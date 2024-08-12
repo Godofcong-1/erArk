@@ -485,3 +485,100 @@ def handle_foot_cloth_to_locker(
                     character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
     character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
 
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UP_AND_BRA_TO_TEM)
+def handle_up_and_bra_to_tem(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    自己的上衣和胸罩转移到临时脱下
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    for i in [5,6]:
+        if len(character_data.cloth.cloth_wear[i]):
+            character_data.cloth.cloth_off[i], character_data.cloth.cloth_wear[i] = character_data.cloth.cloth_wear[i], []
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_AND_PAN_TO_TEM)
+def handle_down_and_pan_to_tem(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    自己的下衣和内裤转移到临时脱下
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    for i in [8,9]:
+        if len(character_data.cloth.cloth_wear[i]):
+            character_data.cloth.cloth_off[i], character_data.cloth.cloth_wear[i] = character_data.cloth.cloth_wear[i], []
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_UP_AND_BRA_TO_TEM)
+def handle_target_up_and_bra_to_tem(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象的上衣和胸罩转移到临时脱下
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    for i in [5,6]:
+        if len(target_data.cloth.cloth_wear[i]):
+            target_data.cloth.cloth_off[i], target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i], []
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_DOWN_AND_PAN_TO_TEM)
+def handle_target_down_and_pan_to_tem(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    交互对象的下衣和内裤转移到临时脱下
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    for i in [8,9]:
+        if len(target_data.cloth.cloth_wear[i]):
+            target_data.cloth.cloth_off[i], target_data.cloth.cloth_wear[i] = target_data.cloth.cloth_wear[i], []

@@ -266,6 +266,7 @@ cid,effect_name,effect_type,effect
 522,URETHRAL_SWAB_ADD_ADJUST,指令_专用结算,（尿道棉棒用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
 523,URETHRAL_FINGER_INSERTION_ADD_ADJUST,指令_专用结算,（尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
 524,MASTUREBATE_ADD_ADJUST,指令_专用结算,（自慰用）选择自己最高感度的部位，增加该部位快感和经验
+525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -286,6 +287,10 @@ cid,effect_name,effect_type,effect
 644,GET_SWIM_CLOTH,属性_服装,清零其他衣服并换上泳衣
 645,WEAR_CLOTH_OFF_MOST,属性_服装,脱掉大部分衣服（保留首饰等）
 646,FOOT_CLOTH_TO_LOCKER,属性_服装,袜子和鞋子转移到衣柜里
+651,UP_AND_BRA_TO_TEM,属性_服装,自己的上衣和胸罩转移到临时脱下
+652,DOWN_AND_PAN_TO_TEM,属性_服装,自己的下衣和内裤转移到临时脱下
+653,TARGET_UP_AND_BRA_TO_TEM,属性_服装,交互对象的上衣和胸罩转移到临时脱下
+654,TARGET_DOWN_AND_PAN_TO_TEM,属性_服装,交互对象的下衣和内裤转移到临时脱下
 
 701,RECORD_TRAINING_TIME,系统量_时间,角色记录并刷新训练时间
 702,RECORD_SHOWER_TIME,系统量_时间,角色记录并刷新淋浴时间

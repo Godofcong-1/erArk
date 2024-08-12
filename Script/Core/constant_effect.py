@@ -566,6 +566,14 @@ class BehaviorEffect:
     """ 属性_服装 脱掉大部分衣服（保留首饰等） """
     FOOT_CLOTH_TO_LOCKER = 646
     """ 属性_服装 袜子和鞋子转移到衣柜里 """
+    UP_AND_BRA_TO_TEM = 651
+    """ 属性_服装 自己的上衣和胸罩转移到临时脱下 """
+    DOWN_AND_PAN_TO_TEM = 652
+    """ 属性_服装 自己的下衣和内裤转移到临时脱下 """
+    TARGET_UP_AND_BRA_TO_TEM = 653
+    """ 属性_服装 交互对象的上衣和胸罩转移到临时脱下 """
+    TARGET_DOWN_AND_PAN_TO_TEM = 654
+    """ 属性_服装 交互对象的下衣和内裤转移到临时脱下 """
 
     RECORD_TRAINING_TIME = 701
     """ 系统量_时间 角色记录并刷新训练时间 """
