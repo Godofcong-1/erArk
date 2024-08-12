@@ -275,7 +275,7 @@ class Assistant_Panel:
             line_feed.draw()
 
             # 更改小时与分钟的按钮
-            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至晚为9时"), window_width / 6, cmd_func=self.change_hour, args=(True,))
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得晚于9时"), window_width / 6, cmd_func=self.change_hour, args=(True,))
             hour_button.draw()
             return_list.append(hour_button.return_text)
             minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(True,))
@@ -317,7 +317,7 @@ class Assistant_Panel:
             line_feed.draw()
 
             # 更改小时与分钟的按钮
-            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，需至少为18时"), window_width / 6, cmd_func=self.change_hour, args=(False,))
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得早于18时"), window_width / 6, cmd_func=self.change_hour, args=(False,))
             hour_button.draw()
             return_list.append(hour_button.return_text)
             minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(False,))

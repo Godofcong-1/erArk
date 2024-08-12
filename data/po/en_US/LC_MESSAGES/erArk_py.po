@@ -6647,3 +6647,155 @@ msgstr ""
 
 msgid "凭证"
 msgstr ""
+
+msgid "加深催眠"
+msgstr ""
+
+msgid "外勤委托"
+msgstr ""
+
+msgid "按名称筛选"
+msgstr ""
+
+msgid "输入要筛选的关键词"
+msgstr ""
+
+msgid "更改小时，不得晚于9时"
+msgstr ""
+
+msgid "更改小时，不得早于18时"
+msgstr ""
+
+msgid ""
+"完成了委托：{0}，获得奖励：{1}\n"
+"\n"
+msgstr ""
+
+msgid "常规外勤"
+msgstr ""
+
+msgid "特殊外勤"
+msgstr ""
+
+msgid "人"
+msgstr ""
+
+msgid "天"
+msgstr ""
+
+msgid "(进行中)"
+msgstr ""
+
+msgid ""
+"\n"
+"委托名称：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"委托等级：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"派遣人数：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"耗时天数：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"需求：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"奖励：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"介绍：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"派遣人员："
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"是否满足需求："
+msgstr ""
+
+msgid "【调整派遣人员】"
+msgstr ""
+
+msgid ""
+"\n"
+"【调整派遣人员】"
+msgstr ""
+
+msgid "[执行委托]"
+msgstr ""
+
+msgid ""
+"\n"
+"可派遣人员（需要{0}人）：\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"已派遣"
+msgstr ""
+
+msgid "执行委托："
+msgstr ""
+
+msgid "，耗时："
+msgstr ""
+
+msgid "天，将在 "
+msgstr ""
+
+msgid ""
+" 返回\n"
+"\n"
+msgstr ""
+
+msgid "(已达上限)"
+msgstr ""
+
+msgid "[购买一个]"
+msgstr ""
+
+msgid "[购买多个]"
+msgstr ""
+
+msgid "请输入要购买多少个"
+msgstr ""
+
+msgid "请输入一个大于0的正整数"
+msgstr ""
+
+msgid "{0}花费了{1}粉红凭证，购买了{2}个{3}"
+msgstr ""
+
+msgid "机库"
+msgstr ""
+
+msgid "[外勤委托系统]"
+msgstr ""
+
+msgid "外勤委托系统"
+msgstr ""
+
+msgid "载具管理"
+msgstr ""
