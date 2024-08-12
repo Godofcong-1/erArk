@@ -16192,10 +16192,6 @@ msgstr ""
 msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
 msgstr ""
 
-#: Event:0155ea5d-8c7c-4717-bdc2-0d0f86a956ad
-msgid "{TargetName}把博士的把柄摆在面前，{PlayerName}害怕会影响名誉，只能作罢"
-msgstr ""
-
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75
 msgid "{TargetName}不打算接受你的邀请，要使用杀手锏吗"
 msgstr ""
