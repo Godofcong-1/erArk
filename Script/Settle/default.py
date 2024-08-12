@@ -5551,6 +5551,48 @@ def handle_masturebate_add_adjust(
     change_data.experience[max_index] += 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET_IN_SHOWER)
+def handle_dirty_reset_in_shower(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身部分部位污浊保留一定比例，其他污浊体归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 保留比例
+    keep_rate_dict = {6 : 0.2, 7 : 0.7, 8 : 0.3}
+    # 保留数据
+    keep_data = {6 : 0, 7 : 0, 8 : 0}
+    # 保留部位
+    for body_cid in [6, 7, 8]:
+        body_dirty = character_data.dirty.body_semen[body_cid].copy()
+        keep_rate = keep_rate_dict[body_cid]
+        new_dirty = body_dirty[1] * keep_rate
+        # 如果保留后小于5，则归零
+        if new_dirty < 5:
+            new_dirty = 0
+        new_lv = attr_calculation.get_semen_now_level(new_dirty, body_cid, 0)
+        body_dirty[1] = new_dirty
+        body_dirty[2] = new_lv
+        keep_data[body_cid] = body_dirty
+
+    # 数据归零后再赋值
+    character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
+    character_data.dirty.body_semen[6] = keep_data[6]
+    character_data.dirty.body_semen[7] = keep_data[7]
+    character_data.dirty.body_semen[8] = keep_data[8]
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,
