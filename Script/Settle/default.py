@@ -6669,6 +6669,154 @@ def handle_target_w_adjust_add_pain(
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_V_ADJUST_ADD_BY_SEX)
+def handle_tech_add_v_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧+阴茎大小对交互目标进行V快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[4], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_A_ADJUST_ADD_BY_SEX)
+def handle_tech_add_a_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧+阴茎大小对交互目标进行A快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[5], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_U_ADJUST_ADD_BY_SEX)
+def handle_tech_add_u_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧+阴茎大小对交互目标进行U快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[6], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_W_ADJUST_ADD_BY_SEX)
+def handle_tech_add_w_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧+阴茎大小对交互目标进行W快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+
+        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        jj_size = character_data.pl_ability.jj_size
+        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
 def handle_low_obscenity_failed_adjust(
         character_id: int,

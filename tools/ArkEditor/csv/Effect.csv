@@ -79,6 +79,10 @@ cid,effect_name,effect_type,effect
 123,TARGET_A_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整
 124,TARGET_U_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整
 125,TARGET_W_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+131,TARGET_V_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行V快、欲情调整
+132,TARGET_A_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行A快、欲情调整
+133,TARGET_U_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行U快、欲情调整
+134,TARGET_W_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行W快、欲情调整
 
 151,LOW_OBSCENITY_FAILED_ADJUST,属性_失败状态,轻度性骚扰失败的加反感、加愤怒、降好感度修正
 152,HIGH_OBSCENITY_FAILED_ADJUST,属性_失败状态,重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正
