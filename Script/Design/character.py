@@ -374,12 +374,12 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_hardlove:
         calculation_text += _("+难以越过的底线(-") + str(judge_hardlove) + ")"
     # 被对方持有把柄修正
-    judge_weakness = target_data.talent[401] * 20
+    judge_weakness = target_data.talent[401] * 100
     judge -= judge_weakness
     if judge_weakness:
         calculation_text += _("+被对方持有把柄(-") + str(judge_weakness) + ")"
     # 持有对方把柄修正
-    judge_weakness = target_data.talent[402] * 50
+    judge_weakness = target_data.talent[402] * 100
     judge += judge_weakness
     if judge_weakness:
         calculation_text += _("+持有对方把柄(+") + str(judge_weakness) + ")"
