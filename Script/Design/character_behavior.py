@@ -978,6 +978,9 @@ def update_new_day():
             # 清零香薰疗愈的flag
             if character_data.sp_flag.aromatherapy != 0:
                 character_data.sp_flag.aromatherapy = 0
+            # 清零食物不对劲的flag
+            if character_data.sp_flag.find_food_weird != 0:
+                character_data.sp_flag.find_food_weird = 0
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
             # 每周一次，如果已陷落则提供粉红凭证
