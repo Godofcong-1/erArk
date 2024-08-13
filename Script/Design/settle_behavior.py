@@ -542,6 +542,14 @@ def second_behavior_effect(
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 检测是否与玩家处于同一位置#
+    if (
+            character_data.position != cache.character_data[0].position
+            and character_data.behavior.move_src != cache.character_data[0].position
+    ):
+        talk.must_show_talk_check(character_id)
+        return
+
     # 遍历二段行为id，进行结算
     for behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:

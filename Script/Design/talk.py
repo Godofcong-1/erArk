@@ -72,13 +72,6 @@ def handle_second_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         if character_id not in player_data.collection_character:
             return
-    # 检测是否与玩家处于同一位置#
-    if (
-            character_data.position != cache.character_data[0].position
-            and character_data.behavior.move_src != cache.character_data[0].position
-    ):
-        must_show_talk_check(character_id)
-        return
 
     # 自己
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
