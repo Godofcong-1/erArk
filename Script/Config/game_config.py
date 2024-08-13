@@ -295,6 +295,8 @@ config_commission: Dict[int, config_def.Commission] = {}
 """ 委托数据 """
 config_commission_id_by_country: Dict[int, List] = {}
 """ 按国家划分的委托id """
+config_vehicle: Dict[int, config_def.Vehicle] = {}
+""" 载具数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1340,6 +1342,16 @@ def load_commission():
         config_commission_id_by_country[now_tem.country_id].append(now_tem.cid)
 
 
+def load_vehicle():
+    """载入载具数据"""
+    now_data = config_data["Vehicle"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Vehicle()
+        now_tem.__dict__ = tem_data
+        config_vehicle[now_tem.cid] = now_tem
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1435,3 +1447,4 @@ def init():
     load_roleplay()
     load_new_round_inherit()
     load_commission()
+    load_vehicle()
