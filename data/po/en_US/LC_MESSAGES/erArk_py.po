@@ -6799,3 +6799,92 @@ msgstr ""
 
 msgid "载具管理"
 msgstr ""
+
+msgid "{0}向{1}移动了\n"
+msgstr ""
+
+msgid "[归还]"
+msgstr ""
+
+msgid "[借阅]"
+msgstr ""
+
+msgid "常规载具"
+msgstr ""
+
+msgid "特殊载具"
+msgstr ""
+
+msgid ""
+"\n"
+"当前机库等级：{0}，载具数量：{1}/{2}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"载具名称：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"载具速度：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"运载量：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"购入价格：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"特殊效果：{0}"
+msgstr ""
+
+msgid "【购买载具】"
+msgstr ""
+
+msgid ""
+"\n"
+"【购买载具】"
+msgstr ""
+
+msgid "【出售载具】"
+msgstr ""
+
+msgid ""
+"\n"
+"【出售载具】"
+msgstr ""
+
+msgid "资金不足，无法购买"
+msgstr ""
+
+msgid "测试角色：{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"指令状态：{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"口上原文本：\n"
+"  {0}\n"
+msgstr ""
+
+msgid ""
+"口上输出文本：\n"
+"  {0}\n"
+msgstr ""
+
+msgid "  {0}：满足(√)\n"
+msgstr ""
+
+msgid "  {0}：不满足(X)\n"
+msgstr ""

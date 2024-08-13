@@ -831,6 +831,16 @@ def handle_move_to_target_scene(
     if character_data.dead:
         return
     if len(character_data.behavior.move_target):
+        # 如果和玩家位于同一地点，则输出提示信息
+        if character_id > 0 and character_data.position == cache.character_data[0].position:
+            target_position_name = character_data.behavior.move_target[-1]
+            if target_position_name == "0":
+                target_position_name = _("入口")
+            draw_text = _("{0}向{1}移动了\n").format(character_data.name, target_position_name)
+            now_draw = draw.NormalDraw()
+            now_draw.text = draw_text
+            now_draw.width = width
+            now_draw.draw()
         map_handle.character_move_scene(
             character_data.position, character_data.behavior.move_target, character_id
         )

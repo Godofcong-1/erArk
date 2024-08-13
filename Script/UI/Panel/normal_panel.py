@@ -833,7 +833,7 @@ class TALK_QUICK_TEST:
             else:
                 pass_flag = True
                 # 输出角色信息
-                draw_text += _(f"测试角色：{target_character_data.name}\n")
+                draw_text += _("测试角色：{0}\n").format(target_character_data.name)
                 # 是否已获得该角色
                 if target_chara_id not in cache.npc_id_got:
                     draw_text += _("  博士未获得该角色(X)\n")
@@ -848,7 +848,7 @@ class TALK_QUICK_TEST:
                     draw_text += _("  博士当前交互对象是该角色(√)\n")
                 # 指令状态
                 now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
-                draw_text += _(f"\n指令状态：{game_config.config_status[now_behavior_id].name}\n")
+                draw_text += _("\n指令状态：{0}\n").format(game_config.config_status[now_behavior_id].name)
                 # 判断触发人与交互对象
                 draw_text += _("\n触发人与交互对象：\n")
                 if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
@@ -885,8 +885,8 @@ class TALK_QUICK_TEST:
 
                 # 输出口上文本
                 talk_context = game_config.config_talk[full_talk_id].context
-                draw_text += _(f"\n口上原文本：\n  {talk_context}\n")
-                draw_text += _(f"口上输出文本：\n  {talk.code_text_to_draw_text(talk_context, start_chara_id)}\n")
+                draw_text += _("\n口上原文本：\n  {0}\n").format(talk_context)
+                draw_text += _("口上输出文本：\n  {0}\n").format(talk.code_text_to_draw_text(talk_context, start_chara_id))
                 # 遍历前提条件
                 draw_text += _("\n前提条件：\n")
                 for premise in game_config.config_talk_premise_data[full_talk_id]:
@@ -898,9 +898,9 @@ class TALK_QUICK_TEST:
                     else:
                         now_add_weight = constant.handle_premise_data[premise](start_chara_id)
                     if now_add_weight:
-                        draw_text += _(f"  {premise}：满足(√)\n")
+                        draw_text += _("  {0}：满足(√)\n").format(premise)
                     else:
-                        draw_text += _(f"  {premise}：不满足(X)\n")
+                        draw_text += _("  {0}：不满足(X)\n").format(premise)
                         pass_flag = False
 
                 # 输出测试结果
