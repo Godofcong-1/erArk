@@ -971,9 +971,9 @@ def update_new_day():
             # 刷新生理周期
             pregnancy.update_reproduction_period(character_id)
             # 清零助理服务的flag
-            if character_data.sp_flag.morning_salutation == 2:
+            if character_data.sp_flag.morning_salutation == 2 or character_data.assistant_services[5] == 0:
                 character_data.sp_flag.morning_salutation = 0
-            if character_data.sp_flag.night_salutation == 2:
+            if character_data.sp_flag.night_salutation == 2 or character_data.assistant_services[6] == 0:
                 character_data.sp_flag.night_salutation = 0
             # 清零香薰疗愈的flag
             if character_data.sp_flag.aromatherapy != 0:
