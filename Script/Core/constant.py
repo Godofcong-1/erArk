@@ -1646,17 +1646,19 @@ class SecondBehavior:
     """ 开启早安咬服务 """
     NIGHT_SERVICE_OFF = 1416
     """ 关闭晚安服务 """
-    NIGHT_KISS = 1417
+    NIGHT_SALUTATION = 1417
+    """ 开启晚上催睡觉服务 """
+    NIGHT_KISS = 1418
     """ 开启晚安吻服务 """
-    NIGHT_BLOWJOB = 1418
+    NIGHT_BLOWJOB = 1419
     """ 开启晚安咬服务 """
-    COHABITATION_OFF = 1419
+    COHABITATION_OFF = 1420
     """ 关闭同居服务 """
-    COHABITATION_ON = 1420
+    COHABITATION_ON = 1421
     """ 开启同居服务 """
-    LOVE_SUPPORT_OFF = 1421
+    LOVE_SUPPORT_OFF = 1422
     """ 关闭助攻服务 """
-    LOVE_SUPPORT_ON = 1422
+    LOVE_SUPPORT_ON = 1423
     """ 开启助攻服务 """
 
     HAS_BEEN_PRIMARY_HYPNOSIS = 1501

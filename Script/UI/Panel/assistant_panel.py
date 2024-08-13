@@ -185,6 +185,7 @@ class Assistant_Panel:
                 target_data.sp_flag.is_follow += 1
         # 其他服务
         else:
+            target_data.assistant_services.setdefault(service_cid, 0)
             if target_data.assistant_services[service_cid] == service_option_len - 1:
                 target_data.assistant_services[service_cid] = 0
             else:
@@ -219,7 +220,7 @@ class Assistant_Panel:
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
         # 计算二段结算的开头、结尾、当前索引
-        start_index_dict = {3:1406, 4:1408, 5:1412, 6:1416, 7:1419, 8:1421}
+        start_index_dict = {3:1406, 4:1408, 5:1412, 6:1416, 7:1420, 8:1422}
         start_index = start_index_dict[service_cid]
         end_index = start_index + service_option_len
         now_index = start_index + target_data.assistant_services[service_cid]

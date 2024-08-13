@@ -293,7 +293,7 @@ msgid "晚安服务"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:9
-msgid "否|晚安吻|晚安咬"
+msgid "否|晚上催睡觉|晚安吻|晚安咬"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:10
@@ -577,7 +577,7 @@ msgid "《世间的美与丑》"
 msgstr ""
 
 #: .\data\csv\Book.csv:14
-msgid "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。"
+msgid "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。\n然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。"
 msgstr ""
 
 #: .\data\csv\Book.csv:15
@@ -9809,38 +9809,42 @@ msgid "关闭晚安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:398
-msgid "开启晚安吻服务"
+msgid "开启晚上催睡觉服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:399
-msgid "开启晚安咬服务"
+msgid "开启晚安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:400
-msgid "关闭同居服务"
+msgid "开启晚安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:401
-msgid "开启同居服务"
+msgid "关闭同居服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:402
-msgid "关闭助攻服务"
+msgid "开启同居服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:403
+msgid "关闭助攻服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:404
 msgid "开启助攻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:405
+#: .\data\csv\Status.csv:406
 msgid "获得被浅层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:406
+#: .\data\csv\Status.csv:407
 msgid "获得被深层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:407
+#: .\data\csv\Status.csv:408
 msgid "获得被完全催眠素质"
 msgstr ""
 
