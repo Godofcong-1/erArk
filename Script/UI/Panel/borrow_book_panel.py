@@ -1,9 +1,7 @@
-from turtle import position
 from typing import Tuple, List
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle,attr_text,attr_calculation
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Design import basement
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -39,6 +37,10 @@ class Borrow_Book_Panel:
 
         title_text = _("借阅书籍")
         book_father_type_list = [_("技能类书籍"), _("娱乐类书籍"), _("色情类书籍")]
+
+        # 如果可借阅字典为空，则初始化可借阅字典
+        if not len(cache.rhodes_island.now_show_book_cid_of_type):
+            basement.settle_library_book()
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -92,8 +94,9 @@ class Borrow_Book_Panel:
             for book_type_cid in game_config.config_book_type:
                 book_type_data = game_config.config_book_type[book_type_cid]
                 if book_type_data.father_type_name in self.now_panel:
-                    # 遍历该cid下的书籍
-                    for book_cid in game_config.config_book_type_data[book_type_cid]:
+                    now_choose_list = cache.rhodes_island.now_show_book_cid_of_type[book_type_cid]
+                    # 遍历该类型下的书籍
+                    for book_cid in now_choose_list:
                         book_data = game_config.config_book[book_cid]
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
@@ -118,7 +121,7 @@ class Borrow_Book_Panel:
                                 _(str(book_count)),
                                 self.width,
                                 normal_style = book_style,
-                                cmd_func=self.borrow,
+                                cmd_func=self.show_book,
                                 args=(book_cid,),
                                 )
                             return_list.append(button_draw.return_text)
@@ -170,11 +173,54 @@ class Borrow_Book_Panel:
 
         self.now_panel = building_type
 
+    def show_book(self, book_cid: int):
+        """
+        显示书籍信息
+        Keyword arguments:
+        book_cid -- 书籍编号
+        """
+        book_data = game_config.config_book[book_cid]
+        book_name = book_data.name
+        book_info = book_data.info
+        # 处理换行符
+        if "\\n" in book_info:
+            book_info = book_info.replace("\\n", "\n")
+        book_text = f"\n{book_name}\n\n{book_info}\n"
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            return_list = []
+            book_info_draw = draw.CenterDraw()
+            book_info_draw.text = book_text
+            book_info_draw.width = self.width
+            book_info_draw.draw()
+            line_feed.draw()
+
+            # 如果已借该书，则显示还书按钮
+            if cache.rhodes_island.book_borrow_dict[book_cid] == 0:
+                borrow_buttin_text = _("[归还]")
+            # 未借该书，则显示借书按钮
+            else:
+                borrow_buttin_text = _("[借阅]")
+
+            borrow_button = draw.CenterButton(
+                borrow_buttin_text, borrow_buttin_text, window_width / 2, cmd_func=self.borrow, args=(book_cid,)
+            )
+            borrow_button.draw()
+            return_list.append(borrow_button.return_text)
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
     def borrow(self, book_cid: int):
         """
         借阅书籍
         Keyword arguments:
-        facility_cid -- 建筑效果编号
+        book_cid -- 书籍编号
         """
 
         character_data: game_type.Character = cache.character_data[0]

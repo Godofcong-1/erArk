@@ -258,6 +258,8 @@ def update_base_resouce_newday():
     settle_aromatherapy_sessions()
     # 结算粉红凭证
     settle_pink_certificate()
+    # 刷新图书馆的可借阅书籍
+    settle_library_book()
 
 
 def update_work_people():
@@ -890,3 +892,18 @@ def settle_pink_certificate():
     # 清零计数
     cache.rhodes_island.total_favorability_increased = 0
     cache.rhodes_island.week_fall_chara_pink_certificate_add = 0
+
+
+def settle_library_book():
+    """
+    刷新图书馆的可借阅书籍
+    """
+
+    for book_type_cid in game_config.config_book_type:
+        game_config.config_book_type_data.setdefault(book_type_cid, [])
+        # 如果该类型的书籍超过3本，则随机选择其中的三本
+        if len(game_config.config_book_type_data[book_type_cid]) > 3:
+            now_choose_list = random.sample(game_config.config_book_type_data[book_type_cid], 3)
+        else:
+            now_choose_list = game_config.config_book_type_data[book_type_cid]
+        cache.rhodes_island.now_show_book_cid_of_type[book_type_cid] = now_choose_list

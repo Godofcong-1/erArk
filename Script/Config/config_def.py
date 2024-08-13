@@ -896,6 +896,25 @@ class Trust_Level:
     """ 实行值加成 """
 
 
+class Vehicle:
+    """ 载具表 """
+
+    cid: int
+    """ 载具id """
+    name: str
+    """ 名字 """
+    speed: int
+    """ 速度 """
+    capacity: int
+    """ 运载量 """
+    price: int
+    """ 价格 """
+    special: str
+    """ 特殊效果 """
+    description: str
+    """ 介绍 """
+
+
 class Visitor_Stay_Attitude:
     """ 访客停留态度 """
 

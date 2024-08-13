@@ -885,6 +885,8 @@ class Rhodes_Island:
         # 训练场
 
         # 图书档案区
+        self.now_show_book_cid_of_type: Dict[int, Tuple[List]] = {}
+        """ 当前展示的可借阅书籍，类别id：书籍id列表 """
         self.book_borrow_dict: Dict[int, Tuple[int]] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
         self.reader_now: int = 0

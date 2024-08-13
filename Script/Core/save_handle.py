@@ -211,6 +211,10 @@ def input_load_save(save_id: str):
                         break
     # 更新食谱
     loaded_dict["recipe_data"] = cooking.init_recipes()
+    # 更新图书借阅
+    for all_cid in game_config.config_book:
+        if all_cid not in loaded_dict["rhodes_island"].book_borrow_dict:
+            loaded_dict["rhodes_island"].book_borrow_dict[all_cid] = -1
 
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()

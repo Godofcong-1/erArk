@@ -748,6 +748,198 @@ msgstr ""
 msgid "测试书籍_娱乐_诗歌"
 msgstr ""
 
+#: .\data\csv\Book.csv:61
+msgid "《尼古拉米娜》"
+msgstr ""
+
+#: .\data\csv\Book.csv:61
+msgid "夏服搭配一百连发！"
+msgstr ""
+
+#: .\data\csv\Book.csv:62
+msgid "《跃动！》"
+msgstr ""
+
+#: .\data\csv\Book.csv:62
+msgid "特刊·年中十大动圈式推荐"
+msgstr ""
+
+#: .\data\csv\Book.csv:63
+msgid "《嫌疑人伊里奇之死》"
+msgstr ""
+
+#: .\data\csv\Book.csv:63
+msgid "建议分类：推理文学"
+msgstr ""
+
+#: .\data\csv\Book.csv:64
+msgid "《弗里德里希的战争论纲》"
+msgstr ""
+
+#: .\data\csv\Book.csv:64
+msgid "沃尔霍夫出版社，10月再版发行"
+msgstr ""
+
+#: .\data\csv\Book.csv:65
+msgid "《奇谈怪论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:65
+msgid "花哨的杂志复印件，内容荒诞不经，却广受杜林人欢迎。纸页上留有各种不同的笔迹，甚至可以从数量上判断杂志转手的次数。其中大多是无意义的涂鸦，但智慧的闪光也散落其间。"
+msgstr ""
+
+#: .\data\csv\Book.csv:66
+msgid "《中央新闻报》"
+msgstr ""
+
+#: .\data\csv\Book.csv:66
+msgid "玫瑰报业集团旗下的主力报纸之一，以新闻报道为主，但也有一些评论和专栏，主要面对的客户是卡西米尔的精英订户。"
+msgstr ""
+
+#: .\data\csv\Book.csv:67
+msgid "《红酒报》"
+msgstr ""
+
+#: .\data\csv\Book.csv:67
+msgid "玫瑰报业集团旗下的主力报纸之一，以八卦绯闻为主，其狗仔队的行动范围几乎覆盖了整个卡西米尔的所有明星骑士。"
+msgstr ""
+
+#: .\data\csv\Book.csv:68
+msgid "《四城竞技报》"
+msgstr ""
+
+#: .\data\csv\Book.csv:68
+msgid "玫瑰报业集团旗下的主力报纸之一，以竞技赛事为主，看似是最专业的的骑士报纸，但实际上只是骑士协会的喉舌。"
+msgstr ""
+
+#: .\data\csv\Book.csv:69
+msgid "《双塔艺术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:69
+msgid "莱塔尼亚的音乐杂志，双月刊，内容涵盖了以古典乐为主的各种音乐风格的介绍、评论、专访等，是莱塔尼亚音乐爱好者的必备读物。"
+msgstr ""
+
+#: .\data\csv\Book.csv:70
+msgid "《乔弗瑞古今童话集》精装本"
+msgstr ""
+
+#: .\data\csv\Book.csv:70
+msgid "经典童话的精装本，收录了乔弗瑞的所有童话作品，是一本非常适合家庭阅读的书籍。"
+msgstr ""
+
+#: .\data\csv\Book.csv:71
+msgid "《最后的骑士》"
+msgstr ""
+
+#: .\data\csv\Book.csv:71
+msgid "卡西米尔家喻户晓的经典骑士小说，讲述了一位骑士伊比利亚的成长与奋斗，最后与巨浪搏斗直至消失的故事，是卡西米尔骑士的精神象征。“如果觉得浪涛吵闹，就去令大海平静。”"
+msgstr ""
+
+#: .\data\csv\Book.csv:72
+msgid "《白牙》"
+msgstr ""
+
+#: .\data\csv\Book.csv:72
+msgid "鲁珀坎民间叙事曲，讲述的是一个鲁珀少年收起獠牙的古老传说。"
+msgstr ""
+
+#: .\data\csv\Book.csv:73
+msgid "《瓦伊凡耕种养殖方法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:73
+msgid "一本关于农业的实用书籍，详细介绍了瓦伊凡地区的农业技术，可惜瓦伊凡农民们大多都没看过。"
+msgstr ""
+
+#: .\data\csv\Book.csv:74
+msgid "《瓦伊凡爱情》"
+msgstr ""
+
+#: .\data\csv\Book.csv:74
+msgid "瓦伊凡战争年代的爱情小说，在雇佣兵组织势均力敌的混乱时代，女主角为了爱情，不惜孤身闯入爱人的佣兵部队，乞求队长答应他们的私奔......！"
+msgstr ""
+
+#: .\data\csv\Book.csv:75
+msgid "《大炎风情志》"
+msgstr ""
+
+#: .\data\csv\Book.csv:75
+msgid "炎国的地理教科书，讲述了炎国人的风土人情，以及各地的地理风貌。但是在天灾的影响下，书中的内容大多已经不再适用。"
+msgstr ""
+
+#: .\data\csv\Book.csv:76
+msgid "《不含传说的高塔》"
+msgstr ""
+
+#: .\data\csv\Book.csv:76
+msgid "讲述了一个高塔内发生的一系列离奇事件，但是作者却没有将这些事件归结为传说，而是用蹩脚的推理来解释这些事件，以反向隐瞒其背后的真相。"
+msgstr ""
+
+#: .\data\csv\Book.csv:77
+msgid "《哥伦比亚司法观察笔记》"
+msgstr ""
+
+#: .\data\csv\Book.csv:77
+msgid "一本关于哥伦比亚司法的观察笔记，内容涵盖了哥伦比亚的司法制度、司法实践、司法改革等方面的内容，是一本非常专业的书籍。"
+msgstr ""
+
+#: .\data\csv\Book.csv:78
+msgid "《征服与同化》"
+msgstr ""
+
+#: .\data\csv\Book.csv:78
+msgid "详细介绍了阿斯兰帝国的征服与同化政策，以及这些政策对于帝国和现代种族制度的影响。"
+msgstr ""
+
+#: .\data\csv\Book.csv:79
+msgid "《离自信只差一步》"
+msgstr ""
+
+#: .\data\csv\Book.csv:79
+msgid "一本关于自信心的书籍，内容涵盖了自信心的重要性、自信心的培养方法、自信心的应用技巧等方面的内容，帮助读者克服自己的心理障碍，提升自己的自信心。"
+msgstr ""
+
+#: .\data\csv\Book.csv:80
+msgid "《你一定能成功》"
+msgstr ""
+
+#: .\data\csv\Book.csv:80
+msgid "一本关于成功学的书籍，内容涵盖了成功学的基本理论、成功学的实践方法、成功学的成功案例等方面的内容，帮助读者了解成功学的基本知识，提升自己的成功学水平。"
+msgstr ""
+
+#: .\data\csv\Book.csv:81
+msgid "《100天教你如何学会企业管理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:81
+msgid "一本关于企业管理的书籍，内容涵盖了企业管理的基本理论、企业管理的实践方法、企业管理的成功案例等方面的内容，帮助读者了解企业管理的基本知识，提升自己的企业管理水平。"
+msgstr ""
+
+#: .\data\csv\Book.csv:82
+msgid "《萨尔贡史》"
+msgstr ""
+
+#: .\data\csv\Book.csv:82
+msgid "举世闻名的浩瀚典籍，基础版一套长达五十卷。一个萨尔贡最古老的史官家族用那支古老的灯芯草笔记录下了这个巨人般的国家，在此后时光中所历经的那段波澜壮阔的英雄岁月。"
+msgstr ""
+
+#: .\data\csv\Book.csv:83
+msgid "《午间邮报》"
+msgstr ""
+
+#: .\data\csv\Book.csv:83
+msgid "叙拉古的一份小报，因为印刷技术的限制，只出版过一次，内容涵盖了叙拉古的政治、经济、文化、社会等方面的内容，是一份非常有价值的小报。"
+msgstr ""
+
+#: .\data\csv\Book.csv:84
+msgid "《帝国军事史》"
+msgstr ""
+
+#: .\data\csv\Book.csv:84
+msgid "一本关于维多利亚军事史的教科书，内容涵盖了军事的基本理论、战阵指挥、军事战略等方面的内容，是维多利亚军校的必备教材。"
+msgstr ""
+
 #: .\data\csv\BookType.csv:7
 msgid "话术"
 msgstr ""
@@ -10934,6 +11126,86 @@ msgstr ""
 
 #: .\data\csv\Tip.csv:49
 msgid "仓储区的裁缝铺可以提供服装定制服务，在这里给干员购买新衣服或者手动指定干员穿某些衣服"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:6
+msgid "温顺的武装大驮兽"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:6
+msgid "情绪稳定的大型驮兽，体型巨大，行动缓慢，载人载货能力强，第二大的缺点是讨厌稳固锁链。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:7
+msgid "两栖摩托快艇"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:7
+msgid "可以在陆地和水面上行驶的载具，速度较快，但只能载一人，而且很容易损毁。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:8
+msgid "两栖摩托重艇"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:8
+msgid "可以在陆地和水面上行驶的载具，速度比快艇慢，但荷载量变成了三倍大。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:9
+msgid "甜品糖果车"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:9
+msgid "街头常见的甜品车，不过里面也可以装载甜品之外的东西，在拉特兰城内很受欢迎。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:10
+msgid "萨卡兹子裔改装补给车"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:10
+msgid "受到血魔大君赐福的补给用载具，可以在战场上为友军提供补给，但是速度慢。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:11
+msgid "R-31a重型动力装甲"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:11
+msgid "罗德岛与莱茵生命能量科联合研发的重型动力装甲，性能与五年前军方量产的相当。虽然无法载货，但其强大的性能能够为近战干员提供强大的支援。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:12
+msgid "R-11a突击动力装甲"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:12
+msgid "罗德岛与莱茵生命能量科联合研发的重型动力装甲，搭载了远程武器的型号。虽然无法载货，但其强大的性能能够为远程干员提供强大的支援。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:13
+msgid "竞赛级沙滩车"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:13
+msgid "大家都喜欢的沙滩越野车，除了司机还能载三个人。在配置全面升级之后，里面的空调经常冻得司机和乘客们哆哆嗦嗦。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:14
+msgid "家族豪华轿车"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:14
+msgid "家族中较为少见的交通工具，外表低调但内饰豪华。除了代步，也会用这种轿车送家族的敌人“一路顺风”。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:15
+msgid "“越长尘”"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:15
+msgid "由炎国工部监造司专为玉门城设计打造的第二批运兵车，运载量极大，即使是沙漠地形亦能平稳、快速地运行，可高效配合作战。"
 msgstr ""
 
 #: .\data\csv\Visitor_Stay_Attitude.csv:7

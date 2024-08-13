@@ -985,8 +985,8 @@ def update_new_day():
                 fall_chara_give_pink_voucher(character_id)
 
     # 非角色部分
-    basement.update_base_resouce_newday()
-    field_commission_panel.judge_field_commission_finish()
+    basement.update_base_resouce_newday() # 更新基础资源
+    field_commission_panel.judge_field_commission_finish() # 刷新委托任务
     cooking.init_food_shop_data() # 初始化餐厅数据
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
