@@ -103,11 +103,15 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
+            # 角色专属口上则需要判定是否为该角色
             if talk_config.adv_id != 0:
                 # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
                 if character_data.adv != talk_config.adv_id:
                     if target_data.adv != talk_config.adv_id:
                         continue
+            # 系统设置中的是否使用通用文本
+            if cache.system_setting[8] == 0 and talk_config.adv_id == 0:
+                continue
             now_weight = 1
             if talk_id in game_config.config_talk_premise_data:
                 now_weight = 0
