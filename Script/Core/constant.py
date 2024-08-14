@@ -1884,6 +1884,8 @@ class Instruct:
     """ 管理流水线 """
     MANAGE_AGRICULTURE = 0
     """ 管理农业生产 """
+    MANAGE_VEHICLE = 0
+    """ 管理载具 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
     NAVIGATION = 0
