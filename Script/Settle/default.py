@@ -5809,8 +5809,6 @@ def handle_put_into_prison_add_just(
     target_data.position = character_data.position
     target_data.behavior.move_src = character_data.position
     target_data.behavior.move_target = character_data.position
-    # 对方行为结算
-    target_data.second_behavior[1352] = 1
     # 角色上线
     handle_chara_on_line(target_id, add_time, change_data, now_time)
 

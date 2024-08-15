@@ -695,6 +695,8 @@ class Premise:
     """ 属性_异常状态 自身5或6或7异常 """
     T_NORMAL_256_OR_UNCONSCIOUS_FLAG = "t_normal_256_or_unconscious_flag"
     """ 属性_异常状态 交互对象256正常或无意识 """
+    T_NORMAL_56_OR_UNCONSCIOUS_FLAG = "t_normal_56_or_unconscious_flag"
+    """ 属性_异常状态 交互对象56正常或无意识 """
     T_UNNORMAL_567 = "t_unnormal_567"
     """ 属性_异常状态 交互对象5或6或7异常 """
     NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS = "normal_all_except_special_hypnosis"

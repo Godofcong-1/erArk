@@ -985,7 +985,7 @@ def handle_take_shower():
     _("身体接触"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_stroke():
@@ -1000,7 +1000,7 @@ def handle_stroke():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TECHNIQUE_GE_3,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_massage():
@@ -2559,7 +2559,7 @@ def handle_repair_equipment():
     constant.Instruct.EMBRACE, constant.InstructType.OBSCENITY, _("拥抱"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_embrace():
@@ -2573,7 +2573,7 @@ def handle_embrace():
     _("亲吻"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_kiss():
@@ -2587,7 +2587,7 @@ def handle_kiss():
     _("摸头"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_head():
@@ -2601,7 +2601,7 @@ def handle_touch_head():
     _("摸胸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_breast():
@@ -2615,7 +2615,7 @@ def handle_touch_breast():
     _("摸屁股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_buttocks():
@@ -2629,7 +2629,7 @@ def handle_touch_buttocks():
     _("摸耳朵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84, },
 )
 def handle_touch_ears():
@@ -2643,7 +2643,7 @@ def handle_touch_ears():
     _("摸角"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_HORN,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2658,7 +2658,7 @@ def handle_touch_horn():
     _("摸尾巴"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TAIL,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2673,7 +2673,7 @@ def handle_touch_tail():
     _("摸光环"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_RING,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2688,7 +2688,7 @@ def handle_touch_ring():
     _("摸光翼"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_WING,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2703,7 +2703,7 @@ def handle_touch_wing():
     _("摸触手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TENTACLE,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2718,7 +2718,7 @@ def handle_touch_tentacle():
     _("摸小车"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_CAR,
      constant_promise.Premise.TIRED_LE_84,},
 )
@@ -2733,7 +2733,7 @@ def handle_touch_car():
     _("牵手"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_handle_in_handle():
@@ -2747,7 +2747,7 @@ def handle_handle_in_handle():
     _("膝枕"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.PLACE_FURNITURE_GE_1,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -2762,7 +2762,7 @@ def handle_lap_pillow():
     _("掀起裙子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SKIRT,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -2777,7 +2777,7 @@ def handle_raise_skirt():
     _("索要内裤"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_PAN,
      constant_promise.Premise.COLLECT_BONUS_102,
      constant_promise.Premise.TIRED_LE_84}
@@ -2793,7 +2793,7 @@ def handle_ask_for_pan():
     _("索要袜子"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
      constant_promise.Premise.COLLECT_BONUS_202,
      constant_promise.Premise.TIRED_LE_84}
@@ -2839,7 +2839,7 @@ def handle_steal_socks():
     _("阴蒂爱抚"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_clitoris():
@@ -2853,7 +2853,7 @@ def handle_touch_clitoris():
     _("手指插入（V）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_vagina():
@@ -2867,7 +2867,7 @@ def handle_touch_vagina():
     _("手指插入（A）"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_touch_anus():
@@ -2881,7 +2881,7 @@ def handle_touch_anus():
     _("挤奶"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_MILK_GE_30,
      constant_promise.Premise.TIRED_LE_84}
 )

@@ -21108,111 +21108,107 @@ msgstr ""
 msgid "\n{Name}触发了新周目告别的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:128
-msgid "\n{Name}触发了被投入监牢的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:130
+#: .\data\talk\system\second.csv:129
 msgid "\n{Name}触发了被选为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:131
+#: .\data\talk\system\second.csv:130
 msgid "\n{Name}触发了不再为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:132
+#: .\data\talk\system\second.csv:131
 msgid "\n{Name}触发了关闭智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:133
+#: .\data\talk\system\second.csv:132
 msgid "\n{Name}触发了开启智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:134
+#: .\data\talk\system\second.csv:133
 msgid "\n{Name}触发了要求前往办公室的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:135
+#: .\data\talk\system\second.csv:134
 msgid "\n{Name}触发了关闭辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:136
+#: .\data\talk\system\second.csv:135
 msgid "\n{Name}触发了开启辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:137
+#: .\data\talk\system\second.csv:136
 msgid "\n{Name}触发了关闭送饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:138
+#: .\data\talk\system\second.csv:137
 msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:139
+#: .\data\talk\system\second.csv:138
 msgid "\n{Name}触发了开启亲手做午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:140
+#: .\data\talk\system\second.csv:139
 msgid "\n{Name}触发了开启亲手做三餐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:141
+#: .\data\talk\system\second.csv:140
 msgid "\n{Name}触发了关闭早安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:142
+#: .\data\talk\system\second.csv:141
 msgid "\n{Name}触发了开启早上叫起床服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:143
+#: .\data\talk\system\second.csv:142
 msgid "\n{Name}触发了开启早安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:144
+#: .\data\talk\system\second.csv:143
 msgid "\n{Name}触发了开启早安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:145
+#: .\data\talk\system\second.csv:144
 msgid "\n{Name}触发了关闭晚安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:146
+#: .\data\talk\system\second.csv:145
 msgid "\n{Name}触发了开启晚上催睡觉服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:147
+#: .\data\talk\system\second.csv:146
 msgid "\n{Name}触发了开启晚安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:148
+#: .\data\talk\system\second.csv:147
 msgid "\n{Name}触发了开启晚安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:149
+#: .\data\talk\system\second.csv:148
 msgid "\n{Name}触发了关闭同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:150
+#: .\data\talk\system\second.csv:149
 msgid "\n{Name}触发了开启同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:151
+#: .\data\talk\system\second.csv:150
 msgid "\n{Name}触发了关闭助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:152
+#: .\data\talk\system\second.csv:151
 msgid "\n{Name}触发了开启助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:154
+#: .\data\talk\system\second.csv:153
 msgid "\n{Name}触发了获得[已催眠·浅]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:155
+#: .\data\talk\system\second.csv:154
 msgid "\n{Name}触发了获得[已催眠·深]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:156
+#: .\data\talk\system\second.csv:155
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
 msgstr ""
 

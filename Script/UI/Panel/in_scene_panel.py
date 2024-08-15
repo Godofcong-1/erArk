@@ -420,7 +420,7 @@ class SeeInstructPanel:
             now_button.draw()
 
         # 如果交互对象是临盆、产后或婴儿的话，不显示性骚扰和H类指令
-        if not handle_premise.handle_t_normal_2(0):
+        if handle_premise.handle_t_parturient_1(0) or handle_premise.handle_t_postpartum_1(0) or handle_premise.handle_t_baby_1(0):
             cache.instruct_type_filter[5] = 0
             cache.instruct_type_filter[6] = 0
 

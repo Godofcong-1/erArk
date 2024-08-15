@@ -3863,7 +3863,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
     """
     124正常的普通状态
     \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
-    \n包括2:临盆、产后、婴儿
+    \n包括2:临盆、产后、监禁
     \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
@@ -3884,7 +3884,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
 def handle_normal_2_3_4(character_id: int) -> int:
     """
     234正常的普通状态
-    \n包括2:临盆、产后、婴儿
+    \n包括2:临盆、产后、监禁
     \n包括3:助理、跟随模式下
     \n包括4:大致全裸、全裸
     Keyword arguments:
@@ -4066,7 +4066,7 @@ def handle_t_normal_6(character_id: int) -> int:
 def handle_normal_2_4(character_id: int) -> int:
     """
     24正常的普通状态
-    \n包括2:临盆、产后、婴儿
+    \n包括2:临盆、产后、监禁
     \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
@@ -4318,7 +4318,7 @@ def handle_normal_123467(character_id: int) -> int:
 def handle_t_normal_2(character_id: int) -> int:
     """
     交互对象2正常的普通状态
-    \n包括2:临盆、产后、婴儿
+    \n包括2:临盆、产后、监禁
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4481,7 +4481,7 @@ def handle_unnormal_567(character_id: int) -> int:
 def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     """
     交互对象256正常或无意识
-    \n包括2:临盆、产后、婴儿
+    \n包括2:临盆、产后、监禁
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
@@ -4494,6 +4494,30 @@ def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     target_chara_id = character_data.target_character_id
     if (
         handle_normal_2(target_chara_id) and 
+        handle_normal_5(target_chara_id) and 
+        handle_normal_6(target_chara_id)
+        ):
+        return 1
+    if target_data.sp_flag.unconscious_h != 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG)
+def handle_t_normal_56_or_unconscious_flag(character_id: int) -> int:
+    """
+    交互对象56正常或无意识
+    \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
+    \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    target_chara_id = character_data.target_character_id
+    if (
         handle_normal_5(target_chara_id) and 
         handle_normal_6(target_chara_id)
         ):
