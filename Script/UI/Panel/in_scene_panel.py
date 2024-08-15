@@ -382,6 +382,17 @@ class SeeInstructPanel:
         """绘制操作菜单面板"""
         start_instruct = time.time()
         self.return_list = []
+
+        # 指令类型与颜色的对应字典
+        color_of_instruct_type = {
+            constant.InstructType.DAILY: "shadow_green",
+            constant.InstructType.PLAY: "light_french_beige",
+            constant.InstructType.WORK: "mongoose",
+            constant.InstructType.ARTS: "light_steel_blue",
+            constant.InstructType.OBSCENITY: "pale_chestnut",
+            constant.InstructType.SEX: "amarath_pink",
+        }
+
         line = draw.LineDraw("-.-", self.width)
         line.draw()
         fix_draw = draw.NormalDraw()
@@ -395,14 +406,14 @@ class SeeInstructPanel:
             if now_type == constant.InstructType.SYSTEM:
                 continue
             now_config = game_config.config_instruct_type[now_type]
-            # 已选择的指令类型变成橙黄色
+            # 已选择的指令类型变成对应颜色
             if cache.instruct_type_filter[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
                     self.width / (len(cache.instruct_type_filter) - 1),
                     " ",
-                    "gold_enrod",
+                    color_of_instruct_type[now_type],
                     "standard",
                     cmd_func=self.change_filter,
                     args=(now_type,),
@@ -412,6 +423,7 @@ class SeeInstructPanel:
                     f"[{now_config.name}]",
                     now_config.name,
                     self.width / (len(cache.instruct_type_filter) - 1),
+                    normal_style = "deep_gray",
                     cmd_func=self.change_filter,
                     args=(now_type,),
                 )
@@ -429,6 +441,7 @@ class SeeInstructPanel:
         line.draw()
         now_instruct_list = []
         now_premise_data = {}
+        # 遍历指令过滤
         for now_type in cache.instruct_type_filter:
             if cache.instruct_type_filter[
                 now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
@@ -461,6 +474,7 @@ class SeeInstructPanel:
         instruct_group = value_handle.list_of_groups(now_instruct_list, 5)
         now_draw_list = []
         system_draw_list = []
+        # 遍历指令绘制
         for instruct_list in instruct_group:
             for instruct_id in instruct_list:
                 instruct_name = constant.handle_instruct_name_data[instruct_id]
@@ -473,6 +487,11 @@ class SeeInstructPanel:
                     cmd_func=self.handle_instruct,
                     args=(instruct_id,),
                 )
+                # 根据指令类型赋予不同的颜色
+                for instruct_type in constant.instruct_type_data:
+                    if instruct_type in color_of_instruct_type and instruct_id in constant.instruct_type_data[instruct_type]:
+                        now_draw.normal_style = color_of_instruct_type[instruct_type]
+                # 系统指令单独加入系统指令列表
                 if instruct_id in constant.instruct_type_data[constant.InstructType.SYSTEM]:
                     system_draw_list.append(now_draw)
                 else:

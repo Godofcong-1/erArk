@@ -5696,6 +5696,66 @@ msgstr ""
 msgid "猩红"
 msgstr ""
 
+#: .\data\csv\FontConfig.csv:53
+msgid "夏日绿"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:54
+msgid "浮石色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:55
+msgid "桃金娘绿"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:56
+msgid "阴影绿色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:57
+msgid "猫鼬色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:58
+msgid "浅栗色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:59
+msgid "浅法国米色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:60
+msgid "浅天蓝色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:61
+msgid "矢车菊蓝"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:62
+msgid "浅蔚蓝"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:63
+msgid "浅钢蓝"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:64
+msgid "公主香水"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:65
+msgid "玫瑰粉"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:66
+msgid "淡洋红"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:67
+msgid "紫红"
+msgstr ""
+
 #: .\data\csv\Food_Quality.csv:6
 msgid "粗劣"
 msgstr ""
@@ -9744,115 +9804,107 @@ msgstr ""
 msgid "新周目告别"
 msgstr ""
 
-#: .\data\csv\Status.csv:381
-msgid "自己被投入监牢"
-msgstr ""
-
 #: .\data\csv\Status.csv:382
-msgid "自己被解除囚禁"
-msgstr ""
-
-#: .\data\csv\Status.csv:384
 msgid "被选为助理"
 msgstr ""
 
-#: .\data\csv\Status.csv:385
+#: .\data\csv\Status.csv:383
 msgid "不再为助理"
 msgstr ""
 
-#: .\data\csv\Status.csv:386
+#: .\data\csv\Status.csv:384
 msgid "关闭智能跟随"
 msgstr ""
 
-#: .\data\csv\Status.csv:387
+#: .\data\csv\Status.csv:385
 msgid "开启智能跟随"
 msgstr ""
 
-#: .\data\csv\Status.csv:388
+#: .\data\csv\Status.csv:386
 msgid "要求前往办公室"
 msgstr ""
 
-#: .\data\csv\Status.csv:389
+#: .\data\csv\Status.csv:387
 msgid "关闭辅佐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:390
+#: .\data\csv\Status.csv:388
 msgid "开启辅佐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:391
+#: .\data\csv\Status.csv:389
 msgid "关闭送饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:392
+#: .\data\csv\Status.csv:390
 msgid "开启帮忙买午饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:393
+#: .\data\csv\Status.csv:391
 msgid "开启亲手做午饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:394
+#: .\data\csv\Status.csv:392
 msgid "开启亲手做三餐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:395
+#: .\data\csv\Status.csv:393
 msgid "关闭早安服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:396
+#: .\data\csv\Status.csv:394
 msgid "开启早上叫起床服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:397
+#: .\data\csv\Status.csv:395
 msgid "开启早安吻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:398
+#: .\data\csv\Status.csv:396
 msgid "开启早安咬服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:399
+#: .\data\csv\Status.csv:397
 msgid "关闭晚安服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:400
+#: .\data\csv\Status.csv:398
 msgid "开启晚上催睡觉服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:401
+#: .\data\csv\Status.csv:399
 msgid "开启晚安吻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:402
+#: .\data\csv\Status.csv:400
 msgid "开启晚安咬服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:403
+#: .\data\csv\Status.csv:401
 msgid "关闭同居服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:404
+#: .\data\csv\Status.csv:402
 msgid "开启同居服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:405
+#: .\data\csv\Status.csv:403
 msgid "关闭助攻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:406
+#: .\data\csv\Status.csv:404
 msgid "开启助攻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:408
+#: .\data\csv\Status.csv:406
 msgid "获得被浅层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:409
+#: .\data\csv\Status.csv:407
 msgid "获得被深层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:410
+#: .\data\csv\Status.csv:408
 msgid "获得被完全催眠素质"
 msgstr ""
 
