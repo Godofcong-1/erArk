@@ -556,7 +556,7 @@ def second_behavior_effect(
             if second_behavior_list and behavior_id not in second_behavior_list:
                 continue
             # 触发二段行为的口上
-            talk.handle_second_talk(character_id)
+            talk.handle_second_talk(character_id, behavior_id)
             # 遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_second_behavior_effect_data[behavior_id]:
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
