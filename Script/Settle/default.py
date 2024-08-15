@@ -4181,12 +4181,20 @@ def handle_chara_on_line(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    # 基础属性回满
+    # 基础属性重置
     character_data.hit_point = character_data.hit_point_max
     character_data.mana_point = character_data.mana_point_max
     character_data.hunger_point = 0
     character_data.tired_point = 0
     character_data.sleep_point = 0
+    # 清零各特殊状态flag
+    character_data.sp_flag.is_follow = 0
+    character_data.sp_flag.sleep = 0
+    character_data.sp_flag.rest = 0
+    character_data.sp_flag.pee = 0
+    character_data.sp_flag.milk = 0
+    character_data.sp_flag.shower = 0
+    character_data.sp_flag.eat_food = 0
     # 加入当前干员列表
     if character_id not in cache.npc_id_got:
         cache.npc_id_got.add(character_id)
@@ -5769,7 +5777,7 @@ def handle_put_into_prison_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id，清零各特殊状态flag
+    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，角色上线
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -5787,33 +5795,24 @@ def handle_put_into_prison_add_just(
     # 对方数据结算
     target_data.sp_flag.be_bagged = 0
     target_data.sp_flag.imprisonment = 1
-    cache.npc_id_got.add(target_id)
-    # 屈服1，恐怖1，反发2
-    if target_data.ability[14] <= 0:
-        target_data.ability[14] = 1
-        target_data.second_behavior[1033] = 1
+    # 屈服2，恐怖1，反发3
+    if target_data.ability[14] <= 1:
+        target_data.ability[14] = 2
+        target_data.second_behavior[1034] = 1
     if target_data.ability[17] <= 0:
         target_data.ability[17] = 1
         target_data.second_behavior[1042] = 1
-    if target_data.ability[18] <= 1:
-        target_data.ability[18] = 2
-        target_data.second_behavior[1046] = 1
+    if target_data.ability[18] <= 2:
+        target_data.ability[18] = 3
+        target_data.second_behavior[1047] = 1
     # 对方位置结算
     target_data.position = character_data.position
     target_data.behavior.move_src = character_data.position
     target_data.behavior.move_target = character_data.position
-    # 清零各特殊状态flag
-    target_data.sp_flag.is_follow = 0
-    target_data.sp_flag.sleep = 0
-    target_data.sp_flag.rest = 0
-    target_data.sp_flag.pee = 0
-    target_data.sp_flag.milk = 0
-    target_data.sp_flag.shower = 0
-    target_data.sp_flag.eat_food = 0
-    # 地图数据结算
-    old_scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    if target_id not in cache.scene_data[old_scene_path_str].character_list:
-        cache.scene_data[old_scene_path_str].character_list.add(target_id)
+    # 对方行为结算
+    target_data.second_behavior[1352] = 1
+    # 角色上线
+    handle_chara_on_line(target_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)

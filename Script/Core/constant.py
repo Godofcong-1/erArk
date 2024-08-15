@@ -1613,6 +1613,8 @@ class SecondBehavior:
 
     NEW_ROUND_FAREWELL = 1351
     """ 新周目告别 """
+    BE_PUT_INTO_PRISON = 1352
+    """ 自己被投入监牢 """
 
     CHOSEN_AS_ASSISTANT = 1401
     """ 被选为助理 """

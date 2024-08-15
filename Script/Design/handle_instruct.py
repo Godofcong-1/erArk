@@ -2915,7 +2915,9 @@ def handle_bagging_and_moving():
 )
 def handle_put_into_prision():
     """处理投入监牢指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PUT_INTO_PRISON)
+    pl_character_data = cache.character_data[0]
+    pl_character_data.target_character_id = pl_character_data.sp_flag.bagging_chara_id
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PUT_INTO_PRISON,force_taget_wait = True)
 
 
 @add_instruct(
