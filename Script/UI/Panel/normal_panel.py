@@ -381,6 +381,10 @@ class Sleep_Panel:
         """ 绘制的最大宽度 """
         self.close_door_flag = True
         """ 关门情况 """
+        self.sleep_time_hour = 0
+        """ 睡眠时间_小时 """
+        self.sleep_time_min = 0
+        """ 睡眠时间_分钟 """
 
     def draw(self):
         """绘制对象"""
@@ -394,7 +398,7 @@ class Sleep_Panel:
         # 疲劳值回复时间
         tired_recover_time = math.ceil((pl_character_data.tired_point) * 3 / 60)
         need_time = max(hpmp_need_time, tired_recover_time)
-        self.sleep_time = need_time
+        self.sleep_time_hour = need_time
 
         title_text = _("睡眠")
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -428,7 +432,7 @@ class Sleep_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            now_draw_text = _("\n\n 预计完全回复体力和气力最少需要 {0} 小时，预计完全回复疲劳至少需要 {1} 小时，当前决定的睡眠时间为：{2} 小时（默认取两者最大值）").format(hpmp_need_time, tired_recover_time, self.sleep_time)
+            now_draw_text = _("\n\n 预计完全回复体力和气力最少需要 {0} 小时，预计完全回复疲劳至少需要 {1} 小时，当前决定的睡眠时间为：{2} 小时（默认取两者最大值）").format(hpmp_need_time, tired_recover_time, self.sleep_time_hour)
             now_draw.text = now_draw_text
             now_draw.draw()
 
@@ -440,6 +444,15 @@ class Sleep_Panel:
                 button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.fast_choice_sleep_time, args=i)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
+
+            # 如果已经启用了早安服务，则增加一个睡到早安服务时间的按钮
+            if pl_character_data.assistant_character_id:
+                assistant_character_data = cache.character_data[pl_character_data.assistant_character_id]
+                if assistant_character_data.assistant_services[5] > 0:
+                    button_text = _(" [睡到早安服务时间] ")
+                    button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.sleep_to_morning_service)
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
 
             button_text = _(" [自定义睡眠时间] ")
             button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大8小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
@@ -472,16 +485,17 @@ class Sleep_Panel:
                 if self.close_door_flag:
                     cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
                 # 睡眠
-                sleep_time = self.sleep_time * 60
-                pl_character_data.behavior.duration = sleep_time
+                if self.sleep_time_min == 0:
+                    self.sleep_time_min = self.sleep_time_hour * 60
+                pl_character_data.behavior.duration = self.sleep_time_min
                 pl_character_data.behavior.behavior_id = constant.Behavior.SLEEP
                 pl_character_data.state = constant.CharacterStatus.STATUS_SLEEP
 
                 pl_character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
-                pl_character_data.action_info.wake_time = game_time.get_sub_date(minute=sleep_time, old_date=cache.game_time) # 记录醒来时间
+                pl_character_data.action_info.wake_time = game_time.get_sub_date(minute=self.sleep_time_min, old_date=cache.game_time) # 记录醒来时间
                 # print(f"debug 玩家睡觉，睡觉时间 = {pl_character_data.action_info.sleep_time},醒来时间 = {pl_character_data.action_info.wake_time}")
                 # cache.wframe_mouse.w_frame_skip_wait_mouse = 1
-                update.game_update_flow(sleep_time)
+                update.game_update_flow(self.sleep_time_min)
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn == back_draw.return_text:
@@ -501,12 +515,31 @@ class Sleep_Panel:
             elif user_input > 0:
                 if user_input > 8:
                     user_input = 8
-                self.sleep_time = user_input
+                self.sleep_time_hour = user_input
                 break
 
     def fast_choice_sleep_time(self, sleep_time):
         """快速选择睡眠时间"""
-        self.sleep_time = sleep_time
+        self.sleep_time_hour = sleep_time
+
+    def sleep_to_morning_service(self):
+        """睡到早安服务时间"""
+        pl_character_data = cache.character_data[0]
+        start_time = pl_character_data.behavior.start_time
+        plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+        wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+        # 12点后则为明天，否则为今天
+        if start_time.hour > 12:
+            judge_wake_up_time = game_time.get_sub_date(day = 1, old_date = start_time)
+        else:
+            judge_wake_up_time = start_time
+        # 替换时间和分钟
+        judge_wake_up_time = judge_wake_up_time.replace(hour = wake_time_hour, minute = wake_time_minute)
+        # 计算时间差
+        self.sleep_time_min = int((judge_wake_up_time - start_time).seconds / 60)
+        self.sleep_time_min = max(self.sleep_time_min, 60)
+        self.sleep_time_hour = int(self.sleep_time_min / 60)
+        self.sleep_time_hour = max(self.sleep_time_hour, 1)
 
     def close_door_switch(self):
         """关门开关"""
