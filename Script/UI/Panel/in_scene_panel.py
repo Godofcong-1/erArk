@@ -387,7 +387,7 @@ class SeeInstructPanel:
         color_of_instruct_type = {
             constant.InstructType.DAILY: "shadow_green",
             constant.InstructType.PLAY: "light_french_beige",
-            constant.InstructType.WORK: "mongoose",
+            constant.InstructType.WORK: "grullo",
             constant.InstructType.ARTS: "light_steel_blue",
             constant.InstructType.OBSCENITY: "pale_chestnut",
             constant.InstructType.SEX: "amarath_pink",

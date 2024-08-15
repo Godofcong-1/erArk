@@ -5756,6 +5756,10 @@ msgstr ""
 msgid "紫红"
 msgstr ""
 
+#: .\data\csv\FontConfig.csv:68
+msgid "灰褐色"
+msgstr ""
+
 #: .\data\csv\Food_Quality.csv:6
 msgid "粗劣"
 msgstr ""
