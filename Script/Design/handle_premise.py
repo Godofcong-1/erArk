@@ -7983,6 +7983,40 @@ def handle_target_love_le_2(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_LOVE_0_OR_LE_1)
+def handle_target_love_0_or_le_1(character_id: int) -> int:
+    """
+    交互对象无陷落或爱情系<=思慕
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_not_fall(character_data.target_character_id):
+        return 1
+    if handle_target_love_1(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_LOVE_0_OR_LE_2)
+def handle_target_love_0_or_le_2(character_id: int) -> int:
+    """
+    交互对象无陷落或爱情系<=恋慕
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_not_fall(character_data.target_character_id):
+        return 1
+    if handle_target_love_le_2(character_data.target_character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_OBEY_1)
 def handle_target_obey_1(character_id: int) -> int:
     """
@@ -8111,8 +8145,42 @@ def handle_target_obey_le_2(character_id: int) -> int:
     target_data = cache.character_data[character_data.target_character_id]
     for i in {211, 212}:
         if target_data.talent[i]:
-            return 0
-    return 1
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_OBEY_0_OR_LE_1)
+def handle_target_obey_0_or_le_1(character_id: int) -> int:
+    """
+    交互对象无陷落或隶属系==屈从
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_not_fall(character_data.target_character_id):
+        return 1
+    if handle_target_obey_1(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_OBEY_0_OR_LE_2)
+def handle_target_obey_0_or_le_2(character_id: int) -> int:
+    """
+    交互对象无陷落或隶属系<=驯服
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_self_not_fall(character_data.target_character_id):
+        return 1
+    if handle_target_obey_le_2(character_data.target_character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HAVE_FIRST_KISS)

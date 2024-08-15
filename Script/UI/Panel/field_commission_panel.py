@@ -174,6 +174,8 @@ class Field_Commission_Panel:
         """ 绘制的文本列表 """
         self.send_npc_list = []
         """ 派遣人员列表 """
+        self.send_vehicle_list = []
+        """ 派遣载具列表 """
 
     def draw(self):
         """绘制对象"""
@@ -299,6 +301,8 @@ class Field_Commission_Panel:
         commision_level = str(commision_data.level)
         commision_people = str(commision_data.people) + _("人")
         commision_time = str(commision_data.time) + _("天")
+        commision_capacity_int = (commision_data.time - 1) * commision_data.people
+        commision_capacity_str = _(" {0}(天数-1) * {1}(人数) = {2}").format(commision_data.time - 1, commision_data.people, commision_capacity_int)
         reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
         commision_reward = reward_return_list[1]
         commision_description = commision_data.description
@@ -306,8 +310,9 @@ class Field_Commission_Panel:
         if "\\n" in commision_description:
             commision_description = commision_description.replace("\\n", "\n      ")
 
-        # 派遣人员
+        # 派遣人员与载具
         self.send_npc_list = []
+        self.send_vehicle_list = []
 
         while 1:
             # 是否满足条件
@@ -326,18 +331,23 @@ class Field_Commission_Panel:
             info_draw.text += _("\n委托等级：{0}").format(commision_level)
             info_draw.text += _("\n派遣人数：{0}").format(commision_people)
             info_draw.text += _("\n耗时天数：{0}").format(commision_time)
-            info_draw.text += _("\n需求：{0}").format(commision_demand)
+            info_draw.text += _("\n载具运量需求：{0}").format(commision_capacity_str)
+            info_draw.text += _("\n其他需求：{0}").format(commision_demand)
             info_draw.text += _("\n奖励：{0}").format(commision_reward)
             info_draw.text += _("\n介绍：{0}").format(commision_description)
             info_draw.width = self.width
             info_draw.draw()
 
-            # 绘制派遣人员与是否满足需求
+            # 绘制派遣人员与载具是否满足需求
             info_draw_2_text = _("\n\n派遣人员：")
             for chara_id in self.send_npc_list:
                 chara_data = cache.character_data[chara_id]
                 chara_name = chara_data.name
                 info_draw_2_text += f"  {chara_name}"
+            info_draw_2_text += _("\n\n派遣载具：")
+            for vehicle_id in self.send_vehicle_list:
+                vehicle_name = game_config.config_vehicle[vehicle_id].name
+                info_draw_2_text += f"  {vehicle_name}"
             info_draw_2_text += _("\n\n是否满足需求：")
             if len(self.send_npc_list) >= commision_data.people and deman_satify:
                 info_draw_2_text += _("是")
@@ -352,15 +362,27 @@ class Field_Commission_Panel:
             # 调整派遣人员
             line_feed.draw()
             line_feed.draw()
-            adjust_button_draw = draw.CenterButton(
+            adjust_NPC_button_draw = draw.CenterButton(
                 _("【调整派遣人员】"),
                 _("\n【调整派遣人员】"),
-                self.width / 5,
+                self.width / 3,
                 cmd_func=self.adjust_send_npc,
                 args=(commision_id,),
             )
-            adjust_button_draw.draw()
-            return_list.append(adjust_button_draw.return_text)
+            adjust_NPC_button_draw.draw()
+            return_list.append(adjust_NPC_button_draw.return_text)
+
+            # 调整使用载具
+            adjust_vehicle_button_draw = draw.CenterButton(
+                _("【调整使用载具】"),
+                _("\n【调整使用载具】"),
+                self.width / 3,
+                cmd_func=self.adjust_send_vehicle,
+                args=(commision_capacity_int,),
+            )
+            adjust_vehicle_button_draw.draw()
+            return_list.append(adjust_vehicle_button_draw.return_text)
+            line_feed.draw()
             line_feed.draw()
 
             line_feed.draw()
@@ -437,6 +459,36 @@ class Field_Commission_Panel:
                 npc_draw_count += 1
                 if npc_draw_count % 6 == 0:
                     line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+
+    def adjust_send_vehicle(self, commision_capacity_int: int):
+        """
+        调整派遣载具
+        Keyword arguments:
+        commision_capacity_int -- 需要的载具运量
+        """
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            now_capacity = 0
+
+            # 绘制可派遣载具
+            info_draw_2 = draw.NormalDraw()
+            info_draw_2.text = _("\n可派遣载具（需要运量{0}/{1}）：\n\n").format(commision_capacity_int, now_capacity)
+            info_draw_2.width = self.width
+            info_draw_2.draw()
 
             line_feed.draw()
             line_feed.draw()
