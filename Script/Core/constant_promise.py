@@ -615,6 +615,8 @@ class Premise:
     """ 时间_当前 当前是早安问候时间（玩家醒来时间之后，动态权重50+超时分钟数 * 5） """
     NOT_MORIING_SALUTATION_TIME = "not_morning_salutation_time"
     """ 时间_当前 当前不是早安问候时间（玩家醒来时间之后） """
+    BEFORE_MORNING_SALUTATION_TIME = "before_morning_salutation_time"
+    """ 时间_当前 当前是早安问候时间之前（玩家醒来时间之前） """
     NIGHT_SALUTATION_TIME = "night_salutation_time"
     """ 时间_当前 当前是晚安问候时间（计划睡觉时间之后，权重50） """
     NOT_NIGHT_SALUTATION_TIME = "not_night_salutation_time"

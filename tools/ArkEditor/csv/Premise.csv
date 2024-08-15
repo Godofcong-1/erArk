@@ -308,6 +308,7 @@ time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
 morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来时间之后，动态权重50+超时分钟数
 not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来时间之后）
+before_morning_salutation_time,BEFORE_MORNING_SALUTATION_TIME,时间_当前,当前是早安问候时间之前（玩家醒来时间之前）
 night_salutation_time,NIGHT_SALUTATION_TIME,时间_当前,当前是晚安问候时间（计划睡觉时间之后，权重50）
 not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是晚安问候时间（计划睡觉时间之后）
 still_30_minutes_before_end,STILL_30_MINUTES_BEFORE_END,时间_当前,距离行动结束时间还有至少30分钟
@@ -344,6 +345,7 @@ t_unnormal_5_6,T_UNNORMAL_5_6,属性_异常状态,交互对象5异常或6异常
 t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
 unnormal_567,UNNORMAL_567,属性_异常状态,自身5或6或7异常
 t_normal_256_or_unconscious_flag,T_NORMAL_256_OR_UNCONSCIOUS_FLAG,属性_异常状态,交互对象256正常或无意识
+t_normal_56_or_unconscious_flag,T_NORMAL_56_OR_UNCONSCIOUS_FLAG,属性_异常状态,交互对象56正常或无意识
 t_unnormal_567,T_UNNORMAL_567,属性_异常状态,交互对象5或6或7异常
 normal_all_except_special_hypnosis,NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS,属性_异常状态,没有任何异常的普通状态或被空气或体控催眠中
 

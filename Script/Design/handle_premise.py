@@ -562,6 +562,30 @@ def handle_not_morning_salutation_time(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.BEFORE_MORNING_SALUTATION_TIME)
+def handle_morning_salutation_time(character_id: int) -> int:
+    """
+    当前是早安问候时间之前（玩家醒来时间之前）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    now_time_hour, now_time_minute = now_time.hour, now_time.minute
+    # 中午12点后不再进行早安问候
+    if now_time_hour >= 12:
+        return 0
+    # 玩家的醒来时间
+    pl_character_data = cache.character_data[0]
+    plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+    wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+    # print(f"debug {character_data.name}进行玩家的醒来前提判定，当前时间为{now_time}，计划醒来时间为{pl_character_data.action_info.plan_to_wake_time}")
+    if now_time_hour < wake_time_hour or (now_time_hour == wake_time_hour and now_time_minute < wake_time_minute):
+        return 50
+    return 0
+
 @add_premise(constant_promise.Premise.NIGHT_SALUTATION_TIME)
 def handle_night_salutation_time(character_id: int) -> int:
     """

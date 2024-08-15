@@ -1480,12 +1480,15 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
             handle_premise.handle_assistant_morning_salutation_on(character_id) and
             handle_premise.handle_morning_salutation_flag_0(character_id)
         ):
-            # 玩家醒来时间
-            pl_character_data = cache.character_data[0]
-            judge_wake_up_time = game_time.get_sub_date(minute=-30, old_date=pl_character_data.action_info.wake_time)
             # 角色醒来时间
             start_time = character_data.behavior.start_time
             end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+            # 玩家醒来时间
+            pl_character_data = cache.character_data[0]
+            plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+            wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+            # 正确的醒来时间是end_time的时间中小时和分钟被替换为玩家醒来时间的小时和分钟
+            judge_wake_up_time = end_time.replace(hour=wake_time_hour, minute=wake_time_minute)
             # 如果角色的行动结束时间在玩家醒来时间之后，则将行动结束时间设为玩家醒来时间
             # 通过判定行动时间来限制只触发一次
             if game_time.judge_date_big_or_small(end_time, judge_wake_up_time) and character_data.behavior.duration == 480:

@@ -267,8 +267,10 @@ class Assistant_Panel:
             plan_to_wake_time = character_data.action_info.plan_to_wake_time
             now_time_hour, now_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
             now_time_text = _("当前预定早安服务时间为：{0}:{1}\n\n").format(str(now_time_hour).rjust(2,'0'), str(now_time_minute).rjust(2,'0'))
+            now_time_text += _("除非太累了等特殊情况，助理干员会在该时间之前醒来，并前往博士位置\n")
             now_time_text += _("如果这个时间博士还没醒来，助理干员会来到博士床前，悄悄进行早安问候，然后一直等待到博士醒来为止\n")
             now_time_text += _("如果这个时间博士已经醒来，助理干员会直接前往博士身边，进行早安服务后离开\n")
+            now_time_text += _("\n○同居状态下，如果助理干员提前醒来，也有可能提前进行早安服务\n")
             now_time_draw = draw.NormalDraw()
             now_time_draw.text = now_time_text
             now_time_draw.width = window_width
