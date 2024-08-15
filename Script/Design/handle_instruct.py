@@ -1959,6 +1959,7 @@ def handle_end_h():
     _("唱歌"),
     {
         constant_promise.Premise.NOT_H,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_singing():
@@ -1994,6 +1995,7 @@ def handle_singing():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_INSTRUMENT,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_play_instrument():
@@ -2029,6 +2031,7 @@ def handle_play_instrument():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_MULTIMEDIA_ROOM,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_watch_movie():
@@ -2072,6 +2075,7 @@ def handle_play_water():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_play_chess():
@@ -2087,6 +2091,7 @@ def handle_play_chess():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_play_mahjong():
@@ -2102,6 +2107,7 @@ def handle_play_mahjong():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74}
 )
 def handle_play_cards():
