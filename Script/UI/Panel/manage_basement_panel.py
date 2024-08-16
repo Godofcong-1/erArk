@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import basement, attr_calculation
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import see_character_info_panel
+from Script.UI.Panel import manage_vehicle_panel, see_character_info_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -132,6 +132,7 @@ class Manage_Basement_Panel:
             _("文职部"):_("[招募系统]"),
             _("访客区"):_("[邀请访客系统]"),
             _("机库"):_("[外勤委托系统]"),
+            _("机库"):_("[载具管理系统]"),
             _("疗养庭院"):_("[农业系统]"),
             }
 
@@ -337,7 +338,7 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
@@ -353,6 +354,8 @@ class Manage_Basement_Panel:
             now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
         elif _("外勤委托系统") in son_panel:
             now_panel = field_commission_panel.Field_Commission_Panel(self.width)
+        elif _("载具管理系统") in son_panel:
+            now_panel = manage_vehicle_panel.Manage_Vehicle_Panel(self.width)
         elif _("农业系统") in son_panel:
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
         now_panel.draw()

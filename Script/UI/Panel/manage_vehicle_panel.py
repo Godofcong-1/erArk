@@ -17,6 +17,15 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def update_basement_vehicle_data():
+    """
+    更新基地载具数据
+    """
+    vehicle_data = game_config.config_vehicle
+    for vehicle_id in vehicle_data:
+        if vehicle_id not in cache.rhodes_island.vehicles:
+            cache.rhodes_island.vehicles[vehicle_id] = [0, 0]
+
 
 class Manage_Vehicle_Panel:
     """
@@ -43,6 +52,9 @@ class Manage_Vehicle_Panel:
 
         title_text = _("载具管理")
         commission_type_list = [_("常规载具"), _("特殊载具")]
+
+        # 更新基地载具数据
+        update_basement_vehicle_data()
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -80,7 +92,7 @@ class Manage_Vehicle_Panel:
             # 载具数量
             self.vehicle_count = 0
             for vehicle_id in cache.rhodes_island.vehicles:
-                self.vehicle_count += cache.rhodes_island.vehicles[vehicle_id]
+                self.vehicle_count += cache.rhodes_island.vehicles[vehicle_id][0]
             facility_info_text = ""
             facility_info_text += _("○载具用于给执行外勤委托的干员提供交通和其他方面的辅助，提高委托效率\n")
             facility_info_text += _("○当前机库等级：{0}，载具数量：{1}/{2}\n").format(now_level, self.vehicle_count, vehicle_num_limit)
@@ -92,9 +104,8 @@ class Manage_Vehicle_Panel:
             line = draw.LineDraw("+", self.width)
             line.draw()
 
-
             # 绘制提示信息
-            info_text_list = [_("载具名称"), _("持有数量"), _("载具速度"), _("运载量"), _("特殊效果(未实装)")]
+            info_text_list = [_("载具名称"), _("外勤中数量/总持有量"), _("载具速度"), _("运载量"), _("特殊效果(未实装)")]
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
@@ -126,10 +137,11 @@ class Manage_Vehicle_Panel:
                 vehicle_speed = str(vehicle_data.speed)
                 vehicle_capacity = str(vehicle_data.capacity)
                 vehicle_special = vehicle_data.special
-                vehicle_count = cache.rhodes_island.vehicles.get(vehicle_id, 0)
+                vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
+                vehicle_count_str = str(cache.rhodes_island.vehicles[vehicle_id][1]) + "/" + str(cache.rhodes_island.vehicles[vehicle_id][0])
                 text_width = int(self.width / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
-                vehicle_text = f"{vehicle_name.center(str_text_width + extra_width_count,'　')}{str(vehicle_count).center(text_width,' ')}{vehicle_speed.center(text_width,' ')}{vehicle_capacity.center(text_width,' ')}{vehicle_special.center(str_text_width,'　')}"
+                vehicle_text = f"{vehicle_name.center(str_text_width + extra_width_count,'　')}{vehicle_count_str.center(text_width,' ')}{vehicle_speed.center(text_width,' ')}{vehicle_capacity.center(text_width,' ')}{vehicle_special.center(str_text_width,'　')}"
 
                 # 可以进行的，绘制为按钮
                 vehicle_draw = draw.LeftButton(
@@ -190,7 +202,7 @@ class Manage_Vehicle_Panel:
             info_draw.text = _("\n载具名称：{0}").format(vehicle_name)
             info_draw.text += _("\n载具速度：{0}").format(vehicle_speed)
             info_draw.text += _("\n运载量：{0}").format(vehicle_capacity)
-            info_draw.text += _("\n购入价格：{0}").format(vehicle_price)
+            info_draw.text += _("\n购入价格：{0}（出售价格为购入的0.8倍）").format(vehicle_price)
             info_draw.text += _("\n特殊效果：{0}").format(vehicle_special)
             info_draw.text += _("\n介绍：{0}").format(vehicle_description)
             info_draw.width = self.width
@@ -217,9 +229,8 @@ class Manage_Vehicle_Panel:
                 buy_vehicle_draw.draw()
                 return_list.append(buy_vehicle_draw.return_text)
             
-            # 如果有载具，绘制出售按钮
-            cache.rhodes_island.vehicles.setdefault(vehicle_id, 0)
-            if cache.rhodes_island.vehicles[vehicle_id] > 0:
+            # 如果有空闲载具，绘制出售按钮
+            if cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1] > 0:
                 sell_vehicle_draw = draw.CenterButton(
                     _("【出售载具】"),
                     _("\n【出售载具】"),
@@ -253,8 +264,7 @@ class Manage_Vehicle_Panel:
         # 购买载具
         if cache.rhodes_island.materials_resouce[1] >= vehicle_price:
             cache.rhodes_island.materials_resouce[1] -= vehicle_price
-            cache.rhodes_island.vehicles.setdefault(vehicle_id, 0)
-            cache.rhodes_island.vehicles[vehicle_id] += 1
+            cache.rhodes_island.vehicles[vehicle_id][0] += 1
             self.vehicle_count += 1
             info_draw.text = _("\n花费 {0} 龙门币购买了一个 {1}\n").format(vehicle_price, vehicle_data.name)
         else:
@@ -270,12 +280,12 @@ class Manage_Vehicle_Panel:
         """
 
         vehicle_data = game_config.config_vehicle[vehicle_id]
-        vehicle_price = vehicle_data.price
+        vehicle_price = vehicle_data.price * 0.8
         # 出售载具
         cache.rhodes_island.materials_resouce[1] += vehicle_price
-        cache.rhodes_island.vehicles[vehicle_id] -= 1
+        cache.rhodes_island.vehicles[vehicle_id][0] -= 1
         self.vehicle_count -= 1
         info_draw = draw.WaitDraw()
         info_draw.width = window_width
-        info_draw.text = _("\n出售了一个 {0}，获得了 {1}龙门币\n").format(vehicle_data.name, vehicle_price)
+        info_draw.text = _("\n出售了一个 {0}，获得了 {1} 龙门币\n").format(vehicle_data.name, vehicle_price)
         info_draw.draw()

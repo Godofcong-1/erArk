@@ -565,12 +565,11 @@ def handle_manage_agriculture():
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
         constant_promise.Premise.IN_GARAGE,
-        constant_promise.Premise.TO_DO,
     })
 def handle_manage_vehicle():
     """处理管理载具指令"""
-    from Script.UI.Panel import manage_vehicle
-    now_draw = manage_vehicle.Manage_Vehicle_Panel(width)
+    from Script.UI.Panel import manage_vehicle_panel
+    now_draw = manage_vehicle_panel.Manage_Vehicle_Panel(width)
     now_draw.draw()
 
 

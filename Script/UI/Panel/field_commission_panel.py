@@ -88,6 +88,9 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif now_text[0] == "e":
         item_name = game_config.config_experience[item_id].name
         item_type = item_name
+        # 如果是奖励，则只显示大类
+        if demand_or_reward:
+            item_type = _("经验")
         now_have_item_num = sum(cache.character_data[character_id].experience[item_id] for character_id in send_npc_list)
     
     # 需求
@@ -126,6 +129,9 @@ def judge_field_commission_finish():
     """
     判断外勤委托是否完成
     """
+
+    import random
+
     now_time = cache.game_time
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -144,6 +150,16 @@ def judge_field_commission_finish():
                 cache.character_data[character_id].sp_flag.field_commission = 0
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
+            # 载具回收
+            send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
+            for vehicle_id in send_vehicle_list:
+                # 20%概率载具损坏
+                if random.randint(1, 5) == 1:
+                    cache.rhodes_island.vehicles[vehicle_id][0] += -1
+                    cache.rhodes_island.vehicles[vehicle_id][1] += -1
+                    draw_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
+                else:
+                    cache.rhodes_island.vehicles[vehicle_id][1] -= 1
             draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
@@ -174,8 +190,8 @@ class Field_Commission_Panel:
         """ 绘制的文本列表 """
         self.send_npc_list = []
         """ 派遣人员列表 """
-        self.send_vehicle_list = []
-        """ 派遣载具列表 """
+        self.send_vehicle_dict = {}
+        """ 派遣载具字典 """
 
     def draw(self):
         """绘制对象"""
@@ -312,11 +328,12 @@ class Field_Commission_Panel:
 
         # 派遣人员与载具
         self.send_npc_list = []
-        self.send_vehicle_list = []
+        self.send_vehicle_dict = {}
 
         while 1:
             # 是否满足条件
-            is_satisfy = False
+            all_satisfy = True
+            # 获取需求
             demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
             commision_demand = demand_return_list[2]
             deman_satify = demand_return_list[0]
@@ -345,15 +362,34 @@ class Field_Commission_Panel:
                 chara_name = chara_data.name
                 info_draw_2_text += f"  {chara_name}"
             info_draw_2_text += _("\n\n派遣载具：")
-            for vehicle_id in self.send_vehicle_list:
+            now_capacity = 0 # 当前运载量
+            for vehicle_id in self.send_vehicle_dict:
                 vehicle_name = game_config.config_vehicle[vehicle_id].name
-                info_draw_2_text += f"  {vehicle_name}"
+                info_draw_2_text += f"  {vehicle_name} * {self.send_vehicle_dict[vehicle_id]}"
+                now_capacity += game_config.config_vehicle[vehicle_id].capacity * self.send_vehicle_dict[vehicle_id]
+            info_draw_2_text += _("  总运载量：{0}").format(now_capacity)
             info_draw_2_text += _("\n\n是否满足需求：")
-            if len(self.send_npc_list) >= commision_data.people and deman_satify:
-                info_draw_2_text += _("是")
-                is_satisfy = True
+            # 人数需求
+            info_draw_2_text += _("人数需求：")
+            if len(self.send_npc_list) >= commision_data.people:
+                info_draw_2_text += "√"
             else:
-                info_draw_2_text += _("否")
+                all_satisfy = False
+                info_draw_2_text += "X"
+            # 载具需求
+            info_draw_2_text += _("  载具需求：")
+            if now_capacity >= commision_capacity_int:
+                info_draw_2_text += "√"
+            else:
+                all_satisfy = False
+                info_draw_2_text += "X"
+            # 其他需求
+            info_draw_2_text += _("  其他需求：")
+            if deman_satify:
+                info_draw_2_text += "√"
+            else:
+                all_satisfy = False
+                info_draw_2_text += "X"
             info_draw_2 = draw.NormalDraw()
             info_draw_2.text = info_draw_2_text
             info_draw_2.width = self.width
@@ -393,7 +429,7 @@ class Field_Commission_Panel:
                 cmd_func=self.send_commision,
                 args=(commision_id,),
             )
-            if is_satisfy:
+            if all_satisfy:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
 
@@ -482,13 +518,83 @@ class Field_Commission_Panel:
             line = draw.LineDraw("-", self.width)
             line.draw()
 
-            now_capacity = 0
-
             # 绘制可派遣载具
             info_draw_2 = draw.NormalDraw()
-            info_draw_2.text = _("\n可派遣载具（需要运量{0}/{1}）：\n\n").format(commision_capacity_int, now_capacity)
+            info_draw_2.text = _("\n可派遣载具：\n\n")
             info_draw_2.width = self.width
             info_draw_2.draw()
+
+            for vehicle_cid in cache.rhodes_island.vehicles:
+                # 如果没有可以派遣的载具，则不绘制
+                vehicle_count = cache.rhodes_island.vehicles[vehicle_cid][0] - cache.rhodes_island.vehicles[vehicle_cid][1]
+                if vehicle_count <= 0:
+                    continue
+                vehicle_data = game_config.config_vehicle[vehicle_cid]
+                vehicle_speed = str(vehicle_data.speed)
+                vehicle_capacity = str(vehicle_data.capacity)
+                vehicle_special = vehicle_data.special
+                now_choice_count = 0
+                if vehicle_cid in self.send_vehicle_dict:
+                    now_choice_count = self.send_vehicle_dict[vehicle_cid]
+
+                draw_text = _("[{0}] {1} 当前选择/可选择：{2}/{3} 速度：{4} 运载量：{5} 特殊效果：{6}\n").format(str(vehicle_cid).rjust(2,'0'), vehicle_data.name, now_choice_count, vehicle_count, vehicle_speed, vehicle_capacity, vehicle_special)
+                info_draw = draw.NormalDraw()
+                info_draw.text = draw_text
+                info_draw.width = self.width
+                info_draw.draw()
+
+                # 增加一辆
+                button_draw = draw.CenterButton(
+                    _("[增加一辆]"),
+                    f"\n{vehicle_cid}+1",
+                    self.width / 6,
+                    cmd_func=self.add_this_vehicle,
+                    args=vehicle_cid,
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                # 减少一辆
+                button_draw = draw.CenterButton(
+                    _("[减少一辆]"),
+                    f"\n{vehicle_cid}-1",
+                    self.width / 6,
+                    cmd_func=self.reduce_this_vehicle,
+                    args=vehicle_cid,
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                line_feed.draw()
+
+            now_capacity = 0 # 当前运载量
+            now_speed = 99 # 当前速度
+            now_effect = [] # 当前效果
+
+            # 遍历已选择的载具
+            for vehicle_id in self.send_vehicle_dict:
+                vehicle_data = game_config.config_vehicle[vehicle_id]
+                now_capacity += vehicle_data.capacity * self.send_vehicle_dict[vehicle_id]
+                now_speed = min(now_speed, vehicle_data.speed)
+                if vehicle_data.special != "无" and vehicle_data.special not in now_effect:
+                    now_effect.append(vehicle_data.special)
+            if now_speed == 99:
+                now_speed = 1
+
+            # 遍历效果，输出效果文本
+            effect_text = ""
+            for effect in now_effect:
+                effect_text += f"{effect} "
+
+            # 绘制当前载具的总信息
+            info_draw = draw.NormalDraw()
+            info_draw_text = _("\n")
+            info_draw_text += _("当前总运载量/需要运载量：{0}/{1}\n").format(now_capacity, commision_capacity_int)
+            info_draw_text += _("当前速度（取决于所有载具中最慢的）（未实装）：{0}\n").format(now_speed)
+            info_draw_text += _("其他效果（未实装）：{0}\n").format(effect_text)
+            info_draw.text = info_draw_text
+            info_draw.width = self.width
+            info_draw.draw()
 
             line_feed.draw()
             line_feed.draw()
@@ -509,6 +615,32 @@ class Field_Commission_Panel:
             self.send_npc_list.remove(character_id)
         else:
             self.send_npc_list.append(character_id)
+
+    def add_this_vehicle(self, vehicle_id: int):
+        """
+        增加一辆载具
+        Keyword arguments:
+        vehicle_id -- 载具id
+        """
+        if vehicle_id not in self.send_vehicle_dict:
+            self.send_vehicle_dict[vehicle_id] = 1
+        else:
+            self.send_vehicle_dict[vehicle_id] += 1
+        # 最大不会超过可派遣数量
+        vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1]
+        if self.send_vehicle_dict[vehicle_id] > vehicle_count:
+            self.send_vehicle_dict[vehicle_id] = vehicle_count
+
+    def reduce_this_vehicle(self, vehicle_id: int):
+        """
+        减少一辆载具
+        Keyword arguments:
+        vehicle_id -- 载具id
+        """
+        if vehicle_id in self.send_vehicle_dict:
+            self.send_vehicle_dict[vehicle_id] -= 1
+            if self.send_vehicle_dict[vehicle_id] <= 0:
+                self.send_vehicle_dict.pop(vehicle_id)
 
     def send_commision(self, commision_id: int):
         """
@@ -546,10 +678,20 @@ class Field_Commission_Panel:
         info_draw.draw()
 
         # 添加到进行中的委托
-        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time]
+        cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time, []]
         # 消耗资源
         get_commission_demand_and_reward(commision_id, self.send_npc_list, False, True)
         # 遍历派遣人员，设为派遣状态，并离线
         for character_id in self.send_npc_list:
             cache.character_data[character_id].sp_flag.field_commission = commision_id
             default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+        # 结算派遣的载具
+        now_vehicle_list = []
+        for vehicle_id in self.send_vehicle_dict:
+            cache.rhodes_island.vehicles[vehicle_id][1] += self.send_vehicle_dict[vehicle_id]
+            for i in range(self.send_vehicle_dict[vehicle_id]):
+                now_vehicle_list.append(vehicle_id)
+        cache.rhodes_island.ongoing_field_commissions[commision_id][2] = now_vehicle_list
+        # 清空派遣人员与载具
+        self.send_npc_list = []
+        self.send_vehicle_dict = {}

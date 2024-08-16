@@ -926,10 +926,10 @@ class Rhodes_Island:
         """ 当前邀请进度 [0目标角色id, 1招募进度, 2招募效率百分比(如2.5)] """
 
         # 机库
-        self.ongoing_field_commissions: Dict[int, Tuple[List, datetime.datetime]] = {}
-        """ 进行中的外勤委托，委托id:0干员id列表，1返回时间 """
-        self.vehicles: Dict[int, int] = {}
-        """ 载具id:数量 """
+        self.ongoing_field_commissions: Dict[int, Tuple[List, datetime.datetime, List]] = {}
+        """ 进行中的外勤委托，委托id:0干员id列表，1返回时间，2使用的载具id列表 """
+        self.vehicles: Dict[int, Tuple[int, int]] = {}
+        """ 载具id:[0数量，1外勤中数量] """
 
         # 教育区
 
