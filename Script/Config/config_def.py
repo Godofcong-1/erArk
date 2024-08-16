@@ -476,6 +476,8 @@ class InstructType:
     """ 指令类型id """
     name: str
     """ 名字 """
+    color: str
+    """ 颜色 """
 
 
 class Item:
