@@ -68,48 +68,340 @@ msgstr ""
 msgid "{Name}触发了对{TargetName}使用心控催眠-角色扮演的地文"
 msgstr ""
 
-#: .\data\talk\chara\0001_阿米娅.csv:6
-msgid "和{TargetName}一起聊了一下最近新加入的干员的情况"
-msgstr ""
-
 #: .\data\talk\chara\0001_阿米娅.csv:7
-msgid "和{TargetName}谈了谈物资的储备问题"
+msgid "\n“博士，您还有许多事情需要处理。现在还不能休息哦。”\n{Name}轻声提醒道。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:8
-msgid "“我已经不是小孩了，博士……”\n正被抚摸脑袋的阿米娅嘟着嘴巴说道。"
+msgid "\n“罗德岛全舰正处于通常航行状态。{PlayerName}，整理下航程信息吧？”\n{TargetName}望向这边。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:9
-msgid "“凯尔希医生教导过我，工作的时候一定要保持全神贯注......嗯，全神贯注。\n……请问，有什么事吗……博士？”\n阿米娅转头看向你的方向。"
+msgid "\n与{TargetName}闲聊着，\n“虽然这可能是我一厢情愿的想法，但我希望罗德岛能成为大家的第二个故乡......”\n{TargetName}的声音越来越小。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:10
-msgid "“博士，您工作辛苦了。”\n说着，{TargetName}替你捏了捏肩膀。"
+msgid "\n“稍微休息一下吧，博士，已经工作了很久了。”\n{Name}端来一杯咖啡，担忧地看着你。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:11
-msgid "“作为罗德岛的领导者我还有很多不成熟的地方，希望{PlayerNickName}您能更多地为我指明前进的方向。”"
+msgid "\n“如果可以的话，请分给我一点工作吧，我想成为{PlayerName}的依靠。”\n{TargetName}认真地望着这边。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:12
-msgid "“嘿嘿，{PlayerNickName}，悄悄告诉你一件事——我重新开始练小提琴了。”\n将双唇贴到你的耳朵附近，{Name}对你说着悄悄话。"
+msgid "\n“{PlayerName}，休息好了吗？还觉得累的话，不用勉强的。有我在呢。”\n{TargetName}认真地望着这边。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:13
-msgid "“欸嘿嘿，{PlayerNickName}~{PlayerNickName}~\n\n欸？没什么，真的没什么啦……只是想叫一声你的名字而已……”\n{Name}开心的独自哼着小曲。"
+msgid "\n处理公务的时候，抬头正好对上了{TargetName}目光，\n“博士，辛苦了！累了的话请休息一会儿吧。”\n{TargetName}露出了微笑。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:14
-msgid "“对了，博士，有时间可以一起去音乐室吗，我最近有练习好小提琴哦~真的——”\n蹦蹦跳跳来到你身前的{Name}将双手背在身后。"
+msgid "\n和{TargetName}闲聊着，{TargetName}突然换上了严肃的口吻，\n“{PlayerName}，请......稍微听我说几句话，好吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:15
-msgid "“碰，碰着耳朵了……博士……”{TargetName}有些害羞的说道。"
+msgid "\n“有什么想喝的吗，{PlayerName}？”\n{Name}在门外探了探头，走了进来。"
 msgstr ""
 
 #: .\data\talk\chara\0001_阿米娅.csv:16
-msgid "“欸嘿嘿，{PlayerNickName}想摸一摸耳朵吗？”\n{TargetName}主动将脑袋凑了过来，"
+msgid "\n{Name}在门外探了探头，走了进来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:17
+msgid "\n{Name}在门外探了探头，脚步轻快地走了进来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:18
+msgid "\n“在忙吗，{PlayerName}？”\n{Name}在门外探出身子望了望，慢慢走了进来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:19
+msgid "\n{Name}轻轻敲了敲门，走了进来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:20
+msgid "\n门被轻轻撞开了，{Name}抱着一大堆文件走了进来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:21
+msgid "\n门被轻轻推开了，{Name}拿着几张简历走了进来。\n“博士，有新的干员加入我们了。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:22
+msgid "\n门被轻轻撞开了，{Name}抱着一大堆文件走了进来，小小的身体几乎完全被堆积的文件挡住了，只露出一点点耳朵，真怀疑她能不能看清路。\n“{PlayerName}，这两份档案一会儿麻烦你审核一下了，有许多新干员加入了罗德岛，我们可不能让他们失望。”\n放下了小山一般的文件后，{Name}这么说着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:23
+msgid "\n“博士，你在忙吗？不陪我聊天也没关系的。我也有必须今天处理好的工作，做完以后，一起去吃饭吧。”\n{Name}抱着一堆文件从门外走进来，向这边打了个招呼。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:24
+msgid "\n戳了戳{TargetName}，\n“欸？{PlayerName}？”\n{TargetName}眨了眨眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:25
+msgid "\n戳了戳{TargetName}，\n“欸嘿嘿......”\n{TargetName}好像走神了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:26
+msgid "\n捏了捏{TargetName}的小脸，\n“欸？{PlayerName}？”\n{TargetName}眨了眨眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:27
+msgid "\n捏了捏{TargetName}的小脸，\n“欸嘿嘿......”\n{TargetName}好像走神了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:28
+msgid "\n揉了揉{TargetName}的小脸，\n“博士，有什么想说的话吗？”\n{TargetName}望着这边微笑着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:29
+msgid "\n揉了揉{TargetName}的小脸，\n“嗯......{PlayerName}。”\n{TargetName}望着这边微笑着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:30
+msgid "\n谈论了稍微有些严肃的话题，气氛冷下来了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:31
+msgid "\n谈论了稍微有些严肃的话题，{TargetName}眼睛闪烁着不知道在想些什么。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:32
+msgid "\n谈论了最近感染者暴动的事件，{TargetName}脸上的笑容也消失了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:33
+msgid "\n{TargetName}稍微有点走神，\n“嗯？博士，你刚刚说什么？”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:34
+msgid "\n{TargetName}稍微有点走神，\n“诶诶？博士请再说一遍。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:35
+msgid "\n和{TargetName}随意聊着近况。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:36
+msgid "\n和{TargetName}随意聊着有关音乐的事情。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:37
+msgid "\n和{TargetName}随意聊着近况。\n{TargetName}眼神闪烁着望向这边。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:38
+msgid "\n“我不会辜负大家的！”\n{Name}斗志昂扬地回答道。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:39
+msgid "\n“是，我明白了。”\n{Name}点了点头。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:40
+msgid "\n“跟上吗？我明白了。”{Name}回答道。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:41
+msgid "\n“需要帮忙吗？我知道了。”\n{Name}抖了抖耳朵，跟了上来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:42
+msgid "\n“博士，我在这里。”\n{Name}挥了挥手，小跑着向这边过来了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:43
+msgid "\n“好的，博士，我马上就来！”\n{Name}向摄像头挥了挥手。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:44
+msgid "\n“无论多么艰难的任务，只要有博士在，就一定能完成，我一直这样坚信着！”\n向{Name}拜托一起处理公务后，{Name}很高兴地答应了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:45
+msgid "\n“博士需要我帮忙吗？好的，我会努力的！”\n向{Name}拜托一起处理公务后，{Name}很高兴地答应了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:46
+msgid "\n“辛苦了，博士。让我去处理善后吧。”\n向{Name}拜托一起处理公务后，{Name}很高兴地答应了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:47
+msgid "\n“博士，你还好吗？要去休息一下吗，我扶你去吧。不用担心，我挺好的，只要你休息好就可以了。”\n向{Name}拜托一起处理公务后，{Name}对你的身体状况表示了担忧。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:48
+msgid "\n“那一天所看到的光景，想要呐喊却无法发出声音的绝望......希望能把这些，永远藏在记忆的最深处......”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:49
+msgid "\n“恨火在蔓延。我会试着浇灭它，不管......要尝试多少次。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:50
+msgid "\n“能不能......在同一场战斗中运用不同的力量？”{Name}思考着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:51
+msgid "\n“这把剑渴望着报复......我不能放纵它。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:52
+msgid "\n“赤霄的影子萦绕着我的剑。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:53
+msgid "\n“陈长官的剑术......在这把武器里流淌。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:54
+msgid "\n“诶诶？没关系的，博士，您不需要为此道歉。”\n{TargetName}向这边连连摆手。\n看起来道歉很有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:55
+msgid "\n“一点点失误......不，不是博士的错。是我本可以做得更好。”\n{TargetName}向这边连连摆手。\n看起来道歉很有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:56
+msgid "\n“我......我没事的！请振作起来，博士！”\n{TargetName}对道歉感到很惊讶，还反过来试图安慰你。\n看起来道歉很有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:57
+msgid "\n“不应该是这样......博士......”\n{TargetName}低着头。\n道歉没有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:58
+msgid "\n“博士......那种事情，无论如何也不可以......”\n{TargetName}低着头。\n道歉没有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:59
+msgid "\n“博士......下次请不要再做那种事情了......”\n{TargetName}低着头。\n道歉没有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:60
+msgid "\n“‘如果战斗不可避免......’这是以前我最信任的人教给我的话。”\n{TargetName}平静地望着这边，似乎已经完全失望了。\n道歉没有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:61
+msgid "\n“唔......”\n{TargetName}只是看着这边，似乎已经完全失望了。\n道歉没有效果。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:62
+msgid "\n“我的戒指看起来不一样了？果然瞒不住博士......的确，有一个戒指在之前碎掉了。但是，不用担心，凯尔希医生已经帮我换了个新的。和我那时晕倒是不是有关系？博士......”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:63
+msgid "\n“在这一次行动中，我们没有得到任何商业收益，甚至付出了很多......但许多事情是没法用商业价值衡量的。罗德岛从来不是一个只为盈利而生的企业，这片大地也不只需要物质层面上的药物。”\n在谈论着上次行动的时候，{TargetName}发出了这样的见解。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:64
+msgid "\n“切尔诺伯格的整合运动......在事情结束以后再去指责他们做了什么，又有什么用？想想践踏他们的人，虐待他们的人，屠杀他们的人......仇恨滋生仇恨。有些事从一开始就不该发生。”\n在谈论着整合运动的时候，{TargetName}发出了这样的见解。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:65
+msgid "\n“到底要什么时候，蔓延在大地上的怒火才会平息呢......”\n{TargetName}似乎走神了，自言自语地说着话。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:66
+msgid "\n“嗯，又有戒指碎掉了。凯尔希医生说，再强大的器具，也承受不了这么强烈的情感。坏掉的戒指......我不想摘掉它。它是约束，也是祝福。我能利用好它的。”\n{TargetName}一边抚摸着手上的戒指一边回答着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:67
+msgid "\n“凯尔希医生见证了那么多死亡，不得不看着爱的人一个个离开，这......太痛苦了。我长大了，可以替她多分担一点。她不用和过去一样独自行走了。博士，我想让她知道，我们和她在一起。”\n{TargetName}认真地盯着你的眼睛，一字一句地说着。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:68
+msgid "\n“博士......我在看书。没什么，就是突然想起来，特蕾西娅小姐为我读过这本，我还不知道结局呢。为什么......在流泪？可能是因为......这个故事真的很温暖。”\n{TargetName}翻动着书页，双眼却没有盯着书本，似乎陷入了回忆。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:69
+msgid "\n与{TargetName}一同登上了甲板眺望着。\n“又一年过去了，罗德岛还在它的航线上呜呜地航行着。{PlayerName}，我很喜欢这个夜晚，喜欢到想把它放在脑海最深处藏起来。谢谢你，能像这样陪着我。明年的这一天，我们一定还能一起度过。”\n{TargetName}抬着头，眼睛里闪烁着星空。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:70
+msgid "\n与{TargetName}一同登上了甲板眺望着。\n“漫漫长夜之后，我们会目睹黎明。”\n{TargetName}抬着头，呆呆地望着暗淡的夜空。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:71
+msgid "\n轻轻拍打着{TargetName}的背部，怀中的{TargetName}似乎平静了下来。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:72
+msgid "\n{TargetName}向你抱怨着工作中的不顺心，很快，她重新露出了笑脸。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:73
+msgid "\n“咖啡吗博士？好的！马上来！”\n{TargetName}立刻起身去准备咖啡了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:74
+msgid "\n“咖啡？好的！要加糖吗博士？”\n{TargetName}立刻起身去准备咖啡了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:75
+msgid "\n“累了吗博士？稍等几分钟，咖啡马上就好！”\n{TargetName}立刻起身去准备咖啡了。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:76
+msgid "\n“博士在看什么书呢？{BookName}？”\n{TargetName}悄悄贴到你耳边。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:77
+msgid "\n{TargetName}站在你身后，踮着脚越过你的肩膀看向书页。\n“{BookName}？看起来好难......不过我会好好努力的，博士！努力让大家......”\n{TargetName}露出了坚定的神色。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:78
+msgid "\n{TargetName}站在你身后，踮着脚看向书页。\n“咦？{BookName}？这本我读过！啊......”\n{TargetName}意识到自己的声音有些大，突然压低了声音。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:79
+msgid "\n读书的时候，{TargetName}只是静静的盯着这边发呆，偶尔有目光交汇，{TargetName}就会露出微笑。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:80
+msgid "\n读书的时候，{TargetName}只是静静的盯着这边发呆，偶尔有目光交汇，{TargetName}就会红着脸躲开视线。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:81
+msgid "\n读书的时候，{TargetName}只是目光热切地望着这边，{TargetName}的眼中闪着幸福。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:83
+msgid "“我已经不是小孩了，博士……”\n正被抚摸脑袋的阿米娅嘟着嘴巴说道。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:84
+msgid "“凯尔希医生教导过我，工作的时候一定要保持全神贯注......嗯，全神贯注。\n……请问，有什么事吗……博士？”\n阿米娅转头看向你的方向。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:85
+msgid "“博士，您工作辛苦了。”\n说着，{TargetName}替你捏了捏肩膀。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:86
+msgid "“作为罗德岛的领导者我还有很多不成熟的地方，希望{PlayerNickName}您能更多地为我指明前进的方向。”"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:87
+msgid "“嘿嘿，{PlayerNickName}，悄悄告诉你一件事——我重新开始练小提琴了。”\n将双唇贴到你的耳朵附近，{Name}对你说着悄悄话。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:88
+msgid "“欸嘿嘿，{PlayerNickName}~{PlayerNickName}~\n\n欸？没什么，真的没什么啦……只是想叫一声你的名字而已……”\n{Name}开心的独自哼着小曲。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:89
+msgid "“对了，博士，有时间可以一起去音乐室吗，我最近有练习好小提琴哦~真的——”\n蹦蹦跳跳来到你身前的{Name}将双手背在身后。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:90
+msgid "“碰，碰着耳朵了……博士……”{TargetName}有些害羞的说道。"
+msgstr ""
+
+#: .\data\talk\chara\0001_阿米娅.csv:91
+msgid "“欸嘿嘿，{PlayerNickName}想摸一摸耳朵吗？”\n{TargetName}主动将脑袋凑了过来"
 msgstr ""
 
 #: .\data\talk\chara\0003_凯尔希.csv:6
