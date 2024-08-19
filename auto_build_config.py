@@ -277,24 +277,25 @@ for i in ui_text_file_list:
     now_path = os.path.join(ui_text_dir,i)
     build_ui_text(now_path,i)
 
-event_file_list = os.listdir(event_dir)
 event_list = []
-for i in event_file_list:
-    if i.split(".")[1] != "json":
-        continue
-    now_event_path = os.path.join(event_dir, i)
-    with open(now_event_path, "r", encoding="utf-8") as event_file:
-        now_event_data = json.loads(event_file.read())
-        for event_id in now_event_data:
-            now_event = now_event_data[event_id]
-            event_list.append(now_event)
-            now_event_text = now_event["text"]
-            if now_event_text not in msgData and not now_event_text in built:
-                config_po += f"#: Event:{event_id}\n"
-                config_po += f'msgid "{now_event_text}"\n'
-                config_po += 'msgstr ""\n\n'
-                built.append(now_event_text)
-                msgData.add(now_event_text)
+for root, dirs, files in os.walk(event_dir):
+    for file in files:
+        # 跳过非json文件
+        if file.split(".")[-1] != "json":
+            continue
+        now_event_path = os.path.join(root, file)
+        with open(now_event_path, "r", encoding="utf-8") as event_file:
+            now_event_data = json.loads(event_file.read())
+            for event_id in now_event_data:
+                now_event = now_event_data[event_id]
+                event_list.append(now_event)
+                now_event_text = now_event["text"]
+                if now_event_text not in msgData and not now_event_text in built:
+                    config_po += f"#: Event:{event_id}\n"
+                    config_po += f'msgid "{now_event_text}"\n'
+                    config_po += 'msgstr ""\n\n'
+                    built.append(now_event_text)
+                    msgData.add(now_event_text)
 config_data["Event"] = {}
 config_data["Event"]["data"] = event_list
 config_data["Event"]["gettext"] = {}
