@@ -3926,6 +3926,28 @@ def handle_normal_2_3_4(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.NORMAL_2_5_6)
+def handle_normal_2_5_6(character_id: int) -> int:
+    """
+    256正常的普通状态
+    \n包括2:临盆、产后、监禁
+    \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if (
+        handle_normal_2(character_id) and 
+        handle_normal_5(character_id) and 
+        handle_normal_6(character_id)
+        ):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.NORMAL_1)
 def handle_normal_1(character_id: int) -> int:
     """

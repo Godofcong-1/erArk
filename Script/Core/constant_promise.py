@@ -681,6 +681,8 @@ class Premise:
     """ 属性_异常状态 124正常的普通状态 """
     NORMAL_2_3_4 = "normal_2_3_4"
     """ 属性_异常状态 234正常的普通状态 """
+    NORMAL_2_5_6 = "normal_2_5_6"
+    """ 属性_异常状态 256正常的普通状态 """
     UNNORMAL = "unnormal"
     """ 属性_异常状态 有特殊需求的异常状态 """
     UNNORMAL_2 = "unnormal_2"
