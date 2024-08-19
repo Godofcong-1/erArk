@@ -501,6 +501,7 @@ def handle_borrow_book():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_74,
+        constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.PLACE_FURNITURE_GE_2,
     })
 def handle_read_book():
