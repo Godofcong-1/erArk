@@ -14562,7 +14562,7 @@ msgstr "\\n{Name} triggered the event of ejaculation"
 
 #: .\data\talk\system\second.csv:17
 msgid "\\n{Name}触发了大量射精的地文"
-msgstr "\\n{Name} triggered the event of big ejaculation"
+msgstr "\\n{Name} triggered the event of large ejaculation"
 
 #: .\data\talk\system\second.csv:18
 msgid "\\n{Name}触发了超大量射精的地文"

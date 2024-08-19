@@ -12314,10 +12314,10 @@ msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
 msgstr "Don't display|Display Hypnosis type|Display Hypnosis type and progress"
 
 msgid "本番合意"
-msgstr "Sex Agreement"
+msgstr "Insertion Agreement"
 
 msgid "同意避孕套下的本番行为"
-msgstr "Allows sex with condom"
+msgstr "Allows inserting with condom"
 
 msgid "避孕中出合意"
 msgstr "Birth Controlled Creampie Agreement"
