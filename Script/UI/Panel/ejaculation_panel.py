@@ -32,18 +32,21 @@ def common_ejaculation():
     random_weight = random.uniform(0.8, 1.2)
 
     # 如果已经没有精液了，则不射精
-    if character_data.semen_point + character_data.tem_extra_semen_point <= 0:
+    if character_data.semen_point + character_data.tem_extra_semen_point <= 2:
         return _("只流出了些许前列腺液，已经射不出精液了"),0
     else:
         # 基础射精值，小中多射精区分
         if character_data.h_state.orgasm_level[3] % 3 == 0:
             semen_count = int(10 * random_weight)
+            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("射精，射出了") + str(semen_count) + _("ml精液")
         if character_data.h_state.orgasm_level[3] % 3 == 1:
             semen_count = int(25 * random_weight)
+            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
         if character_data.h_state.orgasm_level[3] % 3 == 2:
             semen_count = int(45 * random_weight)
+            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
 
         # 射精量不高于剩余精液值
@@ -189,42 +192,37 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         target_character_id = character_data.target_character_id
     target_data: game_type.Character = cache.character_data[target_character_id]
 
-
     semen_text, semen_count = common_ejaculation()
 
-    # 正常射精时
-    if character_data.h_state.body_item[13][1] == False:
+    if semen_count > 0:
+        # 正常射精时
+        if character_data.h_state.body_item[13][1] == False:
+            cache.shoot_position = part_cid
+            # 更新被射精污浊数据
+            update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
+            # 计算精液流动
+            calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
+            # 获取射精文本
+            if part_type == 0:
+                part_name = game_config.config_body_part[part_cid].name
+                now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
+            elif part_type == 1:
+                cloth_text = game_config.config_clothing_type[part_cid].name
+                now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
+        # 戴着避孕套射精时
+        else:
+            cache.shoot_position = 0
+            # 将射精量转化为避孕套中的精液量
+            character_data.h_state.condom_count[0] += 1
+            character_data.h_state.condom_count[1] += semen_count
+            # 去掉避孕套状态
+            character_data.h_state.body_item[13][1] = False
+            # 获取射精文本
+            now_text = _("在避孕套里") + semen_text
 
-        cache.shoot_position = part_cid
-
-        # 更新被射精污浊数据
-        update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
-
-        # 计算精液流动
-        calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
-
-        # 获取射精文本
-        if part_type == 0:
-            part_name = game_config.config_body_part[part_cid].name
-            now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
-        elif part_type == 1:
-            cloth_text = game_config.config_clothing_type[part_cid].name
-            now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
-    
-    # 戴着避孕套射精时
     else:
-
-        cache.shoot_position = 0
-
-        # 将射精量转化为避孕套中的精液量
-        character_data.h_state.condom_count[0] += 1
-        character_data.h_state.condom_count[1] += semen_count
-        # 去掉避孕套状态
-        character_data.h_state.body_item[13][1] = False
-
-        # 获取射精文本
-        now_text = _("在避孕套里") + semen_text
-
+        # 没有射精时
+        now_text = character_data.name + semen_text
 
     # 绘制射精文本
     if draw_flag:

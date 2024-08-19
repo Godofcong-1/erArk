@@ -1112,14 +1112,14 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
         # 非H模式下结算玩家的射精值减少
         if not now_character_data.sp_flag.is_h:
-            # 上次射精时间距离现在超过一小时则射精值减少
+            # 上次射精时间距离现在超过30分钟则射精值减少
             last_time = now_character_data.action_info.last_eaj_add_time
             if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
                 now_character_data.eja_point -= true_add_time * 10
                 now_character_data.eja_point = max(now_character_data.eja_point,0)
 
         # 玩家缓慢恢复精液量
-        now_character_data.semen_point += int(true_add_time / 6)
+        now_character_data.semen_point += int(true_add_time / 20)
         now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
 
         # 结算玩家源石技艺的理智值消耗
