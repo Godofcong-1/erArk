@@ -1442,7 +1442,8 @@ def refresh_temp_semen_max():
     """
     character_data: game_type.Character = cache.character_data[0]
     now_semen = character_data.semen_point
-    if now_semen:
+    # 需要睡眠时长至少大于等于6h
+    if now_semen and character_data.behavior.duration >= 360:
         # 最大额外精液量为正常上限的4倍
         character_data.tem_extra_semen_point += int(now_semen / 2)
         character_data.tem_extra_semen_point = min(character_data.tem_extra_semen_point, character_data.semen_point_max * 4)
