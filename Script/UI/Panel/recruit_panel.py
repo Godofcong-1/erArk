@@ -60,7 +60,10 @@ class Recruit_Panel:
             all_info_draw.draw()
 
             for recruit_line_id in cache.rhodes_island.recruit_line:
-                now_text = _("\n {0}号招募进度：{1}").format(recruit_line_id+1, cache.rhodes_island.recruit_line[recruit_line_id][0])
+                # 招募进度，保留一位小数
+                now_dregree = cache.rhodes_island.recruit_line[recruit_line_id][0]
+                now_dregree = round(now_dregree, 1)
+                now_text = _("\n {0}号招募进度：{1}%").format(recruit_line_id+1, now_dregree)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 

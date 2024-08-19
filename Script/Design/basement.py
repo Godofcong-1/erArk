@@ -272,6 +272,14 @@ def update_work_people():
     for all_cid in game_config.config_work_type:
         cache.rhodes_island.all_work_npc_set[all_cid] = set()
 
+    # 清空各流水线中的角色
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+        cache.rhodes_island.recruit_line[recruit_line_id][2].clear()
+    for assembly_line_id in cache.rhodes_island.assembly_line:
+        cache.rhodes_island.assembly_line[assembly_line_id][1].clear()
+    cache.rhodes_island.herb_garden_line[0][1].clear()
+    cache.rhodes_island.green_house_line[0][1].clear()
+
     # 遍历所有干员，将有职位的干员加入对应职位集合
     cache.npc_id_got.discard(0)
     for chara_id in cache.npc_id_got:
