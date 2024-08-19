@@ -50,6 +50,8 @@ class All_Npc_Position_Panel:
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
+        # 读取缓存中的筛选与移动类型
+        self.select_type = cache.all_npc_position_panel_select_type
         self.move_type = cache.all_npc_position_panel_move_type
         while 1:
             title_draw.draw()
@@ -237,11 +239,13 @@ class All_Npc_Position_Panel:
     def select_type_change(self, new_type: int):
         """筛选类型切换"""
         self.select_type = new_type
+        cache.all_npc_position_panel_select_type = new_type
         if new_type == 5:
             ask_name_panel = panel.AskForOneMessage()
             ask_name_panel.set(_("输入要筛选的关键词"), 10)
             now_name = ask_name_panel.draw()
             self.name_search = now_name
+            cache.all_npc_position_panel_select_type = 0
 
     def move(self, character_id: int):
         """移动"""
