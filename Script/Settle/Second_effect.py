@@ -602,7 +602,7 @@ def handle_down_middle_hit_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_hit = 30
+    sub_hit = 50
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -638,7 +638,7 @@ def handle_down_middle_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 50
+    sub_mana = 100
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -711,7 +711,7 @@ def handle_down_large_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 150
+    sub_mana = 200
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return

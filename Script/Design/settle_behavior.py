@@ -670,12 +670,16 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
     # 检测射精
     if character_id == 0:
         if character_data.eja_point >= character_data.eja_point_max:
-            if character_data.h_state.orgasm_level[3] % 3 == 0:
+            # 如果已经没有精液了则只能进行普通射精
+            if handle_premise.handle_pl_semen_le_2(0):
                 character_data.second_behavior[1009] = 1
-            elif character_data.h_state.orgasm_level[3] % 3 == 1:
-                character_data.second_behavior[1010] = 1
-            elif character_data.h_state.orgasm_level[3] % 3 == 2:
-                character_data.second_behavior[1010] = 1
+            else:
+                if character_data.h_state.orgasm_level[3] % 3 == 0:
+                    character_data.second_behavior[1009] = 1
+                elif character_data.h_state.orgasm_level[3] % 3 == 1:
+                    character_data.second_behavior[1010] = 1
+                elif character_data.h_state.orgasm_level[3] % 3 == 2:
+                    character_data.second_behavior[1011] = 1
             character_data.eja_point = 0
             now_draw = ejaculation_panel.Ejaculation_Panel(width)
             now_draw.draw()

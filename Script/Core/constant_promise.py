@@ -2233,6 +2233,8 @@ class Premise:
     """ H_射精与绝顶 交互对象本次H中W绝顶次数>3 """
     T_TURN_M_ORGASM_G_3 = "t_turn_m_orgasm_g_3"
     """ H_射精与绝顶 交互对象本次H中M绝顶次数>3 """
+    PL_SEMEN_LE_2 = "pl_semen_le_2"
+    """ H_射精与绝顶 玩家当前精液量小于等于2ml """
 
     NPC_ACTIVE_H = "npc_active_h"
     """ H_逆推 自己正在主动H """

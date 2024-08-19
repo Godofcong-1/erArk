@@ -13077,6 +13077,21 @@ def handle_t_turn_m_orgasm_g_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PL_SEMEN_LE_2)
+def handle_pl_semen_le_2(character_id: int) -> int:
+    """
+    玩家当前精液量小于等于2ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point <= 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NPC_ACTIVE_H)
 def handle_npc_active_h(character_id: int) -> int:
     """
