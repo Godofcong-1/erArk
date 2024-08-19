@@ -47,7 +47,7 @@ class All_Npc_Position_Panel:
         else:
             draw_width = self.width / 2
         self.handle_panel = panel.PageHandlePanel([], FindDraw, 60, 3, self.width, 1, 1, 0)
-        select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("按名称筛选")]
+        select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
         self.move_type = cache.all_npc_position_panel_move_type
@@ -84,7 +84,7 @@ class All_Npc_Position_Panel:
             for select_type_id in range(len(select_type_list)):
                 if select_type_id == self.select_type:
                     select_type_text = f"▶{select_type_list[select_type_id]}          "
-                    if select_type_id == 3:
+                    if select_type_id == 5:
                         select_type_text = f"▶{select_type_list[select_type_id]}:{self.name_search}          "
                     now_draw = draw.NormalDraw()
                     now_draw.text = select_type_text
@@ -92,9 +92,9 @@ class All_Npc_Position_Panel:
                     now_draw.width = self.width / 3
                     now_draw.draw()
                 else:
-                    draw_text = f"  {select_type_list[select_type_id]}     "
+                    draw_text = f"   {select_type_list[select_type_id]}   "
                     now_draw_width = min(len(draw_text) * 2, self.width / 2.5)
-                    now_draw = draw.LeftButton(
+                    now_draw = draw.CenterButton(
                         draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=self.select_type_change, args=(select_type_id,)
                     )
                     now_draw.draw()
@@ -120,9 +120,9 @@ class All_Npc_Position_Panel:
                     now_draw.width = self.width / 3
                     now_draw.draw()
                 else:
-                    draw_text = f"  {move_type_text}     "
+                    draw_text = f"  {move_type_text}  "
                     now_draw_width = min(len(draw_text) * 2, self.width / 3)
-                    now_draw = draw.LeftButton(
+                    now_draw = draw.CenterButton(
                         draw_text, move_type_text, now_draw_width, cmd_func=self.move_type_change, args=(move_type_id,)
                     )
                     now_draw.draw()
@@ -143,8 +143,14 @@ class All_Npc_Position_Panel:
                         # 访客筛选
                         elif self.select_type == 2 and npc_id not in cache.rhodes_island.visitor_info:
                             continue
+                        # 未陷落筛选
+                        elif self.select_type == 3 and handle_premise.handle_self_fall(npc_id):
+                            continue
+                        # 已陷落筛选
+                        elif self.select_type == 4 and handle_premise.handle_self_not_fall(npc_id):
+                            continue
                         # 姓名筛选
-                        elif self.select_type == 3 and self.name_search not in character_data.name:
+                        elif self.select_type == 5 and self.name_search not in character_data.name:
                             continue
 
                     # 角色属性与信息
@@ -231,7 +237,7 @@ class All_Npc_Position_Panel:
     def select_type_change(self, new_type: int):
         """筛选类型切换"""
         self.select_type = new_type
-        if new_type == 3:
+        if new_type == 5:
             ask_name_panel = panel.AskForOneMessage()
             ask_name_panel.set(_("输入要筛选的关键词"), 10)
             now_name = ask_name_panel.draw()
