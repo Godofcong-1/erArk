@@ -1746,6 +1746,7 @@ def handle_collect():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_do_h():
