@@ -20765,75 +20765,75 @@ msgid "{Name}触发了饮精绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:34
-msgid "{Name}触发了快乐刻印1的地文"
+msgid "{Name}由于强烈的快感经历，开始变得更加喜欢性行为。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:35
-msgid "{Name}触发了快乐刻印2的地文"
+msgid "{Name}由于承受了超出身体极限的快乐，变得难以拒绝{PlayerName}的请求。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:36
-msgid "{Name}触发了快乐刻印3的地文"
+msgid "{Name}由于获得了足以出卖灵魂的快乐，已经无法回头了。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:37
-msgid "{Name}触发了屈服刻印1的地文"
+msgid "{Name}逐渐能够忍受羞耻行为，愿意尝试更多的事情。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:38
-msgid "{Name}触发了屈服刻印2的地文"
+msgid "{Name}的观念似乎发生了改变，{PlayerName}的想法成为了优先事项。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:39
-msgid "{Name}触发了屈服刻印3的地文"
+msgid "{Name}决定将全身心奉献给{PlayerName}，已经无法回头了。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:40
-msgid "{Name}触发了苦痛刻印1的地文"
+msgid "{Name}伤痕累累的身体，被打上了痛苦的标记"
 msgstr ""
 
 #: .\data\talk\system\second.csv:41
-msgid "{Name}触发了苦痛刻印2的地文"
+msgid "{Name}的身体被烙印上了虐待的记忆，只要靠近{PlayerName}就会全身发疼得主动地向{PlayerName}求饶"
 msgstr ""
 
 #: .\data\talk\system\second.csv:42
-msgid "{Name}触发了苦痛刻印3的地文"
+msgid "{Name}经历了足以摧毁灵魂的疼痛，在翻来覆去的挣扎失败后，只能奄奄一息地躺在那里。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:43
-msgid "{Name}触发了时姦刻印1的地文"
+msgid "{Name}经过多次的异常经历，已经有了些许应对的方法。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:44
-msgid "{Name}触发了时姦刻印2的地文"
+msgid "{Name}在一瞬间获得多重绝顶的记忆，促使她开始期待起被未知的存在玩弄的感觉。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:45
-msgid "{Name}触发了时姦刻印3的地文"
+msgid "{Name}完全适应了不定时的时姦行为，甚至兴奋地做好了随时被一瞬间蹂躏到倒地不起的准备。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:46
-msgid "{Name}触发了恐怖刻印1的地文"
+msgid "{Name}的身体记住了这份恐惧，本能地害怕起和{PlayerName}有关的事情。\"
 msgstr ""
 
 #: .\data\talk\system\second.csv:47
-msgid "{Name}触发了恐怖刻印2的地文"
+msgid "{Name}开始时常做和那时一样的噩梦，混沌，幻觉，已经接近崩溃的边缘。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:48
-msgid "{Name}触发了恐怖刻印3的地文"
+msgid "{Name}所遭受的痛已烙印于灵魂之上，{TargetName}所遭受的苦将伴随记忆永在。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:49
-msgid "{Name}触发了反发刻印1的地文"
+msgid "{Name}的心中埋下了仇恨的种子，在这种情况下恐怕很难与她结缔良好的关系。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:50
-msgid "{Name}触发了反发刻印2的地文"
+msgid "{Name}无法容忍{PlayerName}的存在，刻意地开始避开与{PlayerName}有关的事情。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:51
-msgid "{Name}触发了反发刻印3的地文"
+msgid "{Name}完全将{PlayerName}视为了仇人，但如果能够善用某种力量，就仍然存在逆转的可能性。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:52
@@ -20849,27 +20849,27 @@ msgid "{Name}触发了失去A处女的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:55
-msgid "干员{TargetName}获得无觉刻印1的口上"
+msgid "{Name}虽然已经没有相关的记忆，但是身体记住了快乐的感觉。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:56
-msgid "干员{TargetName}获得无觉刻印2的口上"
+msgid "{Name}最近有些苦恼，因为自己正在变得越来越难拒绝{PlayerName}的性骚扰。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:57
-msgid "干员{TargetName}获得无觉刻印3的口上"
+msgid "{Name}的身体渴望着爱抚，贪婪到仿佛这些恋人一样的触感真的出现过一般。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:58
-msgid "干员{TargetName}获得无觉刻印4的口上"
+msgid "{Name}已经搞不懂自己的身体了，即使寻求了医疗帮助却时常饥渴难耐至难以拒绝{PlayerName}。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:59
-msgid "干员{TargetName}获得无觉刻印5的口上"
+msgid "{Name}渴望性爱的新身体背叛了曾经清醒的意志，逐渐模糊了认知与虚构出来的幻觉之间的界限。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:60
-msgid "干员{TargetName}获得无觉刻印6的口上"
+msgid "{Name}残留的理智不断地警告自己已经陷入深渊，但{Name}已经不在乎这些了。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:62
@@ -20905,311 +20905,475 @@ msgid "{Name}触发了七重绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:72
-msgid "\n{Name}触发了乳头夹持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:73
-msgid "\n{Name}触发了阴蒂夹持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:74
-msgid "\n{Name}触发了震动棒持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:75
-msgid "\n{Name}触发了肛门振动棒持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:76
-msgid "\n{Name}触发了搾乳机持续使用中的地文，共榨出了{MilkMl}毫升母乳"
-msgstr ""
-
-#: .\data\talk\system\second.csv:77
-msgid "\n{Name}触发了采尿器持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:78
-msgid "\n{Name}触发了眼罩持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:79
-msgid "\n{Name}触发了肛门拉珠持续使用中的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:80
 msgid "\n{Name}触发了利尿剂持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:81
+#: .\data\talk\system\second.csv:73
 msgid "\n{Name}触发了安眠药持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:82
+#: .\data\talk\system\second.csv:74
 msgid "\n{Name}触发了排卵促进药持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:83
+#: .\data\talk\system\second.csv:75
 msgid "\n{Name}触发了事前避孕药持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:84
+#: .\data\talk\system\second.csv:76
 msgid "\n{Name}触发了事后避孕药持续使用中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:86
+#: .\data\talk\system\second.csv:78
 msgid "\n{Name}触发了发交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:87
+#: .\data\talk\system\second.csv:79
 msgid "\n{Name}触发了阴茎蹭脸中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:88
+#: .\data\talk\system\second.csv:80
 msgid "\n{Name}触发了口交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:89
+#: .\data\talk\system\second.csv:81
 msgid "\n{Name}触发了乳交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:90
+#: .\data\talk\system\second.csv:82
 msgid "\n{Name}触发了腋交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:91
+#: .\data\talk\system\second.csv:83
 msgid "\n{Name}触发了手交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:92
+#: .\data\talk\system\second.csv:84
 msgid "\n{Name}触发了抽插阴道中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:93
+#: .\data\talk\system\second.csv:85
 msgid "\n{Name}触发了抽插子宫中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:94
+#: .\data\talk\system\second.csv:86
 msgid "\n{Name}触发了抽插后穴中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:95
+#: .\data\talk\system\second.csv:87
 msgid "\n{Name}触发了抽插尿道中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:96
+#: .\data\talk\system\second.csv:88
 msgid "\n{Name}触发了腿交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:97
+#: .\data\talk\system\second.csv:89
 msgid "\n{Name}触发了足交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:98
+#: .\data\talk\system\second.csv:90
 msgid "\n{Name}触发了尾交中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:99
+#: .\data\talk\system\second.csv:91
 msgid "\n{Name}触发了阴茎蹭角中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:100
+#: .\data\talk\system\second.csv:92
 msgid "\n{Name}触发了阴茎蹭耳朵中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:101
+#: .\data\talk\system\second.csv:93
 msgid "\n{Name}触发了素股中的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:103
+#: .\data\talk\system\second.csv:95
 msgid "\n{Name}触发了获得[思慕]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:104
+#: .\data\talk\system\second.csv:96
 msgid "\n{Name}触发了获得[恋慕]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:105
+#: .\data\talk\system\second.csv:97
 msgid "\n{Name}触发了获得[恋人]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:106
+#: .\data\talk\system\second.csv:98
 msgid "\n{Name}触发了获得[爱侣]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:107
+#: .\data\talk\system\second.csv:99
 msgid "\n{Name}触发了获得[屈从]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:108
+#: .\data\talk\system\second.csv:100
 msgid "\n{Name}触发了获得[驯服]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:109
+#: .\data\talk\system\second.csv:101
 msgid "\n{Name}触发了获得[宠物]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:110
+#: .\data\talk\system\second.csv:102
 msgid "\n{Name}触发了获得[奴隶]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:112
+#: .\data\talk\system\second.csv:104
 msgid "\n{Name}触发了获得[受精]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:113
+#: .\data\talk\system\second.csv:105
 msgid "\n{Name}触发了受精失败的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:114
+#: .\data\talk\system\second.csv:106
 msgid "\n{Name}触发了获得[妊娠]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:115
+#: .\data\talk\system\second.csv:107
 msgid "\n{Name}触发了获得[临盆]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:116
+#: .\data\talk\system\second.csv:108
 msgid "\n{Name}触发了生产前的对话的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:117
+#: .\data\talk\system\second.csv:109
 msgid "\n{Name}触发了生产后的对话的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:118
+#: .\data\talk\system\second.csv:110
 msgid "\n{Name}触发了生产后的对话+获得[产后]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:119
+#: .\data\talk\system\second.csv:111
 msgid "\n{Name}触发了获得[育儿]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:120
+#: .\data\talk\system\second.csv:112
 msgid "\n{Name}触发了育儿完成的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:121
+#: .\data\talk\system\second.csv:113
 msgid "\n{Name}触发了幼女长成萝莉的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:122
+#: .\data\talk\system\second.csv:114
 msgid "\n{Name}触发了萝莉长成少女的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:124
+#: .\data\talk\system\second.csv:116
 msgid "\n{Name}触发了初次见面的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:125
+#: .\data\talk\system\second.csv:117
 msgid "\n{Name}触发了每日打招呼的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:127
+#: .\data\talk\system\second.csv:119
 msgid "\n{Name}触发了新周目告别的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:129
+#: .\data\talk\system\second.csv:121
 msgid "\n{Name}触发了被选为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:130
+#: .\data\talk\system\second.csv:122
 msgid "\n{Name}触发了不再为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:131
+#: .\data\talk\system\second.csv:123
 msgid "\n{Name}触发了关闭智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:132
+#: .\data\talk\system\second.csv:124
 msgid "\n{Name}触发了开启智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:133
+#: .\data\talk\system\second.csv:125
 msgid "\n{Name}触发了要求前往办公室的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:134
+#: .\data\talk\system\second.csv:126
 msgid "\n{Name}触发了关闭辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:135
+#: .\data\talk\system\second.csv:127
 msgid "\n{Name}触发了开启辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:136
+#: .\data\talk\system\second.csv:128
 msgid "\n{Name}触发了关闭送饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:137
+#: .\data\talk\system\second.csv:129
 msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:138
+#: .\data\talk\system\second.csv:130
 msgid "\n{Name}触发了开启亲手做午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:139
+#: .\data\talk\system\second.csv:131
 msgid "\n{Name}触发了开启亲手做三餐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:140
+#: .\data\talk\system\second.csv:132
 msgid "\n{Name}触发了关闭早安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:141
+#: .\data\talk\system\second.csv:133
 msgid "\n{Name}触发了开启早上叫起床服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:142
+#: .\data\talk\system\second.csv:134
 msgid "\n{Name}触发了开启早安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:143
+#: .\data\talk\system\second.csv:135
 msgid "\n{Name}触发了开启早安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:144
+#: .\data\talk\system\second.csv:136
 msgid "\n{Name}触发了关闭晚安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:145
+#: .\data\talk\system\second.csv:137
 msgid "\n{Name}触发了开启晚上催睡觉服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:146
+#: .\data\talk\system\second.csv:138
 msgid "\n{Name}触发了开启晚安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:147
+#: .\data\talk\system\second.csv:139
 msgid "\n{Name}触发了开启晚安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:148
+#: .\data\talk\system\second.csv:140
 msgid "\n{Name}触发了关闭同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:149
+#: .\data\talk\system\second.csv:141
 msgid "\n{Name}触发了开启同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:150
+#: .\data\talk\system\second.csv:142
 msgid "\n{Name}触发了关闭助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:151
+#: .\data\talk\system\second.csv:143
 msgid "\n{Name}触发了开启助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:153
+#: .\data\talk\system\second.csv:145
 msgid "\n{Name}触发了获得[已催眠·浅]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:154
+#: .\data\talk\system\second.csv:146
 msgid "\n{Name}触发了获得[已催眠·深]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:155
+#: .\data\talk\system\second.csv:147
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:7
+msgid "在激烈的摇晃下，勉强夹在{Name}小巧的乳头上的铃铛叮铃叮铃地可爱地响了起来。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:8
+msgid "在激烈的摇晃下，夹在{Name}小巧的乳头上的铃铛叮铃叮铃地可爱地响了起来。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:9
+msgid "在激烈的摇晃下，夹在{Name}娇嫩的乳头上的铃铛叮铃叮铃地可爱地响了起来。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:11
+msgid "在激烈的摇晃下，夹在{Name}肥大的乳头上的铃铛叮铃叮铃地可爱地响了起来。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:12
+msgid "挂在敏感的乳头上的重物一阵摇晃，引得乳头夹开始拉扯起{Name}的乳尖。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:13
+msgid "垂下漂亮的装饰物的乳夹，在{Name}的身上诱人的晃动，刺激得{Name}发出甜蜜的喘息。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:14
+msgid "正被乳头夹调教着胸部的{Name}，从肿胀的乳头上感受到了刺激的快感。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:15
+msgid "{Name}湿滑的阴蒂被可爱的阴蒂夹调教着，忍不住肿胀地又流出了汁水。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:16
+msgid "闪闪发光的重物像是在强调自己的存在一样，在摇晃中一下又一下地砸在{Name}潮湿的阴唇上亲吻起来。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:17
+msgid "{Name}敏感的小豆豆被阴蒂夹紧紧地夹住，即使没有做什么，每一次轻微地颤抖都产生了强烈的快感。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:18
+msgid "不时地被股间的阴蒂夹分散注意力的{Name}很难集中精神维持当前的动作。\n“滋，滋滋……”夹在湿润的小豆豆上的阴蒂夹，开始左右甩起重物惩罚分心了的{Name}。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:19
+msgid "“嗡，嗡嗡。”被设置好的震动棒开始自动来回切换起震动功率，帮助{Name}放松小穴。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:20
+msgid "不时地从下腹部传来了一阵阵不稳定的震动快感，让{Name}本能地夹紧了肉穴抵抗。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:21
+msgid "插在还没经过仔细润滑的肉穴里面的震动棒，发出一阵阵清晰的嗡嗡声，诱导着{Name}分泌更多的爱液。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:22
+msgid "插在早已洪水泛滥的淫穴中的震动棒，发出一阵阵粘稠响亮的水声，让{Name}发抖的小穴中不停地流出色情的汁水。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:23
+msgid "插入的震动棒填满了{Name}的小穴，时刻提醒着{Name}正在被他人使用道具调教肉穴的事实。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:24
+msgid "“嗡，嗡嗡……”插在{Name}蜜穴中的震动棒持续地运作着，用{Name}的喘息强调自己的存在。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:25
+msgid "当{Name}稍微放松下来的时候，插在股间的震动棒持续地按摩起了抽搐着的肉穴。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:26
+msgid "“嗡。嗡。嗡。”比插入正面的穴的震动棒，带有更多可以刺激肉壁的凸起的肛门震动棒，有力地按压着{Name}的肛穴。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:27
+msgid "插入肛门的震动棒强烈地拨动起深处的肠肉，引得{Name}不时地收缩起腰腹忍耐。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:28
+msgid "插在肛门中的振动棒左右甩动着像是尾巴一样从{Name}的肛门里面伸出来，从上面点点洒出了{Name}的体液。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:29
+msgid "“咕……嘶……”装在{Name}乳尖上的两个榨乳器安静地运作着，将鲜榨的乳汁挤进储存罐之后，又贪婪地继续吮吸起{Name}的发抖的乳尖。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:30
+msgid "使用真空紧紧地吮吸住乳尖的榨乳机，一缩一放地拉扯着{Name}的乳头，如同给母牛挤奶一样工作着。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:31
+msgid "如同永远喂不饱的婴儿一样，贪婪的榨乳机执拗地吮吸着{Name}的乳尖。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:32
+msgid "{Name}小小的乳尖被榨乳机紧紧地吸住，仿佛即使吸不出多少奶水也要激烈地欺负{Name}。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:33
+msgid "{Name}不够丰满的胸部榨乳机勉强吸住，似乎在抱怨着乳房尺寸一样，拉扯着还没发育好的乳尖教育。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:34
+msgid "{Name}发育得刚好的乳球被榨乳机吸住乳尖，强劲的吸力拉扯着一直保持勃起的乳头。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:35
+msgid "{Name}丰满的乳球被榨乳机完美地吸住乳尖，内部的吸力一松一紧地尝试从巨大地勃起的乳头中榨取乳汁。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:36
+msgid "{Name}过分柔软的乳球完全陷进了真空的榨乳器中，从透明的玻璃中可以看到，被吸到了最里面的肥大乳头正在被缩紧的橡胶管直接压榨着。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:37
+msgid "“嘶……滋滋。”榨乳机又抽成了真空，内部的橡胶管紧紧地吸在了{Name}勃起的乳头上摩擦。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:38
+msgid "插入尿道的玻璃管轻柔地转动，刺激着{Name}放松身体舒畅地接受排泄。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:39
+msgid "被遮住眼睛的{Name}，不安地抓紧了身边的东西。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:40
+msgid "无法使用眼睛确认周围情况的{Name}，尽可能地缩紧了身体想要保护自己。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:41
+msgid "{Name}早已习惯了看不清周围的感觉，好像是否带上眼罩对她来说，并没有什么太大的区别。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:42
+msgid "无法掌控的黑暗持续给{Name}带去了如同失重一般的不安感，迫使{Name}表现出了更多依赖的情绪。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:43
+msgid "一颗颗湿滑的珠子在{Name}的肠内缓慢的滚动，挤压，带来了绵密的快感。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:44
+msgid "珠子的重量压在了{Name}的肛门上，在身体动作下危险地一点点扩开{Name}的菊花。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:45
+msgid "“咕滋，滋。”已经掉出来的肛珠左右沉重地甩动着，连带着残留在肠内的珠子更加大幅度地碾压起了周围的软肉。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:46
+msgid "一股股热流从身体各处不断地汇聚到使用了利尿剂的{Name}小腹上，强烈的失禁感不断地刺激着{Name}。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:47
+msgid "小腹上酸胀的尿意持续地增强，让{Name}不住地下意识想要夹紧双腿憋尿。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:48
+msgid "在药物的作用下，{Name}静静地沉在梦乡之中，无法感知到外界的事情。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:49
+msgid "吃了安眠药的{Name}，胸口安静地上下起伏着睡得很沉的样子，偶尔嘟囔一下。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:50
+msgid "服用了排卵药物的{Name}的子宫已经做好了怀孕的准备，不时地在深处张开子宫小嘴。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:51
+msgid "在药物的刺激下，{Name}的子宫无意识地一阵阵抽搐，早已完成了排卵催促着{Name}寻求雄性的交配。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:52
+msgid "服用了事前避孕药的{Name}，已经对怀孕产生了一定的抗性。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:53
+msgid "{Name}的子宫在事前避孕药的持续影响下，迟钝地动作着。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:54
+msgid "服用了强效的事后避孕药的{Name}，身体深处的子宫一直像是受伤了一样微微地抽搐。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:55
+msgid "{Name}装载了精液的子宫，在事后避孕药的强效作用下早已失去了怀孕的能力，只能发疼地承受精液在体内流动的感觉。"
+msgstr ""
+
+#: .\data\talk\system\second_item.csv:56
+msgid "在温和的药物影响下，{Name}的子宫即使灌入了精液，也只能当作精液存储袋使用。"
 msgstr ""
 
 #: .\data\talk\system\see_attr.csv:6
