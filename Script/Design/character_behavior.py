@@ -930,7 +930,7 @@ def update_sleep():
             if cache.system_setting[3]:
                 handle_ability.gain_ability(character_id)
             # 清零H状态
-            character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+            character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
             # 清零催眠状态
             if character_data.sp_flag.unconscious_h >= 4:
                 character_data.sp_flag.unconscious_h = 0

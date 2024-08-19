@@ -994,6 +994,17 @@ class Rhodes_Island:
         """ 感染抑制剂浓缩液数量 """
 '''
 
+
+class Country:
+    """大地图国家数据"""
+
+    def __init__(self):
+        self.nation_reputation: Dict[int, int] = {}
+        """ 势力声望 """
+        self.country_treatment_progress: Dict[int, int] = {}
+        """ 国家矿石病治疗进度 """
+
+
 class System_Setting:
     """系统设置"""
 
@@ -1276,7 +1287,7 @@ class Cache:
         """ 所有npc位置面板筛选类型 """
         self.all_npc_position_panel_move_type: int = 0
         """ 所有npc位置面板移动类型 """
-        self.rhodes_island: Rhodes_Island = Rhodes_Island
+        self.rhodes_island: Rhodes_Island = Rhodes_Island()
         """ 罗德岛相关属性 """
         self.first_bonus: Dict[int, int] = {}
         """ 初期奖励 """
@@ -1285,6 +1296,8 @@ class Cache:
         # self.system_setting: System_Setting = System_Setting()
         self.system_setting: Dict[int, int] = {}
         """ 系统设定，见System_Setting.csv """
+        self.country: Country = Country()
+        """ 大地图国家数据 """
 
 class TargetChange:
     """交互对象角色变化结构体"""

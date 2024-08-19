@@ -297,6 +297,8 @@ config_commission_id_by_country: Dict[int, List] = {}
 """ 按国家划分的委托id """
 config_vehicle: Dict[int, config_def.Vehicle] = {}
 """ 载具数据 """
+config_reputation_level: Dict[int, config_def.Reputation_Level] = {}
+""" 声望等级数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1352,6 +1354,16 @@ def load_vehicle():
         config_vehicle[now_tem.cid] = now_tem
 
 
+def load_reputation_level():
+    """载入声望等级数据"""
+    now_data = config_data["Reputation_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Reputation_Level()
+        now_tem.__dict__ = tem_data
+        config_reputation_level[now_tem.cid] = now_tem
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1448,3 +1460,4 @@ def init():
     load_new_round_inherit()
     load_commission()
     load_vehicle()
+    load_reputation_level()

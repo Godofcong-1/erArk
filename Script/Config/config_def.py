@@ -663,6 +663,17 @@ class Reproduction_period:
     """ 日期类型(0安全1普通2危险3排卵) """
 
 
+class Reputation_Level:
+    """ 声望等级 """
+
+    cid: int
+    """ 声望等级cid """
+    name: str
+    """ 声望等级名 """
+    threshold: int
+    """ 声望阈值 """
+
+
 class Resouce:
     """ 各类基地使用资源一览 """
 

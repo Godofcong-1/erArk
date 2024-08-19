@@ -226,6 +226,9 @@ def input_load_save(save_id: str):
         now_draw.style = "warning"
         now_draw.draw()
 
+    # 更新大地图势力数据
+    loaded_dict["country"] = attr_calculation.get_country_reset(loaded_dict["country"])
+
     # 更新游戏地图
     update_count += update_map(loaded_dict)
     now_draw = draw.WaitDraw()

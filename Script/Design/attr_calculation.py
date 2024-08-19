@@ -171,9 +171,9 @@ def get_token_zero(token_dict) -> dict:
     return token_list
 
 
-def get_dirty_zero(old_dirty_data: game_type.DIRTY) -> dict:
+def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
     """
-    直接将初始污浊情况归0
+    重置污浊情况
     """
     dirty_data = old_dirty_data
 
@@ -201,9 +201,9 @@ def get_dirty_zero(old_dirty_data: game_type.DIRTY) -> dict:
 
     return dirty_data
 
-def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
+def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BODY_H_STATE:
     """
-    直接将H状态结构体归0
+    重置H状态结构体
     """
     h_state_data = old_h_state_data
     body_item_list = dirty_panel.body_item_list
@@ -237,7 +237,7 @@ def get_h_state_zero(old_h_state_data: game_type.BODY_H_STATE) -> dict:
     return h_state_data
 
 
-def get_first_record_zero() -> dict:
+def get_first_record_zero() -> game_type.FIRST_RECORD:
     """
     直接将初次状态记录结构体归0
     """
@@ -246,7 +246,7 @@ def get_first_record_zero() -> dict:
     return first_record_data
 
 
-def get_pl_ability_zero() -> dict:
+def get_pl_ability_zero() -> game_type.PLAYER_ABILITY:
     """
     直接将玩家能力结构体归0
     """
@@ -255,7 +255,7 @@ def get_pl_ability_zero() -> dict:
     return pl_ability_data
 
 
-def get_action_info_state_zero() -> dict:
+def get_action_info_state_zero() -> game_type.ACTION_INFO:
     """
     直接将行动信息结构体归0
     """
@@ -274,7 +274,7 @@ def get_action_info_state_zero() -> dict:
     return action_info_data
 
 
-def get_cloth_zero() -> dict:
+def get_cloth_zero() -> game_type.CLOTH:
     """
     遍历服装类型，将每个都设为空
     """
@@ -367,6 +367,24 @@ def get_rand_npc_birthday(age: int):
     if now_month < birthday.month or (now_month == birthday.month and now_day < birthday.day):
         birthday = game_time.get_sub_date(year=-1, old_date=birthday)
     return birthday
+
+
+def get_country_reset(country: game_type.Country) -> game_type.Country:
+    """
+    重置大地图国家数据
+    """
+    country_data = country
+
+    # 势力的相关数据
+    for nation_cid in game_config.config_nation:
+        if nation_cid not in country_data.nation_reputation:
+            country_data.nation_reputation[nation_cid] = 0
+    # 国家的相关数据
+    for country_cid in game_config.config_birthplace:
+        if country_cid not in country_data.country_treatment_progress:
+            country_data.country_treatment_progress[country_cid] = 0
+
+    return country_data
 
 
 def get_experience_level_weight(experience: int) -> int:

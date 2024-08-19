@@ -82,7 +82,7 @@ class SeeCharacterClothPanel:
                     now_text += f" {cloth_name}"
                     # 这里出现过BUG，所以加一层检测是否为空的判断
                     if len(target_character_data.dirty.cloth_semen) == 0:
-                        empty_dirty_data = attr_calculation.get_dirty_zero(target_character_data.dirty)
+                        empty_dirty_data = attr_calculation.get_dirty_reset(target_character_data.dirty)
                         target_character_data.dirty.cloth_semen = empty_dirty_data.cloth_semen
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:

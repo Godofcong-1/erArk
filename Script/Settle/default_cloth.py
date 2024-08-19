@@ -445,7 +445,7 @@ def handle_locker_to_wear(
     if len(character_data.dirty.cloth_locker_semen):
         character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
     else:
-        empty_dirty_data = attr_calculation.get_dirty_zero(character_data.dirty)
+        empty_dirty_data = attr_calculation.get_dirty_reset(character_data.dirty)
         character_data.dirty.cloth_semen = empty_dirty_data.cloth_semen
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)

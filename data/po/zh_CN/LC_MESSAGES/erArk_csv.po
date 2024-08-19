@@ -8080,6 +8080,42 @@ msgstr ""
 msgid "排卵日"
 msgstr ""
 
+#: .\data\csv\Reputation_Level.csv:6
+msgid "死仇"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:7
+msgid "敌对"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:8
+msgid "厌恶"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:9
+msgid "疏远"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:10
+msgid "轻视"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:11
+msgid "中立"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:12
+msgid "友好"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:14
+msgid "尊敬"
+msgstr ""
+
+#: .\data\csv\Reputation_Level.csv:15
+msgid "崇敬"
+msgstr ""
+
 #: .\data\csv\Resouce.csv:9
 msgid "龙门币"
 msgstr ""

@@ -3967,7 +3967,7 @@ def handle_dirty_reset(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
+    character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASSISTANT_RESET)
@@ -4087,8 +4087,8 @@ def handle_both_h_state_reset(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
-    target_data.h_state = attr_calculation.get_h_state_zero(target_data.h_state)
+    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
+    target_data.h_state = attr_calculation.get_h_state_reset(target_data.h_state)
     for orgasm in range(8):
         now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
         character_data.h_state.orgasm_level[orgasm] = now_data
@@ -4150,7 +4150,7 @@ def handle_chara_off_line(
     # 清零助理、污浊、H状态数据
     handle_assistant_reset(character_id, add_time, change_data, now_time)
     handle_dirty_reset(character_id, add_time, change_data, now_time)
-    character_data.h_state = attr_calculation.get_h_state_zero(character_data.h_state)
+    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
     # 清零跟随数据
     character_data.sp_flag.is_follow = 0
     # 从当前干员列表中移除
@@ -5605,7 +5605,7 @@ def handle_dirty_reset_in_shower(
         keep_data[body_cid] = body_dirty
 
     # 数据归零后再赋值
-    character_data.dirty = attr_calculation.get_dirty_zero(character_data.dirty)
+    character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
     character_data.dirty.body_semen[6] = keep_data[6]
     character_data.dirty.body_semen[7] = keep_data[7]
     character_data.dirty.body_semen[8] = keep_data[8]
