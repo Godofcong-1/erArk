@@ -5,7 +5,7 @@ Name,str,石棉,1,姓名：石棉
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,24,0,种族：萨弗拉
-Nation,int,111,0,势力：雷姆必拓
+Nation,int,91,0,势力：雷姆必拓
 Birthplace,int,9,0,出生地：雷姆必拓
 Hp,int,2000,0,初始体力：2000
 Mp,int,2500,0,初始气力：2500

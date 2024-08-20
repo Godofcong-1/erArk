@@ -6401,74 +6401,74 @@ msgid "行动预备组A6"
 msgstr ""
 
 #: .\data\csv\Nation.csv:16
-msgid "岁"
-msgstr ""
-
-#: .\data\csv\Nation.csv:18
-msgid "龙门近卫局"
-msgstr ""
-
-#: .\data\csv\Nation.csv:19
-msgid "鲤氏侦探事务所"
-msgstr ""
-
-#: .\data\csv\Nation.csv:20
-msgid "企鹅物流"
-msgstr ""
-
-#: .\data\csv\Nation.csv:22
 msgid "深海猎人"
 msgstr ""
 
-#: .\data\csv\Nation.csv:25
+#: .\data\csv\Nation.csv:21
 msgid "莱茵生命"
 msgstr ""
 
-#: .\data\csv\Nation.csv:28
+#: .\data\csv\Nation.csv:23
 msgid "红松骑士团"
 msgstr ""
 
-#: .\data\csv\Nation.csv:29
+#: .\data\csv\Nation.csv:24
 msgid "临光家族"
 msgstr ""
 
-#: .\data\csv\Nation.csv:30
+#: .\data\csv\Nation.csv:25
 msgid "无胄盟"
 msgstr ""
 
-#: .\data\csv\Nation.csv:32
-msgid "喀兰贸易"
-msgstr ""
-
-#: .\data\csv\Nation.csv:40
-msgid "乌萨斯学生自治团"
-msgstr ""
-
-#: .\data\csv\Nation.csv:43
+#: .\data\csv\Nation.csv:34
 msgid "格拉斯哥帮"
 msgstr ""
 
-#: .\data\csv\Nation.csv:44
+#: .\data\csv\Nation.csv:35
 msgid "深池"
 msgstr ""
 
-#: .\data\csv\Nation.csv:48
+#: .\data\csv\Nation.csv:37
+msgid "乌萨斯学生自治团"
+msgstr ""
+
+#: .\data\csv\Nation.csv:39
+msgid "喀兰贸易"
+msgstr ""
+
+#: .\data\csv\Nation.csv:42
+msgid "岁"
+msgstr ""
+
+#: .\data\csv\Nation.csv:44
+msgid "龙门近卫局"
+msgstr ""
+
+#: .\data\csv\Nation.csv:45
+msgid "鲤氏侦探事务所"
+msgstr ""
+
+#: .\data\csv\Nation.csv:46
+msgid "企鹅物流"
+msgstr ""
+
+#: .\data\csv\Nation.csv:50
 msgid "黑钢国际"
 msgstr ""
 
-#: .\data\csv\Nation.csv:49
+#: .\data\csv\Nation.csv:51
 msgid "彩虹小队"
 msgstr ""
 
-#: .\data\csv\Nation.csv:51
+#: .\data\csv\Nation.csv:53
 msgid "使徒"
 msgstr ""
 
-#: .\data\csv\Nation.csv:52
+#: .\data\csv\Nation.csv:54
 msgid "整合运动"
 msgstr ""
 
-#: .\data\csv\Nation.csv:53
+#: .\data\csv\Nation.csv:55
 msgid "深海教会"
 msgstr ""
 

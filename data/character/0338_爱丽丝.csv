@@ -5,7 +5,7 @@ Name,str,爱丽丝,1,姓名
 Sex,int,1,0,女
 Profession,int,4,0,术士
 Race,int,13,0,菲林
-Nation,int,161,0,维多利亚
+Nation,int,131,0,维多利亚
 Birthplace,int,13,0,维多利亚
 Hp,int,1100,0,初始体力
 Mp,int,1300,0,初始气力

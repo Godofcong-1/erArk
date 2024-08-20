@@ -5,7 +5,7 @@ Name,str,缄默德克萨斯,1,姓名
 Sex,int,1,0,女
 Profession,int,8,0,特种
 Race,int,20,0,鲁珀
-Nation,int,16,0,企鹅物流
+Nation,int,176,0,企鹅物流
 Birthplace,int,4,0,哥伦比亚
 Hp,int,1300,0,初始体力
 Mp,int,1100,0,初始气力

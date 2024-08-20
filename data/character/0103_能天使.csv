@@ -5,7 +5,7 @@ Name,str,能天使,1,姓名：能天使
 Sex,int,1,0,性别：女
 Profession,int,2,0,职业：狙击
 Race,int,26,0,种族：萨科塔
-Nation,int,16,0,势力：企鹅物流
+Nation,int,176,0,势力：企鹅物流
 Birthplace,int,7,0,出生地：拉特兰
 Hp,int,2000,0,初始体力：2000
 Mp,int,2000,0,初始气力：2000

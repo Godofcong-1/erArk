@@ -5,7 +5,7 @@ Name,str,耶拉,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,4,0,角色职业为术师
 Race,int,43,0,角色种族为神
-Nation,int,71,0,角色势力为谢拉格
+Nation,int,151,0,角色势力为谢拉格
 Birthplace,int,15,0,角色出身地为谢拉格
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

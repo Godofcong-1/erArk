@@ -5,7 +5,7 @@ Name,str,槐琥,1,姓名：槐琥
 Sex,int,1,0,性别：女
 Profession,int,8,0,职业：特种
 Race,int,13,0,种族：菲林
-Nation,int,15,0,势力：鲤氏侦探事务所
+Nation,int,175,0,势力：鲤氏侦探事务所
 Birthplace,int,17,0,出生地：炎
 Hp,int,2500,0,初始体力：2500
 Mp,int,2000,0,初始气力：2000

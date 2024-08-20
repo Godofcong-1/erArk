@@ -5,7 +5,7 @@ Name,str,初雪,1,姓名：初雪
 Sex,int,1,0,性别：女
 Profession,int,7,0,职业：辅助
 Race,int,13,0,种族：菲林
-Nation,int,72,0,势力：喀兰贸易
+Nation,int,152,0,势力：喀兰贸易
 Birthplace,int,15,0,出生地：谢拉格
 Hp,int,1500,0,初始体力：1500
 Mp,int,2000,0,初始气力：2000

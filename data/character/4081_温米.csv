@@ -5,7 +5,7 @@ Name,str,温米,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,4,0,角色职业为术师
 Race,int,17,0,角色种族为卡特斯
-Nation,int,111,0,角色势力为雷姆必拓
+Nation,int,91,0,角色势力为雷姆必拓
 Birthplace,int,9,0,角色出身地为雷姆必拓
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

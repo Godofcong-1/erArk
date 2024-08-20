@@ -5,7 +5,7 @@ Name,str,惊蛰,1,姓名：惊蛰
 Sex,int,1,0,性别：女
 Profession,int,4,0,职业：术师
 Race,int,5,0,种族：麒麟
-Nation,int,11,0,势力：炎
+Nation,int,171,0,势力：炎
 Birthplace,int,17,0,出生地：炎
 Hp,int,2000,0,初始体力：2000
 Mp,int,2000,0,初始气力：2000

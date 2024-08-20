@@ -5,7 +5,7 @@ Name,str,黍,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,6,0,角色职业为重装
 Race,int,41,0,角色种族为岁片
-Nation,int,12,0,角色势力为岁
+Nation,int,172,0,角色势力为岁
 Birthplace,int,17,0,角色出身地为炎
 Hp,int,2500,0,角色初始体力
 Mp,int,2500,0,角色初始气力

@@ -170,6 +170,13 @@ def input_load_save(save_id: str):
             character_config.add_text_color_data_to_config_data(text_color_list)
             update_count += 1
             color_update_count += 1
+        # 更新角色势力与出身地
+        if value.cid != 0 and tem_character.Nation != value.relationship.nation:
+            value.relationship.nation = tem_character.Nation
+            update_count += 1
+        if value.cid != 0 and tem_character.Birthplace != value.relationship.birthplace:
+            value.relationship.birthplace = tem_character.Birthplace
+            update_count += 1
         # 更新到玩家收藏品列表
         if value.cid != 0 and value.cid not in loaded_dict["character_data"][0].pl_collection.token_list:
             loaded_dict["character_data"][0].pl_collection.token_list[value.cid] = False

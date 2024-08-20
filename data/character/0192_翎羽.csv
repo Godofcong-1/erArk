@@ -5,7 +5,7 @@ Name,str,翎羽,1,姓名：翎羽
 Sex,int,1,0,性别：女
 Profession,int,1,0,职业：先锋
 Race,int,19,0,种族：黎博利
-Nation,int,81,0,势力：拉特兰
+Nation,int,71,0,势力：拉特兰
 Birthplace,int,7,0,出生地：拉特兰
 Hp,int,2000,0,初始体力：2000
 Mp,int,1500,0,初始气力：1500

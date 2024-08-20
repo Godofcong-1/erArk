@@ -5,7 +5,7 @@ Name,str,地灵,1,姓名：地灵
 Sex,int,1,0,性别：女
 Profession,int,7,0,职业：辅助
 Race,int,16,0,种族：卡普里尼
-Nation,int,91,0,势力：莱塔尼亚
+Nation,int,81,0,势力：莱塔尼亚
 Birthplace,int,8,0,出生地：莱塔尼亚
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500

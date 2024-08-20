@@ -5,7 +5,7 @@ Name,str,耀骑士临光,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,5,0,角色职业为近卫
 Race,int,18,0,角色种族为库兰塔
-Nation,int,61,0,角色势力为卡西米尔
+Nation,int,53,0,角色势力为临光家族
 Birthplace,int,5,0,角色出身地为卡西米尔
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

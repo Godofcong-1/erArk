@@ -5,7 +5,7 @@ Name,str,野鬃,1,姓名：野鬃
 Sex,int,1,0,性别：女
 Profession,int,1,0,职业：先锋
 Race,int,18,0,种族：库兰塔
-Nation,int,62,0,势力：红松骑士团
+Nation,int,52,0,势力：红松骑士团
 Birthplace,int,5,0,出生地：卡西米尔
 Hp,int,2500,0,初始体力：2500
 Mp,int,2000,0,初始气力：2000

@@ -5,7 +5,7 @@ Name,str,琴柳,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
 Race,int,27,0,瓦伊凡
-Nation,int,161,0,维多利亚
+Nation,int,131,0,维多利亚
 Birthplace,int,13,0,维多利亚
 Hp,int,1500,0,初始体力
 Mp,int,1900,0,初始气力

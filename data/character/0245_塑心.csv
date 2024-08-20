@@ -5,7 +5,7 @@ Name,str,塑心,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,7,0,角色职业为辅助
 Race,int,26,0,角色种族为萨科塔
-Nation,int,81,0,角色势力为拉特兰
+Nation,int,71,0,角色势力为拉特兰
 Birthplace,int,7,0,角色出身地为拉特兰
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

@@ -5,7 +5,7 @@ Name,str,普罗旺斯,1,姓名
 Sex,int,1,0,女
 Profession,int,1,0,先锋
 Race,int,20,0,鲁珀
-Nation,int,131,0,叙拉古
+Nation,int,161,0,叙拉古
 Birthplace,int,16,0,叙拉古
 Hp,int,1500,0,初始体力
 Mp,int,1300,0,初始气力

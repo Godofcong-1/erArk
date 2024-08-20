@@ -5,7 +5,7 @@ Name,str,可颂,1,姓名：可颂
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,14,0,种族：丰蹄
-Nation,int,16,0,势力：企鹅物流
+Nation,int,176,0,势力：企鹅物流
 Birthplace,int,10,0,出生地：米诺斯
 Hp,int,2500,0,初始体力：2500
 Mp,int,2000,0,初始气力：2000

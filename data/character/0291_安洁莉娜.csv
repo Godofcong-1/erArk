@@ -5,7 +5,7 @@ Name,str,安洁莉娜,1,姓名：安洁莉娜
 Sex,int,1,0,性别：女
 Profession,int,8,0,职业：特种
 Race,int,28,0,种族：沃尔珀
-Nation,int,131,0,势力：叙拉古
+Nation,int,161,0,势力：叙拉古
 Birthplace,int,16,0,出生地：叙拉古
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500

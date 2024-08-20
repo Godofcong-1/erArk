@@ -5,7 +5,7 @@ Name,str,文月,1,姓名
 Sex,int,1,0,女
 Profession,int,8,0,特种
 Race,int,3,0,龙
-Nation,int,13,0,龙门
+Nation,int,173,0,龙门
 Birthplace,int,3,0,东
 Hp,int,1500,0,初始体力
 Mp,int,1500,0,初始气力

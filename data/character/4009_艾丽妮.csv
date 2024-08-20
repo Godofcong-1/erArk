@@ -5,7 +5,7 @@ Name,str,艾丽妮,1,姓名：艾丽妮
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
 Race,int,19,0,种族：黎博利
-Nation,int,31,0,势力：伊比利亚
+Nation,int,181,0,势力：伊比利亚
 Birthplace,int,18,0,出生地：伊比利亚
 Hp,int,1500,0,初始体力：1500
 Mp,int,2000,0,初始气力：2000

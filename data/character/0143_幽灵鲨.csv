@@ -5,7 +5,7 @@ Name,str,幽灵鲨,1,姓名：幽灵鲨
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
 Race,int,35,0,种族：海嗣
-Nation,int,22,0,势力：深海猎人
+Nation,int,12,0,势力：深海猎人
 Birthplace,int,1,0,出生地：阿戈尔
 Hp,int,3000,0,初始体力：3000
 Mp,int,3000,0,初始气力：3000

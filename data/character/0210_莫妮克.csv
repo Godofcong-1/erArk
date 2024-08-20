@@ -5,7 +5,7 @@ Name,str,莫妮克,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,2,0,角色职业为狙击
 Race,int,13,0,角色种族为菲林
-Nation,int,64,0,角色势力为无胄盟
+Nation,int,54,0,角色势力为无胄盟
 Birthplace,int,5,0,角色出身地为卡西米尔
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

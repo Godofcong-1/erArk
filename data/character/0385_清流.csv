@@ -5,7 +5,7 @@ Name,str,清流,1,姓名：清流
 Sex,int,1,0,性别：女
 Profession,int,3,0,职业：医疗
 Race,int,34,0,种族：阿戈尔
-Nation,int,11,0,势力：炎
+Nation,int,171,0,势力：炎
 Birthplace,int,17,0,出生地：炎
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500

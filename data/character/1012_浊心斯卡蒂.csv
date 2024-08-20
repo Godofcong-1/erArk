@@ -5,7 +5,7 @@ Name,str,浊心斯卡蒂,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,7,0,角色职业为辅助
 Race,int,35,0,角色种族为海嗣
-Nation,int,22,0,角色势力为深海猎人
+Nation,int,12,0,角色势力为深海猎人
 Birthplace,int,1,0,角色出身地为阿戈尔
 Hp,int,2021,0,角色初始体力
 Mp,int,1603,0,角色初始气力

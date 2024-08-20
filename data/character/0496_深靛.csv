@@ -5,7 +5,7 @@ Name,str,深靛,1,姓名：深靛
 Sex,int,1,0,性别：女
 Profession,int,4,0,职业：术师
 Race,int,39,0,种族：斐迪亚
-Nation,int,31,0,势力：伊比利亚
+Nation,int,181,0,势力：伊比利亚
 Birthplace,int,18,0,出生地：伊比利亚
 Hp,int,2000,0,初始体力：2000
 Mp,int,2500,0,初始气力：2500

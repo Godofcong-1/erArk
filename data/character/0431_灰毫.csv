@@ -5,7 +5,7 @@ Name,str,灰毫,1,姓名：灰毫
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,31,0,种族：札拉克
-Nation,int,62,0,势力：红松骑士团
+Nation,int,52,0,势力：红松骑士团
 Birthplace,int,5,0,出生地：卡西米尔
 Hp,int,2500,0,初始体力：2500
 Mp,int,2500,0,初始气力：2500

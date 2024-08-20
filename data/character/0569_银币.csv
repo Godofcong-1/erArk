@@ -5,7 +5,7 @@ Name,str,银币,1,姓名
 Sex,int,1,0,女
 Profession,int,4,0,术师
 Race,int,12,0,杜林
-Nation,int,191,0,际崖城
+Nation,int,192,0,际崖城
 Birthplace,int,19,0,杜林
 Hp,int,1500,0,初始体力
 Mp,int,1500,0,初始气力

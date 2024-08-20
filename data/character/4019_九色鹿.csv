@@ -5,7 +5,7 @@ Name,str,九色鹿,1,姓名：九色鹿
 Sex,int,1,0,性别：女
 Profession,int,7,0,职业：辅助
 Race,int,10,0,种族：埃拉菲亚
-Nation,int,11,0,势力：炎
+Nation,int,171,0,势力：炎
 Birthplace,int,17,0,出生地：炎
 Hp,int,1500,0,初始体力：1500
 Mp,int,2000,0,初始气力：2000

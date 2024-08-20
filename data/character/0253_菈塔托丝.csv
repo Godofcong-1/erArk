@@ -5,7 +5,7 @@ Name,str,菈塔托丝,1,姓名
 Sex,int,1,0,女
 Profession,int,7,0,辅助
 Race,int,31,0,札拉克
-Nation,int,71,0,谢拉格
+Nation,int,151,0,谢拉格
 Birthplace,int,15,0,谢拉格
 Hp,int,1500,0,初始体力
 Mp,int,1500,0,初始气力

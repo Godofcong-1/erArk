@@ -5,7 +5,7 @@ Name,str,夜半,1,姓名：夜半
 Sex,int,1,0,性别：女
 Profession,int,1,0,职业：先锋
 Race,int,24,0,种族：萨弗拉
-Nation,int,111,0,势力：雷姆必拓
+Nation,int,91,0,势力：雷姆必拓
 Birthplace,int,9,0,出生地：雷姆必拓
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500

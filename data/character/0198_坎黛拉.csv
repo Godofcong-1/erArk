@@ -5,7 +5,7 @@ Name,str,坎黛拉,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,7,0,角色职业为辅助
 Race,int,22,0,角色种族为佩洛
-Nation,int,172,0,角色势力为多索雷斯
+Nation,int,22,0,角色势力为多索雷斯
 Birthplace,int,2,0,角色出身地为玻利瓦尔
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

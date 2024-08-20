@@ -5,7 +5,7 @@ Name,str,锏,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,5,0,角色职业为近卫
 Race,int,16,0,角色种族为卡普里尼
-Nation,int,72,0,角色势力为喀兰贸易
+Nation,int,152,0,角色势力为喀兰贸易
 Birthplace,int,8,0,角色出身地为莱塔尼亚
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

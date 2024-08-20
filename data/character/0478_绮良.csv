@@ -5,7 +5,7 @@ Name,str,绮良,1,姓名：绮良
 Sex,int,1,0,性别：女
 Profession,int,8,0,职业：特种
 Race,int,34,0,种族：阿戈尔
-Nation,int,51,0,势力：东
+Nation,int,31,0,势力：东
 Birthplace,int,3,0,出生地：东
 Hp,int,1500,0,初始体力：1500
 Mp,int,2000,0,初始气力：2000

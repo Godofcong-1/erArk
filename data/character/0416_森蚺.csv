@@ -5,7 +5,7 @@ Name,str,森蚺,1,姓名：森蚺
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,39,0,种族：斐迪亚
-Nation,int,151,0,势力：萨尔贡
+Nation,int,111,0,势力：萨尔贡
 Birthplace,int,11,0,出生地：萨尔贡
 Hp,int,2500,0,初始体力：2500
 Mp,int,2500,0,初始气力：2500

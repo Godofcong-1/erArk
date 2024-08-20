@@ -5,7 +5,7 @@ Name,str,星熊,1,姓名：星熊
 Sex,int,1,0,性别：女
 Profession,int,6,0,职业：重装
 Race,int,15,0,种族：鬼
-Nation,int,14,0,势力：龙门近卫局
+Nation,int,174,0,势力：龙门近卫局
 Birthplace,int,3,0,出生地：东
 Hp,int,2500,0,初始体力：2500
 Mp,int,3000,0,初始气力：3000

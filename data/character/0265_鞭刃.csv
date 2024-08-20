@@ -5,7 +5,7 @@ Name,str,鞭刃,1,姓名：鞭刃
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
 Race,int,18,0,种族：库兰塔
-Nation,int,61,0,势力：卡西米尔
+Nation,int,53,0,势力：临光家族
 Birthplace,int,5,0,出生地：卡西米尔
 Hp,int,2000,0,初始体力：2000
 Mp,int,2000,0,初始气力：2000

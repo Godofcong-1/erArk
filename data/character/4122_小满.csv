@@ -5,7 +5,7 @@ Name,str,小满,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,4,0,角色职业为术师
 Race,int,19,0,角色种族为黎博利
-Nation,int,11,0,角色势力为炎
+Nation,int,171,0,角色势力为炎
 Birthplace,int,17,0,角色出身地为炎
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

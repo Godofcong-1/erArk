@@ -5,7 +5,7 @@ Name,str,絮雨,1,姓名：絮雨
 Sex,int,1,0,性别：女
 Profession,int,3,0,职业：医疗
 Race,int,34,0,种族：阿戈尔
-Nation,int,31,0,势力：伊比利亚
+Nation,int,181,0,势力：伊比利亚
 Birthplace,int,18,0,出生地：伊比利亚
 Hp,int,1500,0,初始体力：1500
 Mp,int,1000,0,初始气力：1000

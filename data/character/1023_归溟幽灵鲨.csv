@@ -5,7 +5,7 @@ Name,str,归溟幽灵鲨,1,姓名
 Sex,int,1,0,女
 Profession,int,8,0,特种
 Race,int,34,0,阿戈尔
-Nation,int,22,0,深海猎人
+Nation,int,12,0,深海猎人
 Birthplace,int,1,0,阿戈尔
 Hp,int,1100,0,初始体力
 Mp,int,1400,0,初始气力

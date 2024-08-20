@@ -5,7 +5,7 @@ Name,str,蜜蜡,1,姓名：蜜蜡
 Sex,int,1,0,性别：女
 Profession,int,4,0,职业：术师
 Race,int,16,0,种族：卡普里尼
-Nation,int,151,0,势力：萨尔贡
+Nation,int,111,0,势力：萨尔贡
 Birthplace,int,11,0,出生地：萨尔贡
 Hp,int,1500,0,初始体力：1500
 Mp,int,2000,0,初始气力：2000

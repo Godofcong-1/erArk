@@ -5,7 +5,7 @@ Name,str,推进之王,1,姓名：推进之王
 Sex,int,1,0,性别：女
 Profession,int,1,0,职业：先锋
 Race,int,9,0,种族：阿斯兰
-Nation,int,162,0,势力：格拉斯哥帮
+Nation,int,132,0,势力：格拉斯哥帮
 Birthplace,int,13,0,出生地：维多利亚
 Hp,int,2500,0,初始体力：2500
 Mp,int,2500,0,初始气力：2500

@@ -5,7 +5,7 @@ Name,str,蓝毒,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,2,0,角色职业为狙击
 Race,int,11,0,角色种族为安努拉
-Nation,int,31,0,角色势力为伊比利亚
+Nation,int,181,0,角色势力为伊比利亚
 Birthplace,int,999,0,角色出身地为未知
 Hp,int,1500,0,角色初始体力
 Mp,int,1500,0,角色初始气力

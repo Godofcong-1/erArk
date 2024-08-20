@@ -5,7 +5,7 @@ Name,str,食铁兽,1,姓名：食铁兽
 Sex,int,1,0,性别：女
 Profession,int,8,0,职业：特种
 Race,int,29,0,种族：乌萨斯
-Nation,int,13,0,势力：龙门
+Nation,int,173,0,势力：龙门
 Birthplace,int,17,0,出生地：炎
 Hp,int,2500,0,初始体力：2500
 Mp,int,2000,0,初始气力：2000

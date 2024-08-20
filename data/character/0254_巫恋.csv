@@ -5,7 +5,7 @@ Name,str,巫恋,1,姓名
 Sex,int,1,0,女
 Profession,int,7,0,辅助
 Race,int,28,0,沃尔珀
-Nation,int,131,0,叙拉古
+Nation,int,161,0,叙拉古
 Birthplace,int,16,0,叙拉古
 Hp,int,1000,0,初始体力
 Mp,int,800,0,初始气力

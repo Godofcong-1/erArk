@@ -5,7 +5,7 @@ Name,str,斥罪,1,姓名
 Sex,int,1,0,女
 Profession,int,6,0,重装
 Race,int,20,0,鲁珀
-Nation,int,131,0,叙拉古
+Nation,int,161,0,叙拉古
 Birthplace,int,16,0,叙拉古
 Hp,int,1800,0,初始体力
 Mp,int,1500,0,初始气力

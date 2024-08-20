@@ -5,7 +5,7 @@ Name,str,薇薇安娜,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,5,0,角色职业为近卫
 Race,int,10,0,角色种族为埃拉菲亚
-Nation,int,91,0,角色势力为莱塔尼亚
+Nation,int,81,0,角色势力为莱塔尼亚
 Birthplace,int,8,0,角色出身地为莱塔尼亚
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

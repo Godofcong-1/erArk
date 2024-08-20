@@ -5,7 +5,7 @@ Name,str,纯烬艾雅法拉,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,3,0,角色职业为医疗
 Race,int,16,0,角色种族为卡普里尼
-Nation,int,91,0,角色势力为莱塔尼亚
+Nation,int,81,0,角色势力为莱塔尼亚
 Birthplace,int,8,0,角色出身地为莱塔尼亚
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

@@ -5,7 +5,7 @@ Name,str,微风,1,姓名：微风
 Sex,int,1,0,性别：女
 Profession,int,3,0,职业：医疗
 Race,int,28,0,种族：沃尔珀
-Nation,int,161,0,势力：维多利亚
+Nation,int,131,0,势力：维多利亚
 Birthplace,int,13,0,出生地：维多利亚
 Hp,int,1500,0,初始体力：1500
 Mp,int,1500,0,初始气力：1500
