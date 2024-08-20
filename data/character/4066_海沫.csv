@@ -5,7 +5,7 @@ Name,str,海沫,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,5,0,角色职业为近卫
 Race,int,35,0,角色种族为海嗣
-Nation,int,31,0,角色势力为伊比利亚
+Nation,int,181,0,角色势力为伊比利亚
 Birthplace,int,18,0,角色出身地为伊比利亚
 Hp,int,2300,0,角色初始体力
 Mp,int,1000,0,角色初始气力

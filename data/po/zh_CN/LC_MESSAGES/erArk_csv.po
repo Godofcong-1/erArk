@@ -16268,6 +16268,34 @@ msgstr ""
 msgid "深色运动鞋"
 msgstr ""
 
+#: .\data\character\927_福尔图娜.csv:4
+msgid "福尔图娜"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:13
+msgid "六颗萨科塔的子弹，其中有两枚因为底火损坏而无法击发。"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:14
+msgid "因为意外而堕天的女孩，曾经无忧无虑，喜欢香草饼。\n\n闪耀的光环与心爱的守护铳，如今已成为了新的诅咒。"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:41
+msgid "亮蓝绑带"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:42
+msgid "流苏披肩"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:43
+msgid "圆领灰色连衣裙"
+msgstr ""
+
+#: .\data\character\927_福尔图娜.csv:44
+msgid "玛丽珍鞋"
+msgstr ""
+
 #: .\data\ui_text\ability.csv:6
 msgid "完全没有性经验。阴道处于未开发状态。阴道口细小。处女膜完好。内壁柔软而紧致。阴道狭窄干涩。无法接纳任何物体的插入。性对她来说是一个完全陌生的概念。"
 msgstr ""
