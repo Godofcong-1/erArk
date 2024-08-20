@@ -16028,6 +16028,42 @@ msgstr ""
 msgid "白色长筒高跟靴"
 msgstr ""
 
+#: .\data\character\4100_跃跃.csv:4
+msgid "跃跃"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:13
+msgid "一个圆滚滚、软乎乎的白色绒球，她执意要送给你这份礼物。她的偷笑让你有了不好的预感，但至少现在什么都没发生。"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:14
+msgid "狙击干员跃跃，走起路来一蹦一跳。\n\n她正邀请你加入她的游戏，答应她吧，不会让你失望的。"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:35
+msgid "露耳兜帽"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:36
+msgid "带绒球工作靴"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:37
+msgid "不对称红厚棉袜"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:38
+msgid "红色皮手套"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:39
+msgid "带绒球白色塑制外套"
+msgstr ""
+
+#: .\data\character\4100_跃跃.csv:40
+msgid "黑色露脐羊绒衫"
+msgstr ""
+
 #: .\data\character\4104_冰酿.csv:4
 msgid "冰酿"
 msgstr ""
