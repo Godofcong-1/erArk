@@ -14828,6 +14828,42 @@ msgstr ""
 msgid "哥伦比亚建筑工人松果，被卷入曼斯菲尔德事件后，随山来到罗德岛求职，因其先前的工作经验，现于工程部担任部分干员的助手。"
 msgstr ""
 
+#: .\data\character\0446_阿罗玛.csv:4
+msgid "阿罗玛"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:13
+msgid "一张清洁服务预约单，其中罗列了不同香型的清洁剂所适用的情境。有需要就呼叫她，她知道哪一种香味最能让你舒心。"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:14
+msgid "后勤部的清洁专家阿罗玛，用馨香的泡沫带走每一处脏污。\n\n她很清楚，有些气味无法被掩盖，也有些痕迹无法被涤除。"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:39
+msgid "发箍"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:40
+msgid "卫衣"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:41
+msgid "工作外套"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:42
+msgid "医疗塑胶手套"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:43
+msgid "紧身七分裤"
+msgstr ""
+
+#: .\data\character\0446_阿罗玛.csv:44
+msgid "运动鞋"
+msgstr ""
+
 #: .\data\character\0449_蜜莓.csv:4
 msgid "蜜莓"
 msgstr ""
@@ -15004,6 +15040,50 @@ msgstr ""
 msgid "帕拉斯，曾在米诺斯担任祭司职务。在离开雅赛努斯城邦去往阿克罗蒂村任职期间，带领当地民众进行了对萨尔贡周边部落长年侵扰的反抗，并在当地推行旅游及文化产业的发展。后因矿石病病况恶化，来到罗德岛进行秘密治疗。"
 msgstr ""
 
+#: .\data\character\0487_莉泽洛特.csv:4
+msgid "莉泽洛特"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:13
+msgid "莉泽洛特亲手制作的小竖琴。\n\n和卡普里尼的角一样，都需要上好的油进行护理。"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:14
+msgid "统治莱塔尼亚的双子女皇之一，洁白的裙摆，“永恒恩典”，“白色的绵羊”。\n\n莱塔尼亚最坚硬的盾。"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:48
+msgid "头冠"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:49
+msgid "宝石项链套组"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:50
+msgid "高叉礼服"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:51
+msgid "礼服手套"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:52
+msgid "白仿羽褶边长裙"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:53
+msgid "高跟鞋"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:54
+msgid "红丝绸披风"
+msgstr ""
+
+#: .\data\character\0487_莉泽洛特.csv:55
+msgid "折扇"
+msgstr ""
+
 #: .\data\character\0488_青枳.csv:4
 msgid "青枳"
 msgstr ""
@@ -15130,6 +15210,34 @@ msgstr ""
 
 #: .\data\character\0569_银币.csv:4
 msgid "银币"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:4
+msgid "福尔图娜"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:13
+msgid "六颗萨科塔的子弹，其中有两枚因为底火损坏而无法击发。"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:14
+msgid "因为意外而堕天的女孩，曾经无忧无虑，喜欢香草饼。\n\n闪耀的光环与心爱的守护铳，如今已成为了新的诅咒。"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:41
+msgid "亮蓝绑带"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:42
+msgid "流苏披肩"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:43
+msgid "圆领灰色连衣裙"
+msgstr ""
+
+#: .\data\character\0927_福尔图娜.csv:44
+msgid "玛丽珍鞋"
 msgstr ""
 
 #: .\data\character\1011_炎狱炎熔.csv:4
@@ -16076,10 +16184,6 @@ msgstr ""
 msgid "耐磨短袜"
 msgstr ""
 
-#: .\data\character\4083_铎铃.csv:31
-msgid "运动鞋"
-msgstr ""
-
 #: .\data\character\4087_伊内丝.csv:4
 msgid "伊内丝"
 msgstr ""
@@ -16382,110 +16486,6 @@ msgstr ""
 
 #: .\data\character\4122_小满.csv:31
 msgid "深色运动鞋"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:4
-msgid "阿罗玛"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:13
-msgid "一张清洁服务预约单，其中罗列了不同香型的清洁剂所适用的情境。有需要就呼叫她，她知道哪一种香味最能让你舒心。"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:14
-msgid "后勤部的清洁专家阿罗玛，用馨香的泡沫带走每一处脏污。\n\n她很清楚，有些气味无法被掩盖，也有些痕迹无法被涤除。"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:39
-msgid "发箍"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:40
-msgid "卫衣"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:41
-msgid "工作外套"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:42
-msgid "医疗塑胶手套"
-msgstr ""
-
-#: .\data\character\446_阿罗玛.csv:43
-msgid "紧身七分裤"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:4
-msgid "莉泽洛特"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:13
-msgid "莉泽洛特亲手制作的小竖琴。\n\n和卡普里尼的角一样，都需要上好的油进行护理。"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:14
-msgid "统治莱塔尼亚的双子女皇之一，洁白的裙摆，“永恒恩典”，“白色的绵羊”。\n\n莱塔尼亚最坚硬的盾。"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:48
-msgid "头冠"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:49
-msgid "宝石项链套组"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:50
-msgid "高叉礼服"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:51
-msgid "礼服手套"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:52
-msgid "白仿羽褶边长裙"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:53
-msgid "高跟鞋"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:54
-msgid "红丝绸披风"
-msgstr ""
-
-#: .\data\character\487_莉泽洛特.csv:55
-msgid "折扇"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:4
-msgid "福尔图娜"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:13
-msgid "六颗萨科塔的子弹，其中有两枚因为底火损坏而无法击发。"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:14
-msgid "因为意外而堕天的女孩，曾经无忧无虑，喜欢香草饼。\n\n闪耀的光环与心爱的守护铳，如今已成为了新的诅咒。"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:41
-msgid "亮蓝绑带"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:42
-msgid "流苏披肩"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:43
-msgid "圆领灰色连衣裙"
-msgstr ""
-
-#: .\data\character\927_福尔图娜.csv:44
-msgid "玛丽珍鞋"
 msgstr ""
 
 #: .\data\ui_text\ability.csv:6
