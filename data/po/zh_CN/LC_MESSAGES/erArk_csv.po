@@ -15212,6 +15212,46 @@ msgstr ""
 msgid "银币"
 msgstr ""
 
+#: .\data\character\0687_乔万娜.csv:4
+msgid "乔万娜"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:13
+msgid "一只丢在了桌子上的手套，可能是在邀请决斗。德克萨斯女士对此没有任何看法。"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:14
+msgid "卡特琳娜女士，著名剧作家。或者，罗塞蒂家族的领袖，乔万娜·罗塞蒂。\n\n对德克萨斯女士有着很强的执念。"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:51
+msgid "方片耳饰"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:52
+msgid "方片Choker"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:53
+msgid "风衣"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:54
+msgid "深V皮西装"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:55
+msgid "OL裙"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:56
+msgid "黑丝过膝袜"
+msgstr ""
+
+#: .\data\character\0687_乔万娜.csv:57
+msgid "长靴"
+msgstr ""
+
 #: .\data\character\0927_福尔图娜.csv:4
 msgid "福尔图娜"
 msgstr ""
@@ -16350,10 +16390,6 @@ msgstr ""
 
 #: .\data\character\4102_凛视.csv:43
 msgid "皮裙"
-msgstr ""
-
-#: .\data\character\4102_凛视.csv:44
-msgid "黑丝过膝袜"
 msgstr ""
 
 #: .\data\character\4102_凛视.csv:45
