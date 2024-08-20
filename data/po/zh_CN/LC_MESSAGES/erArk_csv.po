@@ -11640,32 +11640,40 @@ msgstr ""
 msgid "煌，罗德岛精英干员，在机动作战、歼灭战与突袭作战中体现出了专业的战斗技巧与战术素养。现由阿米娅带领，作为攻坚战的战术核心之一发挥作用。"
 msgstr ""
 
-#: .\data\character\0017_煌.csv:30
-msgid "白色罗德岛战斗制服"
-msgstr ""
-
-#: .\data\character\0017_煌.csv:31
-msgid "白色V领衬衣"
-msgstr ""
-
-#: .\data\character\0017_煌.csv:32
-msgid "黑色战术手套"
-msgstr ""
-
 #: .\data\character\0017_煌.csv:33
-msgid "黑色罗德岛改良合身短裙"
+msgid "红色发箍"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:34
-msgid "白色长袜（右）"
+msgid "短版罗德岛制服外套（白）"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:35
-msgid "黑色作战靴"
+msgid "白色交叉肩带小背心"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:36
+msgid "黑色超短包臀裙"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:37
+msgid "白色过膝袜（右）"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:38
+msgid "高跟短靴"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:39
+msgid "黑色战术露指手套"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:40
 msgid "链锯"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:41
+msgid "战术道具腰包"
 msgstr ""
 
 #: .\data\character\0056_特蕾西娅.csv:4
@@ -12118,6 +12126,10 @@ msgstr ""
 
 #: .\data\character\0115_凛冬.csv:34
 msgid "深红色连身裤袜"
+msgstr ""
+
+#: .\data\character\0115_凛冬.csv:35
+msgid "黑色作战靴"
 msgstr ""
 
 #: .\data\character\0115_凛冬.csv:36
@@ -13032,6 +13044,30 @@ msgstr ""
 msgid "天火，隶属民间源石技艺研究会“狐尾”的核心团体“王者之杖”。拥有地质学与源石地质学双学位，维多利亚高等职业术师，在源石技艺及理论研究方面皆有杰出造诣。现任王者之杖驻罗德岛首席术师，与罗德岛签署合作协议，并为罗德岛的源石理论研究，歼灭战作战等多项任务提供协助。"
 msgstr ""
 
+#: .\data\character\0166_天火.csv:28
+msgid "红色宽袖外套"
+msgstr ""
+
+#: .\data\character\0166_天火.csv:29
+msgid "黑色V领夹克"
+msgstr ""
+
+#: .\data\character\0166_天火.csv:30
+msgid "白衬衫"
+msgstr ""
+
+#: .\data\character\0166_天火.csv:31
+msgid "黑色高腰百褶裙"
+msgstr ""
+
+#: .\data\character\0166_天火.csv:32
+msgid "黑色透肉连裤袜"
+msgstr ""
+
+#: .\data\character\0166_天火.csv:33
+msgid "高跟皮鞋"
+msgstr ""
+
 #: .\data\character\0168_莉莉娅.csv:4
 msgid "莉莉娅"
 msgstr ""
@@ -13088,6 +13124,38 @@ msgstr ""
 msgid "崖心，谢拉格出身，现罗德岛干员。攀岩与登山方面的专家，能熟练使用各种攀爬工具。现于罗德岛接受矿石病治疗。"
 msgstr ""
 
+#: .\data\character\0173_崖心.csv:28
+msgid "黑白格子鸭舌帽"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:30
+msgid "白色无袖背心外套"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:31
+msgid "黑色热裤"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:32
+msgid "黑色加厚过膝袜（右）"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:33
+msgid "白色短袜（左）"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:34
+msgid "保暖登山靴"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:35
+msgid "登山镐及勾爪"
+msgstr ""
+
+#: .\data\character\0173_崖心.csv:36
+msgid "登山绳"
+msgstr ""
+
 #: .\data\character\0174_初雪.csv:4
 msgid "初雪"
 msgstr ""
@@ -13098,6 +13166,38 @@ msgstr ""
 
 #: .\data\character\0174_初雪.csv:14
 msgid "初雪，谢拉格出身，喀兰圣女，全谢拉格的宗教领袖。运用神赐的圣铃，呼唤风雪的力量。现通过保密途径来到罗德岛，具体担任事务与驻留时间不便公开。"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:30
+msgid "喀兰圣女的头饰"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:31
+msgid "民族风连身高衩长裙"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:32
+msgid "喀兰贸易披风"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:34
+msgid "白色围脖"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:35
+msgid "珠子项链"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:36
+msgid "灰色加厚过膝袜"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:37
+msgid "黑色中筒保暖靴"
+msgstr ""
+
+#: .\data\character\0174_初雪.csv:38
+msgid "神赐的圣铃"
 msgstr ""
 
 #: .\data\character\0179_夜莺.csv:4
@@ -13610,6 +13710,30 @@ msgstr ""
 
 #: .\data\character\0233_蔓德拉.csv:4
 msgid "蔓德拉"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:13
+msgid "石制法杖的碎片。\n「领袖…这一次，是我…不再需要你了。」"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:14
+msgid "曾是深池的干部之一，塔拉人。\n性格残忍、高傲，脾气暴躁，总是摆着一副蔑视一切的表情。曾有过被维多利亚贵族阶层压迫的过去，因此对维多利亚和贵族恨之入骨，同时也对身份地位异常执着。"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:31
+msgid "墨绿色抹胸裙"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:32
+msgid "墨绿色披风"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:34
+msgid "灰黑色短靴"
+msgstr ""
+
+#: .\data\character\0233_蔓德拉.csv:35
+msgid "白色过膝袜"
 msgstr ""
 
 #: .\data\character\0235_杰西卡.csv:4
@@ -15220,10 +15344,6 @@ msgstr ""
 msgid "黑色丝质夹克"
 msgstr ""
 
-#: .\data\character\1021_寒芒克洛丝.csv:30
-msgid "黑色热裤"
-msgstr ""
-
 #: .\data\character\1023_归溟幽灵鲨.csv:4
 msgid "归溟幽灵鲨"
 msgstr ""
@@ -15888,10 +16008,6 @@ msgstr ""
 msgid "黑底蓝缎饰紧身裙"
 msgstr ""
 
-#: .\data\character\4080_林.csv:29
-msgid "黑色透肉连裤袜"
-msgstr ""
-
 #: .\data\character\4080_林.csv:30
 msgid "黑色高跟长筒靴"
 msgstr ""
@@ -16266,6 +16382,82 @@ msgstr ""
 
 #: .\data\character\4122_小满.csv:31
 msgid "深色运动鞋"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:4
+msgid "阿罗玛"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:13
+msgid "一张清洁服务预约单，其中罗列了不同香型的清洁剂所适用的情境。有需要就呼叫她，她知道哪一种香味最能让你舒心。"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:14
+msgid "后勤部的清洁专家阿罗玛，用馨香的泡沫带走每一处脏污。\n\n她很清楚，有些气味无法被掩盖，也有些痕迹无法被涤除。"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:39
+msgid "发箍"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:40
+msgid "卫衣"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:41
+msgid "工作外套"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:42
+msgid "医疗塑胶手套"
+msgstr ""
+
+#: .\data\character\446_阿罗玛.csv:43
+msgid "紧身七分裤"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:4
+msgid "莉泽洛特"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:13
+msgid "莉泽洛特亲手制作的小竖琴。\n\n和卡普里尼的角一样，都需要上好的油进行护理。"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:14
+msgid "统治莱塔尼亚的双子女皇之一，洁白的裙摆，“永恒恩典”，“白色的绵羊”。\n\n莱塔尼亚最坚硬的盾。"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:48
+msgid "头冠"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:49
+msgid "宝石项链套组"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:50
+msgid "高叉礼服"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:51
+msgid "礼服手套"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:52
+msgid "白仿羽褶边长裙"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:53
+msgid "高跟鞋"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:54
+msgid "红丝绸披风"
+msgstr ""
+
+#: .\data\character\487_莉泽洛特.csv:55
+msgid "折扇"
 msgstr ""
 
 #: .\data\character\927_福尔图娜.csv:4
