@@ -5,7 +5,7 @@ Name,str,跃跃,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,2,0,角色职业为狙击
 Race,int,17,0,角色种族为卡特斯
-Nation,int,171,0,角色势力为玻利瓦尔
+Nation,int,21,0,角色势力为玻利瓦尔
 Birthplace,int,2,0,角色出身地为玻利瓦尔
 Hp,int,1400,0,角色初始体力
 Mp,int,800,0,角色初始气力

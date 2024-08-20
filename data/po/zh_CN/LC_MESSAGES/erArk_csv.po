@@ -16064,6 +16064,54 @@ msgstr ""
 msgid "黑色露脐羊绒衫"
 msgstr ""
 
+#: .\data\character\4102_凛视.csv:4
+msgid "凛视"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:13
+msgid "一盏长明灯，发光元件与她的法杖材质相同。她自己能在黑暗中视物，但她对你放心不下。"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:14
+msgid "萨卡兹独眼巨人凛视，走出冰封的岩窟。\n\n她看见终局，她寻找起因。"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:37
+msgid "白花发饰"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:38
+msgid "铃铛耳饰"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:39
+msgid "毛毡披肩"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:40
+msgid "黑白无袖褶边长襟衣"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:41
+msgid "印花束口衬衣"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:42
+msgid "皮革束腰"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:43
+msgid "皮裙"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:44
+msgid "黑丝过膝袜"
+msgstr ""
+
+#: .\data\character\4102_凛视.csv:45
+msgid "皮革厚增高靴"
+msgstr ""
+
 #: .\data\character\4104_冰酿.csv:4
 msgid "冰酿"
 msgstr ""
