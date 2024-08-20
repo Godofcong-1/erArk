@@ -16524,6 +16524,58 @@ msgstr ""
 msgid "深色运动鞋"
 msgstr ""
 
+#: .\data\character\4130_露托.csv:4
+msgid "露托"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:13
+msgid "一条褪色的浅黄色丝巾，然而其中的回忆不会褪色。她想象着人们如何将丝巾系在她的墓碑上，一如分别那天，母亲将丝巾系在她的胸前。"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:14
+msgid "干员露托，曾在玻利瓦尔各交战地区活动，不从属于任何当地组织，以战场打扫工作为生。现今在本舰接受治疗，并与后勤部签订合作协议，偶尔以战场环境顾问的身份支援外勤任务。"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:39
+msgid "褪色的浅黄色丝巾"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:40
+msgid "玻利瓦尔士官外套"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:41
+msgid "白色上衣（宽大）"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:42
+msgid "黑色长护腕"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:44
+msgid "深绿色护膝"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:45
+msgid "玻利瓦尔制式盾牌（改装）"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:46
+msgid "黑色尖头锤"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:47
+msgid "黑色丝袜（破损）"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:48
+msgid "黑色劳保鞋"
+msgstr ""
+
+#: .\data\character\4130_露托.csv:49
+msgid "棕色背包"
+msgstr ""
+
 #: .\data\ui_text\ability.csv:6
 msgid "完全没有性经验。阴道处于未开发状态。阴道口细小。处女膜完好。内壁柔软而紧致。阴道狭窄干涩。无法接纳任何物体的插入。性对她来说是一个完全陌生的概念。"
 msgstr ""
