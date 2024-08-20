@@ -15788,6 +15788,34 @@ msgstr ""
 msgid "原为叙拉古城邦法官，通过干员德克萨斯与罗德岛建立联系。于后勤部工作，担任罗德岛法律顾问一职。"
 msgstr ""
 
+#: .\data\character\4066_海沫.csv:4
+msgid "海沫"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:13
+msgid "一只洁白的贝螺。在寂静的夜晚将它捧起，靠在耳边，似乎能听到悠远的离歌。\n"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:14
+msgid "驻外干员海沫，她比看上去的要更好斗。\n\n海的女儿，选择了拒绝大海。"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:34
+msgid "贝壳发饰"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:35
+msgid "露肩休闲外套"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:36
+msgid "白色长尾裙"
+msgstr ""
+
+#: .\data\character\4066_海沫.csv:38
+msgid "绑带鞋"
+msgstr ""
+
 #: .\data\character\4071_明椒.csv:4
 msgid "明椒"
 msgstr ""
