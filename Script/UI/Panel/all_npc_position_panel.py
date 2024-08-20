@@ -46,7 +46,6 @@ class All_Npc_Position_Panel:
             draw_width = self.width / 3
         else:
             draw_width = self.width / 2
-        self.handle_panel = panel.PageHandlePanel([], FindDraw, 60, 3, self.width, 1, 1, 0)
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
@@ -212,7 +211,6 @@ class All_Npc_Position_Panel:
                         if chara_count % 2 == 0 and chara_count != len(cache.npc_id_got):
                             line_feed.draw()
 
-            return_list.extend(self.handle_panel.return_list)
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -283,115 +281,3 @@ class All_Npc_Position_Panel:
                 else:
                     pre_position = cache.character_data[0].position
                 self.break_flag = True
-
-
-class FindDraw:
-    """
-    显示可点击的NPC名字+位置按钮对象
-    Keyword arguments:
-    npc_id -- 干员角色编号
-    width -- 最大宽度
-    is_button -- 绘制按钮
-    num_button -- 绘制数字按钮
-    button_id -- 数字按钮id
-    """
-
-    def __init__(
-        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
-    ):
-        """初始化绘制对象"""
-        self.npc_id: int = NPC_id
-        """ 干员角色编号 """
-        self.draw_text: str = ""
-        """ 名字绘制文本 """
-        self.width: int = width
-        """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
-        name_draw = draw.NormalDraw()
-        # print("text :",text)
-
-        character_data = cache.character_data[self.npc_id]
-        name = character_data.name
-        id = str(character_data.adv).rjust(4,'0')
-        scene_position = character_data.position
-        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-        if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
-            scene_position_str = scene_position_str[:-2] + "入口"
-        # scene_name = cache.scene_data[scene_position_str].scene_name
-        # 输出干员名字
-        now_draw_text = f"[{id}]{name}"
-        # 输出跟随信息
-        if character_data.sp_flag.is_follow == 1:
-            now_draw_text += "*"
-        # 输出地点信息
-        now_draw_text += f":{scene_position_str}   "
-
-        status_text = game_config.config_status[character_data.state].name
-        # 如果是在移动，则输出目的地
-        # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
-        if status_text == _("移动") and len(character_data.behavior.move_final_target):
-            now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
-        # 否则输出状态
-        else:
-            now_draw_text += _("正在：{0}").format(status_text)
-
-        name_draw = draw.LeftButton(
-            now_draw_text, self.button_return, self.width, cmd_func=self.see_call_list
-        )
-        self.draw_text = now_draw_text
-        self.now_draw = name_draw
-        """ 绘制的对象 """
-
-
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
-
-    def see_call_list(self):
-        """点击后进行召集"""
-        # title_draw = draw.TitleLineDraw(self.text, window_width)
-        return_list = []
-        # title_draw.draw()
-        line = draw.LineDraw("-", window_width)
-        line.draw()
-        character_data: game_type.Character = cache.character_data[self.npc_id]
-        now_draw = draw.NormalDraw()
-        if not handle_premise.handle_normal_24567(self.npc_id):
-            now_draw.text = _("***{0}状态异常，无法召集***\n").format(character_data.name)
-        elif character_data.sp_flag.is_follow == 0:
-            if cache.debug_mode:
-                character_data.sp_flag.is_follow = 1
-                now_draw.text = character_data.name + _("收到了博士的信息，询问了博士的位置之后开始移动\n")
-            else:
-                character_data.sp_flag.is_follow = 3
-                now_draw.text = character_data.name + _("收到了博士的信息，接下来会前往博士办公室\n")
-
-            # 去掉其他NPC的跟随
-            # if not cache.debug_mode:
-            #     for npc_id in cache.npc_id_got:
-            #         if npc_id != 0 and npc_id != character_id:
-            #             other_character_data = cache.character_data[npc_id]
-            #             if other_character_data.sp_flag.is_follow:
-            #                 other_character_data.sp_flag.is_follow = 0
-            #                 now_draw.text += other_character_data.name + "退出跟随模式\n"
-        elif character_data.sp_flag.is_follow == 1 and cache.debug_mode:
-            character_data.sp_flag.is_follow = 3
-            now_draw.text = character_data.name + _("收到了博士的信息，接下来会前往博士办公室\n")
-
-        else:
-            character_data.sp_flag.is_follow = 0
-            now_draw.text = character_data.name + _("退出跟随模式\n")
-        now_draw.width = 1
-        now_draw.draw()
-        # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        # back_draw.draw()
-        # line_feed.draw()
-        # return_list.append(back_draw.return_text)
-        # yrn = flow_handle.askfor_all(return_list)
-        # if yrn == back_draw.return_text:
-        #     break
