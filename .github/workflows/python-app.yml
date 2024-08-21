@@ -81,19 +81,21 @@ jobs:
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
-    
+
       - name: Get the last merged commit SHA from the main branch
         run: |
-          LAST_MERGED_SHA=$(git rev-parse origin/main)
+          $LAST_MERGED_SHA = git rev-parse origin/main
           echo "Last merged commit SHA: $LAST_MERGED_SHA"
-          echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $GITHUB_ENV
+          echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $env:GITHUB_ENV
+        shell: pwsh
 
       - name: Get current PR commit SHA
         id: commits
         run: |
-          CURRENT_SHA=${{ github.sha }}
+          $CURRENT_SHA = ${{ github.sha }}
           echo "Current PR commit SHA: $CURRENT_SHA"
-          echo "CURRENT_SHA=$CURRENT_SHA" >> $GITHUB_ENV
+          echo "CURRENT_SHA=$CURRENT_SHA" >> $env:GITHUB_ENV
+        shell: pwsh
 
       - name: Output commits for verification
         run: |
