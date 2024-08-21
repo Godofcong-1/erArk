@@ -92,7 +92,7 @@ jobs:
       - name: Get current PR commit SHA
         id: commits
         run: |
-          $CURRENT_SHA = ${{ github.sha }}
+          $CURRENT_SHA = "${{ github.sha }}"
           echo "Current PR commit SHA: $CURRENT_SHA"
           echo "CURRENT_SHA=$CURRENT_SHA" >> $env:GITHUB_ENV
         shell: pwsh
