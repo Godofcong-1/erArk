@@ -82,9 +82,9 @@ jobs:
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
 
-      - name: Get the last merged commit SHA from the main branch
+      - name: Get the last merged commit SHA from the master branch
         run: |
-          $LAST_MERGED_SHA = git rev-parse origin/main
+          $LAST_MERGED_SHA = git rev-parse origin/master
           echo "Last merged commit SHA: $LAST_MERGED_SHA"
           echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $env:GITHUB_ENV
         shell: pwsh
