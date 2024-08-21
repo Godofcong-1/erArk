@@ -215,10 +215,10 @@ class InScenePanel:
             character_status_draw_list = []
             if character_data.target_character_id and cache.scene_panel_show[0]:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width / 2, 9, 0, 0
+                    character_data.cid, self.width / 2, 7, 0, 0
                 )
                 target_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.target_character_id, self.width, 9, 0, 0
+                    character_data.target_character_id, self.width, 7, 0, 0
                 )
                 now_line = len(character_status_draw.draw_list)
                 if len(target_status_draw.draw_list) > now_line:

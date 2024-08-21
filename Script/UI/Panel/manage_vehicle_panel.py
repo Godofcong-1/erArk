@@ -1,10 +1,8 @@
 from typing import Tuple, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.UI.Moudle import draw, panel
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.Design import game_time
-from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """

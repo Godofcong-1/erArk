@@ -45,6 +45,8 @@ config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
 """ 角色状态类型配表数据 """
 config_character_state_type_data: Dict[int, Set] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
+config_character_state_level: Dict[int, config_def.Character_State_Level] = {}
+""" 角色状态等级配置 """
 # config_clothing_suit: Dict[int, config_def.ClothingSuit] = {}
 # """ 衣服套装配置列表 """
 # config_clothing_suit_data: Dict[int, Dict[int, Set]] = {}
@@ -612,6 +614,16 @@ def load_character_state_type_data():
         now_tem = config_def.CharacterStateType()
         now_tem.__dict__ = tem_data
         config_character_state_type[now_tem.cid] = now_tem
+
+
+def load_character_state_level():
+    """载入角色状态等级配置"""
+    now_data = config_data["Character_State_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Character_State_Level()
+        now_tem.__dict__ = tem_data
+        config_character_state_level[now_tem.cid] = now_tem
 
 
 # def load_clothing_suit():
@@ -1391,6 +1403,7 @@ def init():
     load_book_type()
     load_character_state_data()
     load_character_state_type_data()
+    load_character_state_level()
     # load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()

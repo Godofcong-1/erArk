@@ -245,6 +245,8 @@ class InfoBarDraw:
         """ 最大数值 """
         self.value: int = 0
         """ 当前数值 """
+        self.chara_state: bool = False
+        """ 是否为人物状态 """
 
     def set(self, bar_id: str, max_value: int, value: int, text: str):
         """
@@ -262,9 +264,13 @@ class InfoBarDraw:
         info_draw = NormalDraw()
         info_draw.width = int(now_max_width / 3)
         info_draw.text = f"{text}["
+        if self.chara_state:
+            info_draw.text = f"{text} "
         value_draw = NormalDraw()
         value_draw.width = int(now_max_width / 3)
         value_draw.text = f"]({value}/{max_value})"
+        if self.chara_state:
+            value_draw.text = f" {value}"
         self.bar_id = bar_id
         bar_draw = BarDraw()
         bar_draw.width = now_max_width - len(info_draw) - len(value_draw)

@@ -8,3 +8,4 @@ int,str,str,str,int
 2,engravingemptybar,engravingemptybar_true,engravingemptybar_null,2
 3,SemenPointBar,epbar_true,epbar_null,1
 4,SanityPointbar,spbar_true,spbar_null,1
+5,StatusPointbar,statbar_true,statbar_null,1

@@ -159,6 +159,17 @@ class CharacterStateType:
     """ 类型名 """
 
 
+class Character_State_Level:
+    """ 状态等级 """
+
+    cid: int
+    """ 状态等级cid """
+    level: int
+    """ 当前等级 """
+    max_value: int
+    """ 当前等级状态最大值 """
+
+
 class CharaSetting:
     """ 角色设置 """
 

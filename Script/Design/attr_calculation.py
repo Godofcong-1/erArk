@@ -446,6 +446,7 @@ def judge_grade(experience: int) -> str:
         grade = "EX"
     return grade
 
+
 def get_status_level(value: int) -> int:
     """
     按状态数值评定数字等级
@@ -454,29 +455,17 @@ def get_status_level(value: int) -> int:
     Return arguments:
     level -- 数字评级
     """
-    if value < 100:
-        level = 0
-    elif value < 500:
-        level = 1
-    elif value < 1000:
-        level = 2
-    elif value < 2500:
-        level = 3
-    elif value < 6000:
-        level = 4
-    elif value < 12000:
-        level = 5
-    elif value < 30000:
-        level = 6
-    elif value < 50000:
-        level = 7
-    elif value < 75000:
-        level = 8
-    elif value < 99999:
-        level = 9
-    elif value >= 99999:
-        level = 10
-    return level
+
+    # 通过config_character_state_level配置表来计算状态等级
+    for now_cid in game_config.config_character_state_level:
+        now_data = game_config.config_character_state_level[now_cid]
+        if value >= now_data.max_value:
+            continue
+        return now_data.level
+    # 到达极限值时输出config_character_state_level的最后一个作为返回值
+    max_cid = list(game_config.config_character_state_level.keys())[-1]
+    now_data = game_config.config_character_state_level[max_cid]
+    return now_data.level
 
 
 def get_ability_adjust(value: int) -> int:

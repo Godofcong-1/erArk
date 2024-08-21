@@ -313,7 +313,7 @@ class SeeCharacterStatusPanel:
                 # print("type_data.name :",type_data.name)
                 self.draw_list.append(type_line)
                 type_set = game_config.config_character_state_type_data[status_type]
-                status_text_list = []
+                draw_count = 0
                 for status_id in type_set:
                     # print("status_type :",status_type)
                     # print("status_id :",status_id)
@@ -326,6 +326,7 @@ class SeeCharacterStatusPanel:
                         elif character_data.sex == 1:
                             if status_id == 3:
                                 continue
+                    # 计算状态数值和等级
                     status_text = game_config.config_character_state[status_id].name
                     status_value = 0
                     if status_id in character_data.status_data:
@@ -335,16 +336,34 @@ class SeeCharacterStatusPanel:
                     status_value = round(status_value)
                     # status_value = int(attr_text.get_value_text(status_value))
                     status_level = attr_calculation.get_status_level(status_value)
-                    now_text = f"  {status_text}:lv{status_level} {status_value}"
-                    # print("status_value :",status_value)
-                    status_text_list.append(now_text)
-                    # print("status_text_list :",status_text_list)
-                if self.center_status:
-                    now_draw = panel.CenterDrawTextListPanel()
-                else:
-                    now_draw = panel.LeftDrawTextListPanel()
-                now_draw.set(status_text_list, self.width, self.column)
-                self.draw_list.extend(now_draw.draw_list)
+                    # 计算下一等级的最大值
+                    next_level = status_level + 1 if status_level < len(game_config.config_character_state_level) - 1 else status_level
+                    next_level_value = game_config.config_character_state_level[next_level].max_value
+                    # 绘制状态文本
+                    now_draw = draw.LeftDraw()
+                    now_draw.width = self.width / self.column / 2
+                    now_text = f"{status_text}lv{status_level}"
+                    now_draw.text = now_text
+                    # self.draw_list.append(now_draw)
+
+                    # 绘制状态条
+                    bar_draw = draw.InfoBarDraw()
+                    bar_draw.width = self.width / self.column
+                    bar_draw.scale = 0.8
+                    bar_draw.chara_state = True
+                    bar_draw.set(
+                        "StatusPointbar",
+                        next_level_value,
+                        status_value,
+                        now_text,
+                    )
+                    self.draw_list.append(bar_draw)
+
+                    # 如果是最后一个状态则换行
+                    draw_count += 1
+                    if draw_count % self.column == 0:
+                        self.draw_list.append(line_feed)
+                self.draw_list.append(line_feed)
 
     def draw(self):
         """绘制面板"""
