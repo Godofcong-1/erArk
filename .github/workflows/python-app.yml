@@ -83,14 +83,14 @@ jobs:
       - name: Get previous release tag
         id: prev_tag
         run: |
-          $prevTag = $(git describe --tags --abbrev=0)
+          $prevTag = $(git describe --tags --abbrev=0 HEAD^)
           echo "Previous release tag: $prevTag"
           echo "::set-output name=tag::$prevTag"
 
       - name: Get commits between tags
         id: commits
         run: |
-          $prevTag = ${{ steps.prev_tag.outputs.tag }}
+          $prevTag = (git describe --tags --abbrev=0 HEAD^)
           echo "Previous tag: $prevTag"
           $commits = $(git log $prevTag..HEAD --pretty=format:"%h %s")
           echo "Commits: $commits"
