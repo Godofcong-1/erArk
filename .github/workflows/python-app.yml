@@ -127,6 +127,7 @@ jobs:
             游戏本体 - erArk.zip
             游戏所需的字体包（用于绘制AA地图） - font.zip
             口上事件编辑器（字面意思上的无需写代码即可写口上） -- erArkEditor.zip
+            源代码 - Source code
           
             自上次推送以来的更新:
             ${{ steps.commits.outputs.commits }}
