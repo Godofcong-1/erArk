@@ -80,14 +80,24 @@ jobs:
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
 
-      - name: Get previous tag
+      - name: Get previous release tag
         id: prev_tag
-        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0 HEAD^)
+        run: |
+          $tags = $(git tag --list --sort=-creatordate)
+          $prevTag = ""
+          foreach ($tag in $tags) {
+            if ($tag -match "^v[0-9]+\.[0-9]+\.[0-9]+$") {
+              $prevTag = $tag
+              break
+            }
+          }
+          echo "Previous release tag: $prevTag"
+          echo "::set-output name=tag::$prevTag"
 
       - name: Get commits between tags
         id: commits
         run: |
-          $prevTag = $(git describe --tags --abbrev=0 HEAD^)
+          $prevTag = ${{ steps.prev_tag.outputs.tag }}
           echo "Previous tag: $prevTag"
           $commits = $(git log $prevTag..HEAD --pretty=format:"%h %s")
           echo "Commits: $commits"
