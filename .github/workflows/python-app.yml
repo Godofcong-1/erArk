@@ -83,7 +83,7 @@ jobs:
       - name: Get previous release tag
         id: prev_tag
         run: |
-          $prevTag = $(git tag --sort=-creatordate | Select-Object -First 1)
+          $prevTag = $(git describe --tags --abbrev=0)
           echo "Previous release tag: $prevTag"
           echo "::set-output name=tag::$prevTag"
 
@@ -129,7 +129,6 @@ jobs:
             口上事件编辑器（字面意思上的无需写代码即可写口上） -- erArkEditor.zip
             源代码 - Source code
           
-            自上次推送以来的更新:
             ${{ steps.commits.outputs.commits }}
           draft: false
           prerelease: false
