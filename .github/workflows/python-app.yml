@@ -87,9 +87,9 @@ jobs:
       - name: Get commits between tags
         id: commits
         run: |
-          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
-          COMMITS=$(git log $PREV_TAG..HEAD --pretty=format:"%h %s")
-          echo "::set-output name=commits::$COMMITS"
+          $prevTag = (git describe --tags --abbrev=0 HEAD^)
+          $commits = (git log $prevTag..HEAD --pretty=format:"%h %s")
+          echo "::set-output name=commits::$commits"
 
       - name: Pack ArkEditor Files
         run: |
