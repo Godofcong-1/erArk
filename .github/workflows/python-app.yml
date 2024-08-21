@@ -39,6 +39,13 @@ jobs:
       - name: Copy Game Files
         run: |
           Copy-Item data dist/ -Recurse
+          Copy-Item config.ini dist/
+          Copy-Item LICENSE dist/
+          Copy-Item README.md dist/
+          Copy-Item image dist/ -Recurse
+          Copy-Item update.log dist/
+          Copy-Item package.json dist/
+          Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
 
       - name: Pack Game Files
@@ -52,6 +59,26 @@ jobs:
       - name: Copy ArkEditor Files
         run: |
           New-Item -ItemType Directory -Force dist_ArkEditor
+          New-Item -ItemType Directory -Force dist_ArkEditor/csv
+          Copy-Item dist/main.exe dist_ArkEditor/ -Force
+          Copy-Item tools/ArkEditor/csv/Premise.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Status.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
+          Copy-Item tools/ArkEditor/csv/Organ.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Ability.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/CharacterState.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Juel.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Race.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Profession.csv dist_ArkEditor/csv/
+          Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
+          Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
+          Copy-Item example/模板事件.json dist_ArkEditor/
 
       - name: Get previous tag
         id: prev_tag
@@ -60,8 +87,10 @@ jobs:
       - name: Get commits between tags
         id: commits
         run: |
-          $prevTag = (git describe --tags --abbrev=0 HEAD^)
-          $commits = (git log $prevTag..HEAD --pretty=format:"%h %s")
+          $prevTag = $(git describe --tags --abbrev=0 HEAD^)
+          echo "Previous tag: $prevTag"
+          $commits = $(git log $prevTag..HEAD --pretty=format:"%h %s")
+          echo "Commits: $commits"
           echo "::set-output name=commits::$commits"
 
       - name: Output commits for verification
@@ -94,7 +123,7 @@ jobs:
           body: |
             游戏本体 - erArk.zip
             游戏所需的字体包（用于绘制AA地图） - font.zip
-            想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
+            口上事件编辑器（字面意思上的无需写代码即可写口上） -- erArkEditor.zip
           
             自上次推送以来的更新:
             ${{ steps.commits.outputs.commits }}
