@@ -83,14 +83,7 @@ jobs:
       - name: Get previous release tag
         id: prev_tag
         run: |
-          $tags = $(git tag --list --sort=-creatordate)
-          $prevTag = ""
-          foreach ($tag in $tags) {
-            if ($tag -match "^v[0-9]+\.[0-9]+\.[0-9]+$") {
-              $prevTag = $tag
-              break
-            }
-          }
+          $prevTag = $(git tag --sort=-creatordate | Select-Object -First 1)
           echo "Previous release tag: $prevTag"
           echo "::set-output name=tag::$prevTag"
 
