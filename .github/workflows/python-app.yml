@@ -11,7 +11,9 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # 确保获取完整的提交历史
 
       - name: Install Python
         uses: actions/setup-python@v1
@@ -79,22 +81,19 @@ jobs:
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
-
-      - name: Get previous release tag
-        id: prev_tag
+    
+      - name: Get the last merged commit SHA from the main branch
         run: |
-          $prevTag = $(git describe --tags --abbrev=0 HEAD^)
-          echo "Previous release tag: $prevTag"
-          echo "::set-output name=tag::$prevTag"
+          LAST_MERGED_SHA=$(git rev-parse origin/main)
+          echo "Last merged commit SHA: $LAST_MERGED_SHA"
+          echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $GITHUB_ENV
 
-      - name: Get commits between tags
+      - name: Get current PR commit SHA
         id: commits
         run: |
-          $prevTag = (git describe --tags --abbrev=0 HEAD^)
-          echo "Previous tag: $prevTag"
-          $commits = $(git log $prevTag..HEAD --pretty=format:"%h %s")
-          echo "Commits: $commits"
-          echo "::set-output name=commits::$commits"
+          CURRENT_SHA=${{ github.sha }}
+          echo "Current PR commit SHA: $CURRENT_SHA"
+          echo "CURRENT_SHA=$CURRENT_SHA" >> $GITHUB_ENV
 
       - name: Output commits for verification
         run: |
@@ -126,7 +125,7 @@ jobs:
           body: |
             游戏本体 - erArk.zip
             游戏所需的字体包（用于绘制AA地图） - font.zip
-            口上事件编辑器（字面意思上的无需写代码即可写口上） -- erArkEditor.zip
+            口上事件编辑器（字面意思上的无需写代码即可写口上） - erArkEditor.zip
             源代码 - Source code
           
             ${{ steps.commits.outputs.commits }}
