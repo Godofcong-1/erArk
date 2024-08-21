@@ -12,24 +12,30 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v1
+
       - name: Install Python
         uses: actions/setup-python@v1
         with:
           python-version: 3.9
+
       - name: Install requirements
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
           pip install -r requirements.txt
+
       - name: Run PyInstaller
         run: |
           pyinstaller -F game.py
+
       - name: Build Game Config
         run: |
           python buildconfig.py
+
       - name: Build Game Cache
         run: |
           python init_data.py
+
       - name: Copy Game Files
         run: |
           Copy-Item data dist/ -Recurse
@@ -41,12 +47,15 @@ jobs:
           Copy-Item package.json dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
+
       - name: Pack Game Files
         run: |
           Compress-Archive -Path erArk\* -DestinationPath erArk.zip
+
       - name: Run PyInstaller_ArkEditor
         run: |
           pyinstaller -F tools/ArkEditor/main.py
+
       - name: Copy ArkEditor Files
         run: |
           New-Item -ItemType Directory -Force dist_ArkEditor
@@ -70,6 +79,18 @@ jobs:
           Copy-Item example/999_模板人物口上文件.csv dist_ArkEditor/
           Copy-Item example/999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/模板事件.json dist_ArkEditor/
+
+      - name: Get previous tag
+        id: prev_tag
+        run: echo ::set-output name=tag::$(git describe --tags --abbrev=0 HEAD^)
+
+      - name: Get commits between tags
+        id: commits
+        run: |
+          PREV_TAG=$(git describe --tags --abbrev=0 HEAD^)
+          COMMITS=$(git log $PREV_TAG..HEAD --pretty=format:"%h %s")
+          echo "::set-output name=commits::$COMMITS"
+
       - name: Pack ArkEditor Files
         run: |
           Compress-Archive -Path dist_ArkEditor\* -DestinationPath erArkEditor.zip
@@ -77,12 +98,14 @@ jobs:
         with:
           name: Windows
           path: erArk.zip
+
       - name: Read Version
         id: version
         uses: ashley-taylor/read-json-property-action@v1.0
         with:
           path: package.json
           property: version
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -91,9 +114,16 @@ jobs:
         with:
           tag_name: ${{steps.version.outputs.value}}
           release_name: ${{steps.version.outputs.value}}
-          body: 除了游戏本体(erArk.zip)，别忘了下载游戏所需的字体包(font.zip)。想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
+          body: |
+            游戏本体 - erArk.zip
+            游戏所需的字体包（用于绘制AA地图） - font.zip
+            想要写口上和事件的话，可以下载编辑器(erArkEditor.zip)。
+          
+            自上次推送以来的更新:
+            ${{ steps.commits.outputs.commits }}
           draft: false
           prerelease: false
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -104,6 +134,7 @@ jobs:
           asset_path: ${{ github.workspace }}/erArk.zip
           asset_name: erArk_${{steps.version.outputs.value}}.zip
           asset_content_type: application/zip
+
       - name: Upload Font Asset
         id: upload-font-asset
         uses: actions/upload-release-asset@v1
@@ -114,6 +145,7 @@ jobs:
           asset_path: ${{ github.workspace }}/游戏字体包.zip
           asset_name: font.zip
           asset_content_type: application/zip
+
       - name: Upload ArkEditor Asset
         id: upload-ArkEditor-asset
         uses: actions/upload-release-asset@v1
