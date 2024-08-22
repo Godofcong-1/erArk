@@ -226,7 +226,7 @@ def must_show_talk_check(character_id: int):
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
                 handle_talk_draw(character_id, now_talk_data, second_behavior_id)
                 # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
-                change_data = game_type.CharacterStatusChange
+                change_data = game_type.CharacterStatusChange()
                 for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
                     constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
                 # 触发后该行为值归零
