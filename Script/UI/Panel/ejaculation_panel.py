@@ -36,15 +36,15 @@ def common_ejaculation():
         return _("只流出了些许前列腺液，已经射不出精液了"),0
     else:
         # 基础射精值，小中多射精区分
-        if character_data.second_behavior[1009] == 1:
+        if character_data.second_behavior[1009] == 1 or character_data.h_state.orgasm_level[3] % 3 == 0:
             semen_count = int(10 * random_weight)
             semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("射精，射出了") + str(semen_count) + _("ml精液")
-        elif character_data.second_behavior[1010] == 1:
+        elif character_data.second_behavior[1010] == 1 or character_data.h_state.orgasm_level[3] % 3 == 1:
             semen_count = int(25 * random_weight)
             semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
-        elif character_data.second_behavior[1011] == 1:
+        elif character_data.second_behavior[1011] == 1 or character_data.h_state.orgasm_level[3] % 3 == 2:
             semen_count = int(45 * random_weight)
             semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
