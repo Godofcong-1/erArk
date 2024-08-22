@@ -644,7 +644,7 @@ def handle_hypnosis_one():
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.T_UNCONSCIOUS_HYPNOSIS_FLAG,
      constant_promise.Premise.SANITY_POINT_GE_5,
      constant_promise.Premise.TIRED_LE_84}
