@@ -5709,7 +5709,7 @@ msgid "桃金娘绿"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:56
-msgid "阴影绿色"
+msgid "阴影绿色（日常颜色）"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:57
@@ -5717,11 +5717,11 @@ msgid "猫鼬色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:58
-msgid "浅栗色"
+msgid "浅栗色（猥亵颜色）"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:59
-msgid "浅法国米色"
+msgid "浅法国米色（娱乐颜色）"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:60
@@ -5737,7 +5737,7 @@ msgid "浅蔚蓝"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:63
-msgid "浅钢蓝"
+msgid "浅钢蓝（技艺颜色）"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:64
@@ -5753,7 +5753,7 @@ msgid "淡洋红"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:67
-msgid "紫红"
+msgid "紫红（性爱颜色）"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:68

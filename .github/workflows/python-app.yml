@@ -1,10 +1,8 @@
 name: Build Windows Game
 
 on:
-  push:
-    branches: [ master ]
   pull_request:
-    branches: [ master ]
+    branches: [ release ]
 
 jobs:
   build-windows:
@@ -103,9 +101,8 @@ jobs:
       - name: Output commits for verification
         id: get_commit_logs
         run: |
-          echo "Commits between $env:SECOND_LAST_MERGED_SHA and $env:CURRENT_SHA"
-          git log --oneline $env:SECOND_LAST_MERGED_SHA..$env:CURRENT_SHA
-          $COMMIT_LOGS = $(git log --oneline $env:SECOND_LAST_MERGED_SHA..$env:CURRENT_SHA)
+          echo "Commits between $env:LAST_MERGED_SHA and $env:CURRENT_SHA"
+          $COMMIT_LOGS = $(git log --oneline $env:LAST_MERGED_SHA..$env:CURRENT_SHA)
           echo "COMMIT_LOGS : $COMMIT_LOGS"
           echo "COMMIT_LOGS=$COMMIT_LOGS" >> $env:GITHUB_ENV
         shell: pwsh

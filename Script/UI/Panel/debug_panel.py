@@ -1094,7 +1094,11 @@ class Debug_Panel:
             elif key_index == 18:
                 draw_text_list = []
                 draw_text_list.append(f"[000]:受精概率：{target_data.pregnancy.fertilization_rate}")
-                draw_text_list.append(f"[001]:生殖周期的第几天(0安全1普通2危险3排卵，0110232)：{target_data.pregnancy.reproduction_period}")
+                reproduction_period = target_data.pregnancy.reproduction_period
+                now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
+                period_cid = f"生理期{now_reproduction_period_type}"
+                reproduction_text = game_config.ui_text_data['h_state'][period_cid]
+                draw_text_list.append(f"[001]:生殖周期的第几天(0安全1普通2危险3排卵，0110232)：{target_data.pregnancy.reproduction_period},{reproduction_text}")
                 draw_text_list.append(f"[002]:开始受精的时间：{target_data.pregnancy.fertilization_time}      年月日分别为0,1,2")
                 draw_text_list.append(f"[003]:当前妊娠素质：0受精-{target_data.talent[20]}，1妊娠-{target_data.talent[21]}，2临盆-{target_data.talent[22]}，3产后-{target_data.talent[23]}，4育儿-{target_data.talent[24]}")
                 draw_text_list.append(f"[004]:出生的时间：{target_data.pregnancy.born_time}      年月日分别为0,1,2")
