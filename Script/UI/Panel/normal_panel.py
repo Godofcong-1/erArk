@@ -50,7 +50,7 @@ class Close_Door_Panel:
 
         character_data: game_type.Character = cache.character_data[0]
 
-        title_text = "关门"
+        title_text = _("关门")
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -94,6 +94,8 @@ class Close_Door_Panel:
                 if askfor_panel_return_list[yrn] == askfor_list[0]:
                     cache.scene_data[now_scene_str].close_flag = now_scene_data.close_type
                     return 1
+                elif now_scene_data.close_type == 0 and askfor_panel_return_list[yrn] == askfor_list[1]:
+                    return -1
                 return 0
 
 
