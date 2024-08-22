@@ -782,7 +782,7 @@ def handle_hypnosis_heart():
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.TARGET_IN_HYPNOSIS,
      constant_promise.Premise.TIRED_LE_84}
 )
