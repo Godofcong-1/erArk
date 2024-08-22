@@ -87,6 +87,9 @@ jobs:
           $LAST_MERGED_SHA = git rev-parse origin/master
           echo "Last merged commit SHA: $LAST_MERGED_SHA"
           echo "LAST_MERGED_SHA=$LAST_MERGED_SHA" >> $env:GITHUB_ENV
+          $SECOND_LAST_MERGED_SHA = git rev-list --merges -n 2 origin/master | Select-Object -Last 1
+          echo "Second last merged commit SHA: $SECOND_LAST_MERGED_SHA"
+          echo "SECOND_LAST_MERGED_SHA=$SECOND_LAST_MERGED_SHA" >> $env:GITHUB_ENV
         shell: pwsh
 
       - name: Get current PR commit SHA
@@ -100,9 +103,9 @@ jobs:
       - name: Output commits for verification
         id: get_commit_logs
         run: |
-          echo "Commits between $env:LAST_MERGED_SHA and $env:CURRENT_SHA"
-          git log --oneline $env:LAST_MERGED_SHA..$env:CURRENT_SHA
-          $COMMIT_LOGS = $(git log --oneline $env:LAST_MERGED_SHA..$env:CURRENT_SHA)
+          echo "Commits between $env:SECOND_LAST_MERGED_SHA and $env:CURRENT_SHA"
+          git log --oneline $env:SECOND_LAST_MERGED_SHA..$env:CURRENT_SHA
+          $COMMIT_LOGS = $(git log --oneline $env:SECOND_LAST_MERGED_SHA..$env:CURRENT_SHA)
           echo "COMMIT_LOGS : $COMMIT_LOGS"
           echo "COMMIT_LOGS=$COMMIT_LOGS" >> $env:GITHUB_ENV
         shell: pwsh
