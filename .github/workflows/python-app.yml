@@ -99,7 +99,7 @@ jobs:
 
       - name: Output commits for verification
         run: |
-          echo "Commits between $LAST_MERGED_SHA and $CURRENT_SHA:"
+          echo "Commits between $LAST_MERGED_SHA and $CURRENT_SHA"
           git log $LAST_MERGED_SHA..$CURRENT_SHA --oneline
 
       - name: Pack ArkEditor Files
