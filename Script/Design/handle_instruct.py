@@ -634,6 +634,13 @@ def handle_manage_basement():
 )
 def handle_hypnosis_one():
     """处理单人催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if cache.scene_data[now_scene_str].close_flag == 0:
+        now_draw = normal_panel.Close_Door_Panel(width)
+        door_return = now_draw.draw()
+        if door_return == -1:
+            return
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ONE)
 
 
