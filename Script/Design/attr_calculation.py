@@ -742,8 +742,12 @@ def get_favorability_level(value: int):
     """
     for now_cid in game_config.config_favorability_level:
         now_data = game_config.config_favorability_level[now_cid]
-        if value > now_data.Favorability_point:
-            continue
+        # 如果大于下一级的好感度值，则继续
+        next_cid = now_cid + 1
+        if next_cid in game_config.config_favorability_level:
+            next_data = game_config.config_favorability_level[next_cid]
+            if value >= next_data.Favorability_point:
+                continue
         return now_cid,now_data.judge_add
     # 到达极限值时输出config_favorability_level的最后一个作为返回值
     max_cid = list(game_config.config_favorability_level.keys())[-1]
@@ -762,8 +766,12 @@ def get_trust_level(value: int):
     """
     for now_cid in game_config.config_trust_level:
         now_data = game_config.config_trust_level[now_cid]
-        if value > now_data.Trust_point:
-            continue
+        # 如果大于下一级的信赖度值，则继续
+        next_cid = now_cid + 1
+        if next_cid in game_config.config_trust_level:
+            next_data = game_config.config_trust_level[next_cid]
+            if value >= next_data.Trust_point:
+                continue
         return now_cid,now_data.judge_add
     # 到达极限值时输出config_trust_level的最后一个作为返回值
     max_cid = list(game_config.config_trust_level.keys())[-1]
