@@ -49,18 +49,43 @@ root = Tk()
 #读取屏幕长宽
 screen_weight = root.winfo_screenwidth()
 screen_height = root.winfo_screenheight()
-#如果设定长宽大于屏幕长宽，则缩小为屏幕长宽
-if normal_config.config_normal.window_width + 30 > screen_weight:
-    normal_config.config_normal.window_width = screen_weight - 30
-if normal_config.config_normal.window_hight + 30 > screen_height:
-    normal_config.config_normal.window_hight = screen_height - 30
-#字体大小为屏幕宽度除以行数，输入字体大小为普通字体大小-2
-now_font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width) * 2
-normal_config.config_normal.font_size = now_font_size
-normal_config.config_normal.order_font_size = now_font_size - 2
-#读取dpi
-dpi = root.winfo_fpixels("1i")
-root.tk.call("tk", "scaling", 1.0)
+now_font_size = 20
+# 按屏幕分辨率适配字体大小
+window_width = screen_weight - 30
+window_height = screen_height - 30
+need_char_width = int(window_width / normal_config.config_normal.text_width)
+need_char_height = int(window_height / normal_config.config_normal.text_hight)
+test_font = font.Font(family=normal_config.config_normal.font,size=now_font_size)
+char_width = test_font.measure("a")
+char_height = test_font.metrics("linespace")
+if char_width <= need_char_width and char_height <= need_char_height:
+    need_font_size = now_font_size
+    while True:
+        next_font_size = need_font_size + 1
+        next_font = font.Font(family=normal_config.config_normal.font,size=next_font_size)
+        next_font_char_width = next_font.measure("a")
+        next_font_char_height = next_font.metrics("linespace")
+        if next_font_char_width <= need_char_width and next_font_char_height <= need_char_height:
+            need_font_size = next_font_size
+        else:
+            break
+else:
+    need_font_size = now_font_size
+    while True:
+        next_font_size = need_font_size - 1
+        next_font = font.Font(family=normal_config.config_normal.font,size=next_font_size)
+        next_font_char_width = next_font.measure("a")
+        next_font_char_height = next_font.metrics("linespace")
+        need_font_size = next_font_size
+        if next_font_char_width <= need_char_width and next_font_char_height <= need_char_height:
+            break
+now_font = font.Font(family=normal_config.config_normal.font,size=need_font_size)
+now_char_width = now_font.measure("a")
+now_char_height = now_font.metrics("linespace")
+window_width = now_char_width * normal_config.config_normal.text_width
+window_height = now_char_height * normal_config.config_normal.text_hight
+normal_config.config_normal.font_size = need_font_size
+normal_config.config_normal.order_font_size = need_font_size - 2
 root.title(title_text)
 width = normal_config.config_normal.window_width
 #根窗口左上角x坐标-当前窗口左上角x坐标
