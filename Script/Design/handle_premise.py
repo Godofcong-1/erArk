@@ -8998,12 +8998,55 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                for i in {10, 11, 12, 13, 15, 16, 17, 18}:
-                    if other_character_data.talent[i]:
-                        break
-                    if i == 18:
-                        return 999
+                if handle_self_not_fall(chara_id):
+                    return 999
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_UNCONSCIOUS)
+def handle_scene_someone_not_unconscious(character_id: int) -> int:
+    """
+    该地点有非无意识状态的角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id:
+                if handle_unconscious_flag_0(chara_id):
+                    return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_ALL_UNCONSCIOUS)
+def handle_scene_all_unconscious(character_id: int) -> int:
+    """
+    该地点有玩家以外的角色，且所有角色都处于无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id:
+                if handle_unconscious_flag_1(chara_id):
+                    return 0
+        return 1
     return 0
 
 
