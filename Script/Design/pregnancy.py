@@ -89,6 +89,10 @@ def check_fertilization(character_id: int):
     if character_data.pregnancy.reproduction_period != 5:
         return 0
 
+    # 消除强制排卵状态
+    if character_data.hypnosis.force_ovulation:
+        character_data.hypnosis.force_ovulation = False
+
     # 如果当前已受精，则跳过判断
     for i in {20,21,22}:
         if character_data.talent[i] == 1:
