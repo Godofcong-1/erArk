@@ -677,6 +677,16 @@ def handle_hypnosis_all():
     """处理集体催眠"""
     character_data: game_type.Character = cache.character_data[0]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    # 计算当前理智值是否足够进行催眠
+    scene_data: game_type.Scene = cache.scene_data[now_scene_str]
+    now_npc_num = len(scene_data.character_list) - 1
+    sanity_point_cost = 10 + 10 * now_npc_num
+    if character_data.sanity_point < sanity_point_cost:
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n当前理智值不足，至少需要{0}点理智值，无法进行集体催眠\n").format(sanity_point_cost)
+        now_draw.text = draw_text
+        now_draw.draw()
+        return
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
         door_return = now_draw.draw()
