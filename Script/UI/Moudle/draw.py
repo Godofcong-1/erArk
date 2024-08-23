@@ -154,6 +154,7 @@ class BarDraw:
         if self.width > 0:
             proportion = 0
             if self.width > 1:
+                value = min(value, max_value) # 强制令长度不会超过100%
                 proportion = int(value / max_value * self.width)
             fix_bar = int(self.width - proportion)
             # print("bar_id =",bar_id)

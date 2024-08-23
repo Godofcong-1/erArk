@@ -567,6 +567,9 @@ def update_recruit():
                 # 跳过不存在的
                 if chara_id not in cache.character_data:
                     continue
+                # 跳过离线异常
+                if not handle_premise.handle_normal_7(chara_id):
+                    continue
                 # 本地招募
                 if recruitment_strategy == 0:
                     character_data = cache.character_data[chara_id]
@@ -586,9 +589,8 @@ def update_recruit():
                 now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
                 now_draw.draw()
             else:
-                if recruitment_strategy == 1:
-                    now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
-                    now_draw.draw()
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
+                now_draw.draw()
                 cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
 
 
