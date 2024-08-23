@@ -700,7 +700,12 @@ def handle_hypnosis_normal():
     """处理平然催眠"""
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_ability.hypnosis_type = 1
+    if character_data.pl_ability.hypnosis_type != 1:
+        character_data.pl_ability.hypnosis_type = 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n已切换为平然催眠模式\n")
+        now_draw.text = draw_text
+        now_draw.draw()
     target_data.sp_flag.unconscious_h = 4
     now_draw = draw.WaitDraw()
     now_draw.text = _("\n{0}会理所当然地接受{1}的不合理行为了\n").format(target_data.name, character_data.name)
@@ -723,8 +728,13 @@ def handle_hypnosis_air():
     from Script.UI.Panel import originium_arts
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if originium_arts.evaluate_hypnosis_completion(0):
+    if character_data.pl_ability.hypnosis_type != 2:
         character_data.pl_ability.hypnosis_type = 2
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n已切换为空气催眠模式\n")
+        now_draw.text = draw_text
+        now_draw.draw()
+    if originium_arts.evaluate_hypnosis_completion(0):
         target_data.sp_flag.unconscious_h = 5
         now_draw = draw.WaitDraw()
         now_draw.text = _("\n{0}会把{1}视为空气了\n").format(target_data.name, character_data.name)
@@ -746,7 +756,12 @@ def handle_hypnosis_body():
     """处理体控催眠"""
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_ability.hypnosis_type = 3
+    if character_data.pl_ability.hypnosis_type != 3:
+        character_data.pl_ability.hypnosis_type = 3
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n已切换为体控催眠模式\n")
+        now_draw.text = draw_text
+        now_draw.draw()
     target_data.sp_flag.unconscious_h = 6
     now_draw = draw.WaitDraw()
     now_draw.text = _("\n{0}可以随意地操纵{1}的身体了\n").format(character_data.name, target_data.name)
@@ -768,7 +783,12 @@ def handle_hypnosis_heart():
     """处理心控催眠"""
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_ability.hypnosis_type = 4
+    if character_data.pl_ability.hypnosis_type != 4:
+        character_data.pl_ability.hypnosis_type = 4
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n已切换为心控催眠模式\n")
+        now_draw.text = draw_text
+        now_draw.draw()
     target_data.sp_flag.unconscious_h = 7
     now_draw = draw.WaitDraw()
     now_draw.text = _("\n{0}可以向{1}的潜意识灌输指令了\n").format(character_data.name, target_data.name)
