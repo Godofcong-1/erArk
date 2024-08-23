@@ -135,6 +135,8 @@ class Invite_Visitor_Panel:
 
     def select_target(self):
         """选择邀请目标"""
+        from Script.Design import handle_premise
+
         while 1:
             line = draw.LineDraw("-", window_width)
             line.draw()
@@ -201,6 +203,9 @@ class Invite_Visitor_Panel:
                     continue
                 # 跳过不存在的
                 if chara_id not in cache.character_data:
+                    continue
+                # 跳过离线异常
+                if not handle_premise.handle_normal_7(chara_id):
                     continue
                 # 本地
                 if now_level == 2:

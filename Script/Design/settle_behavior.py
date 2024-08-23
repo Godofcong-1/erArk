@@ -548,6 +548,7 @@ def second_behavior_effect(
             and character_data.behavior.move_src != cache.character_data[0].position
     ):
         talk.must_show_talk_check(character_id)
+        must_settle_check(character_id)
         return
 
     # 遍历二段行为id，进行结算
@@ -563,6 +564,26 @@ def second_behavior_effect(
             # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
             # 触发后该行为值归零
             character_data.second_behavior[behavior_id] = 0
+
+
+def must_settle_check(character_id: int):
+    """
+    检查是否有必须计算但不必须显示的空白结算
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0:
+            # print(f"debug 检测到{second_behavior_id}可能需要显示")
+            # 需要有必须计算
+            if 997 in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
+                change_data = game_type.CharacterStatusChange()
+                for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+                # 触发后该行为值归零
+                character_data.second_behavior[second_behavior_id] = 0
 
 
 def check_unconscious_effect(

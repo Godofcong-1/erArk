@@ -29,6 +29,8 @@ def evaluate_hypnosis_completion(character_id: int):
     """
     pl_character_data: game_type.Character = cache.character_data[0]
     character_data: game_type.Character = cache.character_data[character_id]
+    # 进行素质获得检测
+    handle_talent.npc_gain_hypnosis_talent(character_id)
     # 计算催眠完成度
     now_hypnosis_type = pl_character_data.pl_ability.hypnosis_type
     hypnosis_degree_need = game_config.config_hypnosis_type[now_hypnosis_type].hypnosis_degree
@@ -59,11 +61,13 @@ def evaluate_hypnosis_completion(character_id: int):
         else:
             character_data.sp_flag.unconscious_h = 0
         # print(f"debug {character_data.name} unconscious_h = {character_data.sp_flag.unconscious_h}")
-        # 进行素质获得检测
-        handle_talent.npc_gain_hypnosis_talent(character_id)
         return 1
     # 未完成催眠
     else:
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n当前目标的催眠深度未达到{0}%，无法进入{1}催眠状态，需要使用基础手段来加深催眠程度\n").format(hypnosis_degree_need, game_config.config_hypnosis_type[now_hypnosis_type].name)
+        now_draw.text = draw_text
+        now_draw.draw()
         return 0
 
 

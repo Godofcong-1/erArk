@@ -8064,6 +8064,14 @@ msgstr ""
 msgid "可以招募到NPC作为干员（未实装）"
 msgstr ""
 
+#: .\data\csv\Recruitment_Strategy.csv:11
+msgid "停止招募"
+msgstr ""
+
+#: .\data\csv\Recruitment_Strategy.csv:11
+msgid "停止招募干员"
+msgstr ""
+
 #: .\data\csv\Reproduction_period.csv:7
 msgid "安全日"
 msgstr ""

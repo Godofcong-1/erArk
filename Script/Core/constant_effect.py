@@ -800,6 +800,8 @@ class SecondEffect:
     """ 空白结算 """
     Must_Show = 998
     """ 必须显示的空白结算 """
+    Must_Settle = 997
+    """ 必须计算但不必须显示的空白结算 """
 
     ADD_1_NClimax_EXPERIENCE = 210
     """ 增加1N绝顶经验 """

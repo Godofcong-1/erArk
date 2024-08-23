@@ -1616,10 +1616,10 @@ def handle_hypnosis_one(
     originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
     # 判断是否理智已耗尽导致催眠结束
     if character_data.sanity_point == 0 and target_character_data.sp_flag.unconscious_h:
-        target_character_data.sp_flag.unconscious_h = 0
         # 空气催眠则重置催眠地点和解开门锁
         if target_character_data.sp_flag.unconscious_h == 5:
             character_data.pl_ability.air_hypnosis_position = ""
+        target_character_data.sp_flag.unconscious_h = 0
         now_draw = draw.NormalDraw()
         now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
         now_draw.draw()
@@ -1680,10 +1680,10 @@ def handle_hypnosis_all(
     if character_data.sanity_point == 0:
         for target_id in scene_character_list:
             target_character_data = cache.character_data[target_id]
-            target_character_data.sp_flag.unconscious_h = 0
             # 空气催眠则重置催眠地点和解开门锁
             if target_character_data.sp_flag.unconscious_h == 5:
                 character_data.pl_ability.air_hypnosis_position = ""
+            target_character_data.sp_flag.unconscious_h = 0
             now_draw = draw.NormalDraw()
             now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
             now_draw.draw()
@@ -5304,6 +5304,10 @@ def handle_recruit_add_just(
     if select_index == -1 or character_id == 0:
         line_id_list = list(cache.rhodes_island.recruit_line.keys())
         select_index = random.choice(line_id_list)
+
+    # 如果该招募槽的策略为11号停止招募，则直接返回
+    if cache.rhodes_island.recruit_line[select_index][1] == 11:
+        return
 
     # 如果是玩家在招募或玩家与招募者在同一位置的话，显示招募进度的增加情况
     if character_data.position == cache.character_data[0].position:
