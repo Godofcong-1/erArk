@@ -589,9 +589,8 @@ def update_recruit():
                 now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
                 now_draw.draw()
             else:
-                if recruitment_strategy == 1:
-                    now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
-                    now_draw.draw()
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
+                now_draw.draw()
                 cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
 
 

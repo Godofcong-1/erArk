@@ -5305,6 +5305,10 @@ def handle_recruit_add_just(
         line_id_list = list(cache.rhodes_island.recruit_line.keys())
         select_index = random.choice(line_id_list)
 
+    # 如果该招募槽的策略为11号停止招募，则直接返回
+    if cache.rhodes_island.recruit_line[select_index][1] == 11:
+        return
+
     # 如果是玩家在招募或玩家与招募者在同一位置的话，显示招募进度的增加情况
     if character_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()

@@ -72,7 +72,7 @@ class Recruit_Panel:
                 recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
 
                 # 招募策略
-                now_text = _("\n    招募策略：{0}(1/h)      ").format(recruitment_strategy_data.name)
+                now_text = _("\n    招募策略：{0}      ").format(recruitment_strategy_data.name)
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 button_text = _(" [调整策略] ")
@@ -103,6 +103,11 @@ class Recruit_Panel:
                     now_text += _("{0}(话术lv{1}:{2}%)").format(character_data.name, character_data.ability[40], round(character_effect, 1))
                 all_effect *= 1 + (facility_effect / 100)
                 now_text += _("] * 效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
+                # 如果是第11号策略，则不显示效率，并且将招募进度设为0
+                if recruitment_strategy_id == 11:
+                    all_effect = 0
+                    now_text += _("  （已停止招募）")
+                    cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
                 now_text += f" = {round(all_effect, 1)}%      "
                 all_info_draw.text = now_text
                 all_info_draw.draw()
@@ -168,7 +173,7 @@ class Recruit_Panel:
                 for cid in game_config.config_recruitment_strategy.keys():
                     recruitment_strategy_data = game_config.config_recruitment_strategy[cid]
 
-                    if now_level >= cid + 1:
+                    if now_level >= cid + 1 or cid == 11:
 
                         # 输出策略信息
                         button_draw = draw.LeftButton(
