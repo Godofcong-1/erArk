@@ -551,8 +551,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             ask_text += _("\n\n 是否要夺走{0}的处女？").format(target_data.name)
         elif instruct_name == _("A性交") and target_data.talent[1]:
             ask_text += _("\n\n 是否要夺走{0}的A处女？").format(target_data.name)
-        # 询问戴套
-        condom_flag = False
+        # 询问戴套，True为已戴套
+        if character_data.h_state.body_item[13][1]:
+            condom_flag = True
+        else:
+            condom_flag = False
         if instruct_name == _("性交"):
             # 避孕套、已显示过该信息，以上可直接通过
             if (
@@ -561,7 +564,6 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 ):
                 pass
             else:
-                condom_flag = True
                 # 无意识
                 if target_data.sp_flag.unconscious_h:
                     ask_text += _("当前正在对{0}无意识奸，是否不戴套？\n").format(target_data.name)
@@ -642,16 +644,16 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             if (
                 instruct_name == _("性交") and
                 target_data.talent[13] == 0 and
-                condom_flag and
+                condom_flag == False and
                 (handle_premise.handle_reproduction_period_0(target_character_id))
                 ):
                 target_data.talent[13] = 1
                 draw_text += _("\n 获得了{0}的【避孕中出合意】\n").format(target_data.name)
-            # 妊娠合意需要在不带套、危险期或排卵期时，通过判定才可获得
+            # 妊娠合意需要在不带套、非安全期时，通过判定才可获得
             if (
                 instruct_name == _("性交") and
                 target_data.talent[14] == 0 and
-                condom_flag and
+                condom_flag == False and
                 (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))
                 ):
                 target_data.talent[14] = 1

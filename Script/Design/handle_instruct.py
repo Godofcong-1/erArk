@@ -634,6 +634,13 @@ def handle_manage_basement():
 )
 def handle_hypnosis_one():
     """处理单人催眠"""
+    character_data: game_type.Character = cache.character_data[0]
+    now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    if cache.scene_data[now_scene_str].close_flag == 0:
+        now_draw = normal_panel.Close_Door_Panel(width)
+        door_return = now_draw.draw()
+        if door_return == -1:
+            return
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ONE)
 
 
@@ -644,7 +651,7 @@ def handle_hypnosis_one():
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.T_UNCONSCIOUS_HYPNOSIS_FLAG,
      constant_promise.Premise.SANITY_POINT_GE_5,
      constant_promise.Premise.TIRED_LE_84}
@@ -672,7 +679,9 @@ def handle_hypnosis_all():
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
-        now_draw.draw()
+        door_return = now_draw.draw()
+        if door_return == -1:
+            return
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ALL)
 
 
@@ -714,8 +723,8 @@ def handle_hypnosis_air():
     from Script.UI.Panel import originium_arts
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.pl_ability.hypnosis_type = 2
     if originium_arts.evaluate_hypnosis_completion(0):
+        character_data.pl_ability.hypnosis_type = 2
         target_data.sp_flag.unconscious_h = 5
         now_draw = draw.WaitDraw()
         now_draw.text = _("\n{0}会把{1}视为空气了\n").format(target_data.name, character_data.name)
@@ -773,7 +782,7 @@ def handle_hypnosis_heart():
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.TARGET_IN_HYPNOSIS,
      constant_promise.Premise.TIRED_LE_84}
 )
@@ -1759,7 +1768,9 @@ def handle_do_h():
         now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         if cache.scene_data[now_scene_str].close_flag == 0:
             now_draw = normal_panel.Close_Door_Panel(width)
-            now_draw.draw()
+            door_return = now_draw.draw()
+            if door_return == -1:
+                return
         h_flag = True
         target_data.sp_flag.is_h = 1
         target_data.sp_flag.is_follow = 0
@@ -1802,7 +1813,9 @@ def handle_sleep_obscenity():
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
-        now_draw.draw()
+        door_return = now_draw.draw()
+        if door_return == -1:
+            return
     target_data.sp_flag.unconscious_h = 1
     now_draw = draw.WaitDraw()
     now_draw.width = width
@@ -1852,7 +1865,9 @@ def handle_unconscious_h():
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     if cache.scene_data[now_scene_str].close_flag == 0:
         now_draw = normal_panel.Close_Door_Panel(width)
-        now_draw.draw()
+        door_return = now_draw.draw()
+        if door_return == -1:
+            return
     target_data.sp_flag.is_h = 1
     target_data.sp_flag.is_follow = 0
     target_data.h_state.condom_info_show_flag = True
