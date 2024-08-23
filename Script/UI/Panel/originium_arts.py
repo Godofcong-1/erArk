@@ -29,6 +29,8 @@ def evaluate_hypnosis_completion(character_id: int):
     """
     pl_character_data: game_type.Character = cache.character_data[0]
     character_data: game_type.Character = cache.character_data[character_id]
+    # 进行素质获得检测
+    handle_talent.npc_gain_hypnosis_talent(character_id)
     # 计算催眠完成度
     now_hypnosis_type = pl_character_data.pl_ability.hypnosis_type
     hypnosis_degree_need = game_config.config_hypnosis_type[now_hypnosis_type].hypnosis_degree
@@ -59,8 +61,6 @@ def evaluate_hypnosis_completion(character_id: int):
         else:
             character_data.sp_flag.unconscious_h = 0
         # print(f"debug {character_data.name} unconscious_h = {character_data.sp_flag.unconscious_h}")
-        # 进行素质获得检测
-        handle_talent.npc_gain_hypnosis_talent(character_id)
         return 1
     # 未完成催眠
     else:
