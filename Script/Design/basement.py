@@ -567,6 +567,9 @@ def update_recruit():
                 # 跳过不存在的
                 if chara_id not in cache.character_data:
                     continue
+                # 跳过离线异常
+                if not handle_premise.handle_normal_7(chara_id):
+                    continue
                 # 本地招募
                 if recruitment_strategy == 0:
                     character_data = cache.character_data[chara_id]
