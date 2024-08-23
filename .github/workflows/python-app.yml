@@ -1,8 +1,10 @@
 name: Build Windows Game
 
 on:
+  push:
+    branches: [ master ]
   pull_request:
-    branches: [ release ]
+    branches: [ master ]
 
 jobs:
   build-windows:
