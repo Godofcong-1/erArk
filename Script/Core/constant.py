@@ -1378,6 +1378,8 @@ class Panel:
     """ 系统设置面板 """
     AROMATHERAPY = 30
     """ 香薰疗愈面板 """
+    NATION_DIPLOMACY = 31
+    """ 势力外交面板 """
 
 
 class SecondBehavior:
@@ -1876,6 +1878,8 @@ class Instruct:
     """ 访客系统 """
     INVITE_VISITOR = 0
     """ 邀请访客 """
+    NATION_DIPLOMACY = 0
+    """ 势力外交 """
     PRTS = 0
     """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0

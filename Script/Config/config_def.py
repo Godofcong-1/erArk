@@ -94,6 +94,8 @@ class Birthplace:
     """ 出生地名 """
     inmap: int
     """ 是否出现在大地图中 """
+    infect_rate: float
+    """ 初始源石病感染率 """
 
 
 class BodyPart:
@@ -557,6 +559,10 @@ class Nation:
     """ 势力id """
     name: str
     """ 势力名 """
+    country: int
+    """ 所属国别(见Birthplace.csv) """
+    leader: str
+    """ 领导人 """
 
 
 class New_Round_Inherit:

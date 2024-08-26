@@ -2452,12 +2452,24 @@ def handle_recruiment():
 @add_instruct(
     constant.Instruct.VISITOR_SYSTEM, constant.InstructType.WORK, _("访客系统"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
-     constant_promise.Premise.VISITOR_ZONE_GE_2, }
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE,
+     constant_promise.Premise.VISITOR_ZONE_GE_2,}
 )
 def handle_visitor_system():
     """处理访客系统指令"""
     cache.now_panel_id = constant.Panel.VISITOR
+
+
+@add_instruct(
+    constant.Instruct.NATION_DIPLOMACY, constant.InstructType.WORK, _("势力与外交"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.IN_DIPLOMATIC_OFFICE,
+     constant_promise.Premise.VISITOR_ZONE_GE_2,}
+)
+def handle_nation_diplomacy():
+    """处理势力与外交指令"""
+    cache.now_panel_id = constant.Panel.NATION_DIPLOMACY
 
 
 @add_instruct(

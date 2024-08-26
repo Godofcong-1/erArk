@@ -6372,20 +6372,40 @@ msgstr ""
 msgid "收藏地点"
 msgstr ""
 
+#: .\data\csv\Nation.csv:7
+msgid "博士"
+msgstr ""
+
 #: .\data\csv\Nation.csv:8
 msgid "精英干员"
+msgstr ""
+
+#: .\data\csv\Nation.csv:8
+msgid "凯尔希"
 msgstr ""
 
 #: .\data\csv\Nation.csv:9
 msgid "S.W.E.E.P"
 msgstr ""
 
+#: .\data\csv\Nation.csv:9
+msgid "阿斯卡纶"
+msgstr ""
+
 #: .\data\csv\Nation.csv:10
 msgid "巴别塔"
 msgstr ""
 
+#: .\data\csv\Nation.csv:10
+msgid "特蕾西娅"
+msgstr ""
+
 #: .\data\csv\Nation.csv:11
 msgid "行动组A4"
+msgstr ""
+
+#: .\data\csv\Nation.csv:11
+msgid "待填写"
 msgstr ""
 
 #: .\data\csv\Nation.csv:12
@@ -6404,8 +6424,20 @@ msgstr ""
 msgid "深海猎人"
 msgstr ""
 
+#: .\data\csv\Nation.csv:16
+msgid "歌蕾蒂娅"
+msgstr ""
+
+#: .\data\csv\Nation.csv:18
+msgid "坎黛拉"
+msgstr ""
+
 #: .\data\csv\Nation.csv:21
 msgid "莱茵生命"
+msgstr ""
+
+#: .\data\csv\Nation.csv:21
+msgid "克丽斯腾"
 msgstr ""
 
 #: .\data\csv\Nation.csv:23
@@ -6472,6 +6504,10 @@ msgstr ""
 msgid "深海教会"
 msgstr ""
 
+#: .\data\csv\Nation.csv:56
+msgid "锈锤"
+msgstr ""
+
 #: .\data\csv\Organ.csv:7
 msgid "胸"
 msgstr ""
@@ -6494,10 +6530,6 @@ msgstr ""
 
 #: .\data\csv\Organ.csv:14
 msgid "喉咙"
-msgstr ""
-
-#: .\data\csv\Profession.csv:7
-msgid "博士"
 msgstr ""
 
 #: .\data\csv\Profession.csv:8
@@ -11544,10 +11576,6 @@ msgstr ""
 msgid "抑制戒指 必带"
 msgstr ""
 
-#: .\data\character\0003_凯尔希.csv:4
-msgid "凯尔希"
-msgstr ""
-
 #: .\data\character\0003_凯尔希.csv:14
 msgid "#dfe86c"
 msgstr ""
@@ -11682,10 +11710,6 @@ msgstr ""
 
 #: .\data\character\0017_煌.csv:41
 msgid "战术道具腰包"
-msgstr ""
-
-#: .\data\character\0056_特蕾西娅.csv:4
-msgid "特蕾西娅"
 msgstr ""
 
 #: .\data\character\0056_特蕾西娅.csv:13
@@ -13408,10 +13432,6 @@ msgstr ""
 msgid "早露，切尔诺伯格事变前于切城某中学就读，并担任学生会长。事变后加入罗德岛，隶属后勤部门，工作期间风评极佳。现经本人申请，作为狙击干员转入前线。"
 msgstr ""
 
-#: .\data\character\0198_坎黛拉.csv:4
-msgid "坎黛拉"
-msgstr ""
-
 #: .\data\character\0198_坎黛拉.csv:13
 msgid "一張多索雷斯的邀請函。這座繁華的城市是她的精心雕琢的作品，可她的目光顯然不只如此"
 msgstr ""
@@ -14966,10 +14986,6 @@ msgstr ""
 
 #: .\data\character\0473_桑葚.csv:14
 msgid "隶属于炎国灾害救援组织“春乾”的成员，主要在大炎一些寒冷的天灾易发地区进行救援活动。在报名“春乾”与罗德岛的交换项目后，以笔试第一的好成绩被选中，接受派遣前往罗德岛学习矿石病相关救护知识。在学习之余，也作为临时干员协助医疗部工作。"
-msgstr ""
-
-#: .\data\character\0474_歌蕾蒂娅.csv:4
-msgid "歌蕾蒂娅"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:13

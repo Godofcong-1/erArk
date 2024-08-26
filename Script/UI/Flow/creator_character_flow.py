@@ -8,12 +8,10 @@ from Script.Design import (
     handle_panel,
     character,
     character_handle,
-    cooking,
     attr_calculation,
     basement,
 )
 from Script.UI.Moudle import panel, draw
-from Script.UI.Panel import manage_basement_panel, see_character_info_panel, assistant_panel, normal_panel
 from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
@@ -59,6 +57,8 @@ def first_bonus_and_setting_updata():
 
 def game_start():
     """初始化游戏数据"""
+    from Script.Design import cooking
+
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
     character_handle.init_character_facility_open()
@@ -167,6 +167,8 @@ class Character_creat_Handle:
 
     def __init__(self):
         """初始化绘制对象"""
+        from Script.UI.Panel import see_character_info_panel
+
         self.width = normal_config.config_normal.text_width
         info_draw = see_character_info_panel.CharacterInfoHead(0, width)
         info_draw.draw_title = False
@@ -415,6 +417,8 @@ class Character_FirstNPC:
         """ 年龄筛选标记与ID字典 """
         self.race_filter_flag, self.race_filter_id_dict = 0, {}
         """ 种族筛选标记与ID字典 """
+
+        from Script.UI.Panel import manage_basement_panel
 
         now_draw = panel.LeftDrawTextListPanel()
         now_draw.draw_list.append(line_feed_draw)
@@ -977,6 +981,8 @@ class Character_Bonus:
 
     def get_first_bonus(self,first_bonus_id:int):
         """获得初期奖励"""
+        from Script.UI.Panel import assistant_panel, normal_panel
+
         pl_character_data: game_type.Character = cache.character_data[0]
         fail_flag = False
 

@@ -1001,8 +1001,8 @@ class Country:
     def __init__(self):
         self.nation_reputation: Dict[int, int] = {}
         """ 势力声望 """
-        self.country_treatment_progress: Dict[int, int] = {}
-        """ 国家矿石病治疗进度 """
+        self.country_infection_rate: Dict[int, int] = {}
+        """ 国家矿石病感染率 """
 
 
 class System_Setting:

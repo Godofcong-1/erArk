@@ -2,6 +2,7 @@ from Script.Core import constant
 from Script.Design import handle_panel
 from Script.UI.Panel import (
     all_npc_position_panel,
+    nation_diplomacy_panel,
     normal_panel,
     h_item_shop_panel,
     in_scene_panel,
@@ -221,4 +222,10 @@ def system_setting_flow():
 def aromatherapy_flow():
     """芳香疗法面板"""
     now_panel = aromatherapy.Aromatherapy_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.NATION_DIPLOMACY)
+def nation_diplomacy_flow():
+    """势力外交面板"""
+    now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(width)
     now_panel.draw()

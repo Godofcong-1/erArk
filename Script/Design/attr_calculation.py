@@ -381,8 +381,8 @@ def get_country_reset(country: game_type.Country) -> game_type.Country:
             country_data.nation_reputation[nation_cid] = 0
     # 国家的相关数据
     for country_cid in game_config.config_birthplace:
-        if country_cid not in country_data.country_treatment_progress:
-            country_data.country_treatment_progress[country_cid] = 0
+        if country_cid not in country_data.country_infection_rate:
+            country_data.country_infection_rate[country_cid] = game_config.config_birthplace[country_cid].infect_rate
 
     return country_data
 
