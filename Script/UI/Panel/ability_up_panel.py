@@ -432,7 +432,7 @@ class Character_talent_show_Text:
                 now_draw_succed.text = _("满足条件，确定选择此路线吗？\n")
                 now_draw_succed.draw()
 
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args = talent_id)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定") + "_" + str(talent_id), self.width / 3, cmd_func=self.level_up, args = talent_id)
                 yes_draw.draw()
                 self.return_list.append(yes_draw.return_text)
                 line_feed.draw()
