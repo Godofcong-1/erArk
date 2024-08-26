@@ -22741,7 +22741,39 @@ msgid "{Name}触发了背面座位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:6
-msgid "{Name}触发了背面座位指令的地文"
+msgid "{Name}将{TargetName}娇小玲珑的裸体抱到身前，让她背对自己坐在大腿上。\n{TargetName}双腿分开，以M字开脚的姿势跨坐，将粉嫩紧致的花穴对准{Name}昂扬勃发的阳具。\n龟头在花瓣入口摩擦几下，便猛地向上一顶，坚硬滚烫的肉刃劈开紧窄湿滑的阴道，直捣花心。{TargetName}发出一声娇吟，小巧浑圆的翘臀死死抵住{Name}的胯部，肉棒插入了最深处。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:7
+msgid "{Name}让{TargetName}背对自己，以背面坐位的体位骑在身上，让丰腴白嫩的大腿张开，门户大开地展露出湿润粉嫩的蜜穴。\n{Name}一手搂住{TargetName}纤细的腰肢，一手扶着自己的粗硬阴茎，在阴唇外围滑动几下便腰部发力向上一顶。\n巨大的龟头破开紧致的阴道，强硬地插入到最深处。肥嫩的蜜穴被塞得满满当当。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:8
+msgid "{Name}让体态丰满的{TargetName}转过身来，丰满圆润的肉臀正对着自己的胯下缓缓坐下，肥美多汁的花穴一点点吞没{Name}狰狞粗壮的阴茎。\n硕大的龟头重重顶在花心，{TargetName}忍不住仰头娇喘，扭动肥嫩滚圆的大屁股主动套弄，丰腴白皙的肉臀在{Name}胯间起伏耸动。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:9
+msgid "{Name}紧紧揽住{TargetName}纤细的腰肢，下身开始有节奏地耸动起来，粗长的肉棒在紧窄湿滑的阴道中快速进出，每一下都顶在最深处。\n娇小的{TargetName}被顶得身子不停耸动，小巧浑圆的翘臀也随之摆动，在{Name}胯间撞击出啪啪的肉浪声。\n肥厚的阴唇被磨得通红，阴蒂也充血肿胀，敏感的花心更是被一下下重重碾过。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:10
+msgid "{Name}双手掐住{TargetName}盈盈一握的细腰，胯下猛烈耸动，粗壮的阳具在紧致多汁的蜜穴中疯狂抽插。\n硕大的龟头来回刮蹭敏感的阴道壁，湿热的嫩肉痉挛般绞紧。\n{TargetName}丰腴滚圆的肥臀不停摆动迎合，臀浪翻飞，啪啪声不绝于耳，每一下都整根没入直抵花心，又快又狠，插得{TargetName}淫水四溅。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:11
+msgid "{Name}扣住{TargetName}的腰，下身像打桩机般疯狂耸动，肉棒在肥美多汁的花穴中快速进出。\n{TargetName}丰满肥嫩的肉臀在{Name}胯间剧烈颠簸着，臀波荡漾，淫水飞溅。\n肉体撞击发出啪啪的淫靡水声。{Name}尽根没入又整根拔出，肉棒摩擦着敏感充血的阴道嫩肉。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:12
+msgid "{Name}挺立的肉棒正在紧致湿润的{TargetName}蜜穴中抽插。\n{TargetName}玲珑有致的翘臀在{Name}胯间起伏，娇小的身躯被{Name}有力的双手掌控着节奏。\n汗水顺着{TargetName}光滑的脊背流淌，她银铃般的娇喘回荡在卧室。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:13
+msgid "{Name}粗大的阳具正在{TargetName}丰腴多汁的蜜壶中驰骋，伴随着{Name}一记深深的顶弄，{TargetName}香汗淋漓的胴体猛然绷紧。\n{TargetName}浑圆挺翘的美臀在{Name}身上摇摆，柔软的臀肉被{Name}大手揉捏变形。\n媚人的呻吟从{TargetName}花瓣般的唇中溢出，整个房间弥漫着旖旎的气息。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:14
+msgid "{Name}狰狞的巨物正在{TargetName}肥美多汁的秘裂中驰骋，淫靡的水声和肉体撞击声此起彼伏，乳肉在{Name}手中变换着形状。\n{TargetName}雪白硕大的臀瓣将{Name}的胯部完全包裹，随着她起伏的节奏荡起阵阵臀波。\n突然{Name}加快了冲刺的速度，{TargetName}发出一声尖叫，她湿热紧致的小穴疯狂绞紧，"
 msgstr ""
 
 #: .\data\talk\sex\back_sex.csv:6
@@ -23953,7 +23985,403 @@ msgid "{Name}触发了锻炼身体指令的地文"
 msgstr ""
 
 #: .\data\talk\work\maintenance_facilities.csv:6
-msgid "{Name}触发了维护设施的地文"
+msgid "你和{TargetName}一起，把這區的電路尋了一遍"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:7
+msgid "你和{TargetName}把這區的鏽蝕與脫漆的部位用粉筆圈出來，準備回頭通知工程組過來維護"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:8
+msgid "你和{TargetName}簡單地把附近的灰塵清理一番"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:9
+msgid "你和{TargetName}把一隻被雜物壓住的磐蟹解救出來，之後得通知一下豆苗小姐呢"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:10
+msgid "在清理養殖場的過程中，你和{TargetName}被好奇的磐蟹包圍了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:11
+msgid "你注意到有顆孵化燈有些閃爍，於是你從庫存中拿出一顆新的替換"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:12
+msgid "你和{TargetName}簡單整理下吧檯，並約好下次有機會的話再來喝一杯"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:13
+msgid "你和{TargetName}更換了啤酒機的氣瓶，並以“試味道”的名義偷偷喝了一杯"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:14
+msgid "你和{TargetName}試著修了修一個損壞的置物櫃，最後還是用翹棍給撬開了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:15
+msgid "你看到更衣室角落似乎有個【失物招領箱】，不過在你查看前，{TargetName}先一步把你拖走了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:16
+msgid "你和{TargetName}一起更換了休息室中央閃爍了燈管"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:17
+msgid "鐵匠鋪的動力錘最近有些問題，你和{TargetName}琢磨了好一會兒才完成它的上油工作"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:18
+msgid "你和{TargetName}檢查了氣爐了壓力，......看上去燃料還很充足"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:19
+msgid "焊料似乎快用完了，你提醒自己過會兒和可露希爾通知一下"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:20
+msgid "你和{TargetName}簡單的清掃了一下棋牌室，還從角落中找出幾張撲克牌，也不知道是從哪副牌堆裡落下來的"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:21
+msgid "你和{TargetName}一起，把牌桌上的麻將牌收拾整齊"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:22
+msgid "你是真沒想到，這個時代同樣復現了電動麻將桌\n你和{TargetName}一起把桌面簡單擦拭了一下"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:23
+msgid "由於有人抱怨最近網路好像有點慢，於是今天你和{TargetName}一起為直播間安裝了一個新的路由器\n應該沒問題了，吧.....?"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:24
+msgid "鏡頭、高級麥克風、滿配電腦\n你一邊清潔著設備一邊想著，凱爾希居然也會同意購入這些設備嗎?"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:25
+msgid "{TargetName}注意到似乎上個人在離開房間前忘記關停直播準備間了，忍不住擺出了幾個pose\n螢幕上的皮套人也做出了相應的動作..."
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:26
+msgid "在為咖啡機補充豆子時，你忽然想到...\n“哥倫比亞式咖啡不過是序拉古式濃縮加水罷了”\n一名序拉古籍幹員曾和你抱怨道"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:27
+msgid "{TargetName}在掃地時，看著咖啡館的商標出神\n“怎麼了?”\n“博士，這家咖啡館的商標是位阿戈爾人嗎?”\n你看著商標上那位半人半鱗的女子，搖了搖頭\n“我覺得應該不是...”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:28
+msgid "你和{TargetName}整理著藥品櫃，整的診間瀰漫著一股散不去的消毒水的味道"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:29
+msgid "“止痛藥又不太夠了...”\n你嘟噥著，往手裡的清單中加上備註"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:30
+msgid "“就沒有能增加礦石病藥材的方法嗎...”\n{TargetName}嘟噥著，這下換你汗流浹背了\n...總不能回一句“我盡量多射點” 吧?"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:31
+msgid "你和{TargetName}清潔著診間，同時往空氣中噴點空氣清新劑來驅趕原先的消毒水味"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:32
+msgid "“羅德島上還有這空間啊?”\n{TargetName}新奇的東看看西看看，觀察著各式展品\n“東西還很多，只是你不知道而已”\n你小心的回應道\n...要是收藏的內衣褲被發現的話，作為羅德島博士的生涯就要結束了吧..."
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:33
+msgid "你和{TargetName}整理著展台，你暗自期待著這裡有天能成為泰拉上最有名的展覽館\n...要是能放個機械骷髏當展品就更好了......"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:34
+msgid "你和{TargetName}百般聊賴地替漢堡店做著垃圾分類\n“{TargetName}，你說...如果把吉祥物換成一個小丑，生意會不會更好啊?”\n“不如在快餐裡附上一個便宜但受歡迎的玩具?”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:35
+msgid "“我覺得，比起漢堡，約翰老媽的玉米濃湯才是他們的拳頭產品”\n你一邊整理著餐盤，一邊小聲的說道"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:36
+msgid "你和{TargetName}小心翼翼地清理著各類顯示屏上的落塵"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:37
+msgid "{TargetName}看著指揮室裡的垃圾桶，裡面裝滿了速溶咖啡和能量棒的包裝\n“艦橋值班人員，平時就吃這個?”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:38
+msgid "你和{TargetName}把控制面板上的鍵帽一個個拔了下來，用吸塵器吸走暗處堆積的垃圾"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:39
+msgid "你和{TargetName}在甲板上走著，檢查著有無任何會影響到出勤的異物"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:40
+msgid "你和{TargetName}各提著一桶白漆，重新畫上那些快被消磨的標線"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:41
+msgid "一旁牆壁上的黑板，上頭還寫著今天的出勤計畫\n你決定在上頭加上一些註解"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:42
+msgid "你看著食堂的廚餘桶，皺眉\n...今天的剩菜有點多啊...\n...芙蓉值班? 那沒事了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:43
+msgid "你和{TargetName}仔細的拖著有些油膩的地板\n...聽說最近又有人滑倒了，不知道具體傷勢如何"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:44
+msgid "你為手上的備忘錄加上幾行...\n...菜色未達普通評級，應禁止執業、出餐..."
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:45
+msgid "你和{TargetName}巡視著食堂\n...有空搞個票選活動好了，也方便激勵一下這些店家"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:46
+msgid "外交室裡有張大的情報版，上頭用紅線連著各項未被分析的勢力情報\n...如果忽略地上堆著致死量多的羅德島情報文件夾就好了\n...話說為什麼要在羅島島分析羅德島的情報?\n你陷入了沉思"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:47
+msgid "你和{TargetName}整理著文件，並依照日期與勢力來源分別壘了起來"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:48
+msgid "{TargetName}把窗戶推開，讓新鮮空氣流進臥室中"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:49
+msgid "你和{TargetName}一起收拾著房間，把棉被堆成豆腐一般方正的造型"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:50
+msgid "“喔，挺整潔的嘛...”\n你感謝著提前收好房間的自己"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:51
+msgid "你和{TargetName}一起，好好的把辦公室給整理一番"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:52
+msgid "{TargetName}幫你把公文依據速別與日期依序整理好，當然，沒有翻開那些紅皮公文夾"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:53
+msgid "“博士，這些是...”\n完辣，你的零食箱被{TargetName}發現啦..."
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:54
+msgid "你和{TargetName}一起把損壞的木人桩搬到走道上，過會兒會有勤務人員把它運到回收物集中處"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:55
+msgid "你和{TargetName}一起把新到貨了木人桩搬到儲藏室去，不知道這批木人桩能撐多久呢?"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:56
+msgid "{TargetName}把公共冰箱中的運動飲料補滿，並把裝滿空瓶的回收桶放到指定的堆積點"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:57
+msgid "在經年累月被汗水的澆灌下，木桩房的地墊總散發著一股汗味...\n...已經超過“味大，無須多言”的範疇了..."
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:58
+msgid "&sys_2“這裡是?”\n“一個總有一天會用到的地方”\n你和{TargetName}一起清理著空房間，但你相信，這裡總有一天會派上用場的"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:59
+msgid "{TargetName}幫忙著廚房的值班人員，更換著今天的菜單"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:60
+msgid "你和{TargetName}挽起袖子，刷洗著浴池底部"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:61
+msgid "...要不要弄點洗腳水回去呢?\n你一邊整理著環境一邊想著"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:62
+msgid "你和{TargetName}一起把孩子們玩完，散落一地的玩具給放回架上"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:63
+msgid "遊戲室的牆上貼著孩子們的畫，雖然簡略，但仍讓你感到會心一笑"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:64
+msgid "你和{TargetName}補充著公共區的運動飲料和毛巾，這兩項在健身區的消耗堪稱飛快"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:65
+msgid "{TargetName}正吃力的把幹員使用完的槓鈴歸位...\n“要不，我來幫你吧?”\n“麻煩您了，博士...”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:66
+msgid "{TargetName}正吃力的把幹員使用完的槓鈴歸位...\n“要不，我來幫你吧?”\n“麻煩您了，博士...”\n"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:67
+msgid "你和{TargetName}把占用過道的盆栽們給擺放整齊"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:68
+msgid "你們根據盆栽上的標籤，小心翼翼地為每株植物澆上足量的水"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:69
+msgid "幹員們多多少少都會來溫室種上一盆植物，相對的，肥料與培養土的消耗也跟著水漲船高\n該去跟可露希爾商量一下肥料的事情了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:70
+msgid "...之後要不招個人來顧理髮廳好了?\n你看著理髮廳這麼想著"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:71
+msgid "有人反應這裡的熱水供應有點問題\n你和{TargetName}琢磨了好一會兒終於把熱水管給修好了"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:72
+msgid "“這個攤位的營收不太理想阿...”\n你當著店長的面，翻著帳目\n“要不要收掉呢?”\n"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:73
+msgid "“在羅德島上推行健康飲食，任重而道遠阿...”\n你一邊和{TargetName}整理著攤位，一邊小聲地滴咕著"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:74
+msgid "“這是...?”\n“這是必要的程序喔”\n你拿著電子設備偵測器，檢查著會議室"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:75
+msgid "會議室的空調有些髒了，你和{TargetName}花了一點時間把所有的濾網都洗了一遍"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:76
+msgid "你們把抽油煙機的濾網拆了下來，泡在混合好清潔劑的水里"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:77
+msgid "你和{TargetName}拿著抹布，小心地擦拭牆壁上的油漬"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:78
+msgid "你和{TargetName}協助的把幹員們歸還的圖書歸位"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:79
+msgid "為了避免影響到他人，你們特意放輕的自己的動作"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:80
+msgid "你和{TargetName}清點著圖書保存情形，如破損嚴重則先收集起來，以便日後統一修復"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:81
+msgid "“偷偷和妳說，其實湯包的熱量很高喔”\n你故意在{TargetName}吃點心時嚇唬她"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:82
+msgid "你和{TargetName}幫忙整理著今天會出餐的招牌"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:83
+msgid "“對了，你是吃叉燒包會加辣醬的那種人嗎?”\n在整理餐桌的間隙，你向她這麼問到"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:84
+msgid "你看著被你折成豆腐形狀的被子，發出滿意的“哼”聲\n...雖然不知道為什麼會產生這種念頭，但你還是順著它做了\n{TargetName}疑惑的看著你"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:85
+msgid "你仔細地沿著床，把房間巡了一遍\n很乾淨，這是你的第一個念頭\n...為什麼要在愛情賓館做這種事，這是你第二個念頭"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:86
+msgid "你和{TargetName}試著拔掉逃生指標的插座，檢查它能不能在停電時正常運作"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:87
+msgid "你和{TargetName}檢查著這區的滅火器，所有的設備都在有效期以內"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:88
+msgid "你帶著{TargetName}推開附近的防火門，檢查逃生通道是否暢通"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:89
+msgid "“醫療部門是我們的重中之重，也是我們與一般民眾接觸最多的地方”\n你和{TargetName}嚴肅的說著\n“我們要為他們的安全負責”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:90
+msgid "攝影棚中擺放著大量的佈景與供人免費的使用的道具，你一邊整理著環境，一邊想著有沒有其他用途\n"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:91
+msgid "要不，下次帶著女伴來這裡...\n你猛地搖頭，把淫穢思想趕出了腦海\n"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:92
+msgid "你和{TargetName}一起挽起袖子，拿起長柄刷刷洗著浴池"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:93
+msgid "這裡公共冰箱裡的果汁牛奶消耗飛快，你趕緊記下備忘錄好讓後勤部多叫一點貨"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:94
+msgid "要不再公共冰箱免費供應甜酒吧?\n在整理浴池的間隙，你這麼想著"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:95
+msgid "結束了今天的掃除，你和{TargetName}約好，下次有空一起來泡"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:96
+msgid "結束了今天的掃除，你和{TargetName}約好，下次有空一起來泡\n至於到時候穿不穿衣服，哼哼~"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:97
+msgid "你們在維護設備前關停了煙霧，現在視野清晰的桑拿房反道讓人有些不習慣"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:98
+msgid "“絕對禁止在披薩上加菠蘿，雞佛也不行...”\n你一臉古怪的唸出了島上敘拉古裔幹員的聯名抗議信"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:99
+msgid "“漢堡店的玉米濃湯賣的比漢堡好，炸雞店的蛋塔賣的比炸雞好...”\n“而這家披薩店的炸雞比披薩好吃多了...”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:100
+msgid "你和{TargetName}努力地把新到貨的靶子搬到靶場角落的庫房中\n“應該要限制一下爆炸型弩彈的使用了，不然靶子消耗的速度太快了”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:101
+msgid "“就善後而言，現在的銃彈比前文明方便多了”\n你向{TargetName}侃侃而談\n“前文明的銃使用完後，我們還得一個不落的彈殼全拾回去，你們到好，沒有彈殼也沒有藥渣要清”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:102
+msgid "“飛刀、箭矢、重型弩箭、射釘槍、標槍...”\n你和{TargetName}收拾著靶場上散落的投射物\n“我的天，我們的後勤部能負擔這些可真是大地上的奇蹟了”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:103
+msgid "你清潔著島上的數控機床，掃去上頭的鐵屑並為活動部件上油\n或許有空時可以車一些有趣的東西出來"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:104
+msgid "你用泳池旁的吊機，緩緩把清洗泳池無人機放進池子中\n“都什麼年代了，還拿長柄刷刷泳池”"
+msgstr ""
+
+#: .\data\talk\work\maintenance_facilities.csv:105
+msgid "你和{TargetName}用高壓水槍沖洗著過道，被沖洗過的路面和其他部分形成鮮明的色差"
 msgstr ""
 
 #: .\data\talk\work\npc_cook.csv:6
