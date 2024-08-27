@@ -560,6 +560,8 @@ class ChangeWorkButtonList:
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
+                # 特殊工作显示为灰色，无法选择
+                special_work_set = {131}
                 # 必要条件判断
                 if game_config.config_work_type[cid].need != _("无"):
                     need_data_all = game_config.config_work_type[cid].need
@@ -583,15 +585,24 @@ class ChangeWorkButtonList:
                     work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
                     # 将work_text_before统一对齐为18个全角字符
                     work_text = f"{work_text_before.ljust(18,'　')}：{work_describe}"
-                    button_draw = draw.LeftButton(
-                        work_text,
-                        f"\n{work_cid}",
-                        window_width ,
-                        cmd_func=self.select_new_work,
-                        args=work_cid
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
+                    # 正常工作直接显示
+                    if work_cid not in special_work_set:
+                        button_draw = draw.LeftButton(
+                            work_text,
+                            f"\n{work_cid}",
+                            window_width ,
+                            cmd_func=self.select_new_work,
+                            args=work_cid
+                        )
+                        button_draw.draw()
+                        return_list.append(button_draw.return_text)
+                    # 特殊工作显示为灰色，无法选择
+                    else:
+                        now_draw = draw.LeftDraw()
+                        now_draw.text = work_text
+                        now_draw.style = "deep_gray"
+                        now_draw.width = window_width
+                        now_draw.draw()
                     line_feed.draw()
 
             line_feed.draw()

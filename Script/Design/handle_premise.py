@@ -4074,7 +4074,7 @@ def handle_normal_6(character_id: int) -> int:
 def handle_normal_7(character_id: int) -> int:
     """
     7正常的普通状态
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4084,6 +4084,7 @@ def handle_normal_7(character_id: int) -> int:
         handle_be_bagged_1(character_id)
         or handle_field_commission_1(character_id)
         or handle_t_baby_1(character_id)
+        or handle_in_diplomatic_visit_1_and_other_country(character_id)
     ):
         return 0
     else:
@@ -4134,7 +4135,7 @@ def handle_normal_267(character_id: int) -> int:
     267正常（可能基础异常、AI跟随、服装异常或意识模糊）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4157,7 +4158,7 @@ def handle_normal_2467(character_id: int) -> int:
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4181,7 +4182,7 @@ def handle_t_normal_2467(character_id: int) -> int:
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4208,7 +4209,7 @@ def handle_normal_23467(character_id: int) -> int:
     \n3:助理或跟随：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4234,7 +4235,7 @@ def handle_normal_24567(character_id: int) -> int:
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4260,7 +4261,7 @@ def handle_t_normal_24567(character_id: int) -> int:
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4289,7 +4290,7 @@ def handle_normal_124567(character_id: int) -> int:
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4315,7 +4316,7 @@ def handle_normal_1267(character_id: int) -> int:
     \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4341,7 +4342,7 @@ def handle_normal_123467(character_id: int) -> int:
     \n3:助理或跟随：助理、跟随模式下
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4424,7 +4425,7 @@ def handle_unnormal_27(character_id: int) -> int:
     """
     27异常（AI停止或离线）
     \n2:AI行动基本停止：临盆、产后、监禁
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4507,7 +4508,7 @@ def handle_unnormal_567(character_id: int) -> int:
     自身5或6或7异常
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -4579,7 +4580,7 @@ def handle_t_unnormal_567(character_id: int) -> int:
     交互对象5或6或7异常
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    \n7:角色离线：装袋搬走、外勤、婴儿
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -6225,6 +6226,51 @@ def handle_field_commission_1(character_id: int) -> int:
     if handle_field_commission_0(character_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.IN_DIPLOMATIC_VISIT_0)
+def handle_in_diplomatic_visit_0(character_id: int) -> int:
+    """
+    自身没有在外交访问
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.sp_flag.in_diplomatic_visit == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.IN_DIPLOMATIC_VISIT_1)
+def handle_in_diplomatic_visit_1(character_id: int) -> int:
+    """
+    自身正在外交访问
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_diplomatic_visit_0(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.IN_DIPLOMATIC_VISIT_1_AND_OTHER_COUNTRY)
+def handle_in_diplomatic_visit_1_and_other_country(character_id: int) -> int:
+    """
+    自身正在外交访问且对方是非当前所在国家
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_diplomatic_visit_1(character_id):
+        target_coutry_cid = cache.character_data[character_id].sp_flag.in_diplomatic_visit
+        if target_coutry_cid != cache.rhodes_island.current_location[0]:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HP_LOW)
@@ -10758,6 +10804,19 @@ def handle_work_is_diplomat(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 131
+
+
+@add_premise(constant_promise.Premise.WORK_IS_INVITATION_COMMISSIONER)
+def handle_work_is_invitation_commissioner(character_id: int) -> int:
+    """
+    自己的工作为邀请专员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 132
 
 
 @add_premise(constant_promise.Premise.WORK_IS_MEDICINAL_PLANTER)

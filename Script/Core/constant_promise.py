@@ -638,7 +638,7 @@ class Premise:
     #4:服装异常：大致全裸、全裸\n
     #5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然\n
     #6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气\n
-    #7:角色离线：装袋搬走、外勤、婴儿\n
+    #7:角色离线：装袋搬走、外勤、婴儿、他国外交访问\n
     #"""
 
     NORMAL_ALL = "normal_all"
@@ -1124,6 +1124,12 @@ class Premise:
     """ 属性_特殊flag 自身没有在出外勤委托 """
     FIELD_COMMISSION_1 = "field_commission_1"
     """ 属性_特殊flag 自身正在出外勤委托 """
+    IN_DIPLOMATIC_VISIT_0 = "in_diplomatic_visit_0"
+    """ 属性_特殊flag 自身没有在外交访问 """
+    IN_DIPLOMATIC_VISIT_1 = "in_diplomatic_visit_1"
+    """ 属性_特殊flag 自身正在外交访问 """
+    IN_DIPLOMATIC_VISIT_1_AND_OTHER_COUNTRY = "in_diplomatic_visit_1_and_other_country"
+    """ 属性_特殊flag 自身正在外交访问且对方是非当前所在国家 """
 
     TARGET_GOOD_MOOD = "good_mood"
     """ 属性_心情 交互对象心情愉快 """
@@ -1881,6 +1887,8 @@ class Premise:
     """ 属性_工作 自己的工作为按摩师 """
     WORK_IS_DIPLOMAT = "work_is_diplomat"
     """ 属性_工作 自己的工作为外交官 """
+    WORK_IS_INVITATION_COMMISSIONER = "work_is_invitation_commissioner"
+    """ 属性_工作 自己的工作为邀请专员 """
     WORK_IS_MEDICINAL_PLANTER = "work_is_medicinal_planter"
     """ 属性_工作 自己的工作为药材种植员 """
     WORK_IS_FLORAL_PLANTER = "work_is_floral_planter"

@@ -123,9 +123,9 @@ ai的目标,,,,
 362,606,normal_all|work_is_massage_therapist|work_time|not_in_bathzone_rest_room,21,正常状态下，工作是按摩师，在工作时间，如果不在大浴场的休息室，则去大浴场的休息室
 363,313,normal_all_except_special_hypnosis|work_is_massage_therapist|work_time|in_bathzone_rest_room|place_someone_not_massage_therapist,22,正常状态下或被空气或体控催眠中，工作是按摩师，在工作时间，在大浴场的休息室，如果该地点有非按摩师的其他角色，则开始对其按摩
 
-381,631,normal_all|work_is_diplomat|to_work_time|not_in_diplomatic_office,21,正常状态下，工作是外交官，在到岗时间，如果不在外交官办公室，则去外交官办公室
-382,631,normal_all|work_is_diplomat|work_time|not_in_diplomatic_office,21,正常状态下，工作是外交官，在工作时间，如果不在外交官办公室，则去外交官办公室
-383,314,normal_all_except_special_hypnosis|work_is_diplomat|work_time|in_diplomatic_office|visitor_zone_have_target,22,正常状态下或被空气或体控催眠中，工作是外交官，在工作时间，如果在外交官办公室，已选择邀请对象，则开始邀请访客
+381,631,normal_all|work_is_invitation_commissioner|to_work_time|not_in_diplomatic_office,21,正常状态下，工作是邀请专员，在到岗时间，如果不在外交官办公室，则去外交官办公室
+382,631,normal_all|work_is_invitation_commissioner|work_time|not_in_diplomatic_office,21,正常状态下，工作是邀请专员，在工作时间，如果不在外交官办公室，则去外交官办公室
+383,314,normal_all_except_special_hypnosis|work_is_invitation_commissioner|work_time|in_diplomatic_office|visitor_zone_have_target,22,正常状态下或被空气或体控催眠中，工作是邀请专员，在工作时间，如果在外交官办公室，已选择邀请对象，则开始邀请访客
 
 391,641,normal_all|work_is_medicinal_planter|to_work_time|not_in_herb_garden,21,正常状态下，工作是药材种植员，在到岗时间，如果不在药田，则去药田
 392,641,normal_all|work_is_medicinal_planter|work_time|not_in_herb_garden,21,正常状态下，工作是药材种植员，在工作时间，如果不在药田，则去药田

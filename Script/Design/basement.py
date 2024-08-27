@@ -316,6 +316,10 @@ def update_work_people():
                     select_index = random.choice(line_id_list)
                     cache.rhodes_island.assembly_line[select_index][1].add(chara_id)
 
+            # 将旧的外交官改为新的邀请专员
+            if character_data.work.work_type == 131 and character_data.sp_flag.in_diplomatic_visit == 0:
+                character_data.work.work_type = 132
+
             # 药材种植员默认分配到药田0里
             if character_data.work.work_type == 161:
                 if chara_id not in cache.rhodes_island.herb_garden_line[0][1]:

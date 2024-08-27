@@ -591,6 +591,8 @@ class SPECIAL_FLAG:
         """ 香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感,6催眠] """
         self.field_commission: int = 0
         """ 外勤委托状态，0为未外勤，否则为对应外勤委托编号 """
+        self.in_diplomatic_visit: int = 0
+        """ 外交访问状态，0为未访问，否则为对应出身地编号 """
 
 
 class CHARA_WORK:
@@ -924,6 +926,8 @@ class Rhodes_Island:
         """ 上次访客到来时间 """
         self.invite_visitor: List[int, float, float] = {}
         """ 当前邀请进度 [0目标角色id, 1招募进度, 2招募效率百分比(如2.5)] """
+        self.diplomat_of_country: Dict[int, Tuple[int]] = {}
+        """ 负责各的外交官 国家id:[0外交官id] """
 
         # 机库
         self.ongoing_field_commissions: Dict[int, Tuple[List, datetime.datetime, List]] = {}
