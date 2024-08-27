@@ -6376,6 +6376,10 @@ msgstr ""
 msgid "博士"
 msgstr ""
 
+#: .\data\csv\Nation.csv:7
+msgid "待填写"
+msgstr ""
+
 #: .\data\csv\Nation.csv:8
 msgid "精英干员"
 msgstr ""
@@ -6404,10 +6408,6 @@ msgstr ""
 msgid "行动组A4"
 msgstr ""
 
-#: .\data\csv\Nation.csv:11
-msgid "待填写"
-msgstr ""
-
 #: .\data\csv\Nation.csv:12
 msgid "行动预备组A1"
 msgstr ""
@@ -6420,6 +6420,10 @@ msgstr ""
 msgid "行动预备组A6"
 msgstr ""
 
+#: .\data\csv\Nation.csv:15
+msgid "地处深海的国家，对外相对封锁。其领土面积比维多利亚、乌萨斯、哥伦比亚等国加起来还大。\n国家权力掌控在科学执政官与技术执政官手中，设有深海猎人和海巡队等武装力量对抗海洋生物“海嗣”。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:16
 msgid "深海猎人"
 msgstr ""
@@ -6430,6 +6434,10 @@ msgstr ""
 
 #: .\data\csv\Nation.csv:18
 msgid "坎黛拉"
+msgstr ""
+
+#: .\data\csv\Nation.csv:19
+msgid "多种族混居的国家，官方语言为东国语，拥有神道文化，东国的武士刀在收藏界价格不菲。\n目前东国正处于南北朝的内战状态，北方由光严氏当家，南方由光元氏当家。八大家族掌握着全国军权。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:21
@@ -6452,59 +6460,87 @@ msgstr ""
 msgid "无胄盟"
 msgstr ""
 
-#: .\data\csv\Nation.csv:34
-msgid "格拉斯哥帮"
+#: .\data\csv\Nation.csv:26
+msgid "常年内战的国家，国内目前已处于无政府状态。卡兹戴尔国内的绝大多数萨卡兹人均为感染者。\n卡兹戴尔城由军事委员会直接管理，各部族受辖于对应王庭，王庭受制于军事委员会。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:27
+msgid "拉特兰，或称拉特兰城，是位于泰拉大陆中部的神权国家。北邻叙拉古，维多利亚和莱塔尼亚；南邻伊比利亚；东邻雷姆必拓。在泰拉千年的战火与混乱中独树一帜，屹立不倒。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:29
+msgid "以矿业为主要产业，参与与谢拉格的贸易。历史上与维多利亚围绕矿业问题爆发过冲突，导致“围栏事件”爆发。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:30
+msgid "前身为古阿加门王国。曾受到萨尔贡的殖民入侵，激起民众的强烈反抗，最终在十二英雄的领导下将萨尔贡军驱逐。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:32
+msgid "新近并入萨尔贡的地区，处于无政府状态，治安混乱。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:33
+msgid "地处泰拉大陆北部的国家，终年严寒，发展落后，遭受北原邪魔的坍缩影响，该地的萨米雪祀与独眼巨人共同抵御坍缩威胁。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:35
+msgid "格拉斯哥帮"
+msgstr ""
+
+#: .\data\csv\Nation.csv:36
 msgid "深池"
 msgstr ""
 
-#: .\data\csv\Nation.csv:37
+#: .\data\csv\Nation.csv:38
 msgid "乌萨斯学生自治团"
 msgstr ""
 
-#: .\data\csv\Nation.csv:39
+#: .\data\csv\Nation.csv:40
 msgid "喀兰贸易"
 msgstr ""
 
-#: .\data\csv\Nation.csv:42
+#: .\data\csv\Nation.csv:41
+msgid "主要城市为帕勒莫。黑帮势力盛行，由几大黑帮家族支配政权。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:43
 msgid "岁"
 msgstr ""
 
-#: .\data\csv\Nation.csv:44
+#: .\data\csv\Nation.csv:45
 msgid "龙门近卫局"
 msgstr ""
 
-#: .\data\csv\Nation.csv:45
+#: .\data\csv\Nation.csv:46
 msgid "鲤氏侦探事务所"
 msgstr ""
 
-#: .\data\csv\Nation.csv:46
+#: .\data\csv\Nation.csv:47
 msgid "企鹅物流"
 msgstr ""
 
-#: .\data\csv\Nation.csv:50
+#: .\data\csv\Nation.csv:51
 msgid "黑钢国际"
 msgstr ""
 
-#: .\data\csv\Nation.csv:51
+#: .\data\csv\Nation.csv:52
 msgid "彩虹小队"
 msgstr ""
 
-#: .\data\csv\Nation.csv:53
+#: .\data\csv\Nation.csv:54
 msgid "使徒"
 msgstr ""
 
-#: .\data\csv\Nation.csv:54
+#: .\data\csv\Nation.csv:55
 msgid "整合运动"
 msgstr ""
 
-#: .\data\csv\Nation.csv:55
+#: .\data\csv\Nation.csv:56
 msgid "深海教会"
 msgstr ""
 
-#: .\data\csv\Nation.csv:56
+#: .\data\csv\Nation.csv:57
 msgid "锈锤"
 msgstr ""
 
@@ -8354,6 +8390,170 @@ msgstr ""
 
 #: .\data\csv\Resouce.csv:36
 msgid "用各类药用香料和香精调制而成的香水，不仅有着不输于高级香水的香气，还有着较高的药用价值。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:38
+msgid "阿戈尔特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:38
+msgid "特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:38
+msgid "阿戈尔的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:39
+msgid "玻利瓦尔特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:39
+msgid "玻利瓦尔的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:40
+msgid "东特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:40
+msgid "东的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
+msgid "哥伦比亚特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
+msgid "哥伦比亚的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:42
+msgid "卡西米尔特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:42
+msgid "卡西米尔的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:43
+msgid "卡兹戴尔特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:43
+msgid "卡兹戴尔的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:44
+msgid "拉特兰特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:44
+msgid "拉特兰的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:45
+msgid "莱塔尼亚特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:45
+msgid "莱塔尼亚的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:46
+msgid "雷姆必拓特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:46
+msgid "雷姆必拓的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:47
+msgid "米诺斯特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:47
+msgid "米诺斯的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:48
+msgid "萨尔贡特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:48
+msgid "萨尔贡的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:49
+msgid "萨米特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:49
+msgid "萨米的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:50
+msgid "维多利亚特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:50
+msgid "维多利亚的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:51
+msgid "乌萨斯特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:51
+msgid "乌萨斯的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:52
+msgid "谢拉格特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:52
+msgid "谢拉格的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:53
+msgid "叙拉古特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:53
+msgid "叙拉古的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:54
+msgid "炎特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:54
+msgid "炎的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:55
+msgid "伊比利亚特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:55
+msgid "伊比利亚的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:56
+msgid "杜林特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:56
+msgid "杜林的特产。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:57
+msgid "汐斯塔特产"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:57
+msgid "汐斯塔的特产。"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:7
@@ -11485,54 +11685,62 @@ msgid "外交官"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:17
-msgid "处理与各国之间的关系，邀请各界人士来罗德岛访问"
+msgid "处理与各国之间的关系，承接大小委托，协调当地的外勤工作(需要在[外交势力]系统中任命)"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:18
-msgid "教师"
+msgid "邀请专员"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:18
-msgid "教室"
-msgstr ""
-
-#: .\data\csv\WorkType.csv:18
-msgid "给学生上课"
+msgid "邀请各界人士来罗德岛访问，拓宽罗德岛的人脉"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:19
+msgid "教师"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:19
+msgid "教室"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:19
+msgid "给学生上课"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:20
 msgid "听老师讲课"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "药材种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "药田"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "在药田里种植药材等农作物"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "花草种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "在温室里种植花草等香料"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "按摩师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "浴场休息区"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 

@@ -563,6 +563,8 @@ class Nation:
     """ 所属国别(见Birthplace.csv) """
     leader: str
     """ 领导人 """
+    introduction: str
+    """ 介绍 """
 
 
 class New_Round_Inherit:
@@ -704,6 +706,8 @@ class Resouce:
     """ 资源价格 """
     cant_buy: int
     """ 是否无法购买 """
+    specialty: int
+    """ 地区特产(对应出身地cid) """
     info: str
     """ 介绍信息 """
 

@@ -100,6 +100,8 @@ config_facility_open_name_to_cid: Dict[str, int] = {}
 """ 设施开放名称对应编号 """
 config_resouce: Dict[int, config_def.Resouce] = {}
 """ 资源数据 """
+config_resouce_data_of_nation: Dict[int, List] = {}
+""" 势力特产的资源数据 """
 config_font: Dict[int, config_def.FontConfig] = {}
 """ 字体配置数据 """
 config_font_data: Dict[str, int] = {}
@@ -147,6 +149,8 @@ config_birthplace: Dict[int, config_def.Birthplace] = {}
 """ 出生地配置 """
 config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
+config_nation_data_of_country_subordinate: Dict[int, List] = {}
+""" 国家势力所对应的附属势力表 """
 config_restaurant: Dict[int, config_def.Restaurant] = {}
 """ 餐馆配置 """
 config_city: Dict[int, config_def.City] = {}
@@ -474,6 +478,18 @@ def load_nation():
         now_tem.__dict__ = tem_data
         config_nation[now_tem.cid] = now_tem
 
+        # 以国家id为键，存储对应的势力id列表
+        now_cid = now_tem.cid
+        if 11 < now_cid < 500:
+            # 如果个位是1的话，则是总势力
+            if now_cid % 10 == 1 and now_cid not in config_nation_data_of_country_subordinate:
+                config_nation_data_of_country_subordinate[now_cid] = []
+            # 如果个位不是1的话，则是附属势力
+            elif now_cid % 10 != 1:
+                father_cid = now_cid // 10 * 10 + 1
+                config_nation_data_of_country_subordinate.setdefault(father_cid, [])
+                config_nation_data_of_country_subordinate[father_cid].append(now_cid)
+
 
 def load_restaurant():
     """载入餐馆数据"""
@@ -799,6 +815,10 @@ def load_resouce():
         now_tem = config_def.Resouce()
         now_tem.__dict__ = tem_data
         config_resouce[now_tem.cid] = now_tem
+        # 势力对应资源
+        if now_tem.specialty != 0:
+            config_resouce_data_of_nation.setdefault(now_tem.specialty, [])
+            config_resouce_data_of_nation[now_tem.specialty].append(now_tem.cid)
 
 
 def load_font_data():

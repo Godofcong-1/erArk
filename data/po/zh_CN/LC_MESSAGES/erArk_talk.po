@@ -22741,39 +22741,63 @@ msgid "{Name}触发了背面座位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:6
-msgid "{Name}将{TargetName}娇小玲珑的裸体抱到身前，让她背对自己坐在大腿上。\n{TargetName}双腿分开，以M字开脚的姿势跨坐，将粉嫩紧致的花穴对准{Name}昂扬勃发的阳具。\n龟头在花瓣入口摩擦几下，便猛地向上一顶，坚硬滚烫的肉刃劈开紧窄湿滑的阴道，直捣花心。{TargetName}发出一声娇吟，小巧浑圆的翘臀死死抵住{Name}的胯部，肉棒插入了最深处。"
+msgid "{PlayerName}将{TargetName}娇小玲珑的身体抱到身前，让她背对自己坐在大腿上，双腿分开，以M字开脚的姿势跨坐，将粉嫩紧致的花穴对准{PlayerName}昂扬勃发的阳具。\n龟头在花瓣入口摩擦几下，便猛地向上一顶，坚硬滚烫的肉根劈开紧窄湿滑的阴道，直捣花心。\n小巧浑圆的翘臀死死抵住{Name}的胯部，让肉棒插入了最深处。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:7
-msgid "{Name}让{TargetName}背对自己，以背面坐位的体位骑在身上，让丰腴白嫩的大腿张开，门户大开地展露出湿润粉嫩的蜜穴。\n{Name}一手搂住{TargetName}纤细的腰肢，一手扶着自己的粗硬阴茎，在阴唇外围滑动几下便腰部发力向上一顶。\n巨大的龟头破开紧致的阴道，强硬地插入到最深处。肥嫩的蜜穴被塞得满满当当。"
+msgid "{PlayerName}让{TargetName}背对自己，丰腴白嫩的大腿张开，门户大开地展露出湿润粉嫩的蜜穴，以背面坐位的体位骑在身上。\n一手搂住{TargetName}纤细的腰肢，一手扶着自己的粗硬阴茎，在阴唇外围滑动几下便腰部发力向上一顶。\n巨大的龟头破开紧致的阴道，强硬地插入到最深处。肥嫩的蜜穴被塞得满满当当。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:8
-msgid "{Name}让体态丰满的{TargetName}转过身来，丰满圆润的肉臀正对着自己的胯下缓缓坐下，肥美多汁的花穴一点点吞没{Name}狰狞粗壮的阴茎。\n硕大的龟头重重顶在花心，{TargetName}忍不住仰头娇喘，扭动肥嫩滚圆的大屁股主动套弄，丰腴白皙的肉臀在{Name}胯间起伏耸动。"
+msgid "{PlayerName}让体态丰满的{TargetName}转过身来，丰满圆润的肉臀正对着自己的胯下缓缓坐下，肥美多汁的花穴一点点吞没{PlayerName}粗壮的阴茎。\n粗长的肉柱破开湿软的嫩肉长驱直入，硕大的龟头重重顶上花心，让{TargetName}忍不住仰头娇喘，紧致高热的阴道死死绞住肉棒。\n{TargetName}开始扭动肥嫩滚圆的大屁股主动套弄，丰腴白皙的肉臀在{Name}胯间起伏耸动。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:9
-msgid "{Name}紧紧揽住{TargetName}纤细的腰肢，下身开始有节奏地耸动起来，粗长的肉棒在紧窄湿滑的阴道中快速进出，每一下都顶在最深处。\n娇小的{TargetName}被顶得身子不停耸动，小巧浑圆的翘臀也随之摆动，在{Name}胯间撞击出啪啪的肉浪声。\n肥厚的阴唇被磨得通红，阴蒂也充血肿胀，敏感的花心更是被一下下重重碾过。"
+msgid "{PlayerName}紧紧揽住{TargetName}纤细的腰肢，下身开始有节奏地耸动起来，粗长的肉棒在紧窄湿滑的阴道中快速进出，每一下都顶在最深处。\n娇小的{TargetName}被顶得身子不停耸动，小巧浑圆的翘臀也随之摆动，在{Name}胯间撞击出啪啪的肉浪声。\n肥厚的阴唇被磨得通红，阴蒂也充血肿胀，敏感的花心更是被一下下重重碾过。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:10
-msgid "{Name}双手掐住{TargetName}盈盈一握的细腰，胯下猛烈耸动，粗壮的阳具在紧致多汁的蜜穴中疯狂抽插。\n硕大的龟头来回刮蹭敏感的阴道壁，湿热的嫩肉痉挛般绞紧。\n{TargetName}丰腴滚圆的肥臀不停摆动迎合，臀浪翻飞，啪啪声不绝于耳，每一下都整根没入直抵花心，又快又狠，插得{TargetName}淫水四溅。"
+msgid "{PlayerName}双手掐住{TargetName}盈盈一握的细腰，胯下猛烈耸动，粗壮的阳具在紧致多汁的蜜穴中疯狂抽插。\n硕大的龟头来回刮蹭敏感的阴道壁，湿热的嫩肉痉挛般绞紧，{TargetName}滚圆的美臀不停摆动迎合，臀浪翻飞，啪啪声不绝于耳。\n每一下都整根没入直抵花心，又快又狠，插得{TargetName}淫水四溅。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:11
-msgid "{Name}扣住{TargetName}的腰，下身像打桩机般疯狂耸动，肉棒在肥美多汁的花穴中快速进出。\n{TargetName}丰满肥嫩的肉臀在{Name}胯间剧烈颠簸着，臀波荡漾，淫水飞溅。\n肉体撞击发出啪啪的淫靡水声。{Name}尽根没入又整根拔出，肉棒摩擦着敏感充血的阴道嫩肉。"
+msgid "{TargetName}扣住{TargetName}的腰，下身像打桩机般疯狂耸动，肉棒在肥美多汁的花穴中快速进出。\n{TargetName}丰满肥嫩的肉臀在{PlayerName}胯间剧烈颠簸着，臀波荡漾，淫水飞溅。\n肉体撞击发出啪啪的淫靡水声，{PlayerName}尽根没入又整根拔出，用肉棒摩擦着敏感充血的阴道嫩肉。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:12
-msgid "{Name}挺立的肉棒正在紧致湿润的{TargetName}蜜穴中抽插。\n{TargetName}玲珑有致的翘臀在{Name}胯间起伏，娇小的身躯被{Name}有力的双手掌控着节奏。\n汗水顺着{TargetName}光滑的脊背流淌，她银铃般的娇喘回荡在卧室。"
+msgid "挺立的肉棒正在紧致湿润的{TargetName}蜜穴中抽插。\n{TargetName}在{Name}胯间起伏，娇小的腰臀被{Name}有力的双手掌控着节奏。\n汗水顺着{TargetName}光滑的脊背流淌，甜蜜的娇喘从娇嫩的唇舌中溢出。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:13
-msgid "{Name}粗大的阳具正在{TargetName}丰腴多汁的蜜壶中驰骋，伴随着{Name}一记深深的顶弄，{TargetName}香汗淋漓的胴体猛然绷紧。\n{TargetName}浑圆挺翘的美臀在{Name}身上摇摆，柔软的臀肉被{Name}大手揉捏变形。\n媚人的呻吟从{TargetName}花瓣般的唇中溢出，整个房间弥漫着旖旎的气息。"
+msgid "{Name}粗大的阳具正在{TargetName}丰腴多汁的蜜壶中驰骋，浑圆挺翘的美臀在{PlayerName}怀中摇摆，柔软的臀肉被{PlayerName}的手托着分开在两侧揉捏变形。\n媚人的呻吟从{TargetName}花瓣般的唇中溢出，整个房间弥漫着旖旎的气息，伴随着{Name}一记深深的顶弄，{TargetName}香汗淋漓的胴体猛然绷紧。"
 msgstr ""
 
 #: .\data\talk\sex\back_seat_sex.csv:14
-msgid "{Name}狰狞的巨物正在{TargetName}肥美多汁的秘裂中驰骋，淫靡的水声和肉体撞击声此起彼伏，乳肉在{Name}手中变换着形状。\n{TargetName}雪白硕大的臀瓣将{Name}的胯部完全包裹，随着她起伏的节奏荡起阵阵臀波。\n突然{Name}加快了冲刺的速度，{TargetName}发出一声尖叫，她湿热紧致的小穴疯狂绞紧，"
+msgid "{Name}狰狞的巨物正在{TargetName}肥美多汁的秘裂中驰骋，搅弄着发出啪唧啪唧的水声。\n{TargetName}硕大的臀瓣将{Name}的胯部完全包裹压紧，随着起伏的节奏荡起阵阵臀波。\n淫靡的水声和肉体撞击声此起彼伏，丰满的胸脯在{PlayerName}从身后抱住的手中变换着形状。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:15
+msgid "在一阵疾风骤雨般的抽送后，{Name}闷哼一声，滚烫的精华喷涌而出，尽数浇灌在{TargetName}颤抖的花心深处。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:16
+msgid "{Name}咬紧牙关，将浓稠滚烫的阳精尽数射进{TargetName}娇嫩的阴道。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:17
+msgid "突然{Name}加快了冲刺的速度，迫使{TargetName}湿热紧致的小穴疯狂绞紧。\n再也把持不住的{Name}，低吼着将滚烫粘稠的浓精喷射在{TargetName}痉挛抽搐的嫩肉深处。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:18
+msgid "背对着坐在怀中的{Name}扭动肥嫩滚圆的大屁股接受着{PlayerName}的抽送，但无论怎么用力顶弄，丰满的臀瓣只会稳稳地坐在肉根上，泛起勾人的肉浪。\n用股间丰满的包裹感好好地承接住{PlayerName}狂暴的欲望，刺激着{PlayerName}更加快了交配的速度顶弄起柔软的花心。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:19
+msgid "{Name}充满雌性魅力的美臀坐在{PlayerName}的股间被坚挺的肉根插着，下流地漏出淫水，在激烈地抽送下不禁缩紧了阴道绞在了{PlayerName}的肉茎上。"
+msgstr ""
+
+#: .\data\talk\sex\back_seat_sex.csv:20
+msgid "{Name}娇小的臀部被{PlayerName}用力地顶起，接着啪唧地发出响亮的撞击声，深深地坐回到了坚挺的雄根上，从紧密地缠绕在一起的花心深处传来了强烈的酥麻快感。"
 msgstr ""
 
 #: .\data\talk\sex\back_sex.csv:6
@@ -22857,7 +22881,39 @@ msgid "{Name}触发了背面立位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\back_stand_sex.csv:6
-msgid "{Name}触发了背面立位指令的地文"
+msgid "{TargetName}背对着{PlayerName}，双手撑在墙上，身体微微前倾，小巧玲珑的臀部紧贴着{PlayerName}的下腹缓慢地来回斯磨。\n{PlayerName}站在{TargetName}身后，双手轻抚她纤细的腰肢，随着{PlayerName}缓缓进入，感受着紧致的温暖。\n{TargetName}轻轻呻吟，娇小的身躯在{PlayerName}的怀抱中显得格外娇弱。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:7
+msgid "{TargetName}背对着{PlayerName}，双手撑在墙上，身体微微前倾，圆润饱满的臀部与{Name}的下腹紧密相连，如同两个成熟的蜜桃。\n{Name}站在{TargetName}身后，双手扶住她柔软的腰部，随着{PlayerName}缓缓进入，享受着她温暖的包裹。\n{TargetName}发出愉悦的轻叹，优雅的身材在{Name}的拥抱中展现出迷人的曲线。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:8
+msgid "{TargetName}背对着他，双手撑在墙上，身体微微前倾，丰满诱人的臀部紧贴着{PlayerName}的下腹，如同两个硕大的西瓜。\n{PlayerName}站在{TargetName}身后，双手几乎无法完全覆盖她宽阔的腰线，随着{PlayerName}缓缓进入，肉根被她柔软的丰腴所包围。\n{TargetName}发出深沉的呻吟，丰满的身材在{Name}的怀抱中显得格外魅惑。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:9
+msgid "{PlayerName}开始有节奏地抽送，手指陷入{TargetName}纤细的腰间。\n{TargetName}娇小的身躯随着每一次冲击微微颤抖，双手在光滑的墙面上不停地摩挲，试图保持平衡。\n{PlayerName}感受到紧致的内壁紧紧包裹着自己，每一次进出都带来极致的快感。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:10
+msgid "{PlayerName}开始稳定地律动，手掌紧贴着{TargetName}柔软的腰线。\n{TargetName}优雅的身体随着每次冲击轻轻摇晃，手指在墙上微微蜷缩，寻求支撑。\n{PlayerName}沉浸在温暖湿润的包裹中，每一次抽送都带来愉悦的电流。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:11
+msgid "{PlayerName}开始用力抽插，手掌几乎无法完全掌控{TargetName}丰满的腰身。\n{TargetName}丰腴的身体随着每次撞击剧烈晃动，手指在墙上用力抓挠，努力稳住自己。\n{PlayerName}被柔软丰满的内里紧紧包围，每一次进出都带来极度的快感。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:12
+msgid "{Name}的呻吟声越来越高，她那小巧的臀部微微向后迎合，渴望更深入的接触。\n随着节奏加快，{PlayerName}不得不用力搂住{Name}的腰，以防她纤细的双腿因快感而软倒。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:13
+msgid "{Name}的喘息声渐渐加重，她圆润的臀部开始主动迎合{PlayerName}的节奏，追求更深层的快感。\n随着速度的提升，{PlayerName}能感受到{Name}背部肌肉的紧绷，她的身体在快感中微微弓起。"
+msgstr ""
+
+#: .\data\talk\sex\back_stand_sex.csv:14
+msgid "{Name}的呻吟声变得低沉而富有磁性，丰满的臀部不断向后挺动，渴望被更深入地填满。\n随着节奏愈发激烈，{PlayerName}不得不用尽全力扶住{Name}的腰，以抵抗她身体的摇晃和快感带来的冲击。"
 msgstr ""
 
 #: .\data\talk\sex\beat_breast.csv:6
@@ -22961,7 +23017,39 @@ msgid "{Name}触发了对面座位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\face_seat_sex.csv:6
-msgid "{Name}触发了对面座位指令的地文"
+msgid "{TargetName}纤细的双腿轻轻分开，跨坐在{PlayerName}的大腿上，将湿润的穴口贴在龟头上湿滑地斯磨。\n随着紧致的下身缓缓下沉，伴随着一声轻吟，{TargetName}紧绷的小穴被分开，慢慢包裹住{PlayerName}坚挺的肉棒。\n纤巧的身形在{PlayerName}怀中微微颤抖，双手紧紧搂住脖颈，直到完全吞没了那炙热的阴茎。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:7
+msgid "{TargetName}丰满有致的身材贴近{PlayerName}，柔软的双腿张开，跨跪在{PlayerName}的腿上。\n温暖的下体缓缓下压，轻触{PlayerName}挺立的阴茎，伴随着一声深沉的叹息，{TargetName}柔韧的身体逐渐吞入{PlayerName}粗壮的肉棒。\n曼妙的身体在{PlayerName}怀抱中轻轻摇晃，双手抚摸对方的背部，直到完全容纳了那火热的硬物。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:8
+msgid "{TargetName}丰腴诱人的身体滑入{PlayerName}的怀中，丰满的双腿大张，跨坐在了{PlayerName}的腿根。\n{TargetName}湿润的花园轻轻触碰昂扬的阴茎，随着一声满足的呻吟，柔软的身躯慢慢吞没肉棒。\n浑圆的翘臀在怀中微微起伏，{TargetName}双手紧扣住{PlayerName}的肩膀，直到完全融合了那滚烫的阴茎。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:9
+msgid "{TargetName}纤瘦的身体在{PlayerName}怀中轻轻起伏，紧致的甬道随着每次抽插而收缩，紧紧吸附着坚硬的阴茎。\n{PlayerName}有力的双手扶住{TargetName}盈盈一握的细腰，引导她娇小的腰腹在自己的欲望上舞蹈。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:10
+msgid "{TargetName}柔软丰满的身体在{PlayerName}怀中摇曳生姿，湿润温暖的花径随着每次进出而绽开，接着再次紧紧缠绕住{PlayerName}粗壮的肉棒。\n{PlayerName}双手托住{TargetName}挺翘的臀瓣，引领她曼妙的身姿在自己的硬挺上起舞。\n"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:11
+msgid "{TargetName}丰腴诱人的胴体在{PlayerName}怀中不住地发颤，湿滑紧致的蜜穴随着每次冲刺而痉挛，紧紧吮吸着肉茎。\n{PlayerName}有力的双手揉捏着{TargetName}饱满柔软的臀肉，带动性感的身躯在自己的欲望上驰骋，沿着坚硬的肉根漏出快乐的蜜汁。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:12
+msgid "每一次雄根深入，都让怀中的{Name}娇喘连连，双腿不由自主地夹紧{PlayerName}的腰身，将小巧的屁股更深地坐入了{PlayerName}的股间。"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:13
+msgid "圆润的臀部上的每一下撞击，都让{TargetName}呻吟不已，柔韧的双腿情不自禁地缠上{Name}的后腰，将两人的性器默契地交融在一起，一同冲向极乐的天堂。\n"
+msgstr ""
+
+#: .\data\talk\sex\face_seat_sex.csv:14
+msgid "每一记深顶，都让{Name}浪叫连连，肉感十足的双腿本能地盘上{PlayerName}的腰肢，将自己不停流出蜜汁的花心完全献给了雄根。"
 msgstr ""
 
 #: .\data\talk\sex\face_stand_anal_sex.csv:6
@@ -22969,7 +23057,39 @@ msgid "{Name}触发了对面立位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\face_stand_sex.csv:6
-msgid "{Name}触发了对面立位指令的地文"
+msgid "{PlayerName}面对着踮起脚尖，双手搂住脖子的{TargetName}，爱不释手地抚摸着她玲珑有致的身体曲线。\n一手揽住{TargetName}柳腰，一手握住自己勃发的阴茎，对准了{TargetName}早已湿润的花瓣，缓缓挺入。\n随着{PlayerName}的动作{TargetName}发出阵阵娇吟，抬起一条腿缠绕在{PlayerName}腰间，紧致温暖的甬道包裹住{PlayerName}的肉棒，让人情不自禁地加快了抽插的速度。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:7
+msgid "{TargetName}背靠着墙壁，胸脯在{PlayerName}面前轻微晃动。\n{PlayerName}双手托起{TargetName}浑圆挺翘的臀部，胯下的阳物在{TargetName}泛着水光的花径入口磨蹭着，然后一个挺身，深深没入她体内。\n火热坚硬的肉棒分开湿滑嫩肉，直抵花心，让{TargetName}仰头发出一声长吟，指甲在{PlayerName}背上留下道道红痕。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:8
+msgid "{TargetName}丰腴白皙的胴体紧贴着{PlayerName}，硕大饱满的臀瓣在{PlayerName}手中扭动着，用柔嫩的手指扶着狰狞的阴茎，在湿润粉嫩的穴口附近摩擦。\n{PlayerName}掐住{TargetName}纤细的腰肢，龟头分开穴肉，缓缓推进，融入{TargetName}紧窄湿热的蜜道中。\n接着下身有力地律动起来，粗长的性器在{TargetName}体内进出冲刺，肉体碰撞发出'啪啪'的淫靡声响，很快两人的交合处泛起了白沫。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:9
+msgid "{PlayerName}托着{TargetName}娇小的臀瓣，粗长的阴茎在{TargetName}紧致的花径内快速进出，每一下都凶猛地顶到最深处。\n嫩肉讨好般缠绕着{PlayerName}坚硬滚烫的肉棒，湿滑软糯的触感让人爽得头皮发麻。\n{TargetName}被顶得娇喘连连，胸前两团柔软随着剧烈的动作上下跃动，仍不住缠上了{PlayerName}的腰肢将阴茎更深地迎了进去。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:10
+msgid "{PlayerName}的腰身快速摆动，阴茎在{TargetName}的蜜穴中全根没入又拔出。\n粗大的龟头每次都重重碾过花心，引得{TargetName}浪叫不已。\n浑圆的臀肉随着{PlayerName}的撞击而颤动，肉体碰撞发出清脆的\"啪啪\"声。\n"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:11
+msgid "{PlayerName}托起{TargetName}丰腴的翘臀，粗壮的肉柱将泥泞的桃源洞口圆鼓鼓地撑开。\n膣内湿热紧致，享受着下体被层层媚肉包裹吸吮的极致快感，暴起青筋的阴茎快速抽送着，每一下都狠狠碾过敏感点。\n如波浪般起伏的臀浪随着{PlayerName}的冲刺而颤抖，在{PlayerName}的手中被撞得变了形，交合处不断有爱液被带出，把两人的下体弄得湿漉漉的。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:12
+msgid "{Name}小巧的臀部被{PlayerName}抓着抬高以迎合激烈的抽插，让肉棒入得更深。交合处\"咕叽咕叽\"的水声和肉体撞击声回荡在周围。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:13
+msgid "{Name}秀发散乱，蜷起抬起的脚趾用圆润的臀部承受着猛烈的攻势，胸脯贴在{PlayerName}结实的胸膛上，樱红的乳尖硬挺摩擦着。"
+msgstr ""
+
+#: .\data\talk\sex\face_stand_sex.csv:14
+msgid "{Name}甜腻的呻吟声越来越高，无法继续维持站立地瘫软在{PlayerName}怀中，丰满的股肉夹紧了冲撞的淫根，任由{PlayerName}在体内驰骋。"
 msgstr ""
 
 #: .\data\talk\sex\focus_blowjob.csv:6
@@ -23061,7 +23181,39 @@ msgid "{Name}触发了正常位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\normal_sex.csv:6
-msgid "{Name}触发了正常位指令的地文"
+msgid "{PlayerName}抚摸着{TargetName}纤细柔软的腰肢，欣赏着她玲珑有致的翘臀。\n分开{TargetName}修长的双腿，将早已勃起的阴茎抵在她的蜜穴入口，缓缓推入深处。\n随着紧致湿润的小穴被一点点撑开，{TargetName}发出一声细微的娇吟，直到肉棒完全没入{TargetName}体内。"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:7
+msgid "{TargetName}丰满浑圆的臀部在{Name}眼前摇曳，散发着女性的诱惑。\n{PlayerName}扶着自己硬挺的肉棒，在{TargetName}湿润的穴口上来回摩擦，然后一鼓作气插入她的身体。\n肉棒破开层层叠叠的嫩肉，直抵嫩穴深处，开始缓慢抽插，尽情享受{TargetName}丰腴的胴体。"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:8
+msgid "眼前{TargetName}雪白的肌肤和饱满多肉的翘臀，让{PlayerName}兴奋不已。\n一手揉捏着{TargetName}挺翘的臀瓣，一手扶住自己粗壮的阴茎，对准小穴，猛地一插到底。\n硕大的龟头撞击到{TargetName}的肥美的花心，使得{TargetName}不禁发出一声呻吟。\n"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:9
+msgid "{PlayerName}紧紧箍住{TargetName}盈盈一握的纤腰，下身凶猛地抽插着。\n肉棒进出{TargetName}湿热紧致的小穴，带出晶莹的爱液。\n"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:10
+msgid "{PlayerName}压在{TargetName}成熟丰满的胴体上，肉棒在她湿漉漉的蜜穴里快速进出。\n饱满的臀肉被{PlayerName}的胯部撞击得变了形，光滑的肌肤上浮现出一片红晕。\n"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:11
+msgid "{Name}抓着{TargetName}肥美硕大的臀瓣，粗壮的肉棒在她多汁的肉穴里横冲直撞。\n{TargetName}雪白的臀肉被撞得震颤，肉浪翻飞，淫靡的水声和肉体碰撞声此起彼伏，两人的交合处已是泥泞一片。\n\n"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:12
+msgid "被抓住了柔软的小腹的{Name}随着{PlayerName}的顶撞屁股的动作摆动腰肢，娇小臀瓣微微颤动，娇喘连连。"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:13
+msgid "接收着抽插的{Name}发出满足地呻吟，丰润的甬道不自觉地收缩，紧紧咬住{PlayerName}的阴茎。"
+msgstr ""
+
+#: .\data\talk\sex\normal_sex.csv:14
+msgid "{Name}主动迎合{Name}的抽送发出娇喘，坚挺的阴茎撑开{TargetName}的肥穴，一下下鞭挞着敏感的花心。"
 msgstr ""
 
 #: .\data\talk\sex\no_conscious_h_end.csv:6
@@ -23097,7 +23249,39 @@ msgid "{Name}触发了骑乘位肛交指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\riding_sex.csv:6
-msgid "{Name}触发了骑乘位指令的地文"
+msgid "{TargetName}跨坐在{PlayerName}身上，双手撑住{PlayerName}的胸膛，臀部虽然娇小紧致，却也有着诱人的弧度。\n{TargetName}缓缓沉下腰肢，将{PlayerName}早已昂扬的阳具纳入体内。\n紧窄的花径被一寸寸撑开，娇嫩的褶皱被硕大的龟头破开，层层叠叠的嫩肉紧紧咬住炙热的肉茎。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:7
+msgid "{TargetName}背对{PlayerName}，扶着肉棒对准自己微微濡湿的私处，臀瓣圆润饱满，手感十足。\n随着{TargetName}臀部下沉，粗壮的阳具缓缓推开层层叠叠的嫩肉，一点点撑开紧致的甬道。\n硕大的龟头破开湿热的肉壁，享受着被四面八方的嫩肉包裹吮吸的快感，待到茎身尽根没入，{PlayerName}的囊袋啪的一声撞在{TargetName}挺翘的臀肉上，两人的结合才算完成。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:8
+msgid "{TargetName}肥美的臀肉在{PlayerName}眼前微微颤动，散发着成熟女性的诱惑，扶着粗硬的肉棒，对准自己已经泥泞不堪的蜜穴口。\n随着臀部一点点下沉，硕大的阳具头部受到穴口的阻力，但很快，{PlayerName}粗壮的肉刃就破开了{TargetName}湿滑松软的阴道。\n硕大的龟头顶开层层叠叠的嫩肉，在紧窄的甬道内缓缓前进，丰腴的臀瓣在重力作用下不断下压，直到{PlayerName}的肉棒完全插入蜜穴的最深处。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:9
+msgid "{TargetName}白皙的双手按在{PlayerName}的胸膛上，开始了疯狂的骑乘。\n她纤细的腰肢不断摆动，将{PlayerName}大的阳具吞吐进出，娇小的臀瓣随着激烈的动作而颤抖，砸着{PlayerName}的胯部啪啪作响。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:10
+msgid "{TargetName}浑圆的臀肉在{PlayerName}的胯间快速起伏，将他粗壮的阳具吞入小穴的最深处。\n每一次坐下，饱满的臀瓣都会重重地撞击{PlayerName}的胯部，发出清脆的肉体碰撞声，湿滑的甬道被{PlayerName}的肉刃来回捣弄，分泌出大量的蜜液。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:11
+msgid "{TargetName}肥美的臀肉在{PlayerName}的胯间疯狂摇摆，臀波荡漾，淫靡至极。\n丰腴的身体压在{PlayerName}身上，柔软的乳肉随着剧烈的动作而颤动，粗硬的肉棒在肥美多汁的蜜穴中快速抽插，每一次进出都会带出大量晶莹的爱液，将两人的交合处弄得泥泞不堪。\n"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:12
+msgid "骑在腰胯上的{Name}用阴道内的嫩肉紧紧绞住进出的肉棒，仿佛要用娇小的屁股榨出{PlayerName}的每一滴精华。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:13
+msgid "{Name}双手撑住{PlayerName}的腰腹，圆润的臀部配合着挺动腰肢的节奏，上下起伏，让粗硬的阴茎反复摩擦敏感的阴道内壁。"
+msgstr ""
+
+#: .\data\talk\sex\riding_sex.csv:14
+msgid "{Name}丰满的臀部紧紧地坐在了{PlayerName}的阴茎上，每一次沉重地研磨，抽送，湿润的臀浪拍打在{PlayerName}的精袋上发出淫靡的水声，带来了无与伦比的包裹感。"
 msgstr ""
 
 #: .\data\talk\sex\rub_buttock.csv:6

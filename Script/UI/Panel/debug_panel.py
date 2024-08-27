@@ -1225,7 +1225,7 @@ class Debug_Panel:
                 info_text += f"    \n4:服装异常：大致全裸、全裸：{handle_premise.handle_normal_4(self.target_character_id)}"
                 info_text += f"    \n5:意识模糊，或弱交互：醉酒，平然：{handle_premise.handle_normal_5(self.target_character_id)}"
                 info_text += f"    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气：{handle_premise.handle_normal_6(self.target_character_id)}"
-                info_text += f"    \n7:角色离线：装袋搬走、外勤、婴儿：{handle_premise.handle_normal_7(self.target_character_id)}"
+                info_text += f"    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问：{handle_premise.handle_normal_7(self.target_character_id)}"
                 info_text += f"\n\n"
                 info_text += f"[000]:在H模式中：{target_data.sp_flag.is_h}\n"
                 info_text += f"[001]:AI行动里的原地发呆判定：{target_data.sp_flag.wait_flag}\n"

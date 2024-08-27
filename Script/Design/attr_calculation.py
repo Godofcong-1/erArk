@@ -779,6 +779,30 @@ def get_trust_level(value: int):
     return max_cid,max_data.judge_add
 
 
+def get_reputation_level(value: int):
+    """
+    按当前声望值返回当前声望等级的str
+    Keyword arguments:
+    value -- 声望值
+    Return arguments:
+    int -- 声望等级
+    str -- 等级名称
+    """
+    for now_cid in game_config.config_reputation_level:
+        now_data = game_config.config_reputation_level[now_cid]
+        # 如果大于下一级的声望值，则继续
+        next_cid = now_cid + 1
+        if next_cid in game_config.config_reputation_level:
+            next_data = game_config.config_reputation_level[next_cid]
+            if value >= next_data.threshold:
+                continue
+            return now_cid,now_data.name
+    # 到达极限值时输出config_reputation_level的最后一个作为返回值
+    max_cid = list(game_config.config_reputation_level.keys())[-1]
+    max_data = game_config.config_reputation_level[max_cid]
+    return max_cid,max_data.name
+
+
 def hypnosis_degree_calculation(target_character_id: int) -> float:
     """
     计算催眠的增长程度
