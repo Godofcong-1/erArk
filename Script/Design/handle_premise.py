@@ -6817,6 +6817,74 @@ def handle_t_tired_100(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.GOOD_MOOD)
+def handle_good_mood(character_id: int) -> int:
+    """
+    自己心情愉快
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    value = character_data.angry_point
+    if value <= 5:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.NORMAL_MOOD)
+def handle_normal_mood(character_id: int) -> int:
+    """
+    自己心情普通
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    value = character_data.angry_point
+    if 5 < value and value <= 30:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.BAD_MOOD)
+def handle_bad_mood(character_id: int) -> int:
+    """
+    自己心情不好
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    value = character_data.angry_point
+    if 30 < value and value <= 50:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.ANGRY_MOOD)
+def handle_angry_mood(character_id: int) -> int:
+    """
+    自己心情愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    value = character_data.angry_point
+    if value > 50:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
@@ -6827,9 +6895,7 @@ def handle_target_good_mood(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    value = target_data.angry_point
-    if value <= 5:
+    if handle_good_mood(character_data.target_character_id):
         return 1
     else:
         return 0
@@ -6845,9 +6911,7 @@ def handle_target_normal_mood(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    value = target_data.angry_point
-    if 5 < value and value <= 30:
+    if handle_normal_mood(character_data.target_character_id):
         return 1
     else:
         return 0
@@ -6863,9 +6927,7 @@ def handle_target_bad_mood(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    value = target_data.angry_point
-    if 30 < value and value <= 50:
+    if handle_bad_mood(character_data.target_character_id):
         return 1
     else:
         return 0
@@ -6881,9 +6943,7 @@ def handle_target_angry_mood(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    value = target_data.angry_point
-    if value > 50:
+    if handle_angry_mood(character_data.target_character_id):
         return 1
     else:
         return 0

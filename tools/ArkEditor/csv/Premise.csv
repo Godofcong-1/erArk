@@ -88,6 +88,8 @@ place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
+place_someone_not_unconscious,SCENE_SOMEONE_NOT_UNCONSCIOUS,地点_角色,该地点有非无意识状态的角色
+place_all_unconscious,SCENE_ALL_UNCONSCIOUS,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识状态
 place_is_masturebate,SCENE_SOMEONE_IS_MASTUREBATE,地点_角色,该地点有角色在自慰
 place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
 place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
@@ -337,6 +339,7 @@ normal_1267,NORMAL_1267,属性_异常状态,1267正常（可能AI跟随、服装
 normal_123467,NORMAL_123467,属性_异常状态,123467正常（可能意识模糊）
 normal_1_2_4,NORMAL_1_2_4,属性_异常状态,124正常的普通状态
 normal_2_3_4,NORMAL_2_3_4,属性_异常状态,234正常的普通状态
+normal_2_5_6,NORMAL_2_5_6,属性_异常状态,256正常的普通状态
 unnormal,UNNORMAL,属性_异常状态,有特殊需求的异常状态
 unnormal_2,UNNORMAL_2,属性_异常状态,2异常
 unnormal_27,UNNORMAL_27,属性_异常状态,27异常（AI停止或离线）
@@ -460,6 +463,8 @@ t_is_follow,TARGET_IS_FOLLOW,属性_特殊flag,交互对象当前正跟随玩家
 t_not_follow,TARGET_NOT_FOLLOW,属性_特殊flag,交互对象当前没跟随玩家
 hp_1,HP_1,属性_特殊flag,自身疲劳（体力=1）
 hp_g_1,HP_G_1,属性_特殊flag,自身未疲劳（体力>1）
+self_or_target_hp_1,SELF_OR_TARGET_HP_1,属性_特殊flag,自身或交互对象疲劳（体力=1）
+self_and_target_hp_g_1,SELF_AND_TARGET_HP_G_1,属性_特殊flag,自身和交互对象均未疲劳（体力>1）
 be_bagged_0,BE_BAGGED_0,属性_特殊flag,自身没有被装袋搬走
 be_bagged_1,BE_BAGGED_1,属性_特殊flag,自身被装袋搬走
 pl_bagging_chara,PL_BAGGING_CHARA,属性_特殊flag,玩家正在装袋搬走某个角色
@@ -555,7 +560,14 @@ t_sleep_h_awake_0,TARGET_SLEEP_H_AWAKE_0,属性_特殊flag,交互对象没有睡
 t_sleep_h_awake_1,TARGET_SLEEP_H_AWAKE_1,属性_特殊flag,交互对象睡奸中醒来状态
 field_commission_0,FIELD_COMMISSION_0,属性_特殊flag,自身没有在出外勤委托
 field_commission_1,FIELD_COMMISSION_1,属性_特殊flag,自身正在出外勤委托
+in_diplomatic_visit_0,IN_DIPLOMATIC_VISIT_0,属性_特殊flag,自身没有在外交访问
+in_diplomatic_visit_1,IN_DIPLOMATIC_VISIT_1,属性_特殊flag,自身正在外交访问
+in_diplomatic_visit_1_and_other_country,IN_DIPLOMATIC_VISIT_1_AND_OTHER_COUNTRY,属性_特殊flag,自身正在外交访问且对方是非当前所在国家
 
+good_mood,GOOD_MOOD,属性_心情,自己心情愉快
+normal_mood,NORMAL_MOOD,属性_心情,自己心情普通
+bad_mood,BAD_MOOD,属性_心情,自己心情不好
+angry_mood,ANGRY_MOOD,属性_心情,自己心情愤怒
 good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
 bad_mood,TARGET_BAD_MOOD,属性_心情,交互对象心情不好
@@ -939,6 +951,7 @@ work_is_cook,WORK_IS_COOK,属性_工作,自己的工作为厨师
 work_is_production_worker,WORK_IS_PRODUCTION_WORKER,属性_工作,自己的工作为生产工人
 work_is_massage_therapist,WORK_IS_MASSAGE_THERAPIST,属性_工作,自己的工作为按摩师
 work_is_diplomat,WORK_IS_DIPLOMAT,属性_工作,自己的工作为外交官
+work_is_invitation_commissioner,WORK_IS_INVITATION_COMMISSIONER,属性_工作,自己的工作为邀请专员
 work_is_medicinal_planter,WORK_IS_MEDICINAL_PLANTER,属性_工作,自己的工作为药材种植员
 work_is_floral_planter,WORK_IS_FLORAL_PLANTER,属性_工作,自己的工作为花草种植员
 
@@ -1120,6 +1133,7 @@ t_turn_a_orgasm_g_3,T_TURN_A_ORGASM_G_3,H_射精与绝顶,交互对象本次H中
 t_turn_u_orgasm_g_3,T_TURN_U_ORGASM_G_3,H_射精与绝顶,交互对象本次H中U绝顶次数>3
 t_turn_w_orgasm_g_3,T_TURN_W_ORGASM_G_3,H_射精与绝顶,交互对象本次H中W绝顶次数>3
 t_turn_m_orgasm_g_3,T_TURN_M_ORGASM_G_3,H_射精与绝顶,交互对象本次H中M绝顶次数>3
+pl_semen_le_2,PL_SEMEN_LE_2,H_射精与绝顶,玩家当前精液量小于等于2ml
 
 npc_active_h,NPC_ACTIVE_H,H_逆推,自己正在主动H
 npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H
