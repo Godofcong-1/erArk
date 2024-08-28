@@ -1616,6 +1616,20 @@ class SecondBehavior:
     NEW_ROUND_FAREWELL = 1351
     """ 新周目告别 """
 
+    START_FIELD_COMMISSION_AS_LEADER = 1361
+    """ 以队长身份出发执行外勤委托 """
+    END_FIELD_COMMISSION_AS_LEADER = 1362
+    """ 以队长身份完成外勤委托归舰 """
+
+    APPOINNTED_AS_DIPLOMAT_LOCAL = 1371
+    """ 被任命为本地外交官 """
+    RELIEVED_OF_DIPLOMAT_LOCAL = 1372
+    """ 被解除本地外交官的任命 """
+    APPOINNTED_AS_DIPLOMAT_OUT = 1373
+    """ 被任命为外派外交官 """
+    RELIEVED_OF_DIPLOMAT_OUT = 1374
+    """ 被解除外派外交官的任命 """
+
     CHOSEN_AS_ASSISTANT = 1401
     """ 被选为助理 """
     NOT_AS_ASSISTANT = 1402

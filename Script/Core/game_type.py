@@ -927,7 +927,7 @@ class Rhodes_Island:
         self.invite_visitor: List[int, float, float] = {}
         """ 当前邀请进度 [0目标角色id, 1招募进度, 2招募效率百分比(如2.5)] """
         self.diplomat_of_country: Dict[int, Tuple[int]] = {}
-        """ 负责各的外交官 国家id:[0外交官id] """
+        """ 负责各的外交官 出身地国家id:[0外交官id] """
 
         # 机库
         self.ongoing_field_commissions: Dict[int, Tuple[List, datetime.datetime, List]] = {}
