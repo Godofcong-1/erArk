@@ -3328,6 +3328,46 @@ msgstr ""
 msgid "莱塔尼亚边境的一座城镇中日夜回响着阴森嘈杂的曲调，阻碍了杂音纠治乐团前去演出。\n经调查，此地似乎笼罩着非比寻常的“阴郁法术”，而法术造成的荒芜还在向城外蔓延。为了如期进行演出，杂音纠治乐团向罗德岛提出协助请求。\n搞清楚“阴郁法术”的来源，让乐团得以突破噪音的阻拦吧。"
 msgstr ""
 
+#: .\data\csv\Diplomatic_Policy.csv:7
+msgid "在民间开展源石病治疗工作"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:7
+msgid "优先承接低等级的源石病治疗委托，提供低价或免费的源石病治疗服务，小幅度降低当地的源石病感染率。"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:8
+msgid "设立和完善外勤办事处"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:8
+msgid "优先承接低等级的杂项委托，解决当地居民的生活难题，小幅度提高地区声望。"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:9
+msgid "与当地各势力建立合作关系"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:9
+msgid "优先承接来自各势力的委托，主要提高各势力的声望，小幅度提高地区声望。"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:10
+msgid "大规模源石病防治工程"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:10
+msgid "优先承接高等级的源石病治疗委托，投入大量资源进行源石病防治工程，大幅度降低当地的源石病感染率。"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:11
+msgid "与势力领导人进行密切交流"
+msgstr ""
+
+#: .\data\csv\Diplomatic_Policy.csv:11
+msgid "优先承接来自各势力领导人的高级委托，大幅度提高势力声望和地区声望。"
+msgstr ""
+
 #: .\data\csv\Entertainment.csv:9
 msgid "唱歌"
 msgstr ""

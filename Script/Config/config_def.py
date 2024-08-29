@@ -281,6 +281,19 @@ class Commission:
     """ 委托介绍 """
 
 
+class Diplomatic_Policy:
+    """ 外交政策配方 """
+
+    cid: int
+    """ 编号id """
+    name: str
+    """ 政策名 """
+    fdifficulty: int
+    """ 难易度 """
+    info: str
+    """ 政策介绍 """
+
+
 class Entertainment:
     """ 娱乐模板 """
 
