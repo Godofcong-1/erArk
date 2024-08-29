@@ -2356,7 +2356,7 @@ class Premise:
     """ 道具_使用 交互对象V没有在插入震动棒 """
     TARGET_NOW_VIBRATOR_INSERTION_ANAL = "target_now_vibrator_insertion_anal"
     """ 道具_使用 交互对象A正插入震动棒 """
-    TARGET_NOT_VIBRATOR_INSERTION_ANAL = "target_not_vibrator_insertion"
+    TARGET_NOT_VIBRATOR_INSERTION_ANAL = "target_not_vibrator_insertion_anal"
     """ 道具_使用 交互对象A没有在插入震动棒 """
     TARGET_NOW_MILKING_MACHINE = "target_now_milking_machine"
     """ 道具_使用 交互对象正在搾乳机 """

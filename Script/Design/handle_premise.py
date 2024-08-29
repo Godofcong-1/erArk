@@ -13572,7 +13572,7 @@ def handle_target_now_vibrator_insertion_anal(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL)
-def handle_target_not_vibrator_insertion(character_id: int) -> int:
+def handle_target_not_vibrator_insertion_anal(character_id: int) -> int:
     """
     校验交互对象A没有在插入震动棒
     Keyword arguments:
