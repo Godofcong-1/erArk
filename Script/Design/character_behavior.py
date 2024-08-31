@@ -955,7 +955,7 @@ def update_new_day():
     无
     """
     from Script.Design import basement
-    from Script.UI.Panel import field_commission_panel
+    from Script.UI.Panel import field_commission_panel, nation_diplomacy_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -989,8 +989,11 @@ def update_new_day():
 
     # 非角色部分
     basement.update_base_resouce_newday() # 更新基础资源
-    field_commission_panel.judge_field_commission_finish() # 刷新委托任务
+    field_commission_panel.update_field_commission() # 刷新委托任务
     cooking.init_food_shop_data() # 初始化餐厅数据
+    # 每周一次
+    if cache.game_time.weekday() == 6:
+        nation_diplomacy_panel.judge_diplomatic_policy() # 结算外交政策
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()

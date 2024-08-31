@@ -125,6 +125,14 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     return type_text, full_text, satify_flag
 
 
+def update_field_commission():
+    """
+    刷新外勤委托的相关数据
+    """
+    judge_field_commission_finish()
+    find_nation_field_commission()
+
+
 def judge_field_commission_finish():
     """
     判断外勤委托是否完成
@@ -171,6 +179,15 @@ def judge_field_commission_finish():
         info_draw.style = "gold_enrod"
         info_draw.width = window_width
         info_draw.draw()
+
+
+def find_nation_field_commission():
+    """
+    寻找来自势力的外勤委托
+    Keyword arguments:
+    Return arguments:
+    """
+    # TODO: 未实装
 
 
 class Field_Commission_Panel:

@@ -779,7 +779,7 @@ def get_trust_level(value: int):
     return max_cid,max_data.judge_add
 
 
-def get_reputation_level(value: int):
+def get_reputation_level(value: float):
     """
     按当前声望值返回当前声望等级的str
     Keyword arguments:

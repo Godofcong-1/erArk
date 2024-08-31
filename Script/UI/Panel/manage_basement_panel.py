@@ -125,15 +125,14 @@ class Manage_Basement_Panel:
         title_text = _("管理罗德岛")
         panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
-            _("工程部"):_("[基建系统]"),
-            _("制造加工区"):_("[生产系统]"),
-            _("图书馆"):_("[图书馆管理系统]"),
-            _("贸易区"):_("[资源交易系统]"),
-            _("文职部"):_("[招募系统]"),
-            _("访客区"):_("[邀请访客系统]"),
-            _("机库"):_("[外勤委托系统]"),
-            _("机库"):_("[载具管理系统]"),
-            _("疗养庭院"):_("[农业系统]"),
+            _("工程部"):[_("[基建系统]")],
+            _("制造加工区"):[_("[生产系统]")],
+            _("图书馆"):[_("[图书馆管理系统]")],
+            _("贸易区"):[_("[资源交易系统]")],
+            _("文职部"):[_("[招募系统]")],
+            _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
+            _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
+            _("疗养庭院"):[_("[农业系统]")],
             }
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -228,7 +227,6 @@ class Manage_Basement_Panel:
                 all_info_draw = draw.NormalDraw()
 
                 # 统计各部门岗位的工作干员数量
-                patient_now = cache.rhodes_island.patient_now
                 work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
                 all_info_draw.text = _("\n 当前工作中干员/总干员：{0}/{1}").format(work_people_now, people_max)
@@ -246,7 +244,7 @@ class Manage_Basement_Panel:
                     button_draw = draw.CenterButton(
                         department_text,
                         f"\n{department}",
-                        len(department_text)*2,
+                        len(department_text) * 2,
                         cmd_func=self.show_department,
                         args=(department,),
                     )
@@ -255,16 +253,16 @@ class Manage_Basement_Panel:
 
                     # 如果该部门有子系统的话，绘制子系统按钮
                     if department in department_son_panel_button_dict:
-                        button_text = department_son_panel_button_dict[department]
-                        button_draw = draw.CenterButton(
-                            button_text,
-                            button_text,
-                            len(button_text) * 2,
-                            cmd_func=self.jump_to_son_panel,
-                            args=(button_text)
-                        )
-                        button_draw.draw()
-                        return_list.append(button_draw.return_text)
+                        for button_text in department_son_panel_button_dict[department]:
+                            button_draw = draw.CenterButton(
+                                button_text,
+                                f"\n{button_text}",
+                                len(button_text) * 2,
+                                cmd_func=self.jump_to_son_panel,
+                                args=(button_text)
+                            )
+                            button_draw.draw()
+                            return_list.append(button_draw.return_text)
 
                     # 输出部门工作人员数量
                     all_info_draw.text = "："
@@ -273,7 +271,13 @@ class Manage_Basement_Panel:
                         if work_data.department == department:
                             all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
                     if department == _("医疗部"):
+                        patient_now = cache.rhodes_island.patient_now
                         all_info_draw.text += _("  病人 — {0}").format(patient_now)
+                    elif department == _("机库"):
+                        field_people_now = 0
+                        for cid in cache.rhodes_island.ongoing_field_commissions:
+                            field_people_now += len(cache.rhodes_island.ongoing_field_commissions[cid][0])
+                        all_info_draw.text += _("  外勤干员 — {0}").format(field_people_now)
                     all_info_draw.draw()
                     line_feed.draw()
 
@@ -338,7 +342,7 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
@@ -350,6 +354,8 @@ class Manage_Basement_Panel:
             now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(self.width)
         elif _("招募系统") in son_panel:
                 now_panel =recruit_panel.Recruit_Panel(self.width)
+        elif _("势力外交系统") in son_panel:
+            now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(self.width)
         elif _("邀请访客系统") in son_panel:
             now_panel = invite_visitor_panel.Invite_Visitor_Panel(self.width)
         elif _("外勤委托系统") in son_panel:

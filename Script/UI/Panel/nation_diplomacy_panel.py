@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.Design import  attr_calculation
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -39,6 +40,95 @@ def update_nation_data():
     if need_update:
         for country_id in game_config.config_birthplace:
             cache.country.country_infection_rate[country_id] = game_config.config_birthplace[country_id].infect_rate
+
+
+def judge_diplomatic_policy():
+    """
+    结算外交方针
+    """
+
+    from Script.Settle import default_experience
+
+    all_reputation, all_infection_rate = 0, 0
+    # 遍历所有势力
+    for country_id in cache.rhodes_island.diplomat_of_country:
+        # 外交官数据
+        diplomat_chara_id = cache.rhodes_island.diplomat_of_country[country_id][0]
+        if diplomat_chara_id == 0:
+            continue
+        diplomat_chara_data = cache.character_data[diplomat_chara_id]
+        # 外交方针数据
+        diplomatic_policy_id = cache.rhodes_island.diplomat_of_country[country_id][1]
+        if diplomatic_policy_id == 0:
+            continue
+        diplomatic_policy_data = game_config.config_diplomatic_policy[diplomatic_policy_id]
+
+        # 外交官增加对话经验和学识经验
+        for i in range(diplomatic_policy_id):
+            default_experience.handle_add_1_chat_experience(diplomat_chara_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+            default_experience.handle_add_1_learn_experience(diplomat_chara_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+
+        # 能力修正
+        ability_adjust = attr_calculation.get_ability_adjust(diplomat_chara_data.ability[40])
+        # 随机6+能力等级的随机数
+        random_just = random.uniform(-6 + diplomat_chara_data.ability[40], 6 + diplomat_chara_data.ability[40]) / 10
+
+        # 结算外交方针
+        if diplomatic_policy_id == 1:
+            # 小幅度降低源石病感染率
+            down_rate = 0.01 * ability_adjust * random_just
+            cache.country.country_infection_rate[country_id] -= down_rate
+            all_infection_rate += down_rate
+        elif diplomatic_policy_id == 2:
+            # 小幅度提高声望
+            up_reputation = 0.1 * ability_adjust * random_just
+            # 修正声望
+            cache.country.nation_reputation[country_id] += up_reputation
+            all_reputation += up_reputation
+            # 遍历当地的附属势力
+            for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
+                # 修正声望
+                cache.country.nation_reputation[subordinate_id] += up_reputation * 0.5
+                all_reputation += up_reputation * 0.5
+        elif diplomatic_policy_id == 3:
+            # 小幅度提高声望
+            up_reputation = 0.1 * ability_adjust * random_just
+            # 修正声望
+            cache.country.nation_reputation[country_id] += up_reputation
+            all_reputation += up_reputation
+            # 遍历当地的附属势力
+            for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
+                # 修正声望
+                cache.country.nation_reputation[subordinate_id] += up_reputation * 3
+                all_reputation += up_reputation * 3
+        elif diplomatic_policy_id == 4:
+            # 大幅度降低源石病感染率
+            down_rate = 0.05 * ability_adjust * random_just
+            cache.country.country_infection_rate[country_id] -= down_rate
+            all_infection_rate += down_rate
+        elif diplomatic_policy_id == 5:
+            # 大幅度提高声望
+            up_reputation = 0.3 * ability_adjust * random_just
+            # 修正声望
+            cache.country.nation_reputation[country_id] += up_reputation
+            all_reputation += up_reputation
+            # 遍历当地的附属势力
+            for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
+                # 修正声望
+                cache.country.nation_reputation[subordinate_id] += up_reputation
+                all_reputation += up_reputation
+
+    # 保留小数
+    all_reputation = round(all_reputation, 2)
+    all_infection_rate = round(all_infection_rate, 3)
+    # 绘制总结算信息
+    info_text = "\n"
+    info_text += _("本周全势力声望变化：{0}\n").format(all_reputation)
+    info_text += _("本周全势力源石病感染率变化：{0}%\n").format(all_infection_rate)
+    info_draw = draw.WaitDraw()
+    info_draw.text = info_text
+    info_draw.width = window_width
+    info_draw.draw()
 
 
 class Nation_Diplomacy_Panel:
@@ -111,6 +201,8 @@ class Nation_Diplomacy_Panel:
             # 绘制提示信息
             # info_text_list = [_("势力名称"), _("领导人"), _("势力声望"), _("源石病治愈率(未实装)")]
             info_text_list = [_("势力名称"), _("势力声望"), _("源石病治愈率(未实装)"), _("负责外交官")]
+            if self.now_panel == _("其他势力"):
+                info_text_list = [_("势力名称"), _("势力声望")]
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
@@ -153,13 +245,15 @@ class Nation_Diplomacy_Panel:
                 nation_name = nation_data.name
                 # 声望
                 now_nation_reputation = cache.country.nation_reputation[nation_id]
+                now_nation_reputation = round(now_nation_reputation, 2)
                 tem, now_nation_reputation_level = attr_calculation.get_reputation_level(now_nation_reputation)
                 now_nation_reputation_str = f"{now_nation_reputation}({now_nation_reputation_level})"
                 # 治愈率
                 if nation_data.country == -1:
                     now_country_treatment_progress = _("无")
                 else:
-                    now_country_treatment_progress = str(cache.country.country_infection_rate[nation_data.country])
+                    now_country_treatment_progress = round(cache.country.country_infection_rate[nation_data.country], 3)
+                    now_country_treatment_progress = str(now_country_treatment_progress)
                 # 外交官
                 now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
                 if now_diplomat_chara_id != 0:
@@ -171,6 +265,8 @@ class Nation_Diplomacy_Panel:
                 text_width = int(self.width / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
                 nation_text = f"{nation_name.center(str_text_width,'　')}{now_nation_reputation_str.center(text_width,' ')}{now_country_treatment_progress.center(text_width,' ')}{now_diplomat_name.center(str_text_width,'　')}"
+                if self.now_panel == _("其他势力"):
+                    nation_text = f"{nation_name.center(str_text_width,'　')}{now_nation_reputation_str.center(text_width,' ')}"
 
                 # 可以进行的，绘制为按钮
                 draw_style = "standard"
@@ -218,8 +314,9 @@ class Nation_Diplomacy_Panel:
         nation_name = nation_data.name
         nation_leader = nation_data.leader
         nation_introduction = nation_data.introduction
-        nation_reputation = cache.country.nation_reputation[nation_id]
-        nation_infected_rate = cache.country.country_infection_rate[nation_data.country]
+        nation_reputation = round(cache.country.nation_reputation[nation_id], 2)
+        if self.now_panel == _("国家及附属势力"):
+            nation_infected_rate = round(cache.country.country_infection_rate[nation_data.country], 3)
         # 势力特产
         nation_specialty_list = game_config.config_resouce_data_of_nation.get(nation_data.country, [])
         nation_specialty_str = ""
@@ -229,7 +326,7 @@ class Nation_Diplomacy_Panel:
         nation_subordinate_list = game_config.config_nation_data_of_country_subordinate.get(nation_id, [])
         nation_subordinate_str = ""
         for cid in nation_subordinate_list:
-            now_nation_reputation = cache.country.nation_reputation[cid]
+            now_nation_reputation = round(cache.country.nation_reputation[cid], 2)
             tem, now_nation_reputation_level = attr_calculation.get_reputation_level(now_nation_reputation)
             now_nation_reputation_str = f"{now_nation_reputation}({now_nation_reputation_level})"
             nation_subordinate_str += f"{game_config.config_nation[cid].name}{now_nation_reputation_str} "
@@ -251,7 +348,8 @@ class Nation_Diplomacy_Panel:
             # info_draw.text += _("\n领导人：{0}").format(nation_leader)
             # info_draw.text += _("\n势力简介：{0}").format(nation_introduction)
             info_draw.text += _("\n势力声望：{0}").format(nation_reputation)
-            info_draw.text += _("\n源石病感染率：{0}").format(nation_infected_rate)
+            if self.now_panel == _("国家及附属势力"):
+                info_draw.text += _("\n源石病感染率：{0}").format(nation_infected_rate)
             info_draw.text += _("\n势力特产：{0}").format(nation_specialty_str)
             info_draw.text += _("\n附属势力：{0}").format(nation_subordinate_str)
             info_draw.width = self.width
@@ -259,65 +357,67 @@ class Nation_Diplomacy_Panel:
             line_feed.draw()
             line_feed.draw()
 
-            # 当前负责外交官
-            info_text = _("○负责地区势力的外交官会长期离岛停留在对应国家，只有当罗德岛本身也在同一国家时才会在岛上办公\n")
-            info_text += _("当前势力的负责外交官为：")
-            now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
-            if now_diplomat_chara_id != 0:
-                now_diplomat_chara_data = cache.character_data[now_diplomat_chara_id]
-                now_diplomat_name = now_diplomat_chara_data.name
-                now_diplomat_adv = now_diplomat_chara_data.adv
-                now_diplomat_ability_lv = now_diplomat_chara_data.ability[40]
-                ability_name = game_config.config_ability[40].name
-                now_diplomat_ability_effect = 5 * attr_calculation.get_ability_adjust(now_diplomat_ability_lv)
-                now_diplomat_text = f"\n  [{str(now_diplomat_adv).rjust(4,'0')}]{now_diplomat_name}  {ability_name}lv{now_diplomat_ability_lv}：{now_diplomat_ability_effect}%"
-            else:
-                now_diplomat_text = _("  无")
-            info_draw = draw.NormalDraw()
-            info_draw.text = info_text + now_diplomat_text
-            info_draw.width = self.width
-            info_draw.draw()
-            line_feed.draw()
-            line_feed.draw()
+            if self.now_panel == _("国家及附属势力"):
 
-            # 当前外交方针
-            now_diplomatic_policy_cid = cache.rhodes_island.diplomat_of_country[nation_data.country][1]
-            now_diplomatic_policy_text = ""
-            if now_diplomat_chara_id == 0:
-                now_diplomatic_policy_text += _("未任命外交官，无法制定外交方针")
-            else:
-                now_diplomatic_policy_data = game_config.config_diplomatic_policy[now_diplomatic_policy_cid]
-                now_diplomatic_policy_text += now_diplomatic_policy_data.name
-            info_draw = draw.NormalDraw()
-            info_draw.text = _("\n当前外交方针：{0}").format(now_diplomatic_policy_text)
-            info_draw.width = self.width
-            info_draw.draw()
-            line_feed.draw()
+                # 当前负责外交官
+                info_text = _("○负责地区势力的外交官会长期离岛停留在对应国家，只有当罗德岛本身也在同一国家时才会在岛上办公\n")
+                info_text += _("当前势力的负责外交官为：")
+                now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
+                if now_diplomat_chara_id != 0:
+                    now_diplomat_chara_data = cache.character_data[now_diplomat_chara_id]
+                    now_diplomat_name = now_diplomat_chara_data.name
+                    now_diplomat_adv = now_diplomat_chara_data.adv
+                    now_diplomat_ability_lv = now_diplomat_chara_data.ability[40]
+                    ability_name = game_config.config_ability[40].name
+                    now_diplomat_ability_effect = 5 * attr_calculation.get_ability_adjust(now_diplomat_ability_lv)
+                    now_diplomat_text = f"\n  [{str(now_diplomat_adv).rjust(4,'0')}]{now_diplomat_name}  {ability_name}lv{now_diplomat_ability_lv}：{now_diplomat_ability_effect}%"
+                else:
+                    now_diplomat_text = _("  无")
+                info_draw = draw.NormalDraw()
+                info_draw.text = info_text + now_diplomat_text
+                info_draw.width = self.width
+                info_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
 
-            # 调整负责外交官
-            line_feed.draw()
-            line_feed.draw()
-            adjust_NPC_button_draw = draw.CenterButton(
-                _("【调整负责外交官】"),
-                _("\n【调整负责外交官】"),
-                self.width / 3,
-                cmd_func=self.adjust_NPC,
-                args=(nation_id,),
-            )
-            adjust_NPC_button_draw.draw()
-            return_list.append(adjust_NPC_button_draw.return_text)
+                # 当前外交方针
+                now_diplomatic_policy_cid = cache.rhodes_island.diplomat_of_country[nation_data.country][1]
+                now_diplomatic_policy_text = ""
+                if now_diplomat_chara_id == 0:
+                    now_diplomatic_policy_text += _("未任命外交官，无法制定外交方针")
+                else:
+                    now_diplomatic_policy_data = game_config.config_diplomatic_policy[now_diplomatic_policy_cid]
+                    now_diplomatic_policy_text += now_diplomatic_policy_data.name
+                info_draw = draw.NormalDraw()
+                info_draw.text = _("\n当前外交方针：{0}").format(now_diplomatic_policy_text)
+                info_draw.width = self.width
+                info_draw.draw()
+                line_feed.draw()
 
-            # 调整外交方针
-            if now_diplomat_chara_id != 0:
-                adjust_diplomatic_policy_button_draw = draw.CenterButton(
-                    _("【调整外交方针】"),
-                    _("\n【调整外交方针】"),
+                # 调整负责外交官
+                line_feed.draw()
+                line_feed.draw()
+                adjust_NPC_button_draw = draw.CenterButton(
+                    _("【调整负责外交官】"),
+                    _("\n【调整负责外交官】"),
                     self.width / 3,
-                    cmd_func=self.adjust_diplomatic_policy,
+                    cmd_func=self.adjust_NPC,
                     args=(nation_id,),
                 )
-                adjust_diplomatic_policy_button_draw.draw()
-                return_list.append(adjust_diplomatic_policy_button_draw.return_text)
+                adjust_NPC_button_draw.draw()
+                return_list.append(adjust_NPC_button_draw.return_text)
+
+                # 调整外交方针
+                if now_diplomat_chara_id != 0:
+                    adjust_diplomatic_policy_button_draw = draw.CenterButton(
+                        _("【调整外交方针】"),
+                        _("\n【调整外交方针】"),
+                        self.width / 3,
+                        cmd_func=self.adjust_diplomatic_policy,
+                        args=(nation_id,),
+                    )
+                    adjust_diplomatic_policy_button_draw.draw()
+                    return_list.append(adjust_diplomatic_policy_button_draw.return_text)
 
             line_feed.draw()
             line_feed.draw()

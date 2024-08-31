@@ -265,6 +265,8 @@ class Commission:
     """ 国家id(-1为通用) """
     level: int
     """ 委托等级 """
+    type: str
+    """ 委托类型 """
     people: int
     """ 派遣人数 """
     time: int
@@ -290,6 +292,8 @@ class Diplomatic_Policy:
     """ 政策名 """
     difficulty: int
     """ 难易度 """
+    need: str
+    """ 其他需求 """
     info: str
     """ 政策介绍 """
 

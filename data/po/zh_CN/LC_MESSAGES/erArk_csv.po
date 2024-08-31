@@ -8433,7 +8433,7 @@ msgid "用各类药用香料和香精调制而成的香水，不仅有着不输�
 msgstr ""
 
 #: .\data\csv\Resouce.csv:38
-msgid "阿戈尔特产"
+msgid "阿戈尔示波器"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:38
@@ -8445,154 +8445,178 @@ msgid "阿戈尔的特产。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:39
-msgid "玻利瓦尔特产"
+msgid "小帮手"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:39
-msgid "玻利瓦尔的特产。"
+msgid "阿戈尔的特产，本产品以先哲们深邃的智慧铸造而成，将我们助人的美德囊括其内。辗转难眠、煎熬于困顿的阿戈尔人啊，若你在寻找一只救人于苦厄的手，若你忧烦于俗事的琐碎，记得来领取属于你的“小帮手”。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:40
+msgid "金杯啤酒"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:40
+msgid "玻利瓦尔的特产，多索雷斯政府亲手打造的啤酒品牌，比起各种各样的高级酒，在一座充满狂欢的城市中，始终还是啤酒最能深入人心。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
+msgid "咖啡平原咖啡豆"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
+msgid "玻利瓦尔的特产，咖啡平原，多索雷斯家喻户晓的原生品牌，致力于为顾客提供多种口味且高品质的咖啡。同时也为各种势力提供先端武器。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:42
+msgid "翡翠庭院至臻"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:42
+msgid "玻利瓦尔的特产，专为上流客户提供优质咖啡的翡翠庭院中，最上等的一种咖啡，千金难求，只有最有权力的人才有资格获得。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:43
 msgid "东特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:40
+#: .\data\csv\Resouce.csv:43
 msgid "东的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:41
+#: .\data\csv\Resouce.csv:44
 msgid "哥伦比亚特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:41
+#: .\data\csv\Resouce.csv:44
 msgid "哥伦比亚的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:42
+#: .\data\csv\Resouce.csv:45
 msgid "卡西米尔特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:42
+#: .\data\csv\Resouce.csv:45
 msgid "卡西米尔的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:43
+#: .\data\csv\Resouce.csv:46
 msgid "卡兹戴尔特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:43
+#: .\data\csv\Resouce.csv:46
 msgid "卡兹戴尔的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:44
+#: .\data\csv\Resouce.csv:47
 msgid "拉特兰特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:44
+#: .\data\csv\Resouce.csv:47
 msgid "拉特兰的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:45
+#: .\data\csv\Resouce.csv:48
 msgid "莱塔尼亚特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:45
+#: .\data\csv\Resouce.csv:48
 msgid "莱塔尼亚的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:46
+#: .\data\csv\Resouce.csv:49
 msgid "雷姆必拓特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:46
+#: .\data\csv\Resouce.csv:49
 msgid "雷姆必拓的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:47
+#: .\data\csv\Resouce.csv:50
 msgid "米诺斯特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:47
+#: .\data\csv\Resouce.csv:50
 msgid "米诺斯的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:48
+#: .\data\csv\Resouce.csv:51
 msgid "萨尔贡特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:48
+#: .\data\csv\Resouce.csv:51
 msgid "萨尔贡的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:49
+#: .\data\csv\Resouce.csv:52
 msgid "萨米特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:49
+#: .\data\csv\Resouce.csv:52
 msgid "萨米的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:50
+#: .\data\csv\Resouce.csv:53
 msgid "维多利亚特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:50
+#: .\data\csv\Resouce.csv:53
 msgid "维多利亚的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:51
+#: .\data\csv\Resouce.csv:54
 msgid "乌萨斯特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:51
+#: .\data\csv\Resouce.csv:54
 msgid "乌萨斯的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:52
+#: .\data\csv\Resouce.csv:55
 msgid "谢拉格特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:52
+#: .\data\csv\Resouce.csv:55
 msgid "谢拉格的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:53
+#: .\data\csv\Resouce.csv:56
 msgid "叙拉古特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:53
+#: .\data\csv\Resouce.csv:56
 msgid "叙拉古的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:54
+#: .\data\csv\Resouce.csv:57
 msgid "炎特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:54
+#: .\data\csv\Resouce.csv:57
 msgid "炎的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:55
+#: .\data\csv\Resouce.csv:58
 msgid "伊比利亚特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:55
+#: .\data\csv\Resouce.csv:58
 msgid "伊比利亚的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:56
+#: .\data\csv\Resouce.csv:59
 msgid "杜林特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:56
+#: .\data\csv\Resouce.csv:59
 msgid "杜林的特产。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:57
+#: .\data\csv\Resouce.csv:60
 msgid "汐斯塔特产"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:57
+#: .\data\csv\Resouce.csv:60
 msgid "汐斯塔的特产。"
 msgstr ""
 

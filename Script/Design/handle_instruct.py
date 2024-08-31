@@ -2463,7 +2463,6 @@ def handle_visitor_system():
 @add_instruct(
     constant.Instruct.NATION_DIPLOMACY, constant.InstructType.WORK, _("势力与外交"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IN_DIPLOMATIC_OFFICE,
      constant_promise.Premise.VISITOR_ZONE_GE_2,}
 )
