@@ -151,7 +151,7 @@ config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
 config_nation_data_of_country_subordinate: Dict[int, List] = {}
 """ 国家势力所对应的附属势力表 """
-diplomatic_policy: Dict[int, config_def.Diplomatic_Policy] = {}
+config_diplomatic_policy: Dict[int, config_def.Diplomatic_Policy] = {}
 """ 外交方针配置 """
 config_restaurant: Dict[int, config_def.Restaurant] = {}
 """ 餐馆配置 """
@@ -500,7 +500,7 @@ def load_diplomatic_policy():
     for tem_data in now_data["data"]:
         now_tem = config_def.Diplomatic_Policy()
         now_tem.__dict__ = tem_data
-        diplomatic_policy[now_tem.cid] = now_tem
+        config_diplomatic_policy[now_tem.cid] = now_tem
 
 
 def load_restaurant():
@@ -1462,6 +1462,7 @@ def init():
     load_race()
     load_birthplace()
     load_nation()
+    load_diplomatic_policy()
     load_restaurant()
     load_city()
     load_recipes()

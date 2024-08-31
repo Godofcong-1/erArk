@@ -282,13 +282,13 @@ class Commission:
 
 
 class Diplomatic_Policy:
-    """ 外交政策配方 """
+    """ 外交政策 """
 
     cid: int
     """ 编号id """
     name: str
     """ 政策名 """
-    fdifficulty: int
+    difficulty: int
     """ 难易度 """
     info: str
     """ 政策介绍 """

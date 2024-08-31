@@ -229,7 +229,10 @@ class Nation_Diplomacy_Panel:
         nation_subordinate_list = game_config.config_nation_data_of_country_subordinate.get(nation_id, [])
         nation_subordinate_str = ""
         for cid in nation_subordinate_list:
-            nation_subordinate_str += game_config.config_nation[cid].name + " "
+            now_nation_reputation = cache.country.nation_reputation[cid]
+            tem, now_nation_reputation_level = attr_calculation.get_reputation_level(now_nation_reputation)
+            now_nation_reputation_str = f"{now_nation_reputation}({now_nation_reputation_level})"
+            nation_subordinate_str += f"{game_config.config_nation[cid].name}{now_nation_reputation_str} "
         if "\\n" in nation_introduction:
             nation_introduction = nation_introduction.replace("\\n", "\n      ")
 
@@ -257,7 +260,7 @@ class Nation_Diplomacy_Panel:
             line_feed.draw()
 
             # 当前负责外交官
-            info_text = _("○负责地区势力的外交官会长期停留在对应区域，只有在罗德岛本身抵达同一区域后才会回到岛上办公\n")
+            info_text = _("○负责地区势力的外交官会长期离岛停留在对应国家，只有当罗德岛本身也在同一国家时才会在岛上办公\n")
             info_text += _("当前势力的负责外交官为：")
             now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
             if now_diplomat_chara_id != 0:
@@ -274,6 +277,22 @@ class Nation_Diplomacy_Panel:
             info_draw.text = info_text + now_diplomat_text
             info_draw.width = self.width
             info_draw.draw()
+            line_feed.draw()
+            line_feed.draw()
+
+            # 当前外交方针
+            now_diplomatic_policy_cid = cache.rhodes_island.diplomat_of_country[nation_data.country][1]
+            now_diplomatic_policy_text = ""
+            if now_diplomat_chara_id == 0:
+                now_diplomatic_policy_text += _("未任命外交官，无法制定外交方针")
+            else:
+                now_diplomatic_policy_data = game_config.config_diplomatic_policy[now_diplomatic_policy_cid]
+                now_diplomatic_policy_text += now_diplomatic_policy_data.name
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("\n当前外交方针：{0}").format(now_diplomatic_policy_text)
+            info_draw.width = self.width
+            info_draw.draw()
+            line_feed.draw()
 
             # 调整负责外交官
             line_feed.draw()
@@ -288,24 +307,17 @@ class Nation_Diplomacy_Panel:
             adjust_NPC_button_draw.draw()
             return_list.append(adjust_NPC_button_draw.return_text)
 
-            # 设施信息
-            facility_data = game_config.config_facility[14]
-            facility_name = facility_data.name
-            now_level = cache.rhodes_island.facility_level[14]
-            facility_cid = game_config.config_facility_effect_data[facility_name][now_level]
-            nation_num_limit = game_config.config_facility_effect[facility_cid].effect
-
-            # # 如果有空闲势力，绘制出售按钮
-            # if cache.rhodes_island.nations[nation_id][0] - cache.rhodes_island.nations[nation_id][1] > 0:
-            #     sell_nation_draw = draw.CenterButton(
-            #         _("【出售势力】"),
-            #         _("\n【出售势力】"),
-            #         self.width / 3,
-            #         cmd_func=self.sell_nation,
-            #         args=(nation_id,),
-            #     )
-            #     sell_nation_draw.draw()
-            #     return_list.append(sell_nation_draw.return_text)
+            # 调整外交方针
+            if now_diplomat_chara_id != 0:
+                adjust_diplomatic_policy_button_draw = draw.CenterButton(
+                    _("【调整外交方针】"),
+                    _("\n【调整外交方针】"),
+                    self.width / 3,
+                    cmd_func=self.adjust_diplomatic_policy,
+                    args=(nation_id,),
+                )
+                adjust_diplomatic_policy_button_draw.draw()
+                return_list.append(adjust_diplomatic_policy_button_draw.return_text)
 
             line_feed.draw()
             line_feed.draw()
@@ -404,9 +416,9 @@ class Nation_Diplomacy_Panel:
                 default.handle_chara_on_line(old_diplomat_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
-                old_diplomat_chara_data.second_behavior = 1372
+                old_diplomat_chara_data.second_behavior[1372] = 1
             else:
-                old_diplomat_chara_data.second_behavior = 1374
+                old_diplomat_chara_data.second_behavior[1374] = 1
             talk.must_show_talk_check(old_diplomat_id)
 
         # 任命新的外交官
@@ -417,9 +429,92 @@ class Nation_Diplomacy_Panel:
             cache.rhodes_island.diplomat_of_country[country_id][0] = character_id
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
-                new_diplomat_chara_data.second_behavior = 1371
+                new_diplomat_chara_data.second_behavior[1371] = 1
                 talk.must_show_talk_check(character_id)
+                # 输出本地提示
+                info_text = _("\n{0}被任命为{1}的外交官，因为该地为当前罗德岛所在地，所以会在岛上办公，当罗德岛离开该国家后会进入离舰外派状态。\n").format(new_diplomat_chara_data.name, game_config.config_birthplace[country_id].name)
             else:
-                new_diplomat_chara_data.second_behavior = 1373
+                new_diplomat_chara_data.second_behavior[1373] = 1
                 talk.must_show_talk_check(character_id)
                 default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+                # 输出外派提示
+                info_text = _("\n{0}被派遣到{1}作为外交官，将会长期停留在那里，直到被召回或罗德岛抵达该国家。\n").format(new_diplomat_chara_data.name, game_config.config_birthplace[country_id].name)
+            info_draw = draw.WaitDraw()
+            info_draw.text = info_text
+            info_draw.width = window_width
+            info_draw.draw()
+
+
+    def adjust_diplomatic_policy(self, nation_id: int):
+        """
+        调整外交方针
+        Keyword arguments:
+        nation_id -- 势力编号
+        """
+
+        nation_data = game_config.config_nation[nation_id]
+        country_id = nation_data.country
+
+        # 设施信息
+        now_level = cache.rhodes_island.facility_level[13]
+        # facility_data = game_config.config_facility[13]
+        # facility_name = facility_data.name
+        # facility_cid = game_config.config_facility_effect_data[facility_name][now_level]
+        # 外交官信息
+        now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
+        now_diplomat_chara_data = cache.character_data[now_diplomat_chara_id]
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            # 绘制可选择外交方针
+            info_draw_2 = draw.NormalDraw()
+            info_draw_2.text = _("\n○可选的方针受访客区等级、外交官能力、势力的声望与源石病情况等各种因素决定\n").format(now_level)
+            info_draw_2.text += _("\n可选择外交方针：\n\n")
+            info_draw_2.width = self.width
+            info_draw_2.draw()
+            for diplomatic_policy_id in game_config.config_diplomatic_policy:
+                diplomatic_policy_data = game_config.config_diplomatic_policy[diplomatic_policy_id]
+                # 跳过难易度超过当前区块等级或外交官能力的外交方针
+                if diplomatic_policy_data.difficulty > now_level or diplomatic_policy_data.difficulty > now_diplomat_chara_data.ability[40]:
+                    continue
+                # TODO 实装声望和感染率的影响
+                draw_style = "standard"
+                # 如果已经选择，则绘制为金色
+                if diplomatic_policy_id == cache.rhodes_island.diplomat_of_country[country_id][1]:
+                    draw_style = "gold_enrod"
+                draw_text = f"[{diplomatic_policy_id}]{diplomatic_policy_data.name.ljust(15,'　')}：{diplomatic_policy_data.info}"
+
+                # 绘制按钮
+                button_draw = draw.LeftButton(
+                    draw_text,
+                    f"\n{diplomatic_policy_id}",
+                    self.width ,
+                    normal_style = draw_style,
+                    cmd_func = self.sure_diplomatic_policy,
+                    args = (diplomatic_policy_id, country_id),
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def sure_diplomatic_policy(self, diplomatic_policy_id: int, country_id: int):
+        """
+        确认外交方针
+        Keyword arguments:
+        diplomatic_policy_id -- 外交方针编号
+        country_id -- 势力编号
+        """
+
+        cache.rhodes_island.diplomat_of_country[country_id][1] = diplomatic_policy_id
