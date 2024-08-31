@@ -31,20 +31,25 @@ def find_character_image_name(character_id: int) -> str:
     else:
         character_image_name = _(character_data.name, revert_translation=True)
         image_name = character_image_name
-        # 白金差分
-        if character_data.adv == 204:
-            # 没有穿上衣+胸衣
-            if handle_premise.handle_not_wear_in_up(character_id) and handle_premise.handle_not_wear_bra(character_id):
-                image_name += "_半裸"
-                # 胸部大小差分
-                if character_data.talent[122]:
-                    image_name += "_贫乳"
-                elif character_data.talent[123]:
-                    image_name += "_普乳"
-                elif character_data.talent[124]:
-                    image_name += "_巨乳"
-                elif character_data.talent[125]:
-                    image_name += "_爆乳"
+        # 心情差分
+        if handle_premise.handle_good_mood(character_id):
+            image_name += "_愉快"
+        elif handle_premise.handle_bad_mood(character_id):
+            image_name += "_不爽"
+        elif handle_premise.handle_angry_mood(character_id):
+            image_name += "_愤怒"
+        # 没有穿上衣+胸衣
+        if handle_premise.handle_not_wear_in_up(character_id) and handle_premise.handle_not_wear_bra(character_id):
+            image_name += "_半裸"
+            # 胸部大小差分
+            if character_data.talent[122]:
+                image_name += "_贫乳"
+            elif character_data.talent[123]:
+                image_name += "_普乳"
+            elif character_data.talent[124]:
+                image_name += "_巨乳"
+            elif character_data.talent[125]:
+                image_name += "_爆乳"
     # 如果目标图片不存在，则使用角色原始图片
     if image_name not in era_image.image_data:
         image_name = character_image_name
