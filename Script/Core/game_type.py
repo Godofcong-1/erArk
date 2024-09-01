@@ -841,6 +841,8 @@ class Rhodes_Island:
         # 控制中枢
         self.current_location: List[int] = []
         """ 基地当前所在位置，[0国家id,1城市id] """
+        self.move_target_and_time: List = [0,0,0]
+        """ 基地移动目标和时间, [0国家id,1城市id,2抵达时间] """
         self.office_work: int = 0
         """ 需要处理的公务 """
         self.effectiveness: int = 0

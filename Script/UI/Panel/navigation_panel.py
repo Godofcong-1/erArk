@@ -11,7 +11,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import map_handle, attr_text, character_move
+from Script.Design import map_handle, attr_text, game_time
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -25,6 +25,27 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def judge_arrive():
+    """
+    判断是否抵达指定地点
+    Keyword arguments:
+    """
+    if cache.rhodes_island.move_target_and_time[0] != 0:
+        if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.move_target_and_time[2]):
+            cache.rhodes_island.base_move_visitor_flag = 1
+            target_scene_id = cache.rhodes_island.move_target_and_time[0]
+            target_scene_name = game_config.config_birthplace[target_scene_id].name
+            cache.rhodes_island.current_location[0] = target_scene_id
+            cache.rhodes_island.move_target_and_time = [0, 0, 0]
+            now_draw = draw.WaitDraw()
+            now_draw.text = _("\n罗德岛已抵达目的地：{0}\n").format(target_scene_name)
+            now_draw.width = window_width
+            now_draw.style = "gold_enrod"
+            now_draw.draw()
+            return True
+    return False
+
+
 class Base_function_class:
     """
     用于导航的基础功能类
@@ -34,15 +55,18 @@ class Base_function_class:
         """
         判断基地是否移动至指定场景
         Keyword arguments:
-        scene_path -- 目标场景路径，
-        sp_flag -- 0为正常，1为无法抵达非临近地点
+        scene_path -- 目标场景路径，0为场景名，1为抵达该场景的距离
+        sp_flag -- 0为正常，1为无法抵达非临近地点，2为移动中
         """
         scene_path[0] = _(scene_path[0])
+        # 距离
+        distance = scene_path[1]
+        need_time = distance * 5
         # print(f"debug scene_path = {scene_path}")
         if sp_flag == 0:
             # 当前燃料
             now_fuel = cache.rhodes_island.materials_resouce[15]
-            need_fuel = 1000 * scene_path[1]
+            need_fuel = 500 * distance
             if now_fuel < need_fuel and not cache.debug_mode:
                 now_draw = draw.WaitDraw()
                 now_draw.text = _("\n\n移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，燃料不足，无法移动\n").format(scene_path[0], need_fuel, now_fuel)
@@ -53,14 +77,14 @@ class Base_function_class:
                     ask_list = []
                     askfor_panel = panel.OneMessageAndSingleColumnButton()
                     askfor_list = [_("是"), _("否")]
-                    askfor_panel.set(askfor_list, _("\n移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，确定要移动吗\n").format(scene_path[0], need_fuel, now_fuel), 0)
+                    askfor_panel.set(askfor_list, _("\n移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，需要{3}天移动到目的地，确定要移动吗\n").format(scene_path[0], need_fuel, now_fuel, need_time), 0)
                     askfor_panel.draw()
                     askfor_panel_return_list = askfor_panel.get_return_list()
                     ask_list.extend(askfor_panel_return_list.keys())
                     yrn = flow_handle.askfor_all(ask_list)
                     py_cmd.clr_cmd()
                     if yrn == "0":
-                        self.move_to_scene(scene_path[0], need_fuel)
+                        self.move_to_scene(scene_path, need_fuel, need_time)
                         break
                     elif yrn == "1":
                         break
@@ -74,13 +98,20 @@ class Base_function_class:
             now_draw.text = _("\n无法直接抵达非临近地点\n")
             now_draw.width = window_width
             now_draw.draw()
+        elif sp_flag == 2:
+            now_draw = draw.WaitDraw()
+            now_draw.text = _("\n罗德岛正在移动中，无法再次移动\n")
+            now_draw.width = window_width
+            now_draw.draw()
 
 
-    def move_to_scene(self, scene_name: str, need_fuel: int):
+    def move_to_scene(self, scene_name: str, need_fuel: int, need_time: int):
         """
         移动至指定场景
         Keyword arguments:
         scene_name -- 目标国家名字
+        need_fuel -- 移动所需燃料
+        need_time -- 移动所需时间
         """
         py_cmd.clr_cmd()
         line_feed.draw()
@@ -88,8 +119,9 @@ class Base_function_class:
         for birthplace_id in game_config.config_birthplace:
             birthplace_data = game_config.config_birthplace[birthplace_id]
             if birthplace_data.name == scene_name:
-                cache.rhodes_island.current_location[0] = birthplace_id
-                cache.rhodes_island.base_move_visitor_flag = 1
+                cache.rhodes_island.move_target_and_time[0] = birthplace_id
+                arrive_time = game_time.get_sub_date(day = need_time, old_date = cache.game_time)
+                cache.rhodes_island.move_target_and_time[2] = arrive_time
                 cache.rhodes_island.materials_resouce[15] -= need_fuel
                 break
 
@@ -129,6 +161,14 @@ class Navigation_Panel(Base_function_class):
             now_city_name = game_config.config_city[now_city_id].name
             # TODO 在处理好中文地图路径之后再改回来
             base_scene_name = _(now_country_name, revert_translation = True)
+            # 移动中的目标地点
+            if cache.rhodes_island.move_target_and_time[0] != 0:
+                target_scene_id = cache.rhodes_island.move_target_and_time[0]
+                target_scene_name = game_config.config_birthplace[target_scene_id].name
+                now_draw = draw.NormalDraw()
+                now_draw.text = _("\n罗德岛正在移动至{0}，预计抵达时间为{1}\n").format(target_scene_name, game_time.get_date_until_day(cache.rhodes_island.move_target_and_time[2]))
+                now_draw.width = self.width
+                now_draw.draw()
             # 临近地点
             path_edge = map_data.path_edge
             near_scene_path = path_edge[base_scene_name].copy()
@@ -155,23 +195,34 @@ class Navigation_Panel(Base_function_class):
                         if draw_text.text != base_scene_name:
                             # 初始化目标地点路径
                             target_scene = [draw_text.text, 1]
-                            # 临近地点正常绘制
-                            if draw_text.text in near_scene_path_name_list:
-
-                                # 获取目标地点路径，包括地点名和抵达该地点的距离
-                                target_scene = [draw_text.text, near_scene_path[draw_text.text]]
-                                # 绘制按钮
-                                now_draw = draw.Button(
-                                    draw_text.text, draw_text.text, cmd_func=self.move_judge, args=(target_scene,)
-                                )
-                                # TODO 如果是有特殊事件在那么显示为绿色
-                                # if len(cache.scene_data[full_scene_str].character_list):
-                                #     now_draw.normal_style = "green"
-                            # 非临近地点则绘制灰色按钮
+                            # 如果正在移动中，则目标为红色，其他为灰色
+                            if cache.rhodes_island.move_target_and_time[0] != 0:
+                                if draw_text.text == target_scene_name:
+                                    now_draw = draw.Button(
+                                        draw_text.text, draw_text.text, normal_style = "red", cmd_func=self.move_judge, args=(target_scene,2)
+                                    )
+                                else:
+                                    now_draw = draw.Button(
+                                        draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_judge, args=(target_scene,2)
+                                    )
                             else:
-                                now_draw = draw.Button(
-                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_judge, args=(target_scene,1)
-                                )
+                                # 临近地点正常绘制
+                                if draw_text.text in near_scene_path_name_list:
+
+                                    # 获取目标地点路径，包括地点名和抵达该地点的距离
+                                    target_scene = [draw_text.text, near_scene_path[draw_text.text]]
+                                    # 绘制按钮
+                                    now_draw = draw.Button(
+                                        draw_text.text, draw_text.text, cmd_func=self.move_judge, args=(target_scene,)
+                                    )
+                                    # TODO 如果是有特殊事件在那么显示为绿色
+                                    # if len(cache.scene_data[full_scene_str].character_list):
+                                    #     now_draw.normal_style = "green"
+                                # 非临近地点则绘制灰色按钮
+                                else:
+                                    now_draw = draw.Button(
+                                        draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_judge, args=(target_scene,1)
+                                    )
                             now_draw.width = self.width
                             now_draw.draw()
                             return_list.append(now_draw.return_text)
@@ -343,6 +394,9 @@ class MapSceneNameDraw(Base_function_class):
                 # now_id_text = f"{scene_id}:{load_scene_data.scene_name}"
                 if scene_name == base_scene_name:
                     continue
+                # 当前在移动中则也跳过
+                if cache.rhodes_island.move_target_and_time[0] != 0:
+                    continue
                 else:
                     now_id_text = f"→{_(load_scene_data.scene_name)}"
 
@@ -352,7 +406,7 @@ class MapSceneNameDraw(Base_function_class):
                 self.return_list.append(now_draw.return_text)
                 draw_list.append(now_draw)
             draw_group = value_handle.list_of_groups(draw_list, 8)
-            now_width_index = 0
+            now_width_index = 1
             for now_draw_list in draw_group:
                 if len(now_draw_list) > now_width_index:
                     now_width_index = len(now_draw_list)
