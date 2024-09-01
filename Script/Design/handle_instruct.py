@@ -744,7 +744,7 @@ def handle_hypnosis_air():
         draw_text = _("\n已切换为空气催眠模式\n")
         now_draw.text = draw_text
         now_draw.draw()
-    if originium_arts.evaluate_hypnosis_completion(0):
+    if originium_arts.evaluate_hypnosis_completion(character_data.target_character_id):
         target_data.sp_flag.unconscious_h = 5
         now_draw = draw.WaitDraw()
         now_draw.text = _("\n{0}会把{1}视为空气了\n").format(target_data.name, character_data.name)
