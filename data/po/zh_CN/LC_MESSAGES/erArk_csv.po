@@ -8441,7 +8441,7 @@ msgid "特产"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:38
-msgid "阿戈尔的特产。"
+msgid "阿戈尔的特产，一种用于测量电信号的示波器，是阿戈尔人在源石技术上的一项重要突破。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:39
@@ -8453,171 +8453,255 @@ msgid "阿戈尔的特产，本产品以先哲们深邃的智慧铸造而成，�
 msgstr ""
 
 #: .\data\csv\Resouce.csv:40
-msgid "金杯啤酒"
+msgid "“应急物资”蓝图芯片"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:40
+msgid "阿戈尔的特产，内置近千套可打印的蓝图。蓝图内容既包含了生存必需品，也包含了各主流学科的实验器具和创作材料。即使您身陷窘境，也勿忘探究与表达，思想的停滞与精神的麻木无异于死亡。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
+msgid "金杯啤酒"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:41
 msgid "玻利瓦尔的特产，多索雷斯政府亲手打造的啤酒品牌，比起各种各样的高级酒，在一座充满狂欢的城市中，始终还是啤酒最能深入人心。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:41
+#: .\data\csv\Resouce.csv:42
 msgid "咖啡平原咖啡豆"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:41
+#: .\data\csv\Resouce.csv:42
 msgid "玻利瓦尔的特产，咖啡平原，多索雷斯家喻户晓的原生品牌，致力于为顾客提供多种口味且高品质的咖啡。同时也为各种势力提供先端武器。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:42
+#: .\data\csv\Resouce.csv:43
 msgid "翡翠庭院至臻"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:42
+#: .\data\csv\Resouce.csv:43
 msgid "玻利瓦尔的特产，专为上流客户提供优质咖啡的翡翠庭院中，最上等的一种咖啡，千金难求，只有最有权力的人才有资格获得。"
 msgstr ""
 
-#: .\data\csv\Resouce.csv:43
-msgid "东特产"
-msgstr ""
-
-#: .\data\csv\Resouce.csv:43
-msgid "东的特产。"
+#: .\data\csv\Resouce.csv:44
+msgid "武士刀"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:44
-msgid "哥伦比亚特产"
-msgstr ""
-
-#: .\data\csv\Resouce.csv:44
-msgid "哥伦比亚的特产。"
+msgid "东的特产，一把真正的东国武士刀可以卖到天价。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:45
-msgid "卡西米尔特产"
+msgid "噪音引擎"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:45
-msgid "卡西米尔的特产。"
+msgid "哥伦比亚的特产，在中小型城镇的移动拖车上非常常见，性价比很高。噪音很大。也太大了点。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:46
-msgid "卡兹戴尔特产"
+msgid "飞行数据记录芯片"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:46
-msgid "卡兹戴尔的特产。"
+msgid "哥伦比亚的特产，记录了各种高度与环境下飞行数据的芯片，除了被娜斯提掩藏在各地的数据，在国家的支持下，新的数据也在不断产生。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:47
-msgid "拉特兰特产"
+msgid "骑士领纪念模型"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:47
-msgid "拉特兰的特产。"
+msgid "卡西米尔的特产，人们用这些发光的灯管制伏了黑夜，点亮了卡西米尔的光芒。在文明里，吟游诗人唱出了金币的声响，远游的骑士只得与玻璃斗剑。冷漠是无声的浪潮，她乘着最后的扁舟，打捞荣耀。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:48
-msgid "莱塔尼亚特产"
+msgid "制式器械零件"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:48
-msgid "莱塔尼亚的特产。"
+msgid "卡西米尔的特产，迅速锈蚀的战争野心的残骸，骑士团淘汰或损坏武器的零件，处置不当的话会有源石感染的风险。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:49
-msgid "雷姆必拓特产"
+msgid "梅什科竞技证券"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:49
-msgid "雷姆必拓的特产。"
+msgid "卡西米尔的特产，凭券可购买竞技场提供的援助物资支援骑士，也可作为参于博彩的本金，但实际价格经常超过其价值。一张纸，一笔巨款，一位骑士一生的荣辱。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:50
-msgid "米诺斯特产"
+msgid "炉渣"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:50
-msgid "米诺斯的特产。"
+msgid "卡兹戴尔的特产，出于未知原因而从魂灵熔炉中喷出的熔渣巨块，在被飞空艇轰击后分裂为无数碎片。虽然此类炉渣中含有少量源石和异铁成分，但一般人难以安全地将其提炼出来。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:51
-msgid "萨尔贡特产"
+msgid "粗制糖块"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:51
-msgid "萨尔贡的特产。"
+msgid "卡兹戴尔的特产，机械化制作的粗糙糖块，由于卡兹戴尔的气候干燥，糖块在制作过程中容易结块，因此成品的质地较为粗糙，但味道却十分独特。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:52
-msgid "萨米特产"
+msgid "蚀刻弹弹壳"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:52
-msgid "萨米的特产。"
+msgid "拉特兰的特产，拉特兰人之间颇为流行的一种收藏品。根据口径的不同，收藏价值也有所不同。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:53
-msgid "维多利亚特产"
+msgid "老旧贵族领铸币"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:53
-msgid "维多利亚的特产。"
+msgid "莱塔尼亚的特产，这种古老铸币的主人早已远离这片边陲之地，即使如此，身负开拓功勋的贵族后裔依旧要求得到沃伦姆德的尊重，于是他们立下律法，让流通性来满足虚荣。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:54
-msgid "乌萨斯特产"
+msgid "调律追忆"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:54
-msgid "乌萨斯的特产。"
+msgid "莱塔尼亚的特产，远去的回忆散落在莱塔尼亚的百年都城，承载它们的是支离破碎的乐段。也许同如今的莱塔尼亚一样，它们亦需要经过调律才能被听闻。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:55
-msgid "谢拉格特产"
+msgid "声波记录扩音器"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:55
-msgid "谢拉格的特产。"
+msgid "莱塔尼亚的特产，这种扩音器的原理是通过声波的反射和扩散，将声音传播到更远的地方。在莱塔尼亚的大型音乐会上，这种扩音器是必不可少的设备。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:56
-msgid "叙拉古特产"
+msgid "兔子棚屋"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:56
-msgid "叙拉古的特产。"
+msgid "雷姆必拓的特产，用废旧工业材料快速搭建的雷姆必拓棚屋，遮风挡雨还是做得到，但卡特斯人的风格过于明显了些。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:57
-msgid "炎特产"
+msgid "辣瓶树水"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:57
-msgid "炎的特产。"
+msgid "雷姆必拓的特产，在挂树源石虫的腹腔中自然发酵的瓶树水，不仅受人追捧，也是沙地兽的挚爱。不过，不会爬树的沙地兽究竟如何获取辣瓶树水一直是雷姆必拓的未解之谜，难道荒野中真有野人帮忙？"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:58
-msgid "伊比利亚特产"
+msgid "米诺斯高腰花瓶"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:58
-msgid "伊比利亚的特产。"
+msgid "米诺斯的特产，是米诺斯人的象征之一。它的造型优美，线条流畅，是米诺斯人的骄傲。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:59
-msgid "杜林特产"
+msgid "流光之沙"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:59
-msgid "杜林的特产。"
+msgid "萨尔贡的特产，星星点点闪烁的宝石细沙。它比“辉煌之城”更古老，比古老秘藏更辉煌，据说工匠们能把它变回大个头的宝石。"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:60
-msgid "汐斯塔特产"
+msgid "指木雕刻"
 msgstr ""
 
 #: .\data\csv\Resouce.csv:60
-msgid "汐斯塔的特产。"
+msgid "萨米的特产，猎手们留下的粗糙雕刻。一个难以分辨细节的木人向前伸出手，指向储存食物、草药与工具的树洞。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:61
+msgid "皇家科学院望远镜"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:61
+msgid "维多利亚的特产，皇家科学院的望远镜，是维多利亚的象征之一。它的镜片经过特殊处理，可以在夜晚观测到星星的运行轨迹。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:62
+msgid "乌萨斯的特产，一种来自乌萨斯的食物，吃起来有一股子浓烈的发酵味儿。就是酸。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:63
+msgid "驮兽盲盒"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:63
+msgid "谢拉格的特产，“跑跑驮兽”项目联动文创盲盒，系列共九款造型各异的驮兽摆件，内含一限量隐藏款。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:64
+msgid "耶拉冈德之石"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:64
+msgid "谢拉格的特产，经过蔓珠院的修士祝福的圣石，耶拉冈德的意志寄宿其中，谢拉格人会向之祈祷，以求幸福安康。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:65
+msgid "叙拉古芝士"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:65
+msgid "叙拉古的特产，是一种口感细腻，味道浓郁的奶酪，常用于披萨、意面等食物的制作。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:66
+msgid "炎的特产，勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:67
+msgid "炎的特产，玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:68
+msgid "平安符"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:68
+msgid "炎的特产，手工雕刻的祈福用的平安符。带去移山庙，让庙祝用朱砂画上一笔，更能让人心安。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:69
+msgid "战地援护无人机"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:69
+msgid "伊比利亚的特产，是伊比利亚审判庭的得力助手。它可以在战场上为审判官提供支援，也可以在紧急情况下进行救援。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:70
+msgid "《奇谈怪论》复印本"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:70
+msgid "杜林的特产，纸页上留有各种不同的笔迹，甚至可以从数量上判断杂志转手的次数。其中大多是无意义的涂鸦，但智慧的闪光也散落其间。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:71
+msgid "黑曜石晶体"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:71
+msgid "汐斯塔的特产，当地盛产的黑曜石晶体，是一种极为珍贵的矿石，但只有足够纯净，或是能反射出各色光芒的黑曜石才能卖出好价格。"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:72
+msgid "毛绒绒生物的毛"
+msgstr ""
+
+#: .\data\csv\Resouce.csv:72
+msgid "汐斯塔的特产，柔软、防寒且吸水性良好，虽然看上去非常可口，但请不要把它当成棉花糖吃掉。"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:7

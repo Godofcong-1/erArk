@@ -31,7 +31,7 @@ class Resource_Exchange_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False}
+        self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False, _("特产"): False}
         """ 显示的资源类型 """
 
     def draw(self):
@@ -106,7 +106,11 @@ class Resource_Exchange_Line_Panel:
 
             # 显示价格
             price = resouce_data.price
-            price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
+            # 特产的卖出价格为1.5倍
+            if resouce_data.type == "特产" and not self.buy_or_sell_flag:
+                price = 1.5 * price
+            else:
+                price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
             price = int(price)
             all_info_draw.text = _("\n\n  交易的价格为      ：")
             all_info_draw.draw()
@@ -195,7 +199,7 @@ class Resource_Exchange_Line_Panel:
                 line_feed.draw()
 
                 # 遍历全资源类型
-                resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水")]
+                resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水"), _("特产")]
                 for resouce_type in resouce_list:
 
                     # 判断是否显示该类型的资源
@@ -220,6 +224,10 @@ class Resource_Exchange_Line_Panel:
                     for resouce_id in game_config.config_resouce:
                         resouce_data  = game_config.config_resouce[resouce_id]
                         if resouce_data.type == resouce_type:
+                            # 特产商品仅在当地可以买入，其他地方只能卖出
+                            if resouce_data.type == "特产":
+                                if cache.rhodes_island.materials_resouce[resouce_id] == 0 and resouce_data.specialty != cache.rhodes_island.current_location[0]:
+                                    continue
                             button_draw = draw.LeftButton(
                             f" [{str(resouce_id).rjust(3,'0')}]{resouce_data.name}：{resouce_data.info}",
                             f"\n{resouce_id}",
@@ -234,7 +242,10 @@ class Resource_Exchange_Line_Panel:
                             # 判断是否可以买入卖出
                             if resouce_data.cant_buy == 0:
                                 now_text += _("   买入:{0}龙门币/1单位").format(int(resouce_data.price * 1.2))
-                            now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 0.8))
+                            if resouce_data.type == "特产" and cache.rhodes_island.current_location[0] != resouce_data.specialty:
+                                now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 1.5))
+                            else:
+                                now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 0.8))
                             info_draw.text = now_text
                             info_draw.draw()
 
@@ -254,6 +265,12 @@ class Resource_Exchange_Line_Panel:
         # 默认变成买入，不可买入的则变成卖出
         if self.now_select_resouce_id == 12 or resouce_data.type == "药剂":
             self.buy_or_sell_flag = False
+        # 特产商品仅在当地可以买入，其他地方只能卖出
+        elif resouce_data.type == "特产":
+            if resouce_data.specialty == cache.rhodes_island.current_location[0]:
+                self.buy_or_sell_flag = True
+            else:
+                self.buy_or_sell_flag = False
         else:
             self.buy_or_sell_flag = not self.buy_or_sell_flag
 
