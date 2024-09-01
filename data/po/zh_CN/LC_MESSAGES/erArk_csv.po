@@ -11924,7 +11924,11 @@ msgstr ""
 msgid "罗德岛的公开领袖，在内部拥有最高执行权。虽然，从外表上看起来仅仅是个不成熟的少女，实际上，她却是深受大家信任的合格的领袖。现在，阿米娅正带领着罗德岛，为了感染者的未来，为了让这片大地挣脱矿石病的阴霾而不懈努力。"
 msgstr ""
 
-#: .\data\character\0001_阿米娅.csv:35
+#: .\data\character\0001_阿米娅.csv:15
+msgid "#96dfe4"
+msgstr ""
+
+#: .\data\character\0001_阿米娅.csv:36
 msgid "抑制戒指 必带"
 msgstr ""
 
@@ -17501,7 +17505,7 @@ msgid "“呼……呼嗯……呼……”{TargetName}摸着自己不断上下�
 msgstr ""
 
 #: Event:de993277-ffa1-407f-85e8-db13565aa60e
-msgid "{TargetName}如同嫩芽一般，充满活力地向上翘起的乳头此刻正在空气中轻颤着。\n仿佛只是空气轻轻地吹拂也能够让{TargetName}难耐地扭动起腰肢。\n“嗯……嗯”过了好一会才成功脱敏的{TargetName}依靠在{PlayerName}的肩膀上闭上了眼睛。\n“下次的时候，嗯……再这样搓那里，我会生气的……”"
+msgid "{TargetName}如同嫩芽一般，充满活力地向上翘起的乳头此刻正在空气中轻颤着。\n结束了H之后，仿佛只是空气轻轻地吹拂也能够让{TargetName}难耐地扭动起腰肢。\n“嗯……嗯”过了好一会才成功脱敏的{TargetName}依靠在{PlayerName}的肩膀上闭上了眼睛。\n“下次的时候，嗯……再这样搓那里，我会生气的……”"
 msgstr ""
 
 #: Event:37c9d83f-9ab2-4bf2-be9f-ac794aee430a
@@ -17545,7 +17549,7 @@ msgid "在连续的高潮中早已颤抖不已，湿了一大片的小穴即使�
 msgstr ""
 
 #: Event:2c74ae77-80d9-4436-8954-bbd513a44f29
-msgid "“这次射了好多呢。”脸红的不敢与{PlayerName}对视的{TargetName}，飘逸着视线偷偷观察起{PlayerName}腰间的阴茎。\n“怎么说呢，大概，有点开心，雄性射出来这么多精液。”\n“不过，{PlayerName}也要注意身体，再怎么说也是人类，射出来肯定会有很多消耗的吧。”\n“等会会跟后勤的人说一下，给{PlayerName}多准备一点食物。”"
+msgid "“这次射了好多呢。”脸红的不敢与{PlayerName}对视的{TargetName}，飘逸着视线偷偷观察起{PlayerName}腰间的阴茎。\n“怎么说呢，大概，有点开心，雄性射出来这么多精液。”\n“不过，{PlayerName}也要注意身体，再怎么说也是人类，射出来肯定会有很多消耗的吧。”\n“等会会跟后勤的人拜托一下，给{PlayerName}多准备一点食物。”"
 msgstr ""
 
 #: Event:125e15a7-7a59-48a8-8975-138f3f074cb1
@@ -17562,6 +17566,26 @@ msgstr ""
 
 #: Event:ea64b1b9-97c2-459f-9f7f-a7195bce4180
 msgid "“{PlayerNickName}要休息了吗？”注意到{PlayerName}躺下来了的{TargetName}，抱住了{PlayerName}的腰。\n“以前应该说过，{PlayerNickName}休息的时候要把内裤脱了，方便女孩子帮忙回复精力吧。”不由分说地将{PlayerName}的下体扒了个精光，接着让{PlayerName}变成侧躺的适合躺着口交的姿势。\n用鼻尖触碰着稍微因为少女的吐息勃起的阴茎，{TargetName}仰起头亲吻在了肉龟和两颗精囊上。\n“{PlayerNickName}，不要乱动，只是用嘴含住而已，不会让{PlayerNickName}射的，啊姆~”\n张开娇嫩的嘴唇，{TargetName}温柔地用口穴吞下了整根肉茎。感受着口中逐渐变大的阴茎，闭上眼睛的{TargetName}将湿润的吐息轻柔地喷吐在了阴囊上。\n\n…………\n\n“嗯，啾，嗯……哈，{PlayerNickName}一直在乱动肉棒，这样的话必须要用强硬一点的了。”含着微微跳动的阴茎没法好好休息的{TargetName}生气地睁开了一点眼睛。\n“啾……嗯，嗯姆，啾，还在乱动，嗯……”稍微地缩紧了口穴，{TargetName}用舌头欺负起了{PlayerName}的肉龟。\n“啊……诶，不会要射，嗯……啾，咕，咕唔……”无奈地用口穴开始承接起了喷射的精汁，{TargetName}抱紧了{PlayerName}因为射精发起抖的腰肢固定住，好好地喝掉了精液。\n“嗯……呼……啾，啾啵，嗯，接下来必须要好好休息了。”"
+msgstr ""
+
+#: Event:04c0f84c-2b0e-4c9a-9c69-4671e34c6bd2
+msgid "{Name}今晚似乎打算裸睡的样子。"
+msgstr ""
+
+#: Event:2960e5c2-1c9b-4cbd-8543-7f0ac2f97fd1
+msgid "“附近有其他人……”想起来还没进行早安口交{Name}注意到了{SceneName}还有别的干员。\n{Name}拉了拉{PlayerName}的衣袖示意着想要到别的地方去。"
+msgstr ""
+
+#: Event:eab82c64-250c-4b4f-860b-889d525887d0
+msgid "一睁眼就看到了{Name}粉嫩的小穴在{PlayerName}的面前摇晃，下身被子里面还传来了湿漉漉的口交的声音。\n柔顺的尾巴左右拍打在脸颊上，好像已经被吸了很久一样，馋着口中的肉棒{Name}的小穴已经流出了湿漉漉的口水。\n“啊……嗯……{PlayerNickName}提早醒了吗？嗯，不要抓屁股，坏蛋{PlayerNickName}。”\n被抓住了屁股进行69的{Name}，用力地吸紧了口穴很快就把唇中的肉棒精液挤了出来。"
+msgstr ""
+
+#: Event:4cf1681b-2742-4bde-a277-563cdc1c07dc
+msgid "“要，在这里夺走我的初吻吗？”在甜蜜的氛围中，{TargetName}轻颤着低垂下眼睫，柔软地依偎在怀里。\n“可以哦，本来就已经是{PlayerName}的人了，只是稍微准备一下情绪。”\n“因为是第一次……啊……太着急，呼。”被端着下巴将脸抬起来的{TargetName}，羞涩地闭上眼睛，等待起恋人的亲吻。\n“啾……”轻柔的唇齿触碰，细细地品味，接着炽热的恋心再也无法忍耐，依恋地抱上来，“啾~嗯……啾嗯。”\n“嗯，对不起……第一次不太熟练……嗯。”羞耻地想要借口的小嘴被手指扳开，“{PlayerName}……啊。”\n{TargetName}粉色的湿润小舌再次被含住吮吸，在怀中酥软了腰肢任凭{PlayerName}摆布。\n“哈，恋人亲亲好厉害，还想要……继续，{PlayerName}。”{TargetName}呢喃着呼唤{PlayerName}的名字，吐出的舌尖上拉出淫靡的丝线，充满了爱恋与情欲的双眼难以从{PlayerName}的身上移开。"
+msgstr ""
+
+#: Event:9d75adbd-2881-4c4d-a0da-ab663089d9b1
+msgid "“哈啊~”湿热的吐息缠绕在{PlayerName}的龟头上，温和地刺激着，强调{TargetName}柔软的小嘴正准备让{PlayerName}的雄根占有的事实。\n“唔……真的确定要让{PlayerName}的恋人把初吻给阴茎吗？”乖巧地跪坐在股间，隔着一点距离在肉尖下垫好了柔软的舌头。\n幽怨地眼神刺在{PlayerName}的身上，“可以的话，还是想要正常的亲亲。”\n在{PlayerName}的恳求下，红透了脸颊的{TargetName}才勉强了同意了将第一次交给肉茎，“变态……”\n{TargetName}闭上了湿润眼睛，将娇嫩的唇瓣触碰上了勃起的肉龟，深情地在双方的身体上留下自己的记号。\n“啾~嗯。”\n粘稠的亲吻持续了很长的时间，逐渐大胆起来的{TargetName}用舌尖触碰起了铃口，开始尝试更加下流的肉棒湿吻与热情的肉根吞咽。"
 msgstr ""
 
 #: /'data\map\0\0\Scene.json:2

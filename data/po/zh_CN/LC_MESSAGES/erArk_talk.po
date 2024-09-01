@@ -5889,7 +5889,7 @@ msgid "“{PlayerNickName}，过一会有空吗。”\n{Name}贴了过来抱住�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:15
-msgid "{Name}沉默地盯了{PlayerName}一会，悄悄地离开了房间。"
+msgid "{Name}悄悄地离开了房间。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:16
@@ -6113,7 +6113,7 @@ msgid "“我的衣服？嗯，是有点暴露呢，毕竟的为了方便刺杀�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:71
-msgid "“……？看到了？{PlayerNickName}从刚刚开始就一直很在意这件披风缝隙里面的东西的样子”\n“嘛，如果是你的话……掀开看看也可以就是了”"
+msgid "“……？看到了？{PlayerNickName}从刚刚开始就一直很在意这件披风缝隙里面的东西的样子”\n“嘛，想要掀开看看吗……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:72
@@ -6225,7 +6225,7 @@ msgid "“咕唔……”\n不知道从哪里传来了肚子的空空的叫声\n
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:99
-msgid "盯着{PlayerName}的{Name}迈着轻佻的脚步走到{PlayerName}的面前。\n不知道为什么红着脸的{Name}偷偷地掀起了上衣对着{PlayerName}露出了娇嫩的乳头。\n观察着{TargetName}的表情，狡黠地眯起眼睛露出笑容的{Name}牵起{TargetName}的手，放在了自己的胸部上。\n“嘘……”，另一只手慢慢地解开裙带拉开一点缝隙，“这边。”\n示意着{PlayerName}保持安静，让{PlayerName}的手滑入股间，柔软的蜜穴触感亲吻在了{PlayerName}的手指上。\n“……特殊服务结束了。”享受了一小会之后{Name}轻轻地推开了{PlayerName}，狡猾地闭上一只眼睛手指放在嘴唇前做出了安静地手势，“剩下的部分请{PlayerNickName}到床上再说吧~”"
+msgid "盯着{PlayerName}的{Name}迈着轻佻的脚步走到{PlayerName}的面前。\n不知道为什么红着脸的{Name}偷偷地掀起了上衣对着{PlayerName}露出了娇嫩的乳头。\n观察着{PlayerName}的表情，狡黠地眯起眼睛露出笑容的{Name}牵起{PlayerName}的手，放在了自己的胸部上。\n“嘘……”，另一只手慢慢地解开下身的衣服拉开一点缝隙，“这边。”\n示意着{PlayerName}保持安静，让{PlayerName}的手滑入股间，柔软的蜜穴触感亲吻在了{PlayerName}的手指上。\n“……特殊服务结束了。”享受了一小会之后{Name}轻轻地推开了{PlayerName}，狡猾地闭上一只眼睛手指放在嘴唇前做出了安静地手势，“剩下的部分请{PlayerNickName}到床上再说吧~”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:100
@@ -6233,7 +6233,7 @@ msgid "不知道为什么{Name}一直盯着{PlayerName}。\n“{PlayerNickName}�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:101
-msgid "“{PlayerNickName}，过来一下。”牵着{TargetName}的手，走到了房间的角落的{Name}抬头带着奇怪的神情盯着{PlayerName}。\n“那个……”{Name}犹豫了一会，用手指拉开了自己的上衣，往下拉下自己的小热裤。\n偷偷地向{TargetName}近距离展示了自己没有被布料包裹的充满朝气地乳头和娇嫩的耻丘。\n“H……”{Name}羞怯地偷瞄着一直盯着自己的肉体的{PlayerName}，吐出细微的紧张喘息\n……”结束了。”{Name}轻轻地把贴在自己身体上的{TargetName}推开，整理好自己的衣服，不敢再看向{TargetName}，深呼吸着努力地回复平时的矜持。"
+msgid "“{PlayerNickName}，过来一下。”牵着{PlayerName}的手，走到了房间的角落的{Name}抬头带着奇怪的神情盯着{PlayerName}。\n“那个……”{Name}犹豫了一会，用手指拉开了自己的上衣，往下拉下自己的下衣。\n偷偷地向{TargetName}近距离展示了自己没有被布料包裹的充满朝气地乳头和娇嫩的耻丘。\n“H……”{Name}羞怯地偷瞄着一直盯着自己的肉体的{PlayerName}，吐出细微的紧张喘息\n……”结束了。”{Name}轻轻地把贴在自己身体上的{TargetName}推开，整理好自己的衣服，不敢再看向{TargetName}，深呼吸着努力地回复平时的矜持。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:102
@@ -6277,7 +6277,7 @@ msgid "{TargetName}心不在焉地听着{PlayerName}说话，拿着书似乎在�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:112
-msgid "“……唔”\n{TargetName}托着脸看着{PlayerName}，不知道在想些什么。"
+msgid "“……唔”\n没有认真在听的{TargetName}托着脸看着{PlayerName}，不知道在想些什么。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:113
@@ -6485,7 +6485,7 @@ msgid "“如果可以的话希望做的甜一点。少女基本上都喜欢甜�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:164
-msgid "“砂糖加太多了？我倒是觉得还不够来着。好好好，知道了知道了，下次加少一点。”"
+msgid "“砂糖加太多了？我倒是觉得还不够来着。知道了知道了，下次加少一点。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:165
@@ -6521,7 +6521,7 @@ msgid "“很好吃哦，这种程度的话说不定能在格伦比亚或者维�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:173
-msgid "“尝起来感觉跟以前吃过的战场罐头差不多。”\n{TargetName}委婉地发表了评价。"
+msgid "“{FoodName}的味道，大概还行？”{TargetName}在思考着适合的词汇。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:174
@@ -6537,7 +6537,7 @@ msgid "“这个味道有点让我想起了小时候喝的土豆浓汤。……�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:177
-msgid "“很不错哦。有点让我想起了过去的事情。啊啊，不是无胄盟的那些无聊事情，大概是加入无胄盟之前还没离开家的时候。”"
+msgid "“很不错哦。有点让我想起了过去的事情。啊啊，不是无胄盟的那些无聊事情，大概是加入无胄盟之前还没离开大学的时候。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:178
@@ -6549,11 +6549,11 @@ msgid "“辛苦了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:180
-msgid "“我也稍微休息一会好了。”\n{TargetName}坐在了{PlayerName}的身边。"
+msgid "“我也稍微休息一会好了。”\n白金坐在了{PlayerName}的身边。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:181
-msgid "“啊嗯~~”\n{TargetName}伸了个懒腰。"
+msgid "“啊嗯~~”\n白金慵懒地伸了个懒腰。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:182
@@ -6586,6 +6586,10 @@ msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:189
 msgid "{TargetName}拿出一根棉棒示意{PlayerName}过来躺在她的大腿上。\n“需要帮忙清理一下耳朵放松一下吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:190
+msgid "“呼唔……”\n{TargetName}一脸安静地依偎在{PlayerName}怀里"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:191
@@ -6625,7 +6629,7 @@ msgid "“嗯，要去哪里逛逛吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:200
-msgid "“{Name}也是偷偷溜出来的吗？我们接下来要去哪里。”"
+msgid "“{PlayerNickName}也是偷偷溜出来的吗？我们接下来要去哪里。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:201
@@ -6637,7 +6641,7 @@ msgid "“好巧啊，我也正想出去转转。要一起去吃点什么吗？�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:203
-msgid "“诶，{Name}是专门来找我玩的吗？嗯，没事，就是有点开心。”"
+msgid "“诶，{PlayerNickName}是专门来找我玩的吗？嗯，没事，就是有点开心。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:204
@@ -6645,7 +6649,7 @@ msgid "“要一起去哪里玩吗？说起来上次给{PlayerNickName}的门票
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:205
-msgid "“是{Name}的邀请的话，去哪里都行。”"
+msgid "“{PlayerNickName}的邀请的话，去哪里都行。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:206
@@ -6653,7 +6657,7 @@ msgid "“嗯，走吧。值班的任务？已经提前做完了哦。今天都�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:207
-msgid "“觉得欣特莱雅在专门等{Name}？啊，那种事情，应该是错觉吧。”\n{TargetName}飘忽着视线搪塞了过去。"
+msgid "“觉得欣特莱雅在专门等{PlayerNickName}？啊，那种事情，应该是错觉吧。”\n{TargetName}飘忽着视线搪塞了过去。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:208
@@ -6685,7 +6689,7 @@ msgid "“能够仔细再说说{PlayerNickName}为什么要这么做吗？”\n�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:215
-msgid "{TargetName}双手抱在胸前一边听着道歉一边审视着{PlayerName}。\n“……哈啊……”听完了{PlayerName}的道歉的{TargetName}长长地叹了口气，闭上了双眼。\n“……好吧，这次就原谅{PlayerNickName}了。再有这样的事情就不单单是道歉这么简单了知道吗？”"
+msgid "{TargetName}双手抱在胸前一边听着道歉一边审视着{PlayerName}。\n“……哈啊……”听完了{PlayerName}的道歉的{TargetName}长长地叹了口气，闭上了双眼。\n“……好吧，这次就原谅{PlayerNickName}了。再有这样的事情就不单单是道歉这么简单了，知道了吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:216
@@ -6913,7 +6917,7 @@ msgid "嘴唇慢慢地张开，让被含住的阴茎退了出去。\n“咳…�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:272
-msgid "“……嗯？“{TargetName}一脸困惑地跟着你等了一会。"
+msgid "“……嗯？”白金一脸困惑地跟着你等了一会。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:273
@@ -6921,7 +6925,7 @@ msgid "“想要结束了吗？”抓着阴茎的{TargetName}放开了灵活的�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:274
-msgid "“哈……嗯。“{TargetName}打了个哈欠"
+msgid "“哈……嗯。“白金打了个哈欠，“有什么事情可以做吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:275
@@ -6933,15 +6937,15 @@ msgid "滋噜滋噜，在绵密的包裹上来的乳肉之间激烈抽插的阴�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:277
-msgid "{TargetName}无聊地在整理自己的衣着。"
+msgid "白金无聊地在整理自己的衣着。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:278
-msgid "{TargetName}盯着某个点开始出神地发呆。"
+msgid "白金盯着某个点开始出神地发呆。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:279
-msgid "随着时间的延长{TargetName}越发困惑地看着{Name}。\n\"{PlayerName}是在等谁吗？还有就算我在{PlayerName}身边，这也不应该是{PlayerName}可以一直在{SceneName}待着的理由吧。\""
+msgid "随着时间的延长白金越发困惑地看着{PlayerName}。\n\"博士是在等谁吗？还有就算我在博士身边，这也不应该是博士可以一直在{SceneName}待着的理由吧。\""
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:280
@@ -6949,11 +6953,11 @@ msgid "“呼……嗯……”抬起腰让阴茎滑出阴道的{TargetName}红�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:281
-msgid "“有什么事情吗？“{TargetName}有些不耐烦的样子。"
+msgid "白金有些不耐烦的样子，似乎是气还没消。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:282
-msgid "{TargetName}一副局促不安的样子，仔细看的话还会发现{TargetName}偷偷夹起了腿。\n\"嗯……姆姆……\"看起来已经快要忍耐到极限了。"
+msgid "{TargetName}一副局促不安的样子，仔细看的话还会发现{TargetName}偷偷夹起了腿。\n“嗯……姆姆……”看起来已经快要忍耐到极限了。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:283
@@ -7221,11 +7225,11 @@ msgid "“啊……这个家伙。没事，只是看到了以前的任务目标�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:350
-msgid "“夹子……签字……时间是……”\n{TargetName}似乎是进入了工作状态。"
+msgid "“夹子……签字……时间是……”\n白金似乎是进入了工作状态。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:351
-msgid "“意外地很认真？”\n闲暇的时候{TargetName}重新扎了一下稍微有点松动的马尾\n“平时只是嫌麻烦而已啦，不过如果{PlayerName}说这是必要的工作的话，那就是另一回事情了。”"
+msgid "“意外地很认真？”\n闲暇的时候{TargetName}重新扎了一下稍微有点松动的马尾。\n“平时只是嫌麻烦而已啦，不过如果{PlayerName}说这是必要的工作的话，那就是另一回事情了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:352
@@ -7253,7 +7257,7 @@ msgid "“让我参与这种公务，不知道{PlayerNickName}胆子是真的大
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:358
-msgid "“诶，我也要帮忙？如果现在身体不舒服的话可以请会儿假，稍微离开一下吗？”"
+msgid "“诶，我也要帮忙？如果现在身体不舒服的话可以请会儿假吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:359
@@ -7637,7 +7641,7 @@ msgid "{TargetName}伸出手引导着{Name}搂住自己的腰肢。\n“亲吻�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:454
-msgid "“亲吻……吗？”听到了{Name}的请求的{TargetName}愣了一下，“……啊，我们已经是恋人了，确实是应该做这种恋人之间应该做的事情。”\n“呼……嗯……”脸颊逐渐染上了绯红，紧张地躲闪着视线的{TargetName}努力地进行深呼吸。\n“……对不起，让我准备一下。突然之间说想要接吻什么的……明明是对女孩子来说很重要的事情……呼嗯……”\n“嗯，好，只是接吻而已，又不会像小说里面写的那样怀孕什么的。”\n失去了平时的冷静的{TargetName}用双手拍了拍自己的脸颊，重新鼓起了勇气直视起{Name}的眼睛。\n“下来一点……”{TargetName}伸出手臂勾住{Name}的脖子让{Name}稍微低下头，两人的脸贴到了紧张的呼吸声都能清楚地听到的距离。\n“{PlayerNickName}……”缓缓地垂下眼帘的{TargetName}低声嗫嚅着，“欣特莱雅……”\n“……接下来要亲吻你的女孩子名叫欣特莱雅。不是什么高高在上的白金大位，也不是什么无情的骑士杀手。”\n“只是一位，普通的，憧憬着纯真的爱情，名叫 欣特莱雅 的少女。”\n………………\n…………\n……\n\n没有浓厚的唇舌交融，只有像是春花落萍一样，温柔、安静的生涩触碰……\n……缓缓放开恋人的唇的欣特莱雅，睁开了清澈的眼睛。\n“……”短暂地温存了一会之后。按在恋人的胸口上，从温暖的怀抱中离开的欣特莱雅，满脸羞红的重新直视起{Name}的眼睛。\n“刚刚的是，我的初吻哦。”欣特莱雅轻轻地抿着嘴唇似乎是在稍微地回味刚才的触感，“……虽然下次会努力做的更好……但是希望{PlayerNickName}能够好好珍惜。”\n“……走吧。”重新回复了正常的神色的欣特莱雅牵起{Name}的手露出可爱的笑容，“我的恋人。”"
+msgid "“亲吻……吗？”听到了{Name}的请求的{TargetName}愣了一下，“……啊，我们已经是恋人了，确实是应该做这种恋人之间应该做的事情。”\n“呼……嗯……”脸颊逐渐染上了绯红，紧张地躲闪着视线的{TargetName}努力地进行深呼吸。\n“……对不起，让我准备一下。突然之间说想要接吻什么的……明明是对女孩子来说很重要的事情……呼嗯……”\n“嗯，好，只是接吻而已，又不会像小说里面写的那样怀孕什么的。”\n失去了平时的冷静的{TargetName}用双手拍了拍自己的脸颊，重新鼓起了勇气直视起{Name}的眼睛。\n“下来一点……”{TargetName}伸出手臂勾住{Name}的脖子让{Name}稍微低下头，两人的脸贴到了紧张的呼吸声都能清楚地听到的距离。\n“{PlayerNickName}……”缓缓地垂下眼帘的{TargetName}低声嗫嚅着，“欣特莱雅……”\n“……接下来要亲吻你的女孩子名叫欣特莱雅。不是什么高高在上的白金大位，也不是什么无情的骑士杀手。”\n“只是一位，普通的，憧憬着纯真的爱情，名叫 欣特莱雅 的少女。”\n………………\n…………\n……\n\n没有浓厚的唇舌交融，只有像是春花落萍一样，温柔、安静的生涩触碰……\n……缓缓放开恋人的唇的欣特莱雅，睁开了清澈的眼睛。\n“……”短暂地温存了一会之后。按在恋人的胸口上，从温暖的怀抱中离开的欣特莱雅，满脸羞红的重新直视起{Name}的眼睛。\n“刚刚的是，我的初吻哦。”欣特莱雅轻轻地抿着嘴唇似乎是在稍微地回味刚才的触感，“……虽然下次会努力做的更好……但是希望{PlayerNickName}能够好好珍惜。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:455
@@ -7981,7 +7985,7 @@ msgid "因为手指的入侵，还没经过怎么开发的膣穴用力地缠住�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:540
-msgid "分开{TargetName}股间的{TagetPanName}，向小穴中插入了手指。\n“……！”{TargetName}就发出了疑惑的叫声。\n还不能好好地理解快感的锻炼过的紧致小穴用力地缠在了手指上，“快点，拔出去。”带着愠怒的表情，{TargetName}瞪了{PlayerName}一下。"
+msgid "分开{TargetName}股间的{TagetPanName}，向嫩穴中插入了手指。\n“……！”{TargetName}就发出了疑惑的叫声。\n还不能好好地理解快感的锻炼过的紧致小穴用力地缠在了手指上，“快点，拔出去。”带着愠怒的表情，{TargetName}瞪了{PlayerName}一下。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:541
@@ -8313,7 +8317,7 @@ msgid "“那个……{PlayerNickName}，欣特莱雅还有初吻。”\n被按�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:623
-msgid "“……咕……咳……咳嗯……嗯”初吻被{PlayerName}的阴茎强硬地夺走了的{TargetName}用力地推开{PlayerName}。\n“欣特莱雅……咳……可不是{PlayerNickName}买来的妓女。”\n“这样糟蹋他人珍视的东西……”\n捂着自己的嘴唇，难受地皱起眉头的{TargetName}，用不满的眼神紧紧地盯着{PlayerName}。"
+msgid "“……咕……咳……咳嗯……嗯”初吻被{PlayerName}的阴茎强硬地夺走了的{Name}用力地推开{PlayerName}。\n“欣特莱雅……咳……可不是{PlayerNickName}买来的妓女。”\n“这样糟蹋他人珍视的东西……”\n捂着自己的嘴唇，难受地皱起眉头的{Name}，用不满的眼神紧紧地盯着{PlayerName}。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:624
@@ -8329,7 +8333,7 @@ msgid "“嗯……嗯唔？”感受到了舌尖上鼓动起来的肉根的{Tar
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:627
-msgid "“咕……嗯？”突然在口中被射入精液的{TargetName}皱起了眉头。\n带着幽怨的眼神，默默地用温热的口腔包裹着阴茎，将全部的精液接了下来。\n“哈……噗嗯”一结束就放开了{PlayerName}的{TargetName}，拿出纸巾将精液吐了出去。\n“不都说射之前拔出来……呃……嗯……黏黏糊糊的。”"
+msgid "“咕……嗯？”突然在口中被射入精液的{TargetName}皱起了眉头。\n带着幽怨的眼神，默默地用温热的口腔包裹着阴茎，将全部的精液接了下来。\n“哈……噗嗯”一结束就放开了{PlayerName}的{TargetName}，拿出纸巾将精液吐了出去。\n“不都说射之前拔出来……呃……嗯……好粘。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:628
@@ -8505,11 +8509,11 @@ msgid "紧紧地含住插入的阴茎吮吸的{TargetName}察觉到了阴茎越�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:671
-msgid "“咕……咕唔……咕噜”被深喉着，强制灌入了精液{TargetName}从下面瞪着{PlayerName}。\n喉咙一阵阵鼓动着挤压在阴茎上做出吞咽的动作，“咕……咕……哈啊。”\n终于将结束了射精的阴茎从喉咙中吐出来的{TargetName}捂着喉咙难受地咳嗽起了来。\n”{PlayerNickName}，射的太深了，咳嗯。”"
+msgid "“咕……咕唔……咕噜”被深喉着，强制灌入了精液{TargetName}从下面不满地瞪着{PlayerName}。\n喉咙一阵阵鼓动着挤压在阴茎上做出吞咽的动作，“咕……咕……哈啊。”\n终于将结束了射精的阴茎从喉咙中吐出来的{TargetName}捂着喉咙难受地咳嗽起了来。\n”{PlayerNickName}，射的太深了，咳嗯。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:672
-msgid "咽喉被颤抖着逐渐逼近极限的阴茎撑开，{TargetName}无奈地拍打着{PlayerName}的大腿想要让{PlayerName}拔出去。\n……”咕……嗯……嗯唔……啊”终于重新获得了喘息的机会的{TargetName}嘴角沾着双方的体液，用幽怨的眼神盯着{PlayerName}。"
+msgid "咽喉被颤抖着逐渐逼近极限的阴茎撑开，{TargetName}无奈地拍打着{PlayerName}的大腿想要让{PlayerName}拔出去射在外面。\n“……咕……嗯……嗯唔……啊”，终于重新获得了喘息的机会的{TargetName}嘴角沾着双方的体液，用幽怨的眼神盯着{PlayerName}。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:673
@@ -8521,11 +8525,11 @@ msgid "被舔着下体稍微地颤抖起腰肢的{TargetName}不知不觉地减�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:675
-msgid "被要求躺下的{TargetName}看着{PlayerName}移动到了自己的身上，阴茎也顺势垂落在了自己的嘴唇上。\n“嗯……等……果然还是有点害羞。”按住掉下来的阴茎，紧紧地夹着腿的{TargetName}想要拒绝。\n“等一下，不要用力地扳……呃……嗯……”被强制地打开大腿舔舐的{TargetName}无奈地也张嘴接受了阴茎的插入。\n“相互舔果然……嗯……感觉有点太羞耻了……唔。”"
+msgid "躺下的{TargetName}看着{PlayerName}移动到了自己的身上，阴茎也顺势垂落在了自己的嘴唇上。\n“嗯……等……果然还是有点害羞。”按住掉下来的阴茎，紧紧地夹着腿的{TargetName}想要拒绝。\n“等一下，不要用力地扳……呃……嗯……”被强制地打开大腿舔舐的{TargetName}无奈地也张嘴接受了阴茎的插入。\n“相互舔果然……嗯……感觉有点太羞耻了……唔。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:676
-msgid "“啊……要射了。”仔细地观察着{PlayerName}的表情的{TargetName}，在嘴唇察觉到阴茎的鼓起的同时从嘴唇里面吐了出去。\n完全没能及时忍耐住的阴茎将精液喷洒在了{TargetName}的脸上，“啊……”。\n无奈地用脸承接住精液，一只眼睛被粘液封上的{TargetName}幽怨地看着{PlayerName}。\n“唉……真是的，一点耐性也没有的家伙。”"
+msgid "“啊……要射了。”仔细地观察着{PlayerName}的表情的{TargetName}，在嘴唇察觉到阴茎的鼓起的同时从嘴唇里面吐了出去。\n完全没能及时忍耐住的阴茎将精液喷洒在了{TargetName}的脸上和还没闭上的唇舌里面，“啊……”。\n无奈地用脸承接住精液，一只眼睛被粘液封上的{TargetName}幽怨地看着{PlayerName}。\n“唉……真是的，一点耐性也没有的家伙。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:677
@@ -8537,7 +8541,7 @@ msgid "“嗯……唔嗯……”托着阴茎从唇中拔出来的{TargetName}�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:679
-msgid "正专心地用手撸动着的{TargetName}快速地对{PlayerName}的阴茎进行着刺激。\n“啊……”直到高高喷出的精液突然射在了{TargetName}的脸上才慢慢放缓了撸动的速度。\n“呼……嗯……”默默地用脸接住了精液的{TargetName}在喷淋结束之后才放开手中的阴茎，“好像刚刚这边做的有点太过了……嗯。”\n擦掉了射在睫毛上的精液的{TargetName}露出了无奈的眼神。"
+msgid "正专心地用手撸动着的{TargetName}快速地对{PlayerName}的阴茎进行着刺激。\n“啊……”直到高高喷出的精液突然射了出来才慢慢放缓了撸动的速度。\n“呼……嗯……”默默地接住了精液的{TargetName}在喷淋结束之后才放开手中的阴茎，“好像刚刚这边做的有点太过了……嗯。”\n擦掉了射在睫毛上的精液的{TargetName}露出了无奈的眼神。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:680
@@ -8545,7 +8549,7 @@ msgid "扶着{PlayerName}的腰{TargetName}用并拢的大腿夹紧了阴茎，�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:681
-msgid "“帮我一下好吗？扶一下我的腰就行。”{TargetName}高高地抬起修长的长腿搭在阴茎上缠住。\n“嗯……就这样不要太激烈地动就行了，太用力地话这边也会很累。”"
+msgid "“帮我一下好吗？扶一下我的腰就行。”{TargetName}高高地抬起一只修长的玉腿，将小腿和大腿并紧搭在阴茎上缠住。\n“嗯……就这样不要太激烈地动，太用力地话这边也会很累。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:682
@@ -8553,11 +8557,11 @@ msgid "坐下了的{TargetName}曲起腿示意{PlayerName}过来，“只是想�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:683
-msgid "“只是用腿的话，我是不会反对的。但是一直夹着会很累的呀。”\n“而且这边平时也有在练腿，一不小心夹得太用力了{PlayerNickName}也会疼的吧。”\n“反倒希望这边用力地夹比较好吗？{PlayerNickName}真是奇怪的家伙。”\n{TargetName}用锻炼地没有多余的赘肉的柔韧双腿夹紧了阴茎，前后缓慢地摇摆着腰用大腿撸动。"
+msgid "“只是用腿的话，我是不会反对的。但是一直夹着也会消耗体力。”\n“而且这边平时也有在练腿，一不小心夹得太用力了{PlayerNickName}也会疼的吧。”\n“反倒希望这边用力地夹比较好吗？唉，{PlayerNickName}真是奇怪的家伙。”\n{TargetName}用锻炼地没有多余的赘肉的柔韧双腿夹紧了阴茎，前后缓慢地摇摆着腰用大腿撸动。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:684
-msgid "不安地用尾巴一松一紧地缠住抽动的阴茎的{TargetName}发出轻轻的哼声。\n“嗯……嗯唔……动得慢一点。还有……可以不要用力地抓着尾巴吗……嗯……”"
+msgid "不安地用柔顺的尾巴缠住抽动的阴茎的{TargetName}发出轻轻的哼声。\n“嗯……嗯唔……动得慢一点。还有……可以不要用力地抓着尾巴吗……嗯……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:685
@@ -8581,7 +8585,7 @@ msgid "从被体液浸湿的白尾中探出来的龟头高高地射出了精液�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:690
-msgid "“啊……！”感觉到了{PlayerName}在尾巴中泄出了精液的{TargetName}忿忿地盯着{PlayerName}。\n“不要因为很舒服所以就随便射在里面呀……”\n“为了去掉这个气味要很麻烦的……唔……”{TargetName}困扰地抱着被射的黏黏糊糊毛发缠在了一起的尾巴，“唉，这样子糟糕了啊。”"
+msgid "“啊……！”感觉到了{PlayerName}在尾巴中泄出了精液的{TargetName}忿忿地盯着{PlayerName}。\n“不要因为很舒服所以就随便射在里面呀。”\n“为了去掉这个气味要很麻烦的……唔……”{TargetName}困扰地抱着被射的黏黏糊糊毛发缠在了一起的尾巴，“唉，这样子糟糕了啊。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:691
@@ -8593,7 +8597,7 @@ msgid "“嗯……好了不要动……嗯……”被蹭的闭上了一只眼�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:693
-msgid "“这样蹭会让我很困扰的，可以停下来吗？”{TargetName}无奈地按住在脸上磨蹭的阴茎。\n“{TargetName}只是在帮{PlayerNickName}处理一下，并不是说要成为{PlayerNickName}的发泄对象。嗯……”\n“希望{PlayerNickName}能够尊重一下女孩子的想法。”{TargetName}淡淡地叹了口气。"
+msgid "“这样蹭会让我很困扰的，可以停下来吗？”{TargetName}无奈地按住在脸上磨蹭的阴茎。\n“还不是恋人的话，{TargetName}只是在帮{PlayerNickName}处理一下，并不是说要成为{PlayerNickName}的发泄对象。嗯……”\n“希望{PlayerNickName}能够尊重一下女孩子的想法。”{TargetName}淡淡地叹了口气。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:694
@@ -8605,7 +8609,7 @@ msgid "“耳朵里面感觉痒痒的……嗯。”被阴茎磨蹭着抖起耳�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:696
-msgid "“想要碰一下耳朵……？虽然可以，但是不知道为什么，总感觉有点不爽。”\n{TargetName}在{PlayerName}的股间低下头，竖起了耳朵，“好了，自己动可以吗？”\n“还有不要弄太久，也不要插进去……会很痒的。”"
+msgid "“想要用耳朵……？虽然可以，但是，嗯，算了。”\n{TargetName}在{PlayerName}的股间低下头，竖起了两只柔软的耳朵，“好了，自己动可以吗？”\n“还有不要弄太久，也不要插进去……会很痒的。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:697
@@ -8613,7 +8617,7 @@ msgid "“嗯……等一下……{PlayerNickName}是不是要射了。”察觉
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:698
-msgid "“诶，等……嗯……”蹭在{TargetName}的脸上的阴茎高高地射出了精液，让{TargetName}紧紧地闭上了眼睛。\n“嗯……唔……”满脸被淋上了精液，只能眯着眼睛看着{PlayerName}的{TargetName}沉默地把结束了射精的阴茎移开。\n“这样子射在脸上，{PlayerNickName}高兴了吗？变态……”"
+msgid "“诶，等……嗯……”蹭在{TargetName}的脸上的阴茎发着抖射出了精液，让{TargetName}紧紧地闭上了眼睛。\n“嗯……唔……”满脸被淋上了精液，只能眯着眼睛看着{PlayerName}的{TargetName}沉默地把结束了射精的阴茎移开。\n“这样子射在脸上，{PlayerNickName}高兴了吗？变态……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:699
@@ -8637,7 +8641,7 @@ msgid "“不要那么下流地到处摸，我自己来抹就可以……”{Tar
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:704
-msgid "{TargetName}凑近闻了闻{PlayerName}递过来的东西便皱起了眉头，“嗯……这个是媚药吗？”\n“以前也有见过卖这种下流的商品的家伙，因为上面派任务了所以做掉了。”\n“嗯，只是稍微稍微陪{PlayerNickName}玩一会的话倒是没什么关系。就当是测试一下耐药性？”"
+msgid "{TargetName}凑近闻了闻{PlayerName}递过来的东西便皱起了眉头，“嗯……这个是媚药吗？”\n“以前也有见过用这种下流的东西欺辱女性的家伙，因为上面派任务了所以做掉了。”\n“嗯，只是稍微稍微陪{PlayerNickName}玩一会的话倒是没什么关系。就当是测试一下耐药性？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:705
@@ -8681,11 +8685,11 @@ msgid "用力地绞紧了双腿的{TargetName}低低地喘着气，姣好的小�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:715
-msgid "阴唇的尖角被戴上了阴蒂夹的{TargetName}不安地抓挠着周围的物体，随着身体的颤抖体液不受控制地濡湿了阴部。\n“呜……嗯……”咬着嘴唇的{TargetName}不满地看着{PlayerName}，“不要一直盯着那里……笨蛋……”"
+msgid "阴唇的尖角被戴上了阴蒂夹的{TargetName}不安地抓挠着周围的物体，随着身体的颤抖，体液不受控制地濡湿了阴部。\n“呜……嗯……”咬着嘴唇的{TargetName}不满地看着{PlayerName}，“不要一直盯着那里……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:716
-msgid "扶着自己的小腹努力地克制着身体的颤抖的{TargetName}皱着眉头闭上了眼睛。\n“哈……嗯……夹得不舒服……”为了避免被夹子激烈地摩擦阴蒂，{TargetName}小心地克制着动作的幅度。\n“等一下，不许拉……嗯……嗯唔唔……”低下头的{TargetName}痛苦地呻吟着。"
+msgid "扶着自己的小腹努力地克制着身体的颤抖的{TargetName}皱着眉头闭上了眼睛。\n“嗯……夹得不舒服……”为了避免被夹子激烈地摩擦阴蒂，{TargetName}小心地克制着动作的幅度。\n“等一下，不许拉……嗯……嗯唔唔……”低下头的{TargetName}痛苦地呻吟着。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:717
@@ -8701,11 +8705,11 @@ msgid "股间被顶上了快速地转动着的电动按摩棒的{TargetName}难�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:720
-msgid "用力地绷紧了双腿阻止着跳动的电动按摩棒靠近那个地方的{TargetName}瞪着{PlayerName}，“这个太激烈的……不可以。”\n最终被固执的{PlayerName}用边缘蹭到了阴蒂的{TargetName}，一下子放松了双腿，被旋转着的圆头顶进了股间。\n“噫！呜……唔嗯呢……”突然被激烈地欺负重要的地方的{TargetName}紧张地蜷曲起身体。"
+msgid "用力地绷紧了双腿阻止着跳动的电动按摩棒靠近那个地方的{TargetName}瞪着{PlayerName}，“这个太激烈的……不可以。”\n最终被固执的{PlayerName}用边缘蹭到了阴蒂的{TargetName}，用旋转着的圆头顶进了股间。\n“噫！呜……唔嗯呢……”突然被激烈地欺负重要的地方的{TargetName}紧张地蜷曲起身体。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:721
-msgid "被固定住被迫打开了双腿的{TargetName}，紧紧的盯着向着自己的股间靠近的按摩棒，“{PlayerNickName}，我得先警告一下这边还是处女。”\n“就算是被强迫着破处，用道具也……呃，等……”惊恐地看着按摩棒径直地插入阴道的{TargetName}用力地挣扎起来。\n“{PlayerNickName}，快点拔出去，嗯！别再往里面……咕嗯……”{TargetName}用力地收缩起小腹想要阻止入侵物的深入。"
+msgid "被固定住被迫打开了双腿的{TargetName}，紧紧的盯着向着自己的股间靠近的按摩棒，“{PlayerNickName}，我得先警告一下这边还是处女。”\n“就算是要破处，用道具也……呃，等……”惊恐地看着按摩棒径直地插入阴道的{TargetName}用力地挣扎起来。\n“{PlayerNickName}，快点拔出去，嗯！别再往里面……咕嗯……”{TargetName}用力地收缩起小腹想要阻止入侵物的深入。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:722
@@ -8725,7 +8729,7 @@ msgid "“再强调一下，{TargetName}不是{PlayerNickName}的玩具，所以
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:726
-msgid "从小巧的乳头上取下了乳头夹的{TargetName}舒展开了眉头，深呼吸着缓解乳头上残留的快感。\n娇嫩的乳头被夹得泛起了粉红，在空气中颤抖着，“终于拿下来了……哈……呼……”"
+msgid "从小巧的乳头上取下了乳头夹的{TargetName}舒展开了紧皱的眉头，深呼吸着缓解乳头上残留的快感。\n娇嫩的乳头被夹得泛起了潮红，在空气中颤抖，“终于拿下来了……哈……呼……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:727
@@ -8757,11 +8761,11 @@ msgid "承受着身后一阵阵的冲击的{TargetName}把脸深深地埋了下�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:734
-msgid "被要求翻过身准备进行第一次插入的{TargetName}不安地扭头看着{PlayerName}，“真的要用这种姿势做吗？如果可以的话第一次想要温柔一点的方式……”。\n“嘶……”感受着勃起的龟头顶在膣穴入口上的{TargetName}下意识地紧张起来，“这个姿势……感觉不舒服……啊……”\n被扶着腰慢慢插入的{TargetName}伏下身体，“{PlayerNickName}，稍微再慢一点……嗯……唔……”"
+msgid "被要求翻过身准备进行第一次插入的{TargetName}不安地扭头看着{PlayerName}，“真的要用这种姿势做吗？如果可以的话第一次想要温柔一点的方式……”。\n“嘶……”感受着勃起的龟头顶在膣穴入口上的{TargetName}下意识地紧张起来，“这个姿势……感觉不舒服……啊……”\n被扶着腰慢慢插入的{TargetName}伏下身体，“{PlayerNickName}，稍微再慢一点……嗯……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:735
-msgid "{TargetName}似乎在发呆，被{PlayerName}提醒了一下才回过神来。\n“啊，嗯，我在听，刚刚说到哪里了？”"
+msgid "{TargetName}似乎在发呆，被{PlayerName}提醒了一下才回过神来。\n“啊，嗯，我在听。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:736
@@ -8801,7 +8805,7 @@ msgid "“暂时还没有胃口。下次再说吧。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:745
-msgid "被正面抱住，用下身包裹住阴茎的{TargetName}微红着脸，双手搭在{PlayerName}的胸口上。\n“呼……嗯，不要用力顶上来。嗯。”被顶着有些站不稳的{TargetName}不满地瞪了{PlayerName}一眼。\n“明明这个姿势不好用力……呼。”被抽插着小穴的{TargetName}慢慢的分开了双腿，“腿有点软……嗯。”"
+msgid "被正面抱住，用下身包裹住阴茎的{TargetName}微红着脸，双手搭在{PlayerName}的胸口上。\n“呼……嗯，不要用力顶上来。嗯。”被顶着有些站不稳的{TargetName}不满地瞪了{PlayerName}一眼。\n“明明这个姿势不好用力……呼。”被抽插着小穴的{TargetName}慢慢的分开了双腿重新站稳，“腿有点软……嗯。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:746
@@ -8817,7 +8821,7 @@ msgid "“嗯……嗯……”{TargetName}被拉着双臂向后突出臀部接�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:749
-msgid "“真的要用这个姿势……啊……”感受到了{PlayerName}坚硬的性器顶在屁股上的触感，{TargetName}不安地甩动着尾巴。\n“嗯……不要抓那么紧可以吗？”{TargetName}无奈地将手放在按着自己的小腹的手背上，“……同意让{PlayerNickName}拿走处女了，就不会反悔了的。”\n做好了心理准备的{TargetName}感受着探入股间的坚硬之物，慢慢地闭上了眼睛，“请……温柔一点。”"
+msgid "“真的要用这个姿势……啊……”感受到了{PlayerName}坚硬的性器顶在屁股上的触感，{TargetName}不安地甩动着尾巴。\n“嗯……不要抓那么紧可以吗？”{TargetName}无奈地将手放在{PlayerName}按着自己的小腹的手背上，“……同意让{PlayerNickName}拿走处女了，就不会反悔了的。”\n做好了心理准备的{TargetName}感受着探入股间的坚硬之物，慢慢地闭上了眼睛，“请……温柔一点。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:750
@@ -8825,7 +8829,7 @@ msgid "“{PlayerName}对这份食物做了什么吧。如果要练习下药手�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:751
-msgid "随着{PlayerName}深入从未被使用过的狭窄膣穴，{TargetName}发出了不舒服的声音。\n“嘶……嗯……”{TargetName}皱着眉头抓紧了抱上来的{PlayerName}的后背，“有点疼……呼……嗯……”\n{TargetName}刚刚破瓜的小穴紧紧地缠在了阴茎上，光洁的小腹因为疼痛抽搐着。\n“……呼……没有想象中那样的疼……但是也没有小说里面说的那种幸福的感觉……”{TargetName}露出了一副失望的表情。"
+msgid "随着{PlayerName}深入从未被使用过的狭窄膣穴，{TargetName}发出了不舒服的声音。\n“嘶……嗯……”{TargetName}皱着眉头抓紧了抱上来的{PlayerName}的后背，“有点疼……呼……嗯……”\n{TargetName}刚刚破瓜的嫩穴紧紧地缠在了阴茎上，光洁的小腹因为疼痛抽搐着。\n“……呼……没有想象中那样的疼……但是也没有小说里面说的那种幸福的感觉……”{TargetName}露出了一副失望的表情。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:752
@@ -8929,11 +8933,11 @@ msgid "被按着鼠径部牢牢地坐上了阴茎的{TargetName}发出了难受�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:777
-msgid "“嗯！嗯……嗯唔……”突然被背后的阴茎用力地顶入了最深处的{TargetName}难受地在{PlayerName}的大腿上挺出腰肢。\n“唔……哈，哈嗯，哈啊……”过了好一会，逐渐缓过来的小腹用力地缠紧了顶到了子宫口上的阴茎。\n“{PlayerNickName}……呼……插得太深了吧……而且，还顶到了那个地方。”"
+msgid "“嗯！嗯……嗯唔……”突然被背后的阴茎用力地顶入了最深处的{TargetName}难受地在{PlayerName}的大腿上挺出腰肢。\n“唔……哈，哈嗯，哈啊……疼。”过了好一会，逐渐缓过来的小腹用力地缠紧了顶到了子宫口上的阴茎。\n“{PlayerNickName}……呼……插得太深了吧……而且，还顶到了那个地方。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:778
-msgid "“诶……？嗯……！”被扶着臀部进一步分开双腿的{TargetName}发出了疑惑的声音，接着便被阴茎顶在了子宫口上。\n“呼……唔……”失神了一瞬间的{TargetName}扶着额头，不满地看着面前正搂着腰肢深深地插入身体的{TargetName}。\n“头晕……呃……嗯……{PlayerNickName}，啊，嗯，先不要继续顶上来……”"
+msgid "“诶……？嗯……！”被扶着臀部进一步分开双腿的{TargetName}发出了疑惑的声音，接着便被阴茎顶在了子宫口上。\n“呼……唔……”失神了一瞬间的{TargetName}扶着额头，露出了痛苦的表情看着面前正搂着腰肢深深地插入身体的{TargetName}。\n“头晕……呃……嗯……{PlayerNickName}，啊，嗯，先不要继续顶上来……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:779
@@ -9649,7 +9653,7 @@ msgid "“呼……嗯……嗯……嗯嗯！”\n咬着嘴唇用力地仰起�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:957
-msgid "“唔……嗯”\n在轻微地颤抖下，{Name}的小穴中默默地流出了代表绝顶的蜜汁。"
+msgid "“唔……嗯”\n在轻微地颤抖下，{Name}的嫩穴中默默地流出了代表绝顶的蜜汁。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:958
@@ -9733,15 +9737,15 @@ msgid "“噫！”\n闷闷地剧烈绝顶的{Name}全身紧紧地绷成C字形�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:978
-msgid "“要射精了吗？”扶着阴茎，持续地揉弄龟头的{TargetName}仔细地观察着{PlayerName}的表情。\n“嗯嗯……那么……”开始用力地榨取肉棒的{TargetName}满意地看着一股股精汁从龟头持续地被挤出。\n“射了很多呢。”"
+msgid "“要射精了吗？”扶着阴茎，持续地揉弄龟头的{TargetName}仔细地观察着{PlayerName}的表情。\n“嗯嗯……那么……”开始用力地榨取肉棒的{TargetName}满意地看着一股股精汁从龟头持续地被挤出。\n“嗯嗯，射了很多呢。这样性欲处理也会顺利点。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:979
-msgid "“忍不住的时候要记得……欸……”\n感受着手指间迅速膨胀的热流{TargetName}惊讶地睁大了漂亮的眼睛。\n“都说了，要提前报告的呀，{PlayerNickName}。唉。”{TargetName}用从缝隙间不断地溢出精汁的手指包裹住还在持续地一阵阵射精的肉龟，“这也射的太多了吧。”"
+msgid "“忍不住的时候要记得……欸……”\n感受着手指间迅速膨胀的热流{TargetName}惊讶地睁大了漂亮的眼睛。\n“都说了，要提前报告的呀，{PlayerNickName}。唉。”{TargetName}用从缝隙间不断地溢出精汁的手指包裹住还在持续地一阵阵射精的肉龟，“而且怎么会射出来这么多。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:980
-msgid "“嗯……咕……嗯！？”正用柔软的舌尖托举起发抖的肉龟舔舐的{TargetName}，察觉到了在口中爆发的热流。\n“咕……嗯，咕……”无奈地只能用嘴先接住的{TargetName}，因为大量射精，嘴角也溢出了装不下的精液。\n“哈……嗯，这也太多了，有那么舒服吗？”"
+msgid "“嗯……咕……嗯！？”正用柔软的舌尖托举起发抖的肉龟舔舐的{TargetName}，察觉到了在口中爆发的热流。\n“咕……嗯，咕……”无奈地只能用嘴先接住的{TargetName}，因为大量射精，嘴角也溢出了装不下的精液。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:981
@@ -9757,107 +9761,111 @@ msgid "“……？”{Name}用怪异地眼神看着正在射精中的{PlayerNam
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:984
-msgid "用脚冷冷地踩在大量射精中的阴茎上的{Name}，慢慢地叹出一口气。\n“用脚就射出来这么多的话，{PlayerNickName}迟早会变得奇怪的哦。”\n“虽然对这边来说比较方便啦。”说着{TargetName}用脚背挑起射精的肉尖，让阴茎能够顺利地射出来。"
+msgid "{TargetName}用脚冷冷地踩在大量射精中的阴茎上的{Name}，随着叽咕爆射的声音叹出一口气。\n“用脚就射出来这么多的话，{PlayerNickName}迟早会变得奇怪的哦。”\n“虽然对这边来说比较方便啦。”说着{TargetName}用脚背挑起射精的肉尖，让阴茎能够顺利地射出来。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:985
-msgid "“……！”{TargetName}下意识地放开了踩在阴茎上的脚。\n“是不是踩得还是太用力了。”{TargetName}有点担心地看着{PlayerName}，“只是因为感觉很舒服就射精了吗？”\n“能因为脚趾兴奋起来，{PlayerNickName}有时间询问一下医疗部的人的建议比较好吧。”(复制)"
+msgid "{TargetName}用双脚从两边夹住肉根底部，一顿一顿地前后撸动起大量射精中的肉根。\n“{PlayerNickName}射了好多出来。喜欢被用脚欺负吗？”{TargetName}从两边用力的踩紧，挤着肉根左右甩动着甩干净之后才放开了射的湿乎乎的阴茎。\n“这么多流下来，脚底都弄脏了，滑溜溜的不好走路。”{TargetName}嫌弃地看了眼抽搐的肉茎。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:986
-msgid "“啊……射出来了。”正用{TagetSocName}包裹着的脚底按压阴茎的{TargetName}，露出了困扰的表情。\n“虽然{PlayerNickName}能够射出来这边也高兴，但是感觉脚上黏糊糊……想脱掉。”\n{TargetName}抬起了穿着被精液濡湿的{TagetSocName}的脚底，淡淡地叹了口气。(复制)"
+msgid "穿着{TagetSocName}的玉足稍微用力地踩在了噗滋噗滋像是水袋一样射精的肉棒肚子上。\n“袜子的触感很舒服吧，滑溜溜的。”{TargetName}面无表情地歪着头，用脚趾蹭着大量射精的肉根挑逗着抚摸。\n“用脚性处理也能射出来这么多，{PlayerNickName}也真是变态。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:987
-msgid "被用顺滑的头发包络住阴茎从发间射出了精液。\n“除了用头发包裹了一下，明明就跟普通的手指做差不多。”\n扶着慢慢结束了射精的阴茎的{TargetName}抽出了湿润的秀发，“虽然确实是手感上更加舒服一点，但是好歹是女孩子重视的头发诶。”\n“不过{PlayerNickName}能快点用光精力的话，这边也可以快点去清理就是了，唉。”(复制)"
+msgid "细密的发丝刺激在肉冠的边缘上，好像是让肉根变得更加兴奋了的样子。\n“唉，女孩子的头发不是用来做这个的，{PlayerNickName}。”\n“虽然轻松地就能让{PlayerNickName}射出来这么多我也很高兴啦。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:988
-msgid "“……啊”看着白色的粘液慢慢从缠在阴茎上的头发间渗出来的{TargetName}拿出纸巾稍微接了一下溢出来的精液。\n“射在头发里会包裹感更加强一点吗？唉，只是擦擦的话肯定是擦不干净的。”\n{TargetName}困扰地盯着罪魁祸首，“想要快点结束去洗一下头发。”(复制)"
+msgid "看着在雪白的秀发上浸染开来的大量浓稠的精液，{TargetName}不太开心地撅起了嘴巴。\n“射出来这么多，{PlayerNickName}也真是变态。”\n“正常洗头发的时候也不会挤出来这么多洗发液，唉。”无奈地缠紧了包裹在肉冠上的头发，加强了厚实的触感给予了{PlayerName}更多的刺激，“都弄脏了那就没办法了，事后要记得给额外的补偿。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:989
-msgid "皱着眉头抬头看着{PlayerName}仍由阴茎在腋下射出了精液。\n“……{PlayerNickName}喜欢在这里射出来吗？感觉黏糊糊的，而且有点痒。嗯……”(复制)"
+msgid "“嗯唔？”狭窄的腋下没法容纳那么多射出的粘液，从光滑的侧乳上，白色的水流漏了出来。\n默默地夹紧了腋下的压力阻止更多的精液流出，“稍微射慢一点，虽然知道这样夹着会很舒服啦。请{PlayerNickName}忍耐一下。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:990
-msgid "滋啵……滋啵……阴茎在已经被弄得湿滑的股间来回钻出，最后从紧致的大腿之间射出了精液。\n“嗯，{PlayerNickName}如果能就这样满足的话就好了。”\n结束了射精之后，{TargetName}扶着{PlayerName}的腰，让开始变软的阴茎从自己的股间退了出去。(复制)"
+msgid "在锻炼地能够用强大的压力夹紧的股间，无法忍耐快感的肉根强烈地爆发出了射精。\n早就用股间察觉到了{PlayerName}状态的{TargetName}，缩紧了大腿将发抖的肉尖固定在了阴唇上研磨，白白的精汁顺着丰满的唇瓣从阴蒂下面飞溅出来。\n“{PlayerNickName}这个样子射精很喜欢对吧。啊，不要乱动，趁机插入是不允许的。”\n"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:991
-msgid "“嗯……”热流浇淋在小穴入口上的感觉让{TargetName}下意识地提起腰。\n{TargetName}微微皱眉，用大腿夹住因为射精颤动的阴茎固定着射精的方向。\n直到没有更多的精液从股间沿着大腿流下来，“好……一次射精结束。”(复制)"
+msgid "“{PlayerNickName}要射精了吗？”{TargetName}眨了眨眼睛，提起腰臀将{PlayerName}的肉根用厚实的腿根夹住。\n让已经湿透了的圆润的龟头顶在肉穴入口上摩擦着，从两边用力地夹紧敏感地开始发颤的肉龟，研磨着挤压了起来。\n感受着身下开始暖呼呼地射出的热流，{TargetName}似乎是很满意地眯起了眼睛。\n“射了很多呢{PlayerNickName}，看起来处理得很顺利，就是好多从大腿上流下来了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:992
-msgid "用力地用大腿将阴茎挤压在耻丘上，固定着射精的方向的{TargetName}静静地看着射精中的{PlayerName}。\n“呼……这样就是一发结束。”耐心地等待射精结束的{TargetName}，慢慢放开了大腿。\n“如果接下来都是这样，用类似插入的样子就能够让{PlayerNickName}射精的话，我也会轻松一点。”(复制)"
+msgid "{TargetName}有力的双腿卡住{PlayerName}在其中滑动的肉茎，慢慢地扭腰帮助大量喷射之后的肉尖顺利地排出多余的精液。\n“{PlayerNickName}射舒服了吗？”腿肉将开始变软了一些的肉茎夹到弯曲，股肉紧紧地嵌在了凹陷的地方。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:993
-msgid "“滋……滋唔！？嗯……嗯”被突然射入口中的热流刺激到了的{TargetName}慢慢地放松了吮吸的力度，包容地承接住了精液。\n“……哈……嗯”吐出了开始变软的阴茎的{TargetName}将精液处理掉了。\n“虽然知道被要求吮吸的时候肯定会射在最里面，唔……”皱着眉头似乎很在意嘴中的气味一样的{TargetName}，不满地看向{PlayerName}。(复制)"
+msgid "“咕嗯！”突然被大量的精液射入口中的{TargetName}紧急地停止了真空吮吸，鼓起两腮，好好地用口穴接住了精液。\n“呼……嗯，哈。突然射出来这么多，咳咳。”将肉根吐出来的{TargetName}，捂住了嘴巴咳嗽了起来，“味道还那么重。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:994
-msgid "紧紧地含住插入的阴茎吮吸的{TargetName}察觉到了阴茎越发激烈的抖动。\n“滋……滋噜，嗯！？”因为猛烈的吮吸不出所料地射了出来的{TargetName}快速地将开始射精的阴茎从嘴里吐了出来。\n“咳……嗯……嗯唔。”带着复杂的表情看着{PlayerName}的{TargetName}似乎是因为吸得有些用力，一些精液还是射到了喉咙上的样子。\n“咳咳，{PlayerNickName}……变态。”(复制)"
+msgid "感受着唇中的肉根一抖一抖的发颤，{TargetName}睁开了休息着的眼睛，拔出来了一些，让肉根可以用翘起来的角度不直接射进喉咙里面。\n“嗯……嗯唔？！”大量的精液从{PlayerName}抽搐的铃口中喷出，在真空的吸力下喷溅在{TargetName}的喉咙上。\n没有想到会射出来那么多的{TargetName}似乎是不小心喝下去了一些，露出了幽怨的眼神看着{PlayerName}，继续吸出流速开始变小的精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:995
+msgid "被抱住了脑袋，像是玩具一样使用的{TargetName}发出低低的吞咽声，承受着肉根在深处的剧烈抽插。\n“{PlayerNickName}……嗯！咕唔。”大量的精液咕噜，咕噜地灌进了喉咙中。\n比起正常的射精，过了好一会才结束，勉强地睁开一只被泪水润湿的眼睛的{TargetName}，因为呼吸困难而拍打{PlayerName}的大腿要求放开。\n“咳，咳咳。这也，射得太多了在喉咙里面，鬼畜{PlayerNickName}。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:996
-msgid "咽喉被颤抖着逐渐逼近极限的阴茎撑开，{TargetName}无奈地拍打着{PlayerName}的大腿想要让{PlayerName}拔出去。\n……”咕……嗯……嗯唔……啊”终于重新获得了喘息的机会的{TargetName}嘴角沾着双方的体液，用幽怨的眼神盯着{PlayerName}。(复制)"
+msgid "被深喉插入的{TargetName}不安地用舌头来回挤压起开始变大的肉根腹部。\n“咕……咕嗯，稍微等……嗯。”结果又被兴奋的{PlayerName}直直地插进了喉穴中，发出了沉闷的咕噜声。\n“{PlayerNickName}，太深，嗯……”似乎要喷射出比平时还要多的量的肉龟，粗暴地堵住了{TargetName}的喉咙。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:997
-msgid "“啊……要射了。”仔细地观察着{PlayerName}的表情的{TargetName}，在嘴唇察觉到阴茎的鼓起的同时从嘴唇里面吐了出去。\n完全没能及时忍耐住的阴茎将精液喷洒在了{TargetName}的脸上，“啊……”。\n无奈地用脸承接住精液，一只眼睛被粘液封上的{TargetName}幽怨地看着{PlayerName}。\n“唉……真是的，一点耐性也没有的家伙。”(复制)"
+msgid "激烈的摆动着脑袋刺激口中的肉穴的{TargetName}，察觉到了{PlayerName}的阴茎似乎胀大了一圈。\n“呼……唔，差不多了？”观察着{PlayerName}表情的{TargetName}，将口中包裹着的阴茎吐出，想要换上手指催促{PlayerName}射出精液。\n“嗯啊……！”还没等手指握紧，大量的精汁就从张开的铃口中喷出，黏黏糊糊地射出了一条精液桥涂抹在了张开嘴惊呼的{TargetName}舌头上。\n慢慢反应过来的{TargetName}露出了无奈的表情，只能继续用手指撸动着，让还在射精的肉根喷涂在自己的舌头上接住。\n"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:998
-msgid "“要射了吗？既然是用手做的话那就直接射在手上好了。”\n就像是拧开关一样，一只手捏住{PlayerName}勃起的龟头轻轻地拧了一下，{TargetName}安静地看着在手心中射出来的精液。\n“多射出来一点的话这边也可以少做一些。”(复制)"
+msgid "纤细敏感的手指准确地抓住了{PlayerName}已经到达了极限的肉龟，另一只手细心地包裹住开始从精囊中泵出精液的蛋蛋。\n“好……三，二……一”跟从着面无表情的{TargetName}的指令，手指挠住了肉龟，像是拧瓶盖一样转动着按在手心上，“射精。”\n用力地一挤，比起平时还要猛烈持久的快感一股一股地喷出浇淋在了软乎乎的手心上。\n“嗯嗯，再多射点。”做着性欲处理的手指无情地又拧了一下敏感的龟头。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:999
-msgid "“嗯……唔嗯……”托着阴茎从唇中拔出来的{TargetName}，耐心地等待着{PlayerName}最后的一点精液全部排出。\n“射舒服了吗？……{PlayerNickName}舒服了就好。”{TargetName}别过脸默默地擦掉了嘴角还沾着的粘液。(复制)"
+msgid "“嗯唔。”正在进行口交的{TargetName}在股间发出了一声惊呼，浓白的精液从{PlayerName}的铃口上一阵又一阵的喷洒出来。\n“……嗯……”耐心地想要等待{PlayerName}排精结束的{TargetName}，露出了无奈的眼神，而躺在舌头上的抽搐的肉龟，在射出了平常的量之后还在持续地射出。\n“……咕……呼……怎么射了这么多。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1000
-msgid "正专心地用手撸动着的{TargetName}快速地对{PlayerName}的阴茎进行着刺激。\n“啊……”直到高高喷出的精液突然射在了{TargetName}的脸上才慢慢放缓了撸动的速度。\n“呼……嗯……”默默地用脸接住了精液的{TargetName}在喷淋结束之后才放开手中的阴茎，“好像刚刚这边做的有点太过了……嗯。”\n擦掉了射在睫毛上的精液的{TargetName}露出了无奈的眼神。(复制)"
+msgid "激烈地用手刺激着的{TargetName}紧紧地抓住{PlayerName}的阴茎进行着全根撸动。\n“噫呀……”直到突然爆发出来的精液突然喷在了{TargetName}的脸上，在精流的喷溅中才慢慢放缓了榨取的速度。\n啪叽……啪叽，就像是鼓励着肉根把精液射干净一样，手指缓慢地撞在肉冠上挤出。\n像是做面膜一样被浓稠的大量精液洒满了脸，{TargetName}长长地叹了口气，“唉，忍不住就在女孩子脸上射出来这么多。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1001
-msgid "“啊……{PlayerNickName}射出来了的样子。”看着从自己的双腿之间探出的龟头抽抽地射出精液{TargetName}，夹紧了乱动的阴茎固定着射精的方向。\n“射舒服了吗？这边夹得腿有点酸了。”\n“没什么，反正跟平时地锻炼差不多，只是要多上一根发情的阴茎而已。”(复制)"
+msgid "身后的{PlayerName}在激烈的快感下的颤抖，让{TargetName}无情地夹紧了紧致地锻炼过的双腿。\n咕滋，咕滋地碾压着鼓胀起来的肉竿，从腿间像是挤牙膏一样地榨出{PlayerName}大量的欲望。\n“呼唔……用腿性处理这么舒服吗？{PlayerNickName}”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1002
-msgid "感受着在自己的大腿间慢慢浸染而出的温热液体，{TargetName}小小地叹了口气。\n“果然射在大腿里面了呢，被女孩子的大腿夹着做就可以满足了吗？”\n“唉，平时锻炼腿的时候可不是为了让{PlayerNickName}这种奇怪的家伙在里面射精的。”\n{TargetName}面无表情地用力地加紧了腿间结束了射精的敏感阴茎，就像是报复一样滋滋地磨蹭着。(复制)"
+msgid "“啊……”感受着股间扩散开的热流，{TargetName}看到了{PlayerName}汹涌喷出的精汁从夹紧的双腿之间漏了出来。\n“射出来很多呢，{PlayerNickName}。”{TargetName}眨了眨漂亮的眼睛瞥了{PlayerName}一眼，便开始继续扭动着双足绞住{PlayerName}的敏感肉龟压榨。\n“可以的话，希望能够射出来更多，这样之后也不用太麻烦。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1003
-msgid "从被体液浸湿的白尾中探出来的龟头高高地射出了精液，“唔……额……”\n{TargetName}发出了明显的困扰的声音。\n“不是嘱咐过不要在用尾巴做的时候射精了吗……这样事后会很麻烦的。尾巴都被弄得乱糟糟的。”(复制)"
+msgid "从细密的尾巴中一阵阵进出的肉龟突然地挺起了爆发出了大量的浓汁。\n“不是说了不要在用尾巴的时候射出来的吗？唉。”{TargetName}长长地叹了口气。\n“还有{PlayerNickName}有那么兴奋吗？糟蹋女孩子的尾巴。”\n"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1004
-msgid "“啊……！”感觉到了{PlayerName}在尾巴中泄出了精液的{TargetName}忿忿地盯着{PlayerName}。\n“不要因为很舒服所以就随便射在里面呀……”\n“为了去掉这个气味要很麻烦的……唔……”{TargetName}困扰地抱着被射的黏黏糊糊毛发缠在了一起的尾巴，“唉，这样子糟糕了啊。”(复制)"
+msgid "像是毛笔一样被精细地搭理过的尾巴很快被爆射出来的精液濡湿了一大半，变得沉甸甸的发出了淫靡的气味。\n“啊……嗯……”{TargetName}皱起了俏眉，明显地发出了非常困扰的声音。\n“我的尾巴，啊……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1005
-msgid "“嗯……等一下……{PlayerNickName}是不是要射了。”察觉到在脸上磨蹭的阴茎开始了射精之前的颤抖的{TargetName}在射精的同时拉开了一点距离。\n“呃……”{TargetName}近距离地看着射精中的阴茎发出了不满的抱怨声。\n“下次射精之前可以拿远一点吗？不是很想最后用脸让{PlayerNickName}高潮地射出来。”(复制)"
+msgid "“嗯……诶？”被用阴茎戳着脸颊的{TargetName}发出了困惑的声音，接着一大滩的精液持续地浇在了{TargetName}的漂亮的小脸上。\n“{PlayerNickName}，嗯……唔。”{TargetName}最后留下了一个生气的眼神，安静地闭上眼睛等待射精结束。\n“用女孩子的脸打飞机……变态。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1006
-msgid "“诶，等……嗯……”蹭在{TargetName}的脸上的阴茎高高地射出了精液，让{TargetName}紧紧地闭上了眼睛。\n“嗯……唔……”满脸被淋上了精液，只能眯着眼睛看着{PlayerName}的{TargetName}沉默地把结束了射精的阴茎移开。\n“这样子射在脸上，{PlayerNickName}高兴了吗？变态……”(复制)"
+msgid "{TargetName}安静地坐在肉棒的边上，被一股又一股精液在脸上涂抹上淫靡的颜色。\n终于等到大量地爆射的阴茎抽搐着冷静下来了之后，{TargetName}才慢慢睁开已经被{PlayerName}的浓精糊住的淡金色眼睛。\n“竟然对女孩子的脸发情的这么厉害，唉，还射出来这么多。”{TargetName}无奈地用手指摸了摸射在脸上的精液，拉出来一条淫靡的长长丝线。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1007
-msgid "“嗯……{PlayerNickName}射精了吗？是不是太敏感了。”{TargetName}有些不可思议地抖动着刚刚还被蹭来蹭去的耳朵。\n“因为耳朵很可爱所以射精了，这种理由怎么看都是很变态的发言。”{TargetName}困扰地捂住耳朵，就像是要去掉脏东西一样揉着。(复制)"
+msgid "{TargetName}小巧的耳朵轻柔地抖着，拍打在{PlayerName}高高地抬起，想要抑制住射精的肉龟上，无意识地让{PlayerName}喷射了出来。\n“啊……”敏感的耳尖搭在了{PlayerName}开始抽搐的龟头上被顶着摇晃。\n“好像很厉害呢，{PlayerNickName}，一直在听到噗噜噗噜的声音，话说是毛茸茸的耳朵太刺激了吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1008
-msgid "“嗯……嗯？”因为耳朵里面被灌入了黏黏的液体让{TargetName}发出了疑惑的声音，“{PlayerNickName}是不是射精了。”\n“只能听到黏黏的声音……耳朵里面的绒毛都缠在一起了。”\n{TargetName}皱着眉头用手指确认着情况，“还流到了头发上……唉，{PlayerNickName}再这样随便地射出来我会生气的。”(复制)"
+msgid "黏糊糊的液体浸透了耳朵上的绒毛，很快让耳朵变得沉重，只能听到模糊的水声。\n“{PlayerNickName}……”肉棒下的{TargetName}露出了些许讨厌的表情，完全没有停下来的意思的肉棒喷出了比起平时还要多的精液，沿着{TargetName}光滑的头发流了下来，“是不是有点射的太多了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1009
-msgid "察觉到了阴茎的濒临边界的抽搐的{TargetName}眨了眨眼睛，“诶……已经要射了吗？”\n“稍等一下”掐住阴茎的根部的{TargetName}拿出纸巾盖在了{PlayerName}的龟头上，“好了，射吧。”\n“慢一点慢一点。”一边抓着轻微地抖着射精的阴茎，{TargetName}一边转动纸巾注意着不让射出来的液体流出来。(复制)(复制)"
+msgid "“{PlayerNickName}好像很喜欢被女孩子用手指挤出来呢。”\n{TargetName}淡淡地眨着眼睛，用手指夹住了肉棒肿胀的根部仔细地揉搓研磨，“很明显哦，这里都鼓起了好大一块。”\n“很喜欢被挤出来对吧。”还没等{PlayerName}回答，灵巧的手指就开始激烈地揉弄鼓起的地方，刺激着已经开始发抖的肉龟砸在柔软的手心上，不一会就啪叽啪叽地砸出来一大滩白精。\n“这样被欺负也能射出来这么多，变态{PlayerNickName}。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1010
-msgid "“忍不住了吗？等一下，擅自地……唉”看着在自己的手中忍不住已经开始喷出精液的阴茎，{TargetName}叹了口气。\n“这样不就流的到处都是了吗？”{TargetName}用被精液污染了的手指抓住还在抽动的阴茎固定住。\n一动不动地抓着直到{PlayerName}结束为止，才拿出纸巾擦拭了一下。(复制)(复制)"
+msgid "{TargetName}用手指扣成一个环，牢固地套紧了{PlayerName}勃起的肉龟，“{PlayerNickName}已经受不了，对吧。”\n细嫩的手指按摩在黏膜上缓慢地转动，一下子快要升天的刺激感窜了上来，却没有丝毫停止的意思。\n“好了，快点射精，虽然这样挤很有意思，但是说到底也就是性处理而已。”{TargetName}的手指用力地缠紧了肉龟，发出了滋噜滋噜激烈的摩擦声。\n漂亮的眼睛仔细地观察着被拧着张开的马眼，欣赏着从深处喷涌而出的白色黏流。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1011
@@ -9913,7 +9921,7 @@ msgid "“{PlayerNickName}，稍微等……呼……嗯，还不是恋人的话
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1024
-msgid "“哦……嗯……嗯”\n在一阵阵强烈的快感下，笨拙地喘息着沉浸在肉穴快乐中的{Name}逐渐变得无法忍耐，一下子用力地缩紧了膣穴达到了高潮。\n“哦……！嗯！嗯~！”"
+msgid "“哦……嗯……嗯”\n在一阵阵强烈的快感下，笨拙地喘息着沉浸在雌穴快乐中的{Name}逐渐变得无法忍耐，一下子用力地缩紧了膣穴达到了高潮。\n“哦……！嗯！嗯~！”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1025
@@ -10165,7 +10173,7 @@ msgid "“啊，{PlayerNickName}又在乱摸……嗯”，被{PlayerName}抱过
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1087
-msgid "同意了性交的{TargetName}被{PlayerName}抱着坐到了比较高的位置上，用双腿夹住了{PlayerName}的腰。\n“{PlayerNickName}有点太着急，再多摸一会。”\n{TargetName}低垂着眼帘将自己整理了一下，“而且这边，还没准备好，呼。”\n“反正不会有人打扰，有很多的时间可以一起休息一会，{PlayerNickName}可以温柔一点吗？”"
+msgid "同意了性交的{TargetName}被{PlayerName}抱着坐到了{SceneName}比较高的位置上，用双腿夹住了{PlayerName}的腰。\n“{PlayerNickName}有点太着急，再多摸一会。”\n{TargetName}低垂着眼帘将自己整理了一下，“而且这边，还没准备好，呼。”\n“反正不会有人打扰，有很多的时间可以一起休息一会，{PlayerNickName}可以温柔一点吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1088
@@ -10353,7 +10361,7 @@ msgid "品尝了用阴蒂绝顶的快乐的{Name}，翘起了刚刚还在发抖�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1134
-msgid "“呼唔……嗯。”意犹未尽的{Name}用湿润的目光看向{PlayerName}，主动将刚刚还在发颤的濡湿肉穴贴了上来。\n“{PlayerNickName}，知道{Name}的这里很敏感的吧……”喘息着的{Name}，媚眼如丝地看着{PlayerName}。\n“所以说刚刚的不够，还想要……呼唔。”"
+msgid "“呼唔……嗯。”意犹未尽的{Name}用湿润的目光看向{PlayerName}，主动将刚刚还在发颤的濡湿嫩穴贴了上来。\n“{PlayerNickName}，知道{Name}的这里很敏感的吧……”喘息着的{Name}，媚眼如丝地看着{PlayerName}。\n“所以说刚刚的不够，还想要……呼唔。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1135
@@ -10413,7 +10421,7 @@ msgid "婉转的娇啼声中，在{PlayerName}的注视下{Name}用雌穴高潮�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1149
-msgid "“噫……！嗯……”发出了雌兽最脆弱的叫声的{Name}，将自己最为羞耻的一面展示给了{PlayerName}。\n平日里平静紧致的美穴，此时也剧烈的一阵阵抽搐，下流地喷出潮吹的汁水。\n“哈……啊嗯……{PlayerNickName}……”紧紧地住了{PlayerName}的身体的{Name}，将已经被欢愉润湿了的眼眸对了上来。\n“稍微就这样……嗯保持一会……”"
+msgid "“噫……！嗯……”发出了雌兽最脆弱的叫声的{Name}，将自己最为羞耻的一面展示给了{PlayerName}。\n平日里平静紧致的美穴，此时也剧烈的一阵阵抽搐，下流地喷出潮吹的汁水。\n“哈……啊嗯……{PlayerNickName}……”紧紧地缠住了{PlayerName}的身体的{Name}，将已经被欢愉润湿了的眼眸对了上来。\n“稍微就这样……嗯保持一会……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1150
@@ -10481,7 +10489,7 @@ msgid "“{PlayerNickName}今天是要自己行动吗？”\n聊天的时候白�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1166
-msgid "“说起来，我稍微看了一下桌子上的文件，大部分好像不用特别{PlayerNickName}关注。”\n“如果是我的话会把这些丢给手下去做。”\n“诶……我只是随口说一下，要是给我增加工作量的话我也是会头疼的。”"
+msgid "“我稍微看了一下桌子上的文件，大部分好像不用特别{PlayerNickName}关注。”\n“如果是我的话会把这些丢给手下去做。”\n“诶……我只是随口说一下，要是给我增加工作量的话我也是会头疼的。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1167
@@ -10489,7 +10497,7 @@ msgid "“说起来呢，作为助理的话是不是可以帮{PlayerNickName}批
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1168
-msgid "“说起来关于今天的工作，好像下面出现了一些小问题……嗯嗯。”\n“嘛，大概就是这样……姑且去联系着处理了一下……这样。”"
+msgid "“关于今天的工作，好像下面出现了一些小问题……嗯嗯。”\n“嘛，大概就是这样……姑且去联系着处理了一下……这样。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1169
@@ -10725,7 +10733,7 @@ msgid "“嗯？已经不需要早安服务了吗？”\n{Name}低垂下眼帘�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1227
-msgid "“需要早上叫起床的话，我可以用通讯器叫吗？”\n“想要本人来叫，{PlayerNickName}也太贪心了。”\n“那我来叫的话，{PlayerNickName}要快点起来，要是不得不先掀被子的话……我也是会困扰的。”"
+msgid "“需要早上叫起床的话，我可以用通讯器叫吗？”\n“想要本人来叫，{PlayerNickName}啊。”\n“那我来叫的话，{PlayerNickName}要快点起来，要是不得不掀被子的话……我也是会困扰的。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1228
@@ -10773,19 +10781,19 @@ msgid "“{PlayerNickName}，哈嗯……，已经到早上了。”\n{Name}打�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1239
-msgid "“{PlayerNickName}，到时间了。”\n还没怎么睡醒的，略微浑浊的漂亮双眼盯着{PlayerName}。\n“好困。”"
+msgid "“{PlayerNickName}，快点起来，设定好的起床时间已经过了。”\n还没怎么睡醒的，略微浑浊的漂亮双眼盯着{PlayerName}。\n“好困。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1240
-msgid "“博 士 。”一字一顿地来叫起床的{Name}用手指弹了一下{PlayerName}的额头。\n“该起床了。”"
+msgid "“博 士 。”一字一顿地来叫起床的{Name}用手指弹了一下{PlayerName}的额头。\n“还没睡醒吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1241
-msgid "“该起来了啦，懒虫{PlayerNickName}。”\n眼角还沾着还没完全睡醒的露珠的{Name}，顶着还没整理好的乱糟糟的头发来叫起床了。\n“唉，早知道先把头发整理好再来了。”"
+msgid "“该起来了啦，懒虫{PlayerNickName}，时间已经过了。”\n眼角还沾着还没完全睡醒的露珠的{Name}，顶着还没整理好的乱糟糟的头发掀开{PlayerName}的被子。\n“唉，早知道先把头发整理好再来了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1242
-msgid "已经整理好衣着的{Name}一边用发圈扎起马尾一边叫{PlayerName}起床。\n“已经到时间了，{PlayerNickName}。”"
+msgid "已经整理好衣着的{Name}一边用发圈扎起马尾一边道早安。\n“差不多到时间了，{PlayerNickName}。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1243
@@ -10809,15 +10817,15 @@ msgid "感觉到了身体的一部分好像进入了一团柔软湿热的地方�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1248
-msgid "“早上就射了这么多……”被晨勃精液射了一脸的{Name}无奈地用纸巾擦掉眼睛上的精液。\n“清爽了吗，{PlayerNickName}？”\n“虽然知道的男性在睡着的时候完全没有办法忍耐，唉，结果那么突然射出来……好像有些射在头发上了，想要回去洗澡。”\n{Name}苦恼地皱起了眉头。"
+msgid "“咕……咕啾，嗯！……早上就射了这么多……”做着早安口交的{Name}被晨勃精液射了一脸，无奈地用纸巾擦掉眼睛上的精液。\n“清爽了吗，{PlayerNickName}？”\n“虽然知道的男性在刚睡醒的时候完全没有办法忍耐，唉，结果那么突然射出来……好像有些射在头发上了，想要回去洗澡。”\n{Name}苦恼地皱起了眉头。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1249
-msgid "下身传来阵阵被撸动和舔舐的快感，让{Name}迷糊地睁开眼睛。\n“{PlayerNickName}，醒了吗？”{Name}用舌尖舔弄着还没完全睡醒的敏感龟头，纤细的玉指开始加快撸动起阴茎。\n“那快点射出来……嗯，啾。”坏心眼地在发抖的铃口上亲吻了一下，接着用纸巾开始承接起阵阵从阳根中喷出的精汁。\n“好，慢一点。呼，早上好，少女的早安口交还满意吗？”\n"
+msgid "下身传来阵阵被撸动和舔舐的快感，让{PlayerName}睁开了犯迷糊的眼睛。\n“{PlayerNickName}，清醒了吗？”{Name}用舌尖舔弄着还没完全睡醒的敏感龟头，纤细的玉指开始加快撸动起阴茎。\n“那快点射出来……嗯，啾。”坏心眼地在发抖的铃口上亲吻了一下，接着用舌头开始承接起阵阵从阳根中喷出的精汁。\n“好，慢一点。呼，早上好，少女的早安口交还满意吗？”\n"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1250
-msgid "伏在{PlayerName}的脸上，娇羞地送上了早安亲吻的{Name}，一边用嘴唇小心地触碰一边用手指撩起遮挡住眼睛的秀发。\n“早上好，{PlayerNickName}。”\n“助理的亲亲服务已经结束了，现在请快点起床。”"
+msgid "伏在{PlayerName}的脸上，娇羞地送上了早安亲吻的{Name}，一边用嘴唇小心地触碰一边用手指撩起遮挡住眼睛的秀发。\n“早上好，{PlayerNickName}。”\n“助理的早安亲亲服务已经结束了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1251
@@ -10865,7 +10873,7 @@ msgid "用纤细的手指检查起阴茎硬度的{Name}，将垂落下来的头�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1262
-msgid "“说起来好像已经很久没有认真锻炼过。”\n“有点担心自己是不是体重提高了。”\n“{PlayerNickName}……女孩子的体重是秘密哦。”"
+msgid "“好像已经很久没有认真锻炼过。”\n“有点担心自己是不是体重提高了。”\n“{PlayerNickName}……女孩子的体重是秘密哦。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1263
@@ -11389,7 +11397,7 @@ msgid "“另一只手指。”下体被缓慢地抽插玩弄的{TargetName}，�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1393
-msgid "双手主动地分开屁股，让{PlayerName}满足的了手指能够顺畅地拔出去的{TargetName}眨了眨眼睛。\n“不继续了吗？”保持着扳开肉穴的姿势，之前的淫水慢慢地滴落下来。\n“嗯？当然说的是用肉棒插女孩子的事情。”"
+msgid "双手主动地分开屁股，让{PlayerName}满足的了手指能够顺畅地拔出去的{TargetName}眨了眨眼睛。\n“不继续了吗？”保持着扳开嫩穴的姿势，之前的淫水慢慢地滴落下来。\n“嗯？当然说的是用肉棒插女孩子的事情。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1394
@@ -11677,7 +11685,7 @@ msgid "“变态……”被要求打开雌穴的{TargetName}红着脸，对着{
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1465
-msgid "不安地扶着小腹，已经被{PlayerName}的精液灌满了的{TargetName}拉开了两边厚实的肉唇。\n“呀啊……”黏糊糊的精液很快顺着插入肉穴的手指从粉嫩的阴唇之间溢了出来，一个被完美地灌好的精液泡芙展现在了{PlayerName}的面前。\n“灌了这么多进去……”羞耻到不行的{TargetName}，感受着从身体的深处流出来的液体，全身微微颤抖起来。"
+msgid "不安地扶着小腹，已经被{PlayerName}的精液灌满了的{TargetName}拉开了两边厚实的肉唇。\n“呀啊……”黏糊糊的精液很快顺着插入嫩穴的手指从粉嫩的阴唇之间溢了出来，一个被完美地灌好的精液泡芙展现在了{PlayerName}的面前。\n“灌了这么多进去……”羞耻到不行的{TargetName}，感受着从身体的深处流出来的液体，全身微微颤抖起来。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1466
@@ -11697,7 +11705,7 @@ msgid "“像是狗狗一样呢，{PlayerNickName}”漂亮的眼睛带着复杂
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1470
-msgid " 被从背面抱住屁股吮吸的{TargetName}，不时地不安地抬起腰，接着又将轻颤的湿透了的蜜穴落到了{PlayerName}等待着的唇舌上。\n柔韧的娇躯像是猫一样向下用力地弯曲着腰腹，将小穴完全展露出来的高高抬起来。\n“嗯……嗯嗯……呼嗯……肚子，已经酥麻麻的。”"
+msgid " 被从背面抱住屁股吮吸的{TargetName}，不时地不安地抬起腰，接着又将轻颤的湿透了的蜜穴落到了{PlayerName}等待着的唇舌上。\n柔韧的娇躯像是猫一样向下用力地弯曲着腰腹，将蜜穴完全展露出来的高高抬起来。\n“嗯……嗯嗯……呼嗯……肚子，已经酥麻麻的。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1471
@@ -12025,7 +12033,7 @@ msgid "坚硬的肉龟每次缓慢地犁过湿热的阴唇，都会引得{Target
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1552
-msgid "丰润的小穴就像是嘴唇一样，在紧致的压力下向两边分开唇瓣舔舐{PlayerName}的肉根。\n突起的娇嫩小豆豆更是如同小舌头一样，从坚硬的肉尖开始来回舔舐着肉茎。\n“呼……唔……{PlayerNickName}”被扶着腰肢固定住的{TargetName}红透了耳尖，扭着屁股表示轻微的抗议。"
+msgid "丰润的嫩穴就像是嘴唇一样，在紧致的压力下向两边分开唇瓣舔舐{PlayerName}的肉根。\n突起的娇嫩小豆豆更是如同小舌头一样，从坚硬的肉尖开始来回舔舐着肉茎。\n“呼……唔……{PlayerNickName}”被扶着腰肢固定住的{TargetName}红透了耳尖，扭着屁股表示轻微的抗议。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1553
@@ -12053,7 +12061,7 @@ msgid "濡湿了一大片的股间抱紧了{PlayerName}前后抽动的阴茎，�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1559
-msgid "尝试着扭动腰肢的{TargetName}皱起了眉头，察觉到了卡在了阴道入口上，阵阵撞击着阴蒂的龟头。\n“{PlayerNickName}，呼唔，翘的太高了，这样会插进去的。”\n伸出纤细的手指点在已经半插入到了肉穴中的躁动龟头上，向下压着重新夹紧。\n“呼……好了。想要插进去的话，请好好地请求女孩子。”"
+msgid "尝试着扭动腰肢的{TargetName}皱起了眉头，察觉到了卡在了阴道入口上，阵阵撞击着阴蒂的龟头。\n“{PlayerNickName}，呼唔，翘的太高了，这样会插进去的。”\n伸出纤细的手指点在已经半插入到了雌穴中的躁动龟头上，向下压着重新夹紧。\n“呼……好了。想要插进去的话，请好好地请求女孩子。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1560
@@ -12118,6 +12126,2346 @@ msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:1575
 msgid "蠕动着嘴唇不时地和手指交替地爱抚肉棒的{TargetName}，努力地保持肉根的湿润和快感。\n“呼……噗嗯。”啪嗒啪嗒啪嗒。\n{TargetName}安静地观察着{PlayerName}的脸，圈在肉竿上的手持续地撞击起胀大的肉冠欺负。\n“很舒服的时候请说出来，要不然女孩子没法知道对方的心情的。姆……啾。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1576
+msgid "正艰难地用唇舌吞吐阳根的{TargetName}被拍了拍头。\n“嗯？怎么了。”被附加要求使用胸部{TargetName}叹了口气。\n“会很累的哦，{PlayerNickName}的要求太多了。啊姆。”露出胸部，向上托举着两个乳球的{TargetName}，一边咬住前端一边用胸部夹住了阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1577
+msgid "被{PlayerName}示意要把肉龟含住的{TargetName}，露出了些许不满的表情。\n“用胸部抱着这样擦已经很难了，{PlayerNickName}。”\n{TargetName}吐出粉红的香舌忿忿地舔舐在从胸部中间露出的龟头上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1578
+msgid "“呼……嗯呼……”努力地从两边挤压着乳间的阴茎的{TargetName}，像是小猫喝水一样舔舐着勃起的龟头。\n“唔……嗯，这样可以吗？”漂亮地将肉尖舔的湿透了的{TargetName}抬头看向{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1579
+msgid "左右揉弄起乳肉，让{PlayerName}的阴茎在乳房的缝隙之间弯曲的{TargetName}，张开吐出热气的嘴唇，将鲜红的肉龟吞了进去。\n“嗯，咕，咕啾，嗯……噗哈……”舔舐了一会之后吐出来的{TargetName}，一边继续揉弄起双乳一边像是在询问感觉一样看向了{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1580
+msgid "扶着{PlayerName}的阴茎吞入口中，“咕……咕滋，咕啾。”仔细地用口舌润湿之后吐出。\n“哈啊……{PlayerNickName}不要乱动。”{TargetName}捧着双乳将濡湿了的阴茎埋进乳间，一边俯下头不时地舔舐冒出来的龟头，一边滑溜溜地开始了乳交。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1581
+msgid "用双乳抱紧了左右缓慢地扭动，用嘴唇包裹住露出的龟头的{TargetName}眯起了眼睛。\n“稍微休息一会呼唔……。”\n虽然说是休息，含住肉龟的嘴唇内舌头却不安分地来回舔舐起敏感的黏膜。\n“啊，不要乱动，{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1582
+msgid "皱着眉头低头叼住肉龟的将急促的喘息喷吐在{PlayerName}的小腹上。\n“嗯……唔，噗哈。这样弯着头有点累。”{TargetName}抱怨着用双乳向中间挤压起插入的肉根。\n“唔……要是{PlayerNickName}还觉得不舒服的话，我也是会生气的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1583
+msgid "像是吸棒冰咬住龟头一样上下努力地摆头的{TargetName}，左右推动起双乳将一阵阵乳浪打在了阴茎上。\n“呼……嗯呼……”不一会{TargetName}就累到吐出小舌头搭在了湿透了的滑溜溜的肉龟上吐息。\n两边的双乳就像是为了替代中断了口交的快感空缺一样用力地抱上来更加激烈地在肉根上按摩。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1584
+msgid "正用牙齿轻咬肉龟，向{PlayerName}示威的{TargetName}被拍了拍头，托起{TargetName}的乳球从两边压在了阴茎上。\n“嗯……唔，是想要用胸部做吗？”吐出了肉龟的{TargetName}，从{PlayerName}的手中接过乳球来回揉弄。\n“嘴巴也不能闲着，唉，{PlayerNickName}的要求好麻烦。”\n闭上眼睛的{TargetName}再次用娇嫩的嘴唇包裹住探出的肉龟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1585
+msgid "伸出手抚摸正在专心使用胸部乳交的{TargetName}的头，请求想要乳交的时候一起口交。\n“诶……要用嘴吗？”吐出小巧的舌尖的{TargetName}低下头挑逗起从乳沟中间钻出来的龟头。\n“还想要深一点……唔，好吧，但是不许压着头。”{TargetName}张开湿润的嘴唇，轻吮着用舌头来回舔舐起肉龟刺激起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1586
+msgid "{TargetName}困扰地皱起着眉头，吮吸了一会肉茎之后推着{PlayerName}的腰将肉尖拔了出来。\n“哈……休息一会。”好像是有点在意残留在舌头上的气味的样子，{TargetName}用柔软的玉指在舌面上磨蹭想要把气味擦掉。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1587
+msgid "“咕，咕滋，咕滋。”将脸颊吸得瘪下去的{TargetName}，在里面用舌头像是品尝樱桃一样来回挑动湿滑的肉龟。\n“嗯……呼……嗯……咕滋。”被夸奖地抚摸头的{TargetName}，哼哼地眯起眼睛，进一步加大了吮吸的力度。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1588
+msgid "“哈啊……嗯”{TargetName}在{PlayerName}的面前色情地展示接下来要包裹住肉龟的粉红嘴穴之后，将肉尖吞了下去。\n“滋……滋噜。”微红着脸用吸附在粘膜上的嘴唇爱抚，前后摇摆着吮吸吞吐起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1589
+msgid "{TargetName}在{PlayerName}的肉根前乖巧地蹲坐，缓慢又坚定地使用真空口交榨取着。\n“呼……唔。哈嗯~啾，{PlayerNickName}……”少女暂时吮吸着向后拉出肉根，亲吻在了吸得通红的肉龟上，{TargetName}向上偷瞄{PlayerName}的脸，用手指魅惑地将散落的头发撩了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1590
+msgid "{TargetName}用舌头垫在了肉龟的下面，眯起漂亮的眼睛将勃起的坚硬龟头像是吸棒冰一样吮吸。\n“呼唔……”小巧的舌头在用力地苛责阴茎的同时，默默地在肉龟下面滑动安抚着。\n“这个样子，呼，{PlayerNickName}很喜欢对吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1591
+msgid "用嘴唇包裹着阴茎，用力地吮吸不让拔出去的{TargetName}，扶着{PlayerName}的腰左右摇摆起头。\n“呼……嗯，忍耐太久了。嗯。”就像是嫌弃{PlayerName}发抖的肉尖一样，{TargetName}开始用柔韧的舌头用力地拍打口中肿胀的肉龟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1592
+msgid "激烈的前后用嘴唇刷洗肉根的{TargetName}，用力地吮吸着插入的肉根，让{PlayerName}的性器一次次地填满嘴唇。\n“呼……呼嗯……呼唔。变态。”伸手追加揉弄着阴囊的{TargetName}，蠕动嘴唇抱怨了一下之后，再次用力地束紧了嘴穴进行榨取。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1593
+msgid "“滋，滋滋……唔~噗哈。”在色情的真空口交之后，{TargetName}慢慢地从真空的嘴穴中拔出了早就侍奉得湿透了的肉根。\n在拔出的时候还下流地发出了啵啵的吮吸声才将硕大的肉龟成功拔出来。\n“{PlayerNickName}很喜欢最后啵的一下吗？呼，嘴巴有点累了，等会再说。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1594
+msgid "“{PlayerNickName}，等……嗯！有点插得太深。”不舒服地眯起眼睛忍耐口交的{TargetName}被抱着头插进了喉咙深处。\n“嗯……唔”不安的喉咙层层挤压在了插入的龟头上想要把入侵物挤出去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1595
+msgid "在充分地享受了深喉的温暖之后，拔出了肉尖。\n“咳咳，呼……”被解放了的{TargetName}露出了苦恼的表情，生气地瞪了一眼{PlayerName}。\n“请稍微照顾一下女孩子的感受。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1596
+msgid "“咕……嗯……嗯……”努力地克制生理反射的{TargetName}不时地抖着身体，抬头看着{PlayerName}。\n被堵住了嘴唇只能发出唔唔的声音的{TargetName}，最终闭上了眼睛困恼地等待深喉的结束。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1597
+msgid "“唔……唔”还不能熟练地接受深喉插入的{TargetName}在肉根下不安地扭动身体。\n被{PlayerName}用手掌稍微安抚了一会之后才逐渐安静下来，开始适应起在深处的抽插。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1598
+msgid "“还不习惯……哈嗯。”{TargetName}张着嘴将阴茎迎入口中，“稍微，对女孩子的嘴巴轻一点。阿姆。”\n感受着被肉根扩开的喉咙，克制着身体的本能的{TargetName}闭上了眼睛忍耐。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1599
+msgid "“唉，想要用深喉做吗？”{TargetName}露出了有点为难的表情。\n“{PlayerNickName}知道女孩子一般被插得太深，会不舒服的吧。”\n虽然嘴上抱怨着，{TargetName}还是顺从地张开了嘴唇，仰起头摆出了方便深入的姿势。\n“嗯……快点进来。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1600
+msgid "{TargetName}在{PlayerName}面前蹲坐着，闭上双眼，张开了粉嫩的嘴穴安静地等候阴茎插入。\n“嗯~”深入的阴茎顶上了狭窄的喉咙才睁开了一点淡金色的眼睛，用魅惑的眼神看向{PlayerName}，“帮我……咕嗯。”\n示意帮忙扶住脖子支撑的{TargetName}顺从地张开了喉穴，将抵上来的肉龟安稳地吞了进去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1601
+msgid "将{PlayerName}的阳根吞咽到底，嘴唇套弄在了根部上的{TargetName}，柔和地用湿滑的口腔爱抚起填满了唇齿的肉竿。\n“咕……咕……咕滋……”紧接着在激烈的抽插下，{TargetName}用喉咙发出了湿润的声音，仰起头用淡金色的眼睛仔细地观察着{PlayerName}的状态。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1602
+msgid "{TargetName}抱着不断顶上来的腰胯，柔软的嘴唇亲吻到肉根的根部，在肉根上留下一圈圈潮湿的唇印。\n尝试着想要试试能够插到多深的{PlayerName}，挺腰再次扩开了狭窄的喉穴。\n“嗯~”原本安静的{TargetName}露出了不满的眼神，与{PlayerName}对视着，挺起了漂亮的腰肢忍耐。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1603
+msgid "被按住肩膀仰面躺下来的{TargetName}，看着{PlayerName}勃起的阴茎摇晃着靠近。\n“想要用喉咙了吗？”主动地抱住了{PlayerName}的大腿帮忙固定的{TargetName}，张开了湿热的口穴，将诱人的吐息吹在了肉龟上。\n“……咕~咕啾~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1604
+msgid "躺着被捂住光洁的喉咙进行深喉的{TargetName}，明显能够感觉到{PlayerName}的阴茎在深处的跳动。\n“咕……唔，唔。”随着肉根缓慢的抽插，一阵阵湿热的吐息喷吐在了下垂的阴囊上。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1605
+msgid "不时地挺起姣好的小腹的{TargetName}被{PlayerName}安抚着，用喉咙包裹住肉根接受深喉性交。\n“咕嗯……嗯……”随着一声声诱人的呻吟，仰躺着的{TargetName}弓起了腰肢，两只软乎乎的乳球在{PlayerName}的面前微微的摇晃。\n最后在{PlayerName}的柔声安抚下，才慢慢放松下来的{TargetName}，一点点地吮吸着拔出来一些的阴茎，向{PlayerName}表达了自己的不满。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1606
+msgid "娇嫩的口舌软乎乎的吸附在阴茎上带来了强烈的包裹感，能够承受肉龟的挤压的喉咙更是带来了强烈的征服少女的快感。\n仰躺着的{TargetName}用柔唇环抱着阴茎，在抽插下给肉竿涂抹上一层的水膜，最后亲吻在根部的阴囊上更是显示着已经将{PlayerName}的雄根全部吞入的事实。\n被兴奋的阴茎盖住了脸，只能勉强露出一只眼睛的{TargetName}，安静地观察起正享受少女嘴穴的{PlayerName}。\n偷偷地像是示威一样，轻咬了一下插得过深的肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1607
+msgid "健康的雄性肉龟顶撞在女孩子柔软的喉穴里面，下流地随着抽插，翻带着湿润的软肉发出滋噜滋噜的水声。\n诱人地发出轻哼的{TargetName}的嘴边，更是溢满了因为抽送而飞溅出来的汁液，一副非常色情的样子。\n温润的口舌缠绕在跳动的阴茎上更是带来了满足的快感，“{PlayerNickName}……呼嗯，咕滋……”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1608
+msgid "在激烈地深喉之后，被摸着头慢慢拔出肉根，{TargetName}才颤动着沾上了露珠睫毛睁开了的漂亮的眼睛。\n“嗯……咕……咕滋……哈……”顺着舌面剐蹭着拔出，被大肉龟带出了一大摊体液。\n还没习惯闭上唇齿的感觉的{TargetName}吐出了还滴着液体的舌头，幽幽地望向了{PlayerName}，“满足了吗？{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1609
+msgid "“咕~咕滋，咕。”在几次鼓动着喉咙，松开了吸附在阴茎上的软肉之后，让肉根顺利地退了出去的{TargetName}，从合不上的嘴角滴出了晶莹的体液。\n“呼……都怪{PlayerNickName}，把女孩子的嘴插到乱七八糟的。呼……”\n{TargetName}红着脸，遮住了还没适应失去了{PlayerName}的肉棒的口穴，“色狼……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1610
+msgid "露出了羞耻的表情，犹豫着要不要舔舐肉龟的{TargetName}，被先分开了大腿，湿滑的舌头按上了耻丘。\n“唔……嗯，不要催了，这边也要先酝酿一下情绪。”\n{TargetName}苦恼地伸出舌尖接住了嘴边的阴茎，闭上眼睛深深地吞了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1611
+msgid "让{PlayerName}躺在身下跨坐着，被分开双腿固定住的{TargetName}先重新扎起了散落的秀发。\n“嗯……{PlayerNickName}怎么先开始了……呼。”感受到胯下的{PlayerName}开始舔舐起阴唇的{TargetName}，一样俯下来叼住了等待了很久的肉根。\n“就不能先让女孩子准备一下吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1612
+msgid "“唔嗯。”被掉下来的肉根砸到了脸的{TargetName}发出了不满的声音。\n感受到了小腹上阵阵湿润的凉意和舒爽的快感的{TargetName}染红了脸颊，“{PlayerNickName}有点太着急……唔。”\n默默地张开娇嫩的小嘴，一边吐息着一边用湿软的嘴穴包裹住肉龟给予了舔阴的回礼。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1613
+msgid "默默地舔舐起对方阴部的两人，安静地享受着对方给予的侍奉。\n在挠心的水声中，{TargetName}随着舌头的爱抚不时地发颤，最后忍不住用双腿夹住了{PlayerName}的脸压在了耻丘上。\n“……唔，有点太兴奋……”{TargetName}羞耻地咬住了肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1614
+msgid "摆动着脑袋前后吞吐着肉茎的{TargetName}，暂时停下了口舌，默默地叼着肉龟温存。\n“稍微，休息一下。”眯起眼睛的{TargetName}，微微收缩起腰腹享受{PlayerName}的侍奉。\n“……啊，嗯，不要催，明明让女孩子稍微偷懒一下也可以的吧。”被咬住了小豆豆吮吸的{TargetName}叫了出来，忿忿地咬了一下肉龟继续起舔舐。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1615
+msgid "以侧躺的姿势抱着的两人，紧密地缠在一起以求长时间的相互舔舐。\n充分地享受了平静的时光的{TargetName}，开始进攻起{PlayerName}舒服的地方，抱紧了{PlayerName}的屁股防止逃走，“唔，唔，啾嗯。”\n“一直这样的话，嗯，稍微有点无聊了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1616
+msgid "正悠闲地咬住肉尖，不时地使用舌头爱抚的{TargetName}，被抱住了屁股按上了嘴唇。\n“嗯唔？欸……嗯……哈~”被亲吻上敏感的阴蒂，让困惑着的{TargetName}一下子弓起了腰肢呻吟起来。\n原本叼着的肉竿也从发颤的口穴里面掉了出去，“{PlayerNickName}……嗯。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1617
+msgid "以69的姿势相互抱着，{TargetName}很快就因为胯下{PlayerName}的激烈舔舐而软下了腰肢。\n“嗯……呼唔。”少女的腰腹剧烈地收紧，难耐地在{PlayerName}的怀抱里挣扎。\n“{PlayerNickName}，有点舔的太过分。”{TargetName}报复似的咬住了肉根发泄起了快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1618
+msgid "被{PlayerName}坚挺的肉根堵住了小嘴，开始打桩一样地抽插的{TargetName}不满地皱起了眉头。\n“唔……嗯，哈。{PlayerNickName}，太，嗯太自私了。”一面张开了嘴唇顺利的承受{PlayerName}的自慰，一面用好好锻炼过的双腿缠在了{PlayerName}的脖子上要求回礼。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1619
+msgid "感觉到了{PlayerName}的嘴唇离开了阴部，反而加快了在嘴穴上的抽送的{TargetName}，默默地闭上了眼睛，顺从地承接{PlayerName}的欲望。\n“咕啾，咕，咕滋，咕滋。嗯……呼唔。”过了好一会才发泄完毕的肉根反而被{TargetName}用力地吸住不让离开。\n“太过分了……{PlayerNickName}。”{TargetName}睁开了幽怨的眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1620
+msgid "“相互舔对方的那里……”羞耻到脸上发烧的{TargetName}，装出冷静的样子护住了自己的身体想要拒绝。\n“就算是恋人来说，也是太亲密……嗯，而且现在也不恋人。”\n在{PlayerName}的软磨硬泡之下，{TargetName}才勉强同意将自己的双腿打开进行相互侍奉的行为。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1621
+msgid "修长的双腿在{PlayerName}停下来之后，从两边夹紧了阴茎前后交替磨蹭着挤压了起来。\n“充血的很厉害的样子，这样挤会不舒服吗？”\n“想要再用力点，唔……”{TargetName}并紧了双腿前后撸动着用腿压碾压起肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1622
+msgid "“嗯……用腿做可以，但是{PlayerNickName}一直再乱摸。”\n发出了不满的哼哼声的{TargetName}，一边夹紧了双腿一边将手搭在了{PlayerName}正在身体上抚摸的手臂上。\n“再在女孩子身上乱摸就要用力夹了。{PlayerNickName}。”厚实的大腿紧紧地夹住了股间乱动的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1623
+msgid "示意{PlayerName}坐下的{TargetName}，坐在了{PlayerName}的怀里，用大腿夹住了从股间探出来的阴茎。\n“呼唔，{PlayerNickName}坐着就行。”左右缓慢地磨蹭在重力下肉乎乎地摊开的大腿，挑逗着肉根在股间摇晃起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1624
+msgid "“{PlayerNickName}的那个一直在抖呢，女孩子的大腿很喜欢嘛。”\n{TargetName}翘起一只腿坐在{PlayerName}怀里，将阴茎卷进紧致的大腿缝隙之间慢慢研磨。\n“在这里面射出来我也无所谓就是了。”{TargetName}颇有余裕地吐息着，撩起了一边的头发盖在了{PlayerName}的脸上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1625
+msgid "闻嗅着{TargetName}的发香，抱紧了怀里的美少女的{PlayerName}，正被夹紧了阴茎揉搓。\n“呼唔。”{TargetName}安逸地享受着轻松的氛围，从原本的并拢双腿的坐姿，变成了将一只脚的小腿垫在肉根的肚子下，另一只用大腿盖住翘起的肉根，悠闲地进行研磨的姿势。\n“不舒服的话记得要说，{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1626
+msgid "扶着墙壁站稳的{TargetName}，夹紧了大腿被从后面顶着微微踮起脚。\n俯下头看着红红的肉龟从大腿中勉强地探出头来，接着又拉出去再次撞击在屁股上。\n“呼……唔。这个样子会舒服吗？”{TargetName}有些不解的换了个姿势，前后交叉地缩紧了大腿将阴茎紧紧地绞住。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1627
+msgid "锻炼地很好的双腿缠绕在阴茎上，给予了强烈的包裹感，让抽送变得非常费力。\n“需要松开一点吗？”缠紧了大腿的{TargetName}趴在耳边询问。\n两只光滑的大腿反而像是三明治一样将肉根灵巧地包裹在里面，夹得更紧了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1628
+msgid "像是正常位一样躺下，将灵巧的双腿交叉着架在了{PlayerName}的脖子上勾住。\n胯下的大腿在确认肉根的插入之后，用富有弹性的肌肤制作出了能够承受住冲击的大腿飞机杯。\n“……需要女孩子说请用吗？”躺着的{TargetName}，微微红着脸歪起头。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1629
+msgid "挂在{PlayerName}的肩膀上，{TargetName}抬起一边的细足勾在了{PlayerName}坚挺的阴茎上，用小腿和大腿夹紧。\n“慢点动，{PlayerNickName}，毕竟这个样子很不稳定。”\n{TargetName}眨了眨眼睛示意{PlayerName}开始抽送。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1630
+msgid "“呼唔。”站立着的{TargetName}被{PlayerName}搂着腰肢，开始前后摇摆着使用大腿撸动肉根。\n“说实话，这种不是跟素股很像吗？除了能用大腿夹着更紧一点。”\n“才不会给{PlayerNickName}换成素股呢。想要的话请好好地展示一下雄性的魅力再说。”{TargetName}咕滋地扭动大腿，将突出的肉尖积压地流出了一点汁水。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1631
+msgid "“咕唔……”似乎少见地从{TargetName}的脸上看到了不甘心的表情。\n“唉，尾巴被这样用，要花好久才能护理好。”\n“{PlayerNickName}事后也要帮忙清理，知道了吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1632
+msgid "细密柔顺的尾巴厚重地盖在{PlayerName}的肉根上，平时打理地很好所以抽送起来的时候有着层次分明的剐蹭感。\n“咕唔……”{TargetName}似乎像是生气了一样看着沉醉在尾交中的{PlayerName}。\n“{PlayerNickName}，要是对尾巴上瘾的话我会很头疼的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1633
+msgid "跟{TargetName}漂亮的秀发相同，有着类似的触感的尾巴正一圈圈地缠绕在了{PlayerName}的阴茎上。\n因为缺少粗壮的尾骨所以更像是一大团整理的很好的毛笔头，厚重地盖住肉茎提供了很强的包裹感。\n“咕唔……”生气地鼓起脸的{TargetName}看了一眼{PlayerName}之后，又像是放弃了一样叹气，“既然是{PlayerNickName}想要用的话，唉。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1634
+msgid "在持续地抽插下，{TargetName}的尾巴很快被各种体液弄得乱糟糟的，黏糊糊的套在了{PlayerName}的肉茎上，变成了一大团带有一个插出来的洞的毛球。\n“呜……”一副失落的表情的{TargetName}，被{PlayerName}抚摸着头安抚了一会之后才收拾好情绪。\n看起来事后要多照顾一下，下次才会允许再用尾巴了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1635
+msgid "正在被使用着尾巴刺激阴茎的{TargetName}，这次好像没有什么特别不满的样子。\n“唉，既然是{PlayerNickName}的要求的话，我也没什么特别好说的。”\n{TargetName}转过身整理着被弄乱了一些的尾巴，用手挤在阴茎上主动侍奉起来。\n“{PlayerNickName}事后要记得帮忙，要是逃走的话我会生气的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1636
+msgid "“{PlayerNickName}，靠的太近了……嗯。”\n“这样对女孩子来说可是很失礼的，唉。”被蹭在一边的脸上，闭上了一只眼睛的{TargetName}淡淡地叹了口气。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1637
+msgid "“怎么了吗？”被阴茎拍打着脸颊的{TargetName}闭上了眼睛，从肉根的下面看着{PlayerName}。\n“唔……这样看起来比较涩情。唉，虽然不是不能理解雄性对雌性的占有欲，但是不要做得这么显眼好吗？”\n{TargetName}继续用脸接受这拍打，向远处飘逸着视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1638
+msgid "“有什么需要吗？”被肉茎蹭着脸颊的{TargetName}，被肉根顶着闭上了一边的眼睛歪头。\n“就是喜欢看女孩子被男人的那根东西推倒吗，{PlayerNickName}也真是变态。”\n“好了，差不多可以了吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1639
+msgid "被{PlayerName}的阴茎搭在了鼻子上遮挡住了眼睛的{TargetName}露出了疑惑的表情。\n“……这是在模仿什么色情片吗？”\n“我才不会配合地做出什么奇怪的表情呢。”{TargetName}羞红了脸从面前的肉根上移开了视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1640
+msgid "“哈……哈嗯……哈”吐着舌头不住地喘息的{TargetName}，被早就用各种体液润湿了的阴茎戳在脸上遮挡住了眼睛。\n“啊嗯……{PlayerNickName}？”因为连续的绝顶有些难以思考的{TargetName}，抖了抖耳朵，“要比出V的手势吗？”\n“……这样？”吐着舌头喘息的{TargetName}完美地比出了阿黑颜。\n“总感觉好像，哪里不太对。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1641
+msgid "“唔唔……”被{PlayerName}的肉茎从正面顶着，蹭在了鼻子上的{TargetName}发出了略微不满的声音。\n“{PlayerNickName}，我也不是佩罗一类的鼻子敏感的种族，这样顶着想要女孩子发情可是很失礼的。”\n露出了残念的眼神的{TargetName}，脸颊还是微微泛起了红晕。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1642
+msgid "“嗯唔，嗯。”被抱着头用阴茎磨蹭的{TargetName}，似乎是有些不耐烦了一样，转头咬住了蹭上来的肉竿用舌头挑逗了一会。\n“有什么想要女孩子做的就说嘛，一直蹭脸都弄脏了。”\n“唉，{PlayerName}这个不解风情的家伙。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1643
+msgid "柔软的耳朵上的细密的绒毛持续地爱抚起{PlayerName}的阴茎，带来了绵软的刺激触感。\n“如果要射在里面的话，可以说一声吗？虽然有绒毛挡着，但是流进去的话会感觉很奇怪的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1644
+msgid "被{PlayerName}抚摸着头顶，微微转着耳朵用细密的耳朵爱抚的{TargetName}，在{PlayerName}的胯下眨了眨眼睛。\n“感觉怎么样？嗯……，这边只能听到沙沙沙的声音，还有就是黏糊糊的，偶尔也会有一些顶上来的触感。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1645
+msgid "{TargetName}小巧的耳朵不时地抖动着，绒毛一阵又一阵抚摸在了蹭在上面的肉龟上。\n“有点痒。因为很痒所以它自己动了，这种事情我也没法控制。”\n努力地忍耐的{TargetName}，仍然有时候会不时地抖动耳尖。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1646
+msgid "抱着毛茸茸的脑袋，蹭在了雪白的耳朵上的{PlayerName}能够感觉到肉竿拂过短小绒毛时的细密触感。\n“啊……被顶到外翻出来了。”皱起眉头的{TargetName}伸出手重新将耳朵翻了回来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1647
+msgid "重点地戳弄着{TargetName}耳根上格外茂盛的绒毛，明显地能够感觉到像是柔软的抚摸在肉龟上的感觉。\n但是很快被体液濡湿，变得有些粘稠地吸附在黏膜上连带着剐蹭。\n“唔……”{TargetName}只是抖了抖带有一些韧性的耳朵，像是在抗议一样轻拍在{PlayerName}正抚摸着头顶的手指上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1648
+msgid "少女的胸部在润滑油下反射着漂亮的油光，充满活力地微微向上翘起。\n“嗯咻……”{PlayerName}用手从上往下涂抹着胸部上的润滑油，涂抹到乳底的时候乳头高高地弹了起来。\n“{PlayerNickName}一直在玩这边的乳头。”红着脸的{TargetName}不满地瞟了一眼{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1649
+msgid "晶莹的油滴从乳间流下，滞留在了{TargetName}光滑的小腹上展现出一片淫靡的景象。\n{TargetName}纤细的手指抚摸在肚子上，将汁液抹成了一片闪闪发光的油膜，让人忍不住想要摸一摸。\n“{PlayerNickName}，先把自己的涂好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1650
+msgid "{TargetName}正弯下腰涂抹大腿的时候，{PlayerName}挤了一些润滑油在手指上，帮忙涂抹起{TargetName}翘起的屁股。\n“啊。”{TargetName}尾巴高高地竖起来，明显被吓了一跳。\n“嗯……怎么专门挑这些敏感的地方摸。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1651
+msgid "精细地涂抹好了身体的{TargetName}在{PlayerName}展示起了闪闪发光的润滑躯体。\n润滑的肌肤，看起来更加的柔软丰满，比起平时更加诱惑地散发出女性的魅力。\n“欸……怎么抱上来了。色狼{PlayerNickName}已经等不及了吗。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1652
+msgid "满足地在{TargetName}的娇躯上抚摸，来回享受着肌肤异样的润滑和柔软。\n“{PlayerNickName}，刚刚那个地方摸过了……呼。”\n被{PlayerName}再一次伸进股间抚摸着湿滑的阴蒂的{TargetName}，向{PlayerName}抛去了无奈的眼神。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1653
+msgid "正面怀抱着{TargetName}帮忙揉着屁股涂抹的时候，感受到了胸前两团润滑好的柔软。\n“怎么了？{PlayerNickName}。”怀里的{TargetName}歪了歪头磨蹭在胸口上。\n“啊……不是让你去抹那个地方……嗯。”抬起了{TargetName}一边的屁股仔细地抹均匀了丰满的阴唇。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1654
+msgid "娇媚的躯体在{PlayerName}的手掌下一层一层的涂抹上油脂，像是玉脂一样惹人怜爱。\n忍不住在涂抹小腹的时候俯下身亲吻起怀中美人的玉颈，“唔……”。\n羞涩地移开视线的{TargetName}，顺从地抬起了玉足让{PlayerName}接着涂抹起少女的花荫。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1655
+msgid "接过避孕药的{TargetName}点点头。\n“给女孩子做好避孕是应该的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1656
+msgid "“这个月也需要避孕，也就是说{PlayerNickName}打算经常使用那里的意思？”\n{TargetName}露出了有些无奈的表情，当面吃掉了一片避孕药。\n“我说呀，还不是恋人就不停地中出。多戴套套更安全一点。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1657
+msgid "“那个，{PlayerNickName}，处女有必要吃这个吗？”\n“虽然说有时候为了调节月经吃一点没什么，还是说这次打算……啊。”\n意识到了的{TargetName}红着脸移开了视线，不安地玩弄起了头发。\n“可以，稍微等一会吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1658
+msgid "感觉到歪着脑袋的{TargetName}头上冒出了问号。\n“没有使用过那个的话，需要吃这个吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1659
+msgid "看到递过来的避孕药，{TargetName}似乎是有点紧张的样子，不安地夹紧了大腿。\n“嗯……，今天{PlayerNickName}打算破处了吗？”\n“我感觉还没有准备好。”深呼吸地勉强做好了心理准备的{TargetName}，颤抖着嘴唇吃下了药物。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1660
+msgid "“{PlayerNickName}知道紧急避孕药对女孩子的负担很大的吧。”\n{TargetName}叹了口气，“知道的话，下次麻烦好好做好避孕措施。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1661
+msgid "喝掉了媚药的{TargetName}，漂亮的玉肌上很快泛起了娇媚的樱色。\n“{PlayerNickName}，差劲，竟然给女孩子喝这个……”\n嘴上嫌弃着的{TargetName}，却紧紧地缠上了{PlayerName}的身体，欲求不满地用敏感的部位斯磨起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1662
+msgid "“呼……唔……”喝掉了媚药的{TargetName}，变成了缠人的小猫的样子。\n“嗯……嗯”怀中的{TargetName}，微微濡湿了的双眼盯着{PlayerName}，接着一口咬在了肩膀上。\n“快点负起责任来，{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1663
+msgid "“除了身体有点热，大概没事。”\n逞强的{TargetName}手指发软地让装有媚药的玻璃瓶从手里掉了出去。\n“啊……嗯。”{TargetName}魅惑的眼睛赚了过来，直勾勾地盯住了身边的雄性。\n“作为刺客，嗯，这点媚药不算什么啦。”明显已经陷入类似于宿醉的状态。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1664
+msgid "翻看着递过来的药物的{TargetName}一下子红到了耳朵根。\n“……想要怀孕？”\n“{PlayerNickName}，确认已经考虑好了吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1665
+msgid "“要女孩子排卵，嗯……”\n吃掉了药物的{TargetName}好像没有表现出什么明显的效果的样子。\n“光靠药物，不好好照顾好情绪的话，作为雄性是很差劲的。”\n{TargetName}低垂下眼睛，脸颊微红地伸手托起了{PlayerName}的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1666
+msgid "帮忙扶着阴茎带上了套子的{TargetName}，检查了一下密封性。\n“看起来应该没什么问题。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1667
+msgid "{TargetName}搂住{PlayerName}的腰一只柔软的手捉住阴茎，一只手套上了套套。\n“戴好了，{PlayerNickName}。不要太用力弄破了。”{TargetName}拍了拍{PlayerName}的屁股。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1668
+msgid "“欸……要用嘴巴套吗？”{TargetName}眨了眨眼睛，故意叼住了避孕套的一角。\n“骗你的，想要用嘴巴戴的话，请再让女孩子开心点。”{TargetName}灵巧的手指捉住了肉尖，将薄薄的套子戴在了阴茎上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1669
+msgid "低垂下眼帘，坐在阴茎前的{TargetName}乖巧地帮忙戴好了套套。\n“嗯……啾。”似乎是忍不住了一样主动吻在了翘起的肉龟上。\n“只是给愿意戴套套的{PlayerNickName}一点奖励。”意识到了自己的行为的{TargetName}，一下子烧红了脸，捂着嘴从股间站了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1670
+msgid "“嗯，带上也能安心一点，也不用顾虑其他事情。”\n{TargetName}用纤细的手指按摩在阴茎上，确认薄薄的避孕套贴合好阴茎。\n“好了，继续吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1671
+msgid "{TargetName}将手指圈成一个圈，在肉龟上紧紧地束紧之后，向下撸开了包皮套好了避孕套。\n敏感的粘膜完全剥了出来被薄膜套在里面。\n“这样戴会很舒服吧，也能很快地射出来。”{TargetName}坏心眼地用手指弹了一下粉红的肉冠。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1672
+msgid "“是戴着不舒服吗？”\n“我可以帮{PlayerNickName}再换一个……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1673
+msgid "在{PlayerName}的要求下，{TargetName}用灵巧的手指将紧紧地吸附在阴茎上的套套摘了下来。\n“唉，带着的好一点哦，精液也不会流得到处都是。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1674
+msgid "{TargetName}一只手托着勃起的阴茎，一只手捏住{PlayerName}的龟头挠着摘掉了避孕套。\n“虽然说不带套会舒服一点。”\n“但是愿意戴套的男性更容易留下负责任的好印象。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1675
+msgid "“是想要射在哪里吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1676
+msgid "“嗯……嗯嗯……”乳头上的嗡嗡声和少女的娇吟混在了一起。\n“{PlayerNickName}，呼唔……嗯。不要一直压在一个地方。”被刺激到湿润了眼眸的{TargetName}发着抖抓住了{PlayerName}的手腕。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1677
+msgid "“呼唔……嗯。”被一边从身后揉着小腹，一边用跳蛋爱抚乳尖的{TargetName}，转过头来给了{PlayerName}一个幽怨的眼神。\n“{PlayerNickName}，呼嗯……嗯嗯，还要玩多久？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1678
+msgid "“那个玩具是，”{TargetName}警戒地护住了下体，“唔……不要靠过来。”\n“啊~”似乎是没想要会被进攻乳头的{TargetName}，被抓住了手腕抱在了怀里。\n“呜……唔嗯，{PlayerNickName}快点放开。”发抖的{TargetName}在怀里酥软地挣扎。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1679
+msgid "湿漉漉的秀发盖住了少女潮红的脸，在跳蛋的刺激下{TargetName}的身体一阵又一阵缩紧。\n“{PlayerNickName}，哈……嗯，不要再玩胸部，唔。”\n{TargetName}无法思考地挺起了腰肢，两粒可爱的乳头在玩具下发抖个不停。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1680
+msgid "“嗯……呼……嗯嗯。”怀里{TargetName}，被{PlayerName}揉着胸部将跳蛋压在了乳头上。\n“啊嗯……”娇躯开始微微地发抖的{TargetName}，默默缠紧了环抱在{PlayerName}脖子上的手臂。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1681
+msgid "“呼嗯，嗯，嗯，{PlayerNickName}。”勉强还能忍受乳尖上酥麻的刺激的{TargetName}，睁开了湿漉漉的眼睛看向了{PlayerName}。\n没有多余赘肉的柳腰缓缓地起伏，磨蹭在{PlayerName}的手掌上像是撒娇一样表达自己的快感。\n“已经，很久了。”完全放弃了抵抗的{TargetName}任由{PlayerName}继续使用跳蛋玩弄。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1682
+msgid "粉红的跳蛋轻柔地挤压在{TargetName}的乳头下方，震颤得{TargetName}笨拙地张开嘴喘息。\n过了好久才将跳蛋移开的{PlayerName}，被失去了刺激的{TargetName}用力地缠紧了。\n“呼……嗯……呼……”报复地抓挠了一会{PlayerName}的身体才冷静下来，“……嗯，对不起。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1683
+msgid "一边的被{PlayerName}用跳蛋按在乳头上研磨着刺激，另一边被手指夹住了娇嫩的乳尖拉扯着揉搓。\n两边不一样的快感让{TargetName}无所适从地发抖，凌乱的秀发遮住了低下头的眼睛，只能看到一张不断吐出热气的小嘴。\n“嗯……嗯嗯~。已经，不行……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1684
+msgid "{TargetName}抓紧了将跳蛋按在乳头上的手腕，试图通过酥软的拉扯影响按压在乳头上的力度。\n“呼……嗯……”努力地忍耐的{TargetName}，被{PlayerName}的另一只手抚摸起了喘息的腰腹和发抖的双乳安慰。\n“不要来回调节速度……嗯。”{TargetName}咬着嘴唇露出了屈服的表情。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1685
+msgid "用跳蛋仔细的调教了{TargetName}的双乳之后，{TargetName}已经恍惚地迷离起眼睛，粉嫩的乳尖仍然在一跳一跳的颤抖，不时地滴下过分忍耐的汗水。\n“{PlayerNickName}，结束了吗？”{TargetName}用力地抓紧了{PlayerName}的手臂，努力地缓解体内一阵阵激荡的快感。\n“稍微，陪我一下。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1686
+msgid "被重点照顾的两个乳头在{PlayerName}的眼前辛苦地跳动，摇晃的铃铛发出了可爱的声音。\n{TargetName}平时小小的乳头，在乳头夹的挤压下，开始充血地红红得剧烈勃起。\n“啊……嗯……”暂时无法适应胸部上胀痛的快感的{TargetName}，抓紧了{PlayerName}的肩膀。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1687
+msgid "“这边，嗯。”{TargetName}托着一边的乳球，将微微发颤的娇嫩乳尖交给了{PlayerName}夹住。\n两边都装上了小巧的调教玩具的{TargetName}，不安地收缩起小腹。\n“稍等一下……呼嗯……还没适应。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1688
+msgid "深呼吸着的{TargetName}揉着自己的乳房缓解快感，两粒粉嫩的乳头被重点照顾地使用乳头夹好好地夹住了。\n“嗯……呼，这个力度有点松……嗯。”敏感的地方被用力来回揉搓的感觉让{TargetName}看向{PlayerName}，不知道应该拜托夹紧一点还是就这样。\n最后为了避免半途掉下来，重新夹紧了乳夹，“嗯唔！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1689
+msgid "“叮铃，叮铃。”夹在了{TargetName}的乳尖上的夹子，特别地用了两个小巧的铃铛当做重物。\n“咕唔……”听到了因为乳尖的颤抖而响起的铃声，{TargetName}一下子羞红了脸。\n“才没有，很舒服呼……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1690
+msgid "被{PlayerName}在夹住了双乳之后，{PlayerName}轻轻地拍打了一下挂在乳尖上的两个铃铛重物。\n“嗯……嗯嗯……”在叮铃铃的可爱铃声中，被拉扯着娇嫩的乳头玩弄的{TargetName}，一下子咬住了嘴唇努力地忍耐。\n“{PlayerNickName}，不要……嗯。”红着脸的{TargetName}抓住了再次伸过来的手指阻止了{PlayerName}继续玩弄。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1691
+msgid "在确认了乳头的被紧紧的夹住，力度正好不会引起不适的疼痛之后，{PlayerName}托起了乳球轻轻地揉弄。\n只是轻轻地催促乳尖摇晃，就让{TargetName}发出了诱人的娇声。\n“啊……{PlayerNickName}……嗯，不要玩。”{TargetName}不满地瞪了{PlayerName}一眼。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1692
+msgid "最敏感的地方被夹住的酸胀感一阵阵地从乳尖上钻进来，刺激得{TargetName}只能小心翼翼地收缩小腹进行喘息。\n“{PlayerNickName}，嗯……变态。”\n少女最漂亮的乳头上，挂上了闪闪发光的装饰品，在{PlayerName}眼前左右来回轻轻地摇晃，真的很难让人移开视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1693
+msgid "可爱地夹着乳尖的乳头夹，随着发颤的乳头发出了细微的滋滋的声音。\n娇羞的少女用手臂遮挡住了胸部，“呼……嗯，不好一直动。”\n挂在乳头下面的两个重物，一下一下地拍打在了{TargetName}软乎乎的胸部上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1694
+msgid "“胸部，一直酥麻麻的。”被夹住乳尖调教的{TargetName}，湿润地吐息着看向{PlayerName}。\n使用闪闪发光的金属，宝石，还有小巧的铃铛强调自己的存在的漂亮乳夹，与少女娇嫩的乳尖搭配在一起，组成了一副让每个男人都兴奋不已的画面。\n“色狼{PlayerNickName}，嗯，让这边，呼，戴这样下流的东西。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1695
+msgid "{TargetName}仅仅只是夹住了一边的乳尖就不断地开始产生快感。\n“{PlayerNickName}……”被牵着另一边的粉嫩的乳头准备戴上另一只乳夹的{TargetName}，微微颤抖着乳尖似乎想要表达什么。\n最终羞红了脸，两边都戴上了漂亮的乳夹的{TargetName}默默地咬紧了嘴唇，向{PlayerName}投去了幽怨的眼神。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1696
+msgid "“嗯……呼唔……嗯，我自己也可以，不要这样用力地压上来。”\n躺在怀里的{TargetName}挺起了腰肢，想要逃走的下体持续地被{PlayerName}用跳蛋追逐着进行调教。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1697
+msgid "股间的跳蛋发出阵阵嗡鸣，快速地击打在{TargetName}湿润的阴唇上。\n“呼嗯……唔……”敏感的{Name}不时地发出颤音，放弃了抵抗的想法，默默地抓紧了{PlayerName}的身体。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1698
+msgid "湿润的阴唇发着抖含住了压上来的跳蛋，阴唇上方的小豆豆被重点照顾的顶住，来回地研磨起来。\n“啊……嗯……{PlayerNickName}，呼……嗯”{TargetName}娇羞的脸无奈地别过去，努力地忍耐腰腹下的快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1699
+msgid "将按摩玩具在{TargetName}丰满的阴蒂上来回挑弄，让少女不断起伏着腰腹发出难以忍耐的喘息。\n“嗯……那边……呼嗯……”紧张的大腿夹在了{PlayerName}的手上，接着被安抚着柔软的大腿根部再次打开。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1700
+msgid "还没怎么经过润滑的阴蒂生硬地贴上了嗡嗡的跳蛋，似乎给{TargetName}带去了过强的刺激和不太舒服的干涩感。\n“呼……稍微……慢……嗯。”抓着{PlayerName}的手指，示意调低一点速度的{TargetName}，慢慢地扭动着屁股调整跳蛋的位置。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1701
+msgid "完全润湿的了的阴蒂，在震动着的跳蛋的拍打下，小声地滋滋~滋滋地溅出淫湿的水雾，一副已经适应了调教的样子。\n羞于自己屈服于玩具的{TargetName}，飘逸着视线，身体一抖一抖地坐在怀里抵抗着快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1702
+msgid "被分开双腿，用跳蛋刺激着蜜裂的{TargetName}安静地依靠在{PlayerName}的身上。\n柔韧的娇躯不时地因为快感而微颤，“{PlayerNickName}，嗯，又压上来……呼……”{TargetName}因为开始变强的阴蒂快感而夹紧了{PlayerName}的手。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1703
+msgid "少女如花瓣一般娇嫩的阴蒂在高速运作的跳蛋下发出滋，滋滋地声音，在激烈的刺激下{TargetName}羞红了脸闭上了眼睛。\n但是屁股跟随着跳蛋的拨动却抬得越来越高，“嗯……不要，抓着……嗯。”被抓住屁股进一步压上了跳蛋的{TargetName}，挺直了腰肢全身颤抖起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1704
+msgid "“嗯……嗯嗯，啊……”被跳蛋玩具刺激到理性逐渐流失的{TargetName}乖巧地抬起了腰肢，就像是在说还想要一样，摇晃着尾巴缠在了{PlayerName}的手臂上。\n“唔……嗯。{PlayerNickName}。”本人倒像是不愿意承认一样移开了视线，“啊……啊嗯……”\n漂亮的眼睛在跳蛋的刺激下又涣散开来，尾巴更加甜蜜地缠住了手腕。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1705
+msgid "暂时地将嗡嗡作响的跳蛋从{TargetName}潮湿的股间移开之后，兴奋地{TargetName}默默缠了上来。\n“唔……呼……没事，嗯。平时也有……嗯”吞掉了后半句话的{TargetName}咬住了嘴唇，“没事……嗯。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1706
+msgid "{TargetName}跨坐在{PlayerName}的大腿上，不时地前后扭腰，用丰润的耻丘含住嗡嗡作响跳蛋。\n“嗯……哈……嗯呢。”咬住手指忍耐的{TargetName}，默默地盯着{PlayerName}，“呼……嗯，呼……{PlayerNickName}，速度……嗯。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1707
+msgid "在挣扎了一番之后才让{PlayerName}装上阴蒂夹的{TargetName}，恼羞成怒地气红了脸。\n“{PlayerNickName}有点太过分，呼嗯……”还没适应的酸胀快感促使着{TargetName}用力勃起阴蒂。\n“明明已经说过那里很敏感……呼嗯。”轻微的晃动带着下垂的重物摇晃，拉扯着阴蒂开始调教起来。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1708
+msgid "{TargetName}在{PlayerName}的面前分开了双腿，用手指从两边的阴唇中剥出了发抖着的阴蒂。\n“滋……滋滋。”几下操作之后，粉嫩的小豆豆就被装进了漂亮阴蒂夹中，给{TargetName}带去了一阵又一阵酥麻的酸胀感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1709
+msgid "漂亮的阴蒂夹像是蝴蝶一样，从两边夹住少女的阴蒂，闪闪发光的金属小球垂下来，充当着重物拉扯起小豆豆进行调教。\n“唔……呼嗯……”即使只是轻柔地呼吸，股间的小球也轻微地摇晃着，带去了无法停止的快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1710
+msgid "装好的阴蒂夹紧紧地吸附在{TargetName}的阴唇上，牢固地夹住敏感的小珠子，用快感分散了{TargetName}的注意力。\n“嗯……呼？{PlayerNickName}？”收缩着小腹忍耐的{TargetName}，难以继续集中精神跟上{PlayerName}的调教。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1711
+msgid "“嗯……嗯呢，不要主动去拉……”{TargetName}抓住{PlayerName}伸进股间的手腕，想要阻止{PlayerName}继续玩弄带上了阴蒂夹的可怜小豆豆。\n“咕唔……”被温柔地拉扯着小小的金属夹，湿润地用手指在勃起的小豆豆上挤压摩擦的{TargetName}，发出了下流的绝叫酥软了双腿。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1712
+msgid "被股间的{PlayerName}分开双腿，调整着阴蒂夹的松紧的{TargetName}，羞耻地移开了视线。\n“用玩具调教……差劲{PlayerNickName}。嗯唔。”{TargetName}皱着眉头被夹紧了漂亮的小豆豆，酥麻的快感让娇躯开始在{PlayerName}的眼前微微发抖。\n“稍微，等一下。呼嗯……还没，习惯。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1713
+msgid "{TargetName}一副难以行动的样子，在{PlayerName}的眼前不安地收缩着小腹。\n“嗯……有点太紧。”被下体强烈的酥麻感挤地夹紧了双腿的{TargetName}，水润的眼睛望向了{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1714
+msgid "被安装上了阴蒂夹的少女，每一个行动都带着股间发亮的小球重物左右轻晃，让{TargetName}难耐地发出一阵阵喘息。\n“{PlayerNickName}，在看什么。”就像是在强调自己的存在一样，少女股间的阴蒂夹跟随着{TargetName}动作，用勾人心弦的舞蹈吸引着{PlayerName}的目光。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1715
+msgid "“我可以不要那个吗？”看着{PlayerName}拿起了阴蒂夹，{TargetName}下意识地夹紧了双腿想要抵抗。\n被{PlayerName}抚摸着头安慰了一会之后，{TargetName}才飘逸着视线，半推半就地被手指分开了双腿，献出了娇嫩的小豆豆。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1716
+msgid "在装上了阴蒂夹之后，被{PlayerName}按着小腹轻柔地抚摸的{TargetName}，用略显急促的呼吸告诉了{PlayerName}，被夹住的阴蒂还没适应的事实。\n垂下来的夹子重物轻柔的在阴唇上滚动，却反射出了已经被淫液濡湿了的光泽。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1717
+msgid "被告知要使用阴蒂夹调教的{TargetName}羞红了脸，不安地缠紧了双腿。\n“不是很想用那个，嗯。”姣好的玉腿被手指坚决地分开，捏着小豆豆用漂亮的阴蒂夹装饰了起来。\n“嗯……嗯嗯。”微凉的金属触感和酥麻的夹紧的感觉让小豆豆坚硬地勃起，随时都像是要失禁的快感刺激着{TargetName}咬住了嘴唇，发出了低低的呻吟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1718
+msgid "趴着的{TargetName}被{PlayerName}按住背腰，翘起臀部，将旋转着的电动按摩棒压进了隐秘的股间贴在了丰满阴唇上阵阵拍打。\n“啊……嗯……嗯。”原本还想挣扎的{TargetName}很快就高高地翘起了尾巴，发出了放弃了思考的酥软的娇声。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1719
+msgid "“嗡嗡嗡”运作着的电动按摩棒贴在少女的阴唇上仔细地研磨，柔软的阴部被挤压着分开，湿润地含住了转动着的前端。\n“嗯！……嗯呢……嗯。”被快速打磨着阴唇{TargetName}难耐地扭动起了腰肢，贴在{PlayerName}的扶着腰的手上发泄快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1720
+msgid "在温柔的按摩下，{TargetName}舒服地眯起眼睛，光滑的小腹在{PlayerName}的面前轻柔地起伏。\n尝试着偷偷调高了速度。\n察觉到了{TargetName}，睁开了眼睛投来了嗔怪的眼神，原本安详地呼吸的小腹此时也难忍刺激，左右涩情地扭动了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1721
+msgid "看着{PlayerName}拿出了电动按摩棒，{TargetName}不安地夹紧了大腿。\n最后在{PlayerName}的保证下，{TargetName}才半推半就地分开了双腿，露出了柔软的阴部。\n“不要，嗯玩太久……哈……嗯。”将脸藏起来的{TargetName}，羞耻地发出了阵阵娇喘。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1722
+msgid "{TargetName}的阴部还不够湿润，在高速转动的电动按摩棒下，过于强烈的干涩摩擦感让{TargetName}不安地抬起了腰肢想要躲避。\n“呼……唔，呼唔……”{TargetName}被刺激得有些湿润的眼睛，躲闪着{PlayerName}的视线。\n“稍微，嗯，慢……嗯。”{TargetName}抓紧了{PlayerName}的身体。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1723
+msgid "“啊嗯~嗯~”在娇柔的喘息声中，被汗水润湿了的秀发遮挡住了{TargetName}涣散的双眼。\n湿透了的小穴在强烈的震动按摩下，一股一股地飞溅出汁水打湿了少女的股间。\n“哈……嗯……”被湿润的打磨刺激到笨拙地难以思考的{TargetName}，默默地抓紧了{PlayerName}的臂弯。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1724
+msgid "被{PlayerName}用电动按摩棒爱抚着股间的{TargetName}，跟随着敏感的阴唇上时快时慢的力度，高高的挺起了腰腹，任凭按摩棒更加严厉地挤压在小穴上打磨着。\n“嗯……哈，{PlayerNickName}，嗯……腰麻掉了……呼嗯。”在激烈的震动下，被快乐的潮水淹没了的{TargetName}，用朦胧的眼睛望向了{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1725
+msgid "被{PlayerName}用按摩棒来回爱抚着大腿根部调节着气氛的{TargetName}，在不知不觉中放松了腰部，等待着的阴唇展现在{PlayerName}的面前。\n“嗯……！嗯~”最终将转动着的按摩棒压上了饱满的耻丘，在最初紧张的娇声之后，{TargetName}放松了身体开始享受了起温柔的按摩快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1726
+msgid "{TargetName}被{PlayerName}顶弄着着阴部，顺从地抬起腰肢让按摩棒可以蹭到更多柔软的部位。\n“唔呼……嗯，只是嗯，随便{PlayerNickName}而已。”\n暧昧地否认感觉到舒服的{TargetName}，羞红了发颤的耳根，移开了视线继续抬高了屁股。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1727
+msgid "暂时地将按摩了有一会的按摩棒从{TargetName}的股间拉开休息，湿润的淫水从高速旋转的按摩棒头部上滴落了下来。\n羞于承认的{TargetName}，抖着还没冷静下来的腰腹，发出可爱了的声音，“唔……唔。”\n在{TargetName}反应过来之前，稍微调低了档速，捏住{TargetName}酥软了的玉腿拉开，温柔地将按摩棒再次压在了一张一合的小穴入口上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1728
+msgid "没入雌穴的震动棒在{TargetName}的体内开始发出嗡嗡的声音。\n“呼……”{TargetName}长长地吐出一口气，隔着柔软肚子抚摸起小穴中的插入物。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1729
+msgid "接受了震动棒调教的{TargetName}，红着脸移开视线，用手指分开自己的肉穴。\n感受着无生命的物体侵入体内的感觉，{TargetName}微微地发起抖，直到震动棒紧紧地被膣穴吸住插在里面。\n“唔……嗯嗯嗯。”随着震动的开启，{TargetName}发出了一阵舒缓的呻吟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1730
+msgid "翘起屁股被从后面插入震动棒的{TargetName}，安静地伏在{PlayerName}的身上。\n“呼嗯……”{TargetName}轻吐幽兰，紧致的膣穴一点点缠住插入的震动棒，开始跟随着震动上下起伏小腹。\n“差不多这个位置，嗯……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1731
+msgid "{PlayerName}托住开启的震动棒的下端，缓慢地在{TargetName}的肉穴里面抽插着按摩。\n“嗯……哈”感受着肉穴中搅动起来的硬物，阵阵酥麻的快感从身体的深处涌起。\n“{PlayerNickName}……”{TargetName}轻吟着，用微微湿润的眼睛看向{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1732
+msgid "被请求插入震动棒的{TargetName}，红着脸在{PlayerName}的恳求中耷拉下耳朵，半推半就地同意了。\n“嗯……呼……{PlayerNickName}一直在乱摸。”\n正被拉着分开一只玉足，大开着腿承受嗡嗡作响的震动棒插入的{TargetName}，轻轻抓挠在{PlayerName}乱摸的手臂上发表自己的不满。\n“唔嗯~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1733
+msgid "比正常的款式还要大上一圈的震动棒一点点地埋入{TargetName}丰满的膣穴，嗡嗡地开始按摩起周围的肉壁。\n“呼嗯……嗯”明显能够感觉到下体的插入物的{TargetName}，根本合不上俏丽的双腿，只能张开着让{PlayerName}调节震动棒的角度。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1734
+msgid "粗大的振动棒扩开{TargetName}紧致的阴唇，按压着周围光滑的黏膜塞入了少女的身体中。\n就像是股间的尾巴一样，{TargetName}的阴唇一点点地流出口水，努力地含住震个不停的棒棒。\n“呼唔……嗯……”脸颊染上了红晕的{TargetName}抚摸着小腹上的凸起，少女被玩具插入的淫靡的景象完全展示在了{PlayerName}的面前。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1735
+msgid "还没怎么经过开发的小穴被{PlayerName}手上的加粗震动棒强行扩开，撕裂的痛感让{TargetName}全身颤抖不已。\n“呼嗯……嗯！{PlayerNickName}，塞不进去。嗯。”因为疼痛而无法挣扎的{TargetName}，咬紧了牙关抓紧了{PlayerName}的手腕恳求拔出去。\n“疼……啊！嗯。”好不容易插入了的加粗震动棒就像是插入了一团坚硬的橡胶中一样，被紧紧的固定住。\n疼痛得翻起了白眼的{TargetName}在{PlayerName}的安抚下，过了好一段时间才学会慢慢放松抽搐着的小穴，尝试着接纳粗大的侵入物的震动。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1736
+msgid "看着{PlayerName}掏出的马屌震动棒，{TargetName}害怕地咽下了口水。\n“{PlayerNickName}，这个再怎么说也塞不进去的吧。”\n“先不说会会造成撕裂，啊……嗯，不要拉我的腿。”努力地保持冷静的{TargetName}想要劝说{PlayerName}放弃插入的想法，但是被{PlayerName}拉着一只玉足抬起来，打开了还未充分开发的股间。\n虽然少女柔韧的身体充满了迷人的弹性，但是仿照马的阴茎制作的震动棒只能勉强地顶开少女的外阴，接着被内部强力的膣压抵抗着难以再一步深入。\n“……{PlayerName}，不行。”疼到流出泪水的{TargetName}被强硬地塞入了巨根，“哦……哦唔……。”\n干涩地哀嚎着，勉强用嫩穴包裹住了插入的巨大马屌。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1737
+msgid "正常女性绝对塞不进去的马屌玩具此时正在{TargetName}的体内碾磨着周围的淫肉发出淫乱的震动声，从玩具上不断地滴落下淫水。\n“呼唔……嗯，{PlayerNickName}。”已经被开发完毕的{TargetName}将魅惑的眼神投了过来，似乎是因为身体被塞满的感觉而感到非常的满足。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1738
+msgid "模仿着强壮的驮兽的阴茎的震动棒分开了{TargetName}充满弹性的雌穴，一点点温柔地扩开压入了柔软的深处。\n被填满的雌穴开心地抱紧了插入的玩具，就像是啃食着一样一下下蠕动着无意识地品味强烈的震动带来的快感。\n“{PlayerNickName}……呼唔……”完全被唤醒了雌性的本能的{TargetName}，向两边扳开自己的屁股，向{PlayerName}展示了自己在震动下发颤个不停的淫靡交合处。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1739
+msgid "取下了乳头夹的乳尖在解放之后泛起了鲜艳的红色，在{PlayerName}的眼前不停地发颤。\n粉嫩的乳头坚硬地勃起着，反射着晶莹的光泽，让人想要好好抓在手里欺负。\n“{PlayerNickName}，等……啊嗯~”被捏住了还没恢复的敏感乳头揉搓，{TargetName}娇喘着瞪了{PlayerName}一眼。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1740
+msgid "从伸出来的乳尖上取下已经无法忍耐，可爱地抖个不停的乳头夹。\n紧致的乳头夹磨蹭着娇嫩的乳尖边缘慢慢滑动，最终咔哒一声弹着乳尖取了下来。\n“唔！嗯。”强烈的，仿佛还带着乳夹的快感，残留在了胸部上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1741
+msgid "被解放的乳头终于酥软地恢复到原本的形状，不用再绷紧神经抵抗被拉扯着乳球的快感。\n{TargetName}长长地吐出一口气，“终于结束了……才没有说很留恋……”，掩饰着自己的微红的脸，{TargetName}移开了视线。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1742
+msgid "捏着已经湿透了的阴蒂，从小豆豆上取下了温润的阴蒂夹。\n“呼唔……嗯。”{TargetName}如负重释地吐息着，揉着小腹幽怨地看着{PlayerName}。\n“没事。”被{PlayerName}询问的{TargetName}，可爱地鼓起脸颊转过去脸。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1743
+msgid "发抖的敏感阴蒂在手指的拨弄下一阵阵发颤，最终从小豆豆上艰难地取下了夹得太紧的夹子，“滋……滋滋，喀。”\n“嗯唔！”被闭合的阴蒂夹弹到的{TargetName}发出了响亮的哼声。\n“嗯……咕唔……坏{PlayerNickName}。”被打到发肿的小豆豆在{PlayerName}的手指边上颤抖着。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1744
+msgid "肿胀得不像样的小豆豆，从阴蒂夹中解放之后就这样勃起着翘在阴唇的外面。\n反倒是承受了过多的刺激，还没适应失去了夹子的感觉的{TargetName}想要夹腿隐藏起自己的弱点。\n“唔……嗯，不要扳开。”用手指按摩着被夹子调教到酥软的大腿根部，按摩起了{TargetName}发抖的阴蒂帮忙缓解快感，“嗯嗯~！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1745
+msgid "轻柔地拉扯着阴蒂夹，将{TargetName}的阴蒂从夹子中取了出来。\n还没恢复的{TargetName}吐息着捂住酸胀的阴蒂，慢慢适应着解放之后的失禁感。\n“嗯唔……{PlayerNickName}。”{TargetName}带着复杂的感情看了过来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1746
+msgid "紧致的穴肉缠绕在插入的震动棒上，就像是吸附在了上面一样阻止着{PlayerName}拔出。\n“咕唔……”湿滑的膣肉被进一步摩擦的快感让不能控制身体放松的{TargetName}羞耻地藏起了脸。\n搅弄了好一会，才用震动棒放松了{TargetName}吸在上面的膣肉。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1747
+msgid "好不容易适应了插入的震动棒的{TargetName}，伏在{PlayerName}的身上翘起了屁股。\n随着伸进股间的手指抓住震动棒的末端开始抽出，{TargetName}左右摇晃着屁股一边配合地放松膣肉，一边在{PlayerName}的耳边吐出甜腻的喘息。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1748
+msgid "随着还在按摩着周围膣肉的震动棒开始拔出，少女的膣穴一下一下本能地吮吸挽留插入的玩具。\n“啵~”被震动棒扩开，还没来得及缩回原本紧致形状的粉穴展现在了{PlayerName}的面前。\n被{PlayerName}仔细观察着的{TargetName}，如同呼吸一样羞耻地收缩起小穴，咬着手指看向了别处。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1749
+msgid "“啵滋，滋。”从呻吟着的{TargetName}体内拔出了早已被四散飞溅的淫水打湿了的震动棒。\n“嗡嗡嗡……”在濡湿的震动棒拔出的瞬间，被堵住的淫水汩汩地流出，沿着发抖的大腿流了下来。\n就像是在渴求其他的填入物一样，{TargetName}违背着本人的意愿一张一合地收缩着。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1750
+msgid "抚摸着{TargetName}的大腿分开，趁着呢喃的{TargetName}分心的时候用力地拔出了震动棒。\n“嗯~！”就像是跳上岸的鱼一样，被震动棒的突起快速地剐蹭过光滑肉壁的{TargetName}，兴奋地挺出腰腹。\n脑袋可爱地扬起，全身一阵阵发颤着吐出舌头，下身更是失去了插入物，寂寞地剧烈收缩着，想要其他东西填满。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1751
+msgid "将{TargetName}的腰肢抱到了胯下，用正常位分开两只玉腿，准备挺腰插入着用湿滑的肉龟亲吻少女的阴唇求爱。\n在{TargetName}默默地扭着腰调整好位置之后，发出了同意的娇羞呻吟，“嗯唔……”\n“呼……嗯嗯……慢……嗯。”阴茎最粗大的地方撑开少女的入口，接着肉根慢慢地沉进了柔软的娇躯中。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1752
+msgid "{PlayerName}用正常位温柔地插入了{TargetName}，肉根一点点扩开阴唇，直到稳固地和{TargetName}结合在了一起。\n刚刚接受了插入还在适应的{TargetName}，飘逸着眼神微微收缩起小腹慢慢地咀嚼深处的肉根，缠紧。\n“可以了……哈……嗯。”朱唇轻启，肉根便开始抽送了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1753
+msgid "“嗯，嗯，嗯嗯。”被{PlayerName}顶着肉穴，用正常位大开大合地交配的{TargetName}，用手遮挡住脸。\n“不要一直盯着，呼嗯，嗯。”在娇喘声中，{TargetName}羞红了脸颊，将脸别向了其他的方向。\n{PlayerName}激烈地抽插的阴茎被蜜穴含着阵阵吮吸，在下流的水声中勾出了少女诱人的娇喘。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1754
+msgid "保持着插入{TargetName}的姿势，扶着{TargetName}的腰肢推倒的{PlayerName}抓住了两只乱蹬的玉足架在肩膀上，开始用正常位抽插着小穴。\n“呜嗯……”被抓住了腰肢和大腿固定住的{TargetName}，感受着{PlayerName}粗大的肉龟向下砸进肉穴，放弃了无意义的挣扎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1755
+msgid "还没熟悉交配的{TargetName}手臂撑在胸口上，向下伸出屁股让阴茎向上插了进来。\n“嗯……呜，不是这样的吗？”被按着肩膀要求趴下的{TargetName}，抖着耳朵发出了不安的声音。\n但是随着雄性的肉根占据主导地位，向下深深地侵入少女的柔穴，{TargetName}放松了腰肢满足地吐出了喘息。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1756
+msgid "{TargetName}熟练地将屁股抬起来，恭顺地向下挺出腰肢，像是猫伸懒腰一样当好了{PlayerName}的炮架子。\n多亏了{TargetName}的配合，粗大的肉龟能够轻松地俯冲进更加狭窄的深处，有力地剐蹭起{TargetName}的膣肉。\n“嗯~嗯，嗯……”真的像是猫一样，{TargetName}舒服地偷偷眯起了眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1757
+msgid "{TargetName}向后挺出屁股，羞耻地分开了双腿，向{PlayerName}展示了自己丰满的耻丘，“{PlayerNickName}……”\n接着被抓着屁股，用发烫的阴茎拍打上了充满弹性的阴唇求爱，“啊，嗯……”\n身为雌性的{TargetName}不安地叫了一声，开始默默地承受坚挺的雄根从背后插入身体。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1758
+msgid "抱着{TargetName}的屁股拉过来，将阴茎深深地插入的{PlayerName}用力地在少女的屁股上研磨，仔细地用粘稠的压力确认了两人紧紧地链接在了一起的事实。\n“咕唔……”胯下的{TargetName}默默地收起腰腹箍紧了肉穴中的阴茎，转过头偷偷观察起了{PlayerName}的表情。\n啪，啪唧，啪~"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1759
+msgid "因为趴着的姿势无法确认情况的{TargetName}，被从两边抱住腰腹固定住，承受着阵阵从身后看不见的地方传来的快感。\n“呼……唔，唔，{PlayerNickName}速度，……啊。”粘腻地娇喘着的{TargetName}，察觉到了{PlayerName}加快了速度，本能地向下弓起了腰腹承接起狂乱的活塞运动。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1760
+msgid "保持着插入的姿势，抱着{TargetName}的腰抱起来重新调整成了后背位的姿势。\n“{PlayerNickName}，嗯。”只能用被填满的膣穴感受坚硬的阴茎动作的{TargetName}，不安地回头想要确认。\n结果被{PlayerName}拍打着屁股按住，开始激烈地继续抽插起来，“啊，嗯，嗯唔。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1761
+msgid "“唔……”娇羞的{TargetName}叼住了垂落下来的上衣下摆，分开双腿将如同鸡蛋一样嫩滑的耻丘展示在了{PlayerName}的面前。\n红着脸的{TargetName}咬住了嘴唇，将娇嫩的阴唇贴在了竖起的肉龟上，接着扭着屁股，像是表演一样研磨着粗大的肉龟吞入小穴中。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1762
+msgid "嫩滑的阴唇舔舐在{PlayerName}被扶着竖起来的肉龟上，前后研磨地慢慢濡湿，然后稍微用力地坐下将肉龟吞入穴中。\n“嗯唔……”感受着坚挺的肉龟按摩着入口附近的软肉，{TargetName}漂亮的眼睛眨了眨，接着放松了腰肢坐了下去，稳稳地将阴茎纳入腹中，“呼唔……{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1763
+msgid "被{PlayerName}托着柔韧的柳腰，用全身的重量坐在了肉棒上的{TargetName}眨了眨眼睛，收紧了富有弹性的腹部肌肉固定住深处的肉茎。\n接着少女的娇臀前后碾压着磨蹭在{PlayerName}的肉根上，用湿滑的肉末舔舐着肉冠上的黏膜舔舐擦拭起来，“呼唔……嗯。哼~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1764
+msgid "“啊嗯……”被托着臀瓣分开，抬起来一点腰肢蹲坐的{TargetName}，不安地全身发抖着，酥软地趴在了{PlayerName}的胸口上。\n{TargetName}的下身此时正一阵阵地发出响亮的水声，啪啪，啪啪，啪啪地由{PlayerName}主动地向上挺腰，进攻着少女的蜜穴。\n一声声勾人心弦的娇喘从少女的唇舌中被顶着溢出，更加刺激着{PlayerName}加快了向上顶弄的速度。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1765
+msgid "让坚挺的肉根残留在{TargetName}的雌穴中的{PlayerName}，抱紧了{TargetName}的身体，让{TargetName}用乘骑的姿势坐在了腰间。\n“咕唔……懒惰的{PlayerNickName}。”{TargetName}气呼呼地抱怨了一句，转过身来将少女匀称的翘臀砸在了{PlayerName}打开的双腿之间，全身的体重套在了坚挺的肉尖上带来的强烈包裹感让双方都满足地吐出了一口气。\n啪啪啪啪，{TargetName}主动地甩动起富有弹性的屁股快速地砸在了{PlayerName}的肉根上榨取起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1766
+msgid "被{PlayerName}的肉茎填满了娇嫩的肉壶的{TargetName}，在呻吟声中被{PlayerName}抱着酥软的柳腰坐起来，变成了亲密的对面座位姿势。\n“……唔，{PlayerNickName}。”紧紧地抱住了{PlayerName}的{TargetName}还没来得及喘息，含着肉根发抖的蜜穴便被抖着腰进攻的{TargetName}急促地抽插了起来。\n“啊嗯呢……嗯嗯。”甜蜜的娇喘在{PlayerName}的耳边响起，湿润的吐息缠绕在了{TargetName}的脸上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1767
+msgid "{TargetName}被{PlayerName}用手指分开充满弹性的双股，将光滑的耻丘压在了肉龟上分开。\n“呼唔……”近距离地和{PlayerName}对视着的{TargetName}悠长地吐出一口吐息，顺着{PlayerName}的引导紧密地坐进了怀里，用湿滑紧致的阴道将{PlayerName}的欲望包裹了进去。\n坐在大腿上的{TargetName}，软绵绵地收紧了腹中的肉根，难以用力地任凭{PlayerName}慢慢搅动起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1768
+msgid "拥抱着连接在一起的两人，用结合部慢慢地斯磨着，相互从对方的性器上索取快感。\n近距离的将脸贴在一起，可以很清楚地观察到{TargetName}因阴茎出入雌穴的频率而发生的表情变化。\n“咕唔……”最后受不了了的{TargetName}害羞地移开了视线，报复一样地抓挠着{PlayerName}的胸口，用被锻炼地很好的腹部肌肉挤压起坚硬的肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1769
+msgid "{TargetName}环抱住{PlayerName}的脖子，在抽送的颠簸中紧紧地用雌穴接纳住{PlayerName}进攻的肉根。\n“{PlayerNickName}。嗯。唔嗯……”安心地趴在怀里的{TargetName}，一边承受着股间难以继续夹紧的激烈抽插一边呢喃起着。\n惹人怜爱的姿态更激起了{PlayerName}的欲火，用力地抓住了{TargetName}的摇晃的屁股，发狠地顶撞研磨起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1770
+msgid "紧密地包裹住躁动的肉根的嫩穴被{PlayerName}顶着抱起来，让{TargetName}变成了任由玩弄的背面座位的姿势。\n“{PlayerNickName}……”喘息着的{TargetName}紧张地收紧了肉穴，还没发表自己的不想被玩弄的不满，就被{TargetName}用手指堵住了朱唇，激烈地顶撞起匀称的屁股欺负起来。\n“啊……嗯……嗯啾……嗯。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1771
+msgid "被搂着腰肢拉到了身边的{TargetName}，被从身后托起了一只柔软的大腿打开了少女的秘处。\n看不到身后的情况，只能盲目地跟随手指的指引，慢慢坐到了{PlayerName}的股间，直到蜜处被硬地发抖的肉龟顶住。\n“啊~嗯。”随着两人一同吐出满足的吐息，发抖的肉尖顶开了唇瓣，令人安心地填满了{TargetName}的花心。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1772
+msgid "牢牢地坐在{PlayerName}的肉根上的{TargetName}，一阵阵有力地收缩起矫健的小腹，用正好能用手掌托起的屁股顶在股间缓慢地磨蹭。\n湿润的蜜穴更是轻咬在{PlayerName}的肉根上，将{PlayerName}坚挺的雄根包裹住的同时，光滑的膣肉来回地摩擦在了敏感的黏膜上带来了阵阵快感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1773
+msgid "被按住腰腹抱在怀里束缚住的{TargetName}，正被{PlayerName}充满火气地顶弄着少女的屁股，坚挺的阴茎有力地分开想要夹紧阻止的大腿，咚咚咚地撞在{TargetName}的膣肉上。\n“嗯……哈……嗯，{PlayerNickName}慢，嗯~”被抚摸着漂亮的鼠径部地玩弄着，不知道什么时候又会被粗大的肉龟碾起膣肉欺负的{TargetName}，弓起光滑的柳腰挂在了{PlayerName}的脖子上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1774
+msgid "被紧紧地拥抱住的{TargetName}，深情地凝望着{PlayerName}的眼睛。\n而少女的股间被充满活力的肉茎分开，湿润地被勃起的肉龟顶住花瓣，接着更加过分地顶上来压入了少女的蜜穴中。\n{TargetName}察觉到侵入了身体的肉根，羞耻地涨红了脸，却只能酥麻麻地被顶弄着，手指抓挠在{PlayerName}的肩膀上表达对不解风情的{TargetName}的不满。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1775
+msgid "被{PlayerName}压在{SceneName}的墙壁上，甜蜜的拥抱在一起的两人，实际上正淫靡地进行着插入的秘事。\n比起坐下的姿势，站立的{TargetName}更加有力地夹紧了膣肉，坚挺的肉根不停地进出少女的嫩穴，用粗大的龟头刮出一滴又一滴花蜜滴落在了少女发抖着的玉足之间。\n咕滋，咕滋，咕滋，在温柔的拥抱中，一时间只有肉根激烈地调教少女的私处的水声。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1776
+msgid "在连续的对面立位紧密交合中，被戳弄到腰肢发软的{TargetName}，发着抖趴在了{TargetName}的胸口上。\n酥软下来的膣穴没有办法继续用力地使用膣肉揉搓插入的阴茎，脚尖更是被越来越过分的抽插顶弄着发着抖，在快感的驱使下踮起了起来。\n“{PlayerNickName}……啊嗯，嗯”近距离地和{PlayerName}对视的{TargetName}，咬住了嘴唇，羞耻地将求饶的后半句混合着诱人的娇喘咽了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1777
+msgid "就让跳动的阴茎温存在{TargetName}湿滑的肉穴中的{PlayerName}，抱着{TargetName}纤细的柳腰与圆润的大腿站起来，用正面立位的拥抱姿势继续进行起交合的行为。\n被恋人的拥抱刺激到了的{TargetName}，开心地缩紧了狭窄的膣穴，充满活力地想要挤压深处的肉龟。\n接着便被{PlayerName}有力而坚定的抽送按在了搂着腰肢固定住的手掌上，发着抖被{PlayerName}甜蜜地顶弄了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1778
+msgid "用勃起的阴茎填满着{TargetName}的小穴，扶着柔韧的腰肢和锻炼的匀称的大腿站起来，换成了压在{SceneName}的墙壁上的背面立位姿势。\n看不到{PlayerName}的表情的{TargetName}，有些害怕的夹紧了股间，用力地用大腿揉搓在了还露在外面的湿滑阴茎上求助。\n接着便被{PlayerName}的坚挺肉根剐蹭着光滑的膣肉，令{TargetName}安心地一次又一次顶弄着按摩起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1779
+msgid "被{PlayerName}按在了{SceneName}的墙壁上，搂着腰肢翘起了屁股。\n“{PlayerNickName}……啊。”小声地呼唤{PlayerName}的{TargetName}，察觉到了滚烫的肉尖分开了夹紧的双腿，舔舐在了发抖的蜜穴上。\n接着无法逃跑地被按在了墙上，害羞地被身后的雄性强行地顶开了少女最重要的地方，“嗯……嗯嗯……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1780
+msgid "{TargetName}的阴唇被{TargetName}坚硬的阴茎不容反抗地连续抽插着，在少女的股间发出了下流的噗嗤噗呲地声音。\n看不到结合部的情况的{TargetName}，努力地想要收缩起小腹，用紧致的肉壁保护自己，但是每次都被横冲直撞的肉龟粗暴地顶开，用粗糙的肉冠耕耘着{TargetName}舒服的地方。\n“啊……啊嗯。”逐渐意识到自己无法反抗雄性的{TargetName}，屈辱地低下了头，垂下了被顶着一颤一颤的秀发，好好地用膣肉包裹住了{PlayerName}的肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1781
+msgid "{PlayerName}抓住{TargetName}双臂向后拉起，吊着已经被插到暂时直不起腰肢的{TargetName}继续接受肉棒的调教。\n弯下了的腰肢反而减少了缠绕在阴茎上的阻力，更加方便{PlayerName}野蛮地前后撞击{TargetName}的屁股。\n“啊……嗯，啊……”迷糊地呻吟着的{TargetName}，从股间下流地滴落下来快乐的淫水，啪嗒啪嗒地在垫起来发抖的玉足之间溅起了水花。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1782
+msgid "被顶到了舒服的凸起的{TargetName}一下子大脑变得空白，只会使用雌性的本能，用精心锻炼过的腰腹收缩着箍紧了体内乱动的肉龟。\n“嗯，嗯嗯。”{TargetName}笨拙地发出低沉的闷哼，在{PlayerName}调整着角度，更加温柔地刺激了好一会肉穴之后才慢慢放松了下来。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1783
+msgid "柔软的膣穴被{PlayerName}坚挺的肉冠来回耕耘着舒服的地方，“啊……嗯……哈啊……{PlayerNickName}。”\n一声比一声娇媚的{TargetName}，红着脸向{PlayerName}投去了幽怨的眼神。\n兴奋地缩紧了发颤的膣穴徒劳地想要阻止肉根继续发掘，却不小心让粗糙的G点更加紧密地亲吻在了{PlayerName}的肉龟上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1784
+msgid "被粗暴地来回碾压欺负着舒服的地方的感觉，让{TargetName}弓起了姣好的腰腹在{PlayerName}的面前挣扎了起来。\n“{PlayerNickName}，啊嗯……那里……”结果被{PlayerName}抱得更紧了的{TargetName}，露出了无奈和委屈的眼神。\n最终{TargetName}闭上了眼睛，用发软的膣肉承接住肉棒的揉弄，酥软了身体辛苦地忍耐起{PlayerName}强硬的G点刺激。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1785
+msgid "刚刚插入不久就进攻起{TargetName}酥软的粘膜，腹肉紧张地收缩着，用层层叠叠的光滑膣肉挤压在了{PlayerName}敏感的龟头上。\n热情地相互爱抚对方舒服的部分，让{TargetName}一时间像是舒服到融化掉了一样黏在了{PlayerName}的身上，任凭粗壮的阴茎激烈地进出膣穴。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1786
+msgid "被{PlayerName}左右按压着鼠径部调整抽送角度的{TargetName}，用力地抓紧了身下的东西。\n“嗯呢……”红着脸的{TargetName}被顶到了舒服的地方，柔软的玉足发着颤踩在了{PlayerName}的胸口上，想要正在短促地来回剐蹭敏感点的{PlayerName}拔出去一些。\n结果被{PlayerName}反过来抓住了发抖的脚腕向两边张开，一边用力地抽插耕耘一边露出了正在进行交合的结合部。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1787
+msgid "胯下的{TargetName}粘腻地发出舒服的声音，娇柔的细腿不知不觉中勾在了{PlayerName}扭动着剐蹭嫩穴的腰肢上。\n“{PlayerNickName}，嗯……哈……”咬着手指的{TargetName}，从舒服得湿透了的秀发后面凝望着{PlayerName}，不自觉地抽搐着肉穴缠了上来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1788
+msgid "被从背后猛烈地顶弄屁股，不住地发出娇声的{TargetName}，被坚硬的龟头捣弄着舒服的地方酥软了腰肢。\n“{PlayerNickName}，啊，嗯，慢。”漂亮的秀发散落着在抽送下一阵阵发抖。\n接着被{PlayerName}抱住了柳腰固定住，严厉地用龟头棱角向下俯冲着，刺激起绷紧了的肉壁。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1789
+msgid "在抽插下趴在了{PlayerName}的身前，充当发泄的肉马的{TargetName}，被{PlayerName}从后面拉住了双手吊起了腰腹。\n光洁的小腹绷得紧紧地，在少女的娇声中好好地用舒服的地方承接起了{TargetName}的龟头撞击，在小腹中发出了酥麻的咚咚咚的声音。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1790
+msgid "骑在肉根上的{PlayerName}被{PlayerName}按住了腰胯固定住，向上啪啪啪地戳弄着舒服的地方。\n“哈……嗯~嗯”从小巧的口舌中溢出快乐的喘息的{TargetName}，忍不住垂下了秀发，按在{PlayerName}的胸口撑起了身体。\n“{PlayerNickName}，嗯……”酥麻了的小腹在{PlayerName}眼前，像是在述说里面的快感一样艰混乱地收缩起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1791
+msgid "{TargetName}被{PlayerName}抱住柳腰固定住，故意扭着腰肢，让粗糙的肉龟抵在了{TargetName}敏感的地方画圈。\n“{PlayerNickName}……嗯……嗯。”占据了主导地位骑在了肉根上的{TargetName}，濡湿了眼睛，从微启的朱唇中溢出了甜蜜的呻吟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1792
+msgid "少女温热的小腹贴在了{PlayerName}的身上难耐地磨蹭，在{PlayerName}的臂弯里已经用力地弓起了腰肢忍耐刺激。\n突起的肉冠刮挠着深处光滑的带来强烈的贴合感的肉壁，勾出了{TargetName}娇柔的喘息，和近距离的粘稠的视线，“{PlayerNickName}……嗯……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1793
+msgid "坐在了{PlayerName}的怀中左右扭动着柳腰挣扎，但是无法从{PlayerName}热情的臂弯中逃走的{TargetName}一边喘息着一边向{PlayerName}投去了幽怨的眼神。\n湿润的下体咕滋咕滋甜蜜地一次次包裹住进出的肉根，扭动着的身体更是让雌穴中的阴茎每次都被不同的角度剐蹭在湿滑的肉壁上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1794
+msgid "{TargetName}被{PlayerName}从后面抱住，用急促的阴茎顶弄玩弄着，一阵又一阵地绷紧了跨坐在大腿上的玉足。\n“{PlayerNickName}……嗯。”酥软地依靠在{PlayerName}怀里，激烈地收缩腰腹喘息，被{PlayerName}的肉龟撞击着G点的{TargetName}，投来了娇羞又不满的视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1795
+msgid "被顶到了舒服的地方的柔软的屁股在{PlayerName}的腰胯上斯磨挣扎，发抖着的小腿更是缠紧了{PlayerName}的身体。\n伸手扶起{TargetName}倒伏下来的柳腰，一边用温热的手掌爱抚着正在被滋噜滋噜地肉尖戳弄的地方安慰，一边湿润地咬住了{TargetName}垂下来的耳朵玩弄。\n“呜……嗯嗯……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1796
+msgid "双手牢牢地按住两只浑圆的屁股调整角度，让坚硬的肉龟刺激在{TargetName}舒服的地方轻轻剐蹭。\n明显地能够感觉到胸口上少女急促的心跳和因为快感贴合上来的小腹，“啊……嗯。”\n明显很舒服的{TargetName}抿着嘴唇垂下了发抖的耳朵，被{PlayerName}盯到害羞得不行的移开视线，下身却是更加兴奋地箍紧了{PlayerName}的肉根试图阻止肉龟继续剐蹭在光滑的黏膜上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1797
+msgid "强硬地侵入了少女发抖着想要夹紧的双腿之间，将肉根顶到了更加深的地方牢牢地镶嵌在了{TargetName}蜜穴中。\n粗大的龟头勾弄起{TargetName}舒服的地方，湿滑地将双方最舒服的地方交缠在了一起。\n被顶到踮起脚尖的{TargetName}，羞耻地抓挠了一会{PlayerName}的脊背想要挣扎，“{PlayerNickName}，嗯……按小腹……啊，嗯，作弊……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1798
+msgid "感受到分开股间的肉茎调整了角度，直直地撞到了小腹上舒服的地方的{TargetName}发出了一声娇呼。\n“啊嗯~……”小穴紧密地贴合在了开始在G点上研磨的肉根，兴奋地抽搐着舔舐{PlayerName}的黏膜。\n“咕……嗯……嗯。”不得不拉住{TargetName}的双臂，强制着{TargetName}继续弓出腰挺出发抖的小腹承受来自身后的冲撞。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1799
+msgid "{TargetName}被穴内粗暴地一下又一下抽插撞击在敏感点上的肉根，被顶着像是鸭子一样往前摇晃着移动，直到无法逃跑地被按在{SceneName}的墙壁上。\n“嗯~嗯！”娇柔的小腹贴在了微凉的墙壁上，咕滋地被身后的肉根掘进了发抖的G点。\n{TargetName}湿滑的膣肉立即层层缠绕上了想要拔出去的肉根，趴在了墙壁上幽怨地看着准备继续捣入蜜穴的{PlayerName}，“啊嗯……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1800
+msgid "坚挺的肉根尝试着顶起{TargetName}入口附近的敏感点，“啊嗯……{PlayerNickName}，里面，嗯。”\n已经被气氛陶醉到濡湿了蜜穴的{TargetName}，笨拙地躲闪着{PlayerName}的视线，“没事，啊嗯~”\n明显地感觉到了过多分泌的淫水沿着开始顶弄着G点的肉根上流了下来，双颊酡红的{TargetName}，默默夹紧了流出口水的肉穴吞咽起{PlayerName}越来越激烈的肉棒。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1801
+msgid "咕滋……咕滋……，就蜜穴像是多汁的水果一样，依靠在{PlayerName}的身上发抖的{TargetName}，被肉根挤压着敏感点榨出兴奋的汁水。\n“嗯……唔，不要看……”{TargetName}也感觉到了从穴肉中小小地飞溅出来的汁液，却被{PlayerName}顶着弱点刺激着提不起力气反抗。\n在刺激下，{PlayerName}更加用力地摆动起腰肢，大力地顶开了层层包裹上来想要阻止的肉壁，粗暴地碾压在了紧致的黏膜上。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1802
+msgid "“嗯？”被{PlayerName}按压着小腹检查G点位置的{TargetName}，似乎还没理解{PlayerName}的行为地耷拉下来了一只耳朵。\n“呼……呼……嗯！”原本只是被轻柔地蹭过去的敏感点，突然被肉根用力地刮过，滋噜滋噜地来回按摩起来。\n“{PlayerNickName}……啊嗯……”融化了的{TargetName}，发着抖酥软地按住了手腕，却无法阻止手指继续撑开小腹上被激烈地刺激的地方。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1803
+msgid "被温柔地按摩着小腹，隔着腹肉将{TargetName}敏感的黏膜贴在了{PlayerName}坚挺的肉龟上擦拭。\n“啊……嗯嗯……”全身被刺激到一阵阵发抖的{TargetName}，露出了不满的表情。\n“嗯……不要一直那样……啊，嗯，这个也不行。”{TargetName}用酥软的手指好不容易拿掉了{PlayerName}的手指，结果贪婪的肉根记住了位置，狠狠地抽送着主动耕耘了起来，“嗯~嗯嗯。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1804
+msgid "被肉龟撞到了子宫口的{TargetName}，用力的绷紧了身体，膣肉以夹到有些发疼的程度缠紧了{PlayerName}的分身。\n爱抚着身体过了好一会冷静下来的{TargetName}，露出了略带歉意的眼神，“呼，嗯，对不起，刚刚很疼……”\n还没怎么好好开发过的子宫顶在了{PlayerName}的肉龟上发颤着缩紧表示了拒绝，接着粘稠地拉开了黏膜。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1805
+msgid "肉冠用边缘钩住了{TargetName}突起的子宫口，在外缘上画着圈按摩着，让{TargetName}迷糊地抬高腰肢想要插得更深一点。\n原本慢慢的画圈的肉尖，突然有些过分用力地撞进来，从湿滑的边缘按在了还没扩张好的子宫口正中上。\n“啊……嗯嗯！”{TargetName}酥软了腰肢，疼痛地全身微微抽搐着将抬起的腰放了下来，让肉龟回到了子宫口边上的肉沟里面。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1806
+msgid "扳开{TargetName}被插得有些酥软的大腿，{PlayerName}挺腰让肉根能够插到最深的地方，斯磨着将光滑坚硬的肉龟顶在子宫口附近的肉壁上。\n又被顶到了舒服的地方的{TargetName}，发着抖竖起了耳朵，接着被肉龟在子宫口上画着圈，仔细地研磨起敏感的子宫颈。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1807
+msgid "{TargetName}被{TargetName}的肉尖连续轻点着湿滑的子宫口边缘，一点点调教着放松宫口。\n“啊……呼唔……”逐渐熟悉了{PlayerName}的肉龟的形状的子宫口就像是嘴唇一样，一张一合地溢出蜜汁，涂抹在了{PlayerName}研磨着的龟头上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1808
+msgid "被{PlayerName}的肉龟挑起玩弄的子宫软肉，在深处轻颤着依偎在{PlayerName}的雄根上。\n咕滋……咕滋紧紧地贴合在一起。\n不时地被铃口顶到了子宫下方舒服的粘膜，{TargetName}开心地箍紧了小腹，让子宫颈搭在滑溜溜的龟头上用最舒服的地方抱紧。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1809
+msgid "被好好地训练了的子宫口，一被{PlayerName}的肉龟顶到，就像是另一个小穴的入口一样软乎乎的被拉扯着张开黏糊糊地拉丝的子宫口。\n“唔……嗯，{PlayerNickName}。”即使被激烈地在子宫口上画圈欺负，也没有任何不适感的{TargetName}，舒服地吐出湿润的热气深情地凝望着{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1810
+msgid "坚硬的肉龟轻点在{TargetName}的软乎乎的子宫口上玩弄，在多次的调教下已经能够很好的承受挤压的子宫口，在暗示下发起了抖。\n“咕唔……”张开了黏糊糊的子宫口，准备好了肉龟交配的亲吻的样子。\n咕滋咕滋，肉龟却不领情地顶撞起周围的粘膜，在淫乱地擅自张开的子宫软肉上剐蹭欺负，引得{TargetName}发出了闷闷的雌性娇声，“啊……嗯……呜。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1811
+msgid "“啾~”深处的子宫口抱住了压上来的龟头献上了甜蜜的亲吻，细微地在腰腹中发出的亲吻水声让{TargetName}羞红了脸。\n{TargetName}抚摸着小腹重新调整了一下姿势，让{TargetName}的肉根越过突起的子宫口压在了周围的肉壁上，紧密地抱紧。\n“呼呜……”感受着深处的肉根跳动，带动着肉冠剐蹭子宫的感觉，{TargetName}偷偷地满足地吐息，“啊嗯……嗯？等……嗯。”\n还没等{TargetName}适应，{PlayerName}就开始激烈地扭腰，揉弄按摩起了深处的黏肉。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1812
+msgid "深深地坐进股间的{TargetName}，用充满弹性的屁股压在了根部上带来了强烈的包裹感的同时，硬邦邦的肉尖顶到了肉穴的最深处的地方抵住。\n“咕唔……{PlayerNickName}，嗯。”肉龟边上湿润柔软的子宫口被压着歪到了一边，酥麻的如同触电般的快感随着肉尖的滑动让怀里的少女不时地动弹分开的纤纤细腿。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1813
+msgid "扶着少女的腰腹插在了肉根上，牢固地摇晃着手中的柳腰，让{TargetName}糜软的子宫口在肉龟上旋转着亲吻。\n“嗯！嗯……嗯嗯。”被填满的{TargetName}不时地发出闷哼声，却只能难以反抗地抓挠{PlayerName}的手背，夹紧了下身给{PlayerName}带去了更加厚重的包裹感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1814
+msgid "像是动物交配一样趴着的{TargetName}，被{PlayerName}抓住了屁股拉过去，用肉根塞满了雌穴，将粗糙的肉龟压在了深处的子宫口上宣誓自己的主权。\n“呜嗯……”{TargetName}的尾巴屈服着倒伏在{PlayerName}的手背上，身体阵阵发着抖被{TargetName}用肉冠来回勾弄突出的子宫颈。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1815
+msgid "被按住脊背趴下的{TargetName}，全身弓成了一个三角形，用柔韧地插到地了的触感提醒着{PlayerName}已经将{TargetName}填满了的事实。\n“嗯……嗯嗯。”趴在身下转过头来的{TargetName}，幽怨地看着正享受着征服感的{PlayerName}。\n湿滑的子宫附近被{PlayerName}俯冲下来的阴茎激烈地顶弄挤压，酥爽的快感开始冲击起胯下的{TargetName}，努力地夹紧了小穴承接{PlayerName}的欲望。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1816
+msgid "被从后面抱住的{TargetName}发出了黏黏糊糊的娇声，和下体中肉龟甜蜜地和子宫口接吻的感觉缠绕在了一起。\n{PlayerName}揉着手中开始发抖的腰肢，安慰着{TargetName}的小腹的同时用肉尖开始来回在湿乎乎的子宫嫩肉上画起了圆圈。\n“啊……嗯……嗯~”酥麻了腰腿的{TargetName}被搅弄着深处软在了{PlayerName}的手上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1817
+msgid "“嗯……嗯嗯 。”{TargetName}向后钩住了{PlayerName}的脖子将身体向前弯成了漂亮的弧形。\n坚挺的阴茎深深地插在小穴里面，抱着兴奋不已的{TargetName}，{PlayerName}扭腰用龟头仔细地研磨起了最深处的子宫口。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1818
+msgid "近距离地观察着对方的表情，轻柔地按住肩膀，将还想扭腰的{TargetName}按在了股间翘起的肉勾上，勾弄起滑溜溜的子宫口。\n“哈嗯……{PlayerNickName}。”一瞬间舒服到融化的{TargetName}，晕乎乎地回复了意识，赌气地看着{PlayerName}。\n轻轻摇动身下的肉根，让圆滚滚的肉龟磨盘在软肉上画圈研磨，怀中的少女就又软掉了腰肢趴在了胸口上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1819
+msgid "不知道是羞耻到生气还是因为激烈的快感，{TargetName}扑在胸口上一阵阵发抖，股间的玉腿不时地夹紧在深处搅动的棒棒。\n“{PlayerNickName}……”轻吐幽兰的{TargetName}，投来了粘稠的视线，“啊嗯。”\n坏心眼地用肉尖挑起了子宫的边缘压住，滋滋地研磨着敏感的子宫口重新将肉尖顶在了宫口上接吻。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1820
+msgid "站立的姿势让{TargetName}子宫略微下滑着贴在了{PlayerName}深深插入的龟头上。\n被{PlayerName}的肉茎强硬地侵入了双腿之间，趴在了肩膀上的{TargetName}，随着肉尖开始一下下托举起子宫口湿滑地摇晃，而在耳边放出甜蜜的吐息。\n“嗯……有点太深……{PlayerNickName}，哈~”滋噜滋噜地子宫颈被摇晃着贴在肉龟上更加激烈地滑动起来。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1821
+msgid "甜蜜地拥抱在一起的两人，似乎能够感觉到深处的柔软的子宫口被火热的龟头顶弄起来的啵啾啵啾的震动。\n“咕呜……”被近距离盯着的{TargetName}羞红了脸，抓挠在{PlayerName}的胸口上将视线移到了别处。\n少女发抖的双腿不时地触碰着被肉穴含住，正在深处慢慢搅动的肉根，随着肉尖的挑动滴滴蜜汁沿着肉根流了下来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1822
+msgid "{TargetName}光洁的脚丫被抓住高高地抬起来分开，将正深深地吞入肉茎啃食的肉穴暴露了出来。\n“咕唔……”被观察着膣穴，在身体深处被肉根勾引着按摩子宫颈的{TargetName}，用手臂捂住了脸想要遮挡住羞耻的表情。\n“啊……嗯嗯~。”随着龟头温柔地顶上子宫口根部的粘膜献上亲吻，{TargetName}不由自主地夹紧了湿润的蜜穴，律动着小腹用湿滑的肉壁抱住{PlayerName}跳动的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1823
+msgid "{PlayerName}的龟头点点亲吻挑逗着胯下的{TargetName}，刺激得少女呻吟得扭动腰肢想要移动着深处的子宫口逃走。\n察觉到了的{PlayerName}，伸出两只魔爪抓住了{TargetName}漂亮的细腰固定住，开始用肉冠来回爱抚起突起的子宫嫩肉。\n“啊……嗯嗯！”被雌穴的本能驱使着，被玩弄到晕乎乎的{TargetName}不由得钩住了{PlayerName}的腰肢。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1824
+msgid "正安稳地坐在{PlayerName}的腰胯上，斯磨着屁股碾压着{PlayerName}翘起的肉尖偷懒的{TargetName}被抱住了屁股牢牢地套在了肉棒上。\n“唔……嗯”软乎乎，湿漉漉的子宫口被挤着微微变形地黏在了硬挺的肉尖上摩擦。\n“{PlayerNickName}……啊~”还没等{TargetName}将嗔怪的后半句吐出，{PlayerName}便主动摇起了肉柱，沿着{TargetName}酥麻的子宫颈画圈搅弄了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1825
+msgid "“嘶呼……唔呼……”吐息着的{TargetName}被抓住了腰部，将柔软的子宫口亲在了{PlayerName}直直地竖起的龟头上。\n想要争夺主导权的{TargetName}，红着脸按住{PlayerName}的胸口抬起腰肢，但是被牢牢地再次按下，啪唧~地绵密地用软乎乎的屁股坐在了阴囊上。\n“啊，嗯嗯唔，{PlayerNickName}”接着被连续地向上戳弄的肉龟来回顶起子宫玩弄了起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1826
+msgid "被开发得能够被肉尖顶着分开黏糊糊到拉丝的宫口的{TargetName}，迷茫地飘逸着视线，用深处的子宫小嘴含住了一半的龟头，滋噜滋噜的吮吸。\n过了好一会才缓过来的{TargetName}，已经开始被{PlayerName}抱着腰肢左右研磨着敏感的子宫口壁，湿滑地轻轻抽插着，“嗯……呼……嗯呢。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1827
+msgid "挤压在{TargetName}充满弹性的子宫口上，像是湿滑的套子一样紧紧地包裹住插入的肉龟，阻止了进一步的侵入的同时给予了强烈的摩擦快感。\n“呼……呼嗯，呼，{PlayerNickName}”被插入重要的地方的{TargetName}急促地呻吟，缩紧了肉穴想要把肉棒挤出去。\n“有点，疼……嗯”皱起了眉头的{TargetName}已经到达了极限，无法再进一步扩张宫口容纳粗大的龟头插入。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1828
+msgid "被龟头亲吻着子宫口的正中心，稍微插进去了一些的{TargetName}酥软了身体，将龟头的一半包裹了进去。\n就像是肉穴中的另一只小嘴一样含住了敏感的肉尖，用同样敏感的子宫口吮吸了起来。\n明显兴奋过头的{TargetName}咬住了嘴唇，就像是想要不叫出来一样忍耐着，但是被{PlayerName}抓住腰肢，按在湿滑的肉壁上轻轻拧动，就忍不住漏了出来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1829
+msgid "{PlayerName}遵从着雌性的本能包裹住{PlayerName}的肉尖，用如同绸缎一样丝滑的子宫口来回缓慢地打磨着敏感的肉龟。\n无法忍耐地用两只手抓住了{TargetName}扭动的柳腰固定住，占据了主导权地开始激烈抽送起肉龟咕啾咕啾地狂暴地亲吻扩张开的子宫入口。\n“嗯……！嗯嗯，不行……”被控制住的{TargetName}不住的发抖，大量的快感从两人敏感的粘膜上不断地溢出来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1830
+msgid "随着{PlayerName}的肉根深深地顶入{TargetName}湿透了的肉贝，撬开最深处保管着重要的地方的子宫入口。\n“滋噜~~”温热的淫汁从发抖的子宫口中溢出，迎面浇淋在了{PlayerName}的铃口上。\n虽然看不到深处的情况，但是感受到了一股热流从兴奋的子宫中流出，沿着大腿滴了下来的{TargetName}害羞地移开了视线，主动放松了腰肢，接受了{PlayerName}一下下用力地撞在子宫口上的肉根。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1831
+msgid "“啵……啵滋啵滋。”被环抱着肩膀进一步坐进了{PlayerName}分开的胯间的{TargetName}，微微张开嘴，直到充满弹性的子宫软肉包裹住了{PlayerName}肉尖。\n被如此深地侵入到肉穴中的{TargetName}，没有办法大幅度回头或者弯腰确认身后的情况。\n只能努力地挺直了柳腰，蹬着着酥软地使不上劲的玉腿维持着平衡，无意识地蠕动着子宫口爱抚起插入的龟头。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1832
+msgid "“嗯……嗯唔。”被插入到了子宫入口里面的{TargetName}，一阵又一阵地夹紧了抱在{PlayerName}的腰上的玉腿。\n“{PlayerNickName}，里面……嗯。”冷静下来一些之后的{TargetName}缓慢地如蠕动起腰腹，深处的子宫咬在了肉龟上发出了让人酥麻到全身发软的水声。\n不敢再乱动的{TargetName}红透了脸，可爱地在怀里飘走了视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1833
+msgid "被身后的{PlayerName}进一步压上来，将健壮的雄根一点点顶入了不应该插入的地方的{TargetName}在胯下一阵阵发颤。\n“咕啾，咕啾。”卡住了想要缩回去的子宫肉圈，如同亲吻一般的蠕动触感裹挟着征服少女的快感让人爽到全身酥麻。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1834
+msgid "将{TargetName}乱蹬着的玉腿缠在脖子上架住，全身用力地压上了{TargetName}的娇躯，将肉尖强硬地插入了如同少女小嘴一样张开的子宫入口中。\n努力地用缩紧的子宫口承接住{PlayerName}的体重的{TargetName}，伴随着隐隐约约继续扩张的酥麻摩擦声，发出了难耐的呻吟。\n“嗯……嗯嗯。”最后在充满了弹力的子宫肉圈上停下，拔出去一点准备着下一次更加深的插入，“啊嗯~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1835
+msgid "在{PlayerName}的要求和顶弄下，低垂下眼帘的{TargetName}发着抖让坚硬的肉尖顶在了自己肿得圆圆的子宫口上，一点一点咕滋 咕滋地坐了下去。\n“呼……嗯……”让敏感的肉尖粘膜卡在了紧致地吮吸起来的子宫环上，露出了不满的表情，主动左右扭动起腰肢研磨起胯下的肉柱前端，“啊嗯~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1836
+msgid "柔软的子宫小嘴吮住了插入的肉根，用强硬的阻力和开始夹紧磨蹭的双腿阻止了{TargetName}的进一步深入。\n即使是这样抱在一起插着不动，也能够感受到贴上来的小腹中，子宫口吮吸着肉尖的酥麻触感。\n被近距离观察着的{TargetName}羞涩地别开脸，被开始拧动起来磨蹭的龟头顶到踮起了脚尖。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1837
+msgid "{TargetName}用力地在{SceneName}周围的物品上支撑起自己的身体，翘起浑圆的臀部向后挺出腰肢让{PlayerName}能够顶到更深的地方。\n被撑开得圆滚滚地套在了肉尖上的子宫肉环，卡住了{PlayerName}的粘膜，需要用很大的力气才能继续进行插拔。\n“滋，滋滋。”不顾{TargetName}的反对，在{PlayerName}强硬地抽插下，被按住背部站着的{TargetName}全身因为酥麻的研磨快感而不停地发颤。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1838
+msgid "“……滋，滋，啵咕。”在挠心的摩擦声之后，像是有什么东西突破了屏障一般，沉闷的水声从两人交合的部位深处发出。\n已经被插到了最深处的{TargetName}无力地扣紧了脚趾，享受着身为雌性的喜悦和被突破了子宫口的一瞬间的疼痛。\n“{PlayerNickName}……”{TargetName}润湿了的媚眼看了过来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1839
+msgid "感受着{PlayerName}粗大的肉龟钻进了重要的房间，被来回顶弄起子宫肉壁的{TargetName}蹬直了已经被快感灌到酥麻了的玉足。\n大大的肉伞粗暴地想要拔出来，反过来撞击在了紧紧地套弄在肉冠沟中的子宫颈上卡住，滋噜滋噜地开始研磨。\n“啊嗯~~！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1840
+msgid "被一次又一次顶撞着开发好的酥软的子宫口抽插，发出吞咽的口交声的子宫让{TargetName}产生了错乱的感觉，“哦，哦呜……唔……”\n外面被抽搐的肉穴夹紧了肉根舔舐，里面又被少女的子宫口交的快感足以让任何雄性都无法忍耐。\n激烈地抱紧了{TargetName}紧张的腰肢，细心地耕耘照料起{TargetName}的子宫。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1841
+msgid "挠心地颤抖的子宫，如同等待灌注的精液袋子一样紧紧地抱紧了{PlayerName}躁动的龟头亲吻。\n“啊……嗯……哈……哈~”女孩子诱人的娇声缠绕在了{TargetName}的耳边，伴随着套在肉根上，用阴唇与子宫进行的双重口交，啵滋啵滋地削弱了忍耐的意志。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1842
+msgid "强硬地让肉尖研磨在已经开发好的子宫口上，一点点扩张着子宫口将龟头没入其中，直到发出舒心的“啵~”的一声。\n如同榨精环一样，原本紧致地拒绝的子宫小嘴箍在了最脆弱的肉冠下面，随着阴茎的跳动不住地给双方带去足以抽走意识的快感。\n“啵滋，啵，啵滋。”在激烈的子宫奸下，原本想要收紧小腹反抗的{TargetName}意识逐渐飘远。玫红的身体顺从着本能，混乱地夹紧阴道承接着肉根的暴力抽送，抖着子宫震颤起了{PlayerName}的肉龟。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1843
+msgid "“嗯……这样可以吗？”\n“笨蛋{PlayerNickName}，不是在询问今天内衣的评价。”{TargetName}有些无语地半吊着眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1844
+msgid "红着脸脱到光溜溜的{TargetName}，勾了一下勒住了腿肉的袜子。\n白嫩的充满活力气息的肉穴和胸部展现在了{PlayerName}的面前。\n“袜子，不需要脱掉吗？”不如说在袜子的衬托下，娇柔的身体看起来变得更加的诱人了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1845
+msgid "全身脱到了一丝不挂的{TargetName}，一边撩起散落的雪白秀发一边大大方方地露出身体靠到了{PlayerName}的身边。\n但是微红的脸庞和发抖的身体还是暴露出了{TargetName}此时兴奋又羞耻的情绪。\n“不要一直把女孩子晾在一边……”意识到自己暴露了的{TargetName}飘逸开了视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1846
+msgid "“{PlayerNickName}要射精了吗？”感受到了阴茎的鼓动，{TargetName}冷静地做好了承接精液的准备。\n“呼唔，射吧，请不要故意忍耐。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1847
+msgid "“……？”{TargetName}微微地抖动着耳朵，察觉到了{PlayerName}的阴茎开始剧烈地跳动。\n“请全部，射出来。残留在里面会很麻烦的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1848
+msgid "被提前告知了肉根即将射精的{TargetName}，眯起了眼睛做好了承接{PlayerName}精液的准备。\n噗……噗滋。\n“呼，这样就是一发。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1849
+msgid "被膣肉裹挟着的阴茎在紧致的阴道中跳动着，一副快要爆发的样子。\n“啊……嗯，{PlayerNickName}要射精的话快点拔出去。”\n“在射在里面会怀孕……”{TargetName}有力地缩紧了阴道夹在肉龟上，想要把发抖的龟头挤出去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1850
+msgid "“……{PlayerNickName}在里面射出来了吗？”\n{TargetName}露出了不开心的表情，“明明说过还不是恋人的话，只能是普通的处理关系。”\n“唉，变得麻烦了，希望不要怀孕。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1851
+msgid "“噗滋，噗……”插入了{TargetName}的肉穴中发泄精液的肉茎，很快结束了注射的鼓动。\n“额……嗯。”脸颊微微发热的{TargetName}，缠紧了膣肉，用力地夹到有点疼的程度狠狠地榨取了一番。\n“都射进去了的话，那也就没有办法了。”{TargetName}用责怪的眼神侧视着{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1852
+msgid "“啊，射在衣服上了。”{TargetName}皱起了眉头，但是主动地将已经射脏了的布料贴了上来，仔细地擦拭着龟头的腹部催促着射干净了精液。\n“换洗的衣服，还没准备好。”{TargetName}露出了困扰的表情叹了口气，“还有气味……这样只能先穿着这样黏糊糊的衣服到处走了。要是被别人看到了的话。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1853
+msgid "感受着浇淋在身体上的粘稠的精液流动，{TargetName}用手指擦了一下流下来的精液，黏糊糊的在手指间拉出细丝。\n不知道是夸奖还是嫌弃，{TargetName}低垂下眼帘，“射在身上要用好多沐浴露才能洗掉气味。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1854
+msgid "“啊。”已经射了超过正常人射精次数的{PlayerName}，又一次发抖着将高潮边缘的阴茎贴了上来。\n“骗人的吧，还要射精，嗯。给{PlayerNickName}做性欲处理任务，好麻烦。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1855
+msgid "已经累到疲倦地喘息的{TargetName}，勉强地睁开一只眼睛看着{PlayerName}。\n“又射出来了吗？{PlayerNickName}还真是有精力，呼。”\n“这样的话，可以稍微休息会吗？反正{PlayerNickName}的那根射了之后，也不会马上勃起。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1856
+msgid "“嗯啊……射出来了，总感觉好像比平时的还要多。”\n“{PlayerNickName}被这样处理会很舒服吗？”承接着大量的欲望的{TargetName}带着询问的眼神看了过来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1857
+msgid "“结束之后还在发抖呢，{PlayerNickName}。”发出轻柔的呢喃的{TargetName}眨了眨眼睛望向{PlayerName}。\n“只是作为下次处理的参考，所以，有什么感想吗？。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1858
+msgid "“这次好像射了好多，作为性欲处理的一发来说已经很厉害了。”\n感受着超出常规的大量射精之后，肉根过度兴奋的跳动，让{TargetName}飘逸开了视线。\n“还没到恋人的话，这种程度的已经很满足了吧。其余的想法的话，唉，麻烦{PlayerNickName}平时再努努力。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1859
+msgid "{TargetName}感受着粘稠温热的暖流持续地从肉穴中喷出，甚至有一小部分被顶撞着深处抽插的射精肉龟挤着，从肉唇边缘漏了出来。\n“{PlayerNickName}，呼”脸颊微红的{TargetName}抬起被按住的腰肢，将变软的阴茎拔了出来，“里面被射的黏糊糊的。”\n“要是在变成恋人之前怀孕了怎么办啊，唉。”{TargetName}小声的嘟囔着。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1860
+msgid "被肉尖按摩着光滑的肉壁，顶着深处发出轻柔的呢喃声的{TargetName}，察觉到阴茎的搏动和跳跃。\n“{PlayerNickName}，是不是快要射了。好像比平时，呼，还要大。”\n“啊，乱动的话，会射在里面。”紧紧地夹住了即将大量射精的肉根，阻止进一步抽插的{TargetName}苦恼用敏感的地方卡住了肉龟。\n“有点涨的太大……啊。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1861
+msgid "{TargetName}紧致的小穴被兴奋过头的肉根撑开，精液咕噜咕噜地充满气势地灌进了{TargetName}发抖的肉穴。\n“被{PlayerNickName}内射了，呼嗯……”{TargetName}不知道是陶醉于气氛中，还是苦恼于无法将还在持续地抽搐射精的肉棒挤出去，藏起了微红的脸随着呼吸收缩起了小腹。\n光滑的膣肉按摩在跳动的肉茎上，一部分热乎乎的精液从黏膜交合的缝隙中下流地被挤了出去，“而且还射出来这么多……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1862
+msgid "肉尖膨胀着将精液涂抹在了{TargetName}的衣服上，顺着肌肤流得到处都是。\n看着原本以为可以包住的布料变得濡湿，开始渗出黏糊糊的精液，{TargetName}露出了为难的表情。\n“这样子肯定会被其他干员看到的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1863
+msgid "“有点太多了吧，{PlayerNickName}。”\n“唉，虽然对女孩子的身体感到兴奋是很正常的事情，但是射出来这么多在身体上。气味会很重的。”{TargetName}皱着眉头用手指挑起一些从身体上流下来的过多精液。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1864
+msgid "“唉，{PlayerNickName}怎么还能射出来那么多。”\n“正常来说，应该是越射越少才对呀，这样子要处理到什么时候。”\n面对着多次的射精之后还能大量产出精液的{PlayerName}，{TargetName}嫌麻烦地叹了口气。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1865
+msgid "“辛苦了，{PlayerNickName}已经忍耐了很久了呢。”\n持续进行手交刺激的{TargetName}靠在{PlayerName}的身体上近距离地观察着已经忍耐到极限，在手指间已经肿胀到没法动弹的阴茎。\n“哼哼，现在就让{PlayerNickName}射精。”手指轻柔地圈环，箍在了肉根上，滋噜滋噜地按进粘膜里面，接着啪唧啪唧啪唧地撞着肉伞催促起来。\n“好了，射吧射吧。”巨量的精液在{TargetName}的眼前像是排泄一样射出，“很爽对吧，{PlayerNickName}，呼唔……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1866
+msgid "手指缠绕在坚硬的过度忍耐了的肉茎上撸动，即使不用{PlayerName}说出来，{TargetName}也因为手指上的颤抖发现了{PlayerName}已经想要射精了的意愿。\n“{PlayerNickName}想要射的话就射出来吧。一直忍耐也不好……我也有点累了。啊，射出来了。”\n看着从手中发抖个不停开始射精的肉棒，{TargetName}用复杂的眼神看着{PlayerName}，“作为雄性来说已经很厉害了，忍耐这么久还能射出来这么多。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1867
+msgid "“啊……。”正用舌头黏在一鼓一鼓地发抖的肉尖上的{TargetName}，眯着眼睛用粗糙的舌面摩擦起马眼催促射精。\n“嗯！”超出预期的大量精液在舌尖的催促下喷出，灌进了{TargetName}的小嘴中从嘴角飞溅着溢了出来。\n慢慢用舌头垫着喷射中的肉龟摇晃的{TargetName}，像是放弃了一样闭上眼睛，好好承接住了精液，“慢……嗯呼唔……”\n“……呼……只是给好好忍耐的{PlayerNickName}，一点额外的奖励。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1868
+msgid "“呼……呼唔嗯。”安静地在肉茎下，用嘴穴温柔地包裹住发颤的肉尖的{TargetName}，眯起眼睛用舌头接住了大量地喷射进来的浓精。\n很快吸在了肉根上的小嘴被精液撞得满满的，白色的粘液从张开的嘴边溢了出来流到了脖子上。\n过了好一会才结束了射精，从黏黏糊糊，射到一片白色的嘴穴中拔出了肉棒，“……呼，噗哈。……用嘴接住，只是额外的服务。”\n{TargetName}被精液弄脏了的脸害羞地别过去，看向别的地方，“倒是{PlayerNickName}的身体没问题吗？一次性射出来那么多。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1869
+msgid "一瞬间浓白的水柱高高地从胸口射了出来，接着啪嗒啪嗒地落下。\n“哈啊……吓了一跳，”{TargetName}努力地用胸部包裹住胡乱抽搐着射精的阴茎，“好了，知道{PlayerNickName}很兴奋，但是不要射的到处都是。”\n“嗯……，好难夹住，精液一直在喷出来。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1870
+msgid "“唔啊……”脸红到不行的{TargetName}看着{PlayerName}的肉根粘稠地在小巧的乳尖上涂抹白色的奶油。\n“能用胸部射出来这么多，{PlayerNickName}是变态吗？”\n“唔，都从上面流到小腹上了。……女孩子的胸部又不是植物，才不要{PlayerNickName}用精液浇灌变大。”羞恼的{TargetName}瞪了{PlayerName}一眼。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1871
+msgid "用一直脚的脚背做垫子，另一只脚压住了肉龟细腻地摩擦着将射精中的阴茎压弯，开始用双足研磨。\n“呼……脚痒痒的，{PlayerNickName}还没结束吗？”当作垫子的脚背已经弯曲被湿乎乎的精液覆盖上了一层粘液，肉尖还顶在脚底上一阵阵地抽搐。\n“唉，用正常的方法处理会更舒服哦，{PlayerNickName}。这样射对身体负担会比较大吧。”双足无情地夹住中间敏感的射精肉棒，接着严厉地研磨起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1872
+msgid "察觉到已经过度忍耐的肉茎即将喷射的{TargetName}，用光滑的脚底踩在了{PlayerName}发抖的肉尖上压倒，接着按在了小腹上仔细地研磨。\n“辛苦了，{PlayerNickName}。不过是不是射的太多了，没问题吗？”{TargetName}微微红着脸，用脚趾夹住了喷射中的肉冠按摩起来。\n“这样对{PlayerName}来说已经是很棒了奖励的对吧，被女孩子踩着射精，变态。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1873
+msgid "细腻的{TagetSocName}触感从两边夹住了{PlayerName}已经忍耐到不行的肉龟，接着稍微的用劲，像是鼓掌一样啪唧地踩住中间的肉根开始研磨。\n噗滋，噗，噗滋。\n在玉足之间激烈地喷射出了巨量的精液，“射的很厉害呢，{PlayerNickName}。袜子的触感很棒吗？啊，好像射的更加厉害了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1874
+msgid "“唔……好多。”\n巨量的浓稠精液喷淋在衣服上，将{TargetName}还穿着的衣服全部弄到黏黏糊糊的，浸透了粘液的感觉让{TargetName}有点不太舒服。\n“唉，衣服的事情等会再说。倒是{PlayerNickName}，这个样子射精没问题吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1875
+msgid "厚实的头发层层缠绕在发抖的肉茎上，最后一下纤细的挑逗触感刺激地{PlayerName}一下子爆射了出来。\n“啊……”没有反应过来的{TargetName}，看着自己雪白的长发中高高地喷出的精液汁流。\n“不小心太用力了吗……嗯……，还在射精，作为性处理忍耐这么多在里面，还真是辛苦{PlayerNickName}了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1876
+msgid "“啊……头发变得好重。”\n被按在秀发上排出了大量的精液的{TargetName}，苦恼看着黏在了发梢上，将头发粘在一起的浓厚精汁。\n“这也太多了，还故意射在头发上，唉。”{TargetName}投来了幽怨的眼神，“虽然说，因为女孩子的魅力射出来这么多是有点高兴，但是请下次选一个好处理的地方排泄出来可以吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1877
+msgid "嫩滑的腋下根本没法留住那么多喷射出来的精液，汹涌的精汁冲击在{TargetName}的腋下，很快流的侧入上到处都是。\n“嗯啊……”{TargetName}露出了非常困惑的表情，“如果很舒服的话，明明可以选择其他更好的地方射出来的，为什么非要在这里。”\n{TargetName}用另一只手托住从侧乳上流下了的精液，“而且射的黏糊糊的，接下来的性欲处理还要夹着精液继续，唉。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1878
+msgid "“嗯……{PlayerNickName}抓的好用力。”{TargetName}难受的按住抓在腰间上的手指，大腿用力地夹紧了乱动的肉茎。\n滑嫩的双腿夹住了粘膜的两边前后慢慢地撸动着固定住，隔着一小段距离就到阴蒂的地方，白浊的水流充满气势地射了出来。\n“{PlayerNickName}很喜欢被这样夹着射精呢，明明只是夹在外面。啊，不要乱动。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1879
+msgid "感受着在肉乎乎的大腿间膨胀起来的灼热欲望，{TargetName}长长地吐出一口气。\n“{PlayerNickName}，还在射精。”飞溅的精液从柔软的股间溢出，黏在了耻丘上慢慢地沿着大腿上流下来。\n“呼……很好地进行了一次精液处理呢，有不舒服的地方吗？射的太多了或者是被夹得太紧。”{TargetName}微微泛红的耳朵一下下抖着。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1880
+msgid "“咕唔。”小心地给已经膨胀到极限的肉茎做真空口交的{TargetName}，一瞬间就被爆射的精液填满了嘴穴。\n“咳，咳，嗯。”大量的精液一不小心被咽了下去，一下子张开了嘴巴没法维持吮吸的{TargetName}慌张地用舌头勉强地接住已经装不下的精液。\n“唔……嗯……还在射精，咳，装不下……嗯。”嘴角都是精汁的{TargetName}气馁地弯下了耳朵，“早知道，嗯，最后不用嘴巴处理了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1881
+msgid "伸手抚摸着{PlayerName}已经开始收缩起来的阴囊，准备好承接欲望的{TargetName}吐出湿热的气息，最后用力地吸紧了发抖的敏感肉龟。\n“咕……咕噜……咕。”{TargetName}提前缩紧了喉咙，红着脸安静地闭上了眼睛等待着结束。\n直到肉根的颤抖结束，从嘴角还在不断地冒出放不下的精液，“噗哈……气味好重……，嗯。”\n“只是稍微给点奖励而已……唔，早知道这样的话，下次就吐出去好了。”{TargetName}苦恼地用手指刮着舌头上残留的粘液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1882
+msgid "“咕，咕咚，咕咚。”喉咙中发出大量的粘液灌入的声音的{TargetName}，被抓住了想要挣扎的脑袋，强行地接受了超大量射精的注入。\n一开始还在努力的挣扎的{TargetName}，很快就因为浓烈的雄臭而窒息，眼神涣散着失去了反抗的意愿被{PlayerName}像是玩具一样发泄着欲望。\n“咕……咕噜咕……噗哈。”过了好久才结束了灌注，从双颊染上了雌性的酡红的{TargetName}口中，带着少女的唾液拔出了刚刚还塞满了喉穴的肉棒。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1883
+msgid "“嗯……唔，{PlayerNickName}的好硬。”早就被射精的欲望填满了的肉棒粗暴地压住了{TargetName}的舌头，似乎强行要求雌性准备接受雄性的种子汁一样散发出浓烈的气味。\n{TargetName}无奈地按住挺上来大腿拔出去一点插入的肉龟，“{PlayerNickName}，射在外面。啊，咕噜。”\n又被{PlayerName}粗暴地顶了进来，用随时会爆发的龟头顶在了发颤的喉咙上。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1884
+msgid "“呼，唔，嗯。”只含住肉龟的前端舔舐的{TargetName}，用手指缠住了已经开始蓄积精液准备射精的肉根。\n“呼，嗯……好了射吧。”煽情地吐出了被舔的红红的龟头，将舌头垫在肉根下面准备承接欲望的{TargetName}，用手指刺激着开始催促射精。\n“唉，涨起来这么大，看起来攒了很多的样子，肯定要射了。”\n“而且这样子做的话，{PlayerNickName}会射出来很多然后快点结束的对吧，处理也方便一点。所以，啊嗯……”还没等{TargetName}说完，已经忍不住的肉根强力地喷在了舌头上，很快把张开的嘴唇射的满满的。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1885
+msgid "“好了好了，请{PlayerNickName}慢点射。”{TargetName}抱着{PlayerName}的腰固定住，一只手用手心笼着激烈地爆射的龟头，一只手揉弄起了过度兴奋，射到胀痛的肉棒根部。\n近距离地观察着超大量射精的{TargetName}，微微红着脸，专注着开始挤出残留的精液。\n“呼唔，射舒服了吧，{TargetName}。”在{PlayerName}的面前展示着已经射到积起了小水洼，从指缝里面不停地滴落下粘液的手心。\n“唉，真是的，性处理也能射出来这么多。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1886
+msgid "“嗯！唔，唔，好多。”抱紧了{PlayerName}的腰肢，尝试着想要用嘴巴承接住所有射出的欲望的{TargetName}，理所当然地失败了。\n精液满溢着从嘴角漏出来，沿着{TargetName}漂亮的脸蛋流的到处都是。\n“嗯……射出来，太多了，{PlayerNickName}。”{TargetName}幽怨地望向了{PlayerName}。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1887
+msgid "要求将脸靠过来的{TargetName}露出了些许不满的表情，伸出手开始撸动起坚硬地随时可能爆发的肉根。\n“嗯！”浓稠的精液一股又一股在撸动下喷射在漂亮的脸颊上，将{TargetName}的绯红的小脸盖上了一层厚厚的精液面膜。\n“唔……嗯，下次，呜，不许再射在脸上。变态{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1888
+msgid "用力勃起的肉根有力的向上挺起，贴合着少女优美的股间曲线，在小穴前翘起了已经装满了的肉尖。\n“噗噜，噗，噗噗。”在{TargetName}的注视下，肉根两边的大腿紧紧地挤压在阴唇上，一边舔舐着一边榨出精液。\n“呼，麻烦{PlayerNickName}，以后也可以这样多射点，处理起来就会快很多了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1889
+msgid "充满弹性的柔韧大腿强力地缠绕在了{PlayerName}的肉根上，像是榨汁一样仔细地箍紧肉根，在大腿的深处榨出来。\n“呼嗯。”感受着汩汩从大腿上流下的代表雄性屈服的热流，{TargetName}满意地吐出一口气，“也没算是白费力气帮{PlayerNickName}做。”\n“不过，嗯，射出来，好像有点太多了吧。”精液出乎意料地开始从紧致的腿间喷溅出来，“身体这样射没事吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1890
+msgid "“呼唔，嗯”被肿到硬邦邦的肉尖磨蹭着敏感的尾巴，同样吐出舒服的喘息的{TargetName}，转过来警告{PlayerName}，“呼，嗯，不要射在尾巴上。”\n“为什么，唔，以前就有说过的吧，尾巴很重要。啊。”结果被{TargetName}发抖的快要爆发的肉尖又插进了丛密的尾巴之中，顶上了{TargetName}翘起的屁股。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1891
+msgid "“呜。”{TargetName}委屈地看着在自己的尾巴中激烈地爆发出精液的{PlayerName}，忿忿地抖了抖已经沉重地快要抬不起来的尾巴。\n“射出来这么多。”巨量的精液完全渗透到了细密的尾毛之中，将毛发浓密地黏在了一起，变成了皱巴巴的样子。\n“咕唔……”{TargetName}鼓起脸生气地看着{PlayerName}，“虽然{PlayerNickName}射出来很多，很好，但是射在尾巴上也太过分了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1892
+msgid "精液流凌乱地拍在{TargetName}的脸上，很快浓浓地浇淋得{TargetName}睁不开眼睛。\n“呜啊……”嘴巴上都是浓厚的精液的{TargetName}发出了困扰的声音，“{PlayerNickName}怎么还在射精。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1893
+msgid "在{PlayerName}已经忍耐到极限的肉茎边扬起了俏脸的{TargetName}，准备承接射出的精液。\n“说实话不想用脸接住……唔，黏黏糊糊的，啊嗯……！”\n被突然爆发的精液打断了抱怨的{TargetName}，很快被流着浓浓的精液流心的肉根在脸上涂抹了起来，滴滴精液从脸颊上滴了下去拉出长长的细丝，展示出一副非常淫靡的景象。\n“唔……嗯，比预想的多好多。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1894
+msgid "{TargetName}毛茸茸的耳朵蹭着翘起肉根肚子，即使是不怎么敏感也能清楚地感觉到{PlayerName}兴奋的跳动。\n被沉重地蹭到歪头的{TargetName}，眯起了一只眼睛看着{PlayerName}，“已经要射精了吗？嗯……感觉量还好大。”\n噗滋，咕咚……咕咚……浑浊的水声在耳边响了起来，“用耳朵做也能处理出来这么多吗？”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1895
+msgid "被激烈的粘液流冲击到倒伏下来的耳朵，从摇晃的耳尖上垂落下来了黏糊糊的种子汁液。\n“{PlayerNickName}一定要在耳朵上射精吗？”{TargetName}一边露出困惑的表情一边闭上了一只已经被流下来的精液覆盖的眼睛。\n“到不是说，嗯，不行，但是射出来这么多，都流到头发上面了。”已经被射到濡湿的耳朵又勉强地翘起来，不满地拍在了流出精液的肉龟上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1896
+msgid "纤柔的手指捏住了{PlayerName}已经膨胀到极限的肉根，“呼唔。”\n满意地眨了眨眼睛，伸出一只柔软的手放在了肉龟的下面，接着像是三明治一样让鼓起的肉棒肚子在手指上滚动着研磨起来。\n“射吧，作为好好忍到现在的{PlayerName}，必须要给予奖励。”\n“一，二，一，二。”灵巧地给予持续的快感的{TargetName}，用手指撸动的节奏控制着射精速度，将爽到不行的超大量射精延长好长时间。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1897
+msgid "在{TargetName}漂亮的淡金色的眼瞳前，攀附在肉龟上的手指按住了正在流出先走汁的铃口仔细地研磨，“呼唔……”\n“我知道这样会很敏感的啦。倒不如说是故意这样做的。”手指接着抓出了发抖的龟头，嵌进冠状沟里固定在了用手指做成的榨精笼上。\n“反正都是射精处理，一次性全部射出来不好吗？”{TargetName}坏心眼地用另一只手包裹住了{PlayerName}脆弱的阴囊，温柔地开始握紧挤压。\n爽到不行的快感从开始激烈摩擦的铃口上传到全身各处，大量不受控制的精液灌进了满载的尿道中，噗滋噗滋地开始超大量射精，“哼嗯~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1898
+msgid "“咕唔……{PlayerNickName}这个年纪的男性可以射出这么多精液吗？”{TargetName}关切地看了过来。\n“身体不舒服的话最好去检查一下比较好哦，强行和女孩子做会恶化的吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1899
+msgid "“好厉害啊。”感受着从{PlayerName}的体内不断射出来的热流，{TargetName}就像是棒读一样发出了感叹。\n“……竟然对女孩子射出来这么多的。”把脸藏起来的{TargetName}微微红起了脸。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1900
+msgid "“嗯嗯，作为性欲处理来说，{PlayerNickName}这么配合地射出来可以打满分哦。”{TargetName}赞赏地点点头。\n“啊……如果能够不用让我那么麻烦就好了……精液还没射完吗？”实际上已经感觉到非常羞耻的{TargetName}，微微抖着耳朵。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1901
+msgid "“噗滋……”紧紧地包裹在{PlayerName}的阴茎上的膣穴在深处喷出的大量精液的推挤下微微鼓胀起来，接着因为加大的膣压从{PlayerName}的阴茎边缘喷溅了出去。\n“呜……”身下接受中出的{TargetName}担心又羞耻地藏起了脸，还在接受着持续地灌入的精液的小穴微微抽搐着，从装不下的边缘漏出精液。\n“射出来这么多，就算那个还没到，也是会怀孕的。”{TargetName}露出了一只湿润了的眼睛嗔怪地看向{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1902
+msgid "咽口水的{TargetName}早就因为小穴中变得坚硬无比的肉茎抽插而唤醒了一些身为雌性的本能，“咕嗯……”\n“{PlayerNickName}，要……射在里面吗？”{TargetName}红着脸低声地询问{PlayerName}，“呼嗯，感觉好像积攒了很多。但是嗯，果然还是希望拔出去。”\n暖呼呼的液体流动的感觉，在{TargetName}开始本能地缩紧缠住的膣压下变得更加明显。\n“啊……唔……”因为刚刚自己的表现，勉强地承接住了巨量精液的{TargetName}羞耻地抖起可爱的耳朵。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1903
+msgid "坚硬的阴茎粗暴地顶进了{TargetName}的雌穴开始汹涌地发泄自己的欲望，很快将{TargetName}颤抖的粉嫩肉穴涂抹上了自己的颜色。\n“咕呜……”被大量灌注的{TargetName}，红透了脸，暂时无法容纳下那么多精液的小穴开始喷溅着倒流出装不下的粘液。\n“射这么多在里面，明明还不是恋人……太出格了，{PlayerNickName}。”{TargetName}象征性地抵抗了一会，就软下了腰肢暂时陶醉在了淫靡的气氛中。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1904
+msgid "{TargetName}好好地用充满雌性魅力的身体承接了大量的欲望。\n“呼唔……，竟然对还不是恋人的女孩子射这么多。”与嫌弃的口气相反，{TargetName}似乎是因为得到了雄性的认可而有点开心的样子。\n“总之，嗯，还有要射出来的吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1905
+msgid "{TargetName}伸出了纤细的葱指，安抚起喷射出了大量精液，迅速软了下来的阴茎。\n“唉，明明射了那么多次，结果还能射得这么厉害。虽然说作为有魅力的女性被认可而开心，但实际上有点吓到了。”\n“……如果不舒服的话，稍微休息一下比较好。”{TargetName}露出了关心的表情，用手指包裹住了肉根慢慢地按摩抚慰。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1906
+msgid "努力地用身体满足了{PlayerName}的{TargetName}，全身淋满了细密的香汗。\n“射出来这么多，已经可以结束了吗？呼唔……”\n“帮{PlayerNickName}做性欲处理，也是很累的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1907
+msgid "{TargetName}看起来很专心地在用身体承接{PlayerName}的精液的样子。\n“……？怎么了，{PlayerNickName}？”{TargetName}漂亮的眼睛转了过来，好像是在做很平常的事情一样。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1908
+msgid "“高潮了一次呢，{PlayerNickName}。”\n“射精的感觉很棒吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1909
+msgid "“唔……”{TargetName}用手指拉开腋下粉中透红的肌肤，让{TargetName}射在了上面。\n“虽然说已经知道{PlayerNickName}的性癖很奇怪了，还是不能理解为什么要射在这里。”\n重新夹紧了腋下的{TargetName}困扰地皱起了眉头，“刚刚射进去的黏在里面了，嗯……”，似乎每次动作都会很明显地感觉到精液的湿滑触感。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1910
+msgid "将精液黏糊糊地打在了{TargetName}的胸部，在粉嫩的乳球上增添了一笔浓白。\n“呼……满足了吗？在女孩的胸部上做自己的标记。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1911
+msgid "射在布料上的精汁慢慢沿着衣服的褶皱流了下来，湿漉漉地贴在皮肤上压弯，接着滴落下来。\n“嗯……只有这么一点的话，还可以擦掉。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1912
+msgid "耳朵上的绒毛在精液的润湿下塌下去了一点，粘稠地吸附在了{PlayerName}结束射精的龟头上。\n“……耳朵有点痒痒的。听不到{PlayerNickName}射精的声音，已经结束了吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1913
+msgid "射出的精液一股又一股地挂在了{TargetName}的脸颊上，拉出了一条淫靡的丝线。\n“嗯……唔。”{TargetName}在结束之后才慢慢睁开了眼睛，用不满地表情瞟了一眼{PlayerName}，“射在脸上会有气味的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1914
+msgid "{TargetName}轻挑玉足，让{PlayerName}好好地射在了脚上，拉出了一条淫靡的白色液滴。\n“已经没有了吗？”{TargetName}歪了歪头，主动将射脏了的脚趾踩了上去确认。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1915
+msgid "湿哒哒的精液射在了头发上，顺着柔顺的秀发慢慢浸了进去。\n“唉，先这样处理一下好了，不管的话头发要黏成一块的。”{TargetName}用手指擦掉了还在头发外面的更加浓稠的精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1916
+msgid "{TargetName}用手指挑逗着肉龟让{PlayerName}射在了手指上。\n“就这么一点吗？”{TargetName}眨了眨眼睛，在{PlayerName}的面前故意拉开手指展示里面拉出来的几根细丝。\n“呼唔……还以为那样用手指做会让{PlayerNickName}受不了的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1917
+msgid "用手心揉着{PlayerName}射精的敏感龟头，仔细地接住了{PlayerName}射出的浑浊小水洼。\n“好像没有了呢。”就像是挤沐浴露一样，{TargetName}另一只手撸动着阴茎帮助排出残留的精液，“感觉比较一般？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1918
+msgid "打在了柔韧的大腿上的精液，顺着少女优美的身体曲线滴下来一滴晶莹的白玉珠，挂在了股间上。\n“呼唔……”明显的粘液流过股间的感觉让{TargetName}放松开了双腿。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1919
+msgid "“阿姆……”撸着肉棒在{TargetName}的口中排出了欲望之后，{TargetName}低垂下眼睛含住了开始变软的阴茎。\n“滋，滋噜。噗哈。”默默地将射进去的精液吞了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1920
+msgid "“呼啊……”{TargetName}张开了小巧的嘴巴，向{PlayerName}展示了在舌面上来回滚动着的细长精液。\n“姆……啊姆。”被盯到有些脸红的{TargetName}闭上眼睛，“变态{PlayerNickName}……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1921
+msgid "漂亮的尾巴上挤上了一道白白的精液，{TargetName}忿忿地瞪了{PlayerName}一眼。\n“事后要记得帮我清理一下。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1922
+msgid "“呼……”，随着{TargetName}魅惑的吐息，柔嫩的小穴慢慢缩紧包裹住了{PlayerName}射精的阴茎慢慢揉弄。\n“{PlayerNickName}射在里面了啊。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1923
+msgid "当{PlayerName}射精的时候，没有及时察觉到的{TargetName}发出了疑惑的声音，“怎么，嗯，突然不动。”\n“诶，射在里面了吗？”{TargetName}微红着脸，偷偷收紧了小穴缠住开始变软的阴茎。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1924
+msgid "“嗯！”被粘稠的精液打在了子宫壁上的{TargetName}发出了闷闷的娇喘。\n“叽咕……”被注射了的子宫慢慢抽搐着磨蹭在结束了射精的肉龟上，“直接射到最里面了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1925
+msgid "已经被{PlayerName}玩弄到去了好多次的{TargetName}，就像是为了报复似的，这会努力地反过来刺激着{PlayerName}刚刚结束射精的阴茎。\n“……呼……呼……嗯，{PlayerNickName}太狡猾了……”似乎是因为没法让{PlayerName}再继续射出来而有点生气。\n“唔，没事。”慢慢冷静下来的{TargetName}，掩饰着撩起了垂落下来的头发。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1926
+msgid "体力已经快要到达极限的{TargetName}，在{PlayerName}射精之后拥抱着一起休息了一会。\n“呼唔……嗯，{PlayerNickName}，还要继续吗？”淡金色的眼睛慢慢睁开，近距离地观察着{PlayerName}的表情。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1927
+msgid "“呼唔。”{TargetName}看起来很满意地眯起了眼睛。\n“这个量，作为雄性来说，还不错。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1928
+msgid "“射了很多黏黏的呢，{PlayerNickName}。”{TargetName}抖了抖耳朵，继续地刺激着还在射出残余的精液的抽搐肉根。\n“呼唔……刚刚很兴奋对吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1929
+msgid "啪叽，啪。大量的精液泼洒在{TargetName}的柔软的腋下发出了粘稠的水声。\n不少的精液飞溅起来打在了侧乳上微微摇晃，“呼嗯……”{TargetName}发出了不知道是困惑还是满足的声音。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1930
+msgid "大量的精液就射在了{TargetName}的柔软胸部上，激得{TargetName}粉嫩的乳头缓慢的摇晃。\n“哈啊……”乳尖上慢慢垂下了新鲜的粘稠汁液，“黏黏糊糊地粘在上面。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1931
+msgid "发抖的肉尖蹭着{TargetName}柔软的乳房，湍急的精液流很快覆盖住了{TargetName}挺起的上乳，从乳尖上一滴一滴地拉出细丝。\n“呼唔……有必要这样在女孩子的胸部上撒娇着射出来吗？”散发着雌性魅力的{TargetName}，微红着脸叹了口气。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1932
+msgid "精液阵阵浇淋在衣服上发出啪嗒啪嗒的声音，在粘液的重压下，衣料紧致地贴在了{TargetName}的肌肤上，隐隐约约显示出了布料之后的优美曲线。\n“啊……这么多处理不干净的，衣服还没办法马上换。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1933
+msgid "完全濡湿了耳朵上的绒毛，溢出的精液沿着发颤的耳朵流到了头发上。\n“完全被弄湿了，抖耳朵都不方便，事后处理起来的会很麻烦的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1934
+msgid "“嗯啊。”{TargetName}漂亮的小脸上一层又一层地漫上了粘稠的精液。\n“额……”被精液弄花了脸的{TargetName}，勉强的睁开粘上了飞溅的精液的睫毛，“下次可以提前说一声吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1935
+msgid "精液噗滋地射在了{TargetName}的脸颊上，覆盖住了半张小脸，精液丝挂在脸上一点点地滴落下来。\n“呼唔……嗯，在女孩子脸上射精，还射出来这么多。”{TargetName}幽怨地瞟了{PlayerName}一眼，“贪心的家伙。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1936
+msgid "摇摆着玉足，让{PlayerName}的精液均匀地射在了脚背上。\n{TargetName}似乎满意地吐出了一口气，“对着脚能够射出来这么多，变态。”\n{TargetName}在{PlayerName}的面前摇晃着开始沿着边缘滴落下汁液的漂亮脚趾，“唉，黏黏的都是。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1937
+msgid "{TargetName}用光滑足底压在射精的肉龟上，一点点压弯。\n感受着足下飞溅出来的大量温热精液，{TargetName}长长地吐出了一口气，脸颊微红地看向足下的{PlayerName}。\n“需要我踩下去吗？好像快要射到结束了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1938
+msgid "大量的精液很快漫湿了{TargetName}光洁的秀发，沿着发梢开始滴落下来。\n“唉……”{TargetName}发出了困扰的声音，“也不是说非常讨厌射在头发上，但是这么多，头发都变重了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1939
+msgid "啪，啪啪，啪，{TargetName}一边用力地用手指圈成环，用力地从根部撸动着撞击在肉伞上催促射精，一边揉着{PlayerName}发抖的肉尖接住了不断从手心里面溢出去的精液。\n“很棒呢，{PlayerNickName}，好好地用手指射出来了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1940
+msgid "最终屈服于手指的肉竿，发抖着在{TargetName}的控制下吐出了大量的投降的肉汁。\n“哼。”{TargetName}好像很满意的样子，“手指有那么舒服吗？{PlayerNickName}。”\n吧唧，吧唧，{TargetName}被射的满手都是的，湿漉漉地握紧手心从边缘挤出精液，接着展示了用葱指拉出粘稠细丝。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1941
+msgid "大量地泼洒在白嫩的大腿上的浓精，随着{TargetName}放松，在两股之间拉起了精液桥，一齐垂流了下来。\n“嗯唔……感觉像是穿着什么衣服在大腿上。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1942
+msgid "“咕嗯。”凶猛地射出的精液冲击在了{TargetName}的香舌上，接着飞溅进了还没准备好了的喉咙中。\n“嗯，咕……咕噜。”{TargetName}来不及用舌头堵住，只能放任{PlayerName}的大量精液灌进了喉咙。\n漂亮的睫毛随着口中精液的飞溅而轻轻地发颤，直到肉根结束了射精，{TargetName}才最后吮吸着拔出了肉尖，擦掉了嘴角有些溢出来的精汁，“咳嗯，下次射之前麻烦说一声。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1943
+msgid "“啊嗯……”{TargetName}伸出了舌头垫在了{TargetName}的肉竿肚子下面，如同按摩一样前后蠕动着挤压缩紧，催促着肉根排出精液。\n在温暖的口舌中，大量的精液逐渐积蓄起来，覆盖过了{TargetName}的舌头和牙齿。\n“……。”事后被要求检查的{TargetName}，轻哼了一声，露出了柔软的唇瓣之间已经被糟蹋得积起了白浊的水洼的地方。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1944
+msgid "{TargetName}厚重的尾巴被大量的精液濡湿，像是吸饱了水的毛笔一样，气鼓鼓地甩在了{PlayerName}的小腹上。\n“唉，已经跟{PlayerNickName}提醒过了吧，射在尾巴上很失礼的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1945
+msgid "{TargetName}丰满的肉唇好好地含住了{PlayerName}插入的肉龟，粘稠的水声从肉穴的深处响了起来。\n“唔……射在里面了，好多……”白白的浓汁装不下地开始从肉唇的边缘溢出来一些流到了大腿上，“呼唔……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1946
+msgid "{TargetName}明显地感觉到了膣穴内{PlayerName}激烈地射精，默默地夹紧了双腿让肉根在强烈的包裹感下可以更加舒畅地射出来。\n“射舒服了吗？{PlayerNickName}。”如同呼吸一般蠕动着光滑的肉壁，粉嫩的小穴黏膜被涂抹上了厚厚的一层精液，压在了还没来得及变软的龟头上敏感地磨蹭。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1947
+msgid "“唔嗯……”被肉龟顶到了女孩子最重要的地方的{TargetName}，被激发了作为雌性的本能，发着抖降下子宫承接住了温热地拍打在子宫壁上的大量精液。\n“感觉被，呼，{PlayerNickName}灌进来好多，在里面。”身体发热的{TargetName}身体深处，传来了一些液体摇晃的细微声音。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1948
+msgid "已经被{PlayerName}调教着去了好多次的{TargetName}，发抖着主动用身体承接住了{PlayerName}的欲望。\n“哈……哈嗯……”魅惑地喘息着，高潮到全身酥麻的{TargetName}，用湿润的眼睛望向了{PlayerName}，“好多热热的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1949
+msgid "似乎是陶醉在了雄性能为自己大量射出精液的淫靡气氛中，疲惫的{TargetName}睁开一只淡金色的眼睛，勾人地与{PlayerName}对视。\n纤细的葱指耷拉着缠绕在了一样软下来的肉棒上，“稍微，一起休息一会可以吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1950
+msgid "“呼唔……很厉害地射出来了呢{PlayerNickName}。”\n“又热又黏的，对女孩子发情的很厉害嘛。”{TargetName}好好地用身体接住了巨量的精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1951
+msgid "“忍耐辛苦了，努力地忍住之后射的很爽对吧。”\n“嗯……雄性能够这样射出来这么多……呼唔。”{TargetName}满意地吐出诱人的湿热吐息。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1952
+msgid "“射出来好多，稍微表扬一下{PlayerNickName}。”\n“能够学会忍耐来讨女孩子开心，已经超过了大部分男性了。啊……还在射，都流下来了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1953
+msgid "“嗯唔……”很快被喷出的精液打湿了半边的身体，粘稠的精液从腋下激烈地飞溅了出来，沿着软乎乎的乳球流到了肚子上。\n“嗯，这么多，夹不住了。”{TargetName}困扰地皱着眉头，“不如说，{PlayerNickName}能在那个地方射这么多出来，也太奇怪了。”\n已经被射到滑滑的腋下，只是轻轻抬起手臂都会拉出好多细密的精液丝线，“咕唔……”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1954
+msgid "热流在{TargetName}的娇躯上迅速地扩散开，溢出来的精液烫的{TargetName}的身体微微发抖。\n“嗯……呼唔，射出来这么多在身上，色狼{PlayerNickName}。”{TargetName}闻嗅着身上散发出来的雄性气味，意识到自己被大量的雄精标记了地红透了脸。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1955
+msgid "两团软乎乎的白兔里，白浊的水花一朵朵飞溅而出，零散地拍打在胸口上，而在乳压下，龟头已经把乳沟射的鼓胀了起来，从乳沟下漏出了装不下的精汁。\n“哈啊，”小腹因为精珠的流动而发抖，“都射到我的胸部装不下了。”\n{TargetName}嗔怪地看了{PlayerName}一眼。接着用力地按紧了双乳提供更强的乳压，继续揉搓发颤的肉尖。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1956
+msgid "白浊的精液打在{TargetName}柔嫩的乳房上，很快拉出了一条条淫靡的精液丝线。\n“唔……”{TargetName}露出了困扰的表情抖抖耳朵，“{PlayerNickName}也射出来太多了。等会会很难弄的。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1957
+msgid "{TargetName}的衣服很快濡湿了一大片，被厚厚地覆盖上了一层精液，随着{TargetName}娇躯的动作，这些精液湿乎乎的被抖落了下来。\n“这么多肯定会留下味道的，{PlayerNickName}。”被精液浸润了的衣服完美地贴合在{TargetName}的身上，勾勒出美丽的少女曲线。\n“唉，姑且先这也继续做吧。”{TargetName}放弃了似的，红着脸让沾满了精液的衣服继续包裹在身体上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1958
+msgid "“啊，嗯”皱着眉头的{TargetName}，两只软乎乎的耳朵都像是落了一层雪一样，被覆盖满了{PlayerName}的精液压弯了下来。\n“我说……{PlayerNickName}射的也太过分了。”{TargetName}抖着身体，垂下了眼睛，层层精液沿着秀发滑落了下来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1959
+msgid "将手指并拢，变成了能够装住精液的袋子的{TargetName}，幽幽地吐出一口气。\n“{PlayerNickName}辛苦了呢，”精液激烈地发出啪啪地声音从笼住肉龟的手指中飞溅出来，“射的好厉害。”\n默默地揉着{PlayerName}紧张地收缩起来的阴囊帮助着排出，手指上不断地垂流下装不下浓厚的精液，淫乱的样子让脸颊发热的{TargetName}飘逸开了视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1960
+msgid "纤细的手指掂起{PlayerName}的肉尖，让精液流一股又一股地飞进了手心里面。\n另一只手啪唧啪唧地撸动着射个不停的肉棒，尝试着控制{PlayerName}射精的节奏。\n“{PlayerNickName}也辛苦地忍耐了呢。”处理出来一手的精池，沿着手指漏出来的{TargetName}低垂下湿润的视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1961
+msgid "在强大的腿部压力下，精液像是水流一样从{TargetName}丰满的大腿之间飞出来。\n“唔嗯。”{TargetName}用大腿包裹紧了{PlayerName}的肉龟，让精液撞在了股间上，湿乎乎地沿着光滑的肌肤流到了脚上。\n温热的停不下来的精流冲击在{TargetName}的阴唇上，让{TargetName}害羞地微微颤抖起身体，“这么多……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1962
+msgid "美丽的俏脸在肉龟的面前被染上了一层又一层厚厚的白浊颜色。\n“呜……”勉强地睁开一只被涂上较少的精液的眼睛，苦恼地看向{PlayerName}，即使是被厚厚的精液覆盖害羞的红霞也透了出来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1963
+msgid "动着灵巧的双足，将{PlayerName}湿滑的精液涂抹在了脚背，脚趾，接着是脚底上的{TargetName}长长的叹了口气。\n两只玉足已经像是涂好了奶油一样，拉出细长的丝线滴出精液，“精液还在射出来，{PlayerNickName}很喜欢女孩子的脚吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1964
+msgid "噗滋~，就像是水流一样，爆发而出的精液漂亮地覆盖住了{TargetName}的长发，像是头纱一样包裹在上面沿着发梢滴落下来。\n“呜……”似乎是没有想到会被射出来这么多的{TargetName}，露出了无奈接受的表情，“头发变得好重。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1965
+msgid "“啊，咕。”眯着眼睛的{TargetName}被浓厚的精液一股又一股冲击在口腔壁上，多到{TargetName}开始本能地咕噜咕噜地吞咽了起来。\n被浓厚的雄性气味浸染到晕乎乎的{TargetName}，飘逸着魅惑的视线，叼着肉根好好地喝掉了大部分精液，“呼……哈嗯，啾，好多……头晕乎乎的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1966
+msgid "激烈的精液从撞在舌头上，高高的飞溅起来，让{TargetName}粉红的嘴唇布上了一圈精液丝线。\n被接住的精液从口穴中慢慢地积蓄起来，很快从嘴角满溢了出来。\n“嗯……”朦胧着双眼的{TargetName}喷出混乱的鼻息，向{PlayerName}展示了被精液射的满满的口穴，“咕呜……哈。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1967
+msgid "厚实的精液灌进了{TargetName}最重视的尾巴里面，很快变得像是吸满了水的绒布球一样皱皱巴巴的，沉甸甸地垂下来。\n“呜……”发出了屈服的娇声的{TargetName}，露出了不知道是羞耻还是生气的表情，“射出来这么多，在尾巴里面。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1968
+msgid "“噫嗯……”被灌入了大量的精液的小穴，本能地将发抖的肉壁挤了上来，紧紧地贴在发颤个不停的射精肉棒上抓紧。\n“那里……呼嗯……自己缠上去了。”害羞的{TargetName}，此时下体已经装不下这发满满地灌进来的精液，在强烈的膣压下从边缘湿乎乎地挤了出去，更加紧密地吸住了{PlayerName}的肉尖。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1969
+msgid "咚咚咚地用粗硬地忍耐到了极限撞击深处，接着爆射出来的{PlayerName}压在了{TargetName}的身上用尽全力授种。\n“{PlayerNickName}，呼，这样子射进来，不要抱地那么紧。啊……”\n陶醉在交配的氛围中的{TargetName}，红着脸半推半就地被{PlayerName}抱紧在肉棒上，从肉穴中不断漏出的精液暴露了{TargetName}身为雌性已经被灌满了的事实。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1970
+msgid "“咕嗯……”{TargetName}发出了一些难受的声音，直接被灌进了身体最深处的子宫的酸胀感让{TargetName}全身发抖。\n“肚子里面好涨”{TargetName}捂着自己仍然被肉龟卡住了子宫口，咕噜~粘稠地灌入热腾腾的精液的小腹，向{PlayerName}投来了雌性湿润的视线。\n“啊。”好不容易射完了一发的肉根拔了出去，紧致的子宫口好好地缩紧堵住了精液的漏出，“射进来好多……呜，都装在里面了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1971
+msgid "“射进来这么多，肯定会怀孕的。”脸颊染上了美丽的酡红色的{TargetName}，似乎是后悔让{PlayerName}无套插入的样子。\n“唔……”最后像是放弃了思考一样，咬住嘴唇，用濡湿了的漂亮眼睛看向还在激烈的高潮的{PlayerName}，默默地夹紧了肉穴中发抖的肉竿。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1972
+msgid "高潮迭起的{TargetName}，在混乱的快感中终于得到了{PlayerName}巨量射出的精液。\n“唔……呼唔……嗯，一只在故意忍耐，坏蛋{PlayerNickName}。”\n朦胧着眼睛，主动承接住{PlayerName}射出的精液的{TargetName}，笨拙地吐出了喘息，“下次嗯，不许只玩弄女孩子的身体。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1973
+msgid "因过分忍耐和连续射精肿大的龟头在{TargetName}的身体上激烈地喷射，让{TargetName}稍微有点担心起来。\n“{PlayerNickName}需要休息一会吗？现在也在不停地射精，有点担心是不是坏掉了。”脸颊绯红的{TargetName}整理了一下散乱的秀发，闪烁着目光给了一个担心的眼神。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1974
+msgid "在{TargetName}滚烫的身体上，浓浓的白浊喷洒了上来。\n“嗯……”虽然有些疲倦，但是{TargetName}眼中充满了情欲，舒展开身子接住了{PlayerName}的欲望，“{PlayerNickName}，嗯，射的好厉害。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1975
+msgid "发着呆的{Name}摆弄起了手指上的戒指。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1976
+msgid "“哈啊……”{Name}无聊地打起了哈欠，偷偷地拉近了和{PlayerName}的距离。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1979
+msgid "无事可做的白金拿出了一本旅游杂志，好像在研究旅行路线的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1980
+msgid "白金无聊地瘫倒在椅子上，手边抓着一个小笔记本，看着天花板发呆。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1981
+msgid "托着脸的{TargetName}盯着侃侃而谈的{PlayerName}，似乎是已经没有认真在听了的样子。\n“嗯，啊，刚刚说到了哪里？”被提醒了一下的{TargetName}揉捻着发梢，移开了注视的视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1982
+msgid "“嗯，嗯。”{TargetName}心不在焉地玩着头发，眼睛却从来没有从{PlayerName}的身上离开。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1983
+msgid "“唔……”手指被触碰着的{TargetName}，抖了抖耳朵。\n主动将手指缠了上来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1984
+msgid "被触碰着手臂的{TargetName}，习以为常地眨了眨眼睛主动看了过来，“有什么事情吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1985
+msgid "尝试着触碰{TargetName}的脊背，但是{TargetName}将柔韧的腰部递了过来。\n“这边的触感，{PlayerNickName}更喜欢对吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1986
+msgid "“{PlayerNickName}。”轻轻地呼唤了一声的{TargetName}，视线飘往了别处。\n放任了{PlayerName}继续更加大胆的抚摸。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1987
+msgid "{Name}不动神色地用手指触碰了一下{PlayerName}的手背。\n“……没事。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1988
+msgid "{Name}靠到了{PlayerName}的身边，很好闻的发香一阵阵传了过来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1989
+msgid "{Name}的柔软的尾巴搭在了{PlayerName}的身上，“……？”\n好像是无意识中把尾巴蹭在了{PlayerName}身上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1990
+msgid "坐在身边的{Name}，将圆润的大腿与{PlayerName}并排贴在了一起。\n“……啊。”好像{Name}意识到有点靠太近了的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1991
+msgid "{Name}的葱指有意无意地笼在{PlayerName}的手背上，象征着恋人关系的戒指触碰着肌肤。\n“没什么。”{Name}收回了手指。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1992
+msgid "{Name}靠过来贴在了身体上，从柔软的身体上传来了女孩子好闻的气味。\n“……”{Name}眯着眼睛，满足地靠在了身上休息一会。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1993
+msgid "“稍等一下。”已经成为了恋人的{Name}，很自然地帮{PlayerName}整理了一下乱掉的头发和衣领。\n“稍微注意一下自己的容貌比较好哦，女孩子更加喜欢干净的男人。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1994
+msgid "{Name}就像是宣誓自己的所有权一样，故意在{SceneOneCharaName}的面前抱紧了{PlayerName}的手臂，“唔……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1995
+msgid "被时常触碰着指尖的{TargetName}，敏感的竖起了耳朵，盯着{PlayerName}看了一会。\n“找白金助理有什么事情吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1996
+msgid "从{PlayerName}的手里接过文件的{TargetName}，被抚摸了一下手。\n“哼。”{TargetName}淡淡地轻哼了一声。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1997
+msgid "“工作辛苦了，{PlayerNickName}，稍微休息一下吧。”\n身为助理的{Name}靠了过来稍微揉了一下肩膀。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1998
+msgid "“{PlayerNickName}过来一下。”\n{Name}低垂下眼帘，像是妻子一样乖巧地帮{PlayerName}抚平了衣服上的褶皱和衣领。\n“要记得注意形象，{PlayerNickName}可是很重要的人。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:1999
+msgid "“呼唔……”\n{TargetName}舒服地眯起了眼睛接受了{PlayerName}的按摩。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2000
+msgid "“{PlayerNickName}看起来好像很累的样子。”\n{TargetName}牵起了{PlayerName}的手，“要一起去周围的休息室休息一会吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2001
+msgid "“已经好困……哈啊……”{TargetName}打了个长长的哈欠。\n“我先去睡觉了。”{TargetName}揉着朦胧的眼睛先躺了下来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2002
+msgid "“……唔。”{TargetName}最终被疲劳压垮，闭上了失去神采的眼睛昏睡了过去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2003
+msgid "“哈啊……嗯。我先去睡觉了。”{TargetName}伸了个懒腰，疲倦地躺倒在床上，不一会就传来了平静的呼吸声。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2004
+msgid "“{PlayerNickName}先去睡觉吧，等会我也一起。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2005
+msgid "“早上好，{PlayerNickName}。”身边的{TargetName}一块打了个哈欠。\n“今天也有好多事情要做吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2006
+msgid "“早安，亲爱的。”\n“……{PlayerName}射进来的还在里面。”脸颊发红的{TargetName}低垂下眼帘，让{PlayerName}抚摸了自己的小腹。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2007
+msgid "“今天也辛苦了。”{TargetName}凑上来给了亲吻了{PlayerName}的脸颊。\n“那么~晚安。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2008
+msgid "“正好我也有点累了。哈啊……”\n{TargetName}用手指遮挡住嘴打了个哈欠。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2009
+msgid "“要去哪里约会吗？”\n“开玩笑的啦，视察罗德岛可远远算不上是约会。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2010
+msgid "“有不太方便的事情吗？”\n{TargetName}知趣地眨了眨眼睛，“总之有什么需要的话再叫我也可以。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2011
+msgid "“欸，要去和别的女孩子玩了吗？”\n“开玩笑的啦。”{TargetName}低垂下眼角整理了一下头发，“有需要的时候再来找我玩吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2012
+msgid "{TargetName}生气地叉着腰听着{PlayerName}的道歉。\n“知道自己做错了吗？{PlayerNickName}。”\n“唉，我也不是那么好说话的，这次就原谅{PlayerNickName}一次。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2013
+msgid "“唉，所以说当时为什么要那么做呢？”\n“好了好了，我知道了，因为一时冲动——，总之没有下次了知道吗？”\n{TargetName}叹了口气露出了无奈的眼神。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2014
+msgid "“感觉{PlayerNickName}完全没有说到要点上。”\n{TargetName}好像看起来更加生气了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2015
+msgid "“就算是恋人也有不可以和偶尔不可以的事情的。”\n发着脾气的{TargetName}不满地嘟起嘴，“请{PlayerNickName}再认真一点。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2016
+msgid "因为{PlayerName}的道歉，{TargetName}反而看起来更加生气地竖直了两只耳朵。\n“完全没法信任{PlayerNickName}不会再做出那样的事情。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2017
+msgid "“哈啊……说实话呆在岛上的日子太无聊了。”\n“虽然说其实每天都有任务，而且大家都有自己的事情要忙，但是感觉没有什么有趣的事情。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2018
+msgid "“说起来{PlayerNickName}是真的没有时间吗？”\n“上次邀请{PlayerNickName}的旅行计划，博士也没有同意，虽然我是知道有很多事情需要{PlayerNickName}处理。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2019
+msgid "“上次委托天灾信使帮我带一本卡西米尔新出的小说，但是好像运回来的路上因为天灾给弄丢了。”\n“虽然知道没有什么办法而且也不是那位天灾信使的错，但是有点生气。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2020
+msgid "“呼唔。谢谢咖啡。”{TargetName}接过递来的咖啡，满足地啜饮。\n“{PlayerNickName}有意加了很多糖呢，味道很不错。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2021
+msgid "“{PlayerNickName}泡的还可以吧。”\n“我可没有说{PlayerNickName}手制是加分项。”{TargetName}微红着脸继续喝起咖啡。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2022
+msgid "{Name}纤细的手指在{PlayerName}的面前放下了一杯热腾腾的咖啡。\n“给{PlayerNickName}的咖啡，有时间就趁热喝一口吧。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2023
+msgid "“有什么意见吗？”{TargetName}歪着头，看着{PlayerName}拿起咖啡喝了一点。\n“说实话咖啡豆我还认不全，不知道味道怎么样，会不会有点偏酸。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2024
+msgid "“虽然我这么说不太好，咖啡还是少喝一点比较好呢，毕竟算是一种阻断剂。”{TargetName}说着将一杯加好了牛奶的咖啡递过来。\n“作为恋人关心一下{PlayerNickName}的身体不是应该的嘛。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2025
+msgid "“有什么意见吗？”{TargetName}有些心不在焉的样子揉搓着头发。\n“感觉自己泡的手法不是很好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2026
+msgid "在忙着准备咖啡的{TargetName}微微甩动着尾巴，检查咖啡壶里面的容量。\n“好像料有点加的太多了。”有点手忙脚乱的样子。\n“好了，{PlayerNickName}点的咖啡。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2027
+msgid "“{PlayerNickName}要的咖啡。”过了好一会{TargetName}才端过来。\n“稍微认真地做了一下，应该不会很苦。”{TargetName}用心制作的咖啡散发出浓厚的香气。\n“只是平时不想花费那么多力气而已啦。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2028
+msgid "“先生您好，您点的咖啡。”面无表情的{TargetName}模仿着咖啡店员泡好了咖啡。\n“欸……果然是这样吗？以前的同事也说我完全不擅长营业。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2029
+msgid "“爱心咖啡准备好了。”{TargetName}笑着端过来咖啡，然后被{PlayerName}指出了笑容不是很自然。\n“……我也知道的啦。”{TargetName}长长地叹了口气，“不过咖啡味道还是不错的吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2030
+msgid "“{FoodName}的工序，我看看。”\n“还需要{MakeFoodTime}才能做好，稍等一下。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2031
+msgid "“做菜有一半时间花在切菜上，好麻烦。”\n{TargetName}长长地叹了口气，“不过这些都是必要步骤，也没啥办法。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2032
+msgid "“这次是要做{FoodName}吗？”\n“欸，我也要系围裙吗？”被{PlayerName}从身后围上了围裙系紧，“唔……好麻烦。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2033
+msgid "顺从着被{PlayerName}从身后系上了围裙，像是小妻子一样微红着脸，将散落的长发系成了马尾。\n“看够了吗？真是的。”{TargetName}的葱指点在了{PlayerName}的胸口上，“以后还会有机会穿的啦，先做{FoodName}吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2034
+msgid "“再怎么说，直接射在上面也太过分了。”{TargetName}低垂下害羞的眼睛看着盖上了一层冒着泡的精液的{FoodName}。\n“唔……虽然说是{PlayerNickName}的精液的话，也不是不可以。”闭上了眼睛的{TargetName}最后还是好好吃掉了{FoodName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2035
+msgid "“唉……”{TargetName}红着脸吃了一口沾满了{PlayerName}的精液的{FoodName}。\n“直接想要女孩子吃自己的种子的话，直接拜托就好了，又不是不给{PlayerNickName}做。”\n“故意射在食物上也太浪费了……这样不就是只有我吃掉才行了嘛。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2036
+msgid "{TargetName}平静地将{FoodName}吃了下去。\n“有什么问题吗？”{TargetName}奇怪地看着{PlayerName}，“除了里面有一种白色的酱汁味道有点奇怪，其余的都还好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2037
+msgid "像是在故意展示给{PlayerName}看一样，{TargetName}伸出了粉红的舌尖，仔细地品尝了{FoodName}。\n故意露出舌头上沾着白色的粘液的部分，眨了眨眼睛给{PlayerName}看了之后全部吞了下去，“……这种事情，下次直接要求就好了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2038
+msgid "看着递过来的食物，好像发现了什么的{TargetName}伸出了玉指挑起了藏在食物中的白色粘液。\n“阿姆~”放在了嘴巴里面品尝了一下的{TargetName}，眯起了魅惑的眼睛看向{PlayerName}，“坏{PlayerNickName}，要加自己的味道也不是这样加的。”\n最后{TargetName}还是吃完了{FoodName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2039
+msgid "“{PlayerNickName}，是有什么特殊的需求吗？”\n好像是察觉到食物中加了药物的{TargetName}长长叹了口气，梳理了一下头发还是将食物接了过来吃掉了。\n“既然已经是恋人的话，偶尔接受一些这种恶作剧也没什么，希望{PlayerNickName}不要玩的太过火了。”\n“明明直接跟这边说，也会好好吃下去的……”{TargetName}低声嘟囔着把最后一口吃掉了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2040
+msgid "在吃掉了{FoodName}好一会，{TargetName}才扭着身体地问{PlayerName}。\n“刚刚的那个食物里面加了什么吗？”{TargetName}染上了绯红的小脸，搭配上不安的表情显得格外可爱。\n“{PlayerNickName}也真是的。”{TargetName}咬着嘴唇移开了视线。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2041
+msgid "{TargetName}皱起了眉头，好像很不喜欢食物的味道的样子。\n“好苦。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2042
+msgid "“说起来，{PlayerNickName}也少吃点这种带辣味的。”\n“虽然辣的东西有时候很好吃，吃太多了的话会导致油脂分泌失调的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2043
+msgid "吃到了甜品的{TargetName}看起来很开心。\n“怎么了，女孩子喜欢甜一点的很正常吧，而且我也不是小孩子了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2044
+msgid "“{PlayerNickName}，这也太明显了吧。”{TargetName}指出了直接淋洒在食物上的精液。\n“就算是对恋人的恶作剧，这也太过分了。”\n“而且比起糟蹋食物，明明要求我帮忙发泄出来也是可以的。”{TargetName}看起来很不满的样子，拒绝了食物。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2045
+msgid "“{PlayerNickName}，应该知道我的嗅觉还可以吧。”\n{TargetName}随意地摆弄食物，将藏起来的精液露了出来。\n“真是的，{PlayerNickName}也真是恶趣味……明明让我来可以让{PlayerNickName}更加舒服的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2046
+msgid "“呼……”{TargetName}一脸轻松地从发出了冲水声的隔间里面出来了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2047
+msgid "放下了一叠文件之后，{TargetName}关切地靠了过来给{PlayerName}揉了揉酸痛的肩膀。\n“稍微放松一下。”少女的体香和柔软贴在了身体上。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2048
+msgid "进入了认真模式的{TargetName}，专注着整理桌子上文件，一副非常知性的样子。\n“不要发呆了啦。”{TargetName}敲了一下盯着自己想入非非的{PlayerName}。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2049
+msgid "“{PlayerNickName}那边出现了紧急情况。”\n帮忙观察战场的{PlayerName}指出了防御的漏洞。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2050
+msgid "“这个小组一直是待命状态，没有问题吗？”\n“哦，原来是这样。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2051
+msgid "{Name}拿起了计算器快速地敲打计算处理着文件，“好像对不上，需要重新审核一下。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2052
+msgid "{Name}懒散地坐在桌边，趴在文件上发呆。\n“嗯……只是稍微休息一下，等会会继续做的。”被催促了一下的{Name}不情愿地爬起来继续工作。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2053
+msgid "“文件好多……”被文件山埋住了的{TargetName}，放弃了似的趴在里面一动不动。\n尾巴不耐烦地甩在办公椅上，“……知道了啦，唉，现在继续做。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2054
+msgid "“呼！呼……呼嗯。”\n白金连续地击打着沙袋，发出砰砰地声音。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2055
+msgid "“呼——嗯。”柔韧性极佳的白金很轻松地将身体下弯，躲开了攻击。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2056
+msgid "“呼……稍微喝点水休息一下。”完全转化成战斗模式的{TargetName}，用毛巾伸进了衣服下摆里面擦干净了汗水。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2057
+msgid "“虽然说很想偷懒……但是这个还是认真对待一下比较好。”白金开始做起了战斗训练。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2058
+msgid "“会用无胄盟的方式训练博士的。”\n{TargetName}难得摆出了认真的架势。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2059
+msgid "“因为不可能随时护着{PlayerNickName}，所以{PlayerNickName}自己至少也要学会自保。”\n认真地准备模拟战斗的{TargetName}正视{PlayerName}，“会认真训练的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2060
+msgid "“注意不要在训练中弄伤了，{PlayerNickName}的战斗能力还需要更多的训练。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2061
+msgid "“{PlayerNickName}的战斗能力已经很厉害了，说实话有什么需要护卫的必要吗？”\n{TargetName}淡淡地叹了口气。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2062
+msgid "作为训练对手的{TargetName}格外地认真，用柔韧的身体以各种不可思议的姿势躲开了{PlayerName}的攻击。\n“呼……”暂时结束的{TargetName}扶着腰拉伸了一下身体，毫不在意地将宽松的衣服缝隙里面的春光露给了{PlayerName}，“继续吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2063
+msgid "灵活的{TargetName}缠上了{PlayerName}的身体，用柔韧的双腿绞住脖子将{PlayerName}放倒。\n“呼……这一局我赢了。”得意的{TargetName}拍了拍股间{PlayerName}的头，将腿松开，“啊，刚刚摔得太厉害了吗。”\n最后给{PlayerName}提供了柔软的膝枕，一起休息了一会。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2064
+msgid "“{PlayerNickName}还需要更多的训练。”评估着{PlayerName}的战斗能力的{TargetName}，长长叹了口气。\n“现在这个程度的话，说不定哪个小喽啰就把{PlayerNickName}抓走了，到时候我还要去救{PlayerNickName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2065
+msgid "“现在的战斗力的话，应该能够对付不少头目了。”\n暂时结束的{TargetName}擦干了身体上的汗水之后靠了上来，“变成了很可靠的男人了呢，{PlayerNickName}。”\n{TargetName}闭上了眼睛，倚靠在{PlayerName}的肩膀上休息了一会。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2066
+msgid "{Name}开始沐浴，哗啦啦的水声和热腾腾的水汽飘了起来。\n云雾中一个曼妙的女孩子的影子正在优美的身体曲线上涂抹膏液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2067
+msgid "白金绷紧了身体的肌肉在做耐久力锻炼的样子，高高扎起来的马尾微微摇晃。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2068
+msgid "“呼唔”深呼一口气的白金弯下腰，拉伸柔韧度极高的身体，做出各种不可思议的动作。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2069
+msgid "将跑步机维持在高速跑了好一会的白金呼呼地喘着粗气。\n汗水很快濡湿了白金的衣服，伴随着白金充满活力的步伐变得有点半透明起来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2070
+msgid "全身散发着运动之后的荷尔蒙的气味的白金决定停下来休息一会。\n被汗水濡湿的肌肤在灯光下漂亮地反光。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2071
+msgid "“要一起锻炼吗？”{TargetName}拿出发圈重新扎紧了散落下来的头发。\n“唉，锻炼身体又累又会出汗，但是又有各种各样的原因必须要坚持。”\n“身材啊，维持战斗能力什么的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2072
+msgid "“{PlayerNickName}也要一起锻炼吗？”\n“不是说不满什么的，锻炼的时候有各种身体接触很正常。”\n“总之先从跑步机开始？热身运动很重要。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2073
+msgid "“{PlayerNickName}来帮我一下。”坐在瑜伽垫上的{TargetName}分开双腿尝试着拉开自己的韧带。\n在{PlayerName}的帮助下弯下腰的{TargetName}，无意识地从胸口的掉下来的衣领中微泄春光。\n“差不多可以了，可以不用再压上来。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2074
+msgid "担任陪练的{TargetName}，在边上看护着{PlayerName}做肌肉训练，“稍微再加把劲，{PlayerNickName}。”\n“距离目标还有一半呢，不过注意不要把身体弄伤了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2075
+msgid "在和{TargetName}锻炼了好一会之后，一样浑身湿透了的{TargetName}将水和毛巾递了过来。\n“辛苦了，可以稍微等一会再喝。”\n“等会还要好几组动作呢，喝多了不好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2076
+msgid "“哼~哼~”轻哼着的{TargetName}好像心情很好地样子，又增加了一些{PlayerName}的负重。\n“这个重量，嗯，差不多了。”计算着重量大小的{TargetName}让{PlayerName}抱起负重做着耐力锻炼。\n“差不多，就算是差不多了，再问我就要生气了。总之，现在再做几个深蹲，注意不要伤到膝盖了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2077
+msgid "在一边规划着锻炼计划的{TargetName}，在{PlayerName}的计划表上多加了几笔深蹲组数。\n“……有什么意见吗？对男人来说，多做几个深蹲锻炼一下大腿肌肉是很正常的吧。”\n“尤其是{PlayerNickName}这样的经常要坐办公桌的，更加需要注意身材和腰腹力量。”辩解的{TargetName}不知道为什么脸红了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2078
+msgid "“毛巾。”在自行车机上挥洒着汗水，用力踩踏的{TargetName}示意{PlayerName}把毛巾递过来。\n专注于锻炼的{TargetName}左右扭着屁股，有力的大腿用力地踩在踏板上激烈运动，全身上下都充满了少女的活力。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2079
+msgid "“我已经大学毕业了哦。”\n被安排上学工作的白金露出了无奈的眼神。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2080
+msgid "“……这个怎么做的来着，以前的知识都忘得差不多了。”\n担任教师的白金看起来非常困扰的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2081
+msgid "“这根线，还有这个……啊啊……好麻烦。”\n翻阅着图纸但是看不懂的白金发出痛苦的声音。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2082
+msgid "“……”似乎是不太熟悉手边的工具，白金坐着发呆了好久。\n“弓箭的保养工作的话我倒是可以做一点。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2083
+msgid "“还有{MakeFoodTime}分钟，{FoodName}在哪个锅里面来着。”\n“工作好忙。”穿着围裙的白金忙得团团转。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2084
+msgid "用汤勺搅拌着大锅的白金，从额头上冒出了很多的汗水。\n雪白的秀发都粘在了一起，一副非常忙碌的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2085
+msgid "“哈啊……啊。”流水线上的白金打起了哈欠。\n“就没有有意思一点的工作吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2086
+msgid "穿上护士服的白金看起来非常的性感，“这个指数是什么意思？”\n白金用笔挠着脑壳，翻出护理手册查阅。\n看起来在医疗工作上派不上什么用场。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2087
+msgid "当起了护士的白金坐在患者的床边，听患者抱怨自己的身体状况。\n“……嗯，嗯。”虽然很认真在听，但是笔记上不知道记录了什么东西。\n“我去让主治医生来，您这个情况可以直接跟她说。”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2088
+msgid "比起正经的医疗工作，白金似乎更加适合护理工作的样子。\n虽然本人对于更换床铺，清点药物这样的工作并不是很感兴趣。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2089
+msgid "坐在办公桌后面的白金拿着简历一一进行对比。\n“也许这个……可以？”犹豫不决地将简历分到不同的盒子里面。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2090
+msgid "勉强能够胜任招募工作的白金似乎已经因为各种简历看花了眼。\n“呃……” 白金露出了无奈的表情靠在椅子上，看着一边的桌子上堆积起来的文件。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2091
+msgid "“哦，哦，您好，请问是……”白金勉强地用职业性的声线与终端里的对方联系。\n“啊，是这样的，关于您的简历，如果可以的话……”\n“唉……”最终挂断了终端的{TargetName}长长地叹了口气。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2092
+msgid "在办公桌后面维持职业性的微笑的白金努力地向终端里面的访客介绍罗德岛。\n“啊，非常抱歉。关于您的提问……”似乎是很难维持热情的前台小妹状态。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2093
+msgid "露出了死鱼眼的白金，发着呆，一副不知道应该做什么的状态。\n“叮铃铃……”\n“啊，您好，这里是罗德岛办事处。”很快切换上了甜美的表情开始邀请访客。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2094
+msgid "“啊……您好，您是说那个吗……啊哈哈……”\n正在邀请对方的白金似乎是被问到了难题，虽然在努力地维持表情，但是感觉汗水都要从额头上流下了。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2095
+msgid "“我看看……说是要一天浇一次水，还要注意有没有病虫害。”\n{TargetName}提着水壶查看着植物的牌子，“需要的水量是多少来着。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2096
+msgid "“已经自己醒来了吗？”{Name}揉着眼睛。\n“早上好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2097
+msgid "“既然能够自己醒来的话，应该不需要我再说早安了吧。”\n{Name}似乎是因为说好的工作没有必要完成而长长地叹了口气。\n“既然这样的话，我可以睡懒觉吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2098
+msgid "“啊，{PlayerNickName}醒来的比预想的要早。”同居的已经醒来了的{Name}在床边梳理着头发。\n“总之，早上好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2099
+msgid "“……？我把你吵醒了吗？”正在穿着更衣的{Name}不好意思地挠了挠脸颊。\n“虽然时间还没到，早安。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2100
+msgid "“早安，亲爱的……{PlayerNickName}。”\n似乎还是不习惯亲昵称呼的{Name}绞着手指道了早安。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2101
+msgid "“早安，亲爱的。”\n身为恋人的{Name}在脸颊上亲了一口。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2102
+msgid "“昨晚休息的好吗？{PlayerNickName}。”\n“不够睡的话，等会一起去哪里休息一会也可以。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2103
+msgid "“在我来之前已经起来了吗？”\n“再睡会懒觉等我来叫起床也是可以的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2104
+msgid "“该起床了，{PlayerNickName}。”\n昏暗的卧室中，{Name}掀开了{PlayerName}的被子红着脸叹了口气。\n“就算是这样邀请一起睡觉也是不可以的，已经到起床时间了啦。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2105
+msgid "“早……”提早了一点时间，打开了门的{Name}，似乎还没睡醒就跑来早安了，嘴巴里面还叼着发圈在门口准备梳理头发。\n“起床了啦，{PlayerNickName}。”虽然说没有准备完全，但是好像已经在自己的房间打扮好了的样子。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2106
+msgid "“早，该起床了。”早就爬上床的{Name}很快被暖呼呼的被窝俘获，“好困……”\n结果想要叫起床的{Name}抱着{PlayerName}一起睡了一会。\n“啊……有点睡过头了，{PlayerNickName}也快点起床。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2107
+msgid "没有同居的{Name}来道早安但是发现{PlayerName}已经醒了。\n“已经起来了吗？还以为{PlayerNickName}在睡懒觉所以在自己的房间等了一会。”\n似乎是因为没法亲昵地叫{PlayerNickName}起床，有点不太开心的{Name}揉捻着头发，“没事。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2108
+msgid "“早安，哈啊……但是时间还没到。”同居中的{Name}迷迷糊糊地抱紧了{PlayerName}的身体。\n“再睡一会可以吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2109
+msgid "在苏醒的{PlayerName}眼前，{Name}正在床边换衣服，像是在诱惑{PlayerName}一样无意识地翘起了屁股。\n“啊……早，{PlayerNickName}已经醒了吗？还有不要抓我的屁股。”\n{Name}害羞地转过身在{PlayerName}的头上敲了一下。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2110
+msgid "“{PlayerNickName}也真是小孩子气，按时起床也要亲亲奖励吗？”\n抱怨着在{PlayerName}的面前站定的{Name}，抱住了{PlayerName}的脑袋，闭上眼睛献上了亲吻。\n“啾，嗯……好了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2111
+msgid "害羞的{Name}扭捏地在{PlayerName}的面前，吐着细微的热气。\n“嗯……说好的早安亲吻。会有点害羞也是很正常的吧。”\n{Name}幽怨地瞪了一眼{PlayerName}，将柔软的唇瓣印了上来，“早上好，啾。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2112
+msgid "“早安，亲爱的。”{Name}顺从地低垂下眼帘，帮忙整理好{PlayerName}的衣领。\n“啾~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2113
+msgid "“……今天也很帅气呢。”成为了恋人的{Name}在仔细地观察了一番{PlayerName}之后献上了亲吻。\n“嗯……啾，总之今天也请继续加油。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2114
+msgid "{Name}将头埋在了{PlayerName}的胸口上磨蹭了一会，才酝酿好情绪。\n“嗯……”柔软的双唇按在了嘴唇上带来了甜美的触感。\n结束了早安亲吻的{Name}趴在胸口上画着圈圈，“早上好。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2115
+msgid "还未能同居的{Name}梳理了一下头发，低垂下眼睛站到{PlayerName}的身侧。\n“过来一点，嗯，啾。”\n“早安，每天早上还要跑过来给{PlayerNickName}一个吻，{PlayerNickName}的要求也太多了。”抱怨着的{Name}整理了一下{PlayerName}的外套。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2116
+msgid "绵软地散乱着秀发，困倦地一起躺在床上的{Name}抱紧了{PlayerName}。\n“啾……”轻柔地亲吻在了脸颊上，“这样也算是早安亲吻吧。”\n“欸，不算吗？那下次再考虑认真地亲一下。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2117
+msgid "“怎么提早醒来了。”正趴在身侧欣赏着{PlayerName}的睡颜的{Name}，支撑起上身在枕头落下雪白的秀发。\n“这样不就只能早点起来了嘛。”{Name}不满地抱怨着，俯下身将嘴唇按在了{PlayerName}的唇瓣上接吻。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2118
+msgid "“该起床了啦，亲爱的{PlayerNickName}。”一起陪睡的{Name}缠上了{PlayerName}的身体。\n“现在已经睡过头了。啾，啾嗯……”{Name}甜蜜地亲吻在了{PlayerName}的嘴唇上，身体却暂时没有放开{PlayerName}的意思。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2119
+msgid "“早上好，{PlayerNickName}，过了一点时间了啦，不能再睡懒觉了。”{Name}美丽的脸颊躺在枕头的另一边与{PlayerName}对视。\n“那么，呼……”吐着湿气的樱桃小嘴凑了上来，接着温柔地印在{PlayerName}的嘴唇上唤醒意识。\n“啾……嗯。快点起来吧。”稍微缠绵了好一会才放开了对方的嘴唇。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2120
+msgid "“啊，差点忘记了。”在{SceneName}的{Name}拉住了{PlayerName}的衣袖。\n“早上的那个还没做吧。”漂亮的眼睛扑闪着盯着{PlayerName}靠过来，“{PlayerNickName}也不提醒一下。”\n“嗯……啾。”柔软的唇瓣贴了上来印上了自己的痕迹，舌尖害羞地触碰对方的唇齿搅弄，过了好一会才分开，“呼……嗯……早安。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2121
+msgid "“说好的早安口交。早上就勃起这么硬。”{Name}伏在{PlayerName}的腰胯上露出了嫌弃的表情撸动着肉棒检查。\n“呼……嗯……”张开了吐出热气的小嘴将{PlayerName}的晨勃阴茎含了进去，咕滋咕滋地摇摆起脑袋。\n“……啊嗯……”不多时就在温暖的口穴中射了出来，{Name}一边用舌头舔舐着敏感的肉尖一边向{PlayerName}投去了无奈的眼神。\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2122
+msgid "“早上起来想要女孩子做口交，嗯……{PlayerNickName}也太奢侈了。”\n{TargetName}红着脸按在{PlayerName}的大腿分开，用甜美的嘴唇包裹住了{PlayerName}的肉根，开始用力地吮吸和舔舐。\n激烈地想要快点结束的口交很快就让{PlayerName}射了出来，“啊……嗯，又射在嘴里面。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2123
+msgid "“感觉怎么样？”身为恋人的{Name}安静地趴在{PlayerName}的大腿上，温柔地用口穴含住刚刚睡醒的肉茎做着口交。\n“舒服的话就射吧，啊，嗯……。”被抚摸着头抽插的{Name}安心地眯起眼睛，开始用柔软的舌尖承接{PlayerName}忍耐了一个晚上的欲望。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2124
+msgid "“对不起，有点忍不住了。”{Name}打了一个长长的哈欠。\n“我先去睡觉了，晚安，亲爱的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2125
+msgid "打着瞌睡的{Name}瘫在了枕头上，过了好一会才醒过来一小会，“嗯……好困。”\n“我想先去睡觉了。”身为恋人的{Name}困倦地眯着眼睛，可爱地嘟囔着，过一会又睡着了。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2126
+msgid "“……已经好困。”眼睛失去了神采的{Name}一点点拉下眼帘，不一会就传来了平静的呼吸声。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2127
+msgid "{Name}趴在了{PlayerName}的大腿上，拉下了内裤亲吻在了{PlayerName}的肉龟上，“早安~”\n就像是在跟肉棒甜蜜地说早安一样，{Name}张开了小嘴将坚挺的肉龟吞了进去，“很快就会帮你射出来的。”\n粗糙的舌面在温热的口穴中开始激烈地打磨起粘膜，很快就让{PlayerName}达到了高潮，“呼嗯~”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2128
+msgid "“需要恋人帮{TargetName}通精吗？”询问着惯例的早安口交的{Name}，脱掉了{PlayerName}的内裤，揉弄着放置了一整个晚上的阴囊。\n在肉龟上俏皮地亲吻了一下之后，将坚挺的晨勃肉棒吞入了口中慢慢地用唇舌爱抚起来。\n“呼唔……”在甜蜜的口交中感受着{PlayerName}粘稠的第一发精液在口中扩散开，身为恋人的{Name}开心地眯起了眼睛，将精液吞了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2129
+msgid "“早上好，{PlayerNickName}。既然醒了的话，就该做那个了哦。”\n“看起来还没睡醒啊，{PlayerNickName}。”坏笑的{TargetName}爬到了身上，拉下了被撑起了一股帐篷的内裤，“当然是说惯例的早安口交了啦。”\n温暖的口穴包裹住了因为微凉的清晨空气而发抖的肉尖，接着暖呼呼地全根吞下，很快就让迷糊{PlayerName}射出了浓郁的晨勃精液。\n“呼……处理完毕。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2130
+msgid "“该起床了啦，{PlayerNickName}。撒娇是不好的。”\n{Name}叹了口气用宠爱又无奈的视线揉了揉{PlayerName}的头。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2131
+msgid "“早就过了要起床了的时间了啦，{PlayerNickName}。”\n好像等了一会的{Name}不满地看着{PlayerName}，“好了，这是{PlayerNickName}要的早安吻。”\n不太情愿的将嘴唇贴了上来磨蹭，“下次起早一点。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2132
+msgid "“呼嗯……啾。已经过时间了。”接吻了之后，提醒着{PlayerName}已经超过了设定的早安时间的{Name}无奈地叹了口气。\n“下次可不会帮{PlayerNickName}保存这么久的，刚刚起来的好气氛会慢慢没掉的。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2133
+msgid "在难以呼吸的闷热中醒来，看到了{Name}正趴在脸上贪婪地吮吸{PlayerName}的嘴唇，好像已经亲了好一会了。\n“……啊。”漂亮的眼睛慢慢睁开，接着若无其事地继续亲吻起来，“都怪{PlayerNickName}睡过头了啦，再等一会。”\n柔软的身体缠了上来。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2134
+msgid "在刚刚的梦境中似乎梦到了正在喝香甜的蜜汁的{PlayerName}在温热中醒了过来，{Name}正沉迷于亲吻的脸贴在了眼前。\n好像已经深吻了好一会的{TargetName}，平静地拉开嘴唇，抹掉了舌尖上拉丝的汁液，“嗯。早安，{PlayerNickName}。”\n“时间已经很晚了，快点起来吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2135
+msgid "丝毫不在意在场的其他干员，{Name}将漂亮的小脑袋埋进了{PlayerName}的股间，拉开了内裤叼出阴茎，“早上好哦。”\n在亲吻肉尖打招呼之后，坏心眼的用牙齿轻咬，就像是炫耀自己能够独占{PlayerName}的晨勃肉棒一样，{Name}撩起了遮住的头发，用嘴穴前后摇摆着吞吐起来。\n“呼唔……”很快就用缠绕在肉根上的舌头把{PlayerName}刺激到交出了今天的第一发存货，{Name}淑女地闭上了眼睛，缩紧了嘴唇一滴不漏地将{PlayerName}的浓汁全部吞了下去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2136
+msgid "{Name}简单地和在场的其他干员打招呼之后，自然地拉开了{PlayerName}的裤子用嘴把还维持在晨勃状态的肉根叼了出来。\n“{PlayerNickName}，这根还是很有活力呢，看起来积存了很多欲望需要处理。”\n身为贴身助理的{Name}，就像是在做本分工作一样，在其他干员的眼前大方地将肉尖含进去开始用唇舌洗刷起来，很快就让{PlayerName}在舌头上喷射出了粘稠的欲望。\n“咕……咕噜……滋，滋滋，啾，{PlayerNickName}请继续工作吧。”身为恋人的{Name}狡黠地眨了眨眼睛，用力地吸干了肉棒，擦掉了嘴角的残留精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2137
+msgid "“既然已经时间过了的话，应该就不需要帮{PlayerNickName}做口交了吧。”\n微红着脸的{Name}似乎想要逃避助理的任务，但是被{PlayerName}要求了想要。\n“咕唔……难缠的家伙。”{Name}红着脸将勃起的阴茎含了进去。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2138
+msgid "在激烈的手交中转醒的{PlayerName}，被{Name}灵巧的手指按住了腰腹，毫不留情地用另一只手撸动着肉棒。\n“起床时间已经过了啦，懒虫{PlayerNickName}，让这边等这么久。”\n像是惩罚一样刺激着，最终挤着龟头，将柔软的唇瓣亲吻在了迷糊地发抖的铃口上，“没有口交哦，晚起床的{PlayerNickName}只能被允许用手，射吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2139
+msgid "咕……咕滋……伴随着胯下湿热的触感，{PlayerName}从梦境中浮起来，“嗯……早上好。”\n早晨金色的阳光漫射在少女的娇躯上，可爱的还没梳理好的头发的{Name}正伏在股间吞咽着勃起的肉茎。\n“时间已经很晚了哦，再不这样叫{PlayerNickName}起来就要迟到了。不过也……嗯，差不多了呢，射吧~”\n{Name}缩紧了嘴唇让{PlayerName}插在口穴中射出了早晨的第一发精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2140
+msgid "沉浸在梦境中的{PlayerName}，因为逐渐强烈的快感和最后强烈的高潮而苏醒了过来。\n“啊……嗯，早安，{PlayerNickName}，好像有点做太过了。”{Name}眯着一只被淋上了精液的眼睛，努力地用柔软的嘴唇包裹住摇晃甩动的射精肉龟。\n用力地吸紧了嘴唇很快将肉根里面的全部榨了出来，“啾~咕噜。哈，{PlayerNickName}睡太久了，所以从说好的时间开始就一直在咬，清爽的了话就快点起来吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2141
+msgid "“已经过时间了哦。”贤惠地将上衣递给了{PlayerName}之后，{Name}趴在了{PlayerName}的股间上，脱掉了内裤，“所以我们快点解决吧。”\n就这样抱紧了{PlayerName}的腰肢，{Name}将晨勃的阴茎尽根吞入，接着不给任何机会地激烈地口交起爱人的雄根。\n“……滋，滋啵，射吧。”最终将嘴唇用力地吸附在穿好了上衣的{PlayerName}肉棒根部上，尽心尽力地让{PlayerName}在口中射出忍耐了一个晚上的欲望。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2142
+msgid "“呼……嗯，怎么这么早就起来了。”已经开始偷吃肉棒的{Name}嗔怪地瞪了{PlayerName}一眼。\n被发现偷吃的{Name}羞涩地遮住了含住肉根吮吸的脸，就像是报复似得用舌尖来回地刺激柔软的肉根腹部。\n“起来了的话，那就快点射出来……唔。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2143
+msgid "“早上好……”正叼着肉竿，在被窝里面眯着魅惑的眼睛吮吸的{Name}，用舌头爱抚起了肉龟。\n“距离预定的时间还有好一会，唔。”好像已经含了很久了，唇齿中温热的触感温柔地包裹在肉竿上，“稍微再让我吸一会？”\n“还是说，嗯。”可爱地歪着头让肉尖在粗糙的舌面上滑动磨蹭，“就这样先来一发？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2144
+msgid "察觉到{Name}醒来了的{Name}，早就将纤细的手指缠绕在了{PlayerName}勃起的肉根上加强着晨勃的硬度。\n“早安~，{PlayerNickName}。”{Name}在耳边吹气，已经因为气氛双颊泛起了红晕，“想要在我的嘴巴里面射出来吗？”\n魅惑的低语得到了肯定的回复，“变态{PlayerNickName}”，轻咬了一下耳朵的{Name}，起身将已经竖的高高的肉尖迎入小巧的口穴中，温柔地吸榨出了早安精液。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2145
+msgid "“早上好，{PlayerNickName}。昨晚睡得怎么样。”躺身侧的{Name}温柔地抱住了{PlayerName}的腰肢，开始用手揉弄起阴囊检查着容量。\n“那么，按照惯例……呼唔……”{Name}羞涩的垂下了眼帘，骑到了{PlayerName}的身上，“开始早安口交了。”\n粘稠沉重地口交声在{SceneName}中响起，用力地吸着刚刚睡醒的晨勃的肉根，很快从发抖的肉竿中吸出了精花。\n“呼唔……嗯，啾。”似乎是因为浓稠的气味，久久地亲吻在龟头上的{Name}满意地眯起了眼睛。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2146
+msgid "“……虽然是顺着气氛，把初吻送给{PlayerName}了。”微红着脸的{Name}，捂着刚刚被仔细品尝了的娇唇。\n“并不是说后悔，也确实是喜欢{PlayerName}……所以送了出去。”\n冷静下来了一些的{Name}，用手指按在{PlayerName}的嘴唇上，“这件事，作为我们两个人的秘密可以吗？”\n漂亮的眼睛低垂下来，“希望我的眼睛并没有看错人，{PlayerName}是会好好负责的对吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2147
+msgid "被恋人的{PlayerName}夺走了初吻的{Name}，像是小猫一样磨蹭在{PlayerName}的怀里撒娇。\n眼睛闪闪发亮的，抚摸着自己的嘴唇反复品味着被亲吻的触感，“{PlayerName}……”\n“……没事，只是叫一声而已。”\n“{PlayerName}……”\n“我也会好好记住这份感觉的，所以……”\n“{PlayerName}……”\n“成为恋人之后，我们还会继续亲吻，一起做其他的事情，一直到变老，对吧。”\n{Name}牵起{PlayerName}的手掌，仿佛永不分离地十指相扣在一起。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2148
+msgid "“只是因为被{PlayerName}恳求了，才愿意这样做的。”为{PlayerName}的肉龟献上了初吻的{Name}，暂时将阴茎吐出来，轻柔地抚摸起娇嫩的嘴唇。\n“不用用嘴接住女孩子的初吻，反而是用这边的这根，坏东西，在女孩子的嘴唇上做自己的标记。”手指缠绕了上湿润的肉根维持着兴奋。\n“唉，第一次不是恋人那样的接吻，确实是有点失望。但是，啾~”主动地再次亲吻肉龟，“好像初吻给{PlayerName}的这根也不坏。”\n“作为补偿，作为恋人的{PlayerName}会好好地负起责任的吧，把女孩子重要的东西糟蹋成这个样子……”危险地眯起眼睛的{Name}，甜蜜地用舌头挑起阴茎，用柔软的嘴唇包住吮吸。\n“滋，滋啵，还会经常接吻的哦，跟{PlayerName}的这根，又大又粗的肉棒，然后狠狠地全部占有，榨干，作为浪费我的好意的报复。请做好觉悟吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2149
+msgid "象征着处女的鲜血从阴唇的边缘流出，{Name}被深深插入的狭窄膣穴抱紧了初次见面的肉茎，层层不安地抽搐着想要记住恋人的形状。\n修长的玉腿勾在了{PlayerName}的后腰上，幸福地将{PlayerName}拥入怀中缠紧，因为终于能够与恋人结合而兴奋不已。\n“虽然有点疼……但是，感觉很棒……嗯，变成了{PlayerName}的女人。”\n“可以稍微这样抱一会吗？小穴还没习惯，你那根粗大的东西。”平躺着的膣穴发抖着抬起入口，努力地容纳着肉根，插进了更加深的地方。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2150
+msgid "“呼……嗯……”伴随着{Name}诱人的喘息，破瓜的汁液濡湿了肉尖，从因为疼痛发颤的股间滴滴流了下来。\n“有点疼……”过了好一会才缓过来，高高地翘起臀部趴下的{Name}抓紧了身下的东西，嘴角衔着散乱下来的秀发，回过头深情地注视着自己的恋人。\n“但是因为是{PlayerName}的那根……很温柔，感觉很幸福。”膣肉心动地缠紧了{PlayerName}，邀请着{PlayerName}更多地将肉根插进来，用肉根标记胯下的雌穴。\n“再进来一点……欣特莱雅，还能继续……啊嗯。”轻颤着小腹，主动弯下腰肢将臀部顶在了{PlayerName}的小腹上，进一步用肉穴缠紧整根肉棒。\n“呼，终于变成了{PlayerName}的专属的小马了。”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2151
+msgid "发狠的{Name}咬住了嘴唇，撑在{PlayerName}的胸口上，因为破瓜的疼痛而颤抖。\n未经人事的膣肉狭窄得难以插入，只是插入了一半就因为巨大的阻力而难以继续深入，破瓜血顺着坚硬的肉柱流了下来。\n“嗯……呼……不需要……{PlayerName}拔出去，嗯，会让{PlayerName}全部插进去的……请好好记住欣特莱雅，啊！”\n发出娇声的{Name}最终将体重全部压在了肉根上，终于让两人的性器镶嵌在了一起，小穴严丝合缝地变成了最适合{PlayerName}的形状。\n“……好像有点做太过了，呼唔。”{Name}眼角沾上了晶莹的泪珠，安静地趴在了{PlayerName}的胸口上休息，“欣特莱雅的里面感觉怎么样？喜欢吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2152
+msgid "对面的少女惹人怜爱地轻颤，随着肉根缓慢挺动插入，鲜红的处女血沿着硬挺的肉竿滴了下来。\n原本狭窄得无法容纳任何东西的小穴紧密地贴在了肉棒上，开始尝试着变成{PlayerName}的形状，“笨蛋……{PlayerName}……”\n发颤地娇嗔的{Name}柔软地抓挠胸口，身体还在因为疼痛而抽搐。\n“再把我抱紧一点。”羞红了的脸颊上，低垂下来的漂亮双眼浸润了喜悦的泪水，“这个姿势，插得太浅了……呼嗯……会记不住{PlayerName}的形状……啊嗯~”\n纤细的柳腰被紧紧地抱住，娇柔的身体融化在了胸口上，手指在{PlayerName}宽阔的脊背上轻挠着留下道道红印。\n被抱着插到深处的肉穴，甜蜜地含紧了顶进来的肉根，开始漏出蜜汁冲淡了鲜血。\n因为温暖的拥抱而安心地冷静下来的{Name}，迷迷糊糊地瘫在肩膀上，“全部进去了……呼，{PlayerName}，笨木头，这个时候要，嗯，要跟女孩子接吻……”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2153
+msgid "被从身后看不见的地方刺入未经开发的蜜壶，{Name}弓起了细腰贴在了{PlayerName}的手掌上，沿着坚挺的肉矛流下了殷红的处女血。\n“{PlayerName}……”因为破处的疼痛而无法放松腰肢，紧绷着身体难以继续深入的{Name}发出了难受的声音。\n在{PlayerName}的安抚下，挣扎的{Name}逐渐安静下来，套在肉竿上的嫩穴也一点点被扩开，才成功放松着将全根包裹了进去，温暖地缠紧固定住。\n“刚刚的……对不起。”过了一会才冷静下来的{Name}意识到自己刚刚的表现，抽搐着还不习惯被填满的小腹，充满歉意地吮吸{PlayerName}插入口中的手指。\n“明明是{PlayerName}的恋人，第一次交合变成了这个样子……”\n“但是能够和{PlayerName}结合，感觉很幸福……以后会努力做好的……”\n{Name}像是顺从的妻子一样露出了羞愧的表情，在胸口上藏起了自己的脸。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2154
+msgid "“唔嗯嗯……”伴随着酥麻的颤音，处女的鲜血从站立的双腿之间流下，代表着{Name}的贞操已经被{PlayerName}夺走了的事实。\n{Name}抓挠着{PlayerName}逐渐压迫上来的脊背，因为站立的姿势，膣肉紧实地吸附在了肉根上，艰难地阻止着进一步的深入。\n“……呼……嗯，请，再抱紧一点……嗯，因为是{PlayerName}，所以，再疼一点也没关系。”\n“想要好好地记住{PlayerName}初次插入的感觉。”\n红着脸靠在肩膀上发颤的{Name}，咬紧了嘴唇，将无法着地的身体全部交给了{PlayerName}。\n“啊~嗯……”在两人的共同努力下，两人的性器官终于甜蜜地契合在了一起，难以分开。\n“{PlayerName}的，好厉害，烫烫的，在里面跳动……这就是恋人的肉棒。”{Name}被幸福的滋味冲昏了头，不经意依偎着{PlayerName}说出了下流的淫语。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2155
+msgid "肉根坚定地插入少女的未经人事的膣穴，让{Name}逐渐被顶着挺直了身体，被{PlayerName}按在了{SceneName}的墙壁上蹂躏，蜜液混合着红色的处女血沿着大腿流了下来。\n{Name}全身贴在了墙壁上，几乎站不稳地踮着脚尖浑身发抖着，尽力地翘起腰臀，容纳龟头艰难地进入到更深的地方，“可以，嗯，再进来一点。”\n随着最后稚嫩膣穴被阴茎扩开的粘稠声音，肉竿粗暴地钻开了{Name}的深处，不由分说地占领了{Name}的从未被被使用过的雌穴，在光滑的少女膣肉上拓印下自己的形状。\n“啊嗯~”甜蜜地发出了被征服的雌性呻吟，在经历了疼痛之后终于结合在一起了的{Name}，用充满爱意的视线望了过来。\n“小穴都被{PlayerName}的那根，填满了……呼，变成{PlayerName}专用的东西……”\n第一次就被雄性粗暴地征服了的{Name}，满足地吐息着被按住，融化了美丽的脸庞，沉浸在胯下融化在一起的性器搏动中。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2156
+msgid "在{PlayerName}的请求下，躺好的{TargetName}抬起了双腿抱住，用手指按在自己粉嫩的还未使用过的小穴上。\n“唔……多亏了{PlayerName}能够忍耐到现在。”红着脸的{TargetName}，保持着羞耻的姿势，努力让视线不从{PlayerName}的身上离开。\n“……现在，欣特莱雅是{PlayerName}的恋人，所以……”纤细的手指分开了粘稠地拉丝的小穴，露出了粉色的娇嫩膣肉邀请，“请，请收下我的处女……”\n说出了羞耻的台词的{TargetName}，被抱住了大腿分开，随着发烫的肉竿挺入而发出了粘腻的喘息声，“啊~嗯……那层膜，{PlayerName}，可以用力……嗯！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2157
+msgid "“唔……”被请求想要用后背位结合的{TargetName}，红着脸嘟起了小嘴。\n“第一次就想用动物的姿势征服女孩子，变态……”{TargetName}归顺地伏在{PlayerName}的身下，高高地翘起了圆润的臀部，主动用手指分开了湿润的阴唇露出了粉嫩的雌穴入口。\n虽然脸上看起来不高兴的样子，但是尾巴却开心地左右摇晃，似乎是期待着和恋人的结合一样，“麻烦，温柔一点，啊。”\n{PlayerName}的大手抓上了柔软的屁股压在身下，坚挺的肉龟搭在了入口上轻轻顶弄，“快点进来……嗯~”\n在催促下，强壮的肉根分开了{TargetName}完全没有使用过的嫩穴，轻柔地顶在了象征纯洁的处女膜上。\n一边安抚着身下紧张的{Name}，一边施加压力慢慢地收下了{TargetName}的处女，最终甜蜜地结合在了一起。"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2158
+msgid "“{PlayerName}，帮我扶一下腰……”{TargetName}一只手按在{PlayerName}结实的胸口上一只手扶起{PlayerName}坚挺的肉茎，亲吻在了如同花瓣一样娇柔的耻丘上。\n“呼唔……”悠长地吐出一口湿润的吐息之后，不安地弯下腰坐上了{PlayerName}的肉龟，将一半的龟头插在了花径的入口上固定住，前后摇晃着腰肢让双方的黏膜来回的亲吻润滑。\n“还没……嗯，做好心理准备。……{PlayerName}。”深呼吸着的{TargetName}，扣上了{PlayerName}的手掌。\n“我们，是恋人对吧。因为是第一次，接下来会痛哦，虽然有点害怕，但是最后肯定会很舒服地连接在一起。”\n“所以，请{PlayerName}不要乱动，可以吗？”漂亮的头发散落在了{PlayerName}的胸膛上。\n{TargetName}开始放松腰肢，将体重压在{PlayerName}的雄根上，一点一点地含入，“请……相信我……嗯！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2159
+msgid "{TargetName}跨坐在{PlayerName}怀中，亲昵地面对面将脸颊贴在了一起。\n很明显地能够感受到{TargetName}脸上传来的害羞的温度，“{PlayerName}的这根会插到这么深的地方……唔……”\n用手指测量着贴在小腹上的肉根长度，明显地能够感觉到{TargetName}紧张的吐息，“因为，第一次要给恋人，也就是{PlayerName}。不知道能不能全部插进去。”\n犯难的{TargetName}扶着{PlayerName}的肩膀抬起了腰胯，将柔软的阴唇贴在了坚硬的肉龟上，微微地插入分开。\n“这种事情，我也不知道啦，大概，可以……要不然不就，没法让{PlayerName}在里面射的很爽……”\n可爱地羞红了脸的{TargetName}和{PlayerName}对视，“那么……请温柔一点……嗯。”\n{TargetName}放下了腰段，在{PlayerName}的帮助下，缓慢地放下体重用水润的膣穴啃咬着侵入的肉龟将自己扩开，直到顶到了象征着纯洁的膜壁……“嗯唔！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2160
+msgid "{TargetName}柔软的藕臂挂住{PlayerName}的脖子，坐在了坚挺地翘起来的肉根上。\n“唔……好热。”伸手抚摸着胯下的肉棒，{TargetName}有些紧张的吞咽了一下口水，“还硬邦邦的。”\n用湿漉漉的阴唇舔舐了一会肉竿之后，{TargetName}蹲坐起来，扶着{PlayerName}的肉竿贴在了蜜裂上，将稚嫩的唇瓣分开。\n“{PlayerName}，稍微帮我一下……”被扶着腰稳定地蹲在肉尖上，用更加方便插入的角度含住了肉尖，确认着是否能够顺利插入。\n“第一次用这边做，麻烦{PlayerName}……多多关照。”深呼吸了一口的{TargetName}，用湿润的小穴包裹住了肉勾，顶在了坚韧的处女膜上，将身体向后用力地坐了下去。\n“嗯……嗯嗯！”"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2161
+msgid "{TargetName}娇声喘息着，已经被淫靡的气氛感染到酥软了身体，挂在了{PlayerName}的肩膀上，用魅惑的眼睛望着恋人。\n“啊……{PlayerName}。腿……”有力的手掌托起了{TargetName}一只浑圆的玉腿抬起来，分开了淫湿的股间，将滚烫的肉尖顶到了潮湿的花心上。\n这才笨拙地察觉到了{PlayerName}的意图，{TargetName}本就湿润的双眼低垂了下来，视线粘稠地仿佛能够拉出丝线一般，“可以哦。”\n“我的处女……本来就是属于{PlayerName}的。啊……嗯，轻一点。”{TargetName}娇躯被被顶得垫起了脚尖，全身发颤着，用阴唇亲吻着肉龟，湿漉漉的发出滋滋的水声。\n最终在与{TargetName}甜蜜的对视中，扶着{TargetName}柔软的柳腰，将{TargetName}温柔地按在了肉尖上破开了处女膜。\n“啊~！嗯……嗯……”\n"
+msgstr ""
+
+#: .\data\talk\chara\0204_白金.csv:2162
+msgid "感受着{PlayerName}滚烫发情的肉根贴在浑圆的翘臀上磨蹭，{TargetName}贴在了{PlayerName}的胸膛上微微发抖。\n就像是等待处理的猎物一样，翘起了屁股等待着{PlayerName}的恋人雄根的插入。\n“坏蛋{PlayerName}……嗯……”同意了将处女献给{PlayerName}的{TargetName}，羞红了脸徒劳地挣扎着，“没有听说过要用这个姿势……”\n“啊。”不由分说地被架住了肩膀，将{TargetName}的柳腰弯成了适合插入的弓形固定住，灼热的肉龟亲吻在了{TargetName}发抖着早就准备好了的小穴入口上。\n被{PlayerName}强硬的雄性气势压倒了的{TargetName}，酥软了双腿向雄性屈服地分开秘处，湿润的任人宰割的双眼从下面仰望身后的{PlayerName}，“稍微，温柔一点可以吗……”\n随着肉根撑开狭窄粘稠的阴道，{TargetName}发出了辛苦的呻吟，“……顶住了……嗯！”。"
 msgstr ""
 
 #: .\data\talk\chara\0220_格拉尼.csv:6
