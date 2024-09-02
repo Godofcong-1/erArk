@@ -24068,10 +24068,6 @@ msgstr ""
 msgid "{Name}触发了手指插入（A）指令的地文"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_breast.csv:6
-msgid "{Name}触发了摸胸指令的地文"
-msgstr ""
-
 #: .\data\talk\obscenity\touch_breast.csv:7
 msgid "{Name}借检查身体的由头触碰了{TargetName}的胸部\n绝壁\n是有些可怜的家伙呢"
 msgstr ""
@@ -24112,8 +24108,100 @@ msgstr ""
 msgid "虽然是无理的要求，但意外的得到了{TargetName}的同意\n汹涌的波涛，澎湃的人心\n被询问了感想\n让人有不由自主想要托起的欲望\n给予了这样的评价\n如此质量，当真是天赋异禀，恐怖如斯，实在是让人只能仰望的巨峰"
 msgstr ""
 
+#: .\data\talk\obscenity\touch_breast.csv:18
+msgid "{PlayerName}的手轻轻覆上{TargetName}那平坦如壁的胸部。\n肌肤相触的瞬间，一股电流般的刺激让{TargetName}微微颤抖。\n{TargetName}略显紧张，但微微隆起的乳头在{PlayerName}的掌心变得坚硬，默许了这份亲密。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:19
+msgid "{PlayerName}的手掌在{TargetName}平坦的胸部来回摩挲，感受着那细腻光滑的触感。\n{TargetName}的呼吸逐渐急促，脸颊泛起淡淡的红晕。\n她的身体不自觉地向前倾，将自己那平滑可爱的胸部更多地送入{PlayerName}的掌中，仿佛渴望着更多的爱抚。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:20
+msgid "{TargetName}抓住{PlayerName}的手，引导着抚摸自己那平坦却敏感的胸部。\n她的眼中闪烁着羞涩的眼神，身体却因兴奋而微微颤抖。\n{TargetName}的乳头已经完全挺立，在{PlayerName}的掌心摩擦着，诉说着无声的邀请。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:21
+msgid "{PlayerName}小心翼翼地将手放在{TargetName}那微微隆起的小巧乳房上，感受着那柔软而富有弹性的触感。\n{TargetName}的身体因这突如其来的亲密接触而僵硬了一瞬，又慢慢地放松下来。\n似乎还是因为害羞而忍不住将视线移到了其他地方。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:22
+msgid "{PlayerName}的手掌轻柔地揉捏着{TargetName}那小巧玲珑的乳房，指尖不时擦过那已经变硬的乳头。\n可爱的呼吸变得急促，身体不自觉地扭动，细微不可闻的呻吟透露出了她的状态。\n她的小手紧紧却抓住{PlayerName}的衣襟，仿佛在无声地鼓励{PlayerName}继续。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:23
+msgid "见到{PlayerName}刚刚抬起的手抚摸向自己娇小的乳房，{TargetName}的身体便因期待而微微颤抖。\n娇嫩的乳头已经完全挺立，在{PlayerName}的掌心摩擦着。\n{TargetName}的腰肢轻轻扭动，将自己那玲珑的胸部更多地送入{PlayerName}的怀中，无声地邀请着更多的爱抚。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:24
+msgid "{PlayerName}的手缓缓覆上{TargetName}那饱满圆润的乳房，\n感受着那柔软胸部的触感。{TargetName}的身体因这突如其来的亲密接触而微微颤抖，\n但她并没有拒绝，反而微微挺胸，默许了这份接触。\n"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:25
+msgid "{PlayerName}的双手熟练地揉捏着{TargetName}那形状完美的乳房，\n指尖时而轻抚，时而挑逗那已经变硬的乳头。\n{TargetName}的呼吸变得愈发急促，身体也开始不自觉地扭动，迎合着{PlayerName}的动作。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:26
+msgid "{TargetName}望向{PlayerName}的眼睛，抓住了{PlayerName}的手臂，将手掌按压在自己的胸部之上，引导着大力揉捏自己那饱满的乳房。\n她的眼中闪烁着欲望的火花，身体因兴奋而微微颤抖。\n{TargetName}的乳头已经完全挺立，在{PlayerName}的掌心摩擦着，诉说着勾人的欲望。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:27
+msgid "{PlayerName}的手掌小心翼翼地覆上{TargetName}那丰满硕大的乳房\n感受着那惊人的重量和柔软，{TargetName}的身体因这突如其来的亲密接触而颤抖。\n她望向{PlayerName}，而后迅速的收回了视线，微微挺胸，反而默默地将那丰腴的乳肉送入{PlayerName}的掌中。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:28
+msgid "{PlayerName}的双手尽情揉捏着{TargetName}那硕大的乳房，指尖时而轻抚，时而挑逗那已经变硬的乳头。\n{TargetName}的呼吸变得愈发急促，迎合着{PlayerName}的动作。\n她的手紧紧抓住{PlayerName}的手腕，但那力气根本不像是要将{PlayerName}推开。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:29
+msgid "{TargetName}看着{PlayerName}按压在自己那丰满乳房之上的手，而后露出了包容的笑容。\n眯起眼睛，像是邀请一样抓住{PlayerName}的另一只手掌，也按压在了自己另一只丰满的巨乳上。\n{TargetName}的乳头已经完全挺立，抓不住柔软的乳肉从{PlayerName}的指间溢出，在{PlayerName}的掌心摩擦着，展露着魅惑的春色。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:30
+msgid "{PlayerName}的双手小心翼翼地覆上{TargetName}那惊人的爆乳，\n感受着那令人窒息的重量和柔软，{TargetName}的身体因这突如其来的亲密接触而微微一颤。\n她望向{PlayerName}，而后便抖着身体默许了性骚扰。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:31
+msgid "{PlayerName}的双手尽情揉捏着{TargetName}那超乎想象的爆乳，手掌完全陷入了其中。\n{TargetName}的呼吸变得变得急促，身体也开始不自觉地扭动。\n她微微挺起胸膛，默默地迎合着{PlayerName}的手部，让{PlayerName}更加舒服地揉捏自己重量惊人的乳球。\n"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_breast.csv:32
+msgid "{TargetName}抓住{PlayerName}伸出的手，将它们深深埋入自己那惊人的爆乳中。\n眼中闪烁着强烈的欲望，缓缓靠近{PlayerName}，而后将头探到{PlayerName}的耳边，轻声呢喃了起来，热气轻轻吹拂起{PlayerName}敏感的耳朵。\n{TargetName}的乳头已经完全挺立，澎湃的乳肉不断挤压着{PlayerName}的手掌，将其吞没入其中，诉说着无底的渴求。"
+msgstr ""
+
 #: .\data\talk\obscenity\touch_buttocks.csv:6
-msgid "{Name}触发了摸屁股指令的地文"
+msgid "{PlayerName}的手掌轻轻覆上{TargetName}娇小紧致的臀部，\n感受到她身体微微的僵硬。纤细的腰肢下那两瓣小巧的蜜桃微微颤抖，仿佛在害羞地躲闪着触碰。\n但最终还是没有抗拒而是任由{PlayerName}揉捏。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:7
+msgid "{TargetName}的小巧臀部在{PlayerName}的爱抚下渐渐放松，像两团温热的棉花糖般柔软。\n指尖轻轻陷入那紧实的肉感中，在一次次的揉捏下{TargetName}发出了轻微的呜咽声。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:8
+msgid "{TargetName}轻摆纤细的腰肢，将那对小巧玲珑的臀瓣主动送入{PlayerName}的掌心。\n柔嫩的肌肤在{PlayerName}的抚摸下微微发烫，\n{TargetName}的手掌轻轻的按在了{PlayerName}的手臂上，但施力的方向，更像是抗拒着{PlayerName}抽离。\n"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:9
+msgid "{PlayerName}的手掌覆上{TargetName}圆润饱满的桃臀，感受到掌下肌肤的细腻与弹性。\n那丰满而不失形态的曲线让{PlayerName}难以自持，手指不自觉地陷入柔软的臀肉中。\n{TargetName}轻轻吸气，身体微微前倾，却没有逃开，默许了这份大胆的触碰。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:10
+msgid "{TargetName}丰腴的桃臀在{PlayerName}娴熟的抚摸下微微扭动，柔软的臀肉开始随着{PlayerName}的节奏轻轻摇晃。\n姣好的臀肉在{PlayerName}的掌握中微微变形，散发出淫靡的气息。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:11
+msgid "一经接触，{TargetName}那丰满的桃臀便主动贴向{PlayerName}的手掌，仿佛在渴求更多的爱抚。\n她那饱满的臀肉在{PlayerName}的揉捏下变得越发敏感，散发出淫靡的热度。\n{TargetName}圆润的臀瓣在{PlayerName}的掌控中不断变换形状，诉说着下流的欲求。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:12
+msgid "{TargetName}的肥臀丰满圆润，如同熟透的蜜桃。\n当{PlayerName}的手掌覆上时，{TargetName}身体猛地一僵。\n那柔软丰腴的触感令{PlayerName}沉醉，而{TargetName}的脸颊绯红，呼吸急促，默许了{PlayerName}的动作。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:13
+msgid "面对肆意扭动着的{TargetName}的丰肥臀部，忍不住让{PlayerName}将双手覆上了她的肥臀，兴奋地揉搓着。\n而{TargetName}的喘息声渐渐加重，似乎已经习惯并期待着{PlayerName}对她臀部的爱抚。\n手掌完全陷入了柔软的臀肉中，色情地揉捏着，{TargetName}半眯着眼，情不自禁地摇摆着肉感十足的丰臀配合着动作。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_buttocks.csv:14
+msgid "{TargetName}缓缓的晃动着她硕大的臀部，对着{PlayerName}眯起眼睛，而眼神中满是渴望。\n被单手抓住了丰满的肥臀，肆意揉捏了起来。\n{TargetName}配合向后撅起屁股，抓不住的柔软臀肉从{PlayerName}的指间开始溢出。\n"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_car.csv:6
@@ -26253,186 +26341,142 @@ msgid "\n{Name}触发了获得[奴隶]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:104
-msgid "\n{Name}触发了获得[受精]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:105
-msgid "\n{Name}触发了受精失败的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:106
-msgid "\n{Name}触发了获得[妊娠]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:107
-msgid "\n{Name}触发了获得[临盆]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:108
-msgid "\n{Name}触发了生产前的对话的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:109
-msgid "\n{Name}触发了生产后的对话的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:110
-msgid "\n{Name}触发了生产后的对话+获得[产后]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:111
-msgid "\n{Name}触发了获得[育儿]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:112
-msgid "\n{Name}触发了育儿完成的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:113
-msgid "\n{Name}触发了幼女长成萝莉的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:114
-msgid "\n{Name}触发了萝莉长成少女的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:116
 msgid "\n{Name}触发了初次见面的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:117
+#: .\data\talk\system\second.csv:105
 msgid "\n{Name}触发了每日打招呼的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:119
+#: .\data\talk\system\second.csv:107
 msgid "\n{Name}触发了新周目告别的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:121
+#: .\data\talk\system\second.csv:109
 msgid "\n{Name}触发了以队长身份出发执行外勤委托的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:122
+#: .\data\talk\system\second.csv:110
 msgid "\n{Name}触发了以队长身份完成外勤委托归舰的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:123
+#: .\data\talk\system\second.csv:111
 msgid "\n{Name}触发了被任命为本地外交官的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:124
+#: .\data\talk\system\second.csv:112
 msgid "\n{Name}触发了被解除本地外交官的任命的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:125
+#: .\data\talk\system\second.csv:113
 msgid "\n{Name}触发了被任命为外派外交官的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:126
+#: .\data\talk\system\second.csv:114
 msgid "\n{Name}触发了被解除外派外交官的任命的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:128
+#: .\data\talk\system\second.csv:116
 msgid "\n{Name}触发了被选为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:129
+#: .\data\talk\system\second.csv:117
 msgid "\n{Name}触发了不再为助理的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:130
+#: .\data\talk\system\second.csv:118
 msgid "\n{Name}触发了关闭智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:131
+#: .\data\talk\system\second.csv:119
 msgid "\n{Name}触发了开启智能跟随的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:132
+#: .\data\talk\system\second.csv:120
 msgid "\n{Name}触发了要求前往办公室的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:133
+#: .\data\talk\system\second.csv:121
 msgid "\n{Name}触发了关闭辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:134
+#: .\data\talk\system\second.csv:122
 msgid "\n{Name}触发了开启辅佐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:135
+#: .\data\talk\system\second.csv:123
 msgid "\n{Name}触发了关闭送饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:136
+#: .\data\talk\system\second.csv:124
 msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:137
+#: .\data\talk\system\second.csv:125
 msgid "\n{Name}触发了开启亲手做午饭服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:138
+#: .\data\talk\system\second.csv:126
 msgid "\n{Name}触发了开启亲手做三餐服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:139
+#: .\data\talk\system\second.csv:127
 msgid "\n{Name}触发了关闭早安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:140
+#: .\data\talk\system\second.csv:128
 msgid "\n{Name}触发了开启早上叫起床服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:141
+#: .\data\talk\system\second.csv:129
 msgid "\n{Name}触发了开启早安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:142
+#: .\data\talk\system\second.csv:130
 msgid "\n{Name}触发了开启早安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:143
+#: .\data\talk\system\second.csv:131
 msgid "\n{Name}触发了关闭晚安服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:144
+#: .\data\talk\system\second.csv:132
 msgid "\n{Name}触发了开启晚上催睡觉服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:145
+#: .\data\talk\system\second.csv:133
 msgid "\n{Name}触发了开启晚安吻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:146
+#: .\data\talk\system\second.csv:134
 msgid "\n{Name}触发了开启晚安咬服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:147
+#: .\data\talk\system\second.csv:135
 msgid "\n{Name}触发了关闭同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:148
+#: .\data\talk\system\second.csv:136
 msgid "\n{Name}触发了开启同居服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:149
+#: .\data\talk\system\second.csv:137
 msgid "\n{Name}触发了关闭助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:150
+#: .\data\talk\system\second.csv:138
 msgid "\n{Name}触发了开启助攻服务的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:152
+#: .\data\talk\system\second.csv:140
 msgid "\n{Name}触发了获得[已催眠·浅]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:153
+#: .\data\talk\system\second.csv:141
 msgid "\n{Name}触发了获得[已催眠·深]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:154
+#: .\data\talk\system\second.csv:142
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
 msgstr ""
 
@@ -26630,6 +26674,94 @@ msgstr ""
 
 #: .\data\talk\system\second_item.csv:56
 msgid "在温和的药物影响下，{Name}的子宫即使灌入了精液，也只能当作精液存储袋使用。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:7
+msgid "{Name}稚嫩的卵子沐浴在{PlayerName}滚烫、成熟的精液中，\n精力旺盛的精子疯狂地侵袭着这位年幼少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:8
+msgid "{Name}娇嫩的卵子沐浴在{PlayerName}滚烫、浓稠的精液中，\n精力旺盛的精子疯狂地侵袭着这位娇小少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:9
+msgid "{PlayerName}浓郁的精液浸润着{Name}粉嫩的卵子。\n疯狂的精子们围绕着健康的卵子，试图进入其中，在不泄的围攻下，一位幸运儿捷足先登，与粉嫩的卵子融为一体。\n{Name}的卵子最终受精，准备进入着床阶段。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:10
+msgid "{PlayerName}强壮有力的精子疯狂入侵{Name}那娇嫩多汁的卵子，\n{Name}那正适合繁育年龄的卵子终于迎来了她的目标，\n毫无意外的和{PlayerName}的精子结合了。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:11
+msgid "{PlayerName}滚烫浓稠的精液浇灌在{Name}成熟的卵子上，\n精子凶猛有力，撞击着完全成熟的卵壁，\n最终{Name}多年未育子宫中的卵子遵循着本能与精子结合完毕，等待着进一步的着床。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:12
+msgid "{Name}红润的卵子浸泡在{PlayerName}粘稠的精液中，年轻气盛精子争先恐后钻入{Name}烂熟硕大的卵子中，\n比起原有的丈夫，这一次{Name}的子宫将孕育{PlayerName}的后代。\n{Name}的卵子毫无抵抗地接受了不是丈夫的{PlayerName}的基因。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:13
+msgid "在{PlayerName}的精液持续的浇灌和沐浴下，\n即使是贵为长生者的{Name}的卵子\n也开始顺从于欲望和本能，\n最终向{PlayerName}的粘稠精液完全屈服了。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:15
+msgid "在{Name}湿润温暖的子宫内，{PlayerName}射出的上亿精子争先恐后地游向卵子。\n它们穿过层层阻碍，一个个精子触及卵子表面，但却都未能顺利融合。\n{Name}卵子抗拒着它们。\n"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:17
+msgid "{Name}的肚子一点点大了起来，不过性知识尚且匮乏的她。\n还不知道究竟发生了什么。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:18
+msgid "{Name}的小腹开始随着时间愈发隆起，\n意外的怀孕使得她愈发的不安，\n无法知悉孩子的父亲究竟是谁。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:19
+msgid "{Name}怀孕了，肚子开始一天天隆起，\n{Name}怀着忐忑的心情向{PlayerName}汇报了身体的变化。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:20
+msgid "{Name}兴奋地抚摸着微微隆起的小腹，眼中闪烁着喜悦的光芒。\n{Name}汇报着身体的发生的变化，告知了{PlayerName}自己已经怀孕的情况。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:21
+msgid "{Name}的幼小的肚子一点点大了起来，\n对年幼的{Name}来说，这份爱的结晶可能太过沉重，\n总之继续努力吧。"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:23
+msgid "\n{Name}触发了获得[妊娠]的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:24
+msgid "\n{Name}触发了获得[临盆]的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:25
+msgid "\n{Name}触发了生产前的对话的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:26
+msgid "\n{Name}触发了生产后的对话的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:27
+msgid "\n{Name}触发了生产后的对话+获得[产后]的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:28
+msgid "\n{Name}触发了获得[育儿]的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:29
+msgid "\n{Name}触发了育儿完成的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:30
+msgid "\n{Name}触发了幼女长成萝莉的地文"
+msgstr ""
+
+#: .\data\talk\system\second_pregnancy.csv:31
+msgid "\n{Name}触发了萝莉长成少女的地文"
 msgstr ""
 
 #: .\data\talk\system\see_attr.csv:6
