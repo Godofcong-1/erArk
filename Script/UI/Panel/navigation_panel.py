@@ -30,13 +30,28 @@ def judge_arrive():
     判断是否抵达指定地点
     Keyword arguments:
     """
+    from Script.Settle import default
+
     if cache.rhodes_island.move_target_and_time[0] != 0:
         if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.move_target_and_time[2]):
+            # 结算抵达
+            now_scene_id = cache.rhodes_island.current_location[0]
             cache.rhodes_island.base_move_visitor_flag = 1
             target_scene_id = cache.rhodes_island.move_target_and_time[0]
             target_scene_name = game_config.config_birthplace[target_scene_id].name
             cache.rhodes_island.current_location[0] = target_scene_id
+            # 结算变动的外交官
+            if now_scene_id in cache.rhodes_island.diplomat_of_country:
+                now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[now_scene_id][0]
+                if now_diplomat_chara_id != 0:
+                    default.handle_chara_off_line(now_diplomat_chara_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+            if target_scene_id in cache.rhodes_island.diplomat_of_country:
+                target_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[target_scene_id][0]
+                if target_diplomat_chara_id != 0:
+                    default.handle_chara_on_line(target_diplomat_chara_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+            # 清零移动目标
             cache.rhodes_island.move_target_and_time = [0, 0, 0]
+            # 绘制提示信息
             now_draw = draw.WaitDraw()
             now_draw.text = _("\n罗德岛已抵达目的地：{0}\n").format(target_scene_name)
             now_draw.width = window_width
