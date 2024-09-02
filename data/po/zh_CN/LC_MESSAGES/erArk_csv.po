@@ -16164,15 +16164,15 @@ msgstr ""
 msgid "夕，炎国画家，待业。在留舰人员年的积极行动下，被以访客身份挟持至罗德岛。擅长绘画，尤其是炎国传统绘画。现寓居罗德岛某偏僻走道的墙内。"
 msgstr ""
 
-#: .\data\character\2015_夕.csv:27
+#: .\data\character\2015_夕.csv:28
 msgid "水墨色渐变长长袍"
 msgstr ""
 
-#: .\data\character\2015_夕.csv:28
+#: .\data\character\2015_夕.csv:29
 msgid "碎蓝色辅白色旗袍"
 msgstr ""
 
-#: .\data\character\2015_夕.csv:29
+#: .\data\character\2015_夕.csv:30
 msgid "画出来的靴子"
 msgstr ""
 
@@ -16188,19 +16188,19 @@ msgstr ""
 msgid "令，寓居尚蜀的诗人，与炎国司岁台等政府部门均有联系，在尚蜀事件中接触罗德岛，现通过审核，以访客身份驻留本舰。"
 msgstr ""
 
-#: .\data\character\2023_令.csv:27
+#: .\data\character\2023_令.csv:28
 msgid "白色披袍"
 msgstr ""
 
-#: .\data\character\2023_令.csv:28
+#: .\data\character\2023_令.csv:29
 msgid "白色束胸"
 msgstr ""
 
-#: .\data\character\2023_令.csv:29
+#: .\data\character\2023_令.csv:30
 msgid "黑色超短热裤"
 msgstr ""
 
-#: .\data\character\2023_令.csv:30
+#: .\data\character\2023_令.csv:31
 msgid "白色过踝球鞋"
 msgstr ""
 
@@ -16216,15 +16216,15 @@ msgstr ""
 msgid "黍，炎国农业天师，天师府授业天师。曾于炎国北部农业基地大荒城从事农业研究多年且已有丰富的科研成果。现因访问亲属，以访客身份暂驻罗德岛。"
 msgstr ""
 
-#: .\data\character\2025_黍.csv:27
+#: .\data\character\2025_黍.csv:28
 msgid "白色云纹饰束胸"
 msgstr ""
 
-#: .\data\character\2025_黍.csv:28
+#: .\data\character\2025_黍.csv:29
 msgid "白色宽松喇叭裤"
 msgstr ""
 
-#: .\data\character\2025_黍.csv:29
+#: .\data\character\2025_黍.csv:30
 msgid "深色防水长筒靴"
 msgstr ""
 
@@ -16346,6 +16346,62 @@ msgstr ""
 
 #: .\data\character\4019_九色鹿.csv:14
 msgid "九色鹿，自称来自大炎的某一片山林，具体位置并未告知。自身具有丰富的药草采集和制作的相关知识，并具备一定作战能力。经其他干员介绍，来到罗德岛交流学习，近期将与罗德岛同行。"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:30
+msgid "坠玛瑙银环"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:31
+msgid "环颈嵌玛瑙银项链"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:32
+msgid "落花流水纹玉珍珠银环"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:33
+msgid "新中式混纺仰月纹门襟云气纹袖口外套"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:34
+msgid "彩花钿纹轻纱里衬"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:35
+msgid "工字褶丝绸宝相花纹饰抹胸"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:36
+msgid "掐丝嵌玉银流苏环"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:37
+msgid "红青双色绸缎束腰"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:38
+msgid "白色丝质薄纱长裙"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:39
+msgid "银环挂珠"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:40
+msgid "厚底布屐"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:41
+msgid "七彩祥云和五色神光"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:42
+msgid "佛光"
+msgstr ""
+
+#: .\data\character\4019_九色鹿.csv:43
+msgid "神药"
 msgstr ""
 
 #: .\data\character\4027_霍尔海雅.csv:4
