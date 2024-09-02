@@ -6972,3 +6972,329 @@ msgstr ""
 
 msgid "  {0}：不满足(X)\n"
 msgstr ""
+
+msgid "管理载具"
+msgstr ""
+
+msgid ""
+"\n"
+"当前理智值不足，至少需要{0}点理智值，无法进行集体催眠\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已切换为平然催眠模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已切换为空气催眠模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已切换为体控催眠模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已切换为心控催眠模式\n"
+msgstr ""
+
+msgid "势力与外交"
+msgstr ""
+
+msgid "筛选未陷落干员"
+msgstr ""
+
+msgid "筛选已陷落干员"
+msgstr ""
+
+msgid "除非太累了等特殊情况，助理干员会在该时间之前醒来，并前往博士位置\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○同居状态下，如果助理干员提前醒来，也有可能提前进行早安服务\n"
+msgstr ""
+
+msgid "({0}损坏)"
+msgstr ""
+
+msgid " {0}(天数-1) * {1}(人数) = {2}"
+msgstr ""
+
+msgid ""
+"\n"
+"载具运量需求：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"其他需求：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"派遣载具："
+msgstr ""
+
+msgid "  总运载量：{0}"
+msgstr ""
+
+msgid "人数需求："
+msgstr ""
+
+msgid "  载具需求："
+msgstr ""
+
+msgid "  其他需求："
+msgstr ""
+
+msgid "【调整使用载具】"
+msgstr ""
+
+msgid ""
+"\n"
+"【调整使用载具】"
+msgstr ""
+
+msgid ""
+"\n"
+"可派遣载具：\n"
+"\n"
+msgstr ""
+
+msgid "[{0}] {1} 当前选择/可选择：{2}/{3} 速度：{4} 运载量：{5} 特殊效果：{6}\n"
+msgstr ""
+
+msgid "[增加一辆]"
+msgstr ""
+
+msgid "[减少一辆]"
+msgstr ""
+
+msgid "当前总运载量/需要运载量：{0}/{1}\n"
+msgstr ""
+
+msgid "当前速度（取决于所有载具中最慢的）（未实装）：{0}\n"
+msgstr ""
+
+msgid "其他效果（未实装）：{0}\n"
+msgstr ""
+
+msgid "[势力外交系统]"
+msgstr ""
+
+msgid "[载具管理系统]"
+msgstr ""
+
+msgid "  外勤干员 — {0}"
+msgstr ""
+
+msgid "势力外交系统"
+msgstr ""
+
+msgid "载具管理系统"
+msgstr ""
+
+msgid "○载具用于给执行外勤委托的干员提供交通和其他方面的辅助，提高委托效率\n"
+msgstr ""
+
+msgid "○当前机库等级：{0}，载具数量：{1}/{2}\n"
+msgstr ""
+
+msgid "载具名称"
+msgstr ""
+
+msgid "外勤中数量/总持有量"
+msgstr ""
+
+msgid "载具速度"
+msgstr ""
+
+msgid "运载量"
+msgstr ""
+
+msgid "特殊效果(未实装)"
+msgstr ""
+
+msgid ""
+"\n"
+"购入价格：{0}（出售价格为购入的0.8倍）"
+msgstr ""
+
+msgid ""
+"\n"
+"花费 {0} 龙门币购买了一个 {1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"资金不足，无法购买\n"
+msgstr ""
+
+msgid ""
+"\n"
+"出售了一个 {0}，获得了 {1} 龙门币\n"
+msgstr ""
+
+msgid "本周全势力声望变化：{0}\n"
+msgstr ""
+
+msgid "本周全势力源石病感染率变化：{0}%\n"
+msgstr ""
+
+msgid "国家及附属势力"
+msgstr ""
+
+msgid "势力外交"
+msgstr ""
+
+msgid "其他势力"
+msgstr ""
+
+msgid "○与势力维持良好的关系有利于在对应地区的行动，包括外勤委托、商品贸易、技术交流、源石病治疗等\n"
+msgstr ""
+
+msgid "势力名称"
+msgstr ""
+
+msgid "势力声望"
+msgstr ""
+
+msgid "源石病治愈率(未实装)"
+msgstr ""
+
+msgid "负责外交官"
+msgstr ""
+
+msgid ""
+"\n"
+"势力名称：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"势力声望：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"源石病感染率：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"势力特产：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"附属势力：{0}"
+msgstr ""
+
+msgid "○负责地区势力的外交官会长期离岛停留在对应国家，只有当罗德岛本身也在同一国家时才会在岛上办公\n"
+msgstr ""
+
+msgid "当前势力的负责外交官为："
+msgstr ""
+
+msgid "  无"
+msgstr ""
+
+msgid "未任命外交官，无法制定外交方针"
+msgstr ""
+
+msgid ""
+"\n"
+"当前外交方针：{0}"
+msgstr ""
+
+msgid "【调整负责外交官】"
+msgstr ""
+
+msgid ""
+"\n"
+"【调整负责外交官】"
+msgstr ""
+
+msgid "【调整外交方针】"
+msgstr ""
+
+msgid ""
+"\n"
+"【调整外交方针】"
+msgstr ""
+
+msgid ""
+"\n"
+"可选择干员（需要出身地或势力为{0}）：\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}被任命为{1}的外交官，因为该地为当前罗德岛所在地，所以会在岛上办公，当罗德岛离开该国家后会进入离舰外派状态。\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}被派遣到{1}作为外交官，将会长期停留在那里，直到被召回或罗德岛抵达该国家。\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○可选的方针受访客区等级、外交官能力、势力的声望与源石病情况等各种因素决定\n"
+msgstr ""
+
+msgid ""
+"\n"
+"可选择外交方针：\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"罗德岛已抵达目的地：{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"移动至{0}需要消耗{1}燃料，当前有{2}单位燃料，需要{3}天移动到目的地，确定要移动吗\n"
+msgstr ""
+
+msgid ""
+"\n"
+"罗德岛正在移动中，无法再次移动\n"
+msgstr ""
+
+msgid ""
+"\n"
+"罗德岛正在移动至{0}，预计抵达时间为{1}\n"
+msgstr ""
+
+msgid " [睡到早安服务时间] "
+msgstr ""
+
+msgid ""
+"\n"
+"当前目标的催眠深度未达到{0}%，无法进入{1}催眠状态，需要使用基础手段来加深催眠程度\n"
+msgstr ""
+
+msgid ""
+"\n"
+" {0}号招募进度：{1}%"
+msgstr ""
+
+msgid ""
+"\n"
+"    招募策略：{0}      "
+msgstr ""
+
+msgid "  （已停止招募）"
+msgstr ""
+
+msgid "特产"
+msgstr ""
