@@ -126,6 +126,9 @@ ai的目标,,,,
 381,631,normal_all|work_is_invitation_commissioner|to_work_time|not_in_diplomatic_office,21,正常状态下，工作是邀请专员，在到岗时间，如果不在外交官办公室，则去外交官办公室
 382,631,normal_all|work_is_invitation_commissioner|work_time|not_in_diplomatic_office,21,正常状态下，工作是邀请专员，在工作时间，如果不在外交官办公室，则去外交官办公室
 383,314,normal_all_except_special_hypnosis|work_is_invitation_commissioner|work_time|in_diplomatic_office|visitor_zone_have_target,22,正常状态下或被空气或体控催眠中，工作是邀请专员，在工作时间，如果在外交官办公室，已选择邀请对象，则开始邀请访客
+386,631,normal_all|work_is_diplomat|to_work_time|not_in_diplomatic_office,21,正常状态下，工作是外交官，在到岗时间，如果不在外交官办公室，则去外交官办公室
+387,631,normal_all|work_is_diplomat|work_time|not_in_diplomatic_office,21,正常状态下，工作是外交官，在工作时间，如果不在外交官办公室，则去外交官办公室
+388,316,normal_all_except_special_hypnosis|work_is_diplomat|work_time|in_diplomatic_office|visitor_zone_have_target,22,正常状态下或被空气或体控催眠中，工作是外交官，在工作时间，如果在外交官办公室，已选择邀请对象，则开始处理外交事宜
 
 391,641,normal_all|work_is_medicinal_planter|to_work_time|not_in_herb_garden,21,正常状态下，工作是药材种植员，在到岗时间，如果不在药田，则去药田
 392,641,normal_all|work_is_medicinal_planter|work_time|not_in_herb_garden,21,正常状态下，工作是药材种植员，在工作时间，如果不在药田，则去药田

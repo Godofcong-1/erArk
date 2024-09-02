@@ -2608,6 +2608,20 @@ def character_work_plant_manage_crop(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_PLANT_MANAGE_CROP
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_DEAL_WITH_DIPLOMACY)
+def character_work_deal_with_diplomacy(character_id: int):
+    """
+    工作：处理外交事宜
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 60
+    character_data.behavior.behavior_id = constant.Behavior.DEAL_WITH_DIPLOMACY
+    character_data.state = constant.CharacterStatus.STATUS_DEAL_WITH_DIPLOMACY
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
 def character_entertain_read(character_id: int):
     """

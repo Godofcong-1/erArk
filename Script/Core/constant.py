@@ -166,6 +166,8 @@ class CharacterStatus:
     """ 制造产品 """
     STATUS_PLANT_MANAGE_CROP = 219
     """ 种植与养护作物 """
+    STATUS_DEAL_WITH_DIPLOMACY = 221
+    """ 处理外交事宜 """
     STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     STATUS_MORNING_SALUTATION_2 = 252
@@ -666,6 +668,8 @@ class Behavior:
     """ 制造产品 """
     PLANT_MANAGE_CROP = 219
     """ 种植与养护作物 """
+    DEAL_WITH_DIPLOMACY = 221
+    """ 处理外交事宜 """
     MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     MORNING_SALUTATION_2 = 252
@@ -1124,6 +1128,8 @@ class StateMachine:
     """ 工作：邀请访客 """
     WORK_PLANT_MANAGE_CROP = 315
     """ 工作：种植与养护作物 """
+    WORK_DEAL_WITH_DIPLOMACY = 316
+    """ 工作：处理外交事宜 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1894,6 +1900,8 @@ class Instruct:
     """ 邀请访客 """
     NATION_DIPLOMACY = 0
     """ 势力外交 """
+    DEAL_WITH_DIPLOMACY = 0
+    """ 处理外交事宜 """
     PRTS = 0
     """ 普瑞赛斯 """
     MANAGE_LIBRARY = 0
