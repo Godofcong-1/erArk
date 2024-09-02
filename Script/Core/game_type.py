@@ -936,6 +936,9 @@ class Rhodes_Island:
         """ 进行中的外勤委托，委托id:0干员id列表，1返回时间，2使用的载具id列表 """
         self.vehicles: Dict[int, Tuple[int, int]] = {}
         """ 载具id:[0数量，1外勤中数量] """
+        # 已完成的外勤委托
+        self.finished_field_commissions_set: Set = set()
+        """ 已完成的外勤委托集合 """
 
         # 教育区
 

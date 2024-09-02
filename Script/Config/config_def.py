@@ -275,7 +275,7 @@ class Commission:
     """ 具体需求 """
     reward: str
     """ 具体奖励 """
-    related_id: str
+    related_id: int
     """ 关联的委托id """
     special: int
     """ 特殊委托 """

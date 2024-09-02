@@ -149,6 +149,9 @@ def judge_field_commission_finish():
             # 获取奖励
             reward_return_list = get_commission_demand_and_reward(commision_id, [], True, True)
             reward_text = reward_return_list[2]
+            # 加入已完成的委托
+            if commision_id not in cache.rhodes_island.finished_field_commissions_set:
+                cache.rhodes_island.finished_field_commissions_set.add(commision_id)
             # 奖励信息
             commision_name = game_config.config_commission[commision_id].name
             draw_text += "\n"
@@ -266,9 +269,13 @@ class Field_Commission_Panel:
             # 绘制委托信息
             for commision_id in all_commision_list:
                 commision_data = game_config.config_commission[commision_id]
+                # 跳过非当前面板的委托
                 if self.now_panel == _("常规外勤") and commision_data.special != 0:
                     continue
                 if self.now_panel == _("特殊外勤") and commision_data.special == 0:
+                    continue
+                # 跳过未满足前置委托的委托
+                if commision_data.related_id != -1 and commision_data.related_id not in cache.rhodes_island.finished_field_commissions_set:
                     continue
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
