@@ -111,6 +111,17 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             elif now_text[0] == "e":
                 for character_id in send_npc_list:
                     cache.character_data[character_id].experience[item_id] += item_num
+            # 委托部分，-1不可完成，0可以进行，1已完成
+            elif now_text[0] == "m":
+                if item_num == -1:
+                    cache.rhodes_island.shut_down_field_commissions_set.add(item_id)
+                elif item_num == 0:
+                    if item_id in cache.rhodes_island.shut_down_field_commissions_set:
+                        cache.rhodes_island.shut_down_field_commissions_set.remove(item_id)
+                    elif item_id in cache.rhodes_island.finished_field_commissions_set:
+                        cache.rhodes_island.finished_field_commissions_set.remove(item_id)
+                elif item_num == 1:
+                    cache.rhodes_island.finished_field_commissions_set.add(item_id)
 
     # 添加类型文本
     if item_type not in type_text:
@@ -279,6 +290,9 @@ class Field_Commission_Panel:
                     continue
                 # 特殊外勤只能接受一次
                 if commision_data.special != 0 and commision_id in cache.rhodes_island.finished_field_commissions_set:
+                    continue
+                # 跳过已经关闭的委托
+                if commision_id in cache.rhodes_island.shut_down_field_commissions_set:
                     continue
                 # 委托信息
                 commision_name = commision_data.name

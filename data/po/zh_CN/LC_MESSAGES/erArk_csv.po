@@ -3304,115 +3304,187 @@ msgstr ""
 msgid "在战胜了巨型感染生物后，矿洞内的源石结晶暴露在了干员们的面前。接下来就是挖掘和运输的工作了。"
 msgstr ""
 
+#: .\data\csv\Commission.csv:18
+msgid "阿卡胡拉生物採集"
+msgstr ""
+
+#: .\data\csv\Commission.csv:18
+msgid "最近雨林中大量產出稀有生物樣本，其中不乏有特殊功用的動植物，我們有必要將其研究歸檔"
+msgstr ""
+
 #: .\data\csv\Commission.csv:19
+msgid "灰蕈的研究"
+msgstr ""
+
+#: .\data\csv\Commission.csv:19
+msgid "在某次出勤報告中稱，雨林中存有一種特殊的菌類，有至幻作用，但有食用人聲稱其意識來到了特殊的空間，我們可以嘗試對其進行研究"
+msgstr ""
+
+#: .\data\csv\Commission.csv:20
+msgid "意識帝國?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:20
+msgid "經系統性的研究，我們合理懷疑食用該菌類後，其食用人意識會來到一與現實相似的維度，我們可以徵集一隻探險隊對該維度進行探索"
+msgstr ""
+
+#: .\data\csv\Commission.csv:21
+msgid "凱爾西的警告"
+msgstr ""
+
+#: .\data\csv\Commission.csv:21
+msgid "意識帝國的探索不甚順利，精神上的疲勞在探險隊員的身上累積，凱爾西醫生知道此事後嚴正警告了我們的動作"
+msgstr ""
+
+#: .\data\csv\Commission.csv:22
+msgid "也許我們該聽她的"
+msgstr ""
+
+#: .\data\csv\Commission.csv:22
+msgid "凱爾西醫生說的有道理，這不是我們現在該踏足了領域，我們應銷毀實驗記錄並封存相關數據"
+msgstr ""
+
+#: .\data\csv\Commission.csv:23
+msgid "扎實理論"
+msgstr ""
+
+#: .\data\csv\Commission.csv:23
+msgid "你相信你的理論模型，也相信工程部的能力。我們應該暫時無視凱爾西的警告，根據現有的資料來做出一台溝通兩界的試驗機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:24
+msgid "試驗機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:24
+msgid "秘密工程的進度很順利，理論上你只要把試驗機啟動，它就能產生一道溝通兩界的裂隙了"
+msgstr ""
+
+#: .\data\csv\Commission.csv:25
+msgid "失控的試驗機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:25
+msgid "實驗失控了，現在羅德島旁出現了一道亞空間裂隙，一些探險隊曾提到的意識帝國危險生物這在湧出，我們須立刻組織一支斬首小隊摧毀裂隙中央的試驗機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:26
+msgid "關閉的裂隙"
+msgstr ""
+
+#: .\data\csv\Commission.csv:26
+msgid "在斬首小隊的突擊下，裂隙終於被關閉，意識帝國的生物在失去亞空間的聯繫後也跟著消失了，你決定派人清理一下戰場，看看有沒有什麼能回收的物資來彌補損失"
+msgstr ""
+
+#: .\data\csv\Commission.csv:28
 msgid "保卫钢铁萝卜矿场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:19
+#: .\data\csv\Commission.csv:28
 msgid "位于雷姆必拓移动城市“钢铁萝卜城”航线周边的一处矿场，因意外挖掘到源石虫巢穴而荒废。\n近期雷姆必拓矿业联合需要重启该矿洞的挖掘工作，苦于人手不足，将防卫任务外包给了罗德岛。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:20
+#: .\data\csv\Commission.csv:29
 msgid "恢复多伦矿场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:20
+#: .\data\csv\Commission.csv:29
 msgid "维多利亚多伦郡文森特伯爵旗下产业，因周边地区动荡导致矿场被暴徒占领。伯爵经由特殊渠道联系到罗德岛，希望罗德岛能够尽快帮助多伦矿场恢复生产。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:21
+#: .\data\csv\Commission.csv:30
 msgid "清理格里布采矿平台"
 msgstr ""
 
-#: .\data\csv\Commission.csv:21
+#: .\data\csv\Commission.csv:30
 msgid "乌萨斯罗斯托夫实业旗下一座已经退役的移动采矿平台，为节约成本，罗斯托夫实业预将其整修后重新投入使用，经早露与罗德岛取得联系，请求罗德岛协助进行相关清理工作。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:22
+#: .\data\csv\Commission.csv:31
 msgid "清理斯沃玛加工平台"
 msgstr ""
 
-#: .\data\csv\Commission.csv:22
+#: .\data\csv\Commission.csv:31
 msgid "一起原料泄漏事故导致斯沃玛食品彻底弃用这座食品加工平台，平台中储存的废弃原料让这里成了感染生物与暴徒的巢穴，严重影响附近航道安全。\n商业联合会勒令斯沃玛处理此事，而斯沃玛向罗德岛发出了平台清理委托。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:23
+#: .\data\csv\Commission.csv:32
 msgid "草也会长石头的吗"
 msgstr ""
 
-#: .\data\csv\Commission.csv:23
+#: .\data\csv\Commission.csv:32
 msgid "最近阿卡胡拉丛林中植物的长势有些过于喜人，罕见地对当地居民的生活造成了严重困扰，据说一切的起因都来自一只半植物半源石虫的危险生物。\n依娜姆把清除这一生物的工作委托给了嘉维尔，而忙于医疗工作的嘉维尔头也不回地把这份活计转包给了罗德岛。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:24
+#: .\data\csv\Commission.csv:33
 msgid "地上移动黑拳竞技场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:24
+#: .\data\csv\Commission.csv:33
 msgid "多索雷斯在建的城市地块之一，在抵达目的地之前遭到了一伙荒地暴徒的袭击，并被他们据为己有。\n据说暴徒们的首领希望将其改造成一座黑拳竞技场。\n坎黛拉女士委托你先给那伙暴徒一个教训，然后把首领请来多索雷斯一叙，她相信对方会接受她的诚意。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:25
+#: .\data\csv\Commission.csv:34
 msgid "好消息是漏气，坏消息是毒气"
 msgstr ""
 
-#: .\data\csv\Commission.csv:25
+#: .\data\csv\Commission.csv:34
 msgid "雷神工业的一个尖端武器测试平台最近出现了大量请病假的员工，管理人员经过检查，认定此事是某种低毒的工业气体泄漏所致。\n平台在被转移到荒地上准备处理时遭到暴徒占领，员工知晓原因后也纷纷提出工伤赔偿，管理人员焦头烂额，委托罗德岛夺回这座平台，如果能顺便处理气体泄漏就更好了。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:26
+#: .\data\csv\Commission.csv:35
 msgid "逆女施工队的紧急公关"
 msgstr ""
 
-#: .\data\csv\Commission.csv:26
+#: .\data\csv\Commission.csv:35
 msgid "一位约翰老妈的前员工在离开几年之后再次出现在了约翰老妈为了安置员工新建的地块上，忽悠了施土队为自己制造海量武器，大肆摧毁前公司的各项设施。\n记者发布了在地块附近拍摄到的影像，各地销售量断崖式下跌，出于声誉考虑，约翰老妈委托罗德岛解决这一问题。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:27
+#: .\data\csv\Commission.csv:36
 msgid "荒废灯塔历险记"
 msgstr ""
 
-#: .\data\csv\Commission.csv:27
+#: .\data\csv\Commission.csv:36
 msgid "伊比利亚近海的一处荒废灯塔吸引了许多探险者的关注，然而潜入其中的探险者无一例外全都没能返回。\n虽然灯塔外观上没有任何异常，但审判庭怀疑该区域已被深海侵蚀，将其封锁并请求罗德岛协助调查。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:28
+#: .\data\csv\Commission.csv:37
 msgid "过剩的喷射冰淇淋"
 msgstr ""
 
-#: .\data\csv\Commission.csv:28
+#: .\data\csv\Commission.csv:37
 msgid "拉特兰城郊外一处甜品制作平台近日突发事故，起因是为了满足拉特兰城内增长的冰淇淋需求，技术部门改造生产线导致产能溢出，操作人员因吃了太多冰淇淋而纷纷请了病假。\n现在自动生产线上四处喷射冰淇淋，货运无人机大量涌入城内，缠着民众兜售。为了挽救冰淇淋的声誉，阿尔斯特修道院请求罗德岛协助解决这场危机。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:29
+#: .\data\csv\Commission.csv:38
 msgid "制霸自走机械搏斗场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:29
+#: .\data\csv\Commission.csv:38
 msgid "“巨大的终极丑东西杯”自走机械对战选拔赛是杜林人发起的一项只有三个月历史的赛事，该赛事办到第十届时，场面变得空前疯狂。\n蜜酿协会和烈酒协会的成员更是在现场爆发了冲突，看台上的装饰都成了他们的“武器”。\n于是，一封来自“杜林保护协会”的信送至罗德岛，请求帮忙维持赛场秩序。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:30
+#: .\data\csv\Commission.csv:39
 msgid "合成食品大战天然作物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:30
+#: .\data\csv\Commission.csv:39
 msgid "塔山生物科技在雷姆必拓的一处农业科研实验平台近日被一帮“自然饮食主义者”占据，占据者声称实验污染了当地的农产品。\n他们劫持了大量无人机散布不实言论，编造“二十条腿的沙虫”“草莓味的萝卜”等虚假案例，严重抹黑了公司的名誉。\n塔山生物科技请求罗德岛协助夺回平台，制止他们的行为。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:31
+#: .\data\csv\Commission.csv:40
 msgid "摇晃勾爪式旋转抓取法"
 msgstr ""
 
-#: .\data\csv\Commission.csv:31
+#: .\data\csv\Commission.csv:40
 msgid "盒牌工业为了捉回那些为新产品发布会造势而准备的“任性生物”，开动了最新的大型载具“抓娃娃机”，然而它被竞争对手动了手脚，完全失控了！\n现在，载具正驶向多索雷斯的繁华街道，人们却以为这是计划内的全城表演。\n盒牌工业为了保住自己的口碑，也为了居民的安全，向罗德岛发来了援助请求。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:32
+#: .\data\csv\Commission.csv:41
 msgid "依法治理噪音污染扰民案件"
 msgstr ""
 
-#: .\data\csv\Commission.csv:32
+#: .\data\csv\Commission.csv:41
 msgid "莱塔尼亚边境的一座城镇中日夜回响着阴森嘈杂的曲调，阻碍了杂音纠治乐团前去演出。\n经调查，此地似乎笼罩着非比寻常的“阴郁法术”，而法术造成的荒芜还在向城外蔓延。为了如期进行演出，杂音纠治乐团向罗德岛提出协助请求。\n搞清楚“阴郁法术”的来源，让乐团得以突破噪音的阻拦吧。"
 msgstr ""
 
