@@ -277,6 +277,10 @@ class Field_Commission_Panel:
                 # 跳过未满足前置委托的委托
                 if commision_data.related_id != -1 and commision_data.related_id not in cache.rhodes_island.finished_field_commissions_set:
                     continue
+                # 特殊外勤只能接受一次
+                if commision_data.special != 0 and commision_id in cache.rhodes_island.finished_field_commissions_set:
+                    continue
+                # 委托信息
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
                 commision_people = str(commision_data.people) + _("人")
@@ -285,8 +289,10 @@ class Field_Commission_Panel:
                 commision_demand = demand_return_list[1]
                 reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
                 commision_reward = reward_return_list[1]
+                # 修正文本宽度
                 text_width = int(self.width / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
+                # 最终文本
                 commision_text = f"{commision_level.center(text_width,' ')}{commision_name.center(str_text_width,'　')}{commision_people.center(text_width,' ')}{commision_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
 
                 # 可以进行的，绘制为按钮
