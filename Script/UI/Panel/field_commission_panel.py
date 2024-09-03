@@ -341,6 +341,9 @@ class Field_Commission_Panel:
                 # 跳过已经关闭的委托
                 if commision_id in cache.rhodes_island.shut_down_field_commissions_set:
                     continue
+                # 跳过等级大于设施等级+1的委托
+                if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
+                    continue
                 # 委托信息
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
