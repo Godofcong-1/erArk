@@ -75,24 +75,59 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     item_num = int(text_list[2])
 
     # 资源
-    if now_text[0] == "r":
+    if text_list[0] == "r":
         item_name = game_config.config_resouce[item_id].name
         item_type = game_config.config_resouce[item_id].type
         now_have_item_num = cache.rhodes_island.materials_resouce[item_id]
     # 能力
-    elif now_text[0] == "a":
+    elif text_list[0] == "a":
         item_name = game_config.config_ability[item_id].name
         item_type = item_name
         now_have_item_num = sum(cache.character_data[character_id].ability[item_id] for character_id in send_npc_list)
     # 经验
-    elif now_text[0] == "e":
+    elif text_list[0] == "e":
         item_name = game_config.config_experience[item_id].name
         item_type = item_name
         # 如果是奖励，则只显示大类
         if demand_or_reward:
             item_type = _("经验")
         now_have_item_num = sum(cache.character_data[character_id].experience[item_id] for character_id in send_npc_list)
-    
+    # 委托
+    elif text_list[0] == "m":
+        item_name = _("委托")
+        item_type = _("委托")
+    # 特产
+    elif text_list[0] == _("特产"):
+        # 默认值
+        item_name = _("特产")
+        item_type = _("特产")
+        now_have_item_num = 0
+        # 获取当前地点的特产
+        now_location = cache.rhodes_island.current_location[0]
+        nation_specialty_list = game_config.config_resouce_data_of_nation.get(now_location, [])
+        # 如果有特产的话，获取特产数量
+        if len(nation_specialty_list):
+            item_id = nation_specialty_list[0]
+            item_name = game_config.config_resouce[item_id].name
+            now_have_item_num = cache.rhodes_island.materials_resouce[item_id]
+    # 声望
+    elif text_list[0] == _("声望"):
+        item_name = _("声望")
+        item_type = _("声望")
+        # 0为当前国家
+        if item_id == 0:
+            now_country = cache.rhodes_island.current_location[0]
+            for nation_id in game_config.config_nation_data_of_country_subordinate:
+                nation_data = game_config.config_nation[nation_id]
+                if nation_data.country == now_country:
+                    item_id = nation_id
+                    item_name = nation_data.name + _("声望")
+                    now_have_item_num = cache.country.nation_reputation[nation_id]
+                    break
+        else:
+            item_name = game_config.config_nation[item_id].name + _("声望")
+            now_have_item_num = cache.country.nation_reputation[item_id]
+
     # 需求
     if not demand_or_reward:
         # 如果不够数量，设为不满足
@@ -100,19 +135,27 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             satify_flag = False
         else:
             # 扣除资源
-            if deduction_or_increase and now_text[0] == "r":
+            if deduction_or_increase and text_list[0] == "r":
                 cache.rhodes_island.materials_resouce[item_id] -= item_num
+            elif deduction_or_increase and text_list[0] == "声望":
+                item_num *= 0.01
+                cache.country.nation_reputation[item_id] -= item_num
     # 奖励
     else:
         # 增加资源
         if deduction_or_increase:
-            if now_text[0] == "r":
+            # 资源
+            if text_list[0] == "r":
                 cache.rhodes_island.materials_resouce[item_id] += item_num
-            elif now_text[0] == "e":
+            # 经验
+            elif text_list[0] == "e":
                 for character_id in send_npc_list:
                     cache.character_data[character_id].experience[item_id] += item_num
+            # 特产
+            elif text_list[0] == "特产":
+                cache.rhodes_island.materials_resouce[item_id] += item_num
             # 委托部分，-1不可完成，0可以进行，1已完成
-            elif now_text[0] == "m":
+            elif text_list[0] == "m":
                 if item_num == -1:
                     cache.rhodes_island.shut_down_field_commissions_set.add(item_id)
                 elif item_num == 0:
@@ -122,6 +165,10 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                         cache.rhodes_island.finished_field_commissions_set.remove(item_id)
                 elif item_num == 1:
                     cache.rhodes_island.finished_field_commissions_set.add(item_id)
+            # 声望
+            elif text_list[0] == "声望":
+                item_num *= 0.01
+                cache.country.nation_reputation[item_id] += item_num
 
     # 添加类型文本
     if item_type not in type_text:
@@ -132,7 +179,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         full_text += f"{item_name}:{now_have_item_num}/{item_num} "
     else:
         full_text += f"{item_name}:{item_num} "
-    
+
     return type_text, full_text, satify_flag
 
 

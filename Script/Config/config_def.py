@@ -274,7 +274,7 @@ class Commission:
     demand: str
     """ 具体需求 """
     reward: str
-    """ 具体奖励(a能力、e经验、r资源、c角色adv编号、m委托-1不可完成0可以进行1已完成) """
+    """ 具体奖励(a能力、e经验、r资源、c角色adv编号、m委托-1不可完成0可以进行1已完成、声望0为当期其他为对应势力id且加值为小数点后两位) """
     related_id: int
     """ 关联的委托id """
     special: int
