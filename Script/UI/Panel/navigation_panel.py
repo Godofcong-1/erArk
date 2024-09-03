@@ -76,7 +76,7 @@ class Base_function_class:
         scene_path[0] = _(scene_path[0])
         # 距离
         distance = scene_path[1]
-        need_time = distance * 5
+        need_time = 7 + distance * 3
         # print(f"debug scene_path = {scene_path}")
         if sp_flag == 0:
             # 当前燃料
