@@ -10057,7 +10057,7 @@ def handle_target_have_open(character_id: int) -> int:
 @add_premise(constant_promise.Premise.PRIMARY_HYPNOSIS)
 def handle_primary_hypnosis(character_id: int) -> int:
     """
-    拥有初级催眠
+    自己拥有初级催眠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10070,7 +10070,7 @@ def handle_primary_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.INTERMEDIATE_HYPNOSIS)
 def handle_intermediate_hypnosis(character_id: int) -> int:
     """
-    拥有中级催眠
+    自己拥有中级催眠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10083,7 +10083,7 @@ def handle_intermediate_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.ADVANCED_HYPNOSIS)
 def handle_advanced_hypnosis(character_id: int) -> int:
     """
-    拥有高级催眠
+    自己拥有高级催眠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10096,7 +10096,7 @@ def handle_advanced_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SPECIAL_HYPNOSIS)
 def handle_special_hypnosis(character_id: int) -> int:
     """
-    拥有特级催眠
+    自己拥有特级催眠
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10106,10 +10106,41 @@ def handle_special_hypnosis(character_id: int) -> int:
     return character_data.talent[334]
 
 
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_0)
+def handle_target_hypnosis_0(character_id: int) -> int:
+    """
+    交互对象的被催眠程度为0%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.hypnosis.hypnosis_degree == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_NE_0)
+def handle_target_hypnosis_ne_0(character_id: int) -> int:
+    """
+    交互对象的被催眠程度不是0%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_target_hypnosis_0(character_data.target_character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.TARGET_HAS_BEEN_HYPNOSIS)
 def handle_target_has_been_hypnosis(character_id: int) -> int:
     """
-    交互对象已经被催眠
+    交互对象有至少一种被催眠素质
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10126,24 +10157,22 @@ def handle_target_has_been_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_HAS_NOT_BEEN_HYPNOSIS)
 def handle_target_has_not_been_hypnosis(character_id: int) -> int:
     """
-    交互对象没有被催眠
+    交互对象没有任何被催眠素质
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    for cid in {71,72,73}:
-        if target_data.talent[cid]:
-            return 0
+    if handle_target_has_been_hypnosis(character_data.target_character_id):
+        return 0
     return 1
 
 
 @add_premise(constant_promise.Premise.TARGET_HAS_BEEN_PRIMARY_HYPNOSIS)
 def handle_target_has_been_primary_hypnosis(character_id: int) -> int:
     """
-    交互对象已经被浅层催眠
+    交互对象拥有被浅层催眠素质(50%)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10157,7 +10186,7 @@ def handle_target_has_been_primary_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_HAS_BEEN_DEEP_HYPNOSIS)
 def handle_target_has_been_deep_hypnosis(character_id: int) -> int:
     """
-    交互对象已经被深层催眠
+    交互对象拥有被深层催眠素质(100%)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -10171,7 +10200,7 @@ def handle_target_has_been_deep_hypnosis(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_HAS_BEEN_COMPLETE_HYPNOSIS)
 def handle_target_has_been_complete_hypnosis(character_id: int) -> int:
     """
-    交互对象已经被完全催眠
+    交互对象拥有被完全催眠素质(200%)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

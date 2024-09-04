@@ -33,11 +33,27 @@ msgid "{Name}触发了对{TargetName}使用体控催眠-强制排卵的地文"
 msgstr ""
 
 #: .\data\talk\arts\hormone_off.csv:6
-msgid "{Name}关闭了信息素"
+msgid "{Name}关闭了信息素——！\n空气中原本弥漫的淡淡香气逐渐消散，变得几乎不可察觉。"
+msgstr ""
+
+#: .\data\talk\arts\hormone_off.csv:7
+msgid "{Name}关闭了信息素——！\n原本浓郁的气味逐渐变淡，最终完全消失在循环的新鲜中。几个原本在附近徘徊的，嗅觉敏锐的雌性感受到了变化，停下了脚步，露出了疑惑的表情。"
+msgstr ""
+
+#: .\data\talk\arts\hormone_off.csv:8
+msgid "{Name}关闭了信息素——！\n那股强烈而迷人的气味迅速消失得无影无踪，就好像从未出现过一样。原本被吸引的雌性们的双目却仍旧迷茫，她们的视线在空气中游走，仿佛在寻找着什么，却又不知道自己究竟想找到什么，久久回不过神来。"
 msgstr ""
 
 #: .\data\talk\arts\hormone_on.csv:6
-msgid "{Name}开启了信息素"
+msgid "{Name}开启了信息素——！\n{Name}释放出少量的性激素信息素如同轻柔的香气，缓缓地在空气中弥漫开来。尽管气味并不浓烈，但仍然足以引起附近雌性生物在潜意识中的注意力。"
+msgstr ""
+
+#: .\data\talk\arts\hormone_on.csv:7
+msgid "{Name}开启了信息素——！\n{Name}释放出的性激素信息素比之前更加浓烈，散发出一种温暖而厚重的气息。这股气味在空气的流动下迅速扩散开来，引诱着雌性朝着气味的源头走来，她们眼神中带着一丝好奇和期待，仿佛被一种无形的力量所牵引。"
+msgstr ""
+
+#: .\data\talk\arts\hormone_on.csv:8
+msgid "{Name}开启了信息素——！\n{Name}释放出的性激素信息素如同一股浓烈的香气，又像一瓶陈年的美酒，迅速充满了周围的空气。这股气味强烈而迷人，瞬间牢牢抓住了所有处于同一空间内的雌性生物的意识。\n她们就像被火光所引诱的飞蛾一般，望向{Name}的眼神如同看向夜空中唯一的明星。"
 msgstr ""
 
 #: .\data\talk\arts\hypnosis_all.csv:6
@@ -45,11 +61,51 @@ msgid "{Name}发动源石技艺，将在场所有人都催眠了"
 msgstr ""
 
 #: .\data\talk\arts\hypnosis_cancel.csv:6
-msgid "{Name}为{TargetName}解除了施加的催眠"
+msgid "{Name}重新拿起穿绳硬币，和进入催眠时一样，在{TargetName}的眼前机械地摇晃着，在发动源石技艺的同时嘴里念着解除催眠的词句：\n“接下来我会数五个数……在我数到5的时候……你会醒过来并忘记刚才发生的一切……”"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_cancel.csv:7
+msgid "{Name}将源石技艺凝聚在自己的瞳孔中，紧紧盯着{TargetName}无神的眼睛\n“你开始从海里上浮……我每数一个数你就会感到心里轻松很多……3……你已经能看到上方带着光亮的海面了……”"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_cancel.csv:8
+msgid "{Name}打了个响指，{TargetName}的眼睛瞬间清醒，就这么简单。"
 msgstr ""
 
 #: .\data\talk\arts\hypnosis_one.csv:6
-msgid "{Name}对{TargetName}晃了晃手指，一股无形的源石力量渐渐深入{TargetName}的心灵之中"
+msgid "{Name}找了个借口，让{TargetName}尽量配合地坐在那里不动。\n{Name}紧握手里的穿绳硬币，手心微微出汗，在{TargetName}的眼前机械地摇晃着，在发动源石技艺的同时嘴里念着生硬的催眠词句：\n“你……你现在感觉很放松……你的眼，眼皮越来越重……”\n{TargetName}眼神中透出一丝疑惑和不安，不知道自己要配合到什么时候才算结束。"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:7
+msgid "{Name}还是用着之前的那个借口，继续让{TargetName}尽量配合地坐在那里不动。\n穿绳硬币在{TargetName}的眼前机械地摇晃着，{Name}在发动源石技艺的同时嘴里念着不知道第几次的催眠词句：\n“你现在感觉很放松……你的眼皮越来越重……”\n知道还要再持续一会的{TargetName}打了个哈欠，些许的困意也涌了上来。"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:8
+msgid "看到{Name}掏出穿绳硬币的{TargetName}非常自觉地在旁边坐好了。\n尽管已经习惯穿绳硬币在自己的眼前摇晃了，但{Name}还是不知道这种没成功过的尝试到底要重复多少次才行。\n“……是的，我现在感觉很放松……我的眼皮越来越重……”\n看到如小鸡啄米般点着头，机械性地回复自己话语的{TargetName}，{Name}收起了已经完成作用的穿绳硬币。"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:9
+msgid "尽管知道自己要配合{Name}的实验，但是不太清楚具体内容{TargetName}的还是有些紧张。\n{Name}轻描淡写地带过了注意事项和副作用，用柔和的语气重点介绍了实验内容——与{Name}对视一段时间，尽量不要眨眼。\n一开始还有些不好意思的{TargetName}在看到那因为源石技艺而显得深邃又变幻莫测的瞳孔后，渐渐变得有些迷茫了起来。"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:10
+msgid "又一次来参加实验{TargetName}带着几分复杂的心情在椅子上坐好。\n一方面是因为自己好像忘记了已经说过了好几次的实验注意事项，另一方面也是因为自己在生活中会时不时突然想起{Name}的瞳孔。\n但这一切在这次的注视开始之后就都被抛在脑后了，自己的身体也变得越来越放松，只要接着注视下去就可以了……吧？"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:11
+msgid "已经喜欢上这种实验{TargetName}带着雀跃和期待坐在凳子上。\n无论遇到什么困难和烦恼，只要看到{Name}的瞳孔就能平静下来，心里也会涌起一股安心的感觉。\n“是的……我感觉非常平静……就像躺在一片宁静的海洋中……是的……我在往下沉……不停地往下沉……”\n{Name}看着已经顺利进入催眠状态的{TargetName}，散去了眼中的源石技艺。"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:12
+msgid "第一次参加{Name}的心理咨询对谈会的{TargetName}虽然早就听说了它的好评，但是实际开始了之后发现自己还是小看{Name}了。\n在{Name}认真的倾听与恰到好处的附和下，自己的话匣子被轻而易举的挑开，心里的不满和苦恼都像倒豆子一样吐了出来。\n不止如此，房间内若有若无的淡淡香气、墙上波浪相间的素雅花纹、{Name}手中勺子搅拌茶水时，剐蹭茶杯壁的清脆而有规律的声音……\n都让人……有一些……"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:13
+msgid "尽管已经不是第一次参加{Name}的心理咨询对谈会，但{TargetName}还是有些不太好意思，因为自己每次来这里好像都在抱怨一些有的没的。\n所以这次{TargetName}决定也闲谈一些兴趣爱好呀，生活琐事呀什么的。\n说起来房间内不知道什么时候开始，一直回响着低沉而悠扬的古典乐，是{Name}从莱塔尼亚买来的留声机吗……？\n而且还有些……像是花屏的老电视一样……滋滋的还是沙沙的……奇怪的声音……"
+msgstr ""
+
+#: .\data\talk\arts\hypnosis_one.csv:14
+msgid "就像莱塔尼亚人常说的一样，娴熟的源石技艺本身就是一种艺术。\n用闪烁的错视在心里种下一粒小小的种子之后，用轻微刺激中枢神经的香气去浇灌，用接近听觉界限的白噪音去施肥，用调味的茶叶、用沙发扶手的触感、用倾斜地板的不对称重力、用房间里预先准备好的一切来让种子开花结果。\n自{TargetName}踏入这间传心感知的技艺作品的那一刻起，是否按下进入催眠的按钮就已经在{Name}的一念之中了。"
 msgstr ""
 
 #: .\data\talk\arts\increase_body_sensitivity.csv:6
@@ -57,11 +113,19 @@ msgid "{Name}触发了对{TargetName}使用体控催眠-敏感度提升的地文
 msgstr ""
 
 #: .\data\talk\arts\penetrating_vision_off.csv:6
-msgid "{Name}短暂的闭上眼睛，等到再次睁眼时已经没了源石技艺带来的透视效果"
+msgid "{Name}短暂的闭上眼睛，收起了固定在眼球上的源石技艺，再次睁开的时候，视野已经恢复了正常"
 msgstr ""
 
 #: .\data\talk\arts\penetrating_vision_on.csv:6
-msgid "{Name}发动了透视——！"
+msgid "{Name}发动了透视——！\n在精准的技艺控制下，外层的衣服在视野中渐渐变得透明起来，能够直接看到对方的内衣了！"
+msgstr ""
+
+#: .\data\talk\arts\penetrating_vision_on.csv:7
+msgid "{Name}发动了透视——！\n透视的视野转向对方的体内，从阴道的褶皱到子宫的形状，乃至肠道和食道都清晰可见了起来。"
+msgstr ""
+
+#: .\data\talk\arts\penetrating_vision_on.csv:8
+msgid "{Name}发动了透视——！\n将透视的能力发挥到最大，连性激素的分泌和卵子的状态都能看的一清二楚！再将其分析、量化为具体的数据的话……？"
 msgstr ""
 
 #: .\data\talk\arts\roleplay.csv:6
