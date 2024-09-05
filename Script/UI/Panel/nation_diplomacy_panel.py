@@ -83,7 +83,8 @@ def judge_diplomatic_policy():
             # 小幅度提高声望
             up_reputation = 0.1 * ability_adjust * random_just
             # 修正声望
-            cache.country.nation_reputation[country_id] += up_reputation
+            nation_cid = country_id * 10 + 1
+            cache.country.nation_reputation[nation_cid] += up_reputation
             all_reputation += up_reputation
             # 遍历当地的附属势力
             for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
@@ -94,7 +95,8 @@ def judge_diplomatic_policy():
             # 小幅度提高声望
             up_reputation = 0.1 * ability_adjust * random_just
             # 修正声望
-            cache.country.nation_reputation[country_id] += up_reputation
+            nation_cid = country_id * 10 + 1
+            cache.country.nation_reputation[nation_cid] += up_reputation
             all_reputation += up_reputation
             # 遍历当地的附属势力
             for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
@@ -110,7 +112,8 @@ def judge_diplomatic_policy():
             # 大幅度提高声望
             up_reputation = 0.3 * ability_adjust * random_just
             # 修正声望
-            cache.country.nation_reputation[country_id] += up_reputation
+            nation_cid = country_id * 10 + 1
+            cache.country.nation_reputation[nation_cid] += up_reputation
             all_reputation += up_reputation
             # 遍历当地的附属势力
             for subordinate_id in game_config.config_nation_data_of_country_subordinate[country_id]:
