@@ -344,14 +344,14 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         calculation_text += _("+能力修正(") + str(judge_ability) + ")"
 
     # 刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
-    judge_mark = target_data.ability[13] * 20 + target_data.ability[14] * 20
-    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 20 + target_data.ability[18] * 30
+    judge_mark = target_data.ability[13] * 50 + target_data.ability[14] * 50
+    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 50 + target_data.ability[18] * 50
     judge += judge_mark
     if judge_mark:
         calculation_text += _("+刻印修正(") + str(judge_mark) + ")"
 
     # 心情修正，好心情+10，坏心情-10，愤怒-30
-    judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 10
+    judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 20
     judge += judge_angry
     if judge_angry:
         calculation_text += _("+心情修正(") + str(judge_angry) + ")"
@@ -388,13 +388,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_data_type == "S":
         # 淫乱相关属性修正#
         if target_data.talent[40]:
-            judge += 30
-            calculation_text += _("+淫乱(+30)")
+            judge += 50
+            calculation_text += _("+淫乱(+50)")
         # 爱情旅馆修正
         if target_data.h_state.h_in_love_hotel:
             if cache.rhodes_island.love_hotel_room_lv == 1:
-                judge += 10
-                calculation_text += _("+标间(+10)")
+                judge += 25
+                calculation_text += _("+标间(+25)")
             elif cache.rhodes_island.love_hotel_room_lv == 2:
                 judge += 50
                 calculation_text += _("+情趣主题房(+50)")
@@ -404,7 +404,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     # 激素系能力修正#
     if character_data.pl_ability.hormone:
-        judge_information = character_data.talent[304] * 10 + character_data.talent[305] * 25 + character_data.talent[306] * 50
+        judge_information = character_data.talent[304] * 25 + character_data.talent[305] * 50 + character_data.talent[306] * 100
         judge += judge_information
         talent_id = handle_talent.have_hormone_talent()
         talent_name = game_config.config_talent[talent_id].name
@@ -418,15 +418,16 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         scene_data = cache.scene_data[scene_path_str]
         if len(scene_data.character_list) > 2:
+            other_chara_count = len(scene_data.character_list) - 2
             if judge_data_type == "S":
-                judge_other_people = 100
+                judge_other_people = 40 + 40 * other_chara_count
             else:
-                judge_other_people = 30
+                judge_other_people = 25 + 25 * other_chara_count
             # 露出修正
             adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-            judge_other_people = int(judge_other_people * (adjust - 1.5))
+            judge_other_people = int(judge_other_people * (adjust - 1.4))
             judge += judge_other_people
-            calculation_text += _("+当前场景有其他人在(") + text_handle.number_to_symbol_string(judge_other_people) + ")"
+            calculation_text += _("+有别人在时的露出修正(") + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
         # 助理助攻修正
         if character_data.assistant_character_id != target_character_id and character_data.assistant_character_id in scene_data.character_list:
@@ -437,15 +438,15 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
         # 今天H被打断了修正
         if judge_data_type == "S":
-            judge_h_interrupt = character_data.action_info.h_interrupt * 10
+            judge_h_interrupt = character_data.action_info.h_interrupt * 50
             judge -= judge_h_interrupt
             if judge_h_interrupt:
                 calculation_text += _("+今天H被打断过(-") + str(judge_h_interrupt) + ")"
 
         # 监禁模式修正
         if target_data.sp_flag.imprisonment:
-            judge += 400
-            calculation_text += _("+监禁中(+400)")
+            judge += 500
+            calculation_text += _("+监禁中(+500)")
 
         # 无意识模式修正
         if target_data.sp_flag.unconscious_h == 1:
@@ -454,23 +455,23 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     # 处女修正
     if instruct_name == _("性交") and target_data.talent[0]:
-        judge -= 100
-        calculation_text += _("+处女(-100)")
+        judge -= 250
+        calculation_text += _("+处女(-250)")
 
     # A处女修正
     if instruct_name == _("A性交") and target_data.talent[1]:
-        judge -= 200
-        calculation_text += _("+Ａ处女(-200)")
+        judge -= 350
+        calculation_text += _("+Ａ处女(-350)")
 
     # U处女修正
     if instruct_name == _("U性交") and target_data.talent[2]:
-        judge -= 300
-        calculation_text += _("+Ｕ处女(-300)")
+        judge -= 400
+        calculation_text += _("+Ｕ处女(-400)")
 
     # 初吻修正
     if instruct_name == _("亲吻") and target_data.talent[4]:
-        judge -= 50
-        calculation_text += _("+初吻(-50)")
+        judge -= 125
+        calculation_text += _("+初吻(-125)")
 
     # 性交的避孕相关修正
     if instruct_name == _("性交"):
@@ -494,8 +495,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 judge -= 50
                 calculation_text += _("+普通期(-50)")
             elif handle_premise.handle_reproduction_period_2(target_character_id):
-                judge -= 100
-                calculation_text += _("+危险期(-100)")
+                judge -= 200
+                calculation_text += _("+危险期(-200)")
             elif handle_premise.handle_reproduction_period_3(target_character_id):
                 judge -= 300
                 calculation_text += _("+排卵期(-300)")
@@ -622,7 +623,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             now_draw.text = calculation_text
             now_draw.draw()
 
-        # 合意获得的结算
+        # 合意获得的结算，大前提是在有意识情况下通过判定
         if final_judge and target_data.sp_flag.unconscious_h == 0:
             agree_draw = draw.WaitDraw()
             agree_draw.width = 1
@@ -640,17 +641,19 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 target_data.talent[16] = 1
                 draw_text += _("\n 获得了{0}的【Ｕ性交合意】\n").format(target_data.name)
             # 避孕相关合意
-            # 避孕中出合意需要在不带套、安全期时，通过判定才可获得
+            # 避孕中出合意需要在非处女、不带套、安全期时，通过判定才可获得
             if (
+                handle_premise.handle_no_virgin(target_character_id) and
                 instruct_name == _("性交") and
                 target_data.talent[13] == 0 and
                 condom_flag == False and
-                (handle_premise.handle_reproduction_period_0(target_character_id))
+                handle_premise.handle_reproduction_period_0(target_character_id)
                 ):
                 target_data.talent[13] = 1
                 draw_text += _("\n 获得了{0}的【避孕中出合意】\n").format(target_data.name)
-            # 妊娠合意需要在不带套、非安全期时，通过判定才可获得
+            # 妊娠合意需要在非处女、不带套、非安全期时，通过判定才可获得
             if (
+                handle_premise.handle_no_virgin(target_character_id) and
                 instruct_name == _("性交") and
                 target_data.talent[14] == 0 and
                 condom_flag == False and

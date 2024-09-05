@@ -1577,6 +1577,8 @@ class Premise:
     """ 属性_素质 交互对象未保有初吻 """
     TARGET_HAVE_FIRST_KISS = "t_kiss_1"
     """ 属性_素质 交互对象保有初吻 """
+    NO_VIRGIN = "virgin_0"
+    """ 属性_素质 自己非处女 """
     TARGET_NO_VIRGIN = "t_virgin_0"
     """ 属性_素质 交互对象非处女 """
     TARGET_HAVE_VIRGIN = "t_virgin_1"

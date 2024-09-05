@@ -8509,6 +8509,19 @@ def handle_target_have_first_kiss(character_id: int) -> int:
     return target_data.talent[4] == 1
 
 
+@add_premise(constant_promise.Premise.NO_VIRGIN)
+def handle_no_virgin(character_id: int) -> int:
+    """
+    校验自己是否非处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[0] == 0
+
+
 @add_premise(constant_promise.Premise.TARGET_NO_VIRGIN)
 def handle_target_no_virgin(character_id: int) -> int:
     """
