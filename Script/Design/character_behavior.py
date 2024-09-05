@@ -380,6 +380,7 @@ def judge_character_tired_sleep(character_id : int):
             character_data.behavior.behavior_id = constant.Behavior.H_HP_0
             character_data.state = constant.CharacterStatus.STATUS_H_HP_0
             target_data.sp_flag.is_h = False
+            character_data.sp_flag.tired = False
             update.game_update_flow(5)
 
 

@@ -432,6 +432,14 @@ class CharacterInfoHead:
                 sleep_text = f" <{sleep_name}>"
         sleep_draw.text = sleep_text
 
+        # 疲劳状态
+        tired_draw = draw.LeftDraw()
+        tired_draw.style = "little_dark_slate_blue"
+        tired_text = ""
+        if character_data.sp_flag.tired:
+            tired_text = _(" <累>")
+        tired_draw.text = tired_text
+
         # 非普通时输出当前心情
         angry_draw = draw.LeftDraw()
         angry_text = ""
@@ -567,7 +575,7 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + urinate_text + hypnosis_text + hunger_text + active_h_text + imprisonment_text)
+        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + imprisonment_text)
         max_width = max(base_width, text_width)
         message_draw.width = max_width
         message_draw.text = message
@@ -616,7 +624,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, hypnosis_draw, active_h_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)
