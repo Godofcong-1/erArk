@@ -304,6 +304,21 @@ class Field_Commission_Panel:
             line = draw.LineDraw("+", self.width)
             line.draw()
 
+            # 设施信息
+            now_level = cache.rhodes_island.facility_level[14]
+            facility_info_text = ""
+            facility_info_text += _("○通用委托无论在哪里都可以接到，地区委托则需要罗德岛移动到对应地区时才可接到，能接到的委托等级与机库的等级有关\n")
+            facility_info_text += _("○常规外勤委托可以多次反复完成，特殊外勤只能完成一次\n")
+            facility_info_text += _("○罗德岛的移动：控制中枢-指挥室-导航，购买载具：机库-格纳库-管理载具\n")
+            facility_info_text += _("○当前机库等级：{0}，最高可接到{1}级的委托\n").format(now_level, now_level + 1)
+
+            facility_info_draw = draw.NormalDraw()
+            facility_info_draw.text = facility_info_text
+            facility_info_draw.width = self.width
+            facility_info_draw.draw()
+            line = draw.LineDraw("+", self.width)
+            line.draw()
+
             # 绘制提示信息
             info_text_list = ["委托等级", "委托名称", "派遣人数", "耗时天数", "需求类型", "奖励类型"]
             for info_text in info_text_list:
