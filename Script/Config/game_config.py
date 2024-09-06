@@ -150,7 +150,7 @@ config_birthplace: Dict[int, config_def.Birthplace] = {}
 config_nation: Dict[int, config_def.Nation] = {}
 """ 势力配置 """
 config_nation_data_of_country_subordinate: Dict[int, List] = {}
-""" 国家势力所对应的附属势力表 """
+""" 国家势力所对应的附属势力表，势力cid：子势力id列表 """
 config_diplomatic_policy: Dict[int, config_def.Diplomatic_Policy] = {}
 """ 外交方针配置 """
 config_restaurant: Dict[int, config_def.Restaurant] = {}
