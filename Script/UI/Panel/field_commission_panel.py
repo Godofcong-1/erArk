@@ -96,6 +96,19 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif text_list[0] == "m":
         item_name = _("委托")
         item_type = _("委托")
+        now_have_item_num = 0
+    # 角色adv编号
+    elif text_list[0] == "c":
+        item_name = _("指定干员")
+        item_type = _("指定干员")
+        for character_id in cache.character_data:
+            if cache.character_data[character_id].adv == item_id:
+                item_name = cache.character_data[character_id].name
+                item_id = character_id
+                break
+        now_have_item_num = 0
+        if item_id in cache.npc_id_got:
+            now_have_item_num = 1
     # 特产
     elif text_list[0] == _("特产"):
         # 默认值
@@ -198,12 +211,11 @@ def judge_field_commission_finish():
 
     import random
 
-    now_time = cache.game_time
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
     for commision_id in now_ongoing_field_commissions:
         end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-        if game_time.judge_date_big_or_small(now_time, end_time) or game_time.count_day_for_datetime(now_time, end_time) == 0:
+        if game_time.judge_date_big_or_small(cache.game_time, end_time) or game_time.count_day_for_datetime(cache.game_time, end_time) == 0:
             # 获取奖励
             reward_return_list = get_commission_demand_and_reward(commision_id, [], True, True)
             reward_text = reward_return_list[2]

@@ -29,7 +29,7 @@ from Script.Design import (
     update,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import draw_event_text_panel, ejaculation_panel
+from Script.UI.Panel import draw_event_text_panel, ejaculation_panel, field_commission_panel
 from Script.Config import game_config, normal_config
 from Script.Settle import default
 
@@ -57,6 +57,7 @@ def init_character_behavior():
         while 0 not in cache.over_behavior_character:
             pl_start_time = cache.character_data[0].behavior.start_time
             character_behavior(0, cache.game_time, pl_start_time)
+        field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
         # 后结算其他NPC部分
@@ -956,7 +957,7 @@ def update_new_day():
     无
     """
     from Script.Design import basement
-    from Script.UI.Panel import field_commission_panel, nation_diplomacy_panel, navigation_panel
+    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -990,7 +991,6 @@ def update_new_day():
 
     # 非角色部分
     basement.update_base_resouce_newday() # 更新基础资源
-    field_commission_panel.update_field_commission() # 刷新委托任务
     cooking.init_food_shop_data() # 初始化餐厅数据
     navigation_panel.judge_arrive() # 判断是否到达目的地
     # 每周一次
