@@ -66,13 +66,19 @@ class Recruit_Panel:
 
         title_text = _("招募")
         title_draw = draw.TitleLineDraw(title_text, self.width)
+        # 当前设施数据
+        now_level = cache.rhodes_island.facility_level[7]
+        facility_cid = game_config.config_facility_effect_data[_("文职部")][int(now_level)]
+        facility_effect = game_config.config_facility_effect[facility_cid].effect
+        line_count = len(cache.rhodes_island.recruit_line)
+        self.max_hr_in_line = now_level * 2 # 每个招募线的hr上限
 
         while 1:
             return_list = []
             title_draw.draw()
 
             all_info_draw = draw.NormalDraw()
-            now_text = ""
+            now_text = _("当前设施等级为：{0}，可同时有{1}条招募线，每条招募线最多有{2}人\n").format(now_level, line_count, self.max_hr_in_line)
             if len(cache.rhodes_island.recruited_id) == 0:
                 now_text += _(" 当前没有招募到干员\n")
             else:
@@ -114,10 +120,7 @@ class Recruit_Panel:
                 button_draw.draw()
 
                 # 招募效率
-                now_level = cache.rhodes_island.facility_level[7]
-                facility_cid = game_config.config_facility_effect_data[_("文职部")][int(now_level)]
                 all_effect = 0
-                facility_effect = game_config.config_facility_effect[facility_cid].effect
                 now_text = _("\n    当前效率加成：[")
                 # 遍历输出干员的能力效率加成，40号话术技能
                 for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
@@ -263,7 +266,7 @@ class Recruit_Panel:
             for chara_id in id_list:
                 character_data: game_type.Character = cache.character_data[chara_id]
                 # 找到职业是招募专员的
-                if character_data.work.work_type == 71:
+                if handle_premise.handle_work_is_hr(chara_id):
                     character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
                     button_text = _(" [{0}(话术lv{1}:{2}%)] ").format(character_data.name, character_data.ability[40], round(character_effect, 1))
                     button_draw = draw.CenterButton(
@@ -288,12 +291,15 @@ class Recruit_Panel:
             for recruit_line_id in cache.rhodes_island.recruit_line:
                 now_text = _("\n {0}号招募：").format(recruit_line_id+1)
 
-                # 招募
+                # 人数
+                now_text += _("(当前人数：{0}/{1})").format(len(cache.rhodes_island.recruit_line[recruit_line_id][2]), self.max_hr_in_line)
 
+                # 招募策略
                 recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
                 recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
-
                 now_text += _("\n    当前招募策略：{0}      ").format(recruitment_strategy_data.name)
+
+                # 绘制
                 all_info_draw.text = now_text
                 all_info_draw.draw()
 
@@ -321,8 +327,8 @@ class Recruit_Panel:
 
             line_feed.draw()
             yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
-            # 如果有选择的干员则输出确定按钮
-            if self.now_chara_id != -1:
+            # 如果有选择的干员，且目标招募线的人数未达上限则输出确定按钮
+            if self.now_chara_id != -1 and len(cache.rhodes_island.recruit_line[self.target_position][2]) < self.max_hr_in_line:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
