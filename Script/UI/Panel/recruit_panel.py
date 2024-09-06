@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, basement
+from Script.Design import attr_calculation, basement, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import manage_basement_panel
@@ -16,6 +16,33 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+def find_recruitable_npc() -> List[int]:
+    """
+    查找可招募的NPC
+    Returns:
+    List[int]: 可招募的NPC列表
+    """
+
+    recruitable_npc_id_list = []
+
+    for i in range(len(cache.npc_tem_data)):
+        chara_id = i + 1
+        # 跳过已有的
+        if chara_id in cache.npc_id_got:
+            continue
+        # 跳过女儿
+        if cache.npc_tem_data[i].Mother_id != 0 or cache.npc_tem_data[i].AdvNpc > 9000:
+            continue
+        # 跳过不存在的
+        if chara_id not in cache.character_data:
+            continue
+        # 跳过离线异常
+        if not handle_premise.handle_normal_7(chara_id):
+            continue
+        recruitable_npc_id_list.append(chara_id)
+
+    return recruitable_npc_id_list
 
 
 class Recruit_Panel:

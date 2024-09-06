@@ -206,10 +206,11 @@ def update_field_commission():
 
 def judge_field_commission_finish():
     """
-    判断外勤委托是否完成
+    判断与结算外勤委托的完成
     """
 
     import random
+    from Script.UI.Panel import recruit_panel
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -245,9 +246,33 @@ def judge_field_commission_finish():
                     base_rate *= 0.5
                 else:
                     cache.rhodes_island.vehicles[vehicle_id][1] -= 1
-            draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
+            # 判断是否会招募到新干员
+            # 招募概率与等级相关
+            base_rate = 0.01 * game_config.config_commission[commision_id].level
+            recruited_text = ""
+            if random.random() < base_rate:
+                recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
+                wait_id_list = []
+                # 只能招募到当地的干员
+                for chara_id in recruitable_npc_id_list:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出出生地是当前罗德岛所在地的角色
+                    if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                        continue
+                    else:
+                        wait_id_list.append(chara_id)
+                # 如果有符合条件的干员，随机招募一个
+                if len(wait_id_list):
+                    choice_id = random.choice(wait_id_list)
+                    cache.rhodes_island.recruited_id.add(choice_id)
+                    # 绘制招募信息
+                    recruited_text = "※ " + {cache.character_data[character_id].name}
+                    recruited_text += _("汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n")
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
+            # 最后总结
+            draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
+            draw_text += recruited_text
 
     # 绘制完成委托
     if len(draw_text):

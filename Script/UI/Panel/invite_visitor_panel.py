@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import attr_calculation, map_handle, game_time
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import manage_basement_panel
+from Script.UI.Panel import manage_basement_panel, recruit_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -189,24 +189,9 @@ class Invite_Visitor_Panel:
                 now_text += _(" 可邀请范围：{0}\n\n").format(now_invitation_range)
 
             # 可邀请目标
+            recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
             target_id_list = []
-            for i in range(len(cache.npc_tem_data)):
-                chara_id = i + 1
-                # 去掉已经有的角色
-                if chara_id in cache.npc_id_got:
-                    continue
-                # 去掉待确认招募的角色
-                if chara_id in cache.rhodes_island.recruited_id:
-                    continue
-                # 跳过女儿
-                if cache.npc_tem_data[i].Mother_id != 0 or cache.npc_tem_data[i].AdvNpc > 9000:
-                    continue
-                # 跳过不存在的
-                if chara_id not in cache.character_data:
-                    continue
-                # 跳过离线异常
-                if not handle_premise.handle_normal_7(chara_id):
-                    continue
+            for chara_id in recruitable_npc_id_list:
                 # 本地
                 if now_level == 2:
                     character_data = cache.character_data[chara_id]
