@@ -231,14 +231,18 @@ def judge_field_commission_finish():
                 cache.character_data[character_id].sp_flag.field_commission = 0
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
-            # 载具回收
+            # 载具损坏与回收
             send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
+            # 损坏概率与等级相关
+            base_rate = 0.05 * game_config.config_commission[commision_id].level
             for vehicle_id in send_vehicle_list:
-                # 20%概率载具损坏
-                if random.randint(1, 5) == 1:
+                # 根据基准概率判断载具是否损坏
+                if random.random() < base_rate:
                     cache.rhodes_island.vehicles[vehicle_id][0] += -1
                     cache.rhodes_island.vehicles[vehicle_id][1] += -1
                     draw_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
+                    # 如果损坏了，则概率下降一半，以免连续损坏
+                    base_rate *= 0.5
                 else:
                     cache.rhodes_island.vehicles[vehicle_id][1] -= 1
             draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
