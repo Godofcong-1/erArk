@@ -11517,19 +11517,19 @@ msgid "高级视觉系能力，可以看到对方的生理周期与受精概率"
 msgstr ""
 
 #: .\data\csv\Talent.csv:168
-msgid "隔空触摸"
+msgid "隔衣触摸"
 msgstr ""
 
 #: .\data\csv\Talent.csv:168
-msgid "初级触觉系能力，可以隔空抚摸对方的身体"
+msgid "初级触觉系能力，可以隔空抚摸对方没有被衣服覆盖的身体部位（未实装）"
 msgstr ""
 
 #: .\data\csv\Talent.csv:169
-msgid "隔空脱衣"
+msgid "透衣触摸"
 msgstr ""
 
 #: .\data\csv\Talent.csv:169
-msgid "中级触觉系能力，可以隔空脱掉对方的衣服"
+msgid "中级触觉系能力，可以穿过衣服，直接隔空触摸到对方的衣服下的身体部位（未实装）"
 msgstr ""
 
 #: .\data\csv\Talent.csv:170
@@ -11537,98 +11537,122 @@ msgid "隔空插入"
 msgstr ""
 
 #: .\data\csv\Talent.csv:170
-msgid "高级触觉系能力，可以隔空插入对方的腔内"
+msgid "高级触觉系能力，可以穿过衣服，直接隔空插入对方的腔内（未实装）"
+msgstr ""
+
+#: .\data\csv\Talent.csv:171
+msgid "窄域时停"
+msgstr ""
+
+#: .\data\csv\Talent.csv:171
+msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方（未实装）"
 msgstr ""
 
 #: .\data\csv\Talent.csv:172
-msgid "性爱催眠"
+msgid "广域时停"
 msgstr ""
 
 #: .\data\csv\Talent.csv:172
-msgid "中级催眠系能力，可以让对方陷入深层催眠状态，不会抵抗任何性行为"
+msgid "中级时停系能力，可以让时间暂时停止，且自己可以随意移动（未实装）"
 msgstr ""
 
 #: .\data\csv\Talent.csv:173
+msgid "精确时停"
+msgstr ""
+
+#: .\data\csv\Talent.csv:173
+msgid "高级时停系能力，可以让时间暂时停止，且可以选择性地让某些人或物不受影响（未实装）"
+msgstr ""
+
+#: .\data\csv\Talent.csv:175
+msgid "性爱催眠"
+msgstr ""
+
+#: .\data\csv\Talent.csv:175
+msgid "中级催眠系能力，可以让对方陷入深层催眠状态，不会抵抗任何性行为"
+msgstr ""
+
+#: .\data\csv\Talent.csv:176
 msgid "高级催眠系能力，可以同时催眠复数对象，对同房间的所有人共同施加催眠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:174
+#: .\data\csv\Talent.csv:177
 msgid "心体催眠"
 msgstr ""
 
-#: .\data\csv\Talent.csv:174
+#: .\data\csv\Talent.csv:177
 msgid "特级催眠系能力，可以使用体控和心控的催眠，单独操控被催眠的对象的身体或向心灵灌输特定的命令"
 msgstr ""
 
-#: .\data\csv\Talent.csv:176
+#: .\data\csv\Talent.csv:179
 msgid "回复慢"
 msgstr ""
 
-#: .\data\csv\Talent.csv:176
+#: .\data\csv\Talent.csv:179
 msgid "进行体力气力恢复时有减值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:177
+#: .\data\csv\Talent.csv:180
 msgid "回复快"
 msgstr ""
 
-#: .\data\csv\Talent.csv:177
+#: .\data\csv\Talent.csv:180
 msgid "进行体力气力恢复时有加值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:178
+#: .\data\csv\Talent.csv:181
 msgid "酒量差"
 msgstr ""
 
-#: .\data\csv\Talent.csv:179
+#: .\data\csv\Talent.csv:182
 msgid "酒量好"
 msgstr ""
 
-#: .\data\csv\Talent.csv:180
+#: .\data\csv\Talent.csv:183
 msgid "千杯不醉"
 msgstr ""
 
-#: .\data\csv\Talent.csv:181
+#: .\data\csv\Talent.csv:184
 msgid "灵活手指"
 msgstr ""
 
-#: .\data\csv\Talent.csv:182
+#: .\data\csv\Talent.csv:185
 msgid "灵活舌头"
 msgstr ""
 
-#: .\data\csv\Talent.csv:183
+#: .\data\csv\Talent.csv:186
 msgid "教官"
 msgstr ""
 
-#: .\data\csv\Talent.csv:184
+#: .\data\csv\Talent.csv:187
 msgid "厨艺"
 msgstr ""
 
-#: .\data\csv\Talent.csv:184
+#: .\data\csv\Talent.csv:187
 msgid "料理加值"
 msgstr ""
 
-#: .\data\csv\Talent.csv:186
+#: .\data\csv\Talent.csv:189
 msgid "持有博士把柄"
 msgstr ""
 
-#: .\data\csv\Talent.csv:186
+#: .\data\csv\Talent.csv:189
 msgid "实行值减少"
 msgstr ""
 
-#: .\data\csv\Talent.csv:187
+#: .\data\csv\Talent.csv:190
 msgid "被博士持有把柄"
 msgstr ""
 
-#: .\data\csv\Talent.csv:187
+#: .\data\csv\Talent.csv:190
 msgid "实行值增加"
 msgstr ""
 
-#: .\data\csv\Talent.csv:189
+#: .\data\csv\Talent.csv:192
 msgid "把自己的信物交给了博士"
 msgstr ""
 
-#: .\data\csv\Talent.csv:191
+#: .\data\csv\Talent.csv:194
 msgid "是博士的女儿"
 msgstr ""
 
