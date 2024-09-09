@@ -4147,10 +4147,11 @@ def handle_chara_off_line(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    # 清零助理、污浊、H状态数据
-    handle_assistant_reset(character_id, add_time, change_data, now_time)
-    handle_dirty_reset(character_id, add_time, change_data, now_time)
-    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
+    character_data.behavior = game_type.Behavior() # 行动数据归零
+    character_data.event = game_type.Chara_Event() # 事件数据归零
+    handle_assistant_reset(character_id, add_time, change_data, now_time) # 助理数据归零
+    handle_dirty_reset(character_id, add_time, change_data, now_time) # 污浊情况归零
+    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state) # H状态数据归零
     # 清零跟随数据
     character_data.sp_flag.is_follow = 0
     # 从当前干员列表中移除
@@ -4187,14 +4188,19 @@ def handle_chara_on_line(
     character_data.hunger_point = 0
     character_data.tired_point = 0
     character_data.sleep_point = 0
+    character_data.urinate_point = 0
     # 清零各特殊状态flag
-    character_data.sp_flag.is_follow = 0
-    character_data.sp_flag.sleep = 0
-    character_data.sp_flag.rest = 0
-    character_data.sp_flag.pee = 0
-    character_data.sp_flag.milk = 0
-    character_data.sp_flag.shower = 0
-    character_data.sp_flag.eat_food = 0
+    if character_data.sp_flag.imprisonment == 1:
+        character_data.sp_flag = game_type.SPECIAL_FLAG()
+        character_data.sp_flag.imprisonment = 1
+    else:
+        character_data.sp_flag = game_type.SPECIAL_FLAG()
+    # 赋予默认行动数据
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.start_time = now_time
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_ARDER
     # 加入当前干员列表
     if character_id not in cache.npc_id_got:
         cache.npc_id_got.add(character_id)
