@@ -216,7 +216,7 @@ def judge_field_commission_finish():
     draw_text = ""
     for commision_id in now_ongoing_field_commissions:
         end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-        if game_time.judge_date_big_or_small(cache.game_time, end_time) or game_time.count_day_for_datetime(cache.game_time, end_time) == 0:
+        if game_time.judge_date_big_or_small(cache.game_time, end_time):
             # 获取奖励
             reward_return_list = get_commission_demand_and_reward(commision_id, [], True, True)
             reward_text = reward_return_list[2]
