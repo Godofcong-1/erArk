@@ -549,7 +549,7 @@ class DataList(QWidget):
                 cache_control.now_status = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
-                self.chara_id_text_edit.setText(chara_id)
+                self.chara_id_text_edit.setText(str(chara_id))
 
                 # 遍历 list_widget 中的所有 item
                 for i in range(self.list_widget.count()):
