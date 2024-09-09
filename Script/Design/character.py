@@ -67,11 +67,11 @@ def init_attr(character_id: int):
     character_data.assistant_services = attr_calculation.get_assistant_services_zero()
     # character_data.relationship = attr_calculation.get_relationship_zero(character_data.relationship)
 
-    # 主角的初始处理，HP和MP的最大值默认为2000，EP最大值默认为1000，初始化信物，困倦程度归零
+    # 主角的初始处理，HP和MP的最大值默认为1000，EP最大值默认为1000，初始化信物，困倦程度归零
     if character_id == 0:
         character_data.talent = attr_calculation.get_Dr_talent_zero(character_data.talent)
-        character_data.hit_point_max = 2000
-        character_data.mana_point_max = 2000
+        character_data.hit_point_max = 1000
+        character_data.mana_point_max = 1000
         character_data.eja_point = 0
         character_data.eja_point_max = 1000
         character_data.sanity_point = 100
