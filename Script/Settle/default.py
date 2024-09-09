@@ -5945,9 +5945,13 @@ def handle_add_hpmp_max(
     facility_effect = game_config.config_facility_effect[facility_cid].effect
     facility_adjust = 1 + facility_effect / 100
 
+    # 指数曲线，x = [1000, 2000, 4000, 5000, 10000]， y = [50, 25, 15, 10, 5]
+    add_hp = 128.961 * math.exp(-0.0016 * character_data.hit_point_max) + 28.578 * math.exp(-1.8453e-04 * character_data.hit_point_max)
+    add_mp = 128.961 * math.exp(-0.0016 * character_data.mana_point_max) + 28.578 * math.exp(-1.8453e-04 * character_data.mana_point_max)
+
     # 最终增加值
-    add_hp = int(character_data.hit_point_max * 0.005 * facility_adjust * random.uniform(0.8, 1.2))
-    add_mp = int(character_data.mana_point_max * 0.01 * facility_adjust * random.uniform(0.5, 1.2))
+    add_hp = int(add_hp * facility_adjust * random.uniform(0.8, 1.2))
+    add_mp = int(add_mp * facility_adjust * random.uniform(0.8, 1.5))
     # 增加上限
     character_data.hit_point_max += add_hp
     character_data.mana_point_max += add_mp
@@ -5960,8 +5964,10 @@ def handle_add_hpmp_max(
     # 交互对象也同样#
     if character_data.target_character_id != character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        add_hp = int(target_data.hit_point_max * 0.005 * random.uniform(0.8, 1.2))
-        add_mp = int(target_data.mana_point_max * 0.01 * random.uniform(0.5, 1.2))
+        add_hp = 128.961 * math.exp(-0.0016 * target_data.hit_point_max) + 28.578 * math.exp(-1.8453e-04 * target_data.hit_point_max * 2)
+        add_mp = 128.961 * math.exp(-0.0016 * target_data.mana_point_max) + 28.578 * math.exp(-1.8453e-04 * target_data.mana_point_max * 2)
+        add_hp = int(add_hp * facility_adjust * random.uniform(0.8, 1.2))
+        add_mp = int(add_mp * facility_adjust * random.uniform(0.8, 1.5))
         target_data.hit_point_max += add_hp
         target_data.mana_point_max += add_mp
         # 如果和玩家位于同一地点，则输出提示信息
