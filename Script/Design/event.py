@@ -19,6 +19,8 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     str -- 事件id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    target_character_data = cache.character_data[target_character_id]
     behavior_id = character_data.behavior.behavior_id
     now_event_data = {}
     now_premise_data = {}
@@ -30,16 +32,17 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
             event_config = game_config.config_event[event_id]
             # 如果是角色专有事件，则判断角色id是否符合
             if event_config.adv_id not in {"","0"}:
+                event_adv_id = int(event_config.adv_id)
                 # print(f"debug event_config.adv_id:{event_config.adv_id}")
                 # 事件由玩家触发，但交互对象不是该id，则跳过
-                if "sys_0" in event_config.premise and int(event_config.adv_id) != character_data.target_character_id:
+                if "sys_0" in event_config.premise and event_adv_id != target_character_data.adv:
                     continue
                 # 事件由NPC触发，但自己不是该id，则跳过
-                elif "sys_1" in event_config.premise and int(event_config.adv_id) != character_id:
+                elif "sys_1" in event_config.premise and event_adv_id != character_data.adv:
                     continue
                 # 既不是自己id也不是交互对象id，则跳过
                 else:
-                    if int(event_config.adv_id) != character_id and int(event_config.adv_id) != character_data.target_character_id:
+                    if event_adv_id != character_data.adv and event_adv_id != target_character_data.adv:
                         continue
             # 如果是事件在前，指令在后，判断是否需要跳过
             if event_before_instrust_flag:
