@@ -107,6 +107,10 @@ class Assistant_Panel:
                 # 跟随服务
                 button_text = _("[002]跟随服务")
 
+                # 如果数值超限则归零
+                if target_data.sp_flag.is_follow > 4:
+                    target_data.sp_flag.is_follow = 0
+
                 if target_data.sp_flag.is_follow == 0:
                     button_text += f"    否"
                 elif target_data.sp_flag.is_follow == 1:
@@ -179,7 +183,7 @@ class Assistant_Panel:
             chose_assistant()
         # 跟随服务
         elif service_cid == 2:
-            if target_data.sp_flag.is_follow == 1:
+            if target_data.sp_flag.is_follow == 1 or target_data.sp_flag.is_follow > 4:
                 target_data.sp_flag.is_follow = 0
             else:
                 target_data.sp_flag.is_follow += 1
