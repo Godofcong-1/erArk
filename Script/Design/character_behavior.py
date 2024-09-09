@@ -905,10 +905,10 @@ def update_sleep():
         # 玩家结算
         if character_id == 0:
             sanity_point_grow() # 玩家理智成长
-            refresh_temp_semen_max() # 刷新玩家临时精液上限
             character_data.eja_point = 0 # 清零射精槽
-            character_data.sanity_point = character_data.sanity_point_max # 恢复理智槽
-            character_data.semen_point = character_data.semen_point_max # 恢复精液量
+            # 睡眠时间在6h及以上的额外恢复
+            if character_data.behavior.duration >= 360:
+                refresh_temp_semen_max() # 刷新玩家临时精液上限
             # 检查是否有可以升级的能力
             if cache.system_setting[2]:
                 handle_ability.gain_ability(character_id)

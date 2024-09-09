@@ -7263,6 +7263,60 @@ def handle_desire_point_to_0(
     character_data.desire_point = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_SANITY_POINT)
+def handle_add_small_sanity_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加少量理智值(15%/h)
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if character_id > 0:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    add_sanity_point = int(add_time / 60 * 0.15 * character_data.sanity_point_max)
+    character_data.sanity_point += add_sanity_point
+    # 如果超过最大值则=最大值
+    if character_data.sanity_point >= character_data.sanity_point_max:
+        character_data.sanity_point = character_data.sanity_point_max
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_SEMEN_POINT)
+def handle_add_small_semen_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加少量精液值(15%/h)
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if character_id > 0:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    add_semen_point = int(add_time / 60 * 0.15 * character_data.semen_point_max)
+    character_data.semen_point += add_semen_point
+    # 如果超过最大值则=最大值
+    if character_data.semen_point >= character_data.semen_point_max:
+        character_data.semen_point = character_data.semen_point_max
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECORD_TRAINING_TIME)
 def handle_record_training_time(
         character_id: int,

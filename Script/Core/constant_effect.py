@@ -75,6 +75,10 @@ class BehaviorEffect:
     """ 属性_基础 交互对象欲望值调为79 """
     DESIRE_POINT_TO_0 = 1503
     """ 属性_基础 自己欲望值归零 """
+    ADD_SMALL_SANITY_POINT = 1504
+    """ 属性_基础 增加少量理智值(15%/h) """
+    ADD_SMALL_SEMEN_POINT = 1505
+    """ 属性_基础 增加少量精液值(15%/h) """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
@@ -785,6 +789,8 @@ class BehaviorEffect:
     """ 属性_H 对方开启主动H """
     TARGET_NPC_ACTIVE_H_OFF = 1404
     """ 属性_H 对方关闭主动H """
+
+    # 1500+见属性_基础
 
     TRGET_GET_WEEKNESSS_BY_DR = 1601
     """ 属性_素质 交互对象获得[被博士持有把柄] """

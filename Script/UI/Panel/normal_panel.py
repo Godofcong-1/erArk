@@ -392,14 +392,20 @@ class Sleep_Panel:
         """绘制对象"""
         pl_character_data: game_type.Character = cache.character_data[0]
 
-        # 计算回复时间，此处引用的是handle_add_medium_hit_point的回复速度和handle_add_medium_mana_point
+        # 计算回复时间，此处引用的是handle_add_medium_hit_point的回复速度和handle_add_medium_mana_point，然后向上取整，且最小为1
         hp_recover_time = math.ceil((pl_character_data.hit_point_max - pl_character_data.hit_point) / 80 / 60)
         mp_recover_time = math.ceil((pl_character_data.mana_point_max - pl_character_data.mana_point) / 100 / 60)
         hpmp_need_time = max(hp_recover_time, mp_recover_time)
         hpmp_need_time = max(hpmp_need_time, 1)
-        # 疲劳值回复时间
-        tired_recover_time = math.ceil((pl_character_data.tired_point) * 3 / 60)
-        need_time = max(hpmp_need_time, tired_recover_time)
+        # 其他回复所需时间，最大为8小时
+        tired_recover_time = math.ceil((pl_character_data.tired_point) * 3 / 60) # 疲劳
+        # 理智和精液
+        sanity_recover_time = math.ceil((pl_character_data.sanity_point_max - pl_character_data.sanity_point) / pl_character_data.sanity_point_max / 0.15) # 理智
+        semen_recover_time = math.ceil((pl_character_data.semen_point_max - pl_character_data.semen_point) / pl_character_data.sanity_point_max / 0.15) # 精液
+        all_recover_time = max(tired_recover_time, sanity_recover_time, semen_recover_time)
+        # 全状态回复所需时间，最大为8小时
+        all_recover_time = min(all_recover_time, 8)
+        need_time = max(hpmp_need_time, all_recover_time)
         self.sleep_time_hour = need_time
 
         title_text = _("睡眠")
@@ -434,7 +440,8 @@ class Sleep_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
 
-            now_draw_text = _("\n\n 预计完全回复体力和气力最少需要 {0} 小时，预计完全回复疲劳至少需要 {1} 小时，当前决定的睡眠时间为：{2} 小时（默认取两者最大值）").format(hpmp_need_time, tired_recover_time, self.sleep_time_hour)
+            now_draw_text = _("\n\n 预计回满体力和气力最少需要 {0} 小时，全状态完全回复(包括体力、气力、疲劳、理智、精液等)至少需要 {1} 小时\n").format(hpmp_need_time, all_recover_time)
+            now_draw_text += _(" 当前决定的睡眠时间为：{0} 小时（默认取两者最大值）").format( self.sleep_time_hour)
             now_draw.text = now_draw_text
             now_draw.draw()
 
@@ -457,7 +464,7 @@ class Sleep_Panel:
                     return_list.append(button_draw.return_text)
 
             button_text = _(" [自定义睡眠时间] ")
-            button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大8小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
+            button_draw = draw.CenterButton(button_text, _("请输入睡眠时间(最小1小时，最大12小时)："), len(button_text)*2, cmd_func=self.input_sleep_time)
             button_draw.draw()
             return_list.append(button_draw.return_text)
             line_feed.draw()
@@ -515,8 +522,8 @@ class Sleep_Panel:
             if user_input <= 0:
                 continue
             elif user_input > 0:
-                if user_input > 8:
-                    user_input = 8
+                if user_input > 12:
+                    user_input = 12
                 self.sleep_time_hour = user_input
                 break
 
