@@ -132,7 +132,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             new_talent_list = [i for i in all_talent_list if i != talent_id_index]
         # 最后判定
         for talent_id in new_talent_list:
-            if talent_id in final_character_data.talent:
+            if final_character_data.talent[talent_id]:
                 return 1
         return 0
 
