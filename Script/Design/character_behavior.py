@@ -1058,15 +1058,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     if true_add_time == 5:
         tired_change = 1
     # 仅计算在不睡觉时的正常行动结算疲劳值
-    if now_character_data.state not in {constant.CharacterStatus.STATUS_REST, constant.CharacterStatus.STATUS_SLEEP}:
+    if now_character_data.state not in {constant.CharacterStatus.STATUS_SLEEP}:
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
-    # 休息时小幅度减少疲劳值，回复体力、气力
+    # 休息时回复体力、气力
     elif now_character_data.state == constant.CharacterStatus.STATUS_REST:
-        # 减少疲劳值
-        now_character_data.tired_point -= tired_change / 2
-        now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.005 + 10
         hit_point_add = int(hit_point_add_base * true_add_time)

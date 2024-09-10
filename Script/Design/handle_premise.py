@@ -1492,6 +1492,22 @@ def handle_not_in_rest_room(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_REST_ROOM_OR_DORMITORY)
+def handle_in_rest_room_or_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在休息室或自己宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_rest_room(character_id):
+        return 1
+    elif handle_in_dormitory(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IN_MUSIC_ROOM)
 def handle_in_music_room(character_id: int) -> int:
     """

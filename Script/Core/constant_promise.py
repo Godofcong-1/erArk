@@ -277,6 +277,8 @@ class Premise:
     """ 地点_定位 在休息室中 """
     NOT_IN_REST_ROOM = "not_in_restroom"
     """ 地点_定位 不在休息室中 """
+    IN_REST_ROOM_OR_DORMITORY = "in_restroom_or_dormitory"
+    """ 地点_定位 在休息室或自己宿舍中 """
     IN_MUSIC_ROOM = "in_music_room"
     """ 地点_定位 在音乐室中 """
     IN_CLASSIC_MUSIC_ROOM = "in_classic_music_room"

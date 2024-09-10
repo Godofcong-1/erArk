@@ -201,13 +201,13 @@ def handle_comprehensive_state_effect(
 
 @add_instruct(constant.Instruct.REST, constant.InstructType.DAILY, _("休息"),
               {constant_promise.Premise.NOT_H,
-               constant_promise.Premise.HP_OR_MP_GE_80,
-               constant_promise.Premise.PLACE_FURNITURE_GE_1,
+               constant_promise.Premise.IN_REST_ROOM_OR_DORMITORY,
                constant_promise.Premise.TIRED_LE_84}
               )
 def handle_rest():
     """处理休息指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_REST, force_taget_wait = True)
+
 
 @add_instruct(
     constant.Instruct.BUY_FOOD, constant.InstructType.DAILY, _("购买食物"),
