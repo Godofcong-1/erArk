@@ -1062,14 +1062,20 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
-    # 休息时小幅度减少疲劳值
+    # 休息时小幅度减少疲劳值，回复体力、气力
     elif now_character_data.state == constant.CharacterStatus.STATUS_REST:
+        # 减少疲劳值
         now_character_data.tired_point -= tired_change / 2
         now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
-
-        # 疲劳归零则直接结算当前行动
-        # if now_character_data.tired_point <= 0:
-        #     judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+        # 回复体力、气力
+        hit_point_add_base = now_character_data.hit_point_max * 0.005 + 10
+        hit_point_add = int(hit_point_add_base * true_add_time)
+        now_character_data.hit_point += hit_point_add
+        now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
+        mana_point_add_base = now_character_data.mana_point_max * 0.01 + 20
+        mana_point_add = int(mana_point_add_base * true_add_time)
+        now_character_data.mana_point += mana_point_add
+        now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 
     # 睡觉时大量减少疲劳值，增加熟睡值，回复体力、气力
     elif now_character_data.state == constant.CharacterStatus.STATUS_SLEEP:
@@ -1489,8 +1495,19 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 休息中的相关判断
+    if handle_premise.handle_action_rest(character_id):
+        # 疲劳归零，且HP、MP满值时，则立刻结束休息
+        if (
+            handle_premise.handle_tired_le_0(character_id) and
+            handle_premise.handle_hp_max(character_id) and
+            handle_premise.handle_mp_max(character_id)
+        ):
+            judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+            return 1
+
     # 睡觉中的相关判断
-    if handle_premise.handle_action_sleep(character_id):
+    elif handle_premise.handle_action_sleep(character_id):
         # ①睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
         if (
             handle_premise.handle_assistant_morning_salutation_on(character_id) and
@@ -1523,17 +1540,18 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
             # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
             return 1
 
-    # 工作或娱乐中，今日未洗澡，到了淋浴时间，距离行动结束时间还有至少30分钟，正常状态下，则立刻结束工作或娱乐
-    if(
-        handle_premise.handle_action_work_or_entertainment(character_id) and
-        handle_premise.handle_shower_flag_0(character_id) and
-        handle_premise.handle_shower_time(character_id) and
-        handle_premise.handle_still_30_minutes_before_end(character_id) and
-        handle_premise.handle_normal_all(character_id)
-    ):
-        judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
-        # print(f"debug {character_data.name}立刻结束工作或娱乐，当前时间={cache.game_time}")
-        return 1
+    # 工作或娱乐中的相关判断
+    elif handle_premise.handle_action_work_or_entertainment(character_id):
+        # 今日未洗澡，到了淋浴时间，距离行动结束时间还有至少30分钟，正常状态下，则立刻结束工作或娱乐
+        if (
+            handle_premise.handle_shower_flag_0(character_id) and
+            handle_premise.handle_shower_time(character_id) and
+            handle_premise.handle_still_30_minutes_before_end(character_id) and
+            handle_premise.handle_normal_all(character_id)
+        ):
+            judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
+            # print(f"debug {character_data.name}立刻结束工作或娱乐，当前时间={cache.game_time}")
+            return 1
 
     return 0
 

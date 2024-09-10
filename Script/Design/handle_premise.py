@@ -19647,6 +19647,35 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.ACTION_REST)
+def handle_action_rest(character_id: int) -> int:
+    """
+    自己正在休息
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.state == constant.CharacterStatus.STATUS_REST:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ACTION_NOT_REST)
+def handle_action_not_rest(character_id: int) -> int:
+    """
+    自己没有正休息
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_action_rest(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.ACTION_MOVE)
 def handle_action_move(character_id: int) -> int:
     """
