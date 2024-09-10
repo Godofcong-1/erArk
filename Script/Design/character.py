@@ -623,8 +623,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             now_draw.text = calculation_text
             now_draw.draw()
 
-        # 合意获得的结算，大前提是在有意识情况下通过判定
-        if final_judge and target_data.sp_flag.unconscious_h == 0:
+        # 合意获得的结算，大前提是1.5倍实行值、有意识、非监禁
+        if judge_rate >= 1.5 and target_data.sp_flag.unconscious_h == 0 and handle_premise.handle_imprisonment_0(target_character_id):
             agree_draw = draw.WaitDraw()
             agree_draw.width = 1
             draw_text = ""
