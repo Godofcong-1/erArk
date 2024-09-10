@@ -1071,8 +1071,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # if now_character_data.tired_point <= 0:
         #     judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
 
-    # 睡觉时大量减少疲劳值
+    # 睡觉时大量减少疲劳值，增加熟睡值，回复体力、气力
     elif now_character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+        # 减少疲劳值
         tired_change *= 2
         now_character_data.tired_point -= tired_change
         now_character_data.tired_point = max(now_character_data.tired_point,0) # 最少为0
@@ -1088,6 +1089,15 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 最高上限100
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
+        # 回复体力、气力
+        hit_point_add_base = now_character_data.hit_point_max * 0.0025 + 3
+        hit_point_add = int(hit_point_add_base * true_add_time)
+        now_character_data.hit_point += hit_point_add
+        now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
+        mana_point_add_base = now_character_data.mana_point_max * 0.005 + 6
+        mana_point_add = int(mana_point_add_base * true_add_time)
+        now_character_data.mana_point += mana_point_add
+        now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 
     # 结算尿意值
     if character_id == 0 and not cache.system_setting[5]:

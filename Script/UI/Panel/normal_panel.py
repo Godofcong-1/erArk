@@ -392,9 +392,12 @@ class Sleep_Panel:
         """绘制对象"""
         pl_character_data: game_type.Character = cache.character_data[0]
 
-        # 计算回复时间，此处引用的是handle_add_medium_hit_point的回复速度和handle_add_medium_mana_point，然后向上取整，且最小为1
-        hp_recover_time = math.ceil((pl_character_data.hit_point_max - pl_character_data.hit_point) / 80 / 60)
-        mp_recover_time = math.ceil((pl_character_data.mana_point_max - pl_character_data.mana_point) / 100 / 60)
+        # 计算回复时间，然后向上取整，且最小为1
+        # 计算公式同Script/Design/character_behavior.py#character_aotu_change_value()
+        hit_point_add_base = pl_character_data.hit_point_max * 0.0025 + 3
+        mana_point_add_base = pl_character_data.mana_point_max * 0.005 + 6
+        hp_recover_time = math.ceil((pl_character_data.hit_point_max - pl_character_data.hit_point) / hit_point_add_base / 60)
+        mp_recover_time = math.ceil((pl_character_data.mana_point_max - pl_character_data.mana_point) / mana_point_add_base / 60)
         hpmp_need_time = max(hp_recover_time, mp_recover_time)
         hpmp_need_time = max(hpmp_need_time, 1)
         # 其他回复所需时间，最大为8小时
