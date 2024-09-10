@@ -642,8 +642,8 @@ def judge_character_first_meet(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
-    # 需要目标不在完全意识不清醒状态下
-    if handle_premise.handle_normal_6(character_id):
+    # 需要状态6正常，且不是睡觉状态
+    if handle_premise.handle_normal_6(character_id) and handle_premise.handle_action_not_sleep(character_id):
         # 优先输出初见，次要输出每日招呼
         if character_data.first_record.first_meet and character_data.position == pl_character_data.position:
             character_data.second_behavior[1331] = 1
