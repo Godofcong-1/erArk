@@ -5889,8 +5889,9 @@ def handle_eat_add_just(
             base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data, chara_id)
 
         # 加体力气力，清零饥饿值和进食状态
-        handle_add_small_hit_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
-        handle_add_small_mana_point(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
+        # 为了增加更多的体力气力，将时间设为25
+        handle_add_small_hit_point(chara_id,add_time=25,change_data=target_change,now_time=now_time)
+        handle_add_small_mana_point(chara_id,add_time=25,change_data=target_change,now_time=now_time)
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
