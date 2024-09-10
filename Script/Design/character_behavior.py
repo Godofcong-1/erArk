@@ -1064,13 +1064,18 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
     # 休息时回复体力、气力
     elif now_character_data.state == constant.CharacterStatus.STATUS_REST:
+        # 休息室等级对回复效果的影响
+        now_level = cache.rhodes_island.facility_level[31]
+        facility_cid = game_config.config_facility_effect_data[_("休息室")][int(now_level)]
+        facility_effect = game_config.config_facility_effect[facility_cid].effect
+        facility_effect_adjust = 1 + facility_effect / 100
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.005 + 10
-        hit_point_add = int(hit_point_add_base * true_add_time)
+        hit_point_add = int(hit_point_add_base * true_add_time * facility_effect_adjust)
         now_character_data.hit_point += hit_point_add
         now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
         mana_point_add_base = now_character_data.mana_point_max * 0.01 + 20
-        mana_point_add = int(mana_point_add_base * true_add_time)
+        mana_point_add = int(mana_point_add_base * true_add_time * facility_effect_adjust)
         now_character_data.mana_point += mana_point_add
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 

@@ -4717,23 +4717,23 @@ msgid "工作效率加成提升至100%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:151
-msgid "无休息效率加成（未实装）"
+msgid "无休息效率加成"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:152
-msgid "休息效率加成提升5%（未实装）"
+msgid "休息效率加成提升5%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:153
-msgid "休息效率加成提升10%（未实装）"
+msgid "休息效率加成提升10%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:154
-msgid "休息效率加成提升20%（未实装）"
+msgid "休息效率加成提升20%"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:155
-msgid "休息效率加成提升30%（未实装）"
+msgid "休息效率加成提升30%"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:8
