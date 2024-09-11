@@ -1216,6 +1216,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                         target_data.sp_flag.is_h = False
                         # 对方获得睡奸醒来状态
                         target_data.sp_flag.sleep_h_awake = True
+                        # 重置双方H结构体和相关数据
+                        default.handle_both_h_state_reset(0, 0, game_type.CharacterStatusChange, datetime.datetime)
                         # 检测是否满足高级性骚扰的实行值需求
                         if handle_premise.handle_instruct_judge_high_obscenity(0):
                             # 如果已经陷落的话

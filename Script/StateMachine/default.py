@@ -1944,6 +1944,19 @@ def character_get_chara_normal_cloth(character_id: int):
     clothing.get_npc_cloth(character_id)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH)
+def character_reset_shower_status_and_get_normal_cloth(character_id: int):
+    """
+    清零洗澡状态并换上标准衣服
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 0
+    character_data.sp_flag.sleep_h_awake = 0
+    clothing.get_npc_cloth(character_id)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """

@@ -42,6 +42,8 @@ ai的目标,,,,
 55,73,shower_flag_2|in_bathroom,12,要洗澡状态下，当前在淋浴间，则开始淋浴
 56,601,shower_flag_3|not_in_bathzone_locker_room,12,要披浴巾状态，当前不在大浴室的更衣室，则去大浴室的更衣室
 57,74,shower_flag_3|in_bathzone_locker_room,12,要披浴巾状态，当前在大浴室的更衣室，则围上浴巾
+58,71,normal_1267|sleep_h_awake_1|shower_flag_0,0,1267正常（可能AI跟随、服装异常或意识模糊），自身睡奸中醒来状态，今天没洗过澡，则进入要脱衣服（洗澡）状态
+59,94,sleep_h_awake_1|shower_flag_4,12,自身睡奸中醒来状态，自身已洗澡状态，则清零洗澡状态和睡奸醒来状态并换上标准衣服
 
 61,79,normal_1267|mp_0|not_sleep_time|hp_g_1,11,1267正常（可能AI跟随、服装异常或意识模糊），气力=0，非睡觉时间，自身未疲劳（体力>1），则进入要休息状态
 62,512,rest_flag_1|not_in_restroom,12,要休息状态，且不在休息室，则去休息室

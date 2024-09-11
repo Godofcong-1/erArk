@@ -1087,6 +1087,8 @@ class StateMachine:
     """ 自慰 """
     GET_CHARA_NORMAL_CLOTH = 93
     """ 换上角色标准衣服 """
+    RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH = 94
+    """ 清零洗澡状态并换上标准衣服 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
