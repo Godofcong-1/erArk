@@ -230,6 +230,10 @@ class CharacterStatus:
     """ 偷走内裤 """
     STATUS_STEAL_SOCKS = 343
     """ 偷走袜子 """
+    STATUS_STEAL_SCENE_ALL_PAN = 344
+    """ 偷走所有人内裤 """
+    STATUS_STEAL_SCENE_ALL_SOCKS = 345
+    """ 偷走所有人袜子 """
     STATUS_BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
     STATUS_PUT_INTO_PRISON = 352
@@ -732,6 +736,10 @@ class Behavior:
     """ 偷走内裤 """
     STEAL_SOCKS = 343
     """ 偷走袜子 """
+    STEAL_SCENE_ALL_PAN = 344
+    """ 偷走所有人内裤 """
+    STEAL_SCENE_ALL_SOCKS = 345
+    """ 偷走所有人袜子 """
     BAGGING_AND_MOVING = 351
     """ 装袋搬走 """
     PUT_INTO_PRISON = 352
@@ -2002,6 +2010,10 @@ class Instruct:
     """ 偷走内裤 """
     STEAL_SOCKS = 0
     """ 偷走袜子 """
+    STEAL_SCENE_ALL_PAN = 0
+    """ 偷走所有人内裤 """
+    STEAL_SCENE_ALL_SOCKS = 0
+    """ 偷走所有人袜子 """
     TOUCH_CLITORIS = 0
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 0

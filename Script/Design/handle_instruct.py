@@ -2891,6 +2891,36 @@ def handle_steal_socks():
 
 
 @add_instruct(
+    constant.Instruct.STEAL_SCENE_ALL_PAN,
+    constant.InstructType.OBSCENITY,
+    _("偷走所有人内裤"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_OVER_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_steal_scene_all_pan():
+    """处理偷走所有人内裤指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_STEAL_SCENE_ALL_PAN)
+
+
+@add_instruct(
+    constant.Instruct.STEAL_SCENE_ALL_SOCKS,
+    constant.InstructType.OBSCENITY,
+    _("偷走所有人袜子"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_OVER_TWO,
+     constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_steal_scene_all_socks():
+    """处理偷走所有人袜子指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_STEAL_SCENE_ALL_SOCKS)
+
+
+@add_instruct(
     constant.Instruct.TOUCH_CLITORIS,
     constant.InstructType.OBSCENITY,
     _("阴蒂爱抚"),

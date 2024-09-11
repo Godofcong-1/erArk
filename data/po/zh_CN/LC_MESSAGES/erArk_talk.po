@@ -24124,6 +24124,14 @@ msgstr ""
 msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetName}穿着的{TagetPanName}脱下来偷走了"
 msgstr ""
 
+#: .\data\talk\obscenity\steal_scene_all_pan.csv:6
+msgid "{Name}触发了偷走在场所有人的内裤的地文"
+msgstr ""
+
+#: .\data\talk\obscenity\steal_scene_all_socks.csv:6
+msgid "{Name}触发了偷走在场所有人的袜子的地文"
+msgstr ""
+
 #: .\data\talk\obscenity\steal_socks.csv:6
 msgid "{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TagetSocName}脱下来偷走了"
 msgstr ""

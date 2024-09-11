@@ -558,6 +558,10 @@ class BehaviorEffect:
     """ 属性_服装 获得交互对象的内裤 """
     GET_T_SOCKS = 622
     """ 属性_服装 获得交互对象的袜子 """
+    GET_SCENE_T_PAN = 623
+    """ 属性_服装 获得场景内所有其他角色的内裤 """
+    GET_SCENE_T_SOCKS = 624
+    """ 属性_服装 获得场景内所有其他角色的袜子 """
     T_CLOTH_BACK = 631
     """ 属性_服装 交互对象穿回H时脱掉的衣服 """
     WEAR_CLOTH_OFF = 632

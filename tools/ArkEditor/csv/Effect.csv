@@ -39,6 +39,8 @@ cid,effect_name,effect_type,effect
 1501,DESIRE_POINT_TO_79,属性_基础,自己欲望值调为79
 1502,TARGET_DESIRE_POINT_TO_79,属性_基础,交互对象欲望值调为79
 1503,DESIRE_POINT_TO_0,属性_基础,自己欲望值归零
+1504,ADD_SMALL_SANITY_POINT,属性_基础,增加少量理智值(15%/h)
+1505,ADD_SMALL_SEMEN_POINT,属性_基础,增加少量精液值(15%/h)
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
@@ -281,6 +283,8 @@ cid,effect_name,effect_type,effect
 607,RESTE_CLOTH,属性_服装,衣服重置为初始状态
 621,GET_T_PAN,属性_服装,获得交互对象的内裤
 622,GET_T_SOCKS,属性_服装,获得交互对象的袜子
+623,GET_SCENE_T_PAN,属性_服装,获得场景内所有其他角色的内裤
+624,GET_SCENE_T_SOCKS,属性_服装,获得场景内所有其他角色的袜子
 631,T_CLOTH_BACK,属性_服装,交互对象穿回H时脱掉的衣服
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
@@ -401,6 +405,7 @@ cid,effect_name,effect_type,effect
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
 1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
 1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H
+
 
 1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
 

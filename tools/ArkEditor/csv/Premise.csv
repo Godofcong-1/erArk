@@ -137,6 +137,7 @@ not_in_toilet_female,NOT_IN_TOILET_FEMALE,地点_定位,不在女士洗手间
 not_in_toilet,NOT_IN_TOILET,地点_定位,不在洗手间
 in_restroom,IN_REST_ROOM,地点_定位,在休息室中
 not_in_restroom,NOT_IN_REST_ROOM,地点_定位,不在休息室中
+in_restroom_or_dormitory,IN_REST_ROOM_OR_DORMITORY,地点_定位,在休息室或自己宿舍中
 in_music_room,IN_MUSIC_ROOM,地点_定位,在音乐室中
 in_classic_music_room,IN_CLASSIC_MUSIC_ROOM,地点_定位,在夕照区音乐室中
 not_in_classic_music_room,NOT_IN_CLASSIC_MUSIC_ROOM,地点_定位,不在夕照区音乐室中
@@ -789,6 +790,7 @@ a_virgin_0,NO_A_VIRGIN,属性_素质,玩家非A处
 a_virgin_1,HAVE_A_VIRGIN,属性_素质,玩家是A处
 t_kiss_0,TARGET_NO_FIRST_KISS,属性_素质,交互对象未保有初吻
 t_kiss_1,TARGET_HAVE_FIRST_KISS,属性_素质,交互对象保有初吻
+virgin_0,NO_VIRGIN,属性_素质,自己非处女
 t_virgin_0,TARGET_NO_VIRGIN,属性_素质,交互对象非处女
 t_virgin_1,TARGET_HAVE_VIRGIN,属性_素质,交互对象是处女
 t_a_virgin_0,TARGET_NO_A_VIRGIN,属性_素质,交互对象非A处女
@@ -1211,6 +1213,8 @@ action_sleep,ACTION_SLEEP,行动,自己正在睡觉
 action_not_sleep,ACTION_NOT_SLEEP,行动,自己没有在睡觉
 t_action_sleep,T_ACTION_SLEEP,行动,交互对象正在睡觉
 t_action_not_sleep,T_ACTION_NOT_SLEEP,行动,交互对象没有在睡觉
+action_rest,ACTION_REST,行动,自己正在休息
+action_not_rest,ACTION_NOT_REST,行动,自己没有在休息
 action_move,ACTION_MOVE,行动,自己正在移动
 action_not_move,ACTION_NOT_MOVE,行动,自己没有在移动
 pl_action_move,PL_ACTION_MOVE,行动,玩家正在移动

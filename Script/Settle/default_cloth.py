@@ -4,6 +4,7 @@ from Script.Design import (
     settle_behavior,
     attr_calculation,
     clothing,
+    map_handle,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -212,6 +213,60 @@ def handle_get_t_sock(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     clothing.pl_get_chara_socks(character_data.target_character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SCENE_T_PAN)
+def handle_get_scene_t_pan(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    获得场景内所有其他角色的内裤
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历当前角色列表
+    for chara_id in scene_data.character_list:
+        # 遍历非玩家的角色
+        if chara_id > 0:
+            clothing.pl_get_chara_pan(chara_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SCENE_T_SOCKS)
+def handle_get_scene_t_socks(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    获得场景内所有其他角色的袜子
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历当前角色列表
+    for chara_id in scene_data.character_list:
+        # 遍历非玩家的角色
+        if chara_id > 0:
+            clothing.pl_get_chara_socks(chara_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_CLOTH_BACK)
