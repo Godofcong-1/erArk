@@ -9179,7 +9179,7 @@ def handle_scene_all_unconscious(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_unconscious_flag_1(chara_id):
+                if handle_unconscious_flag_0(chara_id):
                     return 0
         return 1
     return 0
