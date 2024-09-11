@@ -1063,7 +1063,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
     # 休息时回复体力、气力
-    elif now_character_data.state == constant.CharacterStatus.STATUS_REST:
+    if now_character_data.state == constant.CharacterStatus.STATUS_REST:
         # 休息室等级对回复效果的影响
         now_level = cache.rhodes_island.facility_level[31]
         facility_cid = game_config.config_facility_effect_data[_("休息室")][int(now_level)]
