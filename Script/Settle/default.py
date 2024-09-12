@@ -30,6 +30,102 @@ cache: game_type.Cache = cache_control.cache
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def base_chara_hp_mp_common_settle(
+        character_id: int,
+        add_time: int = 0,
+        hp_value: int = 0,
+        mp_value: int = 0,
+        dregree: int = 0,
+        target_flag: bool = False,
+        change_data: game_type.CharacterStatusChange = None,
+        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        ):
+    """
+    基础角色体力与气力通用结算函数\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    add_time -- 结算时间\n
+    hp_value -- 体力值，-1为按程度减少，1为按程度增加，其他值则为具体值\n
+    mp_value -- 气力值，-1为按程度减少，1为按程度增加，其他值则为具体值\n
+    dregree -- 程度系数，0少，1中，2大\n
+    target_flag -- 是否对交互对象也进行结算，默认为否\n
+    change_data -- 结算信息记录对象\n
+    change_data_to_target_change -- 交互对象的结算信息记录对象\n
+    """
+    if add_time == 0 and hp_value == 0 and mp_value == 0:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    target_character_data: game_type.Character = cache.character_data[target_character_id]
+    if character_data.dead:
+        return
+    # 程度定义
+    dregree_dict = {
+        0: [1, 3],
+        1: [3, 6],
+        2: [5, 10],
+    }
+    hp_adjust = dregree_dict[dregree][0]
+    mp_adjust = dregree_dict[dregree][1]
+    # 体力结算
+    if hp_value in [-1, 1]:
+        hp_value *= add_time * hp_adjust
+    if hp_value != 0:
+        # 气力为0时体力消耗3倍
+        if character_data.mana_point == 0 and hp_value < 0:
+            hp_value_last = hp_value * 3
+        else:
+            hp_value_last = hp_value
+        # 进行结算
+        character_data.hit_point += hp_value_last
+        change_data.hit_point += hp_value_last
+        # 最小为1，最大为上限
+        character_data.hit_point = max(1, character_data.hit_point)
+        character_data.hit_point = min(character_data.hit_point_max, character_data.hit_point)
+        # 检测hp1导致的疲劳
+        character_behavior.judge_character_tired_sleep(character_id)
+        # 交互对象也同样
+        if target_flag and target_character_id != character_id:
+            if target_character_data.mana_point == 0 and hp_value < 0:
+                hp_value_last = hp_value * 3
+            else:
+                hp_value_last = hp_value
+            # 结算信息记录
+            change_data.target_change.setdefault(target_character_id, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_character_id]
+            # 进行结算
+            target_character_data.hit_point += hp_value_last
+            target_change.hit_point += hp_value_last
+            target_character_data.hit_point = max(1, target_character_data.hit_point)
+            target_character_data.hit_point = min(target_character_data.hit_point_max, target_character_data.hit_point)
+            character_behavior.judge_character_tired_sleep(target_character_id)
+    # 气力结算
+    if mp_value in [-1, 1]:
+        mp_value *= add_time * mp_adjust
+    if mp_value != 0:
+        # 进行结算
+        character_data.mana_point += mp_value
+        change_data.mana_point += mp_value
+        # 最小为0，最大为上限
+        character_data.mana_point = max(0, character_data.mana_point)
+        character_data.mana_point = min(character_data.mana_point_max, character_data.mana_point)
+        # 如果气力为0则体力进行等值消耗
+        if character_data.mana_point == 0 and mp_value < 0:
+            character_data.hit_point += mp_value
+            change_data.hit_point += mp_value
+            character_data.hit_point = max(1, character_data.hit_point)
+            character_behavior.judge_character_tired_sleep(character_id)
+        # 交互对象也同样
+        if target_flag and target_character_id != character_id:
+            # 结算信息记录
+            change_data.target_change.setdefault(target_character_id, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_character_id]
+            # 进行结算
+            target_character_data.mana_point += mp_value
+            target_change.mana_point += mp_value
+            target_character_data.mana_point = max(0, target_character_data.mana_point)
+            target_character_data.mana_point = min(target_character_data.mana_point_max, target_character_data.mana_point)
+
 
 def base_chara_state_common_settle(
         character_id: int,
@@ -503,65 +599,7 @@ def handle_sub_both_small_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    if not add_time:
-        return
-    sub_hit = add_time * 3
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    # 气力为0时体力消耗3倍#
-    if character_data.mana_point == 0:
-        sub_hit *= 3
-    # 体力不足0时锁为1#
-    if character_data.hit_point >= sub_hit:
-        character_data.hit_point -= sub_hit
-        change_data.hit_point -= sub_hit
-    else:
-        change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 1
-        if not character_data.sp_flag.tired:
-            character_data.sp_flag.tired = 1
-            # H时单独结算
-            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            if target_data.sp_flag.is_h:
-                character_behavior.judge_character_tired_sleep(0)
-                handle_instruct.handle_end_h()
-            else:
-                # 如果和玩家位于同一地点，则输出提示信息
-                if character_data.position == cache.character_data[0].position:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + _("太累了\n")
-                    now_draw.draw()
-    # 交互对象也同样#
-    if character_data.target_character_id:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_hit = add_time * 3
-        # 气力为0时体力消耗3倍
-        if target_data.mana_point == 0:
-            sub_hit *= 3
-        # 体力不足0时锁为1
-        if target_data.hit_point >= sub_hit:
-            target_data.hit_point -= sub_hit
-            target_change.hit_point -= sub_hit
-        else:
-            target_change.hit_point -= target_data.hit_point
-            target_data.hit_point = 1
-            if not target_data.sp_flag.tired:
-                target_data.sp_flag.tired = 1
-                # H时单独结算
-                if target_data.sp_flag.is_h:
-                    character_behavior.judge_character_tired_sleep(character_data.target_character_id)
-                    handle_instruct.handle_end_h()
-                else:
-                    # 如果和玩家位于同一地点，则输出提示信息
-                    if character_data.position == cache.character_data[0].position:
-                        now_draw = draw.NormalDraw()
-                        now_draw.width = width
-                        now_draw.text = "\n" + target_data.name + _("太累了\n")
-                        now_draw.draw()
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_SMALL_MANA_POINT)
@@ -579,68 +617,79 @@ def handle_sub_both_small_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    if not add_time:
-        return
-    sub_mana = add_time * 6
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    if character_data.mana_point >= sub_mana:
-        character_data.mana_point -= sub_mana
-        change_data.mana_point -= sub_mana
-    else:
-        change_data.mana_point -= character_data.mana_point
-        sub_mana -= character_data.mana_point
-        character_data.mana_point = 0
-        character_data.hit_point -= sub_mana
-        change_data.hit_point -= sub_mana
-        if character_data.hit_point <= 0:
-            character_data.hit_point = 1
-            if not character_data.sp_flag.tired:
-                character_data.sp_flag.tired = 1
-                # H时单独结算
-                target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-                if target_data.sp_flag.is_h:
-                    character_behavior.judge_character_tired_sleep(0)
-                    handle_instruct.handle_end_h()
-                else:
-                    # 如果和玩家位于同一地点，则输出提示信息
-                    if character_data.position == cache.character_data[0].position:
-                        now_draw = draw.NormalDraw()
-                        now_draw.width = width
-                        now_draw.text = "\n" + character_data.name + _("太累了\n")
-                        now_draw.draw()
-    # 交互对象也同样#
-    if character_data.target_character_id:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-        sub_mana = add_time * 6
-        if target_data.mana_point >= sub_mana:
-            target_data.mana_point -= sub_mana
-            target_change.mana_point -= sub_mana
-        else:
-            target_change.mana_point -= target_data.mana_point
-            sub_mana -= target_data.mana_point
-            target_data.mana_point = 0
-            target_data.hit_point -= sub_mana
-            target_change.hit_point -= sub_mana
-            if target_data.hit_point <= 0:
-                target_data.hit_point = 1
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, target_flag=True, change_data=change_data)
 
-                if not target_data.sp_flag.tired:
-                    target_data.sp_flag.tired = 1
-                    # H时单独结算
-                    if target_data.sp_flag.is_h:
-                        character_behavior.judge_character_tired_sleep(character_data.target_character_id)
-                        handle_instruct.handle_end_h()
-                    else:
-                        # 如果和玩家位于同一地点，则输出提示信息
-                        if character_data.position == cache.character_data[0].position:
-                            now_draw = draw.NormalDraw()
-                            now_draw.width = width
-                            now_draw.text = "\n" + target_data.name + _("太累了\n")
-                            now_draw.draw()
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_MEDIUM_HIT_POINT)
+def handle_sub_both_medium_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方减少中量体力（若没有交互对象则仅减少自己）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=1, target_flag=True, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_MEDIUM_MANA_POINT)
+def handle_sub_both_medium_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方减少中量气力（若没有交互对象则仅减少自己）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=1, target_flag=True, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_LARGE_HIT_POINT)
+def handle_sub_both_large_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方减少大量体力（若没有交互对象则仅减少自己）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=2, target_flag=True, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_LARGE_MANA_POINT)
+def handle_sub_both_large_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方减少大量气力（若没有交互对象则仅减少自己）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
@@ -658,30 +707,7 @@ def handle_sub_self_small_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    if not add_time:
-        return
-    sub_hit = add_time * 3
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    # 气力为0时体力消耗3倍#
-    if character_data.mana_point == 0:
-        sub_hit *= 3
-    # 体力不足0时锁为1#
-    if character_data.hit_point >= sub_hit:
-        character_data.hit_point -= sub_hit
-        change_data.hit_point -= sub_hit
-    else:
-        change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 1
-        if not character_data.sp_flag.tired:
-            character_data.sp_flag.tired = 1
-            # 如果和玩家位于同一地点，则输出提示信息
-            if character_data.position == cache.character_data[0].position:
-                now_draw = draw.NormalDraw()
-                now_draw.width = width
-                now_draw.text = "\n" + character_data.name + _("太累了\n")
-                now_draw.draw()
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_MANA_POINT)
@@ -699,31 +725,79 @@ def handle_sub_self_small_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    if not add_time:
-        return
-    sub_mana = add_time * 6
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    if character_data.mana_point >= sub_mana:
-        character_data.mana_point -= sub_mana
-        change_data.mana_point -= sub_mana
-    else:
-        change_data.mana_point -= character_data.mana_point
-        sub_mana -= character_data.mana_point
-        character_data.mana_point = 0
-        character_data.hit_point -= sub_mana
-        change_data.hit_point -= sub_mana
-        if character_data.hit_point <= 0:
-            character_data.hit_point = 1
-            if not character_data.sp_flag.tired:
-                character_data.sp_flag.tired = 1
-                # 如果和玩家位于同一地点，则输出提示信息
-                if character_data.position == cache.character_data[0].position:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = width
-                    now_draw.text = "\n" + character_data.name + _("太累了\n")
-                    now_draw.draw()
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_MEDIUM_HIT_POINT)
+def handle_sub_self_medium_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少自己中量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=1, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_MEDIUM_MANA_POINT)
+def handle_sub_self_medium_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少自己中量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=1, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_LARGE_HIT_POINT)
+def handle_sub_self_large_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少自己大量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=2, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_LARGE_MANA_POINT)
+def handle_sub_self_large_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少自己大量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)

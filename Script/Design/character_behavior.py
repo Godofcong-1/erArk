@@ -346,17 +346,23 @@ def judge_character_tired_sleep(character_id : int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import handle_instruct
+
     character_data: game_type.Character = cache.character_data[character_id]
     #交互对象结算
     if character_id:
+        # 疲劳判定
+        if character_data.hit_point <= 1 and not character_data.sp_flag.tired:
+            character_data.sp_flag.tired = True
+        # 仅在H或跟随模式下再进行结算
         if character_data.sp_flag.is_h or character_data.sp_flag.is_follow:
-            
-            if character_data.hit_point <= 1 or character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
+            # 如果疲劳了
+            if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
-                now_draw = draw.NormalDraw()
+                now_draw = draw.WaitDraw()
                 now_draw.width = window_width
-                # 跟随和H的分歧，忽略H后停留的情况
+                # 跟随时，忽略H后停留的情况
                 if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
                     draw_text = _("太累了，无法继续跟随\n") if character_data.sp_flag.tired else _("太困了，无法继续跟随\n")
                     now_draw.text = character_data.name + draw_text
@@ -368,21 +374,29 @@ def judge_character_tired_sleep(character_id : int):
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
                     pl_character_data.behavior.duration = 5
-                    update.game_update_flow(5)
+                    # 调用结束H的指令
+                    handle_instruct.handle_end_h()
 
-                # 新：交给指令里的end_h结算(旧：数据结算)
-                # character_data.sp_flag.is_h = False
-                # character_data.sp_flag.is_follow = 0
-
-    # 玩家疲劳计算
+    # 玩家计算
     else:
-        target_data = cache.character_data[character_data.target_character_id]
-        if character_data.sp_flag.tired and target_data.sp_flag.is_h:
-            character_data.behavior.behavior_id = constant.Behavior.H_HP_0
-            character_data.state = constant.CharacterStatus.STATUS_H_HP_0
-            target_data.sp_flag.is_h = False
-            character_data.sp_flag.tired = False
-            update.game_update_flow(5)
+        # 玩家只进行HP1的疲劳判定
+        if character_data.hit_point <= 1:
+            target_data = cache.character_data[character_data.target_character_id]
+            # 如果是在H时
+            if target_data.sp_flag.is_h:
+                character_data.behavior.behavior_id = constant.Behavior.H_HP_0
+                character_data.state = constant.CharacterStatus.STATUS_H_HP_0
+                character_data.behavior.duration = 5
+                target_data.sp_flag.is_h = False
+                character_data.sp_flag.tired = False
+                # 绘制文本
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                draw_text = _("太累了，无法继续H\n")
+                now_draw.text = character_data.name + draw_text
+                now_draw.draw()
+                # 调用结束H的指令
+                handle_instruct.handle_end_h()
 
 
 def judge_character_status(character_id: int) -> int:

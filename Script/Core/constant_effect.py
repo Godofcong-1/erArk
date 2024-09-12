@@ -37,10 +37,14 @@ class BehaviorEffect:
     """ 属性_基础 双方减少少量体力（若没有交互对象则仅减少自己） """
     DOWN_BOTH_SMALL_MANA_POINT = 12
     """ 属性_基础 双方减少少量气力（若没有交互对象则仅减少自己） """
-    DOWN_SELF_SMALL_HIT_POINT = 13
-    """ 属性_基础 减少自己少量体力 """
-    DOWN_SELF_SMALL_MANA_POINT = 14
-    """ 属性_基础 减少自己少量气力 """
+    DOWN_BOTH_MEDIUM_HIT_POINT = 13
+    """ 属性_基础 双方减少中量体力（若没有交互对象则仅减少自己） """
+    DOWN_BOTH_MEDIUM_MANA_POINT = 14
+    """ 属性_基础 双方减少中量气力（若没有交互对象则仅减少自己） """
+    DOWN_BOTH_LARGE_HIT_POINT = 15
+    """ 属性_基础 双方减少大量体力（若没有交互对象则仅减少自己） """
+    DOWN_BOTH_LARGE_MANA_POINT = 16
+    """ 属性_基础 双方减少大量气力（若没有交互对象则仅减少自己） """
     ADD_INTERACTION_FAVORABILITY = 21
     """ 属性_基础 增加基础互动好感 """
     ADD_SMALL_TRUST = 22
@@ -79,6 +83,19 @@ class BehaviorEffect:
     """ 属性_基础 增加少量理智值(15%/h) """
     ADD_SMALL_SEMEN_POINT = 1505
     """ 属性_基础 增加少量精液值(15%/h) """
+    DOWN_SELF_SMALL_HIT_POINT = 1511
+    """ 属性_基础 减少自己少量体力 """
+    DOWN_SELF_SMALL_MANA_POINT = 1512
+    """ 属性_基础 减少自己少量气力 """
+    DOWN_SELF_MEDIUM_HIT_POINT = 1513
+    """ 属性_基础 减少自己中量体力 """
+    DOWN_SELF_MEDIUM_MANA_POINT = 1514
+    """ 属性_基础 减少自己中量气力 """
+    DOWN_SELF_LARGE_HIT_POINT = 1515
+    """ 属性_基础 减少自己大量体力 """
+    DOWN_SELF_LARGE_MANA_POINT = 1516
+    """ 属性_基础 减少自己大量气力 """
+
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """

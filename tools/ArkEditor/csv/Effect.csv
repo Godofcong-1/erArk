@@ -20,8 +20,10 @@ cid,effect_name,effect_type,effect
 6,ADD_MEDIUM_MANA_POINT,属性_基础,增加中量气力
 11,DOWN_BOTH_SMALL_HIT_POINT,属性_基础,双方减少少量体力（若没有交互对象则仅减少自己）
 12,DOWN_BOTH_SMALL_MANA_POINT,属性_基础,双方减少少量气力（若没有交互对象则仅减少自己）
-13,DOWN_SELF_SMALL_HIT_POINT,属性_基础,减少自己少量体力
-14,DOWN_SELF_SMALL_MANA_POINT,属性_基础,减少自己少量气力
+13,DOWN_BOTH_MEDIUM_HIT_POINT,属性_基础,双方减少中量体力（若没有交互对象则仅减少自己）
+14,DOWN_BOTH_MEDIUM_MANA_POINT,属性_基础,双方减少中量气力（若没有交互对象则仅减少自己）
+15,DOWN_BOTH_LARGE_HIT_POINT,属性_基础,双方减少大量体力（若没有交互对象则仅减少自己）
+16,DOWN_BOTH_LARGE_MANA_POINT,属性_基础,双方减少大量气力（若没有交互对象则仅减少自己）
 21,ADD_INTERACTION_FAVORABILITY,属性_基础,增加基础互动好感
 22,ADD_SMALL_TRUST,属性_基础,增加基础互动信赖
 23,DOWN_INTERACTION_FAVORABILITY,属性_基础,降低基础互动好感
@@ -41,6 +43,13 @@ cid,effect_name,effect_type,effect
 1503,DESIRE_POINT_TO_0,属性_基础,自己欲望值归零
 1504,ADD_SMALL_SANITY_POINT,属性_基础,增加少量理智值(15%/h)
 1505,ADD_SMALL_SEMEN_POINT,属性_基础,增加少量精液值(15%/h)
+1511,DOWN_SELF_SMALL_HIT_POINT,属性_基础,减少自己少量体力
+1512,DOWN_SELF_SMALL_MANA_POINT,属性_基础,减少自己少量气力
+1513,DOWN_SELF_MEDIUM_HIT_POINT,属性_基础,减少自己中量体力
+1514,DOWN_SELF_MEDIUM_MANA_POINT,属性_基础,减少自己中量气力
+1515,DOWN_SELF_LARGE_HIT_POINT,属性_基础,减少自己大量体力
+1516,DOWN_SELF_LARGE_MANA_POINT,属性_基础,减少自己大量气力
+
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
