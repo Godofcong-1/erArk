@@ -120,15 +120,19 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
             now_weight = 1
             if talk_id in game_config.config_talk_premise_data:
                 now_weight = 0
+                unconscious_h_pass_flag = False
                 for premise in game_config.config_talk_premise_data[talk_id]:
                     # 是否必须显示
                     if not must_show:
                         # 无意识模式判定
-                        if target_data.sp_flag.unconscious_h != 0 and target_data.sp_flag.unconscious_h <= 5:
-                            unconscious_h_pass_flag = False
+                        if unconscious_h_pass_flag == False and target_data.sp_flag.unconscious_h != 0 and target_data.sp_flag.unconscious_h <= 5:
+                            # 有催眠tag的行为则直接通过
+                            status_data = game_config.config_status[behavior_id]
+                            if _("催眠") in status_data.tag:
+                                unconscious_h_pass_flag = True
                             # 需要前提里有无意识的判定，否则不显示
-                            for premise in game_config.config_talk_premise_data[talk_id]:
-                                if "unconscious" in premise:
+                            for now_premise in game_config.config_talk_premise_data[talk_id]:
+                                if "unconscious" in now_premise:
                                     unconscious_h_pass_flag = True
                                     break
                             if not unconscious_h_pass_flag:

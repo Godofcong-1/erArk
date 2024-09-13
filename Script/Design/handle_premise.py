@@ -10186,8 +10186,7 @@ def handle_target_hypnosis_ne_0(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if handle_target_hypnosis_0(character_data.target_character_id):
+    if handle_target_hypnosis_0(character_id):
         return 0
     return 1
 

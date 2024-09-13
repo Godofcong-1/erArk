@@ -253,10 +253,7 @@ class CVPMenu(QDialog):
     def __init__(self):
         """初始化综合型基础数值前提复选框"""
         super(CVPMenu, self).__init__()
-        if cache_control.now_edit_type_flag == 1:
-            self.setWindowTitle(cache_control.now_event_data[cache_control.now_select_id].text)
-        elif cache_control.now_edit_type_flag == 0:
-            self.setWindowTitle(cache_control.now_talk_data[cache_control.now_select_id].text)
+        self.setWindowTitle("综合型基础数值前提")
         self.font = font
         self.layout: QVBoxLayout = QVBoxLayout()
         self.ABCD_button_layout = QHBoxLayout()
