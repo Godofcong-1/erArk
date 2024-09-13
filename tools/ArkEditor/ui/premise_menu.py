@@ -283,7 +283,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -365,6 +365,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Time"
         elif cvp_b1 == "口上用flag":
             cvp_b_value = "Flag|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "前指令":
+            cvp_b_value = "Instruct|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -461,4 +463,17 @@ class CVPMenu(QDialog):
             for i in range(10):
                 self.cvp_b2.addItem(str(i))
             self.cvp_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持10个flag（即编号为0~9）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
+        elif index == 11:
+            self.cvp_b2.clear()
+            for status_id, status_name in cache_control.status_data.items():
+                # 到二次结算则中断
+                if int(status_id) >= 1000:
+                    break
+                # 跳过玩家无法触发的状态
+                status_data = cache_control.status_all_data[status_id]
+                if status_data["trigger"] == "npc":
+                    continue
+                self.cvp_b2.addItem(f"{status_id}|{status_name}")
+            self.cvp_b2.setCurrentIndex(0)
+            self.cvp_text.setText("前指令可以用来检测玩家上一次输入的指令，用于实现两次指令之间的联动效果\n本前提只判断玩家，所以角色选择会锁定为玩家，且只能使用[等于]或者[不等于]，没有其他逻辑")
         self.cvp_b = self.cvp_b2

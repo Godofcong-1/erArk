@@ -1217,6 +1217,8 @@ class Cache:
         """ 玩家指令输入记录（最大20）"""
         self.daily_intsruce: List[str] = []
         """ 每日指令输入记录 """
+        self.pl_pre_status_instruce: List[int] = []
+        """ 玩家过去状态指令记录，最大长度为10 """
         self.now_init_map_id: str = ""
         """ 寻路算法用,当前节点所属的地图的id """
         self.collect_position_list: List = []

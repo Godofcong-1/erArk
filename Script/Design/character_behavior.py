@@ -129,6 +129,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     if character_id == 0:
         # 记录玩家的指令文本
         cache.daily_intsruce += character_instruct_record(0)
+        cache.pl_pre_status_instruce.append(character_data.state)
+        if len(cache.pl_pre_status_instruce) > 10:
+            cache.pl_pre_status_instruce.pop(0)
 
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             cache.over_behavior_character.add(character_id)

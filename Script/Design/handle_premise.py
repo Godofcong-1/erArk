@@ -77,7 +77,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             return 0
         final_character_data = cache.character_data[final_character_id]
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if premise_all_value_list[1][0] == "A":
@@ -135,6 +135,32 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             if final_character_data.talent[talent_id]:
                 return 1
         return 0
+
+    # 前指令的单独计算
+    if premise_all_value_list[1][0] == "I":
+        if "Instruct" in premise_all_value_list[1]:
+            len_pre_status = len(cache.pl_pre_status_instruce)
+            type_son_id = int(premise_all_value_list[1].split("|")[1])
+            # 指令计数
+            count = 0
+            for i in range(len_pre_status):
+                last_cmd = cache.pl_pre_status_instruce[len_pre_status - 1 - i]
+                # 跳过当前指令
+                if count == 0:
+                    count += 1
+                    continue
+                if last_cmd == type_son_id:
+                    # 判定是否为该指令
+                    if premise_all_value_list[2] == "E":
+                        return 1
+                    if premise_all_value_list[2] == "NE":
+                        return 0
+                if premise_all_value_list[2] == "E":
+                    return 0
+                if premise_all_value_list[2] == "NE":
+                    return 1
+            return 0
+
 
     # 正常的运算符判定
     if premise_all_value_list[2] == "G":
@@ -12211,7 +12237,7 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
             continue
         if last_cmd in sex:
             return 1
-    return 0
+        return 0
 
 
 @add_premise(constant_promise.Premise.LAST_CMD_BLOWJOB_OR_HANDJOB)

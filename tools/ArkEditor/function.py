@@ -56,6 +56,10 @@ def read_CVP(cvp_value_str: str):
         b2_value = cvp_str_list[2].split("S|")[1]
         b2_name = cache_control.state_data[b2_value]
         cvp_str = cvp_str.replace(f"S|{b2_value}", f"状态{b2_name}")
+    elif "Instruct" in cvp_str:
+        b2_value = cvp_str_list[2].split("Instruct|")[1]
+        b2_name = cache_control.status_data[b2_value]
+        cvp_str = cvp_str.replace(f"Instruct|{b2_value}", f"前指令{b2_name}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str
