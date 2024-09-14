@@ -14840,6 +14840,34 @@ msgstr ""
 msgid "前萨尔贡某王酋麾下士兵。遭到同僚背叛后心灰意冷离开军队，几经辗转后加入罗德岛。作战经验丰富，现作为重装干员活跃于各类任务中。"
 msgstr ""
 
+#: .\data\character\0304_暴雨.csv:15
+msgid "#8080A1"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:38
+msgid "浅灰色风衣（带防沙口罩）"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:39
+msgid "灰色上衣"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:40
+msgid "灰色短裙"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:41
+msgid "深灰色长袜"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:43
+msgid "罗德岛产制式链锤"
+msgstr ""
+
+#: .\data\character\0304_暴雨.csv:44
+msgid "浅灰色罗德岛制式轻型盾牌"
+msgstr ""
+
 #: .\data\character\0306_惊蛰.csv:13
 msgid "一把造型老旧的橡木尺子。没有规矩，不成方圆。"
 msgstr ""
