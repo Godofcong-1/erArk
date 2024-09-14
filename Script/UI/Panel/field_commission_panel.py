@@ -69,6 +69,13 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     satify_flag -- 是否满足
     """
 
+    # 无则直接返回
+    if now_text == _("无"):
+        type_text = _("无")
+        full_text = _("无")
+        satify_flag = True
+        return type_text, full_text, satify_flag
+
     # 处理文本
     text_list = now_text.split("_")
     item_id = int(text_list[1])
@@ -107,7 +114,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 item_id = character_id
                 break
         now_have_item_num = 0
-        if item_id in cache.npc_id_got:
+        if item_id in send_npc_list:
             now_have_item_num = 1
     # 特产
     elif text_list[0] == _("特产"):
@@ -140,6 +147,28 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         else:
             item_name = game_config.config_nation[item_id].name + _("声望")
             now_have_item_num = cache.country.nation_reputation[item_id]
+    # 好感
+    elif text_list[0] == _("好感"):
+        item_name = _("好感")
+        item_type = _("好感")
+        now_have_item_num = 0
+        for character_id in cache.character_data:
+            if cache.character_data[character_id].adv == item_id:
+                item_name = cache.character_data[character_id].name
+                item_id = character_id
+                now_have_item_num = cache.character_data[character_id].favorability[0]
+                break
+    # 信赖
+    elif text_list[0] == _("信赖"):
+        item_name = _("信赖")
+        item_type = _("信赖")
+        now_have_item_num = 0
+        for character_id in cache.character_data:
+            if cache.character_data[character_id].adv == item_id:
+                item_name = cache.character_data[character_id].name
+                item_id = character_id
+                now_have_item_num = cache.character_data[character_id].trust
+                break
 
     # 需求
     if not demand_or_reward:
@@ -182,6 +211,12 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             elif text_list[0] == "声望":
                 item_num *= 0.01
                 cache.country.nation_reputation[item_id] += item_num
+            # 好感
+            elif text_list[0] == "好感":
+                cache.character_data[item_id].favorability[0] += item_num
+            # 信赖
+            elif text_list[0] == "信赖":
+                cache.character_data[item_id].trust += item_num
 
     # 添加类型文本
     if item_type not in type_text:
@@ -378,6 +413,9 @@ class Field_Commission_Panel:
             else:
                 now_country_commision_list = []
             common_commision_list = game_config.config_commission_id_by_country[-1]
+            # 根据委托的等级对委托列表进行排序
+            now_country_commision_list.sort(key=lambda x: game_config.config_commission[x].level)
+            common_commision_list.sort(key=lambda x: game_config.config_commission[x].level)
             all_commision_list = now_country_commision_list + common_commision_list
 
             # 绘制委托信息
