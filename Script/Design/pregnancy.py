@@ -84,6 +84,7 @@ def check_fertilization(character_id: int):
     根据受精概率并判断是否受精
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    draw_text = ""
 
     # 仅在排卵日进行判定
     if character_data.pregnancy.reproduction_period != 5:
@@ -93,6 +94,12 @@ def check_fertilization(character_id: int):
     if character_data.hypnosis.force_ovulation:
         character_data.hypnosis.force_ovulation = False
 
+    # 种族是机械的则需要判断是否有生育模组
+    if character_data.race == 2:
+        if character_data.talent[171] == 0:
+            character_data.pregnancy.fertilization_rate = 0
+            draw_text += _("\n{0}是机械体，且未安装生育模组，无法受精\n").format(character_data.name)
+
     # 如果当前已受精，则跳过判断
     for i in {20,21,22}:
         if character_data.talent[i] == 1:
@@ -101,7 +108,6 @@ def check_fertilization(character_id: int):
 
     # 只判断有受精可能的
     if character_data.pregnancy.fertilization_rate:
-        draw_text = ""
 
         # 如果未初潮，则无法受精并触发对话
         if character_data.talent[6] == 1:
@@ -126,14 +132,16 @@ def check_fertilization(character_id: int):
                 character_data.second_behavior[1312] = 1
 
         character_data.pregnancy.fertilization_rate = 0
-        talk.must_show_talk_check(character_id)
-        now_draw = draw.WaitDraw()
-        now_draw.width = window_width
-        now_draw.text = draw_text
-        now_draw.draw()
     else:
         if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
             draw_text += _("\n在避孕药的影响下——\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
+
+    # 绘制输出
+    talk.must_show_talk_check(character_id)
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = draw_text
+    now_draw.draw()
 
 
 def check_pregnancy(character_id: int):
