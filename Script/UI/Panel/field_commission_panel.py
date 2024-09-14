@@ -107,6 +107,14 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         if demand_or_reward:
             item_type = _("宝珠")
         now_have_item_num = sum(cache.character_data[character_id].juel[item_id] for character_id in send_npc_list)
+    # 素质
+    elif text_list[0] == "t":
+        item_name = game_config.config_talent[item_id].name
+        item_type = item_name
+        # 如果是奖励，则只显示大类
+        if demand_or_reward:
+            item_type = _("素质")
+        now_have_item_num = sum(cache.character_data[character_id].talent[item_id] for character_id in send_npc_list)
     # 委托
     elif text_list[0] == "m":
         item_name = _("委托")
@@ -223,6 +231,13 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             elif text_list[0] == "j":
                 for character_id in send_npc_list:
                     cache.character_data[character_id].juel[item_id] += item_num
+            # 素质
+            elif text_list[0] == "t":
+                for character_id in send_npc_list:
+                    if item_num > 0:
+                        cache.character_data[character_id].talent[item_id] = True
+                    elif item_num < 0:
+                        cache.character_data[character_id].talent[item_id] = False
             # 特产
             elif text_list[0] == _("特产"):
                 cache.rhodes_island.materials_resouce[item_id] += item_num
