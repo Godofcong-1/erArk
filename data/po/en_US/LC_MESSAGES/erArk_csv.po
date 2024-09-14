@@ -13792,28 +13792,28 @@ msgid "汐斯塔的特色披萨，上面铺满了各种水果，看起来就像�
 msgstr "Siesta's specialty pizza, having many types of fruit on top as if it's a big cake"
 
 msgid "深盘厚底魔鬼辣椒披萨"
-msgstr ""
+msgstr "Deep-thick ghost pepper pizza"
 
 msgid "来自多索雷斯的特色披萨，辣椒的味道很重，吃完之后会让你感觉到一种前所未有的辣。"
-msgstr ""
+msgstr "Specialty pizza from Dossoles, you'll feel an intense spicy on eating."
 
 msgid "羔岩羊腿肉披萨"
-msgstr ""
+msgstr "Mountain mutton pizza"
 
 msgid "来自维多利亚的特色披萨，只选用最好的岩羊羔羊腿肉，口感鲜嫩，味道鲜美。"
-msgstr ""
+msgstr "Specialty pizza from Victoria, using the best mutton, having fresh and tender taste"
 
 msgid "京城烤鸭披萨"
-msgstr ""
+msgstr "Roasted duck pizza"
 
 msgid "来自炎国的特色披萨，将京城烤鸭与披萨完美结合，能同时品尝到两者的美味。"
-msgstr ""
+msgstr "Specialty pizza fron Yan, combining roasted duck and pizza to taste both together."
 
 msgid "壳虾岩蟹披萨"
-msgstr ""
+msgstr "Cragpincer pizza"
 
 msgid "来自伊比利亚的特色披萨，大胆的将蒜香壳虾与岩蟹肉放在了披萨上，味道鲜美。"
-msgstr ""
+msgstr "Specialty pizza from Iberia, putting the garlic shell-shrimp and cragpincer together on pizza."
 
 msgid "罐装晌午茶"
 msgstr "Canned Tea"
@@ -14041,275 +14041,288 @@ msgid "杨森到底有几个兄弟？这个双人餐是不是只有他一个人�
 msgstr "How many brothers does Janssen have? And was this meal only eaten by himself?"
 
 msgid "蟹肉碎拌饭"
-msgstr ""
+msgstr "Crab Porridge"
 
 msgid "热腾腾的杂粮中加入了岩壳蟹肉，吃起来朴素中略带鲜味。好吃是好吃，但......究竟是谁第一个决定尝试食用岩壳蟹的呢？"
-msgstr ""
+msgstr "Mixed grain with granite grab meat added for a savory touch. Cragpincers are tasty, but who was the first to try one?"
 
 msgid "调味干粮"
-msgstr ""
+msgstr "Seasoned Rations"
 
 msgid "较朴素的速食食品，经过了调味，吃起来还挺适口。据说未经调味的初版十分难以下咽，曾有人评价为不是“食用”，而是“服用”。"
-msgstr ""
+msgstr "Simple, ready-to-eat seasoned food, making it reasonably palatable. The original, unseasoned version was so disagreeable that it was classified as a dietary supplement rather than food."
 
 msgid "松枝熏肉"
-msgstr ""
+msgstr "Pine-Smoked Bacon"
 
 msgid "经过松枝熏烤，整块肉带上了浓郁的松香滋味，表皮油润，内里香醇。只需切下几块放在热腾腾的饭上，熏肉的香气就能充满整间屋子，令人陶醉。"
-msgstr ""
+msgstr "The meat has been smoked to give it a rich pine aroma. Put a few slices on hot, steaming rice, and the scent of smoked meat fills the whole room."
 
 msgid "鲜切蟹生"
-msgstr ""
+msgstr "Crab Sashimi"
 
 msgid ""
 "制作过程似乎只是切了几刀，过了下水，就这样端了出来。评价两极分化的一道菜肴，有人吃完之后感觉自已仿佛长出了和岩壳蟹一样坚硬的外壳。可能是过敏反应。"
 msgstr ""
+"All it takes is a few cuts and a quick rinse. A controversial dish. Some claim to feel like they grew a shell like a cragpincer after eating it, which may or may not be an allergic reaction."
 
 msgid "真空冷制肉脍"
-msgstr ""
+msgstr "Vacuum-Packed Minced Meat"
 
 msgid "已经预制好的兽肉和杂粮，制作流程均在低温下完成，极大限度地保证了食材的新鲜。只需要简单加热，就是一道美味。感谢科技！"
-msgstr ""
+msgstr "Ready-to-eat meat and grains, prepared at low temperatures to ensure freshness. Just heat and enjoy. The wonders of science!"
 
 msgid "炭烤兽肉卷饼"
-msgstr ""
+msgstr "Grilled Meat Wraps"
 
 msgid "每个国家的人都有他们喜欢的独特吃法，可以随意搭配尝试。但如果做出类似在炎国人眼前往饼里卷小笼包这种行为，可能会被追着打。"
-msgstr ""
+msgstr "Every country has its own ways of dining, and one is free to mix and match. One would be well-advised not to try to put xiaolongbaos in wraps, or risk starting a riot."
 
 msgid "猎人饭包"
-msgstr ""
+msgstr "Hunter's Rice Wrap"
 
 msgid "捕捉到什么猎物，就使用什么肉炙烤所得，简单方便，自由度高。谁的饭包最大，谁的捕猎技巧就最高。不过为了面子，往里面多塞一点谷物也是可以的。"
-msgstr ""
+msgstr "Made with whatever meat the hunter caught today. The size of the wrap is a symbol of the hunter's skill, though some secretly stuff more grains in to make it bigger."
 
 msgid "超级厚馅饼"
-msgstr ""
+msgstr "Super Thick Pie"
 
 msgid "萨尔贡当地传统主食之一，馅料是浓厚香醇的兽肉，深受当地人喜爱。大，大，大！越大越好！"
-msgstr ""
+msgstr "Traditional Sargonian dish with tasty meat filling. A local favorite. Bigger is better."
 
 msgid "鲜萃凝方体"
-msgstr ""
+msgstr "Essence Cube"
 
 msgid "由肉类提纯出各类人体所需的成分后精制的凝方体，营养丰富。但它的外表和名字一样，难以让人产生食欲。"
-msgstr ""
+msgstr "The nutrients that the human body needs have been extracted from meat and distilled into a cube. Unfortunately, its appearance is just as unappetizing as the name."
 
 msgid "香煎杂肉饭"
-msgstr ""
+msgstr "Pan-Fried Meats on Rice"
 
 msgid "不同种类的肉混合成独特的美味，颜色丰富，让人难以忘怀。一勺挖下去，热气蒸腾，从里面翻找出最喜欢的肉是这道菜的一大乐趣。"
-msgstr ""
+msgstr "Made with a variety of different meats, offering a myriad of colors and flavors. Part of the fun is digging through the rice to find your favorite meat."
 
 msgid "脱水增味肉干"
-msgstr ""
+msgstr "Dehydrated Seasoned Jerky"
 
 msgid "将食材脱水处理，是人们保存食物最原始也最简单方便的方法。虽然只是薄薄的几片，看起来很没有满足感，但实际上热量很高，完全可以轻松地吃饱。"
-msgstr ""
+msgstr "Drying is one of the oldest and simplest ways to preserve food. A few small pieces hold a lot of calories, plenty to fill you up."
 
 msgid "低温鲜烹炙肉"
-msgstr ""
+msgstr "Sous Vide Meat"
 
 msgid ""
 "低温慢煮而成的食物，为了增香，外表还经过了微微的炙烤。很难从外表看出它来自何种动物，不过加热之后味道令人满意，这就足够了，毕竟填饱肚子才是最重要的。"
 msgstr ""
+"Cooked at a low temperature, then lightly grilled for flavor. It is difficult to tell what beast it came from, but it hardly matters as long as it is tasty and filling."
 
 msgid "蟹壳蒸饭"
-msgstr ""
+msgstr "Crabshell Rice"
 
 msgid ""
 "直接在蟹壳中铺满杂粮蒸熟制成的盖饭，萨尔贡部落民餐桌上最常见的食物。移动城市中的居民偶尔也会尝试这道菜，并为萨尔贡帝国的饮食文化而感到自豪。但很少有部落民会认同这一点。"
 msgstr ""
+"Grains steamed in a crab shell, a regular sight on dinner tables in Sargon's rural areas. Those in the nomadic cities sometimes try some and find pride in Sargon's unique cuisine, but few among the tribes would agree with them."
 
 msgid "提取脂凝晶"
-msgstr ""
+msgstr "Rendered Fat"
 
 msgid "食品科技的智慧结晶，食品现代化的代表，营养丰富。短时间内增加进食满足感和提供足量热量都离不开这种食品科技产品。"
-msgstr ""
+msgstr "The culmination of developments in food technology, and the symbol of the modernization of food. Food science products like these are key to feeling sated and getting the right amount of calories in a short time."
 
 msgid "浓缩羹原液"
-msgstr ""
+msgstr "Concentrated Extract"
 
 msgid "提取肉类鲜味和营养物质后高温浓缩而成的原液，营养丰富。本品为浓缩液，不可直接食用。住所离医院较近的人也不要尝试。"
-msgstr ""
+msgstr "Highly concentrated essence of the flavor and nutrition of meat. Do not directly consume this concentrated solution, even if you live near a hospital."
 
 msgid "高压复焗浓汤"
-msgstr ""
+msgstr "Pressue-Cooked Soup"
 
 msgid "经超长时间高压烹制的极鲜浓汤，被料理机固化重组后制成的汤酥。一口下去，仿佛吃进去了一片云朵，一阵热风。汤鲜浓郁，入口即化。"
-msgstr ""
+msgstr "Extremely rich soup made by cooking under pressure for an extended period, made into solid stock. Rich and flavorful, yet melts in the mouth, as though you are eating a piece of cloud."
 
 msgid "生制代餐粗粉"
-msgstr ""
+msgstr "Naturalist's Replacement Meal"
 
 msgid ""
 "为了保证食材中最佳原料风味的体现，制作者只使用了杂粮来搭配它。低纤维、高热量、易饱腹，从不会出现在现代移动城市中的商场的货架上，在荒野的小商店中则十分抢手。"
 msgstr ""
+"Paired with mixed grains and nothing else, in order to keep the spotlight on the taste of the original ingredients. Low-fiber, high-calorie, and filling, modern nomadic city supermarkets never stock it, but it is a popular product for small shops in the wilderness."
 
 msgid "脆肉薯条转醇"
-msgstr ""
+msgstr "Crispy Meat and Chips"
 
 msgid ""
 "选取荒地上随处可见的肉作为原料，和粗细不一的薯条一起在油锅中煎炸而成。移动城市的居民们会抱怨它过于油腻，而需要干体力活的荒地人则十分享受这种美食。"
 msgstr ""
+"Made with whatever meat you can find in the wastes and fried with taters cut into all shapes and sizes. Nomadic city dwellers whine about how it's too greasy, but wastelanders who need to work all day love it."
 
 msgid "蟹醇"
-msgstr ""
+msgstr "Crab Paste"
 
 msgid "为了展现出岩壳蟹的鲜味和营养，其中还加入了很少见的高级肉类。据说它还努力地模仿了岩壳蟹肉的口感，但似乎没人发现。"
-msgstr ""
+msgstr "Premium meat has been added to emphasize the flavor and nutritious value of cragpincer. A little-known fact is that it also tries to emulate the texture of cragpincer."
 
 msgid "鲜味汤凝胶"
-msgstr ""
+msgstr "Soup Gel"
 
 msgid "可直接食用的凝胶，室温下不会融化，口感软弹，营养丰富。有些科技食物会为了追求高级感而失去食物的本味，它就是一个很好的例子。"
-msgstr ""
+msgstr "Gel that retains consistency under room temperature and can be eaten directly. Soft, chewy, and very nutritious. A good example of how high-tech food has lost its original flavor."
 
 msgid "转质壳酯块"
-msgstr ""
+msgstr "Condensed Calories"
 
 msgid ""
 "顶级食材的威力在这里发挥完全，只需小小一块，登山者也可以获得一整天运动的能量。小心区分它和糖块。虽然吃错了不会造成任何危及生命的后果，但毕竟它的热量很高，非常高。"
 msgstr ""
+"A small piece gives you enough energy to last the day. Be careful about mixing them with sugar cubes. Accidental ingestion will not cause any immediate harm, but that is a LOT of calories you are taking in."
 
 msgid "复合精制肉酱"
-msgstr ""
+msgstr "Mixed Refined Meat Sauce"
 
 msgid "将多种肉类复合制成的肉酱，在添加完相应的营养剂后，不论是口感还是色香味，都有了明显的提升。任何时候都能食用，科技使它永远不会过期。"
-msgstr ""
+msgstr "Meat sauce made from a variety of meats, with added nutrients, coloring, and flavoring. It never expires thanks to the wonder of technology."
 
 msgid "碳水脂肪聚块"
-msgstr ""
+msgstr "Carbohydrate Fat Cube"
 
 msgid "将人体所需的蛋白质、脂肪、碳水按照比例调配而成，也可以根据食用者所需自由搭配，制作简单，方便易携。探险者的背包中常见的食物。"
-msgstr ""
+msgstr "Comprised of protein, fat, and carbohydrates according to the needs of the human body. Easy to make and carry. Often carried by explorers."
 
 msgid "味纯聚素粒"
-msgstr ""
+msgstr "Flavor Granules"
 
 msgid ""
 "研究者在食品科技中剑走偏锋，做出了外形异常好看的素粒，据说是为了食用者心情愉悦。但面对饥饿和快速补充能量的需求，似乎很少有食用者真的注意到了这一点。"
 msgstr ""
+"Food granules made with an appealing appearance to make the eater happy. People trying to satiate their hunger and quickly get their energy boost, however, seldom notice."
 
 msgid "莱塔尼亚浓汤鲜萃"
-msgstr ""
+msgstr "Leithanian Soup Stock"
 
 msgid "由当下最时兴的鲜萃技术制作而成，只有小小一口，但浓香醉人。莱塔尼亚人执着于为不同口味的浓汤搭配不同的音乐，据说曾有诗人专门为此创作诗歌。"
-msgstr ""
+msgstr "An ocean of aroma and flavor in every mouthful. Leithanians pair different music with different kinds of soup, even writing poems to the soup of the day."
 
 msgid "鲜能剂"
-msgstr ""
+msgstr "Essence of Savor"
 
 msgid ""
 "做出鲜能剂的老先生是一位味觉失灵的大厨，他说自己幸福的秘诀是观察食客的微笑，从而确认自己的食物能够满足他们。温暖的故事。但他新品研究所的学生们不这么觉得。"
 msgstr ""
+"The Essence of Savor was invented by a chef who had lost his sense of taste. His secret joy was observing his customers' smiles to determine whether they enjoyed his food. A heartwarming story to everyone except his apprentices who have to taste-taste his new creations."
 
 msgid "极温速烹兽肉"
-msgstr ""
+msgstr "Outside-In Flashboiled Beastmeat"
 
 msgid "刚刚做好就会被送入机器迅速降温，表皮结满冰晶，内里仍旧炙热，带来极限口感体验。似乎不降温直接吃也是一种美妙的体验。"
-msgstr ""
+msgstr "Machine-cooled as soon as it has been cooked, offering a wonderful texture that is frozen on the outside but still warm on the inside. Can also be enjoyed without cooling."
 
 msgid "东国纳米割烹"
-msgstr ""
+msgstr "Higashinese Bento"
 
 msgid "选用当季的新鲜食材，配合季节变换，通过菜肴传达禅意，给人绝对的视觉享受。如果制作这席菜肴的是专业东国厨师的话，或许美丽和美味还是可以兼得的。"
-msgstr ""
+msgstr "Made with fresh seasonal produce, delivering a treat for the eyes and conveying Zen through plating. Higashinese chefs believe in achieving the best of both worlds in taste and appearance."
 
 msgid "维多利亚皇家凝方"
-msgstr ""
+msgstr "Victorian Royal Jelly"
 
 msgid "食用时请遵守绅士淑女进餐礼仪，好保证你在此刻对于食物的享受。维多利亚人为他们的文化而自豪，任何时候都不愿低头。"
-msgstr ""
+msgstr "Proper table manners are critical to ensuring a proper dining experience. Victorians are proud of their culture, never bowing their heads to anyone."
 
 msgid "炎国山水原液"
-msgstr ""
+msgstr "Yanese Shanshui Essence"
 
 msgid "云山衔一梦。呼......酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
-msgstr ""
+msgstr "A dream in the cloudy mountains. Tea, wine, wind, snow, you can taste it all."
 
 msgid "卡西米尔骑士补充剂"
-msgstr ""
+msgstr "Kazimierzian Knight Supplement"
 
 msgid "喝下去以后感觉精神百倍。之前有商家说这就是耀骑士赛前喝的东西，人们蜂拥而上。酽茶醇酒，斜风细雪，似乎都能在这之中体味到。"
-msgstr ""
+msgstr "The color alone excites the mind and arouses the desire to have it, turning heads even if one has already passed it by. A single sip fills you with energy. It has been in high demand due to rumors that the Radiant Knight drinks it."
 
 msgid "哥伦比亚分子胶囊"
-msgstr ""
+msgstr "Columbian Molecular Capsule"
 
 msgid ""
 "莱茵生命产品，改变食材分子结构再重新组合而成，外壳滋味丰富，食用后可获得极强的饱腹感，在获得满足的同时降低食物的摄取量。非常利于身体健康，但不利于心灵健康。"
 msgstr ""
+"A Rhine Lab product that rearranges the molecular structure of food. The capsule is tasty and very filling, reducing food intake while maintaining the same amount of satisfaction. Good for health, not so much for wellbeing."
 
 msgid "拉特兰圣音汤醇"
-msgstr ""
+msgstr "Lateran Holy Soup"
 
 msgid "纯净的外表让人安静下来，但里面的味道让人脑袋在一瞬间出现了有些奇怪的画面——是爆炸？！而且很甜，非常甜！不应该是汤吗？"
-msgstr ""
+msgstr "The pure appearance is soothing, but the flavor creates strange mental images... of explosions? And why is it so damn sweet?"
 
 msgid "低压干制精肉"
-msgstr ""
+msgstr "Low-Pressure Dried Meat"
 
 msgid "撕开包装，里面就是咸香适口的干肉。肉干制作的工艺十分复杂，合适的温度湿度缺一不可，制作成功后能保存数年之久。就是……有点太硬了！"
-msgstr ""
+msgstr "Tear open the package to find savory salted meat within. Making good jerky requires just the right mix of temperature and humidity, but the upside is that it can be kept for years. The only problem is the toughness..."
 
 msgid "米诺斯诗歌凝胶"
-msgstr ""
+msgstr "Minoan Poetic Gel"
 
 msgid "据说最开始是某位祭司在听完一首长篇叙事诗后突发灵感所作，品尝后让人能够真切感悟到她当时的心情。不好，里面似乎加了酒，已经开始头晕了！"
-msgstr ""
+msgstr "Legend has it that a priest invented it after being inspired by an epic poem, in order to communicate what he felt. Wait, there's alcohol in it! I'm getting dizzy already!"
 
 msgid "固态源溏心蛋补剂"
-msgstr ""
+msgstr "Marinated Coagulate Supplement"
 
 msgid ""
 "从混杂着胡椒、肉糜还有酒的溏心蛋中萃取的液体，是当地最常见菜肴的便携版。在野外，这道菜都是在被太阳直射的固态源上烹制的。为了还原这一工艺，移动城市的许多店家配备了专业的阳光聚焦设备。"
 msgstr ""
+"A liquid extract of eggs marinated in pepper, minced meat, and wine. A portable version of the local favorite. Traditionally cooked via exposure to direct sunlight, so many nomadic city stores have professional sunlight directing equipment to recreate the technique."
 
 msgid "河鳞水果凝胶"
-msgstr ""
+msgstr "Riverfin Fruit Gel"
 
 msgid "烟熏的河鳞和清爽的水果在这里相逢，简简单单。对于移动城市的居民来说，无论新鲜的河鳞还是清爽的水果都是昂贵的食材。"
-msgstr ""
+msgstr "A simple mix of smoked river fin and fresh fruits. To nomadic city dwellers, they're both expensive ingredients."
 
 msgid "炎国荒地菜肉酮"
-msgstr ""
+msgstr "Yanese Wasteland Cooking Keton"
 
 msgid ""
 "切成薄片的兽肉与各种生长在荒地上的野菜一起翻炒，是炎国人家中常见的菜肴。菜肉酮是从中提取的精华。这道菜里应该用什么样的肉、什么样的菜，甜的还是咸的，在炎国都是极具争议性的话题。"
 msgstr ""
+"Yanese households often stir-fry thin slices of meat together with all kinds of wasteland-grown vegetables, and this ketone is an essence extracted from the dish. What meats or vegetables should be used in it? Should it be sweet or salty? These questions are controversial topics in Yan."
 
 msgid "音乐速烤萃取酯"
-msgstr ""
+msgstr "Musik-Schnellebraten Extract"
 
 msgid ""
 "使用音乐源石技艺对肉类进行烹饪而得到的酯类。在紧急状态下，驱动源石技艺处理食材也是一种可行的方法。但精益求精的莱塔尼亚人把烹饪过程发展成了一门表演艺术。"
 msgstr ""
+"An esterase extracted by cooking meat with musical Originium Arts. Handling food with Arts is a feasible method during emergencies, but the ever-evolving Leithanians have developed the cooking process into a performance."
 
 msgid "哥伦比亚炮灰羽"
-msgstr ""
+msgstr "Columbian Cannonfowl"
 
 msgid ""
 "哥伦比亚雇佣兵中流传的菜肴，制作方式非常粗暴——将羽兽肉塞进“安全”的源石堆里炙烤而成。刚入口时有些微妙，但羽兽肉的味道会在喉舌之间久久萦绕。"
 msgstr ""
+"A dish passed down by Columbian mercenaries with a particularly crude process: fowlbeast meat is stuffed into a pile of 'safe' Originium and roasted within. It tastes subtle at first, but the fowlbeast flavor lingers on your tongue for a long time after."
 
 msgid "香肠豆泥聚块"
-msgstr ""
+msgstr "Sausage and Bean Paste Cube"
 
 msgid "丝滑的豆泥和香气四溢的香肠在口味上相得益彰，让人百吃不厌，美中不足的是，这只是聚块。因为便于携带和贮藏，广受荒地旅者好评。"
-msgstr ""
+msgstr "This mix of smooth bean paste and aromatic sausages brings the other's flavor out and is a timeless favorite, but there's just one tiny thing: it's just a cube. Easy to store and carry, so its popular with wasteland travelers."
 
 msgid "部族狂欢晚宴"
-msgstr ""
+msgstr "Folk Festive Feast"
 
 msgid "篝火！舞蹈！烤得金黄渗出油脂的整只猎物！雨林部族最高级别的款待！一人吃完一整头，你就是今天的部族英雄！"
-msgstr ""
+msgstr "Dancing around a fire, with a whole animal roasted over the fire as its skin becomes golden crispy and the fat seeps out of it. This is the highest honor given to guests of the jungle clans. Finish the entire dish, and you will be the clan's hero for the day."
 
 msgid "中央谷地混合烤肉"
-msgstr ""
+msgstr "Central Valley BBQ Mix"
 
 msgid "相传是维多利亚的国宴名菜之一，精选大块兽肉，腌制后在专门的塔中晾干，不同部位分开处理，经过多次刷油烧烤而成，入口毫无焦煳味，平时也难得一见。"
-msgstr ""
+msgstr "Legend has it they serve this at Victorian state banquets. Generous meat portions are chosen, marinated, and cured in a special tower. Different parts are handled separately and grilled with oil multiple times, but there's never a burnt taste to it. Rare to find."
 
 msgid "约翰老妈汉堡店"
 msgstr "Mama John's Burger Shop"
@@ -15016,264 +15029,291 @@ msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡�
 msgstr "After a long day, the pleasure {TargetName} felt from her breasts faded with sleep"
 
 msgid "否|晚上催睡觉|晚安吻|晚安咬"
-msgstr ""
+msgstr "None|Induce to sleep|Night kiss|Night bite"
 
 msgid ""
 "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。\n"
 "然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。"
 msgstr ""
+"A legendary book published in Victoria fifteen years ago. The book describes the author's appreciation of aesthetics in simple terms, and it contains a comprehensive record of literary, artistic and musical knowledge and history. The book covers both the past and present and is an easy read, with many honoring it as the \"great art encyclopedia of our generation.\"\n"
+"Yet it is rumored that the book's author was the leader of a certain small troupe and was murdered a few years ago by a hitman codenamed \"Blood Diamond.\""
 
 msgid "《尼古拉米娜》"
-msgstr ""
+msgstr "\"Nikolamina\""
 
 msgid "夏服搭配一百连发！"
-msgstr ""
+msgstr "Fine summer reading!"
 
 msgid "《跃动！》"
-msgstr ""
+msgstr "\"Jump!\""
 
 msgid "特刊·年中十大动圈式推荐"
-msgstr ""
+msgstr "Special Edition – One of the year's Top Ten Recommendations"
 
 msgid "《嫌疑人伊里奇之死》"
-msgstr ""
+msgstr "\"The Death of Ilyich, the Suspect\""
 
 msgid "建议分类：推理文学"
-msgstr ""
+msgstr "Recommended Genre: Detective Literature"
 
 msgid "《弗里德里希的战争论纲》"
-msgstr ""
+msgstr "\"Friedrich's Theory of War\""
 
 msgid "沃尔霍夫出版社，10月再版发行"
-msgstr ""
+msgstr "Volkhov Press, reissued in October"
 
 msgid "《奇谈怪论》"
-msgstr ""
+msgstr "\"Stranger Things\""
 
 msgid ""
 "花哨的杂志复印件，内容荒诞不经，却广受杜林人欢迎。纸页上留有各种不同的笔迹，甚至可以从数量上判断杂志转手的次数。其中大多是无意义的涂鸦，但智慧的闪光也散落其间。"
 msgstr ""
+"The pages retain handwriting of all shapes and sizes, the amount even serving to tell you how often the magazine's changed hands. Most of it is meaningless scrawls, but flashes of wisdom are scattered throughout."
 
 msgid "《中央新闻报》"
-msgstr ""
+msgstr "\"Central Journal\""
 
 msgid "玫瑰报业集团旗下的主力报纸之一，以新闻报道为主，但也有一些评论和专栏，主要面对的客户是卡西米尔的精英订户。"
 msgstr ""
 
 msgid "《红酒报》"
-msgstr ""
+msgstr "\"The Red Wine News\""
 
 msgid "玫瑰报业集团旗下的主力报纸之一，以八卦绯闻为主，其狗仔队的行动范围几乎覆盖了整个卡西米尔的所有明星骑士。"
 msgstr ""
 
 msgid "《四城竞技报》"
-msgstr ""
+msgstr "\"Kawalerleiki Sports\""
 
 msgid "玫瑰报业集团旗下的主力报纸之一，以竞技赛事为主，看似是最专业的的骑士报纸，但实际上只是骑士协会的喉舌。"
 msgstr ""
 
 msgid "《双塔艺术》"
-msgstr ""
+msgstr "\"Zwillingstürmekunst\""
 
 msgid "莱塔尼亚的音乐杂志，双月刊，内容涵盖了以古典乐为主的各种音乐风格的介绍、评论、专访等，是莱塔尼亚音乐爱好者的必备读物。"
 msgstr ""
 
 msgid "《乔弗瑞古今童话集》精装本"
-msgstr ""
+msgstr "\"The Jeffreys Collection of Fairytales New and Old\" Hardback Edition"
 
 msgid "经典童话的精装本，收录了乔弗瑞的所有童话作品，是一本非常适合家庭阅读的书籍。"
 msgstr ""
 
 msgid "《最后的骑士》"
-msgstr ""
+msgstr "\"The Last Knight\""
 
 msgid ""
 "卡西米尔家喻户晓的经典骑士小说，讲述了一位骑士伊比利亚的成长与奋斗，最后与巨浪搏斗直至消失的故事，是卡西米尔骑士的精神象征。“如果觉得浪涛吵闹，就去令大海平静。”"
 msgstr ""
 
 msgid "《白牙》"
-msgstr ""
+msgstr "\"White Fang\""
 
 msgid "鲁珀坎民间叙事曲，讲述的是一个鲁珀少年收起獠牙的古老传说。"
-msgstr ""
+msgstr "A piece from the Lupukarn folk ballad, describing the ancient tale of a Lupo boy who put away his fangs."
 
 msgid "《瓦伊凡耕种养殖方法》"
-msgstr ""
+msgstr "\"Vouivre Agricultural Techniques\""
 
 msgid "一本关于农业的实用书籍，详细介绍了瓦伊凡地区的农业技术，可惜瓦伊凡农民们大多都没看过。"
 msgstr ""
 
 msgid "《瓦伊凡爱情》"
-msgstr ""
+msgstr "\"Vouivre Love\""
 
 msgid "瓦伊凡战争年代的爱情小说，在雇佣兵组织势均力敌的混乱时代，女主角为了爱情，不惜孤身闯入爱人的佣兵部队，乞求队长答应他们的私奔......！"
 msgstr ""
 
 msgid "《大炎风情志》"
-msgstr ""
+msgstr "\"Annals of the Great Yan Classics\""
 
 msgid "炎国的地理教科书，讲述了炎国人的风土人情，以及各地的地理风貌。但是在天灾的影响下，书中的内容大多已经不再适用。"
 msgstr ""
 
 msgid "《不含传说的高塔》"
-msgstr ""
+msgstr "\"A Tower Without a Legend\""
 
 msgid "讲述了一个高塔内发生的一系列离奇事件，但是作者却没有将这些事件归结为传说，而是用蹩脚的推理来解释这些事件，以反向隐瞒其背后的真相。"
 msgstr ""
 
 msgid "《哥伦比亚司法观察笔记》"
-msgstr ""
+msgstr "\"Columbia Judicial Observation Notes\""
 
 msgid "一本关于哥伦比亚司法的观察笔记，内容涵盖了哥伦比亚的司法制度、司法实践、司法改革等方面的内容，是一本非常专业的书籍。"
 msgstr ""
 
 msgid "《征服与同化》"
-msgstr ""
+msgstr "\"Conquest and Assimilation\""
 
 msgid "详细介绍了阿斯兰帝国的征服与同化政策，以及这些政策对于帝国和现代种族制度的影响。"
 msgstr ""
 
 msgid "《离自信只差一步》"
-msgstr ""
+msgstr "\"Only One Step Until The New You\""
 
 msgid ""
 "一本关于自信心的书籍，内容涵盖了自信心的重要性、自信心的培养方法、自信心的应用技巧等方面的内容，帮助读者克服自己的心理障碍，提升自己的自信心。"
 msgstr ""
 
 msgid "《你一定能成功》"
-msgstr ""
+msgstr "\"You're a Winner\""
 
 msgid ""
 "一本关于成功学的书籍，内容涵盖了成功学的基本理论、成功学的实践方法、成功学的成功案例等方面的内容，帮助读者了解成功学的基本知识，提升自己的成功学水平。"
 msgstr ""
 
 msgid "《100天教你如何学会企业管理》"
-msgstr ""
+msgstr "\"Learn Business Management in 100 Days\""
 
 msgid ""
 "一本关于企业管理的书籍，内容涵盖了企业管理的基本理论、企业管理的实践方法、企业管理的成功案例等方面的内容，帮助读者了解企业管理的基本知识，提升自己的企业管理水平。"
 msgstr ""
 
 msgid "《萨尔贡史》"
-msgstr ""
+msgstr "\"Sargonian History\""
 
 msgid ""
 "举世闻名的浩瀚典籍，基础版一套长达五十卷。一个萨尔贡最古老的史官家族用那支古老的灯芯草笔记录下了这个巨人般的国家，在此后时光中所历经的那段波澜壮阔的英雄岁月。"
 msgstr ""
 
 msgid "《午间邮报》"
-msgstr ""
+msgstr "\"The Noon Post\""
 
 msgid "叙拉古的一份小报，因为印刷技术的限制，只出版过一次，内容涵盖了叙拉古的政治、经济、文化、社会等方面的内容，是一份非常有价值的小报。"
 msgstr ""
 
 msgid "《帝国军事史》"
-msgstr ""
+msgstr "\"Military History of the Empire\""
 
 msgid "一本关于维多利亚军事史的教科书，内容涵盖了军事的基本理论、战阵指挥、军事战略等方面的内容，是维多利亚军校的必备教材。"
 msgstr ""
 
 msgid "给感染者送抑制剂"
-msgstr ""
+msgstr "Send inhibitors to Infecteds"
 
 msgid "当地有一个隐蔽的感染者小聚落，需要将2份感染抑制剂小样送到那里。"
-msgstr ""
+msgstr "There's a hidden Infected settlement"
 
 msgid "保卫钢铁萝卜矿场"
-msgstr ""
+msgstr "Protect Iron Carrot Mine"
 
 msgid ""
 "位于雷姆必拓移动城市“钢铁萝卜城”航线周边的一处矿场，因意外挖掘到源石虫巢穴而荒废。\n"
 "近期雷姆必拓矿业联合需要重启该矿洞的挖掘工作，苦于人手不足，将防卫任务外包给了罗德岛。"
 msgstr ""
+"A mine in Rim Billiton on the periphery of Iron Carrot City's route, it was abandoned after accidentally digging into an Originium Slug nest.\n"
+"Recently, the Rim Billiton Mining Industry Association (RMIA) has decided to restart mining efforts here, and has outsourced guard duties to Rhodes Island due to lack of manpower."
 
 msgid "恢复多伦矿场"
-msgstr ""
+msgstr "Recover Toron Mine"
 
 msgid "维多利亚多伦郡文森特伯爵旗下产业，因周边地区动荡导致矿场被暴徒占领。伯爵经由特殊渠道联系到罗德岛，希望罗德岛能够尽快帮助多伦矿场恢复生产。"
-msgstr ""
+msgstr "A property owned by Count Vincent of the County of Toron in Victoria, it is currently occupied by rioters after recent unrest in the area. The Count has contacted Rhodes Island through special channels, and hopes that they will be able to promptly restore working order to the Toron Mine."
 
 msgid "清理格里布采矿平台"
-msgstr ""
+msgstr "Clean Glebe Mining Platform"
 
 msgid ""
 "乌萨斯罗斯托夫实业旗下一座已经退役的移动采矿平台，为节约成本，罗斯托夫实业预将其整修后重新投入使用，经早露与罗德岛取得联系，请求罗德岛协助进行相关清理工作。"
 msgstr ""
+"A retired mobile mining platform owned by Rostov Industries, Ursus. Rostov Industries is planning to refurbish it and return it to service, and they have contracted Rhodes Island through Rosa to perform cleanup work."
 
 msgid "清理斯沃玛加工平台"
-msgstr ""
+msgstr "Clean Słoma Processing Platform"
 
 msgid ""
 "一起原料泄漏事故导致斯沃玛食品彻底弃用这座食品加工平台，平台中储存的废弃原料让这里成了感染生物与暴徒的巢穴，严重影响附近航道安全。\n"
 "商业联合会勒令斯沃玛处理此事，而斯沃玛向罗德岛发出了平台清理委托。"
 msgstr ""
+"	Słoma Foods abandoned this food processing platform after an accident. The materials stored here have made it a nest for infected creatures and bandits, threatening nearby routes.\n"
+"The General Chamber of Commerce has demanded that Słoma deal with the issue, and the company has contracted Rhodes Island to clean the place up."
 
 msgid "草也会长石头的吗"
-msgstr ""
+msgstr "Grass Can Even Grow on Rocks?"
 
 msgid ""
 "最近阿卡胡拉丛林中植物的长势有些过于喜人，罕见地对当地居民的生活造成了严重困扰，据说一切的起因都来自一只半植物半源石虫的危险生物。\n"
 "依娜姆把清除这一生物的工作委托给了嘉维尔，而忙于医疗工作的嘉维尔头也不回地把这份活计转包给了罗德岛。"
 msgstr ""
+"Recently, the flora of the Acahuallan Jungle has thrived a bit too well, to the point where it is troubling the locals. Apparently, everything can be traced back to a dangerous creature that is half-plant, half-Originium slug.\n"
+"Inam tasked Gavial with eliminating this creature, and she, ever busy with her medical work, subcontracted the job to Rhodes Island without a second thought."
 
 msgid "地上移动黑拳竞技场"
-msgstr ""
+msgstr "Underground Nomadic Arena"
 
 msgid ""
 "多索雷斯在建的城市地块之一，在抵达目的地之前遭到了一伙荒地暴徒的袭击，并被他们据为己有。\n"
 "据说暴徒们的首领希望将其改造成一座黑拳竞技场。\n"
 "坎黛拉女士委托你先给那伙暴徒一个教训，然后把首领请来多索雷斯一叙，她相信对方会接受她的诚意。"
 msgstr ""
+"One of Dossoles' under-construction plates was hijacked by a gang of barrens thugs while in transit.\n"
+"It is said that the leader of the gang wants to convert it into an underworld boxing arena.\n"
+"Ms. Candela has tasked you with first teaching the gang a lesson, then inviting their leader to Dossoles for a little chat. She trusts that her sincerity will reach the other party."
 
 msgid "好消息是漏气，坏消息是毒气"
-msgstr ""
+msgstr "Good News: Gas Leak, Bad News: Poisonous Gas"
 
 msgid ""
 "雷神工业的一个尖端武器测试平台最近出现了大量请病假的员工，管理人员经过检查，认定此事是某种低毒的工业气体泄漏所致。\n"
 "平台在被转移到荒地上准备处理时遭到暴徒占领，员工知晓原因后也纷纷提出工伤赔偿，管理人员焦头烂额，委托罗德岛夺回这座平台，如果能顺便处理气体泄漏就更好了。"
 msgstr ""
+"An industrial gas leak at a Raythean weapons testing platform has caused many workers to become ill.\n"
+"The platform was occupied by bandits while being moved into the barrens for cleanup, and Raythean has tasked Rhodes Island to retake it. They wouldn't complain if you stopped the gas leaks too, while you were at it."
 
 msgid "逆女施工队的紧急公关"
-msgstr ""
+msgstr "Rebel's Emergency Relation"
 
 msgid ""
 "一位约翰老妈的前员工在离开几年之后再次出现在了约翰老妈为了安置员工新建的地块上，忽悠了施土队为自己制造海量武器，大肆摧毁前公司的各项设施。\n"
 "记者发布了在地块附近拍摄到的影像，各地销售量断崖式下跌，出于声誉考虑，约翰老妈委托罗德岛解决这一问题。"
 msgstr ""
+"A former Mama John's employee has showed up at a new plate built by Mama for employee housing, tricking the workers into building weapons for her and sabotaging her former company's facilities.\n"
+"Mama John's has hired Rhodes Island to deal with the problem."
 
 msgid "荒废灯塔历险记"
-msgstr ""
+msgstr "Adventure on Abandoned Lighthouse"
 
 msgid ""
 "伊比利亚近海的一处荒废灯塔吸引了许多探险者的关注，然而潜入其中的探险者无一例外全都没能返回。\n"
 "虽然灯塔外观上没有任何异常，但审判庭怀疑该区域已被深海侵蚀，将其封锁并请求罗德岛协助调查。"
 msgstr ""
+"An abandoned lighthouse situated along the Iberian coastline has attracted the attention of many explorers, yet not one to have ventured inside has ever returned.\n"
+"Although there are no observable abnormalities based on the lighthouse's appearance, the Inquisition suspects the area has been corroded by the abyss. They have sealed off the area and requested Rhodes Island to assist with their investigation."
 
 msgid "过剩的喷射冰淇淋"
-msgstr ""
+msgstr "Overflowing Ice Cream"
 
 msgid ""
 "拉特兰城郊外一处甜品制作平台近日突发事故，起因是为了满足拉特兰城内增长的冰淇淋需求，技术部门改造生产线导致产能溢出，操作人员因吃了太多冰淇淋而纷纷请了病假。\n"
 "现在自动生产线上四处喷射冰淇淋，货运无人机大量涌入城内，缠着民众兜售。为了挽救冰淇淋的声誉，阿尔斯特修道院请求罗德岛协助解决这场危机。"
 msgstr ""
+"An emergency recently occurred at a dessert production platform on the outskirts of Laterano. To satisfy the increasing demand for ice cream, the technological department modified their production lines to increase capacity. However, the controllers all had to take sick leave because they ate too much ice cream,\n"
+"causing the automated production lines to start to spraying ice cream everywhere, and wave after wave of cargo drones to start flooding into the city to strongarm the citizens into buying more. To save ice cream's reputation, the Alsterii Monastery has requested Rhodes Island's assistance in resolving this crisis."
 
 msgid "制霸自走机械搏斗场"
-msgstr ""
+msgstr "Dominate Automaton Arena"
 
 msgid ""
 "“巨大的终极丑东西杯”自走机械对战选拔赛是杜林人发起的一项只有三个月历史的赛事，该赛事办到第十届时，场面变得空前疯狂。\n"
 "蜜酿协会和烈酒协会的成员更是在现场爆发了冲突，看台上的装饰都成了他们的“武器”。\n"
 "于是，一封来自“杜林保护协会”的信送至罗德岛，请求帮忙维持赛场秩序。"
 msgstr ""
+"\"The Giant, Ultimate Ugly Thing Cup\" Self-Driving Robots Competition Preliminaries are a series of contests with a mere three month history, and on their tenth iteration, the venue became more frantic than ever.\n"
+"The Mead Association and the Liquor Association even came to blows, and anything and everything in the spectator stands is a weapon.\n"
+"As such, we received a letter from a certain \"Terran Society For The Protection of Durin People\" requesting our help in maintaining order at the competition."
 
 msgid "合成食品大战天然作物"
-msgstr ""
+msgstr "Craft Food against Organic Products"
 
 msgid ""
 "塔山生物科技在雷姆必拓的一处农业科研实验平台近日被一帮“自然饮食主义者”占据，占据者声称实验污染了当地的农产品。\n"
 "他们劫持了大量无人机散布不实言论，编造“二十条腿的沙虫”“草莓味的萝卜”等虚假案例，严重抹黑了公司的名誉。\n"
 "塔山生物科技请求罗德岛协助夺回平台，制止他们的行为。"
 msgstr ""
+"One of Tower Mountains's experimental agricultural platforms near Rim Billiton was taken over by a group of \"organic food activists.\" The occupiers claim that the experiments conducted there have polluted the local produce,\n"
+"and have seized a large number of drones to spread conspiracy theories about \"twenty-legged sandworms\" and \"strawberry-flavored carrots\" to damage the company's reputation.\n"
+"Tower Mountains has requested Rhodes Island assist them in retaking the platform and putting a stop to the activists' activities."
 
 msgid "摇晃勾爪式旋转抓取法"
 msgstr ""
@@ -15294,182 +15334,189 @@ msgid ""
 msgstr ""
 
 msgid "在民间开展源石病治疗工作"
-msgstr ""
+msgstr "Develop Oripathy Treatment"
 
 msgid "优先承接 低等级 的源石病治疗委托，提供低价或免费的源石病治疗服务，小幅度降低当地的源石病感染率。"
-msgstr ""
+msgstr "Prioritize low level treatment commission, slightly reducing the infection rate."
 
 msgid "设立和完善外勤办事处"
-msgstr ""
+msgstr "Develop Field Office"
 
 msgid "优先承接 低等级 的杂项委托，解决当地居民的生活难题，小幅度提高地区声望。"
-msgstr ""
+msgstr "Prioritize low level miscellaneous commission, slightly increasing the Prestige in that area."
 
 msgid "与当地各势力建立合作关系"
-msgstr ""
+msgstr "Develop Relationship with Factions"
 
 msgid "优先承接来自各势力的 中低级 委托，主要提高各势力的声望，小幅度提高地区声望。"
-msgstr ""
+msgstr "Prioritize medium-low level commissions from factions, increasing the Prestige on the faction and slightly increasing the Prestige in that area."
 
 msgid "大规模源石病防治工程"
-msgstr ""
+msgstr "Large-scaled Oripathy Treatment Project"
 
 msgid "优先承接 中高级 的源石病治疗委托，投入大量资源进行源石病防治工程，大幅度降低当地的源石病感染率。"
-msgstr ""
+msgstr "Prioritize medium-high level treatment commission, greatly reducing the infection rate."
 
 msgid "与势力领导人进行密切交流"
-msgstr ""
+msgstr "Communicate with Leaders"
 
 msgid "优先承接来自各势力领导人的 高级 委托，大幅度提高势力声望和地区声望。"
-msgstr ""
+msgstr "Prioritize high level commissions from leaders, greatly increasing the Prestige on the faction and in that area."
 
 msgid "饮精绝顶经验"
-msgstr ""
+msgstr "Semen Drinking EXP"
 
 msgid "可修建三个商店，开放餐馆的修建，开放基础设施:【成人用品店】"
-msgstr ""
+msgstr "Can build up to 3 shops, opens basic facility: [Adult Items' Shop]"
 
 msgid "商店的修建上限提升至六个，开放新设施:【资源交易所】"
-msgstr ""
+msgstr "Shop limit increases to 6, opens new facility: [Resource Exchange]"
 
 msgid "商店的修建上限提升至九个，开放娱乐设施的修建"
-msgstr ""
+msgstr "Shop limit increases to 9, opens building for entertainment facilities"
 
 msgid "商店的修建上限提升至十二个，开放酒店的修建"
-msgstr ""
+msgstr "Shop limit increases to 12, opens building for hotels"
 
 msgid "商店的修建数量不设上限"
-msgstr ""
+msgstr "Shop limit increases to maximum"
 
 msgid "开放基础设施:【外勤集合点】、【出击通道】"
-msgstr ""
+msgstr "Opens basic facilities: [Gathering Point], [Launch Passage]"
 
 msgid "开放新设施:【格纳库】，最多可以拥有2辆载具"
-msgstr ""
+msgstr "Opens new facility: [Garage], maximum 2 vehicles"
 
 msgid "开放新设施:【物流仓】（未实装），载具上限提升至5辆"
-msgstr ""
+msgstr "Opens new facility: [Logistics Warehouse] (not implemented), vehicle limit increases to 5"
 
 msgid "开放新设施:【整修区】（未实装），载具上限提升至10辆"
-msgstr ""
+msgstr "Opens new facility: [Renovation Zone] (not implemented), vehicle limit increases to 10"
 
 msgid "载具上限提升至99辆"
-msgstr ""
+msgstr "Vehicle limit increases to 99"
 
 msgid "调香师解锁"
-msgstr ""
+msgstr "Unlocked by having Operator Perfumer"
 
 msgid "酒店"
-msgstr ""
+msgstr "Hotel"
 
 msgid "餐馆"
-msgstr ""
+msgstr "Restaurant"
 
 msgid "娱乐设施"
-msgstr ""
+msgstr "Entertainment Facility"
 
 msgid "夏日绿"
-msgstr ""
+msgstr "Summer green"
 
 msgid "浮石色"
-msgstr ""
+msgstr "Pumice"
 
 msgid "桃金娘绿"
-msgstr ""
+msgstr "Myrtle green"
 
 msgid "阴影绿色（日常颜色）"
-msgstr ""
+msgstr "Shadow green"
 
 msgid "猫鼬色"
-msgstr ""
+msgstr "Meerkat"
 
 msgid "浅栗色（猥亵颜色）"
-msgstr ""
+msgstr "Light maroon"
 
 msgid "浅法国米色（娱乐颜色）"
-msgstr ""
+msgstr "Light French beige"
 
 msgid "浅天蓝色"
-msgstr ""
+msgstr "Light sky blue"
 
 msgid "矢车菊蓝"
-msgstr ""
+msgstr "Cornflower blue"
 
 msgid "浅蔚蓝"
-msgstr ""
+msgstr "Light cerulean"
 
 msgid "浅钢蓝（技艺颜色）"
-msgstr ""
+msgstr "Light steel blue"
 
 msgid "公主香水"
-msgstr ""
+msgstr "Princess perfume"
 
 msgid "玫瑰粉"
-msgstr ""
+msgstr "Rose pink"
 
 msgid "淡洋红"
-msgstr ""
+msgstr "Light magenta"
 
 msgid "紫红（性爱颜色）"
-msgstr ""
+msgstr "Purple-red"
 
 msgid "灰褐色（工作颜色）"
-msgstr ""
+msgstr "Gray-brown"
 
 msgid "待填写"
 msgstr ""
 
 msgid "阿斯卡纶"
-msgstr ""
+msgstr "Ascalon"
 
 msgid ""
 "地处深海的国家，对外相对封锁。其领土面积比维多利亚、乌萨斯、哥伦比亚等国加起来还大。\n"
 "国家权力掌控在科学执政官与技术执政官手中，设有深海猎人和海巡队等武装力量对抗海洋生物“海嗣”。"
 msgstr ""
+"The country below the ocean, isolated to outsiders. Its land is bigger than adding multiple countries.\n"
+"Controlled by Senate of Aegir, having Abyssal Hunters and Coast Guards to fight against sea monsters \"Seaborns\"."
 
 msgid "坎黛拉"
-msgstr ""
+msgstr "Candela"
 
 msgid ""
 "多种族混居的国家，官方语言为东国语，拥有神道文化，东国的武士刀在收藏界价格不菲。\n"
 "目前东国正处于南北朝的内战状态，北方由光严氏当家，南方由光元氏当家。八大家族掌握着全国军权。"
 msgstr ""
+"The country with mixed races, with Higashinese as language and having Shinto culture, with the price of their katana extremely high for collection.\n"
+"Currently in civil war state, with the north having Kougon clan as head and south having Mitsumoto clan as head. The military is handled by eight clans."
 
 msgid "克丽斯腾"
-msgstr ""
+msgstr "Kristen"
 
 msgid "无胄盟"
-msgstr ""
+msgstr "Armorless Union"
 
 msgid ""
 "常年内战的国家，国内目前已处于无政府状态。卡兹戴尔国内的绝大多数萨卡兹人均为感染者。\n"
 "卡兹戴尔城由军事委员会直接管理，各部族受辖于对应王庭，王庭受制于军事委员会。"
 msgstr ""
+"The country in civil war, now on anarchy, with most Sarkaz as Infected.\n"
+"Managed by Military Commission, with the subraces managed by the corresponding Royal Court who was controlled by the Commission."
 
 msgid ""
 "拉特兰，或称拉特兰城，是位于泰拉大陆中部的神权国家。北邻叙拉古，维多利亚和莱塔尼亚；南邻伊比利亚；东邻雷姆必拓。在泰拉千年的战火与混乱中独树一帜，屹立不倒。"
 msgstr ""
+"Laterano, or Lateran City, located at middle of Terra. North with Siracusa, Victoria and Leithanien; South with Iberia, East with Rim Billiton. Remains stable even after long war and chaos within Terra."
 
 msgid "以矿业为主要产业，参与与谢拉格的贸易。历史上与维多利亚围绕矿业问题爆发过冲突，导致“围栏事件”爆发。"
-msgstr ""
+msgstr "Mining as main production, participated in Kjerag's trade. Having many conflicts with Victoria, causing the \"Cage Incident\"."
 
 msgid "前身为古阿加门王国。曾受到萨尔贡的殖民入侵，激起民众的强烈反抗，最终在十二英雄的领导下将萨尔贡军驱逐。"
-msgstr ""
+msgstr "Formerly Old Agamam. Once colonized by Sargon, but chased them away under lead of Twelve Heroes."
 
 msgid "新近并入萨尔贡的地区，处于无政府状态，治安混乱。"
-msgstr ""
+msgstr "A new area in Sargon, currently in anarchy and disorder."
 
 msgid "地处泰拉大陆北部的国家，终年严寒，发展落后，遭受北原邪魔的坍缩影响，该地的萨米雪祀与独眼巨人共同抵御坍缩威胁。"
-msgstr ""
+msgstr "Located at north, having delayed development due to eternal cold, currently affected by the Collapsals, with Samipriests and Cyclops defending against them."
 
 msgid "主要城市为帕勒莫。黑帮势力盛行，由几大黑帮家族支配政权。"
-msgstr ""
+msgstr "Palermo as main city. Having a prevalent mafia strength, the governing was controlled by the famiglias."
 
 msgid "深海教会"
-msgstr ""
+msgstr "Church of the Deep"
 
 msgid "锈锤"
-msgstr ""
+msgstr "Rusthammer"
 
 msgid ""
 "Ｂ：Breast  ，胸部\n"
@@ -15481,6 +15528,14 @@ msgid ""
 "Ｗ：Womb    ，子宫\n"
 "Ｎ：Normal  ，身体其他部位通用（如耳朵、尾巴、口腔、脖子、肚子、大腿等）"
 msgstr ""
+"B: Breast\\n"
+"C: Clitoris\\n"
+"P: Penis\\n"
+"V: Vagina\\n"
+"A: Anus\\n"
+"U: Urethra\\n"
+"W: Womb\\n"
+"N: Normal (like ear, tail, mouth, neck, belly, leg, etc.)"
 
 msgid ""
 "刻印是干员的一种特殊属性，在干员经历对她影响足够大的事件时才会获得/升级，除无觉刻印外为最高六级以外，其他刻印最高为三级\n"
@@ -15513,6 +15568,36 @@ msgid ""
 "\n"
 "*目前恐怖刻印和反发刻印的负面效果暂未实装"
 msgstr ""
+"Engravings is a special attribute of Operators, which will be obtained/upgraded once the said Operator experienced something huge, and besides Unconscious Engraving with maximum level 6, the rest have maximum level 3\\n"
+"Currently there's 6 Engravings, being Happy Engraving, Yield Engraving, Unconscious Engraving, Pain Engraving, Fear Engraving, Hatred Engraving\\n"
+"Negative Engravings (Fear Engraving and Hatred Engraving) can have their level reduced through Originium Arts, and removed once it reached zero\\n"
+"\\n"
+"Happy Engraving: Will be obtained/upgraded when the Operator experienced strong sexual pleasure\\n"
+"          Once they have experienced such pleasure, they would want to have more of this pleasure from inner heart, and be fallen continuously\\n"
+"          Will increase Command Execution Value during harassment/H commands, and related to body parts' sensitivity increase and promiscuous-type statuses acquirement\\n"
+"\\n"
+"Yield Engraving: Will be obtained/upgraded when the Operator experienced strong humiliative actions\\n"
+"          Slowly abandon their self-esteem and pride, and starts to follow all of your commands, and sees satisfying your will as only objective of life\\n"
+"          Will increase Command Execution Value on all commands, and is the preconditions for Affiliation relationship\\n"
+"\\n"
+"Unconscious Engraving: Will be obtained/upgraded when the Operator experienced strong sexual pleasure while unconscious\\n"
+"          Even if there's no impression, but their own body will remember and get used to such beautiful feelings until when it's too late\\n"
+"          Will increase Command Execution Value during harassment/H commands, and greatly increase pleasure during unconscious rape\\n"
+"\\n"
+"Pain Engraving: Will be obtained/upgraded when the Operator experienced strong painful actions\\n"
+"          Moderate lashing served as a part of education, and making the body slowly understands pain as a type of pleasure\\n"
+"          Will increase Command Execution Value for SM commands, but decrease Command Execution Value for love-type commands\\n"
+"\\n"
+"Fear Engraving: Will be obtained/upgraded when the Operator experienced strong mental blow\\n"
+"          The ever-increasing mental damage will slowly close their heart, and slowly push their personality to the abyss\\n"
+"          Will decrease Command Execution Value on all commands, and their movement will be affected as the level goes higher\\n"
+"\\n"
+"Hatred Engraving: Will be obtained/upgraded when the Operator experienced strong anger, suspicion and hatred\\n"
+"          As the gap of trust widens, the opposite side is the deep hatred\\n"
+"          Will greatly decrease Command Execution Value of all commands, and will reject most commands at level 1, tries to avoid interaction at level 2, and even attempt to attack at level 3\\n"
+"\\n"
+"*No implemented effects from negative Engravings yet"
+
 
 msgid ""
 "当博士通过开局选取或者使用至纯源石来学习催眠的源石技艺素质后，即可对干员进行催眠\n"
@@ -15523,6 +15608,14 @@ msgid ""
 "\n"
 "当前催眠的种类共有平然、空气、体控、心控四种，分别更强的催眠效果，需要的深度也依次提升，默认手动选取每次进行催眠的种类，也可以在【源石技艺】更改为指定种类"
 msgstr ""
+"When the Doctor learned hypnosis-type Originium Arts through starting bonus or using Originium Prime, they can casts hypnosis on Operators\\n"
+"\\n"
+"On early phase, [Single Hypnosis] can be used when interacting with the Operator alone, and [Group Hypnosis] can be used on all Operators in the room after upgrading to higher stage\\n"
+"\\n"
+"After each hypnosis, the hypnosis level of Operators will be increased, at 50%, 100%, 200% which represents slim, deep, fully hypnotized respectively\\n"
+"\\n"
+"Currently, there's four types of hypnosis, Calming, Air, Body Control, Mental Control, and as the effect gets stronger, the hypnosis level required will be higher, initially hypnosis types must be chosen manually, but it can also be changed to specific default types at [Originium Arts]"
+
 
 msgid ""
 "大体上可以分为工作和非工作（无工作或有工作但今天休息）两种状态\n"
@@ -15537,21 +15630,38 @@ msgid ""
 "\n"
 "以上所有行为都会基于动态权重和flag状态槽来梳理干员的行为树，尽可能模拟较为智能和合理的AI行动"
 msgstr ""
+"Generally, it can be separated to working or not working (not assigned or on rest day)\\n"
+"\\n"
+"For working Operators, they wake up in the morning, then head to Canteen for breakfast, then work, have lunch in the afternoon, work in noon, and then have entertainment and dinner after work, and lastly head to Dormitory to sleep after showing at Bathing Spot\\n"
+"The same schedule applied to Operators that didn't have work besides having the work part swapped to entertainment\\n"
+"\\n"
+"Besides those, Fatigue Value and Urinary Value will affect their movements\\n"
+"For the former, they'll head to rest or sleep, as for the latter, they'll head to Washroom\\n"
+"\\n"
+"If the Doctor interrupted their movements such as being assistant or following commands, then they'll have Doctor's commands as priority, and will inform for private needs\\n"
+"\\n"
+"All actions will be based on moving priority and flag statuses to simulate logical AI actions as accurate as possible"
 
 msgid ""
 "没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\n"
 "可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
 msgstr ""
+"No specific requirement, but normally building relationship is the main target while developing Rhodes Island is the side target.\\n"
+"Arrange your actions according to own preferences, such as work, train Arts, interact, train, etc."
 
 msgid ""
 "正常的和干员相处就会自然而然的关系要好起来了，最简单的方式就是把要攻略的目标设为助理，这样平常就一直在一起行动了\n"
 "一开始还是陌生的状态下，就不要急于进行性骚扰甚至做更过分的事情，日常系的指令都是不会出问题的，等到熟悉起来了再逐步尝试吧"
 msgstr ""
+"The relationship will get good naturally on normal interaction, the best way is to set the target as assistant so you can interact more frequently\\n"
+"Do not have sexual harassment or excessive actions if the relationship is still stale, daily command will not have any issues, only try when you're getting along"
 
 msgid ""
 "去诚恳的道歉，不行的话就多道几次歉，总会原谅你的。\n"
 "如果生气很严重，获得反发刻印或者恐怖刻印了的话，可以用源石技艺进行消除，然后再去道歉。"
 msgstr ""
+"Apologize sincerely, do it more than once, they'll forgive you eventually.\\n"
+"If they have Hatred Engraving or Fear Engraving, then apologize after removing the said Engravings via Originium Arts."
 
 msgid ""
 "攻略分为【爱情系】和【隶属系】两条路线，只能二选其一，两条路线在抵达第三阶段时均可获得该干员的【信物】。\n"
@@ -15561,6 +15671,12 @@ msgid ""
 "\n"
 "最开始路线的选择是博士在属性提升中手动选择的，之后当前周目内就不能再更改了，请慎重选择"
 msgstr ""
+"Two paths, [Love] or [Affiliation], which only one can be chosen, and [Token] of the Operator can be obtained on third phase.\\n"
+"\\n"
+"Love-path: Focus on taking care of each other, and make the relationship closer via daily activities till falling in love, and has [Longing], [Envy], [Lover], [Couple] four phases\\n"
+"Affiliation-path: Focus on the Doctor's will, using forced commands and body humiliations to have the Operators fully obey the Doctor's wishes, and has [Yielded], [Tamed], [Pet], [Slave] four phases\\n"
+"\\n"
+"The path can be chosen manually once and unchangeable afterwards, please choose carefully"
 
 msgid ""
 "首先，需要关系足够亲密，当随便性骚扰都没关系的时候，就可以尝试性地邀请与干员H了。\n"
@@ -15568,11 +15684,17 @@ msgid ""
 "邀请成功了的话，H时也要一步一步慢慢来，前戏做好、润滑足够，这样干员才会同意插入，如果润滑不足的话，即使同意了，也会极大的增加苦痛值\n"
 "以及要插入的话，需要提前准备好避孕措施，如果不想避孕的话，可能需要极大的努力才能说服干员同意"
 msgstr ""
+"First, you must have a good relationship with the said Operator, when nothing bad happened on sexual harassment, you can try invite for H.\\n"
+"If failed, that means more effort is needed, like more interaction, have a better atmosphere, or outright use medicines\\n"
+"If success, it's recommended to do step by step, with prequel and Lubrication ready, then only will the Operators agree to have you insert into them; If Lubrication is insufficient, inserting will cause huge pain even if agreed\\n"
+"Make sure to have pregnancy prevention ready, otherwise you need much more effort for agreement of Operators"
 
 msgid ""
 "在贸易区里有一个成人用品商店，消耗粉红凭证就可以购买对应道具\n"
 "大部分道具购买后即可在H中使用，部分特殊道具（如搾乳机等）需要对应部位已经开发到满足条件才可以使用"
 msgstr ""
+"In Commerce Zone, there's Adult Items' Shop, which you can get certain items by spending Pink Certificates\\n"
+"Most items can be used while H, but certain items (like Milking Machine) requires some part to be at certain stage"
 
 msgid ""
 "除去还没有来初潮的干员之外，其他所有人都是可以怀孕的。虽然耗时比较长，最后生出来的小孩在成长后也会成为新的干员\n"
@@ -15585,11 +15707,22 @@ msgid ""
 "孩子的性别仅为女性，在成长到【少女】后即完全成为一名正常的干员\n"
 "女儿会继承母亲包括种族在内大部分生理特征，也会在【育儿】期间学到部分来自母亲的后天知识和技能"
 msgstr ""
+"Besides those that haven't had their menarche, all other Operators can be pregnant. While the time taken is long, the children will also be new Operators\\n"
+"\\n"
+"After [Fertilized], the Operator will enter [Pregnancy] status after a month and gains [Pregnant Belly] and [Lactation]\\n"
+"After two more months, the Operator will have [Confined], and afterwards, [Giving Birth]\\n"
+"After the process, the mother will enter [Parenting] status, which takes a month, and the child will grow from [Baby] to [Young Girl]\\n"
+"After [Parenting] ends, the mother will lose [Lactation] and returns to before pregnancy, and the child will grow to [Loli] and then to [Girl], which takes two months per phase\\n"
+"\\n"
+"The child will always be female, and will be a normal Operator on [Girl]\\n"
+"The daughter will inherit most physical appearance from the mother, and will learn part of the mother's knowledge and skills during [Parenting]"
 
 msgid ""
 "精液的容积系统中有液体流通计算，射上去的精液会有一部分流向联通的其他部位，还会有一部分向环境中滴落，是正常现象\n"
 "如果不想让出现该计算，可以在设置中关闭液体流通功能，这样射出的精液就只会停留在指定部位上了"
 msgstr ""
+"The storage system of semen will flow between body, where a part will flow to connected body parts and another part drops into the environment\\n"
+"If you don't want this to happen, you may disable this in the settings"
 
 msgid ""
 "①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n"
@@ -15599,6 +15732,12 @@ msgid ""
 "\n"
 "③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
 msgstr ""
+"①Before H, prepare aromatherapy or love potions to get into condition quickly\\n"
+"\\n"
+"②During H, do other actions before insertion, such as other non-insertion commands or items to increase Happiness, Lust and Lubrication, and the Happiness will increase on insertion as these go higher, vice versa for Pain\\n"
+"  When triggering climax, they will gain high Happiness and reduce Pain\\n"
+"\\n"
+"③Upgrading Desire, Feels, Dilations and positive Engravings while avoiding negative Engravings outside H"
 
 msgid ""
 "干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n"
@@ -15618,6 +15757,22 @@ msgid ""
 "在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\n"
 "当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
 msgstr ""
+"Operator's menstrual cycle takes 7 days, including Safe Period, Normal Period, Danger Period and Ovulation Period\\n"
+"On the Ovulation Period (6th day), the total amount of semen ejaculated into the Operator during non-Safe Period will be considered for rate of [Fertilized]\\n"
+"Chance according to period: Ovulation > Danger > Normal > Safe Period\\n"
+"\\n"
+"\\n"
+"Many ways of increasing fertilization rate (can stack): \\n"
+"①Buy [Ovulation Drugs] and feed to Operators\\n"
+"②If not ejaculating, a part of the current limit will be inherited on next day, up to 4 times, which [Concentrated Semen] can be acquired\\n"
+"③At Ovulation Period, use [Body Control-Ovulation]\\n"
+"\\n"
+"\\n"
+"Related functions: \\n"
+"Use [Physiological Perspective] will show the menstrual cycle and fertilization rate\\n"
+"Ejaculating in the vagina will only have small amount of it flow into the womb.\\n"
+"Ejaculating in the womb will only have small amount of it flow into the vagina.\\n"
+"When enough semen was in the womb, their stomach will bulge up, and if [Cavity Perspective] is active, you can see the cross-section, which allows you to judge based on the semen amount in the womb and the stretching of the womb."
 
 msgid ""
 "【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\n"
@@ -15625,6 +15780,10 @@ msgid ""
 "\n"
 "除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
 msgstr ""
+"[No Menarche] is the special talent for young Operators, which prohibit them to be pregnant\\n"
+"When [V Feel] and [W Feel] reached a certain point, early sexual maturity can be reached and remove the talent\\n"
+"\\n"
+"For daughters, the talent will be removed on growing to [Loli]"
 
 msgid ""
 "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n"
@@ -15634,401 +15793,424 @@ msgid ""
 "\n"
 "可以使用【招募情况】来查看招募进度或调整招募策略"
 msgstr ""
+"Use [Recruit Operators] in Office of Civil Service Zone, and while you can do it by yourselves, it's recommended to assign Operators for that.\\n"
+"\\n"
+"When doing recruitment, the Recruitment Meter will increase, and the rate is affected by Speech Skill of the Operator\\n"
+"When the Recruitment Meter reached 100%, it'll be reset and a new Operator will join Rhodes Island, during which you will be informed and you can head to Doctor's Office to confirm and welcome the said Operator\\n"
+"\\n"
+"[Recruitment process] can be used to check on recruitment process and change strategies"
 
 msgid ""
 "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n"
 "其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
 msgstr ""
+"Use [Base system] command in Base Building Department of Engineering Zone, which consumes LMD to build or upgrade facilities\\n"
+"The level of [Control Center] affects the maximum of all other areas, the level of [Power Zone] affects the power supply, and the rest will focus on their usages or functions unlocking"
 
 msgid ""
 "目前主要的获取途径有两个。\n"
 "①，医疗部每天治疗病人，能够获得稳定的龙门币收入\n"
 "②，将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润"
 msgstr ""
+"Two ways.\\n"
+"① Treating patients in Medical Zone, which have stable LMD income\\n"
+"② Produces medicines or luxuries in Production Zone and sells them on Resource Exchange, which gives higher profit"
 
 msgid ""
 "①，每日的干员好感度提升会换算为一定的粉红凭证\n"
 "②，已攻略的干员会根据攻略程度每日提供固定的粉红凭证"
 msgstr ""
+"① The Affinity increase on Operators will be exchanged to certain amount of Pink Certificates\\n"
+"② Operators that have completed relationship will provide Pink Certificates according to the relationship stage"
 
 msgid ""
 "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\n"
 "在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\n"
 "收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
 msgstr ""
+"In base system, [Farmland] and [Conservatory] are for planting, the former for herbs and latter for perfumes.\\n"
+"On unlocking, you can assign Operators to there, and choose your crops for automatic planting and collecting.\\n"
+"Products can be used for medicines in [Production Zone] or aromatherapy in [Aromatherapy Treatment Room]."
 
 msgid "阿达克利斯"
-msgstr ""
+msgstr "Adakrys"
 
 msgid "停止招募"
-msgstr ""
+msgstr "Stops recruiting"
 
 msgid "停止招募干员"
-msgstr ""
+msgstr "Stops recruiting Operators"
 
 msgid "死仇"
-msgstr ""
+msgstr "Nemesis"
 
 msgid "敌对"
-msgstr ""
+msgstr "Enemy"
 
 msgid "厌恶"
-msgstr ""
+msgstr "Disgusted"
 
 msgid "疏远"
-msgstr ""
+msgstr "Estranged"
 
 msgid "中立"
-msgstr ""
+msgstr "Neutral"
 
 msgid "友好"
-msgstr ""
+msgstr "Friendly"
 
 msgid "尊敬"
-msgstr ""
+msgstr "Respected"
 
 msgid "崇敬"
-msgstr ""
+msgstr "Honored"
 
 msgid "阿戈尔示波器"
-msgstr ""
+msgstr "Aegirian Oscilloscope"
 
 msgid "特产"
-msgstr ""
+msgstr "Specialty"
 
 msgid "阿戈尔的特产，一种用于测量电信号的示波器，是阿戈尔人在源石技术上的一项重要突破。"
-msgstr ""
+msgstr "Specialty of Aegir, a oscilloscope for measuring signals, it's a breakthrough of Originium technology for Aegirians."
 
 msgid "小帮手"
-msgstr ""
+msgstr "Little Handy"
 
 msgid ""
 "阿戈尔的特产，本产品以先哲们深邃的智慧铸造而成，将我们助人的美德囊括其内。辗转难眠、煎熬于困顿的阿戈尔人啊，若你在寻找一只救人于苦厄的手，若你忧烦于俗事的琐碎，记得来领取属于你的“小帮手”。"
 msgstr ""
+"Specialty of Aegir, a product crafted by the sages' intelligence, including the beauty of helping inside. The Aegirians that was having tough time to sleep, if you wise to find a hand saving people from disasters, if you are annoyed by the chores, remember to claim your \"Little Handy\"."
 
 msgid "“应急物资”蓝图芯片"
-msgstr ""
+msgstr "\"Emergency Supplies\" Blueprint Chip"
 
 msgid ""
 "阿戈尔的特产，内置近千套可打印的蓝图。蓝图内容既包含了生存必需品，也包含了各主流学科的实验器具和创作材料。即使您身陷窘境，也勿忘探究与表达，思想的停滞与精神的麻木无异于死亡。"
 msgstr ""
+"Specialty of Aegir, containing thousands of printable blueprints. The blueprints covered life needs, as well as apparatus and materials. Even if you're in trouble, never forget to research and express, as stagnated mind and numb will equals death."
 
 msgid "金杯啤酒"
-msgstr ""
+msgstr "Cerveza"
 
 msgid "玻利瓦尔的特产，多索雷斯政府亲手打造的啤酒品牌，比起各种各样的高级酒，在一座充满狂欢的城市中，始终还是啤酒最能深入人心。"
-msgstr ""
+msgstr "Specialty of Bolivar, a brand of beer created by the Dossoles government themselves. Between it and every kind of high-class liquor, when you're in a city full of party fever, beer's always been the eternal winner with the people."
 
 msgid "咖啡平原咖啡豆"
-msgstr ""
+msgstr "Coffee Plain Beans"
 
 msgid "玻利瓦尔的特产，咖啡平原，多索雷斯家喻户晓的原生品牌，致力于为顾客提供多种口味且高品质的咖啡。同时也为各种势力提供先端武器。"
-msgstr ""
+msgstr "Specialty of Bolivar, coffee Plain, a household name native to Dossoles, is devoted to giving its customers great flavor variety and high quality in their coffee. They also provide all kinds of powers with apex weaponry."
 
 msgid "翡翠庭院至臻"
-msgstr ""
+msgstr "Court Emeraldia Premium"
 
 msgid "玻利瓦尔的特产，专为上流客户提供优质咖啡的翡翠庭院中，最上等的一种咖啡，千金难求，只有最有权力的人才有资格获得。"
-msgstr ""
+msgstr "Specialty of Bolivar, the most outstanding coffee that Court Emeraldia tailors to the upper-class clientele. Precious beyond simple price, only those with the most authority are qualified to acquire it."
 
 msgid "武士刀"
-msgstr ""
+msgstr "Katana"
 
 msgid "东的特产，一把真正的东国武士刀可以卖到天价。"
-msgstr ""
+msgstr "Specialty of Higashi, an authentic Higashi katana can fetch sky-high prices."
 
 msgid "噪音引擎"
-msgstr ""
+msgstr "Noise Generator"
 
 msgid "哥伦比亚的特产，在中小型城镇的移动拖车上非常常见，性价比很高。噪音很大。也太大了点。"
-msgstr ""
+msgstr "Specialty of Columbia, commonly seen attached to mobile trailers in small and medium-sized towns. Very cost effective, but extremely loud. Way too loud."
 
 msgid "飞行数据记录芯片"
-msgstr ""
+msgstr "Flight Data Recorder Chip"
 
 msgid "哥伦比亚的特产，记录了各种高度与环境下飞行数据的芯片，除了被娜斯提掩藏在各地的数据，在国家的支持下，新的数据也在不断产生。"
-msgstr ""
+msgstr "Specialty of Columbia, a chip containing flight data recorded at various altitudes and environments. Aside from the data hidden by Nasti all over the lands, new data are continually produced with the federal government's support."
 
 msgid "骑士领纪念模型"
-msgstr ""
+msgstr "G.K.T. Commemorative Model"
 
 msgid ""
 "卡西米尔的特产，人们用这些发光的灯管制伏了黑夜，点亮了卡西米尔的光芒。在文明里，吟游诗人唱出了金币的声响，远游的骑士只得与玻璃斗剑。冷漠是无声的浪潮，她乘着最后的扁舟，打捞荣耀。"
 msgstr ""
+"Specialty of Kazimierz. The people use these shining fluorescent lamps to subdue nightfall, such is the light of Kazimierz. In civilized lands, traveling bards sing of gold, wandering knights forced to battle sword with glass. Indifferent are the silent waves; on this small, final vessel, she dredged up glory."
 
 msgid "制式器械零件"
-msgstr ""
+msgstr "Standard-Issue Component"
 
 msgid "卡西米尔的特产，迅速锈蚀的战争野心的残骸，骑士团淘汰或损坏武器的零件，处置不当的话会有源石感染的风险。"
-msgstr ""
+msgstr "Specialty of Kazimierz. The fast rusting remains of war ambitions, Knightclub knockouts, or perhaps damaged weapon parts. Poses a risk of Originium infection if not handled properly. For some strange reason, occasionally found in common working-class households."
 
 msgid "梅什科竞技证券"
-msgstr ""
+msgstr "Mieszko Match Ticket"
 
 msgid ""
 "卡西米尔的特产，凭券可购买竞技场提供的援助物资支援骑士，也可作为参于博彩的本金，但实际价格经常超过其价值。一张纸，一笔巨款，一位骑士一生的荣辱。"
 msgstr ""
+"Specialty of Kazimierz. This voucher can be used to buy aid packages for competition knights in the arena, or as a bankroll to bet on, but be prepared to pay more than the number printed on it. A piece of paper, a huge sum, a knight's life of honor and shame."
 
 msgid "炉渣"
-msgstr ""
+msgstr "Slag"
 
 msgid ""
 "卡兹戴尔的特产，出于未知原因而从魂灵熔炉中喷出的熔渣巨块，在被飞空艇轰击后分裂为无数碎片。虽然此类炉渣中含有少量源石和异铁成分，但一般人难以安全地将其提炼出来。"
 msgstr ""
+"Speciality of Kazdel. Molten pieces spilt from the Furnaceside Fables for unknown reason, blasted into shatters by the airship. While it contains Originium and abnormal metals, but normal people were unable to melt it safely."
 
 msgid "粗制糖块"
-msgstr ""
+msgstr "Raw Sugar Lump"
 
 msgid "卡兹戴尔的特产，机械化制作的粗糙糖块，由于卡兹戴尔的气候干燥，糖块在制作过程中容易结块，因此成品的质地较为粗糙，但味道却十分独特。"
-msgstr ""
+msgstr "Specialty of Kazdel. Raw sugar lump made mechanically, the lump clumps up easily due to dry weather in Kazdel, hence the texture was rough, but the taste is unique."
 
 msgid "蚀刻弹弹壳"
-msgstr ""
+msgstr "Etched Bullet Casing"
 
 msgid "拉特兰的特产，拉特兰人之间颇为流行的一种收藏品。根据口径的不同，收藏价值也有所不同。"
-msgstr ""
+msgstr "Specialty of Laterano, a collectible somewhat popular among the Laterans. The collectability of a bullet depends on its caliber size."
 
 msgid "老旧贵族领铸币"
-msgstr ""
+msgstr "Aristocrat's Antique Aureus"
 
 msgid ""
 "莱塔尼亚的特产，这种古老铸币的主人早已远离这片边陲之地，即使如此，身负开拓功勋的贵族后裔依旧要求得到沃伦姆德的尊重，于是他们立下律法，让流通性来满足虚荣。"
 msgstr ""
+"Specialty of Leithanien. The original owners of these antique coin have long departed from this remote land. However, the descendants of these decorated nobles still demanded Wolumonde's respect, and thus they passed into law the ability to circulate these coins for the purpose of satisfying their vanity."
 
 msgid "调律追忆"
-msgstr ""
+msgstr "Die Klange von den Erinnerungen"
 
 msgid "莱塔尼亚的特产，远去的回忆散落在莱塔尼亚的百年都城，承载它们的是支离破碎的乐段。也许同如今的莱塔尼亚一样，它们亦需要经过调律才能被听闻。"
-msgstr ""
+msgstr "Specialty of Leithanien. Memories of the past are scattered across the ancient capital of Leithanien, carried by broken passages of music. Like today's Leithanien, they will need be tuned before they can be heard."
 
 msgid "声波记录扩音器"
-msgstr ""
+msgstr "Sound Recording Amplifier"
 
 msgid "莱塔尼亚的特产，这种扩音器的原理是通过声波的反射和扩散，将声音传播到更远的地方。在莱塔尼亚的大型音乐会上，这种扩音器是必不可少的设备。"
-msgstr ""
+msgstr "Specialty of Leithanien. The logic of the amplifier is to spread sound further with reflection and diffusion of sound waves. In big concerts of Leithanien, this amplifier is required."
 
 msgid "兔子棚屋"
-msgstr ""
+msgstr "Rabbit Hut"
 
 msgid "雷姆必拓的特产，用废旧工业材料快速搭建的雷姆必拓棚屋，遮风挡雨还是做得到，但卡特斯人的风格过于明显了些。"
-msgstr ""
+msgstr "Specialty of Rim Billiton. This Rim Billiton shed was quickly assembled using leftover industrial materials but is good enough to protect you from the elements. Having that said, the Cautus design is all too evident."
 
 msgid "辣瓶树水"
-msgstr ""
+msgstr "Spicy Bottletree Sap"
 
 msgid ""
 "雷姆必拓的特产，在挂树源石虫的腹腔中自然发酵的瓶树水，不仅受人追捧，也是沙地兽的挚爱。不过，不会爬树的沙地兽究竟如何获取辣瓶树水一直是雷姆必拓的未解之谜，难道荒野中真有野人帮忙？"
 msgstr ""
+"Specialty of Rim Billiton. Bottletree sap naturally fermented in the abdomens of tree-hanging Originium slugs, celebrated by man and adored by sandbeasts. Still, how the beasts get the sap when they can't climb trees is one of Rim Billiton's great mysteries. Are there feral barreners helping them?"
 
 msgid "米诺斯高腰花瓶"
-msgstr ""
+msgstr "Tall Minoan Vase"
 
 msgid "米诺斯的特产，是米诺斯人的象征之一。它的造型优美，线条流畅，是米诺斯人的骄傲。"
-msgstr ""
+msgstr "Specialty of Minos, a symbol of Minoans. Elegant shape, smooth lining, it's a pride of Minoans."
 
 msgid "流光之沙"
-msgstr ""
+msgstr "Glimmering Sand"
 
 msgid "萨尔贡的特产，星星点点闪烁的宝石细沙。它比“辉煌之城”更古老，比古老秘藏更辉煌，据说工匠们能把它变回大个头的宝石。"
-msgstr ""
+msgstr "Specialty of Sargon, some shining gemstone sand. Older than the \"Golden City\", more glorious than the ancient treasures, it's said that the engineers can turn it back to gemstones. "
 
 msgid "指木雕刻"
-msgstr ""
+msgstr "Guiding Figurine"
 
 msgid "萨米的特产，猎手们留下的粗糙雕刻。一个难以分辨细节的木人向前伸出手，指向储存食物、草药与工具的树洞。"
-msgstr ""
+msgstr "Specialty of Sami, a crude carving left behind by the hunters. Wooden figures with indistinct features reach forth an arm, pointing to caves stockpiled with food, remedies, and tools."
 
 msgid "皇家科学院望远镜"
-msgstr ""
+msgstr "Royal Academy Telescope"
 
 msgid "维多利亚的特产，皇家科学院的望远镜，是维多利亚的象征之一。它的镜片经过特殊处理，可以在夜晚观测到星星的运行轨迹。"
-msgstr ""
+msgstr "Specialty of Victoria, telescope from Royal Academy, a symbol of Victoria. Its lenses were specially handled, it can see the stars' traces in night."
 
 msgid "乌萨斯的特产，一种来自乌萨斯的食物，吃起来有一股子浓烈的发酵味儿。就是酸。"
-msgstr ""
+msgstr "Specialty of Ursus. Food from Ursus with a strong, fermented taste. Quite sour."
 
 msgid "驮兽盲盒"
-msgstr ""
+msgstr "Burdenbeast Blind Box"
 
 msgid "谢拉格的特产，“跑跑驮兽”项目联动文创盲盒，系列共九款造型各异的驮兽摆件，内含一限量隐藏款。"
-msgstr ""
+msgstr "Specialty of Kjerag. Blind boxes from the cultural industries in collaboration with \"BangBang Burdenbeast.\" Collect all nine, including a limited edition secret burdenbeast."
 
 msgid "耶拉冈德之石"
-msgstr ""
+msgstr "Stone of Kjeragandr"
 
 msgid "谢拉格的特产，经过蔓珠院的修士祝福的圣石，耶拉冈德的意志寄宿其中，谢拉格人会向之祈祷，以求幸福安康。"
-msgstr ""
+msgstr "Specialty of Kjerag, a sacred stone blessed by a member of the Vine-Bear Court. Kjeragandr's will dwells within. Kjerag's people pray to these, to be blessed and for good health."
 
 msgid "叙拉古芝士"
-msgstr ""
+msgstr "Siracusan Cheese"
 
 msgid "叙拉古的特产，是一种口感细腻，味道浓郁的奶酪，常用于披萨、意面等食物的制作。"
-msgstr ""
+msgstr "Specialty of Siracusa, a cheess with delicate and rich flavor, mainly used for food such as pizza or spaghetti."
 
 msgid "炎的特产，勤劳的工作者们步履匆匆，方便携带的罐装茶饮料应运而生。用茶讲究，色纯香清，味甘绵久，回味悠扬。"
-msgstr ""
+msgstr "Specialty of Yan. Diligent workers step hurriedly, easy-to-carry jarred tea there in times of need. The tea is chosen with care, pure in color and scent, flavor sweet and light and long-lasting, aftertaste melodious."
 
 msgid "炎的特产，玉门特产的高纯度烈酒。人人好饮，家家会酿。取塞上风沙、长空烈日、胡杨飞絮一同酿入酒，一口入喉，仿佛吞刀饮火，再冷的寒夜也不用怕。"
-msgstr ""
+msgstr "Specialty of Yan. A Yumen specialty product, high-purity spirit. Beloved by all drinkers, brewed by all brewers. A brew mixed of sandstorms on the border, and sun beating down in the sky and wind on the poplars, one gulp is a throat of blades and a drink of fire, and even the chilliest nights need no longer be feared."
 
 msgid "平安符"
-msgstr ""
+msgstr "Wellbeing Charm"
 
 msgid "炎的特产，手工雕刻的祈福用的平安符。带去移山庙，让庙祝用朱砂画上一笔，更能让人心安。"
-msgstr ""
+msgstr "Specialty of Yan. A wellbeing charm hand-carved by the Moushan villagers to pray for blessings. Take it to Yishan Temple, have the censer acolyte bestow it a stroke of cinnabar, and it may put you all the more at ease."
 
 msgid "战地援护无人机"
-msgstr ""
+msgstr "Field Support Drone"
 
 msgid "伊比利亚的特产，是伊比利亚审判庭的得力助手。它可以在战场上为审判官提供支援，也可以在紧急情况下进行救援。"
-msgstr ""
+msgstr "Specialty of Iberia, a helper of the Inquisition. It can provide support for the Inquisitors or for emergencies."
 
 msgid "《奇谈怪论》复印本"
-msgstr ""
+msgstr "Photocopies of \"Stranger Things\""
 
 msgid "杜林的特产，纸页上留有各种不同的笔迹，甚至可以从数量上判断杂志转手的次数。其中大多是无意义的涂鸦，但智慧的闪光也散落其间。"
-msgstr ""
+msgstr "Specialty of Durin. The pages retain handwriting of all shapes and sizes, the amount even serving to tell you how often the magazine's changed hands. Most of it is meaningless scrawls, but flashes of wisdom are scattered throughout."
 
 msgid "黑曜石晶体"
-msgstr ""
+msgstr "Obsidian Crystal"
 
 msgid "汐斯塔的特产，当地盛产的黑曜石晶体，是一种极为珍贵的矿石，但只有足够纯净，或是能反射出各色光芒的黑曜石才能卖出好价格。"
-msgstr ""
+msgstr "Specialty of Siesta. The obsidian crystals harvested locally, it's precious, but only those that are pure and reflects right can be sold at a good price."
 
 msgid "毛绒绒生物的毛"
-msgstr ""
+msgstr "Fluffy Critter Wool"
 
 msgid "汐斯塔的特产，柔软、防寒且吸水性良好，虽然看上去非常可口，但请不要把它当成棉花糖吃掉。"
-msgstr ""
+msgstr "Specialty of Siesta. Soft, insulating, and highly absorptive, it might look extremely delicious, but please don't start eating it like cotton candy."
 
 msgid "处理外交事宜"
-msgstr ""
+msgstr "Manage diplomatic affairs"
 
 msgid "结算饮精绝顶"
-msgstr ""
+msgstr "Settling Semen Drinking Climax"
 
 msgid "新周目告别"
-msgstr ""
+msgstr "Farewell"
 
 msgid "开启晚上催睡觉服务"
-msgstr ""
+msgstr "Enabled Inducing to Sleep service"
 
 msgid "温顺的武装大驮兽"
-msgstr ""
+msgstr "Docile Armed Big Burdenbeast"
 
 msgid "情绪稳定的大型驮兽，体型巨大，行动缓慢，载人载货能力强，第二大的缺点是讨厌稳固锁链。"
-msgstr ""
+msgstr "Big burdenbeast with stable emotions, having big size and slow movement, has a great capability of carrying people and cargo, but it hate stable chains."
 
 msgid "两栖摩托快艇"
-msgstr ""
+msgstr "Speedboat"
 
 msgid "可以在陆地和水面上行驶的载具，速度较快，但只能载一人，而且很容易损毁。"
-msgstr ""
+msgstr "Can be used on land or water, has fast speed but could only hold one person, and it's easy to be broken."
 
 msgid "两栖摩托重艇"
-msgstr ""
+msgstr "Motorboat"
 
 msgid "可以在陆地和水面上行驶的载具，速度比快艇慢，但荷载量变成了三倍大。"
-msgstr ""
+msgstr "Can be used on land or water, slower than speedboat but has tripled load."
 
 msgid "甜品糖果车"
-msgstr ""
+msgstr "Snack Cart"
 
 msgid "街头常见的甜品车，不过里面也可以装载甜品之外的东西，在拉特兰城内很受欢迎。"
-msgstr ""
+msgstr "Snack carts commonly seen in streets, but it can load anything besides snacks, hence being popular in Lateran City."
 
 msgid "萨卡兹子裔改装补给车"
-msgstr ""
+msgstr "Sarkaz Heirbearer Retrofit ASV"
 
 msgid "受到血魔大君赐福的补给用载具，可以在战场上为友军提供补给，但是速度慢。"
-msgstr ""
+msgstr "An armored supply vehicle meticulously blessed by the Sanguinarch of Vampires, able to provide support in exchange of slow speed."
 
 msgid " R-31a重型动力装甲"
-msgstr ""
+msgstr " R-31a Heavy Power Armor"
 
 msgid "罗德岛与莱茵生命能量科联合研发的重型动力装甲，性能与五年前军方量产的相当。虽然无法载货，但其强大的性能能够为近战干员提供强大的支援。"
-msgstr ""
+msgstr "Heavy power armor developed by Rhodes Island and Rhine Lab, having equivalent performance with the one produced by military five years ago. Unable to hold cargo, but its strong capacity can provide great support for melee Operators."
 
 msgid " R-11a突击动力装甲"
-msgstr ""
+msgstr " R-11a Assault Power Armor"
 
 msgid "罗德岛与莱茵生命能量科联合研发的重型动力装甲，搭载了远程武器的型号。虽然无法载货，但其强大的性能能够为远程干员提供强大的支援。"
-msgstr ""
+msgstr "Heavy power armor developed by Rhodes Island and Rhine Lab, loaded with model of ranged weapons. Unable to hold cargo, but its strong capacity can provide great support for ranged Operators."
 
 msgid "竞赛级沙滩车"
-msgstr ""
+msgstr "Competitive-Grade Beach Buggy"
 
 msgid "大家都喜欢的沙滩越野车，除了司机还能载三个人。在配置全面升级之后，里面的空调经常冻得司机和乘客们哆哆嗦嗦。"
-msgstr ""
+msgstr "Beach buggy that everyone loves, able to bring three people excluding the driver. After fully upgrading, its air conditioner always makes the passengers nag."
 
 msgid "家族豪华轿车"
-msgstr ""
+msgstr "Famiglia Luxury Limo"
 
 msgid "家族中较为少见的交通工具，外表低调但内饰豪华。除了代步，也会用这种轿车送家族的敌人“一路顺风”。"
-msgstr ""
+msgstr "Rare transport in famiglias, looks low but luxurious inside. Besides transportaion, this limo can be used to send the enemies to \"Bon Voyage\"."
 
 msgid "越长尘"
-msgstr ""
+msgstr "Sand Voyager"
 
 msgid "由炎国工部监造司专为玉门城设计打造的第二批运兵车，运载量极大，即使是沙漠地形亦能平稳、快速地运行，可高效配合作战。"
-msgstr ""
+msgstr "A 2nd generation transport vehicle engineered by the Ministry of Engineering, having huge load, and can travel stablely and fastly even in sand terrain, can support in combat effectively."
 
 msgid "处理与各国之间的关系，承接大小委托，协调当地的外勤工作(需要在[外交势力]系统中任命)"
-msgstr ""
+msgstr "Manage relationship with other nations, receive commissions, and consort the field work"
 
 msgid "邀请专员"
-msgstr ""
+msgstr "Invitation Specialist"
 
 msgid "邀请各界人士来罗德岛访问，拓宽罗德岛的人脉"
-msgstr ""
+msgstr "Invite others to visit Rhodes Island and expand their connections"
 
 msgid "#96dfe4"
 msgstr ""
 
 msgid "红色发箍"
-msgstr ""
+msgstr "Red hairband"
 
 msgid "短版罗德岛制服外套（白）"
-msgstr ""
+msgstr "Short Rhodes Island uniform (white)"
 
 msgid "白色交叉肩带小背心"
-msgstr ""
+msgstr "White cross strapped vest"
 
 msgid "黑色超短包臀裙"
-msgstr ""
+msgstr "Black ultrashort hip-covering skirt"
 
 msgid "白色过膝袜（右）"
-msgstr ""
+msgstr "White overknee socks (right)"
 
 msgid "高跟短靴"
-msgstr ""
+msgstr "High heel boots"
 
 msgid "黑色战术露指手套"
-msgstr ""
+msgstr "Black tactical fingerless gloves"
 
 msgid "战术道具腰包"
-msgstr ""
+msgstr "Tactical tool pocket"
 
 msgid "#da70d6"
 msgstr ""
 
 msgid "红色宽袖外套"
-msgstr ""
+msgstr "Red wide coat"
 
 msgid "黑色V领夹克"
-msgstr ""
+msgstr "Black V-neck jacket"
 
 msgid "白衬衫"
-msgstr ""
+msgstr "White shirt"
 
 msgid "黑色高腰百褶裙"
-msgstr ""
+msgstr "Black high waist pleated skirt"
 
 msgid "高跟皮鞋"
-msgstr ""
+msgstr "High heel leather shoes"
 
 msgid "莉莉娅"
-msgstr ""
+msgstr "Lillia"
 
 msgid "一張陳舊的全家福。即使邊緣破損，畫面泛黃，依舊被持有者細心珍藏著。"
 msgstr ""
@@ -16039,67 +16221,67 @@ msgid ""
 msgstr ""
 
 msgid "淡青色領巾"
-msgstr ""
+msgstr "Light green scarf"
 
 msgid "研究所外衣"
-msgstr ""
+msgstr "Researcher coat"
 
 msgid "白色長袖襯衫"
-msgstr ""
+msgstr "White long sleeve shirt"
 
 msgid "陳舊的婚戒"
-msgstr ""
+msgstr "Old ring"
 
 msgid "研究所连衣裙"
-msgstr ""
+msgstr "Researcher dress"
 
 msgid "厚黑色连裤袜"
-msgstr ""
+msgstr "Thick black pantyhose"
 
 msgid "黑白格子鸭舌帽"
-msgstr ""
+msgstr "black-white pialded peaked cap"
 
 msgid "白色无袖背心外套"
-msgstr ""
+msgstr "White sleeveless vest jacket"
 
 msgid "黑色加厚过膝袜（右）"
-msgstr ""
+msgstr "Black thick overknee sock (right)"
 
 msgid "白色短袜（左）"
-msgstr ""
+msgstr "White short sock (left)"
 
 msgid "保暖登山靴"
-msgstr ""
+msgstr "Warm hiking boots"
 
 msgid "登山镐及勾爪"
-msgstr ""
+msgstr "Hiking pickaxe and claw"
 
 msgid "登山绳"
-msgstr ""
+msgstr "Hiking rope"
 
 msgid "喀兰圣女的头饰"
-msgstr ""
+msgstr "Karlan Saint's headgear"
 
 msgid "民族风连身高衩长裙"
-msgstr ""
+msgstr "National style high slit long dress"
 
 msgid "喀兰贸易披风"
-msgstr ""
+msgstr "Karlan Commercial cloak"
 
 msgid "白色围脖"
-msgstr ""
+msgstr "White scarf"
 
 msgid "珠子项链"
-msgstr ""
+msgstr "Pearl necklace"
 
 msgid "灰色加厚过膝袜"
-msgstr ""
+msgstr "Gray thick overknee socks"
 
 msgid "黑色中筒保暖靴"
-msgstr ""
+msgstr "Black mid-calf warm boots"
 
 msgid "神赐的圣铃"
-msgstr ""
+msgstr "Bell gifted by gods"
 
 msgid "一張多索雷斯的邀請函。這座繁華的城市是她的精心雕琢的作品，可她的目光顯然不只如此"
 msgstr ""
@@ -16109,28 +16291,28 @@ msgid ""
 msgstr ""
 
 msgid "靛藍色領帶"
-msgstr ""
+msgstr "Indigo tie"
 
 msgid "白色修身西裝上衣"
-msgstr ""
+msgstr "White slim suit"
 
 msgid "白手套"
-msgstr ""
+msgstr "White gloves"
 
 msgid "白色西裝裤"
-msgstr ""
+msgstr "White suit pants"
 
 msgid "低丹數膚色丝袜"
-msgstr ""
+msgstr "Low-density complex stockings"
 
 msgid "亮面黑中筒靴"
-msgstr ""
+msgstr "Light black mid-calf boots"
 
 msgid "两张游乐园的门票。这个周末一起去吧。"
 msgstr ""
 
 msgid "莫妮克"
-msgstr ""
+msgstr "Monique"
 
 msgid "一個射箭用指套。上頭無數磨損痕跡與汗漬無不表明其主人在射術這件事上付出了多少的努力"
 msgstr ""
@@ -16141,28 +16323,28 @@ msgid ""
 msgstr ""
 
 msgid "藍色半側套頭斗篷"
-msgstr ""
+msgstr "Blue half pullover cloak"
 
 msgid "側開黑色無冑盟制服"
-msgstr ""
+msgstr "Side-opened black Armorless Union uniform"
 
 msgid "弓術護指手套"
-msgstr ""
+msgstr "Archery protective gloves"
 
 msgid "黑色皮裤"
-msgstr ""
+msgstr "Black leather pants"
 
 msgid "紫色蕾絲內裤"
-msgstr ""
+msgstr "Purple lace underwear"
 
 msgid "亮黑色長筒靴"
-msgstr ""
+msgstr "Light black boots"
 
 msgid "箭袋"
-msgstr ""
+msgstr "Clover"
 
 msgid "現代維多利亞式直弓"
-msgstr ""
+msgstr "Modern Victorian bow"
 
 msgid "#5F737B"
 msgstr ""
@@ -16181,46 +16363,46 @@ msgid ""
 msgstr ""
 
 msgid "墨绿色抹胸裙"
-msgstr ""
+msgstr "Dark green bandeau skirt"
 
 msgid "墨绿色披风"
-msgstr ""
+msgstr "Dark green cloak"
 
 msgid "灰黑色短靴"
-msgstr ""
+msgstr "Gray-black short boots"
 
 msgid "白色过膝袜"
-msgstr ""
+msgstr "White overknee socks"
 
 msgid "工作证"
-msgstr ""
+msgstr "Work license"
 
 msgid "皮质钉刺项圈"
-msgstr ""
+msgstr "Leather thorned collar"
 
 msgid "白色落肩单排扣喇叭袖垂带轻羽绒服"
-msgstr ""
+msgstr "White off-shoulder single-breasted bell-sleeved light down jacket"
 
 msgid "拼接款高腰式侧开口修身无袖高领单层布其纱哑光连衣裙"
-msgstr ""
+msgstr "Patchwork high-waisted side-opening slim-fit sleeveless high-neck single-layer muslin matte dress"
 
 msgid "哑光黑裤袜"
-msgstr ""
+msgstr "Matte black pantyhose"
 
 msgid "黑色棉质护膝"
-msgstr ""
+msgstr "Black cotton knee pads"
 
 msgid "黑色绑带超高跟鞋"
-msgstr ""
+msgstr "Black strapped ultrahigh heels"
 
 msgid "长柄蓄能原石法杖"
-msgstr ""
+msgstr "Long-handled charged Originium staff"
 
 msgid "浮游单元"
-msgstr ""
+msgstr "Drone"
 
 msgid "阿罗玛"
-msgstr ""
+msgstr "Aroma"
 
 msgid "一张清洁服务预约单，其中罗列了不同香型的清洁剂所适用的情境。有需要就呼叫她，她知道哪一种香味最能让你舒心。"
 msgstr ""
@@ -16232,22 +16414,22 @@ msgid ""
 msgstr ""
 
 msgid "发箍"
-msgstr ""
+msgstr "Hairband"
 
 msgid "卫衣"
-msgstr ""
+msgstr "Hoodie"
 
 msgid "工作外套"
-msgstr ""
+msgstr "Working coat"
 
 msgid "医疗塑胶手套"
-msgstr ""
+msgstr "Medical rubber gloves"
 
 msgid "紧身七分裤"
-msgstr ""
+msgstr "Tight cropped pants"
 
 msgid "阿玛雅"
-msgstr ""
+msgstr "Amaia"
 
 msgid "一本筆記本。裏頭整潔的字跡控訴著人類的劣根性與低效，自裡行間無不展露出筆者對一個人們之間毫無隔閡的大同社會的嚮往"
 msgstr ""
@@ -16258,28 +16440,28 @@ msgid ""
 msgstr ""
 
 msgid "黑色寬簷禮帽"
-msgstr ""
+msgstr "Black wide brimmed hat"
 
 msgid "華麗的伊比利亞式披肩"
-msgstr ""
+msgstr "Elegant Iberian shawl"
 
 msgid "長版白色襯衫"
-msgstr ""
+msgstr "Long white shirt"
 
 msgid "純白馬甲式內衣"
-msgstr ""
+msgstr "Pure white vest bra"
 
 msgid "黑色鏤空剪裁裙"
-msgstr ""
+msgstr "Black hollow cut skirt"
 
 msgid "貴族手杖"
-msgstr ""
+msgstr "Noble staff"
 
 msgid "高跟涼鞋"
-msgstr ""
+msgstr "High heel sandals"
 
 msgid "莉泽洛特"
-msgstr ""
+msgstr "Lieselotte"
 
 msgid ""
 "莉泽洛特亲手制作的小竖琴。\n"
@@ -16294,31 +16476,31 @@ msgid ""
 msgstr ""
 
 msgid "头冠"
-msgstr ""
+msgstr "Crown"
 
 msgid "宝石项链套组"
-msgstr ""
+msgstr "Gem necklace set"
 
 msgid "高叉礼服"
-msgstr ""
+msgstr "High-cut dress"
 
 msgid "礼服手套"
-msgstr ""
+msgstr "Robe gloves"
 
 msgid "白仿羽褶边长裙"
-msgstr ""
+msgstr "White faux feather ruffled long skirt"
 
 msgid "高跟鞋"
-msgstr ""
+msgstr "High heels"
 
 msgid "红丝绸披风"
-msgstr ""
+msgstr "Red lace cloak"
 
 msgid "折扇"
-msgstr ""
+msgstr "Folding fan"
 
 msgid "乔万娜"
-msgstr ""
+msgstr "Giovanna"
 
 msgid "一只丢在了桌子上的手套，可能是在邀请决斗。德克萨斯女士对此没有任何看法。"
 msgstr ""
@@ -16330,28 +16512,28 @@ msgid ""
 msgstr ""
 
 msgid "方片耳饰"
-msgstr ""
+msgstr "Square ear ornaments"
 
 msgid "方片Choker"
-msgstr ""
+msgstr "Square choker"
 
 msgid "风衣"
-msgstr ""
+msgstr "Windbreaker"
 
 msgid "深V皮西装"
-msgstr ""
+msgstr "Deep V-leather suit"
 
 msgid "OL裙"
-msgstr ""
+msgstr "OL dress"
 
 msgid "黑丝过膝袜"
-msgstr ""
+msgstr "Black lace overknee socks"
 
 msgid "长靴"
-msgstr ""
+msgstr "Boots"
 
 msgid "福尔图娜"
-msgstr ""
+msgstr "Fortuna"
 
 msgid "六颗萨科塔的子弹，其中有两枚因为底火损坏而无法击发。"
 msgstr ""
@@ -16363,154 +16545,163 @@ msgid ""
 msgstr ""
 
 msgid "亮蓝绑带"
-msgstr ""
+msgstr "Light blue straps"
 
 msgid "流苏披肩"
-msgstr ""
+msgstr "Tassel shawl"
 
 msgid "圆领灰色连衣裙"
-msgstr ""
+msgstr "Round necked dress"
 
 msgid "玛丽珍鞋"
-msgstr ""
+msgstr "Mary Jane shoes"
 
 msgid "#be7f52"
 msgstr ""
 
 msgid "坠玛瑙银环"
-msgstr ""
+msgstr "Agate silver ring"
 
 msgid "环颈嵌玛瑙银项链"
-msgstr ""
+msgstr "Agate silver necklace"
 
 msgid "落花流水纹玉珍珠银环"
-msgstr ""
+msgstr "Walloping pattern jade pearl silver ring"
 
 msgid "新中式混纺仰月纹门襟云气纹袖口外套"
-msgstr ""
+msgstr "New Chinese style blended moon-placket-cloud pattern cuffs jacket"
 
 msgid "彩花钿纹轻纱里衬"
-msgstr ""
+msgstr "Colorful tin pattern gauze lining"
 
 msgid "工字褶丝绸宝相花纹饰抹胸"
-msgstr ""
+msgstr "I-pleated silk lotus pattern brassiere"
 
 msgid "掐丝嵌玉银流苏环"
-msgstr ""
+msgstr "Filigree jade silver tassel ring"
 
 msgid "红青双色绸缎束腰"
-msgstr ""
+msgstr "Red-green silk girdle"
 
 msgid "白色丝质薄纱长裙"
-msgstr ""
+msgstr "White silk chiffon dress"
 
 msgid "银环挂珠"
-msgstr ""
+msgstr "Silver ringed pearl"
 
 msgid "厚底布屐"
-msgstr ""
+msgstr "Thick clogs"
 
 msgid "七彩祥云和五色神光"
-msgstr ""
+msgstr "Iridescent Clouds and five-color divine light"
 
 msgid "佛光"
-msgstr ""
+msgstr "Buddha's light"
 
 msgid "神药"
-msgstr ""
+msgstr "Miracle medicine"
 
 msgid "海沫"
-msgstr ""
+msgstr "Highmore"
 
 msgid "一只洁白的贝螺。在寂静的夜晚将它捧起，靠在耳边，似乎能听到悠远的离歌。\n"
-msgstr ""
+msgstr "A pure white conch shell. Clasp it in the quiet night and lift it to your ear, and you'll seem to hear a distant song of farewell.\n"
 
 msgid ""
 "驻外干员海沫，她比看上去的要更好斗。\n"
 "\n"
 "海的女儿，选择了拒绝大海。"
 msgstr ""
+"Branch Operator Highmore, more belligerent than her looks suggest.\n"
+"\n"
+"Daughter of the sea, yet willful rejecter of the ocean."
 
 msgid "贝壳发饰"
-msgstr ""
+msgstr "Shell hair accessories"
 
 msgid "露肩休闲外套"
-msgstr ""
+msgstr "Bandeau casual coat"
 
 msgid "白色长尾裙"
-msgstr ""
+msgstr "White long dress"
 
 msgid "绑带鞋"
-msgstr ""
+msgstr "Lace-up shoes"
 
 msgid "跃跃"
-msgstr ""
+msgstr "Caper"
 
 msgid "一个圆滚滚、软乎乎的白色绒球，她执意要送给你这份礼物。她的偷笑让你有了不好的预感，但至少现在什么都没发生。"
-msgstr ""
+msgstr "A soft, puffy ball of white fur. She insisted that you accept it. The smug smile on her face gives you a bad feeling, but nothing has happened. Yet."
 
 msgid ""
 "狙击干员跃跃，走起路来一蹦一跳。\n"
 "\n"
 "她正邀请你加入她的游戏，答应她吧，不会让你失望的。"
 msgstr ""
+"Sniper operator Caper, always a bounce in her step.\n"
+"\n"
+"She is inviting you to play her game. Accept the offer; it will not disappoint."
 
 msgid "露耳兜帽"
-msgstr ""
+msgstr "Ear-opening hood"
 
 msgid "带绒球白色塑制外套"
-msgstr ""
+msgstr "White plastic gloves with puffy ball"
 
 msgid "黑色露脐羊绒衫"
-msgstr ""
+msgstr "Black navel sweater"
 
 msgid "红色皮手套"
-msgstr ""
+msgstr "Red leather gloves"
 
 msgid "不对称红厚棉袜"
-msgstr ""
+msgstr "Asymmetrical red thick cotton socks"
 
 msgid "带绒球工作靴"
-msgstr ""
+msgstr "Working boots with puffy ball"
 
 msgid "凛视"
-msgstr ""
+msgstr "Valarqvin"
 
 msgid "一盏长明灯，发光元件与她的法杖材质相同。她自己能在黑暗中视物，但她对你放心不下。"
-msgstr ""
+msgstr "An eternal flame, its lighting element of the same material as her staff. She may be able to see in the dark, but she's not sure about you."
 
 msgid ""
 "萨卡兹独眼巨人凛视，走出冰封的岩窟。\n"
 "\n"
 "她看见终局，她寻找起因。"
 msgstr ""
+"Sarkaz Cyclope Valarqvin, out from frozen caverns.\n"
+"\n"
+"She sees the outcome, and searches for the cause."
 
 msgid "白花发饰"
-msgstr ""
+msgstr "White flower head accessories"
 
 msgid "铃铛耳饰"
-msgstr ""
+msgstr "Bell ear accessories"
 
 msgid "毛毡披肩"
-msgstr ""
+msgstr "Felt shawl"
 
 msgid "黑白无袖褶边长襟衣"
-msgstr ""
+msgstr "Black-white sleeveless frill long cardigan"
 
 msgid "印花束口衬衣"
-msgstr ""
+msgstr "Cuff-printed shirt"
 
 msgid "皮革束腰"
-msgstr ""
+msgstr "Leather corset"
 
 msgid "皮裙"
-msgstr ""
+msgstr "Leather dress"
 
 msgid "皮革厚增高靴"
-msgstr ""
+msgstr "Leather thick boots"
 
 msgid "露托"
-msgstr ""
+msgstr "Lutonada"
 
 msgid "一条褪色的浅黄色丝巾，然而其中的回忆不会褪色。她想象着人们如何将丝巾系在她的墓碑上，一如分别那天，母亲将丝巾系在她的胸前。"
 msgstr ""
@@ -16518,57 +16709,58 @@ msgstr ""
 msgid ""
 "干员露托，曾在玻利瓦尔各交战地区活动，不从属于任何当地组织，以战场打扫工作为生。现今在本舰接受治疗，并与后勤部签订合作协议，偶尔以战场环境顾问的身份支援外勤任务。"
 msgstr ""
+"Operator Lutonada, active in various warzones in Bolivar. She's not affiliated with any local organization and makes a living by cleaning up the battlefield. She's currently receiving treatment on the landship and signed a cooperation agreement with Logistics Department to occasionally supports them in field missions and acts as battlefield terrain consultant."
 
 msgid "褪色的浅黄色丝巾"
-msgstr ""
+msgstr "Faded light yellow silk scarf"
 
 msgid "玻利瓦尔士官外套"
-msgstr ""
+msgstr "Bolivar sergeant coat"
 
 msgid "白色上衣（宽大）"
-msgstr ""
+msgstr "White shirt (large)"
 
 msgid "黑色长护腕"
-msgstr ""
+msgstr "Black long wrist braces"
 
 msgid "深绿色护膝"
-msgstr ""
+msgstr "Dark green ankle pads"
 
 msgid "玻利瓦尔制式盾牌（改装）"
-msgstr ""
+msgstr "Bolivar-made shield (retrofit)"
 
 msgid "黑色尖头锤"
-msgstr ""
+msgstr "Black pointed hammer"
 
 msgid "黑色丝袜（破损）"
-msgstr ""
+msgstr "Black stockings (damaged)"
 
 msgid "黑色劳保鞋"
-msgstr ""
+msgstr "Labor protective shoes"
 
 msgid "棕色背包"
-msgstr ""
+msgstr "Brown backpack"
 
 msgid "{TargetName}不打算接受你的邀请，要使用杀手锏吗"
-msgstr ""
+msgstr "{TargetName} doesn't want to accept your invitation, do you want to pull out your trump card"
 
 msgid "放弃|看在{TargetName}的坚持，{PlayerName}放弃了打算"
-msgstr ""
+msgstr "Give up|Looking at {TargetName}'s dedication, {PlayerName} abandoned the choice"
 
 msgid "强逼|{PlayerName}把{TargetName}的把柄摆在面前，{TargetName}害怕会影响名誉，只能妥协"
-msgstr ""
+msgstr "Enforce|{PlayerName} showed his hold on {TargetName}, {TargetName} chose to compromise due to worrying on affecting reputation"
 
 msgid "趁着{TargetName}在兴头上，要谈判吗"
-msgstr ""
+msgstr "{TargetName} is on mood, do you want to negotiate"
 
 msgid "放弃|看着{TargetName}疲惫的样子，{PlayerName}放弃了打算"
-msgstr ""
+msgstr "Give up|Looking at {TargetName}'s tiredness, {PlayerName} abandoned the choice"
 
 msgid "谈判|在双方的友好交流后，决定一笔勾销，不再用此事威胁对方"
-msgstr ""
+msgstr "Negotiate|Under the friendly communication, both agreed to not threaten each other with the incidents earlier"
 
 msgid "{PlayerName}本想邀请{TargetName}，但看着{TargetName}生气的样子，还是算了"
-msgstr ""
+msgstr "{PlayerName} wish to invite {TargetName}, but looking at {TargetName}'s angry face, he gave up"
 
 msgid "外勤集合点"
-msgstr ""
+msgstr "Gathering Point"
