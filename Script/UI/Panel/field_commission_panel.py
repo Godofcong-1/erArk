@@ -131,7 +131,13 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 break
         now_have_item_num = 0
         if item_id in send_npc_list:
-            now_have_item_num = 1
+            # 1的话需要出场
+            if item_num == 1:
+                now_have_item_num = 1
+            # 否则禁止出场
+            else:
+                now_have_item_num = -1
+                satify_flag = False
     # 特产
     elif text_list[0] == _("特产"):
         # 默认值
@@ -157,11 +163,11 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 nation_data = game_config.config_nation[nation_id]
                 if nation_data.country == now_country:
                     item_id = nation_id
-                    item_name = nation_data.name + _("声望")
+                    item_name = nation_data.name + item_name
                     now_have_item_num = cache.country.nation_reputation[nation_id]
                     break
         else:
-            item_name = game_config.config_nation[item_id].name + _("声望")
+            item_name = game_config.config_nation[item_id].name + item_name
             now_have_item_num = cache.country.nation_reputation[item_id]
     # 好感
     elif text_list[0] == _("好感"):
@@ -170,7 +176,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         now_have_item_num = 0
         for character_id in cache.character_data:
             if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name
+                item_name = cache.character_data[character_id].name + item_name
                 item_id = character_id
                 now_have_item_num = cache.character_data[character_id].favorability[0]
                 break
@@ -181,7 +187,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         now_have_item_num = 0
         for character_id in cache.character_data:
             if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name
+                item_name = cache.character_data[character_id].name + item_name
                 item_id = character_id
                 now_have_item_num = cache.character_data[character_id].trust
                 break
@@ -192,7 +198,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         now_have_item_num = 0
         for character_id in cache.character_data:
             if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name
+                item_name = cache.character_data[character_id].name + item_name
                 item_id = character_id
                 if handle_premise.handle_self_fall_1(character_id):
                     now_have_item_num = 1
@@ -483,6 +489,14 @@ class Field_Commission_Panel:
                 # 跳过等级大于设施等级+1的委托
                 if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
                     continue
+                # 跳过含有角色出场且还没有招募到该角色的委托
+                if "c_" in commision_data.demand:
+                    chara_adv = int(commision_data.demand.split("_")[1])
+                    for character_id in cache.npc_id_got:
+                        if cache.character_data[character_id].adv == chara_adv:
+                            break
+                    else:
+                        continue
                 # 委托信息
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
