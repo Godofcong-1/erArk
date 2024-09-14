@@ -8073,6 +8073,70 @@ def handle_self_not_fall(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.SELF_FALL_1)
+def handle_self_fall_1(character_id: int) -> int:
+    """
+    自己有1级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for i in {201, 211}:
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_FALL_2)
+def handle_self_fall_2(character_id: int) -> int:
+    """
+    自己有2级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for i in {202, 212}:
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_FALL_3)
+def handle_self_fall_3(character_id: int) -> int:
+    """
+    自己有3级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for i in {203, 213}:
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_FALL_4)
+def handle_self_fall_4(character_id: int) -> int:
+    """
+    自己有4级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    for i in {204, 214}:
+        if character_data.talent[i]:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_NOT_FALL)
 def handle_target_not_fall(character_id: int) -> int:
     """

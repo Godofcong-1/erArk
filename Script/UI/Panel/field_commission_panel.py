@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import game_time
+from Script.Design import game_time, handle_premise
 from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
@@ -99,6 +99,14 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         if demand_or_reward:
             item_type = _("经验")
         now_have_item_num = sum(cache.character_data[character_id].experience[item_id] for character_id in send_npc_list)
+    # 宝珠
+    elif text_list[0] == "j":
+        item_name = game_config.config_juel[item_id].name
+        item_type = item_name
+        # 如果是奖励，则只显示大类
+        if demand_or_reward:
+            item_type = _("宝珠")
+        now_have_item_num = sum(cache.character_data[character_id].juel[item_id] for character_id in send_npc_list)
     # 委托
     elif text_list[0] == "m":
         item_name = _("委托")
@@ -169,6 +177,24 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 item_id = character_id
                 now_have_item_num = cache.character_data[character_id].trust
                 break
+    # 攻略
+    elif text_list[0] == _("攻略"):
+        item_name = _("攻略程度")
+        item_type = _("攻略程度")
+        now_have_item_num = 0
+        for character_id in cache.character_data:
+            if cache.character_data[character_id].adv == item_id:
+                item_name = cache.character_data[character_id].name
+                item_id = character_id
+                if handle_premise.handle_self_fall_1(character_id):
+                    now_have_item_num = 1
+                elif handle_premise.handle_self_fall_2(character_id):
+                    now_have_item_num = 2
+                elif handle_premise.handle_self_fall_3(character_id):
+                    now_have_item_num = 3
+                elif handle_premise.handle_self_fall_4(character_id):
+                    now_have_item_num = 4
+                break
 
     # 需求
     if not demand_or_reward:
@@ -179,7 +205,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             # 扣除资源
             if deduction_or_increase and text_list[0] == "r":
                 cache.rhodes_island.materials_resouce[item_id] -= item_num
-            elif deduction_or_increase and text_list[0] == "声望":
+            elif deduction_or_increase and text_list[0] == _("声望"):
                 item_num *= 0.01
                 cache.country.nation_reputation[item_id] -= item_num
     # 奖励
@@ -194,7 +220,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 for character_id in send_npc_list:
                     cache.character_data[character_id].experience[item_id] += item_num
             # 特产
-            elif text_list[0] == "特产":
+            elif text_list[0] == _("特产"):
                 cache.rhodes_island.materials_resouce[item_id] += item_num
             # 委托部分，-1不可完成，0可以进行，1已完成
             elif text_list[0] == "m":
@@ -208,14 +234,14 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 elif item_num == 1:
                     cache.rhodes_island.finished_field_commissions_set.add(item_id)
             # 声望
-            elif text_list[0] == "声望":
+            elif text_list[0] == _("声望"):
                 item_num *= 0.01
                 cache.country.nation_reputation[item_id] += item_num
             # 好感
-            elif text_list[0] == "好感":
+            elif text_list[0] == _("好感"):
                 cache.character_data[item_id].favorability[0] += item_num
             # 信赖
-            elif text_list[0] == "信赖":
+            elif text_list[0] == _("信赖"):
                 cache.character_data[item_id].trust += item_num
 
     # 添加类型文本
@@ -396,7 +422,7 @@ class Field_Commission_Panel:
             line.draw()
 
             # 绘制提示信息
-            info_text_list = ["委托等级", "委托名称", "派遣人数", "耗时天数", "需求类型", "奖励类型"]
+            info_text_list = ["委托等级", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
@@ -443,6 +469,7 @@ class Field_Commission_Panel:
                 commision_level = str(commision_data.level)
                 commision_people = str(commision_data.people) + _("人")
                 commision_time = str(commision_data.time) + _("天")
+                commision_people_and_time = f"{commision_people}  {commision_time}"
                 demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
                 commision_demand = demand_return_list[1]
                 reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
@@ -451,7 +478,7 @@ class Field_Commission_Panel:
                 text_width = int(self.width / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
                 # 最终文本
-                commision_text = f"{commision_level.center(text_width,' ')}{commision_name.center(str_text_width,'　')}{commision_people.center(text_width,' ')}{commision_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
+                commision_text = f"{commision_level.center(text_width,' ')}{commision_name.center(str_text_width,'　')}{commision_people_and_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
 
                 # 可以进行的，绘制为按钮
                 if commision_id not in cache.rhodes_island.ongoing_field_commissions:
