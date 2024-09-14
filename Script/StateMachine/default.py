@@ -1226,6 +1226,10 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    # 如果是关闭了隔间门的房间的话，则不会被看到
+    if handle_premise.handle_place_door_open(character_id):
+        return
+
     character_data: game_type.Character = cache.character_data[character_id]
     to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
     general_movement_module(character_id, to_target)
