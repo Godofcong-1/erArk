@@ -99,7 +99,7 @@ class Base_function_class:
                     yrn = flow_handle.askfor_all(ask_list)
                     py_cmd.clr_cmd()
                     if yrn == "0":
-                        self.move_to_scene(scene_path, need_fuel, need_time)
+                        self.move_to_scene(scene_path[0], need_fuel, need_time)
                         break
                     elif yrn == "1":
                         break
