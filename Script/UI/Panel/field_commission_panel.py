@@ -219,6 +219,10 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             elif text_list[0] == "e":
                 for character_id in send_npc_list:
                     cache.character_data[character_id].experience[item_id] += item_num
+            # 宝珠
+            elif text_list[0] == "j":
+                for character_id in send_npc_list:
+                    cache.character_data[character_id].juel[item_id] += item_num
             # 特产
             elif text_list[0] == _("特产"):
                 cache.rhodes_island.materials_resouce[item_id] += item_num
@@ -246,7 +250,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
 
     # 添加类型文本
     if item_type not in type_text:
-        type_text += f"{item_type} "
+        type_text += f"{item_type}　"
 
     # 添加全文
     if not demand_or_reward:
@@ -422,7 +426,7 @@ class Field_Commission_Panel:
             line.draw()
 
             # 绘制提示信息
-            info_text_list = ["委托等级", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
+            info_text_list = ["委托等级", "委托类型", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
@@ -467,6 +471,7 @@ class Field_Commission_Panel:
                 # 委托信息
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
+                commision_type = commision_data.type
                 commision_people = str(commision_data.people) + _("人")
                 commision_time = str(commision_data.time) + _("天")
                 commision_people_and_time = f"{commision_people}  {commision_time}"
@@ -475,10 +480,10 @@ class Field_Commission_Panel:
                 reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
                 commision_reward = reward_return_list[1]
                 # 修正文本宽度
-                text_width = int(self.width / (len(info_text_list)))
+                text_width = int((self.width - 1) / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
                 # 最终文本
-                commision_text = f"{commision_level.center(text_width,' ')}{commision_name.center(str_text_width,'　')}{commision_people_and_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
+                commision_text = f"{commision_level.center(text_width,' ')}{commision_type.center(str_text_width,'　')}{commision_name.center(str_text_width,'　')}{commision_people_and_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
 
                 # 可以进行的，绘制为按钮
                 if commision_id not in cache.rhodes_island.ongoing_field_commissions:
