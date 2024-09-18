@@ -61,7 +61,7 @@ def get_base_zero() -> dict:
     base_data.last_visitor_time = cache.game_time
 
     # 初始化流水线
-    base_data.assembly_line[0] = [0,set(),0,0,0]
+    base_data.assembly_line[0] = [1,set(),0,0,0]
 
     # 初始化招募
     base_data.recruit_line[0] = [0,0,set(),0]

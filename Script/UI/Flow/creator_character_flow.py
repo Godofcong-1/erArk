@@ -54,6 +54,9 @@ def first_bonus_and_setting_updata():
     for cid in game_config.config_world_setting:
         cache.world_setting[cid] = 0
     cache.system_setting = attr_calculation.get_system_setting_zero()
+    # 初始资源
+    cache.rhodes_island.materials_resouce[1] = 20000
+    cache.rhodes_island.materials_resouce[11] = 20
 
 def game_start():
     """初始化游戏数据"""
@@ -1006,15 +1009,17 @@ class Character_Bonus:
 
         # 获得金钱
         elif first_bonus_id == 11:
-            if cache.rhodes_island.materials_resouce[1]:
-                cache.rhodes_island.materials_resouce[1] = 0
+            if cache.rhodes_island.materials_resouce[2]:
+                cache.rhodes_island.materials_resouce[1] = 20000
                 cache.rhodes_island.materials_resouce[2] = 0
                 cache.rhodes_island.materials_resouce[4] = 0
+                cache.rhodes_island.materials_resouce[11] = 20
                 cache.first_bonus[first_bonus_id] = False
             elif self.bonus_now >= 5:
-                cache.rhodes_island.materials_resouce[1] = 50000
+                cache.rhodes_island.materials_resouce[1] = 70000
                 cache.rhodes_island.materials_resouce[2] = 6000
                 cache.rhodes_island.materials_resouce[4] = 100
+                cache.rhodes_island.materials_resouce[11] = 50
                 cache.first_bonus[first_bonus_id] = True
             else:
                 fail_flag = True

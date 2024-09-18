@@ -5865,7 +5865,7 @@ msgid "启动资金"
 msgstr ""
 
 #: .\data\csv\First_Bouns.csv:11
-msgid "初始获得50000龙门币、6000合成玉和100粉色凭证"
+msgid "初始额外获得50000龙门币、6000合成玉、100粉色凭证和30普通药材"
 msgstr ""
 
 #: .\data\csv\First_Bouns.csv:13
