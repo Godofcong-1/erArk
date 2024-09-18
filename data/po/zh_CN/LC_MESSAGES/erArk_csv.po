@@ -4573,11 +4573,11 @@ msgid "娱乐室和休息室修建数量不设上限（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:43
-msgid "开放基础设施：【门诊部】、【急诊部】、【住院部】，可收治患者为50人"
+msgid "开放基础设施：【门诊部】、【急诊部】、【住院部】，可收治患者为20人"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:44
-msgid "开放新设施：【手术室】（未实装）、【血库】（未实装），可收治患者数量提升至100人"
+msgid "开放新设施：【手术室】（未实装）、【血库】（未实装），可收治患者数量提升至50人"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:45
