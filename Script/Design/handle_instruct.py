@@ -3516,11 +3516,14 @@ def handle_eras_rub():
     constant.Instruct.NIPPLE_CLAMP_ON,
     constant.InstructType.SEX,
     _("戴上乳头夹"),
-    {constant_promise.Premise.HAVE_TARGET,
+    {
+     constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_NIPPLE_CLAMP,
-     constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP},
+     constant_promise.Premise.TARGET_NOT_MILKING_MACHINE,
+     constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP
+     },
 )
 def handle_nipple_clamp_on():
     """处理戴上乳头夹指令"""
@@ -3637,7 +3640,9 @@ def handle_vibrator_insertion():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_VIBRATOR,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL},
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
+     constant_promise.Premise.TARGET_NOT_ANAL_BEADS,
+     },
 )
 def handle_vibrator_insertion_anal():
     """处理肛门插入震动棒指令"""
@@ -3729,6 +3734,7 @@ def handle_anal_plug():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.HAVE_ANAL_BEADS,
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL,
      constant_promise.Premise.TARGET_NOT_ANAL_BEADS},
 )
 def handle_anal_beads():
@@ -3760,6 +3766,7 @@ def handle_anal_beads_off():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.T_LACTATION_1,
      constant_promise.Premise.TARGET_MILK_GE_30,
+     constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP,
      constant_promise.Premise.TARGET_NOT_MILKING_MACHINE,
      constant_promise.Premise.HAVE_MILKING_MACHINE},
 )
