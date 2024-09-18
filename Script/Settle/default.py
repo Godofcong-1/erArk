@@ -150,6 +150,7 @@ def base_chara_state_common_settle(
     change_data_to_target_change -- 结算信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     if character_data.dead:
         return
 
@@ -161,6 +162,29 @@ def base_chara_state_common_settle(
         final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
     else:
         final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
+
+    # 连续重复指令减值，仅正面数值，仅玩家的交互对象
+    if state_id <= 16 and character_id == pl_character_data.target_character_id:
+        # 判断是否为连续指令
+        if len(cache.pl_pre_status_instruce) >= 2 and cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+            # 统计连续指令次数
+            last_instr = cache.pl_pre_status_instruce[-1]
+            # 如果last_instr属于基础指令则跳过连续相关处理
+            if last_instr in [0, 1, 2]:
+                pass
+            else:
+                instruct_count = 0
+                # 从后往前遍历
+                for instr in reversed(cache.pl_pre_status_instruce):
+                    if instr == last_instr:
+                        instruct_count += 1
+                    else:
+                        break
+                # 连续指令次数大于2时减值，每次系数-0.15，最低为0.4
+                if instruct_count > 2:
+                    continuous_adjust = 1 - 0.15 * (instruct_count - 1)
+                    continuous_adjust = max(0.4, continuous_adjust)
+                    final_adjust *= continuous_adjust
 
     # 最终值
     if tenths_add:
@@ -310,15 +334,41 @@ def base_chara_favorability_and_trust_common_settle(
     extra_adjust -- 额外系数\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
+
+    # 判断交互对象
     if target_character_id == 0:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     else:
         target_data: game_type.Character = cache.character_data[target_character_id]
+    # 防止重复结算
     if character_id != target_data.cid and (character_id != 0 or target_data.cid != 0):
         if character_data.dead:
             return
+        # 无意识状态下不结算
         if character_data.sp_flag.unconscious_h or target_data.sp_flag.unconscious_h:
             return
+
+        # 连续重复指令减值
+        continuous_adjust = 1
+        # 判断是否为连续指令
+        if len(cache.pl_pre_status_instruce) >= 2 and cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+            # 统计连续指令次数
+            last_instr = cache.pl_pre_status_instruce[-1]
+            # 如果last_instr属于基础指令则跳过连续相关处理
+            if last_instr in [0, 1, 2]:
+                pass
+            else:
+                instruct_count = 0
+                # 从后往前遍历
+                for instr in reversed(cache.pl_pre_status_instruce):
+                    if instr == last_instr:
+                        instruct_count += 1
+                    else:
+                        break
+                # 连续指令次数大于2时减值，每次系数-0.15，最低为0.4
+                if instruct_count > 2:
+                    continuous_adjust = 1 - 0.15 * (instruct_count - 1)
+                    continuous_adjust = max(0.4, continuous_adjust)
 
         # 结算信息记录对象
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -335,6 +385,10 @@ def base_chara_favorability_and_trust_common_settle(
                 if extra_adjust < 0 and add_favorability > 0:
                     add_favorability *= -1
 
+            # 连续重复减值
+            if add_favorability > 0:
+                add_favorability *= continuous_adjust
+
             # 结算最终值
             character_handle.add_favorability(character_id, target_data.cid, add_favorability, change_data, target_change)
 
@@ -350,6 +404,10 @@ def base_chara_favorability_and_trust_common_settle(
                 add_trust *= extra_adjust
                 if extra_adjust < 0 and add_trust > 0:
                     add_trust *= -1
+
+            # 连续重复减值
+            if add_trust > 0:
+                add_trust *= continuous_adjust
 
             # 结算最终值
             if character_id == 0 and character_data.target_character_id != 0:
