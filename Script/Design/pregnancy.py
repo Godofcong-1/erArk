@@ -11,6 +11,7 @@ from Script.Design import (
     character_handle,
     game_time,
     talk,
+    attr_calculation
 )
 from Script.UI.Moudle import draw
 from Script.UI.Panel import sp_event_panel
@@ -189,6 +190,9 @@ def check_near_born(character_id: int):
         past_day = (start_date - end_date).days
         # 从受精开始算，标准妊娠时间是265天
         if past_day >= 260:
+            # 清零污浊结构体
+            character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
+            # 赋予对应素质和二段行动
             character_data.talent[21] = 0
             character_data.talent[22] = 1
             character_data.second_behavior[1314] = 1
