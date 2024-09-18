@@ -1090,11 +1090,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         facility_effect = game_config.config_facility_effect[facility_cid].effect
         facility_effect_adjust = 1 + facility_effect / 100
         # 回复体力、气力
-        hit_point_add_base = now_character_data.hit_point_max * 0.005 + 10
+        hit_point_add_base = now_character_data.hit_point_max * 0.003 + 10
         hit_point_add = int(hit_point_add_base * true_add_time * facility_effect_adjust)
         now_character_data.hit_point += hit_point_add
         now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
-        mana_point_add_base = now_character_data.mana_point_max * 0.01 + 20
+        mana_point_add_base = now_character_data.mana_point_max * 0.006 + 20
         mana_point_add = int(mana_point_add_base * true_add_time * facility_effect_adjust)
         now_character_data.mana_point += mana_point_add
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
