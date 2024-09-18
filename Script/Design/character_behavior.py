@@ -496,6 +496,9 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     pl_character_data = cache.character_data[0]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 如果行动起始时间大于当前时间，则初始化行动起始时间为当前时间
+    if game_time.judge_date_big_or_small(character_data.behavior.start_time, now_time):
+        character_data.behavior.start_time = now_time
     start_time = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     if (
