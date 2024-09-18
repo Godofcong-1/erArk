@@ -5470,14 +5470,14 @@ def handle_cure_patient_add_just(
         return
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[46])
-    # 获得加成 #
-    now_add_lust = add_time * adjust * 200
-    now_add_lust = int(now_add_lust * random.uniform(0.5, 1.5))
-
     # 如果有交互对象，则算上对方的医疗加成
     if character_data.target_character_id != character_id:
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
-        now_add_lust += int(add_time * adjust_target)
+        adjust = (adjust + adjust_target) / 1.5
+    # 获得加成 #
+    now_add_lust = add_time * adjust * 50
+    now_add_lust = int(now_add_lust * random.uniform(0.5, 1.5))
+
     cache.rhodes_island.cure_income += now_add_lust
     cache.rhodes_island.patient_now -= 1
     cache.rhodes_island.patient_cured += 1
