@@ -390,9 +390,14 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     character_id -- 角色id
     visitor_flag -- 是否为访客
     """
-    cache.npc_id_got.add(character_id)
+    from Script.Settle import default
+
+    # 角色上线
+    default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+
     character_data = cache.character_data[character_id]
-    pl_character_data = cache.character_data[0]
+    # 清零全特殊状态flag
+    character_data.sp_flag = game_type.SPECIAL_FLAG()
 
     if visitor_flag:
         # 根据访客区的等级，赋予对应的停留时间
