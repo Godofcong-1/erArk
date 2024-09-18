@@ -2466,7 +2466,7 @@ def handle_item_off(
         now_time: datetime.datetime,
 ):
     """
-    去掉身上所有的道具
+    去掉身上所有的道具（含药品）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2489,7 +2489,74 @@ def handle_target_item_off(
         now_time: datetime.datetime,
 ):
     """
-    交互对象去掉身上所有的道具
+    交互对象去掉身上所有的道具（含药品）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_item_off(character_data.target_character_id, add_time, change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF_EXCEPT_PILL)
+def handle_item_off_except_pill(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    去掉身上所有的H道具（不含药品）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    for i in range(len(character_data.h_state.body_item)):
+        if i in {8,9,10,11,12}:
+            continue
+        character_data.h_state.body_item[i][1] = False
+        character_data.h_state.body_item[i][2] = None
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ITEM_OFF_EXCEPT_PILL)
+def handle_target_item_off_except_pill(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象去掉身上所有的道具（不含药品）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_item_off_except_pill(character_data.target_character_id, add_time, change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_B_ITEM_OFF)
+def handle_target_b_item_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象去掉B部位的道具
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2500,9 +2567,31 @@ def handle_target_item_off(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    # print(f"debug 触发去掉身上所有的道具 target_data.h_state.body_item = {target_data.h_state.body_item}")
-    for i in range(len(target_data.h_state.body_item)):
-        # print(f"debug i = {i}")
+    for i in [0, 4]:
+        target_data.h_state.body_item[i][1] = False
+        target_data.h_state.body_item[i][2] = None
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_A_ITEM_OFF)
+def handle_target_a_item_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象去掉A部位的道具
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    for i in [3, 7]:
         target_data.h_state.body_item[i][1] = False
         target_data.h_state.body_item[i][2] = None
 

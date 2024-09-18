@@ -337,8 +337,12 @@ cid,effect_name,effect_type,effect
 
 841,H_IN_LOVE_HOTEL_TO_FALSE,H_地点,取消自己和交互对象正在爱情旅馆中H的状态
 
-901,ITEM_OFF,道具_增减,去掉身上所有的道具
-902,TARGET_ITEM_OFF,道具_增减,交互对象去掉身上所有的道具
+901,ITEM_OFF,道具_增减,去掉身上所有的H道具（含药品）
+902,TARGET_ITEM_OFF,道具_增减,交互对象去掉身上所有的道具（含药品）
+903,ITEM_OFF_EXCEPT_PILL,道具_增减,去掉身上所有的H道具（不含药品）
+904,TARGET_ITEM_OFF_EXCEPT_PILL,道具_增减,交互对象去掉身上所有的道具（不含药品）
+905,TARGET_B_ITEM_OFF,道具_增减,交互对象去掉B部位的道具
+906,TARGET_A_ITEM_OFF,道具_增减,交互对象去掉A部位的道具
 911,TARGET_VIBRATOR_ON,道具_增减,交互对象插入V震动棒
 912,TARGET_VIBRATOR_OFF,道具_增减,交互对象拔出V震动棒
 913,TARGET_ANAL_VIBRATOR_ON,道具_增减,交互对象插入A震动棒

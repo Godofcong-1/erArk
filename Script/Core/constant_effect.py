@@ -661,9 +661,17 @@ class BehaviorEffect:
     """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """
 
     ITEM_OFF = 901
-    """ 道具_增减 去掉身上所有的道具 """
+    """ 道具_增减 去掉身上所有的H道具（含药品） """
     TARGET_ITEM_OFF = 902
-    """ 道具_增减 交互对象去掉身上所有的道具 """
+    """ 道具_增减 交互对象去掉身上所有的道具（含药品） """
+    ITEM_OFF_EXCEPT_PILL = 903
+    """ 道具_增减 去掉身上所有的H道具（不含药品） """
+    TARGET_ITEM_OFF_EXCEPT_PILL = 904
+    """ 道具_增减 交互对象去掉身上所有的道具（不含药品） """
+    TARGET_B_ITEM_OFF = 905
+    """ 道具_增减 交互对象去掉B部位的道具 """
+    TARGET_A_ITEM_OFF = 906
+    """ 道具_增减 交互对象去掉A部位的道具 """
     TARGET_VIBRATOR_ON = 911
     """ 道具_增减 交互对象插入V震动棒 """
     TARGET_VIBRATOR_OFF = 912
