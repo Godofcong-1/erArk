@@ -95,17 +95,17 @@ def get_underwear(character_id: int, part_flag = 0):
             elif cloth.tag == 2:
                 pan_H_list.append(cloth_id)
 
-    # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
-        for i in {202,203,204,212,213,214}:
-            if character_data.talent[i]:
-                if cache.character_data[0].pl_collection.collection_bonus == {}:
-                    cache.character_data[0].pl_collection = attr_calculation.get_collection_zero()
-                if cache.character_data[0].pl_collection.collection_bonus[102]:
-                    bra_nor_list += bra_H_list
-                    bra_loli_list += bra_H_list
-                    pan_nor_list += pan_H_list
-                    pan_loli_list += pan_H_list
-                    break
+        # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
+        character_fall_level = attr_calculation.get_character_fall_level(character_id)
+        if character_fall_level >= 2:
+            if cache.character_data[0].pl_collection.collection_bonus == {}:
+                cache.character_data[0].pl_collection = attr_calculation.get_collection_zero()
+            if cache.character_data[0].pl_collection.collection_bonus[102]:
+                bra_nor_list += bra_H_list
+                bra_loli_list += bra_H_list
+                pan_nor_list += pan_H_list
+                pan_loli_list += pan_H_list
+                break
 
     # 判断是否需要穿，包括是否已穿和part_flag限制
     if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2:

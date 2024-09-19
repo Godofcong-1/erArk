@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import game_time, handle_premise
+from Script.Design import game_time, attr_calculation
 from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
@@ -200,14 +200,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             if cache.character_data[character_id].adv == item_id:
                 item_name = cache.character_data[character_id].name + item_name
                 item_id = character_id
-                if handle_premise.handle_self_fall_1(character_id):
-                    now_have_item_num = 1
-                elif handle_premise.handle_self_fall_2(character_id):
-                    now_have_item_num = 2
-                elif handle_premise.handle_self_fall_3(character_id):
-                    now_have_item_num = 3
-                elif handle_premise.handle_self_fall_4(character_id):
-                    now_have_item_num = 4
+                now_have_item_num = attr_calculation.get_character_fall_level(character_id)
                 break
 
     # 需求

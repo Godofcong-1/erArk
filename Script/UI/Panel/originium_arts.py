@@ -453,12 +453,9 @@ class Originium_Arts_Panel:
                     # 总好感度与总陷落角色
                     now_favorability_count, now_fall_count = 0, 0
                     for chara_id in cache.npc_id_got:
+                        now_fall_count += handle_premise.handle_self_fall(chara_id)
                         character_data = cache.character_data[chara_id]
                         now_favorability_count += int(character_data.favorability[0])
-                        for talent_id in [201, 202, 203, 204 ,211, 212, 213, 214]:
-                            if character_data.talent[talent_id]:
-                                now_fall_count += 1
-                                break
                     # 绘制
                     draw_text += _("：需要全干员总好感度≥{0}（当前{1}），已进入任意陷落路线的干员人数≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_favorability_count, talent_of_arts_data.lv_up_value2, now_fall_count)
                     now_contion = now_favorability_count >= talent_of_arts_data.lv_up_value1 and now_fall_count >= talent_of_arts_data.lv_up_value2
