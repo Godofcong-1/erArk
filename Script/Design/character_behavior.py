@@ -817,10 +817,16 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     pl_character_data: game_type.Character = cache.character_data[0]
 
     # 玩家部分
-    if character_id == 0 and character_data.position != character_data.pl_ability.air_hypnosis_position:
-        character_data.pl_ability.air_hypnosis_position = ""
+    if character_id == 0:
+        # 清空空气催眠位置
+        if character_data.position != character_data.pl_ability.air_hypnosis_position:
+            character_data.pl_ability.air_hypnosis_position = ""
+        # 二次确认H意外结束的归零结算
+        special_end_list = constant.special_end_H_list
+        if len(cache.pl_pre_status_instruce) and cache.pl_pre_status_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
+            default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
 
-    # 非玩家部分
+    # 玩家部分终止，以下为NPC部分
     if character_id == 0:
         return 1
 

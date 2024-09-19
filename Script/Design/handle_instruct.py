@@ -1963,7 +1963,7 @@ def handle_end_h():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    special_end_list = [constant.Behavior.H_INTERRUPT, constant.Behavior.H_HP_0, constant.Behavior.T_H_HP_0]
+    special_end_list = constant.special_end_H_list
 
     # 非特殊中断的情况下，正常结束H
     if character_data.behavior.behavior_id not in special_end_list:

@@ -4308,21 +4308,18 @@ def handle_both_h_state_reset(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
-    target_data.h_state = attr_calculation.get_h_state_reset(target_data.h_state)
-    for orgasm in range(8):
-        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-        character_data.h_state.orgasm_level[orgasm] = now_data
-        now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
-        target_data.h_state.orgasm_level[orgasm] = now_data
-    # 清零H相关二段状态
-    for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
-            character_data.second_behavior[second_behavior_id] = 0
-    for second_behavior_id, behavior_data in target_data.second_behavior.items():
-        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
-            target_data.second_behavior[second_behavior_id] = 0
+    for chara_id in [character_id, character_data.target_character_id]:
+        now_character_data = cache.character_data[chara_id]
+        # H状态数据归零
+        now_character_data.h_state = attr_calculation.get_h_state_reset(now_character_data.h_state)
+        # 清零高潮进度
+        for orgasm in range(8):
+            now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])
+            now_character_data.h_state.orgasm_level[orgasm] = now_data
+        # 清零H相关二段状态
+        for second_behavior_id, behavior_data in now_character_data.second_behavior.items():
+            if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
+                now_character_data.second_behavior[second_behavior_id] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UPDATE_ORGASM_LEVEL)
