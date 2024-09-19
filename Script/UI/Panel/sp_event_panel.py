@@ -1,23 +1,14 @@
-from distutils.command.config import config
-from itertools import count
-from Script.UI.Flow import creator_character_flow
-from uuid import UUID
 from typing import Tuple, List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
 from Script.Core import (
     cache_control,
     get_text,
-    value_handle,
     game_type,
-    text_handle,
-    py_cmd,
     flow_handle,
-    constant,
-    rich_text,
 )
-from Script.Config import game_config, normal_config
-from Script.Design import character_handle, talk, attr_calculation
+from Script.Config import normal_config
+from Script.Design import character_handle, talk
 import random
 
 panel_info_data = {}

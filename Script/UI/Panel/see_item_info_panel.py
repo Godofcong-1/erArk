@@ -145,15 +145,20 @@ class ItemNameDraw:
         item_name = item_config.name
         character_data = cache.character_data[0]
         flag_consumables = item_config.tag in ["Drug", "H_Drug", "Consumables"]
+        # 消耗品和药剂使用标记初始化
         self.use_drug_flag = False
+        self.use_consumables_flag = False
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
                 self.draw_text = f"{index_text} {item_name}"
                 if flag_consumables:
                     self.draw_text += _("(持有数量:") + str(character_data.item[self.text]) + ")"
+                # 药剂和消耗品使用标记
                 if item_config.tag == "Drug":
                     self.use_drug_flag = True
+                elif item_config.tag == "Consumables":
+                    self.use_consumables_flag = True
             else:
                 self.draw_text = item_name
         else:
@@ -175,7 +180,7 @@ class ItemNameDraw:
         """绘制道具信息"""
         now_draw = ItemInfoDraw(self.text, window_width)
         now_draw.draw()
-        if self.use_drug_flag:
+        if self.use_drug_flag or self.use_consumables_flag:
             while 1:
                 line_feed.draw()
                 use_draw = draw.CenterButton(_("[使用]"), _("[使用]"), window_width / 2)
@@ -185,10 +190,48 @@ class ItemNameDraw:
                 line_feed.draw()
                 yrn = flow_handle.askfor_all([use_draw.return_text, return_draw.return_text])
                 if yrn == use_draw.return_text:
-                    self.use_drug()
+                    # 消耗品和药剂使用分支
+                    if self.use_consumables_flag:
+                        self.use_consumables()
+                    elif self.use_drug_flag:
+                        self.use_drug()
                     break
                 elif yrn == return_draw.return_text:
                     break
+
+    def use_consumables(self):
+        """使用消耗品"""
+        pl_character_data = cache.character_data[0]
+        # 道具数量减少1
+        pl_character_data.item[self.text] -= 1
+        # 根据道具id获取道具效果
+        # sanity_point_add = game_config.config_item[self.text].effect
+        # 消耗品效果
+        # 改名卡
+        if self.text == 161:
+            ask_name_panel = panel.AskForOneMessage()
+            ask_name_panel.set(_("请输入新的名称（默认称呼为博士，此处仅输入姓名即可）"), 10)
+
+            not_num_error = draw.NormalDraw()
+            not_num_error.text = _("角色名不能为纯数字，请重新输入\n")
+            not_system_error = draw.NormalDraw()
+            not_system_error.text = _("角色名不能为系统保留字，请重新输入\n")
+            not_name_error = draw.NormalDraw()
+            not_name_error.text = _("已有角色使用该姓名，请重新输入\n")
+
+            while 1:
+                now_name = ask_name_panel.draw()
+                if now_name.isdigit():
+                    not_num_error.draw()
+                    continue
+                if now_name in get_text.translation_values:
+                    not_system_error.draw()
+                    continue
+                if now_name in cache.npc_name_data:
+                    not_name_error.draw()
+                    continue
+                pl_character_data.name = now_name
+                break
 
     def use_drug(self):
         """使用药剂"""
