@@ -1366,32 +1366,10 @@ def handle_first_sex(
 
     item_flag = False
 
-    # 遍历指令列表，获得指令的中文名
-    for i in range(len(cache.input_cache)):
-        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
-        # print(f"debug 上指令 = {last_instruct}")
-        if last_instruct == _("确定"):
-            continue
-        # 如果不是int也continue
-        if not last_instruct.isdigit():
-            continue
-
-        # 判定是否为道具性交
-        if cache.input_cache[len(cache.input_cache) - 1 - i] == str(constant.Instruct.VIBRATOR_INSERTION):
-            item_flag = True
-
-        count = 0
-        for instruct_en_name in constant.Instruct.__dict__:
-            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
-            if int(last_instruct) + 2 == count:
-                # 以防没有对应的中文名，直接使用原名
-                if instruct_en_name not in constant.instruct_en2cn:
-                    instruct_name = instruct_en_name
-                else:
-                    instruct_name = constant.instruct_en2cn[instruct_en_name]
-                break
-            count += 1
-        break
+    # 获取玩家最后一个指令的中文名
+    status_id = cache.pl_pre_status_instruce[-1]
+    status_data = game_config.config_status[status_id]
+    instruct_name = status_data.name
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -1476,27 +1454,10 @@ def handle_first_a_sex(
     if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.VIBRATOR_INSERTION_ANAL):
         item_flag = True
 
-    # 遍历指令列表，获得指令的中文名
-    for i in range(len(cache.input_cache)):
-        last_instruct = cache.input_cache[len(cache.input_cache) - 1 - i]
-        # print(f"debug 上指令 = {last_instruct}")
-        if last_instruct == _("确定"):
-            continue
-        # 如果不是int也continue
-        if not last_instruct.isdigit():
-            continue
-        count = 0
-        for instruct_en_name in constant.Instruct.__dict__:
-            # print(f"debug count = {count}，instruct_en_name = {instruct_en_name}")
-            if int(last_instruct) + 2 == count:
-                # 以防没有对应的中文名，直接使用原名
-                if instruct_en_name not in constant.instruct_en2cn:
-                    instruct_name = instruct_en_name
-                else:
-                    instruct_name = constant.instruct_en2cn[instruct_en_name]
-                break
-            count += 1
-        break
+    # 获取玩家最后一个指令的中文名
+    status_id = cache.pl_pre_status_instruce[-1]
+    status_data = game_config.config_status[status_id]
+    instruct_name = status_data.name
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0

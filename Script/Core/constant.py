@@ -2320,9 +2320,6 @@ settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾西娅"),_("华法琳"),_("杜宾")}
 """ 初始就有的NPC的名字 """
 
-instruct_en2cn = {"VIBRATOR_INSERTION" : _("震动棒"),"VIBRATOR_INSERTION_ANAL" : _("肛门震动棒"),"NORMAL_SEX" : _("正常位"),"BACK_SEX" : _("背后位"),"RIDING_SEX" : _("骑乘位"),"FACE_SEAT_SEX" : _("对面座位"),"BACK_SEAT_SEX" : _("背面座位"),"FACE_STAND_SEX" : _("对面立位"),"BACK_STAND_SEX" : _("背面立位"),"STIMULATE_G_POINT" : _("刺激G点"), "WOMB_OS_CARESS": _("玩弄子宫口"), "WOMB_INSERTION": _("插入子宫口"), "WOMB_SEX" : _("子宫姦"),"NORMAL_ANAL_SEX" : _("正常位肛交"),"BACK_ANAL_SEX" : _("后背位肛交"),"RIDING_ANAL_SEX" : _("骑乘位肛交"),"FACE_SEAT_ANAL_SEX" : _("对面座位肛交"),"BACK_SEAT_ANAL_SEX" : _("背面座位肛交"),"FACE_STAND_ANAL_SEX" : _("对面立位肛交"),"BACK_STAND_ANAL_SEX" : _("背面立位肛交"), "STIMULATE_SIGMOID_COLON": _("玩弄s状结肠"), "STIMULATE_VAGINA" : _("隔着刺激阴道"), "DOUBLE_PENETRATION" : _("二穴插入"), "KEEP_ENJOY" : _("继续享受"), "CHANGE_TOP_AND_BOTTOM" : _("交给对方")}
-""" H指令的中英文对照 """
-
 special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0]
 """ 意外中断H的行为id列表 """
 
