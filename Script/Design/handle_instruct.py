@@ -1622,6 +1622,7 @@ def handle_confession():
         now_draw.width = width
         now_draw.text = _("\n告白成功，{0}收下了你赠予的[戒指]，[恋慕]转为[恋人]\n").format(target_data.name)
         now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
+        now_draw.text += _("\n可以在[角色属性]-[角色设置]修改对彼此的称呼了\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION_FAILED
@@ -1662,6 +1663,7 @@ def handle_give_necklace():
         now_draw.width = width
         now_draw.text = _("\n{0}接受了项圈，戴在了自己的脖子上，[驯服]转为[宠物]\n").format(target_data.name)
         now_draw.text += _("\n获得了{0}的信物：{1}\n").format(target_data.name, target_data.token_text)
+        now_draw.text += _("\n可以在[角色属性]-[角色设置]修改对彼此的称呼了\n")
         now_draw.draw()
     else:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE_FAILED

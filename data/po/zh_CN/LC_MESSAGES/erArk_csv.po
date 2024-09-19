@@ -1236,6 +1236,22 @@ msgstr ""
 msgid "当招募的干员数量过多时，可以将心仪的角色设为收藏角色，方便在干员位置等面板进行快速筛选"
 msgstr ""
 
+#: .\data\csv\CharaSetting.csv:9
+msgid "是否使用角色对玩家的专属称呼"
+msgstr ""
+
+#: .\data\csv\CharaSetting.csv:9
+msgid "自定义角色对自己的专属称呼，默认为博士，可更改为任意文本"
+msgstr ""
+
+#: .\data\csv\CharaSetting.csv:10
+msgid "是否使用玩家对角色的专属称呼"
+msgstr ""
+
+#: .\data\csv\CharaSetting.csv:10
+msgid "自定义自己对该角色的专属称呼，默认为无，可更改为任意文本"
+msgstr ""
+
 #: .\data\csv\City.csv:8
 msgid "多索雷斯"
 msgstr ""

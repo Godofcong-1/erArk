@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text
-from Script.UI.Moudle import draw
+from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
 
@@ -74,8 +74,13 @@ class CharacterSetting:
                 now_setting_flag = character_data.chara_setting[cid] # 当前设置的值
                 option_len = len(game_config.config_chara_setting_option[cid]) # 选项的长度
 
-                # 当前选择的选项的名字
+                # 当前选择的选项的文本
                 button_text = f" {game_config.config_chara_setting_option[cid][now_setting_flag]} "
+                # 如果是称呼，则显示称呼
+                if cid == 3 and now_setting_flag == 1:
+                    button_text += f"：{character_data.nick_name_to_pl} "
+                elif cid == 4 and now_setting_flag == 1:
+                    button_text += f"：{character_data.nick_name} "
 
                 # 判断是否符合条件
                 require_text = game_config.config_chara_setting[cid].require
@@ -87,7 +92,7 @@ class CharacterSetting:
                 judge, reason = attr_calculation.judge_require(require_text_list,self.character_id)
 
                 if judge:
-                    button_draw = draw.CenterButton(button_text, button_text, len(button_text)*2, cmd_func=self.change_setting, args=(cid, option_len))
+                    button_draw = draw.CenterButton(button_text, str(cid) + button_text, len(button_text)*2, cmd_func=self.change_setting, args=(cid, option_len))
                     button_draw.draw()
                     self.return_list.append(button_draw.return_text)
                 else:
@@ -104,7 +109,8 @@ class CharacterSetting:
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()
-        # yrn = flow_handle.askfor_all(return_list)
+
+        # yrn = flow_handle.askfor_all(self.return_list)
 
     def draw_info(self, cid):
         """绘制选项介绍信息"""
@@ -121,8 +127,22 @@ class CharacterSetting:
 
     def change_setting(self, cid, option_len):
         """修改设置"""
+        from Script.Design import character
+
         character_data = cache.character_data[self.character_id]
         if character_data.chara_setting[cid] < option_len - 1:
             character_data.chara_setting[cid] += 1
         else:
             character_data.chara_setting[cid] = 0
+        # 修改角色对玩家的称呼
+        if cid == 3:
+            if character_data.chara_setting[cid] == 1:
+                character_data.nick_name_to_pl = character.input_name_func(_("请输入该角色对玩家的专属称呼"))
+            else:
+                character_data.nick_name_to_pl = ""
+        # 修改玩家对角色的称呼
+        if cid == 4:
+            if character_data.chara_setting[cid] == 1:
+                character_data.nick_name = character.input_name_func(_("请输入玩家对该角色的专属称呼"))
+            else:
+                character_data.nick_name = ""

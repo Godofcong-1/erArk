@@ -132,34 +132,9 @@ def input_name_panel() -> bool:
     bool -- 完成角色创建校验
     """
     character_data = cache.character_data[0]
-    ask_name_panel = panel.AskForOneMessage()
-    ask_name_panel.set(_("你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"), 10)
-    line_feed_draw.draw()
-    line.draw()
-    not_num_error = draw.NormalDraw()
-    not_num_error.text = _("角色名不能为纯数字，请重新输入\n")
-    not_system_error = draw.NormalDraw()
-    not_system_error.text = _("角色名不能为系统保留字，请重新输入\n")
-    not_name_error = draw.NormalDraw()
-    not_name_error.text = _("已有角色使用该姓名，请重新输入\n")
-    create_judge = 0
-    while 1:
-        now_name = ask_name_panel.draw()
-        if now_name.isdigit():
-            not_num_error.draw()
-            continue
-        if now_name in get_text.translation_values:
-            not_system_error.draw()
-            continue
-        if now_name in cache.npc_name_data:
-            not_name_error.draw()
-            continue
-        character_data.name = now_name
-        character_data.nick_name = _("博士")
-        create_judge = 1
-
-        break
-    return create_judge
+    character_data.name = character.input_name_func(_("你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"))
+    character_data.nick_name = _("博士")
+    return 1
 
 
 class Character_creat_Handle:

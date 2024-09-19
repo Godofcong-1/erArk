@@ -182,7 +182,7 @@ class CharaSetting:
     info: str
     """ 选项介绍 """
     require: str
-    """ 选项需求(F好感，X信任) """
+    """ 选项需求(F好感，X信任，G攻略等级) """
     option: str
     """ 各个选项 """
 

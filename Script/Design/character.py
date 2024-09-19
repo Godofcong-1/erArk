@@ -18,7 +18,7 @@ from Script.Design import (
     handle_premise,
 )
 from Script.Config import game_config, normal_config
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import panel, draw
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -109,6 +109,46 @@ def init_attr(character_id: int):
     #     character_data.clothing_data.setdefault(clothing_data.tem_id, set())
     #     character_data.clothing_data[clothing_data.tem_id].add(clothing_data.uid)
     # init_class(character_data)
+
+
+def input_name_func(ask_text: str) -> str:
+    """
+    输入角色名函数
+    Keyword arguments:
+    ask_text -- 询问的文本
+    Return arguments:
+    str -- 角色名
+    """
+    ask_name_panel = panel.AskForOneMessage()
+    ask_name_panel.set(ask_text, 10)
+    line_feed.draw()
+    line = draw.LineDraw("=", width=window_width)
+    line.draw()
+    # 几种错误提示
+    not_num_error = draw.NormalDraw()
+    not_num_error.text = _("角色名不能为纯数字，请重新输入\n")
+    not_system_error = draw.NormalDraw()
+    not_system_error.text = _("角色名不能为系统保留字，请重新输入\n")
+    not_name_error = draw.NormalDraw()
+    not_name_error.text = _("已有角色使用该姓名，请重新输入\n")
+    # 返回的角色名
+    return_name = ""
+    # 开始循环
+    while 1:
+        now_name = ask_name_panel.draw()
+        if now_name.isdigit():
+            not_num_error.draw()
+            continue
+        if now_name in get_text.translation_values:
+            not_system_error.draw()
+            continue
+        if now_name in cache.npc_name_data:
+            not_name_error.draw()
+            continue
+        return_name = now_name
+        break
+
+    return return_name
 
 
 def init_character_behavior_start_time(character_id: int, now_time: datetime.datetime):

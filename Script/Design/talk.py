@@ -338,6 +338,23 @@ def code_text_to_draw_text(now_talk:str, character_id: int):
     # 输入的原文本
     now_talk_text: str = now_talk
 
+    # 专属称呼处理
+    nick_name = character_data.nick_name
+    if nick_name == "":
+        nick_name = character_data.name
+    nick_name_to_pl = character_data.nick_name_to_pl
+    if nick_name_to_pl == "":
+        nick_name_to_pl = player_data.nick_name
+    pl_nick_name = character_data.nick_name_to_pl
+    if pl_nick_name == "":
+        pl_nick_name = player_data.nick_name
+    target_nick_name = target_data.nick_name
+    if target_nick_name == "":
+        target_nick_name = target_data.name
+    target_nick_name_to_pl = target_data.nick_name_to_pl
+    if target_nick_name_to_pl == "":
+        target_nick_name_to_pl = player_data.nick_name
+
     # 包中食物
     all_food_name = ""
     all_food_count = 0
@@ -412,10 +429,13 @@ def code_text_to_draw_text(now_talk:str, character_id: int):
     # 最后总结转化
     now_talk_text = now_talk_text.format(
         Name=character_data.name,
-        NickName=character_data.nick_name,
+        NickName=nick_name,
+        NickNameToPl=nick_name_to_pl,
         PlayerName=player_data.name,
-        PlayerNickName=player_data.nick_name,
+        PlayerNickName=pl_nick_name,
         TargetName=target_data.name,
+        TargetNickName=target_nick_name,
+        TargetNickNameToPl=target_nick_name_to_pl,
 
         FoodName=character_data.behavior.food_name,
         MakeFoodTime=character_data.behavior.make_food_time,

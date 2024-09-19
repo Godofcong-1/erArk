@@ -1046,7 +1046,9 @@ class Character:
         self.name: str = ""
         """ 角色名字 """
         self.nick_name: str = ""
-        """ 他人对角色的称呼 """
+        """ 他人对自己的称呼 """
+        self.nick_name_to_pl: str = ""
+        """ 自己对玩家的称呼 """
         self.sex: int = 0
         """ 角色性别 """
         # self.age: int = 18
