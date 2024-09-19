@@ -1561,7 +1561,7 @@ class CharacterBodyText:
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n").format(
                     character_name=cache.character_data[sex_id].name,
-                    time=str(sex_time.month) + "月" + str(sex_time.day) + "日",
+                    time=game_time.get_date_until_day(sex_time),
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
                     posture=sex_posture,
                 )
@@ -1591,7 +1591,7 @@ class CharacterBodyText:
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n").format(
                     character_name=cache.character_data[a_sex_id].name,
-                    time=str(a_sex_time.month) + "月" + str(a_sex_time.day) + "日",
+                    time=game_time.get_date_until_day(a_sex_time),
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
                     posture=a_sex_posture,
                 )

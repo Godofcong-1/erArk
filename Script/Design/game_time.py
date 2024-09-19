@@ -48,13 +48,13 @@ def get_date_text(game_time_data: datetime.datetime = None) -> str:
     if game_time_data is None:
         game_time_data = cache.game_time
     if game_time_data.month == 3:
-        month_text = "春"
+        month_text = _("春")
     elif game_time_data.month == 6:
-        month_text = "夏"
+        month_text = _("夏")
     elif game_time_data.month == 9:
-        month_text = "秋"
+        month_text = _("秋")
     elif game_time_data.month == 12:
-        month_text = "冬"
+        month_text = _("冬")
     return _("时间:{year}年{month}月{day}日{hour}点{minute}分").format(
         year=game_time_data.year,
         month=month_text,
@@ -73,13 +73,13 @@ def get_date_until_day(game_time_data: datetime.datetime = None) -> str:
     if game_time_data is None:
         game_time_data = cache.game_time
     if game_time_data.month == 3:
-        month_text = "春"
+        month_text = _("春")
     elif game_time_data.month == 6:
-        month_text = "夏"
+        month_text = _("夏")
     elif game_time_data.month == 9:
-        month_text = "秋"
+        month_text = _("秋")
     elif game_time_data.month == 12:
-        month_text = "冬"
+        month_text = _("冬")
     return _("时间:{year}年{month}月{day}日").format(
         year=game_time_data.year,
         month=month_text,
