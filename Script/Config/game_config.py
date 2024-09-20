@@ -234,7 +234,7 @@ config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
 config_event: Dict[str, game_type.Event] = {}
 """ 事件配置数据 """
-config_event_status_data: Dict[int, Set] = {}
+config_event_status_data: Dict[int, List] = {}
 """
 各个状态下事件列表
 状态id:口上id集合
@@ -1082,8 +1082,8 @@ def load_event():
         now_tem = game_type.Event()
         now_tem.__dict__ = tem_data
         config_event[now_tem.uid] = now_tem
-        config_event_status_data.setdefault(int(now_tem.status_id), set())
-        config_event_status_data[int(now_tem.status_id)].add(now_tem.uid)
+        config_event_status_data.setdefault(int(now_tem.status_id), [])
+        config_event_status_data[int(now_tem.status_id)].append(now_tem.uid)
 
 
 def load_event_target():
