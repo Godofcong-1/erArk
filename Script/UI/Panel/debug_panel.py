@@ -539,7 +539,7 @@ class Debug_Panel:
                     cache.character_data[0].hunger_point = new_value
                 # 全源石技艺全开，理智9999
                 elif key_index == 8:
-                    for talent_id in {304,305,306,307,308,309,310,311,312,331,332,333,334}:
+                    for talent_id in {304,305,306,307,308,309,310,311,312,316,317,318,331,332,333,334}:
                         cache.character_data[0].talent[talent_id] = 1
                         cache.character_data[0].sanity_point = 9999
                         cache.character_data[0].sanity_point_max = 9999

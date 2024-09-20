@@ -1687,41 +1687,24 @@ class PlayerAbilityText:
         self.draw_list.append(type_line)
         ability_text_list = []
 
-        # 视觉能力#
-        now_text = _("\n 【视觉系】\n")
-        for i in {307, 308, 309}:
-            if character_data.talent[i]:
-                ability_name = game_config.config_talent[i].name
-                ability_info = game_config.config_talent[i].info
-                now_text += f"  {ability_name}：{ability_info}\n"
-        ability_text_list.append(now_text)
+        # 定义能力与素质的对应字典
+        abilities = {
+            _("视觉系"): {307, 308, 309},
+            _("触觉系"): {310, 311, 312},
+            _("激素系"): {304, 305, 306},
+            _("催眠系"): {331, 332, 333, 334},
+            _("时间系"): {316, 317, 318}
+        }
 
-        # 触觉能力#
-        now_text = _("\n 【触觉系】\n")
-        for i in {310, 311, 312}:
-            if character_data.talent[i]:
-                ability_name = game_config.config_talent[i].name
-                ability_info = game_config.config_talent[i].info
-                now_text += f"  {ability_name}：{ability_info}\n"
-        ability_text_list.append(now_text)
-
-        # 激素能力#
-        now_text = _("\n 【激素系】\n")
-        for i in {304, 305, 306}:
-            if character_data.talent[i]:
-                ability_name = game_config.config_talent[i].name
-                ability_info = game_config.config_talent[i].info
-                now_text += f"  {ability_name}：{ability_info}\n"
-        ability_text_list.append(now_text)
-
-        # 催眠能力
-        now_text = _("\n 【催眠系】\n")
-        for i in {331, 332, 333, 334}:
-            if character_data.talent[i]:
-                ability_name = game_config.config_talent[i].name
-                ability_info = game_config.config_talent[i].info
-                now_text += f"  {ability_name}：{ability_info}\n"
-        ability_text_list.append(now_text)
+        # 遍历能力字典，绘制对应的文本
+        for ability_name, ids in abilities.items():
+            now_text = _("\n 【{}】\n".format(ability_name))
+            for i in ids:
+                if character_data.talent[i]:
+                    talent_name = game_config.config_talent[i].name
+                    talent_info = game_config.config_talent[i].info
+                    now_text += f"  {talent_name}：{talent_info}\n"
+            ability_text_list.append(now_text)
 
         if self.center_status:
             now_draw = panel.CenterDrawTextListPanel()
