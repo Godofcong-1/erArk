@@ -3189,23 +3189,27 @@ msgid "获得1至纯源石，可以用来获得或升级源石技艺"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:8
-msgid "获得3至纯源石，可以用来获得或升级源石技艺"
+msgid "获得3至纯源石，装备信物上限提升至3个"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:9
-msgid "获得5至纯源石，可以用来获得或升级源石技艺"
+msgid "获得5至纯源石，装备信物上限提升至5个"
+msgstr ""
+
+#: .\data\csv\Collection_bouns.csv:10
+msgid "获得5至纯源石，装备信物上限提升至7个"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:11
-msgid "获得10至纯源石，可以用来获得或升级源石技艺"
+msgid "获得10至纯源石，装备信物上限提升至10个"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:12
-msgid "获得100至纯源石，可以用来获得或升级源石技艺"
+msgid "获得100至纯源石，装备信物上限提升至15个"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:13
-msgid "获得9999至纯源石，可以用来获得或升级源石技艺"
+msgid "获得9999至纯源石，装备信物上限提升至20个"
 msgstr ""
 
 #: .\data\csv\Collection_bouns.csv:16

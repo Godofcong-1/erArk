@@ -18,6 +18,23 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def refresh_all_bonus():
+    """
+    刷新所有未获得的解锁奖励
+    """
+    pl_character = cache.character_data[0]
+
+    # 遍历全部收集奖励
+    for bonus_id in game_config.config_collection_bonus_data:
+        # 目前仅刷新前10个奖励
+        if bonus_id >= 10:
+            break
+        bonus_data = game_config.config_collection_bonus_data[bonus_id]
+        if pl_character.pl_collection.collection_bonus[bonus_id]:
+            # 刷新信物的上限解锁奖励
+            pl_character.pl_collection.eqip_token[0] = max(pl_character.pl_collection.eqip_token[0], bonus_data.effect_2)
+
+
 class Collection_Panel:
     """
     用于显示收藏品界面面板对象
@@ -38,6 +55,7 @@ class Collection_Panel:
         """绘制对象"""
 
         character_data: game_type.Character = cache.character_data[0]
+        refresh_all_bonus()
 
         title_text = _("收藏品")
         collection_type_list = [_("信物"), _("内裤"), _("袜子")]
@@ -245,46 +263,36 @@ class Collection_Panel:
         """
         character_data: game_type.Character = cache.character_data[0]
         bonus_data = game_config.config_collection_bonus_data[bonus_id]
-        bonus_flag = False
+        originium_prime_flag = False
+        token_flag = False
 
         # 比对相应的收集物数量，判断是否解锁成功
         if bonus_data.type == _("信物"):
             if self.token_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
-                bonus_flag = True
+                originium_prime_flag = True
+                token_flag = True
         elif bonus_data.type == _("内裤"):
             if self.pan_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
-                bonus_flag = True
+                if bonus_id == 101:
+                    originium_prime_flag = True
         elif bonus_data.type == _("袜子"):
             if self.sock_count >= bonus_data.count or cache.debug_mode:
                 character_data.pl_collection.collection_bonus[bonus_id] = True
-                bonus_flag = True
+                if bonus_id == 201:
+                    originium_prime_flag = True
 
         # 获得至纯源石
-        if bonus_flag:
-            if bonus_id == 1:
-                cache.rhodes_island.materials_resouce[3] += 1
-            elif bonus_id == 2:
-                cache.rhodes_island.materials_resouce[3] += 3
-            elif bonus_id == 3:
-                cache.rhodes_island.materials_resouce[3] += 5
-            elif bonus_id == 4:
-                cache.rhodes_island.materials_resouce[3] += 5
-            elif bonus_id == 5:
-                cache.rhodes_island.materials_resouce[3] += 10
-            elif bonus_id == 6:
-                cache.rhodes_island.materials_resouce[3] += 100
-            elif bonus_id == 7:
-                cache.rhodes_island.materials_resouce[3] += 9999
-            elif bonus_id == 101:
-                cache.rhodes_island.materials_resouce[3] += 1
-            elif bonus_id == 201:
-                cache.rhodes_island.materials_resouce[3] += 1
+        if originium_prime_flag:
+            cache.rhodes_island.materials_resouce[3] += bonus_data.effect_1
+        # 解锁信物装备上限
+        if token_flag:
+            character_data.pl_collection.eqip_token[0] = max(character_data.pl_collection.eqip_token[0], bonus_data.effect_2)
 
         # 输出提示信息
         info_draw = draw.NormalDraw()
-        if bonus_flag:
+        if originium_prime_flag:
             info_draw.text = _("\n  解锁成功\n")
         else:
             info_draw.text = _("\n  未满足条件，解锁失败\n")

@@ -250,6 +250,12 @@ class Collection_bouns:
     """ 收藏物类型 """
     count: int
     """ 解锁所需的收藏数量 """
+    effect_1: int
+    """ 奖励数据1 """
+    effect_2: int
+    """ 奖励数据2 """
+    effect_3: int
+    """ 奖励数据3 """
     info: str
     """ 奖励信息 """
 
