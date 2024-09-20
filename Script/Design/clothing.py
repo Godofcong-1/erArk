@@ -95,20 +95,19 @@ def get_underwear(character_id: int, part_flag = 0):
             elif cloth.tag == 2:
                 pan_H_list.append(cloth_id)
 
-        # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
-        character_fall_level = attr_calculation.get_character_fall_level(character_id)
-        if character_fall_level >= 2:
-            if cache.character_data[0].pl_collection.collection_bonus == {}:
-                cache.character_data[0].pl_collection = attr_calculation.get_collection_zero()
-            if cache.character_data[0].pl_collection.collection_bonus[102]:
-                bra_nor_list += bra_H_list
-                bra_loli_list += bra_H_list
-                pan_nor_list += pan_H_list
-                pan_loli_list += pan_H_list
-                break
+    # 解锁了情趣内衣的情况下，对2级攻略以上的角色增加情趣内衣
+    character_fall_level = attr_calculation.get_character_fall_level(character_id)
+    if character_fall_level >= 2:
+        if cache.character_data[0].pl_collection.collection_bonus == {}:
+            cache.character_data[0].pl_collection = attr_calculation.get_collection_zero()
+        if cache.character_data[0].pl_collection.collection_bonus[102]:
+            bra_nor_list += bra_H_list
+            bra_loli_list += bra_H_list
+            pan_nor_list += pan_H_list
+            pan_loli_list += pan_H_list
 
     # 判断是否需要穿，包括是否已穿和part_flag限制
-    if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2:
+    if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2 and len(bra_nor_list):
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
         if character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
@@ -117,7 +116,7 @@ def get_underwear(character_id: int, part_flag = 0):
             bra_id = random.choice(bra_nor_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
 
-    if not len(character_data.cloth.cloth_wear[9]) and part_flag != 1:
+    if not len(character_data.cloth.cloth_wear[9]) and part_flag != 1 and len(pan_nor_list):
         if character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
