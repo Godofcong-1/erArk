@@ -102,6 +102,20 @@ def find_files_and_get_size(directory, character):
     file_sizes = {}
     if len(target_files):
         file_sizes = {file: os.path.getsize(file) for file in target_files}
+    # 同理获得查找事件文件的大小
+    event_directory = 'data/event/chara'
+    event_path = os.path.join(event_directory, '*')
+    event_files = glob.glob(event_path)
+    all_event_chara_name = [os.path.basename(file).split(".")[0].split("_")[1] for file in event_files]
+    target_event_files = []
+    for i in range(len(all_event_chara_name)):
+        if character == all_event_chara_name[i]:
+            target_event_files = [event_files[i]]
+    event_file_sizes = {}
+    if len(target_event_files):
+        event_file_sizes = {file: os.path.getsize(file) for file in target_event_files}
+    # 合并两个字典
+    file_sizes.update(event_file_sizes)
     return file_sizes
 
 def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_count: int):
