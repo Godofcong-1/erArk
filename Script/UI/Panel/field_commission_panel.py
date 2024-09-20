@@ -71,8 +71,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
 
     # 无则直接返回
     if now_text == _("无"):
-        type_text = _("无")
-        full_text = _("无")
+        type_text += _("无 ")
+        full_text += _("无 ")
         satify_flag = True
         return type_text, full_text, satify_flag
 
