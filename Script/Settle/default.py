@@ -222,6 +222,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
 
     # 系数加成
     final_adjust = 0
@@ -238,6 +239,14 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 催眠-敏感
     if character_data.hypnosis.increase_body_sensitivity:
         final_adjust += 2
+    # 信物调整值
+    now_token = pl_character_data.pl_collection.eqip_token[1]
+    if len(now_token):
+        # 信物干员的基础调整为0.1
+        if character_id in now_token:
+            final_adjust += 0.1
+        # 全体干员+数量*0.01
+        final_adjust += len(now_token) * 0.01
 
     return final_adjust
 
@@ -252,20 +261,40 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
     ability_level = max(0, ability_level)
 
     # 系数加成
     final_adjust = 0
     # 能力修正
+    # TODO 改为正确的角色状态属性对应能力刻印关系
     if state_id in [13,14,15,16,17,18,19]:
         feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
     else:
         feel_adjust = attr_calculation.get_ability_adjust(ability_level)
     final_adjust += feel_adjust
-    # 攻略进度素质对负面状态的减少
-    if state_id in [17, 18, 19, 20]:
+    # 信物修正
+    now_token = pl_character_data.pl_collection.eqip_token[1]
+    token_adjust = 0
+    if len(now_token):
+        # 信物干员的基础调整为0.1
+        if character_id in now_token:
+            token_adjust += 0.1
+        # 全体干员+数量*0.01
+        token_adjust += len(now_token) * 0.01
+    # 对正面状态的加成
+    if state_id in [8, 9, 10, 11, 12, 13, 14, 15, 16]:
+        # 攻略进度素质
+        character_fall_level = attr_calculation.get_character_fall_level(character_id)
+        final_adjust += character_fall_level * 0.05
+        # 信物
+        final_adjust += token_adjust
+    elif state_id in [17, 18, 19, 20]:
+        # 攻略进度素质
         character_fall_level = attr_calculation.get_character_fall_level(character_id)
         final_adjust -= character_fall_level * 0.2
+        # 信物
+        final_adjust -= token_adjust
     # 调香
     if character_data.sp_flag.aromatherapy:
         if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
@@ -328,6 +357,7 @@ def base_chara_favorability_and_trust_common_settle(
     extra_adjust -- 额外系数\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
 
     # 判断交互对象
     if target_character_id == 0:
@@ -341,6 +371,16 @@ def base_chara_favorability_and_trust_common_settle(
         # 无意识状态下不结算
         if character_data.sp_flag.unconscious_h or target_data.sp_flag.unconscious_h:
             return
+
+        # 信物调整值
+        now_token = pl_character_data.pl_collection.eqip_token[1]
+        token_adjust = 0
+        if len(now_token):
+            # 信物干员的基础调整为0.1
+            if character_id in now_token or target_data.cid in now_token:
+                token_adjust += 0.1
+            # 全体干员+数量*0.01
+            token_adjust += len(now_token) * 0.01
 
         # 连续重复指令减值
         continuous_adjust = 1
@@ -372,18 +412,29 @@ def base_chara_favorability_and_trust_common_settle(
         if favorability_flag:
             # 基础固定值
             add_favorability = base_value + character.calculation_favorability(character_id, target_data.cid, add_time)
+            final_adjust = 1
 
-            # 结算系数
+            # 额外调整
             if extra_adjust != 0:
-                add_favorability *= extra_adjust
-                if extra_adjust < 0 and add_favorability > 0:
-                    add_favorability *= -1
+                final_adjust *= extra_adjust
+                # 如果额外调整为负，则最终值也必须为负
+                if extra_adjust < 0 and  final_adjust * add_favorability > 0:
+                    final_adjust *= -1
+
+            # 信物调整
+            if token_adjust != 0:
+                # 负数则减少，正数则增加
+                if final_adjust > 0:
+                    final_adjust *= (1 + token_adjust)
+                else:
+                    final_adjust *= (1 - token_adjust)
 
             # 连续重复减值
             if add_favorability > 0:
-                add_favorability *= continuous_adjust
+                final_adjust *= continuous_adjust
 
             # 结算最终值
+            add_favorability *= final_adjust
             character_handle.add_favorability(character_id, target_data.cid, add_favorability, change_data, target_change)
 
         # 信赖
@@ -392,18 +443,29 @@ def base_chara_favorability_and_trust_common_settle(
                 add_trust = base_value + character.calculation_trust(character_id, target_data.cid, add_time)
             else:
                 add_trust = base_value + character.calculation_trust(target_data.cid, character_id, add_time)
+            final_adjust = 1
 
-            # 结算系数
+            # 额外调整
             if extra_adjust != 0:
-                add_trust *= extra_adjust
-                if extra_adjust < 0 and add_trust > 0:
-                    add_trust *= -1
+                final_adjust *= extra_adjust
+                # 如果额外调整为负，则最终值也必须为负
+                if extra_adjust < 0 and  final_adjust * add_trust > 0:
+                    final_adjust *= -1
+
+            # 信物调整
+            if token_adjust != 0:
+                # 负数则减少，正数则增加
+                if final_adjust > 0:
+                    final_adjust *= (1 + token_adjust)
+                else:
+                    final_adjust *= (1 - token_adjust)
 
             # 连续重复减值
-            if add_trust > 0:
-                add_trust *= continuous_adjust
+            if add_favorability > 0:
+                final_adjust *= continuous_adjust
 
             # 结算最终值
+            add_trust *= final_adjust
             if character_id == 0 and character_data.target_character_id != 0:
                 target_data.trust += add_trust
                 target_data.trust = min(300, target_data.trust)

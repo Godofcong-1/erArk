@@ -635,8 +635,8 @@ class PLAYER_COLLECTION:
         """ 获得的角色袜子 """
         self.npc_socks_tem: Dict[int, list] = {}
         """ 临时获得的角色袜子 """
-        self.eqip_token: List = [0, [0]]
-        """ 装备的信物 """
+        self.eqip_token: List = [1, []]
+        """ 装备的信物，0可装备数量int，1已装备信物的干员id列表list """
         self.milk_total: Dict[int, int] = {}
         """ 收集的各角色总乳汁量，单位毫升 """
         self.urine_total: Dict[int, int] = {}

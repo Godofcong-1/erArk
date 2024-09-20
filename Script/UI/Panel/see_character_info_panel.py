@@ -212,6 +212,7 @@ class SeeCharacterThirdPanel:
         """绘制面板"""
         for label in self.draw_list:
             label.draw()
+            self.return_list.extend(label.return_list)
 
 
 class See_Character_Setting_Panel:
@@ -1696,7 +1697,7 @@ class PlayerAbilityText:
             _("时间系"): {316, 317, 318}
         }
 
-        # 遍历能力字典，绘制对应的文本
+        # 遍历能力字典，获取对应的文本
         for ability_name, ids in abilities.items():
             now_text = _("\n 【{}】\n".format(ability_name))
             for i in ids:
@@ -1713,6 +1714,42 @@ class PlayerAbilityText:
         now_draw.set(ability_text_list, self.width, self.column)
         self.draw_list.extend(now_draw.draw_list)
 
+        # 绘制装备信物的信息
+        info_text = _("装备信物")
+        now_draw = draw.LittleTitleLineDraw(info_text, width, ":")
+        self.draw_list.append(now_draw)
+        # 绘制提示信息
+        now_text = "\n"
+        now_text += _("○装备信物时，信物干员正面数值结算+10%，负面数值结算-10%，其他干员为+1%和-1%（可叠加，上限同装备信物上限）\n")
+        # 可装备数量
+        pl_character_data = cache.character_data[0]
+        # 此处修正一下旧版本导致的信物数据
+        if pl_character_data.pl_collection.eqip_token == [0, [0]]:
+            pl_character_data.pl_collection.eqip_token = [1, []]
+        equip_number = pl_character_data.pl_collection.eqip_token[0]
+        now_text += _(f"  当前最大可装备数量：{equip_number}\n\n")
+        now_text += _("  当前装备的信物：\n")
+        # 当前正在装备的信物展示
+        for chara_id in pl_character_data.pl_collection.eqip_token[1]:
+            if chara_id == 0:
+                continue
+            now_text += f"  {cache.character_data[chara_id].name}："
+            token_text = cache.character_data[chara_id].token_text
+            now_text += f"{token_text}\n"
+        now_draw = draw.LeftDraw()
+        now_draw.text = now_text
+        now_draw.width = self.width
+        self.draw_list.append(now_draw)
+        self.draw_list.append(line_feed)
+        # 更改装备信物的按钮
+        button_text = _("[更改装备信物]")
+        now_draw = draw.CenterButton(
+            button_text, button_text, self.width / 4, cmd_func=self.change_token
+        )
+        self.return_list.append(now_draw.return_text)
+        self.draw_list.append(now_draw)
+        self.draw_list.append(line_feed)
+
     def draw(self):
         """绘制面板"""
         line_feed.draw()
@@ -1724,6 +1761,87 @@ class PlayerAbilityText:
             else:
                 label.draw()
 
+    def change_token(self):
+        """更改装备信物"""
+        pl_character_data = cache.character_data[0]
+        equip_number = pl_character_data.pl_collection.eqip_token[0]
+
+        while 1:
+            # 初始化变量
+            now_equiped = pl_character_data.pl_collection.eqip_token[1]
+            return_list = []
+            # 横线
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            # 绘制提示信息
+            info_text = _("\n更改装备信物\n")
+            info_text += _(f"当前已装备数量/最大可装备数量：{len(now_equiped)}/{equip_number}\n")
+            info_text += _("请选择要装备的信物：\n")
+            info_draw = draw.LeftDraw()
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+            line_feed.draw()
+            # 绘制可选择的装备信物
+            count = 0
+            for character_id in cache.npc_id_got:
+                # 跳过未拥有信物的
+                if pl_character_data.pl_collection.token_list[character_id] == 0:
+                    continue
+                draw_style = "standard"
+                # 如果已经选择，则绘制为金色
+                if character_id in now_equiped:
+                    draw_style = "gold_enrod"
+                character_data: game_type.Character = cache.character_data[character_id]
+                character_name = character_data.name
+                character_adv = character_data.adv
+                character_token = character_data.token_text
+                draw_text = f"[{str(character_adv).rjust(4,'0')}]{character_name}：{character_token}"
+                # 如果可以选择，则正常绘制按钮
+                if len(now_equiped) < equip_number or character_id in now_equiped:
+                    button_draw = draw.LeftButton(
+                        draw_text,
+                        f"\n{character_id}",
+                        self.width,
+                        normal_style = draw_style,
+                        cmd_func = self.select_this_token,
+                        args=character_id,
+                    )
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                # 如果当前人数已经满足，则不再绘制按钮，只绘制文本
+                else:
+                    info_draw = draw.LeftDraw()
+                    info_draw.text = draw_text
+                    info_draw.width = self.width
+                    info_draw.style = "deep_gray"
+                    info_draw.draw()
+                count += 1
+                line_feed.draw()
+            # 如果没有可以选择的，则绘制提示信息
+            if count == 0:
+                info_text = _("  当前没有可以选择的信物\n")
+                info_draw = draw.LeftDraw()
+                info_draw.text = info_text
+                info_draw.width = self.width
+                info_draw.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def select_this_token(self, character_id):
+        """选择信物"""
+        pl_character_data = cache.character_data[0]
+        if character_id in pl_character_data.pl_collection.eqip_token[1]:
+            pl_character_data.pl_collection.eqip_token[1].remove(character_id)
+        else:
+            pl_character_data.pl_collection.eqip_token[1].append(character_id)
 
 # class SeeCharacterSocialContact:
 #     """
