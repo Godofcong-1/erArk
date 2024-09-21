@@ -461,7 +461,7 @@ def base_chara_favorability_and_trust_common_settle(
                     final_adjust *= (1 - token_adjust)
 
             # 连续重复减值
-            if add_favorability > 0:
+            if add_trust > 0:
                 final_adjust *= continuous_adjust
 
             # 结算最终值
