@@ -75,6 +75,57 @@ class Event_option_Panel:
             if yrn in return_list:
                 break
 
+
+class multi_layer_event_option_Panel:
+    """
+    多层嵌套的面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, character_id: int, width: int, event_parent_chid_id: int):
+        """初始化绘制对象"""
+        self.character_id = character_id
+        """ 绘制的角色id """
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.event_parent_chid_id = event_parent_chid_id
+        """ 嵌套父子事件的序号id（非事件id） """
+        self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], SonEventDraw, 20, 1, self.width, 1, 1, 0)
+        """ 当前名字列表控制面板 """
+
+    def draw(self):
+        """绘制对象"""
+        line_feed.draw()
+        character_data: game_type.Character = cache.character_data[self.character_id]
+        behavior_id = character_data.behavior.behavior_id
+
+        son_event_list = []
+
+        # 开始遍历当前行为的事件表
+        if behavior_id in game_config.config_event_status_data:
+            for event_id in game_config.config_event_status_data[behavior_id]:
+                event_config = game_config.config_event[event_id]
+                # 需要含有综合数值前提中的子嵌套事件前提
+                son_premise = "CVP_A1_Son|0_E_{0}".format(self.event_parent_chid_id)
+                # 加入到子事件的列表中
+                if son_premise in event_config.premise:
+                    son_event_list.append([event_id, self.character_id])
+
+        while 1:
+            py_cmd.clr_cmd()
+
+            self.handle_panel.text_list = son_event_list
+            self.handle_panel.update()
+            return_list = []
+            self.handle_panel.draw()
+            return_list.extend(self.handle_panel.return_list)
+            line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+
 class SonEventDraw:
     """
     显示子事件选项对象

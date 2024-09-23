@@ -997,6 +997,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     Return arguments:
     bool -- 是否结算成功
     """
+    from Script.UI.Panel import event_option_panel
+
     character_data: game_type.Character = cache.character_data[character_id]
     # print(f"debug character_id = {character_id}, effect_all_value_list = {effect_all_value_list}")
 
@@ -1035,7 +1037,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "F": "favorability",
         "X": "trust",
         "Flag": "flag",
-        "Climax": "climax"
+        "Climax": "climax",
+        "Father": "father"
     }
     
     # 创建一个字典来映射操作
@@ -1059,7 +1062,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         operation_func = operation_mapping[operation]
         # print(f"debug attribute_name = {attribute_name}, operation = {operation}")
     
-        # 对于好感、信赖、口上用flag、绝顶，进行特殊处理
+        # 对于好感、信赖、口上用flag、绝顶、父事件，进行特殊处理
         if attribute_name == "favorability":
             final_character_data.favorability[0] = operation_func(final_character_data.favorability[0], int(effect_all_value_list[3]))
         elif attribute_name == "trust":
@@ -1074,6 +1077,9 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             elif operation == "G":
                 for i in range(int(effect_all_value_list[3]) + 1):
                     base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
+        elif attribute_name == "father":
+            now_draw = event_option_panel.multi_layer_event_option_Panel(character_id, width, int(effect_all_value_list[3]))
+            now_draw.draw()
         else:
             # 对属性进行操作
 

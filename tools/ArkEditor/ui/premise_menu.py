@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -364,6 +364,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Flag|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "前指令":
             cvp_b_value = "Instruct|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "嵌套子事件":
+            cvp_b_value = "Son|0"
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -407,9 +409,19 @@ class CVPMenu(QDialog):
         else:
             self.cvp_a2.setVisible(False)
 
+    def reset_c(self):
+        """重置c的选项"""
+        self.cvp_c.clear()
+        self.cvp_c.addItems(["大于", "小于", "等于", "大于等于", "小于等于", "不等于"])
+        self.cvp_c.setCurrentIndex(0)
+        self.cvp_c.setFont(self.font)
+        self.cvp_c.setVisible(True)
+
     def change_b2(self, index: int):
         """改变b2的选项"""
+        self.cvp_a.setVisible(True)
         self.cvp_b2.setVisible(True)
+        self.reset_c()
         if index == 0:
             self.cvp_b2.setVisible(False)
         elif index == 1:
@@ -461,7 +473,10 @@ class CVPMenu(QDialog):
                 self.cvp_b2.addItem(str(i))
             self.cvp_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持10个flag（即编号为0~9）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
         elif index == 11:
+            self.cvp_a.setVisible(False)
             self.cvp_b2.clear()
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于", "不等于"])
             for status_id, status_name in cache_control.status_data.items():
                 # 到二次结算则中断
                 if int(status_id) >= 1000:
@@ -473,4 +488,10 @@ class CVPMenu(QDialog):
                 self.cvp_b2.addItem(f"{status_id}|{status_name}")
             self.cvp_b2.setCurrentIndex(0)
             self.cvp_text.setText("前指令可以用来检测玩家上一次输入的指令，用于实现两次指令之间的联动效果\n本前提只判断玩家，所以角色选择会锁定为玩家，且只能使用[等于]或者[不等于]，没有其他逻辑")
+        elif index == 12:
+            self.cvp_a.setVisible(False)
+            self.cvp_b2.setVisible(False)
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_text.setText("嵌套子事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统状态]\n②本前提需要配合[综合数值结算]中的[嵌套父事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")
         self.cvp_b = self.cvp_b2

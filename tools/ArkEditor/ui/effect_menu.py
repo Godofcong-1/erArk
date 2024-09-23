@@ -176,7 +176,7 @@ class CVEMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cve_b1 = QComboBox()
-        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶"])
+        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶", "嵌套父事件"])
         self.cve_b1.setCurrentIndex(0)
         self.cve_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cve_b1)
@@ -256,6 +256,8 @@ class CVEMenu(QDialog):
             cve_b_value = "Flag|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "绝顶":
             cve_b_value = "Climax|" + self.cve_b2.currentText().split("|")[0]
+        elif cve_b1 == "嵌套父事件":
+            cve_b_value = "Father|0"
         cve_c = self.cve_c.currentText()
         if cve_c == "增加":
             cve_c_value = "G"
@@ -293,9 +295,19 @@ class CVEMenu(QDialog):
         else:
             self.cve_a2.setVisible(False)
 
+    def reset_c(self):
+        """重置c的选项"""
+        self.cve_c.clear()
+        self.cve_c.addItems(["增加", "减少", "变为"])
+        self.cve_c.setCurrentIndex(0)
+        self.cve_c.setFont(self.font)
+        self.cve_c.setVisible(True)
+
     def change_b2(self, index: int):
         """改变b2的选项"""
+        self.cve_a.setVisible(True)
         self.cve_b2.setVisible(True)
+        self.reset_c()
         if index == 0:
             self.cve_b2.setVisible(False)
         elif index == 1:
@@ -345,7 +357,17 @@ class CVEMenu(QDialog):
             for organ_id, organ_name in cache_control.organ_data.items():
                 self.cve_b2.addItem(f"{organ_id}|{organ_name}")
             self.cve_b2.setCurrentIndex(0)
-            self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶\n选择[减少]则无效")
+            self.cve_c.clear()
+            self.cve_c.addItems(["增加", "减少"])
+            self.cve_c.setCurrentIndex(0)
+            self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶")
+        elif index == 10:
+            self.cve_a.setVisible(False)
+            self.cve_b2.setVisible(False)
+            self.cve_c.clear()
+            self.cve_c.addItems(["变为"])
+            self.cve_c.setCurrentIndex(0)
+            self.cve_text.setText("嵌套父事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统量]-[基础]\n②本前提需要配合[综合数值前提]中的[嵌套子事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")
 
         self.cve_b = self.cve_b2
 
