@@ -7372,3 +7372,204 @@ msgstr "   (Stops Recruiting)"
 
 msgid "特产"
 msgstr "Specialty"
+
+msgid "好感度>={judge_value}  "
+msgstr ""
+
+msgid "信赖度>={judge_value}"
+msgstr ""
+
+msgid "或催眠进度>={judge_value/2}"
+msgstr ""
+
+msgid "解锁{game_config.config_facility_open[judge_type_id].name}  "
+msgstr ""
+
+msgid "攻略等级>={judge_value}  "
+msgstr ""
+
+msgid "+淫乱(+50)"
+msgstr ""
+
+msgid "+标间(+25)"
+msgstr ""
+
+msgid "+有别人在时的露出修正("
+msgstr ""
+
+msgid "+监禁中(+500)"
+msgstr ""
+
+msgid "+处女(-250)"
+msgstr ""
+
+msgid "+Ａ处女(-350)"
+msgstr ""
+
+msgid "+Ｕ处女(-400)"
+msgstr ""
+
+msgid "+初吻(-125)"
+msgstr ""
+
+msgid "+危险期(-200)"
+msgstr ""
+
+msgid "太累了，无法继续H\n"
+msgstr ""
+
+msgid "休息室"
+msgstr ""
+
+msgid ""
+"\n"
+"可以在[角色属性]-[角色设置]修改对彼此的称呼了\n"
+msgstr ""
+
+msgid "偷走所有人内裤"
+msgstr ""
+
+msgid "偷走所有人袜子"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}是机械体，且未安装生育模组，无法受精\n"
+msgstr ""
+
+msgid "催眠"
+msgstr ""
+
+msgid "请输入该角色对玩家的专属称呼"
+msgstr ""
+
+msgid "请输入玩家对该角色的专属称呼"
+msgstr ""
+
+msgid "无 "
+msgstr ""
+
+msgid "委托"
+msgstr ""
+
+msgid "指定干员"
+msgstr ""
+
+msgid "声望"
+msgstr ""
+
+msgid "好感"
+msgstr ""
+
+msgid "信赖"
+msgstr ""
+
+msgid "攻略"
+msgstr ""
+
+msgid "攻略程度"
+msgstr ""
+
+msgid ""
+"汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n"
+"\n"
+msgstr ""
+
+msgid "○通用委托无论在哪里都可以接到，地区委托则需要罗德岛移动到对应地区时才可接到，能接到的委托等级与机库的等级有关\n"
+msgstr ""
+
+msgid "○常规外勤委托可以多次反复完成，特殊外勤只能完成一次\n"
+msgstr ""
+
+msgid "○罗德岛的移动：控制中枢-指挥室-导航，购买载具：机库-格纳库-管理载具\n"
+msgstr ""
+
+msgid "○当前机库等级：{0}，最高可接到{1}级的委托\n"
+msgstr ""
+
+msgid "（进行中）"
+msgstr ""
+
+msgid "(队长)"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"已派遣 "
+msgstr ""
+
+msgid "(连续)"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+" 预计回满体力和气力最少需要 {0} 小时，全状态完全回复(包括体力、气力、疲劳、理智、精液等)至少需要 {1} 小时\n"
+msgstr ""
+
+msgid " 当前决定的睡眠时间为：{0} 小时（默认取两者最大值）"
+msgstr ""
+
+msgid "请输入睡眠时间(最小1小时，最大12小时)："
+msgstr ""
+
+msgid "当前设施等级为：{0}，可同时有{1}条招募线，每条招募线最多有{2}人\n"
+msgstr ""
+
+msgid "(当前人数：{0}/{1})"
+msgstr ""
+
+msgid " <累>"
+msgstr ""
+
+msgid "视觉系"
+msgstr ""
+
+msgid "触觉系"
+msgstr ""
+
+msgid "激素系"
+msgstr ""
+
+msgid "催眠系"
+msgstr ""
+
+msgid "时间系"
+msgstr ""
+
+msgid ""
+"\n"
+" 【{}】\n"
+msgstr ""
+
+msgid "装备信物"
+msgstr ""
+
+msgid "○装备信物时，信物干员正面数值结算+10%，负面数值结算-10%，其他干员为+1%和-1%（可叠加，上限同装备信物上限）\n"
+msgstr ""
+
+msgid ""
+"  当前最大可装备数量：{equip_number}\n"
+"\n"
+msgstr ""
+
+msgid "  当前装备的信物：\n"
+msgstr ""
+
+msgid "[更改装备信物]"
+msgstr ""
+
+msgid ""
+"\n"
+"更改装备信物\n"
+msgstr ""
+
+msgid "当前已装备数量/最大可装备数量：{len(now_equiped)}/{equip_number}\n"
+msgstr ""
+
+msgid "请选择要装备的信物：\n"
+msgstr ""
+
+msgid "  当前没有可以选择的信物\n"
+msgstr ""
