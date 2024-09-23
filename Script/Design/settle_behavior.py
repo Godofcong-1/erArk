@@ -981,6 +981,9 @@ def item_effect(character_id: int, pl_to_npc: bool = False):
 
         for i in range(len(character_data.h_state.body_item)):
             if character_data.h_state.body_item[i][1]:
+                # 事前避孕药的结算仅在每日问候的时候出现一起，其他时候不出现
+                if i == 11 and character_data.second_behavior[1332] != 0:
+                    continue
                 character_data.second_behavior[num + i] = 1
 
 
