@@ -477,7 +477,8 @@ def visitor_leave(character_id: int):
 
     # 位置初始化
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    cache.scene_data[scene_path_str].character_list.remove(character_id)
+    if character_id in cache.scene_data[scene_path_str].character_list:
+        cache.scene_data[scene_path_str].character_list.remove(character_id)
     character_data.position = ["0", "0"]
 
 
