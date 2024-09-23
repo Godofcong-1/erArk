@@ -510,6 +510,8 @@ class Field_Commission_Panel:
                 # 修正文本宽度
                 text_width = int((self.width - 1) / (len(info_text_list)))
                 str_text_width = int(text_width / 2)
+                if commision_id in cache.rhodes_island.ongoing_field_commissions:
+                    commision_name += _("（进行中）")
                 # 最终文本
                 commision_text = f"{commision_level.center(text_width,' ')}{commision_type.center(str_text_width,'　')}{commision_name.center(str_text_width,'　')}{commision_people_and_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
 
@@ -527,7 +529,6 @@ class Field_Commission_Panel:
                 # 正在进行的，绘制为灰色文字
                 else:
                     commision_draw = draw.NormalDraw()
-                    commision_text = _("(进行中)") + commision_text
                     commision_draw.text = commision_text
                     commision_draw.width = self.width
                     commision_draw.style = "deep_gray"
