@@ -69,6 +69,7 @@ class ItemTextEdit(QWidget):
             {"text": "插入玩家对交互对象的称呼", "slot": lambda: self.insert_text('{TargetNickName}')},
             {"text": "插入交互对象对玩家的称呼", "slot": lambda: self.insert_text('{TargetNickNameToPl}')},
             {"text": "插入玩家名字", "slot": lambda: self.insert_text('{PlayerName}')},
+            {"text": "插入触发者与交互对象中非玩家的那个对玩家的称呼", "slot": lambda: self.insert_text('{PlayerNickName}')},
             {"text": "插入当前行为中食物名字", "slot": lambda: self.insert_text('{FoodName}')},
             {"text": "插入食物制作时间", "slot": lambda: self.insert_text('{MakeFoodTime}')},
             {"text": "插入当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
