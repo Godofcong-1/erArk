@@ -14753,11 +14753,59 @@ msgid "斯卡蒂"
 msgstr ""
 
 #: .\data\character\0263_斯卡蒂.csv:13
-msgid "用家乡语言写下的歌谱。虽然完全没法理解这种文字，但她确实是打算教你这首歌的。"
+msgid "一篇用其家乡的语言写就的歌谱。虽然你完全没法阅读上面的文字，不过斯卡蒂确实打算将这首曲教予你。"
 msgstr ""
 
 #: .\data\character\0263_斯卡蒂.csv:14
-msgid "斯卡蒂，赏金猎人，现为罗德岛所雇佣。在过去完成的赏金任务中，于对抗大型生物，破坏硬目标，攻坚战，歼灭战等多类行动中展现出强劲实力，推测与其过往战斗经验相关。成为赏金猎人之前的履历缺失。现于罗德岛某攻坚小队供职，同时身兼单兵任务预备执行干员一职。"
+msgid "斯卡蒂，曾经的赏金猎人，现为罗德岛雇佣。斯卡蒂在过去所完成的赏金任务中，于大型生物的对抗战、坚硬目标的破坏战、困难目标的攻坚战、以及针对敌群的歼灭战等多类战斗中展现出压倒性的实力。根据推测，这与其过往之战斗经验相关，而其成为赏金猎人之前的履历有所缺失。斯卡蒂现于罗德岛的某攻坚小队中担任职位，同时兼任单兵任务预备执行干员一职。"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:15
+msgid "#2a46fe"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:42
+msgid "尖嘴鱼形蓝衬黑顶猎人帽"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:43
+msgid "灰色领结"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:44
+msgid "围脖式蓝黑色分层披肩"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:45
+msgid "大片鱼齿状防水风斗篷"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:46
+msgid "鱼尾形露脐衬衣"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:47
+msgid "黑色防滑手套"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:48
+msgid "内侧开式黑色皮裤"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:49
+msgid "深海猎人制式纯白内裤"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:50
+msgid "黑色防水短袜"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:51
+msgid "高敞口皮鞋"
+msgstr ""
+
+#: .\data\character\0263_斯卡蒂.csv:52
+msgid "带有“SK”字样的镶铜圆盘鞘标巨剑"
 msgstr ""
 
 #: .\data\character\0265_鞭刃.csv:4
