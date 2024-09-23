@@ -197,8 +197,13 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
     if second_behavior_id > 0:
         second_behavior_info_text(character_id, second_behavior_id)
     if now_talk != "":
-        now_talk_text = code_text_to_draw_text(now_talk, character_id)
+        # 特殊符号检测
+        tem_text, special_code = special_code_judge(now_talk)
         now_draw = draw.LineFeedWaitDraw()
+        # 跳过每次的等待
+        if special_code[0]:
+            now_draw = draw.NormalDraw()
+        now_talk_text = code_text_to_draw_text(now_talk, character_id)
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         if unusual_talk_flag:
@@ -212,6 +217,11 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
             elif tar_text_color:
                 now_draw.style = target_character_data.name
         now_draw.draw()
+        # 在最后进行一次换行和等待
+        if special_code[0]:
+            wait_draw = draw.LineFeedWaitDraw()
+            wait_draw.text = " \n"
+            wait_draw.draw()
 
 
 def must_show_talk_check(character_id: int):
@@ -323,12 +333,35 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
     return info_text
 
 
-def code_text_to_draw_text(now_talk:str, character_id: int):
+def special_code_judge(now_talk: str):
+    """
+    将文本中的代码转化为对应的文本 \n
+    Keyword arguments: \n
+    now_talk -- 输入的原文本 \n
+    Return arguments:
+    now_talk_text -- 去掉特殊符号后的文本
+    special_code -- 特殊符号列表，[0非等待文本]
+    """
+
+    special_code = [False]
+
+    # 不停顿的特殊换行符
+    if "<jump>" in now_talk:
+        now_talk = now_talk.replace("<jump>", "")
+        now_talk = now_talk.replace("\\n", "\n")
+        special_code[0] = True
+
+    return now_talk, special_code
+
+
+
+def code_text_to_draw_text(now_talk: str, character_id: int):
     """
     将文本中的代码转化为对应的文本 \n
     Keyword arguments: \n
     now_talk -- 输入的原文本 \n
     character_id -- 角色id \n
+    Return arguments:
     now_talk_text -- 转化后的文本
     """
     character_data: game_type.Character = cache.character_data[character_id]
@@ -336,7 +369,7 @@ def code_text_to_draw_text(now_talk:str, character_id: int):
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     # 输入的原文本
-    now_talk_text: str = now_talk
+    now_talk_text, special_code = special_code_judge(now_talk)
 
     # 专属称呼处理
     nick_name = character_data.nick_name
