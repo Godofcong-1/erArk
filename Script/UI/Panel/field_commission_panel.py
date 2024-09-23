@@ -1,9 +1,9 @@
-from typing import Tuple, List
+from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.UI.Moudle import draw, panel
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.Design import game_time, attr_calculation
+from Script.Design import game_time, attr_calculation, talk
 from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
@@ -307,6 +307,12 @@ def judge_field_commission_finish():
             draw_text += "\n"
             # 派遣人员上线
             send_npc_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
+            # 结算队长
+            if len(send_npc_list):
+                leader_id = send_npc_list[0]
+                cache.character_data[leader_id].second_behavior[1362] = 1
+                talk.must_show_talk_check(leader_id)
+            # 遍历派遣人员
             for character_id in send_npc_list:
                 cache.character_data[character_id].sp_flag.field_commission = 0
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
@@ -691,6 +697,7 @@ class Field_Commission_Panel:
 
         commision_data = game_config.config_commission[commision_id]
         commision_people = commision_data.people
+        self.lead_chara_id = 0
 
         while 1:
             return_list = []
@@ -712,6 +719,9 @@ class Field_Commission_Panel:
                 character_name = character_data.name
                 character_adv = character_data.adv
                 draw_text = f"[{str(character_adv).rjust(4,'0')}]{character_name}"
+                # 队长标记
+                if character_id == self.lead_chara_id:
+                    draw_text += _("(队长)")
 
                 # 如果可以选择，则正常绘制按钮
                 if len(self.send_npc_list) < commision_people or character_id in self.send_npc_list:
@@ -855,8 +865,18 @@ class Field_Commission_Panel:
         """
         if character_id in self.send_npc_list:
             self.send_npc_list.remove(character_id)
+            # 如果队长被取消
+            if character_id == self.lead_chara_id:
+                # 如果还有其他人，则第一个人为队长
+                if len(self.send_npc_list):
+                    self.lead_chara_id = self.send_npc_list[0]
+                else:
+                    self.lead_chara_id = 0
         else:
             self.send_npc_list.append(character_id)
+            # 第一个被任命的人为队长
+            if len(self.send_npc_list) == 1:
+                self.lead_chara_id = character_id
 
     def add_this_vehicle(self, vehicle_id: int):
         """
@@ -890,14 +910,25 @@ class Field_Commission_Panel:
         Keyword arguments:
         commision_id -- 委托编号
         """
+
         commision_data = game_config.config_commission[commision_id]
         commision_people = commision_data.people
         if len(self.send_npc_list) < commision_people:
             return
 
+        # 结算队长
+        if self.lead_chara_id:
+            lead_character_data = cache.character_data[self.lead_chara_id]
+            # 将队长的id调为列表的第一位
+            self.send_npc_list.remove(self.lead_chara_id)
+            self.send_npc_list.insert(0, self.lead_chara_id)
+            # 二段行为
+            lead_character_data.second_behavior[1361] = 1
+            talk.must_show_talk_check(self.lead_chara_id)
+
         # 绘制委托信息
         draw_text = ""
-        draw_text += _("\n\n已派遣")
+        draw_text += _("\n\n已派遣 ")
         for character_id in self.send_npc_list:
             character_data = cache.character_data[character_id]
             character_name = character_data.name
