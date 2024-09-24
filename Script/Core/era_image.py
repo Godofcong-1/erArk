@@ -4,6 +4,7 @@ from PIL import Image
 from Script.Core import main_frame, game_type, cache_control
 
 image_data = {}
+image_data_index_by_chara = {}
 image_text_data = {}
 image_lock = 0
 cache: game_type.Cache = cache_control.cache
@@ -25,5 +26,11 @@ def load_images_from_directory(directory):
                 new_image = Image.open(image_file_path).resize((now_weight, now_height))
                 image_data[image_file_name] = PhotoImage(new_image)
                 # print(f"加载图片：{image_file_name}")
+                # 如果图片的文件名中有_的话，则为差分图片，选取_的第一部分作为角色名
+                if "_" in image_file_name:
+                    character_name = image_file_name.split("_")[0]
+                    if character_name not in image_data_index_by_chara:
+                        image_data_index_by_chara[character_name] = []
+                    image_data_index_by_chara[character_name].append(image_file_name)
 
 load_images_from_directory(image_dir_path)
