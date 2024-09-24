@@ -378,6 +378,7 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     nick_name_to_pl = character_data.nick_name_to_pl
     if nick_name_to_pl == "":
         nick_name_to_pl = player_data.nick_name
+    pl_nick_name = ""
     if character_id != 0:
         pl_nick_name = character_data.nick_name_to_pl
     elif character_data.target_character_id != 0:
