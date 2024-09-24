@@ -13403,6 +13403,51 @@ def handle_pl_semen_le_2(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PL_SEMEN_LE_50)
+def handle_pl_semen_le_50(character_id: int) -> int:
+    """
+    玩家当前精液量小于等于50ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point <= 50:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_SEMEN_GE_50)
+def handle_pl_semen_ge_50(character_id: int) -> int:
+    """
+    玩家当前精液量大于等于50ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point >= 50:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_SEMEN_GE_100)
+def handle_pl_semen_ge_100(character_id: int) -> int:
+    """
+    玩家当前精液量大于等于100ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point >= 100:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NPC_ACTIVE_H)
 def handle_npc_active_h(character_id: int) -> int:
     """
