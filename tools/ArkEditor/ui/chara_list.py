@@ -47,7 +47,7 @@ class CharaList(QWidget):
         self.second_layouts = [QHBoxLayout() for _ in range(5)]
 
         # 说明文本
-        labels_text_1 = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始HP", "初始MP", "初始宿舍", "信物", "人物介绍", "字体颜色", "说明"]
+        labels_text_1 = ["编号", "姓名", "性别", "职业", "种族", "势力", "出身地", "初始体力", "初始气力", "初始宿舍", "信物", "人物介绍", "字体颜色", "说明"]
         labels_1 = [self.create_label(text) for text in labels_text_1]
         labels_text_2 = ["能力", "经验", "素质", "服装", "说明"]
         labels_2 = [self.create_label(text) for text in labels_text_2]
