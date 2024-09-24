@@ -845,11 +845,11 @@ t_lactation_1,T_LACTATION_1,属性_素质,交互对象泌乳==1
 t_baby_1,T_BABY_1,属性_素质,交互对象婴儿==1
 
 t_child_or_loli_1,T_CHILD_OR_LOLI_1,属性_素质,交互对象幼女或萝莉==1
-breast_0,TARGET_CHEST_IS_CLIFF,属性_素质,交互对象胸部大小是绝壁
-breast_1,TARGET_CHEST_IS_SMALL,属性_素质,交互对象胸部大小是贫乳
-breast_2,TARGET_CHEST_IS_NORMAL,属性_素质,交互对象胸部大小是普乳
-breast_3,TARGET_CHEST_IS_BIG,属性_素质,交互对象胸部大小是巨乳
-breast_4,TARGET_CHEST_IS_SUPER,属性_素质,交互对象胸部大小是爆乳
+t_breast_0,TARGET_CHEST_IS_CLIFF,属性_素质,交互对象胸部大小是绝壁
+t_breast_1,TARGET_CHEST_IS_SMALL,属性_素质,交互对象胸部大小是贫乳
+t_breast_2,TARGET_CHEST_IS_NORMAL,属性_素质,交互对象胸部大小是普乳
+t_breast_3,TARGET_CHEST_IS_BIG,属性_素质,交互对象胸部大小是巨乳
+t_breast_4,TARGET_CHEST_IS_SUPER,属性_素质,交互对象胸部大小是爆乳
 buttock_0,TARGET_BUTTOCKS_IS_SMALL,属性_素质,交互对象臀部大小是小臀
 buttock_1,TARGET_BUTTOCKS_IS_NORMAL,属性_素质,交互对象臀部大小是普臀
 buttock_2,TARGET_BUTTOCKS_IS_BIG,属性_素质,交互对象臀部大小是巨臀

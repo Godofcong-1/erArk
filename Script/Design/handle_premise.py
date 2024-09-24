@@ -9587,6 +9587,19 @@ def handle_scene_only_one(character_id: int) -> int:
     return len(scene_data.character_list) == 1
 
 
+@add_premise(constant_promise.Premise.SELF_CHEST_IS_CLIFF)
+def handle_self_chest_is_cliff(character_id: int) -> int:
+    """
+    自己胸部大小是绝壁
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[121]
+
+
 @add_premise(constant_promise.Premise.TARGET_CHEST_IS_CLIFF)
 def handle_target_chest_is_cliff(character_id: int) -> int:
     """
@@ -9597,8 +9610,22 @@ def handle_target_chest_is_cliff(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[121]
+    if handle_self_chest_is_cliff(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_CHEST_IS_SMALL)
+def handle_self_chest_is_small(character_id: int) -> int:
+    """
+    自己胸部大小是贫乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[122]
 
 
 @add_premise(constant_promise.Premise.TARGET_CHEST_IS_SMALL)
@@ -9611,8 +9638,22 @@ def handle_target_chest_is_small(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[122]
+    if handle_self_chest_is_small(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_CHEST_IS_NORMAL)
+def handle_self_chest_is_normal(character_id: int) -> int:
+    """
+    自己胸部大小是普乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[123]
 
 
 @add_premise(constant_promise.Premise.TARGET_CHEST_IS_NORMAL)
@@ -9625,8 +9666,22 @@ def handle_target_chest_is_normal(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[123]
+    if handle_self_chest_is_normal(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_CHEST_IS_BIG)
+def handle_self_chest_is_big(character_id: int) -> int:
+    """
+    自己胸部大小是巨乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[124]
 
 
 @add_premise(constant_promise.Premise.TARGET_CHEST_IS_BIG)
@@ -9639,8 +9694,22 @@ def handle_target_chest_is_big(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[124]
+    if handle_self_chest_is_big(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_CHEST_IS_SUPER)
+def handle_self_chest_is_super(character_id: int) -> int:
+    """
+    自己胸部大小是爆乳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[125]
 
 
 @add_premise(constant_promise.Premise.TARGET_CHEST_IS_SUPER)
@@ -9653,8 +9722,9 @@ def handle_target_chest_is_super(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[125]
+    if handle_self_chest_is_super(character_data.target_character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_BUTTOCKS_IS_SMALL)

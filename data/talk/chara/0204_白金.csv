@@ -242,7 +242,7 @@ str,int,int,str,str
 237,361,204,t_virgin_1&love_ge_3&high_999&sys_0,轻轻地点了点头同意的{TargetName}牵起{PlayerName}的手放在自己的腰间，“嗯……可以哦。”\n“因为我们是恋人嘛。作为恋人结合，加深感情，都是很正常的事情。”脸颊染上了可爱的红晕的{TargetName}靠在{PlayerName}的肩膀上轻轻抱住。\n“{TargetName}……还是处女哦，多亏好色的{PlayerName}能够忍到现在。”\n即使是隔着衣服也能很明显地感受到{TargetName}剧烈跳动着的心跳，“没什么，如果是{PlayerNickName}的话，本来就是要用处女作为礼物的。”\n“稍微温柔一些……可以吗？”似乎是略微有些紧张害怕的{TargetName}进一步抱紧了{PlayerName}在耳边低语，软软地放松了腰肢让{PlayerName}将自己推倒。
 238,362,204,love_0_or_le_2,“已经满足了吗？”逐渐平复着呼吸的{TargetName}无奈地看着{PlayerName}询问，“这样的话，暂时不需要再H了吧。”\n淡淡的叹了口气，{TargetName}伸手重新把散乱的马尾扎了起来，
 239,362,204,love_0_or_le_2&hp_low&high_2,“累了吗？辛苦了。”看着瘫坐着难以再次勃起的{PlayerName}，{TargetName}轻轻地叹了口气帮忙清理了一下。\n“不快点把衣服穿上的话可是会感冒的。”
-240,362,204,love_0_or_le_2&last_cmd_breast_caress&breast_1&high_5,{TargetName}娇嫩的乳房在{TargetName}的手掌下上下轻微地起伏着。\n“说是结束之前再多揉一会胸部……。“{TargetName}不知道是羞耻还是兴奋地红着脸被揉胸。\n”多揉揉也不会变大的。”{TargetName}轻轻叹了口气，“既然已经结束了就放开可以吗？”
+240,362,204,love_0_or_le_2&last_cmd_breast_caress&t_breast_1&high_5,{TargetName}娇嫩的乳房在{TargetName}的手掌下上下轻微地起伏着。\n“说是结束之前再多揉一会胸部……。“{TargetName}不知道是羞耻还是兴奋地红着脸被揉胸。\n”多揉揉也不会变大的。”{TargetName}轻轻叹了口气，“既然已经结束了就放开可以吗？”
 241,362,204,love_0_or_le_2&last_cmd_clit_caress&high_5,“嗯……”{TargetName}发出细微的呻吟轻颤着刚刚还在被抚摸着的阴蒂。\n“呼……唔……”逐渐回复平稳的呼吸的{TargetName}捂住自己的下体看向别的地方，“结束了呢……”
 242,362,204,love_0_or_le_2&last_cmd_deep_throat&high_5,感受着阴茎慢慢地从喉咙的深处拔出，{TargetName}捂着洁白的脖颈咳嗽了起来。\n“咳……咳咳……要结束的话，不要用那么激烈的。咳……”
 243,362,204,love_0_or_le_2&last_cmd_finger_insertion&high_5,被手指塞住的小穴随着手指慢慢地抽出变回了原本紧致的形状。\n揉着刚刚还被搅的有点酥麻的小腹，{TargetName}露出了些许疲倦的表情。\n“让我休息一会……呼……这种程度的话，这边自己等会会清理的。”
@@ -255,7 +255,7 @@ str,int,int,str,str
 250,210,204,high_1&sys_1,“嗯……“{Name}正认真地看着手上的时尚杂志，似乎在研究衣着搭配的样子。
 251,362,204,love_0_or_le_2&place_11&high_5,“结束了……就放开。”推开了贴在身上的{PlayerName}，{TargetName}有些慌张地抓起衣服遮住重要的地方。\n“……”，慢慢地恢复了冷静的{TargetName}低垂下视线不敢与{PlayerName}对视，“因为有其他人在，一直被看着的话很害羞，所以……对不起。”
 252,362,204,love_0_or_le_2&t_hp_low&high_2,“哈啊……哈……哈……”姣好的小腹辛苦地上下起伏着，{TargetName}似乎暂时脱力了的样子喘着气。\n“感觉，比训练还要辛苦啊……为什么……会有这么麻烦的事情……呼……”\n“让我……休息一会可以吗……呼……嗯……”闭上了眼睛慢慢调整呼吸的{TargetName}过了好一会才回复了力气。
-253,422,204,love_0_or_le_2&breast_1&sys_0,坐在{PlayerName}的股间，勉强地用胸部磨蹭阴茎的{TargetName}，露出了有些生气的表情。\n“这样根本包不住。”\n“{PlayerNickName}也知道这边的胸部，没有那么大吧，真是的。”虽然这样说{TargetName}还是努力地在用胸部刺激。
+253,422,204,love_0_or_le_2&t_breast_1&sys_0,坐在{PlayerName}的股间，勉强地用胸部磨蹭阴茎的{TargetName}，露出了有些生气的表情。\n“这样根本包不住。”\n“{PlayerNickName}也知道这边的胸部，没有那么大吧，真是的。”虽然这样说{TargetName}还是努力地在用胸部刺激。
 254,210,204,high_1&sys_1,“B4……A6……”{Name}拿着一本棋谱，专注地进行研究。\n“大炎的干员给我的这个，好像还挺有意思的。”
 255,210,204,high_1,“萨尔贡……好热，不是很想去……“坐在一边读书的白金，一边翻着旅游杂志一边在自己的笔记本上写着什么的样子。\n似乎已经写了很多的样子。
 256,210,204,high_1&sys_0,总感觉身边一起看书的{TargetName}似乎盯着其中一页看了很久的样子。\n好像是看到了喜欢的内容，“等一下。”，手指按上了想要翻页的手背。
@@ -375,21 +375,21 @@ str,int,int,str,str
 370,301,204,sys_0&love_0_or_le_2,“{PlayerNickName}，乱摸女孩子头是不好的。”\n{TargetName}把{PlayerName}的手从头顶上拿下来。
 371,302,204,sys_0&love_0_or_le_2,“突然摸女孩子的胸部，是不是有点太直接了。”\n虽然没有表现出很不高兴的样子，{TargetName}抓住了{PlayerName}的手从胸部上放下来。
 372,302,204,sys_0&love_4&high_2&t_desire_ge_7&t_virgin_0&instruct_judge_h,“……坏人……”被从后面抱住揉胸的{TargetName}娇嗔了一声。\n“必须给{PlayerNickName}这样的痴汉一点惩罚才行。”一边被揉着胸，一边翘起富有弹性的屁股顶在了{PlayerName}的股间。\n轻笑着转过头来的{TargetName}观察着{PlayerName}的表情，用臀部磨蹭着{PlayerName}重要的地方的同时，尾巴像是挑逗一样轻抚{PlayerName}的胸口。\n“袭胸这种事情……在床上做更好吧~{PlayerNickName}❤”
-373,302,204,sys_0&love_ge_1&love_0_or_le_2&breast_1,“{PlayerNickName}，随便地摸还不是恋人的女孩子的胸部可是算性骚扰的。”\n隔着布料的手指很明显地感受到了少女微微向上翘起的乳房。\n“难道说，{PlayerNickName}喜欢小一点的？”{TargetName}微微叹了口气将胸部上的手拿了下来。
+373,302,204,sys_0&love_ge_1&love_0_or_le_2&t_breast_1,“{PlayerNickName}，随便地摸还不是恋人的女孩子的胸部可是算性骚扰的。”\n隔着布料的手指很明显地感受到了少女微微向上翘起的乳房。\n“难道说，{PlayerNickName}喜欢小一点的？”{TargetName}微微叹了口气将胸部上的手拿了下来。
 374,302,204,sys_0&t_happy_mark_ge_1,{TargetName}一副若无其事的样子地看向了别的地方。\n“突然摸女孩子的胸部，色狼……”
 375,302,204,sys_0&love_ge_2,“……”似乎是正在思考怎么反应的{TargetName}盯着{PlayerName}。\n“……咿呀，有人性骚扰。”就像是念台词一样缺乏感情地叫出声。\n“……果然不喜欢吗？还以为{PlayerNickName}喜欢激烈一点的反应。”\n“还有，摸够了的话可以请{PlayerNickName}停手吗？”
 376,302,204,sys_0&love_ge_2,“虽然能够理解像{PlayerNickName}这样的雄性都喜欢少女柔软的身体，但是请不要摸太久可以吗？”\n微红着脸的{TargetName}叹了口气，抖抖耳朵。\n“最多再摸一分钟。”
 377,302,204,sys_0&t_happy_mark_ge_1&love_0_or_le_2,“女孩子的胸部有这么好摸吗？”\n被抚摸着胸口脸颊微红的{TargetName}淡淡地叹气，“虽然只是让{PlayerNickName}摸摸的话倒也没什么。”\n“但是这样一直摸的话，性骚扰也做的太过头了。”\n“就算是{TargetName}允许{PlayerNickName}可以偶尔摸一摸胸部，但是不是说可以纵容{PlayerNickName}，知道了吗？”
 378,302,204,sys_0&high_2&t_happy_mark_3,被揉着胸部的{TargetName}微红着脸，一副不在意的表情继续着手上的事情。\n“……{PlayerNickName}累了吗？突然摸女孩子的胸部。”\n“反正就算是要求{PlayerNickName}停止，{PlayerNickName}也只是糊弄一下人。”\n“与其反抗一下，还不如让{PlayerNickName}满足了比较好……而且我也不是很讨厌这种事情。”
 379,302,204,sys_0&love_0_or_le_2,“{PlayerNickName}，对下属进行性骚扰是不可以的吧。”\n被从背后抱住袭胸的{TargetName}无奈地叹了口气。\n“突然袭击上来的话，我也是会生气的，{PlayerNickName}”
-380,302,204,sys_0&love_ge_2&breast_1&t_happy_mark_ge_1,“色鬼。”\n{TargetName}瞪了{PlayerName}一眼，虽然发出了一些不满的声音还是放任{PlayerName}随意抚摸自己娇小的胸部。
+380,302,204,sys_0&love_ge_2&t_breast_1&t_happy_mark_ge_1,“色鬼。”\n{TargetName}瞪了{PlayerName}一眼，虽然发出了一些不满的声音还是放任{PlayerName}随意抚摸自己娇小的胸部。
 381,302,204,sys_0&love_ge_2&t_happy_mark_ge_1,“……嗯，嗯唔。”{TargetName}脸颊有些微红地盯着一直在揉自己的胸部的{PlayerName}。\n“{PlayerNickName}……{TargetName}的纵容也不是没有底线的。”\n身体却像是在期待着什么一样，挺起了乳尖让{PlayerName}抚摸了一会。\n“呼……嗯，差不多了啦。”
-382,302,204,sys_0&love_ge_3&breast_1,“每次摸的时候总感觉感觉要是能够再大点就好了。”\n{TargetName}在碎碎念的样子。\n用双手偷偷地比划了一下理想中的乳房的形状，一边被摸着一边叹了一口气。\n“反正像{PlayerNickName}这样的男性肯定喜欢大胸脯的成熟女性吧？”\n“嗯？小的也很喜欢……嗯……”{TargetName}又开心地摇晃起了尾巴。
+382,302,204,sys_0&love_ge_3&t_breast_1,“每次摸的时候总感觉感觉要是能够再大点就好了。”\n{TargetName}在碎碎念的样子。\n用双手偷偷地比划了一下理想中的乳房的形状，一边被摸着一边叹了一口气。\n“反正像{PlayerNickName}这样的男性肯定喜欢大胸脯的成熟女性吧？”\n“嗯？小的也很喜欢……嗯……”{TargetName}又开心地摇晃起了尾巴。
 383,302,204,sys_0&love_ge_3&high_2,“啊……变态”\n{TargetName}脸有点红的看向别的地方。\n“至少摸之前好好说一下，也不是说不让{PlayerNickName}摸什么的。”
 384,302,204,sys_0&love_ge_3&high_2&t_desire_ge_5&not_cloth_most_off,{TargetName}娇嫩的胸部隔着布料在{PlayerName}的手掌中上下起伏。\n“……能感觉到吗？我的心跳。”\n“现在正因为好色的{PlayerNickName}而兴奋着呢。说过很多次了，不要随便地摸女孩子的身体。”\n{TargetName}靠到{Name}的身上低声地耳语，“尤其是喜欢的女孩子呀，会兴奋的不行的。”
 385,302,204,sys_0&love_ge_3&high_2&t_desire_ge_5&t_exhibit_ge_5&not_cloth_most_off,“是不是掀起来一点直接摸更好呢？”\n{TargetName}坏笑着进一步靠近了{Name}，偷偷地自己向上掀开一些自己的衣服缝隙让{Name}伸进去抚摸。
 386,302,204,sys_0&love_0_or_le_2,“嗯？”因为突然被袭击了胸部，{TargetName}暂时地停止了思考的样子。\n“嗯，嗯？ 啊……嗯……”\n最终似乎是反应过来了的{TargetName}似乎苦恼地思考了一会，自暴自弃一样地选择无视了{Name}的摸胸行为。
-387,302,204,sys_0&love_0_or_le_2&breast_1,“……随你喜欢吧。”\n{TargetName}无奈地叹了口气，低垂着眼睛看着在自己胸部上揉弄的手掌。\n“……如果是在嫌弃太小了的话，还请不要继续抚摸可以吗？”{TargetName}抓着胸部上的手阻止了{Name}
+387,302,204,sys_0&love_0_or_le_2&t_breast_1,“……随你喜欢吧。”\n{TargetName}无奈地叹了口气，低垂着眼睛看着在自己胸部上揉弄的手掌。\n“……如果是在嫌弃太小了的话，还请不要继续抚摸可以吗？”{TargetName}抓着胸部上的手阻止了{Name}
 388,302,204,sys_0&place_11&t_exhibit_l_5&t_wear_bra,“变态。”\n因为自己原本就很短的上衣被掀起来，{TargetName}慌忙地压住了衣服。稍微有点生气了一样鼓着脸瞪了{Name}一眼。\n“要袭胸的话，至少也要到别人看不见的地方比较好吧”{TargetName}小声地跟{Name}抱怨着。
 389,303,204,sys_0&love_4&high_2&t_desire_ge_7&t_virgin_0,“嗯……嗯唔？”察觉到{Name}的小动作的{TargetName}若无其事地打开双腿，主动向后翘起了屁股让{TargetName}的手指滑进了股间。\n“嗯……嗯”头顶上的耳朵微微地抖着，稍微地踮起脚扭动着纤细的腰肢用柔软的地方按在{Name}的手指上摩擦。\n“这样摸女孩子的屁股，{PlayerNickName}真的是很变态呢。”{TargetName}坏笑着将更多柔软的部分塞入{Name}的手心中\n“这样乱摸的话……嗯……欣特莱雅可是要在床上全部收回来的哦。”
 390,303,204,sys_0&love_ge_1,“H的家伙，至少考虑一下女孩子的感受吧。”\n{TargetName}小声地抱怨着，偷偷瞟向{PlayerName}那边。
@@ -581,7 +581,7 @@ str,int,int,str,str
 576,101,204,sys_0&love_ge_2&place_furniture_ge_1,“……”坐下来的{TargetName}突然捏起自己的肚子，一副非常在意的表情的样子。\n“总感觉好像因为在岛上过得太悠闲了，多了一点肥肉……呃……”{TargetName}低低地发出了痛苦的声音。\n“果然应该少吃点甜食比较好吗？”
 577,101,204,sys_0&love_ge_2,“在卡西米尔当独立骑士的时候，从出道表演的奶油小生，到全身都是肌肉的彪形大汉，各种各样的人都有过一点接触。”\n“也有不少向我示好的帅哥，还有死缠烂打到最后动手动脚的麻烦家伙。唉……”\n“因为对那些家伙完全没有兴趣，所以一开始的时候就全部拒绝了。不过嘛，{PlayerNickName}有着他们所有没有的东西，稍微产生了一点兴趣。”\n“……具体的话，秘密。”
 578,401,204,love_0_or_le_2&love_ge_1&sys_0,“呼嗯……”{TargetName}紧张的身体在{PlayerName}的手指下慢慢放松下来了一些。\n“感觉……好了一些……”\n“被还不是恋人的人触碰身体，女孩子肯定会紧张的吧。”
-579,403,204,love_0_or_le_2&love_ge_1&breast_1&sys_0,“……小的{PlayerNickName}也喜欢吗？还是说只要是少女的胸部都喜欢。”\n“没什么{PlayerNickName}觉得舒服就好。”
+579,403,204,love_0_or_le_2&love_ge_1&t_breast_1&sys_0,“……小的{PlayerNickName}也喜欢吗？还是说只要是少女的胸部都喜欢。”\n“没什么{PlayerNickName}觉得舒服就好。”
 580,401,204,love_0_or_le_2&love_ge_1&sys_0,明显地能够感觉到{TargetName}身体在爱抚下更加放松了一些的。\n“呼……”{TargetName}姣好的小腹在{PlayerName}的手掌下平稳地起伏。\n“要是能……一直这样轻松地被抱着就好了。”
 581,403,204,love_0_or_le_2&love_ge_1&sys_0,“{PlayerNickName}，揉{TargetName}的胸会觉得很舒服吗？”\n“这样啊，{PlayerNickName}不介意的话，那我也没什么可抱怨的。”
 582,404,204,love_0_or_le_2&love_ge_1,“嗯……唔”似乎是因为被玩弄着相对更加敏感的乳头，{TargetName}发出了一些不满的哼哼的声音。\n“那个地方，不要这样捏，嗯……这样会很累的。”
@@ -626,7 +626,7 @@ str,int,int,str,str
 621,1009,204,penis_in_t_mouse&shoot_in_t_mouse&high_2&love_0_or_le_2,“嗯……嗯唔？”感受到了舌尖上鼓动起来的肉根的{TargetName}想要将阴茎推出去。\n“射精……等……嗯……咕唔。”后面的音节被黏糊糊的射入口中的精液堵了回去。\n“唔……”无奈地看着{PlayerName}的{TargetName}放弃了拔出射精中的阴茎，默默地等待着泄欲的结束。
 622,1009,204,love_0_or_le_2&love_ge_1&penis_in_t_mouse&shoot_in_t_mouse&high_2,“咕……嗯？”突然在口中被射入精液的{TargetName}皱起了眉头。\n带着幽怨的眼神，默默地用温热的口腔包裹着阴茎，将全部的精液接了下来。\n“哈……噗嗯”一结束就放开了{PlayerName}的{TargetName}，拿出纸巾将精液吐了出去。\n“不都说射之前拔出来……呃……嗯……好粘。”
 623,422,204,love_0_or_le_2&love_ge_1&sys_0,“这样真的会舒服吗？”{TargetName}努力地用手夹住自己的胸部磨蹭阴茎。\n“感觉好累……{PlayerNickName}还想要继续吗？”
-624,422,204,love_0_or_le_2&love_ge_1&breast_1&sys_0,“话说，这种不是，胸部大一点的做起来比较舒服吗？”\n{TargetName}勉强地用小小的乳头磨蹭阴茎，“为什么想要我做这种事情？”\n“……单纯的想要看这边出丑的话，我可是会生气的。”
+624,422,204,love_0_or_le_2&love_ge_1&t_breast_1&sys_0,“话说，这种不是，胸部大一点的做起来比较舒服吗？”\n{TargetName}勉强地用小小的乳头磨蹭阴茎，“为什么想要我做这种事情？”\n“……单纯的想要看这边出丑的话，我可是会生气的。”
 625,422,204,sys_0&love_ge_2,专心地用胸部抱住阴茎，上下撸动着的{TargetName}细微地吐息着。\n热流喷吐在了胸间的龟头上，“呼……呼……这个样子，舒服一点吗？”
 626,422,204,love_0_or_le_2&love_ge_1&high_2&sys_0,{TargetName}不是很情愿地用胸部抱住阴茎上下摇晃身体。\n“明明用别的方法，可以更舒服地弄出来吧，呼。”\n“这样子，感觉好费力。嗯。”
 627,423,204,love_0_or_le_2&love_ge_1&sys_0,“大概这样踩可以吗？”注意着脚上的力度的{TargetName}踩在{PlayerName}的阴茎上碾压。\n“主动把弱点露出来给女孩子踩……不能理解。”
@@ -634,7 +634,7 @@ str,int,int,str,str
 629,423,204,love_0_or_le_2&love_ge_1&t_wear_socks&place_furniture_ge_1&sys_0,“确定要用脚吗？”穿着{TagetSocName}的双足从两边压在了阴茎上。\n慢慢地夹住开始了撸动，“这样子感觉舒服吗？嘛，{PlayerNickName}觉得可以就好。”
 630,423,204,love_0_or_le_2&love_ge_1&t_wear_socks&sys_0,{TargetName}伸出灵巧的脚尖用脚趾夹住{PlayerName}的阴茎尖端慢慢地撸动着。\n明显能够感觉到{TagetSocName}特别的触感，“没有感觉不舒服的话，就这样可以吗？”\n“感觉触感太粗糙了的话停下来也可以。”
 631,1009,204,love_0_or_le_2&love_ge_1&penis_in_t_breast&high_2,俯视着在胸部中来回进出的龟头的{TargetName}察觉到了阴茎的抽动。\n“等，嗯！”下意识地别过脸避开高高地射出来的精液的{TargetName}无奈地看着射精中的{PlayerName}。\n“……射出来之前可以好好地说一声吗？”
-632,1009,204,love_0_or_le_2&love_ge_1&breast_1&shoot_in_t_breast&high_2,“诶……是不是{PlayerNickName}太兴奋了。真的射出来了。”看着在自己的起伏着的胸部上吐出精液的阴茎{TargetName}露出了一些惊讶的表情。\n“……就算是被射在胸上也不能算是某种表扬吧。”
+632,1009,204,love_0_or_le_2&love_ge_1&t_breast_1&shoot_in_t_breast&high_2,“诶……是不是{PlayerNickName}太兴奋了。真的射出来了。”看着在自己的起伏着的胸部上吐出精液的阴茎{TargetName}露出了一些惊讶的表情。\n“……就算是被射在胸上也不能算是某种表扬吧。”
 633,1009,204,love_0_or_le_2&love_ge_1&shoot_in_t_foot&high_2,看着在自己的脚趾间涌出来的精液，{TargetName}露出了奇怪的表情。\n“被射在脚上，总感觉很奇怪……”{TargetName}慢慢抬起被射的黏黏的脚尖，困扰地歪着头看着{PlayerName}
 634,1009,204,love_0_or_le_2&love_ge_1&penis_in_t_foot&high_2,“……！”{TargetName}下意识地放开了踩在阴茎上的脚。\n“是不是踩得还是太用力了。”{TargetName}有点担心地看着{PlayerName}，“只是因为感觉很舒服就射精了吗？”\n“能因为脚趾兴奋起来，{PlayerNickName}有时间询问一下医疗部的人的建议比较好吧。”
 635,1009,204,love_ge_1&penis_in_t_foot&t_wear_socks&shoot_in_t_foot&high_2,“啊……射出来了。”正用{TagetSocName}包裹着的脚底按压阴茎的{TargetName}，露出了困扰的表情。\n“虽然{PlayerNickName}能够射出来这边也高兴，但是感觉脚上黏糊糊……想脱掉。”\n{TargetName}抬起了穿着被精液濡湿的{TagetSocName}的脚底，淡淡地叹了口气。
@@ -657,7 +657,7 @@ str,int,int,str,str
 652,427,204,love_0_or_le_2&love_ge_1&last_cmd_blowjob_type&t_kiss_0&sys_0,“不要一直盯着……可以吗？”叼着阴茎收拾起散乱的秀发的{TargetName}，皱着眉头抓住了没法用嘴巴继续叼住的肉根。\n“嗯……唔，感觉比刚才流出来了更多的东西。”苦恼的{TargetName}一边撸动着阴茎一边小小地吞咽着口中装不下的体液。
 653,427,204,love_0_or_le_2&love_ge_1&high_2&t_kiss_0&sys_0,“又要用手又想要用嘴，感觉好累。”{TargetName}敷衍地用用嘴唇包裹着阴茎撸动着。\n“嗯……哈啊，已经做过了所以可以休息一会了吗？嘴一直张着感觉很酸。”
 654,428,204,love_0_or_le_2&love_ge_1&sys_0,低下头努力地用嘴唇亲吻胸口的阴茎的{TargetName}，“{PlayerNickName}，不要乱动。”\n“嗯……嗯唔。”皱着眉头的{TargetName}辛苦地上下移动着身体用胸部套弄起{TargetName}的阴茎。
-655,428,204,love_0_or_le_2&love_ge_1&breast_1&sys_0,将小巧的乳头按在阴茎上，俯下头含住阴茎的{TargetName}小小地在股间摇晃着脑袋。\n“这个姿势。不好做……嗯。”闭上一只眼睛努力地满足要求的{TargetName}发出了抱怨，“不要要求那么多可以吗？”
+655,428,204,love_0_or_le_2&love_ge_1&t_breast_1&sys_0,将小巧的乳头按在阴茎上，俯下头含住阴茎的{TargetName}小小地在股间摇晃着脑袋。\n“这个姿势。不好做……嗯。”闭上一只眼睛努力地满足要求的{TargetName}发出了抱怨，“不要要求那么多可以吗？”
 656,428,204,love_0_or_le_2&love_ge_1&high_2&sys_0,“可以不做吗？一边用胸部一边还要低下头来口交，感觉很难呼吸……”\n“啊……”看着从自己的胸部中用力地探出来的龟头，{TargetName}无奈地吐出一口气。\n“好吧，如果{PlayerNickName}能够快点舒服起来的话，那也可以。”
 657,429,204,love_0_or_le_2&love_ge_1&sys_0,“嗯……啾嗯……”用力地吮吸插入的阴茎的{TargetName}前后摆动着头，滑滑的舌头垫在阴茎的下面用力地挤压。\n“嗯……感觉像是吸饮料一样，怪怪的……”
 658,429,204,love_0_or_le_2&love_ge_1&sys_0,“咳……嗯”间断地吸着阴茎的{TargetName}皱起眉头，“不好的味道。”\n忙碌地处理着流入口中的体液的{TargetName}断断续续地吮吸着进行真空口交。
@@ -980,7 +980,7 @@ str,int,int,str,str
 975,1010,204,penis_in_t_mouse&shoot_in_t_mouse&high_2&love_0_or_le_2,“嗯……咕……嗯！？”正用柔软的舌尖托举起发抖的肉龟舔舐的{TargetName}，察觉到了在口中爆发的热流。\n“咕……嗯，咕……”无奈地只能用嘴先接住的{TargetName}，因为大量射精，嘴角也溢出了装不下的精液。
 976,1010,204,love_0_or_le_2&love_ge_1&penis_in_t_mouse&shoot_in_t_mouse&high_2,“咕嗯……咕……”闭上眼睛，皱着眉头的{TargetName}含着{PlayerName}的阴茎安静地用嘴承接射出的大量精浆。\n“嗯……，嘴角都，咕……”在耐心地等待射精结束之后，{TargetName}仰着头让阴茎退了出去。\n“嗯……噗嗯……咳……，{PlayerNickName}射的太多了，刚刚好像不小心咽下去一点。”吐出了满口精液的{TargetName}幽怨地看向了{PlayerName}。
 977,1010,204,love_0_or_le_2&love_ge_1&penis_in_t_breast&high_2,“欸？”突然地从{TargetName}的胸部间高高地喷出了乳白的液流，沉甸甸的落下来淋得到处都是。\n“射了好多啊，胸部都有点变得黏黏糊糊的。”\n“结束的话可以麻烦拿出来吗？一直夹着也会感觉累的。”\n
-978,1010,204,love_0_or_le_2&love_ge_1&breast_1&shoot_in_t_breast&high_2,“……？”{Name}用怪异地眼神看着正在射精中的{PlayerName}，勉强地使用乳尖持续地刺激龟头。\n“我说呀{PlayerNickName}，这是不是射的比正常的量还要多。难道说{PlayerNickName}很喜欢小小的乳房吗？”
+978,1010,204,love_0_or_le_2&love_ge_1&t_breast_1&shoot_in_t_breast&high_2,“……？”{Name}用怪异地眼神看着正在射精中的{PlayerName}，勉强地使用乳尖持续地刺激龟头。\n“我说呀{PlayerNickName}，这是不是射的比正常的量还要多。难道说{PlayerNickName}很喜欢小小的乳房吗？”
 979,1010,204,love_0_or_le_2&love_ge_1&shoot_in_t_foot&high_2,{TargetName}用脚冷冷地踩在大量射精中的阴茎上的{Name}，随着叽咕爆射的声音叹出一口气。\n“用脚就射出来这么多的话，{PlayerNickName}迟早会变得奇怪的哦。”\n“虽然对这边来说比较方便啦。”说着{TargetName}用脚背挑起射精的肉尖，让阴茎能够顺利地射出来。
 980,1010,204,love_0_or_le_2&love_ge_1&penis_in_t_foot&high_2&shoot_in_t_foot,{TargetName}用双脚从两边夹住肉根底部，一顿一顿地前后撸动起大量射精中的肉根。\n“{PlayerNickName}射了好多出来。喜欢被用脚欺负吗？”{TargetName}从两边用力的踩紧，挤着肉根左右甩动着甩干净之后才放开了射的湿乎乎的阴茎。\n“这么多流下来，脚底都弄脏了，滑溜溜的不好走路。”{TargetName}嫌弃地看了眼痉挛的肉茎。
 981,1010,204,love_ge_1&penis_in_t_foot&t_wear_socks&high_2,穿着{TagetSocName}的玉足稍微用力地踩在了噗滋噗滋像是水袋一样射精的肉棒肚子上。\n“袜子的触感很舒服吧，滑溜溜的。”{TargetName}面无表情地歪着头，用脚趾蹭着大量射精的肉根挑逗着抚摸。\n“用脚性处理也能射出来这么多，{PlayerNickName}也真是变态。”
@@ -1089,7 +1089,7 @@ str,int,int,str,str
 1084,361,204,place_covert&sys_0&love_ge_2,在隐蔽的角落被{PlayerName}堵住，轻轻推搡着{PlayerName}压上来的胸口的{TargetName}飘逸起视线。\n“虽然说，已经同意和{PlayerNickName}做了，不要这样很有气势地压上来可以吗？”\n“再说了，女孩子也需要前戏什么的调节一下气氛。啊，又在抓胸部……”声音逐渐微弱，直到被{PlayerName}抱住，“色狼{PlayerNickName}……”
 1085,362,204,love_ge_2,“呼……感觉还不错，大概。”\n“只是能跟{PlayerNickName}一起度过一段悠闲的时间。”{TargetName}眯起眼睛懒散地休息了一会。
 1086,362,204,hp_low&high_2&love_ge_2,“辛苦啦，{PlayerNickName}。”\n“很累的话就让我来好了。”{TargetName}拿起毛巾帮助{PlayerName}清理掉汗水和体液，重点地擦干净了已经难以勃起的阴茎。\n“这次好像做的有点激烈了呢。倒是希望{PlayerNickName}能够多多提升一下体能。”\n“毕竟……女孩子还是更喜欢被动一点的多。”
-1087,362,204,last_cmd_breast_caress&love_ge_2&breast_1&high_5,安静地坐在{PlayerName}的怀里被慢慢地揉着胸部休息的{TargetName}，察觉到了手指上慢下来的动作而睁开了眼睛。\n“已经结束了吗？”\n“真是的，到最后也要揉胸部。”红着脸的{TargetName}将散落的衣服穿上。\n“{PlayerNickName}是喜欢更大一点的吗？毕竟大一点的摸起来好像会更加舒服。也不知道多让{PlayerNickName}揉胸会不会变大。”
+1087,362,204,last_cmd_breast_caress&love_ge_2&t_breast_1&high_5,安静地坐在{PlayerName}的怀里被慢慢地揉着胸部休息的{TargetName}，察觉到了手指上慢下来的动作而睁开了眼睛。\n“已经结束了吗？”\n“真是的，到最后也要揉胸部。”红着脸的{TargetName}将散落的衣服穿上。\n“{PlayerNickName}是喜欢更大一点的吗？毕竟大一点的摸起来好像会更加舒服。也不知道多让{PlayerNickName}揉胸会不会变大。”
 1088,362,204,love_0_or_le_2&last_cmd_clit_caress&high_5,“呼……嗯……嗯。”微微抖着腿的{TargetName}意犹未尽地看向了{PlayerName}。\n“已经，诶……结束了吗？呼。”\n“女孩子的下面都很敏感的，被摸的话肯定会舒服的嘛。”害羞地夹紧了湿乎乎的下体的{TargetName}移开了视线。
 1089,362,204,last_cmd_deep_throat&love_ge_2&high_5,努力地用深喉满足{PlayerName}的{TargetName}眯起眼睛放开了退出去的阴茎。\n“呼……嗯，呼……”喘息着的{TargetName}扶着{PlayerName}的腰休息了一会。\n“嗯……最后都要结束了还要把阴茎插到女孩子的嘴里那么深的地方。”\n“是不是要我记住{PlayerName}的气味，做好自己的标记呀。”
 1090,362,204,last_cmd_finger_insertion&love_ge_2&high_5,“呼嗯……”伴随着轻柔的呻吟，从阴道中拔出来的手指拉出了一条细微的丝线。\n“里面舒服吗？呼嗯……”\n“这个样子插在里面告诉女孩子暂时不会继续用这个身体了。{PlayerNickName}在想什么呢。”
@@ -1171,7 +1171,7 @@ str,int,int,str,str
 1166,301,204,high_1&sys_0&love_ge_1&work_time&have_office_work_need_to_do&t_is_assistant,“……啊，头发乱掉了。”\n从{PlayerName}的魔爪下挣脱的{TargetName}，用橡皮筋重新扎紧了马尾。\n“这只是助理服务的一部分，下次摸之前希望{PlayerNickName}能先多处理完一些工作。”
 1167,302,204,high_1&sys_0&work_time&have_office_work_need_to_do&love_ge_2&t_is_assistant,“啊……”被突然袭击的{TargetName}小小地叫了一声，但是没有怎么反抗。\n“助理手册上没有说可以让{PlayerNickName}可以随便摸胸的吧。”\n“要是{PlayerNickName}工作的时候对其他当助理的干员也这样动手动脚的话，让那只老猞猁知道估计会生气的。这次就算是帮助{PlayerNickName}专注工作的特别服务了。”
 1168,302,204,high_1&sys_0&love_ge_1&t_is_assistant,“……{PlayerNickName}？”\n“心情变好了一点了吗？”歪着头等待着{PlayerName}停下揉胸的{Name}，轻轻叹气。\n“{PlayerNickName}，再摸下去就要超出助理帮助工作的范畴，变成职场性骚扰了哦。”
-1169,302,204,high_1&sys_0&breast_1&love_0_or_le_2&work_time&t_is_assistant,“我说……{PlayerNickName}。”\n“虽然有听说男性揉胸的话会变得更聪明——这样的奇怪的谣传。”\n“但是还是别的胸部大一点的干员担任助理时候，{PlayerNickName}再去摸比较好吧。”\n{TargetName}露出了无奈的眼神看着{PlayerName}，“差不多可以停了。”
+1169,302,204,high_1&sys_0&t_breast_1&love_0_or_le_2&work_time&t_is_assistant,“我说……{PlayerNickName}。”\n“虽然有听说男性揉胸的话会变得更聪明——这样的奇怪的谣传。”\n“但是还是别的胸部大一点的干员担任助理时候，{PlayerNickName}再去摸比较好吧。”\n{TargetName}露出了无奈的眼神看着{PlayerName}，“差不多可以停了。”
 1170,301,204,high_1&sys_0&love_ge_1&work_time&t_is_assistant,“这算是某种对下属的奖赏吗？”\n故意歪着头让抚摸的{TargetName}抓住头顶上抚摸的手掌，“比起这种奖励还是希望{PlayerNickName}能多用心点经营罗德岛。”\n“嘛，虽然并不反感就是了。”
 1171,303,204,high_1&sys_0&love_ge_1&work_time&t_is_assistant,“……！？”被突然抚摸屁股的{TargetName}，像是炸毛了一样高高地竖起尾巴搭在了抚摸的手掌上。\n“{PlayerNickName}……下次就算是这种事情也请事先说一下可以吗？”\n“突然摸女孩子的重要部位会很吓人的。就算是对贴身的助理也一样。”
 1172,303,204,high_1&sys_0&love_ge_1&work_time&have_office_work_need_to_do&t_is_assistant,“有什么事情吗？”查看着今天的工作内容的{TargetName}转过头看了过来。\n“……嗯。”随着{PlayerName}揉捏起颇有弹性的屁股，{TargetName}无奈地叹了口气。\n“{PlayerNickName}，摸助理的屁股不是不可以，但是今天的公务工作还没做完呢。”
@@ -1287,7 +1287,7 @@ str,int,int,str,str
 1282,101,204,high_1&t_unconscious_flag_4&sys_0&t_in_hypnosis,和{TargetName}讨论了一下患有源石病的病人们。\n“嗯……上次也有偷看医疗部的记录，好像{PlayerNickName}的遗传基因好像可以帮助抑制矿石病。”\n“虽然说正常考虑的话使用机器效率会高一点，不过{PlayerNickName}喜欢更加温和的方式吧。”
 1283,101,204,high_1&t_unconscious_flag_4&t_in_hypnosis&sys_0,聊天的时候，{TargetName}无意识地撩起了胸前的布料，隐隐约约能够看到乳房的形状。\n“……？怎么了？胸部的话，怎么样都好吧，比起这个。”\n“刚刚说到哪里了来着。”
 1284,101,204,high_1&t_unconscious_flag_4&sys_0&t_in_hypnosis,“卡西米尔，总感觉好像没有什么回去的理由了。”\n“啊，除了手头上的这些麻烦事以外。”\n{TargetName}扳着指头数了好久，但是到最后也没数完。\n“要是能痛快地从老东家那里离职就好了，唉，这样的话可以在罗德岛做各种各样的事情。”\n“毕竟在外面不能被性骚扰嘛。”
-1285,101,204,high_1&t_unconscious_flag_4&sys_0&breast_1&t_in_hypnosis,“{PlayerNickName}觉得胸部大点比较好吗？”突然转到了稍微露骨的话题的{TargetName}，用手托起自己的鸽乳比较着大小。\n“毕竟好像给{PlayerNickName}摸的时候，{PlayerNickName}不是怎么兴奋的样子。”\n“不过要我说的话，单凭胸部大小评价女孩子的价值的话还是太肤浅了。”
+1285,101,204,high_1&t_unconscious_flag_4&sys_0&t_breast_1&t_in_hypnosis,“{PlayerNickName}觉得胸部大点比较好吗？”突然转到了稍微露骨的话题的{TargetName}，用手托起自己的鸽乳比较着大小。\n“毕竟好像给{PlayerNickName}摸的时候，{PlayerNickName}不是怎么兴奋的样子。”\n“不过要我说的话，单凭胸部大小评价女孩子的价值的话还是太肤浅了。”
 1286,101,204,high_1&t_unconscious_flag_4&sys_0&t_in_hypnosis,“嗯……嗯。”{TargetName}和{PlayerName}有一搭没一搭地聊着天。\n“说起来啊，我好像在贸易区看到了一家奇怪的商店在卖戒指。”\n“虽然说有点想要，但是好像成为恋人之后要做的事情跟现在也没差别。”\n“无非就是让人摸胸部，sex什么的。想要的理由？”\n{TargetName}的眼睛眨了眨，“秘密。”
 1287,101,204,high_1&t_unconscious_flag_4&sys_0&t_has_been_hypnosis&t_in_hypnosis,“说起来，{PlayerNickName}知道为什么游乐园说是适合恋人去吗？”\n{TargetName}有些不解的样子，“说到底，恋人不也就是搂搂抱抱那样子的，开心的时候做爱，跟平时好像没有什么差别？”\n“不如说，恋人到底是什么样子的？”\n{TargetName}漂亮的眼睛蒙上了一层困惑的迷雾，但是很快就消散了。
 1288,101,204,high_1&sys_1&in_hypnosis&unconscious_flag_4,“{PlayerNickName}有什么特别喜欢的衣服吗？”\n被{Name}搭上了话，“常规的布料多一点的还是大胆一点的款式？”\n“考虑到{PlayerNickName}的需求，把重要的地方露出来是不是更加方便一点。啊，如果会导致下垂那就不好了。”
@@ -1351,10 +1351,10 @@ str,int,int,str,str
 1346,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_wear_bra,拍了拍大腿示意{PlayerName}过来的{TargetName}毫不在意地在{PlayerName}的面前调整了一下{TagetBraName}。\n“{PlayerNickName}能看到吗？”{TargetName}故意露出了自己的下乳在躺下的{PlayerName}面前。\n“稍微休息一下吧。”
 1347,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4,感受着{PlayerName}喷吐在小腹上的呼吸，{TargetName}一脸平静地看着手上的终端。\n“{PlayerNickName}不要捣乱。”察觉到{PlayerName}恶作剧地偷偷亲吻小腹，{TargetName}拍了拍{PlayerName}的头。\n“一直给{PlayerNickName}当枕头也是很辛苦的。”
 1348,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4,姣好的小腹在{PlayerName}的面前轻柔地起伏，圆润的双腿安静地枕在身下，眼前的双乳如同新生的嫩芽一样微微向上翘起，无不显示着这具少女的躯体的美好。\n“有在听我说话吗？{PlayerNickName}。”{TargetName}叹了口气戳了戳{PlayerName}的脸。\n“差不多到时间了，虽然让{PlayerNickName}再多躺一会也没什么关系，但是腿有点酸了。”
-1349,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&breast_3,“嗯咻……”微微摇晃的巨乳压到了正躺在大腿上的{PlayerName}的脸颊上。\n{TargetName}拿着手上的小饼干慢慢咀嚼，“男孩子肯定喜欢这个的对吧，被女孩子的巨乳压着。”\n{TargetName}的巨乳漂亮地向上翘起，在{PlayerName}的脸上撑起一片阴影。\n“虽然给{PlayerNickName}一直膝枕也没有什么关系，但是这个样子不好拿东西，唉。”
-1350,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&breast_4,暂时脱掉了胸罩的巨大的双乳，即使不用弯腰也能砸在了{PlayerName}的脸上，{TargetName}倒是像是放松了下来一样瘫软下了身体。\n“有人帮忙托着轻松多了，呼唔……一直带着说实话有点太累了。”\n“反正{PlayerNickName}这样的色狼喜欢这个样子不是吗，被巨乳砸到迷迷糊糊的。”\n{TargetName}平淡地将下乳压在了{TargetName}的鼻子上，“{PlayerNickName}也觉得舒服对吧，那就行。”
-1351,314,204,high_1&sys_0&breast_3&love_ge_2,“嗯咻……”微微摇晃的巨乳压到了正躺在大腿上的{PlayerName}的脸颊上。\n“啊，抱歉，想要去拿饼干，胸部太大了还是有点碍事……”勉强能从乳尖上看到脸的{TargetName}一只手拿着饼干，一只手像是防止走光一样地托起自己的巨乳。\n即使不用{TargetName}托着，软乎乎的巨乳也能漂亮地向上翘起，在{PlayerName}的脸上撑起一片阴影。\n“不许向上看，唉，反正刚刚{PlayerNickName}肯定也爽过了吧，现在就好好休息。”
-1352,314,204,high_1&sys_0&breast_4&love_ge_2,{TargetName}巨大的双乳，即使不用弯腰也能砸在了{PlayerName}的脸上，{TargetName}倒是有点在意地想要调整姿势不让乳球那么大的压在{PlayerName}的脸上。\n“唉……算了，这样也行，我也能轻松一点”最终放弃了的{TargetName}叹了口气。\n“色狼{PlayerNickName}，难不成就是想要被洗面奶才想要做膝枕？”\n得到了肯定的答复的{TargetName}一下子羞红了被爆乳挡住的脸，生气地将乳球更大面积地压在了脸上。\n“变态，现在就憋死好了……”，压在鼻尖上的柔乳中很明显地传来了一股少女的乳香。
+1349,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_breast_3,“嗯咻……”微微摇晃的巨乳压到了正躺在大腿上的{PlayerName}的脸颊上。\n{TargetName}拿着手上的小饼干慢慢咀嚼，“男孩子肯定喜欢这个的对吧，被女孩子的巨乳压着。”\n{TargetName}的巨乳漂亮地向上翘起，在{PlayerName}的脸上撑起一片阴影。\n“虽然给{PlayerNickName}一直膝枕也没有什么关系，但是这个样子不好拿东西，唉。”
+1350,314,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_breast_4,暂时脱掉了胸罩的巨大的双乳，即使不用弯腰也能砸在了{PlayerName}的脸上，{TargetName}倒是像是放松了下来一样瘫软下了身体。\n“有人帮忙托着轻松多了，呼唔……一直带着说实话有点太累了。”\n“反正{PlayerNickName}这样的色狼喜欢这个样子不是吗，被巨乳砸到迷迷糊糊的。”\n{TargetName}平淡地将下乳压在了{TargetName}的鼻子上，“{PlayerNickName}也觉得舒服对吧，那就行。”
+1351,314,204,high_1&sys_0&t_breast_3&love_ge_2,“嗯咻……”微微摇晃的巨乳压到了正躺在大腿上的{PlayerName}的脸颊上。\n“啊，抱歉，想要去拿饼干，胸部太大了还是有点碍事……”勉强能从乳尖上看到脸的{TargetName}一只手拿着饼干，一只手像是防止走光一样地托起自己的巨乳。\n即使不用{TargetName}托着，软乎乎的巨乳也能漂亮地向上翘起，在{PlayerName}的脸上撑起一片阴影。\n“不许向上看，唉，反正刚刚{PlayerNickName}肯定也爽过了吧，现在就好好休息。”
+1352,314,204,high_1&sys_0&t_breast_4&love_ge_2,{TargetName}巨大的双乳，即使不用弯腰也能砸在了{PlayerName}的脸上，{TargetName}倒是有点在意地想要调整姿势不让乳球那么大的压在{PlayerName}的脸上。\n“唉……算了，这样也行，我也能轻松一点”最终放弃了的{TargetName}叹了口气。\n“色狼{PlayerNickName}，难不成就是想要被洗面奶才想要做膝枕？”\n得到了肯定的答复的{TargetName}一下子羞红了被爆乳挡住的脸，生气地将乳球更大面积地压在了脸上。\n“变态，现在就憋死好了……”，压在鼻尖上的柔乳中很明显地传来了一股少女的乳香。
 1353,316,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_wear_pan,“哦，给，这是今日份的内裤。”\n{TargetName}毫不在意地当面脱掉了内裤进入了真空状态。
 1354,316,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_wear_pan,“啊，差点忘记了。”{TargetName}像是被提醒了一样开始脱掉内裤。\n“先给你。”连裤子都还没穿回来，{TargetName}就这样一脸平静地露出着下体，将热乎乎的内裤交了过来。
 1355,316,204,high_1&t_in_hypnosis&sys_0&t_unconscious_flag_4&t_not_wear_pan,“现在没有穿内裤，没办法给{PlayerNickName}。”\n{TargetName}没有什么表情地拉开了自己的{TagetSkiName}，将光溜溜的饱满的耻丘露出给了{PlayerName}看。\n“要内裤的话，下次再说吧。”
@@ -1867,7 +1867,7 @@ str,int,int,str,str
 1862,1011,204,penis_in_t_mouse&shoot_in_t_mouse&high_2&love_0_or_le_2,“啊……。”正用舌头黏在一鼓一鼓地发抖的肉尖上的{TargetName}，眯着眼睛用粗糙的舌面摩擦起马眼催促射精。\n“嗯！”超出预期的大量精液在舌尖的催促下喷出，灌进了{TargetName}的小嘴中从嘴角飞溅着溢了出来。\n慢慢用舌头垫着喷射中的肉龟摇晃的{TargetName}，像是放弃了一样闭上眼睛，好好承接住了精液，“慢……嗯呼唔……”\n“……呼……只是给好好忍耐的{PlayerNickName}，一点额外的奖励。”
 1863,1011,204,love_0_or_le_2&love_ge_1&penis_in_t_mouse&shoot_in_t_mouse&high_2,“呼……呼唔嗯。”安静地在肉茎下，用嘴穴温柔地包裹住发颤的肉尖的{TargetName}，眯起眼睛用舌头接住了大量地喷射进来的浓精。\n很快吸在了肉根上的小嘴被精液撞得满满的，白色的粘液从张开的嘴边溢了出来流到了脖子上。\n过了好一会才结束了射精，从黏黏糊糊，射到一片白色的嘴穴中拔出了肉棒，“……呼，噗哈。……用嘴接住，只是额外的服务。”\n{TargetName}被精液弄脏了的脸害羞地别过去，看向别的地方，“倒是{PlayerNickName}的身体没问题吗？一次性射出来那么多。”
 1864,1011,204,love_0_or_le_2&love_ge_1&high_2&penis_in_t_breast,一瞬间浓白的水柱高高地从胸口射了出来，接着啪嗒啪嗒地落下。\n“哈啊……吓了一跳，”{TargetName}努力地用胸部包裹住胡乱抽搐着射精的阴茎，“好了，知道{PlayerNickName}很兴奋，但是不要射的到处都是。”\n“嗯……，好难夹住，精液一直在喷出来。”
-1865,1011,204,love_0_or_le_2&love_ge_1&breast_1&shoot_in_t_breast&high_2,“唔啊……”脸红到不行的{TargetName}看着{PlayerName}的肉根粘稠地在小巧的乳尖上涂抹白色的奶油。\n“能用胸部射出来这么多，{PlayerNickName}是变态吗？”\n“唔，都从上面流到小腹上了。……女孩子的胸部又不是植物，才不要{PlayerNickName}用精液浇灌变大。”羞恼的{TargetName}瞪了{PlayerName}一眼。
+1865,1011,204,love_0_or_le_2&love_ge_1&t_breast_1&shoot_in_t_breast&high_2,“唔啊……”脸红到不行的{TargetName}看着{PlayerName}的肉根粘稠地在小巧的乳尖上涂抹白色的奶油。\n“能用胸部射出来这么多，{PlayerNickName}是变态吗？”\n“唔，都从上面流到小腹上了。……女孩子的胸部又不是植物，才不要{PlayerNickName}用精液浇灌变大。”羞恼的{TargetName}瞪了{PlayerName}一眼。
 1866,1011,204,love_0_or_le_2&love_ge_1&shoot_in_t_foot&high_2,用一直脚的脚背做垫子，另一只脚压住了肉龟细腻地摩擦着将射精中的阴茎压弯，开始用双足研磨。\n“呼……脚痒痒的，{PlayerNickName}还没结束吗？”当作垫子的脚背已经弯曲被湿乎乎的精液覆盖上了一层粘液，肉尖还顶在脚底上一阵阵地抽搐。\n“唉，用正常的方法处理会更舒服哦，{PlayerNickName}。这样射对身体负担会比较大吧。”双足无情地夹住中间敏感的射精肉棒，接着严厉地研磨起来。
 1867,1011,204,love_0_or_le_2&love_ge_1&penis_in_t_foot&high_2&shoot_in_t_foot,察觉到已经过度忍耐的肉茎即将喷射的{TargetName}，用光滑的脚底踩在了{PlayerName}发抖的肉尖上压倒，接着按在了小腹上仔细地研磨。\n“辛苦了，{PlayerNickName}。不过是不是射的太多了，没问题吗？”{TargetName}微微红着脸，用脚趾夹住了喷射中的肉冠按摩起来。\n“这样对{PlayerName}来说已经是很棒了奖励的对吧，被女孩子踩着射精，变态。”
 1868,1011,204,love_ge_1&penis_in_t_foot&t_wear_socks&high_2,细腻的{TagetSocName}触感从两边夹住了{PlayerName}已经忍耐到不行的肉龟，接着稍微的用劲，像是鼓掌一样啪唧地踩住中间的肉根开始研磨。\n噗滋，噗，噗滋。\n在玉足之间激烈地喷射出了巨量的精液，“射的很厉害呢，{PlayerNickName}。袜子的触感很棒吗？啊，好像射的更加厉害了。”
