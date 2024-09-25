@@ -1856,6 +1856,8 @@ def character_morning_salutation_flag_1(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.morning_salutation = 1
+    # 如果此时还没有完成晚安问候，则清除晚安问候flag
+    character_data.sp_flag.night_salutation = 0
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1872,6 +1874,8 @@ def character_night_salutation_flag_1(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.night_salutation = 1
+    # 如果此时还没有完成早安问候，则清除早安问候flag
+    character_data.sp_flag.morning_salutation = 0
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
