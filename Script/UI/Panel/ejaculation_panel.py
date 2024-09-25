@@ -203,12 +203,17 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 计算精液流动
             calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
             # 获取射精文本
-            if part_type == 0:
-                part_name = game_config.config_body_part[part_cid].name
-                now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
-            elif part_type == 1:
-                cloth_text = game_config.config_clothing_type[part_cid].name
-                now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
+            # 只有在交互对象正确的时候才会显示对方的名字和部位
+            if target_character_id > 0:
+                if part_type == 0:
+                    part_name = game_config.config_body_part[part_cid].name
+                    now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
+                elif part_type == 1:
+                    cloth_text = game_config.config_clothing_type[part_cid].name
+                    now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
+            # 否则只显示自己的名字
+            else:
+                now_text = character_data.name + semen_text
         # 戴着避孕套射精时
         else:
             cache.shoot_position = 0
