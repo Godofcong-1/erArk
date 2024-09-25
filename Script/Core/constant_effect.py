@@ -742,7 +742,7 @@ class BehaviorEffect:
     TARGET_ADD_HUGE_LUBRICATION = 1001
     """ 道具_使用效果 交互对象增加大量润滑（润滑液） """
     TARGET_ADD_HUGE_DESIRE_AND_SUBMIT = 1002
-    """ 道具_使用效果 交互对象增加大量欲情和屈服（媚药） """
+    """ 道具_使用效果 交互对象增加大量欲情和屈服和欲望值（媚药） """
     TARGET_ENEMA = 1003
     """ 道具_使用效果 交互对象A灌肠并增加中量润滑 """
     TARGET_ENEMA_END = 1004

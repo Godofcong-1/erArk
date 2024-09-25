@@ -2964,7 +2964,7 @@ def handle_target_add_huge_desire_and_submit(
         now_time: datetime.datetime,
 ):
     """
-    交互对象增加大量欲情和屈服（媚药）
+    交互对象增加大量欲情和屈服和欲望值（媚药）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3002,6 +3002,8 @@ def handle_target_add_huge_desire_and_submit(
     target_change.status_data.setdefault(15, 0)
     target_change.status_data[15] += now_add_lust
 
+    # 欲望值
+    target_data.desire_point = 100
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_ENEMAS)
 def handle_use_enemas(

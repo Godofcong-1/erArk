@@ -378,7 +378,7 @@ cid,effect_name,effect_type,effect
 995,NPC_MAKE_FOOD_TO_BAG,道具_增减,NPC随机制作一个食物，并补充到自己背包中
 
 1001,TARGET_ADD_HUGE_LUBRICATION,道具_使用效果,交互对象增加大量润滑（润滑液）
-1002,TARGET_ADD_HUGE_DESIRE_AND_SUBMIT,道具_使用效果,交互对象增加大量欲情和屈服（媚药）
+1002,TARGET_ADD_HUGE_DESIRE_AND_SUBMIT,道具_使用效果,交互对象增加大量欲情和屈服和欲望值（媚药）
 1003,TARGET_ENEMA,道具_使用效果,交互对象A灌肠并增加中量润滑
 1004,TARGET_ENEMA_END,道具_使用效果,交互对象结束A灌肠并增加中量润滑
 1005,TARGET_ADD_URINATE,道具_使用效果,交互对象尿意值全满
