@@ -520,7 +520,7 @@ class AUTHOR_FLAG:
     """角色作者变量结构体"""
     def __init__(self):
         self.chara_int_flag_dict: dict = {}
-        """ 角色的int类型flag字典，最大长度为10，初始化为0 """
+        """ 角色的int类型flag字典，最大长度为50，默认值为0 """
         self.chara_str_flag_dict: dict = {}
         """ 角色的str类型flag字典 """
         self.chara_float_flag_dict: dict = {}

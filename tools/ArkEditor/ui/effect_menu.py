@@ -349,9 +349,9 @@ class CVEMenu(QDialog):
         elif index == 8:
             self.cve_b2.clear()
             # b2提供一个文本框，用来输入flag的编号，最多支持10个flag
-            for i in range(10):
+            for i in range(50):
                 self.cve_b2.addItem(str(i))
-            self.cve_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持10个flag（即编号为0~9）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
+            self.cve_text.setText("口上用flag是用来实现供口上作者自定义的数据变量，可以用来实现一些特殊的前提\n口上用flag的数据类型为int，默认值为0，最多支持50个flag（即编号为0~49）\n口上用flag无法独立使用，需要用编辑器的事件中的结算来进行修改\n如【用flag0来记录触发某个指令或某句口上的次数】，【用flag1来记录自己设定的某种攻略的阶段】，【用flag2来衡量自己设定的角色对玩家的某种感情】等等")
         elif index == 9:
             self.cve_b2.clear()
             for organ_id, organ_name in cache_control.organ_data.items():

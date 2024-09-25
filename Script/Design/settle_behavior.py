@@ -1069,7 +1069,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             final_character_data.trust = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
         elif attribute_name == "flag":
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
-            final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+            final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.author_flag.chara_int_flag_dict[type_son_id], int(effect_all_value_list[3]))
         elif attribute_name == "climax":
             from Script.Settle.default import base_chara_climix_common_settle
             if operation == "E":
