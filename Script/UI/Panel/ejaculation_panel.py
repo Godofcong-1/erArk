@@ -197,14 +197,14 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     if semen_count > 0:
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
-            cache.shoot_position = part_cid
-            # 更新被射精污浊数据
-            update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
-            # 计算精液流动
-            calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
             # 获取射精文本
-            # 只有在交互对象正确的时候才会显示对方的名字和部位
             if target_character_id > 0:
+                cache.shoot_position = part_cid
+                # 更新被射精污浊数据
+                update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
+                # 计算精液流动
+                calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
+                # 只有在交互对象正确的时候才会显示对方的名字和部位
                 if part_type == 0:
                     part_name = game_config.config_body_part[part_cid].name
                     now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
@@ -264,8 +264,11 @@ class Ejaculation_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
+        # 如果当前交互对象不是NPC的话，则跳过部位选择
+        if character_data.target_character_id == 0:
+            self.shoot_here(6, 0)
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
-        if not cache.system_setting[4]:
+        elif not cache.system_setting[4]:
             now_position = target_data.h_state.insert_position
             if now_position != -1:
                 self.shoot_here(now_position, 0)
