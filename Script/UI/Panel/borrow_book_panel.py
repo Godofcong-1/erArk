@@ -38,9 +38,8 @@ class Borrow_Book_Panel:
         title_text = _("借阅书籍")
         book_father_type_list = [_("技能类书籍"), _("娱乐类书籍"), _("色情类书籍")]
 
-        # 如果可借阅字典为空，则初始化可借阅字典
-        if not len(cache.rhodes_island.now_show_book_cid_of_type):
-            basement.settle_library_book()
+        # 每次初始化可借阅字典
+        basement.settle_library_book()
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:

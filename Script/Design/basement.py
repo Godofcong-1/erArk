@@ -261,8 +261,6 @@ def update_base_resouce_newday():
     settle_aromatherapy_sessions()
     # 结算粉红凭证
     settle_pink_certificate()
-    # 刷新图书馆的可借阅书籍
-    settle_library_book()
 
 
 def update_work_people():
@@ -916,3 +914,12 @@ def settle_library_book():
         else:
             now_choose_list = game_config.config_book_type_data[book_type_cid]
         cache.rhodes_island.now_show_book_cid_of_type[book_type_cid] = now_choose_list
+
+    # 获取玩家的借书情况
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_borrow = pl_character_data.entertainment.borrow_book_id_set
+    # 遍历借的书籍，也加入到展示列表里
+    for book_id in pl_borrow:
+        book_type = game_config.config_book[book_id].type
+        if book_id not in cache.rhodes_island.now_show_book_cid_of_type[book_type]:
+            cache.rhodes_island.now_show_book_cid_of_type[book_type].append(book_id)
