@@ -273,61 +273,18 @@ class Originium_Arts_Panel:
 
     def arts_show(self, ability_type):
         """源石技艺展示"""
-        line_draw = draw.LineDraw("-", self.width)
-        line_draw.draw()
-        while 1:
-            return_list = []
-            info_draw = draw.NormalDraw()
-            info_text = ""
-            # 催眠系
-            if ability_type == 3:
-                info_text += _("\n○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n")
-                info_text += _("\n催眠系能力：\n")
-                # 催眠能力
-                info_draw.text = _(info_text)
-                info_draw.draw()
-                for cid in game_config.config_hypnosis_talent_of_pl:
-                    hypnosis_data = game_config.config_hypnosis_talent_of_pl[cid]
-                    talent_id = hypnosis_data.hypnosis_talent_id
-                    max_degree = hypnosis_data.max_hypnosis_degree
-                    talent_name = game_config.config_talent[talent_id].name
-                    talent_info = game_config.config_talent[talent_id].info
-                    draw_text = _("  {0}(最高催眠深度{1}%)：{2}\n").format(talent_name, max_degree, talent_info)
-                    now_draw = draw.NormalDraw()
-                    if not self.pl_character_data.talent[talent_id]:
-                        draw_text = _("  {0}(未解锁)：{1}\n").format(talent_name, talent_info)
-                        now_draw.style = "deep_gray"
-                    now_draw.text = _(draw_text)
-                    now_draw.draw()
-                # 催眠类型
-                info_text = _("\n催眠类型：\n")
-                info_draw.text = _(info_text)
-                info_draw.draw()
-                for cid in game_config.config_hypnosis_type:
-                    hypnosis_type_data = game_config.config_hypnosis_type[cid]
-                    draw_text = f"  [{hypnosis_type_data.name}]"
-                    draw_text += _("(需要[{0}]，且催眠深度达到{1}%)").format(game_config.config_talent[hypnosis_type_data.talent_id].name, hypnosis_type_data.hypnosis_degree)
-                    draw_text += f"：{hypnosis_type_data.introduce}"
-                    # 已解锁则绘制按钮
-                    if self.pl_character_data.talent[hypnosis_type_data.talent_id]:
-                        button_draw = draw.LeftButton(
-                            _(draw_text),
-                            _(hypnosis_type_data.name),
-                            window_width,
-                            cmd_func=self.change_hypnosis_type,
-                            args=(cid,),
-                        )
-                        return_list.append(button_draw.return_text)
-                        button_draw.draw()
-                        line_feed.draw()
-                    # 未解锁则绘制灰色文本
-                    else:
-                        now_draw = draw.NormalDraw()
-                        draw_text += f"\n"
-                        now_draw.text = _(draw_text)
-                        now_draw.style = "deep_gray"
-                        now_draw.draw()
-            else:
+        # 催眠系
+        if ability_type == 3:
+            now_panel = Chose_Hypnosis_Type_Panel(self.width)
+            now_panel.draw()
+        else:
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            while 1:
+                return_list = []
+                info_draw = draw.NormalDraw()
+                info_text = ""
+
                 # 激素系
                 if ability_type == 5:
                     talent_id_list = [304,305,306]
@@ -349,14 +306,15 @@ class Originium_Arts_Panel:
                         now_draw.style = "deep_gray"
                     now_draw.text = _(draw_text)
                     now_draw.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
-                break
+
+                line_feed.draw()
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+                back_draw.draw()
+                line_feed.draw()
+                return_list.append(back_draw.return_text)
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn in return_list:
+                    break
 
     def draw_lv_up_button(self, condition, draw_text, cid, return_list):
         """绘制升级按钮"""
@@ -763,10 +721,12 @@ class Chose_Hypnosis_Type_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, width: int, instruct_flag: bool = False):
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
+        self.instruct_flag: bool = instruct_flag
+        """ 是否为指令模式 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
 
@@ -779,15 +739,33 @@ class Chose_Hypnosis_Type_Panel:
             return_list = []
             title_draw.draw()
             pl_character_data: game_type.Character = cache.character_data[0]
-            cinfo_draw = draw.NormalDraw()
-            info_text = _("\n要使用哪一种催眠类型呢？\n")
-            cinfo_draw.text = info_text
-            cinfo_draw.draw()
 
+            info_draw = draw.NormalDraw()
+            info_text = ""
+
+            info_text += _("\n○进行催眠时会消耗理智，催眠结束后会自动合理化催眠过程中的记忆，未被催眠的干员也不会对催眠中的行为起疑\n")
+            info_text += _("\n催眠系能力：\n")
+            # 催眠能力
+            info_draw.text = _(info_text)
+            info_draw.draw()
+            for cid in game_config.config_hypnosis_talent_of_pl:
+                hypnosis_data = game_config.config_hypnosis_talent_of_pl[cid]
+                talent_id = hypnosis_data.hypnosis_talent_id
+                max_degree = hypnosis_data.max_hypnosis_degree
+                talent_name = game_config.config_talent[talent_id].name
+                talent_info = game_config.config_talent[talent_id].info
+                draw_text = _("  {0}(最高催眠深度{1}%)：{2}\n").format(talent_name, max_degree, talent_info)
+                now_draw = draw.NormalDraw()
+                if not pl_character_data.talent[talent_id]:
+                    draw_text = _("  {0}(未解锁)：{1}\n").format(talent_name, talent_info)
+                    now_draw.style = "deep_gray"
+                now_draw.text = _(draw_text)
+                now_draw.draw()
+            # 催眠类型
+            info_text = _("\n可用的催眠类型：\n")
+            info_draw.text = _(info_text)
+            info_draw.draw()
             for cid in game_config.config_hypnosis_type:
-                # 去掉手动选择
-                if cid == 0:
-                    continue
                 hypnosis_type_data = game_config.config_hypnosis_type[cid]
                 draw_text = f"  [{hypnosis_type_data.name}]"
                 draw_text += _("(需要[{0}]，且催眠深度达到{1}%)").format(game_config.config_talent[hypnosis_type_data.talent_id].name, hypnosis_type_data.hypnosis_degree)
@@ -798,7 +776,7 @@ class Chose_Hypnosis_Type_Panel:
                         _(draw_text),
                         _(hypnosis_type_data.name),
                         window_width,
-                        cmd_func=self.ability_switch,
+                        cmd_func=self.change_hypnosis_type,
                         args=(cid,),
                     )
                     return_list.append(button_draw.return_text)
@@ -811,6 +789,7 @@ class Chose_Hypnosis_Type_Panel:
                     now_draw.text = _(draw_text)
                     now_draw.style = "deep_gray"
                     now_draw.draw()
+
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -820,11 +799,108 @@ class Chose_Hypnosis_Type_Panel:
             if yrn in return_list:
                 break
 
-    def ability_switch(self, hypnosis_type_cid):
-        """能力开关"""
+    def change_hypnosis_type(self, hypnosis_type_cid):
+        """改变当前的催眠类型"""
         pl_character_data: game_type.Character = cache.character_data[0]
         pl_character_data.pl_ability.hypnosis_type = hypnosis_type_cid
+        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
 
+        if hypnosis_type_cid > 0:
+            hypnosis_type_name = game_config.config_hypnosis_type[hypnosis_type_cid].name
+            now_draw = draw.WaitDraw()
+            draw_text = _("\n已切换为{0}催眠模式\n\n").format(hypnosis_type_name)
+            now_draw.style = "pink"
+            now_draw.text = draw_text
+            now_draw.draw()
+            # 如果当前有交互对象
+            if self.instruct_flag and pl_character_data.target_character_id:
+                now_draw = draw.WaitDraw()
+                now_draw.style = "pink"
+                if hypnosis_type_cid == 1:
+                    draw_text = _("\n{0}会理所当然地接受{1}的不合理行为了\n\n").format(target_data.name, pl_character_data.name)
+                    now_draw.text = draw_text
+                    now_draw.draw()
+                elif hypnosis_type_cid == 2:
+                    draw_text = _("\n{0}会把{1}视为空气了\n\n").format(target_data.name, pl_character_data.name)
+                    now_draw.text = draw_text
+                    now_draw.draw()
+                elif hypnosis_type_cid == 3:
+                    draw_text = _("\n{0}可以随意地操纵{1}的身体了\n\n").format(pl_character_data.name, target_data.name)
+                    now_draw.text = draw_text
+                    now_draw.draw()
+                    self.body_or_mind_control_option(0)
+                elif hypnosis_type_cid == 4:
+                    draw_text = _("\n{0}可以向{1}的潜意识灌输指令了\n\n").format(pl_character_data.name, target_data.name)
+                    now_draw.text = draw_text
+                    now_draw.draw()
+                    self.body_or_mind_control_option(1)
+
+    def body_or_mind_control_option(self, body_or_mind_flag = 0):
+        """
+        身体或心灵的控制选项
+        Keyword arguments:
+        body_or_mind_flag -- 0为身体控制，1为心灵控制
+        """
+        pl_character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        if body_or_mind_flag == 0:
+            type_text = _("身体")
+            range_list = range(920,930)
+        else:
+            type_text = _("心灵")
+            range_list = range(930,940)
+        while 1:
+            return_list = []
+            title_draw = draw.TitleLineDraw(_("选择{0}控制选项").format(type_text), self.width)
+            title_draw.draw()
+            info_draw = draw.NormalDraw()
+            info_text = _("\n可以对{0}使用的控制指令：\n\n").format(target_data.name)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 遍历体控选项数据库，输出按钮
+            for cid in range_list:
+                # 如果不存在该选项则跳过
+                if cid not in game_config.config_status:
+                    continue
+                status_data = game_config.config_status[cid]
+                draw_text = f"[{cid}]{status_data.name}"
+                button_draw = draw.LeftButton(
+                    _(draw_text),
+                    _(status_data.name),
+                    window_width,
+                    cmd_func=self.son_instruct,
+                    args=(cid,),
+                )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def son_instruct(self, cid):
+        """进行子选项"""
+        from Script.Design import handle_instruct
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+
+        # 心控-角色扮演需要单独绘制面板
+        if cid == 931:
+            now_draw = Chose_Roleplay_Type_Panel(self.width)
+            now_draw.draw()
+            character_data: game_type.Character = cache.character_data[0]
+            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            if target_data.hypnosis.roleplay != 0:
+                handle_instruct.chara_handle_instruct_common_settle(cid)
+        else:
+            handle_instruct.chara_handle_instruct_common_settle(cid)
 
 class Chose_Roleplay_Type_Panel:
     """
@@ -897,7 +973,7 @@ class Chose_Roleplay_Type_Panel:
 
         # 绘制提示信息
         info_draw = draw.WaitDraw()
-        info_draw.style = "gold_enrod"
+        info_draw.style = "purple"
         info_text = _("\n{0}被催眠了，开始进行{1}的扮演\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
         info_draw.text = info_text
         info_draw.draw()
