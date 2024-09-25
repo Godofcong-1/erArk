@@ -76,7 +76,7 @@ class WaitDraw(NormalDraw):
             io_init.era_print(self.text, self.style)
         # 暂时注释掉，即使已经是跳过状态也要等待
         # if not cache.wframe_mouse.w_frame_skip_wait_mouse and int(len(self)):
-        if int(len(self)):
+        if int(len(self.text)):
             flow_handle.askfor_wait()
 
 
