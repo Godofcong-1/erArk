@@ -914,6 +914,158 @@ def handle_sub_self_large_mana_point(
     base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_GOOD)
+def handle_mood_to_good(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己心情变为好
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.angry_point = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_NORMAL)
+def handle_mood_to_normal(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己心情变为普通
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.angry_point = 20
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_BAD)
+def handle_mood_to_bad(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己心情变为不好
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.angry_point = 40
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_ANGRY)
+def handle_mood_to_angry(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己心情变为愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.angry_point = 75
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOOD_TO_GOOD)
+def handle_target_mood_to_good(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象心情变为好
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_mood_to_good(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOOD_TO_NORMAL)
+def handle_target_mood_to_normal(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象心情变为普通
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_mood_to_normal(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOOD_TO_BAD)
+def handle_target_mood_to_bad(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象心情变为不好
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_mood_to_bad(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOOD_TO_ANGRY)
+def handle_target_mood_to_angry(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象心情变为愤怒
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_mood_to_angry(character_data.target_character_id, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
 def handle_add_both_small_hit_point(
         character_id: int,

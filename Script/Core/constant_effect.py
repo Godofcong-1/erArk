@@ -95,6 +95,22 @@ class BehaviorEffect:
     """ 属性_基础 减少自己大量体力 """
     DOWN_SELF_LARGE_MANA_POINT = 1516
     """ 属性_基础 减少自己大量气力 """
+    MOOD_TO_GOOD = 1521
+    """ 属性_基础 自己心情变为好 """
+    MOOD_TO_NORMAL = 1522
+    """ 属性_基础 自己心情变为普通 """
+    MOOD_TO_BAD = 1523
+    """ 属性_基础 自己心情变为不好 """
+    MOOD_TO_ANGRY = 1524
+    """ 属性_基础 自己心情变为愤怒 """
+    TARGET_MOOD_TO_GOOD = 1525
+    """ 属性_基础 交互对象心情变为好 """
+    TARGET_MOOD_TO_NORMAL = 1526
+    """ 属性_基础 交互对象心情变为普通 """
+    TARGET_MOOD_TO_BAD = 1527
+    """ 属性_基础 交互对象心情变为不好 """
+    TARGET_MOOD_TO_ANGRY = 1528
+    """ 属性_基础 交互对象心情变为愤怒 """
 
 
     TARGET_ADD_SMALL_N_FEEL = 41
