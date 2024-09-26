@@ -105,8 +105,8 @@ str,int,int,str,str
 100,102,204,sys_0&high_1,“……哈……嗯唔……”\n{TargetName}打了个哈欠。
 101,102,204,sys_0&high_1,“稍微有点无聊……”\n{TargetName}环顾着四周。
 102,102,204,sys_0&high_1,{TargetName}心不在焉地翻看着时尚杂志。\n好像聊天太多了。
-103,102,204,sys_0&angry_with_player&high_5,“现在请不要找我讲话。”\n{TargetName}双手抱在胸前故意地看向别的地方，似乎是生气了的样子。
-104,102,204,sys_0&bad_or_angry_mood&high_5,“嗯。”\n{TargetName}似乎是心情不好，淡淡地应付着
+103,102,204,sys_0&t_angry_with_player&high_5,“现在请不要找我讲话。”\n{TargetName}双手抱在胸前故意地看向别的地方，似乎是生气了的样子。
+104,102,204,sys_0&t_bad_or_angry_mood&high_5,“嗯。”\n{TargetName}似乎是心情不好，淡淡地应付着
 105,102,204,sys_0&high_1&love_ge_1,“不去别的地方转转吗？”\n没有什么多余的话题的{TargetName}发出提议。
 106,102,204,sys_0&love_ge_1&high_1,已经聊天聊累了的{TargetName}心不在焉地听着{PlayerName}说话，拿着书似乎在研究怎么样冲泡咖啡。
 107,102,204,sys_0&love_ge_1&high_1,“……唔”\n没有认真在听的{TargetName}托着脸看着{PlayerName}，不知道在想些什么。
@@ -278,7 +278,7 @@ str,int,int,str,str
 273,2,204,high_1,白金盯着某个点开始出神地发呆。
 274,2,204,high_1&place_ladies_only,随着时间的延长白金越发困惑地看着{PlayerName}。\n"博士是在等谁吗？还有就算我在博士身边，这也不应该是博士可以一直在{SceneName}待着的理由吧。"
 275,362,204,love_0_or_le_2&last_cmd_sex&high_2,“呼……嗯……”抬起腰让阴茎滑出阴道的{TargetName}红着脸吐出浑浊的吐息。\n“已经……结束了吗？这样啊……工作结束了……让我休息一会可以吗？”
-276,2,204,high_2&bad_or_angry_mood&sys_0,白金有些不耐烦的样子，似乎是气还没消。
+276,2,204,high_2&t_bad_or_angry_mood&sys_0,白金有些不耐烦的样子，似乎是气还没消。
 277,2,204,high_5&urinate_ge_80&sys_1,{Name}一副局促不安的样子，仔细看的话还会发现{Name}偷偷夹起了腿。\n“嗯……姆姆……”看起来已经快要忍耐到极限了。
 278,2,204,high_5&t_not_wear_pan&CVP_A3|204_A|34_L_5&sys_0,{TargetName}因为无事可做有点局促不安地夹着大腿。\n"……嗯，没什么……"似乎是因为股间某些布料的缺失，变得很在意自己的形象的样子。
 279,2,204,sys_0&high_5&t_not_wear_pan&CVP_A2_A|34_G_5,{TargetName}似乎是完全习惯了某些布料缺失的感觉，安静地在做自己的事情。\n不过偶尔的不经意间调整下身衣服的动作，还是在告诉{Name}{TargetName}没有穿着内衣的事实。

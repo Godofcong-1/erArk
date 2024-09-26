@@ -27,7 +27,7 @@ str,int,int,str,str
 22,1,1012,sys_1&place_is_h&place_6&high_10&love_ge_2,”{PlayerName}，在你尽兴的同时，也请注意自己的身体哦，毕竟我会等待回到你的臂弯之中。“{Name}带着信任的笑容准备离开这里。
 23,1,1012,sys_1&place_is_h&high_10&love_1,{Name}静静的退去，默默承担心中的扩散的忧伤，”愿那个人能给你带来快乐，{PlayerName}，你的幸福，便是我最大的愿望。“
 24,2,1012,high_1&sys_0&sys_2&sys_5&place_ladies_only,“虽然我想一直待在{PlayerName}的身边，但这个地方并不是适合{PlayerName}一直驻足的地方。”{Name}有些疑惑的看着{PlayerName}，最后还是提出了意见。
-25,2,1012,sys_0&sys_2&sys_5&bad_or_angry_mood&high_10,”之前和凯尔希讨论的时候，被数落说我太粘{PlayerName}了。“{Name}想要接近{PlayerName}又有些犹豫的样子。
+25,2,1012,sys_0&sys_2&sys_5&t_bad_or_angry_mood&high_10,”之前和凯尔希讨论的时候，被数落说我太粘{PlayerName}了。“{Name}想要接近{PlayerName}又有些犹豫的样子。
 26,2,1012,sys_0&sys_2&sys_5&high_5&t_not_wear_pan&CVP_A2_A|34_LE_5,{TargetName}正在轻声的歌唱抒发自己的情感，一阵微风让她按住了自己的裙摆，仿佛连歌声也变得有些羞涩了起来。
 27,2,1012,sys_0&sys_2&sys_5&high_5&t_not_wear_pan&CVP_A2_A|34_G_5,{TargetName}正在轻声的歌唱抒发自己的情感，一阵微风拂过荡起她的裙摆，在你眼中闪过了一瞬间的诱人景色，而歌声仿佛也变得有些欢快了起来。
 28,2,1012,sys_0&sys_2&sys_5&t_intimacy_ge_5&love_ge_3&t_virgin_0&instruct_judge_high_obscenity&instruct_judge_h&high_2&CVP_A2_F_G_500&t_desire_ge_5,{TargetName}抬起头，深情地注视着{PlayerName}，眼里闪烁着荧光。她轻启红唇，声音细如蚊呐：“{PlayerName}，你是我唯一的光...没有你，我会陷入永恒的黑暗。我愿意为你做任何事。
@@ -97,8 +97,8 @@ str,int,int,str,str
 92,101,1012,sys_0&t_is_assistant,浊心斯卡蒂柔情的望着你，轻声说道：”我很乐意为{PlayerName}分担事务，报酬……只要能够在你的身边就足够了。“
 93,101,1012,sys_0&t_is_assistant&love_ge_3,浊心斯卡蒂伸出手轻轻抚摸着{PlayerName}的脸颊然后帮着你整理了一下衣服的褶皱。\n”要好好的照顾自己，不要把身体搞垮了。可以稍微的依赖我那么一些。“\n浊心斯卡蒂轻轻的拥抱着你，望向你的眼神中满是爱意。\n“而且......这样我们就可以多一些独处的时间了。你说好不好？”
 94,102,1012,sys_0&high_1,“{Name}，我知道我很自私...但我真的离不开你……请原谅我如此的纠缠着你……”\n{TargetName}颤抖着伸出手，轻轻抚摸着{Name}的双手。只有这指尖传来的温度让她感到些许安心。
-95,102,1012,sys_0&angry_with_player&high_5,{TargetName}喃喃低语：“求求你...{Name}，不要丢下我一个人...”\n仿佛此刻的她眼中除了你已经没有了其他人的存在…
-96,102,1012,sys_0&bad_or_angry_mood&high_2,{TargetName}静静的坐在那里，如同镜花水月一般，仿佛下一刻就要化作泡沫消失。“{Name}……”
+95,102,1012,sys_0&t_angry_with_player&high_5,{TargetName}喃喃低语：“求求你...{Name}，不要丢下我一个人...”\n仿佛此刻的她眼中除了你已经没有了其他人的存在…
+96,102,1012,sys_0&t_bad_or_angry_mood&high_2,{TargetName}静静的坐在那里，如同镜花水月一般，仿佛下一刻就要化作泡沫消失。“{Name}……”
 97,102,1012,sys_0&love_1&high_1,{TargetName}为不知如何开口而略感迷茫，她选择来到你身边静静的抓住了你的手。
 98,102,1012,sys_0&love_ge_1&high_1,“属于我们的未来还很漫长，不应急于这一刻。”{TargetName}来到你身边将你轻轻拥入怀中，潮汐的回响回荡让彼此获得了安心。\n“{Name}，我永远属于你...这具身体，这颗心，都只为你而跳动...所以，安心吧。”
 99,102,1012,sys_0&love_ge_2&high_1,“是什么让你如此匆忙。”{TargetName}的手指轻抚上{Name}的脸颊，在{Name}的唇上印下一个轻柔的吻。\n“我相信着我们的爱，会经得住时间的考验。所以……”\n“让我们一起，塑造未来吧。”

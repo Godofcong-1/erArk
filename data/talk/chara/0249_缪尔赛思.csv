@@ -91,8 +91,8 @@ str,int,int,str,str
 106,2,249,sys_0,{TargetName}掏出了终端，若有所思的看着终端屏幕上显示的各种东西
 107,2,249,sys_0&good_mood,{TargetName}似乎正开心的哼着歌
 108,2,249,sys_0&good_mood,{TargetName}脸上挂着一抹很自然的微笑，今天的她很开心呢
-109,2,249,sys_0&bad_or_angry_mood,{TargetName}忧愁的看着四周
-110,2,249,sys_0&bad_or_angry_mood,{TargetName}皱着眉头，鼓着嘴巴，看起来有人惹她生气了
+109,2,249,sys_0&t_bad_or_angry_mood,{TargetName}忧愁的看着四周
+110,2,249,sys_0&t_bad_or_angry_mood,{TargetName}皱着眉头，鼓着嘴巴，看起来有人惹她生气了
 111,102,249,sys_0&love_le_2,{TargetName}看着终端上显示的信息，没有理会你在一旁的谈论
 112,102,249,sys_0&love_2,“...嗯，嗯”\n{TargetName}淡淡的应付着你的话题
 113,102,249,sys_0&love_3,{TargetName}走动了饮水机旁边，接了一杯水，并递给了滔滔不绝说着话的{PlayerName}\n“先休息会吧，呐，喝点水润润喉咙”
