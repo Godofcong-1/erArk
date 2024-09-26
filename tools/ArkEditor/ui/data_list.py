@@ -41,14 +41,21 @@ class DataList(QWidget):
         self.text_search_edit = QTextEdit()
         self.text_search_edit.setFixedHeight(32)
         # self.search_edit.setFixedWidth(400)
-        self.text_search_edit.setPlaceholderText("搜索带有特定关键字的条目")
-        self.text_search_button = QPushButton("搜索")
+        self.text_search_edit.setPlaceholderText("根据文本内容中的关键字搜索")
+        self.text_search_button = QPushButton("根据内容搜索条目")
         self.text_search_button.clicked.connect(self.text_search)
-        self.text_search_reset_button = QPushButton("重置")
+        self.text_search_reset_button = QPushButton("内容搜索重置")
         self.text_search_reset_button.clicked.connect(self.text_search_reset)
         self.text_search_flag = 0
-        # TODO 前提搜索按钮
-        # self.premise_search_button = QPushButton("根据前提进行搜索")
+        # 前提搜索按钮
+        self.premise_search_edit = QTextEdit()
+        self.premise_search_edit.setFixedHeight(32)
+        self.premise_search_edit.setPlaceholderText("根据前提中的关键字搜索")
+        self.premise_search_button = QPushButton("根据前提搜索条目(不含综合数值前提)")
+        self.premise_search_button.clicked.connect(self.premise_search)
+        self.premise_search_reset_button = QPushButton("前提搜索重置")
+        self.premise_search_reset_button.clicked.connect(self.premise_search_reset)
+        self.premise_search_flag = 0
         # 条目列表
         self.list_widget = QListWidget()
         self.font = font
@@ -115,7 +122,10 @@ class DataList(QWidget):
         self.layout.addWidget(self.text_search_edit, 3, 0)
         self.layout.addWidget(self.text_search_button, 3, 1)
         self.layout.addWidget(self.text_search_reset_button, 3, 2)
-        self.layout.addWidget(self.list_widget, 4, 0, 1, 6)
+        self.layout.addWidget(self.premise_search_edit, 4, 0)
+        self.layout.addWidget(self.premise_search_button, 4, 1)
+        self.layout.addWidget(self.premise_search_reset_button, 4, 2)
+        self.layout.addWidget(self.list_widget, 5, 0, 1, 6)
 
         # 设置拉伸因子，保证新建条目、复制条目、搜索框的宽度相等
         self.layout.setColumnStretch(0, 1)
@@ -229,6 +239,21 @@ class DataList(QWidget):
         """重置文本搜索"""
         self.text_search_edit.setText("")
         self.text_search_flag = 0
+        self.update()
+
+    def premise_search(self):
+        """前提搜索"""
+        search_text = self.premise_search_edit.toPlainText()
+        if not search_text:
+            self.update()
+            return
+        self.premise_search_flag = 1
+        self.update()
+
+    def premise_search_reset(self):
+        """重置前提搜索"""
+        self.premise_search_edit.setText("")
+        self.premise_search_flag = 0
         self.update()
 
     def select_now_instruct(self):
@@ -482,6 +507,15 @@ class DataList(QWidget):
                 if self.text_search_flag:
                     if self.text_search_edit.toPlainText() not in item.text():
                         continue
+                if self.premise_search_flag:
+                    premise_flag = 0
+                    for premise_id in now_talk.premise:
+                        premise_name = cache_control.premise_data[premise_id]
+                        if self.premise_search_edit.toPlainText() in premise_name:
+                            premise_flag = 1
+                            break
+                    if not premise_flag:
+                        continue
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
@@ -536,6 +570,15 @@ class DataList(QWidget):
                         continue
                 if self.text_search_flag:
                     if self.text_search_edit.toPlainText() not in now_event.text:
+                        continue
+                if self.premise_search_flag:
+                    premise_flag = 0
+                    for premise_id in now_event.premise:
+                        premise_name = cache_control.premise_data[premise_id]
+                        if self.premise_search_edit.toPlainText() in premise_name:
+                            premise_flag = 1
+                            break
+                    if not premise_flag:
                         continue
                 item = ListItem(now_event.text)
                 item.uid = uid
