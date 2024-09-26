@@ -17945,7 +17945,23 @@ msgid "拉开门缝|{PlayerName}屏住呼吸，蹑手蹑脚地把门拉开了一
 msgstr ""
 
 #: Event:d136684a-593e-4cfe-86a8-6f217b1c900d
-msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
+msgid "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地快步上前抱了过去"
+msgstr ""
+
+#: Event:da8a5d84-014c-41ef-a755-c65c765867e0
+msgid "{TargetSceneName}里现在好像有人，而且传来的声音有些熟悉，要进去吗"
+msgstr ""
+
+#: Event:33421057-f10e-4650-991b-8d60e7e83d8b
+msgid "进去|刚好撞见{Name}进来的{SrcOneCharaName}一边慌忙遮住身体一边试图把{Name}推出去\n察觉到{SrcOneCharaName}其实并没有用上什么力气，{Name}嬉笑着打闹了一会，总算蒙混着留下来了"
+msgstr ""
+
+#: Event:0db72cb3-6cbd-4e49-a599-b91b7902db0b
+msgid "{TargetSceneName}里现在好像有人，不过从源石技艺的感知来看，应该都在无意识状态，要进去吗"
+msgstr ""
+
+#: Event:e09bd1f1-5e9c-4eff-bc24-bae1bfa1c90c
+msgid "进去|{NickName}在源石技艺的帮助下，没有让任何人发现，悄悄地溜了进来"
 msgstr ""
 
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75
@@ -17970,10 +17986,6 @@ msgstr ""
 
 #: Event:0397037e-f6f0-45cb-aef2-65163c9b73cb
 msgid "谈判|在双方的友好交流后，决定一笔勾销，不再用此事威胁对方"
-msgstr ""
-
-#: Event:69748d98-6600-4898-a657-2d82c370d675
-msgid "{PlayerName}本想邀请{TargetName}，但看着{TargetName}生气的样子，还是算了"
 msgstr ""
 
 #: Event:e7deb39e-4384-4a46-a3fe-dec9bb162b20
