@@ -340,6 +340,8 @@ class CharacterStatus:
     """ 阴茎蹭角 """
     STATUS_EARS_RUB = 436
     """ 阴茎蹭耳朵 """
+    STATUS_CLEAN_BLOWJOB = 437
+    """ 清洁口交 """
     STATUS_BODY_LUBRICANT = 451
     """ 润滑液 """
     STATUS_BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -846,6 +848,8 @@ class Behavior:
     """ 阴茎蹭角 """
     EARS_RUB = 436
     """ 阴茎蹭耳朵 """
+    CLEAN_BLOWJOB = 437
+    """ 清洁口交 """
     BODY_LUBRICANT = 451
     """ 润滑液 """
     BIRTH_CONTROL_PILLS_BEFORE = 452
@@ -2106,6 +2110,8 @@ class Instruct:
     """ 真空口交 """
     DEEP_THROAT = 0
     """ 深喉插入 """
+    CLEAN_BLOWJOB = 0
+    """ 清洁口交 """
     SIXTY_NINE = 0
     """ 六九式 """
     LEGJOB = 0

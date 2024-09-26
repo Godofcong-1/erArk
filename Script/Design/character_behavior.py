@@ -821,6 +821,15 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 清空空气催眠位置
         if character_data.position != character_data.pl_ability.air_hypnosis_position:
             character_data.pl_ability.air_hypnosis_position = ""
+        # 阴前指令是口交类型则重置所有阴茎污浊状态
+        if handle_premise.handle_last_cmd_blowjob_type(0):
+            for dirty_key in character_data.dirty.penis_dirty_dict:
+                character_data.dirty.penis_dirty_dict[dirty_key] = False
+        # 刚刚射精状态下，用计数的方式来判断是否重置
+        if character_data.h_state.just_shoot == 1:
+            character_data.h_state.just_shoot = 2
+        else:
+            character_data.h_state.just_shoot = 0
         # 二次确认H意外结束的归零结算
         special_end_list = constant.special_end_H_list
         if len(cache.pl_pre_status_instruce) and cache.pl_pre_status_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:

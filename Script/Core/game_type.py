@@ -320,6 +320,8 @@ class DIRTY:
             # 更多的流通...
         ]
         """
+        self.penis_dirty_dict: dict = {}
+        """ 阴茎的污浊属性 [semen精液, blood处子血] """
 
 
 class PREGNANCY:
@@ -436,6 +438,8 @@ class BODY_H_STATE:
         """ NPC主动H """
         self.h_in_love_hotel: bool = False
         """ 当前正在爱情旅馆中H """
+        self.just_shoot: int = 0
+        """ 刚刚射精了 """
 
 
 class FIRST_RECORD:

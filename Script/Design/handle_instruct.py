@@ -3336,6 +3336,22 @@ def handle_deep_throat():
 
 
 @add_instruct(
+    constant.Instruct.CLEAN_BLOWJOB,
+    constant.InstructType.SEX,
+    _("清洁口交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.PL_PENIS_SEMEN_DIRTY,
+     constant_promise.Premise.NOW_NOT_CONDOM,
+     },
+)
+def handle_clean_blowjob():
+    """处理清洁口交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLEAN_BLOWJOB)
+
+
+@add_instruct(
     constant.Instruct.SIXTY_NINE,
     constant.InstructType.SEX,
     _("六九式"),

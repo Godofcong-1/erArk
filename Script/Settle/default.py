@@ -2350,6 +2350,48 @@ def handle_target_npc_active_h_off(
     target_character_data.h_state.npc_active_h = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_JUST_SHOOT_ON)
+def handle_pl_just_shoot_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    玩家变为前指令刚刚射精状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_character_data.h_state.just_shoot = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_JUST_SHOOT_OFF)
+def handle_pl_just_shoot_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    玩家清零前指令刚刚射精状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_character_data.h_state.just_shoot = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,
@@ -4483,6 +4525,8 @@ def handle_both_h_state_reset(
         now_character_data = cache.character_data[chara_id]
         # H状态数据归零
         now_character_data.h_state = attr_calculation.get_h_state_reset(now_character_data.h_state)
+        # 清零阴茎污浊
+        now_character_data.dirty.penis_dirty_dict["semen"] = False
         # 清零高潮进度
         for orgasm in range(8):
             now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])

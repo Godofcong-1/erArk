@@ -199,6 +199,10 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
 
     dirty_data.a_clean = 0
 
+    # 清零阴茎污浊
+    for dirty_key in dirty_data.penis_dirty_dict:
+        dirty_data.penis_dirty_dict[dirty_key] = False
+
     return dirty_data
 
 def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BODY_H_STATE:
@@ -209,6 +213,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     body_item_list = dirty_panel.body_item_list
     bondage_list = dirty_panel.bondage_list
 
+    # 身体道具
     if len(h_state_data.body_item) == 0:
         for body_item in body_item_list:
             now_list = [body_item,False,None]
@@ -219,11 +224,13 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
             if i not in {8,9,10,11,12}:
                 h_state_data.body_item[i] = [body_item_list[i],False,None]
 
+    # 部位绝顶
     for body_part in game_config.config_body_part:
         h_state_data.orgasm_level[body_part] = 0
         h_state_data.orgasm_count[body_part] = [0,0]
         h_state_data.extra_orgasm_feel[body_part] = 0
 
+    # 相关flag和计数
     h_state_data.insert_position = -1
     h_state_data.shoot_position_body = -1
     h_state_data.shoot_position_cloth = -1
@@ -233,6 +240,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     h_state_data.h_in_love_hotel = False
     h_state_data.extra_orgasm_count = 0
     h_state_data.plural_orgasm_count = 0
+    h_state_data.just_shoot = False
 
     return h_state_data
 

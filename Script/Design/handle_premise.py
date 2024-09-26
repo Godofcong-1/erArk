@@ -6994,7 +6994,7 @@ def handle_target_angry_mood(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_ABD_OR_ANGRY_MOOD)
-def handle_bad_or_angry_mood(character_id: int) -> int:
+def handle_t_bad_or_angry_mood(character_id: int) -> int:
     """
     交互对象心情不好或愤怒
     Keyword arguments:
@@ -12633,7 +12633,7 @@ def handle_last_cmd_blowjob_type(character_id: int) -> int:
     sex = {
         str(constant.Instruct.BLOWJOB), str(constant.Instruct.HAND_BLOWJOB),
         str(constant.Instruct.TITS_BLOWJOB), str(constant.Instruct.FOCUS_BLOWJOB),
-        str(constant.Instruct.DEEP_THROAT), str(constant.Instruct.SIXTY_NINE)
+        str(constant.Instruct.DEEP_THROAT), str(constant.Instruct.SIXTY_NINE), str(constant.Instruct.CLEAN_BLOWJOB)
     }
     if len_input:
         if last_cmd in sex:
@@ -13563,6 +13563,35 @@ def handle_pl_semen_ge_100(character_id: int) -> int:
     if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point >= 100:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.PL_JUST_SHOOT)
+def handle_pl_just_shoot(character_id: int) -> int:
+    """
+    玩家前指令射精了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.h_state.just_shoot:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_NOT_JUST_SHOOT)
+def handle_pl_not_just_shoot(character_id: int) -> int:
+    """
+    玩家前指令未射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_pl_just_shoot(0):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.NPC_ACTIVE_H)
@@ -14916,6 +14945,36 @@ def handle_t_vw_semen_g_1000(character_id: int) -> int:
     if all_semen_count > 1000:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.PL_PENIS_SEMEN_DIRTY)
+def handle_pl_penis_semen_dirty(character_id: int) -> int:
+    """
+    玩家阴茎上精液污浊
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    penis_dirty = pl_character_data.dirty.penis_dirty_dict.get("semen", False)
+    if penis_dirty:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_PENIS_NOT_SEMEN_DIRTY)
+def handle_pl_penis_not_semen_dirty(character_id: int) -> int:
+    """
+    玩家阴茎上没有精液污浊
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_pl_penis_semen_dirty(0):
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.URINATE_LE_49)

@@ -9876,835 +9876,839 @@ msgstr ""
 msgid "阴茎蹭耳朵"
 msgstr ""
 
-#: .\data\csv\Status.csv:174
+#: .\data\csv\Status.csv:173
+msgid "清洁口交"
+msgstr ""
+
+#: .\data\csv\Status.csv:175
 msgid "事前避孕药"
 msgstr ""
 
-#: .\data\csv\Status.csv:182
+#: .\data\csv\Status.csv:183
 msgid "戴上避孕套"
 msgstr ""
 
-#: .\data\csv\Status.csv:184
+#: .\data\csv\Status.csv:185
 msgid "尿道棉棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:185
+#: .\data\csv\Status.csv:186
 msgid "摘掉避孕套"
 msgstr ""
 
-#: .\data\csv\Status.csv:186
+#: .\data\csv\Status.csv:187
 msgid "乳头跳蛋"
 msgstr ""
 
-#: .\data\csv\Status.csv:187
+#: .\data\csv\Status.csv:188
 msgid "戴上乳头夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:188
+#: .\data\csv\Status.csv:189
 msgid "阴蒂跳蛋"
 msgstr ""
 
-#: .\data\csv\Status.csv:189
+#: .\data\csv\Status.csv:190
 msgid "戴上阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:191
+#: .\data\csv\Status.csv:192
 msgid "V插入震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:194
+#: .\data\csv\Status.csv:195
 msgid "A插入震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:195
+#: .\data\csv\Status.csv:196
 msgid "加粗肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:196
+#: .\data\csv\Status.csv:197
 msgid "巨型肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:197
+#: .\data\csv\Status.csv:198
 msgid "灌肠"
 msgstr ""
 
-#: .\data\csv\Status.csv:198
+#: .\data\csv\Status.csv:199
 msgid "肛塞"
 msgstr ""
 
-#: .\data\csv\Status.csv:199
+#: .\data\csv\Status.csv:200
 msgid "塞入肛门拉珠"
 msgstr ""
 
-#: .\data\csv\Status.csv:200
+#: .\data\csv\Status.csv:201
 msgid "拔出肛塞"
 msgstr ""
 
-#: .\data\csv\Status.csv:201
+#: .\data\csv\Status.csv:202
 msgid "取下乳头夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:202
+#: .\data\csv\Status.csv:203
 msgid "取下阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:203
+#: .\data\csv\Status.csv:204
 msgid "拔出震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:204
+#: .\data\csv\Status.csv:205
 msgid "拔出肛门震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:205
+#: .\data\csv\Status.csv:206
 msgid "拔出肛门拉珠"
 msgstr ""
 
-#: .\data\csv\Status.csv:206
+#: .\data\csv\Status.csv:207
 msgid "正常位"
 msgstr ""
 
-#: .\data\csv\Status.csv:207
+#: .\data\csv\Status.csv:208
 msgid "背后位"
 msgstr ""
 
-#: .\data\csv\Status.csv:208
+#: .\data\csv\Status.csv:209
 msgid "骑乘位"
 msgstr ""
 
-#: .\data\csv\Status.csv:209
+#: .\data\csv\Status.csv:210
 msgid "对面座位"
 msgstr ""
 
-#: .\data\csv\Status.csv:210
+#: .\data\csv\Status.csv:211
 msgid "背面座位"
 msgstr ""
 
-#: .\data\csv\Status.csv:211
+#: .\data\csv\Status.csv:212
 msgid "对面立位"
 msgstr ""
 
-#: .\data\csv\Status.csv:212
+#: .\data\csv\Status.csv:213
 msgid "背面立位"
 msgstr ""
 
-#: .\data\csv\Status.csv:213
+#: .\data\csv\Status.csv:214
 msgid "刺激G点"
 msgstr ""
 
-#: .\data\csv\Status.csv:214
+#: .\data\csv\Status.csv:215
 msgid "玩弄子宫口"
 msgstr ""
 
-#: .\data\csv\Status.csv:215
+#: .\data\csv\Status.csv:216
 msgid "插入子宫口"
 msgstr ""
 
-#: .\data\csv\Status.csv:216
+#: .\data\csv\Status.csv:217
 msgid "子宫姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:217
+#: .\data\csv\Status.csv:218
 msgid "正常位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:218
+#: .\data\csv\Status.csv:219
 msgid "后背位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:219
+#: .\data\csv\Status.csv:220
 msgid "骑乘位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:220
+#: .\data\csv\Status.csv:221
 msgid "对面座位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:221
+#: .\data\csv\Status.csv:222
 msgid "背面座位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:222
+#: .\data\csv\Status.csv:223
 msgid "对面立位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:223
+#: .\data\csv\Status.csv:224
 msgid "背面立位肛交"
 msgstr ""
 
-#: .\data\csv\Status.csv:224
+#: .\data\csv\Status.csv:225
 msgid "玩弄s状结肠"
 msgstr ""
 
-#: .\data\csv\Status.csv:225
+#: .\data\csv\Status.csv:226
 msgid "隔着刺激阴道"
 msgstr ""
 
-#: .\data\csv\Status.csv:226
+#: .\data\csv\Status.csv:227
 msgid "尿道指姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:227
+#: .\data\csv\Status.csv:228
 msgid "尿道姦"
 msgstr ""
 
-#: .\data\csv\Status.csv:229
+#: .\data\csv\Status.csv:230
 msgid "装上搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:230
+#: .\data\csv\Status.csv:231
 msgid "装上采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:235
+#: .\data\csv\Status.csv:236
 msgid "取下搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:236
+#: .\data\csv\Status.csv:237
 msgid "取下采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:238
+#: .\data\csv\Status.csv:239
 msgid "脱衣服"
 msgstr ""
 
-#: .\data\csv\Status.csv:239
+#: .\data\csv\Status.csv:240
 msgid "脱到只穿内衣(即只脱上下外衣)"
 msgstr ""
 
-#: .\data\csv\Status.csv:240
+#: .\data\csv\Status.csv:241
 msgid "脱到只穿袜子手套等(即再脱掉内衣)"
 msgstr ""
 
-#: .\data\csv\Status.csv:241
+#: .\data\csv\Status.csv:242
 msgid "脱到全裸(即身上没有任何衣物)"
 msgstr ""
 
-#: .\data\csv\Status.csv:242
+#: .\data\csv\Status.csv:243
 msgid "收起内裤"
 msgstr ""
 
-#: .\data\csv\Status.csv:244
+#: .\data\csv\Status.csv:245
 msgid "抱小孩"
 msgstr ""
 
-#: .\data\csv\Status.csv:245
+#: .\data\csv\Status.csv:246
 msgid "哼唱儿歌"
 msgstr ""
 
-#: .\data\csv\Status.csv:246
+#: .\data\csv\Status.csv:247
 msgid "喂奶"
 msgstr ""
 
-#: .\data\csv\Status.csv:247
+#: .\data\csv\Status.csv:248
 msgid "换尿布"
 msgstr ""
 
-#: .\data\csv\Status.csv:248
+#: .\data\csv\Status.csv:249
 msgid "教说话"
 msgstr ""
 
-#: .\data\csv\Status.csv:249
+#: .\data\csv\Status.csv:250
 msgid "给玩具"
 msgstr ""
 
-#: .\data\csv\Status.csv:251
+#: .\data\csv\Status.csv:252
 msgid "开启透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:252
+#: .\data\csv\Status.csv:253
 msgid "关闭透视"
 msgstr ""
 
-#: .\data\csv\Status.csv:253
+#: .\data\csv\Status.csv:254
 msgid "开启信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:254
+#: .\data\csv\Status.csv:255
 msgid "关闭信息素"
 msgstr ""
 
-#: .\data\csv\Status.csv:255
+#: .\data\csv\Status.csv:256
 msgid "单人催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:256
+#: .\data\csv\Status.csv:257
 msgid "集体催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:257
+#: .\data\csv\Status.csv:258
 msgid "解除催眠"
 msgstr ""
 
-#: .\data\csv\Status.csv:258
+#: .\data\csv\Status.csv:259
 msgid "体控-敏感度提升"
 msgstr ""
 
-#: .\data\csv\Status.csv:259
+#: .\data\csv\Status.csv:260
 msgid "体控-强制高潮"
 msgstr ""
 
-#: .\data\csv\Status.csv:260
+#: .\data\csv\Status.csv:261
 msgid "体控-强制排卵"
 msgstr ""
 
-#: .\data\csv\Status.csv:261
+#: .\data\csv\Status.csv:262
 msgid "体控-木头人"
 msgstr ""
 
-#: .\data\csv\Status.csv:262
+#: .\data\csv\Status.csv:263
 msgid "体控-逆推"
 msgstr ""
 
-#: .\data\csv\Status.csv:263
+#: .\data\csv\Status.csv:264
 msgid "心控-角色扮演"
 msgstr ""
 
-#: .\data\csv\Status.csv:265
+#: .\data\csv\Status.csv:266
 msgid "结算N小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:266
+#: .\data\csv\Status.csv:267
 msgid "结算N普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:267
+#: .\data\csv\Status.csv:268
 msgid "结算N强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:268
+#: .\data\csv\Status.csv:269
 msgid "结算B小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:269
+#: .\data\csv\Status.csv:270
 msgid "结算B普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:270
+#: .\data\csv\Status.csv:271
 msgid "结算B强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:271
+#: .\data\csv\Status.csv:272
 msgid "结算C小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:272
+#: .\data\csv\Status.csv:273
 msgid "结算C普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:273
+#: .\data\csv\Status.csv:274
 msgid "结算C强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:274
+#: .\data\csv\Status.csv:275
 msgid "结算射精"
 msgstr ""
 
-#: .\data\csv\Status.csv:275
+#: .\data\csv\Status.csv:276
 msgid "结算大量射精"
 msgstr ""
 
-#: .\data\csv\Status.csv:276
+#: .\data\csv\Status.csv:277
 msgid "结算超大量射精"
 msgstr ""
 
-#: .\data\csv\Status.csv:277
+#: .\data\csv\Status.csv:278
 msgid "结算V小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:278
+#: .\data\csv\Status.csv:279
 msgid "结算V普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:279
+#: .\data\csv\Status.csv:280
 msgid "结算V强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:280
+#: .\data\csv\Status.csv:281
 msgid "结算A小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:281
+#: .\data\csv\Status.csv:282
 msgid "结算A普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:282
+#: .\data\csv\Status.csv:283
 msgid "结算A强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:283
+#: .\data\csv\Status.csv:284
 msgid "结算U小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:284
+#: .\data\csv\Status.csv:285
 msgid "结算U普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:285
+#: .\data\csv\Status.csv:286
 msgid "结算U强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:286
+#: .\data\csv\Status.csv:287
 msgid "结算W小绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:287
+#: .\data\csv\Status.csv:288
 msgid "结算W普绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:288
+#: .\data\csv\Status.csv:289
 msgid "结算W强绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:289
+#: .\data\csv\Status.csv:290
 msgid "结算额外绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:290
+#: .\data\csv\Status.csv:291
 msgid "结算饮精绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:291
+#: .\data\csv\Status.csv:292
 msgid "结算快乐刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:292
+#: .\data\csv\Status.csv:293
 msgid "结算快乐刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:293
+#: .\data\csv\Status.csv:294
 msgid "结算快乐刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:294
+#: .\data\csv\Status.csv:295
 msgid "结算屈服刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:295
+#: .\data\csv\Status.csv:296
 msgid "结算屈服刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:296
+#: .\data\csv\Status.csv:297
 msgid "结算屈服刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:297
+#: .\data\csv\Status.csv:298
 msgid "结算苦痛刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:298
+#: .\data\csv\Status.csv:299
 msgid "结算苦痛刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:299
+#: .\data\csv\Status.csv:300
 msgid "结算苦痛刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:300
+#: .\data\csv\Status.csv:301
 msgid "结算时姦刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:301
+#: .\data\csv\Status.csv:302
 msgid "结算时姦刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:302
+#: .\data\csv\Status.csv:303
 msgid "结算时姦刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:303
+#: .\data\csv\Status.csv:304
 msgid "结算恐怖刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:304
+#: .\data\csv\Status.csv:305
 msgid "结算恐怖刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:305
+#: .\data\csv\Status.csv:306
 msgid "结算恐怖刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:306
+#: .\data\csv\Status.csv:307
 msgid "结算反发刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:307
+#: .\data\csv\Status.csv:308
 msgid "结算反发刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:308
+#: .\data\csv\Status.csv:309
 msgid "结算反发刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:309
+#: .\data\csv\Status.csv:310
 msgid "结算初吻"
 msgstr ""
 
-#: .\data\csv\Status.csv:310
+#: .\data\csv\Status.csv:311
 msgid "结算处女"
 msgstr ""
 
-#: .\data\csv\Status.csv:311
+#: .\data\csv\Status.csv:312
 msgid "结算A处女"
 msgstr ""
 
-#: .\data\csv\Status.csv:312
+#: .\data\csv\Status.csv:313
 msgid "结算无觉刻印1"
 msgstr ""
 
-#: .\data\csv\Status.csv:313
+#: .\data\csv\Status.csv:314
 msgid "结算无觉刻印2"
 msgstr ""
 
-#: .\data\csv\Status.csv:314
+#: .\data\csv\Status.csv:315
 msgid "结算无觉刻印3"
 msgstr ""
 
-#: .\data\csv\Status.csv:315
+#: .\data\csv\Status.csv:316
 msgid "结算无觉刻印4"
 msgstr ""
 
-#: .\data\csv\Status.csv:316
+#: .\data\csv\Status.csv:317
 msgid "结算无觉刻印5"
 msgstr ""
 
-#: .\data\csv\Status.csv:317
+#: .\data\csv\Status.csv:318
 msgid "结算无觉刻印6"
 msgstr ""
 
-#: .\data\csv\Status.csv:319
+#: .\data\csv\Status.csv:320
 msgid "结算因B绝顶而被迫喷乳"
 msgstr ""
 
-#: .\data\csv\Status.csv:320
+#: .\data\csv\Status.csv:321
 msgid "结算因U绝顶而被迫漏尿"
 msgstr ""
 
-#: .\data\csv\Status.csv:322
+#: .\data\csv\Status.csv:323
 msgid "结算双重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:323
+#: .\data\csv\Status.csv:324
 msgid "结算三重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:324
+#: .\data\csv\Status.csv:325
 msgid "结算四重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:325
+#: .\data\csv\Status.csv:326
 msgid "结算五重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:326
+#: .\data\csv\Status.csv:327
 msgid "结算六重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:327
+#: .\data\csv\Status.csv:328
 msgid "结算七重绝顶"
 msgstr ""
 
-#: .\data\csv\Status.csv:329
+#: .\data\csv\Status.csv:330
 msgid "结算乳头夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:330
+#: .\data\csv\Status.csv:331
 msgid "结算阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Status.csv:331
+#: .\data\csv\Status.csv:332
 msgid "结算震动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:332
+#: .\data\csv\Status.csv:333
 msgid "结算肛门振动棒"
 msgstr ""
 
-#: .\data\csv\Status.csv:333
+#: .\data\csv\Status.csv:334
 msgid "结算搾乳机"
 msgstr ""
 
-#: .\data\csv\Status.csv:334
+#: .\data\csv\Status.csv:335
 msgid "结算采尿器"
 msgstr ""
 
-#: .\data\csv\Status.csv:335
+#: .\data\csv\Status.csv:336
 msgid "结算眼罩"
 msgstr ""
 
-#: .\data\csv\Status.csv:336
+#: .\data\csv\Status.csv:337
 msgid "结算肛门拉珠"
 msgstr ""
 
-#: .\data\csv\Status.csv:337
+#: .\data\csv\Status.csv:338
 msgid "结算利尿剂"
 msgstr ""
 
-#: .\data\csv\Status.csv:338
+#: .\data\csv\Status.csv:339
 msgid "结算安眠药"
 msgstr ""
 
-#: .\data\csv\Status.csv:339
+#: .\data\csv\Status.csv:340
 msgid "结算排卵促进药"
 msgstr ""
 
-#: .\data\csv\Status.csv:340
+#: .\data\csv\Status.csv:341
 msgid "结算事前避孕药"
 msgstr ""
 
-#: .\data\csv\Status.csv:341
+#: .\data\csv\Status.csv:342
 msgid "结算事后避孕药"
 msgstr ""
 
-#: .\data\csv\Status.csv:343
+#: .\data\csv\Status.csv:344
 msgid "结算发交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:344
+#: .\data\csv\Status.csv:345
 msgid "结算阴茎蹭脸中"
 msgstr ""
 
-#: .\data\csv\Status.csv:345
+#: .\data\csv\Status.csv:346
 msgid "结算口交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:346
+#: .\data\csv\Status.csv:347
 msgid "结算乳交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:347
+#: .\data\csv\Status.csv:348
 msgid "结算腋交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:348
+#: .\data\csv\Status.csv:349
 msgid "结算手交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:349
+#: .\data\csv\Status.csv:350
 msgid "结算V插入中"
 msgstr ""
 
-#: .\data\csv\Status.csv:350
+#: .\data\csv\Status.csv:351
 msgid "结算W插入中"
 msgstr ""
 
-#: .\data\csv\Status.csv:351
+#: .\data\csv\Status.csv:352
 msgid "结算A插入中"
 msgstr ""
 
-#: .\data\csv\Status.csv:352
+#: .\data\csv\Status.csv:353
 msgid "结算U插入中"
 msgstr ""
 
-#: .\data\csv\Status.csv:353
+#: .\data\csv\Status.csv:354
 msgid "结算腿交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:354
+#: .\data\csv\Status.csv:355
 msgid "结算足交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:355
+#: .\data\csv\Status.csv:356
 msgid "结算尾交中"
 msgstr ""
 
-#: .\data\csv\Status.csv:356
+#: .\data\csv\Status.csv:357
 msgid "结算阴茎蹭角中"
 msgstr ""
 
-#: .\data\csv\Status.csv:357
+#: .\data\csv\Status.csv:358
 msgid "结算阴茎蹭耳朵中"
 msgstr ""
 
-#: .\data\csv\Status.csv:358
+#: .\data\csv\Status.csv:359
 msgid "结算素股中"
 msgstr ""
 
-#: .\data\csv\Status.csv:360
+#: .\data\csv\Status.csv:361
 msgid "结算获得思慕"
 msgstr ""
 
-#: .\data\csv\Status.csv:361
+#: .\data\csv\Status.csv:362
 msgid "结算获得恋慕"
 msgstr ""
 
-#: .\data\csv\Status.csv:362
+#: .\data\csv\Status.csv:363
 msgid "结算获得恋人(含赠予信物)"
 msgstr ""
 
-#: .\data\csv\Status.csv:363
+#: .\data\csv\Status.csv:364
 msgid "结算获得爱侣"
 msgstr ""
 
-#: .\data\csv\Status.csv:364
+#: .\data\csv\Status.csv:365
 msgid "结算获得屈从"
 msgstr ""
 
-#: .\data\csv\Status.csv:365
+#: .\data\csv\Status.csv:366
 msgid "结算获得驯服"
 msgstr ""
 
-#: .\data\csv\Status.csv:366
+#: .\data\csv\Status.csv:367
 msgid "结算获得宠物(含赠予信物)"
 msgstr ""
 
-#: .\data\csv\Status.csv:367
+#: .\data\csv\Status.csv:368
 msgid "结算获得奴隶"
 msgstr ""
 
-#: .\data\csv\Status.csv:369
+#: .\data\csv\Status.csv:370
 msgid "结算获得受精"
 msgstr ""
 
-#: .\data\csv\Status.csv:370
+#: .\data\csv\Status.csv:371
 msgid "结算受精失败"
 msgstr ""
 
-#: .\data\csv\Status.csv:371
+#: .\data\csv\Status.csv:372
 msgid "结算获得妊娠"
 msgstr ""
 
-#: .\data\csv\Status.csv:372
+#: .\data\csv\Status.csv:373
 msgid "结算获得临盆"
 msgstr ""
 
-#: .\data\csv\Status.csv:373
+#: .\data\csv\Status.csv:374
 msgid "生产前的对话"
 msgstr ""
 
-#: .\data\csv\Status.csv:374
+#: .\data\csv\Status.csv:375
 msgid "生产后的对话+获得产后"
 msgstr ""
 
-#: .\data\csv\Status.csv:375
+#: .\data\csv\Status.csv:376
 msgid "结算获得育儿"
 msgstr ""
 
-#: .\data\csv\Status.csv:376
+#: .\data\csv\Status.csv:377
 msgid "结算育儿完成"
 msgstr ""
 
-#: .\data\csv\Status.csv:377
+#: .\data\csv\Status.csv:378
 msgid "结算幼女长成萝莉"
 msgstr ""
 
-#: .\data\csv\Status.csv:378
+#: .\data\csv\Status.csv:379
 msgid "结算萝莉长成少女"
 msgstr ""
 
-#: .\data\csv\Status.csv:380
+#: .\data\csv\Status.csv:381
 msgid "初次见面"
 msgstr ""
 
-#: .\data\csv\Status.csv:381
+#: .\data\csv\Status.csv:382
 msgid "每日打招呼"
 msgstr ""
 
-#: .\data\csv\Status.csv:383
+#: .\data\csv\Status.csv:384
 msgid "新周目告别"
 msgstr ""
 
-#: .\data\csv\Status.csv:385
+#: .\data\csv\Status.csv:386
 msgid "被选为助理"
 msgstr ""
 
-#: .\data\csv\Status.csv:386
+#: .\data\csv\Status.csv:387
 msgid "不再为助理"
 msgstr ""
 
-#: .\data\csv\Status.csv:387
+#: .\data\csv\Status.csv:388
 msgid "关闭智能跟随"
 msgstr ""
 
-#: .\data\csv\Status.csv:388
+#: .\data\csv\Status.csv:389
 msgid "开启智能跟随"
 msgstr ""
 
-#: .\data\csv\Status.csv:389
+#: .\data\csv\Status.csv:390
 msgid "要求前往办公室"
 msgstr ""
 
-#: .\data\csv\Status.csv:390
+#: .\data\csv\Status.csv:391
 msgid "关闭辅佐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:391
+#: .\data\csv\Status.csv:392
 msgid "开启辅佐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:392
+#: .\data\csv\Status.csv:393
 msgid "关闭送饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:393
+#: .\data\csv\Status.csv:394
 msgid "开启帮忙买午饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:394
+#: .\data\csv\Status.csv:395
 msgid "开启亲手做午饭服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:395
+#: .\data\csv\Status.csv:396
 msgid "开启亲手做三餐服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:396
+#: .\data\csv\Status.csv:397
 msgid "关闭早安服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:397
+#: .\data\csv\Status.csv:398
 msgid "开启早上叫起床服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:398
+#: .\data\csv\Status.csv:399
 msgid "开启早安吻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:399
+#: .\data\csv\Status.csv:400
 msgid "开启早安咬服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:400
+#: .\data\csv\Status.csv:401
 msgid "关闭晚安服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:401
+#: .\data\csv\Status.csv:402
 msgid "开启晚上催睡觉服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:402
+#: .\data\csv\Status.csv:403
 msgid "开启晚安吻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:403
+#: .\data\csv\Status.csv:404
 msgid "开启晚安咬服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:404
+#: .\data\csv\Status.csv:405
 msgid "关闭同居服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:405
+#: .\data\csv\Status.csv:406
 msgid "开启同居服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:406
+#: .\data\csv\Status.csv:407
 msgid "关闭助攻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:407
+#: .\data\csv\Status.csv:408
 msgid "开启助攻服务"
 msgstr ""
 
-#: .\data\csv\Status.csv:409
+#: .\data\csv\Status.csv:410
 msgid "获得被浅层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:410
+#: .\data\csv\Status.csv:411
 msgid "获得被深层催眠素质"
 msgstr ""
 
-#: .\data\csv\Status.csv:411
+#: .\data\csv\Status.csv:412
 msgid "获得被完全催眠素质"
 msgstr ""
 

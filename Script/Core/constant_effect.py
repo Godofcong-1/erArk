@@ -834,6 +834,10 @@ class BehaviorEffect:
     """ 属性_H 对方开启主动H """
     TARGET_NPC_ACTIVE_H_OFF = 1404
     """ 属性_H 对方关闭主动H """
+    PL_JUST_SHOOT_ON = 1405
+    """ 属性_H 玩家变为前指令刚刚射精状态 """
+    PL_JUST_SHOOT_OFF = 1406
+    """ 属性_H 玩家清零前指令刚刚射精状态 """
 
     # 1500+见属性_基础
 

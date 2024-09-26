@@ -52,9 +52,10 @@ def common_ejaculation():
         # 射精量不高于剩余精液值
         semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
 
-        # 更新射精计数和总精液量
-        character_data.h_state.orgasm_level[3] += 1
-        cache.rhodes_island.total_semen_count += semen_count
+        character_data.h_state.orgasm_level[3] += 1 # 更新射精次数
+        character_data.h_state.just_shoot = True # 更新刚射精状态
+        character_data.dirty.penis_dirty_dict["semen"] = True # 更新阴茎精液污浊状态
+        cache.rhodes_island.total_semen_count += semen_count # 更新总精液量
 
         # # 更新精液值，目前弃用
         # if semen_count > character_data.semen_point:

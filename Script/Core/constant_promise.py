@@ -146,7 +146,7 @@ class Premise:
     LAST_CMD_HANDJOB_TYPE = "last_cmd_handjob_type"
     """ 指令_前指令 前一指令为手交类(420，427) """
     LAST_CMD_BLOWJOB_TYPE = "last_cmd_blowjob_type"
-    """ 指令_前指令 前一指令为口交类(421，427，428，429，430，431) """
+    """ 指令_前指令 前一指令为口交类(421，427，428，429，430，431，437) """
     LAST_CMD_PAIZURI_TYPE = "last_cmd_paizuri_type"
     """ 指令_前指令 前一指令为乳交类(422，428) """
 
@@ -2118,6 +2118,10 @@ class Premise:
     """ 污浊_身体 自身当前小穴和子宫总精液量大于1000ml """
     T_VW_SEMEN_G_1000 = "t_v_semen_g_1000"
     """ 污浊_身体 交互对象当前小穴和子宫总精液量大于1000ml """
+    PL_PENIS_SEMEN_DIRTY = "pl_penis_semen_dirty"
+    """ 污浊_身体 玩家阴茎上精液污浊 """
+    PL_PENIS_NOT_SEMEN_DIRTY = "pl_penis_not_semen_dirty"
+    """ 污浊_身体 玩家阴茎上没有精液污浊 """
 
     HAT_SEMEN = "hat_semen"
     """ 污浊_服装 自身当前帽子有精液 """
@@ -2291,6 +2295,10 @@ class Premise:
     """ H_射精与绝顶 玩家当前精液量大于等于50ml """
     PL_SEMEN_GE_100 = "pl_semen_ge_100"
     """ H_射精与绝顶 玩家当前精液量大于等于100ml """
+    PL_JUST_SHOOT = "pl_just_shoot"
+    """ H_射精与绝顶 玩家前指令射精了 """
+    PL_NOT_JUST_SHOOT = "pl_not_just_shoot"
+    """ H_射精与绝顶 玩家前指令未射精 """
 
     NPC_ACTIVE_H = "npc_active_h"
     """ H_逆推 自己正在主动H """
