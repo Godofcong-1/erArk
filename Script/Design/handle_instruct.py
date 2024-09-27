@@ -701,7 +701,6 @@ def handle_hypnosis_all():
     _("切换催眠模式"),
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_change_hypnosis_mode():
