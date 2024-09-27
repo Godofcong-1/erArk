@@ -209,6 +209,9 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
                 if part_type == 0:
                     part_name = game_config.config_body_part[part_cid].name
                     now_text = _("在{0}的{1}{2}").format(target_data.name, part_name, semen_text)
+                    # 更新无意识妊娠flag
+                    if part_cid in [6, 7] and target_data.sp_flag.unconscious_h == 0:
+                        target_data.pregnancy.unconscious_fertilization = False
                 elif part_type == 1:
                     cloth_text = game_config.config_clothing_type[part_cid].name
                     now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)

@@ -341,6 +341,8 @@ class PREGNANCY:
         """ 角色当前乳汁量，单位毫升，每3分钟增加2毫升（平均4小时达到80%涨奶） """
         self.milk_max: int = 200
         """ 角色最大乳汁量，单位毫升 """
+        self.unconscious_fertilization: bool = True
+        """ 无意识妊娠flag，如果进行过有意识下的H就会被置为False """
 
 
 class RELATIONSHIP:

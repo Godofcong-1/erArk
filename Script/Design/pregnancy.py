@@ -125,6 +125,13 @@ def check_fertilization(character_id: int):
                 draw_text += "\n※※※※※※※※※\n"
                 character_data.talent[20] = 1
                 character_data.pregnancy.fertilization_time = cache.game_time
+                # 判断是否是无意识妊娠
+                if character_data.pregnancy.unconscious_fertilization:
+                    character_data.talent[35] = 1
+                    draw_text += _("\n{0}从未在有意识下被中出过，因此不会意识到自己已经怀孕了\n").format(character_data.name)
+                    draw_text += _("\n{0}获得了[无意识妊娠]\n").format(character_data.name)
+                    draw_text += "\n※※※※※※※※※\n"
+                # 触发受精的二段行动
                 character_data.second_behavior[1311] = 1
             else:
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
