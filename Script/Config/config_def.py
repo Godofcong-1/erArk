@@ -938,6 +938,8 @@ class Tip:
     """ 提示id """
     type: str
     """ 提示类型 """
+    facility_id: int
+    """ 设施区块id """
     info: str
     """ 提示内容 """
 

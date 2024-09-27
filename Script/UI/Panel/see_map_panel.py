@@ -13,6 +13,7 @@ from Script.Core import (
 )
 from Script.Design import map_handle, attr_text, character_move
 from Script.Config import game_config
+import random
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -59,6 +60,20 @@ class SeeMapPanel:
             map_name = attr_text.get_map_path_text(self.now_map)
             title_draw = draw.TitleLineDraw(_("当前区块:") + _(map_name), self.width)
             title_draw.draw()
+            # 绘制tips
+            now_facility_id = -1
+            for facility_id in game_config.config_facility:
+                facility_data = game_config.config_facility[facility_id]
+                if facility_data.name == map_name:
+                    now_facility_id = facility_id
+            if now_facility_id != -1:
+                now_facility_tip_list = game_config.config_tip_data_by_facility[now_facility_id]
+                random_tip_id = random.choice(now_facility_tip_list)
+                now_tip_text = game_config.config_tip_data[random_tip_id].info
+                tip_draw = draw.NormalDraw()
+                tip_draw.text = now_tip_text + "\n\n"
+                tip_draw.width = self.width
+                # tip_draw.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
             character_scene_name = map_handle.get_map_scene_id_for_scene_path(

@@ -1051,10 +1051,10 @@ def update_save():
     now_draw.text = _("\n全部结算完毕，开始自动保存\n")
     # 播放一条提示信息
     info_list = []
-    for i in game_config.config_tip_tem:
+    for i in game_config.config_tip_data:
         info_list.append(i)
     info_id = random.choice(info_list)
-    info_text = game_config.config_tip_tem[info_id].info
+    info_text = game_config.config_tip_data[info_id].info
     now_draw.text += _("\n请博士在保存时阅读今日的小贴士：\n\n  {0}\n\n\n").format(info_text)
     now_draw.draw()
     save_handle.establish_save("auto")

@@ -195,8 +195,10 @@ config_sex_tem: Dict[int, config_def.SexTem] = {}
 """ 性别对应描述和性别器官模板 """
 config_jj_tem: Dict[int, config_def.JJ] = {}
 """ 阴茎对应描述 """
-config_tip_tem: Dict[int, config_def.Tip] = {}
+config_tip_data: Dict[int, config_def.Tip] = {}
 """ 提示对应描述 """
+config_tip_data_by_facility: Dict[int, List] = {}
+""" 设施对应提示 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -948,7 +950,10 @@ def load_tip_tem():
     for tem_data in now_data["data"]:
         now_tem = config_def.Tip()
         now_tem.__dict__ = tem_data
-        config_tip_tem[now_tem.cid] = now_tem
+        config_tip_data[now_tem.cid] = now_tem
+        if now_tem.facility_id != -1:
+            config_tip_data_by_facility.setdefault(now_tem.facility_id, [])
+            config_tip_data_by_facility[now_tem.facility_id].append(now_tem.cid)
 
 
 def load_solar_period():
