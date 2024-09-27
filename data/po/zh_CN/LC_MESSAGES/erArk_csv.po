@@ -11025,7 +11025,7 @@ msgid "无意识妊娠"
 msgstr ""
 
 #: .\data\csv\Talent.csv:35
-msgid "从未在有意识下进行过H行为，仅在无意识H下被中出到怀孕，因此不知道孩子是怎么来的"
+msgid "从未在有意识下被中出过，仅在无意识H下被中出到怀孕，因此不知道孩子是怎么来的"
 msgstr ""
 
 #: .\data\csv\Talent.csv:37

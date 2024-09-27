@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -366,6 +366,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Instruct|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "嵌套子事件":
             cvp_b_value = "Son|0"
+        elif cvp_b1 == "其他角色在场":
+            cvp_b_value = "OtherChara|0"
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -409,8 +411,13 @@ class CVPMenu(QDialog):
         else:
             self.cvp_a2.setVisible(False)
 
-    def reset_c(self):
-        """重置c的选项"""
+    def reset_option(self):
+        """重置选项"""
+        self.cvp_a.clear()
+        self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
+        self.cvp_a.setVisible(True)
+        self.cvp_b2.setVisible(True)
+
         self.cvp_c.clear()
         self.cvp_c.addItems(["大于", "小于", "等于", "大于等于", "小于等于", "不等于"])
         self.cvp_c.setCurrentIndex(0)
@@ -419,9 +426,7 @@ class CVPMenu(QDialog):
 
     def change_b2(self, index: int):
         """改变b2的选项"""
-        self.cvp_a.setVisible(True)
-        self.cvp_b2.setVisible(True)
-        self.reset_c()
+        self.reset_option()
         if index == 0:
             self.cvp_b2.setVisible(False)
         elif index == 1:
@@ -494,4 +499,12 @@ class CVPMenu(QDialog):
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
             self.cvp_text.setText("嵌套子事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统状态]\n②本前提需要配合[综合数值结算]中的[嵌套父事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")
+        elif index == 13:
+            self.cvp_a.clear()
+            self.cvp_a.addItems(["角色id为"])
+            self.cvp_a2.setVisible(True)
+            self.cvp_b2.setVisible(False)
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_text.setText("检测特定id的角色是否在场的前提，用于和其他角色进行联动\n\n等于1就是在场，等于0就是不在场")
         self.cvp_b = self.cvp_b2

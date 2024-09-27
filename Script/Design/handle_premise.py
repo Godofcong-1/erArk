@@ -71,13 +71,20 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             return 0
         final_character_data = cache.character_data[character_data.target_character_id]
     elif premise_all_value_list[0][:2] == "A3":
-        final_character_id = int(premise_all_value_list[0][3:])
+        final_character_adv = int(premise_all_value_list[0][3:])
+        final_character_id = 0
+        # 遍历拥有的全角色，找到对应的角色
+        for character_id in cache.npc_id_got:
+            tem_character_data = cache.character_data[character_id]
+            if tem_character_data.adv == final_character_adv:
+                final_character_id = character_id
+                final_character_data = cache.character_data[character_id]
+                break
         # 如果还没拥有该角色，则返回0
-        if final_character_id not in cache.npc_id_got:
+        if final_character_id == 0:
             return 0
-        final_character_data = cache.character_data[final_character_id]
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -163,6 +170,13 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                     return 1
             return 0
 
+    # 其他角色在场的判定
+    if premise_all_value_list[1][0] == "O":
+        if "OtherChara" in premise_all_value_list[1]:
+            if character_data.position == final_character_data.position:
+                return 1 if judge_value >= 1 else 0
+            else:
+                return 0 if judge_value >= 1 else 1
 
     # 正常的运算符判定
     if premise_all_value_list[2] == "G":
