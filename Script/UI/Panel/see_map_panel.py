@@ -66,14 +66,17 @@ class SeeMapPanel:
                 facility_data = game_config.config_facility[facility_id]
                 if facility_data.name == map_name:
                     now_facility_id = facility_id
-            if now_facility_id != -1:
+            if now_facility_id != -1 and now_facility_id in game_config.config_tip_data_by_facility:
                 now_facility_tip_list = game_config.config_tip_data_by_facility[now_facility_id]
                 random_tip_id = random.choice(now_facility_tip_list)
                 now_tip_text = game_config.config_tip_data[random_tip_id].info
-                tip_draw = draw.NormalDraw()
-                tip_draw.text = now_tip_text + "\n\n"
+                tip_draw = draw.CenterDraw()
+                tip_draw.text = "○" + now_tip_text
                 tip_draw.width = self.width
-                # tip_draw.draw()
+                line_feed.draw()
+                tip_draw.draw()
+                line_feed.draw()
+                line_feed.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
             character_data: game_type.Character = cache.character_data[0]
             character_scene_name = map_handle.get_map_scene_id_for_scene_path(
