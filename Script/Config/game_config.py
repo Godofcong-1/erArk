@@ -239,7 +239,12 @@ config_event: Dict[str, game_type.Event] = {}
 config_event_status_data: Dict[int, List] = {}
 """
 各个状态下事件列表
-状态id:口上id集合
+状态id:事件id列表
+"""
+config_event_status_data_by_chara_adv: Dict[int, int] = {}
+"""
+各个状态下事件列表
+状态id:角色adv:事件id列表
 """
 config_event_target: Dict[int, game_type.Target] = {}
 """ 目标配置数据 """
@@ -1089,6 +1094,9 @@ def load_event():
         config_event[now_tem.uid] = now_tem
         config_event_status_data.setdefault(int(now_tem.status_id), [])
         config_event_status_data[int(now_tem.status_id)].append(now_tem.uid)
+        config_event_status_data_by_chara_adv.setdefault(int(now_tem.status_id), {})
+        config_event_status_data_by_chara_adv[int(now_tem.status_id)].setdefault(int(now_tem.adv_id), [])
+        config_event_status_data_by_chara_adv[int(now_tem.status_id)][int(now_tem.adv_id)].append(now_tem.uid)
 
 
 def load_event_target():

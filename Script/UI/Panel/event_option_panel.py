@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, py_cmd
-from Script.Design import talk
+from Script.Design import talk, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -100,18 +100,39 @@ class multi_layer_event_option_Panel:
         character_data: game_type.Character = cache.character_data[self.character_id]
         behavior_id = character_data.behavior.behavior_id
 
-        son_event_list = []
+        tem_event_list = [] # 临时事件列表
+        son_event_list = [] # 子事件列表
 
         # 开始遍历当前行为的事件表
-        if behavior_id in game_config.config_event_status_data:
-            for event_id in game_config.config_event_status_data[behavior_id]:
-                event_config = game_config.config_event[event_id]
-                # 需要含有综合数值前提中的子嵌套事件前提
-                son_premise = "CVP_A1_Son|0_E_{0}".format(self.event_parent_chid_id)
-                # 加入到子事件的列表中
-                if son_premise in event_config.premise:
+        if behavior_id in game_config.config_event_status_data_by_chara_adv:
+            if character_data.adv in game_config.config_event_status_data_by_chara_adv[behavior_id]:
+                tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][character_data.adv]
+            target_character_data = cache.character_data[character_data.target_character_id]
+            if target_character_data.adv in game_config.config_event_status_data_by_chara_adv[behavior_id]:
+                tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][target_character_data.adv]
+
+        for event_id in tem_event_list:
+            event_config = game_config.config_event[event_id]
+            # 需要含有综合数值前提中的子嵌套事件前提
+            son_premise = "CVP_A1_Son|0_E_{0}".format(self.event_parent_chid_id)
+            # 需要有该子事件的前提
+            if son_premise in event_config.premise:
+                premise_dict = event_config.premise.copy()
+                # 从前提集中去掉子事件前提
+                premise_dict.pop(son_premise)
+                # 如果前提集不为空
+                if len(premise_dict):
+                    # 计算总权重
+                    now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, self.character_id, unconscious_pass_flag = True)
+                    # 判定通过，加入到子事件的列表中
+                    if now_weight:
+                        son_event_list.append([event_id, self.character_id])
+                # 前提集为空，直接加入到子事件的列表中
+                else:
                     son_event_list.append([event_id, self.character_id])
 
+        if len(son_event_list) == 0:
+            return
         while 1:
             py_cmd.clr_cmd()
 
