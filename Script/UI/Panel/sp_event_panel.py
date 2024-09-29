@@ -53,6 +53,7 @@ class Born_Panel:
         # 如果是凯尔希怀孕则随机选一名医疗干员作为大夫，否则大夫为凯尔希
         doctor_id_list = []
         dr_k_id = 0
+        doctor_id = 0
         for character_id in cache.npc_id_got:
             character_data: game_type.Character = cache.character_data[character_id]
             if character_data.profession == 3:
@@ -63,6 +64,9 @@ class Born_Panel:
             doctor_id = random.choice(doctor_id_list)
         else:
             doctor_id = dr_k_id
+        # 如果还是没有的话，则随机选取任何一位干员来接生
+        if doctor_id == 0:
+            doctor_id = random.choice(cache.npc_id_got)
         doctor_character_data: game_type.Character = cache.character_data[doctor_id]
 
         # 最外层的大循环
