@@ -1381,6 +1381,21 @@ def handle_originium_arts():
 
 
 @add_instruct(
+    constant.Instruct.CHARA_DIY_INSTRUCT,
+    constant.InstructType.SYSTEM,
+    _("角色特殊指令"),
+    {
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.TARGET_HAVE_CHARA_DIY_INSTRUCT,
+     },
+)
+def handle_chara_diy_instruct():
+    """处理角色特殊指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT)
+
+
+@add_instruct(
     constant.Instruct.LISTEN_INFLATION,
     constant.InstructType.DAILY,
     _("听肚子里的动静"),
@@ -1435,21 +1450,6 @@ def handle_order_hotel_room():
     """处理预定房间指令"""
     now_draw = normal_panel.Order_Hotel_Room_Panel(width)
     now_draw.draw()
-
-
-@add_instruct(
-    constant.Instruct.CHARA_DIY_INSTRUCT,
-    constant.InstructType.DAILY,
-    _("角色特殊指令"),
-    {
-     constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TIRED_LE_84,
-     constant_promise.Premise.TARGET_HAVE_CHARA_DIY_INSTRUCT,
-     },
-)
-def handle_chara_diy_instruct():
-    """处理角色特殊指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT)
 
 
 @add_instruct(

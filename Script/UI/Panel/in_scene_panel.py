@@ -433,8 +433,7 @@ class SeeInstructPanel:
         now_premise_data = {}
         # 遍历指令过滤
         for now_type in cache.instruct_type_filter:
-            if cache.instruct_type_filter[
-                now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
+            if cache.instruct_type_filter[now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
                     # 如果该指令不存在，则置为存在
                     if instruct not in cache.instruct_index_filter:

@@ -1740,6 +1740,8 @@ class Instruct:
     """ 道具 """
     ORIGINIUM_ARTS = 0
     """ 源石技艺 """
+    CHARA_DIY_INSTRUCT = 0
+    """ 角色自定义特殊指令 """
     SAVE = 0
     """ 读写存档 """
     ABL_UP = 0
@@ -1824,8 +1826,6 @@ class Instruct:
     """ 照顾婴儿 """
     ORDER_HOTEL_ROOM = 0
     """ 预定房间 """
-    CHARA_DIY_INSTRUCT = 0
-    """ 角色自定义特殊指令 """
 
     #娱乐#
     SINGING = 0
