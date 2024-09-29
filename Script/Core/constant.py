@@ -16,6 +16,8 @@ class CharacterStatus:
     """ 等待 """
     STATUS_CHANGE_CLOTH = 3
     """ 换衣服状态 """
+    STATUS_CHARA_DIY_INSTRUCT = 5
+    """ 角色自定义指令 """
     STATUS_CHAT = 101
     """ 聊天状态 """
     STATUS_CHAT_FAILED = 102
@@ -522,6 +524,8 @@ class Behavior:
     """ 等待 """
     CHANGE_CLOTH = 3
     """ 换衣服 """
+    CHARA_DIY_INSTRUCT = 5
+    """ 角色自定义指令 """
     CHAT = 101
     """ 聊天 """
     CHAT_FAILED = 102
@@ -1820,6 +1824,8 @@ class Instruct:
     """ 照顾婴儿 """
     ORDER_HOTEL_ROOM = 0
     """ 预定房间 """
+    CHARA_DIY_INSTRUCT = 0
+    """ 角色自定义特殊指令 """
 
     #娱乐#
     SINGING = 0

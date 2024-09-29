@@ -3991,6 +3991,46 @@ def handle_instruct_judge_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_HAVE_CHARA_DIY_INSTRUCT)
+def handle_target_have_chara_diy_instruct(character_id: int) -> int:
+    """
+    交互对象有角色自定义指令且至少有一个序号0的子事件满足全前提
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id:
+        target_character_data = cache.character_data[character_data.target_character_id]
+        # 判断是否存在该行为对应的事件
+        if constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT in game_config.config_event_status_data_by_chara_adv:
+            all_chara_diy_instruct_event_list = game_config.config_event_status_data_by_chara_adv[constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT]
+            # 判断交互对象是否有该行为事件
+            if target_character_data.adv in all_chara_diy_instruct_event_list:
+                target_diy_instruct_event_list = all_chara_diy_instruct_event_list[target_character_data.adv]
+                # 遍历
+                for event_id in target_diy_instruct_event_list:
+                    event_config = game_config.config_event[event_id]
+                    # 子事件前提，序号为0
+                    son_premise = "CVP_A1_Son|0_E_0"
+                    # 需要有该子事件的前提
+                    if son_premise in event_config.premise:
+                        premise_dict = event_config.premise.copy()
+                        # 从前提集中去掉子事件前提
+                        premise_dict.pop(son_premise)
+                        # 如果前提集不为空
+                        if len(premise_dict):
+                            # 计算总权重
+                            now_weight = get_weight_from_premise_dict(premise_dict, 0, unconscious_pass_flag = True)
+                            # 判定通过，加入到子事件的列表中
+                            if now_weight:
+                                return 1
+                        else:
+                            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NORMAL_ALL)
 def handle_normal_all(character_id: int) -> int:
     """

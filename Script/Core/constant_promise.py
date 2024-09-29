@@ -40,6 +40,8 @@ class Premise:
     """ 指令_触发与交互 口上用：当前实行值足以重度性骚扰 """
     INSTRUCT_JUDGE_H = "instruct_judge_h"
     """ 指令_触发与交互 口上用：当前实行值足以邀请H """
+    TARGET_HAVE_CHARA_DIY_INSTRUCT = "target_have_chara_diy_instruct"
+    """ 指令_触发与交互 交互对象有角色自定义指令且至少有一个序号0的子事件满足全前提 """
 
     HIGH_1 = "high_1"
     """ 指令_权重 优先度为1的空白前提 """

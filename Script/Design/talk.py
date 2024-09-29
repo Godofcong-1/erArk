@@ -106,7 +106,8 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
     tem_talk_list = [] # 临时口上列表
     if behavior_id in game_config.config_talk_data_by_chara_adv:
         # 获取通用口上
-        tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0]
+        if 0 in game_config.config_talk_data_by_chara_adv[behavior_id]:
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0]
         # 获取触发者id的口上
         if character_data.adv != 0 and character_data.adv in game_config.config_talk_data_by_chara_adv[behavior_id]:
             tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][character_data.adv]
