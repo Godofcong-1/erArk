@@ -14119,6 +14119,68 @@ def handle_target_not_urine_collector(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.TARGET_NOW_BIRTH_CONTROL_PILLS_BEFORE)
+def handle_target_now_birth_control_pills_before(character_id: int) -> int:
+    """
+    交互对象已服用事前避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[11][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_BIRTH_CONTROL_PILLS_BEFORE)
+def handle_target_not_birth_control_pills_before(character_id: int) -> int:
+    """
+    交互对象没有服用事前避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_target_now_birth_control_pills_before(character_data.target_character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_NOW_BIRTH_CONTROL_PILLS_AFTER)
+def handle_target_now_birth_control_pills_after(character_id: int) -> int:
+    """
+    交互对象已服用事后避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.h_state.body_item[12][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_BIRTH_CONTROL_PILLS_AFTER)
+def handle_target_not_birth_control_pills_after(character_id: int) -> int:
+    """
+    交互对象没有服用事后避孕药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_target_now_birth_control_pills_after(character_data.target_character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.NOW_CONDOM)
 def handle_now_condom(character_id: int) -> int:
     """
@@ -14147,6 +14209,81 @@ def handle_now_not_condom(character_id: int) -> int:
     if character_data.h_state.body_item[13][1]:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.NOT_USE_CONDOM_IN_H)
+def handle_not_use_condom_in_h(character_id: int) -> int:
+    """
+    本次H中没有已用掉的避孕套
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.condom_count[0] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_1)
+def handle_use_condom_in_h_ge_1(character_id: int) -> int:
+    """
+    本次H中已用掉的避孕套数量大于等于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.condom_count[0] >= 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_3)
+def handle_use_condom_in_h_ge_3(character_id: int) -> int:
+    """
+    本次H中已用掉的避孕套数量大于等于3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.condom_count[0] >= 3:
+        return 1
+    return 0
+
+v
+@add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_5)
+def handle_use_condom_in_h_ge_5(character_id: int) -> int:
+    """
+    本次H中已用掉的避孕套数量大于等于5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.condom_count[0] >= 5:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_10)
+def handle_use_condom_in_h_ge_10(character_id: int) -> int:
+    """
+    本次H中已用掉的避孕套数量大于等于10
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.condom_count[0] >= 10:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)

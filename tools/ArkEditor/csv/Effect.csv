@@ -426,6 +426,9 @@ cid,effect_name,effect_type,effect
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
 1403,TARGET_NPC_ACTIVE_H_ON,属性_H,对方开启主动H
 1404,TARGET_NPC_ACTIVE_H_OFF,属性_H,对方关闭主动H
+1405,PL_JUST_SHOOT_ON,属性_H,玩家变为前指令刚刚射精状态
+1406,PL_JUST_SHOOT_OFF,属性_H,玩家清零前指令刚刚射精状态
+1407,PL_CONDOM_USE_RESET,属性_H,重置玩家的避孕套使用状态
 
 
 1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]

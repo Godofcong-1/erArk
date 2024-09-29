@@ -838,6 +838,8 @@ class BehaviorEffect:
     """ 属性_H 玩家变为前指令刚刚射精状态 """
     PL_JUST_SHOOT_OFF = 1406
     """ 属性_H 玩家清零前指令刚刚射精状态 """
+    PL_CONDOM_USE_RESET = 1407
+    """ 属性_H 重置玩家的避孕套使用状态 """
 
     # 1500+见属性_基础
 

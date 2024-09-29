@@ -20,6 +20,7 @@ sex_1,IS_WOMAN,指令_触发与交互,触发该指令的是女性
 instruct_judge_low_obscenity,INSTRUCT_JUDGE_LOW_OBSCENITY,指令_触发与交互,口上用：当前实行值足以轻度性骚扰
 instruct_judge_high_obscenity,INSTRUCT_JUDGE_HIGH_OBSCENITY,指令_触发与交互,口上用：当前实行值足以重度性骚扰
 instruct_judge_h,INSTRUCT_JUDGE_H,指令_触发与交互,口上用：当前实行值足以邀请H
+target_have_chara_diy_instruct,TARGET_HAVE_CHARA_DIY_INSTRUCT,指令_触发与交互,交互对象有角色自定义指令且至少有一个序号0的子事件满足全前提
 
 high_1,HIGH_1,指令_权重,优先度为1的空白前提
 high_2,HIGH_2,指令_权重,优先度为2的空白前提
@@ -74,7 +75,7 @@ last_cmd_a_sex,LAST_CMD_A_SEX,指令_前指令,前一指令为A性交_指令触�
 last_cmd_u_sex,LAST_CMD_U_SEX,指令_前指令,前一指令为U性交_指令触发用
 last_cmd_breast_caress_type,LAST_CMD_BREAST_CARESS_TYPE,指令_前指令,前一指令为胸部爱抚类(403，404，405)
 last_cmd_handjob_type,LAST_CMD_HANDJOB_TYPE,指令_前指令,前一指令为手交类(420，427)
-last_cmd_blowjob_type,LAST_CMD_BLOWJOB_TYPE,指令_前指令,前一指令为口交类(421，427，428，429，430，431)
+last_cmd_blowjob_type,LAST_CMD_BLOWJOB_TYPE,指令_前指令,前一指令为口交类(421，427，428，429，430，431，437)
 last_cmd_paizuri_type,LAST_CMD_PAIZURI_TYPE,指令_前指令,前一指令为乳交类(422，428)
 
 place_0,IN_PLAYER_SCENE,地点_角色,与玩家处于相同地点
@@ -1064,6 +1065,8 @@ v_semen_le_1000,VW_SEMEN_LE_1000,污浊_身体,自身当前小穴和子宫总精
 t_v_semen_le_1000,T_VW_SEMEN_LE_1000,污浊_身体,交互对象当前小穴和子宫总精液量小于等于1000ml
 v_semen_g_1000,VW_SEMEN_G_1000,污浊_身体,自身当前小穴和子宫总精液量大于1000ml
 t_v_semen_g_1000,T_VW_SEMEN_G_1000,污浊_身体,交互对象当前小穴和子宫总精液量大于1000ml
+pl_penis_semen_dirty,PL_PENIS_SEMEN_DIRTY,污浊_身体,玩家阴茎上精液污浊
+pl_penis_not_semen_dirty,PL_PENIS_NOT_SEMEN_DIRTY,污浊_身体,玩家阴茎上没有精液污浊
 
 hat_semen,HAT_SEMEN,污浊_服装,自身当前帽子有精液
 t_hat_semen,T_HAT_SEMEN,污浊_服装,交互对象当前帽子有精液
@@ -1152,6 +1155,8 @@ pl_semen_le_2,PL_SEMEN_LE_2,H_射精与绝顶,玩家当前精液量小于等于2
 pl_semen_le_50,PL_SEMEN_LE_50,H_射精与绝顶,玩家当前精液量小于等于50ml
 pl_semen_ge_50,PL_SEMEN_GE_50,H_射精与绝顶,玩家当前精液量大于等于50ml
 pl_semen_ge_100,PL_SEMEN_GE_100,H_射精与绝顶,玩家当前精液量大于等于100ml
+pl_just_shoot,PL_JUST_SHOOT,H_射精与绝顶,玩家前指令射精了
+pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精与绝顶,玩家前指令未射精
 
 npc_active_h,NPC_ACTIVE_H,H_逆推,自己正在主动H
 npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H
@@ -1209,8 +1214,17 @@ target_now_milking_machine,TARGET_NOW_MILKING_MACHINE,道具_使用,交互对象
 target_not_milking_machine,TARGET_NOT_MILKING_MACHINE,道具_使用,交互对象没有在搾乳机
 target_now_urine_collector,TARGET_NOW_URINE_COLLECTOR,道具_使用,交互对象正在采尿器
 target_not_urine_collector,TARGET_NOT_URINE_COLLECTOR,道具_使用,交互对象没有在采尿器
+target_now_birth_control_pills_before,TARGET_NOW_BIRTH_CONTROL_PILLS_BEFORE,道具_使用,交互对象已服用事前避孕药
+target_not_birth_control_pills_before,TARGET_NOT_BIRTH_CONTROL_PILLS_BEFORE,道具_使用,交互对象没有服用事前避孕药
+target_now_birth_control_pills_after,TARGET_NOW_BIRTH_CONTROL_PILLS_AFTER,道具_使用,交互对象已服用事后避孕药
+target_not_birth_control_pills_after,TARGET_NOT_BIRTH_CONTROL_PILLS_AFTER,道具_使用,交互对象没有服用事后避孕药
 now_condom,NOW_CONDOM,道具_使用,自己正戴着避孕套
 now_not_condom,NOW_NOT_CONDOM,道具_使用,自己没有戴着避孕套
+not_use_condom_in_h,NOT_USE_CONDOM_IN_H,道具_使用,本次H中没有已用掉的避孕套
+use_condom_in_h_ge_1,USE_CONDOM_IN_H_GE_1,道具_使用,本次H中已用掉的避孕套数量大于等于1
+use_condom_in_h_ge_3,USE_CONDOM_IN_H_GE_3,道具_使用,本次H中已用掉的避孕套数量大于等于3
+use_condom_in_h_ge_5,USE_CONDOM_IN_H_GE_5,道具_使用,本次H中已用掉的避孕套数量大于等于3
+use_condom_in_h_ge_10,USE_CONDOM_IN_H_GE_10,道具_使用,本次H中已用掉的避孕套数量大于等于10
 
 have_collection,HAVE_COLLECTION,收集,持有藏品
 c_bonus_103,COLLECT_BONUS_102,收集,收藏奖励_102_解锁索要内裤
