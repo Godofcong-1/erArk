@@ -94,7 +94,7 @@ def handle_second_talk(character_id: int, behavior_id: int = 0):
     #             handle_talk_draw(target_character_id, now_talk_data, second_behavior_id)
 
 
-def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
+def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag = False):
     """
     处理行为结算对话的内置循环部分
     Keyword arguments:
@@ -104,72 +104,20 @@ def handle_talk_sub(character_id: int, behavior_id: int, must_show = False):
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     now_talk_data = {}
-    now_premise_data = {}
     if behavior_id in game_config.config_talk_data:
         for talk_id in game_config.config_talk_data[behavior_id]:
             talk_config = game_config.config_talk[talk_id]
             # 角色专属口上则需要判定是否为该角色
             if talk_config.adv_id != 0:
                 # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
-                if character_data.adv != talk_config.adv_id:
-                    if target_data.adv != talk_config.adv_id:
-                        continue
+                if character_data.adv != talk_config.adv_id and target_data.adv != talk_config.adv_id:
+                    continue
             # 系统设置中的是否使用通用文本
             if cache.system_setting[8] == 0 and talk_config.adv_id == 0:
                 continue
-            now_weight = 1
-            if talk_id in game_config.config_talk_premise_data:
-                now_weight = 0
-                unconscious_h_pass_flag = False
-                for premise in game_config.config_talk_premise_data[talk_id]:
-                    # 是否必须显示
-                    if not must_show:
-                        # 无意识模式判定
-                        if unconscious_h_pass_flag == False and target_data.sp_flag.unconscious_h != 0 and target_data.sp_flag.unconscious_h <= 5:
-                            # 有催眠tag的行为则直接通过
-                            status_data = game_config.config_status[behavior_id]
-                            if _("催眠") in status_data.tag:
-                                unconscious_h_pass_flag = True
-                            # 需要前提里有无意识的判定，否则不显示
-                            for now_premise in game_config.config_talk_premise_data[talk_id]:
-                                if "unconscious" in now_premise:
-                                    unconscious_h_pass_flag = True
-                                    break
-                            if not unconscious_h_pass_flag:
-                                now_weight = 0
-                                break
-                    # 已录入前提的判定
-                    if premise in now_premise_data:
-                        if not now_premise_data[premise]:
-                            now_weight = 0
-                            break
-                        else:
-                            now_weight += now_premise_data[premise]
-                            # 如果premise的前5个字符是"high_"，则将权重加上对应值，否则权重为1
-                            if premise[:5] == "high_":
-                                now_weight += now_premise_data[premise]
-                            else:
-                                now_weight += 1
-                    else:
-                        # 综合数值前提判定
-                        if "CVP" in premise:
-                            premise_all_value_list = premise.split("_")[1:]
-                            now_add_weight = handle_premise.handle_comprehensive_value_premise(character_id, premise_all_value_list)
-                            now_premise_data[premise] = now_add_weight
-                        # 其他正常口上判定
-                        else:
-                            now_add_weight = constant.handle_premise_data[premise](character_id)
-                            now_premise_data[premise] = now_add_weight
-                        if now_add_weight:
-                            # 如果premise的前5个字符是"high_"，则将权重加上对应值，否则权重为1
-                            if premise[:5] == "high_":
-                                now_add_weight = now_add_weight
-                            else:
-                                now_add_weight = 1
-                            now_weight += now_add_weight
-                        else:
-                            now_weight = 0
-                            break
+            # 计算前提字典的总权重
+            premise_dict = game_config.config_talk_premise_data[talk_id]
+            now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
             if now_weight:
                 # 如果该句文本是角色口上，则权重乘以三
                 if talk_config.adv_id != 0:

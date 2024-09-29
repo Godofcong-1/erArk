@@ -49,28 +49,9 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
                 if event_config.type == 1:
                     continue
             if len(event_config.premise):
-                now_weight = 0 
-                for premise in event_config.premise:
-                    if premise in now_premise_data:
-                        if not now_premise_data[premise]:
-                            now_weight = 0
-                            break
-                        now_weight += now_premise_data[premise]
-                    else:
-                        # 综合数值前提判定
-                        if "CVP" in premise:
-                            premise_all_value_list = premise.split("_")[1:]
-                            now_add_weight = handle_premise.handle_comprehensive_value_premise(character_id, premise_all_value_list)
-                            now_premise_data[premise] = now_add_weight
-                        # 其他正常前提判定
-                        else:
-                            now_add_weight = constant.handle_premise_data[premise](character_id)
-                            now_premise_data[premise] = now_add_weight
-                        if now_add_weight:
-                            now_weight += now_add_weight
-                        else:
-                            now_weight = 0
-                            break
+                # 计算前提字典的总权重
+                premise_dict = event_config.premise
+                now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, unconscious_pass_flag = True)
             if now_weight:
                 now_event_data.setdefault(now_weight, set())
                 now_event_data[now_weight].add(event_id)

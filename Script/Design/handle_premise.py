@@ -50,6 +50,80 @@ def handle_premise(premise: str, character_id: int) -> int:
         return 0
 
 
+def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> int:
+    """
+    遍历前提字典，计算总权重
+    Keyword arguments:
+    premise_dict -- 前提字典
+    character_id -- 角色id
+    weight_all_to_1_flag -- 将所有非high的前提权重转换为1，默认为False
+    unconscious_h_pass_flag -- 跳过无意识判定，默认为false，不可以跳过
+    Return arguments:
+    now_weight -- int，总权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    target_character_data = cache.character_data[target_character_id]
+    behavior_id = character_data.behavior.behavior_id
+    now_weight = 0 # 总权重
+    now_premise_data = {} # 记录已经计算过的前提
+    # 遍历前提字典
+    for premise in premise_dict:
+        # 判断是否为权重类空白前提
+        if premise[:5] == "high_":
+            high_flag = True
+        else:
+            high_flag = False
+        # 是否必须显示
+        if not unconscious_pass_flag:
+            # 无意识模式判定
+            if unconscious_pass_flag == False and target_character_data.sp_flag.unconscious_h != 0:
+                # 有催眠tag的行为则直接通过
+                status_data = game_config.config_status[behavior_id]
+                if _("催眠") in status_data.tag:
+                    unconscious_pass_flag = True
+                # 需要前提里有无意识的判定
+                for now_premise in premise_dict:
+                    # 如果前提里有无意识，则正常通过
+                    if "unconscious" in now_premise:
+                        unconscious_pass_flag = True
+                        break
+                # 如果没有无意识的前提，则直接返回0
+                if not unconscious_pass_flag:
+                    now_weight = 0
+                    break
+        # 已录入前提的判定
+        if premise in now_premise_data:
+            if not now_premise_data[premise]:
+                now_weight = 0
+                break
+            else:
+                if weight_all_to_1_flag and not high_flag:
+                    now_weight += 1
+                else:
+                    now_weight += now_premise_data[premise]
+        else:
+            # 综合数值前提判定
+            if "CVP" in premise:
+                premise_all_value_list = premise.split("_")[1:]
+                now_add_weight = handle_comprehensive_value_premise(character_id, premise_all_value_list)
+                now_premise_data[premise] = now_add_weight
+            # 其他正常口上判定
+            else:
+                now_add_weight = constant.handle_premise_data[premise](character_id)
+                now_premise_data[premise] = now_add_weight
+            # 计算总权重
+            if now_add_weight:
+                if weight_all_to_1_flag and not high_flag:
+                    now_weight += 1
+                else:
+                    now_weight += now_add_weight
+            else:
+                now_weight = 0
+                break
+    return now_weight
+
+
 def handle_comprehensive_value_premise(character_id: int, premise_all_value_list: list) -> int:
     """
     综合型基础数值前提
