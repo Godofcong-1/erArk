@@ -103,27 +103,37 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    now_talk_data = {}
-    if behavior_id in game_config.config_talk_data:
-        for talk_id in game_config.config_talk_data[behavior_id]:
-            talk_config = game_config.config_talk[talk_id]
-            # 角色专属口上则需要判定是否为该角色
-            if talk_config.adv_id != 0:
-                # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
-                if character_data.adv != talk_config.adv_id and target_data.adv != talk_config.adv_id:
-                    continue
-            # 系统设置中的是否使用通用文本
-            if cache.system_setting[8] == 0 and talk_config.adv_id == 0:
+    tem_talk_list = [] # 临时口上列表
+    if behavior_id in game_config.config_talk_data_by_chara_adv:
+        # 获取通用口上
+        tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0]
+        # 获取触发者id的口上
+        if character_data.adv != 0 and character_data.adv in game_config.config_talk_data_by_chara_adv[behavior_id]:
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][character_data.adv]
+        # 获取交互目标的口上
+        if target_data.adv != 0 and target_data.adv in game_config.config_talk_data_by_chara_adv[behavior_id]:
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][target_data.adv]
+    now_talk_data = {} # 正式口上数据
+    # 遍历口上列表
+    for talk_id in tem_talk_list:
+        talk_config = game_config.config_talk[talk_id]
+        # 角色专属口上则需要判定是否为该角色
+        if talk_config.adv_id != 0:
+            # print(character_data.name,target_data.name,talk_config.context,character_data.adv,target_data.adv,talk_config.adv_id)
+            if character_data.adv != talk_config.adv_id and target_data.adv != talk_config.adv_id:
                 continue
-            # 计算前提字典的总权重
-            premise_dict = game_config.config_talk_premise_data[talk_id]
-            now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
-            if now_weight:
-                # 如果该句文本是角色口上，则权重乘以三
-                if talk_config.adv_id != 0:
-                    now_weight *= 3
-                now_talk_data.setdefault(now_weight, set())
-                now_talk_data[now_weight].add(talk_id)
+        # 系统设置中的是否使用通用文本
+        if cache.system_setting[8] == 0 and talk_config.adv_id == 0:
+            continue
+        # 计算前提字典的总权重
+        premise_dict = game_config.config_talk_premise_data[talk_id]
+        now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
+        if now_weight:
+            # 如果该句文本是角色口上，则权重乘以三
+            if talk_config.adv_id != 0:
+                now_weight *= 3
+            now_talk_data.setdefault(now_weight, set())
+            now_talk_data[now_weight].add(talk_id)
     return now_talk_data
 
 

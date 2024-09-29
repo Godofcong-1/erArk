@@ -213,7 +213,9 @@ config_status: Dict[int, config_def.Status] = {}
 config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
-""" 角色行为对应口上集合 """
+""" 角色行为对应口上集合 状态id:口上id列表 """
+config_talk_data_by_chara_adv: Dict[int, int] = {}
+""" 角色行为对应口上集合再根据角色adv分类 状态id:角色adv:口上id列表 """
 # config_talk_premise: Dict[int, config_def.TalkPremise] = {}
 # """ 口上前提配置 """
 config_talk_premise_data: Dict[int, Set] = {}
@@ -324,7 +326,7 @@ def load_data_json():
 
 def reload_talk_data():
     """重新载入口上配置数据"""
-    global config_data, config_talk, config_talk_data, config_talk_premise_data
+    global config_data, config_talk, config_talk_data, config_talk_data_by_chara_adv, config_talk_premise_data
     config_data = json_handle.load_json(data_path)
     load_talk()
 
@@ -1003,6 +1005,10 @@ def load_talk():
         #     print(f"debug cid = {now_tem.cid}，now_tem.context = {now_tem.context}")
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
+
+        config_talk_data_by_chara_adv.setdefault(int(now_tem.behavior_id), {})
+        config_talk_data_by_chara_adv[int(now_tem.behavior_id)].setdefault(int(now_tem.adv_id), [])
+        config_talk_data_by_chara_adv[int(now_tem.behavior_id)][int(now_tem.adv_id)].append(now_tem.cid)
 
         config_talk_premise_data.setdefault(now_tem.cid, set())
         # print(f"debug now_tem.context = {now_tem.context}")

@@ -98,6 +98,7 @@ class multi_layer_event_option_Panel:
         """绘制对象"""
         line_feed.draw()
         character_data: game_type.Character = cache.character_data[self.character_id]
+        target_character_data = cache.character_data[character_data.target_character_id]
         behavior_id = character_data.behavior.behavior_id
 
         tem_event_list = [] # 临时事件列表
@@ -107,7 +108,6 @@ class multi_layer_event_option_Panel:
         if behavior_id in game_config.config_event_status_data_by_chara_adv:
             if character_data.adv in game_config.config_event_status_data_by_chara_adv[behavior_id]:
                 tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][character_data.adv]
-            target_character_data = cache.character_data[character_data.target_character_id]
             if target_character_data.adv in game_config.config_event_status_data_by_chara_adv[behavior_id]:
                 tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][target_character_data.adv]
 
