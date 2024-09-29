@@ -2652,6 +2652,28 @@ def handle_close_instruct_filter_h(
     handle_instruct.instruct_filter_H_change(False)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_THIS_EVENT_TO_ALREADY_TRIGGERED)
+def handle_add_this_event_to_already_triggered(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将玩家当前触发的事件加入已触发记录
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    player_character_data: game_type.Character = cache.character_data[0]
+    if player_character_data.event.son_event_id:
+        cache.taiggered_event_record.add(player_character_data.event.son_event_id)
+    else:
+        cache.taiggered_event_record.add(player_character_data.event.event_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_TARGET_TO_ME)
 def handle_pl_target_to_me(
         character_id: int,

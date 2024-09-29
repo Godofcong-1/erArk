@@ -8,6 +8,8 @@ not_h,NOT_H,系统状态,当前不是H模式
 is_unconscious_h,IS_UNCONSCIOUS_H,系统状态,当前为无意识奸模式
 not_unconscious_h,NOT_UNCONSCIOUS_H,系统状态,当前不是无意识奸模式
 option_son,OPTION_SON,系统状态,选项的子事件
+this_event_in_triggered_record,THIS_EVENT_IN_TRIGGERED_RECORD,系统状态,该事件在已触发记录中(需搭配记录结算)
+this_event_not_in_triggered_record,THIS_EVENT_NOT_IN_TRIGGERED_RECORD,系统状态,该事件不在已触发记录中(需搭配记录结算)
 
 sys_0,IS_PLAYER,指令_触发与交互,玩家触发的该指令
 sys_1,NO_PLAYER,指令_触发与交互,NPC触发的该指令

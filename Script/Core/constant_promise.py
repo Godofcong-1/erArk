@@ -17,6 +17,10 @@ class Premise:
     """ 系统状态 当前不是无意识奸模式 """
     OPTION_SON = "option_son"
     """ 系统状态 选项的子事件 """
+    THIS_EVENT_IN_TRIGGERED_RECORD = "this_event_in_triggered_record"
+    """ 系统状态 该事件在已触发记录中(需搭配记录结算) """
+    THIS_EVENT_NOT_IN_TRIGGERED_RECORD = "this_event_not_in_triggered_record"
+    """ 系统状态 该事件不在已触发记录中(需搭配记录结算) """
 
     IS_PLAYER = "sys_0"
     """ 指令_触发与交互 玩家触发的该指令 """

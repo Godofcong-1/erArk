@@ -48,6 +48,13 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
             if event_before_instrust_flag:
                 if event_config.type == 1:
                     continue
+            # 和触发记录相关的前提
+            if "this_event_in_triggered_record" in event_config.premise:
+                if event_id not in cache.taiggered_event_record:
+                    continue
+            if "this_event_not_in_triggered_record" in event_config.premise:
+                if event_id in cache.taiggered_event_record:
+                    continue
             if len(event_config.premise):
                 # 计算前提字典的总权重
                 premise_dict = event_config.premise

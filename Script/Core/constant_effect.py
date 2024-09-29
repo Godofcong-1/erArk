@@ -9,6 +9,8 @@ class BehaviorEffect:
     """ 系统量_基础 开启H面板过滤器 """
     CLOSE_INSTRUCT_FILTER_H = 10004
     """ 系统量_基础 关闭H面板过滤器 """
+    ADD_THIS_EVENT_TO_TRIGGERED_RECORD = 10008
+    """ 系统量_基础 将玩家当前触发的事件加入已触发记录 """
 
     INTERRUPT_TARGET_ACTIVITY = 10000
     """ 系统量_交互 打断交互对象活动 """
