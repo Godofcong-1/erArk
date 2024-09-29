@@ -52,13 +52,14 @@ class Born_Panel:
 
         # 如果是凯尔希怀孕则随机选一名医疗干员作为大夫，否则大夫为凯尔希
         doctor_id_list = []
+        dr_k_id = 0
         for character_id in cache.npc_id_got:
             character_data: game_type.Character = cache.character_data[character_id]
             if character_data.profession == 3:
                 doctor_id_list.append(character_id)
             if character_data.name == _("凯尔希"):
                 dr_k_id = character_id
-        if mom_character_data.name == _("凯尔希"):
+        if mom_character_data.name == _("凯尔希") or dr_k_id == 0:
             doctor_id = random.choice(doctor_id_list)
         else:
             doctor_id = dr_k_id
