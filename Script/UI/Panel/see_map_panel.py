@@ -66,6 +66,7 @@ class SeeMapPanel:
                 facility_data = game_config.config_facility[facility_id]
                 if facility_data.name == map_name:
                     now_facility_id = facility_id
+                    break
             if now_facility_id != -1 and now_facility_id in game_config.config_tip_data_by_facility:
                 now_facility_tip_list = game_config.config_tip_data_by_facility[now_facility_id]
                 random_tip_id = random.choice(now_facility_tip_list)
