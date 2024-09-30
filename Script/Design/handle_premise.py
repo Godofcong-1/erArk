@@ -14255,7 +14255,7 @@ def handle_use_condom_in_h_ge_3(character_id: int) -> int:
         return 1
     return 0
 
-v
+
 @add_premise(constant_promise.Premise.USE_CONDOM_IN_H_GE_5)
 def handle_use_condom_in_h_ge_5(character_id: int) -> int:
     """

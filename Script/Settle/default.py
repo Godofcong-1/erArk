@@ -2652,7 +2652,7 @@ def handle_close_instruct_filter_h(
     handle_instruct.instruct_filter_H_change(False)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_THIS_EVENT_TO_ALREADY_TRIGGERED)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_THIS_EVENT_TO_TRIGGERED_RECORD)
 def handle_add_this_event_to_already_triggered(
         character_id: int,
         add_time: int,
