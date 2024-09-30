@@ -16116,6 +16116,42 @@ msgstr ""
 msgid "歌蕾蒂娅，阿戈尔人，阿戈尔技术执政官、荣誉军团长，阿戈尔军事团体“深海猎人”总战争设计师之一。登陆时间地点俱不明。于对抗大型生物，破坏硬目标，攻坚战，歼灭战，机动战与谍报战等多类行动中展现出非凡实力。现以合作姿态协助罗德岛、辅助罗德岛部分工作，在保留阿戈尔国家职能身份的同时，兼任罗德岛的阿戈尔事务负责人。"
 msgstr ""
 
+#: .\data\character\0474_歌蕾蒂娅.csv:15
+msgid "#58597b"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:38
+msgid "侧向船型帽"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:39
+msgid "白色无袖露背紧身衣"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:40
+msgid "蓝黑色半透明露背衬衣"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:41
+msgid "披肩西装领大衣"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:42
+msgid "蓝黑色皮质手套"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:43
+msgid "白色紧身裤"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:44
+msgid "蓝黑色皮质长筒皮"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:46
+msgid "槊"
+msgstr ""
+
 #: .\data\character\0475_赤冬.csv:4
 msgid "赤冬"
 msgstr ""
@@ -18534,6 +18570,138 @@ msgstr ""
 
 #: Event:88ee6490-b213-470c-8feb-55190c58471d
 msgid "“{PlayerNickName}。”移动到了{PlayerName}身边的{Name}，兴奋地吐息着，就像是发现了什么东西一样不安地扭捏双腿。\n“……没事。”刚刚，{Name}好像紧紧地盯着{PlayerName}看了一会。"
+msgstr ""
+
+#: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
+msgid "要怎么做呢"
+msgstr ""
+
+#: Event:61c94960-5277-46e8-8258-50b779ee91c4
+msgid "摸  手 | 轻轻触碰{TargetName}的手，冰冷的感觉从指间传来\n“我可以把这个，当成一种友好的信号吗”"
+msgstr ""
+
+#: Event:63cad05e-2863-4814-820a-d4a0603466a8
+msgid "揉  肩 | 绕到{TargetName}背后，小心翼翼的揉着她的肩膀\n“讨好我什么的，大可不必了”"
+msgstr ""
+
+#: Event:660aab8a-2c4a-41f7-8c1c-998a6f4647e9
+msgid "摸头发 | 把手搭在{TargetName}的肩上，让一缕发丝从掌心滑过\n“我的头发，有什么奇怪的地方吗”"
+msgstr ""
+
+#: Event:c27ddd31-ef76-47f1-bccd-ee96a1992dc0
+msgid "摸脖子 | 用手指轻轻戳了一下{TargetName}的侧颈部\n“海嗣化的问题我会好好控制的，即使最坏的情况也不会给地上的人带来麻烦”"
+msgstr ""
+
+#: Event:e9ad807d-c34b-49a7-82f3-7318a2cbaf24
+msgid "摸  手 | 轻轻托着{TargetName}的手，一点清凉感从掌心传来\n“......”\n“还要来吗”"
+msgstr ""
+
+#: Event:792c6a25-3011-40cd-ac2a-9561c382ab6c
+msgid "揉  肩 | 从背后为{TargetName}揉肩，应该不需要那么拘谨了吧\n“怎么，还要等我感谢你吗”"
+msgstr ""
+
+#: Event:aead34ff-bd66-47c9-aa5b-2fab75c3dccc
+msgid "摸头发 | 从背后抚摸着{TargetName}的头发，一如既往的顺滑呢\n“我的头发就那么有吸引力吗”"
+msgstr ""
+
+#: Event:29802c98-5209-4644-ac8a-71d3b24fb29a
+msgid "摸脖子 | 凑近{TargetName}的脖子，用一只手轻轻摸了上去\n“不许闻气味！”"
+msgstr ""
+
+#: Event:2533580b-b997-44e5-aa67-a61129e01170
+msgid "搂  腰 | 单手搂着{TargetName}的腰，感觉不到拒绝的意思呢\n{TargetName}想说什么，但最终还是没有说出口"
+msgstr ""
+
+#: Event:5f0528b7-6024-41f9-9935-77d90d6c197d
+msgid "摸耳朵 | 轻触{TargetName}的耳朵\n“适可而止吧”"
+msgstr ""
+
+#: Event:80506d4a-44b6-46d5-a985-ad0c69456189
+msgid "亲吻手 | 握着{TargetName}的手，轻吻她的指节，似乎可以闻到淡淡的香气\n“可以噢”"
+msgstr ""
+
+#: Event:184dc1f7-5313-4d3a-b72d-88ba7041d658
+msgid "揉  肩 | 和往常一样为{TargetName}揉肩\n“确实有时候会感觉僵硬，陆地上干燥的空气没那么容易适应”"
+msgstr ""
+
+#: Event:b1db4c67-8f7d-4250-a3f9-884f1c98ceaa
+msgid "摸头发 | 贴近{TargetName}的头发，一缕一缕仔细触摸着\n“平时有在好好保养的”\n的确闻到了清新的气息"
+msgstr ""
+
+#: Event:54a7bfcc-64db-4802-aa52-85b6c7da8fbe
+msgid "闻脖子 | 从身后把脸靠在脖子上，从领口呼吸着{TargetName}散发出来的体香\n“喜欢我的气味什么的，亏你说得出口”"
+msgstr ""
+
+#: Event:cd775c0b-605e-4eea-95e4-5b08d79447bd
+msgid "环抱腰 | 靠在{TargetName}的身后，双手抱着她的腰\n“安心的感觉”"
+msgstr ""
+
+#: Event:f9f1951b-dfc8-4257-bf44-fa9e341be230
+msgid "向耳朵吹气 | 靠近{TargetName}的耳朵，轻轻向里面吹气，{TargetName}的身体瞬间紧绷了起来\n“喂...等一下...”\n“你在干什么啊!”\n并没有生气"
+msgstr ""
+
+#: Event:8496681d-afe9-4cf0-ba60-813bc7aaec19
+msgid "贴上去 | 紧紧靠在{TargetName}的身上\n虽然{TargetName}没有说什么，但可以听到{TargetName}心跳变快了"
+msgstr ""
+
+#: Event:4242f5ae-c09a-429a-8028-949b140b2088
+msgid "舔手指 | 托着{TargetName}的手，吮吸着她的手指\n迷人的味道\n“真是无可救药了”"
+msgstr ""
+
+#: Event:aeebe4a3-4fc3-4cd3-bb0d-707c684c5bae
+msgid "抱着肩 | 从背后双手抱着{TargetName}的肩膀\n“只是这样就满足了吗”"
+msgstr ""
+
+#: Event:63020a25-016e-46cd-8427-cdbf0d06ebc6
+msgid "摸头发 | 用脸紧紧贴在{TargetName}的头发上\n“这么喜欢的话，下次你帮我梳头发吧”"
+msgstr ""
+
+#: Event:464c8afb-9b03-4675-a860-8f22fdf8c729
+msgid "亲脖子 | 抱着{TargetName}的脖子，不由自主的亲了上去\n“要留下吻痕吗”\n“如果你真的这么做了，我也只好给你留下我的吻痕了”"
+msgstr ""
+
+#: Event:3e49c9be-e21d-4c65-81d9-2f9d1c3b19b4
+msgid "环抱腰 | 双手搂着{TargetName}的腰，双手抚摸着{TargetName}的小腹\n“手在...啊！”\n“不，没什么”"
+msgstr ""
+
+#: Event:e42f9070-6069-4a60-a163-86536b4addf3
+msgid "舔耳朵 | 从{TargetName}耳朵边缘舔了过去\n“不，不行，已经很敏感了”"
+msgstr ""
+
+#: Event:e11286f0-69c8-4222-838e-eacf39c1f876
+msgid "贴上去 | 紧紧靠在{TargetName}的身上，{TargetName}也转过身给予了积极的回应\n“得寸进尺的家伙”"
+msgstr ""
+
+#: Event:74ca0e76-3311-4863-9dc5-deb81a2ec755
+msgid "闻腋下 | 脸贴近{TargetName}的腋下呼吸着她的气息，诱人的费洛蒙气息瞬间充满了大脑\n“啊！”\n“！！”\n“......”\n“变态！”"
+msgstr ""
+
+#: Event:e37c6754-613b-4b03-b785-205c3fdf98c3
+msgid "空事件"
+msgstr ""
+
+#: Event:4b0730e5-fd66-4754-aac3-80223804a1af
+msgid "抱着{TargetName}，夺去了她的嘴唇\n温柔的包裹着那冰凉的唇，侵入了更加甜美的地方\n{TargetName}的瞳孔中郁积了柔和的光\n但这光突然毫无征兆地冻结了\n\n被一把推开了\n{TargetName}急促地喘息着，肩膀剧烈颤抖着\n“啊...啊...为什么...”\n“为什么你会这么熟练啊！”\n“你到底和多少女人接吻过了”\n“你还要，还要把我甩开多远啊”"
+msgstr ""
+
+#: Event:0aca3a25-b2db-4ee6-8df7-926c77fef61f
+msgid "伸手去摸{TargetName}的头\n{TargetName}似乎先一步察觉到了，把帽子摘下来抱在身前，长发从衣领处滑落\n“呼......”\n好感度上升了，仅仅摸头就能拉近关系的好事果然是存在的"
+msgstr ""
+
+#: Event:87451895-094b-44f4-ab37-9ea6be22c109
+msgid ""
+msgstr ""
+
+#: Event:1069fcff-a285-4872-9619-a132b17b864d
+msgid "坚冰开始融化了"
+msgstr ""
+
+#: Event:f170b59f-6087-43c5-97f2-448db7ab53df
+msgid "接下来的相处会容易许多吧"
+msgstr ""
+
+#: Event:70d686f9-04f7-406d-a8d1-58cca39841a8
+msgid "冰下包裹着的是炽热的爱"
 msgstr ""
 
 #: /'data\map\0\0\Scene.json:2
