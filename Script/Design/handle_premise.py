@@ -17017,6 +17017,118 @@ def handle_option_son(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.THIS_EVENT_IN_TRIGGERED_RECORD)
+def handle_this_event_in_triggered_record(character_id: int) -> int:
+    """
+    该事件在已触发记录中(需搭配记录结算)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 本前提在以下地方进行调用，此处不进行实际处理
+    # Script/Design/event.py#L11
+    return 0
+
+
+@add_premise(constant_promise.Premise.THIS_EVENT_NOT_IN_TRIGGERED_RECORD)
+def handle_this_event_not_in_triggered_record(character_id: int) -> int:
+    """
+    该事件不在已触发记录中(需搭配记录结算)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 本前提在以下地方进行调用，此处不进行实际处理
+    # Script/Design/event.py#L11
+    return 0
+
+
+@add_premise(constant_promise.Premise.DAILY_PANEL_SHOW)
+def handle_daily_panel_show(character_id: int) -> int:
+    """
+    当前日常指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAY_PANEL_SHOW)
+def handle_play_panel_show(character_id: int) -> int:
+    """
+    当前娱乐指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[2]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.WORK_PANEL_SHOW)
+def handle_work_panel_show(character_id: int) -> int:
+    """
+    当前工作指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[3]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ARTS_PANEL_SHOW)
+def handle_arts_panel_show(character_id: int) -> int:
+    """
+    当前技艺指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[4]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.OBSCENITY_PANEL_SHOW)
+def handle_obscenity_panel_show(character_id: int) -> int:
+    """
+    当前猥亵指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[5]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SEX_PANEL_SHOW)
+def handle_sex_panel_show(character_id: int) -> int:
+    """
+    当前性爱指令面板可见
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.instruct_type_filter[6]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IS_ASSISTANT)
 def handle_is_assistant(character_id: int) -> int:
     """
