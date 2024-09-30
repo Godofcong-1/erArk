@@ -1385,6 +1385,7 @@ def handle_originium_arts():
     constant.InstructType.SYSTEM,
     _("角色特殊指令"),
     {
+     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.TARGET_HAVE_CHARA_DIY_INSTRUCT,
@@ -1392,6 +1393,8 @@ def handle_originium_arts():
 )
 def handle_chara_diy_instruct():
     """处理角色特殊指令"""
+    # 本指令仅在下述函数中特殊调用，不会被正常调用
+    # Script/UI/Panel/in_scene_panel.py/handle_chara_diy_instruct()
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT)
 
 

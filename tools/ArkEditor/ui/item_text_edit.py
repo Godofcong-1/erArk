@@ -125,9 +125,9 @@ class ItemTextEdit(QWidget):
         now_text = now_text.replace(",", "，")
         # 检测换行符，换成"\n"，防止csv文件解析出错
         now_text = now_text.replace("\n", "\\n")
-        if cache_control.now_edit_type_flag == 1:
+        if cache_control.now_edit_type_flag == 1 and cache_control.now_select_id in cache_control.now_event_data:
             cache_control.now_event_data[cache_control.now_select_id].text = now_text
-        elif cache_control.now_edit_type_flag == 0:
+        elif cache_control.now_edit_type_flag == 0 and cache_control.now_select_id in cache_control.now_talk_data:
             cache_control.now_talk_data[cache_control.now_select_id].text = now_text
         # 检测英文双引号，直接删除，防止csv文件解析出错
         now_text = now_text.replace("\"", "")

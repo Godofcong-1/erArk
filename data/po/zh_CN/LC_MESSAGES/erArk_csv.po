@@ -18240,8 +18240,16 @@ msgstr ""
 msgid "进去|{NickName}在源石技艺的帮助下，没有让任何人发现，悄悄地溜了进来"
 msgstr ""
 
-#: Event:0f54372f-f361-4f6c-ac37-b5bd6d5092eb
-msgid "要对{TargetName}做什么呢？"
+#: Event:b3f8de7b-26f8-47e3-b7e4-fab34bd84434
+msgid "阿米娅测试_A1|无其他前提的子选项，对话经验+1"
+msgstr ""
+
+#: Event:70466f8f-eeb2-4c4d-97e1-a8351f125431
+msgid "阿米娅测试_A2|有可满足的其他前提的子选项，战斗经验+1"
+msgstr ""
+
+#: Event:305a15ce-5725-438d-99d5-9031bb2ad124
+msgid "阿米娅测试_A3|有无法满足的其他前提的子选项，音乐经验+1"
 msgstr ""
 
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75

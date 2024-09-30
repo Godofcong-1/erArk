@@ -737,6 +737,8 @@ class Chara_Event:
         """ 角色当前事件id """
         self.son_event_id: str = ""
         """ 角色当前子事件id """
+        self.chara_diy_event_flag: bool = False
+        """ 角色自定义事件标记 """
 
 
 class Map:

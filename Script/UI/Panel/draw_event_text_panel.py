@@ -44,8 +44,17 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         if player_data.position not in [character_data.position, character_data.behavior.move_target]:
             return
 
-        # 子事件的文本里去掉选项内容
+        # 检查是否是子事件
+        son_event_flag = False
         if "option_son" in game_config.config_event[event_id].premise:
+            son_event_flag = True
+        for primise in game_config.config_event[event_id].premise:
+            if "CVP_A1_Son" in primise:
+                son_event_flag = True
+                break
+
+        # 子事件的文本里去掉选项内容
+        if son_event_flag:
             now_event_text: str = "\n" + game_config.config_event[event_id].text.split("|")[1]
         else:
             now_event_text: str = "\n" + game_config.config_event[event_id].text

@@ -12,7 +12,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image, character_image
+from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image, character_image, talk
 from Script.Config import game_config
 import logging, time
 
@@ -486,6 +486,36 @@ class SeeInstructPanel:
                 else:
                     now_draw_list.append(now_draw)
                 self.return_list.append(now_draw.return_text)
+        # 角色自定义特殊指令检测与绘制
+        from Script.UI.Panel import event_option_panel
+        len_son_event_list, son_event_list = event_option_panel.get_target_chara_diy_instruct(0)
+        if len_son_event_list:
+            count = 0
+            for event_id in son_event_list:
+                count += 1
+                # 获取事件数据
+                event_data = game_config.config_event[event_id]
+                pl_character_data = cache.character_data[0]
+                target_character_data = cache.character_data[pl_character_data.target_character_id]
+                chara_adv = target_character_data.adv
+                # 获取选项文本
+                option_text = event_data.text.split("|")[0]
+                option_text = talk.code_text_to_draw_text(option_text, 0)
+                now_text = f"[{chara_adv}_{count}]{option_text}"
+                return_text = f"{chara_adv}_{count}"
+                # 绘制按钮
+                now_draw = draw.LeftButton(
+                    now_text,
+                    return_text,
+                    int(self.width / 5),
+                    cmd_func=self.handle_chara_diy_instruct,
+                    args=(event_id,),
+                )
+                # 检查是否要使用口上颜色
+                if target_character_data.text_color:
+                    now_draw.normal_style = target_character_data.name
+                now_draw_list.append(now_draw)
+                self.return_list.append(now_draw.return_text)
         now_draw = panel.DrawTextListPanel()
         now_draw.set(now_draw_list, self.width, 5)
         # now_draw = panel.VerticalDrawTextListGroup(self.width)
@@ -531,6 +561,34 @@ class SeeInstructPanel:
         line.draw()
         # 指令结算
         handle_instruct.handle_instruct(instruct_id)
+
+    def handle_chara_diy_instruct(self, event_id: str):
+        """
+        处理角色自定义指令
+        Keyword arguments:
+        event_id -- 事件id
+        """
+        event_data = game_config.config_event[event_id]
+        py_cmd.clr_cmd()
+        # 指令名称绘制
+        option_text = event_data.text.split("|")[0]
+        option_text = talk.code_text_to_draw_text(option_text, 0)
+        instruct_name = option_text
+        now_draw_1 = draw.NormalDraw()
+        now_draw_1.text = f"{instruct_name}"
+        # 如果是重复指令，则加上连续标记
+        if len(cache.pl_pre_status_instruce) >= 2:
+            if cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+                now_draw_1.text += _("(连续)")
+        now_draw_1.text += "\n"
+        now_draw_1.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        # 指令结算
+        pl_character_data = cache.character_data[0]
+        pl_character_data.event.event_id = event_id
+        pl_character_data.event.chara_diy_event_flag = True
+        handle_instruct.handle_instruct(constant.Instruct.CHARA_DIY_INSTRUCT)
 
 
 class CharacterImageListDraw:

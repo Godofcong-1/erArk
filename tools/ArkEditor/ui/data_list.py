@@ -583,7 +583,7 @@ class DataList(QWidget):
                 item = ListItem(now_event.text)
                 item.uid = uid
                 self.list_widget.addItem(item)
-            if cache_control.now_select_id:
+            if cache_control.now_select_id and cache_control.now_select_id in cache_control.now_event_data:
                 status_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
                 status_text = cache_control.status_data[status_cid]
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type

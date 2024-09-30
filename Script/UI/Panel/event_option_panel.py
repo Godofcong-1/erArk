@@ -1,5 +1,5 @@
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, py_cmd
+from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, py_cmd, constant
 from Script.Design import talk, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
@@ -14,6 +14,65 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+def get_target_chara_diy_instruct(character_id: int = 0):
+    """
+    获得交互对象的角色自定义指令\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    Return arguments:\n
+    int -- 子事件数量\n
+    list -- 子事件列表\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    son_event_list = [] # 子事件列表
+    if character_data.target_character_id:
+        target_character_data = cache.character_data[character_data.target_character_id]
+        # 判断是否存在该行为对应的事件
+        if constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT in game_config.config_event_status_data_by_chara_adv:
+            all_chara_diy_instruct_event_list = game_config.config_event_status_data_by_chara_adv[constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT]
+            # 判断交互对象是否有该行为事件
+            if target_character_data.adv in all_chara_diy_instruct_event_list:
+                target_diy_instruct_event_list = all_chara_diy_instruct_event_list[target_character_data.adv]
+                # 获取子事件列表
+                son_event_list = check_son_event_list_from_event_list(target_diy_instruct_event_list, 0, 0)
+
+    return len(son_event_list), son_event_list
+
+
+def check_son_event_list_from_event_list(event_list: list, character_id: int, event_parent_chid_id: int):
+    """
+    检查事件列表中是否有子事件\n
+    Keyword arguments:\n
+    event_list -- 事件列表\n
+    character_id -- 角色id\n
+    event_parent_chid_id -- 子事件的序号id（非事件id）\n
+    Return arguments:\n
+    son_event_list -- 子事件列表\n
+    """
+    son_event_list = [] # 子事件列表
+
+    # 开始遍历当前行为的事件表
+    for event_id in event_list:
+        event_config = game_config.config_event[event_id]
+        # 需要含有综合数值前提中的子嵌套事件前提
+        son_premise = "CVP_A1_Son|0_E_{0}".format(event_parent_chid_id)
+        # 需要有该子事件的前提
+        if son_premise in event_config.premise:
+            premise_dict = event_config.premise.copy()
+            # 从前提集中去掉子事件前提
+            premise_dict.pop(son_premise)
+            # 如果前提集不为空
+            if len(premise_dict):
+                # 计算总权重
+                now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, unconscious_pass_flag = True)
+                # 判定通过，加入到子事件的列表中
+                if now_weight:
+                    son_event_list.append(event_id)
+            # 前提集为空，直接加入到子事件的列表中
+            else:
+                son_event_list.append(event_id)
+    return son_event_list
 
 
 class Event_option_Panel:
@@ -111,28 +170,13 @@ class multi_layer_event_option_Panel:
             if target_character_data.adv in game_config.config_event_status_data_by_chara_adv[behavior_id]:
                 tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][target_character_data.adv]
 
-        for event_id in tem_event_list:
-            event_config = game_config.config_event[event_id]
-            # 需要含有综合数值前提中的子嵌套事件前提
-            son_premise = "CVP_A1_Son|0_E_{0}".format(self.event_parent_chid_id)
-            # 需要有该子事件的前提
-            if son_premise in event_config.premise:
-                premise_dict = event_config.premise.copy()
-                # 从前提集中去掉子事件前提
-                premise_dict.pop(son_premise)
-                # 如果前提集不为空
-                if len(premise_dict):
-                    # 计算总权重
-                    now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, self.character_id, unconscious_pass_flag = True)
-                    # 判定通过，加入到子事件的列表中
-                    if now_weight:
-                        son_event_list.append([event_id, self.character_id])
-                # 前提集为空，直接加入到子事件的列表中
-                else:
-                    son_event_list.append([event_id, self.character_id])
+        # 从临时事件列表中筛选出子事件
+        son_event_list = check_son_event_list_from_event_list(tem_event_list, self.character_id, self.event_parent_chid_id)
 
+        # 如果没有子事件，直接返回
         if len(son_event_list) == 0:
             return
+        # 如果有子事件，继续绘制
         while 1:
             py_cmd.clr_cmd()
 
@@ -159,7 +203,7 @@ class SonEventDraw:
     """
 
     def __init__(
-        self, value_list: [], width: int, is_button: bool, num_button: bool, button_id: int
+        self, value_list: list, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
         self.event_id = value_list[0]
