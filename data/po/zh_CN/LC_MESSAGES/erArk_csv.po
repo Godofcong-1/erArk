@@ -18240,18 +18240,6 @@ msgstr ""
 msgid "进去|{NickName}在源石技艺的帮助下，没有让任何人发现，悄悄地溜了进来"
 msgstr ""
 
-#: Event:b3f8de7b-26f8-47e3-b7e4-fab34bd84434
-msgid "阿米娅测试_A1|无其他前提的子选项，对话经验+1"
-msgstr ""
-
-#: Event:70466f8f-eeb2-4c4d-97e1-a8351f125431
-msgid "阿米娅测试_A2|有可满足的其他前提的子选项，战斗经验+1"
-msgstr ""
-
-#: Event:305a15ce-5725-438d-99d5-9031bb2ad124
-msgid "阿米娅测试_A3|有无法满足的其他前提的子选项，音乐经验+1"
-msgstr ""
-
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75
 msgid "{TargetName}不打算接受你的邀请，要使用杀手锏吗"
 msgstr ""
@@ -18682,10 +18670,6 @@ msgstr ""
 
 #: Event:74ca0e76-3311-4863-9dc5-deb81a2ec755
 msgid "闻腋下 | 脸贴近{TargetName}的腋下呼吸着她的气息，诱人的费洛蒙气息瞬间充满了大脑\n“啊！”\n“！！”\n“......”\n“变态！”"
-msgstr ""
-
-#: Event:e37c6754-613b-4b03-b785-205c3fdf98c3
-msgid "空事件"
 msgstr ""
 
 #: Event:4b0730e5-fd66-4754-aac3-80223804a1af
