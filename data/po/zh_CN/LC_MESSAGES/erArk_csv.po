@@ -15144,6 +15144,58 @@ msgstr ""
 msgid "安洁莉娜，本名安心院安洁莉娜。于叙拉古从事情报递送、货物运输等公开活动，推测身份：信使。现作为实习术师干员，为罗德岛提供后勤保障、战场辅助与战术协同等服务。"
 msgstr ""
 
+#: .\data\character\0291_安洁莉娜.csv:15
+msgid "#cfa498"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:31
+msgid "單耳型無線耳機"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:32
+msgid "羅德島標準型感染監測環"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:33
+msgid "棕色寬鬆居家上衣"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:34
+msgid "紅棕二色薄夾克"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:35
+msgid "信使風衣"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:36
+msgid "灰色運動胸衣"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:37
+msgid "黑白二色防寒手套"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:38
+msgid "黑色白邊運動短裤"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:39
+msgid "灰色運動內裤"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:40
+msgid "黑色白條中筒袜"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:41
+msgid "短筒運動靴"
+msgstr ""
+
+#: .\data\character\0291_安洁莉娜.csv:42
+msgid "重力型源石法杖"
+msgstr ""
+
 #: .\data\character\0297_和弦.csv:4
 msgid "和弦"
 msgstr ""
