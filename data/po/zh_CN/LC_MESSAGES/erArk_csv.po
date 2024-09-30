@@ -15348,6 +15348,42 @@ msgstr ""
 msgid "诗怀雅，龙门近卫局高级警司。现作为特别合作人员协助罗德岛行动，并为现场提供战术指挥支援。"
 msgstr ""
 
+#: .\data\character\0308_诗怀雅.csv:15
+msgid "#ff7300"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:50
+msgid "龙门警卫局夹克"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:51
+msgid "OL上班族衬衫"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:52
+msgid "紧束绳"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:53
+msgid "胸垫"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:54
+msgid "粉色兔胖次"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:56
+msgid "黑色丝袜"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:57
+msgid "带链锯旋转锁链"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:58
+msgid "龙门淑女用高跟鞋"
+msgstr ""
+
 #: .\data\character\0311_泥岩.csv:4
 msgid "泥岩"
 msgstr ""
