@@ -16356,6 +16356,54 @@ msgstr ""
 msgid "一只美丽的水萤虫。它微弱的光能照亮一个夜晚。到了第二天，你可以放它自由。"
 msgstr ""
 
+#: .\data\character\0496_深靛.csv:15
+msgid "#e4d5c6"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:43
+msgid "一对黑色半环发箍"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:45
+msgid "连袖黑色披肩"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:46
+msgid "白色低胸领连衣裙"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:47
+msgid "灰蓝色短披风"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:48
+msgid "黑色羽状文胸"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:49
+msgid "黑丝手套"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:50
+msgid "淡白色内裤"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:51
+msgid "黑丝长袜"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:52
+msgid "带有花饰的白底黑色短靴"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:53
+msgid "装有“伊比利亚之眼”发光单元的镰刀状法杖"
+msgstr ""
+
+#: .\data\character\0496_深靛.csv:54
+msgid "悬浮在身后托扶头发的大半环源石装置"
+msgstr ""
+
 #: .\data\character\0496_野鬃.csv:4
 msgid "野鬃"
 msgstr ""

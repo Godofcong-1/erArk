@@ -26100,6 +26100,170 @@ msgstr ""
 msgid "“啊啊啊，好痛啊”\n“和前面一样，痛”\n尽管做好了心理准备，{Name}仍然为后穴传来的痛感而震惊\n“这种撕裂一般的痛，都是你的错啊”\n{Name}忍不住紧紧抱着{PlayerName}，寻求着更多温暖和抚慰\n“你这个混蛋，世界上最糟糕的家伙”\n“我把我的一切都交给你了，你可是欠了我一生都还不清的债了”\n{Name}夺取了{PlayerName}的双唇，渴求着更多的吻和更多的爱意"
 msgstr ""
 
+#: .\data\talk\chara\0496_深靛.csv:6
+msgid "“您好{PlayerName}。”\n深靛注意到了你的到来，向你打了声招呼"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:7
+msgid "“{PlayerName}好。”\n深靛面带笑意，向你问好"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:8
+msgid "“啊，{PlayerName}。”\n深靛见到了{PlayerName}，整个人都欢快了起来"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:9
+msgid "“亲爱的，你怎么来了。”\n深靛含情脉脉的注视着{PlayerName}，下垂的纤细尾巴不由自主的轻轻左右摇晃"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:10
+msgid "“{PlayerName}再见。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:11
+msgid "“待会见了，{PlayerName}。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:12
+msgid "“{PlayerName}要走了吗？”\n“那待会再见吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:13
+msgid "“要走了吗？那等会有空了我去找你啦，亲爱的。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:14
+msgid "“啊，博士好”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:15
+msgid "“{PlayerName}，打扰了，我来看看你。”\n深靛笑盈盈地向你打招呼，但只要仔细看，会发现少女脸上淡淡的红晕"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:16
+msgid "“亲爱的，我来找你啦。”\n深靛向你走来，依偎在你的怀里\n“{PlayerName}，喜欢……”深靛眯着眼在{PlayerName}耳旁呼气"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:17
+msgid "一位斐迪亚少女略带不安地来到{PlayerName}面前\n“你好，博士，我叫艾莉亚……呃，不对，是深靛。我以前是一名灯塔看守人……见习的。现在是一名术师，还是……见习的。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:18
+msgid "“我……不太擅长说话。以前总是一个人。”\n“刚到外面的时候，有些人很怕我。还有人骗走了我的行李。不过没关系......只要法杖还在，就还能工作，不至于饿很久。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:19
+msgid "“灯塔里的日子并不枯燥。海面，总在变化。”\n“可老师把我赶了出来。她说我需要多看看这片大地，才能守好海边一隅。所以，我来到了这里。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:20
+msgid "“蓝毒送了我一副新手套，是不是很好看？”\n“她说材质也改良了，这样的话，我和那些精通毒理的朋友们相处，更不容易误触有毒物品。”\n“其实，因为总是不小心碰到......我的身体好像也习惯啦。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:21
+msgid "“过去的每一夜，我都在凝视那片海。我们在守望什么，镇子上无人知晓，老师也不曾说过。”\n“我只知道，黑暗中必须有灯塔。我将坚守，直至那一天来到。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:22
+msgid "“你看到的光，有人说，是源石技艺。可老师说，这是我们内心的力量。只要有光的指引，行驶在夜雾里的人，也能抵抗海浪的拉扯，找到正确的航向。我会努力守住这光亮。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:23
+msgid "“觉得我尾巴的颜色很漂亮？谢谢……没关系，你可以摸的。虽然是这个颜色，但并没有毒哦。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:24
+msgid "“头发，太长了。会缠到。能帮我拿一下吗？整理起来会花一点时间。”\n“好了以后，上战场会更方便。我想更好地帮助你。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:25
+msgid "“最近我开始觉得，人也能和灯塔一样……有的人，甚至比灯塔照得更远、更亮。”\n深靛靠在你身边\n“比如说，博士你。在回去之前，我想在你身边待久一些，可以吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:26
+msgid "“大海并不会计数又涨了多少次潮，所以这一天并没有什么特别。“\n“不过书里说过，曾经夜里的大海很美，月光像碎银一样跳动在浪花上，可惜现在已经看不到了。”\n“博士，要是能回到过去，我想带你去看。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:27
+msgid "“博士，有空的话要不要陪我去做护发啊？”\n“作息不规律，头发如果不好好保养的话，会成秃头的哦。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:28
+msgid "“艾丽妮小姐出乎意料的是一个很好接触的人呢。”\n“我原本以为审判官都是一群见到谁都是一副‘你是深海教徒吗’要抓你的态度”\n“也许审判庭没我想象中的那么可怕...吗？”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:29
+msgid "“博士泡的咖啡吗？谢谢”\n深靛接过{PlayerName}泡的咖啡\n“咖啡的味道很奇特呢，虽然没小蓝毒的特饮那么奇特就是了”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:30
+msgid "“欸，真的没关系吗？”\n深靛有点手忙脚乱的泡好了咖啡\n“请用。”\n（小声嘀咕：虽说泡的不太好就是了）"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:31
+msgid "“博士，我来了”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:32
+msgid "“{PlayerName}我来啦。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:33
+msgid "“{PlayerName}工作结束了吗，那走吧。诶，值班的任务？做完了哦。剩下的都是空余时间。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:34
+msgid "“好，那博士再见。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:35
+msgid "{PlayerName}听着深靛诉说着最近的烦心事\n“呼，有博士倾听我说的这些琐事，心情变得好多了。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:36
+msgid "“你说我这样做对吗……值班的时候……最近……”\n深靛靠着{PlayerName}，诉说着自己最近的烦心事。"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:37
+msgid "“诶，博士要我来吗？我会尽力的。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:38
+msgid "“好的，那博士再见。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:39
+msgid "“博士，这些文件放在哪里？”\n深靛在{PlayerName}身旁整理罗德岛的日常事务"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:40
+msgid "“博士幸苦啦。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:41
+msgid "“太累了吗，那就好好休息一下吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:42
+msgid "“最近是不是变胖了……”\n（深靛的碎碎念）"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:43
+msgid "“小蓝毒的甜品卖相虽说很吸引人的注意，但味道是一等一的好哦。”\n“博士你要不要尝尝看。”"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:44
+msgid "深靛静静的倾听你的歌声，有些陶醉的样子"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:45
+msgid "{PlayerName}悄悄的握住了深点的手\n深靛有些局促不安，但并没有表示拒绝的态度"
+msgstr ""
+
+#: .\data\talk\chara\0496_深靛.csv:46
+msgid "{PlayerName}在交接文件时抚摸到了深靛的手\n深靛没有表示什么，但尾巴却缠绕在了大腿上"
+msgstr ""
+
 #: .\data\talk\chara\1012_浊心斯卡蒂.csv:6
 msgid "当{PlayerName}注意到的时候，眼前已经站立着一位让你熟悉又陌生的访客。\n她有着精致的面容与银色的靓丽长发，及至小腿的长发被鱼形纹饰发带束缚着形成两道马尾。\n她穿着一件较为淡薄的暗红色连衣裙，胸前饱满的双峰呼之欲出，几乎要突破半透明的挂脖胸衣束缚弹跳出来，在红色的颈带下系有一条蓬松的黑色领结，配上宽松的袖摆添上几分禁欲的味道。\n暗红色的连衣裙在腰肢部位有着一道开口，将精致紧俏的肚脐眼周围的皮肤展示出来。\n而腰部向下的裙摆下方左腿上是一条黑色的绑扣式腿带，自光滑而修长的美腿下方延伸环绕至小腿根部，凸显出绝妙的勒肉感，搭配脚上穿着的白色高筒高跟鞋，在表面上散发出冷艳飒爽的气质。\n她胸前的罗德岛干员名牌可以看到她现在的干员名，她是浊心斯卡蒂。\n“我在找你，{PlayerName}。我找你太久，太久了，我甚至已经快要忘了为什么要在这片大地找你......不过这些都不重要了。不再那么重要了。”"
 msgstr ""
