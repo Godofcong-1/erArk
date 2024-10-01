@@ -16220,6 +16220,42 @@ msgstr ""
 msgid "帕拉斯，曾在米诺斯担任祭司职务。在离开雅赛努斯城邦去往阿克罗蒂村任职期间，带领当地民众进行了对萨尔贡周边部落长年侵扰的反抗，并在当地推行旅游及文化产业的发展。后因矿石病病况恶化，来到罗德岛进行秘密治疗。"
 msgstr ""
 
+#: .\data\character\0486_格特鲁德.csv:4
+msgid "格特鲁德"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:13
+msgid "繪有斯特羅洛家徽的徽章。徽章的中央有著一道深刻的劃痕"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:14
+msgid "格特魯德·斯特羅洛，前萊塔尼亞伯爵、維謝海姆的統治者。經車爾尼、芙蓉、黑鍵等幹員的報告，指認其其為代號【塵影餘音】事件主謀、犯有公共危險、恐襲、謀殺等等多項罪名，且在報告中提到本人已然身亡....但近日於羅德島上遭人目擊，經sweep小隊拘捕並訊問後，其本人表示無登艦之記憶，目前暫作收容處理"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:29
+msgid "黑色蕾絲胸衣"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:30
+msgid "高衩長裙"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:31
+msgid "黑色蕾絲女士內褲"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:33
+msgid "黑色女士高跟鞋"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:34
+msgid "皮製吊帶腿環"
+msgstr ""
+
+#: .\data\character\0486_格特鲁德.csv:35
+msgid "豎琴"
+msgstr ""
+
 #: .\data\character\0487_莉泽洛特.csv:4
 msgid "莉泽洛特"
 msgstr ""
@@ -16438,6 +16474,34 @@ msgstr ""
 
 #: .\data\character\0569_银币.csv:4
 msgid "银币"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:4
+msgid "萨卢斯"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:13
+msgid "缠绕着扭曲枝干的手杖....不知其用为何"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:14
+msgid "思想扭曲而又疯狂的赦罪师家族成员的一员，其体内的基因相当驳杂，经过了数次实验性的融合，如同奇美拉一般。\n而她所珍视的家人，无一将其视为家人。"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:33
+msgid "白褶胸巾"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:34
+msgid "黑色烫金饰礼服"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:35
+msgid "黑色高衩群"
+msgstr ""
+
+#: .\data\character\0653_萨卢斯.csv:36
+msgid "黑色哑光连裤袜"
 msgstr ""
 
 #: .\data\character\0687_乔万娜.csv:4
@@ -16858,6 +16922,34 @@ msgstr ""
 
 #: .\data\character\1034_涤火杰西卡.csv:30
 msgid "白色球鞋"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:4
+msgid "塔季扬娜"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:13
+msgid "一条手环，应是塔季扬娜过去旅行时所得之物，对她来说有着记录着某一段时光的特殊意义。"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:14
+msgid "塔季扬娜，烈夏生母.\n二十年前于一次探索中与外界失联，后单身带着女儿回归乌萨斯，并独自抚养女儿。于切尔诺伯格事变中受感染，拖着病躯找上罗德岛，找到当时被罗德岛二十年前于一次探索中与外界失联，后单身带着女儿回归乌萨斯，并独自抚养女儿。于切尔诺伯格事变中受感染，拖着病躯找上罗德岛，找到当时被罗德岛\n救助的女儿罗莎琳，即干员烈夏。此后，塔季扬娜女士选择留在罗德岛，接受相关治疗。\n目前身体状况较为稳定，如果能继续接受治疗，控制得当，避免前往过于危险的区域，塔季扬娜女士的病症短期内不会进—步恶化。\n"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:32
+msgid "十字星状吊坠"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:33
+msgid "淡褐色衬衫外套御寒披袍"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:34
+msgid "黑色百褶裙"
+msgstr ""
+
+#: .\data\character\1159_塔季扬娜.csv:35
+msgid "过踝长筒高跟鞋"
 msgstr ""
 
 #: .\data\character\1502_弑君者.csv:4
