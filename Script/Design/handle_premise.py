@@ -17460,7 +17460,7 @@ def handle_assistant_night_salutation_2(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[6] == 1:
+    if character_data.assistant_services[6] == 2:
         return 1
     return 0
 
@@ -17475,7 +17475,7 @@ def handle_assistant_night_salutation_3(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[6] == 2:
+    if character_data.assistant_services[6] == 3:
         return 1
     return 0
 
