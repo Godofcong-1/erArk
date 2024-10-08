@@ -22696,6 +22696,86 @@ msgstr ""
 msgid "真是得寸进尺呢～让本小姐亲自给你下厨，你 有 什 么 可 以 让 我 同 意 的 呢！」\n{PlayerName}允诺了陪着诗怀雅去他们的家族聚会"
 msgstr ""
 
+#: .\data\talk\chara\0328_卡达.csv:6
+msgid "「嘿！{PlayerName}博士看看我新做的視頻，你一定會喜歡的。」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:7
+msgid "「在野外冒險要隨時保持警惕，不然你一放鬆，某個角落的大菲林就可能突然撲過來，一爪子把你按倒在地上，然後然後......」\n「嗯啊！，想想就可怕」。"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:8
+msgid "「欸？博士...你剛才說什麼來著？抱歉，我剛才在想新視頻的題材，有點走神了。能再說一遍嗎?我這次會認真聽的！」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:9
+msgid "「嘿嘿...博士，讓我瞧瞧你都在些看什麼影片」\n\"10催情食物「吃了讓人想色色」\"、\"傷心貓咪與狗狗之歌\"\n「這都是些什麼鬼東西阿！」(´・ω・`)"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:10
+msgid "「下雨天真是煩人！以前在外一下雨，設備會就壞了個遍」\n「不過在科研部升級後，已經不怕受潮了，這也是我選擇留在島上的原因之一」\no(*ﾟ▽ﾟ*)o"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:11
+msgid "「等等等...我把這個點子寫..下..來..再說」\n「啊↑哈↓完美」( ・∀・)っ■  \n「好了，博士你剛說什麼來著？」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:12
+msgid "「欸...嘿，嗯...確實，好的...沒別事的話，我先走啦」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:13
+msgid "「嗯啊！{PlayerName}博士別嚇我好不好！你這樣突然就摸上來，嚇死人了。」 (눈‸눈)"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:14
+msgid "「嗯啊啊啊啊啊！不就一部普通的日常影片而已，怎麼又被黃標了啊！這審核員到底是在搞什麼啊」之後又聽她把審核的祖宗18代都罵了一遍......"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:15
+msgid "「嗯！嗯？ 怎麼了嗎？{PlayerName}博士..」{TargetName}臉上滿是困惑和不解"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:16
+msgid "「哈阿？有什麼..東西要給我看，好吧 博士我跟你走」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:17
+msgid "「Uggh~好苦 >x<」「博士是怎麼嚥下去的？」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:18
+msgid "「左勾拳！右勾拳！雙面夾擊！金剛掌！烏鴉坐飛機~~~」「打得可以啊 {PlayerName}博士」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:19
+msgid "「嗯，哪...欸?!」  \n「哪啊！博士也有在看這個頻道？太酷了吧！」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:20
+msgid "「哦？博士要開始工作啦？需要我幫忙整理文件嗎？就這方面我可是很擅長的！」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:21
+msgid "「工作時間到啦？」卡達的耳朵微微下垂，但很快又挺起身子。「那我去泡杯咖啡給博士吧？工作的時候來點提神的飲料最棒了！」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:22
+msgid "「唔...」{TargetName}臉頰泛紅的撇開了視線，但又忍不住得往博士的手掌蹭了蹭「博士的手...真大啊。總覺的...很安心。」"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:23
+msgid "{TargetName}一把抓住你的手移到自己的臉頰上「哪~博士...別那麼膽怯，再多摸一下嘛~」\n{TargetName}爽朗的笑著與你對視"
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:24
+msgid "「嗯？ 怎麼了嗎{PlayerName}博士，這突然摸上來的」(。•ˇˍˇ•。) "
+msgstr ""
+
+#: .\data\talk\chara\0328_卡达.csv:25
+msgid "「嗯嗯啊！喂喂，博士別這麼急啦...有人來了怎麼辦」\n{TargetName}嘴上雖這麼說，還是挺起胸膛希望能得到更多觸碰\n"
+msgstr ""
+
 #: .\data\talk\chara\0358_铃兰.csv:6
 msgid "罗德岛干员丽萨……啊不对，是铃兰，干员铃兰！是我自己挑的代号喔，今天开始正式作为干员行动，请多指教！"
 msgstr ""
