@@ -150,7 +150,8 @@ class DataList(QWidget):
         menu.setFont(self.font)
         position = QCursor.pos()
 
-        if cache_control.now_edit_type_flag == 1:
+        # 移动状态下不显示移动以外的选项
+        if cache_control.now_edit_type_flag == 1 and self.now_in_moving_flag == False:
             create_action: QWidgetAction = QWidgetAction(self)
             create_action.setText("新增事件")
             create_action.triggered.connect(self.create_event)
@@ -164,7 +165,7 @@ class DataList(QWidget):
                 delete_action.setText("删除事件")
                 delete_action.triggered.connect(self.delete_event)
                 menu.addAction(delete_action)
-        elif cache_control.now_edit_type_flag == 0:
+        elif cache_control.now_edit_type_flag == 0 and self.now_in_moving_flag == False:
             create_action: QWidgetAction = QWidgetAction(self)
             create_action.setText("新增口上")
             create_action.triggered.connect(self.create_talk)
@@ -488,6 +489,7 @@ class DataList(QWidget):
         self.list_widget.clear()
         self.update_clear = 0
         status_cid = cache_control.now_status
+        self.now_in_moving_flag = False
 
         if cache_control.now_edit_type_flag == 0:
             # 按cid排序整个cache_control.now_talk_data
