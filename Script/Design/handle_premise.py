@@ -4212,6 +4212,7 @@ def handle_normal_6(character_id: int) -> int:
         or (handle_sleep_level_2(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or (handle_sleep_level_3(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_5(character_id)
+        or handle_time_stop_on(character_id)
     ):
         return 0
     else:
@@ -5480,11 +5481,20 @@ def handle_unconscious_flag_0(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    return not handle_unconscious_flag_ge_1(character_id)
+
+
+@add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_GE_1)
+def handle_unconscious_flag_ge_1(character_id: int) -> int:
+    """
+    自身有无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.sp_flag.unconscious_h == 0:
-        return 1
-    else:
-        return 0
+    return character_data.sp_flag.unconscious_h
 
 
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_1)
@@ -5615,6 +5625,23 @@ def handle_unconscious_flag_7(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_UNCONSCIOUS_OR_TIME_STOP)
+def handle_self_now_unconscious_or_time_stop(character_id: int) -> int:
+    """
+    自身现在有无意识或时停状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_unconscious_flag_ge_1(character_id):
+        return 1
+    elif handle_time_stop_on(character_id):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_0)
 def handle_t_unconscious_flag_0(character_id: int) -> int:
     """
@@ -5644,6 +5671,23 @@ def handle_t_unconscious_flag(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.sp_flag.unconscious_h:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_OR_TIME_STOP)
+def handle_t_unconscious_flag_or_time_stop(character_id: int) -> int:
+    """
+    交互对象有无意识状态或时停状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_t_unconscious_flag(character_id):
+        return 1
+    elif handle_time_stop_on(character_id):
         return 1
     else:
         return 0
@@ -5681,6 +5725,18 @@ def handle_t_unconscious_flag_1(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_1)
+def handle_t_not_unconscious_flag_1(character_id: int) -> int:
+    """
+    对方有无意识_睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_t_unconscious_flag_1(character_id)
 
 
 @add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_2)
@@ -10396,6 +10452,27 @@ def handle_target_have_open(character_id: int) -> int:
     return target_data.talent[278]
 
 
+@add_premise(constant_promise.Premise.AT_LEAST_ONE_ARTS_ON)
+def handle_at_least_one_arts_on(character_id: int) -> int:
+    """
+    至少有一种源石技艺开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 催眠
+    if handle_target_in_hypnosis(character_id):
+        return 1
+    # 透视
+    if handle_penetrating_vision_on(character_id):
+        return 1
+    # 时停
+    if handle_time_stop_on(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PRIMARY_HYPNOSIS)
 def handle_primary_hypnosis(character_id: int) -> int:
     """
@@ -11051,6 +11128,176 @@ def handle_target_not_hypnosis_roleplay(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     return not target_data.hypnosis.roleplay
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_1)
+def handle_target_hypnosis_roleplay_1(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-妻子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 1
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_2)
+def handle_target_hypnosis_roleplay_2(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-妹妹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 2
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_3)
+def handle_target_hypnosis_roleplay_3(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-女儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 3
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_4)
+def handle_target_hypnosis_roleplay_4(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-女仆
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 4
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_5)
+def handle_target_hypnosis_roleplay_5(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-宠物猫
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 5
+
+
+@add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_6)
+def handle_target_hypnosis_roleplay_6(character_id: int) -> int:
+    """
+    交互对象被心控-角色扮演-宠物狗
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    return target_data.hypnosis.roleplay == 6
+
+
+@add_premise(constant_promise.Premise.PRIMARY_TIME_STOP)
+def handle_primary_time_stop(character_id: int) -> int:
+    """
+    自己拥有初级时停
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.talent[316]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INTERMEDIATE_TIME_STOP)
+def handle_intermediate_time_stop(character_id: int) -> int:
+    """
+    自己拥有中级时停
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.talent[317]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ADVANCED_TIME_STOP)
+def handle_advanced_time_stop(character_id: int) -> int:
+    """
+    自己拥有高级时停
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.talent[318]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_STOP_ON)
+def handle_time_stop_on(character_id: int) -> int:
+    """
+    时停开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.time_stop_mode
+
+
+@add_premise(constant_promise.Premise.TIME_STOP_OFF)
+def handle_time_stop_off(character_id: int) -> int:
+    """
+    时停关闭中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_time_stop_on(character_id)
+
+
+@add_premise(constant_promise.Premise.TIME_STOP_JUDGE_FOR_MOVE)
+def handle_time_stop_judge_for_move(character_id: int) -> int:
+    """
+    (移动用)未开启时停，或时停开启且有中级时停
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_time_stop_off(character_id):
+        return 1
+    else:
+        if handle_intermediate_time_stop(character_id):
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HAVE_WORK)

@@ -511,6 +511,10 @@ class CharacterStatus:
     """ 体控-逆推 """
     STATUS_HYPNOSIS_ROLEPLAY = 931
     """ 心控-角色扮演 """
+    STATUS_TIME_STOP_ON = 941
+    """ 时间停止流动 """
+    STATUS_TIME_STOP_OFF = 942
+    """ 时间重新流动 """
 
 
 class Behavior:
@@ -1025,6 +1029,10 @@ class Behavior:
     """ 体控-逆推 """
     HYPNOSIS_ROLEPLAY = 931
     """ 心控-角色扮演 """
+    TIME_STOP_ON = 941
+    """ 时间停止流动 """
+    TIME_STOP_OFF = 942
+    """ 时间重新流动 """
 
 class StateMachine:
     """状态机id"""
@@ -1974,6 +1982,10 @@ class Instruct:
     """ 开启信息素 """
     HORMONE_OFF = 0
     """ 关闭信息素 """
+    TIME_STOP_ON = 0
+    """ 时间停止流动 """
+    TIME_STOP_OFF = 0
+    """ 时间重新流动 """
 
     #猥亵#
     MAKE_COFFEE_ADD = 0

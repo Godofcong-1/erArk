@@ -827,6 +827,10 @@ class BehaviorEffect:
     """ 源石技艺 对方开启体控-逆推（含理智消耗） """
     TARGET_HYPNOSIS_ACTIVE_H_OFF = 1229
     """ 源石技艺 对方关闭体控-逆推 """
+    TIME_STOP_ON = 1241
+    """ 源石技艺 开启时停 """
+    TIME_STOP_OFF = 1242
+    """ 源石技艺 关闭时停 """
 
     NPC_ACTIVE_H_ON = 1401
     """ 属性_H 自己开启主动H """

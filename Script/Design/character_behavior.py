@@ -57,6 +57,10 @@ def init_character_behavior():
         while 0 not in cache.over_behavior_character:
             pl_start_time = cache.character_data[0].behavior.start_time
             character_behavior(0, cache.game_time, pl_start_time)
+        # 如果当前是时停模式，则回退时间，然后结束循环
+        if cache.time_stop_mode:
+            game_time.sub_time_now(-cache.character_data[0].behavior.duration)
+            break
         field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
@@ -1191,18 +1195,25 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             down_sp = min(down_sp, now_character_data.sanity_point)
             now_character_data.sanity_point -= down_sp
             now_character_data.pl_ability.today_sanity_point_cost += down_sp
-            # 理智值不足则归零并中断所有开启中的源石技艺
-            if now_character_data.sanity_point <= 0:
-                now_character_data.sanity_point = 0
-                now_character_data.pl_ability.visual = False
-                # 解除目标的催眠
-                if target_data.sp_flag.unconscious_h >= 4:
-                    default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
-                # 输出提示信息
-                now_draw = draw.WaitDraw()
-                now_draw.width = window_width
-                now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
-                now_draw.draw()
+        # 时停系
+        if handle_premise.handle_time_stop_on:
+            down_sp = max(true_add_time * 2, 1)
+            # 用于消耗的理智值不得超过当前理智值
+            down_sp = min(down_sp, now_character_data.sanity_point)
+            now_character_data.sanity_point -= down_sp
+            now_character_data.pl_ability.today_sanity_point_cost += down_sp
+        # 理智值不足则归零并中断所有开启中的源石技艺
+        if handle_premise.handle_at_least_one_arts_on(character_id) and now_character_data.sanity_point <= 0:
+            now_character_data.sanity_point = 0
+            now_character_data.pl_ability.visual = False
+            # 解除目标的催眠
+            if target_data.sp_flag.unconscious_h >= 4:
+                default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
+            # 输出提示信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
+            now_draw.draw()
 
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:

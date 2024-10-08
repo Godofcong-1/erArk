@@ -132,6 +132,14 @@ msgstr ""
 msgid "{Name}触发了对{TargetName}使用心控催眠-角色扮演的地文"
 msgstr ""
 
+#: .\data\talk\arts\time_stop_off.csv:6
+msgid "时间啊，重新开始流动吧——！\n仿佛是一股无形的力量被解除，时间重新开始流动，世界恢复了原本的运转。"
+msgstr ""
+
+#: .\data\talk\arts\time_stop_on.csv:6
+msgid "时间啊，停下来吧——！\n虽然还是会有一些微小的运动，但是整个世界仿佛被一股无形的力量所束缚，时间仿佛被凝固在了这一刻。\n"
+msgstr ""
+
 #: .\data\talk\chara\0001_阿米娅.csv:7
 msgid "\n“博士，您还有许多事情需要处理。现在还不能休息哦。”\n{Name}轻声提醒道。"
 msgstr ""

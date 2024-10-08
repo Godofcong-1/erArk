@@ -54,6 +54,9 @@ def base_chara_hp_mp_common_settle(
     """
     if add_time == 0 and hp_value == 0 and mp_value == 0:
         return
+    # 时停下不结算
+    if handle_premise.handle_time_stop_on(character_id):
+        return
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data: game_type.Character = cache.character_data[target_character_id]
@@ -361,15 +364,20 @@ def base_chara_favorability_and_trust_common_settle(
 
     # 判断交互对象
     if target_character_id == 0:
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    else:
-        target_data: game_type.Character = cache.character_data[target_character_id]
+        target_character_id = character_data.target_character_id
+    target_data: game_type.Character = cache.character_data[target_character_id]
+
     # 防止重复结算
-    if character_id != target_data.cid and (character_id != 0 or target_data.cid != 0):
+    if character_id != target_character_id and (character_id != 0 or target_character_id != 0):
         if character_data.dead:
             return
         # 无意识状态下不结算
-        if character_data.sp_flag.unconscious_h or target_data.sp_flag.unconscious_h:
+        if handle_premise.handle_unconscious_flag_ge_1(character_id):
+            return
+        if handle_premise.handle_unconscious_flag_ge_1(target_character_id):
+            return
+        # 时停状态下不结算
+        if handle_premise.handle_time_stop_on(character_id):
             return
 
         # 信物调整值
@@ -377,7 +385,7 @@ def base_chara_favorability_and_trust_common_settle(
         token_adjust = 0
         if len(now_token):
             # 信物干员的基础调整为0.1
-            if character_id in now_token or target_data.cid in now_token:
+            if character_id in now_token or target_character_id in now_token:
                 token_adjust += 0.1
             # 全体干员+数量*0.01
             token_adjust += len(now_token) * 0.01
@@ -405,13 +413,13 @@ def base_chara_favorability_and_trust_common_settle(
                     continuous_adjust = max(0.4, continuous_adjust)
 
         # 结算信息记录对象
-        change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-        target_change = change_data.target_change[target_data.cid]
+        change_data.target_change.setdefault(target_character_id, game_type.TargetChange())
+        target_change = change_data.target_change[target_character_id]
 
         # 好感
         if favorability_flag:
             # 基础固定值
-            add_favorability = base_value + character.calculation_favorability(character_id, target_data.cid, add_time)
+            add_favorability = base_value + character.calculation_favorability(character_id, target_character_id, add_time)
             final_adjust = 1
 
             # 额外调整
@@ -435,14 +443,14 @@ def base_chara_favorability_and_trust_common_settle(
 
             # 结算最终值
             add_favorability *= final_adjust
-            character_handle.add_favorability(character_id, target_data.cid, add_favorability, change_data, target_change)
+            character_handle.add_favorability(character_id, target_character_id, add_favorability, change_data, target_change)
 
         # 信赖
         else:
             if character_id == 0 and character_data.target_character_id != 0:
-                add_trust = base_value + character.calculation_trust(character_id, target_data.cid, add_time)
+                add_trust = base_value + character.calculation_trust(character_id, target_character_id, add_time)
             else:
-                add_trust = base_value + character.calculation_trust(target_data.cid, character_id, add_time)
+                add_trust = base_value + character.calculation_trust(target_character_id, character_id, add_time)
             final_adjust = 1
 
             # 额外调整
@@ -2254,6 +2262,42 @@ def handle_target_hypnosis_active_h_off(
     if character_data.dead:
         return
     target_character_data.hypnosis.active_h = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ON)
+def handle_time_stop_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启时停
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    cache.time_stop_mode = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_OFF)
+def handle_time_stop_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭时停
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    cache.time_stop_mode = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_ON)

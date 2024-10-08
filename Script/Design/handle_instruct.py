@@ -233,7 +233,10 @@ def handle_eat():
 
 @add_instruct(
     constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
-    {constant_promise.Premise.NOT_H}
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TIME_STOP_JUDGE_FOR_MOVE,
+        }
 )
 def handle_move():
     """处理移动指令"""
@@ -884,6 +887,36 @@ def handle_hormone_on():
 def handle_hormone_off():
     """处理关闭信息素"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HORMONE_OFF)
+
+
+@add_instruct(
+    constant.Instruct.TIME_STOP_ON,
+    constant.InstructType.ARTS,
+    _("时间停止流动"),
+    {constant_promise.Premise.PRIMARY_TIME_STOP,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TIME_STOP_OFF,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_time_stop_on():
+    """处理时间停止流动"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TIME_STOP_ON)
+
+
+@add_instruct(
+    constant.Instruct.TIME_STOP_OFF,
+    constant.InstructType.ARTS,
+    _("时间重新流动"),
+    {constant_promise.Premise.PRIMARY_TIME_STOP,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TIME_STOP_ON,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_time_stop_off():
+    """处理时间重新流动"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TIME_STOP_OFF)
 
 
 @add_instruct(
@@ -1756,8 +1789,8 @@ def handle_do_h():
     _("睡眠猥亵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_UNNORMAL_5_6,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
+     constant_promise.Premise.T_ACTION_SLEEP,
+     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_sleep_obscenity():
@@ -1809,7 +1842,7 @@ def handle_stop_sleep_obscenity():
     _("无意识奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_OR_TIME_STOP,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_unconscious_h():
