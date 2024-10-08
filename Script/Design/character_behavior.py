@@ -1599,6 +1599,10 @@ def npc_active_h():
     target_character_id = pl_character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
 
+    # 如果目标不是NPC，则返回
+    if target_character_id == 0:
+        return 0
+
     # 如果对方不是主动H状态，则返回
     if target_character_data.hypnosis.active_h == False and target_character_data.h_state.npc_active_h == False:
         return 0
@@ -1666,21 +1670,21 @@ def npc_active_h():
         status_tag_list = status_data.tag.split("|")
         # 跳过其中非性爱类，道具类、药物类、SM类、非逆推类
         if(
-            "性爱" not in status_tag_list or
-            "道具" in status_tag_list or
-            "药物" in status_tag_list or
-            "SM" in status_tag_list or
-            "非逆推" in status_tag_list
+            _("性爱") not in status_tag_list or
+            _("道具") in status_tag_list or
+            _("药物") in status_tag_list or
+            _("SM") in status_tag_list or
+            _("非逆推") in status_tag_list
         ):
             continue
         # 如果NPC为处，则跳过破处类
-        if part_id == 4 and target_character_data.talent[0] and "破处" in status_tag_list:
+        if part_id == 4 and target_character_data.talent[0] and _("破处") in status_tag_list:
             continue
-        if part_id == 5 and target_character_data.talent[1] and "破处" in status_tag_list:
+        if part_id == 5 and target_character_data.talent[1] and _("破处") in status_tag_list:
             continue
-        if part_id == 6 and target_character_data.talent[2] and "破处" in status_tag_list:
+        if part_id == 6 and target_character_data.talent[2] and _("破处") in status_tag_list:
             continue
-        if part_id == 7 and target_character_data.talent[3] and "破处" in status_tag_list:
+        if part_id == 7 and target_character_data.talent[3] and _("破处") in status_tag_list:
             continue
         # 开始加入列表中
         if part_id == 0 and "N" in status_tag_list:
