@@ -64,7 +64,7 @@ class SeeCharacterItemBagPanel:
         self.item_list_all.append(item_list_H_Machine)
         self.item_list_all.append(item_list_SM)
 
-        item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 5, width, 1, 1, 0)
+        item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 2, width, 1, 1, 0)
         self.handle_panel = item_panel
         """ 页面控制对象 """
 
