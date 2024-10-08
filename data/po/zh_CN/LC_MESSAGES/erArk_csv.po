@@ -15444,48 +15444,48 @@ msgstr ""
 msgid "#CFF536"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:46
+#: .\data\character\0328_卡达.csv:44
 msgid "黑底螢光黃帽檐的棒球帽"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:47
+#: .\data\character\0328_卡达.csv:45
 msgid "小型多功能頭帶式相機"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:48
+#: .\data\character\0328_卡达.csv:46
 msgid "螢光黃色運動上衣"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:49
+#: .\data\character\0328_卡达.csv:47
 msgid "黑色高領短版夾克"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:50
+#: .\data\character\0328_卡达.csv:48
+msgid "右手皮製半指手套"
+msgstr ""
+
+#: .\data\character\0328_卡达.csv:49
 msgid "黑色短裙"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:51
-msgid "灰色漸變絲襪"
+#: .\data\character\0328_卡达.csv:50
+msgid "灰色漸變絲袜"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:52
+#: .\data\character\0328_卡达.csv:51
 msgid "黑白色運動鞋"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:53
+#: .\data\character\0328_卡达.csv:52
 msgid "配有摺疊扇葉及無人機掛載點的拍攝棒"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:54
+#: .\data\character\0328_卡达.csv:53
 msgid "黑白色旅行後背包"
 msgstr ""
 
-#: .\data\character\0328_卡达.csv:55
+#: .\data\character\0328_卡达.csv:54
 msgid "智慧型手環耀黑款"
-msgstr ""
-
-#: .\data\character\0328_卡达.csv:56
-msgid "右手皮製半指手套"
 msgstr ""
 
 #: .\data\character\0332_空弦.csv:4
