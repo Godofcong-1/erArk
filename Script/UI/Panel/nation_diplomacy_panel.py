@@ -530,6 +530,7 @@ class Nation_Diplomacy_Panel:
             # 设置外交官的工作类型和负责区域数据
             new_diplomat_chara_data.work.work_type = 131
             cache.rhodes_island.diplomat_of_country[country_id][0] = character_id
+            new_diplomat_chara_data.sp_flag.in_diplomatic_visit = country_id
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
                 new_diplomat_chara_data.second_behavior[1371] = 1
