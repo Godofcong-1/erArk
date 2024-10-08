@@ -44,6 +44,9 @@ def find_character_image_name(character_id: int) -> str:
             # 胸部差分
             chest_flag = False
             chest_text = chest_judge(character_id)
+            # 膨腹差分
+            big_belly_flag = False
+            big_belly_text = big_belly_judge(character_id)
             # 遍历差分，确认各差分是否存在
             for image_name_for_character in all_image_name_for_character:
                 if emotion_text in image_name_for_character:
@@ -56,6 +59,8 @@ def find_character_image_name(character_id: int) -> str:
                         naked_flag = 2
                 if chest_text in image_name_for_character:
                     chest_flag = True
+                if big_belly_text in image_name_for_character:
+                    big_belly_flag = True
             # 根据flag来确定最终图片名称
             if emotion_flag:
                 image_name += emotion_text
@@ -65,6 +70,8 @@ def find_character_image_name(character_id: int) -> str:
                 image_name += "_半裸"
             if chest_flag:
                 image_name += chest_text
+            if big_belly_flag:
+                image_name += big_belly_text
 
     # 如果目标图片不存在，则使用角色原始图片
     if image_name not in era_image.image_data:
@@ -128,3 +135,22 @@ def chest_judge(character_id: int) -> str:
     elif handle_premise.handle_self_chest_is_super(character_id):
         image_name += "_爆乳"
     return image_name
+
+
+def big_belly_judge(character_id: int) -> str:
+    """
+    角色膨腹判断
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    str -- 角色图片名称
+    """
+    image_name = ""
+    if handle_premise.handle_parturient_1(character_id):
+        image_name += "_大膨腹"
+    elif handle_premise.handle_inflation_1(character_id):
+        image_name += "_膨腹"
+    elif handle_premise.handle_cumflation_1(character_id):
+        image_name += "_膨腹"
+    return image_name
+
