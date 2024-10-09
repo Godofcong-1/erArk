@@ -460,6 +460,7 @@ class SeeNPCButtonList:
         if self.NPC_id == character_data.assistant_character_id:
             character_data.assistant_character_id = 0
         elif handle_premise.handle_unnormal_27(self.NPC_id):
+            new_assistant_data: game_type.Character = cache.character_data[self.NPC_id]
             info_text += _("\n{0}的状态异常，无法任命为助理干员\n").format(new_assistant_data.name)
             pl_flag = True
         else:
