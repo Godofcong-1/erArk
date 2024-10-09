@@ -16181,30 +16181,34 @@ msgid "侧向船型帽"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:39
-msgid "白色无袖露背紧身衣"
+msgid "单侧黑色耳坠"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:40
-msgid "蓝黑色半透明露背衬衣"
+msgid "白色无袖露背紧身衣"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:41
-msgid "披肩西装领大衣"
+msgid "蓝黑色半透明露背衬衣"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:42
-msgid "蓝黑色皮质手套"
+msgid "披肩西装领大衣"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:43
-msgid "白色紧身裤"
+msgid "蓝黑色皮质手套"
 msgstr ""
 
 #: .\data\character\0474_歌蕾蒂娅.csv:44
+msgid "白色紧身裤"
+msgstr ""
+
+#: .\data\character\0474_歌蕾蒂娅.csv:45
 msgid "蓝黑色皮质长筒皮"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:46
+#: .\data\character\0474_歌蕾蒂娅.csv:47
 msgid "槊"
 msgstr ""
 
