@@ -98,9 +98,9 @@ class Born_Panel:
                 info_draw.text += _(" {0}躺在床上，怀里抱着婴儿，对着你微微一笑，催促你给孩子起名\n").format(mom_character_data.name)
                 info_draw.draw()
                 line_feed.draw()
-                change_value_panel = panel.AskForOneMessage()
-                change_value_panel.set(_(" 你决定给女儿取名为——"), 100)
-                new_name = change_value_panel.draw()
+
+                from Script.Design import character
+                new_name = character.input_name_func(_(" 你决定给女儿取名为——"))
 
                 # 创建该角色
                 character_handle.born_new_character(self.mother_character_id,new_name)
