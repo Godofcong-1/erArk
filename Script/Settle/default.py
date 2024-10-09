@@ -157,17 +157,29 @@ def base_chara_state_common_settle(
     if character_data.dead:
         return
 
+    feel_state_set = {0, 1, 2, 3, 4, 5, 6, 7} # 快感状态
+    good_state_set = {8, 9, 10, 11, 12, 13, 14, 15, 16} # 正面状态
+    bad_state_set = {18, 19, 20} # 负面状态
+    body_state_set = {8, 12, 17} # 身体状态
+    mentel_state_set = {9, 10, 11, 13, 14, 15, 18, 19, 20} # 心智状态
+
     # 基础固定值
     time_base_value = add_time + base_value
 
     # 系数加成，区分快感状态和普通状态
-    if state_id <= 7:
+    if state_id in feel_state_set:
         final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
     else:
+        # 意识模糊下，不结算负面状态
+        if state_id in bad_state_set and handle_premise.handle_unconscious_flag_ge_1(character_id):
+           return
+        # 深度无意识下，不结算身体物理外的一切状态
+        elif state_id in mentel_state_set and not handle_premise.handle_normal_6(character_id):
+            return
         final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
 
-    # 连续重复指令减值，仅正面数值，仅玩家的交互对象
-    if state_id <= 16 and character_id == pl_character_data.target_character_id:
+    # 连续重复指令减值，非负面数值，仅玩家的交互对象
+    if state_id not in bad_state_set and character_id == pl_character_data.target_character_id:
         # 判断是否为连续指令
         if len(cache.pl_pre_status_instruce) >= 2 and cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
             # 统计连续指令次数
@@ -2280,6 +2292,9 @@ def handle_time_stop_on(
     now_time -- 结算的时间
     """
     cache.time_stop_mode = True
+    for chara_id in cache.npc_id_got:
+        chara_data = cache.character_data[chara_id]
+        chara_data.sp_flag.unconscious_h = 3
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_OFF)
@@ -2298,6 +2313,9 @@ def handle_time_stop_off(
     now_time -- 结算的时间
     """
     cache.time_stop_mode = False
+    for chara_id in cache.npc_id_got:
+        chara_data = cache.character_data[chara_id]
+        chara_data.sp_flag.unconscious_h = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_ON)
