@@ -472,6 +472,10 @@ class CharacterStatus:
     """ 取下采尿器 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
+    STATUS_ORGASM_EDGE_ON = 751
+    """ 绝顶寸止 """
+    STATUS_ORGASM_EDGE_OFF = 752
+    """ 绝顶解放 """
     STATUS_HOLD_CHILD = 801
     """ 抱小孩 """
     STATUS_SING_CHILDREN_SONG = 802
@@ -989,6 +993,10 @@ class Behavior:
 
     UNDRESS = 701
     """ 脱衣服 """
+    ORGASM_EDGE_ON = 751
+    """ 绝顶寸止 """
+    ORGASM_EDGE_OFF = 752
+    """ 绝顶解放 """
 
     HOLD_CHILD = 801
     """ 抱小孩 """
@@ -1616,6 +1624,23 @@ class SecondBehavior:
     """ 结算阴茎蹭耳朵中 """
     PENIS_IN_RUB_BUTTOCK = 1216
     """ 结算素股中 """
+
+    N_ORGASM_SUPER = 1250
+    """ 结算N绝顶被寸止 """
+    B_ORGASM_SUPER = 1251
+    """ 结算B绝顶被寸止 """
+    C_ORGASM_SUPER = 1252
+    """ 结算C绝顶被寸止 """
+    P_ORGASM_SUPER = 1253
+    """ 结算射精被寸止 """
+    V_ORGASM_SUPER = 1254
+    """ 结算V绝顶被寸止 """
+    A_ORGASM_SUPER = 1255
+    """ 结算A绝顶被寸止 """
+    U_ORGASM_SUPER = 1256
+    """ 结算U绝顶被寸止 """
+    W_ORGASM_SUPER = 1257
+    """ 结算W绝顶被寸止 """
 
     LOVE_1 = 1301
     """ 结算获得思慕 """
@@ -2303,6 +2328,10 @@ class Instruct:
     """ 给对方口交 """
     UNDRESS = 0
     """ 脱衣服 """
+    ORGASM_EDGE_ON = 0
+    """ 绝顶寸止 """
+    ORGASM_EDGE_OFF = 0
+    """ 绝顶解放 """
 
 
 i = 0

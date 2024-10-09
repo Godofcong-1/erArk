@@ -424,6 +424,8 @@ class BODY_H_STATE:
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
         self.orgasm_level: Dict[int, int] = {}
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        self.orgasm_edge_count: Dict[int, int] = {}
+        """ 绝顶寸止次数 """
         self.extra_orgasm_feel: Dict[int, int] = {}
         """ 额外高潮快感记录，用于在10级快感后的额外高潮 """
         self.extra_orgasm_count: int = 0
@@ -442,6 +444,8 @@ class BODY_H_STATE:
         """ 当前正在爱情旅馆中H """
         self.just_shoot: int = 0
         """ 刚刚射精了 """
+        self.orgasm_edge: int = 0
+        """ 绝顶寸止，0未寸止，1正在寸止，2寸止解放 """
 
 
 class FIRST_RECORD:

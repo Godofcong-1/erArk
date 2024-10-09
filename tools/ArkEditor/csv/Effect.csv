@@ -422,6 +422,8 @@ cid,effect_name,effect_type,effect
 1227,TARGET_HYPNOSIS_BLOCKHEAD_OFF,源石技艺,对方关闭体控-木头人
 1228,TARGET_HYPNOSIS_ACTIVE_H_ON,源石技艺,对方开启体控-逆推（含理智消耗）
 1229,TARGET_HYPNOSIS_ACTIVE_H_OFF,源石技艺,对方关闭体控-逆推
+1241,TIME_STOP_ON,源石技艺,开启时停
+1242,TIME_STOP_OFF,源石技艺,关闭时停
 
 1401,NPC_ACTIVE_H_ON,属性_H,自己开启主动H
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H
@@ -430,6 +432,10 @@ cid,effect_name,effect_type,effect
 1405,PL_JUST_SHOOT_ON,属性_H,玩家变为前指令刚刚射精状态
 1406,PL_JUST_SHOOT_OFF,属性_H,玩家清零前指令刚刚射精状态
 1407,PL_CONDOM_USE_RESET,属性_H,重置玩家的避孕套使用状态
+1411,SELF_ORGASM_EDGE_ON,属性_H,自己开启绝顶寸止
+1412,SELF_ORGASM_EDGE_OFF,属性_H,自己关闭绝顶寸止
+1413,TARGET_ORGASM_EDGE_ON,属性_H,交互对象开启绝顶寸止
+1414,TARGET_ORGASM_EDGE_OFF,属性_H,交互对象关闭绝顶寸止
 
 
 1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]

@@ -574,6 +574,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （自慰用）选择自己最高感度的部位，增加该部位快感和经验 """
     DIRTY_RESET_IN_SHOWER = 525
     """ 指令_专用结算 自身部分部位污浊保留一定比例，其他污浊体归零 """
+    ORGASM_EDGE_RELEASE = 526
+    """ 指令_专用结算 （绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -846,6 +848,14 @@ class BehaviorEffect:
     """ 属性_H 玩家清零前指令刚刚射精状态 """
     PL_CONDOM_USE_RESET = 1407
     """ 属性_H 重置玩家的避孕套使用状态 """
+    SELF_ORGASM_EDGE_ON = 1411
+    """ 属性_H 自己开启绝顶寸止 """
+    SELF_ORGASM_EDGE_OFF = 1412
+    """ 属性_H 自己关闭绝顶寸止 """
+    TARGET_ORGASM_EDGE_ON = 1413
+    """ 属性_H 交互对象开启绝顶寸止 """
+    TARGET_ORGASM_EDGE_OFF = 1414
+    """ 属性_H 交互对象关闭绝顶寸止 """
 
     # 1500+见属性_基础
 

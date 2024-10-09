@@ -517,6 +517,7 @@ bathhouse_entertainment_flag_2,BATHHOUSE_ENTERTAINMENT_FLAG_2,属性_特殊flag,
 work_maintenance_flag_0,WORK_MAINTENANCE_FLAG_0,属性_特殊flag,自身没有要检修状态
 work_maintenance_flag_1,WORK_MAINTENANCE_FLAG_1,属性_特殊flag,自身要检修状态
 unconscious_flag_0,UNCONSCIOUS_FLAG_0,属性_特殊flag,自身没有无意识状态
+unconscious_flag_ge_1,UNCONSCIOUS_FLAG_GE_1,属性_特殊flag,自身有无意识状态
 unconscious_flag_1,UNCONSCIOUS_FLAG_1,属性_特殊flag,自身有无意识_睡眠状态
 unconscious_flag_2,UNCONSCIOUS_FLAG_2,属性_特殊flag,自身有无意识_醉酒状态
 unconscious_flag_3,UNCONSCIOUS_FLAG_3,属性_特殊flag,自身有无意识_时停状态
@@ -529,6 +530,7 @@ t_unconscious_flag_0,T_UNCONSCIOUS_FLAG_0,属性_特殊flag,对方没有无意�
 t_unconscious_flag,T_UNCONSCIOUS_FLAG,属性_特殊flag,对方有无意识状态
 t_unconscious_hypnosis_flag,T_UNCONSCIOUS_HYPNOSIS_FLAG,属性_特殊flag,对方有无意识_任意一种催眠状态
 t_unconscious_flag_1,T_UNCONSCIOUS_FLAG_1,属性_特殊flag,对方有无意识_睡眠状态
+t_not_unconscious_flag_1,T_NOT_UNCONSCIOUS_FLAG_1,属性_特殊flag,对方没有无意识_睡眠状态
 t_unconscious_flag_2,T_UNCONSCIOUS_FLAG_2,属性_特殊flag,对方有无意识_醉酒状态
 t_unconscious_flag_3,T_UNCONSCIOUS_FLAG_3,属性_特殊flag,对方有无意识_时停状态
 t_unconscious_flag_4,T_UNCONSCIOUS_FLAG_4,属性_特殊flag,对方有无意识_平然状态
@@ -905,6 +907,7 @@ shame_1,TARGET_HAVE_SHAME,属性_素质,交互对象羞耻
 open_0,TARGET_HAVE_NO_OPEN,属性_素质,交互对象非开放
 open_1,TARGET_HAVE_OPEN,属性_素质,交互对象开放
 
+at_least_one_arts_on,AT_LEAST_ONE_ARTS_ON,属性_源石技艺,至少有一种源石技艺开启中
 primary_hypnosis,PRIMARY_HYPNOSIS,属性_源石技艺,自己拥有初级催眠
 intermediate_hypnosis,INTERMEDIATE_HYPNOSIS,属性_源石技艺,自己拥有中级催眠
 advanced_hypnosis,ADVANCED_HYPNOSIS,属性_源石技艺,自己拥有高级催眠
@@ -959,7 +962,12 @@ t_hypnosis_roleplay_3,TARGET_HYPNOSIS_ROLEPLAY_3,属性_源石技艺,交互对�
 t_hypnosis_roleplay_4,TARGET_HYPNOSIS_ROLEPLAY_4,属性_源石技艺,交互对象被心控-角色扮演-女仆
 t_hypnosis_roleplay_5,TARGET_HYPNOSIS_ROLEPLAY_5,属性_源石技艺,交互对象被心控-角色扮演-宠物猫
 t_hypnosis_roleplay_6,TARGET_HYPNOSIS_ROLEPLAY_6,属性_源石技艺,交互对象被心控-角色扮演-宠物狗
-
+primary_time_stop,PRIMARY_TIME_STOP,属性_源石技艺,自己拥有初级时停
+intermediate_time_stop,INTERMEDIATE_TIME_STOP,属性_源石技艺,自己拥有中级时停
+advanced_time_stop,ADVANCED_TIME_STOP,属性_源石技艺,自己拥有高级时停
+time_stop_on,TIME_STOP_ON,属性_源石技艺,时停开启中
+time_stop_off,TIME_STOP_OFF,属性_源石技艺,时停关闭中
+time_stop_judge_for_move,TIME_STOP_JUDGE_FOR_MOVE,属性_源石技艺,(移动用)未开启时停，或时停开启且有中级时停
 
 have_work,HAVE_WORK,属性_工作,自己有工作
 work_is_maintenance_engineer,WORK_IS_MAINTENANCE_ENGINEER,属性_工作,自己的工作为检修工程师
@@ -1165,6 +1173,10 @@ pl_semen_ge_50,PL_SEMEN_GE_50,H_射精与绝顶,玩家当前精液量大于等�
 pl_semen_ge_100,PL_SEMEN_GE_100,H_射精与绝顶,玩家当前精液量大于等于100ml
 pl_just_shoot,PL_JUST_SHOOT,H_射精与绝顶,玩家前指令射精了
 pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精与绝顶,玩家前指令未射精
+self_orgasm_edge,SELF_ORGASM_EDGE,H_射精与绝顶,自己正在被绝顶寸止
+self_not_orgasm_edge,SELF_NOT_ORGASM_EDGE,H_射精与绝顶,自己没有被绝顶寸止
+target_orgasm_edge,TARGET_ORGASM_EDGE,H_射精与绝顶,交互对象正在被绝顶寸止
+target_not_orgasm_edge,TARGET_NOT_ORGASM_EDGE,H_射精与绝顶,交互对象没有被绝顶寸止
 
 npc_active_h,NPC_ACTIVE_H,H_逆推,自己正在主动H
 npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H

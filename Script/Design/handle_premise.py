@@ -77,7 +77,7 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
         # 是否必须显示
         if not unconscious_pass_flag:
             # 无意识模式判定
-            if unconscious_pass_flag == False and target_character_data.sp_flag.unconscious_h != 0:
+            if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
                 # 有催眠tag的行为则直接通过
                 status_data = game_config.config_status[behavior_id]
                 if _("催眠") in status_data.tag:
@@ -4212,7 +4212,7 @@ def handle_normal_6(character_id: int) -> int:
         or (handle_sleep_level_2(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or (handle_sleep_level_3(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_5(character_id)
-        or handle_time_stop_on(character_id)
+        or (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
     ):
         return 0
     else:
@@ -5625,23 +5625,6 @@ def handle_unconscious_flag_7(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.SELF_NOW_UNCONSCIOUS_OR_TIME_STOP)
-def handle_self_now_unconscious_or_time_stop(character_id: int) -> int:
-    """
-    自身现在有无意识或时停状态
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    if handle_unconscious_flag_ge_1(character_id):
-        return 1
-    elif handle_time_stop_on(character_id):
-        return 1
-    else:
-        return 0
-
-
 @add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_0)
 def handle_t_unconscious_flag_0(character_id: int) -> int:
     """
@@ -5671,23 +5654,6 @@ def handle_t_unconscious_flag(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.sp_flag.unconscious_h:
-        return 1
-    else:
-        return 0
-
-
-@add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_OR_TIME_STOP)
-def handle_t_unconscious_flag_or_time_stop(character_id: int) -> int:
-    """
-    交互对象有无意识状态或时停状态
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    if handle_t_unconscious_flag(character_id):
-        return 1
-    elif handle_time_stop_on(character_id):
         return 1
     else:
         return 0
@@ -13943,6 +13909,84 @@ def handle_pl_not_just_shoot(character_id: int) -> int:
     if handle_pl_just_shoot(0):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.SELF_ORGASM_EDGE)
+def handle_self_orgasm_edge(character_id: int) -> int:
+    """
+    自己正在被绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.orgasm_edge == 1
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_ORGASM_EDGE)
+def handle_self_not_orgasm_edge(character_id: int) -> int:
+    """
+    自己没有被绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.orgasm_edge == 0
+
+
+@add_premise(constant_promise.Premise.SELF_ORGASM_EDGE_RELAESE)
+def handle_self_orgasm_edge_relase(character_id: int) -> int:
+    """
+    自己被绝顶解放
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.orgasm_edge == 2
+
+
+@add_premise(constant_promise.Premise.TARGET_ORGASM_EDGE)
+def handle_target_orgasm_edge(character_id: int) -> int:
+    """
+    交互对象正在被绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_orgasm_edge(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_ORGASM_EDGE)
+def handle_target_not_orgasm_edge(character_id: int) -> int:
+    """
+    交互对象没有被绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_not_orgasm_edge(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_ORGASM_EDGE_RELAESE)
+def handle_target_orgasm_edge_relase(character_id: int) -> int:
+    """
+    交互对象被绝顶解放
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_orgasm_edge_relase(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.NPC_ACTIVE_H)

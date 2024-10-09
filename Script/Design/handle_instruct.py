@@ -1842,7 +1842,7 @@ def handle_stop_sleep_obscenity():
     _("无意识奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_UNCONSCIOUS_FLAG_OR_TIME_STOP,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_unconscious_h():
@@ -4850,3 +4850,32 @@ def handle_give_blowjob():
 def handle_undress():
     """处理脱衣服指令"""
     cache.now_panel_id = constant.Panel.UNDRESS
+
+@add_instruct(
+    constant.Instruct.ORGASM_EDGE_ON,
+    constant.InstructType.SEX,
+    _("绝顶寸止"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_NOT_ORGASM_EDGE,
+        constant_promise.Premise.TO_DO,
+    })
+def handle_orgasm_edge_on():
+    """处理绝顶寸止指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ORGASM_EDGE_ON)
+
+@add_instruct(
+    constant.Instruct.ORGASM_EDGE_OFF,
+    constant.InstructType.SEX,
+    _("绝顶解放"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_ORGASM_EDGE,
+    })
+def handle_orgasm_edge_off():
+    """处理绝顶解放指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ORGASM_EDGE_OFF)

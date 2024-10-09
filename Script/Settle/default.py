@@ -2475,6 +2475,90 @@ def handle_pl_condom_use_reset(
     pl_character_data.h_state.condom_count = [0, 0]
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ORGASM_EDGE_ON)
+def handle_self_orgasm_edge_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己开启绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.orgasm_edge = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ORGASM_EDGE_OFF)
+def handle_self_orgasm_edge_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己关闭绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.orgasm_edge = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ORGASM_EDGE_ON)
+def handle_target_orgasm_edge_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象开启绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_self_orgasm_edge_on(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ORGASM_EDGE_OFF)
+def handle_target_orgasm_edge_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象关闭绝顶寸止
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_self_orgasm_edge_off(character_data.target_character_id, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,
@@ -6158,6 +6242,31 @@ def handle_dirty_reset_in_shower(
     character_data.dirty.body_semen[6] = keep_data[6]
     character_data.dirty.body_semen[7] = keep_data[7]
     character_data.dirty.body_semen[8] = keep_data[8]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ORGASM_EDGE_RELEASE)
+def handle_orgasm_edge_release(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id == character_id:
+        return
+    # 变为寸止解放状态
+    target_data.h_state.orgasm_edge = 2
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
