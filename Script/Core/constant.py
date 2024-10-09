@@ -1542,6 +1542,21 @@ class SecondBehavior:
     SEPTUPLE_ORGASM = 1086
     """ 结算七重绝顶 """
 
+    N_ORGASM_SUPER = 1090
+    """ 结算N超强绝顶 """
+    B_ORGASM_SUPER = 1091
+    """ 结算B超强绝顶 """
+    C_ORGASM_SUPER = 1092
+    """ 结算C超强绝顶 """
+    V_ORGASM_SUPER = 1094
+    """ 结算V超强绝顶 """
+    A_ORGASM_SUPER = 1095
+    """ 结算A超强绝顶 """
+    U_ORGASM_SUPER = 1096
+    """ 结算U超强绝顶 """
+    W_ORGASM_SUPER = 1097
+    """ 结算W超强绝顶 """
+
     NIPPLE_CLAMP = 1100
     """ 结算乳头夹 """
     CLIT_CLAMP = 1101
