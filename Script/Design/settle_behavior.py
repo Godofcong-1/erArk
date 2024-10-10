@@ -1,4 +1,5 @@
 import datetime
+import random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
@@ -492,7 +493,7 @@ def check_second_effect(
     if character_id == 0:
         character_data = cache.character_data[0]
         # 高潮结算
-        orgasm_effect(character_id, change_data)
+        orgasm_judge(character_id, change_data)
         # 道具结算
         item_effect(character_id)
         # 进行结算
@@ -516,7 +517,7 @@ def check_second_effect(
         # 单独遍历道具
         second_behavior_effect(character_id, change_data, item_list)
         # 高潮结算
-        orgasm_effect(character_id, change_data)
+        orgasm_judge(character_id, change_data)
         # 素质结算
 
         # 进行结算
@@ -676,9 +677,9 @@ def insert_position_effect(character_id: int):
         character_data.second_behavior[position_index] = 1
 
 
-def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChange):
+def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange):
     """
-    处理第二结算中的高潮结算
+    判断第二结算中的高潮，都发生哪些高潮，各多少次
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -707,7 +708,9 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
             line = draw.LineDraw("-", width)
             line.draw()
     else:
-        part_count = 0  # 部位高潮计数
+        normal_orgasm_dict = {}  # 高潮结算字典
+        extra_orgasm_dict = {}  # 额外高潮结算字典
+        un_count_orgasm_dict = {}  # 不计数高潮结算字典
         for orgasm in range(8):
             # 跳过射精槽
             if orgasm == 3:
@@ -721,10 +724,15 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
             pre_data = character_data.h_state.orgasm_level[orgasm]
             un_count_data = 0
             extra_add = 0
+            # 字典初始化
+            normal_orgasm_dict[orgasm] = 0
+            extra_orgasm_dict[orgasm] = 0
+            un_count_orgasm_dict[orgasm] = 0
             # 饮精绝顶
             if orgasm == 0 and character_data.talent[31]:
                 if character_data.h_state.shoot_position_body in [2, 15]:
                     un_count_data += 1
+            un_count_orgasm_dict[orgasm] = un_count_data
             # 如果已经到了10级，则进行额外高潮结算
             if pre_data >= 10:
                 character_data.h_state.extra_orgasm_feel.setdefault(orgasm, 0)
@@ -740,70 +748,133 @@ def orgasm_effect(character_id: int, change_data: game_type.CharacterStatusChang
                 now_data = pre_data + extra_add
                 character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
                 character_data.h_state.extra_orgasm_count += extra_add
-            # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
-            if now_data > pre_data or extra_add > 0 or un_count_data > 0:
-                # 该部位高潮计数+1
-                part_count += 1
-                # 判定触发哪些绝顶
-                num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
-                # 高潮次数统计
-                climax_count = now_data - pre_data + un_count_data
-                # now_draw = draw.WaitDraw()
-                # now_draw.width = width
-                if climax_count >= 3:
-                    # now_draw.text = _("\n触发小、普、强绝顶\n")
-                    character_data.second_behavior[num] = 1
-                    character_data.second_behavior[num + 1] = 1
-                    character_data.second_behavior[num + 2] = 1
-                elif climax_count == 2:
-                    if pre_data % 3 == 0:
-                        # now_draw.text = _("\n触发小、普绝顶\n")
-                        character_data.second_behavior[num] = 1
-                        character_data.second_behavior[num + 1] = 1
-                    elif pre_data % 3 == 1:
-                        # now_draw.text = _("\n触发普、强绝顶\n")
-                        character_data.second_behavior[num + 1] = 1
-                        character_data.second_behavior[num + 2] = 1
-                    elif pre_data % 3 == 2:
-                        # now_draw.text = _("\n触发强绝顶\n")
-                        character_data.second_behavior[num + 2] = 1
-                else:
-                    if pre_data % 3 == 0:
-                        # now_draw.text = _("\n触发小绝顶\n")
-                        character_data.second_behavior[num] = 1
-                    elif pre_data % 3 == 1:
-                        # now_draw.text = _("\n触发普绝顶\n")
-                        character_data.second_behavior[num + 1] = 1
-                    elif pre_data % 3 == 2:
-                        # now_draw.text = _("\n触发强绝顶\n")
-                        character_data.second_behavior[num + 2] = 1
-                # B绝顶喷乳，需要乳汁量到80%
-                if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):
-                    # now_draw.text += _("\n触发B绝顶喷乳\n")
-                    character_data.second_behavior[1071] = 1
-                # U绝顶排尿，需要尿意条到80%
-                if orgasm == 6 and handle_premise.handle_urinate_ge_80(character_id):
-                    # now_draw.text += _("\n触发U绝顶排尿\n")
-                    character_data.second_behavior[1072] = 1
-                # 如果发生了额外高潮，则进行额外高潮结算
-                if extra_add > 0:
-                    # now_draw.text += _("\n触发额外高潮\n")
-                    character_data.second_behavior[1026] = 1
-                # now_draw.draw()
+                extra_orgasm_dict[orgasm] = extra_add
+            # 计算普通高潮次数
+            normal_orgasm_dict[orgasm] = now_data - pre_data
+        # 高潮结算函数
+        orgasm_settle(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, un_count_orgasm_dict)
 
-                # 刷新记录
-                character_data.h_state.orgasm_level[orgasm] = now_data
-        if part_count >= 1:
-            # 饮精绝顶经验
-            if character_data.h_state.shoot_position_body in [2, 15]:
-                character_data.experience[111] += 1
-                change_data.experience.setdefault(111, 0)
-                change_data.experience[111] += 1
-        # 如果部位高潮计数大于等于2，则结算多重绝顶
-        if part_count >= 2:
-            second_behavior_index = 1079 + part_count
-            character_data.second_behavior[second_behavior_index] = 1
-            character_data.h_state.plural_orgasm_count = part_count
+
+def orgasm_settle(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+    normal_orgasm_dict: dict,
+    extra_orgasm_dict: dict,
+    un_count_orgasm_dict: dict,
+    ):
+    """
+    处理第二结算中的高潮结算
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    normal_orgasm_dict -- 普通高潮字典
+    extra_orgasm_dict -- 额外高潮字典
+    un_count_orgasm_dict -- 不计数高潮字典
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    # print(f"进入{character_data.name}的高潮结算")
+
+    part_count = 0  # 部位高潮计数
+    for orgasm in range(8):
+        # 跳过射精槽
+        if orgasm == 3:
+            continue
+
+        pre_data = character_data.h_state.orgasm_level[orgasm] # 记录里的前高潮程度
+
+        normal_orgasm_data = normal_orgasm_dict[orgasm]
+        extra_orgasm_data = extra_orgasm_dict[orgasm]
+        un_count_orgasm_data = un_count_orgasm_dict[orgasm]
+
+        # 如果已经进入额外高潮，则将额外高潮次数加入到高潮次数中
+        if extra_orgasm_data > 0:
+            now_data = pre_data + extra_orgasm_data
+        # 否则加入普通高潮次数
+        else:
+            now_data = pre_data + normal_orgasm_data
+
+        # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
+        if normal_orgasm_data or extra_orgasm_data > 0 or un_count_orgasm_data > 0:
+            # 刷新记录
+            character_data.h_state.orgasm_level[orgasm] = now_data
+            # 如果开启了绝顶寸止，则将绝顶计入寸止计数，然后跳过
+            if handle_premise.handle_self_orgasm_edge(character_id):
+                character_data.h_state.orgasm_edge_count.setdefault(orgasm, 0)
+                character_data.h_state.orgasm_edge_count[orgasm] += 1
+                continue
+            # 该部位高潮计数+1
+            part_count += 1
+            # 判定触发哪些绝顶
+            num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
+            # 高潮次数统计
+            climax_count = normal_orgasm_data + un_count_orgasm_data
+            # 开始根据概率计算
+            for i in range(climax_count):
+                # 判断高潮程度
+                now_degree = judge_orgasm_degree(now_data)
+                # 赋予二次行为
+                character_data.second_behavior[num + now_degree] = 1
+            # B绝顶喷乳，需要乳汁量到80%
+            if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):
+                # now_draw.text += _("\n触发B绝顶喷乳\n")
+                character_data.second_behavior[1071] = 1
+            # U绝顶排尿，需要尿意条到80%
+            if orgasm == 6 and handle_premise.handle_urinate_ge_80(character_id):
+                # now_draw.text += _("\n触发U绝顶排尿\n")
+                character_data.second_behavior[1072] = 1
+            # 如果发生了额外高潮，则进行额外高潮结算
+            if extra_orgasm_data > 0:
+                # now_draw.text += _("\n触发额外高潮\n")
+                character_data.second_behavior[1026] = 1
+            # now_draw.draw()
+
+    if part_count >= 1:
+        # 饮精绝顶经验
+        if character_data.h_state.shoot_position_body in [2, 15]:
+            character_data.experience[111] += 1
+            change_data.experience.setdefault(111, 0)
+            change_data.experience[111] += 1
+    # 如果部位高潮计数大于等于2，则结算多重绝顶
+    if part_count >= 2:
+        second_behavior_index = 1079 + part_count
+        character_data.second_behavior[second_behavior_index] = 1
+        character_data.h_state.plural_orgasm_count = part_count
+
+
+def judge_orgasm_degree(level_count: int) -> int:
+    """
+    判断高潮程度
+    Keyword arguments:
+    level_count -- 高潮次数，10级以下为当前等级，以上则为10+额外高潮次数
+    Return arguments:
+    int -- 高潮程度，0小绝顶，1普通绝顶，2强绝顶，3超强绝顶
+    """
+    # 小、普、强的基础概率
+    base_probability = [0.8, 0.15, 0.05]
+    # 开始根据高潮次数计算概率
+    for _ in range(level_count):
+        # 前半段减少小的，增加普的和强的
+        if base_probability[0] > 0:
+            base_probability[0] -= 0.1
+            base_probability[1] += 0.07
+            base_probability[2] += 0.03
+        # 后半段减少普的0.05，增加强的0.05
+        else:
+            base_probability[1] -= 0.05
+            base_probability[2] += 0.05
+    # 确保概率不为负数
+    base_probability = [max(0, p) for p in base_probability]
+    # 随机抽取概率
+    random_num = random.uniform(0, sum(base_probability))
+    # 判断高潮程度
+    if random_num < base_probability[0]:
+        return 0
+    elif random_num < base_probability[0] + base_probability[1]:
+        return 1
+    else:
+        return 2
+
 
 def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
