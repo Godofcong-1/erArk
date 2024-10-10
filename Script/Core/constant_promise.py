@@ -1040,6 +1040,8 @@ class Premise:
     """ 属性_特殊flag 自身没有无意识状态 """
     UNCONSCIOUS_FLAG_GE_1 = "unconscious_flag_ge_1"
     """ 属性_特殊flag 自身有无意识状态 """
+    UNCONSCIOUS_HYPNOSIS_FLAG = "unconscious_hypnosis_flag"
+    """ 属性_特殊flag 自身有无意识_任意一种催眠状态 """
     UNCONSCIOUS_FLAG_1 = "unconscious_flag_1"
     """ 属性_特殊flag 自身有无意识_睡眠状态 """
     UNCONSCIOUS_FLAG_2 = "unconscious_flag_2"

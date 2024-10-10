@@ -230,19 +230,21 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
         else:
             # 定义映射字典和列表
             orgasm_name_map = {
-                range(1000, 1003): "N",
-                range(1003, 1006): "B",
-                range(1006, 1009): "C",
-                range(1009, 1012): "P",
-                range(1012, 1015): "V",
-                range(1015, 1018): "A",
-                range(1018, 1021): "U",
-                range(1021, 1024): "W"
+                (1000, 1001, 1002, 1090): "N",
+                (1003, 1004, 1005, 1091): "B",
+                (1006, 1007, 1008, 1092): "C",
+                (1009, 1010, 1011, 1093): "P",
+                (1012, 1013, 1014, 1094): "V",
+                (1015, 1016, 1017, 1095): "A",
+                (1018, 1019, 1020, 1096): "U",
+                (1021, 1022, 1023, 1097): "W",
             }
             orgasm_degree_list = [_("小"), _("普"), _("强")]
             # 查找对应的部位名与绝顶程度名
             orgasm_name = next((name for key, name in orgasm_name_map.items() if second_behavior_id in key), None)
             orgasm_degree = _(orgasm_degree_list[second_behavior_id % 3 - 1])
+            if second_behavior_id >= 1090:
+                orgasm_degree = _("超强")
             # 最后文本
             info_text = _("\n{0}{1}{2}绝顶\n").format(chara_name, orgasm_name, orgasm_degree)
     # 饮精绝顶

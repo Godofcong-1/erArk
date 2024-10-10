@@ -5497,6 +5497,21 @@ def handle_unconscious_flag_ge_1(character_id: int) -> int:
     return character_data.sp_flag.unconscious_h
 
 
+@add_premise(constant_promise.Premise.UNCONSCIOUS_HYPNOSIS_FLAG)
+def handle_unconscious_hypnosis_flag(character_id: int) -> int:
+    """
+    自身有无意识_任意一种催眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.unconscious_h in {4,5,6,7}:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.UNCONSCIOUS_FLAG_1)
 def handle_unconscious_flag_1(character_id: int) -> int:
     """
@@ -5669,11 +5684,7 @@ def handle_t_unconscious_hypnosis_flag(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    if target_data.sp_flag.unconscious_h in {4,5,6,7}:
-        return 1
-    else:
-        return 0
+    return handle_unconscious_hypnosis_flag(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.T_UNCONSCIOUS_FLAG_1)

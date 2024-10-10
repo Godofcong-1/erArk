@@ -401,6 +401,9 @@ class CharacterInfoHead:
         """ 当前面板监听的按钮列表 """
         self.draw_title: bool = True
         """ 是否绘制面板标题 """
+
+        from Script.Design import handle_premise
+
         character_data: game_type.Character = cache.character_data[character_id]
         # sex_text = game_config.config_sex_tem[character_data.sex].name
 
@@ -425,13 +428,12 @@ class CharacterInfoHead:
         sleep_draw.style = "little_dark_slate_blue"
         sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
         sleep_text = sleep_text_list[attr_calculation.get_tired_level(character_data.tired_point)]
-        status_text = game_config.config_status[character_data.state].name
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
         sleep_text = "" if sleep_text == _(" <清醒>" ) else sleep_text
         if character_id > 0:
-            if status_text == _("睡觉") or character_data.sp_flag.unconscious_h == 1:
+            if handle_premise.handle_action_sleep(character_id) or handle_premise.handle_unconscious_flag_1(character_id):
                 tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
                 sleep_text = f" <{sleep_name}>"
         sleep_draw.text = sleep_text
@@ -440,7 +442,7 @@ class CharacterInfoHead:
         tired_draw = draw.LeftDraw()
         tired_draw.style = "little_dark_slate_blue"
         tired_text = ""
-        if character_data.sp_flag.tired:
+        if handle_premise.handle_hp_1(character_id):
             tired_text = _(" <累>")
         tired_draw.text = tired_text
 
@@ -460,14 +462,14 @@ class CharacterInfoHead:
         follow_draw = draw.LeftDraw()
         follow_draw.style = "spring_green"
         follow_text = ""
-        if character_data.sp_flag.is_follow == 1:
+        if handle_premise.handle_is_follow_1(character_id):
             follow_text = _(" <跟>")
         follow_draw.text = follow_text
 
         # 有尿意时进行提示
         urinate_draw = draw.LeftDraw()
         urinate_draw.style = "khaki"
-        urinate_text = _(" <尿>") if character_data.urinate_point >= 192 else ""
+        urinate_text = _(" <尿>") if handle_premise.handle_urinate_ge_80(character_id) else ""
         urinate_draw.text = urinate_text
 
         # 饥饿时进行提示
@@ -475,7 +477,7 @@ class CharacterInfoHead:
         hunger_draw.style = "beige"
         hunger_text = ""
         if character_id != 0:
-            hunger_text = _(" <饿>") if character_data.hunger_point >= 192 else ""
+            hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
             start_time = character_data.behavior.start_time.hour
             hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
         hunger_draw.text = hunger_text
@@ -498,7 +500,7 @@ class CharacterInfoHead:
         hypnosis_text = ""
         if (
             cache.system_setting[10] and 
-            (character_data.sp_flag.unconscious_h >= 4 or
+            (handle_premise.handle_unconscious_hypnosis_flag(character_id) or
             (character_data.hypnosis.hypnosis_degree > 0 and cache.system_setting[10] == 2))
         ):
             hypnosis_text = _(" <催眠")
@@ -516,19 +518,19 @@ class CharacterInfoHead:
                 # 显示到小数点后一位
                 hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
             # 是否显示催眠类型
-            if character_data.sp_flag.unconscious_h >= 4:
+            if handle_premise.handle_unconscious_hypnosis_flag(character_id):
                 hypnosis_cid = character_data.sp_flag.unconscious_h - 3
                 hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
                 hypnosis_text += _(":{0}").format(hypnosis_name)
-            if character_data.hypnosis.increase_body_sensitivity:
+            if handle_premise.handle_hypnosis_increase_body_sensitivity(character_id):
                 hypnosis_text += _("(敏感度提升)")
-            if character_data.hypnosis.force_ovulation:
+            if handle_premise.handle_hypnosis_force_ovulation(character_id):
                 hypnosis_text += _("(强制排卵)")
-            if character_data.hypnosis.blockhead:
+            if handle_premise.handle_hypnosis_blockhead(character_id):
                 hypnosis_text += _("(木头人)")
-            if character_data.hypnosis.active_h:
+            if handle_premise.handle_hypnosis_active_h(character_id):
                 hypnosis_text += _("(逆推)")
-            if character_data.hypnosis.roleplay:
+            if handle_premise.handle_hypnosis_roleplay(character_id):
                 hypnosis_text += _("(角色扮演)")
             hypnosis_text += ">"
         hypnosis_draw.text = hypnosis_text
@@ -542,7 +544,7 @@ class CharacterInfoHead:
         imprisonment_text = ""
         imprisonment_draw = draw.LeftDraw()
         imprisonment_draw.style = "crimson"
-        if character_data.sp_flag.imprisonment:
+        if handle_premise.handle_imprisonment_1(character_id):
             imprisonment_text = _(" <监>")
         imprisonment_draw.text = imprisonment_text
 
@@ -555,9 +557,17 @@ class CharacterInfoHead:
         active_h_text = ""
         active_h_draw = draw.LeftDraw()
         active_h_draw.style = "light_pink"
-        if character_data.h_state.npc_active_h:
+        if handle_premise.handle_npc_active_h(character_id):
             active_h_text = _(" <逆>")
         active_h_draw.text = active_h_text
+
+        # 绝顶寸止
+        orgasm_edge_text = ""
+        orgasm_edge_draw = draw.LeftDraw()
+        orgasm_edge_draw.style = "light_pink"
+        if handle_premise.handle_self_orgasm_edge(character_id):
+            orgasm_edge_text = _(" <寸止>")
+        orgasm_edge_draw.text = orgasm_edge_text
 
         if character_id:
             message = (
@@ -579,7 +589,7 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + imprisonment_text)
+        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + orgasm_edge_text + imprisonment_text)
         max_width = max(base_width, text_width)
         message_draw.width = max_width
         message_draw.text = message
@@ -628,7 +638,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)

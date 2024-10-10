@@ -291,6 +291,7 @@ cid,effect_name,effect_type,effect
 523,URETHRAL_FINGER_INSERTION_ADD_ADJUST,指令_专用结算,（尿道指姦用）根据交互对象的U属性(润滑+扩张)对其进行苦痛调整
 524,MASTUREBATE_ADD_ADJUST,指令_专用结算,（自慰用）选择自己最高感度的部位，增加该部位快感和经验
 525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
+526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

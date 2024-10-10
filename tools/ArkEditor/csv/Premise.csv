@@ -518,6 +518,7 @@ work_maintenance_flag_0,WORK_MAINTENANCE_FLAG_0,属性_特殊flag,自身没有�
 work_maintenance_flag_1,WORK_MAINTENANCE_FLAG_1,属性_特殊flag,自身要检修状态
 unconscious_flag_0,UNCONSCIOUS_FLAG_0,属性_特殊flag,自身没有无意识状态
 unconscious_flag_ge_1,UNCONSCIOUS_FLAG_GE_1,属性_特殊flag,自身有无意识状态
+unconscious_hypnosis_flag,UNCONSCIOUS_HYPNOSIS_FLAG,属性_特殊flag,自身有无意识_任意一种催眠状态
 unconscious_flag_1,UNCONSCIOUS_FLAG_1,属性_特殊flag,自身有无意识_睡眠状态
 unconscious_flag_2,UNCONSCIOUS_FLAG_2,属性_特殊flag,自身有无意识_醉酒状态
 unconscious_flag_3,UNCONSCIOUS_FLAG_3,属性_特殊flag,自身有无意识_时停状态
@@ -1175,8 +1176,10 @@ pl_just_shoot,PL_JUST_SHOOT,H_射精与绝顶,玩家前指令射精了
 pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精与绝顶,玩家前指令未射精
 self_orgasm_edge,SELF_ORGASM_EDGE,H_射精与绝顶,自己正在被绝顶寸止
 self_not_orgasm_edge,SELF_NOT_ORGASM_EDGE,H_射精与绝顶,自己没有被绝顶寸止
+self_orgasm_edge_relase,SELF_ORGASM_EDGE_RELAESE,H_射精与绝顶,自己被绝顶解放
 target_orgasm_edge,TARGET_ORGASM_EDGE,H_射精与绝顶,交互对象正在被绝顶寸止
 target_not_orgasm_edge,TARGET_NOT_ORGASM_EDGE,H_射精与绝顶,交互对象没有被绝顶寸止
+target_orgasm_edge_relase,TARGET_ORGASM_EDGE_RELAESE,H_射精与绝顶,交互对象被绝顶解放
 
 npc_active_h,NPC_ACTIVE_H,H_逆推,自己正在主动H
 npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H

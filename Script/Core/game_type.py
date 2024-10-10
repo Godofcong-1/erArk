@@ -445,7 +445,7 @@ class BODY_H_STATE:
         self.just_shoot: int = 0
         """ 刚刚射精了 """
         self.orgasm_edge: int = 0
-        """ 绝顶寸止，0未寸止，1正在寸止，2寸止解放 """
+        """ 绝顶寸止，0未寸止，1正在寸止，2正常寸止解放，3寸止失败型解放 """
 
 
 class FIRST_RECORD:

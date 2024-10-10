@@ -6267,6 +6267,8 @@ def handle_orgasm_edge_release(
         return
     # 变为寸止解放状态
     target_data.h_state.orgasm_edge = 2
+    # 将寸止计数转化为绝顶
+    settle_behavior.orgasm_settle(character_id, change_data, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

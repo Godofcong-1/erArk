@@ -843,6 +843,10 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     if character_id == 0:
         return 1
 
+    # 将绝顶解放状态改为关闭绝顶寸止
+    if handle_premise.handle_self_orgasm_edge_relase(character_id):
+        default.handle_self_orgasm_edge_off(character_id, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
+
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外

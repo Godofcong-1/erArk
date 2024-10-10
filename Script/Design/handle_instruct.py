@@ -4860,7 +4860,6 @@ def handle_undress():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.IS_H,
         constant_promise.Premise.TARGET_NOT_ORGASM_EDGE,
-        constant_promise.Premise.TO_DO,
     })
 def handle_orgasm_edge_on():
     """处理绝顶寸止指令"""
