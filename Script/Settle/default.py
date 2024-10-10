@@ -7935,8 +7935,6 @@ def handle_add_small_sanity_point(
     """
     if not add_time:
         return
-    if character_id > 0:
-        return
     character_data: game_type.Character = cache.character_data[character_id]
     add_sanity_point = int(add_time / 60 * 0.15 * character_data.sanity_point_max)
     character_data.sanity_point += add_sanity_point
