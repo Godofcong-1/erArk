@@ -1785,6 +1785,8 @@ class PlayerAbilityText:
             # 绘制可选择的装备信物
             count = 0
             for character_id in cache.npc_id_got:
+                if character_id == 0:
+                    continue
                 # 跳过未拥有信物的
                 if pl_character_data.pl_collection.token_list[character_id] == 0:
                     continue
