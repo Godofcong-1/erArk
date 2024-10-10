@@ -1196,7 +1196,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             now_character_data.sanity_point -= down_sp
             now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 时停系
-        if handle_premise.handle_time_stop_on:
+        if handle_premise.handle_time_stop_on(character_id):
             down_sp = max(true_add_time * 2, 1)
             # 用于消耗的理智值不得超过当前理智值
             down_sp = min(down_sp, now_character_data.sanity_point)
