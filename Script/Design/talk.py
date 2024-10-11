@@ -219,7 +219,7 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
     info_text = ""
     info_draw.style = "standard"
     # 部位绝顶
-    if 1000 <= second_behavior_id < 1030:
+    if 1000 <= second_behavior_id < 1030 or 1090 <= second_behavior_id < 1100:
         # 玩家
         if character_id == 0:
             orgasm_degree_list = [_("射精"), _("大量射精"), _("超大量射精")]
