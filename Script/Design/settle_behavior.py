@@ -56,7 +56,17 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
 
         # 子事件
         son_event_id = now_character_data.event.son_event_id
-        handle_event_data(son_event_id, character_id, add_time, change_data, now_time)
+        # 如果触发了子事件的话
+        if son_event_id != "":
+            from Script.UI.Panel import draw_event_text_panel
+            # 先绘制子事件文本
+            event_config = game_config.config_event[son_event_id]
+            son_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
+            son_event_draw.draw()
+            # 然后进行子事件结算
+            handle_event_data(son_event_id, character_id, add_time, change_data, now_time)
+            # 最后将子事件id归零
+            now_character_data.event.son_event_id = ""
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)

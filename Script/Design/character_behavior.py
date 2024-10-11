@@ -29,7 +29,7 @@ from Script.Design import (
     update,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import draw_event_text_panel, ejaculation_panel, field_commission_panel
+from Script.UI.Panel import ejaculation_panel, field_commission_panel
 from Script.Config import game_config, normal_config
 from Script.Settle import default
 
@@ -466,13 +466,6 @@ def judge_character_status(character_id: int) -> int:
     # if not character_id:
     #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
-    # 如果触发了子事件的话则绘制子事件
-    if character_data.event.son_event_id != "":
-        son_event_id = character_data.event.son_event_id
-        event_config = game_config.config_event[son_event_id]
-        son_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
-        son_event_draw.draw()
-
     # 绘制数值变化
     if first_settle_panel != None:
         first_settle_panel.draw()
@@ -825,7 +818,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 清空空气催眠位置
         if character_data.position != character_data.pl_ability.air_hypnosis_position:
             character_data.pl_ability.air_hypnosis_position = ""
-        # 阴前指令是口交类型则重置所有阴茎污浊状态
+        # 如果前指令是口交类型则重置所有阴茎污浊状态
         if handle_premise.handle_last_cmd_blowjob_type(0):
             for dirty_key in character_data.dirty.penis_dirty_dict:
                 character_data.dirty.penis_dirty_dict[dirty_key] = False
@@ -859,7 +852,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         character_data.target_character_id = character_id
 
     # 如果不在同一位置
-    if character_data.position != pl_character_data.position:
+    if handle_premise.handle_not_in_player_scene(character_id):
 
         # 如果不在同一位置，则结束H状态和无意识状态
         if character_data.sp_flag.is_h:
