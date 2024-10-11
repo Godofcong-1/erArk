@@ -274,10 +274,18 @@ def update_work_people():
         cache.rhodes_island.all_work_npc_set[all_cid] = set()
 
     # 清空各流水线中的角色
-    # for recruit_line_id in cache.rhodes_island.recruit_line:
-    #     cache.rhodes_island.recruit_line[recruit_line_id][2].clear()
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+        for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2].copy():
+            character_data = cache.character_data[chara_id]
+            # 如果已经不是招聘专员，则从该流水线中移除
+            if character_data.work.work_type != 71:
+                cache.rhodes_island.recruit_line[recruit_line_id][2].discard(chara_id)
     for assembly_line_id in cache.rhodes_island.assembly_line:
-        cache.rhodes_island.assembly_line[assembly_line_id][1].clear()
+        for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1].copy():
+            character_data = cache.character_data[chara_id]
+            # 如果已经不是工人，则从该流水线中移除
+            if character_data.work.work_type != 121:
+                cache.rhodes_island.assembly_line[assembly_line_id][1].discard(chara_id)
     cache.rhodes_island.herb_garden_line[0][1].clear()
     cache.rhodes_island.green_house_line[0][1].clear()
 
