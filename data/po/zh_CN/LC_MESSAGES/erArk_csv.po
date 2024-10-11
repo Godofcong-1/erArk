@@ -11817,7 +11817,7 @@ msgid "窄域时停"
 msgstr ""
 
 #: .\data\csv\Talent.csv:173
-msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方（实装中）"
+msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方"
 msgstr ""
 
 #: .\data\csv\Talent.csv:174
@@ -11825,7 +11825,7 @@ msgid "广域时停"
 msgstr ""
 
 #: .\data\csv\Talent.csv:174
-msgid "中级时停系能力，可以让时间暂时停止，且自己可以随意移动（实装中）"
+msgid "中级时停系能力，可以让时间暂时停止，且自己可以随意移动"
 msgstr ""
 
 #: .\data\csv\Talent.csv:175

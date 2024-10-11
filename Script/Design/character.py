@@ -484,14 +484,19 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 calculation_text += _("+今天H被打断过(-") + str(judge_h_interrupt) + ")"
 
         # 监禁模式修正
-        if target_data.sp_flag.imprisonment:
+        if handle_premise.handle_imprisonment_1(target_character_id):
             judge += 500
             calculation_text += _("+监禁中(+500)")
 
-        # 无意识模式修正
-        if target_data.sp_flag.unconscious_h == 1:
-            judge += 1000
-            calculation_text += _("+睡眠(+1000)")
+        # 睡眠修正
+        if handle_premise.handle_unconscious_flag_1(target_character_id):
+            judge += 999
+            calculation_text += _("+睡眠(+999)")
+
+        # 时停修正
+        if handle_premise.handle_unconscious_flag_3(target_character_id):
+            judge += 999
+            calculation_text += _("+时停(+999)")
 
     # 处女修正
     if instruct_name == _("性交") and target_data.talent[0]:

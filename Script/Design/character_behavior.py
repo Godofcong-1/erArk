@@ -56,10 +56,11 @@ def init_character_behavior():
         # 先结算玩家部分
         while 0 not in cache.over_behavior_character:
             pl_start_time = cache.character_data[0].behavior.start_time
+            pl_duration = cache.character_data[0].behavior.duration
             character_behavior(0, cache.game_time, pl_start_time)
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
-            game_time.sub_time_now(-cache.character_data[0].behavior.duration)
+            game_time.sub_time_now(minute = -pl_duration)
             break
         field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()

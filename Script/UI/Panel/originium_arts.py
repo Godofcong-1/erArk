@@ -122,24 +122,34 @@ class Originium_Arts_Panel:
             button1_draw.draw()
             return_list.append(button1_draw.return_text)
 
-            if cache.debug_mode:
-                button2_text = _("[002]时间停止(未实装)")
+            if handle_premise.handle_primary_time_stop(0):
+                button2_text = _("[002]时间系能力：")
+                talent_id_list = [316,317,318]
+                count = 0
+                for talent_id in talent_id_list:
+                    if not self.pl_character_data.talent[talent_id]:
+                        continue
+                    talent_name = game_config.config_talent[talent_id].name
+                    if talent_id != 316:
+                        button2_text += " + "
+                    button2_text += talent_name
+                    count += 1
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("2"),
                     window_width,
-                    cmd_func=self.to_do,
-                    args=(),
+                    cmd_func=self.arts_show,
+                    args=(2),
                     )
                 line_feed.draw()
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
 
             if handle_talent.have_hypnosis_talent():
-                button3_text = _("[003]催眠")
+                button3_text = _("[003]催眠系能力：")
                 now_type_id = self.pl_character_data.pl_ability.hypnosis_type
                 now_type_name = game_config.config_hypnosis_type[now_type_id].name
-                button3_text += _("（当前默认催眠类型：{0}）").format(now_type_name)
+                button3_text += _("当前默认催眠类型：{0}").format(now_type_name)
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
@@ -166,7 +176,7 @@ class Originium_Arts_Panel:
 
             if handle_talent.have_hormone_talent():
                 button5_text = _("[005]激素系能力：")
-                # 输出当前开启的视觉系能力
+                # 输出当前开启的激素系能力
                 talent_id_list = [304,305,306]
                 count = 0
                 for talent_id in talent_id_list:
@@ -174,8 +184,8 @@ class Originium_Arts_Panel:
                         continue
                     talent_name = game_config.config_talent[talent_id].name
                     if talent_id != 304:
-                        button5_text += "+"
-                    button5_text += f"{talent_name}"
+                        button5_text += " + "
+                    button5_text += talent_name
                     count += 1
                 button5_draw = draw.LeftButton(
                     _(button5_text),
@@ -198,8 +208,8 @@ class Originium_Arts_Panel:
                         continue
                     talent_name = game_config.config_talent[talent_id].name
                     if talent_id != 307:
-                        button6_text += "+"
-                    button6_text += f"{talent_name}"
+                        button6_text += " + "
+                    button6_text += talent_name
                     count += 1
                 # 输出理智消耗
                 button6_text += _("({0}理智/h)").format(count*5)
@@ -286,7 +296,10 @@ class Originium_Arts_Panel:
                 info_text = ""
 
                 # 激素系
-                if ability_type == 5:
+                if ability_type == 2:
+                    talent_id_list = [316,317,318]
+                    info_text = _("\n时间系能力（消耗2理智/min）：\n")
+                elif ability_type == 5:
                     talent_id_list = [304,305,306]
                     info_text = _("\n激素系能力（不消耗理智）：\n")
                 # 视觉系
