@@ -426,6 +426,8 @@ class BODY_H_STATE:
         """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
         self.orgasm_edge_count: Dict[int, int] = {}
         """ 绝顶寸止次数 """
+        self.time_stop_orgasm_count: Dict[int, int] = {}
+        """ 时停中绝顶次数 """
         self.extra_orgasm_feel: Dict[int, int] = {}
         """ 额外高潮快感记录，用于在10级快感后的额外高潮 """
         self.extra_orgasm_count: int = 0
@@ -443,9 +445,11 @@ class BODY_H_STATE:
         self.h_in_love_hotel: bool = False
         """ 当前正在爱情旅馆中H """
         self.just_shoot: int = 0
-        """ 刚刚射精了 """
+        """ 刚刚射精了，0没射精，1刚射精，2归零用 """
         self.orgasm_edge: int = 0
         """ 绝顶寸止，0未寸止，1正在寸止，2正常寸止解放，3寸止失败型解放 """
+        self.time_stop_release: bool = False
+        """ 当前为时停解放状态 """
 
 
 class FIRST_RECORD:

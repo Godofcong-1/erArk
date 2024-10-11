@@ -564,10 +564,18 @@ class CharacterInfoHead:
         # 绝顶寸止
         orgasm_edge_text = ""
         orgasm_edge_draw = draw.LeftDraw()
-        orgasm_edge_draw.style = "light_pink"
+        orgasm_edge_draw.style = "rose_pink"
         if handle_premise.handle_self_orgasm_edge(character_id):
             orgasm_edge_text = _(" <寸止>")
         orgasm_edge_draw.text = orgasm_edge_text
+
+        # 时停
+        time_stop_text = ""
+        time_stop_draw = draw.LeftDraw()
+        time_stop_draw.style = "light_sky_blue"
+        if handle_premise.handle_unconscious_flag_3(character_id):
+            time_stop_text = _(" <时停>")
+        time_stop_draw.text = time_stop_text
 
         if character_id:
             message = (
@@ -589,7 +597,7 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + orgasm_edge_text + imprisonment_text)
+        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + orgasm_edge_text + time_stop_text + imprisonment_text)
         max_width = max(base_width, text_width)
         message_draw.width = max_width
         message_draw.text = message
@@ -638,7 +646,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List[Tuple[draw.NormalDraw, draw.NormalDraw]] = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, time_stop_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (sp_draw,)

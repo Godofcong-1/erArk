@@ -786,7 +786,7 @@ def orgasm_settle(
     un_count_orgasm_dict -- 不计数高潮字典
     """
 
-    character_data: game_type.Character = cache.character_data[character_id]
+    character_data = cache.character_data[character_id]
     # print(f"进入{character_data.name}的高潮结算")
 
     part_count = 0  # 部位高潮计数
@@ -816,15 +816,23 @@ def orgasm_settle(
 
         # 如果当前高潮程度大于记录的高潮程度，或者有额外高潮，则进行高潮结算
         if normal_orgasm_data > 0 or extra_orgasm_data > 0 or un_count_orgasm_data > 0:
+            # 高潮次数统计
+            climax_count = normal_orgasm_data + un_count_orgasm_data
             # 刷新记录
             character_data.h_state.orgasm_level[orgasm] = now_data
+            # 时停状态下
+            if handle_premise.handle_unconscious_flag_3(character_id):
+                # 绝顶计入寸止计数
+                character_data.h_state.time_stop_orgasm_count.setdefault(orgasm, 0)
+                character_data.h_state.time_stop_orgasm_count[orgasm] += climax_count
+                continue
             # 如果开启了绝顶寸止，则进行寸止结算，然后跳过
             if handle_premise.handle_self_orgasm_edge(character_id):
                 # 根据技巧而绝顶的能够进行寸止的次数限制
                 orgasm_edge_success_flag = judge_orgasm_edge_success(character_id)
                 # 绝顶计入寸止计数
                 character_data.h_state.orgasm_edge_count.setdefault(orgasm, 0)
-                character_data.h_state.orgasm_edge_count[orgasm] += 1
+                character_data.h_state.orgasm_edge_count[orgasm] += climax_count
                 # 赋予寸止行为
                 character_data.second_behavior[1250 + orgasm] = 1
                 # 寸止失败记录
@@ -835,16 +843,14 @@ def orgasm_settle(
             part_count += 1
             # 判定触发哪些绝顶
             num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
-            # 高潮次数统计
-            climax_count = normal_orgasm_data + un_count_orgasm_data
             # 开始根据概率计算
             for i in range(climax_count):
                 # 判断高潮程度
                 now_degree = judge_orgasm_degree(now_data)
                 # 赋予二次行为
                 character_data.second_behavior[num + now_degree] = 1
-            # 绝顶解放状态下，如果次数大于等于3，则触发超强绝顶
-            if handle_premise.handle_self_orgasm_edge_relase(character_id) and climax_count >= 3:
+            # 绝顶解放状态下（含寸止解放与时停解放），如果次数大于等于3，则触发超强绝顶
+            if handle_premise.handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id) and climax_count >= 3:
                 character_data.second_behavior[1090 + orgasm] = 1
             # B绝顶喷乳，需要乳汁量到80%
             if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):

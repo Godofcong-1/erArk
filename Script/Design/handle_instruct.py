@@ -909,7 +909,6 @@ def handle_time_stop_on():
     constant.InstructType.ARTS,
     _("时间重新流动"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_ON,
      constant_promise.Premise.TIRED_LE_84}

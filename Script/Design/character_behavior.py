@@ -839,6 +839,9 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     # 将绝顶解放状态改为关闭绝顶寸止
     if handle_premise.handle_self_orgasm_edge_relase(character_id):
         default.handle_self_orgasm_edge_off(character_id, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
+    # 将时停解放状态改为False
+    if handle_premise.handle_self_time_stop_orgasm_relase(character_id):
+        character_data.h_state.time_stop_release = False
 
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
@@ -1076,25 +1079,21 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     # 真实的开始时间是当前角色行动开始时间和玩家行动开始时间中更晚的那个
     now_character_behavior_start_time = now_character_data.behavior.start_time
     true_start_time = max(now_character_behavior_start_time, pl_start_time)
-    # print(f"debug {now_character_data.name}的now_character_behavior_start_time = {now_character_behavior_start_time}，pl_start_time = {pl_start_time}，start_time = {true_start_time}")
     # 真实的结束时间是当前角色行动结束时间和当前时间中更早的那个
     now_character_end_time = game_time.get_sub_date(minute=add_time, old_date=now_character_behavior_start_time)
     true_end_time = min(now_character_end_time, now_time)
-    # print(f"debug {now_character_data.name}的now_character_end_time = {now_character_end_time}，now_time = {now_time}，end_time = {true_end_time}")
-    # if true_end_time == true_start_time:
-    #     print(f"debug {now_character_data.name}，behavior_id = {game_config.config_status[now_character_data.state].name}, duration = {add_time}")
     # 真实的行动时间是真实的结束时间减去真实的开始时间
     true_add_time = int((true_end_time.timestamp() - true_start_time.timestamp()) / 60)
-    # print(f"debug {now_character_data.name}的true_add_time = {true_add_time}，true_start_time = {true_start_time}，true_end_time = {true_end_time}\n")
-    # 最少为1分钟，以免随机取值函数出错
+    # 避免负数
     true_add_time = max(true_add_time, 0)
 
+    # 结算疲劳值
     tired_change = int(true_add_time / 6)
     # 基础行动结算1疲劳值
     if true_add_time == 5:
         tired_change = 1
-    # 仅计算在不睡觉时的正常行动结算疲劳值
-    if now_character_data.state not in {constant.CharacterStatus.STATUS_SLEEP}:
+    # 不睡觉时、且不是时停中，结算疲劳值
+    if now_character_data.state not in {constant.CharacterStatus.STATUS_SLEEP} and handle_premise.handle_time_stop_off(character_id):
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 
@@ -1201,16 +1200,22 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             now_character_data.pl_ability.today_sanity_point_cost += down_sp
         # 理智值不足则归零并中断所有开启中的源石技艺
         if handle_premise.handle_at_least_one_arts_on(character_id) and now_character_data.sanity_point <= 0:
+            # 输出提示信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.style = "red"
+            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
+            now_draw.draw()
+            # 开始结算
             now_character_data.sanity_point = 0
             now_character_data.pl_ability.visual = False
             # 解除目标的催眠
             if target_data.sp_flag.unconscious_h >= 4:
                 default.handle_hypnosis_cancel(0,1,game_type.CharacterStatusChange,datetime.datetime)
-            # 输出提示信息
-            now_draw = draw.WaitDraw()
-            now_draw.width = window_width
-            now_draw.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
-            now_draw.draw()
+            # 时停中则进入时停解除状态
+            if handle_premise.handle_time_stop_on(character_id):
+                from Script.Design import handle_instruct
+                handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TIME_STOP_OFF)
 
         # 结算对无意识对象的结算
         if target_data.sp_flag.unconscious_h:
@@ -1230,105 +1235,126 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                     target_data.sleep_point -= down_sleep
                     # 计算当前熟睡等级
                     sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
-                    # print(f"debug {target_data.name}熟睡值={target_data.sleep_point}，熟睡等级{sleep_level}")
                 # 熟睡等级小于等于1时判定是否吵醒
                 if sleep_level <= 1:
-                    # 浅睡和半梦半醒时递增苏醒概率
-                    weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
-                    if target_data.sleep_point <= game_config.config_sleep_level[0].sleep_point:
-                        weak_rate += game_config.config_sleep_level[0].sleep_point - target_data.sleep_point
-                    # 判定是否吵醒，吵醒则先结算当前行动然后进入重度性骚扰失败状态
-                    if weak_rate >= random.randint(1,100):
-                        target_data.tired_point = 0
-                        target_data.sleep_point = 0
-                        # 输出提示信息
-                        now_draw = draw.WaitDraw()
-                        now_draw.width = window_width
-                        now_draw.text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
-                        now_draw.draw()
-                        # 终止对方的睡眠
-                        judge_character_status_time_over(now_character_data.target_character_id, cache.game_time, end_now = 2)
-                        # 停止对方的无意识状态与H状态
-                        target_data.sp_flag.unconscious_h = 0
-                        target_data.sp_flag.is_h = False
-                        # 对方获得睡奸醒来状态
-                        target_data.sp_flag.sleep_h_awake = True
-                        # 重置双方H结构体和相关数据
-                        default.handle_both_h_state_reset(0, 0, game_type.CharacterStatusChange, datetime.datetime)
-                        # 检测是否满足高级性骚扰的实行值需求
-                        if handle_premise.handle_instruct_judge_high_obscenity(0):
-                            # 如果已经陷落的话
-                            if handle_premise.handle_target_fall(character_id):
-                            # 爱情线会变成轻度性骚扰
-                                if handle_premise.handle_target_love_ge_1(character_id):
-                                    now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
-                                    now_character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
-                                # 隶属线会愤怒生气
-                                elif handle_premise.handle_target_obey_ge_1(character_id):
-                                    target_data.angry_point += 100
-                                    target_data.sp_flag.angry_with_player = True
-                                # 如果没有陷落的话，会变成高级性骚扰
-                                else:
-                                    now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-                                    now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-                            # 如果没有陷落的话，会变成高级性骚扰
-                            else:
-                                now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-                                now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-                        # 不满足的话，设为H失败
-                        else:
-                            now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-                            now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
-                        now_character_data.behavior.duration = 10
-                        # 为了让惊醒正常运作，需要时间推进十分钟
-                        update.game_update_flow(10)
+                    judge_weak_up_in_sleep_h(character_id)
 
     # 结算非玩家部分
     else:
-
         # 结算精液流动
         if len(now_character_data.dirty.semen_flow):
-            # 计算流动的精液量
-            flow_semen_max = int(true_add_time * 2)
-            # print(f"debug {now_character_data.name}的精液流动最大量为{flow_semen_max}，add_time = {true_add_time}")
+            settle_semen_flow(character_id, true_add_time)
 
-            new_flow_list = []
-            # 遍历每个部位的精液流动
-            for all_flow_dict in now_character_data.dirty.semen_flow:
-                # 实际流动的精液总量
-                all_real_flow = 0
-                # 源头数据
-                source_id = all_flow_dict["source"]["id"]
-                source_type = all_flow_dict["source"]["type"]
-                new_target_list = []
-                # 如果all_flow_dict没有键"targets"，则跳过
-                if "targets" not in all_flow_dict:
-                    continue
-                # 遍历每个流动的目标
-                for now_flow_dict in all_flow_dict["targets"]:
-                    if now_flow_dict["remaining_volume"] > 0:
-                        # 计算该部位的精液流动
-                        now_flow = min(flow_semen_max, now_flow_dict["remaining_volume"])
-                        all_real_flow += now_flow
-                        now_flow_dict["remaining_volume"] -= now_flow
-                        now_part_cid = now_flow_dict["id"]
-                        # print(f"debug {now_character_data.name}，{now_flow_dict['type']}的{now_part_cid}部位，精液流动{now_flow}，剩余{now_flow_dict['remaining_volume']}")
-                        # 目标部位的精液增加
-                        ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=now_part_cid, part_type=now_flow_dict["type"], semen_count=now_flow, update_shoot_position_flag=False)
-                        # 如果目标部位的精液流动完毕，则将其从流动列表中移除
-                        if now_flow_dict["remaining_volume"] > 0:
-                            new_target_list.append(now_flow_dict)
-                # 更新流动的目标列表
-                all_flow_dict["targets"] = new_target_list
-                # 遍历完全目标后，如果实际流动的精液总量大于0，则在源头部位减少相应的精液量
-                if all_real_flow > 0:
-                    ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=source_id, part_type=source_type, semen_count=-all_real_flow, update_shoot_position_flag=False)
-                # 如果源头部位的精液流动完毕，则将其从流动列表中移除，否则将其加入新的流动列表
-                if len(all_flow_dict["targets"]):
-                    new_flow_list.append(all_flow_dict)
-            # 更新流动的源头列表
-            now_character_data.dirty.semen_flow = new_flow_list
-            # print(f"debug {now_character_data.name}的精液流动完毕，剩余流动列表为{now_character_data.dirty.semen_flow}")
+
+def judge_weak_up_in_sleep_h(character_id: int):
+    """
+    判断睡奸中是否醒来\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+
+    # 浅睡和半梦半醒时递增苏醒概率
+    weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
+    if target_data.sleep_point <= game_config.config_sleep_level[0].sleep_point:
+        weak_rate += game_config.config_sleep_level[0].sleep_point - target_data.sleep_point
+    # 判定是否吵醒，吵醒则先结算当前行动然后进入重度性骚扰失败状态
+    if weak_rate >= random.randint(1,100):
+        target_data.tired_point = 0
+        target_data.sleep_point = 0
+        # 输出提示信息
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        now_draw.text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
+        now_draw.draw()
+        # 终止对方的睡眠
+        judge_character_status_time_over(now_character_data.target_character_id, cache.game_time, end_now = 2)
+        # 停止对方的无意识状态与H状态
+        target_data.sp_flag.unconscious_h = 0
+        target_data.sp_flag.is_h = False
+        # 对方获得睡奸醒来状态
+        target_data.sp_flag.sleep_h_awake = True
+        # 重置双方H结构体和相关数据
+        default.handle_both_h_state_reset(0, 0, game_type.CharacterStatusChange, datetime.datetime)
+        # 检测是否满足高级性骚扰的实行值需求
+        if handle_premise.handle_instruct_judge_high_obscenity(0):
+            # 如果已经陷落的话
+            if handle_premise.handle_target_fall(character_id):
+            # 爱情线会变成轻度性骚扰
+                if handle_premise.handle_target_love_ge_1(character_id):
+                    now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+                    now_character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+                # 隶属线会愤怒生气
+                elif handle_premise.handle_target_obey_ge_1(character_id):
+                    target_data.angry_point += 100
+                    target_data.sp_flag.angry_with_player = True
+                # 如果没有陷落的话，会变成高级性骚扰
+                else:
+                    now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                    now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+            # 如果没有陷落的话，会变成高级性骚扰
+            else:
+                now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+                now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        # 不满足的话，设为H失败
+        else:
+            now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+            now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+        now_character_data.behavior.duration = 10
+        # 为了让惊醒正常运作，需要时间推进十分钟
+        update.game_update_flow(10)
+
+
+def settle_semen_flow(character_id: int, true_add_time: int):
+    """
+    结算精液流动\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    true_add_time -- 实际行动时间\n
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    # 计算流动的精液量
+    flow_semen_max = int(true_add_time * 2)
+    # print(f"debug {now_character_data.name}的精液流动最大量为{flow_semen_max}，add_time = {true_add_time}")
+
+    new_flow_list = []
+    # 遍历每个部位的精液流动
+    for all_flow_dict in now_character_data.dirty.semen_flow:
+        # 实际流动的精液总量
+        all_real_flow = 0
+        # 源头数据
+        source_id = all_flow_dict["source"]["id"]
+        source_type = all_flow_dict["source"]["type"]
+        new_target_list = []
+        # 如果all_flow_dict没有键"targets"，则跳过
+        if "targets" not in all_flow_dict:
+            continue
+        # 遍历每个流动的目标
+        for now_flow_dict in all_flow_dict["targets"]:
+            if now_flow_dict["remaining_volume"] > 0:
+                # 计算该部位的精液流动
+                now_flow = min(flow_semen_max, now_flow_dict["remaining_volume"])
+                all_real_flow += now_flow
+                now_flow_dict["remaining_volume"] -= now_flow
+                now_part_cid = now_flow_dict["id"]
+                # print(f"debug {now_character_data.name}，{now_flow_dict['type']}的{now_part_cid}部位，精液流动{now_flow}，剩余{now_flow_dict['remaining_volume']}")
+                # 目标部位的精液增加
+                ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=now_part_cid, part_type=now_flow_dict["type"], semen_count=now_flow, update_shoot_position_flag=False)
+                # 如果目标部位的精液流动完毕，则将其从流动列表中移除
+                if now_flow_dict["remaining_volume"] > 0:
+                    new_target_list.append(now_flow_dict)
+        # 更新流动的目标列表
+        all_flow_dict["targets"] = new_target_list
+        # 遍历完全目标后，如果实际流动的精液总量大于0，则在源头部位减少相应的精液量
+        if all_real_flow > 0:
+            ejaculation_panel.update_semen_dirty(character_id=character_id, part_cid=source_id, part_type=source_type, semen_count=-all_real_flow, update_shoot_position_flag=False)
+        # 如果源头部位的精液流动完毕，则将其从流动列表中移除，否则将其加入新的流动列表
+        if len(all_flow_dict["targets"]):
+            new_flow_list.append(all_flow_dict)
+    # 更新流动的源头列表
+    now_character_data.dirty.semen_flow = new_flow_list
+    # print(f"debug {now_character_data.name}的精液流动完毕，剩余流动列表为{now_character_data.dirty.semen_flow}")
 
 
 def change_character_persistent_state(character_id: int):

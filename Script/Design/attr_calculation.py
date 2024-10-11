@@ -229,6 +229,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
         h_state_data.orgasm_level[body_part] = 0
         h_state_data.orgasm_count[body_part] = [0, 0]
         h_state_data.orgasm_edge_count[body_part] = 0
+        h_state_data.time_stop_orgasm_count[body_part] = 0
         h_state_data.extra_orgasm_feel[body_part] = 0
 
     # 相关flag和计数
@@ -241,7 +242,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     h_state_data.h_in_love_hotel = False
     h_state_data.extra_orgasm_count = 0
     h_state_data.plural_orgasm_count = 0
-    h_state_data.just_shoot = False
+    h_state_data.just_shoot = 0
     h_state_data.orgasm_edge = 0
 
     return h_state_data

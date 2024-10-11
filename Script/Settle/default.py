@@ -5819,8 +5819,8 @@ def handle_official_work_add_adjust(
     now_draw_text = ""
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
-    # 如果有交互对象，则算上对方的学识加成
-    if character_data.target_character_id != character_id:
+    # 如果有交互对象，且对方不在无意识状态下，则算上对方的学识加成
+    if character_data.target_character_id != character_id and handle_premise.handle_unconscious_flag_0(character_data.target_character_id):
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
         now_draw_text += _("在{0}的帮助下，").format(target_data.name)
@@ -6263,12 +6263,43 @@ def handle_orgasm_edge_release(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    # 如果没有交互对象
     if character_data.target_character_id == character_id:
+        return
+    # 如果对方没有在寸止
+    if target_data.h_state.orgasm_edge == 0:
         return
     # 变为寸止解放状态
     target_data.h_state.orgasm_edge = 2
     # 将寸止计数转化为绝顶
     settle_behavior.orgasm_settle(character_id, change_data, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
+def handle_time_stop_orgasm_release(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （解除时停）交互对象变为时停解放状态，将时停绝顶计数转化为绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    for chara_id in cache.npc_id_got:
+        if chara_id == 0:
+            continue
+        character_data = cache.character_data[chara_id]
+        # 变为时停解放状态
+        character_data.h_state.time_stop_release = True
+        # 将时停绝顶计数转化为绝顶
+        settle_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
