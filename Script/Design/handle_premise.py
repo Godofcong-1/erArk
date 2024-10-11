@@ -17737,19 +17737,19 @@ def handle_assistant_night_salutation_on(character_id: int) -> int:
     return 0
 
 
-# @add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_1)
-# def handle_assistant_night_salutation_1(character_id: int) -> int:
-#     """
-#     自己的助理属性中的晚安问候服务为-晚上催睡觉
-#     Keyword arguments:
-#     character_id -- 角色id
-#     Return arguments:
-#     int -- 权重
-#     """
-#     character_data: game_type.Character = cache.character_data[character_id]
-#     if character_data.assistant_services[6] == 1:
-#         return 1
-#     return 0
+@add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_1)
+def handle_assistant_night_salutation_1(character_id: int) -> int:
+    """
+    自己的助理属性中的晚安问候服务为-晚上催睡觉
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.assistant_services[6] == 1:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.ASSISTANT_NIGHT_SALUTATION_2)

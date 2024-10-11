@@ -2547,6 +2547,25 @@ def character_night_salutation_3(character_id: int):
         character_data.sp_flag.night_salutation = 2
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_FLAG_2)
+def character_night_salutation_flag_2(character_id: int):
+    """
+    进入已晚安问候状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.night_salutation = 2
+    # 如果此时还没有完成早安问候，则清除早安问候flag
+    character_data.sp_flag.morning_salutation = 0
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    # print(f"debug {character_data.name} 进入要晚安问候状态，time = {cache.game_time}")
+
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)
 def character_work_produce(character_id: int):
     """

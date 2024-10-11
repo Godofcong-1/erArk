@@ -1351,6 +1351,8 @@ class StateMachine:
     """ 晚安问候：晚安吻 """
     NIGHT_SALUTATION_3 = 711
     """ 晚安问候：晚安咬 """
+    NIGHT_SALUTATION_FLAG_2 = 712
+    """ 进入已晚安问候状态 """
 
 
 class Panel:
