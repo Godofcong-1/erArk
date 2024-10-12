@@ -6271,10 +6271,12 @@ def handle_orgasm_edge_release(
     # 如果对方没有在寸止
     if target_data.h_state.orgasm_edge == 0:
         return
+    change_data.target_change.setdefault(character_data.target_character_id, game_type.TargetChange())
+    target_change: game_type.TargetChange = change_data.target_change[character_data.target_character_id]
     # 变为寸止解放状态
     target_data.h_state.orgasm_edge = 2
     # 将寸止计数转化为绝顶
-    settle_behavior.orgasm_settle(character_id, change_data, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
+    settle_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
