@@ -946,6 +946,11 @@ def update_sleep():
         if character_id == 0:
             sanity_point_grow() # 玩家理智成长
             character_data.eja_point = 0 # 清零射精槽
+            # 如果此时助理在睡眠中，则清零助理晚安问候
+            assistant_id = character_data.assistant_character_id
+            assistant_character_data: game_type.Character = cache.character_data[assistant_id]
+            if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
+                assistant_character_data.sp_flag.night_salutation = 0
             # 睡眠时间在6h及以上的额外恢复
             if character_data.behavior.duration >= 360:
                 refresh_temp_semen_max() # 刷新玩家临时精液上限
