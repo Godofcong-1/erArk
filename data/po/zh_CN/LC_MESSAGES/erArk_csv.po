@@ -4280,6 +4280,14 @@ msgstr ""
 msgid "被时姦经验"
 msgstr ""
 
+#: .\data\csv\Experience.csv:106
+msgid "催眠姦经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:107
+msgid "被催眠姦经验"
+msgstr ""
+
 #: .\data\csv\Facility.csv:7
 msgid "控制中枢"
 msgstr ""

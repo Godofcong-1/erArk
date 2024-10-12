@@ -624,7 +624,7 @@ def check_unconscious_effect(
     # 玩家对交互目标进行结算
     if character_id == 0 and target_character_id != 0:
         # 目标处于无意识状态
-        if target_character_data.sp_flag.unconscious_h:
+        if handle_premise.handle_unconscious_flag_ge_1(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
             # 经验结算
             for experience_id in target_change.experience.copy():
                 # 普通部位
@@ -636,8 +636,20 @@ def check_unconscious_effect(
                 elif experience_id in range(10, 18):
                     constant.settle_behavior_effect_data[278](character_id, add_time, change_data, now_time)
                 # 性交经验
-                elif experience_id in range(51, 55):
+                elif experience_id in range(61, 65):
                     constant.settle_behavior_effect_data[279](character_id, add_time, change_data, now_time)
+                    # 睡姦经验与被睡姦经验
+                    if handle_premise.handle_unconscious_flag_1(target_character_id):
+                        constant.settle_behavior_effect_data[352](character_id, add_time, change_data, now_time)
+                        constant.settle_behavior_effect_data[354](character_id, add_time, change_data, now_time)
+                    # 催眠姦经验与被催眠姦经验
+                    elif handle_premise.handle_unconscious_hypnosis_flag(target_character_id):
+                        constant.settle_behavior_effect_data[358](character_id, add_time, change_data, now_time)
+                        constant.settle_behavior_effect_data[360](character_id, add_time, change_data, now_time)
+                    # 时姦经验与被时姦经验
+                    elif handle_premise.handle_unconscious_flag_3(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
+                        constant.settle_behavior_effect_data[355](character_id, add_time, change_data, now_time)
+                        constant.settle_behavior_effect_data[357](character_id, add_time, change_data, now_time)
 
     return target_character_data.sp_flag.unconscious_h
 

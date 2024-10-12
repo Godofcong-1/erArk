@@ -225,19 +225,19 @@ class BehaviorEffect:
     TARGET_ADD_1_W_EXPERIENCE = 207
     """ 属性_经验 交互对象增加1W经验 """
     TARGET_ADD_1_NClimax_EXPERIENCE = 210
-    """ 属性_经验 交互对象增加1N绝顶经验 """
+    """ 属性_经验 交互对象增加1N绝顶经验+1绝顶经验 """
     TARGET_ADD_1_BClimax_EXPERIENCE = 211
-    """ 属性_经验 交互对象增加1B绝顶经验 """
+    """ 属性_经验 交互对象增加1B绝顶经验+1绝顶经验 """
     TARGET_ADD_1_CClimax_EXPERIENCE = 212
-    """ 属性_经验 交互对象增加1C绝顶经验 """
+    """ 属性_经验 交互对象增加1C绝顶经验+1绝顶经验 """
     TARGET_ADD_1_VClimax_EXPERIENCE = 214
-    """ 属性_经验 交互对象增加1V绝顶经验 """
+    """ 属性_经验 交互对象增加1V绝顶经验+1绝顶经验 """
     TARGET_ADD_1_AClimax_EXPERIENCE = 215
-    """ 属性_经验 交互对象增加1A绝顶经验 """
+    """ 属性_经验 交互对象增加1A绝顶经验+1绝顶经验 """
     TARGET_ADD_1_UClimax_EXPERIENCE = 216
-    """ 属性_经验 交互对象增加1U绝顶经验 """
+    """ 属性_经验 交互对象增加1U绝顶经验+1绝顶经验 """
     TARGET_ADD_1_WClimax_EXPERIENCE = 217
-    """ 属性_经验 交互对象增加1W绝顶经验 """
+    """ 属性_经验 交互对象增加1W绝顶经验+1绝顶经验 """
     TARGET_ADD_1_Cumming_EXPERIENCE = 221
     """ 属性_经验 交互对象增加1射精经验 """
     TARGET_ADD_1_Milking_EXPERIENCE = 222
@@ -428,6 +428,24 @@ class BehaviorEffect:
     """ 属性_经验 双方增加1学识经验 """
     ADD_1_Masterbate_EXPERIENCE = 351
     """ 属性_经验 增加1自慰经验 """
+    ADD_1_Sleep_Sex_EXPERIENCE = 352
+    """ 属性_经验 增加1睡姦经验 """
+    ADD_1_be_Sleep_Sex_EXPERIENCE = 353
+    """ 属性_经验 增加1被睡姦经验 """
+    TARGET_ADD_1_be_Sleep_Sex_EXPERIENCE = 354
+    """ 属性_经验 交互对象增加1被睡姦经验 """
+    ADD_1_Time_Stop_Sex_EXPERIENCE = 355
+    """ 属性_经验 增加1时姦经验 """
+    ADD_1_be_Time_Stop_Sex_EXPERIENCE = 356
+    """ 属性_经验 增加1被时姦经验 """
+    TARGET_ADD_1_be_Time_Stop_Sex_EXPERIENCE = 357
+    """ 属性_经验 交互对象增加1被时姦经验 """
+    ADD_1_Hypnosis_Sex_EXPERIENCE = 358
+    """ 属性_经验 增加1催眠姦经验 """
+    ADD_1_be_Hypnosis_Sex_EXPERIENCE = 359
+    """ 属性_经验 增加1被催眠姦经验 """
+    TARGET_ADD_1_be_Hypnosis_Sex_EXPERIENCE = 360
+    """ 属性_经验 交互对象增加1被催眠姦经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """

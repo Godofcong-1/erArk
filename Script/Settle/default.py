@@ -150,7 +150,9 @@ def base_chara_state_common_settle(
     base_value -- 基础固定值\n
     ability_level -- 系数修正用能力等级\n
     extra_adjust -- 额外系数\n
-    change_data_to_target_change -- 结算信息记录对象
+    tenths_add -- 是否额外增加十分之一\n
+    change_data -- 结算信息记录对象\n
+    change_data_to_target_change -- 交互对象的结算信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
