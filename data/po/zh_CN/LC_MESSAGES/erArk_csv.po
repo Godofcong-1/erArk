@@ -15453,6 +15453,10 @@ msgid "胸垫"
 msgstr ""
 
 #: .\data\character\0308_诗怀雅.csv:54
+msgid "ol制服裙"
+msgstr ""
+
+#: .\data\character\0308_诗怀雅.csv:55
 msgid "粉色兔胖次"
 msgstr ""
 
