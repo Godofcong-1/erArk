@@ -5888,27 +5888,35 @@ msgstr ""
 msgid "初级催眠系能力，可以让对方陷入浅层催眠状态，不会抵抗性骚扰等级的行为"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:11
+#: .\data\csv\First_Bouns.csv:10
+msgid "窄域时停"
+msgstr ""
+
+#: .\data\csv\First_Bouns.csv:10
+msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方"
+msgstr ""
+
+#: .\data\csv\First_Bouns.csv:12
 msgid "启动资金"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:11
+#: .\data\csv\First_Bouns.csv:12
 msgid "初始额外获得50000龙门币、6000合成玉、100粉色凭证和30普通药材"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:13
+#: .\data\csv\First_Bouns.csv:14
 msgid "专精领域"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:13
+#: .\data\csv\First_Bouns.csv:14
 msgid "将一个能力的初始等级提升至5级"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:14
+#: .\data\csv\First_Bouns.csv:15
 msgid "助理干员"
 msgstr ""
 
-#: .\data\csv\First_Bouns.csv:14
+#: .\data\csv\First_Bouns.csv:15
 msgid "选择一名已招募的干员成为助理干员，且该干员会拥有1000点初始好感和50%初始信赖度"
 msgstr ""
 
@@ -11818,14 +11826,6 @@ msgstr ""
 
 #: .\data\csv\Talent.csv:172
 msgid "高级触觉系能力，可以穿过衣服，直接隔空插入对方的腔内（未实装）"
-msgstr ""
-
-#: .\data\csv\Talent.csv:173
-msgid "窄域时停"
-msgstr ""
-
-#: .\data\csv\Talent.csv:173
-msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方"
 msgstr ""
 
 #: .\data\csv\Talent.csv:174

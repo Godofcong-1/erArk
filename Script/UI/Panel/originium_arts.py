@@ -477,7 +477,37 @@ class Originium_Arts_Panel:
                     draw_text += _("：需要生育孩子数量≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, now_child_count)
                     now_contion = now_child_count >= talent_of_arts_data.lv_up_value1
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
-                # 催眠系
+                # 窄域时停
+                elif talent_id == 316:
+                    # 计算全干员无意识经验
+                    now_orgasm_exp_count, now_sex_exp_count = 0, 0
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        now_orgasm_exp_count += character_data.experience[78]
+                        now_sex_exp_count += character_data.experience[79]
+                    # 绘制
+                    draw_text += _("：需要全干员无意识性交经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_sex_exp_count, talent_of_arts_data.lv_up_value2, now_orgasm_exp_count)
+                    now_contion = now_sex_exp_count >= talent_of_arts_data.lv_up_value1 and now_orgasm_exp_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 广域时停
+                elif talent_id == 317:
+                    # 计算全干员无意识经验
+                    now_time_stop_sex_exp_count, now_orgasm_exp_count = 0, 0
+                    now_time_stop_sex_exp_count = self.pl_character_data.experience[124]
+                    for chara_id in cache.npc_id_got:
+                        character_data = cache.character_data[chara_id]
+                        now_orgasm_exp_count += character_data.experience[78]
+                    # 绘制
+                    draw_text += _("：需要对干员的时姦经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_time_stop_sex_exp_count, talent_of_arts_data.lv_up_value2, now_orgasm_exp_count)
+                    now_contion = now_time_stop_sex_exp_count >= talent_of_arts_data.lv_up_value1 and now_orgasm_exp_count >= talent_of_arts_data.lv_up_value2
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 猥亵催眠
+                elif talent_id == 331:
+                    # 绘制
+                    draw_text += _("：需要对干员的睡姦经验≥{0}（当前{1}）").format(talent_of_arts_data.lv_up_value1, self.pl_character_data.experience[120])
+                    now_contion = self.pl_character_data.experience[120] >= talent_of_arts_data.lv_up_value1
+                    return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
+                # 其他催眠系
                 elif talent_id in game_config.config_hypnosis_talent_of_pl:
                     up_data = game_config.config_hypnosis_talent_of_pl[talent_id]
                     need_exp = up_data.pl_experience

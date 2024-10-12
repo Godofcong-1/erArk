@@ -887,6 +887,7 @@ class Character_Bonus:
         info_talent_draw = draw.LeftDraw()
         info_talent_draw.width = 1
         info_talent_draw.text = _(" 可选奖励有：\n")
+        info_talent_draw.text += _("  （未选择的源石能力均可在游戏中满足特定条件解锁）\n")
         now_draw.draw_list.append(info_talent_draw)
         now_draw.width += len(info_talent_draw.text)
 
