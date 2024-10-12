@@ -1051,27 +1051,29 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # 单次增加量
     if 17 in change_data.status_data:
         pain_count += change_data.status_data[17] * 5
-    if pain_count >= 20000 and character_data.ability[15] <= 0:
-        character_data.ability[15] = 1
-        character_data.second_behavior[1036] = 1
-        # 至少提升为受虐1
-        if character_data.ability[36] < 1:
-            character_data.ability[36] = 1
-            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至1级\n").format(character_data.name)
-    if pain_count >= 40000 and character_data.ability[15] <= 1:
-        character_data.ability[15] = 2
-        character_data.second_behavior[1037] = 1
-        # 至少提升为受虐3
-        if character_data.ability[36] < 3:
-            character_data.ability[36] = 3
-            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至3级\n").format(character_data.name)
-    if pain_count >= 80000 and character_data.ability[15] <= 2:
-        character_data.ability[15] = 3
-        character_data.second_behavior[1038] = 1
-        # 至少提升为受虐5
-        if character_data.ability[36] < 5:
-            character_data.ability[36] = 5
-            now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至5级\n").format(character_data.name)
+    # 需要非深度无意识
+    if handle_premise.handle_normal_6(character_id):
+        if pain_count >= 20000 and character_data.ability[15] <= 0:
+            character_data.ability[15] = 1
+            character_data.second_behavior[1036] = 1
+            # 至少提升为受虐1
+            if character_data.ability[36] < 1:
+                character_data.ability[36] = 1
+                now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至1级\n").format(character_data.name)
+        if pain_count >= 40000 and character_data.ability[15] <= 1:
+            character_data.ability[15] = 2
+            character_data.second_behavior[1037] = 1
+            # 至少提升为受虐3
+            if character_data.ability[36] < 3:
+                character_data.ability[36] = 3
+                now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至3级\n").format(character_data.name)
+        if pain_count >= 80000 and character_data.ability[15] <= 2:
+            character_data.ability[15] = 3
+            character_data.second_behavior[1038] = 1
+            # 至少提升为受虐5
+            if character_data.ability[36] < 5:
+                character_data.ability[36] = 5
+                now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至5级\n").format(character_data.name)
 
     # 无觉刻印未实装
 
@@ -1105,15 +1107,17 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         hate_count += change_data.status_data[19]
     if 17 in change_data.status_data:
         hate_count += change_data.status_data[17]
-    if hate_count >= 10000 and character_data.ability[18] <= 0:
-        character_data.ability[18] = 1
-        character_data.second_behavior[1045] = 1
-    if hate_count >= 50000 and character_data.ability[18] <= 1:
-        character_data.ability[18] = 2
-        character_data.second_behavior[1046] = 1
-    if hate_count >= 100000 and character_data.ability[18] <= 2:
-        character_data.ability[18] = 3
-        character_data.second_behavior[1047] = 1
+    # 需要非深度无意识
+    if handle_premise.handle_normal_6(character_id):
+        if hate_count >= 10000 and character_data.ability[18] <= 0:
+            character_data.ability[18] = 1
+            character_data.second_behavior[1045] = 1
+        if hate_count >= 50000 and character_data.ability[18] <= 1:
+            character_data.ability[18] = 2
+            character_data.second_behavior[1046] = 1
+        if hate_count >= 100000 and character_data.ability[18] <= 2:
+            character_data.ability[18] = 3
+            character_data.second_behavior[1047] = 1
 
     if len(now_draw_text) > 0:
         now_draw_text += "\n"

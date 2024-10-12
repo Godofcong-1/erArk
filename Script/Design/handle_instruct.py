@@ -894,9 +894,9 @@ def handle_hormone_off():
     constant.InstructType.ARTS,
     _("时间停止流动"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_OFF,
+     constant_promise.Premise.SANITY_POINT_G_0,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_time_stop_on():

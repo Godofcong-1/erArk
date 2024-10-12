@@ -163,7 +163,7 @@ def base_chara_state_common_settle(
     good_state_set = {8, 9, 10, 11, 12, 13, 14, 15, 16} # 正面状态
     bad_state_set = {18, 19, 20} # 负面状态
     body_state_set = {8, 12, 17} # 身体状态
-    mentel_state_set = {9, 10, 11, 13, 14, 15, 18, 19, 20} # 心智状态
+    mentel_state_set = {9, 10, 11, 13, 14, 15, 16, 18, 19, 20} # 心智状态
 
     # 基础固定值
     time_base_value = add_time + base_value

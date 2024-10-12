@@ -42,6 +42,11 @@ def base_chara_experience_common_settle(
         final_character_id = character_data.target_character_id
         character_data = cache.character_data[final_character_id]
 
+    # 深度无意识下部分经验不结算
+    conscious_experience_set = {30, 31, 32, 33, 34}
+    if experience_id in conscious_experience_set and not handle_premise.handle_normal_6(final_character_id):
+        return
+
     # 结算最终值
     character_data.experience.setdefault(experience_id, 0)
     character_data.experience[experience_id] += base_value

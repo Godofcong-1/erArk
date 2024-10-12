@@ -495,8 +495,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
         # 时停修正
         if handle_premise.handle_unconscious_flag_3(target_character_id):
-            judge += 999
-            calculation_text += _("+时停(+999)")
+            judge += 9999
+            calculation_text += _("+时停(+9999)")
 
     # 处女修正
     if instruct_name == _("性交") and target_data.talent[0]:
