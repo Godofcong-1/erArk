@@ -2297,6 +2297,9 @@ def handle_time_stop_on(
     for chara_id in cache.npc_id_got:
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 3
+        # 重置时停中的角色的时停高潮计数
+        for body_part in game_config.config_body_part:
+            chara_data.h_state.time_stop_orgasm_count[body_part] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_OFF)
@@ -2496,6 +2499,8 @@ def handle_self_orgasm_edge_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.h_state.orgasm_edge = 1
+    for body_part in game_config.config_body_part:
+        character_data.h_state.orgasm_edge_count[body_part] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ORGASM_EDGE_OFF)
@@ -6277,6 +6282,9 @@ def handle_orgasm_edge_release(
     target_data.h_state.orgasm_edge = 2
     # 将寸止计数转化为绝顶
     settle_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
+    # 清零寸止计数
+    for body_part in game_config.config_body_part:
+        target_data.h_state.orgasm_edge_count[body_part] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
@@ -6304,6 +6312,9 @@ def handle_time_stop_orgasm_release(
         character_data.h_state.time_stop_release = True
         # 将时停绝顶计数转化为绝顶
         settle_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
+        # 清零时停绝顶计数
+        for body_part in game_config.config_body_part:
+            character_data.h_state.time_stop_orgasm_count[body_part] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
