@@ -31,6 +31,19 @@ class AbilityUp:
     """ 升级需求 """
 
 
+class Ai_Chat_Setting:
+    """ 角色设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    option: str
+    """ 各个选项 """
+
+
 class Aromatherapy_Recipes:
     """ 香薰疗愈配方 """
 

@@ -1332,6 +1332,10 @@ class Cache:
         # self.system_setting: System_Setting = System_Setting()
         self.system_setting: Dict[int, int] = {}
         """ 系统设定，见System_Setting.csv """
+        self.ai_chat_setting: Dict[int, int] = {}
+        """ ai聊天设定，见Ai_Chat_Setting.csv """
+        self.ai_chat_api_key: Dict[int, str] = {}
+        """ ai聊天api key """
         self.country: Country = Country()
         """ 大地图国家数据 """
 

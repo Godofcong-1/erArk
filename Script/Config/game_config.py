@@ -284,6 +284,10 @@ config_system_setting: Dict[int, config_def.System_Setting] = {}
 """ 系统设置数据 设置id:详细内容 """
 config_system_setting_option: Dict[int, Dict[int, str]] = {}
 """ 系统设置数据的选项数据 设置id:选项序号:选项内容 """
+config_ai_chat_setting: Dict[int, config_def.Ai_Chat_Setting] = {}
+""" 文本生成AI设置数据 设置id:详细内容 """
+config_ai_chat_setting_option: Dict[int, Dict[int, str]] = {}
+""" 文本生成AI设置数据的选项数据 设置id:选项序号:选项内容 """
 config_assistant_services: Dict[int, config_def.AssistantServices] = {}
 """ 助理服务数据 服务id:详细内容 """
 config_assistant_services_option: Dict[int, Dict[int, str]] = {}
@@ -1340,6 +1344,24 @@ def load_system_setting():
             config_system_setting_option[now_tem.cid] = option_text.split('|')
 
 
+def load_ai_chat_setting():
+    """载入文本生成AI设置"""
+    now_data = config_data["Ai_Chat_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Ai_Chat_Setting()
+        now_tem.__dict__ = tem_data
+        config_ai_chat_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_ai_chat_setting_option[now_tem.cid] = []
+            config_ai_chat_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_ai_chat_setting_option[now_tem.cid] = option_text.split('|')
+
+
 def load_assistant_services():
     """载入助理服务"""
     now_data = config_data["AssistantServices"]
@@ -1513,6 +1535,7 @@ def init():
     load_first_bonus()
     load_chara_setting()
     load_system_setting()
+    load_ai_chat_setting()
     load_assistant_services()
     load_visitor_stay_attitude()
     load_recruitment_strategy()

@@ -30,6 +30,7 @@ from Script.UI.Panel import (
     invite_visitor_panel,
     system_setting,
     aromatherapy,
+    chat_ai_setting
 )
 from Script.Config import normal_config
 
@@ -228,4 +229,10 @@ def aromatherapy_flow():
 def nation_diplomacy_flow():
     """势力外交面板"""
     now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.CHAT_AI_SETTING)
+def chat_ai_setting_flow():
+    """文本生成AI设置面板"""
+    now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(width)
     now_panel.draw()

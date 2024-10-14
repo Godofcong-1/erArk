@@ -1422,6 +1422,8 @@ class Panel:
     """ 香薰疗愈面板 """
     NATION_DIPLOMACY = 31
     """ 势力外交面板 """
+    CHAT_AI_SETTING = 32
+    """ 文本生成AI设置面板 """
 
 
 class SecondBehavior:
@@ -1814,6 +1816,8 @@ class Instruct:
     """ 取消收藏地点 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
+    CHAT_AI_SETTING = 0
+    """ 文本生成AI设置 """
     TALK_QUICK_TEST = 0
     """ 快速测试口上 """
 
@@ -2391,5 +2395,6 @@ first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾�
 special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0]
 """ 意外中断H的行为id列表 """
 
+open_ai_model_list = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini']
 
 # 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛，诺伊，√，はるか

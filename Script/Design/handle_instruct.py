@@ -396,6 +396,18 @@ def handle_talk_quick_test():
 
 
 @add_instruct(
+    constant.Instruct.CHAT_AI_SETTING,
+    constant.InstructType.SYSTEM,
+    _("文本生成AI设置"),
+    {
+    constant_promise.Premise.TO_DO
+    })
+def handle_chat_ai_setting():
+    """文本生成AI设置"""
+    cache.now_panel_id = constant.Panel.CHAT_AI_SETTING
+
+
+@add_instruct(
     constant.Instruct.COLLECTION_NOW_PLACE,
     constant.InstructType.SYSTEM,
     _("收藏该地点"),
