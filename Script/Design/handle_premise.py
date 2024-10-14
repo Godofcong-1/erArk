@@ -11277,6 +11277,94 @@ def handle_time_stop_judge_for_move(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOBODY_FREE_IN_TIME_STOP)
+def handle_nobody_free_in_time_stop(character_id: int) -> int:
+    """
+    没有指定可以在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.pl_ability.free_in_time_stop_chara_id > 0:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.SOMEBODY_FREE_IN_TIME_STOP)
+def handle_somebody_free_in_time_stop(character_id: int) -> int:
+    """
+    玩家已指定可以在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_nobody_free_in_time_stop(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.SELF_FREE_IN_TIME_STOP)
+def handle_self_free_in_time_stop(character_id: int) -> int:
+    """
+    自己是在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if character_id > 0 and character_id == pl_character_data.pl_ability.free_in_time_stop_chara_id:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_FREE_IN_TIME_STOP)
+def handle_self_not_free_in_time_stop(character_id: int) -> int:
+    """
+    自己不是在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_self_free_in_time_stop(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_FREE_IN_TIME_STOP)
+def handle_target_free_in_time_stop(character_id: int) -> int:
+    """
+    交互对象是在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_self_free_in_time_stop(character_data.target_character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_FREE_IN_TIME_STOP)
+def handle_target_not_free_in_time_stop(character_id: int) -> int:
+    """
+    交互对象不是在时停中自由活动的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_self_free_in_time_stop(character_data.target_character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.HAVE_WORK)
 def handle_have_work(character_id: int) -> int:
     """

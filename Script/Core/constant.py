@@ -2028,6 +2028,10 @@ class Instruct:
     """ 时间停止流动 """
     TIME_STOP_OFF = 0
     """ 时间重新流动 """
+    TARGET_FREE_IN_TIME_STOP = 0
+    """ 让对方在时停中获得自由 """
+    TARGET_STOP_IN_TIME_STOP = 0
+    """ 让对方在时停中再次停止 """
 
     #猥亵#
     MAKE_COFFEE_ADD = 0
