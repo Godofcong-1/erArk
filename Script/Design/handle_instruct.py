@@ -4892,6 +4892,7 @@ def handle_undress():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.IS_H,
+        constant_promise.Premise.TIME_STOP_OFF,
         constant_promise.Premise.TARGET_NOT_ORGASM_EDGE,
     })
 def handle_orgasm_edge_on():
@@ -4906,6 +4907,7 @@ def handle_orgasm_edge_on():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.IS_H,
+        constant_promise.Premise.TIME_STOP_OFF,
         constant_promise.Premise.TARGET_ORGASM_EDGE,
     })
 def handle_orgasm_edge_off():
