@@ -17263,32 +17263,6 @@ def handle_have_collection(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.NO_FIRST_KISS)
-def handle_no_first_kiss(character_id: int) -> int:
-    """
-    校验是否初吻还在
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.talent[4] == 1
-
-
-@add_premise(constant_promise.Premise.HAVE_FIRST_KISS)
-def handle_have_first_kiss(character_id: int) -> int:
-    """
-    校验是否初吻不在了
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.first_kiss != -1
-
-
 @add_premise(constant_promise.Premise.IS_H)
 def handle_is_h(character_id: int) -> int:
     """
