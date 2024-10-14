@@ -284,6 +284,14 @@ msgstr ""
 msgid "小数据：仅好感、信赖、攻略程度、基础状态（即<>里的那些）|中数据：小数据+角色详细状态+角色人物卡|大数据：能发的都发过去"
 msgstr ""
 
+#: .\data\csv\Ai_Chat_Setting.csv:12
+msgid "将ai生成的内容自动保存为游戏格式的口上文件"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:12
+msgid "选是的话，会在data/talk/ai的目录下生成ai_talk.csv的文件，将ai生成的条目加到里面"
+msgstr ""
+
 #: .\data\csv\Aromatherapy_Recipes.csv:6
 msgid "无"
 msgstr ""

@@ -18,6 +18,18 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
+def text_ai(character_id: int, behavior_id: int, original_text: str):
+    """
+    文本生成AI\n\n
+    Keyword arguments:
+    character_id: int 角色id\n
+    behavior_id: int 行为id\n
+    original_text: str 原始文本
+    """
+    character_data = cache.character_data[character_id]
+
+
+
 class Chat_Ai_Setting_Panel:
     """
     用于文本生成AI设置的面板对象
@@ -217,7 +229,7 @@ class Chat_Ai_Setting_Panel:
             # 输入框
             ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n")
             ask_name_panel = panel.AskForOneMessage()
-            ask_name_panel.set(ask_text, 10)
+            ask_name_panel.set(ask_text, 99)
             OPENAI_API_KEY = ask_name_panel.draw()
             line_feed.draw()
             line_feed.draw()
@@ -246,9 +258,10 @@ class Chat_Ai_Setting_Panel:
     def test_ai(self):
         """测试AI"""
         if "OPENAI_API_KEY" not in cache.ai_chat_api_key:
-            line_feed.text = _(" \n  请先设置OpenAI API密钥\n")
-            line_feed.width = self.width
-            line_feed.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.text = _(" \n  请先设置OpenAI API密钥\n")
+            info_draw.width = self.width
+            info_draw.draw()
             return
         OPENAI_API_KEY = cache.ai_chat_api_key["OPENAI_API_KEY"]
         # print(OPENAI_API_KEY)
