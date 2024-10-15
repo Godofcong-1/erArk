@@ -146,11 +146,14 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
     now_talk_data -- 口上数据
     second_behavior_id -- 二段行为id，默认为0
     """
+    from Script.UI.Panel import chat_ai_setting
+
     now_talk = ""
     if len(now_talk_data):
         talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         now_talk = game_config.config_talk[now_talk_id].context
+        now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
     # 二段结算前会单独绘制一个信息文本
     if second_behavior_id > 0:
@@ -165,6 +168,7 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
         now_talk_text = code_text_to_draw_text(now_talk, character_id)
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
+        # 角色口上
         if unusual_talk_flag:
             # 口上文本的，角色文本颜色
             character_data: game_type.Character = cache.character_data[character_id]
@@ -175,6 +179,14 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
                 now_draw.style = character_data.name
             elif tar_text_color:
                 now_draw.style = target_character_data.name
+        # 地文
+        else:
+            # 如果启用了文本生成ai
+            if cache.ai_chat_setting[1]:
+                now_draw = draw.LineFeedWaitDraw()
+                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
+                now_draw.width = normal_config.config_normal.text_width
+                now_draw.text = now_talk_text
         now_draw.draw()
         # 在最后进行一次换行和等待
         if special_code[0]:

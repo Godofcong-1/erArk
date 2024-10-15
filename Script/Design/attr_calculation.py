@@ -881,11 +881,12 @@ def hypnosis_degree_limit_calculation() -> int:
     return hypnosis_degree_limit
 
 
-def get_character_fall_level(character_id: int) -> int:
+def get_character_fall_level(character_id: int, minus_flag: bool = False) -> int:
     """
     计算角色的攻略等级
     Keyword arguments:
     character_id -- 角色id
+    minus_flag -- 是否对隶属系输出为负数
     Return arguments:
     int -- 攻略等级
     """
@@ -905,6 +906,10 @@ def get_character_fall_level(character_id: int) -> int:
         now_level = 3
     elif handle_premise.handle_self_fall_4(character_id):
         now_level = 4
+
+    # 对隶属系输出为负数
+    if minus_flag and handle_premise.handle_self_fall_obey(character_id):
+        now_level = -now_level
 
     return now_level
 
@@ -953,7 +958,7 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
         elif judge_type == "F":
             if character_data.favorability[0] < judge_value:
                 judge = 0
-                reason += _(f"好感度>={judge_value}  ")
+                reason += _("好感度>={0}  ").format(judge_value)
                 break
         elif judge_type == "X":
             if character_data.trust < judge_value:
@@ -962,21 +967,21 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
                     if character_data.hypnosis.hypnosis_degree >= judge_value / 2:
                         continue
                 judge = 0
-                reason += _(f"信赖度>={judge_value}")
+                reason += _("信赖度>={0}").format(judge_value)
                 if hypnosis_replace_trust_flag:
-                    reason += _(f"或催眠进度>={judge_value/2}")
+                    reason += _("或催眠进度>={0}").format(judge_value/2)
                 reason += "  "
                 break
         elif judge_type == "O":
             if not cache.rhodes_island.facility_open[judge_type_id]:
                 judge = 0
-                reason += _(f"解锁{game_config.config_facility_open[judge_type_id].name}  ")
+                reason += _("解锁{0}  ").format(game_config.config_facility_open[judge_type_id].name)
                 break
         elif judge_type == "G":
             now_level = get_character_fall_level(character_id)
             if now_level < judge_value:
                 judge = 0
-                reason += _(f"攻略等级>={judge_value}  ")
+                reason += _("攻略等级>={0}  ").format(judge_value)
                 break
 
     return judge, reason

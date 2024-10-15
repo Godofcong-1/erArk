@@ -1745,7 +1745,7 @@ class PlayerAbilityText:
         if pl_character_data.pl_collection.eqip_token == [0, [0]]:
             pl_character_data.pl_collection.eqip_token = [1, []]
         equip_number = pl_character_data.pl_collection.eqip_token[0]
-        now_text += _(f"  当前最大可装备数量：{equip_number}\n\n")
+        now_text += _("  当前最大可装备数量：{0}\n\n").format(equip_number)
         now_text += _("  当前装备的信物：\n")
         # 当前正在装备的信物展示
         for chara_id in pl_character_data.pl_collection.eqip_token[1]:
@@ -1793,7 +1793,7 @@ class PlayerAbilityText:
             line.draw()
             # 绘制提示信息
             info_text = _("\n更改装备信物\n")
-            info_text += _(f"当前已装备数量/最大可装备数量：{len(now_equiped)}/{equip_number}\n")
+            info_text += _("当前已装备数量/最大可装备数量：{0}/{1}\n").format(len(now_equiped), equip_number)
             info_text += _("请选择要装备的信物：\n")
             info_draw = draw.LeftDraw()
             info_draw.text = info_text

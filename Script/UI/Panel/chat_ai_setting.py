@@ -3,6 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+from Script.Design import attr_text, attr_calculation
 import openai
 import concurrent.futures
 
@@ -18,7 +19,58 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def text_ai(character_id: int, behavior_id: int, original_text: str):
+def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
+    """
+    判断是否使用文本生成AI\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    behavior_id -- 行为id\n
+    original_text -- 原始文本\n
+    Return arguments:
+    fanal_text -- 最终文本
+    """
+    # 如果AI设置未开启，则直接返回原文本
+    if 1 not in cache.ai_chat_setting or cache.ai_chat_setting[1] == 0:
+        return original_text
+    # 如果api密钥未设置，则直接返回原文本
+    if "OPENAI_API_KEY" not in cache.ai_chat_api_key:
+        return original_text
+    # 判断是否设置了指令类型
+    if cache.ai_chat_setting[2] == 0:
+        safe_flag = False
+        status_data = game_config.config_status[behavior_id]
+        # 判断是否是安全标签
+        for safe_tag in ["日常", "娱乐", "工作"]:
+            if safe_tag in status_data.tag:
+                safe_flag = True
+                break
+        if not safe_flag:
+            return original_text
+
+    # 判断是什么类型的地文
+    if cache.ai_chat_setting[3] == 0:
+        if "地文" not in original_text:
+            return original_text
+
+    # 输出文本生成提示
+    if cache.ai_chat_setting[8] == 0:
+        model = constant.open_ai_model_list[cache.ai_chat_setting[5]]
+        info_draw = draw.NormalDraw()
+        info_text = _("\n（正在调用{0}）\n").format(model)
+        info_draw.text = info_text
+        info_draw.width = window_width
+        info_draw.draw()
+
+    ai_gererate_text = text_ai(character_id, behavior_id, original_text)
+    # 检测是否显示原文本
+    if cache.ai_chat_setting[4] == 1:
+        fanal_text = ai_gererate_text
+    else:
+        fanal_text = original_text + "*\n" + ai_gererate_text
+
+    return fanal_text
+
+def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     """
     文本生成AI\n\n
     Keyword arguments:
@@ -26,8 +78,83 @@ def text_ai(character_id: int, behavior_id: int, original_text: str):
     behavior_id: int 行为id\n
     original_text: str 原始文本
     """
+    OPENAI_API_KEY = cache.ai_chat_api_key["OPENAI_API_KEY"]
     character_data = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    Name = character_data.name
+    TargetNickName = target_character_data.name
+    Location = attr_text.get_scene_path_text(character_data.position)
+    talk_num = cache.ai_chat_setting[9] + 1
 
+    # 系统提示词
+    system_promote = ''
+    for system_promote_cid in game_config.ui_text_data['text_ai_system_promote']:
+        system_promote_text = game_config.ui_text_data['text_ai_system_promote'][system_promote_cid]
+        # 对生成数量的替换处理
+        if "{talk_num}" in system_promote_text:
+            system_promote_text = system_promote_text.replace("{talk_num}", str(talk_num))
+        system_promote += _(system_promote_text)
+    # print(system_promote)
+    user_prompt = _('请根据以下条件，描写两个角色的互动场景。')
+    Behavior_Name = game_config.config_status[behavior_id].name
+    # 有交互对象时
+    if character_id != 0 or character_data.target_character_id != 0:
+        if character_id == 0:
+            pl_name = Name
+            npc_name = TargetNickName
+            favorability = target_character_data.favorability[character_id]
+            favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
+            trust = target_character_data.trust
+            trust_lv, tem = attr_calculation.get_trust_level(trust)
+            ave_lv = int((favorability_lv + trust_lv) / 2)
+            fall_lv = attr_calculation.get_character_fall_level(character_data.target_character_id, minus_flag = True)
+        elif character_data.target_character_id == 0:
+            pl_name = TargetNickName
+            npc_name = Name
+            favorability = character_data.favorability[character_data.target_character_id]
+            favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
+            trust = character_data.trust
+            trust_lv, tem = attr_calculation.get_trust_level(trust)
+            ave_lv = int((favorability_lv + trust_lv) / 2)
+            fall_lv = attr_calculation.get_character_fall_level(character_id, minus_flag = True)
+        else:
+            return original_text
+        # 名字
+        user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
+        # 动作
+        user_prompt += _("{0}正在对{1}进行的动作是{2}。").format(Name, TargetNickName, Behavior_Name)
+        # 关系
+        user_prompt += _("如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。").format(Name, TargetNickName, ave_lv)
+        # 陷落
+        if fall_lv > 0:
+            user_prompt += _("{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。").format(Name, TargetNickName, Name, TargetNickName, fall_lv)
+        elif fall_lv < 0:
+            user_prompt += _("{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。").format(Name, TargetNickName, npc_name, pl_name, fall_lv)
+    else:
+        user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士。").format(Name)
+        user_prompt += _("{0}正在进行的动作是{1}。").format(Name, Behavior_Name)
+    # 地点
+    user_prompt += _("场景发生的地点是{0}。").format(Location)
+
+    client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
+    completion = client.chat.completions.create(
+    model=constant.open_ai_model_list[cache.ai_chat_setting[5]],
+    messages=[
+        {"role": "system", "content": system_promote},
+        {"role": "user", "content": user_prompt}
+    ]
+    )
+
+    ai_gererate_text = completion.choices[0].message.content
+    if ai_gererate_text == None or not len(ai_gererate_text):
+        ai_gererate_text = original_text
+
+    # 在不影响\\n的情况下，将\n删去
+    ai_gererate_text = ai_gererate_text.replace("\n", "")
+    # print(ai_gererate_text)
+
+    return ai_gererate_text
 
 
 class Chat_Ai_Setting_Panel:
@@ -62,7 +189,7 @@ class Chat_Ai_Setting_Panel:
 
                 # 输出提示信息
                 now_draw = draw.NormalDraw()
-                info_text = _(" \n ○文本生成AI是一个试验性的功能，存在相当多的风险，所以需要您确认以下所有免责事项才可以使用\n\n\n 1.该功能需要您自行准备好一个OpenAI的API密钥，并保证电脑环境可以正常访问OpenAI的API，游戏本身不会为您提供相关的获取方法，请自行准备\n\n\n   2.文本生成AI以及网络环境的使用会产生一定的费用，该费用需自己承担，与开发者没有任何关系\n\n\n 3.文本生成AI的使用可能会产生一定的风险，包括但不限于：聊天内容不当、聊天内容不符合社会规范等，开发者不对生成的内容负责，也不代表开发者同意或反对其中的任何观点\n\n\n 4.不恰当的使用过程或生成内容有可能会导致OpenAI对您的api和相关账号提出警告或进一步的停止服务等举措，请牢记该风险，相关的直接或间接损失均需您自己承担，与开发者无关\n\n\n 5.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n 6.基于以上又叠了这么多层buff，明确知道自己在做什么，并且愿意承担费用和风险的人再来点击下一步吧\n\n\n")
+                info_text = _(" \n ○文本生成AI是一个试验性的功能，存在相当多的风险，所以需要您确认以下所有免责事项才可以使用\n\n\n 1.该功能需要您自行准备好一个OpenAI的API密钥，并保证电脑环境可以正常访问OpenAI的API，本游戏不会为您提供相关的获取方法，请自行准备\n\n\n   2.文本生成AI以及网络环境的使用会产生一定的费用，该费用需自己承担，与开发者没有任何关系\n\n\n 3.文本生成AI的使用可能会产生一定的风险，包括但不限于：聊天内容不当、聊天内容不符合社会规范等，开发者不对生成的内容负责，也不代表开发者同意或反对其中的任何观点\n\n\n 4.不恰当的使用过程或生成内容有可能会导致OpenAI对您的api和相关账号提出警告或进一步的停止服务等举措，请牢记该风险，相关的直接或间接损失均需您自己承担，与开发者无关\n\n\n 5.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n 6.基于以上又叠了这么多层buff，明确知道自己在做什么，并且愿意承担费用和风险的人再来点击下一步吧\n\n\n")
                 now_draw.text = info_text
                 now_draw.width = self.width
                 now_draw.draw()
@@ -93,6 +220,9 @@ class Chat_Ai_Setting_Panel:
             # 输出提示信息
             now_draw = draw.NormalDraw()
             info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
+            info_text += _("   开启本功能后，受网络连接速度和模型中文本生成速度影响，在生成文本时会有明显的延迟\n")
+            info_text += _('   系统提示词文件路径为 data/ui_text/text_ai_system_promote.csv ，可以根据自己的需要进行调整，调整后需重启游戏\n')
+            info_text += _('   包含调用、输送数据在内的完整代码，见游戏源码文件路径 Script/UI/Panel/chat_ai_setting.py ，可以根据自己的需要进行调整，调整后需自行打包\n')
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()
@@ -207,10 +337,22 @@ class Chat_Ai_Setting_Panel:
 
     def change_setting(self, cid, option_len):
         """修改设置"""
-        if cache.ai_chat_setting[cid] < option_len - 1:
-            cache.ai_chat_setting[cid] += 1
+        # 调整生成文本数量的选项单独处理
+        if cid == 9:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            ask_text = _("请输入1~10的数字\n")
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 99)
+            new_num = int(ask_panel.draw()) - 1
+            cache.ai_chat_setting[cid] = new_num
         else:
-            cache.ai_chat_setting[cid] = 0
+            if cache.ai_chat_setting[cid] < option_len - 1:
+                cache.ai_chat_setting[cid] += 1
+            else:
+                cache.ai_chat_setting[cid] = 0
 
     def change_api_key(self):
         """修改api密钥"""
@@ -233,6 +375,15 @@ class Chat_Ai_Setting_Panel:
             OPENAI_API_KEY = ask_name_panel.draw()
             line_feed.draw()
             line_feed.draw()
+
+            # 检测输入的api密钥是否符合规范
+            if not OPENAI_API_KEY.startswith("sk-"):
+                info_text = _(" \n  输入的API密钥不符合规范，请重新输入\n")
+                info_draw = draw.NormalDraw()
+                info_draw.text = info_text
+                info_draw.width = self.width
+                info_draw.draw()
+                continue
 
             # 确定按钮
             yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 2)
