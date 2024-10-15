@@ -238,10 +238,11 @@ def build_po_text(po):
     po += '"Content-Transfer-Encoding: 8bit\\n"\n\n'
     return po
 
+print("开始加载游戏数据\n")
+
 config_po = build_po_text(config_po)
 talk_po = build_po_text(talk_po)
 
-# print("进入buildconfig.py了")
 file_list = os.listdir(config_dir)
 index = 0
 for i in file_list:
@@ -341,4 +342,4 @@ with open(po_csv_path, "w", encoding="utf-8") as po_file:
 with open(po_talk_path, "w", encoding="utf-8") as po_file:
     po_file.write(talk_po)
 
-print("Config Building End")
+print("加载完毕")
