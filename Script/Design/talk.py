@@ -182,6 +182,7 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
         # 地文
         else:
             # 如果启用了文本生成ai
+            cache.ai_chat_setting.setdefault(1, 0)
             if cache.ai_chat_setting[1]:
                 now_draw = draw.LineFeedWaitDraw()
                 now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
