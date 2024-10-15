@@ -16,6 +16,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
+#: .\data\talk\ai\ai_talk.csv:6
+msgid "昏暗的走廊中，寂静如沉睡的巨兽，只有阿米娅的高跟鞋在瓷砖上轻轻叩击。\n博士站在走廊尽头，手里握着平板电脑，目光炯炯地望向阿米娅。\n阿米娅微微躬身，神情恭敬，仿佛那对目光是锐利的箭矢，直穿她的灵魂。\n"
+msgstr ""
+
+#: .\data\talk\ai\ai_talk.csv:7
+msgid "在控制中枢的走廊上，凯尔希犹如一只初出茅庐的雏鸟，小心翼翼地行走着。\n博士微微颔首，沉稳如山，与她擦肩而过，仿佛一片浮云拂过青山的眉宇。\n\"请注意前方，保持安全距离，\"博士不动声色地提醒，声音如同春风般轻柔温和。\n"
+msgstr ""
+
+#: .\data\talk\ai\ai_talk.csv:8
+msgid "可露希尔站在控制中枢走廊，步伐犹如春日的微风轻巧而迅捷。\n博士的声音如同冰冷的机械音，打破了走廊的宁静：“你为何出现在此处？”\n可露希尔微微蹙眉，露出若有所思的神情，似在思索一个未解的难题。\n"
+msgstr ""
+
 #: .\data\talk\arts\active_h.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-逆推的地文"
 msgstr ""

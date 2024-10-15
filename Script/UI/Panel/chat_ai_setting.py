@@ -6,6 +6,7 @@ from Script.Config import game_config, normal_config
 from Script.Design import attr_text, attr_calculation
 import openai
 import concurrent.futures
+import os
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -67,6 +68,35 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
         fanal_text = ai_gererate_text
     else:
         fanal_text = original_text + "*\n" + ai_gererate_text
+
+    # 是否保存
+    if cache.ai_chat_setting[7] == 1:
+        save_path = "data/talk/ai/ai_talk.csv"
+        # 检测是否存在文件，如果不存在的话，创建文件
+        # 检查文件是否存在
+        if not os.path.exists(save_path):
+            # 如果文件不存在，创建文件夹和文件
+            os.makedirs(os.path.dirname(save_path), exist_ok=True)
+            with open(save_path, 'w', encoding='utf-8') as f:
+                f.write("cid,behavior_id,adv_id,premise,context\n")
+                f.write("口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n")
+                f.write("str,int,int,str,str\n")
+                f.write("0,0,0,0,1\n")
+                f.write("口上配置数据,,,,\n")
+
+        # 读取save_path文件的最后一行，获取其cid，然后加1
+        with open(save_path, "r", encoding='utf-8') as f:
+            lines = f.readlines()
+            last_line = lines[-1]
+            last_cid = last_line.split(",")[0]
+            if last_cid == "口上配置数据":
+                new_cid = 0
+            else:
+                new_cid = int(last_cid) + 1
+
+        # 保存数据
+        with open(save_path, "a", encoding='utf-8') as f:
+            f.write(f"{new_cid},{behavior_id},0,0,{ai_gererate_text}\n")
 
     return fanal_text
 
