@@ -32,6 +32,7 @@ jobs:
 
       - name: Build Game Config
         run: |
+          $env:PYTHONIOENCODING="utf-8"
           python buildconfig.py
 
       - name: Build Game Cache
