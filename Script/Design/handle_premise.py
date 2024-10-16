@@ -18018,6 +18018,56 @@ def handle_assistant_live_together_off(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_PL)
+def handle_self_have_nick_name_to_pl(character_id: int) -> int:
+    """
+    自己已设定对玩家的称呼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return len(character_data.nick_name_to_pl)
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HAVE_NICK_NAME_TO_PL)
+def handle_self_not_have_nick_name_to_pl(character_id: int) -> int:
+    """
+    自己未设定对玩家的称呼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_have_nick_name_to_pl(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_SELF)
+def handle_self_have_nick_name_to_self(character_id: int) -> int:
+    """
+    自己已设定玩家对自己的称呼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return len(character_data.nick_name)
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HAVE_NICK_NAME_TO_SELF)
+def handle_self_not_have_nick_name_to_self(character_id: int) -> int:
+    """
+    自己未设定玩家对自己的称呼
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_have_nick_name_to_self(character_id)
+
+
 @add_premise(constant_promise.Premise.JJ_0)
 def handle_jj_0(character_id: int) -> int:
     """

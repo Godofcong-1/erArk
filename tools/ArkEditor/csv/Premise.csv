@@ -462,6 +462,11 @@ in_assistant_ai_link,IN_ASSISTANT_AI_LINK,属性_助理,自己正在助理服务
 assistant_live_together_on,ASSISTANT_LIVE_TOGETHER_ON,属性_助理,自己的助理属性为正在同居
 assistant_live_together_off,ASSISTANT_LIVE_TOGETHER_OFF,属性_助理,自己的助理属性为未同居
 
+self_have_nick_name_to_pl,SELF_HAVE_NICK_NAME_TO_PL,属性_昵称,自己已设定对玩家的称呼
+self_not_have_nick_name_to_pl,SELF_NOT_HAVE_NICK_NAME_TO_PL,属性_昵称,自己未设定对玩家的称呼
+self_have_nick_name_to_self,SELF_HAVE_NICK_NAME_TO_SELF,属性_昵称,自己已设定玩家对自己的称呼
+self_not_have_nick_name_to_self,SELF_NOT_HAVE_NICK_NAME_TO_SELF,属性_昵称,自己未设定玩家对自己的称呼
+
 jj_0,JJ_0,属性_身体部位,自身阴茎大小为短小
 jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通
 jj_2,JJ_2,属性_身体部位,自身阴茎大小为粗大

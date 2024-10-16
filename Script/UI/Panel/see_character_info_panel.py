@@ -426,8 +426,8 @@ class CharacterInfoHead:
         # 非清醒时输出当前状态
         sleep_draw = draw.LeftDraw()
         sleep_draw.style = "little_dark_slate_blue"
-        sleep_text_list = [_(" <清醒>"), _(" <疲劳>"), _(" <昏昏欲睡>"), _(" <随时睡着>")]
-        sleep_text = sleep_text_list[attr_calculation.get_tired_level(character_data.tired_point)]
+        sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
+        sleep_text = " <" + constant.sleep_text_list[sleep_lv] + ">"
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)

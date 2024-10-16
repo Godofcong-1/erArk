@@ -927,6 +927,15 @@ class Premise:
     ASSISTANT_LIVE_TOGETHER_OFF = "assistant_live_together_off"
     """ 属性_助理 自己的助理属性为未同居 """
 
+    SELF_HAVE_NICK_NAME_TO_PL = "self_have_nick_name_to_pl"
+    """ 属性_昵称 自己已设定对玩家的称呼 """
+    SELF_NOT_HAVE_NICK_NAME_TO_PL = "self_not_have_nick_name_to_pl"
+    """ 属性_昵称 自己未设定对玩家的称呼 """
+    SELF_HAVE_NICK_NAME_TO_SELF = "self_have_nick_name_to_self"
+    """ 属性_昵称 自己已设定玩家对自己的称呼 """
+    SELF_NOT_HAVE_NICK_NAME_TO_SELF = "self_not_have_nick_name_to_self"
+    """ 属性_昵称 自己未设定玩家对自己的称呼 """
+
     JJ_0 = "jj_0"
     """ 属性_身体部位 自身阴茎大小为短小 """
     JJ_1 = "jj_1"

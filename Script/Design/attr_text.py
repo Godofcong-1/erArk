@@ -169,3 +169,18 @@ def get_semen_now_text(level: int,position: int) -> str:
         return "被射上了非常多的精液"
     elif level == 5:
         return "被射上了多得数不清的精液"
+
+
+def get_age_talent_text(character_id: int) -> str:
+    """
+    按角色Id获取年龄素质文本
+    Keyword arguments:
+    character_id -- 角色Id
+    Return arguments:
+    str -- 年龄素质文本
+    """
+    charactert_data = cache.character_data[character_id]
+    for talent_id in range(101, 109):
+        if charactert_data.talent[talent_id]:
+            return game_config.config_talent[talent_id].name
+    return ""
