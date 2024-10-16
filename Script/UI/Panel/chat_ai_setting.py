@@ -368,7 +368,7 @@ class Chat_Ai_Setting_Panel:
             # 输出提示信息
             now_draw = draw.NormalDraw()
             info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
-            info_text += _("   开启本功能后，受网络连接速度和模型中文本生成速度影响，在生成文本时会有明显的延迟\n")
+            info_text += _("   开启本功能后，受网络连接速度和模型的文本生成速度影响，在生成文本时会有明显的延迟\n")
             info_text += _('   系统提示词文件路径为 data/ui_text/text_ai_system_promote.csv ，可以根据自己的需要进行调整，调整后需重启游戏\n')
             info_text += _('   包含调用、输送数据在内的完整代码，见游戏源码文件路径 Script/UI/Panel/chat_ai_setting.py ，可以根据自己的需要进行调整，调整后需自行打包\n')
             now_draw.text = info_text
@@ -427,13 +427,13 @@ class Chat_Ai_Setting_Panel:
                     OPENAI_API_KEY = _("未设置")
                 else:
                     OPENAI_API_KEY = _("已设置")
-                key_info_text = f"  OpenAI API密钥： {OPENAI_API_KEY}\n"
+                key_info_text = _("  OpenAI API密钥： {0}\n").format(OPENAI_API_KEY)
                 GEMINI_API_KEY = cache.ai_chat_api_key.get("GEMINI_API_KEY", "")
                 if GEMINI_API_KEY == "":
                     GEMINI_API_KEY = _("未设置")
                 else:
                     GEMINI_API_KEY = _("已设置")
-                key_info_text += f"  Gemini API密钥： {GEMINI_API_KEY}\n"
+                key_info_text += _("  Gemini API密钥： {0}\n").format(GEMINI_API_KEY)
                 key_info_draw = draw.NormalDraw()
                 key_info_draw.text = key_info_text
                 key_info_draw.width = self.width
@@ -531,7 +531,7 @@ class Chat_Ai_Setting_Panel:
 
             # 输出提示信息
             now_draw = draw.NormalDraw()
-            info_text = _(f" \n ○请在下方输入您的{key_type}，输入完成后点击[确定]即可保存，保存后会在当前目录下创建一个文件，请注意保管密钥文件，谨防泄露\n\n\n")
+            info_text = _(" \n ○请在下方输入您的{0}，输入完成后点击[确定]即可保存，保存后会在当前目录下创建一个文件，请注意保管密钥文件，谨防泄露\n\n\n").format(key_type)
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()
@@ -580,6 +580,11 @@ class Chat_Ai_Setting_Panel:
         """更新或添加键值对"""
         rows = []
         key_found = False
+
+        # 检查文件是否存在，如果不存在则创建文件
+        if not os.path.exists(file_path):
+            with open(file_path, "w", newline='', encoding='utf-8') as f:
+                pass  # 创建一个空文件
 
         # 读取文件内容
         with open(file_path, "r", newline='', encoding='utf-8') as f:
@@ -639,7 +644,7 @@ class Chat_Ai_Setting_Panel:
                 info_text = _(" \n  测试不通过，原因：连接超时\n")
                 self.test_flag = 2
             except Exception as e:
-                info_text = _(f" \n  测试不通过，原因：{e}\n")
+                info_text = _(" \n  测试不通过，原因：{0}\n").format(e)
                 self.test_flag = 2
         info_draw = draw.NormalDraw()
         info_draw.text = info_text
