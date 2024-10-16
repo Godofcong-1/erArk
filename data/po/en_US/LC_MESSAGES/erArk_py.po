@@ -7573,3 +7573,423 @@ msgstr ""
 
 msgid "  当前没有可以选择的信物\n"
 msgstr ""
+
+msgid "清醒"
+msgstr ""
+
+msgid "疲劳"
+msgstr ""
+
+msgid "昏昏欲睡"
+msgstr ""
+
+msgid "随时睡着"
+msgstr ""
+
+msgid "好感度>={0}  "
+msgstr ""
+
+msgid "信赖度>={0}"
+msgstr ""
+
+msgid "或催眠进度>={0}"
+msgstr ""
+
+msgid "解锁{0}  "
+msgstr ""
+
+msgid "攻略等级>={0}  "
+msgstr ""
+
+msgid "+睡眠(+999)"
+msgstr ""
+
+msgid "+时停(+9999)"
+msgstr ""
+
+msgid "性爱"
+msgstr ""
+
+msgid "药物"
+msgstr ""
+
+msgid "SM"
+msgstr ""
+
+msgid "非逆推"
+msgstr ""
+
+msgid "破处"
+msgstr ""
+
+msgid "文本生成AI设置"
+msgstr ""
+
+msgid "切换催眠模式"
+msgstr ""
+
+msgid "时间停止流动"
+msgstr ""
+
+msgid "时间重新流动"
+msgstr ""
+
+msgid "让对方在时停中获得自由"
+msgstr ""
+
+msgid "让对方在时停中再次停止"
+msgstr ""
+
+msgid "角色特殊指令"
+msgstr ""
+
+msgid "清洁口交"
+msgstr ""
+
+msgid "绝顶寸止"
+msgstr ""
+
+msgid "绝顶解放"
+msgstr ""
+
+msgid "技艺"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}从未在有意识下被中出过，因此不会意识到自己已经怀孕了\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}获得了[无意识妊娠]\n"
+msgstr ""
+
+msgid "成功寸止了{0}的绝顶，但差不多也到了能控制住的极限了，还是尽快释放出来比较好\n"
+msgstr ""
+
+msgid "成功寸止了{0}的绝顶\n"
+msgstr ""
+
+msgid "尝试寸止{0}的绝顶，但失败了\n"
+msgstr ""
+
+msgid "成功寸止了{0}的绝顶，但已经超过了能控制住的极限，随时都可能释放出来\n"
+msgstr ""
+
+msgid "超强"
+msgstr ""
+
+msgid "在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n"
+msgstr ""
+
+msgid "  （未选择的源石能力均可在游戏中满足特定条件解锁）\n"
+msgstr ""
+
+msgid ""
+"\n"
+"（正在调用{0}）\n"
+msgstr ""
+
+msgid "请根据以下条件，描写两个角色的互动场景："
+msgstr ""
+
+msgid "场景发生的地点是{0}。"
+msgstr ""
+
+msgid "在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。"
+msgstr ""
+
+msgid "{0}正在对{1}进行的动作是{2}。"
+msgstr ""
+
+msgid "如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。"
+msgstr ""
+
+msgid "{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。"
+msgstr ""
+
+msgid ""
+"{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。"
+msgstr ""
+
+msgid "{0}的年龄是{1}。"
+msgstr ""
+
+msgid "{0}正在睡觉，睡眠的深度是{1}。"
+msgstr ""
+
+msgid "{0}有些困了，困的程度为{1}。"
+msgstr ""
+
+msgid "{0}的心情状态是{1}。"
+msgstr ""
+
+msgid "{0}正在跟随{1}一起行动。"
+msgstr ""
+
+msgid "{0}有点想上厕所尿尿。"
+msgstr ""
+
+msgid "{0}有点饿了，想吃东西。"
+msgstr ""
+
+msgid "{0}被{1}催眠了。"
+msgstr ""
+
+msgid "{0}被{1}监禁在监狱里了。"
+msgstr ""
+
+msgid "{0}不是公司的员工，是前来拜访的访客。"
+msgstr ""
+
+msgid "{0}正处在停止的时间中，无法做出任何反应。"
+msgstr ""
+
+msgid "{0}的职业是{1}。"
+msgstr ""
+
+msgid "{0}是一种虚构的奇幻种族，种族名是{1}。"
+msgstr ""
+
+msgid "{0}的出生地是{1}。"
+msgstr ""
+
+msgid "{0}所属的具体势力是{1}。"
+msgstr ""
+
+msgid "{0}有以下素质特性："
+msgstr ""
+
+msgid "{0}、"
+msgstr ""
+
+msgid "{0}穿着的衣服有："
+msgstr ""
+
+msgid "{0}的工作是{1}。"
+msgstr ""
+
+msgid "{0}称呼{1}为{2}。"
+msgstr ""
+
+msgid "在当前的场景里，{0}是医药公司的领导人之一，被称为博士。"
+msgstr ""
+
+msgid "{0}正在进行的动作是{1}。"
+msgstr ""
+
+msgid ""
+" \n"
+" ○文本生成AI是一个试验性的功能，存在相当多的风险，所以需要您确认以下所有免责事项才可以使用\n"
+"\n"
+"\n"
+" 1.该功能需要您自行准备好OpenAI/Gemini的API密钥，并保证电脑的网络环境可以正常访问该API，本游戏不会为您提供相关的获取方法，请自行准备\n"
+"\n"
+"\n"
+"   2.文本生成AI以及网络环境的使用会产生一定的费用，该费用需自己承担，与开发者没有任何关系\n"
+"\n"
+"\n"
+" 3.文本生成AI的使用可能会产生一定的风险，包括但不限于：聊天内容不当、聊天内容不符合社会规范等，开发者不对生成的内容负责，也不代表开发者同意或反对其中的任何观点\n"
+"\n"
+"\n"
+" 4.不恰当的使用过程或生成内容有可能会导致模型提供商对您的api和相关账号提出警告或进一步的停止服务等举措，请牢记该风险，相关的直接或间接损失均需您自己承担，与开发者无关\n"
+"\n"
+"\n"
+" 5.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n"
+"\n"
+"\n"
+" 6.基于以上又叠了这么多层buff，明确知道自己在做什么，并且愿意承担费用和风险的人再来点击下一步吧\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "[0]我不太确定，再考虑一下"
+msgstr ""
+
+msgid "[1]我已阅读并同意以上所有免责事项，理解并愿意承担对应的费用和风险"
+msgstr ""
+
+msgid "下一步"
+msgstr ""
+
+msgid "   开启本功能后，受网络连接速度和模型的文本生成速度影响，在生成文本时会有明显的延迟\n"
+msgstr ""
+
+msgid ""
+"   系统提示词文件路径为 data/ui_text/text_ai_system_promote.csv "
+"，可以根据自己的需要进行调整，调整后需重启游戏\n"
+msgstr ""
+
+msgid ""
+"   包含调用、输送数据在内的完整代码，见游戏源码文件路径 Script/UI/Panel/chat_ai_setting.py "
+"，可以根据自己的需要进行调整，调整后需自行打包\n"
+msgstr ""
+
+msgid "未设置"
+msgstr ""
+
+msgid "已设置"
+msgstr ""
+
+msgid "  OpenAI API密钥： {0}\n"
+msgstr ""
+
+msgid "  Gemini API密钥： {0}\n"
+msgstr ""
+
+msgid "  [更改OpenAI API密钥] "
+msgstr ""
+
+msgid "更改OpenAI API密钥"
+msgstr ""
+
+msgid "  [更改Gemini API密钥] "
+msgstr ""
+
+msgid "更改Gemini API密钥"
+msgstr ""
+
+msgid "  [测试] "
+msgstr ""
+
+msgid "测试"
+msgstr ""
+
+msgid ""
+" \n"
+"  测试通过，当前调用的模型为："
+msgstr ""
+
+msgid ""
+" \n"
+"  测试不通过\n"
+msgstr ""
+
+msgid "请输入1~10的数字\n"
+msgstr ""
+
+msgid "更改API密钥"
+msgstr ""
+
+msgid ""
+" \n"
+" ○请在下方输入您的{0}，输入完成后点击[确定]即可保存，保存后会在当前目录下创建一个文件，请注意保管密钥文件，谨防泄露\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n"
+msgstr ""
+
+msgid "请输入您的Gemini API密钥，应当是一个长段字符串\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  输入的API密钥不符合规范，请重新输入\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  请先设置该模型的API密钥\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  测试通过\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  测试不通过，原因：连接超时\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  测试不通过，原因：{0}\n"
+msgstr ""
+
+msgid "[002]时间系能力："
+msgstr ""
+
+msgid "[003]催眠系能力："
+msgstr ""
+
+msgid "当前默认催眠类型：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"时间系能力（消耗2理智/min）：\n"
+msgstr ""
+
+msgid "：需要全干员无意识性交经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要对干员的时姦经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
+msgstr ""
+
+msgid "：需要对干员的睡姦经验≥{0}（当前{1}）"
+msgstr ""
+
+msgid ""
+"\n"
+"可用的催眠类型：\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已切换为{0}催眠模式\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}会理所当然地接受{1}的不合理行为了\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}会把{1}视为空气了\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}可以随意地操纵{1}的身体了\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}可以向{1}的潜意识灌输指令了\n"
+"\n"
+msgstr ""
+
+msgid "心灵"
+msgstr ""
+
+msgid "选择{0}控制选项"
+msgstr ""
+
+msgid ""
+"\n"
+"可以对{0}使用的控制指令：\n"
+"\n"
+msgstr ""
+
+msgid " <寸止>"
+msgstr ""
+
+msgid " <时停>"
+msgstr ""
+
+msgid ""
+"  当前最大可装备数量：{0}\n"
+"\n"
+msgstr ""
+
+msgid "当前已装备数量/最大可装备数量：{0}/{1}\n"
+msgstr ""
