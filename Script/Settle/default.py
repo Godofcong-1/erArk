@@ -6317,6 +6317,50 @@ def handle_time_stop_orgasm_release(
             character_data.h_state.time_stop_orgasm_count[body_part] = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.END_H_ADD_HPMP_MAX)
+def handle_end_h_add_hpmp_max(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （结束H）根据本次H中的绝顶次数增加体力气力上限
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    orgasm_count = 0
+    for body_part in game_config.config_body_part:
+        orgasm_count += character_data.h_state.orgasm_count[body_part][0]
+    if orgasm_count > 0:
+        character_data.hit_point_max += orgasm_count * 2
+        character_data.mana_point_max += orgasm_count * 3
+        # 输出提示信息
+        info_draw = draw.NormalDraw()
+        info_draw.text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n").format(character_data.name, orgasm_count * 2, orgasm_count * 3)
+        info_draw.width = width
+        info_draw.draw()
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id:
+        orgasm_count = 0
+        for body_part in game_config.config_body_part:
+            orgasm_count += target_data.h_state.orgasm_count[body_part][0]
+        if orgasm_count > 0:
+            target_data.hit_point_max += orgasm_count * 2
+            target_data.mana_point_max += orgasm_count * 3
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n").format(target_data.name, orgasm_count * 2, orgasm_count * 3)
+            info_draw.width = width
+            info_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,

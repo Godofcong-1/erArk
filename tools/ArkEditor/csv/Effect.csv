@@ -116,13 +116,13 @@ cid,effect_name,effect_type,effect
 205,TARGET_ADD_1_A_EXPERIENCE,属性_经验,交互对象增加1A经验
 206,TARGET_ADD_1_U_EXPERIENCE,属性_经验,交互对象增加1U经验
 207,TARGET_ADD_1_W_EXPERIENCE,属性_经验,交互对象增加1W经验
-210,TARGET_ADD_1_NClimax_EXPERIENCE,属性_经验,交互对象增加1N绝顶经验
-211,TARGET_ADD_1_BClimax_EXPERIENCE,属性_经验,交互对象增加1B绝顶经验
-212,TARGET_ADD_1_CClimax_EXPERIENCE,属性_经验,交互对象增加1C绝顶经验
-214,TARGET_ADD_1_VClimax_EXPERIENCE,属性_经验,交互对象增加1V绝顶经验
-215,TARGET_ADD_1_AClimax_EXPERIENCE,属性_经验,交互对象增加1A绝顶经验
-216,TARGET_ADD_1_UClimax_EXPERIENCE,属性_经验,交互对象增加1U绝顶经验
-217,TARGET_ADD_1_WClimax_EXPERIENCE,属性_经验,交互对象增加1W绝顶经验
+210,TARGET_ADD_1_NClimax_EXPERIENCE,属性_经验,交互对象增加1N绝顶经验+1绝顶经验
+211,TARGET_ADD_1_BClimax_EXPERIENCE,属性_经验,交互对象增加1B绝顶经验+1绝顶经验
+212,TARGET_ADD_1_CClimax_EXPERIENCE,属性_经验,交互对象增加1C绝顶经验+1绝顶经验
+214,TARGET_ADD_1_VClimax_EXPERIENCE,属性_经验,交互对象增加1V绝顶经验+1绝顶经验
+215,TARGET_ADD_1_AClimax_EXPERIENCE,属性_经验,交互对象增加1A绝顶经验+1绝顶经验
+216,TARGET_ADD_1_UClimax_EXPERIENCE,属性_经验,交互对象增加1U绝顶经验+1绝顶经验
+217,TARGET_ADD_1_WClimax_EXPERIENCE,属性_经验,交互对象增加1W绝顶经验+1绝顶经验
 221,TARGET_ADD_1_Cumming_EXPERIENCE,属性_经验,交互对象增加1射精经验
 222,TARGET_ADD_1_Milking_EXPERIENCE,属性_经验,交互对象增加1喷乳经验
 223,TARGET_ADD_1_Peeing_EXPERIENCE,属性_经验,交互对象增加1放尿经验
@@ -218,6 +218,15 @@ cid,effect_name,effect_type,effect
 345,ADD_1_Read_H_EXPERIENCE,属性_经验,增加1H书阅读经验
 350,Both_ADD_1_Learn_EXPERIENCE,属性_经验,双方增加1学识经验
 351,ADD_1_Masterbate_EXPERIENCE,属性_经验,增加1自慰经验
+352,ADD_1_Sleep_Sex_EXPERIENCE,属性_经验,增加1睡姦经验
+353,ADD_1_be_Sleep_Sex_EXPERIENCE,属性_经验,增加1被睡姦经验
+354,TARGET_ADD_1_be_Sleep_Sex_EXPERIENCE,属性_经验,交互对象增加1被睡姦经验
+355,ADD_1_Time_Stop_Sex_EXPERIENCE,属性_经验,增加1时姦经验
+356,ADD_1_be_Time_Stop_Sex_EXPERIENCE,属性_经验,增加1被时姦经验
+357,TARGET_ADD_1_be_Time_Stop_Sex_EXPERIENCE,属性_经验,交互对象增加1被时姦经验
+358,ADD_1_Hypnosis_Sex_EXPERIENCE,属性_经验,增加1催眠姦经验
+359,ADD_1_be_Hypnosis_Sex_EXPERIENCE,属性_经验,增加1被催眠姦经验
+360,TARGET_ADD_1_be_Hypnosis_Sex_EXPERIENCE,属性_经验,交互对象增加1被催眠姦经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零
@@ -292,6 +301,8 @@ cid,effect_name,effect_type,effect
 524,MASTUREBATE_ADD_ADJUST,指令_专用结算,（自慰用）选择自己最高感度的部位，增加该部位快感和经验
 525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
 526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
+527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
+528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）根据本次H中的绝顶次数增加体力气力上限
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
