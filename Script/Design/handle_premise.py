@@ -17565,6 +17565,18 @@ def handle_sex_panel_show(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.GENERATE_BY_AI)
+def handle_generate_by_ai(character_id: int) -> int:
+    """
+    该文本由AI自动生成
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return 0
+
+
 @add_premise(constant_promise.Premise.IS_ASSISTANT)
 def handle_is_assistant(character_id: int) -> int:
     """

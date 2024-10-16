@@ -2395,6 +2395,6 @@ first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾�
 special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0]
 """ 意外中断H的行为id列表 """
 
-open_ai_model_list = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini']
+open_ai_model_list = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini', 'gemini-1.5-pro', 'gemini-1.5-flash']
 
 # 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛，诺伊，√，はるか

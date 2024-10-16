@@ -24,6 +24,7 @@ data/data_from_game
 # AI
 tools/AI
 ai_chat_api_key.txt
+ai_chat_api_key.csv
 data/talk/ai
 
 # 地图数据

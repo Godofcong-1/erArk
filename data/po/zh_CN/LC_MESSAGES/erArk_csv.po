@@ -269,7 +269,7 @@ msgid "不同的模型有不同的价格和性能，具体的差别请查阅官�
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Setting.csv:10
-msgid "GPT-3.5 Turbo|GPT-4|GPT-4-turbo|GPT-4o|GPT-4o mini"
+msgid "GPT-3.5 Turbo|GPT-4|GPT-4-turbo|GPT-4o|GPT-4o mini|gemini-1.5-pro|gemini-1.5-flash"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Setting.csv:11

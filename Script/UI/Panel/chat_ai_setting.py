@@ -5,8 +5,10 @@ from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import attr_text, attr_calculation
 import openai
+import google.generativeai as genai
 import concurrent.futures
 import os
+import csv
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -34,7 +36,14 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
     if 1 not in cache.ai_chat_setting or cache.ai_chat_setting[1] == 0:
         return original_text
     # 如果api密钥未设置，则直接返回原文本
-    if "OPENAI_API_KEY" not in cache.ai_chat_api_key:
+
+    # 判断在调用哪个api
+    model = constant.open_ai_model_list[cache.ai_chat_setting[5]]
+    if 'gpt' in model:
+        now_key_type = 'OPENAI_API_KEY'
+    elif 'gemini' in model:
+        now_key_type = 'GEMINI_API_KEY'
+    if now_key_type not in cache.ai_chat_api_key:
         return original_text
     # 判断是否设置了指令类型
     if cache.ai_chat_setting[2] == 0:
@@ -96,7 +105,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
 
         # 保存数据
         with open(save_path, "a", encoding='utf-8') as f:
-            f.write(f"{new_cid},{behavior_id},0,0,{ai_gererate_text}\n")
+            f.write(f"{new_cid},{behavior_id},0,generate_by_ai,{ai_gererate_text}\n")
 
     return fanal_text
 
@@ -108,13 +117,21 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     behavior_id: int 行为id\n
     original_text: str 原始文本
     """
-    OPENAI_API_KEY = cache.ai_chat_api_key["OPENAI_API_KEY"]
+    # 基础数据
     character_data = cache.character_data[character_id]
     target_character_data = cache.character_data[character_data.target_character_id]
     Name = character_data.name
     TargetNickName = target_character_data.name
     Location = attr_text.get_scene_path_text(character_data.position)
     talk_num = cache.ai_chat_setting[9] + 1
+
+    # 模型与密钥
+    model = constant.open_ai_model_list[cache.ai_chat_setting[5]]
+    if 'gpt' in model:
+        now_key_type = 'OPENAI_API_KEY'
+    elif 'gemini' in model:
+        now_key_type = 'GEMINI_API_KEY'
+    API_KEY = cache.ai_chat_api_key[now_key_type]
 
     # 系统提示词
     system_promote = ''
@@ -166,22 +183,40 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     # 地点
     user_prompt += _("场景发生的地点是{0}。").format(Location)
 
-    client = openai.OpenAI(api_key=OPENAI_API_KEY)
+    # 开始调用AI
 
-    completion = client.chat.completions.create(
-    model=constant.open_ai_model_list[cache.ai_chat_setting[5]],
-    messages=[
-        {"role": "system", "content": system_promote},
-        {"role": "user", "content": user_prompt}
-    ]
-    )
+    # 调用OpenAI
+    if now_key_type == "OPENAI_API_KEY":
+        # 创建client
+        client = openai.OpenAI(api_key=API_KEY)
+        # 发送请求
+        completion = client.chat.completions.create(
+        model=constant.open_ai_model_list[cache.ai_chat_setting[5]],
+        messages=[
+            {"role": "system", "content": system_promote},
+            {"role": "user", "content": user_prompt}
+        ]
+        )
+        # 获取返回的文本
+        ai_gererate_text = completion.choices[0].message.content
+    # 调用Gemini
+    elif now_key_type == "GEMINI_API_KEY":
+        # 创建client
+        genai.configure(api_key=API_KEY)
+        client = genai.GenerativeModel(model, system_instruction = system_promote)
+        # 发送请求
+        completion = client.generate_content(user_prompt)
+        # 获取返回的文本
+        ai_gererate_text = completion.text
 
-    ai_gererate_text = completion.choices[0].message.content
+    # 如果没有返回文本，则返回原文本
     if ai_gererate_text == None or not len(ai_gererate_text):
         ai_gererate_text = original_text
 
     # 在不影响\\n的情况下，将\n删去
     ai_gererate_text = ai_gererate_text.replace("\n", "")
+    # 删去空格
+    ai_gererate_text = ai_gererate_text.replace(" ", "")
     # print(ai_gererate_text)
 
     return ai_gererate_text
@@ -219,7 +254,7 @@ class Chat_Ai_Setting_Panel:
 
                 # 输出提示信息
                 now_draw = draw.NormalDraw()
-                info_text = _(" \n ○文本生成AI是一个试验性的功能，存在相当多的风险，所以需要您确认以下所有免责事项才可以使用\n\n\n 1.该功能需要您自行准备好一个OpenAI的API密钥，并保证电脑环境可以正常访问OpenAI的API，本游戏不会为您提供相关的获取方法，请自行准备\n\n\n   2.文本生成AI以及网络环境的使用会产生一定的费用，该费用需自己承担，与开发者没有任何关系\n\n\n 3.文本生成AI的使用可能会产生一定的风险，包括但不限于：聊天内容不当、聊天内容不符合社会规范等，开发者不对生成的内容负责，也不代表开发者同意或反对其中的任何观点\n\n\n 4.不恰当的使用过程或生成内容有可能会导致OpenAI对您的api和相关账号提出警告或进一步的停止服务等举措，请牢记该风险，相关的直接或间接损失均需您自己承担，与开发者无关\n\n\n 5.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n 6.基于以上又叠了这么多层buff，明确知道自己在做什么，并且愿意承担费用和风险的人再来点击下一步吧\n\n\n")
+                info_text = _(" \n ○文本生成AI是一个试验性的功能，存在相当多的风险，所以需要您确认以下所有免责事项才可以使用\n\n\n 1.该功能需要您自行准备好OpenAI/Gemini的API密钥，并保证电脑的网络环境可以正常访问该API，本游戏不会为您提供相关的获取方法，请自行准备\n\n\n   2.文本生成AI以及网络环境的使用会产生一定的费用，该费用需自己承担，与开发者没有任何关系\n\n\n 3.文本生成AI的使用可能会产生一定的风险，包括但不限于：聊天内容不当、聊天内容不符合社会规范等，开发者不对生成的内容负责，也不代表开发者同意或反对其中的任何观点\n\n\n 4.不恰当的使用过程或生成内容有可能会导致模型提供商对您的api和相关账号提出警告或进一步的停止服务等举措，请牢记该风险，相关的直接或间接损失均需您自己承担，与开发者无关\n\n\n 5.本声明的解释权归开发者所有，且在版本更新中声明内容可能有所变更，请以最新版本为准。\n\n\n 6.基于以上又叠了这么多层buff，明确知道自己在做什么，并且愿意承担费用和风险的人再来点击下一步吧\n\n\n")
                 now_draw.text = info_text
                 now_draw.width = self.width
                 now_draw.draw()
@@ -289,13 +324,18 @@ class Chat_Ai_Setting_Panel:
             if cache.ai_chat_setting[1] == 1:
                 line_feed.draw()
                 line_feed.draw()
+
                 # 查看当前目录下是否有api密钥文件
                 try:
-                    with open("ai_chat_api_key.txt", "r") as f:
-                        api_key = f.read()
-                        # 去掉换行符
-                        api_key = api_key.replace("\n", "")
-                        cache.ai_chat_api_key["OPENAI_API_KEY"] = api_key
+                    with open("ai_chat_api_key.csv", "r", encoding='utf-8') as f:
+                        reader = csv.reader(f)
+                        for row in reader:
+                            if row[0] == "OPENAI_API_KEY":
+                                api_key = row[1]
+                                cache.ai_chat_api_key["OPENAI_API_KEY"] = api_key
+                            elif row[0] == "GEMINI_API_KEY":
+                                api_key = row[1]
+                                cache.ai_chat_api_key["GEMINI_API_KEY"] = api_key
                 except FileNotFoundError:
                     pass
                 # 显示当前api的密钥
@@ -305,6 +345,12 @@ class Chat_Ai_Setting_Panel:
                 else:
                     OPENAI_API_KEY = _("已设置")
                 key_info_text = f"  OpenAI API密钥： {OPENAI_API_KEY}\n"
+                GEMINI_API_KEY = cache.ai_chat_api_key.get("GEMINI_API_KEY", "")
+                if GEMINI_API_KEY == "":
+                    GEMINI_API_KEY = _("未设置")
+                else:
+                    GEMINI_API_KEY = _("已设置")
+                key_info_text += f"  Gemini API密钥： {GEMINI_API_KEY}\n"
                 key_info_draw = draw.NormalDraw()
                 key_info_draw.text = key_info_text
                 key_info_draw.width = self.width
@@ -313,7 +359,12 @@ class Chat_Ai_Setting_Panel:
                 # 更改api密钥
                 button_text = _("  [更改OpenAI API密钥] ")
                 button_len = max(len(button_text) * 2, 20)
-                button_draw = draw.LeftButton(button_text, _("更改OpenAI API密钥"), button_len, cmd_func=self.change_api_key)
+                button_draw = draw.CenterButton(button_text, _("更改OpenAI API密钥"), button_len, cmd_func=self.change_api_key, args=("OPENAI_API_KEY"))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                button_text = _("  [更改Gemini API密钥] ")
+                button_len = max(len(button_text) * 2, 20)
+                button_draw = draw.CenterButton(button_text, _("更改Gemini API密钥"), button_len, cmd_func=self.change_api_key, args=("GEMINI_API_KEY"))
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
@@ -384,30 +435,33 @@ class Chat_Ai_Setting_Panel:
             else:
                 cache.ai_chat_setting[cid] = 0
 
-    def change_api_key(self):
+    def change_api_key(self, key_type: str):
         """修改api密钥"""
         while 1:
             return_list = []
-            title_draw = draw.TitleLineDraw(_("更改OpenAI API密钥"), self.width)
+            title_draw = draw.TitleLineDraw(_("更改API密钥"), self.width)
             title_draw.draw()
 
             # 输出提示信息
             now_draw = draw.NormalDraw()
-            info_text = _(" \n ○请在下方输入您的OpenAI API密钥，输入完成后点击[确定]即可保存，保存后会在当前目录下创建一个文件，请注意保管密钥文件，谨防泄露\n\n\n")
+            info_text = _(f" \n ○请在下方输入您的{key_type}，输入完成后点击[确定]即可保存，保存后会在当前目录下创建一个文件，请注意保管密钥文件，谨防泄露\n\n\n")
             now_draw.text = info_text
             now_draw.width = self.width
             now_draw.draw()
 
             # 输入框
-            ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n")
+            if key_type == "OPENAI_API_KEY":
+                ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n")
+            elif key_type == "GEMINI_API_KEY":
+                ask_text = _("请输入您的Gemini API密钥，应当是一个长段字符串\n")
             ask_name_panel = panel.AskForOneMessage()
             ask_name_panel.set(ask_text, 99)
-            OPENAI_API_KEY = ask_name_panel.draw()
+            API_KEY = ask_name_panel.draw()
             line_feed.draw()
             line_feed.draw()
 
             # 检测输入的api密钥是否符合规范
-            if not OPENAI_API_KEY.startswith("sk-"):
+            if key_type == "OPENAI_API_KEY" and not API_KEY.startswith("sk-"):
                 info_text = _(" \n  输入的API密钥不符合规范，请重新输入\n")
                 info_draw = draw.NormalDraw()
                 info_draw.text = info_text
@@ -428,58 +482,99 @@ class Chat_Ai_Setting_Panel:
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == yes_draw.return_text:
-                cache.ai_chat_api_key["OPENAI_API_KEY"] = ask_text
-                # 在当前目录下创建一个文件，保存api密钥
-                with open("ai_chat_api_key.txt", "w") as f:
-                    f.write(OPENAI_API_KEY)
+                cache.ai_chat_api_key[key_type] = ask_text
+                # 调用保存函数
+                self.update_or_add_key("ai_chat_api_key.csv", key_type, API_KEY)
                 break
             elif yrn == back_draw.return_text:
                 break
 
+    def update_or_add_key(self, file_path, key_type, new_api_key):
+        """更新或添加键值对"""
+        rows = []
+        key_found = False
+
+        # 读取文件内容
+        with open(file_path, "r", newline='', encoding='utf-8') as f:
+            reader = csv.reader(f)
+            for row in reader:
+                if row[0] == key_type:
+                    row[1] = new_api_key
+                    key_found = True
+                rows.append(row)
+
+        # 如果没有找到键，则添加新的键值对
+        if not key_found:
+            rows.append([key_type, new_api_key])
+
+        # 写回文件
+        with open(file_path, "w", newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerows(rows)
+
     def test_ai(self):
         """测试AI"""
-        if "OPENAI_API_KEY" not in cache.ai_chat_api_key:
+
+        # 判断在调用哪个api
+        model = constant.open_ai_model_list[cache.ai_chat_setting[5]]
+        if 'gpt' in model:
+            now_key_type = 'OPENAI_API_KEY'
+        elif 'gemini' in model:
+            now_key_type = 'GEMINI_API_KEY'
+
+        # 判断是否设置了api密钥
+        if now_key_type not in cache.ai_chat_api_key:
             info_draw = draw.NormalDraw()
-            info_draw.text = _(" \n  请先设置OpenAI API密钥\n")
+            info_draw.text = _(" \n  请先设置该模型的API密钥\n")
             info_draw.width = self.width
             info_draw.draw()
             return
-        OPENAI_API_KEY = cache.ai_chat_api_key["OPENAI_API_KEY"]
+
+
+        API_KEY = cache.ai_chat_api_key[now_key_type]
         # print(OPENAI_API_KEY)
 
-        client = openai.OpenAI(api_key=OPENAI_API_KEY)
+        if now_key_type == "OPENAI_API_KEY":
+            client = openai.OpenAI(api_key=API_KEY)
+        elif now_key_type == "GEMINI_API_KEY":
+            genai.configure(api_key=API_KEY)
+            client = genai.GenerativeModel(model)
 
         # 测试AI，在30秒内如果没有返回结果，则认为测试不通过
         with concurrent.futures.ThreadPoolExecutor() as executor:
-            future = executor.submit(self.get_completion, client)
+            future = executor.submit(self.get_completion, client, now_key_type)
             try:
                 # 等待30秒以获取结果
                 result = future.result(timeout=30)
                 info_text = _(" \n  测试通过\n")
                 self.test_flag = 1
             except concurrent.futures.TimeoutError:
-                info_text = _(" \n  测试不通过\n")
+                info_text = _(" \n  测试不通过，原因：连接超时\n")
                 self.test_flag = 2
             except Exception as e:
-                info_text = _(" \n  测试不通过\n")
+                info_text = _(f" \n  测试不通过，原因：{e}\n")
                 self.test_flag = 2
         info_draw = draw.NormalDraw()
         info_draw.text = info_text
         info_draw.width = self.width
         info_draw.draw()
 
-    def get_completion(self, client):
-        return client.chat.completions.create(
-            model=constant.open_ai_model_list[cache.ai_chat_setting[5]],
-            messages=[
-                {
-                    "role": "user",
-                    "content": [
-                        {
-                            "type": "text",
-                            "text": "测试消息"
-                        }
-                    ]
-                }
-            ]
-        )
+    def get_completion(self, client, key_type):
+
+        if key_type == "OPENAI_API_KEY":
+            return client.chat.completions.create(
+                model=constant.open_ai_model_list[cache.ai_chat_setting[5]],
+                messages=[
+                    {
+                        "role": "user",
+                        "content": [
+                            {
+                                "type": "text",
+                                "text": "测试消息"
+                            }
+                        ]
+                    }
+                ]
+            )
+        elif key_type == "GEMINI_API_KEY":
+            return client.generate_content("测试消息")
