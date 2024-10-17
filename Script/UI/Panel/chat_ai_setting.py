@@ -272,25 +272,33 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     if now_key_type == "OPENAI_API_KEY":
         # 创建client
         client = openai.OpenAI(api_key=API_KEY)
-        # 发送请求
-        completion = client.chat.completions.create(
-        model=constant.chat_ai_model_list[cache.ai_chat_setting[5]],
-        messages=[
-            {"role": "system", "content": system_promote},
-            {"role": "user", "content": user_prompt}
-        ]
-        )
-        # 获取返回的文本
-        ai_gererate_text = completion.choices[0].message.content
+        try:
+            # 发送请求
+            completion = client.chat.completions.create(
+                model=constant.chat_ai_model_list[cache.ai_chat_setting[5]],
+                messages=[
+                    {"role": "system", "content": system_promote},
+                    {"role": "user", "content": user_prompt}
+                ]
+            )
+            # 获取返回的文本
+            ai_gererate_text = completion.choices[0].message.content
+        except Exception as e:
+            # 如果发生异常，将返回的文本设为空
+            ai_gererate_text = ""
     # 调用Gemini
     elif now_key_type == "GEMINI_API_KEY":
         # 创建client
         genai.configure(api_key=API_KEY)
         client = genai.GenerativeModel(model, system_instruction = system_promote)
-        # 发送请求
-        completion = client.generate_content(user_prompt)
-        # 获取返回的文本
-        ai_gererate_text = completion.text
+        try:
+            # 发送请求
+            completion = client.generate_content(user_prompt)
+            # 获取返回的文本
+            ai_gererate_text = completion.text
+        except Exception as e:
+            # 如果发生异常，将返回的文本设为空
+            ai_gererate_text = ""
 
     # 如果没有返回文本，则返回原文本
     if ai_gererate_text == None or not len(ai_gererate_text):
