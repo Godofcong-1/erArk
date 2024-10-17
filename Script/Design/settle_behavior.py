@@ -993,8 +993,6 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     for orgasm in range(8):
         single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
         all_happy_count += character_data.h_state.orgasm_count[orgasm][1]
-        # 计数归零
-        character_data.h_state.orgasm_count[orgasm][0] = 0
     # print(f"debug happy_count = {happy_count}")
     if character_data.ability[13] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):
         character_data.ability[13] = 1
@@ -1075,38 +1073,43 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
                 character_data.ability[36] = 5
                 now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至5级\n").format(character_data.name)
 
-    # 无觉刻印检测无意识下的绝顶
-    # 快乐刻印检测单指令全部位总高潮次数，2次快乐1,8次快乐2,16次快乐3
-    # 或检测单次H中总绝顶次数，5次快乐1,20次快乐2,50次快乐3
-    # single_happy_count = 0
-    # all_happy_count = 0
-    # for orgasm in range(8):
-    #     single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
-    #     all_happy_count += character_data.h_state.orgasm_count[orgasm][1]
-    #     # 计数归零
-    #     character_data.h_state.orgasm_count[orgasm][0] = 0
-    # # print(f"debug happy_count = {happy_count}")
-    # if character_data.ability[13] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):
-    #     character_data.ability[13] = 1
-    #     character_data.second_behavior[1030] = 1
-    #     # 至少提升为欲望1
-    #     if character_data.ability[33] < 0:
-    #         character_data.ability[33] = 1
-    #         now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至1级\n").format(character_data.name)
-    # if character_data.ability[13] <= 1 and (single_happy_count >= 8 or all_happy_count >= 20):
-    #     character_data.ability[13] = 2
-    #     character_data.second_behavior[1031] = 1
-    #     # 至少提升为欲望3
-    #     if character_data.ability[33] < 3:
-    #         character_data.ability[33] = 3
-    #         now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至3级\n").format(character_data.name)
-    # if character_data.ability[13] <= 2 and (single_happy_count >= 16 or all_happy_count >= 50):
-    #     character_data.ability[13] = 3
-    #     character_data.second_behavior[1032] = 1
-    #     # 至少提升为欲望5
-    #     if character_data.ability[33] < 5:
-    #         character_data.ability[33] = 5
-    #         now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至5级\n").format(character_data.name)
+    # 无觉刻印检测无意识下的绝顶，前3级同快乐，后3级仅检测无意识绝顶经验
+    if handle_premise.handle_unconscious_flag_ge_1(character_id):
+        all_happy_count = 0
+        for orgasm in range(8):
+            single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
+        all_happy_count = character_data.experience[78]
+        # print(f"debug happy_count = {happy_count}")
+        if character_data.ability[19] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):
+            character_data.ability[19] = 1
+            character_data.second_behavior[1061] = 1
+        if character_data.ability[19] <= 1 and (single_happy_count >= 8 or all_happy_count >= 20):
+            character_data.ability[19] = 2
+            character_data.second_behavior[1062] = 1
+        if character_data.ability[19] <= 2 and (single_happy_count >= 16 or all_happy_count >= 50):
+            character_data.ability[19] = 3
+            character_data.second_behavior[1063] = 1
+        if character_data.ability[19] <= 3 and all_happy_count >= 100:
+            character_data.ability[19] = 4
+            character_data.second_behavior[1064] = 1
+            # 至少提升为欲望6
+            if character_data.ability[33] < 6:
+                character_data.ability[33] = 6
+                now_draw_text += _("在无觉刻印的影响下，{0}的欲望提升至6级\n").format(character_data.name)
+        if character_data.ability[19] <= 4 and all_happy_count >= 200:
+            character_data.ability[19] = 5
+            character_data.second_behavior[1065] = 1
+            # 至少提升为欲望7
+            if character_data.ability[33] < 7:
+                character_data.ability[33] = 7
+                now_draw_text += _("在无觉刻印的影响下，{0}的欲望提升至7级\n").format(character_data.name)
+        if character_data.ability[19] <= 5 and all_happy_count >= 500:
+            character_data.ability[19] = 6
+            character_data.second_behavior[1066] = 1
+            # 至少提升为欲望8
+            if character_data.ability[33] < 8:
+                character_data.ability[33] = 8
+                now_draw_text += _("在无觉刻印的影响下，{0}的欲望提升至8级\n").format(character_data.name)
 
     # 恐怖刻印检测恐怖+苦痛/5，20000恐怖1，40000恐怖2，80000恐怖3
     terror_count = 0

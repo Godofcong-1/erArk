@@ -383,12 +383,12 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_ability:
         calculation_text += _("+能力修正(") + str(judge_ability) + ")"
 
-    # 刻印修正，快乐(13)、屈服(14)、时停(16)、恐怖(17)、反发(18)修正#
-    judge_mark = target_data.ability[13] * 50 + target_data.ability[14] * 50
-    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 50 + target_data.ability[18] * 50
+    # 刻印修正，快乐(13)、屈服(14)、苦痛(15)、时停(16)、恐怖(17)、反发(18)、无觉(19)修正#
+    judge_mark = target_data.ability[13] * 50 + target_data.ability[14] * 50 + target_data.ability[15] * 10 + target_data.ability[19] * 25
+    judge_mark -= min(target_data.ability[17] - target_data.ability[16], 0) * 50 + target_data.ability[18] * 100
     judge += judge_mark
     if judge_mark:
-        calculation_text += _("+刻印修正(") + str(judge_mark) + ")"
+        calculation_text += _("+全刻印总修正(") + str(judge_mark) + ")"
 
     # 心情修正，好心情+10，坏心情-10，愤怒-30
     judge_angry = attr_calculation.get_angry_level(target_data.angry_point) * 20
