@@ -932,7 +932,7 @@ def handle_time_stop_off():
 @add_instruct(
     constant.Instruct.TARGET_FREE_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("让对方在时停中获得自由"),
+    _("对方在时停中获得自由"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -942,14 +942,14 @@ def handle_time_stop_off():
 )
 def handle_target_free_in_time_stop():
     """处理让对方在时停中获得自由"""
-    #TODO
+    # TODO，到写隐奸和露出的时候一起写
     tem = 1
 
 
 @add_instruct(
     constant.Instruct.TARGET_STOP_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("让对方在时停中再次停止"),
+    _("对方在时停中再次停止"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -958,8 +958,8 @@ def handle_target_free_in_time_stop():
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_target_stop_in_time_stop():
-    """处理让对方在时停中再次停止"""
-    #TODO
+    """处理对方在时停中再次停止"""
+    # TODO，到写隐奸和露出的时候一起写
     tem = 1
 
 
@@ -3097,6 +3097,19 @@ def handle_twiddle_nipples():
 def handle_breast_sucking():
     """处理舔吸乳头指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BREAST_SUCKING)
+
+
+@add_instruct(
+    constant.Instruct.EXTERNAL_WOMB_MASSAGE,
+    constant.InstructType.SEX,
+    _("体外子宫按摩"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H},
+)
+def handle_external_womb_massage():
+    """处理体外子宫按摩指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EXTERNAL_WOMB_MASSAGE)
 
 
 @add_instruct(

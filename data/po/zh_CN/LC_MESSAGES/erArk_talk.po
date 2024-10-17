@@ -33440,6 +33440,10 @@ msgstr ""
 msgid "{Name}触发了阴茎蹭耳朵指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\external_womb_massage.csv:6
+msgid "{Name}对{TargetName}触发了体外子宫按摩的地文"
+msgstr ""
+
 #: .\data\talk\sex\face_rub.csv:6
 msgid "{Name}触发了阴茎蹭脸指令的地文"
 msgstr ""

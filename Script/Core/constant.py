@@ -432,6 +432,8 @@ class CharacterStatus:
     """ 插入子宫口 """
     STATUS_WOMB_SEX = 514
     """ 子宫姦 """
+    STATUS_EXTERNAL_WOMB_MASSAGE = 515
+    """ 体外子宫按摩 """
     STATUS_NORMAL_ANAL_SEX = 521
     """ 正常位肛交 """
     STATUS_BACK_ANAL_SEX = 522
@@ -950,6 +952,8 @@ class Behavior:
     """ 插入子宫口 """
     WOMB_SEX = 514
     """ 子宫姦 """
+    EXTERNAL_WOMB_MASSAGE = 515
+    """ 体外子宫按摩 """
     NORMAL_ANAL_SEX = 521
     """ 正常位肛交 """
     BACK_ANAL_SEX = 522
@@ -2033,9 +2037,9 @@ class Instruct:
     TIME_STOP_OFF = 0
     """ 时间重新流动 """
     TARGET_FREE_IN_TIME_STOP = 0
-    """ 让对方在时停中获得自由 """
+    """ 对方在时停中获得自由 """
     TARGET_STOP_IN_TIME_STOP = 0
-    """ 让对方在时停中再次停止 """
+    """ 对方在时停中再次停止 """
 
     #猥亵#
     MAKE_COFFEE_ADD = 0
@@ -2128,6 +2132,8 @@ class Instruct:
     """ 玩弄乳头 """
     BREAST_SUCKING = 0
     """ 舔吸乳头 """
+    EXTERNAL_WOMB_MASSAGE = 0
+    """ 体外子宫按摩 """
     CLIT_CARESS = 0
     """ 阴蒂爱抚 """
     OPEN_LABIA = 0
