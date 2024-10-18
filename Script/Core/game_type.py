@@ -381,6 +381,8 @@ class HYPNOSIS:
         """ 体控-逆推 """
         self.roleplay: int = 0
         """ 心控-角色扮演，0为无，其他见Roleplay.csv """
+        self.pain_as_pleasure: bool = False
+        """ 心控-苦痛快感化 """
 
 
 class CLOTH:

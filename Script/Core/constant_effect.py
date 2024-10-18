@@ -843,14 +843,18 @@ class BehaviorEffect:
     """ 源石技艺 对方开启体控-强制排卵（含理智消耗） """
     TARGET_HYPNOSIS_FORCE_OVULATION_OFF = 1225
     """ 源石技艺 对方关闭体控-强制排卵 """
-    TARGET_HYPNOSIS_BLOCKHEAD_ON = 1226
-    """ 源石技艺 对方开启体控-木头人（含理智消耗） """
+    TARGET_HYPNOSIS_BLOCKHEAD_SWITCH_CHANGE = 1226
+    """ 源石技艺 对方切换体控-木头人开关（含理智消耗） """
     TARGET_HYPNOSIS_BLOCKHEAD_OFF = 1227
     """ 源石技艺 对方关闭体控-木头人 """
-    TARGET_HYPNOSIS_ACTIVE_H_ON = 1228
-    """ 源石技艺 对方开启体控-逆推（含理智消耗） """
+    TARGET_HYPNOSIS_ACTIVE_H_SWITCH_CHANGE = 1228
+    """ 源石技艺 对方切换体控-逆推开关（含理智消耗） """
     TARGET_HYPNOSIS_ACTIVE_H_OFF = 1229
     """ 源石技艺 对方关闭体控-逆推 """
+    TARGET_HYPNOSIS_PAIN_AS_PLEASURE_SWITCH_CHANGE = 1230
+    """ 源石技艺 对方切换心控-苦痛快感化开关（含理智消耗） """
+    TARGET_HYPNOSIS_PAIN_AS_PLEASURE_OFF = 1231
+    """ 源石技艺 对方关闭心控-苦痛快感化 """
     TIME_STOP_ON = 1241
     """ 源石技艺 开启时停 """
     TIME_STOP_OFF = 1242

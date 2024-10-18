@@ -1049,8 +1049,8 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # 单次增加量
     if 17 in change_data.status_data:
         pain_count += change_data.status_data[17] * 5
-    # 需要非深度无意识
-    if handle_premise.handle_normal_6(character_id):
+    # 需要非深度无意识，且非心控-苦痛快感化
+    if handle_premise.handle_normal_6(character_id) and handle_premise.handle_not_hypnosis_pain_as_pleasure(character_id):
         if pain_count >= 20000 and character_data.ability[15] <= 0:
             character_data.ability[15] = 1
             character_data.second_behavior[1036] = 1

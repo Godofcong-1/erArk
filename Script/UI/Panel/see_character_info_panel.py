@@ -532,6 +532,8 @@ class CharacterInfoHead:
                 hypnosis_text += _("(逆推)")
             if handle_premise.handle_hypnosis_roleplay(character_id):
                 hypnosis_text += _("(角色扮演)")
+            if handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
+                hypnosis_text += _("(苦痛快感化)")
             hypnosis_text += ">"
         hypnosis_draw.text = hypnosis_text
 

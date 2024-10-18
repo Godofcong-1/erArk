@@ -159,10 +159,10 @@ def base_chara_state_common_settle(
     if character_data.dead:
         return
 
-    feel_state_set = {0, 1, 2, 3, 4, 5, 6, 7} # 快感状态
+    feel_state_set = {0, 1, 2, 3, 4, 5, 6, 7} # 快感状态，N~W快
     good_state_set = {8, 9, 10, 11, 12, 13, 14, 15, 16} # 正面状态
-    bad_state_set = {18, 19, 20} # 负面状态
-    body_state_set = {8, 12, 17} # 身体状态
+    bad_state_set = {18, 19, 20} # 负面状态，恐怖抑郁反感
+    body_state_set = {8, 12, 17} # 身体状态，润滑欲情苦痛
     mentel_state_set = {9, 10, 11, 13, 14, 15, 16, 18, 19, 20} # 心智状态
 
     # 基础固定值
@@ -208,6 +208,11 @@ def base_chara_state_common_settle(
         final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
     else:
         final_value = time_base_value * final_adjust
+
+    # 心控-苦痛快感化，将苦痛状态转化为快感状态
+    if state_id == 17 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
+        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        return
 
     # 结算最终值
     character_data.status_data[state_id] += final_value
@@ -2182,15 +2187,15 @@ def handle_target_hypnosis_force_ovulation_off(
     target_character_data.hypnosis.force_ovulation = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_ON)
-def handle_target_hypnosis_blockhead_on(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_SWITCH_CHANGE)
+def handle_target_hypnosis_blockhead_switch_change(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    对方开启体控-木头人
+    对方切换体控-木头人开关（含理智消耗）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2203,10 +2208,13 @@ def handle_target_hypnosis_blockhead_on(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    target_character_data.hypnosis.blockhead = True
-    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-    change_data.sanity_point -= 50
-    character_data.pl_ability.today_sanity_point_cost += 50
+    if target_character_data.hypnosis.blockhead:
+        target_character_data.hypnosis.blockhead = False
+    else:
+        target_character_data.hypnosis.blockhead = True
+        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+        change_data.sanity_point -= 50
+        character_data.pl_ability.today_sanity_point_cost += 50
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_OFF)
@@ -2233,15 +2241,15 @@ def handle_target_hypnosis_blockhead_off(
     target_character_data.hypnosis.blockhead = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_ON)
-def handle_target_hypnosis_active_h_on(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_SWITCH_CHANGE)
+def handle_target_hypnosis_active_h_switch_change(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    对方开启体控-逆推
+    对方切换体控-逆推开关（含理智消耗）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -2254,10 +2262,16 @@ def handle_target_hypnosis_active_h_on(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    target_character_data.hypnosis.active_h = True
-    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-    change_data.sanity_point -= 50
-    character_data.pl_ability.today_sanity_point_cost += 50
+    if target_character_data.hypnosis.active_h:
+        target_character_data.hypnosis.active_h = False
+        target_character_data.h_state.npc_active_h = False
+    else:
+        target_character_data.hypnosis.active_h = True
+        target_character_data.h_state.npc_active_h = True
+        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+        change_data.sanity_point -= 50
+        character_data.pl_ability.today_sanity_point_cost += 50
+        handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_OFF)
@@ -2282,6 +2296,60 @@ def handle_target_hypnosis_active_h_off(
     if character_data.dead:
         return
     target_character_data.hypnosis.active_h = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_PAIN_AS_PLEASURE_SWITCH_CHANGE)
+def handle_target_hypnosis_pain_as_pleasure_switch_change(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方切换心控-苦痛快感化开关（含理智消耗）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    if target_character_data.hypnosis.pain_as_pleasure:
+        target_character_data.hypnosis.pain_as_pleasure = False
+    else:
+        target_character_data.hypnosis.pain_as_pleasure = True
+        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
+        change_data.sanity_point -= 50
+        character_data.pl_ability.today_sanity_point_cost += 50
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_PAIN_AS_PLEASURE_OFF)
+def handle_target_hypnosis_active_h_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    对方关闭心控-苦痛快感化
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    if character_data.dead:
+        return
+    target_character_data.hypnosis.pain_as_pleasure = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ON)

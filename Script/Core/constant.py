@@ -517,6 +517,8 @@ class CharacterStatus:
     """ 体控-逆推 """
     STATUS_HYPNOSIS_ROLEPLAY = 931
     """ 心控-角色扮演 """
+    STATUS_HYPNOSIS_PAIN_AS_PLEASURE = 932
+    """ 心控-苦痛快感化 """
     STATUS_TIME_STOP_ON = 941
     """ 时间停止流动 """
     STATUS_TIME_STOP_OFF = 942
@@ -1041,6 +1043,8 @@ class Behavior:
     """ 体控-逆推 """
     HYPNOSIS_ROLEPLAY = 931
     """ 心控-角色扮演 """
+    HYPNOSIS_PAIN_AS_PLEASURE = 932
+    """ 心控-苦痛快感化 """
     TIME_STOP_ON = 941
     """ 时间停止流动 """
     TIME_STOP_OFF = 942
@@ -2024,6 +2028,8 @@ class Instruct:
     """ 体控-逆推 """
     HYPNOSIS_ROLEPLAY = 0
     """ 心控-角色扮演 """
+    HYPNOSIS_PAIN_AS_PLEASURE = 0
+    """ 心控-苦痛快感化 """
     PENETRATING_VISION_ON = 0
     """ 开启透视 """
     PENETRATING_VISION_OFF = 0

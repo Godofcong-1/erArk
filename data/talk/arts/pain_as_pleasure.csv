@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,932,0,t_not_hypnosis_pain_as_pleasure,{Name}对{TargetName}使用了心控催眠-苦痛快感化，改变了{TargetName}对苦痛的认知，现在的{TargetName}会在脑内将苦痛自动转化为一种心理快感了
+1,932,0,t_hypnosis_pain_as_pleasure,{Name}结束了{TargetName}的心控催眠-苦痛快感化，{TargetName}恢复了正常

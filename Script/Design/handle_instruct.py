@@ -795,8 +795,8 @@ def handle_hypnosis_force_ovulation():
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_blockhead():
@@ -809,11 +809,11 @@ def handle_hypnosis_blockhead():
     constant.InstructType.ARTS,
     _("体控-逆推"),
     {constant_promise.Premise.SPECIAL_HYPNOSIS,
-     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
+     constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.TIRED_LE_84}
 )
 def handle_hypnosis_active_h():
@@ -841,6 +841,21 @@ def handle_hypnosis_roleplay():
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.hypnosis.roleplay != 0:
         chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_ROLEPLAY)
+
+
+@add_instruct(
+    constant.Instruct.HYPNOSIS_PAIN_AS_PLEASURE,
+    constant.InstructType.ARTS,
+    _("心控-苦痛快感化"),
+    {constant_promise.Premise.SPECIAL_HYPNOSIS,
+     constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
+     constant_promise.Premise.SANITY_POINT_GE_50,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_hypnosis_pain_as_pleasure():
+    """处理心控-苦痛快感化"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HYPNOSIS_PAIN_AS_PLEASURE)
 
 
 @add_instruct(

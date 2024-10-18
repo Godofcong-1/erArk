@@ -3,4 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,925,0,high_1,{Name}触发了对{TargetName}使用体控催眠-逆推的地文
+0,925,0,t_not_hypnosis_active_h,{Name}对{TargetName}使用了体控催眠-逆推，{TargetName}的身体会不再受其想法控制，只能眼睁睁看着自己的身体主动对{Name}进行性行为
+1,925,0,t_hypnosis_active_h,{Name}停止了对{TargetName}使用的体控催眠-逆推，{TargetName}的身体恢复了正常
