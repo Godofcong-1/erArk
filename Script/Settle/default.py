@@ -1099,6 +1099,30 @@ def handle_target_mood_to_angry(
     handle_mood_to_angry(character_data.target_character_id, add_time, change_data, now_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO)
+def handle_scene_all_characters_desire_point_zero(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色欲望值归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        character_data.desire_point = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_BOTH_SMALL_HIT_POINT)
 def handle_add_both_small_hit_point(
         character_id: int,
@@ -1837,9 +1861,9 @@ def handle_penetrating_vision_on(
     if character_data.dead:
         return
     character_data.pl_ability.visual = True
-    character_data.sanity_point = max(character_data.sanity_point - 5, 0)
-    change_data.sanity_point -= 5
-    character_data.pl_ability.today_sanity_point_cost += 5
+    character_data.sanity_point = max(character_data.sanity_point - 1, 0)
+    change_data.sanity_point -= 1
+    character_data.pl_ability.today_sanity_point_cost += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_OFF)
@@ -2552,6 +2576,74 @@ def handle_pl_condom_use_reset(
         return
     pl_character_data: game_type.Character = cache.character_data[0]
     pl_character_data.h_state.condom_count = [0, 0]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_CONDOM_INFO_SHOW_FLAG_ON)
+def handle_self_condom_info_show_flag_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己开启避孕套信息显示
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.condom_info_show_flag = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TAGET_CONDOM_INFO_SHOW_FLAG_ON)
+def handle_target_condom_info_show_flag_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象开启避孕套信息显示
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_target_condom_info_show_flag_on(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_CONDOM_INFO_SHOW_FLAG_ON)
+def handle_scene_all_characters_condom_info_show_flag_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色开启避孕套信息显示
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        # 遍历非玩家的角色
+        if chara_id:
+            handle_target_condom_info_show_flag_on(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ORGASM_EDGE_ON)
@@ -4773,6 +4865,38 @@ def handle_move_to_pre_scene(
         character_data.sp_flag.move_stop = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_H_STATE_RESET)
+def handle_self_h_state_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己H状态结构体归零，同步高潮程度记录，清零H相关二段状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # H状态数据归零
+    character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
+    # 清零阴茎污浊
+    character_data.dirty.penis_dirty_dict["semen"] = False
+    # 清零高潮进度
+    for orgasm in range(8):
+        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
+        character_data.h_state.orgasm_level[orgasm] = now_data
+    # 清零H相关二段状态
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
+        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
+            character_data.second_behavior[second_behavior_id] = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
 def handle_both_h_state_reset(
         character_id: int,
@@ -4791,20 +4915,8 @@ def handle_both_h_state_reset(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    for chara_id in [character_id, character_data.target_character_id]:
-        now_character_data = cache.character_data[chara_id]
-        # H状态数据归零
-        now_character_data.h_state = attr_calculation.get_h_state_reset(now_character_data.h_state)
-        # 清零阴茎污浊
-        now_character_data.dirty.penis_dirty_dict["semen"] = False
-        # 清零高潮进度
-        for orgasm in range(8):
-            now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])
-            now_character_data.h_state.orgasm_level[orgasm] = now_data
-        # 清零H相关二段状态
-        for second_behavior_id, behavior_data in now_character_data.second_behavior.items():
-            if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
-                now_character_data.second_behavior[second_behavior_id] = 0
+    handle_self_h_state_reset(character_id, add_time, change_data, now_time)
+    handle_self_h_state_reset(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UPDATE_ORGASM_LEVEL)
@@ -4831,6 +4943,61 @@ def handle_update_orgasm_level(
         character_data.h_state.orgasm_level[orgasm] = now_data
         now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
         target_data.h_state.orgasm_level[orgasm] = now_data
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_UPDATE_ORGASM_LEVEL)
+def handle_scene_all_characters_update_orgasm_level(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色同步高潮程度记录
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        now_character_data = cache.character_data[chara_id]
+        for orgasm in range(8):
+            now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])
+            now_character_data.h_state.orgasm_level[orgasm] = now_data
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_H_STATE_RESET)
+def handle_scene_all_characters_h_state_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色H状态结构体归零，同步高潮程度记录，清零H相关二段状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        handle_self_h_state_reset(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHARA_OFF_LINE)
@@ -5377,8 +5544,7 @@ def handle_t_h_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_character = cache.character_data[character_data.target_character_id]
-    target_character.sp_flag.is_h = 0
+    handle_h_flag_to_0(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_1)
@@ -5389,7 +5555,7 @@ def handle_t_h_flag_to_1(
         now_time: datetime.datetime,
 ):
     """
-    交互对象清零H状态
+    交互对象变成H状态
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -5399,8 +5565,33 @@ def handle_t_h_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_character = cache.character_data[character_data.target_character_id]
-    target_character.sp_flag.is_h = 1
+    handle_h_flag_to_1(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_H_FLAG_TO_1)
+def handle_scene_all_characters_h_flag_to_1(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色变成H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        handle_h_flag_to_1(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_0)
@@ -6399,7 +6590,7 @@ def handle_end_h_add_hpmp_max(
         now_time: datetime.datetime,
 ):
     """
-    （结束H）根据本次H中的绝顶次数增加体力气力上限
+    （结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -6431,6 +6622,41 @@ def handle_end_h_add_hpmp_max(
             # 输出提示信息
             info_draw = draw.NormalDraw()
             info_draw.text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n").format(target_data.name, orgasm_count * 2, orgasm_count * 3)
+            info_draw.width = width
+            info_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_END_H_ADD_HPMP_MAX)
+def handle_group_sex_end_h_add_hpmp_max(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        now_character_data: game_type.Character = cache.character_data[chara_id]
+        orgasm_count = 0
+        for body_part in game_config.config_body_part:
+            orgasm_count += now_character_data.h_state.orgasm_count[body_part][0]
+        if orgasm_count > 0:
+            now_character_data.hit_point_max += orgasm_count * 2
+            now_character_data.mana_point_max += orgasm_count * 3
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             info_draw.width = width
             info_draw.draw()
 
@@ -8199,6 +8425,31 @@ def handle_penis_in_t_reset(
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.insert_position = -1
     character_data.h_state.insert_position = -1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_PENIS_IN_RESET)
+def handle_scene_all_characters_penis_in_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内所有角色的当前阴茎位置归零
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        now_character_data: game_type.Character = cache.character_data[chara_id]
+        now_character_data.h_state.insert_position = -1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENIS_IN_T_HAIR)

@@ -83,8 +83,7 @@ def handle_target_bra_see(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.cloth.cloth_see[6] = True
+    handle_bra_see(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PAN_SEE)
@@ -126,8 +125,7 @@ def handle_target_pan_see(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.cloth.cloth_see[9] = True
+    handle_pan_see(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLOTH_SEE_ZERO)
@@ -171,6 +169,33 @@ def handle_reset_cloth(
         return
     if character_id:
         clothing.get_npc_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_BRA_PAN_SEE)
+def handle_scene_all_characters_bra_pan_see(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    场景内所有角色胸罩、内裤可视
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        handle_bra_see(chara_id, add_time, change_data, now_time)
+        handle_pan_see(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_PAN)
@@ -269,6 +294,41 @@ def handle_get_scene_t_socks(
             clothing.pl_get_chara_socks(chara_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_CLOTH_BACK)
+def handle_self_cloth_back(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    自己穿回H时脱掉的衣服
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 穿回脱下的衣服
+    wear_flag = False
+    for i in game_config.config_clothing_type:
+        if len(character_data.cloth.cloth_off[i]):
+            character_data.cloth.cloth_wear[i],character_data.cloth.cloth_off[i] = character_data.cloth.cloth_off[i],[]
+            wear_flag = True
+    if wear_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = window_width
+        if character_data.sp_flag.unconscious_h:
+            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n").format(character_data.name)
+        else:
+            now_draw.text = _("\n{0}穿回了脱下的衣服\n").format(character_data.name)
+        now_draw.draw()
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_CLOTH_BACK)
 def handle_t_cloth_back(
     character_id: int,
@@ -287,22 +347,34 @@ def handle_t_cloth_back(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    handle_self_cloth_back(character_data.target_character_id, add_time, change_data, now_time)
 
-    # 穿回脱下的衣服
-    wear_flag = False
-    for i in game_config.config_clothing_type:
-        if len(target_data.cloth.cloth_off[i]):
-            target_data.cloth.cloth_wear[i],target_data.cloth.cloth_off[i] = target_data.cloth.cloth_off[i],[]
-            wear_flag = True
-    if wear_flag:
-        now_draw = draw.WaitDraw()
-        now_draw.width = window_width
-        if target_data.sp_flag.unconscious_h:
-            now_draw.text = _("\n给{0}穿上了脱下的衣服，并尽量整理成H前的样子\n").format(target_data.name)
-        else:
-            now_draw.text = _("\n{0}穿回了脱下的衣服\n").format(target_data.name)
-        now_draw.draw()
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_CLOTH_BACK)
+def handle_scene_all_characters_cloth_back(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    场景内所有角色穿回H时脱掉的衣服
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历当前角色列表
+    for chara_id in scene_data.character_list:
+        if chara_id == 0:
+            continue
+        handle_self_cloth_back(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_CLOTH_OFF)

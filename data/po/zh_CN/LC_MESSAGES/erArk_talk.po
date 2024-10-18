@@ -121,7 +121,7 @@ msgid "{Name}触发了对{TargetName}使用体控催眠-敏感度提升的地文
 msgstr ""
 
 #: .\data\talk\arts\pain_as_pleasure.csv:6
-msgid "{Name}对{TargetName}使用了心控催眠-苦痛快感化，{TargetName}会将苦痛也认为是一种快感了"
+msgid "{Name}对{TargetName}使用了心控催眠-苦痛快感化，改变了{TargetName}对苦痛的认知，现在的{TargetName}会在脑内将苦痛自动转化为一种心理快感了"
 msgstr ""
 
 #: .\data\talk\arts\pain_as_pleasure.csv:7

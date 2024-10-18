@@ -132,6 +132,8 @@ def chara_handle_instruct_common_settle(
                 state_id = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
             elif judge == _("亲吻"):
                 state_id = constant.CharacterStatus.STATUS_KISS_FAIL
+            elif judge == _("H模式"):
+                state_id = constant.CharacterStatus.STATUS_DO_H_FAIL
         elif judge_list[0] == -1:
             return 0
     character_data.state = state_id
@@ -1819,9 +1821,7 @@ def handle_do_h():
             if door_return == -1:
                 return
         h_flag = True
-        target_data.sp_flag.is_h = 1
         target_data.sp_flag.is_follow = 0
-        target_data.h_state.condom_info_show_flag = True
         character_data.behavior.behavior_id = constant.Behavior.H
         character_data.state = constant.CharacterStatus.STATUS_H
         now_draw = draw.WaitDraw()
@@ -1915,9 +1915,7 @@ def handle_unconscious_h():
         door_return = now_draw.draw()
         if door_return == -1:
             return
-    target_data.sp_flag.is_h = 1
     target_data.sp_flag.is_follow = 0
-    target_data.h_state.condom_info_show_flag = True
     character_data.behavior.behavior_id = constant.Behavior.H
     character_data.state = constant.CharacterStatus.STATUS_H
     now_draw = draw.WaitDraw()
@@ -1948,6 +1946,51 @@ def handle_do_h_in_love_hotel():
     target_data = cache.character_data[character_data.target_character_id]
     target_data.h_state.h_in_love_hotel = True
     handle_do_h()
+
+
+@add_instruct(
+    constant.Instruct.ASK_GROUP_SEX,
+    constant.InstructType.OBSCENITY,
+    _("邀请多P"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_ask_group_sex():
+    """处理邀请多P指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    h_flag = False
+    if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
+        now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        if cache.scene_data[now_scene_str].close_flag == 0:
+            now_draw = normal_panel.Close_Door_Panel(width)
+            door_return = now_draw.draw()
+            if door_return == -1:
+                return
+        h_flag = True
+        character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX
+        character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入多P模式\n")
+        now_draw.draw()
+
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+    if not h_flag:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n进入多P模式失败\n")
+        now_draw.draw()
 
 
 @add_instruct(

@@ -58,6 +58,7 @@ cid,effect_name,effect_type,effect
 1526,TARGET_MOOD_TO_NORMAL,属性_基础,交互对象心情变为普通
 1527,TARGET_MOOD_TO_BAD,属性_基础,交互对象心情变为不好
 1528,TARGET_MOOD_TO_ANGRY,属性_基础,交互对象心情变为愤怒
+1531,SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO,属性_结构体,场景内所有角色欲望值归零
 
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
@@ -230,8 +231,11 @@ cid,effect_name,effect_type,effect
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零
+403,SELF_H_STATE_RESET,属性_结构体,自己H状态结构体归零，同步高潮程度记录，清零H相关二段状态
 404,BOTH_H_STATE_RESET,属性_结构体,双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态
 405,UPDATE_ORGASM_LEVEL,属性_结构体,双方同步高潮程度记录
+406,SCENE_ALL_CHARACTERS_UPDATE_ORGASM_LEVEL,属性_结构体,场景内所有角色同步高潮程度记录
+407,SCENE_ALL_CHARACTERS_H_STATE_RESET,属性_结构体,场景内所有角色H状态结构体归零，同步高潮程度记录，清零H相关二段状态
 411,CHARA_OFF_LINE,属性_结构体,角色离线，归零若干数据结构体，从当前干员列表中移除，离开地图
 412,CHARA_ON_LINE,属性_结构体,角色上线，加入从当前干员列表，进入地图
 
@@ -258,6 +262,7 @@ cid,effect_name,effect_type,effect
 476,H_FLAG_TO_1,属性_特殊flag,自身变成H状态
 477,T_H_FLAG_TO_0,属性_特殊flag,交互对象清零H状态
 478,T_H_FLAG_TO_1,属性_特殊flag,交互对象变成H状态
+479,SCENE_ALL_CHARACTERS_H_FLAG_TO_1,属性_特殊flag,场景内所有角色变成H状态
 481,UNCONSCIOUS_FLAG_TO_0,属性_特殊flag,自身清零无意识状态
 482,UNCONSCIOUS_FLAG_TO_1,属性_特殊flag,自身变成无意识_睡眠状态
 483,UNCONSCIOUS_FLAG_TO_2,属性_特殊flag,自身变成无意识_醉酒状态
@@ -302,7 +307,8 @@ cid,effect_name,effect_type,effect
 525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
 526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
 527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
-528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）根据本次H中的绝顶次数增加体力气力上限
+528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限
+529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -311,6 +317,7 @@ cid,effect_name,effect_type,effect
 605,TARGET_PAN_SEE,属性_服装,交互对象内裤可视
 606,CLOTH_SEE_ZERO,属性_服装,内衣可视清零
 607,RESTE_CLOTH,属性_服装,衣服重置为初始状态
+608,SCENE_ALL_CHARACTERS_BRA_PAN_SEE,属性_服装,场景内所有角色胸罩、内裤可视
 621,GET_T_PAN,属性_服装,获得交互对象的内裤
 622,GET_T_SOCKS,属性_服装,获得交互对象的袜子
 623,GET_SCENE_T_PAN,属性_服装,获得场景内所有其他角色的内裤
@@ -319,6 +326,8 @@ cid,effect_name,effect_type,effect
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
 634,GET_SLEEP_CLOTH,属性_服装,清零其他衣服并换上睡衣
+635,SELF_CLOTH_BACK,属性_服装,自己穿回H时脱掉的衣服
+636,SCENE_ALL_CHARACTERS_CLOTH_BACK,属性_服装,场景内所有角色穿回H时脱掉的衣服
 641,LOCKER_CLOTH_RESET,属性_服装,衣柜里的衣服清零
 642,WEAR_TO_LOCKER,属性_服装,身上首饰以外的衣服转移到柜子里
 643,LOCKER_TO_WEAR,属性_服装,衣柜里的衣服转移到身上
@@ -354,6 +363,7 @@ cid,effect_name,effect_type,effect
 814,PENIS_IN_T_TAIL,H_阴茎位置,当前阴茎位置为交互对象_尾交中
 815,PENIS_IN_T_HORN,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭角中
 816,PENIS_IN_T_EARS,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭耳朵中
+821,SCENE_ALL_CHARACTERS_PENIS_IN_RESET,H_阴茎位置,场景内所有角色的当前阴茎位置归零
 831,CANCEL_PENIS_IN_FACE_OR_MOUSE,H_阴茎位置,取消为阴茎位置交互对象_阴茎蹭脸中和口交中
 
 841,H_IN_LOVE_HOTEL_TO_FALSE,H_地点,取消自己和交互对象正在爱情旅馆中H的状态
@@ -446,6 +456,9 @@ cid,effect_name,effect_type,effect
 1405,PL_JUST_SHOOT_ON,属性_H,玩家变为前指令刚刚射精状态
 1406,PL_JUST_SHOOT_OFF,属性_H,玩家清零前指令刚刚射精状态
 1407,PL_CONDOM_USE_RESET,属性_H,重置玩家的避孕套使用状态
+1408,SELF_CONDOM_INFO_SHOW_FLAG_ON,属性_H,自己开启避孕套信息显示
+1409,TAGET_CONDOM_INFO_SHOW_FLAG_ON,属性_H,交互对象开启避孕套信息显示
+1410,SCENE_ALL_CHARACTERS_CONDOM_INFO_SHOW_FLAG_ON,属性_H,场景内所有角色开启避孕套信息显示
 1411,SELF_ORGASM_EDGE_ON,属性_H,自己开启绝顶寸止
 1412,SELF_ORGASM_EDGE_OFF,属性_H,自己关闭绝顶寸止
 1413,TARGET_ORGASM_EDGE_ON,属性_H,交互对象开启绝顶寸止

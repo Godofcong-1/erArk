@@ -1316,9 +1316,11 @@ class Cache:
         self.shoot_position: int = 0
         """ 记录射精位置 """
         self.debug_mode: bool = False
-        """ 是否开启debug模式 """
+        """ debug模式 """
         self.time_stop_mode: bool = False
-        """ 是否开启时间停止模式 """
+        """ 时间停止模式 """
+        self.group_sex_mode: bool = False
+        """ 多P模式 """
         self.game_round: int = 1
         """ 当前周目数 """
         self.all_npc_position_panel_select_type: int = 0

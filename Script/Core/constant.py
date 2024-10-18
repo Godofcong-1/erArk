@@ -256,6 +256,10 @@ class CharacterStatus:
     """ H时被人目击闯入中断 """
     STATUS_NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
+    STATUS_ASK_GROUP_SEX = 368
+    """ 邀请多P """
+    STATUS_GROUP_SEX_END = 369
+    """ 结束多P """
     STATUS_CONFESSION = 371
     """ 告白 """
     STATUS_CONFESSION_FAILED = 372
@@ -778,6 +782,10 @@ class Behavior:
     """ H时被人目击闯入中断 """
     NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
+    ASK_GROUP_SEX = 368
+    """ 邀请多P """
+    GROUP_SEX_END = 369
+    """ 结束多P """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372
@@ -2108,26 +2116,30 @@ class Instruct:
     """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
+    CONFESSION = 0
+    """ 告白 """
+    GIVE_NECKLACE = 0
+    """ 戴上项圈 """
     SLEEP_OBSCENITY = 0
     """ 睡眠猥亵 """
     STOP_SLEEP_OBSCENITY = 0
     """ 停止睡眠猥亵 """
     DO_H = 0
     """ 邀请H """
-    UNCONSCIOUS_H = 0
-    """ 无意识奸 """
     DO_H_IN_LOVE_HOTEL = 0
     """ 邀请在爱情旅馆H """
-    CONFESSION = 0
-    """ 告白 """
-    GIVE_NECKLACE = 0
-    """ 戴上项圈 """
+    UNCONSCIOUS_H = 0
+    """ 无意识奸 """
+    ASK_GROUP_SEX = 0
+    """ 邀请多P """
 
     #性爱#
     WAIT_5_MIN_IN_H = 0
     """ 等待五分钟(H中) """
     END_H = 0
     """ H结束 """
+    GROUP_SEX_END = 0
+    """ 结束多P """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0

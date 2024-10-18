@@ -17480,7 +17480,7 @@ def handle_not_h(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.IS_UNCONSCIOUS_H)
-def  handle_is_unconscious_h(character_id: int) -> int:
+def handle_is_unconscious_h(character_id: int) -> int:
     """
     当前为无意识奸模式
     Keyword arguments:
@@ -17496,7 +17496,7 @@ def  handle_is_unconscious_h(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.NOT_UNCONSCIOUS_H)
-def  handle_not_unconscious_h(character_id: int) -> int:
+def handle_not_unconscious_h(character_id: int) -> int:
     """
     当前不是无意识奸模式
     Keyword arguments:
@@ -17507,6 +17507,30 @@ def  handle_not_unconscious_h(character_id: int) -> int:
     if handle_is_unconscious_h(character_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.GROUP_SEX_MODE_ON)
+def handle_group_sex_mode_on(character_id: int) -> int:
+    """
+    多P模式开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.group_sex_mode
+
+
+@add_premise(constant_promise.Premise.GROUP_SEX_MODE_OFF)
+def handle_group_sex_mode_off(character_id: int) -> int:
+    """
+    多P模式未开启
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_group_sex_mode_on(character_id)
 
 
 @add_premise(constant_promise.Premise.OPTION_SON)

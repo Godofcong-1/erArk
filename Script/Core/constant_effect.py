@@ -113,6 +113,8 @@ class BehaviorEffect:
     """ 属性_基础 交互对象心情变为不好 """
     TARGET_MOOD_TO_ANGRY = 1528
     """ 属性_基础 交互对象心情变为愤怒 """
+    SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO = 1531
+    """ 属性_结构体 场景内所有角色欲望值归零 """
 
 
     TARGET_ADD_SMALL_N_FEEL = 41
@@ -451,10 +453,16 @@ class BehaviorEffect:
     """ 属性_结构体 污浊结构体归零 """
     ASSISTANT_RESET = 402
     """ 属性_结构体 助理结构体归零 """
+    SELF_H_STATE_RESET = 403
+    """ 属性_结构体 自己H状态结构体归零，同步高潮程度记录，清零H相关二段状态 """
     BOTH_H_STATE_RESET = 404
     """ 属性_结构体 双方H状态结构体归零，同步高潮程度记录，清零H相关二段状态 """
     UPDATE_ORGASM_LEVEL = 405
     """ 属性_结构体 双方同步高潮程度记录 """
+    SCENE_ALL_CHARACTERS_UPDATE_ORGASM_LEVEL = 406
+    """ 属性_结构体 场景内所有角色同步高潮程度记录 """
+    SCENE_ALL_CHARACTERS_H_STATE_RESET = 407
+    """ 属性_结构体 场景内所有角色H状态结构体归零，同步高潮程度记录，清零H相关二段状态 """
     CHARA_OFF_LINE = 411
     """ 属性_结构体 角色离线，归零若干数据结构体，从当前干员列表中移除，离开地图 """
     CHARA_ON_LINE = 412
@@ -506,6 +514,8 @@ class BehaviorEffect:
     """ 属性_特殊flag 交互对象清零H状态 """
     T_H_FLAG_TO_1 = 478
     """ 属性_特殊flag 交互对象变成H状态 """
+    SCENE_ALL_CHARACTERS_H_FLAG_TO_1 = 479
+    """ 属性_特殊flag 场景内所有角色变成H状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
     """ 属性_特殊flag 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482
@@ -597,7 +607,9 @@ class BehaviorEffect:
     TIME_STOP_ORGASM_RELEASE = 527
     """ 指令_专用结算 （解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶 """
     END_H_ADD_HPMP_MAX = 528
-    """ 指令_专用结算 （结束H）根据本次H中的绝顶次数增加体力气力上限 """
+    """ 指令_专用结算 （结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限 """
+    GROUP_SEX_END_H_ADD_HPMP_MAX = 529
+    """ 指令_专用结算 （多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -613,6 +625,8 @@ class BehaviorEffect:
     """ 属性_服装 内衣可视清零 """
     RESTE_CLOTH = 607
     """ 属性_服装 衣服重置为初始状态 """
+    SCENE_ALL_CHARACTERS_BRA_PAN_SEE = 608
+    """ 属性_服装 场景内所有角色胸罩、内裤可视 """
     GET_T_PAN = 621
     """ 属性_服装 获得交互对象的内裤 """
     GET_T_SOCKS = 622
@@ -629,6 +643,10 @@ class BehaviorEffect:
     """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
     GET_SLEEP_CLOTH = 634
     """ 属性_服装 清零其他衣服并换上睡衣 """
+    SELF_CLOTH_BACK = 635
+    """ 属性_服装 自己穿回H时脱掉的衣服 """
+    SCENE_ALL_CHARACTERS_CLOTH_BACK = 636
+    """ 属性_服装 场景内所有角色穿回H时脱掉的衣服 """
     LOCKER_CLOTH_RESET = 641
     """ 属性_服装 衣柜里的衣服清零 """
     WEAR_TO_LOCKER = 642
@@ -696,6 +714,8 @@ class BehaviorEffect:
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭角中 """
     PENIS_IN_T_EARS = 816
     """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
+    SCENE_ALL_CHARACTERS_PENIS_IN_RESET = 821
+    """ H_阴茎位置 场景内所有角色的当前阴茎位置归零 """
     CANCEL_PENIS_IN_FACE_OR_MOUSE = 831
     """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
 
@@ -874,6 +894,12 @@ class BehaviorEffect:
     """ 属性_H 玩家清零前指令刚刚射精状态 """
     PL_CONDOM_USE_RESET = 1407
     """ 属性_H 重置玩家的避孕套使用状态 """
+    SELF_CONDOM_INFO_SHOW_FLAG_ON = 1408
+    """ 属性_H 自己开启避孕套信息显示 """
+    TAGET_CONDOM_INFO_SHOW_FLAG_ON = 1409
+    """ 属性_H 交互对象开启避孕套信息显示 """
+    SCENE_ALL_CHARACTERS_CONDOM_INFO_SHOW_FLAG_ON = 1410
+    """ 属性_H 场景内所有角色开启避孕套信息显示 """
     SELF_ORGASM_EDGE_ON = 1411
     """ 属性_H 自己开启绝顶寸止 """
     SELF_ORGASM_EDGE_OFF = 1412
