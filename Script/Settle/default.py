@@ -256,6 +256,9 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 催眠-敏感
     if character_data.hypnosis.increase_body_sensitivity:
         final_adjust += 2
+    # 怀孕状态下加V和W快感
+    if state_id in [4, 7] and handle_premise.handle_inflation_1(character_id):
+        final_adjust += 1
     # 无觉刻印会增加无意识状态下的部位快感系数
     if handle_premise.handle_unconscious_flag_ge_1(character_id):
         final_adjust += (attr_calculation.get_ability_adjust(character_data.ability[19]) - 1) * 2
