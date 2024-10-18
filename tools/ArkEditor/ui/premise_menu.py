@@ -338,6 +338,8 @@ class CVPMenu(QDialog):
         cvp_b1 = self.cvp_b1.currentText()
         if len(self.cvp_b2.currentText().split("|")) == 2:
             cvp_b2 = self.cvp_b2.currentText().split("|")[1]
+        elif len(self.cvp_b2.currentText().split("|")) == 1:
+            cvp_b2 = self.cvp_b2.currentText().split('|')[0]
         else:
             cvp_b2 = ""
         if cvp_b1 == "待选择":
@@ -387,7 +389,7 @@ class CVPMenu(QDialog):
         # 拼接前提字符串
         cvp_str = f"综合数值前提  {cvp_a}{cvp_b1}{cvp_b2}{cvp_c}{cvp_d}"
         cvp_value_str = f"CVP_{cvp_a_value}_{cvp_b_value}_{cvp_c_value}_{cvp_d_value}"
-        # print(f"debug cvp_str: {cvp_str}, cvp_value_str: {cvp_value_str}")
+        print(f"debug cvp_str: {cvp_str}, cvp_value_str: {cvp_value_str}")
 
         # 更新前提数据
         cache_control.premise_data[cvp_value_str] = cvp_str
