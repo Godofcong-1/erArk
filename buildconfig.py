@@ -256,6 +256,9 @@ for i in file_list:
 
 talk_file_list = os.listdir(talk_dir)
 for i in talk_file_list:
+    # 跳过ai文件夹
+    if i == "ai":
+        continue
     now_dir = os.path.join(talk_dir, i)
     for f in os.listdir(now_dir):
         config_def_str += "\n"
