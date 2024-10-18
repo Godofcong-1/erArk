@@ -139,6 +139,8 @@ in_dr_off,IN_DR_OFFICE,地点_定位,在博士办公室
 not_in_dr_off,NOT_IN_DR_OFFICE,地点_定位,不在博士办公室
 in_dr_off_or_debug,IN_DR_OFFICE_OR_DEBUG,地点_定位,在博士办公室或处于debug模式
 in_command_room,IN_COMMAND_ROOM,地点_定位,在指挥室
+in_out_exit,IN_OUT_EXIT,地点_定位,在罗德岛出口
+in_command_room_or_out_exit,IN_COMMAND_ROOM_OR_OUT_EXIT,地点_定位,在指挥室或罗德岛出口
 in_dor,IN_DORMITORY,地点_定位,在自己宿舍中
 not_in_dor,NOT_IN_DORMITORY,地点_定位,不在自己宿舍中
 in_dor_or_hotel,IN_DORMITORY_OR_HOTEL,地点_定位,在自己宿舍中或在已经入住的旅馆中

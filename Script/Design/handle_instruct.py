@@ -610,7 +610,7 @@ def handle_manage_library():
     _("导航"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.IN_COMMAND_ROOM,
+        constant_promise.Premise.IN_COMMAND_ROOM_OR_OUT_EXIT,
     })
 def handle_navigation():
     """处理导航指令"""
