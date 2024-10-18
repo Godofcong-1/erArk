@@ -358,7 +358,7 @@ class CVEMenu(QDialog):
                 self.cve_b2.addItem(f"{organ_id}|{organ_name}")
             self.cve_b2.setCurrentIndex(0)
             self.cve_c.clear()
-            self.cve_c.addItems(["增加", "减少"])
+            self.cve_c.addItems(["增加", "变为"])
             self.cve_c.setCurrentIndex(0)
             self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶")
         elif index == 10:
