@@ -286,6 +286,8 @@ def load_talk_data_to_cache():
     main_window.add_grid_talk_layout(data_list,item_premise_list,item_text_edit)
     main_window.completed_layout()
 
+    update_status_menu()
+
 def create_talk_data():
     """新建口上文件"""
     dialog: QFileDialog = QFileDialog(menu_bar)
@@ -307,15 +309,8 @@ def exit_editor():
     os._exit(0)
 
 
-def change_status_menu(action: QWidgetAction):
-    """
-    更新状态菜单
-    Keyword arguments:
-    action -- 触发的菜单
-    """
-    cid = action.data()
-    data_list.status_menu.setTitle(cache_control.status_data[cid])
-    cache_control.now_status = cid
+def update_status_menu():
+    """更新状态菜单"""
     data_list.status_menu.clear()
     status_group = QActionGroup(data_list.status_menu)
     for status_type in cache_control.status_type_data:
@@ -334,6 +329,18 @@ def change_status_menu(action: QWidgetAction):
             status_menu.setFont(font)
         data_list.status_menu.addMenu(status_menu)
     status_group.triggered.connect(change_status_menu)
+
+
+def change_status_menu(action: QWidgetAction):
+    """
+    更新状态菜单
+    Keyword arguments:
+    action -- 触发的菜单
+    """
+    cid = action.data()
+    data_list.status_menu.setTitle(cache_control.status_data[cid])
+    cache_control.now_status = cid
+    update_status_menu()
     # 如果有选中的条目，则更新该条目的状态
     if cache_control.now_select_id != '':
         status_cid = cache_control.now_status
@@ -429,20 +436,7 @@ def font_update():
 
 
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
-status_group = QActionGroup(data_list.status_menu)
-for status_type in cache_control.status_type_data:
-    status_menu = QMenu(status_type, data_list.status_menu)
-    for cid in cache_control.status_type_data[status_type]:
-        if cid == "0":
-            continue
-        now_action: QWidgetAction = QWidgetAction(data_list)
-        now_action.setText(cache_control.status_data[cid])
-        now_action.setActionGroup(status_group)
-        now_action.setData(cid)
-        status_menu.addAction(now_action)
-        status_menu.setFont(font)
-    data_list.status_menu.addMenu(status_menu)
-status_group.triggered.connect(change_status_menu)
+update_status_menu()
 
 # for status_type, status_list in cache_control.status_type_data.items():
 #     status_menu = QMenu(status_type, data_list.status_menu)
