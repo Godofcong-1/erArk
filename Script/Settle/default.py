@@ -2617,7 +2617,7 @@ def handle_target_condom_info_show_flag_on(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    handle_target_condom_info_show_flag_on(character_data.target_character_id, add_time, change_data, now_time)
+    handle_self_condom_info_show_flag_on(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_CONDOM_INFO_SHOW_FLAG_ON)
