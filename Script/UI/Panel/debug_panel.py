@@ -150,6 +150,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[013]:重置全角色位置至宿舍")
                 draw_text_list.append(f"[014]:重置文职部的招募数据")
                 draw_text_list.append(f"[015]:交互对象全部位快感增加")
+                draw_text_list.append(f"[016]:招募指定adv_id的干员")
 
 
                 for i in range(len(draw_text_list)):
@@ -588,6 +589,21 @@ class Debug_Panel:
                     target_character_data = cache.character_data[target_id]
                     for i in range(8):
                         target_character_data.status_data[i] += new_value
+                # 招募指定adv_id的干员
+                elif key_index == 16:
+                    from Script.Design import character
+                    line_feed.draw()
+                    change_value_panel = panel.AskForOneMessage()
+                    change_value_panel.set(_("输入adv_id"), 100)
+                    new_value = int(change_value_panel.draw())
+                    character_id = character.get_character_id_from_adv(new_value)
+                    if character_id not in cache.npc_id_got:
+                        cache.rhodes_island.recruited_id.add(character_id)
+                        info_draw.text = _("\n招募成功\n")
+                    else:
+                        info_draw.text = _("\n已招募过\n")
+                    info_draw.draw()
+                    line_feed.draw()
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
