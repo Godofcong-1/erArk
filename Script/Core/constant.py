@@ -1918,6 +1918,8 @@ class Instruct:
     """ 摄影 """
     PLAY_WATER = 0
     """ 玩水 """
+    PLAY_GOMOKU = 0
+    """ 下五子棋 """
     PLAY_CHESS = 0
     """ 下棋 """
     PLAY_MAHJONG = 0
@@ -2415,6 +2417,9 @@ settle_second_behavior_effect_data: Dict[int, FunctionType] = {}
 
 first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾西娅"),_("华法琳"),_("杜宾")}
 """ 初始就有的NPC的名字 """
+
+ban_NPC_name_set = {_("普瑞赛斯"),_("老天师"),_("魔王"),_("塔露拉"),_("莉泽洛特"),_("坎黛拉"),_("克丽斯腾"),_("文月"),_("年"),_("夕"),_("令"),_("黍")}
+""" 无法直接招募到的NPC的名字 """
 
 special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0]
 """ 意外中断H的行为id列表 """

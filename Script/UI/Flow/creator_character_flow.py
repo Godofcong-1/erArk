@@ -398,6 +398,11 @@ class Character_FirstNPC:
 
         from Script.UI.Panel import manage_basement_panel
 
+        # 去掉特殊干员
+        for chara_id in self.id_list.copy():
+            if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+                self.id_list.remove(chara_id)
+
         now_draw = panel.LeftDrawTextListPanel()
         now_draw.draw_list.append(line_feed_draw)
         now_draw.draw_list.append(line_feed_draw)

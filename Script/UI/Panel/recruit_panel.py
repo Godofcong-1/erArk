@@ -40,6 +40,9 @@ def find_recruitable_npc() -> List[int]:
         # 跳过离线异常
         if not handle_premise.handle_normal_7(chara_id):
             continue
+        # 跳过特殊NPC
+        if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+            continue
         recruitable_npc_id_list.append(chara_id)
 
     return recruitable_npc_id_list
