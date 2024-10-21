@@ -298,6 +298,12 @@ def update_tem_character(loaded_dict):
 
     # 更新loaded_dict["npc_tem_data"]，用新的角色预设属性代替旧的属性
     for i, now_npc_tem_data in enumerate(loaded_dict["npc_tem_data"]):
+        # 修正深靛的序号错误
+        if now_npc_tem_data.AdvNpc == 496 and 469 in cache_dict:
+            loaded_dict["npc_tem_data"][i] = cache_dict[469]
+            update_count += 1
+            del cache_dict[469]
+            continue
         if now_npc_tem_data.AdvNpc in cache_dict:
             # print(f"debug 准备更新{now_npc_tem_data.Name}的角色预设 ")
             loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.AdvNpc]
@@ -340,6 +346,11 @@ def update_tem_character(loaded_dict):
         if i != 0:
             # print(f"debug name = {value.name}, chara_cid = {value.cid}, new_tem_cid = {value.cid - 1}, old_tem_cid = {tem_cid}")
             tem_npc_data = loaded_dict["npc_tem_data"][tem_cid]
+            # 修正深靛的序号错误
+            if value.name == _("深靛") and value.adv != 469:
+                value.adv = 469
+                update_count += 1
+                continue
             loaded_dict["npc_tem_data"].pop(tem_cid)
             loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
             now_draw = draw.LeftDraw()
@@ -470,6 +481,9 @@ def update_new_character(loaded_dict):
     # 新增该角色
     len_old_character = len(loaded_dict["character_data"])
     for i, now_npc_data in enumerate(add_new_character_list):
+        # 跳过深靛
+        if now_npc_data.Name == _("深靛"):
+            continue
         new_character_cid = len_old_character + i
         # print(f"debug new_character_cid = {new_character_cid}")
         new_character = character_handle.init_character(new_character_cid, now_npc_data)
