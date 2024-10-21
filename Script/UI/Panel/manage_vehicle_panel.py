@@ -117,10 +117,17 @@ class Manage_Vehicle_Panel:
             all_vehicle_list = []
             for cid in game_config.config_vehicle:
                 vehicle_data = game_config.config_vehicle[cid]
-                # if self.now_panel == _("常规载具") and vehicle_data.special == 0:
-                #     continue
-                if self.now_panel == _("特殊载具"):
+                # 获得方式
+                acquire_way = vehicle_data.acquiring
+                vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
+                if self.now_panel == _("常规载具") and acquire_way != _("基础"):
                     continue
+                if self.now_panel == _("特殊载具"):
+                    if acquire_way == _("基础"):
+                        continue
+                    # 非基础的载具在未拥有时不显示
+                    elif acquire_way != _("基础") and vehicle_count == 0:
+                        continue
                 all_vehicle_list.append(cid)
 
             # 绘制载具信息
@@ -186,6 +193,7 @@ class Manage_Vehicle_Panel:
         vehicle_special = vehicle_data.special
         vehicle_description = vehicle_data.description
         vehicle_price = vehicle_data.price
+        vehicle_acquiring = vehicle_data.acquiring
         # 将\n替换为换行符
         if "\\n" in vehicle_description:
             vehicle_description = vehicle_description.replace("\\n", "\n      ")
@@ -215,8 +223,8 @@ class Manage_Vehicle_Panel:
             facility_cid = game_config.config_facility_effect_data[facility_name][now_level]
             vehicle_num_limit = game_config.config_facility_effect[facility_cid].effect
 
-            # 如果还有载具购买空间，则绘制购买按钮
-            if self.vehicle_count < int(vehicle_num_limit):
+            # 基础型载具，如果还有载具购买空间，则绘制购买按钮
+            if vehicle_acquiring == _("基础") and self.vehicle_count < int(vehicle_num_limit):
                 buy_vehicle_draw = draw.CenterButton(
                     _("【购买载具】"),
                     _("\n【购买载具】"),
@@ -227,8 +235,8 @@ class Manage_Vehicle_Panel:
                 buy_vehicle_draw.draw()
                 return_list.append(buy_vehicle_draw.return_text)
             
-            # 如果有空闲载具，绘制出售按钮
-            if cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1] > 0:
+            # 基础型载具，如果有空闲载具，绘制出售按钮
+            if vehicle_acquiring == _("基础") and cache.rhodes_island.vehicles[vehicle_id][0] - cache.rhodes_island.vehicles[vehicle_id][1] > 0:
                 sell_vehicle_draw = draw.CenterButton(
                     _("【出售载具】"),
                     _("\n【出售载具】"),

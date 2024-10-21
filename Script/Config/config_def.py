@@ -979,6 +979,8 @@ class Vehicle:
     """ 速度 """
     capacity: int
     """ 运载量 """
+    acquiring: str
+    """ 获得方式 """
     price: int
     """ 价格 """
     special: str

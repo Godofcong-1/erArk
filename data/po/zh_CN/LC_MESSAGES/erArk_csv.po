@@ -3781,7 +3781,39 @@ msgid "情有所屬"
 msgstr ""
 
 #: .\data\csv\Commission.csv:66
-msgid "萊娜歸來後，送給你一個精緻的香囊。閉上眼，那淡淡的香味讓你聯想到眼前這位愛你的沃爾柏姑娘。\n在你追問這香氣的名字時，萊那只是墊起腳尖，在你的唇上留下輕輕一吻"
+msgid "萊娜歸來後，送給你一個精緻的香囊。閉上眼，那淡淡的香味讓你聯想到眼前這位愛你的沃爾柏姑娘。\n在你追問這香氣的名字時，萊娜只是墊起腳尖，在你的唇上留下輕輕一吻"
+msgstr ""
+
+#: .\data\csv\Commission.csv:67
+msgid "反重力科研項目"
+msgstr ""
+
+#: .\data\csv\Commission.csv:67
+msgid "也許我們能通過研究幹員安潔莉娜的源石技藝運作方式，開發一種新的載具，博士不試試嗎?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:68
+msgid "理論驗證機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:68
+msgid "嘶......搞了好久終於模仿出安潔莉娜的源石迴路，但材料也用完了。博士，再撥點材料下來嘛~"
+msgstr ""
+
+#: .\data\csv\Commission.csv:69
+msgid "推進裝置"
+msgstr ""
+
+#: .\data\csv\Commission.csv:69
+msgid "呃，我們確實搞出了可以長時間穩定懸浮的平台，但如您所見...沒有好的推進方案的話它也只會懸浮而已。\n別打我，您去幫我薅一套蒸氣騎士的火箭推進器我馬上完成項目"
+msgstr ""
+
+#: .\data\csv\Commission.csv:70
+msgid "速攻艇原型機"
+msgstr ""
+
+#: .\data\csv\Commission.csv:70
+msgid "嘿嘿，這玩意可以穩定懸浮於低空，加上火箭推進後速度更是超越這片大地以往任何載具，按照慣例，就依照技術提供者來命名吧~!"
 msgstr ""
 
 #: .\data\csv\Diplomatic_Policy.csv:7
@@ -12462,6 +12494,18 @@ msgstr ""
 
 #: .\data\csv\Vehicle.csv:15
 msgid "由炎国工部监造司专为玉门城设计打造的第二批运兵车，运载量极大，即使是沙漠地形亦能平稳、快速地运行，可高效配合作战。"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:16
+msgid "安潔莉娜型速攻艇"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:16
+msgid "委托_1104"
+msgstr ""
+
+#: .\data\csv\Vehicle.csv:16
+msgid "参照安洁莉娜的源石技艺和蒸汽骑士的技术，由可露希尔研发出的试验性原型机。"
 msgstr ""
 
 #: .\data\csv\Visitor_Stay_Attitude.csv:7

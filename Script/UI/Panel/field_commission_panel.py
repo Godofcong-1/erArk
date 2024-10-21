@@ -48,6 +48,16 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
     for now_text in text_list:
         type_text, full_text, satify_flag = process_commission_text(now_text, demand_or_reward, deduction_or_increase, send_npc_list, type_text, full_text, satify_flag)
 
+    # 特殊奖励单独处理
+    if demand_or_reward == True and deduction_or_increase == True:
+        if commission_id == 1104:
+            cache.rhodes_island.vehicles[51][0] += 1
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n获得了一辆新的载具：{0}\n").format(game_config.config_vehicle[51].name)
+            info_draw.style = "gold_enrod"
+            info_draw.width = window_width
+            info_draw.draw()
+
     return_list = [satify_flag, type_text, full_text]
     return return_list
 
@@ -476,26 +486,28 @@ class Field_Commission_Panel:
                     continue
                 if self.now_panel == _("特殊外勤") and commision_data.special == 0:
                     continue
-                # 跳过未满足前置委托的委托
-                if commision_data.related_id != -1 and commision_data.related_id not in cache.rhodes_island.finished_field_commissions_set:
-                    continue
-                # 特殊外勤只能接受一次
-                if commision_data.special != 0 and commision_id in cache.rhodes_island.finished_field_commissions_set:
-                    continue
-                # 跳过已经关闭的委托
-                if commision_id in cache.rhodes_island.shut_down_field_commissions_set:
-                    continue
-                # 跳过等级大于设施等级+1的委托
-                if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
-                    continue
-                # 跳过含有角色出场且还没有招募到该角色的委托
-                if "c_" in commision_data.demand:
-                    chara_adv = int(commision_data.demand.split("_")[1])
-                    for character_id in cache.npc_id_got:
-                        if cache.character_data[character_id].adv == chara_adv:
-                            break
-                    else:
+                # 以下为非debug模式下会进行的跳过判断
+                if not cache.debug_mode:
+                    # 跳过未满足前置委托的委托
+                    if commision_data.related_id != -1 and commision_data.related_id not in cache.rhodes_island.finished_field_commissions_set:
                         continue
+                    # 特殊外勤只能接受一次
+                    if commision_data.special != 0 and commision_id in cache.rhodes_island.finished_field_commissions_set:
+                        continue
+                    # 跳过已经关闭的委托
+                    if commision_id in cache.rhodes_island.shut_down_field_commissions_set:
+                        continue
+                    # 跳过等级大于设施等级+1的委托
+                    if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
+                        continue
+                    # 跳过含有角色出场且还没有招募到该角色的委托
+                    if "c_" in commision_data.demand:
+                        chara_adv = int(commision_data.demand.split("_")[1])
+                        for character_id in cache.npc_id_got:
+                            if cache.character_data[character_id].adv == chara_adv:
+                                break
+                        else:
+                            continue
                 # 委托信息
                 commision_name = commision_data.name
                 commision_level = str(commision_data.level)
