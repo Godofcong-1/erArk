@@ -18760,6 +18760,118 @@ msgstr ""
 msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
 msgstr ""
 
+#: Event:a1b48e8a-3950-4b60-8e2f-e215c72660a7
+msgid "又是新的一天，清空雷蛇当前的涩乱损伤"
+msgstr ""
+
+#: Event:33ed7275-7ab9-4822-9105-216acfa42ed4
+msgid "雷蛇 【精神损伤】 +5"
+msgstr ""
+
+#: Event:7f876475-cfc3-4aef-91dd-7e95e816a36b
+msgid "雷蛇 【精神损伤】 +10"
+msgstr ""
+
+#: Event:89bc11f1-1ec9-4f11-8e4d-c4886a23263b
+msgid "雷蛇 【精神损伤】 +60"
+msgstr ""
+
+#: Event:4c698b62-5e6e-4086-90dc-6a9c2740752d
+msgid "雷蛇 【精神损伤】 +90"
+msgstr ""
+
+#: Event:28009084-3557-43de-861d-aff58e7ee412
+msgid "雷蛇 【精神损伤】 +25"
+msgstr ""
+
+#: Event:331ffc89-d224-4f0f-be54-ab7b35c8bd54
+msgid "雷蛇 【精神损伤】 +50"
+msgstr ""
+
+#: Event:1582635e-9467-49b5-878a-31799509afd2
+msgid "雷蛇 【精神损伤】 +35"
+msgstr ""
+
+#: Event:bd9fcadc-8824-41c0-95bf-95ab5d724191
+msgid "雷蛇 【精神损伤】 达到了1000，触发特殊状态 【精神爆发】\n\n雷蛇的精神随着与{PlayerName}的交互慢慢扭曲，最后到了一个只要有{PlayerName}在，就会绝对快乐的情况"
+msgstr ""
+
+#: Event:7794a781-2a3e-43bf-947d-0e8128a4b067
+msgid "雷蛇 【腐蚀损伤】 +120"
+msgstr ""
+
+#: Event:338b7934-ec31-40a4-ae58-de36caaff5aa
+msgid "雷蛇 【腐蚀损伤】 +60"
+msgstr ""
+
+#: Event:1e04e6ca-586a-4a00-80aa-7af2449170a6
+msgid "雷蛇 【腐蚀损伤】 +240"
+msgstr ""
+
+#: Event:004cb46d-1db1-410d-8662-e702456ddb50
+msgid "雷蛇 【腐蚀损伤】 +30"
+msgstr ""
+
+#: Event:cceb38a5-1874-411a-bc0e-da69823e9579
+msgid "雷蛇 【腐蚀损伤】 +90"
+msgstr ""
+
+#: Event:66e81a89-2cb9-4d50-84b6-809977c624db
+msgid "雷蛇 【腐蚀损伤】 +45"
+msgstr ""
+
+#: Event:d9461043-5fd5-427f-b2b6-b424224d16eb
+msgid "雷蛇 【腐蚀损伤】 达到了1000，触发特殊状态 【腐蚀心态】\n\n大量的工作把雷蛇压得喘不过气，情绪快崩溃的她很想要找个排泄口疏解一下"
+msgstr ""
+
+#: Event:40bef3c0-7b85-453e-a490-8d3a4515289d
+msgid "雷蛇 【热情损伤】 +10"
+msgstr ""
+
+#: Event:96ba5d07-d785-4685-ba57-50bfa54f6691
+msgid "雷蛇 【热情损伤】 +20"
+msgstr ""
+
+#: Event:1df36a0c-1c56-49fd-a08d-fb15c20592af
+msgid "雷蛇 【热情损伤】 +40"
+msgstr ""
+
+#: Event:e4432b97-5261-4ac0-8562-c930316e32bd
+msgid "雷蛇 【热情损伤】 达到了1000，触发特殊状态 【热情强冲】\n\n雷蛇被{PlayerName}的动作搞得控制不住欲望，直接朝{PlayerName}扑了上去"
+msgstr ""
+
+#: Event:f2bd953b-1e74-482f-a87c-ad3a5b6e0692
+msgid "雷蛇 【堕落损伤】 +20"
+msgstr ""
+
+#: Event:51dcf50b-b342-4097-a5e9-591d6591bb16
+msgid "雷蛇 【堕落淫身】 触发"
+msgstr ""
+
+#: Event:73676e1e-3975-4556-b653-a095d3d887ad
+msgid "雷蛇 【堕落损伤】 +50"
+msgstr ""
+
+#: Event:45f3d069-1bc7-4630-b58a-b433b061757a
+msgid "雷蛇 【堕落损伤】 +40"
+msgstr ""
+
+#: Event:68484e6d-d0f0-4547-b1d0-a612fe38f3d2
+msgid "雷蛇 【堕落损伤】 +60"
+msgstr ""
+
+#: Event:9fe2e0c2-0b90-40f9-8d79-99321b8e987c
+msgid "雷蛇 【堕落损伤】 +100"
+msgstr ""
+
+#: Event:f7c2e3e1-8c74-4175-a02f-3c693f5b530e
+msgid "雷蛇 【堕落损伤】 +150"
+msgstr ""
+
+#: Event:a6fdebf7-5755-42ce-abe3-7bc47890c6bf
+msgid "雷蛇 【堕落损伤】 达到了1000，触发特殊状态 【堕落淫身】\n\n无尽的性行为成功击溃了雷蛇身体的防线，全身瞬间比平常敏感了十倍"
+msgstr ""
+
 #: Event:47346c65-33b4-4009-9e5d-b9ce001d2076
 msgid "“哈……嗯，哈……哈……”汗流浃背地两人抱在一起辛苦地吐息的同时，{PlayerName}感觉到自己的手被{TargetName}牵起来十指相扣地握紧。\n“……嘘……不要说话……”疲惫的淡金色瞳孔盯了{PlayerName}一会又慢慢地闭上，“只是……让我满足一下……”\n……\n在结束之后很久一段时间里面，两人只能相互的听到对方的心跳声。"
 msgstr ""
