@@ -17584,16 +17584,16 @@ msgstr ""
 msgid "前梅兰德基金会所属特工，在凯尔希医生与博士的引荐下加入罗德岛。\n擅长单兵作战，并且能够应对各种极端环境，在各类隐秘行动中发挥了重大价值。"
 msgstr ""
 
-#: .\data\character\4027_霍尔海雅.csv:27
-msgid "白色梅兰德制式上袍"
+#: .\data\character\4027_霍尔海雅.csv:15
+msgid "#32dddc"
 msgstr ""
 
 #: .\data\character\4027_霍尔海雅.csv:28
-msgid "长款包臀裙"
+msgid "白色梅兰德制式上袍"
 msgstr ""
 
-#: .\data\character\4027_霍尔海雅.csv:30
-msgid "黑色高更鞋"
+#: .\data\character\4027_霍尔海雅.csv:29
+msgid "长款包臀裙"
 msgstr ""
 
 #: .\data\character\4032_但书.csv:4
