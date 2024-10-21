@@ -855,7 +855,7 @@ class Field_Commission_Panel:
             info_draw = draw.NormalDraw()
             info_draw_text = _("\n")
             info_draw_text += _("当前总运载量/需要运载量：{0}/{1}\n").format(now_capacity, commision_capacity_int)
-            info_draw_text += _("当前速度（取决于所有载具中最慢的）（未实装）：{0}\n").format(now_speed)
+            info_draw_text += _("当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n").format(now_speed)
             info_draw_text += _("其他效果（未实装）：{0}\n").format(effect_text)
             info_draw.text = info_draw_text
             info_draw.width = self.width
@@ -978,6 +978,19 @@ class Field_Commission_Panel:
             for i in range(self.send_vehicle_dict[vehicle_id]):
                 now_vehicle_list.append(vehicle_id)
         cache.rhodes_island.ongoing_field_commissions[commision_id][2] = now_vehicle_list
+        # 结算速度对时间的影响
+        min_speed = 9
+        for vehicle_id in now_vehicle_list:
+            vehicle_speed = game_config.config_vehicle[vehicle_id].speed
+            min_speed = min(min_speed, vehicle_speed)
+        # 如果有实际速度加成，则减少时间
+        if min_speed > 1:
+            commision_time_by_min = commision_time * 1440
+            # 每点速度则将总时间乘以0.9
+            commision_time_by_min = int(commision_time_by_min * (0.9 ** min_speed))
+            new_time_by_speed = game_time.get_sub_date(minute=commision_time_by_min)
+            # 重新设置时间
+            cache.rhodes_island.ongoing_field_commissions[commision_id][1] = new_time_by_speed
         # 清空派遣人员与载具
         self.send_npc_list = []
         self.send_vehicle_dict = {}
