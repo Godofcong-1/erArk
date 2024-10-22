@@ -2774,7 +2774,7 @@ msgid "体控-敏感度提升"
 msgstr "Body control-Increase body sensitivity"
 
 msgid "体控-强制高潮"
-msgstr "Body control-Climax command"
+msgstr "Body control-Orgasm command"
 
 msgid "体控-强制排卵"
 msgstr "Body control-Force ovulation"
@@ -3189,28 +3189,28 @@ msgid ""
 "{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁被收集到搾乳机中\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml breast milk out while climax, collected by milking machine\n"
+"{0} spilt {1}ml breast milk out while orgasm, collected by milking machine\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁散落的到处都是\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml breast milk out everywhere while climax\n"
+"{0} spilt {1}ml breast milk out everywhere while orgasm\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液被收集到采尿器中\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml urine out while climax, collected by urine collector\n"
+"{0} spilt {1}ml urine out while orgasm, collected by urine collector\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液在地上汇成一滩\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml urine out onto the ground while climax\n"
+"{0} spilt {1}ml urine out onto the ground while orgasm\n"
 
 msgid "被{0}看到了情事现场\n"
 msgstr "{0} saw the incident\n"
@@ -5800,7 +5800,7 @@ msgid "：需要全干员内裤收藏总数量≥{0}（当前{1}）"
 msgstr ": Need total underwear count ≥{0} (Currently {1})"
 
 msgid "：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）"
-msgstr ": Need total semen ejaculated inside ≥{0}ml (Currently {1}ml), total Climax EXP ≥{2} (Currently {3})"
+msgstr ": Need total semen ejaculated inside ≥{0}ml (Currently {1}ml), total Orgasm EXP ≥{2} (Currently {3})"
 
 msgid "：需要生育孩子数量≥{0}（当前{1}）"
 msgstr ": Need total children ≥{0} (Currently {1})"
@@ -5810,7 +5810,7 @@ msgid ""
 "{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n"
 msgstr ""
 "\n"
-"{0} felt more Pain and Terror due to the {1}th consecutive extra climax\n"
+"{0} felt more Pain and Terror due to the {1}th consecutive extra orgasm\n"
 
 msgid "常用更改"
 msgstr "Common Edits"
@@ -6330,10 +6330,10 @@ msgid ""
 "{0}因为经常性地在绝顶的同时被口内射精，因此以后尝到精液的味道就会条件反射性地绝顶了\n"
 msgstr ""
 "\n"
-"{0} frequently climaxed while being ejaculated into mouth, hence she'll be on climax on tasting semen\n"
+"{0} frequently orgasmed while being ejaculated into mouth, hence she'll be on orgasm on tasting semen\n"
 
 msgid "{0}获得了[饮精绝顶]\n"
-msgstr "{0} acquired [Semen Drinking Climax]\n"
+msgstr "{0} acquired [Semen Drinking Orgasm]\n"
 
 msgid "餐馆"
 msgstr "Restaurant"
@@ -6617,14 +6617,14 @@ msgid ""
 "{0}{1}{2}绝顶\n"
 msgstr ""
 "\n"
-"{0}{1}{2} climax\n"
+"{0}{1}{2} orgasm\n"
 
 msgid ""
 "\n"
 "{0}饮精绝顶\n"
 msgstr ""
 "\n"
-"{0} climax on semen drinking\n"
+"{0} orgasm on semen drinking\n"
 
 msgid "双重"
 msgstr "Double"
@@ -6658,7 +6658,7 @@ msgid ""
 "{0}{1}绝顶\n"
 msgstr ""
 "\n"
-"{0}{1} climax\n"
+"{0}{1} orgasm\n"
 
 msgid ""
 "\n"
@@ -6672,14 +6672,14 @@ msgid ""
 "{0}因B绝顶而被迫喷乳\n"
 msgstr ""
 "\n"
-"{0} spilt milk due to B climax\n"
+"{0} spilt milk due to B orgasm\n"
 
 msgid ""
 "\n"
 "{0}因U绝顶而被迫漏尿\n"
 msgstr ""
 "\n"
-"{0} leaked urine due to U climax\n"
+"{0} leaked urine due to U orgasm\n"
 
 msgid "凭证"
 msgstr "Certificates"
@@ -7374,169 +7374,181 @@ msgid "特产"
 msgstr "Specialty"
 
 msgid "好感度>={judge_value}  "
-msgstr ""
+msgstr "Affinity >= {judge_value}  "
 
 msgid "信赖度>={judge_value}"
-msgstr ""
+msgstr "Trust >= {judge_value}  "
 
 msgid "或催眠进度>={judge_value/2}"
-msgstr ""
+msgstr "Hypnosis Depth >= {judge_value/2}"
 
 msgid "解锁{game_config.config_facility_open[judge_type_id].name}  "
-msgstr ""
+msgstr "Unlock {game_config.config_facility_open[judge_type_id].name}  "
 
 msgid "攻略等级>={judge_value}  "
-msgstr ""
+msgstr "Relationship >= {judge_value}  "
 
 msgid "+淫乱(+50)"
-msgstr ""
+msgstr "+ Promiscuous(+50)"
 
 msgid "+标间(+25)"
-msgstr ""
+msgstr "+ Basic Room(+25)"
 
 msgid "+有别人在时的露出修正("
-msgstr ""
+msgstr "+ Revealing towards others("
 
 msgid "+监禁中(+500)"
-msgstr ""
+msgstr "+ Imprisoned(+500)"
 
 msgid "+处女(-250)"
-msgstr ""
+msgstr "+ Virgin(-250)"
 
 msgid "+Ａ处女(-350)"
-msgstr ""
+msgstr "+ A Virgin(-350)"
 
 msgid "+Ｕ处女(-400)"
-msgstr ""
+msgstr "+ U Virgin(-400)"
 
 msgid "+初吻(-125)"
-msgstr ""
+msgstr "+ First Kiss(-125)"
 
 msgid "+危险期(-200)"
-msgstr ""
+msgstr "+ Danger Day(-200)"
 
 msgid "太累了，无法继续H\n"
-msgstr ""
+msgstr "Too tired, unable to continue H\n"
 
 msgid "休息室"
-msgstr ""
+msgstr "Restroom"
 
 msgid ""
 "\n"
 "可以在[角色属性]-[角色设置]修改对彼此的称呼了\n"
 msgstr ""
+"\n"
+"Can now change the calling in [Character's Attributes]-[Character's Settings]\n"
 
 msgid "偷走所有人内裤"
-msgstr ""
+msgstr "Steal all underwears"
 
 msgid "偷走所有人袜子"
-msgstr ""
+msgstr "Steal all socks"
 
 msgid ""
 "\n"
 "{0}是机械体，且未安装生育模组，无法受精\n"
 msgstr ""
+"\n"
+"{0} is a robot, and has not equipped reproduction module, unable to be fertilized\n"
 
 msgid "催眠"
-msgstr ""
+msgstr "Hypnosis"
 
 msgid "请输入该角色对玩家的专属称呼"
-msgstr ""
+msgstr "Please enter the unique calling from Operator"
 
 msgid "请输入玩家对该角色的专属称呼"
-msgstr ""
+msgstr "Please enter the unique calling to Operator"
 
 msgid "无 "
-msgstr ""
+msgstr "None"
 
 msgid "委托"
-msgstr ""
+msgstr "Commission"
 
 msgid "指定干员"
-msgstr ""
+msgstr "Target Operator"
 
 msgid "声望"
-msgstr ""
+msgstr "Prestige"
 
 msgid "好感"
-msgstr ""
+msgstr "Affinity"
 
 msgid "信赖"
-msgstr ""
+msgstr "Trust"
 
 msgid "攻略"
-msgstr ""
+msgstr "Relation"
 
 msgid "攻略程度"
-msgstr ""
+msgstr "Relationship"
 
 msgid ""
 "汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n"
 "\n"
 msgstr ""
+"Reports say that they met a wanderer in commission, and after a short intercation, she's interested in Rhodes Island, and wishing to join here (confirm at Doctor's Office) ※\n"
+"\n"
 
 msgid "○通用委托无论在哪里都可以接到，地区委托则需要罗德岛移动到对应地区时才可接到，能接到的委托等级与机库的等级有关\n"
-msgstr ""
+msgstr "○General commissions can be accepted anywhere, regional commissions otherwise need Rhodes Island to be at specific area; The commission level is related to Garage's level\n"
 
 msgid "○常规外勤委托可以多次反复完成，特殊外勤只能完成一次\n"
-msgstr ""
+msgstr "○Normal commissions can be done repeatly, while special commissions can only be done once\n"
 
 msgid "○罗德岛的移动：控制中枢-指挥室-导航，购买载具：机库-格纳库-管理载具\n"
-msgstr ""
+msgstr "○Rhodes Island's Movement: Control Center - Command Room - Navigate, Purchase Vehicles: Garage - Hangar - Manage Vehicles\n"
 
 msgid "○当前机库等级：{0}，最高可接到{1}级的委托\n"
-msgstr ""
+msgstr "○Current Garage level: {0}, maximum Lv{1} commission can be accepted\n"
 
 msgid "（进行中）"
-msgstr ""
+msgstr " (In progress)"
 
 msgid "(队长)"
-msgstr ""
+msgstr "(Leader)"
 
 msgid ""
 "\n"
 "\n"
 "已派遣 "
 msgstr ""
+"\n"
+"\n"
+"Dispatched "
 
 msgid "(连续)"
-msgstr ""
+msgstr "(Continuous)"
 
 msgid ""
 "\n"
 "\n"
 " 预计回满体力和气力最少需要 {0} 小时，全状态完全回复(包括体力、气力、疲劳、理智、精液等)至少需要 {1} 小时\n"
 msgstr ""
+"\n"
+"\n"
+" Recover Stamina and Energy fully needs {0} hours, recover fully needs {1} hours\n"
 
 msgid " 当前决定的睡眠时间为：{0} 小时（默认取两者最大值）"
-msgstr ""
+msgstr " Sleep time chosen: {0} hours (default as the larger value in both conditions)"
 
 msgid "请输入睡眠时间(最小1小时，最大12小时)："
-msgstr ""
+msgstr "Please enter sleep time (1-12 hours)"
 
 msgid "当前设施等级为：{0}，可同时有{1}条招募线，每条招募线最多有{2}人\n"
-msgstr ""
+msgstr "Current facility level: {0}, up to {1} recruitment line available, up to {2} Operators per recruitment line\n"
 
 msgid "(当前人数：{0}/{1})"
-msgstr ""
+msgstr "(当前人数：{0}/{1})"
 
 msgid " <累>"
-msgstr ""
+msgstr " <Tired>"
 
 msgid "视觉系"
-msgstr ""
+msgstr "Vision-type"
 
 msgid "触觉系"
-msgstr ""
+msgstr "Touch-type"
 
 msgid "激素系"
-msgstr ""
+msgstr "Pheromone-type"
 
 msgid "催眠系"
-msgstr ""
+msgstr "Hypnosis-type"
 
 msgid "时间系"
-msgstr ""
+msgstr "Time-type"
 
 msgid ""
 "\n"
@@ -7544,240 +7556,251 @@ msgid ""
 msgstr ""
 
 msgid "装备信物"
-msgstr ""
+msgstr "Equip token"
 
 msgid "○装备信物时，信物干员正面数值结算+10%，负面数值结算-10%，其他干员为+1%和-1%（可叠加，上限同装备信物上限）\n"
-msgstr ""
+msgstr "○On equipping tokens, positive effects +10% and negative effects -10% for the correct Operator, or +1% and -1% if incorrect (stackable)\n"
 
 msgid ""
 "  当前最大可装备数量：{equip_number}\n"
 "\n"
 msgstr ""
+"  Maximum tokens: {equip_number}\n"
+"\n"
 
 msgid "  当前装备的信物：\n"
-msgstr ""
+msgstr "  Currently equipped tokens: \n"
 
 msgid "[更改装备信物]"
-msgstr ""
+msgstr "[Change equipped tokens]"
 
 msgid ""
 "\n"
 "更改装备信物\n"
 msgstr ""
+"\n"
+"Change equipped tokens\n"
 
 msgid "当前已装备数量/最大可装备数量：{len(now_equiped)}/{equip_number}\n"
-msgstr ""
+msgstr "Equipped/Maximum: {len(now_equiped)}/{equip_number}\n"
 
 msgid "请选择要装备的信物：\n"
-msgstr ""
+msgstr "Please choose token to be equipped: \n"
 
 msgid "  当前没有可以选择的信物\n"
-msgstr ""
+msgstr "  No token available\n"
 
 msgid "清醒"
-msgstr ""
+msgstr "Clear"
 
 msgid "疲劳"
-msgstr ""
+msgstr "Tired"
 
 msgid "昏昏欲睡"
-msgstr ""
+msgstr "Sleepy"
 
 msgid "随时睡着"
-msgstr ""
+msgstr "Drowsy"
 
 msgid "好感度>={0}  "
-msgstr ""
+msgstr "Affinity >= {0}"
 
 msgid "信赖度>={0}"
-msgstr ""
+msgstr "Trust >= {0}"
 
 msgid "或催眠进度>={0}"
-msgstr ""
+msgstr "or Hypnosis Depth >= {0}"
 
 msgid "解锁{0}  "
-msgstr ""
+msgstr "Unlock {0}"
 
 msgid "攻略等级>={0}  "
-msgstr ""
+msgstr "Relationship >= {0}"
 
 msgid "+睡眠(+999)"
-msgstr ""
+msgstr "+ Sleeping(+999)"
 
 msgid "+时停(+9999)"
-msgstr ""
+msgstr "+ Time Stop(+9999)"
 
 msgid "性爱"
-msgstr ""
+msgstr "Sex"
 
 msgid "药物"
-msgstr ""
+msgstr "Medicine"
 
 msgid "SM"
 msgstr ""
 
 msgid "非逆推"
-msgstr ""
+msgstr "Not active H"
 
 msgid "破处"
-msgstr ""
+msgstr "Virginity lost"
 
 msgid "文本生成AI设置"
-msgstr ""
+msgstr "Text AI settings"
 
 msgid "切换催眠模式"
-msgstr ""
+msgstr "Change Hypnosis"
 
 msgid "时间停止流动"
-msgstr ""
+msgstr "Stop timeflow"
 
 msgid "时间重新流动"
-msgstr ""
+msgstr "Resume timeflow"
 
 msgid "让对方在时停中获得自由"
-msgstr ""
+msgstr "Allows movement"
 
 msgid "让对方在时停中再次停止"
-msgstr ""
+msgstr "Stop movement"
 
 msgid "角色特殊指令"
-msgstr ""
+msgstr "Special commands"
 
 msgid "清洁口交"
-msgstr ""
+msgstr "Cleaning blowjob"
 
 msgid "绝顶寸止"
-msgstr ""
+msgstr "Orgasm edge"
 
 msgid "绝顶解放"
-msgstr ""
+msgstr "Orgasm release"
 
 msgid "技艺"
-msgstr ""
+msgstr "Arts"
 
 msgid ""
 "\n"
 "{0}从未在有意识下被中出过，因此不会意识到自己已经怀孕了\n"
 msgstr ""
+"\n"
+"{0} has not received creampies while conscious, hence she didn't realise she's pregnant\n"
 
 msgid ""
 "\n"
 "{0}获得了[无意识妊娠]\n"
 msgstr ""
+"\n"
+"{0} acquired [Unconscious Pregnancy]\n"
 
 msgid "成功寸止了{0}的绝顶，但差不多也到了能控制住的极限了，还是尽快释放出来比较好\n"
-msgstr ""
+msgstr "Edged {0}'s orgasm, but it's reaching the limit, better to release it quickly\n"
 
 msgid "成功寸止了{0}的绝顶\n"
-msgstr ""
+msgstr "Edged {0}'s orgasm\n"
 
 msgid "尝试寸止{0}的绝顶，但失败了\n"
-msgstr ""
+msgstr "Failed to edge {0}'s orgasm\n"
 
 msgid "成功寸止了{0}的绝顶，但已经超过了能控制住的极限，随时都可能释放出来\n"
-msgstr ""
+msgstr "Edged {0}'s orgasm, but it's over the limit, it can be released at any time\n"
 
 msgid "超强"
-msgstr ""
+msgstr "Super"
 
 msgid "在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n"
-msgstr ""
+msgstr "After an intense H, {0}'s Stamina limit +{1}, Energy limit +{2}\n"
 
 msgid "  （未选择的源石能力均可在游戏中满足特定条件解锁）\n"
-msgstr ""
+msgstr "   (Unselected Originium Arts can be unlocked via conditions) \n"
 
 msgid ""
 "\n"
 "（正在调用{0}）\n"
 msgstr ""
+"\n"
+" (Using {0}) \n"
 
 msgid "请根据以下条件，描写两个角色的互动场景："
-msgstr ""
+msgstr "Please describe the interaction between two characters under the conditions: "
 
 msgid "场景发生的地点是{0}。"
-msgstr ""
+msgstr "Currently at {0}."
 
 msgid "在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。"
-msgstr ""
+msgstr "In the event, {0} is a leader of a pharmaceutical company known as leader, while {1} is his employee."
 
 msgid "{0}正在对{1}进行的动作是{2}。"
-msgstr ""
+msgstr "{0}'s action on {1} is {2}."
 
 msgid "如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。"
-msgstr ""
+msgstr "If using numbers are showing relationship, where 0 is first met strangers and 8 is the eternal partner, then {0} and {1} is at {2}."
 
 msgid "{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。"
-msgstr ""
+msgstr "{0} and {1} is in normal love relationship, if using numbers to show it, where 1 is slight affinity and 4 is lover till death, then {0} and {1} is at {4}."
 
 msgid ""
 "{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。"
 msgstr ""
+"{0}and {1} is in twisted dominance relationship, if using numbers to show it, where 1 is slight flattening and humble and 4 is absolute respect and submission, then {2} and {3} is at {4}."
 
 msgid "{0}的年龄是{1}。"
-msgstr ""
+msgstr "{0}'s age level is {1}."
 
 msgid "{0}正在睡觉，睡眠的深度是{1}。"
-msgstr ""
+msgstr "{0} is sleeping, she {1}."
 
 msgid "{0}有些困了，困的程度为{1}。"
-msgstr ""
+msgstr "{0} is tired, she's {1}."
 
 msgid "{0}的心情状态是{1}。"
-msgstr ""
+msgstr "{0}'s mood is {1}."
 
 msgid "{0}正在跟随{1}一起行动。"
-msgstr ""
+msgstr "{0} is following {1}."
 
 msgid "{0}有点想上厕所尿尿。"
-msgstr ""
+msgstr "{0} wish to go toilet for pee."
 
 msgid "{0}有点饿了，想吃东西。"
-msgstr ""
+msgstr "{0} is hungry."
 
 msgid "{0}被{1}催眠了。"
-msgstr ""
+msgstr "{0} is hypnotised by {1}."
 
 msgid "{0}被{1}监禁在监狱里了。"
-msgstr ""
+msgstr "{0} is imprisoned by {1}."
 
 msgid "{0}不是公司的员工，是前来拜访的访客。"
-msgstr ""
+msgstr "{0} is not an employee, but a visitor."
 
 msgid "{0}正处在停止的时间中，无法做出任何反应。"
-msgstr ""
+msgstr "{0} can't move as she's in the halted time."
 
 msgid "{0}的职业是{1}。"
-msgstr ""
+msgstr "{0}'s profession is {1}."
 
 msgid "{0}是一种虚构的奇幻种族，种族名是{1}。"
-msgstr ""
+msgstr "{0} is a mystical race {1}."
 
 msgid "{0}的出生地是{1}。"
-msgstr ""
+msgstr "{0} was born at {1}."
 
 msgid "{0}所属的具体势力是{1}。"
-msgstr ""
+msgstr "{0}'s faction is {1}."
 
 msgid "{0}有以下素质特性："
-msgstr ""
+msgstr "{0} has the following talents and traits:"
 
 msgid "{0}、"
 msgstr ""
 
 msgid "{0}穿着的衣服有："
-msgstr ""
+msgstr "{0} is wearing: "
 
 msgid "{0}的工作是{1}。"
-msgstr ""
+msgstr "{0}'s job in the company is {1}."
 
 msgid "{0}称呼{1}为{2}。"
-msgstr ""
+msgstr "{0} call {1} as {2}."
 
 msgid "在当前的场景里，{0}是医药公司的领导人之一，被称为博士。"
-msgstr ""
+msgstr "In current event, {0} is a leader of pharmaceutical company known as Doctor."
 
 msgid "{0}正在进行的动作是{1}。"
-msgstr ""
+msgstr "{0} is doing {1}."
 
 msgid ""
 " \n"
@@ -7803,74 +7826,104 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+" \n"
+" ○Text generation AI is a function on testing, having many risks, hence please confirm the terms and conditions\n"
+"\n"
+"\n"
+" 1.Requires API from OpenAI or Gemini, and needs internet, please prepare by yourself\n"
+"\n"
+"\n"
+"   2.Both stated above will have fees incurred, this is not given to or by the developer\n"
+"\n"
+"\n"
+" 3.The text generated might be uncomfortable, and the developer does not have anything related about it\n"
+"\n"
+"\n"
+" 4.Inappropriate generated text or process can bring you warning or ban on your API, which also has no relation with the developer\n"
+"\n"
+"\n"
+" 5.Follow the newest version as this terms can change overtime\n"
+"\n"
+"\n"
+" 6.Due to this many buffs above, if you know what you're doing, and you can afford the fees and risks, then continue\n"
+"\n"
+"\n"
 
 msgid "[0]我不太确定，再考虑一下"
-msgstr ""
+msgstr "[0] I'm not sure"
 
 msgid "[1]我已阅读并同意以上所有免责事项，理解并愿意承担对应的费用和风险"
-msgstr ""
+msgstr "[1] I have read and accepted the conditions, and is willing to take on the fees and risks"
 
 msgid "下一步"
-msgstr ""
+msgstr "Next"
 
 msgid "   开启本功能后，受网络连接速度和模型的文本生成速度影响，在生成文本时会有明显的延迟\n"
-msgstr ""
+msgstr "   You may experience a slight delay on text generation\n"
 
 msgid ""
 "   系统提示词文件路径为 data/ui_text/text_ai_system_promote.csv "
 "，可以根据自己的需要进行调整，调整后需重启游戏\n"
 msgstr ""
+"   Keys for generation: data/ui_text/text_ai_system_promote.csv "
+", can be changed by self, but game must be restarted after change\n"
 
 msgid ""
 "   包含调用、输送数据在内的完整代码，见游戏源码文件路径 Script/UI/Panel/chat_ai_setting.py "
 "，可以根据自己的需要进行调整，调整后需自行打包\n"
 msgstr ""
+"   Code for transferring data: Script/UI/Panel/chat_ai_setting.py "
+", can be changed by self, but need to pack by self\n"
 
 msgid "未设置"
-msgstr ""
+msgstr "Not set"
 
 msgid "已设置"
-msgstr ""
+msgstr "Set successfully"
 
 msgid "  OpenAI API密钥： {0}\n"
-msgstr ""
+msgstr "  OpenAI API: {0}\n"
 
 msgid "  Gemini API密钥： {0}\n"
-msgstr ""
+msgstr "  Gemini API: {0}\n"
 
 msgid "  [更改OpenAI API密钥] "
-msgstr ""
+msgstr "  [Change OpenAI API]"
 
 msgid "更改OpenAI API密钥"
-msgstr ""
+msgstr "Change OpenAI API"
 
 msgid "  [更改Gemini API密钥] "
-msgstr ""
+msgstr "  [Change Gemini API]"
 
 msgid "更改Gemini API密钥"
-msgstr ""
+msgstr "Change Gemini API"
 
 msgid "  [测试] "
-msgstr ""
+msgstr "  [Test]"
 
 msgid "测试"
-msgstr ""
+msgstr "Test"
 
 msgid ""
 " \n"
 "  测试通过，当前调用的模型为："
 msgstr ""
+" \n"
+"  Test approved, model used: "
 
 msgid ""
 " \n"
 "  测试不通过\n"
 msgstr ""
+" \n"
+"  Test not approved\n"
 
 msgid "请输入1~10的数字\n"
-msgstr ""
+msgstr "Enter numbers of 1-10\n"
 
 msgid "更改API密钥"
-msgstr ""
+msgstr "Change API"
 
 msgid ""
 " \n"
@@ -7878,118 +7931,156 @@ msgid ""
 "\n"
 "\n"
 msgstr ""
+" \n"
+" ○Please enter {0} and click [Confirm], a file will be created afterwards, save it and avoid leaking\n"
+"\n"
+"\n"
 
 msgid "请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n"
-msgstr ""
+msgstr "Please enter OpenAI API, starting with sk- \n"
 
 msgid "请输入您的Gemini API密钥，应当是一个长段字符串\n"
-msgstr ""
+msgstr "Please enter Gemini API\n"
 
 msgid ""
 " \n"
 "  输入的API密钥不符合规范，请重新输入\n"
 msgstr ""
+" \n"
+"  Incorrect API, please enter again\n"
 
 msgid ""
 " \n"
 "  请先设置该模型的API密钥\n"
 msgstr ""
+" \n"
+"  Not set yet\n"
 
 msgid ""
 " \n"
 "  测试通过\n"
 msgstr ""
+" \n"
+"  Approved\n"
 
 msgid ""
 " \n"
 "  测试不通过，原因：连接超时\n"
 msgstr ""
+" \n"
+"  Not approved, Reason: Timed Out\n"
 
 msgid ""
 " \n"
 "  测试不通过，原因：{0}\n"
 msgstr ""
+" \n"
+"  Not approved, Reason: {0}\n"
 
 msgid "[002]时间系能力："
-msgstr ""
+msgstr "[002] Time-type abilities:"
 
 msgid "[003]催眠系能力："
-msgstr ""
+msgstr "[003] Hypnosis-type abilities:"
 
 msgid "当前默认催眠类型：{0}"
-msgstr ""
+msgstr "Current default Hypnosis type: {0}"
 
 msgid ""
 "\n"
 "时间系能力（消耗2理智/min）：\n"
 msgstr ""
+"\n"
+"Time-type abilities (2 Sanity per minute): \n"
 
 msgid "：需要全干员无意识性交经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
-msgstr ""
+msgstr ": Total Unconscious Sex EXP ≥{0} {Currently {1}}, Total Unconscious Orgasm EXP ≥{2} {Currently {3}}"
 
 msgid "：需要对干员的时姦经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
-msgstr ""
+msgstr ": Timed Rape EXP ≥{0} {Currently {1}}, Total Unconscious Orgasm EXP ≥{2} {Currently {3}}"
 
 msgid "：需要对干员的睡姦经验≥{0}（当前{1}）"
-msgstr ""
+msgstr ": Sleep Rape EXP ≥{0} {Currently {1}}"
 
 msgid ""
 "\n"
 "可用的催眠类型：\n"
 msgstr ""
+"\n"
+"Available Hypnosis type: \n"
 
 msgid ""
 "\n"
 "已切换为{0}催眠模式\n"
 "\n"
 msgstr ""
+"\n"
+"Switched to {0}\n"
+"\n"
 
 msgid ""
 "\n"
 "{0}会理所当然地接受{1}的不合理行为了\n"
 "\n"
 msgstr ""
+"\n"
+"{0} will now accept {1}'s inappropriate actions\n"
+"\n"
 
 msgid ""
 "\n"
 "{0}会把{1}视为空气了\n"
 "\n"
 msgstr ""
+"\n"
+"{0} will now treat {1} as air\n"
+"\n"
 
 msgid ""
 "\n"
 "{0}可以随意地操纵{1}的身体了\n"
 "\n"
 msgstr ""
+"\n"
+"{0} can now control {1}'s body freely\n"
+"\n"
 
 msgid ""
 "\n"
 "{0}可以向{1}的潜意识灌输指令了\n"
 "\n"
 msgstr ""
+"\n"
+"{0} can now insert commands to {1}'s consciousness\n"
+"\n"
 
 msgid "心灵"
-msgstr ""
+msgstr "Mind"
 
 msgid "选择{0}控制选项"
-msgstr ""
+msgstr "Choose {0} option"
 
 msgid ""
 "\n"
 "可以对{0}使用的控制指令：\n"
 "\n"
 msgstr ""
+"\n"
+"Available commands on {0}: \n"
+"\n"
 
 msgid " <寸止>"
-msgstr ""
+msgstr " <Edged>"
 
 msgid " <时停>"
-msgstr ""
+msgstr " <Time Stop>"
 
 msgid ""
 "  当前最大可装备数量：{0}\n"
 "\n"
 msgstr ""
+"  Maximum equipped tokens: {0}\n"
+"\n"
 
 msgid "当前已装备数量/最大可装备数量：{0}/{1}\n"
-msgstr ""
+msgstr "Equipped/Maxiumu: {0}/{1}\n"

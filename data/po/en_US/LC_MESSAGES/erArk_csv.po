@@ -2291,31 +2291,31 @@ msgid "Ｗ经验"
 msgstr "W Experience"
 
 msgid "Ｎ绝顶经验"
-msgstr "N Climax EXP"
+msgstr "N Orgasm EXP"
 
 msgid "Ｂ绝顶经验"
-msgstr "B Climax EXP"
+msgstr "B Orgasm EXP"
 
 msgid "Ｃ绝顶经验"
-msgstr "C Climax EXP"
+msgstr "C Orgasm EXP"
 
 msgid "Ｐ绝顶经验"
-msgstr "P Climax EXP"
+msgstr "P Orgasm EXP"
 
 msgid "Ｖ绝顶经验"
-msgstr "V Climax EXP"
+msgstr "V Orgasm EXP"
 
 msgid "Ａ绝顶经验"
-msgstr "A Climax EXP"
+msgstr "A Orgasm EXP"
 
 msgid "Ｕ绝顶经验"
-msgstr "U Climax EXP"
+msgstr "U Orgasm EXP"
 
 msgid "Ｗ绝顶经验"
-msgstr "W Climax EXP"
+msgstr "W Orgasm EXP"
 
 msgid "绝顶经验"
-msgstr "Climax EXP"
+msgstr "Orgasm EXP"
 
 msgid "射精经验"
 msgstr "Semen Ejaculating EXP"
@@ -2444,7 +2444,7 @@ msgid "无意识Ｗ经验"
 msgstr "Unconscious W EXP"
 
 msgid "无意识绝顶经验"
-msgstr "Unconscious Climax EXP"
+msgstr "Unconscious Orgasm EXP"
 
 msgid "无意识性交经验"
 msgstr "Unconscious Sex EXP"
@@ -2492,25 +2492,25 @@ msgid "H书阅读经验"
 msgstr "H Book Reading EXP"
 
 msgid "正常位绝顶经验"
-msgstr "Missionary Climax EXP"
+msgstr "Missionary Orgasm EXP"
 
 msgid "後背位绝顶经验"
-msgstr "Doggy Climax EXP"
+msgstr "Doggy Orgasm EXP"
 
 msgid "骑乘位绝顶经验"
-msgstr "Cowgirl Climax EXP"
+msgstr "Cowgirl Orgasm EXP"
 
 msgid "对面座位绝顶经验"
-msgstr "Face Sitting Climax EXP"
+msgstr "Face Sitting Orgasm EXP"
 
 msgid "背面座位绝顶经验"
-msgstr "Back Sitting Climax EXP"
+msgstr "Back Sitting Orgasm EXP"
 
 msgid "对面立位绝顶经验"
-msgstr "Face Standing Climax EXP"
+msgstr "Face Standing Orgasm EXP"
 
 msgid "背面立位绝顶经验"
-msgstr "Back Standing Climax EXP"
+msgstr "Back Standing Orgasm EXP"
 
 msgid "睡姦经验"
 msgstr "Sleep Rape EXP"
@@ -5525,7 +5525,7 @@ msgstr "Semen Taste Loving"
 msgid "经常性地在绝顶的同时被口内射精而获得的素质，尝到精液的味道就会条件反射性地绝顶"
 msgstr ""
 "Talent obtained after frequently have semen ejaculated into mouth while on "
-"climax,\\n now will conditionally enter climax after tasting semen"
+"orgasm,\\n now will conditionally enter orgasm after tasting semen"
 
 msgid "精液膨腹"
 msgstr "Semen Inflation"
@@ -5548,7 +5548,7 @@ msgstr "Urine Leaking"
 
 msgid "经常性地在绝顶的同时被迫尿出来而获得的素质，感受到性快感就会条件反射性地漏尿"
 msgstr ""
-"Talent obtained after frequently pee out while on climax,\\n now will leak "
+"Talent obtained after frequently pee out while on orgasm,\\n now will leak "
 "urine out after experiencing sexual pleasure"
 
 msgid "淫乱"
@@ -10465,7 +10465,7 @@ msgstr ""
 " when the surface of tongue and inner wall of the cavity is touched, but the"
 " sensitivity is still weak. The tongue can taste semen but it is still "
 "difficult to swallow. The cavity has certain sexual pleasure, but not to the"
-" point of climax, and still difficult to swallow semen."
+" point of orgasm, and still difficult to swallow semen."
 
 msgid ""
 "口腔和舌头的敏感度明显增强，舌面和口腔内壁被触碰可以产生较强烈的性快感。舌头可以敏锐地品尝到精液的味道，吞咽精液也比较流畅。口腔已经成为一个敏感的性器官，可以通过舌头和口腔的刺激达到高潮，吞咽精液也基本无障碍。"
@@ -10473,7 +10473,7 @@ msgstr ""
 "The sensitivity of the cavity and tongue has strengthened, and strong sexual"
 " pleasure can be produced on the touching surface of the tongue and inner "
 "wall of the cavity. The tongue can taste semen sharply, and can swallow it "
-"smoothly. The cavity has become a sensitive sex organ, can reach climax on "
+"smoothly. The cavity has become a sensitive sex organ, can reach orgasm on "
 "stimulating tongue and cavity, and no difficulties on swallowing semen."
 
 msgid ""
@@ -10484,7 +10484,7 @@ msgstr ""
 "cause sex drive. The cavity is very sensitive, the tongue can taste semen to"
 " the greatest extent, and swallowing semen has become a habit and "
 "entertainment. The cavity can fully become a sex organ, and extreme sex "
-"climax can be reached through fellatio."
+"orgasm can be reached through fellatio."
 
 msgid "有一点精液"
 msgstr "Has a bit of semen"
@@ -12281,7 +12281,7 @@ msgid "体控-敏感度提升"
 msgstr "Body control-Sensitivity"
 
 msgid "体控-强制高潮"
-msgstr "Body control-Climax"
+msgstr "Body control-Orgasm"
 
 msgid "体控-强制排卵"
 msgstr "Body control-Ovulation"
@@ -13750,7 +13750,7 @@ msgstr "How to increase Happiness and reduce negative stats during H?"
 
 msgid ""
 "①在H之前，可以提前进行香薰疗愈、媚药等准备，让干员提前进入状态\n\\n②在H中，插入前可以多做点前戏，用其他非插入指令或者道具来提升干员的快感、欲情和润滑，这些值越高，插入时的快感就越多、苦痛也越少\\n  在H中，干员绝顶时会获得极大的快感和快乐，并减少苦痛、反感等负面状态值\\n\\n③在H之外，也要记得多升级干员的欲望、部位感觉、部位扩张和正面刻印等能力，并且尽量避免负面刻印的获得"
-msgstr "①Before H, prepare aromatherapy or love potions to get into condition quickly\\n\\n②During H, do other actions before insertion, such as other non-insertion commands or items to increase Happiness, Lust and Lubrication, and the Happiness will increase on insertion as these go higher, vice versa for Pain\\n  When triggering climax, they will gain high Happiness and reduce Pain\\n\\n③Upgrading Desire, Feels, Dilations and positive Engravings while avoiding negative Engravings outside H"
+msgstr "①Before H, prepare aromatherapy or love potions to get into condition quickly\\n\\n②During H, do other actions before insertion, such as other non-insertion commands or items to increase Happiness, Lust and Lubrication, and the Happiness will increase on insertion as these go higher, vice versa for Pain\\n  When triggering orgasm, they will gain high Happiness and reduce Pain\\n\\n③Upgrading Desire, Feels, Dilations and positive Engravings while avoiding negative Engravings outside H"
 
 msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
 msgstr "I want to make my Operators pregnant, is there ways to increase chance of fertilization?"
@@ -14352,31 +14352,31 @@ msgid "收起内裤"
 msgstr "Take off underwear"
 
 msgid "结算N小绝顶"
-msgstr "Settling N small climax"
+msgstr "Settling N small orgasm"
 
 msgid "结算N普绝顶"
-msgstr "Settling N medium climax"
+msgstr "Settling N medium orgasm"
 
 msgid "结算N强绝顶"
-msgstr "Settling N strong climax"
+msgstr "Settling N strong orgasm"
 
 msgid "结算B小绝顶"
-msgstr "Settling B small climax"
+msgstr "Settling B small orgasm"
 
 msgid "结算B普绝顶"
-msgstr "Settling B medium climax"
+msgstr "Settling B medium orgasm"
 
 msgid "结算B强绝顶"
-msgstr "Settling B strong climax"
+msgstr "Settling B strong orgasm"
 
 msgid "结算C小绝顶"
-msgstr "Settling C small climax"
+msgstr "Settling C small orgasm"
 
 msgid "结算C普绝顶"
-msgstr "Settling C medium climax"
+msgstr "Settling C medium orgasm"
 
 msgid "结算C强绝顶"
-msgstr "Settling C strong climax"
+msgstr "Settling C strong orgasm"
 
 msgid "结算射精"
 msgstr "Settling ejaculation"
@@ -14388,43 +14388,43 @@ msgid "结算超大量射精"
 msgstr "Settling huge ejaculation"
 
 msgid "结算V小绝顶"
-msgstr "Settling V small climax"
+msgstr "Settling V small orgasm"
 
 msgid "结算V普绝顶"
-msgstr "Settling V medium climax"
+msgstr "Settling V medium orgasm"
 
 msgid "结算V强绝顶"
-msgstr "Settling V strong climax"
+msgstr "Settling V strong orgasm"
 
 msgid "结算A小绝顶"
-msgstr "Settling A small climax"
+msgstr "Settling A small orgasm"
 
 msgid "结算A普绝顶"
-msgstr "Settling A medium climax"
+msgstr "Settling A medium orgasm"
 
 msgid "结算A强绝顶"
-msgstr "Settling A strong climax"
+msgstr "Settling A strong orgasm"
 
 msgid "结算U小绝顶"
-msgstr "Settling U small climax"
+msgstr "Settling U small orgasm"
 
 msgid "结算U普绝顶"
-msgstr "Settling U medium climax"
+msgstr "Settling U medium orgasm"
 
 msgid "结算U强绝顶"
-msgstr "Settling U strong climax"
+msgstr "Settling U strong orgasm"
 
 msgid "结算W小绝顶"
-msgstr "Settling W small climax"
+msgstr "Settling W small orgasm"
 
 msgid "结算W普绝顶"
-msgstr "Settling W medium climax"
+msgstr "Settling W medium orgasm"
 
 msgid "结算W强绝顶"
-msgstr "Settling W strong climax"
+msgstr "Settling W strong orgasm"
 
 msgid "结算额外绝顶"
-msgstr "Settling extra climax"
+msgstr "Settling extra orgasm"
 
 msgid "结算快乐刻印1"
 msgstr "Settling Happy Engraving 1"
@@ -14508,28 +14508,28 @@ msgid "结算无觉刻印6"
 msgstr "Settling Unconscious Engraving 6"
 
 msgid "结算因B绝顶而被迫喷乳"
-msgstr "Settling spilling milk due to B Climax"
+msgstr "Settling spilling milk due to B Orgasm"
 
 msgid "结算因U绝顶而被迫漏尿"
-msgstr "Settling leaking urine due to U Climax"
+msgstr "Settling leaking urine due to U Orgasm"
 
 msgid "结算双重绝顶"
-msgstr "Settling double Climax"
+msgstr "Settling double Orgasm"
 
 msgid "结算三重绝顶"
-msgstr "Settling triple Climax"
+msgstr "Settling triple Orgasm"
 
 msgid "结算四重绝顶"
-msgstr "Settling quadruple Climax"
+msgstr "Settling quadruple Orgasm"
 
 msgid "结算五重绝顶"
-msgstr "Settling quintuple Climax"
+msgstr "Settling quintuple Orgasm"
 
 msgid "结算六重绝顶"
-msgstr "Settling sextuple Climax"
+msgstr "Settling sextuple Orgasm"
 
 msgid "结算七重绝顶"
-msgstr "Settling septuple Climax"
+msgstr "Settling septuple Orgasm"
 
 msgid "结算乳头夹"
 msgstr "Settling nipple clamps"
@@ -14928,7 +14928,7 @@ msgstr ""
 "{TargetName} was facing opposite to the door, but you can still see her clothes opened \\n"
 "and she's doing something with her hand on her body part. \\n"
 "Hence, {PlayerName} watched this interesting performance, and left \\n"
-"when she's still at the aftertaste of the climax."
+"when she's still at the aftertaste of the orgasm."
 
 msgid ""
 "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地发出了加我一个的邀请"
@@ -15735,7 +15735,7 @@ msgstr ""
 "①Before H, prepare aromatherapy or love potions to get into condition quickly\\n"
 "\\n"
 "②During H, do other actions before insertion, such as other non-insertion commands or items to increase Happiness, Lust and Lubrication, and the Happiness will increase on insertion as these go higher, vice versa for Pain\\n"
-"  When triggering climax, they will gain high Happiness and reduce Pain\\n"
+"  When triggering orgasm, they will gain high Happiness and reduce Pain\\n"
 "\\n"
 "③Upgrading Desire, Feels, Dilations and positive Engravings while avoiding negative Engravings outside H"
 
@@ -16087,7 +16087,7 @@ msgid "处理外交事宜"
 msgstr "Manage diplomatic affairs"
 
 msgid "结算饮精绝顶"
-msgstr "Settling Semen Drinking Climax"
+msgstr "Settling Semen Drinking Orgasm"
 
 msgid "新周目告别"
 msgstr "Farewell"
@@ -16766,34 +16766,34 @@ msgid "外勤集合点"
 msgstr "Gathering Point"
 
 msgid "是否使用角色对玩家的专属称呼"
-msgstr ""
+msgstr "Enable unique calling to player"
 
 msgid "自定义角色对自己的专属称呼，默认为博士，可更改为任意文本"
-msgstr ""
+msgstr "Customize special calling, default as Doctor, can change to anything"
 
 msgid "是否使用玩家对角色的专属称呼"
-msgstr ""
+msgstr "Enable unique calling to Operators"
 
 msgid "自定义自己对该角色的专属称呼，默认为无，可更改为任意文本"
-msgstr ""
+msgstr "Customize special calling, default as none, can change to anything"
 
 msgid "获得3至纯源石，装备信物上限提升至3个"
-msgstr ""
+msgstr "Obtain 3 Originium Primes, maximum Token equipped increased to 3"
 
 msgid "获得5至纯源石，装备信物上限提升至5个"
-msgstr ""
+msgstr "Obtain 5 Originium Primes, maximum Token equipped increased to 5"
 
 msgid "获得5至纯源石，装备信物上限提升至7个"
-msgstr ""
+msgstr "Obtain 5 Originium Primes, maximum Token equipped increased to 7"
 
 msgid "获得10至纯源石，装备信物上限提升至10个"
-msgstr ""
+msgstr "Obtain 10 Originium Primes, maximum Token equipped increased to 10"
 
 msgid "获得100至纯源石，装备信物上限提升至15个"
-msgstr ""
+msgstr "Obtain 100 Originium Primes, maximum Token equipped increased to 15"
 
 msgid "获得9999至纯源石，装备信物上限提升至20个"
-msgstr ""
+msgstr "Obtain 9999 Originium Primes, maximum Token equipped increased to 20"
 
 msgid "采集周围的药草"
 msgstr ""
@@ -17075,137 +17075,138 @@ msgid ""
 msgstr ""
 
 msgid "开放基础设施：【门诊部】、【急诊部】、【住院部】，可收治患者为20人"
-msgstr ""
+msgstr "Opens basic facilities: [Outpatient Department], [Emergency Room], [Inpatient Department], 20 maximum number of admissible patients"
 
 msgid "开放新设施：【手术室】（未实装）、【血库】（未实装），可收治患者数量提升至50人"
-msgstr ""
+msgstr "Opens new facilities: [Surgery Room] (not implemented), [Blood Storage Room] (not implemented), maximum number of admissible patients increases to 50"
 
 msgid "休息效率加成提升5%"
-msgstr ""
+msgstr "Recovery speed +5%"
 
 msgid "休息效率加成提升10%"
-msgstr ""
+msgstr "Recovery speed +10%"
 
 msgid "休息效率加成提升20%"
-msgstr ""
+msgstr "Recovery speed +20%"
 
 msgid "休息效率加成提升30%"
-msgstr ""
+msgstr "Recovery speed +30%"
 
 msgid "初始额外获得50000龙门币、6000合成玉、100粉色凭证和30普通药材"
-msgstr ""
+msgstr "Initially obtain 50000 LMD, 6000 Orundums, 100 Pink Certificates and 30 Normal Crude Drugs"
 
 msgid "ID信息更新卡"
-msgstr ""
+msgstr "ID Info Update Card"
 
 msgid "罗德岛舰桥系统升级时使用的ID信息更新卡，这一张是特地为博士您准备的。"
-msgstr ""
+msgstr "Card used to upgrade Rhodes Island's Bridge, specifically prepared for Doctor."
 
 msgid "偷走所有人内裤"
-msgstr ""
+msgstr "Steal all underwears"
 
 msgid "偷走所有人袜子"
-msgstr ""
+msgstr "Steal all socks"
 
 msgid "生育模组"
-msgstr ""
+msgstr "Reproduction Module"
 
 msgid "仿照人体结构制成的生育模组，使无机体一样可以进行妊娠与生育"
-msgstr ""
+msgstr "Module made according to human structure, giving robots ability to be pregnant and give birth"
 
 msgid "隔衣触摸"
-msgstr ""
+msgstr "Cloth-blocked Touch"
 
 msgid "初级触觉系能力，可以隔空抚摸对方没有被衣服覆盖的身体部位（未实装）"
-msgstr ""
+msgstr "Primary touch-type ability, can touch the target's uncovered parts from afar (not implemented)"
 
 msgid "透衣触摸"
-msgstr ""
+msgstr "Cloth-through Touch"
 
 msgid "中级触觉系能力，可以穿过衣服，直接隔空触摸到对方的衣服下的身体部位（未实装）"
-msgstr ""
+msgstr "Secondary touch-type ability, can touch the target's body from afar {not implemented}"
 
 msgid "高级触觉系能力，可以穿过衣服，直接隔空插入对方的腔内（未实装）"
-msgstr ""
+msgstr "Tertiary touch-type ability, can insert into the target's cavity from afar (not implemented)"
 
 msgid "窄域时停"
-msgstr ""
+msgstr "Narrow Timestop"
 
 msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方（未实装）"
-msgstr ""
+msgstr "Primary time-type ability, can stop time but limited self's movement to in the room"
 
 msgid "广域时停"
-msgstr ""
+msgstr "Wide Timestop"
 
 msgid "中级时停系能力，可以让时间暂时停止，且自己可以随意移动（未实装）"
-msgstr ""
+msgstr "Secondary time-type ability, can stop time while move freely"
 
 msgid "精确时停"
-msgstr ""
+msgstr "Point-blank Timestop"
 
 msgid "高级时停系能力，可以让时间暂时停止，且可以选择性地让某些人或物不受影响（未实装）"
-msgstr ""
+msgstr "Tertiary time-type ability, can stop time and choose targets to not be affected"
 
 msgid "一篇用其家乡的语言写就的歌谱。虽然你完全没法阅读上面的文字，不过斯卡蒂确实打算将这首曲教予你。"
-msgstr ""
+msgstr "A song written in her mother tongue. Although you can't understand a word of it, she IS going to teach it to you."
 
 msgid ""
 "斯卡蒂，曾经的赏金猎人，现为罗德岛雇佣。斯卡蒂在过去所完成的赏金任务中，于大型生物的对抗战、坚硬目标的破坏战、困难目标的攻坚战、以及针对敌群的歼灭战等多类战斗中展现出压倒性的实力。根据推测，这与其过往之战斗经验相关，而其成为赏金猎人之前的履历有所缺失。斯卡蒂现于罗德岛的某攻坚小队中担任职位，同时兼任单兵任务预备执行干员一职。"
 msgstr ""
+"Skadi is a bounty hunter, currently employed by Rhodes Island. She has shown impressive combat prowess in the past, defeating large creatures, eliminating difficult targets, fighting crucial battles, and winning entire wars. She is very experienced in combat, but her history prior to becoming a bounty hunter is unclear. She is now an Operator for a Rhodes Island assault team, and also executes solo missions."
 
 msgid "#2a46fe"
 msgstr ""
 
 msgid "尖嘴鱼形蓝衬黑顶猎人帽"
-msgstr ""
+msgstr "Sharp fish-shaped blue lining black top hunter hat"
 
 msgid "灰色领结"
-msgstr ""
+msgstr "Gray tie"
 
 msgid "围脖式蓝黑色分层披肩"
-msgstr ""
+msgstr "Neck-scarf blue-black layered shawl"
 
 msgid "大片鱼齿状防水风斗篷"
-msgstr ""
+msgstr "Big fish-teeth-shaped waterproof cloak"
 
 msgid "鱼尾形露脐衬衣"
-msgstr ""
+msgstr "Fish-tail-shaped navel shirt"
 
 msgid "黑色防滑手套"
-msgstr ""
+msgstr "Black rough gloves"
 
 msgid "内侧开式黑色皮裤"
-msgstr ""
+msgstr "Internal-opened black leather pants"
 
 msgid "深海猎人制式纯白内裤"
-msgstr ""
+msgstr "Abyssal Hunter's white underwear"
 
 msgid "黑色防水短袜"
-msgstr ""
+msgstr "Black waterproof short socks"
 
 msgid "高敞口皮鞋"
-msgstr ""
+msgstr "High opened leather shoes"
 
 msgid "带有“SK”字样的镶铜圆盘鞘标巨剑"
-msgstr ""
+msgstr "Copper disc scabbard greatblade molded with word 'SK'"
 
 msgid "#8080A1"
 msgstr ""
 
 msgid "浅灰色风衣（带防沙口罩）"
-msgstr ""
+msgstr "Light gray trench coat (with sandproof mask)"
 
 msgid "灰色上衣"
-msgstr ""
+msgstr "Gray shirt"
 
 msgid "灰色短裙"
-msgstr ""
+msgstr "Gray dress"
 
 msgid "深灰色长袜"
-msgstr ""
+msgstr "Dark gray long socks"
 
 msgid "罗德岛产制式链锤"
-msgstr ""
+msgstr "Rhodes Island made chainhammer"
 
 msgid "浅灰色罗德岛制式轻型盾牌"
-msgstr ""
+msgstr "Light gray Rhodes Island made lightshield"
