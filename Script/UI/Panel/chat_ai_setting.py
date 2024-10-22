@@ -252,7 +252,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
             user_prompt = user_prompt[:-1] + "。"
             # 工作
             if handle_premise.handle_have_work(npc_character_id):
-                work_name = game_config.config_work_type[npc_character_data.work].name
+                work_name = game_config.config_work_type[npc_character_data.work.work_type].name
                 user_prompt += _("{0}的工作是{1}。").format(npc_name, work_name)
             # 称呼
             if handle_premise.handle_self_have_nick_name_to_pl(npc_character_id):
