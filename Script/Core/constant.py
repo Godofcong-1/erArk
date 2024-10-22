@@ -260,6 +260,8 @@ class CharacterStatus:
     """ 邀请多P """
     STATUS_GROUP_SEX_END = 369
     """ 结束多P """
+    STATUS_ASK_GROUP_SEX_FAIL = 370
+    """ 邀请多P失败 """
     STATUS_CONFESSION = 371
     """ 告白 """
     STATUS_CONFESSION_FAILED = 372
@@ -786,6 +788,8 @@ class Behavior:
     """ 邀请多P """
     GROUP_SEX_END = 369
     """ 结束多P """
+    ASK_GROUP_SEX_FAIL = 370
+    """ 邀请多P失败 """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372

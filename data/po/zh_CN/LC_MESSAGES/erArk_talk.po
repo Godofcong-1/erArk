@@ -31316,6 +31316,14 @@ msgstr ""
 msgid "{Name}{PlayerNickName}触发了索要袜子指令的地文，{TargetName}把穿着的{TagetSocName}脱下来给了你"
 msgstr ""
 
+#: .\data\talk\obscenity\ask_grop_sex.csv:6
+msgid "{Name}邀请{TargetName}等人一起H。"
+msgstr ""
+
+#: .\data\talk\obscenity\ask_grop_sex_fail.csv:6
+msgid "{Name}没能邀请{TargetName}等人一起H。"
+msgstr ""
+
 #: .\data\talk\obscenity\bagging_and_moving.csv:6
 msgid "{Name}触发了将{TargetName}装袋搬走指令的地文"
 msgstr ""
@@ -33458,6 +33466,10 @@ msgstr ""
 
 #: .\data\talk\sex\give_blowjob.csv:6
 msgid "{Name}触发了给对方口交指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_end.csv:6
+msgid "{Name}结束了和{TargetName}等人的一起H。"
 msgstr ""
 
 #: .\data\talk\sex\hairjob.csv:6

@@ -6,6 +6,8 @@ cid,effect_name,effect_type,effect
 10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器
 10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器
 10008,ADD_THIS_EVENT_TO_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入已触发记录
+10010,GROUP_SEX_MODE_ON,系统量_基础,开启多P模式
+10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭多P模式
 
 10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
 10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
@@ -309,6 +311,7 @@ cid,effect_name,effect_type,effect
 527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
 528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限
 529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
+530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

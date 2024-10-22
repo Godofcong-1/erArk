@@ -2993,6 +2993,42 @@ def handle_add_this_event_to_already_triggered(
         cache.taiggered_event_record.add(player_character_data.event.event_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_MODE_ON)
+def handle_group_sex_mode_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启多P模式
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    cache.group_sex_mode = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_MODE_OFF)
+def handle_group_sex_mode_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭多P模式
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    cache.group_sex_mode = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_TARGET_TO_ME)
 def handle_pl_target_to_me(
         character_id: int,
@@ -6659,6 +6695,41 @@ def handle_group_sex_end_h_add_hpmp_max(
             info_draw.text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}\n").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             info_draw.width = width
             info_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_FAIL_ADD_JUST)
+def handle_group_sex_fail_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    original_target_character_id = character_data.target_character_id
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历场景内所有角色
+    for chara_id in scene_data.character_list:
+        handle_sub_self_small_mana_point(chara_id, add_time, change_data, now_time)
+        handle_sub_self_small_hit_point(chara_id, add_time, change_data, now_time)
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        # 如果是拒绝者，则进行邀请H失败结算
+        if handle_premise.handle_group_sex_fail_and_self_refuse(chara_id):
+            character_data.target_character_id = chara_id
+            handle_do_h_failed_adjust(0, add_time, change_data, now_time)
+    character_data.target_character_id = original_target_character_id
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

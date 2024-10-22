@@ -1955,42 +1955,65 @@ def handle_do_h_in_love_hotel():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_ask_group_sex():
     """处理邀请多P指令"""
+    # 输出失败信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    # 场景内有太疲劳的角色
+    if handle_premise.handle_scene_someone_hp_1(0):
+        now_draw.text = _("\n场景内有角色处于疲劳状态，无法进行多P\n")
+        now_draw.draw()
+        return
+
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    h_flag = False
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
-        now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        if cache.scene_data[now_scene_str].close_flag == 0:
+    h_flag = True # 是否成功进入多P模式
+    refuse_chara_list = [] # 拒绝的角色列表
+
+    # 对场景内的全角色进行实行值判定
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id == 0:
+                continue
+            character.init_character_behavior_start_time(chara_id, cache.game_time)
+            now_character_data = cache.character_data[chara_id]
+            now_character_data.behavior.behavior_id = constant.Behavior.WAIT
+            now_character_data.state = constant.CharacterStatus.STATUS_WAIT
+            now_character_data.behavior.duration = 1
+            # 开始判定，TODO 根据已同意人数而增加额外实行值加值
+            if character.calculation_instuct_judege(0, chara_id, _("H模式"), not_draw_flag = True)[0] == False:
+                h_flag = False
+                refuse_chara_list.append(chara_id)
+
+    # 成功进入多P模式
+    if h_flag:
+        if cache.scene_data[scene_path_str].close_flag == 0:
             now_draw = normal_panel.Close_Door_Panel(width)
             door_return = now_draw.draw()
             if door_return == -1:
                 return
-        h_flag = True
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX
         character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
         now_draw.text = _("\n进入多P模式\n")
         now_draw.draw()
-
     else:
-        character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-        character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-    if not h_flag:
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
         now_draw.text = _("\n进入多P模式失败\n")
         now_draw.draw()
+        character_data.action_info.ask_group_sex_refuse_chara_id_list = refuse_chara_list
+        character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX_FAIL
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
 
 @add_instruct(

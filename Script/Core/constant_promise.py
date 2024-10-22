@@ -206,6 +206,10 @@ class Premise:
     """ 地点_角色 该地点有其他角色在和玩家H """
     SCENE_SOMEONE_NO_FALL = "place_someone_no_fall"
     """ 地点_角色 该地点有未拥有陷落素质的角色 """
+    SCENE_SOMEONE_HP_1 = "place_someone_hp_1"
+    """ 地点_角色 该地点有HP1或太疲劳的角色 """
+    SCENE_SOMEONE_UNCONSCIOUS = "place_someone_unconscious"
+    """ 地点_角色 该地点有无意识状态的角色 """
     SCENE_SOMEONE_NOT_UNCONSCIOUS = "place_someone_not_unconscious"
     """ 地点_角色 该地点有非无意识状态的角色 """
     SCENE_ALL_UNCONSCIOUS = "place_all_unconscious"
@@ -2406,6 +2410,11 @@ class Premise:
     """ H_逆推 交互对象正在主动H """
     T_NPC_NOT_ACTIVE_H = "t_npc_not_active_h"
     """ H_逆推 交互对象没有在主动H """
+
+    GROUP_SEX_FAIL_AND_SELF_AGREE = "group_sex_fail_and_self_agree"
+    """ H_多P 多P邀请失败了，但自己不是拒绝者 """
+    GROUP_SEX_FAIL_AND_SELF_REFUSE = "group_sex_fail_and_self_refuse"
+    """ H_多P 多P邀请失败了，自己是拒绝者 """
 
     HAVE_FOOD = "have_food"
     """ 道具_持有 拥有食物 """

@@ -9431,6 +9431,52 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_HP_1)
+def handle_scene_someone_hp_1(character_id: int) -> int:
+    """
+    该地点有HP1或太疲劳的角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id:
+                if handle_hp_1(chara_id):
+                    return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_UNCONSCIOUS)
+def handle_scene_someone_unconscious(character_id: int) -> int:
+    """
+    该地点有无意识状态的角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id:
+                if handle_unconscious_flag_ge_1(chara_id):
+                    return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_UNCONSCIOUS)
 def handle_scene_someone_not_unconscious(character_id: int) -> int:
     """
@@ -14288,6 +14334,33 @@ def handle_t_npc_not_active_h(character_id: int) -> int:
     if target_data.h_state.npc_active_h:
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.GROUP_SEX_FAIL_AND_SELF_AGREE)
+def handle_group_sex_fail_and_self_agree(character_id: int) -> int:
+    """
+    多P邀请失败了，但自己不是拒绝者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if character_id in pl_character_data.action_info.ask_group_sex_refuse_chara_id_list:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.GROUP_SEX_FAIL_AND_SELF_REFUSE)
+def handle_group_sex_fail_and_self_refuse(character_id: int) -> int:
+    """
+    多P邀请失败了，自己是拒绝者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_group_sex_fail_and_self_agree(character_id)
 
 
 # 以下为道具系前提

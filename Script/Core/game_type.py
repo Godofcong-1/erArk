@@ -530,6 +530,8 @@ class ACTION_INFO:
         """ 角色退房时间 """
         self.eat_food_restaurant: int = 0
         """ 要去吃饭的餐厅，见Restaurant.csv """
+        self.ask_group_sex_refuse_chara_id_list = []
+        """ 拒绝群P的角色id列表 """
 
 
 class AUTHOR_FLAG:
