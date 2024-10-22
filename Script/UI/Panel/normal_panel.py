@@ -408,7 +408,8 @@ class Sleep_Panel:
         all_recover_time = max(tired_recover_time, sanity_recover_time, semen_recover_time)
         # 全状态回复所需时间，最大为8小时
         all_recover_time = min(all_recover_time, 8)
-        need_time = max(hpmp_need_time, all_recover_time)
+        all_recover_time = max(hpmp_need_time, all_recover_time)
+        need_time = all_recover_time
         self.sleep_time_hour = need_time
 
         title_text = _("睡眠")
