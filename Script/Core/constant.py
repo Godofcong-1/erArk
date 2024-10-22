@@ -497,6 +497,63 @@ class CharacterStatus:
     STATUS_GIVE_TOY = 806
     """ 给玩具 """
 
+    STATUS_EXAMINE_HAIR = 851
+    """ 检查头发 """
+    STATUS_EXAMINE_ORAL = 852
+    """ 检查口腔内部 """
+    STATUS_EXAMINE_SUCKING_AND_SWALLOWING = 853
+    """ 测试口腔吮吸与吞咽力 """
+    STATUS_EXAMINE_ARMPIT = 854
+    """ 检查腋下 """
+    STATUS_EXAMINE_BREAST = 855
+    """ 检查胸部 """
+    STATUS_EXAMINE_NIPPLE_AND_AREOLA = 856
+    """ 检查乳头与乳晕 """
+    STATUS_EXAMINE_CILITORIS = 857
+    """ 检查阴蒂 """
+    STATUS_EXAMINE_HANDS = 858
+    """ 检查手部 """
+    STATUS_EXAMINE_HANDS_FLEXIBILITY = 859
+    """ 测试手部灵活度 """
+    STATUS_EXAMINE_FOOT = 860
+    """ 检查足部 """
+    STATUS_EXAMINE_FOOTS_FLEXIBILITY = 861
+    """ 测试足部灵活度 """
+    STATUS_EXAMINE_VULVA_AND_SHAPE = 871
+    """ 检查外阴形状 """
+    STATUS_EXAMINE_VAGINA_AND_FOLDS = 872
+    """ 检查内阴褶皱 """
+    STATUS_EXAMINE_HYMEN = 873
+    """ 检查处女膜 """
+    STATUS_EXAMINE_ORIFICE = 874
+    """ 检查子宫口 """
+    STATUS_EXAMINE_VAGINA_FIRMNESS = 875
+    """ 测试阴道紧致度 """
+    STATUS_EXAMINE_ANUS = 876
+    """ 检查菊穴 """
+    STATUS_EXAMINE_INTESTINE_FIRMNESS = 877
+    """ 测试肠道紧致度 """
+    STATUS_EXAMINE_URETHRA = 878
+    """ 检查尿道 """
+    STATUS_EXAMINE_URINATION_STATUS = 879
+    """ 测试现场排尿 """
+    STATUS_EXAMINE_TAIL = 881
+    """ 检查尾巴 """
+    STATUS_EXAMINE_TAIL_FLEXIBILITY = 882
+    """ 测试尾巴灵活度 """
+    STATUS_EXAMINE_HORN = 883
+    """ 检查兽角 """
+    STATUS_EXAMINE_EARS = 884
+    """ 检查兽耳 """
+    STATUS_EXAMINE_WING = 885
+    """ 检查翅膀 """
+    STATUS_EXAMINE_RING = 886
+    """ 检查光环 """
+    STATUS_EXAMINE_TENTACLE = 887
+    """ 检查触手 """
+    STATUS_EXAMINE_TENTACLE_FLEXIBILITY = 888
+    """ 测试触手灵活度 """
+
     STATUS_PENETRATING_VISION_ON = 901
     """ 开启透视 """
     STATUS_PENETRATING_VISION_OFF = 902
@@ -1029,6 +1086,63 @@ class Behavior:
     GIVE_TOY = 806
     """ 给玩具 """
 
+    EXAMINE_HAIR = 851
+    """ 检查头发 """
+    EXAMINE_ORAL = 852
+    """ 检查口腔内部 """
+    EXAMINE_SUCKING_AND_SWALLOWING = 853
+    """ 测试口腔吮吸与吞咽力 """
+    EXAMINE_ARMPIT = 854
+    """ 检查腋下 """
+    EXAMINE_BREAST = 855
+    """ 检查胸部 """
+    EXAMINE_NIPPLE_AND_AREOLA = 856
+    """ 检查乳头与乳晕 """
+    EXAMINE_CILITORIS = 857
+    """ 检查阴蒂 """
+    EXAMINE_HANDS = 858
+    """ 检查手部 """
+    EXAMINE_HANDS_FLEXIBILITY = 859
+    """ 测试手部灵活度 """
+    EXAMINE_FOOT = 860
+    """ 检查足部 """
+    EXAMINE_FOOTS_FLEXIBILITY = 861
+    """ 测试足部灵活度 """
+    EXAMINE_VULVA_AND_SHAPE = 871
+    """ 检查外阴形状 """
+    EXAMINE_VAGINA_AND_FOLDS = 872
+    """ 检查内阴褶皱 """
+    EXAMINE_HYMEN = 873
+    """ 检查处女膜 """
+    EXAMINE_ORIFICE = 874
+    """ 检查子宫口 """
+    EXAMINE_VAGINA_FIRMNESS = 875
+    """ 测试阴道紧致度 """
+    EXAMINE_ANUS = 876
+    """ 检查菊穴 """
+    EXAMINE_INTESTINE_FIRMNESS = 877
+    """ 测试肠道紧致度 """
+    EXAMINE_URETHRA = 878
+    """ 检查尿道 """
+    EXAMINE_URINATION_STATUS = 879
+    """ 测试现场排尿 """
+    EXAMINE_TAIL = 881
+    """ 检查尾巴 """
+    EXAMINE_TAIL_FLEXIBILITY = 882
+    """ 测试尾巴灵活度 """
+    EXAMINE_HORN = 883
+    """ 检查兽角 """
+    EXAMINE_EARS = 884
+    """ 检查兽耳 """
+    EXAMINE_WING = 885
+    """ 检查翅膀 """
+    EXAMINE_RING = 886
+    """ 检查光环 """
+    EXAMINE_TENTACLE = 887
+    """ 检查触手 """
+    EXAMINE_TENTACLE_FLEXIBILITY = 888
+    """ 测试触手灵活度 """
+
     PENETRATING_VISION_ON = 901
     """ 开启透视 """
     PENETRATING_VISION_OFF = 902
@@ -1444,6 +1558,8 @@ class Panel:
     """ 势力外交面板 """
     CHAT_AI_SETTING = 32
     """ 文本生成AI设置面板 """
+    PHYSICAL_CHECK_AND_MANAGE = 35
+    """ 身体检查与管理面板 """
 
 
 class SecondBehavior:
@@ -2122,6 +2238,8 @@ class Instruct:
     """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
+    PHYSICAL_CHECK_AND_MANAGE = 0
+    """ 身体检查与管理 """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0

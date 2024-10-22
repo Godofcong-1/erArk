@@ -30,7 +30,8 @@ from Script.UI.Panel import (
     invite_visitor_panel,
     system_setting,
     aromatherapy,
-    chat_ai_setting
+    chat_ai_setting,
+    physical_check_and_manage
 )
 from Script.Config import normal_config
 
@@ -235,4 +236,10 @@ def nation_diplomacy_flow():
 def chat_ai_setting_flow():
     """文本生成AI设置面板"""
     now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.PHYSICAL_CHECK_AND_MANAGE)
+def physical_check_and_manage_flow():
+    """身体检查与管理面板"""
+    now_panel = physical_check_and_manage.Physical_Check_And_Manage_Panel(width)
     now_panel.draw()

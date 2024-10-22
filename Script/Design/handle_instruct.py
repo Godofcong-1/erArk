@@ -118,6 +118,8 @@ def chara_handle_instruct_common_settle(
     # 如果有指定目标角色id，则设置目标角色id
     if target_character_id != 0:
         character_data.target_character_id = target_character_id
+    else:
+        target_character_id = character_data.target_character_id
     # 如果有判断条件，则先进行判断
     if judge != "":
         judge_list = character.calculation_instuct_judege(character_id, character_data.target_character_id, judge)
@@ -151,7 +153,7 @@ def chara_handle_instruct_common_settle(
     # 如果强制目标等待，则将目标角色状态设置为等待
     if target_character_id != character_id and force_taget_wait:
         character.init_character_behavior_start_time(target_character_id, cache.game_time)
-        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+        target_character_data: game_type.Character = cache.character_data[target_character_id]
         target_character_data.state = constant.CharacterStatus.STATUS_WAIT
         target_character_data.behavior.behavior_id = constant.Behavior.WAIT
         target_character_data.behavior.duration = duration
@@ -1577,6 +1579,20 @@ def handle_field_commission():
 def handle_check_locker():
     """处理检查衣柜指令"""
     cache.now_panel_id = constant.Panel.CHECK_LOCKER
+
+
+@add_instruct(
+    constant.Instruct.PHYSICAL_CHECK_AND_MANAGE,
+    constant.InstructType.OBSCENITY,
+    _("身体检查与管理"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.IN_PHYSICAL_EXAMINATION,
+     constant_promise.Premise.TIRED_LE_84},
+)
+def handle_physical_check_and_manage():
+    """处理身体检查与管理指令"""
+    cache.now_panel_id = constant.Panel.PHYSICAL_CHECK_AND_MANAGE
 
 
 @add_instruct(
