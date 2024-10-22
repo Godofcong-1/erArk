@@ -155,6 +155,8 @@ def input_load_save(save_id: str):
     color_update_count = 0
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
+        if value.cid == 0:
+            continue
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
         # 角色素质、经验、宝珠、能力、设置的更新
         update_count += update_character_config_data(value)
@@ -483,6 +485,7 @@ def update_new_character(loaded_dict):
     for i, now_npc_data in enumerate(add_new_character_list):
         # 跳过深靛
         if now_npc_data.Name == _("深靛"):
+            len_old_character -= 1
             continue
         new_character_cid = len_old_character + i
         # print(f"debug new_character_cid = {new_character_cid}")
