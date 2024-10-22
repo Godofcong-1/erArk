@@ -118,6 +118,10 @@ class CharacterStatus:
     """ 听肚子里的动静 """
     STATUS_PLAY_WITH_CHILD = 172
     """ 一起玩耍 """
+    STATUS_PL_WIN_IN_BOARD_GAME = 173
+    """ 博士在桌游中获胜 """
+    STATUS_PL_LOSE_IN_BOARD_GAME = 174
+    """ 博士在桌游中输了 """
     STATUS_SOAK_FEET = 181
     """ 泡脚 """
     STATUS_STEAM_SAUNA = 182
@@ -701,6 +705,10 @@ class Behavior:
     """ 听肚子里的动静 """
     PLAY_WITH_CHILD = 172
     """ 一起玩耍 """
+    PL_WIN_IN_BOARD_GAME = 173
+    """ 博士在桌游中获胜 """
+    PL_LOSE_IN_BOARD_GAME = 174
+    """ 博士在桌游中输了 """
     SOAK_FEET = 181
     """ 泡脚 """
     STEAM_SAUNA = 182

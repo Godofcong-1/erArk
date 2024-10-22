@@ -616,6 +616,10 @@ class BehaviorEffect:
     """ 指令_专用结算 （多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限 """
     GROUP_SEX_FAIL_ADD_JUST = 530
     """ 指令_专用结算 （多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算 """
+    BOARD_GAME_WIN_ADD_ADJUST = 532
+    """ 指令_专用结算 （桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证 """
+    BOARD_GAME_LOSE_ADD_ADJUST = 533
+    """ 指令_专用结算 （桌游输了用）根据游戏难度获得好感度、习得 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

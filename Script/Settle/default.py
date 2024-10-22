@@ -6732,6 +6732,77 @@ def handle_group_sex_fail_add_just(
     character_data.target_character_id = original_target_character_id
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOARD_GAME_WIN_ADD_ADJUST)
+def handle_board_game_win_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change = change_data.target_change[target_data.cid]
+
+    ai_level = character_data.behavior.board_game_ai_difficulty
+    # 好感
+    base_chara_favorability_and_trust_common_settle(character_data.target_character_id, add_time * 2, True, 0, ai_level, target_change)
+    # 信赖
+    base_chara_favorability_and_trust_common_settle(character_data.target_character_id, add_time * 2, False, 0, ai_level, target_change)
+    # 习得
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = change_data)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = target_change)
+    # 粉红凭证
+    add_pink_certificates = int(add_time // 2 * ai_level)
+    cache.rhodes_island.materials_resouce[4] += add_pink_certificates
+    # 输出提示信息
+    game_name = game_config.config_board_game[character_data.behavior.board_game_type].name
+    info_draw = draw.NormalDraw()
+    info_draw.text = _("{0}在{1}中获胜，获得了{2}粉红凭证\n\n").format(character_data.name, game_name, add_pink_certificates)
+    info_draw.width = width
+    info_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOARD_GAME_LOSE_ADD_ADJUST)
+def handle_board_game_lose_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （桌游输了用）根据游戏难度获得好感度、习得
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
+    target_change = change_data.target_change[target_data.cid]
+
+    ai_level = character_data.behavior.board_game_ai_difficulty
+    # 好感
+    base_chara_favorability_and_trust_common_settle(character_data.target_character_id, add_time * 2, True, 0, ai_level, target_change)
+    # 习得
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = change_data)
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = target_change)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,

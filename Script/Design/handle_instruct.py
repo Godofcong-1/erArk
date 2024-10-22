@@ -2213,6 +2213,24 @@ def handle_play_water():
 
 
 @add_instruct(
+    constant.Instruct.PLAY_GOMOKU,
+    constant.InstructType.PLAY,
+    _("下五子棋"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IN_BOARD_GAMES_ROOM,
+        constant_promise.Premise.T_NORMAL_5_6,
+        constant_promise.Premise.TIRED_LE_74}
+)
+def handle_play_chess():
+    """处理下五子棋指令"""
+    from Script.UI.Panel import play_gomoku_panel
+    now_draw = play_gomoku_panel.GomokuPanel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.PLAY_CHESS,
     constant.InstructType.PLAY,
     _("下棋"),

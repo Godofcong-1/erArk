@@ -633,6 +633,8 @@ class CHARA_ENTERTAINMENT:
         """ 借的书的id """
         self.book_return_possibility: int = 0
         """ 角色归还当前阅读书籍的可能性比例 """
+        self.board_game_settle_data: list = [0, 0]
+        """ 桌游结算用数据，0桌游类型(0无，1五子棋)，1AI难度(0最简单，越高越难) """
 
 
 class PLAYER_COLLECTION:
@@ -741,6 +743,10 @@ class Behavior:
         """ 前提结算用:圣水的毫升数 """
         self.h_interrupt_chara_name: str = ""
         """ 前提结算用:打断H的角色的名字 """
+        self.board_game_type: int = 0
+        """ 前提结算用:桌游类型 """
+        self.board_game_ai_difficulty: int = 0
+        """ 前提结算用:桌游AI难度 """
 
 
 class Chara_Event:

@@ -39,6 +39,8 @@ config_book_type: Dict[int, config_def.BookType] = {}
 """ 书籍类型配表数据 """
 config_book_type_name_data: Dict[str, Set] = {}
 """ 书籍类型配表数据集合 父类型名:子类型名 """
+config_board_game: Dict[int, config_def.Board_Game] = {}
+""" 桌游类型数据 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
 """ 角色状态属性配表数据 """
 config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
@@ -633,6 +635,16 @@ def load_book_type():
         config_book_type[now_type.cid] = now_type
         config_book_type_name_data.setdefault(now_type.father_type_name, set())
         config_book_type_name_data[now_type.father_type_name].add(now_type.son_type_name)
+
+
+def load_board_game():
+    """载入桌游类型数据"""
+    now_data = config_data["Board_Game"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.Board_Game()
+        now_type.__dict__ = tem_data
+        config_board_game[now_type.cid] = now_type
 
 
 def load_character_state_data():
@@ -1474,6 +1486,7 @@ def init():
     load_second_behavior_effect_data()
     load_book_data()
     load_book_type()
+    load_board_game()
     load_character_state_data()
     load_character_state_type_data()
     load_character_state_level()

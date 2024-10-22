@@ -111,6 +111,15 @@ class Birthplace:
     """ 初始源石病感染率 """
 
 
+class Board_Game:
+    """ 桌游类型表 """
+
+    cid: int
+    """ 桌游cid """
+    name: str
+    """ 桌游名字 """
+
+
 class BodyPart:
     """ 身体部位表 """
 
@@ -1052,7 +1061,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 
 
 class TargetEffect:

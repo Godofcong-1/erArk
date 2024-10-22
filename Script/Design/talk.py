@@ -376,6 +376,11 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     if all_food_count > 1:
         all_food_name = all_food_name[:-1]
 
+    # 桌游
+    board_game_name = ""
+    if character_id == 0 and player_data.behavior.board_game_type != 0:
+        board_game_name = game_config.config_board_game[player_data.behavior.board_game_type].name
+
     # 地点
     scene_path = character_data.position
     scene_path_str = map_handle.get_map_system_path_str_for_list(scene_path)
@@ -452,6 +457,7 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
         MakeFoodTime=character_data.behavior.make_food_time,
         AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,
+        BoardGameName = board_game_name,
         MilkMl = character_data.behavior.milk_ml,
         HInterruptCharaName = character_data.behavior.h_interrupt_chara_name,
 

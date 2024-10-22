@@ -32228,6 +32228,14 @@ msgstr ""
 msgid "{Name}对{TargetName}触发了香薰疗愈_催眠的地文"
 msgstr ""
 
+#: .\data\talk\play\board_game.csv:6
+msgid "{Name}在{BoardGameName}中战胜了{TargetName}"
+msgstr ""
+
+#: .\data\talk\play\board_game.csv:7
+msgid "{Name}在{BoardGameName}中输给了{TargetName}"
+msgstr ""
+
 #: .\data\talk\play\full_body_styling.csv:6
 msgid "{Name}触发了全身造型服务的地文"
 msgstr ""
