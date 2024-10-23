@@ -379,7 +379,7 @@ def update_character_config_data(value):
     value -- 角色数据
     """
     update_count = 0
-    # 更新角色素质、经验、宝珠、能力、设置
+    # 更新角色素质、经验、宝珠、能力、设置、身体管理
     # 素质
     if len(value.talent) != len(game_config.config_talent):
         for key in game_config.config_talent:
@@ -416,6 +416,12 @@ def update_character_config_data(value):
         for key in game_config.config_item:
             if key not in value.item:
                 value.item[key] = 0
+                update_count += 1
+    # 身体管理
+    if len(value.body_manage) != len(game_config.config_body_manage_requirement):
+        for key in game_config.config_body_manage_requirement:
+            if key not in value.body_manage:
+                value.body_manage[key] = 0
                 update_count += 1
     return update_count
 
