@@ -4420,6 +4420,27 @@ def handle_wear_condom(
     character_data.h_state.body_item[13][1] = True
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TAKE_CONDOM_OFF)
+def handle_take_condom_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己去掉戴上避孕套状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.body_item[13][1] = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_LEARN)
 def handle_target_add_small_learn(
         character_id: int,
