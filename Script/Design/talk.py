@@ -418,30 +418,38 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
             break
 
     # 服装，来自于NPC当前穿的衣服，或行动传入的变量
+    target_bra_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
-        TagetBraId = target_data.cloth.cloth_wear[6][0]
-        TBraName = game_config.config_clothing_tem[TagetBraId].name
-    else:
-        TBraName = ""
+        for BraId in target_data.cloth.cloth_wear[6]:
+            target_bra_name += game_config.config_clothing_tem[BraId].name
+    target_ski_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
-        TagetSkiId = target_data.cloth.cloth_wear[8][0]
-        TSkiName = game_config.config_clothing_tem[TagetSkiId].name
-    else:
-        TSkiName = ""
+        for SkiId in target_data.cloth.cloth_wear[8]:
+            target_ski_name += game_config.config_clothing_tem[SkiId].name
+    target_pan_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
-        TagetPanId = target_data.cloth.cloth_wear[9][0]
-        TPanName = game_config.config_clothing_tem[TagetPanId].name
-    elif character_id == 0 and player_data.behavior.pan_name != "":
-        TPanName = player_data.behavior.pan_name
-    else:
-        TPanName = ""
+        for PanId in target_data.cloth.cloth_wear[9]:
+            target_pan_name += game_config.config_clothing_tem[PanId].name
+    elif player_data.behavior.pan_name != "":
+        target_pan_name = player_data.behavior.pan_name
+    target_soc_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
-        TagetSocId = target_data.cloth.cloth_wear[10][0]
-        TSocName = game_config.config_clothing_tem[TagetSocId].name
-    elif character_id == 0 and player_data.behavior.socks_name != "":
-        TSocName = player_data.behavior.socks_name
-    else:
-        TSocName = ""
+        for SocId in target_data.cloth.cloth_wear[10]:
+            target_soc_name += game_config.config_clothing_tem[SocId].name
+    elif player_data.behavior.socks_name != "":
+        target_soc_name = player_data.behavior.socks_name
+    pan_name = ""
+    if character_id != 0 and len(character_data.cloth.cloth_wear[9]):
+        for PanId in character_data.cloth.cloth_wear[9]:
+            pan_name += game_config.config_clothing_tem[PanId].name
+    elif player_data.behavior.pan_name != "":
+        pan_name = player_data.behavior.pan_name
+    socks_name = ""
+    if character_id != 0 and len(character_data.cloth.cloth_wear[10]):
+        for SocId in character_data.cloth.cloth_wear[10]:
+            socks_name += game_config.config_clothing_tem[SocId].name
+    elif player_data.behavior.socks_name != "":
+        socks_name = player_data.behavior.socks_name
 
     # 最后总结转化
     now_talk_text = now_talk_text.format(
@@ -469,10 +477,12 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
         SrcSceneName=src_scene_name,
         SrcOneCharaName=src_random_chara_name,
 
-        TagetBraName=TBraName,
-        TagetSkiName=TSkiName,
-        TagetPanName=TPanName,
-        TagetSocName=TSocName,
+        TagetBraName=target_bra_name,
+        TagetSkiName=target_ski_name,
+        TagetPanName=target_pan_name,
+        TagetSocName=target_soc_name,
+        PanName=pan_name,
+        SocName=socks_name,
     )
 
     return now_talk_text
