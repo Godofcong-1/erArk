@@ -679,6 +679,11 @@ def judge_character_first_meet(character_id: int) -> int:
             else:
                 character_data.second_behavior[1332] = 1
             character_data.first_record.day_first_meet = 0
+            # 判断上交内裤与袜子
+            if handle_premise.handle_ask_give_pan_everyday(character_id):
+                character_data.second_behavior[1455] = 1
+            if handle_premise.handle_ask_give_socks_everyday(character_id):
+                character_data.second_behavior[1456] = 1
 
 
 def insert_position_effect(character_id: int):

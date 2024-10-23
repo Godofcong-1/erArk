@@ -137,6 +137,25 @@ class BodyPart:
     """ 额外流通表 """
 
 
+class Body_Manage_Requirement:
+    """ 身体管理需要满足的条件 """
+
+    cid: int
+    """ 序号 """
+    second_behavior_id: int
+    """ 二段行为id """
+    need_examine_id: int
+    """ 需要的检查状态id """
+    need_value_1: int
+    """ 需要数值1 """
+    need_value_2: int
+    """ 需要数值2 """
+    need_value_3: int
+    """ 需要数值3 """
+    todo: int
+    """ 未实装 """
+
+
 class Book:
     """ 书籍配置表 """
 
@@ -1061,6 +1080,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:

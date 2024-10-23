@@ -943,6 +943,15 @@ class Premise:
     ASSISTANT_LIVE_TOGETHER_OFF = "assistant_live_together_off"
     """ 属性_助理 自己的助理属性为未同居 """
 
+    ASK_GIVE_PAN_EVERYDAY = "ask_give_pan_everyday"
+    """ 属性_身体管理 自己被要求每天上交内裤 """
+    ASK_GIVE_SOCKS_EVERYDAY = "ask_give_socks_everyday"
+    """ 属性_身体管理 自己被要求每天上交袜子 """
+    ASK_NOT_WEAR_CORSET = "ask_not_wear_corset"
+    """ 属性_身体管理 自己被要求以后不再穿胸衣 """
+    ASK_NOT_WEAR_CLOTH_IN_SLEEP = "ask_not_wear_cloth_in_sleep"
+    """ 属性_身体管理 自己被要求以后睡觉时不穿衣服裸睡 """
+
     SELF_HAVE_NICK_NAME_TO_PL = "self_have_nick_name_to_pl"
     """ 属性_昵称 自己已设定对玩家的称呼 """
     SELF_NOT_HAVE_NICK_NAME_TO_PL = "self_not_have_nick_name_to_pl"

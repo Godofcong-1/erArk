@@ -167,8 +167,26 @@ class BehaviorEffect:
     """ 属性_状态 自身增加少量Ｐ快 """
     BOTH_ADD_SMALL_LEARN = 71
     """ 属性_状态 双方增加少量习得（若没有交互对象则仅增加自己） """
-    ADD_SMALL_LEARN = 72
-    """ 属性_状态 自己增加少量习得 """
+    ADD_SMALL_LEARN_OLD = 72
+    """ 属性_状态 （旧占位符，现用81）自己增加少量习得（技巧补正） """
+    ADD_SMALL_LUBRICATION = 80
+    """ 属性_状态 自己增加少量润滑（欲望补正） """
+    ADD_SMALL_LEARN = 81
+    """ 属性_状态 自己增加少量习得（技巧补正） """
+    ADD_SMALL_RESPECT = 82
+    """ 属性_状态 自己增加少量恭顺（顺从补正） """
+    ADD_SMALL_FRIENDLY = 83
+    """ 属性_状态 自己增加少量好意（亲密补正） """
+    ADD_SMALL_DESIRE = 84
+    """ 属性_状态 自己增加少量欲情（欲望补正） """
+    ADD_SMALL_HAPPY = 85
+    """ 属性_状态 自己增加少量快乐（快乐刻印补正） """
+    ADD_SMALL_LEAD = 86
+    """ 属性_状态 自己增加少量先导（施虐补正） """
+    ADD_SMALL_SUBMIT = 87
+    """ 属性_状态 自己增加少量屈服（屈服刻印补正） """
+    ADD_SMALL_SHY = 88
+    """ 属性_状态 自己增加少量羞耻（露出补正） """
 
     TECH_ADD_N_ADJUST = 110
     """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行N快、欲情调整 """
@@ -652,7 +670,7 @@ class BehaviorEffect:
     GET_SHOWER_CLOTH = 633
     """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
     GET_SLEEP_CLOTH = 634
-    """ 属性_服装 清零其他衣服并换上睡衣 """
+    """ 属性_服装 清零其他衣服并换上睡衣（管理中则全裸） """
     SELF_CLOTH_BACK = 635
     """ 属性_服装 自己穿回H时脱掉的衣服 """
     SCENE_ALL_CHARACTERS_CLOTH_BACK = 636
@@ -1151,6 +1169,11 @@ class SecondEffect:
 
     PENIS_IN_T_RESET = 501
     """ 当前阴茎位置为交互对象_双方归零 """
+
+    GIVE_PAN_IN_DAY_FIRST_MEET = 511
+    """ 在每日招呼时上交今天的内裤 """
+    GIVE_SOCKS_IN_DAY_FIRST_MEET = 512
+    """ 在每日招呼时上交今天的袜子 """
 
     ADD_1_SEX_V_EXPERIENCE = 601
     """ 属性_经验 增加1V性交经验 """

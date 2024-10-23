@@ -445,7 +445,7 @@ def handle_get_sleep_cloth(
     now_time: datetime.datetime,
 ):
     """
-    清零其他衣服并换上睡衣
+    清零其他衣服并换上睡衣（管理中则全裸）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -454,7 +454,11 @@ def handle_get_sleep_cloth(
     """
     if not add_time:
         return
-    clothing.get_sleep_cloth(character_id)
+    from Script.Design import handle_premise
+    if handle_premise.handle_ask_not_wear_cloth_in_sleep(character_id):
+        clothing.get_all_cloth_off(character_id)
+    else:
+        clothing.get_sleep_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SWIM_CLOTH)

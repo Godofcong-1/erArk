@@ -18195,6 +18195,58 @@ def handle_assistant_live_together_off(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.ASK_GIVE_PAN_EVERYDAY)
+def handle_ask_give_pan_everyday(character_id: int) -> int:
+    """
+    自己被要求每天上交内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[1]
+
+
+@add_premise(constant_promise.Premise.ASK_GIVE_SOCKS_EVERYDAY)
+def handle_ask_give_socks_everyday(character_id: int) -> int:
+    """
+    自己被要求每天上交袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[2]
+
+
+@add_premise(constant_promise.Premise.ASK_NOT_WEAR_CORSET)
+def handle_ask_not_wear_corset(character_id: int) -> int:
+    """
+    自己被要求以后不再穿胸衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[3]
+
+
+@add_premise(constant_promise.Premise.ASK_NOT_WEAR_CLOTH_IN_SLEEP)
+def handle_ask_not_wear_cloth_in_sleep(character_id: int) -> int:
+    """
+    自己被要求以后睡觉时不穿衣服裸睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[4]
+
+
 @add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_PL)
 def handle_self_have_nick_name_to_pl(character_id: int) -> int:
     """

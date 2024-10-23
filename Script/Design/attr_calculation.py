@@ -145,6 +145,16 @@ def get_assistant_services_zero() -> dict:
     return assistant_services
 
 
+def get_body_manage_zero() -> dict:
+    """
+    重置角色身体管理
+    """
+    body_manage = {}
+    for cid in game_config.config_body_manage_requirement:
+        body_manage[cid] = 0
+    return body_manage
+
+
 def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
     将二段行为全项归零，读取配置文件中的二段行为，将其归零

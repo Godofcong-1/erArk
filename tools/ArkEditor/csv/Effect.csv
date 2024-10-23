@@ -86,7 +86,16 @@ cid,effect_name,effect_type,effect
 62,TARGET_ADD_SMALL_DISGUST,属性_状态,交互对象增加少量反感（反发刻印补正）
 70,ADD_SMALL_P_FEEL,属性_状态,自身增加少量Ｐ快
 71,BOTH_ADD_SMALL_LEARN,属性_状态,双方增加少量习得（若没有交互对象则仅增加自己）
-72,ADD_SMALL_LEARN,属性_状态,自己增加少量习得
+72,ADD_SMALL_LEARN_OLD,属性_状态,（旧占位符，现用81）自己增加少量习得（技巧补正）
+80,ADD_SMALL_LUBRICATION,属性_状态,自己增加少量润滑（欲望补正）
+81,ADD_SMALL_LEARN,属性_状态,自己增加少量习得（技巧补正）
+82,ADD_SMALL_RESPECT,属性_状态,自己增加少量恭顺（顺从补正）
+83,ADD_SMALL_FRIENDLY,属性_状态,自己增加少量好意（亲密补正）
+84,ADD_SMALL_DESIRE,属性_状态,自己增加少量欲情（欲望补正）
+85,ADD_SMALL_HAPPY,属性_状态,自己增加少量快乐（快乐刻印补正）
+86,ADD_SMALL_LEAD,属性_状态,自己增加少量先导（施虐补正）
+87,ADD_SMALL_SUBMIT,属性_状态,自己增加少量屈服（屈服刻印补正）
+88,ADD_SMALL_SHY,属性_状态,自己增加少量羞耻（露出补正）
 
 110,TECH_ADD_N_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行N快、欲情调整
 111,TECH_ADD_B_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行B快、欲情调整
@@ -312,6 +321,8 @@ cid,effect_name,effect_type,effect
 528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限
 529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
 530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
+532,BOARD_GAME_WIN_ADD_ADJUST,指令_专用结算,（桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证
+533,BOARD_GAME_LOSE_ADD_ADJUST,指令_专用结算,（桌游输了用）根据游戏难度获得好感度、习得
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -328,7 +339,7 @@ cid,effect_name,effect_type,effect
 631,T_CLOTH_BACK,属性_服装,交互对象穿回H时脱掉的衣服
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
-634,GET_SLEEP_CLOTH,属性_服装,清零其他衣服并换上睡衣
+634,GET_SLEEP_CLOTH,属性_服装,清零其他衣服并换上睡衣（管理中则全裸）
 635,SELF_CLOTH_BACK,属性_服装,自己穿回H时脱掉的衣服
 636,SCENE_ALL_CHARACTERS_CLOTH_BACK,属性_服装,场景内所有角色穿回H时脱掉的衣服
 641,LOCKER_CLOTH_RESET,属性_服装,衣柜里的衣服清零
@@ -422,6 +433,7 @@ cid,effect_name,effect_type,effect
 1009,TARGET_NO_PREGNANCY_NEXT_DAY,道具_使用效果,交互对象获得事前避孕药状态
 1010,TARGET_NO_PREGNANCY_FROM_LAST_H,道具_使用效果,交互对象获得事后避孕药状态
 1011,WEAR_CONDOM,道具_使用效果,自己获得戴上避孕套状态
+1012,TAKE_CONDOM_OFF,道具_使用效果,自己去掉戴上避孕套状态
 
 1101,FIRST_KISS,初次,记录初吻
 1102,FIRST_HAND_IN_HAND,初次,记录初次牵手

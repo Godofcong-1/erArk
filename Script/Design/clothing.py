@@ -6,7 +6,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, handle_premise
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -64,14 +64,14 @@ def get_underwear(character_id: int, part_flag = 0):
     随机穿内衣，包括胸罩和内裤
     Keyword arguments:
     character_id -- 角色id
-    part_flag -- 是否只穿某个部件，0都穿，1仅胸罩，2仅内裤
+    part_flag -- 是否只穿某个部件，0都穿，1仅胸衣，2仅内裤
     Return arguments:
     无
     """
     character_data = cache.character_data[character_id]
     # 60,幼女,61,萝莉,62,少女,63,成年,64,长生者
 
-    # 遍历全衣服，以下分别是正常/童装/情趣的胸罩和内裤
+    # 遍历全衣服，以下分别是正常/童装/情趣的胸衣和内裤
     bra_nor_list = []
     bra_loli_list = []
     bra_H_list = []
@@ -107,7 +107,12 @@ def get_underwear(character_id: int, part_flag = 0):
             pan_loli_list += pan_H_list
 
     # 判断是否需要穿，包括是否已穿和part_flag限制
-    if not len(character_data.cloth.cloth_wear[6]) and part_flag != 2 and len(bra_nor_list):
+    if (
+        not len(character_data.cloth.cloth_wear[6]) # 当前没有穿胸衣
+        and part_flag != 2 # 本次穿胸衣
+        and len(bra_nor_list) # 有可穿的胸衣
+        and not handle_premise.handle_ask_not_wear_corset(character_id) # 没有禁止穿胸衣
+        ):
         # 随机选择胸衣和内裤，有儿童和普通人两个分支
         if character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
@@ -116,7 +121,11 @@ def get_underwear(character_id: int, part_flag = 0):
             bra_id = random.choice(bra_nor_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
 
-    if not len(character_data.cloth.cloth_wear[9]) and part_flag != 1 and len(pan_nor_list):
+    if (
+        not len(character_data.cloth.cloth_wear[9]) # 当前没有穿内裤
+        and part_flag != 1 # 本次穿内裤
+        and len(pan_nor_list) # 有可穿的内裤
+        ):
         if character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)

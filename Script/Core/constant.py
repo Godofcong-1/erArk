@@ -482,6 +482,24 @@ class CharacterStatus:
     """ 取下搾乳机 """
     STATUS_URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
+    STATUS_EXERCISE_SUCKING_AND_SWALLOWING = 681
+    """ 练习吮吸与吞咽力 """
+    STATUS_EXERCISE_ARMPIT_CLAMPING = 682
+    """ 练习腋下夹持力 """
+    STATUS_EXERCISE_BREAST_CLAMPING = 683
+    """ 练习胸部夹持力 """
+    STATUS_EXERCISE_HANDS_FLEXIBILITY = 684
+    """ 练习手部灵活度 """
+    STATUS_EXERCISE_FOOTS_FLEXIBILITY = 685
+    """ 练习足部灵活度 """
+    STATUS_EXERCISE_VAGINA_FIRMNESS = 686
+    """ 练习阴道紧致度 """
+    STATUS_EXERCISE_INTESTINE_FIRMNESS = 687
+    """ 练习肠道紧致度 """
+    STATUS_EXERCISE_TAIL_FLEXIBILITY = 688
+    """ 练习尾巴灵活度 """
+    STATUS_EXERCISE_TENTACLE_FLEXIBILITY = 689
+    """ 练习触手灵活度 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
     STATUS_ORGASM_EDGE_ON = 751
@@ -501,27 +519,33 @@ class CharacterStatus:
     STATUS_GIVE_TOY = 806
     """ 给玩具 """
 
-    STATUS_EXAMINE_HAIR = 851
+    STATUS_EXAMINE_HAIR = 850
     """ 检查头发 """
+    STATUS_EXAMINE_HAIR_SMOOTHNESS = 851
+    """ 测试头发柔顺度 """
     STATUS_EXAMINE_ORAL = 852
     """ 检查口腔内部 """
     STATUS_EXAMINE_SUCKING_AND_SWALLOWING = 853
     """ 测试口腔吮吸与吞咽力 """
     STATUS_EXAMINE_ARMPIT = 854
     """ 检查腋下 """
-    STATUS_EXAMINE_BREAST = 855
+    STATUS_EXAMINE_ARMPIT_CLAMPING = 855
+    """ 测试腋下夹持力 """
+    STATUS_EXAMINE_BREAST = 856
     """ 检查胸部 """
-    STATUS_EXAMINE_NIPPLE_AND_AREOLA = 856
+    STATUS_EXAMINE_NIPPLE_AND_AREOLA = 857
     """ 检查乳头与乳晕 """
-    STATUS_EXAMINE_CILITORIS = 857
+    STATUS_EXAMINE_BREAST_CLAMPING = 858
+    """ 测试胸部夹持力 """
+    STATUS_EXAMINE_CILITORIS = 859
     """ 检查阴蒂 """
-    STATUS_EXAMINE_HANDS = 858
+    STATUS_EXAMINE_HANDS = 860
     """ 检查手部 """
-    STATUS_EXAMINE_HANDS_FLEXIBILITY = 859
+    STATUS_EXAMINE_HANDS_FLEXIBILITY = 861
     """ 测试手部灵活度 """
-    STATUS_EXAMINE_FOOT = 860
+    STATUS_EXAMINE_FOOT = 862
     """ 检查足部 """
-    STATUS_EXAMINE_FOOTS_FLEXIBILITY = 861
+    STATUS_EXAMINE_FOOTS_FLEXIBILITY = 863
     """ 测试足部灵活度 """
     STATUS_EXAMINE_VULVA_AND_SHAPE = 871
     """ 检查外阴形状 """
@@ -1074,6 +1098,25 @@ class Behavior:
     URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
 
+    EXERCISE_SUCKING_AND_SWALLOWING = 681
+    """ 练习吮吸与吞咽力 """
+    EXERCISE_ARMPIT_FLEXIBILITY = 682
+    """ 练习腋下夹持力 """
+    EXERCISE_BREAST_CLAMPING = 683
+    """ 练习胸部夹持力 """
+    EXERCISE_HANDS_CLAMPING = 684
+    """ 练习手部灵活度 """
+    EXERCISE_FOOTS_FLEXIBILITY = 685
+    """ 练习足部灵活度 """
+    EXERCISE_VAGINA_FIRMNESS = 686
+    """ 练习阴道紧致度 """
+    EXERCISE_INTESTINE_FIRMNESS = 687
+    """ 练习肠道紧致度 """
+    EXERCISE_TAIL_FLEXIBILITY = 688
+    """ 练习尾巴灵活度 """
+    EXERCISE_TENTACLE_FLEXIBILITY = 689
+    """ 练习触手灵活度 """
+
     UNDRESS = 701
     """ 脱衣服 """
     ORGASM_EDGE_ON = 751
@@ -1094,27 +1137,33 @@ class Behavior:
     GIVE_TOY = 806
     """ 给玩具 """
 
-    EXAMINE_HAIR = 851
+    EXAMINE_HAIR = 850
     """ 检查头发 """
+    EXAMINE_HAIR_SMOOTHNESS = 851
+    """ 测试头发柔顺度 """
     EXAMINE_ORAL = 852
     """ 检查口腔内部 """
     EXAMINE_SUCKING_AND_SWALLOWING = 853
     """ 测试口腔吮吸与吞咽力 """
     EXAMINE_ARMPIT = 854
     """ 检查腋下 """
-    EXAMINE_BREAST = 855
+    EXAMINE_ARMPIT_CLAMPING = 855
+    """ 测试腋下夹持力 """
+    EXAMINE_BREAST = 856
     """ 检查胸部 """
-    EXAMINE_NIPPLE_AND_AREOLA = 856
+    EXAMINE_NIPPLE_AND_AREOLA = 857
     """ 检查乳头与乳晕 """
-    EXAMINE_CILITORIS = 857
+    EXAMINE_BREAST_CLAMPING = 858
+    """ 测试胸部夹持力 """
+    EXAMINE_CILITORIS = 859
     """ 检查阴蒂 """
-    EXAMINE_HANDS = 858
+    EXAMINE_HANDS = 860
     """ 检查手部 """
-    EXAMINE_HANDS_FLEXIBILITY = 859
+    EXAMINE_HANDS_FLEXIBILITY = 861
     """ 测试手部灵活度 """
-    EXAMINE_FOOT = 860
+    EXAMINE_FOOT = 862
     """ 检查足部 """
-    EXAMINE_FOOTS_FLEXIBILITY = 861
+    EXAMINE_FOOTS_FLEXIBILITY = 863
     """ 测试足部灵活度 """
     EXAMINE_VULVA_AND_SHAPE = 871
     """ 检查外阴形状 """
@@ -1896,6 +1945,59 @@ class SecondBehavior:
     """ 关闭助攻服务 """
     LOVE_SUPPORT_ON = 1423
     """ 开启助攻服务 """
+
+    ASK_GIVE_PAN_EVERYDAY = 1451
+    """ 被要求每天上交内裤 """
+    ASK_GIVE_SOCKS_EVERYDAY = 1452
+    """ 被要求每天上交袜子 """
+    ASK_NOT_WEAR_CORSET = 1453
+    """ 被要求以后不再穿胸衣 """
+    ASK_NOT_WEAR_CLOTH_IN_SLEEP = 1454
+    """ 被要求以后睡觉时不穿衣服裸睡 """
+    GIVE_PAN_IN_DAY_FIRST_MEET = 1455
+    """ 在每日招呼时上交今天的内裤 """
+    GIVE_SOCKS_IN_DAY_FIRST_MEET = 1456
+    """ 在每日招呼时上交今天的袜子 """
+    ASK_EQUP_B_LOVE_EGG_IN_DAY = 1461
+    """ 被要求白天时戴着乳头跳蛋 """
+    ASK_EQUP_C_LOVE_EGG_IN_DAY = 1462
+    """ 被要求白天时戴着阴蒂跳蛋 """
+    ASK_EQUP_V_VIBRATOR_IN_DAY = 1463
+    """ 被要求白天时V里插着振动棒 """
+    ASK_EQUP_A_VIBRATOR_IN_DAY = 1464
+    """ 被要求白天时A里插着振动棒 """
+    ASK_EQUP_B_LOVE_EGG_IN_SLEEP = 1465
+    """ 被要求睡觉时戴着乳头跳蛋 """
+    ASK_EQUP_C_LOVE_EGG_IN_SLEEP = 1466
+    """ 被要求睡觉时戴着阴蒂跳蛋 """
+    ASK_EQUP_V_VIBRATOR_IN_SLEEP = 1467
+    """ 被要求睡觉时V里插着振动棒 """
+    ASK_EQUP_A_VIBRATOR_IN_SLEEP = 1468
+    """ 被要求睡觉时A里插着振动棒 """
+    ASK_NOT_WASH_SEMEN = 1471
+    """ 被要求洗澡时不再清洗精液 """
+    ASK_MASTURBATION_BEFORE_SLEEP = 1472
+    """ 被要求每天晚上睡前都要自慰 """
+    ASK_NOT_MASTURBATION = 1473
+    """ 被要求禁止自慰 """
+    ASK_SUCKING_AND_SWALLOWING_EXERCISES = 1481
+    """ 被要求进行吮吸与吞咽力练习 """
+    ASK_ARMPIT_CLAMPING_EXERCISES = 1482
+    """ 被要求进行腋下夹持力练习 """
+    ASK_BREAST_CLAMPING_EXERCISES = 1483
+    """ 被要求进行胸部夹持力练习 """
+    ASK_HANDS_FLEXIBILITY_EXERCISES = 1484
+    """ 被要求进行手部灵活度练习 """
+    ASK_FOOTS_FLEXIBILITY_EXERCISES = 1485
+    """ 被要求进行足部灵活度练习 """
+    ASK_VAGINA_FIRMNESS_EXERCISES = 1486
+    """ 被要求进行阴道紧致度练习 """
+    ASK_INTESTINE_FIRMNESS_EXERCISES = 1487
+    """ 被要求进行肠道紧致度练习 """
+    ASK_TAIL_FLEXIBILITY_EXERCISES = 1488
+    """ 被要求进行尾巴灵活度练习 """
+    ASK_TENTACLE_FLEXIBILITY_EXERCISES = 1489
+    """ 被要求进行触手灵活度练习 """
 
     HAS_BEEN_PRIMARY_HYPNOSIS = 1501
     """ 获得被浅层催眠素质 """

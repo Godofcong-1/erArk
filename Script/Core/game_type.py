@@ -1201,6 +1201,8 @@ class Character:
         """ 角色的个人设置 """
         self.assistant_services: Dict[int, int] = {}
         """ 角色作为助理的情况 """
+        self.body_manage: Dict[int, int] = {}
+        """ 角色的身体管理，见Body_Manage_Requirement.csv """
         self.first_record: FIRST_RECORD = FIRST_RECORD()
         """ 角色初次状态记录 """
         self.dirty: DIRTY = DIRTY()

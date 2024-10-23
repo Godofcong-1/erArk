@@ -1586,7 +1586,6 @@ def handle_check_locker():
     constant.InstructType.OBSCENITY,
     _("身体检查与管理"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IN_PHYSICAL_EXAMINATION,
      constant_promise.Premise.TIRED_LE_84},
 )

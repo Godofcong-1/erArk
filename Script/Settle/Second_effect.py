@@ -2983,6 +2983,38 @@ def handle_penis_in_t_reset(
     character_data.h_state.insert_position = -1
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.GIVE_PAN_IN_DAY_FIRST_MEET)
+def handle_give_pan_in_day_first_meet(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    在每日招呼时上交今天的内裤
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.Design import clothing
+    # 转移到玩家的临时收藏
+    clothing.pl_get_chara_pan(character_id)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.GIVE_SOCKS_IN_DAY_FIRST_MEET)
+def handle_give_socks_in_day_first_meet(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    在每日招呼时上交今天的袜子
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.Design import clothing
+    # 转移到玩家的临时收藏
+    clothing.pl_get_chara_socks(character_id)
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_SEX_V_EXPERIENCE)
 def handle_add_1_sex_v_experience(
     character_id: int,

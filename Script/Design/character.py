@@ -65,6 +65,7 @@ def init_attr(character_id: int):
     character_data.sp_flag = game_type.SPECIAL_FLAG()
     character_data.chara_setting = attr_calculation.get_chara_setting_zero()
     character_data.assistant_services = attr_calculation.get_assistant_services_zero()
+    character_data.body_manage = attr_calculation.get_body_manage_zero()
     # character_data.relationship = attr_calculation.get_relationship_zero(character_data.relationship)
 
     # 主角的初始处理，HP和MP的最大值默认为1000，EP最大值默认为1000，初始化信物，困倦程度归零
