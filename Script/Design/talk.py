@@ -378,8 +378,9 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
 
     # 桌游
     board_game_name = ""
-    if character_id == 0 and player_data.behavior.board_game_type != 0:
-        board_game_name = game_config.config_board_game[player_data.behavior.board_game_type].name
+    pl_board_game_type = player_data.behavior.board_game_type if hasattr(player_data.behavior, 'board_game_type') else 0
+    if character_id == 0 and pl_board_game_type != 0:
+        board_game_name = game_config.config_board_game[pl_board_game_type].name
 
     # 地点
     scene_path = character_data.position
