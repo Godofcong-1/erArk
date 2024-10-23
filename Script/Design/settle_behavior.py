@@ -1199,6 +1199,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     bool -- 是否结算成功
     """
     from Script.UI.Panel import event_option_panel
+    from Script.Design import character
 
     character_data: game_type.Character = cache.character_data[character_id]
     # print(f"debug character_id = {character_id}, effect_all_value_list = {effect_all_value_list}")
@@ -1218,7 +1219,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         final_change_data = target_change
         final_character_id = character_data.target_character_id
     elif effect_all_value_list[0][:2] == "A3":
-        final_character_id = int(effect_all_value_list[0][3:])
+        final_character_adv = int(effect_all_value_list[0][3:])
+        final_character_id = character.get_character_id_from_adv(final_character_adv)
         # 如果还没拥有该角色，则返回0
         if final_character_id not in cache.npc_id_got:
             return 0
