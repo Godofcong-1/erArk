@@ -416,6 +416,9 @@ def update_character_config_data(value):
                 value.item[key] = 0
                 update_count += 1
     # 身体管理
+    if len(value.body_manage) == 0:
+        value.body_manage = attr_calculation.get_body_manage_zero()
+        update_count += 1
     if len(value.body_manage) != len(game_config.config_body_manage_requirement):
         for key in game_config.config_body_manage_requirement:
             if key not in value.body_manage:

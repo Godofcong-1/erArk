@@ -387,8 +387,6 @@ class Physical_Check_And_Manage_Panel:
             require_text += _("自慰经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-            # DEBUG 目前强制锁为false
-            judge_result = False
         # 攻略进度
         now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
         require_value_2 = body_manage_data.need_value_2
