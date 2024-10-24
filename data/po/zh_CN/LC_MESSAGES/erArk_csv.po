@@ -11153,11 +11153,11 @@ msgid "在每日招呼时上交今天的袜子"
 msgstr ""
 
 #: .\data\csv\Status.csv:500
-msgid "被要求白天时戴着乳头跳蛋"
+msgid "被要求白天时戴着乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:501
-msgid "被要求白天时戴着阴蒂跳蛋"
+msgid "被要求白天时戴着阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:502
@@ -11169,11 +11169,11 @@ msgid "被要求白天时A里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:504
-msgid "被要求睡觉时戴着乳头跳蛋"
+msgid "被要求睡觉时戴着乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:505
-msgid "被要求睡觉时戴着阴蒂跳蛋"
+msgid "被要求睡觉时戴着阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:506

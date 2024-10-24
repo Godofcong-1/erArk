@@ -34589,11 +34589,11 @@ msgid "\n{Name}按照每日上交袜子的约定，脱下了自己穿着的{SocN
 msgstr ""
 
 #: .\data\talk\system\second.csv:163
-msgid "\n{Name}触发了被要求白天时戴着乳头跳蛋的地文"
+msgid "\n{Name}触发了被要求白天时戴着乳头夹的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:164
-msgid "\n{Name}触发了被要求白天时戴着阴蒂跳蛋的地文"
+msgid "\n{Name}触发了被要求白天时戴着阴蒂夹的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:165
@@ -34605,11 +34605,11 @@ msgid "\n{Name}触发了被要求白天时A里插着振动棒的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:167
-msgid "\n{Name}触发了被要求睡觉时戴着乳头跳蛋的地文"
+msgid "\n{Name}触发了被要求睡觉时戴着乳头夹的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:168
-msgid "\n{Name}触发了被要求睡觉时戴着阴蒂跳蛋的地文"
+msgid "\n{Name}触发了被要求睡觉时戴着阴蒂夹的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:169

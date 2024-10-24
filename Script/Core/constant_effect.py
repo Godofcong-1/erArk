@@ -790,6 +790,10 @@ class BehaviorEffect:
     """ 道具_增减 交互对象戴上采尿器 """
     TARGET_URINE_COLLECTOR_OFF = 924
     """ 道具_增减 交互对象取下采尿器 """
+    ADJUST_BODY_MANAGE_DAY_ITEM = 931
+    """ 道具_增减 调整自己的身体管理_白天道具 """
+    ADJUST_BODY_MANAGE_SLEEP_ITEM = 932
+    """ 道具_增减 调整自己的身体管理_睡觉道具 """
     USE_BODY_LUBRICANT = 941
     """ 道具_增减 使用了一个润滑液 """
     USE_PHILTER = 942

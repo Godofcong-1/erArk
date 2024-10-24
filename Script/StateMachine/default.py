@@ -1,5 +1,6 @@
-from types import FunctionType
 import random
+import datetime
+from types import FunctionType
 from Script.Settle import default
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise
@@ -1942,14 +1943,15 @@ def character_masturebate(character_id: int):
     character_data.behavior.duration = 30
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.GET_CHARA_NORMAL_CLOTH)
-def character_get_chara_normal_cloth(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.GET_CHARA_NORMAL_CLOTH_AND_DAY_EQIP)
+def character_get_chara_normal_cloth_and_day_equip(character_id: int):
     """
-    换上角色标准衣服
+    起床（换上正常服装+调整管理白天道具）
     Keyword arguments:
     character_id -- 角色id
     """
     clothing.get_npc_cloth(character_id)
+    default.handle_adjust_body_manage_day_item(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH)
@@ -2564,6 +2566,77 @@ def character_night_salutation_flag_2(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     # print(f"debug {character_data.name} 进入要晚安问候状态，time = {cache.game_time}")
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SELF_NIPPLE_CLAMP_SWITCH_CHANEG)
+def character_self_nipple_clamp_switch_chaneg(character_id: int):
+    """
+    切换自己是否装备道具_乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.h_state.body_item[0][1]:
+        character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP_OFF
+        character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP_OFF
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.NIPPLE_CLAMP_ON
+        character_data.state = constant.CharacterStatus.STATUS_NIPPLE_CLAMP_ON
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 5
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SELF_CLIT_CLAMP_SWITCH_CHANEG)
+def character_self_clit_clamp_switch_chaneg(character_id: int):
+    """
+    切换自己是否装备道具_阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.h_state.body_item[1][1]:
+        character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP_OFF
+        character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP_OFF
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.CLIT_CLAMP_ON
+        character_data.state = constant.CharacterStatus.STATUS_CLIT_CLAMP_ON
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 5
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SELF_V_VIBRATOR_SWITCH_CHANEG)
+def character_self_v_vibrator_switch_chaneg(character_id: int):
+    """
+    切换自己是否装备道具_V振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.h_state.body_item[2][1]:
+        character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_OFF
+        character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_OFF
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION
+        character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 5
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.SELF_A_VIBRATOR_SWITCH_CHANEG)
+def character_self_a_vibrator_switch_chaneg(character_id: int):
+    """
+    切换自己是否装备道具_A振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.h_state.body_item[3][1]:
+        character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL_OFF
+        character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL_OFF
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.VIBRATOR_INSERTION_ANAL
+        character_data.state = constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL
+    character_data.target_character_id = character_id
+    character_data.behavior.duration = 5
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PRODUCE)

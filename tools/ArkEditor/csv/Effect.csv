@@ -402,6 +402,8 @@ cid,effect_name,effect_type,effect
 922,TARGET_MILKING_MACHINE_OFF,道具_增减,交互对象取下搾乳机
 923,TARGET_URINE_COLLECTOR_ON,道具_增减,交互对象戴上采尿器
 924,TARGET_URINE_COLLECTOR_OFF,道具_增减,交互对象取下采尿器
+931,ADJUST_BODY_MANAGE_DAY_ITEM,道具_增减,调整自己的身体管理_白天道具
+932,ADJUST_BODY_MANAGE_SLEEP_ITEM,道具_增减,调整自己的身体管理_睡觉道具
 941,USE_BODY_LUBRICANT,道具_增减,使用了一个润滑液
 942,USE_PHILTER,道具_增减,使用了一个媚药
 943,USE_ENEMAS,道具_增减,使用了一个灌肠液

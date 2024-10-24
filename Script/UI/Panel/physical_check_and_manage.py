@@ -1,6 +1,6 @@
 from typing import List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
 from Script.Design import handle_premise, handle_instruct, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
@@ -165,6 +165,7 @@ class Physical_Check_And_Manage_Panel:
             line_feed.draw()
             line = draw.LineDraw("-", window_width)
             line.draw()
+            py_cmd.clr_cmd()
             # 绘制提示信息
             info_text = _("\n请选择要对{0}进行的身体检查：\n\n").format(target_character_data.name)
             info_draw = draw.NormalDraw()
@@ -218,7 +219,13 @@ class Physical_Check_And_Manage_Panel:
     def settle_target_physical_status(self, status_id: int):
         """结算目标角色的身体状态"""
         self.done_check_status_id_set.add(status_id)
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        line_feed.draw()
         handle_instruct.chara_handle_instruct_common_settle(status_id, force_taget_wait = True)
+        info_draw = draw.WaitDraw()
+        info_draw.text = "\n"
+        info_draw.draw()
 
     def manage_target_physical(self, target_character_id: int):
         """对目标角色进行身体管理"""
@@ -238,7 +245,7 @@ class Physical_Check_And_Manage_Panel:
             line = draw.LineDraw("-", window_width)
             line.draw()
             # 绘制提示信息
-            info_text = _("\n请选择要对{0}进行的身体管理：\n\n").format(target_character_data.name)
+            info_text = _("\n请选择要对{0}进行的身体管理（管理的条件中达成任意一项即可）：\n\n").format(target_character_data.name)
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
             info_draw.draw()
@@ -247,32 +254,49 @@ class Physical_Check_And_Manage_Panel:
             for manage_cid in game_config.config_body_manage_requirement:
                 body_manage_data = game_config.config_body_manage_requirement[manage_cid]
                 body_manage_second_behavior_id = body_manage_data.second_behavior_id
+                examine_status_id = body_manage_data.need_examine_id
                 status_name = game_config.config_status[body_manage_second_behavior_id].name
+                # 去掉status_name里的"被要求"字样
+                status_name = status_name.replace(_("被要求"), "")
                 count += 1
-                # 目前先全部跳过
-                if 1:
-                    continue
                 # 跳过未实装的
                 if body_manage_data.todo:
                     continue
 
-                # 判断是否满足要求
-                judge_result, require_text = self.judge_manage_requirement(manage_cid, target_character_id)
-                if not judge_result:
+                # 跳过没有进行前置检查的
+                if examine_status_id > 0 and examine_status_id not in self.done_check_status_id_set:
                     continue
 
+                # 判断是否满足要求
+                judge_result, require_text = self.judge_manage_requirement(manage_cid, target_character_id)
+
+                # debug模式下直接通过
+                if cache.debug_mode:
+                    judge_result = True
+
                 # 绘制按钮
-                manage_text = f"[{str(count).rjust(2,'0')}]：{status_name}"
-                manage_draw = draw.LeftButton(
-                    _(manage_text),
-                    _(str(count)),
-                    window_width,
-                    cmd_func=self.settle_target_physical_manage,
-                    args=(manage_cid, target_character_id),
-                )
-                line_feed.draw()
-                manage_draw.draw()
-                return_list.append(manage_draw.return_text)
+                if judge_result:
+                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name}"
+                    # 如果已进行该身体管理，则显示进行中
+                    if target_character_data.body_manage[manage_cid]:
+                        manage_text += _("(进行中)")
+                    manage_draw = draw.LeftButton(
+                        _(manage_text),
+                        _(str(count)),
+                        window_width,
+                        cmd_func=self.settle_target_physical_manage,
+                        args=(manage_cid, target_character_id),
+                    )
+                    return_list.append(manage_draw.return_text)
+                    manage_draw.draw()
+                    line_feed.draw()
+                else:
+                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name.ljust(20, '　')}（{require_text}）\n"
+                    manage_draw = draw.NormalDraw()
+                    manage_draw.text = manage_text
+                    manage_draw.style = "deep_gray"
+                    manage_draw.width = window_width
+                    manage_draw.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -290,84 +314,77 @@ class Physical_Check_And_Manage_Panel:
         body_manage_second_behavior_id = body_manage_data.second_behavior_id
         target_character_data = cache.character_data[target_character_id]
         judge_result = False
-        require_text = _("\n需要满足以下条件其中之一：\n")
+        require_text = ""
 
         if body_manage_second_behavior_id == 1451:
             # 内裤收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_panties[target_character_id])
             require_value_1 = body_manage_data.need_value_1
-            require_text += _("内裤收藏数量达到{0}，当前为{1}\n").format(require_value_1, now_value_1)
+            require_text += _("内裤收藏数量{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-            # 攻略进度
-            now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
-            require_value_2 = body_manage_data.need_value_2
-            require_text += _("攻略进度达到{0}，当前为{1}\n").format(require_value_2, now_value_2)
-            if now_value_2 >= require_value_2:
-                judge_result = True
-            # 催眠程度
-            now_value_3 = target_character_data.hypnosis.hypnosis_degree
-            require_value_3 = body_manage_data.need_value_3
-            require_text += _("催眠程度达到{0}%，当前为{1}%\n").format(require_value_3, now_value_3)
-            if now_value_3 >= require_value_3:
-                judge_result = True
         elif body_manage_second_behavior_id == 1452:
+            judge_result = True
             # 袜子收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_socks[target_character_id])
             require_value_1 = body_manage_data.need_value_1
-            require_text += _("袜子收藏数量达到{0}，当前为{1}\n").format(require_value_1, now_value_1)
+            require_text += _("袜子收藏数量{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
-                judge_result = True
-            # 攻略进度
-            now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
-            require_value_2 = body_manage_data.need_value_2
-            require_text += _("攻略进度达到{0}，当前为{1}\n").format(require_value_2, now_value_2)
-            if now_value_2 < require_value_2:
-                judge_result = True
-            # 催眠程度
-            now_value_3 = target_character_data.hypnosis.hypnosis_degree
-            require_value_3 = body_manage_data.need_value_3
-            require_text += _("催眠程度达到{0}%，当前为{1}%\n").format(require_value_3, now_value_3)
-            if now_value_3 >= require_value_3:
                 judge_result = True
         elif body_manage_second_behavior_id == 1453:
-            # 内裤+袜子收藏数
-            now_value_1 = len(self.pl_character_data.pl_collection.npc_panties[target_character_id]) + len(self.pl_character_data.pl_collection.npc_socks[target_character_id])
+            # 露出能力
+            now_value_1 = target_character_data.ability[34]
             require_value_1 = body_manage_data.need_value_1
-            require_text += _("内裤+袜子收藏数量达到{0}，当前为{1}\n").format(require_value_1, now_value_1)
+            require_text += _("露出能力等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
-                judge_result = True
-            # 攻略进度
-            now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
-            require_value_2 = body_manage_data.need_value_2
-            require_text += _("攻略进度达到{0}，当前为{1}\n").format(require_value_2, now_value_2)
-            if now_value_2 >= require_value_2:
-                judge_result = True
-            # 催眠程度
-            now_value_3 = target_character_data.hypnosis.hypnosis_degree
-            require_value_3 = body_manage_data.need_value_3
-            require_text += _("催眠程度达到{0}%，当前为{1}%\n").format(require_value_3, now_value_3)
-            if now_value_3 >= require_value_3:
                 judge_result = True
         elif body_manage_second_behavior_id == 1454:
             # 被睡奸经验
             now_value_1 = target_character_data.experience[121]
             require_value_1 = body_manage_data.need_value_1
-            require_text += _("被睡姦经验达到{0}，当前为{1}\n").format(require_value_1, now_value_1)
+            require_text += _("被睡姦经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-            # 攻略进度
-            now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
-            require_value_2 = body_manage_data.need_value_2
-            require_text += _("攻略进度达到{0}，当前为{1}\n").format(require_value_2, now_value_2)
-            if now_value_2 >= require_value_2:
+        elif body_manage_second_behavior_id == 1461 or body_manage_second_behavior_id == 1465:
+            # Ｂ感觉能力
+            now_value_1 = target_character_data.ability[1]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("Ｂ感觉等级{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
                 judge_result = True
-            # 催眠程度
-            now_value_3 = target_character_data.hypnosis.hypnosis_degree
-            require_value_3 = body_manage_data.need_value_3
-            require_text += _("催眠程度达到{0}%，当前为{1}%\n").format(require_value_3, now_value_3)
-            if now_value_3 >= require_value_3:
+        elif body_manage_second_behavior_id == 1462 or body_manage_second_behavior_id == 1466:
+            # Ｃ感觉能力
+            now_value_1 = target_character_data.ability[2]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("Ｃ感觉等级{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
                 judge_result = True
+        elif body_manage_second_behavior_id == 1463 or body_manage_second_behavior_id == 1467:
+            # Ｖ感觉能力
+            now_value_1 = target_character_data.ability[4]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("Ｖ感觉等级{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
+        elif body_manage_second_behavior_id == 1464 or body_manage_second_behavior_id == 1468:
+            # Ａ感觉能力
+            now_value_1 = target_character_data.ability[5]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("Ａ感觉等级{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
+        # 攻略进度
+        now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
+        require_value_2 = body_manage_data.need_value_2
+        require_text += _(" 或 攻略进度{0}/{1}").format(now_value_2, require_value_2)
+        if now_value_2 >= require_value_2:
+            judge_result = True
+        # 催眠程度
+        now_value_3 = target_character_data.hypnosis.hypnosis_degree
+        require_value_3 = body_manage_data.need_value_3
+        require_text += _(" 或 催眠程度{0}%/{1}%").format(now_value_3, require_value_3)
+        if now_value_3 >= require_value_3:
+            judge_result = True
 
         return judge_result, require_text
 
@@ -376,11 +393,27 @@ class Physical_Check_And_Manage_Panel:
         body_manage_data = game_config.config_body_manage_requirement[manage_cid]
         body_manage_second_behavior_id = body_manage_data.second_behavior_id
         target_character_data = cache.character_data[target_character_id]
-        # 结算二段行为
-        target_character_data.second_behavior[body_manage_second_behavior_id] = 1
-        # 结算身体管理
-        target_character_data.body_manage[manage_cid] = 1
-        handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
+
+        info_text = "\n"
+
+        # 如果没有进行该身体管理，则进行
+        if target_character_data.body_manage[manage_cid] == 0:
+            # 结算二段行为
+            target_character_data.second_behavior[body_manage_second_behavior_id] = 1
+            # 结算身体管理
+            target_character_data.body_manage[manage_cid] = 1
+            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
+            info_text += _("对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+        # 如果已经进行该身体管理，则取消
+        else:
+            # 结算身体管理
+            target_character_data.body_manage[manage_cid] = 0
+            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
+            info_text += _("取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+
+        info_draw = draw.WaitDraw()
+        info_draw.text = info_text
+        info_draw.draw()
 
     def adjust_physical_check_schedule(self):
         """调整体检日程"""

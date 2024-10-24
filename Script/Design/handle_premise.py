@@ -14446,6 +14446,19 @@ def handle_have_nipple_clamp(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_NIPPLE_CLAMP)
+def handle_self_now_nipple_clamp(character_id: int) -> int:
+    """
+    校验自己是否正在乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[0][1]
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_NIPPLE_CLAMP)
 def handle_target_now_nipple_clamp(character_id: int) -> int:
     """
@@ -14456,10 +14469,7 @@ def handle_target_now_nipple_clamp(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[0][1]:
-        return 1
-    return 0
+    return handle_target_now_nipple_clamp(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP)
@@ -14472,10 +14482,7 @@ def handle_target_not_nipple_clamp(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[0][1]:
-        return 0
-    return 1
+    return not handle_target_now_nipple_clamp(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.HAVE_LOVE_EGG)
@@ -14514,6 +14521,19 @@ def handle_have_clit_clamp(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_CLIT_CLAMP)
+def handle_self_now_clit_clamp(character_id: int) -> int:
+    """
+    校验自己是否正在阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[1][1]
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_CLIT_CLAMP)
 def handle_target_now_clit_clamp(character_id: int) -> int:
     """
@@ -14524,10 +14544,7 @@ def handle_target_now_clit_clamp(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[1][1]:
-        return 1
-    return 0
+    return handle_self_now_clit_clamp(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_CLIT_CLAMP)
@@ -14540,10 +14557,7 @@ def handle_target_not_clit_clamp(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[1][1]:
-        return 0
-    return 1
+    return not handle_self_now_clit_clamp(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.HAVE_ELECTRIC_MESSAGE_STICK)
@@ -14582,6 +14596,19 @@ def handle_have_vibrator(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_VIBRATOR_INSERTION)
+def handle_self_now_vibrator_insertion(character_id: int) -> int:
+    """
+    校验自己V正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[2][1]
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION)
 def handle_target_now_vibrator_insertion(character_id: int) -> int:
     """
@@ -14592,10 +14619,7 @@ def handle_target_now_vibrator_insertion(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[2][1]:
-        return 1
-    return 0
+    return handle_self_now_vibrator_insertion(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION)
@@ -14608,10 +14632,20 @@ def handle_target_not_vibrator_insertion(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[2][1]:
-        return 0
-    return 1
+    return not handle_self_now_vibrator_insertion(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_NOW_VIBRATOR_INSERTION_ANAL)
+def handle_self_now_vibrator_insertion_anal(character_id: int) -> int:
+    """
+    校验自己A正插入震动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[3][1]
 
 
 @add_premise(constant_promise.Premise.TARGET_NOW_VIBRATOR_INSERTION_ANAL)
@@ -14624,10 +14658,7 @@ def handle_target_now_vibrator_insertion_anal(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[3][1]:
-        return 1
-    return 0
+    return handle_self_now_vibrator_insertion_anal(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION_ANAL)
@@ -14640,10 +14671,7 @@ def handle_target_not_vibrator_insertion_anal(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[3][1]:
-        return 0
-    return 1
+    return not handle_self_now_vibrator_insertion_anal(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOW_MILKING_MACHINE)
@@ -17079,7 +17107,7 @@ def handle_sleep_cloth_or_not_normal_4(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     if handle_sleep_cloth(character_id):
         return 1
-    elif handle_normal_4(character_id) == 0:
+    elif not handle_normal_4(character_id):
         return 1
     return 0
 
@@ -18245,6 +18273,110 @@ def handle_ask_not_wear_cloth_in_sleep(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.body_manage[4]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_NIPPLE_CLAMP_IN_DAY)
+def handle_ask_equp_nipple_clamp_in_day(character_id: int) -> int:
+    """
+    自己被要求白天时戴着乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[11]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_CLIT_CLAMP_IN_DAY)
+def handle_ask_equp_clit_clamp_in_day(character_id: int) -> int:
+    """
+    自己被要求白天时戴着阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[12]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_V_VIBRATOR_IN_DAY)
+def handle_ask_equp_v_bibrator_in_day(character_id: int) -> int:
+    """
+    自己被要求白天时V里插着振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[13]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_A_VIBRATOR_IN_DAY)
+def handle_ask_equp_a_bibrator_in_day(character_id: int) -> int:
+    """
+    自己被要求白天时A里插着振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[14]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_NIPPLE_CLAMP_IN_SLEEP)
+def handle_ask_equp_nipple_clamp_in_sleep(character_id: int) -> int:
+    """
+    自己被要求睡觉时戴着乳头夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[15]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_CLIT_CLAMP_IN_SLEEP)
+def handle_ask_equp_clit_clamp_in_sleep(character_id: int) -> int:
+    """
+    自己被要求睡觉时戴着阴蒂夹
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[16]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_V_VIBRATOR_IN_SLEEP)
+def handle_ask_equp_v_bibrator_in_sleep(character_id: int) -> int:
+    """
+    自己被要求睡觉时V里插着振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[17]
+
+
+@add_premise(constant_promise.Premise.ASK_EQUP_A_VIBRATOR_IN_SLEEP)
+def handle_ask_equp_a_bibrator_in_sleep(character_id: int) -> int:
+    """
+    自己被要求睡觉时A里插着振动棒
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[18]
 
 
 @add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_PL)

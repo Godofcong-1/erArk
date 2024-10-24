@@ -1300,8 +1300,8 @@ class StateMachine:
     """ 进入要自慰状态 """
     MASTUREBATE = 92
     """ 自慰 """
-    GET_CHARA_NORMAL_CLOTH = 93
-    """ 换上角色标准衣服 """
+    GET_CHARA_NORMAL_CLOTH_AND_DAY_EQIP = 93
+    """ 起床（换上正常服装+调整管理白天道具） """
     RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH = 94
     """ 清零洗澡状态并换上标准衣服 """
 
@@ -1544,6 +1544,15 @@ class StateMachine:
     """ 晚安问候：晚安咬 """
     NIGHT_SALUTATION_FLAG_2 = 712
     """ 进入已晚安问候状态 """
+
+    SELF_NIPPLE_CLAMP_SWITCH_CHANEG = 751
+    """ 切换自己是否装备道具_乳头夹 """
+    SELF_CLIT_CLAMP_SWITCH_CHANEG = 752
+    """ 切换自己是否装备道具_阴蒂夹 """
+    SELF_V_VIBRATOR_SWITCH_CHANEG = 753
+    """ 切换自己是否装备道具_V振动棒 """
+    SELF_A_VIBRATOR_SWITCH_CHANEG = 754
+    """ 切换自己是否装备道具_A振动棒 """
 
 
 class Panel:
@@ -1958,18 +1967,18 @@ class SecondBehavior:
     """ 在每日招呼时上交今天的内裤 """
     GIVE_SOCKS_IN_DAY_FIRST_MEET = 1456
     """ 在每日招呼时上交今天的袜子 """
-    ASK_EQUP_B_LOVE_EGG_IN_DAY = 1461
-    """ 被要求白天时戴着乳头跳蛋 """
-    ASK_EQUP_C_LOVE_EGG_IN_DAY = 1462
-    """ 被要求白天时戴着阴蒂跳蛋 """
+    ASK_EQUP_NIPPLE_CLAMP_IN_DAY = 1461
+    """ 被要求白天时戴着乳头夹 """
+    ASK_EQUP_CLIT_CLAMP_IN_DAY = 1462
+    """ 被要求白天时戴着阴蒂夹 """
     ASK_EQUP_V_VIBRATOR_IN_DAY = 1463
     """ 被要求白天时V里插着振动棒 """
     ASK_EQUP_A_VIBRATOR_IN_DAY = 1464
     """ 被要求白天时A里插着振动棒 """
-    ASK_EQUP_B_LOVE_EGG_IN_SLEEP = 1465
-    """ 被要求睡觉时戴着乳头跳蛋 """
-    ASK_EQUP_C_LOVE_EGG_IN_SLEEP = 1466
-    """ 被要求睡觉时戴着阴蒂跳蛋 """
+    ASK_EQUP_NIPPLE_CLAMP_IN_SLEEP = 1465
+    """ 被要求睡觉时戴着乳头夹 """
+    ASK_EQUP_CLIT_CLAMP_IN_SLEEP = 1466
+    """ 被要求睡觉时戴着阴蒂夹 """
     ASK_EQUP_V_VIBRATOR_IN_SLEEP = 1467
     """ 被要求睡觉时V里插着振动棒 """
     ASK_EQUP_A_VIBRATOR_IN_SLEEP = 1468
