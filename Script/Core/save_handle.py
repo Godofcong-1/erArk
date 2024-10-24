@@ -155,8 +155,6 @@ def input_load_save(save_id: str):
     color_update_count = 0
     for key, value in loaded_dict["character_data"].items():
         # print(f"debug name = {value.name}")
-        if value.cid == 0:
-            continue
         update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
         # 角色素质、经验、宝珠、能力、设置的更新
         update_count += update_character_config_data(value)
