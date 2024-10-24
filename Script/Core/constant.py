@@ -1304,6 +1304,8 @@ class StateMachine:
     """ 起床（换上正常服装+调整管理白天道具） """
     RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH = 94
     """ 清零洗澡状态并换上标准衣服 """
+    START_MASTUREBATE_BEFORE_SLEEP = 95
+    """ 进入要睡前自慰状态 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -1984,7 +1986,7 @@ class SecondBehavior:
     ASK_EQUP_A_VIBRATOR_IN_SLEEP = 1468
     """ 被要求睡觉时A里插着振动棒 """
     ASK_NOT_WASH_SEMEN = 1471
-    """ 被要求洗澡时不再清洗精液 """
+    """ 被要求洗澡时不再清洗阴道内的精液 """
     ASK_MASTURBATION_BEFORE_SLEEP = 1472
     """ 被要求每天晚上睡前都要自慰 """
     ASK_NOT_MASTURBATION = 1473

@@ -259,6 +259,7 @@ class Physical_Check_And_Manage_Panel:
                 # 去掉status_name里的"被要求"字样
                 status_name = status_name.replace(_("被要求"), "")
                 count += 1
+
                 # 跳过未实装的
                 if body_manage_data.todo:
                     continue
@@ -324,7 +325,6 @@ class Physical_Check_And_Manage_Panel:
             if now_value_1 >= require_value_1:
                 judge_result = True
         elif body_manage_second_behavior_id == 1452:
-            judge_result = True
             # 袜子收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_socks[target_character_id])
             require_value_1 = body_manage_data.need_value_1
@@ -373,6 +373,22 @@ class Physical_Check_And_Manage_Panel:
             require_text += _("Ａ感觉等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
+        elif body_manage_second_behavior_id == 1471:
+            # V与W总被射入精液
+            now_value_1 = target_character_data.dirty.body_semen[6][3] + target_character_data.dirty.body_semen[7][3]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("V与W总被射入精液{0}ml/{1}ml").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
+        elif body_manage_second_behavior_id == 1472 or body_manage_second_behavior_id == 1473:
+            # 自慰经验
+            now_value_1 = target_character_data.experience[54]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("自慰经验{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
+            # DEBUG 目前强制锁为false
+            judge_result = False
         # 攻略进度
         now_value_2 = attr_calculation.get_character_fall_level(target_character_id)
         require_value_2 = body_manage_data.need_value_2

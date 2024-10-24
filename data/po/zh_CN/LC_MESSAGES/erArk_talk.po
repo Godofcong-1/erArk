@@ -34621,7 +34621,7 @@ msgid "\n{Name}触发了被要求睡觉时A里插着振动棒的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:171
-msgid "\n{Name}触发了被要求洗澡时不再清洗精液的地文"
+msgid "\n{Name}触发了被要求洗澡时不再清洗阴道内的精液的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:172

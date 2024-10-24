@@ -23,7 +23,7 @@ ai的目标,,,,
 33,78,normal_1267|sleep_time|shower_flag_4|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，今天已经洗过澡，且不满足助理问候，则进入要睡觉状态
 34,78,normal_1267|sleep_time|not_shower_time|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），就寝时间，不是淋浴时间，自己的助理属性中的问候服务不影响AI行动的情况，则进入要睡觉状态
 35,502,sleep_flag_1|not_in_dor,12,要睡觉状态下，不在宿舍，则回宿舍
-36,44,sleep_flag_1|sleep_h_awake_0|in_dor,12,要睡觉状态下，没有睡奸中醒来状态，且已在宿舍，则睡觉
+36,44,sleep_flag_1|sleep_h_awake_0|in_dor|not_need_masturebate_before_sleep_or_already_masturebate,12,要睡觉状态下，没有睡奸中醒来状态，且已在宿舍，自身不需要睡前自慰或已经睡前自慰，则睡觉
 37,44,tired_100,0,疲劳值到100%，当场直接爆睡
 38,93,in_dor|sleep_flag_0|sleep_cloth_or_not_normal_4,0,在宿舍里，无要睡觉状态，身上穿着睡衣或服装异常，则起床（换上正常服装+调整管理白天道具）
 
@@ -64,11 +64,13 @@ ai的目标,,,,
 82,512,milk_flag_1|not_in_restroom,12,要挤奶状态，且不在休息室，则去休息室
 83,90,milk_flag_1|in_restroom,12,要挤奶状态，且在休息室，则挤奶
 
-86,91,normal_1267|desire_point_ge_100,11,1267正常（可能AI跟随、服装异常或意识模糊），欲望值到100%，则进入要自慰状态
+86,91,normal_1267|desire_point_ge_100|not_ask_not_masturbation,11,1267正常（可能AI跟随、服装异常或意识模糊），欲望值到100%，自己没有被要求禁止自慰，则进入要自慰状态
 87,511,masturebate_flag_1|not_in_toilet_female,12,当前要自慰_洗手间，且不在女洗手间里，则去洗手间
 88,92,masturebate_flag_1|in_toilet_female,12,当前要自慰_洗手间，且在女洗手间里，则自慰
 89,502,masturebate_flag_2|not_in_dor,12,当前要自慰_宿舍，不在宿舍，则回宿舍
 90,92,masturebate_flag_2|in_dor,12,当前要自慰_宿舍，已在宿舍，则自慰
+91,95,ask_masturbation_before_sleep|sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_0,11,自己被要求每天晚上睡前都要自慰，要睡觉状态下，且已在宿舍，自身没有要睡前自慰状态，则进入要睡前自慰状态
+92,92,sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_1,12,要睡觉状态下，且已在宿舍，自身要睡前自慰状态，则自慰
 
 100,100,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
 101,101,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触

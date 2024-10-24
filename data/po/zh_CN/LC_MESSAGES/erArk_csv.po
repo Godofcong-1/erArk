@@ -11185,7 +11185,7 @@ msgid "被要求睡觉时A里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:508
-msgid "被要求洗澡时不再清洗精液"
+msgid "被要求洗澡时不再清洗阴道内的精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:509

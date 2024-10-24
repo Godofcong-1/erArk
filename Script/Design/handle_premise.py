@@ -5322,6 +5322,70 @@ def handle_masturebate_flag_2(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.MASTUREBATE_BOFORE_SLEEP_FLAG_0)
+def handle_masturebate_bofore_sleep_flag_0(character_id: int) -> int:
+    """
+    自身没有要睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate_before_sleep == 0:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_BOFORE_SLEEP_FLAG_1)
+def handle_masturebate_bofore_sleep_flag_1(character_id: int) -> int:
+    """
+    自身要睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate_before_sleep == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_BOFORE_SLEEP_FLAG_2)
+def handle_masturebate_bofore_sleep_flag_2(character_id: int) -> int:
+    """
+    自身已睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate_before_sleep == 2:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.NOT_NEED_MASTUREBATE_BEFORE_SLEEP_OR_ALREADY_MASTUREBATE)
+def handle_not_need_masturebate_before_sleep_or_already_masturebate(character_id: int) -> int:
+    """
+    自身不需要睡前自慰或已经睡前自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if not handle_ask_masturbation_before_sleep(character_id):
+        return 1
+    elif handle_masturebate_bofore_sleep_flag_2(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FIND_FOOD_WEIRD_FLAG_0)
 def handlefind_food_weird_flag_0(character_id: int) -> int:
     """
@@ -18377,6 +18441,57 @@ def handle_ask_equp_a_bibrator_in_sleep(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.body_manage[18]
+
+
+@add_premise(constant_promise.Premise.ASK_NOT_WASH_SEMEN)
+def handle_ask_not_wash_semen(character_id: int) -> int:
+    """
+    自己被要求洗澡时不再清洗阴道内的精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[21]
+
+
+@add_premise(constant_promise.Premise.ASK_MASTURBATION_BEFORE_SLEEP)
+def handle_ask_masturbation_before_sleep(character_id: int) -> int:
+    """
+    自己被要求每天晚上睡前都要自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[22]
+
+
+@add_premise(constant_promise.Premise.ASK_NOT_MASTURBATION)
+def handle_ask_not_masturbation(character_id: int) -> int:
+    """
+    自己被要求禁止自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[23]
+
+
+@add_premise(constant_promise.Premise.NOT_ASK_NOT_MASTURBATION)
+def handle_not_ask_not_masturbation(character_id: int) -> int:
+    """
+    自己没有被要求禁止自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_ask_not_masturbation(character_id)
 
 
 @add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_PL)

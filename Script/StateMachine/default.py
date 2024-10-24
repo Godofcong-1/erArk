@@ -1967,6 +1967,21 @@ def character_reset_shower_status_and_get_normal_cloth(character_id: int):
     clothing.get_npc_cloth(character_id)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.START_MASTUREBATE_BEFORE_SLEEP)
+def character_start_masturebate_before_sleep(character_id: int):
+    """
+    进入要睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.masturebate_before_sleep = 1
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)
 def character_wear_to_locker(character_id: int):
     """

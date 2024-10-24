@@ -6276,6 +6276,46 @@ def handle_masturebate_flag_to_0(
     character_data.sp_flag.masturebate = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0)
+def handle_masturebate_before_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime, ):
+    """
+    自身清零要睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.masturebate_before_sleep = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2)
+def handle_masturebate_before_flag_to_2(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime, ):
+    """
+    自身变为已睡前自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.masturebate_before_sleep = 2
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
 def handle_help_make_food_flag_to_0(
         character_id: int,
@@ -6841,6 +6881,10 @@ def handle_dirty_reset_in_shower(
     character_data: game_type.Character = cache.character_data[character_id]
     # 保留比例
     keep_rate_dict = {6 : 0.2, 7 : 0.7, 8 : 0.3}
+    # 身体管理被要求不洗精液时则上调比例
+    if handle_premise.handle_ask_not_wash_semen(character_id):
+        keep_rate_dict[6] = 0.8
+        keep_rate_dict[7] = 0.9
     # 保留数据
     keep_data = {6 : 0, 7 : 0, 8 : 0}
     # 保留部位
