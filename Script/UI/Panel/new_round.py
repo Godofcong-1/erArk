@@ -378,7 +378,7 @@ class New_Round_Handle:
             if self.pl_originium_arts_count < 0:
                 self.pl_originium_arts_count = 0
             elif self.pl_originium_arts_count > len(game_config.config_new_round_inherit_type_data[0]) - 1:
-                self.pl_originium_arts_count = len(game_config.config_new_round_inherit_type_data[2]) - 1
+                self.pl_originium_arts_count = len(game_config.config_new_round_inherit_type_data[0]) - 1
         elif type == 2:
             self.pl_collection_count += value
             if self.pl_collection_count < 0:
