@@ -14533,7 +14533,7 @@ def handle_target_now_nipple_clamp(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    return handle_target_now_nipple_clamp(character_data.target_character_id)
+    return handle_self_now_nipple_clamp(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_NIPPLE_CLAMP)
@@ -18492,6 +18492,139 @@ def handle_not_ask_not_masturbation(character_id: int) -> int:
     int -- 权重
     """
     return not handle_ask_not_masturbation(character_id)
+
+
+@add_premise(constant_promise.Premise.ASK_ONE_EXERCISES)
+def handle_ask_one_exercises(character_id: int) -> int:
+    """
+    自己被要求进行了某一项练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    for i in range(30,40):
+        if character_data.body_manage[i]:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASK_SUCKING_AND_SWALLOWING_EXERCISES)
+def handle_ask_sucking_and_swallowing_exercises(character_id: int) -> int:
+    """
+    自己被要求进行吮吸与吞咽力练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[31]
+
+
+@add_premise(constant_promise.Premise.ASK_ARMPIT_CLAMPING_EXERCISES)
+def handle_ask_armpit_clamping_exercises(character_id: int) -> int:
+    """
+    自己被要求进行腋下夹持力练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[32]
+
+
+@add_premise(constant_promise.Premise.ASK_BREAST_CLAMPING_EXERCISES)
+def handle_ask_breast_clamping_exercise(character_id: int) -> int:
+    """
+    自己被要求进行胸部夹持力练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[33]
+
+
+@add_premise(constant_promise.Premise.ASK_HANDS_FLEXIBILITY_EXERCISES)
+def handle_ask_hands_flexibility_exercises(character_id: int) -> int:
+    """
+    自己被要求进行手部灵活度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[34]
+
+
+@add_premise(constant_promise.Premise.ASK_FOOTS_FLEXIBILITY_EXERCISES)
+def handle_ask_foots_flexibility_exercises(character_id: int) -> int:
+    """
+    自己被要求进行足部灵活度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[35]
+
+
+@add_premise(constant_promise.Premise.ASK_VAGINA_FIRMNESS_EXERCISES)
+def handle_ask_vagina_firmness_exercises(character_id: int) -> int:
+    """
+    自己被要求进行阴道紧致度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[36]
+
+
+@add_premise(constant_promise.Premise.ASK_INTESTINE_FIRMNESS_EXERCISES)
+def handle_ask_intestine_firmness_exercises(character_id: int) -> int:
+    """
+    自己被要求进行肠道紧致度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[37]
+
+
+@add_premise(constant_promise.Premise.ASK_TAIL_FLEXIBILITY_EXERCISES)
+def handle_ask_tail_flexibility_exercises(character_id: int) -> int:
+    """
+    自己被要求进行尾巴灵活度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[38]
+
+
+@add_premise(constant_promise.Premise.ASK_TENTACLE_FLEXIBILITY_EXERCISES)
+def handle_ask_tentacle_flexibility_exercises(character_id: int) -> int:
+    """
+    自己被要求进行触手灵活度练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[39]
 
 
 @add_premise(constant_promise.Premise.SELF_HAVE_NICK_NAME_TO_PL)
