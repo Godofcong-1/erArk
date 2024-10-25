@@ -1357,6 +1357,8 @@ class StateMachine:
     """ 工作：种植与养护作物 """
     WORK_DEAL_WITH_DIPLOMACY = 316
     """ 工作：处理外交事宜 """
+    WORK_SEX_EXERCISES = 317
+    """ 工作：性爱练习 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -1521,6 +1523,8 @@ class StateMachine:
     """ 移动至药田 """
     MOVE_TO_GREENHOUSE = 642
     """ 移动至温室 """
+    MOVE_TO_HUMILIATION_ROOM = 651
+    """ 移动至调教室 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """

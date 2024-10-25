@@ -3541,6 +3541,36 @@ def handle_not_in_prison(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_HUMILIATION_ROOM)
+def handle_in_humiliation_room(character_id: int) -> int:
+    """
+    校验角色是否在调教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Humiliation_Room" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_IN_HUMILIATION_ROOM)
+def handle_not_in_humiliation_room(character_id: int) -> int:
+    """
+    校验角色是否不在调教室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_in_humiliation_room(character_id)
+
+
 @add_premise(constant_promise.Premise.IN_DECK)
 def handle_in_deck(character_id: int) -> int:
     """
@@ -11809,6 +11839,19 @@ def handle_work_is_floral_planter(character_id: int) -> int:
     return character_data.work.work_type == 162
 
 
+@add_premise(constant_promise.Premise.WORK_IS_SEX_TRAINEE)
+def handle_work_is_sex_trainee(character_id: int) -> int:
+    """
+    自己的工作为性爱练习生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 193
+
+
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
 def handle_entertainment_is_read(character_id: int) -> int:
     """
@@ -18494,10 +18537,22 @@ def handle_not_ask_not_masturbation(character_id: int) -> int:
     return not handle_ask_not_masturbation(character_id)
 
 
+@add_premise(constant_promise.Premise.ASK_NONE_EXERCISES)
+def handle_ask_none_exercises(character_id: int) -> int:
+    """
+    自己没有被要求进行任何练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_ask_one_exercises(character_id)
+
+
 @add_premise(constant_promise.Premise.ASK_ONE_EXERCISES)
 def handle_ask_one_exercises(character_id: int) -> int:
     """
-    自己被要求进行了某一项练习
+    自己被要求进行了至少一项练习
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -18505,8 +18560,27 @@ def handle_ask_one_exercises(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     for i in range(30,40):
-        if character_data.body_manage[i]:
+        if i in character_data.body_manage and character_data.body_manage[i]:
             return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.ASK_GE_3_EXERCISES)
+def handle_ask_ge_3_exercises(character_id: int) -> int:
+    """
+    自己被要求进行了至少3项练习
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    count = 0
+    for i in range(30,40):
+        if i in character_data.body_manage and character_data.body_manage[i]:
+            count += 1
+    if count >= 3:
+        return 1
     return 0
 
 

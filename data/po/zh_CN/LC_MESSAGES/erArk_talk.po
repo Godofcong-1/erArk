@@ -34589,83 +34589,83 @@ msgid "\n{Name}按照每日上交袜子的约定，脱下了自己穿着的{SocN
 msgstr ""
 
 #: .\data\talk\system\second.csv:163
-msgid "\n{Name}触发了被要求白天时戴着乳头夹的地文"
+msgid "\n{Name}同意白天时戴着乳头夹了，以后早上起床后会给自己戴上乳头夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:164
-msgid "\n{Name}触发了被要求白天时戴着阴蒂夹的地文"
+msgid "\n{Name}同意白天时戴着阴蒂夹了，以后早上起床后会给自己戴上阴蒂夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:165
-msgid "\n{Name}触发了被要求白天时V里插着振动棒的地文"
+msgid "\n{Name}同意白天时V里插着振动棒了，以后早上起床后会给自己的阴道里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:166
-msgid "\n{Name}触发了被要求白天时A里插着振动棒的地文"
+msgid "\n{Name}同意白天时A里插着振动棒了，以后早上起床后会给自己的菊穴里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:167
-msgid "\n{Name}触发了被要求睡觉时戴着乳头夹的地文"
+msgid "\n{Name}同意睡觉时戴着乳头夹了，以后晚上睡觉时会给自己戴上乳头夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:168
-msgid "\n{Name}触发了被要求睡觉时戴着阴蒂夹的地文"
+msgid "\n{Name}同意睡觉时戴着阴蒂夹了，以后晚上睡觉时会给自己戴上阴蒂夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:169
-msgid "\n{Name}触发了被要求睡觉时V里插着振动棒的地文"
+msgid "\n{Name}同意睡觉时V里插着振动棒了，以后晚上睡觉时会给自己的阴道里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:170
-msgid "\n{Name}触发了被要求睡觉时A里插着振动棒的地文"
+msgid "\n{Name}同意睡觉时A里插着振动棒了，以后晚上睡觉时会给自己的菊穴里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:171
-msgid "\n{Name}触发了被要求洗澡时不再清洗阴道内的精液的地文"
+msgid "\n{Name}同意洗澡时不再清洗阴道内的精液了，以后洗澡的时候只对阴道做外部清洁，不再清洗阴道内的精液"
 msgstr ""
 
 #: .\data\talk\system\second.csv:172
-msgid "\n{Name}触发了被要求每天晚上睡前都要自慰的地文"
+msgid "\n{Name}同意每天晚上睡前都要自慰了，以后每天晚上睡觉前都会自慰一次，直到达到高潮再睡去"
 msgstr ""
 
 #: .\data\talk\system\second.csv:173
-msgid "\n{Name}触发了被要求禁止自慰的地文"
+msgid "\n{Name}同意禁止自慰了，以后无论积攒了多少欲望都不会自慰，除非得到了{PlayerName}的指示"
 msgstr ""
 
 #: .\data\talk\system\second.csv:174
-msgid "\n{Name}触发了被要求进行吮吸与吞咽力练习的地文"
+msgid "\n{Name}同意进行吮吸与吞咽力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:175
-msgid "\n{Name}触发了被要求进行腋下夹持力练习的地文"
+msgid "\n{Name}同意进行腋下夹持力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:176
-msgid "\n{Name}触发了被要求进行胸部夹持力练习的地文"
+msgid "\n{Name}同意进行胸部夹持力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:177
-msgid "\n{Name}触发了被要求进行手部灵活度练习的地文"
+msgid "\n{Name}同意进行手部灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:178
-msgid "\n{Name}触发了被要求进行足部灵活度练习的地文"
+msgid "\n{Name}同意进行足部灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:179
-msgid "\n{Name}触发了被要求进行阴道紧致度练习的地文"
+msgid "\n{Name}同意进行阴道紧致度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:180
-msgid "\n{Name}触发了被要求进行肠道紧致度练习的地文"
+msgid "\n{Name}同意进行肠道紧致度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:181
-msgid "\n{Name}触发了被要求进行尾巴灵活度练习的地文"
+msgid "\n{Name}同意进行尾巴灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:182
-msgid "\n{Name}触发了被要求进行触手灵活度练习的地文"
+msgid "\n{Name}同意进行触手灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
 #: .\data\talk\system\second.csv:184

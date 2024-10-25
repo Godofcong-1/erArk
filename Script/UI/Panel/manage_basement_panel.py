@@ -1,7 +1,7 @@
 from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import basement, attr_calculation
+from Script.Design import basement, attr_calculation, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import manage_vehicle_panel, see_character_info_panel
 from Script.Config import game_config, normal_config
@@ -561,13 +561,12 @@ class ChangeWorkButtonList:
             for cid in game_config.config_work_type.keys():
                 work_cid = game_config.config_work_type[cid].cid
                 work_name = game_config.config_work_type[cid].name
+                work_tag = game_config.config_work_type[cid].tag
                 work_place = game_config.config_work_type[cid].place
                 work_describe = game_config.config_work_type[cid].describe
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
-                # 特殊工作显示为灰色，无法选择
-                special_work_set = {131}
                 # 必要条件判断
                 if game_config.config_work_type[cid].need != _("无"):
                     need_data_all = game_config.config_work_type[cid].need
@@ -586,13 +585,19 @@ class ChangeWorkButtonList:
                         open_cid = game_config.config_facility_open_name_to_cid[work_place]
                         if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
+                # 特殊解锁的工作不直接开放
+                if work_tag == 2:
+                    flag_open = False
+                    # 性爱练习生
+                    if work_cid == 193 and handle_premise.handle_ask_one_exercises(self.NPC_id):
+                        flag_open = True
 
                 if flag_open:
                     work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
                     # 将work_text_before统一对齐为18个全角字符
                     work_text = f"{work_text_before.ljust(18,'　')}：{work_describe}"
                     # 正常工作直接显示
-                    if work_cid not in special_work_set:
+                    if work_tag == 0:
                         button_draw = draw.LeftButton(
                             work_text,
                             f"\n{work_cid}",
@@ -603,7 +608,7 @@ class ChangeWorkButtonList:
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                     # 特殊工作显示为灰色，无法选择
-                    else:
+                    elif work_tag == 1:
                         now_draw = draw.LeftDraw()
                         now_draw.text = work_text
                         now_draw.style = "deep_gray"

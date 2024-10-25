@@ -400,10 +400,33 @@ class Physical_Check_And_Manage_Panel:
         if now_value_3 >= require_value_3:
             judge_result = True
 
+        # 处女检查
+        if manage_cid == 36:
+            require_text += _(" 需要非处女")
+            if target_character_data.talent[0]:
+                judge_result = False
+        elif manage_cid == 37:
+            require_text += _(" 需要非A处女")
+            if target_character_data.talent[1]:
+                judge_result = False
+
+        # 冲突检查
+        if manage_cid == 22 and handle_premise.handle_ask_not_masturbation(target_character_id):
+            require_text += _(" 需要未选择[禁止自慰]")
+            judge_result = False
+        if manage_cid == 23 and handle_premise.handle_ask_masturbation_before_sleep(target_character_id):
+            require_text += _(" 需要未选择[每天晚上睡前都要自慰]")
+            judge_result = False
+        if manage_cid in range(31, 40) and handle_premise.handle_ask_ge_3_exercises(target_character_id):
+            require_text += _(" 最多只能选择3项练习项目")
+            judge_result = False
+
         return judge_result, require_text
 
     def settle_target_physical_manage(self, manage_cid: int, target_character_id: int):
         """结算目标角色的身体管理"""
+        from Script.Design import basement
+
         body_manage_data = game_config.config_body_manage_requirement[manage_cid]
         body_manage_second_behavior_id = body_manage_data.second_behavior_id
         target_character_data = cache.character_data[target_character_id]
@@ -418,12 +441,29 @@ class Physical_Check_And_Manage_Panel:
             target_character_data.body_manage[manage_cid] = 1
             handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
             info_text += _("对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+            # 练习类的身体管理
+            if manage_cid in range(31, 40):
+                # 如果当前职业不是性爱工作，则调整为性爱练习生工作
+                if not handle_premise.handle_work_is_sex_trainee(target_character_id):
+                    # 工作结算
+                    target_character_data.work.work_type = 193
+                    basement.update_work_people()
+                    basement.update_facility_people()
+                    info_text += _("因为被要求进行性爱的相关练习，所以{0}的工作被调整为特殊职业-{1}了\n").format(target_character_data.name, game_config.config_work_type[193].name)
         # 如果已经进行该身体管理，则取消
         else:
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 0
             handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
             info_text += _("取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+            # 练习类的身体管理
+            if manage_cid in range(31, 40):
+                # 如果已经没有练习，且还是性爱工作，则取消该工作
+                if handle_premise.handle_ask_none_exercises(target_character_id) and handle_premise.handle_work_is_sex_trainee(target_character_id):
+                    target_character_data.work.work_type = 0
+                    basement.update_work_people()
+                    basement.update_facility_people()
+                    info_text += _("因为没有进行性爱的相关练习，所以{0}的特殊职业-{1}被取消了\n").format(target_character_data.name, game_config.config_work_type[193].name)
 
         info_draw = draw.WaitDraw()
         info_draw.text = info_text

@@ -12984,6 +12984,18 @@ msgstr ""
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 
+#: .\data\csv\WorkType.csv:24
+msgid "性爱练习生"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:24
+msgid "调教室"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:24
+msgid "利用道具练习自己的性爱技巧"
+msgstr ""
+
 #: .\data\csv\World_Setting.csv:7
 msgid "铜化方舟"
 msgstr ""
@@ -20102,10 +20114,6 @@ msgstr ""
 
 #: /'data\map\关押\牢8\Scene.json:2
 msgid "监牢8"
-msgstr ""
-
-#: /'data\map\关押\调教室\Scene.json:2
-msgid "调教室"
 msgstr ""
 
 #: /'data\map\制造加工\0\Scene.json:2

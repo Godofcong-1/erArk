@@ -781,6 +781,26 @@ def character_move_to_greenhouse(character_id: int):
         now_draw.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HUMILIATION_ROOM)
+def character_move_to_humiliation_room(character_id: int):
+    """
+    移动至调教室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_humiliation_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Humiliation_Room"])
+    )
+    general_movement_module(character_id, to_humiliation_room)
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position:
+        now_draw = draw.NormalDraw()
+        now_draw.text = _("{0}打算去调教室\n").format(character_data.name)
+        now_draw.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
@@ -2748,6 +2768,29 @@ def character_work_deal_with_diplomacy(character_id: int):
     character_data.behavior.duration = 60
     character_data.behavior.behavior_id = constant.Behavior.DEAL_WITH_DIPLOMACY
     character_data.state = constant.CharacterStatus.STATUS_DEAL_WITH_DIPLOMACY
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_SEX_EXERCISES)
+def character_work_sex_exercises(character_id: int):
+    """
+    工作：性爱练习
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    # 从目前的性爱练习列表中随机选一个
+    exercises_list = []
+    for i in range(30,40):
+        if i in character_data.body_manage and character_data.body_manage[i]:
+            status_id = i + 650
+            exercises_list.append(status_id)
+    # 赋予行为
+    if len(exercises_list):
+        now_exercises = random.choice(exercises_list)
+        character_data.behavior.duration = 30
+        character_data.behavior.behavior_id = now_exercises
+        character_data.state = now_exercises
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)

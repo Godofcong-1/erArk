@@ -1049,7 +1049,7 @@ class WorkType:
     place: str
     """ 工作地点 """
     tag: int
-    """ 标签 """
+    """ 标签(1为灰色显示，2为特殊解锁不直接显示) """
     need: str
     """ 必要条件 """
     describe: str
