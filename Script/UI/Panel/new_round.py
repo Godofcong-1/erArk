@@ -343,15 +343,15 @@ class New_Round_Handle:
             all_cost = 0
             pl_character_data = cache.character_data[0]
             # 初级源石技艺
-            for i in [304, 307, 310, 331]:
+            for i in [304, 307, 310, 316, 331]:
                 if pl_character_data.talent[i]:
                     all_cost += 10
             # 中级源石技艺
-            for i in [305, 308, 311, 332]:
+            for i in [305, 308, 311, 317, 332]:
                 if pl_character_data.talent[i]:
                     all_cost += 30
             # 高级源石技艺
-            for i in [306, 309, 312, 333]:
+            for i in [306, 309, 312, 318, 333]:
                 if pl_character_data.talent[i]:
                     all_cost += 60
             # 特级源石技艺
@@ -530,8 +530,8 @@ class New_Round_Handle:
 
         # 玩家源石技艺
         if self.pl_originium_arts_count > 0:
-            for i in [304, 305, 306, 307, 308, 309, 310, 311, 312, 331, 332, 333, 334]:
-                if old_pl_character_data.talent[i]:
+            for i in range(301, 350):
+                if i in old_pl_character_data.talent and old_pl_character_data.talent[i]:
                     new_pl_character_data.talent[i] = old_pl_character_data.talent[i]
         info_draw_text += _("玩家源石技艺继承完毕\n")
 
