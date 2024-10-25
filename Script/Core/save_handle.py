@@ -134,7 +134,6 @@ def input_load_save(save_id: str):
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
     new_cache.rhodes_island = basement.get_base_zero()
-    character_data_type = game_type.Character()
     update_count = 0
 
     # 从存档中加载字典
@@ -154,37 +153,41 @@ def input_load_save(save_id: str):
     cloth_update_count = 0
     color_update_count = 0
     for key, value in loaded_dict["character_data"].items():
+        new_character_data = game_type.Character()
+        recursive_update(new_character_data, value)
+        # new_character_data.__dict__.update(value.__dict__)
         # print(f"debug name = {value.name}")
-        update_count += update_dict_with_default(value.__dict__, character_data_type.__dict__)
         # 角色素质、经验、宝珠、能力、设置的更新
-        update_count += update_character_config_data(value)
+        update_count += update_character_config_data(new_character_data)
         # 当前角色模板数据
-        tem_character = loaded_dict["npc_tem_data"][value.cid - 1]
+        tem_character = loaded_dict["npc_tem_data"][new_character_data.cid - 1]
         # 更新角色服装
-        cloth_update_count += update_chara_cloth(value, tem_character)
+        cloth_update_count += update_chara_cloth(new_character_data, tem_character)
         # 更新角色口上颜色
-        if value.cid != 0 and tem_character.TextColor != value.text_color:
+        if new_character_data.cid != 0 and tem_character.TextColor != new_character_data.text_color:
             # print(f"debug value.name = {value.name}，tem_character.TextColor = {tem_character.TextColor}，value.text_color = {value.text_color}")
-            value.text_color = tem_character.TextColor
-            text_color_list = [value.adv, value.name, tem_character.TextColor]
+            new_character_data.text_color = tem_character.TextColor
+            text_color_list = [new_character_data.adv, new_character_data.name, tem_character.TextColor]
             character_config.add_text_color_data_to_config_data(text_color_list)
             update_count += 1
             color_update_count += 1
         # 更新角色势力与出身地
-        if value.cid != 0 and tem_character.Nation != value.relationship.nation:
-            value.relationship.nation = tem_character.Nation
+        if new_character_data.cid != 0 and tem_character.Nation != new_character_data.relationship.nation:
+            new_character_data.relationship.nation = tem_character.Nation
             update_count += 1
-        if value.cid != 0 and tem_character.Birthplace != value.relationship.birthplace:
-            value.relationship.birthplace = tem_character.Birthplace
+        if new_character_data.cid != 0 and tem_character.Birthplace != new_character_data.relationship.birthplace:
+            new_character_data.relationship.birthplace = tem_character.Birthplace
             update_count += 1
         # 更新到玩家收藏品列表
-        if value.cid != 0 and value.cid not in loaded_dict["character_data"][0].pl_collection.token_list:
-            loaded_dict["character_data"][0].pl_collection.token_list[value.cid] = False
-            loaded_dict["character_data"][0].pl_collection.first_panties[value.cid] = ""
-            loaded_dict["character_data"][0].pl_collection.npc_panties[value.cid] = []
-            loaded_dict["character_data"][0].pl_collection.npc_socks[value.cid] = []
+        if new_character_data.cid != 0 and new_character_data.cid not in loaded_dict["character_data"][0].pl_collection.token_list:
+            loaded_dict["character_data"][0].pl_collection.token_list[new_character_data.cid] = False
+            loaded_dict["character_data"][0].pl_collection.first_panties[new_character_data.cid] = ""
+            loaded_dict["character_data"][0].pl_collection.npc_panties[new_character_data.cid] = []
+            loaded_dict["character_data"][0].pl_collection.npc_socks[new_character_data.cid] = []
             # print(f"debug value.cid = {value.cid}, value.name = {value.name}")
             update_count += 1
+        # 重新指向新的角色数据
+        loaded_dict["character_data"][key] = new_character_data
     if cloth_update_count:
         now_draw = draw.LeftDraw()
         draw_text = _("\n共有{0}个角色的服装数据已重置\n").format(cloth_update_count)
@@ -249,9 +252,9 @@ def input_load_save(save_id: str):
 
 def update_dict_with_default(loaded_dict, default_dict):
     """
-    递归地更新字典
+    递归地赋值字典
     Keyword arguments:
-    loaded_dict -- 要更新的字典
+    loaded_dict -- 要赋值的字典
     default_dict -- 默认字典
     """
     update_count = 0
@@ -282,6 +285,22 @@ def update_dict_with_default(loaded_dict, default_dict):
             now_draw.text = draw_text
             # now_draw.draw()
     return update_count
+
+def recursive_update(target, source):
+    """
+    递归更新字典
+    Keyword arguments:
+    target -- 要被更新的目标字典
+    source -- 数据来源的源字典
+    """
+    for key, value in source.__dict__.items():
+        if isinstance(value, object) and hasattr(value, '__dict__'):
+            if key in target.__dict__ and isinstance(target.__dict__[key], object) and hasattr(target.__dict__[key], '__dict__'):
+                recursive_update(target.__dict__[key], value)
+            else:
+                target.__dict__[key] = value
+        else:
+            target.__dict__[key] = value
 
 
 def update_tem_character(loaded_dict):
