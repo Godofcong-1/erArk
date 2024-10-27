@@ -665,7 +665,8 @@ class Character_FirstNPC:
             # 种族过滤
             race_cid = target_data.race
             race_name = game_config.config_race[race_cid].name
-            self.race_filter_id_dict[race_name].append(NPC_id)
+            if race_name in self.race_filter_id_dict:
+                self.race_filter_id_dict[race_name].append(NPC_id)
 
     def select_all(self):
         """一键全选"""
@@ -778,6 +779,7 @@ class Character_FirstNPC:
         self.chest_filter_flag = 0
         self.race_filter_flag = 0
         self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.talk_character_list = []
         self.prepare_filter()
 
 
