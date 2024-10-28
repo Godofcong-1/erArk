@@ -367,6 +367,12 @@ class DataList(QWidget):
 
     def move_item(self):
         """移动条目"""
+        # 重置所有筛选
+        self.select_now_instruct_flag = 0
+        self.text_search_reset()
+        self.premise_search_reset()
+        self.update()
+        # 设置移动标志
         self.now_in_moving_flag = True
         self.edited_item = self.list_widget.currentItem()
         self.edited_item.setBackground(QColor("light green"))
