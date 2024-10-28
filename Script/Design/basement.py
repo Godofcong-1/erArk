@@ -615,9 +615,9 @@ def update_invite_visitor():
             cache.rhodes_island.invite_visitor[1] = 0
 
 
-def check_facility_open():
+def get_empty_guest_room_id():
     """
-    判断是否有空闲客房，暂时没有用
+    判断是否有空闲客房，如果有的话返回客房id
     """
     # 遍历全部客房
     guest_rooms = [room_id for room_id in cache.rhodes_island.facility_open if 1200 < room_id < 1300]
@@ -635,9 +635,9 @@ def check_facility_open():
                 break
         if have_visitor_flag:
             continue
-        # 发现没有人住的房间，返回True
+        # 发现没有人住的房间，返回客房id
         else:
-            return True
+            return room_id
     # 如果没有空闲客房，则返回False
     return False
 

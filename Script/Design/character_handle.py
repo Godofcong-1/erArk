@@ -416,7 +416,26 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
                 cache.rhodes_island.facility_open[open_cid] = True
 
     # 分配角色宿舍
-    new_character_get_dormitory(character_id)
+    if visitor_flag == False:
+        new_character_get_dormitory(character_id)
+    # 客人则分配客房
+    else:
+        # 获得空闲客房id
+        guest_room_id = basement.get_empty_guest_room_id()
+        if guest_room_id:
+            # 全客房列表
+            guest_room_dict = {
+                key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
+            }
+            # 遍历到同名客房
+            for guest_room_full_path in guest_room_dict:
+                guest_room_name = guest_room_full_path.split('\\')
+                now_room = game_config.config_facility_open[guest_room_id].name
+                if now_room == guest_room_name[-1]:
+                    character_data.dormitory = guest_room_full_path
+                    break
+        else:
+            new_character_get_dormitory(character_id)
 
     # 初始化新角色位置
     character_position = character_data.position
