@@ -163,7 +163,7 @@ class CharaList(QWidget):
         label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Preferred)  # 设置大小策略
         return label
 
-    def create_text_edit(self, initial_text, width = 400, height = 30):
+    def create_text_edit(self, initial_text, width = 400, height = 32):
         """创建一个文本编辑框"""
         text_edit = QTextEdit(initial_text)
         text_edit.setFixedHeight(height)
@@ -474,41 +474,10 @@ class CharaList(QWidget):
                 self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][0])
             # 多个物品时每个单独显示
             else:
-                count = 1
                 for i in range(len(now_clothing_dict[key])):
-                    # 检查是否已经存在具有相同值的comboBox
-                    existing_item = None
-                    for item in self.clothing_widget.items:
-                        if item[1].currentText() == cache_control.clothing_data[str(key)]:
-                            count += 1
-                            existing_item = list(item)
-                            break
-                    if existing_item:
-                        # 在相同的水平布局中添加一个新的textEdit
-                        textEdit = QTextEdit(self.clothing_widget)
-                        textEdit.setFixedHeight(30)
-                        existing_item[0].addWidget(textEdit)
-                        existing_item.append(textEdit)
-
-                        # 计算新的宽度
-                        new_width = 600 // count
-
-                        # 设置所有textEdit的宽度
-                        for sub_item in existing_item:
-                            if isinstance(sub_item, QTextEdit):
-                                sub_item.setFixedWidth(new_width)
-
-                        # 设置新textEdit的文本
-                        textEdit.setText(now_clothing_dict[key][i])
-
-                        # 找到existing_item在self.clothing_widget.items中的索引，然后用existing_item替换掉它
-                        index = self.clothing_widget.items.index(item)
-                        self.clothing_widget.items[index] = existing_item
-
-                    else:
-                        self.clothing_widget.addItems()
-                        self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
-                        self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][i])
+                    self.clothing_widget.addItems()
+                    self.clothing_widget.items[-1][1].setCurrentIndex(int(key))
+                    self.clothing_widget.items[-1][2].setText(now_clothing_dict[key][i])
 
         self.update_chara_textcolor()
 
@@ -557,7 +526,7 @@ class MenuWidget(QWidget):
             comboBox.addItem(initial_text)
 
         # 设定文本编辑框的大小
-        textEdit.setFixedHeight(30)
+        textEdit.setFixedHeight(32)
         textEdit.setFixedWidth(50)
         if cloth_flag:
             textEdit.setFixedWidth(600)
@@ -592,9 +561,12 @@ class MenuWidget(QWidget):
 
             # 从主布局中移除子布局
             self.mainLayout.removeItem(layout)
+            # print(f"debug 移除了布局{layout}")
 
             comboBox.deleteLater()
             textEdit.deleteLater()
+            if len(item) == 4:
+                extraTextEdit.deleteLater()
             self.items_per_layout -= 1  # 减少项目数量
 
     def reset(self):
