@@ -580,7 +580,15 @@ class MenuWidget(QWidget):
 
     def removeItems(self):
         if self.items:
-            layout, comboBox, textEdit = self.items.pop()
+            item = self.items.pop()
+            if len(item) == 3:
+                layout, comboBox, textEdit = item
+            elif len(item) == 4:
+                layout, comboBox, textEdit, extraTextEdit = item
+            else:
+                # 调试输出，查看item的内容
+                print(f"项目数量错误 长度: {len(item)}, 各item: {item}")
+                raise ValueError(f"项目数量错误, 长度为 {len(item)}")
 
             # 从主布局中移除子布局
             self.mainLayout.removeItem(layout)
