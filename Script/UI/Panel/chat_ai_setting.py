@@ -332,6 +332,8 @@ class Chat_Ai_Setting_Panel:
         """ 玩家的属性 """
         self.test_flag = 0
         """ 测试标志，0为未测试，1为测试通过，2为测试不通过 """
+        self.error_message = ""
+        """ 错误信息 """
 
     def draw(self):
         """绘制对象"""
@@ -477,7 +479,7 @@ class Chat_Ai_Setting_Panel:
                     info_draw.width = self.width
                     info_draw.draw()
                 elif self.test_flag == 2:
-                    info_text = _(" \n  测试不通过\n")
+                    info_text = _(" \n  测试不通过，错误信息为：\n  ") + self.error_message + "\n"
                     info_draw = draw.NormalDraw()
                     info_draw.text = info_text
                     info_draw.width = self.width
@@ -651,9 +653,11 @@ class Chat_Ai_Setting_Panel:
             except concurrent.futures.TimeoutError:
                 info_text = _(" \n  测试不通过，原因：连接超时\n")
                 self.test_flag = 2
+                self.error_message = _("连接超时")
             except Exception as e:
                 info_text = _(" \n  测试不通过，原因：{0}\n").format(e)
                 self.test_flag = 2
+                self.error_message = str(e)
         info_draw = draw.NormalDraw()
         info_draw.text = info_text
         info_draw.width = self.width
