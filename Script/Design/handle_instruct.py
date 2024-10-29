@@ -4395,7 +4395,7 @@ def handle_back_stand_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.LAST_CMD_SEX,
+     constant_promise.Premise.LAST_CMD_SEX_OR_W_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.TECHNIQUE_GE_3},
 )
@@ -4425,7 +4425,7 @@ def handle_stimulate_g_point():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.LAST_CMD_SEX,
+     constant_promise.Premise.LAST_CMD_SEX_OR_W_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.TECHNIQUE_GE_3},
 )
@@ -4456,7 +4456,7 @@ def handle_womb_os_caress():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.LAST_CMD_SEX,
+     constant_promise.Premise.LAST_CMD_SEX_OR_W_SEX,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
      constant_promise.Premise.T_W_DILATE_GE_3,
      constant_promise.Premise.TECHNIQUE_GE_3},

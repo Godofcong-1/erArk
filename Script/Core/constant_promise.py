@@ -161,6 +161,8 @@ class Premise:
     """ 指令_前指令 前一指令为V性交_指令触发用 """
     LAST_CMD_W_SEX = "last_cmd_w_sex"
     """ 指令_前指令 前一指令为W性交_指令触发用 """
+    LAST_CMD_SEX_OR_W_SEX = "last_cmd_sex_or_w_sex"
+    """ 指令_前指令 前一指令为V性交或W性交_指令触发用 """
     LAST_CMD_A_SEX = "last_cmd_a_sex"
     """ 指令_前指令 前一指令为A性交_指令触发用 """
     LAST_CMD_U_SEX = "last_cmd_u_sex"

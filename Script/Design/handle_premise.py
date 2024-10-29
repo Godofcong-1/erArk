@@ -13206,6 +13206,22 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.LAST_CMD_SEX_OR_W_SEX)
+def handle_last_cmd_sex_or_w_sex(character_id: int) -> int:
+    """
+    前一指令为V性交或W性交_指令触发用
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_last_cmd_sex(character_id):
+        return 1
+    elif handle_last_cmd_w_sex(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.LAST_CMD_A_SEX)
 def handle_last_cmd_a_sex(character_id: int) -> int:
     """
