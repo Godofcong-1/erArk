@@ -1067,6 +1067,20 @@ class System_Setting:
         """ 所有角色使用通用文本 """
 
 
+class Ai_Setting:
+    """AI设置"""
+
+    def __init__(self):
+        self.ai_chat_setting: Dict[int, int] = {}
+        """ ai聊天设定，见Ai_Chat_Setting.csv """
+        self.ai_chat_api_key: Dict[str, str] = {}
+        """ ai聊天api key """
+        self.now_ai_chat_model: str = ""
+        """ 当前使用的ai聊天模型 """
+        self.now_ai_chat_api_endpoint: str = ""
+        """ 当前使用的api端点 """
+
+
 class Character:
     """角色数据结构体"""
 
@@ -1348,10 +1362,8 @@ class Cache:
         # self.system_setting: System_Setting = System_Setting()
         self.system_setting: Dict[int, int] = {}
         """ 系统设定，见System_Setting.csv """
-        self.ai_chat_setting: Dict[int, int] = {}
-        """ ai聊天设定，见Ai_Chat_Setting.csv """
-        self.ai_chat_api_key: Dict[int, str] = {}
-        """ ai聊天api key """
+        self.ai_setting: Ai_Setting = Ai_Setting()
+        """ ai设定 """
         self.country: Country = Country()
         """ 大地图国家数据 """
 
