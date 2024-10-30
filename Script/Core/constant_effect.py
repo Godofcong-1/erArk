@@ -1199,3 +1199,19 @@ class SecondEffect:
     """ 属性_经验 增加1U扩张经验 """
     ADD_1_EXPAND_W_EXPERIENCE = 608
     """ 属性_经验 增加1W扩张经验 """
+    ADD_1_N_EXPERIENCE = 610
+    """ 属性_经验 自己增加1N经验 """
+    ADD_1_B_EXPERIENCE = 611
+    """ 属性_经验 自己增加1B经验 """
+    ADD_1_C_EXPERIENCE = 612
+    """ 属性_经验 自己增加1C经验 """
+    ADD_1_P_EXPERIENCE = 613
+    """ 属性_经验 自己增加1P经验 """
+    ADD_1_V_EXPERIENCE = 614
+    """ 属性_经验 自己增加1V经验 """
+    ADD_1_A_EXPERIENCE = 615
+    """ 属性_经验 自己增加1A经验 """
+    ADD_1_U_EXPERIENCE = 616
+    """ 属性_经验 自己增加1U经验 """
+    ADD_1_W_EXPERIENCE = 617
+    """ 属性_经验 自己增加1W经验 """

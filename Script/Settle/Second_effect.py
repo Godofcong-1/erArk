@@ -3174,3 +3174,163 @@ def handle_add_1_expand_w_experience(
     change_data.experience.setdefault(68, 0)
     change_data.experience[68] += 1
 
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_N_EXPERIENCE)
+def handle_add_1_n_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1N经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[0] += 1
+    change_data.experience.setdefault(0, 0)
+    change_data.experience[0] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_B_EXPERIENCE)
+def handle_add_1_b_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1B经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[1] += 1
+    change_data.experience.setdefault(1, 0)
+    change_data.experience[1] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_C_EXPERIENCE)
+def handle_add_1_c_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1C经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[2] += 1
+    change_data.experience.setdefault(2, 0)
+    change_data.experience[2] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_P_EXPERIENCE)
+def handle_add_1_p_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1P经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[3] += 1
+    change_data.experience.setdefault(3, 0)
+    change_data.experience[3] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_V_EXPERIENCE)
+def handle_add_1_v_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1V经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[4] += 1
+    change_data.experience.setdefault(4, 0)
+    change_data.experience[4] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_A_EXPERIENCE)
+def handle_add_1_a_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1A经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[5] += 1
+    change_data.experience.setdefault(5, 0)
+    change_data.experience[5] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_U_EXPERIENCE)
+def handle_add_1_u_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1U经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[6] += 1
+    change_data.experience.setdefault(6, 0)
+    change_data.experience[6] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_W_EXPERIENCE)
+def handle_add_1_w_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1W经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[7] += 1
+    change_data.experience.setdefault(7, 0)
+    change_data.experience[7] += 1
+
