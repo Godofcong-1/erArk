@@ -54,7 +54,7 @@ def key_up(event: Event):
     Keyword arguments:
     event -- 键盘事件
     """
-    while cache.input_position == 0:
+    while cache.input_position == 0 and len(cache.input_cache) != 0:
         cache.input_position = len(cache.input_cache)
     while cache.input_position <= 21 and cache.input_position > 1:
         cache.input_position -= 1
