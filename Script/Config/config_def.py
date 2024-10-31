@@ -566,6 +566,8 @@ class Item:
     """ 道具名 """
     tag: str
     """ 标签 """
+    level: int
+    """ 等级 """
     price: int
     """ 价格 """
     effect: int
@@ -1080,6 +1082,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:
