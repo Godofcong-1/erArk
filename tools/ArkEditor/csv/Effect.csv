@@ -107,14 +107,21 @@ cid,effect_name,effect_type,effect
 117,TECH_ADD_W_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行W快、欲情调整
 120,TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧技能对发起者进行P快调整
 121,TARGET_LUBRICATION_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的润滑情况对其进行苦痛调整
-122,TARGET_V_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的V属性(润滑+扩张+阴茎大小)对其进行苦痛调整
-123,TARGET_A_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整
-124,TARGET_U_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整
-125,TARGET_W_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整
-131,TARGET_V_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行V快、欲情调整
-132,TARGET_A_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行A快、欲情调整
-133,TARGET_U_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行U快、欲情调整
-134,TARGET_W_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+阴茎大小对交互目标进行W快、欲情调整
+122,TARGET_V_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的V属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
+123,TARGET_A_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的A属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
+124,TARGET_U_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的U属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
+125,TARGET_W_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的W属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
+131,TARGET_V_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行V快、欲情调整
+132,TARGET_A_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行A快、欲情调整
+133,TARGET_U_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整
+134,TARGET_W_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整
+
+141,FINGER_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+指技对发起者进行P快调整
+142,TONGUE_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+舌技对发起者进行P快调整
+143,FEET_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+足技对发起者进行P快调整
+144,BREAST_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+胸技对发起者进行P快调整
+145,VAGINA_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+膣技对发起者进行P快调整
+146,ANUS_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+肛技对发起者进行P快调整
 
 151,LOW_OBSCENITY_FAILED_ADJUST,属性_失败状态,轻度性骚扰失败的加反感、加愤怒、降好感度修正
 152,HIGH_OBSCENITY_FAILED_ADJUST,属性_失败状态,重度性骚扰失败的加反感、加愤怒、降好感度、降信赖修正
@@ -292,6 +299,7 @@ cid,effect_name,effect_type,effect
 496,TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0,属性_特殊flag,交互对象清零对玩家的愤怒状态
 497,MASTUREBATE_FLAG_TO_0,属性_特殊flag,自身清零要自慰状态
 498,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0,属性_特殊flag,自身清零要睡前自慰状态
+499,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2,属性_特殊flag,自身变为已睡前自慰状态
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整

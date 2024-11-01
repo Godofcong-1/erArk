@@ -8070,7 +8070,7 @@ def handle_target_v_adjust_add_pain(
         now_time: datetime.datetime,
 ):
     """
-    根据交互对象的V属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    根据交互对象的V属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8091,6 +8091,9 @@ def handle_target_v_adjust_add_pain(
         # 润滑调整
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
         jj_size = character_data.pl_ability.jj_size
@@ -8099,7 +8102,7 @@ def handle_target_v_adjust_add_pain(
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
-        final_adjust = pain_adjust * size_adjust
+        final_adjust = max(pain_adjust - waist_adjust, 0) * size_adjust
 
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
@@ -8112,7 +8115,7 @@ def handle_target_a_adjust_add_pain(
         now_time: datetime.datetime,
 ):
     """
-    根据交互对象的A属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    根据交互对象的A属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8133,6 +8136,9 @@ def handle_target_a_adjust_add_pain(
         # 润滑调整
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
         jj_size = character_data.pl_ability.jj_size
@@ -8141,7 +8147,7 @@ def handle_target_a_adjust_add_pain(
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
-        final_adjust = pain_adjust * size_adjust
+        final_adjust = max(pain_adjust - waist_adjust, 0) * size_adjust
 
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
@@ -8154,7 +8160,7 @@ def handle_target_u_adjust_add_pain(
         now_time: datetime.datetime,
 ):
     """
-    根据交互对象的U属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    根据交互对象的U属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8175,6 +8181,9 @@ def handle_target_u_adjust_add_pain(
         # 润滑调整
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为尿道非常小，所以相对于V和A，初始+1-4 = -3
         jj_size = character_data.pl_ability.jj_size
@@ -8183,7 +8192,7 @@ def handle_target_u_adjust_add_pain(
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
-        final_adjust = pain_adjust * size_adjust
+        final_adjust = max(pain_adjust - waist_adjust, 0) * size_adjust
 
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 1000, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
@@ -8196,7 +8205,7 @@ def handle_target_w_adjust_add_pain(
         now_time: datetime.datetime,
 ):
     """
-    根据交互对象的W属性(润滑+扩张+阴茎大小)对其进行苦痛调整
+    根据交互对象的W属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8217,6 +8226,9 @@ def handle_target_w_adjust_add_pain(
         # 润滑调整
         target_data.status_data.setdefault(8, 0)
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为子宫较小，所以相对于V和A，初始+1-2=-1
         jj_size = character_data.pl_ability.jj_size
@@ -8225,7 +8237,7 @@ def handle_target_w_adjust_add_pain(
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
         # 最终调整值
-        final_adjust = pain_adjust * size_adjust
+        final_adjust = max(pain_adjust - waist_adjust, 0) * size_adjust
 
         base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 100, ability_level = target_data.ability[15], extra_adjust = final_adjust, change_data_to_target_change = change_data)
 
@@ -8238,7 +8250,7 @@ def handle_tech_add_v_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧+阴茎大小对交互目标进行V快、欲情调整
+    根据发起者的技巧+腰技+阴茎大小对交互目标进行V快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8257,14 +8269,19 @@ def handle_tech_add_v_adjust(
         if target_data.dead:
             return
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
         size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        # 最终调整值
+        extra_adjust = size_adjust + waist_adjust
 
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 4, 50, ability_level = character_data.ability[30], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[4], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[4], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_A_ADJUST_ADD_BY_SEX)
@@ -8275,7 +8292,7 @@ def handle_tech_add_a_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧+阴茎大小对交互目标进行A快、欲情调整
+    根据发起者的技巧+腰技+阴茎大小对交互目标进行A快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8294,12 +8311,17 @@ def handle_tech_add_a_adjust(
         if target_data.dead:
             return
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
         size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        # 最终调整值
+        extra_adjust = size_adjust + waist_adjust
 
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 5, 50, ability_level = character_data.ability[30], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 欲情
         base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[5], extra_adjust = size_adjust, change_data_to_target_change = change_data)
 
@@ -8312,7 +8334,7 @@ def handle_tech_add_u_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧+阴茎大小对交互目标进行U快、欲情调整
+    根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8331,14 +8353,19 @@ def handle_tech_add_u_adjust(
         if target_data.dead:
             return
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
         size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        # 最终调整值
+        extra_adjust = size_adjust + waist_adjust
 
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 6, 50, ability_level = character_data.ability[30], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[6], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[6], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_W_ADJUST_ADD_BY_SEX)
@@ -8349,7 +8376,7 @@ def handle_tech_add_w_adjust(
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧+阴茎大小对交互目标进行W快、欲情调整
+    根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8368,14 +8395,277 @@ def handle_tech_add_w_adjust(
         if target_data.dead:
             return
 
-        # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
+        # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
         size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        # 腰技的调整
+        waist_tech = character_data.ability[76]
+        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        # 最终调整值
+        extra_adjust = size_adjust + waist_adjust
 
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, ability_level = character_data.ability[30], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, ability_level = character_data.ability[30], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 欲情
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], extra_adjust = size_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FINGER_TECH_ADD_PL_P_ADJUST)
+def handle_finger_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+指技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[70])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TONGUE_TECH_ADD_PL_P_ADJUST)
+def handle_tongue_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+舌技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[71])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FEET_TECH_ADD_PL_P_ADJUST)
+def handle_feet_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+足技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[72])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BREAST_TECH_ADD_PL_P_ADJUST)
+def handle_breast_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+胸技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[73])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.VAGINA_TECH_ADD_PL_P_ADJUST)
+def handle_vagina_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+膣技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[74])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ANUS_TECH_ADD_PL_P_ADJUST)
+def handle_anus_tech_add_pl_p_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据交互对象的技巧+肛技对发起者进行P快调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 获取调整值#
+        target_data.ability.setdefault(19, 0)
+        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[75])
+        adjust = adjust_1 / 2 + adjust_2
+        # P快变化#
+        character_data.status_data.setdefault(3, 0)
+        now_lust = character_data.status_data[3]
+        now_lust_multiple = 50
+        now_add_lust = add_time + now_lust_multiple
+        now_add_lust *= adjust
+        now_add_lust += now_lust / 8
+        character_data.eja_point += now_add_lust
+        change_data.eja_point += now_add_lust
+        character_data.action_info.last_eaj_add_time = now_time
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOW_OBSCENITY_FAILED_ADJUST)
