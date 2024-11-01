@@ -13280,44 +13280,80 @@ msgstr ""
 msgid "陈，龙门高级警司，龙门近卫局特别督察组组长，毕业于维多利亚皇家近卫学校，成绩优异，表现突出。在龙门近卫局供职期间，力主取缔龙门境内非法活动，对抗暴力犯罪和有组织犯罪，追缉武装逃犯与国际重犯等行动，并取得多项重大成果。现作为特别人员协助罗德岛行动，并为现场提供战术指挥支援。"
 msgstr ""
 
-#: .\data\character\0010_陈.csv:30
-msgid "黄色领带"
-msgstr ""
-
-#: .\data\character\0010_陈.csv:31
-msgid "蓝黑色龙门警署制服外套"
-msgstr ""
-
-#: .\data\character\0010_陈.csv:32
-msgid "白色制服衬衫"
-msgstr ""
-
-#: .\data\character\0010_陈.csv:33
-msgid "蓝黑色制服短裤"
-msgstr ""
-
-#: .\data\character\0010_陈.csv:34
-msgid "黑色露指手套"
+#: .\data\character\0010_陈.csv:15
+msgid "#5462a0"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:35
-msgid "厚高跟作战靴"
+msgid "杏黄底蓝纹领带"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:36
-msgid "短袜"
+msgid "蓝黑色龙门警署制服外套"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:37
-msgid "小腿护具"
+msgid "白色龙门警署制服衬衫"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:38
-msgid "赤霄与近卫局制式长剑"
+msgid "黑色特种作战系带"
 msgstr ""
 
 #: .\data\character\0010_陈.csv:39
-msgid "半片式绑腿"
+msgid "灰底白边运动内衣"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:40
+msgid "黑色龙门警署制服短裤"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:41
+msgid "深蓝色战术腰带"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:42
+msgid "灰底白边运动内裤"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:43
+msgid "黑色露指战术手套"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:44
+msgid "深灰船袜"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:45
+msgid "黑色厚高跟作战靴"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:46
+msgid "斩龙剑-赤霄"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:47
+msgid "罗德岛制式剑"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:48
+msgid "半片式黑色绑腿护具"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:49
+msgid "便携战术道具小包"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:50
+msgid "A.E.M.P."
+msgstr ""
+
+#: .\data\character\0010_陈.csv:51
+msgid "浅灰色发圈"
+msgstr ""
+
+#: .\data\character\0010_陈.csv:52
+msgid "员工证胸牌"
 msgstr ""
 
 #: .\data\character\0012_米莎.csv:4
@@ -14032,10 +14068,6 @@ msgstr ""
 msgid "黑色休闲长裤"
 msgstr ""
 
-#: .\data\character\0118_白雪.csv:32
-msgid "黑色露指战术手套"
-msgstr ""
-
 #: .\data\character\0118_白雪.csv:34
 msgid "黑色露趾运动鞋"
 msgstr ""
@@ -14190,6 +14222,10 @@ msgstr ""
 
 #: .\data\character\0126_流星.csv:31
 msgid "卡其色短衫"
+msgstr ""
+
+#: .\data\character\0126_流星.csv:32
+msgid "黑色露指手套"
 msgstr ""
 
 #: .\data\character\0126_流星.csv:33
