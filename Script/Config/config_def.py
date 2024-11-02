@@ -566,8 +566,6 @@ class Item:
     """ 道具名 """
     tag: str
     """ 标签 """
-    level: int
-    """ 等级 """
     price: int
     """ 价格 """
     effect: int

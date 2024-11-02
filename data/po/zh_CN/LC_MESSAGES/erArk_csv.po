@@ -6845,110 +6845,14 @@ msgid "罗德岛舰桥系统升级时使用的ID信息更新卡，这一张是�
 msgstr ""
 
 #: .\data\csv\Item.csv:45
-msgid "阴茎增大药"
-msgstr ""
-
-#: .\data\csv\Item.csv:45
-msgid "使用后会让自己的阴茎增大一个级别，越大的阴茎带来的快感越多，但苦痛也会更多"
-msgstr ""
-
-#: .\data\csv\Item.csv:46
-msgid "阴茎缩小药"
-msgstr ""
-
-#: .\data\csv\Item.csv:46
-msgid "使用后会让自己的阴茎缩小一个级别，越小的阴茎带来的快感越少，但苦痛也会更少"
-msgstr ""
-
-#: .\data\csv\Item.csv:47
-msgid "丰胸药"
-msgstr ""
-
-#: .\data\csv\Item.csv:47
-msgid "使用后会让对方的胸部增大一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:48
-msgid "缩胸药"
-msgstr ""
-
-#: .\data\csv\Item.csv:48
-msgid "使用后会让对方的胸部缩小一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:49
-msgid "丰臀药"
-msgstr ""
-
-#: .\data\csv\Item.csv:49
-msgid "使用后会让对方的臀部增大一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:50
-msgid "缩臀药"
-msgstr ""
-
-#: .\data\csv\Item.csv:50
-msgid "使用后会让对方的臀部缩小一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:51
-msgid "丰腿药"
-msgstr ""
-
-#: .\data\csv\Item.csv:51
-msgid "使用后会让对方的腿部变成丰满的肉腿"
-msgstr ""
-
-#: .\data\csv\Item.csv:52
-msgid "瘦腿药"
-msgstr ""
-
-#: .\data\csv\Item.csv:52
-msgid "使用后会让对方的腿部变成纤细的细腿"
-msgstr ""
-
-#: .\data\csv\Item.csv:53
-msgid "丰足药"
-msgstr ""
-
-#: .\data\csv\Item.csv:53
-msgid "使用后会让对方的脚部变成细长的长足"
-msgstr ""
-
-#: .\data\csv\Item.csv:54
-msgid "瘦足药"
-msgstr ""
-
-#: .\data\csv\Item.csv:54
-msgid "使用后会让对方的脚部变成小巧的小足"
-msgstr ""
-
-#: .\data\csv\Item.csv:55
-msgid "外表年龄增长药"
-msgstr ""
-
-#: .\data\csv\Item.csv:55
-msgid "使用后会让对方的外表年龄增长一个级别，最大为【人妻】"
-msgstr ""
-
-#: .\data\csv\Item.csv:56
-msgid "外表年龄减少药"
-msgstr ""
-
-#: .\data\csv\Item.csv:56
-msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝莉】"
-msgstr ""
-
-#: .\data\csv\Item.csv:58
 msgid "戒指"
 msgstr ""
 
-#: .\data\csv\Item.csv:58
+#: .\data\csv\Item.csv:45
 msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
 msgstr ""
 
-#: .\data\csv\Item.csv:59
+#: .\data\csv\Item.csv:46
 msgid "用来戴在已经被【驯服】的干员脖子上，同意后将作为你的【宠物】"
 msgstr ""
 
