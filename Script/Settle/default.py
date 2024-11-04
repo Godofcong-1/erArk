@@ -5240,7 +5240,7 @@ def handle_self_h_state_reset(
         character_data.h_state.orgasm_level[orgasm] = now_data
     # 清零H相关二段状态
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0 and (second_behavior_id in range(1000,1025) or second_behavior_id in range(1200,1250)):
+        if behavior_data != 0 and (second_behavior_id in range(1100,1120) or second_behavior_id in range(1200,1250)):
             character_data.second_behavior[second_behavior_id] = 0
 
 
