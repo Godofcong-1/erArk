@@ -44,15 +44,21 @@ class InScenePanel:
         while 1:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
+            # 绘制的开始时间
+            start_draw = time.time()
+            # 和上一次主界面绘制之间的空行数量，由系统设置决定
             len_str = game_config.config_system_setting_option[1][cache.system_setting[1]]
             len_line = int(len_str[:1])
             for i in range(len_line):
                 line_feed.draw()
+            # 绘制标题
             title_draw.draw()
-
-            character_data: game_type.Character = cache.character_data[0]
-            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            # 玩家数据
+            pl_character_data: game_type.Character = cache.character_data[0]
+            # 场景数据
+            scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+            # 场景角色数据
             character_handle_panel = panel.PageHandlePanel(
                 [],
                 see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
@@ -62,36 +68,36 @@ class InScenePanel:
                 1,
                 0,
                 999,
-                null_button_text=character_data.target_character_id,
+                null_button_text=pl_character_data.target_character_id,
             )
-            # 绘制的开始时间
-            start_draw = time.time()
-
-            if character_data.dead:
-                cache.wframe_mouse.w_frame_skip_wait_mouse = 0
-                now_draw = draw.LineFeedWaitDraw()
-                now_draw.text = _("已死亡！")
-                now_draw.width = self.width
-                now_draw.draw()
-                continue
             character_set = scene_data.character_list.copy()
-            character_set.remove(0)
+            character_set.remove(0) # 移除玩家自己
             if cache.is_collection:
-                character_list = [i for i in character_set if i in character_data.collection_character]
+                character_list = [i for i in character_set if i in pl_character_data.collection_character]
             else:
                 character_list = list(character_set)
             character_handle_panel.text_list = character_list
+
+            # if pl_character_data.dead:
+            #     cache.wframe_mouse.w_frame_skip_wait_mouse = 0
+            #     now_draw = draw.LineFeedWaitDraw()
+            #     now_draw.text = _("已死亡！")
+            #     now_draw.width = self.width
+            #     now_draw.draw()
+            #     continue
             # print("character_handle_panel.text_list :",character_handle_panel.text_list)
-            if character_data.target_character_id not in scene_data.character_list:
-                character_data.target_character_id = 0
-            if not character_data.target_character_id and len(character_list):
-                character_data.target_character_id = character_list[0]
+            # 如果玩家的交互对象不在场景中，则将交互对象设为自己
+            if pl_character_data.target_character_id not in scene_data.character_list:
+                pl_character_data.target_character_id = 0
+            # 如果没有交互对象，而且场景中有角色，则将交互对象设为场景中的第一个角色
+            if not pl_character_data.target_character_id and len(character_list):
+                pl_character_data.target_character_id = character_list[0]
             # 游戏时间
             game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
             game_time_draw.now_draw.width = len(game_time_draw)
             game_time_draw.draw()
             # 当前位置
-            position_text = attr_text.get_scene_path_text(character_data.position)
+            position_text = attr_text.get_scene_path_text(pl_character_data.position)
             now_position_text = _("当前位置:") + position_text
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
@@ -104,14 +110,14 @@ class InScenePanel:
             # meet_draw.width = self.width
             see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
-            character_handle_panel.null_button_text = character_data.target_character_id
+            character_handle_panel.null_button_text = pl_character_data.target_character_id
 
             # 开始绘制主界面标题栏
             ask_list = []
-            if len(character_list) and character_data.target_character_id not in character_list:
-                character_data.target_character_id = character_list[0]
+            if len(character_list) and pl_character_data.target_character_id not in character_list:
+                pl_character_data.target_character_id = character_list[0]
             if not len(character_list):
-                character_data.target_character_id = 0
+                pl_character_data.target_character_id = 0
             if len(character_list):
                 meet_draw.draw()
                 character_handle_panel.update()
@@ -142,10 +148,10 @@ class InScenePanel:
             # ↓角色信息面板↓#
             character_info_draw_list = []
             character_head_draw = see_character_info_panel.CharacterInfoHead(
-                character_data.cid, self.width
+                pl_character_data.cid, self.width
             )
             target_head_draw = see_character_info_panel.CharacterInfoHead(
-                character_data.target_character_id, self.width
+                pl_character_data.target_character_id, self.width
             )
             character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]
             target_head_draw_list = [y for x in target_head_draw.draw_list for y in x]
@@ -153,7 +159,7 @@ class InScenePanel:
                 value_tuple.draw()
             line_feed.draw()
             # 只有在有交互对象的情况下才绘制交互对象
-            if character_data.target_character_id:
+            if pl_character_data.target_character_id:
                 for value_tuple in target_head_draw_list:
                     value_tuple.draw()
                 line_feed.draw()
@@ -213,12 +219,12 @@ class InScenePanel:
             #         label.draw()
             # ↓以下为状态栏的内容↓#
             character_status_draw_list = []
-            if character_data.target_character_id and cache.scene_panel_show[0]:
+            if pl_character_data.target_character_id and cache.scene_panel_show[0]:
                 character_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.cid, self.width / 2, 7, 0, 0
+                    pl_character_data.cid, self.width / 2, 7, 0, 0
                 )
                 target_status_draw = see_character_info_panel.SeeCharacterStatusPanel(
-                    character_data.target_character_id, self.width, 7, 0, 0
+                    pl_character_data.target_character_id, self.width, 7, 0, 0
                 )
                 now_line = len(character_status_draw.draw_list)
                 if len(target_status_draw.draw_list) > now_line:
@@ -271,16 +277,16 @@ class InScenePanel:
 
             # ↓以下为服装栏的内容↓#
             # 移动至服装文件中
-            if cache.scene_panel_show[1] and character_data.target_character_id:
+            if cache.scene_panel_show[1] and pl_character_data.target_character_id:
                 character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
-                    character_data.cid, self.width, 20, 0, 0
+                    pl_character_data.cid, self.width, 20, 0, 0
                 )
                 character_cloth_draw.draw()
 
             # ↓以下为身体栏的内容↓#
-            if cache.scene_panel_show[2] and character_data.target_character_id:
+            if cache.scene_panel_show[2] and pl_character_data.target_character_id:
                 character_cloth_draw = dirty_panel.SeeCharacterBodyPanel(
-                    character_data.cid, self.width, 9, 0, 0
+                    pl_character_data.cid, self.width, 9, 0, 0
                 )
                 character_cloth_draw.draw()
 
