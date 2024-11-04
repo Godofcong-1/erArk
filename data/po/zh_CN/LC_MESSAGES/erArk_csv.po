@@ -6609,346 +6609,362 @@ msgid "使用后回复20ml精液量。"
 msgstr ""
 
 #: .\data\csv\Item.csv:11
-msgid "相机"
-msgstr ""
-
-#: .\data\csv\Item.csv:11
-msgid "可以用来拍照，暂未实装。"
-msgstr ""
-
-#: .\data\csv\Item.csv:12
-msgid "录像机"
-msgstr ""
-
-#: .\data\csv\Item.csv:12
-msgid "可以用来录像，暂未实装。"
-msgstr ""
-
-#: .\data\csv\Item.csv:13
-msgid "全乐器套装"
-msgstr ""
-
-#: .\data\csv\Item.csv:13
-msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
-msgstr ""
-
-#: .\data\csv\Item.csv:14
-msgid "润滑液"
-msgstr ""
-
-#: .\data\csv\Item.csv:14
-msgid "增加润滑"
-msgstr ""
-
-#: .\data\csv\Item.csv:15
-msgid "事前避孕药(1个月量)"
-msgstr ""
-
-#: .\data\csv\Item.csv:15
-msgid "可以持续防止怀孕的药物，需要每天服用一次，共一个月的量。"
-msgstr ""
-
-#: .\data\csv\Item.csv:16
-msgid "事后避孕药"
-msgstr ""
-
-#: .\data\csv\Item.csv:16
-msgid "用于临时紧急防止怀孕的药物，服用后当天内的性生活不会怀孕。"
-msgstr ""
-
-#: .\data\csv\Item.csv:17
-msgid "媚药"
-msgstr ""
-
-#: .\data\csv\Item.csv:17
-msgid "增加好意和欲情"
-msgstr ""
-
-#: .\data\csv\Item.csv:18
-msgid "灌肠液"
-msgstr ""
-
-#: .\data\csv\Item.csv:18
-msgid "使后穴恢复清洁状态"
-msgstr ""
-
-#: .\data\csv\Item.csv:19
-msgid "一次性利尿剂"
-msgstr ""
-
-#: .\data\csv\Item.csv:19
-msgid "促进排尿，一次性回满尿意值"
-msgstr ""
-
-#: .\data\csv\Item.csv:20
-msgid "持续性利尿剂"
-msgstr ""
-
-#: .\data\csv\Item.csv:20
-msgid "促进排尿，每半小时回满尿意值，持续3小时"
-msgstr ""
-
-#: .\data\csv\Item.csv:21
-msgid "安眠药"
-msgstr ""
-
-#: .\data\csv\Item.csv:21
-msgid "使用后会进入8h的睡眠，中间不会醒"
-msgstr ""
-
-#: .\data\csv\Item.csv:22
-msgid "排卵促进药"
-msgstr ""
-
-#: .\data\csv\Item.csv:22
-msgid "增大怀孕几率，一直持续到排卵日"
-msgstr ""
-
-#: .\data\csv\Item.csv:23
-msgid "避孕套"
-msgstr ""
-
-#: .\data\csv\Item.csv:23
-msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
-msgstr ""
-
-#: .\data\csv\Item.csv:24
-msgid "跳蛋"
-msgstr ""
-
-#: .\data\csv\Item.csv:24
-msgid "最常见也是最基础的电动情趣小玩具，放在性器官上即可通过震动带来快感"
-msgstr ""
-
-#: .\data\csv\Item.csv:25
-msgid "乳头夹"
-msgstr ""
-
-#: .\data\csv\Item.csv:25
-msgid "用来刺激乳头的夹子，戴上后会持续提供快感和轻微的疼痛"
-msgstr ""
-
-#: .\data\csv\Item.csv:26
-msgid "阴蒂夹"
-msgstr ""
-
-#: .\data\csv\Item.csv:26
-msgid "用来刺激阴蒂的夹子，戴上后会持续提供快感和轻微的疼痛"
-msgstr ""
-
-#: .\data\csv\Item.csv:27
-msgid "电动按摩棒"
-msgstr ""
-
-#: .\data\csv\Item.csv:27
-msgid "跳蛋的大型棒状版本，更笨重但震动也更强力"
-msgstr ""
-
-#: .\data\csv\Item.csv:28
-msgid "震动棒"
-msgstr ""
-
-#: .\data\csv\Item.csv:28
-msgid "说明暂无"
-msgstr ""
-
-#: .\data\csv\Item.csv:29
-msgid "加粗震动棒"
-msgstr ""
-
-#: .\data\csv\Item.csv:30
-msgid "巨型震动棒"
-msgstr ""
-
-#: .\data\csv\Item.csv:31
-msgid "灌肠套装(注射套装+肛塞)"
-msgstr ""
-
-#: .\data\csv\Item.csv:32
-msgid "肛门拉珠"
-msgstr ""
-
-#: .\data\csv\Item.csv:33
-msgid "绳子"
-msgstr ""
-
-#: .\data\csv\Item.csv:33
-msgid "暂未实装"
-msgstr ""
-
-#: .\data\csv\Item.csv:34
-msgid "眼罩"
-msgstr ""
-
-#: .\data\csv\Item.csv:35
-msgid "搾乳机"
-msgstr ""
-
-#: .\data\csv\Item.csv:35
-msgid "用来榨出母乳的机器，只能对【泌乳】且当前有奶水的干员使用"
-msgstr ""
-
-#: .\data\csv\Item.csv:36
-msgid "采尿器"
-msgstr ""
-
-#: .\data\csv\Item.csv:36
-msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
-msgstr ""
-
-#: .\data\csv\Item.csv:37
-msgid "鞭子"
-msgstr ""
-
-#: .\data\csv\Item.csv:38
-msgid "低温蜡烛"
-msgstr ""
-
-#: .\data\csv\Item.csv:39
-msgid "针"
-msgstr ""
-
-#: .\data\csv\Item.csv:40
-msgid "灭菌棉签"
-msgstr ""
-
-#: .\data\csv\Item.csv:40
-msgid "用于进行尿道的开发，需要【技巧】至少为5级才能使用，每次使用消耗一个"
-msgstr ""
-
-#: .\data\csv\Item.csv:41
-msgid "口球"
-msgstr ""
-
-#: .\data\csv\Item.csv:42
-msgid "干员携袋"
-msgstr ""
-
-#: .\data\csv\Item.csv:42
-msgid "印有罗德岛logo的黑色桶状袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
-msgstr ""
-
-#: .\data\csv\Item.csv:43
-msgid "干员宿舍万能钥匙(一次性)"
-msgstr ""
-
-#: .\data\csv\Item.csv:43
-msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
-msgstr ""
-
-#: .\data\csv\Item.csv:44
-msgid "ID信息更新卡"
-msgstr ""
-
-#: .\data\csv\Item.csv:44
-msgid "罗德岛舰桥系统升级时使用的ID信息更新卡，这一张是特地为博士您准备的。"
-msgstr ""
-
-#: .\data\csv\Item.csv:45
 msgid "阴茎增大药"
 msgstr ""
 
-#: .\data\csv\Item.csv:45
+#: .\data\csv\Item.csv:11
 msgid "使用后会让自己的阴茎增大一个级别，越大的阴茎带来的快感越多，但苦痛也会更多"
 msgstr ""
 
-#: .\data\csv\Item.csv:46
+#: .\data\csv\Item.csv:12
 msgid "阴茎缩小药"
 msgstr ""
 
-#: .\data\csv\Item.csv:46
+#: .\data\csv\Item.csv:12
 msgid "使用后会让自己的阴茎缩小一个级别，越小的阴茎带来的快感越少，但苦痛也会更少"
 msgstr ""
 
-#: .\data\csv\Item.csv:47
+#: .\data\csv\Item.csv:13
 msgid "丰胸药"
 msgstr ""
 
-#: .\data\csv\Item.csv:47
+#: .\data\csv\Item.csv:13
 msgid "使用后会让对方的胸部增大一个级别"
 msgstr ""
 
-#: .\data\csv\Item.csv:48
+#: .\data\csv\Item.csv:14
 msgid "缩胸药"
 msgstr ""
 
-#: .\data\csv\Item.csv:48
+#: .\data\csv\Item.csv:14
 msgid "使用后会让对方的胸部缩小一个级别"
 msgstr ""
 
-#: .\data\csv\Item.csv:49
+#: .\data\csv\Item.csv:15
 msgid "丰臀药"
 msgstr ""
 
-#: .\data\csv\Item.csv:49
+#: .\data\csv\Item.csv:15
 msgid "使用后会让对方的臀部增大一个级别"
 msgstr ""
 
-#: .\data\csv\Item.csv:50
+#: .\data\csv\Item.csv:16
 msgid "缩臀药"
 msgstr ""
 
-#: .\data\csv\Item.csv:50
+#: .\data\csv\Item.csv:16
 msgid "使用后会让对方的臀部缩小一个级别"
 msgstr ""
 
-#: .\data\csv\Item.csv:51
+#: .\data\csv\Item.csv:17
 msgid "丰腿药"
 msgstr ""
 
-#: .\data\csv\Item.csv:51
+#: .\data\csv\Item.csv:17
 msgid "使用后会让对方的腿部变成丰满的肉腿"
 msgstr ""
 
-#: .\data\csv\Item.csv:52
+#: .\data\csv\Item.csv:18
 msgid "瘦腿药"
 msgstr ""
 
-#: .\data\csv\Item.csv:52
+#: .\data\csv\Item.csv:18
 msgid "使用后会让对方的腿部变成纤细的细腿"
 msgstr ""
 
-#: .\data\csv\Item.csv:53
+#: .\data\csv\Item.csv:19
 msgid "丰足药"
 msgstr ""
 
-#: .\data\csv\Item.csv:53
+#: .\data\csv\Item.csv:19
 msgid "使用后会让对方的脚部变成细长的长足"
 msgstr ""
 
-#: .\data\csv\Item.csv:54
+#: .\data\csv\Item.csv:20
 msgid "瘦足药"
 msgstr ""
 
-#: .\data\csv\Item.csv:54
+#: .\data\csv\Item.csv:20
 msgid "使用后会让对方的脚部变成小巧的小足"
 msgstr ""
 
-#: .\data\csv\Item.csv:55
+#: .\data\csv\Item.csv:21
 msgid "外表年龄增长药"
 msgstr ""
 
-#: .\data\csv\Item.csv:55
+#: .\data\csv\Item.csv:21
 msgid "使用后会让对方的外表年龄增长一个级别，最大为【人妻】"
 msgstr ""
 
-#: .\data\csv\Item.csv:56
+#: .\data\csv\Item.csv:22
 msgid "外表年龄减少药"
 msgstr ""
 
-#: .\data\csv\Item.csv:56
+#: .\data\csv\Item.csv:22
 msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝莉】"
 msgstr ""
 
+#: .\data\csv\Item.csv:23
+msgid "泌乳药"
+msgstr ""
+
+#: .\data\csv\Item.csv:23
+msgid "使用后会让对方的乳房开始分泌奶水"
+msgstr ""
+
+#: .\data\csv\Item.csv:24
+msgid "停乳药"
+msgstr ""
+
+#: .\data\csv\Item.csv:24
+msgid "使用后会让对方的乳房停止分泌奶水"
+msgstr ""
+
+#: .\data\csv\Item.csv:25
+msgid "相机"
+msgstr ""
+
+#: .\data\csv\Item.csv:25
+msgid "可以用来拍照，暂未实装。"
+msgstr ""
+
+#: .\data\csv\Item.csv:26
+msgid "录像机"
+msgstr ""
+
+#: .\data\csv\Item.csv:26
+msgid "可以用来录像，暂未实装。"
+msgstr ""
+
+#: .\data\csv\Item.csv:27
+msgid "全乐器套装"
+msgstr ""
+
+#: .\data\csv\Item.csv:27
+msgid "含有全部类型的乐器，因为分类很麻烦所以不拆开卖，可以获得比唱歌更好的效果"
+msgstr ""
+
+#: .\data\csv\Item.csv:28
+msgid "润滑液"
+msgstr ""
+
+#: .\data\csv\Item.csv:28
+msgid "增加润滑"
+msgstr ""
+
+#: .\data\csv\Item.csv:29
+msgid "事前避孕药(1个月量)"
+msgstr ""
+
+#: .\data\csv\Item.csv:29
+msgid "可以持续防止怀孕的药物，需要每天服用一次，共一个月的量。"
+msgstr ""
+
+#: .\data\csv\Item.csv:30
+msgid "事后避孕药"
+msgstr ""
+
+#: .\data\csv\Item.csv:30
+msgid "用于临时紧急防止怀孕的药物，服用后当天内的性生活不会怀孕。"
+msgstr ""
+
+#: .\data\csv\Item.csv:31
+msgid "媚药"
+msgstr ""
+
+#: .\data\csv\Item.csv:31
+msgid "增加好意和欲情"
+msgstr ""
+
+#: .\data\csv\Item.csv:32
+msgid "灌肠液"
+msgstr ""
+
+#: .\data\csv\Item.csv:32
+msgid "使后穴恢复清洁状态"
+msgstr ""
+
+#: .\data\csv\Item.csv:33
+msgid "一次性利尿剂"
+msgstr ""
+
+#: .\data\csv\Item.csv:33
+msgid "促进排尿，一次性回满尿意值"
+msgstr ""
+
+#: .\data\csv\Item.csv:34
+msgid "持续性利尿剂"
+msgstr ""
+
+#: .\data\csv\Item.csv:34
+msgid "促进排尿，每半小时回满尿意值，持续3小时"
+msgstr ""
+
+#: .\data\csv\Item.csv:35
+msgid "安眠药"
+msgstr ""
+
+#: .\data\csv\Item.csv:35
+msgid "使用后会进入8h的睡眠，中间不会醒"
+msgstr ""
+
+#: .\data\csv\Item.csv:36
+msgid "排卵促进药"
+msgstr ""
+
+#: .\data\csv\Item.csv:36
+msgid "增大怀孕几率，一直持续到排卵日"
+msgstr ""
+
+#: .\data\csv\Item.csv:37
+msgid "避孕套"
+msgstr ""
+
+#: .\data\csv\Item.csv:37
+msgid "用来避免怀孕的消耗品，每次射精会消耗一个。如果对方还没有做好怀孕的准备，又不在安全期内，就戴着避孕套来做爱吧"
+msgstr ""
+
+#: .\data\csv\Item.csv:38
+msgid "跳蛋"
+msgstr ""
+
+#: .\data\csv\Item.csv:38
+msgid "最常见也是最基础的电动情趣小玩具，放在性器官上即可通过震动带来快感"
+msgstr ""
+
+#: .\data\csv\Item.csv:39
+msgid "乳头夹"
+msgstr ""
+
+#: .\data\csv\Item.csv:39
+msgid "用来刺激乳头的夹子，戴上后会持续提供快感和轻微的疼痛"
+msgstr ""
+
+#: .\data\csv\Item.csv:40
+msgid "阴蒂夹"
+msgstr ""
+
+#: .\data\csv\Item.csv:40
+msgid "用来刺激阴蒂的夹子，戴上后会持续提供快感和轻微的疼痛"
+msgstr ""
+
+#: .\data\csv\Item.csv:41
+msgid "电动按摩棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:41
+msgid "跳蛋的大型棒状版本，更笨重但震动也更强力"
+msgstr ""
+
+#: .\data\csv\Item.csv:42
+msgid "震动棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:42
+msgid "说明暂无"
+msgstr ""
+
+#: .\data\csv\Item.csv:43
+msgid "加粗震动棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:44
+msgid "巨型震动棒"
+msgstr ""
+
+#: .\data\csv\Item.csv:45
+msgid "灌肠套装(注射套装+肛塞)"
+msgstr ""
+
+#: .\data\csv\Item.csv:46
+msgid "肛门拉珠"
+msgstr ""
+
+#: .\data\csv\Item.csv:47
+msgid "绳子"
+msgstr ""
+
+#: .\data\csv\Item.csv:47
+msgid "暂未实装"
+msgstr ""
+
+#: .\data\csv\Item.csv:48
+msgid "眼罩"
+msgstr ""
+
+#: .\data\csv\Item.csv:49
+msgid "搾乳机"
+msgstr ""
+
+#: .\data\csv\Item.csv:49
+msgid "用来榨出母乳的机器，只能对【泌乳】且当前有奶水的干员使用"
+msgstr ""
+
+#: .\data\csv\Item.csv:50
+msgid "采尿器"
+msgstr ""
+
+#: .\data\csv\Item.csv:50
+msgid "在干员的U开发足够高之后，可以在H中给干员装上采尿器，采集后的尿液将作为收集品-圣水来使用"
+msgstr ""
+
+#: .\data\csv\Item.csv:51
+msgid "鞭子"
+msgstr ""
+
+#: .\data\csv\Item.csv:52
+msgid "低温蜡烛"
+msgstr ""
+
+#: .\data\csv\Item.csv:53
+msgid "针"
+msgstr ""
+
+#: .\data\csv\Item.csv:54
+msgid "灭菌棉签"
+msgstr ""
+
+#: .\data\csv\Item.csv:54
+msgid "用于进行尿道的开发，需要【技巧】至少为5级才能使用，每次使用消耗一个"
+msgstr ""
+
+#: .\data\csv\Item.csv:55
+msgid "口球"
+msgstr ""
+
+#: .\data\csv\Item.csv:56
+msgid "干员携袋"
+msgstr ""
+
+#: .\data\csv\Item.csv:56
+msgid "印有罗德岛logo的黑色桶状袋子，拉开拉链后里面足以装得下一整个人。可以用来将失去意识的干员【装袋搬走】，然后在关押区【投入监牢】，将其监禁。"
+msgstr ""
+
+#: .\data\csv\Item.csv:57
+msgid "干员宿舍万能钥匙(一次性)"
+msgstr ""
+
+#: .\data\csv\Item.csv:57
+msgid "可露希尔根据自己在系统里留下的后门而制作的特殊磁卡，可以刷开任意一个干员宿舍的门，使用后一次性密钥会自动失效"
+msgstr ""
+
 #: .\data\csv\Item.csv:58
+msgid "ID信息更新卡"
+msgstr ""
+
+#: .\data\csv\Item.csv:58
+msgid "罗德岛舰桥系统升级时使用的ID信息更新卡，这一张是特地为博士您准备的。"
+msgstr ""
+
+#: .\data\csv\Item.csv:60
 msgid "戒指"
 msgstr ""
 
-#: .\data\csv\Item.csv:58
+#: .\data\csv\Item.csv:60
 msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
 msgstr ""
 
-#: .\data\csv\Item.csv:59
+#: .\data\csv\Item.csv:61
 msgid "用来戴在已经被【驯服】的干员脖子上，同意后将作为你的【宠物】"
 msgstr ""
 

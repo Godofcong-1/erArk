@@ -36,6 +36,7 @@ class HItemShopPanel:
         scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
         # scene_name = cache.scene_data[scene_position_str].scene_name
         title_draw = draw.TitleLineDraw(_("成人用品商店"), self.width)
+        now_level = cache.rhodes_island.facility_level[11] # 获取设施等级
 
         # 按类别统计全部道具
         item_list_all = []
@@ -48,17 +49,20 @@ class HItemShopPanel:
         item_list_type = [_("药品"),_("机器"),_("消耗品"),_("H药品"),_("H用机器"),_("SM器具")]
         item_list = [i for i in game_config.config_item]
         for i in item_list:
-            if game_config.config_item[i].tag == "Drug":
+            # 跳过等级高于设施等级的道具
+            if game_config.config_item[i].level > now_level:
+                continue
+            if game_config.config_item[i].type == "Drug":
                 item_list_Drug.append(i)
-            elif game_config.config_item[i].tag == "Machine":
+            elif game_config.config_item[i].type == "Machine":
                 item_list_Machine.append(i)
-            elif game_config.config_item[i].tag == "Consumables":
+            elif game_config.config_item[i].type == "Consumables":
                 item_list_Consumables.append(i)
-            elif game_config.config_item[i].tag == "H_Drug":
+            elif game_config.config_item[i].type == "H_Drug":
                 item_list_H_Drug.append(i)
-            elif game_config.config_item[i].tag == "H_Machine":
+            elif game_config.config_item[i].type == "H_Machine":
                 item_list_H_Machine.append(i)
-            elif game_config.config_item[i].tag == "SM":
+            elif game_config.config_item[i].type == "SM":
                 item_list_SM.append(i)
         item_list_all.append(item_list_Drug)
         item_list_all.append(item_list_Machine)
@@ -72,6 +76,14 @@ class HItemShopPanel:
         while 1:
             return_list = []
             title_draw.draw()
+
+            # 显示等级的提示信息
+            level_text = _("当前设施等级：{0}，提升设施等级可解锁更多道具").format(now_level)
+            level_draw = draw.NormalDraw()
+            level_draw.text = level_text
+            level_draw.width = self.width
+            level_draw.draw()
+            line_feed.draw()
 
             # 绘制粉色凭证
             money_text = _("当前持有粉色凭证：{0}").format(str(cache.rhodes_island.materials_resouce[4]))
@@ -146,7 +158,7 @@ class BuyItemByItemNameDraw:
         # print("debug self.text in self.character_data.item",self.text in self.character_data.item)
 
         # 判断是否是消耗品、是否已达99个堆叠上限，是否已拥有
-        flag_consumables = item_config.tag in ["Drug","H_Drug","Consumables"]
+        flag_consumables = item_config.type in ["Drug","H_Drug","Consumables"]
         flag_not_max = self.character_data.item[self.text] < 99
         flag_have = self.character_data.item[self.text] > 0
 
@@ -201,7 +213,7 @@ class BuyItemByItemNameDraw:
         while 1:
             return_list = []
             line_feed.draw()
-            if item_config.tag in ["Drug","H_Drug","Consumables"]:
+            if item_config.type in ["Drug","H_Drug","Consumables"]:
                 buy_one_draw = draw.CenterButton(_("[购买一个]"), _("[购买一个]"), window_width / 3, cmd_func=self.buy_item)
                 buy_one_draw.draw()
                 return_list.append(buy_one_draw.return_text)
