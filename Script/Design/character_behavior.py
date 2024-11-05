@@ -1105,18 +1105,25 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
     # 休息时回复体力、气力
     if now_character_data.state == constant.CharacterStatus.STATUS_REST:
+        final_adjust = 1
         # 休息室等级对回复效果的影响
         now_level = cache.rhodes_island.facility_level[31]
         facility_cid = game_config.config_facility_effect_data[_("休息室")][int(now_level)]
         facility_effect = game_config.config_facility_effect[facility_cid].effect
         facility_effect_adjust = 1 + facility_effect / 100
+        final_adjust *= facility_effect_adjust
+        # 素质对回复效果的影响
+        if now_character_data.talent[351]: # 回复慢
+            final_adjust *= 0.7
+        elif now_character_data.talent[352]: # 回复快
+            final_adjust *= 1.5
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.003 + 10
-        hit_point_add = int(hit_point_add_base * true_add_time * facility_effect_adjust)
+        hit_point_add = int(hit_point_add_base * true_add_time * final_adjust)
         now_character_data.hit_point += hit_point_add
         now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
         mana_point_add_base = now_character_data.mana_point_max * 0.006 + 20
-        mana_point_add = int(mana_point_add_base * true_add_time * facility_effect_adjust)
+        mana_point_add = int(mana_point_add_base * true_add_time * final_adjust)
         now_character_data.mana_point += mana_point_add
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 
@@ -1138,13 +1145,19 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 最高上限100
         now_character_data.sleep_point = min(now_character_data.sleep_point,100)
         # print(f"debug {now_character_data.name}疲劳值-{tired_change}={now_character_data.tired_point}，熟睡值+{add_sleep}={now_character_data.sleep_point}，当前时间={cache.game_time}")
+        final_adjust = 1
+        # 素质对回复效果的影响
+        if now_character_data.talent[351]: # 回复慢
+            final_adjust *= 0.7
+        elif now_character_data.talent[352]: # 回复快
+            final_adjust *= 1.5
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.0025 + 3
-        hit_point_add = int(hit_point_add_base * true_add_time)
+        hit_point_add = int(hit_point_add_base * true_add_time * final_adjust)
         now_character_data.hit_point += hit_point_add
         now_character_data.hit_point = min(now_character_data.hit_point, now_character_data.hit_point_max)
         mana_point_add_base = now_character_data.mana_point_max * 0.005 + 6
-        mana_point_add = int(mana_point_add_base * true_add_time)
+        mana_point_add = int(mana_point_add_base * true_add_time * final_adjust)
         now_character_data.mana_point += mana_point_add
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 

@@ -300,6 +300,50 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     else:
         feel_adjust = attr_calculation.get_ability_adjust(ability_level)
     final_adjust += feel_adjust
+    # 素质修正
+    if state_id in [9, 14]: # 习得、先导
+        # 勤劳
+        if character_data.talent[271] == 1:
+            final_adjust += 0.3
+        # 懒散
+        elif character_data.talent[272] == 1:
+            final_adjust -= 0.3
+        # 教官
+        if character_data.talent[358] == 1:
+            final_adjust += 0.5
+    if state_id in [10, 15]: # 恭顺、屈服
+        # 脆弱
+        if character_data.talent[273] == 1:
+            final_adjust += 0.3
+        # 坚强
+        elif character_data.talent[274] == 1:
+            final_adjust -= 0.3
+        # 献身
+        if character_data.talent[225] == 1:
+            final_adjust += 0.4
+    if state_id in [11, 13]: # 好意、快乐
+        # 热情
+        if character_data.talent[275] == 1:
+            final_adjust += 0.3
+        # 孤僻
+        elif character_data.talent[276] == 1:
+            final_adjust -= 0.3
+    if state_id in [12, 16]: # 欲情、羞耻
+        # 羞耻
+        if character_data.talent[277] == 1:
+            final_adjust += 0.3
+        # 开放
+        elif character_data.talent[278] == 1:
+            final_adjust -= 0.3
+    # 施虐狂
+    if character_data.talent[229] == 1 and state_id == 14:
+        final_adjust += 0.4
+    # 受虐狂
+    if character_data.talent[230] == 1 and state_id == 17:
+        final_adjust += 0.4
+    # 感情缺乏
+    if character_data.talent[223] == 1:
+        final_adjust -= 0.4
     # 信物修正
     now_token = pl_character_data.pl_collection.eqip_token[1]
     token_adjust = 0
@@ -316,6 +360,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
         final_adjust += character_fall_level * 0.05
         # 信物
         final_adjust += token_adjust
+    # 对负面状态的
     elif state_id in [17, 18, 19, 20]:
         # 攻略进度素质
         character_fall_level = attr_calculation.get_character_fall_level(character_id)
@@ -333,6 +378,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     # 催眠-敏感
     if character_data.hypnosis.increase_body_sensitivity and state_id == 12:
         final_adjust += 2
+    # 保证最终值不为负数
     final_adjust = max(0, final_adjust)
 
     return final_adjust

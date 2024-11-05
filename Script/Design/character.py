@@ -410,7 +410,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     if judge_hate:
         calculation_text += _("+讨厌男性(-") + str(judge_hate) + ")"
     # 难以越过的底线修正#
-    judge_hardlove = target_data.talent[224] * 30
+    judge_hardlove = target_data.talent[224] * 100
     judge -= judge_hardlove
     if judge_hardlove:
         calculation_text += _("+难以越过的底线(-") + str(judge_hardlove) + ")"
@@ -431,6 +431,18 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if target_data.talent[40]:
             judge += 50
             calculation_text += _("+淫乱(+50)")
+        # 性好奇
+        if target_data.talent[220]:
+            judge += 30
+            calculation_text += _("+性好奇(+30)")
+        # 性冷漠
+        if target_data.talent[221]:
+            judge -= 30
+            calculation_text += _("+性冷漠(-30)")
+        # 性无知
+        if target_data.talent[222]:
+            judge += 30
+            calculation_text += _("+性无知(+30)")
         # 爱情旅馆修正
         if target_data.h_state.h_in_love_hotel:
             if cache.rhodes_island.love_hotel_room_lv == 1:
