@@ -295,8 +295,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     # 系数加成
     final_adjust = 0
     # 能力修正
-    # TODO 改为正确的角色状态属性对应能力刻印关系
-    if state_id in [13,14,15,16,17,18,19]:
+    if state_id in [13, 15, 17, 18, 20]: # 与刻印相关的角色状态id
         feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
     else:
         feel_adjust = attr_calculation.get_ability_adjust(ability_level)
