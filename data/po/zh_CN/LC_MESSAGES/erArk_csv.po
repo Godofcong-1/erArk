@@ -321,7 +321,15 @@ msgid "是否使用自定义base url"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Setting.csv:15
-msgid "选是的话，会使用自定义的base url，使用时请确保自己知道"
+msgid "用于调整api请求目标的base url，默认为否"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:16
+msgid "是否使用自定义代理"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:16
+msgid "用于代理服务器的相关设置，默认为否"
 msgstr ""
 
 #: .\data\csv\Aromatherapy_Recipes.csv:6
@@ -12340,12 +12348,16 @@ msgstr ""
 msgid "性无知"
 msgstr ""
 
+#: .\data\csv\Talent.csv:145
+msgid "H指令加值，部分H指令不需判定直接通过"
+msgstr ""
+
 #: .\data\csv\Talent.csv:146
 msgid "感情缺乏"
 msgstr ""
 
 #: .\data\csv\Talent.csv:146
-msgid "全体状态上升难"
+msgid "包括正负面在内的全体状态上升难"
 msgstr ""
 
 #: .\data\csv\Talent.csv:147
@@ -12392,8 +12404,16 @@ msgstr ""
 msgid "施虐狂"
 msgstr ""
 
+#: .\data\csv\Talent.csv:152
+msgid "先导上升易，施虐效果上升"
+msgstr ""
+
 #: .\data\csv\Talent.csv:153
 msgid "受虐狂"
+msgstr ""
+
+#: .\data\csv\Talent.csv:153
+msgid "苦痛上升易，受虐效果上升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:155

@@ -1077,8 +1077,10 @@ class Ai_Setting:
         """ ai聊天api key """
         self.now_ai_chat_model: str = ""
         """ 当前使用的ai聊天模型 """
-        self.now_ai_chat_api_endpoint: str = ""
-        """ 当前使用的api端点 """
+        self.now_ai_chat_base_url: str = ""
+        """ 当前使用的自定义base url """
+        self.now_ai_chat_proxy: list = ["", ""]
+        """ 当前使用的代理，[0代理ip,1代理端口] """
 
 
 class Character:

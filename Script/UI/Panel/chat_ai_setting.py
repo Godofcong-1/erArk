@@ -9,6 +9,7 @@ import google.generativeai as genai
 import concurrent.futures
 import os
 import csv
+import httpx
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -39,6 +40,9 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
 
     # 判断在调用哪个api
     model = cache.ai_setting.ai_chat_setting[5]
+    # 如果没有输入模型名，则返回原文本
+    if not model:
+        return original_text
     if 'gpt' in model:
         now_key_type = 'OPENAI_API_KEY'
     elif 'gemini' in model:
@@ -272,6 +276,12 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     if now_key_type == "OPENAI_API_KEY":
         # 创建client
         client = openai.OpenAI(api_key=API_KEY)
+        # 自定义base_url
+        if cache.ai_setting.ai_chat_setting[10] == 1:
+            client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
+        # 自定义代理
+        if cache.ai_setting.ai_chat_setting[11] == 1:
+            client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         try:
             # 发送请求
             completion = client.chat.completions.create(
@@ -409,6 +419,10 @@ class Chat_Ai_Setting_Panel:
                 # 自定义模型的名字
                 if cid == 5:
                     button_text = f" [{cache.ai_setting.ai_chat_setting[cid]}] "
+                elif cid == 10 and cache.ai_setting.ai_chat_setting[cid] == 1:
+                    button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + cache.ai_setting.now_ai_chat_base_url
+                elif cid == 11 and cache.ai_setting.ai_chat_setting[cid] == 1:
+                    button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + "ip：" + cache.ai_setting.now_ai_chat_proxy[0] + " port：" + cache.ai_setting.now_ai_chat_proxy[1]
                 else:
                     button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] "
                 button_len = max(len(button_text) * 2, 20)
@@ -546,6 +560,39 @@ class Chat_Ai_Setting_Panel:
             elif new_num > 9:
                 new_num = 9
             cache.ai_setting.ai_chat_setting[cid] = new_num
+        # 调整api的base_url的选项单独处理
+        elif cid == 10:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            ask_text = _("请输入您要使用的api的base_url（不含引号、逗号或空格）：\n")
+            ask_text += _("  目前仅支持openAI\n")
+            ask_text += _("  示例：http://my.test.server.example.com:8083/v1\n")
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 99)
+            new_base_url = ask_panel.draw()
+            cache.ai_setting.now_ai_chat_base_url = new_base_url
+        # 调整api的代理的选项单独处理
+        elif cid == 11:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            ask_text = _("请输入您要使用的代理ip（不含引号、逗号或空格）：\n")
+            ask_text += _("  目前仅支持openAI\n")
+            ask_text += _("  示例：http://my.test.proxy.example.com\n")
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 99)
+            new_ip = ask_panel.draw()
+            cache.ai_setting.now_ai_chat_proxy[0] = new_ip
+            line_feed.draw()
+            ask_text = _("请输入您要使用的代理端口（不含引号、逗号或空格）：\n")
+            ask_text += _("  示例：0.0.0.0\n")
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 99)
+            new_port = ask_panel.draw()
+            cache.ai_setting.now_ai_chat_proxy[1] = new_port
         else:
             if cache.ai_setting.ai_chat_setting[cid] < option_len - 1:
                 cache.ai_setting.ai_chat_setting[cid] += 1
@@ -664,6 +711,12 @@ class Chat_Ai_Setting_Panel:
 
         if now_key_type == "OPENAI_API_KEY":
             client = openai.OpenAI(api_key=API_KEY)
+            # 自定义base_url
+            if cache.ai_setting.ai_chat_setting[10] == 1:
+                client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
+            # 自定义代理
+            if cache.ai_setting.ai_chat_setting[11] == 1:
+                client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         elif now_key_type == "GEMINI_API_KEY":
             genai.configure(api_key=API_KEY)
             client = genai.GenerativeModel(model)
