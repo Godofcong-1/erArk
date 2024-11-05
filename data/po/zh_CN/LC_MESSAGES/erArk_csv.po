@@ -316,6 +316,14 @@ msgstr ""
 msgid "1|2|3|4|5|6|7|8|9|10"
 msgstr ""
 
+#: .\data\csv\Ai_Chat_Setting.csv:15
+msgid "是否使用自定义base url"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:15
+msgid "选是的话，会使用自定义的base url，使用时请确保自己知道"
+msgstr ""
+
 #: .\data\csv\Aromatherapy_Recipes.csv:6
 msgid "无"
 msgstr ""
