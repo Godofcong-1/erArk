@@ -3,7 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,102,0,high_1,{Name}触发了聊天失败指令的地文
 
 1001,102,0,high_1,{Name}和{TargetName}尝试聊天，但是由于彼此不熟悉，气氛很尴尬。
 1002,102,0,high_1,{Name}和{TargetName}选的话题不太合适，导致两人聊得很尴尬。

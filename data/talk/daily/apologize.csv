@@ -3,6 +3,15 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,117,0,high_1,{Name}双手合十希望得到原谅
 1,117,0,sys_0,{Name}表达了对{TargetName}的歉意
 2,117,0,sys_0,{Name}向{TargetName}的道歉得到了原谅，不过下一次恐怕不会这么轻松了。
+3,117,0,sys_0,{Name}深深鞠躬，诚恳地向{TargetName}道歉，得到了对方的谅解。
+4,117,0,sys_0,{Name}真诚地向{TargetName}认错，并得到了对方的原谅。
+5,117,0,sys_0,{Name}低声道歉，{TargetName}终于原谅了他。
+6,117,0,sys_0,{Name}向{TargetName}解释了自己的过错，得到了谅解。
+7,117,0,sys_0,{Name}诚恳地请求{TargetName}的原谅，最终得到了宽恕。
+8,117,0,sys_0,{Name}表示悔意，{TargetName}接受了他的道歉。
+9,117,0,sys_0,{Name}向{TargetName}道歉，并承诺不会再犯，得到了原谅。
+10,117,0,sys_0,{Name}真心实意地向{TargetName}道歉，得到了对方的谅解。
+11,117,0,sys_0,{Name}表达了深深的歉意，{TargetName}原谅了他。
+12,117,0,sys_0,{Name}向{TargetName}承认了错误，并得到了对方的宽恕。

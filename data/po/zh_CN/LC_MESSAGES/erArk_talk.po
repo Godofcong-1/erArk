@@ -32653,15 +32653,51 @@ msgid "“話說博士...”\n\n尤里卡坐在椅子上，無聊的旋轉著\n\
 msgstr ""
 
 #: .\data\talk\daily\apologize.csv:6
-msgid "{Name}双手合十希望得到原谅"
-msgstr ""
-
-#: .\data\talk\daily\apologize.csv:7
 msgid "{Name}表达了对{TargetName}的歉意"
 msgstr ""
 
-#: .\data\talk\daily\apologize.csv:8
+#: .\data\talk\daily\apologize.csv:7
 msgid "{Name}向{TargetName}的道歉得到了原谅，不过下一次恐怕不会这么轻松了。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:8
+msgid "{Name}深深鞠躬，诚恳地向{TargetName}道歉，得到了对方的谅解。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:9
+msgid "{Name}真诚地向{TargetName}认错，并得到了对方的原谅。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:10
+msgid "{Name}低声道歉，{TargetName}终于原谅了他。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:11
+msgid "{Name}向{TargetName}解释了自己的过错，得到了谅解。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:12
+msgid "{Name}诚恳地请求{TargetName}的原谅，最终得到了宽恕。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:13
+msgid "{Name}表示悔意，{TargetName}接受了他的道歉。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:14
+msgid "{Name}向{TargetName}道歉，并承诺不会再犯，得到了原谅。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:15
+msgid "{Name}真心实意地向{TargetName}道歉，得到了对方的谅解。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:16
+msgid "{Name}表达了深深的歉意，{TargetName}原谅了他。"
+msgstr ""
+
+#: .\data\talk\daily\apologize.csv:17
+msgid "{Name}向{TargetName}承认了错误，并得到了对方的宽恕。"
 msgstr ""
 
 #: .\data\talk\daily\apologize_failed.csv:6
@@ -32674,6 +32710,46 @@ msgstr ""
 
 #: .\data\talk\daily\apologize_failed.csv:8
 msgid "{Name}向{TargetName}道歉了，但对方依旧很生气"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:9
+msgid "{Name}试图向{TargetName}道歉，但对方冷冷地拒绝了"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:10
+msgid "{Name}诚恳地道歉，但{TargetName}并不领情"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:11
+msgid "{Name}低声下气地道歉，但{TargetName}依旧不为所动"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:12
+msgid "{Name}向{TargetName}解释了自己的错误，但对方不愿原谅"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:13
+msgid "{Name}真诚地请求原谅，但{TargetName}依然心存芥蒂"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:14
+msgid "{Name}试图修复关系，但{TargetName}拒绝了他的道歉"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:15
+msgid "{Name}表达了深深的歉意，但{TargetName}没有回应"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:16
+msgid "{Name}道歉了很多次，但{TargetName}始终不肯原谅"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:17
+msgid "{Name}试图弥补过错，但{TargetName}依旧不接受他的道歉"
+msgstr ""
+
+#: .\data\talk\daily\apologize_failed.csv:18
+msgid "{Name}尽力解释自己的行为，但{TargetName}依然不肯原谅"
 msgstr ""
 
 #: .\data\talk\daily\ask_date.csv:6
@@ -33428,119 +33504,115 @@ msgstr ""
 msgid "{TargetName}向{Name}请教了一些关于摄影的问题，而{Name}则分享了自己的摄影经验和技巧。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:6
-msgid "{Name}触发了聊天失败指令的地文"
-msgstr ""
-
-#: .\data\talk\daily\chat_failed.csv:8
+#: .\data\talk\daily\chat_failed.csv:7
 msgid "{Name}和{TargetName}尝试聊天，但是由于彼此不熟悉，气氛很尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:9
+#: .\data\talk\daily\chat_failed.csv:8
 msgid "{Name}和{TargetName}选的话题不太合适，导致两人聊得很尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:10
+#: .\data\talk\daily\chat_failed.csv:9
 msgid "在两人聊天的过程中，{Name}和{TargetName}发现彼此之间没有共同语言，气氛有些尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:11
+#: .\data\talk\daily\chat_failed.csv:10
 msgid "聊天的过程中，{Name}和{TargetName}尝试着让气氛轻松一些，但却徒劳无功。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:12
+#: .\data\talk\daily\chat_failed.csv:11
 msgid "尽管{Name}和{TargetName}都努力地想找到共同点，但是聊天的气氛却一直不太理想。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:13
+#: .\data\talk\daily\chat_failed.csv:12
 msgid "{Name}和{TargetName}的聊天很尴尬，两人都不知道该如何结束这场失败的交流。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:14
+#: .\data\talk\daily\chat_failed.csv:13
 msgid "在尝试了几个话题之后，{Name}和{TargetName}发现彼此之间似乎没有什么可聊的了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:15
+#: .\data\talk\daily\chat_failed.csv:14
 msgid "聊天的过程中，{Name}和{TargetName}都试图改变气氛，但是结果并不如意。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:16
+#: .\data\talk\daily\chat_failed.csv:15
 msgid "聊天的过程中，{Name}和{TargetName}的话题不断地被彼此打断，导致两人的交流十分困难。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:17
+#: .\data\talk\daily\chat_failed.csv:16
 msgid "聊天的过程中，{Name}和{TargetName}尝试着找到话题，但却一直找不到适合的。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:18
+#: .\data\talk\daily\chat_failed.csv:17
 msgid "尽管{Name}和{TargetName}都很努力地聊天，但气氛还是很尴尬，很难沟通。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:19
+#: .\data\talk\daily\chat_failed.csv:18
 msgid "{Name}和{TargetName}的聊天有点不顺利，没能找到继续聊下去的话题。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:20
+#: .\data\talk\daily\chat_failed.csv:19
 msgid "在聊天的过程中，{Name}和{TargetName}总是产生一些尴尬的沉默，让气氛变得很尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:21
+#: .\data\talk\daily\chat_failed.csv:20
 msgid "聊天过程中，{Name}和{TargetName}的态度明显有些冷淡，让气氛非常尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:22
+#: .\data\talk\daily\chat_failed.csv:21
 msgid "尽管{Name}和{TargetName}都很想尝试让聊天变得有趣，但是结果很失败，让气氛变得更尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:23
+#: .\data\talk\daily\chat_failed.csv:22
 msgid "{Name}和{TargetName}的聊天没有进展，无法建立联系，气氛异常尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:24
+#: .\data\talk\daily\chat_failed.csv:23
 msgid "在聊天过程中，{Name}和{TargetName}总是把话题扯远，导致两人之间的交流变得有些尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:25
+#: .\data\talk\daily\chat_failed.csv:24
 msgid "聊天的过程中，{TargetName}显得有些心不在焉，让气氛更加尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:26
+#: .\data\talk\daily\chat_failed.csv:25
 msgid "{Name}和{TargetName}在聊天过程中产生了一些误解，导致彼此之间的交流变得非常尴尬。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:27
+#: .\data\talk\daily\chat_failed.csv:26
 msgid "聊天的过程中，{Name}和{TargetName}总是互相抢话，无法建立良好的沟通，气氛十分失败。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:28
+#: .\data\talk\daily\chat_failed.csv:27
 msgid "{Name}想要和{TargetName}一起聊天，但气氛有些尴尬，像是没什么话说了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:29
+#: .\data\talk\daily\chat_failed.csv:28
 msgid "聊天开始挺顺利，但不知道为什么，现在{Name}和{TargetName}的话题都有些避重就轻。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:30
+#: .\data\talk\daily\chat_failed.csv:29
 msgid "{Name}和{TargetName}有时候聊天没什么话题，就变得尴尬了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:31
+#: .\data\talk\daily\chat_failed.csv:30
 msgid "{Name}和{TargetName}曾经聊得很嗨，但现在似乎都不太想说话了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:32
+#: .\data\talk\daily\chat_failed.csv:31
 msgid "聊天一开始挺好，但现在{Name}和{TargetName}的话题似乎越来越凑不到一块去了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:33
+#: .\data\talk\daily\chat_failed.csv:32
 msgid "聊天本来很愉快，但后来似乎出了点差错，{Name}和{TargetName}的气氛变得有些尴尬了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:34
+#: .\data\talk\daily\chat_failed.csv:33
 msgid "{Name}和{TargetName}刚刚还一起笑得很开心，但现在却有些尴尬，好像没有什么好说的了。"
 msgstr ""
 
-#: .\data\talk\daily\chat_failed.csv:35
+#: .\data\talk\daily\chat_failed.csv:34
 msgid "聊天开始时{Name}和{TargetName}的话题还不错，但现在两人都陷入了沉默。"
 msgstr ""
 
@@ -33765,11 +33837,51 @@ msgid "{Name}触发了抱小孩指令的地文"
 msgstr ""
 
 #: .\data\talk\daily\listen_complaint.csv:6
-msgid "{Name}触发了听牢骚指令的地文"
+msgid "{TargetName}向{Name}倾诉了最近的烦心事"
 msgstr ""
 
 #: .\data\talk\daily\listen_complaint.csv:7
-msgid "{TargetName}向{Name}倾诉了最近的烦心事"
+msgid "{Name}听了{TargetName}的牢骚，给出了一些建议"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:8
+msgid "{Name}耐心地听取了{TargetName}的抱怨"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:9
+msgid "{TargetName}向{Name}倾诉了心中的不满"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:10
+msgid "{Name}认真地听了{TargetName}的牢骚"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:11
+msgid "{TargetName}向{Name}发泄了最近的烦恼"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:12
+msgid "{Name}听了{TargetName}的抱怨，表示理解"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:13
+msgid "{TargetName}向{Name}诉说了心中的苦闷"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:14
+msgid "{Name}耐心地听了{TargetName}的牢骚，并给出建议"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:15
+msgid "{TargetName}向{Name}倾诉了心中的烦恼"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:16
+msgid "{Name}听了{TargetName}的抱怨，表示同情"
+msgstr ""
+
+#: .\data\talk\daily\listen_complaint.csv:17
+msgid "{TargetName}向{Name}发泄了心中的不满"
 msgstr ""
 
 #: .\data\talk\daily\listen_inflation.csv:6
@@ -33945,19 +34057,19 @@ msgid "{Name}耐心地为{TargetName}泡好了咖啡，并一起送上饼干和�
 msgstr ""
 
 #: .\data\talk\daily\make_coffee_add.csv:6
-msgid "{Name}触发了泡咖啡（加料）指令的地文"
+msgid "{Name}泡了加料咖啡"
 msgstr ""
 
 #: .\data\talk\daily\make_coffee_add.csv:7
-msgid "{Name}为{TargetName}冲泡了不明来源的速溶咖啡"
+msgid "{Name}为{TargetName}泡了加料咖啡"
 msgstr ""
 
 #: .\data\talk\daily\make_coffee_add.csv:8
-msgid "{Name}为{TargetName}以及在场的干员冲泡了不明来源的速溶咖啡"
+msgid "{Name}为{TargetName}以及在场的干员冲泡了加料咖啡"
 msgstr ""
 
 #: .\data\talk\daily\make_coffee_add.csv:9
-msgid "{Name}对{TargetName}{PlayerNickName}触发了泡咖啡（加料）指令的地文"
+msgid "{Name}对{TargetName}{PlayerNickName}泡了加料咖啡"
 msgstr ""
 
 #: .\data\talk\daily\make_food.csv:6
@@ -33993,7 +34105,51 @@ msgid "{NickName}花了{MakeFoodTime}分钟制作了{FoodName}，并往里面加
 msgstr ""
 
 #: .\data\talk\daily\massage.csv:6
-msgid "{Name}触发了按摩指令的地文"
+msgid "{Name}对{TargetName}进行了按摩"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:7
+msgid "{Name}对{TargetName}的腿进行了按摩"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:8
+msgid "{Name}用温暖的双手轻柔地按摩了{TargetName}的肩膀"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:9
+msgid "{Name}用精油为{TargetName}进行了全身按摩"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:10
+msgid "{Name}用指尖轻轻按压{TargetName}的背部肌肉"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:11
+msgid "{Name}用专业手法为{TargetName}舒缓了腰部的疲劳"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:12
+msgid "{Name}用热石为{TargetName}进行了深层次的按摩"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:13
+msgid "{Name}用轻柔的手法按摩了{TargetName}的颈部"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:14
+msgid "{Name}用推拿的方式为{TargetName}放松了全身"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:15
+msgid "{Name}用指压法为{TargetName}缓解了肌肉的紧张"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:16
+msgid "{Name}用芳香疗法为{TargetName}进行了舒缓的按摩"
+msgstr ""
+
+#: .\data\talk\daily\massage.csv:17
+msgid "{Name}用温热的毛巾为{TargetName}进行了放松按摩"
 msgstr ""
 
 #: .\data\talk\daily\nuirse_child.csv:6
@@ -34001,7 +34157,51 @@ msgid "{Name}触发了喂奶指令的地文"
 msgstr ""
 
 #: .\data\talk\daily\pee.csv:6
-msgid "{Name}开始排泄了。"
+msgid "{Name}脱下了裤子，对准马桶，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:7
+msgid "{Name}蹲在马桶上，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:8
+msgid "{Name}轻轻地走进厕所，解开裤子，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:9
+msgid "{Name}在马桶上坐下，放松身体，小便流出"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:10
+msgid "{Name}坐在马桶上，微微弯腰，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:11
+msgid "{Name}蹲在马桶边，慢慢地开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:12
+msgid "{Name}在马桶上调整姿势，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:13
+msgid "{Name}走进厕所，迅速脱下裤子，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:14
+msgid "{Name}在马桶上坐定，深吸一口气，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:15
+msgid "{Name}站在马桶旁，轻轻地开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:16
+msgid "{Name}蹲在马桶上，闭上眼睛，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:17
+msgid "{Name}在马桶上坐下，放松心情，开始小便"
 msgstr ""
 
 #: .\data\talk\daily\play_instrument.csv:6
@@ -34013,7 +34213,7 @@ msgid "{Name}用入门级的水平演奏了简单的音乐。"
 msgstr ""
 
 #: .\data\talk\daily\play_instrument.csv:8
-msgid "{Name}专心致志地弹奏着乐曲、"
+msgid "{Name}专心致志地弹奏着乐曲"
 msgstr ""
 
 #: .\data\talk\daily\play_with_child.csv:6
@@ -39021,7 +39221,127 @@ msgid "{Name}触发了干员做饭的地文"
 msgstr ""
 
 #: .\data\talk\work\official_work.csv:6
-msgid "{Name}触发了处理公务指令的地文"
+msgid "{Name}翻开了工作日志，开始积压的工作"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:7
+msgid "{Name}把新干员的档案摊开在桌子上，开始了解新干员的情况"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:8
+msgid "{Name}在桌子上摆放了一些要处理文件，开始整理起来"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:9
+msgid "{Name}检查了最近的收支情况，开始整理账目"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:10
+msgid "{Name}召开了线上的部门会议，讨论了近期的工作安排"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:11
+msgid "{Name}审核了最新的项目提案，提出了修改意见"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:12
+msgid "{Name}与客户进行了电话会议，商讨合作细节"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:13
+msgid "{Name}检查了各个部门的报告，了解了员工的工作进展"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:14
+msgid "{Name}制定了新的工作计划，明确了未来的工作目标"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:15
+msgid "{Name}签署了几份重要合同，确保了项目的顺利进行"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:16
+msgid "{Name}检查了公司的财务报表，确保了账目的准确性"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:17
+msgid "{Name}整理了桌上的文件夹，准备开始一天的工作"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:18
+msgid "{Name}翻阅了最新的行业报告，分析了市场趋势"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:19
+msgid "{Name}预订了会议室，准备召开和客户的会议"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:20
+msgid "{Name}签署了几份重要的文件，确保了工作的顺利进行"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:21
+msgid "{Name}审核了部门提交的月度报告，提出了改进建议"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:22
+msgid "{Name}在办公室里整理了文件柜，归档了重要资料"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:23
+msgid "{Name}阅读了最新的政策文件，了解了行业动态"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:24
+msgid "{Name}在终端前编写了工作计划，安排了下周的任务"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:25
+msgid "{Name}检查了员工的工作日志，了解了他们的工作情况"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:26
+msgid "{Name}在办公室里召开了小组会议，讨论了项目细节"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:27
+msgid "{Name}在办公室里仔细阅读了合同条款，确保每个细节都没有问题"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:28
+msgid "{Name}在办公桌前整理了项目报告，准备向上级汇报工作进展"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:29
+msgid "{Name}在会议室里与团队成员讨论了文件中的关键问题，提出了解决方案"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:30
+msgid "{Name}在办公室里审阅了最新的政策文件，确保公司的合规性"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:31
+msgid "{Name}在办公桌前签署了几份重要的文件，确保项目的顺利推进"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:32
+msgid "{Name}在办公室里整理了客户的反馈意见，准备进行下一步的改进"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:33
+msgid "{Name}在办公桌前编写了详细的工作计划，安排了团队的任务"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:34
+msgid "{Name}在办公室里审核了部门提交的季度报告，提出了改进建议"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:35
+msgid "{Name}在办公桌前阅读了最新的行业报告，分析了市场趋势"
+msgstr ""
+
+#: .\data\talk\work\official_work.csv:36
+msgid "{Name}在办公室里整理了文件夹，确保所有资料都井井有条"
 msgstr ""
 
 #: .\data\talk\work\read_book.csv:6

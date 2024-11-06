@@ -3,4 +3,15 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,104,0,high_1,{Name}触发了按摩指令的地文
+0,104,0,high_1,{Name}对{TargetName}进行了按摩
+1,104,0,high_1,{Name}对{TargetName}的腿进行了按摩
+2,104,0,high_1,{Name}用温暖的双手轻柔地按摩了{TargetName}的肩膀
+3,104,0,high_1,{Name}用精油为{TargetName}进行了全身按摩
+4,104,0,high_1,{Name}用指尖轻轻按压{TargetName}的背部肌肉
+5,104,0,high_1,{Name}用专业手法为{TargetName}舒缓了腰部的疲劳
+6,104,0,high_1,{Name}用热石为{TargetName}进行了深层次的按摩
+7,104,0,high_1,{Name}用轻柔的手法按摩了{TargetName}的颈部
+8,104,0,high_1,{Name}用推拿的方式为{TargetName}放松了全身
+9,104,0,high_1,{Name}用指压法为{TargetName}缓解了肌肉的紧张
+10,104,0,high_1,{Name}用芳香疗法为{TargetName}进行了舒缓的按摩
+11,104,0,high_1,{Name}用温热的毛巾为{TargetName}进行了放松按摩
