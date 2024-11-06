@@ -189,7 +189,7 @@ class SeeFoodListByFoodNameDraw:
 
         # 根据食物商店id获取食物列表
         if now_restaurant_id is None:
-            now_food_list = [(self.cid, x) for x in cache.dining_hall_data[self.cid]]
+            now_food_list = [(self.cid, x) for x in cache.rhodes_island.dining_hall_data[self.cid]]
         elif now_restaurant_id == "Stall_Vendor":
             now_food_list = [(self.cid, x) for x in cache.rhodes_island.stall_vendor_data[0][self.cid]]
         else:
@@ -204,7 +204,7 @@ class SeeFoodListByFoodNameDraw:
             for now_cid, now_uid in now_food_list:
 
                 if now_restaurant_id is None:
-                    food_data: game_type.Food = cache.dining_hall_data[now_cid][now_uid]
+                    food_data: game_type.Food = cache.rhodes_island.dining_hall_data[now_cid][now_uid]
                 elif now_restaurant_id == "Stall_Vendor":
                     food_data: game_type.Food = cache.rhodes_island.stall_vendor_data[0][now_cid][now_uid]
                 else:
@@ -236,13 +236,13 @@ class SeeFoodListByFoodNameDraw:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 break
-            cache.dining_hall_data.setdefault(self.cid, {})
+            cache.rhodes_island.dining_hall_data.setdefault(self.cid, {})
 
     def buy_food(self, cid: str, uid: UUID, restaurant_id: int = None):
         """玩家购买食物"""
         if restaurant_id is None:
-            cache.character_data[0].food_bag[uid] = cache.dining_hall_data[cid][uid]
-            del cache.dining_hall_data[cid][uid]
+            cache.character_data[0].food_bag[uid] = cache.rhodes_island.dining_hall_data[cid][uid]
+            del cache.rhodes_island.dining_hall_data[cid][uid]
         elif restaurant_id == "Stall_Vendor":
             cache.character_data[0].food_bag[uid] = cache.rhodes_island.stall_vendor_data[0][cid][uid]
             del cache.rhodes_island.stall_vendor_data[0][cid][uid]

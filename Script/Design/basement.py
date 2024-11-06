@@ -132,9 +132,6 @@ def get_base_updata():
         # 初始化科研区设施数量上限
         elif facility_name == _("科研部"):
             cache.rhodes_island.research_zone_max = game_config.config_facility_effect[facility_cid].effect
-        # 初始化商店数量上限
-        elif facility_name == _("贸易区"):
-            cache.rhodes_island.shop_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化战斗时干员数量上限
         elif facility_name == _("指挥室"):
             cache.rhodes_island.soldier_max = game_config.config_facility_effect[facility_cid].effect

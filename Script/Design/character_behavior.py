@@ -94,8 +94,8 @@ def update_cafeteria():
     max_people = len(cache.npc_id_got)
     # food_judge = 1
     food_count = 0
-    for food_type in cache.dining_hall_data:
-        food_list: Dict[UUID, game_type.Food] = cache.dining_hall_data[food_type]
+    for food_type in cache.rhodes_island.dining_hall_data:
+        food_list: Dict[UUID, game_type.Food] = cache.rhodes_island.dining_hall_data[food_type]
         food_count += len(food_list)
     #     for food_id in food_list:
     #         food: game_type.Food = food_list[food_id]

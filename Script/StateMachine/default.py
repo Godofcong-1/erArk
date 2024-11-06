@@ -2135,11 +2135,11 @@ def character_buy_rand_food_at_foodshop(character_id: int):
     # 在食堂购买
     if character_data.action_info.eat_food_restaurant == -1:
         # 获取所有食物id
-        for food_id in cache.dining_hall_data:
-            if not len(cache.dining_hall_data[food_id]):
+        for food_id in cache.rhodes_island.dining_hall_data:
+            if not len(cache.rhodes_island.dining_hall_data[food_id]):
                 continue
-            for food_uid in cache.dining_hall_data[food_id]:
-                now_food: game_type.Food = cache.dining_hall_data[food_id][food_uid]
+            for food_uid in cache.rhodes_island.dining_hall_data[food_id]:
+                now_food: game_type.Food = cache.rhodes_island.dining_hall_data[food_id][food_uid]
                 # if now_food.eat:
                 new_food_list.append(food_id)
                 break
@@ -2149,13 +2149,13 @@ def character_buy_rand_food_at_foodshop(character_id: int):
             return
         # 随机选一个食物id
         now_food_id = random.choice(new_food_list)
-        now_food = cache.dining_hall_data[now_food_id][
-            random.choice(list(cache.dining_hall_data[now_food_id].keys()))
+        now_food = cache.rhodes_island.dining_hall_data[now_food_id][
+            random.choice(list(cache.rhodes_island.dining_hall_data[now_food_id].keys()))
         ]
         # 加入背包
         character_data.food_bag[now_food.uid] = now_food
         # 删除食堂中的食物
-        del cache.dining_hall_data[now_food_id][now_food.uid]
+        del cache.rhodes_island.dining_hall_data[now_food_id][now_food.uid]
     # 在指定餐厅购买
     else:
         restaurant_id = character_data.action_info.eat_food_restaurant

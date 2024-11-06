@@ -218,7 +218,7 @@ class SeeFoodListByFoodNameDraw:
         # print("debug self.cid :",self.text)
 
         # 转换为正确格式
-        now_food_list = [(self.cid, x) for x in cache.makefood_data[self.cid]]
+        now_food_list = [(self.cid, x) for x in cache.rhodes_island.makefood_data[self.cid]]
         # print("debug now_food_list = ",now_food_list)
         self.food_cid: str = now_food_list[0][0]
         """ 食物商店索引id """
@@ -263,19 +263,19 @@ class SeeFoodListByFoodNameDraw:
         """玩家制作食物"""
         character_data: game_type.Character = cache.character_data[0]
         # 赋予名字、作者和味道
-        cache.makefood_data[self.food_cid][self.food_uid].name = self.food_name
-        cache.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
-        cache.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
-        cache.makefood_data[self.food_cid][self.food_uid].quality = character_data.ability[43]
+        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].name = self.food_name
+        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
+        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
+        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].quality = character_data.ability[43]
         # 药物调味则扣除药物
         if self.special_seasoning > 100:
             character_data.item[self.special_seasoning] -= 1
         # 放到玩家背包里
-        character_data.food_bag[self.food_uid] = cache.makefood_data[self.food_cid][self.food_uid]
+        character_data.food_bag[self.food_uid] = cache.rhodes_island.makefood_data[self.food_cid][self.food_uid]
         # 精液调味则将精液量加到食物数据里
         if self.special_seasoning in {11,12} :
             semen_text, semen_count = ejaculation_panel.common_ejaculation()
-            cache.makefood_data[self.food_cid][self.food_uid].special_seasoning_amount = semen_count
+            cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].special_seasoning_amount = semen_count
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time

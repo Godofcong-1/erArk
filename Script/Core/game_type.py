@@ -867,6 +867,10 @@ class Rhodes_Island:
         """ 今日全部门总收入 """
         self.party_day_of_week: Dict[int, Tuple[int]] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
+        self.total_favorability_increased: int = 0
+        """ 每日总好感度提升 """
+        self.week_fall_chara_pink_certificate_add: int = 0
+        """ 本周陷落干员提供的粉红凭证总数 """
 
         # 控制中枢
         self.current_location: List[int] = []
@@ -888,11 +892,27 @@ class Rhodes_Island:
         self.maintenance_place: Dict[int, Tuple[str]] = {}
         """ 当前每个角色的待检修地点，角色id:地点 """
 
+        # 仓储区
+        self.warehouse_capacity: int = 0
+        """ 仓库容量 """
+        self.materials_resouce: Dict[int, Tuple[int]] = {}
+        """ 素材资源 """
+
         # 生活娱乐区
         self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """
         self.milk_in_fridge: Dict[int, Tuple[int]] = {}
         """ 冰箱里每个干员的当日母乳存量，干员id:母乳ml存量 """
+        self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
+        """
+        食堂内贩卖的食物数据
+        食物名字:食物唯一id:食物对象
+        """
+        self.makefood_data: Dict[str, Dict[UUID, Food]] = {}
+        """
+        做饭区的食物数据
+        食物名字:食物唯一id:食物对象
+        """
 
         # 医疗部
         self.patient_now: int = 0
@@ -909,6 +929,8 @@ class Rhodes_Island:
         """ 至今为止的治疗总收入 """
         self.urine_in_fridge: Dict[int, Tuple[int]] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
+        self.total_semen_count: int = 0
+        """ 每日总射精量 """
 
         # 文职区
         self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}
@@ -927,6 +949,7 @@ class Rhodes_Island:
         """ 当前图书馆中的读者数量 """
         self.recommend_book_type_set: Set = set()
         """ 推荐的阅读类别 """
+
         # 贸易区
         self.shop_open_list = []
         """ 商店开放列表 """
@@ -983,57 +1006,8 @@ class Rhodes_Island:
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
-        self.shop_max: int = 0
-        """ 商店数量上限 """
         self.soldier_max: int = 0
         """ 战斗时干员数量上限 """
-
-        self.money: int = 0
-        """ 龙门币数量 """
-        self.orundum: int = 0
-        """ 合成玉数量 """
-        self.Originite_Prime: int = 0
-        """ 至纯源石数量 """
-        self.pink_certificate: int = 0
-        """ 粉红凭证数量 """
-
-        self.total_favorability_increased: int = 0
-        """ 每日总好感度提升 """
-        self.week_fall_chara_pink_certificate_add: int = 0
-        """ 本周陷落干员提供的粉红凭证总数 """
-        self.total_semen_count: int = 0
-        """ 每日总射精量 """
-
-        self.warehouse_capacity: int = 0
-        """ 仓库容量 """
-        self.materials_resouce: Dict[int, Tuple[int]] = {}
-        """ 素材资源 """
-
-
-'''
-        self.daily_necessities : int = 0
-        """ 生活必需品数量 """
-        self.common_medicinal_materials : int = 0
-        """ 普通药材数量 """
-        self.special_medicinal_materials : int = 0
-        """ 矿石病药材数量 """
-        self.industrial_raw_materials : int = 0
-        """ 工业原材料数量 """
-        self.building_materials : int = 0
-        """ 碳素建材数量 """
-        self.machine_parts : int = 0
-        """ 机械零部件数量 """
-
-        self.analgesic : int = 0
-        """ 矿石病镇痛剂数量 """
-        self.inhibitor_S : int = 0
-        """ 感染抑制剂小样数量 """
-        self.inhibitor_M : int = 0
-        """ 感染抑制合剂数量 """
-        self.inhibitor_L : int = 0
-        """ 感染抑制剂浓缩液数量 """
-'''
-
 
 class Country:
     """大地图国家数据"""
@@ -1327,16 +1301,6 @@ class Cache:
         """ 玩家睡觉，要进行存档 """
         self.recipe_data: Dict[int, Recipes] = {}
         """ 菜谱数据 """
-        self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
-        """
-        食堂内贩卖的食物数据
-        食物名字:食物唯一id:食物对象
-        """
-        self.makefood_data: Dict[str, Dict[UUID, Food]] = {}
-        """
-        做饭区的食物数据
-        食物名字:食物唯一id:食物对象
-        """
         self.npc_name_data: Set = set()
         """ 已有的npc姓名集合 """
         self.is_collection: bool = 0

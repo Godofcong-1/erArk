@@ -219,7 +219,7 @@ def init_food_shop_data(update_restaurant_id: int = -2):
     Keyword arguments:\n
     update_restaurant_id -- 餐馆id，默认为-2，如果不是-2则仅刷新对应id的餐馆的食物\n
     """
-    cache.dining_hall_data = {}
+    cache.rhodes_island.dining_hall_data = {}
     max_people = len(cache.npc_id_got)
     # 初始化食堂内的食物
     if update_restaurant_id in [-1,-2]:
@@ -241,8 +241,8 @@ def init_food_shop_data(update_restaurant_id: int = -2):
             # 随机3~7的烹饪技能等级
             cook_level = random.randint(3, 7)
             new_food = cook(food_list, recipes_id, cook_level, "")
-            cache.dining_hall_data.setdefault(str(recipes_id), {})
-            cache.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
+            cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
+            cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
             cook_index += 1
             if cook_index >= max_people * 3:
                 break
@@ -296,12 +296,12 @@ def init_makefood_data():
     recipe_data = cache.recipe_data
     character_data = cache.character_data[0]
     food_list = {}
-    cache.makefood_data = {}
+    cache.rhodes_island.makefood_data = {}
     for recipes_id in recipe_data:
         if character_data.ability[43] >= recipe_data[recipes_id].difficulty:
             new_food = cook(food_list, recipes_id, character_data.ability[43], "")
-            cache.makefood_data.setdefault(str(recipes_id), {})
-            cache.makefood_data[str(recipes_id)][new_food.uid] = new_food
+            cache.rhodes_island.makefood_data.setdefault(str(recipes_id), {})
+            cache.rhodes_island.makefood_data[str(recipes_id)][new_food.uid] = new_food
 
 
 def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type: str) -> Dict[str, Set]:
@@ -384,11 +384,11 @@ def get_food_list_from_food_shop(food_type: str, restaurant_id:int = -1) -> Dict
     food_list = {}
     # 食堂内的食物
     if restaurant_id == -1:
-        for food_id in cache.dining_hall_data:
-            if not len(cache.dining_hall_data[food_id]):
+        for food_id in cache.rhodes_island.dining_hall_data:
+            if not len(cache.rhodes_island.dining_hall_data[food_id]):
                 continue
-            now_food_uid = list(cache.dining_hall_data[food_id].keys())[0]
-            now_food: game_type.Food = cache.dining_hall_data[food_id][now_food_uid]
+            now_food_uid = list(cache.rhodes_island.dining_hall_data[food_id].keys())[0]
+            now_food: game_type.Food = cache.rhodes_island.dining_hall_data[food_id][now_food_uid]
             if now_food.recipe != -1:
                 food_list[food_id] = cache.recipe_data[int(food_id)].name
     # 餐馆的食物
@@ -421,8 +421,8 @@ def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
     dict -- 食物列表 食物id:食物名字
     """
     food_list = {}
-    for food_id in cache.makefood_data:
-        if not len(cache.makefood_data[food_id]):
+    for food_id in cache.rhodes_island.makefood_data:
+        if not len(cache.rhodes_island.makefood_data[food_id]):
             continue
 
         # 选择对应食物种类
@@ -440,8 +440,8 @@ def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
             continue
 
         # 赋予食物其他属性
-        now_food_uid = list(cache.makefood_data[food_id].keys())[0]
-        now_food: game_type.Food = cache.makefood_data[food_id][now_food_uid]
+        now_food_uid = list(cache.rhodes_island.makefood_data[food_id].keys())[0]
+        now_food: game_type.Food = cache.rhodes_island.makefood_data[food_id][now_food_uid]
         if now_food.recipe != -1:
             food_list[food_id] = cache.recipe_data[int(food_id)].name
     return food_list
