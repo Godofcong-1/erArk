@@ -6584,6 +6584,26 @@ msgstr ""
 msgid "性爱"
 msgstr ""
 
+#: .\data\csv\Instruct_Sex_Type.csv:7
+msgid "侍奉"
+msgstr ""
+
+#: .\data\csv\Instruct_Sex_Type.csv:8
+msgid "药物"
+msgstr ""
+
+#: .\data\csv\Instruct_Sex_Type.csv:9
+msgid "道具"
+msgstr ""
+
+#: .\data\csv\Instruct_Sex_Type.csv:10
+msgid "插入"
+msgstr ""
+
+#: .\data\csv\Instruct_Sex_Type.csv:11
+msgid "SM"
+msgstr ""
+
 #: .\data\csv\Item.csv:6
 msgid "应急理智小样"
 msgstr ""

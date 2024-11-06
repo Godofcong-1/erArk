@@ -2041,6 +2041,25 @@ class InstructType:
     """ 性爱 """
 
 
+class SexInstructSubType:
+    """性爱指令子类型"""
+
+    BASE = 0
+    """ 基础 """
+    WAIT_UPON = 1
+    """ 侍奉 """
+    DRUG = 2
+    """ 药物 """
+    ITEM = 3
+    """ 道具 """
+    INSERT = 4
+    """ 插入 """
+    SM = 5
+    """ SM """
+    ARTS = 6
+    """ 技艺 """
+
+
 class Instruct:
     """指令id"""
 
@@ -2632,6 +2651,8 @@ handle_instruct_name_data: Dict[int, str] = {}
 """ 指令对应文本 """
 instruct_type_data: Dict[int, Set] = {}
 """ 指令类型拥有的指令集合 """
+instruct_sub_type_data: Dict[int, int] = {}
+""" 指令的子类型数据，指令id:子类id """
 instruct_premise_data: Dict[int, Set] = {}
 """ 指令显示的所需前提集合 """
 handle_state_machine_data: Dict[int, FunctionType] = {}

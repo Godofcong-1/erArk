@@ -2988,7 +2988,7 @@ def handle_open_instruct_filter_h(
         now_time: datetime.datetime,
 ):
     """
-    开启H面板过滤器
+    开启H面板过滤器（已弃用）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3006,7 +3006,7 @@ def handle_close_instruct_filter_h(
         now_time: datetime.datetime,
 ):
     """
-    关闭H面板过滤器
+    关闭H面板过滤器（已弃用）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

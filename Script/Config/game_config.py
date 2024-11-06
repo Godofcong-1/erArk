@@ -110,6 +110,8 @@ config_font_data: Dict[str, int] = {}
 """ 字体名字对应字体id """
 config_instruct_type: Dict[int, config_def.InstructType] = {}
 """ 指令类型配置 """
+config_instruct_sex_type: Dict[int, config_def.Instruct_Sex_Type] = {}
+""" 性爱指令类型配置 """
 config_item: Dict[int, config_def.Item] = {}
 """ 道具配置数据 """
 config_item_tag_data: Dict[str, Set] = {}
@@ -881,6 +883,16 @@ def load_instruct_type():
         config_instruct_type[now_tem.cid] = now_tem
 
 
+def load_instruct_sex_type():
+    """载入性爱指令类型配置数据"""
+    now_data = config_data["Instruct_Sex_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Instruct_Sex_Type()
+        now_tem.__dict__ = tem_data
+        config_instruct_sex_type[now_tem.cid] = now_tem
+
+
 def load_item():
     """载入道具配置数据"""
     now_data = config_data["Item"]
@@ -1518,6 +1530,7 @@ def init():
     load_experience()
     load_font_data()
     load_instruct_type()
+    load_instruct_sex_type()
     load_instruct_judge_data()
     load_item()
     load_juel()

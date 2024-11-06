@@ -3,8 +3,8 @@ cid,effect_name,effect_type,effect
 
 9999,NOTHING,系统量_基础,什么都没有的空结算
 10001,OPTION_FATER,系统量_基础,开启子选项面板
-10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器
-10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器
+10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器（已弃用）
+10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器（已弃用）
 10008,ADD_THIS_EVENT_TO_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入已触发记录
 10010,GROUP_SEX_MODE_ON,系统量_基础,开启多P模式
 10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭多P模式

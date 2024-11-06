@@ -557,6 +557,17 @@ class InstructType:
     """ 颜色 """
 
 
+class Instruct_Sex_Type:
+    """ 指令类型配置 """
+
+    cid: int
+    """ 指令类型id """
+    name: str
+    """ 名字 """
+    color: str
+    """ 颜色 """
+
+
 class Item:
     """ 道具配置数据 """
 

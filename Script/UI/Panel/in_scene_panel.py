@@ -108,7 +108,6 @@ class InScenePanel:
             meet_draw = draw.NormalDraw()
             meet_draw.text = _("当前位置的角色一览:    ")
             # meet_draw.width = self.width
-            see_instruct_panel = SeeInstructPanel(self.width)
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
             character_handle_panel.null_button_text = pl_character_data.target_character_id
 
@@ -314,6 +313,7 @@ class InScenePanel:
             mid_draw = time.time()
             logging.debug(f'————————')
             logging.debug(f'截止到指令面板绘制前总时间为{mid_draw - start_draw}')
+            see_instruct_panel = SeeInstructPanel(self.width)
             see_instruct_panel.draw()
             ask_list.extend(see_instruct_panel.return_list)
             logging.debug(f'————————')
@@ -369,14 +369,25 @@ class SeeInstructPanel:
         """ 最大绘制宽度 """
         self.return_list: List[str] = []
         """ 监听的按钮列表 """
+
+        # 初始化指令类型过滤
         if cache.instruct_type_filter == {}:
-            for instruct_type in game_config.config_instruct_type:
-                cache.instruct_type_filter[instruct_type] = 0
             cache.instruct_type_filter[0] = 1
             cache.instruct_type_filter[1] = 1
             cache.instruct_type_filter[2] = 1
             cache.instruct_type_filter[3] = 1
             cache.instruct_type_filter[4] = 1
+        for instruct_type in game_config.config_instruct_type:
+            if instruct_type not in cache.instruct_type_filter:
+                cache.instruct_type_filter[instruct_type] = 0
+
+        # 初始化性爱子类类型过滤
+        for instruct_type in game_config.config_instruct_sex_type:
+            if instruct_type not in cache.instruct_sex_type_filter:
+                if instruct_type == 0:
+                    cache.instruct_sex_type_filter[instruct_type] = 1
+                else:
+                    cache.instruct_sex_type_filter[instruct_type] = 0
 
         # 初始化命令过滤
         if cache.instruct_index_filter == {}:
@@ -392,24 +403,38 @@ class SeeInstructPanel:
         line = draw.LineDraw("-.-", self.width)
         line.draw()
         fix_draw = draw.NormalDraw()
+        # 根据是否是H模式，进行指令类型过滤相关变量的区分
+        if handle_premise.handle_is_h(0):
+            instruct_type_len = len(cache.instruct_sex_type_filter) + 1
+            now_instruct_type_list = cache.instruct_sex_type_filter
+            now_instruct_config = game_config.config_instruct_sex_type
+        else:
+            instruct_type_len = len(cache.instruct_type_filter) - 1
+            now_instruct_type_list = cache.instruct_type_filter
+            now_instruct_config = game_config.config_instruct_type
+        # 排版修正用的宽度
         fix_width = int(
-            (self.width - int(self.width / len(cache.instruct_type_filter)) * len(cache.instruct_type_filter)) / 2
+            (self.width - int(self.width / instruct_type_len) * instruct_type_len) / 2
         )
         fix_draw.width = fix_width
         fix_draw.text = " " * fix_width
         fix_draw.draw()
-        for now_type in cache.instruct_type_filter:
-            if now_type == constant.InstructType.SYSTEM:
-                continue
-            now_config = game_config.config_instruct_type[now_type]
+        for now_type in now_instruct_type_list:
+            # 正常模式下，跳过系统类和性爱类的大类选择按钮
+            if not handle_premise.handle_is_h(0):
+                if now_type == constant.InstructType.SYSTEM:
+                    continue
+                if now_type == constant.InstructType.SEX:
+                    continue
+            now_config = now_instruct_config[now_type]
             # 已选择的指令类型变成对应颜色
-            if cache.instruct_type_filter[now_type]:
+            if now_instruct_type_list[now_type]:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (len(cache.instruct_type_filter) - 1),
+                    self.width / (instruct_type_len - 1),
                     " ",
-                    game_config.config_instruct_type[now_type].color,
+                    now_instruct_config[now_type].color,
                     "standard",
                     cmd_func=self.change_filter,
                     args=(now_type,),
@@ -418,16 +443,16 @@ class SeeInstructPanel:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (len(cache.instruct_type_filter) - 1),
+                    self.width / (instruct_type_len - 1),
                     normal_style = "deep_gray",
                     cmd_func=self.change_filter,
                     args=(now_type,),
                 )
-            now_button.width = int(self.width / (len(cache.instruct_type_filter) - 1))
+            now_button.width = int(self.width / (instruct_type_len - 1))
             self.return_list.append(now_button.return_text)
             now_button.draw()
 
-        # 如果交互对象是临盆、产后或婴儿的话，不显示性骚扰和H类指令
+        # 如果交互对象是临盆、产后或婴儿的话，则在常规指令类里不显示性骚扰和H类指令
         if handle_premise.handle_t_parturient_1(0) or handle_premise.handle_t_postpartum_1(0) or handle_premise.handle_t_baby_1(0):
             cache.instruct_type_filter[5] = 0
             cache.instruct_type_filter[6] = 0
@@ -439,32 +464,16 @@ class SeeInstructPanel:
         now_premise_data = {}
         # 遍历指令过滤
         for now_type in cache.instruct_type_filter:
-            if cache.instruct_type_filter[now_type] and now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
+            # 当前类没有开启的指令则过滤
+            if not cache.instruct_type_filter[now_type]:
+                continue
+            # 需要是注册过的指令类型，或者是系统指令
+            if now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
-                    # 如果该指令不存在，则置为存在
-                    if instruct not in cache.instruct_index_filter:
-                        cache.instruct_index_filter[instruct] = 1
-                    # 如果在过滤列表里，则过滤
-                    if not cache.instruct_index_filter[instruct]:
-                        continue
-                    premise_judge = 0
-                    if instruct in constant.instruct_premise_data:
-                        for premise in constant.instruct_premise_data[instruct]:
-                            if premise in now_premise_data:
-                                if now_premise_data[premise]:
-                                    continue
-                                premise_judge = 1
-                                break
-                            else:
-                                now_premise_value = handle_premise.handle_premise(premise, 0)
-                                now_premise_data[premise] = now_premise_value
-                                if not now_premise_value:
-                                    premise_judge = 1
-                                    break
-                    # 如果是debug模式，则不满足也显示
-                    if premise_judge and not cache.debug_mode:
-                        continue
-                    now_instruct_list.append(instruct)
+                    # 检测指令是否通过过滤
+                    filter_judge, now_premise_data = self.judge_single_instruct_filter(instruct, now_premise_data, now_type)
+                    if filter_judge:
+                        now_instruct_list.append(instruct)
         now_instruct_list.sort()
         instruct_group = value_handle.list_of_groups(now_instruct_list, 5)
         now_draw_list = []
@@ -486,6 +495,11 @@ class SeeInstructPanel:
                 for instruct_type in constant.instruct_type_data:
                     if instruct_id in constant.instruct_type_data[instruct_type]:
                         now_draw.normal_style = game_config.config_instruct_type[instruct_type].color
+                        break
+                # 如果是H模式，则单独读取H子类的颜色
+                if handle_premise.handle_is_h(0):
+                    now_sub_type = constant.instruct_sub_type_data[instruct_id]
+                    now_draw.normal_style = game_config.config_instruct_sex_type[now_sub_type].color
                 # 系统指令单独加入系统指令列表
                 if instruct_id in constant.instruct_type_data[constant.InstructType.SYSTEM]:
                     system_draw_list.append(now_draw)
@@ -541,10 +555,16 @@ class SeeInstructPanel:
         Keyword arguments:
         now_type -- 指令类型
         """
-        if cache.instruct_type_filter[now_type]:
-            cache.instruct_type_filter[now_type] = 0
+        if handle_premise.handle_is_h(0):
+            if cache.instruct_sex_type_filter[now_type]:
+                cache.instruct_sex_type_filter[now_type] = 0
+            else:
+                cache.instruct_sex_type_filter[now_type] = 1
         else:
-            cache.instruct_type_filter[now_type] = 1
+            if cache.instruct_type_filter[now_type]:
+                cache.instruct_type_filter[now_type] = 0
+            else:
+                cache.instruct_type_filter[now_type] = 1
 
     def handle_instruct(self, instruct_id: int):
         """
@@ -596,6 +616,53 @@ class SeeInstructPanel:
         pl_character_data.event.chara_diy_event_flag = True
         handle_instruct.handle_instruct(constant.Instruct.CHARA_DIY_INSTRUCT)
 
+    def judge_single_instruct_filter(self, instruct_id: int, now_premise_data: dict, now_type: int):
+        """
+        判断单个指令是否通过过滤\n
+        Keyword arguments：\n
+        instruct_id -- 指令id\n
+        now_premise_data -- 当前记录的前提数据\n
+        now_type -- 当前指令类型\n
+        Returns：\n
+        bool -- 是否通过过滤\n
+        now_premise_data -- 当前记录的前提数据\n
+        """
+        filter_judge = True
+        # 如果该指令不存在，则置为存在
+        if instruct_id not in cache.instruct_index_filter:
+            cache.instruct_index_filter[instruct_id] = 1
+        # 如果在过滤列表里，则过滤
+        if not cache.instruct_index_filter[instruct_id]:
+            filter_judge = False
+        # H子类指令过滤
+        if handle_premise.handle_is_h(0) and now_type == constant.InstructType.SEX:
+            now_sub_type = constant.instruct_sub_type_data[instruct_id]
+            if cache.instruct_sex_type_filter[now_sub_type] == 0:
+                filter_judge = False
+        # 前提判断
+        if filter_judge:
+            premise_judge = True
+            if instruct_id in constant.instruct_premise_data:
+                for premise in constant.instruct_premise_data[instruct_id]:
+                    if premise in now_premise_data:
+                        if now_premise_data[premise]:
+                            continue
+                        premise_judge = False
+                        break
+                    else:
+                        now_premise_value = handle_premise.handle_premise(premise, 0)
+                        now_premise_data[premise] = now_premise_value
+                        if not now_premise_value:
+                            premise_judge = False
+                            break
+            # 如果前提不满足，则过滤
+            if not premise_judge:
+                filter_judge = False
+        # 如果是debug模式，则强制通过
+        if cache.debug_mode:
+            filter_judge = True
+
+        return filter_judge, now_premise_data
 
 class CharacterImageListDraw:
     """

@@ -1,0 +1,12 @@
+cid,name,color
+指令类型id,名字,颜色
+int,str,str
+0,1,0
+指令类型配置,,
+0,基础,light_pink
+1,侍奉,pastel_magenta
+2,药物,princess_perfume
+3,道具,rose_pink
+4,插入,deep_pink
+5,SM,crimson
+6,技艺,light_steel_blue

@@ -57,6 +57,14 @@ class NormalDraw:
             io_init.era_print(self.text, self.style)
 
 
+class FullDraw(NormalDraw):
+    """不截断地绘制全部文本"""
+
+    def draw(self):
+        """绘制文本"""
+        io_init.era_print(self.text, self.style)
+
+
 class WaitDraw(NormalDraw):
     """绘制并等待玩家鼠标左右键或输入回车"""
 

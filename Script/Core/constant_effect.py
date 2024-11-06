@@ -6,9 +6,9 @@ class BehaviorEffect:
     OPTION_FATER = 10001
     """ 系统量_基础 开启子选项面板 """
     OPEN_INSTRUCT_FILTER_H = 10003
-    """ 系统量_基础 开启H面板过滤器 """
+    """ 系统量_基础 开启H面板过滤器（已弃用） """
     CLOSE_INSTRUCT_FILTER_H = 10004
-    """ 系统量_基础 关闭H面板过滤器 """
+    """ 系统量_基础 关闭H面板过滤器（已弃用） """
     ADD_THIS_EVENT_TO_TRIGGERED_RECORD = 10008
     """ 系统量_基础 将玩家当前触发的事件加入已触发记录 """
     GROUP_SEX_MODE_ON = 10010

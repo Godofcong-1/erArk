@@ -1279,8 +1279,10 @@ class Cache:
         """ 回溯输入记录用定位 """
         self.instruct_type_filter: Dict[int, bool] = {}
         """ 玩家操作指令面板指令过滤状态数据 指令类型:是否展示"""
+        self.instruct_sex_type_filter: Dict[int, bool] = {}
+        """ 玩家操作指令面板中，H类的指令过滤状态数据 指令类型:是否展示"""
         self.instruct_type_filter_cache: Dict[int, bool] = {}
-        """ 玩家操作指令面板指令过滤状态数据_的缓存 指令类型:是否展示"""
+        """ （已弃用）玩家操作指令面板指令过滤状态数据_的缓存 指令类型:是否展示"""
         self.instruct_index_filter: Dict[int, bool] = {}
         """ 玩家各编号指令过滤状态数据 指令编号:是否展示"""
         self.output_text_style: str = ""
