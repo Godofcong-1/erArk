@@ -380,6 +380,7 @@ class SeeInstructPanel:
         for instruct_type in game_config.config_instruct_type:
             if instruct_type not in cache.instruct_type_filter:
                 cache.instruct_type_filter[instruct_type] = 0
+        cache.instruct_type_filter[6] = 1
 
         # 初始化性爱子类类型过滤
         for instruct_type in game_config.config_instruct_sex_type:
