@@ -47,6 +47,8 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
         now_key_type = 'OPENAI_API_KEY'
     elif 'gemini' in model:
         now_key_type = 'GEMINI_API_KEY'
+    else:
+        now_key_type = 'OPENAI_API_KEY'
     if now_key_type not in cache.ai_setting.ai_chat_api_key:
         return original_text
     # 判断是否设置了指令类型
@@ -138,6 +140,8 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
         now_key_type = 'OPENAI_API_KEY'
     elif 'gemini' in model:
         now_key_type = 'GEMINI_API_KEY'
+    else:
+        now_key_type = 'OPENAI_API_KEY'
     API_KEY = cache.ai_setting.ai_chat_api_key[now_key_type]
 
     # 系统提示词
@@ -700,11 +704,11 @@ class Chat_Ai_Setting_Panel:
         elif 'gemini' in model:
             now_key_type = 'GEMINI_API_KEY'
         else:
+            now_key_type = 'OPENAI_API_KEY'
             info_draw = draw.NormalDraw()
-            info_draw.text = _(" \n  未识别到正确模型，请确认模型名中是否包含gpt或gemini\n")
+            info_draw.text = _(" \n  未识别到gpt或gemini字符，将默认为openAI格式的模型\n")
             info_draw.width = self.width
             info_draw.draw()
-            return
 
         # 判断是否设置了api密钥
         if now_key_type not in cache.ai_setting.ai_chat_api_key:
