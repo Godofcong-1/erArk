@@ -130,6 +130,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     TargetNickName = target_character_data.name
     Location = attr_text.get_scene_path_text(character_data.position)
     talk_num = cache.ai_setting.ai_chat_setting[9] + 1
+    Behavior_Name = game_config.config_status[behavior_id].name
 
     # 模型与密钥
     model = cache.ai_setting.ai_chat_setting[5]
@@ -168,7 +169,6 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
         # 名字
         user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
         # 动作
-        Behavior_Name = game_config.config_status[behavior_id].name
         user_prompt += _("{0}正在对{1}进行的动作是{2}。").format(Name, TargetNickName, Behavior_Name)
         # 关系
         favorability = npc_character_data.favorability[0]
