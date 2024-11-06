@@ -562,37 +562,45 @@ class Chat_Ai_Setting_Panel:
             cache.ai_setting.ai_chat_setting[cid] = new_num
         # 调整api的base_url的选项单独处理
         elif cid == 10:
-            line_feed.draw()
-            line_draw = draw.LineDraw("-", self.width)
-            line_draw.draw()
-            line_feed.draw()
-            ask_text = _("请输入您要使用的api的base_url（不含引号、逗号或空格）：\n")
-            ask_text += _("  目前仅支持openAI\n")
-            ask_text += _("  示例：http://my.test.server.example.com:8083/v1\n")
-            ask_panel = panel.AskForOneMessage()
-            ask_panel.set(ask_text, 99)
-            new_base_url = ask_panel.draw()
-            cache.ai_setting.now_ai_chat_base_url = new_base_url
+            if cache.ai_setting.ai_chat_setting[cid] == 0:
+                line_feed.draw()
+                line_draw = draw.LineDraw("-", self.width)
+                line_draw.draw()
+                line_feed.draw()
+                ask_text = _("请输入您要使用的api的base_url（不含引号、逗号或空格）：\n")
+                ask_text += _("  目前仅支持openAI\n")
+                ask_text += _("  示例：http://my.test.server.example.com:8083/v1\n")
+                ask_panel = panel.AskForOneMessage()
+                ask_panel.set(ask_text, 999)
+                new_base_url = ask_panel.draw()
+                cache.ai_setting.now_ai_chat_base_url = new_base_url
+                cache.ai_setting.ai_chat_setting[cid] = 1
+            else:
+                cache.ai_setting.ai_chat_setting[cid] = 0
         # 调整api的代理的选项单独处理
         elif cid == 11:
-            line_feed.draw()
-            line_draw = draw.LineDraw("-", self.width)
-            line_draw.draw()
-            line_feed.draw()
-            ask_text = _("请输入您要使用的代理ip（不含引号、逗号或空格）：\n")
-            ask_text += _("  目前仅支持openAI\n")
-            ask_text += _("  示例：http://my.test.proxy.example.com\n")
-            ask_panel = panel.AskForOneMessage()
-            ask_panel.set(ask_text, 99)
-            new_ip = ask_panel.draw()
-            cache.ai_setting.now_ai_chat_proxy[0] = new_ip
-            line_feed.draw()
-            ask_text = _("请输入您要使用的代理端口（不含引号、逗号或空格）：\n")
-            ask_text += _("  示例：0.0.0.0\n")
-            ask_panel = panel.AskForOneMessage()
-            ask_panel.set(ask_text, 99)
-            new_port = ask_panel.draw()
-            cache.ai_setting.now_ai_chat_proxy[1] = new_port
+            if cache.ai_setting.ai_chat_setting[cid] == 0:
+                line_feed.draw()
+                line_draw = draw.LineDraw("-", self.width)
+                line_draw.draw()
+                line_feed.draw()
+                ask_text = _("请输入您要使用的代理ip（不含引号、逗号或空格）：\n")
+                ask_text += _("  目前仅支持openAI\n")
+                ask_text += _("  示例：http://my.test.proxy.example.com\n")
+                ask_panel = panel.AskForOneMessage()
+                ask_panel.set(ask_text, 999)
+                new_ip = ask_panel.draw()
+                cache.ai_setting.now_ai_chat_proxy[0] = new_ip
+                line_feed.draw()
+                ask_text = _("请输入您要使用的代理端口（不含引号、逗号或空格）：\n")
+                ask_text += _("  示例：0.0.0.0\n")
+                ask_panel = panel.AskForOneMessage()
+                ask_panel.set(ask_text, 999)
+                new_port = ask_panel.draw()
+                cache.ai_setting.now_ai_chat_proxy[1] = new_port
+                cache.ai_setting.ai_chat_setting[cid] = 1
+            else:
+                cache.ai_setting.ai_chat_setting[cid] = 0
         else:
             if cache.ai_setting.ai_chat_setting[cid] < option_len - 1:
                 cache.ai_setting.ai_chat_setting[cid] += 1
@@ -619,7 +627,7 @@ class Chat_Ai_Setting_Panel:
             elif key_type == "GEMINI_API_KEY":
                 ask_text = _("请输入您的Gemini API密钥，应当是一个长段字符串\n")
             ask_name_panel = panel.AskForOneMessage()
-            ask_name_panel.set(ask_text, 99)
+            ask_name_panel.set(ask_text, 999)
             API_KEY = ask_name_panel.draw()
             line_feed.draw()
             line_feed.draw()
