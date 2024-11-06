@@ -1323,6 +1323,8 @@ class Cache:
         # """ 可穿戴道具类型数据 """
         self.over_behavior_character: Set = set()
         """ 本次update中已结束结算的npc """
+        self.pl_sleep_save_flag: bool = False
+        """ 玩家睡觉，要进行存档 """
         self.recipe_data: Dict[int, Recipes] = {}
         """ 菜谱数据 """
         self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}

@@ -80,6 +80,10 @@ def init_character_behavior():
         if cache.game_time.day != cache.pre_game_time.day and new_day_flag:
             new_day_flag = False
             update_new_day()
+        # 玩家睡觉存档
+        if cache.pl_sleep_save_flag:
+            cache.pl_sleep_save_flag = False
+            update_save()
         # 结束循环
         if len(cache.over_behavior_character) >= len(id_list) + 1:
             break
@@ -990,7 +994,7 @@ def update_sleep():
 
 
     # 非角色部分
-    update_save()
+    cache.pl_sleep_save_flag = True
 
 
 def update_new_day():
@@ -1056,7 +1060,7 @@ def update_save():
     """
     from Script.Core import save_handle
 
-    now_draw = draw.NormalDraw()
+    now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.text = _("\n全部结算完毕，开始自动保存\n")
     # 播放一条提示信息
