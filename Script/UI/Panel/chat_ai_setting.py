@@ -282,10 +282,13 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
         client = openai.OpenAI(api_key=API_KEY)
         # 自定义base_url
         if cache.ai_setting.ai_chat_setting[10] == 1:
-            client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
+            client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
         # 自定义代理
         if cache.ai_setting.ai_chat_setting[11] == 1:
-            client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
+            if len(cache.ai_setting.now_ai_chat_proxy[1]) == 0:
+                client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0]))
+            else:
+                client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         try:
             # 发送请求
             completion = client.chat.completions.create(
@@ -426,7 +429,9 @@ class Chat_Ai_Setting_Panel:
                 elif cid == 10 and cache.ai_setting.ai_chat_setting[cid] == 1:
                     button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + cache.ai_setting.now_ai_chat_base_url
                 elif cid == 11 and cache.ai_setting.ai_chat_setting[cid] == 1:
-                    button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + "ip：" + cache.ai_setting.now_ai_chat_proxy[0] + " port：" + cache.ai_setting.now_ai_chat_proxy[1]
+                    button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + "ip：" + cache.ai_setting.now_ai_chat_proxy[0]
+                    if len(cache.ai_setting.now_ai_chat_proxy[1]) > 0:
+                        button_text += " port：" + cache.ai_setting.now_ai_chat_proxy[1]
                 else:
                     button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] "
                 button_len = max(len(button_text) * 2, 20)
@@ -596,12 +601,16 @@ class Chat_Ai_Setting_Panel:
                 new_ip = ask_panel.draw()
                 cache.ai_setting.now_ai_chat_proxy[0] = new_ip
                 line_feed.draw()
-                ask_text = _("请输入您要使用的代理端口（不含引号、逗号或空格）：\n")
+                ask_text = _("请输入您要使用的代理端口，不使用端口则随便输入数字后回车即可：\n")
                 ask_text += _("  示例：0.0.0.0\n")
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_port = ask_panel.draw()
-                cache.ai_setting.now_ai_chat_proxy[1] = new_port
+                # 检测输入的端口是否符合规范，需要有三个点
+                if new_port.count(".") == 3:
+                    cache.ai_setting.now_ai_chat_proxy[1] = new_port
+                else:
+                    cache.ai_setting.now_ai_chat_proxy[1] = ""
                 cache.ai_setting.ai_chat_setting[cid] = 1
             else:
                 cache.ai_setting.ai_chat_setting[cid] = 0
@@ -725,10 +734,13 @@ class Chat_Ai_Setting_Panel:
             client = openai.OpenAI(api_key=API_KEY)
             # 自定义base_url
             if cache.ai_setting.ai_chat_setting[10] == 1:
-                client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
+                client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
             # 自定义代理
             if cache.ai_setting.ai_chat_setting[11] == 1:
-                client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
+                if len(cache.ai_setting.now_ai_chat_proxy[1]) == 0:
+                    client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0]))
+                else:
+                    client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         elif now_key_type == "GEMINI_API_KEY":
             genai.configure(api_key=API_KEY)
             client = genai.GenerativeModel(model)
