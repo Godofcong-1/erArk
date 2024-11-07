@@ -3,4 +3,15 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,312,0,high_1,{Name}触发了拥抱指令的地文
+0,312,0,high_1,{Name}伸出双手，把{TargetName}抱在了怀里
+1,312,0,high_1,{Name}拉着{TargetName}的手，把{TargetName}拉到了怀里，轻轻抱住了她
+2,312,0,high_1,{Name}微笑着张开双臂，温柔地将{TargetName}拥入怀中，感受着她的温暖
+3,312,0,high_1,{Name}轻轻地拍了拍{TargetName}的背，然后紧紧地抱住了她，仿佛不愿松开
+4,312,0,high_1,{Name}紧紧地{TargetName}相拥，彼此的心跳在宁静中交织在一起
+5,312,0,high_1,{Name}轻轻地抚摸着{TargetName}的头发，然后将她紧紧地拥入怀中，感受着她的存在
+6,312,0,high_1,{Name}张开双臂，{TargetName}靠入{Name}的怀中，两人紧紧相拥，仿佛时间静止
+7,312,0,high_1,{Name}温柔地将{TargetName}拥入怀中，两人的心跳在这一刻变得如此清晰
+8,312,0,high_1,{Name}将{TargetName}拥入怀中，两人的心灵在这一刻变得如此贴近
+9,312,0,high_1,{Name}轻轻地将{TargetName}揽入怀中，感受着她的温度，仿佛整个世界都在这一刻安静下来
+10,312,0,high_1,{Name}深情地看着{TargetName}，然后将她紧紧地抱在怀里，感受着彼此的心跳和呼吸
+11,312,0,high_1,{Name}温柔地将{TargetName}拥入怀中，轻轻地在她耳边低语，仿佛在诉说着无尽的爱意

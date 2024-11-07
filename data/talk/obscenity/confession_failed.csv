@@ -3,4 +3,14 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,372,0,high_1,{Name}触发了告白失败指令的地文
+0,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}面无表情地拒绝了{Name}的告白
+1,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}摇摇头，表示自己不喜欢{Name}
+2,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}看着{Name}，然后摆了摆手，对{Name}没有那方面的感觉
+3,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}说自己对{Name}没有兴趣
+4,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}微笑着拒绝了{Name}，说两人不合适
+5,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}礼貌地表示自己对{Name}没有感觉
+6,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}轻轻摇头，表示自己不想谈恋爱
+7,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}叹了口气，表示自己只把{Name}当朋友
+8,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}说自己现在不想考虑感情问题
+9,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}表示自己对{Name}没有那种感觉
+10,372,0,high_1,{Name}对{TargetName}的告白失败了，{TargetName}表示两人性格不合适
