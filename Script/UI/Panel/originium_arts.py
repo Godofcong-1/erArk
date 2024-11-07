@@ -64,8 +64,8 @@ def evaluate_hypnosis_completion(character_id: int):
         return 1
     # 未完成催眠
     else:
-        now_draw = draw.WaitDraw()
-        draw_text = _("\n当前目标的催眠深度未达到{0}%，无法进入{1}催眠状态，需要使用基础手段来加深催眠程度\n").format(hypnosis_degree_need, game_config.config_hypnosis_type[now_hypnosis_type].name)
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n{0}的催眠深度未达到{1}%，无法进入{2}催眠状态，需要切换更低的催眠模式或加深催眠程度\n").format(character_data.name, hypnosis_degree_need, game_config.config_hypnosis_type[now_hypnosis_type].name)
         now_draw.text = draw_text
         now_draw.draw()
         return 0

@@ -87,7 +87,7 @@ def gain_ability(character_id: int):
             for need_type_id in jule_dict:
                 character_data.juel[need_type_id] -= jule_dict[need_type_id]
 
-            now_draw_succed = draw.WaitDraw()
+            now_draw_succed = draw.NormalDraw()
             now_draw_succed.text = _("{0}的{1}提升到{2}级\n").format(character_data.name, ability_name, str(ability_level+1))
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束")
