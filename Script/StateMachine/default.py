@@ -1976,6 +1976,11 @@ def character_get_chara_normal_cloth_and_day_equip(character_id: int):
     """
     clothing.get_npc_cloth(character_id)
     default.handle_adjust_body_manage_day_item(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_ARDER
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH)
