@@ -156,6 +156,7 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     year -- 增加的年数
     """
     new_date = get_sub_date(minute, hour, day, month, year)
+    tem_date = new_date
 
     # 切月时对全角色的行为开始时间进行重置
     if new_date.month != cache.game_time.month:
