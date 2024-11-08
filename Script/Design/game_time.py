@@ -158,12 +158,14 @@ def sub_time_now(minute=0, hour=0, day=0, month=0, year=0) -> datetime.datetime:
     new_date = get_sub_date(minute, hour, day, month, year)
 
     # 切月时对全角色的行为开始时间进行重置
-    if new_date.month > cache.game_time.month:
-        new_date = new_date.replace(day = 1)
-        for character_id in cache.npc_id_got:
-            character.init_character_behavior_start_time(character_id, new_date)
+    if new_date.month != cache.game_time.month:
+        tem_date = new_date.replace(day = 1)
+        new_date = new_date.replace(day = 1, hour = 0, minute = 0)
+        # 不再重置全角色的行为开始时间
+        # for character_id in cache.npc_id_got:
+        #     character.init_character_behavior_start_time(character_id, new_date)
 
-    cache.game_time = new_date
+    cache.game_time = tem_date
 
 
 def get_sub_date(
