@@ -515,14 +515,18 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     add_time = (end_time.timestamp() - start_time.timestamp()) / 60
     # if character_data.name == "阿米娅":
     #     print(f"debug {character_data.name}的time_judge = {time_judge}，add_time = {add_time}")
+    # 如果本次行动的持续时间为0
     if not add_time:
+        # 如果是H状态，则直接可以跳出
+        if handle_premise.handle_is_h(character_id):
+            return 1
+        # 等待状态下也进行跳出
+        if character_data.state == constant.CharacterStatus.STATUS_WAIT:
+            return 1
         character_data.behavior = game_type.Behavior()
         character_data.behavior.start_time = now_time
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
-        # 如果是H状态，则直接可以跳出
-        if handle_premise.handle_is_h(character_id):
-            return 1
         # print(f"debug {character_data.name}的add_time = 0，已重置为当前时间：start_time = {character_data.behavior.start_time}")
         return 0
     if end_now:
