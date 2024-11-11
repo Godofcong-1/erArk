@@ -520,6 +520,9 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior.start_time = now_time
         character_data.behavior.duration = 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
+        # 如果是H状态，则直接可以跳出
+        if handle_premise.handle_is_h(character_id):
+            return 1
         # print(f"debug {character_data.name}的add_time = 0，已重置为当前时间：start_time = {character_data.behavior.start_time}")
         return 0
     if end_now:
