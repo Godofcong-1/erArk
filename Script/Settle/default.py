@@ -11,7 +11,8 @@ from Script.Design import (
     handle_instruct,
     character_behavior,
     basement,
-    handle_premise
+    handle_premise,
+    handle_premise_place
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -8891,7 +8892,7 @@ def handle_sleep_add_adjust(
     from Script.Design import clothing
     if not add_time:
         return
-    if handle_premise.handle_in_dormitory(character_id):
+    if handle_premise_place.handle_in_dormitory(character_id):
         # 换睡衣
         clothing.get_sleep_cloth(character_id)
         # 关门

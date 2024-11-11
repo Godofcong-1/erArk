@@ -1,7 +1,7 @@
 import random
 from types import FunctionType
 from Script.Core import cache_control, game_type, value_handle, get_text, constant
-from Script.Design import map_handle, handle_premise
+from Script.Design import map_handle, handle_premise, handle_premise_place
 from Script.UI.Moudle import draw
 from Script.Config import normal_config, game_config
 
@@ -30,7 +30,7 @@ def handle_talk(character_id: int):
         character_id != 0 and
         character_data.sp_flag.is_follow == 1 and
         behavior_id == constant.Behavior.MOVE and
-        (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(character_id))
+        (handle_premise_place.handle_player_leave_scene(0) or handle_premise_place.handle_target_come_scene(character_id))
     ):
         # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
         return
@@ -39,7 +39,7 @@ def handle_talk(character_id: int):
         character_id == 0 and
         target_data.sp_flag.is_follow == 1 and
         behavior_id == constant.Behavior.MOVE and
-        (handle_premise.handle_player_leave_scene(0) or handle_premise.handle_target_come_scene(0))
+        (handle_premise_place.handle_player_leave_scene(0) or handle_premise_place.handle_target_come_scene(0))
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return

@@ -17,6 +17,7 @@ from Script.Design import (
     game_time,
     character,
     handle_premise,
+    handle_premise_place,
     event,
     talk,
     map_handle,
@@ -868,7 +869,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         character_data.target_character_id = character_id
 
     # 如果不在同一位置
-    if handle_premise.handle_not_in_player_scene(character_id):
+    if handle_premise_place.handle_not_in_player_scene(character_id):
 
         # 如果不在同一位置，则结束H状态和无意识状态
         if character_data.sp_flag.is_h:

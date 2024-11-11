@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise, character_behavior
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1981,7 +1981,7 @@ def handle_ask_group_sex():
     now_draw = draw.WaitDraw()
     now_draw.width = width
     # 场景内有太疲劳的角色
-    if handle_premise.handle_scene_someone_hp_1(0):
+    if handle_premise_place.handle_scene_someone_hp_1(0):
         now_draw.text = _("\n场景内有角色处于疲劳状态，无法进行多P\n")
         now_draw.draw()
         return
@@ -2112,7 +2112,7 @@ def handle_singing():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再唱歌
-    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
+    if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
         while 1:
             now_draw = draw.WaitDraw()
             now_draw.width = width
@@ -2148,7 +2148,7 @@ def handle_play_instrument():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再演奏
-    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
+    if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
         while 1:
             now_draw = draw.WaitDraw()
             now_draw.width = width

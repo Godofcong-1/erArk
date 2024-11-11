@@ -6,7 +6,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, attr_calculation, character_handle, game_time, character
+from Script.Design import handle_premise_place, attr_calculation, character_handle, game_time, character
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -352,7 +352,7 @@ def update_facility_people():
     cache.npc_id_got.discard(0)
     for id in cache.npc_id_got:
         # 图书馆读者统计
-        if handle_premise.handle_in_library(id):
+        if handle_premise_place.handle_in_library(id):
             cache.rhodes_island.reader_now += 1
 
 
