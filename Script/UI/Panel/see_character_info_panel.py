@@ -963,6 +963,9 @@ class CharacterabiText:
                 elif character_data.sex == 1:
                     if ability_id == 3:
                         continue
+                # 去掉时奸刻印
+                if ability_id == 16:
+                    continue
                 now_draw = draw.NormalDraw()
                 now_draw_value = draw.NormalDraw()
                 now_draw.text = game_config.config_ability[ability_id].name
