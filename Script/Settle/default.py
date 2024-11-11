@@ -7457,6 +7457,19 @@ def handle_eat_add_just(
     else:
         eat_food_chara_id_list.append(character_data.target_character_id)
 
+    # 根据食物品质获得调整系数
+    food_quality = character_data.behavior.food_quality
+    quality_adjust = (food_quality / 5) ** 2
+
+    # 检测是否是玩家制作的食物
+    food_maker = character_data.behavior.target_food.maker
+    pl_make_flag = False
+    if len(food_maker):
+        pl_character_name = cache.character_data[0].name
+        if food_maker == pl_character_name:
+            quality_adjust *= 2
+            pl_make_flag = True
+
     # 吃掉该食物
     handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
     # 对要吃食物的人进行结算
@@ -7467,12 +7480,17 @@ def handle_eat_add_just(
 
         # 加好感
         if chara_id:
-            base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, 0, change_data, chara_id)
+            now_add = int(add_time * quality_adjust)
+            base_chara_favorability_and_trust_common_settle(character_id, now_add, True, 0, 0, change_data, chara_id)
+            # 玩家做的饭的情况下，额外加信赖
+            if pl_make_flag:
+                base_chara_favorability_and_trust_common_settle(character_id, now_add, False, 0, 0, change_data, chara_id)
 
         # 加体力气力，清零饥饿值和进食状态
         # 为了增加更多的体力气力，将时间设为25
-        handle_add_small_hit_point(chara_id,add_time=25,change_data=target_change,now_time=now_time)
-        handle_add_small_mana_point(chara_id,add_time=25,change_data=target_change,now_time=now_time)
+        now_add = int(25 * quality_adjust)
+        handle_add_small_hit_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
+        handle_add_small_mana_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
