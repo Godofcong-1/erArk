@@ -36,11 +36,20 @@ def general_movement_module(character_id: int, target_scene: list):
                 else:
                     target_scene[i] = _(target_scene[i], revert_translation = True)
     tem_1, tem_2, move_path, move_time = character_move.character_move(character_id, target_scene)
-    character_data.behavior.move_final_target = target_scene
-    character_data.behavior.behavior_id = constant.Behavior.MOVE
-    character_data.behavior.move_target = move_path
-    character_data.behavior.duration = move_time
-    character_data.state = constant.CharacterStatus.STATUS_MOVE
+    # 寻路正常时
+    if move_time > 0:
+        character_data.behavior.move_final_target = target_scene
+        character_data.behavior.behavior_id = constant.Behavior.MOVE
+        character_data.behavior.move_target = move_path
+        character_data.behavior.duration = move_time
+        character_data.state = constant.CharacterStatus.STATUS_MOVE
+        return True
+    # 寻路失败时
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.behavior.duration = 1
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        return False
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_5_MIN)

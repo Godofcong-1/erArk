@@ -1450,6 +1450,13 @@ def get_chara_entertainment(character_id: int):
                     entertainment_data = game_config.config_entertainment[choice_entertainment_id]
                     # if choice_entertainment_id in {92, 151}:
                     #     print(f"debug {character_data.name}: {choice_entertainment_id}")
+                    # 首先检查娱乐地点的场所是否开放
+                    if entertainment_data.palce in game_config.config_facility_open_name_set:
+                        facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.palce]
+                        # 如果该娱乐活动的场所未开放，则去掉该id后重新随机
+                        if cache.rhodes_island.facility_open[facility_open_cid] == 0:
+                            entertainment_list.remove(choice_entertainment_id)
+                            continue
                     # 检查该娱乐活动是否需要特定的条件
                     if entertainment_data.need == "无":
                         break
@@ -1461,11 +1468,6 @@ def get_chara_entertainment(character_id: int):
                         else:
                             need_data_list = need_data_all.split('&')
                         judge, reason = attr_calculation.judge_require(need_data_list, character_id)
-                        # 需要娱乐地点的场所是开放的
-                        if entertainment_data.palce in game_config.config_facility_open_name_set:
-                            facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.palce]
-                            if cache.rhodes_island.facility_open[facility_open_cid] == 0:
-                                judge = False
                         # 如果满足条件则选择该娱乐活动，否则去掉该id后重新随机
                         if judge:
                             break

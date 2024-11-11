@@ -152,6 +152,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[014]:重置文职部的招募数据")
                 draw_text_list.append(f"[015]:交互对象全部位快感增加")
                 draw_text_list.append(f"[016]:招募指定adv_id的干员")
+                draw_text_list.append(f"[017]:重置全角色娱乐")
 
 
                 for i in range(len(draw_text_list)):
@@ -605,6 +606,12 @@ class Debug_Panel:
                         info_draw.text = _("\n已招募过\n")
                     info_draw.draw()
                     line_feed.draw()
+                # 重置全角色娱乐
+                elif key_index == 17:
+                    from Script.Design import character_behavior
+                    cache.npc_id_got.discard(0)
+                    for chara_id in cache.npc_id_got:
+                        character_behavior.get_chara_entertainment(chara_id)
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

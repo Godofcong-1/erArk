@@ -5113,7 +5113,7 @@ msgid "资源交易所"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:21
-msgid "游戏室"
+msgid "黄澄澄游戏室"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:22
@@ -5149,11 +5149,11 @@ msgid "秘密通道"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:31
-msgid "温泉"
+msgid "恒温热泵温泉"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:32
-msgid "桑拿房"
+msgid "蒸汽桑拿房"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:33
@@ -21060,16 +21060,8 @@ msgstr ""
 msgid "大浴场入口"
 msgstr ""
 
-#: /'data\map\大浴场\桑拿\Scene.json:2
-msgid "蒸汽桑拿房"
-msgstr ""
-
 #: /'data\map\大浴场\淋浴\Scene.json:2
 msgid "自动淋浴区"
-msgstr ""
-
-#: /'data\map\大浴场\温泉\Scene.json:2
-msgid "恒温热泵温泉"
 msgstr ""
 
 #: /'data\map\大浴场\足浴区\Scene.json:2
@@ -21306,10 +21298,6 @@ msgstr ""
 
 #: /'data\map\教\办公室\Scene.json:2
 msgid "教师办公室"
-msgstr ""
-
-#: /'data\map\教\游戏室\Scene.json:2
-msgid "黄澄澄游戏室"
 msgstr ""
 
 #: /'data\map\教\育儿\Scene.json:2
