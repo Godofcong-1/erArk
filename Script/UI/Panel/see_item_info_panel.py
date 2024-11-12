@@ -206,9 +206,18 @@ class ItemNameDraw:
         """使用消耗品"""
         from Script.Design import character
         pl_character_data = cache.character_data[0]
+        item_data = game_config.config_item[self.item_id]
+        item_tag = item_data.tag
 
         now_draw = draw.WaitDraw()
-        now_draw.text = _("\n{0}使用了{1}\n\n").format(pl_character_data.name, game_config.config_item[self.item_id].name)
+        now_draw.text = _("\n{0}使用了{1}\n\n").format(pl_character_data.name, item_data.name)
+
+        # 无法直接使用的道具
+        if item_tag == "SP_use":
+            now_draw.text = _("\n该道具无法直接使用\n\n")
+            now_draw.width = window_width
+            now_draw.draw()
+            return
 
         # 道具数量减少1
         pl_character_data.item[self.item_id] -= 1

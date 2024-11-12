@@ -633,19 +633,10 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
                 info_draw = draw.WaitDraw()
                 info_draw.width = width
                 info_draw.text = _("\n  ●目标移动房间——{0}，当前门是锁着的，需要钥匙或其他方法进入\n").format(now_scene_data.scene_name)
-                # 如果这是宿舍或客房，且玩家持有一次性钥匙则消耗钥匙并解锁
-                if ("Dormitory" in now_scene_data.scene_tag or "Guest_Room" in now_scene_data.scene_tag) and character_data.item[152] >= 1:
-                    info_draw.text += _("  ●你拿出了一次性万能钥匙，悄悄打开了门\n\n")
-                    character_data.item[152] -= 1
-                    now_scene_data.close_flag = 0
-                    if draw_flag:
-                        line.draw()
-                        info_draw.draw()
-                else:
-                    if draw_flag:
-                        line.draw()
-                        info_draw.draw()
-                    return "door_lock"
+                if draw_flag:
+                    line.draw()
+                    info_draw.draw()
+                return "door_lock"
             else:
                 return "door_lock"
 

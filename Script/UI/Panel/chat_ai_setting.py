@@ -307,6 +307,9 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
     elif now_key_type == "GEMINI_API_KEY":
         # 创建client
         genai.configure(api_key=API_KEY)
+        # gemini的传输协议改为rest
+        if cache.ai_setting.ai_chat_setting[12] == 1:
+            genai.configure(api_key=API_KEY, transport='rest')
         client = genai.GenerativeModel(model, system_instruction = system_promote)
         try:
             # 发送请求
@@ -743,6 +746,9 @@ class Chat_Ai_Setting_Panel:
                     client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         elif now_key_type == "GEMINI_API_KEY":
             genai.configure(api_key=API_KEY)
+            # gemini的传输协议改为rest
+            if cache.ai_setting.ai_chat_setting[12] == 1:
+                genai.configure(api_key=API_KEY, transport='rest')
             client = genai.GenerativeModel(model)
 
         # 测试AI，在30秒内如果没有返回结果，则认为测试不通过

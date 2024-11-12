@@ -91,6 +91,18 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     # 如果已经到门前了，则判断目标场景是否可进入，不可进入则输出原因
     if now_path_data[0] == target_scene:
         access_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
+        # 玩家移动，且目标地点锁门时
+        if character_id == 0 and access_type == "door_lock":
+            now_scene_data = cache.scene_data[target_scene_str]
+            # 如果这是宿舍或客房，且玩家持有一次性钥匙则消耗钥匙并解锁
+            if ("Dormitory" in now_scene_data.scene_tag or "Guest_Room" in now_scene_data.scene_tag) and character_data.item[152] >= 1:
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n  ●你拿出了一次性万能钥匙，悄悄打开了门\n\n")
+                info_draw.draw()
+                character_data.item[152] -= 1
+                now_scene_data.close_flag = 0
+                access_type = "open"
+        # 其他不可进入情况
         if access_type not in ["open","private"]:
             return access_type, [], [], 0
     return access_type, [], now_path_data[0], now_path_data[1]

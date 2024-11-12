@@ -195,7 +195,7 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
             dirty_data.body_semen[body_part][2] = 0
         else:
             now_list = [body_text,0,0,0]
-            dirty_data.body_semen.append(now_list)
+            dirty_data.body_semen[body_part] = now_list
 
     for clothing_type in game_config.config_clothing_type:
         cloth_text = game_config.config_clothing_type[clothing_type].name
@@ -205,7 +205,33 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
             dirty_data.cloth_semen[clothing_type][2] = 0
         else:
             now_list = [cloth_text,0,0,0]
-            dirty_data.cloth_semen.append(now_list)
+            dirty_data.cloth_semen[clothing_type] = now_list
+
+    dirty_data.a_clean = 0
+
+    # 清零阴茎污浊
+    for dirty_key in dirty_data.penis_dirty_dict:
+        dirty_data.penis_dirty_dict[dirty_key] = False
+
+    return dirty_data
+
+
+def get_zero_dirty() -> game_type.DIRTY:
+    """
+    重置污浊情况
+    """
+    dirty_data = game_type.DIRTY()
+
+    for body_part in game_config.config_body_part:
+        body_text = game_config.config_body_part[body_part].name
+        now_list = [body_text,0,0,0]
+        dirty_data.body_semen[body_part] = now_list
+
+    for clothing_type in game_config.config_clothing_type:
+        cloth_text = game_config.config_clothing_type[clothing_type].name
+        now_list = [cloth_text,0,0,0]
+        dirty_data.cloth_semen[clothing_type] = now_list
+        dirty_data.cloth_locker_semen[clothing_type] = now_list
 
     dirty_data.a_clean = 0
 
@@ -297,14 +323,15 @@ def get_action_info_state_zero() -> game_type.ACTION_INFO:
 
 def get_cloth_zero() -> game_type.CLOTH:
     """
-    遍历服装类型，将每个都设为空
+    遍历全服装类型，包括穿、脱、全衣柜，都设为空
     """
     coloth_data = game_type.CLOTH()
 
     for clothing_type in game_config.config_clothing_type:
         coloth_data.cloth_wear[clothing_type] = []
         coloth_data.cloth_off[clothing_type] = []
-        coloth_data.cloth_locker[clothing_type] = []
+        coloth_data.cloth_locker_in_shower[clothing_type] = []
+        coloth_data.cloth_locker_in_dormitory[clothing_type] = []
 
     coloth_data.cloth_see= {6:False,9:False}
 
@@ -323,11 +350,23 @@ def get_cloth_wear_zero() -> dict:
     return coloth_wear_data
 
 
-def get_cloth_locker_zero() -> dict:
+def get_shower_cloth_locker_zero() -> dict:
     """
-    将衣柜里的每个衣服类型都设为空
+    将大浴场衣柜里的每个衣服类型都设为空
     """
-    cloth_locker_data = game_type.CLOTH().cloth_locker
+    cloth_locker_data = game_type.CLOTH().cloth_locker_in_shower
+
+    for clothing_type in game_config.config_clothing_type:
+        cloth_locker_data[clothing_type] = []
+
+    return cloth_locker_data
+
+
+def get_cloth_locker_in_dormitory_zero() -> dict:
+    """
+    将宿舍衣柜里的每个衣服类型都设为空
+    """
+    cloth_locker_data = game_type.CLOTH().cloth_locker_in_dormitory
 
     for clothing_type in game_config.config_clothing_type:
         cloth_locker_data[clothing_type] = []

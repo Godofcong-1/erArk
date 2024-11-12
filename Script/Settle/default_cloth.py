@@ -481,15 +481,15 @@ def handle_get_swim_cloth(
     clothing.get_swim_cloth(character_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_CLOTH_RESET)
-def handle_locker_cloth_reset(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_CLOTH_IN_SHOWER_RESET)
+def handle_locker_cloth_in_shower_reset(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    衣柜里的衣服清零
+    大浴场衣柜里的衣服清零
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -499,20 +499,20 @@ def handle_locker_cloth_reset(
     if not add_time:
         return
     character_data = cache.character_data[character_id]
-    character_data.cloth.cloth_locker = attr_calculation.get_cloth_locker_zero()
+    character_data.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
     # print(f"debug {character_data.name} cloth_locker = {character_data.cloth.cloth_locker}")
-    character_data.dirty.cloth_locker_semen = []
+    clothing.clean_locker_semen(character_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_TO_LOCKER)
-def handle_wear_to_locker(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WEAR_TO_SHOWER_LOCKER)
+def handle_wear_to_shower_locker(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    身上首饰以外的衣服转移到柜子里
+    身上首饰以外的衣服转移到大浴场柜子里
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -535,19 +535,19 @@ def handle_wear_to_locker(
                 ):
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
-                    character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
-    character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
+                    character_data.cloth.cloth_locker_in_shower[clothing_type].append(cloth_id)
+    character_data.dirty.cloth_locker_semen, character_data.dirty.cloth_semen = character_data.dirty.cloth_semen, character_data.dirty.cloth_locker_semen
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_TO_WEAR)
-def handle_locker_to_wear(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_LOCKER_TO_WEAR)
+def handle_shower_locker_to_wear(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    衣柜里的衣服转移到身上
+    大浴场衣柜里的衣服转移到身上
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -562,35 +562,31 @@ def handle_locker_to_wear(
     # 遍历游戏配置中的所有服装类型
     for clothing_type in game_config.config_clothing_type:
         # 如果某个服装类型的衣柜不为空
-        if len(character_data.cloth.cloth_locker[clothing_type]):
+        if len(character_data.cloth.cloth_locker_in_shower[clothing_type]):
             # 复制该服装类型的衣柜列表
-            tem_list = character_data.cloth.cloth_locker[clothing_type].copy()
+            tem_list = character_data.cloth.cloth_locker_in_shower[clothing_type].copy()
             # 遍历该服装类型的衣柜列表
             for cloth_id in tem_list:
                 # 将服装添加到穿着列表中
                 character_data.cloth.cloth_wear[clothing_type].append(cloth_id)
                 # 将服装从衣柜列表中移除
-                character_data.cloth.cloth_locker[clothing_type].remove(cloth_id)
+                character_data.cloth.cloth_locker_in_shower[clothing_type].remove(cloth_id)
 
-    # 将衣服脏污设置为衣柜脏污中的内容
-    if len(character_data.dirty.cloth_locker_semen):
-        character_data.dirty.cloth_semen = character_data.dirty.cloth_locker_semen
-    else:
-        empty_dirty_data = attr_calculation.get_dirty_reset(character_data.dirty)
-        character_data.dirty.cloth_semen = empty_dirty_data.cloth_semen
+    # 将衣柜里的衣服精液转移到穿着的衣服上
+    clothing.locker_cloth_semen_to_wear_cloth_semen(character_id)
     # 穿特殊服装
     clothing.chara_special_wear_cloth(character_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FOOT_CLOTH_TO_LOCKER)
-def handle_foot_cloth_to_locker(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FOOT_CLOTH_TO_SHOWER_LOCKER)
+def handle_foot_cloth_to_shower_locker(
     character_id: int,
     add_time: int,
     change_data: game_type.CharacterStatusChange,
     now_time: datetime.datetime,
 ):
     """
-    袜子和鞋子转移到衣柜里
+    袜子和鞋子转移到大浴场衣柜里
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -613,8 +609,50 @@ def handle_foot_cloth_to_locker(
                 ):
                     # print(f"debug move_cloth_id = {cloth_id}")
                     character_data.cloth.cloth_wear[clothing_type].remove(cloth_id)
-                    character_data.cloth.cloth_locker[clothing_type].append(cloth_id)
-    character_data.dirty.cloth_locker_semen = character_data.dirty.cloth_semen
+                    character_data.cloth.cloth_locker_in_shower[clothing_type].append(cloth_id)
+        character_data.dirty.cloth_locker_semen[clothing_type] = character_data.dirty.cloth_semen[clothing_type]
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_LOCKER_TO_DORMITORY_LOCKER)
+def handle_shower_locker_to_dormitory_locker(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    大浴场衣柜里的衣服转移到宿舍衣柜
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 从缓存中获取角色数据
+    character_data = cache.character_data[character_id]
+
+    character_data.cloth.cloth_locker_in_dormitory = character_data.cloth.cloth_locker_in_shower.copy()
+    character_data.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAN_LOCKER_CLOTH_SEMEN)
+def handle_clean_locker_cloth_semen(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    清理衣柜里的衣服精液
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    clothing.clean_locker_semen(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UP_AND_BRA_TO_TEM)

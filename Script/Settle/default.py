@@ -6757,7 +6757,6 @@ def handle_salutation_3_add_adjust(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
     ejaculation_panel.ejaculation_flow(2, 0, character_id)
 
 

@@ -79,11 +79,13 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     Keyword arguments:
     character_id -- 角色id
     part_cid -- 部位cid
-    part_type -- 部位类型
+    part_type -- 部位类型，0为身体，1为穿着服装，2为浴场衣柜，3为宿舍衣柜
     semen_count -- 精液量
+    update_shoot_position_flag -- 是否更新射精部位
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # 判断部位类型，0为身体部位，1为服装部位
+
+    # 判断部位类型
     if part_type == 0:
         # 检查是否有该部位
         if part_cid == 12 and not character_data.talent[113]:
@@ -93,24 +95,38 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
         elif part_cid == 14 and not character_data.talent[111]:
             return
         # 更新身体部位被射精污浊数据
-        character_data.dirty.body_semen[part_cid][1] += semen_count
-        character_data.dirty.body_semen[part_cid][1] = max(character_data.dirty.body_semen[part_cid][1], 0)
-        if semen_count > 0:
-            character_data.dirty.body_semen[part_cid][3] += semen_count
-        character_data.dirty.body_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.body_semen[part_cid][1], part_cid, 0)
-        # 记录射精部位
-        if update_shoot_position_flag:
-            character_data.h_state.shoot_position_body = part_cid
+        now_semen_data = character_data.dirty.body_semen[part_cid]
     elif part_type == 1:
         # 检查该部位是否有服装
         if not len(character_data.cloth.cloth_wear[part_cid]):
             return
-        character_data.dirty.cloth_semen[part_cid][1] += semen_count
-        character_data.dirty.cloth_semen[part_cid][1] = max(character_data.dirty.cloth_semen[part_cid][1], 0)
-        if semen_count > 0:
-            character_data.dirty.cloth_semen[part_cid][3] += semen_count
-        character_data.dirty.cloth_semen[part_cid][2] = attr_calculation.get_semen_now_level(character_data.dirty.cloth_semen[part_cid][1], part_cid, 1)
-        if update_shoot_position_flag:
+        # 更新服装部位被射精污浊数据
+        now_semen_data = character_data.dirty.cloth_semen[part_cid]
+    elif part_type == 2:
+        # 检查该部位是否有服装
+        if not len(character_data.cloth.cloth_locker_in_shower[part_cid]):
+            return
+        now_semen_data = character_data.dirty.cloth_locker_semen[part_cid]
+    elif part_type == 3:
+        # 检查该部位是否有服装
+        if not len(character_data.cloth.cloth_locker_in_dormitory[part_cid]):
+            return
+        now_semen_data = character_data.dirty.cloth_locker_semen[part_cid]
+
+    # 进行统一结算
+    # 该部位增加当前精液量
+    now_semen_data[1] += semen_count
+    now_semen_data[1] = max(now_semen_data[1], 0)
+    # 该部位增加总精液量
+    if semen_count > 0:
+        now_semen_data[3] += semen_count
+    # 该部位更新精液等级
+    now_semen_data[2] = attr_calculation.get_semen_now_level(now_semen_data[1], part_cid, part_type)
+    # 记录射精部位
+    if update_shoot_position_flag:
+        if part_type == 0:
+            character_data.h_state.shoot_position_body = part_cid
+        else:
             character_data.h_state.shoot_position_cloth = part_cid
     # print(f"debug update_semen_dirty name = {character_data.name}, part_cid = {part_cid}, part_type = {part_type}, semen_count = {semen_count}")
 
@@ -121,7 +137,7 @@ def calculate_semen_flow(character_id: int, part_cid: int, part_type: int, semen
     Keyword arguments:
     character_id -- 角色id
     part_cid -- 部位cid
-    part_type -- 部位类型
+    part_type -- 部位类型，0为身体，1为穿着服装
     semen_count -- 精液量
     """
     if character_id != 0:
@@ -184,7 +200,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     射精流程的总函数
     Keyword arguments:
     part_cid -- 部位cid
-    part_type -- 部位类型
+    part_type -- 部位类型，0为身体，1为穿着服装，2为浴场衣柜，3为宿舍衣柜
     target_character_id -- 目标角色id
     """
     character_data: game_type.Character = cache.character_data[0]
@@ -204,7 +220,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
                 # 更新被射精污浊数据
                 update_semen_dirty(target_character_id, part_cid, part_type, semen_count)
                 # 计算精液流动
-                calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
+                if part_type in [0, 1]:
+                    calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
                 # 只有在交互对象正确的时候才会显示对方的名字和部位
                 if part_type == 0:
                     part_name = game_config.config_body_part[part_cid].name
@@ -212,7 +229,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
                     # 更新无意识妊娠flag
                     if part_cid in [6, 7] and target_data.sp_flag.unconscious_h == 0:
                         target_data.pregnancy.unconscious_fertilization = False
-                elif part_type == 1:
+                elif part_type in [1, 2, 3]:
                     cloth_text = game_config.config_clothing_type[part_cid].name
                     now_text = _("在{0}的{1}{2}").format(target_data.name, cloth_text, semen_text)
             # 否则只显示自己的名字
