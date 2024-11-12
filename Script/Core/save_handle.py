@@ -460,6 +460,14 @@ def update_chara_cloth(value, tem_character):
     # print(f"debug value.cid = {value.cid}")
     tem_character = tem_character
 
+    # 数据长度不一致时，重置服装数据
+    if len(value.cloth.cloth_wear) != len(game_config.config_clothing_type):
+        value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+    if len(value.cloth.cloth_locker_in_shower) != len(game_config.config_clothing_type):
+        value.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
+    if len(value.cloth.cloth_locker_in_shower) != len(game_config.config_clothing_type):
+        value.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+
     # 判断是否需要重置服装数据
     reset_cloth_flag = False
     if len(value.cloth.cloth_wear):
@@ -479,7 +487,6 @@ def update_chara_cloth(value, tem_character):
     # print(f"debug old value.cloth.cloth_wear = {value.cloth.cloth_wear}")
     if reset_cloth_flag:
         value.cloth = attr_calculation.get_cloth_zero()
-        value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
         for cloth_id in tem_character.Cloth:
             if cloth_id not in game_config.config_clothing_tem:
                 continue

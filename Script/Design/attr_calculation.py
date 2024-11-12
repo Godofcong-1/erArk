@@ -218,7 +218,7 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
 
 def get_zero_dirty() -> game_type.DIRTY:
     """
-    重置污浊情况
+    创建一个空污浊数据
     """
     dirty_data = game_type.DIRTY()
 
