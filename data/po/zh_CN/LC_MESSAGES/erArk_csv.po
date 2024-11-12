@@ -332,6 +332,14 @@ msgstr ""
 msgid "用于代理服务器的相关设置，默认为否"
 msgstr ""
 
+#: .\data\csv\Ai_Chat_Setting.csv:17
+msgid "将gemini的传输协议改为rest"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:17
+msgid "有些网路环境下不支持高于HTTP/1.1的协议，可切换为rest方式进行传输"
+msgstr ""
+
 #: .\data\csv\Aromatherapy_Recipes.csv:6
 msgid "无"
 msgstr ""
