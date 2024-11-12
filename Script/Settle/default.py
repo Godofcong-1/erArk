@@ -7463,13 +7463,14 @@ def handle_eat_add_just(
     quality_adjust = (food_quality / 5) ** 2
 
     # 检测是否是玩家制作的食物
-    food_maker = character_data.behavior.target_food.maker
     pl_make_flag = False
-    if len(food_maker):
-        pl_character_name = cache.character_data[0].name
-        if food_maker == pl_character_name:
-            quality_adjust *= 2
-            pl_make_flag = True
+    if character_data.behavior.target_food:
+        food_maker = character_data.behavior.target_food.maker
+        if len(food_maker):
+            pl_character_name = cache.character_data[0].name
+            if food_maker == pl_character_name:
+                quality_adjust *= 2
+                pl_make_flag = True
 
     # 吃掉该食物
     handle_delete_food(character_id,add_time=add_time,change_data=change_data,now_time=now_time)
