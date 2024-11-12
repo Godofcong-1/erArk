@@ -291,15 +291,15 @@ class DIRTY:
     def __init__(self):
         # 人类正常一次射精量在2～6ml
 
-        self.body_semen: list = []
+        self.body_semen: dict = {}
         """ 身体精液情况    
         同身体部位，编号int:[0部位名str,1当前精液量int,2当前精液等级int,3总精液量int]    
         """
-        self.cloth_semen: list = []
+        self.cloth_semen: dict = {}
         """ 服装精液情况    
         同衣服类型，编号int:[0部位名str,1当前精液量int,2当前精液等级int,3总精液量int]    
         """
-        self.cloth_locker_semen: list = []
+        self.cloth_locker_semen: dict = {}
         """ 衣柜里的服装精液情况    
         同衣服类型，编号int:[0部位名str,1当前精液量int,2当前精液等级int,3总精液量int]    
         """
@@ -396,8 +396,10 @@ class CLOTH:
         """ 角色穿着的服装 部位:衣服id"""
         self.cloth_off: Dict[int, List] = {}
         """ 角色脱下的服装 部位:衣服id"""
-        self.cloth_locker: Dict[int, List] = {}
-        """ 角色放在衣柜里的服装 部位:衣服id"""
+        self.cloth_locker_in_shower: Dict[int, List] = {}
+        """ 角色放在大浴场衣柜里的服装 部位:衣服id"""
+        self.cloth_locker_in_dormitory: Dict[int, List] = {}
+        """ 角色放在宿舍衣柜里的服装 部位:衣服id"""
         self.cloth_see: Dict[int, bool] = {}
         """ 角色穿着的服装能否被看见 部位:能否"""
 

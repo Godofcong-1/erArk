@@ -38,6 +38,28 @@ def get_npc_cloth(character_id: int):
         chara_special_wear_cloth(character_id)
 
 
+def get_cloth_from_dormitory_locker(character_id: int):
+    """
+    清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    Return arguments:\n
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
+        character_data.cloth.cloth_wear = character_data.cloth.cloth_locker_in_dormitory
+        character_data.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+
+    # 换内衣内裤
+    get_underwear(character_id)
+    # 将衣柜里的衣服精液转移到穿着的衣服上
+    locker_cloth_semen_to_wear_cloth_semen(character_id)
+    # 穿特殊服装
+    chara_special_wear_cloth(character_id)
+
+
 def get_random_underwear():
     """
     随机返回一件内衣和一件内裤
@@ -354,6 +376,39 @@ def get_cloth_wear_zero_except_need(character_id: int) -> dict:
     chara_special_wear_cloth(character_id)
     # print(f"debug 脱衣服后 = {character_data.cloth.cloth_wear}")
 
+
+def clean_locker_semen(character_id: int):
+    """
+    清理衣柜里的衣服精液
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    character_data = cache.character_data[character_id]
+    empty_dirty_data = attr_calculation.get_zero_dirty()
+    character_data.dirty.cloth_locker_semen = empty_dirty_data.cloth_locker_semen
+
+
+def locker_cloth_semen_to_wear_cloth_semen(character_id: int):
+    """
+    将衣柜里的衣服精液转移到穿着的衣服上
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    character_data = cache.character_data[character_id]
+    semen_flag = False
+    for clothing_type in game_config.config_clothing_type:
+        now_add = character_data.dirty.cloth_locker_semen[clothing_type][1]
+        if now_add > 0:
+            character_data.dirty.cloth_semen[clothing_type][1] += now_add
+            # 更新当前精液等级
+            character_data.dirty.cloth_semen[clothing_type][2] = attr_calculation.get_semen_now_level(character_data.dirty.cloth_semen[clothing_type][1], clothing_type, 1)
+            semen_flag = True
+    if semen_flag:
+        clean_locker_semen(character_id)
 
 
 '''

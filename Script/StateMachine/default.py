@@ -1983,7 +1983,7 @@ def character_get_chara_normal_cloth_and_day_equip(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    clothing.get_npc_cloth(character_id)
+    clothing.get_cloth_from_dormitory_locker(character_id)
     default.handle_adjust_body_manage_day_item(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id

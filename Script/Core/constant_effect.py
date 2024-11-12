@@ -692,18 +692,22 @@ class BehaviorEffect:
     """ 属性_服装 自己穿回H时脱掉的衣服 """
     SCENE_ALL_CHARACTERS_CLOTH_BACK = 636
     """ 属性_服装 场景内所有角色穿回H时脱掉的衣服 """
-    LOCKER_CLOTH_RESET = 641
-    """ 属性_服装 衣柜里的衣服清零 """
-    WEAR_TO_LOCKER = 642
-    """ 属性_服装 身上首饰以外的衣服转移到柜子里 """
-    LOCKER_TO_WEAR = 643
-    """ 属性_服装 衣柜里的衣服转移到身上 """
+    LOCKER_CLOTH_IN_SHOWER_RESET = 641
+    """ 属性_服装 大浴场衣柜里的衣服清零 """
+    WEAR_TO_SHOWER_LOCKER = 642
+    """ 属性_服装 身上首饰以外的衣服转移到大浴场柜子里 """
+    SHOWER_LOCKER_TO_WEAR = 643
+    """ 属性_服装 大浴场衣柜里的衣服转移到身上 """
     GET_SWIM_CLOTH = 644
     """ 属性_服装 清零其他衣服并换上泳衣 """
     WEAR_CLOTH_OFF_MOST = 645
     """ 属性_服装 脱掉大部分衣服（保留首饰等） """
-    FOOT_CLOTH_TO_LOCKER = 646
-    """ 属性_服装 袜子和鞋子转移到衣柜里 """
+    FOOT_CLOTH_TO_SHOWER_LOCKER = 646
+    """ 属性_服装 袜子和鞋子转移到大浴场衣柜里 """
+    SHOWER_LOCKER_TO_DORMITORY_LOCKER = 647
+    """ 属性_服装 大浴场衣柜里的衣服转移到宿舍衣柜 """
+    CLEAN_LOCKER_CLOTH_SEMEN = 648
+    """ 属性_服装 清理衣柜里的衣服精液 """
     UP_AND_BRA_TO_TEM = 651
     """ 属性_服装 自己的上衣和胸罩转移到临时脱下 """
     DOWN_AND_PAN_TO_TEM = 652
