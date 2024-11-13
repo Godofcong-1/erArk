@@ -55,9 +55,14 @@ class SeeMapPanel:
                 break
             if len(self.now_map) >= 2 and self.now_map[-1] == "0":
                 self.now_map.pop()
+            # 更新当前地图
+            character_data: game_type.Character = cache.character_data[0]
+            self.now_map = map_handle.get_map_for_path(character_data.position)
+            # 获取当前地图数据
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
             map_name = attr_text.get_map_path_text(self.now_map)
+            # 绘制标题
             title_draw = draw.TitleLineDraw(_("当前区块:") + _(map_name), self.width)
             title_draw.draw()
             # 绘制tips
@@ -79,7 +84,6 @@ class SeeMapPanel:
                 line_feed.draw()
                 line_feed.draw()
             now_draw_list: game_type.MapDraw = map_data.map_draw
-            character_data: game_type.Character = cache.character_data[0]
             character_scene_name = map_handle.get_map_scene_id_for_scene_path(
                 self.now_map, character_data.position
             )
@@ -142,9 +146,9 @@ class SeeMapPanel:
                         now_draw.draw()
                 line_feed.draw()
             path_edge = map_data.path_edge
-            scene_path = path_edge[character_scene_name].copy()
-            if character_scene_name in scene_path:
-                del scene_path[character_scene_name]
+            # scene_path = path_edge[character_scene_name].copy()
+            # if character_scene_name in scene_path:
+            #     del scene_path[character_scene_name]
 
             # 当前位置相邻地点
             # scene_path_list = list(scene_path.keys())
@@ -252,6 +256,7 @@ class SeeMapPanel:
         if character_data.position[-2] != scene_path[-2] and scene_path[-1] == "0":
             flag_map_open = True
         character_move.own_charcter_move(scene_path)
+        # 如果是从大地图移动到另一个区块，则不关闭地图面板
         if flag_map_open:
             cache.now_panel_id = constant.Panel.SEE_MAP
             self.down_map()
