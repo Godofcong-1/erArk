@@ -10,6 +10,7 @@ from Script.Core import (
     game_type,
 )
 from Script.Config import game_config
+from Script.Design import attr_calculation
 
 bar_list = set(game_config.config_bar_data.keys())
 chara_list = set(game_config.config_image_data.keys())
@@ -273,8 +274,12 @@ class InfoBarDraw:
         info_draw = NormalDraw()
         info_draw.width = int(now_max_width / 3)
         info_draw.text = f"{text}["
+        # 角色状态时则单独处理
         if self.chara_state:
-            info_draw.text = f"{text} "
+            status_text = text.split("lv")[0]
+            info_draw.text = status_text
+            lv_text = "lv" + text.split("lv")[1] + " "
+            status_draw = StatusLevelDraw(value=value, text=lv_text)
         value_draw = NormalDraw()
         value_draw.width = int(now_max_width / 3)
         value_draw.text = f"]({value}/{max_value})"
@@ -282,13 +287,19 @@ class InfoBarDraw:
             value_draw.text = f" {value}"
         self.bar_id = bar_id
         bar_draw = BarDraw()
-        bar_draw.width = now_max_width - len(info_draw) - len(value_draw)
+        if self.chara_state:
+            bar_draw.width = now_max_width - len(info_draw) - len(value_draw) - len(lv_text)
+        else:
+            bar_draw.width = now_max_width - len(info_draw) - len(value_draw)
         bar_draw.set(self.bar_id, max_value, value)
         fix_width = int((self.width - now_max_width) / 2)
         fix_draw = NormalDraw()
         fix_draw.text = " " * fix_width
         fix_draw.width = fix_width
-        self.draw_list = [fix_draw, info_draw, bar_draw, value_draw, fix_draw]
+        if self.chara_state:
+            self.draw_list = [fix_draw, info_draw, status_draw, bar_draw, value_draw, fix_draw]
+        else:
+            self.draw_list = [fix_draw, info_draw, bar_draw, value_draw, fix_draw]
 
     def draw(self):
         """绘制比例条"""
@@ -958,30 +969,53 @@ class ExpLevelDraw:
 
     def __init__(self, experience: int):
         """初始化绘制对象"""
-        grade = ""
-        if experience <= 0:
-            grade = "G"
-        elif experience == 1:
-            grade = "F"
-        elif experience == 2:
-            grade = "E"
-        elif experience == 3:
-            grade = "D"
-        elif experience == 4:
-            grade = "C"
-        elif experience == 5:
-            grade = "B"
-        elif experience == 6:
-            grade = "A"
-        elif experience == 7:
-            grade = "S"
-        elif experience >= 8:
-            grade = "EX"
+        grade = attr_calculation.judge_grade(experience)
         style = f"level{grade.lower()}"
         now_draw = NormalDraw()
         now_draw.width = len(grade)
         now_draw.style = style
         now_draw.text = grade
+        self.grade_draw = now_draw
+        """ 生成的等级绘制对象 """
+
+    def __len__(self) -> int:
+        """
+        获取等级文本长度
+        Return arguments:
+        int -- 等级文本长度
+        """
+        return len(self.grade_draw)
+
+    def draw(self):
+        """绘制文本"""
+        self.grade_draw.draw()
+
+
+class StatusLevelDraw:
+    """
+    将状态等级转换为对应评级文本
+    Keyword arguments:
+    value -- 状态值，非状态等级
+    text -- 要绘制的文本
+    """
+
+    def __init__(self, value: int, text: str = ""):
+        """初始化绘制对象"""
+
+        # 获取状态等级
+        status_level = attr_calculation.get_status_level(value)
+        if status_level <= 6:
+            grade = attr_calculation.judge_grade(status_level)
+        elif status_level <= 9:
+            grade = "S"
+        else:
+            grade = "EX"
+        # 进行文本绘制
+        style = f"level{grade.lower()}"
+        now_draw = NormalDraw()
+        now_draw.width = len(grade)
+        now_draw.style = style
+        now_draw.text = text
         self.grade_draw = now_draw
         """ 生成的等级绘制对象 """
 

@@ -342,11 +342,11 @@ class SeeCharacterStatusPanel:
                     status_level = attr_calculation.get_status_level(status_value)
                     # 计算当前等级的最大值
                     next_level_value = game_config.config_character_state_level[status_level].max_value
-                    # 绘制状态文本
-                    now_draw = draw.LeftDraw()
-                    now_draw.width = self.width / self.column / 2
                     now_text = f"{status_text}lv{status_level}"
-                    now_draw.text = now_text
+                    # 绘制状态文本，已废弃，改为在InfoBarDraw中绘制
+                    # now_draw = draw.LeftDraw()
+                    # now_draw.width = self.width / self.column / 2
+                    # now_draw.text = now_text
                     # self.draw_list.append(now_draw)
 
                     # 绘制状态条
