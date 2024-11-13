@@ -49,6 +49,11 @@ class Close_Door_Panel:
         """绘制对象"""
 
         character_data: game_type.Character = cache.character_data[0]
+        # 如果当前地点已询问过关门，则在移动前不询问第二次
+        if character_data.action_info.ask_close_door_flag:
+            return 1
+        else:
+            character_data.action_info.ask_close_door_flag = True
 
         title_text = _("关门")
 
@@ -575,8 +580,6 @@ class Fridge_Panel:
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
-        self.close_door_flag = True
-        """ 关门情况 """
 
     def draw(self):
         """绘制对象"""

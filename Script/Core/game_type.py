@@ -534,6 +534,8 @@ class ACTION_INFO:
         """ 要去吃饭的餐厅，见Restaurant.csv """
         self.ask_group_sex_refuse_chara_id_list = []
         """ 拒绝群P的角色id列表 """
+        self.ask_close_door_flag: bool = False
+        """ 询问当前地点是否关门的标记，true的话则已询问过，每次玩家移动时重置 """
 
 
 class AUTHOR_FLAG:

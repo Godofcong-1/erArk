@@ -45,6 +45,7 @@ def own_charcter_move(target_scene: list):
             character_data.behavior.duration = now_need_time
             character_data.behavior.start_time = cache.game_time
             character_data.state = constant.CharacterStatus.STATUS_MOVE
+            character_data.action_info.ask_close_door_flag = False
             # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)
         else:
