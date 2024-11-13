@@ -597,7 +597,7 @@ class ChangeWorkButtonList:
                     # 将work_text_before统一对齐为18个全角字符
                     work_text = f"{work_text_before.ljust(18,'　')}：{work_describe}"
                     # 正常工作直接显示
-                    if work_tag == 0:
+                    if work_tag in {0, 2}:
                         button_draw = draw.LeftButton(
                             work_text,
                             f"\n{work_cid}",
@@ -605,6 +605,9 @@ class ChangeWorkButtonList:
                             cmd_func=self.select_new_work,
                             args=work_cid
                         )
+                        # 特殊工作则高亮显示
+                        if work_tag == 2:
+                            button_draw.normal_style = "gold_enrod"
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                     # 特殊工作显示为灰色，无法选择

@@ -77,7 +77,7 @@ class Physical_Check_And_Manage_Panel:
             if handle_premise.handle_have_target(0) and len(self.done_check_status_id_set) > 0:
                 target_character_id = self.pl_character_data.target_character_id
                 target_character_data = cache.character_data[target_character_id]
-                button2_text = _("[002]对{0}进行身体管理(实装中)").format(target_character_data.name)
+                button2_text = _("[002]对{0}进行身体管理").format(target_character_data.name)
                 button2_draw = draw.LeftButton(
                     _(button2_text),
                     _("2"),
@@ -270,6 +270,9 @@ class Physical_Check_And_Manage_Panel:
 
                 # 判断是否满足要求
                 judge_result, require_text = self.judge_manage_requirement(manage_cid, target_character_id)
+                # 去掉开头的或
+                if require_text.startswith(" 或 "):
+                    require_text = require_text[3:]
 
                 # debug模式下直接通过
                 if cache.debug_mode:
@@ -292,7 +295,7 @@ class Physical_Check_And_Manage_Panel:
                     manage_draw.draw()
                     line_feed.draw()
                 else:
-                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name.ljust(20, '　')}（{require_text}）\n"
+                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name.ljust(20, '　')}（ {require_text} ）\n"
                     manage_draw = draw.NormalDraw()
                     manage_draw.text = manage_text
                     manage_draw.style = "deep_gray"
