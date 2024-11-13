@@ -3726,6 +3726,22 @@ def handle_eras_rub():
 
 
 @add_instruct(
+    constant.Instruct.HAT_JOB,
+    constant.InstructType.SEX,
+    _("帽子交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_HAT},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_eras_rub():
+    """处理帽子交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HAT_JOB)
+
+
+@add_instruct(
     constant.Instruct.NIPPLE_CLAMP_ON,
     constant.InstructType.SEX,
     _("戴上乳头夹"),

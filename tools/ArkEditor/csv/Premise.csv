@@ -1107,13 +1107,19 @@ entertainment_is_steam_sauna,ENTERTAINMENT_IS_STEAM_SAUNA,属性_娱乐,自己�
 entertainment_is_hydrotherapy_treatment,ENTERTAINMENT_IS_HYDROTHERAPY_TREATMENT,属性_娱乐,自己当前时段的娱乐为水疗护理
 entertainment_is_onsen_bath,ENTERTAINMENT_IS_ONSEN_BATH,属性_娱乐,自己当前时段的娱乐为泡温泉
 
+t_wear_hat,TARGET_WEAR_HAT,属性_服装,交互对象穿着帽子
 t_not_wear_hat,TARGET_NOT_WEAR_HAT,属性_服装,交互对象没有穿着帽子
+t_wear_glass,TARGET_WEAR_GLASS,属性_服装,交互对象戴着眼镜
 t_not_wear_glass,TARGET_NOT_WEAR_GLASS,属性_服装,交互对象没有戴着眼镜
+t_wear_in_ear,TARGET_WEAR_IN_EAR,属性_服装,交互对象戴着耳饰
 t_not_wear_in_ear,TARGET_NOT_WEAR_IN_EAR,属性_服装,交互对象没有戴耳饰
+t_wear_in_neck,TARGET_WEAR_IN_NECK,属性_服装,交互对象戴着脖饰
 t_not_wear_in_neck,TARGET_NOT_WEAR_IN_NECK,属性_服装,交互对象没有戴脖饰
+t_wear_in_mouse,TARGET_WEAR_IN_MOUSE,属性_服装,交互对象戴着口饰
 t_not_wear_in_mouse,TARGET_NOT_WEAR_IN_MOUSE,属性_服装,交互对象没有戴口饰
 wear_in_up,WEAR_IN_UP,属性_服装,穿着上衣
 not_wear_in_up,NOT_WEAR_IN_UP,属性_服装,没有穿着上衣
+t_wear_in_up,TARGET_WEAR_IN_UP,属性_服装,交互对象穿着上衣
 t_not_wear_in_up,TARGET_NOT_WEAR_IN_UP,属性_服装,交互对象没有穿着上衣
 wear_bra,WEAR_BRA,属性_服装,穿着胸衣
 not_wear_bra,NOT_WEAR_BRA,属性_服装,没有穿着胸衣
@@ -1121,6 +1127,7 @@ t_wear_bra,TARGET_WEAR_BRA,属性_服装,交互对象穿着胸衣
 t_not_wear_bra,TARGET_NOT_WEAR_BRA,属性_服装,交互对象没有穿着胸衣
 t_wear_gloves,TARGET_WEAR_GLOVES,属性_服装,交互对象戴着手套
 t_not_wear_gloves,TARGET_NOT_WEAR_GLOVES,属性_服装,交互对象没有戴着手套
+t_wear_in_down,TARGET_WEAR_IN_DOWN,属性_服装,交互对象穿着下衣
 t_not_wear_in_down,TARGET_NOT_WEAR_IN_DOWN,属性_服装,交互对象没有穿着下衣
 wear_skirt,WEAR_SKIRT,属性_服装,穿着裙子
 t_wear_skirt,TARGET_WEAR_SKIRT,属性_服装,交互对象穿着裙子
@@ -1129,10 +1136,12 @@ wear_pan,WEAR_PAN,属性_服装,穿着内裤
 t_wear_pan,TARGET_WEAR_PAN,属性_服装,交互对象穿着内裤
 t_not_wear_pan,TARGET_NOT_WEAR_PAN,属性_服装,交互对象没有穿着内裤
 wear_socks,WEAR_SOCKS,属性_服装,穿着袜子
-not_wear_shoes,NOT_WEAR_SHOES,属性_服装,没有穿着鞋子
 t_wear_socks,TARGET_WEAR_SOCKS,属性_服装,交互对象穿着袜子
 t_not_wear_socks,TARGET_NOT_WEAR_SOCKS,属性_服装,交互对象没有穿着袜子
+not_wear_shoes,NOT_WEAR_SHOES,属性_服装,没有穿着鞋子
+t_wear_shoes,TARGET_WEAR_SHOES,属性_服装,交互对象穿着鞋子
 t_not_wear_shoes,TARGET_NOT_WEAR_SHOES,属性_服装,交互对象没有穿着鞋子
+t_take_weapon,TARGET_TAKE_WEAPON,属性_服装,交互对象拿着武器
 t_not_take_weapon,TARGET_NOT_TAKE_WEAPON,属性_服装,交互对象没有拿着武器
 t_not_take_extras,TARGET_NOT_TAKE_EXTRAS,属性_服装,交互对象没有拿着附属物
 cloth_off,CLOTH_OFF,属性_服装,当前全裸

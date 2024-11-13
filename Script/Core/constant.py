@@ -502,6 +502,32 @@ class CharacterStatus:
     """ 练习触手灵活度 """
     STATUS_UNDRESS = 701
     """ 脱衣服 """
+    STATUS_HAT_JOB = 710
+    """ 帽子交 """
+    STATUS_GLASSES_JOB = 711
+    """ 眼镜交 """
+    STATUS_EAR_ORNAMENT_JOB = 712
+    """ 耳饰交 """
+    STATUS_NECK_ORNAMENT_JOB = 713
+    """ 脖饰交 """
+    STATUS_MOUTH_ORNAMENT_JOB = 714
+    """ 口饰交 """
+    STATUS_TOP_JOB = 715
+    """ 上衣交 """
+    STATUS_CORSET_JOB = 716
+    """ 胸衣交 """
+    STATUS_GLOVES_JOB = 717
+    """ 手套交 """
+    STATUS_BOTTOM_JOB = 718
+    """ 下衣交 """
+    STATUS_UNDERWEAR_JOB = 719
+    """ 内裤交 """
+    STATUS_SOCKS_JOB = 720
+    """ 袜子交 """
+    STATUS_SHOES_JOB = 721
+    """ 鞋子交 """
+    STATUS_WEAPONS_JOB = 722
+    """ 武器交 """
     STATUS_ORGASM_EDGE_ON = 751
     """ 绝顶寸止 """
     STATUS_ORGASM_EDGE_OFF = 752
@@ -1079,6 +1105,10 @@ class Behavior:
     """ 尿道指姦 """
     URETHRAL_SEX = 542
     """ 尿道姦 """
+    # FACE_LAY_SEX = 551
+    # """ 对面卧位 """
+    # BACK_LAY_SEX = 552
+    # """ 背面卧位 """
 
     MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """
@@ -1119,6 +1149,32 @@ class Behavior:
 
     UNDRESS = 701
     """ 脱衣服 """
+    HAT_JOB = 710
+    """ 帽子交 """
+    GLASSES_JOB = 711
+    """ 眼镜交 """
+    EAR_ORNAMENT_JOB = 712
+    """ 耳饰交 """
+    NECK_ORNAMENT_JOB = 713
+    """ 脖饰交 """
+    MOUTH_ORNAMENT_JOB = 714
+    """ 口饰交 """
+    TOP_JOB = 715
+    """ 上衣交 """
+    CORSET_JOB = 716
+    """ 胸衣交 """
+    GLOVES_JOB = 717
+    """ 手套交 """
+    BOTTOM_JOB = 718
+    """ 下衣交 """
+    UNDERWEAR_JOB = 719
+    """ 内裤交 """
+    SOCKS_JOB = 720
+    """ 袜子交 """
+    SHOES_JOB = 721
+    """ 鞋子交 """
+    WEAPONS_JOB = 722
+    """ 武器交 """
     ORGASM_EDGE_ON = 751
     """ 绝顶寸止 """
     ORGASM_EDGE_OFF = 752
@@ -2484,6 +2540,32 @@ class Instruct:
     """ 阴茎蹭角 """
     EARS_RUB = 0
     """ 阴茎蹭耳朵 """
+    HAT_JOB = 0
+    """ 帽子交 """
+    GLASSES_JOB = 0
+    """ 眼镜交 """
+    EAR_ORNAMENT_JOB = 0
+    """ 耳饰交 """
+    NECK_ORNAMENT_JOB = 0
+    """ 脖饰交 """
+    MOUTH_ORNAMENT_JOB = 0
+    """ 口饰交 """
+    TOP_JOB = 0
+    """ 上衣交 """
+    CORSET_JOB = 0
+    """ 胸衣交 """
+    GLOVES_JOB = 0
+    """ 手套交 """
+    BOTTOM_JOB = 0
+    """ 下衣交 """
+    UNDERWEAR_JOB = 0
+    """ 内裤交 """
+    SOCKS_JOB = 0
+    """ 袜子交 """
+    SHOES_JOB = 0
+    """ 鞋子交 """
+    WEAPONS_JOB = 0
+    """ 武器交 """
     BODY_LUBRICANT = 0
     """ 润滑液 """
     BIRTH_CONTROL_PILLS = 0
