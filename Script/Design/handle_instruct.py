@@ -3428,7 +3428,21 @@ def handle_handjob():
 )
 def handle_blowjob():
     """处理口交指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BLOWJOB)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.BLOWJOB
+        character_data.state = constant.CharacterStatus.STATUS_BLOWJOB
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3517,7 +3531,21 @@ def handle_rub_buttock():
 )
 def handle_hand_blowjob():
     """处理手交口交指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HAND_BLOWJOB)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.HAND_BLOWJOB
+        character_data.state = constant.CharacterStatus.STATUS_HAND_BLOWJOB
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3533,7 +3561,21 @@ def handle_hand_blowjob():
 )
 def handle_tits_blowjob():
     """处理乳交口交指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TITS_BLOWJOB)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.TITS_BLOWJOB
+        character_data.state = constant.CharacterStatus.STATUS_TITS_BLOWJOB
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3549,7 +3591,21 @@ def handle_tits_blowjob():
 )
 def handle_focus_blowjob():
     """处理真空口交指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FOCUS_BLOWJOB)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.FOCUS_BLOWJOB
+        character_data.state = constant.CharacterStatus.STATUS_FOCUS_BLOWJOB
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3565,7 +3621,21 @@ def handle_focus_blowjob():
 )
 def handle_deep_throat():
     """处理深喉插入指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DEEP_THROAT)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.DEEP_THROAT
+        character_data.state = constant.CharacterStatus.STATUS_DEEP_THROAT
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3582,7 +3652,21 @@ def handle_deep_throat():
 )
 def handle_clean_blowjob():
     """处理清洁口交指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLEAN_BLOWJOB)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.CLEAN_BLOWJOB
+        character_data.state = constant.CharacterStatus.STATUS_CLEAN_BLOWJOB
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -3600,7 +3684,21 @@ def handle_clean_blowjob():
 )
 def handle_sixty_nine():
     """处理六九式指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SIXTY_NINE)
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.SIXTY_NINE
+        character_data.state = constant.CharacterStatus.STATUS_SIXTY_NINE
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(
@@ -4268,7 +4366,21 @@ def handle_birth_control_pills_after():
 )
 def handle_normal_sex():
     """处理正常位指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NORMAL_SEX, judge = _("性交"))
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("性交"))
+    if judge_list[0] == 1:
+        character_data.behavior.behavior_id = constant.Behavior.NORMAL_SEX
+        character_data.state = constant.CharacterStatus.STATUS_NORMAL_SEX
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+        character_data.behavior.duration = 10
+        update.game_update_flow(10)
 
 
 @add_instruct(

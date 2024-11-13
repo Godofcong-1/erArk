@@ -606,6 +606,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         ask_text = ""
         if instruct_name == _("亲吻") and target_data.talent[4]:
             ask_text += _("\n\n 是否要夺走{0}的初吻？").format(target_data.name)
+        if instruct_name == _("口交") and target_data.talent[4]:
+            ask_text += _("\n\n 是否要用阴茎夺走{0}的初吻？").format(target_data.name)
         elif instruct_name == _("性交") and target_data.talent[0]:
             ask_text += _("\n\n 是否要夺走{0}的处女？").format(target_data.name)
         elif instruct_name == _("A性交") and target_data.talent[1]:
