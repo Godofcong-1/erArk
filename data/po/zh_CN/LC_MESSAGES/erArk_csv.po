@@ -6568,6 +6568,18 @@ msgstr ""
 msgid "U开发"
 msgstr ""
 
+#: .\data\csv\InstructJudge.csv:19
+msgid "道具"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:20
+msgid "药物"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:21
+msgid "SM"
+msgstr ""
+
 #: .\data\csv\InstructType.csv:6
 msgid "系统"
 msgstr ""
@@ -6596,20 +6608,8 @@ msgstr ""
 msgid "侍奉"
 msgstr ""
 
-#: .\data\csv\Instruct_Sex_Type.csv:8
-msgid "药物"
-msgstr ""
-
-#: .\data\csv\Instruct_Sex_Type.csv:9
-msgid "道具"
-msgstr ""
-
 #: .\data\csv\Instruct_Sex_Type.csv:10
 msgid "插入"
-msgstr ""
-
-#: .\data\csv\Instruct_Sex_Type.csv:11
-msgid "SM"
 msgstr ""
 
 #: .\data\csv\Item.csv:6

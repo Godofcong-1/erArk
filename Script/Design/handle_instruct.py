@@ -3428,21 +3428,14 @@ def handle_handjob():
 )
 def handle_blowjob():
     """处理口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.BLOWJOB
-        character_data.state = constant.CharacterStatus.STATUS_BLOWJOB
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BLOWJOB)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3531,21 +3524,14 @@ def handle_rub_buttock():
 )
 def handle_hand_blowjob():
     """处理手交口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.HAND_BLOWJOB
-        character_data.state = constant.CharacterStatus.STATUS_HAND_BLOWJOB
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HAND_BLOWJOB)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3561,21 +3547,14 @@ def handle_hand_blowjob():
 )
 def handle_tits_blowjob():
     """处理乳交口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.TITS_BLOWJOB
-        character_data.state = constant.CharacterStatus.STATUS_TITS_BLOWJOB
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TITS_BLOWJOB)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3591,21 +3570,14 @@ def handle_tits_blowjob():
 )
 def handle_focus_blowjob():
     """处理真空口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.FOCUS_BLOWJOB
-        character_data.state = constant.CharacterStatus.STATUS_FOCUS_BLOWJOB
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FOCUS_BLOWJOB)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3621,21 +3593,14 @@ def handle_focus_blowjob():
 )
 def handle_deep_throat():
     """处理深喉插入指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.DEEP_THROAT
-        character_data.state = constant.CharacterStatus.STATUS_DEEP_THROAT
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DEEP_THROAT)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3652,21 +3617,14 @@ def handle_deep_throat():
 )
 def handle_clean_blowjob():
     """处理清洁口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.CLEAN_BLOWJOB
-        character_data.state = constant.CharacterStatus.STATUS_CLEAN_BLOWJOB
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLEAN_BLOWJOB)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3684,21 +3642,14 @@ def handle_clean_blowjob():
 )
 def handle_sixty_nine():
     """处理六九式指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("口交"))
     if judge_list[0] == 1:
-        character_data.behavior.behavior_id = constant.Behavior.SIXTY_NINE
-        character_data.state = constant.CharacterStatus.STATUS_SIXTY_NINE
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SIXTY_NINE)
     elif judge_list[0] == -1:
         pass
     else:
-        character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-        character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-        character_data.behavior.duration = 10
-        update.game_update_flow(10)
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3790,7 +3741,14 @@ def handle_eras_rub():
 )
 def handle_nipple_clamp_on():
     """处理戴上乳头夹指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NIPPLE_CLAMP_ON)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NIPPLE_CLAMP_ON)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3837,7 +3795,14 @@ def handle_nipples_love_egg():
 )
 def handle_clit_clamp_on():
     """处理戴上阴蒂夹指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLIT_CLAMP_ON)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLIT_CLAMP_ON)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3899,7 +3864,14 @@ def handle_electric_message_stick():
 )
 def handle_vibrator_insertion():
     """处理插入震动棒指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_VIBRATOR_INSERTION)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_VIBRATOR_INSERTION)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3917,7 +3889,14 @@ def handle_vibrator_insertion():
 )
 def handle_vibrator_insertion_anal():
     """处理肛门插入震动棒指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_VIBRATOR_INSERTION_ANAL)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -3966,7 +3945,14 @@ def handle_vibrator_insertion_anal_off():
 )
 def handle_clyster():
     """处理灌肠指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLYSTER)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLYSTER)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4016,7 +4002,14 @@ def handle_anal_plug():
 )
 def handle_anal_beads():
     """处理塞入肛门拉珠指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ANAL_BEADS)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ANAL_BEADS)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4051,7 +4044,14 @@ def handle_anal_beads_off():
 )
 def handle_milking_machine_on():
     """处理装上搾乳机指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MILKING_MACHINE_ON)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MILKING_MACHINE_ON)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4118,7 +4118,14 @@ def handle_urine_collector_off():
 )
 def handle_bondage():
     """处理绳子指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BONDAGE)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BONDAGE)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4150,7 +4157,14 @@ def handle_patch():
 )
 def handle_whip():
     """处理鞭子指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WHIP)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WHIP)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4166,7 +4180,14 @@ def handle_whip():
 )
 def handle_neddle():
     """处理针指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NEEDLE)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NEEDLE)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4212,7 +4233,14 @@ def handle_take_condom_out():
 )
 def handle_safe_candles():
     """处理滴蜡指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SAFE_CANDLES)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SAFE_CANDLES)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4242,7 +4270,14 @@ def handle_body_lubricant():
 )
 def handle_philter():
     """处理媚药指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PHILTER)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("药物"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PHILTER)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4275,7 +4310,14 @@ def handle_enemas():
 )
 def handle_diuretics_once():
     """处理一次性利尿剂指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DIURETICS_ONCE)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("药物"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DIURETICS_ONCE)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4290,7 +4332,14 @@ def handle_diuretics_once():
 )
 def handle_diuretics_persistent():
     """处理持续性利尿剂指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DIURETICS_PERSISTENT)
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("药物"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DIURETICS_PERSISTENT)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4305,7 +4354,14 @@ def handle_diuretics_persistent():
 )
 def handle_sleeping_pills():
     """处理安眠药指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SLEEPING_PILLS, judge = _("严重骚扰"))
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("药物"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SLEEPING_PILLS)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
@@ -4320,7 +4376,14 @@ def handle_sleeping_pills():
 )
 def handle_clomid():
     """处理排卵促进药指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLOMID, judge = _("严重骚扰"))
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("药物"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLOMID)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
 
 
 @add_instruct(
