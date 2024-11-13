@@ -3,5 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,345,0,high_1,{Name}触发了偷走在场所有人的袜子的地文
-1,345,0,high_1&is_unconscious_h,{Name}触发了偷走在场所有人的袜子的地文
+0,345,0,high_1,{Name}偷走了在场所有人的袜子
+1,345,0,high_1&is_unconscious_h,{Name}偷走了在场所有人的袜子

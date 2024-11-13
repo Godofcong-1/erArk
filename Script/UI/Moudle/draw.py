@@ -10,7 +10,6 @@ from Script.Core import (
     game_type,
 )
 from Script.Config import game_config
-from Script.Design import attr_calculation
 
 bar_list = set(game_config.config_bar_data.keys())
 chara_list = set(game_config.config_image_data.keys())
@@ -969,6 +968,7 @@ class ExpLevelDraw:
 
     def __init__(self, experience: int):
         """初始化绘制对象"""
+        from Script.Design import attr_calculation
         grade = attr_calculation.judge_grade(experience)
         style = f"level{grade.lower()}"
         now_draw = NormalDraw()
@@ -1001,6 +1001,7 @@ class StatusLevelDraw:
 
     def __init__(self, value: int, text: str = ""):
         """初始化绘制对象"""
+        from Script.Design import attr_calculation
 
         # 获取状态等级
         status_level = attr_calculation.get_status_level(value)

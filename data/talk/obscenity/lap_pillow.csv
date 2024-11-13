@@ -3,4 +3,14 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,314,0,high_1,{Name}触发了膝枕指令的地文
+0,314,0,high_1,{TargetName}坐下来，{Name}的头枕在{TargetName}的大腿上，能够感受到{TargetName}的体温与大腿的柔软触感。
+1,314,0,high_1,{TargetName}轻轻拍了拍{Name}的肩膀，示意可以枕在自己的腿上，{Name}感受到一股温暖的气息。
+2,314,0,high_1,{TargetName}微笑着看着{Name}，轻声说道：“来吧，枕在我的腿上休息一下吧。”
+3,314,0,high_1,{TargetName}坐在一旁，{Name}慢慢躺下，把头枕在{TargetName}的大腿上，感受到一阵舒适。
+4,314,0,high_1,{TargetName}轻轻抚摸着枕在自己腿上的{Name}的头发，{Name}闭上眼睛，享受着这片刻的宁静。
+5,314,0,high_1,{TargetName}用手指梳理着{Name}的头发，{Name}的头枕在{TargetName}的大腿上，感到无比安心。
+6,314,0,high_1,{TargetName}轻声哼唱着一首歌，{Name}的头枕在{TargetName}的大腿上，感受到一股温柔的力量。
+7,314,0,high_1,{TargetName}轻轻拍打着{Name}的背，{Name}的头枕在{TargetName}的大腿上，感受到一阵温暖。
+8,314,0,high_1,{TargetName}低下头，轻轻吻了{Name}的额头，{Name}的头枕在{TargetName}的大腿上，感到无比幸福。
+9,314,0,high_1,{TargetName}轻轻抚摸着{Name}的脸颊，{Name}的头枕在{TargetName}的大腿上，感受到一阵安心。
+10,314,0,high_1,{TargetName}轻声说道：“你累了吧，枕在我的腿上休息一下吧。”{Name}闭上眼睛，享受着这片刻的宁静。

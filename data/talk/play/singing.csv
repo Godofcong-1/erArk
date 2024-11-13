@@ -3,7 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,151,0,sys_2,{Name}对{TargetName}触发了唱歌指令的地文
 
 1001,151,0,place_over_one,{Name}开始唱歌了，{TargetName}坐在旁边认真聆听。
 

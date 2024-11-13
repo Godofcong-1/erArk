@@ -35977,7 +35977,47 @@ msgid "{Name}触发了对{TargetName}亲吻失败指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\lap_pillow.csv:6
-msgid "{Name}触发了膝枕指令的地文"
+msgid "{TargetName}坐下来，{Name}的头枕在{TargetName}的大腿上，能够感受到{TargetName}的体温与大腿的柔软触感。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:7
+msgid "{TargetName}轻轻拍了拍{Name}的肩膀，示意可以枕在自己的腿上，{Name}感受到一股温暖的气息。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:8
+msgid "{TargetName}微笑着看着{Name}，轻声说道：“来吧，枕在我的腿上休息一下吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:9
+msgid "{TargetName}坐在一旁，{Name}慢慢躺下，把头枕在{TargetName}的大腿上，感受到一阵舒适。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:10
+msgid "{TargetName}轻轻抚摸着枕在自己腿上的{Name}的头发，{Name}闭上眼睛，享受着这片刻的宁静。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:11
+msgid "{TargetName}用手指梳理着{Name}的头发，{Name}的头枕在{TargetName}的大腿上，感到无比安心。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:12
+msgid "{TargetName}轻声哼唱着一首歌，{Name}的头枕在{TargetName}的大腿上，感受到一股温柔的力量。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:13
+msgid "{TargetName}轻轻拍打着{Name}的背，{Name}的头枕在{TargetName}的大腿上，感受到一阵温暖。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:14
+msgid "{TargetName}低下头，轻轻吻了{Name}的额头，{Name}的头枕在{TargetName}的大腿上，感到无比幸福。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:15
+msgid "{TargetName}轻轻抚摸着{Name}的脸颊，{Name}的头枕在{TargetName}的大腿上，感受到一阵安心。"
+msgstr ""
+
+#: .\data\talk\obscenity\lap_pillow.csv:16
+msgid "{TargetName}轻声说道：“你累了吧，枕在我的腿上休息一下吧。”{Name}闭上眼睛，享受着这片刻的宁静。"
 msgstr ""
 
 #: .\data\talk\obscenity\low_obscenity_anus.csv:6
@@ -35989,14 +36029,98 @@ msgid "{Name}触发了挤奶指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:6
-msgid "{Name}触发了早安问候：叫起床的地文"
+msgid "到早上了，{Name}开始叫{PlayerName}起床，把{PlayerName}叫醒了"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:7
-msgid "{Name}触发了早安问候：早安吻的地文"
+msgid "新的一天开始了，{Name}拉开了窗帘，阳光晒进了房间，照在了{PlayerName}的脸上"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:8
+msgid "{Name}用手指轻轻刮了刮{PlayerName}的鼻子，笑着说：“懒虫，快起床，今天有很多有趣的事情等着我们呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:9
+msgid "{Name}轻轻推了推{PlayerName}，温柔地说：“起床了，新的早晨已经到来。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:10
+msgid "{Name}用手指轻轻敲了敲{PlayerName}的额头，笑着说：“该起床了，太阳都晒屁股了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:11
+msgid "{Name}拿起枕头轻轻拍打{PlayerName}，调皮地说：“懒虫，快起床，今天有很多事情要做呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:12
+msgid "{Name}打开了窗户，让清晨的凉风吹进来，轻声对{PlayerName}说：“早安，起床呼吸一下新鲜空气吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:13
+msgid "{Name}端来一杯热牛奶，放在{PlayerName}的床头，柔声说：“起床喝点牛奶吧，今天会是美好的一天。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:14
+msgid "{Name}轻轻摇晃着{PlayerName}的肩膀，微笑着说：“早上好，新的冒险等着我们呢，快起床吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:15
+msgid "{Name}拿起手机播放了一首欢快的音乐，对{PlayerName}说：“听，这首歌多有活力，快起床一起享受吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:16
+msgid "{Name}在{PlayerName}耳边轻声哼唱起了早安曲，温柔地说：“起床了，新的开始就在眼前。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:17
+msgid "{Name}轻轻抚摸着{PlayerName}的头发，柔声说：“早安，今天的阳光特别明媚，快起床看看吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:18
+msgid "{Name}轻轻拍了拍{PlayerName}的脸颊，笑着说：“起床啦，今天的早餐已经准备好了，快来享用吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:19
+msgid "{Name}用温暖的毛巾擦了擦{PlayerName}的脸，柔声说：“早安，今天的天气很好，快起床去散步吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:20
+msgid "{Name}在{PlayerName}耳边轻声说：“起床了，有新的公务要处理，不能再睡了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:21
+msgid "{Name}轻轻摇晃着{PlayerName}的手臂，微笑着说：“早上好，今天我们要去一个很有趣的地方。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:22
+msgid "{Name}用手指轻轻戳了戳{PlayerName}的脸颊，调皮地说：“懒虫，快起床，今天有很多好玩的事情等着我们呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:23
+msgid "{Name}打开了窗帘，让阳光洒进房间，对{PlayerName}说：“早安，新的美好一天开始了，快起床吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:24
+msgid "{Name}轻轻拍打着{PlayerName}的背，温柔地说：“起床了，今天有很多事情要做呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:25
+msgid "{Name}拿起一朵花放在{PlayerName}的鼻子前，微笑着说：“早上好，闻闻这花香，快起床吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:26
+msgid "{Name}轻轻捏了捏{PlayerName}的鼻子，笑着说：“起床啦，今天的阳光特别好，快去享受吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:27
+msgid "{Name}在{PlayerName}耳边轻声说：“早安，今天有很多有趣的事情等着我们，快起床吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:28
+msgid "{Name}触发了早安问候：早安吻的地文"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:29
 msgid "{Name}触发了早安问候：早安咬的地文"
 msgstr ""
 
@@ -36037,11 +36161,11 @@ msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetNa
 msgstr ""
 
 #: .\data\talk\obscenity\steal_scene_all_pan.csv:6
-msgid "{Name}触发了偷走在场所有人的内裤的地文"
+msgid "{Name}偷走在场所有人的内裤"
 msgstr ""
 
 #: .\data\talk\obscenity\steal_scene_all_socks.csv:6
-msgid "{Name}触发了偷走在场所有人的袜子的地文"
+msgid "{Name}偷走了在场所有人的袜子"
 msgstr ""
 
 #: .\data\talk\obscenity\steal_socks.csv:6
@@ -36356,775 +36480,771 @@ msgstr ""
 msgid "{Name}触发了排演舞剧的地文"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:6
-msgid "{Name}对{TargetName}触发了唱歌指令的地文"
-msgstr ""
-
-#: .\data\talk\play\singing.csv:8
+#: .\data\talk\play\singing.csv:7
 msgid "{Name}开始唱歌了，{TargetName}坐在旁边认真聆听。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:10
+#: .\data\talk\play\singing.csv:9
 msgid "{Name}唱的很难听，{TargetName}听了很生气，但还是忍住没有打断。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:11
+#: .\data\talk\play\singing.csv:10
 msgid "{Name}唱得是很开心，但{TargetName}听着却开始感到头痛了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:12
+#: .\data\talk\play\singing.csv:11
 msgid "{Name}刚唱完了一曲，准备第二首歌，但{TargetName}实在受不了了，没让{Name}继续开口。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:13
+#: .\data\talk\play\singing.csv:12
 msgid "{TargetName}对{Name}唱的烂歌感到很生气，让氛围变得尴尬。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:14
+#: .\data\talk\play\singing.csv:13
 msgid "{Name}虽然唱得很难听，但还是带着努力唱完了一整曲，这把{TargetName}惹毛了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:15
+#: .\data\talk\play\singing.csv:14
 msgid "{Name}在唱歌时完全没有节奏感，{TargetName}听了很不舒服。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:16
+#: .\data\talk\play\singing.csv:15
 msgid "{TargetName}原本想安慰一下{Name}的，但是实在忍受不了那尖锐的音调，只好离开了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:17
+#: .\data\talk\play\singing.csv:16
 msgid "{Name}唱着一首自己编的歌，然而{TargetName}却觉得这首歌比噪音还难听。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:18
+#: .\data\talk\play\singing.csv:17
 msgid "{Name}唱歌时总是找不准调，让{TargetName}非常生气，差点没控制住自己的情绪。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:19
+#: .\data\talk\play\singing.csv:18
 msgid "尽管{Name}唱歌很难听，但始终保持着一个自以为很好听的表情，令{TargetName}更加生气。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:20
+#: .\data\talk\play\singing.csv:19
 msgid "{TargetName}听了{Name}唱了几句之后就想逃走，可是出于礼貌还是勉强坚持听完了整首歌。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:21
+#: .\data\talk\play\singing.csv:20
 msgid "{Name}唱的超级难听，{TargetName}看起来也很痛苦，但还是咬着牙坚持听完了这一段。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:22
+#: .\data\talk\play\singing.csv:21
 msgid "{Name}五音不全地唱了整整三首歌，最终让{TargetName}彻底失去了耐心。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:23
+#: .\data\talk\play\singing.csv:22
 msgid "{Name}唱的歌全都跑调了，{TargetName}只想拿耳塞堵住自己的耳朵。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:24
+#: .\data\talk\play\singing.csv:23
 msgid "{Name}唱歌时声音太大了，像是在敲锣一样，{TargetName}听得头昏眼花。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:25
+#: .\data\talk\play\singing.csv:24
 msgid "{TargetName}听了{Name}唱了几秒钟就开始脸部肌肉抽筋，苦苦忍受着这场地狱般的演唱会。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:26
+#: .\data\talk\play\singing.csv:25
 msgid "{Name}唱歌的时候居然还不停的忘词，{TargetName}在心里默默吐槽了几百遍。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:27
+#: .\data\talk\play\singing.csv:26
 msgid "{Name}的声音像刚被锤子敲碎的玻璃，{TargetName}实在听不下去了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:28
+#: .\data\talk\play\singing.csv:27
 msgid "{Name}唱歌时总是假音连篇，让{TargetName}感觉像在听老鼠叫。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:29
+#: .\data\talk\play\singing.csv:28
 msgid "虽然{Name}努力唱了五首歌，但最终还是没能赢得{TargetName}的掌声和称赞，只获得了内心的无奈叹息。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:30
+#: .\data\talk\play\singing.csv:29
 msgid "{Name}唱了一首极其难听的情歌，让{TargetName}直接从浪漫世界掉进了雷区。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:31
+#: .\data\talk\play\singing.csv:30
 msgid "{TargetName}本来是来听音乐放松的，却没想到竟然听到了{Name}如此恐怖的唱腔。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:32
+#: .\data\talk\play\singing.csv:31
 msgid "{Name}唱得太难听了，就算用耳机也无法阻止{TargetName}双耳的毁灭。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:33
+#: .\data\talk\play\singing.csv:32
 msgid "{Name}的喉咙貌似被什么东西卡住了，导致唱出了一些让{TargetName}难以忍受的音符。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:34
+#: .\data\talk\play\singing.csv:33
 msgid "{Name}唱得难听极了，但{TargetName}却不知道该如何离开现场，只能默默忍受着。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:35
+#: .\data\talk\play\singing.csv:34
 msgid "{Name}的歌声令人发指，{TargetName}恨不得马上闪人，但却被困在座位上无法逃脱。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:36
+#: .\data\talk\play\singing.csv:35
 msgid "在{Name}开口唱歌之后，整个房间里都弥漫着一种尴尬的气氛。{TargetName}简直无法想象这样的事情会发生在自己身上。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:37
+#: .\data\talk\play\singing.csv:36
 msgid "{Name}的音乐扭曲了所有人的耳朵，虽然{TargetName}已经饱受摧残，但{TargetName}却不得不待到歌曲结束。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:38
+#: .\data\talk\play\singing.csv:37
 msgid "当{Name}开始唱歌时，{TargetName}就开始浑身难受，{TargetName}觉得这首歌唱得太烂了，而且根本没有节奏。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:39
+#: .\data\talk\play\singing.csv:38
 msgid "{Name}唱得实在是太可怕了，{Name}的声音充斥着整个空间，即使{TargetName}想逃走，也已经来不及了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:40
+#: .\data\talk\play\singing.csv:39
 msgid "{Name}显然对于自己唱的东西太过自信，而且{Name}的音调和节奏几乎都一团乱糟，这也让{TargetName}难以忍受。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:41
+#: .\data\talk\play\singing.csv:40
 msgid "{TargetName}当场就选择放弃，在听到{Name}唱的第一段就直接放下手中的东西躲得远远的。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:42
+#: .\data\talk\play\singing.csv:41
 msgid "{Name}唱得太过尖锐，像针一样刺痛了所有人的耳朵，{TargetName}甚至可以感觉到自己的头在发胀。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:43
+#: .\data\talk\play\singing.csv:42
 msgid "尽管{Name}唱得很难听，但{Name}还是毫不在意，更让{TargetName}感到愤怒的是，{Name}竟然还觉得自己唱得不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:45
+#: .\data\talk\play\singing.csv:44
 msgid "{Name}唱得一般，{TargetName}没有特别的喜欢或者讨厌，只是听完了之后觉得还不错而已。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:46
+#: .\data\talk\play\singing.csv:45
 msgid "{TargetName}并没有被{Name}的歌声所吸引，只是普通地听着，没有太多感触。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:47
+#: .\data\talk\play\singing.csv:46
 msgid "{Name}唱得不算出色，{TargetName}并没有被深深打动，只是随口夸赞了一句。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:48
+#: .\data\talk\play\singing.csv:47
 msgid "{TargetName}听完了{Name}的演唱，觉得这是一首普通的歌曲，并没有特别的情感体验。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:49
+#: .\data\talk\play\singing.csv:48
 msgid "{Name}的唱功一般，{TargetName}听完之后没有特别的想法，也没有被音乐所感染。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:50
+#: .\data\talk\play\singing.csv:49
 msgid "{TargetName}听完{Name}的歌曲后，并没有特别的感触或者反应，只是一如既往地保持平静。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:51
+#: .\data\talk\play\singing.csv:50
 msgid "{Name}唱得不算出众，没能让{TargetName}有特别的感受，只是一次普通的听歌经历。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:52
+#: .\data\talk\play\singing.csv:51
 msgid "{TargetName}对{Name}的歌声并没有太大的兴趣，只是听完之后随口评价了一下，并没有过多关注。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:53
+#: .\data\talk\play\singing.csv:52
 msgid "{Name}的唱功平平，给{TargetName}的感受也只是普普通通，没有太多的波澜。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:54
+#: .\data\talk\play\singing.csv:53
 msgid "{TargetName}听完{Name}的演唱，没有特别的喜爱，也没有特别的反感，只是保持一般的态度。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:55
+#: .\data\talk\play\singing.csv:54
 msgid "{Name}在唱歌，{TargetName}听得一般般，没有太多感触和情感体验。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:56
+#: .\data\talk\play\singing.csv:55
 msgid "{Name}的歌声普普通通，{TargetName}也只是听完后随口说了句还不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:57
+#: .\data\talk\play\singing.csv:56
 msgid "{TargetName}在听{Name}唱歌时，并没有被深深吸引，只是表现出一点点兴趣而已。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:58
+#: .\data\talk\play\singing.csv:57
 msgid "{Name}唱得平平常常，{TargetName}也只是随意地听了一下，没有特别的评价或者反馈。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:59
+#: .\data\talk\play\singing.csv:58
 msgid "{TargetName}听{Name}唱歌的感受并没有太多波澜，只是保持着一如既往的平静。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:60
+#: .\data\talk\play\singing.csv:59
 msgid "{Name}的唱功不算出色，{TargetName}听完之后也没有特别的印象和感受，只是一次普通的听歌经历。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:61
+#: .\data\talk\play\singing.csv:60
 msgid "{TargetName}对{Name}的歌声并没有特别的喜好或者偏见，只是听完后表示还不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:62
+#: .\data\talk\play\singing.csv:61
 msgid "{Name}在唱歌时水平一般，{TargetName}听完之后也只是觉得还行，没有特别的想法。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:63
+#: .\data\talk\play\singing.csv:62
 msgid "{TargetName}听{Name}唱歌时没有被深深打动，只是保持着一颗平静的心态。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:64
+#: .\data\talk\play\singing.csv:63
 msgid "{Name}的唱功中规中矩，{TargetName}听完后也没有特别的反应，只是毫无波澜地结束了这次听歌之旅。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:65
+#: .\data\talk\play\singing.csv:64
 msgid "{Name}的唱功尚可，{TargetName}听完之后没有太多感受，只是觉得还可以。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:66
+#: .\data\talk\play\singing.csv:65
 msgid "{TargetName}听{Name}唱歌时没有被深深打动，只是保持一般的态度，听完了就算了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:67
+#: .\data\talk\play\singing.csv:66
 msgid "{Name}唱得普通，{TargetName}没有特别的喜欢或者讨厌，只是平静地听完了歌曲。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:68
+#: .\data\talk\play\singing.csv:67
 msgid "{TargetName}对{Name}的唱功并没有什么特别的看法，只是听完了之后继续做自己的事情。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:69
+#: .\data\talk\play\singing.csv:68
 msgid "{Name}的演唱水平很一般，{TargetName}没有被音乐所感染，也没有特别的情感体验。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:70
+#: .\data\talk\play\singing.csv:69
 msgid "{TargetName}听{Name}唱歌时没有太大的变化，没有被特别感动，也没觉得难听。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:71
+#: .\data\talk\play\singing.csv:70
 msgid "{Name}唱得很普通，{TargetName}听完了之后没有太多感想，只是觉得这是一首普通的歌曲而已。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:72
+#: .\data\talk\play\singing.csv:71
 msgid "{TargetName}没有特别的偏好，对{Name}的歌声也没有特别的抵触，在听完之后就将其忘却了。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:73
+#: .\data\talk\play\singing.csv:72
 msgid "{Name}唱得不算出色，{TargetName}听完之后没有产生太多情感波动，只是随口夸赞了一句。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:74
+#: .\data\talk\play\singing.csv:73
 msgid "{TargetName}听歌时没有太多心理波动，也没有特别讨厌{Name}的演唱，只是保持着平静的心态。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:76
+#: .\data\talk\play\singing.csv:75
 msgid "{TargetName}听完歌之后对{Name}轻轻赞美了一句，但没有特别的感受"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:77
+#: .\data\talk\play\singing.csv:76
 msgid "{TargetName}认为{Name}唱的这首歌不错，但并不是自己最喜欢的类型"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:78
+#: .\data\talk\play\singing.csv:77
 msgid "虽然{Name}的唱功平凡，但{TargetName}还是没有忍住夸了一下"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:79
+#: .\data\talk\play\singing.csv:78
 msgid "{TargetName}觉得{Name}唱得还可以，虽然没有特别的喜欢或讨厌"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:80
+#: .\data\talk\play\singing.csv:79
 msgid "对于{Name}唱的这首歌，{TargetName}表示还不错，但没有什么特别的感触"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:81
+#: .\data\talk\play\singing.csv:80
 msgid "{TargetName}对{Name}的表现给予了肯定，但并不是自己特别钟爱的曲风"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:82
+#: .\data\talk\play\singing.csv:81
 msgid "{TargetName}在听完{Name}的演唱后，点了个赞，并表示这是自己喜欢听的类型"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:83
+#: .\data\talk\play\singing.csv:82
 msgid "{TargetName}听完{Name}的歌曲后发现自己不由得跟着哼唱了一下"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:84
+#: .\data\talk\play\singing.csv:83
 msgid "{TargetName}对{Name}的表现评价较高，希望以后还能听到{Name}的歌声"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:85
+#: .\data\talk\play\singing.csv:84
 msgid "尽管{Name}唱功不算出众，但{TargetName}还是夸了一句：唱得不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:86
+#: .\data\talk\play\singing.csv:85
 msgid "{TargetName}听完{Name}的歌，称赞道还不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:87
+#: .\data\talk\play\singing.csv:86
 msgid "{TargetName}对{Name}的演唱给予了肯定的评价，表示这是一首不错的歌曲。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:88
+#: .\data\talk\play\singing.csv:87
 msgid "{TargetName}听完{Name}的歌曲后，微笑着表示唱得还挺好的。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:89
+#: .\data\talk\play\singing.csv:88
 msgid "{TargetName}听完{Name}的歌，说了一句不错，表示对歌曲满意。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:90
+#: .\data\talk\play\singing.csv:89
 msgid "{TargetName}听了{Name}的歌曲，对{Name}的水平表示肯定，感觉唱得真不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:91
+#: .\data\talk\play\singing.csv:90
 msgid "{TargetName}对{Name}的演唱给与了表扬，认为这首歌唱得挺好的。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:92
+#: .\data\talk\play\singing.csv:91
 msgid "{TargetName}听完{Name}的歌曲后，感觉良好，称赞道：“唱得真不错啊！”"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:93
+#: .\data\talk\play\singing.csv:92
 msgid "{TargetName}听完{Name}的歌之后，坦言这是首好听的歌曲，自己很喜欢。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:94
+#: .\data\talk\play\singing.csv:93
 msgid "{TargetName}听完{Name}的演唱之后发表自己的想法，表示这首歌让自己感到愉悦。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:95
+#: .\data\talk\play\singing.csv:94
 msgid "{TargetName}表示这是一首非常出色的歌曲，对{Name}的演唱水平表示认可。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:96
+#: .\data\talk\play\singing.csv:95
 msgid "{TargetName}听完{Name}的演唱之后，简单夸赞了一下，感觉还不错。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:97
+#: .\data\talk\play\singing.csv:96
 msgid "{TargetName}并不是特别喜欢{Name}的音乐，但听完了之后还是克制地夸奖了一下。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:98
+#: .\data\talk\play\singing.csv:97
 msgid "{TargetName}对{Name}的歌声还算满意，所以在听完之后兴致勃勃地夸赞了一番。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:99
+#: .\data\talk\play\singing.csv:98
 msgid "{TargetName}没有被{Name}的歌声深深打动，但还是夸奖了一下，态度友好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:100
+#: .\data\talk\play\singing.csv:99
 msgid "{TargetName}虽然没能很好地理解{Name}的音乐，但还是夸赞了一下，认可了{Name}的努力。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:101
+#: .\data\talk\play\singing.csv:100
 msgid "{TargetName}并不是{Name}的铁粉，但在听完之后还是真挚地夸奖了一句，共同分享音乐的快乐。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:102
+#: .\data\talk\play\singing.csv:101
 msgid "{TargetName}对{Name}的歌声没有特别的偏好，但听完之后也不吝啬地表达了自己的夸奖之词。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:103
+#: .\data\talk\play\singing.csv:102
 msgid "虽然{Name}的唱功平平，但{TargetName}还是耐心地听完了，而且夸奖了一下。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:104
+#: .\data\talk\play\singing.csv:103
 msgid "即使听多了音乐，{TargetName}依然能欣赏到{Name}的歌曲里独特的魅力，并且夸奖了一下。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:105
+#: .\data\talk\play\singing.csv:104
 msgid "{TargetName}的音乐鉴赏经历丰富，所以只是普通的夸奖了一下{Name}的这首歌。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:107
+#: .\data\talk\play\singing.csv:106
 msgid "{Name}唱得非常动人，{TargetName}听了之后十分感动，不禁流下了泪水。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:108
+#: .\data\talk\play\singing.csv:107
 msgid "{Name}的歌喉实在太棒了，{TargetName}听得心神荡漾，完全沉浸在音乐中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:109
+#: .\data\talk\play\singing.csv:108
 msgid "{Name}唱得一曲高亢，引得{TargetName}为之欣喜若狂，陶醉其中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:110
+#: .\data\talk\play\singing.csv:109
 msgid "{Name}声音如天籁般美妙动听，唱出的每个音符都令{TargetName}感到震撼。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:111
+#: .\data\talk\play\singing.csv:110
 msgid "{TargetName}被{Name}甜美婉转的歌声迷住了，几乎忘却了时间的流逝。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:112
+#: .\data\talk\play\singing.csv:111
 msgid "{Name}用自己的歌声唤起了{TargetName}深藏在内心的情感，两人渐渐走近。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:113
+#: .\data\talk\play\singing.csv:112
 msgid "{TargetName}没想到{Name}的歌喉竟然如此动人，彻底折服于这股强大的音乐力量。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:114
+#: .\data\talk\play\singing.csv:113
 msgid "{Name}唱得十分完美，{TargetName}仿佛置身于梦境之中，享受着这片刻的宁静与美好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:115
+#: .\data\talk\play\singing.csv:114
 msgid "{Name}的歌声穿透了{TargetName}的心灵，为其带来了前所未有的感动和震撼。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:116
+#: .\data\talk\play\singing.csv:115
 msgid "{TargetName}从未听过如此绝妙的声音，看着{Name}倾注全部的激情和精力在歌唱，也不禁为{Name}的才华赞叹不已。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:117
+#: .\data\talk\play\singing.csv:116
 msgid "{Name}的歌喉像一股清泉，轻轻地滋润着{TargetName}的心田，带给{TargetName}无限的舒适和安慰。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:118
+#: .\data\talk\play\singing.csv:117
 msgid "{TargetName}静静地倾听着{Name}的歌声，在这个瞬间，时间停止了，只有音乐和情感在流淌。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:119
+#: .\data\talk\play\singing.csv:118
 msgid "{Name}婉转高亢的歌声充满了力量和魔力，让{TargetName}感受到了音乐中蕴含的奇妙力量。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:120
+#: .\data\talk\play\singing.csv:119
 msgid "{Name}的每一个音符都是那么的准确和动人，让{TargetName}仿佛置身于一个神秘的音乐世界。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:121
+#: .\data\talk\play\singing.csv:120
 msgid "{Name}通过歌唱将内心真挚的情感传达给了{TargetName}，两个人的心灵在音乐中相遇和碰撞。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:122
+#: .\data\talk\play\singing.csv:121
 msgid "{Name}的歌声充满了温柔和力量，让{TargetName}感受到了世界的美好与温馨。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:123
+#: .\data\talk\play\singing.csv:122
 msgid "{Name}用自己的歌声平复了{TargetName}心中的困惑和不安，让{TargetName}重新认知了生命的意义。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:124
+#: .\data\talk\play\singing.csv:123
 msgid "{Name}的歌声如同一条清澈的溪流，轻轻地流淌在{TargetName}的心间，带来无限欢愉和宁静。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:125
+#: .\data\talk\play\singing.csv:124
 msgid "{Name}的歌声充满了情感和柔软，让{TargetName}感受到了爱和温情在空气中飘荡。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:126
+#: .\data\talk\play\singing.csv:125
 msgid "{Name}的歌声是如此的迷人和感人，每一个音符都打动了{TargetName}内心隐藏的情感和记忆。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:127
+#: .\data\talk\play\singing.csv:126
 msgid "{Name}以其独特的嗓音和情感传达技巧，打动了{TargetName}内心中最柔软的部分。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:128
+#: .\data\talk\play\singing.csv:127
 msgid "{Name}用自己的声音演绎出一首动人心弦的歌曲，让{TargetName}沉浸在情感的海洋中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:129
+#: .\data\talk\play\singing.csv:128
 msgid "{Name}唱的音乐节奏精准、嗓音运转自如，令{TargetName}深受启发和感动。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:130
+#: .\data\talk\play\singing.csv:129
 msgid "{Name}勇于展现自己的演唱天赋，在舞台上散发出迷人光芒，令{TargetName}回味无穷。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:131
+#: .\data\talk\play\singing.csv:130
 msgid "{Name}的歌声魅力无穷，用音乐诠释了自己的人生哲学，也感染了{TargetName}。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:132
+#: .\data\talk\play\singing.csv:131
 msgid "{Name}用歌声打开了{TargetName}心灵的大门，让{TargetName}领悟到音乐中蕴藏的深刻内涵。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:133
+#: .\data\talk\play\singing.csv:132
 msgid "{Name}的歌声不仅令听众陶醉，更有着极高的艺术价值，让{TargetName}深深铭记。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:134
+#: .\data\talk\play\singing.csv:133
 msgid "{Name}将自己的情感化为歌声，把自己和{TargetName}的感情紧密相连。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:135
+#: .\data\talk\play\singing.csv:134
 msgid "{Name}用激昂的歌声表达了自己对生命的热爱与执着，给{TargetName}带来了无限的鼓舞和感动。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:136
+#: .\data\talk\play\singing.csv:135
 msgid "{Name}的歌声像是一股清流，轻轻地润湿了{TargetName}的心田，让{TargetName}重新振作起来。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:137
+#: .\data\talk\play\singing.csv:136
 msgid "{TargetName}被{Name}婉转动听的歌声所感染，仿佛置身于一个美好的梦境之中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:138
+#: .\data\talk\play\singing.csv:137
 msgid "{Name}的声音充满着磁性和魅力，{TargetName}听了之后完全沉迷其中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:139
+#: .\data\talk\play\singing.csv:138
 msgid "{TargetName}从{Name}的歌声中感受到了无尽的温暖和力量，心情也变得更加积极向上。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:140
+#: .\data\talk\play\singing.csv:139
 msgid "{Name}用歌声诠释了人生百态，让{TargetName}深深被其感染，陶醉其中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:141
+#: .\data\talk\play\singing.csv:140
 msgid "{Name}的歌声让人感觉像是一股清新的风吹来，{TargetName}心情也随之变得轻松愉快。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:142
+#: .\data\talk\play\singing.csv:141
 msgid "{TargetName}听着{Name}的歌声，感觉自己仿佛置身于一个神秘而美丽的大自然之中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:143
+#: .\data\talk\play\singing.csv:142
 msgid "{Name}的歌声传达了无数的情感和感觉，让{TargetName}的内心得到了极大的满足。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:144
+#: .\data\talk\play\singing.csv:143
 msgid "{TargetName}认为{Name}是个有天赋的艺术家，{Name}的歌声简直可以击穿人们的心灵屏障，让人彻底沉浸其中。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:145
+#: .\data\talk\play\singing.csv:144
 msgid "{Name}的声音犹如天籁之音，每一次的演唱都能够打动{TargetName}的心弦，为其带来前所未有的震撼和感动。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:146
+#: .\data\talk\play\singing.csv:145
 msgid "{TargetName}不仅喜欢{Name}的歌声，同时也被{Name}那颇具感染力的表演所折服。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:149
+#: .\data\talk\play\singing.csv:148
 msgid "{Name}对着墙壁自己一个人唱歌，虽然唱的不好听，但这也是重要的练习。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:150
+#: .\data\talk\play\singing.csv:149
 msgid "{Name}在没有人的{SceneName}里独自练习着歌唱，不管好听不好听，努力都是必须的。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:151
+#: .\data\talk\play\singing.csv:150
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然声音不太好听，但是仍然坚持练习。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:152
+#: .\data\talk\play\singing.csv:151
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好，但{Name}相信只要坚持练习，就会有所进步。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:153
+#: .\data\talk\play\singing.csv:152
 msgid "{Name}独自一人在练习唱歌，虽然声音不太好听，但自己知道只有不断练习才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:154
+#: .\data\talk\play\singing.csv:153
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好，但相信只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:155
+#: .\data\talk\play\singing.csv:154
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然声音不太好听，但知道只有不断练习才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:156
+#: .\data\talk\play\singing.csv:155
 msgid "{Name}一个人在练习唱歌，虽然唱得不太好，但相信只要坚持不懈，就会有所进步。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:157
+#: .\data\talk\play\singing.csv:156
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然调子不太准，但只有不断练习才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:158
+#: .\data\talk\play\singing.csv:157
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然唱得不太好，但相信只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:159
+#: .\data\talk\play\singing.csv:158
 msgid "{Name}独自一人在练习唱歌，虽然有点抢拍，但{Name}知道只有不断努力才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:160
+#: .\data\talk\play\singing.csv:159
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好，但相信只要坚持练习，就会有所进步。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:161
+#: .\data\talk\play\singing.csv:160
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然音准不太稳，但只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:162
+#: .\data\talk\play\singing.csv:161
 msgid "{Name}一个人在练习唱歌，虽然嗓音有些沙哑，但相信只要不断练习，就会变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:163
+#: .\data\talk\play\singing.csv:162
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然有些跑调，但知道只有不断努力才能达到自己的目标。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:164
+#: .\data\talk\play\singing.csv:163
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然声音有些尖锐，但相信只要坚持练习，就会有所进步。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:165
+#: .\data\talk\play\singing.csv:164
 msgid "{Name}独自一人在练习唱歌，虽然音色有些单薄，但知道只有不断练习才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:166
+#: .\data\talk\play\singing.csv:165
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好听，但相信只要不放弃，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:167
+#: .\data\talk\play\singing.csv:166
 msgid "{Name}独自一人在{SceneName}里练习唱歌，虽然有些紧张，但只要保持耐心，就会有所收获。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:168
+#: .\data\talk\play\singing.csv:167
 msgid "{Name}一个人在练习唱歌，虽然有些吞音，但相信只要不断练习，就会变得更加自信。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:169
+#: .\data\talk\play\singing.csv:168
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然有些嘶哑，但知道只有不断努力才能克服困难。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:171
+#: .\data\talk\play\singing.csv:170
 msgid "{Name}独自一人在练习唱歌，虽然有些紧张，但知道只有不断练习才能变得更加自信。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:172
+#: .\data\talk\play\singing.csv:171
 msgid "{Name}一个人在{SceneName}里唱歌，虽然音色有些刺耳，但相信只要不断努力，就会变得更加出色。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:173
+#: .\data\talk\play\singing.csv:172
 msgid "{Name}独自一人在{SceneName}里练习唱歌，虽然有些吞音，但只要保持耐心，就会有所收获。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:174
+#: .\data\talk\play\singing.csv:173
 msgid "{Name}一个人在练习唱歌，虽然有些抢拍，但相信只要不断练习，就会变得更加流畅。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:175
+#: .\data\talk\play\singing.csv:174
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然有些跑调，但知道只有不断努力才能变得更加准确。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:176
+#: .\data\talk\play\singing.csv:175
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然有些嗓音不够稳定，但相信只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:177
+#: .\data\talk\play\singing.csv:176
 msgid "{Name}独自一人在练习唱歌，虽然有些音准不够准确，但知道只有不断练习才能变得更加专业。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:178
+#: .\data\talk\play\singing.csv:177
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得不太好听，但相信只要不断努力，就会变得更加动人。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:179
+#: .\data\talk\play\singing.csv:178
 msgid "{Name}独自一人在{SceneName}里练习唱歌，虽然有些音色不够丰富，但只要保持耐心，就会有所收获。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:180
+#: .\data\talk\play\singing.csv:179
 msgid "{Name}一个人在练习唱歌，虽然有些嗓音不够柔美，但相信只要不断练习，就会变得更加动听。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:181
+#: .\data\talk\play\singing.csv:180
 msgid "{Name}独自一人在{SceneName}里唱歌，虽然有些音量不够大，但知道只有不断努力才能变得更加自信。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:182
+#: .\data\talk\play\singing.csv:181
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然有些音色不够清晰，但相信只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:187
+#: .\data\talk\play\singing.csv:186
 msgid "{Name}一个人在{SceneName}里练习唱歌，虽然唱得普普通通，但知道只有不断练习才能变得更好。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:188
+#: .\data\talk\play\singing.csv:187
 msgid "{Name}独自一人在练习唱歌，虽然唱得平平淡淡，但相信只要坚持下去，就会有所提高。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:189
+#: .\data\talk\play\singing.csv:188
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得普通无奇，但知道只有不断努力才能变得更出色。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:190
+#: .\data\talk\play\singing.csv:189
 msgid "{Name}独自一人在练习唱歌，虽然唱得一般，但相信只要不放弃，就会有所进步。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:191
+#: .\data\talk\play\singing.csv:190
 msgid "{Name}一个人在{SceneName}里唱歌，虽然唱得没什么特色，但知道只有不断练习才能变得更加自信。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:192
+#: .\data\talk\play\singing.csv:191
 msgid "{Name}独自一人在练习唱歌，虽然唱得不算好也不算坏，但相信只要保持耐心，就会有所收获。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:193
+#: .\data\talk\play\singing.csv:192
 msgid "{Name}一个人在{SceneName}里唱歌，虽然感情还不够丰富，但知道只有不断努力才能变得更加出色。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:194
+#: .\data\talk\play\singing.csv:193
 msgid "{Name}独自一人在练习唱歌，虽然有几个音跑调了，但相信只要坚持下去，就能纠正过来。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:195
+#: .\data\talk\play\singing.csv:194
 msgid "{Name}一个人在{SceneName}里唱歌，虽然最后忘词了，只要多背几遍就可以记住。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:196
+#: .\data\talk\play\singing.csv:195
 msgid "{Name}独自一人在练习唱歌，虽然音量时大时小，但相信能保持专注，就能稳定住音量的变化。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:197
+#: .\data\talk\play\singing.csv:196
 msgid "{Name}一个人在{SceneName}里唱歌，虽然音准还有待提高，但知道只有不断练习才能变得更加准确。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:198
+#: .\data\talk\play\singing.csv:197
 msgid "{Name}独自一人在练习唱歌，虽然有些音色不够饱满，但相信只要多加练习，就能让声音更加圆润。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:199
+#: .\data\talk\play\singing.csv:198
 msgid "{Name}一个人在{SceneName}里唱歌，虽然表现还有些生硬，但知道只有不断努力才能变得更加自然。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:200
+#: .\data\talk\play\singing.csv:199
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得不够流畅，但相信只要多加练习，就能让歌声更加流畅自如。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:201
+#: .\data\talk\play\singing.csv:200
 msgid "{Name}一个人在{SceneName}里唱歌，虽然有些地方唱得有些紧张，但知道只有不断练习才能变得更加从容。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:202
+#: .\data\talk\play\singing.csv:201
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些急促，但相信只要多加练习，就能让歌声更加平稳。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:203
+#: .\data\talk\play\singing.csv:202
 msgid "{Name}一个人在{SceneName}里唱歌，虽然有些地方唱得有些模糊，但知道只有不断努力才能变得更加清晰。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:204
+#: .\data\talk\play\singing.csv:203
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些粗糙，但相信只要多加练习，就能让歌声更加细腻。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:205
+#: .\data\talk\play\singing.csv:204
 msgid "{Name}一个人在{SceneName}里唱歌，虽然有些地方唱得有些单调，但知道只有不断练习才能变得更加丰富多彩。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:206
+#: .\data\talk\play\singing.csv:205
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些平淡，但相信只要多加练习，就能让歌声更加动人心弦。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:207
+#: .\data\talk\play\singing.csv:206
 msgid "{Name}一个人在{SceneName}里唱歌，虽然有些地方唱得有些累赘，但知道只有不断努力才能变得更加轻盈自如。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:208
+#: .\data\talk\play\singing.csv:207
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些拖沓，但相信只要多加练习，就能让歌声更加流畅。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:209
+#: .\data\talk\play\singing.csv:208
 msgid "{Name}一个人在{SceneName}里唱歌，虽然有些地方唱得有些僵硬，但知道只有不断努力才能变得更加自如自信。"
 msgstr ""
 
-#: .\data\talk\play\singing.csv:210
+#: .\data\talk\play\singing.csv:209
 msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些疲惫，但相信只要多加练习，就能让歌声更加充满活力。"
 msgstr ""
 
