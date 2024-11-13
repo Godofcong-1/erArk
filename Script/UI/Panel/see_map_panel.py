@@ -49,6 +49,7 @@ class SeeMapPanel:
             # 2: entertainmentSceneNamePanel(self.now_map, self.width),
         }
         move_menu_panel = MoveMenuPanel(self.width)
+        first_position = cache.character_data[0].position
         while 1:
             line_feed.draw()
             if cache.now_panel_id != constant.Panel.SEE_MAP:
@@ -57,7 +58,8 @@ class SeeMapPanel:
                 self.now_map.pop()
             # 更新当前地图
             character_data: game_type.Character = cache.character_data[0]
-            self.now_map = map_handle.get_map_for_path(character_data.position)
+            if character_data.position != first_position:
+                self.now_map = map_handle.get_map_for_path(character_data.position)
             # 获取当前地图数据
             map_path_str = map_handle.get_map_system_path_str_for_list(self.now_map)
             map_data: game_type.Map = cache.map_data[map_path_str]
