@@ -454,19 +454,24 @@ def update_chara_cloth(value, tem_character):
     """
     from Script.Design import clothing
 
-    # 跳过玩家
-    if value.cid == 0:
-        return 0
-    # print(f"debug value.cid = {value.cid}")
-    tem_character = tem_character
-
     # 数据长度不一致时，重置服装数据
     if len(value.cloth.cloth_wear) != len(game_config.config_clothing_type):
         value.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
     if len(value.cloth.cloth_locker_in_shower) != len(game_config.config_clothing_type):
         value.cloth.cloth_locker_in_shower = attr_calculation.get_shower_cloth_locker_zero()
-    if len(value.cloth.cloth_locker_in_shower) != len(game_config.config_clothing_type):
+    if len(value.cloth.cloth_locker_in_dormitory) != len(game_config.config_clothing_type):
         value.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+    empty_dirty_data = attr_calculation.get_zero_dirty()
+    if len(value.dirty.cloth_semen) != len(game_config.config_clothing_type):
+        value.dirty.cloth_semen = empty_dirty_data.cloth_semen
+    if len(value.dirty.cloth_locker_semen) != len(game_config.config_clothing_type):
+        value.dirty.cloth_locker_semen = empty_dirty_data.cloth_locker_semen
+
+    # 跳过玩家
+    if value.cid == 0:
+        return 0
+    # print(f"debug value.cid = {value.cid}")
+    tem_character = tem_character
 
     # 判断是否需要重置服装数据
     reset_cloth_flag = False
