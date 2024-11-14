@@ -661,6 +661,8 @@ class Premise:
     """ 时间_角色 NPC今天还没有洗澡 """
     HAVE_SHOWERED = "ai_have_showered"
     """ 时间_角色 NPC今天已经洗过澡了 """
+    HAVE_NOT_WAKE_UP = "ai_have_not_wake_up"
+    """ 时间_角色 NPC今天还没有起床 """
 
     TIME_DAY = "time_day"
     """ 时间_当前 时间:白天（6点~18点） """

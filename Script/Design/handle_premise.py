@@ -978,6 +978,23 @@ def handle_have_showered(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.HAVE_NOT_WAKE_UP)
+def handle_have_not_wake_up(character_id: int) -> int:
+    """
+    NPC今天还没有起床
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = cache.game_time
+    wake_up_time = character_data.action_info.wake_time
+    if wake_up_time.day != now_time.day:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IS_MAN)
 def handle_is_man(character_id: int) -> int:
     """

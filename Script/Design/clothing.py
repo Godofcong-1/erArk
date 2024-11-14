@@ -53,12 +53,12 @@ def get_cloth_from_dormitory_locker(character_id: int):
             character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
             character_data.cloth.cloth_wear = character_data.cloth.cloth_locker_in_dormitory
             character_data.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+            # 换内衣内裤
+            get_underwear(character_id)
         # 宿舍衣柜中没有衣服的话，根据csv穿衣服
         else:
             get_npc_cloth(character_id)
 
-    # 换内衣内裤
-    get_underwear(character_id)
     # 将衣柜里的衣服精液转移到穿着的衣服上
     locker_cloth_semen_to_wear_cloth_semen(character_id)
     # 穿特殊服装

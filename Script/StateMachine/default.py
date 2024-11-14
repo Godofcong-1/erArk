@@ -1990,6 +1990,8 @@ def character_get_chara_normal_cloth_and_day_equip(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_ARDER
+    # 记录起床
+    character_data.action_info.wake_time = cache.game_time
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH)
