@@ -38245,15 +38245,15 @@ msgid "{Name}触发了C强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:16
-msgid "{Name}触发了射精的地文"
+msgid "{Name}的阴茎颤抖着，射出了白浊的精液"
 msgstr ""
 
 #: .\data\talk\system\second.csv:17
-msgid "{Name}触发了大量射精的地文"
+msgid "{Name}的阴茎惊人般的臌胀着，用难以想象的势头射出了一大滩精液\n精液刺鼻的气味浸染了整个房间，让人不仅被这股淫霏的氛围所包围"
 msgstr ""
 
 #: .\data\talk\system\second.csv:18
-msgid "{Name}触发了超大量射精的地文"
+msgid "在冲刷神经般的快感下，{Name}的阴茎涨大到平常的两倍，粗壮的巨龙上凸出条条青筋\n再也忍不住的{Name}放开了精关，猛烈地射出的白浊精液就像是没有尽头的水枪一样，带着强烈的冲击力从龟头中喷射而出\n然而积攒已久的快感并没有因此而消散，一波又一波的精液持续地从阴茎中射出，让人难以想象这些精液到底来自哪里\n最终，随着最后一大波精液的射出，{Name}的头脑中一片空白，傲立的阴茎总算恢复了原状"
 msgstr ""
 
 #: .\data\talk\system\second.csv:19
@@ -38385,15 +38385,15 @@ msgid "{Name}完全将{PlayerName}视为了仇人，但如果能够善用某种�
 msgstr ""
 
 #: .\data\talk\system\second.csv:52
-msgid "{Name}触发了失去初吻的地文"
+msgid "{Name}被{PlayerName}夺走了初吻\n第一次和别人接吻，{Name}的心情无法平静，心跳加速，脸颊泛红，终于品味到了初吻的滋味"
 msgstr ""
 
 #: .\data\talk\system\second.csv:53
-msgid "{Name}触发了失去处女的地文"
+msgid "{Name}被{PlayerName}夺走了纯洁的处女之身\n剧烈的破瓜之痛让{Name}的身体无意识地绷紧，随着处子血的流出，{Name}也逐渐开始适应这种疼痛，以及与疼痛一起涌上来的奇妙快感\n{Name}的人生被烙上了{PlayerName}的印记"
 msgstr ""
 
 #: .\data\talk\system\second.csv:54
-msgid "{Name}触发了失去A处女的地文"
+msgid "{Name}被{PlayerName}夺走了后穴的第一次\n虽然这里并不是性器官，但是在疼痛之外，{Name}还是感受到了奇妙的快感，这种不正常的快感让{Name}的身体打开了一扇新的大门"
 msgstr ""
 
 #: .\data\talk\system\second.csv:55
