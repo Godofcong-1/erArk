@@ -292,7 +292,10 @@ class Ejaculation_Panel:
         elif not cache.system_setting[4]:
             now_position = target_data.h_state.insert_position
             if now_position != -1:
-                self.shoot_here(now_position, 0)
+                if now_position < 20:
+                    self.shoot_here(now_position, 0)
+                else:
+                    self.shoot_here(now_position - 20, 1)
         # 手动选择射精部位
         else:
             title_name = _("射精部位选择")

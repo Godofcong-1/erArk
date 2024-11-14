@@ -2551,3 +2551,23 @@ def handle_target_add_1_be_hypnosis_sex_experience(
     if not add_time:
         return
     base_chara_experience_common_settle(character_id, 127, target_flag = True, change_data = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_1_CLOTH_JOB_EXPERIENCE)
+def handle_target_add_1_cloth_job_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象增加1服装交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    base_chara_experience_common_settle(character_id, 47, target_flag = True, change_data = change_data)

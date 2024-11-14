@@ -1,0 +1,6 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,716,0,high_1,{Name}把阴茎插入了{TargetName}穿着的胸衣里，感受着胸衣的布料与胸部的柔软双重包裹与摩擦阴茎的触感

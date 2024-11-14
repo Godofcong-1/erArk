@@ -37644,6 +37644,10 @@ msgstr ""
 msgid "{Name}触发了排卵促进药指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\corset_job.csv:6
+msgid "{Name}把阴茎插入了{TargetName}穿着的胸衣里，感受着胸衣的布料与胸部的柔软双重包裹与摩擦阴茎的触感"
+msgstr ""
+
 #: .\data\talk\sex\cunnilingus.csv:6
 msgid "{Name}触发了舔阴指令的地文"
 msgstr ""
@@ -37662,6 +37666,10 @@ msgstr ""
 
 #: .\data\talk\sex\do_h_fail.csv:6
 msgid "{Name}触发了H失败指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\ear_ornament_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的耳饰上摩擦，感受着耳饰与耳朵摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\electric_message_stick.csv:6
@@ -37780,6 +37788,14 @@ msgstr ""
 msgid "{Name}触发了给对方口交指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\glasses_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的眼镜上摩擦，感受着镜面和镜腿摩擦阴茎的触感"
+msgstr ""
+
+#: .\data\talk\sex\gloves_job.csv:6
+msgid "{Name}把阴茎插进了{TargetName}戴着的手套里，感受着手套的布料与手部的皮肤双重包裹与摩擦阴茎的触感"
+msgstr ""
+
 #: .\data\talk\sex\group_sex_end.csv:6
 msgid "{Name}结束了和{TargetName}等人的一起H。"
 msgstr ""
@@ -37794,6 +37810,10 @@ msgstr ""
 
 #: .\data\talk\sex\hand_blowjob.csv:6
 msgid "{Name}触发了手交口交指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\hat_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的帽子上摩擦，感受着帽子的布料包裹和摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\horn_rub.csv:6
@@ -37846,6 +37866,14 @@ msgstr ""
 
 #: .\data\talk\sex\milking_machine_on.csv:6
 msgid "{Name}触发了装上搾乳机指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\mouth_ornament_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的口罩上摩擦，感受着口罩的布料包裹和摩擦阴茎的触感"
+msgstr ""
+
+#: .\data\talk\sex\neck_ornament_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的脖饰上摩擦，感受着脖饰与脖子摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\nipples_love_egg.csv:6
@@ -38020,12 +38048,24 @@ msgstr ""
 msgid "{Name}触发了羞耻play指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\shoes_job.csv:6
+msgid "{Name}把阴茎插进了{TargetName}脱下的鞋子里，感受着鞋尖、鞋面和鞋垫包裹与摩擦阴茎的触感"
+msgstr ""
+
 #: .\data\talk\sex\sixty_nine.csv:6
 msgid "{Name}触发了六九式指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\skirt_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的裙子上摩擦，感受着裙子的布料包裹和摩擦阴茎的触感"
+msgstr ""
+
 #: .\data\talk\sex\sleeping_pills.csv:6
 msgid "{Name}触发了安眠药指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\socks_job.csv:6
+msgid "{Name}把阴茎插进了{TargetName}穿着的袜子里，感受着袜子的布料与腿部的皮肤双重包裹与摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\spanking.csv:6
@@ -38056,12 +38096,24 @@ msgstr ""
 msgid "{Name}触发了乳交口交指令的地文"
 msgstr ""
 
+#: .\data\talk\sex\top_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的上衣上摩擦，感受着上衣的布料包裹和摩擦阴茎的触感"
+msgstr ""
+
+#: .\data\talk\sex\trousers_job.csv:6
+msgid "{Name}的阴茎在{TargetName}的裤子上摩擦，感受着裤子的布料包裹和摩擦阴茎的触感"
+msgstr ""
+
 #: .\data\talk\sex\twiddle_nipples.csv:6
 msgid "{Name}触发了玩弄乳头指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\t_h_hp_0.csv:6
 msgid "{Name}触发了H时{TargetName}体力为零中断的地文"
+msgstr ""
+
+#: .\data\talk\sex\underwear_job.csv:6
+msgid "{Name}把阴茎插进了{TargetName}穿着的内裤里，感受着内裤的布料与阴部和大腿的皮肤双重包裹与摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\urethral_finger_insertion.csv:6
@@ -38090,6 +38142,10 @@ msgstr ""
 
 #: .\data\talk\sex\vibrator_insertion_anal.csv:6
 msgid "{Name}触发了肛门振动棒指令的地文"
+msgstr ""
+
+#: .\data\talk\sex\weapons_job.csv:6
+msgid "{Name}阴茎小心翼翼地摩擦{TargetName}武器的护手与没有尖锐和开锋的其他部分，感受着不同材质包裹与摩擦阴茎的触感"
 msgstr ""
 
 #: .\data\talk\sex\womb_insertion.csv:6
@@ -38425,430 +38481,486 @@ msgid "{Name}触发了W超强绝顶的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:80
-msgid "\n{Name}触发了利尿剂持续使用中的地文"
+msgid "\n{Name}体内的利尿剂发挥着作用，让{Name}不断地想要上厕所"
 msgstr ""
 
 #: .\data\talk\system\second.csv:81
-msgid "\n{Name}触发了安眠药持续使用中的地文"
+msgid "\n{Name}体内的安眠药发挥着作用，让{Name}保持在深度的昏睡中"
 msgstr ""
 
 #: .\data\talk\system\second.csv:82
-msgid "\n{Name}触发了排卵促进药持续使用中的地文"
+msgid "\n{Name}体内的排卵促进药发挥着作用，让{Name}的身体做好了排卵的准备"
 msgstr ""
 
 #: .\data\talk\system\second.csv:83
-msgid "\n{Name}触发了事前避孕药持续使用中的地文"
+msgid "\n{Name}体内的事前避孕药发挥着作用，让{Name}的身体不会怀孕"
 msgstr ""
 
 #: .\data\talk\system\second.csv:84
-msgid "\n{Name}触发了事后避孕药持续使用中的地文"
+msgid "\n{Name}体内的事后避孕药发挥着作用，让{Name}的身体不会怀孕"
 msgstr ""
 
 #: .\data\talk\system\second.csv:86
-msgid "\n{Name}触发了发交中的地文"
+msgid "\n{Name}的头发缠绕在{PlayerName}的阴茎上，不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:87
-msgid "\n{Name}触发了阴茎蹭脸中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的脸上蹭来蹭去，让{PlayerName}感觉到异常的快感和征服感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:88
-msgid "\n{Name}触发了口交中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的口中不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:89
-msgid "\n{Name}触发了乳交中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的双乳间不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:90
-msgid "\n{Name}触发了腋交中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的腋下不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:91
-msgid "\n{Name}触发了手交中的地文"
+msgid "\n{Name}的手温柔地握在{PlayerName}的阴茎上，不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:92
-msgid "\n{Name}触发了抽插阴道中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的阴道中不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:93
-msgid "\n{Name}触发了抽插子宫中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的子宫里不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:94
-msgid "\n{Name}触发了抽插后穴中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的后穴中不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:95
-msgid "\n{Name}触发了抽插尿道中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的尿道中不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:96
-msgid "\n{Name}触发了腿交中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的双腿间不断抽插着，让{PlayerName}的射精欲望不断升高"
 msgstr ""
 
 #: .\data\talk\system\second.csv:97
-msgid "\n{Name}触发了足交中的地文"
+msgid "\n{Name}的双脚温柔地夹住{PlayerName}的阴茎，不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:98
-msgid "\n{Name}触发了尾交中的地文"
+msgid "\n{Name}的尾巴紧紧地缠绕住{PlayerName}的阴茎，不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:99
-msgid "\n{Name}触发了阴茎蹭角中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的角上蹭来蹭去，让{PlayerName}感觉到异常的快感和征服感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:100
-msgid "\n{Name}触发了阴茎蹭耳朵中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的兽耳上蹭来蹭去，让{PlayerName}感觉到异常的快感和征服感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:101
-msgid "\n{Name}触发了素股中的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的股间蹭来蹭去，让{PlayerName}感觉到异常的快感和征服感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:103
-msgid "\n{Name}触发了N绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的帽子上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:104
-msgid "\n{Name}触发了B绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的眼镜上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:105
-msgid "\n{Name}触发了C绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的耳饰上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:106
-msgid "\n{Name}触发了射精被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的脖饰上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:107
-msgid "\n{Name}触发了V绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的口罩上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:108
-msgid "\n{Name}触发了A绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的上衣上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:109
-msgid "\n{Name}触发了U绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的胸衣里不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:110
-msgid "\n{Name}触发了W绝顶被寸止的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的手套上不断摩擦着，让{PlayerName}感到异常的快感"
+msgstr ""
+
+#: .\data\talk\system\second.csv:111
+msgid "\n{PlayerName}的阴茎在{Name}的裙子上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:112
-msgid "\n{Name}触发了获得[思慕]的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的内裤里不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:113
-msgid "\n{Name}触发了获得[恋慕]的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的袜子里不断抽插着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:114
-msgid "\n{Name}触发了获得[恋人]的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的鞋子里不断抽插着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:115
-msgid "\n{Name}触发了获得[爱侣]的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的武器上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:116
-msgid "\n{Name}触发了获得[屈从]的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:117
-msgid "\n{Name}触发了获得[驯服]的地文"
+msgid "\n{PlayerName}的阴茎在{Name}的裤子上不断摩擦着，让{PlayerName}感到异常的快感"
 msgstr ""
 
 #: .\data\talk\system\second.csv:118
-msgid "\n{Name}触发了获得[宠物]的地文"
+msgid "\n{Name}触发了N绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:119
-msgid "\n{Name}触发了获得[奴隶]的地文"
+msgid "\n{Name}触发了B绝顶被寸止的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:120
+msgid "\n{Name}触发了C绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:121
-msgid "\n{Name}进行了初次见面的问候\n{Name}介绍了自己的名字、出身、特长、负责职务等基本信息，并和{PlayerName}简单交流了一些在岛上生活与工作的注意事项"
+msgid "\n{Name}触发了射精被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:122
-msgid "\n{Name}对{PlayerName}打了个招呼"
+msgid "\n{Name}触发了V绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:123
-msgid "\n{Name}对{PlayerName}问候了一声早安"
+msgid "\n{Name}触发了A绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:124
-msgid "\n{Name}对{PlayerName}问候了一声午安"
+msgid "\n{Name}触发了U绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:125
-msgid "\n{Name}对{PlayerName}问候了一声晚安"
-msgstr ""
-
-#: .\data\talk\system\second.csv:126
-msgid "\n{Name}对{PlayerName}招了招手"
+msgid "\n{Name}触发了W绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:127
-msgid "\n{Name}和{PlayerName}简单寒暄了一下"
+msgid "\n{Name}触发了获得[思慕]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:128
-msgid "\n{Name}和{PlayerName}简单聊了聊天气"
+msgid "\n{Name}触发了获得[恋慕]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:129
-msgid "\n{Name}关心了一下{PlayerName}的近况"
+msgid "\n{Name}触发了获得[恋人]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:130
-msgid "\n{Name}对{PlayerName}问了一声好"
+msgid "\n{Name}触发了获得[爱侣]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:131
-msgid "\n{Name}对{PlayerName}点了点头"
+msgid "\n{Name}触发了获得[屈从]的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:132
+msgid "\n{Name}触发了获得[驯服]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:133
-msgid "\n{Name}看着躺在石棺中的{PlayerName}，从相遇以来的回忆涌上心头\n在完成告别后，{Name}盖上了石棺，发自内心的盼望着下一次的再会"
+msgid "\n{Name}触发了获得[宠物]的地文"
 msgstr ""
 
-#: .\data\talk\system\second.csv:135
-msgid "\n{Name}触发了以队长身份出发执行外勤委托的地文"
+#: .\data\talk\system\second.csv:134
+msgid "\n{Name}触发了获得[奴隶]的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:136
-msgid "\n{Name}触发了以队长身份完成外勤委托归舰的地文"
+msgid "\n{Name}进行了初次见面的问候\n{Name}介绍了自己的名字、出身、特长、负责职务等基本信息，并和{PlayerName}简单交流了一些在岛上生活与工作的注意事项"
 msgstr ""
 
 #: .\data\talk\system\second.csv:137
-msgid "\n{Name}触发了被任命为本地外交官的地文"
+msgid "\n{Name}对{PlayerName}打了个招呼"
 msgstr ""
 
 #: .\data\talk\system\second.csv:138
-msgid "\n{Name}触发了被解除本地外交官的任命的地文"
+msgid "\n{Name}对{PlayerName}问候了一声早安"
 msgstr ""
 
 #: .\data\talk\system\second.csv:139
-msgid "\n{Name}触发了被任命为外派外交官的地文"
+msgid "\n{Name}对{PlayerName}问候了一声午安"
 msgstr ""
 
 #: .\data\talk\system\second.csv:140
-msgid "\n{Name}触发了被解除外派外交官的任命的地文"
+msgid "\n{Name}对{PlayerName}问候了一声晚安"
+msgstr ""
+
+#: .\data\talk\system\second.csv:141
+msgid "\n{Name}对{PlayerName}招了招手"
 msgstr ""
 
 #: .\data\talk\system\second.csv:142
-msgid "\n{Name}被{PlayerName}任命为助理了，已自动发送了博士房间的房门密钥，接下来她将会从工作和生活等各方面上对{PlayerName}提供帮助"
+msgid "\n{Name}和{PlayerName}简单寒暄了一下"
 msgstr ""
 
 #: .\data\talk\system\second.csv:143
-msgid "\n{Name}被解除了助理的职务，她的各项服务也将会随之停止，也不再持有博士房间的开门密钥了"
+msgid "\n{Name}和{PlayerName}简单聊了聊天气"
 msgstr ""
 
 #: .\data\talk\system\second.csv:144
-msgid "\n{Name}触发了关闭智能跟随的地文"
+msgid "\n{Name}关心了一下{PlayerName}的近况"
 msgstr ""
 
 #: .\data\talk\system\second.csv:145
-msgid "\n{Name}触发了开启智能跟随的地文"
+msgid "\n{Name}对{PlayerName}问了一声好"
 msgstr ""
 
 #: .\data\talk\system\second.csv:146
-msgid "\n虽然为什么会找自己，但{Name}还是快速处理了一下手头上做了一半的事，开始前往博士办公室"
-msgstr ""
-
-#: .\data\talk\system\second.csv:147
-msgid "\n{Name}触发了关闭辅佐服务的地文"
+msgid "\n{Name}对{PlayerName}点了点头"
 msgstr ""
 
 #: .\data\talk\system\second.csv:148
-msgid "\n{PlayerName}身上文书工作的分量有多少，{Name}一直看在眼里\n在确认{PlayerName}确实需要自己来帮忙之后，{Name}的脸上露出了一丝微笑，开始在终端里检查起了日程表和工作安排"
-msgstr ""
-
-#: .\data\talk\system\second.csv:149
-msgid "\n{Name}触发了关闭送饭服务的地文"
+msgid "\n{Name}看着躺在石棺中的{PlayerName}，从相遇以来的回忆涌上心头\n在完成告别后，{Name}盖上了石棺，发自内心的盼望着下一次的再会"
 msgstr ""
 
 #: .\data\talk\system\second.csv:150
-msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
+msgid "\n{Name}触发了以队长身份出发执行外勤委托的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:151
-msgid "\n{Name}触发了开启亲手做午饭服务的地文"
+msgid "\n{Name}触发了以队长身份完成外勤委托归舰的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:152
-msgid "\n{Name}触发了开启亲手做三餐服务的地文"
+msgid "\n{Name}触发了被任命为本地外交官的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:153
-msgid "\n{Name}触发了关闭早安服务的地文"
+msgid "\n{Name}触发了被解除本地外交官的任命的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:154
-msgid "\n{Name}触发了开启早上叫起床服务的地文"
+msgid "\n{Name}触发了被任命为外派外交官的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:155
-msgid "\n{Name}触发了开启早安吻服务的地文"
-msgstr ""
-
-#: .\data\talk\system\second.csv:156
-msgid "\n{Name}触发了开启早安咬服务的地文"
+msgid "\n{Name}触发了被解除外派外交官的任命的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:157
-msgid "\n{Name}触发了关闭晚安服务的地文"
+msgid "\n{Name}被{PlayerName}任命为助理了，已自动发送了博士房间的房门密钥，接下来她将会从工作和生活等各方面上对{PlayerName}提供帮助"
 msgstr ""
 
 #: .\data\talk\system\second.csv:158
-msgid "\n{Name}触发了开启晚上催睡觉服务的地文"
+msgid "\n{Name}被解除了助理的职务，她的各项服务也将会随之停止，也不再持有博士房间的开门密钥了"
 msgstr ""
 
 #: .\data\talk\system\second.csv:159
-msgid "\n{Name}触发了开启晚安吻服务的地文"
+msgid "\n{Name}触发了关闭智能跟随的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:160
-msgid "\n{Name}触发了开启晚安咬服务的地文"
+msgid "\n{Name}触发了开启智能跟随的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:161
-msgid "\n{Name}触发了关闭同居服务的地文"
+msgid "\n虽然为什么会找自己，但{Name}还是快速处理了一下手头上做了一半的事，开始前往博士办公室"
 msgstr ""
 
 #: .\data\talk\system\second.csv:162
-msgid "\n{Name}触发了开启同居服务的地文"
+msgid "\n{Name}触发了关闭辅佐服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:163
-msgid "\n{Name}触发了关闭助攻服务的地文"
+msgid "\n{PlayerName}身上文书工作的分量有多少，{Name}一直看在眼里\n在确认{PlayerName}确实需要自己来帮忙之后，{Name}的脸上露出了一丝微笑，开始在终端里检查起了日程表和工作安排"
 msgstr ""
 
 #: .\data\talk\system\second.csv:164
-msgid "\n{Name}触发了开启助攻服务的地文"
+msgid "\n{Name}触发了关闭送饭服务的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:165
+msgid "\n{Name}触发了开启帮忙买午饭服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:166
-msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的内裤交给博士"
+msgid "\n{Name}触发了开启亲手做午饭服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:167
-msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的袜子交给博士"
+msgid "\n{Name}触发了开启亲手做三餐服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:168
-msgid "\n{Name}同意以后不再穿胸衣了，之后在上衣里面不会再穿胸衣，让胸部仅被上衣稍微遮挡"
+msgid "\n{Name}触发了关闭早安服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:169
-msgid "\n{Name}同意以后睡觉时不穿衣服了，以后睡觉的时候会不再穿睡衣或者睡袍，而是直接裸睡"
+msgid "\n{Name}触发了开启早上叫起床服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:170
-msgid "\n{Name}按照每日上交内裤的约定，脱下了自己穿着的{PanName}，递给了{PlayerName}"
+msgid "\n{Name}触发了开启早安吻服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:171
-msgid "\n{Name}按照每日上交袜子的约定，脱下了自己穿着的{SocName}，递给了{PlayerName}"
+msgid "\n{Name}触发了开启早安咬服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:172
-msgid "\n{Name}同意白天时戴着乳头夹了，以后早上起床后会给自己戴上乳头夹，一整天都戴着行动，在睡觉的时候再摘下来"
+msgid "\n{Name}触发了关闭晚安服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:173
-msgid "\n{Name}同意白天时戴着阴蒂夹了，以后早上起床后会给自己戴上阴蒂夹，一整天都戴着行动，在睡觉的时候再摘下来"
+msgid "\n{Name}触发了开启晚上催睡觉服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:174
-msgid "\n{Name}同意白天时V里插着振动棒了，以后早上起床后会给自己的阴道里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
+msgid "\n{Name}触发了开启晚安吻服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:175
-msgid "\n{Name}同意白天时A里插着振动棒了，以后早上起床后会给自己的菊穴里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
+msgid "\n{Name}触发了开启晚安咬服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:176
-msgid "\n{Name}同意睡觉时戴着乳头夹了，以后晚上睡觉时会给自己戴上乳头夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
+msgid "\n{Name}触发了关闭同居服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:177
-msgid "\n{Name}同意睡觉时戴着阴蒂夹了，以后晚上睡觉时会给自己戴上阴蒂夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
+msgid "\n{Name}触发了开启同居服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:178
-msgid "\n{Name}同意睡觉时V里插着振动棒了，以后晚上睡觉时会给自己的阴道里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
+msgid "\n{Name}触发了关闭助攻服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:179
-msgid "\n{Name}同意睡觉时A里插着振动棒了，以后晚上睡觉时会给自己的菊穴里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
-msgstr ""
-
-#: .\data\talk\system\second.csv:180
-msgid "\n{Name}同意洗澡时不再清洗阴道内的精液了，以后洗澡的时候只对阴道做外部清洁，不再清洗阴道内的精液"
+msgid "\n{Name}触发了开启助攻服务的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:181
-msgid "\n{Name}同意每天晚上睡前都要自慰了，以后每天晚上睡觉前都会自慰一次，直到达到高潮再睡去"
+msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的内裤交给博士"
 msgstr ""
 
 #: .\data\talk\system\second.csv:182
-msgid "\n{Name}同意禁止自慰了，以后无论积攒了多少欲望都不会自慰，除非得到了{PlayerName}的指示"
+msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的袜子交给博士"
 msgstr ""
 
 #: .\data\talk\system\second.csv:183
-msgid "\n{Name}同意进行吮吸与吞咽力练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意以后不再穿胸衣了，之后在上衣里面不会再穿胸衣，让胸部仅被上衣稍微遮挡"
 msgstr ""
 
 #: .\data\talk\system\second.csv:184
-msgid "\n{Name}同意进行腋下夹持力练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意以后睡觉时不穿衣服了，以后睡觉的时候会不再穿睡衣或者睡袍，而是直接裸睡"
 msgstr ""
 
 #: .\data\talk\system\second.csv:185
-msgid "\n{Name}同意进行胸部夹持力练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}按照每日上交内裤的约定，脱下了自己穿着的{PanName}，递给了{PlayerName}"
 msgstr ""
 
 #: .\data\talk\system\second.csv:186
-msgid "\n{Name}同意进行手部灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}按照每日上交袜子的约定，脱下了自己穿着的{SocName}，递给了{PlayerName}"
 msgstr ""
 
 #: .\data\talk\system\second.csv:187
-msgid "\n{Name}同意进行足部灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意白天时戴着乳头夹了，以后早上起床后会给自己戴上乳头夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:188
-msgid "\n{Name}同意进行阴道紧致度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意白天时戴着阴蒂夹了，以后早上起床后会给自己戴上阴蒂夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:189
-msgid "\n{Name}同意进行肠道紧致度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意白天时V里插着振动棒了，以后早上起床后会给自己的阴道里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:190
-msgid "\n{Name}同意进行尾巴灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意白天时A里插着振动棒了，以后早上起床后会给自己的菊穴里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:191
-msgid "\n{Name}同意进行触手灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgid "\n{Name}同意睡觉时戴着乳头夹了，以后晚上睡觉时会给自己戴上乳头夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
+msgstr ""
+
+#: .\data\talk\system\second.csv:192
+msgid "\n{Name}同意睡觉时戴着阴蒂夹了，以后晚上睡觉时会给自己戴上阴蒂夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:193
-msgid "\n{Name}触发了获得[已催眠·浅]的地文"
+msgid "\n{Name}同意睡觉时V里插着振动棒了，以后晚上睡觉时会给自己的阴道里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:194
-msgid "\n{Name}触发了获得[已催眠·深]的地文"
+msgid "\n{Name}同意睡觉时A里插着振动棒了，以后晚上睡觉时会给自己的菊穴里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
 #: .\data\talk\system\second.csv:195
+msgid "\n{Name}同意洗澡时不再清洗阴道内的精液了，以后洗澡的时候只对阴道做外部清洁，不再清洗阴道内的精液"
+msgstr ""
+
+#: .\data\talk\system\second.csv:196
+msgid "\n{Name}同意每天晚上睡前都要自慰了，以后每天晚上睡觉前都会自慰一次，直到达到高潮再睡去"
+msgstr ""
+
+#: .\data\talk\system\second.csv:197
+msgid "\n{Name}同意禁止自慰了，以后无论积攒了多少欲望都不会自慰，除非得到了{PlayerName}的指示"
+msgstr ""
+
+#: .\data\talk\system\second.csv:198
+msgid "\n{Name}同意进行吮吸与吞咽力练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:199
+msgid "\n{Name}同意进行腋下夹持力练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:200
+msgid "\n{Name}同意进行胸部夹持力练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:201
+msgid "\n{Name}同意进行手部灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:202
+msgid "\n{Name}同意进行足部灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:203
+msgid "\n{Name}同意进行阴道紧致度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:204
+msgid "\n{Name}同意进行肠道紧致度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:205
+msgid "\n{Name}同意进行尾巴灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:206
+msgid "\n{Name}同意进行触手灵活度练习了，收下了{PlayerName}的倒模练习用具"
+msgstr ""
+
+#: .\data\talk\system\second.csv:208
+msgid "\n{Name}触发了获得[已催眠·浅]的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:209
+msgid "\n{Name}触发了获得[已催眠·深]的地文"
+msgstr ""
+
+#: .\data\talk\system\second.csv:210
 msgid "\n{Name}触发了获得[已催眠·极]的地文"
 msgstr ""
 

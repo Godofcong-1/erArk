@@ -511,15 +511,15 @@ class CharacterStatus:
     STATUS_NECK_ORNAMENT_JOB = 713
     """ 脖饰交 """
     STATUS_MOUTH_ORNAMENT_JOB = 714
-    """ 口饰交 """
+    """ 口罩交 """
     STATUS_TOP_JOB = 715
     """ 上衣交 """
     STATUS_CORSET_JOB = 716
     """ 胸衣交 """
     STATUS_GLOVES_JOB = 717
     """ 手套交 """
-    STATUS_BOTTOM_JOB = 718
-    """ 下衣交 """
+    STATUS_SKIRT_JOB = 718
+    """ 裙子交 """
     STATUS_UNDERWEAR_JOB = 719
     """ 内裤交 """
     STATUS_SOCKS_JOB = 720
@@ -528,6 +528,8 @@ class CharacterStatus:
     """ 鞋子交 """
     STATUS_WEAPONS_JOB = 722
     """ 武器交 """
+    STATUS_TROUSERS_JOB = 723
+    """ 裤子交 """
     STATUS_ORGASM_EDGE_ON = 751
     """ 绝顶寸止 """
     STATUS_ORGASM_EDGE_OFF = 752
@@ -1149,6 +1151,7 @@ class Behavior:
 
     UNDRESS = 701
     """ 脱衣服 """
+
     HAT_JOB = 710
     """ 帽子交 """
     GLASSES_JOB = 711
@@ -1158,15 +1161,15 @@ class Behavior:
     NECK_ORNAMENT_JOB = 713
     """ 脖饰交 """
     MOUTH_ORNAMENT_JOB = 714
-    """ 口饰交 """
+    """ 口罩交 """
     TOP_JOB = 715
     """ 上衣交 """
     CORSET_JOB = 716
     """ 胸衣交 """
     GLOVES_JOB = 717
     """ 手套交 """
-    BOTTOM_JOB = 718
-    """ 下衣交 """
+    SKIRT_JOB = 718
+    """ 裙子交 """
     UNDERWEAR_JOB = 719
     """ 内裤交 """
     SOCKS_JOB = 720
@@ -1175,6 +1178,9 @@ class Behavior:
     """ 鞋子交 """
     WEAPONS_JOB = 722
     """ 武器交 """
+    TROUSERS_JOB = 723
+    """ 裤子交 """
+
     ORGASM_EDGE_ON = 751
     """ 绝顶寸止 """
     ORGASM_EDGE_OFF = 752
@@ -1893,6 +1899,35 @@ class SecondBehavior:
     PENIS_IN_RUB_BUTTOCK = 1216
     """ 结算素股中 """
 
+    PENIS_IN_HAT_JOB = 1221
+    """ 结算帽子交中 """
+    PENIS_IN_GLASSES_JOB = 1222
+    """ 结算眼镜交中 """
+    PENIS_IN_EAR_ORNAMENT_JOB = 1223
+    """ 结算耳饰交中 """
+    PENIS_IN_NECK_ORNAMENT_JOB = 1224
+    """ 结算脖饰交中 """
+    PENIS_IN_MOUTH_ORNAMENT_JOB = 1225
+    """ 结算口罩交中 """
+    PENIS_IN_TOP_JOB = 1226
+    """ 结算上衣交中 """
+    PENIS_IN_CORSET_JOB = 1227
+    """ 结算胸衣交中 """
+    PENIS_IN_GLOVES_JOB = 1228
+    """ 结算手套交中 """
+    PENIS_IN_SKIRT_JOB = 1229
+    """ 结算裙子交中 """
+    PENIS_IN_UNDERWEAR_JOB = 1230
+    """ 结算内裤交中 """
+    PENIS_IN_SOCKS_JOB = 1231
+    """ 结算袜子交中 """
+    PENIS_IN_SHOES_JOB = 1232
+    """ 结算鞋子交中 """
+    PENIS_IN_WEAPONS_JOB = 1233
+    """ 结算武器交中 """
+    PENIS_IN_TROUSERS_JOB = 1234
+    """ 结算裤子交中 """
+
     N_ORGASM_SUPER = 1250
     """ 结算N绝顶被寸止 """
     B_ORGASM_SUPER = 1251
@@ -2549,15 +2584,17 @@ class Instruct:
     NECK_ORNAMENT_JOB = 0
     """ 脖饰交 """
     MOUTH_ORNAMENT_JOB = 0
-    """ 口饰交 """
+    """ 口罩交 """
     TOP_JOB = 0
     """ 上衣交 """
     CORSET_JOB = 0
     """ 胸衣交 """
     GLOVES_JOB = 0
     """ 手套交 """
-    BOTTOM_JOB = 0
-    """ 下衣交 """
+    SKIRT_JOB = 0
+    """ 裙子交 """
+    TROUSERS_JOB = 0
+    """ 裤子交 """
     UNDERWEAR_JOB = 0
     """ 内裤交 """
     SOCKS_JOB = 0

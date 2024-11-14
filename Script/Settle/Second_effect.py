@@ -840,7 +840,7 @@ def handle_add_small_p_feel(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加少量射精值（P感补正）
+    增加玩家少量射精值（P感补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

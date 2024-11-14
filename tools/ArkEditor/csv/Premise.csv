@@ -331,6 +331,7 @@ ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=
 ai_trained,HAVE_TRAINED,时间_角色,NPC距离上次战斗训练已经超过两天了
 ai_not_shower,NOT_SHOWER,时间_角色,NPC今天还没有洗澡
 ai_have_showered,HAVE_SHOWERED,时间_角色,NPC今天已经洗过澡了
+ai_have_not_wake_up,HAVE_NOT_WAKE_UP,时间_角色,NPC今天还没有起床
 
 time_day,TIME_DAY,时间_当前,时间:白天（6点~18点）
 time_night,TIME_NIGHT,时间_当前,时间:夜晚（18点~6点）

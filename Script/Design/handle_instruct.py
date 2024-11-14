@@ -952,7 +952,7 @@ def handle_time_stop_off():
 @add_instruct(
     constant.Instruct.TARGET_FREE_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("对方在时停中获得自由"),
+    _("对方在时停中获得自由_未实装"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -969,7 +969,7 @@ def handle_target_free_in_time_stop():
 @add_instruct(
     constant.Instruct.TARGET_STOP_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("对方在时停中再次停止"),
+    _("对方在时停中再次停止_未实装"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -1480,7 +1480,7 @@ def handle_originium_arts():
 @add_instruct(
     constant.Instruct.CHARA_DIY_INSTRUCT,
     constant.InstructType.SYSTEM,
-    _("角色特殊指令"),
+    _("角色特殊指令_特殊调用"),
     {
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.HAVE_TARGET,
@@ -1967,7 +1967,7 @@ def handle_do_h_in_love_hotel():
 @add_instruct(
     constant.Instruct.ASK_GROUP_SEX,
     constant.InstructType.OBSCENITY,
-    _("邀请多P"),
+    _("邀请多P_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -3392,7 +3392,7 @@ def handle_try_pl_active_h():
 @add_instruct(
     constant.Instruct.SEDECU,
     constant.InstructType.SEX,
-    _("诱惑对方"),
+    _("诱惑对方_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -3730,15 +3730,209 @@ def handle_eras_rub():
     constant.InstructType.SEX,
     _("帽子交"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_WEAR_HAT},
     constant.SexInstructSubType.WAIT_UPON,
 )
-def handle_eras_rub():
+def handle_hat_job():
     """处理帽子交指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HAT_JOB)
+
+
+@add_instruct(
+    constant.Instruct.GLASSES_JOB,
+    constant.InstructType.SEX,
+    _("眼镜交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_GLASS},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_glasses_job():
+    """处理眼镜交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GLASSES_JOB)
+
+
+@add_instruct(
+    constant.Instruct.EAR_ORNAMENT_JOB,
+    constant.InstructType.SEX,
+    _("耳饰交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_IN_EAR},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_ear_ornament_job():
+    """处理耳饰交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_EAR_ORNAMENT_JOB)
+
+
+@add_instruct(
+    constant.Instruct.NECK_ORNAMENT_JOB,
+    constant.InstructType.SEX,
+    _("脖饰交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_IN_NECK},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_neck_ornament_job():
+    """处理脖饰交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_NECK_ORNAMENT_JOB)
+
+
+@add_instruct(
+    constant.Instruct.MOUTH_ORNAMENT_JOB,
+    constant.InstructType.SEX,
+    _("口罩交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_IN_MOUSE},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_mouth_ornament_job():
+    """处理口罩交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_MOUTH_ORNAMENT_JOB)
+
+
+@add_instruct(
+    constant.Instruct.TOP_JOB,
+    constant.InstructType.SEX,
+    _("上衣交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_IN_UP},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_top_job():
+    """处理上衣交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TOP_JOB)
+
+
+@add_instruct(
+    constant.Instruct.CORSET_JOB,
+    constant.InstructType.SEX,
+    _("胸衣交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_BRA},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_corset_job():
+    """处理胸衣交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CORSET_JOB)
+
+
+@add_instruct(
+    constant.Instruct.GLOVES_JOB,
+    constant.InstructType.SEX,
+    _("手套交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_GLOVES},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_gloves_job():
+    """处理手套交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GLOVES_JOB)
+
+
+@add_instruct(
+    constant.Instruct.SKIRT_JOB,
+    constant.InstructType.SEX,
+    _("裙子交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_SKIRT},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_skirt_job():
+    """处理裙子交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SKIRT_JOB)
+
+
+@add_instruct(
+    constant.Instruct.TROUSERS_JOB,
+    constant.InstructType.SEX,
+    _("裤子交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_TROUSERS},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_trousers_job():
+    """处理裤子交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TROUSERS_JOB)
+
+
+@add_instruct(
+    constant.Instruct.UNDERWEAR_JOB,
+    constant.InstructType.SEX,
+    _("内裤交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_PAN},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_underwear_job():
+    """处理内裤交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_UNDERWEAR_JOB)
+
+
+@add_instruct(
+    constant.Instruct.SOCKS_JOB,
+    constant.InstructType.SEX,
+    _("袜子交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_SOCKS},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_socks_job():
+    """处理袜子交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SOCKS_JOB)
+
+
+@add_instruct(
+    constant.Instruct.SHOES_JOB,
+    constant.InstructType.SEX,
+    _("鞋子交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_WEAR_SHOES},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_shoes_job():
+    """处理鞋子交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SHOES_JOB)
+
+
+@add_instruct(
+    constant.Instruct.WEAPONS_JOB,
+    constant.InstructType.SEX,
+    _("武器交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_TAKE_WEAPON},
+    constant.SexInstructSubType.WAIT_UPON,
+)
+def handle_weapons_job():
+    """处理武器交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WEAPONS_JOB)
 
 
 @add_instruct(
@@ -4124,7 +4318,7 @@ def handle_urine_collector_off():
 @add_instruct(
     constant.Instruct.BONDAGE,
     constant.InstructType.SEX,
-    _("绳子"),
+    _("绳子_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -4147,7 +4341,7 @@ def handle_bondage():
 @add_instruct(
     constant.Instruct.PATCH,
     constant.InstructType.SEX,
-    _("眼罩"),
+    _("眼罩_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -4163,7 +4357,7 @@ def handle_patch():
 @add_instruct(
     constant.Instruct.WHIP,
     constant.InstructType.SEX,
-    _("鞭子"),
+    _("鞭子_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -4186,7 +4380,7 @@ def handle_whip():
 @add_instruct(
     constant.Instruct.NEEDLE,
     constant.InstructType.SEX,
-    _("针"),
+    _("针_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -4239,7 +4433,7 @@ def handle_take_condom_out():
 @add_instruct(
     constant.Instruct.SAFE_CANDLES,
     constant.InstructType.SEX,
-    _("滴蜡"),
+    _("滴蜡_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
@@ -5179,7 +5373,7 @@ def handle_beat_breast():
 @add_instruct(
     constant.Instruct.SPANKING,
     constant.InstructType.SEX,
-    _("打屁股"),
+    _("打屁股_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TO_DO,

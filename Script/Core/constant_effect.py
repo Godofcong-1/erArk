@@ -483,6 +483,8 @@ class BehaviorEffect:
     """ 属性_经验 增加1被催眠姦经验 """
     TARGET_ADD_1_be_Hypnosis_Sex_EXPERIENCE = 360
     """ 属性_经验 交互对象增加1被催眠姦经验 """
+    TARGET_ADD_1_CLOTH_JOB_EXPERIENCE = 361
+    """ 属性_经验 交互对象增加1服装交经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
@@ -731,44 +733,72 @@ class BehaviorEffect:
     MOVE_TO_PRE_SCENE = 761
     """ 系统量_地点 角色移动至前一场景 """
 
-    PENIS_IN_T_RESET = 801
-    """ H_阴茎位置 当前阴茎位置为交互对象_双方归零 """
-    PENIS_IN_T_HAIR = 802
-    """ H_阴茎位置 当前阴茎位置为交互对象_发交中 """
-    PENIS_IN_T_FACE = 803
-    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭脸中 """
-    PENIS_IN_T_MOUSE = 804
-    """ H_阴茎位置 当前阴茎位置为交互对象_口交中 """
-    PENIS_IN_T_BREAST = 805
-    """ H_阴茎位置 当前阴茎位置为交互对象_乳交中 """
-    PENIS_IN_T_AXILLA = 806
-    """ H_阴茎位置 当前阴茎位置为交互对象_腋交中 """
-    PENIS_IN_T_HAND = 807
-    """ H_阴茎位置 当前阴茎位置为交互对象_手交中 """
-    PENIS_IN_T_VAGINA = 808
-    """ H_阴茎位置 当前阴茎位置为交互对象_V插入中 """
-    PENIS_IN_T_WOMB = 809
-    """ H_阴茎位置 当前阴茎位置为交互对象_W插入中 """
-    PENIS_IN_T_ANAL = 810
-    """ H_阴茎位置 当前阴茎位置为交互对象_A插入中 """
-    PENIS_IN_T_URETHRAL = 811
-    """ H_阴茎位置 当前阴茎位置为交互对象_U插入中 """
-    PENIS_IN_T_LEG = 812
-    """ H_阴茎位置 当前阴茎位置为交互对象_腿交中 """
-    PENIS_IN_T_FOOT = 813
-    """ H_阴茎位置 当前阴茎位置为交互对象_足交中 """
-    PENIS_IN_T_TAIL = 814
-    """ H_阴茎位置 当前阴茎位置为交互对象_尾交中 """
-    PENIS_IN_T_HORN = 815
-    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭角中 """
-    PENIS_IN_T_EARS = 816
-    """ H_阴茎位置 当前阴茎位置为交互对象_阴茎蹭耳朵中 """
-    SCENE_ALL_CHARACTERS_PENIS_IN_RESET = 821
+    SCENE_ALL_CHARACTERS_PENIS_IN_RESET = 800
     """ H_阴茎位置 场景内所有角色的当前阴茎位置归零 """
-    CANCEL_PENIS_IN_FACE_OR_MOUSE = 831
+    PENIS_IN_T_RESET = 801
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_双方归零 """
+    PENIS_IN_T_HAIR = 802
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_发交中 """
+    PENIS_IN_T_FACE = 803
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_阴茎蹭脸中 """
+    PENIS_IN_T_MOUSE = 804
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_口交中 """
+    PENIS_IN_T_BREAST = 805
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_乳交中 """
+    PENIS_IN_T_AXILLA = 806
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_腋交中 """
+    PENIS_IN_T_HAND = 807
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_手交中 """
+    PENIS_IN_T_VAGINA = 808
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_V插入中 """
+    PENIS_IN_T_WOMB = 809
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_W插入中 """
+    PENIS_IN_T_ANAL = 810
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_A插入中 """
+    PENIS_IN_T_URETHRAL = 811
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_U插入中 """
+    PENIS_IN_T_LEG = 812
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_腿交中 """
+    PENIS_IN_T_FOOT = 813
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_足交中 """
+    PENIS_IN_T_TAIL = 814
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_尾交中 """
+    PENIS_IN_T_HORN = 815
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_阴茎蹭角中 """
+    PENIS_IN_T_EARS = 816
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_阴茎蹭耳朵中 """
+    PENIS_IN_T_HAT = 821
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_帽子交中 """
+    PENIS_IN_T_GLASSES = 822
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_眼镜交中 """
+    PENIS_IN_T_EAR_ORNAMENT = 823
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_耳饰交中 """
+    PENIS_IN_T_NECK_ORNAMENT = 824
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_脖饰交中 """
+    PENIS_IN_T_MOUTH_ORNAMENT = 825
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_口罩交中 """
+    PENIS_IN_T_TOP = 826
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_上衣交中 """
+    PENIS_IN_T_CORSET = 827
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_胸衣交中 """
+    PENIS_IN_T_GLOVES = 828
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_手套交中 """
+    PENIS_IN_T_SKIRT = 829
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_裙子交中 """
+    PENIS_IN_T_UNDERWEAR = 830
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_内裤交中 """
+    PENIS_IN_T_SOCKS = 831
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_袜子交中 """
+    PENIS_IN_T_SHOES = 832
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_鞋子交中 """
+    PENIS_IN_T_WEAPONS = 833
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_武器交中 """
+    PENIS_IN_T_TROUSERS = 834
+    """ H_阴茎位置 改变当前阴茎位置为交互对象_裤子交中 """
+    CANCEL_PENIS_IN_FACE_OR_MOUSE = 840
     """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
 
-    H_IN_LOVE_HOTEL_TO_FALSE = 841
+    H_IN_LOVE_HOTEL_TO_FALSE = 871
     """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """
 
     ITEM_OFF = 901
@@ -1040,7 +1070,7 @@ class SecondEffect:
     ADD_SMALL_C_FEEL = 239
     """ 增加少量Ｃ快（C感补正） """
     ADD_SMALL_P_FEEL = 240
-    """ 增加少量射精值（P感补正） """
+    """ 增加少量玩家射精值（P感补正） """
     ADD_SMALL_V_FEEL = 241
     """ 增加少量Ｖ快（V感补正） """
     ADD_SMALL_A_FEEL = 242
@@ -1193,7 +1223,7 @@ class SecondEffect:
     """ 结算多重绝顶(快乐+屈服) """
 
     PENIS_IN_T_RESET = 501
-    """ 当前阴茎位置为交互对象_双方归零 """
+    """ 改变当前阴茎位置为交互对象_双方归零 """
 
     GIVE_PAN_IN_DAY_FIRST_MEET = 511
     """ 在每日招呼时上交今天的内裤 """
