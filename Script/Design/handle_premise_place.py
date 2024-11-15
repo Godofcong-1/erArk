@@ -1092,7 +1092,7 @@ def handle_not_in_toilet_female(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_IN_TOILET)
 def handle_not_in_toilet(character_id: int) -> int:
     """
-    校验角色是否不在洗手间
+    校验角色是否不在洗手间（含宿舍）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1105,6 +1105,8 @@ def handle_not_in_toilet(character_id: int) -> int:
     if "Toilet_Male" in now_scene_data.scene_tag:
         return 0
     if "Toilet_Female" in now_scene_data.scene_tag:
+        return 0
+    if "Dormitory" in now_scene_data.scene_tag:
         return 0
     return 1
 
