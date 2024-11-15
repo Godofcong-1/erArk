@@ -1421,11 +1421,14 @@ class StateMachine:
     """ 工作：处理外交事宜 """
     WORK_SEX_EXERCISES = 317
     """ 工作：性爱练习 """
+    WORK_COMBAT_TRAINING = 318
+    """ 工作：战斗训练 """
+    WORK_FITNESS_TRAINING = 319
+    """ 工作：健身锻炼 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
-    ENTERTAIN_TRAINING = 402
-    """ 娱乐：训练 """
+    # 402空缺占位
     ENTERTAIN_SINGING = 403
     """ 娱乐：唱歌 """
     ENTERTAIN_PLAY_CLASSIC_INSTRUMENT = 404
@@ -1575,6 +1578,8 @@ class StateMachine:
     """ 移动至游泳池 """
     MOVE_TO_TRAINING_LOCKER_ROOM = 612
     """ 移动至训练场的更衣室 """
+    MOVE_TO_GYM_ROOM = 613
+    """ 移动至健身区 """
     MOVE_TO_MAINTENANCE_DEPARTMENT = 621
     """ 移动至运维部 """
     MOVE_TO_BLACKSMITH_SHOP = 622

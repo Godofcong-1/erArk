@@ -8354,6 +8354,19 @@ def handle_work_is_combat_training(character_id: int) -> int:
     return character_data.work.work_type == 91
 
 
+@add_premise(constant_promise.Premise.WORK_IS_FITNESS_TRAINER)
+def handle_work_is_fitness_trainer(character_id: int) -> int:
+    """
+    自己的工作为健身锻炼员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 92
+
+
 @add_premise(constant_promise.Premise.WORK_IS_COOK)
 def handle_work_is_cook(character_id: int) -> int:
     """

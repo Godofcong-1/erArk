@@ -642,6 +642,19 @@ def character_move_to_swimming_pool(character_id: int):
     general_movement_module(character_id, to_swimming_pool)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_GYM_ROOM)
+def character_move_to_gym_room(character_id: int):
+    """
+    移动至健身区
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_gym_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Gym"])
+    )
+    general_movement_module(character_id, to_gym_room)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_FOOT_BATH)
 def character_move_to_foot_bath(character_id: int):
     """
@@ -1318,22 +1331,29 @@ def character_play_instrument(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_PLAY_INSTRUMENT
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_TRAINING)
-def character_training(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
+def character_entertain_read(character_id: int):
     """
-    角色战斗训练
+    角色娱乐：读书
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.target_character_id = character_id
-    character_data.behavior.behavior_id = constant.Behavior.TRAINING
-    character_data.behavior.duration = 120
-    character_data.state = constant.CharacterStatus.STATUS_TRAINING
+    # 检查是否要借书
+    basement.check_random_borrow_book(character_id)
+
+    for book_id_all in character_data.entertainment.borrow_book_id_set:
+        book_id = book_id_all
+    book_data = game_config.config_book[book_id]
+    character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
+    character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
+    character_data.behavior.book_id = book_id
+    character_data.behavior.book_name = book_data.name
+    character_data.behavior.duration = 30
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_SINGING)
-def character_training(character_id: int):
+def character_entertain_singing(character_id: int):
     """
     娱乐：唱歌
     Keyword arguments:
@@ -2813,23 +2833,30 @@ def character_work_sex_exercises(character_id: int):
         character_data.state = now_exercises
 
 
-@handle_state_machine.add_state_machine(constant.StateMachine.ENTERTAIN_READ)
-def character_entertain_read(character_id: int):
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_COMBAT_TRAINING)
+def character_combat_training(character_id: int):
     """
-    角色娱乐：读书
+    角色战斗训练
     Keyword arguments:
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # 检查是否要借书
-    basement.check_random_borrow_book(character_id)
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.TRAINING
+    character_data.behavior.duration = 120
+    character_data.state = constant.CharacterStatus.STATUS_TRAINING
 
-    for book_id_all in character_data.entertainment.borrow_book_id_set:
-        book_id = book_id_all
-    book_data = game_config.config_book[book_id]
-    character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
-    character_data.state = constant.CharacterStatus.STATUS_READ_BOOK
-    character_data.behavior.book_id = book_id
-    character_data.behavior.book_name = book_data.name
-    character_data.behavior.duration = 30
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_FITNESS_TRAINING)
+def character_fitness_training(character_id: int):
+    """
+    角色健身锻炼
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.EXERCISE
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_EXERCISE
 

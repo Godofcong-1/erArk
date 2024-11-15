@@ -113,7 +113,10 @@ ai的目标,,,,
 
 341,514,normal_all|to_work_time|work_is_combat_training|not_in_training_room,21,正常状态下，在到岗时间，工作是战斗训练，当前不在训练室，则移动至训练室
 342,514,normal_all|work_time|work_is_combat_training|not_in_training_room,21,正常状态下，在工作时间，工作是战斗训练，当前不在训练室，则移动至训练室
-343,402,normal_all_except_special_hypnosis|work_time|work_is_combat_training|in_training_room,22,正常状态下或被空气或体控催眠中，在工作时间，工作是战斗训练，且当前在训练室，则进行战斗训练
+343,318,normal_all_except_special_hypnosis|work_time|work_is_combat_training|in_training_room,22,正常状态下或被空气或体控催眠中，在工作时间，工作是战斗训练，且当前在训练室，则进行战斗训练
+344,613,normal_all|to_work_time|work_is_fitness_trainer|not_in_gym_room,21,正常状态下，在到岗时间，工作是健身锻炼，当前不在健身区，则移动至健身区
+345,613,normal_all|work_time|work_is_fitness_trainer|not_in_gym_room,21,正常状态下，在工作时间，工作是健身锻炼，当前不在健身区，则移动至健身区
+346,319,normal_all_except_special_hypnosis|work_time|work_is_fitness_trainer|in_gym_room,22,正常状态下或被空气或体控催眠中，在工作时间，工作是健身锻炼，且当前在健身区，则进行健身锻炼
 
 351,521,normal_all|work_is_cook|to_work_time|not_in_kitchen,21,正常状态下，工作是厨师，在到岗时间，如果不在厨房，则去厨房
 352,521,normal_all|work_is_cook|work_time|not_in_kitchen,21,正常状态下，工作是厨师，在工作时间，如果不在厨房，则去厨房

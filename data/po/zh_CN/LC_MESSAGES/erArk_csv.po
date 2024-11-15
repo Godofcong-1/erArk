@@ -13313,98 +13313,106 @@ msgid "去训练场训练，会根据职业自动到近战的木桩房或远程�
 msgstr ""
 
 #: .\data\csv\WorkType.csv:15
-msgid "图书馆管理员"
+msgid "健身锻炼员"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:15
+msgid "去健身区锻炼，增加体力和气力上限"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:16
+msgid "图书馆管理员"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:16
 msgid "进行图书馆的管理操作"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:16
+#: .\data\csv\WorkType.csv:17
 msgid "生产工人"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:16
+#: .\data\csv\WorkType.csv:17
 msgid "生产车间"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:16
+#: .\data\csv\WorkType.csv:17
 msgid "在车间内使用原材料制造出对应的产品"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:17
+#: .\data\csv\WorkType.csv:18
 msgid "外交官"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:17
+#: .\data\csv\WorkType.csv:18
 msgid "处理与各国之间的关系，承接大小委托，协调当地的外勤工作(需要在[外交势力]系统中任命)"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:18
+#: .\data\csv\WorkType.csv:19
 msgid "邀请专员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:18
+#: .\data\csv\WorkType.csv:19
 msgid "邀请各界人士来罗德岛访问，拓宽罗德岛的人脉"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "教师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "教室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "给学生上课"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "听老师讲课"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "药材种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "药田"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "在药田里种植药材等农作物"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "花草种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "在温室里种植花草等香料"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:23
+#: .\data\csv\WorkType.csv:24
 msgid "按摩师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:23
+#: .\data\csv\WorkType.csv:24
 msgid "浴场休息区"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:23
+#: .\data\csv\WorkType.csv:24
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "性爱练习生"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "调教室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "利用道具练习自己的性爱技巧"
 msgstr ""
 
