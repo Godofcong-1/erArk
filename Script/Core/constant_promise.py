@@ -666,6 +666,13 @@ class Premise:
     HAVE_NOT_WAKE_UP = "ai_have_not_wake_up"
     """ 时间_角色 NPC今天还没有起床 """
 
+    FIRST_KISS_IN_TODAY = "first_kiss_in_today"
+    """ 时间_初次 自己今天失去了初吻 """
+    FIRST_SEX_IN_TODAY = "first_sex_in_today"
+    """ 时间_初次 自己今天失去了V处女 """
+    FIRST_A_SEX_IN_TODAY = "first_a_sex_in_today"
+    """ 时间_初次 自己今天失去了A处女 """
+
     TIME_DAY = "time_day"
     """ 时间_当前 时间:白天（6点~18点） """
     TIME_NIGHT = "time_night"

@@ -176,7 +176,7 @@ class CVEMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cve_b1 = QComboBox()
-        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶", "嵌套父事件"])
+        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶", "嵌套父事件", "指定角色id为交互对象"])
         self.cve_b1.setCurrentIndex(0)
         self.cve_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cve_b1)
@@ -258,6 +258,8 @@ class CVEMenu(QDialog):
             cve_b_value = "Climax|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "嵌套父事件":
             cve_b_value = "Father|0"
+        elif cve_b1 == "指定角色id为交互对象":
+            cve_b_value = "ChangeTargetId|0"
         cve_c = self.cve_c.currentText()
         if cve_c == "增加":
             cve_c_value = "G"
@@ -267,6 +269,15 @@ class CVEMenu(QDialog):
             cve_c_value = "E"
         cve_d = self.cve_d.toPlainText()
         cve_d_value = cve_d
+        # 空值时默认为0
+        if cve_d_value == "":
+            cve_d_value = "0"
+
+        # 指定角色id为交互对象时特殊处理
+        if cve_b1 == "指定角色id为交互对象":
+            # 不显示c和d
+            cve_c = ""
+            cve_d = ""
 
         # 拼接结算字符串
         cve_str = f"综合数值结算  {cve_a}{cve_b1}{cve_b2}{cve_c}{cve_d}"
@@ -305,9 +316,12 @@ class CVEMenu(QDialog):
 
     def change_b2(self, index: int):
         """改变b2的选项"""
+        self.cve_a.clear()
+        self.cve_a.addItems(["自己", "交互对象", "角色id为"])
         self.cve_a.setVisible(True)
         self.cve_b2.setVisible(True)
         self.reset_c()
+        self.cve_d.setVisible(True)
         if index == 0:
             self.cve_b2.setVisible(False)
         elif index == 1:
@@ -368,6 +382,15 @@ class CVEMenu(QDialog):
             self.cve_c.addItems(["变为"])
             self.cve_c.setCurrentIndex(0)
             self.cve_text.setText("嵌套父事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统量]-[基础]\n②本前提需要配合[综合数值前提]中的[嵌套子事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")
+
+        elif index == 11:
+            self.cve_a.clear()
+            self.cve_a.addItems(["角色id为"])
+            self.cve_a2.setVisible(True)
+            self.cve_b2.setVisible(False)
+            self.cve_c.setVisible(False)
+            self.cve_d.setVisible(False)
+            self.cve_text.setText("选择当前场景中的指定id的角色作为自己的交互对象\n\n需要搭配综合数值前提中的，当前场景中有特定id的角色存在，的前提一同使用，当前场景中没有该id角色时会无法起效\n当有多个结算时，本结算需要放到第一个，以便第一个执行\n玩家的id固定为0")
 
         self.cve_b = self.cve_b2
 

@@ -69,13 +69,16 @@ def read_CVP(cvp_value_str: str):
 
 def read_CVE(cve_value_str: str):
     """读取CVE字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
+    # 用下划线分割字符串
     cve_str_list = cve_value_str.split("_")
     # print(f"cve_str_list = {cve_str_list}")
+    # 对基本的字符串进行替换
     cve_str_list[0] = cve_str_list[0].replace("CVE", "综合数值结算  ")
     cve_str_list[1] = cve_str_list[1].replace("A1", "自己")
     cve_str_list[1] = cve_str_list[1].replace("A2", "交互对象")
     cve_str_list[2] = cve_str_list[2].replace("Flag", "口上用flag")
     cve_str_list[2] = cve_str_list[2].replace("Father", "嵌套父事件")
+    cve_str_list[2] = cve_str_list[2].replace("ChangeTargetId", "指定角色id为交互对象")
     cve_str_list[2] = cve_str_list[2].replace("F", "好感")
     cve_str_list[2] = cve_str_list[2].replace("X", "信赖")
     cve_str_list[3] = cve_str_list[3].replace("G", "增加")
@@ -115,6 +118,13 @@ def read_CVE(cve_value_str: str):
         b2_value = cve_str_list[2].split("Climax|")[1]
         b2_name = cache_control.organ_data[b2_value]
         cve_str = cve_str.replace(f"Climax|{b2_value}", f"绝顶{b2_name}")
+    elif "指定角色id为交互对象" in cve_str:
+        b2_value = cve_str_list[2].split("指定角色id为交互对象|")[1]
+        b2_name = cache_control.organ_data[b2_value]
+        cve_str = cve_str.replace(f"指定角色id为交互对象|{b2_value}", f"指定角色id为交互对象")
+        # 去掉c和d的部分
+        cve_str = cve_str.replace(cve_str_list[3], "")
+        cve_str = cve_str.replace(cve_str_list[4], "")
     # 最后去掉所有的下划线
     cve_str = cve_str.replace("_", "")
     return cve_str
