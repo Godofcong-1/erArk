@@ -701,6 +701,7 @@ def settle_visitor_arrivals(visitor_id = 0):
     return 0 时，没有访客抵达
     return 1 时，有访客抵达
     """
+    from Script.UI.Panel import recruit_panel
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.style = "gold_enrod"
@@ -714,8 +715,8 @@ def settle_visitor_arrivals(visitor_id = 0):
     else:
         # 随机抽取一名访客
         if visitor_id == 0:
-            # 未招募的干员id
-            not_recruit_npc_id_list = [id for id in range(1, len(cache.npc_tem_data) + 1) if id not in cache.npc_id_got]
+            # 未招募的干员id列表
+            not_recruit_npc_id_list = recruit_panel.find_recruitable_npc()
             # 根据当前基地的位置筛选出同国度且没有招募的干员
             now_country_id = cache.rhodes_island.current_location[0]
             now_country_npc_id_list = []
