@@ -13706,6 +13706,18 @@ def handle_wear_pan(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.NOT_WEAR_PAN)
+def handle_not_wear_pan(character_id: int) -> int:
+    """
+    没有穿着内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_wear_pan(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_WEAR_PAN)
 def handle_t_wear_pan(character_id: int) -> int:
     """

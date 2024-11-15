@@ -182,6 +182,7 @@ in_library_or_library_office,IN_LIBRARY_OR_LIBRARY_OFFICE,地点_定位,在图�
 not_in_library_or_library_office,NOT_IN_LIBRARY_OR_LIBRARY_OFFICE,地点_定位,不在图书馆或图书馆办公室中
 in_collection_room,IN_COLLECTION_ROOM,地点_定位,在藏品馆中
 in_gym_room,IN_GYM_ROOM,地点_定位,在健身区中
+not_in_gym_room,NOT_IN_GYM_ROOM,地点_定位,不在健身区中
 in_training_room,IN_TRAINING_ROOM,地点_定位,在训练室中（包括木桩房和射击房）
 not_in_training_room,NOT_IN_TRAINING_ROOM,地点_定位,不在训练室中（包括木桩房和射击房）
 in_fight_room,IN_FIGHT_ROOM,地点_定位,在木桩房中
@@ -332,6 +333,10 @@ ai_trained,HAVE_TRAINED,时间_角色,NPC距离上次战斗训练已经超过两
 ai_not_shower,NOT_SHOWER,时间_角色,NPC今天还没有洗澡
 ai_have_showered,HAVE_SHOWERED,时间_角色,NPC今天已经洗过澡了
 ai_have_not_wake_up,HAVE_NOT_WAKE_UP,时间_角色,NPC今天还没有起床
+
+first_kiss_in_today,FIRST_KISS_IN_TODAY,时间_初次,自己今天失去了初吻
+first_sex_in_today,FIRST_SEX_IN_TODAY,时间_初次,自己今天失去了V处女
+first_a_sex_in_today,FIRST_A_SEX_IN_TODAY,时间_初次,自己今天失去了A处女
 
 time_day,TIME_DAY,时间_当前,时间:白天（6点~18点）
 time_night,TIME_NIGHT,时间_当前,时间:夜晚（18点~6点）
@@ -1070,6 +1075,7 @@ t_work_is_library_manager,T_WORK_IS_LIBRARY_MANAGER,属性_工作,交互对象�
 work_is_teacher,WORK_IS_TEACHER,属性_工作,自己的工作为教师
 work_is_student,WORK_IS_STUDENT,属性_工作,自己的工作为学生
 work_is_combat_training,WORK_IS_COMBAT_TRAINING,属性_工作,自己的工作为训练学员
+work_is_fitness_trainer,WORK_IS_FITNESS_TRAINER,属性_工作,自己的工作为健身锻炼员
 work_is_cook,WORK_IS_COOK,属性_工作,自己的工作为厨师
 work_is_production_worker,WORK_IS_PRODUCTION_WORKER,属性_工作,自己的工作为生产工人
 work_is_massage_therapist,WORK_IS_MASSAGE_THERAPIST,属性_工作,自己的工作为按摩师
@@ -1134,6 +1140,7 @@ wear_skirt,WEAR_SKIRT,属性_服装,穿着裙子
 t_wear_skirt,TARGET_WEAR_SKIRT,属性_服装,交互对象穿着裙子
 t_wear_trousers,TARGET_WEAR_TROUSERS,属性_服装,交互对象穿着裤子
 wear_pan,WEAR_PAN,属性_服装,穿着内裤
+not_wear_pan,NOT_WEAR_PAN,属性_服装,没有穿着内裤
 t_wear_pan,TARGET_WEAR_PAN,属性_服装,交互对象穿着内裤
 t_not_wear_pan,TARGET_NOT_WEAR_PAN,属性_服装,交互对象没有穿着内裤
 wear_socks,WEAR_SOCKS,属性_服装,穿着袜子

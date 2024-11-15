@@ -1188,6 +1188,18 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_character_data.hunger_point += add_hunger
     now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
+    # 结算有意识状态下，不穿胸衣和内裤时的羞耻值增加
+    exposure_adjust = 0
+    if handle_premise.handle_unconscious_flag_0(character_id):
+        if handle_premise.handle_not_wear_bra(character_id):
+            exposure_adjust += 1
+        if handle_premise.handle_not_wear_pan(character_id):
+            exposure_adjust += 2
+    if exposure_adjust:
+        feel_adjust = attr_calculation.get_ability_adjust(now_character_data.ability[34])
+        exposure_add = true_add_time * feel_adjust * exposure_adjust * 4
+        now_character_data.status_data[16] += exposure_add
+
     # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 
     # 结算乳汁量，仅结算有泌乳素质的
