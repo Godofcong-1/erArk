@@ -36141,7 +36141,11 @@ msgid "{Name}触发了将{TargetName}投入监牢指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\raise_skirt.csv:6
-msgid "{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}"
+msgid "{Name}掀起了{TargetName}的{TagetSkiName}，露出了下面的{TagetPanName}"
+msgstr ""
+
+#: .\data\talk\obscenity\raise_skirt.csv:7
+msgid "{Name}掀起了{TargetName}的{TagetSkiName}，露出了下面没有穿内裤的阴部"
 msgstr ""
 
 #: .\data\talk\obscenity\see_h.csv:6
@@ -36157,7 +36161,7 @@ msgid "{Name}触发了闻内衣指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\steal_pan.csv:6
-msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetName}穿着的{TagetPanName}脱下来偷走了"
+msgid "{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了"
 msgstr ""
 
 #: .\data\talk\obscenity\steal_scene_all_pan.csv:6

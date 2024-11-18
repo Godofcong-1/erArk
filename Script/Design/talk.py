@@ -422,34 +422,46 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
         for BraId in target_data.cloth.cloth_wear[6]:
             target_bra_name += game_config.config_clothing_tem[BraId].name
+    if target_bra_name == "":
+        target_bra_name = _("没有穿胸罩的乳房")
     target_ski_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
         for SkiId in target_data.cloth.cloth_wear[8]:
             target_ski_name += game_config.config_clothing_tem[SkiId].name
+    if target_ski_name == "":
+        target_ski_name = _("没有穿裙子的胯部")
     target_pan_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[9]):
         for PanId in target_data.cloth.cloth_wear[9]:
             target_pan_name += game_config.config_clothing_tem[PanId].name
     elif player_data.behavior.pan_name != "":
         target_pan_name = player_data.behavior.pan_name
+    if target_pan_name == "":
+        target_pan_name = _("没有穿内裤的阴部")
     target_soc_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[10]):
         for SocId in target_data.cloth.cloth_wear[10]:
             target_soc_name += game_config.config_clothing_tem[SocId].name
     elif player_data.behavior.socks_name != "":
         target_soc_name = player_data.behavior.socks_name
+    if target_soc_name == "":
+        target_soc_name = _("没有穿袜子的双腿")
     pan_name = ""
     if character_id != 0 and len(character_data.cloth.cloth_wear[9]):
         for PanId in character_data.cloth.cloth_wear[9]:
             pan_name += game_config.config_clothing_tem[PanId].name
     elif player_data.behavior.pan_name != "":
         pan_name = player_data.behavior.pan_name
+    if pan_name == "":
+        pan_name = _("没有穿内裤的阴部")
     socks_name = ""
     if character_id != 0 and len(character_data.cloth.cloth_wear[10]):
         for SocId in character_data.cloth.cloth_wear[10]:
             socks_name += game_config.config_clothing_tem[SocId].name
     elif player_data.behavior.socks_name != "":
         socks_name = player_data.behavior.socks_name
+    if socks_name == "":
+        socks_name = _("没有穿袜子的双腿")
 
     # 最后总结转化
     now_talk_text = now_talk_text.format(
