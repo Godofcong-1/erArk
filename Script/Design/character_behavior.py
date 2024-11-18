@@ -1448,9 +1448,14 @@ def get_chara_entertainment(character_id: int):
         if hasattr(cache.rhodes_island, 'party_day_of_week') and cache.rhodes_island.party_day_of_week[week_day]:
             for i in range(3):
                 character_data.entertainment.entertainment_type[i] = cache.rhodes_island.party_day_of_week[week_day]
-        
+
         # 否则随机当天的娱乐活动
         else:
+            # 幼女只能进行过家家的娱乐活动
+            if handle_premise.handle_self_is_child(character_id):
+                for i in range(3):
+                    character_data.entertainment.entertainment_type[i] = 151
+                return
             entertainment_list = [i for i in game_config.config_entertainment]
             entertainment_list.remove(0)
             # 循环获得上午、下午、晚上的三个娱乐活动

@@ -585,6 +585,9 @@ class ChangeWorkButtonList:
                         open_cid = game_config.config_facility_open_name_to_cid[work_place]
                         if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
+                # 幼女不能进行学生以外的工作
+                if handle_premise.handle_self_is_child(self.NPC_id) and work_cid != 152:
+                    flag_open = False
                 # 特殊解锁的工作不直接开放
                 if work_tag == 2:
                     flag_open = False

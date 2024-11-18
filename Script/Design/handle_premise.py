@@ -18585,6 +18585,21 @@ def handle_t_baby_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_IS_CHILD)
+def handle_self_is_child(character_id: int) -> int:
+    """
+    校验自己是幼女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.talent[102] == 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_CHILD_OR_LOLI_1)
 def handle_t_child_or_loli_1(character_id: int) -> int:
     """
@@ -18596,6 +18611,6 @@ def handle_t_child_or_loli_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[102] == 1 or target_data.talent[103] == 1 :
+    if target_data.talent[102] == 1 or target_data.talent[103] == 1:
         return 1
     return 0
