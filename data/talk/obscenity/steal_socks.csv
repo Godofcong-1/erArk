@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,343,0,high_1&is_unconscious_h,{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TagetSocName}脱下来偷走了
+0,343,0,high_1&is_unconscious_h,{Name}{PlayerNickName}把{TargetName}穿着的{TagetSocName}脱下来偷走了

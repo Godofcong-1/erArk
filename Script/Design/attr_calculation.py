@@ -932,11 +932,11 @@ def hypnosis_degree_limit_calculation() -> int:
 
 def get_character_fall_level(character_id: int, minus_flag: bool = False) -> int:
     """
-    计算角色的攻略等级
-    Keyword arguments:
-    character_id -- 角色id
-    minus_flag -- 是否对隶属系输出为负数
-    Return arguments:
+    计算角色的攻略等级\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    minus_flag -- 是否对隶属系输出为负数\n
+    Return arguments:\n
     int -- 攻略等级
     """
     from Script.Design import handle_premise

@@ -3,4 +3,14 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,396,0,high_1,{Name}触发了目睹玩家与其他角色H的地文
+0,396,0,high_1,{Name}目睹了{PlayerName}的情事现场，吃惊地瞪大了眼睛
+1,396,0,high_1,{Name}不小心撞见了{PlayerName}的情事现场，脸色一下子变得通红
+2,396,0,high_1,{Name}不敢置信地看着{PlayerName}的情事现场，头脑一片空白
+3,396,0,high_1,{Name}看到{PlayerName}的情事现场，惊讶得说不出话来，心跳加速，脸色苍白
+4,396,0,high_1,{Name}看着正在激烈动作{PlayerName}等人的裸体，双腿发软，几乎站立不稳
+5,396,0,high_1,{Name}目睹了{PlayerName}的情事现场，瞳孔放大，嘴巴张得大大的
+6,396,0,high_1,{Name}看到{PlayerName}的情事现场，整个人呆住了，仿佛时间静止了一般
+7,396,0,high_1,{Name}被{PlayerName}的裸体和动作惊呆了，半天说不出话来
+8,396,0,high_1,{Name}看到{PlayerName}的情事现场，心中思路万千，脸色一阵红一阵白
+9,396,0,high_1,{Name}目睹了{PlayerName}的情事现场，整个人僵在原地，无法动弹
+10,396,0,high_1,{Name}看到{PlayerName}的情事现场，惊讶得瞪大了眼睛，嘴巴微张

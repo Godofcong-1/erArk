@@ -3,4 +3,15 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,373,0,high_1,{Name}触发了戴上项圈指令的地文
+0,373,0,high_1,{Name}给{TargetName}戴上了项圈，{TargetName}接受{Name}成为了自己的主人
+1,373,0,high_1,{Name}拿出了项圈，{TargetName}红着脸接过，戴在了自己的脖子上，接受了自己的宠物身份
+2,373,0,high_1,{Name}轻轻地将项圈套在{TargetName}的脖子上，{TargetName}温顺地低下头，表示对{Name}的完全信任
+3,373,0,high_1,{Name}微笑着拿出项圈，{TargetName}乖巧地跪在地上，等待{Name}将项圈戴好
+4,373,0,high_1,{Name}缓缓地将项圈扣在{TargetName}的脖子上，{TargetName}闭上眼睛，感受着这一刻的仪式感
+5,373,0,high_1,{Name}拿起项圈，轻轻地抚摸了一下{TargetName}的头，然后将项圈戴在了{TargetName}的脖子上
+6,373,0,high_1,{Name}将项圈展示给{TargetName}看，{TargetName}点了点头，示意{Name}可以开始戴上
+7,373,0,high_1,{Name}将项圈放在{TargetName}的脖子上，轻轻地扣上，{TargetName}露出了满足的笑容
+8,373,0,high_1,{Name}拿出项圈，{TargetName}乖巧地抬起头，{Name}将项圈戴在了{TargetName}的脖子上
+9,373,0,high_1,{Name}将项圈递给{TargetName}，{TargetName}接过后，自己戴在了脖子上，然后看向{Name}，露出感激的神情
+10,373,0,high_1,{Name}轻轻地将项圈扣在{TargetName}的脖子上，{TargetName}感受到{Name}的温柔，眼中闪过一丝幸福
+11,373,0,high_1,{Name}拿出项圈，{TargetName}乖巧地跪在地上，{Name}将项圈戴在了{TargetName}的脖子上，{TargetName}露出了幸福的笑容

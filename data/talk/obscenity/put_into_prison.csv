@@ -3,4 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,352,0,high_1,{Name}触发了将{TargetName}投入监牢指令的地文
+0,352,0,high_1,{Name}将{TargetName}从袋子中搬出，然后放在了监牢的地上，关上门之后静静地等待{TargetName}的清醒
+1,352,0,high_1,{Name}把{TargetName}关进了监牢之后，隔着牢门看着逐渐醒过来的{TargetName}，向{TargetName}解释着她的新生活
+2,352,0,high_1,看着监牢里不知所措的{TargetName}，{Name}笑着解释了她的处境，以及接下来的新生活
+3,352,0,high_1,无视着在监牢里尖叫的{TargetName}，{Name}冷漠地看着她，等待她的情绪平复

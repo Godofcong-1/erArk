@@ -3,4 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,374,0,high_1,{Name}触发了戴上项圈失败指令的地文
+0,374,0,high_1,{Name}拿出了项圈，说明了自己的打算，{TargetName}露出了难以置信的表情，冷着脸离开了
+1,374,0,high_1,看到{Name}手里的项圈之后，{TargetName}一开始还不知道是什么意思，但是在明白之后，{TargetName}狠狠地瞪了{Name}一眼
+2,374,0,high_1,{Name}拿出项圈，试图给{TargetName}戴上的时候，但{TargetName}一把拍掉了{Name}的手，露出了难以置信的表情
+3,374,0,high_1,{Name}拿出了项圈，{TargetName}看到之后，立刻就明白了{Name}的意图，{TargetName}冷冷地说道：“放弃你的打算，想都不要想”
+4,374,0,high_1,{Name}试图将项圈套在{TargetName}的脖子上，但{TargetName}摇了摇头，说道：“我不喜欢你的玩笑，{PlayerNickName}”
+6,374,0,high_1,{Name}把项圈递给{TargetName}，但{TargetName}退后一步，说：“我不需要这个，去找其他人吧”

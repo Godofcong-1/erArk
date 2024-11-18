@@ -12,7 +12,7 @@ str,int,int,str,str
 6,251,0,high_1,{Name}打开了窗户，让清晨的凉风吹进来，轻声对{PlayerName}说：“早安，起床呼吸一下新鲜空气吧。”
 7,251,0,high_1,{Name}端来一杯热牛奶，放在{PlayerName}的床头，柔声说：“起床喝点牛奶吧，今天会是美好的一天。”
 8,251,0,high_1,{Name}轻轻摇晃着{PlayerName}的肩膀，微笑着说：“早上好，新的冒险等着我们呢，快起床吧。”
-9,251,0,high_1,{Name}拿起手机播放了一首欢快的音乐，对{PlayerName}说：“听，这首歌多有活力，快起床一起享受吧。”
+9,251,0,high_1,{Name}拿起终端播放了一首欢快的音乐，对{PlayerName}说：“听，这首歌多有活力，快起床一起享受吧。”
 10,251,0,high_1,{Name}在{PlayerName}耳边轻声哼唱起了早安曲，温柔地说：“起床了，新的开始就在眼前。”
 11,251,0,high_1,{Name}轻轻抚摸着{PlayerName}的头发，柔声说：“早安，今天的阳光特别明媚，快起床看看吧。”
 12,251,0,high_1,{Name}轻轻拍了拍{PlayerName}的脸颊，笑着说：“起床啦，今天的早餐已经准备好了，快来享用吧。”
@@ -25,5 +25,15 @@ str,int,int,str,str
 19,251,0,high_1,{Name}拿起一朵花放在{PlayerName}的鼻子前，微笑着说：“早上好，闻闻这花香，快起床吧。”
 20,251,0,high_1,{Name}轻轻捏了捏{PlayerName}的鼻子，笑着说：“起床啦，今天的阳光特别好，快去享受吧。”
 21,251,0,high_1,{Name}在{PlayerName}耳边轻声说：“早安，今天有很多有趣的事情等着我们，快起床吧。”
-101,252,0,high_1,{Name}触发了早安问候：早安吻的地文
-201,253,0,high_1,{Name}触发了早安问候：早安咬的地文
+101,252,0,high_1,{Name}靠近{PlayerName}的旁边，轻轻把嘴印了上去，用亲吻唤醒了{PlayerName}
+102,252,0,high_1,{Name}轻轻在{PlayerName}的嘴上亲了一下，温柔地说：“早安，新的一天开始了。”
+103,252,0,high_1,{Name}轻轻吻了{PlayerName}的嘴唇，感受着温暖的触感，慢慢地唤醒了{PlayerName}
+104,252,0,high_1,{Name}在{PlayerName}的唇上留下了一个温柔的吻，轻轻地唤醒了{PlayerName}
+105,252,0,high_1,{Name}用嘴唇轻轻碰触{PlayerName}的双唇，温柔地唤醒了{PlayerName}
+106,252,0,high_1,{Name}在{PlayerName}的双唇上轻轻一吻，感受着{PlayerName}的呼吸，慢慢地唤醒了{PlayerName}
+107,252,0,high_1,{Name}轻柔地捧起{PlayerName}的脸庞，先是轻轻吻了吻眼睛，然后缓缓移向双唇，用温柔绵长的亲吻唤醒了沉睡中的{PlayerName}
+108,252,0,high_1,{Name}俯身靠近，先是轻抚{PlayerName}的脸颊，接着在额头落下浅吻，最后将唇瓣轻轻覆上{PlayerName}的嘴唇，用这一连串温柔的动作把{PlayerName}从梦中唤醒
+201,253,0,high_1,{Name}解开了{PlayerName}的裤子，开始给{PlayerName}口交，一直到{PlayerName}射精为止，咽下了精液之后，{Name}用手指轻轻擦拭了一下嘴角，然后笑着说：“早安。”
+202,253,0,high_1,{Name}吞吐着{PlayerName}的阴茎，感受在自己嘴中的几次喷薄之后，{Name}咽下了{PlayerName}的精液，平息了一下自己的呼吸，然后道了早安。
+203,253,0,high_1,{Name}用嘴唇包裹住{PlayerName}的肉棒，慢慢地舔到硬起来之后，然后仔细地舔舐着每个部位，直到{PlayerName}射出了精液，才完成了这个早晨的仪式。
+

@@ -3,4 +3,11 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,353,0,high_1,{Name}触发了将{TargetName}解除囚禁指令的地文
+0,353,0,high_1,{Name}解开了{TargetName}的囚禁，打开了牢门，告诉{TargetName}，她可以自由了
+1,353,0,high_1,{Name}决定放过{TargetName}，把牢门和锁的钥匙丢了进去，重新给{TargetName}自由
+2,353,0,high_1,{Name}轻轻推开牢门，微笑着对{TargetName}说：“你自由了。”阳光透过门缝洒在{TargetName}的脸上。
+3,353,0,high_1,{Name}用力拉开铁链，牢门嘎吱作响地打开，{TargetName}惊讶地看着{Name}，不敢相信自己终于重获自由。
+4,353,0,high_1,{Name}拿出钥匙，慢慢地插入锁孔，转动几下后，牢门应声而开，{TargetName}看了{Name}一眼，迅速地跑了出去。
+6,353,0,high_1,{Name}用力踢开牢门，{TargetName}被突如其来的光亮刺得眯起了眼睛，{Name}笑着说：“走吧，你自由了。”
+7,353,0,high_1,{Name}轻轻推开牢门，{TargetName}跌跌撞撞地跑了出来，{Name}扶住她，温柔地说：“恭喜，你自由了。”
+8,353,0,high_1,{Name}用钥匙打开牢门，{TargetName}慢慢走了出来，{Name}拍了拍她的肩膀：“从今天起，你自由了。”

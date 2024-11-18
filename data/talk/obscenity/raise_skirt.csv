@@ -3,4 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,315,0,high_1,{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}
+0,315,0,t_wear_pan,{Name}掀起了{TargetName}的{TagetSkiName}，露出了下面的{TagetPanName}
+1,315,0,high_1,{Name}掀起了{TargetName}的{TagetSkiName}，露出了下面没有穿内裤的阴部

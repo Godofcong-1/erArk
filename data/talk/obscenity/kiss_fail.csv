@@ -3,4 +3,16 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,397,0,high_1,{Name}触发了对{TargetName}亲吻失败指令的地文
+0,397,0,high_1,{Name}想要亲一口{TargetName}，但是被{TargetName}躲开了
+1,397,0,high_1,{Name}揽住{TargetName}的腰，还没亲上去，就被{TargetName}推开了
+2,397,0,high_1,{Name}试探性地靠近{TargetName}的脸颊，但{TargetName}一下子就后撤了一大步
+3,397,0,high_1,{Name}试图亲吻{TargetName}，但{TargetName}迅速转头避开了{Name}的嘴唇
+4,397,0,high_1,{Name}靠近{TargetName}的脸庞，{TargetName}却用手挡住了{Name}的嘴
+5,397,0,high_1,{Name}想要亲吻{TargetName}的额头，但{TargetName}轻轻推开了他
+6,397,0,high_1,{Name}突然靠近{TargetName}，试图亲吻她，但{TargetName}后退了一步
+7,397,0,high_1,{Name}温柔地靠近{TargetName}，但{TargetName}侧身避开了他的吻
+8,397,0,high_1,{Name}试图亲吻{TargetName}的嘴唇，但{TargetName}迅速低下头避开了
+9,397,0,high_1,{Name}靠近{TargetName}，想要亲吻她，但{TargetName}用手指挡住了他的嘴
+10,397,0,high_1,{Name}试图亲吻{TargetName}，但{TargetName}迅速转身避开了他的嘴唇
+11,397,0,high_1,{Name}靠近{TargetName}，试图亲吻她，但{TargetName}轻轻推开了他的脸
+12,397,0,high_1,{Name}温柔地靠近{TargetName}，但{TargetName}用手挡住了{Name}的嘴唇

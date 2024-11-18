@@ -35837,11 +35837,75 @@ msgid "{Name}温柔地将{TargetName}拥入怀中，轻轻地在她耳边低语�
 msgstr ""
 
 #: .\data\talk\obscenity\give_necklace.csv:6
-msgid "{Name}触发了戴上项圈指令的地文"
+msgid "{Name}给{TargetName}戴上了项圈，{TargetName}接受{Name}成为了自己的主人"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:7
+msgid "{Name}拿出了项圈，{TargetName}红着脸接过，戴在了自己的脖子上，接受了自己的宠物身份"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:8
+msgid "{Name}轻轻地将项圈套在{TargetName}的脖子上，{TargetName}温顺地低下头，表示对{Name}的完全信任"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:9
+msgid "{Name}微笑着拿出项圈，{TargetName}乖巧地跪在地上，等待{Name}将项圈戴好"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:10
+msgid "{Name}缓缓地将项圈扣在{TargetName}的脖子上，{TargetName}闭上眼睛，感受着这一刻的仪式感"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:11
+msgid "{Name}拿起项圈，轻轻地抚摸了一下{TargetName}的头，然后将项圈戴在了{TargetName}的脖子上"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:12
+msgid "{Name}将项圈展示给{TargetName}看，{TargetName}点了点头，示意{Name}可以开始戴上"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:13
+msgid "{Name}将项圈放在{TargetName}的脖子上，轻轻地扣上，{TargetName}露出了满足的笑容"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:14
+msgid "{Name}拿出项圈，{TargetName}乖巧地抬起头，{Name}将项圈戴在了{TargetName}的脖子上"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:15
+msgid "{Name}将项圈递给{TargetName}，{TargetName}接过后，自己戴在了脖子上，然后看向{Name}，露出感激的神情"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:16
+msgid "{Name}轻轻地将项圈扣在{TargetName}的脖子上，{TargetName}感受到{Name}的温柔，眼中闪过一丝幸福"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace.csv:17
+msgid "{Name}拿出项圈，{TargetName}乖巧地跪在地上，{Name}将项圈戴在了{TargetName}的脖子上，{TargetName}露出了幸福的笑容"
 msgstr ""
 
 #: .\data\talk\obscenity\give_necklace_failed.csv:6
-msgid "{Name}触发了戴上项圈失败指令的地文"
+msgid "{Name}拿出了项圈，说明了自己的打算，{TargetName}露出了难以置信的表情，冷着脸离开了"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace_failed.csv:7
+msgid "看到{Name}手里的项圈之后，{TargetName}一开始还不知道是什么意思，但是在明白之后，{TargetName}狠狠地瞪了{Name}一眼"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace_failed.csv:8
+msgid "{Name}拿出项圈，试图给{TargetName}戴上的时候，但{TargetName}一把拍掉了{Name}的手，露出了难以置信的表情"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace_failed.csv:9
+msgid "{Name}拿出了项圈，{TargetName}看到之后，立刻就明白了{Name}的意图，{TargetName}冷冷地说道：“放弃你的打算，想都不要想”"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace_failed.csv:10
+msgid "{Name}试图将项圈套在{TargetName}的脖子上，但{TargetName}摇了摇头，说道：“我不喜欢你的玩笑，{PlayerNickName}”"
+msgstr ""
+
+#: .\data\talk\obscenity\give_necklace_failed.csv:11
+msgid "{Name}把项圈递给{TargetName}，但{TargetName}退后一步，说：“我不需要这个，去找其他人吧”"
 msgstr ""
 
 #: .\data\talk\obscenity\hand_in_hand.csv:6
@@ -35881,7 +35945,7 @@ msgid "{Name}的亲吻让{TargetName}感到无比的幸福和满足，{TargetNam
 msgstr ""
 
 #: .\data\talk\obscenity\kiss.csv:13
-msgid " 每一次与{Name}亲吻，{TargetName}都能感受到你对{TargetName}的爱和温柔。"
+msgid "每一次与{Name}亲吻，{TargetName}都能感受到你对{TargetName}的爱和温柔。"
 msgstr ""
 
 #: .\data\talk\obscenity\kiss.csv:14
@@ -35973,7 +36037,55 @@ msgid "{Name}和{TargetName}相视一笑，你在{TargetName}的脸颊上轻吻�
 msgstr ""
 
 #: .\data\talk\obscenity\kiss_fail.csv:6
-msgid "{Name}触发了对{TargetName}亲吻失败指令的地文"
+msgid "{Name}想要亲一口{TargetName}，但是被{TargetName}躲开了"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:7
+msgid "{Name}揽住{TargetName}的腰，还没亲上去，就被{TargetName}推开了"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:8
+msgid "{Name}试探性地靠近{TargetName}的脸颊，但{TargetName}一下子就后撤了一大步"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:9
+msgid "{Name}试图亲吻{TargetName}，但{TargetName}迅速转头避开了{Name}的嘴唇"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:10
+msgid "{Name}靠近{TargetName}的脸庞，{TargetName}却用手挡住了{Name}的嘴"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:11
+msgid "{Name}想要亲吻{TargetName}的额头，但{TargetName}轻轻推开了他"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:12
+msgid "{Name}突然靠近{TargetName}，试图亲吻她，但{TargetName}后退了一步"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:13
+msgid "{Name}温柔地靠近{TargetName}，但{TargetName}侧身避开了他的吻"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:14
+msgid "{Name}试图亲吻{TargetName}的嘴唇，但{TargetName}迅速低下头避开了"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:15
+msgid "{Name}靠近{TargetName}，想要亲吻她，但{TargetName}用手指挡住了他的嘴"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:16
+msgid "{Name}试图亲吻{TargetName}，但{TargetName}迅速转身避开了他的嘴唇"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:17
+msgid "{Name}靠近{TargetName}，试图亲吻她，但{TargetName}轻轻推开了他的脸"
+msgstr ""
+
+#: .\data\talk\obscenity\kiss_fail.csv:18
+msgid "{Name}温柔地靠近{TargetName}，但{TargetName}用手挡住了{Name}的嘴唇"
 msgstr ""
 
 #: .\data\talk\obscenity\lap_pillow.csv:6
@@ -36025,7 +36137,15 @@ msgid "{Name}触发了对{TargetName}轻度猥亵失败指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\milk.csv:6
-msgid "{Name}触发了挤奶指令的地文"
+msgid "{Name}使用搾乳机，给{TargetName}把乳房中的奶水吸出来，装进了瓶子里"
+msgstr ""
+
+#: .\data\talk\obscenity\milk.csv:7
+msgid "{Name}熟练地挤压着{TargetName}的乳房，开始榨乳，直到奶水干瘪为止"
+msgstr ""
+
+#: .\data\talk\obscenity\milk.csv:8
+msgid "{Name}用手指轻轻揉捏着{TargetName}的膨大乳头，将奶汁慢慢挤出来，然后装进了瓶子里"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:6
@@ -36065,7 +36185,7 @@ msgid "{Name}轻轻摇晃着{PlayerName}的肩膀，微笑着说：“早上好�
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:15
-msgid "{Name}拿起手机播放了一首欢快的音乐，对{PlayerName}说：“听，这首歌多有活力，快起床一起享受吧。”"
+msgid "{Name}拿起终端播放了一首欢快的音乐，对{PlayerName}说：“听，这首歌多有活力，快起床一起享受吧。”"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:16
@@ -36117,27 +36237,119 @@ msgid "{Name}在{PlayerName}耳边轻声说：“早安，今天有很多有趣�
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:28
-msgid "{Name}触发了早安问候：早安吻的地文"
+msgid "{Name}靠近{PlayerName}的旁边，轻轻把嘴印了上去，用亲吻唤醒了{PlayerName}"
 msgstr ""
 
 #: .\data\talk\obscenity\morning_salutation.csv:29
-msgid "{Name}触发了早安问候：早安咬的地文"
+msgid "{Name}轻轻在{PlayerName}的嘴上亲了一下，温柔地说：“早安，新的一天开始了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:30
+msgid "{Name}轻轻吻了{PlayerName}的嘴唇，感受着温暖的触感，慢慢地唤醒了{PlayerName}"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:31
+msgid "{Name}在{PlayerName}的唇上留下了一个温柔的吻，轻轻地唤醒了{PlayerName}"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:32
+msgid "{Name}用嘴唇轻轻碰触{PlayerName}的双唇，温柔地唤醒了{PlayerName}"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:33
+msgid "{Name}在{PlayerName}的双唇上轻轻一吻，感受着{PlayerName}的呼吸，慢慢地唤醒了{PlayerName}"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:34
+msgid "{Name}轻柔地捧起{PlayerName}的脸庞，先是轻轻吻了吻眼睛，然后缓缓移向双唇，用温柔绵长的亲吻唤醒了沉睡中的{PlayerName}"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:35
+msgid "{Name}俯身靠近，先是轻抚{PlayerName}的脸颊，接着在额头落下浅吻，最后将唇瓣轻轻覆上{PlayerName}的嘴唇，用这一连串温柔的动作把{PlayerName}从梦中唤醒"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:36
+msgid "{Name}解开了{PlayerName}的裤子，开始给{PlayerName}口交，一直到{PlayerName}射精为止，咽下了精液之后，{Name}用手指轻轻擦拭了一下嘴角，然后笑着说：“早安。”"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:37
+msgid "{Name}吞吐着{PlayerName}的阴茎，感受在自己嘴中的几次喷薄之后，{Name}咽下了{PlayerName}的精液，平息了一下自己的呼吸，然后道了早安。"
+msgstr ""
+
+#: .\data\talk\obscenity\morning_salutation.csv:38
+msgid "{Name}用嘴唇包裹住{PlayerName}的肉棒，慢慢地舔到硬起来之后，然后仔细地舔舐着每个部位，直到{PlayerName}射出了精液，才完成了这个早晨的仪式。"
 msgstr ""
 
 #: .\data\talk\obscenity\night_salutation.csv:6
-msgid "{Name}触发了晚安问候：催睡觉的地文"
+msgid "{Name}催促{TargetName}赶快睡觉，已经很晚了"
 msgstr ""
 
 #: .\data\talk\obscenity\night_salutation.csv:7
-msgid "{Name}触发了晚安问候：晚安吻的地文"
+msgid "{Name}告诉{TargetName}，现在是睡觉的时间了，回去休息吧"
 msgstr ""
 
 #: .\data\talk\obscenity\night_salutation.csv:8
+msgid "{Name}轻声对{TargetName}说：“夜深了，快去休息吧，明天还有很多事情要做呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:9
+msgid "{Name}温柔地拍了拍{TargetName}的肩膀，提醒道：“该睡觉了，晚安。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:10
+msgid "{Name}看着{TargetName}疲惫的样子，关切地说：“早点休息吧，别熬夜了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:11
+msgid "{Name}走到{TargetName}身边，轻声说道：“夜已经很深了，快去睡觉吧。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:12
+msgid "{Name}微笑着对{TargetName}说：“时间不早了，早点休息，养足精神。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:13
+msgid "{Name}轻轻拥抱了{TargetName}，柔声说道：“该睡觉了，晚安，好梦。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:14
+msgid "{Name}轻声提醒{TargetName}：“夜深了，快去休息吧，明天还要早起呢。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:15
+msgid "{Name}温柔地对{TargetName}说：“早点睡吧，保持好的作息习惯。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:16
+msgid "{Name}轻轻拍了拍{TargetName}的背，柔声说道：“该休息了，晚安。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:17
+msgid "{Name}看着{TargetName}，关心地说：“夜已经很深了，快去睡觉吧，晚安。”"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:18
+msgid "{Name}触发了晚安问候：晚安吻的地文"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:19
 msgid "{Name}触发了晚安问候：晚安咬的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\put_into_prison.csv:6
-msgid "{Name}触发了将{TargetName}投入监牢指令的地文"
+msgid "{Name}将{TargetName}从袋子中搬出，然后放在了监牢的地上，关上门之后静静地等待{TargetName}的清醒"
+msgstr ""
+
+#: .\data\talk\obscenity\put_into_prison.csv:7
+msgid "{Name}把{TargetName}关进了监牢之后，隔着牢门看着逐渐醒过来的{TargetName}，向{TargetName}解释着她的新生活"
+msgstr ""
+
+#: .\data\talk\obscenity\put_into_prison.csv:8
+msgid "看着监牢里不知所措的{TargetName}，{Name}笑着解释了她的处境，以及接下来的新生活"
+msgstr ""
+
+#: .\data\talk\obscenity\put_into_prison.csv:9
+msgid "无视着在监牢里尖叫的{TargetName}，{Name}冷漠地看着她，等待她的情绪平复"
 msgstr ""
 
 #: .\data\talk\obscenity\raise_skirt.csv:6
@@ -36149,11 +36361,79 @@ msgid "{Name}掀起了{TargetName}的{TagetSkiName}，露出了下面没有穿�
 msgstr ""
 
 #: .\data\talk\obscenity\see_h.csv:6
-msgid "{Name}触发了目睹玩家与其他角色H的地文"
+msgid "{Name}目睹了{PlayerName}的情事现场，吃惊地瞪大了眼睛"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:7
+msgid "{Name}不小心撞见了{PlayerName}的情事现场，脸色一下子变得通红"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:8
+msgid "{Name}不敢置信地看着{PlayerName}的情事现场，头脑一片空白"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:9
+msgid "{Name}看到{PlayerName}的情事现场，惊讶得说不出话来，心跳加速，脸色苍白"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:10
+msgid "{Name}看着正在激烈动作{PlayerName}等人的裸体，双腿发软，几乎站立不稳"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:11
+msgid "{Name}目睹了{PlayerName}的情事现场，瞳孔放大，嘴巴张得大大的"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:12
+msgid "{Name}看到{PlayerName}的情事现场，整个人呆住了，仿佛时间静止了一般"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:13
+msgid "{Name}被{PlayerName}的裸体和动作惊呆了，半天说不出话来"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:14
+msgid "{Name}看到{PlayerName}的情事现场，心中思路万千，脸色一阵红一阵白"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:15
+msgid "{Name}目睹了{PlayerName}的情事现场，整个人僵在原地，无法动弹"
+msgstr ""
+
+#: .\data\talk\obscenity\see_h.csv:16
+msgid "{Name}看到{PlayerName}的情事现场，惊讶得瞪大了眼睛，嘴巴微张"
 msgstr ""
 
 #: .\data\talk\obscenity\set_free.csv:6
-msgid "{Name}触发了将{TargetName}解除囚禁指令的地文"
+msgid "{Name}解开了{TargetName}的囚禁，打开了牢门，告诉{TargetName}，她可以自由了"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:7
+msgid "{Name}决定放过{TargetName}，把牢门和锁的钥匙丢了进去，重新给{TargetName}自由"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:8
+msgid "{Name}轻轻推开牢门，微笑着对{TargetName}说：“你自由了。”阳光透过门缝洒在{TargetName}的脸上。"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:9
+msgid "{Name}用力拉开铁链，牢门嘎吱作响地打开，{TargetName}惊讶地看着{Name}，不敢相信自己终于重获自由。"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:10
+msgid "{Name}拿出钥匙，慢慢地插入锁孔，转动几下后，牢门应声而开，{TargetName}看了{Name}一眼，迅速地跑了出去。"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:11
+msgid "{Name}用力踢开牢门，{TargetName}被突如其来的光亮刺得眯起了眼睛，{Name}笑着说：“走吧，你自由了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:12
+msgid "{Name}轻轻推开牢门，{TargetName}跌跌撞撞地跑了出来，{Name}扶住她，温柔地说：“恭喜，你自由了。”"
+msgstr ""
+
+#: .\data\talk\obscenity\set_free.csv:13
+msgid "{Name}用钥匙打开牢门，{TargetName}慢慢走了出来，{Name}拍了拍她的肩膀：“从今天起，你自由了。”"
 msgstr ""
 
 #: .\data\talk\obscenity\smell_underwear.csv:6
@@ -36173,7 +36453,7 @@ msgid "{Name}偷走了在场所有人的袜子"
 msgstr ""
 
 #: .\data\talk\obscenity\steal_socks.csv:6
-msgid "{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TagetSocName}脱下来偷走了"
+msgid "{Name}{PlayerNickName}把{TargetName}穿着的{TagetSocName}脱下来偷走了"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_anus.csv:6
@@ -36329,54 +36609,50 @@ msgid "{Name}触发了摸耳朵指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_head.csv:6
-msgid "{Name}触发了摸头指令的地文"
-msgstr ""
-
-#: .\data\talk\obscenity\touch_head.csv:7
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}好像不太高兴"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:8
+#: .\data\talk\obscenity\touch_head.csv:7
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}好像不太高兴"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:9
+#: .\data\talk\obscenity\touch_head.csv:8
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}没有拒绝"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:10
+#: .\data\talk\obscenity\touch_head.csv:9
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}没有拒绝"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:11
+#: .\data\talk\obscenity\touch_head.csv:10
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}好像有点开心"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:12
+#: .\data\talk\obscenity\touch_head.csv:11
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}好像有点开心"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:13
+#: .\data\talk\obscenity\touch_head.csv:12
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}主动地蹭了蹭{Name}的手"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:14
+#: .\data\talk\obscenity\touch_head.csv:13
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}主动地蹭了蹭{Name}的手"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:15
+#: .\data\talk\obscenity\touch_head.csv:14
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}的脸上泛起了不正常的红晕\n仔细观察的话，可以发现{TargetName}的双腿在轻微的互相摩擦"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:16
+#: .\data\talk\obscenity\touch_head.csv:15
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}的脸上泛起了不正常的红晕\n仔细观察的话，可以发现{TargetName}的双腿在轻微的互相摩擦"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:17
+#: .\data\talk\obscenity\touch_head.csv:16
 msgid "{Name}伸手摸了摸{TargetName}的头\n{TargetName}眯起了眼睛享受着你的抚摸"
 msgstr ""
 
-#: .\data\talk\obscenity\touch_head.csv:18
+#: .\data\talk\obscenity\touch_head.csv:17
 msgid "{Name}摸了摸{TargetName}的头\n{TargetName}眯起了眼睛享受着你的抚摸"
 msgstr ""
 
@@ -36445,7 +36721,35 @@ msgid "{Name}触发了水疗护理的地文"
 msgstr ""
 
 #: .\data\talk\play\onsen_bath.csv:6
-msgid "{Name}触发了泡温泉的地文"
+msgid "{Name}躺进了温泉里，舒服的闭上了眼睛，享受着温泉的舒适，一时间忘却了一切烦恼"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:7
+msgid "{Name}试了一下温泉的温度，感觉差不多合适，于是小心地扶着把手，慢慢坐在温泉里的石台上，让温泉水慢慢淹没自己的身体"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:8
+msgid "{Name}轻轻地走进温泉，感受着温暖的泉水包裹着身体，慢慢地坐下，闭上眼睛，享受着这片刻的宁静"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:9
+msgid "{Name}缓缓地滑入温泉，温暖的水流轻轻拍打着肌肤，整个人都放松了下来，仿佛置身于梦境之中"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:10
+msgid "{Name}小心翼翼地踏入温泉，感受着水温的变化，慢慢地沉入水中，任由温泉的热气蒸腾全身"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:11
+msgid "{Name}轻轻地踩入温泉，温暖的泉水瞬间包围了双脚，慢慢地坐下，感受着温泉的热度渗透进每一寸肌肤"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:12
+msgid "{Name}缓缓地走进温泉，温暖的水流轻轻拍打着身体，慢慢地坐下，闭上眼睛，享受着这片刻的宁静"
+msgstr ""
+
+#: .\data\talk\play\onsen_bath.csv:13
+msgid "{Name}小心地踏入温泉，感受着水温的变化，慢慢地沉入水中，任由温泉的热气蒸腾全身"
 msgstr ""
 
 #: .\data\talk\play\photography.csv:6
@@ -36481,7 +36785,83 @@ msgid "{Name}触发了玩水的地文"
 msgstr ""
 
 #: .\data\talk\play\rehearse_dance.csv:6
-msgid "{Name}触发了排演舞剧的地文"
+msgid "{Name}开始按照剧本排演舞剧，努力练习舞蹈动作，希望能够在舞台上表现出色"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:7
+msgid "{Name}在排练舞蹈的过程中，不断调整动作，希望能够更加完美地表现"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:8
+msgid "{Name}拿着舞剧的台本，揣摩着角色的性格，努力理解剧情，希望能够更好地演绎"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:9
+msgid "{Name}考虑着如何更好地表现角色的情感，不断调整自己的语调，希望能够更加入木地表演"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:10
+msgid "{Name}一遍遍朗诵着台词，试图将角色的性格融入到自己的表演中"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:11
+msgid "{Name}不断调整身体姿态，一会儿转圈，一会儿跳跃，一会儿优雅地伸展手臂，反复练习着复杂的舞蹈动作，汗水浸湿了衣衫"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:12
+msgid "{Name}对着镜子反复练习表情变化，时而微笑，时而忧郁，手指轻轻划过空气，脚步轻盈地在舞台上移动，全神贯注地投入表演"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:13
+msgid "{Name}在空旷的舞台上旋转跳跃，裙摆随着动作优雅飞扬，手臂画出优美的弧线，脚尖轻点地面，展现出完美的舞姿"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:14
+msgid "{Name}认真地配合着音乐节奏，手臂随着旋律起伏，身体随着节拍摆动，时而快速转身，时而缓慢伸展，展现出极强的表现力"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:15
+msgid "{Name}专注地练习高难度动作，一遍遍尝试空中转体，落地时保持完美平衡，额头渗出细密的汗珠，依然坚持不懈地练习"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:16
+msgid "{Name}精确地控制每个动作的力度，手指轻轻舒展，脚步轻盈跳动，身体随着音乐流畅移动，展现出极强的艺术感染力"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:17
+msgid "{Name}反复练习群舞中的配合动作，注意与其他演员保持恰当距离，移动时步伐整齐划一，展现出完美的团队协作"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:18
+msgid "{Name}仔细揣摩角色的肢体语言，手势细腻优雅，眼神专注投入，身体姿态自然流畅，将角色特点展现得淋漓尽致"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:19
+msgid "{Name}专心排练独舞部分，手臂划出优美的弧线，身体灵活旋转，脚步轻快跳跃，展现出极强的个人魅力"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:20
+msgid "{Name}耐心地练习舞台走位，注意与道具的互动，调整走位路线，身体动作舒展优美，展现出专业的舞台表现力"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:21
+msgid "{Name}在排练舞蹈的过程中，不断调整情绪，时而悲伤，时而欢快，时而愤怒，全情投入地表演，展现出极强的情感表达力"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:22
+msgid "{Name}认真揣摩角色的内心世界，用心体会角色的情感变化，不断调整表演方式，希望能够更好地诠释角色的性格"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:23
+msgid "{Name}在排练舞蹈的过程中，不断调整动作的力度和速度，时而轻盈飘逸，时而激情奔放，展现出极强的舞蹈技巧"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:24
+msgid "{Name}在排练舞蹈的过程中，不断调整表情和动作的配合，时而微笑，时而流泪，时而愤怒，展现出极强的表演技巧"
+msgstr ""
+
+#: .\data\talk\play\rehearse_dance.csv:25
+msgid "{Name}在排练舞蹈的过程中，不断调整呼吸和动作的协调，时而深呼吸，时而浅吸气，展现出极强的舞蹈表现力"
 msgstr ""
 
 #: .\data\talk\play\singing.csv:7
@@ -37253,7 +37633,15 @@ msgid "{Name}独自一人在练习唱歌，虽然有些地方唱得有些疲惫�
 msgstr ""
 
 #: .\data\talk\play\soak_feet.csv:6
-msgid "{Name}触发了泡脚的地文"
+msgid "{Name}把脚伸进泡脚池里，感受着温暖的水流，舒服极了"
+msgstr ""
+
+#: .\data\talk\play\soak_feet.csv:7
+msgid "{Name}的脚在泡脚池里泡了一会，感觉脚底的疲劳都消失了"
+msgstr ""
+
+#: .\data\talk\play\soak_feet.csv:8
+msgid "{Name}在泡脚池里踢着水花，玩得不亦乐乎，好像又回到了童年时光"
 msgstr ""
 
 #: .\data\talk\play\steam_sauna.csv:6
@@ -37261,7 +37649,43 @@ msgid "{Name}触发了蒸桑拿的地文"
 msgstr ""
 
 #: .\data\talk\play\style_hair.csv:6
-msgid "{Name}触发了修整发型的地文"
+msgid "{Name}坐在椅子上，让理发师为自己设计发型，看着镜子里的自己的头发渐渐变成自己想要的样子，心情愉悦"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:7
+msgid "{Name}在几种颜色中犹豫不决，最后还是选择了自己最常用的那一款，看着理发师进行染发剂的准备工作，开始期待最后的效果"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:8
+msgid "{Name}让理发师照常给自己保养头发，看着理发师给自己的头发涂抹特制的护发素，感觉头发变得更加柔顺了"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:9
+msgid "{Name}靠在洗发椅上，闭着眼享受理发师熟练的按摩手法，温暖的水流冲洗着头皮，整个人都放松下来，感受着专业的服务"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:10
+msgid "{Name}认真地翻阅发型杂志，时不时抬头看看镜中的自己，与理发师仔细讨论着剪裁的长度和层次，反复比划着想要的效果"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:11
+msgid "{Name}坐在理发椅上，看着理发师熟练地梳理着自己的头发，将发丝分成几个部分，开始用剪刀精确地修剪每一缕发丝"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:12
+msgid "{Name}观察着理发师用卷发棒细心地为自己打造完美的弧度，蒸腾的热气中，发丝渐渐卷曲成优雅的波浪"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:13
+msgid "{Name}静静地等待着染发剂的显色时间，看着镜子里自己的头发逐渐改变颜色，期待着焕然一新的造型"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:14
+msgid "{Name}感受着理发师用吹风机精心调整发型的每一个细节，温热的风拂过发丝，一个全新的造型正在成型"
+msgstr ""
+
+#: .\data\talk\play\style_hair.csv:15
+msgid "{Name}注视着理发师使用定型喷雾，将每一缕头发都打理得整整齐齐，最后用梳子细致地梳理，确保每个角度都完美"
 msgstr ""
 
 #: .\data\talk\play\swimming.csv:6

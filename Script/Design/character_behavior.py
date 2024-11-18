@@ -1501,18 +1501,14 @@ def get_chara_entertainment(character_id: int):
 def fall_chara_give_pink_voucher(character_id: int):
     """
     陷落角色给予粉红凭证\n
-    Keyword arguments:
+    Keyword arguments:\n
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     # 如果已陷落则给予粉红凭证
-    if character_data.talent[201] or character_data.talent[211]:
-        cache.rhodes_island.week_fall_chara_pink_certificate_add += 20
-    elif character_data.talent[202] or character_data.talent[212]:
-        cache.rhodes_island.week_fall_chara_pink_certificate_add += 40
-    elif character_data.talent[203] or character_data.talent[213]:
-        cache.rhodes_island.week_fall_chara_pink_certificate_add += 60
-    elif character_data.talent[204] or character_data.talent[214]:
+    character_fall_level = attr_calculation.get_character_fall_level(character_id)
+    if character_fall_level <= 3:
+        cache.rhodes_island.week_fall_chara_pink_certificate_add += character_fall_level * 20
+    else:
         cache.rhodes_island.week_fall_chara_pink_certificate_add += 100
 
 
@@ -1541,7 +1537,7 @@ def sanity_point_grow():
 def judge_same_position_npc_follow():
     """
     判断同位置的NPC是否跟随玩家\n
-    Keyword arguments:
+    Keyword arguments:\n
     无
     """
     pl_character_data: game_type.Character = cache.character_data[0]

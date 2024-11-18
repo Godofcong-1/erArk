@@ -3,7 +3,6 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,301,0,high_1,{Name}触发了摸头指令的地文
 1,301,0,sys_0,{Name}伸手摸了摸{TargetName}的头\n{TargetName}好像不太高兴
 2,301,0,sys_0,{Name}摸了摸{TargetName}的头\n{TargetName}好像不太高兴
 3,301,0,sys_0&t_intimacy_le_1,{Name}伸手摸了摸{TargetName}的头\n{TargetName}没有拒绝
