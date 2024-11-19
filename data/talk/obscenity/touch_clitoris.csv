@@ -3,4 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,331,0,high_1,{Name}触发了阴蒂爱抚指令的地文
+0,331,0,high_1,{Name}爱抚着{TargetName}的阴蒂，{TargetName}的身体不停的颤抖着，发出了一些奇怪的声音
+1,331,0,high_1,{Name}拨开了{TargetName}的阴蒂外侧的皮肤，露出了里面的粉红色的部分，只轻轻的碰了一下，{TargetName}的身体就不禁颤抖了一下，脚尖都弓起来了
+2,331,0,high_1,{Name}有节奏地抚摸着{TargetName}的阴蒂，每次用力大一些的时候，{TargetName}就会情不自禁地娇喘出声
+

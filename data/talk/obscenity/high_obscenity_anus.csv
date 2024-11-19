@@ -3,4 +3,14 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,398,0,high_1,{Name}触发了对{TargetName}重度猥亵失败指令的地文
+0,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}愤怒地痛骂了{Name}一顿，冷着脸离开了
+1,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}冷冷地哼了一声，转身离去，背影显得十分决绝
+2,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地甩开{Name}的手，脸色阴沉，眼神中透出一丝愤怒
+3,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}冷冷地看了{Name}一眼，转身离去，背影显得十分决绝
+4,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}用力推开{Name}，眉头紧锁，嘴角狠狠地咬着牙
+5,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}狠狠地踩了一下地面，双手紧握成拳，眼神中充满了怒火
+6,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地站起身来，椅子发出刺耳的声音，脸色铁青
+7,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}用力拍了一下桌子，声音震耳欲聋，眼神中充满了不满
+8,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}狠狠地瞪了{Name}一眼，转身快步离开，脚步声沉重
+9,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}用力甩开{Name}的手，脸上露出厌恶的表情，眼神冰冷
+10,398,0,high_1,{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地推开{Name}，脸色涨红，呼吸急促，显得十分愤怒

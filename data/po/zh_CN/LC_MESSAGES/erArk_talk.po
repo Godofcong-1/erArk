@@ -35913,7 +35913,47 @@ msgid "{Name}触发了牵手指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\high_obscenity_anus.csv:6
-msgid "{Name}触发了对{TargetName}重度猥亵失败指令的地文"
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}愤怒地痛骂了{Name}一顿，冷着脸离开了"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:7
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}冷冷地哼了一声，转身离去，背影显得十分决绝"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:8
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地甩开{Name}的手，脸色阴沉，眼神中透出一丝愤怒"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:9
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}冷冷地看了{Name}一眼，转身离去，背影显得十分决绝"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:10
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}用力推开{Name}，眉头紧锁，嘴角狠狠地咬着牙"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:11
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}狠狠地踩了一下地面，双手紧握成拳，眼神中充满了怒火"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:12
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地站起身来，椅子发出刺耳的声音，脸色铁青"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:13
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}用力拍了一下桌子，声音震耳欲聋，眼神中充满了不满"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:14
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}狠狠地瞪了{Name}一眼，转身快步离开，脚步声沉重"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:15
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}用力甩开{Name}的手，脸上露出厌恶的表情，眼神冰冷"
+msgstr ""
+
+#: .\data\talk\obscenity\high_obscenity_anus.csv:16
+msgid "{Name}对{TargetName}的重度猥亵失败，{TargetName}猛地推开{Name}，脸色涨红，呼吸急促，显得十分愤怒"
 msgstr ""
 
 #: .\data\talk\obscenity\kiss.csv:6
@@ -36133,7 +36173,35 @@ msgid "{TargetName}轻声说道：“你累了吧，枕在我的腿上休息一�
 msgstr ""
 
 #: .\data\talk\obscenity\low_obscenity_anus.csv:6
-msgid "{Name}触发了对{TargetName}轻度猥亵失败指令的地文"
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}不太开心，瞪了{Name}一眼"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:7
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}打掉了{Name}的手，露出不悦的表情"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:8
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}皱了皱眉头，转身离开，留下{Name}一脸尴尬"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:9
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}冷冷地看了{Name}一眼，然后默默地走到一旁"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:10
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}轻轻推开{Name}，然后去做别的事了"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:11
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}摇了摇头，继续做自己刚的事，显得很失望"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:12
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}皱了皱眉，叹了口气，显得很不耐烦"
+msgstr ""
+
+#: .\data\talk\obscenity\low_obscenity_anus.csv:13
+msgid "{Name}对{TargetName}的轻度猥亵失败，{TargetName}失望地看了{Name}一眼，不再搭理{Name}了"
 msgstr ""
 
 #: .\data\talk\obscenity\milk.csv:6
@@ -36457,7 +36525,15 @@ msgid "{Name}{PlayerNickName}把{TargetName}穿着的{TagetSocName}脱下来偷�
 msgstr ""
 
 #: .\data\talk\obscenity\touch_anus.csv:6
-msgid "{Name}触发了手指插入（A）指令的地文"
+msgid "{Name}的手指插入了{TargetName}的肛门中，感受着肠壁的挤压，{TargetName}也在不停的扭动着屁股，发出了一些奇怪的声音"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_anus.csv:7
+msgid "{Name}的手指在{TargetName}的后穴中来回插动，{TargetName}发出了有些苦闷的声音，但是还是感觉到了一些快感"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_anus.csv:8
+msgid "{TargetName}因为自己菊穴里{Name}的手指的抽插而身体不停的颤抖，发出了一些奇怪的声音"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_breast.csv:7
@@ -36601,11 +36677,135 @@ msgid "{Name}触发了摸小车指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_clitoris.csv:6
-msgid "{Name}触发了阴蒂爱抚指令的地文"
+msgid "{Name}爱抚着{TargetName}的阴蒂，{TargetName}的身体不停的颤抖着，发出了一些奇怪的声音"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_clitoris.csv:7
+msgid "{Name}拨开了{TargetName}的阴蒂外侧的皮肤，露出了里面的粉红色的部分，只轻轻的碰了一下，{TargetName}的身体就不禁颤抖了一下，脚尖都弓起来了"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_clitoris.csv:8
+msgid "{Name}有节奏地抚摸着{TargetName}的阴蒂，每次用力大一些的时候，{TargetName}就会情不自禁地娇喘出声"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_ears.csv:6
-msgid "{Name}触发了摸耳朵指令的地文"
+msgid "{Name}摸了摸{TargetName}的耳朵，{TargetName}的耳朵从趴下的状态猛地竖了起来，看起来很舒服"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:7
+msgid "{Name}绕着{TargetName}的耳朵画了几个圈，{TargetName}的耳朵不停的抖动着，看起来很有趣"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:8
+msgid "{Name}轻轻的揉了揉{TargetName}的耳朵，{TargetName}的耳朵晃动了两下，接受了这个动作"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:9
+msgid "{Name}用手指轻轻捏了捏{TargetName}的耳朵，{TargetName}的耳朵微微颤动了一下，显得非常敏感"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:10
+msgid "{Name}用手掌轻轻拍了拍{TargetName}的耳朵，{TargetName}的耳朵随之摆动，显得非常可爱"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:11
+msgid "{Name}用指尖轻轻划过{TargetName}的耳朵，{TargetName}的耳朵微微抖动了一下，显得非常舒服"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:12
+msgid "{Name}用手掌轻轻抚摸{TargetName}的耳朵，{TargetName}的耳朵慢慢竖了起来，显得非常享受"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:13
+msgid "{Name}用手指轻轻揉了揉{TargetName}的耳朵，{TargetName}的耳朵微微颤抖了一下，显得非常惬意"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:14
+msgid "{Name}用手掌轻轻按了按{TargetName}的耳朵，{TargetName}的耳朵随之摆动，显得非常放松"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:15
+msgid "{Name}用指尖轻轻点了点{TargetName}的耳朵，{TargetName}的耳朵微微抖动了一下，显得非常敏感"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:16
+msgid "{Name}用手掌轻轻捏了捏{TargetName}的耳朵，{TargetName}的耳朵随之摆动，显得非常可爱"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:17
+msgid "{Name}用手指轻轻划过{TargetName}的耳朵，{TargetName}的耳朵微微颤动了一下，显得非常舒服"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:18
+msgid "{Name}用手掌轻轻拍了拍{TargetName}的耳朵，{TargetName}的耳朵随之摆动，显得非常享受"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:19
+msgid "{Name}轻柔地用指腹抚过{TargetName}的耳朵尖，{TargetName}舒服地眯起眼睛，耳朵微微前倾，身体也不自觉地向{Name}靠近了一些"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:20
+msgid "{Name}双手轻轻捧起{TargetName}的耳朵，像对待珍宝一样细细抚摸，{TargetName}的耳朵在手心里微微颤动，显得格外温暖"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:21
+msgid "{Name}小心翼翼地用手指梳理{TargetName}耳朵上的绒毛，{TargetName}的耳朵随着抚摸的节奏轻轻摆动，看起来十分惬意"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:22
+msgid "{Name}用掌心轻轻包裹住{TargetName}的耳朵，温柔地来回摩挲，{TargetName}的耳朵在温暖的触碰下微微抖动，整个身体都放松下来"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:23
+msgid "{Name}用指尖沿着{TargetName}耳朵的轮廓慢慢描绘，{TargetName}的耳朵随着触摸的移动而轻轻晃动，显得格外灵动可爱"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:24
+msgid "{Name}轻轻握住{TargetName}的耳根，手指顺着耳朵的纹路缓缓向上滑动，{TargetName}的耳朵在抚摸下微微颤抖，显得十分享受"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:25
+msgid "{Name}用指背轻柔地蹭过{TargetName}的耳朵内侧，{TargetName}的耳朵立刻竖起，随后又慢慢放松，整个身体都显得很惬意"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:26
+msgid "{Name}将{TargetName}的耳朵轻轻展开，手指温柔地按摩耳根处，{TargetName}的耳朵在按摩下完全放松，显得格外柔软"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:27
+msgid "{Name}用指尖轻轻挠痒{TargetName}耳后，{TargetName}舒服得眯起眼睛，尾巴轻轻摇动，身体微微弓起。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:28
+msgid "{Name}用拇指和食指轻轻捏住{TargetName}的耳尖，轻轻揉捏，{TargetName}舒适地发出呼噜声，眼睛半睁半闭。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:29
+msgid "{Name}用手指轻轻刮过{TargetName}耳朵内侧，{TargetName}耳朵抖动几下，随后放松下来，享受着这份惬意。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:30
+msgid "{Name}用掌心轻轻包裹住{TargetName}整个头部，手指在耳朵周围轻轻打圈，{TargetName}舒服地将头靠在{Name}的手上。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:31
+msgid "{Name}用手指轻轻顺着{TargetName}耳朵的毛发纹理梳理，{TargetName}眯着眼睛，享受着这份温柔的抚摸。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:32
+msgid "{Name}用手指轻轻按压{TargetName}耳根处的穴位，{TargetName}舒服地闭上眼睛，身体完全放松。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:33
+msgid "{Name}用指尖轻轻挑起{TargetName}耳朵上的毛发，{TargetName}好奇地歪着头，看着{Name}的动作。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:34
+msgid "{Name}用手指轻轻沿着{TargetName}耳朵的边缘画圈，{TargetName}舒服地发出呼噜声，身体微微颤抖。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_ears.csv:35
+msgid "{Name}用手指轻轻抚摸{TargetName}耳后的腺体，{TargetName}舒服地眯起眼睛，尾巴轻轻拍打着地面。"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_head.csv:6
@@ -36665,7 +36865,59 @@ msgid "{Name}触发了摸光环指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_tail.csv:6
-msgid "{Name}触发了摸尾巴指令的地文"
+msgid "{Name}轻柔地捋顺着{TargetName}的尾巴，从尾根到尾尖一寸寸抚过，{TargetName}的尾巴在手掌间愉悦地微微摆动，身体慵懒地伸展开来，发出满足的咕噜声"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:7
+msgid "{Name}用指尖轻轻梳理{TargetName}蓬松的尾巴，小心翼翼地解开每一处纠结，{TargetName}开心地摇摆着尾巴，看起来十分可爱"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:8
+msgid "{Name}轻轻抓住{TargetName}的尾巴根部，用温柔的力道沿着尾巴的纹理缓缓向上滑动，指尖感受着柔软的绒毛，{TargetName}舒适地眯起眼睛，尾尖随着抚摸的节奏轻轻颤动，整个身体都放松地趴在地上"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:9
+msgid "{Name}用手掌轻轻包裹住{TargetName}的尾巴，温柔地来回摩挲，{TargetName}的尾巴在温暖的触碰下微微抖动，整个身体都放松下来"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:10
+msgid "{Name}用指尖轻轻挠着{TargetName}尾巴根部的毛发，{TargetName}的尾巴立刻高高翘起，像一朵盛开的蒲公英，随后又慢慢地摆动起来。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:11
+msgid "{Name}双手捧住{TargetName}蓬松的尾巴，轻轻地揉捏着，{TargetName}的尾巴在手中像棉花糖一样柔软，它舒服地眯起眼睛，喉咙里发出愉悦的呼噜声。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:12
+msgid "{Name}用指腹顺着{TargetName}尾巴的纹路轻轻抚摸，从根部一直到尾尖，{TargetName}的尾巴随着抚摸的节奏有规律地摆动，像一个快乐的钟摆。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:13
+msgid "{Name}用手指轻轻勾起{TargetName}尾巴上的几根毛发，轻轻地拽了拽，{TargetName}的尾巴立刻绷紧，然后又迅速放松下来，发出一声愉快的喵叫。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:14
+msgid "{Name}将{TargetName}的尾巴圈在掌心，像握着一根毛茸茸的棒棒糖，轻轻地旋转着，{TargetName}的尾巴随着旋转而上下起伏，显得格外可爱。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:15
+msgid "{Name}用指尖轻轻敲打{TargetName}尾巴上的毛球，{TargetName}的尾巴立刻竖起来，毛球像一个小小的绒球一样不停地抖动。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:16
+msgid "{Name}用手指轻轻拨弄{TargetName}尾巴分叉的部分，{TargetName}的尾巴立刻散开，像一把柔软的小扇子，轻轻地扇动着。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:17
+msgid "{Name}将脸埋在{TargetName}蓬松的尾巴里，深深地吸了一口气，{TargetName}的尾巴轻轻地拍打着{Name}的脸颊，仿佛在回应着这份宠爱。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:18
+msgid "{Name}用手指轻轻梳理{TargetName}尾巴上的每一根毛发，将缠结的毛发轻轻解开，{TargetName}的尾巴变得更加柔顺光滑，它舒服地闭上了眼睛。"
+msgstr ""
+
+#: .\data\talk\obscenity\touch_tail.csv:19
+msgid "{Name}用手指轻轻挠{TargetName}尾巴下方的软肉，{TargetName}的尾巴立刻夹紧，整个身体都蜷缩起来，发出满足的呼噜声。"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_tentacle.csv:6
@@ -38058,6 +38310,10 @@ msgstr ""
 
 #: .\data\talk\sex\clean_blowjob.csv:7
 msgid "{TargetName}的舌头在{Name}的阴茎上游走，将上面的精液舔得干干净净。\n然后用力吮吸着{Name}的马眼，把里面残留的少许精液也吸了出来。"
+msgstr ""
+
+#: .\data\talk\sex\clit_caress.csv:6
+msgid "{Name}触发了阴蒂爱抚指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\clit_clamp.csv:6

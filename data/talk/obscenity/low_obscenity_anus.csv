@@ -3,4 +3,11 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,399,0,high_1,{Name}触发了对{TargetName}轻度猥亵失败指令的地文
+0,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}不太开心，瞪了{Name}一眼
+1,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}打掉了{Name}的手，露出不悦的表情
+2,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}皱了皱眉头，转身离开，留下{Name}一脸尴尬
+3,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}冷冷地看了{Name}一眼，然后默默地走到一旁
+4,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}轻轻推开{Name}，然后去做别的事了
+5,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}摇了摇头，继续做自己刚的事，显得很失望
+6,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}皱了皱眉，叹了口气，显得很不耐烦
+7,399,0,high_1,{Name}对{TargetName}的轻度猥亵失败，{TargetName}失望地看了{Name}一眼，不再搭理{Name}了
