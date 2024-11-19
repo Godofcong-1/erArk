@@ -7051,8 +7051,9 @@ def handle_end_h_add_hpmp_max(
             now_character_data.mana_point_max += orgasm_count * 3
             info_text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             # 玩家则额外增加精液量上限
-            if chara_id == 0:
+            if chara_id == 0 and now_character_data.semen_point_max < 999:
                 now_character_data.semen_point_max += orgasm_count
+                now_character_data.semen_point_max = min(now_character_data.semen_point_max, 999)
                 info_text += _("，精液量上限增加了{0}").format(orgasm_count)
             info_text += "\n"
             # 输出提示信息
@@ -7092,8 +7093,9 @@ def handle_group_sex_end_h_add_hpmp_max(
             now_character_data.mana_point_max += orgasm_count * 3
             info_text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             # 玩家则额外增加精液量上限
-            if chara_id == 0:
+            if chara_id == 0 and now_character_data.semen_point_max < 999:
                 now_character_data.semen_point_max += orgasm_count
+                now_character_data.semen_point_max = min(now_character_data.semen_point_max, 999)
                 info_text += _("，精液量上限增加了{0}").format(orgasm_count)
             info_text += "\n"
             # 输出提示信息
