@@ -720,7 +720,8 @@ def handle_hypnosis_all():
     _("切换催眠模式"),
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_change_hypnosis_mode():
     """处理切换催眠模式"""
@@ -754,7 +755,8 @@ def handle_hypnosis_cancel():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_20,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_increase_body_sensitivity():
     """处理体控-敏感度提升"""
@@ -769,7 +771,8 @@ def handle_hypnosis_increase_body_sensitivity():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_force_climax():
     """处理体控-强制高潮"""
@@ -786,7 +789,8 @@ def handle_hypnosis_force_climax():
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_force_ovulation():
     """处理体控-强制排卵"""
@@ -802,7 +806,8 @@ def handle_hypnosis_force_ovulation():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_blockhead():
     """处理体控-木头人"""
@@ -819,7 +824,8 @@ def handle_hypnosis_blockhead():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_active_h():
     """处理体控-逆推"""
@@ -835,7 +841,8 @@ def handle_hypnosis_active_h():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_roleplay():
     """处理心控-角色扮演"""
@@ -856,7 +863,8 @@ def handle_hypnosis_roleplay():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hypnosis_pain_as_pleasure():
     """处理心控-苦痛快感化"""
@@ -868,10 +876,10 @@ def handle_hypnosis_pain_as_pleasure():
     constant.InstructType.ARTS,
     _("开启透视"),
     {constant_promise.Premise.PRIMARY_PENETRATING_VISION,
-     constant_promise.Premise.NOT_H,
      constant_promise.Premise.PENETRATING_VISION_OFF,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_penetrating_vision_on():
     """处理开启透视"""
@@ -883,9 +891,9 @@ def handle_penetrating_vision_on():
     constant.InstructType.ARTS,
     _("关闭透视"),
     {constant_promise.Premise.PRIMARY_PENETRATING_VISION,
-     constant_promise.Premise.NOT_H,
      constant_promise.Premise.PENETRATING_VISION_ON,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_penetrating_vision_off():
     """处理关闭透视"""
@@ -899,7 +907,8 @@ def handle_penetrating_vision_off():
     {constant_promise.Premise.PRIMARY_HORMONE,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HORMONE_OFF,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hormone_on():
     """处理开启信息素"""
@@ -913,7 +922,8 @@ def handle_hormone_on():
     {constant_promise.Premise.PRIMARY_HORMONE,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.HORMONE_ON,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_hormone_off():
     """处理关闭信息素"""
@@ -925,10 +935,10 @@ def handle_hormone_off():
     constant.InstructType.ARTS,
     _("时间停止流动"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
-     constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_OFF,
      constant_promise.Premise.SANITY_POINT_G_0,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_time_stop_on():
     """处理时间停止流动"""
@@ -940,9 +950,9 @@ def handle_time_stop_on():
     constant.InstructType.ARTS,
     _("时间重新流动"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
-     constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_ON,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84},
+    constant.SexInstructSubType.ARTS,
 )
 def handle_time_stop_off():
     """处理时间重新流动"""
