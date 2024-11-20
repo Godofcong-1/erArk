@@ -933,6 +933,9 @@ def judge_before_pl_behavior():
         if target_character_data.h_state.shoot_position_cloth != -1:
             target_character_data.h_state.shoot_position_cloth = -1
 
+        # 睡眠时间在6h及以上的额外恢复
+        if pl_character_data.state == constant.CharacterStatus.STATUS_SLEEP and pl_character_data.behavior.duration >= 360:
+            refresh_temp_semen_max() # 刷新玩家临时精液上限
 
 def update_sleep():
     """
@@ -964,9 +967,6 @@ def update_sleep():
             assistant_character_data: game_type.Character = cache.character_data[assistant_id]
             if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
                 assistant_character_data.sp_flag.night_salutation = 0
-            # 睡眠时间在6h及以上的额外恢复
-            if character_data.behavior.duration >= 360:
-                refresh_temp_semen_max() # 刷新玩家临时精液上限
             # 检查是否有可以升级的能力
             if cache.system_setting[2]:
                 handle_ability.gain_ability(character_id)
@@ -997,6 +997,7 @@ def update_sleep():
             character_data.hypnosis.increase_body_sensitivity = False
             character_data.hypnosis.blockhead = False
             character_data.hypnosis.active_h = False
+            character_data.hypnosis.pain_as_pleasure = False
             character_data.hypnosis.roleplay = 0
             # 清零睡奸中醒来状态
             character_data.sp_flag.sleep_h_awake = 0
