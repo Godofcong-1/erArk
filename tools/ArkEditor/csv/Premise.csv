@@ -885,6 +885,7 @@ obey_ge_3,TARGET_OBEY_GE_3,属性_素质,交互对象隶属系且>=宠物
 obey_le_2,TARGET_OBEY_LE_2,属性_素质,交互对象隶属系且<=驯服
 obey_0_or_le_1,TARGET_OBEY_0_OR_LE_1,属性_素质,交互对象无陷落或隶属系==屈从
 obey_0_or_le_2,TARGET_OBEY_0_OR_LE_2,属性_素质,交互对象无陷落或隶属系<=驯服
+
 kiss_0,NO_FIRST_KISS,属性_素质,玩家未保有初吻
 kiss_1,HAVE_FIRST_KISS,属性_素质,玩家保有初吻
 virgin_0,NO_VIRGIN,属性_素质,玩家非童贞
@@ -898,6 +899,8 @@ t_virgin_0,TARGET_NO_VIRGIN,属性_素质,交互对象非处女
 t_virgin_1,TARGET_HAVE_VIRGIN,属性_素质,交互对象是处女
 t_a_virgin_0,TARGET_NO_A_VIRGIN,属性_素质,交互对象非A处女
 t_a_virgin_1,TARGET_HAVE_A_VIRGIN,属性_素质,交互对象是A处女
+sexual_ignorance_0,SELF_SEXUAL_IGNORANCE_0,属性_素质,自己没有性无知
+sexual_ignorance_1,SELF_SEXUAL_IGNORANCE_1,属性_素质,自己性无知
 t_love_sense_taste_0,T_LOVE_SENSE_TASTE_0,属性_素质,交互对象精爱味觉==0
 t_love_sense_taste_1,T_LOVE_SENSE_TASTE_1,属性_素质,交互对象精爱味觉==1
 t_sadism_0,T_SADISM_0,属性_素质,交互对象施虐狂==0

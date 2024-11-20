@@ -1763,6 +1763,7 @@ class Premise:
     """ 属性_素质 交互对象无陷落或隶属系==屈从 """
     TARGET_OBEY_0_OR_LE_2 = "obey_0_or_le_2"
     """ 属性_素质 交互对象无陷落或隶属系<=驯服 """
+
     NO_FIRST_KISS = "kiss_0"
     """ 属性_素质 玩家未保有初吻 """
     HAVE_FIRST_KISS = "kiss_1"
@@ -1789,6 +1790,10 @@ class Premise:
     """ 属性_素质 交互对象非A处女 """
     TARGET_HAVE_A_VIRGIN = "t_a_virgin_1"
     """ 属性_素质 交互对象是A处女 """
+    SELF_SEXUAL_IGNORANCE_0 = "sexual_ignorance_0"
+    """ 属性_素质 自己没有性无知 """
+    SELF_SEXUAL_IGNORANCE_1 = "sexual_ignorance_1"
+    """ 属性_素质 自己性无知 """
     T_LOVE_SENSE_TASTE_0 = "t_love_sense_taste_0"
     """ 属性_素质 交互对象精爱味觉==0 """
     T_LOVE_SENSE_TASTE_1 = "t_love_sense_taste_1"

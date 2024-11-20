@@ -64,7 +64,7 @@ ai的目标,,,,
 82,512,milk_flag_1|not_in_restroom,12,要挤奶状态，且不在休息室，则去休息室
 83,90,milk_flag_1|in_restroom,12,要挤奶状态，且在休息室，则挤奶
 
-86,91,normal_1267|desire_point_ge_100|not_ask_not_masturbation,11,1267正常（可能AI跟随、服装异常或意识模糊），欲望值到100%，自己没有被要求禁止自慰，则进入要自慰状态
+86,91,normal_1267|desire_point_ge_100|sexual_ignorance_0|not_ask_not_masturbation,11,1267正常（可能AI跟随、服装异常或意识模糊），欲望值到100%，自己没有性无知，自己没有被要求禁止自慰，则进入要自慰状态
 87,511,masturebate_flag_1|not_in_toilet_female,12,当前要自慰_洗手间，且不在女洗手间里，则去洗手间
 88,92,masturebate_flag_1|in_toilet_female,12,当前要自慰_洗手间，且在女洗手间里，则自慰
 89,502,masturebate_flag_2|not_in_dor,12,当前要自慰_宿舍，不在宿舍，则回宿舍
