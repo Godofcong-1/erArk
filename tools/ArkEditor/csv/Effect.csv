@@ -328,8 +328,8 @@ cid,effect_name,effect_type,effect
 525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
 526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
 527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
-528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限
-529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
+528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
+529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
 530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
 532,BOARD_GAME_WIN_ADD_ADJUST,指令_专用结算,（桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证
 533,BOARD_GAME_LOSE_ADD_ADJUST,指令_专用结算,（桌游输了用）根据游戏难度获得好感度、习得
@@ -491,6 +491,10 @@ cid,effect_name,effect_type,effect
 1231,TARGET_HYPNOSIS_PAIN_AS_PLEASURE_OFF,源石技艺,对方关闭心控-苦痛快感化
 1241,TIME_STOP_ON,源石技艺,开启时停
 1242,TIME_STOP_OFF,源石技艺,关闭时停
+1243,TARGET_BE_CARRIED_IN_TIME_STOP,源石技艺,将交互对象设为当前时停搬运对象
+1244,TARGET_NOT_BE_CARRIED_IN_TIME_STOP,源石技艺,清零自己的当前时停搬运对象
+1245,TARGET_BE_FREE_IN_TIME_STOP,源石技艺,将交互对象设为时停中自由状态（含理智消耗）
+1246,TARGET_NOT_BE_FREE_IN_TIME_STOP,源石技艺,清零自己的让某人时停中自由状态
 
 1401,NPC_ACTIVE_H_ON,属性_H,自己开启主动H
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H

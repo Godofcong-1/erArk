@@ -689,6 +689,8 @@ class PLAYER_ABILITY:
         """ 催眠类型 """
         self.air_hypnosis_position: str = ""
         """ 空气催眠地点 """
+        self.carry_chara_id_in_time_stop: int = 0
+        """ 时停中正在搬运的角色id """
         self.free_in_time_stop_chara_id: int = 0
         """ 时停中允许自由活动的角色id """
 

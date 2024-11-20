@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,943,0,high_1,{Name}把{TargetName}扛在肩上，准备带到其他地方去
+1,943,0,high_1,{Name}把{TargetName}抱起来，准备带到其他地方去

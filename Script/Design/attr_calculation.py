@@ -249,16 +249,17 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     body_item_list = dirty_panel.body_item_list
     bondage_list = dirty_panel.bondage_list
 
-    # 身体道具
+    # 无数据则初始化
     if len(h_state_data.body_item) == 0:
         for body_item in body_item_list:
             now_list = [body_item,False,None]
             h_state_data.body_item.append(now_list)
     else:
         for i in range(len(h_state_data.body_item)):
-            # 药物部分不归零
-            if i not in {8,9,10,11,12}:
-                h_state_data.body_item[i] = [body_item_list[i],False,None]
+            # 跳过药物
+            if i in {8,9,10,11,12}:
+                continue
+            h_state_data.body_item[i] = [body_item_list[i],False,None]
 
     # 部位绝顶
     for body_part in game_config.config_body_part:

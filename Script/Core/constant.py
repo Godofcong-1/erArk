@@ -644,6 +644,14 @@ class CharacterStatus:
     """ 时间停止流动 """
     STATUS_TIME_STOP_OFF = 942
     """ 时间重新流动 """
+    STATUS_CARRY_TARGET = 943
+    """ 搬运对方 """
+    STATUS_STOP_CARRY_TARGET = 944
+    """ 停止搬运对方 """
+    STATUS_TARGET_FREE_IN_TIME_STOP = 945
+    """ 对方在时停中获得自由 """
+    STATUS_TARGET_STOP_IN_TIME_STOP = 946
+    """ 对方在时停中再次停止 """
 
 
 class Behavior:
@@ -1298,6 +1306,14 @@ class Behavior:
     """ 时间停止流动 """
     TIME_STOP_OFF = 942
     """ 时间重新流动 """
+    CARRY_TARGET = 943
+    """ 搬运对方 """
+    STOP_CARRY_TARGET = 944
+    """ 停止搬运对方 """
+    TARGET_FREE_IN_TIME_STOP = 945
+    """ 对方在时停中获得自由 """
+    TARGET_STOP_IN_TIME_STOP = 946
+    """ 对方在时停中再次停止 """
 
 class StateMachine:
     """状态机id"""
@@ -2416,6 +2432,10 @@ class Instruct:
     """ 时间停止流动 """
     TIME_STOP_OFF = 0
     """ 时间重新流动 """
+    CARRY_TARGET = 0
+    """ 搬运对方 """
+    STOP_CARRY_TARGET = 0
+    """ 停止搬运对方 """
     TARGET_FREE_IN_TIME_STOP = 0
     """ 对方在时停中获得自由 """
     TARGET_STOP_IN_TIME_STOP = 0

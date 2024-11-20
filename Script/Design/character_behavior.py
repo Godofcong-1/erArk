@@ -845,6 +845,15 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         special_end_list = constant.special_end_H_list
         if len(cache.pl_pre_status_instruce) and cache.pl_pre_status_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
             default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
+        # 如果在时停中搬运角色，则直接移动到玩家同一地点
+        if (
+            handle_premise.handle_time_stop_on(character_id) and 
+            handle_premise.handle_carry_somebody_in_time_stop(character_id)
+            ):
+            now_carry_chara_id = pl_character_data.pl_ability.carry_chara_id_in_time_stop
+            now_carry_character_data = cache.character_data[now_carry_chara_id]
+            map_handle.character_move_scene(now_carry_character_data.position, pl_character_data.position, now_carry_chara_id)
+
 
     # 玩家部分终止，以下为NPC部分
     if character_id == 0:
@@ -1544,10 +1553,12 @@ def judge_same_position_npc_follow():
     pl_character_data: game_type.Character = cache.character_data[0]
     for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
-        # 智能跟随、位置在玩家移动的出发地、异常状态267正常
+        # 跳过不在同一位置的NPC
+        if character_data.position != pl_character_data.position:
+            continue
+        # 智能跟随、异常状态267正常
         if (
             character_data.sp_flag.is_follow == 1 and
-            character_data.position == pl_character_data.position and 
             handle_premise.handle_normal_267(character_id)
             ):
 

@@ -32,6 +32,14 @@ msgstr ""
 msgid "{Name}停止了对{TargetName}使用的体控催眠-木头人，{TargetName}的身体恢复了正常"
 msgstr ""
 
+#: .\data\talk\arts\carry_target.csv:6
+msgid "{Name}把{TargetName}扛在肩上，准备带到其他地方去"
+msgstr ""
+
+#: .\data\talk\arts\carry_target.csv:7
+msgid "{Name}把{TargetName}抱起来，准备带到其他地方去"
+msgstr ""
+
 #: .\data\talk\arts\force_climax.csv:6
 msgid "{Name}触发了对{TargetName}使用体控催眠-强制高潮的地文"
 msgstr ""
@@ -146,6 +154,14 @@ msgstr ""
 
 #: .\data\talk\arts\roleplay.csv:6
 msgid "{Name}触发了对{TargetName}使用心控催眠-角色扮演的地文"
+msgstr ""
+
+#: .\data\talk\arts\stop_carry_target.csv:6
+msgid "{Name}把扛在肩上的{TargetName}放了下来"
+msgstr ""
+
+#: .\data\talk\arts\stop_carry_target.csv:7
+msgid "{Name}抱着的{TargetName}放了下来"
 msgstr ""
 
 #: .\data\talk\arts\time_stop_off.csv:6

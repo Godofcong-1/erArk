@@ -964,6 +964,14 @@ class BehaviorEffect:
     """ 源石技艺 开启时停 """
     TIME_STOP_OFF = 1242
     """ 源石技艺 关闭时停 """
+    TARGET_BE_CARRIED_IN_TIME_STOP = 1243
+    """ 源石技艺 将交互对象设为当前时停搬运对象 """
+    TARGET_NOT_BE_CARRIED_IN_TIME_STOP = 1244
+    """ 源石技艺 清零自己的当前时停搬运对象 """
+    TARGET_BE_FREE_IN_TIME_STOP = 1245
+    """ 源石技艺 将交互对象设为时停中自由状态（含理智消耗） """
+    TARGET_NOT_BE_FREE_IN_TIME_STOP = 1246
+    """ 源石技艺 清零自己的让某人时停中自由状态 """
 
     NPC_ACTIVE_H_ON = 1401
     """ 属性_H 自己开启主动H """

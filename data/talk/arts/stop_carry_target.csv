@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,944,0,high_1,{Name}把扛在肩上的{TargetName}放了下来
+1,943,0,high_1,{Name}抱着的{TargetName}放了下来
