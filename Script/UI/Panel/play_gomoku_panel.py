@@ -1090,7 +1090,7 @@ class GomokuPanel:
                     winner_name = self.target_character_data.name
                     self.end_settle(1)
                 win_draw = draw.NormalDraw()
-                win_draw.text = _(f"{winner_name} 获胜!\n\n\n")
+                win_draw.text = _("{0} 获胜!\n\n\n").format(winner_name)
                 win_draw.width = self.width
                 win_draw.draw()
                 restart_button = draw.CenterButton(_("[再来一局]"), _("再来一局"), self.width / 2, cmd_func=self.reset_board)

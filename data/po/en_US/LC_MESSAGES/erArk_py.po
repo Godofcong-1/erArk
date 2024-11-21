@@ -8084,3 +8084,548 @@ msgstr ""
 
 msgid "当前已装备数量/最大可装备数量：{0}/{1}\n"
 msgstr "Equipped/Maxiumu: {0}/{1}\n"
+
+msgid "老天师"
+msgstr ""
+
+msgid "魔王"
+msgstr ""
+
+msgid "菈玛莲"
+msgstr ""
+
+msgid "塔露拉"
+msgstr ""
+
+msgid "莉泽洛特"
+msgstr ""
+
+msgid "希尔德加德"
+msgstr ""
+
+msgid "坎黛拉"
+msgstr ""
+
+msgid "克丽斯腾"
+msgstr ""
+
+msgid "爱布拉娜"
+msgstr ""
+
+msgid "温德米尔"
+msgstr ""
+
+msgid "赫拉提娅"
+msgstr ""
+
+msgid "文月"
+msgstr ""
+
+msgid "年"
+msgstr ""
+
+msgid "夕"
+msgstr ""
+
+msgid "令"
+msgstr ""
+
+msgid "黍"
+msgstr ""
+
+msgid "深靛"
+msgstr ""
+
+msgid "+全刻印总修正("
+msgstr ""
+
+msgid "+性好奇(+30)"
+msgstr ""
+
+msgid "+性冷漠(-30)"
+msgstr ""
+
+msgid "+性无知(+30)"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+" 是否要用阴茎夺走{0}的初吻？"
+msgstr ""
+
+msgid ""
+"\n"
+"  ●你拿出了一次性万能钥匙，悄悄打开了门\n"
+"\n"
+msgstr ""
+
+msgid "心控-苦痛快感化"
+msgstr ""
+
+msgid "搬运对方"
+msgstr ""
+
+msgid "停止搬运对方"
+msgstr ""
+
+msgid "对方在时停中获得自由_未实装"
+msgstr ""
+
+msgid "对方在时停中再次停止_未实装"
+msgstr ""
+
+msgid "角色特殊指令_特殊调用"
+msgstr ""
+
+msgid "身体检查与管理"
+msgstr ""
+
+msgid "邀请多P_未实装"
+msgstr ""
+
+msgid ""
+"\n"
+"场景内有角色处于疲劳状态，无法进行多P\n"
+msgstr ""
+
+msgid ""
+"\n"
+"进入多P模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"进入多P模式失败\n"
+msgstr ""
+
+msgid "下五子棋"
+msgstr ""
+
+msgid "体外子宫按摩"
+msgstr ""
+
+msgid "诱惑对方_未实装"
+msgstr ""
+
+msgid "帽子交"
+msgstr ""
+
+msgid "眼镜交"
+msgstr ""
+
+msgid "耳饰交"
+msgstr ""
+
+msgid "脖饰交"
+msgstr ""
+
+msgid "口罩交"
+msgstr ""
+
+msgid "上衣交"
+msgstr ""
+
+msgid "胸衣交"
+msgstr ""
+
+msgid "手套交"
+msgstr ""
+
+msgid "裙子交"
+msgstr ""
+
+msgid "裤子交"
+msgstr ""
+
+msgid "内裤交"
+msgstr ""
+
+msgid "袜子交"
+msgstr ""
+
+msgid "鞋子交"
+msgstr ""
+
+msgid "武器交"
+msgstr ""
+
+msgid "绳子_未实装"
+msgstr ""
+
+msgid "眼罩_未实装"
+msgstr ""
+
+msgid "鞭子_未实装"
+msgstr ""
+
+msgid "针_未实装"
+msgstr ""
+
+msgid "滴蜡_未实装"
+msgstr ""
+
+msgid "打屁股_未实装"
+msgstr ""
+
+msgid "在无觉刻印的影响下，{0}的欲望提升至6级\n"
+msgstr ""
+
+msgid "在无觉刻印的影响下，{0}的欲望提升至7级\n"
+msgstr ""
+
+msgid "在无觉刻印的影响下，{0}的欲望提升至8级\n"
+msgstr ""
+
+msgid "没有穿胸罩的乳房"
+msgstr ""
+
+msgid "没有穿裙子的胯部"
+msgstr ""
+
+msgid "没有穿内裤的阴部"
+msgstr ""
+
+msgid "没有穿袜子的双腿"
+msgstr ""
+
+msgid "在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}"
+msgstr ""
+
+msgid "，精液量上限增加了{0}"
+msgstr ""
+
+msgid ""
+"{0}在{1}中获胜，获得了{2}粉红凭证\n"
+"\n"
+msgstr ""
+
+msgid "{0}打算去调教室\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  测试不通过，错误信息为：\n"
+"  "
+msgstr ""
+
+msgid "请输入您要使用的模型名（不含引号、逗号或空格）：\n"
+msgstr ""
+
+msgid "  *目前仅支持gpt和gemini模型，未包含在示例中的更多模型名请在官方文档中查阅\n"
+msgstr ""
+
+msgid "  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n"
+msgstr ""
+
+msgid "  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash\n"
+msgstr ""
+
+msgid "请输入您要使用的api的base_url（不含引号、逗号或空格）：\n"
+msgstr ""
+
+msgid "  目前仅支持openAI\n"
+msgstr ""
+
+msgid "  示例：http://my.test.server.example.com:8083/v1\n"
+msgstr ""
+
+msgid "请输入您要使用的代理ip（不含引号、逗号或空格）：\n"
+msgstr ""
+
+msgid "  示例：http://my.test.proxy.example.com\n"
+msgstr ""
+
+msgid "请输入您要使用的代理端口，不使用端口则随便输入数字后回车即可：\n"
+msgstr ""
+
+msgid "  示例：0.0.0.0\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  未识别到gpt或gemini字符，将默认为openAI格式的模型\n"
+msgstr ""
+
+msgid "连接超时"
+msgstr ""
+
+msgid ""
+"！！！特别注意事项！！！\n"
+"！debug前请一定要进行存档备份，不正确和过大的数值修改可能会出现数据超限、跳过中间值结算、数据类型错误和长度错误等问题\n"
+"！这些问题会导致游戏的部分结算和功能无法运行和使用，进而坏档\n"
+"！总之请一定要进行存档备份，存档数据很珍贵的，坏档了就太痛了\n"
+"！！！特别注意事项！！！\n"
+"\n"
+msgstr ""
+
+msgid "玩家的各项属性"
+msgstr ""
+
+msgid "输入adv_id"
+msgstr ""
+
+msgid ""
+"\n"
+"招募成功\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已招募过\n"
+msgstr ""
+
+msgid ""
+"\n"
+"获得了一辆新的载具：{0}\n"
+msgstr ""
+
+msgid "当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n"
+msgstr ""
+
+msgid "当前设施等级：{0}，提升设施等级可解锁更多道具"
+msgstr ""
+
+msgid "基础"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}的催眠深度未达到{1}%，无法进入{2}催眠状态，需要切换更低的催眠模式或加深催眠程度\n"
+msgstr ""
+
+msgid "○当前催眠对象：{0}，催眠深度：{1}%\n"
+msgstr ""
+
+msgid ""
+"\n"
+"要做什么呢？\n"
+msgstr ""
+
+msgid "[001]检查{0}的身体情况"
+msgstr ""
+
+msgid "[001]检查身体情况（当前没有查看对象）\n"
+msgstr ""
+
+msgid "[002]对{0}进行身体管理"
+msgstr ""
+
+msgid ""
+"\n"
+"[002]进行身体管理（当前没有管理对象）"
+msgstr ""
+
+msgid ""
+"\n"
+"[002]进行身体管理（需要先进行身体检查）"
+msgstr ""
+
+msgid "[003]调整体检日程(未实装)"
+msgstr ""
+
+msgid ""
+"\n"
+"请选择要对{0}进行的身体检查：\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"请选择要对{0}进行的身体管理（管理的条件中达成任意一项即可）：\n"
+"\n"
+msgstr ""
+
+msgid "被要求"
+msgstr ""
+
+msgid "内裤收藏数量{0}/{1}"
+msgstr ""
+
+msgid "袜子收藏数量{0}/{1}"
+msgstr ""
+
+msgid "露出能力等级{0}/{1}"
+msgstr ""
+
+msgid "被睡姦经验{0}/{1}"
+msgstr ""
+
+msgid "Ｂ感觉等级{0}/{1}"
+msgstr ""
+
+msgid "Ｃ感觉等级{0}/{1}"
+msgstr ""
+
+msgid "Ｖ感觉等级{0}/{1}"
+msgstr ""
+
+msgid "Ａ感觉等级{0}/{1}"
+msgstr ""
+
+msgid "V与W总被射入精液{0}ml/{1}ml"
+msgstr ""
+
+msgid "自慰经验{0}/{1}"
+msgstr ""
+
+msgid " 或 攻略进度{0}/{1}"
+msgstr ""
+
+msgid " 或 催眠程度{0}%/{1}%"
+msgstr ""
+
+msgid " 需要非处女"
+msgstr ""
+
+msgid " 需要非A处女"
+msgstr ""
+
+msgid " 需要未选择[禁止自慰]"
+msgstr ""
+
+msgid " 需要未选择[每天晚上睡前都要自慰]"
+msgstr ""
+
+msgid " 最多只能选择3项练习项目"
+msgstr ""
+
+msgid "对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n"
+msgstr ""
+
+msgid "因为被要求进行性爱的相关练习，所以{0}的工作被调整为特殊职业-{1}了\n"
+msgstr ""
+
+msgid "取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n"
+msgstr ""
+
+msgid "因为没有进行性爱的相关练习，所以{0}的特殊职业-{1}被取消了\n"
+msgstr ""
+
+msgid "[低难度，计算速度快]"
+msgstr ""
+
+msgid "低难度"
+msgstr ""
+
+msgid "[中难度，计算速度中等]"
+msgstr ""
+
+msgid "中难度"
+msgstr ""
+
+msgid "[中难度 - 需要{0}的{1}达到4级]"
+msgstr ""
+
+msgid "[高难度，计算速度慢]"
+msgstr ""
+
+msgid "高难度"
+msgstr ""
+
+msgid "[高难度 - 需要{0}的{1}达到6级]"
+msgstr ""
+
+msgid "五子棋"
+msgstr ""
+
+msgid ""
+"{0} 获胜!\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "[再来一局]"
+msgstr ""
+
+msgid "再来一局"
+msgstr ""
+
+msgid "[结束游戏]"
+msgstr ""
+
+msgid "结束游戏"
+msgstr ""
+
+msgid "[玩家先手]"
+msgstr ""
+
+msgid "玩家先手"
+msgstr ""
+
+msgid "[AI先手]"
+msgstr ""
+
+msgid "AI先手"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}思考中...\n"
+msgstr ""
+
+msgid "(苦痛快感化)"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}使用了{1}\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"该道具无法直接使用\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"当前没有交互对象，无法使用{0}\n"
+"\n"
+msgstr ""
+
+msgid "{0}的阴茎尺寸增加了，现在是{1}\n"
+msgstr ""
+
+msgid "{0}的阴茎尺寸减小了，现在是{1}\n"
+msgstr ""
+
+msgid "胸部"
+msgstr ""
+
+msgid "臀部"
+msgstr ""
+
+msgid "腿部"
+msgstr ""
+
+msgid "足部"
+msgstr ""
+
+msgid "外表年龄"
+msgstr ""
+
+msgid "{0}已经有【泌乳】了，无法再获得【泌乳】\n"
+msgstr ""
+
+msgid "{0}获得了【泌乳】\n"
+msgstr ""
+
+msgid "{0}没有【泌乳】，无法失去【泌乳】\n"
+msgstr ""
+
+msgid "{0}失去了【泌乳】\n"
+msgstr ""
+
+msgid "变大了"
+msgstr ""
+
+msgid "变小了"
+msgstr ""
+
+msgid "{0}的{1}{2}，现在是【{3}】\n"
+msgstr ""
+
+msgid "○对{0}使用\n"
+msgstr ""
