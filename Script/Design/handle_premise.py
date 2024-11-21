@@ -836,6 +836,18 @@ def handle_have_target(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.HAVE_NO_TARGET)
+def handle_have_no_target(character_id: int) -> int:
+    """
+    校验角色是否没有交互对象
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_have_target(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_NO_PLAYER)
 def handle_target_no_player(character_id: int) -> int:
     """
