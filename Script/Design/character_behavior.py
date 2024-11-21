@@ -1198,9 +1198,15 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_character_data.hunger_point += add_hunger
     now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
-    # 结算有意识状态下，不穿胸衣和内裤时的羞耻值增加
+    # 结算有意识且状态1256正常下，不穿胸衣和内裤时的羞耻值增加
     exposure_adjust = 0
-    if handle_premise.handle_unconscious_flag_0(character_id):
+    if (
+        handle_premise.handle_unconscious_flag_0(character_id) and 
+        handle_premise.handle_normal_1(character_id) and 
+        handle_premise.handle_normal_2(character_id) and
+        handle_premise.handle_normal_5(character_id) and
+        handle_premise.handle_normal_6(character_id)
+        ):
         if handle_premise.handle_not_wear_bra(character_id):
             exposure_adjust += 1
         if handle_premise.handle_not_wear_pan(character_id):
