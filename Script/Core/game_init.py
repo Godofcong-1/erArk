@@ -2,7 +2,7 @@
 import os
 import traceback
 from types import FunctionType
-from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd, get_text, save_handle
+from Script.Core import flow_handle, io_init, main_frame, cache_control, game_type, constant, py_cmd, get_text, save_handle
 from Script.Config import normal_config
 from Script.UI.Moudle import panel
 from Script.Design import game_time
@@ -26,12 +26,9 @@ def init(main_flow: object):
     Keyword argument:
     main_flow -- 游戏主流程
     """
-    global def_style
     io_init.clear_screen()
     io_init.clear_order()
     flow_handle.cmd_clear()
-    # 载入按键监听
-    key_listion_event.on_wframe_listion()
     # 设置背景颜色
     io_init.set_background(normal_config.config_normal.background)
     # 初始化字体
@@ -104,6 +101,7 @@ def run(main_func: object):
         init(main_func)
 
     io_init.run(_init)
+    main_frame.run()
 
 
 def console_log(string: str):
@@ -124,6 +122,7 @@ askfor_str = flow_handle.askfor_str
 
 # 请求输入一个数字
 askfor_int = flow_handle.askfor_int
+askfor_list = flow_handle.askfor_list
 askfor_all = flow_handle.askfor_all
 
 # 设置尾命令处理函数

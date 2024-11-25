@@ -3,7 +3,6 @@ from Script.Core import (
     cache_control,
     game_type,
     get_text,
-    era_image
 )
 from Script.Design import handle_premise
 
@@ -20,6 +19,9 @@ def find_character_image_name(character_id: int) -> str:
     Return arguments:
     str -- 角色图片名称
     """
+    from Script.Core import main_frame
+    image_data_index_by_chara = main_frame.window.image_data_index_by_chara
+
     character_data: game_type.Character = cache.character_data[character_id]
     image_name = ""
 
@@ -32,8 +34,8 @@ def find_character_image_name(character_id: int) -> str:
         character_image_name = _(character_data.name, revert_translation=True)
         image_name = character_image_name
         # 查询角色差分图片是否存在
-        if character_data.name in era_image.image_data_index_by_chara:
-            all_image_name_for_character = era_image.image_data_index_by_chara[character_data.name]
+        if character_data.name in image_data_index_by_chara:
+            all_image_name_for_character = image_data_index_by_chara[character_data.name]
             # print(all_image_name_for_character)
             # 心情差分
             emotion_flag = False
@@ -74,7 +76,7 @@ def find_character_image_name(character_id: int) -> str:
                 image_name += big_belly_text
 
     # 如果目标图片不存在，则使用角色原始图片
-    if image_name not in era_image.image_data:
+    if image_name not in main_frame.window.image_data:
         image_name = character_image_name
     return image_name
 

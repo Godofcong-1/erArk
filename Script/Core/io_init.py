@@ -3,6 +3,7 @@ import threading
 import queue
 import json
 from multiprocessing import Process
+from typing import Union
 from Script.Core import main_frame
 from Script.Config import game_config, normal_config
 
@@ -28,8 +29,8 @@ def get_order():
     return _order_queue.get()
 
 
-main_frame.bind_return(_input_evnet_set)
-main_frame.bind_queue(_send_queue)
+main_frame.window.bind_return(_input_evnet_set)
+main_frame.window.bind_queue(_send_queue)
 
 
 def _get_input_event():
@@ -45,9 +46,8 @@ def run(open_func: object):
     Keyword arguments:
     open_func -- 开场流程函数
     """
-    global _flowthread
-    _flowthread = threading.Thread(target=open_func, name="flowthread")
-    _flowthread.start()
+    flowthread = threading.Thread(target=open_func, name="flowthread")
+    flowthread.start()
     main_frame.run()
 
 
@@ -82,7 +82,7 @@ def new_json():
     return flow_json
 
 
-def text_json(string: str, style: tuple or str):
+def text_json(string: str, style: Union[tuple, str]):
     """
     定义一个文本json
     Keyword arguments:
@@ -99,11 +99,45 @@ def text_json(string: str, style: tuple or str):
     return re
 
 
+def event_json(string: str, style: Union[tuple, str]):
+    """
+    定义一个事件json
+    Keyword arguments:
+    string -- 要显示的文本
+    style -- 显示时的样式
+    """
+    re = {}
+    re["type"] = "event"
+    re["text"] = string
+    if isinstance(style, tuple):
+        re["style"] = style
+    if isinstance(style, str):
+        re["style"] = (style,)
+    return re
+
+
+def instruct_json(string: str, style: Union[tuple, str]):
+    """
+    定义一个指令json
+    Keyword arguments:
+    string -- 要显示的文本
+    style -- 显示时的样式
+    """
+    re = {}
+    re["type"] = "instruct"
+    re["text"] = string
+    if isinstance(style, tuple):
+        re["style"] = style
+    if isinstance(style, str):
+        re["style"] = (style,)
+    return re
+
+
 def cmd_json(
-    cmd_str: str,
-    cmd_num: int,
-    normal_style: tuple or str,
-    on_style: tuple or str,
+        cmd_str: str,
+        cmd_num: int,
+        normal_style: Union[tuple, str],
+        on_style: Union[tuple, str],
 ):
     """
     定义一个命令json
@@ -128,15 +162,44 @@ def cmd_json(
     return re
 
 
+def instruct_cmd_json(
+        cmd_str: str,
+        cmd_num: int,
+        normal_style: Union[tuple, str],
+        on_style: Union[tuple, str],
+):
+    """
+    定义一个命令json
+    Keyword arguments:
+    cmd_str -- 命令文本
+    cmd_num -- 命令数字
+    normal_style -- 正常显示样式
+    on_style -- 鼠标在其上时显示样式
+    """
+    re = {}
+    re["type"] = "instruct_cmd"
+    re["text"] = cmd_str
+    re["num"] = cmd_num
+    if isinstance(normal_style, tuple):
+        re["normal_style"] = normal_style
+    if isinstance(normal_style, str):
+        re["normal_style"] = (normal_style,)
+    if isinstance(on_style, tuple):
+        re["on_style"] = on_style
+    if isinstance(on_style, str):
+        re["on_style"] = (on_style,)
+    return re
+
+
 def style_json(
-    style_name: str,
-    foreground: str,
-    background: str,
-    font: str,
-    fontsize: str,
-    bold: str,
-    underline: str,
-    italic: str,
+        style_name: str,
+        foreground: str,
+        background: str,
+        font: str,
+        fontsize: str,
+        bold: str,
+        underline: str,
+        italic: str,
 ):
     """
     定义一个样式json
@@ -166,16 +229,22 @@ def style_json(
 # 输出格式化
 
 
-def era_print(string: str, style="standard"):
+def era_print(string: str, style="standard", draw_type="text"):
     """
     输出命令
     Keyword arguments:
     string -- 输出文本
     style -- 显示样式
+    draw_type -- 绘制位置类型 text|event|instruct
     """
     json_str = new_json()
-    json_str["content"].append(text_json(string, style))
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    if draw_type == "text":
+        json_str["content"].append(text_json(string, style))
+    elif draw_type == "event":
+        json_str["content"].append(event_json(string, style))
+    elif draw_type == "instruct":
+        json_str["content"].append(instruct_json(string, style))
+    put_queue(json_str)
 
 
 def image_print(image_name: str):
@@ -188,7 +257,7 @@ def image_print(image_name: str):
     json_str = new_json()
     image_json = {"image_name": image_name}
     json_str["image"] = image_json
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
 
 
 def clear_screen():
@@ -197,18 +266,32 @@ def clear_screen():
     """
     json_str = new_json()
     json_str["clear_cmd"] = "true"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
+
+
+def open_eventbox():
+    """开启事件文本面板"""
+    json_str = new_json()
+    json_str["open_eventbox"] = True
+    put_queue(json_str)
+
+
+def close_eventbox():
+    """关闭事件文本面板"""
+    json_str = new_json()
+    json_str["close_eventbox"] = True
+    put_queue(json_str)
 
 
 def frame_style_def(
-    style_name: str,
-    foreground: str,
-    background: str,
-    font: str,
-    fontsize: str,
-    bold: str,
-    underline: str,
-    italic: str,
+        style_name: str,
+        foreground: str,
+        background: str,
+        font: str,
+        fontsize: str,
+        bold: str,
+        underline: str,
+        italic: str,
 ):
     """
     推送一条在前端定义样式的信息
@@ -233,7 +316,7 @@ def frame_style_def(
         underline,
         italic,
     )
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
 
 
 def set_background(color: str):
@@ -244,30 +327,44 @@ def set_background(color: str):
     """
     json_str = new_json()
     json_str["bgcolor"] = color
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
 
 
 def clear_order():
     """
-    清除前端已经设置的命令
+    清楚前端已经设置的命令
     """
     json_str = new_json()
     json_str["clearorder_cmd"] = "true"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
 
 
-def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_style="onbutton"):
+def io_print_cmd(cmd_str: str, cmd_return: str, normal_style="standard", on_style="onbutton"):
     """
     打印一条指令
     Keyword arguments:
     cmd_str -- 命令文本
-    cmd_number -- 命令数字
+    cmd_return -- 命令返回
     normal_style -- 正常显示样式
     on_style -- 鼠标在其上时显示样式
     """
     json_str = new_json()
-    json_str["content"].append(cmd_json(cmd_str, cmd_number, normal_style, on_style))
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    json_str["content"].append(cmd_json(cmd_str, cmd_return, normal_style, on_style))
+    put_queue(json_str)
+
+
+def io_print_instruct_cmd(cmd_str: str, cmd_return: str, normal_style="standard", on_style="onbutton"):
+    """
+    场景指令面板打印一条指令
+    Keyword arguments:
+    cmd_str -- 命令文本
+    cmd_return -- 命令返回
+    normal_style -- 正常显示样式
+    on_style -- 鼠标在其上时显示样式
+    """
+    json_str = new_json()
+    json_str["content"].append(instruct_cmd_json(cmd_str, cmd_return, normal_style, on_style))
+    put_queue(json_str)
 
 
 def io_print_image_cmd(cmd_str: str, cmd_number: int):
@@ -283,7 +380,7 @@ def io_print_image_cmd(cmd_str: str, cmd_number: int):
     data["text"] = cmd_str
     data["num"] = cmd_number
     json_str["content"].append(data)
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    put_queue(json_str)
 
 
 def io_clear_cmd(*cmd_numbers: int):
@@ -297,28 +394,23 @@ def io_clear_cmd(*cmd_numbers: int):
         json_str["clearcmd_cmd"] = cmd_numbers
     else:
         json_str["clearcmd_cmd"] = "all"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
-
-
-def style_def():
-    pass
+    put_queue(json_str)
 
 
 def init_style():
     """
     富文本样式初始化
     """
-    global style_def
 
     def new_style_def(
-        style_name,
-        foreground,
-        background,
-        font,
-        fontsize,
-        bold,
-        underline,
-        italic,
+            style_name,
+            foreground,
+            background,
+            font,
+            fontsize,
+            bold,
+            underline,
+            italic,
     ):
         frame_style_def(
             style_name,
@@ -339,13 +431,11 @@ def init_style():
         for k in standard_data.__dict__:
             if k not in style.__dict__:
                 style.__dict__[k] = standard_data.__dict__[k]
-        if "font" not in style.__dict__ or style.font == "":
-            style.font = normal_config.config_normal.font
         style_def(
             style.name,
             style.foreground,
             style.background,
-            style.font,
+            normal_config.config_normal.font,
             normal_config.config_normal.font_size,
             style.bold,
             style.underline,
