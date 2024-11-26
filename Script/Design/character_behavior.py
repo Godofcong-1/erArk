@@ -794,6 +794,15 @@ def judge_character_follow(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 正常状态下的助理跟随，未智能跟随则变成智能跟随
+    if (
+        handle_premise.handle_not_follow(character_id) and
+        handle_premise.handle_is_assistant(character_id) and
+        handle_premise.handle_assistant_follow_1(character_id) and
+        handle_premise.handle_normal_1(character_id)
+        ):
+        character_data.sp_flag.is_follow = 1
+
     # 智能跟随
     if character_data.sp_flag.is_follow == 1:
         # 取消所有工作和娱乐状态

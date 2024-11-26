@@ -393,54 +393,62 @@ msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒�
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:6
-msgid "辅佐服务"
+msgid "跟随服务"
 msgstr ""
 
 #: .\data\csv\AssistantServices.csv:6
+msgid "否|是，智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）"
+msgstr ""
+
+#: .\data\csv\AssistantServices.csv:7
+msgid "辅佐服务"
+msgstr ""
+
+#: .\data\csv\AssistantServices.csv:7
 msgid "否|是，在非跟随状态下，会自己在博士办公室里处理公务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:7
+#: .\data\csv\AssistantServices.csv:8
 msgid "送饭服务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:7
+#: .\data\csv\AssistantServices.csv:8
 msgid "否|帮忙买午饭|亲手做午饭|亲手做三餐"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:8
+#: .\data\csv\AssistantServices.csv:9
 msgid "早安服务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:8
+#: .\data\csv\AssistantServices.csv:9
 msgid "否|早上叫起床|早安吻|早安咬"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:9
+#: .\data\csv\AssistantServices.csv:10
 msgid "晚安服务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:9
+#: .\data\csv\AssistantServices.csv:10
 msgid "否|晚上催睡觉|晚安吻|晚安咬"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:10
+#: .\data\csv\AssistantServices.csv:11
 msgid "同居服务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:11
+#: .\data\csv\AssistantServices.csv:12
 msgid "助攻服务"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:11
+#: .\data\csv\AssistantServices.csv:12
 msgid "否|是，助理在场时对其他干员的指令实行值+50"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:12
+#: .\data\csv\AssistantServices.csv:13
 msgid "性处理服务(未实装)"
 msgstr ""
 
-#: .\data\csv\AssistantServices.csv:12
+#: .\data\csv\AssistantServices.csv:13
 msgid "否|被动接受(非本番)|被动接受(含本番)|主动请求(非本番)|主动请求(含本番)"
 msgstr ""
 

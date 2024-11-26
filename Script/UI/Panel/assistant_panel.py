@@ -106,6 +106,10 @@ class Assistant_Panel:
 
                 # 跟随服务
                 button_text = _("[002]跟随服务")
+                if handle_premise.handle_assistant_follow_1(character_data.assistant_character_id):
+                    button_text += ("(开)")
+                else:
+                    button_text += ("(关)")
 
                 # 如果数值超限则归零
                 if target_data.sp_flag.is_follow > 4:
@@ -183,6 +187,8 @@ class Assistant_Panel:
             chose_assistant()
         # 跟随服务
         elif service_cid == 2:
+            target_data.assistant_services.setdefault(service_cid, 0)
+            target_data.assistant_services[service_cid] = not target_data.assistant_services[service_cid]
             if target_data.sp_flag.is_follow == 1 or target_data.sp_flag.is_follow > 4:
                 target_data.sp_flag.is_follow = 0
             else:

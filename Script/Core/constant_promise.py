@@ -964,6 +964,8 @@ class Premise:
     """ 属性_助理 交互对象是当前的助理干员 """
     TARGET_NOT_ASSISTANT = "t_not_assistant"
     """ 属性_助理 交互对象不是当前的助理干员 """
+    ASSISTANT_FOLLOW_1 = "assistant_follow_1"
+    """ 属性_助理 自己的助理属性中的跟随服务开启中 """
     ASSISTANT_HELP_WORK_0 = "assistant_help_work_0"
     """ 属性_助理 自己的助理属性中的辅佐服务未开启 """
     ASSISTANT_HELP_WORK_1 = "assistant_help_work_1"

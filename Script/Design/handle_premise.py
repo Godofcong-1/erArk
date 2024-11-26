@@ -14785,6 +14785,22 @@ def handle_assistant_help_work_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ASSISTANT_FOLLOW_1)
+def handle_assistant_follow_1(character_id: int) -> int:
+    """
+    自己的助理属性中的跟随服务开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.assistant_services.setdefault(2, 0)
+    if character_data.assistant_services[2]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_0)
 def handle_assistant_help_work_0(character_id: int) -> int:
     """
