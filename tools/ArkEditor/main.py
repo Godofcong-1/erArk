@@ -315,7 +315,7 @@ def update_status_menu():
     status_group = QActionGroup(data_list.status_menu)
     for status_type in cache_control.status_type_data:
         # 如果是事件编辑模式，则跳过二段结算
-        if cache_control.now_edit_type_flag == 1 and status_type == "二段结算":
+        if cache_control.now_edit_type_flag == 1 and "二段结算"in status_type:
             continue
         status_menu = QMenu(status_type, data_list.status_menu)
         for cid in cache_control.status_type_data[status_type]:
