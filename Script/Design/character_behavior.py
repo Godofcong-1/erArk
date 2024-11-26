@@ -1648,8 +1648,8 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
             judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
             return 1
 
-    # 睡觉中的相关判断
-    elif handle_premise.handle_action_sleep(character_id):
+    # 睡觉中的相关判断，需要没有被安眠药
+    elif handle_premise.handle_action_sleep(character_id) and handle_premise.handle_self_not_sleep_pills(character_id):
         # ①睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
         if (
             handle_premise.handle_assistant_morning_salutation_on(character_id) and

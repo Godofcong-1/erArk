@@ -11564,6 +11564,33 @@ def handle_target_not_urine_collector(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.SELF_SEELP_PIILS)
+def handle_self_sleep_pills(character_id: int) -> int:
+    """
+    自己已服用安眠药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.body_item[9][1]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_SEELP_PIILS)
+def handle_self_not_sleep_pills(character_id: int) -> int:
+    """
+    自己没有服用安眠药
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_sleep_pills(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_BIRTH_CONTROL_PILLS_BEFORE)
 def handle_target_now_birth_control_pills_before(character_id: int) -> int:
     """
