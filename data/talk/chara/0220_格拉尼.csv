@@ -5,7 +5,7 @@ str,int,int,str,str
 口上配置数据,,,,
 1,101,220,high_1&morning_entertainment_time&sys_1,“早上好啊，博士”\n{TargetName}元氣滿滿的像你問早
 2,101,220,high_1&eat_time&t_hunger_ge_80&sys_0&not_in_restaurant,“好餓啊，想吃點東西...啊，博士!! 要一起去食堂吃點甚麼嗎?”
-3,101,220,high_1&in_food_shop&sys_1&CVP_A2_X_G_15,“咿咕...有點難決定要吃哪個....”\n{TargetName}看著取餐口的菜單陷入了沉思，隨後抬起頭望著你\n“博士，有沒有推薦的呢?”
+3,101,220,high_1&in_food_shop&sys_1&sys_4&CVP_A2_X_G_15,“咿咕...有點難決定要吃哪個....”\n{TargetName}看著取餐口的菜單陷入了沉思，隨後抬起頭望著你\n“博士，有沒有推薦的呢?”
 4,115,220,high_1&CVP_A2_F_GE_10&sys_0,“想要我跟著嗎? 明白了”\n{TargetName}俏皮的向你敬了個禮\n“騎警格拉尼，保證完成任務!”
 5,101,220,high_1&CVP_A2_G_GE_1&CVP_A3|423_F_GE_1&sys_0,“博士，今天瑪莉婭小姐和我分享了一首歌，說是在她們家鄉的競速騎士之間很紅喔”\n{TargetName}試著哼出了幾句\n“今天的勝利女神只親吻我一人~”
 6,101,220,high_1&in_fairy_banquet&place_0&place_10&CVP_A3|423_G_G_1&CVP_A2_G_GE_2&CVP_A3|332_F_G_1&sys_0,“博士...”\n走在空蕩蕩的舞台上，{TargetName}難得地臉紅起來\n“我把瑪莉亞小姐教我的那首舞曲練好囉，席德嘉小姐也幫上了不少忙...您要看看嗎?”\n見到你點頭後，她簡直開心的蹦起來，點開手機音樂後便在舞台中央跳了起舞來\n“你的愛馬~”\n隨著音樂而起舞，勇敢的小騎警紅著臉，為你獻上了只屬於一人的勝者舞台
