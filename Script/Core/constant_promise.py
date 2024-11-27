@@ -1705,6 +1705,9 @@ class Premise:
     TARGET_KISS_GE_10 = "t_kiss_ge_10"
     """ 属性_经验 交互对象亲吻经验>=10 """
 
+    SELF_SHY_GE_100000 = "self_shy_ge_100000"
+    """ 属性_状态 自身羞耻小于等于100000 """
+
     SELF_FALL = "self_fall"
     """ 属性_素质 自己有陷落素质 """
     SELF_NOT_FALL = "self_not_fall"

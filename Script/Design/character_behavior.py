@@ -1208,10 +1208,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_character_data.hunger_point += add_hunger
     now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
-    # 结算有意识且状态1256正常下，不穿胸衣和内裤时的羞耻值增加
+    # 结算有意识、周围有其他人、羞耻没有超限、状态1256正常下，不穿胸衣和内裤时的羞耻值增加
     exposure_adjust = 0
     if (
         handle_premise.handle_unconscious_flag_0(character_id) and 
+        handle_premise_place.handle_scene_over_two(character_id) and 
+        handle_premise.handle_self_shy_ge_100000(character_id) and 
         handle_premise.handle_normal_1(character_id) and 
         handle_premise.handle_normal_2(character_id) and
         handle_premise.handle_normal_5(character_id) and
@@ -1223,8 +1225,9 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             exposure_adjust += 2
     if exposure_adjust:
         feel_adjust = attr_calculation.get_ability_adjust(now_character_data.ability[34])
-        exposure_add = true_add_time * feel_adjust * exposure_adjust * 4
+        exposure_add = true_add_time * feel_adjust * exposure_adjust
         now_character_data.status_data[16] += exposure_add
+        now_character_data.status_data[16] = min(now_character_data.status_data[16],100000)
 
     # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
 

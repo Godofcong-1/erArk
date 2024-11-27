@@ -5445,6 +5445,21 @@ def handle_t_kiss_ge_10(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_SHY_GE_100000)
+def handle_self_shy_ge_100000(character_id: int) -> int:
+    """
+    自身羞耻小于等于100000
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.status_data[16] <= 100000:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_FALL)
 def handle_self_fall(character_id: int) -> int:
     """
