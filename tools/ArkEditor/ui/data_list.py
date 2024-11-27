@@ -424,7 +424,7 @@ class DataList(QWidget):
                 self.now_in_moving_flag = False
         # 处理事件移动
         elif cache_control.now_edit_type_flag == 1:
-            print("开始处理事件移动，移动到上方")
+            # print("开始处理事件移动，移动到上方")
             # 获取事件 uid
             need_move_uid = self.edited_item.uid
             # 获取当前选中的事件 uid
@@ -432,7 +432,7 @@ class DataList(QWidget):
             if not current_select_item:
                 return
             current_select_uid = current_select_item.uid
-            print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
+            # print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
             # 新建一个空白字典，用于存放移动后的事件
             new_event_data = {}
             # 遍历事件数据，将选中的事件之前的事件加入新的事件数据中，到选中的事件时，将要移动的事件加入新的事件数据中，然后加入选中的事件，最后将选中的事件之后的事件加入新的事件数据中
@@ -494,12 +494,12 @@ class DataList(QWidget):
                 self.now_in_moving_flag = False
         # 处理事件移动
         elif cache_control.now_edit_type_flag == 1:
-            print("开始处理事件移动，移动到下方")
+            # print("开始处理事件移动，移动到下方")
             # 获取事件 uid
             need_move_uid = need_move_cid
             # 获取当前选中的事件 uid
             current_select_uid = current_select_cid
-            print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
+            # print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
             # 新建一个空白字典，用于存放移动后的事件
             new_event_data = {}
             # 遍历事件数据，将选中的事件之前的事件加入新的事件数据中，到选中的事件时，将要移动的事件加入新的事件数据中，然后加入选中的事件，最后将选中的事件之后的事件加入新的事件数据中
@@ -511,10 +511,10 @@ class DataList(QWidget):
                 if uid == current_select_uid and not skip_flag:
                     new_event_data[need_move_uid] = cache_control.now_event_data[need_move_uid]
                     skip_flag = True
-                    print(f"移动到下方，加入{need_move_uid}")
-            print(f"debug 前now_event_data: {cache_control.now_event_data}")
+                    # print(f"移动到下方，加入{need_move_uid}")
+            # print(f"debug 前now_event_data: {cache_control.now_event_data}")
             cache_control.now_event_data = new_event_data
-            print(f"debug 后now_event_data: {cache_control.now_event_data}")
+            # print(f"debug 后now_event_data: {cache_control.now_event_data}")
             self.now_in_moving_flag = False
         # 更新界面
         self.update()

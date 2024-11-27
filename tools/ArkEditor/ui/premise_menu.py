@@ -415,9 +415,11 @@ class CVPMenu(QDialog):
 
     def reset_option(self):
         """重置选项"""
-        self.cvp_a.clear()
-        self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
-        self.cvp_a.setVisible(True)
+        items_count = self.cvp_a.count()
+        if items_count != 3:
+            self.cvp_a.clear()
+            self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
+            self.cvp_a.setVisible(True)
         self.cvp_b2.setVisible(True)
 
         self.cvp_c.clear()

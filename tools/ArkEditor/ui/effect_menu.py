@@ -254,6 +254,7 @@ class CVEMenu(QDialog):
             cve_b_value = "S|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "口上用flag":
             cve_b_value = "Flag|" + self.cve_b2.currentText().split("|")[0]
+            cve_b2 = self.cve_b2.currentText()
         elif cve_b1 == "绝顶":
             cve_b_value = "Climax|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "嵌套父事件":
@@ -316,9 +317,12 @@ class CVEMenu(QDialog):
 
     def change_b2(self, index: int):
         """改变b2的选项"""
-        self.cve_a.clear()
-        self.cve_a.addItems(["自己", "交互对象", "角色id为"])
-        self.cve_a.setVisible(True)
+        # 获取cve_a的items数量
+        items_count = self.cve_a.count()
+        if items_count != 3:
+            self.cve_a.clear()
+            self.cve_a.addItems(["自己", "交互对象", "角色id为"])
+            self.cve_a.setVisible(True)
         self.cve_b2.setVisible(True)
         self.reset_c()
         self.cve_d.setVisible(True)
