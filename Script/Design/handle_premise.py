@@ -13827,6 +13827,20 @@ def handle_t_not_wear_pan(character_id: int) -> int:
     return not handle_t_wear_pan(character_id)
 
 
+@add_premise(constant_promise.Premise.NOW_WEAR_BRA_OR_PAN)
+def handle_not_wear_bra_or_pan(character_id: int) -> int:
+    """
+    自己没有穿着胸衣或内裤
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_not_wear_bra(character_id) or handle_not_wear_pan(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.WEAR_SOCKS)
 def handle_wear_socks(character_id: int) -> int:
     """

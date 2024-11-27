@@ -2288,6 +2288,8 @@ class Premise:
     """ 属性_服装 交互对象穿着内裤 """
     TARGET_NOT_WEAR_PAN = "t_not_wear_pan"
     """ 属性_服装 交互对象没有穿着内裤 """
+    NOW_WEAR_BRA_OR_PAN = "not_wear_bra_or_pan"
+    """ 属性_服装 自己没有穿着胸衣或内裤 """
     WEAR_SOCKS = "wear_socks"
     """ 属性_服装 穿着袜子 """
     TARGET_WEAR_SOCKS = "t_wear_socks"
