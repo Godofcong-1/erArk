@@ -1293,7 +1293,8 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
                     base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
         # 父子嵌套事件
         elif attribute_name == "father":
-            now_draw = event_option_panel.multi_layer_event_option_Panel(character_id, width, int(effect_all_value_list[3]))
+            # print(f"debug effect_all_value_list = {effect_all_value_list}")
+            now_draw = event_option_panel.multi_layer_event_option_Panel(character_id, width, type_son_id, int(effect_all_value_list[3]))
             now_draw.draw()
         # 指定角色id为交互对象
         elif attribute_name == "change_target_id":

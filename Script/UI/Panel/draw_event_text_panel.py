@@ -54,7 +54,7 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
                 break
 
         # 子事件的文本里去掉选项内容
-        if son_event_flag:
+        if son_event_flag and "|" in game_config.config_event[event_id].text:
             now_event_text: str = "\n" + game_config.config_event[event_id].text.split("|")[1]
         else:
             now_event_text: str = "\n" + game_config.config_event[event_id].text

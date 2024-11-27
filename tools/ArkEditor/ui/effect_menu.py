@@ -234,6 +234,8 @@ class CVEMenu(QDialog):
         cve_b1 = self.cve_b1.currentText()
         if len(self.cve_b2.currentText().split("|")) == 2:
             cve_b2 = self.cve_b2.currentText().split("|")[1]
+        elif len(self.cve_b2.currentText().split("|")) == 1:
+            cve_b2 = self.cve_b2.currentText().split("|")[0]
         else:
             cve_b2 = ""
         if cve_b1 == "待选择":
@@ -254,11 +256,10 @@ class CVEMenu(QDialog):
             cve_b_value = "S|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "口上用flag":
             cve_b_value = "Flag|" + self.cve_b2.currentText().split("|")[0]
-            cve_b2 = self.cve_b2.currentText()
         elif cve_b1 == "绝顶":
             cve_b_value = "Climax|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "嵌套父事件":
-            cve_b_value = "Father|0"
+            cve_b_value = "Father|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "指定角色id为交互对象":
             cve_b_value = "ChangeTargetId|0"
         cve_c = self.cve_c.currentText()
@@ -381,12 +382,13 @@ class CVEMenu(QDialog):
             self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶")
         elif index == 10:
             self.cve_a.setVisible(False)
-            self.cve_b2.setVisible(False)
+            self.cve_b2.clear()
+            for i in range(100):
+                self.cve_b2.addItem(str(i))
             self.cve_c.clear()
             self.cve_c.addItems(["变为"])
             self.cve_c.setCurrentIndex(0)
             self.cve_text.setText("嵌套父事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统量]-[基础]\n②本前提需要配合[综合数值前提]中的[嵌套子事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")
-
         elif index == 11:
             self.cve_a.clear()
             self.cve_a.addItems(["角色id为"])

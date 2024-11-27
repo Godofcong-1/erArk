@@ -40,13 +40,14 @@ def get_target_chara_diy_instruct(character_id: int = 0):
     return len(son_event_list), son_event_list
 
 
-def check_son_event_list_from_event_list(event_list: list, character_id: int, event_parent_chid_id: int):
+def check_son_event_list_from_event_list(event_list: list, character_id: int, event_parent_chid_id: int, event_parent_value: int):
     """
     检查事件列表中是否有子事件\n
     Keyword arguments:\n
     event_list -- 事件列表\n
     character_id -- 角色id\n
     event_parent_chid_id -- 子事件的序号id（非事件id）\n
+    event_parent_value -- 子事件的值\n
     Return arguments:\n
     son_event_list -- 子事件列表\n
     """
@@ -56,7 +57,7 @@ def check_son_event_list_from_event_list(event_list: list, character_id: int, ev
     for event_id in event_list:
         event_config = game_config.config_event[event_id]
         # 需要含有综合数值前提中的子嵌套事件前提
-        son_premise = "CVP_A1_Son|0_E_{0}".format(event_parent_chid_id)
+        son_premise = "CVP_A1_Son|{0}_E_{1}".format(event_parent_chid_id, event_parent_value)
         # 需要有该子事件的前提
         if son_premise in event_config.premise:
             premise_dict = event_config.premise.copy()
@@ -142,7 +143,7 @@ class multi_layer_event_option_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, character_id: int, width: int, event_parent_chid_id: int):
+    def __init__(self, character_id: int, width: int, event_parent_chid_id: int, event_parent_value: int):
         """初始化绘制对象"""
         self.character_id = character_id
         """ 绘制的角色id """
@@ -150,6 +151,8 @@ class multi_layer_event_option_Panel:
         """ 绘制的最大宽度 """
         self.event_parent_chid_id = event_parent_chid_id
         """ 嵌套父子事件的序号id（非事件id） """
+        self.event_parent_value = event_parent_value
+        """ 嵌套父子事件的值 """
         self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], SonEventDraw, 20, 1, self.width, 1, 1, 0)
         """ 当前名字列表控制面板 """
 
@@ -171,16 +174,20 @@ class multi_layer_event_option_Panel:
                 tem_event_list += game_config.config_event_status_data_by_chara_adv[behavior_id][target_character_data.adv]
 
         # 从临时事件列表中筛选出子事件
-        son_event_list = check_son_event_list_from_event_list(tem_event_list, self.character_id, self.event_parent_chid_id)
+        son_event_list = check_son_event_list_from_event_list(tem_event_list, self.character_id, self.event_parent_chid_id, self.event_parent_value)
 
         # 如果没有子事件，直接返回
         if len(son_event_list) == 0:
             return
+        else:
+            draw_event_list = []
+            for son_event_id in son_event_list:
+                draw_event_list.append([son_event_id, self.character_id])
         # 如果有子事件，继续绘制
         while 1:
             py_cmd.clr_cmd()
 
-            self.handle_panel.text_list = son_event_list
+            self.handle_panel.text_list = draw_event_list
             self.handle_panel.update()
             return_list = []
             self.handle_panel.draw()

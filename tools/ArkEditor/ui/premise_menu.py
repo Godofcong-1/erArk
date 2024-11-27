@@ -367,7 +367,7 @@ class CVPMenu(QDialog):
         elif cvp_b1 == "前指令":
             cvp_b_value = "Instruct|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "嵌套子事件":
-            cvp_b_value = "Son|0"
+            cvp_b_value = "Son|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "其他角色在场":
             cvp_b_value = "OtherChara|0"
         cvp_c = self.cvp_c.currentText()
@@ -499,7 +499,9 @@ class CVPMenu(QDialog):
             self.cvp_text.setText("前指令可以用来检测玩家上一次输入的指令，用于实现两次指令之间的联动效果\n本前提只判断玩家，所以角色选择会锁定为玩家，且只能使用[等于]或者[不等于]，没有其他逻辑")
         elif index == 12:
             self.cvp_a.setVisible(False)
-            self.cvp_b2.setVisible(False)
+            self.cvp_b2.clear()
+            for i in range(100):
+                self.cvp_b2.addItem(str(i))
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
             self.cvp_text.setText("嵌套子事件，用于在事件编辑中展开多层嵌套父子事件\n\n①如果仅需要单层的父子选项事件请使用[整体修改]-[系统状态]\n②本前提需要配合[综合数值结算]中的[嵌套父事件]使用\n③同数字的父事件会展开同数字的子事件，如，序号0的嵌套父事件会检索序号0的嵌套子事件，以此类推\n④子事件除本前提外，还可以拥有父事件之外的独立前提。若设置了独立前提，满足时则正常显示，不满足时不显示该子事件的选项\n\n例子：父事件A1（嵌套父事件=0）\n  一级子事件B1（嵌套子事件=0↔A1，嵌套父事件=1）、B2（嵌套子事件=0↔A1，嵌套父事件=2）\n  二级子事件C1（嵌套子事件=1↔B1），C2（嵌套子事件=1↔B1），C3（嵌套子事件=2↔B2），C4（嵌套子事件=2↔B2）\n")

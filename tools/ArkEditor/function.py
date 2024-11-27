@@ -17,7 +17,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[1] = cvp_str_list[1].replace("A2", "交互对象")
     cvp_str_list[2] = cvp_str_list[2].replace("Time", "时间")
     cvp_str_list[2] = cvp_str_list[2].replace("Flag", "口上用flag")
-    cvp_str_list[2] = cvp_str_list[2].replace("Son|0", "嵌套子事件")
+    cvp_str_list[2] = cvp_str_list[2].replace("Son", "嵌套子事件")
     cvp_str_list[2] = cvp_str_list[2].replace("OtherChara|0", "其他角色在场")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
