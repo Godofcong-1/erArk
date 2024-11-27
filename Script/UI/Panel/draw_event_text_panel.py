@@ -44,20 +44,40 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         if player_data.position not in [character_data.position, character_data.behavior.move_target]:
             return
 
+        son_event_flag = False # 子事件标记
+        diy_event_flag = False  # diy事件标记
+
+        event_data = game_config.config_event[self.event_id]
+
+        # 如果玩家身上有角色diy事件标记
+        if character_data.event.chara_diy_event_flag:
+            # 更新事件id
+            self.event_id = character_data.event.event_id
+            event_data = game_config.config_event[self.event_id]
+            # 如果文本中没有两个|，则不是diy事件，不触发
+            if event_data.text.count("|") < 2:
+                return
+            # 清除角色的diy事件标记
+            character_data.event.chara_diy_event_flag = False
+            # 触发diy事件标记
+            diy_event_flag = True
+
         # 检查是否是子事件
-        son_event_flag = False
-        if "option_son" in game_config.config_event[event_id].premise:
+        if "option_son" in event_data.premise:
             son_event_flag = True
-        for primise in game_config.config_event[event_id].premise:
+        for primise in event_data.premise:
             if "CVP_A1_Son" in primise:
                 son_event_flag = True
                 break
 
         # 子事件的文本里去掉选项内容
-        if son_event_flag and "|" in game_config.config_event[event_id].text:
-            now_event_text: str = "\n" + game_config.config_event[event_id].text.split("|")[1]
+        if son_event_flag and "|" in event_data.text:
+            now_event_text: str = "\n" + event_data.text.split("|")[1]
+        # diy事件的文本里去掉选项和行动事件内容
+        elif diy_event_flag and "|" in event_data.text:
+            now_event_text: str = "\n" + event_data.text.split("|")[2]
         else:
-            now_event_text: str = "\n" + game_config.config_event[event_id].text
+            now_event_text: str = "\n" + event_data.text
 
         # 代码词语
         now_event_text = talk.code_text_to_draw_text(now_event_text, character_id)

@@ -1532,7 +1532,12 @@ def handle_chara_diy_instruct():
     """处理角色特殊指令"""
     # 本指令仅在下述函数中特殊调用，不会被正常调用
     # Script/UI/Panel/in_scene_panel.py/handle_chara_diy_instruct()
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT)
+    pl_character_data = cache.character_data[0]
+    event_id = pl_character_data.event.event_id
+    event_data = game_config.config_event[event_id]
+    # 将角色的行动事件改为事件文本中的时间
+    new_duration = int(event_data.text.split("|")[1])
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT, duration=new_duration)
 
 
 @add_instruct(

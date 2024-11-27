@@ -67,10 +67,6 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
         event_weight = value_handle.get_rand_value_for_value_region(list(now_event_data.keys()))
         now_event_id = random.choice(list(now_event_data[event_weight]))
         event_config = game_config.config_event[now_event_id]
-    # 如果玩家身上有角色diy事件标记，则优先触发，然后清除标记
-    if character_data.event.chara_diy_event_flag:
-        now_event_id = character_data.event.event_id
-        character_data.event.chara_diy_event_flag = False
     if now_event_id != "":
         # print(f"debug now_event_id:{now_event_id}")
         return draw_event_text_panel.DrawEventTextPanel(now_event_id, character_id, event_config.type)

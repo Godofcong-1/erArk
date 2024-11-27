@@ -34,8 +34,14 @@ def get_target_chara_diy_instruct(character_id: int = 0):
             # 判断交互对象是否有该行为事件
             if target_character_data.adv in all_chara_diy_instruct_event_list:
                 target_diy_instruct_event_list = all_chara_diy_instruct_event_list[target_character_data.adv]
-                # 获取子事件列表
-                son_event_list = check_son_event_list_from_event_list(target_diy_instruct_event_list, 0, 0)
+                # 遍历事件列表
+                for event_id in target_diy_instruct_event_list:
+                    event_config = game_config.config_event[event_id]
+                    # 计算总权重
+                    now_weight = handle_premise.get_weight_from_premise_dict(event_config.premise, character_id, unconscious_pass_flag = True)
+                    # 判定通过，加入到子事件的列表中
+                    if now_weight:
+                        son_event_list.append(event_id)
 
     return len(son_event_list), son_event_list
 
