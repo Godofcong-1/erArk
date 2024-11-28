@@ -34,6 +34,8 @@ class CharacterStatus:
     """ 睡觉 """
     STATUS_TAKE_SHOWER = 112
     """ 淋浴 """
+    STATUS_GET_UP = 113
+    """ 起床 """
     STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116
@@ -683,6 +685,8 @@ class Behavior:
     """ 睡觉 """
     TAKE_SHOWER = 112
     """ 淋浴 """
+    GET_UP = 113
+    """ 起床 """
     FOLLOW = 115
     """ 让NPC跟随玩家 """
     END_FOLLOW = 116

@@ -710,6 +710,8 @@ class BehaviorEffect:
     """ 属性_服装 大浴场衣柜里的衣服转移到宿舍衣柜 """
     CLEAN_LOCKER_CLOTH_SEMEN = 648
     """ 属性_服装 清理衣柜里的衣服精液 """
+    GET_CLOTH_FROM_DORMITORY_LOCKER = 649
+    """ 属性_服装 清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上 """
     UP_AND_BRA_TO_TEM = 651
     """ 属性_服装 自己的上衣和胸罩转移到临时脱下 """
     DOWN_AND_PAN_TO_TEM = 652
@@ -723,6 +725,8 @@ class BehaviorEffect:
     """ 系统量_时间 角色记录并刷新训练时间 """
     RECORD_SHOWER_TIME = 702
     """ 系统量_时间 角色记录并刷新淋浴时间 """
+    RECORD_WAKE_TIME = 703
+    """ 系统量_时间 角色记录并刷新起床时间 """
 
     MOVE_TO_TARGET_SCENE = 751
     """ 系统量_地点 移动至目标场景 """

@@ -655,6 +655,24 @@ def handle_clean_locker_cloth_semen(
     clothing.clean_locker_semen(character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_CLOTH_FROM_DORMITORY_LOCKER)
+def handle_get_cloth_from_dormitory_locker(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    clothing.get_cloth_from_dormitory_locker(character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UP_AND_BRA_TO_TEM)
 def handle_up_and_bra_to_tem(
     character_id: int,

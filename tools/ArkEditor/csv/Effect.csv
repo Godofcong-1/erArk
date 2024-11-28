@@ -360,6 +360,7 @@ cid,effect_name,effect_type,effect
 646,FOOT_CLOTH_TO_SHOWER_LOCKER,属性_服装,袜子和鞋子转移到大浴场衣柜里
 647,SHOWER_LOCKER_TO_DORMITORY_LOCKER,属性_服装,大浴场衣柜里的衣服转移到宿舍衣柜
 648,CLEAN_LOCKER_CLOTH_SEMEN,属性_服装,清理衣柜里的衣服精液
+649,GET_CLOTH_FROM_DORMITORY_LOCKER,属性_服装,清空身上的旧衣服，从宿舍的衣柜里穿上衣服、内衣内裤，并转移衣柜中的精液数据到穿着的衣服上
 651,UP_AND_BRA_TO_TEM,属性_服装,自己的上衣和胸罩转移到临时脱下
 652,DOWN_AND_PAN_TO_TEM,属性_服装,自己的下衣和内裤转移到临时脱下
 653,TARGET_UP_AND_BRA_TO_TEM,属性_服装,交互对象的上衣和胸罩转移到临时脱下
@@ -367,6 +368,7 @@ cid,effect_name,effect_type,effect
 
 701,RECORD_TRAINING_TIME,系统量_时间,角色记录并刷新训练时间
 702,RECORD_SHOWER_TIME,系统量_时间,角色记录并刷新淋浴时间
+703,RECORD_WAKE_TIME,系统量_时间,角色记录并刷新起床时间
 
 751,MOVE_TO_TARGET_SCENE,系统量_地点,移动至目标场景
 752,DOOR_CLOSE,系统量_地点,当前场景进入关门状态
