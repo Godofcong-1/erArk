@@ -190,7 +190,7 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
     for body_part in game_config.config_body_part:
         body_text = game_config.config_body_part[body_part].name
         # 如果已经有数据，则将当前数据归0
-        if len(dirty_data.body_semen) > body_part:
+        if body_part in dirty_data.body_semen:
             dirty_data.body_semen[body_part][1] = 0
             dirty_data.body_semen[body_part][2] = 0
         else:
@@ -200,7 +200,7 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
     for clothing_type in game_config.config_clothing_type:
         cloth_text = game_config.config_clothing_type[clothing_type].name
         # 如果已经有数据，则将当前数据归0
-        if len(dirty_data.cloth_semen) > clothing_type:
+        if clothing_type in dirty_data.cloth_semen:
             dirty_data.cloth_semen[clothing_type][1] = 0
             dirty_data.cloth_semen[clothing_type][2] = 0
         else:
