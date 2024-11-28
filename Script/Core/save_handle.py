@@ -4,7 +4,6 @@ import pickle
 import shutil
 import datetime
 import platform
-import multiprocessing
 from types import FunctionType
 from Script.Core import (
     cache_control,
