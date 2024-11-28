@@ -4,7 +4,6 @@ import json
 import uuid
 import psutil
 import signal
-import time
 from tkinter import (
     ttk,
     Tk,
@@ -235,7 +234,6 @@ def read_queue():
             if "\n" in c["text"]:
                 if textbox.get("1.0", END).count("\n") > normal_config.config_normal.text_hight * 10:
                     textbox.delete("1.0", str(normal_config.config_normal.text_hight * 5) + ".0")
-    time.sleep(0.01)
     root.after(1, read_queue)
 
 
