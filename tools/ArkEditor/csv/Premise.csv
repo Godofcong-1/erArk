@@ -344,6 +344,8 @@ time_midnight,TIME_MIDNIGHT,时间_当前,时间:深夜（22点~2点）
 time_morning,TIME_MORNING,时间_当前,时间:清晨（4点~8点）
 time_moon,TIME_MOON,时间_当前,时间:中午（10点~14点）
 time_aftermoon,TIME_AFTERMOON,时间_当前,时间:下午（15点~18点）
+time_0_to_9,TIME_0_TO_9,时间_当前,时间:0点~9点
+time_18_to_23,TIME_18_TO_23,时间_当前,时间:18点~23点
 eat_time,EAT_TIME,时间_当前,饭点（早上7~8点、中午12~13点、晚上18~19点）
 breakfast_time,BREAKFAST_TIME,时间_当前,早饭饭点（早上7~8点）
 launch_time,LAUNCH_TIME,时间_当前,午饭饭点（中午12~13点）
@@ -370,6 +372,7 @@ before_morning_salutation_time,BEFORE_MORNING_SALUTATION_TIME,时间_当前,当�
 night_salutation_time,NIGHT_SALUTATION_TIME,时间_当前,当前是晚安问候时间（计划睡觉时间之后，权重50）
 not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是晚安问候时间（计划睡觉时间之后）
 still_30_minutes_before_end,STILL_30_MINUTES_BEFORE_END,时间_当前,距离行动结束时间还有至少30分钟
+chara_behavior_end_time_lateer_than_game_time,CHARA_BEHAVIOR_END_TIME_LATEER_THAN_GAME_TIME,时间_当前,角色行动结束时间晚于游戏时间
 time_over_a_year,TIME_OVER_A_YEAR,时间_当前,游戏时间超过一年
 
 
@@ -425,6 +428,7 @@ t_mp_low,TARGET_MP_LOW,属性_基础,交互对象气力低于30%
 t_mp_high,TARGET_MP_HIGH,属性_基础,交互对象气力高于70%
 self_and_target_hp_ge_70,SELF_AND_TARGET_HP_GE_70,属性_基础,自身和交互对象体力都高于70%
 tired_le_0,TIRED_LE_0,属性_基础,疲劳条≤0%
+tired_ge_10,TIRED_GE_10,属性_基础,疲劳条≥10%
 tired_ge_50,TIRED_GE_50,属性_基础,疲劳条≥50%
 tired_le_74,TIRED_LE_74,属性_基础,疲劳条≤74%，全指令自由
 tired_ge_75,TIRED_GE_75,属性_基础,疲劳条≥75%，部分指令受限
@@ -856,6 +860,8 @@ kiss_ge_10,KISS_GE_10,属性_经验,自身亲吻经验>=10
 t_kiss_0,TARGET_KISS_0,属性_经验,交互对象亲吻经验==0
 t_kiss_ge_10,TARGET_KISS_GE_10,属性_经验,交互对象亲吻经验>=10
 
+self_shy_ge_100000,SELF_SHY_GE_100000,属性_状态,自身羞耻小于等于100000
+
 self_fall,SELF_FALL,属性_素质,自己有陷落素质
 self_not_fall,SELF_NOT_FALL,属性_素质,自己无陷落素质
 self_fall_1,SELF_FALL_1,属性_素质,自己有1级陷落素质
@@ -1150,6 +1156,7 @@ wear_pan,WEAR_PAN,属性_服装,穿着内裤
 not_wear_pan,NOT_WEAR_PAN,属性_服装,没有穿着内裤
 t_wear_pan,TARGET_WEAR_PAN,属性_服装,交互对象穿着内裤
 t_not_wear_pan,TARGET_NOT_WEAR_PAN,属性_服装,交互对象没有穿着内裤
+not_wear_bra_or_pan,NOW_WEAR_BRA_OR_PAN,属性_服装,自己没有穿着胸衣或内裤
 wear_socks,WEAR_SOCKS,属性_服装,穿着袜子
 t_wear_socks,TARGET_WEAR_SOCKS,属性_服装,交互对象穿着袜子
 t_not_wear_socks,TARGET_NOT_WEAR_SOCKS,属性_服装,交互对象没有穿着袜子

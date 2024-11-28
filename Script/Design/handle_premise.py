@@ -4040,6 +4040,24 @@ def handle_tired_le_0(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TIRED_GE_10)
+def handle_tired_ge_10(character_id: int) -> int:
+    """
+    疲劳条≥10%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.tired_point / 160
+    if value >= 0.1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.TIRED_GE_50)
 def handle_tired_ge_50(character_id: int) -> int:
     """
@@ -6665,6 +6683,38 @@ def handle_time_aftermoon(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_time: datetime.datetime = character_data.behavior.start_time
     if now_time.hour >= 15 and now_time.hour <= 17:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_0_TO_9)
+def handle_time_0_to_9(character_id: int) -> int:
+    """
+    时间:0点~9点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 0 and now_time.hour <= 9:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_18_TO_23)
+def handle_time_18_to_23(character_id: int) -> int:
+    """
+    时间:18点~23点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time: datetime.datetime = character_data.behavior.start_time
+    if now_time.hour >= 18 and now_time.hour <= 23:
         return 1
     return 0
 
@@ -15159,18 +15209,18 @@ def handle_assistant_salutation_of_ai_disable(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    # 早安问候不影响早饭
-    if handle_breakfast_time(character_id):
+    # 早安问候
+    if handle_time_0_to_9(character_id):
         if handle_assistant_morning_salutation_0(character_id):
             return 1
         else:
-            if handle_not_morning_salutation_time(character_id):
+            if handle_morning_salutation_flag_2(character_id):
                 return 1
             # elif handle_morning_salutation_flag_2(character_id):
             #     return 1
             return 0
-    # 晚安问候不影响睡觉
-    if handle_sleep_time(character_id):
+    # 晚安问候
+    if handle_time_18_to_23(character_id):
         if handle_assistant_night_salutation_0(character_id):
             return 1
         # 只要已开启，则必须在问候完才能睡觉
