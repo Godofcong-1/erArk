@@ -2535,6 +2535,10 @@ def character_morning_salutation_1(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.morning_salutation == 1:
         character_data.sp_flag.morning_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行早安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_2)
@@ -2553,6 +2557,10 @@ def character_morning_salutation_2(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.morning_salutation == 1:
         character_data.sp_flag.morning_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行早安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_3)
@@ -2571,6 +2579,10 @@ def character_morning_salutation_2(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.morning_salutation == 1:
         character_data.sp_flag.morning_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行早安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_1)
@@ -2586,6 +2598,11 @@ def character_night_salutation_1(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_1
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_1
+    character_data.sp_flag.night_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_2)
@@ -2602,8 +2619,11 @@ def character_night_salutation_2(character_id: int):
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_2
     # 特殊flag进行对应更改
-    if character_data.sp_flag.night_salutation == 1:
-        character_data.sp_flag.night_salutation = 2
+    character_data.sp_flag.night_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_3)
@@ -2620,8 +2640,11 @@ def character_night_salutation_3(character_id: int):
     character_data.behavior.duration = 10
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_3
     # 特殊flag进行对应更改
-    if character_data.sp_flag.night_salutation == 1:
-        character_data.sp_flag.night_salutation = 2
+    character_data.sp_flag.night_salutation = 2
+    info_draw = draw.WaitDraw()
+    info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
+    info_draw.style = "gold_enrod"
+    info_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.NIGHT_SALUTATION_FLAG_2)
