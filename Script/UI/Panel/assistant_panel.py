@@ -104,32 +104,9 @@ class Assistant_Panel:
 
             if character_data.assistant_character_id != 0:
 
-                # 跟随服务
-                button_text = _("[002]跟随服务")
-                if handle_premise.handle_assistant_follow_1(character_data.assistant_character_id):
-                    button_text += ("(开)")
-                else:
-                    button_text += ("(关)")
-
                 # 如果数值超限则归零
                 if target_data.sp_flag.is_follow > 4:
                     target_data.sp_flag.is_follow = 0
-
-                if target_data.sp_flag.is_follow == 0:
-                    button_text += f"    否"
-                elif target_data.sp_flag.is_follow == 1:
-                    button_text += _("    智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）")
-                elif target_data.sp_flag.is_follow == 2:
-                    button_text += _("    强制跟随（测试用，会影响一部分游戏机能）")
-                elif target_data.sp_flag.is_follow == 3:
-                    button_text += _("    来博士办公室一趟（抵达后会如果博士不在，则最多等待半小时）")
-                elif target_data.sp_flag.is_follow == 4:
-                    button_text += _("    前往博士当前位置（抵达后会最多等待半小时）")
-
-                button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(2,4))
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-                line_feed.draw()
 
                 # 开始遍历全部助理服务
                 for cid in game_config.config_assistant_services:
@@ -473,6 +450,7 @@ class SeeNPCButtonList:
             character_data.assistant_character_id = self.NPC_id
             new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
             new_assistant_data.sp_flag.is_follow = 1
+            new_assistant_data.assistant_services[2] = 1
             new_assistant_data.second_behavior[1401] = 1
             info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         if not pl_flag:
