@@ -195,7 +195,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         if time_judge:
             cache.over_behavior_character.add(character_id)
         # if character_data.name == "阿米娅":
-            # print(f"debug 后：{character_data.name}，time_judge = {time_judge}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}, duration = {character_data.behavior.duration}, end_time = {game_time.get_sub_date(minute=character_data.behavior.duration, old_date=character_data.behavior.start_time)}")
+        #     print(f"debug 后：{character_data.name}，time_judge = {time_judge}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}, duration = {character_data.behavior.duration}, end_time = {game_time.get_sub_date(minute=character_data.behavior.duration, old_date=character_data.behavior.start_time)}")
 
     # 自动获得对应素质和能力
     handle_talent.gain_talent(character_id,now_gain_type = 0)
@@ -1658,10 +1658,11 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
 
     # 睡觉中的相关判断，需要没有被安眠药
     elif handle_premise.handle_action_sleep(character_id) and handle_premise.handle_self_not_sleep_pills(character_id):
-        # ①睡觉中，早安问候服务开启中，今日未问候，则将行动结束时间设为问候时间
+        # ①睡觉中，早安问候服务开启中，今日未问候，角色行动结束时间晚于游戏时间，则将行动结束时间设为问候时间
         if (
             handle_premise.handle_assistant_morning_salutation_on(character_id) and
-            handle_premise.handle_morning_salutation_flag_0(character_id)
+            handle_premise.handle_morning_salutation_flag_0(character_id) and
+            handle_premise.handle_chara_behavior_end_time_lateer_than_game_time(character_id)
         ):
             # 角色醒来时间
             start_time = character_data.behavior.start_time

@@ -1042,8 +1042,8 @@ def handle_diary():
 )
 def handle_sleep():
     """处理睡觉指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    now_draw = normal_panel.Sleep_Panel(width)
+    from Script.UI.Panel import sleep_panel
+    now_draw = sleep_panel.Sleep_Panel(width)
     now_draw.draw()
 
 
