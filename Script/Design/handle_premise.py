@@ -770,6 +770,25 @@ def handle_still_30_minutes_before_end(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.CHARA_BEHAVIOR_END_TIME_LATEER_THAN_GAME_TIME)
+def handle_chara_behavior_end_time_lateer_than_game_time(character_id: int) -> int:
+    """
+    角色行动结束时间晚于游戏时间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 当前角色的行为时间
+    character_data: game_type.Character = cache.character_data[character_id]
+    start_time = character_data.behavior.start_time
+    end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
+    now_time = cache.game_time
+    if game_time.judge_date_big_or_small(end_time, now_time):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TIME_OVER_A_YEAR)
 def handle_time_over_a_year(character_id: int) -> int:
     """

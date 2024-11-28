@@ -174,7 +174,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-        # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.state == constant.CharacterStatus.STATUS_ARDER:
             # 寻找可用行动
@@ -336,7 +336,8 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         # print(f"debug {character_data.name}")
         # print(f"debug null_target_set = {null_target_set}")
         # print(f"debug premise_data = {premise_data}")
-        # print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
+        # if character_data.name == "阿米娅":
+        #     print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
         target_config = game_config.config_target[target]
         state_machine_id = target_config.state_machine_id
         #如果上个AI行动是普通交互指令，则将等待flag设为1
@@ -344,6 +345,8 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         #     character_data.sp_flag.wait_flag = 1
             # print(f"debug 前一个状态机id = ",state_machine_id,",flag变为1,character_name =",character_data.name)
         constant.handle_state_machine_data[state_machine_id](character_id)
+        # if character_data.name == "阿米娅":
+        #     print(f"debug 中：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
     else:
         now_judge = game_time.judge_date_big_or_small(start_time, now_time)
         if now_judge:
@@ -418,7 +421,7 @@ def judge_character_status(character_id: int) -> int:
     Keyword arguments:\n
     character_id -- 角色id\n
     Return arguments:\n
-    bool -- 本次update时间切片内活动是否已完成\n
+    int -- 结算是否成功
     """
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -1676,12 +1679,13 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
                 # print(f"debug {character_data.name}早安问候服务开启中，今日未问候，将行动结束时间设为问候时间，玩家醒来时间={pl_character_data.action_info.wake_time}，角色行动结束时间={end_time},原行动时间={character_data.behavior.duration}分钟，新行动时间={new_duration}分钟")
                 character_data.behavior.duration = new_duration
 
-        # ②睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，则立刻结束睡觉
+        # ②睡觉中，疲劳归零，且HP、MP满值时，当前非睡觉时间，角色行动结束时间晚于游戏时间，则立刻结束睡觉
         if (
             handle_premise.handle_tired_le_0(character_id) and
             handle_premise.handle_hp_max(character_id) and
             handle_premise.handle_mp_max(character_id) and
-            not handle_premise.handle_game_time_is_sleep_time(character_id)
+            not handle_premise.handle_game_time_is_sleep_time(character_id) and
+            handle_premise.handle_chara_behavior_end_time_lateer_than_game_time(character_id)
         ):
             judge_character_status_time_over(character_id, cache.game_time, end_now = 2)
             # print(f"debug {character_data.name}疲劳归零，结束睡觉，当前时间={cache.game_time}")
