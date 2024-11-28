@@ -34740,6 +34740,38 @@ msgstr ""
 msgid "{Name}表示自己想要了解{TargetName}的梦想，期望能和{TargetName}一起追求理想"
 msgstr ""
 
+#: .\data\talk\daily\get_up.csv:6
+msgid "{Name}起床后，首先伸了个懒腰，然后慢慢地从床上爬起来。接着，她走到衣柜前，挑选了一套今天要穿的衣服，仔细地换上。\n换好衣服后，{Name}走进浴室，开始洗漱，认真地刷牙、洗脸，最后梳理了一下头发，准备迎接新的一天。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:7
+msgid "{Name}醒来后，揉了揉眼睛，慢慢地坐起身来。她伸了个懒腰，然后走到窗边，拉开窗帘，让阳光洒进房间。接着，她打开衣柜，挑选了一套衣服，迅速地换上。\n换好衣服后，{Name}走进浴室，开始洗漱，认真地刷牙、洗脸，最后整理了一下头发，准备开始新的一天。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:8
+msgid "一缕阳光透过窗帘的缝隙，照射在{Name}的脸上。她惬意地伸了个懒腰，缓缓地睁开了双眼。起床后，她习惯性地走到窗边，拉开窗帘，欣赏窗外的美景。\n深吸一口气，{Name}感到神清气爽。随后，她走进衣柜，换上了自己常穿的衣服。\n换好衣服后，她哼着小曲，走进浴室，一边洗脸刷牙，一边想象着今天会发生些什么有趣的事情。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:9
+msgid "{Name}被一阵鸟鸣声吵醒，她睁开眼睛，发现窗外的天空已经亮了。\n她轻轻地下了床，走到阳台，呼吸着新鲜的空气。感受着微风拂过脸颊，她感到心情愉悦。\n回到房间，她打开衣柜，从中挑选了自己喜欢的衣服。\n换好衣服后，她给自己煮了一杯咖啡。端着咖啡，她打开个人终端，准备开始新的一天。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:10
+msgid "{Name}做了一个美梦，醒来时心情特别好。她轻轻地下了床，走到窗边，看着窗外金色的阳光，感到无比的幸福。\n她走到衣柜前，挑选了今天的衣服，然后开始坐在梳妆台前化妆。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:11
+msgid "闹钟的铃声刺破了宁静，{Name}迷迷糊糊地睁开双眼。她伸了个懒腰，打了个哈欠，然后掀开被子，慢悠悠地从床上坐起来。\n走到衣柜前，她随意地抓起一件衣服套上，然后走进浴室。一边对着镜子挤牙膏，一边哼着小曲，{Name}开始了一天的洗漱。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:12
+msgid "一缕晨光透过窗帘的缝隙，洒在{Name}的脸上，暖洋洋的。她翻了个身，继续享受着片刻的宁静。\n几分钟后，她才恋恋不舍地睁开眼睛。起床后，她先到阳台透透气，然后回到房间，开始挑选今天的穿搭。\n最后，她对着镜子整理了一下头发，对着自己微笑了一下。"
+msgstr ""
+
+#: .\data\talk\daily\get_up.csv:13
+msgid "{Name}做了一个噩梦，醒来时出了一身冷汗。她平复了一下心情，然后下了床。\n她走到窗边，打开窗户，呼吸着新鲜的空气。深吸一口气后，她感到心情平静了许多。\n然后，她开始洗漱，一边洗脸，一边想着今天的工作。"
+msgstr ""
+
 #: .\data\talk\daily\give_toy.csv:6
 msgid "{Name}触发了给玩具指令的地文"
 msgstr ""
@@ -36392,6 +36424,10 @@ msgstr ""
 msgid "{Name}对{TargetName}告白，{TargetName}激动地说：“我愿意和你在一起，永远不分开。”"
 msgstr ""
 
+#: .\data\talk\obscenity\confession.csv:21
+msgid "{Name}和{PlayerName}终于捅破了那层窗户纸，两人的心意像两颗紧紧相扣的星星。\n当{PlayerName}说出“我们在一起吧”时，{Name}的心跳几乎要从嗓子眼跳出来。她害羞地点了点头，眼角泛起泪光。\n这一刻，世界仿佛都变得绚烂多彩，未来充满了无限的可能性。两人相视一笑，决定一起书写属于自己的爱情故事。"
+msgstr ""
+
 #: .\data\talk\obscenity\confession_failed.csv:6
 msgid "{Name}对{TargetName}的告白失败了，{TargetName}面无表情地拒绝了{Name}的告白"
 msgstr ""
@@ -37356,12 +37392,64 @@ msgstr ""
 msgid "{Name}看着{TargetName}，关心地说：“夜已经很深了，快去睡觉吧，晚安。”"
 msgstr ""
 
-#: .\data\talk\obscenity\night_salutation.csv:18
-msgid "{Name}触发了晚安问候：晚安吻的地文"
+#: .\data\talk\obscenity\night_salutation.csv:19
+msgid "{Name}轻轻走到{TargetName}身边，温柔地抚摸着{TargetName}的脸颊，深情地看着对方的眼睛，慢慢靠近，轻轻地在{TargetName}的嘴唇上印下一个晚安吻。\n亲吻之后，{Name}微笑着看着{TargetName}，轻声说道：“晚安，好梦。”"
 msgstr ""
 
-#: .\data\talk\obscenity\night_salutation.csv:19
-msgid "{Name}触发了晚安问候：晚安咬的地文"
+#: .\data\talk\obscenity\night_salutation.csv:20
+msgid "{Name}关上卧室的灯，只留下一盏小夜灯投射出柔和的光晕。{Name}蹑手蹑脚地走到床边，轻轻掀开被子的一角，钻了进去。\n{Name}将手臂环绕在{TargetName}的腰间，将头靠在{TargetName}的肩上，深深地吸了一口气，然后在{TargetName}的嘴唇上印下了一个温柔的吻。\n闭上眼睛的那一刻，{Name}的心中充满了满足感。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:21
+msgid "窗外的月光洒在房间里，给一切蒙上了一层银色的光辉。{Name}坐在床边，轻轻地梳理着{TargetName}的头发。\n当手指滑过{TargetName}柔软的发丝时，{Name}的心中荡起了一阵涟漪。{Name}低头，在{TargetName}的唇角印下了一个轻轻的吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:22
+msgid "{Name}捧着一杯温热的牛奶，走到了床边。{Name}将牛奶放在床头柜上，然后轻轻地坐在床沿。{Name}看着熟睡中的{TargetName}，嘴角微微上扬。\n{Name}俯下身，在{TargetName}的鼻尖轻轻地碰了一下，然后在{TargetName}的嘴唇上印下一个晚安吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:23
+msgid "房间里弥漫着淡淡的薰衣草香气。{Name}拉开窗帘，让皎洁的月光洒进房间。{Name}走到床边，轻轻地替{TargetName}盖好被子。\n{Name}俯身，在{TargetName}的耳畔轻轻地说道：“晚安。”然后，{Name}在{TargetName}的脸颊上印下了一个吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:24
+msgid "{Name}换上了一套舒适的睡衣，走到了床边。{Name}轻轻地将{TargetName}揽入怀中，感受着{TargetName}的体温。\n{Name}闭上眼睛，将头靠在{TargetName}的心口，听着{TargetName}的心跳声。\n过了一会儿，{Name}在{TargetName}的嘴唇上印下了一个深情的吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:25
+msgid "{Name}在床边铺了一层柔软的毯子，然后轻轻地将毯子盖在{TargetName}的身上。{Name}坐在{TargetName}的身边，为{TargetName}按摩着肩膀。\n{Name}的手指在{TargetName}的肩上滑动，缓解了{TargetName}一天的疲劳。{Name}低头，在{TargetName}的脖颈处轻轻地吻了一下。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:26
+msgid "{Name}在床头柜上放了一束鲜花，然后走到床边。{Name}将鲜花放在{TargetName}的鼻子前，让{TargetName}闻一闻花香。{TargetName}露出了幸福的笑容。\n{Name}俯身，在{TargetName}的唇上印下了一个轻轻的吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:27
+msgid "{Name}在床头柜上放了一杯水和一本书，然后走到床边。{Name}轻轻地掀开被子的一角，钻了进去。{Name}将手臂环绕在{TargetName}的腰间，将头靠在{TargetName}的肩上。\n{Name}闭上眼睛，想象着两人一起去看日出的场景。{Name}在{TargetName}的唇角印下了一个轻轻的吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:28
+msgid "{Name}打开了一首舒缓的音乐，轻轻地哼唱起来。{Name}走到床边，轻轻地摇晃着{TargetName}的身体。\n{TargetName}渐渐地睁开了眼睛，看着{Name}。{Name}笑了笑，在{TargetName}的嘴唇上印下了一个晚安吻。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:30
+msgid "{Name}蹑手蹑脚地走到床边，轻轻掀开被子的一角。借着昏黄的灯光，{Name}注视着{TargetName}熟睡的侧脸，心跳加速。\n深吸一口气，{Name}小心翼翼地凑近，开始舔舐{TargetName}的阴茎。感受到{TargetName}微微的颤动，{Name}的心中涌起一股满足感，仿佛在宣示着独有的占有欲。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:31
+msgid "{Name}在床边坐了一会儿，看着{TargetName}熟睡的样子，心中充满了爱意。\n{Name}轻轻地抚摸着{TargetName}的脸颊，然后将嘴唇包裹在{TargetName}的阴茎上，轻轻地吮吸着。感受到{TargetName}身体的颤动，{Name}的眼中闪过一丝狡黠。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:32
+msgid "{Name}将一本书放在床头，然后轻轻地关上了灯。在黑暗中，{Name}悄悄地走到床边，俯身在{TargetName}的耳边轻声说道：“睡着了么？”\n没有听到{TargetName}的回应，{Name}嘴角微微上扬，轻轻地钻进被窝，开始吞咽{TargetName}的阴茎。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:33
+msgid "{Name}将一曲轻柔的音乐打开，然后将手臂轻轻地环绕在{TargetName}的腰间，慢慢的解开{TargetName}的裤子。\n在音乐声中，{Name}一口含住了{TargetName}的阴茎，开始前后吞吐。\n{TargetName}的呼吸渐渐变得急促，{Name}的动作也变得更加热烈。"
+msgstr ""
+
+#: .\data\talk\obscenity\night_salutation.csv:34
+msgid "{Name}为{TargetName}按摩了一会儿，直到对方进入了梦乡。{Name}轻轻地将手移开，然后凑近到胯下，把阴茎掏了出来，自己开始慢慢舔舐。\n感受到{TargetName}的脚趾蜷缩了一下，{Name}的心中充满了愉悦。"
 msgstr ""
 
 #: .\data\talk\obscenity\put_into_prison.csv:6
@@ -41433,19 +41521,19 @@ msgid "\n{Name}触发了W绝顶被寸止的地文"
 msgstr ""
 
 #: .\data\talk\system\second.csv:127
-msgid "\n{Name}触发了获得[思慕]的地文"
+msgid "\n{Name}在独处时突然起{PlayerName}的脸，心中涌起一股暖流。\n她轻轻抚摸着自己胸口，感受到心跳的加速。脸颊微微泛红，眼神中流露出一丝羞涩和期待。\n这是单纯的友谊吗？{Name}开始回忆起与{PlayerName}相处的点点滴滴，每一个细节都让她感到温暖和幸福，这种感情让她既甜蜜又忐忑。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:128
-msgid "\n{Name}触发了获得[恋慕]的地文"
+msgid "\n{Name}最近常常失眠，脑海中总是浮现{PlayerName}的身影。\n她终于恍然大悟，原来自己对{PlayerName}的感情早已超越了友谊。她的心跳会在不经意间加速，目光总是不由自主地追随着{PlayerName}。这种甜蜜又忐忑的感觉让她既兴奋又害怕。\n{Name}决定鼓起勇气，不再掩饰自己的心意，她想主动去了解{PlayerName}，希望能和{PlayerName}更进一步。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:129
-msgid "\n{Name}触发了获得[恋人]的地文"
+msgid "n{Name}和{PlayerName}终于走到了一起，两人正式确立了恋爱关系。\n{Name}的心中充满了甜蜜和幸福。她小心翼翼地捧着这份来之不易的感情，期待着与{PlayerName}共建美好的未来。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:130
-msgid "\n{Name}触发了获得[爱侣]的地文"
+msgid "\n{Name}和{PlayerName}决定携手走过余生，成为了彼此的[爱侣]。\n交换了爱的誓言]，许下了永远在一起的承诺。{Name}感到前所未有的幸福和满足，她相信，两人会共同创造一个美好的未来。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:131

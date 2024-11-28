@@ -18,3 +18,4 @@ str,int,int,str,str
 12,371,0,high_1,{Name}对{TargetName}告白，{TargetName}含泪说：“我一直在等你这句话。”
 13,371,0,high_1,{Name}对{TargetName}告白，{TargetName}笑着说：“我也喜欢你，我们一起走下去吧。”
 14,371,0,high_1,{Name}对{TargetName}告白，{TargetName}激动地说：“我愿意和你在一起，永远不分开。”
+15,371,0,high_1,{Name}和{PlayerName}终于捅破了那层窗户纸，两人的心意像两颗紧紧相扣的星星。\n当{PlayerName}说出“我们在一起吧”时，{Name}的心跳几乎要从嗓子眼跳出来。她害羞地点了点头，眼角泛起泪光。\n这一刻，世界仿佛都变得绚烂多彩，未来充满了无限的可能性。两人相视一笑，决定一起书写属于自己的爱情故事。
