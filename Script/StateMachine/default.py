@@ -835,16 +835,34 @@ def character_move_to_rest_room(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    # 检索当前角色所在的大场景里有没有休息室，没有的话再随机选择其他区块
-    now_position = character_data.position[0]
+    special_rest_room_list = []
     find_flag = False
-    for place in constant.place_data["Rest_Room"]:
-        if place.split("\\")[0] == now_position:
-            if map_handle.judge_scene_accessible(place,character_id) == "open":
-                to_rest_room = map_handle.get_map_system_path_for_str(place)
-                find_flag = True
-                break
-    if not find_flag:
+    # 首先检测角色所属的势力与出身地是否有专属休息室
+    chara_nation = character_data.relationship.nation
+    nation_rest_room_tag = "Nation_" + str(chara_nation)
+    if nation_rest_room_tag in constant.place_data:
+        special_rest_room_list.extend(constant.place_data[nation_rest_room_tag])
+    chara_birthplace = character_data.relationship.birthplace
+    birthplace_rest_room_tag = "Birthplace_" + str(chara_birthplace)
+    if birthplace_rest_room_tag in constant.place_data:
+        special_rest_room_list.extend(constant.place_data[birthplace_rest_room_tag])
+    # 如果有专属休息室的话，有一半几率使用该休息室
+    if len(special_rest_room_list) and random.randint(1, 2) == 1:
+        to_rest_room = map_handle.get_map_system_path_for_str(
+            random.choice(special_rest_room_list)
+        )
+        find_flag = True
+    # 不使用专属休息室的话，检索当前角色所在的大场景里有没有休息室
+    if find_flag == False:
+        now_position = character_data.position[0]
+        for place in constant.place_data["Rest_Room"]:
+            if place.split("\\")[0] == now_position:
+                if map_handle.judge_scene_accessible(place,character_id) == "open":
+                    to_rest_room = map_handle.get_map_system_path_for_str(place)
+                    find_flag = True
+                    break
+    # 没有的话再随机选择其他区块
+    if find_flag == False:
         to_rest_room = map_handle.get_map_system_path_for_str(
     random.choice(constant.place_data["Rest_Room"])
     )
