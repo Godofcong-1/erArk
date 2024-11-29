@@ -21564,6 +21564,10 @@ msgstr ""
 msgid "企鹅物流安全屋"
 msgstr ""
 
+#: /'data\map\生娱\伦蒂尼姆站台\Scene.json:2
+msgid "伦蒂尼姆火车站台"
+msgstr ""
+
 #: /'data\map\生娱\兰赛拉尔宴会厅\Scene.json:2
 msgid "兰赛拉尔宴会厅"
 msgstr ""
@@ -21574,6 +21578,10 @@ msgstr ""
 
 #: /'data\map\生娱\取餐区\Scene.json:2
 msgid "取餐区"
+msgstr ""
+
+#: /'data\map\生娱\叙拉古往事\Scene.json:2
+msgid "“叙拉古往事”"
 msgstr ""
 
 #: /'data\map\生娱\夕照区音乐室\Scene.json:2
@@ -21624,8 +21632,16 @@ msgstr ""
 msgid "红松骑士团休息室"
 msgstr ""
 
+#: /'data\map\生娱\莱塔尼亚之夜\Scene.json:2
+msgid "莱塔尼亚之夜"
+msgstr ""
+
 #: /'data\map\生娱\萨卡兹休息室\Scene.json:2
 msgid "萨卡兹佣兵休息室"
+msgstr ""
+
+#: /'data\map\生娱\萨米印象\Scene.json:2
+msgid "萨米印象"
 msgstr ""
 
 #: /'data\map\生娱\走廊A\Scene.json:2
@@ -21648,12 +21664,20 @@ msgstr ""
 msgid "“再来一杯”酒吧"
 msgstr ""
 
+#: /'data\map\生娱\阿尔萨兰营帐\Scene.json:2
+msgid "阿尔萨兰旅行营帐"
+msgstr ""
+
 #: /'data\map\生娱\食堂\Scene.json:2
 msgid "食堂"
 msgstr ""
 
 #: /'data\map\生娱\魂灵秘会\Scene.json:2
 msgid "魂灵秘会"
+msgstr ""
+
+#: /'data\map\生娱\黑钢国际安全屋\Scene.json:2
+msgid "黑钢国际安全屋"
 msgstr ""
 
 #: /'data\map\生娱\龙门休息室\Scene.json:2

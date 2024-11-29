@@ -1,8 +1,8 @@
 {
-  "SceneName":"愚人号会客室",
+  "SceneName":"阿尔萨兰旅行营帐",
   "InOutDoor":"In",
   "Exposed":"1",
   "Have_Furniture":"3",
   "Close_Type":"2",
-  "SceneTag":"Rest_Room|Nation_12"
+  "SceneTag":"Rest_Room|Birthpalce_11"
 }
