@@ -103,7 +103,7 @@ class Physical_Check_And_Manage_Panel:
                 button2_draw.width = self.width
                 button2_draw.draw()
 
-            if 1:
+            if cache.debug_mode:
                 button3_text = _("[003]调整体检日程(未实装)")
                 button3_draw = draw.LeftButton(
                     _(button3_text),
@@ -115,6 +115,19 @@ class Physical_Check_And_Manage_Panel:
                 line_feed.draw()
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
+
+            if cache.debug_mode and len(self.done_check_status_id_set) > 0:
+                button11_text = _("[011]查看检查报告(未实装)")
+                button11_draw = draw.LeftButton(
+                    _(button11_text),
+                    _("11"),
+                    window_width,
+                    cmd_func=self.check_physcial_report,
+                    args=(),
+                    )
+                line_feed.draw()
+                button11_draw.draw()
+                return_list.append(button11_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -476,3 +489,45 @@ class Physical_Check_And_Manage_Panel:
         """调整体检日程"""
         # TODO
         pass
+
+    def check_physcial_report(self):
+        """查看检查报告"""
+        # TODO
+
+        base_ability_dict = {
+            0: "基础敏感",
+            9: "扩张耐受",
+            35: "S M 耐受",
+        }
+
+        # 指令与能力id的对应表
+        cmd_ablility_dict = {
+            853: [71, "舌部机动"],
+            856: [0, "胸部敏感"],
+            858: [73, "乳压强度"],
+            859: [2, "阴蒂敏感"],
+            861: [70, "手部机动"],
+            863: [72, "足部机动"],
+            871: [4, "阴道敏感"],
+            874: [7, "子宫敏感"],
+            875: [74, "阴道技巧"],
+            876: [5, "肛门敏感"],
+            877: [75, "肛门技巧"],
+            879: [6, "尿道敏感"],
+            882: [30, "尾部机动"],
+            888: [30, "触手机动"],
+        }
+        # # 指令与前置指令的对应表
+        # cmd_able_dict = {
+        #     # 872: "阴唇形状",  # 检查内阴
+        #     # 873: "处女膜",  # 检查处女膜
+        #     # 874: "子宫口",  # 检查子宫口
+        #     875: "穴压强度",  # 测试阴道
+        #     877: "菊压强度",  # 测试肠道
+        #     # 879: "排尿情况",  # 测试排尿
+        #     882: 881,  # 测试尾巴
+        #     888: 887,  # 测试触手
+        # }
+
+        for status_id in self.done_check_status_id_set:
+            print(game_config.config_status[status_id].name)
