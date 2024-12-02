@@ -1703,6 +1703,8 @@ class Premise:
     """ 属性_能力 交互对象指技==0 """
     T_FINGER_TEC_L_3 = "t_finger_tec_l_3"
     """ 属性_能力 交互对象指技<3 """
+    T_FINGER_TEC_L_7 = "t_finger_tec_l_7"
+    """ 属性_能力 交互对象指技<7 """
 
     KISS_0 = "kiss_0"
     """ 属性_经验 自身亲吻经验==0 """

@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,515,0,high_1,{Name}对{TargetName}触发了体外子宫按摩的地文
+0,515,0,high_1,{Name}的手放在{TargetName}的肚子上，摸索到了子宫的位置之后，开始用适当的力度隔着肚皮按摩在体内的子宫，这种陌生的感觉让{TargetName}感到一阵阵的刺激

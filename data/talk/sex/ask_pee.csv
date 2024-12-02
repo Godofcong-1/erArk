@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,417,0,high_1,{Name}触发了命令对方小便指令的地文
+0,417,0,high_1,{Name}命令{TargetName}小便，{TargetName}蹲在地上，很快就尿了出来\n伴随着一道液体的抛物线，尿液撒在地上的声音在房间里

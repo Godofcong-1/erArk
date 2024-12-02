@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,999,0,high_1,{Name}触发了利尿剂指令的地文
+0,456,0,high_1,{Name}给{TargetName}喂下了一次性利尿剂，促进{TargetName}的身体产生更多的尿液，{TargetName}很快就感觉到了尿意，并且即将抵达自己的极限

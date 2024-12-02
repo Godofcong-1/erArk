@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,999,0,high_1,{Name}触发了电动按摩棒指令的地文
+0,485,0,high_1,{Name}拿着电动按摩棒，刺激着{TargetName}身上的各个敏感部位

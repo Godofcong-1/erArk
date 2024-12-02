@@ -3,4 +3,8 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,364,0,high_1,{Name}触发了H时博士体力为零中断的地文
+0,364,0,high_1,{Name}的呼吸越来越急促，额头上沁出一层细密的汗珠。虽然强撑着想继续下去，但身体却像灌了铅一样沉重。\n{Name}不得不停下来，歉意地看向{TargetName}：“抱歉，我……我实在是太累了。”{TargetName}依依不舍地与{Name}分开，眼中满是关切。
+1,364,0,high_1,{Name}的动作逐渐变得缓慢而僵硬，虽然努力想保持住姿势，但腰部却忍不住微微颤抖。\n{TargetName}察觉到了异样，轻轻地扶住{Name}：“我们休息一下吧？”{Name}点了点头，靠在{TargetName}身上，长长地舒了一口气。
+2,364,0,high_1,{Name}的汗水湿透了衣衫，他大口喘着气，胸口剧烈起伏。\n{TargetName}心疼地替{Name}擦去汗水，轻声说道：“我们下次再继续吧。”{Name}虽然还不想结束，但也只好点了点头。
+3,364,0,high_1,{Name}的关节酸痛，肌肉痉挛，感觉自己的身体已经到了极限。没过多久，{Name}便再也支撑不住，瘫软在了{TargetName}的怀里。\n{TargetName}心疼地抱紧了{Name}，轻声安慰道：“我们先休息一下吧。”
+4,364,0,high_1,{Name}的视线开始模糊，感觉天旋地转，虽然努力想看清{TargetName}的脸，但眼前的一切都变得模糊不清。\n过了一会，在{TargetName}的呼唤声中，{Name}才枕着{TargetName}的腿慢慢清醒过来，看着{TargetName}的眼神中充满了歉意。

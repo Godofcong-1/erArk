@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,363,0,high_1,{Name}触发了H失败指令的地文
+0,363,0,high_1,{Name}邀请{TargetName}H失败了，{TargetName}拒绝了{Name}的邀请，并愤怒地质问着{Name}为什么要这样做

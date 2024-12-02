@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,999,0,high_1,{Name}触发了打胸部指令的地文
+0,999,0,high_1,{Name}扇打着{TargetName}的胸部，在上面留下了一个红红的巴掌印
