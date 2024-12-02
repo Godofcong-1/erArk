@@ -361,7 +361,7 @@ def judge_field_commission_finish():
                     choice_id = random.choice(wait_id_list)
                     cache.rhodes_island.recruited_id.add(choice_id)
                     # 绘制招募信息
-                    recruited_text = "※ " + {cache.character_data[character_id].name}
+                    recruited_text = "※ " + {cache.character_data[choice_id].name}
                     recruited_text += _("汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n")
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
