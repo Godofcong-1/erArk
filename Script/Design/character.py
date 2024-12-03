@@ -512,22 +512,22 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             calculation_text += _("+时停(+9999)")
 
     # 处女修正
-    if instruct_name == _("性交") and target_data.talent[0]:
+    if instruct_name == _("性交") and handle_premise.handle_have_virgin(target_character_id) and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
         judge -= 250
         calculation_text += _("+处女(-250)")
 
     # A处女修正
-    if instruct_name == _("A性交") and target_data.talent[1]:
+    if instruct_name == _("A性交") and target_data.talent[1] and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
         judge -= 350
         calculation_text += _("+Ａ处女(-350)")
 
     # U处女修正
-    if instruct_name == _("U性交") and target_data.talent[2]:
+    if instruct_name == _("U性交") and target_data.talent[2] and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
         judge -= 400
         calculation_text += _("+Ｕ处女(-400)")
 
     # 初吻修正
-    if instruct_name == _("亲吻") and target_data.talent[4]:
+    if instruct_name == _("亲吻") and target_data.talent[4] and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
         judge -= 125
         calculation_text += _("+初吻(-125)")
 
@@ -684,7 +684,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             now_draw.draw()
 
         # 合意获得的结算，大前提是1.5倍实行值、有意识、非监禁
-        if judge_rate >= 1.5 and target_data.sp_flag.unconscious_h == 0 and handle_premise.handle_imprisonment_0(target_character_id):
+        if judge_rate >= 1.5 and handle_premise.handle_unconscious_flag_0(target_character_id) and handle_premise.handle_imprisonment_0(target_character_id):
             agree_draw = draw.WaitDraw()
             agree_draw.width = 1
             draw_text = ""

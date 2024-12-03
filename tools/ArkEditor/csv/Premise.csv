@@ -854,6 +854,7 @@ t_finger_tec_ge_5,T_FINGER_TEC_GE_5,属性_能力,交互对象指技>=5
 t_finger_tec_ge_7,T_FINGER_TEC_GE_7,属性_能力,交互对象指技>=7
 t_finger_tec_0,T_FINGER_TEC_0,属性_能力,交互对象指技==0
 t_finger_tec_l_3,T_FINGER_TEC_L_3,属性_能力,交互对象指技<3
+t_finger_tec_l_7,T_FINGER_TEC_L_7,属性_能力,交互对象指技<7
 
 kiss_0,KISS_0,属性_经验,自身亲吻经验==0
 kiss_ge_10,KISS_GE_10,属性_经验,自身亲吻经验>=10
@@ -895,13 +896,14 @@ obey_0_or_le_2,TARGET_OBEY_0_OR_LE_2,属性_素质,交互对象无陷落或隶�
 
 kiss_0,NO_FIRST_KISS,属性_素质,玩家未保有初吻
 kiss_1,HAVE_FIRST_KISS,属性_素质,玩家保有初吻
-virgin_0,NO_VIRGIN,属性_素质,玩家非童贞
-virgin_1,HAVE_VIRGIN,属性_素质,玩家是童贞
+pl_virgin_0,PL_NO_VIRGIN,属性_素质,玩家非童贞
+pl_virgin_1,PL_HAVE_VIRGIN,属性_素质,玩家是童贞
 a_virgin_0,NO_A_VIRGIN,属性_素质,玩家非A处
 a_virgin_1,HAVE_A_VIRGIN,属性_素质,玩家是A处
 t_kiss_0,TARGET_NO_FIRST_KISS,属性_素质,交互对象未保有初吻
 t_kiss_1,TARGET_HAVE_FIRST_KISS,属性_素质,交互对象保有初吻
 virgin_0,NO_VIRGIN,属性_素质,自己非处女
+virgin_1,HAVE_VIRGIN,属性_素质,自己是处女
 t_virgin_0,TARGET_NO_VIRGIN,属性_素质,交互对象非处女
 t_virgin_1,TARGET_HAVE_VIRGIN,属性_素质,交互对象是处女
 t_a_virgin_0,TARGET_NO_A_VIRGIN,属性_素质,交互对象非A处女
