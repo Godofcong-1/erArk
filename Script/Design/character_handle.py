@@ -573,6 +573,8 @@ def handle_character_setting():
     """
     # 遍历所有角色
     for character_id in cache.character_data:
+        if character_id == 0:
+            continue
         character_data = cache.character_data[character_id]
         # 萝莉化
         if cache.world_setting[1]:
