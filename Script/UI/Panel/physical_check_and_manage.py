@@ -1,10 +1,9 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import handle_premise, handle_instruct, attr_calculation
-from Script.UI.Moudle import draw, panel
+from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, attr_text
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -74,7 +73,7 @@ class Physical_Check_And_Manage_Panel:
                 button1_draw.width = self.width
                 button1_draw.draw()
 
-            if handle_premise.handle_have_target(0) and len(self.done_check_status_id_set) > 0:
+            if len(self.done_check_status_id_set) > 0:
                 target_character_id = self.pl_character_data.target_character_id
                 target_character_data = cache.character_data[target_character_id]
                 button2_text = _("[002]对{0}进行身体管理").format(target_character_data.name)
@@ -88,13 +87,6 @@ class Physical_Check_And_Manage_Panel:
                 line_feed.draw()
                 button2_draw.draw()
                 return_list.append(button2_draw.return_text)
-            elif len(self.done_check_status_id_set) > 0:
-                button2_text = _("\n[002]进行身体管理（当前没有管理对象）")
-                button2_draw = draw.NormalDraw()
-                button2_draw.text = button2_text
-                button2_draw.style = "deep_gray"
-                button2_draw.width = self.width
-                button2_draw.draw()
             else:
                 button2_text = _("\n[002]进行身体管理（需要先进行身体检查）")
                 button2_draw = draw.NormalDraw()
@@ -116,8 +108,8 @@ class Physical_Check_And_Manage_Panel:
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
 
-            if cache.debug_mode and len(self.done_check_status_id_set) > 0:
-                button11_text = _("[011]查看检查报告(未实装)")
+            if len(self.done_check_status_id_set) > 0:
+                button11_text = _("[011]查看检查报告")
                 button11_draw = draw.LeftButton(
                     _(button11_text),
                     _("11"),
@@ -128,6 +120,13 @@ class Physical_Check_And_Manage_Panel:
                 line_feed.draw()
                 button11_draw.draw()
                 return_list.append(button11_draw.return_text)
+            else:
+                button11_text = _("\n[011]查看检查报告（需要先进行身体检查）")
+                button11_draw = draw.NormalDraw()
+                button11_draw.text = button11_text
+                button11_draw.style = "deep_gray"
+                button11_draw.width = window_width
+                button11_draw.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -496,32 +495,49 @@ class Physical_Check_And_Manage_Panel:
 
     def check_physcial_report(self):
         """查看检查报告"""
-        # TODO
+
+        level_text_dict = {
+            0: _("缺陷"),
+            1: _("普通"),
+            2: _("普通"),
+            3: _("标准"),
+            4: _("标准"),
+            5: _("标准"),
+            6: _("优良"),
+            7: _("优良"),
+            8: _("卓越"),
+        }
 
         base_ability_dict = {
-            0: "基础敏感",
-            9: "扩张耐受",
-            35: "S M 耐受",
+            0: _("【基础敏感强度】"),
+            1: _("【扩张耐受】"),
+            2: _("【SM耐受】"),
+            3: _("【受孕适应性】"),
+            4: _("【催眠程度】"),
+            11: _("【初吻】"),
+            12: _("【处女】"),
+            13: _("【A处女】"),
         }
 
         # 指令与能力id的对应表
         cmd_ablility_dict = {
-            853: [71, "舌部机动"],
-            856: [0, "胸部敏感"],
-            858: [73, "乳压强度"],
-            859: [2, "阴蒂敏感"],
-            861: [70, "手部机动"],
-            863: [72, "足部机动"],
-            871: [4, "阴道敏感"],
-            874: [7, "子宫敏感"],
-            875: [74, "阴道技巧"],
-            876: [5, "肛门敏感"],
-            877: [75, "肛门技巧"],
-            879: [6, "尿道敏感"],
-            882: [30, "尾部机动"],
-            888: [30, "触手机动"],
+            853: [71, _("【舌部机动】")],
+            856: [0, _("【胸部敏感】")],
+            858: [73, _("【乳压强度】")],
+            859: [2, _("【阴蒂敏感】")],
+            861: [70, _("【手部机动】")],
+            863: [72, _("【足部机动】")],
+            871: [4, _("【阴道敏感】")],
+            874: [7, _("【子宫敏感】")],
+            875: [74, _("【阴道技巧】")],
+            876: [5, _("【肛门敏感】")],
+            877: [75, _("【肛门技巧】")],
+            879: [6, _("【尿道敏感】")],
+            882: [30, _("【尾部机动】")],
+            888: [30, _("【触手机动】")],
         }
-        # # 指令与前置指令的对应表
+
+        # TODO 指令与前置指令的对应表
         # cmd_able_dict = {
         #     # 872: "阴唇形状",  # 检查内阴
         #     # 873: "处女膜",  # 检查处女膜
@@ -529,9 +545,161 @@ class Physical_Check_And_Manage_Panel:
         #     875: "穴压强度",  # 测试阴道
         #     877: "菊压强度",  # 测试肠道
         #     # 879: "排尿情况",  # 测试排尿
-        #     882: 881,  # 测试尾巴
-        #     888: 887,  # 测试触手
         # }
 
-        for status_id in self.done_check_status_id_set:
-            print(game_config.config_status[status_id].name)
+        target_character_id = self.pl_character_data.target_character_id
+        target_character_data = cache.character_data[target_character_id]
+
+        report_text = "\n"
+        report_text += _("基础档案：\n")
+        report_text += _(" 【代号】") + target_character_data.name + "\n"
+        report_text += _(" 【性别】") + game_config.config_sex_tem[target_character_data.sex].name + "\n"
+        report_text += _(" 【出身地】") + game_config.config_birthplace[target_character_data.relationship.birthplace].name + "\n"
+        report_text += _(" 【种族】") + game_config.config_race[target_character_data.race].name + "\n"
+        report_text += _(" 【矿石病感染情况】\n")
+        if handle_premise.handle_target_is_patient(0):
+            report_text += _("  参照医学检测报告，确认为感染者。\n")
+        else:
+            report_text += _("  参照医学检测报告，确认为非感染者。\n")
+        report_text += _("\n综合体检测试：\n")
+
+        # 基础
+        N_feel = target_character_data.ability[1]
+        report_text += (" {0}{1}\n").format(base_ability_dict[0], level_text_dict[N_feel])
+        # 扩张
+        ave_resist = 0
+        for ability_id in {9, 10, 11, 12}:
+            ave_resist += target_character_data.ability[ability_id]
+        ave_resist = int(ave_resist // 4)
+        report_text += (" {0}{1}\n").format(base_ability_dict[1], level_text_dict[ave_resist])
+        # SM
+        max_sm = 0
+        for ability_id in {35, 36}:
+            max_sm = max(max_sm, target_character_data.ability[ability_id])
+        report_text += (" {0}{1}\n").format(base_ability_dict[2], level_text_dict[max_sm])
+        # 受孕
+        report_text += " " + base_ability_dict[3]
+        # 当前怀孕进度
+        all_pregnancy_talent_id_list = [0, 6, 7, 20, 21, 22, 23, 24, 26, 27, 35]
+        now_pregnancy_talent_id_list = [20, 21, 22, 23, 24]
+        pregnancy_talent_text = " "
+        all_pregnancy_flag, now_pregnancy_flag = False, False
+        # 遍历怀孕相关的素质
+        for talent_id in all_pregnancy_talent_id_list:
+            if target_character_data.talent[talent_id]:
+                all_pregnancy_flag = True
+                pregnancy_talent_text += game_config.config_talent[talent_id].name + " "
+                if talent_id in now_pregnancy_talent_id_list:
+                    now_pregnancy_flag = True
+        # 如果有怀孕相关的素质
+        if all_pregnancy_flag:
+            report_text += _("{0}").format(pregnancy_talent_text)
+        # 未怀孕情况下显示受精概率
+        if not now_pregnancy_flag:
+            report_text += _("当前受精概率{0}%").format(target_character_data.pregnancy.fertilization_rate)
+        # 已生育
+        child_id_list = target_character_data.relationship.child_id_list
+        if len(child_id_list) > 0:
+            report_text += _(" 已经生育了{0}个孩子，分别是：{1}").format(len(child_id_list), "、".join([cache.character_data[cid].name for cid in child_id_list]))
+        report_text += "\n"
+        # 催眠
+        report_text += " " + base_ability_dict[4]
+        hypnosis_talent_id_list = [73, 72, 71]
+        hypnosis_talent_text = " "
+        now_hypnosis_flag = False
+        # 遍历催眠相关的素质，仅选择第一个找到的素质
+        for talent_id in hypnosis_talent_id_list:
+            if target_character_data.talent[talent_id]:
+                now_hypnosis_flag = True
+                hypnosis_talent_text += game_config.config_talent[talent_id].name + " "
+                break
+        # 如果有催眠相关的素质
+        if now_hypnosis_flag:
+            report_text += _("{0}（{1}%）\n").format(hypnosis_talent_text, target_character_data.hypnosis.hypnosis_degree)
+        # 否则显示催眠程度
+        else:
+            report_text += _("{0}%\n").format(target_character_data.hypnosis.hypnosis_degree)
+        # 各指令的遍历
+        for cmd_id in cmd_ablility_dict:
+            if cmd_id not in self.done_check_status_id_set:
+                continue
+            ability_id = cmd_ablility_dict[cmd_id][0]
+            now_name = cmd_ablility_dict[cmd_id][1]
+            ability_level = target_character_data.ability[ability_id]
+            report_text += (" {0}{1}\n").format(now_name, level_text_dict[ability_level])
+
+        # 性爱履历：
+        report_text += "\n性爱履历：\n"
+
+        # 初吻
+        now_text = ""
+        if target_character_data.talent[4]:
+            now_text += _("保有初吻")
+        elif target_character_data.first_record.first_kiss_id != -1:
+            kiss_id = target_character_data.first_record.first_kiss_id
+            kiss_time = target_character_data.first_record.first_kiss_time
+            now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士").format(
+            character_name=cache.character_data[kiss_id].name,
+            kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
+            kiss_palce=attr_text.get_scene_path_text(target_character_data.first_record.first_kiss_place),
+        )
+            if target_character_data.first_record.first_kiss_body_part == 1:
+                now_text += _("的阴茎")
+            now_text += _("献上了初吻")
+        report_text += (" {0}{1}\n").format(base_ability_dict[11], now_text)
+
+        # 处女
+        now_text = ""
+        if target_character_data.talent[0]:
+            now_text += _("保有处女")
+        elif target_character_data.first_record.first_sex_id != -1:
+            sex_id = target_character_data.first_record.first_sex_id
+            sex_time = target_character_data.first_record.first_sex_time
+            sex_posture = target_character_data.first_record.first_sex_posture
+            now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女").format(
+                character_name=cache.character_data[sex_id].name,
+                time=game_time.get_date_until_day(sex_time),
+                palce=attr_text.get_scene_path_text(target_character_data.first_record.first_sex_place),
+                posture=sex_posture,
+            )
+        report_text += (" {0}{1}\n").format(base_ability_dict[12], now_text)
+
+        # A处女
+        now_text = ""
+        if target_character_data.talent[1]:
+            now_text += _("保有后庭处女")
+        elif target_character_data.first_record.first_a_sex_id != -1:
+            a_sex_id = target_character_data.first_record.first_a_sex_id
+            a_sex_time = target_character_data.first_record.first_a_sex_time
+            a_sex_posture = target_character_data.first_record.first_a_sex_posture
+            now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女").format(
+                character_name=cache.character_data[a_sex_id].name,
+                time=game_time.get_date_until_day(a_sex_time),
+                palce=attr_text.get_scene_path_text(target_character_data.first_record.first_a_sex_place),
+                posture=a_sex_posture,
+            )
+        report_text += (" {0}{1}\n").format(base_ability_dict[13], now_text)
+
+        # 检查人与时间
+        report_text += _("\n检查人：Dr.{0}\n").format(self.pl_character_data.name)
+        report_text += _("检查日期：{0}\n").format(game_time.get_date_until_day()[3:])
+
+        while 1:
+
+            title_draw = draw.TitleLineDraw("检查报告", self.width)
+            title_draw.draw()
+
+            report_draw = draw.NormalDraw()
+            report_draw.text = report_text
+            report_draw.draw()
+
+            return_list = []
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+

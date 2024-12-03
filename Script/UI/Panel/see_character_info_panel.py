@@ -1520,21 +1520,14 @@ class CharacterBodyText:
             elif character_data.first_record.first_kiss_id != -1:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
-                if character_data.first_record.first_kiss_body_part == -1:
-                    now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士献上了初吻\n").format(
+                now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士").format(
                     character_name=cache.character_data[kiss_id].name,
                     kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
                     kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
                 )
-                elif character_data.first_record.first_kiss_body_part == 1:
-                    now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士\n").format(
-                    character_name=cache.character_data[kiss_id].name,
-                    kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
-                    kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
-                )
-                    if character_data.first_record.first_kiss_body_part == 1:
-                        now_text += _("的阴茎")
-                    now_text += _("献上了初吻\n")
+                if character_data.first_record.first_kiss_body_part == 1:
+                    now_text += _("的阴茎")
+                now_text += _("献上了初吻\n")
             if character_data.ability[71] == 0:
                 now_text += _("  普普通通的舌头\n")
             if character_data.dirty.body_semen[2][3] == 0:
