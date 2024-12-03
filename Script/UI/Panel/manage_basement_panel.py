@@ -638,6 +638,13 @@ class ChangeWorkButtonList:
     def select_new_work(self,work_id: int):
         """赋予新的工作id"""
         target_data: game_type.Character = cache.character_data[self.NPC_id]
+        # 如果原工作是性爱练习生的话，则重置性爱练习
+        if target_data.work.work_type == 193:
+            for i in target_data.body_manage:
+                if i in range(30,40) and target_data.body_manage[i]:
+                    target_data.body_manage[i] = 0
+        # 赋予新工作
         target_data.work.work_type = work_id
+        # 更新罗德岛的工作人员及状态
         basement.update_work_people()
         basement.update_facility_people()
