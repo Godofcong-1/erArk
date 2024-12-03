@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,631,0,high_1,{Name}触发了取下搾乳机指令的地文
+0,631,0,high_1,{Name}取下了{TargetName}身上的搾乳机

@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,999,0,high_1,{Name}触发了媚药指令的地文
+0,454,0,high_1,{Name}让{TargetName}喝下了媚药，{TargetName}的身体开始变得异常敏感，情欲不断攀升，每一次的触碰都会让{TargetName}的身体颤抖不已

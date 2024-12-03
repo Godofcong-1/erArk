@@ -1626,7 +1626,7 @@ def refresh_temp_semen_max():
         # 绘制说明信息
         now_draw = draw.NormalDraw()
         now_draw.width = window_width
-        draw_text = _("\n今日未消耗的 {0}ml 精液转化为了 {1}ml 次日额外精液").format(now_semen, int(now_semen / 2))
+        draw_text = _("\n在充足的睡眠下，今日未消耗的 {0}ml 精液转化为了 {1}ml 次日额外精液").format(now_semen, int(now_semen / 2))
         if character_data.tem_extra_semen_point >= character_data.semen_point_max * 4:
             draw_text += _("，额外精液量已达上限，并获得了为期一天的[浓厚精液]")
         draw_text += "\n"

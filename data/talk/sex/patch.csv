@@ -3,4 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,999,0,high_1,{Name}触发了眼罩指令的地文
+0,604,0,high_1,{Name}给{TargetName}戴上了眼罩，让{TargetName}无法看到周围的一切，进一步强化了{TargetName}的对触觉的感知
+1,604,0,high_1,{Name}取下了{TargetName}的眼罩，让{TargetName}重新能看到世界

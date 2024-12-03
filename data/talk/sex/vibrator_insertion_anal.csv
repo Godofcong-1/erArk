@@ -3,4 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,489,0,high_1,{Name}触发了肛门振动棒指令的地文
+0,489,0,target_not_vibrator_insertion_anal,{Name}往{TargetName}的肛门里插入了震动棒，然后打开了开关，震动棒开始在{TargetName}的里面震动起来
+1,489,0,target_now_vibrator_insertion_anal,{Name}拔出了{TargetName}肛门里的震动棒，震动棒的震动声停止了

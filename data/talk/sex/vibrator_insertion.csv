@@ -3,4 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,486,0,high_1,{Name}触发了震动棒指令的地文
+0,486,0,target_not_vibrator_insertion,{Name}把震动棒插进了{TargetName}的小穴里，然后打开了开关，震动棒开始在{TargetName}的里面震动起来
+1,486,0,target_not_vibrator_insertion,{Name}拔出了{TargetName}小穴里的震动棒，震动棒的震动声停止了

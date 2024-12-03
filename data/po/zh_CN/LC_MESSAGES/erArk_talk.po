@@ -42205,19 +42205,19 @@ msgid "{Name}触发了命令对方自慰指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\making_out.csv:6
-msgid "{Name}触发了身体爱抚指令的地文"
+msgid "{Name}在{TargetName}的身体上到处爱抚着"
 msgstr ""
 
 #: .\data\talk\sex\masturebate.csv:6
-msgid "{Name}触发了自慰的地文"
+msgid "{Name}开始自慰了"
 msgstr ""
 
 #: .\data\talk\sex\milking_machine_off.csv:6
-msgid "{Name}触发了取下搾乳机指令的地文"
+msgid "{Name}取下了{TargetName}身上的搾乳机"
 msgstr ""
 
 #: .\data\talk\sex\milking_machine_on.csv:6
-msgid "{Name}触发了装上搾乳机指令的地文"
+msgid "{Name}给{TargetName}的胸部装上了搾乳机"
 msgstr ""
 
 #: .\data\talk\sex\mouth_ornament_job.csv:6
@@ -42229,15 +42229,15 @@ msgid "{Name}的阴茎在{TargetName}的脖饰上摩擦，感受着脖饰与脖�
 msgstr ""
 
 #: .\data\talk\sex\nipples_love_egg.csv:6
-msgid "{Name}触发了乳头跳蛋指令的地文"
+msgid "{Name}把跳蛋放在{TargetName}的乳头上，控制着震动幅度的大小，给{TargetName}带来一阵阵的快感"
 msgstr ""
 
 #: .\data\talk\sex\nipple_clamp.csv:6
-msgid "{Name}触发了乳头夹指令的地文"
+msgid "{Name}给{TargetName}装上了乳头夹"
 msgstr ""
 
 #: .\data\talk\sex\normal_anal_sex.csv:6
-msgid "{Name}触发了正常位肛交指令的地文"
+msgid "{Name}让{TargetName}躺在床上，自己压在{TargetName}的身上，把阴茎插进了{TargetName}的菊穴，开始抽动起来"
 msgstr ""
 
 #: .\data\talk\sex\normal_sex.csv:6
@@ -42277,15 +42277,15 @@ msgid "{Name}主动迎合{Name}的抽送发出娇喘，坚挺的阴茎撑开{Tar
 msgstr ""
 
 #: .\data\talk\sex\no_conscious_h_end.csv:6
-msgid "{Name}触发了结束无意识H指令的地文"
+msgid "{Name}结束了本次对{TargetName}的无意识H"
 msgstr ""
 
 #: .\data\talk\sex\open_anus.csv:6
-msgid "{Name}触发了掰开肛门观察指令的地文"
+msgid "{Name}掰开了{TargetName}的肛门，开始仔细观察"
 msgstr ""
 
 #: .\data\talk\sex\open_labia.csv:6
-msgid "{Name}触发了掰开阴唇观察指令的地文"
+msgid "{Name}掰开了{TargetName}的阴唇，开始仔细观察"
 msgstr ""
 
 #: .\data\talk\sex\orgasm_edge_off.csv:6
@@ -42297,23 +42297,27 @@ msgid "{Name}开始小心地使用技巧来控制{TargetName}的快感累积，�
 msgstr ""
 
 #: .\data\talk\sex\paizuri.csv:6
-msgid "{Name}触发了乳交指令的地文"
+msgid "{Name}让{TargetName}用双乳夹住自己的阴茎，开始上下摩擦"
 msgstr ""
 
 #: .\data\talk\sex\patch.csv:6
-msgid "{Name}触发了眼罩指令的地文"
+msgid "{Name}给{TargetName}戴上了眼罩，让{TargetName}无法看到周围的一切，进一步强化了{TargetName}的对触觉的感知"
+msgstr ""
+
+#: .\data\talk\sex\patch.csv:7
+msgid "{Name}取下了{TargetName}的眼罩，让{TargetName}重新能看到世界"
 msgstr ""
 
 #: .\data\talk\sex\philter.csv:6
-msgid "{Name}触发了媚药指令的地文"
+msgid "{Name}让{TargetName}喝下了媚药，{TargetName}的身体开始变得异常敏感，情欲不断攀升，每一次的触碰都会让{TargetName}的身体颤抖不已"
 msgstr ""
 
 #: .\data\talk\sex\put_condom.csv:6
-msgid "{Name}触发了避孕套指令的地文"
+msgid "{Name}戴上了避孕套"
 msgstr ""
 
 #: .\data\talk\sex\riding_anal_sex.csv:6
-msgid "{Name}触发了骑乘位肛交指令的地文"
+msgid "{Name}让{TargetName}骑在自己身上，抱住她的腰，然后把阴茎插进了{TargetName}的菊穴里，开始抽插起来"
 msgstr ""
 
 #: .\data\talk\sex\riding_sex.csv:6
@@ -42353,7 +42357,7 @@ msgid "{Name}丰满的臀部紧紧地坐在了{PlayerName}的阴茎上，每一�
 msgstr ""
 
 #: .\data\talk\sex\rub_buttock.csv:6
-msgid "{Name}触发了素股指令的地文"
+msgid "{Name}让{TargetName}把胯部的双腿夹紧，然后把阴茎插进这片被柔嫩的皮肤和阴部包裹住的缝隙中，开始抽插起来"
 msgstr ""
 
 #: .\data\talk\sex\sedecu.csv:6
@@ -42405,7 +42409,7 @@ msgid "{Name}把阴茎插进了{TargetName}脱下的鞋子里，感受着鞋尖�
 msgstr ""
 
 #: .\data\talk\sex\sixty_nine.csv:6
-msgid "{Name}触发了六九式指令的地文"
+msgid "{Name}让{TargetName}趴在自己身上，头对着自己的阴茎，两个人摆成69的姿势，然后开始互相舔舐对方的性器"
 msgstr ""
 
 #: .\data\talk\sex\skirt_job.csv:6
@@ -42413,7 +42417,7 @@ msgid "{Name}的阴茎在{TargetName}的裙子上摩擦，感受着裙子的布�
 msgstr ""
 
 #: .\data\talk\sex\sleeping_pills.csv:6
-msgid "{Name}触发了安眠药指令的地文"
+msgid "{Name}让{TargetName}服下了安眠药\n很快，沉重的睡意不受控制地袭来，{TargetName}昏昏沉沉地倒在了床上，对外界的一切毫无反应"
 msgstr ""
 
 #: .\data\talk\sex\socks_job.csv:6
@@ -42421,23 +42425,23 @@ msgid "{Name}把阴茎插进了{TargetName}穿着的袜子里，感受着袜子�
 msgstr ""
 
 #: .\data\talk\sex\spanking.csv:6
-msgid "{Name}触发了打屁股指令的地文"
+msgid "{Name}拍打着{TargetName}的屁股，发出清脆的声响，{TargetName}的屁股也因此泛起了一片红晕，腰也扭动了起来"
 msgstr ""
 
 #: .\data\talk\sex\stimulate_g_point.csv:6
-msgid "{Name}触发了刺激G点指令的地文"
+msgid "{Name}找到了{TargetName}阴道里的G点，开始用阴茎重点进攻这里，{TargetName}的身体开始颤抖，发出了一连串的呻吟声"
 msgstr ""
 
 #: .\data\talk\sex\stimulate_sigmoid_colon.csv:6
-msgid "{Name}触发了玩弄s状结肠指令的地文"
+msgid "{Name}用力插入到菊穴的最深处，开始时玩弄{TargetName}的s状结肠，{TargetName}的身体开始颤抖，发出了一连串的呻吟声"
 msgstr ""
 
 #: .\data\talk\sex\stimulate_vagina.csv:6
-msgid "{Name}触发了隔着刺激阴道指令的地文"
+msgid "{Name}找准了位置，开始用阴茎隔着{TargetName}的肠壁刺激另一端的阴道，{TargetName}的身体开始颤抖，发出了一连串的呻吟声"
 msgstr ""
 
 #: .\data\talk\sex\tailjob.csv:6
-msgid "{Name}触发了尾交指令的地文"
+msgid "{Name}让{TargetName}把尾巴缠绕在自己的阴茎上，然后上下摩擦"
 msgstr ""
 
 #: .\data\talk\sex\take_shower.csv:6
@@ -42445,7 +42449,7 @@ msgid "{Name}触发了淋浴指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\tits_blowjob.csv:6
-msgid "{Name}触发了乳交口交指令的地文"
+msgid "{TargetName}一边用双乳夹着{Name}的阴茎上下撸动，一边用嘴舔舐着{Name}的龟头"
 msgstr ""
 
 #: .\data\talk\sex\top_job.csv:6
@@ -42457,7 +42461,7 @@ msgid "{Name}的阴茎在{TargetName}的裤子上摩擦，感受着裤子的布�
 msgstr ""
 
 #: .\data\talk\sex\twiddle_nipples.csv:6
-msgid "{Name}触发了玩弄乳头指令的地文"
+msgid "{Name}玩弄着{TargetName}的乳头，时不时画圈，时不时揪捏"
 msgstr ""
 
 #: .\data\talk\sex\t_h_hp_0.csv:6
@@ -42497,31 +42501,39 @@ msgid "{Name}把阴茎插进了{TargetName}穿着的内裤里，感受着内裤�
 msgstr ""
 
 #: .\data\talk\sex\urethral_finger_insertion.csv:6
-msgid "{Name}对{TargetName}触发了尿道指姦指令的地文"
+msgid "{Name}把手指慢慢插进了{TargetName}的尿道里，开始缓慢抽插起来"
 msgstr ""
 
 #: .\data\talk\sex\urethral_sex.csv:6
-msgid "{Name}对{TargetName}触发了尿道姦指令的地文"
+msgid "{Name}把阴茎插入了{TargetName}的尿道里，开始抽插起来"
 msgstr ""
 
 #: .\data\talk\sex\urethral_swab.csv:6
-msgid "{Name}对{TargetName}触发了尿道棉棒指令的地文"
+msgid "{Name}拿着无菌的棉棒，小心翼翼地在{TargetName}的尿道口来回刺激，控制着每一次探入的深浅，耐心地开发着"
 msgstr ""
 
 #: .\data\talk\sex\urine_collector_off.csv:6
-msgid "{Name}触发了取下采尿器指令的地文"
+msgid "{Name}取下了{TargetName}身上的采尿器"
 msgstr ""
 
 #: .\data\talk\sex\urine_collector_on.csv:6
-msgid "{Name}触发了装上采尿器指令的地文"
+msgid "{Name}给{TargetName}的尿道装上了采尿器"
 msgstr ""
 
 #: .\data\talk\sex\vibrator_insertion.csv:6
-msgid "{Name}触发了震动棒指令的地文"
+msgid "{Name}把震动棒插进了{TargetName}的小穴里，然后打开了开关，震动棒开始在{TargetName}的里面震动起来"
+msgstr ""
+
+#: .\data\talk\sex\vibrator_insertion.csv:7
+msgid "{Name}拔出了{TargetName}小穴里的震动棒，震动棒的震动声停止了"
 msgstr ""
 
 #: .\data\talk\sex\vibrator_insertion_anal.csv:6
-msgid "{Name}触发了肛门振动棒指令的地文"
+msgid "{Name}往{TargetName}的肛门里插入了震动棒，然后打开了开关，震动棒开始在{TargetName}的里面震动起来"
+msgstr ""
+
+#: .\data\talk\sex\vibrator_insertion_anal.csv:7
+msgid "{Name}拔出了{TargetName}肛门里的震动棒，震动棒的震动声停止了"
 msgstr ""
 
 #: .\data\talk\sex\weapons_job.csv:6
@@ -42529,15 +42541,15 @@ msgid "{Name}阴茎小心翼翼地摩擦{TargetName}武器的护手与没有尖�
 msgstr ""
 
 #: .\data\talk\sex\womb_insertion.csv:6
-msgid "{Name}触发了插入子宫口指令的地文"
+msgid "{Name}把肉棒顶在{TargetName}已经初步开发的子宫口附近，来回蹭了几下，子宫口就自己张开了足以将龟头插进去的程度\n{Name}用力一顶，终于将肉棒插进了{TargetName}的子宫口，开始在子宫口附近来回抽插起来"
 msgstr ""
 
 #: .\data\talk\sex\womb_os_caress.csv:6
-msgid "{Name}触发了玩弄子宫口指令的地文"
+msgid "{Name}把肉棒顶在{TargetName}的子宫口附近，上下剐蹭着，时不时顶一下子宫口，让{TargetName}不禁发出一阵阵的呻吟"
 msgstr ""
 
 #: .\data\talk\sex\womb_sex.csv:6
-msgid "{Name}触发了子宫姦指令的地文"
+msgid "{Name}轻轻松松就把肉棒直接插进了{TargetName}已经完全开发的子宫口，一路向前直接顶在了子宫内壁上\n{Name}就像是使用飞机杯一样，剧烈地抽插着{TargetName}的子宫，让{TargetName}不禁发出一阵阵的呻吟"
 msgstr ""
 
 #: .\data\talk\system\abl_up.csv:6
