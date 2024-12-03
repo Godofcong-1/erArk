@@ -441,8 +441,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             calculation_text += _("+性冷漠(-30)")
         # 性无知
         if target_data.talent[222]:
-            judge += 30
-            calculation_text += _("+性无知(+30)")
+            judge += 100
+            calculation_text += _("+性无知(+100)")
         # 爱情旅馆修正
         if target_data.h_state.h_in_love_hotel:
             if cache.rhodes_island.love_hotel_room_lv == 1:
@@ -498,13 +498,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
         # 监禁模式修正
         if handle_premise.handle_imprisonment_1(target_character_id):
-            judge += 500
-            calculation_text += _("+监禁中(+500)")
+            judge += 9999
+            calculation_text += _("+监禁中(+9999)")
 
         # 睡眠修正
         if handle_premise.handle_unconscious_flag_1(target_character_id):
-            judge += 999
-            calculation_text += _("+睡眠(+999)")
+            judge += 9999
+            calculation_text += _("+睡眠(+9999)")
 
         # 时停修正
         if handle_premise.handle_unconscious_flag_3(target_character_id):
