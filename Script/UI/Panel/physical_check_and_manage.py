@@ -277,15 +277,19 @@ class Physical_Check_And_Manage_Panel:
                 if body_manage_data.todo:
                     continue
 
-                # 跳过没有进行前置检查的
-                if examine_status_id > 0 and examine_status_id not in self.done_check_status_id_set:
-                    continue
-
                 # 判断是否满足要求
                 judge_result, require_text = self.judge_manage_requirement(manage_cid, target_character_id)
                 # 去掉开头的或
                 if require_text.startswith(" 或 "):
                     require_text = require_text[3:]
+
+                # 已经在进行中的不需要判定
+                if target_character_data.body_manage[manage_cid]:
+                    judge_result = True
+                else:
+                    # 跳过没有进行前置检查的
+                    if examine_status_id > 0 and examine_status_id not in self.done_check_status_id_set:
+                        continue
 
                 # debug模式下直接通过
                 if cache.debug_mode:
