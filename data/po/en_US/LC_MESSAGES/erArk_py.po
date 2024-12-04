@@ -8629,3 +8629,200 @@ msgstr ""
 
 msgid "○对{0}使用\n"
 msgstr ""
+
+msgid "+性无知(+100)"
+msgstr ""
+
+msgid "+监禁中(+9999)"
+msgstr ""
+
+msgid "+睡眠(+9999)"
+msgstr ""
+
+msgid ""
+"\n"
+"在充足的睡眠下，今日未消耗的 {0}ml 精液转化为了 {1}ml 次日额外精液"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}来进行早安问候了\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}来进行晚安问候了\n"
+msgstr ""
+
+msgid "[011]查看检查报告"
+msgstr ""
+
+msgid ""
+"\n"
+"[011]查看检查报告（需要先进行身体检查）"
+msgstr ""
+
+msgid "缺陷"
+msgstr ""
+
+msgid "标准"
+msgstr ""
+
+msgid "优良"
+msgstr ""
+
+msgid "卓越"
+msgstr ""
+
+msgid "【基础敏感强度】"
+msgstr ""
+
+msgid "【扩张耐受】"
+msgstr ""
+
+msgid "【SM耐受】"
+msgstr ""
+
+msgid "【受孕适应性】"
+msgstr ""
+
+msgid "【催眠程度】"
+msgstr ""
+
+msgid "【性器】"
+msgstr ""
+
+msgid "【特殊体质】"
+msgstr ""
+
+msgid "【初吻】"
+msgstr ""
+
+msgid "【处女】"
+msgstr ""
+
+msgid "【肛门处女】"
+msgstr ""
+
+msgid "【舌部机动】"
+msgstr ""
+
+msgid "【胸部敏感】"
+msgstr ""
+
+msgid "【乳压强度】"
+msgstr ""
+
+msgid "【阴蒂敏感】"
+msgstr ""
+
+msgid "【手部机动】"
+msgstr ""
+
+msgid "【足部机动】"
+msgstr ""
+
+msgid "【阴道敏感】"
+msgstr ""
+
+msgid "【子宫敏感】"
+msgstr ""
+
+msgid "【阴道技巧】"
+msgstr ""
+
+msgid "【肛门敏感】"
+msgstr ""
+
+msgid "【肛门技巧】"
+msgstr ""
+
+msgid "【尿道敏感】"
+msgstr ""
+
+msgid "【尾部机动】"
+msgstr ""
+
+msgid "【触手机动】"
+msgstr ""
+
+msgid "基础档案：\n"
+msgstr ""
+
+msgid " 【代号】"
+msgstr ""
+
+msgid " 【性别】"
+msgstr ""
+
+msgid " 【出身地】"
+msgstr ""
+
+msgid " 【种族】"
+msgstr ""
+
+msgid " 【矿石病感染情况】\n"
+msgstr ""
+
+msgid "  参照医学检测报告，确认为感染者。\n"
+msgstr ""
+
+msgid "  参照医学检测报告，确认为非感染者。\n"
+msgstr ""
+
+msgid ""
+"\n"
+"综合体检测试：\n"
+msgstr ""
+
+msgid "当前受精概率{0}%"
+msgstr ""
+
+msgid " 已经生育了{0}个孩子，分别是：{1}"
+msgstr ""
+
+msgid "{0}（{1}%）\n"
+msgstr ""
+
+msgid "{0}%\n"
+msgstr ""
+
+msgid "保有初吻"
+msgstr ""
+
+msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士"
+msgstr ""
+
+msgid "献上了初吻"
+msgstr ""
+
+msgid "保有处女"
+msgstr ""
+
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了处女"
+msgstr ""
+
+msgid "保有后庭处女"
+msgstr ""
+
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女"
+msgstr ""
+
+msgid ""
+"\n"
+"检查人：Dr.{0}\n"
+msgstr ""
+
+msgid "检查日期：{0}\n"
+msgstr ""
+
+msgid ""
+" 当前设定的早安服务时间为：{0} ，睡到早安服务时间预计为 {1} 小时左右\n"
+"\n"
+msgstr ""
+
+msgid " 当前决定的睡眠时间为：{0} 小时（默认睡到早安服务时间）"
+msgstr ""
+
+msgid "{0}:{1}"
+msgstr ""
