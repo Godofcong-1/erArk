@@ -514,9 +514,11 @@ class Physical_Check_And_Manage_Panel:
             2: _("【SM耐受】"),
             3: _("【受孕适应性】"),
             4: _("【催眠程度】"),
+            5: _("【性器】"),
+            6: _("【特殊体质】"),
             11: _("【初吻】"),
             12: _("【处女】"),
-            13: _("【A处女】"),
+            13: _("【肛门处女】"),
         }
 
         # 指令与能力id的对应表
@@ -627,6 +629,22 @@ class Physical_Check_And_Manage_Panel:
             now_name = cmd_ablility_dict[cmd_id][1]
             ability_level = target_character_data.ability[ability_id]
             report_text += (" {0}{1}\n").format(now_name, level_text_dict[ability_level])
+        # 性器
+        body_part_talent_id_list = list(range(111, 133))
+        body_part_talent_text = " "
+        for talent_id in body_part_talent_id_list:
+            if talent_id in target_character_data.talent and target_character_data.talent[talent_id]:
+                body_part_talent_text += game_config.config_talent[talent_id].name + " "
+        report_text += (" {0}{1}\n").format(base_ability_dict[5], body_part_talent_text)
+        # 特殊体质
+        special_talent_id_list = list(range(61, 65)) + list(range(151, 180))
+        special_talent_text = " "
+        for talent_id in special_talent_id_list:
+            if talent_id in target_character_data.talent and target_character_data.talent[talent_id]:
+                special_talent_text += game_config.config_talent[talent_id].name + " "
+        if special_talent_text == " ":
+            special_talent_text = _("无")
+        report_text += (" {0}{1}\n").format(base_ability_dict[6], special_talent_text)
 
         # 性爱履历：
         report_text += "\n性爱履历：\n"
