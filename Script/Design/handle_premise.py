@@ -11325,6 +11325,63 @@ def handle_group_sex_fail_and_self_refuse(character_id: int) -> int:
     return not handle_group_sex_fail_and_self_agree(character_id)
 
 
+@add_premise(constant_promise.Premise.HAVE_ONE_GRUOP_SEX_TEMPLE)
+def handle_have_one_group_sex_temple(character_id: int) -> int:
+    """
+    当前存在一个多P模板
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    group_sex_temple_flag = False
+    # 获取多P模板数据
+    pl_character_data = cache.character_data[0]
+    pl_group_sex_A_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
+    # 遍历模板的对单部分
+    for body_part in pl_group_sex_A_data[0]:
+        # 如果某个部位的指令id不为-1，则返回为True
+        if pl_group_sex_A_data[0][body_part][1] != -1:
+            group_sex_temple_flag = True
+            break
+    # 如果flag为false，则继续检测对多部分
+    if not group_sex_temple_flag:
+        if pl_group_sex_A_data[1][1] != -1:
+            group_sex_temple_flag = True
+    # 返回flag
+    return group_sex_temple_flag
+
+
+@add_premise(constant_promise.Premise.HAVE_OVER_ONE_GRUOP_SEX_TEMPLE)
+def handle_have_over_one_group_sex_temple(character_id: int) -> int:
+    """
+    当前存在多个多P模板
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    group_sex_temple_flag = False
+    # 获取多P模板数据
+    pl_character_data = cache.character_data[0]
+    pl_group_sex_B_data = pl_character_data.h_state.group_sex_body_template_dict["B"]
+    # 遍历模板的对单部分
+    for body_part in pl_group_sex_B_data[0]:
+        # 如果某个部位的指令id不为-1，则返回为True
+        if pl_group_sex_B_data[0][body_part][1] != -1:
+            group_sex_temple_flag = True
+            break
+    # 如果flag为false，则继续检测对多部分
+    if not group_sex_temple_flag:
+        if pl_group_sex_B_data[1][1] != -1:
+            group_sex_temple_flag = True
+    # 返回
+    if handle_have_one_group_sex_temple(character_id) and group_sex_temple_flag:
+        return 1
+    else:
+        return 0
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)

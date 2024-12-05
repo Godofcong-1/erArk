@@ -2608,6 +2608,10 @@ class Premise:
     """ H_多P 多P邀请失败了，但自己不是拒绝者 """
     GROUP_SEX_FAIL_AND_SELF_REFUSE = "group_sex_fail_and_self_refuse"
     """ H_多P 多P邀请失败了，自己是拒绝者 """
+    HAVE_ONE_GRUOP_SEX_TEMPLE = "have_one_group_sex_temple"
+    """ H_多P 当前存在一个多P模板 """
+    HAVE_OVER_ONE_GRUOP_SEX_TEMPLE = "have_over_one_group_sex_temple"
+    """ H_多P 当前存在多个多P模板 """
 
     HAVE_FOOD = "have_food"
     """ 道具_持有 拥有食物 """

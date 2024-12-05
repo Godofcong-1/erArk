@@ -140,13 +140,14 @@ def chara_handle_instruct_common_settle(
         elif judge_list[0] == -1:
             return 0
     character_data.state = state_id
+    status_data = game_config.config_status[state_id]
     # 如果行动id为0，则行动id等于状态id
     if behevior_id == 0:
         behevior_id = state_id
     character_data.behavior.behavior_id = behevior_id
     # 查表获取行动持续时间
     if duration == 0:
-        duration = game_config.config_status[state_id].duration
+        duration = status_data.duration
         # 如果持续时间小于等于0，则持续时间为1
         if duration <= 0:
             duration = 1
@@ -158,9 +159,77 @@ def chara_handle_instruct_common_settle(
         target_character_data.state = constant.CharacterStatus.STATUS_WAIT
         target_character_data.behavior.behavior_id = constant.Behavior.WAIT
         target_character_data.behavior.duration = duration
+    # 群交结算
+    group_sex_settle(character_id, target_character_id, state_id)
     # 仅在玩家指令时更新游戏流程
     if character_id == 0 or game_update_flag:
         update.game_update_flow(duration)
+
+
+def group_sex_settle(
+        character_id: int,
+        target_character_id: int,
+        state_id: int,
+):
+    """
+    群交结算
+    Keyword arguments:
+    character_id -- 角色id
+    target_character_id -- 目标角色id
+    """
+    # 如果是非群交模式，则返回
+    if not cache.group_sex_mode:
+        return
+    # 非玩家或无交互对象返回
+    if character_id != 0 or target_character_id == character_id:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_template_data = character_data.h_state.group_sex_body_template_dict["A"]
+    # 如果当前群交模板已锁死，则返回
+    if character_data.h_state.group_sex_lock_flag:
+        return
+    # 获取指令tag
+    status_data = game_config.config_status[state_id]
+    tag_list = status_data.tag.split("|")
+    # 遍历tag
+    if not len(tag_list):
+        return
+    # 阴茎插入
+    if _("插入") in tag_list:
+        now_template_data[0]["penis"] = [target_character_id, state_id]
+        now_template_data[1] = [[-1], -1]
+    # 阴茎侍奉
+    elif _("侍奉") in tag_list:
+        now_template_data[0]["penis"] = [-1, -1]
+        # 如果新指令，则重置数据
+        if now_template_data[1][1] != state_id:
+            now_template_data[1] = [[target_character_id], state_id]
+        # 否则则只将角色id加进角色列表里
+        elif target_character_id not in now_template_data[1][0]:
+            now_template_data[1][0].append(target_character_id)
+    # 口
+    elif _("口") in tag_list:
+        now_template_data[0]["mouth"] = [target_character_id, state_id]
+    # 手
+    elif _("手") in tag_list:
+        # 如果L是空的，或当前对象是L对象，则赋给L
+        if now_template_data[0]["L_hand"][1] == -1 or now_template_data[0]["L_hand"][0] == target_character_id:
+            now_template_data[0]["L_hand"] = [target_character_id, state_id]
+        # R同理
+        elif now_template_data[0]["R_hand"][1] == -1 or now_template_data[0]["R_hand"][0] == target_character_id:
+            now_template_data[0]["R_hand"] = [target_character_id, state_id]
+        # 否则，全部更新，左等于右，右等于新
+        else:
+            now_template_data[0]["L_hand"] = now_template_data[0]["R_hand"]
+            now_template_data[0]["R_hand"] = [target_character_id, state_id]
+    # 肛
+    elif _("肛") in tag_list:
+        now_template_data[0]["anal"] = [target_character_id, state_id]
+
+    # 特殊指令特殊处理
+    if status_data.name == _("六九式"):
+        now_template_data[0]["mouth"] = [target_character_id, state_id]
+        now_template_data[1] = [[target_character_id], state_id]
 
 
 def handle_comprehensive_state_effect(
@@ -381,6 +450,7 @@ def debug_adjust():
     constant.InstructType.SYSTEM,
     _("系统设置"),
     {
+        constant_promise.Premise.NOT_H,
     })
 def handle_system_setting():
     """系统设置"""
@@ -405,6 +475,7 @@ def handle_talk_quick_test():
     constant.InstructType.SYSTEM,
     _("文本生成AI设置"),
     {
+        constant_promise.Premise.NOT_H,
     })
 def handle_chat_ai_setting():
     """文本生成AI设置"""
@@ -416,6 +487,7 @@ def handle_chat_ai_setting():
     constant.InstructType.SYSTEM,
     _("收藏该地点"),
     {
+        constant_promise.Premise.NOT_H,
         constant_promise.Premise.PLACE_NOT_IN_COLLECTION_LIST,
     })
 def handle_collection_now_place():
@@ -429,6 +501,7 @@ def handle_collection_now_place():
     constant.InstructType.SYSTEM,
     _("取消收藏地点"),
     {
+        constant_promise.Premise.NOT_H,
         constant_promise.Premise.PALCE_IN_COLLECTION_LIST,
     })
 def handle_cancel_collection_now_place():
@@ -3396,6 +3469,7 @@ def handle_make_lick_anal():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
      constant_promise.Premise.IS_H},
 )
 def handle_change_top_and_bottom():
@@ -5560,3 +5634,56 @@ def handle_orgasm_edge_on():
 def handle_orgasm_edge_off():
     """处理绝顶解放指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ORGASM_EDGE_OFF)
+
+@add_instruct(
+    constant.Instruct.RUN_GROUP_SEX_TEMPLE,
+    constant.InstructType.SEX,
+    _("进行一次当前多P(未实装)"),
+    {
+        constant_promise.Premise.TO_DO,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.GROUP_SEX_MODE_ON,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TIME_STOP_OFF,
+        constant_promise.Premise.HAVE_ONE_GRUOP_SEX_TEMPLE,
+    })
+def handle_run_group_sex_temple():
+    """处理进行一次当前多P指令"""
+    # TODO
+    pass
+
+@add_instruct(
+    constant.Instruct.RUN_ALL_GROUP_SEX_TEMPLE,
+    constant.InstructType.SEX,
+    _("进行一次轮流多P(未实装)"),
+    {
+        constant_promise.Premise.TO_DO,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.GROUP_SEX_MODE_ON,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TIME_STOP_OFF,
+        constant_promise.Premise.HAVE_OVER_ONE_GRUOP_SEX_TEMPLE,
+    })
+def handle_run_all_group_sex_temple():
+    """处理进行一次轮流多P指令"""
+    # TODO
+    pass
+
+@add_instruct(
+    constant.Instruct.EDIT_GROUP_SEX_TEMPLE,
+    constant.InstructType.SEX,
+    _("编辑多P行动(未实装)"),
+    {
+        constant_promise.Premise.TO_DO,
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.GROUP_SEX_MODE_ON,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TIME_STOP_OFF,
+    })
+def handle_edit_group_sex_temple():
+    """处理编辑多P行动指令"""
+    # TODO
+    pass

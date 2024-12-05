@@ -420,6 +420,37 @@ class BODY_H_STATE:
         [0未捆绑,1后高手缚,2直立缚,3驷马捆绑,4直臂缚,5双手缚,6菱绳缚,7龟甲缚,8团缚,9逆团缚,10吊缚,11后手吊缚,12单足吊缚,13后手观音,14苏秦背剑,15五花大绑]
         """
 
+        self.group_sex_body_template_dict: dict = {
+            "A":[
+                {
+                    "mouth": [-1, -1],
+                    "L_hand": [-1, -1],
+                    "R_hand": [-1, -1],
+                    "penis": [-1, -1],
+                    "anal": [-1, -1],
+                },
+                [[-1], -1],
+            ],
+            "B":[
+                {
+                    "mouth": [-1, -1],
+                    "L_hand": [-1, -1],
+                    "R_hand": [-1, -1],
+                    "penis": [-1, -1],
+                    "anal": [-1, -1],
+                },
+                [[-1], -1],
+            ],
+        }
+        """
+        多P模式下的部位模板\n 
+        分为模板A和模板B\n
+        模板为列表，0为全对单部位，1为阴茎侍奉\n
+        对单部位为 mouth L_hand R_hand penis anal 以上各字典部位\n
+        每个字典部位为列表，0为交互对象id，1为指令状态id\n
+        阴茎侍奉为列表，0为全交互对象id列表，1为指令状态id
+        """
+
         self.insert_position: int = -1
         """ 阴茎插入位置，int，-1为未插入，0开始同身体部位，20开始同服装部位 """
         self.shoot_position_body: int = -1
@@ -454,6 +485,10 @@ class BODY_H_STATE:
         """ 绝顶寸止，0未寸止，1正在寸止，2正常寸止解放，3寸止失败型解放 """
         self.time_stop_release: bool = False
         """ 当前为时停解放状态 """
+        self.group_sex_lock_flag: bool = False
+        """ 群P的模板锁定标记 """
+        self.all_group_sex_temple_run: bool = False
+        """ 运行全群P模板 """
 
 
 class FIRST_RECORD:

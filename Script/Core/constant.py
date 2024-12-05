@@ -2204,12 +2204,6 @@ class Instruct:
     """ 查看污浊情况 """
     INSTRUCT_FILTER = 0
     """ 指令过滤 """
-    DEBUG_MODE_ON = 0
-    """ 开启debug模式 """
-    DEBUG_MODE_OFF = 0
-    """ 关闭debug模式 """
-    DEBUG_ADJUST = 0
-    """ debug数值调整 """
     COLLECTION_NOW_PLACE = 0
     """ 收藏该地点 """
     CANCEL_COLLECTION_NOW_PLACE = 0
@@ -2218,6 +2212,12 @@ class Instruct:
     """ 系统设置 """
     CHAT_AI_SETTING = 0
     """ 文本生成AI设置 """
+    DEBUG_MODE_ON = 0
+    """ 开启debug模式 """
+    DEBUG_MODE_OFF = 0
+    """ 关闭debug模式 """
+    DEBUG_ADJUST = 0
+    """ debug数值调整 """
     TALK_QUICK_TEST = 0
     """ 快速测试口上 """
 
@@ -2532,6 +2532,24 @@ class Instruct:
     """ H结束 """
     GROUP_SEX_END = 0
     """ 结束多P """
+    UNDRESS = 0
+    """ 脱衣服 """
+    CHANGE_TOP_AND_BOTTOM = 0
+    """ 交给对方 """
+    KEEP_ENJOY = 0
+    """ 继续享受 """
+    TRY_PL_ACTIVE_H = 0
+    """ 尝试掌握主动权 """
+    ORGASM_EDGE_ON = 0
+    """ 绝顶寸止 """
+    ORGASM_EDGE_OFF = 0
+    """ 绝顶解放 """
+    RUN_GROUP_SEX_TEMPLE = 0
+    """ 进行一次当前多P """
+    RUN_ALL_GROUP_SEX_TEMPLE = 0
+    """ 进行一次轮流多P """
+    EDIT_GROUP_SEX_TEMPLE = 0
+    """ 编辑多P行动 """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0
@@ -2564,12 +2582,6 @@ class Instruct:
     """ 命令对方舔自己肛门 """
     ASK_PEE = 0
     """ 命令对方小便 """
-    CHANGE_TOP_AND_BOTTOM = 0
-    """ 交给对方 """
-    KEEP_ENJOY = 0
-    """ 继续享受 """
-    TRY_PL_ACTIVE_H = 0
-    """ 尝试掌握主动权 """
     SEDECU = 0
     """ 诱惑 """
     HANDJOB = 0
@@ -2780,12 +2792,7 @@ class Instruct:
     """ 泡泡浴 """
     GIVE_BLOWJOB = 0
     """ 给对方口交 """
-    UNDRESS = 0
-    """ 脱衣服 """
-    ORGASM_EDGE_ON = 0
-    """ 绝顶寸止 """
-    ORGASM_EDGE_OFF = 0
-    """ 绝顶解放 """
+
 
 
 i = 0
