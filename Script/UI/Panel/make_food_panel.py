@@ -225,7 +225,6 @@ class SeeFoodListByFoodNameDraw:
         self.food_uid: UUID = now_food_list[0][1]
         """ 食物uid """
 
-
         if isinstance(self.food_cid, str):
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
             self.food_name = food_recipe.name
@@ -242,12 +241,12 @@ class SeeFoodListByFoodNameDraw:
                 index_text = text_handle.id_index(button_id)
                 button_text = f"{index_text}{self.food_name}"
                 name_draw = draw.LeftButton(
-                    button_text, self.button_return, self.width, cmd_func=self.make_food
+                    button_text, self.button_return, self.width, cmd_func=self.make_food_for_sure
                 )
             else:
                 button_text = f"[{self.food_name}]"
                 name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.make_food
+                    button_text, self.text, self.width, cmd_func=self.make_food_for_sure
                 )
             self.button_return = name_draw.return_text
             self.draw_text = button_text
@@ -258,6 +257,44 @@ class SeeFoodListByFoodNameDraw:
             self.draw_text = name_draw.text
         self.now_draw = name_draw
         """ 绘制的对象 """
+
+    def make_food_for_sure(self):
+        """确认是否制作食物"""
+
+        line_feed.draw()
+
+        food_recipe = cache.recipe_data[int(self.food_cid)]
+        food_name = self.food_name
+        food_diffucty = food_recipe.difficulty
+        make_food_time = self.make_food_time
+        seasoning_name = game_config.config_seasoning[self.special_seasoning].name
+
+        # 输出食物的名字、预计制作耗时、介绍、调味，询问是否确认
+        confirm_text = _(
+            f"食物名字: {food_name}\n"
+            f"菜谱难度: {food_diffucty}\n"
+            f"预计耗时: {make_food_time} 分钟\n"
+            f"当前调味: {seasoning_name}\n"
+            "是否确认制作该食物？"
+        )
+
+        info_draw = draw.NormalDraw()
+        info_draw.text = confirm_text
+        info_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
+
+        confirm_draw = draw.CenterButton(_("[确认]"), _("确认"), window_width / 2)
+        confirm_draw.draw()
+        cancel_draw = draw.CenterButton(_("[取消]"), _("取消"), window_width / 2)
+        cancel_draw.draw()
+        line_feed.draw()
+
+        # 确认则制作食物
+        yrn = flow_handle.askfor_all([confirm_draw.return_text, cancel_draw.return_text])
+        if yrn == confirm_draw.return_text:
+            self.make_food()
+
 
     def make_food(self):
         """玩家制作食物"""
