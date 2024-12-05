@@ -137,7 +137,7 @@ def add_cloth_data_to_config_data(cloth_list: List[int], AdvNpc: int, cloth_coun
             tag = 5
     now_cloth_cid = 10000 + AdvNpc * 50 + cloth_count
     # print(f"debug cloth_count = {cloth_count}, AdvNpc = {AdvNpc}, now_cloth_cid = {now_cloth_cid}")
-    cloth_data = {'cid':now_cloth_cid, 'name':name, 'clothing_type':type, 'npc':0, 'tag':tag, 'describe':name + '的服装'}
+    cloth_data = {'cid':now_cloth_cid, 'name':name, 'clothing_type':type, 'npc':AdvNpc, 'tag':tag, 'describe':name + '的服装'}
     # print(f"debug cloth_data = {cloth_data}")
     now_cloth = config_def.ClothingTem()
     now_cloth.__dict__ = cloth_data

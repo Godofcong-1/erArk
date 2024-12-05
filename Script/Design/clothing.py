@@ -117,6 +117,9 @@ def get_underwear(character_id: int, part_flag = 0):
     pan_H_list = []
     for cloth_id in game_config.config_clothing_tem:
         cloth = game_config.config_clothing_tem[cloth_id]
+        # 跳过非自己的衣服
+        if cloth.npc != 0 and cloth.npc != character_data.adv:
+            continue
         if cloth.clothing_type == 6:
             if cloth.tag == 0:
                 bra_nor_list.append(cloth_id)
