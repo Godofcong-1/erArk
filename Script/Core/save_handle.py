@@ -480,7 +480,7 @@ def update_chara_cloth(value, tem_character):
             for now_cloth_id in now_type_cloth_data:
                     # 查找该编号的服装数据是否存在，如果不存在，则重置该角色的服装数据
                     if (
-                        now_cloth_id >= 10001 and
+                        # now_cloth_id >= 10001 and
                         now_cloth_id not in game_config.config_clothing_tem
                     ):
                         reset_cloth_flag = True
