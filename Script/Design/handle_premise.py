@@ -5639,6 +5639,18 @@ def handle_self_fall_obey(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOT_FALL_OBEY)
+def handle_self_not_fall_obey(character_id: int) -> int:
+    """
+    自己没有隶属系陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_fall_obey(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_NOT_FALL)
 def handle_target_not_fall(character_id: int) -> int:
     """

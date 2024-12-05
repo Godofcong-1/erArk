@@ -1734,6 +1734,8 @@ class Premise:
     """ 属性_素质 自己有爱情系陷落素质 """
     SELF_FALL_OBEY = "self_fall_obey"
     """ 属性_素质 自己有隶属系陷落素质 """
+    SELF_NOT_FALL_OBEY = "self_not_fall_obey"
+    """ 属性_素质 自己没有隶属系陷落素质 """
     TARGET_NOT_FALL = "not_fall"
     """ 属性_素质 交互对象无陷落素质 """
     TARGET_FALL = "target_fall"

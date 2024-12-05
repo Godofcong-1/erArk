@@ -247,6 +247,9 @@ ai的目标,,,,
 
 701,1,normal_1|unconscious_flag_5,1,1正常（基础正常），自身被空气催眠，则原地待机10分钟
 
-801,651,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，如果不在调教室，则去调教室
-802,651,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，如果不在调教室，则去调教室
-803,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|in_humiliation_room,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，如果在调教室，则开始性爱练习
+801,502,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_not_fall_obey|not_in_dor,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己没有隶属系陷落素质，如果不在自己宿舍，则去自己宿舍
+802,502,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_not_fall_obey|not_in_dor,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己没有隶属系陷落素质，如果不在自己宿舍，则去自己宿舍
+803,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_not_fall_obey|in_dor,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己没有隶属系陷落素质，如果在自己宿舍，则开始性爱练习
+804,651,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
+805,651,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
+806,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|in_humiliation_room,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己有隶属系陷落素质，如果在调教室，则开始性爱练习

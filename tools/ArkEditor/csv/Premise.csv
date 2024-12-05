@@ -871,6 +871,7 @@ self_fall_3,SELF_FALL_3,属性_素质,自己有3级陷落素质
 self_fall_4,SELF_FALL_4,属性_素质,自己有4级陷落素质
 self_fall_love,SELF_FALL_LOVE,属性_素质,自己有爱情系陷落素质
 self_fall_obey,SELF_FALL_OBEY,属性_素质,自己有隶属系陷落素质
+self_not_fall_obey,SELF_NOT_FALL_OBEY,属性_素质,自己没有隶属系陷落素质
 not_fall,TARGET_NOT_FALL,属性_素质,交互对象无陷落素质
 target_fall,TARGET_FALL,属性_素质,交互对象有陷落素质
 love_1,TARGET_LOVE_1,属性_素质,交互对象拥有思慕（爱情系第一阶段）
