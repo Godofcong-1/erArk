@@ -1,8 +1,6 @@
-from turtle import position
-from typing import Tuple
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import attr_calculation, handle_premise
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
+from Script.Design import attr_calculation, handle_premise, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -288,6 +286,10 @@ class Ejaculation_Panel:
         # 如果当前交互对象不是NPC的话，则跳过部位选择
         if character_data.target_character_id == 0:
             self.shoot_here(6, 0)
+        # 群交模式下手动选择对象与部位
+        elif cache.group_sex_mode:
+            self.draw_choose_target_chara_in_group_sex()
+            self.draw_choose_part()
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
         elif not cache.system_setting[4]:
             now_position = target_data.h_state.insert_position
@@ -298,54 +300,7 @@ class Ejaculation_Panel:
                     self.shoot_here(now_position - 20, 1)
         # 手动选择射精部位
         else:
-            title_name = _("射精部位选择")
-            title_draw = draw.TitleLineDraw(title_name, self.width)
-
-            while 1:
-                return_list = []
-                title_draw.draw()
-
-                # 绘制身体部位按钮
-                body_count = 0
-                for body_part_cid in game_config.config_body_part:
-                    part_name = game_config.config_body_part[body_part_cid].name
-                    draw_text = f"[{body_part_cid}]{part_name}"
-                    # print("debug draw_text = ",draw_text)
-                    body_count += 1
-                    show_flag = self.part_can_choose(body_part_cid)
-                    if show_flag:
-                        name_draw = draw.CenterButton(
-                            draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
-                        )
-                        name_draw.draw()
-                        return_list.append(name_draw.return_text)
-                        if body_count > 0 and body_count % 8 == 0:
-                            line_feed.draw()
-
-                line_feed.draw()
-
-                # 绘制服装部位按钮
-                cloth_count = 0
-                for clothing_type in game_config.config_clothing_type:
-                    cloth_name = game_config.config_clothing_type[clothing_type].name
-                    draw_text = f"[{clothing_type}]{cloth_name}"
-                    cloth_count += 1
-                    show_flag = len(target_data.cloth.cloth_wear[clothing_type])
-                    if show_flag:
-                        name_draw = draw.CenterButton(
-                            draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
-                        )
-                        name_draw.draw()
-                        return_list.append(name_draw.return_text)
-                        if cloth_count > 0 and cloth_count % 8 == 0:
-                            line_feed.draw()
-
-                yrn = flow_handle.askfor_all(return_list)
-
-                # 在非页面切换时退出面板
-                if yrn not in [_('身体'), _('服装')]:
-                    cache.now_panel_id = constant.Panel.IN_SCENE
-                    break
+            self.draw_choose_part()
 
     def part_can_choose(self, body_part_cid: int):
         """判断该部位是否可以绘制"""
@@ -394,6 +349,103 @@ class Ejaculation_Panel:
                 return False
         return True
 
+    def draw_choose_target_chara_in_group_sex(self):
+        """绘制选择射精对象"""
+
+        title_name = _("选择射精对象")
+        title_draw = draw.TitleLineDraw(title_name, self.width)
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            character_data: game_type.Character = cache.character_data[0]
+            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+
+            # 当前场景的角色列表
+            for chara_id in scene_data.character_list:
+                # 不显示自己
+                if chara_id == 0:
+                    continue
+                now_character_data: game_type.Character = cache.character_data[chara_id]
+                chara_name = now_character_data.name
+                chara_adv = now_character_data.adv
+                draw_text = f"[{chara_adv}]{chara_name}"
+                name_draw = draw.CenterButton(
+                    draw_text, chara_name, (len(draw_text) + 1) * 3, cmd_func=self.change_shoot_target, args=(chara_id)
+                )
+                name_draw.draw()
+                return_list.append(name_draw.return_text)
+
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+
+            # 在非页面切换时退出面板
+            if yrn in return_list:
+                break
+
+    def draw_choose_part(self):
+        """绘制选择射精部位"""
+
+        title_name = _("选择射精部位")
+        title_draw = draw.TitleLineDraw(title_name, self.width)
+        while 1:
+
+            character_data: game_type.Character = cache.character_data[0]
+            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+            return_list = []
+            title_draw.draw()
+
+            # 绘制身体部位按钮
+            body_count = 0
+            for body_part_cid in game_config.config_body_part:
+                part_name = game_config.config_body_part[body_part_cid].name
+                draw_text = f"[{body_part_cid}]{part_name}"
+                # print("debug draw_text = ",draw_text)
+                body_count += 1
+                show_flag = self.part_can_choose(body_part_cid)
+                if show_flag:
+                    name_draw = draw.CenterButton(
+                        draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                    )
+                    name_draw.draw()
+                    return_list.append(name_draw.return_text)
+                    if body_count > 0 and body_count % 8 == 0:
+                        line_feed.draw()
+
+            line_feed.draw()
+
+            # 绘制服装部位按钮
+            cloth_count = 0
+            for clothing_type in game_config.config_clothing_type:
+                cloth_name = game_config.config_clothing_type[clothing_type].name
+                draw_text = f"[{clothing_type}]{cloth_name}"
+                cloth_count += 1
+                show_flag = len(target_data.cloth.cloth_wear[clothing_type])
+                if show_flag:
+                    name_draw = draw.CenterButton(
+                        draw_text, cloth_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(clothing_type, 1)
+                    )
+                    name_draw.draw()
+                    return_list.append(name_draw.return_text)
+                    if cloth_count > 0 and cloth_count % 8 == 0:
+                        line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+
+            # 在非页面切换时退出面板
+            if yrn not in [_('身体'), _('服装')]:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def change_shoot_target(self, target_character_id: int):
+        """更改射精目标"""
+        character_data: game_type.Character = cache.character_data[0]
+        character_data.target_character_id = target_character_id
+
     def shoot_here(self, part_cid: int, part_type: int):
+        """结算射精"""
         py_cmd.clr_cmd()
         ejaculation_flow(part_cid, part_type)

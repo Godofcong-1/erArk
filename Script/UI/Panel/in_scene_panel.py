@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel
 from Script.Core import (
     get_text,
     cache_control,
@@ -284,10 +284,17 @@ class InScenePanel:
 
             # ↓以下为身体栏的内容↓#
             if cache.scene_panel_show[2] and pl_character_data.target_character_id:
-                character_cloth_draw = dirty_panel.SeeCharacterBodyPanel(
+                character_body_draw = dirty_panel.SeeCharacterBodyPanel(
                     pl_character_data.cid, self.width, 9, 0, 0
                 )
-                character_cloth_draw.draw()
+                character_body_draw.draw()
+
+            # ↓以下为群交栏的内容↓#
+            if cache.group_sex_mode:
+                character_group_sex_draw = group_sex_panel.SeeGroupSexInfoPanel(
+                    pl_character_data.cid, self.width, 9, 0, 0
+                )
+                character_group_sex_draw.draw()
 
             # 以下为图片面板#
             if len(character_list) and cache.scene_panel_show[4]:

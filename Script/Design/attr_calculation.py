@@ -269,7 +269,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
         h_state_data.time_stop_orgasm_count[body_part] = 0
         h_state_data.extra_orgasm_feel[body_part] = 0
 
-    # 多P字典
+    # 群交字典
     h_state_data.group_sex_body_template_dict = {
             "A":[
                 {

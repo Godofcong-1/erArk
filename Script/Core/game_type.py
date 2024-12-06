@@ -443,7 +443,7 @@ class BODY_H_STATE:
             ],
         }
         """
-        多P模式下的部位模板\n 
+        群交模式下的部位模板\n 
         分为模板A和模板B\n
         模板为列表，0为全对单部位，1为阴茎侍奉\n
         对单部位为 mouth L_hand R_hand penis anal 以上各字典部位\n
@@ -488,7 +488,7 @@ class BODY_H_STATE:
         self.group_sex_lock_flag: bool = False
         """ 群P的模板锁定标记 """
         self.all_group_sex_temple_run: bool = False
-        """ 运行全群P模板 """
+        """ 运行全群交模板 """
 
 
 class FIRST_RECORD:
@@ -1357,7 +1357,7 @@ class Cache:
         self.time_stop_mode: bool = False
         """ 时间停止模式 """
         self.group_sex_mode: bool = False
-        """ 多P模式 """
+        """ 群交模式 """
         self.game_round: int = 1
         """ 当前周目数 """
         self.all_npc_position_panel_select_type: int = 0

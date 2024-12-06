@@ -12,9 +12,9 @@ class BehaviorEffect:
     ADD_THIS_EVENT_TO_TRIGGERED_RECORD = 10008
     """ 系统量_基础 将玩家当前触发的事件加入已触发记录 """
     GROUP_SEX_MODE_ON = 10010
-    """ 系统量_基础 开启多P模式 """
+    """ 系统量_基础 开启群交模式 """
     GROUP_SEX_MODE_OFF = 10011
-    """ 系统量_基础 关闭多P模式 """
+    """ 系统量_基础 关闭群交模式 """
 
     INTERRUPT_TARGET_ACTIVITY = 10000
     """ 系统量_交互 打断交互对象活动 """
@@ -650,9 +650,9 @@ class BehaviorEffect:
     END_H_ADD_HPMP_MAX = 528
     """ 指令_专用结算 （结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限 """
     GROUP_SEX_END_H_ADD_HPMP_MAX = 529
-    """ 指令_专用结算 （多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限 """
+    """ 指令_专用结算 （群交结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限 """
     GROUP_SEX_FAIL_ADD_JUST = 530
-    """ 指令_专用结算 （多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算 """
+    """ 指令_专用结算 （群交失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算 """
     BOARD_GAME_WIN_ADD_ADJUST = 532
     """ 指令_专用结算 （桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证 """
     BOARD_GAME_LOSE_ADD_ADJUST = 533
@@ -1005,6 +1005,10 @@ class BehaviorEffect:
     """ 属性_H 交互对象开启绝顶寸止 """
     TARGET_ORGASM_EDGE_OFF = 1414
     """ 属性_H 交互对象关闭绝顶寸止 """
+    ALL_GROUP_SEX_TEMPLE_ON = 1415
+    """ 属性_H 开启全群交模板，进行轮流群交 """
+    ALL_GROUP_SEX_TEMPLE_OFF = 1416
+    """ 属性_H 关闭全群交模板，进行单轮群交 """
 
     # 1500+见属性_基础
 

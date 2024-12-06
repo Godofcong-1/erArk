@@ -18,7 +18,6 @@ from Script.Core import cache_control, constant, constant_effect, game_type, get
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel
-from Script.Settle import default_experience
 
 import random, math
 
@@ -2865,6 +2864,48 @@ def handle_target_orgasm_edge_off(
     handle_self_orgasm_edge_off(character_data.target_character_id, add_time, change_data, now_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_GROUP_SEX_TEMPLE_ON)
+def handle_all_group_sex_temple_run_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    开启全群交模板，进行轮流群交
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.all_group_sex_temple_run = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_GROUP_SEX_TEMPLE_OFF)
+def handle_all_group_sex_temple_run_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    关闭全群交模板，进行单轮群交
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.all_group_sex_temple_run = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,
@@ -3134,7 +3175,7 @@ def handle_group_sex_mode_on(
         now_time: datetime.datetime,
 ):
     """
-    开启多P模式
+    开启群交模式
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3152,7 +3193,7 @@ def handle_group_sex_mode_off(
         now_time: datetime.datetime,
 ):
     """
-    关闭多P模式
+    关闭群交模式
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -5375,6 +5416,8 @@ def handle_self_h_state_reset(
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0 and (second_behavior_id in range(1100,1120) or second_behavior_id in range(1200,1250)):
             character_data.second_behavior[second_behavior_id] = 0
+    # 退出H模式
+    character_data.sp_flag.is_h = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
@@ -7158,7 +7201,7 @@ def handle_group_sex_end_h_add_hpmp_max(
         now_time: datetime.datetime,
 ):
     """
-    （多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
+    （群交结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7200,7 +7243,7 @@ def handle_group_sex_fail_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
+    （群交失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7385,6 +7428,7 @@ def handle_teach_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.Settle import default_experience
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
@@ -7538,6 +7582,7 @@ def handle_eat_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.Settle import default_experience
     if not add_time:
         return
     # 获取角色数据

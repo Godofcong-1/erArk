@@ -1,7 +1,6 @@
 from typing import List
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import diary_panel
 from Script.Core import (
     cache_control,
     get_text,
@@ -12,7 +11,6 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import update, map_handle, character, game_time, cooking, handle_premise
-import math
 
 panel_info_data = {}
 

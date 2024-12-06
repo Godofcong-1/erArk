@@ -6,8 +6,8 @@ cid,effect_name,effect_type,effect
 10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器（已弃用）
 10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器（已弃用）
 10008,ADD_THIS_EVENT_TO_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入已触发记录
-10010,GROUP_SEX_MODE_ON,系统量_基础,开启多P模式
-10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭多P模式
+10010,GROUP_SEX_MODE_ON,系统量_基础,开启群交模式
+10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭群交模式
 
 10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
 10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
@@ -329,8 +329,8 @@ cid,effect_name,effect_type,effect
 526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
 527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
 528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
-529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（多P结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
-530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（多P失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
+529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（群交结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
+530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（群交失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
 532,BOARD_GAME_WIN_ADD_ADJUST,指令_专用结算,（桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证
 533,BOARD_GAME_LOSE_ADD_ADJUST,指令_专用结算,（桌游输了用）根据游戏难度获得好感度、习得
 
@@ -512,6 +512,8 @@ cid,effect_name,effect_type,effect
 1412,SELF_ORGASM_EDGE_OFF,属性_H,自己关闭绝顶寸止
 1413,TARGET_ORGASM_EDGE_ON,属性_H,交互对象开启绝顶寸止
 1414,TARGET_ORGASM_EDGE_OFF,属性_H,交互对象关闭绝顶寸止
+1415,ALL_GROUP_SEX_TEMPLE_ON,属性_H,开启全群交模板，进行轮流群交
+1416,ALL_GROUP_SEX_TEMPLE_OFF,属性_H,关闭全群交模板，进行单轮群交
 
 
 1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]

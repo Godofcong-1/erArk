@@ -7,8 +7,8 @@ is_h,IS_H,系统状态,当前为H模式
 not_h,NOT_H,系统状态,当前不是H模式
 is_unconscious_h,IS_UNCONSCIOUS_H,系统状态,当前为无意识奸模式
 not_unconscious_h,NOT_UNCONSCIOUS_H,系统状态,当前不是无意识奸模式
-group_sex_mode_on,GROUP_SEX_MODE_ON,系统状态,多P模式开启中
-group_sex_mode_off,GROUP_SEX_MODE_OFF,系统状态,多P模式未开启
+group_sex_mode_on,GROUP_SEX_MODE_ON,系统状态,群交模式开启中
+group_sex_mode_off,GROUP_SEX_MODE_OFF,系统状态,群交模式未开启
 option_son,OPTION_SON,系统状态,选项的子事件
 this_event_in_triggered_record,THIS_EVENT_IN_TRIGGERED_RECORD,系统状态,该事件在已触发记录中(需搭配记录结算)
 this_event_not_in_triggered_record,THIS_EVENT_NOT_IN_TRIGGERED_RECORD,系统状态,该事件不在已触发记录中(需搭配记录结算)
@@ -1313,8 +1313,10 @@ npc_not_active_h,NPC_NOT_ACTIVE_H,H_逆推,自己没有在主动H
 t_npc_active_h,T_NPC_ACTIVE_H,H_逆推,交互对象正在主动H
 t_npc_not_active_h,T_NPC_NOT_ACTIVE_H,H_逆推,交互对象没有在主动H
 
-group_sex_fail_and_self_agree,GROUP_SEX_FAIL_AND_SELF_AGREE,H_多P,多P邀请失败了，但自己不是拒绝者
-group_sex_fail_and_self_refuse,GROUP_SEX_FAIL_AND_SELF_REFUSE,H_多P,多P邀请失败了，自己是拒绝者
+group_sex_fail_and_self_agree,GROUP_SEX_FAIL_AND_SELF_AGREE,H_群交,群交邀请失败了，但自己不是拒绝者
+group_sex_fail_and_self_refuse,GROUP_SEX_FAIL_AND_SELF_REFUSE,H_群交,群交邀请失败了，自己是拒绝者
+have_one_group_sex_temple,HAVE_ONE_GRUOP_SEX_TEMPLE,H_群交,当前存在一个群交模板
+have_over_one_group_sex_temple,HAVE_OVER_ONE_GRUOP_SEX_TEMPLE,H_群交,当前存在多个群交模板
 
 have_food,HAVE_FOOD,道具_持有,拥有食物
 not_have_food,NOT_HAVE_FOOD,道具_持有,未拥有食物

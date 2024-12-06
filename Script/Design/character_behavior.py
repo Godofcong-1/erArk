@@ -384,8 +384,31 @@ def judge_character_tired_sleep(character_id : int):
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
-                # H时，在无意识模式下则不检测疲劳，只检测HP
-                elif character_data.sp_flag.is_h and (not character_data.sp_flag.unconscious_h or (character_data.sp_flag.unconscious_h and character_data.hit_point <= 1)):
+                # 群交时
+                elif handle_premise.handle_group_sex_mode_on(character_id):
+                    # 检测当前场景中的NPC角色数量
+                    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+                    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+                    character_num = len(scene_data.character_list)
+                    # 如果自己是唯一的参与者，则按普通H结束处理
+                    if character_num <= 2:
+                        character_data.sp_flag.is_h = False
+                        pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
+                        pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
+                        pl_character_data.behavior.duration = 5
+                        # 调用结束H的指令
+                        handle_instruct.handle_end_h()
+                    # 如果有其他参与者，则仅自己退出，其他人正常
+                    else:
+                        character_data.sp_flag.is_h = False
+
+                # H时，有意识H则正常检测，无意识H则不检测疲劳，只检测HP
+                elif (
+                    character_data.sp_flag.is_h and
+                    (
+                        not character_data.sp_flag.unconscious_h or
+                        (character_data.sp_flag.unconscious_h and character_data.hit_point <= 1))
+                    ):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0

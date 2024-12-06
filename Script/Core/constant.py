@@ -264,12 +264,6 @@ class CharacterStatus:
     """ H时被人目击闯入中断 """
     STATUS_NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
-    STATUS_ASK_GROUP_SEX = 368
-    """ 邀请多P """
-    STATUS_GROUP_SEX_END = 369
-    """ 结束多P """
-    STATUS_ASK_GROUP_SEX_FAIL = 370
-    """ 邀请多P失败 """
     STATUS_CONFESSION = 371
     """ 告白 """
     STATUS_CONFESSION_FAILED = 372
@@ -278,6 +272,20 @@ class CharacterStatus:
     """ 戴上项圈 """
     STATUS_GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    STATUS_ASK_GROUP_SEX = 380
+    """ 邀请群交 """
+    STATUS_ASK_GROUP_SEX_FAIL = 381
+    """ 邀请群交失败 """
+    STATUS_GROUP_SEX_END = 382
+    """ 结束群交 """
+    STATUS_GROUP_SEX_PL_HP_0_END = 383
+    """ 群交时博士体力为零中断 """
+    STATUS_GROUP_SEX_NPC_HP_0_END = 384
+    """ 群交时自己体力为零退出 """
+    STATUS_GROUP_SEX_TO_H = 385
+    """ 群交时NPC数量不足转为单人H """
+    STATUS_H_TO_GROUP_SEX = 386
+    """ 博士单人H时自己加入转为群交 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -917,12 +925,6 @@ class Behavior:
     """ H时被人目击闯入中断 """
     NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
-    ASK_GROUP_SEX = 368
-    """ 邀请多P """
-    GROUP_SEX_END = 369
-    """ 结束多P """
-    ASK_GROUP_SEX_FAIL = 370
-    """ 邀请多P失败 """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372
@@ -931,6 +933,20 @@ class Behavior:
     """ 戴上项圈 """
     GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    ASK_GROUP_SEX = 380
+    """ 邀请群交 """
+    ASK_GROUP_SEX_FAIL = 381
+    """ 邀请群交失败 """
+    GROUP_SEX_END = 382
+    """ 结束群交 """
+    GROUP_SEX_PL_HP_0_END = 383
+    """ 群交时博士体力为零中断 """
+    GROUP_SEX_NPC_HP_0_END = 384
+    """ 群交时自己体力为零退出 """
+    GROUP_SEX_TO_H = 385
+    """ 群交时NPC数量不足转为单人H """
+    H_TO_GROUP_SEX = 386
+    """ 博士单人H时自己加入转为群交 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -2523,7 +2539,7 @@ class Instruct:
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
     ASK_GROUP_SEX = 0
-    """ 邀请多P """
+    """ 邀请群交 """
 
     #性爱#
     WAIT_5_MIN_IN_H = 0
@@ -2531,7 +2547,7 @@ class Instruct:
     END_H = 0
     """ H结束 """
     GROUP_SEX_END = 0
-    """ 结束多P """
+    """ 结束群交 """
     UNDRESS = 0
     """ 脱衣服 """
     CHANGE_TOP_AND_BOTTOM = 0
@@ -2545,11 +2561,11 @@ class Instruct:
     ORGASM_EDGE_OFF = 0
     """ 绝顶解放 """
     RUN_GROUP_SEX_TEMPLE = 0
-    """ 进行一次当前多P """
+    """ 进行一次当前群交 """
     RUN_ALL_GROUP_SEX_TEMPLE = 0
-    """ 进行一次轮流多P """
+    """ 进行一次轮流群交 """
     EDIT_GROUP_SEX_TEMPLE = 0
-    """ 编辑多P行动 """
+    """ 编辑群交行动 """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0

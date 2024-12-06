@@ -24,6 +24,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     now_time -- 结算时间
     event_flag -- 事件结算变量，0只事件不指令，1只指令不事件，2均结算
     """
+    from Script.UI.Panel import group_sex_panel
+
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]
     change_data = game_type.CharacterStatusChange()
@@ -35,9 +37,13 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         # 玩家在群P模式的结算
         if character_id == 0 and handle_premise.handle_group_sex_mode_on:
             # 统计要执行的指令列表
-            group_sex_instruct_list, full_list_of_target_id_and_state_id = count_group_sex_instruct_list()
+            group_sex_instruct_list, full_list_of_target_id_and_state_id = group_sex_panel.count_group_sex_instruct_list()
             # 判定是否要进行当前行为的结算
-            if behavior_id not in group_sex_instruct_list:
+            # 当前行为不在群P行为列表中，且不是等待行为时结算
+            if behavior_id not in group_sex_instruct_list and behavior_id != constant.Behavior.WAIT:
+                change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
+            # 不满足上述条件且也没有群P行为时也结算
+            elif len(group_sex_instruct_list) == 0:
                 change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
             # 判定进行群P行为的计算
             if len(group_sex_instruct_list):
@@ -60,7 +66,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     if instruct_flag != 1:
         # 主事件
         event_id = now_character_data.event.event_id
-        handle_event_data(event_id, character_id, add_time, change_data, now_time)
+        change_data = handle_event_data(event_id, character_id, add_time, change_data, now_time)
 
         # 子事件
         son_event_id = now_character_data.event.son_event_id
@@ -74,7 +80,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             son_event_draw = draw_event_text_panel.DrawEventTextPanel(son_event_id,character_id, event_config.type)
             son_event_draw.draw()
             # 进行子事件结算
-            handle_event_data(son_event_id, character_id, add_time, change_data, now_time)
+            change_data = handle_event_data(son_event_id, character_id, add_time, change_data, now_time)
 
     # target_data = game_type.Character = cache.character_data[player_character_data.target_character_id]
     # print("target_data.name :",target_data.name)
@@ -349,6 +355,7 @@ def handle_event_data(event_id, character_id, add_time, change_data, now_time):
                 constant.settle_behavior_effect_data[int(effect)](
                     character_id, add_time, change_data, now_time
                 )
+    return change_data
 
 
 def add_settle_behavior_effect(behavior_effect_id: int):
@@ -738,7 +745,7 @@ def insert_position_effect(character_id: int):
 
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
-    # 非多P模式，当前有阴茎插入、当前位置为玩家位置
+    # 非群交模式，当前有阴茎插入、当前位置为玩家位置
     if (
         handle_premise.handle_group_sex_mode_off(character_id) and
         character_data.h_state.insert_position != -1 and
@@ -1371,39 +1378,3 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
 
     return 0
 
-
-def count_group_sex_instruct_list():
-    """
-    统计多P指令列表
-    """
-    # 变量定义
-    group_sex_instruct_list = []
-    full_list_of_target_id_and_state_id = []
-    player_character_data: game_type.Character = cache.character_data[0]
-    # 获取全模板
-    template_data_list = []
-    A_template_data = player_character_data.h_state.group_sex_body_template_dict["A"]
-    template_data_list.append(A_template_data)
-    if player_character_data.h_state.all_group_sex_temple_run:
-        B_template_data = player_character_data.h_state.group_sex_body_template_dict["B"]
-        template_data_list.append(B_template_data)
-    # 遍历模板
-    for template_data in template_data_list:
-        # 对多
-        for body_part in template_data[0]:
-            target_chara_id = [template_data[0][body_part][0]]
-            state_id = template_data[0][body_part][1]
-            if state_id != -1:
-                group_sex_instruct_list.append(state_id)
-                full_list_of_target_id_and_state_id.append([target_chara_id, state_id])
-        # 对单
-        target_chara_id_list = template_data[1][0]
-        state_id = template_data[1][1]
-        if state_id != -1:
-            group_sex_instruct_list.append(state_id)
-            full_list_of_target_id_and_state_id.append([target_chara_id_list, state_id])
-    # 去重
-    group_sex_instruct_list = list(set(group_sex_instruct_list))
-
-    # 返回
-    return group_sex_instruct_list, full_list_of_target_id_and_state_id

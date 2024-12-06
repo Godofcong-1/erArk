@@ -11301,7 +11301,7 @@ def handle_t_npc_not_active_h(character_id: int) -> int:
 @add_premise(constant_promise.Premise.GROUP_SEX_FAIL_AND_SELF_AGREE)
 def handle_group_sex_fail_and_self_agree(character_id: int) -> int:
     """
-    多P邀请失败了，但自己不是拒绝者
+    群交邀请失败了，但自己不是拒绝者
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11316,7 +11316,7 @@ def handle_group_sex_fail_and_self_agree(character_id: int) -> int:
 @add_premise(constant_promise.Premise.GROUP_SEX_FAIL_AND_SELF_REFUSE)
 def handle_group_sex_fail_and_self_refuse(character_id: int) -> int:
     """
-    多P邀请失败了，自己是拒绝者
+    群交邀请失败了，自己是拒绝者
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -11328,14 +11328,14 @@ def handle_group_sex_fail_and_self_refuse(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_ONE_GRUOP_SEX_TEMPLE)
 def handle_have_one_group_sex_temple(character_id: int) -> int:
     """
-    当前存在一个多P模板
+    当前存在一个群交模板
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     group_sex_temple_flag = False
-    # 获取多P模板数据
+    # 获取群交模板数据
     pl_character_data = cache.character_data[0]
     pl_group_sex_A_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
     # 遍历模板的对单部分
@@ -11355,14 +11355,14 @@ def handle_have_one_group_sex_temple(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_OVER_ONE_GRUOP_SEX_TEMPLE)
 def handle_have_over_one_group_sex_temple(character_id: int) -> int:
     """
-    当前存在多个多P模板
+    当前存在多个群交模板
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     group_sex_temple_flag = False
-    # 获取多P模板数据
+    # 获取群交模板数据
     pl_character_data = cache.character_data[0]
     pl_group_sex_B_data = pl_character_data.h_state.group_sex_body_template_dict["B"]
     # 遍历模板的对单部分
@@ -14773,7 +14773,7 @@ def handle_not_unconscious_h(character_id: int) -> int:
 @add_premise(constant_promise.Premise.GROUP_SEX_MODE_ON)
 def handle_group_sex_mode_on(character_id: int) -> int:
     """
-    多P模式开启中
+    群交模式开启中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -14785,7 +14785,7 @@ def handle_group_sex_mode_on(character_id: int) -> int:
 @add_premise(constant_promise.Premise.GROUP_SEX_MODE_OFF)
 def handle_group_sex_mode_off(character_id: int) -> int:
     """
-    多P模式未开启
+    群交模式未开启
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

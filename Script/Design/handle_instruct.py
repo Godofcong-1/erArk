@@ -113,6 +113,7 @@ def chara_handle_instruct_common_settle(
     game_update_flag -- 是否强制更新游戏流程，默认=False\n
     force_taget_wait -- 是否强制目标等待，默认=False\n
     """
+    from Script.UI.Panel import group_sex_panel
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
     character.init_character_behavior_start_time(character_id, cache.game_time)
     character_data: game_type.Character = cache.character_data[character_id]
@@ -160,76 +161,10 @@ def chara_handle_instruct_common_settle(
         target_character_data.behavior.behavior_id = constant.Behavior.WAIT
         target_character_data.behavior.duration = duration
     # 群交结算
-    group_sex_settle(character_id, target_character_id, state_id)
+    group_sex_panel.group_sex_settle(character_id, target_character_id, state_id)
     # 仅在玩家指令时更新游戏流程
     if character_id == 0 or game_update_flag:
         update.game_update_flow(duration)
-
-
-def group_sex_settle(
-        character_id: int,
-        target_character_id: int,
-        state_id: int,
-):
-    """
-    群交结算
-    Keyword arguments:
-    character_id -- 角色id
-    target_character_id -- 目标角色id
-    """
-    # 如果是非群交模式，则返回
-    if not cache.group_sex_mode:
-        return
-    # 非玩家或无交互对象返回
-    if character_id != 0 or target_character_id == character_id:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    now_template_data = character_data.h_state.group_sex_body_template_dict["A"]
-    # 如果当前群交模板已锁死，则返回
-    if character_data.h_state.group_sex_lock_flag:
-        return
-    # 获取指令tag
-    status_data = game_config.config_status[state_id]
-    tag_list = status_data.tag.split("|")
-    # 遍历tag
-    if not len(tag_list):
-        return
-    # 阴茎插入
-    if _("插入") in tag_list:
-        now_template_data[0]["penis"] = [target_character_id, state_id]
-        now_template_data[1] = [[-1], -1]
-    # 阴茎侍奉
-    elif _("侍奉") in tag_list:
-        now_template_data[0]["penis"] = [-1, -1]
-        # 如果新指令，则重置数据
-        if now_template_data[1][1] != state_id:
-            now_template_data[1] = [[target_character_id], state_id]
-        # 否则则只将角色id加进角色列表里
-        elif target_character_id not in now_template_data[1][0]:
-            now_template_data[1][0].append(target_character_id)
-    # 口
-    elif _("口") in tag_list:
-        now_template_data[0]["mouth"] = [target_character_id, state_id]
-    # 手
-    elif _("手") in tag_list:
-        # 如果L是空的，或当前对象是L对象，则赋给L
-        if now_template_data[0]["L_hand"][1] == -1 or now_template_data[0]["L_hand"][0] == target_character_id:
-            now_template_data[0]["L_hand"] = [target_character_id, state_id]
-        # R同理
-        elif now_template_data[0]["R_hand"][1] == -1 or now_template_data[0]["R_hand"][0] == target_character_id:
-            now_template_data[0]["R_hand"] = [target_character_id, state_id]
-        # 否则，全部更新，左等于右，右等于新
-        else:
-            now_template_data[0]["L_hand"] = now_template_data[0]["R_hand"]
-            now_template_data[0]["R_hand"] = [target_character_id, state_id]
-    # 肛
-    elif _("肛") in tag_list:
-        now_template_data[0]["anal"] = [target_character_id, state_id]
-
-    # 特殊指令特殊处理
-    if status_data.name == _("六九式"):
-        now_template_data[0]["mouth"] = [target_character_id, state_id]
-        now_template_data[1] = [[target_character_id], state_id]
 
 
 def handle_comprehensive_state_effect(
@@ -2016,6 +1951,7 @@ def handle_sleep_obscenity():
 )
 def handle_stop_sleep_obscenity():
     """处理停止睡眠猥亵指令"""
+    from Script.Settle import default
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
@@ -2024,8 +1960,6 @@ def handle_stop_sleep_obscenity():
     now_draw.width = width
     now_draw.text = _("\n退出睡眠猥亵模式\n")
     now_draw.draw()
-    from Script.Settle import default
-    import datetime
     default.handle_door_close_reset(0,1,game_type.CharacterStatusChange,datetime.datetime)
 
 
@@ -2085,7 +2019,7 @@ def handle_do_h_in_love_hotel():
 @add_instruct(
     constant.Instruct.ASK_GROUP_SEX,
     constant.InstructType.OBSCENITY,
-    _("邀请多P_未实装"),
+    _("邀请群交_未实装"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -2094,19 +2028,19 @@ def handle_do_h_in_love_hotel():
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_ask_group_sex():
-    """处理邀请多P指令"""
+    """处理邀请群交指令"""
     # 输出失败信息
     now_draw = draw.WaitDraw()
     now_draw.width = width
     # 场景内有太疲劳的角色
     if handle_premise_place.handle_scene_someone_hp_1(0):
-        now_draw.text = _("\n场景内有角色处于疲劳状态，无法进行多P\n")
+        now_draw.text = _("\n场景内有角色处于疲劳状态，无法进行群交\n")
         now_draw.draw()
         return
 
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    h_flag = True # 是否成功进入多P模式
+    h_flag = True # 是否成功进入群交模式
     refuse_chara_list = [] # 拒绝的角色列表
 
     # 对场景内的全角色进行实行值判定
@@ -2129,7 +2063,7 @@ def handle_ask_group_sex():
                 h_flag = False
                 refuse_chara_list.append(chara_id)
 
-    # 成功进入多P模式
+    # 成功进入群交模式
     if h_flag:
         if cache.scene_data[scene_path_str].close_flag == 0:
             now_draw = normal_panel.Close_Door_Panel(width)
@@ -2138,10 +2072,10 @@ def handle_ask_group_sex():
                 return
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX
         character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX
-        now_draw.text = _("\n进入多P模式\n")
+        now_draw.text = _("\n进入群交模式\n")
         now_draw.draw()
     else:
-        now_draw.text = _("\n进入多P模式失败\n")
+        now_draw.text = _("\n进入群交模式失败\n")
         now_draw.draw()
         character_data.action_info.ask_group_sex_refuse_chara_id_list = refuse_chara_list
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX_FAIL
@@ -2195,9 +2129,40 @@ def handle_end_h():
             if not target_data.sp_flag.imprisonment:
                 target_data.sp_flag.is_follow = 1
 
-    # H结束时的其他处理
-    if target_data.sp_flag.is_h == 1:
-        target_data.sp_flag.is_h = 0
+    # 对方原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.behavior.duration = 10
+    target_data.behavior.start_time = character_data.behavior.start_time
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # H结束时的其他处理完毕
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束H模式\n")
+    now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+
+@add_instruct(
+    constant.Instruct.GROUP_SEX_END,
+    constant.InstructType.SEX,
+    _("结束群交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.GROUP_SEX_MODE_ON,
+     constant_promise.Premise.IS_H},
+)
+def handle_group_sex_end():
+    """处理结束群交指令"""
+    character.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    special_end_list = constant.special_end_H_list
+
+    # 非特殊中断的情况下，正常结束H
+    if character_data.behavior.behavior_id not in special_end_list:
+        character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_END
+        character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_END
 
     # 对方原地待机10分钟
     target_data.behavior.behavior_id = constant.Behavior.WAIT
@@ -5638,9 +5603,8 @@ def handle_orgasm_edge_off():
 @add_instruct(
     constant.Instruct.RUN_GROUP_SEX_TEMPLE,
     constant.InstructType.SEX,
-    _("进行一次当前多P(未实装)"),
+    _("进行一次当前群交(未实装)"),
     {
-        constant_promise.Premise.TO_DO,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
         constant_promise.Premise.GROUP_SEX_MODE_ON,
@@ -5649,16 +5613,14 @@ def handle_orgasm_edge_off():
         constant_promise.Premise.HAVE_ONE_GRUOP_SEX_TEMPLE,
     })
 def handle_run_group_sex_temple():
-    """处理进行一次当前多P指令"""
-    # TODO
-    pass
+    """处理进行一次当前群交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration=10)
 
 @add_instruct(
     constant.Instruct.RUN_ALL_GROUP_SEX_TEMPLE,
     constant.InstructType.SEX,
-    _("进行一次轮流多P(未实装)"),
+    _("进行一次轮流群交(未实装)"),
     {
-        constant_promise.Premise.TO_DO,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
         constant_promise.Premise.GROUP_SEX_MODE_ON,
@@ -5667,16 +5629,17 @@ def handle_run_group_sex_temple():
         constant_promise.Premise.HAVE_OVER_ONE_GRUOP_SEX_TEMPLE,
     })
 def handle_run_all_group_sex_temple():
-    """处理进行一次轮流多P指令"""
-    # TODO
-    pass
+    """处理进行一次轮流群交指令"""
+    from Script.Settle import default
+    default.handle_all_group_sex_temple_run_on(0,1,game_type.CharacterStatusChange,datetime.datetime)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration=10)
+    default.handle_all_group_sex_temple_run_off(0,1,game_type.CharacterStatusChange,datetime.datetime)
 
 @add_instruct(
     constant.Instruct.EDIT_GROUP_SEX_TEMPLE,
     constant.InstructType.SEX,
-    _("编辑多P行动(未实装)"),
+    _("编辑群交行动(未实装)"),
     {
-        constant_promise.Premise.TO_DO,
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
         constant_promise.Premise.GROUP_SEX_MODE_ON,
@@ -5684,6 +5647,6 @@ def handle_run_all_group_sex_temple():
         constant_promise.Premise.TIME_STOP_OFF,
     })
 def handle_edit_group_sex_temple():
-    """处理编辑多P行动指令"""
+    """处理编辑群交行动指令"""
     # TODO
     pass
