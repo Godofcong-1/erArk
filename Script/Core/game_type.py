@@ -197,20 +197,20 @@ class NormalConfig:
     """ 背景色 """
     language: str
     """ 语言 """
-    window_width: int
-    """ 窗体宽度 """
-    window_hight: int
-    """ 窗体高度 """
-    textbox_width: int
-    """ 文本框字符宽度 """
-    textbox_hight: int
-    """ 文本框字符高度 """
+    # window_width: int
+    # """ 窗体宽度 """
+    # window_hight: int
+    # """ 窗体高度 """
+    # textbox_width: int
+    # """ 文本框字符宽度 """
+    # textbox_hight: int
+    # """ 文本框字符高度 """
     text_width: int
     """ 绘制用单行文本宽度 """
-    text_hight: int
+    displayed_text_rows: int
     """ 绘制用单屏行数 """
-    inputbox_width: int
-    """ 输入框宽度 """
+    # inputbox_width: int
+    # """ 输入框宽度 """
     year: int
     """ 游戏时间开始年份 """
     month: int

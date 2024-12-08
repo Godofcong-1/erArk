@@ -57,6 +57,8 @@ class MainWindow(QMainWindow):
         self.image_text_data = {}
         self.image_lock = 0
         self.image_data_index_by_chara = {}
+        self.screen_dpi = 96
+        self.screen_scale = 1
 
         # 设置窗口和字体
         self._setup_window_and_font()
@@ -69,13 +71,6 @@ class MainWindow(QMainWindow):
         self.main_layout.setSpacing(0)  # 移除主布局的间距
 
         self.textbox_layout = QHBoxLayout()
-        self.eventbox_layout = QVBoxLayout()
-        # 创建事件显示区域
-        self.eventbox = CommandTextEdit(self)
-        self.eventbox.setReadOnly(True)
-        self.eventbox.setFont(self.normal_font)
-        self.eventbox.box_id = "event"
-        self.eventbox.verticalScrollBar().setStyleSheet("width: 0px;")
         # 场景面板互动指令显示区域
         self.instructbox = CommandTextEdit(self)
         self.instructbox.setReadOnly(True)
@@ -83,7 +78,6 @@ class MainWindow(QMainWindow):
         self.instructbox.box_id = "instruct"
         self.instructbox.verticalScrollBar().setStyleSheet("width: 0px;")
         self.instructbox.setContentsMargins(0, 0, 0, 0)
-        self.eventbox.setContentsMargins(0, 0, 0, 0)
         # 创建面板显示区域
         self.panelbox = CommandTextEdit(self)
         self.panelbox.setReadOnly(True)
@@ -92,15 +86,6 @@ class MainWindow(QMainWindow):
         self.panelbox.verticalScrollBar().setStyleSheet("width: 0px;")
 
         self.textbox_layout.addWidget(self.panelbox)
-        self.eventbox_layout.addWidget(self.eventbox)
-        self.eventbox_layout.addWidget(self.instructbox)
-        self.eventbox_layout.setStretch(0, 1)
-        self.eventbox_layout.setStretch(1, 2)
-        self.eventbox_layout.setContentsMargins(0, 0, 0, 0)  # 移除主布局的边距
-        self.eventbox_widget = QWidget()
-        self.eventbox_widget.setLayout(self.eventbox_layout)
-        self.textbox_layout.addWidget(self.eventbox_widget)
-        self.eventbox_widget.hide()
         self.textbox_layout.setStretch(0, 1)
         self.textbox_layout.invalidate()
         self.main_layout.addLayout(self.textbox_layout)
@@ -126,23 +111,24 @@ class MainWindow(QMainWindow):
         cursor_pos = QCursor.pos()
         current_screen = QApplication.screenAt(cursor_pos)
         screen_geometry = current_screen.geometry()
+        # 获取屏幕的长和宽
         screen_width = screen_geometry.width()
         screen_height = screen_geometry.height()
-        fix_width = 90
-        fix_width *= screen_width / 1920
-        fix_width = int(fix_width)
+        # 获取win系统的显示缩放率
+        self.screen_dpi = current_screen.physicalDotsPerInch()
+        # 获取win系统的缩放率
+        self.screen_scale = current_screen.devicePixelRatio()
+        # print(f"screen_dpi: {self.screen_dpi}, screen_scale: {self.screen_scale}")
 
-        # 计算窗口大小和字体大小
-        window_width = screen_width - fix_width
-        window_height = screen_height - fix_width
-        need_char_width = window_width / normal_config.config_normal.textbox_width
-        need_char_height = window_height / normal_config.config_normal.text_hight
-        now_font_size = 20
-        # now_font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width) * 2
-        # normal_config.config_normal.font_size = now_font_size
-        # normal_config.config_normal.order_font_size = now_font_size - 2
+        need_char_height = screen_height / normal_config.config_normal.displayed_text_rows
+        now_font_size = need_char_height
+        normal_config.config_normal.font_size = now_font_size
+        normal_config.config_normal.order_font_size = now_font_size - 2
         try:
             font_file_path = os.path.join("data", "font", "SarasaMonoSC-Regular.ttf")
+            # 检查该路径的该文件是否存在
+            if not os.path.exists(font_file_path):
+                raise FileNotFoundError
             font_id = QFontDatabase.addApplicationFont(font_file_path)
             font_families = QFontDatabase.applicationFontFamilies(font_id)
             normal_config.config_normal.font = font_families[0]
@@ -152,45 +138,13 @@ class MainWindow(QMainWindow):
 
         font = QFont(font_family, now_font_size)
         font_metrics = QFontMetrics(font)
-        char_width = font_metrics.horizontalAdvance('a')
-        char_height = font_metrics.lineSpacing()
-
-        if char_width <= need_char_width and char_height <= need_char_height:
-            need_font_size = now_font_size
-            while True:
-                next_font_size = need_font_size + 1
-                next_font = QFont(font_family, next_font_size)
-                next_font_metrics = QFontMetrics(next_font)
-                next_char_width = next_font_metrics.horizontalAdvance('a')
-                next_char_height = next_font_metrics.lineSpacing()
-                if next_char_width <= need_char_width and next_char_height <= need_char_height:
-                    need_font_size = next_font_size
-                else:
-                    break
-        else:
-            need_font_size = now_font_size
-            while True:
-                next_font_size = need_font_size - 1
-                if next_font_size <= 0:
-                    break
-                next_font = QFont(font_family, next_font_size)
-                next_font_metrics = QFontMetrics(next_font)
-                next_char_width = next_font_metrics.horizontalAdvance('a')
-                next_char_height = next_font_metrics.lineSpacing()
-                need_font_size = next_font_size
-                if next_char_width <= need_char_width and next_char_height <= need_char_height:
-                    break
 
         # 设置字体
-        self.normal_font = QFont(font_family, need_font_size)
-        normal_config.config_normal.font_size = need_font_size
-        normal_config.config_normal.order_font_size = need_font_size
+        self.normal_font = QFont(font_family, now_font_size)
 
         font_metrics = QFontMetrics(self.normal_font)
         self.now_char_width = font_metrics.horizontalAdvance('a')
         self.now_char_height = font_metrics.lineSpacing()
-        window_width = self.now_char_width * normal_config.config_normal.textbox_width
-        window_height = self.now_char_height * normal_config.config_normal.text_hight
 
         # 设置窗口最大化
         self.showMaximized()
@@ -373,12 +327,8 @@ class MainWindow(QMainWindow):
         pal.setColor(self.panelbox.viewport().backgroundRole(), QColor(color))
         self.panelbox.setPalette(pal)
         self.panelbox.setStyleSheet(f"background-color: {color};")
-        self.eventbox.setPalette(pal)
-        self.eventbox.setStyleSheet(f"background-color: {color};")
         self.instructbox.setPalette(pal)
         self.instructbox.setStyleSheet(f"background-color: {color};")
-        self.eventbox_widget.setPalette(pal)
-        self.eventbox_widget.setStyleSheet(f"background-color: {color};")
 
     def now_print(self, string: str, style=('standard',)):
         """
@@ -567,16 +517,13 @@ class MainWindow(QMainWindow):
         cursor = self.panelbox.textCursor()
         start_pos = cursor.position()
         image_format = QTextImageFormat()
-        image = self.image_data[image_name]  # QImage 对象
-        print(image.width(), image.height())
+        image = self.image_data[image_name]
         image_format.setName(image_name)
-        # image_format.setWidth(image.width())
-        # image_format.setHeight(image.height())
-        # 将图片作为资源添加到文档中
         self.panelbox.document().addResource(QTextDocument.ImageResource, image_name, image)
         cursor.insertImage(image_format)
         end_pos = cursor.position()
         self.cmd_tag_map[cmd_return] = (start_pos, end_pos, '', '')
+        self.panelbox.ensureCursorVisible()
         self.panelbox.update_hover_state()
 
     def load_and_resize_images(self):
@@ -598,20 +545,19 @@ class MainWindow(QMainWindow):
                     #         img.info.pop('icc_profile', None)
                     #         img.save(image_file_path)
                     old_image = QPixmap(image_file_path)
+
                     if old_image.isNull():
                         print(f"无法加载图片 '{image_file_path}'。")
                         continue
-                    # old_width = old_image.width()
-                    # old_height = old_image.height()
-                    # font_width_scaling = self.now_char_width
-                    # font_height_scaling = self.now_char_height
-                    # font_width_scaling = 1
-                    # font_height_scaling = 1
-                    # now_width = int(old_width * font_width_scaling)
-                    # now_height = int(old_height * font_height_scaling)
-                    # 调整图片大小
-                    # new_image = old_image.scaled(now_width, now_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
-                    new_image = QPixmap(image_file_path)
+
+                    # 根据屏幕的缩放率调整图片大小
+                    now_width = old_image.width() * self.screen_scale
+                    now_height = old_image.height() * self.screen_scale
+                    new_image = old_image.scaled(now_width, now_height, Qt.KeepAspectRatio, Qt.SmoothTransformation)
+
+                    # 根据屏幕的缩放率设置图片的 devicePixelRatio，解决高分屏下图片模糊的问题
+                    new_image.setDevicePixelRatio(self.screen_scale)
+
                     # 存储图片
                     self.image_data[image_file_name] = new_image  # 存储为 QImage 对象
                     # 如果图片的文件名中有_的话，则为差分图片，选取_的第一部分作为角色名
@@ -674,42 +620,63 @@ class MainWindow(QMainWindow):
         style_name -- 要应用的样式名称
         """
         if cmd_number in self.cmd_tag_map:
-            start, end, normal_style, on_style = self.cmd_tag_map[cmd_number]
+            start_pos, end_pos, _, _ = self.cmd_tag_map[cmd_number]
             cursor = self.panelbox.textCursor()
-            cursor.setPosition(start)
-            cursor.setPosition(end, QTextCursor.KeepAnchor)
-            text_format = self.styles.get(style_name, QTextCharFormat())
-            cursor.setCharFormat(text_format)
+            cursor.setPosition(start_pos)
+            cursor.setPosition(end_pos, QTextCursor.KeepAnchor)
+            # 检查选中的内容是否包含图片
+            selected_text = cursor.selection().toPlainText()
+            if '\uFFFC' in selected_text:
+                # 如果包含图片，不修改格式
+                pass
+            else:
+                text_format = self.styles.get(style_name, QTextCharFormat())
+                cursor.setCharFormat(text_format)
         elif cmd_number in self.instruct_cmd_tag_map:
-            start, end, normal_style, on_style = self.instruct_cmd_tag_map[cmd_number]
+            start_pos, end_pos, _, _ = self.instruct_cmd_tag_map[cmd_number]
             cursor = self.instructbox.textCursor()
-            cursor.setPosition(start)
-            cursor.setPosition(end, QTextCursor.KeepAnchor)
-            text_format = self.styles.get(style_name, QTextCharFormat())
-            cursor.setCharFormat(text_format)
+            cursor.setPosition(start_pos)
+            cursor.setPosition(end_pos, QTextCursor.KeepAnchor)
+            # 检查选中的内容是否包含图片
+            selected_text = cursor.selection().toPlainText()
+            if '\uFFFC' in selected_text:
+                # 如果包含图片，不修改格式
+                pass
+            else:
+                text_format = self.styles.get(style_name, QTextCharFormat())
+                cursor.setCharFormat(text_format)
 
     def restore_previous_cmd_style(self):
         """恢复之前悬停的命令的样式"""
         if self.current_hover_cmd is not None:
             cmd_number = self.current_hover_cmd
             if cmd_number in self.cmd_tag_map:
-                start, end, normal_style, on_style = self.cmd_tag_map[cmd_number]
+                start_pos, end_pos, style_name, _ = self.cmd_tag_map[cmd_number]
                 cursor = self.panelbox.textCursor()
-                cursor.setPosition(start)
-                cursor.setPosition(end, QTextCursor.KeepAnchor)
-                text_format = self.styles.get(normal_style, QTextCharFormat())
-                cursor.setCharFormat(text_format)
-            self.current_hover_cmd = None
-        elif self.current_instruct_hover_cmd is not None:
-            cmd_number = self.current_instruct_hover_cmd
-            cmd_number = self.current_instruct_hover_cmd
-            if cmd_number in self.instruct_cmd_tag_map:
-                start, end, normal_style, on_style = self.instruct_cmd_tag_map[cmd_number]
+                cursor.setPosition(start_pos)
+                cursor.setPosition(end_pos, QTextCursor.KeepAnchor)
+                # 检查选中的内容是否包含图片
+                selected_text = cursor.selection().toPlainText()
+                if '\uFFFC' in selected_text:
+                    # 如果包含图片，不修改格式
+                    pass
+                else:
+                    text_format = self.styles.get(style_name, QTextCharFormat())
+                    cursor.setCharFormat(text_format)
+            elif cmd_number in self.instruct_cmd_tag_map:
+                start_pos, end_pos, style_name, _ = self.instruct_cmd_tag_map[cmd_number]
                 cursor = self.instructbox.textCursor()
-                cursor.setPosition(start)
-                cursor.setPosition(end, QTextCursor.KeepAnchor)
-                text_format = self.styles.get(normal_style, QTextCharFormat())
-                cursor.setCharFormat(text_format)
+                cursor.setPosition(start_pos)
+                cursor.setPosition(end_pos, QTextCursor.KeepAnchor)
+                # 检查选中的内容是否包含图片
+                selected_text = cursor.selection().toPlainText()
+                if '\uFFFC' in selected_text:
+                    # 如果包含图片，不修改格式
+                    pass
+                else:
+                    text_format = self.styles.get(style_name, QTextCharFormat())
+                    cursor.setCharFormat(text_format)
+            self.current_hover_cmd = None
 
 
 class LineDecorationArea(QWidget):
