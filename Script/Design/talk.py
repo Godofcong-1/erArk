@@ -29,15 +29,6 @@ def handle_talk(character_id: int):
         player_data: game_type.Character = cache.character_data[0]
         if character_id not in player_data.collection_character:
             return
-    # 智能跟随模式下，跟随博士性质的移动不显示移动文本
-    if (
-        character_id != 0 and
-        character_data.sp_flag.is_follow == 1 and
-        behavior_id == constant.Behavior.MOVE and
-        handle_premise_place.handle_move_to_same_target_with_pl(character_id)
-    ):
-        # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
-        return
     # 智能跟随模式下，博士离开时，跟随的角色不显示送别文本
     if (
         character_id == 0 and
@@ -47,6 +38,16 @@ def handle_talk(character_id: int):
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
+    # 避免多次触发NPC的移动口上
+    if character_id != 0 and behavior_id == constant.Behavior.MOVE:
+        # 跟随博士的移动不触发
+        if character_data.sp_flag.is_follow == 1 and handle_premise_place.handle_move_to_same_target_with_pl(character_id):
+            # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
+            return
+        # 当前小时内已触发过的不触发
+        if character_data.action_info.move_talk_time.hour == cache.game_time.hour and character_data.action_info.move_talk_time.year != 1:
+            # print(f"debug {character_data.name}在当前小时内已触发过一次移动文本")
+            return
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
     handle_talk_draw(character_id, now_talk_data)
@@ -150,6 +151,7 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
     from Script.UI.Panel import chat_ai_setting
 
     now_talk = ""
+    character_data: game_type.Character = cache.character_data[character_id]
     if len(now_talk_data):
         talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
@@ -172,7 +174,6 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
         # 角色口上
         if unusual_talk_flag:
             # 口上文本的，角色文本颜色
-            character_data: game_type.Character = cache.character_data[character_id]
             target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
             text_color = character_data.text_color
             tar_text_color = target_character_data.text_color
@@ -180,6 +181,9 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
                 now_draw.style = character_data.name
             elif tar_text_color:
                 now_draw.style = target_character_data.name
+            # 记录当前小时内已触发过一次的移动文本
+            if character_data.behavior.behavior_id == constant.Behavior.MOVE:
+                character_data.action_info.move_talk_time = cache.game_time
         # 地文
         else:
             # 如果启用了文本生成ai

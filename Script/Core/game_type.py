@@ -571,6 +571,8 @@ class ACTION_INFO:
         """ 拒绝群P的角色id列表 """
         self.ask_close_door_flag: bool = False
         """ 询问当前地点是否关门的标记，true的话则已询问过，每次玩家移动时重置 """
+        self.move_talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色触发移动口上的时间，用以避免短时间频繁触发该口上 """
 
 
 class AUTHOR_FLAG:
