@@ -204,6 +204,8 @@ class Premise:
     """ 地点_角色 该地点里有除了玩家和该角色之外的人 """
     SCENE_ONLY_ONE = "place_12"
     """ 地点_角色 该地点里没有自己外的其他角色 """
+    MOVE_TO_SAME_TARGET_WITH_PL = "move_to_same_target_with_pl"
+    """ 地点_角色 该角色与玩家有相同的移动目标地点 """
     SCENE_SOMEONE_IS_H = "place_is_h"
     """ 地点_角色 该地点有其他角色在和玩家H """
     SCENE_SOMEONE_NO_FALL = "place_someone_no_fall"

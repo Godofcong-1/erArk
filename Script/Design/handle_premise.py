@@ -6759,21 +6759,6 @@ def handle_time_18_to_23(character_id: int) -> int:
     return 0
 
 
-@add_premise(constant_promise.Premise.SCENE_ONLY_ONE)
-def handle_scene_only_one(character_id: int) -> int:
-    """
-    该地点里没有自己外的其他角色
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path]
-    return len(scene_data.character_list) == 1
-
-
 @add_premise(constant_promise.Premise.SELF_CHEST_IS_CLIFF)
 def handle_self_chest_is_cliff(character_id: int) -> int:
     """
@@ -15892,11 +15877,7 @@ def handle_not_follow(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.sp_flag.is_follow:
-        return 0
-    else:
-        return 1
+    return not handle_is_follow(character_id)
 
 
 @add_premise(constant_promise.Premise.IS_FOLLOW_1)

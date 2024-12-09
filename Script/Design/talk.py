@@ -20,6 +20,10 @@ def handle_talk(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     behavior_id = character_data.behavior.behavior_id
+    # 和玩家不在同一位置的NPC不显示文本
+    if character_id != 0 and character_data.position != cache.character_data[0].position:
+        # print(f"debug {character_data.name}和玩家不在同一位置，不显示文本")
+        return
     # 检测是否是收藏模式#
     if cache.is_collection and character_id:
         player_data: game_type.Character = cache.character_data[0]
@@ -30,7 +34,7 @@ def handle_talk(character_id: int):
         character_id != 0 and
         character_data.sp_flag.is_follow == 1 and
         behavior_id == constant.Behavior.MOVE and
-        (handle_premise_place.handle_player_leave_scene(0) or handle_premise_place.handle_target_come_scene(character_id))
+        handle_premise_place.handle_move_to_same_target_with_pl(character_id)
     ):
         # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
         return
@@ -39,13 +43,9 @@ def handle_talk(character_id: int):
         character_id == 0 and
         target_data.sp_flag.is_follow == 1 and
         behavior_id == constant.Behavior.MOVE and
-        (handle_premise_place.handle_player_leave_scene(0) or handle_premise_place.handle_target_come_scene(0))
+        handle_premise_place.handle_move_to_same_target_with_pl(character_data.target_character_id)
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
-        return
-    # 和玩家不在同一位置的NPC不显示文本
-    if character_id != 0 and character_data.position != cache.character_data[0].position:
-        # print(f"debug {character_data.name}和玩家不在同一位置，不显示文本")
         return
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
@@ -55,7 +55,8 @@ def handle_talk(character_id: int):
     if character_id == 0 and behavior_id == constant.Behavior.MOVE:
         scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         for chara_id in cache.scene_data[scene_path_str].character_list:
-            if chara_id > 0:
+            # 要求对象是NPC，且没有跟随玩家
+            if chara_id > 0 and handle_premise.handle_not_follow(chara_id):
                 now_talk_data = handle_talk_sub(chara_id, behavior_id)
                 handle_talk_draw(chara_id, now_talk_data)
 

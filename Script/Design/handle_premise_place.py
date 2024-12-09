@@ -60,7 +60,6 @@ def handle_not_in_player_scene(character_id: int) -> int:
     return 1
 
 
-
 @add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
 def handle_player_come_scene(character_id: int) -> int:
     """
@@ -70,6 +69,8 @@ def handle_player_come_scene(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
     pl_character_data: game_type.Character = cache.character_data[0]
     if (
         len(pl_character_data.behavior.move_src) and
@@ -92,11 +93,13 @@ def handle_player_leave_scene(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
     pl_character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+    now_character_data: game_type.Character = cache.character_data[character_id]
     if (
-            pl_character_data.behavior.move_src == target_data.position
-            and pl_character_data.behavior.move_target != target_data.position
+            pl_character_data.behavior.move_src == now_character_data.position
+            and pl_character_data.behavior.move_target != now_character_data.position
             # and pl_character_data.position != target_data.position
     ):
         return 1
@@ -112,11 +115,14 @@ def handle_target_come_scene(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
+    pl_character_data: game_type.Character = cache.character_data[0]
     now_character_data: game_type.Character = cache.character_data[character_id]
     if (
-            now_character_data.behavior.move_src != cache.character_data[0].position
-            and now_character_data.behavior.move_target == cache.character_data[0].position
-            and now_character_data.position == cache.character_data[0].position
+            now_character_data.behavior.move_src != pl_character_data.position
+            and now_character_data.behavior.move_target == pl_character_data.position
+            and now_character_data.position == pl_character_data.position
     ):
         return 1
     return 0
@@ -131,6 +137,8 @@ def handle_target_leave_scene(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
     now_character_data: game_type.Character = cache.character_data[character_id]
     if (
             now_character_data.behavior.move_src == cache.character_data[0].position
@@ -150,6 +158,8 @@ def handle_scene_only_two(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -165,10 +175,27 @@ def handle_scene_over_two(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    if character_id == 0:
+        return 0
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     return len(scene_data.character_list) > 2
+
+
+@add_premise(constant_promise.Premise.SCENE_ONLY_ONE)
+def handle_scene_only_one(character_id: int) -> int:
+    """
+    该地点里没有自己外的其他角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path]
+    return len(scene_data.character_list) == 1
 
 
 @add_premise(constant_promise.Premise.SCENE_OVER_ONE)
@@ -184,6 +211,27 @@ def handle_scene_over_one(character_id: int) -> int:
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     return len(scene_data.character_list) > 1
+
+
+@add_premise(constant_promise.Premise.MOVE_TO_SAME_TARGET_WITH_PL)
+def handle_move_to_same_target_with_pl(character_id: int) -> int:
+    """
+    该角色与玩家有相同的移动目标地点
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if character_id == 0:
+        return 0
+    pl_character_data: game_type.Character = cache.character_data[0]
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if (
+            now_character_data.behavior.move_final_target == pl_character_data.behavior.move_final_target
+            or now_character_data.behavior.move_target == pl_character_data.behavior.move_target
+    ):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_IS_H)
