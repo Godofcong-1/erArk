@@ -209,6 +209,8 @@ class NormalConfig:
     """ 绘制用单行文本宽度 """
     displayed_text_rows: int
     """ 绘制用单屏行数 """
+    row_spacing: int
+    """ 绘制用行间距 """
     # inputbox_width: int
     # """ 输入框宽度 """
     year: int

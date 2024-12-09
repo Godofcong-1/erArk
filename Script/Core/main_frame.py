@@ -18,7 +18,7 @@ from PySide6.QtGui import (
     QTextCharFormat, QTextImageFormat, QImage,
     QCursor, QTextCursor, QPixmap,
     QTextDocument, QFontDatabase, QTextCursor,
-    QPainter, QPen
+    QPainter, QPen, QTextBlockFormat
 )
 from PySide6.QtWidgets import (
     QApplication, QMainWindow, QWidget,
@@ -194,6 +194,20 @@ class MainWindow(QMainWindow):
         self.input_layout.addWidget(self.input_container)
         self.main_layout.addLayout(self.input_layout)
 
+    def set_line_height(self, text_edit, line_height):
+        """
+        设置文本编辑器的行高
+        Keyword arguments:
+        text_edit -- 要设置行高的 QTextEdit 对象
+        line_height -- 行高值
+        """
+        block_format = QTextBlockFormat()
+        block_format.setLineHeight(line_height, QTextBlockFormat.FixedHeight.value)
+        cursor = text_edit.textCursor()
+        cursor.select(QTextCursor.Document)
+        cursor.mergeBlockFormat(block_format)
+        # print(f"设置行高为 {line_height}")
+
     def closeEvent(self, event):
         """关闭事件处理，关闭游戏进程"""
         self.close_window()
@@ -312,9 +326,26 @@ class MainWindow(QMainWindow):
                     self.io_print_instruct_cmd(c["text"], c["num"], c["normal_style"][0], c["on_style"][0])
                 if c["type"] == "image_cmd":
                     self.io_print_image_cmd(c["text"], c["num"])
-                if c["type"] == "event":
-                    self.event_print(c["text"], style=tuple(c["style"]))
-                # 如果需要，实现滚动限制
+                # if c["type"] == "event":
+                #     self.event_print(c["text"], style=tuple(c["style"]))
+                # print(f"read_queue: {c},type: {c['type']}")
+            # 插入文本后重新设置行高
+            current_line_height = self.panelbox.document().firstBlock().blockFormat().lineHeight()
+            config_line_height = 1 + normal_config.config_normal.row_spacing / 100
+            desired_line_height = self.now_char_height * config_line_height
+            # 如果当前行高不等于期望行高，则重新设置行高
+            if current_line_height != desired_line_height:
+                self.set_line_height(self.panelbox, desired_line_height)
+                self.set_line_height(self.instructbox, desired_line_height)
+            cursor = self.panelbox.textCursor()
+            # 如果cursor的高度大于期望行高，则设置行高
+            if cursor.blockFormat().lineHeight() > desired_line_height:
+                # 当前不是instruct_cmd的绘制，则设置行高
+                if '\uFFFC' not in cursor.block().text():
+                    block_format = cursor.blockFormat()
+                    block_format.setLineHeight(desired_line_height, QTextBlockFormat.FixedHeight.value)
+                    cursor.setBlockFormat(block_format)
+        # 如果需要，实现滚动限制
         self.input_line.setFocus()
 
     def set_background(self, color: str):
@@ -346,21 +377,21 @@ class MainWindow(QMainWindow):
         self.panelbox.ensureCursorVisible()
         self.panelbox.update_hover_state()
 
-    def event_print(self, string: str, style=('standard',)):
-        """
-        在事件面板绘制文本
-        Keyword arguments:
-        string -- 要输出的字符串
-        style -- 样式名称的元组
-        """
-        self.eventbox.moveCursor(QTextCursor.End)
-        cursor = self.eventbox.textCursor()
-        text_format = QTextCharFormat()
-        for style_name in style:
-            if style_name in self.styles:
-                text_format.merge(self.styles[style_name])
-        cursor.insertText(string, text_format)
-        self.eventbox.ensureCursorVisible()
+    # def event_print(self, string: str, style=('standard',)):
+    #     """
+    #     在事件面板绘制文本
+    #     Keyword arguments:
+    #     string -- 要输出的字符串
+    #     style -- 样式名称的元组
+    #     """
+    #     self.eventbox.moveCursor(QTextCursor.End)
+    #     cursor = self.eventbox.textCursor()
+    #     text_format = QTextCharFormat()
+    #     for style_name in style:
+    #         if style_name in self.styles:
+    #             text_format.merge(self.styles[style_name])
+    #     cursor.insertText(string, text_format)
+    #     self.eventbox.ensureCursorVisible()
 
     def instruct_print(self, string: str, style=('standard',)):
         """
@@ -518,6 +549,10 @@ class MainWindow(QMainWindow):
         start_pos = cursor.position()
         image_format = QTextImageFormat()
         image = self.image_data[image_name]
+        # 设置行高为图片高度
+        block_format = cursor.blockFormat()
+        block_format.setLineHeight(image.height() / self.screen_scale, QTextBlockFormat.FixedHeight.value)
+        cursor.setBlockFormat(block_format)
         image_format.setName(image_name)
         self.panelbox.document().addResource(QTextDocument.ImageResource, image_name, image)
         cursor.insertImage(image_format)

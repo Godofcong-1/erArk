@@ -684,6 +684,8 @@ class CharacterImageListDraw:
 
     def draw(self):
         """绘制列表"""
+        line_feed.draw()
+        line_feed.draw()
         head_width = len(self.character_list) * 16
         head_width = min(head_width,160) # 最多修正十个人
         center_fix = text_handle.align("*" * head_width, "center", 1, 1)
