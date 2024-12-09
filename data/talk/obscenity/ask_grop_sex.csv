@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,368,0,high_1,{Name}邀请{TargetName}等人一起H。
+0,380,0,high_1,{Name}邀请{TargetName}等人一起H。

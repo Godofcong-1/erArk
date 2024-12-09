@@ -284,8 +284,8 @@ class CharacterStatus:
     """ 群交时自己体力为零退出 """
     STATUS_GROUP_SEX_TO_H = 385
     """ 群交时NPC数量不足转为单人H """
-    STATUS_H_TO_GROUP_SEX = 386
-    """ 博士单人H时自己加入转为群交 """
+    STATUS_JOIN_GROUP_SEX = 386
+    """ 自己加入群交 """
     STATUS_SEE_H = 396
     """ 目睹玩家与其他角色H """
     STATUS_KISS_FAIL = 397
@@ -945,8 +945,8 @@ class Behavior:
     """ 群交时自己体力为零退出 """
     GROUP_SEX_TO_H = 385
     """ 群交时NPC数量不足转为单人H """
-    H_TO_GROUP_SEX = 386
-    """ 博士单人H时自己加入转为群交 """
+    JOIN_GROUP_SEX = 386
+    """ 自己加入群交 """
     SEE_H = 396
     """ 目睹玩家与其他角色H """
     KISS_FAIL = 397
@@ -2864,7 +2864,7 @@ first_NPC_name_set = {_("阿米娅"),_("凯尔希"),_("可露希尔"),_("特蕾�
 ban_NPC_name_set = {_("普瑞赛斯"),_("老天师"),_("魔王"),_("菈玛莲"),_("塔露拉"),_("莉泽洛特"),_("希尔德加德"),_("坎黛拉"),_("克丽斯腾"),_("爱布拉娜"),_("温德米尔"),_("赫拉提娅"),_("文月"),_("年"),_("夕"),_("令"),_("黍")}
 """ 无法直接招募到的NPC的名字 """
 
-special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0]
+special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0, Behavior.GROUP_SEX_PL_HP_0_END]
 """ 意外中断H的行为id列表 """
 
 chat_ai_model_list = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini', 'gemini-1.5-pro', 'gemini-1.5-flash']

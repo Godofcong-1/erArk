@@ -45,7 +45,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             # 不满足上述条件且也没有群P行为时也结算
             elif len(group_sex_instruct_list) == 0:
                 change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
-            # 判定进行群P行为的计算
+            # 进行群P行为的计算
             if len(group_sex_instruct_list):
                 for now_behavior_list in full_list_of_target_id_and_state_id:
                     # 获取当前行为的交互目标id和状态id

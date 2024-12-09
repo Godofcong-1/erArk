@@ -386,21 +386,24 @@ def judge_character_tired_sleep(character_id : int):
                     character_data.sp_flag.is_follow = 0
                 # 群交时
                 elif handle_premise.handle_group_sex_mode_on(character_id):
+                    # 自己退出
+                    character_data.target_character_id = character_id
+                    handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GROUP_SEX_NPC_HP_0_END, character_id)
                     # 检测当前场景中的NPC角色数量
                     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
                     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-                    character_num = len(scene_data.character_list)
-                    # 如果自己是唯一的参与者，则按普通H结束处理
-                    if character_num <= 2:
-                        character_data.sp_flag.is_h = False
-                        pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
-                        pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
-                        pl_character_data.behavior.duration = 5
-                        # 调用结束H的指令
+                    # 去掉自己和玩家
+                    last_character_list = scene_data.character_list.copy()
+                    last_character_list.discard(0)
+                    last_character_list.discard(character_id)
+                    # 如果自己退出后，剩余NPC角色数量小于等于1，则转为普通H
+                    if len(last_character_list) == 1:
+                        new_traget_id = last_character_list.pop()
+                        pl_character_data.target_character_id = new_traget_id
+                        handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GROUP_SEX_TO_H)
+                    # 如果没有人了，则结束H
+                    elif len(last_character_list) == 0:
                         handle_instruct.handle_end_h()
-                    # 如果有其他参与者，则仅自己退出，其他人正常
-                    else:
-                        character_data.sp_flag.is_h = False
 
                 # H时，有意识H则正常检测，无意识H则不检测疲劳，只检测HP
                 elif (
@@ -412,7 +415,6 @@ def judge_character_tired_sleep(character_id : int):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
-                    pl_character_data.behavior.duration = 5
                     # 调用结束H的指令
                     handle_instruct.handle_end_h()
 
@@ -420,20 +422,25 @@ def judge_character_tired_sleep(character_id : int):
     else:
         # 玩家只进行HP1的疲劳判定
         if character_data.hit_point <= 1:
+            # 绘制文本
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            draw_text = _("太累了，无法继续H\n")
+            now_draw.text = character_data.name + draw_text
+            now_draw.draw()
+            # 数据处理
+            character_data.sp_flag.tired = False
             target_data = cache.character_data[character_data.target_character_id]
-            # 如果是在H时
-            if target_data.sp_flag.is_h:
+            # 群交时
+            if handle_premise.handle_group_sex_mode_on(character_id):
+                character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_PL_HP_0_END
+                character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_PL_HP_0_END
+                # 调用结束H的指令
+                handle_instruct.handle_group_sex_end()
+            # 普通H时
+            elif target_data.sp_flag.is_h:
                 character_data.behavior.behavior_id = constant.Behavior.H_HP_0
                 character_data.state = constant.CharacterStatus.STATUS_H_HP_0
-                character_data.behavior.duration = 5
-                target_data.sp_flag.is_h = False
-                character_data.sp_flag.tired = False
-                # 绘制文本
-                now_draw = draw.WaitDraw()
-                now_draw.width = window_width
-                draw_text = _("太累了，无法继续H\n")
-                now_draw.text = character_data.name + draw_text
-                now_draw.draw()
                 # 调用结束H的指令
                 handle_instruct.handle_end_h()
 
@@ -906,6 +913,9 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外
         if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+            return 1
+        # 群交时除外
+        if handle_premise.handle_group_sex_mode_on(character_id):
             return 1
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT

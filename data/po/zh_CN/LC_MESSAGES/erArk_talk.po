@@ -42088,6 +42088,18 @@ msgstr ""
 msgid "{Name}结束了和{TargetName}等人的一起H。"
 msgstr ""
 
+#: .\data\talk\sex\group_sex_npc_hp_0_end.csv:6
+msgid "因为体力不足，{Name}只能提前离开了这次群交，自己先去休息"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_pl_hp_0_end.csv:6
+msgid "因为体力不足，{Name}只能结束了这次群交"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_to_h.csv:6
+msgid "因为其他人已经离开了，所以{Name}又回到了和{TargetName}的单人H中"
+msgstr ""
+
 #: .\data\talk\sex\hairjob.csv:6
 msgid "{TargetName}用自己的头发包裹住{Name}的阴茎，用手握着被包裹的部分，上下摩擦"
 msgstr ""
@@ -42178,6 +42190,10 @@ msgstr ""
 
 #: .\data\talk\sex\h_interrupt.csv:6
 msgid "{Name}在和{TargetName}的H时被{HInterruptCharaName}的闯入中断了"
+msgstr ""
+
+#: .\data\talk\sex\join_group_sex.csv:6
+msgid "{Name}加入了群交"
 msgstr ""
 
 #: .\data\talk\sex\keep_enjoy.csv:6

@@ -6564,6 +6564,10 @@ msgstr ""
 msgid "SM"
 msgstr ""
 
+#: .\data\csv\InstructJudge.csv:22
+msgid "群交"
+msgstr ""
+
 #: .\data\csv\InstructType.csv:6
 msgid "系统"
 msgstr ""
@@ -10213,7 +10217,7 @@ msgid "群交时NPC数量不足转为单人H"
 msgstr ""
 
 #: .\data\csv\Status.csv:151
-msgid "博士单人H时自己加入转为群交"
+msgid "自己加入群交"
 msgstr ""
 
 #: .\data\csv\Status.csv:153

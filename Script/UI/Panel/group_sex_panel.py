@@ -203,7 +203,7 @@ class SeeGroupSexInfoPanel:
 
         # 如果文本不为空，则加入到绘制列表中
         if all_part_text != "":
-            all_part_text += "\n"
+            all_part_text = character_data.name + all_part_text + "\n"
             self.draw_list.append(type_line)
         text_draw.text = all_part_text
         now_draw.draw_list.append(text_draw)

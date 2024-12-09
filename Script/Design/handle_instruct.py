@@ -2059,7 +2059,7 @@ def handle_ask_group_sex():
             now_character_data.state = constant.CharacterStatus.STATUS_WAIT
             now_character_data.behavior.duration = 1
             # 开始判定，TODO 根据已同意人数而增加额外实行值加值
-            if character.calculation_instuct_judege(0, chara_id, _("H模式"), not_draw_flag = True)[0] == False:
+            if character.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
                 h_flag = False
                 refuse_chara_list.append(chara_id)
 
@@ -2074,8 +2074,17 @@ def handle_ask_group_sex():
         character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX
         now_draw.text = _("\n进入群交模式\n")
         now_draw.draw()
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id == 0:
+                continue
+            chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_JOIN_GROUP_SEX, character_id=chara_id, target_character_id=0)
+            # 手动结算该状态
+            character_behavior.judge_character_status(chara_id)
     else:
         now_draw.text = _("\n进入群交模式失败\n")
+        for chara_id in refuse_chara_list:
+            now_draw.text += _("{0}拒绝了加入群交\n").format(cache.character_data[chara_id].name)
         now_draw.draw()
         character_data.action_info.ask_group_sex_refuse_chara_id_list = refuse_chara_list
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX_FAIL
@@ -2107,6 +2116,7 @@ def handle_wait_5_min_in_h():
     _("H结束"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
      constant_promise.Premise.IS_H},
 )
 def handle_end_h():
@@ -2173,7 +2183,7 @@ def handle_group_sex_end():
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    now_draw.text = _("\n结束H模式\n")
+    now_draw.text = _("\n结束群交模式\n")
     now_draw.draw()
     character_data.behavior.duration = 5
     update.game_update_flow(5)
