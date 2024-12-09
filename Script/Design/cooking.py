@@ -439,6 +439,10 @@ def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
         elif food_type == _("其他") and cache.recipe_data[int(food_id)].type != 9:
             continue
 
+        # 跳过时间为999的食谱
+        if cache.recipe_data[int(food_id)].time >= 999:
+            continue
+
         # 赋予食物其他属性
         now_food_uid = list(cache.rhodes_island.makefood_data[food_id].keys())[0]
         now_food: game_type.Food = cache.rhodes_island.makefood_data[food_id][now_food_uid]
