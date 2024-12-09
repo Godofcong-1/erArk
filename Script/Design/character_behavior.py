@@ -499,7 +499,7 @@ def judge_character_status(character_id: int) -> int:
     #     print(f"debug 3 move_src = {character_data.behavior.move_src},position = {character_data.position}")
 
     # 绘制数值变化
-    if first_settle_panel != None:
+    if first_settle_panel != None and len(first_settle_panel.draw_list):
         first_settle_panel.draw()
         if second_settle_panel != None:
             second_settle_panel.draw()
