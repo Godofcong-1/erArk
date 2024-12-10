@@ -617,7 +617,7 @@ msgstr "Touch tail"
 msgid "摸光环"
 msgstr "Touch halo"
 
-msgid "摸光翼"
+msgid "摸翅膀"
 msgstr "Touch wings"
 
 msgid "摸触手"

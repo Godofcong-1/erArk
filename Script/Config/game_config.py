@@ -214,6 +214,8 @@ config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
 config_status: Dict[int, config_def.Status] = {}
 """ 角色状态类型配置数据 """
+config_status_id_list_of_group_sex_body_part: Dict[str, list] = {}
+""" 群交时身体部位占用所对应的的状态id列表 """
 config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
@@ -1011,6 +1013,17 @@ def load_status():
         now_tem = config_def.Status()
         now_tem.__dict__ = tem_data
         config_status[now_tem.cid] = now_tem
+        # 拆解tag为列表
+        tag_list = now_tem.tag.split("|")
+        if not len(tag_list):
+            continue
+        # 以tag为键，存储对应的状态id列表
+        for tag_name in ["插入", "侍奉", "口", "手", "肛"]:
+            if tag_name in tag_list:
+                config_status_id_list_of_group_sex_body_part.setdefault(tag_name, [])
+                config_status_id_list_of_group_sex_body_part[tag_name].append(now_tem.cid)
+                # 每个状态仅存进一个组中
+                break
 
 
 def load_sun_time():

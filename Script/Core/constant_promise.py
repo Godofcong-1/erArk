@@ -2614,6 +2614,10 @@ class Premise:
     """ H_群交 当前存在一个群交模板 """
     HAVE_OVER_ONE_GRUOP_SEX_TEMPLE = "have_over_one_group_sex_temple"
     """ H_群交 当前存在多个群交模板 """
+    ALL_GROUP_SEX_TEMPLE_RUN_ON = "all_group_sex_temple_run_on"
+    """ H_群交 开启了运行全群交模板 """
+    ALL_GROUP_SEX_TEMPLE_RUN_OFF = "all_group_sex_temple_run_off"
+    """ H_群交 关闭了运行全群交模板 """
 
     HAVE_FOOD = "have_food"
     """ 道具_持有 拥有食物 """

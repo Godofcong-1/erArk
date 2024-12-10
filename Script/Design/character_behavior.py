@@ -1751,6 +1751,8 @@ def npc_active_h():
     Return arguments:
     bool -- 0为失败，1为正常逆推
     """
+    from Script.UI.Panel import in_scene_panel
+
     pl_character_data: game_type.Character = cache.character_data[0]
     target_character_id = pl_character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
@@ -1820,6 +1822,7 @@ def npc_active_h():
 
     # 遍历全状态
     all_stastus_list = []
+    now_premise_data = {}
     for status_id in game_config.config_status:
         # 获得各状态的tag
         status_data = game_config.config_status[status_id]
@@ -1842,6 +1845,17 @@ def npc_active_h():
             continue
         if part_id == 7 and target_character_data.talent[3] and _("破处") in status_tag_list:
             continue
+
+        # 跳过不满足前提的
+        if status_id in constant.state_id_to_instruct_id:
+            # 获取指令id
+            instruct_id = constant.state_id_to_instruct_id[status_id]
+            # 检查指令是否可用
+            filter_judge, now_premise_data = in_scene_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
+            # 跳过
+            if not filter_judge:
+                continue
+
         # 开始加入列表中
         if part_id == 0 and "N" in status_tag_list:
             all_stastus_list.append(status_id)

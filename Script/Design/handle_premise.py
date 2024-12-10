@@ -11367,6 +11367,31 @@ def handle_have_over_one_group_sex_temple(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.ALL_GROUP_SEX_TEMPLE_RUN_ON)
+def handle_all_group_sex_temple_run_on(character_id: int) -> int:
+    """
+    开启了运行全群交模板
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return pl_character_data.h_state.all_group_sex_temple_run
+
+
+@add_premise(constant_promise.Premise.ALL_GROUP_SEX_TEMPLE_RUN_OFF)
+def handle_all_group_sex_temple_run_off(character_id: int) -> int:
+    """
+    关闭了运行全群交模板
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_all_group_sex_temple_run_on(character_id)
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)

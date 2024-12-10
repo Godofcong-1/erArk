@@ -207,7 +207,7 @@ class CharacterStatus:
     STATUS_TOUCH_RING = 307
     """ 摸光环 """
     STATUS_TOUCH_WING = 308
-    """ 摸光翼 """
+    """ 摸翅膀 """
     STATUS_TOUCH_TENTACLE = 309
     """ 摸触手 """
     STATUS_TOUCH_CAR = 310
@@ -868,7 +868,7 @@ class Behavior:
     TOUCH_RING = 307
     """ 摸光环 """
     TOUCH_WING = 308
-    """ 摸光翼 """
+    """ 摸翅膀 """
     TOUCH_TENTACLE = 309
     """ 摸触手 """
     TOUCH_CAR = 310
@@ -2479,7 +2479,7 @@ class Instruct:
     TOUCH_RING = 0
     """ 摸光环 """
     TOUCH_WING = 0
-    """ 摸光翼 """
+    """ 摸翅膀 """
     TOUCH_TENTACLE = 0
     """ 摸触手 """
     TOUCH_CAR = 0
@@ -2828,6 +2828,8 @@ instruct_type_data: Dict[int, Set] = {}
 """ 指令类型拥有的指令集合 """
 instruct_sub_type_data: Dict[int, int] = {}
 """ 指令的子类型数据，指令id:子类id """
+state_id_to_instruct_id: Dict[int, int] = {}
+""" 从状态id获取指令id，状态id:指令id """
 instruct_premise_data: Dict[int, Set] = {}
 """ 指令显示的所需前提集合 """
 handle_state_machine_data: Dict[int, FunctionType] = {}

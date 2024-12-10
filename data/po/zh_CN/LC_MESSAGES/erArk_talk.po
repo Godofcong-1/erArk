@@ -39393,7 +39393,7 @@ msgid "{Name}触发了手指插入（V）指令的地文"
 msgstr ""
 
 #: .\data\talk\obscenity\touch_wing.csv:6
-msgid "{Name}触发了摸光翼指令的地文"
+msgid "{Name}触发了摸翅膀指令的地文"
 msgstr ""
 
 #: .\data\talk\play\aromatherapy.csv:6

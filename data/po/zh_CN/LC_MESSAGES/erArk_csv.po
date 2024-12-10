@@ -10073,7 +10073,7 @@ msgid "摸光环"
 msgstr ""
 
 #: .\data\csv\Status.csv:109
-msgid "摸光翼"
+msgid "摸翅膀"
 msgstr ""
 
 #: .\data\csv\Status.csv:110
