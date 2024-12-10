@@ -96,9 +96,10 @@ place_2,PLAYER_COME_SCENE,地点_角色,玩家来到该角色所在的地点
 place_4,PLAYER_LEAVE_SCENE,地点_角色,玩家离开该角色所在的地点
 place_6,TATGET_COME_SCENE,地点_角色,该角色来到玩家所在的地点
 place_8,TATGET_LEAVE_SCENE,地点_角色,该角色离开玩家所在的地点
-place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有玩家和该角色
-place_11,SCENE_OVER_TWO,地点_角色,该地点里有除了玩家和该角色之外的人
+place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有两个角色(可以不含玩家)
+place_11,SCENE_OVER_TWO,地点_角色,该地点有超过两个角色(可以不含玩家)
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
+move_to_same_target_with_pl,MOVE_TO_SAME_TARGET_WITH_PL,地点_角色,该角色与玩家有相同的移动目标地点
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
 place_someone_hp_1,SCENE_SOMEONE_HP_1,地点_角色,该地点有HP1或太疲劳的角色

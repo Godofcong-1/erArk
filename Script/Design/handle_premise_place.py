@@ -152,14 +152,12 @@ def handle_target_leave_scene(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_ONLY_TWO)
 def handle_scene_only_two(character_id: int) -> int:
     """
-    该地点仅有玩家和该角色
+    该地点仅有两个角色(可以不含玩家)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if character_id == 0:
-        return 0
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -169,14 +167,12 @@ def handle_scene_only_two(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_OVER_TWO)
 def handle_scene_over_two(character_id: int) -> int:
     """
-    该地点里有除了玩家和该角色之外的人
+    该地点有超过两个角色(可以不含玩家)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    if character_id == 0:
-        return 0
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
