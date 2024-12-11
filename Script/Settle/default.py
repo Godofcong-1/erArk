@@ -10,6 +10,7 @@ from Script.Design import (
     cooking,
     handle_instruct,
     character_behavior,
+    handle_npc_ai,
     basement,
     handle_premise,
     handle_premise_place
@@ -86,7 +87,7 @@ def base_chara_hp_mp_common_settle(
         character_data.hit_point = max(1, character_data.hit_point)
         character_data.hit_point = min(character_data.hit_point_max, character_data.hit_point)
         # 检测hp1导致的疲劳
-        character_behavior.judge_character_tired_sleep(character_id)
+        handle_npc_ai.judge_character_tired_sleep(character_id)
         # 交互对象也同样
         if target_flag and target_character_id != character_id:
             if target_character_data.mana_point == 0 and hp_value < 0:
@@ -101,7 +102,7 @@ def base_chara_hp_mp_common_settle(
             target_change.hit_point += hp_value_last
             target_character_data.hit_point = max(1, target_character_data.hit_point)
             target_character_data.hit_point = min(target_character_data.hit_point_max, target_character_data.hit_point)
-            character_behavior.judge_character_tired_sleep(target_character_id)
+            handle_npc_ai.judge_character_tired_sleep(target_character_id)
     # 气力结算
     if mp_value in [-1, 1]:
         mp_value *= add_time * mp_adjust
@@ -117,7 +118,7 @@ def base_chara_hp_mp_common_settle(
             character_data.hit_point += mp_value
             change_data.hit_point += mp_value
             character_data.hit_point = max(1, character_data.hit_point)
-            character_behavior.judge_character_tired_sleep(character_id)
+            handle_npc_ai.judge_character_tired_sleep(character_id)
         # 交互对象也同样
         if target_flag and target_character_id != character_id:
             # 结算信息记录
@@ -6741,6 +6742,8 @@ def handle_recruit_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.UI.Panel import recruit_panel
+
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
@@ -6782,7 +6785,7 @@ def handle_recruit_add_just(
 
     # 增加对应槽的招募值，并进行结算
     cache.rhodes_island.recruit_line[select_index][0] += now_add_lust
-    basement.update_recruit()
+    recruit_panel.update_recruit()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.INVITE_VISITOR_ADD_ADJUST)
@@ -6800,6 +6803,8 @@ def handle_invite_visitor_add_adjust(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.UI.Panel import invite_visitor_panel
+
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
@@ -6837,7 +6842,7 @@ def handle_invite_visitor_add_adjust(
 
     # 增加对应槽的邀请值，并进行结算
     cache.rhodes_island.invite_visitor[1] += now_add_lust
-    basement.update_invite_visitor()
+    invite_visitor_panel.update_invite_visitor()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MILK_ADD_ADJUST)
@@ -7356,6 +7361,8 @@ def handle_read_add_adjust(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.UI.Panel import borrow_book_panel
+
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
@@ -7410,7 +7417,7 @@ def handle_read_add_adjust(
     if character_id:
         return_rate = 20 + random.randint(1,20)
         character_data.entertainment.book_return_possibility += return_rate
-        basement.check_return_book(character_id)
+        borrow_book_panel.check_return_book(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)

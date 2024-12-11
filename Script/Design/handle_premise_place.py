@@ -1155,6 +1155,18 @@ def handle_not_in_toilet(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_TOILET_OR_DORMITORY)
+def handle_in_toilet_or_dormitory(character_id: int) -> int:
+    """
+    在洗手间或自己宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_not_in_toilet(character_id)
+
+
 @add_premise(constant_promise.Premise.IN_REST_ROOM)
 def handle_in_rest_room(character_id: int) -> int:
     """

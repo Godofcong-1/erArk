@@ -608,10 +608,10 @@ class Debug_Panel:
                     line_feed.draw()
                 # 重置全角色娱乐
                 elif key_index == 17:
-                    from Script.Design import character_behavior
+                    from Script.Design import handle_npc_ai
                     cache.npc_id_got.discard(0)
                     for chara_id in cache.npc_id_got:
-                        character_behavior.get_chara_entertainment(chara_id)
+                        handle_npc_ai.get_chara_entertainment(chara_id)
 
             line_feed.draw()
             # back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)

@@ -18,6 +18,84 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
+def settle_agriculture_line():
+    """
+    结算农业的生产
+    """
+    # print("debug 开始结算农业生产")
+    # 遍历药田
+    for agriculture_line_id in cache.rhodes_island.herb_garden_line:
+        resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
+        # print(f"debug 药田{agriculture_line_id}，种植的作物id为{resouce_id}")
+        if resouce_id != 0:
+            resouce_data = game_config.config_resouce[resouce_id]
+
+            # 每天生产一次
+            max_time = 10
+            produce_effect = cache.rhodes_island.herb_garden_line[agriculture_line_id][2]
+            # 公务的总效率
+            produce_effect *= cache.rhodes_island.effectiveness / 100
+            # 计算最大生产数
+            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num = produce_num_max
+            # print(f"debug 药田{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+
+            # 结算实际生产
+            if produce_num > 0:
+                # 结算实际生产的产品
+                cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+
+                now_text = _("\n今日药田共生产了{0}个{1}").format(produce_num, resouce_data.name)
+                # 不会超过仓库容量
+                if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
+                    cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
+                    now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
+                now_text += f"\n"
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = now_text
+                now_draw.draw()
+
+        # 重置收菜时间
+        cache.rhodes_island.herb_garden_line[agriculture_line_id][4] = cache.game_time.hour
+
+    # 遍历温室
+    for agriculture_line_id in cache.rhodes_island.green_house_line:
+        resouce_id = cache.rhodes_island.green_house_line[agriculture_line_id][0]
+        # print(f"debug 温室{agriculture_line_id}，种植的作物id为{resouce_id}")
+        if resouce_id != 0:
+            resouce_data = game_config.config_resouce[resouce_id]
+
+            # 每天生产一次
+            max_time = 10
+            produce_effect = cache.rhodes_island.green_house_line[agriculture_line_id][2]
+            # 公务的总效率
+            produce_effect *= cache.rhodes_island.effectiveness / 100
+            # 计算最大生产数
+            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num = produce_num_max
+            # print(f"debug 温室{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
+
+            # 结算实际生产
+            if produce_num > 0:
+                # 结算实际生产的产品
+                cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+
+                now_text = _("\n今日温室共生产了{0}个{1}").format(produce_num, resouce_data.name)
+                # 不会超过仓库容量
+                if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
+                    cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
+                    now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
+                now_text += f"\n"
+                now_draw = draw.WaitDraw()
+                now_draw.width = window_width
+                now_draw.text = now_text
+                now_draw.draw()
+
+        # 重置收菜时间
+        cache.rhodes_island.green_house_line[agriculture_line_id][4] = cache.game_time.hour
+
+
 class Agriculture_Production_Panel:
     """
     用于农业生产的面板对象

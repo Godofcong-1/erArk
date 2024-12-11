@@ -17,6 +17,21 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
+def settle_aromatherapy_sessions():
+    """
+    结算香薰疗愈次数
+    """
+
+    level = cache.rhodes_island.facility_level[16]
+
+    # 刷新香薰疗愈次数
+    if level >= 5:
+        cache.rhodes_island.remaining_aromatherapy_sessions_today = 3
+    elif level == 4:
+        cache.rhodes_island.remaining_aromatherapy_sessions_today = 2
+    elif level <= 3:
+        cache.rhodes_island.remaining_aromatherapy_sessions_today = 1
+
 class Aromatherapy_Panel:
     """
     用于香薰疗愈的面板对象

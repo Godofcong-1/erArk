@@ -6,6 +6,8 @@ from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import manage_basement_panel
 
+import random
+
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -46,6 +48,54 @@ def find_recruitable_npc() -> List[int]:
         recruitable_npc_id_list.append(chara_id)
 
     return recruitable_npc_id_list
+
+
+def update_recruit():
+    """刷新招募栏位"""
+
+    from Script.UI.Panel import recruit_panel
+
+    # 遍历全招募栏
+    for recruit_line_id in cache.rhodes_island.recruit_line:
+
+        # 如果超过100则进行结算
+        if cache.rhodes_island.recruit_line[recruit_line_id][0] >= 100:
+            cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
+
+            # 招募策略
+            recruitment_strategy = cache.rhodes_island.recruit_line[recruit_line_id][1]
+
+            # 绘制信息
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.style = "gold_enrod"
+
+            # 开始获得招募npc的id
+            recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
+            wait_id_list = []
+            for chara_id in recruitable_npc_id_list:
+                # 本地招募
+                if recruitment_strategy == 0:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出出生地是当前罗德岛所在地的角色
+                    if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                        continue
+                    else:
+                        wait_id_list.append(chara_id)
+                # 全泰拉招募
+                # TODO 当前其他招聘策略均由全泰拉招聘代替，需要实装
+                elif recruitment_strategy == 1 or recruitment_strategy in {2,3,4}:
+                    wait_id_list.append(chara_id)
+            if len(wait_id_list):
+                choice_id = random.choice(wait_id_list)
+                cache.rhodes_island.recruited_id.add(choice_id)
+
+                now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
+                now_draw.draw()
+            else:
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
+                now_draw.draw()
+                cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
 
 
 class Recruit_Panel:

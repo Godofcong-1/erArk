@@ -1,9 +1,10 @@
 from typing import Tuple, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import basement
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -15,6 +16,85 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+
+def settle_library_book():
+    """
+    刷新图书馆的可借阅书籍
+    """
+
+    for book_type_cid in game_config.config_book_type:
+        game_config.config_book_type_data.setdefault(book_type_cid, [])
+        # 如果该类型的书籍超过3本，则随机选择其中的三本
+        if len(game_config.config_book_type_data[book_type_cid]) > 3:
+            now_choose_list = random.sample(game_config.config_book_type_data[book_type_cid], 3)
+        else:
+            now_choose_list = game_config.config_book_type_data[book_type_cid]
+        cache.rhodes_island.now_show_book_cid_of_type[book_type_cid] = now_choose_list
+
+    # 获取玩家的借书情况
+    pl_character_data: game_type.Character = cache.character_data[0]
+    pl_borrow = pl_character_data.entertainment.borrow_book_id_set
+    # 遍历借的书籍，也加入到展示列表里
+    for book_id in pl_borrow:
+        book_type = game_config.config_book[book_id].type
+        if book_id not in cache.rhodes_island.now_show_book_cid_of_type[book_type]:
+            cache.rhodes_island.now_show_book_cid_of_type[book_type].append(book_id)
+
+
+def check_return_book(character_id):
+    """
+    检查并决定是否归还当前书籍
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 未借书则跳过
+    if len(character_data.entertainment.borrow_book_id_set) == 0:
+        return 0
+    # 已借书则d100和还书概率比大小
+    else:
+        return_d100 = random.randint(1,100)
+        # 小于还书概率则还书
+        # print(f"debug return_d100 = {return_d100},book_return_possibility = {character_data.entertainment.book_return_possibility}")
+        if return_d100 < character_data.entertainment.book_return_possibility:
+            for book_id in character_data.entertainment.borrow_book_id_set:
+                cache.rhodes_island.book_borrow_dict[book_id] = -1
+                character_data.entertainment.borrow_book_id_set.discard(book_id)
+                # print(f"debug {character_data.name}还了书{book_id}")
+                return 1
+        return 0
+
+
+def check_random_borrow_book(character_id):
+    """
+    检查角色是否有借书，有的话跳过，没有的话随机借一本书
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 已借书则跳过
+    if len(character_data.entertainment.borrow_book_id_set):
+        return 1
+    # 未借书则随机借书
+    else:
+        # 遍历获得所有没借的书id
+        recommend_book_id_set,book_id_set = [],[]
+        for book_id in cache.rhodes_island.book_borrow_dict:
+            # 未被借出则加入book_id_set
+            if cache.rhodes_island.book_borrow_dict[book_id] == -1:
+                book_id_set.append(book_id)
+                # 如果类型在推荐列表里，则加入recommend_book_id_set
+                if game_config.config_book[book_id].type in cache.rhodes_island.recommend_book_type_set:
+                    recommend_book_id_set.append(book_id)
+        # 如果推荐列表有书，则有一半的概率在推荐列表里借书，否则在全列表里借书
+        if len(recommend_book_id_set) and random.randint(0,1) == 1:
+            borrow_book_id = random.choice(recommend_book_id_set)
+        else:
+            borrow_book_id = random.choice(book_id_set)
+        cache.rhodes_island.book_borrow_dict[borrow_book_id] = character_id
+        character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
+        # print(f"debug {character_data.name}借了书{borrow_book_id}")
+        return 0
+
 
 class Borrow_Book_Panel:
     """
@@ -39,7 +119,7 @@ class Borrow_Book_Panel:
         book_father_type_list = [_("技能类书籍"), _("娱乐类书籍"), _("色情类书籍")]
 
         # 每次初始化可借阅字典
-        basement.settle_library_book()
+        settle_library_book()
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:

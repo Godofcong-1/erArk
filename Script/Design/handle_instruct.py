@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -3581,7 +3581,7 @@ def handle_change_top_and_bottom():
     character_data: game_type.Character = cache.character_data[0]
     target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_character_data.h_state.npc_active_h = True
-    character_behavior.npc_active_h()
+    handle_npc_ai.npc_active_h()
 
 
 @add_instruct(
@@ -3594,7 +3594,7 @@ def handle_change_top_and_bottom():
 )
 def handle_keep_enjoy():
     """处理继续享受指令"""
-    character_behavior.npc_active_h()
+    handle_npc_ai.npc_active_h()
 
 
 @add_instruct(
