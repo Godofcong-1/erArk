@@ -2258,8 +2258,10 @@ class Instruct:
     """ 做饭 """
     EAT = 0
     """ 进食 """
-    GIVE_FOOD = 0
-    """ 让对方食用 """
+    # GIVE_FOOD = 0
+    # """ 让对方食用 """
+    PUT_SELFMADE_FOOD_IN = 0
+    """ 放入正常食物 """
     REST = 0
     """ 休息 """
     DIRAY = 0

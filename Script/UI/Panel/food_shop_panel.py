@@ -18,6 +18,44 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
+def put_selfmade_food_in():
+    """
+    将自制食物放入食堂
+    """
+    character_data: game_type.Character = cache.character_data[0]
+
+    # 读取背包食物，并只提取uid列表
+    id_list_normal = []
+    for i in character_data.food_bag.copy():
+        food_data: game_type.Food = character_data.food_bag[i]
+        if food_data.special_seasoning == 0:
+            id_list_normal.append(i)
+
+    # 绘制提示信息
+    if len(id_list_normal):
+        info_draw_text = _("{0}开始将身上没有调味的食物放进食堂取餐区里\n").format(character_data.name)
+    else:
+        info_draw_text = _("{0}身上没有正常调味的食物\n").format(character_data.name)
+    info_draw = draw.NormalDraw()
+    info_draw.text = info_draw_text
+    info_draw.width = window_width
+    info_draw.draw()
+
+    # 遍历食物列表，将食物放入食堂
+    for uid in id_list_normal:
+        food_data = character_data.food_bag[uid]
+        recipes_id = str(food_data.recipe)
+        food_name = food_data.name
+        cache.rhodes_island.dining_hall_data.setdefault(recipes_id, {})
+        cache.rhodes_island.dining_hall_data[recipes_id][uid] = cache.character_data[0].food_bag[uid]
+        del cache.character_data[0].food_bag[uid]
+        # 绘制提示信息
+        info_draw = draw.NormalDraw()
+        info_draw.text = _("{0}已放入食堂\n").format(food_name)
+        info_draw.width = window_width
+        info_draw.draw()
+
+
 class FoodShopPanel:
     """
     用于查看食物商店界面面板对象

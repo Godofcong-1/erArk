@@ -248,6 +248,21 @@ def handle_eat():
 
 
 @add_instruct(
+    constant.Instruct.PUT_SELFMADE_FOOD_IN,
+    constant.InstructType.DAILY,
+    _("放入正常食物"),
+    {constant_promise.Premise.HAVE_FOOD,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_TAKE_FOOD,
+     constant_promise.Premise.TIRED_LE_84}
+)
+def handle_put_selfmade_food_in():
+    """处理放入正常食物指令"""
+    from Script.UI.Panel import food_shop_panel
+    food_shop_panel.put_selfmade_food_in()
+
+
+@add_instruct(
     constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
     {
         constant_promise.Premise.NOT_H,
