@@ -36601,7 +36601,7 @@ msgid "{Name}在马桶上坐定，深吸一口气，开始小便"
 msgstr ""
 
 #: .\data\talk\daily\pee.csv:15
-msgid "{Name}站在马桶旁，轻轻地开始小便"
+msgid "{Name}拉开马桶盖，轻轻地开始小便"
 msgstr ""
 
 #: .\data\talk\daily\pee.csv:16
@@ -36610,6 +36610,18 @@ msgstr ""
 
 #: .\data\talk\daily\pee.csv:17
 msgid "{Name}在马桶上坐下，放松心情，开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:19
+msgid "{Name}实在忍不住，虽然不在厕所，但只能找了个角落，蹲下开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:20
+msgid "{Name}已经忍了很久，但是实在没有办法，只能找了个角落，蹲下开始小便"
+msgstr ""
+
+#: .\data\talk\daily\pee.csv:21
+msgid "{Name}忍到极限了，往四周看了看，赶紧找了个角落，蹲下开始小便"
 msgstr ""
 
 #: .\data\talk\daily\play_instrument.csv:6

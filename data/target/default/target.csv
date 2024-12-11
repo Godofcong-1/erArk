@@ -71,6 +71,7 @@ ai的目标,,,,
 90,92,masturebate_flag_2|in_dor,12,当前要自慰_宿舍，已在宿舍，则自慰
 91,95,ask_masturbation_before_sleep|sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_0,11,自己被要求每天晚上睡前都要自慰，要睡觉状态下，且已在宿舍，自身没有要睡前自慰状态，则进入要睡前自慰状态
 92,92,sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_1,12,要睡觉状态下，且已在宿舍，自身要睡前自慰状态，则自慰
+93,92,group_sex_mode_on|place_0|masturebate_flag_3,12,群交模式开启中，与玩家处于相同地点，自身要自慰状态_群交，则自慰
 
 100,100,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
 101,101,normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触

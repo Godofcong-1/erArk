@@ -486,9 +486,11 @@ class BODY_H_STATE:
         self.time_stop_release: bool = False
         """ 当前为时停解放状态 """
         self.group_sex_lock_flag: bool = False
-        """ 群P的模板锁定标记 """
+        """ 群交的模板锁定标记 """
         self.all_group_sex_temple_run: bool = False
         """ 运行全群交模板 """
+        self.npc_ai_type_in_group_sex: int = 0
+        """ 未在模板中的NPC在群交中的AI逻辑，0为无行动，1为仅自慰，2为优先自动补位、无位则自慰 """
 
 
 class FIRST_RECORD:
@@ -623,7 +625,7 @@ class SPECIAL_FLAG:
         self.milk: bool = 0
         """ 要挤奶状态 """
         self.masturebate: int = 0
-        """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰]"""
+        """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰,3群交自慰]"""
         self.masturebate_before_sleep: int = 0
         """ 睡前自慰状态，int [0无,1要自慰,2已自慰] """
         self.shower: int = 0

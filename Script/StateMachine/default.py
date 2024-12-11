@@ -2012,7 +2012,7 @@ def character_masturebate(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.MASTUREBATE
     character_data.state = constant.CharacterStatus.STATUS_MASTUREBATE
-    character_data.behavior.duration = 30
+    character_data.behavior.duration = 10
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.GET_CHARA_NORMAL_CLOTH_AND_DAY_EQIP)

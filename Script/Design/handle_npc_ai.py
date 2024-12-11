@@ -224,8 +224,9 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 睡奸时例外
         if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
             return 1
-        # 群交时除外
-        if handle_premise.handle_group_sex_mode_on(character_id):
+        # 群交时则进行群交AI判断处理
+        if handle_premise.handle_group_sex_mode_on(character_id) and not handle_premise.handle_npc_ai_type_0_in_group_sex(character_id):
+            npc_ai_in_group_sex(character_id)
             return 1
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
@@ -306,10 +307,15 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
     target_weight_data = {}
     null_target_set = set()
 
-    # 如果该NPC在H模式，则不赋予新活动，且直接加入结束列表
+    # 如果该NPC在H模式
     if character_data.sp_flag.is_h:
-        cache.over_behavior_character.add(character_id)
-        return
+        # 群交中+要群交自慰时，才能继续下去
+        if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_masturebate_flag_3(character_id):
+            pass
+        # 否则不赋予新活动，且直接加入结束列表
+        else:
+            cache.over_behavior_character.add(character_id)
+            return
 
     # 如果玩家在对该NPC交互，则等待flag=1，此操作暂时不进行
     # safe_instruct = [constant.CharacterStatus.STATUS_WAIT,constant.CharacterStatus.STATUS_REST,constant.CharacterStatus.STATUS_SLEEP]
@@ -787,24 +793,17 @@ def get_chara_entertainment(character_id: int):
                 entertainment_list.remove(choice_entertainment_id) # 从列表中去掉该娱乐活动，防止重复
 
 
-def npc_active_h():
+def evaluate_npc_body_part_prefs(character_id: int) -> int:
     """
-    判断NPC的逆推ai\n
+    判断NPC的部位喜好\n
     Return arguments:
-    bool -- 0为失败，1为正常逆推
+    int -- 选择的部位
     """
-    from Script.UI.Panel import in_scene_panel
 
-    pl_character_data: game_type.Character = cache.character_data[0]
-    target_character_id = pl_character_data.target_character_id
-    target_character_data = cache.character_data[target_character_id]
+    character_data = cache.character_data[character_id]
 
-    # 如果目标不是NPC，则返回
-    if target_character_id == 0:
-        return 0
-
-    # 如果对方不是主动H状态，则返回
-    if target_character_data.hypnosis.active_h == False and target_character_data.h_state.npc_active_h == False:
+    # 如果自己不是NPC，则返回
+    if character_id == 0:
         return 0
 
     # 按照部位统计权重，初始权重为1
@@ -831,7 +830,7 @@ def npc_active_h():
             part_id = 6
         elif experience_id in {64,68}:
             part_id = 7
-        now_exp = target_character_data.experience[experience_id]
+        now_exp = character_data.experience[experience_id]
         part_weight[part_id] += now_exp
 
     # 能力等级权重为20
@@ -844,23 +843,41 @@ def npc_active_h():
         # 将扩张的序号转换为部位序号
         else:
             part_id = ability_id - 5
-        now_ability = target_character_data.ability[ability_id]
+        now_ability = character_data.ability[ability_id]
         part_weight[part_id] += now_ability * 20
-
-    # TODO 暂时不支持U和W的逆推
-    part_weight[6] = 0
-    part_weight[7] = 0
 
     # 在最后将阴茎的权重置为0
     part_weight[3] = 0
 
     # 根据权重，随机选择一个部位
     part_id = random.choices(list(part_weight.keys()), weights=list(part_weight.values()), k=1)[0]
-    # print(f"debug {target_character_data.name}的逆推ai选择了{game_config.config_organ[part_id].name}部位，总权重为{part_weight}")
+    # print(f"debug {character_data.name}的逆推ai选择了{game_config.config_organ[part_id].name}部位，总权重为{part_weight}")
 
     # 以防万一，如果因为BUG选中了阴茎，则返回
     if part_id == 3:
         return 0
+
+    # 返回选择的部位
+    return part_id
+
+def npc_active_h():
+    """
+    判断NPC的逆推ai\n
+    Return arguments:
+    bool -- 0为失败，1为正常逆推
+    """
+    from Script.UI.Panel import in_scene_panel
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_character_id = pl_character_data.target_character_id
+    target_character_data = cache.character_data[target_character_id]
+
+    # 如果对方不是主动H状态，则返回
+    if target_character_data.hypnosis.active_h == False and target_character_data.h_state.npc_active_h == False:
+        return 0
+
+    # 根据NPC的部位喜好，选择一个部位
+    part_id = evaluate_npc_body_part_prefs(target_character_id)
 
     # 遍历全状态
     all_stastus_list = []
@@ -879,6 +896,8 @@ def npc_active_h():
         ):
             continue
         # 如果NPC为处，则跳过破处类
+        if part_id == 0 and target_character_data.talent[4] and _("破处") in status_tag_list:
+            continue
         if part_id == 4 and target_character_data.talent[0] and _("破处") in status_tag_list:
             continue
         if part_id == 5 and target_character_data.talent[1] and _("破处") in status_tag_list:
@@ -929,3 +948,86 @@ def npc_active_h():
     pl_character_data.state = status_id
     pl_character_data.behavior.duration = 10
     update.game_update_flow(10)
+
+
+def npc_ai_in_group_sex(character_id: int):
+    """
+    NPC在群交中的AI\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    from Script.UI.Panel import group_sex_panel
+
+    # 玩家则返回
+    if character_id == 0:
+        return
+    # 如果自己已在群交模板中，则返回
+    group_sex_chara_id_list = group_sex_panel.count_group_sex_character_list()
+    if character_id in group_sex_chara_id_list:
+        return
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
+    A_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
+
+    # 如果不是H状态+群交，则返回
+    if character_data.sp_flag.is_h == False or handle_premise.handle_group_sex_mode_off(character_id):
+        return
+
+    # 如果设定NPC为仅自慰，则进入要自慰后返回
+    if handle_premise.handle_npc_ai_type_1_in_group_sex(character_id):
+        character_data.sp_flag.masturebate = 3
+        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        # print(f"debug {character_data.name}进入了要自慰状态")
+        return
+
+    # 首先看玩家当前是否有部位空缺
+    now_template_empty_part_list = []
+    wait_upon_flag = True # 侍奉是否可选
+    wait_upon_state_id = A_template_data[1][1] # 侍奉的状态id
+    # 对单
+    for body_part in A_template_data[0]:
+        state_id = A_template_data[0][body_part][1]
+        if state_id == -1:
+            # 如果不是阴茎，则直接加入
+            if body_part != "penis":
+                now_template_empty_part_list.append(body_part)
+            # 如果是阴茎，则需要未选侍奉
+            elif wait_upon_state_id == -1:
+                now_template_empty_part_list.append(body_part)
+        # 如果阴茎已选，则侍奉不可选
+        elif body_part == "penis":
+            wait_upon_flag = False
+    # 侍奉
+    if wait_upon_flag:
+        target_chara_id_list = A_template_data[1][0]
+        if wait_upon_state_id == -1:
+            now_template_empty_part_list.append(_("侍奉"))
+        elif wait_upon_state_id != -1 and len(target_chara_id_list) < 4:
+            now_template_empty_part_list.append(_("加入侍奉"))
+
+    # 如果有空缺，则随机选择一个部位
+    if len(now_template_empty_part_list):
+        body_part = random.choice(now_template_empty_part_list)
+        # 如果是加入侍奉，则直接加入
+        if body_part == _("加入侍奉"):
+            A_template_data[1][0].append(character_id)
+            # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
+        else:
+            # 获取该部位的状态id列表
+            pl_character_data.target_character_id = character_id
+            new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            # 随机选择一个状态
+            status_id = random.choice(new_status_id_list)
+            # 如果是侍奉
+            if body_part == _("侍奉"):
+                A_template_data[1] = [[character_id], status_id]
+            # 如果是对单
+            else:
+                A_template_data[0][body_part] = [character_id, status_id]
+            # print(f"debug {character_data.name}对{body_part}选择了{game_config.config_status[status_id].name}")
+    # 否则，自己进入要自慰状态
+    else:
+        character_data.sp_flag.masturebate = 3
+        character_data.state == constant.CharacterStatus.STATUS_ARDER
+        # print(f"debug {character_data.name}进入了要自慰状态")

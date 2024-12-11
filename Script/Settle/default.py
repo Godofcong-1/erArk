@@ -7023,22 +7023,16 @@ def handle_masturebate_add_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    # 获取最高感度部位，默认选择C
-    max_index = 2
-    max_value = 0
-    # 列表为0~7
-    body_part_list = [0, 1, 2, 3, 4, 5, 6, 7]
-    for index in body_part_list:
-        if character_data.ability[index] > max_value:
-            max_value = character_data.ability[index]
-            max_index = index
+    from Script.Design import handle_npc_ai
+    # 根据NPC的部位喜好，选择一个部位
+    part_id = handle_npc_ai.evaluate_npc_body_part_prefs(character_id)
     # 增加快感
-    base_chara_state_common_settle(character_id, add_time, max_index, 50, ability_level = character_data.ability[30], change_data = change_data)
+    base_chara_state_common_settle(character_id, add_time, part_id, 50, ability_level = character_data.ability[30], change_data = change_data)
     # 增加经验
-    character_data.experience.setdefault(max_index, 0)
-    character_data.experience[max_index] += 1
-    change_data.experience.setdefault(max_index, 0)
-    change_data.experience[max_index] += 1
+    character_data.experience.setdefault(part_id, 0)
+    character_data.experience[part_id] += 1
+    change_data.experience.setdefault(part_id, 0)
+    change_data.experience[part_id] += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET_IN_SHOWER)

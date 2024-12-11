@@ -2451,7 +2451,7 @@ def handle_masturebate_flag_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MASTUREBATE_FLAG_G_0)
 def handle_masturebate_flag_g_0(character_id: int) -> int:
     """
-    自身要自慰状态(含两类位置)
+    自身要自慰状态(含全位置)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -2491,6 +2491,22 @@ def handle_masturebate_flag_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.masturebate == 2:
+        return 400
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_FLAG_3)
+def handle_masturebate_flag_3(character_id: int) -> int:
+    """
+    自身要自慰状态_群交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.masturebate == 3:
         return 400
     else:
         return 0
@@ -11390,6 +11406,45 @@ def handle_all_group_sex_temple_run_off(character_id: int) -> int:
     int -- 权重
     """
     return not handle_all_group_sex_temple_run_on(character_id)
+
+
+@add_premise(constant_promise.Premise.NPC_AI_TYPE_0_IN_GROUP_SEX)
+def handle_npc_ai_type_0_in_group_sex(character_id: int) -> int:
+    """
+    未在模板中的NPC在群交中无行动
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return pl_character_data.h_state.npc_ai_type_in_group_sex == 0
+
+
+@add_premise(constant_promise.Premise.NPC_AI_TYPE_1_IN_GROUP_SEX)
+def handle_npc_ai_type_1_in_group_sex(character_id: int) -> int:
+    """
+    未在模板中的NPC在群交中仅自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return pl_character_data.h_state.npc_ai_type_in_group_sex == 1
+
+
+@add_premise(constant_promise.Premise.NPC_AI_TYPE_2_IN_GROUP_SEX)
+def handle_npc_ai_type_2_in_group_sex(character_id: int) -> int:
+    """
+    未在模板中的NPC在群交中优先自动补位、无位则自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return pl_character_data.h_state.npc_ai_type_in_group_sex == 2
 
 
 # 以下为道具系前提
