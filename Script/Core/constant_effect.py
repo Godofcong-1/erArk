@@ -485,6 +485,8 @@ class BehaviorEffect:
     """ 属性_经验 交互对象增加1被催眠姦经验 """
     TARGET_ADD_1_CLOTH_JOB_EXPERIENCE = 361
     """ 属性_经验 交互对象增加1服装交经验 """
+    ADD_1_GROUP_SEX_EXPERIENCE = 362
+    """ 属性_经验 增加1群交经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """

@@ -2571,3 +2571,23 @@ def handle_target_add_1_cloth_job_experience(
     if not add_time:
         return
     base_chara_experience_common_settle(character_id, 47, target_flag = True, change_data = change_data)
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_1_GROUP_SEX_EXPERIENCE)
+def handle_add_1_group_sex_experience(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    增加1群交经验
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    base_chara_experience_common_settle(character_id, 56, change_data = change_data)
+
