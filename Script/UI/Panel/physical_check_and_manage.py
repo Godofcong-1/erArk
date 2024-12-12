@@ -551,11 +551,16 @@ class Physical_Check_And_Manage_Panel:
 
         target_character_id = self.pl_character_data.target_character_id
         target_character_data = cache.character_data[target_character_id]
+        all_part_sex_exp = 0
+        for exp_id in {61, 62, 63, 64}:
+            all_part_sex_exp += target_character_data.experience[exp_id]
 
         report_text = "\n"
         report_text += _("基础档案：\n")
         report_text += _(" 【代号】") + target_character_data.name + "\n"
         report_text += _(" 【性别】") + game_config.config_sex_tem[target_character_data.sex].name + "\n"
+        report_text += _(" 【性交经验】") + str(all_part_sex_exp) + _("次\n")
+        report_text += _(" 【无意识性交经验】") + str(target_character_data.experience[79]) + _("次\n")
         report_text += _(" 【出身地】") + game_config.config_birthplace[target_character_data.relationship.birthplace].name + "\n"
         report_text += _(" 【种族】") + game_config.config_race[target_character_data.race].name + "\n"
         report_text += _(" 【矿石病感染情况】\n")
@@ -647,7 +652,7 @@ class Physical_Check_And_Manage_Panel:
         report_text += (" {0}{1}\n").format(base_ability_dict[6], special_talent_text)
 
         # 性爱履历：
-        report_text += "\n性爱履历：\n"
+        report_text += _("\n性爱履历：\n")
 
         # 初吻
         now_text = ""
