@@ -244,7 +244,9 @@ ai的目标,,,,
 545,711,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_3,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
 546,712,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_1,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为催睡觉，则变为已晚安问候
 
-601,40,normal_2_5_6|place_door_open|place_is_h|not_in_dor,0,自己256正常，当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，则逃回自己宿舍
+601,40,normal_2_5_6|place_door_open|place_is_h|not_in_dor|self_not_go_to_join_group_sex,0,自己256正常，当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，自己没有前往加入群交，则逃回自己宿舍
+603,96,self_now_go_to_join_group_sex|place_0|group_sex_mode_on,0,自己正在前往加入群交，自己在玩家位置，群交模式开启中，则加入群交
+604,97,self_now_go_to_join_group_sex|place_0|group_sex_mode_off,0,自己正在前往加入群交，自己在玩家位置，群交模式未开启，则停止加入群交
 
 701,1,normal_1|unconscious_flag_5,1,1正常（基础正常），自身被空气催眠，则原地待机10分钟
 

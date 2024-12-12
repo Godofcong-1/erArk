@@ -1011,6 +1011,10 @@ class BehaviorEffect:
     """ 属性_H 开启全群交模板，进行轮流群交 """
     ALL_GROUP_SEX_TEMPLE_OFF = 1416
     """ 属性_H 关闭全群交模板，进行单轮群交 """
+    SELF_JOIN_GROUP_SEX_ON = 1417
+    """ 属性_H 自己开始加入群交 """
+    SELF_JOIN_GROUP_SEX_OFF = 1418
+    """ 属性_H 自己停止加入群交 """
 
     # 1500+见属性_基础
 

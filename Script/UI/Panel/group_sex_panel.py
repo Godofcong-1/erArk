@@ -477,6 +477,21 @@ class Edit_Group_Sex_Temple_Panel:
             npc_ai_change_button.draw()
             return_list.append(npc_ai_change_button.return_text)
 
+            # 邀请其他干员按钮
+            line_feed.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("邀请其他干员：邀请不在场的干员来这里参加群交，只能邀请实行值足够同意的\n")
+            info_draw.text += "              "
+            info_draw.width = self.width
+            info_draw.draw()
+
+            invite_other_npc_text = _("邀请")
+            invite_other_npc_button = draw.LeftButton(
+                f"▶{invite_other_npc_text}", _("邀请其他干员"), len(npc_ai_text) * 4 + 1, cmd_func=self.show_invite_npc_panel
+            )
+            invite_other_npc_button.draw()
+            return_list.append(invite_other_npc_button.return_text)
+
             line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -581,6 +596,59 @@ class Edit_Group_Sex_Temple_Panel:
             if yrn in return_list:
                 break
 
+    def show_invite_npc_panel(self):
+        """绘制可邀请的NPC列表"""
+        from Script.Design import character
+        # 当前地点的角色列表
+        scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        now_scene_character_list = scene_data.character_list
+
+        while 1:
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            line_feed.draw()
+            return_list = []
+
+            # 绘制提示信息
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("当前可邀请的干员有：\n\n")
+            info_draw.width = self.width
+            info_draw.draw()
+
+            # 遍历全部已有角色
+            chara_count = 0
+            for chara_id in cache.npc_id_got:
+                # 如果角色已在场景中，则跳过
+                if chara_id in now_scene_character_list:
+                    continue
+                # 判断实行值是否足够，不够的也跳过
+                if character.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                    continue
+                now_character_data = cache.character_data[chara_id]
+                name_draw_text = f"[{str(now_character_data.adv).rjust(4,'0')}]{now_character_data.name}"
+                name_draw = draw.LeftButton(name_draw_text, now_character_data.name, self.width / 5, cmd_func=self.invite_npc, args=(chara_id,))
+                # 如果已经被选择过，则改变颜色
+                if handle_premise.handle_self_now_go_to_join_group_sex(chara_id):
+                    name_draw = draw.LeftButton(name_draw_text, now_character_data.name, self.width / 5, normal_style='gold_enrod', cmd_func=self.invite_npc, args=(chara_id,))
+                name_draw.draw()
+                return_list.append(name_draw.return_text)
+                chara_count += 1
+                # 每五个换行一次
+                if chara_count != 0 and chara_count % 5 == 0:
+                    line_feed.draw()
+            
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
     def set_target_chara(self, temple_id: str, body_part: str, target_chara_id: int):
         """设置交互对象"""
         if body_part != "侍奉":
@@ -640,6 +708,32 @@ class Edit_Group_Sex_Temple_Panel:
     def change_temple(self):
         """切换模板"""
         self.pl_character_data.h_state.group_sex_body_template_dict["A"], self.pl_character_data.h_state.group_sex_body_template_dict["B"] = self.pl_character_data.h_state.group_sex_body_template_dict["B"], self.pl_character_data.h_state.group_sex_body_template_dict["A"]
+
+    def invite_npc(self, character_id: int):
+        """邀请NPC"""
+        from Script.Design import character
+        character_data = cache.character_data[character_id]
+        # 如果已经邀请，则取消邀请
+        if character_data.sp_flag.go_to_join_group_sex:
+            character_data.sp_flag.go_to_join_group_sex = False
+            info_draw_text = _("\n已取消对{0}的群交邀请，{0}不会来这里参加群交了\n").format(character_data.name)
+            # 结算等待
+            character.init_character_behavior_start_time(character_id, cache.game_time)
+            constant.handle_state_machine_data[0](character_id)
+        # 否则邀请
+        else:
+            character_data.sp_flag.go_to_join_group_sex = True
+            info_draw_text = _("\n已邀请{0}来这里参加群交\n").format(character_data.name)
+            # 赋予二段行为
+            character_data.second_behavior[1366] = 1
+            # 结算移动
+            character.init_character_behavior_start_time(character_id, cache.game_time)
+            constant.handle_state_machine_data[503](character_id)
+        # 绘制信息
+        info_draw = draw.WaitDraw()
+        info_draw.text = info_draw_text
+        info_draw.width = self.width
+        info_draw.draw()
 
     def reset_unfinish_select(self):
         """重置角色id或者状态id没有全部填完的项"""

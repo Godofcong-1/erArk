@@ -10,6 +10,11 @@ example/口上测试.csv
 */*/*/*/*.pyc
 */*/*/*/*/*.pyc
 
+# 数据库
+data/Character.json
+data/data.json
+data/ui_text.json
+
 # 临时文件
 tem
 

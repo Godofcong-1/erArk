@@ -1408,6 +1408,10 @@ class StateMachine:
     """ 清零洗澡状态并换上标准衣服 """
     START_MASTUREBATE_BEFORE_SLEEP = 95
     """ 进入要睡前自慰状态 """
+    JOIN_GROUP_SEX = 96
+    """ 加入群交 """
+    STOP_JOIN_GROUP_SEX = 97
+    """ 停止加入群交 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -2040,6 +2044,9 @@ class SecondBehavior:
     """ 以队长身份出发执行外勤委托 """
     END_FIELD_COMMISSION_AS_LEADER = 1362
     """ 以队长身份完成外勤委托归舰 """
+
+    BE_INVITED_JOIN_GROUP_SEX = 1366
+    """ 被邀请加入群交，开始前往群交地点 """
 
     APPOINNTED_AS_DIPLOMAT_LOCAL = 1371
     """ 被任命为本地外交官 """

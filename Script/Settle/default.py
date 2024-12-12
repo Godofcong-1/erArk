@@ -2932,6 +2932,48 @@ def handle_all_group_sex_temple_run_off(
     character_data.h_state.all_group_sex_temple_run = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_JOIN_GROUP_SEX_ON)
+def handle_self_join_group_sex_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己开始加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.go_to_join_group_sex = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_JOIN_GROUP_SEX_OFF)
+def handle_self_join_group_sex_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己停止加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.go_to_join_group_sex = False
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,

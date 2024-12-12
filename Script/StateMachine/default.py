@@ -3,7 +3,7 @@ import datetime
 from types import FunctionType
 from Script.Settle import default
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, basement, handle_premise, handle_premise_place
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_premise_place
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -2051,6 +2051,35 @@ def character_start_masturebate_before_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.masturebate_before_sleep = 1
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.JOIN_GROUP_SEX)
+def character_join_group_sex(character_id: int):
+    """
+    加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = 0
+    character_data.behavior.behavior_id = constant.Behavior.JOIN_GROUP_SEX
+    character_data.behavior.duration = 5
+    character_data.state = constant.CharacterStatus.STATUS_JOIN_GROUP_SEX
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.STOP_JOIN_GROUP_SEX)
+def character_stop_join_group_sex(character_id: int):
+    """
+    停止加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.go_to_join_group_sex = False
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1

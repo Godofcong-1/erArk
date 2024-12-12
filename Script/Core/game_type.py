@@ -656,6 +656,8 @@ class SPECIAL_FLAG:
         """ 外勤委托状态，0为未外勤，否则为对应外勤委托编号 """
         self.in_diplomatic_visit: int = 0
         """ 外交访问状态，0为未访问，否则为对应出身地编号 """
+        self.go_to_join_group_sex: bool = False
+        """ 正在前往参与群交 """
 
 
 class CHARA_WORK:

@@ -626,6 +626,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         # 博士可以无条件进博士房间和博士办公室
         elif character_id == 0 and ("Dr_room" in now_scene_data.scene_tag or "Dr_office" in now_scene_data.scene_tag):
             pass
+        # 被邀请群交的角色可以进
+        elif character_data.sp_flag.go_to_join_group_sex:
+            pass
         else:
             # 如果是玩家的话输出提示信息
             if character_id == 0:
@@ -641,7 +644,8 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
                 return "door_lock"
 
     # 私密场所判断，仅限干员
-    if character_id:
+    # 被邀请群交的角色可以进
+    if character_id and character_data.sp_flag.go_to_join_group_sex == False:
         # 博士房间
         if "Dr_room" in now_scene_data.scene_tag:
             # 助理可以进

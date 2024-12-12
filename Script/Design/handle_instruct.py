@@ -2126,11 +2126,6 @@ def handle_ask_group_sex():
 
     # 成功进入群交模式
     if h_flag:
-        if cache.scene_data[scene_path_str].close_flag == 0:
-            now_draw = normal_panel.Close_Door_Panel(width)
-            door_return = now_draw.draw()
-            if door_return == -1:
-                return
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX
         character_data.state = constant.CharacterStatus.STATUS_ASK_GROUP_SEX
         now_draw.text = _("\n进入群交模式\n")

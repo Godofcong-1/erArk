@@ -11447,6 +11447,31 @@ def handle_npc_ai_type_2_in_group_sex(character_id: int) -> int:
     return pl_character_data.h_state.npc_ai_type_in_group_sex == 2
 
 
+@add_premise(constant_promise.Premise.SLEF_NOW_GO_TO_JOIN_GROUP_SEX)
+def handle_self_now_go_to_join_group_sex(character_id: int) -> int:
+    """
+    自己正在前往加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.go_to_join_group_sex
+
+
+@add_premise(constant_promise.Premise.SLEF_NOT_GO_TO_JOIN_GROUP_SEX)
+def handle_self_not_go_to_join_group_sex(character_id: int) -> int:
+    """
+    自己没有前往加入群交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_go_to_join_group_sex(character_id)
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)
