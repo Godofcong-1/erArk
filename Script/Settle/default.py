@@ -11,7 +11,6 @@ from Script.Design import (
     handle_instruct,
     character_behavior,
     handle_npc_ai,
-    basement,
     handle_premise,
     handle_premise_place
 )
@@ -71,6 +70,16 @@ def base_chara_hp_mp_common_settle(
     }
     hp_adjust = dregree_dict[dregree][0]
     mp_adjust = dregree_dict[dregree][1]
+    # 群交中消耗减少
+    if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
+        # 玩家减为三分之一
+        if character_id == 0:
+            hp_adjust /= 3
+            mp_adjust /= 3
+        # NPC减为二分之一
+        else:
+            hp_adjust /= 2
+            mp_adjust /= 2
     # 体力结算
     if hp_value in [-1, 1]:
         hp_value *= add_time * hp_adjust
@@ -276,6 +285,14 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
             final_adjust += 0.1
         # 全体干员+数量*0.01
         final_adjust += len(now_token) * 0.01
+    # 群交中会因在场的其他干员人数进行调整
+    if character_data.sp_flag.is_h and handle_premise.handle_group_sex_mode_on(character_id):
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        other_npc_num = len(scene_data.character_list) - 2
+        # 最大只能吃十个人的加成
+        other_npc_num = min(10, other_npc_num)
+        final_adjust += other_npc_num * 0.02
 
     return final_adjust
 
@@ -379,6 +396,14 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     # 催眠-敏感
     if character_data.hypnosis.increase_body_sensitivity and state_id == 12:
         final_adjust += 2
+    # 群交中会因在场的其他干员人数进行调整
+    if character_data.sp_flag.is_h and handle_premise.handle_group_sex_mode_on(character_id):
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        other_npc_num = len(scene_data.character_list) - 2
+        # 最大只能吃十个人的加成
+        other_npc_num = min(10, other_npc_num)
+        final_adjust += other_npc_num * 0.05
     # 保证最终值不为负数
     final_adjust = max(0, final_adjust)
 
