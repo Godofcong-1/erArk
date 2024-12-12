@@ -889,7 +889,7 @@ class Scene:
         self.close_type: int = 0
         """ 关门类型(0无法关门,1正常关门,2小隔间关门) """
         self.close_flag: int = 0
-        """ 关门状态 """
+        """ 关门状态(0未关门,1正常关门,2小隔间关门) """
         self.scene_tag: list = []
         """ 场景标签 """
         self.character_list: set = set()

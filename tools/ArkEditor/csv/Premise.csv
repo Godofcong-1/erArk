@@ -28,9 +28,11 @@ sys_4,TARGET_IS_PLAYER,指令_触发与交互,交互对象是玩家角色
 sys_5,TARGET_NO_PLAYER,指令_触发与交互,交互对象不是玩家
 sex_0,IS_MAN,指令_触发与交互,触发该指令的是男性
 sex_1,IS_WOMAN,指令_触发与交互,触发该指令的是女性
-instruct_judge_low_obscenity,INSTRUCT_JUDGE_LOW_OBSCENITY,指令_触发与交互,口上用：当前实行值足以轻度性骚扰
-instruct_judge_high_obscenity,INSTRUCT_JUDGE_HIGH_OBSCENITY,指令_触发与交互,口上用：当前实行值足以重度性骚扰
-instruct_judge_h,INSTRUCT_JUDGE_H,指令_触发与交互,口上用：当前实行值足以邀请H
+instruct_judge_low_obscenity,INSTRUCT_JUDGE_LOW_OBSCENITY,指令_触发与交互,口上用：当前实行值足以对自己轻度性骚扰
+instruct_judge_high_obscenity,INSTRUCT_JUDGE_HIGH_OBSCENITY,指令_触发与交互,口上用：当前实行值足以对自己重度性骚扰
+instruct_judge_h,INSTRUCT_JUDGE_H,指令_触发与交互,口上用：当前实行值足以对自己邀请H
+instruct_judge_group_sex,INSTRUCT_JUDGE_GROUP_SEX,指令_触发与交互,口上用：当前实行值足以对自己邀请群交
+instruct_not_judge_group_sex,INSTRUCT_NOT_JUDGE_GROUP_SEX,指令_触发与交互,口上用：当前实行值不足以对自己邀请群交
 target_have_chara_diy_instruct,TARGET_HAVE_CHARA_DIY_INSTRUCT,指令_触发与交互,交互对象有角色自定义指令且至少有一个序号0的子事件满足全前提
 
 high_1,HIGH_1,指令_权重,优先度为1的空白前提
@@ -127,6 +129,7 @@ place_furniture_3,PLACE_FURNITURE_3,地点_属性,当前地点有卧室级家具
 place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中（本前提已弃用）
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
+place_inside_door_close,PLACE_INSIDE_DOOR_CLOSE,地点_属性,地点的内隔间正关门中
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
 place_in_collection_list,PALCE_IN_COLLECTION_LIST,地点_属性,当前地点在收藏列表中
 place_not_in_collection_list,PLACE_NOT_IN_COLLECTION_LIST,地点_属性,当前地点不在收藏列表中
@@ -1326,6 +1329,8 @@ all_group_sex_temple_run_off,ALL_GROUP_SEX_TEMPLE_RUN_OFF,H_群交,关闭了运�
 npc_ai_type_0_in_group_sex,NPC_AI_TYPE_0_IN_GROUP_SEX,H_群交,未在模板中的NPC在群交中无行动
 npc_ai_type_1_in_group_sex,NPC_AI_TYPE_1_IN_GROUP_SEX,H_群交,未在模板中的NPC在群交中仅自慰
 npc_ai_type_2_in_group_sex,NPC_AI_TYPE_2_IN_GROUP_SEX,H_群交,未在模板中的NPC在群交中优先自动补位、无位则自慰
+self_now_go_to_join_group_sex,SLEF_NOW_GO_TO_JOIN_GROUP_SEX,H_群交,自己正在前往加入群交
+self_not_go_to_join_group_sex,SLEF_NOT_GO_TO_JOIN_GROUP_SEX,H_群交,自己没有前往加入群交
 
 have_food,HAVE_FOOD,道具_持有,拥有食物
 not_have_food,NOT_HAVE_FOOD,道具_持有,未拥有食物

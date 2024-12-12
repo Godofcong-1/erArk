@@ -1164,49 +1164,77 @@ def handle_high_999(character_id: int) -> int:
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_LOW_OBSCENITY)
 def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
-    口上用：当前实行值足以轻度性骚扰
+    口上用：当前实行值足以对自己轻度性骚扰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, _("初级骚扰"), not_draw_flag = True)[0]:
-            return 1
+    if character_id == 0:
+        return 0
+    if character.calculation_instuct_judege(0, character_id, _("初级骚扰"), not_draw_flag = True)[0]:
+        return 1
     return 0
 
 
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_HIGH_OBSCENITY)
 def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     """
-    口上用：当前实行值足以重度性骚扰
+    口上用：当前实行值足以对自己重度性骚扰
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, _("严重骚扰"), not_draw_flag = True)[0]:
-            return 1
+    if character_id == 0:
+        return 0
+    if character.calculation_instuct_judege(0, character_id, _("严重骚扰"), not_draw_flag = True)[0]:
+        return 1
     return 0
 
 
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_H)
 def handle_instruct_judge_h(character_id: int) -> int:
     """
-    口上用：当前实行值足以邀请H
+    口上用：当前实行值足以对自己邀请H
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.target_character_id:
-        if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"), not_draw_flag = True)[0]:
-            return 1
+    if character_id == 0:
+        return 0
+    if character.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag = True)[0]:
+        return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.INSTRUCT_JUDGE_GROUP_SEX)
+def handle_instruct_judge_group_sex(character_id: int) -> int:
+    """
+    口上用：当前实行值足以对自己邀请群交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if character_id == 0:
+        return 0
+    if character.calculation_instuct_judege(0, character_id, _("群交"), not_draw_flag = True)[0]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.INSTRUCT_NOT_JUDGE_GROUP_SEX)
+def handle_instruct_not_judge_group_sex(character_id: int) -> int:
+    """
+    口上用：当前实行值不足以对自己邀请群交
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_instruct_judge_group_sex(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_CHARA_DIY_INSTRUCT)

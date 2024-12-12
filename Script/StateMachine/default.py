@@ -1292,33 +1292,42 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     # 如果是关闭了隔间门的房间的话，则不会被看到
-    if handle_premise_place.handle_place_door_open(character_id):
+    if handle_premise_place.handle_place_inside_door_close(character_id):
         return
 
     character_data: game_type.Character = cache.character_data[character_id]
-    to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
-    general_movement_module(character_id, to_target)
 
-    # 输出提示信息，并结算把柄
+    # 输出提示信息，并结算
+    result_type = 0 # 0为无事发生，1为中断H，2为加入群交
     now_draw = draw.NormalDraw()
     now_draw.text = _("被{0}看到了情事现场\n").format(character_data.name)
-    if character_data.talent[222]:
-        now_draw.text += _("{0}还不懂这是什么意义，被你随口糊弄走了").format(character_data.name)
+    if handle_premise.handle_instruct_judge_group_sex(character_id):
+        result_type = 2
+        now_draw.text += _("{0}决定加入其中\n").format(character_data.name)
+    elif character_data.talent[222]:
+        now_draw.text += _("{0}还不懂这是什么意义，被你随口糊弄走了\n").format(character_data.name)
     else:
+        result_type = 1
         character_data.talent[401] = 1
         now_draw.text += _("{0}获得了[持有博士把柄]\n").format(character_data.name)
-        now_draw.text += _("{0}红着脸跑走了").format(character_data.name)
+        now_draw.text += _("{0}红着脸跑走了\n").format(character_data.name)
     now_draw.draw()
     line_feed.draw()
 
     # 中断H
-    pl_data: game_type.Character = cache.character_data[0]
-    target_data = cache.character_data[pl_data.target_character_id]
-    target_data.action_info.h_interrupt = 1
-    # 原地待机10分钟
-    pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
-    pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
-    handle_instruct.handle_end_h()
+    if result_type == 1:
+        to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
+        general_movement_module(character_id, to_target)
+        pl_data: game_type.Character = cache.character_data[0]
+        target_data = cache.character_data[pl_data.target_character_id]
+        target_data.action_info.h_interrupt = 1
+        # 原地待机10分钟
+        pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+        pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+        handle_instruct.handle_end_h()
+    # 加入群交
+    elif result_type == 2:
+        character_join_group_sex(character_id)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
