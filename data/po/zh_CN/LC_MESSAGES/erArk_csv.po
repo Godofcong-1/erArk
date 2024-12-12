@@ -20869,11 +20869,11 @@ msgid "“{PlayerNickName}……”转过头看向呼唤自己的{Name}的时候
 msgstr ""
 
 #: Event:3653baf8-c688-498a-9439-62a4628228c6
-msgid "“呼唔……”不知道什么时候贴到了身上的{Name}，眯着眼睛仰着头看着{PlayerName}。\n“{PlayerName}~”，纤细的手指笼上了{PlayerName}的股间，将阴茎抓了出来慢慢地揉弄。\n原本柔软的娇躯现在散发着热量，还来不及仔细感觉，就被发情的{Name}按在了墙壁上堵住，“都怪，无情的{PlayerName}，现在白金变成了这样下流的样子。”\n“即使是被袭击也好，可以请{PlayerName}负起责任吗？”"
+msgid "“呼唔……”不知道什么时候贴到了身上的{Name}，眯着眼睛仰着头看着{PlayerName}。\n“{PlayerName}~”，纤细的手指笼上了{PlayerName}的股间，将阴茎抓了出来慢慢地揉弄。\n原本柔软的娇躯现在散发着热量，还来不及仔细感觉，就被发情的{Name}按在了墙壁上堵住，“都怪，无情的{PlayerName}，现在我变成了这样下流的样子。”\n“即使是被袭击也好，可以请{PlayerName}负起责任吗？”"
 msgstr ""
 
 #: Event:d029009b-6a61-4552-a757-431b0aa75e57
-msgid "不知道为什么，夹着腿的{Name}牵起了{PlayerName}的手，拉到了一个隐蔽的角落里。\n“这里，嗯，可以……”{Name}仔细地观察了周围环境之后，躲闪着视线不敢看向{PlayerName}，“{PlayerNickName}，这个……”\n{Name}将自己已经濡湿的内裤展示了出来，“已经很想要{PlayerName}的……所以，可以陪我一下吗？”\n发情到眼底已经快要冒出爱心的{TargetName}，将柔顺的尾巴缠在了{PlayerName}的大腿上，“正常来说，不会这个样子的，但是一想到{PlayerNickName}的事情……”"
+msgid "不知道为什么，夹着腿的{Name}牵起了{PlayerName}的手，拉到了一个隐蔽的角落里。\n“这里，嗯，可以……”{Name}仔细地观察了周围环境之后，躲闪着视线不敢看向{PlayerName}，“{PlayerNickName}，这个……”\n{Name}将自己已经濡湿的下体展示了出来，“已经很想要{PlayerName}的……所以，可以陪我一下吗？”\n发情到眼底已经快要冒出爱心的{TargetName}，将柔顺的尾巴缠在了{PlayerName}的大腿上，“正常来说，不会这个样子的，但是一想到{PlayerNickName}的事情……”"
 msgstr ""
 
 #: Event:127eef6b-688c-4b8e-9ebd-461d0828e60a
@@ -20881,7 +20881,7 @@ msgid "经过床边的时候，突然被一起行动的{Name}推倒在了床上�
 msgstr ""
 
 #: Event:9c40b7be-4049-43fb-a8c6-24a7bc181c6b
-msgid "安静地贴到了{PlayerName}身边的{Name}，像是杀手从后背上缠住了{PlayerName}，“呼唔……”\n“{PlayerNickName}还是太大意了呢，这样……很容易被女孩子袭击的。”\n{PlayerName}的眼前漂亮的眼睛湿润了，小脸染上了绯红的{Name}，呢喃着轻咬{PlayerName}的脖颈，“尤其是发情的雌性，很危险的呢。”\n“那么，作为袭击{PlayerNickName}的奖励，我可以从{PlayerNickName}身上拿走战利品吗？”"
+msgid "安静地贴到了{PlayerName}身边的{Name}，像是杀手从后背上缠住了{PlayerName}，“呼唔……”\n“{PlayerNickName}还是太大意了呢，这样……很容易被女孩子袭击的。”\n{PlayerName}的眼前漂亮的眼睛湿润了，小脸染上了绯红的{Name}，呢喃着轻咬{PlayerName}的脖颈。\n“尤其是发情的雌性，很危险的呢。”\n“那么，作为袭击{PlayerNickName}的奖励，我可以从{PlayerNickName}身上拿走战利品吗？”"
 msgstr ""
 
 #: Event:e5d90888-a179-4340-98cc-cb8f6f1031be
