@@ -2089,7 +2089,7 @@ def handle_do_h_in_love_hotel():
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.SCENE_OVER_TWO,
-     constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
+     constant_promise.Premise.SCENE_ALL_NOT_TIRED,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_ASK_GROUP_SEX,
 )
@@ -2098,11 +2098,6 @@ def handle_ask_group_sex():
     # 输出失败信息
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    # 场景内有太疲劳的角色
-    if handle_premise_place.handle_scene_someone_hp_1(0):
-        now_draw.text = _("\n场景内有角色处于疲劳状态，无法进行群交\n")
-        now_draw.draw()
-        return
 
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]

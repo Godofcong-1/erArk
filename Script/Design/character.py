@@ -472,13 +472,15 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         scene_data = cache.scene_data[scene_path_str]
         if len(scene_data.character_list) > 2:
             other_chara_count = len(scene_data.character_list) - 2
-            if judge_data_type == "S":
+            if instruct_name == _("群交"):
+                judge_other_people = 60 + 60 * other_chara_count
+            elif judge_data_type == "S":
                 judge_other_people = 40 + 40 * other_chara_count
             else:
                 judge_other_people = 25 + 25 * other_chara_count
             # 露出修正
             adjust = attr_calculation.get_ability_adjust(target_data.ability[34])
-            judge_other_people = int(judge_other_people * (adjust - 1.4))
+            judge_other_people = int(judge_other_people * (adjust - 1.6))
             judge += judge_other_people
             calculation_text += _("+有别人在时的露出修正(") + text_handle.number_to_symbol_string(judge_other_people) + ")"
 
