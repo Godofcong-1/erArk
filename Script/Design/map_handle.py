@@ -440,6 +440,8 @@ def judge_scene_is_full(scene_path_str: str) -> bool:
     scene_path -- 场景路径
     """
     scene_data = cache.scene_data[scene_path_str]
+    if not hasattr(scene_data, 'room_area'):
+        return False
     if scene_data.room_area == 0:
         max_character = 10
     elif scene_data.room_area == 1:
