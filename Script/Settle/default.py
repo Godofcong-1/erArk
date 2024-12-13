@@ -5557,8 +5557,6 @@ def handle_scene_all_characters_update_orgasm_level(
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     for chara_id in scene_data.character_list:
-        if chara_id == 0:
-            continue
         now_character_data = cache.character_data[chara_id]
         for orgasm in range(8):
             now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])
@@ -5586,8 +5584,6 @@ def handle_scene_all_characters_h_state_reset(
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     for chara_id in scene_data.character_list:
-        if chara_id == 0:
-            continue
         handle_self_h_state_reset(chara_id, add_time, change_data, now_time)
 
 
