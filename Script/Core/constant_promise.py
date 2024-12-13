@@ -234,6 +234,8 @@ class Premise:
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都至少有2级陷落素质 """
     SCENE_ALL_NOT_TIRED = "place_all_not_tired"
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都未疲劳 """
+    SCENE_ALL_NOT_H = "place_all_not_h"
+    """ 地点_角色 该地点有玩家以外的角色，且所有角色都未在H中 """
 
     TEACHER_TEACHING_IN_CLASSROOM = "teacher_teaching_in_classroom"
     """ 地点_工作 当前有教师在教室里讲课 """

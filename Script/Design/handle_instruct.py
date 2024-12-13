@@ -1937,6 +1937,7 @@ def handle_collect():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_H,
@@ -2067,6 +2068,7 @@ def handle_unconscious_h():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_LOVE_HOTEL,
+     constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.TARGET_HP_NE_1,
@@ -2084,10 +2086,9 @@ def handle_do_h_in_love_hotel():
 @add_instruct(
     constant.Instruct.ASK_GROUP_SEX,
     constant.InstructType.OBSCENITY,
-    _("邀请群交_未实装"),
+    _("邀请群交"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
-     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_ALL_NOT_H,
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.SCENE_ALL_NOT_TIRED,
      constant_promise.Premise.TIRED_LE_74},
@@ -2095,7 +2096,6 @@ def handle_do_h_in_love_hotel():
 )
 def handle_ask_group_sex():
     """处理邀请群交指令"""
-    # 输出失败信息
     now_draw = draw.WaitDraw()
     now_draw.width = width
 
@@ -2140,7 +2140,7 @@ def handle_ask_group_sex():
     else:
         now_draw.text = _("\n进入群交模式失败\n")
         for chara_id in refuse_chara_list:
-            now_draw.text += _("{0}拒绝了加入群交\n").format(cache.character_data[chara_id].name)
+            now_draw.text += _("{0}拒绝了群交\n").format(cache.character_data[chara_id].name)
         now_draw.draw()
         character_data.action_info.ask_group_sex_refuse_chara_id_list = refuse_chara_list
         character_data.behavior.behavior_id = constant.Behavior.ASK_GROUP_SEX_FAIL
