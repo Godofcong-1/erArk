@@ -4,5 +4,6 @@
   "Exposed":"1",
   "Have_Furniture":"1",
   "Close_Type":"1",
-  "SceneTag":"Room|Ladies_Only|Sauna"
+  "SceneTag":"Room|Ladies_Only|Sauna",
+  "Room_Area":"1"
 }

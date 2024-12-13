@@ -4,5 +4,6 @@
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"1",
-  "SceneTag":"Production_Workshop|assembly_line_1"
+  "SceneTag":"Production_Workshop|assembly_line_1",
+  "Room_Area":"2"
 }

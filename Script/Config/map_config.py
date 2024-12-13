@@ -66,6 +66,7 @@ def load_dir_now(data_path: str):
                         now_scene_data.exposed = int(load_scene_data["Exposed"])
                         now_scene_data.have_furniture = int(load_scene_data["Have_Furniture"])
                         now_scene_data.close_type = int(load_scene_data["Close_Type"])
+                        now_scene_data.room_area = int(load_scene_data["Room_Area"])
                         now_scene_data.close_flag = 0
                         scene_tag_list = load_scene_data["SceneTag"]
                         if "|" not in scene_tag_list:

@@ -3,6 +3,7 @@
   "InOutDoor":"In",
   "Exposed":"1",
   "Have_Furniture":"0",
-  "Close_Type":"1",
-  "SceneTag":"Room"
+  "Close_Type":"0",
+  "SceneTag":"Room",
+  "Room_Area":"1"
 }

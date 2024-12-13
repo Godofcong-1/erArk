@@ -433,6 +433,25 @@ def get_scene_character_id_list(scene_path_str: str) -> list:
     return list(cache.scene_data[scene_path_str].character_list)
 
 
+def judge_scene_is_full(scene_path_str: str) -> bool:
+    """
+    判断场景是否满员
+    Keyword arguments:
+    scene_path -- 场景路径
+    """
+    scene_data = cache.scene_data[scene_path_str]
+    if scene_data.room_area == 0:
+        max_character = 10
+    elif scene_data.room_area == 1:
+        max_character = 50
+    elif scene_data.room_area == 2:
+        max_character = 100
+    elif scene_data.room_area == 3:
+        max_character = 9999
+    if len(scene_data.character_list) >= max_character:
+        return True
+    return False
+
 def sort_scene_character_id(scene_path_str: str):
     """
     对场景上的角色按好感度进行排序
@@ -566,7 +585,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
     character_id -- 角色id
     draw_flag -- 是否输出提示信息 (default True)
     Return arguments:
-    str -- open:可以进入,wait_open:未解锁,door_lock:门上锁,private:私密场所
+    str -- open:可以进入,wait_open:未解锁,door_lock:门上锁,private:私密场所,full:房间满员
     """
 
     # print(f"debug target_scene_str = {target_scene_str}")
@@ -659,5 +678,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         # 非自己的宿舍
         elif "Dormitory" in now_scene_data.scene_tag and character_data.dormitory != target_scene_str:
             return "private"
+
+    # 房间满员判断，仅限干员
+    if character_id and judge_scene_is_full(target_scene_str):
+        return "full"
 
     return "open"
