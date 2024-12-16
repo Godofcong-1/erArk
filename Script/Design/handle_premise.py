@@ -11475,6 +11475,19 @@ def handle_npc_ai_type_2_in_group_sex(character_id: int) -> int:
     return pl_character_data.h_state.npc_ai_type_in_group_sex == 2
 
 
+@add_premise(constant_promise.Premise.NPC_AI_TYPE_3_IN_GROUP_SEX)
+def handle_npc_ai_type_3_in_group_sex(character_id: int) -> int:
+    """
+    未在模板中的NPC在群交中随机抢占替换当前位置，无位则自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    return pl_character_data.h_state.npc_ai_type_in_group_sex == 3
+
+
 @add_premise(constant_promise.Premise.SLEF_NOW_GO_TO_JOIN_GROUP_SEX)
 def handle_self_now_go_to_join_group_sex(character_id: int) -> int:
     """

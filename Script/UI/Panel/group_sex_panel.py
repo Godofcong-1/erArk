@@ -226,6 +226,50 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
     return new_status_id_list
 
 
+def get_now_template_part_list():
+    """
+    获取当前模板中空缺与非空缺的部位列表\n
+    Keyword arguments:\n
+    body_part -- 群交部位\n
+    Return arguments:\n
+    [], [] -- 空缺的部位列表，非空缺的部位列表
+    """
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+    A_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
+
+    now_template_empty_part_list = [] # 空缺的部位列表
+    now_template_not_empty_part_list = [] # 非空缺的部位列表
+    wait_upon_flag = True # 侍奉是否可选
+    wait_upon_state_id = A_template_data[1][1] # 侍奉的状态id
+    # 对单
+    for body_part in A_template_data[0]:
+        state_id = A_template_data[0][body_part][1]
+        if state_id == -1:
+            # 如果不是阴茎，则直接加入
+            if body_part != "penis":
+                now_template_empty_part_list.append(body_part)
+            # 如果是阴茎，则需要未选侍奉
+            elif wait_upon_state_id == -1:
+                now_template_empty_part_list.append(body_part)
+        # 如果阴茎已选，则侍奉不可选
+        elif body_part == "penis":
+            wait_upon_flag = False
+        if state_id != -1:
+            now_template_not_empty_part_list.append(body_part)
+
+    # 侍奉
+    if wait_upon_flag:
+        target_chara_id_list = A_template_data[1][0]
+        if wait_upon_state_id == -1:
+            now_template_empty_part_list.append(_("侍奉"))
+        elif wait_upon_state_id != -1:
+            now_template_not_empty_part_list.append(_("侍奉"))
+            if len(target_chara_id_list) < 4:
+                now_template_empty_part_list.append(_("加入侍奉"))
+
+    return now_template_empty_part_list, now_template_not_empty_part_list
+
 class SeeGroupSexInfoPanel:
     """
     显示群交栏数据面板对象
@@ -471,6 +515,8 @@ class Edit_Group_Sex_Temple_Panel:
                 npc_ai_text = _("自慰")
             elif handle_premise.handle_npc_ai_type_2_in_group_sex(0):
                 npc_ai_text = _("优先补空位，无空位则自慰")
+            elif handle_premise.handle_npc_ai_type_3_in_group_sex(0):
+                npc_ai_text = _("随机抢占替换当前位置，无位则自慰")
             npc_ai_change_button = draw.LeftButton(
                 f"▶{npc_ai_text}", _("调整干员行动"), len(npc_ai_text) * 4 + 1, cmd_func=self.change_npc_ai
             )
@@ -698,7 +744,7 @@ class Edit_Group_Sex_Temple_Panel:
     def change_npc_ai(self):
         """改变NPC行动逻辑"""
         self.pl_character_data.h_state.npc_ai_type_in_group_sex += 1
-        if self.pl_character_data.h_state.npc_ai_type_in_group_sex >= 3:
+        if self.pl_character_data.h_state.npc_ai_type_in_group_sex >= 4:
             self.pl_character_data.h_state.npc_ai_type_in_group_sex = 0
 
     def change_B_temple_flag(self):

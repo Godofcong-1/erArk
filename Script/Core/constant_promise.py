@@ -2640,6 +2640,8 @@ class Premise:
     """ H_群交 未在模板中的NPC在群交中仅自慰 """
     NPC_AI_TYPE_2_IN_GROUP_SEX = "npc_ai_type_2_in_group_sex"
     """ H_群交 未在模板中的NPC在群交中优先自动补位、无位则自慰 """
+    NPC_AI_TYPE_3_IN_GROUP_SEX = "npc_ai_type_3_in_group_sex"
+    """ H_群交 未在模板中的NPC在群交中随机抢占替换当前位置，无位则自慰 """
     SLEF_NOW_GO_TO_JOIN_GROUP_SEX = "self_now_go_to_join_group_sex"
     """ H_群交 自己正在前往加入群交 """
     SLEF_NOT_GO_TO_JOIN_GROUP_SEX = "self_not_go_to_join_group_sex"

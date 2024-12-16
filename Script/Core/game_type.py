@@ -490,7 +490,7 @@ class BODY_H_STATE:
         self.all_group_sex_temple_run: bool = False
         """ 运行全群交模板 """
         self.npc_ai_type_in_group_sex: int = 0
-        """ 未在模板中的NPC在群交中的AI逻辑，0为无行动，1为仅自慰，2为优先自动补位、无位则自慰 """
+        """ 未在模板中的NPC在群交中的AI逻辑，0为无行动，1为仅自慰，2为优先自动补位、无位则自慰，3为每次指令都重置位置后随机抢位 """
 
 
 class FIRST_RECORD:

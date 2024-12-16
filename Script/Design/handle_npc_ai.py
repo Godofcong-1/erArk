@@ -224,8 +224,13 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 睡奸时例外
         if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
             return 1
-        # 群交时则进行群交AI判断处理
-        if handle_premise.handle_group_sex_mode_on(character_id) and not handle_premise.handle_npc_ai_type_0_in_group_sex(character_id):
+        # 群交时，仅自慰类型和部位类型由群交AI判断处理
+        if (
+            handle_premise.handle_group_sex_mode_on(character_id) and
+            (
+                handle_premise.handle_npc_ai_type_1_in_group_sex(character_id) or handle_premise.handle_npc_ai_type_2_in_group_sex(character_id)
+             )
+            ):
             npc_ai_in_group_sex(character_id)
             return 1
         character_data.behavior.behavior_id = constant.Behavior.WAIT
@@ -952,7 +957,7 @@ def npc_active_h():
 
 def npc_ai_in_group_sex(character_id: int):
     """
-    NPC在群交中的AI\n
+    NPC在群交中的AI，不含抢占\n
     Keyword arguments:\n
     character_id -- 角色id\n
     """
@@ -981,30 +986,8 @@ def npc_ai_in_group_sex(character_id: int):
         # print(f"debug {character_data.name}进入了要自慰状态")
         return
 
-    # 首先看玩家当前是否有部位空缺
-    now_template_empty_part_list = []
-    wait_upon_flag = True # 侍奉是否可选
-    wait_upon_state_id = A_template_data[1][1] # 侍奉的状态id
-    # 对单
-    for body_part in A_template_data[0]:
-        state_id = A_template_data[0][body_part][1]
-        if state_id == -1:
-            # 如果不是阴茎，则直接加入
-            if body_part != "penis":
-                now_template_empty_part_list.append(body_part)
-            # 如果是阴茎，则需要未选侍奉
-            elif wait_upon_state_id == -1:
-                now_template_empty_part_list.append(body_part)
-        # 如果阴茎已选，则侍奉不可选
-        elif body_part == "penis":
-            wait_upon_flag = False
-    # 侍奉
-    if wait_upon_flag:
-        target_chara_id_list = A_template_data[1][0]
-        if wait_upon_state_id == -1:
-            now_template_empty_part_list.append(_("侍奉"))
-        elif wait_upon_state_id != -1 and len(target_chara_id_list) < 4:
-            now_template_empty_part_list.append(_("加入侍奉"))
+    # 获取当前模板的空缺部位和非空缺部位
+    now_template_empty_part_list, now_template_not_empty_part_list = group_sex_panel.get_now_template_part_list()
 
     # 如果有空缺，则随机选择一个部位
     if len(now_template_empty_part_list):
@@ -1028,6 +1011,90 @@ def npc_ai_in_group_sex(character_id: int):
             # print(f"debug {character_data.name}对{body_part}选择了{game_config.config_status[status_id].name}")
     # 否则，自己进入要自慰状态
     else:
+        character_data.sp_flag.masturebate = 3
+        character_data.state == constant.CharacterStatus.STATUS_ARDER
+        # print(f"debug {character_data.name}进入了要自慰状态")
+
+def npc_ai_in_group_sex_type_3():
+    """
+    NPC在群交中的抢占AI\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    from Script.UI.Panel import group_sex_panel
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+    A_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
+    group_sex_chara_id_list = group_sex_panel.count_group_sex_character_list()
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    scene_data = cache.scene_data[scene_path_str]
+    now_scene_chara_id_list = scene_data.character_list
+
+    # 筛选角色列表
+    new_chara_id_list = []
+    for character_id in now_scene_chara_id_list:
+        character_data: game_type.Character = cache.character_data[character_id]
+        # 如果自己已在群交模板中，则跳过
+        if character_id in group_sex_chara_id_list:
+            continue
+        # 如果不是H状态+群交，则跳过
+        if character_data.sp_flag.is_h == False or handle_premise.handle_group_sex_mode_off(character_id):
+            continue
+        new_chara_id_list.append(character_id)
+
+    # 获取当前模板的空缺部位和非空缺部位
+    now_template_empty_part_list, now_template_not_empty_part_list = group_sex_panel.get_now_template_part_list()
+
+    # 遍历空缺部位
+    for body_part in now_template_empty_part_list:
+        # 如果新角色列表空了，则退出循环
+        if len(new_chara_id_list) <= 0:
+            break
+        # 从新角色列表中选择一个随机角色
+        character_id = random.choice(new_chara_id_list)
+        # 从列表中去掉该角色
+        new_chara_id_list.remove(character_id)
+        # 如果是加入侍奉，则直接加入
+        if body_part == _("加入侍奉"):
+            A_template_data[1][0].append(character_id)
+            # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
+        else:
+            # 获取该部位的状态id列表
+            pl_character_data.target_character_id = character_id
+            new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            # 随机选择一个状态
+            status_id = random.choice(new_status_id_list)
+            # 如果是侍奉
+            if body_part == _("侍奉"):
+                A_template_data[1] = [[character_id], status_id]
+            # 如果是对单
+            else:
+                A_template_data[0][body_part] = [character_id, status_id]
+            # print(f"debug {character_data.name}对{body_part}选择了{game_config.config_status[status_id].name}")
+
+    # 遍历非空缺部位
+    for body_part in now_template_not_empty_part_list:
+        # 如果新角色列表空了，则退出循环
+        if len(new_chara_id_list) <= 0:
+            break
+        # 二分之一的几率不结算该部位
+        if random.randint(0,1):
+            continue
+        # 从新角色列表中选择一个随机角色
+        character_id = random.choice(new_chara_id_list)
+        # 从列表中去掉该角色
+        new_chara_id_list.remove(character_id)
+        # 如果是侍奉，则加入角色列表，并踢出列表中的第0个角色
+        if body_part == _("侍奉"):
+            A_template_data[1][0].append(character_id)
+            A_template_data[1][0].pop(0)
+        # 否则代替原角色
+        else:
+            A_template_data[0][body_part][0] = character_id
+
+    # 剩下的角色进入要自慰状态
+    for character_id in new_chara_id_list:
+        character_data = cache.character_data[character_id]
         character_data.sp_flag.masturebate = 3
         character_data.state == constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}进入了要自慰状态")
