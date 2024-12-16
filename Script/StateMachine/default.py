@@ -1311,6 +1311,9 @@ def character_see_h_and_move_to_dormitory(character_id: int):
         character_data.talent[401] = 1
         now_draw.text += _("{0}获得了[持有博士把柄]\n").format(character_data.name)
         now_draw.text += _("{0}红着脸跑走了\n").format(character_data.name)
+        # 如果是群交状态，则不打断
+        if handle_premise.handle_group_sex_mode_on(character_id):
+            result_type = 0
     now_draw.draw()
     line_feed.draw()
 
