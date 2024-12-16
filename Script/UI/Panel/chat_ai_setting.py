@@ -23,13 +23,14 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
+def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False) -> str:
     """
     判断是否使用文本生成AI\n
     Keyword arguments:\n
     character_id -- 角色id\n
     behavior_id -- 行为id\n
     original_text -- 原始文本\n
+    translator -- 翻译模式\n
     Return arguments:
     fanal_text -- 最终文本
     """
@@ -64,7 +65,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
             return original_text
 
     # 判断是什么类型的地文
-    if cache.ai_setting.ai_chat_setting[3] == 0:
+    if cache.ai_setting.ai_chat_setting[3] == 0 and not translator:
         if "地文" not in original_text:
             return original_text
 
@@ -77,7 +78,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
         info_draw.width = window_width
         info_draw.draw()
 
-    ai_gererate_text = text_ai(character_id, behavior_id, original_text)
+    ai_gererate_text = text_ai(character_id, behavior_id, original_text, translator=translator)
     # 检测是否显示原文本
     if cache.ai_setting.ai_chat_setting[4] == 1:
         fanal_text = ai_gererate_text
@@ -85,7 +86,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
         fanal_text = original_text + "*\n" + ai_gererate_text
 
     # 是否保存
-    if cache.ai_setting.ai_chat_setting[7] == 1:
+    if cache.ai_setting.ai_chat_setting[7] == 1 and not translator:
         save_path = "data/talk/ai/ai_talk.csv"
         # 检测是否存在文件，如果不存在的话，创建文件
         # 检查文件是否存在
@@ -115,13 +116,14 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str) -
 
     return fanal_text
 
-def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
+def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False) -> str:
     """
     文本生成AI\n\n
     Keyword arguments:
     character_id: int 角色id\n
     behavior_id: int 行为id\n
-    original_text: str 原始文本
+    original_text: str 原始文本\n
+    translator -- 翻译模式\n
     """
     from Script.Design import handle_premise
 
@@ -153,127 +155,134 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
             system_promote_text = system_promote_text.replace("{talk_num}", str(talk_num))
         system_promote += _(system_promote_text)
     # print(system_promote)
-    user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
-    # 地点
-    user_prompt += _("场景发生的地点是{0}。").format(Location)
-    # 有交互对象时
-    if character_id != 0 or character_data.target_character_id != 0:
-        if character_id == 0:
-            pl_name = Name
-            npc_name = TargetNickName
-            npc_character_id = character_data.target_character_id
-            npc_character_data = target_character_data
-        elif character_data.target_character_id == 0:
-            pl_name = TargetNickName
-            npc_name = Name
-            npc_character_id = character_id
-            npc_character_data = character_data
-        else:
-            return original_text
-        # 名字
-        user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
-        # 动作
-        user_prompt += _("{0}正在对{1}进行的动作是{2}。").format(Name, TargetNickName, Behavior_Name)
-        # 关系
-        favorability = npc_character_data.favorability[0]
-        favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
-        trust = npc_character_data.trust
-        trust_lv, tem = attr_calculation.get_trust_level(trust)
-        ave_lv = int((favorability_lv + trust_lv) / 2)
-        user_prompt += _("如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。").format(Name, TargetNickName, ave_lv)
-        # 陷落
-        fall_lv = attr_calculation.get_character_fall_level(npc_character_id, minus_flag = True)
-        if fall_lv > 0:
-            user_prompt += _("{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。").format(Name, TargetNickName, Name, TargetNickName, fall_lv)
-        elif fall_lv < 0:
-            user_prompt += _("{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。").format(Name, TargetNickName, npc_name, pl_name, fall_lv)
+    # 生成模式
+    if not translator:
+        user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
+        # 地点
+        user_prompt += _("场景发生的地点是{0}。").format(Location)
+        # 有交互对象时
+        if character_id != 0 or character_data.target_character_id != 0:
+            if character_id == 0:
+                pl_name = Name
+                npc_name = TargetNickName
+                npc_character_id = character_data.target_character_id
+                npc_character_data = target_character_data
+            elif character_data.target_character_id == 0:
+                pl_name = TargetNickName
+                npc_name = Name
+                npc_character_id = character_id
+                npc_character_data = character_data
+            else:
+                return original_text
+            # 名字
+            user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
+            # 动作
+            user_prompt += _("{0}正在对{1}进行的动作是{2}。").format(Name, TargetNickName, Behavior_Name)
+            # 关系
+            favorability = npc_character_data.favorability[0]
+            favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
+            trust = npc_character_data.trust
+            trust_lv, tem = attr_calculation.get_trust_level(trust)
+            ave_lv = int((favorability_lv + trust_lv) / 2)
+            user_prompt += _("如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。").format(Name, TargetNickName, ave_lv)
+            # 陷落
+            fall_lv = attr_calculation.get_character_fall_level(npc_character_id, minus_flag = True)
+            if fall_lv > 0:
+                user_prompt += _("{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。").format(Name, TargetNickName, Name, TargetNickName, fall_lv)
+            elif fall_lv < 0:
+                user_prompt += _("{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。").format(Name, TargetNickName, npc_name, pl_name, fall_lv)
 
-        # 基础状态
-        # 年龄素质
-        age_text = attr_text.get_age_talent_text(npc_character_id)
-        user_prompt += _("{0}的年龄是{1}。").format(npc_name, age_text)
-        # 睡眠、疲劳、困倦
-        if handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id):
-            tem,sleep_name = attr_calculation.get_sleep_level(npc_character_data.sleep_point)
-            user_prompt += _("{0}正在睡觉，睡眠的深度是{1}。").format(npc_name, sleep_name)
-        else:
-            # 疲劳与困倦
-            sleep_lv = attr_calculation.get_tired_level(npc_character_data.tired_point)
-            if sleep_lv > 0:
-                sleep_text = constant.sleep_text_list[sleep_lv]
-                user_prompt += _("{0}有些困了，困的程度为{1}。").format(npc_name, sleep_text)
-        # 心情
-        angry_text = attr_calculation.get_angry_text(npc_character_data.angry_point)
-        if angry_text != "普通":
-            user_prompt += _("{0}的心情状态是{1}。").format(npc_name, angry_text)
-        # 跟随
-        if handle_premise.handle_is_follow_1(npc_character_id):
-            user_prompt += _("{0}正在跟随{1}一起行动。").format(npc_name, pl_name)
-        # 尿意
-        if handle_premise.handle_urinate_ge_80(npc_character_id):
-            user_prompt += _("{0}有点想上厕所尿尿。").format(npc_name)
-        # 饥饿
-        if handle_premise.handle_hunger_ge_80(npc_character_id):
-            user_prompt += _("{0}有点饿了，想吃东西。").format(npc_name)
-        # 催眠
-        if handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
-            user_prompt += _("{0}被{1}催眠了。").format(npc_name, pl_name)
-        # 监禁
-        if handle_premise.handle_imprisonment_1(npc_character_id):
-            user_prompt += _("{0}被{1}监禁在监狱里了。").format(npc_name, pl_name)
-        # 访客
-        if npc_character_data.sp_flag.vistor == 1:
-            user_prompt += _("{0}不是公司的员工，是前来拜访的访客。").format(npc_name)
-        # 时停
-        if handle_premise.handle_unconscious_flag_3(npc_character_id):
-            user_prompt += _("{0}正处在停止的时间中，无法做出任何反应。").format(npc_name)
-        # 中量数据才有的分支
-        if cache.ai_setting.ai_chat_setting[6] >= 1:
-            # 职业
-            profession_name = game_config.config_profession[npc_character_data.profession].name
-            user_prompt += _("{0}的职业是{1}。").format(npc_name, profession_name)
-            # 种族
-            race_name = game_config.config_race[npc_character_data.race].name
-            user_prompt += _("{0}是一种虚构的奇幻种族，种族名是{1}。").format(npc_name, race_name)
-            # 出身地
-            birthplace_name = game_config.config_birthplace[npc_character_data.relationship.birthplace].name
-            user_prompt += _("{0}的出生地是{1}。").format(npc_name, birthplace_name)
-            # 势力
-            nation_name = game_config.config_nation[npc_character_data.relationship.nation].name
-            user_prompt += _("{0}所属的具体势力是{1}。").format(npc_name, nation_name)
-            # 全素质数据
-            user_prompt += _("{0}有以下素质特性：").format(npc_name)
-            for talent_id in game_config.config_talent:
-                if npc_character_data.talent[talent_id]:
-                    talent_name = game_config.config_talent[talent_id].name
-                    user_prompt += _("{0}、").format(talent_name)
-            user_prompt = user_prompt[:-1] + "。"
-        # 大量数据才有的分支
-        if cache.ai_setting.ai_chat_setting[6] >= 2:
-            # 服装
-            user_prompt += _("{0}穿着的衣服有：").format(npc_name)
-            for clothing_type in game_config.config_clothing_type:
-                if len(npc_character_data.cloth.cloth_wear[clothing_type]):
-                    for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
-                        cloth_name = game_config.config_clothing_tem[cloth_id].name
-                        user_prompt += _("{0}、").format(cloth_name)
-            user_prompt = user_prompt[:-1] + "。"
-            # 工作
-            if handle_premise.handle_have_work(npc_character_id):
-                work_name = game_config.config_work_type[npc_character_data.work.work_type].name
-                user_prompt += _("{0}的工作是{1}。").format(npc_name, work_name)
-            # 称呼
-            if handle_premise.handle_self_have_nick_name_to_pl(npc_character_id):
-                nick_name = npc_character_data.nick_name_to_pl
-                user_prompt += _("{0}称呼{1}为{2}。").format(npc_name, pl_name, nick_name)
-            if handle_premise.handle_self_have_nick_name_to_self(npc_character_id):
-                nick_name = npc_character_data.nick_name
-                user_prompt += _("{0}称呼{1}为{2}。").format(pl_name, npc_name, nick_name)
+            # 基础状态
+            # 年龄素质
+            age_text = attr_text.get_age_talent_text(npc_character_id)
+            user_prompt += _("{0}的年龄是{1}。").format(npc_name, age_text)
+            # 睡眠、疲劳、困倦
+            if handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id):
+                tem,sleep_name = attr_calculation.get_sleep_level(npc_character_data.sleep_point)
+                user_prompt += _("{0}正在睡觉，睡眠的深度是{1}。").format(npc_name, sleep_name)
+            else:
+                # 疲劳与困倦
+                sleep_lv = attr_calculation.get_tired_level(npc_character_data.tired_point)
+                if sleep_lv > 0:
+                    sleep_text = constant.sleep_text_list[sleep_lv]
+                    user_prompt += _("{0}有些困了，困的程度为{1}。").format(npc_name, sleep_text)
+            # 心情
+            angry_text = attr_calculation.get_angry_text(npc_character_data.angry_point)
+            if angry_text != "普通":
+                user_prompt += _("{0}的心情状态是{1}。").format(npc_name, angry_text)
+            # 跟随
+            if handle_premise.handle_is_follow_1(npc_character_id):
+                user_prompt += _("{0}正在跟随{1}一起行动。").format(npc_name, pl_name)
+            # 尿意
+            if handle_premise.handle_urinate_ge_80(npc_character_id):
+                user_prompt += _("{0}有点想上厕所尿尿。").format(npc_name)
+            # 饥饿
+            if handle_premise.handle_hunger_ge_80(npc_character_id):
+                user_prompt += _("{0}有点饿了，想吃东西。").format(npc_name)
+            # 催眠
+            if handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
+                user_prompt += _("{0}被{1}催眠了。").format(npc_name, pl_name)
+            # 监禁
+            if handle_premise.handle_imprisonment_1(npc_character_id):
+                user_prompt += _("{0}被{1}监禁在监狱里了。").format(npc_name, pl_name)
+            # 访客
+            if npc_character_data.sp_flag.vistor == 1:
+                user_prompt += _("{0}不是公司的员工，是前来拜访的访客。").format(npc_name)
+            # 时停
+            if handle_premise.handle_unconscious_flag_3(npc_character_id):
+                user_prompt += _("{0}正处在停止的时间中，无法做出任何反应。").format(npc_name)
+            # 中量数据才有的分支
+            if cache.ai_setting.ai_chat_setting[6] >= 1:
+                # 职业
+                profession_name = game_config.config_profession[npc_character_data.profession].name
+                user_prompt += _("{0}的职业是{1}。").format(npc_name, profession_name)
+                # 种族
+                race_name = game_config.config_race[npc_character_data.race].name
+                user_prompt += _("{0}是一种虚构的奇幻种族，种族名是{1}。").format(npc_name, race_name)
+                # 出身地
+                birthplace_name = game_config.config_birthplace[npc_character_data.relationship.birthplace].name
+                user_prompt += _("{0}的出生地是{1}。").format(npc_name, birthplace_name)
+                # 势力
+                nation_name = game_config.config_nation[npc_character_data.relationship.nation].name
+                user_prompt += _("{0}所属的具体势力是{1}。").format(npc_name, nation_name)
+                # 全素质数据
+                user_prompt += _("{0}有以下素质特性：").format(npc_name)
+                for talent_id in game_config.config_talent:
+                    if npc_character_data.talent[talent_id]:
+                        talent_name = game_config.config_talent[talent_id].name
+                        user_prompt += _("{0}、").format(talent_name)
+                user_prompt = user_prompt[:-1] + "。"
+            # 大量数据才有的分支
+            if cache.ai_setting.ai_chat_setting[6] >= 2:
+                # 服装
+                user_prompt += _("{0}穿着的衣服有：").format(npc_name)
+                for clothing_type in game_config.config_clothing_type:
+                    if len(npc_character_data.cloth.cloth_wear[clothing_type]):
+                        for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
+                            cloth_name = game_config.config_clothing_tem[cloth_id].name
+                            user_prompt += _("{0}、").format(cloth_name)
+                user_prompt = user_prompt[:-1] + "。"
+                # 工作
+                if handle_premise.handle_have_work(npc_character_id):
+                    work_name = game_config.config_work_type[npc_character_data.work.work_type].name
+                    user_prompt += _("{0}的工作是{1}。").format(npc_name, work_name)
+                # 称呼
+                if handle_premise.handle_self_have_nick_name_to_pl(npc_character_id):
+                    nick_name = npc_character_data.nick_name_to_pl
+                    user_prompt += _("{0}称呼{1}为{2}。").format(npc_name, pl_name, nick_name)
+                if handle_premise.handle_self_have_nick_name_to_self(npc_character_id):
+                    nick_name = npc_character_data.nick_name
+                    user_prompt += _("{0}称呼{1}为{2}。").format(pl_name, npc_name, nick_name)
 
+        else:
+            user_prompt += _("在当前的场景里，{0}是医药公司的领导人之一，被称为博士。").format(Name)
+            user_prompt += _("{0}正在进行的动作是{1}。").format(Name, Behavior_Name)
+    # 翻译模式
     else:
-        user_prompt += _("在当前的场景里，{0}是医药公司的领导人之一，被称为博士。").format(Name)
-        user_prompt += _("{0}正在进行的动作是{1}。").format(Name, Behavior_Name)
-
+        user_prompt = _('你需要将一段文本翻译为')
+        user_prompt += normal_config.config_normal.language
+        user_prompt += _('语言。如果文本中有有\{\}括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本：')
+        user_prompt += original_text
     # 开始调用AI
 
     # 调用OpenAI
@@ -326,8 +335,9 @@ def text_ai(character_id: int, behavior_id: int, original_text: str) -> str:
 
     # 在不影响\\n的情况下，将\n删去
     ai_gererate_text = ai_gererate_text.replace("\n", "")
-    # 删去空格
-    ai_gererate_text = ai_gererate_text.replace(" ", "")
+    # 非翻译模式下删去空格
+    if not translator:
+        ai_gererate_text = ai_gererate_text.replace(" ", "")
     # print(ai_gererate_text)
 
     return ai_gererate_text
@@ -444,6 +454,26 @@ class Chat_Ai_Setting_Panel:
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
+            # 非中文语言下，显示翻译选项
+            if normal_config.config_normal.language != "zh_CN":
+                line_feed.draw()
+                # 选项名
+                button_text = _("  [语言翻译]： ")
+                button_len = max(len(button_text) * 2, 60)
+                button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.draw_info, args=(31))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                # 绘制选项
+                if cache.ai_setting.ai_chat_translator_setting == 0:
+                    button_text = _(" [未开启] ")
+                elif cache.ai_setting.ai_chat_translator_setting == 1:
+                    button_text = _(" [仅翻译地文] ")
+                elif cache.ai_setting.ai_chat_translator_setting == 2:
+                    button_text = _(" [翻译地文和口上] ")
+                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_translator)
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
             # api密钥
             if cache.ai_setting.ai_chat_setting[1] == 1:
                 line_feed.draw()
@@ -532,8 +562,13 @@ class Chat_Ai_Setting_Panel:
         line = draw.LineDraw("-", self.width)
         line.draw()
         now_draw = draw.WaitDraw()
-        ai_chat_setting_data = game_config.config_ai_chat_setting[cid]
-        info_text = f"\n {ai_chat_setting_data.info}\n"
+        # 常规选项
+        if cid <= 30:
+            ai_chat_setting_data = game_config.config_ai_chat_setting[cid]
+            info_text = f"\n {ai_chat_setting_data.info}\n"
+        elif cid == 31:
+            info_text = _(" \n  本选项用于设置是否开启语言翻译功能\n")
+            info_text += _("  开启后，游戏中的文本将会被翻译成您设置的语言-[{0}]\n").format(normal_config.config_normal.language)
         now_draw.text = info_text
         now_draw.width = self.width
         now_draw.draw()
@@ -622,6 +657,12 @@ class Chat_Ai_Setting_Panel:
                 cache.ai_setting.ai_chat_setting[cid] += 1
             else:
                 cache.ai_setting.ai_chat_setting[cid] = 0
+
+    def change_translator(self):
+        """修改翻译设置"""
+        cache.ai_setting.ai_chat_translator_setting += 1
+        if cache.ai_setting.ai_chat_translator_setting > 2:
+            cache.ai_setting.ai_chat_translator_setting = 0
 
     def change_api_key(self, key_type: str):
         """修改api密钥"""

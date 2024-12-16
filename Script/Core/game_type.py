@@ -1104,6 +1104,8 @@ class Ai_Setting:
         """ 当前使用的自定义base url """
         self.now_ai_chat_proxy: list = ["", ""]
         """ 当前使用的代理，[0代理ip,1代理端口] """
+        self.ai_chat_translator_setting: int = 0
+        """ 是否开启ai聊天翻译功能，0不开启，1仅翻译地文，2翻译地文和口上 """
 
 
 class Character:

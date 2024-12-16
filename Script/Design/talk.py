@@ -184,11 +184,19 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
             # 记录当前小时内已触发过一次的移动文本
             if character_data.behavior.behavior_id == constant.Behavior.MOVE:
                 character_data.action_info.move_talk_time = cache.game_time
+            # 翻译口上
+            if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
+                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+                now_draw.text = now_talk_text
         # 地文
         else:
-            # 如果启用了文本生成ai
             cache.ai_setting.ai_chat_setting.setdefault(1, 0)
-            if cache.ai_setting.ai_chat_setting[1]:
+            # 地文翻译
+            if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting >= 1:
+                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+                now_draw.text = now_talk_text
+            # 如果启用了文本生成ai
+            elif cache.ai_setting.ai_chat_setting[1]:
                 now_draw = draw.LineFeedWaitDraw()
                 now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
                 now_draw.width = normal_config.config_normal.text_width
