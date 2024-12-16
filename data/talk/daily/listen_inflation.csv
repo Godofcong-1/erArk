@@ -3,4 +3,9 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,171,0,high_1,{Name}触发了听肚子里的动静指令的地文
+0,171,0,high_1,{Name}趴在{TargetName}的肚子上，听肚子里的动静
+1,171,0,high_1,{Name}将耳朵贴在{TargetName}的隆起的腹部，指尖轻轻抚摸着，仿佛在与小生命进行一场无声的对话。
+2,171,0,high_1,{Name}半跪在床边，双手捧着{TargetName}的腹部，闭上眼睛，专注地倾听着来自生命深处的律动。
+3,171,0,high_1,{Name}将手掌贴在{TargetName}的腹部，感受着生命的跳动，{Name}的眼中充满了温柔与期待。
+4,171,0,high_1,{Name}将头埋在{TargetName}的腹部，仿佛想要更近距离地感受小生命的存在。
+5,171,0,high_1,{Name}将耳朵贴在{TargetName}的腹部，听着心脏的跳动和腹中的律动，感受着生命的美妙。
