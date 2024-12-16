@@ -550,7 +550,6 @@ def update_sleep():
             # 清零睡奸中醒来状态
             character_data.sp_flag.sleep_h_awake = 0
 
-
     # 非角色部分
     cache.pl_sleep_save_flag = True
 
@@ -563,8 +562,8 @@ def update_new_day():
     Return arguments:
     无
     """
-    from Script.Design import basement, clothing
-    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel
+    from Script.Design import basement
+    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -603,6 +602,9 @@ def update_new_day():
     # 每周一次
     if cache.game_time.weekday() == 6:
         nation_diplomacy_panel.judge_diplomatic_policy() # 结算外交政策
+    # 每周一的助理轮换
+    if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
+        assistant_panel.select_random_assistant()
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()

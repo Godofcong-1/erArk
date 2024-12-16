@@ -15505,6 +15505,25 @@ def handle_assistant_live_together_off(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.PL_ASSISTANT_CHANGE_EVERY_WEEK_ON)
+def handle_pl_assistant_change_every_week_on(character_id: int) -> int:
+    """
+    玩家设置了每周一轮换助理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data: game_type.Character = cache.character_data[0]
+    assistant_chara_id = pl_character_data.assistant_character_id
+    if assistant_chara_id == 0:
+        return 0
+    assistant_character_data: game_type.Character = cache.character_data[assistant_chara_id]
+    if assistant_character_data.assistant_services[10] == 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.ASK_GIVE_PAN_EVERYDAY)
 def handle_ask_give_pan_everyday(character_id: int) -> int:
     """

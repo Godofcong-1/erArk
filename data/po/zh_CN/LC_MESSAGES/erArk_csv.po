@@ -452,6 +452,14 @@ msgstr ""
 msgid "否|被动接受(非本番)|被动接受(含本番)|主动请求(非本番)|主动请求(含本番)"
 msgstr ""
 
+#: .\data\csv\AssistantServices.csv:14
+msgid "每周轮换"
+msgstr ""
+
+#: .\data\csv\AssistantServices.csv:14
+msgid "否|是，每周一随机指定一名干员担任本周的助理"
+msgstr ""
+
 #: .\data\csv\Birthplace.csv:7
 msgid "罗德岛"
 msgstr ""

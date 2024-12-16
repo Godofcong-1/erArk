@@ -1,10 +1,10 @@
-from typing import Tuple, Dict
 from types import FunctionType
-from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
 from Script.Design import handle_premise, attr_calculation, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -57,6 +57,94 @@ def chose_assistant():
         yrn = flow_handle.askfor_all(return_list)
         if yrn in return_list:
             break
+
+
+def select_random_assistant():
+    """
+    随机选择助理\n
+    Keyword arguments:
+    无\n
+    Return arguments:
+    无
+    """
+
+    # 开始随机选择
+    while 1:
+        assistant_id = random.choice(list(cache.npc_id_got))
+        # 跳过玩家
+        if assistant_id == 0:
+            continue
+        # 跳过前一个助理
+        if assistant_id == cache.character_data[0].assistant_character_id:
+            continue
+        # 跳过27异常的角色
+        if handle_premise.handle_unnormal_27(assistant_id):
+            continue
+        break
+    # 绘制提示信息
+    info_draw = draw.WaitDraw()
+    info_text = _("\n○本周抽签选中了{0}作为{1}的助理\n").format(cache.character_data[assistant_id].name, cache.character_data[0].name)
+    info_draw.text = info_text
+    info_draw.width = window_width
+    info_draw.draw()
+    # 开始替换助理
+    assistant_replace(assistant_id)
+
+
+def assistant_replace(new_assistant_id: int):
+    """
+    助理替换\n
+    Keyword arguments:
+    new_assistant_id -- 新助理角色id
+    """
+    character_data: game_type.Character = cache.character_data[0]
+
+    # 判断是否有旧助理
+    old_assistant_flag = True
+    if character_data.assistant_character_id != 0:
+        # 去掉旧助理的跟随状态
+        old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+        old_assistant_data.sp_flag.is_follow = 0
+        # 去掉旧助理的同居状态
+        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
+            old_assistant_data.dormitory = old_assistant_data.pre_dormitory
+        # 重置旧助理的助理服务数据体
+        old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
+    # 没有旧助理
+    else:
+        old_assistant_flag = False
+
+    line = draw.LineDraw("-", window_width)
+    line.draw()
+    info_draw = draw.WaitDraw()
+    info_text = ""
+
+    # 新助理是旧助理时，仅取消该助理
+    if new_assistant_id == character_data.assistant_character_id:
+        character_data.assistant_character_id = 0
+    # 新助理状态异常时，无法任命
+    elif handle_premise.handle_unnormal_27(new_assistant_id):
+        new_assistant_data: game_type.Character = cache.character_data[new_assistant_id]
+        info_text += _("\n{0}的状态异常，无法任命为助理干员\n").format(new_assistant_data.name)
+        old_assistant_flag = False
+    # 正常情况下，设置新助理
+    else:
+        character_data.assistant_character_id = new_assistant_id
+        new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+        new_assistant_data.sp_flag.is_follow = 1
+        new_assistant_data.assistant_services[2] = 1
+        new_assistant_data.second_behavior[1401] = 1
+        info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
+        # 同步换助理的选项
+        if 10 in old_assistant_data.assistant_services and old_assistant_data.assistant_services[10] == 1:
+            new_assistant_data.assistant_services[10] = 1
+    # 取消旧助理的结算
+    if old_assistant_flag:
+        old_assistant_data.second_behavior[1402] = 1
+        info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
+    info_draw.text = info_text
+    info_draw.width = window_width
+    info_draw.draw()
 
 
 class Assistant_Panel:
@@ -117,6 +205,7 @@ class Assistant_Panel:
                     service_data = game_config.config_assistant_services[cid]
                     service_option_data = game_config.config_assistant_services_option[cid]
                     service_option_text_all = service_option_data[0]
+                    target_data.assistant_services.setdefault(cid, 0)
                     service_option_text_now = service_option_text_all[target_data.assistant_services[cid]]
                     service_option_len = len(service_option_text_all)
 
@@ -203,6 +292,9 @@ class Assistant_Panel:
 
     def settlement_of_associated_attribute(self, service_cid:int, service_option_len:int):
         """结算附带的属性变化"""
+        # 跳过没有变化的
+        if service_cid in {10}:
+            return
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
@@ -407,7 +499,7 @@ class SeeNPCButtonList:
         # 按钮绘制
 
         name_draw = draw.LeftButton(
-            button_text, self.button_return, self.width, cmd_func=self.button_0
+            button_text, self.button_return, self.width, cmd_func=assistant_replace, args=(NPC_id,)
         )
         # self.button_return = NPC_id
         self.now_draw = name_draw
@@ -416,51 +508,6 @@ class SeeNPCButtonList:
         """ 绘制的对象 """
         self.now_draw = name_draw
 
-
-    def button_0(self):
-        """选项1"""
-        character_data: game_type.Character = cache.character_data[0]
-
-        # 去掉旧助理的跟随状态
-        old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-        old_assistant_data.sp_flag.is_follow = 0
-        # 去掉旧助理的同居状态
-        if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
-            old_assistant_data.dormitory = old_assistant_data.pre_dormitory
-        # 重置旧助理的助理服务数据体
-        old_assistant_data.assistant_services = attr_calculation.get_assistant_services_zero()
-
-        # 判断旧助理是否是玩家自己
-        pl_flag = False
-        if character_data.assistant_character_id == 0:
-            pl_flag = True
-
-        line = draw.LineDraw("-", window_width)
-        line.draw()
-        info_draw = draw.WaitDraw()
-        info_text = ""
-
-        if self.NPC_id == character_data.assistant_character_id:
-            character_data.assistant_character_id = 0
-        elif handle_premise.handle_unnormal_27(self.NPC_id):
-            new_assistant_data: game_type.Character = cache.character_data[self.NPC_id]
-            info_text += _("\n{0}的状态异常，无法任命为助理干员\n").format(new_assistant_data.name)
-            pl_flag = True
-        else:
-            character_data.assistant_character_id = self.NPC_id
-            new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-            new_assistant_data.sp_flag.is_follow = 1
-            new_assistant_data.assistant_services[2] = 1
-            new_assistant_data.second_behavior[1401] = 1
-            info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
-        if not pl_flag:
-            old_assistant_data.second_behavior[1402] = 1
-            info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
-        info_draw.text = info_text
-        info_draw.width = self.width
-        info_draw.draw()
-
     def draw(self):
         """绘制对象"""
         self.now_draw.draw()
-

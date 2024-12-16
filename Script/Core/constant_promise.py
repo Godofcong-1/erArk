@@ -1034,6 +1034,8 @@ class Premise:
     """ 属性_助理 自己的助理属性为正在同居 """
     ASSISTANT_LIVE_TOGETHER_OFF = "assistant_live_together_off"
     """ 属性_助理 自己的助理属性为未同居 """
+    PL_ASSISTANT_CHANGE_EVERY_WEEK_ON = "pl_assistant_change_every_week_on"
+    """ 属性_助理 玩家设置了每周一轮换助理 """
 
     ASK_GIVE_PAN_EVERYDAY = "ask_give_pan_everyday"
     """ 属性_身体管理 自己被要求每天上交内裤 """
