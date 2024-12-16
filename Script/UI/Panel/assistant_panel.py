@@ -136,8 +136,9 @@ def assistant_replace(new_assistant_id: int):
         new_assistant_data.second_behavior[1401] = 1
         info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         # 同步换助理的选项
-        if 10 in old_assistant_data.assistant_services and old_assistant_data.assistant_services[10] == 1:
-            new_assistant_data.assistant_services[10] = 1
+        if old_assistant_flag:
+            if 10 in old_assistant_data.assistant_services and old_assistant_data.assistant_services[10] == 1:
+                new_assistant_data.assistant_services[10] = 1
     # 取消旧助理的结算
     if old_assistant_flag:
         old_assistant_data.second_behavior[1402] = 1
