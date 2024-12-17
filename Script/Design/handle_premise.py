@@ -15532,6 +15532,7 @@ def handle_pl_assistant_change_every_week_on(character_id: int) -> int:
     if assistant_chara_id == 0:
         return 0
     assistant_character_data: game_type.Character = cache.character_data[assistant_chara_id]
+    assistant_character_data.assistant_services.setdefault(10, 0)
     if assistant_character_data.assistant_services[10] == 1:
         return 1
     return 0

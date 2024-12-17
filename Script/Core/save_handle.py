@@ -442,6 +442,12 @@ def update_character_config_data(value):
             if key not in value.body_manage:
                 value.body_manage[key] = 0
                 update_count += 1
+    # 助理服务
+    if len(value.assistant_services) != len(game_config.config_assistant_services):
+        for key in game_config.config_assistant_services:
+            if key not in value.assistant_services:
+                value.assistant_services[key] = 0
+                update_count += 1
     return update_count
 
 
