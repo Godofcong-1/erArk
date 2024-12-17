@@ -13172,6 +13172,142 @@ msgstr ""
 msgid "【监牢】：在将无意识的干员[装袋搬走]后，可以在这里使用[投入监牢]来监禁干员，或使用[解除囚禁]来释放干员"
 msgstr ""
 
+#: .\data\csv\Tip_Chara.csv:7
+msgid "1"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:8
+msgid "10"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:9
+msgid "56"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:10
+msgid "101"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:11
+msgid "107"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:12
+msgid "113"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:13
+msgid "129"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:14
+msgid "179"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:15
+msgid "181"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:16
+msgid "204"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:17
+msgid "220"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:18
+msgid "230"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:19
+msgid "241"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:20
+msgid "245"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:21
+msgid "248"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:22
+msgid "249"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:23
+msgid "263"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:24
+msgid "274"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:25
+msgid "285"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:26
+msgid "290"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:27
+msgid "291"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:28
+msgid "304"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:29
+msgid "308"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:30
+msgid "328"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:31
+msgid "358"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:32
+msgid "365"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:33
+msgid "377"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:34
+msgid "405"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:35
+msgid "469"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:36
+msgid "474"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:37
+msgid "1012"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:38
+msgid "2013"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:39
+msgid "4027"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:40
+msgid "4091"
+msgstr ""
+
 #: .\data\csv\Vehicle.csv:6
 msgid "温顺的武装大驮兽"
 msgstr ""

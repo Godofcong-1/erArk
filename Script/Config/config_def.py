@@ -1000,6 +1000,19 @@ class Tip:
     """ 提示内容 """
 
 
+class Tip_Chara:
+    """ 角色提示信息 """
+
+    cid: int
+    """ 提示id """
+    chara_adv_id: int
+    """ 角色id """
+    writer_name: str
+    """ 作者名 """
+    text: str
+    """ 文本内容 """
+
+
 class Trust_Level:
     """ 信赖等级 """
 

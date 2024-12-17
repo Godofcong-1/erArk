@@ -203,6 +203,8 @@ config_tip_data: Dict[int, config_def.Tip] = {}
 """ 提示对应描述 """
 config_tip_data_by_facility: Dict[int, List] = {}
 """ 设施对应提示 """
+config_tip_chara: Dict[int, config_def.Tip_Chara] = {}
+""" 角色提示信息 """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -982,7 +984,7 @@ def load_jj_tem():
         config_jj_tem[now_tem.cid] = now_tem
 
 
-def load_tip_tem():
+def load_tip():
     """载入提示数据"""
     now_data = config_data["Tip"]
     translate_data(now_data)
@@ -993,6 +995,16 @@ def load_tip_tem():
         if now_tem.facility_id != -1:
             config_tip_data_by_facility.setdefault(now_tem.facility_id, [])
             config_tip_data_by_facility[now_tem.facility_id].append(now_tem.cid)
+
+
+def load_tip_chara():
+    """载入角色提示数据"""
+    now_data = config_data["Tip_Chara"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Tip_Chara()
+        now_tem.__dict__ = tem_data
+        config_tip_chara[now_tem.cid] = now_tem
 
 
 def load_solar_period():
@@ -1561,7 +1573,8 @@ def init():
     load_season()
     load_sex_tem()
     load_jj_tem()
-    load_tip_tem()
+    load_tip()
+    load_tip_chara()
     load_solar_period()
     load_status()
     load_sun_time()
