@@ -17,6 +17,91 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def show_endure_ejaculation_panel():
+    """
+    进行是否忍住射精的判断
+    return
+    bool -- 是否忍住 True为忍住 False为射出
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    now_lv = character_data.ability[30]
+    now_count = character_data.h_state.endure_not_shot_count
+
+    # 判断忍耐几率
+    if now_count <= now_lv:
+        now_rate = 100
+        endure_text = _("必定忍住")
+    else:
+        now_rate = 100 - (now_count - now_lv) * 25
+        if now_rate >= 75:
+            endure_text = _("高")
+        elif now_rate >= 50:
+            endure_text = _("中")
+        elif now_rate >= 25:
+            endure_text = _("低")
+        else:
+            endure_text = _("无")
+
+    return_flag = judge_endure_ejaculation(now_rate)
+
+    while 1:
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        line_feed.draw()
+        return_list = []
+
+        # 询问是否要忍住
+        now_draw = draw.NormalDraw()
+        now_draw_text = _("要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n".format(now_count, endure_text))
+        now_draw.text = now_draw_text
+        now_draw.width = window_width
+        now_draw.draw()
+        line_feed.draw()
+
+        # 选择是否忍住
+        yes_draw = draw.CenterButton(_("[忍住]"), _("忍住"), window_width / 3)
+        yes_draw.draw()
+        return_list.append(yes_draw.return_text)
+        no_draw = draw.CenterButton(_("[射出]"), _("射出"), window_width / 3)
+        no_draw.draw()
+        return_list.append(no_draw.return_text)
+
+        line_feed.draw()
+
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn in return_list:
+            # 如果是射出，则返回False
+            if yrn == _("射出"):
+                return_flag = False
+            break
+
+    # 忍住的结算
+    if return_flag:
+        character_data.h_state.endure_not_shot_count += 1
+        character_data.eja_point = 0
+        endure_text = _("\n{0}忍住了射精\n").format(character_data.name)
+        now_draw = draw.NormalDraw()
+        now_draw.text = endure_text
+        now_draw.width = window_width
+        now_draw.draw()
+
+    line.draw()
+
+    return return_flag
+
+
+def judge_endure_ejaculation(endure_rate: int) -> bool:
+    """
+    计算是否忍住射精
+    Keyword arguments:
+    endure_rate -- 忍住射精的几率
+    """
+    if random.randint(1, 100) <= endure_rate:
+        return True
+    else:
+        return False
+
+
 def common_ejaculation():
     """
     通用射精结算，进行一次射精，并返回射精文本和射精量
@@ -34,18 +119,18 @@ def common_ejaculation():
         return _("只流出了些许前列腺液，已经射不出精液了"),0
     else:
         # 基础射精值，小中多射精区分
-        if character_data.second_behavior[1009] == 1 or character_data.h_state.orgasm_level[3] % 3 == 0:
+        if character_data.second_behavior[1011] == 1:
+            semen_count = int(50 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
+            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
+            semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
+        elif character_data.second_behavior[1010] == 1:
+            semen_count = int(20 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
+            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
+            semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
+        else:
             semen_count = int(10 * random_weight)
             semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
             semen_text = _("射精，射出了") + str(semen_count) + _("ml精液")
-        elif character_data.second_behavior[1010] == 1 or character_data.h_state.orgasm_level[3] % 3 == 1:
-            semen_count = int(25 * random_weight)
-            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
-            semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
-        elif character_data.second_behavior[1011] == 1 or character_data.h_state.orgasm_level[3] % 3 == 2:
-            semen_count = int(45 * random_weight)
-            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
-            semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
 
         # 射精量不高于剩余精液值
         semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
@@ -54,6 +139,7 @@ def common_ejaculation():
         character_data.h_state.just_shoot = 1 # 更新刚射精状态
         character_data.dirty.penis_dirty_dict["semen"] = True # 更新阴茎精液污浊状态
         cache.rhodes_island.total_semen_count += semen_count # 更新总精液量
+        character_data.h_state.endure_not_shot_count = 0 # 清零忍住不射次数
 
         # # 更新精液值，目前弃用
         # if semen_count > character_data.semen_point:

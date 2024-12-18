@@ -775,12 +775,19 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
             if handle_premise.handle_pl_semen_le_2(0):
                 character_data.second_behavior[1009] = 1
             else:
-                if character_data.h_state.orgasm_level[3] % 3 == 0:
+                # 忍住射精
+                endure_flag = ejaculation_panel.show_endure_ejaculation_panel()
+                if endure_flag:
+                    return
+                # 普
+                if character_data.h_state.endure_not_shot_count == 0:
                     character_data.second_behavior[1009] = 1
-                elif character_data.h_state.orgasm_level[3] % 3 == 1:
-                    character_data.second_behavior[1010] = 1
-                elif character_data.h_state.orgasm_level[3] % 3 == 2:
+                # 超强
+                elif character_data.h_state.endure_not_shot_count >= 4:
                     character_data.second_behavior[1011] = 1
+                # 强
+                else:
+                    character_data.second_behavior[1010] = 1
             character_data.eja_point = 0
             now_draw = ejaculation_panel.Ejaculation_Panel(width)
             now_draw.draw()
