@@ -51,7 +51,16 @@ class Physical_Check_And_Manage_Panel:
             cinfo_draw.text = info_text
             cinfo_draw.draw()
 
-            if handle_premise.handle_have_target(0):
+            # 如果对象已经在体检数据中，则直接显示体检数据
+            if self.pl_character_data.target_character_id in cache.rhodes_island.today_physical_examination_chara_id_dict:
+                self.done_check_status_id_set = cache.rhodes_island.today_physical_examination_chara_id_dict[self.pl_character_data.target_character_id]
+                button1_text = _("[001]检查身体情况（今日已体检）")
+                button1_draw = draw.NormalDraw()
+                button1_draw.text = button1_text
+                button1_draw.style = "deep_gray"
+                button1_draw.width = self.width
+                button1_draw.draw()
+            elif handle_premise.handle_have_target(0):
                 target_character_id = self.pl_character_data.target_character_id
                 target_character_data = cache.character_data[target_character_id]
                 button1_text = _("[001]检查{0}的身体情况").format(target_character_data.name)
@@ -66,7 +75,7 @@ class Physical_Check_And_Manage_Panel:
                 button1_draw.draw()
                 return_list.append(button1_draw.return_text)
             else:
-                button1_text = _("[001]检查身体情况（当前没有查看对象）\n")
+                button1_text = _("[001]检查身体情况（当前没有查看对象）")
                 button1_draw = draw.NormalDraw()
                 button1_draw.text = button1_text
                 button1_draw.style = "deep_gray"
@@ -135,6 +144,9 @@ class Physical_Check_And_Manage_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                # 如果已经体检了，则加入到体检数据中
+                if len(self.done_check_status_id_set) > 0:
+                    cache.rhodes_island.today_physical_examination_chara_id_dict[self.pl_character_data.target_character_id] = self.done_check_status_id_set
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 

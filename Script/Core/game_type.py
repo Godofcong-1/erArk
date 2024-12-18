@@ -471,6 +471,8 @@ class BODY_H_STATE:
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
         self.plural_orgasm_count: int = 0
         """ 多重高潮次数 """
+        self.endure_not_shot_count: int = 0
+        """ 忍住不射次数 """
         self.condom_info_show_flag: bool = False
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
@@ -980,6 +982,8 @@ class Rhodes_Island:
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
         self.total_semen_count: int = 0
         """ 每日总射精量 """
+        self.today_physical_examination_chara_id_dict: Dict[int, Tuple[set]] = {}
+        """ 今日已体检的干员数据 干员id:体检项目id集合 """
 
         # 文职区
         self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}

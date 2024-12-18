@@ -259,6 +259,8 @@ def update_base_resouce_newday():
     aromatherapy_panel.settle_aromatherapy_sessions()
     # 结算粉红凭证
     settle_pink_certificate()
+    # 重置今日体检数据
+    cache.rhodes_island.today_physical_examination_chara_id_dict = {}
 
 
 def update_work_people():
