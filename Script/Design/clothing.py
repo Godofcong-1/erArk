@@ -49,6 +49,7 @@ def get_cloth_from_dormitory_locker(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         tem_character = cache.npc_tem_data[character_id - 1]
+        tem_cloth_list = tem_character.Cloth
         # 检查宿舍衣柜中是否有衣服
         wear_locker_flag = False
         for cloth_type in character_data.cloth.cloth_locker_in_dormitory:
@@ -56,13 +57,22 @@ def get_cloth_from_dormitory_locker(character_id: int):
                 wear_locker_flag = True
                 # 去掉里面不符合角色csv的衣服
                 for cloth_id in character_data.cloth.cloth_locker_in_dormitory[cloth_type].copy():
-                    if cloth_id not in tem_character.Cloth:
+                    if cloth_id not in tem_cloth_list:
                         character_data.cloth.cloth_locker_in_dormitory[cloth_type].remove(cloth_id)
+                    else:
+                        tem_cloth_list.remove(cloth_id)
         # 宿舍衣柜中有衣服的话，穿上衣服
         if wear_locker_flag:
             character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
             character_data.cloth.cloth_wear = character_data.cloth.cloth_locker_in_dormitory
             character_data.cloth.cloth_locker_in_dormitory = attr_calculation.get_cloth_locker_in_dormitory_zero()
+            # 如果在范例里的衣服还有没穿着的，则穿上
+            for cloth_id in tem_cloth_list:
+                type = game_config.config_clothing_tem[cloth_id].clothing_type
+                # 跳过内衣内裤
+                if type in {6,9}:
+                    continue
+                character_data.cloth.cloth_wear[type].append(cloth_id)
             # 换内衣内裤
             get_underwear(character_id)
             # 将衣柜里的衣服精液转移到穿着的衣服上
