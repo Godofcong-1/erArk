@@ -14940,7 +14940,7 @@ def handle_option_son(character_id: int) -> int:
 @add_premise(constant_promise.Premise.THIS_EVENT_IN_TRIGGERED_RECORD)
 def handle_this_event_in_triggered_record(character_id: int) -> int:
     """
-    该事件在已触发记录中(需搭配记录结算)
+    该事件在总次数已触发记录中(需搭配记录结算)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -14954,7 +14954,35 @@ def handle_this_event_in_triggered_record(character_id: int) -> int:
 @add_premise(constant_promise.Premise.THIS_EVENT_NOT_IN_TRIGGERED_RECORD)
 def handle_this_event_not_in_triggered_record(character_id: int) -> int:
     """
-    该事件不在已触发记录中(需搭配记录结算)
+    该事件不在总次数已触发记录中(需搭配记录结算)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 本前提在以下地方进行调用，此处不进行实际处理
+    # Script/Design/event.py#L11
+    return 0
+
+
+@add_premise(constant_promise.Premise.THIS_EVENT_IN_TODAY_TRIGGERED_RECORD)
+def handle_this_event_in_today_triggered_record(character_id: int) -> int:
+    """
+    该事件在今日已触发记录中(需搭配记录结算)
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 本前提在以下地方进行调用，此处不进行实际处理
+    # Script/Design/event.py#L11
+    return 0
+
+
+@add_premise(constant_promise.Premise.THIS_EVENT_NOT_IN_TODAY_TRIGGERED_RECORD)
+def handle_this_event_not_in_today_triggered_record(character_id: int) -> int:
+    """
+    该事件不在今日已触发记录中(需搭配记录结算)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

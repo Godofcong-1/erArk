@@ -605,6 +605,7 @@ def update_new_day():
     # 每周一的助理轮换
     if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
         assistant_panel.select_random_assistant()
+    cache.today_taiggered_event_record = {} # 清空今日触发事件记录
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
     # update_save()

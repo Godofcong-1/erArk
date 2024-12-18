@@ -5,7 +5,8 @@ cid,effect_name,effect_type,effect
 10001,OPTION_FATER,系统量_基础,开启子选项面板
 10003,OPEN_INSTRUCT_FILTER_H,系统量_基础,开启H面板过滤器（已弃用）
 10004,CLOSE_INSTRUCT_FILTER_H,系统量_基础,关闭H面板过滤器（已弃用）
-10008,ADD_THIS_EVENT_TO_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入已触发记录
+10008,ADD_THIS_EVENT_TO_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入总次数已触发记录
+10009,ADD_THIS_EVENT_TO_TODAY_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入今日已触发记录
 10010,GROUP_SEX_MODE_ON,系统量_基础,开启群交模式
 10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭群交模式
 
@@ -247,6 +248,7 @@ cid,effect_name,effect_type,effect
 359,ADD_1_be_Hypnosis_Sex_EXPERIENCE,属性_经验,增加1被催眠姦经验
 360,TARGET_ADD_1_be_Hypnosis_Sex_EXPERIENCE,属性_经验,交互对象增加1被催眠姦经验
 361,TARGET_ADD_1_CLOTH_JOB_EXPERIENCE,属性_经验,交互对象增加1服装交经验
+362,ADD_1_GROUP_SEX_EXPERIENCE,属性_经验,增加1群交经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零
@@ -514,6 +516,8 @@ cid,effect_name,effect_type,effect
 1414,TARGET_ORGASM_EDGE_OFF,属性_H,交互对象关闭绝顶寸止
 1415,ALL_GROUP_SEX_TEMPLE_ON,属性_H,开启全群交模板，进行轮流群交
 1416,ALL_GROUP_SEX_TEMPLE_OFF,属性_H,关闭全群交模板，进行单轮群交
+1417,SELF_JOIN_GROUP_SEX_ON,属性_H,自己开始加入群交
+1418,SELF_JOIN_GROUP_SEX_OFF,属性_H,自己停止加入群交
 
 
 1601,TRGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]

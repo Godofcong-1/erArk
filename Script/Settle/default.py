@@ -3221,7 +3221,7 @@ def handle_add_this_event_to_already_triggered(
         now_time: datetime.datetime,
 ):
     """
-    将玩家当前触发的事件加入已触发记录
+    将玩家当前触发的事件加入总次数已触发记录
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -3233,6 +3233,28 @@ def handle_add_this_event_to_already_triggered(
         cache.taiggered_event_record.add(player_character_data.event.son_event_id)
     else:
         cache.taiggered_event_record.add(player_character_data.event.event_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_THIS_EVENT_TO_TODAY_TRIGGERED_RECORD)
+def handle_add_this_event_to_today_already_triggered(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将玩家当前触发的事件加入今日已触发记录
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    player_character_data: game_type.Character = cache.character_data[0]
+    if player_character_data.event.son_event_id:
+        cache.today_taiggered_event_record.add(player_character_data.event.son_event_id)
+    else:
+        cache.today_taiggered_event_record.add(player_character_data.event.event_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_MODE_ON)

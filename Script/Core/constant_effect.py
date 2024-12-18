@@ -10,7 +10,9 @@ class BehaviorEffect:
     CLOSE_INSTRUCT_FILTER_H = 10004
     """ 系统量_基础 关闭H面板过滤器（已弃用） """
     ADD_THIS_EVENT_TO_TRIGGERED_RECORD = 10008
-    """ 系统量_基础 将玩家当前触发的事件加入已触发记录 """
+    """ 系统量_基础 将玩家当前触发的事件加入总次数已触发记录 """
+    ADD_THIS_EVENT_TO_TODAY_TRIGGERED_RECORD = 10009
+    """ 系统量_基础 将玩家当前触发的事件加入今日已触发记录 """
     GROUP_SEX_MODE_ON = 10010
     """ 系统量_基础 开启群交模式 """
     GROUP_SEX_MODE_OFF = 10011

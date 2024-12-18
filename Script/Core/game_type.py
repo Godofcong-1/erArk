@@ -1296,6 +1296,8 @@ class Cache:
         """ 玩家过去状态指令记录，最大长度为10 """
         self.taiggered_event_record: Set = set()
         """ 触发过的事件记录 """
+        self.today_taiggered_event_record: Set = set()
+        """ 今日触发过的事件记录 """
         self.now_init_map_id: str = ""
         """ 寻路算法用,当前节点所属的地图的id """
         self.collect_position_list: List = []
