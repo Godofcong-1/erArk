@@ -7590,14 +7590,21 @@ def handle_put_into_prison_add_just(
     # 对方数据结算
     target_data.sp_flag.be_bagged = 0
     target_data.sp_flag.imprisonment = 1
-    # 屈服2，恐怖1，反发3
+    target_fall = attr_calculation.get_character_fall_level(target_id, minus_flag=True)
+    # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
     if target_data.ability[14] <= 1:
         target_data.ability[14] = 2
         target_data.second_behavior[1034] = 1
-    if target_data.ability[17] <= 0:
+    if target_data.ability[17] <= 0 and target_fall >= -2:
         target_data.ability[17] = 1
         target_data.second_behavior[1042] = 1
-    if target_data.ability[18] <= 2:
+    if target_data.ability[18] <= 0 and target_fall >= -2:
+        target_data.ability[18] = 1
+        target_data.second_behavior[1045] = 1
+    if target_data.ability[18] <= 1 and target_fall >= -1:
+        target_data.ability[18] = 2
+        target_data.second_behavior[1046] = 1
+    if target_data.ability[18] <= 2 and target_fall >= 0:
         target_data.ability[18] = 3
         target_data.second_behavior[1047] = 1
     # 对方位置结算
@@ -9045,8 +9052,10 @@ def handle_do_h_failed_adjust(
     if character_data.target_character_id:
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-        # 不需要再进行该判断
-        # if not character.calculation_instuct_judege(0,character_data.target_character_id,"严重骚扰"):
+        # 高陷落不进行该判断
+        chara_fall = attr_calculation.get_character_fall_level(character_data.target_character_id)
+        if chara_fall >= 4:
+            return
 
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
