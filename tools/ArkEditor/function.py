@@ -19,6 +19,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("Flag", "口上用flag")
     cvp_str_list[2] = cvp_str_list[2].replace("Son", "嵌套子事件")
     cvp_str_list[2] = cvp_str_list[2].replace("OtherChara|0", "其他角色在场")
+    cvp_str_list[2] = cvp_str_list[2].replace("Dirty", "部位污浊")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
@@ -62,6 +63,14 @@ def read_CVP(cvp_value_str: str):
         b2_value = cvp_str_list[2].split("Instruct|")[1]
         b2_name = cache_control.status_data[b2_value]
         cvp_str = cvp_str.replace(f"Instruct|{b2_value}", f"前指令{b2_name}")
+    elif "部位污浊" in cvp_str:
+        b2_value = cvp_str_list[2].split("部位污浊|")[1]
+        part_type = b2_value[0]
+        if part_type == "B":
+            b2_name = cache_control.body_data[b2_value[1:]]
+        else:
+            b2_name = cache_control.clothing_data[b2_value[1:]]
+        cvp_str = cvp_str.replace(f"部位污浊|{b2_value}", f"部位污浊{b2_name}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str

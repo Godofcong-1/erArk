@@ -15,6 +15,7 @@ birthplace_path = "csv/Birthplace.csv"
 nation_path = "csv/Nation.csv"
 profession_path = "csv/Profession.csv"
 race_path = "csv/Race.csv"
+body_path = "csv/BodyPart.csv"
 clothing_path = "csv/ClothingType.csv"
 organ_path = "csv/Organ.csv"
 
@@ -148,6 +149,17 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.race_data[i["cid"]] = i["name"]
+    with open(body_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "身体部位表":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.body_data[i["cid"]] = i["name"]
     with open(clothing_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         read_flag = False

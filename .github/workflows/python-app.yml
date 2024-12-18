@@ -74,6 +74,7 @@ jobs:
           Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Juel.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Talent.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/BodyPart.csv dist_ArkEditor/csv/
           Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/

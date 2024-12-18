@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场","部位污浊"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -370,6 +370,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Son|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "其他角色在场":
             cvp_b_value = "OtherChara|0"
+        elif cvp_b1 == "部位污浊":
+            cvp_b_value = "Dirty|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -389,7 +391,7 @@ class CVPMenu(QDialog):
         # 拼接前提字符串
         cvp_str = f"综合数值前提  {cvp_a}{cvp_b1}{cvp_b2}{cvp_c}{cvp_d}"
         cvp_value_str = f"CVP_{cvp_a_value}_{cvp_b_value}_{cvp_c_value}_{cvp_d_value}"
-        print(f"debug cvp_str: {cvp_str}, cvp_value_str: {cvp_value_str}")
+        # print(f"debug cvp_str: {cvp_str}, cvp_value_str: {cvp_value_str}")
 
         # 更新前提数据
         cache_control.premise_data[cvp_value_str] = cvp_str
@@ -513,4 +515,11 @@ class CVPMenu(QDialog):
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
             self.cvp_text.setText("检测特定id的角色是否在场的前提，用于和其他角色进行联动\n\n等于1就是在场，等于0就是不在场")
+        elif index == 14:
+            self.cvp_b2.clear()
+            for body_id, body_name in cache_control.body_data.items():
+                self.cvp_b2.addItem(f"B{body_id}|{body_name}")
+            for cloth_id, cloth_name in cache_control.clothing_data.items():
+                self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
+            self.cvp_text.setText("检测部位的精液量，包括身体部位与服装部位，单位是ml\n\n如果角色没有该部位，比如没有兽角，或者没有穿内裤等，则该部位精液量固定为0")
         self.cvp_b = self.cvp_b2

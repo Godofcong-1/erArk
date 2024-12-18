@@ -73,6 +73,8 @@ profession_data: dict = {}
 """ 职业数据 """
 race_data: dict = {}
 """ 种族数据 """
+body_data: dict = {}
+""" 身体部位数据 """
 clothing_data: dict = {}
 """ 服装数据 """
 organ_data: dict = {}
