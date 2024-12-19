@@ -82,7 +82,9 @@ def judge_character_tired_sleep(character_id : int):
                     if len(last_character_list) == 1:
                         new_traget_id = last_character_list.pop()
                         pl_character_data.target_character_id = new_traget_id
-                        handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GROUP_SEX_TO_H)
+                        pl_character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_TO_H
+                        pl_character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_TO_H
+                        character_behavior.judge_character_status(0)
                     # 如果没有人了，则结束H
                     elif len(last_character_list) == 0:
                         handle_instruct.handle_end_h()
