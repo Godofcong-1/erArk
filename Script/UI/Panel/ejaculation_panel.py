@@ -32,7 +32,13 @@ def show_endure_ejaculation_panel():
         now_rate = 100
         endure_text = _("必定忍住")
     else:
-        now_rate = 100 - (now_count - now_lv) * 25
+        # 超出的次数
+        over_count = now_count - now_lv
+        # 下降的动态几率
+        down_rate = 50 - now_lv * 5
+        # 当前忍耐几率
+        now_rate = 100 - over_count * down_rate
+        now_rate = max(0, now_rate)
         if now_rate >= 75:
             endure_text = _("高")
         elif now_rate >= 50:
