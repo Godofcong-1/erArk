@@ -2951,7 +2951,7 @@ def handle_plural_orgasm(
         return
 
     # 多重高潮次数
-    plural_orgasm_count = character_data.h_state.plural_orgasm_count - 1
+    plural_orgasm_count = len(character_data.h_state.plural_orgasm_set) - 1
     # 如果有多重高潮次数，则进行结算
     if plural_orgasm_count > 0:
         base_value = 1000 * plural_orgasm_count
@@ -2959,8 +2959,8 @@ def handle_plural_orgasm(
         base_chara_state_common_settle(character_id, 0, 13, base_value = base_value, extra_adjust = extral_adjust, change_data = change_data)
         base_chara_state_common_settle(character_id, 0, 15, base_value = base_value, extra_adjust = extral_adjust, change_data = change_data)
 
-        # 多重绝顶次数清零
-        character_data.h_state.plural_orgasm_count = 0
+        # 多重绝顶数据清零
+        character_data.h_state.plural_orgasm_set = set()
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)

@@ -866,6 +866,7 @@ def orgasm_settle(
     # print(f"进入{character_data.name}的高潮结算")
 
     part_count = 0  # 部位高潮计数
+    tem_orgasm_set = set()  # 临时高潮部位集合
     for orgasm in range(8):
         # 跳过射精槽
         if orgasm == 3:
@@ -917,6 +918,8 @@ def orgasm_settle(
                 continue
             # 该部位高潮计数+1
             part_count += 1
+            # 加入高潮部位记录
+            tem_orgasm_set.add(orgasm)
             # 判定触发哪些绝顶
             num = orgasm * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
             # 开始根据概率计算
@@ -952,7 +955,7 @@ def orgasm_settle(
     if part_count >= 2:
         second_behavior_index = 1079 + part_count
         character_data.second_behavior[second_behavior_index] = 1
-        character_data.h_state.plural_orgasm_count = part_count
+        character_data.h_state.plural_orgasm_set = tem_orgasm_set.copy()
 
 
 def judge_orgasm_degree(level_count: int) -> int:

@@ -302,7 +302,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     h_state_data.npc_active_h = False
     h_state_data.h_in_love_hotel = False
     h_state_data.extra_orgasm_count = 0
-    h_state_data.plural_orgasm_count = 0
+    h_state_data.plural_orgasm_set = set()
     h_state_data.just_shoot = 0
     h_state_data.orgasm_edge = 0
     h_state_data.group_sex_lock_flag = False

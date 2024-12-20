@@ -11275,6 +11275,188 @@ def handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id: int)
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_N)
+def handle_self_plural_orgasm_have_N(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含N绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 0 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_N)
+def handle_target_plural_orgasm_have_N(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含N绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_N(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_B)
+def handle_self_plural_orgasm_have_B(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含B绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 1 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_B)
+def handle_target_plural_orgasm_have_B(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含B绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_B(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_C)
+def handle_self_plural_orgasm_have_C(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含C绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 2 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_C)
+def handle_target_plural_orgasm_have_C(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含C绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_C(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_V)
+def handle_self_plural_orgasm_have_V(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含V绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 4 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_V)
+def handle_target_plural_orgasm_have_V(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含V绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_V(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_A)
+def handle_self_plural_orgasm_have_A(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含A绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 5 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_A)
+def handle_target_plural_orgasm_have_A(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含A绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_A(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_U)
+def handle_self_plural_orgasm_have_U(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含U绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 6 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_U)
+def handle_target_plural_orgasm_have_U(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含U绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_U(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_PLURAL_ORGASM_HAVE_W)
+def handle_self_plural_orgasm_have_W(character_id: int) -> int:
+    """
+    自己的本次多重绝顶中包含W绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return 7 in character_data.h_state.plural_orgasm_set
+
+
+@add_premise(constant_promise.Premise.TARGET_PLURAL_ORGASM_HAVE_W)
+def handle_target_plural_orgasm_have_W(character_id: int) -> int:
+    """
+    交互对象的本次多重绝顶中包含W绝顶
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_plural_orgasm_have_W(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.NPC_ACTIVE_H)
 def handle_npc_active_h(character_id: int) -> int:
     """

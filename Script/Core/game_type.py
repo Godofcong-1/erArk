@@ -471,6 +471,8 @@ class BODY_H_STATE:
         """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
         self.plural_orgasm_count: int = 0
         """ 多重高潮次数 """
+        self.plural_orgasm_set: Set = set()
+        """ 多重高潮部位数据集合 """
         self.endure_not_shot_count: int = 0
         """ 忍住不射次数 """
         self.condom_info_show_flag: bool = False
