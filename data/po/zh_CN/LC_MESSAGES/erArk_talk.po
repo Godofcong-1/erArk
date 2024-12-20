@@ -42801,15 +42801,15 @@ msgid "如潮水般汹涌而来的快感从胸部蔓延到全身，{Name}的身�
 msgstr ""
 
 #: .\data\talk\system\second.csv:13
-msgid "{Name}的阴蒂缓缓充血，变成了膨胀的小肉芽，在快感的冲击中愈发敏感"
+msgid "{Name}因为兴奋而升温的阴蒂在冷空气下挺立着，空气中任何轻微的变化都使得{TargetName}的阴蒂更为敏感。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:14
-msgid "{Name}因为阴蒂的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来"
+msgid "来自阴蒂的快感让{Name}绷紧了小腹，快感在身体的颤抖中一波波从阴蒂传递到了四肢的末端。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:15
-msgid "如潮水般汹涌而来的快感从阴蒂蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离"
+msgid "{Name}的喘息不断变得沉重，来自阴蒂的快感不断累积最终超过了{Name}的极限，{Name}反弓着身体肆意喷洒着爱液。\n勉强渡过快感高潮的{Name}在一阵阵不自觉的颤抖中失去了所有气力，只有缓慢聚焦的瞳孔还证明着{Name}对身体的支配权。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:16
@@ -42825,51 +42825,51 @@ msgid "在冲刷神经般的快感下，{Name}的阴茎涨大到平常的两倍�
 msgstr ""
 
 #: .\data\talk\system\second.csv:19
-msgid "{Name}的阴道轻微收缩了几下，快速地分泌出了大量的爱液"
+msgid "{Name}的阴道不规律地收缩着，内壁上的褶皱在高潮的刺激下变得更为突出，诉说着潜意识下的欲望。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:20
-msgid "{Name}因为阴道的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来"
+msgid "{Name}的阴道仿佛拥有着自己的意志，不受{Name}的控制抽搐着。被阴道牵扯着的神经将快感的波动反馈到{Name}的脑海中，使得{Name}短暂地失去了意识，随后又被快感拉回现实世界。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:21
-msgid "{Name}如潮水般汹涌而来的快感从阴道蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离"
+msgid "{Name}的阴道在强烈的刺激下最终到达了忍耐的极限，阴道内壁互相挤压着，试图通过这种方法来释放高潮强烈的余波。\n突破{Name}精神阈值的快感甚至让{Name}一时忘记了呼吸，直到微微缺氧的眩晕迫使{Name}直面仍然在体内横冲直撞的快感潮水。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:22
-msgid "{Name}的菊穴轻微收缩了几下，分泌出了少许的肠液"
+msgid "不存在于本能之中的快感在{Name}的后穴中游走着，循着一条陌生的回路钻入了{Name}的大脑，引得{Name}不受控制地快速呼吸起来。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:23
-msgid "{Name}因为菊穴的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来"
+msgid "违背常理的快感穿透了肠壁直击着{Name}的子宫，熟悉的刺激将{Name}从意识的迷失中击倒在快感的潮水之中，{Name}宛如处于溺水边缘一般深深喘息着。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:24
-msgid "{Name}如潮水般汹涌而来的快感从菊穴蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离"
+msgid "来自后穴的快感像一道射线一样在{Name}僵硬的躯体中不断反射着，刺激着{Name}的肢体不断抽搐着。\n狂野且暴力的刺激使得{Name}失去了大部分身体控制权，愈来愈深的喘息预示着即将到来的绝顶，最终在一次深深的吸气后触及到了这条禁忌快感之路的终点，留下了{Name}洞开着的后穴。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:25
-msgid "{Name}的尿道轻微收缩了几下，不受控制地从膀胱中流出了几滴尿液"
+msgid "不断的刺激使得{Name}的尿道逐渐失去了控制，名为排泄的奇异快感在{Name}的小腹底端肆意游走着，不断诱惑着{Name}一泄为快。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:26
-msgid "{Name}因为尿道的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来"
+msgid "反复冲刷着{Name}尿道关口的快感将{Name}对体液的控制逐渐全部剥离，僵硬的身体在狂乱的颤抖中令{Name}失态地任由唾液，眼泪，以及尿液缓缓渗出。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:27
-msgid "{Name}如潮水般汹涌而来的快感从尿道蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离"
+msgid "{Name}被逆向突入的尿道长时间保持着不正常的洞开状态，违背了生理结构的人为刺激将{Name}的精神逼入了被大脑隐藏着的死胡同，只有无尽的高潮在其中反复回荡，最终在一次次反射中磨耗掉了{Name}所有的意识，将{Name}的身体化作了一滩烂泥。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:28
-msgid "从子宫传来的快感让{Name}感觉有些陌生有有些熟悉，雌性的本能开始在她的身体中蔓延"
+msgid "触及繁殖本能的快感在一瞬间熔断了{Name}的意识，本该拒绝一切异物的子宫口在快感的攻势下微微软化，无力的预示着将被攻破的未来。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:29
-msgid "{Name}因为子宫的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来"
+msgid "反复的快感无情地一遍遍碾过{Name}的本能，腹腔的神经感受到了{Name}对于繁衍的渴望，将{Name}的子宫降下，叫嚣着对于被播种的愿望。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:30
-msgid "{Name}如潮水般汹涌而来的快感从子宫蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离"
+msgid "对{Name}子宫的反复刺激使得{Name}对于身体的其他部分早已麻木，{Name}现在能感受到的只有自己的子宫以及反复施加于其上的强烈快感。{Name}的子宫已经完全做好了受孕的"
 msgstr ""
 
 #: .\data\talk\system\second.csv:31
@@ -43273,7 +43273,7 @@ msgid "\n{Name}对{PlayerName}问候了一声晚安"
 msgstr ""
 
 #: .\data\talk\system\second.csv:141
-msgid "\n{Name}对{PlayerName}招了招手"
+msgid "\n{Name}对{PlayerName}点了点头"
 msgstr ""
 
 #: .\data\talk\system\second.csv:142
@@ -43292,247 +43292,243 @@ msgstr ""
 msgid "\n{Name}对{PlayerName}问了一声好"
 msgstr ""
 
-#: .\data\talk\system\second.csv:146
-msgid "\n{Name}对{PlayerName}点了点头"
-msgstr ""
-
-#: .\data\talk\system\second.csv:148
+#: .\data\talk\system\second.csv:147
 msgid "\n{Name}看着躺在石棺中的{PlayerName}，从相遇以来的回忆涌上心头\n在完成告别后，{Name}盖上了石棺，发自内心的盼望着下一次的再会"
 msgstr ""
 
-#: .\data\talk\system\second.csv:150
+#: .\data\talk\system\second.csv:149
 msgid "\n{Name}深吸一口气，以队长的坚定姿态，带领小队踏上了此次外勤任务。{Name}的眼中闪烁着坚毅的光芒，心中充满了对任务成功的渴望和对队员的关切。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:151
+#: .\data\talk\system\second.csv:150
 msgid "\n{Name}带领小队成功完成了任务，安全返回罗德岛。卸下装备的那一刻，{Name}长舒了一口气，心中涌起一股成就感。\n但{Name}并没有放松警惕，而是开始仔细检查队员的状态，并为下一次任务做准备。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:152
+#: .\data\talk\system\second.csv:151
 msgid "\n{Name}考虑了一下，还是同意了群交的邀请，决定和大家一起享受与{PlayerName}性爱的快乐"
 msgstr ""
 
-#: .\data\talk\system\second.csv:153
+#: .\data\talk\system\second.csv:152
 msgid "\n{Name}被任命为罗德岛外交官时，心中充满了自豪与责任感。她对这个国家有着深厚的感情，这里不仅是她的家，更是她了解最透彻的地方。\n{Name}相信，自己能够凭借对当地风土人情的熟悉，以及对罗德岛的深入了解，为罗德岛与这个国家建立更紧密的联系。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:154
+#: .\data\talk\system\second.csv:153
 msgid "\n被解除罗德岛外交官职务的消息让{Name}感到有些失落。{Name}曾为这个罗德岛付出了很多心血，也与这个国家建立了深厚的感情。\n虽然有些不舍，但{Name}尊重{PlayerName}的决定。她相信，这段经历会成为她人生中宝贵的财富。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:155
+#: .\data\talk\system\second.csv:154
 msgid "\n{Name}接到任命时，心中五味杂陈。{Name}对即将前往的国家有着深厚的感情，那里不仅是她曾生活过的地方，更是她魂牵梦萦的家乡。\n{Name}决心充分利用自己对当地风土人情的熟悉，为罗德岛的外交事业贡献一份力量。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:156
+#: .\data\talk\system\second.csv:155
 msgid "\n被解除任命的消息让{Name}感到有些失落。{Name}曾满怀热情地投入到外交工作中，对即将离开的国家也充满了不舍。\n不过，{Name}很快调整了心态，她相信这段经历会成为她人生中宝贵的财富。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:158
+#: .\data\talk\system\second.csv:157
 msgid "\n{Name}被{PlayerName}任命为助理了，已自动发送了博士房间的房门密钥，接下来她将会从工作和生活等各方面上对{PlayerName}提供帮助"
 msgstr ""
 
-#: .\data\talk\system\second.csv:159
+#: .\data\talk\system\second.csv:158
 msgid "\n{Name}被解除了助理的职务，她的各项服务也将会随之停止，也不再持有博士房间的开门密钥了"
 msgstr ""
 
-#: .\data\talk\system\second.csv:160
+#: .\data\talk\system\second.csv:159
 msgid "\n{Name}接到了{PlayerName}的指示，要求她不再跟随自己行动。\n{Name}感到有些失落，但她明白{PlayerName}可能有自己的考虑。\n她决定利用这段时间提升自己的能力，以便在未来更好地协助{PlayerName}。\n{Name}心中暗自希望，自己能够早日再次获得{PlayerName}的信任和重用。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:161
+#: .\data\talk\system\second.csv:160
 msgid "\n{Name}接到了{PlayerName}的指示，要求她随时跟随在身边。\n虽然感到有些意外，但{Name}还是迅速整理了一下自己的情绪，决定全力配合{PlayerName}的需求。\n她心中暗自思忖，这或许是一个展示自己能力的好机会，同时也能更好地了解{PlayerName}的工作和生活习惯。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:162
+#: .\data\talk\system\second.csv:161
 msgid "\n虽然为什么会找自己，但{Name}还是快速处理了一下手头上做了一半的事，开始前往博士办公室"
 msgstr ""
 
-#: .\data\talk\system\second.csv:163
+#: .\data\talk\system\second.csv:162
 msgid "\n得知{PlayerName}不再需要自己进行辅佐服务后，{Name}的脸上露出了一丝失望，但还是尽力地向{PlayerName}表达了对这段时间的工作的珍惜"
 msgstr ""
 
-#: .\data\talk\system\second.csv:164
+#: .\data\talk\system\second.csv:163
 msgid "\n{PlayerName}的文书工作的分量有多少，{Name}一直看在眼里\n在确认{PlayerName}确实需要自己来帮忙之后，{Name}的脸上露出了一丝微笑，开始在终端里检查起了日程表和工作安排"
 msgstr ""
 
-#: .\data\talk\system\second.csv:165
+#: .\data\talk\system\second.csv:164
 msgid "\n{Name}接到了{PlayerName}的指示，要求她不再负责送饭服务。\n{Name}感到有些失落，但她明白{PlayerName}可能有自己的考虑。\n她决定利用这段时间提升自己的厨艺，以便在未来更好地协助{PlayerName}。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:166
+#: .\data\talk\system\second.csv:165
 msgid "\n{Name}接到了{PlayerName}的指示，要求她帮忙购买午饭。\n虽然感到有些意外，但{Name}还是迅速整理了一下自己的情绪，决定全力配合{PlayerName}的需求。\n她心中暗自思忖，这或许是一个展示自己能力的好机会。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:167
+#: .\data\talk\system\second.csv:166
 msgid "\n{Name}接到了{PlayerName}的指示，要求她亲手为自己做午饭。\n{Name}感到有些紧张，但她还是决定尽力做好这项任务。\n她希望通过自己的努力，能够让{PlayerName}满意，并进一步提升自己的厨艺。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:168
+#: .\data\talk\system\second.csv:167
 msgid "\n{Name}接到了{PlayerName}的指示，要求她亲手为自己做三餐。\n{Name}感到责任重大，但她还是决定全力以赴。\n她希望通过自己的努力，能够让{PlayerName}满意，并进一步提升自己的厨艺和服务能力。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:169
+#: .\data\talk\system\second.csv:168
 msgid "\n{Name}听到{PlayerName}的请求时，心中不禁泛起一丝失落。她曾那么享受为{PlayerName}服务的时光，如今却要画上句号。\n不过，{Name}很快调整好情绪，她决定将这份失落转化为动力，潜心钻研新的技能，期待未来能以更好的姿态再次为{PlayerName}服务。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:170
+#: .\data\talk\system\second.csv:169
 msgid "\n{Name}接到这个任务后，心中充满了责任感。她会早早地准备好一切，用最清脆的声音唤醒{PlayerName}。\n同时，{Name}还会为{PlayerName}准备一份丰盛的早餐，希望能够为{PlayerName}的一天注入满满的活力。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:171
+#: .\data\talk\system\second.csv:170
 msgid "\n{Name}听到这个请求时，脸颊不禁微微泛红。她会仔细挑选一款香气迷人的香水，让自己保持清新甜美的气息。\n同时，{Name}还会练习不同的吻法，希望能够给{PlayerName}带来最甜蜜的早晨。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:172
+#: .\data\talk\system\second.csv:171
 msgid "\n{Name}听到这个略带挑逗的请求时，心中闪过一丝惊讶。\n不过，{Name}很快就冷静下来。她会选择一个合适的姿势，让{PlayerName}能够感受到最舒适的触感。同时，{Name}还会控制好力度，确保不会让{PlayerName}感到疼痛。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:173
+#: .\data\talk\system\second.csv:172
 msgid "\n{Name}听到这个消息时，感到有些失落。她曾那么享受与{PlayerName}共度的夜晚，如今却要中断这一习惯。\n不过，{Name}相信，{PlayerName}一定有自己的理由。她决定尊重{PlayerName}的决定。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:174
+#: .\data\talk\system\second.csv:173
 msgid "\n{Name}接到这个任务后，心中升起了一丝期待。\n她会选择一个柔和的灯光，营造一个温馨的氛围。同时，{Name}还会准备一杯热牛奶，轻轻地摇晃着，直到{PlayerName}进入梦乡。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:175
+#: .\data\talk\system\second.csv:174
 msgid "\n{Name}听到这个请求时，脸颊不禁微微泛红。\n她会仔细挑选一款香氛，让自己保持迷人的气息。同时，{Name}还会练习不同的吻法，希望能够给{PlayerName}一个甜蜜的晚安吻。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:176
+#: .\data\talk\system\second.csv:175
 msgid "\n{Name}听到这个略带挑逗的请求时，心中闪过一丝惊喜。\n她会尽量营造一个放松的氛围，让{PlayerName}尽快释放出来，以便更好地进入梦乡。同时，{Name}还会控制好力度，确保不会让{PlayerName}感到不适。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:177
+#: .\data\talk\system\second.csv:176
 msgid "\n{Name}听到这个消息时，心中一阵酸楚。她已经习惯了和{PlayerName}朝夕相处，如今却要分开了，她感到非常失落。\n{Name}会默默地收拾好自己的东西，但心中仍旧留恋着和{PlayerName}在一起的点点滴滴。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:178
+#: .\data\talk\system\second.csv:177
 msgid "\n{Name}听到这个消息时，惊喜地瞪大了眼睛。她一直盼望着能和{PlayerName}住在一起，现在愿望终于实现了，她感到无比激动。\n{Name}开始想象着和{PlayerName}一起生活的种种美好画面，心中充满了期待。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:179
+#: .\data\talk\system\second.csv:178
 msgid "\n{Name}接到这个命令时，心中感到有些失落。她一直享受着帮助{PlayerName}与他人沟通的过程，从中也收获了很大的满足感。\n如今，她不得不终止这项服务，心中难免有些失落。不过，{Name}还是会默默地关注着{PlayerName}，希望能够一切顺利。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:180
+#: .\data\talk\system\second.csv:179
 msgid "\n{Name}听到这个要求，心中充满了期待。\n她会仔细观察{PlayerName}与他人交流时的互动，并适时地提供一些建议或帮助，让他们的交流更加顺畅愉快。\n同时，{Name}也会努力提升自己的社交能力，以便更好地协助{PlayerName}。"
 msgstr ""
 
-#: .\data\talk\system\second.csv:181
+#: .\data\talk\system\second.csv:180
 msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的内裤交给博士"
 msgstr ""
 
-#: .\data\talk\system\second.csv:182
+#: .\data\talk\system\second.csv:181
 msgid "\n{Name}同意每天上交内裤了，以后每日招呼的时候会脱下自己穿着的袜子交给博士"
 msgstr ""
 
-#: .\data\talk\system\second.csv:183
+#: .\data\talk\system\second.csv:182
 msgid "\n{Name}同意以后不再穿胸衣了，之后在上衣里面不会再穿胸衣，让胸部仅被上衣稍微遮挡"
 msgstr ""
 
-#: .\data\talk\system\second.csv:184
+#: .\data\talk\system\second.csv:183
 msgid "\n{Name}同意以后睡觉时不穿衣服了，以后睡觉的时候会不再穿睡衣或者睡袍，而是直接裸睡"
 msgstr ""
 
-#: .\data\talk\system\second.csv:185
+#: .\data\talk\system\second.csv:184
 msgid "\n{Name}按照每日上交内裤的约定，脱下了自己穿着的{PanName}，递给了{PlayerName}"
 msgstr ""
 
-#: .\data\talk\system\second.csv:186
+#: .\data\talk\system\second.csv:185
 msgid "\n{Name}按照每日上交袜子的约定，脱下了自己穿着的{SocName}，递给了{PlayerName}"
 msgstr ""
 
-#: .\data\talk\system\second.csv:187
+#: .\data\talk\system\second.csv:186
 msgid "\n{Name}同意白天时戴着乳头夹了，以后早上起床后会给自己戴上乳头夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:188
+#: .\data\talk\system\second.csv:187
 msgid "\n{Name}同意白天时戴着阴蒂夹了，以后早上起床后会给自己戴上阴蒂夹，一整天都戴着行动，在睡觉的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:189
+#: .\data\talk\system\second.csv:188
 msgid "\n{Name}同意白天时V里插着振动棒了，以后早上起床后会给自己的阴道里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:190
+#: .\data\talk\system\second.csv:189
 msgid "\n{Name}同意白天时A里插着振动棒了，以后早上起床后会给自己的菊穴里插入振动棒，一整天都插着行动，在睡觉的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:191
+#: .\data\talk\system\second.csv:190
 msgid "\n{Name}同意睡觉时戴着乳头夹了，以后晚上睡觉时会给自己戴上乳头夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:192
+#: .\data\talk\system\second.csv:191
 msgid "\n{Name}同意睡觉时戴着阴蒂夹了，以后晚上睡觉时会给自己戴上阴蒂夹，一整晚都戴着睡觉，在白天起床的时候再摘下来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:193
+#: .\data\talk\system\second.csv:192
 msgid "\n{Name}同意睡觉时V里插着振动棒了，以后晚上睡觉时会给自己的阴道里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:194
+#: .\data\talk\system\second.csv:193
 msgid "\n{Name}同意睡觉时A里插着振动棒了，以后晚上睡觉时会给自己的菊穴里插入振动棒，一整晚都插着睡觉，在白天起床的时候再拔出来"
 msgstr ""
 
-#: .\data\talk\system\second.csv:195
+#: .\data\talk\system\second.csv:194
 msgid "\n{Name}同意洗澡时不再清洗阴道内的精液了，以后洗澡的时候只对阴道做外部清洁，不再清洗阴道内的精液"
 msgstr ""
 
-#: .\data\talk\system\second.csv:196
+#: .\data\talk\system\second.csv:195
 msgid "\n{Name}同意每天晚上睡前都要自慰了，以后每天晚上睡觉前都会自慰一次，直到达到高潮再睡去"
 msgstr ""
 
-#: .\data\talk\system\second.csv:197
+#: .\data\talk\system\second.csv:196
 msgid "\n{Name}同意禁止自慰了，以后无论积攒了多少欲望都不会自慰，除非得到了{PlayerName}的指示"
 msgstr ""
 
-#: .\data\talk\system\second.csv:198
+#: .\data\talk\system\second.csv:197
 msgid "\n{Name}同意进行吮吸与吞咽力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:199
+#: .\data\talk\system\second.csv:198
 msgid "\n{Name}同意进行腋下夹持力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:200
+#: .\data\talk\system\second.csv:199
 msgid "\n{Name}同意进行胸部夹持力练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:201
+#: .\data\talk\system\second.csv:200
 msgid "\n{Name}同意进行手部灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:202
+#: .\data\talk\system\second.csv:201
 msgid "\n{Name}同意进行足部灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:203
+#: .\data\talk\system\second.csv:202
 msgid "\n{Name}同意进行阴道紧致度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:204
+#: .\data\talk\system\second.csv:203
 msgid "\n{Name}同意进行肠道紧致度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:205
+#: .\data\talk\system\second.csv:204
 msgid "\n{Name}同意进行尾巴灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:206
+#: .\data\talk\system\second.csv:205
 msgid "\n{Name}同意进行触手灵活度练习了，收下了{PlayerName}的倒模练习用具"
 msgstr ""
 
-#: .\data\talk\system\second.csv:208
+#: .\data\talk\system\second.csv:207
 msgid "\n{Name}获得了[已催眠·浅]，在催眠状态下，{Name}不会抵抗性骚扰等级的行为了"
 msgstr ""
 
-#: .\data\talk\system\second.csv:209
+#: .\data\talk\system\second.csv:208
 msgid "\n{Name}获得了[已催眠·深]，在催眠状态下，{Name}不会抵抗性任何性行为了"
 msgstr ""
 
-#: .\data\talk\system\second.csv:210
+#: .\data\talk\system\second.csv:209
 msgid "\n{Name}获得了[已催眠·极]，可以对{Name}进行最深度的体控催眠或者心控催眠了"
 msgstr ""
 
