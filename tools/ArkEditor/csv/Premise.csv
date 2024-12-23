@@ -764,6 +764,7 @@ technique_ge_3,TECHNIQUE_GE_3,属性_能力,自身技巧技能>=3
 technique_ge_5,TECHNIQUE_GE_5,属性_能力,自身技巧技能>=5
 t_technique_ge_3,TARGET_TECHNIQUE_GE_3,属性_能力,交互对象技巧技能>=3
 t_technique_ge_5,TARGET_TECHNIQUE_GE_5,属性_能力,交互对象技巧技能>=5
+t_technique_ge_5_or_is_unconscious_h,TARGET_TECHNIQUE_GE_5_OR_IS_UNCONSCIOUS_H,属性_能力,交互对象技巧技能>=5或处于无意识状态
 t_submit_ge_1,T_SUBMIT_GE_1,属性_能力,交互对象顺从>=1
 t_submit_ge_3,T_SUBMIT_GE_3,属性_能力,交互对象顺从>=3
 t_submit_ge_5,T_SUBMIT_GE_5,属性_能力,交互对象顺从>=5
@@ -1272,6 +1273,9 @@ penis_in_t_foot,PENIS_IN_T_FOOT,H_射精,当前阴茎位置为交互对象_足�
 penis_in_t_tail,PENIS_IN_T_TAIL,H_射精,当前阴茎位置为交互对象_尾交中
 penis_in_t_horn,PENIS_IN_T_HORN,H_射精,当前阴茎位置为交互对象_阴茎蹭角中
 penis_in_t_ears,PENIS_IN_T_EARS,H_射精,当前阴茎位置为交互对象_阴茎蹭耳朵中
+penis_in_t_mouse_or_breast,PENIS_IN_T_MOUSE_OR_BREAST,H_射精,当前阴茎位置为交互对象_口交中或乳交中
+penis_in_t_mouse_or_hand,PENIS_IN_T_MOUSE_OR_HAND,H_射精,当前阴茎位置为交互对象_口交中或手交中
+penis_in_t_vagina_or_womb,PENIS_IN_T_VAGINA_OR_WOMB,H_射精,当前阴茎位置为交互对象_V插入中或W插入中
 shoot_in_t_body,SHOOT_IN_T_BODY,H_射精,在交互对象的身体上射精（即含全部位）
 shoot_in_t_hair,SHOOT_IN_T_HAIR,H_射精,在交互对象的头发射精
 shoot_in_t_face,SHOOT_IN_T_FACE,H_射精,在交互对象的脸部射精

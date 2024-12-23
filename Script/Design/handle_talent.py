@@ -65,7 +65,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
                 character_data.talent[old_talent_id] = 0
 
             now_draw_succed = draw.WaitDraw()
-            now_draw_succed.text = _("\n{0}获得了{1}\n").format(character_data.name, talent_name)
+            now_draw_succed.text = _("\n{0}获得了【{1}】\n").format(character_data.name, talent_name)
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 

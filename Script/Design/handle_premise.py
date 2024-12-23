@@ -5298,6 +5298,20 @@ def handle_t_technique_ge_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_TECHNIQUE_GE_5_OR_IS_UNCONSCIOUS_H)
+def handle_t_technique_ge_5_or_is_unconscious_h(character_id: int) -> int:
+    """
+    校验交互对象是否技巧技能>=5或处于无意识状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_t_technique_ge_3(character_id) or handle_is_unconscious_h(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.T_YIELD_MARK_1)
 def handle_t_yield_mark_1(character_id: int) -> int:
     """
@@ -10560,6 +10574,48 @@ def handle_penis_in_t_ears(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     if target_data.h_state.insert_position == 14:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PENIS_IN_T_MOUSE_OR_BREAST)
+def handle_penis_in_t_mouse_or_breast(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_口交中或乳交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_penis_in_t_mouse(character_id) or handle_penis_in_t_breast(character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PENIS_IN_T_MOUSE_OR_HAND)
+def handle_penis_in_t_mouse_or_hand(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_口交中或手交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_penis_in_t_mouse(character_id) or handle_penis_in_t_hand(character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB)
+def handle_penis_in_t_vagina_or_womb(character_id: int) -> int:
+    """
+    当前阴茎位置为交互对象_V插入中或W插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_penis_in_t_vagina(character_id) or handle_penis_in_t_womb(character_id):
         return 1
     return 0
 
