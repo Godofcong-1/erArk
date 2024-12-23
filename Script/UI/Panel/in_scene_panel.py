@@ -323,7 +323,6 @@ class InScenePanel:
                     label.draw()
 
             # ↓以下为服装栏的内容↓#
-            # 移动至服装文件中
             if cache.scene_panel_show[1] and pl_character_data.target_character_id:
                 character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
                     pl_character_data.cid, self.width, 20, 0, 0

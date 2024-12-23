@@ -18,7 +18,7 @@ from Script.UI.Panel import (
     manage_basement_panel,
     see_item_info_panel,
     see_map_panel,
-    undress_panel,
+    cloth_panel,
     instruct_filter_panel,
     event_option_panel,
     check_locker_panel,
@@ -133,7 +133,7 @@ def see_map_flow():
 @handle_panel.add_panel(constant.Panel.UNDRESS)
 def undress_flow():
     """脱衣服面板"""
-    now_panel = undress_panel.Undress_Panel(width)
+    now_panel = cloth_panel.Undress_Panel(width)
     now_panel.draw()
 
 
