@@ -29,7 +29,7 @@ class All_Npc_Position_Panel:
         """ 绘制的最大宽度 """
         self.now_panel = _("干员位置一览")
         """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = None
+        self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 60, 3, window_width, 1, 0, 0)
         """ 当前名字列表控制面板 """
         self.select_type = 0
         """ 当前筛选类型 """
@@ -42,10 +42,9 @@ class All_Npc_Position_Panel:
         """绘制对象"""
         title_draw = draw.TitleLineDraw("干员位置一览", self.width)
 
-        if normal_config.config_normal.language == "zh_CN":
-            draw_width = self.width / 3
-        else:
-            draw_width = self.width / 2
+        # 非中文则每行只显示两个
+        if normal_config.config_normal.language != "zh_CN":
+            self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 40, 2, window_width, 1, 0, 0)
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
@@ -132,8 +131,8 @@ class All_Npc_Position_Panel:
             line_feed.draw()
 
             # 遍历角色id
-            chara_count = 0
             npc_id_got_list = sorted(cache.npc_id_got)
+            final_list = []
             for npc_id in npc_id_got_list:
                 if npc_id != 0:
                     character_data = cache.character_data[npc_id]
@@ -153,72 +152,23 @@ class All_Npc_Position_Panel:
                         # 姓名筛选
                         elif self.select_type == 5 and self.name_search not in character_data.name:
                             continue
+                    # 加入列表
+                    final_list.append([npc_id, self.move_type])
 
-                    # 角色属性与信息
-                    name = character_data.name
-                    id = str(character_data.adv).rjust(4,'0')
-                    scene_position = character_data.position.copy()
-                    if normal_config.config_normal.language != "zh_CN":
-                        for i in range(len(scene_position)):
-                            scene_position[i] = _(scene_position[i])
-                    scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
-                    # 对于入口的特殊处理
-                    if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
-                        scene_position_str = scene_position_str[:-2] + _("入口")
-                    chara_count += 1
+            # 生成子面板
+            self.handle_panel.text_list = final_list
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list.extend(self.handle_panel.return_list)
 
-                    # 输出干员名字
-                    now_draw_text = f"[{id}]{name}"
-                    # 输出跟随信息
-                    if character_data.sp_flag.is_follow == 1:
-                        now_draw_text += _("(跟)")
-                    # 输出访客信息
-                    if npc_id in cache.rhodes_island.visitor_info:
-                        now_draw_text += _("(访)")
-                    # 输出地点信息
-                    now_draw_text += f":{scene_position_str}   "
-
-                    status_text = game_config.config_status[character_data.state].name
-                    # 如果是在移动，则输出目的地
-                    # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
-                    if status_text == _("移动") and len(character_data.behavior.move_final_target):
-                        now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
-                    # 否则输出状态
-                    else:
-                        now_draw_text += _("正在：{0}").format(status_text)
-
-                    # 如果有口上颜色的话，使用口上颜色
-                    if character_data.text_color:
-                        now_style = character_data.name
-                    # 否则使用标准颜色
-                    else:
-                        now_style = "standard"
-
-                    # 输出按钮
-                    name_draw = draw.LeftButton(
-                        now_draw_text, name, draw_width, cmd_func=self.move, args=(npc_id,)
-                    )
-                    name_draw.normal_style = now_style
-                    name_draw.draw()
-                    return_list.append(name_draw.return_text)
-
-                    if normal_config.config_normal.language == "zh_CN":
-                        # 每行三个，如果是第三个，且当前不是最后一个则换行
-                        if chara_count % 3 == 0 and chara_count != len(cache.npc_id_got):
-                            line_feed.draw()
-                    else:
-                        # 每行两个，如果是第二个，且当前不是最后一个则换行
-                        if chara_count % 2 == 0 and chara_count != len(cache.npc_id_got):
-                            line_feed.draw()
-
-            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or self.break_flag:
+            # 选择玩家移动时，也跳出循环
+            if yrn == back_draw.return_text or (yrn in self.handle_panel.return_list and self.move_type == 2):
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -244,6 +194,91 @@ class All_Npc_Position_Panel:
             now_name = ask_name_panel.draw()
             self.name_search = now_name
             cache.all_npc_position_panel_select_type = 0
+
+
+class MoveSonPanel:
+    """
+    移动子面板对象
+    Keyword arguments:
+    text_list -- 文本列表，0为角色id，1为移动类型
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, text_list: list, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.chara_id: int = text_list[0]
+        """ 角色id """
+        self.move_type: int = text_list[1]
+        """ 移动类型 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        character_data: game_type.Character = cache.character_data[self.chara_id]
+
+        # 角色属性与信息
+        name = character_data.name
+        id = str(character_data.adv).rjust(4,'0')
+        scene_position = character_data.position.copy()
+        if normal_config.config_normal.language != "zh_CN":
+            for i in range(len(scene_position)):
+                scene_position[i] = _(scene_position[i])
+        scene_position_str = map_handle.get_map_system_path_str_for_list(scene_position)
+        # 对于入口的特殊处理
+        if scene_position_str[-2] == "\\" and scene_position_str[-1] == "0":
+            scene_position_str = scene_position_str[:-2] + _("入口")
+
+        # 输出干员名字
+        now_draw_text = f"[{id}]{name}"
+        # 输出跟随信息
+        if character_data.sp_flag.is_follow == 1:
+            now_draw_text += _("(跟)")
+        # 输出访客信息
+        if self.chara_id in cache.rhodes_island.visitor_info:
+            now_draw_text += _("(访)")
+        # 输出地点信息
+        now_draw_text += f":{scene_position_str}   "
+
+        status_text = game_config.config_status[character_data.state].name
+        # 如果是在移动，则输出目的地
+        # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
+        if status_text == _("移动") and len(character_data.behavior.move_final_target):
+            now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
+        # 否则输出状态
+        else:
+            now_draw_text += _("正在：{0}").format(status_text)
+
+        # 如果有口上颜色的话，使用口上颜色
+        if character_data.text_color:
+            now_style = character_data.name
+        # 否则使用标准颜色
+        else:
+            now_style = "standard"
+
+        # 输出按钮
+        name_draw = draw.LeftButton(
+            now_draw_text, name, self.width, cmd_func=self.move, args=(self.chara_id,)
+        )
+        name_draw.normal_style = now_style
+        self.button_return = name_draw.return_text
+        self.now_draw = name_draw
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
 
     def move(self, character_id: int):
         """移动"""
@@ -280,4 +315,6 @@ class All_Npc_Position_Panel:
                     break
                 else:
                     pre_position = cache.character_data[0].position
-                self.break_flag = True
+            # 如果该干员在玩家的位置，那么玩家的交互对象设为该干员
+            if character_data.position == cache.character_data[0].position:
+                cache.character_data[0].target_character_id = character_id

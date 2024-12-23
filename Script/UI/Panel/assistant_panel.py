@@ -20,7 +20,7 @@ window_width: int = normal_config.config_normal.text_width
 def chose_assistant():
     """选择助理"""
 
-    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 999, 8, window_width, 1, 1, 0)
+    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 80, 8, window_width, 1, 1, 0)
 
     while 1:
 
@@ -469,7 +469,7 @@ class SeeNPCButtonList:
     """
     点击后可选择作为助理的NPC的按钮对象
     Keyword arguments:
-    text -- 选项名字
+    chara_id -- 角色id
     width -- 最大宽度
     is_button -- 绘制按钮
     num_button -- 绘制数字按钮
@@ -477,12 +477,12 @@ class SeeNPCButtonList:
     """
 
     def __init__(
-        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
+        self, chara_id: int, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
 
-        self.NPC_id: int = NPC_id
-        """ 指令名字绘制文本 """
+        self.chara_id: int = chara_id
+        """ 角色id """
         self.draw_text: str = ""
         """ 绘制文本 """
         self.width: int = width
@@ -494,20 +494,18 @@ class SeeNPCButtonList:
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
 
-        target_data: game_type.Character = cache.character_data[NPC_id]
+        target_data: game_type.Character = cache.character_data[self.chara_id]
         button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
 
         # 按钮绘制
 
         name_draw = draw.LeftButton(
-            button_text, self.button_return, self.width, cmd_func=assistant_replace, args=(NPC_id,)
+            button_text, self.button_return, self.width, cmd_func=assistant_replace, args=(self.chara_id,)
         )
         # self.button_return = NPC_id
-        self.now_draw = name_draw
-        self.draw_text = button_text
-
         """ 绘制的对象 """
         self.now_draw = name_draw
+        self.draw_text = button_text
 
     def draw(self):
         """绘制对象"""
