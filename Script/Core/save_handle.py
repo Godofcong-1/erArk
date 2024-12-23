@@ -228,11 +228,14 @@ def input_load_save(save_id: str):
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()
     if len(loaded_dict["system_setting"]) != len(zero_system_setting):
-        loaded_dict["system_setting"] = zero_system_setting
-        now_draw = draw.WaitDraw()
-        draw_text = _("\n系统设置已重置，如有需要请手动修改\n")
+        for key in zero_system_setting:
+            if key not in loaded_dict["system_setting"]:
+                loaded_dict["system_setting"][key] = zero_system_setting[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n系统设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
         now_draw.text = draw_text
-        now_draw.style = "warning"
         now_draw.draw()
 
     # 更新大地图势力数据

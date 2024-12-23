@@ -1293,7 +1293,9 @@ class Cache:
         self.npc_tem_data: List[NpcTem] = []
         """ npc模板列表 """
         self.npc_id_got: Set = set()
-        """ 已拥有的干员id数据 """
+        """ 已拥有的干员id集合 """
+        self.forbidden_npc_id: Set = set()
+        """ 禁止出现的干员id集合 """
         self.input_cache: List[str] = []
         """ 玩家指令输入记录（最大20）"""
         self.daily_intsruce: List[str] = []

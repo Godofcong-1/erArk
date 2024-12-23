@@ -11864,6 +11864,18 @@ msgstr ""
 msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
 msgstr ""
 
+#: .\data\csv\System_Setting.csv:16
+msgid "禁止某些干员在游戏中出现"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:16
+msgid "如果对某些干员不感兴趣，可以选择禁止她们在游戏中出现，未招募的会无法招募，已招募的会离岛并无法招募"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:16
+msgid "不禁止|禁止"
+msgstr ""
+
 #: .\data\csv\Talent.csv:7
 msgid "处女"
 msgstr ""
