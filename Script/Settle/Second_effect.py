@@ -543,28 +543,9 @@ def handle_down_small_hit_point(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    sub_hit = 10
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    #气力为0时体力消耗3倍#
-    if character_data.mana_point == 0:
-        sub_hit *= 3
-    #体力不足0时锁为1#
-    if character_data.hit_point >= sub_hit:
-        character_data.hit_point -= sub_hit
-        change_data.hit_point -= sub_hit
-    else:
-        change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 1
-        if not character_data.sp_flag.tired:
-            character_data.sp_flag.tired = 1
-            # 如果和玩家位于同一地点，则输出提示信息
-            if character_data.position == cache.character_data[0].position:
-                now_draw = draw.NormalDraw()
-                now_draw.width = window_width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 10, -1, dregree=0, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_MANA_POINT)
@@ -579,29 +560,8 @@ def handle_down_small_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 20
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    if character_data.mana_point >= sub_mana:
-        character_data.mana_point -= sub_mana
-        change_data.mana_point -= sub_mana
-    else:
-        change_data.mana_point -= character_data.mana_point
-        sub_mana -= character_data.mana_point
-        character_data.mana_point = 0
-        character_data.hit_point -= sub_mana
-        change_data.hit_point -= sub_mana
-        if character_data.hit_point <= 0:
-            character_data.hit_point = 1
-            if not character_data.sp_flag.tired:
-                character_data.sp_flag.tired = 1
-                # 如果和玩家位于同一地点，则输出提示信息
-                if character_data.position == cache.character_data[0].position:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = window_width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
-                    now_draw.draw()
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 20, mp_value=-1, dregree=0, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_HIT_POINT)
@@ -616,28 +576,8 @@ def handle_down_middle_hit_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_hit = 50
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    #气力为0时体力消耗3倍#
-    if character_data.mana_point == 0:
-        sub_hit *= 3
-    #体力不足0时锁为1#
-    if character_data.hit_point >= sub_hit:
-        character_data.hit_point -= sub_hit
-        change_data.hit_point -= sub_hit
-    else:
-        change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 1
-        if not character_data.sp_flag.tired:
-            character_data.sp_flag.tired = 1
-            # 如果和玩家位于同一地点，则输出提示信息
-            if character_data.position == cache.character_data[0].position:
-                now_draw = draw.NormalDraw()
-                now_draw.width = window_width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 20, -1, dregree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_MANA_POINT)
@@ -652,29 +592,8 @@ def handle_down_middle_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 100
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    if character_data.mana_point >= sub_mana:
-        character_data.mana_point -= sub_mana
-        change_data.mana_point -= sub_mana
-    else:
-        change_data.mana_point -= character_data.mana_point
-        sub_mana -= character_data.mana_point
-        character_data.mana_point = 0
-        character_data.hit_point -= sub_mana
-        change_data.hit_point -= sub_mana
-        if character_data.hit_point <= 0:
-            character_data.hit_point = 1
-            if not character_data.sp_flag.tired:
-                character_data.sp_flag.tired = 1
-                # 如果和玩家位于同一地点，则输出提示信息
-                if character_data.position == cache.character_data[0].position:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = window_width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
-                    now_draw.draw()
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 25, mp_value=-1, dregree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_HIT_POINT)
@@ -689,28 +608,8 @@ def handle_down_large_hit_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_hit = 100
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    #气力为0时体力消耗3倍#
-    if character_data.mana_point == 0:
-        sub_hit *= 3
-    #体力不足0时锁为1#
-    if character_data.hit_point >= sub_hit:
-        character_data.hit_point -= sub_hit
-        change_data.hit_point -= sub_hit
-    else:
-        change_data.hit_point -= character_data.hit_point
-        character_data.hit_point = 1
-        if not character_data.sp_flag.tired:
-            character_data.sp_flag.tired = 1
-            # 如果和玩家位于同一地点，则输出提示信息
-            if character_data.position == cache.character_data[0].position:
-                now_draw = draw.NormalDraw()
-                now_draw.width = window_width
-                now_draw.text = "\n" + character_data.name + "太累了\n"
-                now_draw.draw()
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 30, -1, dregree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_MANA_POINT)
@@ -725,29 +624,8 @@ def handle_down_large_mana_point(
     change_data -- 状态变更信息记录对象
     """
 
-    sub_mana = 200
-    character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.dead:
-        return
-    if character_data.mana_point >= sub_mana:
-        character_data.mana_point -= sub_mana
-        change_data.mana_point -= sub_mana
-    else:
-        change_data.mana_point -= character_data.mana_point
-        sub_mana -= character_data.mana_point
-        character_data.mana_point = 0
-        character_data.hit_point -= sub_mana
-        change_data.hit_point -= sub_mana
-        if character_data.hit_point <= 0:
-            character_data.hit_point = 1
-            if not character_data.sp_flag.tired:
-                character_data.sp_flag.tired = 1
-                # 如果和玩家位于同一地点，则输出提示信息
-                if character_data.position == cache.character_data[0].position:
-                    now_draw = draw.NormalDraw()
-                    now_draw.width = window_width
-                    now_draw.text = "\n" + character_data.name + "太累了\n"
-                    now_draw.draw()
+    from Script.Settle import default
+    default.base_chara_hp_mp_common_settle(character_id, 30, mp_value=-1, dregree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
