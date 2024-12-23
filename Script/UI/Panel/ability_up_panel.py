@@ -454,6 +454,16 @@ class Character_talent_show_Text:
             now_draw.text = _("满足条件后需要准备【项圈】，然后进行【戴上项圈】，成功后即可获得\n")
             now_draw.draw()
 
+        elif judge:
+            now_draw_succed = draw.NormalDraw()
+            now_draw_succed.text = _("\n满足条件，确定要现在获得该素质吗（也可以在过夜时自动获得）\n")
+            now_draw_succed.draw()
+
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定") + "_" + str(talent_id), self.width / 3, cmd_func=self.level_up, args = talent_id)
+            yes_draw.draw()
+            self.return_list.append(yes_draw.return_text)
+            line_feed.draw()
+
     def level_up(self, talent_id):
         now_draw_succed = draw.WaitDraw()
         now_draw_succed.text = _("选择成功\n")
