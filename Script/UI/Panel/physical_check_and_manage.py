@@ -190,8 +190,13 @@ class Physical_Check_And_Manage_Panel:
             line = draw.LineDraw("-", window_width)
             line.draw()
             py_cmd.clr_cmd()
+            # 获取医术等级与可用次数，次数为(等级+1)*4-已使用次数
+            now_ability_lv = self.pl_character_data.ability[46]
+            done_times = len(self.done_check_status_id_set)
+            now_ability_times = (now_ability_lv + 1) * 4 - done_times
             # 绘制提示信息
-            info_text = _("\n请选择要对{0}进行的身体检查：\n\n").format(target_character_data.name)
+            info_text = _("\n可以进行的检查项目/已进行的检查项目：{0}/{1}（每级医术技能+4）\n").format(now_ability_times, done_times)
+            info_text += _("请选择要对{0}进行的身体检查：\n\n").format(target_character_data.name)
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
             info_draw.draw()
@@ -200,35 +205,48 @@ class Physical_Check_And_Manage_Panel:
             for status_id in range(850, 899):
                 if status_id in game_config.config_status:
                     count += 1
-                    # 已经检查过的不再显示
+                    done_flag = False
+                    # 已经检查过的不可用
                     if status_id in self.done_check_status_id_set:
-                        continue
+                        done_flag = True
                     # 部分指令需要有前置指令才能使用
                     if status_id in cmd_able_dict and cmd_able_dict[status_id] not in self.done_check_status_id_set:
                         continue
-                    # 部分指令需要破处后才能使用
+                    # 部分指令需要未破处则不可用
                     if (status_id == 874 or status_id == 875) and target_character_data.talent[0]:
-                        continue
+                        done_flag = True
                     elif status_id == 877 and target_character_data.talent[1]:
-                        continue
+                        done_flag = True
                     # 部分指令需要有对应部位的器官才能使用
                     if status_id in body_talent_map:
                         talent_id = body_talent_map[status_id]
                         if not target_character_data.talent[talent_id]:
                             continue
+                    # 如果使用次数已经用完，则不可用
+                    if now_ability_times <= 0:
+                        done_flag = True
                     # 绘制按钮
                     status_data = game_config.config_status[status_id]
                     status_text = f"[{str(count).rjust(2,'0')}]：{status_data.name}"
-                    status_draw = draw.LeftButton(
-                        _(status_text),
-                        _(str(count)),
-                        window_width,
-                        cmd_func=self.settle_target_physical_status,
-                        args=(status_id),
-                    )
+                    if done_flag:
+                        if status_id in self.done_check_status_id_set:
+                            status_text += _("(已检查)")
+                        status_draw = draw.NormalDraw()
+                        status_draw.text = status_text
+                        status_draw.style = "deep_gray"
+                        status_draw.width = window_width
+                        status_draw.draw()
+                    else:
+                        status_draw = draw.LeftButton(
+                            _(status_text),
+                            _(str(count)),
+                            window_width,
+                            cmd_func=self.settle_target_physical_status,
+                            args=(status_id),
+                        )
+                        status_draw.draw()
+                        return_list.append(status_draw.return_text)
                     line_feed.draw()
-                    status_draw.draw()
-                    return_list.append(status_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
