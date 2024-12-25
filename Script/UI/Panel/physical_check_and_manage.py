@@ -2,7 +2,7 @@ from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
 from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, attr_text
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -520,8 +520,76 @@ class Physical_Check_And_Manage_Panel:
 
     def adjust_physical_check_schedule(self):
         """调整体检日程"""
-        # TODO
-        pass
+        title_text = _("调整体检日程")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            return_list = []
+            line_feed.draw()
+            title_draw.draw()
+
+            # 输出提示信息
+            now_draw = draw.NormalDraw()
+            info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
+            now_draw.text = info_text
+            now_draw.width = self.width
+            now_draw.draw()
+
+            # 遍历全部设置
+            for cid in game_config.config_physical_exam_setting:
+                # 如果当前不是第2个设置，且第2个设置没有开启，则不显示后面的设置
+                if cid >= 3 and cache.rhodes_island.physical_examination_setting[2] == 0:
+                    break
+                line_feed.draw()
+                physical_exam_setting_data = game_config.config_physical_exam_setting[cid]
+                # 选项名
+                button_text = f"  [{physical_exam_setting_data.name}]： "
+                button_len = max(len(button_text) * 2, 60)
+                button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.draw_info, args=(cid))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                # 如果没有该键，则创建一个，并置为0
+                if cid not in cache.rhodes_island.physical_examination_setting:
+                    cache.rhodes_island.physical_examination_setting[cid] = 0
+                now_setting_flag = cache.rhodes_island.physical_examination_setting[cid] # 当前设置的值
+                option_len = len(game_config.config_physical_exam_setting_option[cid]) # 选项的长度
+
+                # 当前选择的选项的名字
+                button_text = f" [{game_config.config_physical_exam_setting_option[cid][now_setting_flag]}] "
+                button_len = max(len(button_text) * 2, 20)
+
+                # 绘制选项
+                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting, args=(cid, option_len))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                # 部分选项有额外的手动选择按钮
+                if cid == 4 and cache.rhodes_island.physical_examination_setting[cid] == 2:
+                    now_len = len(cache.rhodes_island.manually_selected_exam_operator_ids)
+                    button_text = _("[调整干员名单]({0}人)").format(now_len)
+                    button_len = max(len(button_text) * 2, 20)
+                    button_draw = draw.CenterButton(button_text, str(cid) + button_text, button_len, cmd_func=self.adjust_target_list)
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                elif cid == 7 and cache.rhodes_island.physical_examination_setting[cid] == 1:
+                    now_len = len(cache.rhodes_island.manually_selected_exam_week_day_list)
+                    button_text = _("[调整体检日]({0}天)").format(now_len)
+                    button_len = max(len(button_text) * 2, 20)
+                    button_draw = draw.CenterButton(button_text, str(cid) + button_text, button_len, cmd_func=self.adjust_physical_exam_date)
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
 
     def check_physcial_report(self):
         """查看检查报告"""
@@ -756,3 +824,115 @@ class Physical_Check_And_Manage_Panel:
             if yrn == back_draw.return_text:
                 break
 
+    def draw_info(self, cid: int):
+        """绘制体检设置的详细信息"""
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+        now_draw = draw.WaitDraw()
+        setting_data = game_config.config_physical_exam_setting[cid]
+        info_text = f"\n {setting_data.info}\n"
+        now_draw.text = info_text
+        now_draw.width = self.width
+        now_draw.draw()
+        line = draw.LineDraw("-", self.width)
+        line.draw()
+
+    def change_setting(self, cid, option_len):
+        """修改设置"""
+        # 调整每天抽取体检人数的选项单独处理
+        if cid == 6:
+            line_feed.draw()
+            line_draw = draw.LineDraw("-", self.width)
+            line_draw.draw()
+            line_feed.draw()
+            ask_text = _("请输入1~10的数字\n")
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 99)
+            new_num = int(ask_panel.draw()) - 1
+            if new_num < 0:
+                new_num = 0
+            elif new_num > 9:
+                new_num = 9
+            cache.rhodes_island.physical_examination_setting[cid] = new_num
+        else:
+            if cache.rhodes_island.physical_examination_setting[cid] < option_len - 1:
+                cache.rhodes_island.physical_examination_setting[cid] += 1
+            else:
+                cache.rhodes_island.physical_examination_setting[cid] = 0
+
+    def adjust_target_list(self):
+        """调整体检对象名单"""
+        from Script.UI.Panel import normal_panel
+
+        while 1:
+            npc_id_got_list = sorted(cache.npc_id_got)
+            # 已选择的角色id列表
+            selected_id_list = list(cache.rhodes_island.manually_selected_exam_operator_ids)
+            final_list = []
+            # 遍历角色id
+            for npc_id in npc_id_got_list:
+                if npc_id == 0:
+                    continue
+                now_list = [npc_id, self.switch_chara_in_target_list, selected_id_list]
+                final_list.append(now_list)
+
+            # 调用通用选择按钮列表函数
+            return_list = normal_panel.common_select_npc_button_list_func(final_list)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == _("返回"):
+                break
+
+    def switch_chara_in_target_list(self, character_id: int):
+        """切换体检对象名单中的角色"""
+        if character_id in cache.rhodes_island.manually_selected_exam_operator_ids:
+            cache.rhodes_island.manually_selected_exam_operator_ids.remove(character_id)
+        else:
+            cache.rhodes_island.manually_selected_exam_operator_ids.add(character_id)
+
+    def adjust_physical_exam_date(self):
+        """调整体检日期"""
+        week_data = game_config.config_week_day
+
+        while 1:
+            line_feed.draw()
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            line_feed.draw()
+
+            return_list = []
+
+            info_text = _("请选择体检日期：\n")
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.draw()
+
+            # 绘制星期
+            for week_id in range(7):
+                draw_text = f" [{week_id}]{week_data[week_id].name}"
+                draw_style = 'standard'
+                # 如果已选择该日期，则显示为选中状态
+                if week_id in cache.rhodes_island.manually_selected_exam_week_day_list:
+                    draw_text += _("(已选择)")
+                    draw_style = 'gold_enrod'
+                week_draw = draw.LeftButton(draw_text, str(week_id), window_width, normal_style=draw_style, cmd_func=self.set_physical_exam_date, args=(week_id))
+
+                return_list.append(week_draw.return_text)
+                week_draw.draw()
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def set_physical_exam_date(self, week_id: int):
+        """设置体检日期"""
+        if week_id in cache.rhodes_island.manually_selected_exam_week_day_list:
+            cache.rhodes_island.manually_selected_exam_week_day_list.remove(week_id)
+        else:
+            cache.rhodes_island.manually_selected_exam_week_day_list.append(week_id)

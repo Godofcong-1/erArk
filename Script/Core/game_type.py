@@ -579,6 +579,8 @@ class ACTION_INFO:
         """ 询问当前地点是否关门的标记，true的话则已询问过，每次玩家移动时重置 """
         self.move_talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色触发移动口上的时间，用以避免短时间频繁触发该口上 """
+        self.health_check_today: int = 0
+        """ 角色今天体检的时间，0不需要，1上午，2下午 """
 
 
 class AUTHOR_FLAG:
@@ -922,6 +924,8 @@ class Rhodes_Island:
         """ 一周内的派对计划，周一0~周日6:娱乐id """
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
+        self.total_semen_count: int = 0
+        """ 每日总射精量 """
         self.week_fall_chara_pink_certificate_add: int = 0
         """ 本周陷落干员提供的粉红凭证总数 """
 
@@ -982,10 +986,18 @@ class Rhodes_Island:
         """ 至今为止的治疗总收入 """
         self.urine_in_fridge: Dict[int, Tuple[int]] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
-        self.total_semen_count: int = 0
-        """ 每日总射精量 """
+        self.physical_examination_setting: Dict[int, Tuple[int]] = {}
+        """ 体检设置 设置id:设置值 """
         self.today_physical_examination_chara_id_dict: Dict[int, Tuple[set]] = {}
         """ 今日已体检的干员数据 干员id:体检项目id集合 """
+        self.examined_operator_ids: Set[int] = set()
+        """ 本次体检周期内已体检过的干员id集合 """
+        self.waiting_for_exam_operator_ids: Set[int] = set()
+        """ 当前正在等待体检的干员id集合 """
+        self.manually_selected_exam_operator_ids: Set[int] = set()
+        """ 手动选择的体检对象干员id集合 """
+        self.manually_selected_exam_week_day_list: List[int] = []
+        """ 手动选择的每周的体检日列表 """
 
         # 文职区
         self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}

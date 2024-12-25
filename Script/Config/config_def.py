@@ -672,6 +672,19 @@ class Organ:
     """ 名字 """
 
 
+class Physical_Exam_Setting:
+    """ 角色设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    option: str
+    """ 各个选项 """
+
+
 class ProductFormula:
     """ 产品配方 """
 

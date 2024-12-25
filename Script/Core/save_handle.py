@@ -218,6 +218,13 @@ def input_load_save(save_id: str):
                     if character_data.adv == game_config.config_facility_open[all_cid].NPC_id:
                         loaded_dict["rhodes_island"].facility_open[all_cid] = True
                         break
+    # 更新体检设置
+    zero_physical_exam_setting = attr_calculation.get_physical_exam_setting_zero()
+    if len(loaded_dict["rhodes_island"].physical_examination_setting) != len(zero_physical_exam_setting):
+        for key in zero_physical_exam_setting:
+            if key not in loaded_dict["rhodes_island"].physical_examination_setting:
+                loaded_dict["rhodes_island"].physical_examination_setting[key] = zero_physical_exam_setting[key]
+                update_count += 1
     # 更新食谱
     loaded_dict["recipe_data"] = cooking.init_recipes()
     # 更新图书借阅

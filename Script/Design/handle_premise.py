@@ -637,6 +637,27 @@ def handle_time_weekend(character_id: int) -> int:
     return not game_time.judge_work_today(0)
 
 
+@add_premise(constant_promise.Premise.TODAY_IS_HEALTY_CHECK_DAY)
+def handle_today_is_healty_check_day(character_id: int) -> int:
+    """
+    今天是体检日
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 如果设置的是周末体检日的话
+    if cache.rhodes_island.physical_examination_setting[7] == 0:
+        if handle_time_weekend(character_id):
+            return 1
+    # 否则手动检查当前星期
+    else:
+        now_week_day = cache.game_time.weekday()
+        if now_week_day in cache.rhodes_island.manually_selected_exam_week_day_list:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.MORIING_SALUTATION_TIME)
 def handle_morning_salutation_time(character_id: int) -> int:
     """
@@ -921,10 +942,46 @@ def handle_visitor_zone_have_target(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PERIODIC_HEALTH_CHECK_ON)
+def handle_periodic_health_check_on(character_id: int) -> int:
+    """
+    当前已开启定期体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.rhodes_island.physical_examination_setting[1] == 1
+
+
+@add_premise(constant_promise.Premise.HEALTH_CHECK_DONE_NEED_CHECK_AGAIN)
+def handle_health_check_done_need_check_again(character_id: int) -> int:
+    """
+    已体检的仍需要再次体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.rhodes_island.physical_examination_setting[5] == 1
+
+
+@add_premise(constant_promise.Premise.HEALTH_CHECK_DONE_NOT_NEED_CHECK_AGAIN)
+def handle_health_check_done_not_need_check_again(character_id: int) -> int:
+    """
+    已体检的不需要再次体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_health_check_done_need_check_again(character_id)
+
+
 @add_premise(constant_promise.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """
-    NPC距离上次移动已经至少经过了1小时
+    自己距离上次移动已经至少经过了1小时
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -949,7 +1006,7 @@ def handle_have_moved(character_id: int) -> int:
 @add_premise(constant_promise.Premise.AI_WAIT)
 def handle_ai_wait(character_id: int) -> int:
     """
-    NPC需要进行一次5分钟的等待（wait_flag = 1)
+    自己需要进行一次5分钟的等待（wait_flag = 1)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -966,7 +1023,7 @@ def handle_ai_wait(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_TRAINED)
 def handle_have_trained(character_id: int) -> int:
     """
-    NPC距离上次战斗训练已经超过两天了
+    自己距离上次战斗训练已经超过两天了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -984,7 +1041,7 @@ def handle_have_trained(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_SHOWER)
 def handle_not_shower(character_id: int) -> int:
     """
-    NPC今天还没有洗澡
+    自己今天还没有洗澡
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1003,7 +1060,7 @@ def handle_not_shower(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_SHOWERED)
 def handle_have_showered(character_id: int) -> int:
     """
-    NPC今天已经洗过澡了
+    自己今天已经洗过澡了
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1022,7 +1079,7 @@ def handle_have_showered(character_id: int) -> int:
 @add_premise(constant_promise.Premise.HAVE_NOT_WAKE_UP)
 def handle_have_not_wake_up(character_id: int) -> int:
     """
-    NPC今天还没有起床
+    自己今天还没有起床
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1034,6 +1091,45 @@ def handle_have_not_wake_up(character_id: int) -> int:
     if wake_up_time.day != now_time.day:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NEED_HEALTH_CHECK_TODAY)
+def handle_self_need_health_check_today(character_id: int) -> int:
+    """
+    自己今天需要进行体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.action_info.health_check_today > 0
+
+
+@add_premise(constant_promise.Premise.SELF_NEED_HEALTH_CHECK_MORNING)
+def handle_self_need_health_check_morning(character_id: int) -> int:
+    """
+    自己今天上午需要进行体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.action_info.health_check_today == 1
+
+
+@add_premise(constant_promise.Premise.SELF_NEED_HEALTH_CHECK_AFTERNOON)
+def handle_self_need_health_check_afternoon(character_id: int) -> int:
+    """
+    自己今天下午需要进行体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.action_info.health_check_today == 2
 
 
 @add_premise(constant_promise.Premise.FIRST_KISS_IN_TODAY)

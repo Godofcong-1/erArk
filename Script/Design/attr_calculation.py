@@ -28,6 +28,14 @@ def get_system_setting_zero() -> dict:
             system_setting_list[system_setting] = 0
     return system_setting_list
 
+def get_physical_exam_setting_zero() -> dict:
+    """
+    重置体检设置
+    """
+    physical_check_setting_list = {}
+    for physical_check_setting in game_config.config_physical_exam_setting:
+        physical_check_setting_list[physical_check_setting] = 0
+    return physical_check_setting_list
 
 def get_ability_zero(ability_dict) -> dict:
     """

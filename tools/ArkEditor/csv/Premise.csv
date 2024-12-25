@@ -335,13 +335,19 @@ move_not_finish,MOVE_NOT_FINISH,地点_移动,角色移动未完成(权重为10)
 
 visitor_zone_ge_2,VISITOR_ZONE_GE_2,设施,访客区等级大于等于2级
 visitor_zone_have_target,VISITOR_ZONE_HAVE_TARGET,设施,访客区当前有已选择好的邀请目标
+periodic_health_check_on,PERIODIC_HEALTH_CHECK_ON,设施,当前已开启定期体检
+health_check_done_need_check_again,HEALTH_CHECK_DONE_NEED_CHECK_AGAIN,设施,已体检的仍需要再次体检
+health_check_done_not_need_check_again,HEALTH_CHECK_DONE_NOT_NEED_CHECK_AGAIN,设施,已体检的不需要再次体检
 
-ai_moved,HAVE_MOVED,时间_角色,NPC距离上次移动已经至少经过了1小时
-ai_wait,AI_WAIT,时间_角色,NPC需要进行一次5分钟的等待（wait_flag=1）
-ai_trained,HAVE_TRAINED,时间_角色,NPC距离上次战斗训练已经超过两天了
-ai_not_shower,NOT_SHOWER,时间_角色,NPC今天还没有洗澡
-ai_have_showered,HAVE_SHOWERED,时间_角色,NPC今天已经洗过澡了
-ai_have_not_wake_up,HAVE_NOT_WAKE_UP,时间_角色,NPC今天还没有起床
+ai_moved,HAVE_MOVED,时间_角色,自己距离上次移动已经至少经过了1小时
+ai_wait,AI_WAIT,时间_角色,自己需要进行一次5分钟的等待（wait_flag=1）
+ai_trained,HAVE_TRAINED,时间_角色,自己距离上次战斗训练已经超过两天了
+ai_not_shower,NOT_SHOWER,时间_角色,自己今天还没有洗澡
+ai_have_showered,HAVE_SHOWERED,时间_角色,自己今天已经洗过澡了
+ai_have_not_wake_up,HAVE_NOT_WAKE_UP,时间_角色,自己今天还没有起床
+self_need_health_check_today,SELF_NEED_HEALTH_CHECK_TODAY,时间_角色,自己今天需要进行体检
+self_need_health_check_morning,SELF_NEED_HEALTH_CHECK_MORNING,时间_角色,自己今天上午需要进行体检
+self_need_health_check_afternoon,SELF_NEED_HEALTH_CHECK_AFTERNOON,时间_角色,自己今天下午需要进行体检
 
 first_kiss_in_today,FIRST_KISS_IN_TODAY,时间_初次,自己今天失去了初吻
 first_sex_in_today,FIRST_SEX_IN_TODAY,时间_初次,自己今天失去了V处女
@@ -375,6 +381,7 @@ afternoon_entertainment_time,AFTERNOON_ENTERTAINMENT_TIME,时间_当前,下午�
 night_entertainment_time,NIGHT_ENTERTAINMENT_TIME,时间_当前,晚上娱乐时间（晚上19:00~晚上22:00）
 time_workday,TIME_WORKDAYD,时间_当前,今天为工作日（周一到周五）
 time_weekend,TIME_WEEKEND,时间_当前,今天为周末（周六或周日）
+today_is_healty_check_day,TODAY_IS_HEALTY_CHECK_DAY,时间_当前,今天是体检日
 morning_salutation_time,MORIING_SALUTATION_TIME,时间_当前,当前是早安问候时间（玩家醒来时间之后，动态权重50+超时分钟数
 not_morning_salutation_time,NOT_MORIING_SALUTATION_TIME,时间_当前,当前不是早安问候时间（玩家醒来时间之后）
 before_morning_salutation_time,BEFORE_MORNING_SALUTATION_TIME,时间_当前,当前是早安问候时间之前（玩家醒来时间之前）

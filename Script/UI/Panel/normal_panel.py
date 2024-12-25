@@ -26,6 +26,36 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def common_select_npc_button_list_func(final_list: list):
+    """
+    通用npc选择按钮列表函数\n
+    Keyword arguments:\n
+    final_list -- 最终按钮列表，每个子列表里\n：0号元素为角色id，1号元素为按钮要调用的函数source_func，2号元素为已选择角色id列表，默认值为空\n
+    return\n
+    return_list -- 返回按钮列表，包括返回按钮 "返回" \n
+    """
+
+    # 绘制空行和分割线
+    line_feed.draw()
+    line_draw = draw.LineDraw("-", window_width)
+    line_draw.draw()
+    line_feed.draw()
+    return_list = []
+
+    # 绘制面板
+    now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel(final_list, CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+    now_draw_panel.update()
+    now_draw_panel.draw()
+    return_list.extend(now_draw_panel.return_list)
+
+    # 绘制返回按钮
+    line_feed.draw()
+    back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+    back_draw.draw()
+    line_feed.draw()
+    return_list.append(back_draw.return_text)
+
+    return return_list
 
 class Close_Door_Panel:
     """
@@ -822,3 +852,57 @@ class TALK_QUICK_TEST:
 
     def nothing(self):
         pass
+
+class CommonSelectNPCButtonList:
+    """
+    通用的从列表中选择目标干员的面板
+    Keyword arguments:
+    chara_info -- 列表，0号元素为角色id，1号元素为按钮要调用的函数source_func，2号元素为已选择角色id列表，默认值为空
+    width -- 最大宽度
+    is_button -- 绘制按钮
+    num_button -- 绘制数字按钮
+    button_id -- 数字按钮id
+    """
+
+    def __init__(
+        self, chara_info: list, width: int, is_button: bool, num_button: bool, button_id: int
+    ):
+        """初始化绘制对象"""
+
+        self.chara_id: int = chara_info[0]
+        """ 角色id """
+        self.source_func = chara_info[1]
+        """ 按钮调用的函数 """
+        self.chara_id_list: List[int] = chara_info[2] if len(chara_info) > 2 else []
+        """ 已选择角色id列表 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.num_button: bool = num_button
+        """ 绘制数字按钮 """
+        self.button_id: int = button_id
+        """ 数字按钮的id """
+        self.button_return: str = str(button_id)
+        """ 按钮返回值 """
+
+        character_data: game_type.Character = cache.character_data[self.chara_id]
+        button_text = f"[{str(character_data.adv).rjust(4,'0')}]：{character_data.name}"
+
+        draw_style = 'standard'
+        # 如果当前角色已经被选择，则更改按钮样式
+        if self.chara_id in self.chara_id_list:
+            draw_style = 'gold_enrod'
+
+        # 按钮绘制
+        name_draw = draw.LeftButton(
+            button_text, character_data.name, self.width, normal_style=draw_style, cmd_func=self.source_func, args=(self.chara_id,)
+        )
+        self.button_return = name_draw.return_text
+        """ 绘制的对象 """
+        self.now_draw = name_draw
+        self.draw_text = button_text
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
