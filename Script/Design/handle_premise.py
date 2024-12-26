@@ -646,8 +646,11 @@ def handle_today_is_healty_check_day(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    # 如果是每天体检的话
+    if cache.rhodes_island.physical_examination_setting[3] == 3:
+        return 1
     # 如果设置的是周末体检日的话
-    if cache.rhodes_island.physical_examination_setting[7] == 0:
+    elif cache.rhodes_island.physical_examination_setting[7] == 0:
         if handle_time_weekend(character_id):
             return 1
     # 否则手动检查当前星期
@@ -951,7 +954,7 @@ def handle_periodic_health_check_on(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    return cache.rhodes_island.physical_examination_setting[1] == 1
+    return cache.rhodes_island.physical_examination_setting[2] == 1
 
 
 @add_premise(constant_promise.Premise.HEALTH_CHECK_DONE_NEED_CHECK_AGAIN)
@@ -15908,6 +15911,117 @@ def handle_pl_assistant_change_every_week_on(character_id: int) -> int:
     if assistant_character_data.assistant_services[10] == 1:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_WAITING_FOR_HEALTH_CHECK)
+def handle_self_waiting_for_health_check(character_id: int) -> int:
+    """
+    自己正在等待体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return character_id in cache.rhodes_island.waiting_for_exam_operator_ids
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_WAITING_FOR_HEALTH_CHECK)
+def handle_self_not_waiting_for_health_check(character_id: int) -> int:
+    """
+    自己没有在等待体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_waiting_for_health_check(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HEALTH_CHECKED)
+def handle_self_health_checked(character_id: int) -> int:
+    """
+    自己本周期内已经体检过
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return character_id in cache.rhodes_island.examined_operator_ids
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HEALTH_CHECKED)
+def handle_self_not_health_checked(character_id: int) -> int:
+    """
+    自己本周期内没有体检过
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_health_checked(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HEALTH_CHECKED_TODAY)
+def handle_self_health_checked_today(character_id: int) -> int:
+    """
+    自己今天已经体检过
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return character_id in cache.rhodes_island.today_physical_examination_chara_id_dict
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HEALTH_CHECKED_TODAY)
+def handle_self_not_health_checked_today(character_id: int) -> int:
+    """
+    自己今天没有体检过
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_health_checked_today(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_IN_HEALTH_CHECK_LIST)
+def handle_self_in_health_check_list(character_id: int) -> int:
+    """
+    自己在体检名单中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 如果设置了不重复体检，且自己已体检过，则直接返回0
+    if handle_health_check_done_not_need_check_again(character_id) and handle_self_health_checked(character_id):
+        return 0
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 源石病患者
+    if cache.rhodes_island.physical_examination_setting[4] == 0:
+        if character_data.talent[150] == 1:
+            return 1
+    # 全干员
+    elif cache.rhodes_island.physical_examination_setting[4] == 1:
+        return 1
+    # 手动选择干员
+    elif cache.rhodes_island.physical_examination_setting[4] == 2:
+        if character_id in cache.rhodes_island.manually_selected_exam_operator_ids:
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SOMEONE_WAITING_FOR_HEALTH_CHECK)
+def handle_someone_waiting_for_health_check(character_id: int) -> int:
+    """
+    当前有正在等待体检的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return len(cache.rhodes_island.waiting_for_exam_operator_ids) > 0
 
 
 @add_premise(constant_promise.Premise.ASK_GIVE_PAN_EVERYDAY)

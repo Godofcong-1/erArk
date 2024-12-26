@@ -596,7 +596,7 @@ def update_new_day():
                 fall_chara_give_pink_voucher(character_id)
 
     # 非角色部分
-    basement.update_base_resouce_newday() # 更新基础资源
+    basement.update_base_resouce_newday() # 更新基地资源
     cooking.init_food_shop_data() # 初始化餐厅数据
     navigation_panel.judge_arrive() # 判断是否到达目的地
     # 每周一次

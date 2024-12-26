@@ -6,7 +6,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise_place, attr_calculation
+from Script.Design import handle_premise_place, attr_calculation, handle_premise
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -259,9 +259,8 @@ def update_base_resouce_newday():
     aromatherapy_panel.settle_aromatherapy_sessions()
     # 结算粉红凭证
     settle_pink_certificate()
-    # 重置今日体检数据
-    cache.rhodes_island.today_physical_examination_chara_id_dict = {}
-
+    # 结算体检
+    settle_health_check()
 
 def update_work_people():
     """
@@ -511,3 +510,53 @@ def settle_pink_certificate():
     # 清零计数
     cache.rhodes_island.total_favorability_increased = 0
     cache.rhodes_island.week_fall_chara_pink_certificate_add = 0
+
+def settle_health_check():
+    """
+    结算体检
+    """
+    # 重置今日体检数据
+    cache.rhodes_island.today_physical_examination_chara_id_dict = {}
+    # 如果开启了定期体检
+    if handle_premise.handle_periodic_health_check_on(0):
+        # 如果今天是体检日，则抽选今日要体检的干员
+        if handle_premise.handle_today_is_healty_check_day(0):
+            need_physical_examination_chara_id_list = []
+            # 遍历所有干员，获得要体检的干员列表
+            for chara_id in cache.npc_id_got:
+                if chara_id == 0:
+                    continue
+                if handle_premise.handle_self_in_health_check_list(chara_id):
+                    need_physical_examination_chara_id_list.append(chara_id)
+            # 今日的要体检人数
+            need_chara_num = int(cache.rhodes_island.physical_examination_setting[6]) + 1
+            final_physical_examination_chara_id_list = []
+            # 如果要体检的人数大于等于干员总数，则全体体检
+            if need_chara_num >= len(need_physical_examination_chara_id_list):
+                final_physical_examination_chara_id_list = need_physical_examination_chara_id_list
+            else:
+                # 随机抽取要体检的干员
+                final_physical_examination_chara_id_list = random.sample(need_physical_examination_chara_id_list, need_chara_num)
+            # 遍历要体检的干员，一半的几率上午体检，一半的几率下午体检
+            for chara_id in final_physical_examination_chara_id_list:
+                now_character_data = cache.character_data[chara_id]
+                if random.randint(0, 1) == 0:
+                    now_character_data.action_info.health_check_today = 1
+                else:
+                    now_character_data.action_info.health_check_today = 2
+        # 重置周期内的已体检干员数据
+        if cache.rhodes_island.physical_examination_setting[3] == 0:
+            # 每年重置一次
+            if cache.game_time.month == 3 and cache.game_time.day == 1:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 1:
+            # 每月重置一次
+            if cache.game_time.day == 1:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 2:
+            # 每周重置一次
+            if cache.game_time.weekday() == 0:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 3:
+            # 每天重置一次
+            cache.rhodes_island.examined_operator_ids = set()

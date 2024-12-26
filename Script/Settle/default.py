@@ -2974,7 +2974,7 @@ def handle_self_join_group_sex_off(
     character_data.sp_flag.go_to_join_group_sex = False
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRGET_GET_WEEKNESSS_BY_DR)
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,
         add_time: int,
@@ -3000,6 +3000,48 @@ def handle_target_get_weeknesss_by_dr(
     now_draw.width = width
     now_draw.text = _("\n{0}获得了【被博士持有把柄】\n").format(target_character_data.name)
     now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ENTER_WAITING_FOR_PHYSICAL_EXAM)
+def handle_enter_waiting_for_physical_exam(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己进入等待体检状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if character_id not in cache.rhodes_island.waiting_for_exam_operator_ids:
+        cache.rhodes_island.waiting_for_exam_operator_ids.add(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EXIT_WAITING_FOR_PHYSICAL_EXAM)
+def handle_exit_waiting_for_physical_exam(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己退出等待体检状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if character_id in cache.rhodes_island.waiting_for_exam_operator_ids:
+        cache.rhodes_island.waiting_for_exam_operator_ids.remove(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAIT_UNITL_TRAGET_ACTION_END)

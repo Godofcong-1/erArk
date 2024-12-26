@@ -1020,8 +1020,13 @@ class BehaviorEffect:
 
     # 1500+见属性_基础
 
-    TRGET_GET_WEEKNESSS_BY_DR = 1601
+    TARGET_GET_WEEKNESSS_BY_DR = 1601
     """ 属性_素质 交互对象获得[被博士持有把柄] """
+
+    ENTER_WAITING_FOR_PHYSICAL_EXAM = 1651
+    """ 属性_体检 自己进入等待体检状态 """
+    EXIT_WAITING_FOR_PHYSICAL_EXAM = 1652
+    """ 属性_体检 自己退出等待体检状态 """
 
     WAIT_UNITL_TRAGET_ACTION_END = 1701
     """ 行动 玩家等待至交互对象行动结束 """
