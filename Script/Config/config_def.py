@@ -673,7 +673,7 @@ class Organ:
 
 
 class Physical_Exam_Setting:
-    """ 角色设置 """
+    """ 体检日程设置 """
 
     cid: int
     """ 选项id """
