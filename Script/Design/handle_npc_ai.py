@@ -78,6 +78,11 @@ def judge_character_tired_sleep(character_id : int):
                     last_character_list = scene_data.character_list.copy()
                     last_character_list.discard(0)
                     last_character_list.discard(character_id)
+                    # 去掉HP为1和疲劳的角色
+                    for chara_id in last_character_list.copy():
+                        tem_character_data = cache.character_data[chara_id]
+                        if tem_character_data.hit_point <= 1 or tem_character_data.sp_flag.tired:
+                            last_character_list.discard(chara_id)
                     # 如果自己退出后，剩余NPC角色数量小于等于1，则转为普通H
                     if len(last_character_list) == 1:
                         new_traget_id = last_character_list.pop()
@@ -87,7 +92,7 @@ def judge_character_tired_sleep(character_id : int):
                         character_behavior.judge_character_status(0)
                     # 如果没有人了，则结束H
                     elif len(last_character_list) == 0:
-                        handle_instruct.handle_end_h()
+                        handle_instruct.handle_group_sex_end()
 
                 # H时，有意识H则正常检测，无意识H则不检测疲劳，只检测HP
                 elif (
