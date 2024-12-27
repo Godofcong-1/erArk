@@ -1348,7 +1348,7 @@ class StateMachine:
     """ 跟随玩家 """
 
     SEE_H_AND_MOVE_TO_DORMITORY = 40
-    """ 目睹玩家和其他角色H，然后逃回自己宿舍 """
+    """ 目睹玩家和其他角色H """
     REST = 43
     """ 休息一会儿 """
     SLEEP = 44
@@ -1412,6 +1412,8 @@ class StateMachine:
     """ 加入群交 """
     STOP_JOIN_GROUP_SEX = 97
     """ 停止加入群交 """
+    WAIT_FOR_HEALTH_CHECK = 98
+    """ 等待体检 """
 
     CHAT_TO_DR = 100
     """ 和玩家聊天 """
@@ -1534,8 +1536,6 @@ class StateMachine:
     """ 去洗手间 """
     MOVE_TO_REST_ROOM = 512
     """ 移动至休息室 """
-    MOVE_TO_CLINIC = 513
-    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_TRAINING_ROOM = 514
     """ 根据职业自动移动至对应训练室 """
     MOVE_TO_BATH_ROOM = 515
@@ -1636,6 +1636,10 @@ class StateMachine:
     """ 移动至温室 """
     MOVE_TO_HUMILIATION_ROOM = 651
     """ 移动至调教室 """
+    MOVE_TO_CLINIC = 661
+    """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
+    MOVE_TO_PHYSICAL_EXAMINATION = 662
+    """ 移动至体检科 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """

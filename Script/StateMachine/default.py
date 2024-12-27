@@ -291,6 +291,20 @@ def character_move_to_clinic(character_id: int):
     general_movement_module(character_id, to_clinic)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PHYSICAL_EXAMINATION)
+def character_move_to_physical_examination(character_id: int):
+    """
+    移动至体检科
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_physical_examination = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Physical_Examination"])
+    )
+    general_movement_module(character_id, to_physical_examination)
+    # print(f"debug {cache.character_data[character_id].name} 前往体检科 {to_physical_examination}")
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
 def character_move_to_hr_office(character_id: int):
     """
@@ -2096,6 +2110,25 @@ def character_stop_join_group_sex(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WAIT_FOR_HEALTH_CHECK)
+def character_wait_for_health_check(character_id: int):
+    """
+    等待体检
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 加入等待序列
+    cache.rhodes_island.waiting_for_exam_operator_ids.add(character_id)
+    # 重置今日体检时间
+    character_data.action_info.health_check_today = 0
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
+    character_data.behavior.duration = 1
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    # print(f"{character_data.name}进入等待体检状态")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WEAR_TO_LOCKER)

@@ -580,7 +580,7 @@ class ACTION_INFO:
         self.move_talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色触发移动口上的时间，用以避免短时间频繁触发该口上 """
         self.health_check_today: int = 0
-        """ 角色今天体检的时间，0不需要，1上午，2下午 """
+        """ 角色今天体检的时间，0不需要，1上午，2下午，3新干员立刻体检 """
 
 
 class AUTHOR_FLAG:

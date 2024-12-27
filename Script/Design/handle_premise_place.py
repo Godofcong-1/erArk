@@ -814,6 +814,22 @@ def handle_place_not_in_collection_list(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.DR_OFFICE_NOT_FULL)
+def handle_dr_office_not_full(character_id: int) -> int:
+    """
+    博士办公室未满员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_position = ['中枢', '博士办公室']
+    now_position_str = map_handle.get_map_system_path_str_for_list(now_position)
+    if map_handle.judge_scene_is_full(now_position_str):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.IN_KITCHEN)
 def handle_in_kitchen(character_id: int) -> int:
     """

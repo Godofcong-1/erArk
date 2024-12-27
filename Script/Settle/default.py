@@ -6772,6 +6772,7 @@ def handle_official_work_add_adjust(
     """
     if not add_time:
         return
+    from Script.Design import basement
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
@@ -6806,6 +6807,8 @@ def handle_official_work_add_adjust(
         now_draw.text = now_draw_text
         now_draw.width = width
         now_draw.draw()
+    # 输出待办事项
+    basement.draw_todo()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)

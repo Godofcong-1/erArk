@@ -1245,7 +1245,7 @@ class Debug_Panel:
                 info_text = f"1~7异常状态：，正常为1"
                 info_text += f"    \n1:基础生理需求：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰：{handle_premise.handle_normal_1(self.target_character_id)}"
                 info_text += f"    \n2:AI行动基本停止：临盆、产后、监禁：{handle_premise.handle_normal_2(self.target_character_id)}"
-                info_text += f"    \n3:助理或跟随：助理、跟随模式下：{handle_premise.handle_normal_3(self.target_character_id)}"
+                info_text += f"    \n3:高优先级AI：助理、跟随、体检：{handle_premise.handle_normal_3(self.target_character_id)}"
                 info_text += f"    \n4:服装异常：大致全裸、全裸：{handle_premise.handle_normal_4(self.target_character_id)}"
                 info_text += f"    \n5:意识模糊，或弱交互：醉酒，平然：{handle_premise.handle_normal_5(self.target_character_id)}"
                 info_text += f"    \n6:完全意识不清醒，或无交互：睡眠（熟睡或完全深眠），时停，空气：{handle_premise.handle_normal_6(self.target_character_id)}"

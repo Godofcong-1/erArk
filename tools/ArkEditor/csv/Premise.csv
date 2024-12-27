@@ -136,6 +136,7 @@ place_inside_door_close,PLACE_INSIDE_DOOR_CLOSE,地点_属性,地点的内隔间
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
 place_in_collection_list,PALCE_IN_COLLECTION_LIST,地点_属性,当前地点在收藏列表中
 place_not_in_collection_list,PLACE_NOT_IN_COLLECTION_LIST,地点_属性,当前地点不在收藏列表中
+dr_office_not_full,DR_OFFICE_NOT_FULL,地点_属性,博士办公室未满员
 
 in_kitchen,IN_KITCHEN,地点_定位,在厨房
 not_in_kitchen,NOT_IN_KITCHEN,地点_定位,不在厨房
@@ -348,6 +349,7 @@ ai_have_not_wake_up,HAVE_NOT_WAKE_UP,时间_角色,自己今天还没有起床
 self_need_health_check_today,SELF_NEED_HEALTH_CHECK_TODAY,时间_角色,自己今天需要进行体检
 self_need_health_check_morning,SELF_NEED_HEALTH_CHECK_MORNING,时间_角色,自己今天上午需要进行体检
 self_need_health_check_afternoon,SELF_NEED_HEALTH_CHECK_AFTERNOON,时间_角色,自己今天下午需要进行体检
+self_need_health_check_now,SELF_NEED_HEALTH_CHECK_NOW,时间_角色,自己现在需要进行体检
 
 first_kiss_in_today,FIRST_KISS_IN_TODAY,时间_初次,自己今天失去了初吻
 first_sex_in_today,FIRST_SEX_IN_TODAY,时间_初次,自己今天失去了V处女
@@ -395,7 +397,7 @@ time_over_a_year,TIME_OVER_A_YEAR,时间_当前,游戏时间超过一年
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态
 normal_1,NORMAL_1,属性_异常状态,1正常(基础生理需求)
 normal_2,NORMAL_2,属性_异常状态,2正常(AI行动基本停止)
-normal_3,NORMAL_3,属性_异常状态,3正常(助理或跟随)
+normal_3,NORMAL_3,属性_异常状态,3正常(高优先级AI)
 normal_4,NORMAL_4,属性_异常状态,4正常(服装异常)
 normal_5,NORMAL_5,属性_异常状态,5正常(意识模糊)
 normal_6,NORMAL_6,属性_异常状态,6正常(完全意识不清醒)
@@ -403,14 +405,14 @@ normal_7,NORMAL_7,属性_异常状态,7正常(角色离线)
 t_normal_2,T_NORMAL_2,属性_异常状态,交互对象2正常
 t_normal_6,T_NORMAL_6,属性_异常状态,交互对象6正常
 normal_2_4,NORMAL_2_4,属性_异常状态,24正常的普通状态
-normal_267,NORMAL_267,属性_异常状态,267正常（可能基础异常、AI跟随、服装异常或意识模糊）
-normal_2467,NORMAL_2467,属性_异常状态,2467正常（可能基础异常、AI跟随或意识模糊）
-t_normal_2467,T_NORMAL_2467,属性_异常状态,交互对象2467正常（可能基础异常、AI跟随或意识模糊）
+normal_267,NORMAL_267,属性_异常状态,267正常（可能基础异常、高优先级AI、服装异常或意识模糊）
+normal_2467,NORMAL_2467,属性_异常状态,2467正常（可能基础异常、高优先级AI或意识模糊）
+t_normal_2467,T_NORMAL_2467,属性_异常状态,交互对象2467正常（可能基础异常、高优先级AI或意识模糊）
 normal_23467,NORMAL_23467,属性_异常状态,23467正常（可能基础异常或意识模糊）
-normal_24567,NORMAL_24567,属性_异常状态,24567正常（可能基础异常、AI跟随）
-t_normal_24567,T_NORMAL_24567,属性_异常状态,交互对象24567正常（可能基础异常、AI跟随）
-normal_124567,NORMAL_124567,属性_异常状态,124567正常（可能AI跟随）
-normal_1267,NORMAL_1267,属性_异常状态,1267正常（可能AI跟随、服装异常或意识模糊）
+normal_24567,NORMAL_24567,属性_异常状态,24567正常（可能基础异常、高优先级AI）
+t_normal_24567,T_NORMAL_24567,属性_异常状态,交互对象24567正常（可能基础异常、高优先级AI）
+normal_124567,NORMAL_124567,属性_异常状态,124567正常（可能高优先级AI）
+normal_1267,NORMAL_1267,属性_异常状态,1267正常（可能高优先级AI、服装异常或意识模糊）
 normal_123467,NORMAL_123467,属性_异常状态,123467正常（可能意识模糊）
 normal_1_2_4,NORMAL_1_2_4,属性_异常状态,124正常的普通状态
 normal_2_3_4,NORMAL_2_3_4,属性_异常状态,234正常的普通状态
@@ -535,11 +537,13 @@ self_health_checked_today,SELF_HEALTH_CHECKED_TODAY,属性_体检,自己今天�
 self_not_health_checked_today,SELF_NOT_HEALTH_CHECKED_TODAY,属性_体检,自己今天没有体检过
 self_in_health_check_list,SELF_IN_HEALTH_CHECK_LIST,属性_体检,自己在体检名单中
 someone_waiting_for_health_check,SOMEONE_WAITING_FOR_HEALTH_CHECK,属性_体检,当前有正在等待体检的干员
+self_in_health_check_action_chain,SELF_IN_HEALTH_CHECK_ACTION_CHAIN,属性_体检,自己当前正在体检行动链中
 
 ask_give_pan_everyday,ASK_GIVE_PAN_EVERYDAY,属性_身体管理,自己被要求每天上交内裤
 ask_give_socks_everyday,ASK_GIVE_SOCKS_EVERYDAY,属性_身体管理,自己被要求每天上交袜子
 ask_not_wear_corset,ASK_NOT_WEAR_CORSET,属性_身体管理,自己被要求以后不再穿胸衣
 ask_not_wear_cloth_in_sleep,ASK_NOT_WEAR_CLOTH_IN_SLEEP,属性_身体管理,自己被要求以后睡觉时不穿衣服裸睡
+ask_wear_different_socks_everyday,ASK_WEAR_DIFFERENT_SOCKS_EVERYDAY,属性_身体管理,自己被要求每天穿不同的袜子
 ask_equp_nipple_clamp_in_day,ASK_EQUP_NIPPLE_CLAMP_IN_DAY,属性_身体管理,自己被要求白天时戴着乳头夹
 ask_equp_clit_clamp_in_day,ASK_EQUP_CLIT_CLAMP_IN_DAY,属性_身体管理,自己被要求白天时戴着阴蒂夹
 ask_equp_v_bibrator_in_day,ASK_EQUP_V_VIBRATOR_IN_DAY,属性_身体管理,自己被要求白天时V里插着振动棒
@@ -552,6 +556,7 @@ ask_not_wash_semen,ASK_NOT_WASH_SEMEN,属性_身体管理,自己被要求洗澡�
 ask_masturbation_before_sleep,ASK_MASTURBATION_BEFORE_SLEEP,属性_身体管理,自己被要求每天晚上睡前都要自慰
 ask_not_masturbation,ASK_NOT_MASTURBATION,属性_身体管理,自己被要求禁止自慰
 not_ask_not_masturbation,NOT_ASK_NOT_MASTURBATION,属性_身体管理,自己没有被要求禁止自慰
+ask_not_lock_door_bedore_sleeping,ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING,属性_身体管理,自己被要求晚上睡觉不锁门
 ask_none_exercises,ASK_NONE_EXERCISES,属性_身体管理,自己没有被要求进行任何练习
 ask_one_exercises,ASK_ONE_EXERCISES,属性_身体管理,自己被要求进行了至少一项练习
 ask_ge_3_exercises,ASK_GE_3_EXERCISES,属性_身体管理,自己被要求进行了至少3项练习

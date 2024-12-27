@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, attr_text
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -15,6 +16,60 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+
+def settle_health_check():
+    """
+    结算体检
+    """
+    # 重置今日体检数据
+    cache.rhodes_island.today_physical_examination_chara_id_dict = {}
+    # 如果开启了定期体检
+    if handle_premise.handle_periodic_health_check_on(0):
+        # 如果今天是体检日，则抽选今日要体检的干员
+        if handle_premise.handle_today_is_healty_check_day(0):
+            need_physical_examination_chara_id_list = []
+            # 遍历所有干员
+            for chara_id in cache.npc_id_got:
+                if chara_id == 0:
+                    continue
+                # 重置今日体检时间数据
+                cache.character_data[chara_id].action_info.health_check_today = 0
+                # 如果干员在体检名单中，则加入要体检的干员列表
+                if handle_premise.handle_self_in_health_check_list(chara_id):
+                    need_physical_examination_chara_id_list.append(chara_id)
+            # 今日的要体检人数
+            need_chara_num = int(cache.rhodes_island.physical_examination_setting[6]) + 1
+            final_physical_examination_chara_id_list = []
+            # 如果要体检的人数大于等于干员总数，则全体体检
+            if need_chara_num >= len(need_physical_examination_chara_id_list):
+                final_physical_examination_chara_id_list = need_physical_examination_chara_id_list
+            else:
+                # 随机抽取要体检的干员
+                final_physical_examination_chara_id_list = random.sample(need_physical_examination_chara_id_list, need_chara_num)
+            # 遍历要体检的干员，一半的几率上午体检，一半的几率下午体检
+            for chara_id in final_physical_examination_chara_id_list:
+                now_character_data = cache.character_data[chara_id]
+                if random.randint(0, 1) == 0:
+                    now_character_data.action_info.health_check_today = 1
+                else:
+                    now_character_data.action_info.health_check_today = 2
+        # 重置周期内的已体检干员数据
+        if cache.rhodes_island.physical_examination_setting[3] == 0:
+            # 每年重置一次
+            if cache.game_time.month == 3 and cache.game_time.day == 1:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 1:
+            # 每月重置一次
+            if cache.game_time.day == 1:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 2:
+            # 每周重置一次
+            if cache.game_time.weekday() == 0:
+                cache.rhodes_island.examined_operator_ids = set()
+        elif cache.rhodes_island.physical_examination_setting[3] == 3:
+            # 每天重置一次
+            cache.rhodes_island.examined_operator_ids = set()
 
 
 class Physical_Check_And_Manage_Panel:
@@ -44,6 +99,8 @@ class Physical_Check_And_Manage_Panel:
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
             self.pl_character_data = cache.character_data[0] # 更新玩家的角色数据
+            target_character_id = self.pl_character_data.target_character_id
+            target_character_data = cache.character_data[target_character_id]
             return_list = []
             title_draw.draw()
             cinfo_draw = draw.NormalDraw()
@@ -52,8 +109,8 @@ class Physical_Check_And_Manage_Panel:
             cinfo_draw.draw()
 
             # 如果对象已经在体检数据中，则直接显示体检数据
-            if self.pl_character_data.target_character_id in cache.rhodes_island.today_physical_examination_chara_id_dict:
-                self.done_check_status_id_set = cache.rhodes_island.today_physical_examination_chara_id_dict[self.pl_character_data.target_character_id]
+            if target_character_id in cache.rhodes_island.today_physical_examination_chara_id_dict:
+                self.done_check_status_id_set = cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id]
                 button1_text = _("[001]检查身体情况（今日已体检）")
                 button1_draw = draw.NormalDraw()
                 button1_draw.text = button1_text
@@ -61,8 +118,6 @@ class Physical_Check_And_Manage_Panel:
                 button1_draw.width = self.width
                 button1_draw.draw()
             elif handle_premise.handle_have_target(0):
-                target_character_id = self.pl_character_data.target_character_id
-                target_character_data = cache.character_data[target_character_id]
                 button1_text = _("[001]检查{0}的身体情况").format(target_character_data.name)
                 button1_draw = draw.LeftButton(
                     _(button1_text),
@@ -83,8 +138,6 @@ class Physical_Check_And_Manage_Panel:
                 button1_draw.draw()
 
             if len(self.done_check_status_id_set) > 0:
-                target_character_id = self.pl_character_data.target_character_id
-                target_character_data = cache.character_data[target_character_id]
                 button2_text = _("[002]对{0}进行身体管理").format(target_character_data.name)
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -104,8 +157,8 @@ class Physical_Check_And_Manage_Panel:
                 button2_draw.width = self.width
                 button2_draw.draw()
 
-            if cache.debug_mode:
-                button3_text = _("[003]调整体检日程(未实装)")
+            if 1:
+                button3_text = _("[003]调整体检日程")
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
@@ -144,11 +197,24 @@ class Physical_Check_And_Manage_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
-                # 如果已经体检了，则加入到体检数据中
-                if len(self.done_check_status_id_set) > 0:
-                    cache.rhodes_island.today_physical_examination_chara_id_dict[self.pl_character_data.target_character_id] = self.done_check_status_id_set
+                self.settle_finish_physical_check(target_character_id)
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
+    def settle_finish_physical_check(self, target_character_id: int):
+        """结算完成的体检"""
+        # 如果已经体检了
+        if len(self.done_check_status_id_set) > 0:
+            target_character_data = cache.character_data[target_character_id]
+            # 记录到今日已体检角色数据中
+            cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id] = self.done_check_status_id_set
+            # 加入周期内已体检角色名单
+            cache.rhodes_island.examined_operator_ids.add(target_character_id)
+            # 从等待体检名单中移除
+            if target_character_id in cache.rhodes_island.waiting_for_exam_operator_ids:
+                cache.rhodes_island.waiting_for_exam_operator_ids.remove(target_character_id)
+            # 清零今日体检时间
+            target_character_data.action_info.health_check_today = 0
 
     def check_target_physical(self, target_character_id: int):
         """查看目标角色的身体情况"""

@@ -15,7 +15,7 @@ ai的目标,,,,
 
 10,501,normal_123467,1,123467正常（可能意识模糊），则闲逛
 11,502,normal_123467,1,123467正常（可能意识模糊），则回宿舍
-12,571,normal_123467,1,123467正常（可能意识模糊），则移动至博士办公室
+12,571,normal_123467|dr_office_not_full,1,123467正常（可能意识模糊），博士办公室未满员，则移动至博士办公室
 13,504,move_not_finish|normal_123467,0,1267正常（可能意识模糊），如果角色移动未完成(权重为10)，则继续移动
 
 31,78,normal_1267|hp_1,11,1267正常（可能AI跟随、服装异常或意识模糊），hp1时，则进入要睡觉状态
@@ -82,8 +82,8 @@ ai的目标,,,,
 202,202,normal_1267|in_music_room|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，房间里有其他人，则唱歌给房间里玩家以外的随机角色听
 203,203,normal_1267|in_music_room|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，房间里有其他人，则演奏乐器给房间里玩家以外的随机角色听
 
-301,513,normal_all|work_is_doctor|to_work_time|not_in_clinic,21,正常状态下，工作为医生，在到岗时间，如果不在门诊，则去门诊
-302,513,normal_all|work_is_doctor|work_time|not_in_clinic,21,正常状态下，工作为医生，在工作时间，如果不在门诊，则去门诊
+301,661,normal_all|work_is_doctor|to_work_time|not_in_clinic,21,正常状态下，工作为医生，在到岗时间，如果不在门诊，则去门诊
+302,661,normal_all|work_is_doctor|work_time|not_in_clinic,21,正常状态下，工作为医生，在工作时间，如果不在门诊，则去门诊
 303,301,normal_all_except_special_hypnosis|work_is_doctor|work_time|in_clinic|patient_wait,22,正常状态下或被空气或体控催眠中，工作为医生，在工作时间，如果在门诊，而且有正在排队的患者，则接诊
 
 305,541,normal_all|work_is_hr|to_work_time|not_in_hr_office,21,正常状态下，工作为人事，在到岗时间，如果不在人事部办公室，则去人事部办公室
@@ -249,6 +249,11 @@ ai的目标,,,,
 604,97,self_now_go_to_join_group_sex|place_0|group_sex_mode_off,0,自己正在前往加入群交，自己在玩家位置，群交模式未开启，则停止加入群交
 
 701,1,normal_1|unconscious_flag_5,1,1正常（基础正常），自身被空气催眠，则原地待机10分钟
+
+711,662,self_in_health_check_action_chain|self_not_waiting_for_health_check|not_in_physical_examination,21,自己在体检行动链中，自己没有在等待体检，自己不在体检科，则去体检科
+712,98,self_in_health_check_action_chain|self_not_waiting_for_health_check|in_physical_examination,22,自己在体检行动链中，自己没有在等待体检，自己在体检科，则等待体检
+713,662,self_waiting_for_health_check|not_in_physical_examination,22,自己正在等待体检，自己不在体检科，则去体检科
+714,1,self_waiting_for_health_check|in_physical_examination,22,自己正在等待体检，自己在体检科，则原地待机10分钟
 
 801,502,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_not_fall_obey|not_in_dor,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己没有隶属系陷落素质，如果不在自己宿舍，则去自己宿舍
 802,502,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_not_fall_obey|not_in_dor,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己没有隶属系陷落素质，如果不在自己宿舍，则去自己宿舍

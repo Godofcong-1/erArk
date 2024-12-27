@@ -276,6 +276,8 @@ class Premise:
     """ 地点_属性 当前地点在收藏列表中 """
     PLACE_NOT_IN_COLLECTION_LIST = "place_not_in_collection_list"
     """ 地点_属性 当前地点不在收藏列表中 """
+    DR_OFFICE_NOT_FULL = "dr_office_not_full"
+    """ 地点_属性 博士办公室未满员 """
 
     IN_KITCHEN = "in_kitchen"
     """ 地点_定位 在厨房 """
@@ -695,6 +697,8 @@ class Premise:
     """ 时间_角色 自己今天上午需要进行体检 """
     SELF_NEED_HEALTH_CHECK_AFTERNOON = "self_need_health_check_afternoon"
     """ 时间_角色 自己今天下午需要进行体检 """
+    SELF_NEED_HEALTH_CHECK_NOW = "self_need_health_check_now"
+    """ 时间_角色 自己现在需要进行体检 """
 
     FIRST_KISS_IN_TODAY = "first_kiss_in_today"
     """ 时间_初次 自己今天失去了初吻 """
@@ -782,7 +786,7 @@ class Premise:
     #异常状态类型：\n
     #1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰\n
     #2:AI行动基本停止：临盆、产后、监禁\n
-    #3:助理或跟随：助理、跟随模式下\n
+    #3:高优先级AI：助理、跟随、体检\n
     #4:服装异常：大致全裸、全裸\n
     #5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然\n
     #6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气\n
@@ -796,7 +800,7 @@ class Premise:
     NORMAL_2 = "normal_2"
     """ 属性_异常状态 2正常(AI行动基本停止) """
     NORMAL_3 = "normal_3"
-    """ 属性_异常状态 3正常(助理或跟随) """
+    """ 属性_异常状态 3正常(高优先级AI) """
     NORMAL_4 = "normal_4"
     """ 属性_异常状态 4正常(服装异常) """
     NORMAL_5 = "normal_5"
@@ -812,21 +816,21 @@ class Premise:
     NORMAL_2_4 = "normal_2_4"
     """ 属性_异常状态 24正常的普通状态 """
     NORMAL_267 = "normal_267"
-    """ 属性_异常状态 267正常（可能基础异常、AI跟随、服装异常或意识模糊） """
+    """ 属性_异常状态 267正常（可能基础异常、高优先级AI、服装异常或意识模糊） """
     NORMAL_2467 = "normal_2467"
-    """ 属性_异常状态 2467正常（可能基础异常、AI跟随或意识模糊） """
+    """ 属性_异常状态 2467正常（可能基础异常、高优先级AI或意识模糊） """
     T_NORMAL_2467 = "t_normal_2467"
-    """ 属性_异常状态 交互对象2467正常（可能基础异常、AI跟随或意识模糊） """
+    """ 属性_异常状态 交互对象2467正常（可能基础异常、高优先级AI或意识模糊） """
     NORMAL_23467 = "normal_23467"
     """ 属性_异常状态 23467正常（可能基础异常或意识模糊） """
     NORMAL_24567 = "normal_24567"
-    """ 属性_异常状态 24567正常（可能基础异常、AI跟随） """
+    """ 属性_异常状态 24567正常（可能基础异常、高优先级AI） """
     T_NORMAL_24567 = "t_normal_24567"
-    """ 属性_异常状态 交互对象24567正常（可能基础异常、AI跟随） """
+    """ 属性_异常状态 交互对象24567正常（可能基础异常、高优先级AI） """
     NORMAL_124567 = "normal_124567"
-    """ 属性_异常状态 124567正常（可能AI跟随） """
+    """ 属性_异常状态 124567正常（可能高优先级AI） """
     NORMAL_1267 = "normal_1267"
-    """ 属性_异常状态 1267正常（可能AI跟随、服装异常或意识模糊） """
+    """ 属性_异常状态 1267正常（可能高优先级AI、服装异常或意识模糊） """
     NORMAL_123467 = "normal_123467"
     """ 属性_异常状态 123467正常（可能意识模糊） """
     NORMAL_1_2_4 = "normal_1_2_4"
@@ -1071,6 +1075,8 @@ class Premise:
     """ 属性_体检 自己在体检名单中 """
     SOMEONE_WAITING_FOR_HEALTH_CHECK = "someone_waiting_for_health_check"
     """ 属性_体检 当前有正在等待体检的干员 """
+    SELF_IN_HEALTH_CHECK_ACTION_CHAIN = "self_in_health_check_action_chain"
+    """ 属性_体检 自己当前正在体检行动链中 """
 
     ASK_GIVE_PAN_EVERYDAY = "ask_give_pan_everyday"
     """ 属性_身体管理 自己被要求每天上交内裤 """

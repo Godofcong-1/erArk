@@ -1135,6 +1135,19 @@ def handle_self_need_health_check_afternoon(character_id: int) -> int:
     return character_data.action_info.health_check_today == 2
 
 
+@add_premise(constant_promise.Premise.SELF_NEED_HEALTH_CHECK_NOW)
+def handle_self_need_health_check_now(character_id: int) -> int:
+    """
+    自己现在需要进行体检
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.action_info.health_check_today == 3
+
+
 @add_premise(constant_promise.Premise.FIRST_KISS_IN_TODAY)
 def handle_first_kiss_in_today(character_id: int) -> int:
     """
@@ -1412,7 +1425,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
     """
     234正常的普通状态
     \n包括2:临盆、产后、监禁
-    \n包括3:助理、跟随模式下
+    \n包括3:助理、跟随、体检
     \n包括4:大致全裸、全裸
     Keyword arguments:
     character_id -- 角色id
@@ -1499,7 +1512,7 @@ def handle_normal_2(character_id: int) -> int:
 def handle_normal_3(character_id: int) -> int:
     """
     3正常的普通状态
-    \n3:助理或跟随：助理、跟随模式下
+    \n3:高优先级AI：助理、跟随、体检
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1508,6 +1521,7 @@ def handle_normal_3(character_id: int) -> int:
     if(
          handle_is_assistant(character_id)
         or handle_is_follow(character_id)
+        or handle_self_in_health_check_action_chain(character_id)
     ):
         return 0
     else:
@@ -1636,7 +1650,7 @@ def handle_normal_2_4(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_267)
 def handle_normal_267(character_id: int) -> int:
     """
-    267正常（可能基础异常、AI跟随、服装异常或意识模糊）
+    267正常（可能基础异常、高优先级AI、服装异常或意识模糊）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
@@ -1658,7 +1672,7 @@ def handle_normal_267(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_2467)
 def handle_normal_2467(character_id: int) -> int:
     """
-    2467正常（可能基础异常、AI跟随或意识模糊）
+    2467正常（可能基础异常、高优先级AI或意识模糊）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
@@ -1682,7 +1696,7 @@ def handle_normal_2467(character_id: int) -> int:
 @add_premise(constant_promise.Premise.T_NORMAL_2467)
 def handle_t_normal_2467(character_id: int) -> int:
     """
-    交互对象2467正常（可能基础异常、AI跟随或意识模糊）
+    交互对象2467正常（可能基础异常、高优先级AI或意识模糊）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
@@ -1710,7 +1724,7 @@ def handle_normal_23467(character_id: int) -> int:
     """
     23467正常（可能基础异常或意识模糊）
     \n2:AI行动基本停止：临盆、产后、监禁
-    \n3:助理或跟随：助理、跟随模式下
+    \n3:高优先级AI：助理、跟随、体检
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
@@ -1734,7 +1748,7 @@ def handle_normal_23467(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_24567)
 def handle_normal_24567(character_id: int) -> int:
     """
-    24567正常（可能基础异常、AI跟随）
+    24567正常（可能基础异常、高优先级AI）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
@@ -1760,7 +1774,7 @@ def handle_normal_24567(character_id: int) -> int:
 @add_premise(constant_promise.Premise.T_NORMAL_24567)
 def handle_t_normal_24567(character_id: int) -> int:
     """
-    交互对象24567正常（可能基础异常、AI跟随）
+    交互对象24567正常（可能基础异常、高优先级AI）
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
     \n5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
@@ -1788,7 +1802,7 @@ def handle_t_normal_24567(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_124567)
 def handle_normal_124567(character_id: int) -> int:
     """
-    124567正常（可能基础异常、AI跟随）
+    124567正常（可能基础异常、高优先级AI）
     \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:AI行动基本停止：临盆、产后、监禁
     \n4:服装异常：大致全裸、全裸
@@ -1816,7 +1830,7 @@ def handle_normal_124567(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NORMAL_1267)
 def handle_normal_1267(character_id: int) -> int:
     """
-    1267正常（可能AI跟随、服装异常或意识模糊）
+    1267正常（可能高优先级AI、服装异常或意识模糊）
     \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:AI行动基本停止：临盆、产后、监禁
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
@@ -1843,7 +1857,7 @@ def handle_normal_123467(character_id: int) -> int:
     123467正常（可能意识模糊）
     \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
     \n2:AI行动基本停止：临盆、产后、监禁
-    \n3:助理或跟随：助理、跟随模式下
+    \n3:高优先级AI：助理、跟随、体检
     \n4:服装异常：大致全裸、全裸
     \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问
@@ -16022,6 +16036,30 @@ def handle_someone_waiting_for_health_check(character_id: int) -> int:
     int -- 权重
     """
     return len(cache.rhodes_island.waiting_for_exam_operator_ids) > 0
+
+
+@add_premise(constant_promise.Premise.SELF_IN_HEALTH_CHECK_ACTION_CHAIN)
+def handle_self_in_health_check_action_chain(character_id: int) -> int:
+    """
+    自己当前正在体检行动链中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 正在等待体检
+    if handle_self_waiting_for_health_check(character_id):
+        return 1
+    # 立刻需要体检
+    if handle_self_need_health_check_now(character_id):
+        return 1
+    # 自己今天上午需要体检，且现在是上午
+    if handle_self_need_health_check_morning(character_id) and handle_morning_entertainment_time(character_id):
+        return 1
+    # 自己是今天下午需要体检，且现在是下午
+    if handle_self_need_health_check_afternoon(character_id) and handle_afternoon_entertainment_time(character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.ASK_GIVE_PAN_EVERYDAY)
