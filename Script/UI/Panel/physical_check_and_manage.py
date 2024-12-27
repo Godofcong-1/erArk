@@ -394,6 +394,13 @@ class Physical_Check_And_Manage_Panel:
             require_text += _("被睡姦经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
+        elif body_manage_second_behavior_id == 1455:
+            # 内裤收藏数
+            now_value_1 = len(self.pl_character_data.pl_collection.npc_panties[target_character_id])
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("内裤收藏数量{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
         elif body_manage_second_behavior_id == 1461 or body_manage_second_behavior_id == 1465:
             # Ｂ感觉能力
             now_value_1 = target_character_data.ability[1]
@@ -434,6 +441,13 @@ class Physical_Check_And_Manage_Panel:
             now_value_1 = target_character_data.experience[54]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("自慰经验{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
+        elif body_manage_second_behavior_id == 1474:
+            # 被睡奸经验
+            now_value_1 = target_character_data.experience[121]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("被睡姦经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
         # 攻略进度

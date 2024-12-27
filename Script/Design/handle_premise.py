@@ -16076,6 +16076,19 @@ def handle_ask_not_wear_cloth_in_sleep(character_id: int) -> int:
     return character_data.body_manage[4]
 
 
+@add_premise(constant_promise.Premise.ASK_WEAR_DIFFERENT_SOCKS_EVERYDAY)
+def handle_ask_wear_different_socks_everyday(character_id: int) -> int:
+    """
+    自己被要求每天穿不同的袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[5]
+
+
 @add_premise(constant_promise.Premise.ASK_EQUP_NIPPLE_CLAMP_IN_DAY)
 def handle_ask_equp_nipple_clamp_in_day(character_id: int) -> int:
     """
@@ -16229,6 +16242,19 @@ def handle_not_ask_not_masturbation(character_id: int) -> int:
     int -- 权重
     """
     return not handle_ask_not_masturbation(character_id)
+
+
+@add_premise(constant_promise.Premise.ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING)
+def handle_ask_not_lock_door_bedore_sleeping(character_id: int) -> int:
+    """
+    自己被要求晚上睡觉不锁门
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[24]
 
 
 @add_premise(constant_promise.Premise.ASK_NONE_EXERCISES)

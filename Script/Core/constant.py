@@ -2116,6 +2116,8 @@ class SecondBehavior:
     """ 在每日招呼时上交今天的内裤 """
     GIVE_SOCKS_IN_DAY_FIRST_MEET = 1456
     """ 在每日招呼时上交今天的袜子 """
+    ASK_WEAR_DIFFERENT_SOCKS_EVERYDAY = 1457
+    """ 被要求每天穿不同的袜子 """
     ASK_EQUP_NIPPLE_CLAMP_IN_DAY = 1461
     """ 被要求白天时戴着乳头夹 """
     ASK_EQUP_CLIT_CLAMP_IN_DAY = 1462
@@ -2138,6 +2140,8 @@ class SecondBehavior:
     """ 被要求每天晚上睡前都要自慰 """
     ASK_NOT_MASTURBATION = 1473
     """ 被要求禁止自慰 """
+    ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING = 1474
+    """ 被要求晚上睡觉不锁门 """
     ASK_SUCKING_AND_SWALLOWING_EXERCISES = 1481
     """ 被要求进行吮吸与吞咽力练习 """
     ASK_ARMPIT_CLAMPING_EXERCISES = 1482

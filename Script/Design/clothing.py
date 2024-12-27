@@ -81,6 +81,10 @@ def get_cloth_from_dormitory_locker(character_id: int):
         if not wear_locker_flag:
             get_npc_cloth(character_id)
 
+        # 如果被命令了每条换新袜子
+        if handle_premise.handle_ask_wear_different_socks_everyday(character_id):
+            get_socks(character_id)
+
     # 穿特殊服装
     chara_special_wear_cloth(character_id)
 
@@ -182,6 +186,33 @@ def get_underwear(character_id: int, part_flag = 0):
         else:
             pan_id = random.choice(pan_nor_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
+
+
+def get_socks(character_id: int):
+    """
+    随机穿袜子
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    character_data = cache.character_data[character_id]
+
+    # 遍历全衣服
+    socks_list = []
+    for cloth_id in game_config.config_clothing_tem:
+        cloth = game_config.config_clothing_tem[cloth_id]
+        # 跳过非自己的衣服
+        if cloth.npc != 0 and cloth.npc != character_data.adv:
+            continue
+        if cloth.clothing_type == 10:
+            socks_list.append(cloth_id)
+
+    # 清空旧袜子
+    character_data.cloth.cloth_wear[10] = []
+    # 随机穿袜子
+    socks_id = random.choice(socks_list)
+    character_data.cloth.cloth_wear[10].append(socks_id)
 
 
 def undress_out_cloth(character_id: int):

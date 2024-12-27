@@ -9172,8 +9172,11 @@ def handle_sleep_add_adjust(
     if handle_premise_place.handle_in_dormitory(character_id):
         # 换睡衣
         clothing.get_sleep_cloth(character_id)
-        # 关门
-        if random.random() < 0.5:
+        # 被要求不关门则不关门
+        if handle_premise.handle_ask_not_lock_door_bedore_sleeping(character_id):
+            pass
+        # 否则判定是否关门
+        elif random.random() < 0.5:
             handle_door_close(character_id, add_time, change_data, now_time)
             # print(F"debug : {cache.character_data[character_id].name} 在{cache.character_data[character_id].dormitory}关门睡觉")
         # else:

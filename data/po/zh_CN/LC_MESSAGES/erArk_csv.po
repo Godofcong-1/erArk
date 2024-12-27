@@ -2873,342 +2873,362 @@ msgid "黑色及膝袜"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:295
-msgid "战术绑腿包"
+msgid "黑色吊带袜"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:296
-msgid "战术腿带"
+msgid "白色过膝袜"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:297
+msgid "白色大腿袜"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:298
-msgid "深蓝色小皮鞋"
+msgid "白色及膝袜"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:299
-msgid "高跟皮靴"
+msgid "白色小腿袜"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:300
-msgid "黑色圆头皮靴"
+msgid "战术绑腿包"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:301
-msgid "白色厚底长筒靴"
-msgstr ""
-
-#: .\data\csv\ClothingTem.csv:302
-msgid "冰刀鞋"
+msgid "战术腿带"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:303
-msgid "黑色中筒运动鞋"
+msgid "深蓝色小皮鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:304
-msgid "黑色防水靴"
+msgid "高跟皮靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:305
-msgid "粉色翻领高帮滑板鞋"
+msgid "黑色圆头皮靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:306
-msgid "浅灰色低筒靴"
+msgid "白色厚底长筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:307
-msgid "厚底凉鞋"
+msgid "冰刀鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:308
-msgid "过膝战靴"
+msgid "黑色中筒运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:309
-msgid "黑色小皮鞋"
+msgid "黑色防水靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:310
-msgid "黑色过膝高筒靴"
+msgid "粉色翻领高帮滑板鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:311
-msgid "黑色高跟鞋"
+msgid "浅灰色低筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:312
-msgid "黑色绑带中筒皮靴"
+msgid "厚底凉鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:313
-msgid "白色高帮运动鞋"
+msgid "过膝战靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:314
-msgid "绑带中筒靴（带爪）"
+msgid "黑色小皮鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:315
-msgid "黑红间色低跟短靴"
+msgid "黑色过膝高筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:316
-msgid "黑色运动鞋"
+msgid "黑色高跟鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:317
-msgid "黑色无跟低筒皮靴"
+msgid "黑色绑带中筒皮靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:318
-msgid "芭蕾舞鞋"
+msgid "白色高帮运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:319
-msgid "脚环高跟单鞋"
+msgid "绑带中筒靴（带爪）"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:320
-msgid "橘色高帮运动鞋"
+msgid "黑红间色低跟短靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:321
-msgid "黑色尖头乐福鞋"
+msgid "黑色运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:322
-msgid "棕色中跟低筒皮短靴"
+msgid "黑色无跟低筒皮靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:323
-msgid "白色翻边中筒靴"
+msgid "芭蕾舞鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:324
-msgid "防滑翻折中筒靴"
+msgid "脚环高跟单鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:325
-msgid "金色尖头配花高跟鞋"
+msgid "橘色高帮运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:326
-msgid "灰绿色防滑运动鞋"
+msgid "黑色尖头乐福鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:327
-msgid "黑色厚底短靴"
+msgid "棕色中跟低筒皮短靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:328
-msgid "白色运动鞋"
+msgid "白色翻边中筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:329
-msgid "黑色带蝴蝶结高跟鞋"
+msgid "防滑翻折中筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:330
-msgid "黑色扣带中筒皮靴"
+msgid "金色尖头配花高跟鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:331
-msgid "黑色圆头乐福鞋"
+msgid "灰绿色防滑运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:332
-msgid "棕色翻折中筒靴"
+msgid "黑色厚底短靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:333
-msgid "黑色尖头绑带高跟鞋"
+msgid "白色运动鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:334
-msgid "黑色尖头中筒靴"
+msgid "黑色带蝴蝶结高跟鞋"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:335
+msgid "黑色扣带中筒皮靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:336
-msgid "无胄盟源石复合弓"
+msgid "黑色圆头乐福鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:337
-msgid "“提灯天使”法杖"
+msgid "棕色翻折中筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:338
-msgid "龙腾无人机控制器"
+msgid "黑色尖头绑带高跟鞋"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:339
-msgid "切城警用防暴左轮"
-msgstr ""
-
-#: .\data\csv\ClothingTem.csv:340
-msgid "“浮标”"
+msgid "黑色尖头中筒靴"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:341
-msgid "维多利亚军旗"
+msgid "无胄盟源石复合弓"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:342
-msgid "仪仗剑"
+msgid "“提灯天使”法杖"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:343
-msgid "长柄镰刀"
+msgid "龙腾无人机控制器"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:344
-msgid "“光羽箭”骑士弩"
+msgid "切城警用防暴左轮"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:345
-msgid "共振装置手提箱"
+msgid "“浮标”"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:346
-msgid "口琴型匕首"
+msgid "维多利亚军旗"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:347
-msgid "深海猎人长柄圆锯"
+msgid "仪仗剑"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:348
-msgid "工程蓄水炮"
+msgid "长柄镰刀"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:349
-msgid "咪波控制终端XP"
+msgid "“光羽箭”骑士弩"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:350
-msgid "锻锤"
+msgid "共振装置手提箱"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:351
-msgid "皮鞭"
+msgid "口琴型匕首"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:352
-msgid "“蓝莓与黑巧”"
+msgid "深海猎人长柄圆锯"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:353
-msgid "维多利亚破城矛"
+msgid "工程蓄水炮"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:354
-msgid "荆棘审判锤"
+msgid "咪波控制终端XP"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:355
-msgid "专业级改良镜头"
+msgid "锻锤"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:356
-msgid "杜林桌布旗"
+msgid "皮鞭"
 msgstr ""
 
 #: .\data\csv\ClothingTem.csv:357
+msgid "“蓝莓与黑巧”"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:358
+msgid "维多利亚破城矛"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:359
+msgid "荆棘审判锤"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:360
+msgid "专业级改良镜头"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:361
+msgid "杜林桌布旗"
+msgstr ""
+
+#: .\data\csv\ClothingTem.csv:362
 msgid "天球仪与源石剑"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:358
+#: .\data\csv\ClothingTem.csv:363
 msgid "源石法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:358
+#: .\data\csv\ClothingTem.csv:363
 msgid "法杖"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:359
+#: .\data\csv\ClothingTem.csv:364
 msgid "源石弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:359
+#: .\data\csv\ClothingTem.csv:364
 msgid "弩"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:360
+#: .\data\csv\ClothingTem.csv:365
 msgid "罗德岛制式刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:360
+#: .\data\csv\ClothingTem.csv:365
 msgid "刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:361
+#: .\data\csv\ClothingTem.csv:366
 msgid "罗德岛制式长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:361
+#: .\data\csv\ClothingTem.csv:366
 msgid "长枪"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:363
+#: .\data\csv\ClothingTem.csv:368
 msgid "源石检测抑制环"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:364
+#: .\data\csv\ClothingTem.csv:369
 msgid "肩背式箭袋"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:365
+#: .\data\csv\ClothingTem.csv:370
 msgid "“笼中青鸟”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:366
+#: .\data\csv\ClothingTem.csv:371
 msgid "大帝的坠饰"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:367
+#: .\data\csv\ClothingTem.csv:372
 msgid "警徽"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:368
+#: .\data\csv\ClothingTem.csv:373
 msgid "剪刀"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:369
+#: .\data\csv\ClothingTem.csv:374
 msgid "战术挎包"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:370
+#: .\data\csv\ClothingTem.csv:375
 msgid "电工工具套"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:371
+#: .\data\csv\ClothingTem.csv:376
 msgid "仿生海龙小叶"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:372
+#: .\data\csv\ClothingTem.csv:377
 msgid "机械水獭咪波"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:373
+#: .\data\csv\ClothingTem.csv:378
 msgid "叙拉古法典"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:374
+#: .\data\csv\ClothingTem.csv:379
 msgid "磐蟹饲养箱"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:375
+#: .\data\csv\ClothingTem.csv:380
 msgid "摄影辅助机器人“镜头”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:376
+#: .\data\csv\ClothingTem.csv:381
 msgid "“金苹果”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:377
+#: .\data\csv\ClothingTem.csv:382
 msgid "诅咒娃娃“小莫提”"
 msgstr ""
 
-#: .\data\csv\ClothingTem.csv:378
+#: .\data\csv\ClothingTem.csv:383
 msgid "绿叶伞"
 msgstr ""
 
@@ -11685,94 +11705,102 @@ msgid "在每日招呼时上交今天的袜子"
 msgstr ""
 
 #: .\data\csv\Status.csv:549
-msgid "被要求白天时戴着乳头夹"
+msgid "被要求每天穿不同的袜子"
 msgstr ""
 
 #: .\data\csv\Status.csv:550
-msgid "被要求白天时戴着阴蒂夹"
+msgid "被要求白天时戴着乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:551
-msgid "被要求白天时V里插着振动棒"
+msgid "被要求白天时戴着阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:552
-msgid "被要求白天时A里插着振动棒"
+msgid "被要求白天时V里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:553
-msgid "被要求睡觉时戴着乳头夹"
+msgid "被要求白天时A里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:554
-msgid "被要求睡觉时戴着阴蒂夹"
+msgid "被要求睡觉时戴着乳头夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:555
-msgid "被要求睡觉时V里插着振动棒"
+msgid "被要求睡觉时戴着阴蒂夹"
 msgstr ""
 
 #: .\data\csv\Status.csv:556
-msgid "被要求睡觉时A里插着振动棒"
+msgid "被要求睡觉时V里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:557
-msgid "被要求洗澡时不再清洗阴道内的精液"
+msgid "被要求睡觉时A里插着振动棒"
 msgstr ""
 
 #: .\data\csv\Status.csv:558
-msgid "被要求每天晚上睡前都要自慰"
+msgid "被要求洗澡时不再清洗阴道内的精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:559
-msgid "被要求禁止自慰"
+msgid "被要求每天晚上睡前都要自慰"
 msgstr ""
 
 #: .\data\csv\Status.csv:560
-msgid "被要求进行吮吸与吞咽力练习"
+msgid "被要求禁止自慰"
 msgstr ""
 
 #: .\data\csv\Status.csv:561
-msgid "被要求进行腋下夹持力练习"
+msgid "被要求晚上睡觉不锁门"
 msgstr ""
 
 #: .\data\csv\Status.csv:562
-msgid "被要求进行胸部夹持力练习"
+msgid "被要求进行吮吸与吞咽力练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:563
-msgid "被要求进行手部灵活度练习"
+msgid "被要求进行腋下夹持力练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:564
-msgid "被要求进行足部灵活度练习"
+msgid "被要求进行胸部夹持力练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:565
-msgid "被要求进行阴道紧致度练习"
+msgid "被要求进行手部灵活度练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:566
-msgid "被要求进行肠道紧致度练习"
+msgid "被要求进行足部灵活度练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:567
-msgid "被要求进行尾巴灵活度练习"
+msgid "被要求进行阴道紧致度练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:568
-msgid "被要求进行触手灵活度练习"
+msgid "被要求进行肠道紧致度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:569
+msgid "被要求进行尾巴灵活度练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:570
-msgid "获得被浅层催眠素质"
-msgstr ""
-
-#: .\data\csv\Status.csv:571
-msgid "获得被深层催眠素质"
+msgid "被要求进行触手灵活度练习"
 msgstr ""
 
 #: .\data\csv\Status.csv:572
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:573
+msgid "获得被深层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:574
 msgid "获得被完全催眠素质"
 msgstr ""
 
@@ -14048,10 +14076,6 @@ msgstr ""
 msgid "黑白双色民族风格连衣长裙"
 msgstr ""
 
-#: .\data\character\0079_阿丽娜.csv:30
-msgid "白色小腿袜"
-msgstr ""
-
 #: .\data\character\0079_阿丽娜.csv:31
 msgid "黑色皮靴"
 msgstr ""
@@ -16134,10 +16158,6 @@ msgstr ""
 
 #: .\data\character\0233_蔓德拉.csv:34
 msgid "灰黑色短靴"
-msgstr ""
-
-#: .\data\character\0233_蔓德拉.csv:35
-msgid "白色过膝袜"
 msgstr ""
 
 #: .\data\character\0235_杰西卡.csv:4
@@ -19138,10 +19158,6 @@ msgstr ""
 
 #: .\data\character\2012_提丰.csv:28
 msgid "皮质安全裤"
-msgstr ""
-
-#: .\data\character\2012_提丰.csv:29
-msgid "黑色吊带袜"
 msgstr ""
 
 #: .\data\character\2012_提丰.csv:30
