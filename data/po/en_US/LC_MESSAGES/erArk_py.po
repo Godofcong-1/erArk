@@ -8826,3 +8826,381 @@ msgstr ""
 
 msgid "{0}:{1}"
 msgstr ""
+
+msgid ""
+"\n"
+"系统设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid "  当前有干员已招募，等待确认\n"
+msgstr ""
+
+msgid "  当前有干员正在体检科等待体检\n"
+msgstr ""
+
+msgid "群交"
+msgstr ""
+
+msgid "放入正常食物"
+msgstr ""
+
+msgid "邀请群交"
+msgstr ""
+
+msgid ""
+"\n"
+"进入群交模式\n"
+msgstr ""
+
+msgid ""
+"\n"
+"进入群交模式失败\n"
+msgstr ""
+
+msgid "{0}拒绝了群交\n"
+msgstr ""
+
+msgid "结束群交"
+msgstr ""
+
+msgid ""
+"\n"
+"结束群交模式\n"
+msgstr ""
+
+msgid "进行一次当前群交"
+msgstr ""
+
+msgid "进行一次轮流群交"
+msgstr ""
+
+msgid "编辑群交行动"
+msgstr ""
+
+msgid "加入侍奉"
+msgstr ""
+
+msgid "侍奉"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}获得了【{1}】\n"
+msgstr ""
+
+msgid "{0}决定加入其中\n"
+msgstr ""
+
+msgid "{0}还不懂这是什么意义，被你随口糊弄走了\n"
+msgstr ""
+
+msgid "{0}红着脸跑走了\n"
+msgstr ""
+
+msgid ""
+"\n"
+"满足条件，确定要现在获得该素质吗（也可以在过夜时自动获得）\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○本周抽签选中了{0}作为{1}的助理\n"
+msgstr ""
+
+msgid "你需要将一段文本翻译为"
+msgstr ""
+
+msgid "语言。如果文本中有有\\{\\}括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本："
+msgstr ""
+
+msgid "  [语言翻译]： "
+msgstr ""
+
+msgid " [未开启] "
+msgstr ""
+
+msgid " [仅翻译地文] "
+msgstr ""
+
+msgid " [翻译地文和口上] "
+msgstr ""
+
+msgid ""
+" \n"
+"  本选项用于设置是否开启语言翻译功能\n"
+msgstr ""
+
+msgid "  开启后，游戏中的文本将会被翻译成您设置的语言-[{0}]\n"
+msgstr ""
+
+msgid "  [已脱下]:"
+msgstr ""
+
+msgid "必定忍住"
+msgstr ""
+
+msgid "高"
+msgstr ""
+
+msgid "中"
+msgstr ""
+
+msgid "低"
+msgstr ""
+
+msgid "要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n"
+msgstr ""
+
+msgid "[忍住]"
+msgstr ""
+
+msgid "忍住"
+msgstr ""
+
+msgid "[射出]"
+msgstr ""
+
+msgid "射出"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}忍住了射精\n"
+msgstr ""
+
+msgid "选择射精对象"
+msgstr ""
+
+msgid "选择射精部位"
+msgstr ""
+
+msgid "{0}开始将身上没有调味的食物放进食堂取餐区里\n"
+msgstr ""
+
+msgid "{0}身上没有正常调味的食物\n"
+msgstr ""
+
+msgid "{0}已放入食堂\n"
+msgstr ""
+
+msgid "嘴"
+msgstr ""
+
+msgid "左手"
+msgstr ""
+
+msgid "右手"
+msgstr ""
+
+msgid "阴茎"
+msgstr ""
+
+msgid "肛门"
+msgstr ""
+
+msgid "插入"
+msgstr ""
+
+msgid "口"
+msgstr ""
+
+msgid "手"
+msgstr ""
+
+msgid "肛"
+msgstr ""
+
+msgid "V"
+msgstr ""
+
+msgid "A"
+msgstr ""
+
+msgid "U"
+msgstr ""
+
+msgid "W"
+msgstr ""
+
+msgid "N"
+msgstr ""
+
+msgid "{0}-{1}-{2} "
+msgstr ""
+
+msgid "一起"
+msgstr ""
+
+msgid "阴茎正在被{0}{1} "
+msgstr ""
+
+msgid "当前群交状态：\n"
+msgstr ""
+
+msgid "○群交时同一角色无法同时占用多个部位\n"
+msgstr ""
+
+msgid ""
+"○插入和侍奉只能二选一，插入为单人，侍奉可最多四人\n"
+"\n"
+msgstr ""
+
+msgid "阴茎（插入）"
+msgstr ""
+
+msgid "未选择角色"
+msgstr ""
+
+msgid "未选择指令"
+msgstr ""
+
+msgid "阴茎（侍奉）"
+msgstr ""
+
+msgid "轮流用副模板：在当前状态之外新增一套副模板，可在两套模板之间切换，或者使用轮流群交指令，可轮流进行一次双模板中的群交指令\n"
+msgstr ""
+
+msgid "未启用"
+msgstr ""
+
+msgid "已启用"
+msgstr ""
+
+msgid "轮流用副模板"
+msgstr ""
+
+msgid "切换模板"
+msgstr ""
+
+msgid "切换"
+msgstr ""
+
+msgid "锁定群交模板：锁定后使用指令时不会再自动调整状态，仅可在当前编辑面板中修改\n"
+msgstr ""
+
+msgid "已锁定"
+msgstr ""
+
+msgid "未锁定"
+msgstr ""
+
+msgid "锁定群交模板"
+msgstr ""
+
+msgid "调整干员行动：没有在上述位置中的干员会\n"
+msgstr ""
+
+msgid "无行动"
+msgstr ""
+
+msgid "自慰"
+msgstr ""
+
+msgid "优先补空位，无空位则自慰"
+msgstr ""
+
+msgid "随机抢占替换当前位置，无位则自慰"
+msgstr ""
+
+msgid "调整干员行动"
+msgstr ""
+
+msgid "邀请其他干员：邀请不在场的干员来这里参加群交，只能邀请实行值足够同意的\n"
+msgstr ""
+
+msgid "邀请"
+msgstr ""
+
+msgid "邀请其他干员"
+msgstr ""
+
+msgid ""
+"当前可邀请的干员有：\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已取消对{0}的群交邀请，{0}不会来这里参加群交了\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已邀请{0}来这里参加群交\n"
+msgstr ""
+
+msgid "食物名字: {food_name}\n"
+msgstr ""
+
+msgid "[确认]"
+msgstr ""
+
+msgid "确认"
+msgstr ""
+
+msgid "取消"
+msgstr ""
+
+msgid "[001]检查身体情况（今日已体检）"
+msgstr ""
+
+msgid "[001]检查身体情况（当前没有查看对象）"
+msgstr ""
+
+msgid "[003]调整体检日程"
+msgstr ""
+
+msgid ""
+"\n"
+"可以进行的检查项目/已进行的检查项目：{0}/{1}（每级医术技能+4）\n"
+msgstr ""
+
+msgid ""
+"请选择要对{0}进行的身体检查：\n"
+"\n"
+msgstr ""
+
+msgid "(已检查)"
+msgstr ""
+
+msgid "调整体检日程"
+msgstr ""
+
+msgid "[调整干员名单]({0}人)"
+msgstr ""
+
+msgid "[调整体检日]({0}天)"
+msgstr ""
+
+msgid " 【性交经验】"
+msgstr ""
+
+msgid "次\n"
+msgstr ""
+
+msgid " 【无意识性交经验】"
+msgstr ""
+
+msgid ""
+"\n"
+"性爱履历：\n"
+msgstr ""
+
+msgid "请选择体检日期：\n"
+msgstr ""
+
+msgid "(已选择)"
+msgstr ""
+
+msgid "[010]干员的口上信息"
+msgstr ""
+
+msgid "已禁止干员列表"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"{0}干员已离岛\n"
+"\n"
+msgstr ""

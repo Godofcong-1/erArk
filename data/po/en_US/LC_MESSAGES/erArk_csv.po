@@ -20154,3 +20154,135 @@ msgstr ""
 
 msgid "黑钢国际安全屋"
 msgstr ""
+
+msgid "每周轮换"
+msgstr ""
+
+msgid "否|是，每周一随机指定一名干员担任本周的助理"
+msgstr ""
+
+msgid "白色大腿袜"
+msgstr ""
+
+msgid "白色及膝袜"
+msgstr ""
+
+msgid "群交经验"
+msgstr ""
+
+msgid "群交"
+msgstr ""
+
+msgid "新入职干员安排体检"
+msgstr ""
+
+msgid "开启后，新干员会先在博士办公室报到，然后前往体检科等待体检"
+msgstr ""
+
+msgid "岛上干员定期安排体检"
+msgstr ""
+
+msgid "开启后，会根据已设定的时间周期，从目标对象中抽取人员发送体检安排，体检人会在对应时间前往体检科等待"
+msgstr ""
+
+msgid "定期体检周期"
+msgstr ""
+
+msgid "定期体检的周期，默认为每年体检一次"
+msgstr ""
+
+msgid "每年体检一次|每月体检一次|每周体检一次|每天体检一次"
+msgstr ""
+
+msgid "定期体检对象"
+msgstr ""
+
+msgid "定期体检对象，默认为源石病患者干员"
+msgstr ""
+
+msgid "源石病患者干员|全部干员|手动选择干员名单"
+msgstr ""
+
+msgid "周期内已体检过的是否仍需体检"
+msgstr ""
+
+msgid "默认为否，干员在同一周期内体过一次后便不会再被抽取体检，开启后则可以被多次抽取"
+msgstr ""
+
+msgid "每次抽取体检人数"
+msgstr ""
+
+msgid "每日0点抽取，平分安排到上午场和下午场，每日最多体检10人"
+msgstr ""
+
+msgid "每周的体检日"
+msgstr ""
+
+msgid "可以手动选择每周的哪几天会抽选干员进行体检，默认为周末（即周六和周日两天）"
+msgstr ""
+
+msgid "周末|手动选择"
+msgstr ""
+
+msgid "邀请群交"
+msgstr ""
+
+msgid "邀请群交失败"
+msgstr ""
+
+msgid "结束群交"
+msgstr ""
+
+msgid "群交时博士体力为零中断"
+msgstr ""
+
+msgid "群交时自己体力为零退出"
+msgstr ""
+
+msgid "群交时NPC数量不足转为单人H"
+msgstr ""
+
+msgid "自己加入群交"
+msgstr ""
+
+msgid "以队长身份出发执行外勤委托"
+msgstr ""
+
+msgid "以队长身份完成外勤委托归舰"
+msgstr ""
+
+msgid "被邀请加入群交，开始前往群交地点"
+msgstr ""
+
+msgid "被任命为本地外交官"
+msgstr ""
+
+msgid "被解除本地外交官的任命"
+msgstr ""
+
+msgid "被任命为外派外交官"
+msgstr ""
+
+msgid "被解除外派外交官的任命"
+msgstr ""
+
+msgid "被要求每天穿不同的袜子"
+msgstr ""
+
+msgid "被要求晚上睡觉不锁门"
+msgstr ""
+
+msgid "禁止某些干员在游戏中出现"
+msgstr ""
+
+msgid "如果对某些干员不感兴趣，可以选择禁止她们在游戏中出现，未招募的会无法招募，已招募的会离岛并无法招募"
+msgstr ""
+
+msgid "不禁止|禁止"
+msgstr ""
+
+msgid "是否在处理公务时显示待处理事项"
+msgstr ""
+
+msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
+msgstr ""
