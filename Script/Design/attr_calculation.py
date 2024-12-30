@@ -20,7 +20,7 @@ def get_system_setting_zero() -> dict:
     重置系统设置
     """
     system_setting_list = {}
-    default_dict = {1:2, 2:0, 3:1, 4:0, 5:0, 6:2, 7:1, 8:1, 9:2, 10:1}
+    default_dict = {1:2, 2:0, 3:1, 4:0, 5:0, 6:2, 7:1, 8:1, 9:2, 10:1, 11:0, 12:1}
     for system_setting in game_config.config_system_setting:
         if system_setting in default_dict:
             system_setting_list[system_setting] = default_dict[system_setting]

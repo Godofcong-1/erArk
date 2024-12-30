@@ -11972,6 +11972,14 @@ msgstr ""
 msgid "不禁止|禁止"
 msgstr ""
 
+#: .\data\csv\System_Setting.csv:17
+msgid "是否在处理公务时显示待处理事项"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:17
+msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
+msgstr ""
+
 #: .\data\csv\Talent.csv:7
 msgid "处女"
 msgstr ""
