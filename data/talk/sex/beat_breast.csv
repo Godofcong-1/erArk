@@ -4,3 +4,7 @@ str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 0,999,0,high_1,{Name}扇打着{TargetName}的胸部，在上面留下了一个红红的巴掌印
+1,999,0,high_1,{Name}将自己的掌印猛地镶嵌到{TargetName}的胸部之上，引得{TargetName}一阵颤抖。
+2,999,0,high_1,{Name}强劲的力道贯穿了{TargetName}的胸部，留下了令{TargetName}惊呼的热辣痛感。
+3,999,0,high_1,{Name}毫不留情地向{TargetName}软嫩的胸部付诸了暴力，刺痛感反而激发了{TargetName}的生殖本能，子宫不由得一紧。
+4,999,0,high_1,{Name}的手掌猛地掠过{TargetName}的胸部，在疼痛自神经传达到{TargetName}的大脑前，手背带来的冲击力和刚刚到达的痛感在{TargetName}胸前共鸣着。
