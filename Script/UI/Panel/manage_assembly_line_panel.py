@@ -18,11 +18,20 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def settle_assembly_line(newdayflag = False):
+def settle_assembly_line(newdayflag = False, draw_flag = True):
     """
-    结算流水线的生产
+    结算流水线的生产\n
+    Keyword arguments:\n
+    newdayflag -- 是否是新的一天\n
+    draw_flag -- 是否绘制结算信息\n
+    Return arguments:\n
+    un_normal -- 是否有异常\n
+    return_text -- 结算信息\n
     """
-    
+
+    # 生产是否有问题
+    un_normal = False
+    return_text = ""
 
     # 遍历流水线
     for assembly_line_id in cache.rhodes_island.assembly_line:
@@ -65,19 +74,25 @@ def settle_assembly_line(newdayflag = False):
                 now_text += _("上次结算是{0}时，到现在已过{1}小时，").format(cache.rhodes_island.assembly_line[assembly_line_id][4], max_time)
                 if produce_num < produce_num_max:
                     now_text += _("由于原料不足，最大可以生产{0}个，实际").format(produce_num)
+                    un_normal = True
                 now_text += _("共生产了{0}个{1}").format(produce_num, game_config.config_resouce[product_id].name)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[product_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[product_id] = cache.rhodes_island.warehouse_capacity
                     now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(game_config.config_resouce[product_id].name, cache.rhodes_island.warehouse_capacity)
+                    un_normal = True
                 now_text += f"\n"
-                now_draw = draw.WaitDraw()
-                now_draw.width = window_width
-                now_draw.text = now_text
-                now_draw.draw()
+                return_text += now_text
+                if draw_flag:
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = window_width
+                    now_draw.text = now_text
+                    now_draw.draw()
 
         # 重置收菜时间
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
+
+    return un_normal, return_text
 
 
 class Manage_Assembly_Line_Panel:

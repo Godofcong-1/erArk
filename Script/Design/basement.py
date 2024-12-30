@@ -516,6 +516,7 @@ def draw_todo():
     """
     绘制待办事项
     """
+    from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel
 
     draw_text = ""
 
@@ -526,6 +527,16 @@ def draw_todo():
     # 是否有人正在等待体检
     if len(cache.rhodes_island.waiting_for_exam_operator_ids):
         draw_text += _("  当前有干员正在体检科等待体检\n")
+
+    # 流水线生产是否正常
+    un_normal, now_text = manage_assembly_line_panel.settle_assembly_line(draw_flag=False)
+    if un_normal:
+        draw_text += now_text[1:] + ' '
+
+    # 农业生产是否正常
+    un_normal, now_text = agriculture_production_panel.settle_agriculture_line(draw_flag=False)
+    if un_normal:
+        draw_text += now_text[1:] + ' '
 
     # 如果有待办事项，输出待办事项
     if draw_text:

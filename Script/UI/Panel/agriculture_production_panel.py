@@ -18,11 +18,19 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def settle_agriculture_line():
+def settle_agriculture_line(draw_flag = True):
     """
     结算农业的生产
+    Keyword arguments:
+    draw_flag -- 是否绘制结算信息
+    Return arguments:
+    un_normal -- bool 是否有异常
+    return_text -- str 结算信息
     """
     # print("debug 开始结算农业生产")
+    # 生产是否有问题
+    un_normal = False
+    return_text = ""
     # 遍历药田
     for agriculture_line_id in cache.rhodes_island.herb_garden_line:
         resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
@@ -50,11 +58,14 @@ def settle_agriculture_line():
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
                     now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
+                    un_normal = True
                 now_text += f"\n"
-                now_draw = draw.WaitDraw()
-                now_draw.width = window_width
-                now_draw.text = now_text
-                now_draw.draw()
+                return_text += now_text
+                if draw_flag:
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = window_width
+                    now_draw.text = now_text
+                    now_draw.draw()
 
         # 重置收菜时间
         cache.rhodes_island.herb_garden_line[agriculture_line_id][4] = cache.game_time.hour
@@ -86,14 +97,19 @@ def settle_agriculture_line():
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
                     now_text += _("，由于仓库容量不足，{0}已达上限数量{1}").format(resouce_data.name, cache.rhodes_island.warehouse_capacity)
+                    un_normal = True
                 now_text += f"\n"
-                now_draw = draw.WaitDraw()
-                now_draw.width = window_width
-                now_draw.text = now_text
-                now_draw.draw()
+                return_text += now_text
+                if draw_flag:
+                    now_draw = draw.WaitDraw()
+                    now_draw.width = window_width
+                    now_draw.text = now_text
+                    now_draw.draw()
 
         # 重置收菜时间
         cache.rhodes_island.green_house_line[agriculture_line_id][4] = cache.game_time.hour
+
+    return un_normal, return_text
 
 
 class Agriculture_Production_Panel:
