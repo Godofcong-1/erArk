@@ -17624,6 +17624,38 @@ msgstr ""
 msgid "卡涅利安，出身萨尔贡深处不受王酋管辖的某个古老部族，目前外出游学中。因接受莱塔尼亚霍恩洛厄伯爵的雇佣，作为其侍从长期停留于莱塔尼亚地区。现与罗德岛达成合作关系，作为干员为罗德岛执行莱塔尼亚境内的相关任务。"
 msgstr ""
 
+#: .\data\character\0426_卡涅利安.csv:15
+msgid "#e68328"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:31
+msgid "白色内衬"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:32
+msgid "白色长风衣"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:33
+msgid "皮质半手手套"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:34
+msgid "黑色皮质紧身短裙"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:35
+msgid "黑色绑带"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:36
+msgid "黑色高跟短靴"
+msgstr ""
+
+#: .\data\character\0426_卡涅利安.csv:37
+msgid "提胸绑带"
+msgstr ""
+
 #: .\data\character\0430_远牙.csv:4
 msgid "远牙"
 msgstr ""
