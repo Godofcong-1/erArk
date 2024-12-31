@@ -203,6 +203,25 @@ def settle_visitor_arrivals_and_departures():
                 now_draw.text += _("\n ●【{0}】打包好行李，离开了罗德岛\n").format(character_data.name)
                 now_draw.draw()
 
+def get_today_departing_visitors():
+    """
+    检查今天是否有要离开的访客
+    return: List[int] -- 所有今天要离开的访客的角色id
+    """
+    departing_visitors = []
+    # 遍历全部访客
+    now_visitor_id_list = list(cache.rhodes_island.visitor_info.keys())
+    for visitor_id in now_visitor_id_list:
+        # 判断时间为明天0点
+        judge_time = game_time.get_sub_date(day=1)
+        judge_time.replace(hour=0, minute=0, second=0, microsecond=0)
+        # 判定今天结束后是否要离开
+        if game_time.judge_date_big_or_small(judge_time, cache.rhodes_island.visitor_info[visitor_id]):
+            # 计算访客留下概率
+            tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
+            if stay_posibility < 0.5:
+                departing_visitors.append(visitor_id)
+    return departing_visitors
 
 class Invite_Visitor_Panel:
     """

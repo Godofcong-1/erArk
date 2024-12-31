@@ -516,7 +516,7 @@ def draw_todo():
     """
     绘制待办事项
     """
-    from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel
+    from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel, invite_visitor_panel
 
     # 如果系统设置中关闭了待办事项，直接返回
     if cache.system_setting[12] == 0:
@@ -541,6 +541,11 @@ def draw_todo():
     un_normal, now_text = agriculture_production_panel.settle_agriculture_line(draw_flag=False)
     if un_normal:
         draw_text += now_text[1:] + ' '
+
+    # 检查今日是否有访客离开
+    departing_visitors = invite_visitor_panel.get_today_departing_visitors()
+    if len(departing_visitors):
+        draw_text += _("  今日有访客要离开罗德岛，且其留下意愿较低\n")
 
     # 如果有待办事项，输出待办事项
     if draw_text:
