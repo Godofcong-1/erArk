@@ -231,15 +231,9 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
             recipes_id_list = list(cache.recipe_data.keys())
             recipes_id = random.choice(recipes_id_list)
             food_list = {}
-            recipes = cache.recipe_data[recipes_id]
-            # 难度上无法制作的菜谱直接跳过
-            if recipes.difficulty == 999:
-                continue
-            # 无法制作的种类的菜谱直接跳过
-            if recipes.type in {4,8,9}:
-                continue
-            # 跳过非主食的菜谱
-            if recipes.type != 0:
+            now_recipe_data = cache.recipe_data[recipes_id]
+            # 只能制作预制菜
+            if now_recipe_data.type != 5:
                 continue
             # 随机1~5的烹饪技能等级
             cook_level = random.randint(1, 5)
@@ -262,12 +256,12 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
             # 只能选择该餐馆自己的食谱
             recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].restaurant == restaurant_id]
             recipes_id = random.choice(recipes_id_list)
-            recipes = cache.recipe_data[recipes_id]
+            now_recipe_data = cache.recipe_data[recipes_id]
             # 难度上无法制作的菜谱直接跳过
-            if recipes.difficulty == 999:
+            if now_recipe_data.difficulty == 999:
                 continue
             # 无法制作的种类的菜谱直接跳过
-            if recipes.type in {4,8,9}:
+            if now_recipe_data.type in {4,5,8,9}:
                 continue
             cook_level = random.randint(3, 7)
             new_food = cook(food_list, recipes_id, cook_level, "")
@@ -286,7 +280,7 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
             # 选择零食和饮料类型的食谱
             recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].type in [1, 2]]
             recipes_id = random.choice(recipes_id_list)
-            recipes = cache.recipe_data[recipes_id]
+            now_recipe_data = cache.recipe_data[recipes_id]
             cook_level = random.randint(1, 8)
             new_food = cook(food_list, recipes_id, cook_level, "")
             cache.rhodes_island.stall_vendor_data[0].setdefault(str(recipes_id), {})
@@ -295,17 +289,49 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
             if cook_index >= max_people or cook_index >= 10:
                 break
 
+def get_character_cookable_recipes(character_id: int = 0, weight_flag = False) -> list[int]:
+    """
+    获取角色可以制作的食物食谱列表
+    Keyword arguments:
+    character_id -- 角色id，默认为0
+    输出权重标记 -- 是否根据食谱难度的权重输出列表，默认为False
+    Return arguments:
+    list -- 食谱id列表
+    """
+    character_data = cache.character_data[character_id]
+    cookable_recipes_list = []
+    for recipe_id, recipe in cache.recipe_data.items():
+        # 难度上无法制作的菜谱直接跳过
+        if recipe.difficulty >= 100:
+            continue
+        # 无法制作的种类的菜谱直接跳过
+        if recipe.type in {4,5,9}:
+            continue
+        # 非玩家跳过咖啡
+        if character_id != 0 and recipe.type in {8}:
+            continue
+        # 难度高于烹饪技能的菜谱直接跳过
+        if character_data.ability[43] < recipe.difficulty:
+            continue
+        # 根据权重输出列表
+        if weight_flag:
+            weight_num = min(recipe.difficulty, 8)
+            cookable_recipes_list.extend([recipe_id] * weight_num)
+        # 直接输出列表
+        else:
+            cookable_recipes_list.append(recipe_id)
+    return cookable_recipes_list
+
 def init_makefood_data():
-    """初始化做饭区内的食物数据"""
-    recipe_data = cache.recipe_data
+    """初始化玩家做饭区内的食物数据"""
     character_data = cache.character_data[0]
     food_list = {}
     cache.rhodes_island.makefood_data = {}
-    for recipes_id in recipe_data:
-        if character_data.ability[43] >= recipe_data[recipes_id].difficulty:
-            new_food = cook(food_list, recipes_id, character_data.ability[43], "")
-            cache.rhodes_island.makefood_data.setdefault(str(recipes_id), {})
-            cache.rhodes_island.makefood_data[str(recipes_id)][new_food.uid] = new_food
+    cookable_recipes_list = get_character_cookable_recipes()
+    for recipes_id in cookable_recipes_list:
+        new_food = cook(food_list, recipes_id, character_data.ability[43], "")
+        cache.rhodes_island.makefood_data.setdefault(str(recipes_id), {})
+        cache.rhodes_island.makefood_data[str(recipes_id)][new_food.uid] = new_food
 
 
 def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type: str) -> Dict[str, Set]:
@@ -416,9 +442,9 @@ def get_food_list_from_food_shop(food_type: str, restaurant_id:int = -1) -> Dict
     return food_list
 
 
-def get_cook_level_food_type(food_type: str) -> Dict[uuid.UUID, str]:
+def get_cook_from_makefood_data_by_food_type(food_type: str) -> Dict[uuid.UUID, str]:
     """
-    获取可以烹饪的的食物种类
+    按食物种类从做饭区获取可以烹饪的的食物列表
     Keyword arguments:
     food_type -- 食物类型
     Return arguments:

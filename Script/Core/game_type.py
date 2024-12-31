@@ -963,12 +963,12 @@ class Rhodes_Island:
         self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
         """
         食堂内贩卖的食物数据
-        食物名字:食物唯一id:食物对象
+        食谱id(str):食物唯一id:食物对象
         """
         self.makefood_data: Dict[str, Dict[UUID, Food]] = {}
         """
         做饭区的食物数据
-        食物名字:食物唯一id:食物对象
+        食谱id(str):食物唯一id:食物对象
         """
 
         # 医疗部

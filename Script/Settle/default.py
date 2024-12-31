@@ -1387,18 +1387,22 @@ def handle_npc_make_food_to_shop(
     """
     if not add_time:
         return
-    # 获取角色数据
+    # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
+    cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
+    recipes_id = random.choice(cookable_recipes_list)
+    # 获取角色数据与食谱数据
     character_data: game_type.Character = cache.character_data[character_id]
-    while 1:
-        recipes_id_list = list(cache.recipe_data.keys())
-        recipes_id = random.choice(recipes_id_list)
-        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
-            break
+    cook_ability_lv = character_data.ability[43]
     food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
+    # 制作食物
     food_list = {}
-    new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
-    cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
-    cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
+    # 每级料理技能等级增加一次制作次数
+    for i in range(cook_ability_lv + 1):
+        new_food = cooking.cook(food_list, recipes_id, cook_ability_lv, character_data.name)
+        # 将食物添加到当前所在食物商店中
+        cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
+        cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
+    # 将食物名记录到角色数据中
     character_data.behavior.food_name = food_recipe.name
 
 
@@ -1421,11 +1425,9 @@ def handle_npc_make_food_to_bag(
         return
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
-    while 1:
-        recipes_id_list = list(cache.recipe_data.keys())
-        recipes_id = random.choice(recipes_id_list)
-        if cache.recipe_data[recipes_id].difficulty <= character_data.ability[43]:
-            break
+    # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
+    cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
+    recipes_id = random.choice(cookable_recipes_list)
     food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
     food_list = {}
     new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
@@ -7738,15 +7740,22 @@ def handle_eat_add_just(
     # 根据食物品质获得调整系数
     food_quality = character_data.behavior.food_quality
     quality_adjust = (food_quality / 5) ** 2
+    # 高品质食物额外加系数
+    if food_quality == 8:
+        quality_adjust *= 2
+    elif food_quality >= 7:
+        quality_adjust += 1
 
-    # 检测是否是玩家制作的食物
+    # 检测是否是手制的食物
     pl_make_flag = False
     if character_data.behavior.target_food:
         food_maker = character_data.behavior.target_food.maker
         if len(food_maker):
+            # 手动制作的食物则额外加成
+            quality_adjust *= 2
+            # 检测是否是玩家制作的食物
             pl_character_name = cache.character_data[0].name
             if food_maker == pl_character_name:
-                quality_adjust *= 2
                 pl_make_flag = True
 
     # 吃掉该食物
@@ -7764,6 +7773,9 @@ def handle_eat_add_just(
             # 玩家做的饭的情况下，额外加信赖
             if pl_make_flag:
                 base_chara_favorability_and_trust_common_settle(character_id, now_add, False, 0, 0, change_data, chara_id)
+            # 高品质食物则变为好心情
+            if food_quality >= 7:
+                handle_mood_to_good(chara_id, add_time, change_data, now_time)
 
         # 加体力气力，清零饥饿值和进食状态
         # 为了增加更多的体力气力，将时间设为25

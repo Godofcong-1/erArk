@@ -1,7 +1,7 @@
 import csv
 
 # 定义txt文件路径
-txt_path = '巫恋.txt'
+txt_path = 'name.txt'
 # 定义输出csv文件路径
 csv_path = 'output.csv'
 
@@ -43,7 +43,7 @@ def save_list_to_csv(data, csv_path):
         count = 1
         for element in data:
             # 按行写入csv文件
-            writer.writerow([count, 101, 254, 'high_1', element])
+            writer.writerow([count, 101, 1, 'high_1', element])
             count += 1
 
 if __name__ == "__main__":
