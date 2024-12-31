@@ -44460,6 +44460,22 @@ msgstr ""
 msgid "{Name}用阴茎蹭着{TargetName}的耳朵，品味着{TargetName}的耳朵的触感"
 msgstr ""
 
+#: .\data\talk\sex\ears_rub.csv:7
+msgid "{Name}将坚硬的肉棒在{TargetName}耳朵的软骨上刮擦着，柔软而坚韧的触感令{Name}难以自拔。"
+msgstr ""
+
+#: .\data\talk\sex\ears_rub.csv:8
+msgid "{Name}将龟头顶在{TargetName}的耳洞上，微微旋转着以从{TargetName}的耳朵上获取些许快感。"
+msgstr ""
+
+#: .\data\talk\sex\ears_rub.csv:9
+msgid "{Name}借助{TargetName}不规则的耳廓摩擦着自己的竿身，少量的快感积累起来逐渐使得{Name}的动作越来越大。"
+msgstr ""
+
+#: .\data\talk\sex\ears_rub.csv:10
+msgid "{Name}用自己挺立的肉棒对着{TargetName}的耳朵反复冲撞，四处飞溅的先走汁是{Name}的欲望正在发泄的象征。"
+msgstr ""
+
 #: .\data\talk\sex\ear_ornament_job.csv:6
 msgid "{Name}的阴茎在{TargetName}的耳饰上摩擦，感受着耳饰与耳朵摩擦阴茎的触感"
 msgstr ""
@@ -44526,6 +44542,22 @@ msgstr ""
 
 #: .\data\talk\sex\external_womb_massage.csv:6
 msgid "{Name}的手放在{TargetName}的肚子上，摸索到了子宫的位置之后，开始用适当的力度隔着肚皮按摩在体内的子宫，这种陌生的感觉让{TargetName}感到一阵阵的刺激"
+msgstr ""
+
+#: .\data\talk\sex\external_womb_massage.csv:7
+msgid "{Name}的手指在{TargetName}的小腹上用力按下，观察着{TargetName}的反应直到找到了子宫所在，隔着肚子的按摩为{TargetName}提供了一种钝感的快乐。"
+msgstr ""
+
+#: .\data\talk\sex\external_womb_massage.csv:8
+msgid "{Name}将拳峰抵在{TargetName}的小腹上，略显尖锐的触感使得{TargetName}不由得倒吸一口凉气。\n在这口气吐出之前，{Name}已经用力将拳头压入{TargetName}的小腹，并快速的来回旋转，快感一次次贯穿着{TargetName}的子宫。"
+msgstr ""
+
+#: .\data\talk\sex\external_womb_massage.csv:9
+msgid "{Name}的手指在{TargetName}的小腹上游走，给{TargetName}产生了一种{Name}不知道子宫在哪里的错觉。\n然而在{Name}眼中，{TargetName}的子宫如同暴露在外一般，{Name}随即精准地按压着{TargetName}的小腹，将力道全部用在刺激{TargetName}的子宫上。"
+msgstr ""
+
+#: .\data\talk\sex\external_womb_massage.csv:10
+msgid "{Name}用手指在{TargetName}的小腹上丈量着，最终停在了一处，{TargetName}很清楚这就是她最脆弱的子宫所在之地。\n连哀求都还没来得及说出口，{Name}有力而精准的按压便施加在{TargetName}的子宫外部，熟悉的快感通过不一样的渠道直达{TargetName}的大脑。"
 msgstr ""
 
 #: .\data\talk\sex\face_rub.csv:6

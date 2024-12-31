@@ -1,6 +1,0 @@
-cid,behavior_id,adv_id,premise,context
-口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
-0,0,0,0,1
-口上配置数据,,,,
-0,436,0,high_1,{Name}用阴茎蹭着{TargetName}的耳朵，品味着{TargetName}的耳朵的触感

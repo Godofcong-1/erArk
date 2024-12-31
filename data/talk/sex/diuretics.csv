@@ -4,3 +4,7 @@ str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 0,456,0,high_1,{Name}给{TargetName}喂下了一次性利尿剂，促进{TargetName}的身体产生更多的尿液，{TargetName}很快就感觉到了尿意，并且即将抵达自己的极限
+1,456,0,high_1,{TargetName}在{Name}的指示下服下了一次性利尿剂，微酸的药剂一路刺激着{TargetName}的消化道，{TargetName}能明显感受到膀胱迅速被充满的奇特感受。
+2,456,0,high_1,{Name}为{TargetName}递上了一杯利尿剂，淡黄的药剂很快通过血管渗透到了{TargetName}的肾脏，快速填满着{TargetName}的膀胱。
+3,456,0,high_1,{Name}给{TargetName}冲调了一杯淡黄色的利尿剂，{TargetName}毫不犹豫地服下了这微酸的液体，几乎就在同时，异样的胀感在{TargetName}的膀胱中快速扩散。
+4,456,0,high_1,{Name}把冰凉的利尿剂倒入了{TargetName}的口中，随后帮助{TargetName}吞咽了下去，在药剂的作用下，{TargetName}的身体迅速地调动着身体机能，无视膀胱极限地生产尿液。
