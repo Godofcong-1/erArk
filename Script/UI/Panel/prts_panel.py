@@ -164,13 +164,16 @@ class Prts_Panel:
         while 1:
             line = draw.LineDraw("-", self.width)
             line.draw()
-            id_list = []
+            id_list = [0]
             return_list = []
 
             # 循环角色提示信息
             for cid in game_config.config_tip_chara:
                 tip_chara_data = game_config.config_tip_chara[cid]
                 character_id = character.get_character_id_from_adv(tip_chara_data.chara_adv_id)
+                # 跳过0
+                if cid == 0:
+                    continue
                 # 跳过未招募的
                 if character_id not in cache.npc_id_got:
                     continue
@@ -251,13 +254,17 @@ class ShowCharaNameDraw:
 
         # 获取角色提示信息
         tip_chara_data = game_config.config_tip_chara[cid]
-        # 获取角色id
-        character_id = character.get_character_id_from_adv(tip_chara_data.chara_adv_id)
-        character_data = cache.character_data[character_id]
-        now_text = f"[{str(tip_chara_data.chara_adv_id).rjust(4,'0')}]{character_data.name}  by {tip_chara_data.writer_name}"
-        # 颜色
-        if character_data.text_color:
-            self.text_color = character_data.name
+        # 地文
+        if cid == 0:
+            now_text = _("[0000]通用文本  by {0}").format(tip_chara_data.writer_name)
+        else:
+            # 获取角色id
+            character_id = character.get_character_id_from_adv(tip_chara_data.chara_adv_id)
+            character_data = cache.character_data[character_id]
+            now_text = f"[{str(tip_chara_data.chara_adv_id).rjust(4,'0')}]{character_data.name}  by {tip_chara_data.writer_name}"
+            # 颜色
+            if character_data.text_color:
+                self.text_color = character_data.name
         # 绘制
         button_draw = draw.LeftButton(
             _(now_text),
@@ -281,13 +288,15 @@ class ShowCharaNameDraw:
         显示角色信息
         """
 
+        info_text = info_text.replace("\\n", "\n")
+
         line_feed.draw()
         line = draw.LineDraw("-", self.width)
         line.draw()
         line_feed.draw()
 
         name_draw = draw.WaitDraw()
-        name_draw.text = name_text + "\n\n" + info_text
+        name_draw.text = name_text + "\n\n" + info_text + "\n\n"
         name_draw.width = self.width
         name_draw.style = self.text_color
         name_draw.draw()

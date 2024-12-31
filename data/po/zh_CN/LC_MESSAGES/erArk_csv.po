@@ -13293,142 +13293,154 @@ msgid "【监牢】：在将无意识的干员[装袋搬走]后，可以在这�
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:7
-msgid "1"
+msgid "0"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:7
+msgid "这里是dongya，三分热度大王，在热情消退之前大概会一直会写\n尽可能的动用了自己的经验和共情能力，希望看得开心\n老天保佑金山银山全都有~"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:8
-msgid "10"
+msgid "1"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:9
-msgid "56"
+msgid "10"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:10
-msgid "101"
+msgid "56"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:11
+msgid "101"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:12
 msgid "107"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:12
-msgid "113"
+msgid "大家好 这里是GeniusGD，各位可以直接称呼为雷蛇哥 是个雷蛇厨（不然嘞）\n雷蛇口上就是兴趣写的 偶尔会翻译+处理数值\n啥 你不要听废话？那直接把雷蛇的机制说一遍吧\n\n雷蛇目前写好的有四大淫乱损伤 当然之后有什么会加上\n【精神损伤】触发时会当场自慰 基本为免费获得把柄\n【腐蚀损伤】触发时会拉高欲望 被推了不关雷蛇的事 谁叫你留在那里\n【热情损伤】触发时会直接送你上床 小心被其他干员看到\n【堕落损伤】触发时会提高雷蛇身体的敏感度 要刷刻印啥的就趁现在\n损伤最多一天触发一次 睡觉时重置损伤和冷却 当然不一定正常 bug炸了麻烦上dc找我或者git填issue"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:13
-msgid "129"
+msgid "113"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:14
-msgid "179"
+msgid "129"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:15
-msgid "181"
+msgid "179"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:16
-msgid "204"
+msgid "181"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:17
-msgid "220"
+msgid "204"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:18
-msgid "230"
+msgid "220"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:19
-msgid "241"
+msgid "230"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:20
-msgid "245"
+msgid "241"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:21
-msgid "248"
+msgid "245"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:22
-msgid "249"
+msgid "248"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:23
-msgid "263"
+msgid "249"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:24
-msgid "274"
+msgid "263"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:25
-msgid "285"
+msgid "274"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:26
-msgid "290"
+msgid "285"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:27
-msgid "291"
+msgid "290"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:28
-msgid "304"
+msgid "291"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:29
-msgid "308"
+msgid "304"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:30
-msgid "328"
+msgid "308"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:31
-msgid "358"
+msgid "328"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:32
-msgid "365"
+msgid "358"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:33
-msgid "377"
+msgid "365"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:34
-msgid "405"
+msgid "377"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:35
-msgid "469"
+msgid "405"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:36
-msgid "426"
+msgid "469"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:37
-msgid "474"
+msgid "426"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:38
-msgid "1012"
+msgid "474"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:39
-msgid "2013"
+msgid "1012"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:40
-msgid "4027"
+msgid "2013"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:41
+msgid "4027"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:42
 msgid "4091"
 msgstr ""
 
