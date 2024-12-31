@@ -522,6 +522,9 @@ class SeeInstructPanel:
             # 当前类没有开启的指令则过滤
             if not cache.instruct_type_filter[now_type]:
                 continue
+            # 不在H模式中则过滤H指令
+            if not handle_premise.handle_is_h(0) and now_type == constant.InstructType.SEX:
+                continue
             # 需要是注册过的指令类型，或者是系统指令
             if now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
