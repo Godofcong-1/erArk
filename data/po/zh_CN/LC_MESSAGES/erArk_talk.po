@@ -44416,6 +44416,22 @@ msgstr ""
 msgid "{Name}给{TargetName}喂下了一次性利尿剂，促进{TargetName}的身体产生更多的尿液，{TargetName}很快就感觉到了尿意，并且即将抵达自己的极限"
 msgstr ""
 
+#: .\data\talk\sex\diuretics.csv:7
+msgid "{TargetName}在{Name}的指示下服下了一次性利尿剂，微酸的药剂一路刺激着{TargetName}的消化道，{TargetName}能明显感受到膀胱迅速被充满的奇特感受。"
+msgstr ""
+
+#: .\data\talk\sex\diuretics.csv:8
+msgid "{Name}为{TargetName}递上了一杯利尿剂，淡黄的药剂很快通过血管渗透到了{TargetName}的肾脏，快速填满着{TargetName}的膀胱。"
+msgstr ""
+
+#: .\data\talk\sex\diuretics.csv:9
+msgid "{Name}给{TargetName}冲调了一杯淡黄色的利尿剂，{TargetName}毫不犹豫地服下了这微酸的液体，几乎就在同时，异样的胀感在{TargetName}的膀胱中快速扩散。"
+msgstr ""
+
+#: .\data\talk\sex\diuretics.csv:10
+msgid "{Name}把冰凉的利尿剂倒入了{TargetName}的口中，随后帮助{TargetName}吞咽了下去，在药剂的作用下，{TargetName}的身体迅速地调动着身体机能，无视膀胱极限地生产尿液。"
+msgstr ""
+
 #: .\data\talk\sex\double_penetration.csv:6
 msgid "{Name}触发了二穴插入指令的地文"
 msgstr ""
@@ -44424,24 +44440,88 @@ msgstr ""
 msgid "{Name}邀请{TargetName}H失败了，{TargetName}拒绝了{Name}的邀请，并愤怒地质问着{Name}为什么要这样做"
 msgstr ""
 
+#: .\data\talk\sex\do_h_fail.csv:7
+msgid "{TargetName}拒绝了{Name}对自己的渴求，{TargetName}冰冷的表情毫不掩饰地表达了自己的厌恶。"
+msgstr ""
+
+#: .\data\talk\sex\do_h_fail.csv:8
+msgid "{Name}向{TargetName}发起了共度欢愉的邀请，然而{TargetName}并不领情，一把将{Name}伸出的手打到一旁。"
+msgstr ""
+
+#: .\data\talk\sex\do_h_fail.csv:9
+msgid "{Name}将手搭到{TargetName}的腰间，暧昧地请求和{TargetName}进行身体层面的进一步交流，然而这一举动却遭到了{TargetName}的厌恶。"
+msgstr ""
+
+#: .\data\talk\sex\do_h_fail.csv:10
+msgid "{Name}向{TargetName}表达了想要进行肉体缠绵的想法，{TargetName}否决了这一提议，转过脸去不再理睬{Name}。"
+msgstr ""
+
+#: .\data\talk\sex\ears_rub.csv:6
+msgid "{Name}用阴茎蹭着{TargetName}的耳朵，品味着{TargetName}的耳朵的触感"
+msgstr ""
+
 #: .\data\talk\sex\ear_ornament_job.csv:6
 msgid "{Name}的阴茎在{TargetName}的耳饰上摩擦，感受着耳饰与耳朵摩擦阴茎的触感"
 msgstr ""
 
-#: .\data\talk\sex\electric_message_stick.csv:6
+#: .\data\talk\sex\ear_ornament_job.csv:7
+msgid "{Name}利用着{TargetName}耳饰的不规则外表，摩擦着自己肉棒的冠状沟，努力获取着些许病态的快感。"
+msgstr ""
+
+#: .\data\talk\sex\ear_ornament_job.csv:8
+msgid "{TargetName}粗糙的耳饰在{Name}的阴茎上反复留下疼痛的快感，新奇的感受令{Name}不断发出快乐的喘息。"
+msgstr ""
+
+#: .\data\talk\sex\ear_ornament_job.csv:9
+msgid "{Name}滚烫的肉棒在{TargetName}的耳饰和耳朵之间发掘着新鲜的快感，反复变化的触感时刻拨弄着{Name}的快感神经。"
+msgstr ""
+
+#: .\data\talk\sex\ear_ornament_job.csv:10
+msgid "{Name}用自己的肉棒一下下轻轻敲击着{TargetName}的耳饰，轻微的痛感刺激着{Name}的感官，{TargetName}难以置信的眼神更是将这奇异的快感提升了一个档次。"
+msgstr ""
+
+#: .\data\talk\sex\electric_massage_stick.csv:6
 msgid "{Name}拿着电动按摩棒，刺激着{TargetName}身上的各个敏感部位"
+msgstr ""
+
+#: .\data\talk\sex\electric_massage_stick.csv:7
+msgid "{Name}的电动按摩棒在{TargetName}身体的各个敏感点游走着，为{TargetName}带来来自不同方向的刺激。"
+msgstr ""
+
+#: .\data\talk\sex\electric_massage_stick.csv:8
+msgid "{Name}随机地使用电子按摩棒刺激着{TargetName}的身体各处，无法预测的快感令{TargetName}无法提前做出任何对快感的心理建设。"
+msgstr ""
+
+#: .\data\talk\sex\electric_massage_stick.csv:9
+msgid "{Name}握住电动按摩棒刁钻地按压着{TargetName}试图藏起来的身体敏感部位，高频的震动逐渐升高了{TargetName}的体温。"
+msgstr ""
+
+#: .\data\talk\sex\electric_massage_stick.csv:10
+msgid "{Name}拿着电动按摩棒，在{TargetName}的身上探索着敏感点。"
 msgstr ""
 
 #: .\data\talk\sex\end_h.csv:6
 msgid "{Name}结束了和{TargetName}的H，两人感到满足，互相拥抱着休息了一下"
 msgstr ""
 
-#: .\data\talk\sex\enemas.csv:6
-msgid "{Name}触发了灌肠液指令的地文"
+#: .\data\talk\sex\end_h.csv:7
+msgid "{Name}在{TargetName}身上的发泄暂时告一段落，两人依偎着，无言地享受着这片刻宁静。"
 msgstr ""
 
-#: .\data\talk\sex\eras_rub.csv:6
-msgid "{Name}用阴茎蹭着{TargetName}的耳朵，品味着{TargetName}的耳朵的触感"
+#: .\data\talk\sex\end_h.csv:8
+msgid "{Name}和{TargetName}欲望均已消解，{TargetName}在{Name}怀里享受着{Name}温柔的爱抚。"
+msgstr ""
+
+#: .\data\talk\sex\end_h.csv:9
+msgid "{Name}满足地将{TargetName}拥入怀中，手掌在{TargetName}的发间一次次滑过，安抚着{TargetName}尚存余韵的精神。"
+msgstr ""
+
+#: .\data\talk\sex\end_h.csv:10
+msgid "激烈的性爱告一段落，{TargetName}伏在{Name}胸口微微喘息着，任由{Name}整理着自己在先前运动中乱掉了的头发。"
+msgstr ""
+
+#: .\data\talk\sex\enemas.csv:6
+msgid "{Name}触发了灌肠液指令的地文"
 msgstr ""
 
 #: .\data\talk\sex\external_womb_massage.csv:6

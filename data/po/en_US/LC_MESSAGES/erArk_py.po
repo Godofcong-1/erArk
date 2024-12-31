@@ -8083,91 +8083,97 @@ msgstr ""
 "\n"
 
 msgid "当前已装备数量/最大可装备数量：{0}/{1}\n"
-msgstr "Equipped/Maxiumu: {0}/{1}\n"
+msgstr "Equipped/Maximum: {0}/{1}\n"
 
 msgid "老天师"
-msgstr ""
+msgstr "Oid Tianshi"
 
 msgid "魔王"
-msgstr ""
+msgstr "Civilight Eterna"
 
 msgid "菈玛莲"
-msgstr ""
+msgstr "Laqeramaline"
 
 msgid "塔露拉"
-msgstr ""
+msgstr "Talulah"
 
 msgid "莉泽洛特"
-msgstr ""
+msgstr "Lieselotte"
 
 msgid "希尔德加德"
-msgstr ""
+msgstr "Hildegard"
 
 msgid "坎黛拉"
-msgstr ""
+msgstr "Candela"
 
 msgid "克丽斯腾"
-msgstr ""
+msgstr "Kristen"
 
 msgid "爱布拉娜"
-msgstr ""
+msgstr "Eblana"
 
 msgid "温德米尔"
-msgstr ""
+msgstr "Windermere"
 
 msgid "赫拉提娅"
-msgstr ""
+msgstr "Heratia"
 
 msgid "文月"
-msgstr ""
+msgstr "Fumizuki"
 
 msgid "年"
-msgstr ""
+msgstr "Nian"
 
 msgid "夕"
-msgstr ""
+msgstr "Dusk"
 
 msgid "令"
-msgstr ""
+msgstr "Ling"
 
 msgid "黍"
-msgstr ""
+msgstr "Shu"
 
 msgid "深靛"
-msgstr ""
+msgstr "Indigo"
 
 msgid "+全刻印总修正("
-msgstr ""
+msgstr "+ Engraving("
 
 msgid "+性好奇(+30)"
-msgstr ""
+msgstr "+ Sexual Curiosity(+30)"
 
 msgid "+性冷漠(-30)"
-msgstr ""
+msgstr "+ Sexual Indifference(-30)"
 
 msgid "+性无知(+30)"
-msgstr ""
+msgstr "+ Sexual Ignorance (+30)"
 
 msgid ""
 "\n"
 "\n"
 " 是否要用阴茎夺走{0}的初吻？"
 msgstr ""
+"\n"
+"\n"
+" Do you want to take away first kiss of {0} with penis?"
 
 msgid ""
 "\n"
 "  ●你拿出了一次性万能钥匙，悄悄打开了门\n"
 "\n"
 msgstr ""
+"\n"
+"  ●You used disposable key, and opened the door silently\n"
+"\n"
 
 msgid "心控-苦痛快感化"
-msgstr ""
+msgstr "Mind Control - Pain to Pleasure"
 
 msgid "搬运对方"
-msgstr ""
+msgstr "Move target"
 
 msgid "停止搬运对方"
-msgstr ""
+msgstr "Stops moving target"
 
 msgid "对方在时停中获得自由_未实装"
 msgstr ""
@@ -8179,7 +8185,7 @@ msgid "角色特殊指令_特殊调用"
 msgstr ""
 
 msgid "身体检查与管理"
-msgstr ""
+msgstr "Body check and management"
 
 msgid "邀请多P_未实装"
 msgstr ""
@@ -8188,67 +8194,73 @@ msgid ""
 "\n"
 "场景内有角色处于疲劳状态，无法进行多P\n"
 msgstr ""
+"\n"
+"There are characters tired, unable to perform group sex\n"
 
 msgid ""
 "\n"
 "进入多P模式\n"
 msgstr ""
+"\n"
+"Enter group sex\n"
 
 msgid ""
 "\n"
 "进入多P模式失败\n"
 msgstr ""
+"\n"
+"Failed to enter group sex\n"
 
 msgid "下五子棋"
-msgstr ""
+msgstr "Backgammon"
 
 msgid "体外子宫按摩"
-msgstr ""
+msgstr "External womb massage"
 
 msgid "诱惑对方_未实装"
 msgstr ""
 
 msgid "帽子交"
-msgstr ""
+msgstr "Hatjob"
 
 msgid "眼镜交"
-msgstr ""
+msgstr "Glassjob"
 
 msgid "耳饰交"
-msgstr ""
+msgstr "Earringjob"
 
 msgid "脖饰交"
-msgstr ""
+msgstr "Shawljob"
 
 msgid "口罩交"
-msgstr ""
+msgstr "Maskjob"
 
 msgid "上衣交"
-msgstr ""
+msgstr "Shirtjob"
 
 msgid "胸衣交"
-msgstr ""
+msgstr "Brajob"
 
 msgid "手套交"
-msgstr ""
+msgstr "Glovejob"
 
 msgid "裙子交"
-msgstr ""
+msgstr "Dressjob"
 
 msgid "裤子交"
-msgstr ""
+msgstr "Pantjob"
 
 msgid "内裤交"
-msgstr ""
+msgstr "Underwearjob"
 
 msgid "袜子交"
-msgstr ""
+msgstr "Sockjob"
 
 msgid "鞋子交"
-msgstr ""
+msgstr "Shoejob"
 
 msgid "武器交"
-msgstr ""
+msgstr "Weaponjob"
 
 msgid "绳子_未实装"
 msgstr ""
@@ -8269,86 +8281,93 @@ msgid "打屁股_未实装"
 msgstr ""
 
 msgid "在无觉刻印的影响下，{0}的欲望提升至6级\n"
-msgstr ""
+msgstr "Under the influence of Unconscious Engraving, {0}'s Desire increased to Lv6\n"
 
 msgid "在无觉刻印的影响下，{0}的欲望提升至7级\n"
-msgstr ""
+msgstr "Under the influence of Unconscious Engraving, {0}'s Desire increased to Lv7\n"
 
 msgid "在无觉刻印的影响下，{0}的欲望提升至8级\n"
-msgstr ""
+msgstr "Under the influence of Unconscious Engraving, {0}'s Desire increased to Lv8\n"
 
 msgid "没有穿胸罩的乳房"
-msgstr ""
+msgstr "Breasts without bra"
 
 msgid "没有穿裙子的胯部"
-msgstr ""
+msgstr "Crotch without dress"
 
 msgid "没有穿内裤的阴部"
-msgstr ""
+msgstr "Vulva without underwear"
 
 msgid "没有穿袜子的双腿"
-msgstr ""
+msgstr "Legs without socks"
 
 msgid "在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}"
-msgstr ""
+msgstr "After intense sex, {0}'s Stamina limit +{1}, Energy limit+{2}"
 
 msgid "，精液量上限增加了{0}"
-msgstr ""
+msgstr ", Semen limit +{0}"
 
 msgid ""
 "{0}在{1}中获胜，获得了{2}粉红凭证\n"
 "\n"
 msgstr ""
+"{0} won in {1}, and gained {2} Pink Certificates\n"
+"\n"
 
 msgid "{0}打算去调教室\n"
-msgstr ""
+msgstr "{0} want to go to Humiliation Room\n"
 
 msgid ""
 " \n"
 "  测试不通过，错误信息为：\n"
 "  "
 msgstr ""
+" \n"
+"  Test failed, message: \n"
+"  "
 
 msgid "请输入您要使用的模型名（不含引号、逗号或空格）：\n"
-msgstr ""
+msgstr "Please enter model name (not including quotations, commas and spaces): \n"
 
 msgid "  *目前仅支持gpt和gemini模型，未包含在示例中的更多模型名请在官方文档中查阅\n"
-msgstr ""
+msgstr "  *Only support gpt and gemini, for not included models please read at official files\n"
 
 msgid "  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n"
-msgstr ""
+msgstr "  gpt model examples: gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n"
 
 msgid "  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash\n"
-msgstr ""
+msgstr "  gemini model examples: gemini-1.5-pro, gemini-1.5-flash\n"
 
 msgid "请输入您要使用的api的base_url（不含引号、逗号或空格）：\n"
-msgstr ""
+msgstr "Please enter api's base_url (not including quotations, commas and spaces): \n"
 
 msgid "  目前仅支持openAI\n"
-msgstr ""
+msgstr "  only support openAI\n"
 
 msgid "  示例：http://my.test.server.example.com:8083/v1\n"
-msgstr ""
+msgstr "  example: http://my.test.server.example.com:8083/v1\n"
 
 msgid "请输入您要使用的代理ip（不含引号、逗号或空格）：\n"
-msgstr ""
+msgstr "Please enter proxy ip (not including quotations, commas and spaces): \n"
 
 msgid "  示例：http://my.test.proxy.example.com\n"
-msgstr ""
+msgstr "  example: http://my.test.proxy.example.com\n"
 
 msgid "请输入您要使用的代理端口，不使用端口则随便输入数字后回车即可：\n"
-msgstr ""
+msgstr "Please enter proxy port, or enter random numbers if no port: \n"
 
 msgid "  示例：0.0.0.0\n"
-msgstr ""
+msgstr "  example: 0.0.0.0.\n"
 
 msgid ""
 " \n"
 "  未识别到gpt或gemini字符，将默认为openAI格式的模型\n"
 msgstr ""
+" \n"
+"  No gpt or gemini character recognized, default as openAI model\n"
 
 msgid "连接超时"
-msgstr ""
+msgstr "Timed out"
 
 msgid ""
 "！！！特别注意事项！！！\n"
@@ -8369,57 +8388,71 @@ msgid ""
 "\n"
 "招募成功\n"
 msgstr ""
+"\n"
+"Recruited successfully\n"
 
 msgid ""
 "\n"
 "已招募过\n"
 msgstr ""
+"\n"
+"Already recruited\n"
 
 msgid ""
 "\n"
 "获得了一辆新的载具：{0}\n"
 msgstr ""
+"\n"
+"Obtained a new vehicle: {0}\n"
 
 msgid "当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n"
-msgstr ""
+msgstr "Current speed (slowest of all vehicles, can reduce commission time): {0}\n"
 
 msgid "当前设施等级：{0}，提升设施等级可解锁更多道具"
-msgstr ""
+msgstr "Current facility level: {0}, upgrading unlocks more items"
 
 msgid "基础"
-msgstr ""
+msgstr "Base"
 
 msgid ""
 "\n"
 "{0}的催眠深度未达到{1}%，无法进入{2}催眠状态，需要切换更低的催眠模式或加深催眠程度\n"
 msgstr ""
+"\n"
+"{0}'s Hypnosis depth hasn't reached {1}%, unable to enter {2}, need to swap to lower Hypnosis or increase the Depth\n"
 
 msgid "○当前催眠对象：{0}，催眠深度：{1}%\n"
-msgstr ""
+msgstr "○Hypnosis target: {0}, Hypnosis Depth: {1}%\n"
 
 msgid ""
 "\n"
 "要做什么呢？\n"
 msgstr ""
+"\n"
+"What to do? \n"
 
 msgid "[001]检查{0}的身体情况"
-msgstr ""
+msgstr "[001] Check {0}'s body condition"
 
 msgid "[001]检查身体情况（当前没有查看对象）\n"
-msgstr ""
+msgstr "[001] Check body condition (no target currently)\n"
 
 msgid "[002]对{0}进行身体管理"
-msgstr ""
+msgstr "[002] Do body management on {0}"
 
 msgid ""
 "\n"
 "[002]进行身体管理（当前没有管理对象）"
 msgstr ""
+"\n"
+"[002] Do body management (no target currently)"
 
 msgid ""
 "\n"
 "[002]进行身体管理（需要先进行身体检查）"
 msgstr ""
+"\n"
+"[002] Do body management (checking required)"
 
 msgid "[003]调整体检日程(未实装)"
 msgstr ""
@@ -8429,357 +8462,387 @@ msgid ""
 "请选择要对{0}进行的身体检查：\n"
 "\n"
 msgstr ""
+"\n"
+"Please select body check programme for {0}: \n"
+"\n"
 
 msgid ""
 "\n"
 "请选择要对{0}进行的身体管理（管理的条件中达成任意一项即可）：\n"
 "\n"
 msgstr ""
+"\n"
+"Please select body management for {0}: \n"
+"\n"
 
 msgid "被要求"
-msgstr ""
+msgstr "Requested"
 
 msgid "内裤收藏数量{0}/{1}"
-msgstr ""
+msgstr "Underwears collected {0}/{1}"
 
 msgid "袜子收藏数量{0}/{1}"
-msgstr ""
+msgstr "Socks collected {0}/{1}"
 
 msgid "露出能力等级{0}/{1}"
-msgstr ""
+msgstr "Exposure Lv{0}/{1}"
 
 msgid "被睡姦经验{0}/{1}"
-msgstr ""
+msgstr "Sleep Raped EXP {0}/{1}"
 
 msgid "Ｂ感觉等级{0}/{1}"
-msgstr ""
+msgstr "B Feel Lv{0}/{1}"
 
 msgid "Ｃ感觉等级{0}/{1}"
-msgstr ""
+msgstr "C Feel Lv{0}/{1}"
 
 msgid "Ｖ感觉等级{0}/{1}"
-msgstr ""
+msgstr "V Feel Lv{0}/{1}"
 
 msgid "Ａ感觉等级{0}/{1}"
-msgstr ""
+msgstr "A Feel Lv{0}/{1}"
 
 msgid "V与W总被射入精液{0}ml/{1}ml"
-msgstr ""
+msgstr "V and W total semen ejaculated {0}/{1}ml"
 
 msgid "自慰经验{0}/{1}"
-msgstr ""
+msgstr "Masturbation EXP {0}/{1}"
 
 msgid " 或 攻略进度{0}/{1}"
-msgstr ""
+msgstr " or Relationship {0}/{1}"
 
 msgid " 或 催眠程度{0}%/{1}%"
-msgstr ""
+msgstr " or Hypnosis Depth {0}/{1}%"
 
 msgid " 需要非处女"
-msgstr ""
+msgstr " need not Virgin"
 
 msgid " 需要非A处女"
-msgstr ""
+msgstr " need not A Virgin"
 
 msgid " 需要未选择[禁止自慰]"
-msgstr ""
+msgstr " need not selected [No masturbation]"
 
 msgid " 需要未选择[每天晚上睡前都要自慰]"
-msgstr ""
+msgstr " need not selected [Masturbate everytime before sleep]"
 
 msgid " 最多只能选择3项练习项目"
-msgstr ""
+msgstr " up to 3 practices"
 
 msgid "对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n"
-msgstr ""
+msgstr "{0} has been conducted body management of {1}, effective tomorrow.\n"
 
 msgid "因为被要求进行性爱的相关练习，所以{0}的工作被调整为特殊职业-{1}了\n"
-msgstr ""
+msgstr "Due to requested for sexual practices, {0}'s occupation changed to {1}\n"
 
 msgid "取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n"
-msgstr ""
+msgstr "{0}'s body management of {1} has been cancelled, effective tomorrow.\n"
 
 msgid "因为没有进行性爱的相关练习，所以{0}的特殊职业-{1}被取消了\n"
-msgstr ""
+msgstr "Due to no sexual practices, {0}'s occupation of {1} was cancelled\n"
 
 msgid "[低难度，计算速度快]"
-msgstr ""
+msgstr "[Easy, fast calculation]"
 
 msgid "低难度"
-msgstr ""
+msgstr "Easy"
 
 msgid "[中难度，计算速度中等]"
-msgstr ""
+msgstr "[Medium, normal calculation]"
 
 msgid "中难度"
-msgstr ""
+msgstr "Medium"
 
 msgid "[中难度 - 需要{0}的{1}达到4级]"
-msgstr ""
+msgstr "[Medium - required {0}'s {1} at Lv4]"
 
 msgid "[高难度，计算速度慢]"
-msgstr ""
+msgstr "[Hard, slow calculation]"
 
 msgid "高难度"
-msgstr ""
+msgstr "Hard"
 
 msgid "[高难度 - 需要{0}的{1}达到6级]"
-msgstr ""
+msgstr "[Hard - required {0}'s {1} at Lv6]"
 
 msgid "五子棋"
-msgstr ""
+msgstr "Backgammon"
 
 msgid ""
 "{0} 获胜!\n"
 "\n"
 "\n"
 msgstr ""
+"{0} won!\n"
+"\n"
+"\n"
 
 msgid "[再来一局]"
-msgstr ""
+msgstr "[Another match]"
 
 msgid "再来一局"
-msgstr ""
+msgstr "Another match"
 
 msgid "[结束游戏]"
-msgstr ""
+msgstr "[End game]"
 
 msgid "结束游戏"
-msgstr ""
+msgstr "End game"
 
 msgid "[玩家先手]"
-msgstr ""
+msgstr "[Player first]"
 
 msgid "玩家先手"
-msgstr ""
+msgstr "Player first"
 
 msgid "[AI先手]"
-msgstr ""
+msgstr "[Opponent first]"
 
 msgid "AI先手"
-msgstr ""
+msgstr "Opponent first"
 
 msgid ""
 "\n"
 "{0}思考中...\n"
 msgstr ""
+"\n"
+"{0} is thinking\n"
 
 msgid "(苦痛快感化)"
-msgstr ""
+msgstr "(Pain to Pleasure)"
 
 msgid ""
 "\n"
 "{0}使用了{1}\n"
 "\n"
 msgstr ""
+"\n"
+"{0} used {1}\n"
+"\n"
 
 msgid ""
 "\n"
 "该道具无法直接使用\n"
 "\n"
 msgstr ""
+"\n"
+"This item can't be used directly\n"
+"\n"
 
 msgid ""
 "\n"
 "当前没有交互对象，无法使用{0}\n"
 "\n"
 msgstr ""
+"\n"
+"No target available, unable to use {0}\n"
+"\n"
 
 msgid "{0}的阴茎尺寸增加了，现在是{1}\n"
-msgstr ""
+msgstr "{0}'s penis size enlarged to {1}\n"
 
 msgid "{0}的阴茎尺寸减小了，现在是{1}\n"
-msgstr ""
+msgstr "{0}'s penis size shrinked to {1}\n"
 
 msgid "胸部"
-msgstr ""
+msgstr "Breasts"
 
 msgid "臀部"
-msgstr ""
+msgstr "Butt"
 
 msgid "腿部"
-msgstr ""
+msgstr "Leg"
 
 msgid "足部"
-msgstr ""
+msgstr "Feet"
 
 msgid "外表年龄"
-msgstr ""
+msgstr "Age"
 
 msgid "{0}已经有【泌乳】了，无法再获得【泌乳】\n"
-msgstr ""
+msgstr "{0} already have [Lactation]\n"
 
 msgid "{0}获得了【泌乳】\n"
-msgstr ""
+msgstr "{0} acquired [Lactation]\n"
 
 msgid "{0}没有【泌乳】，无法失去【泌乳】\n"
-msgstr ""
+msgstr "{0} doesn't have [Lactation]\n"
 
 msgid "{0}失去了【泌乳】\n"
-msgstr ""
+msgstr "{0} lost [Lactation]\n"
 
 msgid "变大了"
-msgstr ""
+msgstr "enlarged"
 
 msgid "变小了"
-msgstr ""
+msgstr "shrinked"
 
 msgid "{0}的{1}{2}，现在是【{3}】\n"
-msgstr ""
+msgstr "{0}'s {1} {2} to [{3}] \n"
 
 msgid "○对{0}使用\n"
-msgstr ""
+msgstr "○Use at {0}\n"
 
 msgid "+性无知(+100)"
-msgstr ""
+msgstr "+ Sexual Ignorance(+100)"
 
 msgid "+监禁中(+9999)"
-msgstr ""
+msgstr "+ Imprisoned(+9999)"
 
 msgid "+睡眠(+9999)"
-msgstr ""
+msgstr "+ Sleeping(+9999)"
 
 msgid ""
 "\n"
 "在充足的睡眠下，今日未消耗的 {0}ml 精液转化为了 {1}ml 次日额外精液"
 msgstr ""
+"\n"
+"Under sufficient sleep, remaining {0}ml semen becomes {1}ml temporary semen"
 
 msgid ""
 "\n"
 "{0}来进行早安问候了\n"
 msgstr ""
+"\n"
+"{0} came for morning greeting\n"
 
 msgid ""
 "\n"
 "{0}来进行晚安问候了\n"
 msgstr ""
+"\n"
+"{0} came for night greeting\n"
 
 msgid "[011]查看检查报告"
-msgstr ""
+msgstr "[011] Check report"
 
 msgid ""
 "\n"
 "[011]查看检查报告（需要先进行身体检查）"
 msgstr ""
+"\n"
+"[011] Check report (checking required)"
 
 msgid "缺陷"
-msgstr ""
+msgstr "Flawed"
 
 msgid "标准"
-msgstr ""
+msgstr "Standard"
 
 msgid "优良"
-msgstr ""
+msgstr "Excellent"
 
 msgid "卓越"
-msgstr ""
+msgstr "Outstanding"
 
 msgid "【基础敏感强度】"
-msgstr ""
+msgstr " [Base sensitivity]"
 
 msgid "【扩张耐受】"
-msgstr ""
+msgstr " [Dilute tolerance]"
 
 msgid "【SM耐受】"
-msgstr ""
+msgstr " [SM tolerance]"
 
 msgid "【受孕适应性】"
-msgstr ""
+msgstr " [Pregnancy adaptability]"
 
 msgid "【催眠程度】"
-msgstr ""
+msgstr " [Hypnosis depth]"
 
 msgid "【性器】"
-msgstr ""
+msgstr " [Sexual organs]"
 
 msgid "【特殊体质】"
-msgstr ""
+msgstr " [Special physique]"
 
 msgid "【初吻】"
-msgstr ""
+msgstr " [First kiss]"
 
 msgid "【处女】"
-msgstr ""
+msgstr " [Virginity]"
 
 msgid "【肛门处女】"
-msgstr ""
+msgstr " [Anal virginity]"
 
 msgid "【舌部机动】"
-msgstr ""
+msgstr " [Tongue flexibility]"
 
 msgid "【胸部敏感】"
-msgstr ""
+msgstr " [Breast sensitivity]"
 
 msgid "【乳压强度】"
-msgstr ""
+msgstr " [Breast pressure]"
 
 msgid "【阴蒂敏感】"
-msgstr ""
+msgstr " [Clitoris sensitivity]"
 
 msgid "【手部机动】"
-msgstr ""
+msgstr " [Hand flexibility]"
 
 msgid "【足部机动】"
-msgstr ""
+msgstr " [Feet flexibility]"
 
 msgid "【阴道敏感】"
-msgstr ""
+msgstr " [Vagina sensitivity]"
 
 msgid "【子宫敏感】"
-msgstr ""
+msgstr " [Womb sensitivity]"
 
 msgid "【阴道技巧】"
-msgstr ""
+msgstr " [Vagina technique]"
 
 msgid "【肛门敏感】"
-msgstr ""
+msgstr " [Anus sensitivity]"
 
 msgid "【肛门技巧】"
-msgstr ""
+msgstr " [Anus technique]"
 
 msgid "【尿道敏感】"
-msgstr ""
+msgstr " [Urethra sensitivity]"
 
 msgid "【尾部机动】"
-msgstr ""
+msgstr " [Tail flexibility]"
 
 msgid "【触手机动】"
-msgstr ""
+msgstr " [Tentacle flexibility]"
 
 msgid "基础档案：\n"
-msgstr ""
+msgstr "Basic file: \n"
 
 msgid " 【代号】"
-msgstr ""
+msgstr "  [Codename]"
 
 msgid " 【性别】"
-msgstr ""
+msgstr "  [Gender]"
 
 msgid " 【出身地】"
-msgstr ""
+msgstr "  [Birthplace]"
 
 msgid " 【种族】"
-msgstr ""
+msgstr "  [Race]"
 
 msgid " 【矿石病感染情况】\n"
-msgstr ""
+msgstr "  [Infection status]\n"
 
 msgid "  参照医学检测报告，确认为感染者。\n"
-msgstr ""
+msgstr "  Medical reports confirmed her as infected.\n"
 
 msgid "  参照医学检测报告，确认为非感染者。\n"
-msgstr ""
+msgstr "  Medical reports confirmed her as not infected.\n"
 
 msgid ""
 "\n"
 "综合体检测试：\n"
 msgstr ""
+"\n"
+"Overall body check:\n"
 
 msgid "当前受精概率{0}%"
-msgstr ""
+msgstr "Fertilization rate {0}%"
 
 msgid " 已经生育了{0}个孩子，分别是：{1}"
-msgstr ""
+msgstr " gave birth to {0} children, which is: {1}"
 
 msgid "{0}（{1}%）\n"
 msgstr ""
@@ -8788,41 +8851,45 @@ msgid "{0}%\n"
 msgstr ""
 
 msgid "保有初吻"
-msgstr ""
+msgstr "First kiss kept"
 
 msgid "于{kiss_time}在{kiss_palce}，向{character_name}博士"
-msgstr ""
+msgstr "On {kiss_time}, at {kiss_palce}, to Dr.{character_name}"
 
 msgid "献上了初吻"
-msgstr ""
+msgstr "she gave her first kiss"
 
 msgid "保有处女"
-msgstr ""
+msgstr "Virginity kept"
 
 msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了处女"
-msgstr ""
+msgstr "On {time}, at {palce}, Dr.{character_name} used {posture} and took her virginity"
 
 msgid "保有后庭处女"
-msgstr ""
+msgstr "Anal virginity kept"
 
 msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女"
-msgstr ""
+msgstr "On {time}, at {palce}, Dr.{character_name} used {posture} and took her A virginity"
 
 msgid ""
 "\n"
 "检查人：Dr.{0}\n"
 msgstr ""
+"\n"
+"Checker: Dr.{0}\n"
 
 msgid "检查日期：{0}\n"
-msgstr ""
+msgstr "Check date: {0}\n"
 
 msgid ""
 " 当前设定的早安服务时间为：{0} ，睡到早安服务时间预计为 {1} 小时左右\n"
 "\n"
 msgstr ""
+" Morning service time set: {0}, {1} hours of sleep estimated for service time\n"
+"\n"
 
 msgid " 当前决定的睡眠时间为：{0} 小时（默认睡到早安服务时间）"
-msgstr ""
+msgstr " currently decided sleep time: {0} hours (default until morning service)"
 
 msgid "{0}:{1}"
 msgstr ""
@@ -8831,184 +8898,202 @@ msgid ""
 "\n"
 "系统设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"System has updated, please manually edit if needed\n"
 
 msgid "  当前有干员已招募，等待确认\n"
-msgstr ""
+msgstr "  Operators recruited, waiting for confirming\n"
 
 msgid "  当前有干员正在体检科等待体检\n"
-msgstr ""
+msgstr "  Operators waiting for body check\n"
 
 msgid "群交"
-msgstr ""
+msgstr "Group sex"
 
 msgid "放入正常食物"
-msgstr ""
+msgstr "Put normal food"
 
 msgid "邀请群交"
-msgstr ""
+msgstr "Invite for group sex"
 
 msgid ""
 "\n"
 "进入群交模式\n"
 msgstr ""
+"\n"
+"Enter group sex\n"
 
 msgid ""
 "\n"
 "进入群交模式失败\n"
 msgstr ""
+"\n"
+"Failed to enter group sex\n"
 
 msgid "{0}拒绝了群交\n"
-msgstr ""
+msgstr "{0} rejected group sex\n"
 
 msgid "结束群交"
-msgstr ""
+msgstr "End group sex"
 
 msgid ""
 "\n"
 "结束群交模式\n"
 msgstr ""
+"\n"
+"End group sex\n"
 
 msgid "进行一次当前群交"
-msgstr ""
+msgstr "Do current sex"
 
 msgid "进行一次轮流群交"
-msgstr ""
+msgstr "Do turn-based sex"
 
 msgid "编辑群交行动"
-msgstr ""
+msgstr "Edit group sex actions"
 
 msgid "加入侍奉"
-msgstr ""
+msgstr "Join serving"
 
 msgid "侍奉"
-msgstr ""
+msgstr "Serve"
 
 msgid ""
 "\n"
 "{0}获得了【{1}】\n"
 msgstr ""
+"\n"
+"{0} acquired [{1}]\n"
 
 msgid "{0}决定加入其中\n"
-msgstr ""
+msgstr "{0} decided to join\n"
 
 msgid "{0}还不懂这是什么意义，被你随口糊弄走了\n"
-msgstr ""
+msgstr "{0} doesn't know what was happening, and you tricked her away\n"
 
 msgid "{0}红着脸跑走了\n"
-msgstr ""
+msgstr "{0} ran away blushed\n"
 
 msgid ""
 "\n"
 "满足条件，确定要现在获得该素质吗（也可以在过夜时自动获得）\n"
 msgstr ""
+"\n"
+"Condition fulfilled, do you want to grant the talent now (or automatically grant after night)\n"
 
 msgid ""
 "\n"
 "○本周抽签选中了{0}作为{1}的助理\n"
 msgstr ""
+"\n"
+"○{0} was drawn as {1}'s assistant this week\n"
 
 msgid "你需要将一段文本翻译为"
-msgstr ""
+msgstr "You need to translate the text as"
 
 msgid "语言。如果文本中有有\\{\\}括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本："
-msgstr ""
+msgstr "language. if there is \\{\\} characters, please keep them, and keep the newline characters. The text for translation is:"
 
 msgid "  [语言翻译]： "
-msgstr ""
+msgstr "  [Translator]: "
 
 msgid " [未开启] "
-msgstr ""
+msgstr " [Disabled]"
 
 msgid " [仅翻译地文] "
-msgstr ""
+msgstr " [Only general dialogues]"
 
 msgid " [翻译地文和口上] "
-msgstr ""
+msgstr "  [Translate all dialogues]"
 
 msgid ""
 " \n"
 "  本选项用于设置是否开启语言翻译功能\n"
 msgstr ""
+" \n"
+"  Option used to enable translation\n"
 
 msgid "  开启后，游戏中的文本将会被翻译成您设置的语言-[{0}]\n"
-msgstr ""
+msgstr "  on enabling, the dialogues in game will be translated to [{0}]\n"
 
 msgid "  [已脱下]:"
-msgstr ""
+msgstr "  [Taken off]:"
 
 msgid "必定忍住"
-msgstr ""
+msgstr "Guaranteed"
 
 msgid "高"
-msgstr ""
+msgstr "High"
 
 msgid "中"
-msgstr ""
+msgstr "Medium"
 
 msgid "低"
-msgstr ""
+msgstr "Low"
 
 msgid "要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n"
-msgstr ""
+msgstr "You're about to ejaculate, do you want to hold it ({0} times held, current chance {1})\n"
 
 msgid "[忍住]"
-msgstr ""
+msgstr "[Hold it]"
 
 msgid "忍住"
-msgstr ""
+msgstr "Hold it"
 
 msgid "[射出]"
-msgstr ""
+msgstr "[Burst it]"
 
 msgid "射出"
-msgstr ""
+msgstr "Burst it"
 
 msgid ""
 "\n"
 "{0}忍住了射精\n"
 msgstr ""
+"\n"
+"{0} held an ejaculation\n"
 
 msgid "选择射精对象"
-msgstr ""
+msgstr "Choose target"
 
 msgid "选择射精部位"
-msgstr ""
+msgstr "Choose part"
 
 msgid "{0}开始将身上没有调味的食物放进食堂取餐区里\n"
-msgstr ""
+msgstr "{0} put unmodified food to canteen\n"
 
 msgid "{0}身上没有正常调味的食物\n"
-msgstr ""
+msgstr "{0} doesn't have unmodified food\n"
 
 msgid "{0}已放入食堂\n"
-msgstr ""
+msgstr "{0} was put into canteen\n"
 
 msgid "嘴"
-msgstr ""
+msgstr "Mouth"
 
 msgid "左手"
-msgstr ""
+msgstr "Left hand"
 
 msgid "右手"
-msgstr ""
+msgstr "Right hand"
 
 msgid "阴茎"
-msgstr ""
+msgstr "Penis"
 
 msgid "肛门"
-msgstr ""
+msgstr "Anus"
 
 msgid "插入"
-msgstr ""
+msgstr "Insert"
 
 msgid "口"
-msgstr ""
+msgstr "Oral"
 
 msgid "手"
-msgstr ""
+msgstr "Hand"
 
 msgid "肛"
-msgstr ""
+msgstr "Anus"
 
 msgid "V"
 msgstr ""
@@ -9029,174 +9114,188 @@ msgid "{0}-{1}-{2} "
 msgstr ""
 
 msgid "一起"
-msgstr ""
+msgstr "Together"
 
 msgid "阴茎正在被{0}{1} "
-msgstr ""
+msgstr "{0} was {1} on penis"
 
 msgid "当前群交状态：\n"
-msgstr ""
+msgstr "Current group sex state: \n"
 
 msgid "○群交时同一角色无法同时占用多个部位\n"
-msgstr ""
+msgstr "○Same character can't occupy multiple parts\n"
 
 msgid ""
 "○插入和侍奉只能二选一，插入为单人，侍奉可最多四人\n"
 "\n"
 msgstr ""
+"○Can only either inserting or serving, inserting is one-by-one while serving can afford 4 people\n"
+"\n"
 
 msgid "阴茎（插入）"
-msgstr ""
+msgstr "Penis (insert)"
 
 msgid "未选择角色"
-msgstr ""
+msgstr "Not selected Operator"
 
 msgid "未选择指令"
-msgstr ""
+msgstr "Not selected command"
 
 msgid "阴茎（侍奉）"
-msgstr ""
+msgstr "Penis (serve)"
 
 msgid "轮流用副模板：在当前状态之外新增一套副模板，可在两套模板之间切换，或者使用轮流群交指令，可轮流进行一次双模板中的群交指令\n"
-msgstr ""
+msgstr "Turn-based panel: Swap between panels or take turns\n"
 
 msgid "未启用"
-msgstr ""
+msgstr "Disabled"
 
 msgid "已启用"
-msgstr ""
+msgstr "Enabled"
 
 msgid "轮流用副模板"
-msgstr ""
+msgstr "Turn-based panel"
 
 msgid "切换模板"
-msgstr ""
+msgstr "Switch panel"
 
 msgid "切换"
-msgstr ""
+msgstr "Switch"
 
 msgid "锁定群交模板：锁定后使用指令时不会再自动调整状态，仅可在当前编辑面板中修改\n"
-msgstr ""
+msgstr "Locked panel: No automatic changes will be done on statuses, and can only be edited on this panel\n"
 
 msgid "已锁定"
-msgstr ""
+msgstr "Locked"
 
 msgid "未锁定"
-msgstr ""
+msgstr "Unlocked"
 
 msgid "锁定群交模板"
-msgstr ""
+msgstr "Lock panel"
 
 msgid "调整干员行动：没有在上述位置中的干员会\n"
-msgstr ""
+msgstr "Change Operator's action: Operators not on position will\n"
 
 msgid "无行动"
-msgstr ""
+msgstr "Do nothing"
 
 msgid "自慰"
-msgstr ""
+msgstr "Masturbate"
 
 msgid "优先补空位，无空位则自慰"
-msgstr ""
+msgstr "Fill in empty spots, else masturbate"
 
 msgid "随机抢占替换当前位置，无位则自慰"
-msgstr ""
+msgstr "Randomly capture spots, else masturbate"
 
 msgid "调整干员行动"
-msgstr ""
+msgstr "Change Operator's actions"
 
 msgid "邀请其他干员：邀请不在场的干员来这里参加群交，只能邀请实行值足够同意的\n"
-msgstr ""
+msgstr "Invite others: Invite Operators not here, but only when enough Execution Value\n"
 
 msgid "邀请"
-msgstr ""
+msgstr "Invite"
 
 msgid "邀请其他干员"
-msgstr ""
+msgstr "Invite others"
 
 msgid ""
 "当前可邀请的干员有：\n"
 "\n"
 msgstr ""
+"Available Operators: \n"
+"\n"
 
 msgid ""
 "\n"
 "已取消对{0}的群交邀请，{0}不会来这里参加群交了\n"
 msgstr ""
+"\n"
+"Cancelled invitation for {0}, {0} won't come here\n"
 
 msgid ""
 "\n"
 "已邀请{0}来这里参加群交\n"
 msgstr ""
+"\n"
+"Invited {0} for group sex\n"
 
 msgid "食物名字: {food_name}\n"
-msgstr ""
+msgstr "Food name: {food_name}\n"
 
 msgid "[确认]"
-msgstr ""
+msgstr "[Confirm]"
 
 msgid "确认"
-msgstr ""
+msgstr "Confirm"
 
 msgid "取消"
-msgstr ""
+msgstr "Cancel"
 
 msgid "[001]检查身体情况（今日已体检）"
-msgstr ""
+msgstr "[001] Check body condition (already checked)"
 
 msgid "[001]检查身体情况（当前没有查看对象）"
-msgstr ""
+msgstr "[001] Check body condition (no target)"
 
 msgid "[003]调整体检日程"
-msgstr ""
+msgstr "[003] Change schedule for checking"
 
 msgid ""
 "\n"
 "可以进行的检查项目/已进行的检查项目：{0}/{1}（每级医术技能+4）\n"
 msgstr ""
+"\n"
+"Available/Conducted: {0}/{1} (Medical Skill * 4 = available attempts) \n"
 
 msgid ""
 "请选择要对{0}进行的身体检查：\n"
 "\n"
 msgstr ""
+"Please choose body check for {0}: \n"
+"\n"
 
 msgid "(已检查)"
-msgstr ""
+msgstr "(Checked)"
 
 msgid "调整体检日程"
-msgstr ""
+msgstr "Change schedule for checking"
 
 msgid "[调整干员名单]({0}人)"
-msgstr ""
+msgstr "[Change Operator list]({0} people)"
 
 msgid "[调整体检日]({0}天)"
-msgstr ""
+msgstr "[Change check day]({0} days)"
 
 msgid " 【性交经验】"
-msgstr ""
+msgstr "  [Sex experience]"
 
 msgid "次\n"
-msgstr ""
+msgstr "times\n"
 
 msgid " 【无意识性交经验】"
-msgstr ""
+msgstr "  [Unconscious sex experience]"
 
 msgid ""
 "\n"
 "性爱履历：\n"
 msgstr ""
+"\n"
+"Sex resume: \n"
 
 msgid "请选择体检日期：\n"
-msgstr ""
+msgstr "Please select check date: \n"
 
 msgid "(已选择)"
-msgstr ""
+msgstr "(selected)"
 
 msgid "[010]干员的口上信息"
-msgstr ""
+msgstr "[010] Operators' dialogues"
 
 msgid "已禁止干员列表"
-msgstr ""
+msgstr "Banned Operator list"
 
 msgid ""
 "\n"
@@ -9204,3 +9303,7 @@ msgid ""
 "{0}干员已离岛\n"
 "\n"
 msgstr ""
+"\n"
+"\n"
+"{0} left Rhodes Island\n"
+"\n"
