@@ -213,13 +213,16 @@ def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str
     return create_food("", recipe_id, cook_level, maker)
 
 
-def init_food_shop_data(update_restaurant_id: int = -2):
+def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = False):
     """
     初始化食物商店内的食物数据\n
     Keyword arguments:\n
     update_restaurant_id -- 餐馆id，默认为-2，如果不是-2则仅刷新对应id的餐馆的食物\n
+    new_day_flag -- 是否为新的一天，默认为False\n
     """
-    cache.rhodes_island.dining_hall_data = {}
+    # 如果是新的一天则清空食物数据
+    if new_day_flag:
+        cache.rhodes_island.dining_hall_data = {}
     max_people = len(cache.npc_id_got)
     # 初始化食堂内的食物
     if update_restaurant_id in [-1,-2]:
@@ -238,8 +241,8 @@ def init_food_shop_data(update_restaurant_id: int = -2):
             # 跳过非主食的菜谱
             if recipes.type != 0:
                 continue
-            # 随机3~7的烹饪技能等级
-            cook_level = random.randint(3, 7)
+            # 随机1~5的烹饪技能等级
+            cook_level = random.randint(1, 5)
             new_food = cook(food_list, recipes_id, cook_level, "")
             cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
             cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
@@ -274,22 +277,23 @@ def init_food_shop_data(update_restaurant_id: int = -2):
             cook_index += 1
             if cook_index >= max_people:
                 break
-    # 初始化地摊小贩的食物
-    cook_index = 0
-    cache.rhodes_island.stall_vendor_data[0] = {}
-    while 1:
-        food_list = {}
-        # 选择零食和饮料类型的食谱
-        recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].type in [1, 2]]
-        recipes_id = random.choice(recipes_id_list)
-        recipes = cache.recipe_data[recipes_id]
-        cook_level = random.randint(2, 8)
-        new_food = cook(food_list, recipes_id, cook_level, "")
-        cache.rhodes_island.stall_vendor_data[0].setdefault(str(recipes_id), {})
-        cache.rhodes_island.stall_vendor_data[0][str(recipes_id)][new_food.uid] = new_food
-        cook_index += 1
-        if cook_index >= max_people or cook_index >= 10:
-            break
+    # 如果是新的一天则初始化地摊小贩的食物
+    if new_day_flag:
+        cook_index = 0
+        cache.rhodes_island.stall_vendor_data[0] = {}
+        while 1:
+            food_list = {}
+            # 选择零食和饮料类型的食谱
+            recipes_id_list = [ x for x in game_config.config_recipes if game_config.config_recipes[x].type in [1, 2]]
+            recipes_id = random.choice(recipes_id_list)
+            recipes = cache.recipe_data[recipes_id]
+            cook_level = random.randint(1, 8)
+            new_food = cook(food_list, recipes_id, cook_level, "")
+            cache.rhodes_island.stall_vendor_data[0].setdefault(str(recipes_id), {})
+            cache.rhodes_island.stall_vendor_data[0][str(recipes_id)][new_food.uid] = new_food
+            cook_index += 1
+            if cook_index >= max_people or cook_index >= 10:
+                break
 
 def init_makefood_data():
     """初始化做饭区内的食物数据"""

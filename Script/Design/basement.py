@@ -6,7 +6,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise_place, attr_calculation, handle_premise
+from Script.Design import handle_premise_place, attr_calculation, handle_premise, cooking
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -261,6 +261,8 @@ def update_base_resouce_newday():
     settle_pink_certificate()
     # 结算体检
     physical_check_and_manage.settle_health_check()
+    # 刷新食堂食物
+    cooking.init_food_shop_data(new_day_flag=True)
 
 def update_work_people():
     """

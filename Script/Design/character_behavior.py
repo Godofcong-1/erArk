@@ -20,7 +20,6 @@ from Script.Design import (
     event,
     handle_npc_ai,
     map_handle,
-    cooking,
     attr_calculation,
     pregnancy,
     handle_talent,
@@ -85,28 +84,6 @@ def init_character_behavior():
         # 结束循环
         if len(cache.over_behavior_character) >= len(id_list) + 1:
             break
-
-
-def update_cafeteria():
-    """刷新食堂内食物"""
-    max_people = len(cache.npc_id_got)
-    # food_judge = 1
-    food_count = 0
-    for food_type in cache.rhodes_island.dining_hall_data:
-        food_list: Dict[UUID, game_type.Food] = cache.rhodes_island.dining_hall_data[food_type]
-        food_count += len(food_list)
-    #     for food_id in food_list:
-    #         food: game_type.Food = food_list[food_id]
-    #         # if food.eat:
-    #             # food_judge = 0
-    #         food_judge = 0
-    #         break
-    #     if not food_judge:
-    #         break
-    # if food_judge:
-    # 食物数量不足且当前时间在饭点时，刷新食物
-    if food_count <= max_people * 3 and handle_premise.handle_eat_time(0):
-        cooking.init_food_shop_data()
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):
@@ -597,7 +574,6 @@ def update_new_day():
 
     # 非角色部分
     basement.update_base_resouce_newday() # 更新基地资源
-    cooking.init_food_shop_data() # 初始化餐厅数据
     navigation_panel.judge_arrive() # 判断是否到达目的地
     # 每周一次
     if cache.game_time.weekday() == 6:

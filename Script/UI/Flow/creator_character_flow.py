@@ -69,7 +69,7 @@ def game_start():
     character_handle.init_character_facility_open()
     character_handle.handle_character_setting()
     cooking.init_recipes()
-    cooking.init_food_shop_data()
+    cooking.init_food_shop_data(new_day_flag=True)
     cache.system_setting = attr_calculation.get_system_setting_zero()
     cache.country = attr_calculation.get_country_reset(cache.country)
     basement.get_base_updata()
