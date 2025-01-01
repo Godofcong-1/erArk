@@ -495,6 +495,9 @@ sanity_point_ge_50,SANITY_POINT_GE_50,属性_基础,理智值≥50
 desire_point_ge_80,DESIRE_POINT_GE_80,属性_基础,欲望值≥80
 desire_point_l_80,DESIRE_POINT_L_80,属性_基础,欲望值<80
 desire_point_ge_100,DESIRE_POINT_GE_100,属性_基础,欲望值≥100
+t_desire_point_ge_80,TARGET_DESIRE_POINT_GE_80,属性_基础,交互对象欲望值≥80
+t_desire_point_l_80,TARGET_DESIRE_POINT_L_80,属性_基础,交互对象欲望值<80
+t_desire_point_ge_100,TARGET_DESIRE_POINT_GE_100,属性_基础,交互对象欲望值≥100
 
 favorability_le_2,FAVORABILITY_LE_2,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于2（1000点）
 favorability_ge_3,FAVORABILITY_GE_3,属性_好感与信赖,指令双方中NPC方对玩家的好感等级小于等于3（2500点）
@@ -1320,6 +1323,10 @@ pl_semen_ge_50,PL_SEMEN_GE_50,H_射精,玩家当前精液量大于等于50ml
 pl_semen_ge_100,PL_SEMEN_GE_100,H_射精,玩家当前精液量大于等于100ml
 pl_just_shoot,PL_JUST_SHOOT,H_射精,玩家前指令射精了
 pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精,玩家前指令未射精
+pl_eja_point_low,PL_EJA_POINT_LOW,H_射精,玩家当前射精欲低
+pl_eja_point_middle,PL_EJA_POINT_MIDDLE,H_射精,玩家当前射精欲中
+pl_eja_point_high,PL_EJA_POINT_HIGH,H_射精,玩家当前射精欲高
+pl_eja_point_extreme,PL_EJA_POINT_EXTREME,H_射精,玩家当前射精欲极
 
 t_turn_orgasm_0,T_TURN_ORGASM_0,H_绝顶,交互对象本次H中还没有绝顶
 t_turn_orgasm_g_1,T_TURN_ORGASM_G_1,H_绝顶,交互对象本次H中绝顶次数>1

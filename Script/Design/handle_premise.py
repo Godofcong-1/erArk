@@ -11326,6 +11326,66 @@ def handle_pl_not_just_shoot(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.PL_EJA_POINT_LOW)
+def handle_pl_eja_point_low(character_id: int) -> int:
+    """
+    玩家当前射精欲低
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.eja_point <= 300:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_EJA_POINT_MIDDLE)
+def handle_pl_eja_point_middle(character_id: int) -> int:
+    """
+    玩家当前射精欲中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.eja_point <= 600:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_EJA_POINT_HIGH)
+def handle_pl_eja_point_high(character_id: int) -> int:
+    """
+    玩家当前射精欲高
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.eja_point <= 900:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_EJA_POINT_EXTREME)
+def handle_pl_eja_point_extreme(character_id: int) -> int:
+    """
+    玩家当前射精欲极
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.eja_point > 900:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_ORGASM_EDGE)
 def handle_self_orgasm_edge(character_id: int) -> int:
     """
@@ -13947,6 +14007,45 @@ def handle_desire_point_ge_100(character_id: int) -> int:
         return character_data.desire_point * 2
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_DESIRE_POINT_GE_80)
+def handle_t_desire_point_ge_80(character_id: int) -> int:
+    """
+    交互对象欲望值≥80
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_desire_point_ge_80(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_DESIRE_POINT_L_80)
+def handle_t_desire_point_l_80(character_id: int) -> int:
+    """
+    交互对象欲望值<80
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_desire_point_l_80(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_DESIRE_POINT_GE_100)
+def handle_t_desire_point_ge_100(character_id: int) -> int:
+    """
+    交互对象欲望值≥100
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_desire_point_ge_100(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.SLEEP_LEVEL_0)
