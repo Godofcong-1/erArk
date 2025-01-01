@@ -313,9 +313,10 @@ def get_character_cookable_recipes(character_id: int = 0, weight_flag = False) -
         # 难度高于烹饪技能的菜谱直接跳过
         if character_data.ability[43] < recipe.difficulty:
             continue
-        # 根据权重输出列表
+        # 根据权重输出列表，最大权重为8，最小权重为1
         if weight_flag:
             weight_num = min(recipe.difficulty, 8)
+            weight_num = max(weight_num, 1)
             cookable_recipes_list.extend([recipe_id] * weight_num)
         # 直接输出列表
         else:
