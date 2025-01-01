@@ -112,10 +112,13 @@ def judge_character_tired_sleep(character_id : int):
         # 玩家只进行HP1的疲劳判定
         if character_data.hit_point <= 1:
             # 绘制文本
+            draw_text = character_data.name + _("太累了")
+            if character_data.sp_flag.is_h:
+                draw_text = _("，无法继续H")
+            draw_text += "\n"
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
-            draw_text = _("太累了，无法继续H\n")
-            now_draw.text = character_data.name + draw_text
+            now_draw.text = draw_text
             now_draw.draw()
             # 数据处理
             character_data.sp_flag.tired = False
