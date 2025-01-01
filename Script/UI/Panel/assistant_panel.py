@@ -20,7 +20,8 @@ window_width: int = normal_config.config_normal.text_width
 def chose_assistant():
     """选择助理"""
 
-    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, 80, 8, window_width, 1, 1, 0)
+    SHOW_NPC_NUMS = 80
+    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, SHOW_NPC_NUMS, 8, window_width, 1, 1, 0)
 
     while 1:
 
@@ -49,13 +50,20 @@ def chose_assistant():
         handle_panel.draw()
         return_list = []
         return_list.extend(handle_panel.return_list)
+        # 大于等于显示角色数的最后两个是页面按钮
+        if len(handle_panel.return_list) == SHOW_NPC_NUMS + 2:
+            page_return_list = handle_panel.return_list[-2:]
+        elif len(handle_panel.return_list) == SHOW_NPC_NUMS + 1:
+            page_return_list = handle_panel.return_list[-1:]
+        else:
+            page_return_list = []
         line_feed.draw()
         back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
         back_draw.draw()
         line_feed.draw()
         return_list.append(back_draw.return_text)
         yrn = flow_handle.askfor_all(return_list)
-        if yrn in return_list:
+        if yrn in return_list and yrn not in page_return_list:
             break
 
 
