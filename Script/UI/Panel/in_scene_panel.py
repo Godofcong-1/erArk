@@ -54,6 +54,9 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
         premise_judge = True
         if instruct_id in constant.instruct_premise_data:
             for premise in constant.instruct_premise_data[instruct_id]:
+                # 忽略子类时（即非主界面），NPC逆推模式下则忽略NPC逆推的相关前提
+                if use_type_filter_flag == False and handle_premise.handle_t_npc_active_h(0) and premise == 't_npc_not_active_h':
+                    continue
                 if premise in now_premise_data:
                     if now_premise_data[premise]:
                         continue

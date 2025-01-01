@@ -845,7 +845,7 @@ def evaluate_npc_body_part_prefs(character_id: int) -> int:
         now_exp = character_data.experience[experience_id]
         part_weight[part_id] += now_exp
 
-    # 能力等级权重为20
+    # 能力等级权重为10
     for ability_id in game_config.config_ability:
         # 去掉非部位的能力
         if ability_id >= 13:
@@ -856,7 +856,7 @@ def evaluate_npc_body_part_prefs(character_id: int) -> int:
         else:
             part_id = ability_id - 5
         now_ability = character_data.ability[ability_id]
-        part_weight[part_id] += now_ability * 20
+        part_weight[part_id] += now_ability * 10
 
     # 在最后将阴茎的权重置为0
     part_weight[3] = 0
@@ -919,6 +919,22 @@ def npc_active_h():
         if part_id == 7 and target_character_data.talent[3] and _("破处") in status_tag_list:
             continue
 
+        # 跳过非当前部位
+        if part_id == 0 and "N" not in status_tag_list:
+            continue
+        elif part_id == 1 and "B" not in status_tag_list:
+            continue
+        elif part_id == 2 and "C" not in status_tag_list:
+            continue
+        elif part_id == 4 and "V" not in status_tag_list:
+            continue
+        elif part_id == 5 and "A" not in status_tag_list:
+            continue
+        elif part_id == 6 and "U" not in status_tag_list:
+            continue
+        elif part_id == 7 and "W" not in status_tag_list:
+            continue
+
         # 跳过不满足前提的
         if status_id in constant.state_id_to_instruct_id:
             # 获取指令id
@@ -930,20 +946,7 @@ def npc_active_h():
                 continue
 
         # 开始加入列表中
-        if part_id == 0 and "N" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 1 and "B" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 2 and "C" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 4 and "V" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 5 and "A" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 6 and "U" in status_tag_list:
-            all_stastus_list.append(status_id)
-        elif part_id == 7 and "W" in status_tag_list:
-            all_stastus_list.append(status_id)
+        all_stastus_list.append(status_id)
 
     # 如果没有符合条件的状态，则返回
     if len(all_stastus_list) == 0:
