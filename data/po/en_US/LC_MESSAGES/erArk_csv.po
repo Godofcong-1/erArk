@@ -5429,7 +5429,7 @@ msgid "指挥作战"
 msgstr "Commanding"
 
 msgid "外勤委托"
-msgstr "Listening to commissions"
+msgstr "Field commissions"
 
 msgid "上学"
 msgstr "Studying"
@@ -5441,7 +5441,7 @@ msgid "制造产品"
 msgstr "Producing"
 
 msgid "种植与养护作物"
-msgstr "Planting crops"
+msgstr "Plant crops"
 
 msgid "早安问候：叫起床"
 msgstr "Morning greeting: Waking up"
@@ -17993,44 +17993,45 @@ msgid "浅灰色罗德岛制式轻型盾牌"
 msgstr "Light gray Rhodes Island made lightshield"
 
 msgid "是否使用本功能"
-msgstr ""
+msgstr "Should the function be enabled"
 
 msgid "总开关"
-msgstr ""
+msgstr "Main switch"
 
 msgid "根据指令类型的全年龄与R18的切换开关"
-msgstr ""
+msgstr "Switch for command type"
 
 msgid ""
 "仅生成全年龄的指令会极大的减少使用风险，对R18的指令也进行生成的话，如果没有足够好的破限预设提示词，可能会导致模型提供商的警告或停止服务等制裁措施"
 msgstr ""
+"Generating for SFW commands only can greatly reduce usage risk, and if NSFW commands are generated without correct prompts, warnings and prohibition on using the service may apply"
 
 msgid "仅生成全年龄的指令的文本|对包含R18类型在内的所有指令都进行生成"
-msgstr ""
+msgstr "Only generate text for SFW commands|Generate for both SFW and NSFW commands"
 
 msgid "当原文本是在什么情况下才进行AI生成"
-msgstr ""
+msgstr "When to generate"
 
 msgid "本功能只会在触发地文（即通用文本）的时候进行生成，如果触发的是角色专属的口上的话则不会进行生成"
-msgstr ""
+msgstr "Only generate general dialogues, and won't generate if said character have their specific dialogues"
 
 msgid "仅当文本为\"触发了XXX的地文\"时进行生成|对所有地文都进行生成"
-msgstr ""
+msgstr "When text \"triggered dialogue of XXX\"|Generate for all general dialogues"
 
 msgid "在生成文本后是否不显示原文本"
-msgstr ""
+msgstr "Do original text be shown"
 
 msgid "如果只想看到AI生成的文本的话可以设为是，如果在意原文本的话可以选否"
-msgstr ""
+msgstr "Enable if only want to see AI generated text"
 
 msgid "否，仍然显示原文本|是，将不显示原文本"
-msgstr ""
+msgstr "No, show original|Yes, original text won't be shown"
 
 msgid "AI模型的选择"
-msgstr ""
+msgstr "AI model's selection"
 
 msgid "不同的模型有不同的价格和性能，具体的差别请查阅官网的说明"
-msgstr ""
+msgstr "Different model have different price and functionalities"
 
 msgid ""
 "GPT-3.5 Turbo|GPT-4|GPT-4-turbo|GPT-4o|GPT-4o "
@@ -18038,63 +18039,65 @@ msgid ""
 msgstr ""
 
 msgid "将哪些数据作为提示信息发送给AI进行辅助生成"
-msgstr ""
+msgstr "What to hand to AI"
 
 msgid ""
 "发送的数据越多，AI能够获取的信息越多，生成的效果会越好，但是花费也越高，也有可能因为发送的数据过多，AI抓不到重点，生成的质量下降。且中量和大量数据中发送的数据也会包含非全年龄的数据，有一定风险。"
 msgstr ""
+"The more the data, the better the effect, but the higher the cost and may reduce quality if overinforming. It may also have risks as the data contain NSFW contents."
 
 msgid "少量数据：仅好感、信赖、攻略程度、地点、基础状态（即<>里的那些）|中量数据：小数据+角色详细状态+角色人物卡|大量数据：能发的都发过去"
-msgstr ""
+msgstr "Less data: Only those listed near name|Normal: Include status and talents|Large data: Send whatever available"
 
 msgid "将生成的内容自动保存为口上文件"
-msgstr ""
+msgstr "Save as file"
 
 msgid ""
 "选是的话，会在data/talk/ai的目录下生成ai_talk.csv的文件，将ai生成的条目转化为符合游戏口上文本的格式，然后加到文件中并保存"
 msgstr ""
+"If enabled, ai_talk.csv will be created under data/talk/ai, and save the generated content as format for game dialogues"
 
 msgid "是否输出正在进行文本生成的提示"
-msgstr ""
+msgstr "Do reminder needed"
 
 msgid "选是的话，会在开始生成前输出一句提示信息"
-msgstr ""
+msgstr "If enabled, a reminder will be sent before generating"
 
 msgid "是|否"
-msgstr ""
+msgstr "Yes|No"
 
 msgid "要生成多少句文本"
-msgstr ""
+msgstr "How much needed"
 
 msgid "生成的文本越多，描述的就越详细，但是花费会越高，也可能会生成出更多和主题无关的内容"
-msgstr ""
+msgstr "The more the text, the more detailed the text, but the higher the cost and more unrelated content may be generated"
 
 msgid "1|2|3|4|5|6|7|8|9|10"
 msgstr ""
 
 msgid "是否使用自定义base url"
-msgstr ""
+msgstr "Was custom base url used"
 
 msgid "用于调整api请求目标的base url，默认为否"
-msgstr ""
+msgstr "To arrange base url for api, default as no"
 
 msgid "是否使用自定义代理"
-msgstr ""
+msgstr "Was custom proxy used"
 
 msgid "用于代理服务器的相关设置，默认为否"
-msgstr ""
+msgstr "To set about server proxy, default as no"
 
 msgid "将gemini的传输协议改为rest"
-msgstr ""
+msgstr "Change protocol of gemini to rest"
 
 msgid "有些网路环境下不支持高于HTTP/1.1的协议，可切换为rest方式进行传输"
-msgstr ""
+msgstr "Some internet environment may not support protocol above HTTP/1.1, can swap to rest for transferring"
 
 msgid "浓郁的气味让人头晕眼花，失重的眩晕感袭来，天地倒转，意识陷入深渊。今日催眠进度的增长速度+5倍"
-msgstr ""
+msgstr "Concentrated smell makes people fainting and unconscious. Today's Hypnosis Depth increase speed increased by 5 times"
 
 msgid "五子棋"
-msgstr ""
+msgstr "Backgammon"
 
 msgid "純屬意外？"
 msgstr ""
@@ -18131,258 +18134,272 @@ msgid "嘿嘿，這玩意可以穩定懸浮於低空，加上火箭推進後速�
 msgstr ""
 
 msgid "服装交经验"
-msgstr ""
+msgstr "Cloth Sex EXP"
 
 msgid "催眠姦经验"
-msgstr ""
+msgstr "Hypnosis Rape EXP"
 
 msgid "被催眠姦经验"
-msgstr ""
+msgstr "Hypnotized Rape EXP"
 
 msgid "宿舍开放至6区全部，干员最大人数提升至346人"
-msgstr ""
+msgstr "Dormitory open to the whole Zone 6, maximum number of Operators increases to 346"
 
 msgid "宿舍开放至9区全部，干员最大人数提升至424人"
-msgstr ""
+msgstr "Dormitory open to the whole Zone 9, maximum number of Operators increases to 424"
 
 msgid "开放新设施：【体检科】，可收治患者数量提升至200人"
-msgstr ""
+msgstr "Opens new facility: [Body Check Department], maximum number of admissible patients increases to 200"
 
 msgid "开放新功能：【招募病人干员】（未实装），可收治患者数量提升至500人"
-msgstr ""
+msgstr "Opens new function: [Recruit patient Operator] (not implemented), maximum number of admissible patients increases to 500"
 
 msgid "宿舍514房"
-msgstr ""
+msgstr "Room 514"
 
 msgid "宿舍515房"
-msgstr ""
+msgstr "Room 515"
 
 msgid "宿舍516房"
-msgstr ""
+msgstr "Room 516"
 
 msgid "宿舍517房"
-msgstr ""
+msgstr "Room 517"
 
 msgid "宿舍518房"
-msgstr ""
+msgstr "Room 518"
 
 msgid "宿舍519房"
-msgstr ""
+msgstr "Room 519"
 
 msgid "宿舍520房"
-msgstr ""
+msgstr "Room 520"
 
 msgid "宿舍521房"
-msgstr ""
+msgstr "Room 521"
 
 msgid "宿舍522房"
-msgstr ""
+msgstr "Room 522"
 
 msgid "宿舍523房"
-msgstr ""
+msgstr "Room 523"
 
 msgid "宿舍524房"
-msgstr ""
+msgstr "Room 524"
 
 msgid "宿舍525房"
-msgstr ""
+msgstr "Room 525"
 
 msgid "宿舍526房"
-msgstr ""
+msgstr "Room 526"
 
 msgid "宿舍527房"
-msgstr ""
+msgstr "Room 527"
 
 msgid "宿舍528房"
-msgstr ""
+msgstr "Room 528"
 
 msgid "宿舍529房"
-msgstr ""
+msgstr "Room 529"
 
 msgid "宿舍614房"
-msgstr ""
+msgstr "Room 614"
 
 msgid "宿舍615房"
-msgstr ""
+msgstr "Room 615"
 
 msgid "宿舍616房"
-msgstr ""
+msgstr "Room 616"
 
 msgid "宿舍617房"
-msgstr ""
+msgstr "Room 617"
 
 msgid "宿舍618房"
-msgstr ""
+msgstr "Room 618"
 
 msgid "宿舍619房"
-msgstr ""
+msgstr "Room 619"
 
 msgid "宿舍620房"
-msgstr ""
+msgstr "Room 620"
 
 msgid "宿舍621房"
-msgstr ""
+msgstr "Room 621"
 
 msgid "宿舍622房"
-msgstr ""
+msgstr "Room 622"
 
 msgid "宿舍623房"
-msgstr ""
+msgstr "Room 623"
 
 msgid "宿舍624房"
-msgstr ""
+msgstr "Room 624"
 
 msgid "宿舍625房"
-msgstr ""
+msgstr "Room 625"
 
 msgid "宿舍626房"
-msgstr ""
+msgstr "Room 626"
 
 msgid "宿舍627房"
-msgstr ""
+msgstr "Room 627"
 
 msgid "宿舍628房"
-msgstr ""
+msgstr "Room 628"
 
 msgid "宿舍629房"
-msgstr ""
+msgstr "Room 629"
 
 msgid "初级时停系能力，可以让时间暂时停止，但自己行动范围受限，无法移动到房间以外的地方"
-msgstr ""
+msgstr "Primary timestop-type ability, can stop time temporarily"
 
 msgid "道具"
-msgstr ""
+msgstr "Item"
 
 msgid "药物"
-msgstr ""
+msgstr "Medicines"
 
 msgid "SM"
 msgstr ""
 
 msgid "侍奉"
-msgstr ""
+msgstr "Serving"
 
 msgid "插入"
-msgstr ""
+msgstr "Inserting"
 
 msgid "阴茎增大药"
-msgstr ""
+msgstr "Penis enlarging medicine"
 
 msgid "使用后会让自己的阴茎增大一个级别，越大的阴茎带来的快感越多，但苦痛也会更多"
-msgstr ""
+msgstr "After usage, enlarge own penis; the bigger the size, the more the pleasure and pain"
 
 msgid "阴茎缩小药"
-msgstr ""
+msgstr "Penis shrinking medicine"
 
 msgid "使用后会让自己的阴茎缩小一个级别，越小的阴茎带来的快感越少，但苦痛也会更少"
-msgstr ""
+msgstr "After usage, shrink own penis; the smaller the size, the lesser the pleasure and pain"
 
 msgid "丰胸药"
-msgstr ""
+msgstr "Breast expansion medicine"
 
 msgid "使用后会让对方的胸部增大一个级别"
-msgstr ""
+msgstr "After usage, expands the target's breasts"
 
 msgid "缩胸药"
-msgstr ""
+msgstr "Breast shrinking medicine"
 
 msgid "使用后会让对方的胸部缩小一个级别"
-msgstr ""
+msgstr "After usage, shrinks the target's breasts"
 
 msgid "丰臀药"
-msgstr ""
+msgstr "Butt expansion medicine"
 
 msgid "使用后会让对方的臀部增大一个级别"
-msgstr ""
+msgstr "After usage, expands the target's butt"
 
 msgid "缩臀药"
-msgstr ""
+msgstr "Butt shrinking medicine"
 
 msgid "使用后会让对方的臀部缩小一个级别"
-msgstr ""
+msgstr "After usage, shrinks the target's butt"
 
 msgid "丰腿药"
-msgstr ""
+msgstr "Leg expansion medicine"
 
 msgid "使用后会让对方的腿部变成丰满的肉腿"
-msgstr ""
+msgstr "After usage, transforms the target's leg to plump legs"
 
 msgid "瘦腿药"
-msgstr ""
+msgstr "Leg slimming medicine"
 
 msgid "使用后会让对方的腿部变成纤细的细腿"
-msgstr ""
+msgstr "After usage, transforms the target's leg to thin legs"
 
 msgid "丰足药"
-msgstr ""
+msgstr "Foot expansion medicine"
 
 msgid "使用后会让对方的脚部变成细长的长足"
-msgstr ""
+msgstr "After usage, transforms the target's feet to long feet"
 
 msgid "瘦足药"
-msgstr ""
+msgstr "Foot slimming medicine"
 
 msgid "使用后会让对方的脚部变成小巧的小足"
-msgstr ""
+msgstr "After usage, transforms the target's feet to small feet"
 
 msgid "外表年龄增长药"
-msgstr ""
+msgstr "Age increasing medicine"
 
 msgid "使用后会让对方的外表年龄增长一个级别，最大为【人妻】"
-msgstr ""
+msgstr "After usage, increase the target's age by one stage, up to [Wife]"
 
 msgid "外表年龄减少药"
-msgstr ""
+msgstr "Age decreasing medicine"
 
 msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝莉】"
-msgstr ""
+msgstr "After usage, decrease the target's age by one stage, up to [Wife]"
 
 msgid "泌乳药"
-msgstr ""
+msgstr "Lactation medicine"
 
 msgid "使用后会让对方的乳房开始分泌奶水"
-msgstr ""
+msgstr "After usage, the target's breasts will start to lactate"
 
 msgid "停乳药"
-msgstr ""
+msgstr "Milkblock medicine"
 
 msgid "使用后会让对方的乳房停止分泌奶水"
-msgstr ""
+msgstr "After usage, the target's breasts will stop to lactate"
 
 msgid ""
 "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用\n"
 "除此之外，在H结束后，也会根据本次H中射精/绝顶的次数而获得小幅度的提升"
 msgstr ""
+"[Exercise] in [Fitness Zone] of [Training Room], but be reminded this is not available until base upgrade\\n"
+"Other than that, it also also be slightly increased based on ejaculation/orgasm count"
 
 msgid ""
 "每日多多使用源石技艺，将理智尽量消耗光，会根据消耗的量来缓慢提升理智上限\n"
 "如果想要快速提升的话，可以在[成人商店]中购买理智药剂，在恢复理智的同时，也提升了自己的消耗量，进而提升理智上限"
 msgstr ""
+"Use Originium Arts frequently, and it will increase slowly based on consumption\\n"
+"If wished to increase quickly, purchase Sanity potions in [Adult Items' Shop], giving increased consumption on top of recovery"
 
 msgid ""
 "在【贸易区】的【成人用品商店】，消耗粉红凭证就可以购买对应道具\n"
 "大部分道具购买后即可在H中使用，部分特殊道具（如搾乳机等）需要对应部位已经开发到满足条件才可以使用"
 msgstr ""
+"In Commerce Zone, there's Adult Items' Shop, which you can get certain items by spending Pink Certificates\\n"
+"Most items can be used while H, but certain items (like Milking Machine) requires some part to be at certain stage"
 
 msgid ""
 "①医疗部每天治疗病人，能够获得稳定的龙门币收入\n"
 "②将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润\n"
 "③部分外勤委托会提供丰厚的龙门币奖励"
 msgstr ""
+"① Treating patients in Medical Zone, which have stable LMD income\\n"
+"② Produces medicines or luxuries in Production Zone and sells them on Resource Exchange, which gives higher profit\\n"
+"③ Certain commissions grant great LMD rewards"
 
 msgid ""
 "①每日的干员好感度提升会换算为一定的粉红凭证\n"
 "②已攻略的干员会根据攻略程度每日提供固定的粉红凭证\n"
 "③部分外勤委托会提供粉红凭证作为奖励"
 msgstr ""
+"① The Affinity increase on Operators will be exchanged to certain amount of Pink Certificates\\n"
+"② Operators that have completed relationship will provide Pink Certificates according to the relationship stage\\n"
+"③ Some commissions grant Pink Certificates as reward"
 
 msgid ""
 "①在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励\n"
 "②部分外勤委托会提供至纯源石作为报酬"
 msgstr ""
+"① From Collection Bonus at Collection Hall of Library, which will award Originium Primes\\n"
+"② Some commissions grant Originium Primes as reward"
 
 msgid "外勤委托系统是如何运作的？"
-msgstr ""
+msgstr "How does commission system work?"
 
 msgid ""
 "在基建系统中，是在【机库】的【外勤集合点】来接受外勤委托。\n"
@@ -18392,429 +18409,435 @@ msgid ""
 "可以接受的委托的数量和等级会与【机库】的等级，以及罗德岛现在的所在地有关，部分特殊委托则还需要拥有特定的干员，或者达成了某些特殊条件才能够解锁\n"
 "外勤委托的奖励多种多样，除了能够获得各种资源之外，还包括干员自身的成长、特殊解锁项，甚至能够在任务途中结识新的伙伴，将其吸纳为干员等。"
 msgstr ""
+"In base system, head to [Garage] -> [Gathering Point] to accept commissions.\\n"
+"Commissions require Operators fulfilling conditions, and may need vehicles or special resources for rewards.\\n"
+"Vehicles for commissions can be bought and managed in [Garage] -> [Hangar], with each vehicle having different load limit and effects\\n"
+"Commissions are separated to general commissions and special commissions, with the latter can only be triggered once\\n"
+"The amount and level of commissions acceptable is related to [Garage] level and the current location, with some even need having specific Operator or conditions\\n"
+"The reward from commissions varies, which include Operator's stat growth outside of resources, and may even meet new friends."
 
 msgid "角色特殊指令"
-msgstr ""
+msgstr "Special commands"
 
 msgid "空白示范指令"
-msgstr ""
+msgstr "Empty command"
 
 msgid "博士在桌游中获胜"
-msgstr ""
+msgstr "Doctor won"
 
 msgid "博士在桌游中输了"
-msgstr ""
+msgstr "Doctor lost"
 
 msgid "邀请多P"
-msgstr ""
+msgstr "Invite for group sex"
 
 msgid "结束多P"
-msgstr ""
+msgstr "End group sex"
 
 msgid "邀请多P失败"
-msgstr ""
+msgstr "Invite for group sex failed"
 
 msgid "清洁口交"
-msgstr ""
+msgstr "Cleaning blowjob"
 
 msgid "体外子宫按摩"
-msgstr ""
+msgstr "External womb massage"
 
 msgid "练习吮吸与吞咽力"
-msgstr ""
+msgstr "Practice for sucking and swallowing"
 
 msgid "练习腋下夹持力"
-msgstr ""
+msgstr "Practice for armpit holding"
 
 msgid "练习胸部夹持力"
-msgstr ""
+msgstr "Practice for breast holding"
 
 msgid "练习手部灵活度"
-msgstr ""
+msgstr "Practice for hand flexibility"
 
 msgid "练习足部灵活度"
-msgstr ""
+msgstr "Practice for foot flexibility"
 
 msgid "练习阴道紧致度"
-msgstr ""
+msgstr "Practice for vagina firmness"
 
 msgid "练习肠道紧致度"
-msgstr ""
+msgstr "Practice for intestine firmness"
 
 msgid "练习尾巴灵活度"
-msgstr ""
+msgstr "Practice for tail flexibility"
 
 msgid "练习触手灵活度"
-msgstr ""
+msgstr "Practice for tentacle flexibility"
 
 msgid "帽子交"
-msgstr ""
+msgstr "Hatjob"
 
 msgid "眼镜交"
-msgstr ""
+msgstr "Glassjob"
 
 msgid "耳饰交"
-msgstr ""
+msgstr "Earringjob"
 
 msgid "脖饰交"
-msgstr ""
+msgstr "Shawljob"
 
 msgid "口罩交"
-msgstr ""
+msgstr "Maskjob"
 
 msgid "上衣交"
-msgstr ""
+msgstr "Shirtjob"
 
 msgid "胸衣交"
-msgstr ""
+msgstr "Brajob"
 
 msgid "手套交"
-msgstr ""
+msgstr "Glovejob"
 
 msgid "裙子交"
-msgstr ""
+msgstr "Dressjob"
 
 msgid "内裤交"
-msgstr ""
+msgstr "Underwearjob"
 
 msgid "袜子交"
-msgstr ""
+msgstr "Sockjob"
 
 msgid "鞋子交"
-msgstr ""
+msgstr "Shoejob"
 
 msgid "武器交"
-msgstr ""
+msgstr "Weaponjob"
 
 msgid "裤子交"
-msgstr ""
+msgstr "Pantjob"
 
 msgid "绝顶寸止"
-msgstr ""
+msgstr "Orgasm edge"
 
 msgid "绝顶解放"
-msgstr ""
+msgstr "Orgasm release"
 
 msgid "检查头发"
-msgstr ""
+msgstr "Check hair"
 
 msgid "测试头发柔顺度"
-msgstr ""
+msgstr "Test for hair suppleness"
 
 msgid "检查口腔内部"
-msgstr ""
+msgstr "Check inner oral"
 
 msgid "测试口腔吮吸与吞咽力"
-msgstr ""
+msgstr "Test for sucking and swallowing"
 
 msgid "检查腋下"
-msgstr ""
+msgstr "Check armpits"
 
 msgid "测试腋下夹持力"
-msgstr ""
+msgstr "Test for armpit holding"
 
 msgid "检查胸部"
-msgstr ""
+msgstr "Check breasts"
 
 msgid "检查乳头与乳晕"
-msgstr ""
+msgstr "Check nipples"
 
 msgid "测试胸部夹持力"
-msgstr ""
+msgstr "Test for breast holding"
 
 msgid "检查阴蒂"
-msgstr ""
+msgstr "Check clitoris"
 
 msgid "检查手部"
-msgstr ""
+msgstr "Check hand"
 
 msgid "测试手部灵活度"
-msgstr ""
+msgstr "Test for hand flexibility"
 
 msgid "检查足部"
-msgstr ""
+msgstr "Check feet"
 
 msgid "测试足部灵活度"
-msgstr ""
+msgstr "Test for feet flexibility"
 
 msgid "检查外阴形状"
-msgstr ""
+msgstr "Check vulva shape"
 
 msgid "检查内阴褶皱"
-msgstr ""
+msgstr "Check vagina folds"
 
 msgid "检查处女膜"
-msgstr ""
+msgstr "Check hymen"
 
 msgid "检查子宫口"
-msgstr ""
+msgstr "Check orifice"
 
 msgid "测试阴道紧致度"
-msgstr ""
+msgstr "Test for vagina firmness"
 
 msgid "检查菊穴"
-msgstr ""
+msgstr "Check anus"
 
 msgid "测试肠道紧致度"
-msgstr ""
+msgstr "Check intestine firmness"
 
 msgid "检查尿道"
-msgstr ""
+msgstr "Check urethra"
 
 msgid "测试现场排尿"
-msgstr ""
+msgstr "Test for urination publicly"
 
 msgid "检查尾巴"
-msgstr ""
+msgstr "Check tail"
 
 msgid "测试尾巴灵活度"
-msgstr ""
+msgstr "Test for tail flexibility"
 
 msgid "检查兽角"
-msgstr ""
+msgstr "Check horns"
 
 msgid "检查兽耳"
-msgstr ""
+msgstr "Check ears"
 
 msgid "检查翅膀"
-msgstr ""
+msgstr "Check wings"
 
 msgid "检查光环"
-msgstr ""
+msgstr "Check halo"
 
 msgid "检查触手"
-msgstr ""
+msgstr "Check tentacles"
 
 msgid "测试触手灵活度"
-msgstr ""
+msgstr "Test for tentacle flexibility"
 
 msgid "心控-苦痛快感化"
-msgstr ""
+msgstr "Mind control - Pain to pleasure"
 
 msgid "时间停止流动"
-msgstr ""
+msgstr "Time stopped"
 
 msgid "时间重新流动"
-msgstr ""
+msgstr "Time resumed"
 
 msgid "搬运对方"
-msgstr ""
+msgstr "Move target"
 
 msgid "停止搬运对方"
-msgstr ""
+msgstr "Stops moving target"
 
 msgid "对方在时停中获得自由"
-msgstr ""
+msgstr "Target was free during timestop"
 
 msgid "对方在时停中再次停止"
-msgstr ""
+msgstr "Target was halted during timestop"
 
 msgid "结算N超强绝顶"
-msgstr ""
+msgstr "Settling N super orgasm"
 
 msgid "结算B超强绝顶"
-msgstr ""
+msgstr "Settling B super orgasm"
 
 msgid "结算C超强绝顶"
-msgstr ""
+msgstr "Settling C super orgasm"
 
 msgid "结算V超强绝顶"
-msgstr ""
+msgstr "Settling V super orgasm"
 
 msgid "结算A超强绝顶"
-msgstr ""
+msgstr "Settling A super orgasm"
 
 msgid "结算U超强绝顶"
-msgstr ""
+msgstr "Settling U super orgasm"
 
 msgid "结算W超强绝顶"
-msgstr ""
+msgstr "Settling W super orgasm"
 
 msgid "结算帽子交中"
-msgstr ""
+msgstr "Settling hatjob"
 
 msgid "结算眼镜交中"
-msgstr ""
+msgstr "Settling glassjob"
 
 msgid "结算耳饰交中"
-msgstr ""
+msgstr "Settling earringjob"
 
 msgid "结算脖饰交中"
-msgstr ""
+msgstr "Settling shawljob"
 
 msgid "结算口罩交中"
-msgstr ""
+msgstr "Settling maskjob"
 
 msgid "结算上衣交中"
-msgstr ""
+msgstr "Settling shirtjob"
 
 msgid "结算胸衣交中"
-msgstr ""
+msgstr "Settling brajob"
 
 msgid "结算手套交中"
-msgstr ""
+msgstr "Settling glovejob"
 
 msgid "结算裙子交中"
-msgstr ""
+msgstr "Settling dressjob"
 
 msgid "结算内裤交中"
-msgstr ""
+msgstr "Settling underwearjob"
 
 msgid "结算袜子交中"
-msgstr ""
+msgstr "Settling sockjob"
 
 msgid "结算鞋子交中"
-msgstr ""
+msgstr "Settling shoejob"
 
 msgid "结算武器交中"
-msgstr ""
+msgstr "Settling weaponjob"
 
 msgid "结算裤子交中"
-msgstr ""
+msgstr "Settling pantjob"
 
 msgid "结算N绝顶被寸止"
-msgstr ""
+msgstr "Settling N orgasm edged"
 
 msgid "结算B绝顶被寸止"
-msgstr ""
+msgstr "Settling B orgasm edged"
 
 msgid "结算C绝顶被寸止"
-msgstr ""
+msgstr "Settling C orgasm edged"
 
 msgid "结算射精被寸止"
-msgstr ""
+msgstr "Settling ejaculation edged"
 
 msgid "结算V绝顶被寸止"
-msgstr ""
+msgstr "Settling V orgasm edged"
 
 msgid "结算A绝顶被寸止"
-msgstr ""
+msgstr "Settling A orgasm edged"
 
 msgid "结算U绝顶被寸止"
-msgstr ""
+msgstr "Settling U orgasm edged"
 
 msgid "结算W绝顶被寸止"
-msgstr ""
+msgstr "Settling W orgasm edged"
 
 msgid "被要求每天上交内裤"
-msgstr ""
+msgstr "Requested to submit underwear everyday"
 
 msgid "被要求每天上交袜子"
-msgstr ""
+msgstr "Requested to submit socks everyday"
 
 msgid "被要求以后不再穿胸衣"
-msgstr ""
+msgstr "Requested to not wear bra"
 
 msgid "被要求以后睡觉时不穿衣服裸睡"
-msgstr ""
+msgstr "Requested to sleep naked"
 
 msgid "在每日招呼时上交今天的内裤"
-msgstr ""
+msgstr "Submit underwear on greeting"
 
 msgid "在每日招呼时上交今天的袜子"
-msgstr ""
+msgstr "Submit socks on greeting"
 
 msgid "被要求白天时戴着乳头夹"
-msgstr ""
+msgstr "Requested to wear nipple clamps in morning"
 
 msgid "被要求白天时戴着阴蒂夹"
-msgstr ""
+msgstr "Requested to wear clitoral clamp in morning"
 
 msgid "被要求白天时V里插着振动棒"
-msgstr ""
+msgstr "Requested to insert V vibrator in morning"
 
 msgid "被要求白天时A里插着振动棒"
-msgstr ""
+msgstr "Requested to insert A vibrator in morning"
 
 msgid "被要求睡觉时戴着乳头夹"
-msgstr ""
+msgstr "Requested to wear nipple clamps while sleeping"
 
 msgid "被要求睡觉时戴着阴蒂夹"
-msgstr ""
+msgstr "Requested to wear clitoral clamp while sleeping"
 
 msgid "被要求睡觉时V里插着振动棒"
-msgstr ""
+msgstr "Requested to insert V vibrator while sleeping"
 
 msgid "被要求睡觉时A里插着振动棒"
-msgstr ""
+msgstr "Requested to insert A vibrator while sleeping"
 
 msgid "被要求洗澡时不再清洗阴道内的精液"
-msgstr ""
+msgstr "Requested to not wash away semen in vagina"
 
 msgid "被要求每天晚上睡前都要自慰"
-msgstr ""
+msgstr "Requested to masturbate before sleep"
 
 msgid "被要求禁止自慰"
-msgstr ""
+msgstr "Requested to not masturbate"
 
 msgid "被要求进行吮吸与吞咽力练习"
-msgstr ""
+msgstr "Requested to practice sucking and swallowing"
 
 msgid "被要求进行腋下夹持力练习"
-msgstr ""
+msgstr "Requested to practice armpit holding"
 
 msgid "被要求进行胸部夹持力练习"
-msgstr ""
+msgstr "Requested to practice breast holding"
 
 msgid "被要求进行手部灵活度练习"
-msgstr ""
+msgstr "Requested to practice hand flexibility"
 
 msgid "被要求进行足部灵活度练习"
-msgstr ""
+msgstr "Requested to practice feet flexibility"
 
 msgid "被要求进行阴道紧致度练习"
-msgstr ""
+msgstr "Requested to practice vagina firmness"
 
 msgid "被要求进行肠道紧致度练习"
-msgstr ""
+msgstr "Requested to practice intestine firmness"
 
 msgid "被要求进行尾巴灵活度练习"
-msgstr ""
+msgstr "Requested to practice tail flexibility"
 
 msgid "被要求进行触手灵活度练习"
-msgstr ""
+msgstr "Requested to practice tentacle flexibility"
 
 msgid "无意识妊娠"
-msgstr ""
+msgstr "Unconscious Pregnancy"
 
 msgid "从未在有意识下被中出过，仅在无意识H下被中出到怀孕，因此不知道孩子是怎么来的"
-msgstr ""
+msgstr "Never been creampied when conscious, and only been creampied at unconscious H, hence she doesn't know where does the baby come from"
 
 msgid "翅膀"
-msgstr ""
+msgstr "Wings"
 
 msgid "H指令加值，部分H指令不需判定直接通过"
-msgstr ""
+msgstr "H command have increased Execution Value, with some ignoring the requirements"
 
 msgid "包括正负面在内的全体状态上升难"
-msgstr ""
+msgstr "All statuses, including positive and negative, increase slower"
 
 msgid "先导上升易，施虐效果上升"
-msgstr ""
+msgstr "Guidance increases faster, Sadism effect increases"
 
 msgid "苦痛上升易，受虐效果上升"
-msgstr ""
+msgstr "Pain increases faster, Masochism effect increases"
 
 msgid "中级时停系能力，可以让时间暂时停止，且自己可以随意移动"
-msgstr ""
+msgstr "Secondary timestop-type ability, can stop time while keeping free movement"
 
 msgid "高级时停系能力，可以让时间暂时停止，且可以选择性地让某些人或物不受影响（实装中）"
 msgstr ""
 
 msgid "【博士房间】：博士醒来后会逐渐变得困倦，很困的时候会限制可以用的指令，需要回这里[睡觉]"
-msgstr ""
+msgstr " [Doctor's Room] : Doctor will get fatigued gradually, which will limit commands available, and need to return here to [Sleep]"
 
 msgid "【博士办公室】：博士进行办公的主要场所，通过在这里[处理公务]，可以有效提升整个罗德岛各部门的运行效率"
-msgstr ""
+msgstr " [Doctor's Office] : Main spot for working, doing [Work] here can increase efficiency of Rhodes Island"
 
 msgid "【指挥室】：可以在这里使用[导航]，消耗燃料，使罗德岛前往其他地点"
-msgstr ""
+msgstr " [Command Room] : [Navigate] can be used here to head to other location at cost of Oil"
 
 msgid "【博士办公室】：在这里使用[管理罗德岛]指令可以一览整个罗德岛的情况，并且对各部门进行管理"
-msgstr ""
+msgstr " [Doctor's Office] : Using [Manage Rhodes Island] can observe and manage the departments"
 
 msgid "【基建部】：可以在这里的[基建系统]中消耗资源来兴建新的设施、或者升级已有的设施"
-msgstr ""
+msgstr " [Base Building Department] : Using [Base system] can build or upgrade facilities with resources"
 
 msgid "【鲁特拉】：梅尔可以给博士提供一台咪波，并对其进行进行[咪波改装]，并进行功能的升级（未实装）"
 msgstr ""
@@ -18823,7 +18846,7 @@ msgid "【铁匠铺】：火神会在这里[维修装备]，帮助外勤的干�
 msgstr ""
 
 msgid "【机房】：罗德岛的服务器和网络设备都在这里，可以在这里登录核心系统[普瑞赛斯]，获取很多有用的信息"
-msgstr ""
+msgstr " [Garage] : Most of Rhodes Island's server and online devices are here, and the core system [Priestess] is also here"
 
 msgid "【生物工程部】：温蒂平常会在这里进行[生物工程]的研究，帮助博士或者干员们进行基因改造（未实装）"
 msgstr ""
@@ -18835,164 +18858,165 @@ msgid "【舍管房】：在指定了当层的舍管之后，可以在这里进�
 msgstr ""
 
 msgid "【取餐区】：早上7~8点、中午12~13点、晚上17~18点是饭点，取餐区会在此时供应免费饭菜，可以到这里[购买食物]"
-msgstr ""
+msgstr " [Meal Taking Zone] : Meal time at 0700-0800, 1200-1300, 1700-1800, where free meals will be provided here via [Purchase food]"
 
 msgid "【多媒体室】：小型电影院，可以和电影兴趣小组的干员一起[看电影]"
-msgstr ""
+msgstr " [Multimedia Room] : A small cinema to [Watch movies] with Operators"
 
 msgid "【现代音乐排练室】：可以和喜欢流行乐的干员一起[唱歌]和[演奏乐器]"
-msgstr ""
+msgstr " [Modern Music Rehearsal Room] : Can [Sing] and [Play instruments] with Operators"
 
 msgid "【夕照区音乐室】：可以和喜欢古典乐的干员一起[唱歌]和[演奏乐器]"
-msgstr ""
+msgstr " [Afterglow-styled Music Room] : Can [Sing] and [Play instruments] with Operators"
 
 msgid "【棋牌室】：可以和喜欢棋牌的干员一起[下棋]、[打麻将]、[打牌]"
-msgstr ""
+msgstr " [Chess Room] : Can [Play chess], [Play mahjong] or [Play cards] with Operators"
 
 msgid "【酒吧】：可以和喜欢喝酒的干员一起[品酒]"
-msgstr ""
+msgstr " [Bar] : Can [Drink alcohol] with Operators"
 
 msgid "【大水坑体验屋】：可以和喜欢水的干员一起[玩水]"
-msgstr ""
+msgstr " [Great Aquapit Experientorium] : Can [Play water] with Operators"
 
 msgid "【厨房】：可以在这里[做饭]，获得料理经验，料理技能的等级关系到可以做的饭的种类和质量"
-msgstr ""
+msgstr " [Kitchen] : Can [Cook] for Cuisine EXP, with the quality and type of food related to Cuisine Skill"
 
 msgid "【摄影棚】：可以在这里和喜欢摄影与当模特的干员一起[摄影]"
-msgstr ""
+msgstr " [Photograph Studio] : Can do [Photography] with Operators"
 
 msgid "【糖果仙子宴会厅】：可以在这里和喜欢歌舞剧的干员一起[排演舞剧]"
-msgstr ""
+msgstr " [Sugar Pome Fairy's Banquet Hall] : Can do [Rehearsal] with Operators"
 
 msgid "【门诊室】/【急诊室】：被安排进行坐诊的医生干员会在这里[诊疗病人]，医治完毕后可以获得医疗经验和龙门币"
-msgstr ""
+msgstr " [Outpatient Department]/[Emergency Room] : Operators appointed will do [Diagnosis] for Medical EXP and LMD"
 
 msgid "【住院部】：怀孕后临盆的干员会在这里待产，可以来这里向她[听肚子里的动静]"
-msgstr ""
+msgstr " [Inpatient Department] : Operators that are pregnant will stay here to wait for the birth, but you can still come here to [Hear on stomach]"
 
 msgid "【体检科】：可以在这里对干员进行[身体检查]，仔细检查干员身体的每个部位，并制定[身体管理]的特殊安排"
-msgstr ""
+msgstr " [Body Check Department] : Can do [Body check] on Operators and conduct [Body management]"
 
 msgid "【会议室】：被安排进行招募干员的HR干员会在这里[招募干员]，检查招募进度或者调整招募方案可以使用[招募情况]"
-msgstr ""
+msgstr " [Meeting Room] : Operators appointed will [Recruit Operators] here, and the progress and plan can be viewed via [Recruitment progress]"
 
 msgid "【健身房】：可以在这里[锻炼身体]，从而提高体力和气力的上限"
-msgstr ""
+msgstr " [Fitness Zone] : Can do [Exercise] here for increasing Stamina and Energy"
 
 msgid "【木桩房】/【射击房】：可以在这里进行[战斗训练]，从而获得战斗经验，提高战斗技能"
-msgstr ""
+msgstr " [Stake Room]/[Shooting Room] : Can do [Combat training] here for Combat EXP"
 
 msgid "【游泳池】：可以在这里和喜欢游泳的干员一起[游泳]"
-msgstr ""
+msgstr " [Swimming Pool] : Can do [Swimming] here with Operators"
 
 msgid "【图书馆】：可以在这里[借阅书籍]，选择自己想看的书借走后，就可以[读书]了"
-msgstr ""
+msgstr " [Library] : Can [Borrow books], and then you can [Read books]"
 
 msgid "【图书馆】：如果想要举办图书会，或者催某人还书，可以在任命了图书馆管理员之后，进行[管理图书馆]"
-msgstr ""
+msgstr " [Library] : If you wish to induce for book returning, or want to set Reading Day, then you can do [Manage library] after appointing library manager"
 
 msgid "【资源交易所】：可以在这里进行[资源交易]，买卖各种资源"
-msgstr ""
+msgstr " [Resource Exchange]: Can [Trade resources] here"
 
 msgid "【美食街】：这里的各个餐厅会提供自己地区的特色美食，既提供堂食，也可以打包"
-msgstr ""
+msgstr " [Gourmet Street]: Every restaurant here will provide specialities, which can be eaten directly or packed away"
 
 msgid "【酒店】：可以在任意一家酒店或者旅馆中[预定房间]，有不同档次的房间可以选择，在越高级的房间里会有越多的服务和特殊效果"
-msgstr ""
+msgstr " [Hotel] : Can [Order for a room] in any hotel with different types of rooms that provide different services and effects"
 
 msgid "【成人用品店】：可露希尔会在这里贩卖一些特殊的商品，可以在这里花费粉红凭证来[购买成人用品]"
-msgstr ""
+msgstr " [Adult Items' Shop] : Closure will sell some special items here, can spend Pink Certificates for them"
 
 msgid "【前卫街机厅】：可以在这里和喜欢街机的干员一起[玩街机游戏]"
-msgstr ""
+msgstr " [Avant-Garde Arcade Hall] : Can [Play arcade games] with Operators"
 
 msgid "【造型工作室】：可以在这里和喜欢时尚的干员一起体验[全身造型服务]"
-msgstr ""
+msgstr " [Styling Studio] : Can do [Full body styling] with Operators"
 
 msgid "【理发店】：可以在这里和喜欢折腾头发的干员一起[修整发型]"
-msgstr ""
+msgstr " [Hair Salon] : Can do [Hair fix] with Operators"
 
 msgid "【生产车间】：可以在这里进行[管理流水线]，调整要生产的产品种类以及各流水线上的工人"
-msgstr ""
+msgstr " [Production Workshop] : Can [Manage assembly line] to adjust products and workers"
 
 msgid "【外交办公室】：被安排邀请访客的干员会在这里[邀请访客]，检查邀请进度或者调整邀请对象可以使用[访客系统]"
-msgstr ""
+msgstr " [Diplomacy Office] : Operators appointed will [Invite guests], with progress and adjustment available at [Guest system]"
 
 msgid "【外交办公室】：查看和各势力之间的关系、安排外交官、调整外交策略等操作可以在这里进行[势力外交]"
-msgstr ""
+msgstr " [Diplomacy Office] : Can check relationship with factions, appoint diplomatists, or adjust strategies"
 
 msgid "【客房】：来访的客人会住在这里，并停留一段时间，在这期间如果对罗德岛和博士的印象满意的话，可能会留下成为干员"
-msgstr ""
+msgstr " [Guest Room] : Guests will stay here for a while, and might become Operators if having good impression"
 
 msgid "【外勤集合点】：可以在这里安排干员出发执行[外勤委托]，各个委托都有自己的需求和奖励，还会有特殊委托和角色专属委托等"
-msgstr ""
+msgstr " [gathering Point] : Can appoint Operators for [Field commissions], with each having its own requirements and rewards"
 
 msgid "【格纳库】：可以在这里[管理载具]，购买、查看和调整进行外勤委托所需要的载具"
-msgstr ""
+msgstr " [Garage] : Can [Manage vehicles] to buy, check and adjust vehicles"
 
 msgid "【教室】：被任命为教师工作的干员会在这里给学生们[授课]，帮助学生们获取各方面的经验"
-msgstr ""
+msgstr " [Classroom] : Operators appointed will [Teach] students for experience"
 
 msgid "【育儿室】：出生后还是婴儿状态下的角色会在这里慢慢成长，母亲干员或者玩家可以来这里[照顾婴儿]，增长亲子感情并传授一些经验和技能"
-msgstr ""
+msgstr " [Parenting Room] : Babies will grow here, with mothers or player available to [Take care of baby]"
 
 msgid "【黄澄澄游戏室】：可以在这里和做游戏的年幼干员们一起[过家家]"
-msgstr ""
+msgstr " [Golden Game Room] : Can do [Playhouse] with young Operators"
 
 msgid "【乌萨斯学生活动室】：可以在这里和乌萨斯学生会的干员们一起进行[社团活动]（未实装）"
 msgstr ""
 
 msgid "【香熏治疗室】：可以在这里对干员进行[香薰疗愈]，消耗香料资源，为其附加特殊的调香效果"
-msgstr ""
+msgstr " [Aromatherapy Treatment Room] : Can do [Aromatherapy] on Operators for effects"
 
 msgid "【温室】：被任命为花草种植员的干员会在这里[种植与养护作物]，种植的植物可以用来作为香料系的资源"
-msgstr ""
+msgstr " [Conservatory] : Operators appointed will [Plant crops] for essences"
 
 msgid "【药田】：被任命为药材种植员的干员会在这里[种植与养护作物]，种植的植物可以用来作为药材系的资源"
-msgstr ""
+msgstr " [Farmland] : Operators appointed will [Plant crops] for medicines"
 
 msgid "【温室】/【药田】：可以在这里进行[管理农业生产]，调整要种植的作物种类以及各个农田上的种植员"
-msgstr ""
+msgstr " [Conservatory]/[Farmland] : Can [Manage farm production] to adjust crops and planters"
 
 msgid ""
 "【更衣室】：每天来洗澡的干员会先来这里[脱衣服]，把身上的衣服都放进衣柜里，然后再去洗澡。如果没有被发现的话，可以在这里[检查衣柜]来查看干员的衣服"
 msgstr ""
+" [Fitting Room] : Operators will [Take off clothes] and put them into closet before showing, which you can [Check closet]"
 
 msgid "【更衣室】：洗完澡的干员会[穿衣服]，换上浴巾或者浴袍，并把旧的衣服带回宿舍"
-msgstr ""
+msgstr " [Fitting Room] : Operators showered will [Wear clothes]"
 
 msgid "【淋浴】：干员每天都会在这里进行[淋浴]，会清洗身体各部位和性器官的污浊，但如果是射进子宫内的精液则很难被清洗掉"
-msgstr ""
+msgstr " [Showering Room] : Operators will [Shower] here and clean organs, but those in womb will be harder to clean"
 
 msgid "【休息区】：被任命为按摩师工作的干员会在这里给疲劳的干员们[按摩]"
-msgstr ""
+msgstr " [Rest Zone] : Operators appointed will do [Massage] to tired Operators"
 
 msgid "【秘密通道】：不为人知的特殊通道，可以在这里偷窥到大浴场的每个房间，甚至还可以……？（未实装）"
 msgstr ""
 
 msgid "【监牢】：在将无意识的干员[装袋搬走]后，可以在这里使用[投入监牢]来监禁干员，或使用[解除囚禁]来释放干员"
-msgstr ""
+msgstr " [Prison] : After [Bag and move] unconscious Operators, you can do [Put in prison] or [Free from captivity]"
 
 msgid "安潔莉娜型速攻艇"
-msgstr ""
+msgstr "Angelina-type speed attack craft"
 
 msgid "委托_1104"
 msgstr ""
 
 msgid "参照安洁莉娜的源石技艺和蒸汽骑士的技术，由可露希尔研发出的试验性原型机。"
-msgstr ""
+msgstr "Original model developed by Closure on referring Angelina's Arts and Steam Knight's technology"
 
 msgid "健身锻炼员"
-msgstr ""
+msgstr "Fitness trainer"
 
 msgid "去健身区锻炼，增加体力和气力上限"
-msgstr ""
+msgstr "Train in Fitness Zone to increase Stamina and Energy"
 
 msgid "性爱练习生"
-msgstr ""
+msgstr "Sexual student"
 
 msgid "利用道具练习自己的性爱技巧"
-msgstr ""
+msgstr "Practice sex skills via items"
 
 msgid "#5462a0"
 msgstr ""
@@ -19046,7 +19070,7 @@ msgid "员工证胸牌"
 msgstr ""
 
 msgid "九"
-msgstr ""
+msgstr "Nine"
 
 msgid "Only-1"
 msgstr ""
@@ -19070,20 +19094,20 @@ msgid "白色袖套"
 msgstr ""
 
 msgid "塔佳娜"
-msgstr ""
+msgstr "Tatjana"
 
 msgid "一位故人的遗物"
-msgstr ""
+msgstr "A deceased's relic"
 
 msgid ""
 "沃伦姆德居民，管理着当地的民兵团，在政府议事厅工作，跟随着亚叶及铃兰在感染者居住区调查，后在暴乱中受伤并被感染者打晕，被灰喉小队救出。为了恢复沃伦姆德的平静而奔波。"
 msgstr ""
 
 msgid "依娜姆"
-msgstr ""
+msgstr "Inam"
 
 msgid "依娜姆商会"
-msgstr ""
+msgstr "Inam Committee"
 
 msgid ""
 "部族“依娜姆商会”的头领，真实身份是信使，因没有信可送，所以经常从附近城市进货做生意，久而久之被其他部落的人称为“爱做生意的依娜姆”。负责教授特米米在内的部分阿达克利斯人萨尔贡语，并帮特米米和森蚺从城市中购买所需的书籍。“捡到”可颂后带回部族，随后遇见嘉维尔一行人，送信给迪伦后前往森蚺部族看热闹，被嘉维尔直接任命为大酋长。"
@@ -19096,7 +19120,7 @@ msgid "破烂热裤"
 msgstr ""
 
 msgid "普瑞赛斯"
-msgstr ""
+msgstr "Priestess"
 
 msgid "PRTS"
 msgstr ""
@@ -19128,10 +19152,10 @@ msgid "#edc471"
 msgstr ""
 
 msgid "黎"
-msgstr ""
+msgstr "Dawn"
 
 msgid "算盘"
-msgstr ""
+msgstr "Abacus"
 
 msgid ""
 "生于婆山镇，为家中最小的孩子，在一次天灾转移中采集食物回家时婆山镇被天灾所毁，她被家人抛弃，之后被夕所搭救，并跟随夕活在画中，学习作画。后成为能独自离开夕之画卷世界的人之一。离开画卷后一生未曾执笔。在弥留之际夕前来看望，她拜托夕画出她的家乡婆山镇，在画中做一个掌柜，将时光永远停留在年轻之时。画卷中作为当铺掌柜的她在炎熔一行人一筹莫展之时为其暗示线索，揭示画中世界的运行原理，是炎熔等人离开画中世界的关键人物。画中的黎自知自己是画中之人，“不是真正的黎”。\n"
@@ -19150,10 +19174,10 @@ msgid "黑色布鞋"
 msgstr ""
 
 msgid "安妮塔"
-msgstr ""
+msgstr "Anita"
 
 msgid "竖琴"
-msgstr ""
+msgstr "Harp"
 
 msgid ""
 "盐风城当地人，种族未知，性格开放随性。斯卡蒂在盐风城的向导，在她的陪同下斯卡蒂在盐风城收集线索；在斯卡蒂被小审判官追杀的时候提供帮助；开导斯卡蒂让她不要再为过去的差错自怨自艾，最后斯卡蒂放下了包袱，与歌蕾蒂娅坚定地前往教堂与主教对峙。\n"
@@ -19211,10 +19235,10 @@ msgid "重力型源石法杖"
 msgstr ""
 
 msgid "杜遥夜"
-msgstr ""
+msgstr "Du Yaoye"
 
 msgid "岁相酒盏"
-msgstr ""
+msgstr "Sui-Xiang wine cup"
 
 msgid ""
 "郑清钺的养女，拥有魄力和胆识，带领一群年轻人行走江湖。其父在十年前行裕镖局押运酒盏被劫的事件中丧生。意图迎合时代发展，将没落的行裕镖局改为物流公司，但遭到郑清钺反对，因而与其渐生嫌隙。原本意图破坏抢盏之事，后发现事情的严重性而停手。岁相酒盏事件后和郑清钺商量，带领年轻人们前去玉门。在孟铁衣帮助下建立行裕物流，参与了天灾情报的运输。\n"
@@ -19227,7 +19251,7 @@ msgid "橙色披风"
 msgstr ""
 
 msgid "宁辞秋"
-msgstr ""
+msgstr "Ning Ciqiu"
 
 msgid ""
 "炎国礼部左侍郎，官阶从二品。出身南方水乡，家中同辈排行第七，其祖父官至一品，出任尚书。曾卷入走私贪污案，但成功抓出贼人并因此而入仕。为监管在尚蜀的令，出任钦差之责带领青雷伯白定山等数位天师坐镇尚蜀，在此期间也与尚蜀知府梁洵关系日益亲密，因关心梁洵而派夜半偷走梁洵手中的酒盏。酒盏一事后接太傅指令前往玉门，随后又调任到大荒城与工部尚书万勤城共事，协调十二楼五城的建造。\n"
@@ -19321,10 +19345,10 @@ msgid "黑色金属大剑"
 msgstr ""
 
 msgid "薇尔丽芙"
-msgstr ""
+msgstr "Velliv"
 
 msgid "巨大黑色手枪"
-msgstr ""
+msgstr "Huge black pistol"
 
 msgid "拉特兰教皇厅枢机。万国峰会期间随同教宗控制了奥伦。"
 msgstr ""
@@ -19360,19 +19384,19 @@ msgid "四月的通行证"
 msgstr ""
 
 msgid "阿勒黛"
-msgstr ""
+msgstr "Allerdale"
 
 msgid "蒸汽骑士的照片"
-msgstr ""
+msgstr "Steam Knight's photo"
 
 msgid "伦蒂尼姆市民自救军中央区负责人，坎伯兰公爵的女儿"
 msgstr ""
 
 msgid "克洛维希娅"
-msgstr ""
+msgstr "Clovisia"
 
 msgid "指挥官徽章"
-msgstr ""
+msgstr "Commander's medal"
 
 msgid ""
 "长生者，独角兽，“护国公”，维多利亚众多故事中的仙子，为满足选中者的心愿与缝补维多利亚行动。为实现的普通人想要活着的愿望，以裁缝的女儿的身份担任伦蒂尼姆市民自救军指挥官，深受自救军成员们信任爱戴。在战争结束时出现在维娜·维多利亚面前，但被拒绝了，最后抛弃这个身份重新隐于幕后。"
@@ -19383,10 +19407,10 @@ msgid ""
 msgstr ""
 
 msgid "睡莲"
-msgstr ""
+msgstr "Lotus"
 
 msgid "医疗法杖"
-msgstr ""
+msgstr "Healing staff"
 
 msgid ""
 "被上一任曼斯菲尔德狱医收养并在监狱长大，后担任曼斯菲尔德监狱的狱医兼入殓师，在越狱事件之前从未走出过监狱。为人有些古怪，因此被部分囚犯害怕。在越狱过程中为越狱的几人提供了情报交换场所，并在越狱后随卡夫卡，罗宾等人一同加入了罗德岛。"
@@ -19459,7 +19483,7 @@ msgid "槊"
 msgstr ""
 
 msgid "格特鲁德"
-msgstr ""
+msgstr "Gertrude"
 
 msgid "繪有斯特羅洛家徽的徽章。徽章的中央有著一道深刻的劃痕"
 msgstr ""
@@ -19487,7 +19511,7 @@ msgid "豎琴"
 msgstr ""
 
 msgid "玛丽"
-msgstr ""
+msgstr "Mary"
 
 msgid ""
 "特里蒙的警长，与桑尼为青梅竹马，曾收留了流离失所的桑尼，但后来被桑尼打劫，其祖母因受到过度惊吓瘫痪，因此对桑尼大失所望。在359号基地事件时因为收到桑尼挟持人质的报警而来到基地，事件后两人和好。"
@@ -19519,7 +19543,7 @@ msgid "黑色长裤"
 msgstr ""
 
 msgid "戈尔丁"
-msgstr ""
+msgstr "Golding"
 
 msgid "演剧的讲稿"
 msgstr ""
@@ -19528,7 +19552,7 @@ msgid "伦蒂尼姆市民自救军成员，海蒂的旧识。在奥克特里格�
 msgstr ""
 
 msgid "萨卢斯"
-msgstr ""
+msgstr "Salus"
 
 msgid "缠绕着扭曲枝干的手杖....不知其用为何"
 msgstr ""
@@ -19551,26 +19575,26 @@ msgid "黑色哑光连裤袜"
 msgstr ""
 
 msgid "茉莉"
-msgstr ""
+msgstr "Molly"
 
 msgid "教课用书籍"
-msgstr ""
+msgstr "Book for teaching"
 
 msgid "伦蒂尼姆市民，戈尔丁的好友。带领戈尔丁和孩子们共同进行了一场“演出”。"
 msgstr ""
 
 msgid "爱布拉娜"
-msgstr ""
+msgstr "Eblana"
 
 msgid "紫焰长枪"
-msgstr ""
+msgstr "Purple-flamed lance"
 
 msgid ""
 "深池领袖，拉芙希妮的姐姐。父母成为政治斗争牺牲品遇刺身亡后姐妹二人一同被橡林郡的沃里克伯爵收养、教导。不满足于沃里克伯爵建立塔拉政权、自己作为傀儡统治者的野心而亲手烧死了他，引发橡林郡内部的局势倾覆，乘机号召起塔拉人建立了深池，离开了橡林郡。成为领袖的爱布拉纳让妹妹作为影子的领袖，尽管不堪忍受深池残酷行径的妹妹在小丘郡事件中被罗德岛精英干员Outcast救下后便逃离了深池，又联合了塔拉人出身的“铁公爵”威灵顿，登上了许久未曾停靠移动城市的“加斯特里尔”号高速战舰，率领深池的队伍与威灵顿公爵的军队重返橡林郡，在城外的盖尔王古城与妹妹重逢。在伦蒂尼姆郊外独自遇到整合运动，并与塔露拉发生冲突。源石技艺燃起的火焰能够让死去的人重新站起来，成为她的战士。"
 msgstr ""
 
 msgid "塞尔蒙"
-msgstr ""
+msgstr "Selmon"
 
 msgid "旧日的深池制服"
 msgstr ""
@@ -19579,29 +19603,29 @@ msgid "自称深池士兵的游击队员，是维恩等人的老大。曾加入�
 msgstr ""
 
 msgid "贝尔德"
-msgstr ""
+msgstr "Baird"
 
 msgid "一把蝴蝶刀"
-msgstr ""
+msgstr "Butterfly knife"
 
 msgid ""
 "格拉斯哥帮成员，和其他人一起运营着诺伯特区的“揍歪下巴”拳馆作为据点，并等待维娜和追随她离开维多利亚的格拉斯哥帮成员归来。随身携带着的是从旧货市场淘来的最爱的蝴蝶刀。诺伯特区被萨卡兹分离出去后与卡铎尔、戴菲恩一同坚守拳馆，援助寻求庇护的难民。"
 msgstr ""
 
 msgid "珀茜瓦尔"
-msgstr ""
+msgstr "Percival"
 
 msgid "电报机"
-msgstr ""
+msgstr "Telegraph"
 
 msgid "日落街酒店门童，来自维多利亚本地的整合运动成员。在博士等人之前取走了日落街酒店的电报机，暗中向整合运动发送情报。"
 msgstr ""
 
 msgid "温德米尔"
-msgstr ""
+msgstr "Windermere"
 
 msgid "维多利亚勋章"
-msgstr ""
+msgstr "Victoria medal"
 
 msgid ""
 "温德米尔以剑法和领军能力闻名，其剑刃能斩断高塔。她是镇守莱塔尼亚边境的大公爵，选帝侯的大敌。军纪严明，忠于维多利亚，对王剑没有兴趣，对危险非常敏锐，对部下比较仁义。"
@@ -19617,57 +19641,57 @@ msgid "长剑"
 msgstr ""
 
 msgid "埃芒加德"
-msgstr ""
+msgstr "Ermengarde"
 
 msgid "小方块"
-msgstr ""
+msgstr "Little cube"
 
 msgid ""
 "巫妖王庭信使，十分在意自己的小方块。在离开伦蒂尼姆时遇到了伊内斯等人，并且交通工具小方块被W炸掉，与其见识了巨兽移动造成的残影并进行了交流。在始源之角降临时与众巫妖一同被巫妖君王叫回协助处理相关事务。在魂灵熔炉爆炸后将巫妖君王下达的回收死魂灵碎片任务外包给妮芙解决，并擅自带领一群萨卡兹进入魂灵熔炉内继续没能完成的安抚仪式。"
 msgstr ""
 
 msgid "娜斯提"
-msgstr ""
+msgstr "Nasti"
 
 msgid "研究装置"
-msgstr ""
+msgstr "Research device"
 
 msgid ""
 "莱茵生命工程科主任，女妖，因为厌倦战争离开卡兹戴尔来到哥伦比亚并进入莱茵生命，梦想是建设能够飞在空中的移动城市作为萨卡兹的应许之地。其构建的空间结构被塞雷娅认为不符合安全规范但却能够自洽。协助克丽斯腾建设万星园，希望能通过这次的数据接近自己的目标。事件结束后与缪尔赛思一起参加了赫默的伦理会议。"
 msgstr ""
 
 msgid "雅拉"
-msgstr ""
+msgstr "Jara"
 
 msgid "演员的奖杯"
-msgstr ""
+msgstr "Actor's trophy"
 
 msgid ""
 "莱茵生命人力资源科主任，前蓝卡坞著名演员玛丽安娜·布莱克，前梅兰德基金会特工“晨星”，曾检视克丽斯腾的父母莱特夫妇，在他们去世后资助克丽斯腾的生活和学业，也支持她的理想，视克丽斯腾如女儿一般，为莱茵生命贡献全部人脉。向赫默提供身份掩护等帮助，但在能量井中因自身对克丽斯腾的情感挡在了赫默前面。事件结束后帮赫默打点关系后从莱茵生命退休，不再过问世事。"
 msgstr ""
 
 msgid "伯德"
-msgstr ""
+msgstr "Byrd"
 
 msgid "与大帝的合照"
-msgstr ""
+msgstr "A photo with Emperor"
 
 msgid ""
 "哥伦比亚的旅行歌手，自称“精神上的拓荒者”，与大帝是旧识。来到新汐斯塔故地重游并四处收集故事，在此期间以“一个故事”为报酬担任酒吧“纯白火山”的驻唱歌手。虽然不能像阿黛尔那样看到多利和祂所有的分身，但是在海岸边弹吉他时看到了那只带着矿灯、咀嚼路牌的分身。"
 msgstr ""
 
 msgid "凯勒"
-msgstr ""
+msgstr "Keller"
 
 msgid "泰拉火山图志"
-msgstr ""
+msgstr "Terra's volcano magazine"
 
 msgid ""
 "全名阿黛尔·凯勒，汐斯塔人，阿黛尔的老师，现任汐斯塔火山博物馆馆长一职。修习的方向是地质学，在汐斯塔的知更鸟咖啡店偶遇了玛格娜·瑙曼和卡提亚·瑙曼后便被邀请同行，之后长期随行瑙曼夫妇在各地的火山进行考察，直到瑙曼夫妇丧生于乌纳火山的事故中、自身为应付莱塔尼亚的使者而躲过一劫，不再参与对火山的实地考察，转而专心整理瑙曼夫妇的遗稿，并在赫尔曼邀请下回到汐斯塔建起博物馆。与科斯达是旧友，曾借了他一本《泰拉火山图志》，自从凯勒离开汐斯塔后二人就再未见面，直至在火山博物馆的偶遇。"
 msgstr ""
 
 msgid "维娜·维多利亚"
-msgstr ""
+msgstr "Vina Victoria"
 
 msgid "一块纪念罗德岛的铭牌，你好像在伦蒂尼姆重建后的街角见过，上面的铆钉也似曾相识。她说，铆钉一旦固定，就再也卸不下来了。"
 msgstr ""
@@ -19695,7 +19719,7 @@ msgid "秩序圣球"
 msgstr ""
 
 msgid "维什戴尔"
-msgstr ""
+msgstr "Wis'adel"
 
 msgid "一颗画着笑脸的手雷。你并不清楚它是什么时候到你手上的。往好处想，你或许只是收到了一场还未绽放的烟花。"
 msgstr ""
@@ -19722,7 +19746,7 @@ msgid "炸弹"
 msgstr ""
 
 msgid "历阵锐枪芬"
-msgstr ""
+msgstr "Fang the Fire-Sharpened"
 
 msgid ""
 "罗德岛先锋干员芬，总是奔走在急需援助的前线。\n"
@@ -19750,54 +19774,54 @@ msgid "防风镜"
 msgstr ""
 
 msgid "西尔维娅"
-msgstr ""
+msgstr "Sylvia"
 
 msgid "一枚镶嵌碎钻的戒指"
-msgstr ""
+msgstr "A ring with shattered diamond"
 
 msgid ""
 "达维镇的银行职员，前前任镇长的女儿。自身对数字异常敏感而成绩优异，因此考上全哥伦比亚最好的金融系，毕业后却回到了达维镇成为一名普普通通的职员。由于银行与达维镇居民敏感而尖锐的关系而在镇民中受尽脸色，依靠着戒指麻木度日。之后离开了达维镇接应海伦娜，跟杰西卡等人一起在拓荒地生活。"
 msgstr ""
 
 msgid "蒂拉"
-msgstr ""
+msgstr "Tila"
 
 msgid "便身武器包"
-msgstr ""
+msgstr "Convenient weapon bag"
 
 msgid "直接与黑钢创始人接触的黑钢国际的成员。达维镇的事件尘埃落定后和海伦娜一起在某处等待某人。"
 msgstr ""
 
 msgid "厄尔苏拉"
-msgstr ""
+msgstr "Ursulah"
 
 msgid "一瓶摩根队长佳酿"
-msgstr ""
+msgstr "A bottle of Captain Morgan's Wine"
 
 msgid "疤痕商场原下一任掌门，伊内丝的旧识，军事委员会最年轻的少校。负责驱使骸骨舰船“生命脊椎”运输物资。现已被罗德岛俘获。"
 msgstr ""
 
 msgid "菈玛莲"
-msgstr ""
+msgstr "Laqeramaline"
 
 msgid "女妖之吻"
-msgstr ""
+msgstr "Banshee's kiss"
 
 msgid "女妖王庭之主菈玛莲·杜康珐丽丝，萨卡兹六英雄之一。"
 msgstr ""
 
 msgid "希尔德加德"
-msgstr ""
+msgstr "Hildegard"
 
 msgid "黑色长剑"
-msgstr ""
+msgstr "Black sword"
 
 msgid ""
 "统治莱塔尼亚的两位女皇之一，深黑的剑刃，“无情权威”，“黑色的山羊”，实际是与另一位女皇莉泽洛特·伊维格娜德一同制造的人造对巫王兵器。看似是严厉的“权威无情”，但实际上内心仍然有柔软的部分。认为晚霞应属于每一个人，收留教导来自鲁珀坎大区的米夏。"
 msgstr ""
 
 msgid "塔季扬娜"
-msgstr ""
+msgstr "Tatiana"
 
 msgid "一条手环，应是塔季扬娜过去旅行时所得之物，对她来说有着记录着某一段时光的特殊意义。"
 msgstr ""
@@ -19822,10 +19846,10 @@ msgid "过踝长筒高跟鞋"
 msgstr ""
 
 msgid "老天师"
-msgstr ""
+msgstr "Old Tianshi"
 
 msgid "老蒲扇\n"
-msgstr ""
+msgstr "Old cattail leaf fan\n"
 
 msgid ""
 "大炎最资深的天师之一，本名未知，镇守天机阁三百七十余年，是北境邪魔战线的核心。外形是娇小的金发少女，实际上已有数百岁的长寿。惊蛰的师祖。\n"
@@ -19838,19 +19862,19 @@ msgid ""
 msgstr ""
 
 msgid "尤莉叶"
-msgstr ""
+msgstr "Julie"
 
 msgid "特蕾西娅的刺绣"
-msgstr ""
+msgstr "Theresa's embroidery"
 
 msgid "巴别塔的刺客。卡兹戴尔内战中加入了特蕾西娅与巴别塔一方，其衣领有特蕾西娅的刺绣。"
 msgstr ""
 
 msgid "娜汀"
-msgstr ""
+msgstr "Nadin"
 
 msgid "斩首大刀"
-msgstr ""
+msgstr "Beheading sword"
 
 msgid "萨卡兹食腐者军官，军衔为一等旗尉。"
 msgstr ""
@@ -19868,78 +19892,80 @@ msgid "高跟凉鞋"
 msgstr ""
 
 msgid "克莱门莎"
-msgstr ""
+msgstr "Clementia"
 
 msgid "航行计划的蓝图"
-msgstr ""
+msgstr "Waterway Program's blueprint"
 
 msgid ""
 "阿戈尔的总战争设计师，社会行政监察所的技术执政官，耐心的、友善的阿戈尔人。管理弥利亚留姆，提出并推动航道计划。一年前将弥利亚留姆移动到伊比利亚附近，事件开始前一周与伊比利亚联系，邀请伊比利亚的使节出访阿戈尔"
 msgstr ""
 
 msgid "赫拉提娅"
-msgstr ""
+msgstr "Heratia"
 
 msgid "歌蕾蒂娅的来信"
-msgstr ""
+msgstr "Gladiia's letter"
 
 msgid "科学发展规划所最优秀的执政官，留在阿戈尔本境。"
 msgstr ""
 
 msgid "卡莱莎"
-msgstr ""
+msgstr "Qalaisa"
 
 msgid "巫女法杖"
-msgstr ""
+msgstr "Witch's staff"
 
 msgid ""
 "女性食腐者。898年联军进攻卡兹戴尔时，卡莱莎受一名想要看雪的逃兵影响北上前往萨米为食腐者寻找新出路，发现了一眼可以缓解食腐者因长期没有食腐而流失力量痛苦的冰泉，其后自称“北风女巫”隐居于萨米。萨卡兹进驻伦蒂尼姆前夕，卡莱莎拒绝了军事委员会的军衔。萨卡兹撤退回卡兹戴尔后，卡莱莎与她的房子返回了卡兹戴尔，用自己的记忆和一些源石技艺制作了一顶花冠用以抚慰受战争创伤的士兵。卡莱莎的房子具有巫妖与食腐者的源石技艺，可以在炮火中穿行并翻越卡兹戴尔城墙。"
 msgstr ""
 
 msgid "克伦妮"
-msgstr ""
+msgstr "Crownie"
 
 msgid "服装设计图"
-msgstr ""
+msgstr "Clothing design drawings"
 
 msgid ""
 "全名克伦妮·“雅仕”·曼提尔，居住于卡兹戴尔的无业裁缝，从事服装设计与制作、旅游纪念品制售行业，长期惨淡经营，在温饱线上挣扎。长期委托莫斯提马采购外国衣料。有成为服装设计师的愿望。有与卡兹戴尔大多数萨卡兹格格不入的审美观与生活观。"
 msgstr ""
 
 msgid "阿斯帕齐娅"
-msgstr ""
+msgstr "Aspasia"
 
 msgid "被抢走的金酒之杯"
-msgstr ""
+msgstr "Stolen Golden Cup"
 
 msgid "来自米诺斯的游客。米诺斯被萨尔贡入侵期间阿斯帕齐亚的家族丢失了一对金杯。"
 msgstr ""
 
 msgid "梅捷缇克缇"
-msgstr ""
+msgstr "Medjedtyti"
 
 msgid "远古法杖"
-msgstr ""
+msgstr "Ancient staff"
 
 msgid "简称缇缇。是佩佩和莎草上学时期的好友。"
 msgstr ""
 
 msgid "红隼"
-msgstr ""
+msgstr "Kestrel"
 
 msgid "一柄古朴的弯刀。来自萨尔贡的部落战士把你视作战友，将它赠予了你。"
-msgstr ""
+msgstr "A rustic scimitar. Regarding you as a friend in arms, the tribal warrior of Sargon gifts you this."
 
 msgid ""
 "红隼，萨尔贡人，舒巴特-"
 "阿尔萨兰地区前部落战士，曾与她的兄弟姐妹们一起被当地王酋军强制奴役。在一次逃离后与罗德岛相遇，重返矿场解救了与自己一同受难的工友，后主动申请加入罗德岛。现作为罗德岛萨尔贡办事处干员，接受治疗的同时参与各类外勤任务。"
 msgstr ""
+"Formerly a warrior of a Szubat-Arsalan tribe in Sargon, Kestrel and her siblings were enslaved by the local lord ameer's army. Encountering Rhodes Island personnel during her escape, she was able to return to the mines and rescue the other workers. \\n"
+"She later joined Rhodes Island and is currently employed at the Sargonian branch, receiving treatment while participating in field missions."
 
 msgid "#32dddc"
 msgstr ""
 
 msgid "佩佩"
-msgstr ""
+msgstr "Pepe"
 
 msgid "一枚价值不菲的莲花胸针，请不要尝试卖掉它，它象征的意义比它的价值更加珍贵。"
 msgstr ""
@@ -19966,21 +19992,23 @@ msgid "蓝色腰包"
 msgstr ""
 
 msgid "海霓"
-msgstr ""
+msgstr "Lucilla"
 
 msgid "一张自制的兑换券。她点子太多了，实在无法决定该送什么。你去兑换的时候，她会凭当下的心情随机做上一件。"
-msgstr ""
+msgstr "A hand-made coupon. She has so many ideas that she could not decide on what to gift; she makes something on the spot based on her mood at the time when you redeem the coupon."
 
 msgid ""
 "卢契拉，阿戈尔人，隶属技术院设施管理所，于穹顶系统担任穹顶管理员与洋流测绘员。阿戈尔与陆地建立联系后，卢契拉出于个人兴趣，以个人名义与罗德岛达成合作，不定期前来进行文化交流。"
 " 现以“海霓”为代号，登记为罗德岛合作干员。"
 msgstr ""
+"Lucilla, Ægir, a member of the Academy of Technology's Institute of Facility Management who manages the domes and surveys oceanic currents. After Ægir established communications with the land, she entered an individual cooperative arrangement with Rhodes Island out of personal interest. She now comes for cultural exchange purposes at irregular times.\\n"
+"She is registered as one of Rhodes Island's collaborating operators under the codename Lucilla."
 
 msgid "一只装着烟雾的细小玻璃瓶。遇到危险便捏碎它，阿斯卡纶会即刻赶到你的身边。"
-msgstr ""
+msgstr "A tiny glass phial filled with smoke. Shatter with your fingers when danger looms, and Ascalon will be by your side."
 
 msgid "阿斯卡纶，巴别塔时期担任情报官，后作为S.W.E.E.P.负责人，为罗德岛负责反渗透工作。"
-msgstr ""
+msgstr "Ascalon, a former Babel intelligence officer. She is now in charge of S.W.E.E.P. and responsible for counter-infiltration aboard Rhodes Island."
 
 msgid "白色刺客风衣"
 msgstr ""
@@ -19992,15 +20020,17 @@ msgid "黑色紧身裤"
 msgstr ""
 
 msgid "魔王"
-msgstr ""
+msgstr "Civilight Eterna"
 
 msgid "一份与罗德岛继续同行的承诺，这是现在的她唯一能给予你的东西。你知道她一定会践行诺言。"
-msgstr ""
+msgstr "A promise to continue journeying with Rhodes Island; the only thing she can give you now. You know she'll keep her word."
 
 msgid ""
 "巴别塔的创立者，特蕾西娅。\n"
 "一段来自过去的回响，承载着通往未来的爱与希望。"
 msgstr ""
+"Babel's founder, Theresa.\\n"
+"An echo of the past, loaded with love and hope for the future."
 
 msgid "长黑丝"
 msgstr ""
@@ -20015,18 +20045,20 @@ msgid "白色纱裙"
 msgstr ""
 
 msgid "深巡"
-msgstr ""
+msgstr "Underflow"
 
 msgid "一个简约的金属文件夹，可以根据使用者偏好的规则自动整理文件。深巡似乎希望你用它来收纳她提交的报告。"
-msgstr ""
+msgstr "A simple metal folder that automatically sorts documents based on rules set by the user. Underflow seems to want you to use it for the reports she submits."
 
 msgid ""
 "西昆妲，前深海猎人计划研究员，现服役于阿戈尔军团系统，担任海巡队指挥官。在阿戈尔向陆上诸国发出合作邀请后，西昆妲以阿戈尔对陆接洽代表的身份与罗德岛达成合作协议，以罗德岛为媒介与陆上诸国建立交流关系。"
 " 现以“深巡”为代号，登记为罗德岛合作干员。"
 msgstr ""
+"Secunda, former Abyssal Hunter project researcher, now serving in Ægir's legions as a Praefecta of the Sea Patrol. After Ægir sent out their invitation for collaboration to their fellow nations, she has reached a cooperation agreement with Rhodes Island to act as Ægir's envoy to land.\\n"
+"She is now registered as one of Rhodes Island's collaborating operators under the codename Underflow."
 
 msgid "娜仁图亚"
-msgstr ""
+msgstr "Narantuya"
 
 msgid "一管自制的安眠药水，源自复杂的雨林植被和沙盗丰富的野外生存经验。她真心希望你能一直在她身边做她的好伙伴，还希望你不会因她而噩梦连连。"
 msgstr ""
@@ -20035,46 +20067,46 @@ msgid "娜仁图亚，曾是足迹遍布萨尔贡大半地区的沙盗，现作�
 msgstr ""
 
 msgid "帽子交中"
-msgstr ""
+msgstr "Doing hatjob"
 
 msgid "眼镜交中"
-msgstr ""
+msgstr "Doing glassjob"
 
 msgid "耳饰交中"
-msgstr ""
+msgstr "Doing earringjob"
 
 msgid "脖饰交中"
-msgstr ""
+msgstr "Doing shawljob"
 
 msgid "口罩交中"
-msgstr ""
+msgstr "Doing maskjob"
 
 msgid "上衣交中"
-msgstr ""
+msgstr "Doing shirtjob"
 
 msgid "胸衣交中"
-msgstr ""
+msgstr "Doing brajob"
 
 msgid "手套交中"
-msgstr ""
+msgstr "Doing glovejob"
 
 msgid "下衣交中"
-msgstr ""
+msgstr "Doing skirtjob"
 
 msgid "内裤交中"
-msgstr ""
+msgstr "Doing underwearjob"
 
 msgid "袜子交中"
-msgstr ""
+msgstr "Doing sockjob"
 
 msgid "鞋子交中"
-msgstr ""
+msgstr "Doing shoejob"
 
 msgid "武器交中"
-msgstr ""
+msgstr "Doing weaponjob"
 
 msgid "附属物交中"
-msgstr ""
+msgstr "Doing accessoryjob"
 
 msgid ""
 "你是一个游戏文学作家，负责编写游戏中的对话文本。你非常擅长根据给出的条件，描写当前场景里两个角色的互动场景。你需要严格遵守以下的每个规则来进行描写："
@@ -20105,17 +20137,18 @@ msgid "7.如果生成的内容不符合规范或涉及到非全年龄的内容�
 msgstr ""
 
 msgid "进去|{Name}被{SrcOneCharaName}很生气地赶出来了"
-msgstr ""
+msgstr "Enter|{Name} got chased out by {SrcOneCharaName} angrily"
 
 msgid "不进去|{Name}放弃了打算"
-msgstr ""
+msgstr "Nope|{Name} refused the thought"
 
 msgid ""
 "推门而入|{PlayerName}直接用力推开了门，看着里面没穿衣服正在自慰的{TargetName}，趁对方还不知所措的愣在原地的时候，大胆地快步上前抱了过去"
 msgstr ""
+"Rush in|{PlayerName} pushed the door, and saw {TargetName} who's masturbating with her clothes off, and while she's still stuck in place, you straight up hug her"
 
 msgid "{TargetSceneName}里现在好像有人，而且传来的声音有些熟悉，要进去吗"
-msgstr ""
+msgstr "There seems to be someone inside {TargetSceneName}, and the sound is familiar, do you really want to enter"
 
 msgid ""
 "进去|刚好撞见{Name}进来的{TargetOneCharaName}一边慌忙遮住身体一边试图把{Name}推出去\n"
@@ -20123,166 +20156,166 @@ msgid ""
 msgstr ""
 
 msgid "{TargetSceneName}里现在好像有人，不过从源石技艺的感知来看，应该都在无意识状态，要进去吗"
-msgstr ""
+msgstr "There seems to be someone inside {TargetSceneName}, but Arts' sensing says that they're unconscious, do you really want to enter"
 
 msgid "进去|{Name}在源石技艺的帮助下，没有让任何人发现，悄悄地溜了进来"
-msgstr ""
+msgstr "Enter|{Name} entered without being noticed thanks to Originium Arts"
 
 msgid "跟随服务"
-msgstr ""
+msgstr "Following Service"
 
 msgid "否|是，智能跟随（在吃饭/上厕所/休息/睡觉等生理需求时会暂离，其他情况下跟随）"
-msgstr ""
+msgstr "No|Yes, activate Intelligence Following (leave only when having physical needs)"
 
 msgid "起床"
-msgstr ""
+msgstr "Wake up"
 
 msgid "伦蒂尼姆火车站台"
-msgstr ""
+msgstr "Londinium Train Station"
 
 msgid "“叙拉古往事”"
-msgstr ""
+msgstr "\"Siracusan Retro\""
 
 msgid "莱塔尼亚之夜"
-msgstr ""
+msgstr "Leithanian Nights"
 
 msgid "萨米印象"
-msgstr ""
+msgstr "Sami Impressions"
 
 msgid "阿尔萨兰旅行营帐"
-msgstr ""
+msgstr "Arsalan Travel Tent"
 
 msgid "黑钢国际安全屋"
-msgstr ""
+msgstr "BSW Safehouse"
 
 msgid "每周轮换"
-msgstr ""
+msgstr "Swap weekly"
 
 msgid "否|是，每周一随机指定一名干员担任本周的助理"
-msgstr ""
+msgstr "No|Yes, randomly pick at Monday"
 
 msgid "白色大腿袜"
-msgstr ""
+msgstr "White thigh socks"
 
 msgid "白色及膝袜"
-msgstr ""
+msgstr "White knee socks"
 
 msgid "群交经验"
-msgstr ""
+msgstr "Group Sex EXP"
 
 msgid "群交"
-msgstr ""
+msgstr "Group sex"
 
 msgid "新入职干员安排体检"
-msgstr ""
+msgstr "New Operators' body check"
 
 msgid "开启后，新干员会先在博士办公室报到，然后前往体检科等待体检"
-msgstr ""
+msgstr "After enabling, new Operators will report at Doctor's Office, then wait in Body Check Department"
 
 msgid "岛上干员定期安排体检"
-msgstr ""
+msgstr "Regular body check"
 
 msgid "开启后，会根据已设定的时间周期，从目标对象中抽取人员发送体检安排，体检人会在对应时间前往体检科等待"
-msgstr ""
+msgstr "On enabling, Operators will be picked randomly at selected time"
 
 msgid "定期体检周期"
-msgstr ""
+msgstr "Regular body check interval"
 
 msgid "定期体检的周期，默认为每年体检一次"
-msgstr ""
+msgstr "Regular body check interval, default as once per year"
 
 msgid "每年体检一次|每月体检一次|每周体检一次|每天体检一次"
-msgstr ""
+msgstr "Once per year|Once per month|Once per week|Once per day"
 
 msgid "定期体检对象"
-msgstr ""
+msgstr "Regular body check targets"
 
 msgid "定期体检对象，默认为源石病患者干员"
-msgstr ""
+msgstr "Regular body check targets, default as Infected"
 
 msgid "源石病患者干员|全部干员|手动选择干员名单"
-msgstr ""
+msgstr "Infected|All|Choose manually"
 
 msgid "周期内已体检过的是否仍需体检"
-msgstr ""
+msgstr "Was repeated body check needed"
 
 msgid "默认为否，干员在同一周期内体过一次后便不会再被抽取体检，开启后则可以被多次抽取"
-msgstr ""
+msgstr "Default as no, Operators after body check in the interval won't be selected again"
 
 msgid "每次抽取体检人数"
-msgstr ""
+msgstr "Target count"
 
 msgid "每日0点抽取，平分安排到上午场和下午场，每日最多体检10人"
-msgstr ""
+msgstr "Choose at every 0000, spread to morning and noon, up to 10"
 
 msgid "每周的体检日"
-msgstr ""
+msgstr "Day for weekly check"
 
 msgid "可以手动选择每周的哪几天会抽选干员进行体检，默认为周末（即周六和周日两天）"
-msgstr ""
+msgstr "Can choose which day for body check, default as weekends"
 
 msgid "周末|手动选择"
-msgstr ""
+msgstr "Weekends|Manually pick"
 
 msgid "邀请群交"
-msgstr ""
+msgstr "Invite for group sex"
 
 msgid "邀请群交失败"
-msgstr ""
+msgstr "Failed to invite for group sex"
 
 msgid "结束群交"
-msgstr ""
+msgstr "End group sex"
 
 msgid "群交时博士体力为零中断"
-msgstr ""
+msgstr "Group sex ended due to Doctor's Stamina reaching 0"
 
 msgid "群交时自己体力为零退出"
-msgstr ""
+msgstr "Quitted group sex due to Stamina reaching 0"
 
 msgid "群交时NPC数量不足转为单人H"
-msgstr ""
+msgstr "Group sex swapped to single sex due to insufficient people"
 
 msgid "自己加入群交"
-msgstr ""
+msgstr "Self joining group sex"
 
 msgid "以队长身份出发执行外勤委托"
-msgstr ""
+msgstr "Headed to commission as leader"
 
 msgid "以队长身份完成外勤委托归舰"
-msgstr ""
+msgstr "Returned from commission as leader"
 
 msgid "被邀请加入群交，开始前往群交地点"
-msgstr ""
+msgstr "Invited for group sex"
 
 msgid "被任命为本地外交官"
-msgstr ""
+msgstr "Appointed as local diplomatist"
 
 msgid "被解除本地外交官的任命"
-msgstr ""
+msgstr "Expelled as local diplomatist"
 
 msgid "被任命为外派外交官"
-msgstr ""
+msgstr "Appointed as external diplomatist"
 
 msgid "被解除外派外交官的任命"
-msgstr ""
+msgstr "Expelled as external diplomatist"
 
 msgid "被要求每天穿不同的袜子"
-msgstr ""
+msgstr "Requested to wear different socks everyday"
 
 msgid "被要求晚上睡觉不锁门"
-msgstr ""
+msgstr "Requested to not lock door"
 
 msgid "禁止某些干员在游戏中出现"
-msgstr ""
+msgstr "Ban Operators"
 
 msgid "如果对某些干员不感兴趣，可以选择禁止她们在游戏中出现，未招募的会无法招募，已招募的会离岛并无法招募"
-msgstr ""
+msgstr "If not interested on some Operators, you can ban them from appearing, prohibiting them from being recruited, and recruited will left Rhodes Island"
 
 msgid "不禁止|禁止"
-msgstr ""
+msgstr "Don't|Ban"
 
 msgid "是否在处理公务时显示待处理事项"
-msgstr ""
+msgstr "Show situations needing handling"
 
 msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
-msgstr ""
+msgstr "On enabled, the state of all departments will be shown, and problematic spots will be hinted"

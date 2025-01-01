@@ -16368,12 +16368,48 @@ msgstr ""
 msgid "巫恋"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:14
-msgid "在叙拉古地区作为怪谈与传说被广为人知的少女，在调查时，被发现其根源在于少女无法控制自己的源石技艺，后作为感染者被罗德岛收容。批准其在接受治疗的同时作为干员参与部分轻度任务，以帮助她学会控制自身。"
+#: .\data\character\0254_巫恋.csv:13
+msgid "咬过一口的苹果，小小的牙印清晰可见。"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:33
-msgid "酒红色超低腰内裤"
+#: .\data\character\0254_巫恋.csv:14
+msgid "在叙拉古地区作为怪谈与传说被广为人知的少女，在调查时，被发现其根源在于少女无法控制自己的源石技艺，后作为感染者被罗德岛收容。批准其在接受治疗的同时作为干员参与部分轻度任务，以帮助她学会控制自身。\n你在古堡与少女待了半年，虽然她很厌烦你的喋喋不休，只要你拉长时间会发现巫恋有点离不开牢骚的你。\n随身穿着你带着她上岛时精心挑选的衣服。"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:15
+msgid "#FF69B4"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:46
+msgid "墨黑色小礼帽"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:47
+msgid "白色发箍麻花辫半扎发"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:48
+msgid "哥特式半袖垂膝露背式黑色连衣裙"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:49
+msgid "“妈妈”赠送的西洋式薄绸"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:50
+msgid "女童式花纹黑色薄丝安全裤"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:51
+msgid "白色渐变透肉及腰连裤袜"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:52
+msgid "黑色蕾丝边绑腿绸带"
+msgstr ""
+
+#: .\data\character\0254_巫恋.csv:53
+msgid "黑色带蝴蝶结安全女童鞋"
 msgstr ""
 
 #: .\data\character\0255_莫希.csv:4
