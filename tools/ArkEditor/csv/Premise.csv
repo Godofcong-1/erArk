@@ -392,6 +392,10 @@ not_night_salutation_time,NOT_NIGHT_SALUTATION_TIME,时间_当前,当前不是�
 still_30_minutes_before_end,STILL_30_MINUTES_BEFORE_END,时间_当前,距离行动结束时间还有至少30分钟
 chara_behavior_end_time_lateer_than_game_time,CHARA_BEHAVIOR_END_TIME_LATEER_THAN_GAME_TIME,时间_当前,角色行动结束时间晚于游戏时间
 time_over_a_year,TIME_OVER_A_YEAR,时间_当前,游戏时间超过一年
+time_spring,TIME_SPRING,时间_当前,当前是春季
+time_summer,TIME_SUMMER,时间_当前,当前是夏季
+time_autumn,TIME_AUTUMN,时间_当前,当前是秋季
+time_winter,TIME_WINTER,时间_当前,当前是冬季
 
 
 normal_all,NORMAL_ALL,属性_异常状态,没有任何异常的普通状态

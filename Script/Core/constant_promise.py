@@ -781,6 +781,14 @@ class Premise:
     """ 时间_当前 角色行动结束时间晚于游戏时间 """
     TIME_OVER_A_YEAR = "time_over_a_year"
     """ 时间_当前 游戏时间超过一年 """
+    TIME_SPRING = "time_spring"
+    """ 时间_当前 当前是春季 """
+    TIME_SUMMER = "time_summer"
+    """ 时间_当前 当前是夏季 """
+    TIME_AUTUMN = "time_autumn"
+    """ 时间_当前 当前是秋季 """
+    TIME_WINTER = "time_winter"
+    """ 时间_当前 当前是冬季 """
 
     #"""
     #异常状态类型：\n

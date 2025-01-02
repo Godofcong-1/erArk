@@ -840,6 +840,65 @@ def handle_time_over_a_year(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TIME_SPRING)
+def handle_time_spring(character_id: int) -> int:
+    """
+    当前是春季
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.month == 3:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_SUMMER)
+def handle_time_summer(character_id: int) -> int:
+    """
+    当前是夏季
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.month == 6:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_AUTUMN)
+def handle_time_autumn(character_id: int) -> int:
+    """
+    当前是秋季
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.month == 9:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TIME_WINTER)
+def handle_time_winter(character_id: int) -> int:
+    """
+    当前是冬季
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_time = cache.game_time
+    if now_time.month == 12:
+        return 1
+    return 0
+
 @add_premise(constant_promise.Premise.HAVE_FOOD)
 def handle_have_food(character_id: int) -> int:
     """
