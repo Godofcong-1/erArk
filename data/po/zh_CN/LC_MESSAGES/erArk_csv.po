@@ -20769,11 +20769,11 @@ msgid "1.对于每个场景，你需要写{talk_num}句话，每句话不低于3
 msgstr ""
 
 #: .\data\ui_text\text_ai_system_promote.csv:8
-msgid "2.你可以描写两个角色的对话、表情、动作、心理活动。"
+msgid "2.你可以描写两个角色的对话台词、表情、肢体动作、心理活动。你只需要描述动作本身，不要描述动作之前的剧情，或者动作之后的剧情发展。"
 msgstr ""
 
 #: .\data\ui_text\text_ai_system_promote.csv:9
-msgid "3.你的描写必须非常细致、生动、充满文学感，可以适度的运用比喻、拟人、排比、成语等修辞手法，每种手法只能出现一次。"
+msgid "3.你的描写必须非常直白、通俗易懂，能准确体验出是谁在对谁做什么动作。在通俗易懂的基础上，可以适度地使用文学的手法，细致、生动描写一些动作的细节。"
 msgstr ""
 
 #: .\data\ui_text\text_ai_system_promote.csv:10
