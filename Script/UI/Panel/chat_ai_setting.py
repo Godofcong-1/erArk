@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, attr_calculation
+from Script.Design import attr_text, attr_calculation, game_time
 import openai
 import google.generativeai as genai
 import concurrent.futures
@@ -132,7 +132,9 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     target_character_data = cache.character_data[character_data.target_character_id]
     Name = character_data.name
     TargetNickName = target_character_data.name
-    Location = attr_text.get_scene_path_text(character_data.position)
+    Location = character_data.position[-1]
+    Season = game_time.get_month_text()
+    time = game_time.get_day_and_time_text()
     talk_num = cache.ai_setting.ai_chat_setting[9] + 1
     Behavior_Name = game_config.config_status[behavior_id].name
 
@@ -158,8 +160,6 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     # 生成模式
     if not translator:
         user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
-        # 地点
-        user_prompt += _("场景发生的地点是{0}。").format(Location)
         # 有交互对象时
         if character_id != 0 or character_data.target_character_id != 0:
             if character_id == 0:
@@ -177,7 +177,13 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
             # 名字
             user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
             # 动作
-            user_prompt += _("{0}正在对{1}进行的动作是{2}。").format(Name, TargetNickName, Behavior_Name)
+            user_prompt += _("{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。").format(Name, TargetNickName, Behavior_Name)
+            user_prompt += _("你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。")
+            user_prompt += _("以下是一些额外提供的参考信息，信息里包括了两个人的详细信息，你可以这些信息中挑选一部分来丰富对本次动作的描述，你只能直接使用这些信息本身，不能从这些信息中联想或者猜测其他的信息：")
+            # 地点
+            user_prompt += _("场景发生的地点是{0}。").format(Location)
+            # 时间
+            user_prompt += _("当前的季节是{0}，当前的时间是{1}。").format(Season, time)
             # 关系
             favorability = npc_character_data.favorability[0]
             favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
@@ -277,12 +283,17 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
         else:
             user_prompt += _("在当前的场景里，{0}是医药公司的领导人之一，被称为博士。").format(Name)
             user_prompt += _("{0}正在进行的动作是{1}。").format(Name, Behavior_Name)
+            # 地点
+            user_prompt += _("场景发生的地点是{0}。").format(Location)
+            # 时间
+            user_prompt += _("当前的季节是{0}，当前的时间是{1}。").format(Season, time)
     # 翻译模式
     else:
         user_prompt = _('你需要将一段文本翻译为')
         user_prompt += normal_config.config_normal.language
         user_prompt += _('语言。如果文本中有有\{\}括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本：')
         user_prompt += original_text
+    # print(f'user_prompt = {user_prompt}')
     # 开始调用AI
 
     # 调用OpenAI
