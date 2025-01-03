@@ -948,6 +948,8 @@ class Rhodes_Island:
         # 工程部
         self.maintenance_place: Dict[int, Tuple[str]] = {}
         """ 当前每个角色的待检修地点，角色id:地点 """
+        self.facility_damage_data: Dict[str, int] = {}
+        """ 设施损坏数据，地点名str:损坏值int """
 
         # 仓储区
         self.warehouse_capacity: int = 0

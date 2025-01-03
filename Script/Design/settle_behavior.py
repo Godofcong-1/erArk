@@ -316,6 +316,11 @@ def handle_instruct_data(
         talk.handle_talk(character_id)
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
+        # 娱乐和工作类的指令则进行一次设施损坏检测
+        if behavior_id in game_config.config_status:
+            status_data = game_config.config_status[behavior_id]
+            if _('娱乐') in status_data.tag or _('工作') in status_data.tag:
+                constant.settle_behavior_effect_data[1751](character_id, add_time, change_data, now_time)
     # 进行二段结算
     check_second_effect(character_id, change_data)
     # 如果是玩家对NPC的行为，则额外进行对方的二段结算

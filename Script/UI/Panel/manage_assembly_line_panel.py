@@ -33,6 +33,14 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
     un_normal = False
     return_text = ""
 
+    # 计算设施损坏
+    damage_down = 0
+    for facility_str in cache.rhodes_island.facility_damage_data:
+        if '制造加工' in facility_str:
+            damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
+    # 计算总调整值
+    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
+
     # 遍历流水线
     for assembly_line_id in cache.rhodes_island.assembly_line:
         now_formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
@@ -46,11 +54,9 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
             else:
                 max_time = cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
             # 生产效率
-            produce_effect = cache.rhodes_island.assembly_line[assembly_line_id][2]
-            # 公务的总效率
-            produce_effect *= cache.rhodes_island.effectiveness / 100
+            produce_effect = cache.rhodes_island.assembly_line[assembly_line_id][2] / 100
             # 计算最大生产数
-            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num_max = int(max_time * produce_effect * adjust)
             produce_num = produce_num_max
             # print(f"debug 流水线{assembly_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
@@ -72,6 +78,9 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
 
                 now_text = _("\n 流水线{0}:").format(assembly_line_id)
                 now_text += _("上次结算是{0}时，到现在已过{1}小时，").format(cache.rhodes_island.assembly_line[assembly_line_id][4], max_time)
+                # 如果有设备故障，则输出信息
+                if damage_down > 0:
+                    now_text += _("由于设备故障，生产效率下降{0}%，").format(damage_down)
                 if produce_num < produce_num_max:
                     now_text += _("由于原料不足，最大可以生产{0}个，实际").format(produce_num)
                     un_normal = True

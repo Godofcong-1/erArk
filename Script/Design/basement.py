@@ -442,16 +442,29 @@ def settle_office_work():
     # 遍历全设施，获取等级的和
     for facility_cid in cache.rhodes_island.facility_level:
         all_facility_level += cache.rhodes_island.facility_level[facility_cid]
-    # 总工作量为设施等级和*10
-    all_work = all_facility_level * 10
+    # 总工作量为设施等级和*10+干员数量
+    all_work = all_facility_level * 10 + len(cache.npc_id_got)
     # 根据当前剩余工作量和总工作量的比例，计算效率
     effectiveness_change = ((all_work / 2) - now_work) / all_work * 100
     if effectiveness_change > 0:
         effectiveness_change *= 2
+    # 计算设施损坏
+    max_damage_down = 0
+    for facility_str in cache.rhodes_island.facility_damage_data:
+        if max_damage_down < cache.rhodes_island.facility_damage_data[facility_str]:
+            max_damage_down = cache.rhodes_island.facility_damage_data[facility_str]
+    # 如果没有设备出现严重损坏，则增加全局效率
+    if max_damage_down < 5:
+        effectiveness_change += 5
+    # 否则减少全局效率
+    else:
+        effectiveness_change -= max_damage_down
     cache.rhodes_island.effectiveness = 100 + effectiveness_change
     # 效率不会小于50，也不会大于200
     cache.rhodes_island.effectiveness = min(cache.rhodes_island.effectiveness,200)
     cache.rhodes_island.effectiveness = max(cache.rhodes_island.effectiveness,50)
+    # 保留一位小数
+    cache.rhodes_island.effectiveness = round(cache.rhodes_island.effectiveness,1)
     # 取0.3~0.7的随机数，作为新增的工作量
     add_work = random.randint(30,70) / 100 * all_work
     # 把新增的工作量加入当前剩余工作量
@@ -460,9 +473,15 @@ def settle_office_work():
     cache.rhodes_island.office_work = min(cache.rhodes_island.office_work,all_work)
     cache.rhodes_island.office_work = max(cache.rhodes_island.office_work,0)
     # 输出提示信息
+    now_draw_text = _("\n今日剩余待处理公务量为{0}，").format(now_work)
+    if max_damage_down < 5:
+        now_draw_text += _("且各区块设施运行基本正常，")
+    else:
+        now_draw_text += _("且部分区块设施出现较大故障，")
+    now_draw_text += _("因此今日罗德岛的各设施的总效率为{0}%\n").format(cache.rhodes_island.effectiveness)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _("\n今日剩余待处理公务量为{0}，因此今日罗德岛的各设施的总效率为{1}%\n").format(now_work, cache.rhodes_island.effectiveness)
+    now_draw.text = now_draw_text
     now_draw.draw()
 
 
@@ -473,8 +492,15 @@ def settle_income():
 
     # 计算医疗部收入
     today_cure_income = int(cache.rhodes_island.cure_income)
+    # 计算设施损坏
+    damage_down = 0
+    for facility_str in cache.rhodes_island.facility_damage_data:
+        if '医疗' in facility_str:
+            damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
+    # 计算总调整值
+    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
     # 计算总收入
-    today_all_income = int(today_cure_income * cache.rhodes_island.effectiveness / 100)
+    today_all_income = int(today_cure_income * adjust)
     # 转化为龙门币
     cache.rhodes_island.materials_resouce[1] += today_all_income
 
@@ -485,9 +511,13 @@ def settle_income():
     cache.rhodes_island.all_income = 0
 
     # 输出提示信息
+    now_draw_text = "\n"
+    if damage_down:
+        now_draw_text += _("医疗部设施损坏，效率降低{0}%\n").format(damage_down)
+    now_draw_text += _("今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n").format(today_cure_income, today_all_income)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
-    now_draw.text = _("\n今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n").format(today_cure_income, today_all_income)
+    now_draw.text = now_draw_text
     now_draw.draw()
 
 

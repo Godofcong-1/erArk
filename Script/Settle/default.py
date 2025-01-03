@@ -3079,6 +3079,40 @@ def handle_wait_unitl_traget_action_end(
     update.game_update_flow(add_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
+def handle_facility_damage_check(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    几率判定自己所在地点是否造成损坏
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 获取当前位置
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    # 计算已损坏次数
+    damage_count = 0
+    if scene_path_str in cache.rhodes_island.facility_damage_data:
+        damage_count = cache.rhodes_island.facility_damage_data[scene_path_str]
+    # 计算损坏几率
+    damage_rate = 5 / (2 ** damage_count)
+    damage_rate = max(damage_rate, 0)
+    # 掷骰子
+    if random.random() < (damage_rate / 100):
+        # 损坏
+        damage_count += 1
+        cache.rhodes_island.facility_damage_data[scene_path_str] = damage_count
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_MEDIUM_HIT_POINT)
 def handle_add_medium_hit_point(
         character_id: int,
@@ -7470,6 +7504,35 @@ def handle_board_game_lose_add_adjust(
     # 习得
     base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = change_data)
     base_chara_state_common_settle(character_data.target_character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = ai_level, change_data = target_change)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAINTENANCE_ADD_ADJUST)
+def handle_maintenance_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （维护设施用）修复当前地点的损坏设施
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 获取当前位置
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    # 检查是否在损坏设施数据中
+    if scene_path_str in cache.rhodes_island.facility_damage_data:
+        repair_num = character_data.ability[48]
+        cache.rhodes_island.facility_damage_data[scene_path_str] -= repair_num
+        # 修复后如果小于等于0则去掉
+        if cache.rhodes_island.facility_damage_data[scene_path_str] <= 0:
+            cache.rhodes_island.facility_damage_data.pop(scene_path_str)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

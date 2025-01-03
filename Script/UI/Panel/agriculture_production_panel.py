@@ -31,6 +31,14 @@ def settle_agriculture_line(draw_flag = True):
     # 生产是否有问题
     un_normal = False
     return_text = ""
+    # 计算设施损坏
+    damage_down = 0
+    for facility_str in cache.rhodes_island.facility_damage_data:
+        if '疗养庭院' in facility_str:
+            damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
+    # 计算总调整值
+    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
+
     # 遍历药田
     for agriculture_line_id in cache.rhodes_island.herb_garden_line:
         resouce_id = cache.rhodes_island.herb_garden_line[agriculture_line_id][0]
@@ -40,11 +48,9 @@ def settle_agriculture_line(draw_flag = True):
 
             # 每天生产一次
             max_time = 10
-            produce_effect = cache.rhodes_island.herb_garden_line[agriculture_line_id][2]
-            # 公务的总效率
-            produce_effect *= cache.rhodes_island.effectiveness / 100
+            produce_effect = cache.rhodes_island.herb_garden_line[agriculture_line_id][2] / 100
             # 计算最大生产数
-            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num_max = int(max_time * produce_effect * adjust)
             produce_num = produce_num_max
             # print(f"debug 药田{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
@@ -54,6 +60,9 @@ def settle_agriculture_line(draw_flag = True):
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
                 now_text = _("\n今日药田共生产了{0}个{1}").format(produce_num, resouce_data.name)
+                # 如果有设备故障，则输出信息
+                if damage_down > 0:
+                    now_text += _("，由于设备故障，生产效率下降{0}%").format(damage_down)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity
@@ -79,11 +88,9 @@ def settle_agriculture_line(draw_flag = True):
 
             # 每天生产一次
             max_time = 10
-            produce_effect = cache.rhodes_island.green_house_line[agriculture_line_id][2]
-            # 公务的总效率
-            produce_effect *= cache.rhodes_island.effectiveness / 100
+            produce_effect = cache.rhodes_island.green_house_line[agriculture_line_id][2] / 100
             # 计算最大生产数
-            produce_num_max = int(max_time * produce_effect / 100)
+            produce_num_max = int(max_time * produce_effect * adjust)
             produce_num = produce_num_max
             # print(f"debug 温室{agriculture_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
@@ -93,6 +100,9 @@ def settle_agriculture_line(draw_flag = True):
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
 
                 now_text = _("\n今日温室共生产了{0}个{1}").format(produce_num, resouce_data.name)
+                # 如果有设备故障，则输出信息
+                if damage_down > 0:
+                    now_text += _("，由于设备故障，生产效率下降{0}%").format(damage_down)
                 # 不会超过仓库容量
                 if cache.rhodes_island.materials_resouce[resouce_id] > cache.rhodes_island.warehouse_capacity:
                     cache.rhodes_island.materials_resouce[resouce_id] = cache.rhodes_island.warehouse_capacity

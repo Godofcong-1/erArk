@@ -661,6 +661,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证 """
     BOARD_GAME_LOSE_ADD_ADJUST = 533
     """ 指令_专用结算 （桌游输了用）根据游戏难度获得好感度、习得 """
+    MAINTENANCE_ADD_ADJUST = 534
+    """ 指令_专用结算 （维护设施用）修复当前地点的损坏设施 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
@@ -1031,6 +1033,8 @@ class BehaviorEffect:
     WAIT_UNITL_TRAGET_ACTION_END = 1701
     """ 行动 玩家等待至交互对象行动结束 """
 
+    FACILITY_DAMAGE_CHECK = 1751
+    """ 设施 几率判定自己所在地点是否造成损坏 """
 
 class SecondEffect:
     """二段结算效果函数"""

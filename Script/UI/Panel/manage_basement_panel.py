@@ -392,14 +392,33 @@ class Manage_Basement_Panel:
                         now_text += _(" 暂无")
 
             if department == _("工程部"):
-                now_text += _("\n  当前待检修地点：")
-                maintenance_flag = True
+                # 故障地点与设施损坏数
+                now_text += _("\n  当前故障地点与设施损坏数：")
+                facility_damage_text = ""
+                now_count = 0
+                for scene_path_str in cache.rhodes_island.facility_damage_data:
+                    # 每行显示3个
+                    if now_count % 3 == 0:
+                        facility_damage_text += "\n"
+                    facility_damage_text += f"    {scene_path_str}-{cache.rhodes_island.facility_damage_data[scene_path_str]}"
+                    now_count += 1
+                if facility_damage_text == "":
+                    facility_damage_text = _("\n    无")
+                now_text += facility_damage_text
+                # 检修人员与其负责地点
+                now_text += _("\n  当前检修人员与其负责地点：")
+                npc_and_place_text = ""
+                now_count = 0
                 for chara_id in cache.rhodes_island.maintenance_place:
                     if len(cache.rhodes_island.maintenance_place[chara_id]):
-                        now_text += f"{cache.rhodes_island.maintenance_place[chara_id]}"
-                        maintenance_flag = False
-                if maintenance_flag:
-                    now_text += _(" 暂无")
+                        if now_count % 3 == 0:
+                            npc_and_place_text += "\n"
+                        chara_name = cache.character_data[chara_id].name
+                        npc_and_place_text += f"    {chara_name}-{cache.rhodes_island.maintenance_place[chara_id]}"
+                        now_count += 1
+                if npc_and_place_text == "":
+                    npc_and_place_text = _("\n    无")
+                now_text += npc_and_place_text
 
             elif department == _("医疗部"):
                 patient_cured,patient_now = str(cache.rhodes_island.patient_cured),str(cache.rhodes_island.patient_now)
