@@ -6253,6 +6253,132 @@ def handle_target_obey_0_or_le_2(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PLAYER_HAVE_OTHER_LOVER)
+def handle_player_have_other_lover(character_id: int) -> int:
+    """
+    玩家有除了自己之外的恋人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    for chara_id in cache.npc_id_got:
+        if chara_id == 0:
+            continue
+        if chara_id == character_id:
+            continue
+        if handle_self_fall_love(chara_id) and (handle_self_fall_3(chara_id) or handle_self_fall_4(chara_id)):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NO_OTHER_LOVER)
+def handle_player_no_other_lover(character_id: int) -> int:
+    """
+    玩家没有除了自己之外的恋人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_player_have_other_lover(character_id)
+
+
+@add_premise(constant_promise.Premise.PLAYER_HAVE_OTHER_LOVER_EXCEPT_TARGET)
+def handle_player_have_other_lover_except_target(character_id: int) -> int:
+    """
+    玩家有除了玩家交互对象之外的恋人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    for chara_id in cache.npc_id_got:
+        if chara_id == 0:
+            continue
+        if chara_id == pl_character_data.target_character_id:
+            continue
+        if handle_self_fall_love(chara_id) and (handle_self_fall_3(chara_id) or handle_self_fall_4(chara_id)):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NO_OTHER_LOVER_EXCEPT_TARGET)
+def handle_player_no_other_lover_except_target(character_id: int) -> int:
+    """
+    玩家没有除了玩家交互对象之外的恋人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_player_have_other_lover_except_target(character_id)
+
+
+@add_premise(constant_promise.Premise.PLAYER_HAVE_OTHER_PET)
+def handle_player_have_other_pet(character_id: int) -> int:
+    """
+    玩家有除了自己之外的宠物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    for chara_id in cache.npc_id_got:
+        if chara_id == 0:
+            continue
+        if chara_id == character_id:
+            continue
+        if handle_self_fall_obey(chara_id) and (handle_self_fall_3(chara_id) or handle_self_fall_4(chara_id)):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NO_OTHER_PET)
+def handle_player_no_other_pet(character_id: int) -> int:
+    """
+    玩家没有除了自己之外的宠物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_player_have_other_pet(character_id)
+
+
+@add_premise(constant_promise.Premise.PLAYER_HAVE_OTHER_PET_EXCEPT_TARGET)
+def handle_player_have_other_pet_except_target(character_id: int) -> int:
+    """
+    玩家有除了玩家交互对象之外的宠物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    for chara_id in cache.npc_id_got:
+        if chara_id == 0:
+            continue
+        if chara_id == pl_character_data.target_character_id:
+            continue
+        if handle_self_fall_obey(chara_id) and (handle_self_fall_3(chara_id) or handle_self_fall_4(chara_id)):
+            return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NO_OTHER_PET_EXCEPT_TARGET)
+def handle_player_no_other_pet_except_target(character_id: int) -> int:
+    """
+    玩家没有除了玩家交互对象之外的宠物
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_player_have_other_pet_except_target(character_id)
+
+
 @add_premise(constant_promise.Premise.HAVE_FIRST_KISS)
 def handle_have_first_kiss(character_id: int) -> int:
     """
