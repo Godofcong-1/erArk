@@ -295,6 +295,7 @@ def judge_character_cant_move(character_id: int) -> int:
     # 临盆和产后
     if character_data.talent[22] == 1 or character_data.talent[23] == 1:
         cant_move_flag = True
+        character_data.desire_point = 0 # 欲望锁0
         # character.init_character_behavior_start_time(character_id, cache.game_time)
         # character_data.behavior.behavior_id = constant.Behavior.WAIT
         # character_data.state = constant.CharacterStatus.STATUS_WAIT
