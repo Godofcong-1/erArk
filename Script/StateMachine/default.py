@@ -2591,6 +2591,16 @@ def character_work_maintenance_2(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.MAINTENANCE_FACILITIES
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
+    # 获取当前位置
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    # 检查是否在损坏设施数据中
+    if scene_path_str in cache.rhodes_island.facility_damage_data:
+        # 1级损坏，10分钟修复
+        if cache.rhodes_island.facility_damage_data[scene_path_str] == 1:
+            character_data.behavior.duration = 10
+        # 2级损坏，30分钟修复
+        elif cache.rhodes_island.facility_damage_data[scene_path_str] == 2:
+            character_data.behavior.duration = 30
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_REPAIR_EQUIPMENT)
