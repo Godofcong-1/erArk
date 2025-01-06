@@ -13096,211 +13096,215 @@ msgstr ""
 msgid "【生物工程部】：温蒂平常会在这里进行[生物工程]的研究，帮助博士或者干员们进行基因改造（未实装）"
 msgstr ""
 
-#: .\data\csv\Tip.csv:37
+#: .\data\csv\Tip.csv:36
+msgid "【运维部】：被安排为检修工程师干员会在这里检查罗德岛各区块的设施运行情况，发现问题后会前往有故障的地点进行[维护设施]"
+msgstr ""
+
+#: .\data\csv\Tip.csv:38
 msgid "【裁缝铺】：柏喙可以在这里为干员提供[服装定制]服务，给干员购买、更换特定的服装（未实装）"
 msgstr ""
 
-#: .\data\csv\Tip.csv:39
+#: .\data\csv\Tip.csv:40
 msgid "【舍管房】：在指定了当层的舍管之后，可以在这里进行[宿舍管理]，调整每个房间的干员，以及对宿舍进行改造（未实装）"
 msgstr ""
 
-#: .\data\csv\Tip.csv:41
+#: .\data\csv\Tip.csv:42
 msgid "【取餐区】：早上7~8点、中午12~13点、晚上17~18点是饭点，取餐区会在此时供应免费饭菜，可以到这里[购买食物]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:42
+#: .\data\csv\Tip.csv:43
 msgid "【多媒体室】：小型电影院，可以和电影兴趣小组的干员一起[看电影]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:43
+#: .\data\csv\Tip.csv:44
 msgid "【现代音乐排练室】：可以和喜欢流行乐的干员一起[唱歌]和[演奏乐器]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:44
+#: .\data\csv\Tip.csv:45
 msgid "【夕照区音乐室】：可以和喜欢古典乐的干员一起[唱歌]和[演奏乐器]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:45
+#: .\data\csv\Tip.csv:46
 msgid "【棋牌室】：可以和喜欢棋牌的干员一起[下棋]、[打麻将]、[打牌]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:46
+#: .\data\csv\Tip.csv:47
 msgid "【酒吧】：可以和喜欢喝酒的干员一起[品酒]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:47
+#: .\data\csv\Tip.csv:48
 msgid "【大水坑体验屋】：可以和喜欢水的干员一起[玩水]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:48
+#: .\data\csv\Tip.csv:49
 msgid "【厨房】：可以在这里[做饭]，获得料理经验，料理技能的等级关系到可以做的饭的种类和质量"
 msgstr ""
 
-#: .\data\csv\Tip.csv:49
+#: .\data\csv\Tip.csv:50
 msgid "【摄影棚】：可以在这里和喜欢摄影与当模特的干员一起[摄影]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:50
+#: .\data\csv\Tip.csv:51
 msgid "【糖果仙子宴会厅】：可以在这里和喜欢歌舞剧的干员一起[排演舞剧]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:51
+#: .\data\csv\Tip.csv:52
 msgid "【厨房】：被安排进行烹饪的厨师干员会在这里[做饭]，烹饪食物的质量与数量与料理技能等级有关，做出来的食物会在【取餐区】供应"
 msgstr ""
 
-#: .\data\csv\Tip.csv:53
+#: .\data\csv\Tip.csv:54
 msgid "【门诊室】/【急诊室】：被安排进行坐诊的医生干员会在这里[诊疗病人]，医治完毕后可以获得医疗经验和龙门币"
 msgstr ""
 
-#: .\data\csv\Tip.csv:54
+#: .\data\csv\Tip.csv:55
 msgid "【住院部】：怀孕后临盆的干员会在这里待产，可以来这里向她[听肚子里的动静]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:55
+#: .\data\csv\Tip.csv:56
 msgid "【体检科】：可以在这里对干员进行[身体检查]，仔细检查干员身体的每个部位，并制定[身体管理]的特殊安排"
 msgstr ""
 
-#: .\data\csv\Tip.csv:56
+#: .\data\csv\Tip.csv:57
 msgid "【体检科】：可以在这里详细安排干员的体检日程，系统会自动抽选符合条件的干员安排第二天进行体检"
 msgstr ""
 
-#: .\data\csv\Tip.csv:58
+#: .\data\csv\Tip.csv:59
 msgid "【人事办公室】：被安排进行招募干员的HR干员会在这里[招募干员]，检查招募进度或者调整招募方案可以使用[招募情况]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:60
+#: .\data\csv\Tip.csv:61
 msgid "【健身房】：可以在这里[锻炼身体]，从而提高体力和气力的上限"
 msgstr ""
 
-#: .\data\csv\Tip.csv:61
+#: .\data\csv\Tip.csv:62
 msgid "【木桩房】/【射击房】：可以在这里进行[战斗训练]，从而获得战斗经验，提高战斗技能"
 msgstr ""
 
-#: .\data\csv\Tip.csv:62
+#: .\data\csv\Tip.csv:63
 msgid "【游泳池】：可以在这里和喜欢游泳的干员一起[游泳]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:64
+#: .\data\csv\Tip.csv:65
 msgid "【图书馆】：可以在这里[借阅书籍]，选择自己想看的书借走后，就可以[读书]了"
 msgstr ""
 
-#: .\data\csv\Tip.csv:65
+#: .\data\csv\Tip.csv:66
 msgid "【图书馆】：如果想要举办图书会，或者催某人还书，可以在任命了图书馆管理员之后，进行[管理图书馆]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:67
+#: .\data\csv\Tip.csv:68
 msgid "【资源交易所】：可以在这里进行[资源交易]，买卖各种资源"
 msgstr ""
 
-#: .\data\csv\Tip.csv:68
+#: .\data\csv\Tip.csv:69
 msgid "【美食街】：这里的各个餐厅会提供自己地区的特色美食，既提供堂食，也可以打包"
 msgstr ""
 
-#: .\data\csv\Tip.csv:69
+#: .\data\csv\Tip.csv:70
 msgid "【酒店】：可以在任意一家酒店或者旅馆中[预定房间]，有不同档次的房间可以选择，在越高级的房间里会有越多的服务和特殊效果"
 msgstr ""
 
-#: .\data\csv\Tip.csv:70
+#: .\data\csv\Tip.csv:71
 msgid "【成人用品店】：可露希尔会在这里贩卖一些特殊的商品，可以在这里花费粉红凭证来[购买成人用品]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:71
+#: .\data\csv\Tip.csv:72
 msgid "【前卫街机厅】：可以在这里和喜欢街机的干员一起[玩街机游戏]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:72
+#: .\data\csv\Tip.csv:73
 msgid "【造型工作室】：可以在这里和喜欢时尚的干员一起体验[全身造型服务]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:73
+#: .\data\csv\Tip.csv:74
 msgid "【理发店】：可以在这里和喜欢折腾头发的干员一起[修整发型]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:75
+#: .\data\csv\Tip.csv:76
 msgid "【生产车间】：可以在这里进行[管理流水线]，调整要生产的产品种类以及各流水线上的工人"
 msgstr ""
 
-#: .\data\csv\Tip.csv:77
+#: .\data\csv\Tip.csv:78
 msgid "【外交办公室】：被安排邀请访客的干员会在这里[邀请访客]，检查邀请进度或者调整邀请对象可以使用[访客系统]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:78
+#: .\data\csv\Tip.csv:79
 msgid "【外交办公室】：查看和各势力之间的关系、安排外交官、调整外交策略等操作可以在这里进行[势力外交]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:79
+#: .\data\csv\Tip.csv:80
 msgid "【客房】：来访的客人会住在这里，并停留一段时间，在这期间如果对罗德岛和博士的印象满意的话，可能会留下成为干员"
 msgstr ""
 
-#: .\data\csv\Tip.csv:81
+#: .\data\csv\Tip.csv:82
 msgid "【外勤集合点】：可以在这里安排干员出发执行[外勤委托]，各个委托都有自己的需求和奖励，还会有特殊委托和角色专属委托等"
 msgstr ""
 
-#: .\data\csv\Tip.csv:82
+#: .\data\csv\Tip.csv:83
 msgid "【格纳库】：可以在这里[管理载具]，购买、查看和调整进行外勤委托所需要的载具"
 msgstr ""
 
-#: .\data\csv\Tip.csv:84
+#: .\data\csv\Tip.csv:85
 msgid "【教室】：被任命为教师工作的干员会在这里给学生们[授课]，帮助学生们获取各方面的经验"
 msgstr ""
 
-#: .\data\csv\Tip.csv:85
+#: .\data\csv\Tip.csv:86
 msgid "【育儿室】：出生后还是婴儿状态下的角色会在这里慢慢成长，母亲干员或者玩家可以来这里[照顾婴儿]，增长亲子感情并传授一些经验和技能"
 msgstr ""
 
-#: .\data\csv\Tip.csv:86
+#: .\data\csv\Tip.csv:87
 msgid "【黄澄澄游戏室】：可以在这里和做游戏的年幼干员们一起[过家家]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:87
+#: .\data\csv\Tip.csv:88
 msgid "【乌萨斯学生活动室】：可以在这里和乌萨斯学生会的干员们一起进行[社团活动]（未实装）"
 msgstr ""
 
-#: .\data\csv\Tip.csv:89
+#: .\data\csv\Tip.csv:90
 msgid "【香熏治疗室】：可以在这里对干员进行[香薰疗愈]，消耗香料资源，为其附加特殊的调香效果"
 msgstr ""
 
-#: .\data\csv\Tip.csv:90
+#: .\data\csv\Tip.csv:91
 msgid "【温室】：被任命为花草种植员的干员会在这里[种植与养护作物]，种植的植物可以用来作为香料系的资源"
 msgstr ""
 
-#: .\data\csv\Tip.csv:91
+#: .\data\csv\Tip.csv:92
 msgid "【药田】：被任命为药材种植员的干员会在这里[种植与养护作物]，种植的植物可以用来作为药材系的资源"
 msgstr ""
 
-#: .\data\csv\Tip.csv:92
+#: .\data\csv\Tip.csv:93
 msgid "【温室】/【药田】：可以在这里进行[管理农业生产]，调整要种植的作物种类以及各个农田上的种植员"
 msgstr ""
 
-#: .\data\csv\Tip.csv:94
+#: .\data\csv\Tip.csv:95
 msgid "【更衣室】：每天来洗澡的干员会先来这里[脱衣服]，把身上的衣服都放进衣柜里，然后再去洗澡。如果没有被发现的话，可以在这里[检查衣柜]来查看干员的衣服"
 msgstr ""
 
-#: .\data\csv\Tip.csv:95
+#: .\data\csv\Tip.csv:96
 msgid "【更衣室】：洗完澡的干员会[穿衣服]，换上浴巾或者浴袍，并把旧的衣服带回宿舍"
 msgstr ""
 
-#: .\data\csv\Tip.csv:96
+#: .\data\csv\Tip.csv:97
 msgid "【淋浴】：干员每天都会在这里进行[淋浴]，会清洗身体各部位和性器官的污浊，但如果是射进子宫内的精液则很难被清洗掉"
 msgstr ""
 
-#: .\data\csv\Tip.csv:97
+#: .\data\csv\Tip.csv:98
 msgid "【休息区】：被任命为按摩师工作的干员会在这里给疲劳的干员们[按摩]"
 msgstr ""
 
-#: .\data\csv\Tip.csv:98
+#: .\data\csv\Tip.csv:99
 msgid "【秘密通道】：不为人知的特殊通道，可以在这里偷窥到大浴场的每个房间，甚至还可以……？（未实装）"
 msgstr ""
 
-#: .\data\csv\Tip.csv:100
+#: .\data\csv\Tip.csv:101
 msgid "【甲板】罗德岛上最宽广的地方，如果苦恼于房间内有人数上限，想要与超过100名干员进行群交的话，就来这里吧"
 msgstr ""
 
-#: .\data\csv\Tip.csv:102
+#: .\data\csv\Tip.csv:103
 msgid "【监牢】：在将无意识的干员[装袋搬走]后，可以在这里使用[投入监牢]来监禁干员，或使用[解除囚禁]来释放干员"
 msgstr ""
 
-#: .\data\csv\Tip.csv:103
+#: .\data\csv\Tip.csv:104
 msgid "【调教室】：被任命为性爱练习生的隶属系干员会来这里使用道具进行[性爱练习]"
 msgstr ""
 

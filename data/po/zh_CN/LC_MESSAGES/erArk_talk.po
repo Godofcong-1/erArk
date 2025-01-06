@@ -45940,12 +45940,60 @@ msgstr ""
 msgid "{Name}的手指插入到{TargetName}的阴道中，感受着{TargetName}的阴道的温度和湿润度，来回的抽插让{TargetName}感到一阵阵的刺激"
 msgstr ""
 
+#: .\data\talk\sex\finger_insertion.csv:7
+msgid "{Name}将手指探入{TargetName}温暖的甬道，粗糙的指尖摸索着{TargetName}阴道内突出的敏感点。"
+msgstr ""
+
+#: .\data\talk\sex\finger_insertion.csv:8
+msgid "{Name}借助着{TargetName}阴道分泌的淫液，反复抠弄着{TargetName}洪水泛滥的小穴。"
+msgstr ""
+
+#: .\data\talk\sex\finger_insertion.csv:9
+msgid "{Name}将中指深深插入{TargetName}敏感的阴道中，随后借着搭在{TargetName}小腹上的大拇指，对{TargetName}的阴道发起了猛烈进攻。"
+msgstr ""
+
+#: .\data\talk\sex\finger_insertion.csv:10
+msgid "{Name}用手指挖掘着{TargetName}温暖潮湿的阴道，努力刺激的回报便是{TargetName}一阵阵的呻吟。"
+msgstr ""
+
 #: .\data\talk\sex\focus_blowjob.csv:6
 msgid "{TargetName}用力吸着{Name}的阴茎，让口腔内紧急地贴着阴茎的表面"
 msgstr ""
 
+#: .\data\talk\sex\focus_blowjob.csv:7
+msgid "{TargetName}卖力地吸吮着{Name}的肉棒，强大的负压使得{Name}的肉棒不断向深处进发。"
+msgstr ""
+
+#: .\data\talk\sex\focus_blowjob.csv:8
+msgid "{TargetName}将{Name}的阴茎抵在自己的上颚上，唾液在肉棒和口腔内壁之间被{TargetName}抽吸着，发出了下流的水声。"
+msgstr ""
+
+#: .\data\talk\sex\focus_blowjob.csv:9
+msgid "{TargetName}用自己湿润的口穴将{Name}的阴茎完全包裹住，灵活的舌头在负压的腔室内旋转刺激着{Name}的龟头。"
+msgstr ""
+
+#: .\data\talk\sex\focus_blowjob.csv:10
+msgid "{TargetName}尽全力抽空了自己口腔中的空气，{Name}的肉棒被负压牢牢吸住，难以移动分毫，只能任由{TargetName}的舌头顶着{Name}的马眼反复刺激。"
+msgstr ""
+
 #: .\data\talk\sex\footjob.csv:6
 msgid "{Name}让{TargetName}用双脚夹着自己的阴茎，上下摩擦"
+msgstr ""
+
+#: .\data\talk\sex\footjob.csv:7
+msgid "{TargetName}将{Name}滚烫的肉棒夹在了自己左脚的脚背和右脚的脚心之间，{TargetName}脸上带着一丝调笑，缓慢的前后移动着双足，滚动刺激着{Name}的阴茎。"
+msgstr ""
+
+#: .\data\talk\sex\footjob.csv:8
+msgid "{Name}指示{TargetName}双足合拢，只将足指全部翘起，留下一个完美的空间给{Name}发泄着欲望。"
+msgstr ""
+
+#: .\data\talk\sex\footjob.csv:9
+msgid "{TargetName}用自己软嫩的足底把{Name}的肉棒压在{Name}的小腹上，一下下碾轧着{Name}的阴茎，另一只脚调皮地一下下挑动着{Name}的阴囊，将{Name}逐渐抛向快感的高峰。"
+msgstr ""
+
+#: .\data\talk\sex\footjob.csv:10
+msgid "{TargetName}交叉着双腿，将两只白皙的软足叠在一起，用大拇指的足缝一上一下地夹住了{Name}的肉棒，随后灵活地用脚撸动着{Name}的阴茎。"
 msgstr ""
 
 #: .\data\talk\sex\give_blowjob.csv:6
@@ -45956,28 +46004,140 @@ msgstr ""
 msgid "{Name}的阴茎在{TargetName}的眼镜上摩擦，感受着镜面和镜腿摩擦阴茎的触感"
 msgstr ""
 
+#: .\data\talk\sex\glasses_job.csv:7
+msgid "{Name}将滚烫的龟头压在{TargetName}的眼镜上，升腾的热气凝结在冰冷镜面上，光滑的触感带着寒气刺激着{Name}的肉棒。"
+msgstr ""
+
+#: .\data\talk\sex\glasses_job.csv:8
+msgid "{Name}将阴茎夹在了{TargetName}被迫闭上的眼睛和被肉棒挑起的眼镜之间，两侧截然相反的触感随着{Name}的每一次微动产生着快感。"
+msgstr ""
+
+#: .\data\talk\sex\glasses_job.csv:9
+msgid "{Name}按捺不住自己的欲望，按住{TargetName}的后脑，在{TargetName}的眼镜上摩擦着自己的肉棒，陌生的触感竟也能为{Name}带来些许快感。"
+msgstr ""
+
+#: .\data\talk\sex\glasses_job.csv:10
+msgid "{Name}在{TargetName}的眼镜上摩擦着自己的肉棒，先走汁随着{Name}狂乱的的动作在{TargetName}的眼镜和脸上撒得到处都是。"
+msgstr ""
+
 #: .\data\talk\sex\gloves_job.csv:6
 msgid "{Name}把阴茎插进了{TargetName}戴着的手套里，感受着手套的布料与手部的皮肤双重包裹与摩擦阴茎的触感"
+msgstr ""
+
+#: .\data\talk\sex\gloves_job.csv:7
+msgid "{Name}强硬地将坚硬的肉棒塞到了{TargetName}的手套中，感受着布料的粗糙感和{TargetName}掌心的柔软共同缔造的奇特快感。"
+msgstr ""
+
+#: .\data\talk\sex\gloves_job.csv:8
+msgid "{Name}用手引导着{TargetName}隔着手套握住{Name}的肉棒，一下下利用手套的摩擦力撸动着，随着快感的提升，就算手套也没法隔离{Name}阴茎的温度。"
+msgstr ""
+
+#: .\data\talk\sex\gloves_job.csv:9
+msgid "在{Name}的指示下，{TargetName}脱下了一只手套，套在了{Name}的阴茎上，任由{Name}的欲望浸染着曾经会，未来也将要包裹着自己手掌的布料。"
+msgstr ""
+
+#: .\data\talk\sex\gloves_job.csv:10
+msgid "{TargetName}褪下了一只手套，十指交错，用双手手掌包裹着{Name}的肉棒。\n温暖与冰冷，软嫩与粗糙，截然相反的感官刺激作用在{Name}的阴茎两旁，随着{TargetName}的开始撸动而融合，创造出了一种复合的快感。"
 msgstr ""
 
 #: .\data\talk\sex\group_sex_end.csv:6
 msgid "{Name}结束了和{TargetName}等人的一起H。"
 msgstr ""
 
+#: .\data\talk\sex\group_sex_end.csv:7
+msgid "翻云覆雨过后，{Name}和{TargetName}等人躺在一起，享受着片刻安宁。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_end.csv:8
+msgid "激烈的性爱结束了，{Name}和{TargetName}等人依偎在一起，感受着快感的余韵慢慢散去。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_end.csv:9
+msgid "{Name}和{TargetName}等人聚在一起，分享着彼此的体温，淫靡的蒸汽逐渐淡去，回归了生活的平静。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_end.csv:10
+msgid "{TargetName}等人在{Name}的安抚下逐渐平复了呼吸，美好的感觉在彼此之间无言的传递着。"
+msgstr ""
+
 #: .\data\talk\sex\group_sex_npc_hp_0_end.csv:6
 msgid "因为体力不足，{Name}只能提前离开了这次群交，自己先去休息"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_npc_hp_0_end.csv:7
+msgid "就算有人分担火力，{Name}仍然提前耗尽了体力，不得不提前离开了群交。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_npc_hp_0_end.csv:8
+msgid "{Name}的体力在这次淫趴中被迅速耗尽，为了避免在后续更激烈的战斗中倒下，{Name}选择提前离场去休息。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_npc_hp_0_end.csv:9
+msgid "{Name}的体力槽在激烈的性爱中迅速见底，在倒下之前，{Name}离开了活春宫，自行去休息。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_npc_hp_0_end.csv:10
+msgid "{Name}的体力难以继续群交，只得提前离场。"
 msgstr ""
 
 #: .\data\talk\sex\group_sex_pl_hp_0_end.csv:6
 msgid "因为体力不足，{Name}只能结束了这次群交"
 msgstr ""
 
+#: .\data\talk\sex\group_sex_pl_hp_0_end.csv:7
+msgid "在多人的轮番榨取下，{Name}耗尽了体力，不得不提前退场。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_pl_hp_0_end.csv:8
+msgid "双拳难敌四掌，更何况{Name}只能使用一把圣剑去面对那么多如饥似渴的家伙们。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_pl_hp_0_end.csv:9
+msgid "耗尽体力的{Name}看着面前仍然不满足的众人不由得流下冷汗，为了生命着想，{Name}赶紧尿遁离开了这次群交。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_pl_hp_0_end.csv:10
+msgid "{Name}的体力在多人的车轮战之下被消耗殆尽，只得提前离开群交，放下饥渴的众人先去休息。"
+msgstr ""
+
 #: .\data\talk\sex\group_sex_to_h.csv:6
 msgid "因为其他人已经离开了，所以{Name}又回到了和{TargetName}的单人H中"
 msgstr ""
 
+#: .\data\talk\sex\group_sex_to_h.csv:7
+msgid "{Name}完成了多人的挑战，现在在他面前的只有{Name}一人了。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_to_h.csv:8
+msgid "激烈的性爱过后，唯有{TargetName}和{Name}还留在淫趴上，等待着决战的到来。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_to_h.csv:9
+msgid "其他人陆陆续续的离开了这场性爱，只有{Name}和{TargetName}还在淫靡的气息中注视着对方，等待着下半场。"
+msgstr ""
+
+#: .\data\talk\sex\group_sex_to_h.csv:10
+msgid "{Name}和干员们团队战结束了，再次回到了和{TargetName}的单人性爱之中。"
+msgstr ""
+
 #: .\data\talk\sex\hairjob.csv:6
 msgid "{TargetName}用自己的头发包裹住{Name}的阴茎，用手握着被包裹的部分，上下摩擦"
+msgstr ""
+
+#: .\data\talk\sex\hairjob.csv:7
+msgid "{TargetName}撩起自己顺滑的头发，包裹着{Name}的肉棒，丝状的头发随着{TargetName}的撸动摩擦着{Name}的阴茎。"
+msgstr ""
+
+#: .\data\talk\sex\hairjob.csv:8
+msgid "{TargetName}将自己的头发缠绕着{Name}的阴茎，冠状沟处的触感为{Name}提供了新奇的快感。"
+msgstr ""
+
+#: .\data\talk\sex\hairjob.csv:9
+msgid "{TargetName}捏住自己的一缕头发，挑逗着{Name}的龟头和马眼。"
+msgstr ""
+
+#: .\data\talk\sex\hairjob.csv:10
+msgid "{TargetName}将自己的一把头发摊在手心，随后用这极具刺激性的“布料”包裹住了{Name}的龟头，{Name}的嘴角在{TargetName}的来回摩擦中漏出了一阵阵的呻吟。"
 msgstr ""
 
 #: .\data\talk\sex\handjob.csv:6
@@ -46036,6 +46196,22 @@ msgstr ""
 msgid "{TargetName}一边握着{Name}的阴茎上下撸动，一边用嘴舔舐着{Name}的龟头"
 msgstr ""
 
+#: .\data\talk\sex\hand_blowjob.csv:7
+msgid "{TargetName}的小嘴含住{Name}的龟头，舌头不断刺激着冠状沟和马眼，同时一手撸动着{Name}的肉棒，一手按摩着{Name}的阴囊。"
+msgstr ""
+
+#: .\data\talk\sex\hand_blowjob.csv:8
+msgid "{TargetName}张开嘴，舌头不断扫过{Name}的龟头，两只手则共同上下按压着{Name}的输精管处。"
+msgstr ""
+
+#: .\data\talk\sex\hand_blowjob.csv:9
+msgid "{TargetName}卖力地吸吮着{Name}的肉棒，不雅的唾液从嘴角流下，滴落到了{TargetName}的手上，为{TargetName}的手交服侍提供了润滑。"
+msgstr ""
+
+#: .\data\talk\sex\hand_blowjob.csv:10
+msgid "{TargetName}不住地亲吻着{Name}的龟头，同时双手也充满爱意地刺激着{Name}的竿身。"
+msgstr ""
+
 #: .\data\talk\sex\hat_job.csv:6
 msgid "{Name}的阴茎在{TargetName}的帽子上摩擦，感受着帽子的布料包裹和摩擦阴茎的触感"
 msgstr ""
@@ -46066,6 +46242,22 @@ msgstr ""
 
 #: .\data\talk\sex\h_interrupt.csv:6
 msgid "{Name}在和{TargetName}的H时被{HInterruptCharaName}的闯入中断了"
+msgstr ""
+
+#: .\data\talk\sex\h_interrupt.csv:7
+msgid "正在兴头上的{Name}和{TargetName}在{HInterruptCharaName}的闯入下被打断了。"
+msgstr ""
+
+#: .\data\talk\sex\h_interrupt.csv:8
+msgid "{Name}和{TargetName}将视线从彼此身上抽离，意外地看着闯入的{HInterruptCharaName}，随后在尴尬中中断了性爱。"
+msgstr ""
+
+#: .\data\talk\sex\h_interrupt.csv:9
+msgid "{HInterruptCharaName}的意外到来迫使{Name}和{TargetName}停下了性事。"
+msgstr ""
+
+#: .\data\talk\sex\h_interrupt.csv:10
+msgid "在{HInterruptCharaName}的突入和注视下，{Name}和{TargetName}选择中断和彼此的肉体连接。"
 msgstr ""
 
 #: .\data\talk\sex\join_group_sex.csv:6

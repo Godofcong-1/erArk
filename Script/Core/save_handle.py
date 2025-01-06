@@ -345,7 +345,7 @@ def update_tem_character(loaded_dict):
     loaded_dict["npc_tem_data"].extend(cache_dict.values())
     update_count += len(cache_dict)
 
-    # 更新新角色
+    # 更新新增角色
     update_count += update_new_character(loaded_dict)
     # 修正loaded_dict["npc_tem_data"]的元素的序号，如果与实际的序号不一致，将其修正
     for key, value in loaded_dict["character_data"].items():
