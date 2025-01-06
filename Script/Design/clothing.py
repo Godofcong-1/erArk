@@ -49,7 +49,7 @@ def get_cloth_from_dormitory_locker(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         tem_character = cache.npc_tem_data[character_id - 1]
-        tem_cloth_list = tem_character.Cloth
+        tem_cloth_list = tem_character.Cloth.copy()
         # 检查宿舍衣柜中是否有衣服
         wear_locker_flag = False
         for cloth_type in character_data.cloth.cloth_locker_in_dormitory:
