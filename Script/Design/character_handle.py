@@ -320,14 +320,27 @@ def new_character_get_dormitory(character_id: int):
         guest_room = {
             x: 0 for j in [k[1] for k in sorted(guest_room.items(), key=lambda x: x[0])] for x in j
         }
+        final_room_list = []
+        for room_id in game_config.config_facility_open:
+            # 跳过非客房和未开放的客房
+            if _("客房") not in game_config.config_facility_open[room_id].name:
+                continue
+            # 跳过未开放的客房
+            cache.rhodes_island.facility_open.setdefault(room_id,False)
+            if not cache.rhodes_island.facility_open[room_id]:
+                continue
+            # 遍历检查是否有同名客房
+            for room_full_path in guest_room:
+                if game_config.config_facility_open[room_id].name in room_full_path:
+                    final_room_list.append(room_full_path)
         npc_count = 0
-        for now_character_id in cache.npc_id_got:
+        for now_character_id in cache.rhodes_island.visitor_info:
             now_character_data = cache.character_data[now_character_id]
             # 客房每个人住一间
             if "客房" in now_character_data.dormitory:
                 npc_count += 1
         n = npc_count
-        now_room = list(guest_room.keys())[n]
+        now_room = final_room_list[n]
         character_data.dormitory = now_room
     else:
         dormitory = {
