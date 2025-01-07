@@ -645,54 +645,38 @@ class Edit_Group_Sex_Temple_Panel:
     def show_invite_npc_panel(self):
         """绘制可邀请的NPC列表"""
         from Script.Design import character
+        from Script.UI.Panel import normal_panel
         # 当前地点的角色列表
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
         now_scene_character_list = scene_data.character_list
 
         while 1:
-            line = draw.LineDraw("-", self.width)
-            line.draw()
-            line_feed.draw()
-            return_list = []
-
-            # 绘制提示信息
-            info_draw = draw.NormalDraw()
-            info_draw.text = _("当前可邀请的干员有：\n\n")
-            info_draw.width = self.width
-            info_draw.draw()
-
-            # 遍历全部已有角色
-            chara_count = 0
-            for chara_id in cache.npc_id_got:
+            npc_id_got_list = sorted(cache.npc_id_got)
+            # 已选择的角色id列表
+            selected_id_list = []
+            final_list = []
+            # 遍历角色id
+            for chara_id in npc_id_got_list:
+                if chara_id == 0:
+                    continue
                 # 如果角色已在场景中，则跳过
                 if chara_id in now_scene_character_list:
                     continue
                 # 判断实行值是否足够，不够的也跳过
                 if character.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
                     continue
-                now_character_data = cache.character_data[chara_id]
-                name_draw_text = f"[{str(now_character_data.adv).rjust(4,'0')}]{now_character_data.name}"
-                name_draw = draw.LeftButton(name_draw_text, now_character_data.name, self.width / 5, cmd_func=self.invite_npc, args=(chara_id,))
-                # 如果已经被选择过，则改变颜色
+                # 判断是否被选择过
                 if handle_premise.handle_self_now_go_to_join_group_sex(chara_id):
-                    name_draw = draw.LeftButton(name_draw_text, now_character_data.name, self.width / 5, normal_style='gold_enrod', cmd_func=self.invite_npc, args=(chara_id,))
-                name_draw.draw()
-                return_list.append(name_draw.return_text)
-                chara_count += 1
-                # 每五个换行一次
-                if chara_count != 0 and chara_count % 5 == 0:
-                    line_feed.draw()
-            
-            line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            line_feed.draw()
+                    selected_id_list.append(chara_id)
+                now_list = [chara_id, self.invite_npc, selected_id_list]
+                final_list.append(now_list)
+
+            # 调用通用选择按钮列表函数
+            return_list = normal_panel.common_select_npc_button_list_func(final_list, _("邀请干员参加群交"), _("当前可邀请的干员有：\n"))
 
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == _("返回"):
                 break
 
     def set_target_chara(self, temple_id: str, body_part: str, target_chara_id: int):
