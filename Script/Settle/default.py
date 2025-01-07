@@ -2032,17 +2032,18 @@ def handle_hypnosis_one(
     if character_data.dead:
         return
     # 结算理智消耗
-    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
-    change_data.sanity_point -= 20
-    character_data.pl_ability.today_sanity_point_cost += 20
+    santi_down = originium_arts.calculate_hypnosis_sanity_cost(character_data.target_character_id)
+    character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+    change_data.sanity_point -= santi_down
+    character_data.pl_ability.today_sanity_point_cost += santi_down
     # 结算催眠度增加
-    hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(character_data.target_character_id)
+    hypnosis_degree_grow = originium_arts.hypnosis_degree_calculation(character_data.target_character_id)
     # debug下催眠增加到999
     if cache.debug_mode:
         hypnosis_degree_grow = 999
     new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
     # 赋予到角色数据
-    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, originium_arts.hypnosis_degree_limit_calculation())
     target_change.hypnosis_degree += hypnosis_degree_grow
     # 判断催眠完成
     originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
@@ -2081,30 +2082,42 @@ def handle_hypnosis_all(
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     scene_character_list = scene_data.character_list.copy()
+    # 催眠角色列表
+    hypnosis_character_list = []
     # 去掉里的自己
     if character_id in scene_character_list:
         scene_character_list.remove(character_id)
+    # 基础理智消耗
+    sanity_point_cost = 10
+    # 遍历角色列表
+    for target_id in scene_character_list:
+        # 计算理智消耗
+        santi_down = originium_arts.calculate_hypnosis_sanity_cost(target_id)
+        sanity_point_cost += santi_down
+        hypnosis_character_list.append(target_id)
+        # 如果超出了现有理智，则取现有理智
+        if sanity_point_cost >= character_data.sanity_point:
+            sanity_point_cost = min(sanity_point_cost, character_data.sanity_point)
+            break
     # 结算理智消耗
-    sanity_point_cost = 10 + 10 * len(scene_character_list)
-    sanity_point_cost = min(sanity_point_cost, character_data.sanity_point)
     character_data.sanity_point = max(character_data.sanity_point - sanity_point_cost, 0)
     change_data.sanity_point -= sanity_point_cost
     character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
-    # 遍历角色列表
-    for target_id in scene_character_list:
+    # 遍历催眠角色列表
+    for target_id in hypnosis_character_list:
         target_character_data = cache.character_data[target_id]
         change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_character_data.cid]
         if target_character_data.dead:
             continue
         # 结算催眠度增加
-        hypnosis_degree_grow = attr_calculation.hypnosis_degree_calculation(target_id)
+        hypnosis_degree_grow = originium_arts.hypnosis_degree_calculation(target_id)
         # debug下催眠增加到999
         if cache.debug_mode:
             hypnosis_degree_grow = 999
         new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
         # 赋予到角色数据
-        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, attr_calculation.hypnosis_degree_limit_calculation())
+        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, originium_arts.hypnosis_degree_limit_calculation())
         target_change.hypnosis_degree += hypnosis_degree_grow
         # 判断催眠完成
         originium_arts.evaluate_hypnosis_completion(target_id)
@@ -2175,10 +2188,13 @@ def handle_target_hypnosis_increase_body_sensitivity_on(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
+    santi_down = 20
+    if target_character_data.talent[73]:
+        santi_down = 10
     target_character_data.hypnosis.increase_body_sensitivity = True
-    character_data.sanity_point = max(character_data.sanity_point - 20, 0)
-    change_data.sanity_point -= 20
-    character_data.pl_ability.today_sanity_point_cost += 20
+    character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+    change_data.sanity_point -= santi_down
+    character_data.pl_ability.today_sanity_point_cost += santi_down
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_OFF)
