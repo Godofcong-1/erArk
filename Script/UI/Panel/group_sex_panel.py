@@ -759,8 +759,10 @@ class Edit_Group_Sex_Temple_Panel:
         """邀请NPC"""
         from Script.Design import character
         character_data = cache.character_data[character_id]
+        if not handle_premise.handle_normal_24567(character_id):
+            info_draw_text = _("***{0}状态异常，无法召集***\n").format(character_data.name)
         # 如果已经邀请，则取消邀请
-        if character_data.sp_flag.go_to_join_group_sex:
+        elif character_data.sp_flag.go_to_join_group_sex:
             character_data.sp_flag.go_to_join_group_sex = False
             info_draw_text = _("\n已取消对{0}的群交邀请，{0}不会来这里参加群交了\n").format(character_data.name)
             # 结算等待
