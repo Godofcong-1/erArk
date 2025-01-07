@@ -1,5 +1,5 @@
 from types import FunctionType
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, handle_premise
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
@@ -73,6 +73,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     if now_gain_type == 0:
         npc_gain_and_lost_cumflation(character_id)
         npc_gain_semen_drinking_climax_talent(character_id)
+        npc_b_talent_change_for_lactation_flag(character_id)
     if now_gain_type == 3:
         npc_lost_no_menarche_talent(character_id)
 
@@ -205,6 +206,23 @@ def npc_gain_semen_drinking_climax_talent(character_id: int):
         now_draw_succed.text = now_draw_text
         now_draw_succed.draw()
 
+def npc_b_talent_change_for_lactation_flag(character_id: int):
+    """
+    干员因涨奶而发生的罩杯变化\n
+    """
+    character_data = cache.character_data[character_id]
+    if not character_data.talent[27]:
+        return
+
+    # 乳汁量大于80时，罩杯变大
+    if handle_premise.handle_milk_ge_80(character_id) and character_data.pregnancy.lactation_flag == False:
+        character_data.pregnancy.lactation_flag = True
+        body_part_talent_update(character_id, [121, 122, 123, 124, 125], True, _("胸部"))
+    # 乳汁量小于80时，罩杯变小
+    elif handle_premise.handle_milk_le_79(character_id) and character_data.pregnancy.lactation_flag == 1:
+        character_data.pregnancy.lactation_flag = False
+        body_part_talent_update(character_id, [121, 122, 123, 124, 125], False, _("胸部"))
+
 def npc_lost_no_menarche_talent(character_id: int):
     """
     干员失去未初潮素质\n
@@ -219,3 +237,30 @@ def npc_lost_no_menarche_talent(character_id: int):
             now_draw_succed = draw.WaitDraw()
             now_draw_succed.text = now_draw_text
             now_draw_succed.draw()
+
+def body_part_talent_update(character_id, talent_ids, increase, body_part):
+    """
+    根据素质id表来使角色的身体部位素质变大或变小
+    Keyword arguments:
+    character_id -- 角色id
+    talent_ids -- 素质id列表
+    increase -- 是否增加
+    body_part -- 身体部位
+    """
+    now_character_data = cache.character_data[character_id]
+    # 获取当前素质id
+    for talent_id in talent_ids:
+        if now_character_data.talent[talent_id] == 1:
+            now_talent_id = talent_id
+            break
+    # 更新素质id
+    if increase:
+        new_talent_id = min(now_talent_id + 1, talent_ids[-1])
+    else:
+        new_talent_id = max(now_talent_id - 1, talent_ids[0])
+    now_character_data.talent[now_talent_id] = 0
+    now_character_data.talent[new_talent_id] = 1
+    # 输出信息
+    change_text = _("变大了") if increase else _("变小了")
+    return_text = _("{0}的{1}{2}，现在是【{3}】\n".format(now_character_data.name, body_part, change_text, game_config.config_talent[new_talent_id].name))
+    return return_text

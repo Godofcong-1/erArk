@@ -343,6 +343,8 @@ class PREGNANCY:
         """ 角色最大乳汁量，单位毫升 """
         self.unconscious_fertilization: bool = True
         """ 无意识妊娠flag，如果进行过有意识下的H就会被置为False """
+        self.lactation_flag: bool = False
+        """ 涨奶标记 """
 
 
 class RELATIONSHIP:

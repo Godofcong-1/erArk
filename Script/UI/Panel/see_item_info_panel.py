@@ -3,6 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, text_handle, get_text, flow_handle, constant, py_cmd, game_type
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
+from Script.Design import handle_talent
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -273,34 +274,34 @@ class ItemNameDraw:
             now_draw.text += _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
         # 丰胸药
         elif self.item_id == 21:
-            now_draw.text += self.update_talent(target_character_id, [121, 122, 123, 124, 125], True, _("胸部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [121, 122, 123, 124, 125], True, _("胸部"))
         # 缩胸药
         elif self.item_id == 22:
-            now_draw.text += self.update_talent(target_character_id, [121, 122, 123, 124, 125], False, _("胸部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [121, 122, 123, 124, 125], False, _("胸部"))
         # 丰臀药
         elif self.item_id == 23:
-            now_draw.text += self.update_talent(target_character_id, [126, 127, 128], True, _("臀部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [126, 127, 128], True, _("臀部"))
         # 缩臀药
         elif self.item_id == 24:
-            now_draw.text += self.update_talent(target_character_id, [126, 127, 128], False, _("臀部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [126, 127, 128], False, _("臀部"))
         # 丰腿药
         elif self.item_id == 25:
-            now_draw.text += self.update_talent(target_character_id, [129, 130], True, _("腿部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [129, 130], True, _("腿部"))
         # 瘦腿药
         elif self.item_id == 26:
-            now_draw.text += self.update_talent(target_character_id, [129, 130], False, _("腿部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [129, 130], False, _("腿部"))
         # 丰足药
         elif self.item_id == 27:
-            now_draw.text += self.update_talent(target_character_id, [131, 132], True, _("足部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [131, 132], True, _("足部"))
         # 瘦足药
         elif self.item_id == 28:
-            now_draw.text += self.update_talent(target_character_id, [131, 132], False, _("足部"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [131, 132], False, _("足部"))
         # 外表年龄增长药
         elif self.item_id == 31:
-            now_draw.text += self.update_talent(target_character_id, [103, 104, 105, 106, 107], True, _("外表年龄"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [103, 104, 105, 106, 107], True, _("外表年龄"))
         # 外表年龄减少药
         elif self.item_id == 32:
-            now_draw.text += self.update_talent(target_character_id, [103, 104, 105, 106, 107], False, _("外表年龄"))
+            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [103, 104, 105, 106, 107], False, _("外表年龄"))
         # 泌乳药
         elif self.item_id == 33:
             # 如果已经有泌乳，则不再增加
@@ -325,34 +326,6 @@ class ItemNameDraw:
         # 绘制使用道具信息
         now_draw.width = window_width
         now_draw.draw()
-
-
-    def update_talent(self, character_id, talent_ids, increase, body_part):
-        """
-        根据素质id表来增加或减少角色素质
-        Keyword arguments:
-        character_id -- 角色id
-        talent_ids -- 素质id列表
-        increase -- 是否增加
-        body_part -- 身体部位
-        """
-        now_character_data = cache.character_data[character_id]
-        # 获取当前素质id
-        for talent_id in talent_ids:
-            if now_character_data.talent[talent_id] == 1:
-                now_talent_id = talent_id
-                break
-        # 更新素质id
-        if increase:
-            new_talent_id = min(now_talent_id + 1, talent_ids[-1])
-        else:
-            new_talent_id = max(now_talent_id - 1, talent_ids[0])
-        now_character_data.talent[now_talent_id] = 0
-        now_character_data.talent[new_talent_id] = 1
-        # 输出信息
-        change_text = _("变大了") if increase else _("变小了")
-        return_text = _("{0}的{1}{2}，现在是【{3}】\n".format(now_character_data.name, body_part, change_text, game_config.config_talent[new_talent_id].name))
-        return return_text
 
 
 class ItemInfoDraw:
