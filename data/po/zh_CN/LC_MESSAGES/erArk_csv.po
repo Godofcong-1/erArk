@@ -13457,18 +13457,22 @@ msgid "474"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:39
-msgid "1012"
+msgid "497"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:40
-msgid "2013"
+msgid "1012"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:41
-msgid "4027"
+msgid "2013"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:42
+msgid "4027"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:43
 msgid "4091"
 msgstr ""
 
@@ -18268,8 +18272,16 @@ msgstr ""
 msgid "晓歌"
 msgstr ""
 
+#: .\data\character\0497_晓歌.csv:13
+msgid "一把剔除了武器的小竖琴。随意拨动也能传出动人的乐声，安定你在混乱中纷杂的心绪。"
+msgstr ""
+
 #: .\data\character\0497_晓歌.csv:14
 msgid "晓歌，罗德岛驻玻利瓦尔办事处在难民区解救出来的矿石病患者，转交本舰进行后续治疗。根据本人意愿，于半年后以正式干员身份加入罗德岛。"
+msgstr ""
+
+#: .\data\character\0497_晓歌.csv:15
+msgid "#87CEFA"
 msgstr ""
 
 #: .\data\character\0501_杜林.csv:14
