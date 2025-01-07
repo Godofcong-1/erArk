@@ -13393,86 +13393,94 @@ msgid "249"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:24
-msgid "263"
+msgid "254"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:24
+msgid "巫恋的文本更的会慢点但会一直更，同时ooc的人设在一起在古堡里待半年因为不这么加我确实没法想着角色写，文笔较差会慢慢进步\n同时很多的文本和诗怀雅一样采用E=1+a+b＋n的形式，可能上秒没感情下秒说喜欢，这是正常的，大概等写的差不多了再进行重新排序，暂且就这样\n顺带一提博士的人设是活了很久很屑很无厘头同时保留记忆，所以会比较怪"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:25
-msgid "274"
+msgid "263"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:26
-msgid "285"
+msgid "274"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:27
-msgid "290"
+msgid "285"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:28
-msgid "291"
+msgid "290"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:29
-msgid "304"
+msgid "291"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:30
-msgid "308"
+msgid "304"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:31
-msgid "328"
+msgid "308"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:32
-msgid "358"
+msgid "328"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:33
+msgid "358"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:34
 msgid "365"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:34
+#: .\data\csv\Tip_Chara.csv:35
 msgid "377"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:34
+#: .\data\csv\Tip_Chara.csv:35
 msgid "喔，澄閃，一位善良、正質、偶爾缺乏點運氣的小貓咪，這片大地上不該只有不公，善良之人應得一個美好的故事，試問誰又不是如蘇茜一般努力過著日子呢\n(只可惜鷹角又在密錄裡把貓貓當成駱駝澄子開涮，鷹角壞!)\n好像還要給玩家一點建議來著....那，希望溫柔的人都能被溫柔以待\n(說貓貓是豬豬的人聽著，YOU!!  馬上到你家門口!!)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:35
+#: .\data\csv\Tip_Chara.csv:36
 msgid "405"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:36
+#: .\data\csv\Tip_Chara.csv:37
 msgid "469"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:37
+#: .\data\csv\Tip_Chara.csv:38
 msgid "426"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:38
+#: .\data\csv\Tip_Chara.csv:39
 msgid "474"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:39
+#: .\data\csv\Tip_Chara.csv:40
 msgid "497"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:40
+#: .\data\csv\Tip_Chara.csv:41
 msgid "1012"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:41
+#: .\data\csv\Tip_Chara.csv:42
 msgid "2013"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:42
+#: .\data\csv\Tip_Chara.csv:43
 msgid "4027"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:43
+#: .\data\csv\Tip_Chara.csv:44
 msgid "4091"
 msgstr ""
 
