@@ -168,6 +168,11 @@ def check_pregnancy(character_id: int):
             character_data.talent[21] = 1
             character_data.talent[26] = 1
             character_data.talent[27] = 1
+            # 根据罩杯大小修改乳汁上限
+            for talent_id in [121,122,123,124,125]:
+                if character_data.talent[talent_id]:
+                    character_data.pregnancy.milk_max = 150 + (talent_id - 121) * 40
+                    break
             character_data.second_behavior[1313] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
