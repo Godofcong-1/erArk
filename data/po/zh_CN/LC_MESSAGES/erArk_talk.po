@@ -47312,8 +47312,40 @@ msgstr ""
 msgid "{Name}的阴茎在{TargetName}的帽子上摩擦，感受着帽子的布料包裹和摩擦阴茎的触感"
 msgstr ""
 
+#: .\data\talk\sex\hat_job.csv:7
+msgid "{Name}将{TargetName}的帽子卷起，粗糙的布料包裹着{Name}的肉棒，随着{Name}手的撸动发出模糊的水声。"
+msgstr ""
+
+#: .\data\talk\sex\hat_job.csv:8
+msgid "{Name}在{TargetName}的帽子上找到了一处柔软的布料，简单的用先走汁润滑后，便在残留着{TargetName}发香和体温的这块织物上释放着自己的欲望。"
+msgstr ""
+
+#: .\data\talk\sex\hat_job.csv:9
+msgid "{Name}贪婪的呼吸着{TargetName}帽子内温暖的气息，随后将帽子套在了自己的阴茎上，回味着{TargetName}的温度的同时玷污着{TargetName}的气息。"
+msgstr ""
+
+#: .\data\talk\sex\hat_job.csv:10
+msgid "{Name}取下{TargetName}的帽子，将自己的肉棒压在了{TargetName}的头上，在{TargetName}反应过来之前，就迫不及待地将帽子扣在阴茎上，来回摩擦着。"
+msgstr ""
+
 #: .\data\talk\sex\horn_rub.csv:6
 msgid "{Name}的阴茎在{TargetName}的角上摩擦着，感受着角的质感"
+msgstr ""
+
+#: .\data\talk\sex\horn_rub.csv:7
+msgid "{Name}将自己的肉棒抵在{TargetName}的角上，来回摩擦涂抹着先走汁抛光着{TargetName}的角。"
+msgstr ""
+
+#: .\data\talk\sex\horn_rub.csv:8
+msgid "{TargetName}角的坚硬质感非但没有劝退{Name}，反而使得{Name}在好奇心和欲望的双重作用下，将自己的阴茎在{TargetName}的角上摩擦获取着快感。"
+msgstr ""
+
+#: .\data\talk\sex\horn_rub.csv:9
+msgid "{TargetName}的角忠实的将{Name}的摩擦动作传导到{TargetName}的颅骨内，逐渐崩坏的表情刺激得{Name}越来越兴奋。"
+msgstr ""
+
+#: .\data\talk\sex\horn_rub.csv:10
+msgid "{TargetName}平日里当作荣耀精心保养的角如今却成了{Name}的泄欲工具，略微磨钝的棱角此刻成为了完美的阴茎按摩工具。"
 msgstr ""
 
 #: .\data\talk\sex\h_hp_0.csv:6
@@ -47360,6 +47392,22 @@ msgstr ""
 msgid "{Name}加入了群交"
 msgstr ""
 
+#: .\data\talk\sex\join_group_sex.csv:7
+msgid "面前的活春宫刺激着{Name}的视网膜，{Name}按耐不住地走近加入了这场群交。"
+msgstr ""
+
+#: .\data\talk\sex\join_group_sex.csv:8
+msgid "铺面而来的淫乱气息模糊了{Name}的意识，在本能的驱动下，{Name}站定在原地，显然是不打算什么都不做就离开。"
+msgstr ""
+
+#: .\data\talk\sex\join_group_sex.csv:9
+msgid "{Name}的手不老实的探入了自己的衣服。显然已经做好了加入群交的准备。"
+msgstr ""
+
+#: .\data\talk\sex\join_group_sex.csv:10
+msgid "色情的声响在空气中凝结，{Name}充满情欲的双眼望着已经在淫趴中的众人，加入了这场多人运动。"
+msgstr ""
+
 #: .\data\talk\sex\keep_enjoy.csv:6
 msgid "{Name}触发了继续享受指令的地文"
 msgstr ""
@@ -47368,12 +47416,60 @@ msgstr ""
 msgid "{Name}和{TargetName}亲吻着，舌头伸进对方的嘴里，交换彼此的唾液"
 msgstr ""
 
+#: .\data\talk\sex\kiss_h.csv:7
+msgid "{Name}的舌头在{TargetName}的口腔中索取着，两人的唾液在嘴唇间混合着，发出了湿润的水声。"
+msgstr ""
+
+#: .\data\talk\sex\kiss_h.csv:8
+msgid "{Name}灵活的舌头侵略了{TargetName}的口腔，肆无忌惮地从内部刺激着{TargetName}。"
+msgstr ""
+
+#: .\data\talk\sex\kiss_h.csv:9
+msgid "{Name}贪婪地亲吻着{TargetName}，不断吸取{TargetName}口腔内的空气，直到{TargetName}因缺氧而不得不中断热吻。"
+msgstr ""
+
+#: .\data\talk\sex\kiss_h.csv:10
+msgid "{Name}轻轻咬住{TargetName}的嘴唇，随后将舌头滑入{TargetName}的口腔，他人的体温在{TargetName}的唇齿间划过。\n{TargetName}情不自禁地用舌头迎了上去。"
+msgstr ""
+
 #: .\data\talk\sex\legjob.csv:6
 msgid "{Name}让{TargetName}把双腿并起来，把{Name}的阴茎夹在双腿之间，抽插着享受大腿的摩擦触感"
 msgstr ""
 
+#: .\data\talk\sex\legjob.csv:7
+msgid "在{Name}的指示下，{TargetName}将大腿交叠起来，纵容着{Name}的肉棒在大腿脂肪的柔软压力下前后抽插着。"
+msgstr ""
+
+#: .\data\talk\sex\legjob.csv:8
+msgid "{Name}抬起{TargetName}的双腿，用双手环抱着，腰部快速的运动将挺立的肉棒反复钻入{TargetName}双腿间的柔软。"
+msgstr ""
+
+#: .\data\talk\sex\legjob.csv:9
+msgid "{TargetName}折起一条腿，小腿后侧肌肉和大腿后侧脂肪之间的区域诱惑着{Name}将自己的滚烫的阴茎插入这块充满刺激的肉穴。"
+msgstr ""
+
+#: .\data\talk\sex\legjob.csv:10
+msgid "{TargetName}并拢双腿，用双手微微撑开其中的缝隙。\n{Name}没有放弃这难得的机会，将自己的肉棒猛地插入其中，反复摩擦着。"
+msgstr ""
+
 #: .\data\talk\sex\lick_anal.csv:6
-msgid "{Name}触发了舔肛指令的地文"
+msgid "{Name}用双手轻轻掰开{TargetName}的屁股，舌头强硬的钻入{TargetName}的菊穴，随后顺着后穴的纹理舔舐了起来。"
+msgstr ""
+
+#: .\data\talk\sex\lick_anal.csv:7
+msgid "{Name}捧起{TargetName}圆润的屁股，随后猛地将头埋入了{TargetName}的双穴处，灵活的舌头不断挖掘着，引得{TargetName}一阵阵娇喘。"
+msgstr ""
+
+#: .\data\talk\sex\lick_anal.csv:8
+msgid "{Name}用唾液润湿了{TargetName}的菊穴周边，在{TargetName}紧张的神情下，{Name}缓慢的深处舌头，刮擦着{TargetName}敏感的软肉。"
+msgstr ""
+
+#: .\data\talk\sex\lick_anal.csv:9
+msgid "{Name}的舌头按摩着{TargetName}的菊穴，在温柔的按压下，{TargetName}收紧的肌肉逐渐放松，{Name}看准机会，将舌尖探入了{TargetName}温暖潮湿的后穴。"
+msgstr ""
+
+#: .\data\talk\sex\lick_anal.csv:10
+msgid "{Name}的嘴唇贴上了{TargetName}菊穴的褶皱，灵活的舌尖游走在{TargetName}的后穴内外，引得{TargetName}一阵阵颤抖。"
 msgstr ""
 
 #: .\data\talk\sex\make_lick_anal.csv:6
