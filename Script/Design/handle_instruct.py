@@ -301,7 +301,6 @@ def handle_see_attr():
 )
 def handle_chat():
     """处理聊天指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     if target_data.action_info.talk_count > character_data.ability[40] + 1:
