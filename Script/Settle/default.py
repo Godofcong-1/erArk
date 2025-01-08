@@ -2188,9 +2188,7 @@ def handle_target_hypnosis_increase_body_sensitivity_on(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    santi_down = 20
-    if target_character_data.talent[73]:
-        santi_down = 10
+    santi_down = 10
     target_character_data.hypnosis.increase_body_sensitivity = True
     character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
     change_data.sanity_point -= santi_down
@@ -2270,10 +2268,11 @@ def handle_target_hypnosis_force_ovulation_on(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
+    santi_down = 10
     target_character_data.hypnosis.force_ovulation = True
-    character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-    change_data.sanity_point -= 50
-    character_data.pl_ability.today_sanity_point_cost += 50
+    character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+    change_data.sanity_point -= santi_down
+    character_data.pl_ability.today_sanity_point_cost += santi_down
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_OFF)
@@ -2325,9 +2324,10 @@ def handle_target_hypnosis_blockhead_switch_change(
         target_character_data.hypnosis.blockhead = False
     else:
         target_character_data.hypnosis.blockhead = True
-        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-        change_data.sanity_point -= 50
-        character_data.pl_ability.today_sanity_point_cost += 50
+        santi_down = 10
+        character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+        change_data.sanity_point -= santi_down
+        character_data.pl_ability.today_sanity_point_cost += santi_down
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_BLOCKHEAD_OFF)
@@ -2381,9 +2381,10 @@ def handle_target_hypnosis_active_h_switch_change(
     else:
         target_character_data.hypnosis.active_h = True
         target_character_data.h_state.npc_active_h = True
-        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-        change_data.sanity_point -= 50
-        character_data.pl_ability.today_sanity_point_cost += 50
+        santi_down = 10
+        character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+        change_data.sanity_point -= santi_down
+        character_data.pl_ability.today_sanity_point_cost += santi_down
         handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
 
 
@@ -2436,9 +2437,10 @@ def handle_target_hypnosis_pain_as_pleasure_switch_change(
         target_character_data.hypnosis.pain_as_pleasure = False
     else:
         target_character_data.hypnosis.pain_as_pleasure = True
-        character_data.sanity_point = max(character_data.sanity_point - 50, 0)
-        change_data.sanity_point -= 50
-        character_data.pl_ability.today_sanity_point_cost += 50
+        santi_down = 10
+        character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
+        change_data.sanity_point -= santi_down
+        character_data.pl_ability.today_sanity_point_cost += santi_down
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_PAIN_AS_PLEASURE_OFF)
