@@ -316,6 +316,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     h_state_data.group_sex_lock_flag = False
     h_state_data.all_group_sex_temple_run = False
     h_state_data.npc_ai_type_in_group_sex = 0
+    h_state_data.pretend_sleep = False
 
     return h_state_data
 

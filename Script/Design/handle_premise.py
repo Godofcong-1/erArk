@@ -12119,6 +12119,56 @@ def handle_self_not_go_to_join_group_sex(character_id: int) -> int:
     return not handle_self_now_go_to_join_group_sex(character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
+def handle_self_sleep_h_awake_but_pretend_sleep(character_id: int) -> int:
+    """
+    自己在睡奸中醒来但是装睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.pretend_sleep
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
+def handle_self_not_sleep_h_awake_but_pretend_sleep(character_id: int) -> int:
+    """
+    自己没有在睡奸中醒来但是装睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_sleep_h_awake_but_pretend_sleep(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
+def handle_target_sleep_h_awake_but_pretend_sleep(character_id: int) -> int:
+    """
+    交互对象在睡奸中醒来但是装睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_sleep_h_awake_but_pretend_sleep(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
+def handle_target_not_sleep_h_awake_but_pretend_sleep(character_id: int) -> int:
+    """
+    交互对象没有在睡奸中醒来但是装睡
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_sleep_h_awake_but_pretend_sleep(character_id)
+
+
 # 以下为道具系前提
 
 @add_premise(constant_promise.Premise.HAVE_CAMERA)

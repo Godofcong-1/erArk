@@ -422,7 +422,7 @@ class CharacterInfoHead:
             elif cache.system_setting[9] == 2:
                 favorability_and_trust_text = _("好感度:{0}({1})，信赖度:{2}({3})").format(favorability_text, favorability_lv_letter, trust_text, trust_lv_letter)
 
-        # 非清醒时输出当前状态
+        # 非0疲劳时输出当前疲劳状态
         sleep_draw = draw.LeftDraw()
         sleep_draw.style = "little_dark_slate_blue"
         sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
@@ -430,14 +430,20 @@ class CharacterInfoHead:
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
-        sleep_text = "" if sleep_text == _(" <清醒>" ) else sleep_text
+        # 0疲劳的清醒则不输出
+        if sleep_text == _(" <清醒>" ):
+            sleep_text = ""
         if character_id > 0:
+            # 睡眠中则输出睡眠程度
             if handle_premise.handle_action_sleep(character_id) or handle_premise.handle_unconscious_flag_1(character_id):
                 tem,sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
                 sleep_text = f" <{sleep_name}>"
+            # 如果在装睡则输出装睡
+            if handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(character_id):
+                sleep_text = _(" <装睡>")
         sleep_draw.text = sleep_text
 
-        # 疲劳状态
+        # hp1的完全疲劳状态
         tired_draw = draw.LeftDraw()
         tired_draw.style = "little_dark_slate_blue"
         tired_text = ""

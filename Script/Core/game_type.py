@@ -497,6 +497,8 @@ class BODY_H_STATE:
         """ 运行全群交模板 """
         self.npc_ai_type_in_group_sex: int = 0
         """ 未在模板中的NPC在群交中的AI逻辑，0为无行动，1为仅自慰，2为优先自动补位、无位则自慰，3为每次指令都重置位置后随机抢位 """
+        self.pretend_sleep: bool = False
+        """ 睡奸中醒来但是装睡的状态 """
 
 
 class FIRST_RECORD:

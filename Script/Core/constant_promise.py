@@ -2768,6 +2768,15 @@ class Premise:
     SLEF_NOT_GO_TO_JOIN_GROUP_SEX = "self_not_go_to_join_group_sex"
     """ H_群交 自己没有前往加入群交 """
 
+    SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP = "self_sleep_h_awake_but_pretend_sleep"
+    """ H_其他 自己在睡奸中醒来但是装睡 """
+    SELF_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP = "self_not_sleep_h_awake_but_pretend_sleep"
+    """ H_其他 自己没有在睡奸中醒来但是装睡 """
+    TARGET_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP = "target_sleep_h_awake_but_pretend_sleep"
+    """ H_其他 交互对象在睡奸中醒来但是装睡 """
+    TARGET_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP = "target_not_sleep_h_awake_but_pretend_sleep"
+    """ H_其他 交互对象没有在睡奸中醒来但是装睡 """
+
     HAVE_FOOD = "have_food"
     """ 道具_持有 拥有食物 """
     NOT_HAVE_FOOD = "not_have_food"
