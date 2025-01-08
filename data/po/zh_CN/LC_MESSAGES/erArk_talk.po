@@ -39864,6 +39864,18 @@ msgstr ""
 msgid "冲泡咖啡时，{TargetName}子宫里的精液顺着大腿流淌了下来。"
 msgstr ""
 
+#: .\data\talk\daily\ask_make_coffee.csv:75
+msgid "{TargetName}不情愿地将速溶咖啡倒入杯中，心中暗想：我还得给他泡咖啡，真是的。\n她按下热水键，咖啡机发出轻微的嗡嗡声，热气蒸腾而上。\n“博士，您的咖啡。”{TargetName}面无表情地将咖啡递给{Name}，肚子咕噜噜地叫了一声。\n{Name}接过咖啡，轻轻说了声谢谢，并没有注意到{TargetName}细微的表情变化。\n{TargetName}默默地退到一旁，揉了揉肚子，此刻她只想赶紧结束工作，去吃点东西。"
+msgstr ""
+
+#: .\data\talk\daily\ask_make_coffee.csv:76
+msgid "窗外熹微晨光透过薄纱窗帘，照亮了略显凌乱的房间。{TargetName}站在一旁，肚子咕噜噜地叫着，很不情愿地将一杯速溶咖啡递给{Name}。\n“博士，您的咖啡。请趁热喝。”{TargetName}语气冷淡，眼神飘向别处，心里暗想：才大早上就要起来工作，真是的。\n{Name}接过咖啡，轻抿一口，苦涩的味道在口中蔓延开来。“谢谢，”{Name}揉了揉太阳穴，说道，“今天的事情比较多，辛苦你了。”\n{TargetName}低头看着自己的脚尖，小声嘟囔着：“希望今天能早点结束，我想吃点东西……”\n她偷偷瞄了一眼博士，发现他正专心致志地看着终端屏幕，于是又把目光移回自己的脚尖，心中暗暗盘算着早餐吃什么好。"
+msgstr ""
+
+#: .\data\talk\daily\ask_make_coffee.csv:77
+msgid "窗外的晨曦刚刚洒进房间，{TargetName}不满地小声嘀咕：“这么早就要起来，连杯咖啡都要我来泡。”\n她揉着惺忪的睡眼，走到房间的咖啡机旁，熟练地操作起来。\n咖啡机的运作声打破了清晨的宁静，一股浓郁的香气逐渐弥漫开来。\n{TargetName}娅偷偷瞥了一眼还在工作的博士，心里想着：“哼，等下给他加点盐。”\n但她最终还是放弃了这个念头，将泡好的咖啡轻轻放在博士的桌边。"
+msgstr ""
+
 #: .\data\talk\daily\buy_food.csv:6
 msgid "{Name}购买了{FoodName}"
 msgstr ""
@@ -40374,6 +40386,10 @@ msgstr ""
 
 #: .\data\talk\daily\chat.csv:131
 msgid "{TargetName}向{Name}请教了一些关于摄影的问题，而{Name}则分享了自己的摄影经验和技巧。"
+msgstr ""
+
+#: .\data\talk\daily\chat.csv:133
+msgid "“博士，我肚子饿了……”{TargetName}揉了揉肚子，小声抱怨着。\n{Name}从桌上拿起一块巧克力递过去，“先垫垫肚子，等会儿带你去吃好吃的。”\n{TargetName}接过巧克力，立刻剥开包装，放进嘴里，脸上露出了满足的神色。\n不能看着{TargetName}吃东西的样子，嘴角微微上扬，心想这孩子真是容易满足。\n“谢谢博士！”{TargetName}吃完巧克力，心情似乎好了不少，甜甜地笑着说。"
 msgstr ""
 
 #: .\data\talk\daily\chat_failed.csv:7
@@ -47473,7 +47489,23 @@ msgid "{Name}的嘴唇贴上了{TargetName}菊穴的褶皱，灵活的舌尖游�
 msgstr ""
 
 #: .\data\talk\sex\make_lick_anal.csv:6
-msgid "{Name}触发了命令对方舔自己肛门指令的地文"
+msgid "{Name}将{TargetName}的脸按在了自己的屁股上，强迫{TargetName}的小嘴为自己的后庭进行服务。"
+msgstr ""
+
+#: .\data\talk\sex\make_lick_anal.csv:7
+msgid "在{Name}的指示下，{TargetName}将自己柔软的嘴唇贴上了{Name}的谷道口，不顾形象的亲吻舔舐着，在唾液淫乱的响声，{TargetName}不断将唇印留在了{Name}的后庭处。"
+msgstr ""
+
+#: .\data\talk\sex\make_lick_anal.csv:8
+msgid "收到了{Name}的请求后，{TargetName}的双手从跪趴姿势的{Name}的双腿间穿过，向上紧紧扣住了{TargetName}的腰部，随后忘我地舔舐着无法动弹的{Name}的后庭。"
+msgstr ""
+
+#: .\data\talk\sex\make_lick_anal.csv:9
+msgid "{Name}向{TargetName}使了个眼神，{TargetName}懂事地将躺着的{Name}的屁股抬高，伸长舌头狂乱地舔舐着{Name}后庭的纹路，就连自己的妆容也被唾液晕染开来。"
+msgstr ""
+
+#: .\data\talk\sex\make_lick_anal.csv:10
+msgid "{TargetName}同意了{Name}的要求，趴伏在{Name}的胯下，用自己的唇舌服侍着{Name}后庭的每一条褶皱。"
 msgstr ""
 
 #: .\data\talk\sex\make_masturebate.csv:6
