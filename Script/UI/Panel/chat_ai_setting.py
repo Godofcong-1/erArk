@@ -110,6 +110,18 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
             else:
                 new_cid = int(last_cid) + 1
 
+        # 将角色名称还原回代码
+        character_data = cache.character_data[character_id]
+        target_character_data = cache.character_data[character_data.target_character_id]
+        Name = character_data.name
+        TargetNickName = target_character_data.name
+        # 查找是否存在该角色名称，如果存在的话，将其还原回代码
+        if Name in ai_gererate_text:
+            ai_gererate_text = ai_gererate_text.replace(Name, '{Name}')
+        if character_id != 0 or character_data.target_character_id != 0:
+            if TargetNickName in ai_gererate_text:
+                ai_gererate_text = ai_gererate_text.replace(TargetNickName, '{TargetName}')
+
         # 保存数据
         with open(save_path, "a", encoding='utf-8') as f:
             f.write(f"{new_cid},{behavior_id},0,generate_by_ai,{ai_gererate_text}\n")
@@ -595,9 +607,9 @@ class Chat_Ai_Setting_Panel:
             line_draw.draw()
             line_feed.draw()
             ask_text = _("请输入您要使用的模型名（不含引号、逗号或空格）：\n")
-            ask_text += _("  *目前仅支持gpt和gemini模型，未包含在示例中的更多模型名请在官方文档中查阅\n")
+            ask_text += _("  *gpt和gemini的更多模型名请在官方文档中查阅，非上述模型将自动使用OpenAI格式来处理\n")
             ask_text += _("  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n")
-            ask_text += _("  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash\n")
+            ask_text += _("  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n")
             ask_panel = panel.AskForOneMessage()
             ask_panel.set(ask_text, 99)
             new_model = ask_panel.draw()
