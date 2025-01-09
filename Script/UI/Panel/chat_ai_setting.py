@@ -122,9 +122,22 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
             if TargetNickName in ai_gererate_text:
                 ai_gererate_text = ai_gererate_text.replace(TargetNickName, '{TargetName}')
 
+        # 前提文本
+        premise_text = "generate_by_ai"
+        # 触发者
+        if character_id == 0:
+            premise_text += "&sys_0"
+        else:
+            premise_text += "&sys_1"
+        # 交互对象
+        if character_data.target_character_id == 0:
+            premise_text += "&sys_4"
+        else:
+            premise_text += "&sys_5"
+
         # 保存数据
         with open(save_path, "a", encoding='utf-8') as f:
-            f.write(f"{new_cid},{behavior_id},0,generate_by_ai,{ai_gererate_text}\n")
+            f.write(f"{new_cid},{behavior_id},0,{premise_text},{ai_gererate_text}\n")
 
     return fanal_text
 
