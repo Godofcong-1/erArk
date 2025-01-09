@@ -4813,6 +4813,21 @@ def handle_cook_le_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.COOK_LE_3)
+def handle_cook_le_3(character_id: int) -> int:
+    """
+    校验角色是否料理技能<=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[43] <= 3:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.COOK_GE_3)
 def handle_cook_ge_3(character_id: int) -> int:
     """

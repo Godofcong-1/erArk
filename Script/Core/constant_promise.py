@@ -1718,6 +1718,8 @@ class Premise:
     """ 属性_能力 自身料理技能==4 """
     COOK_LE_1 = "cook_le_1"
     """ 属性_能力 自身料理技能<=1 """
+    COOK_LE_3 = "cook_le_3"
+    """ 属性_能力 自身料理技能<=3 """
     COOK_GE_3 = "cook_ge_3"
     """ 属性_能力 自身料理技能>=3 """
     COOK_GE_5 = "cook_ge_5"
