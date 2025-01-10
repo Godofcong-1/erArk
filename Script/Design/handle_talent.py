@@ -216,12 +216,13 @@ def npc_b_talent_change_for_lactation_flag(character_id: int):
 
     # 乳汁量大于80时，罩杯变大
     if handle_premise.handle_milk_ge_80(character_id) and character_data.pregnancy.lactation_flag == False:
-        character_data.pregnancy.lactation_flag = True
-        body_part_talent_update(character_id, [121, 122, 123, 124, 125], True, _("胸部"))
+        if body_part_talent_update(character_id, [121, 122, 123, 124, 125], True, _("胸部")):
+            character_data.pregnancy.lactation_flag = True
     # 乳汁量小于80时，罩杯变小
     elif handle_premise.handle_milk_le_79(character_id) and character_data.pregnancy.lactation_flag == 1:
         character_data.pregnancy.lactation_flag = False
-        body_part_talent_update(character_id, [121, 122, 123, 124, 125], False, _("胸部"))
+        if body_part_talent_update(character_id, [121, 122, 123, 124, 125], False, _("胸部")):
+            pass
 
 def npc_lost_no_menarche_talent(character_id: int):
     """
@@ -258,6 +259,9 @@ def body_part_talent_update(character_id, talent_ids, increase, body_part):
         new_talent_id = min(now_talent_id + 1, talent_ids[-1])
     else:
         new_talent_id = max(now_talent_id - 1, talent_ids[0])
+    # 如果已经是极限值，则不进行变化
+    if now_talent_id == new_talent_id:
+        return ""
     now_character_data.talent[now_talent_id] = 0
     now_character_data.talent[new_talent_id] = 1
     # 输出信息
