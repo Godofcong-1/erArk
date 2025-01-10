@@ -141,6 +141,7 @@ def assistant_replace(new_assistant_id: int):
         new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         new_assistant_data.sp_flag.is_follow = 1
         new_assistant_data.assistant_services[2] = 1
+        new_assistant_data.second_behavior[1402] = 0
         new_assistant_data.second_behavior[1401] = 1
         info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         # 同步换助理的选项
@@ -149,6 +150,7 @@ def assistant_replace(new_assistant_id: int):
                 new_assistant_data.assistant_services[10] = 1
     # 取消旧助理的结算
     if old_assistant_flag:
+        old_assistant_data.second_behavior[1401] = 0
         old_assistant_data.second_behavior[1402] = 1
         info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
     info_draw.text = info_text
