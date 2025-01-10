@@ -675,8 +675,10 @@ def judge_weak_up_in_sleep_h(character_id: int):
         target_data.sp_flag.sleep_h_awake = True
         # 重置双方H结构体和相关数据
         default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange, datetime.datetime)
+        # 同步玩家的行动开始时间
+        character.init_character_behavior_start_time(character_id, cache.game_time)
         # 检测是否满足高级性骚扰的实行值需求
-        if handle_premise.handle_instruct_judge_high_obscenity(0):
+        if handle_premise.handle_instruct_judge_high_obscenity(now_character_data.target_character_id):
             # 如果已经陷落的话
             if handle_premise.handle_target_fall(character_id):
                 # 3级及以上的陷落时会直接变成H，对方变为装睡状态
@@ -685,6 +687,9 @@ def judge_weak_up_in_sleep_h(character_id: int):
                     target_data.h_state.pretend_sleep = True
                     now_character_data.behavior.behavior_id = constant.Behavior.H
                     now_character_data.state = constant.CharacterStatus.STATUS_H
+                    target_data.behavior.behavior_id = constant.Behavior.WAIT
+                    target_data.state = constant.CharacterStatus.STATUS_WAIT
+                    target_data.behavior.duration = 15
                 # 爱情线会变成轻度性骚扰
                 elif character_fall_level > 0:
                     now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
