@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import map_handle, handle_premise
+from Script.Design import map_handle, handle_premise, handle_premise_place
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -45,7 +45,7 @@ class All_Npc_Position_Panel:
         # 非中文则每行只显示两个
         if normal_config.config_normal.language != "zh_CN":
             self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 40, 2, window_width, 1, 0, 0)
-        select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选")]
+        select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选"), _("筛选同区块干员"), _("筛选无意识干员")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
         # 读取缓存中的筛选与移动类型
@@ -82,6 +82,14 @@ class All_Npc_Position_Panel:
             info_draw.width = self.width
             info_draw.draw()
             for select_type_id in range(len(select_type_list)):
+                # 每五个换行
+                if select_type_id % 5 == 0 and select_type_id != 0:
+                    line_feed.draw()
+                    empty_draw = draw.NormalDraw()
+                    empty_draw.text = "  " * len(info_text)
+                    empty_draw.width = self.width
+                    empty_draw.draw()
+                # 已选中的为高亮显示
                 if select_type_id == self.select_type:
                     select_type_text = f"▶{select_type_list[select_type_id]}          "
                     if select_type_id == 5:
@@ -91,10 +99,11 @@ class All_Npc_Position_Panel:
                     now_draw.style = "gold_enrod"
                     now_draw.width = self.width / 3
                     now_draw.draw()
+                # 未选中的为按钮
                 else:
-                    draw_text = f"   {select_type_list[select_type_id]}   "
+                    draw_text = f"  {select_type_list[select_type_id]}    "
                     now_draw_width = min(len(draw_text) * 2, self.width / 2.5)
-                    now_draw = draw.CenterButton(
+                    now_draw = draw.LeftButton(
                         draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=self.select_type_change, args=(select_type_id,)
                     )
                     now_draw.draw()
@@ -122,7 +131,7 @@ class All_Npc_Position_Panel:
                 else:
                     draw_text = f"  {move_type_text}  "
                     now_draw_width = min(len(draw_text) * 2, self.width / 3)
-                    now_draw = draw.CenterButton(
+                    now_draw = draw.LeftButton(
                         draw_text, move_type_text, now_draw_width, cmd_func=self.move_type_change, args=(move_type_id,)
                     )
                     now_draw.draw()
@@ -151,6 +160,12 @@ class All_Npc_Position_Panel:
                             continue
                         # 姓名筛选
                         elif self.select_type == 5 and self.name_search not in character_data.name:
+                            continue
+                        # 同区块筛选
+                        elif self.select_type == 6 and not handle_premise_place.handle_in_player_zone(npc_id):
+                            continue
+                        # 无意识筛选
+                        elif self.select_type == 7 and handle_premise.handle_unconscious_flag_0(npc_id):
                             continue
                     # 加入列表
                     final_list.append([npc_id, self.move_type])

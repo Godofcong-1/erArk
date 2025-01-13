@@ -194,6 +194,21 @@ def handle_scene_only_one(character_id: int) -> int:
     return len(scene_data.character_list) == 1
 
 
+@add_premise(constant_promise.Premise.IN_PLAYER_ZONE)
+def handle_in_player_zone(character_id: int) -> int:
+    """
+    与玩家处于相同大区域
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    if now_character_data.position[0] == cache.character_data[0].position[0]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_OVER_ONE)
 def handle_scene_over_one(character_id: int) -> int:
     """

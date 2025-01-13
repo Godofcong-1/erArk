@@ -103,6 +103,7 @@ place_8,TATGET_LEAVE_SCENE,地点_角色,该角色离开玩家所在的地点
 place_10,SCENE_ONLY_TWO,地点_角色,该地点仅有两个角色(可以不含玩家)
 place_11,SCENE_OVER_TWO,地点_角色,该地点有超过两个角色(可以不含玩家)
 place_12,SCENE_ONLY_ONE,地点_角色,该地点里没有自己外的其他角色
+in_player_zone,IN_PLAYER_ZONE,地点_角色,与玩家处于相同大区域
 move_to_same_target_with_pl,MOVE_TO_SAME_TARGET_WITH_PL,地点_角色,该角色与玩家有相同的移动目标地点
 place_is_h,SCENE_SOMEONE_IS_H,地点_角色,该地点有其他角色在和玩家H
 place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有陷落素质的角色
@@ -862,6 +863,7 @@ cook_2,COOK_2,属性_能力,自身料理技能==2
 cook_3,COOK_3,属性_能力,自身料理技能==3
 cook_4,COOK_4,属性_能力,自身料理技能==4
 cook_le_1,COOK_LE_1,属性_能力,自身料理技能<=1
+cook_le_3,COOK_LE_3,属性_能力,自身料理技能<=3
 cook_ge_3,COOK_GE_3,属性_能力,自身料理技能>=3
 cook_ge_5,COOK_GE_5,属性_能力,自身料理技能>=5
 t_cook_1,TARGET_COOK_1,属性_能力,交互对象料理技能==1
