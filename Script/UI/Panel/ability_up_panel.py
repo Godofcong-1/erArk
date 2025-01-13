@@ -12,7 +12,7 @@ from Script.Core import (
     rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, update, handle_talent
+from Script.Design import attr_calculation, update, handle_talent, settle_behavior
 
 panel_info_data = {}
 
@@ -70,8 +70,12 @@ class Characterabi_show_Text:
                     # 当前刻印等级
                     now_mark_level = self.character_data.ability[ability_id]
                     button_text = f" {game_config.config_ability[ability_id].name}   {now_mark_level} "
-                    # 已经记录了刻印升级条件的刻印
-                    if ability_id in game_config.config_mark_up_data_by_ability and now_mark_level < 3:
+                    # 要求：已经记录了刻印升级条件，小于3级，不是负面刻印
+                    if (
+                        ability_id in game_config.config_mark_up_data_by_ability and 
+                        now_mark_level < 3 and 
+                        ability_id < 17
+                        ):
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
@@ -141,43 +145,19 @@ class Characterabi_show_Text:
         mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_mark_level]
         mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
         need_state_all_value = mark_up_data.need_state_all_value
-        now_state_all_value = 0
-        mark_up_data_need_state_list = []
-        mark_up_data_need_state_list.append(mark_up_data.need_state_1)
-        mark_up_data_need_state_list.append(mark_up_data.need_state_2)
-        mark_up_data_need_state_list.append(mark_up_data.need_state_3)
-        mark_up_data_need_state_list.append(mark_up_data.need_state_4)
+        now_state_all_value, state_text = settle_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
         # 文本信息
         info_text = _("○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n\n")
         info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
         info_text += _("升级需要的总值为：{0}\n").format(need_state_all_value)
         info_text += _("当前角色状态可以提供的总值为：")
-        state_text = ""
-        for need_state in mark_up_data_need_state_list:
-            # 跳过空值
-            if need_state == '0':
-                continue
-            # 如果存在|符号，说明有权重调整
-            if '|' in need_state:
-                state_id = int(need_state.split('|')[0])
-                adjust = float(need_state.split('|')[1])
-                # 计算当前状态值
-                now_state_value = int(self.character_data.status_data[state_id] * adjust)
-                now_state_all_value += now_state_value
-                # 输出文本
-                state_text += f" {game_config.config_character_state[state_id].name}*{adjust} = {now_state_value} "
-            else:
-                state_id = int(need_state)
-                now_state_value = self.character_data.status_data[state_id]
-                now_state_all_value += now_state_value
-                state_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
         # 如果为空，则输出无
         if state_text == "":
             state_text = _("无")
         # 加到文本信息中
         info_text += state_text + "\n"
         # 需要的宝珠值为
-        need_juel = need_state_all_value - now_state_all_value
+        need_juel = int(need_state_all_value - now_state_all_value)
         need_juel = max(need_juel, 0)
         # 宝珠信息
         juel_type_id = mark_up_data.need_juel_type
@@ -215,7 +195,6 @@ class Characterabi_show_Text:
 
     def mark_up(self, ability_id: int, need_juel: int):
         """升级刻印"""
-        from Script.Design import settle_behavior
         now_mark_level = self.character_data.ability[ability_id]
         mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_mark_level]
         mark_up_data = game_config.config_mark_up_data[mark_up_data_id]

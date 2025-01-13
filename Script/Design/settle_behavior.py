@@ -1039,6 +1039,42 @@ def judge_orgasm_edge_success(character_id: int) -> bool:
     info_draw.draw()
     return orgasm_edge_success_flag
 
+def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, character_id: int) -> tuple:
+    """
+    从刻印数据中获取刻印的总值和提示文本
+    Keyword arguments:
+    mark_up_id -- 刻印id
+    character_id -- 角色id
+    Return arguments:
+    tuple -- 总值,提示文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    mark_up_data = game_config.config_mark_up_data[mark_up_id]
+    mark_up_data_need_state_list = []
+    mark_up_data_need_state_list.append(mark_up_data.need_state_1)
+    mark_up_data_need_state_list.append(mark_up_data.need_state_2)
+    mark_up_data_need_state_list.append(mark_up_data.need_state_3)
+    mark_up_data_need_state_list.append(mark_up_data.need_state_4)
+    mark_up_data_all_value = 0
+    mark_up_data_text = ""
+    for need_state in mark_up_data_need_state_list:
+        # 跳过空值
+        if need_state == '0':
+            continue
+        # 如果存在|符号，说明有权重调整
+        if '|' in need_state:
+            state_id = int(need_state.split('|')[0])
+            adjust = float(need_state.split('|')[1])
+            # 计算当前状态值
+            now_state_value = int(character_data.status_data[state_id] * adjust)
+            mark_up_data_all_value += now_state_value
+            mark_up_data_text += f" {game_config.config_character_state[state_id].name}*{adjust} = {now_state_value} "
+        else:
+            state_id = int(need_state)
+            now_state_value = int(character_data.status_data[state_id])
+            mark_up_data_all_value += now_state_value
+            mark_up_data_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
+    return mark_up_data_all_value, mark_up_data_text
 
 def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
@@ -1089,25 +1125,23 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
             now_draw_text += _("在快乐刻印的影响下，{0}的欲望提升至5级\n").format(character_data.name)
 
     # 屈服刻印检测屈服+恭顺+羞耻/5，30000屈服1，50000屈服2，100000屈服3
-    yield_count = 0
-    yield_count += character_data.status_data[10]
-    yield_count += character_data.status_data[15]
-    yield_count += character_data.status_data[16] / 5
-    if yield_count >= 30000 and character_data.ability[14] <= 0:
+    yield_count, yield_count_text = get_now_state_all_value_and_text_from_mark_up_data(10, character_id)
+    # 进行判断
+    if yield_count >= game_config.config_mark_up_data[10].need_state_all_value and character_data.ability[14] <= 0:
         character_data.ability[14] = 1
         character_data.second_behavior[1033] = 1
         # 至少提升为顺从1
         if character_data.ability[31] < 1:
             character_data.ability[31] = 1
             now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至1级\n").format(character_data.name)
-    if yield_count >= 50000 and character_data.ability[14] <= 1:
+    if yield_count >= game_config.config_mark_up_data[11].need_state_all_value and character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior[1034] = 1
         # 至少提升为顺从3
         if character_data.ability[31] < 3:
             character_data.ability[31] = 3
             now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至3级\n").format(character_data.name)
-    if yield_count >= 100000 and character_data.ability[14] <= 2:
+    if yield_count >= game_config.config_mark_up_data[12].need_state_all_value and character_data.ability[14] <= 2:
         character_data.ability[14] = 3
         character_data.second_behavior[1035] = 1
         # 至少提升为顺从5
@@ -1116,28 +1150,27 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
             now_draw_text += _("在屈服刻印的影响下，{0}的顺从提升至5级\n").format(character_data.name)
 
     # 苦痛刻印检测苦痛，20000苦痛1，40000苦痛2，80000苦痛3
-    pain_count = 0
-    pain_count += character_data.status_data[17]
+    pain_count, pain_count_text = get_now_state_all_value_and_text_from_mark_up_data(21, character_id)
     # 单次增加量
     if 17 in change_data.status_data:
         pain_count += change_data.status_data[17] * 5
     # 需要非深度无意识，且非心控-苦痛快感化
     if handle_premise.handle_normal_6(character_id) and handle_premise.handle_not_hypnosis_pain_as_pleasure(character_id):
-        if pain_count >= 20000 and character_data.ability[15] <= 0:
+        if pain_count >= game_config.config_mark_up_data[21].need_state_all_value and character_data.ability[15] <= 0:
             character_data.ability[15] = 1
             character_data.second_behavior[1036] = 1
             # 至少提升为受虐1
             if character_data.ability[36] < 1:
                 character_data.ability[36] = 1
                 now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至1级\n").format(character_data.name)
-        if pain_count >= 40000 and character_data.ability[15] <= 1:
+        if pain_count >= game_config.config_mark_up_data[22].need_state_all_value and character_data.ability[15] <= 1:
             character_data.ability[15] = 2
             character_data.second_behavior[1037] = 1
             # 至少提升为受虐3
             if character_data.ability[36] < 3:
                 character_data.ability[36] = 3
                 now_draw_text += _("在苦痛刻印的影响下，{0}的受虐提升至3级\n").format(character_data.name)
-        if pain_count >= 80000 and character_data.ability[15] <= 2:
+        if pain_count >= game_config.config_mark_up_data[23].need_state_all_value and character_data.ability[15] <= 2:
             character_data.ability[15] = 3
             character_data.second_behavior[1038] = 1
             # 至少提升为受虐5
@@ -1184,26 +1217,24 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
                 now_draw_text += _("在无觉刻印的影响下，{0}的欲望提升至8级\n").format(character_data.name)
 
     # 恐怖刻印检测恐怖+苦痛/5，20000恐怖1，40000恐怖2，80000恐怖3
-    terror_count = 0
-    terror_count += character_data.status_data[18]
+    terror_count, terror_count_text = get_now_state_all_value_and_text_from_mark_up_data(41, character_id)
     # 单次增加量
     if 18 in change_data.status_data:
         terror_count += change_data.status_data[18] * 5
     if 17 in change_data.status_data:
         terror_count += change_data.status_data[17]
-    if terror_count >= 20000 and character_data.ability[17] <= 0:
+    if terror_count >= game_config.config_mark_up_data[41].need_state_all_value and character_data.ability[17] <= 0:
         character_data.ability[17] = 1
         character_data.second_behavior[1042] = 1
-    if terror_count >= 40000 and character_data.ability[17] <= 1:
+    if terror_count >= game_config.config_mark_up_data[42].need_state_all_value and character_data.ability[17] <= 1:
         character_data.ability[17] = 2
         character_data.second_behavior[1043] = 1
-    if terror_count >= 80000 and character_data.ability[17] <= 2:
+    if terror_count >= game_config.config_mark_up_data[43].need_state_all_value and character_data.ability[17] <= 2:
         character_data.ability[17] = 3
         character_data.second_behavior[1044] = 1
 
     # 反发刻印检测反感+抑郁+恐怖+苦痛，10000反发1，30000反发2，80000反发3
-    hate_count = 0
-    hate_count += character_data.status_data[20]
+    hate_count, hate_count_text = get_now_state_all_value_and_text_from_mark_up_data(51, character_id)
     # 单次增加量
     if 20 in change_data.status_data:
         hate_count += change_data.status_data[20] * 5
@@ -1215,13 +1246,13 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
         hate_count += change_data.status_data[17]
     # 需要非深度无意识
     if handle_premise.handle_normal_6(character_id):
-        if hate_count >= 10000 and character_data.ability[18] <= 0:
+        if hate_count >= game_config.config_mark_up_data[51].need_state_all_value and character_data.ability[18] <= 0:
             character_data.ability[18] = 1
             character_data.second_behavior[1045] = 1
-        if hate_count >= 50000 and character_data.ability[18] <= 1:
+        if hate_count >= game_config.config_mark_up_data[52].need_state_all_value and character_data.ability[18] <= 1:
             character_data.ability[18] = 2
             character_data.second_behavior[1046] = 1
-        if hate_count >= 100000 and character_data.ability[18] <= 2:
+        if hate_count >= game_config.config_mark_up_data[53].need_state_all_value and character_data.ability[18] <= 2:
             character_data.ability[18] = 3
             character_data.second_behavior[1047] = 1
 
