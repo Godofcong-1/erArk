@@ -1451,7 +1451,9 @@ def handle_make_food():
               })
 def handle_all_npc_position():
     """处理干员位置一览指令"""
-    cache.now_panel_id = constant.Panel.ALL_NPC_POSITION
+    from Script.UI.Panel import all_npc_position_panel
+    now_panel = all_npc_position_panel.All_Npc_Position_Panel(width)
+    now_panel.draw()
 
 
 @add_instruct(

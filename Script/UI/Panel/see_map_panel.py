@@ -194,35 +194,48 @@ class SeeMapPanel:
                 return_list.extend(now_move_menu.return_list)
             line = draw.LineDraw("=", self.width)
             line.draw()
+            # 查看上级地图
             if self.now_map != []:
                 now_id = text_handle.id_index(now_index)
                 now_text = now_id + _("查看上级地图")
                 up_button = draw.CenterButton(
-                    now_text, str(now_index), self.width / 3, cmd_func=self.up_map
+                    now_text, str(now_index), self.width / 4, cmd_func=self.up_map
                 )
                 up_button.draw()
                 return_list.append(up_button.return_text)
                 now_index += 1
             else:
                 now_draw = draw.NormalDraw()
-                now_draw.text = " " * int(self.width / 3)
-                now_draw.width = self.width / 3
+                now_draw.text = " " * int(self.width / 4)
+                now_draw.width = self.width / 4
                 now_draw.draw()
+            # 返回按钮
             back_id = text_handle.id_index(now_index)
             now_text = back_id + _("返回")
-            back_button = draw.CenterButton(now_text, str(now_index), self.width / 3)
+            back_button = draw.CenterButton(now_text, str(now_index), self.width / 4)
             back_button.draw()
             return_list.append(back_button.return_text)
             now_index += 1
+            # 查看下级地图
             character_map = map_handle.get_map_for_path(character_data.position)
             if character_map != self.now_map:
                 now_id = text_handle.id_index(now_index)
                 now_text = now_id + _("查看下级地图")
                 down_button = draw.CenterButton(
-                    now_text, str(now_index), self.width / 3, cmd_func=self.down_map
+                    now_text, str(now_index), self.width / 4, cmd_func=self.down_map
                 )
                 down_button.draw()
                 return_list.append(down_button.return_text)
+                now_index += 1
+            # 干员位置一览
+            now_id = text_handle.id_index(now_index)
+            now_text = now_id + _("干员位置一览")
+            character_position_button = draw.CenterButton(
+                now_text, str(now_index), self.width / 4, cmd_func=self.all_npc_position
+            )
+            character_position_button.draw()
+            return_list.append(character_position_button.return_text)
+            now_index += 1
             line_feed.draw()
             yrn = flow_handle.askfor_all(return_list)
             py_cmd.clr_cmd()
@@ -242,6 +255,13 @@ class SeeMapPanel:
         character_position = cache.character_data[0].position
         down_map_scene_id = map_handle.get_map_scene_id_for_scene_path(self.now_map, character_position)
         self.now_map.append(down_map_scene_id)
+
+    def all_npc_position(self):
+        """查看所有干员位置"""
+        py_cmd.clr_cmd()
+        from Script.UI.Panel import all_npc_position_panel
+        now_panel = all_npc_position_panel.All_Npc_Position_Panel(self.width)
+        now_panel.draw()
 
     def move_now(self, scene_path: List[str]):
         """

@@ -169,7 +169,7 @@ class All_Npc_Position_Panel:
             yrn = flow_handle.askfor_all(return_list)
             # 选择玩家移动时，也跳出循环
             if yrn == back_draw.return_text or (yrn in self.handle_panel.return_list and yrn not in {'0', '1'} and self.move_type == 2):
-                cache.now_panel_id = constant.Panel.IN_SCENE
+                # cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def call_all(self):
