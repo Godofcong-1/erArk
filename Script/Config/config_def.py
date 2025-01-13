@@ -19,7 +19,7 @@ class AbilityType:
 
 
 class AbilityUp:
-    """ 能力对应类型和文字描述 """
+    """ 能力升级数据表 """
 
     cid: int
     """ 编号id """
@@ -605,6 +605,31 @@ class Juel:
     """ 珠id """
     name: str
     """ 珠名 """
+
+
+class Mark_Up:
+    """ 刻印升级数据表 """
+
+    cid: int
+    """ 编号id """
+    ability_id: int
+    """ 能力id """
+    now_level: int
+    """ 当前等级 """
+    second_behavior: int
+    """ 二段行为id """
+    need_state_all_value: int
+    """ 升级需求的总状态值 """
+    need_state_1: str
+    """ 升级需求的状态1 """
+    need_state_2: str
+    """ 升级需求的状态2 """
+    need_state_3: str
+    """ 升级需求的状态3 """
+    need_state_4: str
+    """ 升级需求的状态4 """
+    need_juel_type: int
+    """ 升级需求的宝珠类型 """
 
 
 class Moon:

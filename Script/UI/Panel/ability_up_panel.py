@@ -60,43 +60,72 @@ class Characterabi_show_Text:
         ability_list = game_config.config_ability_type_data
         for anility_type in ability_list:
             type_set = ability_list[anility_type]
-            # 去掉刻印
-            # print("anility_type : ",anility_type)
+            # 刻印单独处理
             if anility_type == 2:
-                continue
-            for ability_id in type_set:
-                # 去掉与性别不符的感度与扩张
-                if self.character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 73, 74}:
-                        continue
-                elif self.character_data.sex == 1:
-                    if ability_id == 3:
-                        continue
-                # 这个_1是为了补空格让格式对齐#
-                now_exp = 0
-                now_exp = self.character_data.ability[ability_id]
-                button_text = " "
-                button_text += game_config.config_ability[ability_id].name
-                button_text += " "
-                # 根据不同的类型补不同数量的空格#
-                if anility_type != 2 and anility_type != 4 and anility_type != 6:
-                    button_text += "  "
-                    if anility_type == 3 or anility_type == 5:
+                # 跳过玩家
+                if self.character_id == 0:
+                    continue
+                # 遍历刻印
+                for ability_id in type_set:
+                    # 当前刻印等级
+                    now_mark_level = self.character_data.ability[ability_id]
+                    button_text = f" {game_config.config_ability[ability_id].name}   {now_mark_level} "
+                    # 已经记录了刻印升级条件的刻印
+                    if ability_id in game_config.config_mark_up_data_by_ability and now_mark_level < 3:
+                        button_draw = draw.LeftButton(
+                            _(button_text),
+                            _(game_config.config_ability[ability_id].name),
+                            self.width / 10,
+                            cmd_func=self.mark_up_show,
+                            args=(ability_id),
+                        )
+                        self.return_list.append(button_draw.return_text)
+                        button_draw.draw()
+                    # 未记录刻印升级条件的刻印
+                    else:
+                        button_draw = draw.LeftButton(
+                            _(button_text),
+                            _(game_config.config_ability[ability_id].name),
+                            self.width / 10,
+                            normal_style='deep_gray',
+                            cmd_func=self.mark_can_up_show,
+                        )
+                        self.return_list.append(button_draw.return_text)
+                        button_draw.draw()
+            else:
+                for ability_id in type_set:
+                    # 去掉与性别不符的感度与扩张
+                    if self.character_data.sex == 0:
+                        if ability_id in {2, 4, 7, 9, 12, 73, 74}:
+                            continue
+                    elif self.character_data.sex == 1:
+                        if ability_id == 3:
+                            continue
+                    # 这个_1是为了补空格让格式对齐#
+                    now_exp = 0
+                    now_exp = self.character_data.ability[ability_id]
+                    button_text = " "
+                    button_text += game_config.config_ability[ability_id].name
+                    button_text += " "
+                    # 根据不同的类型补不同数量的空格#
+                    if anility_type != 2 and anility_type != 4 and anility_type != 6:
                         button_text += "  "
-                button_text += attr_calculation.judge_grade(now_exp)
-                button_text += " "
-                button_text += str(now_exp)
-                now_abi_up_panel = Characterabi_cmd_Text(self.character_id, self.width, ability_id)
-                button_draw = draw.LeftButton(
-                    _(button_text),
-                    _(game_config.config_ability[ability_id].name),
-                    self.width / 10,
-                    cmd_func=now_abi_up_panel.draw)
-                self.return_list.append(button_draw.return_text)
-                button_draw.draw()
-                # py_cmd.clr_cmd()
-                # if yrn == self.back_draw.return_text:
-                #     break
+                        if anility_type == 3 or anility_type == 5:
+                            button_text += "  "
+                    button_text += attr_calculation.judge_grade(now_exp)
+                    button_text += " "
+                    button_text += str(now_exp)
+                    now_abi_up_panel = Characterabi_cmd_Text(self.character_id, self.width, ability_id)
+                    button_draw = draw.LeftButton(
+                        _(button_text),
+                        _(game_config.config_ability[ability_id].name),
+                        self.width / 10,
+                        cmd_func=now_abi_up_panel.draw)
+                    self.return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                    # py_cmd.clr_cmd()
+                    # if yrn == self.back_draw.return_text:
+                    #     break
             # 只有不是最后一个类型就补个换行#
             if anility_type != 6:
                 new_draw_n = draw.NormalDraw()
@@ -105,6 +134,107 @@ class Characterabi_show_Text:
                 new_draw_n.draw()
         # yrn = flow_handle.askfor_all(self.return_list)
 
+    def mark_up_show(self, ability_id: int):
+        """显示刻印升级面板"""
+        # 获取刻印升级数据
+        now_mark_level = self.character_data.ability[ability_id]
+        mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_mark_level]
+        mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
+        need_state_all_value = mark_up_data.need_state_all_value
+        now_state_all_value = 0
+        mark_up_data_need_state_list = []
+        mark_up_data_need_state_list.append(mark_up_data.need_state_1)
+        mark_up_data_need_state_list.append(mark_up_data.need_state_2)
+        mark_up_data_need_state_list.append(mark_up_data.need_state_3)
+        mark_up_data_need_state_list.append(mark_up_data.need_state_4)
+        # 文本信息
+        info_text = _("○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n\n")
+        info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += _("升级需要的总值为：{0}\n").format(need_state_all_value)
+        info_text += _("当前角色状态可以提供的总值为：")
+        state_text = ""
+        for need_state in mark_up_data_need_state_list:
+            # 跳过空值
+            if need_state == '0':
+                continue
+            # 如果存在|符号，说明有权重调整
+            if '|' in need_state:
+                state_id = int(need_state.split('|')[0])
+                adjust = float(need_state.split('|')[1])
+                # 计算当前状态值
+                now_state_value = int(self.character_data.status_data[state_id] * adjust)
+                now_state_all_value += now_state_value
+                # 输出文本
+                state_text += f" {game_config.config_character_state[state_id].name}*{adjust} = {now_state_value} "
+            else:
+                state_id = int(need_state)
+                now_state_value = self.character_data.status_data[state_id]
+                now_state_all_value += now_state_value
+                state_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
+        # 如果为空，则输出无
+        if state_text == "":
+            state_text = _("无")
+        # 加到文本信息中
+        info_text += state_text + "\n"
+        # 需要的宝珠值为
+        need_juel = need_state_all_value - now_state_all_value
+        need_juel = max(need_juel, 0)
+        # 宝珠信息
+        juel_type_id = mark_up_data.need_juel_type
+        juel_name = game_config.config_juel[juel_type_id].name
+        now_juel = self.character_data.juel[juel_type_id]
+        juel_text = _("减去提供值后需要消耗的宝珠为：{0} {1}，当前拥有：{2}\n").format(juel_name, need_juel, now_juel)
+        info_text += juel_text
+
+        # 开始绘制
+        while 1:
+            return_list = []
+            title_line = draw.TitleLineDraw(_("使用宝珠升级刻印"), self.width, ":")
+            title_line.draw()
+            line_feed.draw()
+            # 绘制信息文本
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.draw()
+            line_feed.draw()
+            # 如果当前宝珠足够，绘制升级按钮
+            if now_juel >= need_juel:
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_up, args=(ability_id, need_juel))
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
+            # 绘制返回按钮
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            # 等待玩家选择
+            yrn = flow_handle.askfor_all(return_list)
+            py_cmd.clr_cmd()
+            line_feed.draw()
+            if yrn in return_list:
+                break
+
+    def mark_up(self, ability_id: int, need_juel: int):
+        """升级刻印"""
+        from Script.Design import settle_behavior
+        now_mark_level = self.character_data.ability[ability_id]
+        mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_mark_level]
+        mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
+        # 扣除宝珠
+        juel_type_id = mark_up_data.need_juel_type
+        self.character_data.juel[juel_type_id] -= need_juel
+        # 刻印等级+1
+        self.character_data.ability[ability_id] += 1
+        # 赋予二段行为
+        second_behavior_id = mark_up_data.second_behavior
+        self.character_data.second_behavior[second_behavior_id] = 1
+        # 结算二段行为
+        settle_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
+
+    def mark_can_up_show(self):
+        """显示无法升级的刻印信息"""
+        now_draw = draw.WaitDraw()
+        now_draw.text = _("\n该刻印当前无法使用宝珠升级\n")
+        now_draw.draw()
 
 class Characterabi_cmd_Text:
     """
