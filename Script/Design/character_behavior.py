@@ -352,7 +352,9 @@ def settle_character_juel(character_id: int) -> int:
         #只要状态值不为0就结算为对应珠
         if status_value != 0:
             add_juel = attr_calculation.get_juel(status_value)
+            character_data.juel.setdefault(status_id, 0)
             if status_id in [17, 18, 19]:
+                character_data.juel[status_id] += add_juel // 4
                 character_data.juel[20] += add_juel // 2
             else:
                 character_data.juel[status_id] += add_juel
