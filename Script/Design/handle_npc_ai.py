@@ -1123,3 +1123,45 @@ def npc_ai_in_group_sex_type_3():
         character_data.sp_flag.masturebate = 3
         character_data.state == constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}进入了要自慰状态")
+
+
+def select_random_free_character(character_id: int) -> int:
+    """
+    选择在场的一位空闲的随机角色
+    Keyword arguments:
+    character_id -- 自己的角色id
+    Return arguments:
+    int -- 对方的角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    available_characters = []
+    # 遍历所有角色
+    for chara_id in scene_data.character_list:
+        # 跳过自己
+        if chara_id == character_id:
+            continue
+        now_character_data = cache.character_data[chara_id]
+        # 跳过H状态
+        if now_character_data.sp_flag.is_h:
+            continue
+        # 跳过正在移动的
+        if handle_premise.handle_action_move(chara_id):
+            continue
+        # 跳过正在睡觉的
+        if handle_premise.handle_action_sleep(chara_id):
+            continue
+        # 检查是否有人正在对其互动
+        interacting_character_end_info = now_character_data.action_info.interacting_character_end_info
+        # 如果有人正在对其互动，且不是自己的话
+        if interacting_character_end_info[0] != -1 and interacting_character_end_info[0] != character_id:
+            # 检查互动结束时间
+            interacting_character_end_time = interacting_character_end_info[1]
+            # 如果自己的行动开始时间晚于对方的互动结束时间，则跳过
+            if game_time.judge_date_big_or_small(character_data.behavior.start_time, interacting_character_end_time) < 0:
+                continue
+        available_characters.append(chara_id)
+    if not available_characters:
+        return -1  # 无空闲角色
+    return random.choice(available_characters)

@@ -3,7 +3,7 @@ import datetime
 from types import FunctionType
 from Script.Settle import default
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_premise_place
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_premise_place, handle_npc_ai
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -1198,20 +1198,12 @@ def character_chat_rand_character(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    character_set = scene_data.character_list.copy()
-    character_set.remove(character_id)
-    if 0 in character_set:
-        character_set.remove(0)
-    character_list = list(character_set)
-    if len(character_list):
-        target_id = random.choice(character_list)
-        if handle_premise.handle_action_not_sleep(target_id):
-            character_data.behavior.behavior_id = constant.Behavior.CHAT
-            character_data.behavior.duration = 10
-            character_data.target_character_id = target_id
-            character_data.state = constant.CharacterStatus.STATUS_CHAT
+    target_id = handle_npc_ai.select_random_free_character(character_id)
+    if target_id != -1:
+        character_data.behavior.behavior_id = constant.Behavior.CHAT
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_CHAT
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.STROKE_RAND_CHARACTER)
@@ -1222,20 +1214,12 @@ def character_stroke_rand_character(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    character_set = scene_data.character_list.copy()
-    character_set.remove(character_id)
-    if 0 in character_set:
-        character_set.remove(0)
-    character_list = list(character_set)
-    if len(character_list):
-        target_id = random.choice(character_list)
-        if handle_premise.handle_action_not_sleep(target_id):
-            character_data.behavior.behavior_id = constant.Behavior.STROKE
-            character_data.behavior.duration = 10
-            character_data.target_character_id = target_id
-            character_data.state = constant.CharacterStatus.STATUS_STROKE
+    target_id = handle_npc_ai.select_random_free_character(character_id)
+    if target_id != -1:
+        character_data.behavior.behavior_id = constant.Behavior.STROKE
+        character_data.behavior.duration = 10
+        character_data.target_character_id = target_id
+        character_data.state = constant.CharacterStatus.STATUS_STROKE
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.CHAT_TO_DR)
@@ -1739,16 +1723,8 @@ def character_singing_to_rand_character(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_list = list(
-        cache.scene_data[
-            map_handle.get_map_system_path_str_for_list(character_data.position)
-        ].character_list
-    )
-    character_list.remove(character_id)
-    if 0 in character_list:
-        character_list.remove(0)
-    if len(character_list):
-        target_id = random.choice(character_list)
+    target_id = handle_npc_ai.select_random_free_character(character_id)
+    if target_id != -1:
         character_data.behavior.behavior_id = constant.Behavior.SINGING
         character_data.behavior.duration = 10
         character_data.target_character_id = target_id
@@ -1763,16 +1739,8 @@ def character_play_instrument_to_rand_character(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_list = list(
-        cache.scene_data[
-            map_handle.get_map_system_path_str_for_list(character_data.position)
-        ].character_list
-    )
-    character_list.remove(character_id)
-    if 0 in character_list:
-        character_list.remove(0)
-    if len(character_list):
-        target_id = random.choice(character_list)
+    target_id = handle_npc_ai.select_random_free_character(character_id)
+    if target_id != -1:
         character_data.behavior.behavior_id = constant.Behavior.PLAY_INSTRUMENT
         character_data.behavior.duration = 30
         character_data.target_character_id = target_id

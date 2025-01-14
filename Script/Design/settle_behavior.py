@@ -3,7 +3,7 @@ import random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk
+from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel, originium_arts
@@ -307,7 +307,6 @@ def handle_instruct_data(
     now_time -- 结算时间
     add_time -- 行动已经过时间
     change_data -- 状态变更信息记录对象
-
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     # 进行一段结算
@@ -316,6 +315,11 @@ def handle_instruct_data(
         talk.handle_talk(character_id)
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
+        # 如果是对他人的行为，则将自己的id与行动结束时间记录到对方的数据中
+        if now_character_data.target_character_id != character_id:
+            end_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=now_character_data.behavior.start_time)
+            target_character_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
+            target_character_data.action_info.interacting_character_end_info = [character_id, end_time]
         # 娱乐和工作类的指令则进行一次设施损坏检测
         if behavior_id in game_config.config_status:
             status_data = game_config.config_status[behavior_id]

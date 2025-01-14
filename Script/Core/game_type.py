@@ -585,6 +585,8 @@ class ACTION_INFO:
         """ 角色触发移动口上的时间，用以避免短时间频繁触发该口上 """
         self.health_check_today: int = 0
         """ 角色今天体检的时间，0不需要，1上午，2下午，3新干员立刻体检 """
+        self.interacting_character_end_info = [-1, datetime.datetime(1, 1, 1)]
+        """ 正在对自己进行交互的对方角色信息，0对方角色id，1对方行动结束时间 """
 
 
 class AUTHOR_FLAG:
