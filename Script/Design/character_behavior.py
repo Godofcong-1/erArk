@@ -97,7 +97,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     if character_data.dead:
         return
     if character_data.behavior.start_time is None:
-        character.init_character_behavior_start_time(character_id, now_time)
+        character.init_character_behavior_start_time(character_id, pl_start_time)
 
     # 处理特殊模式
     if character_id != 0:
