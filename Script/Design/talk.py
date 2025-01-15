@@ -126,7 +126,7 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
             if character_data.adv != talk_config.adv_id and target_data.adv != talk_config.adv_id:
                 continue
         # 系统设置中的是否使用通用文本
-        if cache.system_setting[8] == 0 and talk_config.adv_id == 0:
+        if cache.all_system_setting.draw_setting[2] == 0 and talk_config.adv_id == 0:
             continue
         # 计算前提字典的总权重
         premise_dict = game_config.config_talk_premise_data[talk_id]

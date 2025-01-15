@@ -53,7 +53,7 @@ def first_bonus_and_setting_updata():
         cache.first_bonus[cid] = False
     for cid in game_config.config_world_setting:
         cache.world_setting[cid] = 0
-    cache.system_setting = attr_calculation.get_system_setting_zero()
+    cache.all_system_setting = attr_calculation.get_system_setting_zero()
     # 初始资源
     cache.rhodes_island.materials_resouce[1] = 20000
     cache.rhodes_island.materials_resouce[11] = 20
@@ -70,7 +70,7 @@ def game_start():
     character_handle.handle_character_setting()
     cooking.init_recipes()
     cooking.init_food_shop_data(new_day_flag=True)
-    cache.system_setting = attr_calculation.get_system_setting_zero()
+    cache.all_system_setting = attr_calculation.get_system_setting_zero()
     cache.country = attr_calculation.get_country_reset(cache.country)
     basement.get_base_updata()
     character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面

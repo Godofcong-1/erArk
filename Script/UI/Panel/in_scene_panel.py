@@ -98,7 +98,7 @@ class InScenePanel:
             # 绘制的开始时间
             start_draw = time.time()
             # 和上一次主界面绘制之间的空行数量，由系统设置决定
-            len_str = game_config.config_system_setting_option[1][cache.system_setting[1]]
+            len_str = game_config.config_draw_setting_option[1][cache.all_system_setting.draw_setting[1]]
             len_line = int(len_str[:1])
             for i in range(len_line):
                 line_feed.draw()

@@ -552,7 +552,7 @@ def draw_todo():
     from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel, invite_visitor_panel
 
     # 如果系统设置中关闭了待办事项，直接返回
-    if cache.system_setting[12] == 0:
+    if cache.all_system_setting.draw_setting[5] == 0:
         return
 
     draw_text = ""

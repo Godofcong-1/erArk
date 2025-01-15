@@ -234,13 +234,25 @@ def input_load_save(save_id: str):
 
     # 重置系统设置
     zero_system_setting = attr_calculation.get_system_setting_zero()
-    if len(loaded_dict["system_setting"]) != len(zero_system_setting):
-        for key in zero_system_setting:
-            if key not in loaded_dict["system_setting"]:
-                loaded_dict["system_setting"][key] = zero_system_setting[key]
+    base_setting = zero_system_setting.base_setting
+    if len(loaded_dict["all_system_setting"].base_setting) != len(base_setting):
+        for key in base_setting:
+            if key not in loaded_dict["all_system_setting"].base_setting:
+                loaded_dict["all_system_setting"].base_setting[key] = base_setting[key]
                 update_count += 1
         now_draw = draw.NormalDraw()
         draw_text = _("\n系统设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
+    draw_setting = zero_system_setting.draw_setting
+    if len(loaded_dict["all_system_setting"].draw_setting) != len(draw_setting):
+        for key in draw_setting:
+            if key not in loaded_dict["all_system_setting"].draw_setting:
+                loaded_dict["all_system_setting"].draw_setting[key] = draw_setting[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n绘制设置已更新，如有需要请手动修改\n")
         now_draw.style = "gold_enrod"
         now_draw.text = draw_text
         now_draw.draw()

@@ -634,7 +634,7 @@ class New_Round_Handle:
         map_config.init_map_data()
         game_time.init_time()
         cache.rhodes_island = basement.get_base_zero()
-        cache.system_setting = attr_calculation.get_system_setting_zero()
+        cache.all_system_setting = attr_calculation.get_system_setting_zero()
         creator_character_flow.game_start()
         info_draw_text += _("游戏数据重置完毕\n")
 

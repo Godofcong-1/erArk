@@ -495,7 +495,7 @@ def update_sleep():
             if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
                 assistant_character_data.sp_flag.night_salutation = 0
             # 检查是否有可以升级的能力
-            if cache.system_setting[2]:
+            if cache.all_system_setting.base_setting[1]:
                 handle_ability.gain_ability(character_id)
             line_feed.draw()
         else:
@@ -514,7 +514,7 @@ def update_sleep():
             # 检查是否有可以获得的素质
             handle_talent.gain_talent(character_id,now_gain_type = 3)
             # 检查是否有可以升级的能力
-            if cache.system_setting[3]:
+            if cache.all_system_setting.base_setting[2]:
                 handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
@@ -705,11 +705,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 
     # 结算尿意值
-    if character_id == 0 and not cache.system_setting[5]:
+    if character_id == 0 and not cache.all_system_setting.base_setting[4]:
         pass
     else:
         add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
-        add_urinate *= cache.system_setting[6] / 2
+        add_urinate *= cache.all_system_setting.base_setting[5] / 2
         now_character_data.urinate_point += int(add_urinate)
         now_character_data.urinate_point = min(now_character_data.urinate_point,300)
 

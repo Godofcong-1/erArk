@@ -416,10 +416,10 @@ class CharacterInfoHead:
             favorability_text = f"{int(character_data.favorability[0])}"
             trust_text = f"{round(character_data.trust, 1)}%"
             # 只显示等级
-            if cache.system_setting[9] == 1:
+            if cache.all_system_setting.draw_setting[3] == 1:
                 favorability_and_trust_text = _("好感度:{0}，信赖度:{1}").format(favorability_lv_letter, trust_lv_letter)
             # 显示数值和等级
-            elif cache.system_setting[9] == 2:
+            elif cache.all_system_setting.draw_setting[3] == 2:
                 favorability_and_trust_text = _("好感度:{0}({1})，信赖度:{2}({3})").format(favorability_text, favorability_lv_letter, trust_text, trust_lv_letter)
 
         # 非0疲劳时输出当前疲劳状态
@@ -504,9 +504,9 @@ class CharacterInfoHead:
         hypnosis_draw = draw.LeftDraw()
         hypnosis_text = ""
         if (
-            cache.system_setting[10] and 
+            cache.all_system_setting.draw_setting[4] and 
             (handle_premise.handle_unconscious_hypnosis_flag(character_id) or
-            (character_data.hypnosis.hypnosis_degree > 0 and cache.system_setting[10] == 2))
+            (character_data.hypnosis.hypnosis_degree > 0 and cache.all_system_setting.draw_setting[4] == 2))
         ):
             hypnosis_text = _(" <催眠")
             # 根据催眠程度来区分颜色
@@ -519,7 +519,7 @@ class CharacterInfoHead:
             else:
                 hypnosis_draw.style = "purple"
             # 是否显示具体数值
-            if cache.system_setting[10] == 2:
+            if cache.all_system_setting.draw_setting[4] == 2:
                 # 显示到小数点后一位
                 hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
             # 是否显示催眠类型

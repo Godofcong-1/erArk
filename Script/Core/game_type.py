@@ -1098,22 +1098,14 @@ class System_Setting:
     """系统设置"""
 
     def __init__(self):
+        self.base_setting: Dict[int, int] = {}
+        """ 基础系统设定，见System_Setting.csv """
+        self.draw_setting: Dict[int, int] = {}
+        """ 绘制设定，见Draw_Setting.csv """
         self.line_before_main_update: int = 3
         """ 主界面刷新前的行数 """
-        self.pl_ability_auto_lvup: bool = False
-        """ 是否自动升级玩家的能力 """
-        self.npc_ability_auto_lvup: bool = True
-        """ 是否自动升级NPC的能力 """
-        self.choose_shoot_where: bool = False
-        """ 每次射精时手动选择射在哪里 """
-        self.dr_need_pee: bool = False
-        """ 博士需要尿尿 """
-        self.urinate_grow_speed: int = 2
-        """ 尿意值的增长速度，0不增长，1为8h增长到最大，2为4h增长到最大，3为2h增长到最大 """
-        self.semen_flow: bool = True
-        """ 是否开关精液流通功能 """
-        self.all_chara_use_common_text: bool = True
-        """ 所有角色使用通用文本 """
+        self.value_draw: Dict[str, bool] = {"pl": False, "npc": False}
+        """ 数值绘制 """
 
 
 class Ai_Setting:
@@ -1410,9 +1402,10 @@ class Cache:
         """ 初期奖励 """
         self.world_setting: Dict[int, int] = {}
         """ 世界设定 """
-        # self.system_setting: System_Setting = System_Setting()
-        self.system_setting: Dict[int, int] = {}
-        """ 系统设定，见System_Setting.csv """
+        # self.system_setting: Dict[int, int] = {}
+        # """ 系统设定，见System_Setting.csv """
+        self.all_system_setting: System_Setting = System_Setting()
+        """ 新的总系统设定 """
         self.ai_setting: Ai_Setting = Ai_Setting()
         """ ai设定 """
         self.country: Country = Country()

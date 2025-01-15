@@ -383,7 +383,7 @@ class Ejaculation_Panel:
             self.draw_choose_target_chara_in_group_sex()
             self.draw_choose_part()
         # 如果没有选择射精部位，则直接在当前阴茎位置射精
-        elif not cache.system_setting[4]:
+        elif not cache.all_system_setting.base_setting[3]:
             now_position = target_data.h_state.insert_position
             if now_position != -1:
                 if now_position < 20:

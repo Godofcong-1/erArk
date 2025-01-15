@@ -3892,6 +3892,58 @@ msgstr ""
 msgid "优先承接来自各势力领导人的 高级 委托，大幅度提高势力声望和地区声望。"
 msgstr ""
 
+#: .\data\csv\Draw_Setting.csv:6
+msgid "主界面每次刷新时的空行数量"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:6
+msgid "主界面即主场景界面，每次使用指令后刷新。喜欢连在一起的可以调小，喜欢明确分隔的可以调大"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:6
+msgid "1行|2行|3行|5行|10行|50行"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:7
+msgid "全角色是否使用通用文本"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:7
+msgid "指令文本分为通用文本和角色专属文本，通用文本可以被所有角色使用，角色专属文本只能被指定角色使用。注意，改变该项将会覆盖全角色的该个人选项，如需个别调整请手动调整对应角色"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:8
+msgid "主界面中干员好感与信赖的显示"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:8
+msgid "是否在主界面的角色信息中显示好感与信赖的情况，以及要显示多详细"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:8
+msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:9
+msgid "主界面中干员催眠情况的显示"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:9
+msgid "是否在主界面的角色信息中显示催眠的情况，以及要显示多详细"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:9
+msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:10
+msgid "是否在处理公务时显示待处理事项"
+msgstr ""
+
+#: .\data\csv\Draw_Setting.csv:10
+msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
+msgstr ""
+
 #: .\data\csv\Entertainment.csv:9
 msgid "唱歌"
 msgstr ""
@@ -11853,131 +11905,79 @@ msgid "深夜"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:6
-msgid "主界面每次刷新时的空行数量"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:6
-msgid "主界面即主场景界面，每次使用指令后刷新。喜欢连在一起的可以调小，喜欢明确分隔的可以调大"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:6
-msgid "1行|2行|3行|5行|10行|50行"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:7
 msgid "是否在博士入睡结算时自动升级玩家的能力"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:7
+#: .\data\csv\System_Setting.csv:6
 msgid "会依次遍历全能力，符合升级条件则进行升级。对自己的升级路线有特定规划的话，建议自己手动升级"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:8
+#: .\data\csv\System_Setting.csv:7
 msgid "是否在博士入睡结算时自动升级干员的能力"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:8
+#: .\data\csv\System_Setting.csv:7
 msgid "会依次遍历全能力，符合升级条件则进行升级。因干员数量较多，建议开启"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:9
+#: .\data\csv\System_Setting.csv:8
 msgid "每次射精时手动选择射在哪里"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:9
+#: .\data\csv\System_Setting.csv:8
 msgid "手动选择时会弹出选择框，可自由选择所有可选的部位，比如乳交时可以射在脸上或者衣服上。自动射精时则阴茎在哪里就会射在哪里"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:9
+#: .\data\csv\System_Setting.csv:8
 msgid "否，自动射在当前阴茎所在的位置|是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:10
+#: .\data\csv\System_Setting.csv:9
 msgid "博士的尿意值自然增长"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:10
+#: .\data\csv\System_Setting.csv:9
 msgid "博士是否和其他干员一样需要上厕所解手（该选项的优先度高于6号的全角色尿意值的增长速度选项）"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:10
+#: .\data\csv\System_Setting.csv:9
 msgid "否，博士的尿意值不再自然增加|是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:11
+#: .\data\csv\System_Setting.csv:10
 msgid "全角色尿意值的增长速度"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:11
+#: .\data\csv\System_Setting.csv:10
 msgid "尿意值会随着时间流逝自然增加，当涨到上限的80%以上时会开始有尿意，越高则会越想去解手，解手后尿意值清零"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:11
+#: .\data\csv\System_Setting.csv:10
 msgid "不自然增加|慢，8h回满|中，4h回满|快，2h回满"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:12
+#: .\data\csv\System_Setting.csv:11
 msgid "是否开关精液流通功能"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:12
+#: .\data\csv\System_Setting.csv:11
 msgid "流通功能会使精液中的一定比例向附近的联通部位流动，如头发上的精液会向帽子和面部流动，小穴的精液会向子宫和内裤流动"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:12
+#: .\data\csv\System_Setting.csv:11
 msgid "否，精液只会停留在射上去的部位|是，射上去的精液会有部分流向联通部位"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:13
-msgid "全角色是否使用通用文本"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:13
-msgid "指令文本分为通用文本和角色专属文本，通用文本可以被所有角色使用，角色专属文本只能被指定角色使用。注意，改变该项将会覆盖全角色的该个人选项，如需个别调整请手动调整对应角色"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:14
-msgid "主界面中干员好感与信赖的显示"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:14
-msgid "是否在主界面的角色信息中显示好感与信赖的情况，以及要显示多详细"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:14
-msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:15
-msgid "主界面中干员催眠情况的显示"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:15
-msgid "是否在主界面的角色信息中显示催眠的情况，以及要显示多详细"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:15
-msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:12
 msgid "禁止某些干员在游戏中出现"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:12
 msgid "如果对某些干员不感兴趣，可以选择禁止她们在游戏中出现，未招募的会无法招募，已招募的会离岛并无法招募"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:12
 msgid "不禁止|禁止"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:17
-msgid "是否在处理公务时显示待处理事项"
-msgstr ""
-
-#: .\data\csv\System_Setting.csv:17
-msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
 msgstr ""
 
 #: .\data\csv\Talent.csv:7

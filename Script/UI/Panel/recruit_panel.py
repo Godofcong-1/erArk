@@ -46,7 +46,7 @@ def find_recruitable_npc() -> List[int]:
         if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
             continue
         # 如果设置了禁止，则跳过禁止干员
-        if cache.system_setting[11]:
+        if cache.all_system_setting.base_setting[7]:
             if chara_id in cache.forbidden_npc_id:
                 continue
         recruitable_npc_id_list.append(chara_id)
