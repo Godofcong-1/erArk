@@ -250,10 +250,13 @@ def body_part_talent_update(character_id, talent_ids, increase, body_part):
     """
     now_character_data = cache.character_data[character_id]
     # 获取当前素质id
+    now_talent_id = -1
     for talent_id in talent_ids:
         if now_character_data.talent[talent_id] == 1:
             now_talent_id = talent_id
             break
+    if now_talent_id == -1:
+        return _("未找到目标素质，无法进行变化\n")
     # 更新素质id
     if increase:
         new_talent_id = min(now_talent_id + 1, talent_ids[-1])
