@@ -4,9 +4,10 @@ from Script.Core import (
     cache_control,
     game_type,
     get_text,
+    constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise_place, attr_calculation, handle_premise, cooking
+from Script.Design import handle_premise_place, attr_calculation, map_handle, cooking
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -586,3 +587,38 @@ def draw_todo():
         now_draw.text = '\n' + draw_text
         now_draw.style = "gold_enrod"
         now_draw.draw()
+
+
+def find_facility_damage():
+    """
+    检查设施损坏
+    """
+    tem_data = cache.rhodes_island.facility_damage_data.copy()
+    # 去掉已经有人在修理的地点
+    for character_id in cache.rhodes_island.maintenance_place:
+        if cache.rhodes_island.maintenance_place[character_id] in tem_data:
+            tem_data.pop(cache.rhodes_island.maintenance_place[character_id])
+    target_scene_str = ''
+    # 如果当前有损坏地点，则根据每个地点的数值大小作为权重选择一个
+    if len(cache.rhodes_island.facility_damage_data):
+        # 计算总权重
+        total_weight = 0
+        for place_str in tem_data:
+            total_weight += tem_data[place_str]
+        # 随机一个数
+        rand_num = random.randint(1, total_weight)
+        # 遍历地点，减去权重，当权重小于0时，选中该地点
+        for place_str in tem_data:
+            rand_num -= tem_data[place_str]
+            if rand_num <= 0:
+                target_scene_str = place_str
+                break
+    # 否则随机选一个地点
+    if not target_scene_str:
+        # 指定的地点需要是可进入的
+        while 1:
+            target_scene_str = random.choice(constant.place_data["Room"])
+            close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
+            if close_type == "open":
+                break
+    return target_scene_str

@@ -2514,6 +2514,7 @@ def character_work_maintenance_1(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import basement
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.work_maintenance = 1
     character_data.target_character_id = character_id
@@ -2521,28 +2522,8 @@ def character_work_maintenance_1(character_id: int):
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
 
-    # 如果当前有损坏地点，则根据每个地点的数值大小作为权重选择一个
-    if len(cache.rhodes_island.facility_damage_data):
-        # 计算总权重
-        total_weight = 0
-        for place_str in cache.rhodes_island.facility_damage_data:
-            total_weight += cache.rhodes_island.facility_damage_data[place_str]
-        # 随机一个数
-        rand_num = random.randint(1, total_weight)
-        # 遍历地点，减去权重，当权重小于0时，选中该地点
-        for place_str in cache.rhodes_island.facility_damage_data:
-            rand_num -= cache.rhodes_island.facility_damage_data[place_str]
-            if rand_num <= 0:
-                target_scene_str = place_str
-                break
-    # 否则随机选一个地点
-    else:
-        # 指定的地点需要是可进入的
-        while 1:
-            target_scene_str = random.choice(constant.place_data["Room"])
-            close_type = map_handle.judge_scene_accessible(target_scene_str,character_id)
-            if close_type == "open":
-                break
+    # 获得维修地点
+    target_scene_str = basement.find_facility_damage()
     # 记录检修地点
     cache.rhodes_island.maintenance_place[character_id] = target_scene_str
 
