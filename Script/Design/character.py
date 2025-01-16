@@ -371,9 +371,13 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_trust
     calculation_text += _("+信赖修正(") + str(judge_trust) + ")"
 
-    # 状态修正，好意(11)和欲情(12)修正#
-    status_level_sum =  attr_calculation.get_status_level(target_data.status_data[11]) + attr_calculation.get_status_level(target_data.status_data[12])
-    judge_status = status_level_sum * 10
+    # 状态修正
+    # 欲情和快乐为低正修正，恭顺和屈服为高正修正，羞耻和抑郁低小负修正，苦痛和恐怖和反感为高负修正
+    add_status_level_sum_s =  attr_calculation.get_status_level(target_data.status_data[12]) + attr_calculation.get_status_level(target_data.status_data[13])
+    add_status_level_sum_l =  attr_calculation.get_status_level(target_data.status_data[10]) + attr_calculation.get_status_level(target_data.status_data[15])
+    down_status_level_sum_s = attr_calculation.get_status_level(target_data.status_data[16]) + attr_calculation.get_status_level(target_data.status_data[19])
+    down_status_level_sum_l = attr_calculation.get_status_level(target_data.status_data[17]) + attr_calculation.get_status_level(target_data.status_data[18]) + attr_calculation.get_status_level(target_data.status_data[20])
+    judge_status = add_status_level_sum_s * 5 +  add_status_level_sum_l * 10 - down_status_level_sum_s * 5 - down_status_level_sum_l * 10
     judge += judge_status
     if judge_status:
         calculation_text += _("+状态修正(") + str(judge_status) + ")"
