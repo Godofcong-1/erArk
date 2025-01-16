@@ -26,11 +26,12 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-def common_select_npc_button_list_func(final_list: list, title_text: str = '', info_text:str = '') -> list:
+def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, title_text: str = '', info_text:str = '') -> list:
     """
     通用npc选择按钮列表函数\n
     Keyword arguments:\n
-    final_list -- 最终按钮列表，每个子列表里\n：0号元素为角色id，1号元素为按钮要调用的函数source_func，2号元素为已选择角色id列表，默认值为空\n
+    now_draw_panel -- 当前绘制面板，即CommonSelectNPCButtonList\n
+    now_draw_panel.text_list -- 最终按钮列表，每个子列表里\n：0号元素为角色id，1号元素为按钮要调用的函数source_func，2号元素为已选择角色id列表，默认值为空\n
     title_text -- 标题文本\n
     info_text -- 信息文本\n
     return\n
@@ -57,7 +58,6 @@ def common_select_npc_button_list_func(final_list: list, title_text: str = '', i
     return_list = []
 
     # 绘制面板
-    now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel(final_list, CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
     now_draw_panel.update()
     now_draw_panel.draw()
     return_list.extend(now_draw_panel.return_list)
@@ -907,6 +907,9 @@ class CommonSelectNPCButtonList:
         # 如果当前角色已经被选择，则更改按钮样式
         if self.chara_id in self.chara_id_list:
             draw_style = 'gold_enrod'
+        # 如果未选中且是有口上颜色的角色，则显示口上颜色
+        elif character_data.text_color:
+            draw_style = character_data.name
 
         # 按钮绘制
         name_draw = draw.LeftButton(

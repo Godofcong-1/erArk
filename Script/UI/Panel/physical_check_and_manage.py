@@ -943,7 +943,7 @@ class Physical_Check_And_Manage_Panel:
     def adjust_target_list(self):
         """调整体检对象名单"""
         from Script.UI.Panel import normal_panel
-
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], normal_panel.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
         while 1:
             npc_id_got_list = sorted(cache.npc_id_got)
             # 已选择的角色id列表
@@ -955,9 +955,10 @@ class Physical_Check_And_Manage_Panel:
                     continue
                 now_list = [npc_id, self.switch_chara_in_target_list, selected_id_list]
                 final_list.append(now_list)
+            now_draw_panel.text_list = final_list
 
             # 调用通用选择按钮列表函数
-            return_list = normal_panel.common_select_npc_button_list_func(final_list, _("体检对象名单"))
+            return_list = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("体检对象名单"))
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == _("返回"):
