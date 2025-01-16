@@ -159,15 +159,15 @@ class System_Setting_Panel:
 
     def change_draw_setting(self, cid, option_len):
         """修改绘制设置"""
-        if cache.all_system_setting.base_setting[cid] < option_len - 1:
-            cache.all_system_setting.base_setting[cid] += 1
+        if cache.all_system_setting.draw_setting[cid] < option_len - 1:
+            cache.all_system_setting.draw_setting[cid] += 1
         else:
-            cache.all_system_setting.base_setting[cid] = 0
+            cache.all_system_setting.draw_setting[cid] = 0
         # 全角色是否使用通用文本
         if cid == 2:
             for character_id in cache.character_data:
                 character_data = cache.character_data[character_id]
-                character_data.chara_setting[1] = cache.all_system_setting.base_setting[cid]
+                character_data.chara_setting[1] = cache.all_system_setting.draw_setting[cid]
 
     def change_ban_list(self):
         """修改已禁止干员列表"""
