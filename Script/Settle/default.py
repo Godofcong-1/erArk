@@ -1300,8 +1300,8 @@ def handle_move_to_target_scene(
     if character_data.dead:
         return
     if len(character_data.behavior.move_target):
-        # 如果和玩家位于同一地点，则输出提示信息
-        if character_id > 0 and character_data.position == cache.character_data[0].position:
+        # 如果未开始屏蔽，且和玩家位于同一地点，则输出提示信息
+        if cache.all_system_setting.draw_setting[8] == 1 and character_id > 0 and character_data.position == cache.character_data[0].position:
             target_position_name = character_data.behavior.move_target[-1]
             if target_position_name == "0":
                 target_position_name = _("入口")

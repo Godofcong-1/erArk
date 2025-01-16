@@ -23,7 +23,7 @@ def get_system_setting_zero() -> game_type.System_Setting:
     # 基础设定
     base_default_dict = {1:0, 2:1, 3:0, 4:0, 5:2, 6:1, 7:0}
     # 绘制设定
-    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1}
+    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1}
     # 赋予默认值
     for system_setting in game_config.config_system_setting:
         if system_setting in base_default_dict:

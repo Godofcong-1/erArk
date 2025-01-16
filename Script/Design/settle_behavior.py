@@ -137,53 +137,34 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     if now_judge:
         # print(f"debug now_judge")
         now_text_list = []
-        now_draw = draw.NormalDraw()
         if character_id == 0:
-            now_draw.text = "\n" + now_character_data.name + now_character_data.nick_name + ": "
+            now_text = "\n" + now_character_data.name + now_character_data.nick_name + ": "
         else:
-            now_draw.text = "\n" + now_character_data.name + ": "
-        now_draw.width = width
-        # now_draw.draw()
-        if PC_information_flag == 1:
-            now_text_list.append(now_draw.text)
+            now_text = "\n" + now_character_data.name + ": "
 
         # 体力/气力/射精/理智的结算输出
         if change_data.hit_point and round(change_data.hit_point, 2) != 0:
-            now_text_list.append(
-                _("\n  体力") + text_handle.number_to_symbol_string(int(change_data.hit_point))
-            )
+            now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(change_data.hit_point))
         if change_data.mana_point and round(change_data.mana_point, 2) != 0:
-            now_text_list.append(
-                _("\n  气力") + text_handle.number_to_symbol_string(int(change_data.mana_point))
-            )
+            now_text += _("\n  气力") + text_handle.number_to_symbol_string(int(change_data.mana_point))
         if change_data.eja_point and round(change_data.eja_point, 2) != 0:
-            now_text_list.append(
-                _("\n  射精") + text_handle.number_to_symbol_string(int(change_data.eja_point))
-            )
+            now_text += _("\n  射精") + text_handle.number_to_symbol_string(int(change_data.eja_point))
         if change_data.sanity_point and round(change_data.sanity_point, 2) != 0:
-            now_text_list.append(
-                _("\n  理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point))
-            )
+            now_text += _("\n  理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point))
 
         # 状态的结算输出
         if len(change_data.status_data) and not exchange_flag:
-            now_text_list.extend(
-                [
+            for i in change_data.status_data:
+                now_text += (
                     f"\n  {game_config.config_character_state[i].name}{attr_text.get_value_text(int(change_data.status_data[i]))}"
-                    for i in change_data.status_data
-                ]
-            )
+                )
 
         # 经验的结算输出
         if len(change_data.experience):
-            now_text_list.extend(
-                [
-                    _("\n  ")
-                    + game_config.config_experience[i].name
-                    + text_handle.number_to_symbol_string(change_data.experience[i])
-                    for i in change_data.experience
-                ]
-            )
+            for i in change_data.experience:
+                now_text += (
+                    f"\n  {game_config.config_experience[i].name}{attr_text.get_value_text(int(change_data.experience[i]))}"
+                )
 
         # 非常见结算输出
         # if status_data.money:
@@ -195,8 +176,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
         #     )
 
         # 最后补个回车
-        if now_text_list != []:
-            now_text_list.extend("\n")
+        if now_text != "":
+            now_text += "\n"
+
+        if PC_information_flag == 1 and cache.all_system_setting.draw_setting[6] == 1:
+            now_text_list.append(now_text)
 
         # 交互对象的结算输出
         if len(change_data.target_change):
@@ -271,7 +255,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                             )
                             )
                             judge = 1
-                if judge and (now_text != name):
+                if judge and (now_text != name) and cache.all_system_setting.draw_setting[7] == 1:
                     now_text_list.append(now_text)
         if add_time > 0:
             if not exchange_flag:

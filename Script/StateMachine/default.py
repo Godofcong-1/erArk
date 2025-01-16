@@ -210,7 +210,7 @@ def character_move_to_toilet(character_id: int):
     general_movement_module(character_id, to_toilet)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去洗手间\n").format(character_data.name)
         now_draw.draw()
@@ -251,7 +251,7 @@ def character_move_to_foodshop(character_id: int):
     general_movement_module(character_id, to_foodshop)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去吃饭\n").format(character_data.name)
         now_draw.draw()
@@ -735,7 +735,7 @@ def character_move_to_maintenance_department(character_id: int):
     general_movement_module(character_id, to_maintenance_department)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去运维部\n").format(character_data.name)
         now_draw.draw()
@@ -755,7 +755,7 @@ def character_move_to_blacksmith_shop(character_id: int):
     general_movement_module(character_id, to_blacksmith_shop)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去铁匠铺\n").format(character_data.name)
         now_draw.draw()
@@ -775,7 +775,7 @@ def character_move_to_diplomatic_office(character_id: int):
     general_movement_module(character_id, to_diplomatic_office)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去外交官办公室\n").format(character_data.name)
         now_draw.draw()
@@ -795,7 +795,7 @@ def character_move_to_herb_garden(character_id: int):
     general_movement_module(character_id, to_herb_garden)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去药田\n").format(character_data.name)
         now_draw.draw()
@@ -815,7 +815,7 @@ def character_move_to_greenhouse(character_id: int):
     general_movement_module(character_id, to_greenhouse)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去温室\n").format(character_data.name)
         now_draw.draw()
@@ -835,7 +835,7 @@ def character_move_to_humiliation_room(character_id: int):
     general_movement_module(character_id, to_humiliation_room)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去调教室\n").format(character_data.name)
         now_draw.draw()
@@ -927,7 +927,7 @@ def character_move_to_maintenance_place(character_id: int):
     general_movement_module(character_id, to_maintenance_place_shop)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去检修地点\n").format(character_data.name)
         now_draw.draw()
@@ -971,7 +971,7 @@ def character_move_to_production_workshop(character_id: int):
     general_movement_module(character_id, to_production_workshop)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去生产车间\n").format(character_data.name)
         now_draw.draw()
@@ -1000,7 +1000,7 @@ def character_move_to_bathzone_locker_room(character_id: int):
         general_movement_module(character_id, to_locker_room)
 
         # 如果和玩家位于同一地点，则输出提示信息
-        if character_data.position == cache.character_data[0].position:
+        if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
             now_draw = draw.NormalDraw()
             now_draw.text = _("{0}打算去大浴场的更衣室\n").format(character_data.name)
             now_draw.draw()
@@ -1050,7 +1050,7 @@ def character_move_to_training_locker_room(character_id: int):
         general_movement_module(character_id, to_locker_room)
 
         # 如果和玩家位于同一地点，则输出提示信息
-        if character_data.position == cache.character_data[0].position:
+        if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
             now_draw = draw.NormalDraw()
             now_draw.text = _("{0}打算去训练场的更衣室\n").format(character_data.name)
             now_draw.draw()
@@ -1081,7 +1081,7 @@ def character_move_to_bath_room(character_id: int):
     general_movement_module(character_id, to_bath_room)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去淋浴\n").format(character_data.name)
         now_draw.draw()
@@ -1107,7 +1107,7 @@ def character_move_to_training_room(character_id: int):
     general_movement_module(character_id, to_training_room)
 
     # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
         now_draw = draw.NormalDraw()
         now_draw.text = _("{0}打算去进行战斗训练\n").format(character_data.name)
         now_draw.draw()

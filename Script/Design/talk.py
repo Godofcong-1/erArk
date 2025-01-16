@@ -38,16 +38,6 @@ def handle_talk(character_id: int):
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
-    # 避免多次触发NPC的移动口上
-    if character_id != 0 and behavior_id == constant.Behavior.MOVE:
-        # 跟随博士的移动不触发
-        if character_data.sp_flag.is_follow == 1 and handle_premise_place.handle_move_to_same_target_with_pl(character_id):
-            # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
-            return
-        # 当前小时内已触发过的不触发
-        if character_data.action_info.move_talk_time.hour == cache.game_time.hour and character_data.action_info.move_talk_time.year != 1:
-            # print(f"debug {character_data.name}在当前小时内已触发过一次移动文本")
-            return
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
     handle_talk_draw(character_id, now_talk_data)
@@ -162,6 +152,10 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
     if second_behavior_id > 0:
         second_behavior_info_text(character_id, second_behavior_id)
     if now_talk != "":
+        # 检测是否需要跳过
+        not_draw_flag = check_not_draw_talk(character_id, now_behavior_id, unusual_talk_flag)
+        if not_draw_flag:
+            return
         # 特殊符号检测
         tem_text, special_code = special_code_judge(now_talk)
         now_draw = draw.LineFeedWaitDraw()
@@ -181,9 +175,6 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
                 now_draw.style = character_data.name
             elif tar_text_color:
                 now_draw.style = target_character_data.name
-            # 记录当前小时内已触发过一次的移动文本
-            if character_data.behavior.behavior_id == constant.Behavior.MOVE:
-                character_data.action_info.move_talk_time = cache.game_time
             # 翻译口上
             if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
                 now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
@@ -321,6 +312,51 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
 
     return info_text
 
+
+def check_not_draw_talk(character_id: int, now_behavior_id: int, unusual_talk_flag: int):
+    """
+    检测是否需要跳过
+    Keyword arguments:
+    character_id -- 角色id
+    now_behavior_id -- 当前行为id
+    unusual_talk_flag -- 是否是特殊文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 未触发文本
+    if not now_behavior_id:
+        return True
+
+    # NPC的移动
+    if character_id != 0 and now_behavior_id == constant.Behavior.MOVE:
+        # 设置为屏蔽的不触发
+        if cache.all_system_setting.draw_setting[8] == 0:
+            # print(f"debug {character_data.name}设置为屏蔽，不显示移动文本")
+            return True
+        # 跟随博士的移动不触发
+        if character_data.sp_flag.is_follow == 1 and handle_premise_place.handle_move_to_same_target_with_pl(character_id):
+            # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
+            return True
+        # 当前小时内已触发过的不触发
+        if character_data.action_info.move_talk_time.hour == cache.game_time.hour and character_data.action_info.move_talk_time.year != 1:
+            # print(f"debug {character_data.name}在当前小时内已触发过一次移动文本")
+            return True
+        else:
+            # 记录当前小时内已触发过一次的移动文本
+            character_data.action_info.move_talk_time = cache.game_time
+            return False
+
+    # NPC的每日招呼
+    if character_id != 0 and now_behavior_id == constant.SecondBehavior.DAY_HELLO:
+        # 全屏蔽
+        if cache.all_system_setting.draw_setting[9] == 0:
+            # print(f"debug {character_data.name}设置为屏蔽，不显示每日招呼文本")
+            return True
+        # 仅屏蔽地文
+        elif cache.all_system_setting.draw_setting[9] == 2 and not unusual_talk_flag:
+            # print(f"debug {character_data.name}设置为仅屏蔽地文，不显示地文的每日招呼文本")
+            return True
+
+    return False
 
 def special_code_judge(now_talk: str):
     """
