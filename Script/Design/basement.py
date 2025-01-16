@@ -600,7 +600,7 @@ def find_facility_damage():
             tem_data.pop(cache.rhodes_island.maintenance_place[character_id])
     target_scene_str = ''
     # 如果当前有损坏地点，则根据每个地点的数值大小作为权重选择一个
-    if len(cache.rhodes_island.facility_damage_data):
+    if len(tem_data):
         # 计算总权重
         total_weight = 0
         for place_str in tem_data:
