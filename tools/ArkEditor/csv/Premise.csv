@@ -153,6 +153,7 @@ in_office,IN_OFFICE,地点_定位,在办公室（含全部办公室）
 in_dr_off,IN_DR_OFFICE,地点_定位,在博士办公室
 not_in_dr_off,NOT_IN_DR_OFFICE,地点_定位,不在博士办公室
 in_dr_off_or_debug,IN_DR_OFFICE_OR_DEBUG,地点_定位,在博士办公室或处于debug模式
+in_dr_room,IN_DR_ROOM,地点_定位,在博士房间
 in_command_room,IN_COMMAND_ROOM,地点_定位,在指挥室
 in_out_exit,IN_OUT_EXIT,地点_定位,在罗德岛出口
 in_command_room_or_out_exit,IN_COMMAND_ROOM_OR_OUT_EXIT,地点_定位,在指挥室或罗德岛出口
@@ -296,6 +297,7 @@ in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
 in_humiliation_room,IN_HUMILIATION_ROOM,地点_定位,在调教室
 not_in_humiliation_room,NOT_IN_HUMILIATION_ROOM,地点_定位,不在调教室
+in_humiliation_room_or_dr_room,IN_HUMILIATION_ROOM_OR_DR_ROOM,地点_定位,在调教室或博士房间
 in_deck,IN_DECK,地点_定位,在甲板
 not_in_deck,NOT_IN_DECK,地点_定位,不在甲板
 
