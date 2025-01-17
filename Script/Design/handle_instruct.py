@@ -4442,6 +4442,33 @@ def handle_clyster():
 
 
 @add_instruct(
+    constant.Instruct.CONTINUE_CLYSTER,
+    constant.InstructType.SEX,
+    _("继续灌肠"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.HAVE_CLYSTER_TOOLS,
+     constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+     constant_promise.Premise.T_ENEMA,
+     constant_promise.Premise.T_ENEMA_CAPACITY_L_5,
+     constant_promise.Premise.HAVE_ENEMAS},
+    constant.CharacterStatus.STATUS_CLYSTER,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_continue_clyster():
+    """处理继续灌肠指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    if judge_list[0] == 1:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLYSTER)
+    elif judge_list[0] == -1:
+        pass
+    else:
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS)
+
+
+@add_instruct(
     constant.Instruct.CLYSTER_END,
     constant.InstructType.SEX,
     _("拔出肛塞"),

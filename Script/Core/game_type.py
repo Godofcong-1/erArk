@@ -305,6 +305,8 @@ class DIRTY:
         """
         self.a_clean: int = 0
         """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
+        self.enema_capacity: int = 0
+        """ 灌肠容量，int，0为未灌肠，1少2中3大4巨5极 """
         self.semen_flow: list = []
         """
         精液流通情况，每个子list都是一个字典，字典有源头和目标，所有目标都在一个列表内

@@ -3122,7 +3122,7 @@ def handle_facility_damage_check(
     if scene_path_str in cache.rhodes_island.facility_damage_data:
         damage_count = cache.rhodes_island.facility_damage_data[scene_path_str]
     # 计算损坏几率
-    damage_rate = 5 / (2 ** damage_count)
+    damage_rate = 1 / (2 ** damage_count)
     damage_rate = max(damage_rate, 0)
     # 掷骰子
     if random.random() < (damage_rate / 100):
@@ -4015,8 +4015,17 @@ def handle_target_enema(
     target_change.status_data.setdefault(8, 0)
     target_change.status_data[8] += now_add_lust
 
+    # 根据A扩张和当前灌肠液量来判定苦痛程度
+    ability_lv = target_data.ability[10]
+    ability_adjust = attr_calculation.get_ability_adjust(ability_lv)
+    enema_capacity = target_data.dirty.enema_capacity
+    enema_capacity_adjust = 2 ** (enema_capacity + 1)
+    extra_adjust = enema_capacity_adjust / ability_adjust
+    base_chara_state_common_settle(character_data.target_character_id, add_time, 17, base_value = 1000, ability_level = target_data.ability[15], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
+
     # A灌肠
     target_data.dirty.a_clean = 1
+    target_data.dirty.enema_capacity += 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ENEMA_END)
@@ -4055,6 +4064,7 @@ def handle_target_enema_end(
 
     # A灌肠结束
     target_data.dirty.a_clean = 2
+    target_data.dirty.enema_capacity = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_NIPPLE_CLAMP_ON)

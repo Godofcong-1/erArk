@@ -13481,6 +13481,110 @@ def handle_t_semen_enema_end(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.ENEMA_CAPACITY_0)
+def handle_enama_capacity_0(character_id: int) -> int:
+    """
+    自己灌肠液量为无
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.dirty.enema_capacity == 0
+
+
+@add_premise(constant_promise.Premise.T_ENEMA_CAPACITY_0)
+def handle_t_enama_capacity_0(character_id: int) -> int:
+    """
+    交互对象灌肠液量为无
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_enama_capacity_0(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.ENEMA_CAPACITY_GE_1)
+def handle_enama_capacity_ge_1(character_id: int) -> int:
+    """
+    自己灌肠液量为大于等于少量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.dirty.enema_capacity >= 1
+
+
+@add_premise(constant_promise.Premise.T_ENEMA_CAPACITY_GE_1)
+def handle_t_enama_capacity_ge_1(character_id: int) -> int:
+    """
+    交互对象灌肠液量为大于等于少量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_enama_capacity_ge_1(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.ENEMA_CAPACITY_5)
+def handle_enama_capacity_5(character_id: int) -> int:
+    """
+    自己灌肠液量为极量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.dirty.enema_capacity == 5
+
+
+@add_premise(constant_promise.Premise.T_ENEMA_CAPACITY_5)
+def handle_t_enama_capacity_5(character_id: int) -> int:
+    """
+    交互对象灌肠液量为极量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_enama_capacity_5(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.ENEMA_CAPACITY_L_5)
+def handle_enama_capacity_l_5(character_id: int) -> int:
+    """
+    自己灌肠液量为少于极量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.dirty.enema_capacity < 5
+
+
+@add_premise(constant_promise.Premise.T_ENEMA_CAPACITY_L_5)
+def handle_t_enama_capacity_l_5(character_id: int) -> int:
+    """
+    交互对象灌肠液量为少于极量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_enama_capacity_l_5(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.T_HAIR_SEMEN)
 def handle_t_hair_semen(character_id: int) -> int:
     """

@@ -2741,6 +2741,8 @@ class Instruct:
     """ 拔出肛门振动棒 """
     CLYSTER = 0
     """ 灌肠 """
+    CONTINUE_CLYSTER = 0
+    """ 继续灌肠 """
     ANAL_PLUG = 0
     """ 肛塞 """
     CLYSTER_END = 0

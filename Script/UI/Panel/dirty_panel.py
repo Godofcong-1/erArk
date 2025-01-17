@@ -374,6 +374,9 @@ class SeeCharacterBodyPanel:
         if target_character_data.dirty.a_clean:
             enemas_text = game_config.ui_text_data['dirty'][f"灌肠{str(target_character_data.dirty.a_clean)}"]
             all_part_text_list.append(f" <{enemas_text}>")
+        if target_character_data.dirty.enema_capacity:
+            enema_capacity_text = game_config.ui_text_data['dirty'][f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"]
+            all_part_text_list.append(f" <{enema_capacity_text}>")
 
         # 香薰疗愈文本
         if target_character_data.sp_flag.aromatherapy != 0:

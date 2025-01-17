@@ -6933,7 +6933,7 @@ msgid "灌肠液"
 msgstr ""
 
 #: .\data\csv\Item.csv:32
-msgid "使后穴恢复清洁状态"
+msgid "灌肠时的消耗品，每次灌肠需要使用一瓶"
 msgstr ""
 
 #: .\data\csv\Item.csv:33
@@ -7026,6 +7026,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:45
 msgid "灌肠套装(注射套装+肛塞)"
+msgstr ""
+
+#: .\data\csv\Item.csv:45
+msgid "用来进行灌肠的道具，使后穴恢复清洁状态，需要搭配灌肠液使用"
 msgstr ""
 
 #: .\data\csv\Item.csv:46
@@ -20654,6 +20658,26 @@ msgstr ""
 
 #: .\data\ui_text\dirty.csv:141
 msgid "已精液灌肠"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:143
+msgid "肠内少许不适"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:144
+msgid "腹部有些许鼓起"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:145
+msgid "腹部明显鼓起"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:146
+msgid "腹部大的像是塞了一个皮球"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:147
+msgid "腹部像是临盆了一般膨胀到了极限"
 msgstr ""
 
 #: .\data\ui_text\h_state.csv:6
