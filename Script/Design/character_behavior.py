@@ -718,37 +718,6 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_character_data.hunger_point += add_hunger
     now_character_data.hunger_point = min(now_character_data.hunger_point,240)
 
-    # 结算有意识、周围有其他人、羞耻没有超限、状态1256正常下，不穿胸衣和内裤时的羞耻值增加
-    exposure_adjust = 0
-    if (
-        handle_premise.handle_not_wear_bra_or_pan(character_id) and 
-        handle_premise.handle_unconscious_flag_0(character_id) and 
-        handle_premise_place.handle_scene_over_two(character_id) and 
-        handle_premise.handle_self_shy_ge_100000(character_id) and 
-        handle_premise.handle_normal_1(character_id) and 
-        handle_premise.handle_normal_2(character_id) and
-        handle_premise.handle_normal_5(character_id) and
-        handle_premise.handle_normal_6(character_id)
-        ):
-        if handle_premise.handle_not_wear_bra(character_id):
-            exposure_adjust += 1
-        if handle_premise.handle_not_wear_pan(character_id):
-            exposure_adjust += 2
-    if exposure_adjust:
-        feel_adjust = attr_calculation.get_ability_adjust(now_character_data.ability[34])
-        exposure_add = true_add_time * feel_adjust * exposure_adjust
-        now_character_data.status_data[16] += exposure_add
-        now_character_data.status_data[16] = min(now_character_data.status_data[16],100000)
-
-    # print(f"debug character_id = {character_id}，target_character_id = {player_character_data.target_character_id}，now_character_data.hunger_point = {now_character_data.hunger_point}")
-
-    # 结算乳汁量，仅结算有泌乳素质的
-    if now_character_data.talent[27]:
-        milk_change = int(true_add_time * 2 / 3)
-        add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
-        now_character_data.pregnancy.milk += add_milk
-        now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
-
     # 结算玩家部分
     if character_id == 0:
 
@@ -828,6 +797,47 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         # 结算精液流动
         if len(now_character_data.dirty.semen_flow):
             settle_semen_flow(character_id, true_add_time)
+
+        # 结算乳汁量，仅结算有泌乳素质的
+        if now_character_data.talent[27]:
+            milk_change = int(true_add_time * 2 / 3)
+            add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
+            now_character_data.pregnancy.milk += add_milk
+            now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
+
+        # 结算有意识、周围有其他人、羞耻没有超限、状态1256正常下，不穿胸衣和内裤时的羞耻值增加
+        if (
+            handle_premise.handle_not_wear_bra_or_pan(character_id) and 
+            handle_premise.handle_unconscious_flag_0(character_id) and 
+            handle_premise_place.handle_scene_over_two(character_id) and 
+            handle_premise.handle_self_shy_ge_100000(character_id) and 
+            handle_premise.handle_normal_1(character_id) and 
+            handle_premise.handle_normal_2(character_id) and
+            handle_premise.handle_normal_5(character_id) and
+            handle_premise.handle_normal_6(character_id)
+            ):
+            exposure_adjust = 0
+            if handle_premise.handle_not_wear_bra(character_id):
+                exposure_adjust += 1
+            if handle_premise.handle_not_wear_pan(character_id):
+                exposure_adjust += 2
+            feel_adjust = attr_calculation.get_ability_adjust(now_character_data.ability[34])
+            exposure_add = true_add_time * feel_adjust * exposure_adjust
+            now_character_data.status_data[16] += exposure_add
+            now_character_data.status_data[16] = min(now_character_data.status_data[16],100000)
+
+        # 结算有意识，灌肠中，苦痛值增加
+        if (
+            handle_premise.handle_unconscious_flag_0(character_id) and 
+            handle_premise.handle_enema(character_id) and 
+            handle_premise.handle_normal_5(character_id) and
+            handle_premise.handle_normal_6(character_id)
+            ):
+            feel_adjust = attr_calculation.get_ability_adjust(now_character_data.ability[34])
+            enema_just = now_character_data.dirty.enema_capacity
+            pain_add = true_add_time * feel_adjust * enema_just
+            now_character_data.status_data[17] += pain_add
+            now_character_data.status_data[17] = min(now_character_data.status_data[17],100000)
 
 
 def settle_semen_flow(character_id: int, true_add_time: int):
