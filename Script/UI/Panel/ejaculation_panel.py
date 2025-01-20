@@ -218,6 +218,24 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
             character_data.h_state.shoot_position_body = part_cid
         else:
             character_data.h_state.shoot_position_cloth = part_cid
+    # A部位射精时如果已经持有灌肠肛塞道具，且设置已开启，则结算精液灌肠
+    if (
+        part_type == 0 and
+        part_cid == 8 and
+        cache.all_system_setting[8] and
+        handle_premise.handle_have_clyster_tools(0)
+        ):
+        character_data.dirty.a_clean = 3
+        if now_semen_data[2] <= 3:
+            character_data.dirty.enema_capacity = 1
+        elif now_semen_data[2] <= 5:
+            character_data.dirty.enema_capacity = 2
+        elif now_semen_data[2] == 6:
+            character_data.dirty.enema_capacity = 3
+        elif now_semen_data[2] == 7:
+            character_data.dirty.enema_capacity = 4
+        else:
+            character_data.dirty.enema_capacity = 5
     # print(f"debug update_semen_dirty name = {character_data.name}, part_cid = {part_cid}, part_type = {part_type}, semen_count = {semen_count}")
 
 

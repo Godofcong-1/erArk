@@ -12020,6 +12020,14 @@ msgstr ""
 msgid "不禁止|禁止"
 msgstr ""
 
+#: .\data\csv\System_Setting.csv:13
+msgid "自动精液灌肠"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:13
+msgid "开启后，如果持有灌肠套装道具，在干员的后穴里射精之后，将会自动地塞入肛塞，以进行精液灌肠，在拔出肛塞时会将灌肠用的精液喷出"
+msgstr ""
+
 #: .\data\csv\Talent.csv:7
 msgid "处女"
 msgstr ""
