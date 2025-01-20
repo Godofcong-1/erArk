@@ -2744,7 +2744,7 @@ class Instruct:
     CONTINUE_CLYSTER = 0
     """ 继续灌肠 """
     ANAL_PLUG = 0
-    """ 肛塞 """
+    """ 肛塞_已废弃 """
     CLYSTER_END = 0
     """ 拔出肛塞 """
     ANAL_BEADS = 0

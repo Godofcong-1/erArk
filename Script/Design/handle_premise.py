@@ -12483,6 +12483,40 @@ def handle_target_not_vibrator_insertion_anal(character_id: int) -> int:
     return not handle_self_now_vibrator_insertion_anal(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_A_EMPTY)
+def handle_self_a_empty(character_id: int) -> int:
+    """
+    校验自己A无任何道具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 震动棒
+    if handle_self_now_vibrator_insertion_anal(character_id):
+        return 0
+    # 拉珠
+    if handle_self_now_anal_beads(character_id):
+        return 0
+    # 灌肠中
+    if handle_enema(character_id):
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.TARGET_A_EMPTY)
+def handle_target_a_empty(character_id: int) -> int:
+    """
+    交互对象A无任何道具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_a_empty(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_MILKING_MACHINE)
 def handle_target_now_milking_machine(character_id: int) -> int:
     """
@@ -12885,6 +12919,21 @@ def handle_have_anal_beads(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_ANAL_BEADS)
+def handle_self_now_anal_beads(character_id: int) -> int:
+    """
+    校验自己是否正在肛门拉珠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.body_item[7][1]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TARGET_NOW_ANAL_BEADS)
 def handle_target_now_anal_beads(character_id: int) -> int:
     """
@@ -12895,8 +12944,7 @@ def handle_target_now_anal_beads(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[7][1]:
+    if handle_self_now_anal_beads(character_data.target_character_id):
         return 1
     return 0
 
@@ -12911,8 +12959,7 @@ def handle_target_not_anal_beads(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.h_state.body_item[7][1]:
+    if handle_self_now_anal_beads(character_data.target_character_id):
         return 0
     return 1
 
