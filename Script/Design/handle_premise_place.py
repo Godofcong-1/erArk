@@ -2409,9 +2409,8 @@ def handle_in_any_maintenance_place(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_position = character_data.position
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    for chara_id in cache.rhodes_island.maintenance_place:
-        if now_scene_str == cache.rhodes_island.maintenance_place[chara_id]:
-            return 1
+    if now_scene_str == cache.rhodes_island.facility_damage_data:
+        return 1
     return 0
 
 
