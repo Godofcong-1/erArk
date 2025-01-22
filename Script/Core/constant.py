@@ -387,7 +387,7 @@ class CharacterStatus:
     STATUS_PUT_CONDOM = 471
     """ 戴上避孕套 """
     STATUS_SAFE_CANDLES = 472
-    """ 低温蜡烛 """
+    """ 滴蜡 """
     STATUS_URETHRAL_SWAB = 473
     """ 尿道棉棒 """
     STATUS_TAKE_CONDOM_OUT = 474
@@ -1048,7 +1048,7 @@ class Behavior:
     PUT_CONDOM = 471
     """ 戴上避孕套 """
     SAFE_CANDLES = 472
-    """ 低温蜡烛 """
+    """ 滴蜡 """
     URETHRAL_SWAB = 473
     """ 尿道棉棒 """
     TAKE_CONDOM_OUT = 474

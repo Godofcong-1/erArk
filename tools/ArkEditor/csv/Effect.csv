@@ -53,6 +53,10 @@ cid,effect_name,effect_type,effect
 1514,DOWN_SELF_MEDIUM_MANA_POINT,属性_基础,减少自己中量气力
 1515,DOWN_SELF_LARGE_HIT_POINT,属性_基础,减少自己大量体力
 1516,DOWN_SELF_LARGE_MANA_POINT,属性_基础,减少自己大量气力
+1517,DOWN_TARGET_MEDIUM_HIT_POINT,属性_基础,减少交互对象中量体力
+1518,DOWN_TARGET_MEDIUM_MANA_POINT,属性_基础,减少交互对象中量气力
+1519,DOWN_TARGET_LARGE_HIT_POINT,属性_基础,减少交互对象大量体力
+1520,DOWN_TARGET_LARGE_MANA_POINT,属性_基础,减少交互对象大量气力
 1521,MOOD_TO_GOOD,属性_基础,自己心情变为好
 1522,MOOD_TO_NORMAL,属性_基础,自己心情变为普通
 1523,MOOD_TO_BAD,属性_基础,自己心情变为不好
@@ -116,6 +120,7 @@ cid,effect_name,effect_type,effect
 132,TARGET_A_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行A快、欲情调整
 133,TARGET_U_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整
 134,TARGET_W_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整
+135,TARGET_PAIN_TO_N_ADJUST,属性_状态特殊补正,根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整
 
 141,FINGER_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+指技对发起者进行P快调整
 142,TONGUE_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+舌技对发起者进行P快调整
@@ -249,6 +254,7 @@ cid,effect_name,effect_type,effect
 360,TARGET_ADD_1_be_Hypnosis_Sex_EXPERIENCE,属性_经验,交互对象增加1被催眠姦经验
 361,TARGET_ADD_1_CLOTH_JOB_EXPERIENCE,属性_经验,交互对象增加1服装交经验
 362,ADD_1_GROUP_SEX_EXPERIENCE,属性_经验,增加1群交经验
+363,ADD_1_SADISM_EXPERIENCE,属性_经验,增加1嗜虐快乐经验
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零
@@ -335,6 +341,7 @@ cid,effect_name,effect_type,effect
 530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（群交失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
 532,BOARD_GAME_WIN_ADD_ADJUST,指令_专用结算,（桌游获胜用）根据游戏难度获得好感度、信赖、习得、粉红凭证
 533,BOARD_GAME_LOSE_ADD_ADJUST,指令_专用结算,（桌游输了用）根据游戏难度获得好感度、习得
+534,MAINTENANCE_ADD_ADJUST,指令_专用结算,（维护设施用）修复当前地点的损坏设施
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -448,6 +455,7 @@ cid,effect_name,effect_type,effect
 952,USE_BAG,道具_增减,使用了一个干员携袋
 953,USE_CONDOM,道具_增减,使用了一个避孕套
 954,USE_URETHRAL_SWAB,道具_增减,使用了一个尿道棉棒
+955,USE_SAFE_CANDLES,道具_增减,使用了一个低温蜡烛
 991,DELETE_FOOD,道具_增减,删除当前行动中的对象食物
 992,MAKE_FOOD,道具_增减,结算因为制作食物而加好感
 993,NPC_MAKE_FOOD_TO_SHOP,道具_增减,NPC随机制作一个食物，并补充到当前所在食物商店中
@@ -527,4 +535,5 @@ cid,effect_name,effect_type,effect
 
 1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
 
+1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

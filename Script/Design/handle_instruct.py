@@ -4754,11 +4754,10 @@ def handle_take_condom_out():
 @add_instruct(
     constant.Instruct.SAFE_CANDLES,
     constant.InstructType.SEX,
-    _("滴蜡_未实装"),
+    _("滴蜡"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
      constant_promise.Premise.HAVE_SAFE_CANDLES},
     constant.CharacterStatus.STATUS_SAFE_CANDLES,

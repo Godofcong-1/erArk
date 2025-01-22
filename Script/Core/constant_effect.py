@@ -103,6 +103,14 @@ class BehaviorEffect:
     """ 属性_基础 减少自己大量体力 """
     DOWN_SELF_LARGE_MANA_POINT = 1516
     """ 属性_基础 减少自己大量气力 """
+    DOWN_TARGET_MEDIUM_HIT_POINT = 1517
+    """ 属性_基础 减少交互对象中量体力 """
+    DOWN_TARGET_MEDIUM_MANA_POINT = 1518
+    """ 属性_基础 减少交互对象中量气力 """
+    DOWN_TARGET_LARGE_HIT_POINT = 1519
+    """ 属性_基础 减少交互对象大量体力 """
+    DOWN_TARGET_LARGE_MANA_POINT = 1520
+    """ 属性_基础 减少交互对象大量气力 """
     MOOD_TO_GOOD = 1521
     """ 属性_基础 自己心情变为好 """
     MOOD_TO_NORMAL = 1522
@@ -226,6 +234,8 @@ class BehaviorEffect:
     """ 属性_状态特殊补正 根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整 """
     TARGET_W_ADJUST_ADD_BY_SEX = 134
     """ 属性_状态特殊补正 根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整 """
+    TARGET_PAIN_TO_N_ADJUST = 135
+    """ 属性_状态特殊补正 根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整 """
 
     FINGER_TECH_ADD_PL_P_ADJUST = 141
     """ 属性_状态特殊补正 根据交互对象的技巧+指技对发起者进行P快调整 """
@@ -489,6 +499,8 @@ class BehaviorEffect:
     """ 属性_经验 交互对象增加1服装交经验 """
     ADD_1_GROUP_SEX_EXPERIENCE = 362
     """ 属性_经验 增加1群交经验 """
+    ADD_1_SADISM_EXPERIENCE = 363
+    """ 属性_经验 增加1嗜虐快乐经验 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
@@ -883,6 +895,8 @@ class BehaviorEffect:
     """ 道具_增减 使用了一个避孕套 """
     USE_URETHRAL_SWAB = 954
     """ 道具_增减 使用了一个尿道棉棒 """
+    USE_SAFE_CANDLES = 955
+    """ 道具_增减 使用了一个低温蜡烛 """
     DELETE_FOOD = 991
     """ 道具_增减 删除当前行动中的对象食物 """
     MAKE_FOOD = 992

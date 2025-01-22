@@ -1021,6 +1021,82 @@ def handle_sub_self_large_mana_point(
     base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_MEDIUM_HIT_POINT)
+def handle_sub_target_medium_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少交互对象中量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data = cache.character_data[character_id]
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, dregree=1, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_MEDIUM_MANA_POINT)
+def handle_sub_target_medium_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少交互对象中量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data = cache.character_data[character_id]
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, dregree=1, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_LARGE_HIT_POINT)
+def handle_sub_target_large_hit_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少交互对象大量体力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data = cache.character_data[character_id]
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, dregree=2, change_data=change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_LARGE_MANA_POINT)
+def handle_sub_target_large_mana_point(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    减少交互对象大量气力
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data = cache.character_data[character_id]
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_GOOD)
 def handle_mood_to_good(
         character_id: int,
@@ -4734,6 +4810,30 @@ def handle_use_urethral_swab(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.item[139] -= 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.USE_SAFE_CANDLES)
+def handle_use_safe_candles(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    使用了一个低温蜡烛
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 在爱情旅馆的顶级套房中H则不消耗
+    if handle_premise.handle_h_in_love_hotel(character_id) and handle_premise.handle_love_hotel_room_v3(character_id):
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.item[136] -= 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_URINATE)
@@ -8871,6 +8971,50 @@ def handle_tech_add_w_adjust(
         base_chara_state_common_settle(character_data.target_character_id, add_time, 7, 50, ability_level = character_data.ability[30], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 欲情
         base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PAIN_TO_N_ADJUST)
+def handle_pain_to_n_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+
+        # 技巧大小的调整
+        tech_lv = character_data.ability[30]
+        tech_adjust = attr_calculation.get_ability_adjust(tech_lv)
+        # 受虐的调整
+        masochism_lv = target_data.ability[36]
+        masochism_adjust = attr_calculation.get_ability_adjust(masochism_lv)
+        # 最终调整值
+        extra_adjust = tech_adjust + masochism_adjust
+
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, ability_level = character_data.ability[30], extra_adjust = masochism_adjust, change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[33], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
+        # 苦痛
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 17, 50, ability_level = target_data.ability[15], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FINGER_TECH_ADD_PL_P_ADJUST)

@@ -47804,6 +47804,10 @@ msgstr ""
 msgid "{Name}让{TargetName}把胯部的双腿夹紧，然后把阴茎插进这片被柔嫩的皮肤和阴部包裹住的缝隙中，开始抽插起来"
 msgstr ""
 
+#: .\data\talk\sex\safe_candles.csv:6
+msgid "{Name}把低温蜡烛点燃，滴在{TargetName}的身上，让{TargetName}感受到灼热与轻微刺痛的特殊刺激"
+msgstr ""
+
 #: .\data\talk\sex\sedecu.csv:6
 msgid "{Name}触发了诱惑对方指令的地文"
 msgstr ""

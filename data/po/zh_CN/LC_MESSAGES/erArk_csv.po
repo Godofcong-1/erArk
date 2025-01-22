@@ -7072,6 +7072,10 @@ msgstr ""
 msgid "低温蜡烛"
 msgstr ""
 
+#: .\data\csv\Item.csv:52
+msgid "用于【滴蜡】的消耗品。使用了特制的材料，可以在低温下保持燃烧的状态，滴到人体上时也不会烫伤"
+msgstr ""
+
 #: .\data\csv\Item.csv:53
 msgid "针"
 msgstr ""
@@ -10558,6 +10562,10 @@ msgstr ""
 
 #: .\data\csv\Status.csv:206
 msgid "戴上避孕套"
+msgstr ""
+
+#: .\data\csv\Status.csv:207
+msgid "滴蜡"
 msgstr ""
 
 #: .\data\csv\Status.csv:208
