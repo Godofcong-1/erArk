@@ -825,12 +825,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                     exposure_adjust += 1
                 if handle_premise.handle_not_wear_pan(character_id):
                     exposure_adjust += 2
-                default.base_chara_state_common_settle(character_id, 16, add_time=true_add_time, base_value=0, ability_level=now_character_data.ability[34], extra_adjust=exposure_adjust, tenths_add=False)
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_character_data.ability[34], extra_adjust=exposure_adjust, tenths_add=False)
 
             # 结算灌肠中，苦痛值增加
             if handle_premise.handle_enema(character_id):
                 enema_just = now_character_data.dirty.enema_capacity
-                default.base_chara_state_common_settle(character_id, 17, add_time=true_add_time, base_value=0, ability_level=now_character_data.ability[15], extra_adjust=enema_just, tenths_add=False)
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_character_data.ability[15], extra_adjust=enema_just, tenths_add=False)
 
 
 def settle_semen_flow(character_id: int, true_add_time: int):
