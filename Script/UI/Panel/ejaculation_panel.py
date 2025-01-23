@@ -222,7 +222,7 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     if (
         part_type == 0 and
         part_cid == 8 and
-        cache.all_system_setting[8] and
+        cache.all_system_setting.base_setting[8] and
         handle_premise.handle_have_clyster_tools(0)
         ):
         character_data.dirty.a_clean = 3
