@@ -4652,21 +4652,39 @@ def handle_bondage():
 
 
 @add_instruct(
-    constant.Instruct.PATCH,
+    constant.Instruct.PATCH_ON,
     constant.InstructType.SEX,
-    _("眼罩_未实装"),
+    _("戴上眼罩"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+     constant_promise.Premise.TARGET_NOT_PATCH,
      constant_promise.Premise.HAVE_PATCH},
-    constant.CharacterStatus.STATUS_PATCH,
+    constant.CharacterStatus.STATUS_PATCH_ON,
     constant.SexInstructSubType.SM,
 )
-def handle_patch():
-    """处理眼罩指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PATCH)
+def handle_patch_on():
+    """处理戴上眼罩指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PATCH_ON)
+
+
+@add_instruct(
+    constant.Instruct.PATCH_OFF,
+    constant.InstructType.SEX,
+    _("摘下眼罩"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+     constant_promise.Premise.TARGET_NOW_PATCH,
+     constant_promise.Premise.HAVE_PATCH},
+    constant.CharacterStatus.STATUS_PATCH_OFF,
+    constant.SexInstructSubType.SM,
+)
+def handle_patch_off():
+    """处理摘下眼罩指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PATCH_OFF)
 
 
 @add_instruct(

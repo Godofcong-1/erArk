@@ -12581,6 +12581,57 @@ def handle_target_not_urine_collector(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_PATCH)
+def handle_self_now_patch(character_id: int) -> int:
+    """
+    自己戴着眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[6][1]
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_PATCH)
+def handle_self_not_patch(character_id: int) -> int:
+    """
+    自己没有戴着眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_patch(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOW_PATCH)
+def handle_target_now_patch(character_id: int) -> int:
+    """
+    交互对象戴着眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_now_patch(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_PATCH)
+def handle_target_not_patch(character_id: int) -> int:
+    """
+    交互对象没有戴着眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_now_patch(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_SEELP_PIILS)
 def handle_self_sleep_pills(character_id: int) -> int:
     """

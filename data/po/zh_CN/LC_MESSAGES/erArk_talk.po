@@ -48232,12 +48232,12 @@ msgstr ""
 msgid "{Name}让{TargetName}用双乳夹住自己的阴茎，开始上下摩擦"
 msgstr ""
 
-#: .\data\talk\sex\patch.csv:6
-msgid "{Name}给{TargetName}戴上了眼罩，让{TargetName}无法看到周围的一切，进一步强化了{TargetName}的对触觉的感知"
+#: .\data\talk\sex\patch_off.csv:6
+msgid "{Name}取下了{TargetName}的眼罩，让{TargetName}重新能看到世界"
 msgstr ""
 
-#: .\data\talk\sex\patch.csv:7
-msgid "{Name}取下了{TargetName}的眼罩，让{TargetName}重新能看到世界"
+#: .\data\talk\sex\patch_on.csv:6
+msgid "{Name}给{TargetName}戴上了眼罩，让{TargetName}无法看到周围的一切，进一步强化了{TargetName}的对触觉的感知"
 msgstr ""
 
 #: .\data\talk\sex\philter.csv:6

@@ -484,8 +484,8 @@ class CharacterStatus:
     """ 采尿器 """
     STATUS_BONDAGE = 603
     """ 绳子 """
-    STATUS_PATCH = 604
-    """ 眼罩 """
+    STATUS_PATCH_ON = 604
+    """ 戴上眼罩 """
     STATUS_WHIP = 605
     """ 鞭子 """
     STATUS_NEEDLE = 606
@@ -494,6 +494,8 @@ class CharacterStatus:
     """ 取下搾乳机 """
     STATUS_URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
+    STATUS_PATCH_OFF = 634
+    """ 摘下眼罩 """
     STATUS_EXERCISE_SUCKING_AND_SWALLOWING = 681
     """ 练习吮吸与吞咽力 """
     STATUS_EXERCISE_ARMPIT_CLAMPING = 682
@@ -1150,8 +1152,8 @@ class Behavior:
     """ 装上采尿器 """
     BONDAGE = 603
     """ 绳子 """
-    PATCH = 604
-    """ 眼罩 """
+    PATCH_ON = 604
+    """ 戴上眼罩 """
     WHIP = 605
     """ 鞭子 """
     NEEDLE = 606
@@ -1161,6 +1163,8 @@ class Behavior:
     """ 取下搾乳机 """
     URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
+    PATCH_OFF = 634
+    """ 摘上眼罩 """
 
     EXERCISE_SUCKING_AND_SWALLOWING = 681
     """ 练习吮吸与吞咽力 """
@@ -2761,8 +2765,10 @@ class Instruct:
     """ 取下采尿器 """
     BONDAGE = 0
     """ 绳子 """
-    PATCH = 0
-    """ 眼罩 """
+    PATCH_ON = 0
+    """ 戴上眼罩 """
+    PATCH_OFF = 0
+    """ 摘下眼罩 """
     WHIP = 0
     """ 鞭子 """
     NEEDLE = 0

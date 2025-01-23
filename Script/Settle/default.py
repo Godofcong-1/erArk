@@ -277,15 +277,18 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 灌肠下会增加V和W快感
     if state_id in [4, 7] and handle_premise.handle_enema(character_id):
         final_adjust += character_data.dirty.enema_capacity * 0.2
+    # 眼罩增加全部快感
+    if handle_premise.handle_self_now_patch(character_id):
+        final_adjust += 0.2
     # 无觉刻印会增加无意识状态下的部位快感系数
     if handle_premise.handle_unconscious_flag_ge_1(character_id):
         final_adjust += (attr_calculation.get_ability_adjust(character_data.ability[19]) - 1) * 2
     # 信物调整值
     now_token = pl_character_data.pl_collection.eqip_token[1]
     if len(now_token):
-        # 信物干员的基础调整为0.1
+        # 信物干员的基础调整为0.5
         if character_id in now_token:
-            final_adjust += 0.1
+            final_adjust += 0.5
         # 全体干员+数量*0.01
         final_adjust += len(now_token) * 0.01
     # 群交中会因在场的其他干员人数进行调整
@@ -369,9 +372,9 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     now_token = pl_character_data.pl_collection.eqip_token[1]
     token_adjust = 0
     if len(now_token):
-        # 信物干员的基础调整为0.1
+        # 信物干员的基础调整为0.5
         if character_id in now_token:
-            token_adjust += 0.1
+            token_adjust += 0.5
         # 全体干员+数量*0.01
         token_adjust += len(now_token) * 0.01
     # 对正面状态的加成
@@ -4467,6 +4470,50 @@ def handle_target_urine_collector_off(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.h_state.body_item[5][1] = False
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PATCH_ON)
+def handle_target_patch_on(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象戴上眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[6][1] = True
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PATCH_OFF)
+def handle_target_patch_off(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象取下眼罩
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_data.h_state.body_item[6][1] = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADJUST_BODY_MANAGE_DAY_ITEM)
