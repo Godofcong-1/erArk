@@ -13904,6 +13904,14 @@ msgstr ""
 msgid "可露希尔"
 msgstr ""
 
+#: .\data\character\0007_可露希尔.csv:13
+msgid "可露希尔打折券，手绘有带小翅膀和尾巴的可爱玩偶印章，以廉价的打印纸制成。\n"
+msgstr ""
+
+#: .\data\character\0007_可露希尔.csv:14
+msgid "罗德岛舰船可靠性工程师，罗德岛supervisor伟大的系统工程师，卡兹戴尔百强青年，开源软件的倡导者。\n荣获多项设计大奖，[此处因插入诸多奖状]，热心游戏玩家。\n热爱声卡、碳酸水和傍晚的咖啡。\n每天早上睡4个小时不就够了吗？"
+msgstr ""
+
 #: .\data\character\0010_陈.csv:4
 msgid "陈"
 msgstr ""
@@ -20272,15 +20280,19 @@ msgstr ""
 msgid "前卡西米尔骑士竞赛三届冠军，喀兰贸易总裁恩希欧迪斯的贴身保镖。基于博士与恩希欧迪斯签订的合同，无限期作为干员加入罗德岛。\n现作为近卫干员活跃于各种任务之中，以其强大无比的战斗力为其他干员开辟道路。\n\n我收到一些反馈，说大部分任务有她在的话，和野营没什么区别。这确实不怪博士，她主动去的，而且看起来她还挺乐在其中的。呃，那我也没什么理由反对，不是吗？"
 msgstr ""
 
-#: .\data\character\4116_锏.csv:27
-msgid "深色莱塔尼亚军装"
+#: .\data\character\4116_锏.csv:15
+msgid "#B22222"
 msgstr ""
 
 #: .\data\character\4116_锏.csv:28
+msgid "深色莱塔尼亚军装"
+msgstr ""
+
+#: .\data\character\4116_锏.csv:29
 msgid "深色西装裤"
 msgstr ""
 
-#: .\data\character\4116_锏.csv:30
+#: .\data\character\4116_锏.csv:31
 msgid "雪地军靴"
 msgstr ""
 
@@ -21618,6 +21630,46 @@ msgstr ""
 
 #: Event:70d686f9-04f7-406d-a8d1-58cca39841a8
 msgid "冰下包裹着的是炽热的爱"
+msgstr ""
+
+#: Event:ae87e849-070a-4a26-a6f2-509e0ebd7ac8
+msgid "{TargetName}頑皮地咯咯笑，眼睛閃爍著光芒\n\n哦，{PlayerName}沒什麼特別的！只是我平常的例行公事——大量的舉重和有氧運動\n\n"
+msgstr ""
+
+#: Event:a942e75a-2fd8-4fbd-8598-6961e68c4402
+msgid "當{TargetName}感覺到{PlayerName}存在時，她的眼睛微微瞇起頭髮隨著每一個微妙的動作而飄動\n\n啊，早上好{PlayerName}\n\n"
+msgstr ""
+
+#: Event:9942101c-08ad-40cf-ba53-d9e83f442277
+msgid "當和{TargetName}一起繼續舉重時，汗水像鑽石一樣從她的額頭滴落在藍色運動胸罩下繃緊的肌肉上\n"
+msgstr ""
+
+#: Event:5137cfe2-8e34-4df4-baf6-a0d5e37315f5
+msgid "{TargetName}被這意想不到的觸碰嚇得微微一跳\n當她感覺到{PlayerName} 的手臂從後面環住她時，她的心跳加速\n她轉過身面對他，眼睛睜得大大的，眼中滿是慾望\n\n{PlayerName}?\n\n她輕聲說道，靠在{PlayerName}的懷裡。\n"
+msgstr ""
+
+#: Event:20a6dc83-8a34-443e-951d-8835503786b6
+msgid "{TargetName}感到強壯的手臂從後面環抱住她，嚇了一跳\n她轉過頭，看到 {PlayerName} 站在那裡，他的手臂溫暖地擁抱著她\n{TargetName}靠在{PlayerName}身上，感覺到{PlayerName}的胸膛緊貼著她的背\n{PlayerName}強壯的胸膛平穩而令{TargetName}感到安心\n{TargetName}繼續沐浴在你懷抱的溫暖中"
+msgstr ""
+
+#: Event:3ca6673d-9203-4b83-a4a5-cbccd19bb69d
+msgid "當 {PlayerName} 從後面抱住她時，{TargetName}輕輕嘆了口氣。\n{TargetName}感覺到他身體的溫暖，這讓她的心跳加速。 \n她咬了咬唇，輕輕地把手伸向{PlayerName}的胸口，感受你的心跳。 \n\n哦，{PlayerName}\n\n她輕聲地呼道，靠在你的觸摸中，她發出了一聲滿足的嘆息。 \n\n我今天太想你了\n\n{TargetName}將手伸進{PlayerName}的腰間，把你拉得更近\n{TargetName}的乳房壓在你的胸膛上，使她依偎在你的頸窩裡\n"
+msgstr ""
+
+#: Event:230945c7-8513-43ef-850a-6bbc79b54107
+msgid "{TargetName}感覺到你強壯的手臂從後面環抱著她，一抹溫暖、令人安心的微笑浮現在她的嘴角\n她靠在你身上，她那曲線玲瓏的身軀緊貼著你的胸膛，她閉上眼睛，享受著這種感覺\n\n"哦，{PlayerName}"\n\n她輕聲低語，聲音充滿愛意，她伸手輕輕撫摸你的手，手指輕柔地撫摸著你的指關節。 *\n"
+msgstr ""
+
+#: Event:feb09bcb-77d7-47c6-836c-f8c9ca8ac7f9
+msgid "當{TargetName}回答時，她的眸子微微瞇起，凝視著你\n她用手臂擦去額頭上的汗水，在她健美的皮膚上留下一道道濕氣\n\n只是在稍後報到之前完成鍛煉{PlayerName}\n\n\n"
+msgstr ""
+
+#: Event:74b502c8-b526-4094-86ef-3b67912a9e57
+msgid "當{TargetName}完成另一組引體向上時，她發出一聲咕噥\n她的大乳房輕微地搖晃著，她的運動外套拉鍊彼此碰撞叮叮噹噹作地響\n\n"
+msgstr ""
+
+#: Event:bd3984ea-8252-4572-89b9-68a82c17dba5
+msgid "\n只是檢查我的裝備，{PlayerName}沒什麼的\n\n{TargetName}的目光在{PlayerName}身上停留了一會兒，然後又回到了她的日常檢查上"
 msgstr ""
 
 #: /'data\map\0\0\Scene.json:2
