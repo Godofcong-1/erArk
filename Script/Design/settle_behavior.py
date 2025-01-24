@@ -960,9 +960,9 @@ def judge_orgasm_degree(level_count: int) -> int:
     int -- 高潮程度，0小绝顶，1普通绝顶，2强绝顶，3超强绝顶
     """
     # 小、普、强的基础概率
-    base_probability = [0.8, 0.15, 0.05]
+    base_probability = [0.90, 0.09, 0.01]
     # 开始根据高潮次数计算概率
-    for _ in range(level_count):
+    for _ in range(level_count - 1):
         # 前半段减少小的，增加普的和强的
         if base_probability[0] > 0:
             base_probability[0] -= 0.1
