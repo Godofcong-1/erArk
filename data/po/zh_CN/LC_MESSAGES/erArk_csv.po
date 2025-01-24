@@ -7036,6 +7036,10 @@ msgstr ""
 msgid "肛门拉珠"
 msgstr ""
 
+#: .\data\csv\Item.csv:46
+msgid "一粒粒连起来的珠子，塞进去再拉出来时能够带来特殊的快感"
+msgstr ""
+
 #: .\data\csv\Item.csv:47
 msgid "绳子"
 msgstr ""
@@ -7070,6 +7074,10 @@ msgstr ""
 
 #: .\data\csv\Item.csv:51
 msgid "鞭子"
+msgstr ""
+
+#: .\data\csv\Item.csv:51
+msgid "特殊材料制成的鞭子，挥舞时能发出响亮的的声音，但被抽到的人不会有疼痛感之上的影响，身上的痕迹也会几个小时内消失"
 msgstr ""
 
 #: .\data\csv\Item.csv:52

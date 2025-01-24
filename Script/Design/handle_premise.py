@@ -12872,7 +12872,7 @@ def handle_have_bondage(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.item[135] > 0:
+    if character_data.item[131] > 0:
         return 1
     # 在爱情旅馆的顶级套房中则临时持有
     if handle_h_in_love_hotel(character_id) and handle_love_hotel_room_v3(character_id):
@@ -13043,7 +13043,7 @@ def handle_have_whip(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.item[131] > 0:
+    if character_data.item[135] > 0:
         return 1
     # 在爱情旅馆的顶级套房中则临时持有
     if handle_h_in_love_hotel(character_id) and handle_love_hotel_room_v3(character_id):

@@ -130,7 +130,6 @@ class BehaviorEffect:
     SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO = 1531
     """ 属性_结构体 场景内所有角色欲望值归零 """
 
-
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
     TARGET_ADD_SMALL_B_FEEL = 42

@@ -48476,6 +48476,10 @@ msgstr ""
 msgid "{Name}阴茎小心翼翼地摩擦{TargetName}武器的护手与没有尖锐和开锋的其他部分，感受着不同材质包裹与摩擦阴茎的触感"
 msgstr ""
 
+#: .\data\talk\sex\whip.csv:6
+msgid "{Name}挥舞着鞭子，抽在{TargetName}的身上，发出清脆的响声，{TargetName}的身体也随之颤抖，嘴里发出了一声声的呻吟。"
+msgstr ""
+
 #: .\data\talk\sex\womb_insertion.csv:6
 msgid "{Name}把肉棒顶在{TargetName}已经初步开发的子宫口附近，来回蹭了几下，子宫口就自己张开了足以将龟头插进去的程度\n{Name}用力一顶，终于将肉棒插进了{TargetName}的子宫口，开始在子宫口附近来回抽插起来"
 msgstr ""
