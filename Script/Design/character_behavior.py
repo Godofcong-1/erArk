@@ -648,13 +648,18 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
 
     # 休息时回复体力、气力
     if now_character_data.state == constant.CharacterStatus.STATUS_REST:
-        final_adjust = 1
-        # 休息室等级对回复效果的影响
-        now_level = cache.rhodes_island.facility_level[31]
-        facility_cid = game_config.config_facility_effect_data[_("休息室")][int(now_level)]
-        facility_effect = game_config.config_facility_effect[facility_cid].effect
-        facility_effect_adjust = 1 + facility_effect / 100
-        final_adjust *= facility_effect_adjust
+        # 休息室对回复效果的影响
+        if handle_premise_place.handle_in_rest_room_or_dormitory(character_id):
+            final_adjust = 1
+            # 休息室等级对回复效果的影响
+            now_level = cache.rhodes_island.facility_level[31]
+            facility_cid = game_config.config_facility_effect_data[_("休息室")][int(now_level)]
+            facility_effect = game_config.config_facility_effect[facility_cid].effect
+            facility_effect_adjust = 1 + facility_effect / 100
+            final_adjust *= facility_effect_adjust
+        # 非休息室的回复效果
+        else:
+            final_adjust = 0.3
         # 素质对回复效果的影响
         if now_character_data.talent[351]: # 回复慢
             final_adjust *= 0.7

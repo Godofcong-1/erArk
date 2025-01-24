@@ -215,7 +215,6 @@ def handle_comprehensive_state_effect(
     constant.InstructType.DAILY,
     _("休息"),
     {constant_promise.Premise.NOT_H,
-    constant_promise.Premise.IN_REST_ROOM_OR_DORMITORY,
     constant_promise.Premise.TIRED_LE_84},
     constant.CharacterStatus.STATUS_REST
 )
