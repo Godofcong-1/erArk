@@ -296,10 +296,14 @@ config_system_setting: Dict[int, config_def.System_Setting] = {}
 """ 系统设置数据 设置id:详细内容 """
 config_system_setting_option: Dict[int, Dict[int, str]] = {}
 """ 系统设置数据的选项数据 设置id:选项序号:选项内容 """
-config_draw_setting: Dict[int, config_def.Draw_Setting] = {}
+config_draw_setting: Dict[int, config_def.System_Setting] = {}
 """ 绘制设置数据 设置id:详细内容 """
 config_draw_setting_option: Dict[int, Dict[int, str]] = {}
 """ 绘制设置数据的选项数据 设置id:选项序号:选项内容 """
+config_difficulty_setting: Dict[int, config_def.System_Setting] = {}
+""" 难度设置数据 设置id:详细内容 """
+config_difficulty_setting_option: Dict[int, Dict[int, str]] = {}
+""" 难度设置数据的选项数据 设置id:选项序号:选项内容 """
 config_ai_chat_setting: Dict[int, config_def.Ai_Chat_Setting] = {}
 """ 文本生成AI设置数据 设置id:详细内容 """
 config_ai_chat_setting_option: Dict[int, Dict[int, str]] = {}
@@ -1406,33 +1410,36 @@ def load_system_setting():
     for tem_data in now_data["data"]:
         now_tem = config_def.System_Setting()
         now_tem.__dict__ = tem_data
-        config_system_setting[now_tem.cid] = now_tem
-
         option_text = now_tem.option
-        # 以|为分割判定是否有多个选项
-        if "|" not in option_text:
-            config_system_setting_option[now_tem.cid] = []
-            config_system_setting_option[now_tem.cid].append(option_text)
-        else:
-            config_system_setting_option[now_tem.cid] = option_text.split('|')
-
-
-def load_draw_setting():
-    """载入绘制设置"""
-    now_data = config_data["Draw_Setting"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.Draw_Setting()
-        now_tem.__dict__ = tem_data
-        config_draw_setting[now_tem.cid] = now_tem
-
-        option_text = now_tem.option
-        # 以|为分割判定是否有多个选项
-        if "|" not in option_text:
-            config_draw_setting_option[now_tem.cid] = []
-            config_draw_setting_option[now_tem.cid].append(option_text)
-        else:
-            config_draw_setting_option[now_tem.cid] = option_text.split('|')
+        option_type = now_tem.type
+        # 基础设置
+        if option_type == "base":
+            config_system_setting[now_tem.cid] = now_tem
+            # 以|为分割判定是否有多个选项
+            if "|" not in option_text:
+                config_system_setting_option[now_tem.cid] = []
+                config_system_setting_option[now_tem.cid].append(option_text)
+            else:
+                config_system_setting_option[now_tem.cid] = option_text.split('|')
+        # 难度设置
+        elif option_type == "difficulty":
+            # 除以100取余为新的序号
+            new_cid = now_tem.cid % 100
+            config_difficulty_setting[new_cid] = now_tem
+            if "|" not in option_text:
+                config_difficulty_setting_option[new_cid] = []
+                config_difficulty_setting_option[new_cid].append(option_text)
+            else:
+                config_difficulty_setting_option[new_cid] = option_text.split('|')
+        # 绘制设置
+        elif option_type == "draw":
+            new_cid = now_tem.cid % 100
+            config_draw_setting[new_cid] = now_tem
+            if "|" not in option_text:
+                config_draw_setting_option[new_cid] = []
+                config_draw_setting_option[new_cid].append(option_text)
+            else:
+                config_draw_setting_option[new_cid] = option_text.split('|')
 
 
 def load_ai_chat_setting():
@@ -1658,7 +1665,6 @@ def init():
     load_first_bonus()
     load_chara_setting()
     load_system_setting()
-    load_draw_setting()
     load_ai_chat_setting()
     load_physical_exam_setting()
     load_assistant_services()

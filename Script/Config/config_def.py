@@ -345,19 +345,6 @@ class Diplomatic_Policy:
     """ 政策介绍 """
 
 
-class Draw_Setting:
-    """ 绘制设置 """
-
-    cid: int
-    """ 选项id """
-    name: str
-    """ 选项名 """
-    info: str
-    """ 选项介绍 """
-    option: str
-    """ 各个选项 """
-
-
 class Entertainment:
     """ 娱乐模板 """
 
@@ -959,6 +946,8 @@ class System_Setting:
 
     cid: int
     """ 选项id """
+    type: str
+    """ 选项类型 """
     name: str
     """ 选项名 """
     info: str

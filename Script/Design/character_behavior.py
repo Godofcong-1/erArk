@@ -710,11 +710,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         now_character_data.mana_point = min(now_character_data.mana_point, now_character_data.mana_point_max)
 
     # 结算尿意值
-    if character_id == 0 and not cache.all_system_setting.base_setting[4]:
+    if character_id == 0 and not cache.all_system_setting.difficulty_setting[12]:
         pass
     else:
         add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
-        add_urinate *= cache.all_system_setting.base_setting[5] / 2
+        add_urinate *= cache.all_system_setting.difficulty_setting[11] / 2
         now_character_data.urinate_point += int(add_urinate)
         now_character_data.urinate_point = min(now_character_data.urinate_point,300)
 

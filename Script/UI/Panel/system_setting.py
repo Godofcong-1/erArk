@@ -33,7 +33,7 @@ class System_Setting_Panel:
         """ 绘制的文本列表 """
         self.pl_character_data = cache.character_data[0]
         """ 玩家的属性 """
-        self.type_show = {"基础": True, "绘制": False}
+        self.type_show = {_("基础"): True, _("难度"): False, _("绘制"): False}
         """ 当前显示的设置类型 """
 
     def draw(self):
@@ -52,94 +52,10 @@ class System_Setting_Panel:
             now_draw.width = self.width
             now_draw.draw()
 
-            # 遍历基础设置
-            if self.type_show["基础"]:
-                type_text = _(" ▼[基础设置]")
-            else:
-                type_text = _(" ▶[基础设置]")
-            type_button_draw = draw.LeftButton(
-                type_text,
-                type_text,
-                len(type_text) * 2,
-                cmd_func=self.change_type_show,
-                args=("基础")
-            )
-            type_button_draw.draw()
-            return_list.append(type_button_draw.return_text)
-            line_feed.draw()
-            if self.type_show["基础"]:
-                for cid in game_config.config_system_setting:
-                    system_setting_data = game_config.config_system_setting[cid]
-                    # 选项名
-                    button_text = f"  [{system_setting_data.name}]： "
-                    button_len = max(len(button_text) * 2, 60)
-                    button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.base_info, args=(cid))
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
+            # 遍历设置
+            for key in self.type_show:
+                return_list = self.draw_option(key, return_list)
 
-                    # 如果没有该键，则创建一个，并置为0
-                    if cid not in cache.all_system_setting.base_setting:
-                        cache.all_system_setting.base_setting[cid] = 0
-                    now_setting_flag = cache.all_system_setting.base_setting[cid] # 当前设置的值
-                    option_len = len(game_config.config_system_setting_option[cid]) # 选项的长度
-
-                    # 当前选择的选项的名字
-                    button_text = f" [{game_config.config_system_setting_option[cid][now_setting_flag]}] "
-                    button_len = max(len(button_text) * 2, 20)
-                    button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_base_setting, args=(cid, option_len))
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-
-                    # 如果是第7项的话，则加一个[修改已禁止干员列表]的按钮
-                    if cid == 7 and cache.all_system_setting.base_setting[cid]:
-                        new_button_text = f" [修改已禁止干员列表] "
-                        new_button_len = max(len(new_button_text) * 2, 30)
-                        new_button_draw = draw.LeftButton(new_button_text, "11" + new_button_text, new_button_len, cmd_func=self.change_ban_list)
-                        new_button_draw.draw()
-                        return_list.append(new_button_draw.return_text)
-                    line_feed.draw()
-            line_feed.draw()
-
-            # 遍历绘制设置
-            if self.type_show["绘制"]:
-                type_text = _(" ▼[绘制设置]")
-            else:
-                type_text = _(" ▶[绘制设置]")
-            type_button_draw = draw.LeftButton(
-                type_text,
-                type_text,
-                len(type_text) * 2,
-                cmd_func=self.change_type_show,
-                args=("绘制")
-            )
-            type_button_draw.draw()
-            return_list.append(type_button_draw.return_text)
-            line_feed.draw()
-            if self.type_show["绘制"]:
-                for cid in game_config.config_draw_setting:
-                    draw_setting_data = game_config.config_draw_setting[cid]
-                    # 选项名
-                    button_text = f"  [{draw_setting_data.name}]： "
-                    button_len = max(len(button_text) * 2, 60)
-                    button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.draw_info, args=(cid))
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-
-                    # 如果没有该键，则创建一个，并置为0
-                    if cid not in cache.all_system_setting.draw_setting:
-                        cache.all_system_setting.draw_setting[cid] = 0
-                    now_setting_flag = cache.all_system_setting.draw_setting[cid] # 当前设置的值
-                    option_len = len(game_config.config_draw_setting_option[cid]) # 选项的长度
-
-                    # 当前选择的选项的名字
-                    button_text = f" [{game_config.config_draw_setting_option[cid][now_setting_flag]}] "
-                    button_len = max(len(button_text) * 2, 20)
-                    button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_draw_setting, args=(cid, option_len))
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                    line_feed.draw()
-
-            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -154,47 +70,110 @@ class System_Setting_Panel:
         """改变当前显示的设置类型"""
         self.type_show[type_name] = not self.type_show[type_name]
 
-    def base_info(self, cid):
+    def draw_option(self, type_name: str, return_list: List[str]):
+        """绘制选项"""
+        if type_name == _("基础"):
+            setting_data = game_config.config_system_setting
+            setting_option = game_config.config_system_setting_option
+            setting = cache.all_system_setting.base_setting
+        elif type_name == _("难度"):
+            setting_data = game_config.config_difficulty_setting
+            setting_option = game_config.config_difficulty_setting_option
+            setting = cache.all_system_setting.difficulty_setting
+        elif type_name == _("绘制"):
+            setting_data = game_config.config_draw_setting
+            setting_option = game_config.config_draw_setting_option
+            setting = cache.all_system_setting.draw_setting
+
+        # 绘制选项标题
+        if self.type_show[type_name]:
+            type_text = _(" ▼[{0}设置]").format(type_name)
+        else:
+            type_text = _(" ▶[{0}设置]").format(type_name)
+        type_button_draw = draw.LeftButton(
+            type_text,
+            type_text,
+            len(type_text) * 2,
+            cmd_func=self.change_type_show,
+            args=(type_name)
+        )
+        type_button_draw.draw()
+        return_list.append(type_button_draw.return_text)
+        line_feed.draw()
+
+        # 开始绘制选项
+        if self.type_show[type_name]:
+            for cid in setting_data:
+                # TODO 跳过难度的前10项，还没有实装
+                if type_name == _("难度") and cid < 10:
+                    continue
+                system_setting_data = setting_data[cid]
+                # 选项名
+                button_text = f"  [{system_setting_data.name}]： "
+                button_len = max(len(button_text) * 2, 60)
+                button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.option_name_info, args=(type_name, cid))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                # 如果没有该键，则创建一个，并置为0
+                if cid not in setting:
+                    setting[cid] = 0
+                now_setting_flag = setting[cid] # 当前设置的值
+                option_len = len(setting_option[cid]) # 选项的长度
+
+                # 当前选择的选项的名字
+                button_text = f" [{setting_option[cid][now_setting_flag]}] "
+                button_len = max(len(button_text) * 2, 20)
+                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
+
+                # 如果是基础设置的第7项的话，则加一个[修改已禁止干员列表]的按钮
+                if type_name == "基础" and cid == 7 and cache.all_system_setting.base_setting[cid]:
+                    new_button_text = _(" [修改已禁止干员列表] ")
+                    new_button_len = max(len(new_button_text) * 2, 30)
+                    new_button_draw = draw.LeftButton(new_button_text, "11" + new_button_text, new_button_len, cmd_func=self.change_ban_list)
+                    new_button_draw.draw()
+                    return_list.append(new_button_draw.return_text)
+                    line_feed.draw()
+
+        line_feed.draw()
+    
+        return return_list
+
+    def option_name_info(self, type_name: str, cid: int):
         """绘制选项介绍信息"""
         line = draw.LineDraw("-", self.width)
         line.draw()
         now_draw = draw.WaitDraw()
-        system_setting_data = game_config.config_system_setting[cid]
-        info_text = f"\n {system_setting_data.info}\n"
+        if type_name == _("基础"):
+            setting_data = game_config.config_system_setting[cid]
+        elif type_name == _("难度"):
+            setting_data = game_config.config_difficulty_setting[cid]
+        elif type_name == _("绘制"):
+            setting_data = game_config.config_draw_setting[cid]
+        info_text = f"\n {setting_data.info}\n"
         now_draw.text = info_text
         now_draw.width = self.width
         now_draw.draw()
         line = draw.LineDraw("-", self.width)
         line.draw()
 
-    def draw_info(self, cid):
-        """绘制选项介绍信息"""
-        line = draw.LineDraw("-", self.width)
-        line.draw()
-        now_draw = draw.WaitDraw()
-        draw_setting_data = game_config.config_draw_setting[cid]
-        info_text = f"\n {draw_setting_data.info}\n"
-        now_draw.text = info_text
-        now_draw.width = self.width
-        now_draw.draw()
-        line = draw.LineDraw("-", self.width)
-        line.draw()
-
-    def change_base_setting(self, cid, option_len):
-        """修改基础设置"""
-        if cache.all_system_setting.base_setting[cid] < option_len - 1:
-            cache.all_system_setting.base_setting[cid] += 1
+    def change_setting_value(self, type_name: str, cid: int, option_len: int):
+        """修改选项设置"""
+        if type_name == _("基础"):
+            setting = cache.all_system_setting.base_setting
+        elif type_name == _("难度"):
+            setting = cache.all_system_setting.difficulty_setting
+        elif type_name == _("绘制"):
+            setting = cache.all_system_setting.draw_setting
+        if setting[cid] < option_len - 1:
+            setting[cid] += 1
         else:
-            cache.all_system_setting.base_setting[cid] = 0
-
-    def change_draw_setting(self, cid, option_len):
-        """修改绘制设置"""
-        if cache.all_system_setting.draw_setting[cid] < option_len - 1:
-            cache.all_system_setting.draw_setting[cid] += 1
-        else:
-            cache.all_system_setting.draw_setting[cid] = 0
+            setting[cid] = 0
         # 全角色是否使用通用文本
-        if cid == 2:
+        if type_name == _("绘制") and cid == 2:
             for character_id in cache.character_data:
                 character_data = cache.character_data[character_id]
                 character_data.chara_setting[1] = cache.all_system_setting.draw_setting[cid]

@@ -21,9 +21,11 @@ def get_system_setting_zero() -> game_type.System_Setting:
     """
     empty_system_setting = game_type.System_Setting()
     # 基础设定
-    base_default_dict = {1:0, 2:1, 3:0, 4:0, 5:2, 6:1, 7:0, 8:1}
+    base_default_dict = {1:0, 2:1, 3:0, 6:1, 7:0, 8:1}
     # 绘制设定
     draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1}
+    # 难度设定
+    difficulty_default_dict = {1:3, 2:3, 3:3, 11:2, 12:0}
     # 赋予默认值
     for system_setting in game_config.config_system_setting:
         if system_setting in base_default_dict:
@@ -35,6 +37,11 @@ def get_system_setting_zero() -> game_type.System_Setting:
             empty_system_setting.draw_setting[system_setting] = draw_default_dict[system_setting]
         else:
             empty_system_setting.draw_setting[system_setting] = 0
+    for system_setting in game_config.config_difficulty_setting:
+        if system_setting in difficulty_default_dict:
+            empty_system_setting.difficulty_setting[system_setting] = difficulty_default_dict[system_setting]
+        else:
+            empty_system_setting.difficulty_setting[system_setting] = 0
     return empty_system_setting
 
 def get_physical_exam_setting_zero() -> dict:

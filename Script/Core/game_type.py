@@ -1101,9 +1101,11 @@ class System_Setting:
 
     def __init__(self):
         self.base_setting: Dict[int, int] = {}
-        """ 基础系统设定，见System_Setting.csv """
+        """ 基础系统设定，即base类 """
         self.draw_setting: Dict[int, int] = {}
-        """ 绘制设定，见Draw_Setting.csv """
+        """ 绘制设定，即draw类 """
+        self.difficulty_setting: Dict[int, int] = {}
+        """ 难度设定，即difficulty类 """
         self.line_before_main_update: int = 3
         """ 主界面刷新前的行数 """
         self.value_draw: Dict[str, bool] = {"pl": False, "npc": False}

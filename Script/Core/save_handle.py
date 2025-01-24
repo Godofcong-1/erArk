@@ -256,6 +256,17 @@ def input_load_save(save_id: str):
         now_draw.style = "gold_enrod"
         now_draw.text = draw_text
         now_draw.draw()
+    difficulty_setting = zero_system_setting.difficulty_setting
+    if len(loaded_dict["all_system_setting"].difficulty_setting) != len(difficulty_setting):
+        for key in difficulty_setting:
+            if key not in loaded_dict["all_system_setting"].difficulty_setting:
+                loaded_dict["all_system_setting"].difficulty_setting[key] = difficulty_setting[key]
+                update_count += 1
+        now_difficulty = draw.NormalDraw()
+        draw_text = _("\n难度设置已更新，如有需要请手动修改\n")
+        now_difficulty.style = "gold_enrod"
+        now_difficulty.text = draw_text
+        now_difficulty.draw()
 
     # 更新大地图势力数据
     loaded_dict["country"] = attr_calculation.get_country_reset(loaded_dict["country"])
