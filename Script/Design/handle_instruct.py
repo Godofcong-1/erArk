@@ -4426,12 +4426,12 @@ def handle_vibrator_insertion_anal_off():
      constant_promise.Premise.T_NOT_ENEMA,
      constant_promise.Premise.HAVE_ENEMAS},
     constant.CharacterStatus.STATUS_CLYSTER,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_clyster():
     """处理灌肠指令"""
     character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
     if judge_list[0] == 1:
         chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLYSTER)
     elif judge_list[0] == -1:
@@ -4453,12 +4453,12 @@ def handle_clyster():
      constant_promise.Premise.T_ENEMA_CAPACITY_L_5,
      constant_promise.Premise.HAVE_ENEMAS},
     constant.CharacterStatus.STATUS_CLYSTER,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_continue_clyster():
     """处理继续灌肠指令"""
     character_data: game_type.Character = cache.character_data[0]
-    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("道具"))
+    judge_list = character.calculation_instuct_judege(0, character_data.target_character_id, _("SM"))
     if judge_list[0] == 1:
         chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_CLYSTER)
     elif judge_list[0] == -1:
@@ -4478,7 +4478,7 @@ def handle_continue_clyster():
      constant_promise.Premise.T_ENEMA,
      },
     constant.CharacterStatus.STATUS_CLYSTER_END,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_clyster_end():
     """处理拔出肛塞指令"""
@@ -4495,7 +4495,7 @@ def handle_clyster_end():
      constant_promise.Premise.HAVE_ANAL_PLUG,
      constant_promise.Premise.TO_DO},
     constant.CharacterStatus.STATUS_ANAL_PLUG,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_anal_plug():
     """处理肛塞指令"""
@@ -4662,7 +4662,7 @@ def handle_bondage():
      constant_promise.Premise.TARGET_NOT_PATCH,
      constant_promise.Premise.HAVE_PATCH},
     constant.CharacterStatus.STATUS_PATCH_ON,
-    constant.SexInstructSubType.SM,
+    constant.SexInstructSubType.ITEM,
 )
 def handle_patch_on():
     """处理戴上眼罩指令"""
@@ -4680,7 +4680,7 @@ def handle_patch_on():
      constant_promise.Premise.TARGET_NOW_PATCH,
      constant_promise.Premise.HAVE_PATCH},
     constant.CharacterStatus.STATUS_PATCH_OFF,
-    constant.SexInstructSubType.SM,
+    constant.SexInstructSubType.ITEM,
 )
 def handle_patch_off():
     """处理摘下眼罩指令"""
@@ -4835,7 +4835,7 @@ def handle_philter():
 @add_instruct(
     constant.Instruct.ENEMAS,
     constant.InstructType.SEX,
-    _("灌肠液_未实装"),
+    _("灌肠液_已废弃"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,

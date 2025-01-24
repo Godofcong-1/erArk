@@ -812,11 +812,10 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             handle_premise.handle_normal_6(character_id)
             ):
 
-            # 结算周围有其他人、羞耻没有超限、状态1256正常下，不穿胸衣和内裤时的羞耻值增加
+            # 结算周围有其他人、状态12正常下，不穿胸衣和内裤时的羞耻值增加
             if (
                 handle_premise.handle_not_wear_bra_or_pan(character_id) and 
                 handle_premise_place.handle_scene_over_two(character_id) and 
-                handle_premise.handle_self_shy_ge_100000(character_id) and 
                 handle_premise.handle_normal_1(character_id) and 
                 handle_premise.handle_normal_2(character_id)
                 ):

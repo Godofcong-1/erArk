@@ -2692,7 +2692,7 @@ class Instruct:
     PHILTER = 0
     """ 媚药 """
     ENEMAS = 0
-    """ 灌肠液 """
+    """ 灌肠液_已废弃 """
     DIURETICS_ONCE = 0
     """ 一次性利尿剂 """
     DIURETICS_PERSISTENT = 0
