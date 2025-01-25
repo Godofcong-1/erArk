@@ -20536,6 +20536,38 @@ msgstr ""
 msgid "卡兹戴尔市民妮芙，通过罗德岛驻卡兹戴尔办事处加入罗德岛外勤部门。\n擅长使用心灵相关的源石技艺，配合其笞心魔的天赋，可在诸多领域发挥特长。"
 msgstr ""
 
+#: .\data\character\6666_炉芯终曲阿米娅.csv:4
+msgid "炉芯终曲阿米娅"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:13
+msgid "一個半透明的琥珀。曾經【嬌小的魔王】最具標誌性的法術，但她已經不再需要將任何人或事物封進永恆的停滯之中了"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:14
+msgid "從眾魂的預言中誕生，將眾生熬成回憶之王的具象，被博士以特殊的手法從魂靈熔爐中帶出，我們不知她曾在異界經歷了何等的苦痛，以至於阿米婭的眼底總滿懷著悲傷。希望她能在這裡尋到她的歸處"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:15
+msgid "#4B4F5E"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:33
+msgid "焦黑的白色大摆连衣裙"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:34
+msgid "束胸绷带"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:35
+msgid "白色棉質内裤"
+msgstr ""
+
+#: .\data\character\6666_炉芯终曲阿米娅.csv:36
+msgid "掩面黑纱"
+msgstr ""
+
 #: .\data\ui_text\ability.csv:6
 msgid "完全没有性经验。阴道处于未开发状态。阴道口细小。处女膜完好。内壁柔软而紧致。阴道狭窄干涩。无法接纳任何物体的插入。性对她来说是一个完全陌生的概念。"
 msgstr ""
