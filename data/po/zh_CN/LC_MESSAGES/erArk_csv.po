@@ -3852,6 +3852,134 @@ msgstr ""
 msgid "嘿嘿，這玩意可以穩定懸浮於低空，加上火箭推進後速度更是超越這片大地以往任何載具，按照慣例，就依照技術提供者來命名吧~!"
 msgstr ""
 
+#: .\data\csv\Commission.csv:72
+msgid "死魂靈安撫儀式"
+msgstr ""
+
+#: .\data\csv\Commission.csv:72
+msgid "卡茲戴爾的重建進度已經進行的差不多，是時候更換一下這座移動城市的動力來源了，先從安撫這些勞苦功高的老祖宗開始吧"
+msgstr ""
+
+#: .\data\csv\Commission.csv:73
+msgid "爆炸的熔爐"
+msgstr ""
+
+#: .\data\csv\Commission.csv:73
+msgid "該說不出意外的出了意外，在一陣雞飛狗跳之後，熔爐爆炸了。\n有沒有哪個倒楣蛋...富有正義心且樂於助人的女士願意幫我們把死魂靈們收集回來呢，就決定是你了，妮芙!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:74
+msgid "四散的祖宗"
+msgstr ""
+
+#: .\data\csv\Commission.csv:74
+msgid "咳咳...小妮芙，我們這就認命你為死魂靈應對小組的組長，去尋找街上那些同樣倒楣...富有正義之心且助人為樂的夥伴們，將四散的死魂靈們請回來"
+msgstr ""
+
+#: .\data\csv\Commission.csv:75
+msgid "死魂靈安撫·續"
+msgstr ""
+
+#: .\data\csv\Commission.csv:75
+msgid "巫妖的學徒私下找上了你，希望舉辦一場...不那麼正規了安魂儀式，還叮囑千萬不要告訴老巫妖這檔事，這傢伙真的靠普嗎?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:76
+msgid "構思的開始"
+msgstr ""
+
+#: .\data\csv\Commission.csv:76
+msgid "果然，這是就沒有那麼簡單就能由學徒來完成，不過在錫人先生的引導下，魂靈熔爐就變得像...娛樂設施一樣!!\n博士，我們能在不忙的情況下去給熔爐內的祖宗們講故事嗎!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:77
+msgid "憧憬未來"
+msgstr ""
+
+#: .\data\csv\Commission.csv:77
+msgid "可惡，偷偷進熔爐時被弗萊蒙特先生抓住了，還被說教了好久，可是給祖宗們說故事真的很有趣嘛...不行! 得想想法子在混進去"
+msgstr ""
+
+#: .\data\csv\Commission.csv:78
+msgid "雙王計"
+msgstr ""
+
+#: .\data\csv\Commission.csv:78
+msgid "博士博士，這次的野史絕對勁爆，在故事的彼端，特雷西婭小姐和特雷西斯先生同時成為魔王囉!\n而且在阿米婭進來撈我們的時候，兩位魔王大人還露出了懷念的表情，真想知道最後阿米婭和他們的悄悄話說了些什麼"
+msgstr ""
+
+#: .\data\csv\Commission.csv:79
+msgid "天使之城"
+msgstr ""
+
+#: .\data\csv\Commission.csv:79
+msgid "哇...在新的故事中，薩科塔們居然是由現在的薩卡茲轉化而成埃，曾經的純血溫迪哥背生光翼，成為銃騎\n而像阿爾圖羅小姐那種，則化為了現行的石翼魔薩卡茲，在最後博卓卡斯替先生去找時任教宗談判了，也不知道他成功了沒有..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:80
+msgid "遁入阇那"
+msgstr ""
+
+#: .\data\csv\Commission.csv:80
+msgid "嗯，雖然出來了，但覺者奎隆...或是說青色怒火，前魔王奎隆先生的話好難懂喔...\n啊，博士，我說的是另一個事件線喔，奎隆先生建了佛國，傳授佛法，卡茲戴爾在悟道的薩卡茲們轉化而成的阿納薩們的建設下變得很美好呢\n他還託我給您帶句話，\"安存法度之外，或不失于梦幻泡影，奇妙\"，果然好難懂啊"
+msgstr ""
+
+#: .\data\csv\Commission.csv:81
+msgid "迫近的陰影"
+msgstr ""
+
+#: .\data\csv\Commission.csv:81
+msgid "好奇怪，但...最近入熔爐的時候，好像...被什麼人盯著一樣..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:82
+msgid "空無前兆"
+msgstr ""
+
+#: .\data\csv\Commission.csv:82
+msgid "啊~~博士!!聽的到嗎!!\n我這次只是試著讓死魂靈祖宗們講自己的故事，然後、然後就失控啦!!\n博士，快想想辦法!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:83
+msgid "孤注一擲"
+msgstr ""
+
+#: .\data\csv\Commission.csv:83
+msgid "我原本只是想結束這個故事而已，但現在!!\n幻境變得混沌，有一股\"終結故事的存在\"正在從空無中現身，博士!!\n它、它正在封存其他的故事，而且，還是以阿米婭的模樣，我們得阻止..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:84
+msgid "不容拒絕"
+msgstr ""
+
+#: .\data\csv\Commission.csv:84
+msgid "您好，初次見面...博士..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:85
+msgid "爐芯終曲"
+msgstr ""
+
+#: .\data\csv\Commission.csv:85
+msgid "呼，終於出來了\n自從遇到裡面那位...魔王阿米婭後，我做了好一陣子的噩夢了，那將一切包裹的悲傷與停滯...\n沒事沒事，不知怎麼了，出來看到博士和阿米婭小姐後，感覺像是放下了一塊大石頭..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:86
+msgid "熔爐之外"
+msgstr ""
+
+#: .\data\csv\Commission.csv:86
+msgid "我擊碎了一切束縛、虛妄，最終站在了這扇終點的大門之前。阿米婭，如果累了，就請休息一下，然後，跟著我出去吧"
+msgstr ""
+
+#: .\data\csv\Commission.csv:87
+msgid "新生具現"
+msgstr ""
+
+#: .\data\csv\Commission.csv:87
+msgid "博士，您...唉? 為、為什麼她也在，博士你連這種事情都做得到嗎!!?\n什麼叫她已經失去把人包裹在源石繭的能力了，那就好，被慢慢變成繭的回憶我是無論如何都不想再試了"
+msgstr ""
+
 #: .\data\csv\Diplomatic_Policy.csv:7
 msgid "在民间开展源石病治疗工作"
 msgstr ""
