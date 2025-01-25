@@ -13561,174 +13561,182 @@ msgid "1"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:9
-msgid "10"
+msgid "7"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:10
+msgid "10"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:11
 msgid "56"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:11
+#: .\data\csv\Tip_Chara.csv:12
 msgid "101"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:11
+#: .\data\csv\Tip_Chara.csv:12
 msgid "各位，这里是亚北小老虎，各位直接叫亚北或老虎就行。\n这次负责是空的口上，本来是没打算参与到口上的制作的，\n被雷蛇哥抓来被迫打工的，才不是喜欢写的（雷蛇哥你还欠我全裸土下坐呢）。\n本虎代码不会文本稀烂（全靠几年COC跑团经验和FH团经验）希望各位玩时请轻点喷，\n目前写口上就是全凭感觉写事件什么的如果以后研究明白了会有（大概率没有）。\n本虎对偶像相关了解也就只看过BanG Dream系列，并且对恋爱上面一点经验也没有。\n所以目前写的都是关于自己对恋爱的看法（什么你说性奴线呢？21世纪了还搞什么传统性奴，等和空关系好了你在看看？）。\n最后呢......要是有什么新的想法欢迎来给本虎提意见（如果要求简单基本上本虎都会考虑添加的。）\n本虎要是代码好的话我在这把我人设放出来让各位爽爽，毕竟在岛上还没有西伯利亚虎呢（金毛傲娇大老虎谁不喜欢呢对吧~）。\n最后的最后嘛~本虎其实是很希望哪怕是空这种冷门干员也有一个说的过去的口上才写的（应该没人看到这吧。）。"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:12
+#: .\data\csv\Tip_Chara.csv:13
 msgid "107"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:12
+#: .\data\csv\Tip_Chara.csv:13
 msgid "大家好 这里是GeniusGD，各位可以直接称呼为雷蛇哥 是个雷蛇厨（不然嘞）\n雷蛇口上就是兴趣写的 偶尔会翻译+处理数值\n啥 你不要听废话？那直接把雷蛇的机制说一遍吧\n\n雷蛇目前写好的有四大淫乱损伤 当然之后有什么会加上\n【精神损伤】触发时会当场自慰 基本为免费获得把柄\n【腐蚀损伤】触发时会拉高欲望 被推了不关雷蛇的事 谁叫你留在那里\n【热情损伤】触发时会直接送你上床 小心被其他干员看到\n【堕落损伤】触发时会提高雷蛇身体的敏感度 要刷刻印啥的就趁现在\n损伤最多一天触发一次 睡觉时重置损伤和冷却 当然不一定正常 bug炸了麻烦上dc找我或者git填issue"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:13
+#: .\data\csv\Tip_Chara.csv:14
 msgid "113"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:14
+#: .\data\csv\Tip_Chara.csv:15
 msgid "129"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:15
+#: .\data\csv\Tip_Chara.csv:16
 msgid "179"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:16
+#: .\data\csv\Tip_Chara.csv:17
 msgid "181"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:17
+#: .\data\csv\Tip_Chara.csv:18
 msgid "204"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:18
+#: .\data\csv\Tip_Chara.csv:19
 msgid "220"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:18
+#: .\data\csv\Tip_Chara.csv:19
 msgid "喔，小馬，總是充滿活力的小馬。想我當年就是因為一張小馬的美圖才開始了解方舟的。露著大腿外側的褲子，想必內褲是高腰細繩的那種...\n問我為什麼喜歡小馬呢...\n原本小馬對我來說只是個漂亮的姑娘，直到在nga看到一篇格拉尼的特雷森入(原帖被斃了，但作者有另外開)被小馬的英姿打動到了，經數個月的發酵後某天就\"好漂亮的一姑娘!!\"\n(然後就跑去玩賽馬娘了)\n請各位賽博女婿們能喜歡我寫的格拉尼，目前仍在嘗試在嘗試有天能在甲板上舉辦屬於我們的羅德島大賞賽，2500，左旋!!\n(個人私心覺得格拉尼是方舟最適合跑賽馬的庫蘭塔了，我還有藏勝者舞台在口上裡喔，獻給博士的勝者舞台)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:19
+#: .\data\csv\Tip_Chara.csv:20
 msgid "230"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:19
+#: .\data\csv\Tip_Chara.csv:20
 msgid "阿，夏洛特...當時正值羅德島活動結束，當大家都沉浸在緬懷殿下(或前文明)而傷神，我卻被這位大姑娘的劇情擊中了\n試想她一個大姑娘，就這麼陪著博士和阿米婭，在大地上旅行了這麼久，是在什麼樣的心情下說出那句\"如果你願意，我們可以給阿米婭一個家\"\n又是在一聽到羅德島時馬上跑去找凱貓貓...不行，我不能忍受大家聊到暴行時大家只會調侃\"她的胡蘿蔔派很好吃\"、\"她本有機會贏的，可惜和博士的記憶被刪光光了\"\n本世界線，我的夏洛特必會大贏特贏，善良的人應得到該有的獎賞"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:20
+#: .\data\csv\Tip_Chara.csv:21
 msgid "241"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:21
+#: .\data\csv\Tip_Chara.csv:22
 msgid "245"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:22
+#: .\data\csv\Tip_Chara.csv:23
 msgid "248"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:23
+#: .\data\csv\Tip_Chara.csv:24
 msgid "249"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:24
+#: .\data\csv\Tip_Chara.csv:25
 msgid "254"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:24
+#: .\data\csv\Tip_Chara.csv:25
 msgid "巫恋的文本更的会慢点但会一直更，同时ooc的人设在一起在古堡里待半年因为不这么加我确实没法想着角色写，文笔较差会慢慢进步\n同时很多的文本和诗怀雅一样采用E=1+a+b＋n的形式，可能上秒没感情下秒说喜欢，这是正常的，大概等写的差不多了再进行重新排序，暂且就这样\n顺带一提博士的人设是活了很久很屑很无厘头同时保留记忆，所以会比较怪"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:25
+#: .\data\csv\Tip_Chara.csv:26
 msgid "263"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:26
+#: .\data\csv\Tip_Chara.csv:27
 msgid "274"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:27
+#: .\data\csv\Tip_Chara.csv:28
 msgid "285"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:27
+#: .\data\csv\Tip_Chara.csv:28
 msgid "喔，小車，羅德島的機械媽咪～\n一開始為了整活而寫，最後卻讓群組的大家想破腦袋的一位幹員\n小車的性交部分要怎麼寫呢？被車輪壓牛子算足交嗎？⋯種種哲學問題總是引人辯論\n但是，小車是不可能變機娘的，這是對原教旨主義者的背叛（振聲\n努力的試著寫出媽咪的感覺\n希望大家能用愛包容這位特殊的幹員喔\n（小車的內容仍偏少，也希望有想法的博士能踴躍參與）"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:28
+#: .\data\csv\Tip_Chara.csv:29
 msgid "290"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:29
+#: .\data\csv\Tip_Chara.csv:30
 msgid "291"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:30
+#: .\data\csv\Tip_Chara.csv:31
 msgid "304"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:31
+#: .\data\csv\Tip_Chara.csv:32
 msgid "308"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:32
+#: .\data\csv\Tip_Chara.csv:33
 msgid "328"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:33
+#: .\data\csv\Tip_Chara.csv:34
 msgid "358"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:34
+#: .\data\csv\Tip_Chara.csv:35
 msgid "365"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:35
+#: .\data\csv\Tip_Chara.csv:36
 msgid "377"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:35
+#: .\data\csv\Tip_Chara.csv:36
 msgid "喔，澄閃，一位善良、正質、偶爾缺乏點運氣的小貓咪，這片大地上不該只有不公，善良之人應得一個美好的故事，試問誰又不是如蘇茜一般努力過著日子呢\n(只可惜鷹角又在密錄裡把貓貓當成駱駝澄子開涮，鷹角壞!)\n好像還要給玩家一點建議來著....那，希望溫柔的人都能被溫柔以待\n(說貓貓是豬豬的人聽著，YOU!!  馬上到你家門口!!)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:36
+#: .\data\csv\Tip_Chara.csv:37
 msgid "405"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:37
+#: .\data\csv\Tip_Chara.csv:38
 msgid "469"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:38
+#: .\data\csv\Tip_Chara.csv:39
 msgid "426"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:39
+#: .\data\csv\Tip_Chara.csv:40
 msgid "474"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:40
+#: .\data\csv\Tip_Chara.csv:41
 msgid "497"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:41
+#: .\data\csv\Tip_Chara.csv:42
 msgid "1012"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:42
+#: .\data\csv\Tip_Chara.csv:43
 msgid "2013"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:43
+#: .\data\csv\Tip_Chara.csv:44
 msgid "4027"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:44
+#: .\data\csv\Tip_Chara.csv:45
+msgid "4080"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:46
 msgid "4091"
 msgstr ""
 
@@ -21850,6 +21858,14 @@ msgstr ""
 
 #: Event:0aca3a25-b2db-4ee6-8df7-926c77fef61f
 msgid "伸手去摸{TargetName}的头\n{TargetName}似乎先一步察觉到了，把帽子摘下来抱在身前，长发从衣领处滑落\n“呼......”\n好感度上升了，仅仅摸头就能拉近关系的好事果然是存在的"
+msgstr ""
+
+#: Event:97fe92a7-3578-4ab2-ad1b-60696a640606
+msgid "“看来...和劳伦缇娜有了不错的进展啊...”\n“...”\n“这样啊...”\n“...是这样啊”\n“从什么时候开始的呢？”\n{TargetName}眼睛盯着地面上的某个不存在的位置\n“看来花了不少精力啊”\n“太好了...真是太好了。劳伦缇娜给你这样的家伙，还真是有点浪费呢”\n{TargetName}抬起头，盯着这边，又躲开了视线\n“劳伦缇娜她，真的是个好女孩呢。即使你找遍全世界，也没有她这样完美的恋人了”\n“可爱、善良、高雅、充满魅力，而且还是一心一意的......”\n{TargetName}似乎努力搜索着词语\n“真是，恭喜你们了...”"
+msgstr ""
+
+#: Event:926e2e80-dfa0-4590-b0ce-9e91cba8fbfb
+msgid "“看到了吗，阿戈尔就是这样的地方”\n“悲哀的地方，也是可怕的地方，被污染的地方，也是值得怀念的地方”\n“未来的某个时候，我一定会带着我的同胞们回去那里的，一定”\n{TargetName}不动声色的贴了过来\n“在那之前，恐怕还有相当艰难的命运要去击碎”\n“在和它们战斗中我会变成什么样啊”\n手心感受到了{TargetName}的温度\n“即使我在海洋的深处丢掉了理性，也会在心智的深处保留你的记忆的火种的”\n“那种时候，就靠你来找到我了”"
 msgstr ""
 
 #: Event:1069fcff-a285-4872-9619-a132b17b864d
