@@ -132,13 +132,10 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         now_have_item_num = 0
     # 角色adv编号
     elif text_list[0] == "c":
+        from Script.Design import character
         item_name = _("指定干员")
         item_type = _("指定干员")
-        for character_id in cache.character_data:
-            if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name
-                item_id = character_id
-                break
+        item_id = character.get_character_id_from_adv(item_id)
         now_have_item_num = 0
         if item_id in send_npc_list:
             # 1的话需要出场
@@ -247,6 +244,12 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                         cache.character_data[character_id].talent[item_id] = True
                     elif item_num < 0:
                         cache.character_data[character_id].talent[item_id] = False
+            # 角色
+            elif text_list[0] == "c":
+                from Script.Design import character
+                cache.rhodes_island.recruited_id.add(item_id)
+                item_name = cache.character_data[item_id].name
+                item_num = _("成为干员")
             # 特产
             elif text_list[0] == _("特产"):
                 cache.rhodes_island.materials_resouce[item_id] += item_num

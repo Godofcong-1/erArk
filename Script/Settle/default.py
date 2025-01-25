@@ -5923,7 +5923,7 @@ def handle_chara_on_line(
         now_time: datetime.datetime,
 ):
     """
-    角色上线，加入从当前干员列表，进入地图
+    角色上线，加入当前干员列表，进入地图
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
