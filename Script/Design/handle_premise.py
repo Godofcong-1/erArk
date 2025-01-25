@@ -1434,6 +1434,31 @@ def handle_target_have_chara_diy_instruct(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE)
+def handle_no_target_or_target_can_cooperate(character_id: int) -> int:
+    """
+    无交互对象或交互对象可以协同指令
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.target_character_id == 0:
+        return 1
+    # HP正常，未疲劳，未睡眠，267正常
+    elif (
+        handle_target_hp_ne_1(character_id) and
+        handle_t_tired_le_84(character_id) and
+        handle_t_action_not_sleep(character_id) and
+        handle_normal_2(character_data.target_character_id) and
+        handle_normal_6(character_data.target_character_id) and
+        handle_normal_7(character_data.target_character_id)
+        ):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NORMAL_ALL)
 def handle_normal_all(character_id: int) -> int:
     """

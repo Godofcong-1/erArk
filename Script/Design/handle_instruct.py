@@ -214,8 +214,11 @@ def handle_comprehensive_state_effect(
     constant.Instruct.REST,
     constant.InstructType.DAILY,
     _("休息"),
-    {constant_promise.Premise.NOT_H,
-    constant_promise.Premise.TIRED_LE_84},
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+        constant_promise.Premise.TIRED_LE_84
+    },
     constant.CharacterStatus.STATUS_REST
 )
 def handle_rest():
@@ -294,8 +297,8 @@ def handle_see_attr():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_LE_84,
-     constant_promise.Premise.T_ACTION_NOT_SLEEP,
-     constant_promise.Premise.T_NORMAL_6,},
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+    },
     constant.CharacterStatus.STATUS_CHAT
 )
 def handle_chat():
@@ -553,7 +556,7 @@ def handle_borrow_book():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_74,
-        constant_promise.Premise.T_NORMAL_5_6,
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
         constant_promise.Premise.PLACE_FURNITURE_GE_2,
     })
 def handle_read_book():
@@ -1424,7 +1427,8 @@ def handle_make_coffee_add():
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.URINATE_LE_49,
-     constant_promise.Premise.T_NORMAL_24567,},
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     },
     constant.CharacterStatus.STATUS_ASK_MAKE_COFFEE,
 )
 def handle_ask_make_coffee():
@@ -1461,8 +1465,7 @@ def handle_all_npc_position():
     _("邀请同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_2467,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TARGET_NOT_FOLLOW},
     constant.CharacterStatus.STATUS_FOLLOW,
 )
@@ -1524,7 +1527,7 @@ def handle_end_followed():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_ANGRY_WITH_PLAYER,
-     constant_promise.Premise.T_NORMAL_24567,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_APOLOGIZE,
 )
@@ -1554,7 +1557,7 @@ def handle_apologize():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_ABD_OR_ANGRY_MOOD,
      constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,
-     constant_promise.Premise.T_NORMAL_24567,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_84,
      },
     constant.CharacterStatus.STATUS_LISTEN_COMPLAINT,
@@ -1750,6 +1753,7 @@ def handle_ask_date():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_LOVE_2,
      constant_promise.Premise.HAVE_RING,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_CONFESSION,
 )
@@ -1792,6 +1796,7 @@ def handle_confession():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_OBEY_2,
      constant_promise.Premise.HAVE_COLLAR,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_GIVE_NECKLACE,
 )
@@ -1937,9 +1942,8 @@ def handle_collect():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.SCENE_ONLY_TWO,
-     constant_promise.Premise.SELF_AND_TARGET_HP_G_1,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_H,
 )
@@ -2072,7 +2076,7 @@ def handle_unconscious_h():
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
      constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_do_h_in_love_hotel():
@@ -2256,8 +2260,9 @@ def handle_group_sex_end():
     _("唱歌"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.T_NORMAL_5_6,
-        constant_promise.Premise.TIRED_LE_74},
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+        constant_promise.Premise.TIRED_LE_74
+    },
     constant.CharacterStatus.STATUS_SINGING,
 )
 def handle_singing():
@@ -2293,7 +2298,7 @@ def handle_singing():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.HAVE_INSTRUMENT,
-        constant_promise.Premise.T_NORMAL_5_6,
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
         constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_PLAY_INSTRUMENT,
 )
@@ -2685,7 +2690,7 @@ def handle_aromatherapy():
     _("处理公务"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.HAVE_OFFICE_WORK_NEED_TO_DO,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_OFFICIAL_WORK,
@@ -2768,6 +2773,7 @@ def handle_nation_diplomacy():
     constant.Instruct.INVITE_VISITOR, constant.InstructType.WORK, _("邀请访客"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DIPLOMATIC_OFFICE, 
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.VISITOR_ZONE_GE_2,
      },
     constant.CharacterStatus.STATUS_INVITE_VISITOR,
@@ -2793,6 +2799,7 @@ def handle_prts():
     _("战斗训练"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_TRAINING_ROOM,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_TRAINING,
 )
@@ -2807,7 +2814,7 @@ def handle_training():
     _("锻炼身体"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_GYM_ROOM,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_EXERCISE,
 )
@@ -2823,7 +2830,7 @@ def handle_exercise():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
      constant_promise.Premise.PATIENT_WAIT,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_CURE_PATIENT,
 )
@@ -2838,7 +2845,7 @@ def handle_cure_patient():
     _("招募干员"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_HR_OFFICE,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_RECRUIT,
 )
@@ -2886,7 +2893,7 @@ def handle_confim_recruit():
     _("维护设施"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_ANY_MAINTENANCE_PLACE,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES,
 )
@@ -2901,7 +2908,7 @@ def handle_maintenance_facilities():
     _("维修装备"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_BLACKSMITH_SHOP,
-     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_REPAIR_EQUIPMENT,
 )
