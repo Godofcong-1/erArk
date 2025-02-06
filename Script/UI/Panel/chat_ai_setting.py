@@ -48,6 +48,8 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         now_key_type = 'OPENAI_API_KEY'
     elif 'gemini' in model:
         now_key_type = 'GEMINI_API_KEY'
+    elif 'deepseek' in model:
+        now_key_type = 'DEEPSEEK_API_KEY'
     else:
         now_key_type = 'OPENAI_API_KEY'
     if now_key_type not in cache.ai_setting.ai_chat_api_key:
@@ -169,6 +171,8 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
         now_key_type = 'OPENAI_API_KEY'
     elif 'gemini' in model:
         now_key_type = 'GEMINI_API_KEY'
+    elif 'deepseek' in model:
+        now_key_type = 'DEEPSEEK_API_KEY'
     else:
         now_key_type = 'OPENAI_API_KEY'
     API_KEY = cache.ai_setting.ai_chat_api_key[now_key_type]
@@ -322,9 +326,12 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     # 开始调用AI
 
     # 调用OpenAI
-    if now_key_type == "OPENAI_API_KEY":
+    if now_key_type == "OPENAI_API_KEY" or now_key_type == "DEEPSEEK_API_KEY":
         # 创建client
         client = openai.OpenAI(api_key=API_KEY)
+        # deepseek则调整base_url
+        if now_key_type == "DEEPSEEK_API_KEY":
+            client = client.with_options(base_url="https://api.deepseek.com")
         # 自定义base_url
         if cache.ai_setting.ai_chat_setting[10] == 1:
             client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
@@ -526,6 +533,9 @@ class Chat_Ai_Setting_Panel:
                             elif row[0] == "GEMINI_API_KEY":
                                 api_key = row[1]
                                 cache.ai_setting.ai_chat_api_key["GEMINI_API_KEY"] = api_key
+                            elif row[0] == "DEEPSEEK_API_KEY":
+                                api_key = row[1]
+                                cache.ai_setting.ai_chat_api_key["DEEPSEEK_API_KEY"] = api_key
                 except FileNotFoundError:
                     pass
                 # 显示当前api的密钥
@@ -541,6 +551,12 @@ class Chat_Ai_Setting_Panel:
                 else:
                     GEMINI_API_KEY = _("已设置")
                 key_info_text += _("  Gemini API密钥： {0}\n").format(GEMINI_API_KEY)
+                DEEPSEEK_API_KEY = cache.ai_setting.ai_chat_api_key.get("DEEPSEEK_API_KEY", "")
+                if DEEPSEEK_API_KEY == "":
+                    DEEPSEEK_API_KEY = _("未设置")
+                else:
+                    DEEPSEEK_API_KEY = _("已设置")
+                key_info_text += _("  DeepSeek API密钥： {0}\n").format(DEEPSEEK_API_KEY)
                 key_info_draw = draw.NormalDraw()
                 key_info_draw.text = key_info_text
                 key_info_draw.width = self.width
@@ -555,6 +571,11 @@ class Chat_Ai_Setting_Panel:
                 button_text = _("  [更改Gemini API密钥] ")
                 button_len = max(len(button_text) * 2, 20)
                 button_draw = draw.CenterButton(button_text, _("更改Gemini API密钥"), button_len, cmd_func=self.change_api_key, args=("GEMINI_API_KEY"))
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                button_text = _("  [更改DeepSeek API密钥] ")
+                button_len = max(len(button_text) * 2, 20)
+                button_draw = draw.CenterButton(button_text, _("更改DeepSeek API密钥"), button_len, cmd_func=self.change_api_key, args=("DEEPSEEK_API_KEY"))
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
 
@@ -620,8 +641,9 @@ class Chat_Ai_Setting_Panel:
             line_draw.draw()
             line_feed.draw()
             ask_text = _("请输入您要使用的模型名（不含引号、逗号或空格）：\n")
-            ask_text += _("  *gpt和gemini的更多模型名请在官方文档中查阅，非上述模型将自动使用OpenAI格式来处理\n")
+            ask_text += _("  *更多模型名请在官方文档中查阅，非上述模型将自动使用OpenAI格式来处理\n")
             ask_text += _("  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n")
+            ask_text += _("  deepseek模型示例：deepseek-chat,deepseek-reasoner\n")
             ask_text += _("  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n")
             ask_panel = panel.AskForOneMessage()
             ask_panel.set(ask_text, 99)
@@ -651,8 +673,9 @@ class Chat_Ai_Setting_Panel:
                 line_draw.draw()
                 line_feed.draw()
                 ask_text = _("请输入您要使用的api的base_url（不含引号、逗号或空格）：\n")
-                ask_text += _("  目前仅支持openAI\n")
-                ask_text += _("  示例：http://my.test.server.example.com:8083/v1\n")
+                ask_text += _("  调用gpt、deepseek、gemini的官方api时url会自动填充，非官方api调用或本地api调用可在此手动输入\n")
+                ask_text += _("  在线调用示例：http://my.test.server.example.com:8083/v1\n")
+                ask_text += _("  本地调用示例：http://localhost:1234/v1\n")
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_base_url = ask_panel.draw()
@@ -668,7 +691,6 @@ class Chat_Ai_Setting_Panel:
                 line_draw.draw()
                 line_feed.draw()
                 ask_text = _("请输入您要使用的代理ip（不含引号、逗号或空格）：\n")
-                ask_text += _("  目前仅支持openAI\n")
                 ask_text += _("  示例：http://my.test.proxy.example.com\n")
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
@@ -717,6 +739,8 @@ class Chat_Ai_Setting_Panel:
             # 输入框
             if key_type == "OPENAI_API_KEY":
                 ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n")
+            elif key_type == "DEEPSEEK_API_KEY":
+                ask_text = _("请输入您的DeepSeek API密钥，应当是以 sk- 开头的一长段字符串\n")
             elif key_type == "GEMINI_API_KEY":
                 ask_text = _("请输入您的Gemini API密钥，应当是一个长段字符串\n")
             ask_name_panel = panel.AskForOneMessage()
@@ -726,7 +750,7 @@ class Chat_Ai_Setting_Panel:
             line_feed.draw()
 
             # 检测输入的api密钥是否符合规范
-            if key_type == "OPENAI_API_KEY" and not API_KEY.startswith("sk-"):
+            if (key_type == "OPENAI_API_KEY" or key_type == "DEEPSEEK_API_KEY") and not API_KEY.startswith("sk-"):
                 info_text = _(" \n  输入的API密钥不符合规范，请重新输入\n")
                 info_draw = draw.NormalDraw()
                 info_draw.text = info_text
@@ -790,6 +814,8 @@ class Chat_Ai_Setting_Panel:
         model = cache.ai_setting.ai_chat_setting[5]
         if 'gpt' in model:
             now_key_type = 'OPENAI_API_KEY'
+        elif 'deepseek' in model:
+            now_key_type = 'DEEPSEEK_API_KEY'
         elif 'gemini' in model:
             now_key_type = 'GEMINI_API_KEY'
         else:
@@ -810,8 +836,11 @@ class Chat_Ai_Setting_Panel:
         API_KEY = cache.ai_setting.ai_chat_api_key[now_key_type]
         # CUSTOM_ENDPOINT = cache.ai_setting.now_ai_chat_api_endpoint[now_key_type]
 
-        if now_key_type == "OPENAI_API_KEY":
+        if now_key_type == "OPENAI_API_KEY" or now_key_type == "DEEPSEEK_API_KEY":
             client = openai.OpenAI(api_key=API_KEY)
+            # deepseek则调整base_url
+            if now_key_type == "DEEPSEEK_API_KEY":
+                client = client.with_options(base_url="https://api.deepseek.com")
             # 自定义base_url
             if cache.ai_setting.ai_chat_setting[10] == 1:
                 client = client.with_options(base_url=cache.ai_setting.now_ai_chat_base_url)
