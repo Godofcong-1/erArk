@@ -214,10 +214,12 @@ def base_chara_state_common_settle(
                     final_adjust *= continuous_adjust
 
     # 最终值
+    final_value = time_base_value * final_adjust
     if tenths_add:
-        final_value = time_base_value * final_adjust + character_data.status_data[state_id] / 10
-    else:
-        final_value = time_base_value * final_adjust
+        # 最大不超过3倍最终值
+        tenths_value = character_data.status_data[state_id] / 10
+        tenths_value = min(3 * final_value, tenths_value)
+        final_value += tenths_value
 
     # 心控-苦痛快感化，将苦痛状态转化为快感状态
     if state_id == 17 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
