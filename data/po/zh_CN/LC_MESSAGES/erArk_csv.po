@@ -12077,11 +12077,11 @@ msgid "干员的攻略难易度"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:12
-msgid "对获得好感与信赖进行修正，仅影响加值的基础比例，不影响减值"
+msgid "对获得好感与信赖进行修正，仅影响正常加算时的最终乘积比例，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:12
-msgid "极难(0.25)|难(0.5)|较难(0.75)|标准(1)|较易(1.25)|容易(1.5)|极易(2)"
+msgid "极难|难|较难|标准|较易|容易|极易"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:13
@@ -12089,23 +12089,23 @@ msgid "干员的部位敏感度"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:13
-msgid "对获得部位快感进行修正，仅影响加值的基础比例，不影响减值"
+msgid "对获得部位快感进行修正，仅影响正常加算时的最终乘积比例，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:13
-msgid "极顿感(0.25)|顿感(0.5)|较顿感(0.75)|标准(1)|较敏感(1.25)|敏感(1.5)|极敏感(2)"
+msgid "极顿感|顿感|较顿感|标准|较敏感|敏感|极敏感"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:14
-msgid "干员的情绪积极度"
+msgid "干员的心智强韧度"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:14
-msgid "同时影响正面状态与负面状态，设为积极时正面状态为加值，负面为减值，设为消极时同理"
+msgid "同时影响正面状态与负面状态，设为积极时对正面状态向上修正，对负面状态进行向下修正，设为消极时同理，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:14
-msgid "非常消极(0.25)|消极(0.5)|较消极(0.75)|标准(1)|较积极(1.25)|积极(1.5)|非常积极(2)"
+msgid "非常消极|消极|较消极|标准|较积极|积极|非常积极"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:15

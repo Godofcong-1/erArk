@@ -17,7 +17,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel
+from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel, system_setting
 
 import random, math
 
@@ -252,7 +252,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     Keyword arguments:
     character_id -- 角色id
     state_id -- 状态id
-    ability_level -- 系数修正用能力等级
+    ability_level -- 系数修正用能力等级，此处为技巧能力等级
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -301,6 +301,12 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
         # 最大只能吃十个人的加成
         other_npc_num = min(10, other_npc_num)
         final_adjust += other_npc_num * 0.02
+    # 系统难度修正
+    now_difficulty = cache.all_system_setting.difficulty_setting[2]
+    difficulty_adjust = system_setting.get_difficulty_coefficient(now_difficulty)
+    final_adjust *= difficulty_adjust
+    # 保证最终值不为负数
+    final_adjust = max(0, final_adjust)
 
     return final_adjust
 
@@ -379,20 +385,6 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
             token_adjust += 0.5
         # 全体干员+数量*0.01
         token_adjust += len(now_token) * 0.01
-    # 对正面状态的加成
-    if state_id in [8, 9, 10, 11, 12, 13, 14, 15, 16]:
-        # 攻略进度素质
-        character_fall_level = attr_calculation.get_character_fall_level(character_id)
-        final_adjust += character_fall_level * 0.05
-        # 信物
-        final_adjust += token_adjust
-    # 对负面状态的
-    elif state_id in [17, 18, 19, 20]:
-        # 攻略进度素质
-        character_fall_level = attr_calculation.get_character_fall_level(character_id)
-        final_adjust -= character_fall_level * 0.2
-        # 信物
-        final_adjust -= token_adjust
     # 调香
     if character_data.sp_flag.aromatherapy:
         if character_data.sp_flag.aromatherapy == 2 and state_id == 9:
@@ -412,6 +404,33 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
         # 最大只能吃十个人的加成
         other_npc_num = min(10, other_npc_num)
         final_adjust += other_npc_num * 0.05
+    # 系统难度修正
+    now_difficulty = cache.all_system_setting.difficulty_setting[3]
+    difficulty_adjust = system_setting.get_difficulty_coefficient(now_difficulty)
+    # 对正面状态的加成
+    if state_id in [8, 9, 10, 11, 12, 13, 14, 15, 16]:
+        # 攻略进度素质
+        character_fall_level = attr_calculation.get_character_fall_level(character_id)
+        final_adjust += character_fall_level * 0.05
+        # 信物
+        final_adjust += token_adjust
+        # 难度调整
+        if difficulty_adjust > 1:
+            final_adjust *= difficulty_adjust
+        else:
+            final_adjust /= difficulty_adjust
+    # 对负面状态的
+    elif state_id in [17, 18, 19, 20]:
+        # 攻略进度素质
+        character_fall_level = attr_calculation.get_character_fall_level(character_id)
+        final_adjust -= character_fall_level * 0.2
+        # 信物
+        final_adjust -= token_adjust
+        # 难度调整
+        if difficulty_adjust > 1:
+            final_adjust /= difficulty_adjust
+        else:
+            final_adjust *= difficulty_adjust
     # 保证最终值不为负数
     final_adjust = max(0, final_adjust)
 
@@ -541,9 +560,13 @@ def base_chara_favorability_and_trust_common_settle(
                 else:
                     final_adjust *= (1 - token_adjust)
 
-            # 连续重复减值
             if add_favorability > 0:
+                # 连续重复减值
                 final_adjust *= continuous_adjust
+                # 系统难度修正
+                now_difficulty = cache.all_system_setting.difficulty_setting[1]
+                difficulty_adjust = system_setting.get_difficulty_coefficient(now_difficulty)
+                final_adjust *= difficulty_adjust
 
             # 结算最终值
             add_favorability *= final_adjust
@@ -572,9 +595,13 @@ def base_chara_favorability_and_trust_common_settle(
                 else:
                     final_adjust *= (1 - token_adjust)
 
-            # 连续重复减值
             if add_trust > 0:
+                # 连续重复减值
                 final_adjust *= continuous_adjust
+                # 系统难度修正
+                now_difficulty = cache.all_system_setting.difficulty_setting[1]
+                difficulty_adjust = system_setting.get_difficulty_coefficient(now_difficulty)
+                final_adjust *= difficulty_adjust
 
             # 结算最终值
             add_trust *= final_adjust

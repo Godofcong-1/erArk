@@ -15,6 +15,14 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def get_difficulty_coefficient(difficulty: int) -> float:
+    """根据设定的难度值返回修正系数"""
+    coefficients = [0.25, 0.5, 0.75, 1.0, 1.25, 2.0, 4.0]
+    if 0 <= difficulty < len(coefficients):
+        return coefficients[difficulty]
+    else:
+        return 1.0
+
 
 class System_Setting_Panel:
     """
@@ -104,9 +112,6 @@ class System_Setting_Panel:
         # 开始绘制选项
         if self.type_show[type_name]:
             for cid in setting_data:
-                # TODO 跳过难度的前10项，还没有实装
-                if type_name == _("难度") and cid < 10:
-                    continue
                 system_setting_data = setting_data[cid]
                 # 选项名
                 button_text = f"  [{system_setting_data.name}]： "
