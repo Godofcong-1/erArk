@@ -21,8 +21,8 @@ window_width: int = normal_config.config_normal.text_width
 
 def find_recruitable_npc() -> List[int]:
     """
-    查找可招募的NPC
-    Returns:
+    查找可招募的NPC\n
+    Returns：\n
     List[int]: 可招募的NPC列表
     """
 
@@ -130,16 +130,29 @@ class Recruit_Panel:
         line_count = len(cache.rhodes_island.recruit_line)
         self.max_hr_in_line = now_level * 2 # 每个招募线的hr上限
 
+        # 开始获得招募npc的id
+        recruitable_npc_id_list = find_recruitable_npc()
+        wait_id_list = []
+        for chara_id in recruitable_npc_id_list:
+            character_data = cache.character_data[chara_id]
+            # 筛选出出生地是当前罗德岛所在地的角色
+            if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                continue
+            else:
+                wait_id_list.append(chara_id)
+
         while 1:
             return_list = []
             title_draw.draw()
 
             all_info_draw = draw.NormalDraw()
             now_text = _("当前设施等级为：{0}，可同时有{1}条招募线，每条招募线最多有{2}人\n").format(now_level, line_count, self.max_hr_in_line)
+            # 输出当前国家剩余可招募干员的数量
+            now_text += _("当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n").format(len(wait_id_list))
             if len(cache.rhodes_island.recruited_id) == 0:
-                now_text += _(" 当前没有招募到干员\n")
+                now_text += _("  当前没有已招募待确认的干员\n")
             else:
-                now_text += _(" 当前已招募待确认的干员有：")
+                now_text += _("  当前已招募待确认的干员有：")
                 for chara_id in cache.rhodes_island.recruited_id:
                     character_data: game_type.Character = cache.character_data[chara_id]
                     now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
