@@ -2339,15 +2339,9 @@ def handle_down_small_pain(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -50 - character_data.status_data[17] / 10
 
-    now_add_lust = -50
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = max(0, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_DISGUST)
@@ -2365,15 +2359,9 @@ def handle_down_small_disgust(
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -50 - character_data.status_data[20] / 10
 
-    now_add_lust = -50
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = max(0, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_PAIN)
@@ -2390,15 +2378,10 @@ def handle_down_middle_pain(
     now_time -- 结算的时间
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -500 - character_data.status_data[17] / 5
 
-    now_add_lust = -500 - character_data.status_data[17] / 10
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = max(0, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_DISGUST)
@@ -2415,15 +2398,9 @@ def handle_down_middle_disgust(
     now_time -- 结算的时间
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -500 - character_data.status_data[20] / 5
 
-    now_add_lust = -500 - character_data.status_data[20] / 10
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = max(0, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_PAIN)
@@ -2440,15 +2417,9 @@ def handle_down_large_pain(
     now_time -- 结算的时间
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -2000 - character_data.status_data[17] / 3
 
-    now_add_lust = -2000 - character_data.status_data[17] / 5
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = max(0, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_DISGUST)
@@ -2465,15 +2436,9 @@ def handle_down_large_disgust(
     now_time -- 结算的时间
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    now_add_lust = -2000 - character_data.status_data[20] / 3
 
-    now_add_lust = -2000 - character_data.status_data[20] / 5
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[18])
-    now_add_lust *= adjust
-
-    character_data.status_data[20] += now_add_lust
-    character_data.status_data[20] = max(0, character_data.status_data[20])
-    change_data.status_data.setdefault(20, 0)
-    change_data.status_data[20] += now_add_lust
+    default.base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_SEX)
