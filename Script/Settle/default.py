@@ -5802,7 +5802,7 @@ def handle_self_h_state_reset(
     character_data.sp_flag.masturebate = 0
     # 清零前往群交
     character_data.sp_flag.go_to_join_group_sex = False
-    # 清零高潮进度
+    # 记录高潮进度
     for orgasm in range(8):
         now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
         character_data.h_state.orgasm_level[orgasm] = now_data

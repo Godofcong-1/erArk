@@ -269,20 +269,23 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     """
     重置H状态结构体
     """
-    h_state_data = old_h_state_data
+    zero_h_state = game_type.BODY_H_STATE()
+    h_state_data = zero_h_state
     body_item_list = dirty_panel.body_item_list
     bondage_list = dirty_panel.bondage_list
 
-    # 无数据则初始化
-    if len(h_state_data.body_item) == 0:
+    # 数据长度错误则初始化
+    if len(old_h_state_data.body_item) != len(body_item_list):
         for body_item in body_item_list:
             now_list = [body_item,False,None]
             h_state_data.body_item.append(now_list)
     else:
-        for i in range(len(h_state_data.body_item)):
-            # 跳过药物
+        for i in range(len(body_item_list)):
+            # 保留药物数据
             if i in {8,9,10,11,12}:
+                h_state_data.body_item[i] = old_h_state_data.body_item[i]
                 continue
+            # 其他则重置
             h_state_data.body_item[i] = [body_item_list[i],False,None]
 
     # 部位绝顶
@@ -318,21 +321,11 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
         }
 
     # 相关flag和计数
-    h_state_data.insert_position = -1
-    h_state_data.shoot_position_body = -1
-    h_state_data.shoot_position_cloth = -1
-    h_state_data.bondage = 0
-    h_state_data.condom_count = [0, 0]
-    h_state_data.npc_active_h = False
-    h_state_data.h_in_love_hotel = False
-    h_state_data.extra_orgasm_count = 0
-    h_state_data.plural_orgasm_set = set()
-    h_state_data.just_shoot = 0
-    h_state_data.orgasm_edge = 0
-    h_state_data.group_sex_lock_flag = False
-    h_state_data.all_group_sex_temple_run = False
-    h_state_data.npc_ai_type_in_group_sex = 0
-    h_state_data.pretend_sleep = False
+    h_state_data.endure_not_shot_count = old_h_state_data.endure_not_shot_count
+    # 保留群交设置
+    h_state_data.group_sex_lock_flag = old_h_state_data.group_sex_lock_flag
+    h_state_data.all_group_sex_temple_run = old_h_state_data.all_group_sex_temple_run
+    h_state_data.npc_ai_type_in_group_sex = old_h_state_data.npc_ai_type_in_group_sex
 
     return h_state_data
 

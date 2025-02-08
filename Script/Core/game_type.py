@@ -462,7 +462,9 @@ class BODY_H_STATE:
         self.shoot_position_cloth: int = -1
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
         self.orgasm_level: Dict[int, int] = {}
-        """ 高潮程度记录，每3级一个循环，1为小绝顶，2为普绝顶，3为强绝顶 """
+        """ 高潮程度记录，部位id:前部位快感等级 """
+        self.orgasm_count: Dict[int, list] = {}
+        """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
         self.orgasm_edge_count: Dict[int, int] = {}
         """ 绝顶寸止次数 """
         self.time_stop_orgasm_count: Dict[int, int] = {}
@@ -471,14 +473,16 @@ class BODY_H_STATE:
         """ 额外高潮快感记录，用于在10级快感后的额外高潮 """
         self.extra_orgasm_count: int = 0
         """ 额外高潮次数，用于在10级快感后的额外高潮 """
-        self.orgasm_count: Dict[int, list] = {}
-        """ 本次H里各部位的高潮次数计数，身体部位编号int:[当次计数int，总次计数int] """
-        self.plural_orgasm_count: int = 0
-        """ 多重高潮次数 """
         self.plural_orgasm_set: Set = set()
         """ 多重高潮部位数据集合 """
         self.endure_not_shot_count: int = 0
         """ 忍住不射次数 """
+        self.just_shoot: int = 0
+        """ 刚刚射精了，0没射精，1刚射精，2归零用 """
+        self.orgasm_edge: int = 0
+        """ 绝顶寸止，0未寸止，1正在寸止，2正常寸止解放，3寸止失败型解放 """
+        self.time_stop_release: bool = False
+        """ 当前为时停解放状态 """
         self.condom_info_show_flag: bool = False
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
@@ -487,12 +491,6 @@ class BODY_H_STATE:
         """ NPC主动H """
         self.h_in_love_hotel: bool = False
         """ 当前正在爱情旅馆中H """
-        self.just_shoot: int = 0
-        """ 刚刚射精了，0没射精，1刚射精，2归零用 """
-        self.orgasm_edge: int = 0
-        """ 绝顶寸止，0未寸止，1正在寸止，2正常寸止解放，3寸止失败型解放 """
-        self.time_stop_release: bool = False
-        """ 当前为时停解放状态 """
         self.group_sex_lock_flag: bool = False
         """ 群交的模板锁定标记 """
         self.all_group_sex_temple_run: bool = False
