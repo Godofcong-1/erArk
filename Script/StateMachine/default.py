@@ -17,12 +17,13 @@ line_feed.text = "\n"
 line_feed.width = 1
 
 
-def general_movement_module(character_id: int, target_scene: list):
+def general_movement_module(character_id: int, target_scene: list, show_info_flag = True):
     """
     通用移动模块\n
     Keyword arguments:\n
     character_id -- 角色id\n
-    target_scene -- 寻路目标场景(在地图系统下的绝对坐标)
+    target_scene -- 寻路目标场景(在地图系统下的绝对坐标)\n
+    show_info_flag -- 是否显示移动信息，默认为True
     """
     from Script.Config import normal_config
     character_data: game_type.Character = cache.character_data[character_id]
@@ -43,6 +44,12 @@ def general_movement_module(character_id: int, target_scene: list):
         character_data.behavior.move_target = move_path
         character_data.behavior.duration = move_time
         character_data.state = constant.CharacterStatus.STATUS_MOVE
+        # 如果和玩家位于同一地点，则输出提示信息
+        if show_info_flag and character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
+            now_scene_data = cache.scene_data[target_scene_str]
+            now_draw = draw.NormalDraw()
+            now_draw.text = _("{0}打算前往{1}\n").format(character_data.name, now_scene_data.scene_name)
+            now_draw.draw()
         return True
     # 寻路失败时
     else:
@@ -163,7 +170,7 @@ def character_move_to_rand_scene(character_id: int):
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_list.remove(now_scene_str)
     target_scene = map_handle.get_map_system_path_for_str(random.choice(scene_list))
-    general_movement_module(character_id, target_scene)
+    general_movement_module(character_id, target_scene,show_info_flag = False)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DR_OFFICE)
@@ -209,12 +216,6 @@ def character_move_to_toilet(character_id: int):
     # print(f"debug constant.place_data[\"Toilet_Female\"] = ",constant.place_data["Toilet_Female"])
     general_movement_module(character_id, to_toilet)
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去洗手间\n").format(character_data.name)
-        now_draw.draw()
-
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KITCHEN)
 def character_move_to_kitchen(character_id: int):
@@ -250,12 +251,6 @@ def character_move_to_foodshop(character_id: int):
         )
     general_movement_module(character_id, to_foodshop)
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去吃饭\n").format(character_data.name)
-        now_draw.draw()
-
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DINING_HALL)
 def character_move_to_dining_hall(character_id: int):
@@ -267,7 +262,7 @@ def character_move_to_dining_hall(character_id: int):
     to_dining_hall = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Dining_hall"])
     )
-    general_movement_module(character_id, to_dining_hall)
+    general_movement_module(character_id, to_dining_hall, show_info_flag = False)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_CLINIC)
@@ -302,7 +297,6 @@ def character_move_to_physical_examination(character_id: int):
         random.choice(constant.place_data["Physical_Examination"])
     )
     general_movement_module(character_id, to_physical_examination)
-    # print(f"debug {cache.character_data[character_id].name} 前往体检科 {to_physical_examination}")
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
@@ -728,17 +722,10 @@ def character_move_to_maintenance_department(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_maintenance_department = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Maintenance_Department"])
     )
     general_movement_module(character_id, to_maintenance_department)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去运维部\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BLACKSMITH_SHOP)
@@ -748,17 +735,10 @@ def character_move_to_blacksmith_shop(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_blacksmith_shop = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Blacksmith_Shop"])
     )
     general_movement_module(character_id, to_blacksmith_shop)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去铁匠铺\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DIPLOMATIC_OFFICE)
@@ -768,17 +748,10 @@ def character_move_to_diplomatic_office(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_diplomatic_office = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Diplomatic_Office"])
     )
     general_movement_module(character_id, to_diplomatic_office)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去外交官办公室\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HERB_GARDEN)
@@ -788,17 +761,10 @@ def character_move_to_herb_garden(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_herb_garden = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Herb_Garden"])
     )
     general_movement_module(character_id, to_herb_garden)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去药田\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_GREENHOUSE)
@@ -808,17 +774,10 @@ def character_move_to_greenhouse(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_greenhouse = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Greenhouse"])
     )
     general_movement_module(character_id, to_greenhouse)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去温室\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HUMILIATION_ROOM)
@@ -828,17 +787,10 @@ def character_move_to_humiliation_room(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_humiliation_room = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Humiliation_Room"])
     )
     general_movement_module(character_id, to_humiliation_room)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去调教室\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_WARDEN_OFFICE)
@@ -848,17 +800,10 @@ def character_move_to_warden_office(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_warden_office = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Warden_Office"])
     )
     general_movement_module(character_id, to_warden_office)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去监狱长办公室\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
@@ -903,12 +848,6 @@ def character_move_to_rest_room(character_id: int):
 
     general_movement_module(character_id, to_rest_room)
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去休息\n").format(character_data.name)
-        now_draw.draw()
-
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RESTAURANT)
 def character_move_to_restaurant(character_id: int):
@@ -942,15 +881,8 @@ def character_move_to_maintenance_place(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.rhodes_island.maintenance_place[character_id])
     general_movement_module(character_id, to_maintenance_place_shop)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去检修地点\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PRODUCTION_WORKSHOP)
@@ -960,7 +892,6 @@ def character_move_to_production_workshop(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
 
     # 如果已经属于某个车间，则直接选择该车间
     need_allocated_flag = True
@@ -990,12 +921,6 @@ def character_move_to_production_workshop(character_id: int):
     to_production_workshop = map_handle.get_map_system_path_for_str(target_scene_str)
     general_movement_module(character_id, to_production_workshop)
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去生产车间\n").format(character_data.name)
-        now_draw.draw()
-
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_LOCKER_ROOM)
 def character_move_to_bathzone_locker_room(character_id: int):
@@ -1004,10 +929,8 @@ def character_move_to_bathzone_locker_room(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
 
     to_locker_room = []
-
     # 直接检索大浴场的更衣室
     for place in constant.place_data["Locker_Room"]:
         if place.split("\\")[0] == "大浴场":
@@ -1016,14 +939,7 @@ def character_move_to_bathzone_locker_room(character_id: int):
 
     # 以防没有找到更衣室
     if to_locker_room != []:
-
         general_movement_module(character_id, to_locker_room)
-
-        # 如果和玩家位于同一地点，则输出提示信息
-        if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{0}打算去大浴场的更衣室\n").format(character_data.name)
-            now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATHZONE_REST_ROOM)
@@ -1035,7 +951,6 @@ def character_move_to_bathzone_rest_room(character_id: int):
     """
 
     to_rest_room = []
-
     # 直接检索大浴场的休息室
     for place in constant.place_data["Rest_Room"]:
         if place.split("\\")[0] == "大浴场":
@@ -1044,7 +959,7 @@ def character_move_to_bathzone_rest_room(character_id: int):
 
     # 以防没有找到休息室
     if to_rest_room != []:
-        general_movement_module(character_id, to_rest_room)
+        general_movement_module(character_id, to_rest_room, show_info_flag = False)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_LOCKER_ROOM)
@@ -1054,10 +969,8 @@ def character_move_to_training_locker_room(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    character_data: game_type.Character = cache.character_data[character_id]
 
     to_locker_room = []
-
     # 直接检索训练场的更衣室
     for place in constant.place_data["Locker_Room"]:
         if place.split("\\")[0] == "训练":
@@ -1065,15 +978,8 @@ def character_move_to_training_locker_room(character_id: int):
             break
 
     # 以防没有找到更衣室
-    if to_locker_room == []:
-
+    if to_locker_room != []:
         general_movement_module(character_id, to_locker_room)
-
-        # 如果和玩家位于同一地点，则输出提示信息
-        if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-            now_draw = draw.NormalDraw()
-            now_draw.text = _("{0}打算去训练场的更衣室\n").format(character_data.name)
-            now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_BATH_ROOM)
@@ -1100,12 +1006,6 @@ def character_move_to_bath_room(character_id: int):
 
     general_movement_module(character_id, to_bath_room)
 
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去淋浴\n").format(character_data.name)
-        now_draw.draw()
-
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_TRAINING_ROOM)
 def character_move_to_training_room(character_id: int):
@@ -1125,12 +1025,6 @@ def character_move_to_training_room(character_id: int):
     )
 
     general_movement_module(character_id, to_training_room)
-
-    # 如果和玩家位于同一地点，则输出提示信息
-    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
-        now_draw = draw.NormalDraw()
-        now_draw.text = _("{0}打算去进行战斗训练\n").format(character_data.name)
-        now_draw.draw()
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PLAYER)
