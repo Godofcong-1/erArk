@@ -5616,7 +5616,6 @@ def handle_double_penetration():
     constant_promise.Premise.HAVE_COTTON_STICK,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.TECHNIQUE_GE_5,
-    constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
     },
     constant.CharacterStatus.STATUS_URETHRAL_SWAB,
     constant.SexInstructSubType.ITEM,
