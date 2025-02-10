@@ -14057,14 +14057,26 @@ msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:25
+msgid "监狱长"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:25
+msgid "监狱长办公室"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:25
+msgid "管理关押区的干员"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:26
 msgid "性爱练习生"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:25
+#: .\data\csv\WorkType.csv:26
 msgid "调教室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:25
+#: .\data\csv\WorkType.csv:26
 msgid "利用道具练习自己的性爱技巧"
 msgstr ""
 
