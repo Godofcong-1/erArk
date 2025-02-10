@@ -89,6 +89,7 @@ def init_attr(character_id: int):
         character_data.dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]) # 此处不可使用翻译
         character_data.pre_dormitory = map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"])
         # 初始收藏地点
+        cache.collect_position_list = []
         cache.collect_position_list.append(['中枢', '博士房间'])
         cache.collect_position_list.append(['中枢', '博士办公室'])
         cache.collect_position_list.append(['贸易', '成人用品店'])
