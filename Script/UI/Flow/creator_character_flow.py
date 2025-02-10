@@ -1036,11 +1036,10 @@ class Character_Bonus:
                     target_data: game_type.Character = cache.character_data[pl_character_data.assistant_character_id]
                     target_data.favorability[0] = 0
                     target_data.trust = 0
-                    pl_character_data.assistant_character_id = 0
                     cache.first_bonus[first_bonus_id] = False
                 
                 # 这里直接沿用的助理页面的代码
-                elif self.bonus_now >= 5:
+                if self.bonus_now >= 5:
                     assistant_panel.chose_assistant()
 
                     # 在这里处理好感和信赖的增加
