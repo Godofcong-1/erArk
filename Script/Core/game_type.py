@@ -412,7 +412,7 @@ class BODY_H_STATE:
     """H状态结构体"""
 
     def __init__(self):
-        self.body_item: list = []
+        self.body_item: dict = {}
         """ 身体道具情况    
         编号int:[道具名str,当前有无bool,状态的结束时间datetime.datetime]    
         部位顺序 [0"乳头夹",1"阴蒂夹",2"V震动棒",3"A震动棒",4"搾乳机",5"采尿器",6"眼罩",7"肛门拉珠",8"持续性利尿剂",9"安眠药",10"排卵促进药",11"事前避孕药",12"事后避孕药",13"避孕套"]
@@ -899,7 +899,7 @@ class Scene:
         self.exposed: bool = 0
         """ 地点暴露 """
         self.have_furniture: int = 0
-        """ 有家具(1基础家具,2办公机家具,3卧室级家具) """
+        """ 有家具(1基础家具,2办公级家具,3卧室级家具) """
         self.close_type: int = 0
         """ 关门类型(0无法关门,1正常关门,2小隔间关门) """
         self.close_flag: int = 0

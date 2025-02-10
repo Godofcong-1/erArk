@@ -274,19 +274,12 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     body_item_list = dirty_panel.body_item_list
     bondage_list = dirty_panel.bondage_list
 
-    # 数据长度错误则初始化
-    if len(old_h_state_data.body_item) != len(body_item_list):
-        for body_item in body_item_list:
-            now_list = [body_item,False,None]
-            h_state_data.body_item.append(now_list)
-    else:
-        for i in range(len(body_item_list)):
-            # 保留药物数据
-            if i in {8,9,10,11,12}:
-                h_state_data.body_item[i] = old_h_state_data.body_item[i]
-                continue
-            # 其他则重置
-            h_state_data.body_item[i] = [body_item_list[i],False,None]
+    # 身体道具
+    for i in range(len(body_item_list)):
+        h_state_data.body_item[i] = [body_item_list[i],False,None]
+        # 保留药物数据
+        if i in {8,9,10,11,12} and i in old_h_state_data.body_item:
+            h_state_data.body_item[i] = old_h_state_data.body_item[i]
 
     # 部位绝顶
     for body_part in game_config.config_body_part:
