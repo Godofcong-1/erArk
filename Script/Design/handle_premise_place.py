@@ -694,7 +694,7 @@ def handle_place_furniture_1(character_id: int) -> int:
 @add_premise(constant_promise.Premise.PLACE_FURNITURE_2)
 def handle_place_furniture_2(character_id: int) -> int:
     """
-    当前地点有办公级家具
+    当前地点为办公级家具
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -712,7 +712,7 @@ def handle_place_furniture_2(character_id: int) -> int:
 @add_premise(constant_promise.Premise.PLACE_FURNITURE_3)
 def handle_place_furniture_3(character_id: int) -> int:
     """
-    当前地点有卧室级家具（即含床）
+    当前地点为卧室级家具（即含床）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

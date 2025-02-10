@@ -129,8 +129,8 @@ place_covert,PLACE_COVERT,地点_属性,当前地点隐蔽
 place_furniture_ge_1,PLACE_FURNITURE_GE_1,地点_属性,当前地点有家具
 place_furniture_ge_2,PLACE_FURNITURE_GE_2,地点_属性,当前地点至少有办公级家具
 place_furniture_1,PLACE_FURNITURE_1,地点_属性,当前地点仅有基础家具
-place_furniture_2,PLACE_FURNITURE_2,地点_属性,当前地点有办公级家具
-place_furniture_3,PLACE_FURNITURE_3,地点_属性,当前地点有卧室级家具（即含床）
+place_furniture_2,PLACE_FURNITURE_2,地点_属性,当前地点为办公级家具
+place_furniture_3,PLACE_FURNITURE_3,地点_属性,当前地点为卧室级家具（即含床）
 place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中（本前提已弃用）
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
@@ -298,6 +298,8 @@ in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
 in_humiliation_room,IN_HUMILIATION_ROOM,地点_定位,在调教室
 not_in_humiliation_room,NOT_IN_HUMILIATION_ROOM,地点_定位,不在调教室
+in_warden_office,IN_WARDEN_OFFICE,地点_定位,在监狱长办公室
+not_in_warden_office,NOT_IN_WARDEN_OFFICE,地点_定位,不在监狱长办公室
 in_humiliation_room_or_dr_room,IN_HUMILIATION_ROOM_OR_DR_ROOM,地点_定位,在调教室或博士房间
 in_deck,IN_DECK,地点_定位,在甲板
 not_in_deck,NOT_IN_DECK,地点_定位,不在甲板
