@@ -1640,6 +1640,8 @@ class StateMachine:
     """ 移动至温室 """
     MOVE_TO_HUMILIATION_ROOM = 651
     """ 移动至调教室 """
+    MOVE_TO_WARDEN_OFFICE = 652
+    """ 移动至监狱长办公室 """
     MOVE_TO_CLINIC = 661
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_PHYSICAL_EXAMINATION = 662

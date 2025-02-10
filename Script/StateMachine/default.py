@@ -841,6 +841,26 @@ def character_move_to_humiliation_room(character_id: int):
         now_draw.draw()
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_WARDEN_OFFICE)
+def character_move_to_warden_office(character_id: int):
+    """
+    移动至监狱长办公室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_warden_office = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Warden_Office"])
+    )
+    general_movement_module(character_id, to_warden_office)
+
+    # 如果和玩家位于同一地点，则输出提示信息
+    if character_data.position == cache.character_data[0].position and cache.all_system_setting.draw_setting[8] == 1:
+        now_draw = draw.NormalDraw()
+        now_draw.text = _("{0}打算去监狱长办公室\n").format(character_data.name)
+        now_draw.draw()
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_REST_ROOM)
 def character_move_to_rest_room(character_id: int):
     """
