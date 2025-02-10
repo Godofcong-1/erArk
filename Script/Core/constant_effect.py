@@ -396,20 +396,6 @@ class BehaviorEffect:
     """ 属性_经验 交互对象增加1指挥经验 """
     TARGET_ADD_1_Cure_EXPERIENCE = 289
     """ 属性_经验 交互对象增加1医疗经验 """
-    TARGET_ADD_1_ForwardClimax_EXPERIENCE = 300
-    """ 属性_经验 交互对象增加1正面位绝顶经验 """
-    TARGET_ADD_1_BackClimax_EXPERIENCE = 301
-    """ 属性_经验 交互对象增加1后入位绝顶经验 """
-    TARGET_ADD_1_RideClimax_EXPERIENCE = 302
-    """ 属性_经验 交互对象增加1骑乘位绝顶经验 """
-    TARGET_ADD_1_FSeatClimax_EXPERIENCE = 303
-    """ 属性_经验 交互对象增加1对面座位绝顶经验 """
-    TARGET_ADD_1_BSeatClimax_EXPERIENCE = 304
-    """ 属性_经验 交互对象增加1背面座位绝顶经验 """
-    TARGET_ADD_1_FStandClimax_EXPERIENCE = 305
-    """ 属性_经验 交互对象增加1对面立位绝顶经验 """
-    TARGET_ADD_1_BStandClimax_EXPERIENCE = 306
-    """ 属性_经验 交互对象增加1背面立位绝顶经验 """
     ADD_1_Kiss_EXPERIENCE = 307
     """ 属性_经验 增加1接吻经验 """
     ADD_1_Handjob_EXPERIENCE = 308
@@ -818,6 +804,31 @@ class BehaviorEffect:
     """ H_阴茎位置 改变当前阴茎位置为交互对象_裤子交中 """
     CANCEL_PENIS_IN_FACE_OR_MOUSE = 840
     """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
+
+    DR_POSITION_NORMAL = 851
+    """ H_体位 博士体位数据变成正常体位 """
+    DR_POSITION_BACK = 852
+    """ H_体位 博士体位数据变成后背体位 """
+    DR_POSITION_FACE_RIDE = 853
+    """ H_体位 博士体位数据变成对面骑乘体位 """
+    DR_POSITION_BACK_RIDE = 854
+    """ H_体位 博士体位数据变成背面骑乘体位 """
+    DR_POSITION_FACE_SEAT = 855
+    """ H_体位 博士体位数据变成对面座体位 """
+    DR_POSITION_BACK_SEAT = 856
+    """ H_体位 博士体位数据变成背面座体位 """
+    DR_POSITION_FACE_STAND = 857
+    """ H_体位 博士体位数据变成对面立体位 """
+    DR_POSITION_BACK_STAND = 858
+    """ H_体位 博士体位数据变成背面立体位 """
+    DR_POSITION_FACE_HUG = 859
+    """ H_体位 博士体位数据变成对面抱体位 """
+    DR_POSITION_BACK_HUG = 860
+    """ H_体位 博士体位数据变成背面抱体位 """
+    DR_POSITION_FACE_LIE = 861
+    """ H_体位 博士体位数据变成对面卧体位 """
+    DR_POSITION_BACK_LIE = 862
+    """ H_体位 博士体位数据变成背面卧体位 """
 
     H_IN_LOVE_HOTEL_TO_FALSE = 871
     """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """

@@ -136,6 +136,9 @@ class Base_function_class:
             if birthplace_data.name == scene_name:
                 cache.rhodes_island.move_target_and_time[0] = birthplace_id
                 arrive_time = game_time.get_sub_date(day = need_time, old_date = cache.game_time)
+                # debug模式下直接抵达
+                if cache.debug_mode:
+                    arrive_time = cache.game_time
                 cache.rhodes_island.move_target_and_time[2] = arrive_time
                 cache.rhodes_island.materials_resouce[15] -= need_fuel
                 break

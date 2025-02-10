@@ -461,6 +461,8 @@ class BODY_H_STATE:
         """ 身体上的射精位置，int，-1为未射精，其他同身体部位 """
         self.shoot_position_cloth: int = -1
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
+        self.current_sex_position: int = -1
+        """ 当前性交体位，仅博士有的数据，int，-1为无体位，1正常2后背3对面骑乘4背面骑乘5对面座6背面座7对面立8背面立9对面抱10背面抱11对面卧12背面卧 """
         self.orgasm_level: Dict[int, int] = {}
         """ 高潮程度记录，部位id:前部位快感等级 """
         self.orgasm_count: Dict[int, list] = {}

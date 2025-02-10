@@ -67,7 +67,6 @@ cid,effect_name,effect_type,effect
 1528,TARGET_MOOD_TO_ANGRY,属性_基础,交互对象心情变为愤怒
 1531,SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO,属性_结构体,场景内所有角色欲望值归零
 
-
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
 43,TARGET_ADD_SMALL_C_FEEL,属性_状态,交互对象增加少量Ｃ快（C感补正）
@@ -203,13 +202,6 @@ cid,effect_name,effect_type,effect
 286,TARGET_ADD_1_GiveBirth_EXPERIENCE,属性_经验,交互对象增加1妊娠经验
 288,TARGET_ADD_1_Command_EXPERIENCE,属性_经验,交互对象增加1指挥经验
 289,TARGET_ADD_1_Cure_EXPERIENCE,属性_经验,交互对象增加1医疗经验
-300,TARGET_ADD_1_ForwardClimax_EXPERIENCE,属性_经验,交互对象增加1正面位绝顶经验
-301,TARGET_ADD_1_BackClimax_EXPERIENCE,属性_经验,交互对象增加1后入位绝顶经验
-302,TARGET_ADD_1_RideClimax_EXPERIENCE,属性_经验,交互对象增加1骑乘位绝顶经验
-303,TARGET_ADD_1_FSeatClimax_EXPERIENCE,属性_经验,交互对象增加1对面座位绝顶经验
-304,TARGET_ADD_1_BSeatClimax_EXPERIENCE,属性_经验,交互对象增加1背面座位绝顶经验
-305,TARGET_ADD_1_FStandClimax_EXPERIENCE,属性_经验,交互对象增加1对面立位绝顶经验
-306,TARGET_ADD_1_BStandClimax_EXPERIENCE,属性_经验,交互对象增加1背面立位绝顶经验
 307,ADD_1_Kiss_EXPERIENCE,属性_经验,增加1接吻经验
 308,ADD_1_Handjob_EXPERIENCE,属性_经验,增加1手淫经验
 309,ADD_1_Blowjob_EXPERIENCE,属性_经验,增加1口淫经验
@@ -416,6 +408,19 @@ cid,effect_name,effect_type,effect
 833,PENIS_IN_T_WEAPONS,H_阴茎位置,改变当前阴茎位置为交互对象_武器交中
 834,PENIS_IN_T_TROUSERS,H_阴茎位置,改变当前阴茎位置为交互对象_裤子交中
 840,CANCEL_PENIS_IN_FACE_OR_MOUSE,H_阴茎位置,取消为阴茎位置交互对象_阴茎蹭脸中和口交中
+
+851,DR_POSITION_NORMAL,H_体位,博士体位数据变成正常体位
+852,DR_POSITION_BACK,H_体位,博士体位数据变成后背体位
+853,DR_POSITION_FACE_RIDE,H_体位,博士体位数据变成对面骑乘体位
+854,DR_POSITION_BACK_RIDE,H_体位,博士体位数据变成背面骑乘体位
+855,DR_POSITION_FACE_SEAT,H_体位,博士体位数据变成对面座体位
+856,DR_POSITION_BACK_SEAT,H_体位,博士体位数据变成背面座体位
+857,DR_POSITION_FACE_STAND,H_体位,博士体位数据变成对面立体位
+858,DR_POSITION_BACK_STAND,H_体位,博士体位数据变成背面立体位
+859,DR_POSITION_FACE_HUG,H_体位,博士体位数据变成对面抱体位
+860,DR_POSITION_BACK_HUG,H_体位,博士体位数据变成背面抱体位
+861,DR_POSITION_FACE_LIE,H_体位,博士体位数据变成对面卧体位
+862,DR_POSITION_BACK_LIE,H_体位,博士体位数据变成背面卧体位
 
 871,H_IN_LOVE_HOTEL_TO_FALSE,H_地点,取消自己和交互对象正在爱情旅馆中H的状态
 

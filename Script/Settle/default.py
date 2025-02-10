@@ -10613,6 +10613,258 @@ def handle_cancel_penis_in_face_or_mouse(
         target_data.h_state.insert_position = -1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_NORMAL)
+def handle_dr_position_normal(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成正常体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK)
+def handle_dr_position_back(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成后背体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 2
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_FACE_RIDE)
+def handle_dr_position_face_ride(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成对面骑乘体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 3
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK_RIDE)
+def handle_dr_position_back_ride(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成背面骑乘体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 4
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_FACE_SEAT)
+def handle_dr_position_face_seat(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成对面座体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 5
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK_SEAT)
+def handle_dr_position_back_seat(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成背面座体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 6
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_FACE_STAND)
+def handle_dr_position_face_stand(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成对面立体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 7
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK_STAND)
+def handle_dr_position_back_stand(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成背面立体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 8
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_FACE_HUG)
+def handle_dr_position_face_hug(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成对面抱体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 9
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK_HUG)
+def handle_dr_position_back_hug(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成背面抱体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 10
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_FACE_LIE)
+def handle_dr_position_face_lie(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成对面卧体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 11
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_BACK_LIE)
+def handle_dr_position_back_lie(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成背面卧体位
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = 12
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_IN_LOVE_HOTEL_TO_FALSE)
 def handle_h_in_love_hotel_to_false(
         character_id: int,

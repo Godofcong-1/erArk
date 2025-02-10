@@ -564,7 +564,7 @@ def check_second_effect(
         # 初见和每日招呼结算
         judge_character_first_meet(character_id)
         # 阴茎位置结算
-        insert_position_effect(character_id)
+        insert_position_effect(character_id, change_data)
         # 道具结算
         item_effect(character_id, pl_to_npc)
         # 单独遍历道具
@@ -729,24 +729,34 @@ def judge_character_first_meet(character_id: int) -> int:
                 character_data.second_behavior[1456] = 1
 
 
-def insert_position_effect(character_id: int):
+def insert_position_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
     处理第二结算中的阴茎位置结算
     Keyword arguments:
     character_id -- 角色id
+    change_data: game_type.CharacterStatusChange,
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
-    # 非群交模式，当前有阴茎插入、当前位置为玩家位置
+    # 当前有阴茎插入、当前位置为玩家位置
     if (
-        handle_premise.handle_group_sex_mode_off(character_id) and
         character_data.h_state.insert_position != -1 and
         character_data.position == pl_character_data.position
         ):
-        # 身体部位与服装部位通用均为+1200
-        position_index = 1201 + character_data.h_state.insert_position
-        character_data.second_behavior[position_index] = 1
+        # 非群交模式
+        if handle_premise.handle_group_sex_mode_off(character_id):
+            # 身体部位与服装部位通用均为+1200
+            position_index = 1201 + character_data.h_state.insert_position
+            character_data.second_behavior[position_index] = 1
+        # 如果玩家当前有性交姿势数据
+        if pl_character_data.h_state.current_sex_position != -1:
+            from Script.Settle import default_experience
+            # 自己增加对应姿势的经验
+            exp_id = 140 + pl_character_data.h_state.current_sex_position
+            default_experience.base_chara_experience_common_settle(character_id, exp_id, change_data = change_data)
+            # 玩家增加对应姿势的经验
+            default_experience.base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
 
 
 def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange):
