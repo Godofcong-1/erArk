@@ -162,7 +162,12 @@ def born_new_character(mother_id,child_name):
     now_tem.Profession = random.randint(0,8)
     now_tem.Race = mom_character_data.race
     now_tem.Mother_id = mother_id
-    now_tem.AdvNpc = random.randint(9000,9999)
+    # 避免重复adv
+    while 1:
+        new_adv = random.randint(9000,9999)
+        if character.get_character_id_from_adv(new_adv) == 0:
+            break
+    now_tem.AdvNpc = new_adv
     # 基础的素质
     now_tem.Talent = {0:1,1:1,2:1,3:1,4:1,6:1,7:1,101:1,121:1,126:1,129:1,131:1,451:1}
     # 遗传母亲的可遗传素质
