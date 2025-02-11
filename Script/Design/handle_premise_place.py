@@ -30,6 +30,46 @@ def add_premise(premise: str) -> FunctionType:
     return decoraror
 
 
+def common_place_judge_by_SceneName(character_id: int, scene_name: str, judge_in_flag: bool = True) -> bool:
+    """
+    通用型检测角色是否在特定名称的地点中的函数
+    Keyword arguments:
+    character_id -- 角色id
+    scene_name -- 地点名
+    judge_in_flag -- 判断在还是不在，默认为Ture，判断在
+    Return arguments:
+    bool -- 是否满足
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if scene_name == now_scene_data.scene_name:
+        return judge_in_flag
+    else:
+        return not judge_in_flag
+
+
+def common_place_judge_by_SceneTag(character_id: int, scene_tag: str, judge_in_flag: bool = True) -> bool:
+    """
+    通用型检测角色是否在有特定标签的地点中的函数
+    Keyword arguments:
+    character_id -- 角色id
+    scene_tag -- 地点标签名
+    judge_in_flag -- 判断在还是不在，默认为Ture，判断在
+    Return arguments:
+    bool -- 是否满足
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if scene_tag in now_scene_data.scene_tag:
+        return judge_in_flag
+    else:
+        return not judge_in_flag
+
+
 @add_premise(constant_promise.Premise.IN_PLAYER_SCENE)
 def handle_in_player_scene(character_id: int) -> int:
     """

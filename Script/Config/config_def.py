@@ -354,12 +354,20 @@ class Entertainment:
     """ 娱乐名 """
     behavior_id: int
     """ 娱乐行动id """
-    palce: str
+    place: str
     """ 娱乐地点 """
+    place_tag: str
+    """ 地点tag """
     need: str
     """ 必要条件 """
     tag: int
     """ 标签 """
+    auto_ai: int
+    """ 是否使用自动ai行动 """
+    auto_ai_move: str
+    """ 自动ai移动数据 """
+    auto_ai_entertainment: str
+    """ 自动ai工作数据 """
     describe: str
     """ 描述 """
 
@@ -1116,10 +1124,18 @@ class WorkType:
     """ 工作部门 """
     place: str
     """ 工作地点 """
+    place_tag: str
+    """ 工作地点标签 """
     tag: int
     """ 标签(1为灰色显示，2为特殊解锁不直接显示) """
     need: str
     """ 必要条件 """
+    auto_ai: int
+    """ 是否使用自动ai行动 """
+    auto_ai_move: str
+    """ 自动ai移动数据 """
+    auto_ai_work: str
+    """ 自动ai工作数据 """
     describe: str
     """ 描述 """
 

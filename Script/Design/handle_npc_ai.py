@@ -390,26 +390,57 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             premise_data = new_premise_data
     # 然后判断工作，需要有工作，且在工作时间或到岗时间
     if judge == 0 and handle_premise.handle_have_work(character_id) and handle_premise.handle_to_work_time_or_work_time(character_id):
+        # 当前工作数据
+        work_type_id = character_data.work.work_type
+        work_type_data = game_config.config_work_type[work_type_id]
         # 进行工作
         if judge == 0:
-            now_target_list = game_config.config_target_type_index[22]
-            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
-            null_target_set.update(now_target_list)
-            premise_data = new_premise_data
+            # 判断是否存在自动ai工作流程
+            if work_type_data.auto_ai and (handle_premise_place.common_place_judge_by_SceneName(character_id, work_type_data.place) or handle_premise_place.common_place_judge_by_SceneTag(character_id, work_type_data.place_tag)):
+                state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=False, work_flag=True)
+                premise_data = new_premise_data
+                if state_machine_id:
+                    judge = state_machine_id
+            # 没有的话则正常寻找
+            else:
+                now_target_list = game_config.config_target_type_index[22]
+                target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+                null_target_set.update(now_target_list)
+                premise_data = new_premise_data
         # 工作准备
         if judge == 0:
-            now_target_list = game_config.config_target_type_index[21]
-            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
-            null_target_set.update(now_target_list)
-            premise_data = new_premise_data
+            # 判断是否存在自动ai工作流程
+            if work_type_data.auto_ai:
+                state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=True, work_flag=True)
+                premise_data = new_premise_data
+                if state_machine_id:
+                    judge = state_machine_id
+            # 没有的话则正常寻找
+            else:
+                now_target_list = game_config.config_target_type_index[21]
+                target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+                null_target_set.update(now_target_list)
+                premise_data = new_premise_data
     # 然后判断娱乐，需要在娱乐时间
     if judge == 0 and handle_premise.handle_all_entertainment_time(character_id):
+        # 当前娱乐数据
+        enter_time = game_time.judge_entertainment_time(character_id) - 1
+        entertainment_type_id = character_data.entertainment.entertainment_type[enter_time]
+        entertainment_type_data = game_config.config_entertainment[entertainment_type_id]
         # 进行娱乐
         if judge == 0:
-            now_target_list = game_config.config_target_type_index[32]
-            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
-            null_target_set.update(now_target_list)
-            premise_data = new_premise_data
+            # 判断是否存在自动ai娱乐流程
+            if entertainment_type_data.auto_ai and (handle_premise_place.common_place_judge_by_SceneName(character_id, entertainment_type_data.place) or handle_premise_place.common_place_judge_by_SceneTag(character_id, entertainment_type_data.place_tag)):
+                state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=False, work_flag=False)
+                premise_data = new_premise_data
+                if state_machine_id:
+                    judge = state_machine_id
+            # 没有的话则正常寻找
+            else:
+                now_target_list = game_config.config_target_type_index[32]
+                target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+                null_target_set.update(now_target_list)
+                premise_data = new_premise_data
         # 娱乐后处理
         if judge == 0:
             now_target_list = game_config.config_target_type_index[33]
@@ -418,10 +449,18 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
             premise_data = new_premise_data
         # 娱乐准备
         if judge == 0:
-            now_target_list = game_config.config_target_type_index[31]
-            target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
-            null_target_set.update(now_target_list)
-            premise_data = new_premise_data
+            # 判断是否存在自动ai娱乐流程
+            if entertainment_type_data.auto_ai:
+                state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=True, work_flag=False)
+                premise_data = new_premise_data
+                if state_machine_id:
+                    judge = state_machine_id
+            # 没有的话则正常寻找
+            else:
+                now_target_list = game_config.config_target_type_index[31]
+                target, weight, judge, new_premise_data = search_target(character_id, now_target_list, null_target_set, premise_data, target_weight_data)
+                null_target_set.update(now_target_list)
+                premise_data = new_premise_data
 
     # 如果以上都没有，则开始遍历各大类的目标行动
     if judge == 0:
@@ -455,9 +494,14 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         # print(f"debug null_target_set = {null_target_set}")
         # print(f"debug premise_data = {premise_data}")
         # if character_data.name == "阿米娅":
-        #     print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
-        target_config = game_config.config_target[target]
-        state_machine_id = target_config.state_machine_id
+            # print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
+        # 正常行动
+        if judge == 1:
+            target_config = game_config.config_target[target]
+            state_machine_id = target_config.state_machine_id
+        # ai自动补完的工作或娱乐行动
+        else:
+            state_machine_id = judge
         #如果上个AI行动是普通交互指令，则将等待flag设为1
         # if state_machine_id >= 100:
         #     character_data.sp_flag.wait_flag = 1
@@ -493,6 +537,7 @@ def search_target(
     int -- 目标id\n
     int -- 目标权重\n
     bool -- 前提是否能够被满足\n
+    Dict[int, int] -- 新的前提数据\n
     """
     target_data = {}
     for target in target_list:
@@ -572,6 +617,72 @@ def search_target(
         #     print(f"debug value_weight = {value_weight}")
         return final_target, value_weight, 1, premise_data
     return "", 0, 0, premise_data
+
+
+def npc_auto_work_or_entertainment(character_id: int, premise_data: Dict[int, int], move_flag: bool, work_flag: bool):
+    """
+    NPC自动工作或娱乐\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    premise_data -- 前提数据\n
+    move_flag -- 是否移动\n
+    work_flag -- 是否工作\n
+    Return arguments:\n
+    int -- 状态机id\n
+    Dict[int, int] -- 新的前提数据\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 工作
+    if work_flag:
+        # 当前工作数据
+        work_type_id = character_data.work.work_type
+        work_type_data = game_config.config_work_type[work_type_id]
+        tem_premise_data = {'work_time'}
+        # 进行工作
+        if move_flag:
+            tem_premise_data.add('normal_all')
+            target_data = work_type_data.auto_ai_move
+        else:
+            tem_premise_data.add('normal_all_except_special_hypnosis')
+            target_data = work_type_data.auto_ai_work
+    # 娱乐
+    else:
+        enter_time = game_time.judge_entertainment_time(character_id) - 1
+        entertainment_type_id = character_data.entertainment.entertainment_type[enter_time]
+        entermainment_type_data = game_config.config_entertainment[entertainment_type_id]
+        tem_premise_data = {'all_entertainment_time'}
+        # 进行娱乐
+        if move_flag:
+            tem_premise_data.add('normal_all')
+            target_data = entermainment_type_data.auto_ai_move
+        else:
+            tem_premise_data.add('normal_all_except_special_hypnosis')
+            target_data = entermainment_type_data.auto_ai_entertainment
+    # 进行判断
+    if '|' in target_data:
+        state_machine_id = int(target_data.split('|')[0])
+        extra_premise = target_data.split('|')[1]
+        tem_premise_data.add(extra_premise)
+    else:
+        state_machine_id = int(target_data)
+    judge = True
+    # 开始遍历前提
+    for premise in tem_premise_data:
+        premise_judge = 0
+        if premise in premise_data:
+            premise_judge = premise_data[premise]
+        else:
+            premise_judge = handle_premise.handle_premise(premise, character_id)
+            premise_judge = max(premise_judge, 0)
+            premise_data[premise] = premise_judge
+        if not premise_judge:
+            judge = False
+            break
+    # 如果前提都满足，则返回状态机id
+    if judge:
+        return state_machine_id, premise_data
+    return 0, premise_data
 
 
 def judge_interrupt_character_behavior(character_id: int) -> int:
@@ -795,8 +906,8 @@ def get_chara_entertainment(character_id: int):
                     # if choice_entertainment_id in {92, 151}:
                     #     print(f"debug {character_data.name}: {choice_entertainment_id}")
                     # 首先检查娱乐地点的场所是否开放
-                    if entertainment_data.palce in game_config.config_facility_open_name_set:
-                        facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.palce]
+                    if entertainment_data.place in game_config.config_facility_open_name_set:
+                        facility_open_cid = game_config.config_facility_open_name_to_cid[entertainment_data.place]
                         # 如果该娱乐活动的场所未开放，则去掉该id后重新随机
                         if cache.rhodes_island.facility_open[facility_open_cid] == 0:
                             entertainment_list.remove(choice_entertainment_id)
