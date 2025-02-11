@@ -812,6 +812,13 @@ class Chat_Ai_Setting_Panel:
 
         # 判断在调用哪个api
         model = cache.ai_setting.ai_chat_setting[5]
+        if model == 0 or model == "0":
+            info_draw = draw.WaitDraw()
+            info_draw.style = "warning"
+            info_draw.text = _(" \n  未设置模型，请先选择模型\n")
+            info_draw.width = self.width
+            info_draw.draw()
+            return
         if 'gpt' in model:
             now_key_type = 'OPENAI_API_KEY'
         elif 'deepseek' in model:
