@@ -28,8 +28,8 @@ def general_movement_module(character_id: int, target_scene: list, show_info_fla
     from Script.Config import normal_config
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
+    target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
     if normal_config.config_normal.language != "zh_CN":
-        target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
         if target_scene_str not in map_handle.scene_path_edge:
             for i in range(len(target_scene)):
                 if target_scene[i] == _("中枢") or target_scene[i] == _("控制中枢"):
