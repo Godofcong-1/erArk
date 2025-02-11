@@ -296,6 +296,7 @@ class Assistant_Panel:
                     info_draw.text = info_text
                     info_draw.draw()
                     target_data.assistant_services[service_cid] = 0
+                    return
 
             # 结算附带的属性变化
             self.settlement_of_associated_attribute(service_cid, service_option_len)
