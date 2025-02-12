@@ -316,6 +316,10 @@ config_assistant_services: Dict[int, config_def.AssistantServices] = {}
 """ 助理服务数据 服务id:详细内容 """
 config_assistant_services_option: Dict[int, Dict[int, str]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
+config_confinement_training_setting: Dict[int, config_def.Confinement_Training_Setting] = {}
+""" 监禁调教设置数据 设置id:详细内容 """
+config_confinement_training_setting_option: Dict[int, Dict[int, str]] = {}
+""" 监禁调教设置数据的选项数据 设置id:选项序号:选项内容 """
 config_body_manage_requirement: Dict[int, config_def.Body_Manage_Requirement] = {}
 """ 身体管理需求数据 """
 config_visitor_stay_attitude: Dict[int, config_def.Visitor_Stay_Attitude] = {}
@@ -1502,6 +1506,24 @@ def load_assistant_services():
             config_assistant_services_option[now_tem.cid][1] = require_text.split('#')
 
 
+def load_confinement_training_setting():
+    """载入监禁调教设置"""
+    now_data = config_data["Confinement_Training_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Confinement_Training_Setting()
+        now_tem.__dict__ = tem_data
+        config_confinement_training_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_confinement_training_setting_option[now_tem.cid] = []
+            config_confinement_training_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_confinement_training_setting_option[now_tem.cid] = option_text.split('|')
+
+
 def load_body_manage_requirement():
     """载入身体管理需求"""
     now_data = config_data["Body_Manage_Requirement"]
@@ -1668,6 +1690,7 @@ def init():
     load_ai_chat_setting()
     load_physical_exam_setting()
     load_assistant_services()
+    load_confinement_training_setting()
     load_body_manage_requirement()
     load_visitor_stay_attitude()
     load_recruitment_strategy()

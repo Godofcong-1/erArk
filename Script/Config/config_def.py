@@ -330,6 +330,19 @@ class Commission:
     """ 委托介绍 """
 
 
+class Confinement_Training_Setting:
+    """ 监禁调教设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    option: str
+    """ 各个选项 """
+
+
 class Diplomatic_Policy:
     """ 外交政策 """
 

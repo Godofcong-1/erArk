@@ -1081,6 +1081,14 @@ class Rhodes_Island:
         self.remaining_aromatherapy_sessions_today: int = 0
         """ 今日剩余调香次数 """
 
+        # 大浴场
+
+        # 甲板
+
+        # 关押区
+        self.confinement_training_setting: Dict[int, Tuple[int]] = {}
+        """ 监禁调整设置 设置id:设置值 """
+
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
         self.soldier_max: int = 0

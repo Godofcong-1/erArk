@@ -643,6 +643,22 @@ def handle_physical_check_and_manage():
 
 
 @add_instruct(
+    constant.Instruct.MANAGE_CONFINEMENT_AND_TRAINING,
+    constant.InstructType.WORK,
+    _("管理监禁调教"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.TO_DO,
+    })
+def handle_manage_vehicle():
+    """处理管理监禁调教指令"""
+    from Script.UI.Panel import confinement_and_training
+    now_draw = confinement_and_training.Confinement_And_Training_Manage_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.RESOURCE_EXCHANGE,
     constant.InstructType.WORK,
     _("资源交易"),

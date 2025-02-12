@@ -2429,6 +2429,8 @@ class Instruct:
     """ 管理载具 """
     PHYSICAL_CHECK_AND_MANAGE = 0
     """ 身体检查与管理 """
+    MANAGE_CONFINEMENT_AND_TRAINING = 0
+    """ 管理监禁调教 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
     NAVIGATION = 0

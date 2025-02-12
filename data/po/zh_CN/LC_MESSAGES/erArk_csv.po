@@ -3980,6 +3980,74 @@ msgstr ""
 msgid "博士，您...唉? 為、為什麼她也在，博士你連這種事情都做得到嗎!!?\n什麼叫她已經失去把人包裹在源石繭的能力了，那就好，被慢慢變成繭的回憶我是無論如何都不想再試了"
 msgstr ""
 
+#: .\data\csv\Confinement_Training_Setting.csv:6
+msgid "囚犯日常管理"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:6
+msgid "日常方面的管理，训练效果取决于监狱长对应的属性，如部位快感训练效果取决于监狱长的部位快感能力等级"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:6
+msgid "不进行训练|部位快感训练|部位扩张训练|苦痛快感训练|性爱技巧训练|身体锻炼训练|心理服从训练"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:7
+msgid "囚犯服装管理"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:7
+msgid "服装方面的管理"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:7
+msgid "保持全裸|提供囚犯服装|提供正常服装"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:8
+msgid "囚犯内衣管理"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:8
+msgid "内衣方面的管理"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:8
+msgid "不提供内衣与袜子|提供情趣内衣与袜子|提供正常内衣与袜子"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:9
+msgid "调教前准备"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:9
+msgid "在进行调教H前，需要对被调教进行哪些准备工作"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:9
+msgid "不进行准备|污浊清洗|部位润滑|道具使用"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:10
+msgid "调教助手(未实装)"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:10
+msgid "在调教H中是否作为助手辅助调教，可以使用和助手相关的指令"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:11
+msgid "调教后清洁"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:11
+msgid "是否在调教后对囚犯干员进行清洁"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:11
+msgid "不清洗|仅清洁身体|仅清洁衣物|清洁身体与衣物"
+msgstr ""
+
 #: .\data\csv\Diplomatic_Policy.csv:7
 msgid "在民间开展源石病治疗工作"
 msgstr ""
