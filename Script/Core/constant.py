@@ -2427,6 +2427,8 @@ class Instruct:
     """ 管理农业生产 """
     MANAGE_VEHICLE = 0
     """ 管理载具 """
+    PHYSICAL_CHECK_AND_MANAGE = 0
+    """ 身体检查与管理 """
     RESOURCE_EXCHANGE = 0
     """ 资源交易 """
     NAVIGATION = 0
@@ -2545,8 +2547,6 @@ class Instruct:
     """ 解除囚禁 """
     CHECK_LOCKER = 0
     """ 检查衣柜 """
-    PHYSICAL_CHECK_AND_MANAGE = 0
-    """ 身体检查与管理 """
     CONFESSION = 0
     """ 告白 """
     GIVE_NECKLACE = 0

@@ -630,6 +630,19 @@ def handle_manage_vehicle():
 
 
 @add_instruct(
+    constant.Instruct.PHYSICAL_CHECK_AND_MANAGE,
+    constant.InstructType.WORK,
+    _("身体检查与管理"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_PHYSICAL_EXAMINATION,
+     constant_promise.Premise.TIRED_LE_84},
+)
+def handle_physical_check_and_manage():
+    """处理身体检查与管理指令"""
+    cache.now_panel_id = constant.Panel.PHYSICAL_CHECK_AND_MANAGE
+
+
+@add_instruct(
     constant.Instruct.RESOURCE_EXCHANGE,
     constant.InstructType.WORK,
     _("资源交易"),
@@ -1698,19 +1711,6 @@ def handle_field_commission():
 def handle_check_locker():
     """处理检查衣柜指令"""
     cache.now_panel_id = constant.Panel.CHECK_LOCKER
-
-
-@add_instruct(
-    constant.Instruct.PHYSICAL_CHECK_AND_MANAGE,
-    constant.InstructType.OBSCENITY,
-    _("身体检查与管理"),
-    {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_PHYSICAL_EXAMINATION,
-     constant_promise.Premise.TIRED_LE_84},
-)
-def handle_physical_check_and_manage():
-    """处理身体检查与管理指令"""
-    cache.now_panel_id = constant.Panel.PHYSICAL_CHECK_AND_MANAGE
 
 
 @add_instruct(
