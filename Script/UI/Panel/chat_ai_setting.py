@@ -85,7 +85,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
     if cache.ai_setting.ai_chat_setting[4] == 1:
         fanal_text = ai_gererate_text
     else:
-        fanal_text = original_text + "*\n" + ai_gererate_text
+        fanal_text = "(原文本)" + original_text + "\n" + ai_gererate_text
 
     # 是否保存
     if cache.ai_setting.ai_chat_setting[7] == 1 and not translator:
@@ -374,7 +374,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
 
     # 如果没有返回文本，则返回原文本
     if ai_gererate_text == None or not len(ai_gererate_text):
-        ai_gererate_text = original_text
+        ai_gererate_text = _("(生成失败，使用原文本)") + original_text
 
     # 在不影响\\n的情况下，将\n删去
     ai_gererate_text = ai_gererate_text.replace("\n", "")
@@ -583,7 +583,7 @@ class Chat_Ai_Setting_Panel:
             if cache.ai_setting.ai_chat_setting[1] == 1:
                 line_feed.draw()
                 line_feed.draw()
-                button_text = _("  [测试] ")
+                button_text = _("  [测试](最大延迟上限10秒) ")
                 button_len = max(len(button_text) * 2, 20)
                 button_draw = draw.CenterButton(button_text, _("测试"), button_len, cmd_func=self.test_ai)
                 button_draw.draw()
@@ -864,12 +864,12 @@ class Chat_Ai_Setting_Panel:
                 genai.configure(api_key=API_KEY, transport='rest')
             client = genai.GenerativeModel(model)
 
-        # 测试AI，在30秒内如果没有返回结果，则认为测试不通过
+        # 测试AI，在10秒内如果没有返回结果，则认为测试不通过
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(self.get_completion, client, now_key_type)
             try:
-                # 等待30秒以获取结果
-                result = future.result(timeout=30)
+                # 等待10秒以获取结果
+                result = future.result(timeout=10)
                 info_text = _(" \n  测试通过\n")
                 self.test_flag = 1
             except concurrent.futures.TimeoutError:
