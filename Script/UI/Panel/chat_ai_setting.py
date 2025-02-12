@@ -641,7 +641,8 @@ class Chat_Ai_Setting_Panel:
             line_draw.draw()
             line_feed.draw()
             ask_text = _("请输入您要使用的模型名（不含引号、逗号或空格）：\n")
-            ask_text += _("  *更多模型名请在官方文档中查阅，非上述模型将自动使用OpenAI格式来处理\n")
+            ask_text += _("  *此处使用的模型会默认使用官方api地址，如果是第三方或本地部署，请更改[base_url]\n")
+            ask_text += _("  *更多模型名请在官方文档中查阅，非该三类的模型将自动使用OpenAI格式来处理\n")
             ask_text += _("  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini\n")
             ask_text += _("  deepseek模型示例：deepseek-chat,deepseek-reasoner\n")
             ask_text += _("  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n")
@@ -679,6 +680,9 @@ class Chat_Ai_Setting_Panel:
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_base_url = ask_panel.draw()
+                # 如果最后的字符是换行符，则删去
+                if new_base_url[-1] == "\n":
+                    new_base_url = new_base_url[:-1]
                 cache.ai_setting.now_ai_chat_base_url = new_base_url
                 cache.ai_setting.ai_chat_setting[cid] = 1
             else:
@@ -695,6 +699,9 @@ class Chat_Ai_Setting_Panel:
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_ip = ask_panel.draw()
+                # 如果最后的字符是换行符，则删去
+                if new_ip[-1] == "\n":
+                    new_ip = new_ip[:-1]
                 cache.ai_setting.now_ai_chat_proxy[0] = new_ip
                 line_feed.draw()
                 ask_text = _("请输入您要使用的代理端口，不使用端口则随便输入数字后回车即可：\n")
@@ -702,6 +709,9 @@ class Chat_Ai_Setting_Panel:
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_port = ask_panel.draw()
+                # 如果最后的字符是换行符，则删去
+                if new_port[-1] == "\n":
+                    new_port = new_port[:-1]
                 # 检测输入的端口是否符合规范，需要有三个点
                 if new_port.count(".") == 3:
                     cache.ai_setting.now_ai_chat_proxy[1] = new_port
