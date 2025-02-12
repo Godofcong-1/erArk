@@ -164,18 +164,18 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     if "Son" in premise_all_value_list[1]:
         return 0
     if premise_all_value_list[1][0] == "A":
-        final_value = final_character_data.ability[type_son_id]
+        final_value = final_character_data.ability.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "T":
         if "Time" in premise_all_value_list[1]:
             final_value = final_character_data.behavior.start_time.hour
         else:
-            final_value = final_character_data.talent[type_son_id]
+            final_value = final_character_data.talent.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "J":
-        final_value = final_character_data.juel[type_son_id]
+        final_value = final_character_data.juel.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "E":
-        final_value = final_character_data.experience[type_son_id]
+        final_value = final_character_data.experience.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "S":
-        final_value = final_character_data.status_data[type_son_id]
+        final_value = final_character_data.status_data.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "F":
         if "Flag" in premise_all_value_list[1]:
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
