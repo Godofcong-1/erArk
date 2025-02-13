@@ -10,6 +10,7 @@ import concurrent.futures
 import os
 import csv
 import httpx
+import re
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -343,15 +344,38 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                 client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         try:
             # 发送请求
-            completion = client.chat.completions.create(
-                model=cache.ai_setting.ai_chat_setting[5],
-                messages=[
-                    {"role": "system", "content": system_promote},
-                    {"role": "user", "content": user_prompt}
-                ]
-            )
-            # 获取返回的文本
-            ai_gererate_text = completion.choices[0].message.content
+            # 流式输出
+            if cache.ai_setting.ai_chat_setting[14] == 1:
+                completion = client.chat.completions.create(
+                    model=cache.ai_setting.ai_chat_setting[5],
+                    messages=[
+                        {"role": "system", "content": system_promote},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    stream=True
+                )
+                # 获取返回的文本
+                ai_gererate_text = ""
+                # 进行绘制
+                now_draw = draw.NormalDraw()
+                for chunk in completion:
+                    chunk_text = chunk.choices[0].delta.content
+                    # print(chunk_text, end="", flush=True)
+                    now_draw.text = chunk_text
+                    now_draw.width = 1
+                    now_draw.draw()
+                    ai_gererate_text += chunk_text
+            # 非流式输出
+            else:
+                completion = client.chat.completions.create(
+                    model=cache.ai_setting.ai_chat_setting[5],
+                    messages=[
+                        {"role": "system", "content": system_promote},
+                        {"role": "user", "content": user_prompt}
+                    ]
+                )
+                # 获取返回的文本
+                ai_gererate_text = completion.choices[0].message.content
         except Exception as e:
             # 如果发生异常，将返回的文本设为空
             ai_gererate_text = ""
@@ -365,9 +389,25 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
         client = genai.GenerativeModel(model, system_instruction = system_promote)
         try:
             # 发送请求
-            completion = client.generate_content(user_prompt)
-            # 获取返回的文本
-            ai_gererate_text = completion.text
+            # 流式输出
+            if cache.ai_setting.ai_chat_setting[14] == 1:
+                completion = client.generate_content(user_prompt, stream=True)
+                # 获取返回的文本
+                ai_gererate_text = ""
+                # 进行绘制
+                now_draw = draw.NormalDraw()
+                for chunk in completion:
+                    chunk_text = chunk.text
+                    # print(chunk_text, end="", flush=True)
+                    now_draw.text = chunk_text
+                    now_draw.width = 1
+                    now_draw.draw()
+                    ai_gererate_text += chunk_text
+            # 非流式输出
+            else:
+                completion = client.generate_content(user_prompt)
+                # 获取返回的文本
+                ai_gererate_text = completion.text
         except Exception as e:
             # 如果发生异常，将返回的文本设为空
             ai_gererate_text = ""
@@ -381,6 +421,10 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     # 非翻译模式下删去空格
     if not translator:
         ai_gererate_text = ai_gererate_text.replace(" ", "")
+    # 删除思考过程
+    if cache.ai_setting.ai_chat_setting[13] == 1:
+        # 使用正则删除<think>到</think>之间的内容
+        ai_gererate_text = re.sub(r'<think>.*?</think>', '', ai_gererate_text)
     # print(ai_gererate_text)
 
     return ai_gererate_text
@@ -905,11 +949,11 @@ class Chat_Ai_Setting_Panel:
                         "content": [
                             {
                                 "type": "text",
-                                "text": "测试消息"
+                                "text": "这是一条测试消息，如果收到请指直接回复1即可，不需要思考，不要回复其他内容"
                             }
                         ]
                     }
                 ]
             )
         elif key_type == "GEMINI_API_KEY":
-            return client.generate_content("测试消息")
+            return client.generate_content("这是一条测试消息，如果收到请指直接回复1即可，不需要思考，不需要回复其他内容")

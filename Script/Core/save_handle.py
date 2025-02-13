@@ -267,6 +267,18 @@ def input_load_save(save_id: str):
         now_difficulty.style = "gold_enrod"
         now_difficulty.text = draw_text
         now_difficulty.draw()
+    # 更新AI设置
+    if len(loaded_dict["ai_setting"].ai_chat_setting) != len(game_config.config_ai_chat_setting):
+        for key in game_config.config_ai_chat_setting:
+            if key not in loaded_dict["ai_setting"].ai_chat_setting:
+                loaded_dict["ai_setting"].ai_chat_setting[key] = 0
+                update_count += 1
+        update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n文本生成AI设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
 
     # 更新大地图势力数据
     loaded_dict["country"] = attr_calculation.get_country_reset(loaded_dict["country"])

@@ -340,6 +340,22 @@ msgstr ""
 msgid "有些网路环境下不支持高于HTTP/1.1的协议，可切换为rest方式进行传输"
 msgstr ""
 
+#: .\data\csv\Ai_Chat_Setting.csv:18
+msgid "是否屏蔽思考过程"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:18
+msgid "思考型模型会输出思考过程，选是的时候会使用正则进行屏蔽"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:19
+msgid "是否使用流式输出"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Setting.csv:19
+msgid "选是的话，会在生成文本的过程中逐条输出，选否的话会在生成完毕后一次性输出"
+msgstr ""
+
 #: .\data\csv\Aromatherapy_Recipes.csv:6
 msgid "无"
 msgstr ""
@@ -4025,7 +4041,7 @@ msgid "在进行调教H前，需要对被调教进行哪些准备工作"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:9
-msgid "不进行准备|污浊清洗|部位润滑|道具使用"
+msgid "污浊清洗|部位润滑|道具使用"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:10
