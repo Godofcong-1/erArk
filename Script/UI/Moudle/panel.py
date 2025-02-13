@@ -708,6 +708,7 @@ class PageHandlePanel:
                 cmd_func=self.old_page,
             )
             self.return_list.append(str(page_change_start_id))
+            self.old_page_return = old_page_button.return_text
             draw_list.append(old_page_button)
             page_text = f"({self.now_page}/{total_page})"
             page_draw = draw.CenterDraw()
@@ -723,6 +724,7 @@ class PageHandlePanel:
             )
             self.end_index = page_change_start_id + 1
             self.return_list.append(str(page_change_start_id + 1))
+            self.next_page_return = next_page_button.return_text
             draw_list.append(next_page_button)
             draw_list.append(line_feed)
         self.draw_list = draw_list

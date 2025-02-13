@@ -147,7 +147,7 @@ class Make_food_Panel:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or yrn in self.handle_panel.return_list:
+            if yrn == back_draw.return_text or (yrn in self.handle_panel.return_list and yrn != self.handle_panel.old_page_return and yrn != self.handle_panel.next_page_return and yrn != _("取消")):
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
