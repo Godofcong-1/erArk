@@ -748,9 +748,9 @@ class Chat_Ai_Setting_Panel:
 
             # 输入框
             if key_type == "OPENAI_API_KEY":
-                ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串\n")
+                ask_text = _("请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n")
             elif key_type == "DEEPSEEK_API_KEY":
-                ask_text = _("请输入您的DeepSeek API密钥，应当是以 sk- 开头的一长段字符串\n")
+                ask_text = _("请输入您的DeepSeek API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n")
             elif key_type == "GEMINI_API_KEY":
                 ask_text = _("请输入您的Gemini API密钥，应当是一个长段字符串\n")
             ask_name_panel = panel.AskForOneMessage()
@@ -761,12 +761,11 @@ class Chat_Ai_Setting_Panel:
 
             # 检测输入的api密钥是否符合规范
             if (key_type == "OPENAI_API_KEY" or key_type == "DEEPSEEK_API_KEY") and not API_KEY.startswith("sk-"):
-                info_text = _(" \n  输入的API密钥不符合规范，请重新输入\n")
+                info_text = _(" \n  输入的API密钥不符合规范，请确认是否输入正确（第三方或本地部署没有格式需求）\n\n")
                 info_draw = draw.NormalDraw()
                 info_draw.text = info_text
                 info_draw.width = self.width
                 info_draw.draw()
-                continue
 
             # 确定按钮
             yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 2)
