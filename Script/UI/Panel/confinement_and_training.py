@@ -76,9 +76,34 @@ class Confinement_And_Training_Manage_Panel:
                 button_len = max(len(button_text) * 2, 20)
 
                 # 绘制选项
-                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting, args=(cid, option_len))
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
+                if cid not in {11}:
+                    button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting, args=(cid, option_len))
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                # 调教前准备单独处理
+                elif cid == 11:
+                    clean_flag = cache.rhodes_island.pre_training_cleaning
+                    lubrication_flag = cache.rhodes_island.pre_training_lubrication
+                    tool_dict = cache.rhodes_island.pre_training_tool_dict
+
+                    if clean_flag:
+                        clean_text = _(" [进行污浊清洗] ")
+                    else:
+                        clean_text = _(" [不进行污浊清洗] ")
+                    clean_button = draw.LeftButton(clean_text, _("污浊清洗"), len(clean_text) * 2, cmd_func=self.change_pre_training_cleaning)
+                    clean_button.draw()
+                    return_list.append(clean_button.return_text)
+                    if lubrication_flag:
+                        lubrication_text = _(" [使用润滑液提前润滑] ")
+                    else:
+                        lubrication_text = _(" [不使用润滑液提前润滑] ")
+                    lubrication_button = draw.LeftButton(lubrication_text, _("润滑液"), len(lubrication_text) * 2, cmd_func=self.change_pre_training_lubrication)
+                    lubrication_button.draw()
+                    return_list.append(lubrication_button.return_text)
+                    tool_text = _(" [调整道具使用] ")
+                    tool_button = draw.LeftButton(tool_text, _("道具使用"), len(tool_text) * 2, cmd_func=self.adjust_tool_list)
+                    tool_button.draw()
+                    return_list.append(tool_button.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -91,7 +116,7 @@ class Confinement_And_Training_Manage_Panel:
                 break
 
     def draw_info(self, cid: int):
-        """绘制体检设置的详细信息"""
+        """绘制设置的详细信息"""
         line = draw.LineDraw("-", self.width)
         line.draw()
         now_draw = draw.WaitDraw()
@@ -105,14 +130,22 @@ class Confinement_And_Training_Manage_Panel:
 
     def change_setting(self, cid, option_len):
         """修改设置"""
-        # TODO 调教前准备单独处理
-        if cid == 11:
-            pass
+        if cache.rhodes_island.confinement_training_setting[cid] < option_len - 1:
+            cache.rhodes_island.confinement_training_setting[cid] += 1
         else:
-            if cache.rhodes_island.confinement_training_setting[cid] < option_len - 1:
-                cache.rhodes_island.confinement_training_setting[cid] += 1
-            else:
-                cache.rhodes_island.confinement_training_setting[cid] = 0
+            cache.rhodes_island.confinement_training_setting[cid] = 0
+
+    def change_pre_training_cleaning(self):
+        """切换是否进行污浊清洗"""
+        cache.rhodes_island.pre_training_cleaning = not cache.rhodes_island.pre_training_cleaning
+
+    def change_pre_training_lubrication(self):
+        """切换是否使用润滑液提前润滑"""
+        cache.rhodes_island.pre_training_lubrication = not cache.rhodes_island.pre_training_lubrication
+
+    def adjust_tool_list(self):
+        """调整道具使用"""
+        pass
 
     def adjust_target_list(self):
         """调整体检对象名单"""

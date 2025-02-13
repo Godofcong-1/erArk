@@ -1087,7 +1087,14 @@ class Rhodes_Island:
 
         # 关押区
         self.confinement_training_setting: Dict[int, Tuple[int]] = {}
-        """ 监禁调整设置 设置id:设置值 """
+        """ 监禁调教设置 设置id:设置值 """
+        self.pre_training_cleaning: bool = False
+        """ 调教前清洗准备 """
+        self.pre_training_lubrication: bool = False
+        """ 调教前润滑准备 """
+        self.pre_training_tool_dict: Dict[int, Tuple[int]] = {}
+        """ 调教前道具使用，同BODY_H_STATE类的body_item """
+
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
