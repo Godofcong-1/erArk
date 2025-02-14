@@ -620,9 +620,9 @@ class BehaviorEffect:
     BAGGING_AND_MOVING_ADD_ADJUST = 513
     """ 指令_专用结算 （装袋搬走用）交互对象获得装袋搬走flag，玩家增加搬运人id，对方离线 """
     PUT_INTO_PRISON_ADD_ADJUST = 514
-    """ 指令_专用结算 （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，并从当前场景增加角色id，清零各特殊状态flag """
+    """ 指令_专用结算 （投入监牢用）被搬运对象上线，成为囚犯并结算，玩家失去搬运人id """
     SET_FREE_ADD_ADJUST = 515
-    """ 指令_专用结算 （解除囚禁）交互对象失去监禁flag """
+    """ 指令_专用结算 （解除囚禁）交互对象失去监禁flag，从囚犯数据中删除 """
     EAT_ADD_ADJUST = 516
     """ 指令_专用结算 （进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物食用 """
     # REFUSE_EAT_ADD_ADJUST = 517
@@ -660,6 +660,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （桌游输了用）根据游戏难度获得好感度、习得 """
     MAINTENANCE_ADD_ADJUST = 534
     """ 指令_专用结算 （维护设施用）修复当前地点的损坏设施 """
+    TRAIN_PRISONERS_ADD_ADJUST = 535
+    """ 指令_专用结算 （训练囚犯用）对所有被关押的囚犯进行日常训练 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

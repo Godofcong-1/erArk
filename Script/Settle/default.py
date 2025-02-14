@@ -7761,6 +7761,100 @@ def handle_maintenance_add_adjust(
             cache.rhodes_island.facility_damage_data.pop(scene_path_str)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TRAIN_PRISONERS_ADD_ADJUST)
+def handle_train_prisoners_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （训练囚犯用）对所有被关押的囚犯进行日常训练
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.Core import value_handle
+    from Script.Settle import default_experience
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_train_id = cache.rhodes_island.confinement_training_setting[1]
+    all_prisoner_data = cache.rhodes_island.current_prisoners
+    # 如果未设定训练则返回
+    if now_train_id == 0:
+        return
+    # 如果没有囚犯则返回
+    if len(all_prisoner_data) == 0:
+        return
+    # 部位快感训练
+    if now_train_id == 1:
+        # 根据部位感度等级进行加权选择目标部位
+        all_part_data = {}
+        for part_id in range(8):
+            # 跳过P
+            if part_id == 3:
+                continue
+            all_part_data[part_id] = character_data.ability[part_id]
+        # 选择部位
+        target_part_id = value_handle.get_random_for_weight(all_part_data)
+        def now_tarin(now_prisoner_cid):
+            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
+            exp_id = target_part_id
+            default_experience.base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
+    # 部位扩张训练
+    elif now_train_id == 2:
+        # 根据部位扩张等级进行加权选择目标部位
+        all_part_data = {}
+        for part_id in [9,10,11,12]:
+            all_part_data[part_id] = character_data.ability[part_id]
+        # 选择部位
+        target_part_id = value_handle.get_random_for_weight(all_part_data)
+        def now_tarin(now_prisoner_cid):
+            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
+            exp_id = target_part_id + 56
+            default_experience.base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
+    # 苦痛快感训练
+    elif now_train_id == 3:
+        def now_tarin(now_prisoner_cid):
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 0, 0, ability_level = character_data.ability[36], change_data_to_target_change = change_data)
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 17, 0, change_data_to_target_change = change_data)
+            exp_id = 32
+            default_experience.base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
+    # 性爱技巧训练
+    elif now_train_id == 4:
+        # 根据性爱技巧等级进行加权选择目标部位
+        all_part_data = {}
+        for part_id in [70,71,72,73,74,75,76]:
+            all_part_data[part_id] = character_data.ability[part_id]
+        # 选择部位
+        target_part_id = value_handle.get_random_for_weight(all_part_data)
+        def now_tarin(now_prisoner_cid):
+            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 9, 0, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
+    # 身体锻炼训练
+    elif now_train_id == 5:
+        def now_tarin(now_prisoner_cid):
+            handle_add_hpmp_max(now_prisoner_cid, add_time, change_data, now_time)
+    # 心理服从训练
+    elif now_train_id == 6:
+        def now_tarin(now_prisoner_cid):
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 11, 0, ability_level = character_data.ability[32], change_data_to_target_change = change_data)
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 15, 0, ability_level = character_data.ability[14], change_data_to_target_change = change_data)
+
+    # 遍历犯人
+    for key, value in all_prisoner_data.items():
+        now_prisoner_cid = key
+        # 1异常或睡觉中的角色不进行训练
+        if not handle_premise.handle_normal_1(now_prisoner_cid) or handle_premise.handle_action_sleep(now_prisoner_cid):
+            continue
+        now_tarin(now_prisoner_cid)
+        handle_sub_self_medium_mana_point(now_prisoner_cid, add_time, change_data, now_time)
+        handle_sub_self_medium_hit_point(now_prisoner_cid, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,
@@ -7930,7 +8024,7 @@ def handle_put_into_prison_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （投入监牢用）玩家失去搬运人id，玩家搬运的角色失去装袋搬走flag，获得监禁flag，获得屈服1，反发2和恐怖1，角色上线
+    （投入监牢用）被搬运对象上线，成为囚犯并结算，玩家失去搬运人id
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7948,8 +8042,12 @@ def handle_put_into_prison_add_just(
     # 对方数据结算
     target_data.sp_flag.be_bagged = 0
     target_data.sp_flag.imprisonment = 1
-    target_fall = attr_calculation.get_character_fall_level(target_id, minus_flag=True)
+    # 重置身体管理
+    target_data.body_manage = attr_calculation.get_body_manage_zero()
+    # 加入囚犯数据
+    cache.rhodes_island.current_prisoners[target_id] = [now_time, 0]
     # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
+    target_fall = attr_calculation.get_character_fall_level(target_id, minus_flag=True)
     if target_data.ability[14] <= 1:
         target_data.ability[14] = 2
         target_data.second_behavior[1034] = 1
@@ -7981,7 +8079,7 @@ def handle_set_free_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （解除囚禁）交互对象失去监禁flag
+    （解除囚禁）交互对象失去监禁flag，从囚犯数据中删除
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7994,6 +8092,9 @@ def handle_set_free_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = 0
+    # 从囚犯数据中删除
+    if character_data.target_character_id in cache.rhodes_island.current_prisoners:
+        cache.rhodes_island.current_prisoners.pop(character_data.target_character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_ADD_ADJUST)
@@ -8122,7 +8223,7 @@ def handle_add_hpmp_max(
         return
     # 设施效率
     now_level = cache.rhodes_island.facility_level[9]
-    facility_cid = game_config.config_facility_effect_data[_("疗养庭院")][int(now_level)]
+    facility_cid = game_config.config_facility_effect_data[_("训练场")][int(now_level)]
     facility_effect = game_config.config_facility_effect[facility_cid].effect
     facility_adjust = 1 + facility_effect / 100
 

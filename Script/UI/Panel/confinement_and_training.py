@@ -59,6 +59,7 @@ class Confinement_And_Training_Manage_Panel:
                 line_feed.draw()
                 confinement_training_setting_data = game_config.config_confinement_training_setting[cid]
                 # 选项名
+                # id_text = f"[{(str(cid)).rjust(2, '0')}]"
                 button_text = f"  [{confinement_training_setting_data.name}]： "
                 button_len = max(len(button_text) * 2, 60)
                 button_draw = draw.LeftButton(button_text, button_text, button_len, cmd_func=self.draw_info, args=(cid))
@@ -145,7 +146,91 @@ class Confinement_And_Training_Manage_Panel:
 
     def adjust_tool_list(self):
         """调整道具使用"""
-        pass
+        from Script.UI.Panel import h_item_shop_panel
+        body_item_list = h_item_shop_panel.body_item_list
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            line_feed.draw()
+            # 输出提示信息
+            info_draw = draw.NormalDraw()
+            info_text = _("○开启后，监狱长会在进行调教准备时依次使用选择道具\n")
+            info_text += _("○消耗类道具会在使用时减少，数量不足时会自动关闭\n")
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+            line_feed.draw()
+
+            # 遍历道具列表
+            for i in range(len(body_item_list)):
+                # 初始化道具字典
+                if i not in cache.rhodes_island.pre_training_tool_dict:
+                    cache.rhodes_island.pre_training_tool_dict[i] = 0
+
+                # 持有道具数量
+                item_id = h_item_shop_panel.get_item_id_from_body_item_list(i)
+                item_num = cache.character_data[0].item[item_id]
+                name_draw_text = f"[{(str(i)).rjust(2, '0')}]"
+                len_add = 40 - len(body_item_list[i]) # 排版用的空格数量
+                if i in {2, 3}:
+                    len_add += 1
+                # 如果是消耗类道具，显示数量
+                if i in {8, 9, 10, 11, 12, 13}:
+                    name_draw_text += f"{body_item_list[i]}(有{item_num}个) "
+                    len_add += 1
+                # 否则只显示是否持有
+                else:
+                    name_draw_text += f"{body_item_list[i]}"
+                    if item_num > 0:
+                        name_draw_text += _("(已持有)")
+                    else:
+                        name_draw_text += _("(未持有)")
+                # 给name_draw_text从右侧补空格到40个字符
+                name_draw_text = name_draw_text.ljust(len_add, " ")
+
+                # 绘制道具名
+                name_draw = draw.NormalDraw()
+                name_draw.text = name_draw_text
+                name_draw.width = len(name_draw_text)
+                name_draw.draw()
+
+                # 如果数量为0，则绘制灰色不可选按钮
+                if item_num <= 0:
+                    cache.rhodes_island.pre_training_tool_dict[i] = 0
+                    button_text = _(" [不使用] ")
+                    button_draw = draw.NormalDraw()
+                    button_draw.text = button_text
+                    button_draw.style = 'deep_gray'
+                    button_draw.width = 20
+                    button_draw.draw()
+                else:
+                    if cache.rhodes_island.pre_training_tool_dict[i]:
+                        button_text = _(" [使用] ")
+                    else:
+                        button_text = _(" [不使用] ")
+                    button_draw = draw.LeftButton(button_text, str(i) + button_text, 20, cmd_func=self.change_pre_training_tool, args=(i,))
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def change_pre_training_tool(self, tool_id: int):
+        """切换是否使用道具"""
+        if cache.rhodes_island.pre_training_tool_dict[tool_id]:
+            cache.rhodes_island.pre_training_tool_dict[tool_id] = 0
+        else:
+            cache.rhodes_island.pre_training_tool_dict[tool_id] = 1
 
     def adjust_target_list(self):
         """调整体检对象名单"""

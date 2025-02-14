@@ -6695,6 +6695,34 @@ def handle_pink_certificate_g_10(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PRISONER_IN_CUSTODY)
+def handle_prisoner_in_custody(character_id: int) -> int:
+    """
+    当前有关押的囚犯
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if len(cache.rhodes_island.current_prisoners):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PRISONER_DAILY_MANAGEMENT_SET)
+def handle_prisoner_daily_management_set(character_id: int) -> int:
+    """
+    已设定对囚犯的日常管理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if cache.rhodes_island.confinement_training_setting[1]:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FLAG_BABY_EXIST)
 def handle_flag_baby_exist(character_id: int) -> int:
     """
@@ -8910,8 +8938,7 @@ def handle_t_work_is_library_manager(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.work.work_type == 101
+    return handle_work_is_library_manager(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_TEACHER)
@@ -9068,6 +9095,32 @@ def handle_work_is_sex_trainee(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 193
+
+
+@add_premise(constant_promise.Premise.WORK_IS_WARDEN)
+def handle_work_is_warden(character_id: int) -> int:
+    """
+    自己的工作为监狱长
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 191
+
+
+@add_premise(constant_promise.Premise.T_WORK_IS_WARDEN)
+def handle_t_work_is_warden(character_id: int) -> int:
+    """
+    交互对象的工作为监狱长
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_warden(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)

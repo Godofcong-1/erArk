@@ -649,6 +649,7 @@ def handle_physical_check_and_manage():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.T_WORK_IS_WARDEN,
         constant_promise.Premise.TO_DO,
     })
 def handle_manage_vehicle():

@@ -178,6 +178,8 @@ class CharacterStatus:
     """ 种植与养护作物 """
     STATUS_DEAL_WITH_DIPLOMACY = 221
     """ 处理外交事宜 """
+    STATUS_TRAIN_PRISONER = 222
+    """ 训练囚犯 """
     STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     STATUS_MORNING_SALUTATION_2 = 252
@@ -841,6 +843,9 @@ class Behavior:
     """ 种植与养护作物 """
     DEAL_WITH_DIPLOMACY = 221
     """ 处理外交事宜 """
+    TRAIN_PRISONER = 222
+    """ 训练囚犯 """
+
     MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     MORNING_SALUTATION_2 = 252
@@ -855,6 +860,7 @@ class Behavior:
     """ 晚安问候：晚安咬 """
     NPC_ASSISTANT_COOK = 261
     """ 干员助理做饭 """
+
     TOUCH_HEAD = 301
     """ 摸头 """
     TOUCH_BREAST = 302
@@ -1475,6 +1481,8 @@ class StateMachine:
     """ 工作：战斗训练 """
     WORK_FITNESS_TRAINING = 319
     """ 工作：健身锻炼 """
+    WORK_TRAIN_PRISONER = 320
+    """ 工作：对囚犯进行日常训练 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """

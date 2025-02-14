@@ -51176,3 +51176,7 @@ msgstr ""
 msgid "{Name}在射击房中进行快速换弹训练，在最短时间内完成换弹并继续射击"
 msgstr ""
 
+#: .\data\talk\work\train_prisoner.csv:6
+msgid "{Name}开始了对囚犯的训练"
+msgstr ""
+

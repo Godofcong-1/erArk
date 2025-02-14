@@ -185,6 +185,10 @@ def input_load_save(save_id: str):
             loaded_dict["character_data"][0].pl_collection.npc_socks[new_character_data.cid] = []
             # print(f"debug value.cid = {value.cid}, value.name = {value.name}")
             update_count += 1
+        # 被监禁的角色检查是否在囚犯列表中
+        if new_character_data.sp_flag.imprisonment and new_character_data.cid not in loaded_dict["rhodes_island"].current_prisoners:
+            loaded_dict["rhodes_island"].current_prisoners[new_character_data.cid] = [cache.game_time, 0]
+            update_count += 1
         # 重新指向新的角色数据
         loaded_dict["character_data"][key] = new_character_data
     if cloth_update_count:

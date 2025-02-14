@@ -16,6 +16,30 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
+body_item_list = [_("乳头夹"),_("阴蒂夹"),_("V震动棒"),_("A震动棒"),_("搾乳机"),_("采尿器"),_("眼罩"),_("肛门拉珠"),_("持续性利尿剂"),_("安眠药"),_("排卵促进药"),_("事前避孕药"),_("事后避孕药"),_("避孕套")]
+
+def get_item_id_from_body_item_list(body_item_id : int):
+    """根据道具名获取道具id"""
+    # 对应的id字典
+    item_id_dict = {
+        0 : 122,
+        1 : 123,
+        2 : 125,
+        3 : 125,
+        4 : 133,
+        5 : 134,
+        6 : 132,
+        7 : 129,
+        8 : 106,
+        9 : 107,
+        10 : 108,
+        11 : 101,
+        12 : 102,
+        13 : 120,
+    }
+    if body_item_id in item_id_dict:
+        return item_id_dict[body_item_id]
+    return -1
 
 class HItemShopPanel:
     """

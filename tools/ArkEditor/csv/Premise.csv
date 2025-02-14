@@ -294,6 +294,8 @@ in_Aromatherapy_room,IN_AROMATHERAPY_ROOM,地点_定位,在香薰治疗室
 not_in_aromatherapy_room,NOT_IN_AROMATHERAPY_ROOM,地点_定位,不在香薰治疗室
 in_breeding_farm,IN_BREEDING_FARM,地点_定位,在磐蟹养殖场
 not_in_breeding_farm,NOT_IN_BREEDING_FARM,地点_定位,不在磐蟹养殖场
+in_detention_area,IN_DETENTION_AREA,地点_定位,在关押区
+not_in_detention_area,NOT_IN_DETENTION_AREA,地点_定位,不在关押区
 in_prison,IN_PRISON,地点_定位,在监牢
 not_in_prison,NOT_IN_PRISON,地点_定位,不在监牢
 in_humiliation_room,IN_HUMILIATION_ROOM,地点_定位,在调教室
@@ -1156,6 +1158,8 @@ work_is_invitation_commissioner,WORK_IS_INVITATION_COMMISSIONER,属性_工作,�
 work_is_medicinal_planter,WORK_IS_MEDICINAL_PLANTER,属性_工作,自己的工作为药材种植员
 work_is_floral_planter,WORK_IS_FLORAL_PLANTER,属性_工作,自己的工作为花草种植员
 work_is_sex_trainee,WORK_IS_SEX_TRAINEE,属性_工作,自己的工作为性爱练习生
+work_is_warden,WORK_IS_WARDEN,属性_工作,自己的工作为监狱长
+t_work_is_warden,T_WORK_IS_WARDEN,属性_工作,交互对象的工作为监狱长
 
 entertainment_is_read,ENTERTAINMENT_IS_READ,属性_娱乐,自己当前时段的娱乐为读书
 entertainment_is_sing,ENTERTAINMENT_IS_SING,属性_娱乐,自己当前时段的娱乐为唱歌
@@ -1516,6 +1520,8 @@ patient_wait,PATIENT_WAIT,经营,有患者正等待就诊
 new_npc_wait,NEW_NPC_WAIT,经营,有已招募待确认的干员
 have_office_work_need_to_do,HAVE_OFFICE_WORK_NEED_TO_DO,经营,有需要处理的公务
 pink_certificate_g_10,PINK_CERTIFICATE_G_10,经营,拥有粉红凭证数量大于10
+prisoner_in_custody,PRISONER_IN_CUSTODY,经营,当前有关押的囚犯
+prisoner_daily_management_set,PRISONER_DAILY_MANAGEMENT_SET,经营,已设定对囚犯的日常管理
 
 pl_action_sleep,PL_ACTION_SLEEP,行动,玩家正在睡觉
 pl_action_not_sleep,PL_ACTION_NOT_SLEEP,行动,玩家没有在睡觉
