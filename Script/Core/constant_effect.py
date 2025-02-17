@@ -694,11 +694,13 @@ class BehaviorEffect:
     GET_SHOWER_CLOTH = 633
     """ 属性_服装 清零其他衣服并换上浴帽和浴巾 """
     GET_SLEEP_CLOTH = 634
-    """ 属性_服装 清零其他衣服并换上睡衣（管理中则全裸） """
+    """ 属性_服装 睡觉服装结算（正常时清零其他衣服并换上睡衣） """
     SELF_CLOTH_BACK = 635
     """ 属性_服装 自己穿回H时脱掉的衣服 """
     SCENE_ALL_CHARACTERS_CLOTH_BACK = 636
     """ 属性_服装 场景内所有角色穿回H时脱掉的衣服 """
+    GET_SELF_PRISONER_CLOTH = 637
+    """ 属性_服装 按照监禁设定对自身进行囚犯服装结算 """
     LOCKER_CLOTH_IN_SHOWER_RESET = 641
     """ 属性_服装 大浴场衣柜里的衣服清零 """
     WEAR_TO_SHOWER_LOCKER = 642

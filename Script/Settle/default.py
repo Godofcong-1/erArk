@@ -12,7 +12,8 @@ from Script.Design import (
     character_behavior,
     handle_npc_ai,
     handle_premise,
-    handle_premise_place
+    handle_premise_place,
+    clothing
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -8065,6 +8066,8 @@ def handle_put_into_prison_add_just(
     target_data.body_manage = attr_calculation.get_body_manage_zero()
     # 加入囚犯数据
     cache.rhodes_island.current_prisoners[target_id] = [now_time, 0]
+    # 服装结算
+    clothing.handle_prisoner_clothing(target_id)
     # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
     target_fall = attr_calculation.get_character_fall_level(target_id, minus_flag=True)
     if target_data.ability[14] <= 1:
@@ -9634,7 +9637,6 @@ def handle_sleep_add_adjust(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    from Script.Design import clothing
     if not add_time:
         return
     if handle_premise_place.handle_in_dormitory(character_id):

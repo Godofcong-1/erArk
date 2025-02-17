@@ -437,30 +437,6 @@ def handle_get_shower_cloth(
     clothing.get_shower_cloth(character_id)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_CLOTH)
-def handle_get_sleep_cloth(
-    character_id: int,
-    add_time: int,
-    change_data: game_type.CharacterStatusChange,
-    now_time: datetime.datetime,
-):
-    """
-    清零其他衣服并换上睡衣（管理中则全裸）
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    from Script.Design import handle_premise
-    if handle_premise.handle_ask_not_wear_cloth_in_sleep(character_id):
-        clothing.get_all_cloth_off(character_id)
-    else:
-        clothing.get_sleep_cloth(character_id)
-
-
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SWIM_CLOTH)
 def handle_get_swim_cloth(
     character_id: int,
@@ -479,6 +455,54 @@ def handle_get_swim_cloth(
     if not add_time:
         return
     clothing.get_swim_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SLEEP_CLOTH)
+def handle_get_sleep_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    睡觉服装结算（正常时清零其他衣服并换上睡衣）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.Design import handle_premise
+    # 管理中则全裸
+    if handle_premise.handle_ask_not_wear_cloth_in_sleep(character_id):
+        clothing.get_all_cloth_off(character_id)
+    # 囚犯则跳过
+    elif handle_premise.handle_imprisonment_1(character_id):
+        pass
+    else:
+        clothing.get_sleep_cloth(character_id)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SELF_PRISONER_CLOTH)
+def handle_get_self_prisoner_cloth(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    按照监禁设定对自身进行囚犯服装结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    clothing.handle_prisoner_clothing(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.LOCKER_CLOTH_IN_SHOWER_RESET)

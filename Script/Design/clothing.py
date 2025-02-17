@@ -48,6 +48,10 @@ def get_cloth_from_dormitory_locker(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
+        # 是否被监禁
+        if handle_premise.handle_imprisonment_1(character_id):
+            handle_prisoner_clothing(character_id)
+            return
         tem_character = cache.npc_tem_data[character_id - 1]
         tem_cloth_list = tem_character.Cloth.copy()
         # 检查宿舍衣柜中是否有衣服
@@ -89,6 +93,45 @@ def get_cloth_from_dormitory_locker(character_id: int):
     chara_special_wear_cloth(character_id)
 
 
+def handle_prisoner_clothing(character_id: int):
+    """
+    处理囚犯的服装\n
+    参数:
+        character_id -- 囚犯角色的id
+    返回:
+        无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        cache.rhodes_island.confinement_training_setting.setdefault(2, 0)
+        cache.rhodes_island.confinement_training_setting.setdefault(3, 0)
+        # 全裸
+        if cache.rhodes_island.confinement_training_setting[2] == 0:
+            get_all_cloth_off(character_id)
+        # 囚服
+        elif cache.rhodes_island.confinement_training_setting[2] == 1:
+            get_prison_cloth(character_id)
+        # 正常衣服
+        else:
+            get_npc_cloth(character_id)
+        # 清空内衣
+        # if cache.rhodes_island.confinement_training_setting[3] == 0:
+        character_data.cloth.cloth_wear[6] = []
+        character_data.cloth.cloth_wear[9] = []
+        # 清空袜子
+        if cache.rhodes_island.confinement_training_setting[3] == 0:
+            character_data.cloth.cloth_wear[10] = []
+        # 提供情趣内衣与袜子
+        elif cache.rhodes_island.confinement_training_setting[3] == 1:
+            get_underwear(character_id, type_cid = 2)
+            get_socks(character_id)
+        # 提供正常内衣与袜子
+        else:
+            get_underwear(character_id)
+            get_socks(character_id)
+        chara_special_wear_cloth(character_id)
+
+
 def get_random_underwear():
     """
     随机返回一件内衣和一件内裤
@@ -110,13 +153,13 @@ def get_random_underwear():
     return bra_id, pan_id
 
 
-def get_underwear(character_id: int, part_flag = 0):
+def get_underwear(character_id: int, part_flag = 0, type_cid = 0):
     """
-    随机穿内衣，包括胸罩和内裤
-    Keyword arguments:
-    character_id -- 角色id
-    part_flag -- 是否只穿某个部件，0都穿，1仅胸衣，2仅内裤
-    Return arguments:
+    随机穿内衣，包括胸罩和内裤\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    part_flag -- 是否只穿某个部件，0都穿，1仅胸衣，2仅内裤\n
+    Return arguments:\n
     无
     """
     character_data = cache.character_data[character_id]
@@ -167,10 +210,16 @@ def get_underwear(character_id: int, part_flag = 0):
         and len(bra_nor_list) # 有可穿的胸衣
         and not handle_premise.handle_ask_not_wear_corset(character_id) # 没有禁止穿胸衣
         ):
-        # 随机选择胸衣和内裤，有儿童和普通人两个分支
-        if character_data.talent[102] or character_data.talent[103]:
+        # 随机选择胸衣和内裤
+        # 指定类别
+        if type_cid == 2 and len(bra_H_list):
+            bra_id = random.choice(bra_H_list)
+            character_data.cloth.cloth_wear[6].append(bra_id)
+        # 童装
+        elif character_data.talent[102] or character_data.talent[103]:
             bra_id = random.choice(bra_loli_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
+        # 正常
         else:
             bra_id = random.choice(bra_nor_list)
             character_data.cloth.cloth_wear[6].append(bra_id)
@@ -180,7 +229,10 @@ def get_underwear(character_id: int, part_flag = 0):
         and part_flag != 1 # 本次穿内裤
         and len(pan_nor_list) # 有可穿的内裤
         ):
-        if character_data.talent[102] or character_data.talent[103]:
+        if type_cid == 2 and len(pan_H_list):
+            pan_id = random.choice(pan_H_list)
+            character_data.cloth.cloth_wear[9].append(pan_id)
+        elif character_data.talent[102] or character_data.talent[103]:
             pan_id = random.choice(pan_loli_list)
             character_data.cloth.cloth_wear[9].append(pan_id)
         else:
@@ -337,7 +389,7 @@ def get_shower_cloth(character_id: int):
 
 def get_sleep_cloth(character_id: int):
     """
-    换上睡衣和内裤
+    清零其他衣服并换上睡衣和内裤
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -358,7 +410,7 @@ def get_sleep_cloth(character_id: int):
 
 def get_swim_cloth(character_id: int):
     """
-    换上泳衣的胸衣和内裤
+    清零其他衣服并换上泳衣的胸衣和内裤
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -370,6 +422,22 @@ def get_swim_cloth(character_id: int):
         choic_type = random.randint(1,14)
         character_data.cloth.cloth_wear[6].append(choic_type + 680)
         character_data.cloth.cloth_wear[9].append(choic_type + 980)
+        chara_special_wear_cloth(character_id)
+
+
+def get_prison_cloth(character_id: int):
+    """
+    清零其他衣服并换上囚服的上衣和下衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        get_cloth_wear_zero_except_need(character_id)
+        character_data.cloth.cloth_wear[5].append(561)
+        character_data.cloth.cloth_wear[8].append(861)
         chara_special_wear_cloth(character_id)
 
 
