@@ -618,7 +618,7 @@ def find_facility_damage():
         # 指定的地点需要是可进入的
         while 1:
             target_scene_str = random.choice(constant.place_data["Room"])
-            close_type = map_handle.judge_scene_accessible(target_scene_str,0)
+            close_type = map_handle.judge_scene_accessible(target_scene_str,0,draw_flag=False)
             if close_type == "open":
                 break
     return target_scene_str
