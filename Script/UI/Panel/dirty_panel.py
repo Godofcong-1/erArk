@@ -337,9 +337,9 @@ class SeeCharacterBodyPanel:
             now_position_index = target_character_data.h_state.insert_position
             position_text_cid = f"阴茎位置{str(now_position_index)}"
             position_text = game_config.ui_text_data['h_state'][position_text_cid]
-            # 如果是阴茎位置为阴道、子宫、后穴、尿道，则显示性交姿势
-            if now_position_index in {6,7,8,9}:
-                sex_position_index = character_data.h_state.current_sex_position
+            sex_position_index = character_data.h_state.current_sex_position
+            # 如果是阴茎位置为阴道、子宫、后穴、尿道，且博士有体位数据，则显示性交姿势
+            if now_position_index in {6,7,8,9} and sex_position_index != -1:
                 sex_position_text_cid = f"体位{str(sex_position_index)}"
                 sex_position_text = game_config.ui_text_data['h_state'][sex_position_text_cid]
                 all_part_text_list.append(f" {sex_position_text}{position_text}")
