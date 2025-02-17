@@ -48,7 +48,7 @@ def base_chara_hp_mp_common_settle(
     hp_value -- 体力值，-1为按程度减少，1为按程度增加，其他值则为具体值\n
     mp_value -- 气力值，-1为按程度减少，1为按程度增加，其他值则为具体值\n
     dregree -- 程度系数，0少，1中，2大\n
-    target_flag -- 是否对交互对象也进行结算，默认为否\n
+    target_flag -- 是否对交互对象也进行结算，默认为否，不可与change_data_to_target_change同时使用\n
     change_data -- 结算信息记录对象\n
     change_data_to_target_change -- 交互对象的结算信息记录对象\n
     """
@@ -80,6 +80,43 @@ def base_chara_hp_mp_common_settle(
         else:
             hp_adjust /= 2
             mp_adjust /= 2
+    # 气力结算
+    if mp_value in [-1, 1]:
+        mp_value *= add_time * mp_adjust
+    if mp_value != 0:
+        # 进行结算
+        character_data.mana_point += mp_value
+        # 结算信息记录
+        if change_data != None:
+            change_data.mana_point += mp_value
+        if change_data_to_target_change != None:
+            change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+            target_change.mana_point += mp_value
+        # 最小为0，最大为上限
+        character_data.mana_point = max(0, character_data.mana_point)
+        character_data.mana_point = min(character_data.mana_point_max, character_data.mana_point)
+        # 如果气力为0则体力进行等值消耗
+        if character_data.mana_point == 0 and mp_value < 0:
+            character_data.hit_point += mp_value
+            if change_data != None:
+                change_data.hit_point += mp_value
+            if change_data_to_target_change != None:
+                change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+                target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+                target_change.hit_point += mp_value
+            character_data.hit_point = max(1, character_data.hit_point)
+            handle_npc_ai.judge_character_tired_sleep(character_id)
+        # 交互对象也同样
+        if target_flag and target_character_id != character_id:
+            # 结算信息记录
+            change_data.target_change.setdefault(target_character_id, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data.target_change[target_character_id]
+            # 进行结算
+            target_character_data.mana_point += mp_value
+            target_change.mana_point += mp_value
+            target_character_data.mana_point = max(0, target_character_data.mana_point)
+            target_character_data.mana_point = min(target_character_data.mana_point_max, target_character_data.mana_point)
     # 体力结算
     if hp_value in [-1, 1]:
         hp_value *= add_time * hp_adjust
@@ -91,7 +128,13 @@ def base_chara_hp_mp_common_settle(
             hp_value_last = hp_value
         # 进行结算
         character_data.hit_point += hp_value_last
-        change_data.hit_point += hp_value_last
+        # 结算信息记录
+        if change_data != None:
+            change_data.hit_point += hp_value_last
+        if change_data_to_target_change != None:
+            change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
+            target_change: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+            target_change.hit_point += hp_value_last
         # 最小为1，最大为上限
         character_data.hit_point = max(1, character_data.hit_point)
         character_data.hit_point = min(character_data.hit_point_max, character_data.hit_point)
@@ -112,32 +155,6 @@ def base_chara_hp_mp_common_settle(
             target_character_data.hit_point = max(1, target_character_data.hit_point)
             target_character_data.hit_point = min(target_character_data.hit_point_max, target_character_data.hit_point)
             handle_npc_ai.judge_character_tired_sleep(target_character_id)
-    # 气力结算
-    if mp_value in [-1, 1]:
-        mp_value *= add_time * mp_adjust
-    if mp_value != 0:
-        # 进行结算
-        character_data.mana_point += mp_value
-        change_data.mana_point += mp_value
-        # 最小为0，最大为上限
-        character_data.mana_point = max(0, character_data.mana_point)
-        character_data.mana_point = min(character_data.mana_point_max, character_data.mana_point)
-        # 如果气力为0则体力进行等值消耗
-        if character_data.mana_point == 0 and mp_value < 0:
-            character_data.hit_point += mp_value
-            change_data.hit_point += mp_value
-            character_data.hit_point = max(1, character_data.hit_point)
-            handle_npc_ai.judge_character_tired_sleep(character_id)
-        # 交互对象也同样
-        if target_flag and target_character_id != character_id:
-            # 结算信息记录
-            change_data.target_change.setdefault(target_character_id, game_type.TargetChange())
-            target_change: game_type.TargetChange = change_data.target_change[target_character_id]
-            # 进行结算
-            target_character_data.mana_point += mp_value
-            target_change.mana_point += mp_value
-            target_character_data.mana_point = max(0, target_character_data.mana_point)
-            target_character_data.mana_point = min(target_character_data.mana_point_max, target_character_data.mana_point)
 
 
 def base_chara_state_common_settle(
@@ -7781,7 +7798,7 @@ def handle_train_prisoners_add_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    now_train_id = cache.rhodes_island.confinement_training_setting[1]
+    now_train_id = cache.rhodes_island.confinement_training_setting.get(1, 0)
     all_prisoner_data = cache.rhodes_island.current_prisoners
     # 如果未设定训练则返回
     if now_train_id == 0:
@@ -7798,6 +7815,7 @@ def handle_train_prisoners_add_adjust(
             if part_id == 3:
                 continue
             all_part_data[part_id] = character_data.ability[part_id]
+            all_part_data[part_id] = max(all_part_data[part_id], 1)
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
@@ -7810,6 +7828,7 @@ def handle_train_prisoners_add_adjust(
         all_part_data = {}
         for part_id in [9,10,11,12]:
             all_part_data[part_id] = character_data.ability[part_id]
+            all_part_data[part_id] = max(all_part_data[part_id], 1)
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
@@ -7829,6 +7848,7 @@ def handle_train_prisoners_add_adjust(
         all_part_data = {}
         for part_id in [70,71,72,73,74,75,76]:
             all_part_data[part_id] = character_data.ability[part_id]
+            all_part_data[part_id] = max(all_part_data[part_id], 1)
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
@@ -7851,8 +7871,7 @@ def handle_train_prisoners_add_adjust(
         if not handle_premise.handle_normal_1(now_prisoner_cid) or handle_premise.handle_action_sleep(now_prisoner_cid):
             continue
         now_tarin(now_prisoner_cid)
-        handle_sub_self_medium_mana_point(now_prisoner_cid, add_time, change_data, now_time)
-        handle_sub_self_medium_hit_point(now_prisoner_cid, add_time, change_data, now_time)
+        base_chara_hp_mp_common_settle(now_prisoner_cid, add_time, hp_value=-1, mp_value=-1, dregree=1, change_data_to_target_change=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

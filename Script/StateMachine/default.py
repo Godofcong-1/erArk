@@ -2886,3 +2886,17 @@ def character_fitness_training(character_id: int):
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_EXERCISE
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_TRAIN_PRISONER)
+def character_train_prisoner(character_id: int):
+    """
+    工作：对囚犯进行日常训练
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.TRAIN_PRISONER
+    character_data.behavior.duration = 60
+    character_data.state = constant.CharacterStatus.STATUS_TRAIN_PRISONER
+
