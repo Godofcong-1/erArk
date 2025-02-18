@@ -7,7 +7,7 @@ from types import FunctionType
 if __name__ == "__main__":
 
 
-    # import auto_build_config
+    import auto_build_config
     from Script.Config import normal_config
     from Script.Core import game_type, cache_control
 
