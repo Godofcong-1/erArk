@@ -542,7 +542,7 @@ def update_new_day():
     无
     """
     from Script.Design import basement
-    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
+    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel, confinement_and_training
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -570,6 +570,9 @@ def update_new_day():
                 character_data.sp_flag.find_food_weird = 0
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
+            # 囚犯逃跑结算
+            if handle_premise.handle_imprisonment_1(character_id):
+                confinement_and_training.settle_prisoners(character_id)
             # 每周一次，如果已陷落则提供粉红凭证
             if cache.game_time.weekday() == 6:
                 fall_chara_give_pink_voucher(character_id)
@@ -586,7 +589,6 @@ def update_new_day():
     cache.today_taiggered_event_record = {} # 清空今日触发事件记录
     cache.pre_game_time = cache.game_time
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
-    # update_save()
 
 
 def update_save():
@@ -665,6 +667,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             final_adjust *= 0.7
         elif now_character_data.talent[352]: # 回复快
             final_adjust *= 1.5
+        # 监禁时根据生活条件判定
+        if handle_premise.handle_imprisonment_1(character_id):
+            if cache.rhodes_island.confinement_training_setting[4] == 0:
+                final_adjust *= 0.5
+            elif cache.rhodes_island.confinement_training_setting[4] == 2:
+                final_adjust *= 1.5
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.003 + 10
         hit_point_add = int(hit_point_add_base * true_add_time * final_adjust)
@@ -699,6 +707,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             final_adjust *= 0.7
         elif now_character_data.talent[352]: # 回复快
             final_adjust *= 1.5
+        # 监禁时根据生活条件判定
+        if handle_premise.handle_imprisonment_1(character_id):
+            if cache.rhodes_island.confinement_training_setting[4] == 0:
+                final_adjust *= 0.5
+            elif cache.rhodes_island.confinement_training_setting[4] == 2:
+                final_adjust *= 1.5
         # 回复体力、气力
         hit_point_add_base = now_character_data.hit_point_max * 0.0025 + 3
         hit_point_add = int(hit_point_add_base * true_add_time * final_adjust)

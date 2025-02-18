@@ -1086,7 +1086,9 @@ class Rhodes_Island:
         # 甲板
 
         # 关押区
-        self.current_prisoners: Dict[int, Tuple[datetime.datetime, float]] = {}
+        self.current_warden_id: int = 0
+        """ 当前监狱长的干员id """
+        self.current_prisoners: Dict[int, Tuple[datetime.datetime, int]] = {}
         """ 当前囚犯干员的数据，干员id: (被关押的时间, 逃脱的概率) """
         self.confinement_training_setting: Dict[int, Tuple[int]] = {}
         """ 监禁调教设置 设置id:设置值 """

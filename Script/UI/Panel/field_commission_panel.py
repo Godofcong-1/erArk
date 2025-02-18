@@ -24,7 +24,7 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
     commission_id -- 委托编号\n
     send_npc_list -- 派遣人员列表，默认为空\n
     demand_or_reward -- False为需求，True为奖励，默认为False\n
-    deduction -- 是否扣除或增加资源，默认为False\n
+    deduction_or_increase -- 是否扣除或增加资源，默认为False\n
     Return arguments:\n
     return_list -- [是否满足, 需求类型文本, 需求全文]
     """
@@ -388,6 +388,69 @@ def find_nation_field_commission():
     Return arguments:
     """
     # TODO: 未实装
+
+def create_temp_commission(
+    commission_id: int,
+    name: str,
+    level: int,
+    type: str,
+    people: int,
+    time_cost: int,
+    demand: str,
+    reward: str,
+    description: str,
+    related_id: int = -1,
+    special: int = 0,
+    country_id: int = -1,
+):
+    """
+    通用函数：创建一个临时的委托数据并加入 game_config.config_commission，
+    使用 config_def 中的 Commission 类
+    """
+    from Script.Config.config_def import Commission
+    # 防止重复
+    while commission_id in game_config.config_commission:
+        commission_id += 1
+    temp_commission = Commission()
+    temp_commission.cid = commission_id
+    temp_commission.name = name
+    temp_commission.level = level
+    temp_commission.type = type
+    temp_commission.people = people
+    temp_commission.time = time_cost
+    temp_commission.demand = demand
+    temp_commission.reward = reward
+    temp_commission.description = description
+    # 设置默认值
+    temp_commission.related_id = related_id      # 默认无关联委托
+    temp_commission.special = special  # 默认为普通委托
+    temp_commission.country_id = country_id      # 通用委托，国家id设为 -1
+
+    game_config.config_commission[commission_id] = temp_commission
+
+def create_capture_fugitive_commission(fugitive_id: int, commission_id: int = 9999):
+    """
+    创建“追捕逃跑囚犯干员”委托，要求派遣角色战斗技能之和至少为囚犯的两倍，耗时一周
+    Keyword arguments:
+    fugitive_id -- 逃跑囚犯干员编号
+    commission_id -- 委托编号，默认为9999
+    """
+    fugitive_character = cache.character_data[fugitive_id]
+    fugitive_combat = fugitive_character.ability[42] * 2
+    required_combat = fugitive_combat * 2
+    # 将需求格式化为a_42_xxxx
+    demand_text = f"a_42_{required_combat}"
+    # 奖励留空，特殊奖励单独处理
+    create_temp_commission(
+        commission_id,
+        name=_("追捕囚犯{0}").format(fugitive_character.name),
+        level=1,
+        people=3,
+        time_cost=7,
+        demand=demand_text,
+        reward=_("追捕_{0}").format(fugitive_id),
+        description="囚犯{0}从监狱逃跑了，请尽快将其抓回。".format(fugitive_character.name),
+    )
 
 
 class Field_Commission_Panel:

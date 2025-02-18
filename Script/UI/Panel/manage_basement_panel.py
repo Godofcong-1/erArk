@@ -610,6 +610,9 @@ class ChangeWorkButtonList:
                 # 特殊解锁的工作不直接开放
                 if work_tag == 2:
                     flag_open = False
+                    # 监狱长
+                    if work_cid == 191 and handle_premise.handle_prisoner_in_custody(self.NPC_id):
+                        flag_open = True
                     # 性爱练习生
                     if work_cid == 193 and handle_premise.handle_ask_one_exercises(self.NPC_id):
                         flag_open = True
@@ -662,6 +665,19 @@ class ChangeWorkButtonList:
             for i in target_data.body_manage:
                 if i in range(30,40) and target_data.body_manage[i]:
                     target_data.body_manage[i] = 0
+        # 如果当前工作是监狱长
+        if work_id == 191:
+            from Script.Design import map_handle
+            # 如果有旧的监狱长，则解除监狱长身份，并重置宿舍
+            if cache.rhodes_island.current_warden_id != 0:
+                old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
+                old_warden.work.work_type = 0
+                old_warden.dormitory = old_warden.pre_dormitory
+            # 更新监狱长id
+            cache.rhodes_island.current_warden_id = self.NPC_id
+            # 更新监狱长的宿舍
+            target_data.pre_dormitory = target_data.dormitory
+            target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
         # 赋予新工作
         target_data.work.work_type = work_id
         # 更新罗德岛的工作人员及状态

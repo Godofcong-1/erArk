@@ -196,13 +196,14 @@ def input_load_save(save_id: str):
         draw_text = _("\n共有{0}个角色的服装数据已重置\n").format(cloth_update_count)
         now_draw.text = draw_text
         now_draw.draw()
+
     # 更新字体颜色
     if color_update_count:
+        io_init.init_style()
         now_draw = draw.LeftDraw()
         draw_text = _("\n共有{0}个角色的口上颜色已更新\n").format(color_update_count)
         now_draw.text = draw_text
         now_draw.draw()
-        io_init.init_style()
 
     # 更新罗德岛的资源
     for all_cid in game_config.config_resouce:
@@ -222,13 +223,6 @@ def input_load_save(save_id: str):
                     if character_data.adv == game_config.config_facility_open[all_cid].NPC_id:
                         loaded_dict["rhodes_island"].facility_open[all_cid] = True
                         break
-    # 更新体检设置
-    zero_physical_exam_setting = attr_calculation.get_physical_exam_setting_zero()
-    if len(loaded_dict["rhodes_island"].physical_examination_setting) != len(zero_physical_exam_setting):
-        for key in zero_physical_exam_setting:
-            if key not in loaded_dict["rhodes_island"].physical_examination_setting:
-                loaded_dict["rhodes_island"].physical_examination_setting[key] = zero_physical_exam_setting[key]
-                update_count += 1
     # 更新食谱
     loaded_dict["recipe_data"] = cooking.init_recipes()
     # 更新图书借阅
@@ -236,59 +230,16 @@ def input_load_save(save_id: str):
         if all_cid not in loaded_dict["rhodes_island"].book_borrow_dict:
             loaded_dict["rhodes_island"].book_borrow_dict[all_cid] = -1
 
-    # 重置系统设置
-    zero_system_setting = attr_calculation.get_system_setting_zero()
-    base_setting = zero_system_setting.base_setting
-    if len(loaded_dict["all_system_setting"].base_setting) != len(base_setting):
-        for key in base_setting:
-            if key not in loaded_dict["all_system_setting"].base_setting:
-                loaded_dict["all_system_setting"].base_setting[key] = base_setting[key]
-                update_count += 1
-        now_draw = draw.NormalDraw()
-        draw_text = _("\n系统设置已更新，如有需要请手动修改\n")
-        now_draw.style = "gold_enrod"
-        now_draw.text = draw_text
-        now_draw.draw()
-    draw_setting = zero_system_setting.draw_setting
-    if len(loaded_dict["all_system_setting"].draw_setting) != len(draw_setting):
-        for key in draw_setting:
-            if key not in loaded_dict["all_system_setting"].draw_setting:
-                loaded_dict["all_system_setting"].draw_setting[key] = draw_setting[key]
-                update_count += 1
-        now_draw = draw.NormalDraw()
-        draw_text = _("\n绘制设置已更新，如有需要请手动修改\n")
-        now_draw.style = "gold_enrod"
-        now_draw.text = draw_text
-        now_draw.draw()
-    difficulty_setting = zero_system_setting.difficulty_setting
-    if len(loaded_dict["all_system_setting"].difficulty_setting) != len(difficulty_setting):
-        for key in difficulty_setting:
-            if key not in loaded_dict["all_system_setting"].difficulty_setting:
-                loaded_dict["all_system_setting"].difficulty_setting[key] = difficulty_setting[key]
-                update_count += 1
-        now_difficulty = draw.NormalDraw()
-        draw_text = _("\n难度设置已更新，如有需要请手动修改\n")
-        now_difficulty.style = "gold_enrod"
-        now_difficulty.text = draw_text
-        now_difficulty.draw()
-    # 更新AI设置
-    if len(loaded_dict["ai_setting"].ai_chat_setting) != len(game_config.config_ai_chat_setting):
-        for key in game_config.config_ai_chat_setting:
-            if key not in loaded_dict["ai_setting"].ai_chat_setting:
-                loaded_dict["ai_setting"].ai_chat_setting[key] = 0
-                update_count += 1
-        update_count += 1
-        now_draw = draw.NormalDraw()
-        draw_text = _("\n文本生成AI设置已更新，如有需要请手动修改\n")
-        now_draw.style = "gold_enrod"
-        now_draw.text = draw_text
-        now_draw.draw()
+    # 更新各项设置
+    update_count += update_settings(loaded_dict)
 
     # 更新大地图势力数据
     loaded_dict["country"] = attr_calculation.get_country_reset(loaded_dict["country"])
 
     # 更新游戏地图
     update_count += update_map(loaded_dict)
+
+    # 最后输出
     now_draw = draw.NormalDraw()
     draw_text = _("\n检测完毕，共有{0}条数据完成了更新\n").format(update_count)
     now_draw.text = draw_text
@@ -633,6 +584,83 @@ def update_map(loaded_dict):
         now_draw.draw()
 
 
+    return update_count
+
+def update_settings(loaded_dict):
+    """
+    更新设置
+    Keyword arguments:
+    loaded_dict -- 存档数据
+    """
+    update_count = 0
+    zero_system_setting = attr_calculation.get_system_setting_zero()
+    base_setting = zero_system_setting.base_setting
+    if len(loaded_dict["all_system_setting"].base_setting) != len(base_setting):
+        for key in base_setting:
+            if key not in loaded_dict["all_system_setting"].base_setting:
+                loaded_dict["all_system_setting"].base_setting[key] = base_setting[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n系统设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
+    draw_setting = zero_system_setting.draw_setting
+    if len(loaded_dict["all_system_setting"].draw_setting) != len(draw_setting):
+        for key in draw_setting:
+            if key not in loaded_dict["all_system_setting"].draw_setting:
+                loaded_dict["all_system_setting"].draw_setting[key] = draw_setting[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n绘制设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
+    difficulty_setting = zero_system_setting.difficulty_setting
+    if len(loaded_dict["all_system_setting"].difficulty_setting) != len(difficulty_setting):
+        for key in difficulty_setting:
+            if key not in loaded_dict["all_system_setting"].difficulty_setting:
+                loaded_dict["all_system_setting"].difficulty_setting[key] = difficulty_setting[key]
+                update_count += 1
+        now_difficulty = draw.NormalDraw()
+        draw_text = _("\n难度设置已更新，如有需要请手动修改\n")
+        now_difficulty.style = "gold_enrod"
+        now_difficulty.text = draw_text
+        now_difficulty.draw()
+    # 更新AI设置
+    if len(loaded_dict["ai_setting"].ai_chat_setting) != len(game_config.config_ai_chat_setting):
+        for key in game_config.config_ai_chat_setting:
+            if key not in loaded_dict["ai_setting"].ai_chat_setting:
+                loaded_dict["ai_setting"].ai_chat_setting[key] = 0
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n文本生成AI设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
+    # 更新体检设置
+    zero_physical_exam_setting = attr_calculation.get_physical_exam_setting_zero()
+    if len(loaded_dict["rhodes_island"].physical_examination_setting) != len(zero_physical_exam_setting):
+        for key in zero_physical_exam_setting:
+            if key not in loaded_dict["rhodes_island"].physical_examination_setting:
+                loaded_dict["rhodes_island"].physical_examination_setting[key] = zero_physical_exam_setting[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n体检设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
+    # 更新监禁调教设置
+    if len(loaded_dict["rhodes_island"].confinement_training_setting) != len(game_config.config_confinement_training_setting):
+        for key in game_config.config_confinement_training_setting:
+            if key not in loaded_dict["rhodes_island"].confinement_training_setting:
+                loaded_dict["rhodes_island"].confinement_training_setting[key] = 0
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n监禁调教设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
     return update_count
 
 
