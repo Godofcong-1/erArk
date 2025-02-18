@@ -1074,6 +1074,47 @@ def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, characte
             mark_up_data_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
     return mark_up_data_all_value, mark_up_data_text
 
+def get_now_juel_all_value_and_text_from_mark_down_data(mark_down_id: int, character_id: int) -> tuple:
+    """
+    从刻印数据中获取刻印的总值和提示文本
+    Keyword arguments:
+    mark_down_id -- 刻印id
+    character_id -- 角色id
+    Return arguments:
+    tuple -- 总值,提示文本
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    mark_down_data = game_config.config_mark_down_data[mark_down_id]
+    mark_down_data_need_juel_list = []
+    mark_down_data_need_juel_list.append(mark_down_data.need_juel_1)
+    mark_down_data_need_juel_list.append(mark_down_data.need_juel_2)
+    mark_down_data_need_juel_list.append(mark_down_data.need_juel_3)
+    # 如果有1号，则替换为全快感珠
+    if '1' in mark_down_data_need_juel_list:
+        mark_down_data_need_juel_list.remove('1')
+        for i in range(8):
+            mark_down_data_need_juel_list.append(str(i))
+    mark_down_data_all_value = 0
+    mark_down_data_text = ""
+    for need_juel in mark_down_data_need_juel_list:
+        # 跳过空值
+        if need_juel == '0':
+            continue
+        # 如果存在|符号，说明有权重调整
+        if '|' in need_juel:
+            juel_id = int(need_juel.split('|')[0])
+            adjust = float(need_juel.split('|')[1])
+            # 计算当前宝珠值
+            now_juel_value = int(character_data.juel[juel_id] * adjust)
+            mark_down_data_all_value += now_juel_value
+            mark_down_data_text += f" {game_config.config_juel[juel_id].name}*{adjust} = {now_juel_value} "
+        else:
+            juel_id = int(need_juel)
+            now_juel_value = int(character_data.juel[juel_id])
+            mark_down_data_all_value += now_juel_value
+            mark_down_data_text += f" {game_config.config_juel[juel_id].name} = {now_juel_value} "
+    return mark_down_data_all_value, mark_down_data_text
+
 def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange):
     """
     处理第二结算中的刻印结算

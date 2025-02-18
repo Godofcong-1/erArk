@@ -193,6 +193,10 @@ config_mark_up_data: Dict[int, config_def.Mark_Up] = {}
 """ 刻印升级数据 """
 config_mark_up_data_by_ability: Dict[int, Dict] = {}
 """ 根据刻印能力id和能力等级来获取的刻印升级数据id """
+config_mark_down_data: Dict[int, config_def.Mark_Down] = {}
+""" 刻印降级数据 """
+config_mark_down_data_by_ability: Dict[int, Dict] = {}
+""" 根据刻印能力id和能力等级来获取的刻印降级数据id """
 config_instruct_judge_data: Dict[int, config_def.InstructJudge] = {}
 """ 每个指令的实行值判定数据 """
 config_recipes: Dict[int, config_def.Recipes] = {}
@@ -464,6 +468,17 @@ def load_mark_up_data():
         config_mark_up_data[now_tem.cid] = now_tem
         config_mark_up_data_by_ability.setdefault(now_tem.ability_id, {})
         config_mark_up_data_by_ability[now_tem.ability_id][now_tem.now_level] = now_tem.cid
+
+def load_mark_down_data():
+    """载入刻印升级数据"""
+    now_data = config_data["Mark_Down"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Mark_Down()
+        now_tem.__dict__ = tem_data
+        config_mark_down_data[now_tem.cid] = now_tem
+        config_mark_down_data_by_ability.setdefault(now_tem.ability_id, {})
+        config_mark_down_data_by_ability[now_tem.ability_id][now_tem.now_level] = now_tem.cid
 
 def load_instruct_judge_data():
     """每个指令的实行值判定数据"""
@@ -1670,6 +1685,7 @@ def init():
     load_talent_type_data()
     load_talent_gain_data()
     load_mark_up_data()
+    load_mark_down_data()
     load_target()
     load_target_type()
     load_target_effect()

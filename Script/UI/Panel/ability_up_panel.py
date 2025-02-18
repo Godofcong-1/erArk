@@ -85,6 +85,20 @@ class Characterabi_show_Text:
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
+                    # 要求：已经记录了刻印降级条件，大于0级
+                    elif (
+                        ability_id in game_config.config_mark_down_data_by_ability and 
+                        now_mark_level > 0
+                        ):
+                        button_draw = draw.LeftButton(
+                            _(button_text),
+                            _(game_config.config_ability[ability_id].name),
+                            self.width / 10,
+                            cmd_func=self.mark_down_show,
+                            args=(ability_id),
+                        )
+                        self.return_list.append(button_draw.return_text)
+                        button_draw.draw()
                     # 未记录刻印升级条件的刻印
                     else:
                         button_draw = draw.LeftButton(
@@ -193,6 +207,52 @@ class Characterabi_show_Text:
             if yrn in return_list:
                 break
 
+    def mark_down_show(self, ability_id: int):
+        """显示刻印降级面板"""
+        # 获取刻印降级数据
+        now_mark_level = self.character_data.ability[ability_id]
+        mark_down_data_id = game_config.config_mark_down_data_by_ability[ability_id][now_mark_level]
+        mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
+        need_juel_all_value = mark_down_data.need_juel_all_value
+        now_juel_all_value, juel_text = settle_behavior.get_now_juel_all_value_and_text_from_mark_down_data(mark_down_data_id, self.character_id)
+        # 文本信息
+        info_text = _("○非正面刻印除了通过源石技艺降级之外，还可以通过消耗大量宝珠来直接降级\n\n")
+        info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += _("降级需要的总值为：{0}\n").format(need_juel_all_value)
+        info_text += _("当前角色宝珠可以提供的总值为：")
+        # 如果为空，则输出无
+        if juel_text == "":
+            juel_text = _("无")
+        # 加到文本信息中
+        info_text += juel_text + "\n"
+
+        # 开始绘制
+        while 1:
+            return_list = []
+            title_line = draw.TitleLineDraw(_("使用宝珠降低刻印"), self.width, ":")
+            title_line.draw()
+            line_feed.draw()
+            # 绘制信息文本
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.draw()
+            line_feed.draw()
+            # 如果当前宝珠足够，绘制降低按钮
+            if now_juel_all_value >= need_juel_all_value:
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id, mark_down_data_id))
+                yes_draw.draw()
+                return_list.append(yes_draw.return_text)
+            # 绘制返回按钮
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            # 等待玩家选择
+            yrn = flow_handle.askfor_all(return_list)
+            py_cmd.clr_cmd()
+            line_feed.draw()
+            if yrn in return_list:
+                break
+
     def mark_up(self, ability_id: int, need_juel: int):
         """升级刻印"""
         now_mark_level = self.character_data.ability[ability_id]
@@ -208,6 +268,54 @@ class Characterabi_show_Text:
         self.character_data.second_behavior[second_behavior_id] = 1
         # 结算二段行为
         settle_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
+
+    def mark_down(self, ability_id: int, mark_down_data_id: int):
+        """降级刻印"""
+        # 刻印等级-1
+        self.character_data.ability[ability_id] -= 1
+        # 扣除宝珠
+        mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
+        need_juel_all_value = mark_down_data.need_juel_all_value
+        mark_down_data_need_juel_list = []
+        mark_down_data_need_juel_list.append(mark_down_data.need_juel_1)
+        mark_down_data_need_juel_list.append(mark_down_data.need_juel_2)
+        mark_down_data_need_juel_list.append(mark_down_data.need_juel_3)
+        # 如果有1号，则替换为全快感珠
+        if '1' in mark_down_data_need_juel_list:
+            mark_down_data_need_juel_list.remove('1')
+            for i in range(8):
+                mark_down_data_need_juel_list.append(str(i))
+        mark_down_data_all_value = 0
+        # 遍历宝珠需求
+        for need_juel in mark_down_data_need_juel_list:
+            # 跳过空值
+            if need_juel == '0':
+                continue
+            # 如果存在|符号，说明有权重调整
+            if '|' in need_juel:
+                juel_id = int(need_juel.split('|')[0])
+                adjust = float(need_juel.split('|')[1])
+            else:
+                juel_id = int(need_juel)
+                adjust = 1
+            # 计算当前宝珠值
+            now_juel_value = int(self.character_data.juel[juel_id] * adjust)
+            # 如果不足以扣除，扣除后继续计算下一个宝珠
+            if mark_down_data_all_value + now_juel_value < need_juel_all_value:
+                self.character_data.juel[juel_id] = 0
+                mark_down_data_all_value += now_juel_value
+            # 如果足够扣除，则扣除到刚刚好等于需求值
+            else:
+                # 计算扣除值
+                now_need_juel = need_juel_all_value - mark_down_data_all_value
+                # 扣除宝珠
+                self.character_data.juel[juel_id] -= int(now_need_juel / adjust)
+                break
+        # 输出降级信息
+        info_draw = draw.WaitDraw()
+        info_draw.text = _("刻印降级成功，{0}降至{1}级\n").format(game_config.config_ability[ability_id].name, self.character_data.ability[ability_id])
+        info_draw.draw()
+
 
     def mark_can_up_show(self):
         """显示无法升级的刻印信息"""

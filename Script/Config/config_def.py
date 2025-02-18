@@ -628,6 +628,25 @@ class Juel:
     """ 珠名 """
 
 
+class Mark_Down:
+    """ 刻印降级数据表 """
+
+    cid: int
+    """ 编号id """
+    ability_id: int
+    """ 能力id """
+    now_level: int
+    """ 当前等级 """
+    need_juel_all_value: int
+    """ 降级需求的总宝珠值 """
+    need_juel_1: str
+    """ 降级需求的宝珠1，1号同全快感珠 """
+    need_juel_2: str
+    """ 降级需求的宝珠2 """
+    need_juel_3: str
+    """ 降级需求的宝珠3 """
+
+
 class Mark_Up:
     """ 刻印升级数据表 """
 

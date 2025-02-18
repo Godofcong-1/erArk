@@ -4072,18 +4072,6 @@ msgstr ""
 msgid "在调教H中是否作为助手辅助调教，可以使用和助手相关的指令"
 msgstr ""
 
-#: .\data\csv\Confinement_Training_Setting.csv:12
-msgid "调教后清洁"
-msgstr ""
-
-#: .\data\csv\Confinement_Training_Setting.csv:12
-msgid "是否在调教后对囚犯干员进行清洁"
-msgstr ""
-
-#: .\data\csv\Confinement_Training_Setting.csv:12
-msgid "不清洗|仅清洁身体|仅清洁衣物|清洁身体与衣物"
-msgstr ""
-
 #: .\data\csv\Diplomatic_Policy.csv:7
 msgid "在民间开展源石病治疗工作"
 msgstr ""
