@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai, handle_premise
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -2214,8 +2214,12 @@ def handle_end_h():
         else:
             character_data.behavior.behavior_id = constant.Behavior.END_H
             character_data.state = constant.CharacterStatus.STATUS_END_H
-            # 如果是非监禁对象，则进入跟随
-            if not target_data.sp_flag.imprisonment:
+            # 异常126正常，则进入跟随
+            if (
+                handle_premise.handle_normal_1(character_data.target_character_id) and 
+                handle_premise.handle_normal_2(character_data.target_character_id) and
+                handle_premise.handle_normal_6(character_data.target_character_id)
+                ):
                 target_data.sp_flag.is_follow = 1
 
     # 对方原地待机10分钟
