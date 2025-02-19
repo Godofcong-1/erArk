@@ -3628,6 +3628,45 @@ def handle_night_salutation_flag_2(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_VISITOR_FLAG_1)
+def handle_self_visitor_flag_1(character_id: int) -> int:
+    """
+    自身是访问中的访客
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.vistor == 1
+
+
+@add_premise(constant_promise.Premise.TARGET_VISITOR_FLAG_1)
+def handle_target_visitor_flag_1(character_id: int) -> int:
+    """
+    交互对象是访问中的访客
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_visitor_flag_1(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_VISITOR_FLAG_1)
+def handle_target_not_visitor_flag_1(character_id: int) -> int:
+    """
+    交互对象不是访问中的访客
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_self_visitor_flag_1(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_0)
 def handle_aromatherapy_flag_0(character_id: int) -> int:
     """

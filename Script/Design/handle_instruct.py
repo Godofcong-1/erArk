@@ -3341,6 +3341,7 @@ def handle_milk():
      constant_promise.Premise.HAVE_BAG,
      constant_promise.Premise.T_IMPRISONMENT_0,
      constant_promise.Premise.T_UNNORMAL_6,
+     constant_promise.Premise.TARGET_NOT_VISITOR_FLAG_1,
     #  constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.PL_NOT_BAGGING_CHARA,
