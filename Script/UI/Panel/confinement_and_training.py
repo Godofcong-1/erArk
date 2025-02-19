@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, attr_text
+from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import random
@@ -163,6 +163,72 @@ def escape_fail(character_id: int):
     escape_draw.draw()
     # 囚犯逃脱值清零
     cache.rhodes_island.current_prisoners[character_id][1] = 0
+
+def chara_become_prisoner(character_id: int):
+    """
+    角色成为囚犯，不含位置和上线结算\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    from Script.Design import clothing
+    character_data = cache.character_data[character_id]
+
+    # flag结算
+    character_data.sp_flag.be_bagged = 0
+    character_data.sp_flag.imprisonment = 1
+    # 重置身体管理
+    character_data.body_manage = attr_calculation.get_body_manage_zero()
+    # 加入囚犯数据
+    cache.rhodes_island.current_prisoners[character_id] = [cache.game_time, 0]
+    # 服装结算
+    clothing.handle_prisoner_clothing(character_id)
+    # 当前位置作为宿舍，并保存旧宿舍
+    character_data.pre_dormitory = character_data.dormitory
+    character_data.dormitory = map_handle.get_map_system_path_str_for_list(character_data.position)
+    # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
+    target_fall = attr_calculation.get_character_fall_level(character_id, minus_flag=True)
+    if character_data.ability[14] <= 1:
+        character_data.ability[14] = 2
+        character_data.second_behavior[1034] = 1
+    if character_data.ability[17] <= 0 and target_fall >= -2:
+        character_data.ability[17] = 1
+        character_data.second_behavior[1042] = 1
+    if character_data.ability[18] <= 0 and target_fall >= -2:
+        character_data.ability[18] = 1
+        character_data.second_behavior[1045] = 1
+    if character_data.ability[18] <= 1 and target_fall >= -1:
+        character_data.ability[18] = 2
+        character_data.second_behavior[1046] = 1
+    if character_data.ability[18] <= 2 and target_fall >= 0:
+        character_data.ability[18] = 3
+        character_data.second_behavior[1047] = 1
+
+def get_unused_prison_dormitory() -> str:
+    """
+    遍历当前所有囚犯，从其角色属性中读取宿舍位置，
+    根据预设的所有牢狱列表，选取还没有被使用的牢狱，
+    返回该牢狱的名字。如果所有牢狱都已被占用，则返回空字符串。
+
+    Return:
+        str -- 可用牢狱的名字，如果没有可用牢狱则返回空字符串
+    """
+    # 预设的所有牢狱名字列表
+    all_dormitories = ['牢1', '牢2', '牢3', '牢4', '牢5', '牢6', '牢7', '牢8']
+
+    # 收集所有在用的牢狱名字
+    occupied_dorms = set()
+    for prisoner_id in cache.rhodes_island.current_prisoners:
+        character_data = cache.character_data[prisoner_id]
+        dorm = character_data.dormitory
+        for d in all_dormitories:
+            if d in dorm:
+                occupied_dorms.add(d)
+
+    # 选取一个未被占用的牢狱
+    for dorm in all_dormitories:
+        if dorm not in occupied_dorms:
+            return dorm
+    return ""
 
 class Confinement_And_Training_Manage_Panel:
     """

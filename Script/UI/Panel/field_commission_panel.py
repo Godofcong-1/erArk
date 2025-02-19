@@ -4,7 +4,6 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, talk
-from Script.Settle import default
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -57,6 +56,13 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
             info_draw.style = "gold_enrod"
             info_draw.width = window_width
             info_draw.draw()
+        # 抓捕
+        elif "追捕" in commission_data.reward:
+            from Script.Settle import default
+            from Script.UI.Panel import confinement_and_training
+            fugitive_id = int(commission_data.reward.split("_")[1])
+            confinement_and_training.chara_become_prisoner(fugitive_id)
+            default.handle_chara_on_line(fugitive_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
 
     return_list = [satify_flag, type_text, full_text]
     return return_list
@@ -78,6 +84,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     full_text -- 全文\n
     satify_flag -- 是否满足
     """
+    from Script.Design import character
 
     # 无则直接返回
     if now_text == _("无"):
@@ -132,7 +139,6 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         now_have_item_num = 0
     # 角色adv编号
     elif text_list[0] == "c":
-        from Script.Design import character
         item_name = _("指定干员")
         item_type = _("指定干员")
         item_id = character.get_character_id_from_adv(item_id)
@@ -180,35 +186,34 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif text_list[0] == _("好感"):
         item_name = _("好感")
         item_type = _("好感")
-        now_have_item_num = 0
-        for character_id in cache.character_data:
-            if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name + item_name
-                item_id = character_id
-                now_have_item_num = cache.character_data[character_id].favorability[0]
-                break
+        item_id = character.get_character_id_from_adv(item_id)
+        character_id = item_id
+        item_name = cache.character_data[character_id].name + item_name
+        now_have_item_num = cache.character_data[character_id].favorability[0]
     # 信赖
     elif text_list[0] == _("信赖"):
         item_name = _("信赖")
         item_type = _("信赖")
-        now_have_item_num = 0
-        for character_id in cache.character_data:
-            if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name + item_name
-                item_id = character_id
-                now_have_item_num = cache.character_data[character_id].trust
-                break
+        item_id = character.get_character_id_from_adv(item_id)
+        character_id = item_id
+        item_name = cache.character_data[character_id].name + item_name
+        now_have_item_num = cache.character_data[character_id].trust
     # 攻略
     elif text_list[0] == _("攻略"):
         item_name = _("攻略程度")
         item_type = _("攻略程度")
-        now_have_item_num = 0
-        for character_id in cache.character_data:
-            if cache.character_data[character_id].adv == item_id:
-                item_name = cache.character_data[character_id].name + item_name
-                item_id = character_id
-                now_have_item_num = attr_calculation.get_character_fall_level(character_id)
-                break
+        item_id = character.get_character_id_from_adv(item_id)
+        character_id = item_id
+        item_name = cache.character_data[character_id].name + item_name
+        now_have_item_num = attr_calculation.get_character_fall_level(character_id)
+    # 追捕
+    elif text_list[0] == _("追捕"):
+        item_name = _("追捕")
+        item_type = _("追捕")
+        item_id = character.get_character_id_from_adv(item_id)
+        character_id = item_id
+        item_name += cache.character_data[character_id].name
+        now_have_item_num = 1
 
     # 需求
     if not demand_or_reward:
@@ -246,7 +251,6 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                         cache.character_data[character_id].talent[item_id] = False
             # 角色
             elif text_list[0] == "c":
-                from Script.Design import character
                 cache.rhodes_island.recruited_id.add(item_id)
                 item_name = cache.character_data[item_id].name
                 item_num = _("成为干员")
@@ -303,6 +307,7 @@ def judge_field_commission_finish():
 
     import random
     from Script.UI.Panel import recruit_panel
+    from Script.Settle import default
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -1034,6 +1039,7 @@ class Field_Commission_Panel:
         # 消耗资源
         get_commission_demand_and_reward(commision_id, self.send_npc_list, False, True)
         # 遍历派遣人员，设为派遣状态，并离线
+        from Script.Settle import default
         for character_id in self.send_npc_list:
             cache.character_data[character_id].sp_flag.field_commission = commision_id
             default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)

@@ -8051,6 +8051,7 @@ def handle_put_into_prison_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.UI.Panel import confinement_and_training
     if not add_time:
         return
     # 获取角色数据
@@ -8059,36 +8060,12 @@ def handle_put_into_prison_add_just(
     target_data: game_type.Character = cache.character_data[target_id]
     # 玩家数据结算
     character_data.sp_flag.bagging_chara_id = 0
-    # 对方数据结算
-    target_data.sp_flag.be_bagged = 0
-    target_data.sp_flag.imprisonment = 1
-    # 重置身体管理
-    target_data.body_manage = attr_calculation.get_body_manage_zero()
-    # 加入囚犯数据
-    cache.rhodes_island.current_prisoners[target_id] = [now_time, 0]
-    # 服装结算
-    clothing.handle_prisoner_clothing(target_id)
-    # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
-    target_fall = attr_calculation.get_character_fall_level(target_id, minus_flag=True)
-    if target_data.ability[14] <= 1:
-        target_data.ability[14] = 2
-        target_data.second_behavior[1034] = 1
-    if target_data.ability[17] <= 0 and target_fall >= -2:
-        target_data.ability[17] = 1
-        target_data.second_behavior[1042] = 1
-    if target_data.ability[18] <= 0 and target_fall >= -2:
-        target_data.ability[18] = 1
-        target_data.second_behavior[1045] = 1
-    if target_data.ability[18] <= 1 and target_fall >= -1:
-        target_data.ability[18] = 2
-        target_data.second_behavior[1046] = 1
-    if target_data.ability[18] <= 2 and target_fall >= 0:
-        target_data.ability[18] = 3
-        target_data.second_behavior[1047] = 1
     # 对方位置结算
     target_data.position = character_data.position
     target_data.behavior.move_src = character_data.position
     target_data.behavior.move_target = character_data.position
+    # 对方数据结算
+    confinement_and_training.chara_become_prisoner(target_id)
     # 角色上线
     handle_chara_on_line(target_id, add_time, change_data, now_time)
 
