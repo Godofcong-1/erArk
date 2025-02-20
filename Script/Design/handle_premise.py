@@ -16848,6 +16848,9 @@ def handle_self_in_health_check_list(character_id: int) -> int:
     # 如果设置了不重复体检，且自己已体检过，则直接返回0
     if handle_health_check_done_not_need_check_again(character_id) and handle_self_health_checked(character_id):
         return 0
+    # 跳过27异常
+    if handle_normal_2(character_id) or handle_normal_7(character_id):
+        return 0
     character_data: game_type.Character = cache.character_data[character_id]
     # 源石病患者
     if cache.rhodes_island.physical_examination_setting[4] == 0:

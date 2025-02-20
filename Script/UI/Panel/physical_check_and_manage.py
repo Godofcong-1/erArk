@@ -956,6 +956,9 @@ class Physical_Check_And_Manage_Panel:
             for npc_id in npc_id_got_list:
                 if npc_id == 0:
                     continue
+                # 跳过2、7异常的角色
+                if handle_premise.handle_normal_2(npc_id) or handle_premise.handle_normal_7(npc_id):
+                    continue
                 now_list = [npc_id, self.switch_chara_in_target_list, selected_id_list]
                 final_list.append(now_list)
             now_draw_panel.text_list = final_list
