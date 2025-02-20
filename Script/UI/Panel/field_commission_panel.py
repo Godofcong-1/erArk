@@ -61,8 +61,13 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
             from Script.Settle import default
             from Script.UI.Panel import confinement_and_training
             fugitive_id = int(commission_data.reward.split("_")[1])
-            confinement_and_training.chara_become_prisoner(fugitive_id)
-            default.handle_chara_on_line(fugitive_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+            # 需要有空房间
+            empty_room = confinement_and_training.get_unused_prison_dormitory()
+            if empty_room == "":
+                character_data: game_type.Character = cache.character_data[fugitive_id]
+                character_data.position = ["关押", f"{empty_room}"]
+                confinement_and_training.chara_become_prisoner(fugitive_id)
+                default.handle_chara_on_line(fugitive_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
 
     return_list = [satify_flag, type_text, full_text]
     return return_list
