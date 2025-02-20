@@ -18,22 +18,21 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def settle_prisoners(character_id: int):
+def settle_prisoners():
     """
     囚犯结算，先计算逃脱概率的增加，再判断是否能逃脱，最后处理失败与成功的情况。\n
-    Keyword arguments:\n
-    character_id -- 角色id\n
     """
-    # 计算逃脱概率
-    escape_probability = calculate_escape_probability(character_id)
-    # 判断是否能逃脱
-    can_escape, escape_value, warden_value = judge_can_escape(character_id)
-    # 逃脱成功
-    if can_escape:
-        escape_success(character_id)
-    # 逃脱失败
-    else:
-        escape_fail(character_id)
+    for character_id in cache.rhodes_island.current_prisoners:
+        # 计算逃脱概率
+        escape_probability = calculate_escape_probability(character_id)
+        # 判断是否能逃脱
+        can_escape, escape_value, warden_value = judge_can_escape(character_id)
+        # 逃脱成功
+        if can_escape:
+            escape_success(character_id)
+        # 逃脱失败
+        else:
+            escape_fail(character_id)
 
 def calculate_escape_probability(character_id: int) -> float:
     """
@@ -183,7 +182,8 @@ def chara_become_prisoner(character_id: int):
     # 服装结算
     clothing.handle_prisoner_clothing(character_id)
     # 当前位置作为宿舍，并保存旧宿舍
-    character_data.pre_dormitory = character_data.dormitory
+    if character_data.pre_dormitory == "":
+        character_data.pre_dormitory = character_data.dormitory
     character_data.dormitory = map_handle.get_map_system_path_str_for_list(character_data.position)
     # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
     target_fall = attr_calculation.get_character_fall_level(character_id, minus_flag=True)

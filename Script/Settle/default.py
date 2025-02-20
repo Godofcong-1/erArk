@@ -8091,6 +8091,10 @@ def handle_set_free_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = 0
+    # 回到旧宿舍
+    if target_data.pre_dormitory != "":
+        target_data.dormitory = target_data.pre_dormitory
+        target_data.pre_dormitory = ""
     # 从囚犯数据中删除
     if character_data.target_character_id in cache.rhodes_island.current_prisoners:
         cache.rhodes_island.current_prisoners.pop(character_data.target_character_id)

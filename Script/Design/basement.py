@@ -237,7 +237,7 @@ def update_base_resouce_newday():
     Return arguments:
     无
     """
-    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage
+    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -264,6 +264,8 @@ def update_base_resouce_newday():
     physical_check_and_manage.settle_health_check()
     # 刷新食堂食物
     cooking.init_food_shop_data(new_day_flag=True)
+    # 囚犯逃跑结算
+    confinement_and_training.settle_prisoners()
 
 def update_work_people():
     """

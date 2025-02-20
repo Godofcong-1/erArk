@@ -570,9 +570,6 @@ def update_new_day():
                 character_data.sp_flag.find_food_weird = 0
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
-            # 囚犯逃跑结算
-            if handle_premise.handle_imprisonment_1(character_id):
-                confinement_and_training.settle_prisoners(character_id)
             # 每周一次，如果已陷落则提供粉红凭证
             if cache.game_time.weekday() == 6:
                 fall_chara_give_pink_voucher(character_id)
