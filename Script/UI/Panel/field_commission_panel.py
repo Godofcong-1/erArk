@@ -455,11 +455,12 @@ def create_capture_fugitive_commission(fugitive_id: int, commission_id: int = 99
         commission_id,
         name=_("追捕囚犯{0}").format(fugitive_character.name),
         level=1,
+        type=_("追捕"),
         people=3,
         time_cost=7,
         demand=demand_text,
         reward=_("追捕_{0}").format(fugitive_id),
-        description="囚犯{0}从监狱逃跑了，请尽快将其抓回。".format(fugitive_character.name),
+        description=_("囚犯{0}从监狱逃跑了，请尽快将其抓回。").format(fugitive_character.name),
     )
 
 

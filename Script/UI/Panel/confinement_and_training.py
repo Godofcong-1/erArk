@@ -22,7 +22,7 @@ def settle_prisoners():
     """
     囚犯结算，先计算逃脱概率的增加，再判断是否能逃脱，最后处理失败与成功的情况。\n
     """
-    for character_id in cache.rhodes_island.current_prisoners:
+    for character_id in cache.rhodes_island.current_prisoners.copy():
         # 计算逃脱概率
         escape_probability = calculate_escape_probability(character_id)
         # 判断是否能逃脱
@@ -133,6 +133,7 @@ def escape_success(character_id: int):
     character_id -- 角色id\n
     """
     from Script.Settle import default
+    from Script.UI.Panel import field_commission_panel
     character_data = cache.character_data[character_id]
     # 逃脱成功提示
     escape_text = _("\n囚犯{0}逃脱成功，请尽快派遣外勤干员进行追捕！\n").format(character_data.name)
@@ -145,6 +146,7 @@ def escape_success(character_id: int):
     cache.rhodes_island.current_prisoners.pop(character_id)
     # 囚犯离线
     default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+    field_commission_panel.create_capture_fugitive_commission(character_id)
 
 def escape_fail(character_id: int):
     """
