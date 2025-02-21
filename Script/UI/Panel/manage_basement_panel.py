@@ -610,8 +610,8 @@ class ChangeWorkButtonList:
                 # 特殊解锁的工作不直接开放
                 if work_tag == 2:
                     flag_open = False
-                    # 监狱长
-                    if work_cid == 191 and handle_premise.handle_prisoner_in_custody(self.NPC_id):
+                    # 监狱长，需要有囚犯在关押，且至少为三级陷落
+                    if work_cid == 191 and handle_premise.handle_prisoner_in_custody(self.NPC_id) and (handle_premise.handle_self_fall_3(self.NPC_id) or handle_premise.handle_self_fall_4(self.NPC_id)):
                         flag_open = True
                     # 性爱练习生
                     if work_cid == 193 and handle_premise.handle_ask_one_exercises(self.NPC_id):
