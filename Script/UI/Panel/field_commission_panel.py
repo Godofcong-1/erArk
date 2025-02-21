@@ -437,6 +437,7 @@ def create_temp_commission(
     temp_commission.country_id = country_id      # 通用委托，国家id设为 -1
 
     game_config.config_commission[commission_id] = temp_commission
+    game_config.config_commission_id_by_country[country_id].append(commission_id)
 
 def create_capture_fugitive_commission(fugitive_id: int, commission_id: int = 9999):
     """
