@@ -2561,6 +2561,8 @@ class Instruct:
     """ 告白 """
     GIVE_NECKLACE = 0
     """ 戴上项圈 """
+    PREPARE_TRAINING = 0
+    """ 调教前准备 """
     SLEEP_OBSCENITY = 0
     """ 睡眠猥亵 """
     STOP_SLEEP_OBSCENITY = 0

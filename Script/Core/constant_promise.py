@@ -3024,6 +3024,8 @@ class Premise:
     """ 经营 当前有关押的囚犯 """
     PRISONER_DAILY_MANAGEMENT_SET = "prisoner_daily_management_set"
     """ 经营 已设定对囚犯的日常管理 """
+    HAVE_WARDEN = "have_warden"
+    """ 经营 当前有监狱长 """
 
     PL_ACTION_SLEEP = "pl_action_sleep"
     """ 行动 玩家正在睡觉 """

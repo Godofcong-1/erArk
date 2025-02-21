@@ -211,7 +211,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 二次确认H意外结束的归零结算
         special_end_list = constant.special_end_H_list
         if len(cache.pl_pre_status_instruce) and cache.pl_pre_status_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
-            default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
+            default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange(), now_time=datetime.datetime)
         # 如果在时停中搬运角色，则直接移动到玩家同一地点
         if (
             handle_premise.handle_time_stop_on(character_id) and 
@@ -228,7 +228,7 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
 
     # 将绝顶解放状态改为关闭绝顶寸止
     if handle_premise.handle_self_orgasm_edge_relase(character_id):
-        default.handle_self_orgasm_edge_off(character_id, 1, change_data=game_type.CharacterStatusChange, now_time=datetime.datetime)
+        default.handle_self_orgasm_edge_off(character_id, 1, change_data=game_type.CharacterStatusChange(), now_time=datetime.datetime)
     # 将时停解放状态改为False
     if handle_premise.handle_self_time_stop_orgasm_relase(character_id):
         character_data.h_state.time_stop_release = False

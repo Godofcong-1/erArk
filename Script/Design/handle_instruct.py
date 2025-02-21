@@ -1999,6 +1999,25 @@ def handle_do_h():
 
 
 @add_instruct(
+    constant.Instruct.PREPARE_TRAINING,
+    constant.InstructType.OBSCENITY,
+    _("调教前准备"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.T_IMPRISONMENT_1,
+     constant_promise.Premise.HAVE_WARDEN,
+     constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.TIRED_LE_74}
+)
+def handle_prepare_training():
+    """处理调教前准备指令"""
+    from Script.UI.Panel import confinement_and_training
+    character.init_character_behavior_start_time(0, cache.game_time)
+    confinement_and_training.prepare_training()
+    update.game_update_flow(10)
+
+
+@add_instruct(
     constant.Instruct.SLEEP_OBSCENITY,
     constant.InstructType.OBSCENITY,
     _("睡眠猥亵"),

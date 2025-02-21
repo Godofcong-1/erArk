@@ -29,6 +29,7 @@ def general_movement_module(character_id: int, target_scene: list, show_info_fla
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     target_scene_str = map_handle.get_map_system_path_str_for_list(target_scene)
+    # 非中文语言环境下特殊处理
     if normal_config.config_normal.language != "zh_CN":
         if target_scene_str not in map_handle.scene_path_edge:
             for i in range(len(target_scene)):

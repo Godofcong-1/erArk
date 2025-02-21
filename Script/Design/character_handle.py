@@ -412,7 +412,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     from Script.UI.Panel import invite_visitor_panel
 
     # 角色上线
-    default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+    default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
 
     character_data = cache.character_data[character_id]
     # 清零全特殊状态flag

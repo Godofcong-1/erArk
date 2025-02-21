@@ -67,7 +67,7 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
                 character_data: game_type.Character = cache.character_data[fugitive_id]
                 character_data.position = ["关押", f"{empty_room}"]
                 confinement_and_training.chara_become_prisoner(fugitive_id)
-                default.handle_chara_on_line(fugitive_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+                default.handle_chara_on_line(fugitive_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
 
     return_list = [satify_flag, type_text, full_text]
     return return_list
@@ -338,7 +338,7 @@ def judge_field_commission_finish():
             # 遍历派遣人员
             for character_id in send_npc_list:
                 cache.character_data[character_id].sp_flag.field_commission = 0
-                default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+                default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
             # 载具损坏与回收
             send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
@@ -1051,7 +1051,7 @@ class Field_Commission_Panel:
         from Script.Settle import default
         for character_id in self.send_npc_list:
             cache.character_data[character_id].sp_flag.field_commission = commision_id
-            default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+            default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
         # 结算派遣的载具
         now_vehicle_list = []
         for vehicle_id in self.send_vehicle_dict:

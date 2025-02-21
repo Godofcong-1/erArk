@@ -6814,6 +6814,18 @@ def handle_prisoner_daily_management_set(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.HAVE_WARDEN)
+def handle_have_warden(character_id: int) -> int:
+    """
+    当前有监狱长
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.rhodes_island.current_warden_id
+
+
 @add_premise(constant_promise.Premise.FLAG_BABY_EXIST)
 def handle_flag_baby_exist(character_id: int) -> int:
     """

@@ -231,7 +231,7 @@ class System_Setting_Panel:
             cache.forbidden_npc_id.add(npc_id)
             # 如果该干员已被招募，则离岛
             if npc_id in cache.npc_id_got:
-                default.handle_chara_off_line(npc_id, 1, change_data = game_type.CharacterStatusChange, now_time = cache.game_time)
+                default.handle_chara_off_line(npc_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 # 输出提示信息
                 now_draw = draw.NormalDraw()
                 info_text = _("\n\n{0}干员已离岛\n\n").format(cache.character_data[npc_id].name)
