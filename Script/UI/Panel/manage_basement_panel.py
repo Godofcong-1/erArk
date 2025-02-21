@@ -52,13 +52,22 @@ def change_npc_work_out(width):
         info_draw.text = info_text
         info_draw.draw()
         idle_npc_list = []
-        # 去掉玩家
-        cache.npc_id_got.discard(0)
-        # 去掉访客
-        id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
-        for id in id_list:
-            if id in cache.rhodes_island.all_work_npc_set[0]:
-                idle_npc_list.append(id)
+        for chara_cid in cache.npc_id_got:
+            # 去掉玩家
+            if chara_cid == 0:
+                continue
+            # 去掉访客
+            if chara_cid in cache.rhodes_island.visitor_info:
+                continue
+            # 去掉正在工作的干员
+            if not chara_cid in cache.rhodes_island.all_work_npc_set[0]:
+                continue
+            # 去掉2、7异常
+            if not handle_premise.handle_normal_2(chara_cid):
+                continue
+            if not handle_premise.handle_normal_7(chara_cid):
+                continue
+            idle_npc_list.append(chara_cid)
         department_panels[0].text_list = idle_npc_list
         department_panels[0].update()
         department_panels[0].draw()
@@ -367,7 +376,7 @@ class Manage_Basement_Panel:
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
         elif _("监禁调教系统") in son_panel:
             # 如果没有监狱长，则不显示监禁调教系统
-            if cache.rhodes_island.current_warden_id == 0:
+            if not handle_premise.handle_have_warden(0):
                 info_draw = draw.WaitDraw()
                 info_draw.text = _("\n○未任命监狱长，无法进入监禁调教系统\n")
                 info_draw.style = "gold_enrod"
@@ -681,7 +690,7 @@ class ChangeWorkButtonList:
         if work_id == 191:
             from Script.Design import map_handle
             # 如果有旧的监狱长，则解除监狱长身份，并重置宿舍
-            if cache.rhodes_island.current_warden_id != 0:
+            if not handle_premise.handle_have_warden(0):
                 old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
                 old_warden.work.work_type = 0
                 old_warden.dormitory = old_warden.pre_dormitory
