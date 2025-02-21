@@ -133,6 +133,7 @@ class Manage_Basement_Panel:
             _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
             _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
             _("疗养庭院"):[_("[农业系统]")],
+            _("关押区"):[_("[监禁调教系统]")],
             }
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -342,7 +343,7 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
@@ -364,6 +365,17 @@ class Manage_Basement_Panel:
             now_panel = manage_vehicle_panel.Manage_Vehicle_Panel(self.width)
         elif _("农业系统") in son_panel:
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
+        elif _("监禁调教系统") in son_panel:
+            # 如果没有监狱长，则不显示监禁调教系统
+            if cache.rhodes_island.current_warden_id == 0:
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n○未任命监狱长，无法进入监禁调教系统\n")
+                info_draw.style = "gold_enrod"
+                info_draw.width = self.width
+                info_draw.draw()
+                return
+            else:
+                now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
         now_panel.draw()
 
     def show_department(self, department: str):
