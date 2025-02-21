@@ -630,6 +630,8 @@ class SPECIAL_FLAG:
         """ 玩家正在装袋搬走的角色的id """
         self.imprisonment: bool = 0
         """ 被监禁状态 """
+        self.escaping: bool = 0
+        """ 逃跑中的状态 """
         self.sleep: bool = 0
         """ 要睡觉状态 """
         self.rest: bool = 0

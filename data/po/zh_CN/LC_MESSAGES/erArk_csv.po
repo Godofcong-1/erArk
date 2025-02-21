@@ -3905,7 +3905,7 @@ msgid "死魂靈安撫·續"
 msgstr ""
 
 #: .\data\csv\Commission.csv:75
-msgid "巫妖的學徒私下找上了你，希望舉辦一場...不那麼正規了安魂儀式，還叮囑千萬不要告訴老巫妖這檔事，這傢伙真的靠普嗎?"
+msgid "巫妖的學徒私下找上了你，希望舉辦一場...不那麼正規了安魂儀式，還叮囑千萬不要告訴老巫妖這檔事，這傢伙真的靠谱嗎?"
 msgstr ""
 
 #: .\data\csv\Commission.csv:76
@@ -3913,7 +3913,7 @@ msgid "構思的開始"
 msgstr ""
 
 #: .\data\csv\Commission.csv:76
-msgid "果然，這是就沒有那麼簡單就能由學徒來完成，不過在錫人先生的引導下，魂靈熔爐就變得像...娛樂設施一樣!!\n博士，我們能在不忙的情況下去給熔爐內的祖宗們講故事嗎!"
+msgid "果然，這就不是那麼簡單就能由學徒來完成，不過在錫人先生的引導下，魂靈熔爐就變得像...娛樂設施一樣!!\n博士，我們能在不忙的情況下去給熔爐內的祖宗們講故事嗎!"
 msgstr ""
 
 #: .\data\csv\Commission.csv:77
@@ -4004,6 +4004,14 @@ msgstr ""
 msgid "博士，您...唉? 為、為什麼她也在，博士你連這種事情都做得到嗎!!?\n什麼叫她已經失去把人包裹在源石繭的能力了，那就好，被慢慢變成繭的回憶我是無論如何都不想再試了"
 msgstr ""
 
+#: .\data\csv\Commission.csv:88
+msgid "追捕囚犯九"
+msgstr ""
+
+#: .\data\csv\Commission.csv:88
+msgid "囚犯九从监狱逃跑了，请尽快将其抓回。"
+msgstr ""
+
 #: .\data\csv\Confinement_Training_Setting.csv:6
 msgid "囚犯训练管理"
 msgstr ""
@@ -4053,7 +4061,7 @@ msgid "艰苦生活条件|标准生活条件|舒适生活条件"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:10
-msgid "调教前准备"
+msgid "调教前准备(未实装)"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:10

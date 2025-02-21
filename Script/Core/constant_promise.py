@@ -812,7 +812,7 @@ class Premise:
     #4:服装异常：大致全裸、全裸\n
     #5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然\n
     #6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气\n
-    #7:角色离线：装袋搬走、外勤、婴儿、他国外交访问\n
+    #7:角色离线：装袋搬走、外勤、婴儿、他国外交访问、逃跑中\n
     #"""
 
     NORMAL_ALL = "normal_all"
@@ -1225,6 +1225,14 @@ class Premise:
     """ 属性_特殊flag 交互对象没有被监禁 """
     T_IMPRISONMENT_1 = "t_imprisonment_1"
     """ 属性_特殊flag 交互对象被监禁 """
+    ESCAPING_1 = "escaping_1"
+    """ 属性_特殊flag 自身正在逃跑 """
+    ESCAPING_0 = "escaping_0"
+    """ 属性_特殊flag 自身没有在逃跑 """
+    T_ESCAPING_1 = "t_escaping_1"
+    """ 属性_特殊flag 交互对象正在逃跑 """
+    T_ESCAPING_0 = "t_escaping_0"
+    """ 属性_特殊flag 交互对象没有在逃跑 """
     SHOWER_FLAG_0 = "shower_flag_0"
     """ 属性_特殊flag 自身没有洗澡状态 """
     SHOWER_FLAG_GE_1 = "shower_flag_ge_1"

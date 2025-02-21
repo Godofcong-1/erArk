@@ -63,7 +63,7 @@ def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], dem
             fugitive_id = int(commission_data.reward.split("_")[1])
             # 需要有空房间
             empty_room = confinement_and_training.get_unused_prison_dormitory()
-            if empty_room == "":
+            if empty_room != "":
                 character_data: game_type.Character = cache.character_data[fugitive_id]
                 character_data.position = ["关押", f"{empty_room}"]
                 confinement_and_training.chara_become_prisoner(fugitive_id)
@@ -400,17 +400,17 @@ def find_nation_field_commission():
     # TODO: 未实装
 
 def create_temp_commission(
-    commission_id: int,
     name: str,
     level: int,
     type: str,
     people: int,
-    time_cost: int,
+    time: int,
     demand: str,
     reward: str,
     description: str,
+    commission_id: int = 10001,
     related_id: int = -1,
-    special: int = 0,
+    special: int = 1,
     country_id: int = -1,
 ):
     """
@@ -427,40 +427,42 @@ def create_temp_commission(
     temp_commission.level = level
     temp_commission.type = type
     temp_commission.people = people
-    temp_commission.time = time_cost
+    temp_commission.time = time
     temp_commission.demand = demand
     temp_commission.reward = reward
     temp_commission.description = description
     # 设置默认值
     temp_commission.related_id = related_id      # 默认无关联委托
-    temp_commission.special = special  # 默认为普通委托
+    temp_commission.special = special  # 默认为特殊委托
     temp_commission.country_id = country_id      # 通用委托，国家id设为 -1
 
     game_config.config_commission[commission_id] = temp_commission
     game_config.config_commission_id_by_country[country_id].append(commission_id)
+    # 对路径data\csv\Commission.csv进行更新，在最后一行加入新的委托数据
+    new_commission_data = f"{commission_id},{name},{country_id},{level},{type},{people},{time},{demand},{reward},{related_id},{special},{description}\n"
+    with open("data/csv/Commission.csv", "a", encoding="utf-8") as f:
+        f.write(new_commission_data)
 
-def create_capture_fugitive_commission(fugitive_id: int, commission_id: int = 9999):
+def create_capture_fugitive_commission(fugitive_id: int):
     """
-    创建“追捕逃跑囚犯干员”委托，要求派遣角色战斗技能之和至少为囚犯的两倍，耗时一周
+    创建“追捕逃跑囚犯干员”委托
     Keyword arguments:
     fugitive_id -- 逃跑囚犯干员编号
-    commission_id -- 委托编号，默认为9999
     """
     fugitive_character = cache.character_data[fugitive_id]
     fugitive_combat = fugitive_character.ability[42] * 2
     required_combat = fugitive_combat * 2
-    # 将需求格式化为a_42_xxxx
+    # 需求为2倍战斗能力
     demand_text = f"a_42_{required_combat}"
-    # 奖励留空，特殊奖励单独处理
+    # 特殊奖励单独处理
     create_temp_commission(
-        commission_id,
         name=_("追捕囚犯{0}").format(fugitive_character.name),
-        level=1,
+        level=2,
         type=_("追捕"),
         people=3,
-        time_cost=7,
+        time=3,
         demand=demand_text,
-        reward=_("追捕_{0}").format(fugitive_id),
+        reward=_("追捕_{0}_1").format(fugitive_id),
         description=_("囚犯{0}从监狱逃跑了，请尽快将其抓回。").format(fugitive_character.name),
     )
 

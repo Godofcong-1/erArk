@@ -42,6 +42,8 @@ def chose_assistant():
 
         # 去掉玩家
         cache.npc_id_got.discard(0)
+        # 去掉监狱长
+        cache.npc_id_got.discard(cache.rhodes_island.current_warden_id)
         # 去掉访客
         id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
         # print("debug id_list = ",id_list)

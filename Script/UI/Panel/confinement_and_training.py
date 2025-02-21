@@ -30,8 +30,8 @@ def settle_prisoners():
         # 逃脱成功
         if can_escape:
             escape_success(character_id)
-        # 逃脱失败
-        else:
+        # 逃脱对抗失败
+        elif escape_probability > 0:
             escape_fail(character_id)
 
 def calculate_escape_probability(character_id: int) -> float:
@@ -76,7 +76,7 @@ def calculate_escape_probability(character_id: int) -> float:
     else:
         cache.rhodes_island.current_prisoners[character_id] = [cache.game_time, add_escape_probability]
 
-    return add_escape_probability
+    return cache.rhodes_island.current_prisoners[character_id][1]
 
 def judge_can_escape(character_id: int) -> bool:
     """
@@ -142,6 +142,8 @@ def escape_success(character_id: int):
     escape_draw.style = 'warning'
     escape_draw.width = window_width
     escape_draw.draw()
+    # 进入逃跑中的状态
+    character_data.sp_flag.escaping = True
     # 移除囚犯信息
     cache.rhodes_island.current_prisoners.pop(character_id)
     # 囚犯离线
@@ -177,6 +179,7 @@ def chara_become_prisoner(character_id: int):
     # flag结算
     character_data.sp_flag.be_bagged = 0
     character_data.sp_flag.imprisonment = 1
+    character_data.sp_flag.escaping = False
     # 重置身体管理
     character_data.body_manage = attr_calculation.get_body_manage_zero()
     # 加入囚犯数据
