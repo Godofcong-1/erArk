@@ -49017,7 +49017,7 @@ msgid "如潮水般汹涌而来的快感从胸部蔓延到全身，{Name}的身�
 msgstr ""
 
 #: .\data\talk\system\second.csv:13
-msgid "{Name}因为兴奋而升温的阴蒂在冷空气下挺立着，空气中任何轻微的变化都使得{TargetName}的阴蒂更为敏感。"
+msgid "{Name}因为兴奋而升温的阴蒂在冷空气下挺立着，空气中任何轻微的变化都使得{Name}的阴蒂更为敏感。"
 msgstr ""
 
 #: .\data\talk\system\second.csv:14

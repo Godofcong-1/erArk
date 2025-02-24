@@ -9,10 +9,9 @@ from Script.Core import (
     py_cmd,
     flow_handle,
     constant,
-    rich_text,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, update, handle_talent, settle_behavior
+from Script.Design import attr_calculation, update, handle_talent, settle_behavior, handle_premise
 
 panel_info_data = {}
 
@@ -215,10 +214,18 @@ class Characterabi_show_Text:
         mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
         need_juel_all_value = mark_down_data.need_juel_all_value
         now_juel_all_value, juel_text = settle_behavior.get_now_juel_all_value_and_text_from_mark_down_data(mark_down_data_id, self.character_id)
+        # 关押区的等级效果
+        now_level = cache.rhodes_island.facility_level[19]
+        facility_cid = game_config.config_facility_effect_data[_("关押区")][int(now_level)]
+        facility_effect = game_config.config_facility_effect[facility_cid].effect
         # 文本信息
         info_text = _("○非正面刻印除了通过源石技艺降级之外，还可以通过消耗大量宝珠来直接降级\n\n")
         info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
         info_text += _("降级需要的总值为：{0}\n").format(need_juel_all_value)
+        # 被关押区等级影响
+        if handle_premise.handle_imprisonment_1(self.character_id):
+            need_juel_all_value = int(need_juel_all_value * (1 - facility_effect / 100))
+            info_text += _("该干员已被关押，当前关押区等级为{0}，降级所需宝珠值降低{1}%，降级所需宝珠值为{2}\n").format(now_level, facility_effect, need_juel_all_value)
         info_text += _("当前角色宝珠可以提供的总值为：")
         # 如果为空，则输出无
         if juel_text == "":
@@ -239,7 +246,7 @@ class Characterabi_show_Text:
             line_feed.draw()
             # 如果当前宝珠足够，绘制降低按钮
             if now_juel_all_value >= need_juel_all_value:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id, mark_down_data_id))
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id, mark_down_data_id, need_juel_all_value))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             # 绘制返回按钮
@@ -269,13 +276,12 @@ class Characterabi_show_Text:
         # 结算二段行为
         settle_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
 
-    def mark_down(self, ability_id: int, mark_down_data_id: int):
+    def mark_down(self, ability_id: int, mark_down_data_id: int, need_juel_all_value: int):
         """降级刻印"""
         # 刻印等级-1
         self.character_data.ability[ability_id] -= 1
         # 扣除宝珠
         mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
-        need_juel_all_value = mark_down_data.need_juel_all_value
         mark_down_data_need_juel_list = []
         mark_down_data_need_juel_list.append(mark_down_data.need_juel_1)
         mark_down_data_need_juel_list.append(mark_down_data.need_juel_2)

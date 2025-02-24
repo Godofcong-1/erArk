@@ -22,5 +22,5 @@ int,str,str,str,str,int,str,int,str,str,str
 161,药材种植员,疗养庭院,药田,Herb_Garden,0,无,1,641,315,在药田里种植药材等农作物
 162,花草种植员,疗养庭院,温室,Greenhouse,0,O71|1,1,642,315,在温室里种植花草等香料
 171,按摩师,大浴场,浴场休息区,Bath_Rest_Room,0,无,1,606,313|place_someone_not_massage_therapist,为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务
-191,监狱长,关押区,监狱长办公室,Warden_Office,2,无,1,652,320|prisoner_in_custody,管理关押区的干员
+191,监狱长,关押区,监狱长办公室,Warden_Office,2,无,1,652,320|prisoner_in_custody,管理和训练关押区的囚犯干员，只能有一位，不能兼任助理
 193,性爱练习生,关押区,调教室,Humiliation_Room,2,无,0,无,无,利用道具练习自己的性爱技巧

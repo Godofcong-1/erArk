@@ -65,9 +65,10 @@ def calculate_escape_probability(character_id: int) -> float:
     # 乘以系数后的逃脱概率
     add_escape_probability = total_skill * coefficient
 
-    # 已逃脱概率越高，则越难提升
+    # 已逃脱概率越高，则越难提升，最少也有1%
     max_probability = (100 - cache.rhodes_island.current_prisoners[character_id][1]) * 0.1
     add_escape_probability = int(min(add_escape_probability, max_probability))
+    add_escape_probability = max(add_escape_probability, 1)
 
     # 记录逃脱概率
     if character_id in cache.rhodes_island.current_prisoners:
@@ -100,8 +101,14 @@ def judge_can_escape(character_id: int) -> bool:
         if cache.rhodes_island.current_prisoners[character_id][1] > 30:
             return True, 0, 0
         return False, 0, 0
-    # 需要逃脱概率大于80
-    if cache.rhodes_island.current_prisoners[character_id][1] < 80:
+    # 关押区的等级效果
+    now_level = cache.rhodes_island.facility_level[19]
+    facility_cid = game_config.config_facility_effect_data[_("关押区")][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_cid].effect
+    # 需要逃脱概率大于50+关押区效果，最大99
+    need_escape_probability = 50 + facility_effect
+    need_escape_probability = min(need_escape_probability, 99)
+    if cache.rhodes_island.current_prisoners[character_id][1] < need_escape_probability:
         return False, 0, 0
 
     # 囚犯的逃脱概率
