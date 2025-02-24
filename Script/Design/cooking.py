@@ -534,8 +534,8 @@ def judge_accept_special_seasoning_food(character_id: int):
                     if target_data.talent[talent_id]:
                         target_data.sp_flag.find_food_weird = 1
                         return 1
-                # 进行概率判定，难度*5
-                if return_d100 * 5 <= accept_rate:
+                # 进行概率判定，难度*5，但不会高于50
+                if min(return_d100 * 5, 50) <= accept_rate:
                     target_data.sp_flag.find_food_weird = 0
                     return 1
                 else:
@@ -548,8 +548,8 @@ def judge_accept_special_seasoning_food(character_id: int):
                     if target_data.talent[talent_id]:
                         target_data.sp_flag.find_food_weird = 1
                         return 1
-                # 进行概率判定，难度*10
-                if return_d100 * 10 <= accept_rate:
+                # 进行概率判定，难度*10，但不会高于80
+                if min(return_d100 * 10, 80) <= accept_rate:
                     target_data.sp_flag.find_food_weird = 0
                     return 1
                 else:
@@ -557,8 +557,8 @@ def judge_accept_special_seasoning_food(character_id: int):
                     return 0
         # 药物判定
         elif pl_character_data.behavior.food_seasoning >= 101:
-            # 进行概率判定，难度*2
-            if return_d100 * 2 <= accept_rate:
+            # 进行概率判定，难度*2，但不会高于40
+            if min(return_d100 * 2, 40) <= accept_rate:
                 target_data.sp_flag.find_food_weird = 0
                 return 1
             else:
