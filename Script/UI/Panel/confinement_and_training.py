@@ -83,7 +83,7 @@ def judge_can_escape(character_id: int) -> bool:
     """
     判断指定角色是否能逃脱成功。\n
     逃脱成功条件：\n
-    1. 逃脱概率大于80\n
+    1. 逃脱概率大于阈值\n
     2. 如果存在监狱长，则需要对比逃脱角色和监狱长的战斗技能与体力气力\n
     Keyword arguments:\n
     character_id -- 角色id\n

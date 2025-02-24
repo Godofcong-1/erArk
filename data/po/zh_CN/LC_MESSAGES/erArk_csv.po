@@ -4004,6 +4004,94 @@ msgstr ""
 msgid "博士，您...唉? 為、為什麼她也在，博士你連這種事情都做得到嗎!!?\n什麼叫她已經失去把人包裹在源石繭的能力了，那就好，被慢慢變成繭的回憶我是無論如何都不想再試了"
 msgstr ""
 
+#: .\data\csv\Commission.csv:88
+msgid "迫近的歲獸"
+msgstr ""
+
+#: .\data\csv\Commission.csv:88
+msgid "博士，很抱歉在這個時間紧急打扰貴司。\n但龍門正面臨著前所未有的危機，我們需要一切人手來協助...守歲，詳細情況請等我們見面再說明"
+msgstr ""
+
+#: .\data\csv\Commission.csv:89
+msgid "溫度異常"
+msgstr ""
+
+#: .\data\csv\Commission.csv:89
+msgid "您好，您就是羅德島的博士嗎?\n有數個城區的溫度出現不明原因的上升，且沒有源石反應，請幫我派人查看一下"
+msgstr ""
+
+#: .\data\csv\Commission.csv:90
+msgid "兵俑"
+msgstr ""
+
+#: .\data\csv\Commission.csv:90
+msgid "整合運動? ...不對，是兵俑! 所有人，列陣! 歲獸來了"
+msgstr ""
+
+#: .\data\csv\Commission.csv:91
+msgid "超載"
+msgstr ""
+
+#: .\data\csv\Commission.csv:91
+msgid "超載當前所有的源石器械，最後查看到底哪裡沒有源石反應，歲獸一定就在那裏!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:92
+msgid "正主"
+msgstr ""
+
+#: .\data\csv\Commission.csv:92
+msgid "博士，我想我找到歲獸了，在我牽制住她的時候，麻煩趕快把人派來支援!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:93
+msgid "推進"
+msgstr ""
+
+#: .\data\csv\Commission.csv:93
+msgid "好啦，作為一個反派，沒有點壓迫感怎麼能行呢。我現在將從這裡，一步一步向前，直到走到你們大本營然後摧毀它，試著攔住我吧!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:94
+msgid "城防砲牌爆竹"
+msgstr ""
+
+#: .\data\csv\Commission.csv:94
+msgid "計畫就是，我堵在年的路徑上，然後拉響這個用城防炮核心改裝的二踢腳給年來一下狠的!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:95
+msgid "任性的導演"
+msgstr ""
+
+#: .\data\csv\Commission.csv:95
+msgid "不要，我的劇情還可以再加點什麼。龍門，站起來吧!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:96
+msgid "卡"
+msgstr ""
+
+#: .\data\csv\Commission.csv:96
+msgid "夠了!\n博士，【慶祝新年的小短片】的相關企劃全部取消，鎮壓年並把她帶回來，不要再讓她胡鬧下去了。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:97
+msgid "洪爐示歲"
+msgstr ""
+
+#: .\data\csv\Commission.csv:97
+msgid "哎呀~~博士，沒想到那個老女人這次這麼生氣，還押著上島好抵銷拍片的損失。我的電影也只能依據現有的畫面有多少剪多少囉~~"
+msgstr ""
+
+#: .\data\csv\Commission.csv:98
+msgid "人才派駐"
+msgstr ""
+
+#: .\data\csv\Commission.csv:98
+msgid "阿諾~~博士你好，經文月夫人推薦，我被派來加深與羅德島在工程方面的合作了"
+msgstr ""
+
 #: .\data\csv\Confinement_Training_Setting.csv:6
 msgid "囚犯训练管理"
 msgstr ""

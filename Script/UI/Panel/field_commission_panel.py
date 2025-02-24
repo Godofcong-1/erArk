@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.Design import game_time, attr_calculation, talk
+from Script.Design import game_time, attr_calculation, talk, handle_premise
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -256,7 +256,9 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                         cache.character_data[character_id].talent[item_id] = False
             # 角色
             elif text_list[0] == "c":
-                cache.rhodes_island.recruited_id.add(item_id)
+                # 如果未获得该干员，则获得
+                if item_id not in cache.npc_id_got and handle_premise.handle_normal_7(item_id):
+                    cache.rhodes_island.recruited_id.add(item_id)
                 item_name = cache.character_data[item_id].name
                 item_num = _("成为干员")
             # 特产
