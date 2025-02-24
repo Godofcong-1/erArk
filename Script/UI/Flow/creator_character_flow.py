@@ -386,10 +386,14 @@ class Character_FirstNPC:
         """ 是否显示一般干员选择面板 """
         self.show_talk_chara_handle_panel = True
         """ 是否显示口上干员选择面板 """
+        self.show_special_chara_handle_panel = False
+        """ 是否显示特殊干员选择面板 """
         self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         """ 当前显示的NPC列表 """
         self.talk_character_list = []
         """ 口上干员列表 """
+        self.special_chara_list = []
+        """ 特殊干员列表 """
         self.name_filter_flag = False
         """ 姓名筛选标记 """
         self.chest_filter_flag, self.chest_filter_id_dict = 0, {}
@@ -405,6 +409,7 @@ class Character_FirstNPC:
         for chara_id in self.id_list.copy():
             if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
                 self.id_list.remove(chara_id)
+                self.special_chara_list.append(chara_id)
 
         now_draw = panel.LeftDrawTextListPanel()
         now_draw.draw_list.append(line_feed_draw)
@@ -627,6 +632,40 @@ class Character_FirstNPC:
                     self.talk_chara_handle_panel.draw()
                     return_list.extend(self.talk_chara_handle_panel.return_list)
                     line_feed_draw.draw()
+
+            # 特殊角色
+            if self.show_special_chara_handle_panel:
+                draw_text = _(" ▼有口上但初期不可选的特殊干员")
+            else:
+                draw_text = _(" ▶有口上但初期不可选的特殊干员")
+            button_draw = draw.LeftButton(draw_text, draw_text, len(draw_text) * 2, cmd_func=self.show_handle_panel, args=(2))
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            line_feed_draw.draw()
+            # 特殊角色面板
+            if self.show_special_chara_handle_panel:
+                for character_id in self.special_chara_list:
+                    npc_character_data = cache.character_data[character_id]
+                    # 跳过没有口上的
+                    if not npc_character_data.talk_size:
+                        continue
+                    # 如果有口上颜色的话，使用口上颜色
+                    if npc_character_data.text_color:
+                        now_style = npc_character_data.name
+                    # 否则使用标准颜色
+                    else:
+                        now_style = "standard"
+                    # 绘制干员信息
+                    npc_draw = draw.LeftDraw()
+                    draw_text = f"[{str(npc_character_data.adv).rjust(4,'0')}]：{npc_character_data.name}"
+                    draw_text += f"({npc_character_data.talk_size}kb)"
+                    npc_draw.text = draw_text
+                    npc_draw.width = self.width
+                    npc_draw.style = now_style
+                    npc_draw.draw()
+            line_feed_draw.draw()
+            line_feed_draw.draw()
+
             # 返回按钮
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back_draw.draw()
@@ -642,6 +681,8 @@ class Character_FirstNPC:
             self.show_normal_handle_panel = not self.show_normal_handle_panel
         elif panel_id == 1:
             self.show_talk_chara_handle_panel = not self.show_talk_chara_handle_panel
+        elif panel_id == 2:
+            self.show_special_chara_handle_panel = not self.show_special_chara_handle_panel
 
     def prepare_filter(self):
         """完善各种过滤器"""
