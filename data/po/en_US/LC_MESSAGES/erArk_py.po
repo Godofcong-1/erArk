@@ -9307,3 +9307,365 @@ msgstr ""
 "\n"
 "{0} left Rhodes Island\n"
 "\n"
+
+msgid "炉芯终曲阿米娅"
+msgstr ""
+
+msgid ""
+"\n"
+"绘制设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid ""
+"\n"
+"难度设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid ""
+"\n"
+"文本生成AI设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid ""
+"\n"
+"体检设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid ""
+"\n"
+"监禁调教设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid ""
+"\n"
+"今日剩余待处理公务量为{0}，"
+msgstr ""
+
+msgid "且各区块设施运行基本正常，"
+msgstr ""
+
+msgid "且部分区块设施出现较大故障，"
+msgstr ""
+
+msgid "因此今日罗德岛的各设施的总效率为{0}%\n"
+msgstr ""
+
+msgid "医疗部设施损坏，效率降低{0}%\n"
+msgstr ""
+
+msgid "今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n"
+msgstr ""
+
+msgid "  今日有访客要离开罗德岛，且其留下意愿较低\n"
+msgstr ""
+
+msgid "管理监禁调教"
+msgstr ""
+
+msgid "调教前准备"
+msgstr ""
+
+msgid "继续灌肠"
+msgstr ""
+
+msgid "肛塞_已废弃"
+msgstr ""
+
+msgid "戴上眼罩"
+msgstr ""
+
+msgid "摘下眼罩"
+msgstr ""
+
+msgid "灌肠液_已废弃"
+msgstr ""
+
+msgid "太累了"
+msgstr ""
+
+msgid "，无法继续H"
+msgstr ""
+
+msgid "未找到目标素质，无法进行变化\n"
+msgstr ""
+
+msgid "娱乐"
+msgstr ""
+
+msgid "工作"
+msgstr ""
+
+msgid "{0}的后穴喷出了{1}ml的精液\n"
+msgstr ""
+
+msgid "训练场"
+msgstr ""
+
+msgid "{0}打算前往{1}\n"
+msgstr ""
+
+msgid " ▼有口上但初期不可选的特殊干员"
+msgstr ""
+
+msgid " ▶有口上但初期不可选的特殊干员"
+msgstr ""
+
+msgid ""
+"○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n"
+"\n"
+msgstr ""
+
+msgid "当前刻印及等级为：{0}{1}\n"
+msgstr ""
+
+msgid "升级需要的总值为：{0}\n"
+msgstr ""
+
+msgid "当前角色状态可以提供的总值为："
+msgstr ""
+
+msgid "减去提供值后需要消耗的宝珠为：{0} {1}，当前拥有：{2}\n"
+msgstr ""
+
+msgid "使用宝珠升级刻印"
+msgstr ""
+
+msgid "关押区"
+msgstr ""
+
+msgid ""
+"○非正面刻印除了通过源石技艺降级之外，还可以通过消耗大量宝珠来直接降级\n"
+"\n"
+msgstr ""
+
+msgid "降级需要的总值为：{0}\n"
+msgstr ""
+
+msgid "该干员已被关押，当前关押区等级为{0}，降级所需宝珠值降低{1}%，降级所需宝珠值为{2}\n"
+msgstr ""
+
+msgid "当前角色宝珠可以提供的总值为："
+msgstr ""
+
+msgid "使用宝珠降低刻印"
+msgstr ""
+
+msgid "刻印降级成功，{0}降至{1}级\n"
+msgstr ""
+
+msgid ""
+"\n"
+"该刻印当前无法使用宝珠升级\n"
+msgstr ""
+
+msgid "，由于设备故障，生产效率下降{0}%"
+msgstr ""
+
+msgid "筛选同区块干员"
+msgstr ""
+
+msgid "筛选无意识干员"
+msgstr ""
+
+msgid "{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。"
+msgstr ""
+
+msgid ""
+"你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。"
+msgstr ""
+
+msgid ""
+"以下是一些额外提供的参考信息，信息里包括了两个人的详细信息，你可以这些信息中挑选一部分来丰富对本次动作的描述，你只能直接使用这些信息本身，不能从这些信息中联想或者猜测其他的信息："
+msgstr ""
+
+msgid "当前的季节是{0}，当前的时间是{1}。"
+msgstr ""
+
+msgid "(生成失败，使用原文本)"
+msgstr ""
+
+msgid "  DeepSeek API密钥： {0}\n"
+msgstr ""
+
+msgid "  [更改DeepSeek API密钥] "
+msgstr ""
+
+msgid "更改DeepSeek API密钥"
+msgstr ""
+
+msgid "  [测试](最大延迟上限10秒) "
+msgstr ""
+
+msgid "  *此处使用的模型会默认使用官方api地址，如果是第三方或本地部署，请更改[base_url]\n"
+msgstr ""
+
+msgid "  *更多模型名请在官方文档中查阅，非该三类的模型将自动使用OpenAI格式来处理\n"
+msgstr ""
+
+msgid "  deepseek模型示例：deepseek-chat,deepseek-reasoner\n"
+msgstr ""
+
+msgid "  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n"
+msgstr ""
+
+msgid "  调用gpt、deepseek、gemini的官方api时url会自动填充，非官方api调用或本地api调用可在此手动输入\n"
+msgstr ""
+
+msgid "  在线调用示例：http://my.test.server.example.com:8083/v1\n"
+msgstr ""
+
+msgid "  本地调用示例：http://localhost:1234/v1\n"
+msgstr ""
+
+msgid "请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n"
+msgstr ""
+
+msgid "请输入您的DeepSeek API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  输入的API密钥不符合规范，请确认是否输入正确（第三方或本地部署没有格式需求）\n"
+"\n"
+msgstr ""
+
+msgid ""
+" \n"
+"  未设置模型，请先选择模型\n"
+msgstr ""
+
+msgid ""
+"\n"
+"囚犯{0}逃脱成功，请尽快派遣外勤干员进行追捕！\n"
+msgstr ""
+
+msgid "囚犯{0}逃脱失败，监狱长已经加强了对其的监视！\n"
+msgstr ""
+
+msgid "监禁调教管理"
+msgstr ""
+
+msgid " [进行污浊清洗] "
+msgstr ""
+
+msgid " [不进行污浊清洗] "
+msgstr ""
+
+msgid "污浊清洗"
+msgstr ""
+
+msgid " [使用润滑液提前润滑] "
+msgstr ""
+
+msgid " [不使用润滑液提前润滑] "
+msgstr ""
+
+msgid " [调整道具使用] "
+msgstr ""
+
+msgid "道具使用"
+msgstr ""
+
+msgid "○开启后，监狱长会在进行调教准备时依次使用选择道具\n"
+msgstr ""
+
+msgid "○消耗类道具会在使用时减少，数量不足时会自动关闭\n"
+msgstr ""
+
+msgid " [不使用] "
+msgstr ""
+
+msgid " [使用] "
+msgstr ""
+
+msgid "体检对象名单"
+msgstr ""
+
+msgid "追捕"
+msgstr ""
+
+msgid "成为干员"
+msgstr ""
+
+msgid "追捕囚犯{0}"
+msgstr ""
+
+msgid "追捕_{0}_1"
+msgstr ""
+
+msgid "囚犯{0}从监狱逃跑了，请尽快将其抓回。"
+msgstr ""
+
+msgid "(手制)"
+msgstr ""
+
+msgid "邀请干员参加群交"
+msgstr ""
+
+msgid "当前可邀请的干员有：\n"
+msgstr ""
+
+msgid "由于设备故障，生产效率下降{0}%，"
+msgstr ""
+
+msgid "[监禁调教系统]"
+msgstr ""
+
+msgid "监禁调教系统"
+msgstr ""
+
+msgid ""
+"\n"
+"○未任命监狱长，无法进入监禁调教系统\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  当前故障地点与设施损坏数："
+msgstr ""
+
+msgid ""
+"\n"
+"    无"
+msgstr ""
+
+msgid ""
+"\n"
+"  当前检修人员与其负责地点："
+msgstr ""
+
+msgid "[0000]通用文本  by {0}"
+msgstr ""
+
+msgid "当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n"
+msgstr ""
+
+msgid "  当前没有已招募待确认的干员\n"
+msgstr ""
+
+msgid "  当前已招募待确认的干员有："
+msgstr ""
+
+msgid " <装睡>"
+msgstr ""
+
+msgid "难度"
+msgstr ""
+
+msgid "绘制"
+msgstr ""
+
+msgid ""
+" \n"
+" ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n"
+"\n"
+msgstr ""
+
+msgid " ▼[{0}设置]"
+msgstr ""
+
+msgid " ▶[{0}设置]"
+msgstr ""
+
+msgid " [修改已禁止干员列表] "
+msgstr ""

@@ -320,6 +320,7 @@ class Characterabi_show_Text:
         # 输出降级信息
         info_draw = draw.WaitDraw()
         info_draw.text = _("刻印降级成功，{0}降至{1}级\n").format(game_config.config_ability[ability_id].name, self.character_data.ability[ability_id])
+        info_draw.style = "gold_enrod"
         info_draw.draw()
 
 
