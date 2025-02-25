@@ -33,7 +33,7 @@ When meeting BUG, check on the error.log file, and paste the content inside erro
 
 Update Log
 ----
-Look at update.log
+Look at [update.log](update.log)
 
 Copyright Info
 ----
@@ -55,7 +55,7 @@ Configure via the config.ini file, submit the feedback if there’s any compatib
 
 Relied on
 ----
-python3.9+
+python3.9
 
 Recommend to download through:
 
@@ -77,7 +77,7 @@ Localization
 ----
 The project used gettext for localization settings \
 Please head to catalog of data/po to create the corresponding language directories \
-Change the language at config.ini-> language \
+Change the language at [config.ini](config.ini)-> language \
 Plan for collaborative translations not determined yet
 
 Warning

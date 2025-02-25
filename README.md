@@ -32,7 +32,7 @@ BUG反馈
 
 更新日志
 ----
-见update.log
+见[update.log](update.log)
 
 著作权信息
 ----
@@ -50,11 +50,11 @@ Memory: \
 系统: \
 仅限win \
 配置调整: \
-可通过 config.ini 文件进行调整，出现兼容问题请提交反馈
+可通过 [config.ini](config.ini) 文件进行调整，出现兼容问题请提交反馈
 
 依赖
 ----
-python3.9+
+python3.9
 
 建议通过::
 
