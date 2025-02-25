@@ -73,7 +73,7 @@ class Characterabi_show_Text:
                     if (
                         ability_id in game_config.config_mark_up_data_by_ability and 
                         now_mark_level < 3 and 
-                        ability_id < 17
+                        ability_id not in {17, 18}
                         ):
                         button_draw = draw.LeftButton(
                             _(button_text),
