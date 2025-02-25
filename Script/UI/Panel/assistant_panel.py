@@ -40,12 +40,23 @@ def chose_assistant():
         line_feed.draw()
         line_feed.draw()
 
-        # 去掉玩家
-        cache.npc_id_got.discard(0)
-        # 去掉监狱长
-        cache.npc_id_got.discard(cache.rhodes_island.current_warden_id)
-        # 去掉访客
-        id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
+        # 显示助手列表
+        id_list = []
+        for i in cache.npc_id_got:
+            # 跳过玩家
+            if i == 0:
+                continue
+            # 跳过27异常
+            if handle_premise.handle_unnormal_27(i):
+                continue
+            # 跳过监狱长
+            if i == cache.rhodes_island.current_warden_id:
+                continue
+            # 跳过访客
+            if i in cache.rhodes_island.visitor_info:
+                continue
+            id_list.append(i)
+
         # print("debug id_list = ",id_list)
         handle_panel.text_list = id_list
         handle_panel.update()
