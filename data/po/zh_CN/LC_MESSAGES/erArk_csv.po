@@ -19249,7 +19249,7 @@ msgid "蓝渐变色光滑热裤"
 msgstr ""
 
 #: .\data\character\1013_假日威龙陈.csv:30
-msgid "在沙滩上行走需要这种东西吗"
+msgid "凉鞋"
 msgstr ""
 
 #: .\data\character\1014_耀骑士临光.csv:4
@@ -19442,10 +19442,6 @@ msgstr ""
 
 #: .\data\character\1026_百炼嘉维尔.csv:31
 msgid "黑色连袜护膝"
-msgstr ""
-
-#: .\data\character\1026_百炼嘉维尔.csv:32
-msgid "凉鞋"
 msgstr ""
 
 #: .\data\character\1028_缄默德克萨斯.csv:4

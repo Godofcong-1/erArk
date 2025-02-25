@@ -92,6 +92,17 @@ class InScenePanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("场景"), self.width)
+        # 场景角色数据
+        character_handle_panel = panel.PageHandlePanel(
+            [],
+            see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
+            20,
+            10,
+            self.width,
+            1,
+            0,
+            999,
+        )
         while 1:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
@@ -109,18 +120,7 @@ class InScenePanel:
             # 场景数据
             scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-            # 场景角色数据
-            character_handle_panel = panel.PageHandlePanel(
-                [],
-                see_character_info_panel.SeeCharacterInfoByNameDrawInScene,
-                20,
-                10,
-                self.width,
-                1,
-                0,
-                999,
-                null_button_text=pl_character_data.target_character_id,
-            )
+            character_handle_panel.null_button_text=pl_character_data.target_character_id
             character_set = scene_data.character_list.copy()
             character_set.remove(0) # 移除玩家自己
             if cache.is_collection:
@@ -158,6 +158,9 @@ class InScenePanel:
             # 当前位置的角色一览
             meet_draw = draw.NormalDraw()
             meet_draw.text = _("当前位置的角色一览:    ")
+            # 如果角色数量大于9个人，则换行
+            if len(character_list) > 9:
+                meet_draw.text += "\n"
             # meet_draw.width = self.width
             cache.wframe_mouse.w_frame_skip_wait_mouse = 0
             character_handle_panel.null_button_text = pl_character_data.target_character_id
