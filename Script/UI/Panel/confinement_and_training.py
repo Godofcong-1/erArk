@@ -433,7 +433,7 @@ class Confinement_And_Training_Manage_Panel:
         line = draw.LineDraw("-", self.width)
         line.draw()
         now_draw = draw.WaitDraw()
-        setting_data = game_config.config_physical_exam_setting[cid]
+        setting_data = game_config.config_confinement_training_setting[cid]
         info_text = f"\n {setting_data.info}\n"
         now_draw.text = info_text
         now_draw.width = self.width
