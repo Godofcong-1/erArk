@@ -7833,7 +7833,7 @@ def handle_train_prisoners_add_adjust(
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
-            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
+            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id - 5, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
             exp_id = target_part_id + 56
             default_experience.base_chara_experience_common_settle(now_prisoner_cid, exp_id, change_data_to_target_change = change_data)
     # 苦痛快感训练
@@ -7853,7 +7853,7 @@ def handle_train_prisoners_add_adjust(
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
-            base_chara_state_common_settle(now_prisoner_cid, add_time, target_part_id, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
+            base_chara_state_common_settle(now_prisoner_cid, add_time, 9, 0, ability_level = character_data.ability[target_part_id], change_data_to_target_change = change_data)
             base_chara_state_common_settle(now_prisoner_cid, add_time, 9, 0, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
     # 身体锻炼训练
     elif now_train_id == 5:
