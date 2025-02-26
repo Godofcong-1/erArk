@@ -451,7 +451,8 @@ class Confinement_And_Training_Manage_Panel:
         line.draw()
         now_draw = draw.WaitDraw()
         setting_data = game_config.config_confinement_training_setting[cid]
-        info_text = f"\n {setting_data.info}\n"
+        new_info = setting_data.info.replace("\\n", "\n")
+        info_text = f"\n {new_info}\n"
         now_draw.text = info_text
         now_draw.width = self.width
         now_draw.draw()
