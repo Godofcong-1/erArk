@@ -366,6 +366,22 @@ class Confinement_And_Training_Manage_Panel:
             now_draw.width = self.width
             now_draw.draw()
 
+            all_info_draw = draw.NormalDraw()
+            now_text = "   "
+            if len(cache.rhodes_island.current_prisoners) == 0:
+                now_text += _("目前没有囚犯\n")
+            else:
+                now_text += _("目前的囚犯有：")
+                for chara_id in cache.rhodes_island.current_prisoners:
+                    tem_character_data: game_type.Character = cache.character_data[chara_id]
+                    live_room = tem_character_data.dormitory.split("\\")[-1]
+                    now_text += _(" [{0}]{1} - {2}  ").format(str(tem_character_data.adv).rjust(4,'0'), tem_character_data.name, live_room)
+                now_text += f"\n"
+
+            all_info_draw.text = now_text
+            all_info_draw.width = self.width
+            all_info_draw.draw()
+
             # 遍历全部设置
             for cid in game_config.config_confinement_training_setting:
                 line_feed.draw()
@@ -418,6 +434,7 @@ class Confinement_And_Training_Manage_Panel:
                     tool_button.draw()
                     return_list.append(tool_button.return_text)
 
+            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
