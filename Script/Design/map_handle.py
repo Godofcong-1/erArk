@@ -650,6 +650,9 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
         # 被邀请群交的角色可以进
         elif character_data.sp_flag.go_to_join_group_sex:
             pass
+        # 牢房可以进
+        elif "Prison" in now_scene_data.scene_tag:
+            pass
         else:
             # 如果是玩家的话输出提示信息
             if character_id == 0:
