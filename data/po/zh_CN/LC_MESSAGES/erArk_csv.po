@@ -14301,7 +14301,7 @@ msgid "监狱长办公室"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:25
-msgid "管理和训练关押区的囚犯干员，只能有一位，不能兼任助理"
+msgid "管理和训练关押区的囚犯干员(需要3级陷落且有囚犯)(只能有一位，不能兼任助理)"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:26
@@ -14313,7 +14313,7 @@ msgid "调教室"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:26
-msgid "利用道具练习自己的性爱技巧"
+msgid "利用道具练习自己的性爱技巧(需要身体管理-性爱练习)"
 msgstr ""
 
 #: .\data\csv\World_Setting.csv:7
