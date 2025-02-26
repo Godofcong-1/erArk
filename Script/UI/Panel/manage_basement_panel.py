@@ -1,9 +1,9 @@
 from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import basement, attr_calculation, handle_premise
+from Script.Design import basement, attr_calculation, handle_premise, game_time
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import manage_vehicle_panel, see_character_info_panel
+from Script.UI.Panel import  see_character_info_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -240,12 +240,13 @@ class Manage_Basement_Panel:
                 work_people_now,people_max = cache.rhodes_island.work_people_now,len(cache.npc_id_got)
 
                 all_info_draw.text = _("\n 当前工作中干员/总干员：{0}/{1}").format(work_people_now, people_max)
-                all_info_draw.text += _("\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作位的部门是未实装的空白部门\n\n")
+                all_info_draw.text += _("\n ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作的部门是未实装的空白部门\n\n")
                 all_info_draw.draw()
 
                 # 遍历全部门
                 for department in department_text_list:
                     department_text = f"[{department}]"
+                    draw_width = max(len(department_text) * 2, 18)
 
                     # 输出部门按钮
                     space_draw = draw.NormalDraw()
@@ -254,28 +255,46 @@ class Manage_Basement_Panel:
                     button_draw = draw.CenterButton(
                         department_text,
                         f"\n{department}",
-                        len(department_text) * 2,
+                        draw_width,
                         cmd_func=self.show_department,
                         args=(department,),
                     )
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
 
+                    # 输出冒号
+                    space_draw = draw.NormalDraw()
+                    space_draw.text = "："
+                    space_draw.draw()
+
                     # 如果该部门有子系统的话，绘制子系统按钮
+                    department_count = 2
                     if department in department_son_panel_button_dict:
                         for button_text in department_son_panel_button_dict[department]:
+                            draw_width = max(len(button_text) * 2, 22)
                             button_draw = draw.CenterButton(
                                 button_text,
                                 f"\n{button_text}",
-                                len(button_text) * 2,
+                                draw_width,
                                 cmd_func=self.jump_to_son_panel,
                                 args=(button_text)
                             )
                             button_draw.draw()
                             return_list.append(button_draw.return_text)
+                            department_count -= 1
+                    # 为没有部门子系统的部门补齐空白绘制
+                    while department_count > 0:
+                        space_draw = draw.NormalDraw()
+                        space_draw.text = " " * 22
+                        space_draw.draw()
+                        department_count -= 1
+                    # 输出冒号
+                    space_draw = draw.NormalDraw()
+                    space_draw.text = "："
+                    space_draw.draw()
 
                     # 输出部门工作人员数量
-                    all_info_draw.text = "："
+                    all_info_draw.text = ""
                     for all_cid in game_config.config_work_type:
                         work_data = game_config.config_work_type[all_cid]
                         if work_data.department == department:
@@ -288,6 +307,9 @@ class Manage_Basement_Panel:
                         for cid in cache.rhodes_island.ongoing_field_commissions:
                             field_people_now += len(cache.rhodes_island.ongoing_field_commissions[cid][0])
                         all_info_draw.text += _("  外勤干员 — {0}").format(field_people_now)
+                    elif department == _("关押区"):
+                        prisoner_now = len(cache.rhodes_island.current_prisoners)
+                        all_info_draw.text += _("  囚犯 — {0}").format(prisoner_now)
                     all_info_draw.draw()
                     line_feed.draw()
 
@@ -509,11 +531,45 @@ class Manage_Basement_Panel:
                         dormitory_count += 1
                 now_text += "\n"
 
+            elif department == _("机库"):
+                now_text += _("\n  当前外勤委托情况：")
+                # 输出委托信息
+                for commision_id in cache.rhodes_island.ongoing_field_commissions:
+                    commision_data = game_config.config_commission[commision_id]
+                    commision_name = commision_data.name
+                    # 参与干员名字
+                    commision_chara_id_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
+                    commision_chara_name_list = [cache.character_data[chara_id].name for chara_id in commision_chara_id_list]
+                    commision_chara_name_str = "、".join(commision_chara_name_list)
+                    # 剩余返回天数
+                    return_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
+                    last_days = game_time.count_day_for_datetime(cache.game_time, return_time)
+                    if last_days <= 0:
+                        last_days = _("不足一天")
+                    else:
+                        last_days = _("{0}天").format(last_days)
+                    now_text += _("\n  [{0}]：{1}，剩余{2}").format(commision_name, commision_chara_name_str, last_days)
+                if not len(cache.rhodes_island.ongoing_field_commissions):
+                    now_text += _("\n  无")
+                now_text += _("\n  当前载具情况：")
+                # 输出载具信息
+                for vehicle_id in cache.rhodes_island.vehicles:
+                    # 如果未持有，则跳过
+                    if cache.rhodes_island.vehicles[vehicle_id][0] == 0 and cache.rhodes_island.vehicles[vehicle_id][1] == 0:
+                        continue
+                    vehicle_data = game_config.config_vehicle[vehicle_id]
+                    vehicle_name = vehicle_data.name
+                    # 载具数量
+                    now_vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
+                    out_vehicle_count = cache.rhodes_island.vehicles[vehicle_id][1]
+                    now_text += _("\n  [{0}]：可用{1}辆，出动中{2}辆").format(vehicle_name, now_vehicle_count, out_vehicle_count)
+
             now_draw.text = now_text
             now_draw.width = self.width
             now_draw.draw()
             line_feed.draw()
 
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
