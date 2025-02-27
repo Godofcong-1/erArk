@@ -176,7 +176,7 @@ class CVEMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cve_b1 = QComboBox()
-        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶", "嵌套父事件", "指定角色id为交互对象"])
+        self.cve_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "口上用flag", "绝顶", "嵌套父事件", "指定角色id为交互对象", "移动"])
         self.cve_b1.setCurrentIndex(0)
         self.cve_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cve_b1)
@@ -262,6 +262,8 @@ class CVEMenu(QDialog):
             cve_b_value = "Father|" + self.cve_b2.currentText().split("|")[0]
         elif cve_b1 == "指定角色id为交互对象":
             cve_b_value = "ChangeTargetId|0"
+        elif cve_b1 == "移动":
+            cve_b_value = "Move|0"
         cve_c = self.cve_c.currentText()
         if cve_c == "增加":
             cve_c_value = "G"
@@ -269,6 +271,8 @@ class CVEMenu(QDialog):
             cve_c_value = "L"
         elif cve_c == "变为":
             cve_c_value = "E"
+        else:
+            cve_c_value = cve_c
         cve_d = self.cve_d.toPlainText()
         cve_d_value = cve_d
         # 空值时默认为0
@@ -323,6 +327,7 @@ class CVEMenu(QDialog):
         self.cve_a.setVisible(True)
         self.cve_b2.setVisible(True)
         self.reset_c()
+        self.cve_d.setPlainText("0")
         self.cve_d.setVisible(True)
         if index == 0:
             self.cve_b2.setVisible(False)
@@ -394,6 +399,16 @@ class CVEMenu(QDialog):
             self.cve_c.setVisible(False)
             self.cve_d.setVisible(False)
             self.cve_text.setText("选择当前场景中的指定id的角色作为自己的交互对象\n\n需要搭配综合数值前提中的，当前场景中有特定id的角色存在，的前提一同使用，当前场景中没有该id角色时会无法起效\n当有多个结算时，本结算需要放到第一个，以便第一个执行\n玩家的id固定为0")
+        elif index == 12:
+            self.cve_b2.setVisible(False)
+            self.cve_c.clear()
+            self.cve_c.addItems(["寻路"])
+            self.cve_c.addItems(["瞬移"])
+            self.cve_c.setCurrentIndex(0)
+            # self.cve_d的值改为Dr_Office，宽度改为200
+            self.cve_d.setPlainText("Dr_Office")
+            self.cve_d.setFixedWidth(200)
+            self.cve_text.setText("用来实现角色在场景中的移动，通过输入一个Scenetag而移动到一个地点\n\n依靠地点的[Scenetag]属性来指定目标地点，在游戏根目录下的[data\map]文件夹中有全地点的数据\n如[data\map\中枢\博士办公室\Scene.json]可以查询到[博士办公室]的 SceneTag = Dr_Office\n每个地点的SceneTag都至少有一个，可以有多个\n如果输入的SceneTag不只有一个，而是有多个对应地点，则随机选取一个为目标进行移动\n如果SceneTag没有对应地点，则不进行移动\n如[龙门食坊]有以下SceneTag：Lungmen_Eatery|Restaurant|Food_Shop\nLungmen_Eatery：仅龙门食坊有的单独tag\nRestaurant：包括龙门食坊在内的，贸易街的所有餐馆都有该tag\nFood_Shop：包括贸易街餐馆、小贩、食堂取餐区在内的所有可以买食物的地方都有该tag\n\n移动方式有[寻路]和[瞬移]两种，推荐使用[寻路]，仅在特殊情况下再使用[瞬移]\n[寻路]：游戏中角色正常移动方式，角色会获取从当前地点到目标地点的完整路径，随着时间的前进，每步移动到下一个地点\n        每次移动时判定时间流逝的影响、路上遇到的其他角色、每个地点的情况等结算，直到抵达最终目标地点而停止\n        中途可能因打招呼、疲劳休息等结算而短暂搁置到处理完毕后再继续移动，或因门锁、未开放等结算而提前终止移动\n        玩家的移动会自带时间前进，NPC的移动不带时间前进\n[瞬移]：无视所有情况，跳过一切判定，不进行任何其他结算，直接从当前位置瞬间移动到指定位置")
 
         self.cve_b = self.cve_b2
 

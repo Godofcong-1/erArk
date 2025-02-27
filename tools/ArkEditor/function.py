@@ -88,6 +88,7 @@ def read_CVE(cve_value_str: str):
     cve_str_list[2] = cve_str_list[2].replace("Flag", "口上用flag")
     cve_str_list[2] = cve_str_list[2].replace("Father", "嵌套父事件")
     cve_str_list[2] = cve_str_list[2].replace("ChangeTargetId", "指定角色id为交互对象")
+    cve_str_list[2] = cve_str_list[2].replace("Move|0", "移动")
     cve_str_list[2] = cve_str_list[2].replace("F", "好感")
     cve_str_list[2] = cve_str_list[2].replace("X", "信赖")
     cve_str_list[3] = cve_str_list[3].replace("G", "增加")

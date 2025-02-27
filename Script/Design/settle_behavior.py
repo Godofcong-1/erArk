@@ -1385,13 +1385,16 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         "Climax": "climax",
         "Father": "father",
         "ChangeTargetId": "change_target_id",
+        "Move": "move",
     }
     
     # 创建一个字典来映射操作
     operation_mapping = {
         "G": lambda x, y: x + y,
         "L": lambda x, y: x - y,
-        "E": lambda x, y: y
+        "E": lambda x, y: y,
+        "寻路": None,
+        "瞬移": None,
     }
     
     # 获取属性名和操作
@@ -1437,6 +1440,31 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             # 检查目标角色是否与自己位于同一位置
             if character_data.position == final_character_data.position:
                 character_data.target_character_id = final_character_id
+                return 1
+            return 0
+        # 移动
+        elif attribute_name == "move":
+            from Script.Design import map_handle, character_move
+            from Script.StateMachine import default
+            # 获取目标地点的tag
+            # 将序号3及之后的effect_all_value_list拼回一个str，中间用_连接
+            move_tag = "_".join(effect_all_value_list[3:])
+            if move_tag in constant.place_data:
+                # 获取目标地点的系统路径
+                to_place = map_handle.get_map_system_path_for_str(
+                    random.choice(constant.place_data[move_tag])
+                )
+                # 判断是寻路移动还是瞬移
+                if operation == "寻路":
+                    # 玩家进行寻路移动
+                    if final_character_id == 0:
+                        character_move.own_charcter_move(to_place)
+                    # NPC进行寻路移动
+                    else:
+                        default.general_movement_module(final_character_id, to_place)
+                elif operation == "瞬移":
+                    # 调用map_handle的character_move_scene方法，输入旧、新地点路径和角色id
+                    map_handle.character_move_scene(final_character_data.position, to_place, final_character_id)
                 return 1
             return 0
         else:

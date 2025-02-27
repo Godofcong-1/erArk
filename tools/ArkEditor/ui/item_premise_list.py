@@ -46,7 +46,7 @@ class ItemPremiseList(QWidget):
         main_layout.addLayout(title_layout)
         # 文字说明
         self.info_label = QLabel()
-        self.info_label.setText("○右键删除该前提，双击替换该前提\n○指令结算需要区分触发者自己和交互对象，二段结算仅区分触发者自己，没有交互对象")
+        self.info_label.setText("○右键删除该前提，双击替换该前提\n○指令(一段结算)需要区分触发者自己和交互对象\n○二段结算仅触发者自己，没有交互对象")
         # 前提列表布局
         list_layout = QHBoxLayout()
         self.item_list = QListWidget()
@@ -88,7 +88,7 @@ class ItemPremiseList(QWidget):
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
-        draw_text = f"○右键删除该前提，双击替换该前提\n○指令结算需要区分触发者自己和交互对象，二段结算仅区分触发者自己，没有交互对象\n○当前该文本的出现权重=1"
+        draw_text = f"○右键删除该前提，双击替换该前提\n○指令(一段结算)需要区分触发者自己和交互对象\n○二段结算仅触发者自己，没有交互对象\n○当前该文本的出现权重=1"
         if add_now_talk_weight:
             draw_text += f" + {add_now_talk_weight}"
             final_weight += add_now_talk_weight

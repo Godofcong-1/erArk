@@ -1,7 +1,5 @@
 import random
-import datetime
 from types import FunctionType
-from Script.Settle import default
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_premise_place, handle_npc_ai
 from Script.Core import get_text, cache_control, game_type, constant
