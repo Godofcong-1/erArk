@@ -14352,11 +14352,19 @@ msgstr ""
 msgid "#96dfe4"
 msgstr ""
 
-#: .\data\character\0001_阿米娅.csv:36
+#: .\data\character\0001_阿米娅.csv:37
 msgid "抑制戒指 必带"
 msgstr ""
 
+#: .\data\character\0003_凯尔希.csv:13
+msgid "一个奇特的怀表，从未在诸国见过的制式，上面刻有四个年份日期，以及歪歪扭扭的几个字母。"
+msgstr ""
+
 #: .\data\character\0003_凯尔希.csv:14
+msgid ""
+msgstr ""
+
+#: .\data\character\0003_凯尔希.csv:15
 msgid "#dfe86c"
 msgstr ""
 
@@ -22030,10 +22038,6 @@ msgstr ""
 
 #: Event:94bae913-42a5-44da-a682-04f0f3104bc6
 msgid "最终一起在最后一份文件上签名的两人，保持着插入的状态一起瘫在了椅子上休息了一会。\n各种各样的黏糊糊的体液，从两人已经融化在了一起，散发着热气腾腾的水雾的结合部中漏了出来。\n最后还是{PlayerName}托着{TargetName}已经用不上力气的丰满屁股，让{TargetName}趴在了办公桌上拔出来了被吮吸了好久的肉棒。\n啵唧~随着肉尖的拔出，{TargetName}娇嫩的小穴也随之合拢，从蜜裂中一点点地滴出储存在里面的汁液。\n“呼……呼唔……嗯。{PlayerNickName}插了好久在里面，就算是中途高潮了，还硬邦邦的填满在里面。”{TargetName}转过来用陶醉了的眼神望着身后的雄性。\n“鬼畜。”休息了好一会之后，{TargetName}才回复了力气，软绵绵地从办公桌上滑下来，捂着小腹将自己的衣服穿了回去。\n“嗯，唔{PlayerName}的感觉还残留在里面。硬邦邦的，变不回去了。”\n……\n“啊，糟糕了。”{TargetName}拿起刚刚被自己压在下面的文件，上面隐隐约约用汗水拓印下了少女身体的轮廓形状。\n“要是被凯尔希女士看到了的话又要被骂了。”"
-msgstr ""
-
-#: Event:efffc778-dcd2-47d6-af78-5149c5923633
-msgid ""
 msgstr ""
 
 #: Event:a2cb2ea3-7599-4ac2-b76f-bb62c575be27
