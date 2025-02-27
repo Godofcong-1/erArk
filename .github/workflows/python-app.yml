@@ -63,6 +63,7 @@ jobs:
         run: |
           New-Item -ItemType Directory -Force dist_ArkEditor
           New-Item -ItemType Directory -Force dist_ArkEditor/csv
+          New-Item -ItemType Directory -Force dist_ArkEditor/例子
           Copy-Item dist/main.exe dist_ArkEditor/ -Force
           Copy-Item tools/ArkEditor/csv/Premise.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/PremiseGroup.csv dist_ArkEditor/csv/
@@ -83,7 +84,8 @@ jobs:
           Copy-Item example/0999_口上编辑器教程文件.csv dist_ArkEditor/
           Copy-Item example/0999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/0999_事件编辑器教程文件.json dist_ArkEditor/
-          Copy-Item example/事件测试用例_移动.json dist_ArkEditor/
+          Copy-Item example/事件测试用例_移动.json dist_ArkEditor/例子/
+          Copy-Item example/事件测试用例_自定义指令.json dist_ArkEditor/例子/
 
       - name: Get the last merged commit SHA from the master branch
         run: |
