@@ -112,6 +112,7 @@ place_someone_hp_1,SCENE_SOMEONE_HP_1,地点_角色,该地点有HP1或太疲劳�
 place_someone_unconscious,SCENE_SOMEONE_UNCONSCIOUS,地点_角色,该地点有无意识状态的角色
 place_someone_not_unconscious,SCENE_SOMEONE_NOT_UNCONSCIOUS,地点_角色,该地点有非无意识状态的角色
 place_all_unconscious,SCENE_ALL_UNCONSCIOUS,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识状态
+place_all_unconscious_or_sleep,SCENE_ALL_UNCONSCIOUS_OR_SLEEP,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识或睡眠状态
 place_is_masturebate,SCENE_SOMEONE_IS_MASTUREBATE,地点_角色,该地点有角色在自慰
 place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
 place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
@@ -615,6 +616,10 @@ imprisonment_1,IMPRISONMENT_1,属性_特殊flag,自身被监禁
 imprisonment_0,IMPRISONMENT_0,属性_特殊flag,自身没有被监禁
 t_imprisonment_0,T_IMPRISONMENT_0,属性_特殊flag,交互对象没有被监禁
 t_imprisonment_1,T_IMPRISONMENT_1,属性_特殊flag,交互对象被监禁
+escaping_1,ESCAPING_1,属性_特殊flag,自身正在逃跑
+escaping_0,ESCAPING_0,属性_特殊flag,自身没有在逃跑
+t_escaping_1,T_ESCAPING_1,属性_特殊flag,交互对象正在逃跑
+t_escaping_0,T_ESCAPING_0,属性_特殊flag,交互对象没有在逃跑
 shower_flag_0,SHOWER_FLAG_0,属性_特殊flag,自身没有洗澡状态
 shower_flag_ge_1,SHOWER_FLAG_GE_1,属性_特殊flag,自身有某一种洗澡状态
 shower_flag_123,SHOWER_FLAG_123,属性_特殊flag,自身有正在进行的洗澡状态
@@ -690,6 +695,9 @@ morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,属性_特殊flag,自身已�
 night_salutation_flag_0,NIGHT_SALUTATION_FLAG_0,属性_特殊flag,自身没有晚安问候状态
 night_salutation_flag_1,NIGHT_SALUTATION_FLAG_1,属性_特殊flag,自身要晚安问候状态（权重100）
 night_salutation_flag_2,NIGHT_SALUTATION_FLAG_2,属性_特殊flag,自身已晚安问候状态
+self_visitor_flag_1,SELF_VISITOR_FLAG_1,属性_特殊flag,自身是访问中的访客
+target_visitor_flag_1,TARGET_VISITOR_FLAG_1,属性_特殊flag,交互对象是访问中的访客
+target_not_visitor_flag_1,TARGET_NOT_VISITOR_FLAG_1,属性_特殊flag,交互对象不是访问中的访客
 aromatherapy_flag_0,AROMATHERAPY_FLAG_0,属性_特殊flag,自身没有香薰疗愈状态
 aromatherapy_flag_1,AROMATHERAPY_FLAG_1,属性_特殊flag,自身香薰疗愈-回复
 aromatherapy_flag_2,AROMATHERAPY_FLAG_2,属性_特殊flag,自身香薰疗愈-习得
@@ -1522,6 +1530,7 @@ have_office_work_need_to_do,HAVE_OFFICE_WORK_NEED_TO_DO,经营,有需要处理�
 pink_certificate_g_10,PINK_CERTIFICATE_G_10,经营,拥有粉红凭证数量大于10
 prisoner_in_custody,PRISONER_IN_CUSTODY,经营,当前有关押的囚犯
 prisoner_daily_management_set,PRISONER_DAILY_MANAGEMENT_SET,经营,已设定对囚犯的日常管理
+have_warden,HAVE_WARDEN,经营,当前有监狱长
 
 pl_action_sleep,PL_ACTION_SLEEP,行动,玩家正在睡觉
 pl_action_not_sleep,PL_ACTION_NOT_SLEEP,行动,玩家没有在睡觉

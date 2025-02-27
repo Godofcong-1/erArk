@@ -426,6 +426,33 @@ def handle_scene_all_unconscious(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_ALL_UNCONSCIOUS_OR_SLEEP)
+def handle_scene_all_unconscious_or_sleep(character_id: int) -> int:
+    """
+    该地点有玩家以外的角色，且所有角色都处于无意识或睡眠状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id:
+                if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                    continue
+                if handle_premise.handle_action_sleep(chara_id):
+                    continue
+                return 0
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_IS_MASTUREBATE)
 def handle_scene_someone_is_masturebate(character_id: int) -> int:
     """

@@ -228,6 +228,8 @@ class Premise:
     """ 地点_角色 该地点有非无意识状态的角色 """
     SCENE_ALL_UNCONSCIOUS = "place_all_unconscious"
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都处于无意识状态 """
+    SCENE_ALL_UNCONSCIOUS_OR_SLEEP = "place_all_unconscious_or_sleep"
+    """ 地点_角色 该地点有玩家以外的角色，且所有角色都处于无意识或睡眠状态 """
     SCENE_SOMEONE_IS_MASTUREBATE = "place_is_masturebate"
     """ 地点_角色 该地点有角色在自慰 """
     SCENE_OVER_ONE = "place_over_one"
