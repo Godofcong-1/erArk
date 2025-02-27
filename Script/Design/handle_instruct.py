@@ -216,7 +216,7 @@ def handle_comprehensive_state_effect(
     _("休息"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
         constant_promise.Premise.TIRED_LE_84
     },
     constant.CharacterStatus.STATUS_REST
@@ -297,7 +297,7 @@ def handle_see_attr():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_LE_84,
-     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
     },
     constant.CharacterStatus.STATUS_CHAT
 )
@@ -1812,7 +1812,7 @@ def handle_confession():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TARGET_OBEY_2,
      constant_promise.Premise.HAVE_COLLAR,
-     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_GIVE_NECKLACE,
 )
