@@ -108,7 +108,7 @@ def create_event_data():
 
 def create_chara_data():
     """新建属性文件"""
-    cache_control.now_file_path = "999_模板人物属性文件.csv"
+    cache_control.now_file_path = "0999_模板人物属性文件.csv"
     load_chara_data_to_cache()
 
 def load_chara_data(path = ""):
