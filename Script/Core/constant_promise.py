@@ -74,6 +74,8 @@ class Premise:
     """ 指令_触发与交互 交互对象有角色自定义指令且至少有一个序号0的子事件满足全前提 """
     NO_TARGET_OR_TARGET_CAN_COOPERATE = "no_target_or_target_can_cooperate"
     """ 指令_触发与交互 无交互对象或交互对象可以协同指令 """
+    NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1 = "no_target_or_target_can_cooperate_or_imprisonment_1"
+    """ 指令_触发与交互 无交互对象或交互对象可以协同指令或交互对象被监禁 """
 
     HIGH_1 = "high_1"
     """ 指令_权重 优先度为1的空白前提 """

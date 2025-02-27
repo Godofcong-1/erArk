@@ -5828,6 +5828,10 @@ def handle_self_h_state_reset(
     for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0 and (second_behavior_id in range(1100,1120) or second_behavior_id in range(1200,1250)):
             character_data.second_behavior[second_behavior_id] = 0
+    # 囚犯干员回到自己监牢
+    if handle_premise.handle_imprisonment_1(character_id) and handle_premise_place.handle_not_in_dormitory(character_id):
+        dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
+        map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
     # 退出H模式
     character_data.sp_flag.is_h = 0
 

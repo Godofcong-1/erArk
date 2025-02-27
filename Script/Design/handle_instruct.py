@@ -1958,7 +1958,7 @@ def handle_collect():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_H,
