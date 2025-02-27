@@ -318,12 +318,9 @@ class CVEMenu(QDialog):
 
     def change_b2(self, index: int):
         """改变b2的选项"""
-        # 获取cve_a的items数量
-        items_count = self.cve_a.count()
-        if items_count != 3:
-            self.cve_a.clear()
-            self.cve_a.addItems(["自己", "交互对象", "角色id为"])
-            self.cve_a.setVisible(True)
+        self.cve_a.clear()
+        self.cve_a.addItems(["自己", "交互对象", "角色id为"])
+        self.cve_a.setVisible(True)
         self.cve_b2.setVisible(True)
         self.reset_c()
         self.cve_d.setVisible(True)
