@@ -462,6 +462,11 @@ class Edit_Group_Sex_Temple_Panel:
                     return_list.append(state_name_button.return_text)
                     line_feed.draw()
 
+            line_feed.draw()
+            reset_button = draw.CenterButton(_("▶重置模板"), _("重置模板"), self.width // 8, cmd_func=self.reset_template)
+            reset_button.draw()
+            return_list.append(reset_button.return_text)
+
             # 轮流用副模板
             line_feed.draw()
             line_feed.draw()
@@ -641,6 +646,19 @@ class Edit_Group_Sex_Temple_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 break
+
+    def reset_template(self):
+        """重置当前模板中的所有位的角色和指令状态"""
+        current_template = self.pl_character_data.h_state.group_sex_body_template_dict["A"]
+        # 重置各个部位的单项数据
+        for key in current_template[0]:
+            current_template[0][key] = [-1, -1]
+        # 重置侍奉的多项数据
+        current_template[1] = [[-1], -1]
+        info_draw = draw.NormalDraw()
+        info_draw.text = _("当前模板已重置\n")
+        info_draw.width = self.width
+        info_draw.draw()
 
     def show_invite_npc_panel(self):
         """绘制可邀请的NPC列表"""
