@@ -1051,6 +1051,7 @@ def handle_time_stop_off():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_ON,
      constant_promise.Premise.NOT_CARRY_ANYBODY_IN_TIME_STOP,
+     constant_promise.Premise.PL_NOT_BAGGING_CHARA,
      constant_promise.Premise.TIRED_LE_84},
     constant.CharacterStatus.STATUS_CARRY_TARGET,
 )
@@ -3366,6 +3367,7 @@ def handle_milk():
     #  constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.SCENE_ALL_UNCONSCIOUS_OR_SLEEP,
      constant_promise.Premise.PL_NOT_BAGGING_CHARA,
+     constant_promise.Premise.NOT_CARRY_ANYBODY_IN_TIME_STOP,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_BAGGING_AND_MOVING,
 )
