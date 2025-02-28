@@ -5931,7 +5931,7 @@ def handle_scene_all_characters_h_state_reset(
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    for chara_id in scene_data.character_list:
+    for chara_id in scene_data.character_list.copy():
         handle_self_h_state_reset(chara_id, add_time, change_data, now_time)
 
 
