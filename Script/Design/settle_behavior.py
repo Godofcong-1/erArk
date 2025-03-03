@@ -35,7 +35,12 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     behavior_id = now_character_data.behavior.behavior_id
     if instruct_flag > 0:
         # 玩家在群P模式的结算
-        if character_id == 0 and handle_premise.handle_group_sex_mode_on(character_id) and behavior_id != constant.Behavior.GROUP_SEX_TO_H:
+        if (
+            character_id == 0 and
+            handle_premise.handle_group_sex_mode_on(character_id) and
+            behavior_id not in {constant.Behavior.GROUP_SEX_TO_H, constant.Behavior.GROUP_SEX_END} and
+            behavior_id not in constant.special_end_H_list
+            ):
             # 统计要执行的指令列表
             group_sex_instruct_list, full_list_of_target_id_and_state_id = group_sex_panel.count_group_sex_instruct_list()
             # 判定是否要进行当前行为的结算
