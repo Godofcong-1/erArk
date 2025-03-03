@@ -568,35 +568,42 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
     # 催眠系能力的最后补正
     judge_hypnosis = 0 # 初始为零，方便其他修正判断是否进行了催眠
-    # 体控和心控直接通过
-    if target_data.sp_flag.unconscious_h in {6,7} and judge_data_type == "S":
-        judge_hypnosis = 9999
-    # 其他则仅在性爱判定、且实行值不足时生效，需要消耗理智
-    elif target_data.sp_flag.unconscious_h in [4,5] and judge_data_type == "S" and judge < judge_data_value:
-        # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
-        if (
-            ((_("骚扰") in instruct_name or _("亲吻") in instruct_name) and target_data.hypnosis.hypnosis_degree >= 50) or 
-            (character_data.talent[332] and target_data.hypnosis.hypnosis_degree >= 100)
-        ):
-            # 实行值不够的差值为
-            unenough = judge_data_value - judge
-            # 催眠基础补正为100，再不足的部分用理智折算为实行值
-            if unenough <= 100:
-                judge_hypnosis = 100
-                sanity_point_cost = 10
-            else:
-                # 1理智折算为10实行值
-                judge_hypnosis = unenough
-                sanity_point_cost = round(unenough / 10)
-            # 最后的总结算
-            if sanity_point_cost <= character_data.sanity_point:
-                judge += judge_hypnosis
-                calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
-                character_data.sanity_point -= sanity_point_cost
-                character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
-            else:
-                calculation_text += _("+催眠(+0,理智不足,催眠解除)")
-                target_data.sp_flag.unconscious_h = 0
+    # 需要在催眠状态中，性爱判定
+    if target_data.sp_flag.unconscious_h in {4,5,6,7} and judge_data_type == "S":
+        # 完全催眠直接通过
+        if handle_premise.handle_self_has_been_complete_hypnosis(target_character_id):
+            judge_hypnosis = 9999
+        # 否则仅在实行值不足时生效，需要消耗理智
+        elif judge < judge_data_value:
+            # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
+            if (
+                ((_("骚扰") in instruct_name or _("亲吻") in instruct_name) and handle_premise.handle_self_has_been_primary_hypnosis(target_character_id)) or 
+                (handle_premise.handle_intermediate_hypnosis(character_id) and handle_premise.handle_self_has_been_deep_hypnosis(target_character_id))
+            ):
+                # 实行值不够的差值为
+                unenough = judge_data_value - judge
+                # 催眠基础补正为100，再不足的部分用理智折算为实行值
+                if unenough <= 100:
+                    judge_hypnosis = 100
+                    sanity_point_cost = 5
+                else:
+                    # 刚好补齐需要的差值
+                    judge_hypnosis = unenough
+                    # 深层催眠下，1理智折算为20实行值
+                    if handle_premise.handle_self_has_been_deep_hypnosis(target_character_id):
+                        sanity_point_cost = round(unenough / 20)
+                    # 否则1理智折算为10实行值
+                    else:
+                        sanity_point_cost = round(unenough / 10)
+                # 最后的总结算
+                if sanity_point_cost <= character_data.sanity_point:
+                    judge += judge_hypnosis
+                    calculation_text += _("+催眠(+{0},消耗{1}理智)").format(judge_hypnosis, sanity_point_cost)
+                    character_data.sanity_point -= sanity_point_cost
+                    character_data.pl_ability.today_sanity_point_cost += sanity_point_cost
+                else:
+                    calculation_text += _("+催眠(+0,理智不足,催眠解除)")
+                    target_data.sp_flag.unconscious_h = 0
 
     # debug模式修正
     if cache.debug_mode == True:
