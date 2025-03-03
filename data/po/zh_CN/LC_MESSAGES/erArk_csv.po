@@ -4092,6 +4092,138 @@ msgstr ""
 msgid "阿諾~~博士你好，經文月夫人推薦，我被派來加深與羅德島在工程方面的合作了"
 msgstr ""
 
+#: .\data\csv\Commission.csv:99
+msgid "護身符"
+msgstr ""
+
+#: .\data\csv\Commission.csv:99
+msgid "拜託啦，炎蓉妹妹。博士都批准這次外勤了，還同意讓克洛斯和你一起去喔\n要是你成功把我那瓜妹妹找回來，我額外答應你一個要求如何?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:100
+msgid "婆山鎮？"
+msgstr ""
+
+#: .\data\csv\Commission.csv:100
+msgid "嗨嗨，這裡是定期聯絡喔，刀客塔。\n雖然我們按照年小姐的描述來到了目標附近，但並沒有找到叫【婆山鎮】的聚落誒...阿勒，那是?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:101
+msgid "日月當空"
+msgstr ""
+
+#: .\data\csv\Commission.csv:101
+msgid "萬幸還聯繫的上您，博士。長話短說，我們確實到達了任務目標婆山鎮，但卻是因不明原因進來的\n我們正在嘗試釐清狀況，會在明天6點展開下次定期聯絡"
+msgstr ""
+
+#: .\data\csv\Commission.csv:102
+msgid "獸災"
+msgstr ""
+
+#: .\data\csv\Commission.csv:102
+msgid "這裡是定期聯絡，博士。這裡簡直感覺不出時間流逝，日月位置永不變，還有不時來襲的獸災...看來年的妹妹確實有古怪"
+msgstr ""
+
+#: .\data\csv\Commission.csv:103
+msgid "外來人"
+msgstr ""
+
+#: .\data\csv\Commission.csv:103
+msgid "喔喔，居然還真能聯絡上外界。那小僧就長話短說了，此界乃夕大家的畫卷，但至於出去的辦法...嘿嘿，小僧也不甚明朗"
+msgstr ""
+
+#: .\data\csv\Commission.csv:104
+msgid "無懼朝陽"
+msgstr ""
+
+#: .\data\csv\Commission.csv:104
+msgid "那些墨魎...不是懼怕陽光嗎? 牠們正在襲擊鎮民!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:105
+msgid "再啟"
+msgstr ""
+
+#: .\data\csv\Commission.csv:105
+msgid "說來也奇怪，只要所有的畫外人都闔了眼，那這畫卷便會悄悄的變回本來的面貌，每觉醒来，都是如此，小僧早已习惯啦。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:106
+msgid "難得清醒"
+msgstr ""
+
+#: .\data\csv\Commission.csv:106
+msgid "唉，也不知她...為何將你們困在這方寸之間。請讓我來幫忙吧，就當是，我的一點小心思"
+msgstr ""
+
+#: .\data\csv\Commission.csv:107
+msgid "爆竹（真）"
+msgstr ""
+
+#: .\data\csv\Commission.csv:107
+msgid "雖然黎小姐告訴了我們那些墨魎真正怕的是爆竹，但真的有用嗎? 年小姐也不怕爆竹啊，更何況是這種竹子做的..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:108
+msgid "問"
+msgstr ""
+
+#: .\data\csv\Commission.csv:108
+msgid "如果我们也不过是画中人，随便哪天便烟消云散，怎还能如此泰然处之？"
+msgstr ""
+
+#: .\data\csv\Commission.csv:109
+msgid "答"
+msgstr ""
+
+#: .\data\csv\Commission.csv:110
+msgid "古鑄造物"
+msgstr ""
+
+#: .\data\csv\Commission.csv:110
+msgid "夕大家，感謝您讓我在您的百餘幅畫卷中遊歷，小僧不勝感激。對了，炎熔施主讓我把這個交給..."
+msgstr ""
+
+#: .\data\csv\Commission.csv:111
+msgid "晖冶寒淬照云清！"
+msgstr ""
+
+#: .\data\csv\Commission.csv:111
+msgid "瓜妹妹，吃我一計，全长八尺宽三尺，采用泰拉前所未见的科技引爆的特大號二踢腳口牙!!"
+msgstr ""
+
+#: .\data\csv\Commission.csv:112
+msgid "看山是山，看水是水"
+msgstr ""
+
+#: .\data\csv\Commission.csv:112
+msgid "只记得第一个见得的，是如今的小僧，最后一个见得，还是如今的小僧\n至于中间万重山水，皆如过眼云烟，想来可能是小僧的种种念想吧"
+msgstr ""
+
+#: .\data\csv\Commission.csv:113
+msgid "畫中人"
+msgstr ""
+
+#: .\data\csv\Commission.csv:113
+msgid "先說好，我是看在年的面子上才來的。我從不送畫，也別用些【幹員義務】之類的藉口打擾我作畫"
+msgstr ""
+
+#: .\data\csv\Commission.csv:114
+msgid "出畫"
+msgstr ""
+
+#: .\data\csv\Commission.csv:114
+msgid "先別急著拒絕，黎小姐。人世間難得走一遭，不知你聽說過，源石轉錄技術嗎?"
+msgstr ""
+
+#: .\data\csv\Commission.csv:115
+msgid "迷路小僧"
+msgstr ""
+
+#: .\data\csv\Commission.csv:115
+msgid "既然這就是炎蓉施主提到的羅德島，而您又是她口中所言之博士，相逢即是有緣，就容小僧在此艦停留一段時日吧!"
+msgstr ""
+
 #: .\data\csv\Confinement_Training_Setting.csv:6
 msgid "囚犯训练管理"
 msgstr ""
