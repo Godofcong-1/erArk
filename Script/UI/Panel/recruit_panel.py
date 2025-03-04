@@ -97,9 +97,10 @@ def update_recruit():
                 now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
                 now_draw.draw()
             else:
-                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败 ※\n\n")
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整策略或移动至其他国家 ※\n\n")
+                now_draw.style = "warning"
                 now_draw.draw()
-                cache.rhodes_island.recruit_line[recruit_line_id][0] = 100
+                cache.rhodes_island.recruit_line[recruit_line_id][1] = 11
 
 
 class Recruit_Panel:
