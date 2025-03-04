@@ -93,6 +93,11 @@ def check_fertilization(character_id: int):
     if character_data.pregnancy.reproduction_period != 5:
         return 0
 
+    # 清空小穴和子宫的当前精液量
+    for body_cid in [6, 7]:
+        character_data.dirty.body_semen[body_cid][1] = 0
+        character_data.dirty.body_semen[body_cid][2] = 0
+
     # 消除强制排卵状态
     if character_data.hypnosis.force_ovulation:
         character_data.hypnosis.force_ovulation = False
