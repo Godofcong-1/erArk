@@ -2776,8 +2776,8 @@ def character_work_massage(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.behavior.duration = 30
-    character_data.behavior.behavior_id = constant.Behavior.OFFICIAL_WORK
-    character_data.state = constant.CharacterStatus.STATUS_OFFICIAL_WORK
+    character_data.behavior.behavior_id = constant.Behavior.MASSAGE
+    character_data.state = constant.CharacterStatus.STATUS_MASSAGE
 
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -2785,12 +2785,15 @@ def character_work_massage(character_id: int):
     if len(scene_data.character_list) >= 2:
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id != character_id:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                if other_character_data.work.work_type != 171:
-                    character_data.target_character_id = chara_id
-                    break
+            # 跳过自己
+            if chara_id == character_id:
+                continue
+            other_character_data: game_type.Character = cache.character_data[chara_id]
+            # 跳过也是按摩师的角色
+            if other_character_data.work.work_type != 171:
+                continue
+            character_data.target_character_id = chara_id
+            break
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_INVITE_VISITOR)
