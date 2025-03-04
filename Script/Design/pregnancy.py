@@ -77,6 +77,8 @@ def get_fertilization_rate(character_id: int):
                 new_rate = min(100, now_rate * 2)
                 draw_text += _("\n在浓厚精液的影响下，怀孕概率由{0}上升到了{1}%\n").format(character_data.pregnancy.fertilization_rate, new_rate)
                 character_data.pregnancy.fertilization_rate = new_rate
+    # 保留两位小数
+    now_rate = round(now_rate,2)
     character_data.pregnancy.fertilization_rate = now_rate
 
 

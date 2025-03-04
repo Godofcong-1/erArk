@@ -331,7 +331,7 @@ class PREGNANCY:
 
     def __init__(self):
 
-        self.fertilization_rate: int = 0
+        self.fertilization_rate: float = 0
         """ 受精概率 """
         self.reproduction_period: int = 0
         """ 生殖周期的第几天(0安全1普通2危险3排卵，0011232) """
