@@ -17,64 +17,56 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def get_assistant_candidates():
+    """
+    获取助理候选角色id列表
+    """
+    candidates = []
+    npc_id_got_list = sorted(cache.npc_id_got)
+    for npc_id in npc_id_got_list:
+        # 跳过玩家
+        if npc_id == 0:
+            continue
+        # 跳过2、7异常
+        if handle_premise.handle_unnormal_27(npc_id):
+            continue
+        # 跳过监狱长
+        if npc_id == cache.rhodes_island.current_warden_id:
+            continue
+        # 跳过访客
+        if npc_id in cache.rhodes_island.visitor_info:
+            continue
+        candidates.append(npc_id)
+    return candidates
+
 def chose_assistant():
     """选择助理"""
-
-    SHOW_NPC_NUMS = 80
-    handle_panel = panel.PageHandlePanel([], SeeNPCButtonList, SHOW_NPC_NUMS, 8, window_width, 1, 1, 0)
-
+    from Script.UI.Panel import normal_panel
+    now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], normal_panel.CommonSelectNPCButtonList, 80, 8, window_width, 1, 0, 0)
     while 1:
-
         # 显示当前助手
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
-        line = draw.LineDraw("-", window_width)
-        line.draw()
-        now_npc_draw = draw.NormalDraw()
         if character_data.assistant_character_id != 0:
-            now_npc_text = _("当前助理为{0}，请选择新的助理：").format(target_data.name)
+            now_npc_text = _("当前助理为 [{0}]{1}，请选择新的助理：\n").format(str(target_data.adv).rjust(4,'0'), target_data.name)
         else:
-            now_npc_text = _("当前无助理，请选择新的助理：")
-        now_npc_draw.text = now_npc_text
-        now_npc_draw.draw()
-        line_feed.draw()
-        line_feed.draw()
+            now_npc_text = _("当前无助理，请选择新的助理：\n")
+        # 已选择的角色id列表
+        selected_id_list = [character_data.assistant_character_id]
+        final_list = []
+        # 遍历候选角色id
+        for npc_id in get_assistant_candidates():
+            now_list = [npc_id, assistant_replace, selected_id_list]
+            final_list.append(now_list)
+        now_draw_panel.text_list = final_list
 
-        # 显示助手列表
-        id_list = []
-        for i in cache.npc_id_got:
-            # 跳过玩家
-            if i == 0:
-                continue
-            # 跳过27异常
-            if handle_premise.handle_unnormal_27(i):
-                continue
-            # 跳过监狱长
-            if i == cache.rhodes_island.current_warden_id:
-                continue
-            # 跳过访客
-            if i in cache.rhodes_island.visitor_info:
-                continue
-            id_list.append(i)
+        # 调用通用选择按钮列表函数
+        return_list = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("选择助理"), now_npc_text)
+        # 切换前后页按钮
+        page_return_list = []
+        page_return_list.append(now_draw_panel.next_page_return)
+        page_return_list.append(now_draw_panel.old_page_return)
 
-        # print("debug id_list = ",id_list)
-        handle_panel.text_list = id_list
-        handle_panel.update()
-        handle_panel.draw()
-        return_list = []
-        return_list.extend(handle_panel.return_list)
-        # 大于等于显示角色数的最后两个是页面按钮
-        if len(handle_panel.return_list) == SHOW_NPC_NUMS + 2:
-            page_return_list = handle_panel.return_list[-2:]
-        elif len(handle_panel.return_list) == SHOW_NPC_NUMS + 1:
-            page_return_list = handle_panel.return_list[-1:]
-        else:
-            page_return_list = []
-        line_feed.draw()
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        back_draw.draw()
-        line_feed.draw()
-        return_list.append(back_draw.return_text)
         yrn = flow_handle.askfor_all(return_list)
         if yrn in return_list and yrn not in page_return_list:
             break
@@ -89,19 +81,8 @@ def select_random_assistant():
     无
     """
 
-    # 开始随机选择
-    while 1:
-        assistant_id = random.choice(list(cache.npc_id_got))
-        # 跳过玩家
-        if assistant_id == 0:
-            continue
-        # 跳过前一个助理
-        if assistant_id == cache.character_data[0].assistant_character_id:
-            continue
-        # 跳过27异常的角色
-        if handle_premise.handle_unnormal_27(assistant_id):
-            continue
-        break
+    # 随机选择
+    assistant_id = random.choice(get_assistant_candidates())
     # 绘制提示信息
     info_draw = draw.WaitDraw()
     info_text = _("\n○本周抽签选中了{0}作为{1}的助理\n").format(cache.character_data[assistant_id].name, cache.character_data[0].name)
