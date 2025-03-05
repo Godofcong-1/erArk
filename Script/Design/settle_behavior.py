@@ -728,9 +728,9 @@ def judge_character_first_meet(character_id: int) -> int:
                 character_data.second_behavior[1332] = 1
             character_data.first_record.day_first_meet = 0
             # 判断上交内裤与袜子
-            if handle_premise.handle_wear_socks(character_id) and handle_premise.handle_ask_give_pan_everyday(character_id):
+            if handle_premise.handle_wear_pan(character_id) and handle_premise.handle_ask_give_pan_everyday(character_id):
                 character_data.second_behavior[1455] = 1
-            if handle_premise.handle_wear_pan(character_id) and handle_premise.handle_ask_give_socks_everyday(character_id):
+            if handle_premise.handle_wear_socks(character_id) and handle_premise.handle_ask_give_socks_everyday(character_id):
                 character_data.second_behavior[1456] = 1
 
 
