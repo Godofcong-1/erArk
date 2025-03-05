@@ -1376,12 +1376,7 @@ def handle_massage():
 )
 def handle_wait():
     """处理等待五分钟指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WAIT
-    character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 5)
 
 
 @add_instruct(
@@ -1392,13 +1387,8 @@ def handle_wait():
 )
 def handle_wait_1_hour():
     """处理等待一个小时指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WAIT
-    character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = 60
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
-    update.game_update_flow(60)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 60)
 
 
 @add_instruct(
@@ -1409,13 +1399,8 @@ def handle_wait_1_hour():
 )
 def handle_wait_6_hour():
     """处理等待六个小时指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WAIT
-    character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = 360
     cache.wframe_mouse.w_frame_skip_wait_mouse = 1
-    update.game_update_flow(360)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 360)
 
 
 @add_instruct(
@@ -1893,66 +1878,10 @@ def handle_pee():
 )
 def handle_collect():
     """处理摆放藏品指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-
-    now_draw = draw.WaitDraw()
-    now_draw.width = width
-    now_draw.text = _("\n开始摆放藏品\n")
-    now_draw.draw()
-
-    # 内裤
-    if len(character_data.pl_collection.npc_panties_tem):
-        for npc_id in character_data.pl_collection.npc_panties_tem:
-            if npc_id == 0:
-                continue
-            for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
-                # 如果该内裤不存在，则跳过
-                if pan_id not in game_config.config_clothing_tem:
-                    continue
-                pan_name = game_config.config_clothing_tem[pan_id].name
-                now_draw = draw.WaitDraw()
-                now_draw.width = width
-                """
-                # 如果已经重复持有，则进行提示
-                # if pan_name in character_data.pl_collection.npc_panties[npc_id]:
-                #     now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, pan_name)
-                # else:
-                """
-                # 改为可以重复持有
-                character_data.pl_collection.npc_panties[npc_id].append(pan_name)
-                now_draw.text = _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, pan_name)
-                now_draw.draw()
-        # 最后清空
-        character_data.pl_collection.npc_panties_tem.clear()
-
-    # 袜子
-    if len(character_data.pl_collection.npc_socks_tem):
-        for npc_id in character_data.pl_collection.npc_socks_tem:
-            if npc_id == 0:
-                continue
-            for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
-                # 如果该袜子不存在，则跳过
-                if socks_id not in game_config.config_clothing_tem:
-                    continue
-                socks_name = game_config.config_clothing_tem[socks_id].name
-                now_draw = draw.WaitDraw()
-                now_draw.width = width
-                """
-                # 如果已经重复持有，则进行提示
-                if socks_name in character_data.pl_collection.npc_socks[npc_id]:
-                    now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, socks_name)
-                else:
-                """
-                # 改为可以重复持有
-                character_data.pl_collection.npc_socks[npc_id].append(socks_name)
-                now_draw.text = _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, socks_name)
-                now_draw.draw()
-        # 装完了之后清空
-        character_data.pl_collection.npc_socks_tem.clear()
-
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    from Script.UI.Panel import collection_panel
+    # 收起藏品
+    collection_panel.collapse_collection()
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 5)
 
 
 @add_instruct(
@@ -2202,12 +2131,7 @@ def handle_ask_group_sex():
 )
 def handle_wait_5_min_in_h():
     """处理等待五分钟指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.behavior_id = constant.Behavior.WAIT
-    character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 5)
 
 
 @add_instruct(

@@ -18,6 +18,75 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def collapse_collection():
+    """
+    收起收集品
+    """
+
+    character_data: game_type.Character = cache.character_data[0]
+
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = _("\n开始摆放藏品\n")
+    now_draw.draw()
+    now_draw = draw.NormalDraw()
+    now_draw.width = window_width
+    now_draw_text = ""
+
+    # 内裤
+    if len(character_data.pl_collection.npc_panties_tem):
+        for npc_id in character_data.pl_collection.npc_panties_tem:
+            if npc_id == 0:
+                continue
+            for pan_id in character_data.pl_collection.npc_panties_tem[npc_id]:
+                # 如果该内裤不存在，则跳过
+                if pan_id not in game_config.config_clothing_tem:
+                    continue
+                pan_name = game_config.config_clothing_tem[pan_id].name
+                """
+                # 如果已经重复持有，则进行提示
+                # if pan_name in character_data.pl_collection.npc_panties[npc_id]:
+                #     now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, pan_name)
+                # else:
+                """
+                # 改为可以重复持有
+                character_data.pl_collection.npc_panties[npc_id].append(pan_name)
+                now_draw_text += _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, pan_name)
+                now_draw.draw()
+        # 最后清空
+        character_data.pl_collection.npc_panties_tem.clear()
+
+    # 袜子
+    if len(character_data.pl_collection.npc_socks_tem):
+        for npc_id in character_data.pl_collection.npc_socks_tem:
+            if npc_id == 0:
+                continue
+            for socks_id in character_data.pl_collection.npc_socks_tem[npc_id]:
+                # 如果该袜子不存在，则跳过
+                if socks_id not in game_config.config_clothing_tem:
+                    continue
+                socks_name = game_config.config_clothing_tem[socks_id].name
+                """
+                # 如果已经重复持有，则进行提示
+                if socks_name in character_data.pl_collection.npc_socks[npc_id]:
+                    now_draw.text = _("\n已持有藏品：{0}的{1}").format(cache.character_data[npc_id].name, socks_name)
+                else:
+                """
+                # 改为可以重复持有
+                character_data.pl_collection.npc_socks[npc_id].append(socks_name)
+                now_draw_text += _("增加了藏品：{0}的{1}\n").format(cache.character_data[npc_id].name, socks_name)
+                now_draw.draw()
+        # 装完了之后清空
+        character_data.pl_collection.npc_socks_tem.clear()
+
+    now_draw.text = now_draw_text
+    now_draw.draw()
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = _("\n摆放藏品结束\n")
+    now_draw.draw()
+
+
 def refresh_all_bonus():
     """
     刷新所有未获得的解锁奖励
