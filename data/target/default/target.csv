@@ -145,8 +145,8 @@ ai的目标,,,,
 541,708,normal_1267|night_salutation_flag_0|assistant_night_salutation_on|night_salutation_time,41,1267正常（可能AI跟随、服装异常或意识模糊），自身没有晚安问候状态，自己的助理属性中的晚安问候服务开启中，当前是晚安问候时间（计划睡觉时间之后，权重50），则进入要晚安问候状态
 542,503,place_1|night_salutation_flag_1,42,不在玩家位置，自身要晚安问候状态（权重100），则移动到玩家位置
 543,709,place_0|night_salutation_flag_1|pl_action_not_sleep,42,在玩家位置，自身要晚安问候状态（权重100），玩家没有在睡觉，则催睡觉
-544,710,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_2,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安吻，则晚安吻
-545,711,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_3,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
+544,710,place_0|night_salutation_flag_1|assistant_night_salutation_2,42,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安吻，则晚安吻
+545,711,place_0|night_salutation_flag_1|assistant_night_salutation_3,42,在玩家位置，自身要晚安问候状态（权重100），自己的助理属性中的晚安问候服务为晚安咬，则晚安咬
 546,712,place_0|night_salutation_flag_1|pl_action_sleep|assistant_night_salutation_1,42,在玩家位置，自身要晚安问候状态（权重100），玩家正在睡觉，自己的助理属性中的晚安问候服务为催睡觉，则变为已晚安问候
 
 601,40,normal_2_5_6|place_door_open|place_is_h|not_in_dor|self_not_go_to_join_group_sex,0,自己256正常，当前地点的门开着，目睹玩家和其他角色H，且不在自己宿舍里，自己没有前往加入群交，则逃回自己宿舍或加入其中

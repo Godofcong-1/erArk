@@ -2600,7 +2600,9 @@ def character_night_salutation_1(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.NIGHT_SALUTATION_1
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_1
-    character_data.sp_flag.night_salutation = 2
+    # 仅在催睡觉的服务下，晚安问候flag才会变为2
+    if handle_premise.handle_assistant_night_salutation_1(character_id):
+        character_data.sp_flag.night_salutation = 2
     info_draw = draw.WaitDraw()
     info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
     info_draw.style = "gold_enrod"
