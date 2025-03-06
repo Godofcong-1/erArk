@@ -1767,7 +1767,7 @@ def handle_confession():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("告白"))[0]:
+    if handle_premise.handle_target_trust_ge_200(0) and character.calculation_instuct_judege(0, character_data.target_character_id, _("告白"))[0]:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，对方获得戒指
@@ -1787,7 +1787,7 @@ def handle_confession():
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION_FAILED
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _("\n告白失败，需要[恋慕]且满足实行值\n")
+        now_draw.text = _("\n告白失败，需要[恋慕]、信赖≥200%、且满足实行值\n")
         now_draw.draw()
     character_data.behavior.duration = 10
     update.game_update_flow(10)
@@ -1810,7 +1810,7 @@ def handle_give_necklace():
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("戴上项圈"))[0]:
+    if handle_premise.handle_target_trust_ge_200(0) and character.calculation_instuct_judege(0, character_data.target_character_id, _("戴上项圈"))[0]:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
@@ -1830,7 +1830,7 @@ def handle_give_necklace():
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE_FAILED
         now_draw = draw.WaitDraw()
         now_draw.width = width
-        now_draw.text = _("\n戴上项圈失败，需要[驯服]且满足实行值\n")
+        now_draw.text = _("\n戴上项圈失败，需要[驯服]、信赖≥200%、且满足实行值\n")
         now_draw.draw()
     character_data.behavior.duration = 10
     update.game_update_flow(10)

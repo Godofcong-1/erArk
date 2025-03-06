@@ -15042,6 +15042,21 @@ def handle_favorability_ge_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_TRUST_GE_200)
+def handle_target_trust_ge_200(character_id: int) -> int:
+    """
+    交互对象信赖>=200%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+
+    return target_data.trust >= 200
+
+
 @add_premise(constant_promise.Premise.TARGET_WEAR_HAT)
 def handle_t_wear_hat(character_id: int) -> int:
     """

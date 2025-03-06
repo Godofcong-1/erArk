@@ -1031,6 +1031,8 @@ class Premise:
     """ 属性_好感与信赖 指令双方中NPC方对玩家的好感等级小于等于2（1000点） """
     FAVORABILITY_GE_3 = "favorability_ge_3"
     """ 属性_好感与信赖 指令双方中NPC方对玩家的好感等级小于等于3（2500点） """
+    TARGET_TRUST_GE_200 = "target_trust_ge_200"
+    """ 属性_好感与信赖 交互对象信赖>=200% """
 
     IS_ASSISTANT = "is_assistant"
     """ 属性_助理 自己是当前的助理干员 """
