@@ -88,6 +88,7 @@ class ItemTextEdit(QWidget):
             {"text": "插入玩家的交互对象的袜子名字", "slot": lambda: self.insert_text('{TagetSocName}')},
             {"text": "插入自己穿着的内裤名字", "slot": lambda: self.insert_text('{PanName}')},
             {"text": "插入自己穿着的袜子名字", "slot": lambda: self.insert_text('{SocName}')},
+            {"text": "○插入跳过代码，直接显示到最后一行", "slot": lambda: self.insert_text('{Jump}')},
         ]
         for item in menu_items:
             action = QAction(item["text"], self)
