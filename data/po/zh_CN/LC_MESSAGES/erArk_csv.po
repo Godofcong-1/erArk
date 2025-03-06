@@ -14069,63 +14069,71 @@ msgid "328"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:34
-msgid "358"
+msgid "350"
 msgstr ""
 
 #: .\data\csv\Tip_Chara.csv:35
+msgid "358"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:36
 msgid "365"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:36
+#: .\data\csv\Tip_Chara.csv:37
 msgid "377"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:36
+#: .\data\csv\Tip_Chara.csv:37
 msgid "喔，澄閃，一位善良、正質、偶爾缺乏點運氣的小貓咪，這片大地上不該只有不公，善良之人應得一個美好的故事，試問誰又不是如蘇茜一般努力過著日子呢\n(只可惜鷹角又在密錄裡把貓貓當成駱駝澄子開涮，鷹角壞!)\n好像還要給玩家一點建議來著....那，希望溫柔的人都能被溫柔以待\n(說貓貓是豬豬的人聽著，YOU!!  馬上到你家門口!!)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:37
+#: .\data\csv\Tip_Chara.csv:38
 msgid "405"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:38
+#: .\data\csv\Tip_Chara.csv:39
 msgid "469"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:39
+#: .\data\csv\Tip_Chara.csv:40
 msgid "426"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:40
+#: .\data\csv\Tip_Chara.csv:41
 msgid "474"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:41
+#: .\data\csv\Tip_Chara.csv:42
 msgid "497"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:42
+#: .\data\csv\Tip_Chara.csv:43
 msgid "1012"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:43
+#: .\data\csv\Tip_Chara.csv:44
 msgid "2013"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:43
+#: .\data\csv\Tip_Chara.csv:44
 msgid "博士對刻俄柏瑟瑟，博士壞! 但小刻最喜歡博士了，所以小刻好!\n\n小刻的口上寫起來最讓人開心了，誰不喜歡一隻活力無限，傻呼呼的同時又愛你且聽話的巨乳狗狗呢。\n文本裡大量使用了各類壯聲詞和口語化的口癖來凸顯小刻的活潑可愛，筆者是寫的很治癒啦，就不知道現在看著這段文字的你怎麼想了\n出於偏愛，除了身體接觸，還寫了不少教小刻做飯、念書、品酒、戰鬥和設備維護的篇幅，大家有興趣可以看看喔\n雖然寫這段時發情期系統尚未實裝，但寫了不少篇幅，一想到平時活潑可愛的大姑娘一到時間就變得扭捏，滿腦子只想和博士貼貼跟瑟瑟，一想就覺得這簡直要瑟瘋了\n\n希望大家都能喜歡我的小刻喔，讓小刻成為幸福的刻俄柏吧!"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:44
+#: .\data\csv\Tip_Chara.csv:45
 msgid "4027"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:45
+#: .\data\csv\Tip_Chara.csv:46
 msgid "4080"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:46
+#: .\data\csv\Tip_Chara.csv:47
 msgid "4091"
+msgstr ""
+
+#: .\data\csv\Tip_Chara.csv:48
+msgid "6666"
 msgstr ""
 
 #: .\data\csv\Vehicle.csv:6
@@ -17986,6 +17994,30 @@ msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:14
 msgid "神秘的萨卡兹少女史尔特尔，或因矿石病影响导致缺失性记忆障碍，其情况在矿石病病理中也极其少见，现于罗德岛接受治疗中。在测试过程中展现出了原因不详的强大战斗能力，很快成为了作战干员。"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:15
+msgid "#B83434"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:34
+msgid "黑色宽外套"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:35
+msgid "略破损的黑色连衣裙"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:36
+msgid "黑色长筒丝袜（带腿环）"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:37
+msgid "莱万汀"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:38
+msgid "干员身份牌"
 msgstr ""
 
 #: .\data\character\0352_塞茜莉亚.csv:4

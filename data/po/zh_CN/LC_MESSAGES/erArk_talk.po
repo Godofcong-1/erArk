@@ -30844,6 +30844,214 @@ msgstr ""
 msgid "「嗯嗯啊！喂喂，博士別這麼急啦...有人來了怎麼辦」\n{TargetName}嘴上雖這麼說，還是挺起胸膛希望能得到更多觸碰\n"
 msgstr ""
 
+#: .\data\talk\chara\0350_史尔特尔.csv:6
+msgid "“我是史尔特尔，你就是他们说的{PlayerName}博士吗。”\n“听说这里冰淇淋管够，所以今后我会在这里工作，希望你不要让我失望。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:7
+msgid "“不要让我去给其他人做法术指导了，我可没兴趣去跟一群普通人玩源石技艺游戏。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:8
+msgid "“我会在这里不是因为我需要在这里，只是因为我想而已。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:9
+msgid "“我最讨厌的就是不停问为什么的人，希望你不是。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:10
+msgid "“看来你已经对我的源石技艺有所了解了，希望你自己也清楚其危险性。”\n“为了你的安全，还是别离我太近了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:11
+msgid "“反应过来的时候，源石技艺和这把法杖已经伴随着我了。”\n“我一点都不记得什么时候得到了这样的能力，当然我也并不在意。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:12
+msgid "“我有着各种各样的记忆，我也不知道它们是怎么来的，我也不知道哪些是真正属于我的。”\n“为了找到记忆的来源，我一直在各个国家中来回旅行，而现在来到了罗德岛。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:13
+msgid "“没有什么比一份冰淇淋更能让我从混乱的记忆中冷静下来了，以前我还是一个人的时候多亏了它们。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:14
+msgid "“你连自己的分内之事都完成不了，需要我来帮忙？”\n“那等工作做完要请我吃冰淇淋哦，博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:15
+msgid "{PlayerName}伸手去触碰史尔特尔。\n“{PlayerName}博士，有什么事吗？”\n“没事的话，就别碰我了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:16
+msgid "史尔特尔坐在椅子上，舔食着手上的甜筒冰淇淋，而{PlayerName}在背后帮她揉着肩膀。\n“谢谢你，博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:17
+msgid "“别靠近我！”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:18
+msgid "“离我远点！”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:19
+msgid "“好吧，那请我吃冰淇淋就原谅你了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:20
+msgid "史尔特尔正在和{PlayerName}玩某卡牌对战游戏。\n“什么？你说这卡上的角色很像我？”\n“应该只是巧合吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:21
+msgid "“要请我吃{FoodName}吗？谢谢你。”\n“不过我还是更喜欢吃棒冰。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:22
+msgid "“要给我泡咖啡吗？那帮我加点香草冰淇淋吧，谢谢。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:23
+msgid "“唔......这玩意是这样用的吗？”\n博士看着史尔特尔笨拙地操作着咖啡机，泡出了一杯还算能喝的咖啡。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:24
+msgid "“要喝咖啡吗？”\n史尔特尔熟练地操作着咖啡机，泡出了一杯醇香的咖啡，然后在咖啡上挤出了一座香草冰淇淋雪山。\n“给，这是我最喜欢的雪山咖啡。”\n虽然光听咖啡加冰淇淋感觉味道会很奇怪，但这杯雪山咖啡的甜与苦，冷与热平衡的恰到好处。\n既能品尝到咖啡的醇香，又能体验到香草奶油的温润。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:25
+msgid "“无话可聊的话你就走吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:26
+msgid "“无话可聊的话，那就陪在我身边就好了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:27
+msgid "随着{PlayerName}的一个响指，史尔特尔回过神来。\n“唔，刚才怎么了？好像有些奇怪的记忆。”\n“大概是我记忆又出错了吧。”\n解除催眠后，史尔特尔自然地忽略了刚才发生的那些事。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:28
+msgid "“莱万汀！”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:29
+msgid "史尔特尔无聊地坐在椅子上吃着冰淇淋，看着{PlayerName}在自己眼前晃动着怀表。\n“这催眠还真是无聊地让人犯困。”她在心里想着。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:30
+msgid "史尔特尔无聊地坐在椅子上吃着冰淇淋，看着{PlayerName}在自己眼前晃动着怀表。\n“唔......怎么好像有点困了......” 她感到脑子逐渐变得昏昏沉沉的。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:31
+msgid "史尔特尔呆呆地坐在椅子上吃着冰淇淋，看着{PlayerName}在自己眼前晃动着怀表。\n史尔特尔的瞳孔逐渐涣散，紫色的眼睛慢慢变得无神。\n似乎已经不会对{PlayerName}在自己身上做的各种事有什么反应了。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:32
+msgid "当{PlayerName}从兜里拿出怀表时，史尔特尔就不自觉的集中注意力在那块怀表上。\n看着{PlayerName}在自己眼前晃动着怀表，史尔特尔的瞳孔逐渐涣散，紫色的眼睛变得无神，精神和身体也逐渐脱离了自己的控制。\n“需要让我做什么吗，{PlayerNickName}。” 她已经变成了随你玩弄的人偶。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:33
+msgid "“啧，浪费时间。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:34
+msgid "“哎，还要让我等多久。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:35
+msgid "“还没好吗，{NickNameToPl}？”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:36
+msgid "史尔特尔乖乖地站在门外，期待着{PlayerName}的出现。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:37
+msgid "史尔特尔乖乖地站在门外，期待着{PlayerName}的出现，脸上露出了一丝微笑。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:38
+msgid "“需要我的帮助吗？那我试试吧。”\n“等工作做完要请我吃冰淇淋哦，博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:39
+msgid "“需要帮忙吗？”\n“为什么这么主动？因为我觉得我需要在这里。”史尔特尔的脸微微泛红。\n“当然，冰淇淋还是要的......\""
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:40
+msgid "(3阶段占位)“需要帮忙吗？”\n“为什么这么主动？因为我觉得我需要在这里。”史尔特尔的脸微微泛红。\n“当然，冰淇淋还是要的......\""
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:41
+msgid "(4阶段占位)“需要帮忙吗？”\n“为什么这么主动？因为我觉得我需要在这里。”史尔特尔的脸微微泛红。\n“当然，冰淇淋还是要的......\""
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:42
+msgid "{PlayerName}伸手去触碰史尔特尔。\n“{PlayerName}博士，有什么事吗？”\n“没事的话，还是让我一个人待着吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:43
+msgid "{PlayerName}伸手去触碰史尔特尔。\n“{PlayerName}博士，有什么事吗？”\n“只是想和我待在一起吗，好吧。”史尔特尔在博士身边坐下，安静地吃着棒冰。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:44
+msgid "{PlayerName}伸手拉住了史尔特尔。\n“想要我陪着你吗？”史尔特尔微微一笑，轻轻地靠在了{PlayerName}的肩膀上。\n“总觉得，这样还挺幸福的。”史尔特尔边吃着棒冰边说道。\n"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:45
+msgid "{PlayerName}伸手拉住了史尔特尔，史尔特尔心领神会，微微一笑，搂住了博士的手臂，依偎在{PlayerName}的身边。\n“好想，就一直这样下去啊......”史尔特尔由心露出了幸福的笑容。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:46
+msgid "史尔特尔坐在椅子上，舔食着手上的甜筒冰淇淋，而{PlayerName}在背后帮她揉着肩膀。\n“{TargetNickNameToPl}的手，好舒服~”\n“我一个人四处寻找记忆线索的时候，根本不会想到能像现在这样，轻松幸福地生活吧。\"\n“等{TargetNickNameToPl}按完了，我也来帮{TargetNickNameToPl}按按吧~”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:47
+msgid "史尔特尔收到了任命助理的通知。\n“我来当{PlayerName}博士的助理吗？哎，先试试吧。”\n“希望这样能多点棒冰吃。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:48
+msgid "史尔特尔收到了任命助理的通知。\n“我来当{NickNameToPl}的助理吗？”\n史尔特尔不禁开心地笑了出来。\n“这样又能多多待在一起了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:49
+msgid "史尔特尔收到了取消任命助理的通知。\n“这样啊，随便他吧。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:50
+msgid "史尔特尔收到了取消任命助理的通知。\n“这样啊......有点寂寞呢。”史尔特尔露出了落寞的神情。"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:51
+msgid "“懒虫博士，该起床了。”史尔特尔摇了摇赖在床上的博士\n“再不起床的话......莱——万——汀！”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:52
+msgid "“还要亲亲才肯起床，真是的......”\n史尔特尔轻轻地在{PlayerName}嘴唇上吻了一下。\n“该起床了吧，懒虫博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:53
+msgid "“真是变态......”\n史尔特尔脱下{PlayerName}的裤子，将肉棒含进嘴里，用舌头搅动着龟头，直到肉棒在口腔中射精。\n史尔特尔拿纸巾擦掉嘴上的精液后，和博士道了早安。\n“早上好，变态博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:54
+msgid "“该去睡觉了，{PlayerName}博士。”\n“大晚上的就别去骚扰别的女孩子了。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:55
+msgid "“还要亲亲才肯睡觉，真是的......”\n史尔特尔轻轻地在{PlayerName}嘴唇上吻了一下。\n“该去睡觉了吧，博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:56
+msgid "“真是变态......”\n史尔特尔脱下{PlayerName}的裤子，将肉棒含进嘴里，用舌头搅动着龟头，直到肉棒在口腔中射精。\n史尔特尔拿纸巾擦掉嘴上的精液后，和博士道了早安。\n“晚安，变态博士。”"
+msgstr ""
+
+#: .\data\talk\chara\0350_史尔特尔.csv:57
+msgid "史尔特尔在厨房做了午饭，顺带拿了个冰淇淋，然后回去找{PlayerName}了。"
+msgstr ""
+
 #: .\data\talk\chara\0358_铃兰.csv:6
 msgid "罗德岛干员丽萨……啊不对，是铃兰，干员铃兰！是我自己挑的代号喔，今天开始正式作为干员行动，请多指教！"
 msgstr ""
