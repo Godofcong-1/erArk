@@ -178,8 +178,11 @@ class Prts_Panel:
                 if character_id not in cache.npc_id_got:
                     continue
                 # 跳过没有内容的
-                if tip_chara_data.text == _("暂无"):
-                    continue
+                # if tip_chara_data.text == _("暂无"):
+                #     continue
+                # 跳过白金
+                # if tip_chara_data.chara_adv_id == 204:
+                #     continue
                 id_list.append(cid)
 
             # 同步数据
