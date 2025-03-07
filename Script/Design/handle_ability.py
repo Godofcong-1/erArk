@@ -1,4 +1,5 @@
 from types import FunctionType
+from typing import Tuple
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
@@ -15,6 +16,45 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def check_upgrade_requirements(need_list: list, character_id: int) -> Tuple[bool, dict]:
+    """
+    描述：判断角色是否满足能力升级的所有需求，并返回是否满足及需要消耗的珠。
+    参数:
+      need_list (list[str]): 升级需求列表，每个元素格式为 "X<number>|<数值>"。
+      character_id (int): 角色ID。
+    返回值:
+      (bool, dict): 布尔值表示是否满足所有需求，字典包含需要消耗的珠信息。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    jule_dict = {}
+    for need_text in need_list:
+        # 解析需求字符串
+        need_type = need_text.split('|')[0][0]
+        if len(need_text.split('|')[0]) >= 2:
+            need_type_id = int(need_text.split('|')[0][1:])
+        need_value = int(need_text.split('|')[1])
+        # 检查不同类型的需求
+        if need_type == "A":
+            if character_data.ability[need_type_id] < need_value:
+                return False, {}
+        elif need_type == "T":
+            if not character_data.talent[need_value]:
+                return False, {}
+        elif need_type == "J":
+            jule_dict[need_type_id] = need_value
+            if character_data.juel[need_type_id] < need_value:
+                return False, {}
+        elif need_type == "E":
+            if character_data.experience[need_type_id] < need_value:
+                return False, {}
+        elif need_type == "F":
+            if character_data.favorability[0] < need_value:
+                return False, {}
+        elif need_type == "X":
+            if character_data.trust < need_value:
+                return False, {}
+    return True, jule_dict
+
 def gain_ability(character_id: int):
     """
     结算可以获得的能力\n
@@ -28,62 +68,33 @@ def gain_ability(character_id: int):
         # 跳过刻印部分
         if ability_data.ability_type == 2:
             continue
-        ability_level = character_data.ability[ability_cid]
-        # 最大8级
-        if ability_level >= 8:
-            continue
-        # 去掉与性别不符的感度与扩张
-        if character_data.sex == 0:
-            if ability_cid in {2, 4, 7, 9, 12, 73, 74}:
-                continue
-        elif character_data.sex == 1:
-            if ability_cid == 3:
-                continue
 
-        need_list = game_config.config_ability_up_data[ability_cid][ability_level]
-
-        # 遍历升级需求，判断是否符合升级要求
-        judge = 1
-        jule_dict = {}
-        for need_text in need_list:
-            need_type = need_text.split('|')[0][0]
-            # need_type_id = int(need_text.split('|')[0][1:])
-            if len(need_text.split('|')[0]) >= 2:
-                need_type_id = int(need_text.split('|')[0][1:])
-            need_value = int(need_text.split('|')[1])
-            # print(f"debug need_type = {need_type},need_type_id = {need_type_id},need_value = {need_value}")
-            if need_type == "A":
-                if character_data.ability[need_type_id] < need_value:
-                    judge = 0
+        # 进行循环，以保证能力升级时可以继续升级，直到满足退出条件
+        while True:
+            ability_level = character_data.ability[ability_cid]
+            # 最大8级
+            if ability_level >= 8:
+                break
+            # 去掉与性别不符的感度与扩张
+            if character_data.sex == 0:
+                if ability_cid in {2, 4, 7, 9, 12, 73, 74}:
                     break
-            elif need_type == "T":
-                if not character_data.talent[need_value]:
-                    judge = 0
-                    break
-            elif need_type == "J":
-                jule_dict[need_type_id] = need_value
-                if character_data.juel[need_type_id] < need_value:
-                    judge = 0
-                    break
-            elif need_type == "E":
-                if character_data.experience[need_type_id] < need_value:
-                    judge = 0
-                    break
-            elif need_type == "F":
-                if character_data.favorability[0] < need_value:
-                    judge = 0
-                    break
-            elif need_type == "X":
-                if character_data.trust < need_value:
-                    judge = 0
+            elif character_data.sex == 1:
+                if ability_cid == 3:
                     break
 
-        # 如果符合获得条件，则该能力升级
-        if judge:
+            need_list = game_config.config_ability_up_data[ability_cid][ability_level]
+
+            # 调用独立函数判断升级需求是否满足，并获取需要消耗的珠
+            judge, jule_dict = check_upgrade_requirements(need_list, character_id)
+            if not judge:
+                break
+
+            # 满足要求则升级能力
             character_data.ability[ability_cid] += 1
             ability_name = ability_data.name
 
-            # 减少对应的珠
+            # 扣除相应的珠
             for need_type_id in jule_dict:
                 character_data.juel[need_type_id] -= jule_dict[need_type_id]
 
