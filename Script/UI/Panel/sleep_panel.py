@@ -46,8 +46,10 @@ class Sleep_Panel:
         """ 睡眠时间_分钟 """
         self.pl_character_data: game_type.Character = cache.character_data[0]
         """ 玩家角色数据 """
-        self.min_to_moring_service = 0
-        """ 睡到早安服务的时间 """
+        self.min_to_moring_service_min = 0
+        """ 睡到早安服务的时间_分钟 """
+        self.min_to_moring_service_hour = 0
+        """ 睡到早安服务的时间_小时 """
         self.morning_service_time_text = ""
         """ 早安服务时间文本 """
 
@@ -118,7 +120,7 @@ class Sleep_Panel:
             now_draw_text = _("\n\n 预计回满体力和气力最少需要 {0} 小时，全状态完全回复(包括体力、气力、疲劳、理智、精液等)至少需要 {1} 小时\n").format(hpmp_need_time, all_recover_time)
             # 早安服务模式下默认睡到早安时间
             if morning_service_flag:
-                now_draw_text += _(" 当前设定的早安服务时间为：{0} ，睡到早安服务时间预计为 {1} 小时左右\n\n").format(self.morning_service_time_text, self.sleep_time_hour)
+                now_draw_text += _(" 当前设定的早安服务时间为：{0} ，睡到早安服务时间预计为 {1} 小时左右\n\n").format(self.morning_service_time_text, self.min_to_moring_service_hour)
                 now_draw_text += _(" 当前决定的睡眠时间为：{0} 小时（默认睡到早安服务时间）").format(self.sleep_time_hour)
             else:
                 now_draw_text += _(" 当前决定的睡眠时间为：{0} 小时（默认取两者最大值）").format(self.sleep_time_hour)
@@ -205,11 +207,13 @@ class Sleep_Panel:
                 if user_input > 12:
                     user_input = 12
                 self.sleep_time_hour = user_input
+                self.sleep_time_min = user_input * 60
                 break
 
     def fast_choice_sleep_time(self, sleep_time):
         """快速选择睡眠时间"""
         self.sleep_time_hour = sleep_time
+        self.sleep_time_min = sleep_time * 60
 
     def judge_time_to_morning_service(self):
         """计算睡到早安服务的时间"""
@@ -224,15 +228,16 @@ class Sleep_Panel:
         # 替换时间和分钟
         judge_wake_up_time = judge_wake_up_time.replace(hour = wake_time_hour, minute = wake_time_minute)
         # 计算时间差
-        self.min_to_moring_service = int((judge_wake_up_time - start_time).seconds / 60)
+        self.min_to_moring_service_min = int((judge_wake_up_time - start_time).seconds / 60)
+        self.min_to_moring_service_hour = int(self.min_to_moring_service_min / 60)
+        self.min_to_moring_service_hour = max(self.min_to_moring_service_hour, 1)
         # 获得早安服务时间的文本
         self.morning_service_time_text = _("{0}:{1}").format(str(wake_time_hour).rjust(2,'0'), str(wake_time_minute).rjust(2,'0'))
 
     def sleep_to_morning_service(self):
         """睡到早安服务时间"""
-        self.sleep_time_min = max(self.min_to_moring_service, 60)
-        self.sleep_time_hour = int(self.sleep_time_min / 60)
-        self.sleep_time_hour = max(self.sleep_time_hour, 1)
+        self.sleep_time_min = max(self.min_to_moring_service_min, 60)
+        self.sleep_time_hour = self.min_to_moring_service_hour
 
     def close_door_switch(self):
         """关门开关"""
@@ -265,7 +270,7 @@ class Sleep_Panel:
             constant.handle_state_machine_data[44](self.pl_character_data.assistant_character_id)
             # 如果开启了早安服务，则睡到早安服务时间前十分钟醒来
             if handle_premise.handle_assistant_morning_salutation_on(self.pl_character_data.assistant_character_id):
-                assistant_character_data.behavior.duration = self.min_to_moring_service - 10
+                assistant_character_data.behavior.duration = self.min_to_moring_service_min - 10
             # 否则睡到和玩家同时醒来
             else:
                 assistant_character_data.behavior.duration = self.sleep_time_min
