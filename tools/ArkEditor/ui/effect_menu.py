@@ -379,9 +379,9 @@ class CVEMenu(QDialog):
                 self.cve_b2.addItem(f"{organ_id}|{organ_name}")
             self.cve_b2.setCurrentIndex(0)
             self.cve_c.clear()
-            self.cve_c.addItems(["增加", "变为"])
+            self.cve_c.addItems(["变为", "增加"])
             self.cve_c.setCurrentIndex(0)
-            self.cve_text.setText("触发一次该部位的绝顶，0为小绝顶，1为普绝顶，2为强绝顶。\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶")
+            self.cve_text.setText("触发一次该部位的绝顶或射精，NPC的0为小绝顶，1为普绝顶，2为强绝顶，玩家则为0射精，1大量射精，2超大量射精。\n\n选择[增加]时，效果为从小绝顶开始，同时触发多次不同强度的绝顶，如增加 1 即为同时触发0小绝顶和1普绝顶，以此类推\n选择[变为]则变为哪个就触发哪个，如变为 2 即为触发强绝顶\n\n射精时，如果玩家的阴茎已经在NPC的某部位(包括身体部位和服装部位)，则默认在该部位射精，否则将弹出部位选择面板\n如果想指定指定射精部位，请使用 [H_阴茎位置] 中的 [改变阴茎位置] 的结算进行指定后，再使用本结算进行射精")
         elif index == 10:
             self.cve_a.setVisible(False)
             self.cve_b2.clear()
