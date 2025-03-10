@@ -404,10 +404,15 @@ class Ejaculation_Panel:
         elif not cache.all_system_setting.base_setting[3]:
             now_position = target_data.h_state.insert_position
             if now_position != -1:
+                # 身体
                 if now_position < 20:
                     self.shoot_here(now_position, 0)
+                # 衣服
                 else:
                     self.shoot_here(now_position - 20, 1)
+            # 如果没有插入位置，则也手动选择射精部位
+            else:
+                self.draw_choose_part()
         # 手动选择射精部位
         else:
             self.draw_choose_part()
@@ -518,7 +523,7 @@ class Ejaculation_Panel:
                 show_flag = self.part_can_choose(body_part_cid)
                 if show_flag:
                     name_draw = draw.CenterButton(
-                        draw_text, part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
+                        draw_text, '\n' + part_name, (len(draw_text) + 1) * 2, cmd_func=self.shoot_here, args=(body_part_cid, 0)
                     )
                     name_draw.draw()
                     return_list.append(name_draw.return_text)
