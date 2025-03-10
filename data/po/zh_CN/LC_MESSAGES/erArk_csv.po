@@ -13948,6 +13948,10 @@ msgstr ""
 msgid "3"
 msgstr ""
 
+#: .\data\csv\Tip_Chara.csv:9
+msgid "爱吃鸡：\n愿大家能享受小小的欢乐时光。"
+msgstr ""
+
 #: .\data\csv\Tip_Chara.csv:10
 msgid "7"
 msgstr ""

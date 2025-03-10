@@ -431,7 +431,8 @@ def handle_system_setting():
     })
 def handle_talk_quick_test():
     """快速测试口上"""
-    now_draw = normal_panel.TALK_QUICK_TEST(width)
+    from Script.UI.Panel import debug_panel
+    now_draw = debug_panel.TALK_QUICK_TEST(width)
     now_draw.draw()
 
 

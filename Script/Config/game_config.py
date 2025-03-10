@@ -9,12 +9,18 @@ data_path = os.path.join("data", "data.json")
 """ 原始json数据文件路径 """
 character_path = os.path.join("data", "Character.json")
 """ 原始角色数据文件路径 """
+character_talk_path = os.path.join("data", "Character_Talk.json")
+""" 原始角色文本文件路径 """
+character_event_path = os.path.join("data", "Character_Event.json")
+""" 原始角色事件文件路径 """
 ui_text_path = os.path.join("data", "ui_text.json")
 """ 原始ui文本数据文件路径 """
 config_data = {}
 """ 原始json数据 """
 character_data = {}
 """ 原始角色数据 """
+character_talk_data = {}
+""" 原始角色口上数据 """
 ui_text_data = {}
 """ 原始ui文本数据 """
 config_bar: Dict[int, config_def.BarConfig] = {}
@@ -357,15 +363,18 @@ config_reputation_level: Dict[int, config_def.Reputation_Level] = {}
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
-    global config_data,character_data,ui_text_data
+    global config_data,character_data,ui_text_data,character_talk_data,character_event_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
     ui_text_data = json_handle.load_json(ui_text_path)
+    character_talk_data = json_handle.load_json(character_talk_path)
+    character_event_data = json_handle.load_json(character_event_path)
 
 def reload_talk_data():
     """重新载入口上配置数据"""
-    global config_data, config_talk, config_talk_data, config_talk_data_by_chara_adv, config_talk_premise_data
-    config_data = json_handle.load_json(data_path)
+    global character_data, character_event_data, config_talk, config_talk_data, config_talk_data_by_chara_adv, config_talk_premise_data
+    character_data = json_handle.load_json(character_path)
+    character_event_data = json_handle.load_json(character_event_path)
     load_talk()
 
 def translate_data(data: dict):
@@ -1095,7 +1104,7 @@ def load_sun_time():
 
 def load_talk():
     """载入口上配置"""
-    now_data = config_data["Talk"]
+    now_data = character_talk_data["Talk"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = config_def.Talk()
@@ -1192,7 +1201,7 @@ def load_week_day():
 
 def load_event():
     """载入事件配置"""
-    now_data = config_data["Event"]
+    now_data = character_event_data["Event"]
     # translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = game_type.Event()
@@ -1207,7 +1216,7 @@ def load_event():
 
 def load_event_target():
     """载入事件目标配置"""
-    now_data = config_data["Event_Target"]
+    now_data = character_event_data["Event_Target"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
         now_tem = game_type.Target()

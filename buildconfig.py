@@ -1,27 +1,76 @@
 import csv
 import os
 import json
-import datetime
 import ast
 
+# 文件路径
 config_dir = os.path.join("data", "csv")
 event_dir = os.path.join("data", "event")
 talk_dir = os.path.join("data", "talk")
 target_dir = os.path.join("data", "target")
-config_data = {}
-config_def_str = ""
-msgData = set()
-class_data = set()
 character_dir = os.path.join("data","character")
-character_data = {}
 ui_text_dir = os.path.join("data", "ui_text")
-ui_text_data = {}
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
-config_po, talk_po = "", ""
+data_path = os.path.join("data","Character.json")
+config_data_path = os.path.join("data", "data.json")
+ui_text_data_path = os.path.join("data", "ui_text.json")
+character_talk_data_path = os.path.join("data", "Character_Talk.json")
+character_event_data_path = os.path.join("data", "Character_Event.json")
+config_path = os.path.join("Script", "Config", "config_def.py")
+
+# 全局变量
+config_data = {}
+character_data = {}
+ui_text_data = {}
+character_talk_data = {}
+character_event_data = {}
 built = []
+msgData = set()
+class_data = set()
+config_def_str = ""
+config_po, talk_po = "", ""
+
+# 是否覆盖原有数据
+BUILD_CONFIG = True
+BUILD_EVENT = True
+BUILD_TALK = True
+BUILD_CHARACTER = True
+BUILD_UI_TEXT = True
+BUILD_TARGET = True
+BUILD_PO = True
+BUILD_CHARA_ID = 0
+
+# 在开始时读取 JSON，若读取失败则用空对象
+try:
+    if BUILD_CHARA_ID == 0:
+        character_talk_data = {}
+        character_evrnt_data = {}
+    else:
+        with open(character_talk_data_path, "r", encoding="utf-8") as f:
+            character_talk_data = json.load(f)
+        with open(character_event_data_path, "r", encoding="utf-8") as f:
+            character_event_data = json.load(f)
+        # 如果指定了特定角色，则将该角色重置
+        for key in character_talk_data["Talk"]["data"].copy():
+            if key["adv_id"] == BUILD_CHARA_ID:
+                character_talk_data["Talk"]["data"].remove(key)
+        for key in character_event_data["Event"]["data"].copy():
+            if key["adv_id"] == BUILD_CHARA_ID:
+                character_event_data["Event"]["data"].remove(key)
+except:
+    character_talk_data = {}
 
 def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
+    """
+    输入：
+        file_path (str): 文件路径
+        file_name (str): 文件名
+        talk (bool): 是否为talk
+        target (bool): 是否为target
+    返回：None
+    功能：读取csv并更新全局配置数据
+    """
     # print(f"debug file_path = {file_path}")
     with open(file_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
@@ -47,9 +96,14 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 type_text = "TargetPremise"
             elif "effect" in file_name:
                 type_text = "TargetEffect"
-        config_data.setdefault(type_text, {})
-        config_data[type_text].setdefault("data", [])
-        config_data[type_text].setdefault("gettext", {})
+        if talk:
+            character_talk_data.setdefault(type_text, {})
+            character_talk_data[type_text].setdefault("data", [])
+            character_talk_data[type_text].setdefault("gettext", {})
+        else:
+            config_data.setdefault(type_text, {})
+            config_data[type_text].setdefault("data", [])
+            config_data[type_text].setdefault("gettext", {})
         for row in now_read:
             # 获得当前的行数
             now_index = now_read.line_num
@@ -72,6 +126,10 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 class_text = list(row.values())[0]
                 i += 1
                 continue
+            # 跳过非指定角色的行
+            if talk and BUILD_CHARA_ID != 0:
+                if int(row["adv_id"]) != BUILD_CHARA_ID:
+                    continue
             for k in now_type_data:
                 now_type = now_type_data[k]
                 # print(f"debug row = {row}")
@@ -98,12 +156,27 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
                     build_config_po(row[k], file_path, now_index, talk)
-            config_data[type_text]["data"].append(row)
-        config_data[type_text]["gettext"] = get_text_data
+            if talk:
+                character_talk_data[type_text]["data"].append(row)
+            else:
+                config_data[type_text]["data"].append(row)
+        if talk:
+            character_talk_data[type_text]["gettext"] = get_text_data
+        else:
+            config_data[type_text]["gettext"] = get_text_data
         build_config_def(type_text, now_type_data, now_docstring_data, class_text)
 
 
 def build_config_def(class_name: str, value_type: dict, docstring: dict, class_text: str):
+    """
+    输入：
+        class_name (str): 类名
+        value_type (dict): 类型定义字典
+        docstring (dict): 参数说明字典
+        class_text (str): 类文档字符串
+    返回：None
+    功能：构建配置定义字符串
+    """
     global config_def_str
     if class_name not in class_data:
         # 给talk补上一个头部空行
@@ -126,6 +199,15 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
 
 
 def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False):
+    """
+    输入：
+        message (str): 文本内容
+        file_path (str): 文件路径
+        now_index (int): 当前行数
+        talk (bool): 是否为talk
+    返回：None
+    功能：构建配置po文本
+    """
     global config_po, talk_po,built
     if not message in built:
         if talk:
@@ -140,6 +222,12 @@ def build_config_po(message: str, file_path: str, now_index: int, talk: bool = F
 
 
 def build_scene_config(data_path):
+    """
+    输入：
+        data_path: 场景数据路径
+    返回：None
+    功能：构建场景配置并提取文本
+    """
     global config_po
     for i in os.listdir(data_path):
         now_path = os.path.join(data_path, i)
@@ -167,6 +255,13 @@ def build_scene_config(data_path):
 
 
 def build_character_config(file_path:str,file_name:str):
+    """
+    输入：
+        file_path (str): 文件路径
+        file_name (str): 文件名
+    返回：None
+    功能：读取角色CSV并更新全局角色数据
+    """
     global config_po,built
     with open(file_path,encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
@@ -197,6 +292,13 @@ def build_character_config(file_path:str,file_name:str):
         character_data[file_id] = now_data
 
 def build_ui_text(file_path:str,file_name:str):
+    """
+    输入：
+        file_path (str): 文件路径
+        file_name (str): 文件名
+    返回：None
+    功能：读取UI文本CSV并更新全局UI数据
+    """
     global config_po,built
     with open(file_path,encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
@@ -219,6 +321,12 @@ def build_ui_text(file_path:str,file_name:str):
         ui_text_data[file_id] = now_data
 
 def build_po_text(po):
+    """
+    输入：
+        po: 原始po字符串
+    返回：str
+    功能：生成po文件的头部内容
+    """
     po = "\n"
     po += '# SOME DESCRIPTIVE TITLE.\n'
     po += '# Copyright (C) YEAR Free Software Foundation, Inc.\n'
@@ -240,8 +348,9 @@ def build_po_text(po):
 
 print("开始加载游戏数据\n")
 
-config_po = build_po_text(config_po)
-talk_po = build_po_text(talk_po)
+if BUILD_PO:
+    config_po = build_po_text(config_po)
+    talk_po = build_po_text(talk_po)
 
 file_list = os.listdir(config_dir)
 index = 0
@@ -254,95 +363,104 @@ for i in file_list:
     build_csv_config(now_file, i, 0, 0)
     index += 1
 
-talk_file_list = os.listdir(talk_dir)
-for i in talk_file_list:
-    # 跳过ai文件夹
-    if i == "ai":
-        continue
-    now_dir = os.path.join(talk_dir, i)
-    for f in os.listdir(now_dir):
-        config_def_str += "\n"
-        # config_def_str += "\n\n\n"
-        now_f = os.path.join(now_dir, f)
-        build_csv_config(now_f, f, 1, 0)
-
-target_file_list = os.listdir(target_dir)
-for i in target_file_list:
-    now_dir = os.path.join(target_dir, i)
-    for f in os.listdir(now_dir):
-        config_def_str += "\n\n\n"
-        now_f = os.path.join(now_dir, f)
-        build_csv_config(now_f, f, 0, 1)
-
-character_file_list = os.listdir(character_dir)
-for i in character_file_list:
-    now_path = os.path.join(character_dir,i)
-    build_character_config(now_path,i)
-
-ui_text_file_list = os.listdir(ui_text_dir)
-for i in ui_text_file_list:
-    now_path = os.path.join(ui_text_dir,i)
-    build_ui_text(now_path,i)
-
-event_list = []
-for root, dirs, files in os.walk(event_dir):
-    for file in files:
-        # 跳过非json文件
-        if file.split(".")[-1] != "json":
+# 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
+if BUILD_TALK:
+    talk_file_list = os.listdir(talk_dir)
+    for i in talk_file_list:
+        # 跳过ai文件夹
+        if i == "ai":
             continue
-        now_event_path = os.path.join(root, file)
-        with open(now_event_path, "r", encoding="utf-8") as event_file:
-            now_event_data = json.loads(event_file.read())
-            for event_id in now_event_data:
-                now_event = now_event_data[event_id]
-                event_list.append(now_event)
-                now_event_text = now_event["text"]
-                if now_event_text not in msgData and not now_event_text in built:
-                    config_po += f"#: Event:{event_id}\n"
-                    config_po += f'msgid "{now_event_text}"\n'
-                    config_po += 'msgstr ""\n\n'
-                    built.append(now_event_text)
-                    msgData.add(now_event_text)
-config_data["Event"] = {}
-config_data["Event"]["data"] = event_list
-config_data["Event"]["gettext"] = {}
-config_data["Event"]["gettext"]["text"] = 1
+        now_dir = os.path.join(talk_dir, i)
+        for f in os.listdir(now_dir):
+            config_def_str += "\n"
+            # config_def_str += "\n\n\n"
+            now_f = os.path.join(now_dir, f)
+            build_csv_config(now_f, f, 1, 0)
+    # 写入 talk 数据
+    with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
+        json.dump(character_talk_data, talk_data_file, ensure_ascii=0)
+else:
+    # 不覆盖 talk 数据，保持原有数据
+    pass
+
+# 在写入 target 数据时根据 BUILD_TARGET 判断是否覆盖
+if BUILD_TARGET:
+    target_file_list = os.listdir(target_dir)
+    for i in target_file_list:
+        now_dir = os.path.join(target_dir, i)
+        for f in os.listdir(now_dir):
+            config_def_str += "\n\n\n"
+            now_f = os.path.join(now_dir, f)
+            build_csv_config(now_f, f, 0, 1)
+
+if BUILD_CHARACTER:
+    character_file_list = os.listdir(character_dir)
+    for i in character_file_list:
+        now_path = os.path.join(character_dir,i)
+        build_character_config(now_path,i)
+
+if BUILD_UI_TEXT:
+    ui_text_file_list = os.listdir(ui_text_dir)
+    for i in ui_text_file_list:
+        now_path = os.path.join(ui_text_dir,i)
+        build_ui_text(now_path,i)
+
+# 在写入 event 数据时根据 BUILD_EVENT 判断是否覆盖
+if BUILD_EVENT:
+    event_list = []
+    for root, dirs, files in os.walk(event_dir):
+        for file in files:
+            # 跳过非json文件
+            if file.split(".")[-1] != "json":
+                continue
+            now_event_path = os.path.join(root, file)
+            with open(now_event_path, "r", encoding="utf-8") as event_file:
+                now_event_data = json.loads(event_file.read())
+                for event_id in now_event_data:
+                    now_event = now_event_data[event_id]
+                    event_list.append(now_event)
+                    now_event_text = now_event["text"]
+                    if now_event_text not in msgData and not now_event_text in built:
+                        config_po += f"#: Event:{event_id}\n"
+                        config_po += f'msgid "{now_event_text}"\n'
+                        config_po += 'msgstr ""\n\n'
+                        built.append(now_event_text)
+                        msgData.add(now_event_text)
+    character_event_data["Event"] = {}
+    character_event_data["Event"]["data"] = event_list
+    character_event_data["Event"]["gettext"] = {}
+    character_event_data["Event"]["gettext"]["text"] = 1
+    with open(character_event_data_path, "w", encoding="utf-8") as event_data_file:
+        json.dump(character_event_data, event_data_file, ensure_ascii=0)
+else:
+    # 不覆盖 event 数据，保持原有数据
+    pass
 
 map_path = os.path.join("data", "map")
 build_scene_config(map_path)
 
-# print("处理到Character.json了")
-data_path = os.path.join("data","Character.json")
-with open(data_path,"w",encoding="utf-8") as character_data_file:
-    json.dump(character_data,character_data_file,ensure_ascii=0)
+# 在写入时根据flag判断是否覆盖
+if BUILD_CHARACTER:
+    with open(data_path,"w",encoding="utf-8") as character_data_file:
+        json.dump(character_data,character_data_file,ensure_ascii=0)
 
-config_path = os.path.join("Script", "Config", "config_def.py")
 config_def_str += "\n"
-with open(config_path, "w", encoding="utf-8") as config_file:
-    config_file.write(config_def_str)
+if BUILD_CONFIG:
+    with open(config_path, "w", encoding="utf-8") as config_file:
+        config_file.write(config_def_str)
+    with open(config_data_path, "w", encoding="utf-8") as config_data_file:
+        json.dump(config_data, config_data_file, ensure_ascii=0)
 
-config_data_path = os.path.join("data", "data.json")
-with open(config_data_path, "w", encoding="utf-8") as config_data_file:
-    json.dump(config_data, config_data_file, ensure_ascii=0)
+if BUILD_UI_TEXT:
+    with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
+        json.dump(ui_text_data, ui_text_data_file, ensure_ascii=0)
 
-ui_text_data_path = os.path.join("data", "ui_text.json")
-with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
-    json.dump(ui_text_data, ui_text_data_file, ensure_ascii=0)
+if BUILD_CONFIG:  # 与po输出相关的配置
+    with open(po_csv_path, "w", encoding="utf-8") as po_file:
+        po_file.write(config_po)
 
-# package_path = os.path.join("package.json")
-# with open(package_path, "w", encoding="utf-8") as package_file:
-#     now_time = datetime.datetime.now()
-#     version = f"{now_time.year}.{now_time.month}.{now_time.day}"
-#     version_data = {"version": version}
-#     json.dump(version_data, package_file, ensure_ascii=0)
-
-
-# print(f"debug config_po = {config_po}")
-# 将po文件写入po_path
-with open(po_csv_path, "w", encoding="utf-8") as po_file:
-    po_file.write(config_po)
-
-with open(po_talk_path, "w", encoding="utf-8") as po_file:
-    po_file.write(talk_po)
+if BUILD_PO:
+    with open(po_talk_path, "w", encoding="utf-8") as po_file:
+        po_file.write(talk_po)
 
 print("加载完毕")
