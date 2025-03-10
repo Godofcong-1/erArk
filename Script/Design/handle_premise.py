@@ -16299,7 +16299,7 @@ def handle_this_event_in_triggered_record(character_id: int) -> int:
     """
     # 本前提在以下地方进行调用，此处不进行实际处理
     # Script/Design/event.py#L11
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.THIS_EVENT_NOT_IN_TRIGGERED_RECORD)
@@ -16313,7 +16313,7 @@ def handle_this_event_not_in_triggered_record(character_id: int) -> int:
     """
     # 本前提在以下地方进行调用，此处不进行实际处理
     # Script/Design/event.py#L11
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.THIS_EVENT_IN_TODAY_TRIGGERED_RECORD)
@@ -16327,7 +16327,7 @@ def handle_this_event_in_today_triggered_record(character_id: int) -> int:
     """
     # 本前提在以下地方进行调用，此处不进行实际处理
     # Script/Design/event.py#L11
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.THIS_EVENT_NOT_IN_TODAY_TRIGGERED_RECORD)
@@ -16341,7 +16341,7 @@ def handle_this_event_not_in_today_triggered_record(character_id: int) -> int:
     """
     # 本前提在以下地方进行调用，此处不进行实际处理
     # Script/Design/event.py#L11
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.DAILY_PANEL_SHOW)
