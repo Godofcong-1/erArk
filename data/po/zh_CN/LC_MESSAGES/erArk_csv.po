@@ -22212,10 +22212,6 @@ msgstr ""
 msgid "正用{PlayerName}的肉棒旖旎承欢的{TargetName}，朦胧了眼神，身上挂满了汗水，发颤着在恋人的身体上享受性爱的快乐。\n就在这幸福时刻被{HInterruptCharaName}闯入了情事现场，“吓噫！？”\n被惊吓到了{TargetName}抽搐紧了娇躯，直直地立起尾巴和耳朵。\n原本就很紧致的小穴突然剧烈地绞在一起，紧密地夹住了抽插中的肉竿，两人敏感的粘膜害怕又兴奋地相互挤压在了一起发出了滋滋！的水声。\n平时感受不到的过紧触感和被人发现的禁忌快乐，给予了偷情中的两人意想不到的刺激。"
 msgstr ""
 
-#: Event:1efaacb7-aec7-4fb5-a5ea-2e77f7050191
-msgid "看见{PlayerName}解开裤子露出肉棒排尿，{TargetName}心中的欲望再也抑制不住。\n“真是过分啊~{TargetNickNameToPl}”“让人家忍了这么久，现在又露出这样美味的肉棒，谁都忍不住吧~”\n{TargetName}咽了咽口水，张开双腿蹲下，抓住肉棒送进嘴里，舌头在龟头上来回舔弄。\n{PlayerName}刚排完尿的肉棒散发着浓烈的腥臭味，直冲{TargetName}的鼻腔。\n“唔嗯~{PlayerName}的肉棒~好好吃哦~”{TargetName}的手也不禁伸向自己私处，爱抚着自己敏感的小豆豆。\n{TargetName}的手配合着嘴巴一起套弄着{PlayerName}的肉棒，仿佛要将{PlayerName}尿道里的液体全部榨出。\n{PlayerName}轻轻抚摸着{TargetName}的脑袋，看着她在自己面前露出的痴态，肉棒也不禁涨得更大了。\n直到{TargetName}自慰到高潮，她才松开{PlayerName}的肉棒，开始不停地喘息。"
-msgstr ""
-
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
 msgid "要怎么做呢"
 msgstr ""
