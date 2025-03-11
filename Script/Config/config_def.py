@@ -1091,6 +1091,10 @@ class Tip_Chara:
     """ 版本id """
     writer_name: str
     """ 作者名 """
+    talk_file_path: str
+    """ 口上文件路径 """
+    event_file_path: str
+    """ 事件文件路径 """
     text: str
     """ 文本内容 """
 
