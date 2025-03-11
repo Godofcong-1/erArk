@@ -159,6 +159,7 @@ class Character_creat_Handle:
         firstNpc_draw = Character_FirstNPC(self.width)
         bonus_draw = Character_Bonus(self.width)
         world_setting_draw = World_Setting(self.width)
+        other_settings_draw = Other_Settings(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         # tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
         self.draw_list: List[draw.NormalDraw] = [
@@ -169,6 +170,7 @@ class Character_creat_Handle:
             firstNpc_draw,
             bonus_draw,
             world_setting_draw,
+            other_settings_draw,
             # abi_draw,
             # tal_draw,
         ]
@@ -858,8 +860,8 @@ class SelectFirstNPCButton:
 
         target_data: game_type.Character = cache.character_data[NPC_id]
         button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
-        # 如果有口上的话，输出大小
-        if target_data.talk_size:
+        # 如果有口上的话，且版本已弃用，输出大小
+        if target_data.talk_size and cache.all_system_setting.character_text_version[target_data.adv] > 0:
             button_text += f"({target_data.talk_size}kb)"
         # 获得绘制颜色
         # 如果有口上颜色的话，使用口上颜色
@@ -1175,3 +1177,76 @@ class World_Setting:
     def select_setting(self,setting_cid : int):
         """选择该设定"""
         cache.world_setting[setting_cid] = not cache.world_setting[setting_cid]
+
+class Other_Settings:
+    """
+    其他设定面板
+    Keyword arguments:
+    character_id -- 角色id
+    width -- 最大宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 当前最大可绘制宽度 """
+        self.return_list: List[str] = []
+        """ 监听的按钮列表 """
+        from Script.UI.Panel import prts_panel
+
+        now_draw = panel.LeftDrawTextListPanel()
+        now_draw.draw_list.append(line_feed_draw)
+        line = draw.LineDraw("↘", 1)
+        now_draw.draw_list.append(line)
+
+        setting_info_draw = draw.LeftDraw()
+        setting_info_draw.width = 1
+        draw_text = _(" 其他设定：\n")
+        setting_info_draw.text = draw_text
+        now_draw.draw_list.append(setting_info_draw)
+        now_draw.width += len(setting_info_draw.text)
+
+        # 绘制按钮
+        button_text = _(" [系统设定] ")
+        button_draw = draw.CenterButton(
+            button_text,
+            button_text,
+            len(button_text) * 2,
+            cmd_func=self.system_setting_draw,
+            )
+        self.return_list.append(button_draw.return_text)
+        now_draw.draw_list.append(button_draw)
+        now_draw.width += len(button_text)
+
+        button_text = _(" [口上版本设定] ")
+        button_draw = draw.CenterButton(
+            button_text,
+            button_text,
+            len(button_text) * 2,
+            cmd_func=prts_panel.chara_talk_info,
+            )
+        self.return_list.append(button_draw.return_text)
+        now_draw.draw_list.append(button_draw)
+        now_draw.width += len(button_text)
+        now_draw.draw_list.append(line_feed_draw)
+        now_draw.width += 1
+
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+        self.draw_list.extend(now_draw.draw_list)
+
+    def system_setting_draw(self):
+        """系统设定"""
+        from Script.UI.Panel import system_setting
+        now_panel = system_setting.System_Setting_Panel(width)
+        now_panel.draw()
+
+    def draw(self):
+        """绘制面板"""
+        for label in self.draw_list:
+            if isinstance(label, list):
+                for value in label:
+                    value.draw()
+                line_feed_draw.draw()
+            else:
+                label.draw()

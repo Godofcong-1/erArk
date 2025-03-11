@@ -16,6 +16,44 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+
+def chara_talk_info():
+    """
+    干员口上信息
+    """
+
+    handle_panel_normal = panel.PageHandlePanel(
+        [], ShowCharaNameDraw, 15, 1, window_width, 1, 0, 0
+    )
+
+    while 1:
+        line = draw.LineDraw("-", window_width)
+        line.draw()
+        id_list = []
+        return_list = []
+
+        # 循环角色提示信息
+        for chara_adv_id in game_config.config_tip_chara_data_by_adv:
+            # character_id = character.get_character_id_from_adv(chara_adv_id)
+            id_list.append(chara_adv_id)
+
+        # 同步数据
+        handle_panel_normal.text_list = id_list
+        handle_panel_normal.update()
+        # 绘制
+        handle_panel_normal.draw()
+        return_list.extend(handle_panel_normal.return_list)
+
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        return_list.append(back_draw.return_text)
+        line_feed.draw()
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn == back_draw.return_text:
+            break
+
+
 class Prts_Panel:
     """
     用于显示教程界面面板对象
@@ -150,43 +188,7 @@ class Prts_Panel:
 
         # 干员口上信息
         if self.fater_type == 5:
-            self.chara_talk_info()
-
-    def chara_talk_info(self):
-        """
-        干员口上信息
-        """
-
-        self.handle_panel_normal = panel.PageHandlePanel(
-            [], ShowCharaNameDraw, 15, 1, window_width, 1, 0, 0
-        )
-
-        while 1:
-            line = draw.LineDraw("-", self.width)
-            line.draw()
-            id_list = []
-            return_list = []
-
-            # 循环角色提示信息
-            for chara_adv_id in game_config.config_tip_chara_data_by_adv:
-                # character_id = character.get_character_id_from_adv(chara_adv_id)
-                id_list.append(chara_adv_id)
-
-            # 同步数据
-            self.handle_panel_normal.text_list = id_list
-            self.handle_panel_normal.update()
-            # 绘制
-            self.handle_panel_normal.draw()
-            return_list.extend(self.handle_panel_normal.return_list)
-
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            line_feed.draw()
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
+            chara_talk_info()
 
     def show_answer(self, key_index: int):
         """
@@ -289,7 +291,7 @@ class ShowCharaNameDraw:
             name_draw.style = self.text_color
             # 版本切换按钮
             now_text = _(" [版本切换] ")
-            button_draw = draw.LeftButton(
+            button_draw = draw.CenterButton(
                 now_text,
                 character_data.name,
                 len(now_text) * 2,
@@ -355,7 +357,7 @@ class ShowCharaNameDraw:
                 self.show_chara_info(now_text, tip_chara_data.text)
                 # 版本切换按钮
                 now_text = _(" [选择该版本] ")
-                button_draw = draw.LeftButton(
+                button_draw = draw.CenterButton(
                     now_text,
                     str(tip_cid),
                     len(now_text) * 2,
@@ -370,7 +372,7 @@ class ShowCharaNameDraw:
             # 不使用任何版本的按钮
             line_feed.draw()
             now_text = _(" [不使用任何版本] ")
-            button_draw = draw.LeftButton(
+            button_draw = draw.CenterButton(
                 now_text,
                 now_text,
                 len(now_text) * 2,

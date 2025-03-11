@@ -32,7 +32,7 @@ config_def_str = ""
 config_po, talk_po = "", ""
 
 # 是否覆盖原有数据
-BUILD_CONFIG = False
+BUILD_CONFIG = True
 BUILD_EVENT = True
 BUILD_TALK = True
 BUILD_CHARACTER = True
@@ -452,8 +452,9 @@ if BUILD_CHARACTER:
 
 config_def_str += "\n"
 if BUILD_CONFIG:
-    with open(config_path, "w", encoding="utf-8") as config_file:
-        config_file.write(config_def_str)
+    # 玩家版本里不需要写入config_def
+    # with open(config_path, "w", encoding="utf-8") as config_file:
+    #     config_file.write(config_def_str)
     with open(config_data_path, "w", encoding="utf-8") as config_data_file:
         json.dump(config_data, config_data_file, ensure_ascii=0)
 
