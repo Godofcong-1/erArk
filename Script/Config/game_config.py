@@ -217,8 +217,10 @@ config_tip_data: Dict[int, config_def.Tip] = {}
 """ 提示对应描述 """
 config_tip_data_by_facility: Dict[int, List] = {}
 """ 设施对应提示 """
-config_tip_chara: Dict[int, config_def.Tip_Chara] = {}
-""" 角色提示信息 """
+config_tip_chara_data: Dict[int, config_def.Tip_Chara] = {}
+""" 角色文本说明数据 """
+config_tip_chara_data_by_adv: Dict[int, List] = {}
+""" 按adv分类的角色文本说明数据的cid列表  """
 config_sun_time: Dict[int, config_def.SunTime] = {}
 """ 太阳时间配置 """
 config_random_npc_sex_region: Dict[int, int] = {}
@@ -1058,7 +1060,9 @@ def load_tip_chara():
     for tem_data in now_data["data"]:
         now_tem = config_def.Tip_Chara()
         now_tem.__dict__ = tem_data
-        config_tip_chara[now_tem.cid] = now_tem
+        config_tip_chara_data[now_tem.cid] = now_tem
+        config_tip_chara_data_by_adv.setdefault(now_tem.chara_adv_id, [])
+        config_tip_chara_data_by_adv[now_tem.chara_adv_id].append(now_tem.cid)
 
 
 def load_solar_period():

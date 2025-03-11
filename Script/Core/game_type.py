@@ -1130,6 +1130,8 @@ class System_Setting:
         """ 主界面刷新前的行数 """
         self.value_draw: Dict[str, bool] = {"pl": False, "npc": False}
         """ 数值绘制 """
+        self.character_text_version: Dict[int, int] = {}
+        """ 角色文本版本，adv_id:版本id """
 
 
 class Ai_Setting:

@@ -42,6 +42,9 @@ def get_system_setting_zero() -> game_type.System_Setting:
             empty_system_setting.difficulty_setting[system_setting] = difficulty_default_dict[system_setting]
         else:
             empty_system_setting.difficulty_setting[system_setting] = 0
+    for i in range(len(cache.npc_tem_data)):
+        chara_adv_id = cache.npc_tem_data[i].AdvNpc
+        empty_system_setting.character_text_version[chara_adv_id] = 1
     return empty_system_setting
 
 def get_physical_exam_setting_zero() -> dict:

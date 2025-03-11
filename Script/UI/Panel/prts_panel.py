@@ -164,26 +164,13 @@ class Prts_Panel:
         while 1:
             line = draw.LineDraw("-", self.width)
             line.draw()
-            id_list = [0]
+            id_list = []
             return_list = []
 
             # 循环角色提示信息
-            for cid in game_config.config_tip_chara:
-                tip_chara_data = game_config.config_tip_chara[cid]
-                character_id = character.get_character_id_from_adv(tip_chara_data.chara_adv_id)
-                # 跳过0
-                if cid == 0:
-                    continue
-                # 跳过未招募的
-                if character_id not in cache.npc_id_got:
-                    continue
-                # 跳过没有内容的
-                # if tip_chara_data.text == _("暂无"):
-                #     continue
-                # 跳过白金
-                # if tip_chara_data.chara_adv_id == 204:
-                #     continue
-                id_list.append(cid)
+            for chara_adv_id in game_config.config_tip_chara_data_by_adv:
+                # character_id = character.get_character_id_from_adv(chara_adv_id)
+                id_list.append(chara_adv_id)
 
             # 同步数据
             self.handle_panel_normal.text_list = id_list
@@ -237,11 +224,11 @@ class ShowCharaNameDraw:
     """
 
     def __init__(
-        self, cid: int, width: int, is_button: bool, num_button: bool, button_id: int
+        self, chara_adv_id: int, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.cid: int = cid
-        """ 角色信息id """
+        self.chara_adv_id: int = chara_adv_id
+        """ 角色adv_id """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -255,36 +242,163 @@ class ShowCharaNameDraw:
         self.text_color: str = "standard"
         """ 文本颜色 """
 
-        # 获取角色提示信息
-        tip_chara_data = game_config.config_tip_chara[cid]
         # 地文
-        if cid == 0:
+        if self.chara_adv_id == 0:
+            # 空白的提示
+            name_draw = draw.NormalDraw()
+            name_draw.text = ""
+            name_draw.width = self.width
+            # 获取角色提示信息
+            tip_chara_data = game_config.config_tip_chara_data[0]
             now_text = _("[0000]通用文本  by {0}").format(tip_chara_data.writer_name)
+            # 绘制
+            button_draw = draw.LeftButton(
+                _(now_text),
+                _(now_text),
+                self.width,
+                normal_style=self.text_color,
+                cmd_func=self.show_chara_info,
+                args=(now_text, tip_chara_data.text),
+                )
         else:
             # 获取角色id
-            character_id = character.get_character_id_from_adv(tip_chara_data.chara_adv_id)
+            character_id = character.get_character_id_from_adv(self.chara_adv_id)
             character_data = cache.character_data[character_id]
-            now_text = f"[{str(tip_chara_data.chara_adv_id).rjust(4,'0')}]{character_data.name}  by {tip_chara_data.writer_name}"
+            # 获取当前版本信息
+            now_version = cache.all_system_setting.character_text_version[self.chara_adv_id]
+            tip_cid_list = game_config.config_tip_chara_data_by_adv[self.chara_adv_id]
+            version_text = "无"
+            for tip_cid in tip_cid_list:
+                tip_chara_data = game_config.config_tip_chara_data[tip_cid]
+                if tip_chara_data.version_id == now_version:
+                    version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, character_data.talk_size)
+            # 姓名信息
+            name_text = character_data.name.ljust(12,'　')
+            # 如果name_text中有英文字母或者数字，则按照其数量加上空格
+            for char in name_text:
+                if char.isascii():
+                    name_text += " "
+            now_text = f"[{str(self.chara_adv_id).rjust(4,'0')}]{name_text}  "
+            now_text += _("当前选择版本：{0}             ").format(version_text)
+            name_draw = draw.NormalDraw()
+            name_draw.text = now_text
+            name_draw.width = self.width
             # 颜色
             if character_data.text_color:
                 self.text_color = character_data.name
-        # 绘制
-        button_draw = draw.LeftButton(
-            _(now_text),
-            _(now_text),
-            self.width,
-            normal_style=self.text_color,
-            cmd_func=self.show_chara_info,
-            args=(now_text, tip_chara_data.text),
+            name_draw.style = self.text_color
+            # 版本切换按钮
+            now_text = _(" [版本切换] ")
+            button_draw = draw.LeftButton(
+                now_text,
+                character_data.name,
+                len(now_text) * 2,
+                normal_style=self.text_color,
+                cmd_func=self.show_character_text_version,
             )
-        self.button_return = button_draw.return_text
-
+        self.info_draw = name_draw
         self.now_draw = button_draw
+        self.button_return = button_draw.return_text
         """ 绘制的对象 """
 
     def draw(self):
         """绘制对象"""
+        self.info_draw.draw()
         self.now_draw.draw()
+
+    def show_character_text_version(self):
+        """
+        切换角色文本版本
+        """
+
+        # 获取角色id
+        character_id = character.get_character_id_from_adv(self.chara_adv_id)
+        character_data = cache.character_data[character_id]
+        # 获取当前版本信息
+        tip_cid_list = game_config.config_tip_chara_data_by_adv[self.chara_adv_id]
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            line_feed.draw()
+
+            # 提示信息
+            info_text = _("○一个角色可能会有多个版本的文本，只能选择其中一个版本，或者不选择任何版本。\n")
+            info_text += _("  选择一个版本后，将仅显示该版本的口上与事件。\n")
+            info_text += _("  选择不使用版本时，该角色将回到只有地文的通用角色状态，不再使用任何口上。\n\n")
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+
+            # 角色信息
+            chara_text = f"[{str(self.chara_adv_id).rjust(4,'0')}]{character_data.name}\n\n"
+            chara_draw = draw.NormalDraw()
+            chara_draw.text = chara_text
+            chara_draw.width = self.width
+            chara_draw.style = self.text_color
+            chara_draw.draw()
+            # 获取当前版本信息
+            now_version = cache.all_system_setting.character_text_version[self.chara_adv_id]
+
+            # 遍历该角色的全版本
+            for tip_cid in tip_cid_list:
+                tip_chara_data = game_config.config_tip_chara_data[tip_cid]
+
+                # 显示当前版本的角色信息，以及该版本的选择按钮
+                now_text = f"版本：{tip_chara_data.version_id}  "
+                now_text += f"by {tip_chara_data.writer_name}"
+                # 如果是当前版本，则加上当前版本的标记
+                if tip_chara_data.version_id == now_version:
+                    now_text += _("(当前版本)")
+                self.show_chara_info(now_text, tip_chara_data.text)
+                # 版本切换按钮
+                now_text = _(" [选择该版本] ")
+                button_draw = draw.LeftButton(
+                    now_text,
+                    str(tip_cid),
+                    len(now_text) * 2,
+                    normal_style=self.text_color,
+                    cmd_func=self.select_character_text_version,
+                    args=(tip_chara_data.version_id),
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
+
+            # 不使用任何版本的按钮
+            line_feed.draw()
+            now_text = _(" [不使用任何版本] ")
+            button_draw = draw.LeftButton(
+                now_text,
+                now_text,
+                len(now_text) * 2,
+                normal_style=self.text_color,
+                cmd_func=self.select_character_text_version,
+                args=(0),
+            )
+            button_draw.draw()
+            return_list.append(button_draw.return_text)
+            line_feed.draw()
+
+            line_feed.draw()
+            # 返回按钮
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+            # 选择
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def select_character_text_version(self, version_id: int):
+        """
+        选择角色文本版本
+        """
+        # 设置当前版本
+        cache.all_system_setting.character_text_version[self.chara_adv_id] = version_id
 
     def show_chara_info(self, name_text: str, info_text: str):
         """
@@ -298,10 +412,8 @@ class ShowCharaNameDraw:
         line.draw()
         line_feed.draw()
 
-        name_draw = draw.WaitDraw()
+        name_draw = draw.NormalDraw()
         name_draw.text = name_text + "\n\n" + info_text + "\n\n"
         name_draw.width = self.width
         name_draw.style = self.text_color
         name_draw.draw()
-
-        line_feed.draw()

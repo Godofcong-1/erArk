@@ -170,6 +170,11 @@ def input_load_save(save_id: str):
             character_config.add_text_color_data_to_config_data(text_color_list)
             update_count += 1
             color_update_count += 1
+        # 更新角色的口上大小
+        if new_character_data.cid != 0 and tem_character.Talk_Size != new_character_data.talk_size:
+            # print(f"debug value.name = {value.name}，tem_character.TextSize = {tem_character.TextSize}，value.text_size = {value.text_size}")
+            new_character_data.talk_size = tem_character.Talk_Size
+            update_count += 1
         # 更新角色势力与出身地
         if new_character_data.cid != 0 and tem_character.Nation != new_character_data.relationship.nation:
             new_character_data.relationship.nation = tem_character.Nation
@@ -627,6 +632,18 @@ def update_settings(loaded_dict):
         now_difficulty.style = "gold_enrod"
         now_difficulty.text = draw_text
         now_difficulty.draw()
+    # 角色口上选择设置
+    character_text_version = zero_system_setting.character_text_version
+    if len(loaded_dict["all_system_setting"].character_text_version) != len(character_text_version):
+        for key in character_text_version:
+            if key not in loaded_dict["all_system_setting"].character_text_version:
+                loaded_dict["all_system_setting"].character_text_version[key] = character_text_version[key]
+                update_count += 1
+        now_draw = draw.NormalDraw()
+        draw_text = _("\n角色口上选择设置已更新，如有需要请手动修改\n")
+        now_draw.style = "gold_enrod"
+        now_draw.text = draw_text
+        now_draw.draw()
     # 更新AI设置
     if len(loaded_dict["ai_setting"].ai_chat_setting) != len(game_config.config_ai_chat_setting):
         for key in game_config.config_ai_chat_setting:

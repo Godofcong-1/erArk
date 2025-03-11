@@ -1081,12 +1081,14 @@ class Tip:
 
 
 class Tip_Chara:
-    """ 角色提示信息 """
+    """ 角色文本说明 """
 
     cid: int
     """ 提示id """
     chara_adv_id: int
-    """ 角色id """
+    """ 角色adv_id """
+    version_id: int
+    """ 版本id """
     writer_name: str
     """ 作者名 """
     text: str
