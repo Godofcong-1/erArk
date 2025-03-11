@@ -366,7 +366,7 @@ class CVEMenu(QDialog):
             for state_id, state_name in cache_control.state_data.items():
                 self.cve_b2.addItem(f"{state_id}|{state_name}")
             self.cve_b2.setCurrentIndex(0)
-            self.cve_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999，此处使用的为状态值的具体数值，不是等级")
+            self.cve_text.setText("状态值的0~10级的升级阈值分别为：100，500，1000，2500，6000，12000，30000，50000，75000，99999，100000，此处使用的为状态值的具体数值，不是等级")
         elif index == 8:
             self.cve_b2.clear()
             # b2提供一个文本框，用来输入flag的编号，最多支持10个flag

@@ -470,7 +470,7 @@ class CVPMenu(QDialog):
             for state_id, state_name in cache_control.state_data.items():
                 self.cvp_b2.addItem(f"{state_id}|{state_name}")
             self.cvp_b2.setCurrentIndex(0)
-            self.cvp_text.setText("状态值的1~10级分别为：100，500，3000，10000，30000，60000，100000，150000，500000，999999，此处使用的为状态值的具体数值，不是等级")
+            self.cvp_text.setText("状态值的0~10级的升级阈值分别为：100，500，1000，2500，6000，12000，30000，50000，75000，99999，100000，此处使用的为状态值的具体数值，不是等级")
         elif index == 8:
             self.cvp_b2.setVisible(False)
             self.cvp_text.setText("攻略有正数的【爱情系】和负数的【隶属系】两种路线\n爱情系的1~4分别为思慕、恋慕、恋人、爱侣，隶属系的-1~-4分别为屈从、驯服、宠物、奴隶\n备注：数值不会到0，如，当选择爱情系的≤2时，只会有2的恋慕和1的思慕，而不会到0或者负数的隶属系，其他情况同理\n同时，也因为数值不到0，如果需要有/没有陷落素质，请前往[整体修改]-[属性]-[素质]")
