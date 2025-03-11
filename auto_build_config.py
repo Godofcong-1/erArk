@@ -369,6 +369,7 @@ for i in file_list:
 
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
 if BUILD_TALK:
+    print("开始写入角色口上数据，该处理耗时较长，仅在第一次启动游戏时处理")
     talk_file_list = os.listdir(talk_dir)
     for i in talk_file_list:
         # 跳过ai文件夹
@@ -383,6 +384,7 @@ if BUILD_TALK:
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
         json.dump(character_talk_data, talk_data_file, ensure_ascii=0)
+    print("角色口上数据写入完成，路径为 data\Character_Talk.json")
 else:
     # 不覆盖 talk 数据，保持原有数据
     pass
