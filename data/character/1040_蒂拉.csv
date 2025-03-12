@@ -5,7 +5,7 @@ Name,str,蒂拉,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,8,0,角色职业为特种
 Race,int,31,0,角色种族为札拉克
-Nation,int,501,0,角色势力为黑钢国际
+Nation,int,43,0,角色势力为黑钢国际
 Birthplace,int,999,0,角色出身地为未知
 Hp,int,1500,0,角色初始体力
 Mp,int,1000,0,角色初始气力

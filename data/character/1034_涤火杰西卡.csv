@@ -5,7 +5,7 @@ Name,str,涤火杰西卡,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,6,0,角色职业为重装
 Race,int,13,0,角色种族为菲林
-Nation,int,501,0,角色势力为黑钢国际
+Nation,int,43,0,角色势力为黑钢国际
 Birthplace,int,13,0,角色出身地为维多利亚
 Hp,int,2000,0,角色初始体力
 Mp,int,2000,0,角色初始气力

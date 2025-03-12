@@ -7804,99 +7804,103 @@ msgstr ""
 msgid "克丽斯腾"
 msgstr ""
 
-#: .\data\csv\Nation.csv:23
-msgid "红松骑士团"
+#: .\data\csv\Nation.csv:22
+msgid "黑钢国际"
 msgstr ""
 
 #: .\data\csv\Nation.csv:24
-msgid "临光家族"
+msgid "红松骑士团"
 msgstr ""
 
 #: .\data\csv\Nation.csv:25
-msgid "无胄盟"
+msgid "临光家族"
 msgstr ""
 
 #: .\data\csv\Nation.csv:26
-msgid "常年内战的国家，国内目前已处于无政府状态。卡兹戴尔国内的绝大多数萨卡兹人均为感染者。\n卡兹戴尔城由军事委员会直接管理，各部族受辖于对应王庭，王庭受制于军事委员会。"
+msgid "无胄盟"
 msgstr ""
 
 #: .\data\csv\Nation.csv:27
+msgid "常年内战的国家，国内目前已处于无政府状态。卡兹戴尔国内的绝大多数萨卡兹人均为感染者。\n卡兹戴尔城由军事委员会直接管理，各部族受辖于对应王庭，王庭受制于军事委员会。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:28
 msgid "拉特兰，或称拉特兰城，是位于泰拉大陆中部的神权国家。北邻叙拉古，维多利亚和莱塔尼亚；南邻伊比利亚；东邻雷姆必拓。在泰拉千年的战火与混乱中独树一帜，屹立不倒。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:29
+#: .\data\csv\Nation.csv:30
 msgid "以矿业为主要产业，参与与谢拉格的贸易。历史上与维多利亚围绕矿业问题爆发过冲突，导致“围栏事件”爆发。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:30
+#: .\data\csv\Nation.csv:31
 msgid "前身为古阿加门王国。曾受到萨尔贡的殖民入侵，激起民众的强烈反抗，最终在十二英雄的领导下将萨尔贡军驱逐。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:32
+#: .\data\csv\Nation.csv:33
 msgid "新近并入萨尔贡的地区，处于无政府状态，治安混乱。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:33
+#: .\data\csv\Nation.csv:34
 msgid "地处泰拉大陆北部的国家，终年严寒，发展落后，遭受北原邪魔的坍缩影响，该地的萨米雪祀与独眼巨人共同抵御坍缩威胁。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:35
+#: .\data\csv\Nation.csv:36
 msgid "格拉斯哥帮"
 msgstr ""
 
-#: .\data\csv\Nation.csv:36
+#: .\data\csv\Nation.csv:37
 msgid "深池"
 msgstr ""
 
 #: .\data\csv\Nation.csv:38
-msgid "乌萨斯学生自治团"
+msgid "塔拉"
 msgstr ""
 
 #: .\data\csv\Nation.csv:40
+msgid "乌萨斯学生自治团"
+msgstr ""
+
+#: .\data\csv\Nation.csv:42
 msgid "喀兰贸易"
 msgstr ""
 
-#: .\data\csv\Nation.csv:41
+#: .\data\csv\Nation.csv:43
 msgid "主要城市为帕勒莫。黑帮势力盛行，由几大黑帮家族支配政权。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:43
+#: .\data\csv\Nation.csv:45
 msgid "岁"
 msgstr ""
 
-#: .\data\csv\Nation.csv:45
+#: .\data\csv\Nation.csv:47
 msgid "龙门近卫局"
 msgstr ""
 
-#: .\data\csv\Nation.csv:46
+#: .\data\csv\Nation.csv:48
 msgid "鲤氏侦探事务所"
 msgstr ""
 
-#: .\data\csv\Nation.csv:47
+#: .\data\csv\Nation.csv:49
 msgid "企鹅物流"
 msgstr ""
 
-#: .\data\csv\Nation.csv:51
-msgid "黑钢国际"
-msgstr ""
-
-#: .\data\csv\Nation.csv:52
+#: .\data\csv\Nation.csv:53
 msgid "彩虹小队"
 msgstr ""
 
-#: .\data\csv\Nation.csv:54
+#: .\data\csv\Nation.csv:55
 msgid "使徒"
 msgstr ""
 
-#: .\data\csv\Nation.csv:55
+#: .\data\csv\Nation.csv:56
 msgid "整合运动"
 msgstr ""
 
-#: .\data\csv\Nation.csv:56
+#: .\data\csv\Nation.csv:57
 msgid "深海教会"
 msgstr ""
 
-#: .\data\csv\Nation.csv:57
+#: .\data\csv\Nation.csv:58
 msgid "锈锤"
 msgstr ""
 
@@ -20958,6 +20962,46 @@ msgstr ""
 
 #: .\data\character\4146_妮芙.csv:14
 msgid "卡兹戴尔市民妮芙，通过罗德岛驻卡兹戴尔办事处加入罗德岛外勤部门。\n擅长使用心灵相关的源石技艺，配合其笞心魔的天赋，可在诸多领域发挥特长。"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:4
+msgid "水灯心"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:13
+msgid "一本夹有字条的塔拉语无名诗集"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:14
+msgid "水灯心，本名布莉吉，游牧民。据称来自塔拉某支古老的游牧部族，其成员长久以来在平原、丘陵地区从事游牧活动，兼领天灾预警、传信相关职责。现经干员苇草推荐与罗德岛合作，在接受矿石病治疗的同时，作为狙击干员协助战斗。"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:31
+msgid "部落风贴颈饰"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:32
+msgid "部落长摆夹露肩贴身夹克"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:33
+msgid "单边护臂"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:34
+msgid "部落皮革腰带镂空露腿长裤"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:36
+msgid "回旋刃"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:37
+msgid "旅行露指平板鞋"
+msgstr ""
+
+#: .\data\character\4177_水灯心.csv:38
+msgid "部落风旅行皮革包"
 msgstr ""
 
 #: .\data\character\6666_炉芯终曲阿米娅.csv:4

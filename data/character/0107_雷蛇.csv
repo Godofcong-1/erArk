@@ -5,7 +5,7 @@ Name,str,雷蛇,1,角色姓名
 Sex,int,1,0,角色性别
 Profession,int,6,0,角色职业为重装
 Race,int,27,0,角色种族为瓦伊凡
-Nation,int,501,0,角色势力为黑钢国际
+Nation,int,43,0,角色势力为黑钢国际
 Birthplace,int,25,0,角色出身地为瓦伊凡
 Hp,int,2000,0,角色初始体力
 Mp,int,2500,0,角色初始气力

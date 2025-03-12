@@ -5,7 +5,7 @@ Name,str,芙兰卡,1,姓名：芙兰卡
 Sex,int,1,0,性别：女
 Profession,int,5,0,职业：近卫
 Race,int,28,0,种族：沃尔珀
-Nation,int,501,0,势力：黑钢国际
+Nation,int,43,0,势力：黑钢国际
 Birthplace,int,4,0,出生地：哥伦比亚
 Hp,int,2500,0,初始体力：2500
 Mp,int,2000,0,初始气力：2000
