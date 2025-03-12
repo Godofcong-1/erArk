@@ -4229,7 +4229,7 @@ msgid "囚犯训练管理"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:6
-msgid "监狱长在空闲时会对空闲的囚犯进行日常训练，训练效果取决于监狱长对应的属性\n\n○部位快感训练：加权选取一个身体部位，获得部位快感和部位经验\n○部位扩张训练：加权选取一个身体部位，获得部位快感和部位扩张经验\n○苦痛快感训练：获得苦痛和N快感和苦痛快乐经验\n○性爱技巧训练：获得习得和部位经验\n○身体锻炼训练：提升体力最大值和气力最大值\n○心理服从训练：获得好意与屈服"
+msgid "监狱长在空闲时会对空闲的囚犯进行日常训练，训练效果取决于监狱长对应的属性\n\n○部位快感训练：加权选取一个身体部位，获得部位快感和部位经验\n○部位扩张训练：加权选取一个身体部位，获得部位快感和部位扩张经验\n○苦痛快感训练：获得苦痛、N快感、苦痛快乐经验\n○性爱技巧训练：获得习得和部位经验\n○身体锻炼训练：提升体力最大值和气力最大值\n○心理服从训练：获得好意与屈服"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:6
@@ -17836,23 +17836,23 @@ msgstr ""
 msgid "#B83434"
 msgstr ""
 
-#: .\data\character\0350_史尔特尔.csv:34
+#: .\data\character\0350_史尔特尔.csv:32
 msgid "黑色宽外套"
 msgstr ""
 
-#: .\data\character\0350_史尔特尔.csv:35
+#: .\data\character\0350_史尔特尔.csv:33
 msgid "略破损的黑色连衣裙"
 msgstr ""
 
-#: .\data\character\0350_史尔特尔.csv:36
+#: .\data\character\0350_史尔特尔.csv:34
 msgid "黑色长筒丝袜（带腿环）"
 msgstr ""
 
-#: .\data\character\0350_史尔特尔.csv:37
+#: .\data\character\0350_史尔特尔.csv:35
 msgid "莱万汀"
 msgstr ""
 
-#: .\data\character\0350_史尔特尔.csv:38
+#: .\data\character\0350_史尔特尔.csv:36
 msgid "干员身份牌"
 msgstr ""
 
