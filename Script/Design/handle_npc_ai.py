@@ -292,9 +292,10 @@ def judge_character_cant_move(character_id: int) -> int:
     # 被囚禁
     if character_data.sp_flag.imprisonment:
         cant_move_flag = True
-        # character.init_character_behavior_start_time(character_id, cache.game_time)
-        # character_data.behavior.behavior_id = constant.Behavior.WAIT
-        # character_data.state = constant.CharacterStatus.STATUS_WAIT
+        # 如果不在自己的监狱，且不和玩家在同一位置，不在H中，则瞬移回自己的监狱
+        if handle_premise_place.handle_not_in_player_scene(character_id) and handle_premise_place.handle_not_in_dormitory(character_id) and not character_data.sp_flag.is_h:
+            dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
+            map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
 
     # 临盆和产后
     if character_data.talent[22] == 1 or character_data.talent[23] == 1:

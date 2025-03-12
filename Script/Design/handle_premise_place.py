@@ -94,10 +94,7 @@ def handle_not_in_player_scene(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    now_character_data: game_type.Character = cache.character_data[character_id]
-    if now_character_data.position == cache.character_data[0].position:
-        return 0
-    return 1
+    return not handle_in_player_scene(character_id)
 
 
 @add_premise(constant_promise.Premise.PLAYER_COME_SCENE)
