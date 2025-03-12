@@ -6783,9 +6783,19 @@ def handle_have_office_work_need_to_do(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.rhodes_island.office_work > 0:
-        return 1
-    return 0
+    return cache.rhodes_island.office_work > 0
+
+
+@add_premise(constant_promise.Premise.NOT_HAVE_OFFICE_WORK_NEED_TO_DO)
+def handle_not_have_office_work_need_to_do(character_id: int) -> int:
+    """
+    没有需要处理的公务
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_have_office_work_need_to_do(character_id)
 
 
 @add_premise(constant_promise.Premise.PINK_CERTIFICATE_G_10)

@@ -3034,6 +3034,8 @@ class Premise:
     """ 经营 有已招募待确认的干员 """
     HAVE_OFFICE_WORK_NEED_TO_DO = "have_office_work_need_to_do"
     """ 经营 有需要处理的公务 """
+    NOT_HAVE_OFFICE_WORK_NEED_TO_DO = "not_have_office_work_need_to_do"
+    """ 经营 没有需要处理的公务 """
     PINK_CERTIFICATE_G_10 = "pink_certificate_g_10"
     """ 经营 拥有粉红凭证数量大于10 """
     PRISONER_IN_CUSTODY = "prisoner_in_custody"
