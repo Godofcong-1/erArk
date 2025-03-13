@@ -728,6 +728,8 @@ good_mood,GOOD_MOOD,属性_心情,自己心情愉快
 normal_mood,NORMAL_MOOD,属性_心情,自己心情普通
 bad_mood,BAD_MOOD,属性_心情,自己心情不好
 angry_mood,ANGRY_MOOD,属性_心情,自己心情愤怒
+self_angry_with_player,SELF_ANGRY_WITH_PLAYER,属性_心情,自己被玩家惹火了
+self_not_angry_with_player,SELF_NOT_ANGRY_WITH_PLAYER,属性_心情,自己没有被玩家惹火
 t_good_mood,TARGET_GOOD_MOOD,属性_心情,交互对象心情愉快
 t_normal_mood,TARGET_NORMAL_MOOD,属性_心情,交互对象心情普通
 t_bad_mood,TARGET_BAD_MOOD,属性_心情,交互对象心情不好

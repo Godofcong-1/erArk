@@ -4724,6 +4724,31 @@ def handle_angry_mood(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_ANGRY_WITH_PLAYER)
+def handle_self_angry_with_player(character_id: int) -> int:
+    """
+    自己被玩家惹火了
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.angry_with_player
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_ANGRY_WITH_PLAYER)
+def handle_self_not_angry_with_player(character_id: int) -> int:
+    """
+    自己没有被玩家惹火
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_angry_with_player(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_GOOD_MOOD)
 def handle_target_good_mood(character_id: int) -> int:
     """
