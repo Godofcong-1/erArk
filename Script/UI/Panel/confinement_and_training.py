@@ -330,6 +330,66 @@ def prepare_training():
     pl_character_data.target_character_id = target_character_id
 
 
+def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_selet_part: str = "") -> List[int]:
+    """
+    获取调教助手所有可用的指令id
+    Keyword arguments:
+    select_part -- 选择的部位
+    not_selet_part -- 不选择的部位
+    Return arguments:
+    List[int] -- 可用的指令id列表
+    """
+    from Script.UI.Panel import in_scene_panel
+    # 获取所有可用的状态id
+    status_id_list = []
+    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("口")])
+    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("手")])
+    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("道具")])
+    # 去重
+    status_id_list = list(set(status_id_list))
+    # 遍历状态id
+    now_premise_data = {}
+    new_status_id_list = []
+    for status_id in status_id_list:
+        if status_id in constant.state_id_to_instruct_id:
+            # 获取指令id
+            instruct_id = constant.state_id_to_instruct_id[status_id]
+            # 检查指令是否可用
+            filter_judge, now_premise_data = in_scene_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
+            # 进一步检查是否可用
+            if filter_judge:
+                status_data = game_config.config_status[status_id]
+                status_tag_list = status_data.tag
+                status_tag_list = status_data.tag.split("|")
+                # 如果指定了部位
+                if select_part != "" and select_part not in status_tag_list:
+                    continue
+                # 如果指定了不使用的部位
+                if not_selet_part != "" and not_selet_part in status_tag_list:
+                    continue
+                # 如果指定了部位或者不使用的部位，则也跳过被ban的指令id
+                if select_part != "" or not_selet_part != "":
+                    if status_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
+                        continue
+                pl_character_data = cache.character_data[0]
+                if pl_character_data.target_character_id == 0:
+                    target_character_data = cache.character_data[pl_character_data.target_character_id]
+                    # 如果NPC为处，则跳过破处类
+                    if target_character_data.talent[0] and _("V") in status_tag_list and _("破处") in status_tag_list:
+                        continue
+                    if target_character_data.talent[1] and _("A") in status_tag_list and _("破处") in status_tag_list:
+                        continue
+                    if target_character_data.talent[2] and _("U") in status_tag_list and _("破处") in status_tag_list:
+                        continue
+                    if target_character_data.talent[3] and _("W") in status_tag_list and _("破处") in status_tag_list:
+                        continue
+                    if target_character_data.talent[4] and _("N") in status_tag_list and _("破处") in status_tag_list:
+                        continue
+
+                # 加入到新列表中
+                new_status_id_list.append(status_id)
+    return new_status_id_list
+
 class Confinement_And_Training_Manage_Panel:
     """
     用于监禁调教管理的面板对象
@@ -433,6 +493,23 @@ class Confinement_And_Training_Manage_Panel:
                     tool_button = draw.LeftButton(tool_text, _("道具使用"), len(tool_text) * 2, cmd_func=self.adjust_tool_list)
                     tool_button.draw()
                     return_list.append(tool_button.return_text)
+                # 调教助手的额外选项
+                if cid == 12:
+                    # 如果选择的是从指定列表中选择，则显示指定列表按钮
+                    if cache.rhodes_island.confinement_training_setting[cid] == 3:
+                        target_text = _(" [调整指令列表] ")
+                        target_button = draw.LeftButton(
+                            target_text, _("指令列表"), len(target_text) * 2, cmd_func=self.adjust_sex_assistant_instruct_list
+                        )
+                        target_button.draw()
+                        return_list.append(target_button.return_text)
+                    # 绘制禁止指令列表按钮
+                    ban_button_text = _(" [调整禁止指令列表] ")
+                    ban_button = draw.LeftButton(
+                        ban_button_text, _("禁止指令列表"), len(ban_button_text) * 2, cmd_func=self.adjust_sex_assistant_instruct_list, args=(True,)
+                    )
+                    ban_button.draw()
+                    return_list.append(ban_button.return_text)
 
             line_feed.draw()
             line_feed.draw()
@@ -562,33 +639,71 @@ class Confinement_And_Training_Manage_Panel:
         else:
             cache.rhodes_island.pre_training_tool_dict[tool_id] = 1
 
-    def adjust_target_list(self):
-        """调整体检对象名单"""
-        from Script.UI.Panel import normal_panel
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], normal_panel.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+    def adjust_sex_assistant_instruct_list(self, ban_flag: bool = False):
+        """调整调教助手指令列表"""
+        new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant()
         while 1:
-            npc_id_got_list = sorted(cache.npc_id_got)
-            # 已选择的角色id列表
-            selected_id_list = list(cache.rhodes_island.manually_selected_exam_operator_ids)
-            final_list = []
-            # 遍历角色id
-            for npc_id in npc_id_got_list:
-                if npc_id == 0:
-                    continue
-                now_list = [npc_id, self.switch_chara_in_target_list, selected_id_list]
-                final_list.append(now_list)
-            now_draw_panel.text_list = final_list
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+            line_feed.draw()
+            # 遍历指令，绘制为按钮
+            count = 0
+            for status_id in new_status_id_list:
+                # 获取状态数据
+                status_data = game_config.config_status[status_id]
+                # 获取指令id
+                instruct_id = constant.state_id_to_instruct_id[status_id]
+                # 绘制格式
+                button_text = f" [{status_data.name}] "
+                button_len = max(len(button_text) * 2, 30)
+                # 选择下，选择变黄
+                if not ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_instruct_list:
+                    draw_style = 'gold_enrod'
+                # 禁止下，选择变灰
+                elif ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
+                    draw_style = 'deep_gray'
+                else:
+                    draw_style = 'standard'
+                # 绘制按钮
+                button_draw = draw.CenterButton(
+                    button_text,
+                    str(instruct_id) + button_text,
+                    button_len,
+                    normal_style=draw_style,
+                    cmd_func=self.change_select_instruct,
+                    args=(status_id,ban_flag)
+                    )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                # 换行
+                count += 1
+                if count % 6 == 0:
+                    line_feed.draw()
 
-            # 调用通用选择按钮列表函数
-            return_list = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("体检对象名单"))
-
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == _("返回"):
+            if yrn == back_draw.return_text:
                 break
 
-    def switch_chara_in_target_list(self, character_id: int):
-        """切换体检对象名单中的角色"""
-        if character_id in cache.rhodes_island.manually_selected_exam_operator_ids:
-            cache.rhodes_island.manually_selected_exam_operator_ids.remove(character_id)
+    def change_select_instruct(self, instruct_id: int, ban_flag: bool = False):
+        """
+        切换调教助手指令选择状态
+        Keyword arguments:
+        instruct_id -- 指令id
+        ban_flag -- 是否禁止该指令
+        """
+        if not ban_flag:
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_instruct_list:
+                cache.rhodes_island.sex_assistant_ai_instruct_list.remove(instruct_id)
+            else:
+                cache.rhodes_island.sex_assistant_ai_instruct_list.append(instruct_id)
         else:
-            cache.rhodes_island.manually_selected_exam_operator_ids.add(character_id)
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
+                cache.rhodes_island.sex_assistant_ai_ban_instruct_list.remove(instruct_id)
+            else:
+                cache.rhodes_island.sex_assistant_ai_ban_instruct_list.append(instruct_id)

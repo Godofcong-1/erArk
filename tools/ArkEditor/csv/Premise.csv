@@ -929,10 +929,13 @@ self_fall_2,SELF_FALL_2,素质_陷落,自己有2级陷落素质
 self_fall_3,SELF_FALL_3,素质_陷落,自己有3级陷落素质
 self_fall_4,SELF_FALL_4,素质_陷落,自己有4级陷落素质
 self_fall_love,SELF_FALL_LOVE,素质_陷落,自己有爱情系陷落素质
+self_not_fall_love,SELF_NOT_FALL_LOVE,素质_陷落,自己没有爱情系陷落素质
 self_fall_obey,SELF_FALL_OBEY,素质_陷落,自己有隶属系陷落素质
 self_not_fall_obey,SELF_NOT_FALL_OBEY,素质_陷落,自己没有隶属系陷落素质
 not_fall,TARGET_NOT_FALL,素质_陷落,交互对象无陷落素质
 target_fall,TARGET_FALL,素质_陷落,交互对象有陷落素质
+target_not_fall_love,TARGET_NOT_FALL_LOVE,素质_陷落,交互对象没有爱情系陷落素质
+target_not_fall_obey,TARGET_NOT_FALL_OBEY,素质_陷落,交互对象没有隶属系陷落素质
 love_1,TARGET_LOVE_1,素质_陷落,交互对象拥有思慕（爱情系第一阶段）
 love_2,TARGET_LOVE_2,素质_陷落,交互对象拥有恋慕（爱情系第二阶段）
 love_3,TARGET_LOVE_3,素质_陷落,交互对象拥有恋人（爱情系第三阶段）
@@ -1175,6 +1178,7 @@ work_is_floral_planter,WORK_IS_FLORAL_PLANTER,属性_工作,自己的工作为�
 work_is_sex_trainee,WORK_IS_SEX_TRAINEE,属性_工作,自己的工作为性爱练习生
 work_is_warden,WORK_IS_WARDEN,属性_工作,自己的工作为监狱长
 t_work_is_warden,T_WORK_IS_WARDEN,属性_工作,交互对象的工作为监狱长
+t_work_is_warden_or_t_assistant,T_WORK_IS_WARDEN_OR_T_ASSISTANT,属性_工作,交互对象的工作为监狱长或交互对象是助理
 
 entertainment_is_read,ENTERTAINMENT_IS_READ,属性_娱乐,自己当前时段的娱乐为读书
 entertainment_is_sing,ENTERTAINMENT_IS_SING,属性_娱乐,自己当前时段的娱乐为唱歌
@@ -1445,6 +1449,11 @@ npc_ai_type_2_in_group_sex,NPC_AI_TYPE_2_IN_GROUP_SEX,H_群交,未在模板中�
 npc_ai_type_3_in_group_sex,NPC_AI_TYPE_3_IN_GROUP_SEX,H_群交,未在模板中的NPC在群交中随机抢占替换当前位置，无位则自慰
 self_now_go_to_join_group_sex,SLEF_NOW_GO_TO_JOIN_GROUP_SEX,H_群交,自己正在前往加入群交
 self_not_go_to_join_group_sex,SLEF_NOT_GO_TO_JOIN_GROUP_SEX,H_群交,自己没有前往加入群交
+self_sex_assistant_on,SELF_SEX_ASSISTANT_ON,H_群交,自己开启了性爱助手
+target_sex_assistant_on,TARGET_SEX_ASSISTANT_ON,H_群交,交互对象开启了性爱助手
+self_sex_assistant_1,SELF_SEX_ASSISTANT_1,H_群交,自己的性爱助手目标为玩家同部位
+self_sex_assistant_2,SELF_SEX_ASSISTANT_2,H_群交,自己的性爱助手目标为避开玩家部位
+self_sex_assistant_3,SELF_SEX_ASSISTANT_3,H_群交,自己的性爱助手目标为指定指令列表
 
 self_sleep_h_awake_but_pretend_sleep,SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP,H_其他,自己在睡奸中醒来但是装睡
 self_not_sleep_h_awake_but_pretend_sleep,SELF_NOT_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP,H_其他,自己没有在睡奸中醒来但是装睡

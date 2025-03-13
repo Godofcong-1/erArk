@@ -6010,6 +6010,18 @@ def handle_self_fall_love(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_NOT_FALL_LOVE)
+def handle_self_not_fall_love(character_id: int) -> int:
+    """
+    自己没有爱情系陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_fall_love(character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_FALL_OBEY)
 def handle_self_fall_obey(character_id: int) -> int:
     """
@@ -6066,6 +6078,32 @@ def handle_target_fall(character_id: int) -> int:
     if handle_self_fall(character_data.target_character_id):
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_FALL_LOVE)
+def handle_target_not_fall_love(character_id: int) -> int:
+    """
+    交互对象没有爱情系陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_fall_love(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_FALL_OBEY)
+def handle_target_not_fall_obey(character_id: int) -> int:
+    """
+    交互对象没有隶属系陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_fall_obey(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_LOVE_1)
@@ -9308,6 +9346,23 @@ def handle_t_work_is_warden(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return handle_work_is_warden(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.T_WORK_IS_WARDEN_OR_T_ASSISTANT)
+def handle_t_work_is_warden_or_t_assistant(character_id: int) -> int:
+    """
+    交互对象的工作为监狱长或交互对象是助理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_work_is_warden(character_data.target_character_id):
+        return 1
+    if handle_is_assistant(character_data.target_character_id):
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.ENTERTAINMENT_IS_READ)
@@ -12566,6 +12621,71 @@ def handle_self_not_go_to_join_group_sex(character_id: int) -> int:
     int -- 权重
     """
     return not handle_self_now_go_to_join_group_sex(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_ON)
+def handle_self_sex_assistant_on(character_id: int) -> int:
+    """
+    自己开启了性爱助手
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.assistant_ai_logic > 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SEX_ASSISTANT_ON)
+def handle_target_sex_assistant_on(character_id: int) -> int:
+    """
+    交互对象开启了性爱助手
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_sex_assistant_on(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_1)
+def handle_self_sex_assistant_1(character_id: int) -> int:
+    """
+    自己的性爱助手目标为玩家同部位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.assistant_ai_logic == 1
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_2)
+def handle_self_sex_assistant_2(character_id: int) -> int:
+    """
+    自己的性爱助手目标为避开玩家部位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.assistant_ai_logic == 2
+
+
+@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_3)
+def handle_self_sex_assistant_3(character_id: int) -> int:
+    """
+    自己的性爱助手目标为指定指令列表
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.assistant_ai_logic == 3
 
 
 @add_premise(constant_promise.Premise.SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
@@ -16459,6 +16579,9 @@ def handle_is_assistant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    # 玩家自己不能是助理
+    if character_id == 0:
+        return 0
     pl_character_data: game_type.Character = cache.character_data[0]
     if pl_character_data.assistant_character_id == character_id:
         return 1
@@ -16474,10 +16597,7 @@ def handle_not_assistant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    pl_character_data: game_type.Character = cache.character_data[0]
-    if pl_character_data.assistant_character_id == character_id:
-        return 0
-    return 1
+    return not handle_is_assistant(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_IS_ASSISTANT)
@@ -16490,10 +16610,7 @@ def handle_target_is_assistant(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
-    if pl_character_data.assistant_character_id == character_data.target_character_id:
-        return 1
-    return 0
+    return handle_is_assistant(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_ASSISTANT)
@@ -16506,10 +16623,7 @@ def handle_target_not_assistant(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
-    if pl_character_data.assistant_character_id == character_data.target_character_id:
-        return 0
-    return 1
+    return not handle_is_assistant(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.ASSISTANT_HELP_WORK_1)

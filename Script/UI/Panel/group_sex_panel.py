@@ -219,8 +219,7 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
                     if target_character_data.talent[4] and _("N") in status_tag_list and _("破处") in status_tag_list:
                         continue
 
-            # 加入到新列表中
-            if filter_judge:
+                # 加入到新列表中
                 new_status_id_list.append(status_id)
 
     return new_status_id_list

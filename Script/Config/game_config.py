@@ -1088,7 +1088,7 @@ def load_status():
         if not len(tag_list):
             continue
         # 以tag为键，存储对应的状态id列表
-        for tag_name in ["插入", "侍奉", "口", "手", "肛"]:
+        for tag_name in ["插入", "侍奉", "口", "手", "肛", "道具"]:
             if tag_name in tag_list:
                 config_status_id_list_of_group_sex_body_part.setdefault(tag_name, [])
                 config_status_id_list_of_group_sex_body_part[tag_name].append(now_tem.cid)

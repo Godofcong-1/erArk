@@ -1100,6 +1100,10 @@ class Rhodes_Island:
         """ 调教前润滑准备 """
         self.pre_training_tool_dict: Dict[int, Tuple[int]] = {}
         """ 调教前道具使用，同BODY_H_STATE类的body_item """
+        self.sex_assistant_ai_instruct_list: list = []
+        """ 调教助手的AI指令列表 """
+        self.sex_assistant_ai_ban_instruct_list: list = []
+        """ 调教助手的AI禁止指令列表 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """
