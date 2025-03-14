@@ -746,7 +746,7 @@ class ChangeWorkButtonList:
         if work_id == 191:
             from Script.Design import map_handle
             # 如果有旧的监狱长，则解除监狱长身份，并重置宿舍
-            if not handle_premise.handle_have_warden(0):
+            if handle_premise.handle_have_warden(0):
                 old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
                 old_warden.work.work_type = 0
                 old_warden.dormitory = old_warden.pre_dormitory
