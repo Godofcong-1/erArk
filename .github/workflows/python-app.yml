@@ -47,7 +47,7 @@ jobs:
           Copy-Item README.md dist/
           Copy-Item image dist/ -Recurse
           Copy-Item update.log dist/
-          Copy-Item todo list.txt dist/
+          Copy-Item "todo list.txt" dist/
           Copy-Item package.json dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
