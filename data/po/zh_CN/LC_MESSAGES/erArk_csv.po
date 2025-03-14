@@ -19644,6 +19644,34 @@ msgstr ""
 msgid "防风镜"
 msgstr ""
 
+#: .\data\character\1038_荒芜拉普兰德.csv:4
+msgid "荒芜拉普兰德"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:13
+msgid "一封异常精美的紫色邀请函，角落潦草画着一只白狼和一串葡萄。她邀请你参加一场狂欢，但无人知晓主题是什么。"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:14
+msgid "拉普兰德，无业，叙拉古萨卢佐家族现任家主阿尔贝托的独女，目前已从家族脱离。拉普兰德擅长单兵作战，经常在战术攻坚与肃清作战中为罗德岛提供协助。"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:35
+msgid "华丽叙拉古礼服上衣夹克"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:37
+msgid "华丽叙拉古礼服连体裙"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:38
+msgid "灰色长袜"
+msgstr ""
+
+#: .\data\character\1038_荒芜拉普兰德.csv:40
+msgid "不规则几何形双刃法杖"
+msgstr ""
+
 #: .\data\character\1039_西尔维娅.csv:4
 msgid "西尔维娅"
 msgstr ""
@@ -20062,6 +20090,42 @@ msgstr ""
 
 #: .\data\character\4009_艾丽妮.csv:14
 msgid "艾丽妮，前伊比利亚审判官，大审判官达里奥的学生。对伊比利亚历史、律法、人文地理等知识十分了解。在“愚人号”事件后，辞去审判官职务，经凯尔希亲自推荐，现以审判庭信使的身份与罗德岛签订合作协议，为应对来自海洋的威胁而做准备。"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:4
+msgid "隐德来希"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:13
+msgid "一条银链，上面什么也没挂。你与她最为亲近的时刻尚未到来，等到那时，她会将那份记忆凝成血晶，再正式赠予你。"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:14
+msgid "隐德来希，作为卡兹戴尔情报组织玫瑰河畔的成员，曾为巴别塔提供过情报。伦蒂尼姆战争期间，隐德来希主动与罗德岛取得联系，现以访客身份留舰。\n需注意，隐德来希与罗德岛并非正式的合约关系，她与罗德岛的一切合作，均视作私人委托。"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:24
+msgid "白色领巾"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:25
+msgid "束腰暗黑哥特服"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:27
+msgid "深红色蕾丝文胸"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:28
+msgid "镂空蕾丝边丝袜"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:29
+msgid "黑色高跟皮靴"
+msgstr ""
+
+#: .\data\character\4010_隐德来希.csv:30
+msgid "月牙状大型镰刀"
 msgstr ""
 
 #: .\data\character\4013_耶拉.csv:4
@@ -21013,7 +21077,7 @@ msgid "水灯心"
 msgstr ""
 
 #: .\data\character\4177_水灯心.csv:13
-msgid "一本夹有字条的塔拉语无名诗集"
+msgid "一枚环环相扣的草编绳结，其寓意无法在任何现存书籍上找到。给草绳涂抹兽油是罕见的举动，但或许她只是不想让你被草梗割伤。"
 msgstr ""
 
 #: .\data\character\4177_水灯心.csv:14
@@ -21046,6 +21110,42 @@ msgstr ""
 
 #: .\data\character\4177_水灯心.csv:38
 msgid "部落风旅行皮革包"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:4
+msgid "死芒"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:13
+msgid "一本从未出版过的故事集，没有一个故事有结局。细细看去，每个没完结的故事都指向一个尚在人世的人，你自己也在其中。"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:14
+msgid "死芒，本名爱布拉娜·都柏林，前“深池”领袖，该组织现已不复存在。在谨慎权衡之后，罗德岛有条件地同意与其建立一定程度的合作关系。\n经医疗部、人事部和博士共同确认，死芒的所有档案移入高权限资料库。"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:31
+msgid "紫色系半透明外套"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:32
+msgid "深紫白色外套式连衣裙"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:33
+msgid "破洞黑紫袜"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:34
+msgid "黑紫色绑带短靴"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:35
+msgid "黑柄尖枪法杖"
+msgstr ""
+
+#: .\data\character\450_死芒.csv:36
+msgid "黑色骨骼风指环"
 msgstr ""
 
 #: .\data\character\6666_炉芯终曲阿米娅.csv:4
