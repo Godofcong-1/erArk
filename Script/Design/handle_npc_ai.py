@@ -238,15 +238,19 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 睡奸时例外
         if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
             return 1
-        # 群交时，仅自慰类型和部位类型由群交AI判断处理
-        if (
-            handle_premise.handle_group_sex_mode_on(character_id) and
-            (
+        # 群交时
+        if handle_premise.handle_group_sex_mode_on(character_id):
+            # 仅自慰类型和部位类型由群交AI判断处理
+            if(
                 handle_premise.handle_npc_ai_type_1_in_group_sex(character_id) or handle_premise.handle_npc_ai_type_2_in_group_sex(character_id)
-             )
             ):
-            npc_ai_in_group_sex(character_id)
-            return 1
+                npc_ai_in_group_sex(character_id)
+                return 1
+            # 如果已经获得性爱助手行为，则结算助手行动
+            elif character_data.h_state.sex_assist:
+                # 手动结算性爱助手行动
+                character_behavior.judge_character_status(character_id)
+                character_data.h_state.sex_assist = False
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
         character_data.behavior.start_time = pl_character_data.behavior.start_time
@@ -292,8 +296,8 @@ def judge_character_cant_move(character_id: int) -> int:
     # 被囚禁
     if character_data.sp_flag.imprisonment:
         cant_move_flag = True
-        # 如果不在自己的监狱，且不和玩家在同一位置，不在H中，则瞬移回自己的监狱
-        if handle_premise_place.handle_not_in_player_scene(character_id) and handle_premise_place.handle_not_in_dormitory(character_id) and not character_data.sp_flag.is_h:
+        # 如果不在自己的监狱，且玩家不在关押区，不在H中，则瞬移回自己的监狱
+        if not handle_premise_place.handle_in_detention_area(0) and handle_premise_place.handle_not_in_dormitory(character_id) and not character_data.sp_flag.is_h:
             dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
             map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
 

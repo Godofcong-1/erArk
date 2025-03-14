@@ -351,9 +351,10 @@ cid,effect_name,effect_type,effect
 631,T_CLOTH_BACK,属性_服装,交互对象穿回H时脱掉的衣服
 632,WEAR_CLOTH_OFF,属性_服装,脱掉全部衣服
 633,GET_SHOWER_CLOTH,属性_服装,清零其他衣服并换上浴帽和浴巾
-634,GET_SLEEP_CLOTH,属性_服装,清零其他衣服并换上睡衣（管理中则全裸）
+634,GET_SLEEP_CLOTH,属性_服装,睡觉服装结算（正常时清零其他衣服并换上睡衣）
 635,SELF_CLOTH_BACK,属性_服装,自己穿回H时脱掉的衣服
 636,SCENE_ALL_CHARACTERS_CLOTH_BACK,属性_服装,场景内所有角色穿回H时脱掉的衣服
+637,GET_SELF_PRISONER_CLOTH,属性_服装,按照监禁设定对自身进行囚犯服装结算
 641,LOCKER_CLOTH_IN_SHOWER_RESET,属性_服装,大浴场衣柜里的衣服清零
 642,WEAR_TO_SHOWER_LOCKER,属性_服装,身上首饰以外的衣服转移到大浴场柜子里
 643,SHOWER_LOCKER_TO_WEAR,属性_服装,大浴场衣柜里的衣服转移到身上

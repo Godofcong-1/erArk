@@ -9373,6 +9373,19 @@ def handle_t_work_is_warden(character_id: int) -> int:
     return handle_work_is_warden(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.T_WORK_IS_NOT_WARDEN)
+def handle_t_work_is_not_warden(character_id: int) -> int:
+    """
+    交互对象的工作不是监狱长
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_work_is_warden(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.T_WORK_IS_WARDEN_OR_T_ASSISTANT)
 def handle_t_work_is_warden_or_t_assistant(character_id: int) -> int:
     """
@@ -12648,69 +12661,64 @@ def handle_self_not_go_to_join_group_sex(character_id: int) -> int:
     return not handle_self_now_go_to_join_group_sex(character_id)
 
 
-@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_ON)
-def handle_self_sex_assistant_on(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SEX_ASSISTANT_ON)
+def handle_sex_assistant_on(character_id: int) -> int:
     """
-    自己开启了性爱助手
+    开启了性爱助手
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    return character_data.h_state.assistant_ai_logic > 0
+    return cache.rhodes_island.confinement_training_setting[12] > 0
 
 
-@add_premise(constant_promise.Premise.TARGET_SEX_ASSISTANT_ON)
-def handle_target_sex_assistant_on(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SEX_ASSISTANT_OFF)
+def handle_sex_assistant_off(character_id: int) -> int:
     """
-    交互对象开启了性爱助手
+    没有开启性爱助手
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    return handle_self_sex_assistant_on(character_data.target_character_id)
+    return not handle_sex_assistant_on(character_id)
 
 
-@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_1)
-def handle_self_sex_assistant_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SEX_ASSISTANT_1)
+def handle_sex_assistant_1(character_id: int) -> int:
     """
-    自己的性爱助手目标为玩家同部位
+    性爱助手目标为玩家同部位
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    return character_data.h_state.assistant_ai_logic == 1
+    return cache.rhodes_island.confinement_training_setting[12] == 1
 
 
-@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_2)
-def handle_self_sex_assistant_2(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SEX_ASSISTANT_2)
+def handle_sex_assistant_2(character_id: int) -> int:
     """
-    自己的性爱助手目标为避开玩家部位
+    性爱助手目标为避开玩家部位
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    return character_data.h_state.assistant_ai_logic == 2
+    return cache.rhodes_island.confinement_training_setting[12] == 2
 
 
-@add_premise(constant_promise.Premise.SELF_SEX_ASSISTANT_3)
-def handle_self_sex_assistant_3(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SEX_ASSISTANT_3)
+def handle_sex_assistant_3(character_id: int) -> int:
     """
-    自己的性爱助手目标为指定指令列表
+    性爱助手目标为指定指令列表
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    return character_data.h_state.assistant_ai_logic == 3
+    return cache.rhodes_island.confinement_training_setting[12] == 3
 
 
 @add_premise(constant_promise.Premise.SELF_SLEEP_H_AWAKE_BUT_PRETEND_SLEEP)
@@ -17027,9 +17035,7 @@ def handle_assistant_live_together_on(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.assistant_services[7] == 1:
-        return 1
-    return 0
+    return character_data.assistant_services[7] == 1
 
 
 @add_premise(constant_promise.Premise.ASSISTANT_LIVE_TOGETHER_OFF)
@@ -17041,9 +17047,33 @@ def handle_assistant_live_together_off(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_assistant_live_together_on(character_id):
-        return 0
-    return 1
+    return not handle_assistant_live_together_on(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_ASSISTANT_LIVE_TOGETHER_ON)
+def handle_target_assistant_live_together_on(character_id: int) -> int:
+    """
+    交互对象的助理属性为正在同居
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_assistant_live_together_on(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_ASSISTANT_LIVE_TOGETHER_OFF)
+def handle_target_assistant_live_together_off(character_id: int) -> int:
+    """
+    交互对象的助理属性为未同居
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_assistant_live_together_on(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.PL_ASSISTANT_CHANGE_EVERY_WEEK_ON)

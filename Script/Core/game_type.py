@@ -501,6 +501,8 @@ class BODY_H_STATE:
         """ 未在模板中的NPC在群交中的AI逻辑，0为无行动，1为仅自慰，2为优先自动补位、无位则自慰，3为每次指令都重置位置后随机抢位 """
         self.pretend_sleep: bool = False
         """ 睡奸中醒来但是装睡的状态 """
+        self.sex_assist: bool = False
+        """ 性爱助手状态，False为不进行，True为进行 """
 
 
 class FIRST_RECORD:
@@ -1100,10 +1102,10 @@ class Rhodes_Island:
         """ 调教前润滑准备 """
         self.pre_training_tool_dict: Dict[int, Tuple[int]] = {}
         """ 调教前道具使用，同BODY_H_STATE类的body_item """
-        self.sex_assistant_ai_instruct_list: list = []
-        """ 调教助手的AI指令列表 """
-        self.sex_assistant_ai_ban_instruct_list: list = []
-        """ 调教助手的AI禁止指令列表 """
+        self.sex_assistant_ai_status_list: list = []
+        """ 调教助手的AI行为状态列表 """
+        self.sex_assistant_ai_ban_status_list: list = []
+        """ 调教助手的AI禁止行为状态列表 """
 
         self.research_zone_max: int = 0
         """ 科研区设施数量上限 """

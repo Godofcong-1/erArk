@@ -4285,11 +4285,11 @@ msgid "污浊清洗|部位润滑|持续性道具"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:11
-msgid "调教助手(未实装)"
+msgid "调教助手"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:11
-msgid "开启后会作为调教助手辅助H\n当博士对调教助手以外的干员进行了指令时，调教助手会从可选指令中随机选择一项，也对该干员执行"
+msgid "开启后会作为调教助手辅助H\n当博士对调教助手以外的干员进行了指令时，调教助手会从可选指令中随机选择一项，也对该干员执行\n调教助手对目标的结算将合并到博士对目标的结算中"
 msgstr ""
 
 #: .\data\csv\Confinement_Training_Setting.csv:11

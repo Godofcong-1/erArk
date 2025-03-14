@@ -41,6 +41,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             behavior_id not in {constant.Behavior.GROUP_SEX_TO_H, constant.Behavior.GROUP_SEX_END} and
             behavior_id not in constant.special_end_H_list
             ):
+            # 记录初始的交互对象id
+            first_target_character_id = now_character_data.target_character_id
             # 统计要执行的指令列表
             group_sex_instruct_list, full_list_of_target_id_and_state_id = group_sex_panel.count_group_sex_instruct_list()
             # 判定是否要进行当前行为的结算
@@ -63,6 +65,22 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
                         now_character_data.behavior.behavior_id = state_id
                         # 进行指令相关数据的结算
                         change_data = handle_instruct_data(character_id, state_id, now_time, add_time, change_data)
+            # 回到初始的交互对象id
+            now_character_data.target_character_id = first_target_character_id
+            # 监狱长的性爱助手开启中，且当前交互目标不是监狱长
+            if handle_premise.handle_sex_assistant_on(character_id) and handle_premise.handle_t_work_is_not_warden(character_id):
+                from Script.UI.Panel import confinement_and_training
+                # 进行性爱助手结算
+                state_id = confinement_and_training.get_state_id_of_sex_assistant()
+                if state_id != 0:
+                    warden_character_id = cache.rhodes_island.current_warden_id
+                    warden_character_data = cache.character_data[warden_character_id]
+                    warden_character_data.behavior.behavior_id = state_id
+                    warden_character_data.state = state_id
+                    warden_character_data.behavior.duration = now_character_data.behavior.duration
+                    warden_character_data.behavior.start_time = now_character_data.behavior.start_time
+                    warden_character_data.target_character_id = now_character_data.target_character_id
+                    warden_character_data.h_state.sex_assist = True
         # 正常情况下则直接执行结算
         else:
             # 进行指令相关数据的结算

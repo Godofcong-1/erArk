@@ -370,7 +370,7 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
                     continue
                 # 如果指定了部位或者不使用的部位，则也跳过被ban的指令id
                 if select_part != "" or not_selet_part != "":
-                    if status_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
+                    if status_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
                         continue
                 pl_character_data = cache.character_data[0]
                 if pl_character_data.target_character_id == 0:
@@ -390,6 +390,53 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
                 # 加入到新列表中
                 new_status_id_list.append(status_id)
     return new_status_id_list
+
+def get_state_id_of_sex_assistant() -> int:
+    """
+    获取调教助手的状态id
+    Return arguments:
+    int -- 调教助手的状态id
+    """
+    # 如果没有开启性爱助手，则返回0
+    if handle_premise.handle_sex_assistant_off(0):
+        return 0
+    # 如果是指定指令列表，则直接随机选择
+    if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_status_list) > 0:
+        state_id = random.choice(cache.rhodes_island.sex_assistant_ai_status_list)
+        return state_id
+    else:
+        # 获取玩家当前的状态id
+        pl_character_data = cache.character_data[0]
+        state_id = pl_character_data.behavior.behavior_id
+        if state_id in game_config.config_status:
+            state_data = game_config.config_status[state_id]
+            # 遍历部位列表，获取存在与tag中的部位
+            part_str_list = ["U", "W", "V", "A", "C", "B", "N"]
+            now_part = ""
+            for part_str in part_str_list:
+                if part_str in state_data.tag:
+                    now_part = part_str
+                    break
+            # 如果没有部位，则返回0
+            if now_part == "":
+                return 0
+            # 如果目标为玩家同部位
+            if handle_premise.handle_sex_assistant_1(0):
+                # 获取目标的状态id
+                new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant(select_part=now_part)
+                # 随机选择一个状态id
+                if len(new_status_id_list) > 0:
+                    state_id = random.choice(new_status_id_list)
+                    return state_id
+            # 如果为非玩家同部位
+            elif handle_premise.handle_sex_assistant_2(0):
+                # 获取目标的状态id
+                new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant(not_selet_part=now_part)
+                # 随机选择一个状态id
+                if len(new_status_id_list) > 0:
+                    state_id = random.choice(new_status_id_list)
+                    return state_id
+    return 0
 
 class Confinement_And_Training_Manage_Panel:
     """
@@ -659,10 +706,10 @@ class Confinement_And_Training_Manage_Panel:
                 button_text = f" [{status_data.name}] "
                 button_len = max(len(button_text) * 2, 30)
                 # 选择下，选择变黄
-                if not ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_instruct_list:
+                if not ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_status_list:
                     draw_style = 'gold_enrod'
                 # 禁止下，选择变灰
-                elif ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
+                elif ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
                     draw_style = 'deep_gray'
                 else:
                     draw_style = 'standard'
@@ -699,12 +746,12 @@ class Confinement_And_Training_Manage_Panel:
         ban_flag -- 是否禁止该指令
         """
         if not ban_flag:
-            if instruct_id in cache.rhodes_island.sex_assistant_ai_instruct_list:
-                cache.rhodes_island.sex_assistant_ai_instruct_list.remove(instruct_id)
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_status_list:
+                cache.rhodes_island.sex_assistant_ai_status_list.remove(instruct_id)
             else:
-                cache.rhodes_island.sex_assistant_ai_instruct_list.append(instruct_id)
+                cache.rhodes_island.sex_assistant_ai_status_list.append(instruct_id)
         else:
-            if instruct_id in cache.rhodes_island.sex_assistant_ai_ban_instruct_list:
-                cache.rhodes_island.sex_assistant_ai_ban_instruct_list.remove(instruct_id)
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
+                cache.rhodes_island.sex_assistant_ai_ban_status_list.remove(instruct_id)
             else:
-                cache.rhodes_island.sex_assistant_ai_ban_instruct_list.append(instruct_id)
+                cache.rhodes_island.sex_assistant_ai_ban_status_list.append(instruct_id)
