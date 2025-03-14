@@ -284,6 +284,7 @@ def prepare_training():
     body_item_list = h_item_shop_panel.body_item_list
     for i in range(len(body_item_list)):
         # 已开启
+        cache.rhodes_island.pre_training_tool_dict.setdefault(i, 0)
         if cache.rhodes_island.pre_training_tool_dict[i]:
             item_id = h_item_shop_panel.get_item_id_from_body_item_list(i)
             item_num = cache.character_data[0].item[item_id]
