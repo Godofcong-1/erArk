@@ -405,22 +405,32 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     now_talk_text, special_code = special_code_judge(now_talk)
 
     # 专属称呼处理
+    # 他人对自己的称呼
     nick_name = character_data.nick_name
     if nick_name == "":
         nick_name = character_data.name
-    nick_name_to_pl = character_data.nick_name_to_pl
-    if nick_name_to_pl == "":
+    # 自己对玩家的称呼
+    if character_data.nick_name_to_pl != "":
+        nick_name_to_pl = character_data.nick_name_to_pl
+    elif player_data.nick_name != "":
         nick_name_to_pl = player_data.nick_name
-    pl_nick_name = ""
-    if character_id != 0:
+    else:
+        nick_name_to_pl = player_data.name
+    # 玩家的称呼
+    if character_id != 0 and character_data.nick_name_to_pl != "":
         pl_nick_name = character_data.nick_name_to_pl
-    elif character_data.target_character_id != 0:
+    elif character_data.target_character_id != 0 and target_data.nick_name_to_pl != "":
         pl_nick_name = target_data.nick_name_to_pl
-    if pl_nick_name == "":
+    elif player_data.nick_name != "":
         pl_nick_name = player_data.nick_name
-    target_nick_name = target_data.nick_name
-    if target_nick_name == "":
+    else:
+        pl_nick_name = player_data.name
+    # 对交互对象的称呼
+    if target_data.nick_name != "":
+        target_nick_name = target_data.nick_name
+    else:
         target_nick_name = target_data.name
+    # 交互对象对玩家的称呼
     target_nick_name_to_pl = target_data.nick_name_to_pl
     if target_nick_name_to_pl == "":
         target_nick_name_to_pl = player_data.nick_name
