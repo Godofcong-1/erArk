@@ -4296,6 +4296,18 @@ msgstr ""
 msgid "否|一同欺负博士选择的部位|欺负博士没有选择的部位|从指定指令列表中选择"
 msgstr ""
 
+#: .\data\csv\Confinement_Training_Setting.csv:12
+msgid "调教目标"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:12
+msgid "选择调教的目标"
+msgstr ""
+
+#: .\data\csv\Confinement_Training_Setting.csv:12
+msgid "仅调教囚犯干员|对所有干员都可以调教"
+msgstr ""
+
 #: .\data\csv\Diplomatic_Policy.csv:7
 msgid "在民间开展源石病治疗工作"
 msgstr ""

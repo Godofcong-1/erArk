@@ -400,6 +400,9 @@ def get_state_id_of_sex_assistant() -> int:
     # 如果没有开启性爱助手，则返回0
     if handle_premise.handle_sex_assistant_off(0):
         return 0
+    # 如果调教目标是仅囚犯干员的话，玩家的交互对象不是囚犯时返回0
+    if cache.rhodes_island.confinement_training_setting[13] == 0 and handle_premise.handle_t_imprisonment_0(0):
+        return 0
     # 如果是指定指令列表，则直接随机选择
     if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_status_list) > 0:
         state_id = random.choice(cache.rhodes_island.sex_assistant_ai_status_list)
@@ -492,6 +495,9 @@ class Confinement_And_Training_Manage_Panel:
 
             # 遍历全部设置
             for cid in game_config.config_confinement_training_setting:
+                # 如果是第13序号[调教目标]的话，需要12[调教助手]已开启
+                if cid == 13 and cache.rhodes_island.confinement_training_setting.get(12, 0) == 0:
+                    continue
                 line_feed.draw()
                 confinement_training_setting_data = game_config.config_confinement_training_setting[cid]
                 # 选项名
