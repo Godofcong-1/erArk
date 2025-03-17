@@ -153,9 +153,6 @@ def settle_visitor_arrivals_and_departures():
     """
     结算访客抵达和离开
     """
-    now_draw = draw.WaitDraw()
-    now_draw.width = window_width
-    now_draw.style = "gold_enrod"
 
     # 因罗德岛移动而产生的访客
     if cache.rhodes_island.base_move_visitor_flag:
@@ -175,33 +172,47 @@ def settle_visitor_arrivals_and_departures():
     # 遍历全部访客
     now_visitor_id_list = list(cache.rhodes_island.visitor_info.keys())
     for visitor_id in now_visitor_id_list:
-        character_data: game_type.Character = cache.character_data[visitor_id]
         # 判断是否已经超过停留时间
         if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.visitor_info[visitor_id]):
-            # 计算访客留下概率
-            tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
-            # 遍历所有留下态度
-            for attitude_id in game_config.config_visitor_stay_attitude:
-                attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
-                if stay_posibility >= attitude_data.rate:
-                    continue
-                # 获得留下态度对应的文本
-                stay_text = attitude_data.name
-                break
-            now_draw.text = _("\n 访客【{0}】预定的停留期限到了，她当前的留下意愿为：【{1}】").format(character_data.name, stay_text)
-            # 随机计算访客是否留下
-            if random.random() < stay_posibility:
-                # 访客留下
-                visitor_to_operator(visitor_id)
-                # 输出提示信息
-                now_draw.text += _("\n ○【{0}】决定放弃离开，留在罗德岛成为一名正式干员\n").format(character_data.name)
-                now_draw.draw()
-            else:
-                # 访客离开
-                visitor_leave(visitor_id)
-                # 输出提示信息
-                now_draw.text += _("\n ●【{0}】打包好行李，离开了罗德岛\n").format(character_data.name)
-                now_draw.draw()
+            judge_visitor_if_leave(visitor_id)
+
+def judge_visitor_if_leave(visitor_id: int):
+    """
+    判断访客是否离开
+    Keyword arguments:
+    visitor_id -- 角色id
+    """
+    # 输出提示信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.style = "gold_enrod"
+    # 获得访客角色数据
+    character_data: game_type.Character = cache.character_data[visitor_id]
+    # 计算访客留下概率
+    tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
+    # 遍历所有留下态度
+    for attitude_id in game_config.config_visitor_stay_attitude:
+        attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
+        if stay_posibility >= attitude_data.rate:
+            continue
+        # 获得留下态度对应的文本
+        stay_text = attitude_data.name
+        break
+    now_draw.text = _("\n 访客【{0}】预定的停留期限到了，她当前的留下意愿为：【{1}】").format(character_data.name, stay_text)
+    # 随机计算访客是否留下
+    if random.random() < stay_posibility:
+        # 访客留下
+        visitor_to_operator(visitor_id)
+        # 输出提示信息
+        now_draw.text += _("\n ○【{0}】决定放弃离开，留在罗德岛成为一名正式干员\n").format(character_data.name)
+        now_draw.draw()
+    else:
+        # 访客离开
+        visitor_leave(visitor_id)
+        # 输出提示信息
+        now_draw.text += _("\n ●【{0}】打包好行李，离开了罗德岛\n").format(character_data.name)
+        now_draw.draw()
+
 
 def get_today_departing_visitors():
     """
@@ -322,6 +333,19 @@ class Invite_Visitor_Panel:
                     _(button_text),
                     self.width,
                     cmd_func=self.select_target,
+                    )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+
+            # 增加提前结算访客离开的按钮
+            if len(cache.rhodes_island.visitor_info) > 0:
+                line_feed.draw()
+                button_text = _("[100]提前结算访客离开")
+                button_draw = draw.LeftButton(
+                    _(button_text),
+                    _(button_text),
+                    self.width,
+                    cmd_func=self.settle_visitor_departures,
                     )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
@@ -459,3 +483,40 @@ class Invite_Visitor_Panel:
         """更改邀请目标"""
         cache.rhodes_island.invite_visitor[0] = chara_id
         cache.rhodes_island.invite_visitor[1] = 0
+
+    def settle_visitor_departures(self):
+        """结算访客离开"""
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            line_feed.draw()
+
+            # 遍历所有访客，输出每个访客的adv_id和姓名的按钮，每行输出三个
+            visitor_id_list = list(cache.rhodes_island.visitor_info.keys())
+            visitor_count = 0
+            for visitor_id in visitor_id_list:
+                visitor_count += 1
+                character_data: game_type.Character = cache.character_data[visitor_id]
+                button_text = f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
+                button_draw = draw.LeftButton(
+                    button_text,
+                    button_text,
+                    int(len(button_text) * 2),
+                    cmd_func=judge_visitor_if_leave,
+                    args=visitor_id
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                if visitor_count % 3 == 0:
+                    line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
