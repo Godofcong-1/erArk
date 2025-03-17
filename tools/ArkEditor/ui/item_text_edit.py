@@ -61,39 +61,87 @@ class ItemTextEdit(QWidget):
 
     def create_right_click_menu(self):
         """创建右键菜单"""
-        menu_items = [
-            {"text": "插入文本触发者名字", "slot": lambda: self.insert_text('{Name}')},
-            {"text": "插入文本触发者的交互对象名字", "slot": lambda: self.insert_text('{TargetName}')},
-            {"text": "插入玩家对触发者的称呼", "slot": lambda: self.insert_text('{NickName}')},
-            {"text": "插入触发者对玩家的称呼", "slot": lambda: self.insert_text('{NickNameToPl}')},
-            {"text": "插入玩家对交互对象的称呼", "slot": lambda: self.insert_text('{TargetNickName}')},
-            {"text": "插入交互对象对玩家的称呼", "slot": lambda: self.insert_text('{TargetNickNameToPl}')},
-            {"text": "插入玩家名字", "slot": lambda: self.insert_text('{PlayerName}')},
-            {"text": "插入触发者与交互对象中非玩家的那个对玩家的称呼", "slot": lambda: self.insert_text('{PlayerNickName}')},
-            {"text": "插入当前行为中食物名字", "slot": lambda: self.insert_text('{FoodName}')},
-            {"text": "插入食物制作时间", "slot": lambda: self.insert_text('{MakeFoodTime}')},
-            {"text": "插入当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
-            {"text": "插入当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
-            {"text": "插入当前行为榨出母乳的毫升数", "slot": lambda: self.insert_text('{MilkMl}')},
-            {"text": "插入H行为被打断时的闯入者的名字", "slot": lambda: self.insert_text('{HInterruptCharaName}')},
-            {"text": "插入当前场景名字", "slot": lambda: self.insert_text('{SceneName}')},
-            {"text": "插入当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},
-            {"text": "插入移动目标场景名字", "slot": lambda: self.insert_text('{TargetSceneName}')},
-            {"text": "插入移动目标场景中随机一名角色名字", "slot": lambda: self.insert_text('{TargetOneCharaName}')},
-            {"text": "插入移动出发场景名字", "slot": lambda: self.insert_text('{SrcSceneName}')},
-            {"text": "插入移动出发场景中随机一名角色名字", "slot": lambda: self.insert_text('{SrcOneCharaName}')},
-            {"text": "插入玩家的交互对象的胸衣名字", "slot": lambda: self.insert_text('{TagetBraName}')},
-            {"text": "插入玩家的交互对象的裙子名字", "slot": lambda: self.insert_text('{TagetSkiName}')},
-            {"text": "插入玩家的交互对象的内裤名字", "slot": lambda: self.insert_text('{TagetPanName}')},
-            {"text": "插入玩家的交互对象的袜子名字", "slot": lambda: self.insert_text('{TagetSocName}')},
-            {"text": "插入自己穿着的内裤名字", "slot": lambda: self.insert_text('{PanName}')},
-            {"text": "插入自己穿着的袜子名字", "slot": lambda: self.insert_text('{SocName}')},
-            {"text": "○插入跳过代码，直接显示到最后一行", "slot": lambda: self.insert_text('{Jump}')},
+        # 创建四个一级菜单
+        chara_menu = self.right_click_menu.addMenu("角色名")
+        chara_nick_menu = self.right_click_menu.addMenu("角色称呼")
+        clothing_menu = self.right_click_menu.addMenu("服装名")
+        scene_menu = self.right_click_menu.addMenu("场景名")
+        food_menu = self.right_click_menu.addMenu("食物名")
+        other_menu = self.right_click_menu.addMenu("其他")
+        draw_menu = self.right_click_menu.addMenu("绘制")
+
+        # 角色名菜单项
+        chara_items = [
+            {"text": "文本触发者名字", "slot": lambda: self.insert_text('{Name}')},
+            {"text": "文本触发者的交互对象名字", "slot": lambda: self.insert_text('{TargetName}')},
+            {"text": "玩家名字", "slot": lambda: self.insert_text('{PlayerName}')},
+            {"text": "当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},
+            {"text": "移动目标场景中随机一名角色名字", "slot": lambda: self.insert_text('{TargetOneCharaName}')},
+            {"text": "移动出发场景中随机一名角色名字", "slot": lambda: self.insert_text('{SrcOneCharaName}')},
+            {"text": "H行为被打断时的闯入者的名字", "slot": lambda: self.insert_text('{HInterruptCharaName}')},
         ]
-        for item in menu_items:
-            action = QAction(item["text"], self)
-            action.triggered.connect(item["slot"])
-            self.right_click_menu.addAction(action)
+
+        # 角色称呼菜单项
+        chara_nick_items = [
+            {"text": "玩家对触发者的称呼", "slot": lambda: self.insert_text('{NickName}')},
+            {"text": "触发者对玩家的称呼", "slot": lambda: self.insert_text('{NickNameToPl}')},
+            {"text": "玩家对交互对象的称呼", "slot": lambda: self.insert_text('{TargetNickName}')},
+            {"text": "交互对象对玩家的称呼", "slot": lambda: self.insert_text('{TargetNickNameToPl}')},
+            {"text": "触发者与交互对象中非玩家的那个对玩家的称呼", "slot": lambda: self.insert_text('{PlayerNickName}')},
+        ]
+
+        # 服装名菜单项
+        clothing_items = [
+            {"text": "玩家的交互对象的胸衣名字", "slot": lambda: self.insert_text('{TagetBraName}')},
+            {"text": "玩家的交互对象的裙子名字", "slot": lambda: self.insert_text('{TagetSkiName}')},
+            {"text": "玩家的交互对象的内裤名字", "slot": lambda: self.insert_text('{TagetPanName}')},
+            {"text": "玩家的交互对象的袜子名字", "slot": lambda: self.insert_text('{TagetSocName}')},
+            {"text": "自己穿着的内裤名字", "slot": lambda: self.insert_text('{PanName}')},
+            {"text": "自己穿着的袜子名字", "slot": lambda: self.insert_text('{SocName}')},
+        ]
+
+        # 场景名菜单项
+        scene_items = [
+            {"text": "当前场景名字", "slot": lambda: self.insert_text('{SceneName}')},
+            {"text": "移动目标场景名字", "slot": lambda: self.insert_text('{TargetSceneName}')},
+            {"text": "移动出发场景名字", "slot": lambda: self.insert_text('{SrcSceneName}')},
+        ]
+
+        # 食物名菜单项
+        food_items = [
+            {"text": "当前行为中食物名字", "slot": lambda: self.insert_text('{FoodName}')},
+            {"text": "食物制作时间", "slot": lambda: self.insert_text('{MakeFoodTime}')},
+            {"text": "当前背包里所有食物名字", "slot": lambda: self.insert_text('{AllFoodName}')},
+        ]
+
+        # 其他名菜单项
+        other_items = [
+            {"text": "当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
+            {"text": "当前行为榨出母乳的毫升数", "slot": lambda: self.insert_text('{MilkMl}')},
+        ]
+
+        # 绘制菜单项
+        draw_items = [
+            {"text": "跳过每行确认，直接显示到最后一行", "slot": lambda: self.insert_text('{Jump}')},
+        ]
+
+        # 将菜单项添加到对应的一级菜单中
+        menu_items = [
+            (chara_menu, chara_items),
+            (chara_nick_menu, chara_nick_items),
+            (clothing_menu, clothing_items),
+            (scene_menu, scene_items),
+            (food_menu, food_items),
+            (other_menu, other_items),
+            (draw_menu, draw_items),
+        ]
+
+        # 遍历菜单项，添加到对应的菜单中
+        for menu, items in menu_items:
+            for item in items:
+                action = QAction(item["text"], self)
+                action.triggered.connect(item["slot"])
+                menu.addAction(action)
 
     def show_right_click_menu(self, pos):
         """显示右键菜单"""
