@@ -25,7 +25,7 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True):
+def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True, skip_h_judge: bool = False) -> tuple:
     """
     判断单个指令是否通过过滤\n
     Keyword arguments：\n
@@ -33,6 +33,7 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
     now_premise_data -- 当前记录的前提数据\n
     now_type -- 当前指令类型\n
     use_sub_type -- 是否使用子类过滤\n
+    skip_h_judge -- 是否跳过H类指令判断\n
     Returns：\n
     bool -- 是否通过过滤\n
     now_premise_data -- 当前记录的前提数据\n
@@ -62,6 +63,9 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
                         continue
                     premise_judge = False
                     break
+                # 如果跳过H类指令判断，则不进行H类前提判断
+                elif skip_h_judge and premise == 'is_h':
+                    now_premise_data[premise] = 1
                 else:
                     now_premise_value = handle_premise.handle_premise(premise, 0)
                     now_premise_data[premise] = now_premise_value
