@@ -103,6 +103,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     if character_id != 0:
         handle_npc_ai.judge_character_tired_sleep(character_id) # 判断疲劳和睡眠
         handle_npc_ai.judge_character_cant_move(character_id) # 无法自由移动的角色
+        handle_npc_ai.judge_assistant_character(character_id) # 助理
         handle_npc_ai.judge_character_follow(character_id) # 跟随模式
         handle_npc_ai.judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
 
@@ -542,7 +543,7 @@ def update_new_day():
     无
     """
     from Script.Design import basement
-    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel, confinement_and_training
+    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width

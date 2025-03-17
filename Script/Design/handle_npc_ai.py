@@ -137,14 +137,18 @@ def judge_character_tired_sleep(character_id : int):
                 handle_instruct.handle_end_h()
 
 
-def judge_character_follow(character_id: int) -> int:
+def judge_assistant_character(character_id: int) -> int:
     """
-    处理跟随模式
+    处理助理角色的行为\n
     Keyword arguments:
-    character_id -- 角色id
+    character_id -- 角色id\n
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
+    # 如果自己不是助理，则返回
+    if handle_premise.handle_not_assistant(character_id):
+        return 0
+
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 正常状态下的助理跟随，未智能跟随则变成智能跟随
@@ -157,10 +161,29 @@ def judge_character_follow(character_id: int) -> int:
         ):
         character_data.sp_flag.is_follow = 1
 
+    now_time_hour = character_data.behavior.start_time.hour
+    # 如果超过了12点，则清零早安问候
+    if now_time_hour >= 12:
+        character_data.sp_flag.morning_salutation = 0
+    # 如果早于18点且不是睡觉时间，则清零晚安问候
+    if now_time_hour < 18 and not handle_premise.handle_game_time_is_sleep_time(character_id):
+        character_data.sp_flag.night_salutation = 0
+
+def judge_character_follow(character_id: int) -> int:
+    """
+    处理跟随模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 本次update时间切片内活动是否已完成
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+
     # 智能跟随
     if character_data.sp_flag.is_follow == 1:
         # 取消所有工作和娱乐状态
         default.handle_cancel_all_work_and_entertainment_flag(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
+        return 1
 
     # 维持强制跟随的状态
     if character_data.sp_flag.is_follow == 2:
@@ -176,7 +199,8 @@ def judge_character_follow(character_id: int) -> int:
             character_data.behavior.move_target = move_path
             character_data.behavior.duration = move_time
             character_data.state = constant.CharacterStatus.STATUS_MOVE
-    return 1
+            return 1
+    return 0
 
 
 def judge_character_h_obscenity_unconscious(character_id: int) -> int:
@@ -1145,6 +1169,9 @@ def npc_ai_in_group_sex(character_id: int):
             # 获取该部位的状态id列表
             pl_character_data.target_character_id = character_id
             new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            # 如果没有可用的状态，则返回
+            if len(new_status_id_list) == 0:
+                return
             # 随机选择一个状态
             status_id = random.choice(new_status_id_list)
             # 如果是侍奉

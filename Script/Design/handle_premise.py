@@ -16616,9 +16616,7 @@ def handle_is_assistant(character_id: int) -> int:
     if character_id == 0:
         return 0
     pl_character_data: game_type.Character = cache.character_data[0]
-    if pl_character_data.assistant_character_id == character_id:
-        return 1
-    return 0
+    return pl_character_data.assistant_character_id == character_id
 
 
 @add_premise(constant_promise.Premise.NOT_ASSISTANT)
