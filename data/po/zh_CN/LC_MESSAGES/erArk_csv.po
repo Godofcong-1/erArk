@@ -17865,22 +17865,30 @@ msgid "#B83434"
 msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:32
-msgid "黑色宽外套"
+msgid "黑色假领"
 msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:33
-msgid "略破损的黑色连衣裙"
+msgid "黑色宽外套"
 msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:34
-msgid "黑色长筒丝袜（带腿环）"
+msgid "略破损的黑色连衣裙"
 msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:35
-msgid "莱万汀"
+msgid "黑色长筒丝袜（带腿环）"
 msgstr ""
 
 #: .\data\character\0350_史尔特尔.csv:36
+msgid "莱万汀"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:37
+msgid "尖头高跟靴"
+msgstr ""
+
+#: .\data\character\0350_史尔特尔.csv:38
 msgid "干员身份牌"
 msgstr ""
 
@@ -22242,6 +22250,14 @@ msgstr ""
 
 #: Event:a2cb2ea3-7599-4ac2-b76f-bb62c575be27
 msgid "正用{PlayerName}的肉棒旖旎承欢的{TargetName}，朦胧了眼神，身上挂满了汗水，发颤着在恋人的身体上享受性爱的快乐。\n就在这幸福时刻被{HInterruptCharaName}闯入了情事现场，“吓噫！？”\n被惊吓到了{TargetName}抽搐紧了娇躯，直直地立起尾巴和耳朵。\n原本就很紧致的小穴突然剧烈地绞在一起，紧密地夹住了抽插中的肉竿，两人敏感的粘膜害怕又兴奋地相互挤压在了一起发出了滋滋！的水声。\n平时感受不到的过紧触感和被人发现的禁忌快乐，给予了偷情中的两人意想不到的刺激。"
+msgstr ""
+
+#: Event:1efaacb7-aec7-4fb5-a5ea-2e77f7050191
+msgid "看见{PlayerName}解开裤子露出肉棒排尿，{TargetName}心中的欲望再也抑制不住。\n“真是过分啊~{TargetNickNameToPl}”“让人家忍了这么久，现在又露出这样美味的肉棒，谁都忍不住吧~”\n{TargetName}咽了咽口水，张开双腿蹲下，抓住肉棒送进嘴里，舌头在龟头上来回舔弄。\n{PlayerName}刚排完尿的肉棒散发着浓烈的腥臭味，直冲{TargetName}的鼻腔。\n“唔嗯~{PlayerName}的肉棒~好好吃哦~”{TargetName}的手也不禁伸向自己私处，爱抚着自己敏感的小豆豆。\n{TargetName}的手配合着嘴巴一起套弄着{PlayerName}的肉棒，仿佛要将{PlayerName}尿道里的液体全部榨出。\n{PlayerName}轻轻抚摸着{TargetName}的脑袋，看着她在自己面前露出的痴态，肉棒也不禁涨得更大了。\n{PlayerName}的欲望达到顶峰，在{TargetName}的口中射出大量白浊的液体。\n{TargetName}不停地吞咽，才将{PlayerName}的精液全部吃下，自己也因吞精达到高潮。\n“哈~肉棒奶油好多~好好吃哦~”{TargetName}眼睛微微上翻，吐着舌头，看来是因高潮的冲击暂时失神了。"
+msgstr ""
+
+#: Event:9e151bc1-26e9-44b4-8b57-fadc191aea2c
+msgid "“要喝咖啡吗？好的~”{TargetName}收到泡咖啡的请求，去操作咖啡机泡出了一杯咖啡。\n这时她突然产生了一个色情的想法。\n{TargetName}拉开自己胸前的衣服，露出一边的胸部和乳头，向咖啡中挤入了自己的母乳。\n{TargetName}微微红着脸，流着一些汗，将咖啡端到{PlayerName}面前。\n{PlayerName}端起咖啡品尝，这次的咖啡奶香特别浓郁，还有甘甜的回味，十分好喝。\n“今天的咖啡特别好喝呢，是放了什么特别的吗？”{PlayerName}问道。\n“怎...怎么会呢...还能放什么奇怪的东西呢...”{TargetName}紧张地回答着，让人感觉在掩饰着什么。"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
