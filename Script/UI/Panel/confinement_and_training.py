@@ -362,6 +362,9 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
                 status_data = game_config.config_status[status_id]
                 status_tag_list = status_data.tag
                 status_tag_list = status_data.tag.split("|")
+                # 跳过仅玩家可用的指令
+                if status_data.trigger == 'pl':
+                    continue
                 # 如果指定了部位
                 if select_part != "" and select_part not in status_tag_list:
                     continue
