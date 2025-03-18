@@ -107,7 +107,7 @@ class Resource_Exchange_Line_Panel:
             # 显示价格
             price = resouce_data.price
             # 特产的卖出价格为1.5倍
-            if resouce_data.type == "特产" and not self.buy_or_sell_flag:
+            if resouce_data.type == _("特产") and not self.buy_or_sell_flag:
                 price = 1.5 * price
             else:
                 price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
@@ -151,10 +151,12 @@ class Resource_Exchange_Line_Panel:
             # 买入，且钱不足
             # 买入，但是该资源不可买入
             # 卖出，且资源不足
+            # 卖出，资源为特产且为本地特产
             if (
                 (self.buy_or_sell_flag and price * self.quantity_of_resouce > money) or 
                 (self.buy_or_sell_flag and cant_buy_flag) or
-                (not self.buy_or_sell_flag and self.quantity_of_resouce > now_resouce_stock)
+                (not self.buy_or_sell_flag and self.quantity_of_resouce > now_resouce_stock) or
+                (not self.buy_or_sell_flag and resouce_data.type == _("特产") and resouce_data.specialty == cache.rhodes_island.current_location[0])
                 ):
                 pass
             else:
@@ -225,7 +227,7 @@ class Resource_Exchange_Line_Panel:
                         resouce_data  = game_config.config_resouce[resouce_id]
                         if resouce_data.type == resouce_type:
                             # 特产商品仅在当地可以买入，其他地方只能卖出
-                            if resouce_data.type == "特产":
+                            if resouce_data.type == _("特产"):
                                 if cache.rhodes_island.materials_resouce[resouce_id] == 0 and resouce_data.specialty != cache.rhodes_island.current_location[0]:
                                     continue
                             button_draw = draw.LeftButton(
@@ -242,7 +244,7 @@ class Resource_Exchange_Line_Panel:
                             # 判断是否可以买入卖出
                             if resouce_data.cant_buy == 0:
                                 now_text += _("   买入:{0}龙门币/1单位").format(int(resouce_data.price * 1.2))
-                            if resouce_data.type == "特产" and cache.rhodes_island.current_location[0] != resouce_data.specialty:
+                            if resouce_data.type == _("特产") and cache.rhodes_island.current_location[0] != resouce_data.specialty:
                                 now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 1.5))
                             else:
                                 now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 0.8))
@@ -266,7 +268,7 @@ class Resource_Exchange_Line_Panel:
         if self.now_select_resouce_id == 12 or resouce_data.type == "药剂":
             self.buy_or_sell_flag = False
         # 特产商品仅在当地可以买入，其他地方只能卖出
-        elif resouce_data.type == "特产":
+        elif resouce_data.type == _("特产"):
             if resouce_data.specialty == cache.rhodes_island.current_location[0]:
                 self.buy_or_sell_flag = True
             else:
