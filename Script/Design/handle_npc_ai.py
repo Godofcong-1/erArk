@@ -523,7 +523,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         # print(f"debug null_target_set = {null_target_set}")
         # print(f"debug premise_data = {premise_data}")
         # if character_data.name == "阿米娅":
-            # print(f"debug {character_data.name}的target = {target},weight = {weight},now_time = {now_time}")
+        #     print(f"debug {character_data.name}的target = {target},weight = {weight},judge = {judge},now_time = {now_time}")
         # 正常行动
         if judge == 1:
             target_config = game_config.config_target[target]

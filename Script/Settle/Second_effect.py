@@ -2,6 +2,7 @@ from types import FunctionType
 from Script.Design import (
     settle_behavior,
     attr_calculation,
+    handle_premise
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -2554,8 +2555,9 @@ def handle_add_sleep_point(
     if character_data.dead:
         return
 
-    if character_data.h_state.body_item[9][1]:
+    if handle_premise.handle_self_sleep_pills(character_id):
         character_data.sleep_point = 100
+        character_data.tired_point = max(10, character_data.tired_point)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.MILKING_MACHINE)

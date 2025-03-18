@@ -25,7 +25,8 @@ ai的目标,,,,
 35,502,sleep_flag_1|not_in_dor,12,要睡觉状态下，不在宿舍，则回宿舍
 36,44,sleep_flag_1|sleep_h_awake_0|in_dor|not_need_masturebate_before_sleep_or_already_masturebate,12,要睡觉状态下，没有睡奸中醒来状态，且已在宿舍，自身不需要睡前自慰或已经睡前自慰，则睡觉
 37,44,tired_100,0,疲劳值到100%，当场直接爆睡
-38,93,in_dor|sleep_flag_0|ai_have_not_wake_up,0,在宿舍里，无要睡觉状态，NPC今天还没有起床，则起床（换上正常服装+调整管理白天道具）
+38,93,in_dor|sleep_flag_0|self_not_sleep_pills|ai_have_not_wake_up,0,在宿舍里，无要睡觉状态，自己没有服用安眠药，NPC今天还没有起床，则起床（换上正常服装+调整管理白天道具）
+39,44,self_sleep_pills|action_not_sleep,0,自己已服用安眠药，且没有在睡觉，则睡觉
 
 41,75,normal_1267|hunger_ge_80|eat_time|assistant_send_food_of_ai_disable|assistant_salutation_of_ai_disable,11,1267正常（可能AI跟随、服装异常或意识模糊），饥饿值到80%，且在饭点，且不满足助理送饭，且不满足助理问候，则进入要取餐状态
 42,522,eat_food_flag_1|not_in_ai_food_shop,12,要取餐状态下，且不在AI要去吃饭的食物商店里，则去食物商店
