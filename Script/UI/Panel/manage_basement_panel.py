@@ -22,93 +22,8 @@ def change_npc_work_out(width):
     """
     调整干员的工作岗位
     """
-
-    while 1:
-        basement.update_work_people()
-        # 遍历全部门
-        department_names = []
-        for work_type_id in game_config.config_facility:
-            facility_data = game_config.config_facility[work_type_id]
-            if facility_data.type == -1:
-                department_names.append(game_config.config_facility[work_type_id].name)
-
-        # 遍历创建全部门的面板
-        department_panels = []
-        for department_name in range(len(department_names)+1):
-            if normal_config.config_normal.language == "zh_CN":
-                department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 8, width, 1, 0, 0))
-            else:
-                department_panels.append(panel.PageHandlePanel([], ChangeWorkButtonList, 999, 6, width, 1, 0, 0))
-
-        line = draw.LineDraw("-", width)
-        line.draw()
-
-        info_draw = draw.NormalDraw()
-        info_draw.width = width
-        return_list = []
-
-        # 空闲干员
-        info_text = _("\n  空闲干员：\n")
-        info_draw.text = info_text
-        info_draw.draw()
-        idle_npc_list = []
-        for chara_cid in cache.npc_id_got:
-            # 去掉玩家
-            if chara_cid == 0:
-                continue
-            # 去掉访客
-            if chara_cid in cache.rhodes_island.visitor_info:
-                continue
-            # 去掉正在工作的干员
-            if not chara_cid in cache.rhodes_island.all_work_npc_set[0]:
-                continue
-            # 去掉2、7异常
-            if not handle_premise.handle_normal_2(chara_cid):
-                continue
-            if not handle_premise.handle_normal_7(chara_cid):
-                continue
-            idle_npc_list.append(chara_cid)
-        department_panels[0].text_list = idle_npc_list
-        department_panels[0].update()
-        department_panels[0].draw()
-        return_list.extend(department_panels[0].return_list)
-        if not len(department_panels[0].text_list):
-            line_feed.draw()
-
-        # 遍历全部门
-        department_count = 1
-        n_flag = True
-        for department in department_names:
-
-            # 部门名
-            info_text = f"\n" if n_flag else ""
-            info_text += f"  {department}："
-            info_draw.text = info_text
-            info_draw.draw()
-            # 部门干员传给面板
-            for work_type_id in game_config.config_work_type:
-                work_type_data = game_config.config_work_type[work_type_id]
-                if work_type_data.department == department:
-                    if len(cache.rhodes_island.all_work_npc_set[work_type_id]):
-                        department_panels[department_count].text_list += list(cache.rhodes_island.all_work_npc_set[work_type_id])
-            if len(department_panels[department_count].text_list):
-                n_flag = False
-                line_feed.draw()
-            else:
-                n_flag = True
-            department_panels[department_count].update()
-            department_panels[department_count].draw()
-            return_list.extend(department_panels[department_count].return_list)
-            department_count += 1
-
-        line_feed.draw()
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-        back_draw.draw()
-        line_feed.draw()
-        return_list.append(back_draw.return_text)
-        yrn = flow_handle.askfor_all(return_list)
-        if yrn == back_draw.return_text:
-            break
+    now_panel = Change_Npc_Work_Panel(width)
+    now_panel.draw()
 
 
 class Manage_Basement_Panel:
@@ -588,9 +503,9 @@ class Manage_Basement_Panel:
         now_draw.draw()
 
 
-class ChangeWorkButtonList:
+class Change_Npc_Work_Panel:
     """
-    点击后可选择NPC的工作的按钮对象
+    调整干员的工作岗位的面板对象
     Keyword arguments:
     text -- 选项名字
     width -- 最大宽度
@@ -599,41 +514,146 @@ class ChangeWorkButtonList:
     button_id -- 数字按钮id
     """
 
-    def __init__(
-        self, NPC_id: int, width: int, is_button: bool, num_button: bool, button_id: int
-    ):
+    def __init__(self, width: int):
         """初始化绘制对象"""
-
-        self.NPC_id: int = NPC_id
-        """ 角色id """
-        self.draw_text: str = ""
-        """ 绘制文本 """
         self.width: int = width
         """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
-        self.button_id: int = button_id
-        """ 数字按钮的id """
-        self.button_return: str = str(button_id)
-        """ 按钮返回值 """
+        self.work_type_state: Dict[int, bool] = {wt_id: False for wt_id in game_config.config_work_type}
+        """ 工作类型id和是否展开的状态 """
+        self.work_type_state[0] = True
+        """ 默认展开第一个工作类型 """
 
-        target_data: game_type.Character = cache.character_data[NPC_id]
-        button_text = f"[{target_data.adv}]：{target_data.name}"
-        self.button_return = str(NPC_id)
+    def draw(self):
+        """绘制对象"""
 
-        # 按钮绘制
+        title_text = _("调整干员工作岗位")
+        title_draw = draw.TitleLineDraw(title_text, self.width)
 
-        name_draw = draw.LeftButton(
-            button_text, self.button_return, self.width, cmd_func=self.button_0
-        )
-        self.now_draw = name_draw
-        self.draw_text = button_text
+        while 1:
+            title_draw.draw()
+            basement.update_work_people()
+            return_list = []
 
-        """ 绘制的对象 """
-        self.now_draw = name_draw
+            # 展开与收起所有类别按钮
+            expand_all_text = _("[展开所有类别]")
+            collapse_all_text = _("[收起所有类别]")
+            expand_all_draw = draw.CenterButton(expand_all_text, expand_all_text, len(expand_all_text) * 2, cmd_func=self.expand_all)
+            collapse_all_draw = draw.CenterButton(collapse_all_text, collapse_all_text, len(collapse_all_text) * 2, cmd_func=self.collapse_all)
+            expand_all_draw.draw()
+            collapse_all_draw.draw()
+            return_list.append(expand_all_draw.return_text)
+            return_list.append(collapse_all_draw.return_text)
+            line_feed.draw()
+            line_feed.draw()
 
+            # 定义一个字典，用来表示各工作类型id下的干员id列表
+            self.work_type_npc_dict = {}
+            for work_type_id in game_config.config_work_type:
+                self.work_type_npc_dict[work_type_id] = []
 
-    def button_0(self):
+            # 遍历所有干员，将其加入对应的工作类型id列表中
+            for npc_id in cache.npc_id_got:
+                # 去掉玩家
+                if npc_id == 0:
+                    continue
+                # 去掉访客
+                if npc_id in cache.rhodes_island.visitor_info:
+                    continue
+                # 去掉2、7异常
+                if not handle_premise.handle_normal_2(npc_id):
+                    continue
+                if not handle_premise.handle_normal_7(npc_id):
+                    continue
+                npc_data = cache.character_data[npc_id]
+                work_type_id = npc_data.work.work_type
+                if work_type_id in self.work_type_npc_dict:
+                    self.work_type_npc_dict[work_type_id].append(npc_id)
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+
+            # 遍历全部工作类型
+            for work_type_id in game_config.config_work_type:
+                work_type_data = game_config.config_work_type[work_type_id]
+                work_type_name = work_type_data.name
+
+                # 绘制工作类型按钮
+                symbol = "▼" if self.work_type_state[work_type_id] else "▶"
+                # 为了美观，在这里不显示工作类型的id
+                # button_text = f"{symbol}[{str(work_type_id).rjust(3,'0')}]{work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
+                button_text = f"{symbol} {work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
+                draw_width = self.width / 7
+                type_button_draw = draw.LeftButton(
+                    button_text, work_type_name, draw_width,
+                    cmd_func=self.toggle_work_type, args=(work_type_id,)
+                )
+                type_button_draw.draw()
+                return_list.append(type_button_draw.return_text)
+
+                # 如果展开，则绘制该工作类型下的干员列表
+                if self.work_type_state[work_type_id]:
+                    npc_list = self.work_type_npc_dict[work_type_id]
+                    chara_count = 0
+                    # 遍历干员列表，获取每个干员的信息
+                    for npc_id in npc_list:
+                        character_data = cache.character_data[npc_id]
+                        name = character_data.name
+                        adv_id = str(character_data.adv).rjust(4, '0')
+                        button_text = f"[{adv_id}]{name}"
+                        name_draw = draw.LeftButton(
+                            button_text, name, draw_width, cmd_func=self.button_0, args=(npc_id,)
+                        )
+                        name_draw.draw()
+                        return_list.append(name_draw.return_text)
+                        chara_count += 1
+                        if chara_count % 6 == 0:
+                            line_feed.draw()
+                            space_draw = draw.NormalDraw()
+                            space_draw.text = " " * int(draw_width + 1)
+                            space_draw.draw()
+                    line_feed.draw()
+                else:
+                    line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def toggle_work_type(self, work_type_id: int) -> None:
+        """切换工作类型展开或收起状态
+        参数:
+            work_type_id: int, 工作类型id
+        返回:
+            None
+        """
+        self.work_type_state[work_type_id] = not self.work_type_state[work_type_id]
+
+    def expand_all(self) -> None:
+        """展开所有工作类型
+        参数:
+            无
+        返回:
+            None
+        """
+        for key in self.work_type_state:
+            self.work_type_state[key] = True
+
+    def collapse_all(self) -> None:
+        """收起所有工作类型
+        参数:
+            无
+        返回:
+            None
+        """
+        for key in self.work_type_state:
+            self.work_type_state[key] = False
+
+    def button_0(self, character_id: int):
         """选项1"""
 
         while 1:
@@ -645,7 +665,7 @@ class ChangeWorkButtonList:
             info_draw.width = window_width
             return_list = []
 
-            target_data: game_type.Character = cache.character_data[self.NPC_id]
+            target_data: game_type.Character = cache.character_data[character_id]
             info_text = _("{0}的当前工作为：").format(target_data.name)
             work_data = game_config.config_work_type[target_data.work.work_type]
             info_text += f"{work_data.name}({work_data.department})"
@@ -663,7 +683,7 @@ class ChangeWorkButtonList:
                 work_describe = work_data.describe
                 work_ability_id = work_data.ability_id
                 work_ability_name = game_config.config_ability[work_ability_id].name[:2]
-                chara_ability_lv = cache.character_data[self.NPC_id].ability[work_ability_id]
+                chara_ability_lv = cache.character_data[character_id].ability[work_ability_id]
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
@@ -675,7 +695,7 @@ class ChangeWorkButtonList:
                         need_data_list = [need_data_all]
                     else:
                         need_data_list = need_data_all.split('&')
-                    judge, reason = attr_calculation.judge_require(need_data_list, self.NPC_id)
+                    judge, reason = attr_calculation.judge_require(need_data_list, character_id)
                     if not judge:
                         flag_open = False
                 # 当前工作的地点名字判断
@@ -686,16 +706,16 @@ class ChangeWorkButtonList:
                         if not cache.rhodes_island.facility_open[open_cid]:
                             flag_open = False
                 # 幼女不能进行学生以外的工作
-                if handle_premise.handle_self_is_child(self.NPC_id) and work_cid != 152:
+                if handle_premise.handle_self_is_child(character_id) and work_cid != 152:
                     flag_open = False
                 # 特殊解锁的工作不直接开放
                 if work_tag == 2:
                     flag_open = False
                     # 监狱长，需要有囚犯在关押，且至少为三级陷落
-                    if work_cid == 191 and handle_premise.handle_prisoner_in_custody(self.NPC_id) and (handle_premise.handle_self_fall_3(self.NPC_id) or handle_premise.handle_self_fall_4(self.NPC_id)):
+                    if work_cid == 191 and handle_premise.handle_prisoner_in_custody(character_id) and (handle_premise.handle_self_fall_3(character_id) or handle_premise.handle_self_fall_4(character_id)):
                         flag_open = True
                     # 性爱练习生
-                    if work_cid == 193 and handle_premise.handle_ask_one_exercises(self.NPC_id):
+                    if work_cid == 193 and handle_premise.handle_ask_one_exercises(character_id):
                         flag_open = True
 
                 if flag_open:
@@ -718,7 +738,7 @@ class ChangeWorkButtonList:
                             f"\n{work_cid}",
                             window_width ,
                             cmd_func=self.select_new_work,
-                            args=work_cid
+                            args=(work_cid, character_id)
                         )
                         # 特殊工作则高亮显示
                         if work_tag == 2:
@@ -743,13 +763,10 @@ class ChangeWorkButtonList:
             if yrn in return_list:
                 break
 
-    def draw(self):
-        """绘制对象"""
-        self.now_draw.draw()
 
-    def select_new_work(self,work_id: int):
+    def select_new_work(self, work_id: int, character_id: int):
         """赋予新的工作id"""
-        target_data: game_type.Character = cache.character_data[self.NPC_id]
+        target_data: game_type.Character = cache.character_data[character_id]
         # 如果原工作是性爱练习生的话，则重置性爱练习
         if target_data.work.work_type == 193:
             for i in target_data.body_manage:
@@ -764,7 +781,7 @@ class ChangeWorkButtonList:
                 old_warden.work.work_type = 0
                 old_warden.dormitory = old_warden.pre_dormitory
             # 更新监狱长id
-            cache.rhodes_island.current_warden_id = self.NPC_id
+            cache.rhodes_island.current_warden_id = character_id
             # 更新监狱长的宿舍
             target_data.pre_dormitory = target_data.dormitory
             target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
