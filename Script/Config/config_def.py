@@ -1166,6 +1166,8 @@ class WorkType:
     """ 工作地点标签 """
     tag: int
     """ 标签(1为灰色显示，2为特殊解锁不直接显示) """
+    ability_id: int
+    """ 工作需要的能力id """
     need: str
     """ 必要条件 """
     auto_ai: int

@@ -605,7 +605,7 @@ class ChangeWorkButtonList:
         """初始化绘制对象"""
 
         self.NPC_id: int = NPC_id
-        """ 指令名字绘制文本 """
+        """ 角色id """
         self.draw_text: str = ""
         """ 绘制文本 """
         self.width: int = width
@@ -655,17 +655,21 @@ class ChangeWorkButtonList:
 
             # 遍历工作列表，获取每个工作的信息
             for cid in game_config.config_work_type.keys():
-                work_cid = game_config.config_work_type[cid].cid
-                work_name = game_config.config_work_type[cid].name
-                work_tag = game_config.config_work_type[cid].tag
-                work_place = game_config.config_work_type[cid].place
-                work_describe = game_config.config_work_type[cid].describe
+                work_data = game_config.config_work_type[cid]
+                work_cid = work_data.cid
+                work_name = work_data.name
+                work_tag = work_data.tag
+                work_place = work_data.place
+                work_describe = work_data.describe
+                work_ability_id = work_data.ability_id
+                work_ability_name = game_config.config_ability[work_ability_id].name[:2]
+                chara_ability_lv = cache.character_data[self.NPC_id].ability[work_ability_id]
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
                 # 必要条件判断
-                if game_config.config_work_type[cid].need != _("无"):
-                    need_data_all = game_config.config_work_type[cid].need
+                if work_data.need != _("无"):
+                    need_data_all = work_data.need
                     # 整理需要的条件
                     if "&" not in need_data_all:
                         need_data_list = [need_data_all]
@@ -695,9 +699,18 @@ class ChangeWorkButtonList:
                         flag_open = True
 
                 if flag_open:
+                    work_text = ""
+                    # 基础信息
                     work_text_before = f"[{str(work_cid).rjust(3,'0')}]{work_name}({work_place})"
-                    # 将work_text_before统一对齐为18个全角字符
-                    work_text = f"{work_text_before.ljust(18,'　')}：{work_describe}"
+                    work_text += work_text_before.ljust(18,'　')
+                    # 在有能力要求的情况下，显示干员的能力
+                    if work_ability_id != 0:
+                        ability_text = f"({work_ability_name}:{chara_ability_lv})"
+                        work_text += ability_text.ljust(6,'　')
+                    else:
+                        work_text += "　" * 4
+                    # 工作描述
+                    work_text += f"：{work_describe}"
                     # 正常工作直接显示
                     if work_tag in {0, 2}:
                         button_draw = draw.LeftButton(
