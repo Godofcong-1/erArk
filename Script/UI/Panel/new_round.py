@@ -37,6 +37,8 @@ class New_Round_Handle:
         """ 继承玩家能力和经验 """
         self.pl_originium_arts_count = 0
         """ 继承玩家源石技艺 """
+        self.pl_extra_growth_count = 0
+        """ 继承玩家属性上限成长 """
         self.pl_collection_count = 0
         """ 继承玩家收藏品 """
         self.chara_fon_and_trust_count = 0
@@ -49,7 +51,7 @@ class New_Round_Handle:
         """ 周目点数消耗 """
         self.show_npc_flag = False
         """ 干员显示 """
-        self.show_panel_flag_list = [False, False, False, False, False]
+        self.show_panel_flag_list = [False, False, False, False, False, False]
         """ 面板显示列表 """
         self.all_fall_chara_list = []
         """ 所有陷落干员列表 """
@@ -102,7 +104,11 @@ class New_Round_Handle:
                     chara_point_all += point_add
                     chara_count += 1
                     if self.show_npc_flag:
-                        info_text += ("  {0}-{1}(+{2})").format(now_character_data.name, talent_name, point_add)
+                        # 用空格对齐
+                        draw_chara_name = now_character_data.name.rjust(6, "　")
+                        now_chara_text = ("  {0}-{1}(+{2})").format(draw_chara_name, talent_name, point_add)
+                        info_text += now_chara_text
+                        # 每8个换行
                         if chara_count % 8 == 0:
                             info_text += "\n"
             if self.show_npc_flag:
@@ -137,49 +143,13 @@ class New_Round_Handle:
             info_draw.text = info_text
             info_draw.draw()
 
-            # 玩家能力与经验
-            button_text = _("[0]博士的能力与经验")
+            # 玩家源石技艺
+            button_text = _("[0]博士的源石技艺")
             if self.show_panel_flag_list[0]:
                 button_text += "▼"
             else:
                 button_text += "▶"
             button = draw.LeftButton(button_text, button_text, len(button_text) * 2, cmd_func=self.show_panel_change, args=(0,))
-            self.return_list.append(button_text)
-            button.draw()
-            # 继承选项
-            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[1][self.pl_abi_and_exp_count]
-            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
-            now_rate = now_inherit_data.inherit_rate
-            now_cost = now_inherit_data.point_cost
-            self.round_point_cost += now_cost
-            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_abi_and_exp_count, now_rate, now_cost)
-            info_draw.text = info_text
-            info_draw.draw()
-            # 提高和降低按钮
-            add_button_text = _(" [提高] ")
-            add_button = draw.CenterButton(add_button_text, add_button_text + "_0", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,0))
-            self.return_list.append(add_button.return_text)
-            add_button.draw()
-            reduce_button_text = _(" [降低] ")
-            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_0", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,0))
-            self.return_list.append(reduce_button.return_text)
-            reduce_button.draw()
-            line_feed_draw.draw()
-            # 绘制玩家能力与经验
-            if self.show_panel_flag_list[0]:
-                abi_draw = CharacterabiText(0, self.width, now_rate)
-                experience_draw = CharacterExperienceText(0, self.width, 8, now_rate)
-                abi_draw.draw()
-                experience_draw.draw()
-            line_feed_draw.draw()
-
-            # 玩家源石技艺
-            button_text = _("[1]博士的源石技艺")
-            if self.show_panel_flag_list[1]:
-                button_text += "▼"
-            else:
-                button_text += "▶"
-            button = draw.LeftButton(button_text, button_text, len(button_text) * 2, cmd_func=self.show_panel_change, args=(1,))
             self.return_list.append(button_text)
             button.draw()
             # 继承选项
@@ -193,6 +163,40 @@ class New_Round_Handle:
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_0", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,0))
+            self.return_list.append(add_button.return_text)
+            add_button.draw()
+            reduce_button_text = _(" [降低] ")
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_0", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,0))
+            self.return_list.append(reduce_button.return_text)
+            reduce_button.draw()
+            line_feed_draw.draw()
+            # 绘制玩家源石技艺
+            if self.show_panel_flag_list[0]:
+                talent_draw = see_character_info_panel.PlayerAbilityText(0, self.width, 8)
+                talent_draw.draw()
+            line_feed_draw.draw()
+
+            # 玩家能力与经验
+            button_text = _("[1]博士的能力与经验")
+            if self.show_panel_flag_list[1]:
+                button_text += "▼"
+            else:
+                button_text += "▶"
+            button = draw.LeftButton(button_text, button_text, len(button_text) * 2, cmd_func=self.show_panel_change, args=(1,))
+            self.return_list.append(button_text)
+            button.draw()
+            # 继承选项
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[1][self.pl_abi_and_exp_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            now_cost = now_inherit_data.point_cost
+            self.round_point_cost += now_cost
+            info_text = _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_abi_and_exp_count, now_rate, now_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 提高和降低按钮
+            add_button_text = _(" [提高] ")
             add_button = draw.CenterButton(add_button_text, add_button_text + "_1", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,1))
             self.return_list.append(add_button.return_text)
             add_button.draw()
@@ -201,14 +205,49 @@ class New_Round_Handle:
             self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
-            # 绘制玩家源石技艺
+            # 绘制玩家能力与经验
             if self.show_panel_flag_list[1]:
-                talent_draw = see_character_info_panel.PlayerAbilityText(0, self.width, 8)
-                talent_draw.draw()
+                abi_draw = CharacterabiText(0, self.width, now_rate)
+                experience_draw = CharacterExperienceText(0, self.width, 8, now_rate)
+                abi_draw.draw()
+                experience_draw.draw()
             line_feed_draw.draw()
 
+            # 玩家属性上限成长
+            info_text = _("[2]博士的属性上限成长")
+            # 继承选项
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[2][self.pl_extra_growth_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            now_cost = self.calculate_pl_extra_growth_count()
+            self.round_point_cost += now_cost
+            info_text += _("\n   当前继承等级{0}，继承比例{1}%，点数消耗{2}\n  ").format(self.pl_extra_growth_count, now_rate, now_cost)
+            info_draw.text = info_text
+            info_draw.draw()
+            # 提高和降低按钮
+            add_button_text = _(" [提高] ")
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_2", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,2))
+            self.return_list.append(add_button.return_text)
+            add_button.draw()
+            reduce_button_text = _(" [降低] ")
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_2", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,2))
+            self.return_list.append(reduce_button.return_text)
+            reduce_button.draw()
+            line_feed_draw.draw()
+            # 绘制玩家属性上限成长
+            hp_extra_grouth = 1000 + int((pl_character_data.hit_point_max - 1000) * now_rate / 100)
+            mp_extra_grouth = 1000 + int((pl_character_data.mana_point_max - 1000) * now_rate / 100)
+            santy_extra_grouth = 100 + int((pl_character_data.sanity_point_max - 100) * now_rate / 100)
+            semen_extra_grouth = 100 + int((pl_character_data.semen_point_max - 100) * now_rate / 100)
+            info_text = _("  属性上限成长：当前体力上限{0}(→{1})，气力上限{2}(→{3})，理智上限{4}(→{5})，精液上限{6}(→{7})\n\n").format(
+                pl_character_data.hit_point_max, hp_extra_grouth, pl_character_data.mana_point_max, mp_extra_grouth,
+                pl_character_data.sanity_point_max, santy_extra_grouth, pl_character_data.semen_point_max, semen_extra_grouth
+            )
+            info_draw.text = info_text
+            info_draw.draw()
+
             # 玩家收藏品
-            info_text = _("[2]博士的收藏品")
+            info_text = _("[3]博士的收藏品")
             # 继承选项
             now_inherit_data_cid = game_config.config_new_round_inherit_type_data[3][self.pl_collection_count]
             now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
@@ -220,11 +259,11 @@ class New_Round_Handle:
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
-            add_button = draw.CenterButton(add_button_text, add_button_text + "_2", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,2))
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_3", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,3))
             self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
-            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_2", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,2))
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_3", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,3))
             self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
@@ -238,7 +277,7 @@ class New_Round_Handle:
             # 干员好感与信任
             info_text = _("已陷落干员将直接继承至新的周目，无需重新招募\n")
             info_text += _("耗费点数可以进一步继承这些干员一定比例的好感、信赖、能力、经验\n")
-            info_text += _("\n[3]干员的好感与信任")
+            info_text += _("\n[4]干员的好感与信任")
             info_draw.text = info_text
             info_draw.draw()
             # 继承选项
@@ -252,17 +291,17 @@ class New_Round_Handle:
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
-            add_button = draw.CenterButton(add_button_text, add_button_text + "_3", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,3))
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_4", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,4))
             self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
-            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_3", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,3))
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_4", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,4))
             self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
 
             # 干员能力与经验
-            info_text = _("\n[4]干员的能力与经验")
+            info_text = _("\n[5]干员的能力与经验")
             info_draw.text = info_text
             info_draw.draw()
             # 继承选项
@@ -276,11 +315,11 @@ class New_Round_Handle:
             info_draw.draw()
             # 提高和降低按钮
             add_button_text = _(" [提高] ")
-            add_button = draw.CenterButton(add_button_text, add_button_text + "_4", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,4))
+            add_button = draw.CenterButton(add_button_text, add_button_text + "_5", len(add_button_text) * 2, cmd_func=self.value_change_buton, args=(1,5))
             self.return_list.append(add_button.return_text)
             add_button.draw()
             reduce_button_text = _(" [降低] ")
-            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_4", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,4))
+            reduce_button = draw.CenterButton(reduce_button_text, reduce_button_text + "_5", len(reduce_button_text) * 2, cmd_func=self.value_change_buton, args=(-1,5))
             self.return_list.append(reduce_button.return_text)
             reduce_button.draw()
             line_feed_draw.draw()
@@ -360,6 +399,34 @@ class New_Round_Handle:
                     all_cost += 120
             return all_cost
 
+    def calculate_pl_extra_growth_count(self):
+        """
+        计算玩家属性上限成长消耗\n
+        每50点hp、mp消耗1点\n
+        每1点sanity、semen消耗1点\n
+        """
+        if self.pl_extra_growth_count == 0:
+            return 0
+        else:
+            all_cost = 0
+            pl_character_data = cache.character_data[0]
+            now_inherit_data_cid = game_config.config_new_round_inherit_type_data[2][self.pl_extra_growth_count]
+            now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+            now_rate = now_inherit_data.inherit_rate
+            # 体力上限成长
+            hp_extra_grouth = (pl_character_data.hit_point_max - 1000) * now_rate / 100
+            all_cost += int(hp_extra_grouth / 50)
+            # 气力上限成长
+            mp_extra_grouth = (pl_character_data.mana_point_max - 1000) * now_rate / 100
+            all_cost += int(mp_extra_grouth / 50)
+            # 理智上限成长
+            san_extra_grouth = (pl_character_data.sanity_point_max - 100) * now_rate / 100
+            all_cost += int(san_extra_grouth)
+            # 精液上限成长
+            semen_extra_grouth = (pl_character_data.semen_point_max - 100) * now_rate / 100
+            all_cost += int(semen_extra_grouth)
+            return all_cost
+
     def value_change_buton(self, value: int, type: int):
         """
         提高或降低继承等级
@@ -368,30 +435,36 @@ class New_Round_Handle:
         type -- 继承类型
         """
         if type == 0:
-            self.pl_abi_and_exp_count += value
-            if self.pl_abi_and_exp_count < 0:
-                self.pl_abi_and_exp_count = 0
-            elif self.pl_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[1]) - 1:
-                self.pl_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[1]) - 1
-        elif type == 1:
             self.pl_originium_arts_count += value
             if self.pl_originium_arts_count < 0:
                 self.pl_originium_arts_count = 0
             elif self.pl_originium_arts_count > len(game_config.config_new_round_inherit_type_data[0]) - 1:
                 self.pl_originium_arts_count = len(game_config.config_new_round_inherit_type_data[0]) - 1
+        elif type == 1:
+            self.pl_abi_and_exp_count += value
+            if self.pl_abi_and_exp_count < 0:
+                self.pl_abi_and_exp_count = 0
+            elif self.pl_abi_and_exp_count > len(game_config.config_new_round_inherit_type_data[1]) - 1:
+                self.pl_abi_and_exp_count = len(game_config.config_new_round_inherit_type_data[1]) - 1
         elif type == 2:
+            self.pl_extra_growth_count += value
+            if self.pl_extra_growth_count < 0:
+                self.pl_extra_growth_count = 0
+            elif self.pl_extra_growth_count > len(game_config.config_new_round_inherit_type_data[2]) - 1:
+                self.pl_extra_growth_count = len(game_config.config_new_round_inherit_type_data[2]) - 1
+        elif type == 3:
             self.pl_collection_count += value
             if self.pl_collection_count < 0:
                 self.pl_collection_count = 0
             elif self.pl_collection_count > len(game_config.config_new_round_inherit_type_data[3]) - 1:
                 self.pl_collection_count = len(game_config.config_new_round_inherit_type_data[3]) - 1
-        elif type == 3:
+        elif type == 4:
             self.chara_fon_and_trust_count += value
             if self.chara_fon_and_trust_count < 0:
                 self.chara_fon_and_trust_count = 0
             elif self.chara_fon_and_trust_count > len(game_config.config_new_round_inherit_type_data[4]) - 1:
                 self.chara_fon_and_trust_count = len(game_config.config_new_round_inherit_type_data[4]) - 1
-        elif type == 4:
+        elif type == 5:
             self.chara_abi_and_exp_count += value
             if self.chara_abi_and_exp_count < 0:
                 self.chara_abi_and_exp_count = 0
@@ -534,6 +607,24 @@ class New_Round_Handle:
                 if i in old_pl_character_data.talent and old_pl_character_data.talent[i]:
                     new_pl_character_data.talent[i] = old_pl_character_data.talent[i]
         info_draw_text += _("玩家源石技艺继承完毕\n")
+
+        # 玩家属性上限成长
+        now_inherit_data_cid = game_config.config_new_round_inherit_type_data[2][self.pl_extra_growth_count]
+        now_inherit_data = game_config.config_new_round_inherit[now_inherit_data_cid]
+        now_rate = now_inherit_data.inherit_rate
+        # 体力上限成长
+        hp_extra_grouth = (old_pl_character_data.hit_point_max - 1000) * now_rate / 100
+        new_pl_character_data.hit_point_max = int(1000 + hp_extra_grouth)
+        # 气力上限成长
+        mp_extra_grouth = (old_pl_character_data.mana_point_max - 1000) * now_rate / 100
+        new_pl_character_data.mana_point_max = int(1000 + mp_extra_grouth)
+        # 理智上限成长
+        san_extra_grouth = (old_pl_character_data.sanity_point_max - 100) * now_rate / 100
+        new_pl_character_data.sanity_point_max = int(100 + san_extra_grouth)
+        # 精液上限成长
+        semen_extra_grouth = (old_pl_character_data.semen_point_max - 100) * now_rate / 100
+        new_pl_character_data.semen_point_max = int(100 + semen_extra_grouth)
+        info_draw_text += _("玩家属性上限成长继承完毕\n")
 
         # 玩家收藏品
         now_inherit_data_cid = game_config.config_new_round_inherit_type_data[3][self.pl_collection_count]
