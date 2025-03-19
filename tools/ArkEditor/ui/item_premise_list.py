@@ -64,12 +64,16 @@ class ItemPremiseList(QWidget):
         """更新前提列表"""
         self.item_list.clear()
         add_now_talk_weight, final_weight = 0, 1
+        fixed_weight = 0
         if cache_control.now_edit_type_flag == 0:
             for premise in cache_control.now_talk_data[cache_control.now_select_id].premise:
                 # 如果是CVP前提，读取CVP前提的内容
                 if "CVP" in premise and premise not in cache_control.premise_data:
                     cvp_str = function.read_CVP(premise)
                     cache_control.premise_data[premise] = cvp_str
+                # 如果是固定权重前提，读取固定权重
+                if "CVP" in premise and "Weight" in premise:
+                    fixed_weight = int(premise.split("_")[-1])
                 # 计算权重并更新到info_label的文本中
                 if premise[:5] == "high_":
                     add_weignt = int(premise[5:])
@@ -88,16 +92,21 @@ class ItemPremiseList(QWidget):
                 item = QListWidgetItem(cache_control.premise_data[premise])
                 item.setToolTip(item.text())
                 self.item_list.addItem(item)
-        draw_text = f"○右键删除该前提，双击替换该前提\n○指令(一段结算)需要区分触发者自己和交互对象\n○二段结算仅触发者自己，没有交互对象\n○当前该文本的出现权重=1"
-        if add_now_talk_weight:
-            draw_text += f" + {add_now_talk_weight}"
-            final_weight += add_now_talk_weight
-        # 是NPC的专属口上时，权重翻三倍
-        if cache_control.now_adv_id != 0 and cache_control.now_adv_id != "0":
-            draw_text += f"，角色口上再乘3"
-            final_weight = final_weight * 3
-        if final_weight != 1:
-            draw_text += f"，最终权重：{final_weight}"
+        draw_text = f"○右键删除该前提，双击替换该前提\n○指令(一段结算)需要区分触发者自己和交互对象\n○二段结算仅触发者自己，没有交互对象\n○当前该文本的出现权重="
+        # 如果有固定权重，则显示固定权重
+        if fixed_weight != 0:
+            draw_text += f"固定值{fixed_weight}"
+        else:
+            draw_text += "1"
+            if add_now_talk_weight:
+                draw_text += f" + {add_now_talk_weight}"
+                final_weight += add_now_talk_weight
+            # 是NPC的专属口上时，权重翻三倍
+            if cache_control.now_adv_id != 0 and cache_control.now_adv_id != "0":
+                draw_text += f"，角色口上再乘3"
+                final_weight = final_weight * 3
+            if final_weight != 1:
+                draw_text += f"，最终权重：{final_weight}"
         self.info_label.setText(draw_text)
 
     def CVP(self):

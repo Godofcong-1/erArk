@@ -1032,6 +1032,7 @@ t_lactation_1,T_LACTATION_1,素质_妊娠,交互对象泌乳==1
 t_baby_1,T_BABY_1,素质_妊娠,交互对象婴儿==1
 
 child_1,SELF_IS_CHILD,属性_素质,自己是幼女
+self_child_or_loli_1,SELF_CHILD_OR_LOLI_1,属性_素质,自己幼女或萝莉==1
 t_child_or_loli_1,T_CHILD_OR_LOLI_1,属性_素质,交互对象幼女或萝莉==1
 breast_0,SELF_CHEST_IS_CLIFF,属性_素质,自己胸部大小是绝壁
 t_breast_0,TARGET_CHEST_IS_CLIFF,属性_素质,交互对象胸部大小是绝壁

@@ -67,6 +67,7 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     behavior_id = character_data.behavior.behavior_id
     now_weight = 0 # 总权重
     now_premise_data = {} # 记录已经计算过的前提
+    fixed_weight = 0 # 固定权重
     # 遍历前提字典
     for premise in premise_dict:
         # 判断是否为权重类空白前提
@@ -106,6 +107,12 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
             # 综合数值前提判定
             if "CVP" in premise:
                 premise_all_value_list = premise.split("_")[1:]
+                # 如果是权重前提
+                if premise_all_value_list[1] == "Weight|0":
+                    fixed_weight = int(premise_all_value_list[-1])
+                    # 最小为1，最大为999
+                    fixed_weight = max(1, min(fixed_weight, 999))
+                    continue
                 now_add_weight = handle_comprehensive_value_premise(character_id, premise_all_value_list)
                 now_premise_data[premise] = now_add_weight
             # 其他正常口上判定
@@ -121,6 +128,9 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
             else:
                 now_weight = 0
                 break
+    # 如果权重大于0且有固定权重，则变为固定权重
+    if now_weight > 0 and fixed_weight > 0:
+        now_weight = fixed_weight
     return now_weight
 
 

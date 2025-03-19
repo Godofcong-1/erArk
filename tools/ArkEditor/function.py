@@ -20,6 +20,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("Son", "嵌套子事件")
     cvp_str_list[2] = cvp_str_list[2].replace("OtherChara|0", "其他角色在场")
     cvp_str_list[2] = cvp_str_list[2].replace("Dirty", "部位污浊")
+    cvp_str_list[2] = cvp_str_list[2].replace("Weight|0", "触发权重")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")

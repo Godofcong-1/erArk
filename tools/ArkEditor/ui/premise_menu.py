@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场","部位污浊"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -372,6 +372,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "OtherChara|0"
         elif cvp_b1 == "部位污浊":
             cvp_b_value = "Dirty|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "触发权重":
+            cvp_b_value = "Weight|0"
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -417,6 +419,7 @@ class CVPMenu(QDialog):
 
     def reset_option(self):
         """重置选项"""
+        self.cvp_a.setVisible(True)
         items_count = self.cvp_a.count()
         if items_count != 3:
             self.cvp_a.clear()
@@ -522,4 +525,10 @@ class CVPMenu(QDialog):
             for cloth_id, cloth_name in cache_control.clothing_data.items():
                 self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
             self.cvp_text.setText("检测部位的精液量，包括身体部位与服装部位，单位是ml\n\n如果角色没有该部位，比如没有兽角，或者没有穿内裤等，则该部位精液量固定为0")
+        elif index == 15:
+            self.cvp_a.setVisible(False)
+            self.cvp_b2.setVisible(False)
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_text.setText("自由设定触发本条目的权重，\n正整数，最小为1，最大999\n设定后将锁定为固定值，优先度高于其他任何权重计算")
         self.cvp_b = self.cvp_b2
