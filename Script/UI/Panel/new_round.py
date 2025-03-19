@@ -676,9 +676,9 @@ class New_Round_Handle:
 
             # 仅继承陷落干员
             if now_id not in self.all_fall_chara_list:
-                character_handle.init_character(now_id, now_npc_data)
+                character_handle.init_character(now_id, now_npc_data, collect_reset=False)
             else:
-                character_handle.init_character(now_id, now_npc_data)
+                character_handle.init_character(now_id, now_npc_data, collect_reset=False)
                 new_npc_data = cache.character_data[now_id]
                 cache.npc_id_got.add(now_id)
 

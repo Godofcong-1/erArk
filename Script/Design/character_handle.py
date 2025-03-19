@@ -36,12 +36,15 @@ def init_character_list():
         init_character(now_id, now_npc_data)
 
 
-def init_character(character_id: int, character_tem: game_type.NpcTem):
+def init_character(character_id: int, character_tem: game_type.NpcTem, collect_reset: bool = True) -> game_type.Character:
     """
     按id生成角色属性
     Keyword arguments:
     character_id -- 角色id
     character_tem -- 角色生成模板数据
+    skip_collect_reset -- 是否进行藏品重置
+    returns:
+    game_type.Character -- 角色数据
     """
     # print("进入init_character")
     # print("生成阶段，character_id :",character_id)
@@ -87,7 +90,7 @@ def init_character(character_id: int, character_tem: game_type.NpcTem):
         #     print(f"debug {character_tem.Name} cloth_wear = {now_character.cloth.cloth_wear}")
     # print(f"debug {character_tem.Name} cloth_wear = {now_character.cloth.cloth_wear}")
     # 生成藏品
-    if 0 in cache.character_data:
+    if collect_reset and 0 in cache.character_data:
         pl_character_data = cache.character_data[0]
         pl_character_data.pl_collection.token_list[character_id] = False
         pl_character_data.pl_collection.first_panties[character_id] = ""
