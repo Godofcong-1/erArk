@@ -148,11 +148,13 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
     if premise_all_value_list[0] == "A1":
+        final_character_id = character_id
         final_character_data = character_data
     elif premise_all_value_list[0] == "A2":
         # 如果没有交互对象，则返回0
         if character_data.target_character_id == character_id:
             return 0
+        final_character_id = character_data.target_character_id
         final_character_data = cache.character_data[character_data.target_character_id]
     elif premise_all_value_list[0][:2] == "A3":
         final_character_adv = int(premise_all_value_list[0][3:])
@@ -204,40 +206,21 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = final_character_data.dirty.body_semen[part_cid][1]
             else:
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
+    elif premise_all_value_list[1][0] == "G":
+        final_value = attr_calculation.get_character_fall_level(final_character_id, minus_flag=True)
 
     # 进行方式C和数值D的判别
     judge_value = int(premise_all_value_list[3])
     # print(f"debug final_value = {final_value}, judge_value = {judge_value}")
 
-    # 攻略程度进行单独计算
+    # 攻略程度的不过0处理
     if premise_all_value_list[1][0] == "G":
-        if judge_value > 0:
-            all_talent_list = [201,202,203,204]
-            talent_id_index = 200 + judge_value
-        elif judge_value < 0:
-            all_talent_list = [211,212,213,214]
-            talent_id_index = 210 - judge_value
-        else:
-            return 0
-        # 攻略程度的运算符判定
-        if premise_all_value_list[2] == "G":
-           # 获取all_talent_list中所有比talent_id_index大的作为一个新列表
-            new_talent_list = [i for i in all_talent_list if i > talent_id_index]
-        elif premise_all_value_list[2] == "L":
-            new_talent_list = [i for i in all_talent_list if i < talent_id_index]
-        elif premise_all_value_list[2] == "E":
-            new_talent_list = [i for i in all_talent_list if i == talent_id_index]
-        elif premise_all_value_list[2] == "GE":
-            new_talent_list = [i for i in all_talent_list if i >= talent_id_index]
-        elif premise_all_value_list[2] == "LE":
-            new_talent_list = [i for i in all_talent_list if i <= talent_id_index]
-        elif premise_all_value_list[2] == "NE":
-            new_talent_list = [i for i in all_talent_list if i != talent_id_index]
-        # 最后判定
-        for talent_id in new_talent_list:
-            if final_character_data.talent[talent_id]:
-                return 1
-        return 0
+        # 如果是在大于，或者大于等于负数的情况下，则当前值最大为0
+        if premise_all_value_list[2] in {"G", "GE"} and judge_value < 0:
+            final_value = min(0, final_value)
+        # 如果是在小于，或者小于等于正数的情况下，则当前值最小为0
+        elif premise_all_value_list[2] in {"L", "LE"} and judge_value > 0:
+            final_value = max(0, final_value)
 
     # 前指令的单独计算
     if premise_all_value_list[1][0] == "I":
