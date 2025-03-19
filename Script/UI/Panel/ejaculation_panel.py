@@ -236,6 +236,18 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
             character_data.dirty.enema_capacity = 4
         else:
             character_data.dirty.enema_capacity = 5
+        # 如果自己的身体插入部位是A，则清零
+        if character_data.h_state.insert_position == 8:
+            character_data.h_state.insert_position = -1
+        # 如果此时在群交中，且阴茎状态为肛交，则清零阴茎状态
+        if handle_premise.handle_group_sex_mode_on(0):
+            pl_character_data: game_type.Character = cache.character_data[0]
+            now_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
+            state_id = now_template_data[0]["penis"][1]
+            status_data = game_config.config_status[state_id]
+            # 如果为肛交，则清零阴茎状态
+            if "A" in status_data.tag:
+                now_template_data[0]["penis"] = [-1, -1]
     # print(f"debug update_semen_dirty name = {character_data.name}, part_cid = {part_cid}, part_type = {part_type}, semen_count = {semen_count}")
 
 
