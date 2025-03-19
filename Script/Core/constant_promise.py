@@ -2049,6 +2049,8 @@ class Premise:
 
     SELF_IS_CHILD = "child_1"
     """ 属性_素质 自己是幼女 """
+    SELF_CHILD_OR_LOLI_1 = "self_child_or_loli_1"
+    """ 属性_素质 自己幼女或萝莉==1 """
     T_CHILD_OR_LOLI_1 = "t_child_or_loli_1"
     """ 属性_素质 交互对象幼女或萝莉==1 """
     SELF_CHEST_IS_CLIFF = "breast_0"

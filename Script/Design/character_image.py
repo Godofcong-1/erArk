@@ -25,7 +25,17 @@ def find_character_image_name(character_id: int) -> str:
 
     # 如果是女儿的话
     if character_data.relationship.father_id == 0:
+        # 默认为使用标准图片
         character_image_name = "女儿_1"
+        # 母亲的名字的萝莉图片
+        mother_data: game_type.Character = cache.character_data[character_data.relationship.mother_id]
+        mather_image_name = mother_data.name + "_小"
+        # 优先选择自己的同名图片
+        if character_data.name in era_image.image_data:
+            character_image_name = _(character_data.name, revert_translation=True)
+        # 其次选择母亲的名字的萝莉图片
+        elif mather_image_name in era_image.image_data:
+            character_image_name = _(mather_image_name, revert_translation=True)
         image_name = character_image_name
     # 非女儿的正常干员角色
     else:
@@ -35,6 +45,9 @@ def find_character_image_name(character_id: int) -> str:
         if character_data.name in era_image.image_data_index_by_chara:
             all_image_name_for_character = era_image.image_data_index_by_chara[character_data.name]
             # print(all_image_name_for_character)
+            # 萝莉差分
+            child_flag = False
+            child_text = child_judge(character_id)
             # 心情差分
             emotion_flag = False
             emotion_text = emotion_judge(character_id)
@@ -49,6 +62,8 @@ def find_character_image_name(character_id: int) -> str:
             big_belly_text = big_belly_judge(character_id)
             # 遍历差分，确认各差分是否存在
             for image_name_for_character in all_image_name_for_character:
+                if child_text in image_name_for_character:
+                    child_flag = True
                 if emotion_text in image_name_for_character:
                     emotion_flag = True
                 # 裸体则宽容处理
@@ -62,22 +77,38 @@ def find_character_image_name(character_id: int) -> str:
                 if big_belly_text in image_name_for_character:
                     big_belly_flag = True
             # 根据flag来确定最终图片名称
-            if emotion_flag:
-                image_name += emotion_text
-            if naked_flag == 1:
-                image_name += "_全裸"
-            elif naked_flag == 2:
-                image_name += "_半裸"
-            if chest_flag:
-                image_name += chest_text
-            if big_belly_flag:
-                image_name += big_belly_text
+            # 萝莉优先于其他差分
+            if child_flag:
+                image_name += child_text
+            else:
+                if emotion_flag:
+                    image_name += emotion_text
+                if naked_flag == 1:
+                    image_name += "_全裸"
+                elif naked_flag == 2:
+                    image_name += "_半裸"
+                if chest_flag:
+                    image_name += chest_text
+                if big_belly_flag:
+                    image_name += big_belly_text
 
     # 如果目标图片不存在，则使用角色原始图片
     if image_name not in era_image.image_data:
         image_name = character_image_name
     return image_name
 
+def child_judge(character_id: int) -> str:
+    """
+    角色萝莉判断
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    str -- 角色图片名称
+    """
+    image_name = ""
+    if handle_premise.handle_self_child_or_loli_1(character_id):
+        image_name += "_小"
+    return image_name
 
 def emotion_judge(character_id: int) -> str:
     """
