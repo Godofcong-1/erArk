@@ -1286,6 +1286,8 @@ class SecondEffect:
     """ 结算额外绝顶(痛苦+恐怖) """
     PLURAL_ORGASM = 409
     """ 结算多重绝顶(快乐+屈服) """
+    BONDAGE_EFFECT = 410
+    """ 结算绳子捆绑效果(已弃用) """
 
     PENIS_IN_T_RESET = 501
     """ 改变当前阴茎位置为交互对象_双方归零 """

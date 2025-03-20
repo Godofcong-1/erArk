@@ -18,7 +18,7 @@ def find_character_image_name(character_id: int) -> str:
     返回:
       str: 最终选中的角色图片名称。
     功能描述:
-      根据角色当前状态构造所有可能差分组合，并按差分优先度（萝莉>裸体>胸部>膨腹>心情）依次尝试匹配完全符合的图片名，
+      根据角色当前状态构造所有可能差分组合，并按差分优先度依次尝试匹配完全符合的图片名，
       若无符合项则返回原始立绘。
     """
     character_data: game_type.Character = cache.character_data[character_id]
@@ -51,7 +51,6 @@ def find_character_image_name(character_id: int) -> str:
 
     # 如果角色在差分索引中存在，则尝试匹配符合的候选图片
     if character_data.name in era_image.image_data_index_by_chara:
-        all_image_names = era_image.image_data_index_by_chara[character_data.name]
         # 构造候选组合列表：
         # 先尝试全组合，再依次去掉低优先级的差分（即从后向前移除非空项）
         candidates = []

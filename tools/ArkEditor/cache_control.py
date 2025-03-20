@@ -79,3 +79,5 @@ clothing_data: dict = {}
 """ 服装数据 """
 organ_data: dict = {}
 """ 性器官数据 """
+bondage_data: dict = {}
+""" 绑缚数据 """

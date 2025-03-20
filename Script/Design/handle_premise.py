@@ -170,7 +170,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if final_character_id == 0:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1] and "Dirty" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -208,6 +208,13 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
         final_value = attr_calculation.get_character_fall_level(final_character_id, minus_flag=True)
+    elif premise_all_value_list[1][0] == "B":
+        if "Bondage" in premise_all_value_list[1]:
+            if final_character_data.h_state.bondage == type_son_id:
+                final_value = 1
+            else:
+                final_value = 0
+
 
     # 进行方式C和数值D的判别
     judge_value = int(premise_all_value_list[3])
@@ -13404,6 +13411,56 @@ def handle_use_condom_in_h_ge_10(character_id: int) -> int:
     if character_data.h_state.condom_count[0] >= 10:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOW_BONDAGE)
+def handle_self_now_bondage(character_id: int) -> int:
+    """
+    自己正在被绳子捆绑
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.bondage > 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_BONDAGE)
+def handle_self_not_bondage(character_id: int) -> int:
+    """
+    自己没有被绳子捆绑
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_bondage(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOW_BONDAGE)
+def handle_target_now_bondage(character_id: int) -> int:
+    """
+    交互对象正在被绳子捆绑
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_now_bondage(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_BONDAGE)
+def handle_target_not_bondage(character_id: int) -> int:
+    """
+    交互对象没有被绳子捆绑
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_now_bondage(character_id)
 
 
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)

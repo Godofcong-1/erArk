@@ -348,8 +348,10 @@ class SeeCharacterBodyPanel:
 
         # 绳子捆绑文本
         if target_character_data.h_state.bondage:
-            bondage_text = game_config.ui_text_data['item'][f'绳子捆绑{str(target_character_data.h_state.bondage)}']
-            all_part_text_list.append(f" {bondage_text}")
+            bondage_id = target_character_data.h_state.bondage
+            bondage_name = game_config.config_bondage[bondage_id].name
+            bondage_text = _(" 被绳子捆成了{0}").format(bondage_name)
+            all_part_text_list.append(bondage_text)
 
         # 检查并补全角色的H道具数据
         if len(body_item_list) != len(target_character_data.h_state.body_item) or len(body_item_list) != len(character_data.h_state.body_item):

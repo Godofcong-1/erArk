@@ -203,11 +203,12 @@ def judge_character_follow(character_id: int) -> int:
     return 0
 
 
-def judge_character_h_obscenity_unconscious(character_id: int) -> int:
+def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: datetime.datetime) -> int:
     """
     判断H状态、猥亵与无意识\n
     Keyword arguments:
     character_id -- 角色id\n
+    pl_start_time -- 玩家行动开始时间\n
     Return arguments:
     bool -- 本次update时间切片内活动是否已完成
     """
@@ -262,6 +263,9 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
         # 睡奸时例外
         if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
             return 1
+        # 6异常时例外
+        if not handle_premise.handle_normal_6(character_id):
+            return 1
         # 群交时
         if handle_premise.handle_group_sex_mode_on(character_id):
             # 仅自慰类型和部位类型由群交AI判断处理
@@ -277,9 +281,13 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
                 character_data.h_state.sex_assist = False
         character_data.behavior.behavior_id = constant.Behavior.WAIT
         character_data.state = constant.CharacterStatus.STATUS_WAIT
-        character_data.behavior.start_time = pl_character_data.behavior.start_time
+        character_data.behavior.start_time = pl_start_time
         character_data.behavior.duration = pl_character_data.behavior.duration
         character_data.target_character_id = character_id
+        # 防止行为的时间为0
+        if character_data.behavior.duration == 0:
+            past_time = int((cache.game_time.timestamp() - pl_start_time.timestamp()) / 60)
+            character_data.behavior.duration = past_time
 
     # 如果不在同一位置
     if handle_premise_place.handle_not_in_player_scene(character_id):
@@ -290,8 +298,8 @@ def judge_character_h_obscenity_unconscious(character_id: int) -> int:
             character_data.sp_flag.unconscious_h = 0
             character_data.behavior.behavior_id = constant.Behavior.END_H
             character_data.state = constant.CharacterStatus.STATUS_END_H
-            character_data.behavior.start_time = pl_character_data.behavior.start_time
-            character_data.behavior.duration = pl_character_data.behavior.duration
+            character_data.behavior.start_time = pl_start_time
+            character_data.behavior.duration = 1
             character_data.target_character_id = character_id
 
         # 如果不在同一位置，则结束睡眠猥亵状态
@@ -1146,6 +1154,10 @@ def npc_ai_in_group_sex(character_id: int):
 
     # 如果不是H状态+群交，则返回
     if character_data.sp_flag.is_h == False or handle_premise.handle_group_sex_mode_off(character_id):
+        return
+
+    # 被绳子捆绑则返回
+    if handle_premise.handle_self_now_bondage(character_id):
         return
 
     # 如果设定NPC为仅自慰，则进入要自慰后返回

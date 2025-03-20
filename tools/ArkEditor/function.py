@@ -21,6 +21,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("OtherChara|0", "其他角色在场")
     cvp_str_list[2] = cvp_str_list[2].replace("Dirty", "部位污浊")
     cvp_str_list[2] = cvp_str_list[2].replace("Weight|0", "触发权重")
+    cvp_str_list[2] = cvp_str_list[2].replace("Bondage", "绳子捆绑")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
@@ -72,6 +73,10 @@ def read_CVP(cvp_value_str: str):
         else:
             b2_name = cache_control.clothing_data[b2_value[1:]]
         cvp_str = cvp_str.replace(f"部位污浊|{b2_value}", f"部位污浊{b2_name}")
+    elif "绳子捆绑" in cvp_str:
+        b2_value = cvp_str_list[2].split("绳子捆绑|")[1]
+        b2_name = cache_control.bondage_data[b2_value]
+        cvp_str = cvp_str.replace(f"绳子捆绑|{b2_value}", f"绳子捆绑{b2_name}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str

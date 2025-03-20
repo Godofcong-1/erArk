@@ -1352,6 +1352,9 @@ def item_effect(character_id: int, pl_to_npc: bool = False):
                     continue
                 character_data.second_behavior[num + i] = 1
 
+        # 绳子捆绑
+        if handle_premise.handle_self_now_bondage(character_id):
+            character_data.second_behavior[1113] = 1
 
 def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange = None) -> int:
     """

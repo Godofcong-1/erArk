@@ -419,10 +419,7 @@ class BODY_H_STATE:
         """
 
         self.bondage: int = 0
-        """ 绳子捆绑情况    
-        编号int    
-        [0未捆绑,1后高手缚,2直立缚,3驷马捆绑,4直臂缚,5双手缚,6菱绳缚,7龟甲缚,8团缚,9逆团缚,10吊缚,11后手吊缚,12单足吊缚,13后手观音,14苏秦背剑,15五花大绑]
-        """
+        """ 绳子捆绑情况，int，见bondage.csv，0为无捆绑 """
 
         self.group_sex_body_template_dict: dict = {
             "A":[

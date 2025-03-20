@@ -483,9 +483,9 @@ class CharacterStatus:
     STATUS_MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """
     STATUS_URINE_COLLECTOR = 602
-    """ 采尿器 """
-    STATUS_BONDAGE = 603
-    """ 绳子 """
+    """ 装上采尿器 """
+    STATUS_BIND = 603
+    """ 捆绑 """
     STATUS_PATCH_ON = 604
     """ 戴上眼罩 """
     STATUS_WHIP = 605
@@ -496,6 +496,8 @@ class CharacterStatus:
     """ 取下搾乳机 """
     STATUS_URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
+    STATUS_UNBIND = 633
+    """ 解除捆绑 """
     STATUS_PATCH_OFF = 634
     """ 摘下眼罩 """
     STATUS_EXERCISE_SUCKING_AND_SWALLOWING = 681
@@ -1156,8 +1158,8 @@ class Behavior:
     """ 装上搾乳机 """
     URINE_COLLECTOR_ON = 602
     """ 装上采尿器 """
-    BONDAGE = 603
-    """ 绳子 """
+    BIND = 603
+    """ 捆绑 """
     PATCH_ON = 604
     """ 戴上眼罩 """
     WHIP = 605
@@ -1169,6 +1171,8 @@ class Behavior:
     """ 取下搾乳机 """
     URINE_COLLECTOR_OFF = 632
     """ 取下采尿器 """
+    UNBIND = 633
+    """ 解除捆绑 """
     PATCH_OFF = 634
     """ 摘上眼罩 """
 
@@ -1932,6 +1936,8 @@ class SecondBehavior:
     """ 结算事前避孕药 """
     SLEEPING_BIRTH_CONTROL_PILLS_AFTER = 1112
     """ 结算事后避孕药 """
+    CONDAGE = 1113
+    """ 结算绳子捆绑 """
 
     PENIS_IN_HAIR = 1201
     """ 结算发交中 """
@@ -2778,7 +2784,7 @@ class Instruct:
     URINE_COLLECTOR_OFF = 0
     """ 取下采尿器 """
     BONDAGE = 0
-    """ 绳子 """
+    """ 绳艺 """
     PATCH_ON = 0
     """ 戴上眼罩 """
     PATCH_OFF = 0

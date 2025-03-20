@@ -3527,6 +3527,7 @@ def handle_anal_caress():
     _("命令对方自慰"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_MAKE_MASTUREBATE,
 )
@@ -3541,6 +3542,7 @@ def handle_make_masturebate():
     _("命令对方舔自己肛门"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_MAKE_LICK_ANAL,
 )
@@ -3557,6 +3559,7 @@ def handle_make_lick_anal():
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
 )
 def handle_change_top_and_bottom():
@@ -3616,6 +3619,7 @@ def handle_sedecu():
     _("手交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_HANDJOB,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3646,6 +3650,7 @@ def handle_blowjob():
     _("乳交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_PAIZURI,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3694,6 +3699,7 @@ def handle_hairjob():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_5},
     constant.CharacterStatus.STATUS_AXILLAJOB,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3709,6 +3715,7 @@ def handle_axillajob():
     _("素股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_RUB_BUTTOCK,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3726,6 +3733,7 @@ def handle_rub_buttock():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE_OR_HAND,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
     constant.CharacterStatus.STATUS_HAND_BLOWJOB,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3743,6 +3751,7 @@ def handle_hand_blowjob():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE_OR_BREAST,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
     constant.CharacterStatus.STATUS_TITS_BLOWJOB,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3814,6 +3823,7 @@ def handle_clean_blowjob():
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.PENIS_IN_T_MOUSE,
      constant_promise.Premise.TECHNIQUE_GE_3,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_3},
     constant.CharacterStatus.STATUS_SIXTY_NINE,
     constant.SexInstructSubType.WAIT_UPON,
@@ -4500,19 +4510,20 @@ def handle_urine_collector_off():
 @add_instruct(
     constant.Instruct.BONDAGE,
     constant.InstructType.SEX,
-    _("绳子_未实装"),
+    _("绳艺"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IN_HUMILIATION_ROOM,
      constant_promise.Premise.HAVE_BONDAGE},
-    constant.CharacterStatus.STATUS_BONDAGE,
+    constant.CharacterStatus.STATUS_BIND,
     constant.SexInstructSubType.SM,
 )
 def handle_bondage():
-    """处理绳子指令"""
-    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BONDAGE, judge = _("SM"))
+    """处理绳艺指令"""
+    from Script.UI.Panel import normal_panel
+    now_panel = normal_panel.Bondage_Panel(width=width)
+    now_panel.draw()
 
 
 @add_instruct(
@@ -4818,6 +4829,7 @@ def handle_back_sex():
     _("骑乘位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
@@ -4999,6 +5011,7 @@ def handle_back_anal_sex():
     _("骑乘位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.TARGET_A_EMPTY},

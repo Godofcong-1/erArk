@@ -156,6 +156,17 @@ class Body_Manage_Requirement:
     """ 未实装 """
 
 
+class Bondage:
+    """ 绳子捆绑 """
+
+    cid: int
+    """ 绳子捆绑id """
+    name: str
+    """ 绳子捆绑名 """
+    level: int
+    """ 捆绑等级 """
+
+
 class Book:
     """ 书籍配置表 """
 
@@ -1204,7 +1215,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 
 
 class TargetEffect:

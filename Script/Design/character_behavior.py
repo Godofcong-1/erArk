@@ -105,7 +105,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         handle_npc_ai.judge_character_cant_move(character_id) # 无法自由移动的角色
         handle_npc_ai.judge_assistant_character(character_id) # 助理
         handle_npc_ai.judge_character_follow(character_id) # 跟随模式
-        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
+        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
 
     # 处理公共资源
     # update_cafeteria() # 刷新食堂的饭，不需要了，改为NPC在没有饭的时候自动刷新
@@ -142,7 +142,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
                 cache.over_behavior_character.add(character_id)
         #         print(f"debug time_judge")
         handle_npc_ai.judge_character_tired_sleep(character_id) # 结算疲劳
-        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id) # H状态、猥亵与无意识
+        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
         judge_pl_real_time_data() # 玩家实时数据结算
         # print(f"debug 玩家结算完毕")
 
@@ -848,6 +848,13 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                 enema_just = now_character_data.dirty.enema_capacity
                 default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_character_data.ability[15], extra_adjust=enema_just, tenths_add=False)
 
+            # 结算捆绑中，欲情值和苦痛值增加
+            if handle_premise.handle_self_now_bondage(character_id):
+                bondage_id = now_character_data.h_state.bondage
+                bondage_data = game_config.config_bondage[bondage_id]
+                bondage_adjust = bondage_data.level * 0.5
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=12, base_value=0, ability_level=now_character_data.ability[33], extra_adjust=bondage_adjust, tenths_add=False)
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_character_data.ability[15], extra_adjust=bondage_adjust, tenths_add=False)
 
 def settle_semen_flow(character_id: int, true_add_time: int):
     """

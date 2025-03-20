@@ -406,6 +406,10 @@ def get_state_id_of_sex_assistant() -> int:
     # 如果调教目标是仅囚犯干员的话，玩家的交互对象不是囚犯时返回0
     if cache.rhodes_island.confinement_training_setting[13] == 0 and handle_premise.handle_t_imprisonment_0(0):
         return 0
+    # 6异常或者绳子捆绑则返回0
+    warden_id = cache.rhodes_island.current_warden_id
+    if not handle_premise.handle_normal_6(warden_id) or handle_premise.handle_self_now_bondage(warden_id):
+        return 0
     # 如果是指定指令列表，则直接随机选择
     if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_status_list) > 0:
         state_id = random.choice(cache.rhodes_island.sex_assistant_ai_status_list)

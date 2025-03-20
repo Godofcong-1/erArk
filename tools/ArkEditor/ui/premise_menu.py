@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -374,6 +374,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Dirty|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "触发权重":
             cvp_b_value = "Weight|0"
+        elif cvp_b1 == "绳子捆绑":
+            cvp_b_value = "Bondage|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -531,4 +533,12 @@ class CVPMenu(QDialog):
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
             self.cvp_text.setText("自由设定触发本条目的权重，\n正整数，最小为1，最大999\n设定后将锁定为固定值，优先度高于其他任何权重计算")
+        elif index == 16:
+            self.cvp_b2.clear()
+            for bondage_id, bondage_name in cache_control.bondage_data.items():
+                self.cvp_b2.addItem(f"{bondage_id}|{bondage_name}")
+            self.cvp_b2.setCurrentIndex(0)
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_text.setText("用于判断被绳子捆绑的姿势\n等于1则为该姿势，等于0则为非该姿势")
         self.cvp_b = self.cvp_b2
