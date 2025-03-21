@@ -1480,6 +1480,7 @@ have_milking_machine,HAVE_MILKING_MACHINE,道具_持有,已持有搾乳机
 have_urine_collector,HAVE_URINE_COLLECTOR,道具_持有,已持有采尿器
 have_bondage,HAVE_BONDAGE,道具_持有,已持有绳子
 have_patch,HAVE_PATCH,道具_持有,已持有眼罩
+have_gag,HAVE_GAG,道具_持有,已持有口球
 have_big_vibrator,HAVE_BIG_VIBRATOR,道具_持有,已持有加粗震动棒
 have_huge_vibrator,HAVE_HUGE_VIBRATOR,道具_持有,已持有巨型震动棒
 have_clyster_tools,HAVE_CLYSTER_TOOLS,道具_持有,已持有灌肠套装
@@ -1528,6 +1529,10 @@ self_now_patch,SELF_NOW_PATCH,道具_使用,自己戴着眼罩
 self_not_patch,SELF_NOT_PATCH,道具_使用,自己没有戴着眼罩
 target_now_patch,TARGET_NOW_PATCH,道具_使用,交互对象戴着眼罩
 target_not_patch,TARGET_NOT_PATCH,道具_使用,交互对象没有戴着眼罩
+self_now_gag,SELF_NOW_GAG,道具_使用,自己戴着口球
+self_not_gag,SELF_NOT_GAG,道具_使用,自己没有戴着口球
+target_now_gag,TARGET_NOW_GAG,道具_使用,交互对象戴着口球
+target_not_gag,TARGET_NOT_GAG,道具_使用,交互对象没有戴着口球
 self_sleep_pills,SELF_SEELP_PIILS,道具_使用,自己已服用安眠药
 self_not_sleep_pills,SELF_NOT_SEELP_PIILS,道具_使用,自己没有服用安眠药
 target_now_birth_control_pills_before,TARGET_NOW_BIRTH_CONTROL_PILLS_BEFORE,道具_使用,交互对象已服用事前避孕药
@@ -1539,8 +1544,12 @@ now_not_condom,NOW_NOT_CONDOM,道具_使用,自己没有戴着避孕套
 not_use_condom_in_h,NOT_USE_CONDOM_IN_H,道具_使用,本次H中没有已用掉的避孕套
 use_condom_in_h_ge_1,USE_CONDOM_IN_H_GE_1,道具_使用,本次H中已用掉的避孕套数量大于等于1
 use_condom_in_h_ge_3,USE_CONDOM_IN_H_GE_3,道具_使用,本次H中已用掉的避孕套数量大于等于3
-use_condom_in_h_ge_5,USE_CONDOM_IN_H_GE_5,道具_使用,本次H中已用掉的避孕套数量大于等于3
+use_condom_in_h_ge_5,USE_CONDOM_IN_H_GE_5,道具_使用,本次H中已用掉的避孕套数量大于等于5
 use_condom_in_h_ge_10,USE_CONDOM_IN_H_GE_10,道具_使用,本次H中已用掉的避孕套数量大于等于10
+self_now_bondage,SELF_NOW_BONDAGE,道具_使用,自己正在被绳子捆绑
+self_not_bondage,SELF_NOT_BONDAGE,道具_使用,自己没有被绳子捆绑
+target_now_bondage,TARGET_NOW_BONDAGE,道具_使用,交互对象正在被绳子捆绑
+target_not_bondage,TARGET_NOT_BONDAGE,道具_使用,交互对象没有被绳子捆绑
 
 have_collection,HAVE_COLLECTION,收集,持有藏品
 c_bonus_103,COLLECT_BONUS_102,收集,收藏奖励_102_解锁索要内裤

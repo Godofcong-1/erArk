@@ -617,8 +617,21 @@ class Item:
     """ 价格 """
     effect: int
     """ 效果 """
+    h_item_id: int
+    """ h道具的id """
     info: str
     """ 描述 """
+
+
+class Item_h_equip:
+    """ H用装备型道具 """
+
+    cid: int
+    """ 道具id """
+    name: str
+    """ 道具名 """
+    item_id: int
+    """ 道具id """
 
 
 class JJ:

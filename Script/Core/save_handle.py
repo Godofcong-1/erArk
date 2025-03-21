@@ -453,6 +453,14 @@ def update_character_config_data(value):
             if key not in value.assistant_services:
                 value.assistant_services[key] = 0
                 update_count += 1
+    # 身体道具
+    if len(value.h_state.body_item) != len(game_config.config_h_item_index):
+        for key in game_config.config_h_item_index:
+            if key not in value.h_state.body_item:
+                item_id = game_config.config_h_item_index[key]
+                item_name = game_config.config_item[item_id].name
+                value.h_state.body_item[key] = [item_name,False,None]
+                update_count += 1
     return update_count
 
 

@@ -3359,6 +3359,7 @@ def handle_making_out():
     _("接吻"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_KISS_H,
 )
@@ -3543,6 +3544,7 @@ def handle_make_masturebate():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_MAKE_LICK_ANAL,
 )
@@ -3635,6 +3637,7 @@ def handle_handjob():
     _("口交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_BLOWJOB,
     constant.SexInstructSubType.WAIT_UPON,
@@ -3731,6 +3734,7 @@ def handle_rub_buttock():
     _("手交口交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE_OR_HAND,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
@@ -3749,6 +3753,7 @@ def handle_hand_blowjob():
     _("乳交口交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE_OR_BREAST,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
@@ -3767,6 +3772,7 @@ def handle_tits_blowjob():
     _("真空口交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_5},
@@ -3784,6 +3790,7 @@ def handle_focus_blowjob():
     _("深喉插入"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PENIS_IN_T_MOUSE,
      constant_promise.Premise.TARGET_TECHNIQUE_GE_5_OR_IS_UNCONSCIOUS_H},
@@ -3801,6 +3808,7 @@ def handle_deep_throat():
     _("清洁口交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PL_PENIS_SEMEN_DIRTY,
      constant_promise.Premise.NOW_NOT_CONDOM,
@@ -3819,6 +3827,7 @@ def handle_clean_blowjob():
     _("六九式"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_GAG,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
      constant_promise.Premise.PENIS_IN_T_MOUSE,
@@ -4530,12 +4539,14 @@ def handle_bondage():
     constant.Instruct.PATCH_ON,
     constant.InstructType.SEX,
     _("戴上眼罩"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
-     constant_promise.Premise.TARGET_NOT_PATCH,
-     constant_promise.Premise.HAVE_PATCH},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+        constant_promise.Premise.TARGET_NOT_PATCH,
+        constant_promise.Premise.HAVE_PATCH
+        },
     constant.CharacterStatus.STATUS_PATCH_ON,
     constant.SexInstructSubType.ITEM,
 )
@@ -4548,12 +4559,14 @@ def handle_patch_on():
     constant.Instruct.PATCH_OFF,
     constant.InstructType.SEX,
     _("摘下眼罩"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
-     constant_promise.Premise.TARGET_NOW_PATCH,
-     constant_promise.Premise.HAVE_PATCH},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+        constant_promise.Premise.TARGET_NOW_PATCH,
+        constant_promise.Premise.HAVE_PATCH
+        },
     constant.CharacterStatus.STATUS_PATCH_OFF,
     constant.SexInstructSubType.ITEM,
 )
@@ -4563,14 +4576,56 @@ def handle_patch_off():
 
 
 @add_instruct(
+    constant.Instruct.GAG_ON,
+    constant.InstructType.SEX,
+    _("戴上口球"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+        constant_promise.Premise.TARGET_NOT_GAG,
+        constant_promise.Premise.HAVE_GAG,
+        },
+    constant.CharacterStatus.STATUS_GAG_ON,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_gag_on():
+    """处理戴上口球指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GAG_ON)
+
+
+@add_instruct(
+    constant.Instruct.GAG_OFF,
+    constant.InstructType.SEX,
+    _("摘下口球"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM_OR_DR_ROOM,
+        constant_promise.Premise.TARGET_NOW_GAG,
+        constant_promise.Premise.HAVE_GAG,
+        },
+    constant.CharacterStatus.STATUS_GAG_OFF,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_gag_off():
+    """处理摘下口球指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GAG_OFF)
+
+
+@add_instruct(
     constant.Instruct.WHIP,
     constant.InstructType.SEX,
     _("鞭子"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.IN_HUMILIATION_ROOM,
-     constant_promise.Premise.HAVE_WHIP},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM,
+        constant_promise.Premise.HAVE_WHIP
+        },
     constant.CharacterStatus.STATUS_WHIP,
     constant.SexInstructSubType.SM,
 )
@@ -4601,10 +4656,12 @@ def handle_neddle():
     constant.Instruct.PUT_CONDOM,
     constant.InstructType.SEX,
     _("戴上避孕套"),
-    {constant_promise.Premise.IS_H,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.NOW_NOT_CONDOM,
-     constant_promise.Premise.HAVE_CONDOM},
+    {
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.NOW_NOT_CONDOM,
+        constant_promise.Premise.HAVE_CONDOM
+        },
     constant.CharacterStatus.STATUS_PUT_CONDOM,
     constant.SexInstructSubType.ITEM,
 )
@@ -4617,9 +4674,10 @@ def handle_put_condom():
     constant.Instruct.TAKE_CONDOM_OUT,
     constant.InstructType.SEX,
     _("摘掉避孕套"),
-    {constant_promise.Premise.IS_H,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.NOW_CONDOM,
+    {
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.NOW_CONDOM,
     },
     constant.CharacterStatus.STATUS_TAKE_CONDOM_OUT,
     constant.SexInstructSubType.ITEM,
@@ -4633,11 +4691,13 @@ def handle_take_condom_out():
     constant.Instruct.SAFE_CANDLES,
     constant.InstructType.SEX,
     _("滴蜡"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.IN_HUMILIATION_ROOM,
-     constant_promise.Premise.HAVE_SAFE_CANDLES},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.IN_HUMILIATION_ROOM,
+        constant_promise.Premise.HAVE_SAFE_CANDLES
+        },
     constant.CharacterStatus.STATUS_SAFE_CANDLES,
     constant.SexInstructSubType.SM,
 )

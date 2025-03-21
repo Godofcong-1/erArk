@@ -274,12 +274,12 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     """
     zero_h_state = game_type.BODY_H_STATE()
     h_state_data = zero_h_state
-    body_item_list = dirty_panel.body_item_list
-    bondage_list = dirty_panel.bondage_list
 
     # 身体道具
-    for i in range(len(body_item_list)):
-        h_state_data.body_item[i] = [body_item_list[i],False,None]
+    for i in game_config.config_h_item_index:
+        item_id = game_config.config_h_item_index[i]
+        item_name = game_config.config_item[item_id].name
+        h_state_data.body_item[i] = [item_name,False,None]
         # 保留药物数据
         if i in {8,9,10,11,12} and i in old_h_state_data.body_item:
             h_state_data.body_item[i] = old_h_state_data.body_item[i]

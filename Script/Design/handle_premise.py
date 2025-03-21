@@ -65,9 +65,33 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     target_character_id = character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
     behavior_id = character_data.behavior.behavior_id
+    target_behavior_id = target_character_data.behavior.behavior_id
     now_weight = 0 # 总权重
     now_premise_data = {} # 记录已经计算过的前提
     fixed_weight = 0 # 固定权重
+
+    # 无意识模式判定
+    if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
+        # 有技艺tag的行为则直接通过
+        status_data = game_config.config_status[behavior_id]
+        if _("技艺") in status_data.tag:
+            unconscious_pass_flag = True
+        # 需要前提里有无意识的判定
+        for now_premise in premise_dict:
+            # 如果前提里有无意识，则正常通过
+            if "unconscious" in now_premise:
+                unconscious_pass_flag = True
+                break
+        # 如果没有无意识的前提，则直接返回0
+        if not unconscious_pass_flag:
+            return 0
+
+    # 口球判定
+    if handle_self_now_gag(character_id) and "self_now_gag" not in premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}:
+        return 0
+    if handle_self_now_gag(target_character_id) and "target_now_gag" not in premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}:
+        return 0
+
     # 遍历前提字典
     for premise in premise_dict:
         # 判断是否为权重类空白前提
@@ -75,24 +99,6 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
             high_flag = True
         else:
             high_flag = False
-        # 是否必须显示
-        if not unconscious_pass_flag:
-            # 无意识模式判定
-            if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
-                # 有技艺tag的行为则直接通过
-                status_data = game_config.config_status[behavior_id]
-                if _("技艺") in status_data.tag:
-                    unconscious_pass_flag = True
-                # 需要前提里有无意识的判定
-                for now_premise in premise_dict:
-                    # 如果前提里有无意识，则正常通过
-                    if "unconscious" in now_premise:
-                        unconscious_pass_flag = True
-                        break
-                # 如果没有无意识的前提，则直接返回0
-                if not unconscious_pass_flag:
-                    now_weight = 0
-                    break
         # 已录入前提的判定
         if premise in now_premise_data:
             if not now_premise_data[premise]:
@@ -13219,6 +13225,57 @@ def handle_target_not_patch(character_id: int) -> int:
     return not handle_self_now_patch(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_GAG)
+def handle_self_now_gag(character_id: int) -> int:
+    """
+    自己戴着口球
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.body_item[14][1]
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_GAG)
+def handle_self_not_gag(character_id: int) -> int:
+    """
+    自己没有戴着口球
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_gag(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOW_GAG)
+def handle_target_now_gag(character_id: int) -> int:
+    """
+    交互对象戴着口球
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_now_gag(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_GAG)
+def handle_target_not_gag(character_id: int) -> int:
+    """
+    交互对象没有戴着口球
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_now_gag(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_SEELP_PIILS)
 def handle_self_sleep_pills(character_id: int) -> int:
     """
@@ -13528,6 +13585,24 @@ def handle_have_patch(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if character_data.item[132] > 0:
+        return 1
+    # 在爱情旅馆的顶级套房中则临时持有
+    if handle_h_in_love_hotel(character_id) and handle_love_hotel_room_v3(character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.HAVE_GAG)
+def handle_have_gag(character_id: int) -> int:
+    """
+    校验角色是否已持有口球
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[140] > 0:
         return 1
     # 在爱情旅馆的顶级套房中则临时持有
     if handle_h_in_love_hotel(character_id) and handle_love_hotel_room_v3(character_id):

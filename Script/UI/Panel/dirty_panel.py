@@ -18,11 +18,6 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-body_item_list = [_("乳头夹"),_("阴蒂夹"),_("V震动棒"),_("A震动棒"),_("搾乳机"),_("采尿器"),_("眼罩"),_("肛门拉珠"),_("持续性利尿剂"),_("安眠药"),_("排卵促进药"),_("事前避孕药"),_("事后避孕药"),_("避孕套")]
-""" H道具列表 """
-bondage_list = ["未捆绑","后高手缚","直立缚","驷马捆绑","直臂缚","双手缚","菱绳缚","龟甲缚","团缚","逆团缚","吊缚","后手吊缚","单足吊缚","后手观音","苏秦背剑","五花大绑"]
-""" 绳子捆绑列表 """
-
 
 def get_v_and_w_semen_count(character_id: int) -> int:
     """
@@ -353,21 +348,13 @@ class SeeCharacterBodyPanel:
             bondage_text = _(" 被绳子捆成了{0}").format(bondage_name)
             all_part_text_list.append(bondage_text)
 
-        # 检查并补全角色的H道具数据
-        if len(body_item_list) != len(target_character_data.h_state.body_item) or len(body_item_list) != len(character_data.h_state.body_item):
-            for i in range(len(body_item_list)):
-                new_item = [body_item_list[i], False, None]
-                if new_item not in target_character_data.h_state.body_item:
-                    target_character_data.h_state.body_item.append(new_item)
-                if new_item not in character_data.h_state.body_item:
-                    character_data.h_state.body_item.append(new_item)
         # H道具文本
         now_text = ""
-        body_item_set = target_character_data.h_state.body_item
-        for i in range(len(body_item_set)):
+        body_item_dict = target_character_data.h_state.body_item
+        for i in range(len(body_item_dict)):
             # print("status_type :",status_type)
-            if body_item_set[i][1]:
-                status_text = body_item_set[i][0]
+            if body_item_dict[i][1]:
+                status_text = body_item_dict[i][0]
                 now_text += f" <{status_text}>"
         if now_text != "":
             all_part_text_list.append(now_text)

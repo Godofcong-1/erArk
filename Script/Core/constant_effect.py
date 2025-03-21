@@ -881,6 +881,10 @@ class BehaviorEffect:
     """ 道具_增减 交互对象戴上眼罩 """
     TARGET_PATCH_OFF = 926
     """ 道具_增减 交互对象取下眼罩 """
+    TARGET_GAG_ON = 927
+    """ 道具_增减 交互对象戴上口球 """
+    TARGET_GAG_OFF = 928
+    """ 道具_增减 交互对象取下口球 """
     ADJUST_BODY_MANAGE_DAY_ITEM = 931
     """ 道具_增减 调整自己的身体管理_白天道具 """
     ADJUST_BODY_MANAGE_SLEEP_ITEM = 932

@@ -492,6 +492,8 @@ class CharacterStatus:
     """ 鞭子 """
     STATUS_NEEDLE = 606
     """ 针 """
+    STATUS_GAG_ON = 607
+    """ 戴上口球 """
     STATUS_MILKING_MACHINE_OFF = 631
     """ 取下搾乳机 """
     STATUS_URINE_COLLECTOR_OFF = 632
@@ -500,6 +502,8 @@ class CharacterStatus:
     """ 解除捆绑 """
     STATUS_PATCH_OFF = 634
     """ 摘下眼罩 """
+    STATUS_GAG_OFF = 635
+    """ 摘下口球 """
     STATUS_EXERCISE_SUCKING_AND_SWALLOWING = 681
     """ 练习吮吸与吞咽力 """
     STATUS_EXERCISE_ARMPIT_CLAMPING = 682
@@ -1166,6 +1170,8 @@ class Behavior:
     """ 鞭子 """
     NEEDLE = 606
     """ 针 """
+    GAG_ON = 607
+    """ 戴上口球 """
 
     MILKING_MACHINE_OFF = 631
     """ 取下搾乳机 """
@@ -1174,7 +1180,9 @@ class Behavior:
     UNBIND = 633
     """ 解除捆绑 """
     PATCH_OFF = 634
-    """ 摘上眼罩 """
+    """ 摘下眼罩 """
+    GAG_OFF = 635
+    """ 摘下口球 """
 
     EXERCISE_SUCKING_AND_SWALLOWING = 681
     """ 练习吮吸与吞咽力 """
@@ -1936,7 +1944,10 @@ class SecondBehavior:
     """ 结算事前避孕药 """
     SLEEPING_BIRTH_CONTROL_PILLS_AFTER = 1112
     """ 结算事后避孕药 """
-    CONDAGE = 1113
+    GAG = 1114
+    """ 结算口球 """
+
+    CONDAGE = 1161
     """ 结算绳子捆绑 """
 
     PENIS_IN_HAIR = 1201
@@ -2789,6 +2800,10 @@ class Instruct:
     """ 戴上眼罩 """
     PATCH_OFF = 0
     """ 摘下眼罩 """
+    GAG_ON = 0
+    """ 戴上口球 """
+    GAG_OFF = 0
+    """ 摘下口球 """
     WHIP = 0
     """ 鞭子 """
     NEEDLE = 0
