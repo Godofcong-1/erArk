@@ -1230,6 +1230,7 @@ class Talk:
     """ 口上内容 """
 
 
+
 class TargetEffect:
     """ 执行目标所能达成的效果id """
 

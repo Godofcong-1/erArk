@@ -556,6 +556,9 @@ class CharacterStatus:
     """ 绝顶寸止 """
     STATUS_ORGASM_EDGE_OFF = 752
     """ 绝顶解放 """
+    STATUS_SPANKING = 771
+    """ 打屁股 """
+
     STATUS_HOLD_CHILD = 801
     """ 抱小孩 """
     STATUS_SING_CHILDREN_SONG = 802
@@ -1239,6 +1242,9 @@ class Behavior:
     """ 绝顶寸止 """
     ORGASM_EDGE_OFF = 752
     """ 绝顶解放 """
+
+    SPANKING = 771
+    """ 打屁股 """
 
     HOLD_CHILD = 801
     """ 抱小孩 """
@@ -2740,8 +2746,6 @@ class Instruct:
     """ 戴上避孕套 """
     TAKE_CONDOM_OUT = 0
     """ 摘掉避孕套 """
-    SAFE_CANDLES = 0
-    """ 滴蜡 """
     URETHRAL_SWAB = 0
     """ 尿道棉棒 """
     NIPPLES_LOVE_EGG = 0
@@ -2774,14 +2778,6 @@ class Instruct:
     """ 巨型肛门震动棒 """
     VIBRATOR_INSERTION_ANAL_OFF = 0
     """ 拔出肛门振动棒 """
-    CLYSTER = 0
-    """ 灌肠 """
-    CONTINUE_CLYSTER = 0
-    """ 继续灌肠 """
-    ANAL_PLUG = 0
-    """ 肛塞_已废弃 """
-    CLYSTER_END = 0
-    """ 拔出肛塞 """
     ANAL_BEADS = 0
     """ 塞入肛门拉珠 """
     ANAL_BEADS_OFF = 0
@@ -2794,6 +2790,10 @@ class Instruct:
     """ 装上采尿器 """
     URINE_COLLECTOR_OFF = 0
     """ 取下采尿器 """
+    BEAT_BREAST = 0
+    """ 打胸部 """
+    SPANKING = 0
+    """ 打屁股 """
     BONDAGE = 0
     """ 绳艺 """
     PATCH_ON = 0
@@ -2804,6 +2804,16 @@ class Instruct:
     """ 戴上口球 """
     GAG_OFF = 0
     """ 摘下口球 """
+    CLYSTER = 0
+    """ 灌肠 """
+    CONTINUE_CLYSTER = 0
+    """ 继续灌肠 """
+    ANAL_PLUG = 0
+    """ 肛塞_已废弃 """
+    CLYSTER_END = 0
+    """ 拔出肛塞 """
+    SAFE_CANDLES = 0
+    """ 滴蜡 """
     WHIP = 0
     """ 鞭子 """
     NEEDLE = 0
@@ -2854,14 +2864,8 @@ class Instruct:
     """ 尿道指姦 """
     URETHRAL_SEX = 0
     """ 尿道姦 """
-    BEAT_BREAST = 0
-    """ 打胸部 """
-    SPANKING = 0
-    """ 打屁股 """
     SHAME_PLAY = 0
     """ 羞耻play """
-    BUNDLED_PLAY = 0
-    """ 拘束play """
     TAKE_SHOWER_H = 0
     """ 淋浴 """
     BUBBLE_BATH = 0

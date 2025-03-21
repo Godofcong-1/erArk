@@ -4548,7 +4548,7 @@ def handle_bondage():
         constant_promise.Premise.HAVE_PATCH
         },
     constant.CharacterStatus.STATUS_PATCH_ON,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_patch_on():
     """处理戴上眼罩指令"""
@@ -4568,7 +4568,7 @@ def handle_patch_on():
         constant_promise.Premise.HAVE_PATCH
         },
     constant.CharacterStatus.STATUS_PATCH_OFF,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_patch_off():
     """处理摘下眼罩指令"""
@@ -4588,7 +4588,7 @@ def handle_patch_off():
         constant_promise.Premise.HAVE_GAG,
         },
     constant.CharacterStatus.STATUS_GAG_ON,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_gag_on():
     """处理戴上口球指令"""
@@ -4608,7 +4608,7 @@ def handle_gag_on():
         constant_promise.Premise.HAVE_GAG,
         },
     constant.CharacterStatus.STATUS_GAG_OFF,
-    constant.SexInstructSubType.ITEM,
+    constant.SexInstructSubType.SM,
 )
 def handle_gag_off():
     """处理摘下口球指令"""
@@ -5269,6 +5269,7 @@ def handle_ask_pee():
     """处理命令对方小便指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ASK_PEE, judge = _("严重骚扰"))
 
+
 @add_instruct(
     constant.Instruct.BEAT_BREAST,
     constant.InstructType.SEX,
@@ -5290,19 +5291,16 @@ def handle_beat_breast():
 @add_instruct(
     constant.Instruct.SPANKING,
     constant.InstructType.SEX,
-    _("打屁股_未实装"),
+    _("打屁股"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.IS_H},
+    constant.CharacterStatus.STATUS_SPANKING,
     constant.SexInstructSubType.SM,
 )
 def handle_spanking():
     """处理打屁股指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_SPANKING)
 
 
 @add_instruct(
@@ -5316,23 +5314,6 @@ def handle_spanking():
 )
 def handle_shame_play():
     """处理羞耻play指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-
-@add_instruct(
-    constant.Instruct.BUNDLED_PLAY,
-    constant.InstructType.SEX,
-    _("拘束play_未实装"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TO_DO},
-)
-def handle_bundled_play():
-    """处理拘束play指令"""
     character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
