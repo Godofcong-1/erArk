@@ -455,6 +455,9 @@ def update_character_config_data(value):
                 update_count += 1
     # 身体道具
     if len(value.h_state.body_item) != len(game_config.config_h_item_index):
+        # 如果body_item是列表而不是字典，则初始化为空字典
+        if isinstance(value.h_state.body_item, list):
+            value.h_state.body_item = {}
         for key in game_config.config_h_item_index:
             if key not in value.h_state.body_item:
                 item_id = game_config.config_h_item_index[key]

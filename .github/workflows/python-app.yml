@@ -72,13 +72,14 @@ jobs:
           Copy-Item tools/ArkEditor/csv/Effect.csv dist_ArkEditor/csv/
           Copy-Item tools/ArkEditor/csv/Organ.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Ability.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/BodyPart.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Bondage.csv dist_ArkEditor/csv/
           Copy-Item data/csv/CharacterState.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Experience.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Juel.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Talent.csv dist_ArkEditor/csv/
-          Copy-Item data/csv/BodyPart.csv dist_ArkEditor/csv/
-          Copy-Item data/csv/ClothingType.csv dist_ArkEditor/csv/
-          Copy-Item data/csv/Birthplace.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Nation.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Race.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Profession.csv dist_ArkEditor/csv/
