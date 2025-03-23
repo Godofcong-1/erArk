@@ -443,10 +443,12 @@ def handle_talk_quick_test():
     {
         constant_promise.Premise.TO_DO,
         constant_promise.Premise.AI_CHAT_ON,
+        constant_promise.Premise.HAVE_TARGET,
     })
 def handle_chat_with_ai():
     """与文本生成AI对话"""
-    cache.now_panel_id = constant.Panel.CHAT_AI_SETTING
+    from Script.UI.Panel import chat_ai_setting
+    chat_ai_setting.direct_chat_with_ai()
 
 
 @add_instruct(

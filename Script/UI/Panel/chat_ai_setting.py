@@ -24,7 +24,7 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False) -> str:
+def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
     """
     判断是否使用文本生成AI\n
     Keyword arguments:\n
@@ -32,6 +32,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
     behavior_id -- 行为id\n
     original_text -- 原始文本\n
     translator -- 翻译模式\n
+    direct_mode -- 直接对话模式\n
     Return arguments:
     fanal_text -- 最终文本
     """
@@ -55,22 +56,25 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         now_key_type = 'OPENAI_API_KEY'
     if now_key_type not in cache.ai_setting.ai_chat_api_key:
         return original_text
-    # 判断是否设置了指令类型
-    if cache.ai_setting.ai_chat_setting[2] == 0:
-        safe_flag = False
-        status_data = game_config.config_status[behavior_id]
-        # 判断是否是安全标签
-        for safe_tag in ["日常", "娱乐", "工作"]:
-            if safe_tag in status_data.tag:
-                safe_flag = True
-                break
-        if not safe_flag:
-            return original_text
+        
+    # 直接对话模式跳过安全检查
+    if not direct_mode:
+        # 判断是否设置了指令类型
+        if cache.ai_setting.ai_chat_setting[2] == 0:
+            safe_flag = False
+            status_data = game_config.config_status[behavior_id]
+            # 判断是否是安全标签
+            for safe_tag in ["日常", "娱乐", "工作"]:
+                if safe_tag in status_data.tag:
+                    safe_flag = True
+                    break
+            if not safe_flag:
+                return original_text
 
-    # 判断是什么类型的地文
-    if cache.ai_setting.ai_chat_setting[3] == 0 and not translator:
-        if "地文" not in original_text:
-            return original_text
+        # 判断是什么类型的地文
+        if cache.ai_setting.ai_chat_setting[3] == 0 and not translator:
+            if "地文" not in original_text:
+                return original_text
 
     # 输出文本生成提示
     if cache.ai_setting.ai_chat_setting[8] == 0:
@@ -81,7 +85,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         info_draw.width = window_width
         info_draw.draw()
 
-    ai_gererate_text = text_ai(character_id, behavior_id, original_text, translator=translator)
+    ai_gererate_text = text_ai(character_id, behavior_id, original_text, translator=translator, direct_mode=direct_mode)
     # 检测是否显示原文本
     if cache.ai_setting.ai_chat_setting[4] == 1:
         fanal_text = ai_gererate_text
@@ -144,7 +148,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
 
     return fanal_text
 
-def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False) -> str:
+def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False,direct_mode: bool = False) -> str:
     """
     文本生成AI\n\n
     Keyword arguments:
@@ -152,6 +156,9 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     behavior_id: int 行为id\n
     original_text: str 原始文本\n
     translator -- 翻译模式\n
+    direct_mode -- 直接对话模式\n
+    Return arguments:
+    ai_gererate_text -- AI生成的文本\n
     """
     from Script.Design import handle_premise
 
@@ -207,8 +214,14 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
             # 名字
             user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
             # 动作
-            user_prompt += _("{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。").format(Name, TargetNickName, Behavior_Name)
-            user_prompt += _("你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。")
+            if not direct_mode:
+                user_prompt += _("{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。").format(Name, TargetNickName, Behavior_Name)
+                user_prompt += _("你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。")
+            else:
+                user_prompt += _("{0}正在对{1}进行互动。互动文本里的“我”都是指{0}，你都是指“{1}”。").format(Name, TargetNickName)
+                user_prompt += _("互动的文本的全文是：{0}。互动文本到这里结束了。").format(original_text)
+                user_prompt += _("你要将该互动的内容补充完善，并进一步续写对该互动的反应。")
+                user_prompt += _("你需要尽量详细地描述，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述互动之前的剧情，只能描述互动本身的过程和之后的剧情，但不能出现位置或者场景的移动。")
             user_prompt += _("以下是一些额外提供的参考信息，信息里包括了两个人的详细信息，你可以这些信息中挑选一部分来丰富对本次动作的描述，你只能直接使用这些信息本身，不能从这些信息中联想或者猜测其他的信息：")
             # 地点
             user_prompt += _("场景发生的地点是{0}。").format(Location)
@@ -399,10 +412,20 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                 for chunk in completion:
                     chunk_text = chunk.text
                     # print(chunk_text, end="", flush=True)
+                    # 如果是换行符的话，则直接换行
+                    if chunk_text == "\n":
+                        line_feed.draw()
+                        continue
+                    # 替换掉换行符
+                    chunk_text = chunk_text.replace("\\n", "\n")
                     now_draw.text = chunk_text
                     now_draw.width = 1
                     now_draw.draw()
                     ai_gererate_text += chunk_text
+                # 绘制一个空白的等待
+                wait_draw = draw.LineFeedWaitDraw()
+                wait_draw.text = " \n"
+                wait_draw.draw()
             # 非流式输出
             else:
                 completion = client.generate_content(user_prompt)
@@ -428,6 +451,43 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     # print(ai_gererate_text)
 
     return ai_gererate_text
+
+def direct_chat_with_ai() -> str:
+    """
+    与AI进行直接对话\n
+    用户输入动作文本，AI生成回复\n
+    Return arguments:
+    reply_text -- AI回复文本
+    """
+    # 提示信息
+    ask_text = _("\n请描述你想要进行的动作(输入空白文本退出)：\n")
+
+    # 获取玩家输入
+    ask_panel = panel.AskForOneMessage()
+    ask_panel.set(ask_text, 999)
+    user_input = ask_panel.draw()
+    line_feed.draw()
+    
+    # 如果输入为空，则退出
+    if not user_input:
+        return ""
+        
+    # 获取当前玩家角色ID和目标角色ID
+    character_id = 0  # 假设0是玩家角色
+    behavior_id = 0   # 默认行为ID，可以根据实际情况调整
+    
+    # 调用判断函数，启用直接对话模式
+    reply_text = judge_use_text_ai(character_id, behavior_id, user_input, direct_mode=True)
+    
+    # 非流式传输下再绘制回复
+    if cache.ai_setting.ai_chat_setting[14] != 1:
+        reply_draw = draw.NormalDraw()
+        reply_draw.text = _("\nAI回复：\n") + reply_text + _("\n")
+        reply_draw.width = window_width
+        reply_draw.draw()
+
+    return reply_text
+
 
 
 class Chat_Ai_Setting_Panel:
@@ -518,8 +578,8 @@ class Chat_Ai_Setting_Panel:
                 # 如果没有该键，则创建一个，并置为0
                 if cid not in cache.ai_setting.ai_chat_setting:
                     cache.ai_setting.ai_chat_setting[cid] = 0
-                    # 仅第12项设为1
-                    if cid == 12:
+                    # 将部分选项默认设为1
+                    if cid in {7, 12, 14}:
                         cache.ai_setting.ai_chat_setting[cid] = 1
                 now_setting_flag = cache.ai_setting.ai_chat_setting[cid] # 当前设置的值
                 option_len = len(game_config.config_ai_chat_setting_option[cid]) # 选项的长度
