@@ -18,6 +18,8 @@ class CharacterStatus:
     """ 换衣服状态 """
     STATUS_CHARA_DIY_INSTRUCT = 5
     """ 角色自定义指令 """
+    STATUS_AI_CHAT_INSTRUCT = 6
+    """ AI对话用特殊指令 """
     STATUS_EMPTY_INSTRUCT = 99
     """ 空白示范指令 """
     STATUS_CHAT = 101
