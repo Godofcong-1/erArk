@@ -437,14 +437,15 @@ def handle_talk_quick_test():
 
 
 @add_instruct(
-    constant.Instruct.CHAT_AI_SETTING,
+    constant.Instruct.CHAT_WITH_AI,
     constant.InstructType.SYSTEM,
-    _("文本生成AI设置"),
+    _("与文本生成AI对话"),
     {
-        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TO_DO,
+        constant_promise.Premise.AI_CHAT_ON,
     })
-def handle_chat_ai_setting():
-    """文本生成AI设置"""
+def handle_chat_with_ai():
+    """与文本生成AI对话"""
     cache.now_panel_id = constant.Panel.CHAT_AI_SETTING
 
 

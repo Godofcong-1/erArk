@@ -482,7 +482,6 @@ class Chat_Ai_Setting_Panel:
 
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn == no_draw.return_text:
-                    cache.now_panel_id = constant.Panel.IN_SCENE
                     return
                 elif yrn == yes_draw.return_text:
                     break
@@ -658,7 +657,6 @@ class Chat_Ai_Setting_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
-                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def draw_info(self, cid):

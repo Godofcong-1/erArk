@@ -43,6 +43,8 @@ class Premise:
     """ 系统状态 当前性爱指令面板可见 """
     GENERATE_BY_AI = "generate_by_ai"
     """ 系统状态 该文本由AI自动生成 """
+    AI_CHAT_ON = "ai_chat_on"
+    """ 系统状态 AI文本生成开启中 """
 
     IS_PLAYER = "sys_0"
     """ 指令_触发与交互 玩家触发的该指令 """

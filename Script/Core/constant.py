@@ -2278,8 +2278,8 @@ class Instruct:
     """ 取消收藏地点 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
-    CHAT_AI_SETTING = 0
-    """ 文本生成AI设置 """
+    CHAT_WITH_AI = 0
+    """ 与文本生成AI对话 """
     DEBUG_MODE_ON = 0
     """ 开启debug模式 """
     DEBUG_MODE_OFF = 0

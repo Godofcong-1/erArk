@@ -16728,6 +16728,19 @@ def handle_generate_by_ai(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.AI_CHAT_ON)
+def handle_ai_chat_on(character_id: int) -> int:
+    """
+    AI文本生成开启中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    cache.ai_setting.ai_chat_setting.setdefault(1, 0)
+    return cache.ai_setting.ai_chat_setting[1]
+
+
 @add_premise(constant_promise.Premise.IS_ASSISTANT)
 def handle_is_assistant(character_id: int) -> int:
     """

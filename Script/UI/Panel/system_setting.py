@@ -64,6 +64,17 @@ class System_Setting_Panel:
             for key in self.type_show:
                 return_list = self.draw_option(key, return_list)
 
+            # 添加“文本生成AI设置”按钮
+            ai_chat_setting_button_text = _(" [文本生成AI设置] ")
+            ai_chat_setting_button = draw.CenterButton(
+                ai_chat_setting_button_text,
+                ai_chat_setting_button_text,
+                len(ai_chat_setting_button_text) * 2,
+                cmd_func=self.chat_ai_setting_panel_draw,
+                )
+            ai_chat_setting_button.draw()
+            return_list.append(ai_chat_setting_button.return_text)
+
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -77,6 +88,12 @@ class System_Setting_Panel:
     def change_type_show(self, type_name):
         """改变当前显示的设置类型"""
         self.type_show[type_name] = not self.type_show[type_name]
+
+    def chat_ai_setting_panel_draw(self):
+        """绘制文本生成AI设置面板"""
+        from Script.UI.Panel import chat_ai_setting
+        now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(self.width)
+        now_panel.draw()
 
     def draw_option(self, type_name: str, return_list: List[str]):
         """绘制选项"""
