@@ -519,6 +519,9 @@ class Chat_Ai_Setting_Panel:
                 # 如果没有该键，则创建一个，并置为0
                 if cid not in cache.ai_setting.ai_chat_setting:
                     cache.ai_setting.ai_chat_setting[cid] = 0
+                    # 仅第12项设为1
+                    if cid == 12:
+                        cache.ai_setting.ai_chat_setting[cid] = 1
                 now_setting_flag = cache.ai_setting.ai_chat_setting[cid] # 当前设置的值
                 option_len = len(game_config.config_ai_chat_setting_option[cid]) # 选项的长度
 
@@ -917,6 +920,9 @@ class Chat_Ai_Setting_Panel:
                 genai.configure(api_key=API_KEY, transport='rest')
             client = genai.GenerativeModel(model)
 
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+
         # 测试AI，在10秒内如果没有返回结果，则认为测试不通过
         with concurrent.futures.ThreadPoolExecutor() as executor:
             future = executor.submit(self.get_completion, client, now_key_type)
@@ -933,10 +939,15 @@ class Chat_Ai_Setting_Panel:
                 info_text = _(" \n  测试不通过，原因：{0}\n").format(e)
                 self.test_flag = 2
                 self.error_message = str(e)
-        info_draw = draw.NormalDraw()
-        info_draw.text = info_text
-        info_draw.width = self.width
-        info_draw.draw()
+            finally:
+                info_draw.text = info_text
+                info_draw.draw()
+                # TODO 不知道为什么取消没有生效，十分奇怪
+                # 取消任务
+                future.cancel()
+                # 关闭线程池
+                executor.shutdown(wait=False, cancel_futures=True)
+                return
 
     def get_completion(self, client, key_type):
 
