@@ -7109,6 +7109,57 @@ def handle_t_reproduction_period_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SELF_IS_PLAYER_DAUGHTER)
+def handle_self_is_player_daughter(character_id: int) -> int:
+    """
+    校验自己是玩家的女儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.relationship.father_id == 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_PLAYER_DAUGHTER)
+def handle_self_not_player_daughter(character_id: int) -> int:
+    """
+    校验自己不是玩家的女儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_is_player_daughter(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_IS_PLAYER_DAUGHTER)
+def handle_target_is_player_daughter(character_id: int) -> int:
+    """
+    校验交互对象是玩家的女儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_is_player_daughter(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_PLAYER_DAUGHTER)
+def handle_target_not_player_daughter(character_id: int) -> int:
+    """
+    校验交互对象不是玩家的女儿
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_is_player_daughter(character_data.target_character_id)
+
+
 # @add_premise(constant_promise.Premise.TARGET_AGE_SIMILAR)
 # def handle_target_age_similar(character_id: int) -> int:
 #     """

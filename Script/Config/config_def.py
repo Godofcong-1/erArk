@@ -31,6 +31,23 @@ class AbilityUp:
     """ 升级需求 """
 
 
+class Ai_Chat_Send_Data:
+    """ 向AI发送的数据 """
+
+    cid: int
+    """ 数据id """
+    name: str
+    """ 数据名 """
+    required: int
+    """ 是否必选 """
+    data_size: int
+    """ 数据量(1小2中3大) """
+    default: int
+    """ 是否默认已选 """
+    prompt: str
+    """ 提示词 """
+
+
 class Ai_Chat_Setting:
     """ 角色设置 """
 

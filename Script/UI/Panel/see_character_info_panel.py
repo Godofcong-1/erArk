@@ -426,7 +426,7 @@ class CharacterInfoHead:
         sleep_draw = draw.LeftDraw()
         sleep_draw.style = "little_dark_slate_blue"
         sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
-        sleep_text = " <" + constant.sleep_text_list[sleep_lv] + ">"
+        sleep_text = " <" + constant.tired_text_list[sleep_lv] + ">"
 
         # if character_id != 0:
         #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)

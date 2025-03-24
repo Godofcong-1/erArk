@@ -2938,7 +2938,7 @@ special_end_H_list = [Behavior.H_INTERRUPT, Behavior.H_HP_0, Behavior.T_H_HP_0, 
 chat_ai_model_list = ['gpt-3.5-turbo', 'gpt-4', 'gpt-4-turbo', 'gpt-4o', 'gpt-4o-mini', 'gemini-1.5-pro', 'gemini-1.5-flash']
 """ 文本生成的AI模型列表 """
 
-sleep_text_list = [_("清醒"), _("疲劳"), _("昏昏欲睡"), _("随时睡着")]
+tired_text_list = [_("清醒"), _("疲劳"), _("昏昏欲睡"), _("随时睡着")]
 """ 困倦状态文本列表 """
 
 # 协力名单，不分先后 依吹脆香，反R，幻白，无色树，灵鸠伊凛，诺伊，√，はるか

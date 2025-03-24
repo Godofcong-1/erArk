@@ -2,7 +2,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import attr_text, attr_calculation, game_time
+from Script.Design import handle_premise, attr_calculation, game_time, attr_text
 import openai
 import google.generativeai as genai
 import os
@@ -142,6 +142,13 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
             if "地文" not in original_text:
                 return original_text
 
+    # 没有交互对象则返回
+    if handle_premise.handle_have_no_target(0):
+        return original_text
+    # 自己和交互对象都不是玩家则返回
+    if handle_premise.handle_no_player(character_id) and handle_premise.handle_target_no_player(character_id):
+        return original_text
+
     # 输出文本生成提示
     if cache.ai_setting.ai_chat_setting[8] == 0:
         model = cache.ai_setting.ai_chat_setting[5]
@@ -152,7 +159,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         info_draw.draw()
 
     ai_result = text_ai(character_id, behavior_id, original_text, translator=translator, direct_mode=direct_mode)
-    print(f"ai_result = {ai_result}")
+    print(f"ai_text_result = {ai_result}")
     
     # 处理直接对话模式的返回值
     if direct_mode:
@@ -191,6 +198,226 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
     return fanal_text
 
 
+def build_user_prompt(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
+    """
+    构造用户提示词
+    参数:
+        character_id: int 角色ID
+        behavior_id: int 行为ID
+        original_text: str 原始文本
+        translator: bool 是否为翻译模式
+        direct_mode: bool 是否为直接对话模式
+    返回:
+        user_prompt: str 构造好的用户提示词
+    功能描述:
+        根据角色数据、行为数据及外部CSV（game_config.config_ai_chat_send_data）中预置的提示词模板生成用户提示词。
+        只有当 cache.ai_setting.send_data_flags 中对应的 cid 为 True 时才会将该提示词加入到输出中。
+        模板中的花括号{}内为变量，需要替换为对应的实际值。
+    """
+
+    # 翻译模式分支，沿用原有逻辑
+    if translator:
+        user_prompt = _('你需要将一段文本翻译为') + normal_config.config_normal.language + _('语言。如果文本中有有{ }括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本：')
+        user_prompt += original_text
+        return user_prompt
+
+    # 获取角色和场景相关数据
+    character_data = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    Name = character_data.name
+    TargetName = target_character_data.name
+    Location = character_data.position[-1]
+    Season = game_time.get_month_text()
+    time_str = game_time.get_day_and_time_text()
+    Behavior_Name = game_config.config_status[behavior_id].name
+
+    # 玩家与NPC的区分
+    pl_name = Name
+    npc_name = TargetName
+    npc_character_id = character_data.target_character_id
+    npc_character_data = target_character_data
+    # 如果交互对象是玩家
+    if character_data.target_character_id == 0:
+        pl_name = TargetName
+        npc_name = Name
+        npc_character_id = character_id
+        npc_character_data = character_data
+
+    # 心情、年龄、种族、出身地、势力
+    angry_text = attr_calculation.get_angry_text(npc_character_data.angry_point)
+    age_text = attr_text.get_age_talent_text(npc_character_id)
+    race_name = game_config.config_race[npc_character_data.race].name
+    birthplace_name = game_config.config_birthplace[npc_character_data.relationship.birthplace].name
+    nation_name = game_config.config_nation[npc_character_data.relationship.nation].name
+
+    # 关系
+    favorability = npc_character_data.favorability[0]
+    favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
+    trust = npc_character_data.trust
+    trust_lv, tem = attr_calculation.get_trust_level(trust)
+    ave_lv = int((favorability_lv + trust_lv) / 2)
+    ave_text = str(ave_lv)
+
+    # 陷落
+    fall_lv = attr_calculation.get_character_fall_level(character_data.target_character_id if character_id == 0 else character_id, minus_flag=True)
+    fall_prompt = ""
+    if fall_lv > 0:
+        fall_prompt = _(' 双方是正常的爱情关系。如果用数字等级来表示爱情的程度，1表示有些懵懂的好感，4表示至死不渝的爱人，那么{0}和{1}的关系大概是{2}。').format(npc_name, pl_name, str(fall_lv))
+    elif fall_lv < 0:
+        fall_prompt = _(' 双方是扭曲的服从和支配关系。如果用数字等级来表示服从的程度，1代表有些讨好，4代表无比尊敬，那么{0}对{1}的服从程度大概是{2}。').format(npc_name, pl_name, str(fall_lv))
+
+    sleep_text, tired_text = "", ""
+    # 睡眠
+    if handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id):
+        tem,sleep_text = attr_calculation.get_sleep_level(npc_character_data.sleep_point)
+    # 疲劳
+    else:
+        tired_lv = attr_calculation.get_tired_level(npc_character_data.tired_point)
+        if tired_lv > 0:
+            tired_text = constant.tired_text_list[tired_lv]
+
+    # 全素质数据
+    talent_text = ""
+    for talent_id in game_config.config_talent:
+        if npc_character_data.talent[talent_id]:
+            talent_name = game_config.config_talent[talent_id].name
+            talent_text += _("{0}、").format(talent_name)
+    if len(talent_text) > 0:
+        talent_text = talent_text[:-1] + "。"
+    # 服装
+    cloth_text = ""
+    for clothing_type in game_config.config_clothing_type:
+        if len(npc_character_data.cloth.cloth_wear[clothing_type]):
+            for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
+                cloth_data = game_config.config_clothing_tem[cloth_id]
+                cloth_name = cloth_data.name
+                cloth_text += _("{0}、").format(cloth_name)
+    if len(cloth_text) > 0:
+        cloth_text = cloth_text[:-1] + "。"
+    # 工作
+    work_name, work_description = "", ""
+    if handle_premise.handle_have_work(npc_character_id):
+        work_type = npc_character_data.work.work_type
+        work_data = game_config.config_work_type[work_type]
+        work_name = work_data.name
+        work_description = work_data.describe
+    # 称呼
+    nick_name, nick_name_to_pl = "", ""
+    if handle_premise.handle_self_have_nick_name_to_self(npc_character_id):
+        nick_name = npc_character_data.nick_name
+    if handle_premise.handle_self_have_nick_name_to_pl(npc_character_id):
+        nick_name_to_pl = npc_character_data.nick_name_to_pl
+    # 催眠
+    hypnosis_name, hypnosis_effect = "", ""
+    if handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
+        hypnosis_id = npc_character_data.sp_flag.unconscious_h
+        hypnosis_data = game_config.config_hypnosis_type[hypnosis_id]
+        hypnosis_name = hypnosis_data.name
+        hypnosis_effect = hypnosis_data.introduce
+
+    # 初始提示词构造（根据是否有交互对象以及直接对话模式分支）
+    user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
+    # 有交互对象
+    if character_id != 0 or character_data.target_character_id != 0:
+        # 生成模式
+        if not direct_mode:
+            user_prompt += _(' 在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。').format(pl_name, npc_name)
+            user_prompt += _(' {0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。你需要仅描述这个动作的过程。').format(pl_name, npc_name, Behavior_Name)
+        # 直接对话模式
+        else:
+            user_prompt += _(' 互动文本里的“我”都是指{0}，你都是指“{1}”。').format(pl_name, npc_name)
+            user_prompt += _(' 互动的文本的全文是：{0}。互动文本到这里结束了。').format(original_text)
+            user_prompt += _(' 你要将该互动的内容补充完善，并进一步续写对该互动的反应。')
+    # 无交互对象的情况
+    else:
+        user_prompt += _(' 在当前的场景里，{0}是医药公司的领导人之一，被称为博士，正在进行的动作是{1}。').format(pl_name, Behavior_Name)
+
+    # 遍历 CSV 数据（game_config.config_ai_chat_send_data）按标识决定是否加入提示词
+    # 假定每项数据为字典，键包括 'cid' 和 'prompt'
+    for cid in game_config.config_ai_chat_send_data:
+        ai_chat_send_data = game_config.config_ai_chat_send_data[cid]
+        # 初始化不存在的数据选择状态
+        if cid not in cache.ai_setting.send_data_flags:
+            # 如果是默认选择的，设为True，否则设为False
+            if ai_chat_send_data.default == 1:
+                cache.ai_setting.send_data_flags[cid] = True
+            else:
+                cache.ai_setting.send_data_flags[cid] = False
+        # 如果没有选择该数据，则跳过
+        if cache.ai_setting.send_data_flags[cid] == 0:
+            continue
+        # 饥饿
+        if cid == 31 and not handle_premise.handle_hunger_ge_80(npc_character_id):
+            continue
+        # 尿意
+        if cid == 32 and not handle_premise.handle_urinate_ge_80(npc_character_id):
+            continue
+        # 疲劳
+        if cid == 33 and not handle_premise.handle_tired_ge_75(npc_character_id):
+            continue
+        # 睡眠
+        if cid == 35 and not handle_premise.handle_action_sleep(npc_character_id):
+            continue
+        # 女儿
+        if cid == 45 and not handle_premise.handle_self_is_player_daughter(npc_character_id):
+            continue
+        # 助理
+        if cid == 51 and not handle_premise.handle_is_assistant(npc_character_id):
+            continue
+        # 跟随
+        if cid == 52 and not handle_premise.handle_is_follow(npc_character_id):
+            continue
+        # 工作
+        if cid == 53 and not handle_premise.handle_have_work(npc_character_id):
+            continue
+        # 访客
+        if cid == 54 and not handle_premise.handle_self_visitor_flag_1(npc_character_id):
+            continue
+        # 催眠
+        if cid == 61 and not handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
+            continue
+        # 监禁
+        if cid == 62 and not handle_premise.handle_imprisonment_1(npc_character_id):
+            continue
+        # 时停
+        if cid == 63 and not handle_premise.handle_time_stop_on(npc_character_id):
+            continue
+
+        # 获取提示词
+        prompt_template = ai_chat_send_data.prompt
+        # 定义模板变量
+        variables = {
+            'name': npc_name,
+            'pl_name': pl_name,
+            'Season': Season,
+            'time': time_str,
+            'Location': Location,
+            'ave_text': ave_text,
+            'fall_prompt': fall_prompt,
+            'tired_text': tired_text,
+            'sleep_text': sleep_text,
+            'angry_text': angry_text,
+            'age_text': age_text,
+            'race_name': race_name,
+            'birthplace_name': birthplace_name,
+            'nation_name': nation_name,
+            'work_name': work_name,
+            'work_description': work_description,
+            'nick_name': nick_name,
+            'nick_name_to_pl': nick_name_to_pl,
+            'hypnosis_name': hypnosis_name,
+            'hypnosis_effect': hypnosis_effect,
+            'cloth_text': cloth_text,
+            'talent_text': talent_text,
+        }
+        try:
+            prompt_filled = prompt_template.format(**variables)
+        except Exception:
+            prompt_filled = prompt_template
+        user_prompt += prompt_filled
+    return user_prompt
+
+
 def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> dict:
     """
     文本生成AI\n\n
@@ -204,18 +431,9 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     直接对话模式: dict -- {"time": int, "tired": int, "relationship": int, "text": str}
     非直接对话模式: str -- AI生成的文本\n
     """
-    from Script.Design import handle_premise
 
     # 基础数据
-    character_data = cache.character_data[character_id]
-    target_character_data = cache.character_data[character_data.target_character_id]
-    Name = character_data.name
-    TargetNickName = target_character_data.name
-    Location = character_data.position[-1]
-    Season = game_time.get_month_text()
-    time = game_time.get_day_and_time_text()
     talk_num = cache.ai_setting.ai_chat_setting[9] + 1
-    Behavior_Name = game_config.config_status[behavior_id].name
 
     # 模型与密钥
     model = cache.ai_setting.ai_chat_setting[5]
@@ -231,148 +449,8 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
             system_promote_text = system_promote_text.replace("{talk_num}", str(talk_num))
         system_promote += _(system_promote_text)
     # print(system_promote)
-    # 生成模式
-    if not translator:
-        user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
-        # 有交互对象时
-        if character_id != 0 or character_data.target_character_id != 0:
-            if character_id == 0:
-                pl_name = Name
-                npc_name = TargetNickName
-                npc_character_id = character_data.target_character_id
-                npc_character_data = target_character_data
-            elif character_data.target_character_id == 0:
-                pl_name = TargetNickName
-                npc_name = Name
-                npc_character_id = character_id
-                npc_character_data = character_data
-            else:
-                return original_text
-            # 名字
-            user_prompt += _("在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。").format(pl_name, npc_name)
-            # 动作
-            if not direct_mode:
-                user_prompt += _("{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。").format(Name, TargetNickName, Behavior_Name)
-                user_prompt += _("你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。")
-            else:
-                user_prompt += _("{0}正在对{1}进行互动。互动文本里的“我”都是指{0}，你都是指“{1}”。").format(Name, TargetNickName)
-                user_prompt += _("互动的文本的全文是：{0}。互动文本到这里结束了。").format(original_text)
-                user_prompt += _("你要将该互动的内容补充完善，并进一步续写对该互动的反应。")
-                user_prompt += _("你需要尽量详细地描述，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述互动之前的剧情，只能描述互动本身的过程和之后的剧情，但不能出现位置或者场景的移动。")
-            user_prompt += _("以下是一些额外提供的参考信息，信息里包括了两个人的详细信息，你可以这些信息中挑选一部分来丰富对本次动作的描述，你只能直接使用这些信息本身，不能从这些信息中联想或者猜测其他的信息：")
-            # 地点
-            user_prompt += _("场景发生的地点是{0}。").format(Location)
-            # 时间
-            user_prompt += _("当前的季节是{0}，当前的时间是{1}。").format(Season, time)
-            # 关系
-            favorability = npc_character_data.favorability[0]
-            favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
-            trust = npc_character_data.trust
-            trust_lv, tem = attr_calculation.get_trust_level(trust)
-            ave_lv = int((favorability_lv + trust_lv) / 2)
-            user_prompt += _("如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{0}和{1}的关系大概是{2}。").format(Name, TargetNickName, ave_lv)
-            # 陷落
-            fall_lv = attr_calculation.get_character_fall_level(npc_character_id, minus_flag = True)
-            if fall_lv > 0:
-                user_prompt += _("{0}和{1}是正常的爱情关系。如果用数字等级来表示爱情的程度，1是有些懵懂的好感，4是至死不渝的爱人，那{0}和{1}的关系大概是{4}。").format(Name, TargetNickName, Name, TargetNickName, fall_lv)
-            elif fall_lv < 0:
-                user_prompt += _("{0}和{1}是扭曲的服从和支配的关系。如果用数字等级来表示服从的程度，1是有些讨好和有些卑微，4是无比的尊敬和彻底的服从，那{2}对{3}的服从的等级大概是{4}。").format(Name, TargetNickName, npc_name, pl_name, fall_lv)
-
-            # 基础状态
-            # 年龄素质
-            age_text = attr_text.get_age_talent_text(npc_character_id)
-            user_prompt += _("{0}的年龄是{1}。").format(npc_name, age_text)
-            # 睡眠、疲劳、困倦
-            if handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id):
-                tem,sleep_name = attr_calculation.get_sleep_level(npc_character_data.sleep_point)
-                user_prompt += _("{0}正在睡觉，睡眠的深度是{1}。").format(npc_name, sleep_name)
-            else:
-                # 疲劳与困倦
-                sleep_lv = attr_calculation.get_tired_level(npc_character_data.tired_point)
-                if sleep_lv > 0:
-                    sleep_text = constant.sleep_text_list[sleep_lv]
-                    user_prompt += _("{0}有些困了，困的程度为{1}。").format(npc_name, sleep_text)
-            # 心情
-            angry_text = attr_calculation.get_angry_text(npc_character_data.angry_point)
-            if angry_text != "普通":
-                user_prompt += _("{0}的心情状态是{1}。").format(npc_name, angry_text)
-            # 跟随
-            if handle_premise.handle_is_follow_1(npc_character_id):
-                user_prompt += _("{0}正在跟随{1}一起行动。").format(npc_name, pl_name)
-            # 尿意
-            if handle_premise.handle_urinate_ge_80(npc_character_id):
-                user_prompt += _("{0}有点想上厕所尿尿。").format(npc_name)
-            # 饥饿
-            if handle_premise.handle_hunger_ge_80(npc_character_id):
-                user_prompt += _("{0}有点饿了，想吃东西。").format(npc_name)
-            # 催眠
-            if handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
-                user_prompt += _("{0}被{1}催眠了。").format(npc_name, pl_name)
-            # 监禁
-            if handle_premise.handle_imprisonment_1(npc_character_id):
-                user_prompt += _("{0}被{1}监禁在监狱里了。").format(npc_name, pl_name)
-            # 访客
-            if npc_character_data.sp_flag.vistor == 1:
-                user_prompt += _("{0}不是公司的员工，是前来拜访的访客。").format(npc_name)
-            # 时停
-            if handle_premise.handle_unconscious_flag_3(npc_character_id):
-                user_prompt += _("{0}正处在停止的时间中，无法做出任何反应。").format(npc_name)
-            # 中量数据才有的分支
-            if cache.ai_setting.ai_chat_setting[6] >= 1:
-                # 职业
-                profession_name = game_config.config_profession[npc_character_data.profession].name
-                user_prompt += _("{0}的职业是{1}。").format(npc_name, profession_name)
-                # 种族
-                race_name = game_config.config_race[npc_character_data.race].name
-                user_prompt += _("{0}是一种虚构的奇幻种族，种族名是{1}。").format(npc_name, race_name)
-                # 出身地
-                birthplace_name = game_config.config_birthplace[npc_character_data.relationship.birthplace].name
-                user_prompt += _("{0}的出生地是{1}。").format(npc_name, birthplace_name)
-                # 势力
-                nation_name = game_config.config_nation[npc_character_data.relationship.nation].name
-                user_prompt += _("{0}所属的具体势力是{1}。").format(npc_name, nation_name)
-                # 全素质数据
-                user_prompt += _("{0}有以下素质特性：").format(npc_name)
-                for talent_id in game_config.config_talent:
-                    if npc_character_data.talent[talent_id]:
-                        talent_name = game_config.config_talent[talent_id].name
-                        user_prompt += _("{0}、").format(talent_name)
-                user_prompt = user_prompt[:-1] + "。"
-            # 大量数据才有的分支
-            if cache.ai_setting.ai_chat_setting[6] >= 2:
-                # 服装
-                user_prompt += _("{0}穿着的衣服有：").format(npc_name)
-                for clothing_type in game_config.config_clothing_type:
-                    if len(npc_character_data.cloth.cloth_wear[clothing_type]):
-                        for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
-                            cloth_name = game_config.config_clothing_tem[cloth_id].name
-                            user_prompt += _("{0}、").format(cloth_name)
-                user_prompt = user_prompt[:-1] + "。"
-                # 工作
-                if handle_premise.handle_have_work(npc_character_id):
-                    work_name = game_config.config_work_type[npc_character_data.work.work_type].name
-                    user_prompt += _("{0}的工作是{1}。").format(npc_name, work_name)
-                # 称呼
-                if handle_premise.handle_self_have_nick_name_to_pl(npc_character_id):
-                    nick_name = npc_character_data.nick_name_to_pl
-                    user_prompt += _("{0}称呼{1}为{2}。").format(npc_name, pl_name, nick_name)
-                if handle_premise.handle_self_have_nick_name_to_self(npc_character_id):
-                    nick_name = npc_character_data.nick_name
-                    user_prompt += _("{0}称呼{1}为{2}。").format(pl_name, npc_name, nick_name)
-
-        else:
-            user_prompt += _("在当前的场景里，{0}是医药公司的领导人之一，被称为博士。").format(Name)
-            user_prompt += _("{0}正在进行的动作是{1}。").format(Name, Behavior_Name)
-            # 地点
-            user_prompt += _("场景发生的地点是{0}。").format(Location)
-            # 时间
-            user_prompt += _("当前的季节是{0}，当前的时间是{1}。").format(Season, time)
-    # 翻译模式
-    else:
-        user_prompt = _('你需要将一段文本翻译为')
-        user_prompt += normal_config.config_normal.language
-        user_prompt += _('语言。如果文本中有有\{\}括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本：')
-        user_prompt += original_text
+    # 用户提示词
+    user_prompt = build_user_prompt(character_id, behavior_id, original_text, translator, direct_mode)
     # print(f'user_prompt = {user_prompt}')
 
     # 直接对话模式
@@ -629,6 +707,11 @@ def direct_chat_with_ai() -> str:
     
     # 非流式传输下再绘制回复
     if cache.ai_setting.ai_chat_setting[14] != 1:
+        # 处理换行符
+        reply_text = reply_text.replace("\\n", "\n")
+        # 替换掉text:
+        reply_text = reply_text.replace("text:", "")
+        # 绘制AI回复
         reply_draw = draw.NormalDraw()
         reply_draw.text = _("\nAI回复：\n") + reply_text + _("\n")
         reply_draw.width = window_width

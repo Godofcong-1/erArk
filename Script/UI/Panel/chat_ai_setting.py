@@ -120,8 +120,13 @@ class Chat_Ai_Setting_Panel:
                 # 自定义模型的名字
                 if cid == 5:
                     button_text = f" [{cache.ai_setting.ai_chat_setting[cid]}] "
+                # 自定义发送的数据
+                elif cid == 6:
+                    button_text = _(" [调整发送的数据] ")
+                # 自定义base_url
                 elif cid == 10 and cache.ai_setting.ai_chat_setting[cid] == 1:
                     button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + cache.ai_setting.now_ai_chat_base_url
+                # 自定义代理
                 elif cid == 11 and cache.ai_setting.ai_chat_setting[cid] == 1:
                     button_text = f" [{game_config.config_ai_chat_setting_option[cid][now_setting_flag]}] " + "ip：" + cache.ai_setting.now_ai_chat_proxy[0]
                     if len(cache.ai_setting.now_ai_chat_proxy[1]) > 0:
@@ -288,6 +293,9 @@ class Chat_Ai_Setting_Panel:
             new_model = ask_panel.draw()
             cache.ai_setting.ai_chat_setting[cid] = new_model
             self.test_flag = 0 # 重置测试标志
+        # 自定义发送的数据
+        elif cid == 6:
+            self.select_send_data()
         # 调整生成文本数量的选项单独处理
         elif cid == 9:
             line_feed.draw()
@@ -362,6 +370,104 @@ class Chat_Ai_Setting_Panel:
                 cache.ai_setting.ai_chat_setting[cid] += 1
             else:
                 cache.ai_setting.ai_chat_setting[cid] = 0
+
+    def select_send_data(self):
+        """选择发送的数据"""
+        while True:
+            send_data_all_flags = cache.ai_setting.send_data_flags
+            return_list = []
+            title_draw = draw.TitleLineDraw(_("选择发送给AI的数据"), self.width)
+            title_draw.draw()
+            
+            # 显示提示信息
+            info_draw = draw.NormalDraw()
+            info_text = _(" \n ○发送的数据越多，AI可以利用的信息就越多，理论效果会越好\n")
+            info_text += _("  但同时消耗的tokens和响应时间也越多，也可能因为信息太多而抓不住重点或超出上下文长度\n")
+            info_text += _("  每项的数据量有小、中、大三级区分\n")
+            info_draw.text = info_text
+            info_draw.width = self.width
+            info_draw.draw()
+            
+            # 遍历所有数据
+            for send_data_cid in game_config.config_ai_chat_send_data:
+                ai_chat_send_data = game_config.config_ai_chat_send_data[send_data_cid]
+                
+                # 跳过ID为0的表头
+                if send_data_cid == 0:
+                    continue
+                    
+                # 初始化不存在的数据选择状态
+                if send_data_cid not in send_data_all_flags:
+                    # 如果是默认选择的，设为True，否则设为False
+                    if ai_chat_send_data.default == 1:
+                        send_data_all_flags[send_data_cid] = True
+                    else:
+                        send_data_all_flags[send_data_cid] = False
+
+                # 如果当前cid的余数是1，则换行
+                if send_data_cid % 10 == 1:
+                    line_feed.draw()
+
+                # 获取数据信息
+                send_data_name = ai_chat_send_data.name
+                send_data_required = ai_chat_send_data.required
+                send_data_size = ai_chat_send_data.data_size
+                
+                # 数据量显示
+                if send_data_size == 1:
+                    size_text = _("小")
+                elif send_data_size == 2:
+                    size_text = _("中")
+                elif send_data_size == 3:
+                    size_text = _("大")
+                else:
+                    size_text = _("未知")
+                    
+                # 构建显示文本
+                line_text = f"  {send_data_name}({size_text})  "
+                button_len = max(len(line_text) * 2, 40)
+                
+                # 绘制数据名称和数据量
+                name_draw = draw.LeftDraw()
+                name_draw.text = line_text
+                name_draw.width = button_len
+                name_draw.draw()
+                
+                # 绘制选择按钮（必选数据没有按钮）
+                if send_data_required == 1:
+                    button_text = _("【必选】")
+                    required_draw = draw.LeftDraw()
+                    required_draw.text = button_text
+                    required_draw.draw()
+                else:
+                    if send_data_all_flags[send_data_cid]:
+                        button_text = _("[√]")
+                    else:
+                        button_text = _("[×]")
+                    button_draw = draw.CenterButton(button_text, send_data_name, 10, cmd_func=self.toggle_send_data, args=(send_data_cid))
+                    button_draw.draw()
+                    return_list.append(button_draw.return_text)
+
+                line_feed.draw()
+            
+            # 添加返回按钮
+            line_feed.draw()
+            save_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width // 2)
+            save_draw.draw()
+            return_list.append(save_draw.return_text)
+            
+            line_feed.draw()
+            
+            # 等待用户选择
+            yrn = flow_handle.askfor_all(return_list)
+            
+            # 处理用户选择
+            if yrn == save_draw.return_text:
+                break
+
+    def toggle_send_data(self, send_data_cid):
+        """切换数据是否被选择"""
+        cache.ai_setting.send_data_flags[send_data_cid] = not cache.ai_setting.send_data_flags[send_data_cid]
 
     def change_translator(self):
         """修改翻译设置"""
@@ -540,7 +646,7 @@ class Chat_Ai_Setting_Panel:
                 return
 
     def get_completion(self, client, key_type):
-
+        """获取AI的返回结果"""
         if key_type == "OPENAI_API_KEY":
             return client.chat.completions.create(
                 model=cache.ai_setting.ai_chat_setting[5],

@@ -21,6 +21,7 @@ arts_panel_show,ARTS_PANEL_SHOW,系统状态,当前技艺指令面板可见
 obscenity_panel_show,OBSCENITY_PANEL_SHOW,系统状态,当前猥亵指令面板可见
 sex_panel_show,SEX_PANEL_SHOW,系统状态,当前性爱指令面板可见
 generate_by_ai,GENERATE_BY_AI,系统状态,该文本由AI自动生成
+ai_chat_on,AI_CHAT_ON,系统状态,AI文本生成开启中
 
 sys_0,IS_PLAYER,指令_触发与交互,玩家触发的该指令
 sys_1,NO_PLAYER,指令_触发与交互,NPC触发的该指令
@@ -1600,6 +1601,10 @@ t_reproduction_period_0,T_REPRODUCTION_PERIOD_0,生育,交互对象当前是安�
 t_reproduction_period_1,T_REPRODUCTION_PERIOD_1,生育,交互对象当前是普通期
 t_reproduction_period_2,T_REPRODUCTION_PERIOD_2,生育,交互对象当前是危险期
 t_reproduction_period_3,T_REPRODUCTION_PERIOD_3,生育,交互对象当前是排卵期
+self_is_player_daughter,SELF_IS_PLAYER_DAUGHTER,生育,自己是玩家的女儿
+self_not_player_daughter,SELF_NOT_PLAYER_DAUGHTER,生育,自己不是玩家的女儿
+target_is_player_daughter,TARGET_IS_PLAYER_DAUGHTER,生育,交互对象是玩家的女儿
+target_not_player_daughter,TARGET_NOT_PLAYER_DAUGHTER,生育,交互对象不是玩家的女儿
 
 to_do,TO_DO,未分类,未实装
 

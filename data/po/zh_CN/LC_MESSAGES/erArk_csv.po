@@ -212,6 +212,206 @@ msgstr ""
 msgid "技术"
 msgstr ""
 
+#: .\data\csv\Ai_Chat_Send_Data.csv:6
+msgid "角色名"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:6
+msgid "{pl_name}正在对{name}进行互动，干员的名字叫做{name}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:7
+msgid "时间"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:7
+msgid "当前的季节是{Season}，当前的时间是{time}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:8
+msgid "地点"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:8
+msgid "场景发生的地点是{Location}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:10
+msgid "好感与信赖"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:10
+msgid "如果用数字等级来表示关系好坏，0是第一次见面的陌生人，8是托付人生的亲密伴侣，那{pl_name}和{name}的关系大概是{ave_text}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:11
+msgid "陷落"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:11
+msgid "{fall_prompt}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:13
+msgid "饥饿"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:13
+msgid "{name}有点饿了，想吃东西。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:14
+msgid "尿意"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:14
+msgid "{name}有点想上厕所尿尿。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:15
+msgid "疲劳程度"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:15
+msgid "{name}有些累了，疲劳的程度为{tired_text}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:16
+msgid "心情"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:16
+msgid "{name}的心情状态是{angry_text}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:17
+msgid "睡眠与睡眠深度"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:17
+msgid "{name}正在睡觉，睡眠的深度是{sleep_text}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:19
+msgid "年龄素质"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:19
+msgid "{name}的年龄是{age_text}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:20
+msgid "种族"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:20
+msgid "{name}的种族是{race_name}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:21
+msgid "出身地"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:21
+msgid "{name}的出生地是{birthplace_name}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:22
+msgid "势力"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:22
+msgid "{name}所属的势力是{nation_name}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:23
+msgid "女儿"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:23
+msgid "{name}是{pl_name}的女儿。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:25
+msgid "助理"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:25
+msgid "{name}是{pl_name}的助理，负责协助{pl_name}的工作。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:26
+msgid "跟随"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:26
+msgid "{name}正在跟随{pl_name}一起行动。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:27
+msgid "工作职业"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:27
+msgid "{name}的工作是{work_name}。工作的内容是{work_description}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:28
+msgid "访客"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:28
+msgid "{name}不是公司的员工，是前来拜访的访客。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:29
+msgid "角色称呼"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:29
+msgid "{name}会称呼{pl_name}为{nick_name_to_pl}，{pl_name}称呼{name}为{nick_name}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:31
+msgid "催眠与催眠类型"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:31
+msgid "{name}被{pl_name}催眠了，催眠的类型是{hypnosis_name}，催眠的效果是{hypnosis_effect}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:32
+msgid "监禁"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:32
+msgid "{name}被{pl_name}监禁在监狱里了。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:33
+msgid "时停"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:33
+msgid "{name}正处在停止的时间中，无法做出任何反应。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:35
+msgid "身上穿的服装"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:35
+msgid "{name}目前穿着{cloth_description}。"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:36
+msgid "全素质数据"
+msgstr ""
+
+#: .\data\csv\Ai_Chat_Send_Data.csv:36
+msgid "{name}的详细素质数据：{talent_text}"
+msgstr ""
+
 #: .\data\csv\Ai_Chat_Setting.csv:6
 msgid "是否使用本功能"
 msgstr ""
@@ -10250,10 +10450,6 @@ msgstr ""
 
 #: .\data\csv\Roleplay.csv:10
 msgid "妹妹"
-msgstr ""
-
-#: .\data\csv\Roleplay.csv:11
-msgid "女儿"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:12

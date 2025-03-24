@@ -322,6 +322,8 @@ config_ai_chat_setting: Dict[int, config_def.Ai_Chat_Setting] = {}
 """ 文本生成AI设置数据 设置id:详细内容 """
 config_ai_chat_setting_option: Dict[int, Dict[int, str]] = {}
 """ 文本生成AI设置数据的选项数据 设置id:选项序号:选项内容 """
+config_ai_chat_send_data: Dict[int, config_def.Ai_Chat_Send_Data] = {}
+""" 文本生成AI发送数据 设置id:详细内容 """
 config_physical_exam_setting: Dict[int, config_def.Physical_Exam_Setting] = {}
 """ 体检设置数据 设置id:详细内容 """
 config_physical_exam_setting_option: Dict[int, Dict[int, str]] = {}
@@ -1499,6 +1501,16 @@ def load_ai_chat_setting():
             config_ai_chat_setting_option[now_tem.cid] = option_text.split('|')
 
 
+def load_ai_chat_send_data():
+    """载入文本生成AI发送数据"""
+    now_data = config_data["Ai_Chat_Send_Data"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Ai_Chat_Send_Data()
+        now_tem.__dict__ = tem_data
+        config_ai_chat_send_data[now_tem.cid] = now_tem
+
+
 def load_physical_exam_setting():
     """载入体检设置"""
     now_data = config_data["Physical_Exam_Setting"]
@@ -1734,6 +1746,7 @@ def init():
     load_chara_setting()
     load_system_setting()
     load_ai_chat_setting()
+    load_ai_chat_send_data()
     load_physical_exam_setting()
     load_assistant_services()
     load_confinement_training_setting()
