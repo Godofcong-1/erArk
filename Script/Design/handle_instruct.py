@@ -447,8 +447,8 @@ def handle_talk_quick_test():
     })
 def handle_chat_with_ai():
     """与文本生成AI对话"""
-    from Script.UI.Panel import chat_ai_setting
-    chat_ai_setting.direct_chat_with_ai()
+    from Script.Design import handle_chat_ai
+    handle_chat_ai.direct_chat_with_ai()
 
 
 @add_instruct(

@@ -146,7 +146,7 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
     now_talk_data -- 口上数据
     second_behavior_id -- 二段行为id，默认为0
     """
-    from Script.UI.Panel import chat_ai_setting
+    from Script.Design import handle_chat_ai
 
     now_talk = ""
     character_data: game_type.Character = cache.character_data[character_id]
@@ -185,19 +185,19 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
                 now_draw.style = target_character_data.name
             # 翻译口上
             if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
-                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
                 now_draw.text = now_talk_text
         # 地文
         else:
             cache.ai_setting.ai_chat_setting.setdefault(1, 0)
             # 地文翻译
             if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting >= 1:
-                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
+                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
                 now_draw.text = now_talk_text
             # 如果启用了文本生成ai
             elif cache.ai_setting.ai_chat_setting[1]:
                 now_draw = draw.LineFeedWaitDraw()
-                now_talk_text = chat_ai_setting.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
+                now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
                 now_draw.width = normal_config.config_normal.text_width
                 now_draw.text = now_talk_text
         now_draw.draw()
