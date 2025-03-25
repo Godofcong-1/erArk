@@ -441,7 +441,6 @@ def handle_talk_quick_test():
     constant.InstructType.SYSTEM,
     _("与文本生成AI对话"),
     {
-        constant_promise.Premise.TO_DO,
         constant_promise.Premise.AI_CHAT_ON,
         constant_promise.Premise.HAVE_TARGET,
     })
