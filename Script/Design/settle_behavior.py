@@ -321,7 +321,13 @@ def handle_instruct_data(
         # 先结算口上
         talk.handle_talk(character_id)
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
-            constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
+            # 综合数值结算判定
+            # 如果effect_id是str类型，则说明是综合数值结算
+            if isinstance(effect_id, str) and "CVE" in effect_id:
+                effect_all_value_list = effect_id.split("_")[1:]
+                handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
+            else:
+                constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
         # 如果是对他人的行为，则将自己的id与行动结束时间记录到对方的数据中
         if now_character_data.target_character_id != character_id:
             end_time = game_time.get_sub_date(minute=now_character_data.behavior.duration, old_date=now_character_data.behavior.start_time)

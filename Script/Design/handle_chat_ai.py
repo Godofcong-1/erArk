@@ -501,7 +501,20 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
             now_text = _("{0}：{1}，").format(cid, character_state_data.name)
             system_promote += now_text
         system_promote = system_promote[:-1] + "。\n"
-        system_promote += _("第五行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n")
+        system_promote += _("第五行：experience:int，用于表示本次行为对角色经验的提升。\n")
+        system_promote += _("如果本次行为与某个经验类型相吻合，则等于该经验的id值，如果要同时提升多个经验，中间用逗号隔开，不符合任何经验类型则为-1。\n")
+        system_promote += _("角色经验反映了角色在特定领域的技能成熟度，例如聊天增加对话经验，做饭提升料理经验，学习提升学识经验，唱歌提升音乐经验。\n")
+        system_promote += _("所有经验类型与其id如下：")
+        for cid, exp_data in game_config.config_experience.items():
+            if cid < 80:
+                continue
+            if cid >= 110:
+                break
+            # 根据经验类型展示ID和名称
+            now_text = _("{0}：{1}，").format(cid, exp_data.name)
+            system_promote += now_text
+        system_promote = system_promote[:-1] + "。\n"
+        system_promote += _("第六行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n")
         # print(f"system_promote = {system_promote}")
 
     # 开始调用AI
@@ -596,6 +609,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
             "tired": 2,  # 默认值
             "relationship": 2,  # 默认值
             "character_state": -1,  # 默认值
+            "experience": -1,  # 默认值
             "text": ""  # 默认值
         }
         
@@ -627,6 +641,19 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                 else:
                     try:
                         result["character_state"] = int(state_value)
+                    except ValueError:
+                        pass
+            elif line.startswith("experience:"):
+                # 解析经验返回值，可能是单个整数或者多个逗号分割的整数，返回值为int或list
+                exp_value = line.replace("experience:", "").strip()
+                if "," in exp_value:
+                    try:
+                        result["experience"] = [int(s.strip()) for s in exp_value.split(",") if s.strip()]
+                    except ValueError:
+                        pass
+                else:
+                    try:
+                        result["experience"] = int(exp_value)
                     except ValueError:
                         pass
             elif line.startswith("text:"):
@@ -787,6 +814,7 @@ def settle_direct_instruct(ai_result: dict) -> None:
         None
     """
     from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+    from Script.Settle.default_experience import base_chara_experience_common_settle
     tem_state_id = constant.CharacterStatus.STATUS_AI_CHAT_INSTRUCT
     # 指令持续时间
     new_duration = ai_result["time"]
@@ -816,6 +844,18 @@ def settle_direct_instruct(ai_result: dict) -> None:
             chara_state_id = ai_result["character_state"]
             if chara_state_id >= 9:
                 effect_id = chara_state_id + 42
+            game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+    # 经验变化
+    if ai_result["experience"] != -1:
+        # 如果是列表，则遍历添加
+        if isinstance(ai_result["experience"], list):
+            for exp_id in ai_result["experience"]:
+                effect_id = f"CVE_A2_E|{exp_id}_G_1"
+                game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+        # 否则直接添加
+        else:
+            exp_id = ai_result["experience"]
+            effect_id = f"CVE_A2_E|{exp_id}_G_1"
             game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
     # 执行结算
     chara_handle_instruct_common_settle(tem_state_id, duration=new_duration, force_taget_wait=True)
