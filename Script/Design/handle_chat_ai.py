@@ -158,30 +158,14 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         info_draw.width = window_width
         info_draw.draw()
 
+    # 获取ai返回文本
     ai_result = text_ai(character_id, behavior_id, original_text, translator=translator, direct_mode=direct_mode)
     print(f"ai_text_result = {ai_result}")
     
     # 处理直接对话模式的返回值
     if direct_mode:
-        from Script.Design.handle_instruct import chara_handle_instruct_common_settle
-        tem_state_id = constant.CharacterStatus.STATUS_AI_CHAT_INSTRUCT
         ai_gererate_text = ai_result["text"]
-        # 指令持续时间
-        new_duration = ai_result["time"]
-        # 构建该临时指令的结算
-        game_config.config_behavior_effect_data[tem_state_id] = set()
-        # 体力气力消耗
-        game_config.config_behavior_effect_data[tem_state_id].add(10 + ai_result["tired"])
-        game_config.config_behavior_effect_data[tem_state_id].add(11 + ai_result["tired"])
-        # 关系变化
-        if ai_result["relationship"] == 1:
-            game_config.config_behavior_effect_data[tem_state_id].add(23)
-        elif ai_result["relationship"] == 3:
-            game_config.config_behavior_effect_data[tem_state_id].add(21)
-        elif ai_result["relationship"] == 4:
-            game_config.config_behavior_effect_data[tem_state_id].add(21)
-            game_config.config_behavior_effect_data[tem_state_id].add(22)
-        chara_handle_instruct_common_settle(tem_state_id, duration=new_duration)
+        settle_direct_instruct(ai_result)
     else:
         ai_gererate_text = ai_result
 
@@ -243,6 +227,9 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
         npc_character_id = character_id
         npc_character_data = character_data
 
+    # 初始定义各数据是否处理
+    tem_send_data_flags = create_tem_sned_data_flags(npc_character_id,)
+
     # 心情、年龄、种族、出身地、势力
     angry_text = attr_calculation.get_angry_text(npc_character_data.angry_point)
     age_text = attr_text.get_age_talent_text(npc_character_id)
@@ -251,52 +238,36 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
     nation_name = game_config.config_nation[npc_character_data.relationship.nation].name
 
     # 关系
-    favorability = npc_character_data.favorability[0]
-    favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
-    trust = npc_character_data.trust
-    trust_lv, tem = attr_calculation.get_trust_level(trust)
-    ave_lv = int((favorability_lv + trust_lv) / 2)
-    ave_text = str(ave_lv)
+    ave_text = 0
+    if tem_send_data_flags[11]:
+        favorability = npc_character_data.favorability[0]
+        favorability_lv, tem = attr_calculation.get_favorability_level(favorability)
+        trust = npc_character_data.trust
+        trust_lv, tem = attr_calculation.get_trust_level(trust)
+        ave_lv = int((favorability_lv + trust_lv) / 2)
+        ave_text = str(ave_lv)
 
     # 陷落
-    fall_lv = attr_calculation.get_character_fall_level(character_data.target_character_id if character_id == 0 else character_id, minus_flag=True)
     fall_prompt = ""
-    if fall_lv > 0:
-        fall_prompt = _(' 双方是正常的爱情关系。如果用数字等级来表示爱情的程度，1表示有些懵懂的好感，4表示至死不渝的爱人，那么{0}和{1}的关系大概是{2}。').format(npc_name, pl_name, str(fall_lv))
-    elif fall_lv < 0:
-        fall_prompt = _(' 双方是扭曲的服从和支配关系。如果用数字等级来表示服从的程度，1代表有些讨好，4代表无比尊敬，那么{0}对{1}的服从程度大概是{2}。').format(npc_name, pl_name, str(fall_lv))
+    if tem_send_data_flags[12]:
+        fall_lv = attr_calculation.get_character_fall_level(character_data.target_character_id if character_id == 0 else character_id, minus_flag=True)
+        if fall_lv > 0:
+            fall_prompt = _(' 双方是正常的爱情关系。如果用数字等级来表示爱情的程度，1表示有些懵懂的好感，4表示至死不渝的爱人，那么{0}和{1}的关系大概是{2}。').format(npc_name, pl_name, str(fall_lv))
+        elif fall_lv < 0:
+            fall_prompt = _(' 双方是扭曲的服从和支配关系。如果用数字等级来表示服从的程度，1代表有些讨好，4代表无比尊敬，那么{0}对{1}的服从程度大概是{2}。').format(npc_name, pl_name, str(fall_lv))
 
     sleep_text, tired_text = "", ""
     # 睡眠
-    if handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id):
+    if tem_send_data_flags[35]:
         tem,sleep_text = attr_calculation.get_sleep_level(npc_character_data.sleep_point)
     # 疲劳
-    else:
+    if tem_send_data_flags[33]:
         tired_lv = attr_calculation.get_tired_level(npc_character_data.tired_point)
         if tired_lv > 0:
             tired_text = constant.tired_text_list[tired_lv]
-
-    # 全素质数据
-    talent_text = ""
-    for talent_id in game_config.config_talent:
-        if npc_character_data.talent[talent_id]:
-            talent_name = game_config.config_talent[talent_id].name
-            talent_text += _("{0}、").format(talent_name)
-    if len(talent_text) > 0:
-        talent_text = talent_text[:-1] + "。"
-    # 服装
-    cloth_text = ""
-    for clothing_type in game_config.config_clothing_type:
-        if len(npc_character_data.cloth.cloth_wear[clothing_type]):
-            for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
-                cloth_data = game_config.config_clothing_tem[cloth_id]
-                cloth_name = cloth_data.name
-                cloth_text += _("{0}、").format(cloth_name)
-    if len(cloth_text) > 0:
-        cloth_text = cloth_text[:-1] + "。"
     # 工作
     work_name, work_description = "", ""
-    if handle_premise.handle_have_work(npc_character_id):
+    if tem_send_data_flags[53]:
         work_type = npc_character_data.work.work_type
         work_data = game_config.config_work_type[work_type]
         work_name = work_data.name
@@ -309,11 +280,32 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
         nick_name_to_pl = npc_character_data.nick_name_to_pl
     # 催眠
     hypnosis_name, hypnosis_effect = "", ""
-    if handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
+    if tem_send_data_flags[61]:
         hypnosis_id = npc_character_data.sp_flag.unconscious_h
         hypnosis_data = game_config.config_hypnosis_type[hypnosis_id]
         hypnosis_name = hypnosis_data.name
         hypnosis_effect = hypnosis_data.introduce
+
+    # 服装
+    cloth_text = ""
+    if tem_send_data_flags[101]:
+        for clothing_type in game_config.config_clothing_type:
+            if len(npc_character_data.cloth.cloth_wear[clothing_type]):
+                for cloth_id in npc_character_data.cloth.cloth_wear[clothing_type]:
+                    cloth_data = game_config.config_clothing_tem[cloth_id]
+                    cloth_name = cloth_data.name
+                    cloth_text += _("{0}、").format(cloth_name)
+        if len(cloth_text) > 0:
+            cloth_text = cloth_text[:-1] + "。"
+    # 全素质数据
+    talent_text = ""
+    if tem_send_data_flags[102]:
+        for talent_id in game_config.config_talent:
+            if npc_character_data.talent[talent_id]:
+                talent_name = game_config.config_talent[talent_id].name
+                talent_text += _("{0}、").format(talent_name)
+        if len(talent_text) > 0:
+            talent_text = talent_text[:-1] + "。"
 
     # 初始提示词构造（根据是否有交互对象以及直接对话模式分支）
     user_prompt = _('请根据以下条件，描写两个角色的互动场景：')
@@ -335,53 +327,10 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
     # 遍历 CSV 数据（game_config.config_ai_chat_send_data）按标识决定是否加入提示词
     # 假定每项数据为字典，键包括 'cid' 和 'prompt'
     for cid in game_config.config_ai_chat_send_data:
-        ai_chat_send_data = game_config.config_ai_chat_send_data[cid]
-        # 初始化不存在的数据选择状态
-        if cid not in cache.ai_setting.send_data_flags:
-            # 如果是默认选择的，设为True，否则设为False
-            if ai_chat_send_data.default == 1:
-                cache.ai_setting.send_data_flags[cid] = True
-            else:
-                cache.ai_setting.send_data_flags[cid] = False
         # 如果没有选择该数据，则跳过
-        if cache.ai_setting.send_data_flags[cid] == 0:
+        if tem_send_data_flags[cid] == False:
             continue
-        # 饥饿
-        if cid == 31 and not handle_premise.handle_hunger_ge_80(npc_character_id):
-            continue
-        # 尿意
-        if cid == 32 and not handle_premise.handle_urinate_ge_80(npc_character_id):
-            continue
-        # 疲劳
-        if cid == 33 and not handle_premise.handle_tired_ge_75(npc_character_id):
-            continue
-        # 睡眠
-        if cid == 35 and not handle_premise.handle_action_sleep(npc_character_id):
-            continue
-        # 女儿
-        if cid == 45 and not handle_premise.handle_self_is_player_daughter(npc_character_id):
-            continue
-        # 助理
-        if cid == 51 and not handle_premise.handle_is_assistant(npc_character_id):
-            continue
-        # 跟随
-        if cid == 52 and not handle_premise.handle_is_follow(npc_character_id):
-            continue
-        # 工作
-        if cid == 53 and not handle_premise.handle_have_work(npc_character_id):
-            continue
-        # 访客
-        if cid == 54 and not handle_premise.handle_self_visitor_flag_1(npc_character_id):
-            continue
-        # 催眠
-        if cid == 61 and not handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
-            continue
-        # 监禁
-        if cid == 62 and not handle_premise.handle_imprisonment_1(npc_character_id):
-            continue
-        # 时停
-        if cid == 63 and not handle_premise.handle_time_stop_on(npc_character_id):
-            continue
+        ai_chat_send_data = game_config.config_ai_chat_send_data[cid]
 
         # 获取提示词
         prompt_template = ai_chat_send_data.prompt
@@ -417,6 +366,80 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
         user_prompt += prompt_filled
     return user_prompt
 
+def create_tem_sned_data_flags(npc_character_id: int) -> list:
+    """
+    创建临时发送数据标志列表
+    参数:
+        npc_character_id: int 角色ID
+    返回:
+        tem_send_data_flags: list -- 临时发送数据标志列表
+    功能描述:
+        根据角色ID和游戏配置中的预设数据，创建一个包含各个数据项是否需要处理的布尔值的列表。
+        该列表用于在生成用户提示词时判断哪些数据需要被包含在内。
+    """
+    tem_send_data_flags = cache.ai_setting.send_data_flags.copy()
+    for cid in game_config.config_ai_chat_send_data:
+        ai_chat_send_data = game_config.config_ai_chat_send_data[cid]
+        # 初始化不存在的数据选择状态
+        if cid not in tem_send_data_flags:
+            # 如果是默认选择的，设为True，否则设为False
+            if ai_chat_send_data.default == 1:
+                tem_send_data_flags[cid] = True
+            else:
+                tem_send_data_flags[cid] = False
+        # 跳过已经是false的
+        if tem_send_data_flags[cid] == False:
+            continue
+        # 饥饿
+        if cid == 31:
+            if handle_premise.handle_hunger_le_79(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 尿意
+        elif cid == 32:
+            if handle_premise.handle_urinate_le_79(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 疲劳
+        elif cid == 33:
+            if handle_premise.handle_tired_le_74(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 睡眠
+        elif cid == 35:
+            if not (handle_premise.handle_action_sleep(npc_character_id) or handle_premise.handle_unconscious_flag_1(npc_character_id)):
+                tem_send_data_flags[cid] = False
+        # 女儿
+        elif cid == 45:
+            if handle_premise.handle_self_not_player_daughter(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 助理
+        elif cid == 51:
+            if handle_premise.handle_not_assistant(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 跟随
+        elif cid == 52:
+            if handle_premise.handle_not_follow(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 工作
+        elif cid == 53:
+            if not handle_premise.handle_have_work(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 访客
+        elif cid == 54:
+            if not handle_premise.handle_self_visitor_flag_1(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 催眠
+        elif cid == 61:
+            if not handle_premise.handle_unconscious_hypnosis_flag(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 监禁
+        elif cid == 62:
+            if handle_premise.handle_imprisonment_0(npc_character_id):
+                tem_send_data_flags[cid] = False
+        # 时停
+        elif cid == 63:
+            if handle_premise.handle_time_stop_off(npc_character_id):
+                tem_send_data_flags[cid] = False
+
+    return tem_send_data_flags
 
 def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> dict:
     """
@@ -466,7 +489,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
         system_promote += _("  2 - 关系不变，如没有营养的对话、无聊的行为等\n")
         system_promote += _("  3 - 关系稍微变好，如共同工作、共同娱乐、轻度肢体交流等行为\n")
         system_promote += _("  4 - 关系快速变好，如约会、亲密行为等正面行为\n")
-        system_promote += _("第四行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:，后面的每一行里都不能出现text:\n")
+        system_promote += _("第四行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n")
 
     # 开始调用AI
 
@@ -719,3 +742,30 @@ def direct_chat_with_ai() -> str:
 
     return reply_text
 
+def settle_direct_instruct(ai_result: dict) -> None:
+    """
+    处理直接对话模式下的AI返回结果\n
+    参数:
+        ai_result: dict -- AI返回的结果，包含时间、体力消耗、关系变化等信息
+    返回:
+        None
+    """
+    from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+    tem_state_id = constant.CharacterStatus.STATUS_AI_CHAT_INSTRUCT
+    # 指令持续时间
+    new_duration = ai_result["time"]
+    # 构建该临时指令的结算
+    game_config.config_behavior_effect_data[tem_state_id] = set()
+    # 体力气力消耗
+    game_config.config_behavior_effect_data[tem_state_id].add(10 + ai_result["tired"])
+    game_config.config_behavior_effect_data[tem_state_id].add(11 + ai_result["tired"])
+    # 关系变化
+    if ai_result["relationship"] == 1:
+        game_config.config_behavior_effect_data[tem_state_id].add(23)
+    elif ai_result["relationship"] == 3:
+        game_config.config_behavior_effect_data[tem_state_id].add(21)
+    elif ai_result["relationship"] == 4:
+        game_config.config_behavior_effect_data[tem_state_id].add(21)
+        game_config.config_behavior_effect_data[tem_state_id].add(22)
+    # 执行结算
+    chara_handle_instruct_common_settle(tem_state_id, duration=new_duration)

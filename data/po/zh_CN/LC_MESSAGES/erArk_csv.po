@@ -249,7 +249,7 @@ msgid "陷落"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:11
-msgid "{fall_prompt}。"
+msgid "{fall_prompt}"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:13
@@ -401,7 +401,7 @@ msgid "身上穿的服装"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:35
-msgid "{name}目前穿着{cloth_description}。"
+msgid "{name}目前穿着{cloth_text}。"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:36
@@ -21934,10 +21934,6 @@ msgstr ""
 
 #: .\data\ui_text\text_ai_system_promote.csv:12
 msgid "6.你只能输出最后的描述文本，不要重复我的问题。"
-msgstr ""
-
-#: .\data\ui_text\text_ai_system_promote.csv:13
-msgid "7.如果生成的内容不符合规范或涉及到非全年龄的内容，那你就必须要用其他的描述方式和安全的词语来回避掉不符合规范的内容。"
 msgstr ""
 
 #: Event:6b39ddda-f2a2-4ca0-8f4f-73ec901e1b41

@@ -32,5 +32,5 @@ int,str,int,int,int,str
 62,监禁,0,1,1,{name}被{pl_name}监禁在监狱里了。
 63,时停,0,1,1,{name}正处在停止的时间中，无法做出任何反应。
 
-101,身上穿的服装,0,3,0,{name}目前穿着{cloth_description}。
+101,身上穿的服装,0,3,0,{name}目前穿着{cloth_text}。
 102,全素质数据,0,3,0,{name}的详细素质数据：{talent_text}
