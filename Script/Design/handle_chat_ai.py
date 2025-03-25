@@ -160,7 +160,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
 
     # 获取ai返回文本
     ai_result = text_ai(character_id, behavior_id, original_text, translator=translator, direct_mode=direct_mode)
-    print(f"ai_text_result = {ai_result}")
+    # print(f"ai_text_result = {ai_result}")
     
     # 处理直接对话模式的返回值
     if direct_mode:
@@ -478,7 +478,7 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
 
     # 直接对话模式
     if direct_mode:
-        system_promote += _("你要根据以下格式返回文本，并且不需要任何其他的解释：\n")
+        system_promote += _("\n你要根据以下格式返回文本，并且不需要任何其他的解释：\n")
         system_promote += _("第一行：time:int，用于表示互动行为持续的时间，单位为分钟，如 time:5 代表互动持续了5分钟\n")
         system_promote += _("第二行：tired:int，用于表示本次行为对体力的消耗程度，分为三个等级：\n")
         system_promote += _("  1 - 接近静止状态下的很少消耗，如坐着看书\n")
@@ -489,7 +489,20 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
         system_promote += _("  2 - 关系不变，如没有营养的对话、无聊的行为等\n")
         system_promote += _("  3 - 关系稍微变好，如共同工作、共同娱乐、轻度肢体交流等行为\n")
         system_promote += _("  4 - 关系快速变好，如约会、亲密行为等正面行为\n")
-        system_promote += _("第四行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n")
+        system_promote += _("第四行：character_state:int，用于表示本次行为对角色状态的影响。\n")
+        system_promote += _("如果本次行为应该提升某个状态，则等于该状态的id值，如果要同时提升多个状态，中间用逗号隔开，不提升任何属状态则为-1。\n")
+        system_promote += _("角色状态代表了该行为之后角色的心理变化，比如读书学习和勤奋工作会提高【习得】的状态，亲密的肢体接触会提高【好意】的状态，性唤起会提高【欲情】的状态，害羞或者暴露自我会提高【羞耻】的状态，疼痛或者受伤会提高【苦痛】的状态，令人反感或者讨厌的行为会提高【反感】的状态。\n")
+        system_promote += _("所有的状态与其id如下：")
+        for cid in game_config.config_character_state:
+            # 跳过快感状态
+            if cid <= 7:
+                continue
+            character_state_data = game_config.config_character_state[cid]
+            now_text = _("{0}：{1}，").format(cid, character_state_data.name)
+            system_promote += now_text
+        system_promote = system_promote[:-1] + "。\n"
+        system_promote += _("第五行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n")
+        # print(f"system_promote = {system_promote}")
 
     # 开始调用AI
 
@@ -576,11 +589,13 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
     # 处理直接对话模式下的返回格式
     if direct_mode:
         # 解析AI返回的格式化文本
+        # print(f"ai_gererate_text = {ai_gererate_text}")
         lines = ai_gererate_text.split('\n')
         result = {
             "time": 5,  # 默认值
             "tired": 2,  # 默认值
             "relationship": 2,  # 默认值
+            "character_state": -1,  # 默认值
             "text": ""  # 默认值
         }
         
@@ -601,6 +616,19 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                     result["relationship"] = int(line.replace("relationship:", "").strip())
                 except ValueError:
                     pass
+            elif line.startswith("character_state:"):
+                # 解析角色状态返回值，可能是单个整数或者多个逗号分割的整数，返回值为int或list
+                state_value = line.replace("character_state:", "").strip()
+                if "," in state_value:
+                    try:
+                        result["character_state"] = [int(s.strip()) for s in state_value.split(",") if s.strip()]
+                    except ValueError:
+                        pass
+                else:
+                    try:
+                        result["character_state"] = int(state_value)
+                    except ValueError:
+                        pass
             elif line.startswith("text:"):
                 text_content.append(line.replace("text:", "", 1))
             else:
@@ -650,8 +678,10 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
     for chunk in stream:
         # 提取当前chunk中的文本
         chunk_text: str = extractor(chunk)
+        ai_generate_text += chunk_text
         if not chunk_text:
             continue
+        # print(f"chunk_text = {chunk_text}", flush=True)
 
         # 如果chunk仅为单独换行，则绘制换行并跳过当前循环
         if chunk_text.strip() == "\n":
@@ -673,7 +703,6 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
                     now_draw.text = display_text
                     now_draw.width = 1
                     now_draw.draw()
-                    ai_generate_text += display_text
             # 如果已经开始text部分，直接显示文本
             elif text_started:
                 # 替换掉换行符
@@ -682,16 +711,23 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
                 now_draw.text = chunk_text.replace("text:", "")
                 now_draw.width = 1
                 now_draw.draw()
-                ai_generate_text += chunk_text
-            # 如果未开始text部分，只存储不显示
-            else:
-                ai_generate_text += chunk_text
         # 非直接对话模式下直接显示文本
         else:
             now_draw.text = chunk_text
             now_draw.width = 1
             now_draw.draw()
-            ai_generate_text += chunk_text
+
+    # 如果一直到最后都没有遇到text:，则直接显示最后的文本
+    if not text_started and direct_mode:
+        # 为text:后面的文本
+        parts = ai_generate_text.split("text:", 1)
+        if len(parts) > 1:
+            display_text = parts[1]
+            # 替换掉换行符
+            display_text = display_text.replace("\\n", "\n")
+            now_draw.text = display_text
+            now_draw.width = 1
+            now_draw.draw()
 
     # 绘制一个空白的等待
     wait_draw = draw.LineFeedWaitDraw()
@@ -709,7 +745,7 @@ def direct_chat_with_ai() -> str:
     reply_text -- AI回复文本
     """
     # 提示信息
-    ask_text = _("\n请描述你想要进行的动作(输入空白文本退出)：\n")
+    ask_text = _("\n请描述你想要进行的动作：\n")
 
     # 获取玩家输入
     ask_panel = panel.AskForOneMessage()
@@ -767,5 +803,19 @@ def settle_direct_instruct(ai_result: dict) -> None:
     elif ai_result["relationship"] == 4:
         game_config.config_behavior_effect_data[tem_state_id].add(21)
         game_config.config_behavior_effect_data[tem_state_id].add(22)
+    # 角色状态变化
+    if ai_result["character_state"] != -1:
+        # 如果是列表，则遍历添加
+        if isinstance(ai_result["character_state"], list):
+            for chara_state_id in ai_result["character_state"]:
+                if chara_state_id >= 9:
+                    effect_id = chara_state_id + 42
+                    game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+        # 否则直接添加
+        else:
+            chara_state_id = ai_result["character_state"]
+            if chara_state_id >= 9:
+                effect_id = chara_state_id + 42
+            game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
     # 执行结算
-    chara_handle_instruct_common_settle(tem_state_id, duration=new_duration)
+    chara_handle_instruct_common_settle(tem_state_id, duration=new_duration, force_taget_wait=True)
