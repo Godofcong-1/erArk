@@ -282,8 +282,12 @@ class SeeFoodListByFoodNameDraw:
         # 特殊调味的食物则需要进行食用判定，失败则变为拒绝食用
         if now_food.special_seasoning != 0:
             if not cooking.judge_accept_special_seasoning_food(character_data.target_character_id):
+                # 味道调味则仅生气
+                if now_food.special_seasoning in [1, 2, 3, 4]:
+                    character_data.angry_point += 40
+                    character_data.sp_flag.angry_with_player = True
                 # 检测是否满足高级性骚扰的实行值需求
-                if handle_premise.handle_instruct_judge_high_obscenity(0):
+                elif handle_premise.handle_instruct_judge_high_obscenity(0):
                     character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
                     character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
                 else:
