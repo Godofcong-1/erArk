@@ -20,84 +20,6 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-def get_key_type() -> str:
-    """
-    获取当前使用的api密钥类型\n
-    Return arguments:
-    key_type -- 当前使用的api密钥类型
-    """
-    model = cache.ai_setting.ai_chat_setting[5]
-    # 如果没有输入模型名，则返回空字符串
-    if not model:
-        return ''
-    if 'gpt' in model:
-        return 'OPENAI_API_KEY'
-    elif 'gemini' in model:
-        return 'GEMINI_API_KEY'
-    elif 'deepseek' in model:
-        return 'DEEPSEEK_API_KEY'
-    else:
-        return 'OPENAI_API_KEY'
-
-
-def save_ai_talk_record(character_id: int, behavior_id: int, ai_generated_text: str) -> None:
-    """
-    将AI生成的对话记录保存到CSV文件中
-    参数:
-        character_id: int 角色ID
-        behavior_id: int 行为ID
-        ai_generated_text: str AI生成的文本
-    返回:
-        None
-    """
-    # 保存路径
-    save_path = "data/talk/ai/ai_talk.csv"
-    # 如果文件不存在，则创建文件并写入表头
-    if not os.path.exists(save_path):
-        os.makedirs(os.path.dirname(save_path), exist_ok=True)
-        with open(save_path, 'w', encoding='utf-8') as f:
-            f.write("cid,behavior_id,adv_id,premise,context\n")
-            f.write("口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n")
-            f.write("str,int,int,str,str\n")
-            f.write("0,0,0,0,1\n")
-            f.write("口上配置数据,,,,\n")
-    # 读取save_path文件的最后一行，获取其cid，然后加1
-    with open(save_path, "r", encoding='utf-8') as f:
-        lines = f.readlines()
-        last_line = lines[-1]
-        last_cid = last_line.split(",")[0]
-        if last_cid == "口上配置数据":
-            new_cid = 0
-        else:
-            new_cid = int(last_cid) + 1
-    # 开始数据处理
-    character_data = cache.character_data[character_id]
-    target_character_data = cache.character_data[character_data.target_character_id]
-    # 处理名字，将角色名替换为{Name}，交互对象名替换为{TargetName}
-    Name = character_data.name
-    TargetNickName = target_character_data.name
-    if Name in ai_generated_text:
-        ai_generated_text = ai_generated_text.replace(Name, '{Name}')
-    if character_id != 0 or character_data.target_character_id != 0:
-        if TargetNickName in ai_generated_text:
-            ai_generated_text = ai_generated_text.replace(TargetNickName, '{TargetName}')
-    # 前提文本
-    premise_text = "generate_by_ai"
-    # 触发者
-    if character_id == 0:
-        premise_text += "&sys_0"
-    else:
-        premise_text += "&sys_1"
-    # 交互对象
-    if character_data.target_character_id == 0:
-        premise_text += "&sys_4"
-    else:
-        premise_text += "&sys_5"
-    # 写入新数据
-    with open(save_path, "a", encoding='utf-8') as f:
-        f.write(f"{new_cid},{behavior_id},0,{premise_text},{ai_generated_text}\n")
-
-
 def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
     """
     判断是否使用文本生成AI
@@ -180,6 +102,84 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         save_ai_talk_record(character_id, behavior_id, ai_gererate_text)
 
     return fanal_text
+
+
+def get_key_type() -> str:
+    """
+    获取当前使用的api密钥类型\n
+    Return arguments:
+    key_type -- 当前使用的api密钥类型
+    """
+    model = cache.ai_setting.ai_chat_setting[5]
+    # 如果没有输入模型名，则返回空字符串
+    if not model:
+        return ''
+    if 'gpt' in model:
+        return 'OPENAI_API_KEY'
+    elif 'gemini' in model:
+        return 'GEMINI_API_KEY'
+    elif 'deepseek' in model:
+        return 'DEEPSEEK_API_KEY'
+    else:
+        return 'OPENAI_API_KEY'
+
+
+def save_ai_talk_record(character_id: int, behavior_id: int, ai_generated_text: str) -> None:
+    """
+    将AI生成的对话记录保存到CSV文件中
+    参数:
+        character_id: int 角色ID
+        behavior_id: int 行为ID
+        ai_generated_text: str AI生成的文本
+    返回:
+        None
+    """
+    # 保存路径
+    save_path = "data/talk/ai/ai_talk.csv"
+    # 如果文件不存在，则创建文件并写入表头
+    if not os.path.exists(save_path):
+        os.makedirs(os.path.dirname(save_path), exist_ok=True)
+        with open(save_path, 'w', encoding='utf-8') as f:
+            f.write("cid,behavior_id,adv_id,premise,context\n")
+            f.write("口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n")
+            f.write("str,int,int,str,str\n")
+            f.write("0,0,0,0,1\n")
+            f.write("口上配置数据,,,,\n")
+    # 读取save_path文件的最后一行，获取其cid，然后加1
+    with open(save_path, "r", encoding='utf-8') as f:
+        lines = f.readlines()
+        last_line = lines[-1]
+        last_cid = last_line.split(",")[0]
+        if last_cid == "口上配置数据":
+            new_cid = 0
+        else:
+            new_cid = int(last_cid) + 1
+    # 开始数据处理
+    character_data = cache.character_data[character_id]
+    target_character_data = cache.character_data[character_data.target_character_id]
+    # 处理名字，将角色名替换为{Name}，交互对象名替换为{TargetName}
+    Name = character_data.name
+    TargetNickName = target_character_data.name
+    if Name in ai_generated_text:
+        ai_generated_text = ai_generated_text.replace(Name, '{Name}')
+    if character_id != 0 or character_data.target_character_id != 0:
+        if TargetNickName in ai_generated_text:
+            ai_generated_text = ai_generated_text.replace(TargetNickName, '{TargetName}')
+    # 前提文本
+    premise_text = "generate_by_ai"
+    # 触发者
+    if character_id == 0:
+        premise_text += "&sys_0"
+    else:
+        premise_text += "&sys_1"
+    # 交互对象
+    if character_data.target_character_id == 0:
+        premise_text += "&sys_4"
+    else:
+        premise_text += "&sys_5"
+    # 写入新数据
+    with open(save_path, "a", encoding='utf-8') as f:
+        f.write(f"{new_cid},{behavior_id},0,{premise_text},{ai_generated_text}\n")
 
 
 def build_user_prompt(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
@@ -547,11 +547,15 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                     ],
                     stream=True
                 )
+                if now_key_type == "OPENAI_API_KEY":
+                    extractor=lambda chunk: chunk.choices[0].delta.content
+                elif now_key_type == "DEEPSEEK_API_KEY":
+                    extractor=lambda chunk: chunk.choices[0].message.content
                 # 调用流式处理函数获取返回的文本
                 ai_gererate_text = process_stream_response(
                     stream=completion,         # 流式返回数据的迭代器，类型为object
                     direct_mode=direct_mode,   # 是否为直接对话模式，类型为bool
-                    extractor=lambda chunk: chunk.choices[0].delta.content  # 提取chunk中的文本，返回值为str
+                    extractor=extractor  # 提取chunk中的文本，返回值为str
                 )
            # 非流式输出
             else:
@@ -701,48 +705,76 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
     now_draw = draw.NormalDraw()
     # 非直接对话模式时默认直接开始输出文本
     text_started: bool = not direct_mode
+    # 临时存储上次的最后文本
+    last_text: str = ""
 
-    for chunk in stream:
-        # 提取当前chunk中的文本
-        chunk_text: str = extractor(chunk)
-        ai_generate_text += chunk_text
-        if not chunk_text:
-            continue
-        # print(f"chunk_text = {chunk_text}", flush=True)
+    try:
+        for chunk in stream:
+            # 提取当前chunk中的文本
+            chunk_text: str = extractor(chunk)
+            if chunk_text is None or not chunk_text:
+                continue
+            ai_generate_text += chunk_text
+            # print(f"chunk_text = {chunk_text}", flush=True)
 
-        # 如果chunk仅为单独换行，则绘制换行并跳过当前循环
-        if chunk_text.strip() == "\n":
-            line_feed = draw.LineFeedWaitDraw()
-            line_feed.text = " \n"
-            line_feed.draw()
-            continue
+            # 如果chunk仅为单独换行，则绘制换行并跳过当前循环
+            if chunk_text.strip() == "\n":
+                line_feed = draw.LineFeedWaitDraw()
+                line_feed.text = " \n"
+                line_feed.draw()
+                continue
 
-        # 在直接对话模式下，等待遇到"text:"标记后再开始绘制和存储
-        if direct_mode:
-            # 直接对话模式下等待遇到"text:"标记后再开始绘制和存储
-            if "text:" in chunk_text and not text_started:
-                text_started = True
-                parts = chunk_text.split("text:", 1)
-                if len(parts) > 1:
-                    display_text = parts[1]
+            # 如果chunk最后的字符为单斜杠，则记录并替换该斜杠
+            if chunk_text[-1] == "\\":
+                chunk_text = chunk_text[:-1]
+                last_text = "\\"
+
+            # 在直接对话模式下，等待遇到"text:"标记后再开始绘制和存储
+            if direct_mode:
+                # 直接对话模式下等待遇到"text:"标记后再开始绘制和存储
+                if "text:" in chunk_text and not text_started:
+                    text_started = True
+                    parts = chunk_text.split("text:", 1)
+                    if len(parts) > 1:
+                        display_text = parts[1]
+                        # 替换掉换行符
+                        display_text = display_text.replace("\\n", "\n")
+                        now_draw.text = display_text
+                        now_draw.width = 1
+                        now_draw.draw()
+                # 如果是"text"，则再等待一个":"之后开始绘制
+                elif chunk_text.strip() == "text" and not text_started:
+                    last_text = "text"
+                # 如果是":"，则开始绘制
+                elif last_text and chunk_text.strip() == ":":
+                    last_text = ""
+                    text_started = True
+                    parts = chunk_text.split(":", 1)
+                    if len(parts) > 1:
+                        display_text = parts[1]
+                        # 替换掉换行符
+                        display_text = display_text.replace("\\n", "\n")
+                        now_draw.text = display_text
+                        now_draw.width = 1
+                        now_draw.draw()
+                # 如果已经开始text部分，直接显示文本
+                elif text_started:
                     # 替换掉换行符
-                    display_text = display_text.replace("\\n", "\n")
-                    now_draw.text = display_text
+                    chunk_text = chunk_text.replace("\\n", "\n")
+                    # 如果这次的文本开头n，且上次的最后文本是斜杠，则将该文本替换为换行符
+                    if last_text == "\\" and chunk_text.startswith("n"):
+                        chunk_text = chunk_text.replace("n", "\n")
+                        last_text = ""
+                    now_draw.text = chunk_text.replace("text:", "")
                     now_draw.width = 1
                     now_draw.draw()
-            # 如果已经开始text部分，直接显示文本
-            elif text_started:
-                # 替换掉换行符
-                chunk_text = chunk_text.replace("\\n", "\n")
-                # 替换掉text:
-                now_draw.text = chunk_text.replace("text:", "")
+            # 非直接对话模式下直接显示文本
+            else:
+                now_draw.text = chunk_text
                 now_draw.width = 1
                 now_draw.draw()
-        # 非直接对话模式下直接显示文本
-        else:
-            now_draw.text = chunk_text
-            now_draw.width = 1
-            now_draw.draw()
+    except Exception as e:
+        print(f"处理流式响应出错: {e}", flush=True)
 
     # 如果一直到最后都没有遇到text:，则直接显示最后的文本
     if not text_started and direct_mode:
@@ -814,7 +846,6 @@ def settle_direct_instruct(ai_result: dict) -> None:
         None
     """
     from Script.Design.handle_instruct import chara_handle_instruct_common_settle
-    from Script.Settle.default_experience import base_chara_experience_common_settle
     tem_state_id = constant.CharacterStatus.STATUS_AI_CHAT_INSTRUCT
     # 指令持续时间
     new_duration = ai_result["time"]
