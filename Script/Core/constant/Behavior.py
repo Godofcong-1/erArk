@@ -437,7 +437,7 @@ class Behavior:
     BACK_SEX = 502
     """ 背后位 """
     RIDING_SEX = 503
-    """ 骑乘位 """
+    """ 对面骑乘位 """
     FACE_SEAT_SEX = 504
     """ 对面座位 """
     BACK_SEAT_SEX = 505
@@ -446,6 +446,8 @@ class Behavior:
     """ 对面立位 """
     BACK_STAND_SEX = 507
     """ 背面立位 """
+    BACK_RIDING_SEX = 508
+    """ 背面骑乘位 """
     STIMULATE_G_POINT = 511
     """ 刺激G点 """
     WOMB_OS_CARESS = 512
@@ -461,7 +463,7 @@ class Behavior:
     BACK_ANAL_SEX = 522
     """ 后背位肛交 """
     RIDING_ANAL_SEX = 523
-    """ 骑乘位肛交 """
+    """ 对面骑乘位肛交 """
     FACE_SEAT_ANAL_SEX = 524
     """ 对面座位肛交 """
     BACK_SEAT_ANAL_SEX = 525
@@ -470,6 +472,8 @@ class Behavior:
     """ 对面立位肛交 """
     BACK_STAND_ANAL_SEX = 527
     """ 背面立位肛交 """
+    BACK_RIDING_ANAL_SEX = 528
+    """ 背面骑乘位肛交 """
     STIMULATE_SIGMOID_COLON = 530
     """ 玩弄s状结肠 """
     STIMULATE_VAGINA = 531
@@ -478,10 +482,22 @@ class Behavior:
     """ 尿道指姦 """
     URETHRAL_SEX = 542
     """ 尿道姦 """
-    # FACE_LAY_SEX = 551
-    # """ 对面卧位 """
-    # BACK_LAY_SEX = 552
-    # """ 背面卧位 """
+    FACE_HUG_SEX = 551
+    """ 对面抱位 """
+    BACK_HUG_SEX = 552
+    """ 背面抱位 """
+    FACE_LAY_SEX = 553
+    """ 对面卧位 """
+    BACK_LAY_SEX = 554
+    """ 背面卧位 """
+    FACE_HUG_ANAL_SEX = 561
+    """ 对面抱位肛交 """
+    BACK_HUG_ANAL_SEX = 562
+    """ 背面抱位肛交 """
+    FACE_LAY_ANAL_SEX = 563
+    """ 对面卧位肛交 """
+    BACK_LAY_ANAL_SEX = 564
+    """ 背面卧位肛交 """
 
     MILKING_MACHINE_ON = 601
     """ 装上搾乳机 """

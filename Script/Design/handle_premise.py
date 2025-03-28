@@ -10680,15 +10680,20 @@ def handle_last_cmd_penis_position(character_id: int) -> int:
     len_input = len(cache.input_cache)
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
-        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX),
+        str(constant.Instruct.RIDING_SEX), str(constant.Instruct.BACK_RIDING_SEX),
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
         str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
+        str(constant.Instruct.FACE_HUG_SEX), str(constant.Instruct.BACK_HUG_SEX),
+        str(constant.Instruct.FACE_LAY_SEX), str(constant.Instruct.BACK_LAY_SEX),
         str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
         str(constant.Instruct.WOMB_INSERTION),
         str(constant.Instruct.NORMAL_ANAL_SEX), str(constant.Instruct.BACK_ANAL_SEX),
-        str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.RIDING_ANAL_SEX), str(constant.Instruct.BACK_RIDING_ANAL_SEX),
         str(constant.Instruct.FACE_SEAT_ANAL_SEX), str(constant.Instruct.BACK_SEAT_ANAL_SEX),
         str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.FACE_HUG_ANAL_SEX), str(constant.Instruct.BACK_HUG_ANAL_SEX),
+        str(constant.Instruct.FACE_LAY_ANAL_SEX), str(constant.Instruct.BACK_LAY_ANAL_SEX),
         str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA),
         str(constant.Instruct.URETHRAL_SEX),
         str(constant.Instruct.HANDJOB), str(constant.Instruct.HAND_BLOWJOB),
@@ -10777,10 +10782,13 @@ def handle_last_cmd_sex(character_id: int) -> int:
     len_input = len(cache.input_cache)
 
     sex = {
-        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX), str(constant.Instruct.RIDING_SEX),
+        str(constant.Instruct.NORMAL_SEX), str(constant.Instruct.BACK_SEX),
+        str(constant.Instruct.RIDING_SEX), str(constant.Instruct.BACK_RIDING_SEX),
         str(constant.Instruct.FACE_SEAT_SEX), str(constant.Instruct.BACK_SEAT_SEX),
         str(constant.Instruct.FACE_STAND_SEX), str(constant.Instruct.BACK_STAND_SEX),
-        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS)
+        str(constant.Instruct.FACE_HUG_SEX), str(constant.Instruct.BACK_HUG_SEX),
+        str(constant.Instruct.FACE_LAY_SEX), str(constant.Instruct.BACK_LAY_SEX),
+        str(constant.Instruct.STIMULATE_G_POINT), str(constant.Instruct.WOMB_OS_CARESS),
     }
 
     for i in range(len_input):
@@ -10842,9 +10850,11 @@ def handle_last_cmd_a_sex(character_id: int) -> int:
     len_input = len(cache.input_cache)
     sex = {
         str(constant.Instruct.NORMAL_ANAL_SEX), str(constant.Instruct.BACK_ANAL_SEX),
-        str(constant.Instruct.RIDING_ANAL_SEX),
+        str(constant.Instruct.RIDING_ANAL_SEX), str(constant.Instruct.BACK_RIDING_ANAL_SEX),
         str(constant.Instruct.FACE_SEAT_ANAL_SEX), str(constant.Instruct.BACK_SEAT_ANAL_SEX),
         str(constant.Instruct.FACE_STAND_ANAL_SEX), str(constant.Instruct.BACK_STAND_ANAL_SEX),
+        str(constant.Instruct.FACE_HUG_ANAL_SEX), str(constant.Instruct.BACK_HUG_ANAL_SEX),
+        str(constant.Instruct.FACE_LAY_ANAL_SEX), str(constant.Instruct.BACK_LAY_ANAL_SEX),
         str(constant.Instruct.STIMULATE_SIGMOID_COLON), str(constant.Instruct.STIMULATE_VAGINA)
     }
 

@@ -4888,7 +4888,7 @@ def handle_back_sex():
 @add_instruct(
     constant.Instruct.RIDING_SEX,
     constant.InstructType.SEX,
-    _("骑乘位"),
+    _("对面骑乘位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
@@ -4899,18 +4899,36 @@ def handle_back_sex():
     constant.SexInstructSubType.INSERT,
 )
 def handle_riding_sex():
-    """处理骑乘位指令"""
+    """处理对面骑乘位指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_RIDING_SEX, judge = _("性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_RIDING_SEX,
+    constant.InstructType.SEX,
+    _("背面骑乘位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.PLACE_FURNITURE_3,
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_RIDING_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_riding_sex():
+    """处理背面骑乘位指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_RIDING_SEX, judge = _("性交"))
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_SEX,
     constant.InstructType.SEX,
     _("对面座位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_GE_2,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_GE_2,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.CharacterStatus.STATUS_FACE_SEAT_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -4922,11 +4940,12 @@ def handle_face_seat_sex():
     constant.Instruct.BACK_SEAT_SEX,
     constant.InstructType.SEX,
     _("背面座位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_GE_2,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_GE_2,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.CharacterStatus.STATUS_BACK_SEAT_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -4938,10 +4957,11 @@ def handle_back_seat_sex():
     constant.Instruct.FACE_STAND_SEX,
     constant.InstructType.SEX,
     _("对面立位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.CharacterStatus.STATUS_FACE_STAND_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -4953,16 +4973,83 @@ def handle_face_stand_sex():
     constant.Instruct.BACK_STAND_SEX,
     constant.InstructType.SEX,
     _("背面立位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.IS_H,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.CharacterStatus.STATUS_BACK_STAND_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_stand_sex():
     """处理背面立位指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_STAND_SEX, judge = _("性交"))
+
+@add_instruct(
+    constant.Instruct.FACE_HUG_SEX,
+    constant.InstructType.SEX,
+    _("对面抱位"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_FACE_HUG_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_face_hug_sex():
+    """处理对面抱位指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FACE_HUG_SEX, judge=_("性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_HUG_SEX,
+    constant.InstructType.SEX,
+    _("背面抱位"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_HUG_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_hug_sex():
+    """处理背面抱位指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_HUG_SEX, judge=_("性交"))
+
+@add_instruct(
+    constant.Instruct.FACE_LAY_SEX,
+    constant.InstructType.SEX,
+    _("对面卧位"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_FACE_LAY_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_face_lay_sex():
+    """处理对面卧位指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FACE_LAY_SEX, judge=_("性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_LAY_SEX,
+    constant.InstructType.SEX,
+    _("背面卧位"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.CharacterStatus.STATUS_BACK_LAY_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_lay_sex():
+    """处理背面卧位指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_LAY_SEX, judge=_("性交"))
 
 @add_instruct(
     constant.Instruct.STIMULATE_G_POINT,
@@ -5066,11 +5153,10 @@ def handle_back_anal_sex():
     """处理后背位肛交指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_ANAL_SEX, judge = _("A性交"))
 
-
 @add_instruct(
     constant.Instruct.RIDING_ANAL_SEX,
     constant.InstructType.SEX,
-    _("骑乘位肛交"),
+    _("对面骑乘位肛交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
@@ -5081,8 +5167,25 @@ def handle_back_anal_sex():
     constant.SexInstructSubType.INSERT,
 )
 def handle_riding_anal_sex():
-    """处理骑乘位肛交指令"""
+    """处理对面骑乘位肛交指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_RIDING_ANAL_SEX, judge = _("A性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_RIDING_ANAL_SEX,
+    constant.InstructType.SEX,
+    _("背面骑乘位肛交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.PLACE_FURNITURE_3,
+     constant_promise.Premise.TARGET_A_EMPTY},
+    constant.CharacterStatus.STATUS_BACK_RIDING_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_riding_anal_sex():
+    """处理背面骑乘位肛交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_RIDING_ANAL_SEX, judge = _("A性交"))
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_ANAL_SEX,
@@ -5145,6 +5248,77 @@ def handle_face_stand_anal_sex():
 def handle_back_stand_anal_sex():
     """处理背面立位肛交指令"""
     chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_STAND_ANAL_SEX, judge = _("A性交"))
+
+
+@add_instruct(
+    constant.Instruct.FACE_HUG_ANAL_SEX,
+    constant.InstructType.SEX,
+    _("对面抱位肛交"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_A_EMPTY,
+    },
+    constant.CharacterStatus.STATUS_FACE_HUG_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_face_hug_anal_sex():
+    """处理对面抱位肛交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FACE_HUG_ANAL_SEX, judge=_("A性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_HUG_ANAL_SEX,
+    constant.InstructType.SEX,
+    _("背面抱位肛交"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.TARGET_A_EMPTY,
+    },
+    constant.CharacterStatus.STATUS_BACK_HUG_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_hug_anal_sex():
+    """处理背面抱位肛交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_HUG_ANAL_SEX, judge=_("A性交"))
+
+@add_instruct(
+    constant.Instruct.FACE_LAY_ANAL_SEX,
+    constant.InstructType.SEX,
+    _("对面卧位肛交"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.TARGET_A_EMPTY,
+    },
+    constant.CharacterStatus.STATUS_FACE_LAY_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_face_lay_anal_sex():
+    """处理对面卧位肛交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_FACE_LAY_ANAL_SEX, judge=_("A性交"))
+
+@add_instruct(
+    constant.Instruct.BACK_LAY_ANAL_SEX,
+    constant.InstructType.SEX,
+    _("背面卧位肛交"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.TARGET_A_EMPTY,
+    },
+    constant.CharacterStatus.STATUS_BACK_LAY_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_back_lay_anal_sex():
+    """处理背面卧位肛交指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BACK_LAY_ANAL_SEX, judge=_("A性交"))
 
 @add_instruct(
     constant.Instruct.STIMULATE_SIGMOID_COLON,

@@ -573,7 +573,9 @@ class Instruct:
     BACK_SEX = 0
     """ 背后位 """
     RIDING_SEX = 0
-    """ 骑乘位 """
+    """ 对面骑乘位 """
+    BACK_RIDING_SEX = 0
+    """ 背面骑乘位 """
     FACE_SEAT_SEX = 0
     """ 对面座位 """
     BACK_SEAT_SEX = 0
@@ -582,6 +584,14 @@ class Instruct:
     """ 对面立位 """
     BACK_STAND_SEX = 0
     """ 背面立位 """
+    FACE_HUG_SEX = 0
+    """ 对面抱位 """
+    BACK_HUG_SEX = 0
+    """ 背面抱位 """
+    FACE_LAY_SEX = 0
+    """ 对面卧位 """
+    BACK_LAY_SEX = 0
+    """ 背面卧位 """
     STIMULATE_G_POINT = 0
     """ 刺激G点 """
     WOMB_OS_CARESS = 0
@@ -595,7 +605,9 @@ class Instruct:
     BACK_ANAL_SEX = 0
     """ 后背位肛交 """
     RIDING_ANAL_SEX = 0
-    """ 骑乘位肛交 """
+    """ 对面骑乘位肛交 """
+    BACK_RIDING_ANAL_SEX = 0
+    """ 背面骑乘位肛交 """
     FACE_SEAT_ANAL_SEX = 0
     """ 对面座位肛交 """
     BACK_SEAT_ANAL_SEX = 0
@@ -604,6 +616,14 @@ class Instruct:
     """ 对面立位肛交 """
     BACK_STAND_ANAL_SEX = 0
     """ 背面立位肛交 """
+    FACE_HUG_ANAL_SEX = 0
+    """ 对面抱位肛交 """
+    BACK_HUG_ANAL_SEX = 0
+    """ 背面抱位肛交 """
+    FACE_LAY_ANAL_SEX = 0
+    """ 对面卧位肛交 """
+    BACK_LAY_ANAL_SEX = 0
+    """ 背面卧位肛交 """
     STIMULATE_SIGMOID_COLON = 0
     """ 玩弄s状结肠 """
     STIMULATE_VAGINA = 0
