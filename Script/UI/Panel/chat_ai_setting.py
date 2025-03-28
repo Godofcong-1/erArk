@@ -384,6 +384,7 @@ class Chat_Ai_Setting_Panel:
             info_text = _(" \n ○发送的数据越多，AI可以利用的信息就越多，理论效果会越好\n")
             info_text += _("  但同时消耗的tokens和响应时间也越多，也可能因为信息太多而抓不住重点或超出上下文长度\n")
             info_text += _("  每项的数据量有小、中、大三级区分\n")
+            info_text += _("  发送数据的文件路径为：data\csv\Ai_Chat_Send_Data.csv，可根据需要自行修改提示词\n")
             info_draw.text = info_text
             info_draw.width = self.width
             info_draw.draw()
@@ -427,11 +428,10 @@ class Chat_Ai_Setting_Panel:
                 line_text = f"  {send_data_name}({size_text})  "
                 button_len = max(len(line_text) * 2, 40)
                 
-                # 绘制数据名称和数据量
-                name_draw = draw.LeftDraw()
-                name_draw.text = line_text
-                name_draw.width = button_len
+                # 绘制数据名称和数据量，点击后将打印该send_data的提示信息
+                name_draw = draw.LeftButton(line_text, send_data_name + '_prompt', button_len, cmd_func=self.print_send_data_prompt, args=(send_data_cid,))
                 name_draw.draw()
+                return_list.append(name_draw.return_text)
                 
                 # 绘制选择按钮（必选数据没有按钮）
                 if send_data_required == 1:
@@ -464,6 +464,19 @@ class Chat_Ai_Setting_Panel:
             # 处理用户选择
             if yrn == save_draw.return_text:
                 break
+
+    def print_send_data_prompt(self, send_data_cid):
+        """打印数据的提示信息"""
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+        line_feed.draw()
+        ai_chat_send_data = game_config.config_ai_chat_send_data[send_data_cid]
+        now_draw = draw.WaitDraw()
+        now_draw.text = ai_chat_send_data.prompt
+        now_draw.width = self.width
+        now_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
 
     def toggle_send_data(self, send_data_cid):
         """切换数据是否被选择"""
