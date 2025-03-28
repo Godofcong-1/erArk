@@ -547,15 +547,11 @@ def text_ai(character_id: int, behavior_id: int, original_text: str, translator:
                     ],
                     stream=True
                 )
-                if now_key_type == "OPENAI_API_KEY":
-                    extractor=lambda chunk: chunk.choices[0].delta.content
-                elif now_key_type == "DEEPSEEK_API_KEY":
-                    extractor=lambda chunk: chunk.choices[0].message.content
                 # 调用流式处理函数获取返回的文本
                 ai_gererate_text = process_stream_response(
                     stream=completion,         # 流式返回数据的迭代器，类型为object
                     direct_mode=direct_mode,   # 是否为直接对话模式，类型为bool
-                    extractor=extractor  # 提取chunk中的文本，返回值为str
+                    extractor=lambda chunk: chunk.choices[0].delta.content  # 提取chunk中的文本，返回值为str
                 )
            # 非流式输出
             else:
