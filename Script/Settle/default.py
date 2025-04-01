@@ -4155,6 +4155,7 @@ def handle_target_enema(
     # A灌肠
     target_data.dirty.a_clean = 1
     target_data.dirty.enema_capacity += 1
+    target_data.dirty.enema_capacity = min(6, target_data.dirty.enema_capacity)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ENEMA_END)
