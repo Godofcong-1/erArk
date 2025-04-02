@@ -44,7 +44,7 @@ class ItemEffectList(QWidget):
         title_layout.addLayout(button_layout2)
         # 文字说明
         info_label = QLabel()
-        info_label.setText("右键删除该结算，双击替换该结算")
+        info_label.setText("双击替换，右键展开删除、复制、粘贴菜单")
         # 结算列表布局
         list_layout = QHBoxLayout()
         self.item_list = QListWidget()
@@ -90,20 +90,58 @@ class ItemEffectList(QWidget):
         self.item_list.clear()
 
     def show_context_menu(self, pos):
-        """删除该结算"""
+        """右键菜单：删除、复制、粘贴结算
+        参数:
+            pos (QPoint): 鼠标点击的位置
+        返回:
+            None
+        """
+        # 获取当前位置对应的列表项
         item = self.item_list.itemAt(pos)
         if item is not None:
+            # 遍历寻找当前结算的cid，匹配结算文本
+            for effect in cache_control.effect_data:
+                if cache_control.effect_data[effect] == item.text():
+                    effect_cid = effect
+                    break
+            # 根据当前编辑类型获取对应的数据对象
+            if cache_control.now_edit_type_flag == 1:
+                data = cache_control.now_event_data[cache_control.now_select_id]
+            elif cache_control.now_edit_type_flag == 0:
+                data = cache_control.now_talk_data[cache_control.now_select_id]
+            # 创建右键菜单
             menu = QMenu(self)
-            delete_action = menu.addAction("删除")
+            delete_action = menu.addAction("删除")  # 添加“删除”按钮，删除当前结算
+            copy_action = menu.addAction("复制")    # 添加“复制”按钮，复制当前结算
+            paste_action = menu.addAction("粘贴")    # 添加“粘贴”按钮，将复制的结算粘贴到列表中
+            # 显示菜单并等待用户选择操作
             action = menu.exec_(self.item_list.mapToGlobal(pos))
+            # 如果选择删除操作
             if action == delete_action:
+                # 从列表中删除该项
                 self.item_list.takeItem(self.item_list.row(item))
-                for effect in cache_control.effect_data:
-                    if cache_control.effect_data[effect] == item.text():
-                        effect_cid = effect
-                        break
-                if effect_cid in cache_control.now_event_data[cache_control.now_select_id].effect:
-                    del cache_control.now_event_data[cache_control.now_select_id].effect[effect_cid]
+                # 根据cid删除数据对象中的结算
+                if effect_cid in data.effect:
+                    del data.effect[effect_cid]
+            # 如果选择复制操作
+            elif action == copy_action:
+                # 将当前结算的cid存入全局复制变量
+                cache_control.now_copied_effect = effect_cid
+            # 如果选择粘贴操作
+            elif action == paste_action:
+                # 从全局复制变量中获取结算cid
+                effect_cid = cache_control.now_copied_effect
+                # 检查复制变量是否有内容
+                if effect_cid != "":
+                    # 如果存在结算组，则将组中所有结算添加到数据对象中
+                    if effect_cid in cache_control.effect_group_data:
+                        for now_cid in cache_control.effect_group_data[effect_cid]:
+                            data.effect[now_cid] = 1
+                    # 如果不存在结算组，则直接添加该结算
+                    else:
+                        data.effect[effect_cid] = 1
+                    # 在列表中添加新的结算项
+                    self.item_list.addItem(cache_control.effect_data[cache_control.now_copied_effect])
 
     def CVE(self):
         """展开CVE菜单"""

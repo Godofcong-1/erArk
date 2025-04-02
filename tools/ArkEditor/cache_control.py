@@ -10,6 +10,10 @@ now_file_path: str = ""
 """ 当前事件数据文件路径 """
 now_edit_type_flag = 1
 """ 当前编辑器编辑类型，0为口上，1为事件，2为属性 """
+now_copied_premise: str = ""
+""" 当前拷贝的前提数据 """
+now_copied_effect: str = ""
+""" 当前拷贝的结算数据 """
 
 now_talk_data: Dict[str, game_type.Talk] = {}
 """ 当前口上数据 """
@@ -55,6 +59,8 @@ effect_data: dict = {}
 """ 结算数据 """
 effect_type_data: Dict[str, Set] = {}
 """ 结算类型数据 """
+effect_group_data: Dict[str, List] = {}
+""" 结算组数据 """
 ability_data: dict = {}
 """ 能力数据 """
 state_data: dict = {}
