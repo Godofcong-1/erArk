@@ -833,8 +833,9 @@ def judge_weak_up_in_sleep_h(character_id: int):
         if handle_premise.handle_instruct_judge_high_obscenity(now_character_data.target_character_id):
             # 如果已经陷落的话
             if handle_premise.handle_target_fall(character_id):
-                # 3级及以上的陷落时会直接变成H，对方变为装睡状态
+                # 获取陷落状态
                 character_fall_level = attr_calculation.get_character_fall_level(now_character_data.target_character_id, minus_flag=True)
+                # 3级及以上的陷落时会直接变成H，对方变为装睡状态
                 if character_fall_level >= 3:
                     target_data.h_state.pretend_sleep = True
                     now_character_data.behavior.behavior_id = constant.Behavior.H
@@ -858,6 +859,13 @@ def judge_weak_up_in_sleep_h(character_id: int):
             else:
                 now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
                 now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+            # 如果交互对象是监禁状态，则也转为H状态
+            if handle_premise.handle_t_imprisonment_1(character_id):
+                now_character_data.behavior.behavior_id = constant.Behavior.H
+                now_character_data.state = constant.CharacterStatus.STATUS_H
+                target_data.behavior.behavior_id = constant.Behavior.WAIT
+                target_data.state = constant.CharacterStatus.STATUS_WAIT
+                target_data.behavior.duration = 15
         # 不满足的话，设为H失败
         else:
             now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
