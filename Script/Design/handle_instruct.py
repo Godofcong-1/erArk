@@ -1576,6 +1576,20 @@ def handle_originium_arts():
 
 
 @add_instruct(
+    constant.Instruct.TARGET_TO_SELF,
+    constant.InstructType.SYSTEM,
+    _("对自己交互"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H},
+)
+def handle_target_to_self():
+    """处理对自己交互指令"""
+    pl_character_data = cache.character_data[0]
+    pl_character_data.target_character_id = 0
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1)
+
+
+@add_instruct(
     constant.Instruct.CHARA_DIY_INSTRUCT,
     constant.InstructType.SYSTEM,
     _("角色特殊指令_特殊调用"),

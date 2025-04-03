@@ -10,8 +10,8 @@ class Instruct:
     """ 道具 """
     ORIGINIUM_ARTS = 0
     """ 源石技艺 """
-    CHARA_DIY_INSTRUCT = 0
-    """ 角色自定义特殊指令 """
+    TARGET_TO_SELF = 0
+    """ 对自己交互 """
     SAVE = 0
     """ 读写存档 """
     ABL_UP = 0
@@ -30,6 +30,8 @@ class Instruct:
     """ 关闭debug模式 """
     DEBUG_ADJUST = 0
     """ debug数值调整 """
+    CHARA_DIY_INSTRUCT = 0
+    """ 角色自定义特殊指令 """
     TALK_QUICK_TEST = 0
     """ 快速测试口上 """
 
