@@ -456,10 +456,9 @@ def judge_before_pl_behavior():
         if target_character_data.h_state.shoot_position_cloth != -1:
             target_character_data.h_state.shoot_position_cloth = -1
 
-    else:
-        # 睡眠时间在6h及以上的额外恢复
-        if pl_character_data.state == constant.CharacterStatus.STATUS_SLEEP and pl_character_data.behavior.duration >= 360:
-            refresh_temp_semen_max() # 刷新玩家临时精液上限
+    # 睡眠时间在6h及以上的额外恢复
+    if pl_character_data.state == constant.CharacterStatus.STATUS_SLEEP and pl_character_data.behavior.duration >= 360:
+        refresh_temp_semen_max() # 刷新玩家临时精液上限
 
     # 结算上次进行聊天的时间，以重置聊天计数器#
     settle_behavior.change_character_talkcount_for_time(0, pl_character_data.behavior.start_time)
