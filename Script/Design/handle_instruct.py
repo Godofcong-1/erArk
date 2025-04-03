@@ -380,12 +380,6 @@ def see_dirty():
     cache.now_panel_id = constant.Panel.DIRTY
 
 
-@add_instruct(constant.Instruct.INSTRUCT_FILTER, constant.InstructType.SYSTEM, _("指令过滤"), {})
-def instruct_filter():
-    """处理指令过滤指令"""
-    cache.now_panel_id = constant.Panel.INSTRUCT_FILTER
-
-
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"),
               {constant_promise.Premise.DEBUG_MODE_SETTING_ON,
                constant_promise.Premise.DEBUG_MODE_OFF})

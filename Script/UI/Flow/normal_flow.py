@@ -144,11 +144,11 @@ def manage_basement_flow():
     now_panel.draw()
 
 
-@handle_panel.add_panel(constant.Panel.INSTRUCT_FILTER)
-def instruct_filter_flow():
-    """指令过滤面板"""
-    now_panel = instruct_filter_panel.Instruct_filter_Panel(width)
-    now_panel.draw()
+# @handle_panel.add_panel(constant.Panel.INSTRUCT_FILTER)
+# def instruct_filter_flow():
+#     """指令过滤面板"""
+#     now_panel = instruct_filter_panel.Instruct_filter_Panel(width)
+#     now_panel.draw()
 
 
 @handle_panel.add_panel(constant.Panel.EVENT_OPTION)
@@ -232,11 +232,11 @@ def nation_diplomacy_flow():
     now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(width)
     now_panel.draw()
 
-@handle_panel.add_panel(constant.Panel.CHAT_AI_SETTING)
-def chat_ai_setting_flow():
-    """文本生成AI设置面板"""
-    now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(width)
-    now_panel.draw()
+# @handle_panel.add_panel(constant.Panel.CHAT_AI_SETTING)
+# def chat_ai_setting_flow():
+#     """文本生成AI设置面板"""
+#     now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(width)
+#     now_panel.draw()
 
 @handle_panel.add_panel(constant.Panel.PHYSICAL_CHECK_AND_MANAGE)
 def physical_check_and_manage_flow():

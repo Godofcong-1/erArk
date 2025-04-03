@@ -20,8 +20,6 @@ class Instruct:
     """ 自身属性升级 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
-    INSTRUCT_FILTER = 0
-    """ 指令过滤 """
     COLLECTION_NOW_PLACE = 0
     """ 收藏该地点 """
     CANCEL_COLLECTION_NOW_PLACE = 0

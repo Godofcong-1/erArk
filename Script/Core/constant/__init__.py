@@ -48,8 +48,8 @@ class Panel:
     """ 基建面板 """
     MANAGE_BASEMENT = 16
     """ 管理罗德岛面板 """
-    INSTRUCT_FILTER = 17
-    """ 指令过滤面板 """
+    # INSTRUCT_FILTER = 17
+    # """ 指令过滤面板 """
     EVENT_OPTION = 18
     """ 事件选项面板 """
     CHECK_LOCKER = 19
@@ -78,8 +78,8 @@ class Panel:
     """ 香薰疗愈面板 """
     NATION_DIPLOMACY = 31
     """ 势力外交面板 """
-    CHAT_AI_SETTING = 32
-    """ 文本生成AI设置面板 """
+    # CHAT_AI_SETTING = 32
+    # """ 文本生成AI设置面板 """
     PHYSICAL_CHECK_AND_MANAGE = 35
     """ 身体检查与管理面板 """
 

@@ -75,6 +75,18 @@ class System_Setting_Panel:
             ai_chat_setting_button.draw()
             return_list.append(ai_chat_setting_button.return_text)
 
+            # 添加“指令过滤”按钮
+            command_filter_button_text = _(" [指令过滤] ")
+            command_filter_button = draw.CenterButton(
+                command_filter_button_text,
+                command_filter_button_text,
+                len(command_filter_button_text) * 2,
+                cmd_func=self.chat_filter_panel_draw,
+                )
+            command_filter_button.draw()
+            return_list.append(command_filter_button.return_text)
+
+            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -93,6 +105,12 @@ class System_Setting_Panel:
         """绘制文本生成AI设置面板"""
         from Script.UI.Panel import chat_ai_setting
         now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(self.width)
+        now_panel.draw()
+
+    def chat_filter_panel_draw(self):
+        """绘制指令过滤面板"""
+        from Script.UI.Panel import instruct_filter_panel
+        now_panel = instruct_filter_panel.Instruct_filter_Panel(self.width)
         now_panel.draw()
 
     def draw_option(self, type_name: str, return_list: List[str]):
