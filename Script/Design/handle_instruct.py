@@ -445,34 +445,6 @@ def handle_chat_with_ai():
 
 
 @add_instruct(
-    constant.Instruct.COLLECTION_NOW_PLACE,
-    constant.InstructType.SYSTEM,
-    _("收藏该地点"),
-    {
-        constant_promise.Premise.NOT_H,
-        constant_promise.Premise.PLACE_NOT_IN_COLLECTION_LIST,
-    })
-def handle_collection_now_place():
-    """收藏该地点"""
-    pl_character_data: game_type.Character = cache.character_data[0]
-    cache.collect_position_list.append(pl_character_data.position)
-
-
-@add_instruct(
-    constant.Instruct.CANCEL_COLLECTION_NOW_PLACE,
-    constant.InstructType.SYSTEM,
-    _("取消收藏地点"),
-    {
-        constant_promise.Premise.NOT_H,
-        constant_promise.Premise.PALCE_IN_COLLECTION_LIST,
-    })
-def handle_cancel_collection_now_place():
-    """取消收藏地点"""
-    pl_character_data: game_type.Character = cache.character_data[0]
-    cache.collect_position_list.remove(pl_character_data.position)
-
-
-@add_instruct(
     constant.Instruct.SEE_COLLECTION,
     constant.InstructType.WORK,
     _("查看收藏品"),

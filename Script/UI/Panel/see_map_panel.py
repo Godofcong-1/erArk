@@ -11,7 +11,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import map_handle, attr_text, character_move
+from Script.Design import map_handle, attr_text, character_move, handle_premise_place
 from Script.Config import game_config
 import random
 
@@ -761,6 +761,27 @@ class CollectionSceneNamePanel:
                     now_draw.draw()
                 line_feed.draw()
 
+            line_feed.draw()
+            # 根据玩家当前位置判断是否已收藏，决定显示“收藏当前地点”或“取消收藏当前地点”按钮
+            if handle_premise_place.handle_place_in_collection_list(0):
+                # 当前地点已收藏，设置按钮显示文字为“取消收藏当前地点”
+                btn_text: str = _(" [取消收藏当前地点] ")
+                collect_flag = False
+            else:
+                btn_text: str = _(" [收藏当前地点] ")
+                collect_flag = True
+            # 绘制按钮
+            draw_collection_button = draw.CenterButton(
+                btn_text,               # 按钮显示文字
+                btn_text,               # 按钮返回值
+                self.width / 4,         # 按钮宽度
+                cmd_func=self.settle_collection_place,  # 点击按钮后执行的函数
+                args=(collect_flag,)  # 函数参数
+            )
+            draw_collection_button.draw()  # 绘制按钮到界面上
+            self.return_list.append(draw_collection_button.return_text)  # 添加按钮返回值到监听列表
+            line_feed.draw()
+
     def move_now(self, scene_path: List[str]):
         """
         控制角色移动至指定场景
@@ -772,3 +793,14 @@ class CollectionSceneNamePanel:
         cache.wframe_mouse.w_frame_skip_wait_mouse = 1
         character_move.own_charcter_move(scene_path)
 
+    def settle_collection_place(self, collect_flag: bool):
+        """
+        收藏或取消收藏当前地点
+        Keyword arguments:
+        collect_flag -- 是否收藏当前地点
+        """
+        pl_character_data: game_type.Character = cache.character_data[0]
+        if collect_flag:
+            cache.collect_position_list.append(pl_character_data.position)
+        else:
+            cache.collect_position_list.remove(pl_character_data.position)

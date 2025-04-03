@@ -20,10 +20,6 @@ class Instruct:
     """ 自身属性升级 """
     SEE_DIRTY = 0
     """ 查看污浊情况 """
-    COLLECTION_NOW_PLACE = 0
-    """ 收藏该地点 """
-    CANCEL_COLLECTION_NOW_PLACE = 0
-    """ 取消收藏地点 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
     CHAT_WITH_AI = 0
