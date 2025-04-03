@@ -4200,14 +4200,15 @@ def handle_target_enema_end(
         # 清空肠内精液量的90%
         now_semen_data = character_data.dirty.body_semen[8]
         semen_num = now_semen_data[1] * 0.9
-        now_semen_data[1] -= semen_num
-        now_semen_data[2] = attr_calculation.get_semen_now_level(now_semen_data[1], 8, 0)
-        # 绘制提示信息
-        info_text  = _("{0}的后穴喷出了{1}ml的精液\n").format(target_data.name, semen_num)
-        info_draw = draw.NormalDraw()
-        info_draw.text = info_text
-        info_draw.width = width
-        info_draw.draw()
+        if semen_num > 1:
+            now_semen_data[1] -= semen_num
+            now_semen_data[2] = attr_calculation.get_semen_now_level(now_semen_data[1], 8, 0)
+            # 绘制提示信息
+            info_text  = _("{0}的后穴喷出了{1}ml的精液\n").format(target_data.name, int(semen_num))
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.width = width
+            info_draw.draw()
     # 清空灌肠液量
     target_data.dirty.enema_capacity = 0
 
