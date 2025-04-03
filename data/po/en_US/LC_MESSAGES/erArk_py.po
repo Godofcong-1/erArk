@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-14 13:53+0800\n"
+"POT-Creation-Date: 2025-04-03 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3189,28 +3189,28 @@ msgid ""
 "{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁被收集到搾乳机中\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml breast milk out while orgasm, collected by milking machine\n"
+"{0} spilled {1}ml breast milk out while orgasm, collected by milking machine\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁散落的到处都是\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml breast milk out everywhere while orgasm\n"
+"{0} spilled {1}ml breast milk out everywhere while orgasm\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液被收集到采尿器中\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml urine out while orgasm, collected by urine collector\n"
+"{0} spilled {1}ml urine out while orgasm, collected by urine collector\n"
 
 msgid ""
 "\n"
 "{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液在地上汇成一滩\n"
 msgstr ""
 "\n"
-"{0} spilt {1}ml urine out onto the ground while orgasm\n"
+"{0} spilled {1}ml urine out onto the ground while orgasm\n"
 
 msgid "被{0}看到了情事现场\n"
 msgstr "{0} saw the incident\n"
@@ -6672,7 +6672,7 @@ msgid ""
 "{0}因B绝顶而被迫喷乳\n"
 msgstr ""
 "\n"
-"{0} spilt milk due to B orgasm\n"
+"{0} spilled milk due to B orgasm\n"
 
 msgid ""
 "\n"
@@ -9309,363 +9309,401 @@ msgstr ""
 "\n"
 
 msgid "炉芯终曲阿米娅"
-msgstr ""
+msgstr "Furnace's Finale Amiya"
 
 msgid ""
 "\n"
 "绘制设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"Updated image settings, please edit manually if needed\n"
 
 msgid ""
 "\n"
 "难度设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"Updated difficulty settings, please edit manually if needed\n"
 
 msgid ""
 "\n"
 "文本生成AI设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"Updated AI text generation settings, please edit manually if needed\n"
 
 msgid ""
 "\n"
 "体检设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"Updated body check settings, please edit manually if needed\n"
 
 msgid ""
 "\n"
 "监禁调教设置已更新，如有需要请手动修改\n"
 msgstr ""
+"\n"
+"Updated prison training settings, please edit manually if needed\n"
 
 msgid ""
 "\n"
 "今日剩余待处理公务量为{0}，"
 msgstr ""
+"\n"
+"{0} work needed to be handled"
 
 msgid "且各区块设施运行基本正常，"
-msgstr ""
+msgstr "and all facilities are operating normally, "
 
 msgid "且部分区块设施出现较大故障，"
-msgstr ""
+msgstr "and some facilities are requiring fixing, "
 
 msgid "因此今日罗德岛的各设施的总效率为{0}%\n"
-msgstr ""
+msgstr "hence efficiency of all facilities increased to {1}%\n"
 
 msgid "医疗部设施损坏，效率降低{0}%\n"
-msgstr ""
+msgstr "Medical Department have broken facilities, efficiency -{0}%\n"
 
 msgid "今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n"
-msgstr ""
+msgstr "Today's income： {0} from Medical Department, final income {1}, exchanged to LMD\n"
 
 msgid "  今日有访客要离开罗德岛，且其留下意愿较低\n"
-msgstr ""
+msgstr "  There's guests leaving Rhodes Island, and have low interest to stay\n"
 
 msgid "管理监禁调教"
-msgstr ""
+msgstr "Manage prison training"
 
 msgid "调教前准备"
-msgstr ""
+msgstr "Training preparation"
 
 msgid "继续灌肠"
-msgstr ""
+msgstr "Continue lavation"
 
 msgid "肛塞_已废弃"
 msgstr ""
 
 msgid "戴上眼罩"
-msgstr ""
+msgstr "Put on eye mask"
 
 msgid "摘下眼罩"
-msgstr ""
+msgstr "Take off eye mask"
 
 msgid "灌肠液_已废弃"
 msgstr ""
 
 msgid "太累了"
-msgstr ""
+msgstr "Too tired"
 
 msgid "，无法继续H"
-msgstr ""
+msgstr ", can't continue H"
 
 msgid "未找到目标素质，无法进行变化\n"
-msgstr ""
+msgstr "Cannot change the target's talent due to failed search\n"
 
 msgid "娱乐"
-msgstr ""
+msgstr "Entertainment"
 
 msgid "工作"
-msgstr ""
+msgstr "Work"
 
 msgid "{0}的后穴喷出了{1}ml的精液\n"
-msgstr ""
+msgstr "{0}'s butt hole spilled {1}ml of semen\n"
 
 msgid "训练场"
-msgstr ""
+msgstr "Training Ground"
 
 msgid "{0}打算前往{1}\n"
-msgstr ""
+msgstr "{0} wish to go {1}\n"
 
 msgid " ▼有口上但初期不可选的特殊干员"
-msgstr ""
+msgstr " ▼Have dialogues but unselectable Operators"
 
 msgid " ▶有口上但初期不可选的特殊干员"
-msgstr ""
+msgstr " ▶Have dialogues but unselectable Operators"
 
 msgid ""
 "○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n"
 "\n"
 msgstr ""
+"○Some Engravings can be upgraded directly via Juels besides the normal way\n"
+"\n"
 
 msgid "当前刻印及等级为：{0}{1}\n"
-msgstr ""
+msgstr "Current Engraving and Level: {0} at Lv{1}\n"
 
 msgid "升级需要的总值为：{0}\n"
-msgstr ""
+msgstr "Upgrade requirement: {0}\n"
 
 msgid "当前角色状态可以提供的总值为："
-msgstr ""
+msgstr "Current total amount provided by statuses: "
 
 msgid "减去提供值后需要消耗的宝珠为：{0} {1}，当前拥有：{2}\n"
-msgstr ""
+msgstr "Juels required after deducting provided amount: {0} {1}, currently having: {2}\n"
 
 msgid "使用宝珠升级刻印"
-msgstr ""
+msgstr "Use Juels to upgrade"
 
 msgid "关押区"
-msgstr ""
+msgstr "Detention Zone"
 
 msgid ""
 "○非正面刻印除了通过源石技艺降级之外，还可以通过消耗大量宝珠来直接降级\n"
 "\n"
 msgstr ""
+"○Negative Engravings can be reduced directly with Juels besides using Originium Arts\n"
+"\n"
 
 msgid "降级需要的总值为：{0}\n"
-msgstr ""
+msgstr "Downgrade requirement: {0}\n"
 
 msgid "该干员已被关押，当前关押区等级为{0}，降级所需宝珠值降低{1}%，降级所需宝珠值为{2}\n"
-msgstr ""
+msgstr "The Operator was imprisoned, currently having Detention Zone Lv{0}, Juels required -{1}%, now requiring {2}\n"
 
 msgid "当前角色宝珠可以提供的总值为："
-msgstr ""
+msgstr "Current total amount provided by Juels: "
 
 msgid "使用宝珠降低刻印"
-msgstr ""
+msgstr "Use Juels to downgrade"
 
 msgid "刻印降级成功，{0}降至{1}级\n"
-msgstr ""
+msgstr "Engraving downgraded, {0} is reduced to Lv{1}\n"
 
 msgid ""
 "\n"
 "该刻印当前无法使用宝珠升级\n"
 msgstr ""
+"\n"
+"This Engraving can't be upgraded with Juels\n"
 
 msgid "，由于设备故障，生产效率下降{0}%"
-msgstr ""
+msgstr ", due to facilities broken, efficiency -{0}%"
 
 msgid "筛选同区块干员"
-msgstr ""
+msgstr "Filter Operators in same area"
 
 msgid "筛选无意识干员"
-msgstr ""
+msgstr "Filter unconscious Operators"
 
 msgid "{0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。"
-msgstr ""
+msgstr "{0} is currently targeting {1} for doing {2}, you need to know who's doing to who, {0} is the doer and {1} is the target."
 
 msgid ""
 "你需要仅描述这个动作，包括角色的肢体动作、角色的台词、角色的心理活动、角色与场景中的物体的交互等。你不要描述动作之前的剧情，或者动作之后的剧情，只描述这个动作的过程。"
 msgstr ""
+"You only need to describe the action, include body language, dialogues, mental activities, the interaction between characters and object. You should not to describe the story before and after the action, only describe during the action."
 
 msgid ""
 "以下是一些额外提供的参考信息，信息里包括了两个人的详细信息，你可以这些信息中挑选一部分来丰富对本次动作的描述，你只能直接使用这些信息本身，不能从这些信息中联想或者猜测其他的信息："
 msgstr ""
+"The message below is information added, including two related people's information, you can choose a few to enrichen the narration, but you shall not have additional information outside of these provided: "
 
 msgid "当前的季节是{0}，当前的时间是{1}。"
-msgstr ""
+msgstr "Current season is {0}, and current time is {1}."
 
 msgid "(生成失败，使用原文本)"
-msgstr ""
+msgstr "(Generation failed)"
 
 msgid "  DeepSeek API密钥： {0}\n"
-msgstr ""
+msgstr "  Deepseek API Key: {0}\n"
 
 msgid "  [更改DeepSeek API密钥] "
-msgstr ""
+msgstr "  [Change Deepseek API Key]"
 
 msgid "更改DeepSeek API密钥"
-msgstr ""
+msgstr "Change Deepseek API Key"
 
 msgid "  [测试](最大延迟上限10秒) "
-msgstr ""
+msgstr "  [Test](up to 10 seconds delay)"
 
 msgid "  *此处使用的模型会默认使用官方api地址，如果是第三方或本地部署，请更改[base_url]\n"
-msgstr ""
+msgstr "  *Model used will follow the official api address, edit [base_url] if it's a third-party or local deployment\n"
 
 msgid "  *更多模型名请在官方文档中查阅，非该三类的模型将自动使用OpenAI格式来处理\n"
-msgstr ""
+msgstr "  *More model name can be found in official files, will automatically using OpenAI format if it's not the categories listed\n"
 
 msgid "  deepseek模型示例：deepseek-chat,deepseek-reasoner\n"
-msgstr ""
+msgstr "  deepseek model examples: deepseek-chat,deepseek-reasoner\n"
 
 msgid "  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n"
-msgstr ""
+msgstr "  gemini model examples: gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp\n"
 
 msgid "  调用gpt、deepseek、gemini的官方api时url会自动填充，非官方api调用或本地api调用可在此手动输入\n"
-msgstr ""
+msgstr "  url will automatically filled if using official api of gpt、deepseek、gemini, else you may enter manually here\n"
 
 msgid "  在线调用示例：http://my.test.server.example.com:8083/v1\n"
-msgstr ""
+msgstr "  Online example: http://my.test.server.example.com:8083/v1 \n"
 
 msgid "  本地调用示例：http://localhost:1234/v1\n"
-msgstr ""
+msgstr "  Local example: http://localhost:1234/v1 \n"
 
 msgid "请输入您的OpenAI API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n"
-msgstr ""
+msgstr "Please enter OpenAI API Key, which should be a long string starting with sk- (no format for third-party or local)\n"
 
 msgid "请输入您的DeepSeek API密钥，应当是以 sk- 开头的一长段字符串（第三方或本地部署没有格式需求）\n"
-msgstr ""
+msgstr "Please enter DeepSeek API Key, which should be a long string starting with sk- (no format for third-party or local)\n"
 
 msgid ""
 " \n"
 "  输入的API密钥不符合规范，请确认是否输入正确（第三方或本地部署没有格式需求）\n"
 "\n"
 msgstr ""
+" \n"
+"  API Key not following format, please confirm it's correct\n"
+"\n"
 
 msgid ""
 " \n"
 "  未设置模型，请先选择模型\n"
 msgstr ""
+" \n"
+"  Model not selected\n"
 
 msgid ""
 "\n"
 "囚犯{0}逃脱成功，请尽快派遣外勤干员进行追捕！\n"
 msgstr ""
+"\n"
+"Prisoner {0} has escaped, please deploy Operators to capture them back!\n"
 
 msgid "囚犯{0}逃脱失败，监狱长已经加强了对其的监视！\n"
-msgstr ""
+msgstr "Prisoner {0} failed to escape, monitoring strengthened!\n"
 
 msgid "监禁调教管理"
-msgstr ""
+msgstr "Prison training management"
 
 msgid " [进行污浊清洗] "
-msgstr ""
+msgstr " [Conduct cleaning]"
 
 msgid " [不进行污浊清洗] "
-msgstr ""
+msgstr " [Not conduct cleaning]"
 
 msgid "污浊清洗"
-msgstr ""
+msgstr "Dirty cleaning"
 
 msgid " [使用润滑液提前润滑] "
-msgstr ""
+msgstr " [Early lubrication]"
 
 msgid " [不使用润滑液提前润滑] "
-msgstr ""
+msgstr " [No early lubrication]"
 
 msgid " [调整道具使用] "
-msgstr ""
+msgstr " [Change item usage]"
 
 msgid "道具使用"
-msgstr ""
+msgstr "Item usage"
 
 msgid "○开启后，监狱长会在进行调教准备时依次使用选择道具\n"
-msgstr ""
+msgstr "○After enabling, the warden will select items before training\n"
 
 msgid "○消耗类道具会在使用时减少，数量不足时会自动关闭\n"
-msgstr ""
+msgstr "○Consumable items will reduce on usage, the setting will be disabled on insufficient\n"
 
 msgid " [不使用] "
-msgstr ""
+msgstr " [Not using]"
 
 msgid " [使用] "
-msgstr ""
+msgstr " [Use it]"
 
 msgid "体检对象名单"
-msgstr ""
+msgstr "Body check list"
 
 msgid "追捕"
-msgstr ""
+msgstr "Capture"
 
 msgid "成为干员"
-msgstr ""
+msgstr "Become Operator"
 
 msgid "追捕囚犯{0}"
-msgstr ""
+msgstr "Capture prisoner {0}"
 
 msgid "追捕_{0}_1"
-msgstr ""
+msgstr "Capture_{0}_1"
 
 msgid "囚犯{0}从监狱逃跑了，请尽快将其抓回。"
-msgstr ""
+msgstr "Prisoner {0} have escaped, please capture asap"
 
 msgid "(手制)"
-msgstr ""
+msgstr "(manual)"
 
 msgid "邀请干员参加群交"
-msgstr ""
+msgstr "Invite Operators for group sex"
 
 msgid "当前可邀请的干员有：\n"
-msgstr ""
+msgstr "Invitable Operators: \n"
 
 msgid "由于设备故障，生产效率下降{0}%，"
-msgstr ""
+msgstr "Due to facilities broken, efficiency -{0}%, "
 
 msgid "[监禁调教系统]"
-msgstr ""
+msgstr "[Prison training system]"
 
 msgid "监禁调教系统"
-msgstr ""
+msgstr "Prison training system"
 
 msgid ""
 "\n"
 "○未任命监狱长，无法进入监禁调教系统\n"
 msgstr ""
+"\n"
+"○Warden not appointed\n"
 
 msgid ""
 "\n"
 "  当前故障地点与设施损坏数："
 msgstr ""
+"\n"
+"  Broken facilities: "
 
 msgid ""
 "\n"
 "    无"
 msgstr ""
+"\n"
+"    None"
 
 msgid ""
 "\n"
 "  当前检修人员与其负责地点："
 msgstr ""
+"\n"
+"  Current maintenance personnel and place responsible: "
 
 msgid "[0000]通用文本  by {0}"
-msgstr ""
+msgstr "[0000]General dialogues  by {0}"
 
 msgid "当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n"
-msgstr ""
+msgstr "Current available Operators to recruit here: {0}\n"
 
 msgid "  当前没有已招募待确认的干员\n"
-msgstr ""
+msgstr "  There's no Operators requiring confirmation\n"
 
 msgid "  当前已招募待确认的干员有："
-msgstr ""
+msgstr "  Operators requiring confirmation: "
 
 msgid " <装睡>"
-msgstr ""
+msgstr " <Pretend sleeping>"
 
 msgid "难度"
-msgstr ""
+msgstr "Difficulty"
 
 msgid "绘制"
-msgstr ""
+msgstr "Image"
 
 msgid ""
 " \n"
 " ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n"
 "\n"
 msgstr ""
+" \n"
+" ○Click [Option title] to show [Option description], clicking [Option itself] to [Change its settings]\n"
+"\n"
 
 msgid " ▼[{0}设置]"
-msgstr ""
+msgstr " ▼[{0} Settings]"
 
 msgid " ▶[{0}设置]"
-msgstr ""
+msgstr " ▶[{0} Settings]"
 
 msgid " [修改已禁止干员列表] "
-msgstr ""
+msgstr " [Change banned Operators]"
