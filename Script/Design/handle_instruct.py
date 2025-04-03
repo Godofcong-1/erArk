@@ -1590,6 +1590,40 @@ def handle_target_to_self():
 
 
 @add_instruct(
+    constant.Instruct.DOOR_LOCK_INNER,
+    constant.InstructType.SYSTEM,
+    _("锁上门内侧锁"),
+    {constant_promise.Premise.PLACE_DOOR_OPEN,
+     constant_promise.Premise.PLACE_DOOR_LOCKABLE},
+)
+def handle_door_lock_inner():
+    """处理锁上门内侧锁指令"""
+    pl_character_data = cache.character_data[0]
+    now_position = pl_character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    now_scene_data.close_flag = now_scene_data.close_type
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1)
+
+
+@add_instruct(
+    constant.Instruct.DOOR_UNLOCK_INNER,
+    constant.InstructType.SYSTEM,
+    _("解开门内侧锁"),
+    {constant_promise.Premise.PLACE_DOOR_CLOSE,
+     constant_promise.Premise.PLACE_DOOR_LOCKABLE},
+)
+def handle_door_unlock_inner():
+    """处理解开门内侧锁指令"""
+    pl_character_data = cache.character_data[0]
+    now_position = pl_character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    now_scene_data.close_flag = 0
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1)
+
+
+@add_instruct(
     constant.Instruct.CHARA_DIY_INSTRUCT,
     constant.InstructType.SYSTEM,
     _("角色特殊指令_特殊调用"),

@@ -12,6 +12,10 @@ class Instruct:
     """ 源石技艺 """
     TARGET_TO_SELF = 0
     """ 对自己交互 """
+    DOOR_LOCK_INNER = 0  
+    """ 锁上门内侧锁 """
+    DOOR_UNLOCK_INNER = 0  
+    """ 解开门内侧锁 """
     SAVE = 0
     """ 读写存档 """
     ABL_UP = 0

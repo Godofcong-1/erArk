@@ -12,7 +12,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, cross_section_image, character_image, talk
+from Script.Design import attr_text, map_handle, handle_instruct, handle_premise, handle_premise_place, cross_section_image, character_image, talk
 from Script.Config import game_config
 import logging, time
 
@@ -147,6 +147,8 @@ class InScenePanel:
             game_time_draw.draw()
             # 当前位置
             position_text = attr_text.get_scene_path_text(pl_character_data.position)
+            if handle_premise_place.handle_place_door_close(0):
+                position_text += _("(锁)")
             now_position_text = _("当前位置:") + position_text
             now_position_draw = draw.NormalDraw()
             now_position_draw.text = now_position_text
