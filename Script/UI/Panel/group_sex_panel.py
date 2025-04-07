@@ -668,6 +668,7 @@ class Edit_Group_Sex_Temple_Panel:
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
         now_scene_character_list = scene_data.character_list
+        select_state = {}
 
         while 1:
             npc_id_got_list = sorted(cache.npc_id_got)
@@ -692,7 +693,7 @@ class Edit_Group_Sex_Temple_Panel:
             now_draw_panel.text_list = final_list
 
             # 调用通用选择按钮列表函数
-            return_list = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("邀请干员参加群交"), _("当前可邀请的干员有：\n"))
+            return_list, other_return_list, select_state = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("邀请干员参加群交"), _("当前可邀请的干员有：\n"), select_state)
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == _("返回"):

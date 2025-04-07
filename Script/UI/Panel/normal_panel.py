@@ -10,7 +10,7 @@ from Script.Core import (
     py_cmd
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character, game_time, cooking, handle_premise
+from Script.Design import update, map_handle, character, game_time, cooking, handle_premise, handle_premise_place
 
 panel_info_data = {}
 
@@ -26,7 +26,7 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, title_text: str = '', info_text:str = '') -> list:
+def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, title_text: str = '', info_text:str = '', select_state: dict = {}) -> list:
     """
     通用npc选择按钮列表函数\n
     Keyword arguments:\n
@@ -36,8 +36,23 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
     info_text -- 信息文本\n
     return\n
     return_list -- 返回按钮列表，包括返回按钮 "返回" \n
+    other_return_list -- 其他按钮列表，按下去之后不应退出面板\n
+    select_state -- 筛选状态字典，包含筛选类型和关键词\n
     """
-
+    # 定义局部状态字典保存筛选类型和关键词
+    if not select_state or not isinstance(select_state, dict):
+        # 如果没有传入select_state，则初始化一个新的字典
+        select_state = {"type": 0, "name": ""}
+    else:
+        select_state = {"type": select_state.get("type", 0), "name": select_state.get("name", "")}
+    
+    # 内部回调函数，通过返回值更新状态
+    def inner_select_type_change(new_type: int):
+        # 调用新的筛选类型切换函数，并更新局部状态
+        new_state = select_type_change(new_type)
+        select_state["type"] = new_state[0]
+        select_state["name"] = new_state[1]
+    
     line_feed.draw()
     # 绘制标题
     if title_text:
@@ -56,20 +71,115 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
         info_draw.draw()
         line_feed.draw()
     return_list = []
+    other_return_list = []
 
+    # 添加筛选功能
+    select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选"), _("筛选同区块干员"), _("筛选无意识干员")]
+    
+    # 绘制筛选选项
+    info_text = _("选择人员筛选方式：")
+    info_draw = draw.NormalDraw()
+    info_draw.text = info_text
+    info_draw.width = window_width
+    info_draw.draw()
+    
+    for select_type_id in range(len(select_type_list)):
+        # 每五个换行
+        if select_type_id % 5 == 0 and select_type_id != 0:
+            line_feed.draw()
+            empty_draw = draw.NormalDraw()
+            empty_draw.text = "  " * len(info_text)
+            empty_draw.width = window_width
+            empty_draw.draw()
+        # 使用局部状态，不再依赖全局变量
+        if select_type_id == select_state["type"]:
+            select_type_text = f"▶{select_type_list[select_type_id]}          "
+            if select_type_id == 5:
+                select_type_text = f"▶{select_type_list[select_type_id]}:{select_state['name']}          "
+            now_draw = draw.NormalDraw()
+            now_draw.text = select_type_text
+            now_draw.style = "gold_enrod"
+            now_draw.width = window_width / 3
+            now_draw.draw()
+        # 未选中的为按钮
+        else:
+            draw_text = f"  {select_type_list[select_type_id]}    "
+            now_draw_width = min(len(draw_text) * 2, window_width / 2.5)
+            # 将回调函数替换为内部回调 inner_select_type_change
+            now_draw = draw.LeftButton(
+                draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=inner_select_type_change, args=(select_type_id,)
+            )
+            now_draw.draw()
+            return_list.append(now_draw.return_text)
+            other_return_list.append(now_draw.return_text)
+    line_feed.draw()
+    line_feed.draw()
+    
+    # 根据局部状态进行筛选，使用select_state而非全局变量
+    original_text_list = now_draw_panel.text_list
+    filtered_text_list = []
+    for item in original_text_list:
+        npc_id = item[0]
+        if npc_id != 0:  # 跳过玩家
+            character_data = cache.character_data[npc_id]
+            if select_state["type"] > 0:
+                # 收藏筛选
+                if select_state["type"] == 1 and character_data.chara_setting[2] != 1:
+                    continue
+                # 访客筛选
+                elif select_state["type"] == 2 and npc_id not in cache.rhodes_island.visitor_info:
+                    continue
+                # 未陷落筛选
+                elif select_state["type"] == 3 and handle_premise.handle_self_fall(npc_id):
+                    continue
+                # 已陷落筛选
+                elif select_state["type"] == 4 and handle_premise.handle_self_not_fall(npc_id):
+                    continue
+                # 姓名筛选
+                elif select_state["type"] == 5 and select_state["name"] not in character_data.name:
+                    continue
+                # 同区块筛选
+                elif select_state["type"] == 6 and not handle_premise_place.handle_in_player_zone(npc_id):
+                    continue
+                # 无意识筛选
+                elif select_state["type"] == 7 and handle_premise.handle_unconscious_flag_0(npc_id):
+                    continue
+            # 添加到过滤后的列表
+            filtered_text_list.append(item)
+    
+    # 更新面板中的列表
+    now_draw_panel.text_list = filtered_text_list
     # 绘制面板
     now_draw_panel.update()
     now_draw_panel.draw()
     return_list.extend(now_draw_panel.return_list)
-
+    other_return_list.append(now_draw_panel.next_page_return)
+    other_return_list.append(now_draw_panel.old_page_return)
     # 绘制返回按钮
     line_feed.draw()
     back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
     back_draw.draw()
     line_feed.draw()
     return_list.append(back_draw.return_text)
+    
+    return return_list, other_return_list, select_state
 
-    return return_list
+def select_type_change(new_type: int) -> tuple[int, str]:
+    """
+    筛选类型切换
+    输入:
+        new_type (int): 新的筛选类型
+    输出:
+        tuple: (新筛选类型, 筛选关键词)。若 new_type 为 5，则弹出输入框获取关键词，否则返回空关键词
+    """
+    if new_type == 5:
+        ask_name_panel = panel.AskForOneMessage()
+        ask_name_panel.set(_("输入要筛选的关键词"), 10)
+        now_name = ask_name_panel.draw()
+        return (new_type, now_name)
+    else:
+        return (new_type, "")
+
 
 class Close_Door_Panel:
     """

@@ -43,6 +43,7 @@ def chose_assistant():
     """选择助理"""
     from Script.UI.Panel import normal_panel
     now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], normal_panel.CommonSelectNPCButtonList, 80, 8, window_width, 1, 0, 0)
+    select_state = {}
     while 1:
         # 显示当前助手
         character_data: game_type.Character = cache.character_data[0]
@@ -61,14 +62,10 @@ def chose_assistant():
         now_draw_panel.text_list = final_list
 
         # 调用通用选择按钮列表函数
-        return_list = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("选择助理"), now_npc_text)
-        # 切换前后页按钮
-        page_return_list = []
-        page_return_list.append(now_draw_panel.next_page_return)
-        page_return_list.append(now_draw_panel.old_page_return)
+        return_list, other_return_list, select_state = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("选择助理"), now_npc_text, select_state)
 
         yrn = flow_handle.askfor_all(return_list)
-        if yrn in return_list and yrn not in page_return_list:
+        if yrn in return_list and yrn not in other_return_list:
             break
 
 
