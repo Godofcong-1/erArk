@@ -58,7 +58,7 @@ def own_charcter_move(target_scene: list):
         cache.now_panel_id = constant.Panel.IN_SCENE
 
 
-def character_move(character_id: int, target_scene: list) -> (str, list, list, int):
+def character_move(character_id: int, target_scene: list) -> tuple[str, list, list, int]:
     """
     通用角色移动控制 \n
     Keyword arguments: \n
@@ -109,7 +109,7 @@ def character_move(character_id: int, target_scene: list) -> (str, list, list, i
     return access_type, [], now_path_data[0], now_path_data[1]
 
 
-def judge_character_move_to_private(character_id: int, move_path: []) -> int:
+def judge_character_move_to_private(character_id: int, move_path: list) -> int:
     """
     结算角色是否移动到私密房间\n
     Keyword arguments:\n

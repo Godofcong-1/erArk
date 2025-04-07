@@ -131,7 +131,7 @@ def get_map_system_path_str_for_list(now_list: list) -> str:
     return os.sep.join(now_list)
 
 
-def get_path_finding(map_path_str: str, now_node: str, target_node: str) -> (str, game_type.TargetPath):
+def get_path_finding(map_path_str: str, now_node: str, target_node: str) -> tuple[str, game_type.TargetPath]:
     """
     查询寻路路径
     Keyword arguments:
@@ -151,7 +151,7 @@ def get_path_finding(map_path_str: str, now_node: str, target_node: str) -> (str
         )
 
 
-def get_scene_to_scene_map_list(now_scene_path: list, target_scene_path: list) -> (str, list):
+def get_scene_to_scene_map_list(now_scene_path: list, target_scene_path: list) -> tuple[str, list]:
     """
     获取场景到场景之间需要经过的地图列表
     如果两个场景属于同一地图并在同一层级，则返回common
@@ -506,7 +506,7 @@ def init_scene_edge_path_data():
         json.dump(scene_path_edge, path_edge_file)
 
 
-def difference_map_move(now_position: list, target_scene: list) -> (str, list, list, int):
+def difference_map_move(now_position: list, target_scene: list) -> tuple[str, list, list, int]:
     """
     角色跨地图层级移动
     Keyword arguments:
@@ -553,7 +553,7 @@ def identical_map_move(
     now_map: list,
     now_map_scene_id: str,
     target_map_scene_id: str,
-) -> (str, list, list, int):
+) -> tuple[str, list, list, int]:
     """
     角色在相同地图层级内移动
     Keyword arguments:

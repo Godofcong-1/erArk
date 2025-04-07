@@ -662,8 +662,8 @@ class Edit_Group_Sex_Temple_Panel:
     def show_invite_npc_panel(self):
         """绘制可邀请的NPC列表"""
         from Script.Design import character
-        from Script.UI.Panel import normal_panel
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], normal_panel.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        from Script.UI.Panel import common_select_NPC
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
         # 当前地点的角色列表
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -693,7 +693,7 @@ class Edit_Group_Sex_Temple_Panel:
             now_draw_panel.text_list = final_list
 
             # 调用通用选择按钮列表函数
-            return_list, other_return_list, select_state = normal_panel.common_select_npc_button_list_func(now_draw_panel, _("邀请干员参加群交"), _("当前可邀请的干员有：\n"), select_state)
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("邀请干员参加群交"), _("当前可邀请的干员有：\n"), select_state)
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == _("返回"):
