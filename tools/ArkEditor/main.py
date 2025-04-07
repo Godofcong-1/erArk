@@ -56,9 +56,9 @@ font.setFamily(cache_control.now_font_name)
 def load_event_data():
     """载入事件文件"""
     now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.json")
-    cache_control.now_event_data = {}
     file_path = now_file[0]
     if file_path:
+        cache_control.now_event_data = {}
         cache_control.now_file_path = file_path
         now_data = json_handle.load_json(file_path)
         for k in now_data:
