@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, talk, handle_premise
 
@@ -793,63 +793,49 @@ class Field_Commission_Panel:
         commision_data = game_config.config_commission[commision_id]
         commision_people = commision_data.people
         self.lead_chara_id = 0
+        self.now_commision_id = commision_id
+
+        from Script.UI.Panel import common_select_NPC
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        select_state = {}
 
         while 1:
-            return_list = []
-            line = draw.LineDraw("-", self.width)
-            line.draw()
+            info_text = _("可派遣人员（需要{0}人）：\n").format(commision_people)
+            info_text += _("队长：")
+            if self.lead_chara_id != 0:
+                info_text += cache.character_data[self.lead_chara_id].name
+            else:
+                info_text += _("无")
+            info_text += _("。队员：")
+            # 遍历已选择的角色id列表
+            for npc_id in self.send_npc_list:
+                # 跳过队长
+                if npc_id == self.lead_chara_id:
+                    continue
+                info_text += cache.character_data[npc_id].name + " "
+            info_text += _("\n\n")
 
-            # 绘制可派遣人员
-            info_draw_2 = draw.NormalDraw()
-            info_draw_2.text = _("\n可派遣人员（需要{0}人）：\n\n").format(commision_people)
-            info_draw_2.width = self.width
-            info_draw_2.draw()
-            npc_draw_count = 0
-            for character_id in cache.npc_id_got:
-                draw_style = "standard"
-                # 如果已经选择，则绘制为金色
-                if character_id in self.send_npc_list:
-                    draw_style = "gold_enrod"
-                character_data: game_type.Character = cache.character_data[character_id]
-                character_name = character_data.name
-                character_adv = character_data.adv
-                draw_text = f"[{str(character_adv).rjust(4,'0')}]{character_name}"
-                # 队长标记
-                if character_id == self.lead_chara_id:
-                    draw_text += _("(队长)")
+            npc_id_got_list = sorted(cache.npc_id_got)
+            # 已选择的角色id列表
+            final_list = []
+            # 遍历角色id
+            for npc_id in npc_id_got_list:
+                if npc_id == 0:
+                    continue
+                # 跳过2、7异常的角色
+                if not handle_premise.handle_normal_2(npc_id) :
+                    continue
+                if not handle_premise.handle_normal_7(npc_id):
+                    continue
+                now_list = [npc_id, self.select_this_npc, self.send_npc_list]
+                final_list.append(now_list)
+            now_draw_panel.text_list = final_list
 
-                # 如果可以选择，则正常绘制按钮
-                if len(self.send_npc_list) < commision_people or character_id in self.send_npc_list:
-                    button_draw = draw.LeftButton(
-                        draw_text,
-                        f"\n{character_id}",
-                        self.width / 6 ,
-                        normal_style = draw_style,
-                        cmd_func = self.select_this_npc,
-                        args=character_id,
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                # 如果当前人数已经满足，则不再绘制按钮，只绘制文本
-                else:
-                    info_draw = draw.LeftDraw()
-                    info_draw.text = draw_text
-                    info_draw.width = self.width / 6
-                    info_draw.style = "deep_gray"
-                    info_draw.draw()
+            # 调用通用选择按钮列表函数
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("调整派遣人员"), info_text, select_state)
 
-                # 每绘制6个角色换行
-                npc_draw_count += 1
-                if npc_draw_count % 6 == 0:
-                    line_feed.draw()
-
-            line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn == _("返回"):
                 break
 
 
@@ -968,6 +954,10 @@ class Field_Commission_Panel:
                 else:
                     self.lead_chara_id = 0
         else:
+            # 如果人数已经满了，则不添加
+            max_people = game_config.config_commission[self.now_commision_id].people
+            if len(self.send_npc_list) >= max_people:
+                return
             self.send_npc_list.append(character_id)
             # 第一个被任命的人为队长
             if len(self.send_npc_list) == 1:
