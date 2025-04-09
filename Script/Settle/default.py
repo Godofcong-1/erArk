@@ -7925,6 +7925,29 @@ def handle_train_prisoners_add_adjust(
         base_chara_hp_mp_common_settle(now_prisoner_cid, add_time, hp_value=-1, mp_value=-1, dregree=1, change_data_to_target_change=change_data)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST)
+def handle_recover_from_unconscious_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象从无意识H中恢复意识的结算
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 如果交互对象是在H中，则进行恢复意识结算
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_premise.handle_is_h(character_data.target_character_id):
+        handle_npc_ai.recover_from_unconscious_h(character_id)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,

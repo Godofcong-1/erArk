@@ -662,6 +662,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （维护设施用）修复当前地点的损坏设施 """
     TRAIN_PRISONERS_ADD_ADJUST = 535
     """ 指令_专用结算 （训练囚犯用）对所有被关押的囚犯进行日常训练 """
+    RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST = 536
+    """ 指令_专用结算 交互对象从无意识H中恢复意识的结算 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """
