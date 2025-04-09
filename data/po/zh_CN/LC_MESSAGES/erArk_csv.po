@@ -188,6 +188,10 @@ msgstr ""
 msgid "腰技"
 msgstr ""
 
+#: .\data\csv\Ability.csv:55
+msgid "隐蔽"
+msgstr ""
+
 #: .\data\csv\AbilityType.csv:6
 msgid "感觉"
 msgstr ""
@@ -4909,7 +4913,7 @@ msgid "肛射经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:33
-msgid "奉仕快乐经验"
+msgid "奉仕经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:34
@@ -4925,286 +4929,290 @@ msgid "嗜虐快乐经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:37
-msgid "露出快乐经验"
+msgid "露出经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:39
-msgid "接吻经验"
+#: .\data\csv\Experience.csv:38
+msgid "隐奸经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:40
-msgid "手淫经验"
+msgid "接吻经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:41
-msgid "口淫经验"
+msgid "手淫经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:42
-msgid "乳交经验"
+msgid "口淫经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:43
-msgid "足交经验"
+msgid "乳交经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:44
-msgid "发交经验"
+msgid "足交经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:45
-msgid "腋交经验"
+msgid "发交经验"
 msgstr ""
 
 #: .\data\csv\Experience.csv:46
+msgid "腋交经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:47
 msgid "服装交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:48
+#: .\data\csv\Experience.csv:49
 msgid "异常经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:49
+#: .\data\csv\Experience.csv:50
 msgid "道具使用经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:50
+#: .\data\csv\Experience.csv:51
 msgid "紧缚经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:51
+#: .\data\csv\Experience.csv:52
 msgid "灌肠经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:52
+#: .\data\csv\Experience.csv:53
 msgid "自慰经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:53
+#: .\data\csv\Experience.csv:54
 msgid "调教自慰经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:54
+#: .\data\csv\Experience.csv:55
 msgid "群交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:55
+#: .\data\csv\Experience.csv:56
 msgid "助手经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:57
+#: .\data\csv\Experience.csv:58
 msgid "插入经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:58
+#: .\data\csv\Experience.csv:59
 msgid "Ｖ性交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:59
+#: .\data\csv\Experience.csv:60
 msgid "Ａ性交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:60
+#: .\data\csv\Experience.csv:61
 msgid "Ｕ性交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:61
+#: .\data\csv\Experience.csv:62
 msgid "Ｗ性交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:62
+#: .\data\csv\Experience.csv:63
 msgid "Ｖ扩张经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:63
+#: .\data\csv\Experience.csv:64
 msgid "Ａ扩张经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:64
+#: .\data\csv\Experience.csv:65
 msgid "Ｕ扩张经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:65
+#: .\data\csv\Experience.csv:66
 msgid "Ｗ扩张经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:67
+#: .\data\csv\Experience.csv:68
 msgid "无意识Ｎ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:68
+#: .\data\csv\Experience.csv:69
 msgid "无意识Ｂ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:69
+#: .\data\csv\Experience.csv:70
 msgid "无意识Ｃ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:70
+#: .\data\csv\Experience.csv:71
 msgid "无意识Ｐ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:71
+#: .\data\csv\Experience.csv:72
 msgid "无意识Ｖ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:72
+#: .\data\csv\Experience.csv:73
 msgid "无意识Ａ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:73
+#: .\data\csv\Experience.csv:74
 msgid "无意识Ｕ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:74
+#: .\data\csv\Experience.csv:75
 msgid "无意识Ｗ经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:75
+#: .\data\csv\Experience.csv:76
 msgid "无意识绝顶经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:76
+#: .\data\csv\Experience.csv:77
 msgid "无意识性交经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:78
+#: .\data\csv\Experience.csv:79
 msgid "对话经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:79
+#: .\data\csv\Experience.csv:80
 msgid "战斗经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:80
+#: .\data\csv\Experience.csv:81
 msgid "学识经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:81
+#: .\data\csv\Experience.csv:82
 msgid "料理经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:82
+#: .\data\csv\Experience.csv:83
 msgid "约会经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:83
+#: .\data\csv\Experience.csv:84
 msgid "音乐经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:84
+#: .\data\csv\Experience.csv:85
 msgid "妊娠经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:85
+#: .\data\csv\Experience.csv:86
 msgid "指挥经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:86
+#: .\data\csv\Experience.csv:87
 msgid "医疗经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:87
+#: .\data\csv\Experience.csv:88
 msgid "农业经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:88
+#: .\data\csv\Experience.csv:89
 msgid "制造经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:89
+#: .\data\csv\Experience.csv:90
 msgid "绘画经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:90
+#: .\data\csv\Experience.csv:91
 msgid "阅读经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:91
+#: .\data\csv\Experience.csv:92
 msgid "H书阅读经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:93
+#: .\data\csv\Experience.csv:94
 msgid "饮精绝顶经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:95
+#: .\data\csv\Experience.csv:96
 msgid "睡姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:96
+#: .\data\csv\Experience.csv:97
 msgid "被睡姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:97
+#: .\data\csv\Experience.csv:98
 msgid "催眠经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:98
+#: .\data\csv\Experience.csv:99
 msgid "被催眠经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:99
+#: .\data\csv\Experience.csv:100
 msgid "时姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:100
+#: .\data\csv\Experience.csv:101
 msgid "被时姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:101
+#: .\data\csv\Experience.csv:102
 msgid "催眠姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:102
+#: .\data\csv\Experience.csv:103
 msgid "被催眠姦经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:104
+#: .\data\csv\Experience.csv:105
 msgid "正常位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:105
+#: .\data\csv\Experience.csv:106
 msgid "後背位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:106
+#: .\data\csv\Experience.csv:107
 msgid "对面骑乘位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:107
+#: .\data\csv\Experience.csv:108
 msgid "背面骑乘位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:108
+#: .\data\csv\Experience.csv:109
 msgid "对面座位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:109
+#: .\data\csv\Experience.csv:110
 msgid "背面座位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:110
+#: .\data\csv\Experience.csv:111
 msgid "对面立位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:111
+#: .\data\csv\Experience.csv:112
 msgid "背面立位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:112
+#: .\data\csv\Experience.csv:113
 msgid "对面抱位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:113
+#: .\data\csv\Experience.csv:114
 msgid "背面抱位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:114
+#: .\data\csv\Experience.csv:115
 msgid "对面卧位经验"
 msgstr ""
 
-#: .\data\csv\Experience.csv:115
+#: .\data\csv\Experience.csv:116
 msgid "背面卧位经验"
 msgstr ""
 
