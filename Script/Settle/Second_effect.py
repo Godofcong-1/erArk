@@ -2465,7 +2465,7 @@ def handle_add_large_pain_first_sex(
     # print("润滑修正", now_add_lust)
     # 欲情修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
-    adjust = adjust/3 if adjust >=2 else adjust/1.5
+    adjust = adjust/3 if adjust >=2 else adjust/2
     now_add_lust *= adjust
     # print("欲情修正", now_add_lust)
     # 痛苦刻印修正
@@ -2474,7 +2474,7 @@ def handle_add_large_pain_first_sex(
     # print("痛苦刻印修正", now_add_lust)
     # V扩张修正
     adjust = attr_calculation.get_ability_adjust(character_data.ability[9])
-    now_add_lust /= adjust
+    now_add_lust /= adjust * adjust
     # print("V扩张修正", now_add_lust)
 
     character_data.status_data[17] += now_add_lust
@@ -2505,14 +2505,14 @@ def handle_add_large_pain_first_a_sex(
     now_add_lust *= adjust
     # 欲情修正
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
-    adjust = adjust/3 if adjust >=2 else adjust/1.5
+    adjust = adjust/3 if adjust >=2 else adjust/2
     now_add_lust *= adjust
     # 痛苦刻印修正
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
     now_add_lust *= adjust
     # A扩张修正
     adjust = attr_calculation.get_ability_adjust(character_data.ability[10])
-    now_add_lust /= adjust
+    now_add_lust /= adjust * adjust
 
     character_data.status_data[17] += now_add_lust
     character_data.status_data[17] = min(99999, character_data.status_data[17])
