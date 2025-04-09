@@ -795,6 +795,90 @@ def judge_interrupt_character_behavior(character_id: int) -> int:
 
     return 0
 
+def recover_from_unconscious_h(character_id: int, info_text: str = ""):
+    """
+    从无意识H中恢复意识的结算\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 如果角色不在无意识H状态，则直接返回
+    if character_data.sp_flag.unconscious_h == 0:
+        return
+
+    # 停止对方的无意识状态与H状态
+    target_data.sp_flag.unconscious_h = 0
+    target_data.sp_flag.is_h = False
+
+    # 是否继续H
+    continue_h = False
+
+    # 输出提示信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    if info_text == "":
+        now_draw.text = _("\n{0}从无意识状态中恢复过来\n").format(target_data.name)
+    else:
+        now_draw.text = info_text
+    now_draw.draw()
+
+    # 终止对方的行动
+    character_behavior.judge_character_status_time_over(character_data.target_character_id, cache.game_time, end_now = 2)
+    # 睡眠中，则对方获得睡奸醒来状态
+    if handle_premise.handle_action_sleep(character_data.target_character_id):
+        target_data.sp_flag.sleep_h_awake = True
+    # 同步玩家的行动开始时间
+    character.init_character_behavior_start_time(character_id, cache.game_time)
+    # 玩家的行动时间设为10分钟，对方的行动时间设为15分钟
+    character_data.behavior.duration = 10
+    target_data.behavior.duration = 15
+
+    # 如果交互对象是监禁状态，则直接通过
+    if handle_premise.handle_t_imprisonment_1(character_id):
+        continue_h = True
+    # 检测是否满足高级性骚扰的实行值需求
+    elif handle_premise.handle_instruct_judge_high_obscenity(character_data.target_character_id):
+        # 获取陷落状态
+        character_fall_level = attr_calculation.get_character_fall_level(character_data.target_character_id, minus_flag=True)
+        # 3级及以上的陷落时会通过
+        if character_fall_level >= 3:
+            continue_h = True
+        # 爱情线会变成轻度性骚扰
+        elif character_fall_level > 0:
+            character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
+            character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
+        # 隶属线会愤怒生气
+        elif character_fall_level < 0:
+            target_data.angry_point += 100
+            target_data.sp_flag.angry_with_player = True
+        # 如果没有陷落的话，会变成高级性骚扰
+        else:
+            character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
+            character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
+    # 不满足的话，设为H失败
+    else:
+        character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
+        character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
+
+    # 如果继续H
+    if continue_h:
+        character_data.behavior.behavior_id = constant.Behavior.H
+        character_data.state = constant.CharacterStatus.STATUS_H
+        target_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_data.state = constant.CharacterStatus.STATUS_WAIT
+       # 睡眠中，则对方获得装睡状态
+        if handle_premise.handle_action_sleep(character_data.target_character_id):
+            target_data.h_state.pretend_sleep = True
+    # 否则
+    else:
+        # 重置双方H结构体和相关数据
+        default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange, datetime.datetime)
+
+    # 时间推进十分钟
+    update.game_update_flow(10)
+
 
 def judge_weak_up_in_sleep_h(character_id: int):
     """
@@ -809,70 +893,15 @@ def judge_weak_up_in_sleep_h(character_id: int):
     weak_rate = game_config.config_sleep_level[1].sleep_point - target_data.sleep_point
     if target_data.sleep_point <= game_config.config_sleep_level[0].sleep_point:
         weak_rate += game_config.config_sleep_level[0].sleep_point - target_data.sleep_point
-    # 判定是否吵醒，吵醒则先结算当前行动然后进入重度性骚扰失败状态
+    # 判定是否吵醒
     if weak_rate >= random.randint(1,100):
+        # 清空疲劳和睡眠程度
         target_data.tired_point = 0
         target_data.sleep_point = 0
-        # 输出提示信息
-        now_draw = draw.WaitDraw()
-        now_draw.width = window_width
-        now_draw.text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
-        now_draw.draw()
-        # 终止对方的睡眠
-        character_behavior.judge_character_status_time_over(now_character_data.target_character_id, cache.game_time, end_now = 2)
-        # 停止对方的无意识状态与H状态
-        target_data.sp_flag.unconscious_h = 0
-        target_data.sp_flag.is_h = False
-        # 对方获得睡奸醒来状态
-        target_data.sp_flag.sleep_h_awake = True
-        # 重置双方H结构体和相关数据
-        default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange, datetime.datetime)
-        # 同步玩家的行动开始时间
-        character.init_character_behavior_start_time(character_id, cache.game_time)
-        # 检测是否满足高级性骚扰的实行值需求
-        if handle_premise.handle_instruct_judge_high_obscenity(now_character_data.target_character_id):
-            # 如果已经陷落的话
-            if handle_premise.handle_target_fall(character_id):
-                # 获取陷落状态
-                character_fall_level = attr_calculation.get_character_fall_level(now_character_data.target_character_id, minus_flag=True)
-                # 3级及以上的陷落时会直接变成H，对方变为装睡状态
-                if character_fall_level >= 3:
-                    target_data.h_state.pretend_sleep = True
-                    now_character_data.behavior.behavior_id = constant.Behavior.H
-                    now_character_data.state = constant.CharacterStatus.STATUS_H
-                    target_data.behavior.behavior_id = constant.Behavior.WAIT
-                    target_data.state = constant.CharacterStatus.STATUS_WAIT
-                    target_data.behavior.duration = 15
-                # 爱情线会变成轻度性骚扰
-                elif character_fall_level > 0:
-                    now_character_data.behavior.behavior_id = constant.Behavior.LOW_OBSCENITY_ANUS
-                    now_character_data.state = constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS
-                # 隶属线会愤怒生气
-                elif character_fall_level < 0:
-                    target_data.angry_point += 100
-                    target_data.sp_flag.angry_with_player = True
-                # 如果没有陷落的话，会变成高级性骚扰
-                else:
-                    now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-                    now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-            # 如果没有陷落的话，会变成高级性骚扰
-            else:
-                now_character_data.behavior.behavior_id = constant.Behavior.HIGH_OBSCENITY_ANUS
-                now_character_data.state = constant.CharacterStatus.STATUS_HIGH_OBSCENITY_ANUS
-            # 如果交互对象是监禁状态，则也转为H状态
-            if handle_premise.handle_t_imprisonment_1(character_id):
-                now_character_data.behavior.behavior_id = constant.Behavior.H
-                now_character_data.state = constant.CharacterStatus.STATUS_H
-                target_data.behavior.behavior_id = constant.Behavior.WAIT
-                target_data.state = constant.CharacterStatus.STATUS_WAIT
-                target_data.behavior.duration = 15
-        # 不满足的话，设为H失败
-        else:
-            now_character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-            now_character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
-        now_character_data.behavior.duration = 10
-        # 为了让惊醒正常运作，需要时间推进十分钟
-        update.game_update_flow(10)
+        # 提示信息
+        info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
+        # 结算醒来
+        recover_from_unconscious_h(character_id, info_text)
 
 
 def judge_same_position_npc_follow():
