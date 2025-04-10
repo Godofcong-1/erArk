@@ -31,7 +31,7 @@ config_image_data: Dict[int, int] = {}
 """ 人物图片对应图片id """
 config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
 """ 行为结算器配置 """
-config_behavior_effect_data: Dict[int, Set] = {}
+config_behavior_effect_data: Dict[int, List] = {}
 """ 行为所包含的结算器id数据 """
 config_second_behavior_effect: Dict[int, config_def.SecondEffect] = {}
 """ 二段行为结算器配置 """
@@ -653,15 +653,25 @@ def load_behavior_effect_data():
         now_tem = config_def.BehaviorEffect()
         now_tem.__dict__ = tem_data
         config_behavior_effect[now_tem.cid] = now_tem
-        config_behavior_effect_data.setdefault(now_tem.behavior_id, set())
+        config_behavior_effect_data.setdefault(now_tem.behavior_id, [])
         # config_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
 
         if "|" not in now_tem.effect_id:
-            config_behavior_effect_data[now_tem.behavior_id].add(int(now_tem.effect_id))
+            # 如果now_tem.effect_id是数字，则转为int
+            if now_tem.effect_id.isdigit():
+                config_behavior_effect_data[now_tem.behavior_id].append(int(now_tem.effect_id))
+            # 否则是字符串，直接添加
+            else:
+                config_behavior_effect_data[now_tem.behavior_id].append(now_tem.effect_id)
         else:
             effect_list = now_tem.effect_id.split('|')
             for effect in effect_list:
-                config_behavior_effect_data[now_tem.behavior_id].add(int(effect))
+                # 如果effect是数字，则转为int
+                if effect.isdigit():
+                    config_behavior_effect_data[now_tem.behavior_id].append(int(effect))
+                # 否则是字符串，直接添加
+                else:
+                    config_behavior_effect_data[now_tem.behavior_id].append(effect)
 
 
 def load_second_behavior_effect_data():

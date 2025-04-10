@@ -846,18 +846,18 @@ def settle_direct_instruct(ai_result: dict) -> None:
     # 指令持续时间
     new_duration = ai_result["time"]
     # 构建该临时指令的结算
-    game_config.config_behavior_effect_data[tem_state_id] = set()
+    game_config.config_behavior_effect_data[tem_state_id] = []
     # 体力气力消耗
-    game_config.config_behavior_effect_data[tem_state_id].add(10 + ai_result["tired"])
-    game_config.config_behavior_effect_data[tem_state_id].add(11 + ai_result["tired"])
+    game_config.config_behavior_effect_data[tem_state_id].append(10 + ai_result["tired"])
+    game_config.config_behavior_effect_data[tem_state_id].append(11 + ai_result["tired"])
     # 关系变化
     if ai_result["relationship"] == 1:
-        game_config.config_behavior_effect_data[tem_state_id].add(23)
+        game_config.config_behavior_effect_data[tem_state_id].append(23)
     elif ai_result["relationship"] == 3:
-        game_config.config_behavior_effect_data[tem_state_id].add(21)
+        game_config.config_behavior_effect_data[tem_state_id].append(21)
     elif ai_result["relationship"] == 4:
-        game_config.config_behavior_effect_data[tem_state_id].add(21)
-        game_config.config_behavior_effect_data[tem_state_id].add(22)
+        game_config.config_behavior_effect_data[tem_state_id].append(21)
+        game_config.config_behavior_effect_data[tem_state_id].append(22)
     # 角色状态变化
     if ai_result["character_state"] != -1:
         # 如果是列表，则遍历添加
@@ -865,24 +865,24 @@ def settle_direct_instruct(ai_result: dict) -> None:
             for chara_state_id in ai_result["character_state"]:
                 if chara_state_id >= 9:
                     effect_id = chara_state_id + 42
-                    game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+                    game_config.config_behavior_effect_data[tem_state_id].append(effect_id)
         # 否则直接添加
         else:
             chara_state_id = ai_result["character_state"]
             if chara_state_id >= 9:
                 effect_id = chara_state_id + 42
-            game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+            game_config.config_behavior_effect_data[tem_state_id].append(effect_id)
     # 经验变化
     if ai_result["experience"] != -1:
         # 如果是列表，则遍历添加
         if isinstance(ai_result["experience"], list):
             for exp_id in ai_result["experience"]:
                 effect_id = f"CVE_A2_E|{exp_id}_G_1"
-                game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+                game_config.config_behavior_effect_data[tem_state_id].append(effect_id)
         # 否则直接添加
         else:
             exp_id = ai_result["experience"]
             effect_id = f"CVE_A2_E|{exp_id}_G_1"
-            game_config.config_behavior_effect_data[tem_state_id].add(effect_id)
+            game_config.config_behavior_effect_data[tem_state_id].append(effect_id)
     # 执行结算
     chara_handle_instruct_common_settle(tem_state_id, duration=new_duration, force_taget_wait=True)
