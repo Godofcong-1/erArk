@@ -346,6 +346,8 @@ class Instruct:
     """ 邀请在爱情旅馆H """
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
+    ASK_HIDDEN_SEX = 0
+    """ 邀请隐奸 """
     ASK_GROUP_SEX = 0
     """ 邀请群交 """
 

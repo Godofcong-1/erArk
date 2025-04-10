@@ -477,7 +477,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         scene_data = cache.scene_data[scene_path_str]
         if len(scene_data.character_list) > 2:
             other_chara_count = len(scene_data.character_list) - 2
-            if instruct_name == _("群交"):
+            if instruct_name in {_("群交"), _("隐奸")}:
                 judge_other_people = 60 + 60 * other_chara_count
             elif judge_data_type == "S":
                 judge_other_people = 40 + 40 * other_chara_count

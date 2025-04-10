@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai, handle_premise
+from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai, handle_npc_ai_in_h, handle_premise
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1915,10 +1915,10 @@ def handle_collect():
 )
 def handle_do_h():
     """处理邀请H指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    h_flag = False
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
     if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
         now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         if cache.scene_data[now_scene_str].close_flag == 0:
@@ -1926,26 +1926,14 @@ def handle_do_h():
             door_return = now_draw.draw()
             if door_return == -1:
                 return
-        h_flag = True
         target_data.sp_flag.is_follow = 0
-        character_data.behavior.behavior_id = constant.Behavior.H
-        character_data.state = constant.CharacterStatus.STATUS_H
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
         now_draw.text = _("\n进入H模式\n")
         now_draw.draw()
-
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
     else:
-        character_data.behavior.behavior_id = constant.Behavior.DO_H_FAIL
-        character_data.state = constant.CharacterStatus.STATUS_DO_H_FAIL
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
-
-    if not h_flag:
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
         now_draw.text = _("\n进入H模式失败\n")
         now_draw.draw()
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DO_H_FAIL)
 
 
 @add_instruct(
@@ -2030,7 +2018,6 @@ def handle_stop_sleep_obscenity():
 )
 def handle_unconscious_h():
     """处理无意识奸指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -2040,15 +2027,11 @@ def handle_unconscious_h():
         if door_return == -1:
             return
     target_data.sp_flag.is_follow = 0
-    character_data.behavior.behavior_id = constant.Behavior.H
-    character_data.state = constant.CharacterStatus.STATUS_H
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
-
-    character_data.behavior.duration = 5
-    update.game_update_flow(5)
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
 
 
 @add_instruct(
@@ -2071,6 +2054,35 @@ def handle_do_h_in_love_hotel():
     target_data = cache.character_data[character_data.target_character_id]
     target_data.h_state.h_in_love_hotel = True
     handle_do_h()
+
+
+@add_instruct(
+    constant.Instruct.ASK_HIDDEN_SEX,
+    constant.InstructType.OBSCENITY,
+    _("邀请隐奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.CharacterStatus.STATUS_ASK_HIDDEN_SEX,
+)
+def handle_ask_hidden_sex():
+    """处理邀请隐奸指令"""
+    from Script.UI.Panel.Select_Hidden_Sex_Mode_Panel import Select_Hidden_Sex_Mode_Panel
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if character.calculation_instuct_judege(0, character_data.target_character_id, _("隐奸"))[0]:
+        target_data.sp_flag.is_follow = 0
+        now_panel = Select_Hidden_Sex_Mode_Panel(width)
+        now_panel.draw()
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ASK_HIDDEN_SEX)
+    else:
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n邀请隐奸失败\n")
+        now_draw.draw()
+        chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_ASK_HIDDEN_SEX_FAIL)
 
 
 @add_instruct(
@@ -3585,7 +3597,7 @@ def handle_change_top_and_bottom():
     character_data: game_type.Character = cache.character_data[0]
     target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_character_data.h_state.npc_active_h = True
-    handle_npc_ai.npc_active_h()
+    handle_npc_ai_in_h.npc_active_h()
 
 
 @add_instruct(
@@ -3598,7 +3610,7 @@ def handle_change_top_and_bottom():
 )
 def handle_keep_enjoy():
     """处理继续享受指令"""
-    handle_npc_ai.npc_active_h()
+    handle_npc_ai_in_h.npc_active_h()
 
 
 @add_instruct(

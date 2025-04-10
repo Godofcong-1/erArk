@@ -1,4 +1,3 @@
-
 class Behavior:
     """行为id"""
 
@@ -272,6 +271,10 @@ class Behavior:
     """ 戴上项圈 """
     GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    ASK_HIDDEN_SEX = 378
+    """ 邀请隐奸 """
+    ASK_HIDDEN_SEX_FAIL = 379
+    """ 邀请隐奸失败 """
     ASK_GROUP_SEX = 380
     """ 邀请群交 """
     ASK_GROUP_SEX_FAIL = 381

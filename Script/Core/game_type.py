@@ -500,6 +500,8 @@ class BODY_H_STATE:
         """ 睡奸中醒来但是装睡的状态 """
         self.sex_assist: bool = False
         """ 性爱助手状态，False为不进行，True为进行 """
+        self.hidden_sex_discovery_dregree: int = 0
+        """ 隐奸中被发现的程度，int，初始为0，100时被发现 """
 
 
 class FIRST_RECORD:
@@ -611,6 +613,8 @@ class SPECIAL_FLAG:
         """ 在H模式中 """
         self.unconscious_h: int = 0
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
+        self.hidden_sex_mode: int = 0
+        """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐] """
         self.sleep_h_awake: bool = 0
         """ 睡奸中醒来 """
         self.wait_flag: bool = 0

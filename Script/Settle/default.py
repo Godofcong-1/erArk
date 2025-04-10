@@ -715,6 +715,7 @@ def handle_nothing(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    pass
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_HIT_POINT)

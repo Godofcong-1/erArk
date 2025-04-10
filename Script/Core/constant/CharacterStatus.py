@@ -1,4 +1,3 @@
-
 class CharacterStatus:
     """角色状态id"""
 
@@ -270,6 +269,10 @@ class CharacterStatus:
     """ 戴上项圈 """
     STATUS_GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    STATUS_ASK_HIDDEN_SEX = 378
+    """ 邀请隐奸 """
+    STATUS_ASK_HIDDEN_SEX_FAIL = 379
+    """ 邀请隐奸失败 """
     STATUS_ASK_GROUP_SEX = 380
     """ 邀请群交 """
     STATUS_ASK_GROUP_SEX_FAIL = 381
