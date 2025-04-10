@@ -19,6 +19,7 @@ from Script.Design import (
     handle_premise_place,
     event,
     handle_npc_ai,
+    handle_npc_ai_in_h,
     map_handle,
     attr_calculation,
     pregnancy,
@@ -105,7 +106,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         handle_npc_ai.judge_character_cant_move(character_id) # 无法自由移动的角色
         handle_npc_ai.judge_assistant_character(character_id) # 助理
         handle_npc_ai.judge_character_follow(character_id) # 跟随模式
-        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
+        handle_npc_ai_in_h.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
 
     # 处理公共资源
     # update_cafeteria() # 刷新食堂的饭，不需要了，改为NPC在没有饭的时候自动刷新
@@ -142,7 +143,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
                 cache.over_behavior_character.add(character_id)
         #         print(f"debug time_judge")
         handle_npc_ai.judge_character_tired_sleep(character_id) # 结算疲劳
-        handle_npc_ai.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
+        handle_npc_ai_in_h.judge_character_h_obscenity_unconscious(character_id, pl_start_time) # H状态、猥亵与无意识
         judge_pl_real_time_data() # 玩家实时数据结算
         # print(f"debug 玩家结算完毕")
 
@@ -806,7 +807,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
                     sleep_level,tem = attr_calculation.get_sleep_level(target_data.sleep_point)
                 # 熟睡等级小于等于1时判定是否吵醒
                 if sleep_level <= 1:
-                    handle_npc_ai.judge_weak_up_in_sleep_h(character_id)
+                    handle_npc_ai_in_h.judge_weak_up_in_sleep_h(character_id)
 
     # 结算非玩家部分
     else:

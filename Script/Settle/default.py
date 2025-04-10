@@ -11,6 +11,7 @@ from Script.Design import (
     handle_instruct,
     character_behavior,
     handle_npc_ai,
+    handle_npc_ai_in_h,
     handle_premise,
     handle_premise_place,
     clothing
@@ -7483,9 +7484,8 @@ def handle_masturebate_add_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    from Script.Design import handle_npc_ai
     # 根据NPC的部位喜好，选择一个部位
-    part_id = handle_npc_ai.evaluate_npc_body_part_prefs(character_id)
+    part_id = handle_npc_ai_in_h.evaluate_npc_body_part_prefs(character_id)
     # 增加快感
     base_chara_state_common_settle(character_id, add_time, part_id, 50, ability_level = character_data.ability[30], change_data = change_data)
     # 增加经验
@@ -7945,7 +7945,7 @@ def handle_recover_from_unconscious_add_adjust(
     # 如果交互对象是在H中，则进行恢复意识结算
     character_data: game_type.Character = cache.character_data[character_id]
     if handle_premise.handle_is_h(character_data.target_character_id):
-        handle_npc_ai.recover_from_unconscious_h(character_id)
+        handle_npc_ai_in_h.recover_from_unconscious_h(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
