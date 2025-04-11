@@ -1097,6 +1097,7 @@ def handle_diary():
     constant.Instruct.SLEEP, constant.InstructType.DAILY, _("睡觉"),
     {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TIME_STOP_OFF,
      constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME},
     constant.CharacterStatus.STATUS_SLEEP,
 )
