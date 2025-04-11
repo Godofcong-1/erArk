@@ -128,7 +128,7 @@ class BehaviorEffect:
     TARGET_MOOD_TO_ANGRY = 1528
     """ 属性_基础 交互对象心情变为愤怒 """
     SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO = 1531
-    """ 属性_结构体 场景内所有角色欲望值归零 """
+    """ 属性_基础 场景内所有角色欲望值归零 """
 
     TARGET_ADD_SMALL_N_FEEL = 41
     """ 属性_状态 交互对象增加少量Ｎ快（N感补正） """
@@ -259,6 +259,8 @@ class BehaviorEffect:
     PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE = 201
     """ 属性_经验 场景内所有其他角色均增加1被催眠经验 """
 
+    SHOWER_FLAG_TO_0 = 301
+    """ 特殊flag_基础 自身清零洗澡状态 """
     SHOWER_FLAG_TO_1 = 302
     """ 特殊flag_基础 自身变成要脱衣服（洗澡）状态 """
     SHOWER_FLAG_TO_2 = 303
@@ -364,7 +366,7 @@ class BehaviorEffect:
     UNCONSCIOUS_FLAG_TO_7 = 488
     """ 特殊flag_H 自身变成无意识_体控状态 """
     HYPNOSIS_FLAG_TO_0 = 489
-    """ 特殊flag_H 自身清零催眠系的flag状态 """
+    """ 特殊flag_H 自身清零催眠系的flag与催眠子项 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

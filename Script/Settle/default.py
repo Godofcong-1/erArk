@@ -6129,6 +6129,27 @@ def handle_shower_flag_to_1(
     character_data.sp_flag.shower = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_0)
+def handle_shower_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身清零洗澡状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.shower = 0
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_2)
 def handle_shower_flag_to_2(
         character_id: int,
@@ -6856,7 +6877,7 @@ def handle_hypnosis_flag_to_0(
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime, ):
     """
-    自身清零催眠系的flag状态
+    自身清零催眠系的flag与催眠子项
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -6868,6 +6889,11 @@ def handle_hypnosis_flag_to_0(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.unconscious_h in [4, 5, 6, 7]:
         character_data.sp_flag.unconscious_h = 0
+    character_data.hypnosis.increase_body_sensitivity = False
+    character_data.hypnosis.blockhead = False
+    character_data.hypnosis.active_h = False
+    character_data.hypnosis.pain_as_pleasure = False
+    character_data.hypnosis.roleplay = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0)

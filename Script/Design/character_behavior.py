@@ -506,8 +506,6 @@ def update_sleep():
             character_data.action_info.h_interrupt = 0
             # 重置每天第一次见面
             character_data.first_record.day_first_meet = 1
-            # 重置洗澡状态
-            character_data.sp_flag.shower = 0
             # 新：改为洗澡时清零（清零污浊状态）
             # character_data.dirty = attr_calculation.get_dirty_zero()
             # 检查并处理受精怀孕部分
@@ -519,14 +517,6 @@ def update_sleep():
                 handle_ability.gain_ability(character_id)
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
-            # 清零催眠状态
-            if character_data.sp_flag.unconscious_h >= 4:
-                character_data.sp_flag.unconscious_h = 0
-            character_data.hypnosis.increase_body_sensitivity = False
-            character_data.hypnosis.blockhead = False
-            character_data.hypnosis.active_h = False
-            character_data.hypnosis.pain_as_pleasure = False
-            character_data.hypnosis.roleplay = 0
             # 清零睡奸中醒来状态
             character_data.sp_flag.sleep_h_awake = 0
 

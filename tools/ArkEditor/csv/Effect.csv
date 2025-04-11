@@ -65,7 +65,7 @@ cid,effect_name,effect_type,effect
 1526,TARGET_MOOD_TO_NORMAL,属性_基础,交互对象心情变为普通
 1527,TARGET_MOOD_TO_BAD,属性_基础,交互对象心情变为不好
 1528,TARGET_MOOD_TO_ANGRY,属性_基础,交互对象心情变为愤怒
-1531,SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO,属性_结构体,场景内所有角色欲望值归零
+1531,SCENE_ALL_CHARACTERS_DESIRE_POINT_ZERO,属性_基础,场景内所有角色欲望值归零
 
 41,TARGET_ADD_SMALL_N_FEEL,属性_状态,交互对象增加少量Ｎ快（N感补正）
 42,TARGET_ADD_SMALL_B_FEEL,属性_状态,交互对象增加少量Ｂ快（B感补正）
@@ -134,6 +134,7 @@ cid,effect_name,effect_type,effect
 
 201,PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE,属性_经验,场景内所有其他角色均增加1被催眠经验
 
+301,SHOWER_FLAG_TO_0,特殊flag_基础,自身清零洗澡状态
 302,SHOWER_FLAG_TO_1,特殊flag_基础,自身变成要脱衣服（洗澡）状态
 303,SHOWER_FLAG_TO_2,特殊flag_基础,自身变成要洗澡状态
 304,SHOWER_FLAG_TO_3,特殊flag_基础,自身变成要披浴巾状态
@@ -187,7 +188,7 @@ cid,effect_name,effect_type,effect
 486,UNCONSCIOUS_FLAG_TO_5,特殊flag_H,自身变成无意识_平然状态
 487,UNCONSCIOUS_FLAG_TO_6,特殊flag_H,自身变成无意识_心控状态
 488,UNCONSCIOUS_FLAG_TO_7,特殊flag_H,自身变成无意识_体控状态
-489,HYPNOSIS_FLAG_TO_0,特殊flag_H,自身清零催眠系的flag状态
+489,HYPNOSIS_FLAG_TO_0,特殊flag_H,自身清零催眠系的flag与催眠子项
 
 501,TALK_ADD_ADJUST,指令_专用结算,（聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间
 502,COFFEE_ADD_ADJUST,指令_专用结算,（泡咖啡用）根据发起者的料理技能进行好感度、信赖、好意调整
