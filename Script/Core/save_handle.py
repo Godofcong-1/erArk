@@ -421,11 +421,12 @@ def update_character_config_data(value):
                 value.juel[key] = 0
                 update_count += 1
     # 能力
-    if len(value.ability) != len(game_config.config_ability):
-        for key in game_config.config_ability:
-            if key not in value.ability:
-                value.ability[key] = 0
-                update_count += 1
+    # 可能存在旧的空编号，所以这里不检查长度
+    # if len(value.ability) != len(game_config.config_ability):
+    for key in game_config.config_ability:
+        if key not in value.ability:
+            value.ability[key] = 0
+            update_count += 1
     # 设置
     if len(value.chara_setting) != len(game_config.config_chara_setting):
         for key in game_config.config_chara_setting:
