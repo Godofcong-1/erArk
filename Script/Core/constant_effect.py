@@ -256,8 +256,57 @@ class BehaviorEffect:
     DO_H_FAILED_ADJUST = 153
     """ 属性_失败状态 邀请H失败的加反感、加愤怒、降好感度、降信赖修正 """
 
-    PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE = 340
+    PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE = 201
     """ 属性_经验 场景内所有其他角色均增加1被催眠经验 """
+
+    SHOWER_FLAG_TO_1 = 302
+    """ 特殊flag_基础 自身变成要脱衣服（洗澡）状态 """
+    SHOWER_FLAG_TO_2 = 303
+    """ 特殊flag_基础 自身变成要洗澡状态 """
+    SHOWER_FLAG_TO_3 = 304
+    """ 特殊flag_基础 自身变成要披浴巾状态 """
+    SHOWER_FLAG_TO_4 = 305
+    """ 特殊flag_基础 自身变成洗完澡状态 """
+    EAT_FOOD_FLAG_TO_0 = 311
+    """ 特殊flag_基础 自身清零吃饭状态 """
+    EAT_FOOD_FLAG_TO_1 = 312
+    """ 特殊flag_基础 自身变成要取餐状态 """
+    EAT_FOOD_FLAG_TO_2 = 313
+    """ 特殊flag_基础 自身变成要进食状态 """
+    HELP_BUY_FOOD_FLAG_TO_0 = 314
+    """ 特殊flag_基础 自身清零要帮忙买午饭状态 """
+    HELP_MAKE_FOOD_FLAG_TO_0 = 315
+    """ 特殊flag_基础 自身清零做午饭状态 """
+    SLEEP_FLAG_TO_0 = 321
+    """ 特殊flag_基础 自身清零要睡眠状态 """
+    SLEEP_FLAG_TO_1 = 322
+    """ 特殊flag_基础 自身变成要睡眠状态 """
+    REST_FLAG_TO_0 = 325
+    """ 特殊flag_基础 自身清零要休息状态 """
+    REST_FLAG_TO_1 = 326
+    """ 特殊flag_基础 自身变成要休息状态 """
+    PEE_FLAG_TO_0 = 331
+    """ 特殊flag_基础 自身清零要撒尿状态 """
+    PEE_FLAG_TO_1 = 332
+    """ 特殊flag_基础 自身变成要撒尿状态 """
+    MILK_FLAG_TO_0 = 336
+    """ 特殊flag_基础 自身清零要挤奶状态 """
+    TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 341
+    """ 特殊flag_基础 交互对象清零对玩家的愤怒状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_0 = 351
+    """ 特殊flag_基础 自身清零大浴场娱乐状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_1 = 352
+    """ 特殊flag_基础 自身变成大浴场娱乐_要更衣状态 """
+    BATHHOUSE_ENTERTAINMENT_FLAG_TO_2 = 353
+    """ 特殊flag_基础 自身变成大浴场娱乐_要娱乐状态 """
+    SWIM_FLAG_TO_1 = 356
+    """ 特殊flag_基础 自身变成要换泳衣状态 """
+    SWIM_FLAG_TO_2 = 357
+    """ 特殊flag_基础 自身变成要游泳状态 """
+    CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG = 361
+    """ 特殊flag_基础 自身取消所有工作和娱乐状态 """
+    MAINTENANCE_FLAG_TO_0 = 371
+    """ 特殊flag_基础 自身清零要检修状态 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """
@@ -279,91 +328,43 @@ class BehaviorEffect:
     """ 属性_结构体 角色上线，加入从当前干员列表，进入地图 """
 
     T_BE_BAGGED = 451
-    """ 属性_特殊flag 交互对象变成被装袋搬走状态 """
+    """ 特殊flag_H 交互对象变成被装袋搬走状态 """
     T_BE_IMPRISONMENT = 452
-    """ 属性_特殊flag 交互对象变成被监禁状态 """
-    SHOWER_FLAG_TO_1 = 453
-    """ 属性_特殊flag 自身变成要脱衣服（洗澡）状态 """
-    SHOWER_FLAG_TO_2 = 454
-    """ 属性_特殊flag 自身变成要洗澡状态 """
-    SHOWER_FLAG_TO_3 = 455
-    """ 属性_特殊flag 自身变成要披浴巾状态 """
-    SHOWER_FLAG_TO_4 = 456
-    """ 属性_特殊flag 自身变成洗完澡状态 """
-    EAT_FOOD_FLAG_TO_0 = 457
-    """ 属性_特殊flag 自身清零吃饭状态 """
-    EAT_FOOD_FLAG_TO_1 = 458
-    """ 属性_特殊flag 自身变成要取餐状态 """
-    EAT_FOOD_FLAG_TO_2 = 459
-    """ 属性_特殊flag 自身变成要进食状态 """
-    SLEEP_FLAG_TO_0 = 460
-    """ 属性_特殊flag 自身清零要睡眠状态 """
-    SLEEP_FLAG_TO_1 = 461
-    """ 属性_特殊flag 自身变成要睡眠状态 """
-    REST_FLAG_TO_0 = 462
-    """ 属性_特殊flag 自身清零要休息状态 """
-    REST_FLAG_TO_1 = 463
-    """ 属性_特殊flag 自身变成要休息状态 """
-    PEE_FLAG_TO_0 = 464
-    """ 属性_特殊flag 自身清零要撒尿状态 """
-    PEE_FLAG_TO_1 = 465
-    """ 属性_特殊flag 自身变成要撒尿状态 """
-    SWIM_FLAG_TO_1 = 466
-    """ 属性_特殊flag 自身变成要换泳衣状态 """
-    SWIM_FLAG_TO_2 = 467
-    """ 属性_特殊flag 自身变成要游泳状态 """
-    MAINTENANCE_FLAG_TO_0 = 468
-    """ 属性_特殊flag 自身清零要检修状态 """
-    CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG = 469
-    """ 属性_特殊flag 自身取消所有工作和娱乐状态 """
-    H_FLAG_TO_0 = 475
-    """ 属性_特殊flag 自身清零H状态 """
-    H_FLAG_TO_1 = 476
-    """ 属性_特殊flag 自身变成H状态 """
-    T_H_FLAG_TO_0 = 477
-    """ 属性_特殊flag 交互对象清零H状态 """
-    T_H_FLAG_TO_1 = 478
-    """ 属性_特殊flag 交互对象变成H状态 """
-    SCENE_ALL_CHARACTERS_H_FLAG_TO_1 = 479
-    """ 属性_特殊flag 场景内所有角色变成H状态 """
+    """ 特殊flag_H 交互对象变成被监禁状态 """
+    MASTUREBATE_FLAG_TO_0 = 456
+    """ 特殊flag_H 自身清零要自慰状态 """
+    MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0 = 457
+    """ 特殊flag_H 自身清零要睡前自慰状态 """
+    MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2 = 458
+    """ 特殊flag_H 自身变为已睡前自慰状态 """
+    H_FLAG_TO_0 = 461
+    """ 特殊flag_H 自身清零H状态 """
+    H_FLAG_TO_1 = 462
+    """ 特殊flag_H 自身变成H状态 """
+    T_H_FLAG_TO_0 = 463
+    """ 特殊flag_H 交互对象清零H状态 """
+    T_H_FLAG_TO_1 = 464
+    """ 特殊flag_H 交互对象变成H状态 """
+    SCENE_ALL_CHARACTERS_H_FLAG_TO_1 = 465
+    """ 特殊flag_H 场景内所有角色变成H状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
-    """ 属性_特殊flag 自身清零无意识状态 """
+    """ 特殊flag_H 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482
-    """ 属性_特殊flag 自身变成无意识_睡眠状态 """
+    """ 特殊flag_H 自身变成无意识_睡眠状态 """
     UNCONSCIOUS_FLAG_TO_2 = 483
-    """ 属性_特殊flag 自身变成无意识_醉酒状态 """
+    """ 特殊flag_H 自身变成无意识_醉酒状态 """
     UNCONSCIOUS_FLAG_TO_3 = 484
-    """ 属性_特殊flag 自身变成无意识_时停状态 """
+    """ 特殊flag_H 自身变成无意识_时停状态 """
     UNCONSCIOUS_FLAG_TO_4 = 485
-    """ 属性_特殊flag 自身变成无意识_空气状态 """
+    """ 特殊flag_H 自身变成无意识_空气状态 """
     UNCONSCIOUS_FLAG_TO_5 = 486
-    """ 属性_特殊flag 自身变成无意识_平然状态 """
+    """ 特殊flag_H 自身变成无意识_平然状态 """
     UNCONSCIOUS_FLAG_TO_6 = 487
-    """ 属性_特殊flag 自身变成无意识_心控状态 """
+    """ 特殊flag_H 自身变成无意识_心控状态 """
     UNCONSCIOUS_FLAG_TO_7 = 488
-    """ 属性_特殊flag 自身变成无意识_体控状态 """
-    HELP_BUY_FOOD_FLAG_TO_0 = 489
-    """ 属性_特殊flag 自身清零要帮忙买午饭状态 """
-    HELP_MAKE_FOOD_FLAG_TO_0 = 490
-    """ 属性_特殊flag 自身清零做午饭状态 """
-    BATHHOUSE_ENTERTAINMENT_FLAG_TO_0 = 491
-    """ 属性_特殊flag 自身清零大浴场娱乐状态 """
-    BATHHOUSE_ENTERTAINMENT_FLAG_TO_1 = 492
-    """ 属性_特殊flag 自身变成大浴场娱乐_要更衣状态 """
-    BATHHOUSE_ENTERTAINMENT_FLAG_TO_2 = 493
-    """ 属性_特殊flag 自身变成大浴场娱乐_要娱乐状态 """
-    MILK_FLAG_TO_0 = 494
-    """ 属性_特殊flag 自身清零要挤奶状态 """
-    HYPNOSIS_FLAG_TO_0 = 495
-    """ 属性_特殊flag 自身清零催眠系的flag状态 """
-    TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 496
-    """ 属性_特殊flag 交互对象清零对玩家的愤怒状态 """
-    MASTUREBATE_FLAG_TO_0 = 497
-    """ 属性_特殊flag 自身清零要自慰状态 """
-    MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0 = 498
-    """ 属性_特殊flag 自身清零要睡前自慰状态 """
-    MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2 = 499
-    """ 属性_特殊flag 自身变为已睡前自慰状态 """
+    """ 特殊flag_H 自身变成无意识_体控状态 """
+    HYPNOSIS_FLAG_TO_0 = 489
+    """ 特殊flag_H 自身清零催眠系的flag状态 """
 
     TALK_ADD_ADJUST = 501
     """ 指令_专用结算 （聊天用）根据发起者的话术技能进行双方的好感度、好意、快乐调整，并记录当前谈话时间 """

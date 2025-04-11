@@ -115,6 +115,7 @@ place_someone_unconscious,SCENE_SOMEONE_UNCONSCIOUS,地点_角色,该地点有�
 place_someone_not_unconscious,SCENE_SOMEONE_NOT_UNCONSCIOUS,地点_角色,该地点有非无意识状态的角色
 place_all_unconscious,SCENE_ALL_UNCONSCIOUS,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识状态
 place_all_unconscious_or_sleep,SCENE_ALL_UNCONSCIOUS_OR_SLEEP,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识或睡眠状态
+scene_all_others_unconscious_or_sleep,SCENE_ALL_OTHERS_UNCONSCIOUS_OR_SLEEP,地点_角色,该地点除了自己和交互对象以外的角色都处于无意识或睡眠状态
 place_is_masturebate,SCENE_SOMEONE_IS_MASTUREBATE,地点_角色,该地点有角色在自慰
 place_over_one,SCENE_OVER_ONE,地点_角色,该地点里有除了自己之外的人
 place_have_assistant,SCENE_HAVE_ASSISTANT,地点_角色,该地点有助理
@@ -136,7 +137,10 @@ place_furniture_2,PLACE_FURNITURE_2,地点_属性,当前地点为办公级家具
 place_furniture_3,PLACE_FURNITURE_3,地点_属性,当前地点为卧室级家具（即含床）
 place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中（本前提已弃用）
+place_door_lockable,PLACE_DOOR_LOCKABLE,地点_属性,当前地点可以正常锁门（非内隔间锁）
+place_door_not_lockable,PLACE_DOOR_NOT_LOCKABLE,地点_属性,当前地点不能锁门（非内隔间锁）
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
+place_door_close,PLACE_DOOR_CLOSE,地点_属性,地点的门是锁着的（不含内隔间关门）
 place_inside_door_close,PLACE_INSIDE_DOOR_CLOSE,地点_属性,地点的内隔间正关门中
 place_ladies_only,PLACE_LADIES_ONLY,地点_属性,该地点男士止步（女洗手间/更衣室/浴室等）
 place_in_collection_list,PALCE_IN_COLLECTION_LIST,地点_属性,当前地点在收藏列表中
