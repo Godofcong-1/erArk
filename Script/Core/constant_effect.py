@@ -349,6 +349,12 @@ class BehaviorEffect:
     """ 特殊flag_H 交互对象变成H状态 """
     SCENE_ALL_CHARACTERS_H_FLAG_TO_1 = 465
     """ 特殊flag_H 场景内所有角色变成H状态 """
+    SELF_HIDDEN_SEX_FLAG_TO_0 = 471
+    """ 特殊flag_H 自己清零隐奸状态 """
+    TARGET_HIDDEN_SEX_FLAG_TO_0 = 472
+    """ 特殊flag_H 交互对象清零隐奸状态 """
+    BOTH_HIDDEN_SEX_FLAG_TO_0 = 473
+    """ 特殊flag_H 双方清零隐奸状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
     """ 特殊flag_H 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482

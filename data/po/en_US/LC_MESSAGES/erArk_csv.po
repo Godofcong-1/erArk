@@ -5492,7 +5492,7 @@ msgstr "Propose failed"
 msgid "戴上项圈失败"
 msgstr "Put on collar failed"
 
-msgid "目睹玩家与其他角色H"
+msgid "目睹玩家与其他角色H并打断"
 msgstr "Saw player doing H with others"
 
 msgid "亲吻失败"

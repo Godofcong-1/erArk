@@ -12760,7 +12760,7 @@ msgstr "{Name} triggered the event of lifting up skirt,\\n"
 "lifting {TargetName}'s {TagetSkiName} up and revealing the {TagetPanName} inside"
 
 #: .\data\talk\obscenity\see_h.csv:6
-msgid "{Name}触发了目睹玩家与其他角色H的地文"
+msgid "{Name}触发了目睹玩家与其他角色H并打断的地文"
 msgstr "{Name} triggered the event of seeing player doing H with others"
 
 #: .\data\talk\obscenity\set_free.csv:6
