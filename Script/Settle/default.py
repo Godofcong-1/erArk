@@ -8050,7 +8050,7 @@ def handle_teach_add_just(
 
     # 增加自己的习得和学识经验
     base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], change_data = change_data)
-    default_experience.handle_add_1_learn_experience(character_id, add_time, change_data, now_time)
+    default_experience.base_chara_experience_common_settle(character_id, 82)
 
     # 遍历当前场景的其他角色
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -8069,7 +8069,7 @@ def handle_teach_add_just(
 
                     # 增加习得和学识经验
                     base_chara_state_common_settle(chara_id, add_time, 9, ability_level = character_data.ability[45], change_data_to_target_change = change_data)
-                    default_experience.handle_add_1_learn_experience(chara_id, add_time, change_data, now_time)
+                    default_experience.base_chara_experience_common_settle(chara_id, 82)
 
                     # 如果老师是玩家
                     if character_id == 0:
@@ -8254,9 +8254,9 @@ def handle_eat_add_just(
 
         # 精液食物则将精液加到口腔污浊，并加精液经验
         if character_data.behavior.food_seasoning in {11,12}:
-            # 加精液经验
-            default_experience.handle_target_add_1_cumsdrink_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
-            default_experience.handle_target_add_1_cums_experience(0,add_time=add_time,change_data=change_data,now_time=now_time)
+            # 加精液经验和饮精经验
+            default_experience.base_chara_experience_common_settle(chara_id, 24, change_data=target_change)
+            default_experience.base_chara_experience_common_settle(chara_id, 25, change_data=target_change)
             # 获取精液量
             now_food = character_data.behavior.target_food
             semen_ml = now_food.special_seasoning_amount

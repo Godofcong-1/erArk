@@ -64,9 +64,9 @@ def judge_diplomatic_policy():
         diplomatic_policy_data = game_config.config_diplomatic_policy[diplomatic_policy_id]
 
         # 外交官增加对话经验和学识经验
-        for i in range(diplomatic_policy_id):
-            default_experience.handle_add_1_chat_experience(diplomat_chara_id, 1, game_type.CharacterStatusChange(), cache.game_time)
-            default_experience.handle_add_1_learn_experience(diplomat_chara_id, 1, game_type.CharacterStatusChange(), cache.game_time)
+        for i in range(diplomatic_policy_data.difficulty):
+            default_experience.base_chara_experience_common_settle(diplomat_chara_id, 80)
+            default_experience.base_chara_experience_common_settle(diplomat_chara_id, 82)
 
         # 能力修正
         ability_adjust = attr_calculation.get_ability_adjust(diplomat_chara_data.ability[40])
