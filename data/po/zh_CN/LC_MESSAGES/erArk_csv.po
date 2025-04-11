@@ -4117,7 +4117,7 @@ msgid "反重力科研項目"
 msgstr ""
 
 #: .\data\csv\Commission.csv:67
-msgid "也許我們能通過研究幹員安潔莉娜的源石技藝運作方式，開發一種新的載具，博士不試試嗎?"
+msgid "這裡是可露希爾，也許我們能通過研究幹員安潔莉娜的源石技藝運作方式，開發一種新的載具，博士不試試嗎?"
 msgstr ""
 
 #: .\data\csv\Commission.csv:68
