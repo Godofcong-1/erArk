@@ -56,8 +56,9 @@ def base_chara_experience_common_settle(
         final_change_data: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
 
     # 结算信息记录对象增加经验
-    final_change_data.experience.setdefault(experience_id, 0)
-    final_change_data.experience[experience_id] += base_value
+    if final_change_data != None:
+        final_change_data.experience.setdefault(experience_id, 0)
+        final_change_data.experience[experience_id] += base_value
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE)
 def handle_place_all_chara_add_1_been_hypnosis_experience(
