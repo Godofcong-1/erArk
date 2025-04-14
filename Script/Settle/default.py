@@ -3220,12 +3220,71 @@ def handle_wait_unitl_traget_action_end(
     target_start_time = target_character_data.behavior.start_time
     target_end_time = game_time.get_sub_date(target_character_data.behavior.duration, old_date=target_start_time)
     # 到结束时间还有多少分钟
-    add_time = (target_end_time.timestamp() - now_time.timestamp()) / 60
+    add_time = int((target_end_time.timestamp() - now_time.timestamp()) / 60)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.behavior.duration = add_time
     update.game_update_flow(add_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAIT_UNITL_PLAYER_ACTION_END)
+def handle_wait_unitl_player_action_end(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己等待至玩家行动结束
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data = cache.character_data[0]
+    if character_data.dead:
+        return
+    player_action_start_time = pl_character_data.behavior.start_time
+    player_action_end_time = game_time.get_sub_date(pl_character_data.behavior.duration, old_date=player_action_start_time)
+    # 到结束时间还有多少分钟
+    add_time = int((player_action_end_time.timestamp() - now_time.timestamp()) / 60)
+    character_data.behavior.behavior_id = constant.Behavior.WAIT
+    character_data.state = constant.CharacterStatus.STATUS_WAIT
+    character_data.behavior.duration = add_time + 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_TARGET_FOOD_FROM_BAG_LAST)
+def handle_set_target_food_from_bag_last(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将自己行为目标食物指定为背包里的最后一个食物
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if len(character_data.food_bag) == 0:
+        return
+    # 获取背包最后一个食物
+    last_key = list(character_data.food_bag.keys())[-1]
+    now_food = character_data.food_bag[last_key]
+    character_data.behavior.food_name = now_food.name
+    character_data.behavior.food_seasoning = now_food.special_seasoning
+    character_data.behavior.food_quality = now_food.quality
+    character_data.behavior.target_food = now_food
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
@@ -8272,7 +8331,7 @@ def handle_eat_add_just(
         now_time: datetime.datetime,
 ):
     """
-    （进食）根据当前场景的有无目标，以及食物的调味来区分进行食用人的判断和相应的结算
+    （进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8296,6 +8355,8 @@ def handle_eat_add_just(
 
     # 根据食物品质获得调整系数
     food_quality = character_data.behavior.food_quality
+    # 品质最小为1
+    food_quality = max(food_quality, 1)
     quality_adjust = (food_quality / 5) ** 2
     # 高品质食物额外加系数
     if food_quality == 8:

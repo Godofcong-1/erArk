@@ -180,6 +180,9 @@ cid,effect_name,effect_type,effect
 463,T_H_FLAG_TO_0,特殊flag_H,交互对象清零H状态
 464,T_H_FLAG_TO_1,特殊flag_H,交互对象变成H状态
 465,SCENE_ALL_CHARACTERS_H_FLAG_TO_1,特殊flag_H,场景内所有角色变成H状态
+471,SELF_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,自己清零隐奸状态
+472,TARGET_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,交互对象清零隐奸状态
+473,BOTH_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,双方清零隐奸状态
 481,UNCONSCIOUS_FLAG_TO_0,特殊flag_H,自身清零无意识状态
 482,UNCONSCIOUS_FLAG_TO_1,特殊flag_H,自身变成无意识_睡眠状态
 483,UNCONSCIOUS_FLAG_TO_2,特殊flag_H,自身变成无意识_醉酒状态
@@ -205,7 +208,7 @@ cid,effect_name,effect_type,effect
 513,BAGGING_AND_MOVING_ADD_ADJUST,指令_专用结算,（装袋搬走用）交互对象获得装袋搬走flag，玩家增加搬运人id，对方离线
 514,PUT_INTO_PRISON_ADD_ADJUST,指令_专用结算,（投入监牢用）被搬运对象上线，成为囚犯并结算，玩家失去搬运人id
 515,SET_FREE_ADD_ADJUST,指令_专用结算,（解除囚禁）交互对象失去监禁flag，从囚犯数据中删除
-516,EAT_ADD_ADJUST,指令_专用结算,（进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物食用
+516,EAT_ADD_ADJUST,指令_专用结算,（进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物使用
 518,INVITE_VISITOR_ADD_ADJUST,指令_专用结算,（邀请访客用）根据发起者(如果有的话再加上交互对象)的话术技能增加邀请槽
 519,MILK_ADD_ADJUST,指令_专用结算,（挤奶用）把交互对象的乳汁转移到厨房的冰箱里
 520,SALUTATION_3_ADD_ADJUST,指令_专用结算,（早安咬与晚安咬）触发交互对象一次射精，射到发起者嘴里
@@ -434,6 +437,8 @@ cid,effect_name,effect_type,effect
 1652,EXIT_WAITING_FOR_PHYSICAL_EXAM,属性_体检,自己退出等待体检状态
 
 1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
+1702,WAIT_UNITL_PLAYER_ACTION_END,行动,自己等待至玩家行动结束
+1711,SET_TARGET_FOOD_FROM_BAG_LAST,行动,将自己行为目标食物指定为背包里的最后一个食物
 
 1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

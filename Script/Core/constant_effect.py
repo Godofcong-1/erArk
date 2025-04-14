@@ -405,7 +405,7 @@ class BehaviorEffect:
     SET_FREE_ADD_ADJUST = 515
     """ 指令_专用结算 （解除囚禁）交互对象失去监禁flag，从囚犯数据中删除 """
     EAT_ADD_ADJUST = 516
-    """ 指令_专用结算 （进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物食用 """
+    """ 指令_专用结算 （进食）食物结算。会根据有无交互目标，食物的调味来自动判别食用对象和结算内容。需要搭配删除当前食物使用 """
     # REFUSE_EAT_ADD_ADJUST = 517
     # """ 指令_专用结算 （拒绝进食）吃掉该食物 """
     INVITE_VISITOR_ADD_ADJUST = 518
@@ -851,6 +851,10 @@ class BehaviorEffect:
 
     WAIT_UNITL_TRAGET_ACTION_END = 1701
     """ 行动 玩家等待至交互对象行动结束 """
+    WAIT_UNITL_PLAYER_ACTION_END = 1702
+    """ 行动 自己等待至玩家行动结束 """
+    SET_TARGET_FOOD_FROM_BAG_LAST = 1711
+    """ 行动 将自己行为目标食物指定为背包里的最后一个食物 """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """
