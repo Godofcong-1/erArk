@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,int,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,379,0,target_instruct_not_judge_h,{TargetName}拒绝了{Name}的邀请，表示不想和{Name}做这种事。
+1,379,0,target_instruct_judge_h,{TargetName}拒绝了{Name}的邀请，表示私下里可以，但是不想在大庭广众之下做这种事。

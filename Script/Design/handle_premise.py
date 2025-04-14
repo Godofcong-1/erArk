@@ -1363,6 +1363,34 @@ def handle_instruct_judge_low_obscenity(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_JUDGE_LOW_OBSCENITY)
+def handle_target_instruct_judge_low_obscenity(character_id: int) -> int:
+    """
+    口上用：当前实行值足以对交互对象轻度性骚扰
+    输入：character_id: int - 角色id
+    输出：int - 权重
+    """
+    # 获取角色数据
+    character_data = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    # 如果角色没有交互对象则返回0
+    if character_id == target_character_id:
+        return 0
+    # 判断交互对象是否满足低级骚扰条件（调用计算函数判断低级骚扰）
+    if character.calculation_instuct_judege(character_id, target_character_id, _("初级骚扰"), not_draw_flag=True)[0]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_NOT_JUDGE_LOW_OBSCENITY)
+def handle_target_instruct_not_judge_low_obscenity(character_id: int) -> int:
+    """
+    口上用：当前实行值不足以对交互对象轻度性骚扰
+    输入：character_id: int - 角色id
+    输出：int - 权重
+    """
+    return not handle_target_instruct_judge_low_obscenity(character_id)
+
 
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_HIGH_OBSCENITY)
 def handle_instruct_judge_high_obscenity(character_id: int) -> int:
@@ -1380,6 +1408,40 @@ def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_JUDGE_HIGH_OBSCENITY)
+def handle_target_instruct_judge_high_obscenity(character_id: int) -> int:
+    """
+    口上用：当前实行值足以对交互对象重度性骚扰
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重（1 表示满足，0 表示不满足）
+    """
+    # 获取当前角色数据
+    character_data = cache.character_data[character_id]
+    # 获取交互对象id
+    target_character_id = character_data.target_character_id
+    # 如果角色没有交互对象，则直接返回0
+    if character_id == target_character_id:
+        return 0
+    # 调用评价函数判断交互对象是否满足“严重骚扰”条件
+    if character.calculation_instuct_judege(character_id, target_character_id, _("严重骚扰"), not_draw_flag=True)[0]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_NOT_JUDGE_HIGH_OBSCENITY)
+def handle_target_instruct_not_judge_high_obscenity(character_id: int) -> int:
+    """
+    口上用：当前实行值不足以对交互对象重度性骚扰
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重（1 表示满足，0 表示不满足）
+    """
+    return not handle_target_instruct_judge_high_obscenity(character_id)
+
+
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_H)
 def handle_instruct_judge_h(character_id: int) -> int:
     """
@@ -1394,6 +1456,36 @@ def handle_instruct_judge_h(character_id: int) -> int:
     if character.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag = True)[0]:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_JUDGE_H)
+def handle_target_instruct_judge_h(character_id: int) -> int:
+    """
+    口上用：当前实行值足以对交互对象邀请H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    if character_id == target_character_id:
+        return 0
+    if character.calculation_instuct_judege(character_id, target_character_id, _("H模式"), not_draw_flag = True)[0]:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_INSTRUCT_NOT_JUDGE_H)
+def handle_target_instruct_not_judge_h(character_id: int) -> int:
+    """
+    口上用：当前实行值不足以对交互对象邀请H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_instruct_judge_h(character_id)
 
 
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_GROUP_SEX)
@@ -4024,6 +4116,83 @@ def handle_t_sleep_h_awake_1(character_id: int) -> int:
     if handle_sleep_h_awake_0(target_chara_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_0)
+def handle_hidden_sex_mode_0(character_id: int) -> int:
+    """
+    自己不在隐奸模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 0
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_GE_1)
+def handle_hidden_sex_mode_ge_1(character_id: int) -> int:
+    """
+    自己在某个隐奸模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode > 0
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_1)
+def handle_hidden_sex_mode_1(character_id: int) -> int:
+    """
+    判断角色是否处于双不隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于双不隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 1
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_2)
+def handle_hidden_sex_mode_2(character_id: int) -> int:
+    """
+    判断角色是否处于女隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于女隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 2
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_3)
+def handle_hidden_sex_mode_3(character_id: int) -> int:
+    """
+    判断角色是否处于男隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于男隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 3
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_4)
+def handle_hidden_sex_mode_4(character_id: int) -> int:
+    """
+    判断角色是否处于双隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于双隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 4
 
 
 @add_premise(constant_promise.Premise.FIELD_COMMISSION_0)
