@@ -22572,8 +22572,12 @@ msgstr ""
 msgid "“要喝咖啡吗？好的~”{TargetName}收到泡咖啡的请求，去操作咖啡机泡出了一杯咖啡。\n这时她突然产生了一个色情的想法。\n{TargetName}拉开自己胸前的衣服，露出一边的胸部和乳头，向咖啡中挤入了自己的母乳。\n{TargetName}微微红着脸，流着一些汗，将咖啡端到{PlayerName}面前。\n{PlayerName}端起咖啡品尝，这次的咖啡奶香特别浓郁，还有甘甜的回味，十分好喝。\n“今天的咖啡特别好喝呢，是放了什么特别的吗？”{PlayerName}问道。\n“怎...怎么会呢...还能放什么奇怪的东西呢...”{TargetName}紧张地回答着，让人感觉在掩饰着什么。"
 msgstr ""
 
+#: Event:4925fd01-a009-4af5-bf10-957ff228d79f
+msgid "调教指令前提|1|驯服及以下：\n部位扩张调教：非处女，非A处女，调教室，被监禁，非无意识\n敏感度调教：持有媚药，调教室，被监禁，非无意识\n催眠调教：非处女，已催眠-极，被监禁，非无意识\n夺取处女：处女，调教室，被监禁，非无意识\n夺取A处女：非处女，A处女，调教室，被监禁，非无意识\n侍奉调教：饥饿，被监禁，非无意识\n自慰调教：被监禁，非无意识\n榨乳调教：持有震动棒，榨乳机，非处女，调教室，被监禁，非无意识"
+msgstr ""
+
 #: Event:c7e1a6bb-9caf-4e6b-a2fd-eaaf8f97bef5
-msgid "迷晕带走|20|“要请我吃冰淇淋？你有这么好心吗？不过，谢了。”{TargetName}接过了{PlayerName}递来的冰淇淋。\n“怎么...头...晕晕的......”吃下混入迷药的冰淇淋的{TargetName}视野开始模糊，最终倒在地上，失去了意识。"
+msgid "迷晕带走|20|“要请我吃冰淇淋？你有这么好心吗？不过，谢了。”{TargetName}接过了{PlayerName}递来的冰淇淋。\n“怎么...头...晕晕的......”吃下混入迷药的冰淇淋的{TargetName}视野开始模糊，最终倒在地上，失去了意识。\n“不知道等她醒来时会怎么想呢？”{PlayerName}趁着{TargetName}失去意识，将其装入袋中，拉上拉链搬走。"
 msgstr ""
 
 #: Event:7d1dfea8-bf95-46a7-a6ac-787233fab76f
@@ -22592,28 +22596,16 @@ msgstr ""
 msgid "夺取处女|10|{TargetName}被脱光了衣服绑在调教台上，阴部暴露在{PlayerName}面前。\n“真是漂亮的小穴啊，之前考虑到你的感受，所以一直没有让你破处。”{PlayerName}的手指轻轻滑过阴唇。\n“不过既然现在决定把你调教成性奴，那今天就享用一下处女小穴吧。”{PlayerName}掰开{TargetName}的小穴，将龟头顶在穴口。\n“不，不要，插进来的话，我真的会杀了你。”{TargetName}威胁着，但现在失去力量的她根本吓不到{PlayerName}。\n随着肉棒插入阴道，捅破处女膜，破瓜之痛传入{TargetName}脑中，泪珠从她的眼角流下。\n“真是紧致的小穴呢，好好调教的话一定会成为非常好用的肉穴吧~”{PlayerName}凑到{TargetName}耳边挑衅着。\n失去反抗力量的{TargetName}只能闭上眼睛咬着牙，默默忍受着被玷污的事实。\n[调教进度+1]"
 msgstr ""
 
+#: Event:52474aa7-373c-4669-8e59-d58bb7cf2cbc
+msgid "夺取A处女|10|{TargetName}被脱光了衣服绑在调教台上，阴部暴露在{PlayerName}面前。\n{PlayerName}手指在{TargetName}的肛门边上打转，“好粉嫩啊，有成为肉穴的潜质呢。”\n“你...你不会要插进来吧...”{TargetName}有些害怕，“那不是可以插的地方啊！”\n{PlayerName}慢慢用手指探入肛门内，轻轻按压着括约肌让其放松下来。\n“这里可不是这样说的呢。”{TargetName}的肛门紧紧吸着{PlayerName}的手指，不让其离开，拔出来时发出了色情的“啵”声。\n{PlayerName}的龟头顶在了肛门口。“别插进来，我让你插小穴好吗，求你了。”{TargetName}害怕着，卑微地说道。\n“谢谢你的好意了，不过今天还是先享用处女屁穴吧。”说着，肉棒就顶开肛门，插入肠中。\n被强行扩张开肛门的痛楚折磨着{TargetName}，令她不断发出哀嚎，却在抽插中逐渐变成愉悦的呻吟。\n{PlayerName}捏住{TargetName}的下巴，“很有潜力呢，这么快就舒服起来了吗？”\n“怎么可能......”{TargetName}闭上眼睛转过头去，不知是在反驳{PlayerName}，还是因为被侵犯的快乐而羞耻。\n[调教进度+1]"
+msgstr ""
+
 #: Event:76bee102-7a12-4cf7-8708-060a101fdd41
 msgid "侍奉调教|15|被关起来后，因为监狱只提供能维持生存的食物，{TargetName}现在感到十分饥饿。\n“好想吃冰淇淋......”{TargetName}自言自语道。\n“哦，是吗？如果你乖乖听我的话，那我也不是不能让你吃。”{TargetName}微笑着说。\n“真的吗？！......不对，你这家伙肯定没怀什么好心。”{TargetName}先是激动，仔细一想又冷静了下来。\n但咕咕叫的肚子还是催促着{TargetName}答应下来。“说吧......要我做什么？”\n{PlayerName}脱下裤子，露出自己的肉棒。“自己过来侍奉，我觉得满意了就让你吃冰淇淋。”\n“啧，我就知道...”{TargetName}有些不情愿的跪在{TargetName}身前，用手握住柱身开始撸动。\n“还不够。”听到{PlayerName}这么说，{TargetName}只能将龟头含入口中，另一只手托住阴囊。\n{TargetName}轻轻揉捏着阴囊，一边撸动柱身一边用舌头舔舐着龟头。“怎么样...哈...满意了吧...”\n“还是很有天赋的嘛。”{PlayerName}拿出一个冰淇淋，看到冰淇淋的{TargetName}眼中又亮起了光芒。\n就在她想要伸手去拿时，{PlayerName}把肉棒从她嘴里拔出，对着冰淇淋上射精。\n“来，吃吧。不吃可没有了哦。”饥饿的{TargetName}面对沾满了腥臭精液的冰淇淋，也只能忍着腥味和苦味将其吃下。\n[调教进度+1]"
 msgstr ""
 
 #: Event:2397a0a6-6622-44f2-943d-ced4d79b70bf
 msgid "自慰调教|20|“又来了吗...今天又想干什么...”{TargetName}怨怨地说道。\n“嘛，反正你也不想被插入吧，那今天的调教，就只要你在我面前自慰到高潮就行了。”\n{TargetName}的脸被羞耻感染红，但也只好顺从地将手探向私处，一边揉捏着自己的乳头一边爱抚阴蒂。\n“被看着自慰什么的，也太羞耻了......”{TargetName}咬牙在心里想着。\n这时，{PlayerName}脱下裤子，将散发着精臭味和雄性荷尔蒙的肉棒放在{TargetName}脸上。\n“你，你干什么！”{TargetName}大喊着，“不是让我自慰就行了吗？”\n“别激动~只要你高潮了调教就结束了，我说话算数。”{PlayerName}的肉棒在{TargetName}鼻子前磨蹭着。\n肉棒的气味侵犯着{TargetName}的鼻腔，但她却不自觉兴奋起来。\n“嗯~怎么回事~比自己自慰的时候还要舒服~”{TargetName}抿着嘴唇，加快了手上的动作。\n高潮的快感传入大脑，{TargetName}绷紧了身体，大口喘息着，爱液从穴口喷出。\n“怎么回事...自己自慰都没有潮吹过...”{TargetName}为自己沉浸在快感中而感到羞耻。\n“结束了吧，你快走吧...”\n[调教进度+1]"
-msgstr ""
-
-#: Event:83829c5c-ca98-43be-af0c-b98564f00c01
-msgid "{TargetName}被{PlayerName}多次玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕。\n[调教进度+2]"
-msgstr ""
-
-#: Event:d7482de5-3010-4aba-a4f5-122d60a50a62
-msgid "{TargetName}被{PlayerName}不断玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕，她的内心有些向{PlayerName}屈服了。\n[调教进度+3]"
-msgstr ""
-
-#: Event:447f9b72-1b4a-48dc-96fd-7f2d54183151
-msgid "“你在做梦吗？我都说了我不可能当你的性奴。”\n“你真是让人火大。莱万汀！”火焰巨人在{TargetName}身后复现，{PlayerName}见状赶紧逃跑了。\n（看来在非监禁的状态下不可能让{TargetName}屈服）"
-msgstr ""
-
-#: Event:b884eb17-ea13-4762-88bf-ceaa0a0d5831
-msgid "“你别想了，我是不可能屈服的。”{TargetName}眼中依然透露着坚定的意志。\n（看来还需要继续调教{TargetName}，让她改变想法）"
 msgstr ""
 
 #: Event:9eac5edf-3921-4411-8d5e-62369358fdde
@@ -22624,8 +22616,20 @@ msgstr ""
 msgid "榨乳调教|30|{TargetName}被张开四肢固定在调教架上，榨乳机紧紧吸住乳头。\n“你...你又要干什么~啊~”敏感的乳头被不断吮吸着，即使是{TargetName}也只能像头奶牛一样呻吟起来。\n{PlayerName}拿出一支催乳剂，注射进{TargetName}的乳房。\n“岛上做冰淇淋的牛奶不够了，{TargetName}小姐，你也不想没有冰淇淋吃吧？”{TargetName}一脸奸诈的样子。\n“嗯~你这是~借口罢了~”小小的毛刷不断拂过乳头，刺激着乳房分泌乳汁，{TargetName}咬牙忍受着快感。\n“如果{TargetName}小姐不能好好挤出乳汁，大家会很困扰的。”说着{PlayerName}拿出振动棒插入{TargetName}的小穴。\n“喔呜~”粗大的振动棒顶到了{TargetName}的子宫口，子宫的繁育本能促使着乳房分泌乳汁。\n“要~要喷出来了~”{TargetName}再也承受不住快感，双眼上翻，张嘴伸出舌头，绷直身体到达了高潮。\n随着{TargetName}胸部达到绝顶，奶白的乳汁从乳头不停地喷出，被搾乳机收集起来。\n[调教进度+1]"
 msgstr ""
 
-#: Event:52474aa7-373c-4669-8e59-d58bb7cf2cbc
-msgid "夺取A处女|10|{TargetName}被脱光了衣服绑在调教台上，阴部暴露在{PlayerName}面前。\n{PlayerName}手指在{TargetName}的肛门边上打转，“好粉嫩啊，有成为肉穴的潜质呢。”\n“你...你不会要插进来吧...”{TargetName}有些害怕，“那不是可以插的地方啊！”\n{PlayerName}慢慢用手指探入肛门内，轻轻按压着括约肌让其放松下来。\n“这里可不是这样说的呢。”{TargetName}的肛门紧紧吸着{PlayerName}的手指，不让其离开，拔出来时发出了色情的“啵”声。\n{PlayerName}的龟头顶在了肛门口。“别插进来，我让你插小穴好吗，求你了。”{TargetName}害怕着，卑微地说道。\n“谢谢你的好意了，不过今天还是先享用处女屁穴吧。”说着，肉棒就顶开肛门，插入肠中。\n被强行扩张开肛门的痛楚折磨着{TargetName}，令她不断发出哀嚎，却在抽插中逐渐变成愉悦的呻吟。\n{PlayerName}捏住{TargetName}的下巴，“很有潜力呢，这么快就舒服起来了吗？”\n“怎么可能......”{TargetName}闭上眼睛转过头去，不知是在反驳{PlayerName}，还是因为被侵犯的快乐而羞耻。\n[调教进度+1]"
+#: Event:83829c5c-ca98-43be-af0c-b98564f00c01
+msgid "{TargetName}被{PlayerName}多次玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕。\n[调教进度+2]"
+msgstr ""
+
+#: Event:d7482de5-3010-4aba-a4f5-122d60a50a62
+msgid "{TargetName}被{PlayerName}不断玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕，她的内心有些向{PlayerName}屈服了。\n[调教进度+3]"
+msgstr ""
+
+#: Event:af654856-b81b-4d5d-9681-63d6185c0fd4
+msgid "“你别想了，我是不可能屈服的。”{TargetName}眼中依然透露着坚定的意志。\n看来还需要继续调教{TargetName}，让她改变想法。"
+msgstr ""
+
+#: Event:b884eb17-ea13-4762-88bf-ceaa0a0d5831
+msgid "“想，想什么呢...我只是觉得舒服才...”\n“总之，让我当你的性奴，还早着呢！”{TargetName}的理性依然占据着主导权。\n看来{TargetName}还没有完全屈服，需要进行更多的调教。"
 msgstr ""
 
 #: Event:354a567b-abbc-429d-84ac-a28fe44973a4
@@ -22642,6 +22646,10 @@ msgstr ""
 
 #: Event:6dca44c2-0613-40a0-a9bd-eec2b7883eed
 msgid "“我回来了，博士。”{Name}推开门将做好的{AllFoodName}放在桌上。\n“来一起吃吧~”{Name}在{PlayerName}身边坐下，一起享用了{AllFoodName}。\n“来，啊~”{Name}舀起一小块喂给{PlayerName}，两人之间的空气都充满了恋爱的气味。\n“怎么样，可不准说难吃哦...我已经努力练习过了...”{Name}很期待{PlayerName}的评价。"
+msgstr ""
+
+#: Event:9c0a6e3d-6f2c-4dc1-8616-187a54b17285
+msgid "“诶？！谁要和你做啊！”{TargetName}嫌弃地看着{PlayerName}。"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
