@@ -826,6 +826,12 @@ class Character_FirstNPC:
         self.race_filter_flag = 0
         self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
         self.talk_character_list = []
+        # 去掉特殊干员
+        self.special_chara_list = []
+        for chara_id in self.id_list.copy():
+            if cache.character_data[chara_id].name in constant.ban_NPC_name_set:
+                self.id_list.remove(chara_id)
+                self.special_chara_list.append(chara_id)
         self.prepare_filter()
 
 
@@ -860,7 +866,7 @@ class SelectFirstNPCButton:
 
         target_data: game_type.Character = cache.character_data[NPC_id]
         button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
-        # 如果有口上的话，且版本已弃用，输出大小
+        # 如果有口上的话，且版本已启用，输出大小
         if target_data.talk_size and cache.all_system_setting.character_text_version[target_data.adv] > 0:
             button_text += f"({target_data.talk_size}kb)"
         # 获得绘制颜色
