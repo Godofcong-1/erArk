@@ -14336,6 +14336,42 @@ msgstr ""
 msgid "【休息室】：监狱长晚上不会回宿舍睡觉，而是在此处休息，以免囚犯趁夜逃跑"
 msgstr ""
 
+#: .\data\csv\Tip.csv:108
+msgid "PRTS"
+msgstr ""
+
+#: .\data\csv\Tip.csv:108
+msgid "你找到我了。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:109
+msgid "你理应有很多的疑问。我会等你。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:110
+msgid "对了，不必担心PRTS，它只是在履行我们赋予它的职责。我没允许它伤害你。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:111
+msgid "深陷长梦的混沌之时，你会想起——"
+msgstr ""
+
+#: .\data\csv\Tip.csv:112
+msgid "这里万籁俱寂……太安静了。别留下我。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:113
+msgid "你没有忘记我。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:114
+msgid "我们的呼吸█̵̌█̵̌█̵̌温暖█̵̌█̵̌█̵̌█̵̌█̵̌█̵̌█̵̌双手。"
+msgstr ""
+
+#: .\data\csv\Tip.csv:115
+msgid "关闭PRTS，然后闭上眼睛。等你醒来，我会履行我们的约定。"
+msgstr ""
+
 #: .\data\csv\Tip_Chara.csv:7
 msgid "这里是dongya，三分热度大王，在热情消退之前大概会一直会写\n尽可能的动用了自己的经验和共情能力，希望看得开心\n老天保佑金山银山全都有~"
 msgstr ""
@@ -15078,10 +15114,6 @@ msgstr ""
 
 #: .\data\character\0083_普瑞赛斯.csv:4
 msgid "普瑞赛斯"
-msgstr ""
-
-#: .\data\character\0083_普瑞赛斯.csv:13
-msgid "PRTS"
 msgstr ""
 
 #: .\data\character\0083_普瑞赛斯.csv:14
