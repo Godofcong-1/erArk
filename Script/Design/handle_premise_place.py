@@ -261,6 +261,22 @@ def handle_scene_over_one(character_id: int) -> int:
     return len(scene_data.character_list) > 1
 
 
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_CAN_BE_INTERACT)
+def handle_scene_someone_can_be_interact(character_id: int) -> int:
+    """
+    房间内存在可交互对象
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import handle_npc_ai
+    target_id = handle_npc_ai.select_random_free_character(character_id)
+    if target_id != -1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.MOVE_TO_SAME_TARGET_WITH_PL)
 def handle_move_to_same_target_with_pl(character_id: int) -> int:
     """

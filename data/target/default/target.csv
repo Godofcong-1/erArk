@@ -7,7 +7,7 @@ ai的目标,,,,
 0,0,high_1,1,原地待机5分钟
 1,1,high_1,1,原地待机10分钟
 4,0,ai_wait,1,（AI行为控制用）进行日常交互指令后都需要原地待机5分钟
-5,503,is_follow_1|place_1|normal_1267,0,智能跟随模式下，如果不在玩家位置，1267正常（可能AI跟随、服装异常或意识模糊），则移动到玩家位置
+5,503,is_follow_1|place_1|normal_1267|player_not_in_hidden_sex_mode,0,智能跟随模式下，如果不在玩家位置，1267正常（可能AI跟随、服装异常或意识模糊），玩家不在隐奸模式中，则移动到玩家位置
 6,571,is_follow_3|not_in_dr_off,1,要求前往博士办公室时，如果不在博士办公室，则移动到博士办公室
 7,2,is_follow_3|in_dr_off,1,要求前往博士办公室时，如果在博士办公室，则原地等待30分钟并取消跟随
 8,503,is_follow_4|place_1,1,要求前往博士所在位置时，如果不在博士所在位置，则移动到博士所在位置
@@ -74,14 +74,14 @@ ai的目标,,,,
 92,92,sleep_flag_1|in_dor|masturebate_bofore_sleep_flag_1,12,要睡觉状态下，且已在宿舍，自身要睡前自慰状态，则自慰
 93,92,group_sex_mode_on|place_0|masturebate_flag_3,12,群交模式开启中，与玩家处于相同地点，自身要自慰状态_群交，则自慰
 
-100,100,self_fall|normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家聊天
-101,101,self_fall|normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，则有可能随机和玩家身体接触
-102,102,self_fall|normal_1267|not_unconscious_flag_5|place_0|pl_action_not_sleep|place_furniture_ge_2,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），没有被空气催眠，和玩家在一个房间里，玩家没有在睡觉，当前地点至少有办公级家具，则有可能随机给玩家泡咖啡
+100,100,self_fall|normal_1267|place_0|player_can_be_interact,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家聊天
+101,101,self_fall|normal_1267|place_0|player_can_be_interact,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家身体接触
+102,102,self_fall|normal_1267|place_0|player_can_be_interact|place_furniture_ge_2,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，当前地点至少有办公级家具，则有可能随机给玩家泡咖啡
 
-200,200,normal_1267|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），房间里有其他人，则可能随机和房间里的人聊天
-201,201,normal_1267|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），房间里有其他人，则可能随机和房间里的人身体接触
-202,202,normal_1267|in_music_room|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，房间里有其他人，则唱歌给房间里随机角色听
-203,203,normal_1267|in_music_room|place_over_one,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，房间里有其他人，则演奏乐器给房间里随机角色听
+200,200,normal_1267|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），场景内存在可交互对象，则可能随机和房间里的人聊天
+201,201,normal_1267|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），场景内存在可交互对象，则可能随机和房间里的人身体接触
+202,202,normal_1267|in_music_room|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，场景内存在可交互对象，则唱歌给房间里随机角色听
+203,203,normal_1267|in_music_room|scene_someone_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），在音乐室里，场景内存在可交互对象，则演奏乐器给房间里随机角色听
 
 321,551,normal_all|work_is_library_manager|to_work_time|not_in_library_or_library_office,21,正常状态下，工作为图书馆管理员，在到岗时间，如果不在图书馆或图书馆办公室，则去图书馆办公室
 322,551,normal_all|work_is_library_manager|work_time|not_in_library_or_library_office,21,正常状态下，工作为图书馆管理员，在工作时间，如果不在图书馆或图书馆办公室，则去图书馆办公室

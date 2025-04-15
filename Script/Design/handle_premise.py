@@ -1348,6 +1348,27 @@ def handle_high_999(character_id: int) -> int:
     return 999
 
 
+@add_premise(constant_promise.Premise.PLAYER_CAN_BE_INTERACT)
+def handle_player_can_be_interact(character_id: int) -> int:
+    """
+    玩家当前可被交互（非睡觉、非隐藏等），自己非空气催眠
+    输入：character_id: int - 角色id
+    输出：int - 权重
+    """
+    # 非睡觉状态
+    if handle_pl_action_sleep(0):
+        return 0
+    # 非隐藏状态
+    if handle_hidden_sex_mode_3(0):
+        return 0
+    if handle_hidden_sex_mode_4(0):
+        return 0
+    # 自己非空气催眠
+    if handle_unconscious_flag_5(character_id):
+        return 0
+    return 1
+
+
 @add_premise(constant_promise.Premise.INSTRUCT_JUDGE_LOW_OBSCENITY)
 def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
@@ -4129,6 +4150,31 @@ def handle_hidden_sex_mode_0(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode == 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NOT_IN_HIDDEN_SEX_MODE)
+def handle_player_not_in_hidden_sex_mode(character_id: int) -> int:
+    """
+    玩家不在隐奸模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return handle_hidden_sex_mode_0(0)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE)
+def handle_target_not_in_hidden_sex_mode(character_id: int) -> int:
+    """
+    交互对象不在隐奸模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_0(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_GE_1)

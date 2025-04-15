@@ -817,6 +817,15 @@ def select_random_free_character(character_id: int) -> int:
         # 跳过正在睡觉的
         if handle_premise.handle_action_sleep(chara_id):
             continue
+        # 跳过双隐
+        if handle_premise.handle_hidden_sex_mode_4(chara_id):
+            continue
+        # 跳过玩家的男隐
+        if chara_id == 0 and handle_premise.handle_hidden_sex_mode_3(chara_id):
+            continue
+        # 跳过非玩家的女隐
+        if chara_id != 0 and handle_premise.handle_hidden_sex_mode_2(chara_id):
+            continue
         # 检查是否有人正在对其互动
         interacting_character_end_info = now_character_data.action_info.interacting_character_end_info
         # 如果有人正在对其互动，且不是自己的话
