@@ -476,6 +476,7 @@ def handle_see_fridge():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLASS_ROOM,
      constant_promise.Premise.TARGET_HP_NE_1,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_TEACH
 )
@@ -2858,6 +2859,7 @@ def handle_recruit():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_DR_OFFICE,
      constant_promise.Premise.NEW_NPC_WAIT,
+     constant_promise.Premise.TIME_STOP_OFF,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_confim_recruit():
