@@ -2661,6 +2661,8 @@ def handle_target_be_carried_in_time_stop(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.target_character_id == character_id:
+        return
     character_data.pl_ability.carry_chara_id_in_time_stop = character_data.target_character_id
 
 
