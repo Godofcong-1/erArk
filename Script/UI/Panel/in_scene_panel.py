@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel, see_instruct_panel, chara_image_list_panel
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel, see_instruct_panel, chara_image_list_panel, Hidden_Sex_Mode_Panel
 from Script.Core import (
     get_text,
     cache_control,
@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import attr_text, map_handle, handle_premise_place
+from Script.Design import attr_text, map_handle, handle_premise, handle_premise_place
 from Script.Config import game_config
 import logging, time
 
@@ -297,6 +297,13 @@ class InScenePanel:
                     pl_character_data.cid, self.width, 9, 0, 0
                 )
                 character_group_sex_draw.draw()
+
+            # ↓以下为隐奸栏的内容↓#
+            if handle_premise.handle_hidden_sex_mode_ge_1(0):
+                character_hidden_sex_draw = Hidden_Sex_Mode_Panel.See_Hidden_Sex_InfoPanel(
+                    pl_character_data.cid, self.width, 9, 0, 0
+                )
+                character_hidden_sex_draw.draw()
 
             # 以下为图片面板#
             if len(character_list) and cache.scene_panel_show[4]:

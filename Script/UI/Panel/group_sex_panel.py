@@ -9,7 +9,7 @@ from Script.Core import (
     flow_handle
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise, map_handle
+from Script.Design import handle_premise, map_handle
 
 panel_info_data = {}
 

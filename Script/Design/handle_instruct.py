@@ -2120,7 +2120,7 @@ def handle_do_h_in_love_hotel():
 )
 def handle_ask_hidden_sex():
     """处理邀请隐奸指令"""
-    from Script.UI.Panel.Select_Hidden_Sex_Mode_Panel import Select_Hidden_Sex_Mode_Panel
+    from Script.UI.Panel.Hidden_Sex_Mode_Panel import Select_Hidden_Sex_Mode_Panel
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     if character.calculation_instuct_judege(0, character_data.target_character_id, _("隐奸"))[0]:

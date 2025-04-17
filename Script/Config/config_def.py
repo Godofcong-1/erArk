@@ -533,6 +533,17 @@ class Food_Quality:
     """ 料理技能上限 """
 
 
+class Hidden_Level:
+    """ 隐蔽等级 """
+
+    cid: int
+    """ 隐蔽等级cid """
+    name: str
+    """ 等级名 """
+    hidden_point: int
+    """ 当前等级隐蔽值上限 """
+
+
 class Hypnosis_Talent_Of_Npc:
     """ 干员获得被催眠素质 """
 

@@ -280,6 +280,8 @@ config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
 config_sleep_level: Dict[int, config_def.Sleep_Level] = {}
 """ 睡眠等级数据 """
+config_hidden_level: Dict[int, config_def.Hidden_Level] = {}
+""" 隐蔽等级数据 """
 config_favorability_level: Dict[int, config_def.Favorability_Level] = {}
 """ 好感度等级数据 """
 config_trust_level: Dict[int, config_def.Trust_Level] = {}
@@ -1260,6 +1262,16 @@ def load_sleep_level():
         config_sleep_level[now_tem.cid] = now_tem
 
 
+def load_hidden_level():
+    """载入隐蔽等级数据"""
+    now_data = config_data["Hidden_Level"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hidden_Level()
+        now_tem.__dict__ = tem_data
+        config_hidden_level[now_tem.cid] = now_tem
+
+
 def load_food_quality():
     """载入食物质量数据"""
     now_data = config_data["Food_Quality"]
@@ -1745,6 +1757,7 @@ def init():
     load_event()
     # load_event_target()
     load_sleep_level()
+    load_hidden_level()
     load_food_quality()
     load_favorability_level()
     load_trust_level()
