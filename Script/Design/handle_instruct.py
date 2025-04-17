@@ -272,6 +272,7 @@ def handle_put_selfmade_food_in():
     constant.Instruct.MOVE, constant.InstructType.SYSTEM, _("移动"),
     {
         constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
         constant_promise.Premise.TIME_STOP_JUDGE_FOR_MOVE,
         }
 )
@@ -335,8 +336,15 @@ def handle_item():
     cache.now_panel_id = constant.Panel.ITEM
 
 
-@add_instruct(constant.Instruct.SAVE, constant.InstructType.SYSTEM, _("读写存档"),
-              {constant_promise.Premise.NOT_H})
+@add_instruct(
+    constant.Instruct.SAVE,
+    constant.InstructType.SYSTEM,
+    _("读写存档"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        }
+        )
 def handle_save():
     """处理读写存档指令"""
     from Script.UI.Panel import see_save_info_panel
@@ -346,8 +354,11 @@ def handle_save():
 
 @add_instruct(
     constant.Instruct.ABL_UP, constant.InstructType.SYSTEM, _("属性上升"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H, }
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        }
 )
 def handle_abl_up():
     """处理属性上升"""
@@ -361,7 +372,10 @@ def handle_abl_up():
 
 @add_instruct(
     constant.Instruct.OWNER_ABL_UP, constant.InstructType.SYSTEM, _("自身属性上升"),
-    {constant_promise.Premise.NOT_H}
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        }
 )
 def handle_owner_abl_up():
     """处理自身属性上升"""
@@ -410,6 +424,7 @@ def debug_adjust():
     _("系统设置"),
     {
         constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
     })
 def handle_system_setting():
     """系统设置"""
@@ -1570,8 +1585,11 @@ def handle_listen_complaint():
     constant.Instruct.ORIGINIUM_ARTS,
     constant.InstructType.SYSTEM,
     _("源石技艺"),
-    {constant_promise.Premise.TIRED_LE_84,
-     constant_promise.Premise.NOT_H},
+    {
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        },
 )
 def handle_originium_arts():
     """处理源石技艺指令"""
@@ -1582,8 +1600,11 @@ def handle_originium_arts():
     constant.Instruct.TARGET_TO_SELF,
     constant.InstructType.SYSTEM,
     _("对自己交互"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        },
 )
 def handle_target_to_self():
     """处理对自己交互指令"""
@@ -1596,8 +1617,12 @@ def handle_target_to_self():
     constant.Instruct.DOOR_LOCK_INNER,
     constant.InstructType.SYSTEM,
     _("锁上门内侧锁"),
-    {constant_promise.Premise.PLACE_DOOR_OPEN,
-     constant_promise.Premise.PLACE_DOOR_LOCKABLE},
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        constant_promise.Premise.PLACE_DOOR_OPEN,
+        constant_promise.Premise.PLACE_DOOR_LOCKABLE,
+        },
 )
 def handle_door_lock_inner():
     """处理锁上门内侧锁指令"""
@@ -1613,8 +1638,12 @@ def handle_door_lock_inner():
     constant.Instruct.DOOR_UNLOCK_INNER,
     constant.InstructType.SYSTEM,
     _("解开门内侧锁"),
-    {constant_promise.Premise.PLACE_DOOR_CLOSE,
-     constant_promise.Premise.PLACE_DOOR_LOCKABLE},
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        constant_promise.Premise.PLACE_DOOR_CLOSE,
+        constant_promise.Premise.PLACE_DOOR_LOCKABLE,
+        },
 )
 def handle_door_unlock_inner():
     """处理解开门内侧锁指令"""
@@ -1910,6 +1939,7 @@ def handle_collect():
     _("邀请H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
      constant_promise.Premise.SCENE_ONLY_TWO,
@@ -1959,11 +1989,27 @@ def handle_prepare_training():
 
 
 @add_instruct(
+    constant.Instruct.SWITCH_TO_H_INTERFACE,
+    constant.InstructType.OBSCENITY,
+    _("切换到H"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.HIDDEN_SEX_MODE_GE_1,
+        constant_promise.Premise.SHOW_NON_H_IN_HIDDEN_SEX,
+    })
+def handle_switch_to_h_interface():
+    """处理切换到H指令"""
+    cache.show_non_h_in_hidden_sex = False
+
+
+@add_instruct(
     constant.Instruct.SLEEP_OBSCENITY,
     constant.InstructType.OBSCENITY,
     _("睡眠猥亵"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_ACTION_SLEEP,
      constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_1,
      constant_promise.Premise.TIRED_LE_74}
@@ -2016,6 +2062,7 @@ def handle_stop_sleep_obscenity():
     _("无意识奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_74}
 )
@@ -2043,6 +2090,7 @@ def handle_unconscious_h():
     _("邀请在爱情旅馆H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.IN_LOVE_HOTEL,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
@@ -2093,6 +2141,8 @@ def handle_ask_hidden_sex():
     constant.InstructType.OBSCENITY,
     _("邀请群交"),
     {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.HIDDEN_SEX_MODE_0,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.SCENE_ALL_NOT_H,
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.SCENE_ALL_NOT_TIRED,
@@ -5672,3 +5722,18 @@ def handle_edit_group_sex_temple():
     from Script.UI.Panel import group_sex_panel
     now_panel = group_sex_panel.Edit_Group_Sex_Temple_Panel(width)
     now_panel.draw()
+
+
+@add_instruct(
+    constant.Instruct.SWITCH_TO_NON_H_INTERFACE,
+    constant.InstructType.SEX,
+    _("切换到非H"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.IS_H,
+        constant_promise.Premise.HIDDEN_SEX_MODE_GE_1,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+    })
+def handle_switch_to_non_h_interface():
+    """处理切换到非H指令"""
+    cache.show_non_h_in_hidden_sex = True

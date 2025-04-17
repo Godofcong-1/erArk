@@ -25,7 +25,7 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True, skip_h_judge: bool = False) -> tuple:
+def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_type: int, use_type_filter_flag: bool = True, skip_h_judge: bool = False, skip_not_h_judge: bool = False) -> tuple:
     """
     判断单个指令是否通过过滤\n
     Keyword arguments：\n
@@ -34,6 +34,7 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
     now_type -- 当前指令类型\n
     use_sub_type -- 是否使用子类过滤\n
     skip_h_judge -- 是否跳过H类指令判断\n
+    skip_not_h_judge -- 是否跳过非H类指令判断\n
     Returns：\n
     bool -- 是否通过过滤\n
     now_premise_data -- 当前记录的前提数据\n
@@ -46,7 +47,7 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
     if not cache.instruct_index_filter[instruct_id]:
         filter_judge = False
     # H子类指令过滤
-    if use_type_filter_flag and handle_premise.handle_is_h(0) and now_type == constant.InstructType.SEX:
+    if use_type_filter_flag and handle_premise.handle_now_show_h_instruct(0) and now_type == constant.InstructType.SEX:
         now_sub_type = constant.instruct_sub_type_data[instruct_id]
         if cache.instruct_sex_type_filter[now_sub_type] == 0:
             filter_judge = False
@@ -65,6 +66,9 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
                     break
                 # 如果跳过H类指令判断，则不进行H类前提判断
                 elif skip_h_judge and premise == 'is_h':
+                    now_premise_data[premise] = 1
+                # 如果跳过非H类指令判断，则不进行非H类前提判断
+                elif skip_not_h_judge and premise == 'not_h':
                     now_premise_data[premise] = 1
                 else:
                     now_premise_value = handle_premise.handle_premise(premise, 0)
@@ -471,8 +475,8 @@ class SeeInstructPanel:
         line = draw.LineDraw("-.-", self.width)
         line.draw()
         fix_draw = draw.NormalDraw()
-        # 根据是否是H模式，进行指令类型过滤相关变量的区分
-        if handle_premise.handle_is_h(0):
+        # 根据是否是显示H指令，进行指令类型过滤相关变量的区分
+        if handle_premise.handle_now_show_h_instruct(0):
             instruct_type_len = len(cache.instruct_sex_type_filter) + 1
             now_instruct_type_list = cache.instruct_sex_type_filter
             now_instruct_config = game_config.config_instruct_sex_type
@@ -489,7 +493,7 @@ class SeeInstructPanel:
         fix_draw.draw()
         for now_type in now_instruct_type_list:
             # 正常模式下，跳过系统类和性爱类的大类选择按钮
-            if not handle_premise.handle_is_h(0):
+            if handle_premise.handle_now_show_non_h_instruct(0):
                 if now_type == constant.InstructType.SYSTEM:
                     continue
                 if now_type == constant.InstructType.SEX:
@@ -537,13 +541,17 @@ class SeeInstructPanel:
             if not cache.instruct_type_filter[now_type]:
                 continue
             # 不在H模式中则过滤H指令
-            if not handle_premise.handle_is_h(0) and now_type == constant.InstructType.SEX:
+            if handle_premise.handle_now_show_non_h_instruct(0) and now_type == constant.InstructType.SEX:
                 continue
             # 需要是注册过的指令类型，或者是系统指令
             if now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:
+                    # 隐奸中且显示非H时，跳过not_h的前提
+                    if handle_premise.handle_show_non_h_in_hidden_sex(0):
+                        filter_judge, now_premise_data = judge_single_instruct_filter(instruct, now_premise_data, now_type, skip_not_h_judge=True)
                     # 检测指令是否通过过滤
-                    filter_judge, now_premise_data = judge_single_instruct_filter(instruct, now_premise_data, now_type)
+                    else:
+                        filter_judge, now_premise_data = judge_single_instruct_filter(instruct, now_premise_data, now_type)
                     if filter_judge:
                         now_instruct_list.append(instruct)
         now_instruct_list.sort()
@@ -569,7 +577,7 @@ class SeeInstructPanel:
                         now_draw.normal_style = game_config.config_instruct_type[instruct_type].color
                         break
                 # 如果是H模式，则单独读取H子类的颜色
-                if handle_premise.handle_is_h(0):
+                if handle_premise.handle_now_show_h_instruct(0):
                     now_sub_type = constant.instruct_sub_type_data[instruct_id]
                     now_draw.normal_style = game_config.config_instruct_sex_type[now_sub_type].color
                 # 系统指令单独加入系统指令列表
@@ -627,7 +635,7 @@ class SeeInstructPanel:
         Keyword arguments:
         now_type -- 指令类型
         """
-        if handle_premise.handle_is_h(0):
+        if handle_premise.handle_now_show_h_instruct(0):
             if cache.instruct_sex_type_filter[now_type]:
                 cache.instruct_sex_type_filter[now_type] = 0
             else:

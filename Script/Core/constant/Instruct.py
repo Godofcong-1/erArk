@@ -336,6 +336,8 @@ class Instruct:
     """ 戴上项圈 """
     PREPARE_TRAINING = 0
     """ 调教前准备 """
+    SWITCH_TO_H_INTERFACE = 0
+    """ 切换到H """
     SLEEP_OBSCENITY = 0
     """ 睡眠猥亵 """
     STOP_SLEEP_OBSCENITY = 0
@@ -376,6 +378,8 @@ class Instruct:
     """ 进行一次轮流群交 """
     EDIT_GROUP_SEX_TEMPLE = 0
     """ 编辑群交行动 """
+    SWITCH_TO_NON_H_INTERFACE = 0
+    """ 切换到非H """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0

@@ -16992,6 +16992,61 @@ def handle_sex_panel_show(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.NOW_SHOW_NON_H_INSTRUCT)
+def handle_now_show_non_h_instruct(character_id: int) -> int:
+    """
+    当前显示非H类指令
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_now_show_h_instruct(character_id)
+
+
+@add_premise(constant_promise.Premise.NOW_SHOW_H_INSTRUCT)
+def handle_now_show_h_instruct(character_id: int) -> int:
+    """
+    当前显示H类指令
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # H中
+    if handle_is_h(0):
+        # 隐奸且已经切换到正常模式，则不显示
+        if handle_hidden_sex_mode_ge_1(0) and handle_show_non_h_in_hidden_sex(0):
+            return 0
+        # 显示
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SHOW_NON_H_IN_HIDDEN_SEX)
+def handle_show_non_h_in_hidden_sex(character_id: int) -> int:
+    """
+    在隐奸中显示非H类指令
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.show_non_h_in_hidden_sex
+
+
+@add_premise(constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX)
+def handle_not_show_non_h_in_hidden_sex(character_id: int) -> int:
+    """
+    不在隐奸中显示非H类指令
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_show_non_h_in_hidden_sex(character_id)
+
+
 @add_premise(constant_promise.Premise.GENERATE_BY_AI)
 def handle_generate_by_ai(character_id: int) -> int:
     """
