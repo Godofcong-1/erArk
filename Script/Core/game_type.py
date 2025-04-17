@@ -1334,6 +1334,12 @@ class Cache:
         """ 退出存档面板 """
         self.wframe_mouse: WFrameMouse = WFrameMouse()
         """ 主页监听控制流程用变量组 """
+        self.current_draw_elements: List = []
+        """ 当前绘制的元素列表 """
+        self.current_return_list: List = []
+        """ 当前返回的元素列表 """
+        self.current_input_request: List = []
+        """ 当前输入请求列表 """
         self.character_data: Dict[int, Character] = {}
         """ 角色对象数据缓存组 """
         self.npc_tem_data: List[NpcTem] = []
