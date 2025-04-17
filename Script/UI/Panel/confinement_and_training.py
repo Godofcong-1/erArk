@@ -340,7 +340,7 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
     Return arguments:
     List[int] -- 可用的指令id列表
     """
-    from Script.UI.Panel import in_scene_panel
+    from Script.UI.Panel import see_instruct_panel
     # 获取所有可用的状态id
     status_id_list = []
     status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("口")])
@@ -356,7 +356,7 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
             # 获取指令id
             instruct_id = constant.state_id_to_instruct_id[status_id]
             # 检查指令是否可用
-            filter_judge, now_premise_data = in_scene_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False, skip_h_judge=True)
+            filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False, skip_h_judge=True)
             # 进一步检查是否可用
             if filter_judge:
                 status_data = game_config.config_status[status_id]
