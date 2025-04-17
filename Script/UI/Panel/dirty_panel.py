@@ -188,6 +188,39 @@ class Dirty_Panel:
         self.now_panel = dirty_type
 
 
+def get_inserted_character_id() -> int:
+    """
+    获取玩家同场景中阴茎插入数据不为 -1 的角色id。
+    参数: 无
+    返回值: int -- 如果找到符合条件的角色则返回该角色id，否则返回0。
+    """
+    # 获取玩家数据，玩家角色id固定为0
+    pl_character_data = cache.character_data[0]
+    # 获取玩家的交互对象id
+    target_id: int = pl_character_data.target_character_id
+    # 检查玩家的交互对象是否存在且其阴茎插入数据符合条件（不为 -1）
+    if target_id != 0:
+        target_character = cache.character_data[target_id]
+        # 如果交互对象符合条件，则返回该角色id
+        if target_character.h_state.insert_position != -1:
+            return target_id
+
+    # 如果交互对象不符合条件，遍历场景内其他角色（排除玩家和交互对象）
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    for character_id in scene_data.character_list:
+        # 排除玩家和已检测的交互对象
+        if character_id == 0 or character_id == target_id:
+            continue
+        now_character_data = cache.character_data[character_id]
+        # 如果该角色的阴茎插入数据不为 -1，则返回该角色id
+        if now_character_data.h_state.insert_position != -1:
+            return character_id
+
+    # 如果没有找到符合条件的角色则返回0
+    return 0
+
+
 class Dirty_Draw:
     """
     污浊绘制对象
@@ -329,17 +362,19 @@ class SeeCharacterBodyPanel:
 
         # 阴茎位置文本，因为是直接调用ui文本，所以不需要调用翻译组件，下同
         if target_character_data.h_state.insert_position != -1:
+            insert_text = " "
+            # 显示阴茎位置的文本
             now_position_index = target_character_data.h_state.insert_position
             position_text_cid = f"阴茎位置{str(now_position_index)}"
-            position_text = game_config.ui_text_data['h_state'][position_text_cid]
+            insert_position_text = game_config.ui_text_data['h_state'][position_text_cid]
             sex_position_index = character_data.h_state.current_sex_position
             # 如果是阴茎位置为阴道、子宫、后穴、尿道，且博士有体位数据，则显示性交姿势
             if now_position_index in {6,7,8,9} and sex_position_index != -1:
                 sex_position_text_cid = f"体位{str(sex_position_index)}"
                 sex_position_text = game_config.ui_text_data['h_state'][sex_position_text_cid]
-                all_part_text_list.append(f" {sex_position_text}{position_text}")
-            else:
-                all_part_text_list.append(f" {position_text}")
+                insert_text += _("以{0}").format(sex_position_text)
+            insert_text += insert_position_text
+            all_part_text_list.append(insert_text)
 
         # 绳子捆绑文本
         if target_character_data.h_state.bondage:

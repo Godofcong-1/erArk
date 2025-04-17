@@ -327,7 +327,7 @@ def npc_active_h():
     Return arguments:
     bool -- 0为失败，1为正常逆推
     """
-    from Script.UI.Panel import in_scene_panel
+    from Script.UI.Panel import see_instruct_panel
 
     pl_character_data: game_type.Character = cache.character_data[0]
     target_character_id = pl_character_data.target_character_id
@@ -389,7 +389,7 @@ def npc_active_h():
             # 获取指令id
             instruct_id = constant.state_id_to_instruct_id[status_id]
             # 检查指令是否可用
-            filter_judge, now_premise_data = in_scene_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
+            filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 跳过
             if not filter_judge:
                 continue

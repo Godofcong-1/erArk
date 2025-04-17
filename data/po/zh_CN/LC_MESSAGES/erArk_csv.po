@@ -7264,6 +7264,18 @@ msgstr ""
 msgid "绝珍"
 msgstr ""
 
+#: .\data\csv\Hidden_Level.csv:6
+msgid "完全隐蔽"
+msgstr ""
+
+#: .\data\csv\Hidden_Level.csv:8
+msgid "引人注意"
+msgstr ""
+
+#: .\data\csv\Hidden_Level.csv:9
+msgid "随时暴露"
+msgstr ""
+
 #: .\data\csv\Hypnosis_Type.csv:7
 msgid " 无 "
 msgstr ""

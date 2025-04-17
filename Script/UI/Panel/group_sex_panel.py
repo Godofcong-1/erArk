@@ -9,7 +9,7 @@ from Script.Core import (
     flow_handle
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise, map_handle
+from Script.Design import handle_premise, map_handle
 
 panel_info_data = {}
 
@@ -176,7 +176,7 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
     Return arguments:\n
     [] -- 状态id列表
     """
-    from Script.UI.Panel import in_scene_panel
+    from Script.UI.Panel import see_instruct_panel
 
     new_status_id_list = []
     # 获取状态id列表
@@ -198,7 +198,7 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
             # 获取指令id
             instruct_id = constant.state_id_to_instruct_id[status_id]
             # 检查指令是否可用
-            filter_judge, now_premise_data = in_scene_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
+            filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 去掉有破处判定且当前为处的
             if filter_judge:
                 status_data = game_config.config_status[status_id]
