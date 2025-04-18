@@ -875,7 +875,7 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
         # 寸止失败解放
         if character_data.h_state.orgasm_edge == 3:
             character_data.h_state.orgasm_edge = 2
-            orgasm_settle(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, un_count_orgasm_dict)
+            orgasm_settle(character_id, change_data, normal_orgasm_dict, extra_orgasm_dict, character_data.h_state.orgasm_edge_count)
 
 
 def orgasm_settle(
@@ -940,14 +940,16 @@ def orgasm_settle(
             if handle_premise.handle_self_orgasm_edge(character_id):
                 # 根据技巧而绝顶的能够进行寸止的次数限制
                 orgasm_edge_success_flag = judge_orgasm_edge_success(character_id)
+                # 寸止失败
+                if not orgasm_edge_success_flag:
+                    # 进入解放状态，返回以便重新进行结算
+                    character_data.h_state.orgasm_edge = 3
+                    return
                 # 绝顶计入寸止计数
                 character_data.h_state.orgasm_edge_count.setdefault(orgasm, 0)
                 character_data.h_state.orgasm_edge_count[orgasm] += climax_count
                 # 赋予寸止行为
                 character_data.second_behavior[1250 + orgasm] = 1
-                # 寸止失败记录
-                if not orgasm_edge_success_flag:
-                    character_data.h_state.orgasm_edge = 3
                 continue
             # 该部位高潮计数+1
             part_count += 1
