@@ -2379,7 +2379,6 @@ str,int,int,str,str
 2374,131,204,sys_0,“在提神方面还是比较推荐大炎的茶饮和果汁。”\n“相比于咖啡更加好喝，而且也不会很伤身体。”\n“不过，谢谢你的咖啡。”{TargetName}礼貌地眨了眨眼睛。
 2375,131,204,sys_1&sys_4&CVP_A1_G_GE_1,{Name}递过来了一杯果汁。\n“医疗部的人说{PlayerNickName}最近的咖啡量摄入过多了，所以这次喝果汁怎么样。”
 2376,131,204,sys_0&time_night,{TargetName}有点困惑地接过咖啡，“已经到晚上的时间了哦，{PlayerNickName}。”\n“晚上还是不要喝咖啡比较好。”
-2377,131,204,sys_1,
 2378,133,204,not_fall,{TargetName}遵循着{PlayerName}的要求端来了一杯咖啡。\n仔细看的话好像完全没有用心泡，好多没来及溶解的粉末堆在底部。\n“嗯……”意识到自己好像没搞好的{TargetName}若无其事地移开了视线。
 2379,131,204,time_night&sys_1&sys_4&love_ge_2&high_1,{TargetName}将一杯热茶放在了{PlayerName}的面前。\n“晚上要工作的话，就喝点茶水好了。”\n“医疗部的人说了，不许{PlayerNickName}晚上熬夜太晚，也不许晚上喝咖啡。”
 2380,131,204,sys_1&sys_4&high_1&CVP_A1_G_GE_1,{Name}将一份咖啡放在了{PlayerName}的桌子上，一块坐了下来。\n可爱地托着腮，仔细地观察起了{PlayerName}，好像进入了发呆状态。\n“……不喝吗？”
