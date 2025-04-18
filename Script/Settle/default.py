@@ -7782,6 +7782,10 @@ def handle_end_h_add_hpmp_max(
         id_list.append(character_data.target_character_id)
     for chara_id in id_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
+        # 如果有精液寸止，则射出
+        if now_character_data.h_state.endure_not_shot_count > 0:
+            settle_behavior.orgasm_judge(chara_id, change_data, skip_undure = True)
+            settle_behavior.second_behavior_effect(chara_id, change_data)
         # 统计绝顶次数
         orgasm_count = 0
         for body_part in game_config.config_body_part:

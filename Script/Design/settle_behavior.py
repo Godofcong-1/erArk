@@ -789,12 +789,13 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
             default_experience.base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
 
 
-def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange):
+def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange, skip_undure: bool = False):
     """
     判断第二结算中的高潮，都发生哪些高潮，各多少次
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
+    skip_undure -- 是否跳过忍耐高潮的结算
     """
 
     # print()
@@ -803,15 +804,16 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
 
     # 检测射精
     if character_id == 0:
-        if character_data.eja_point >= character_data.eja_point_max:
+        if character_data.eja_point >= character_data.eja_point_max or skip_undure:
             # 如果已经没有精液了则只能进行普通射精
             if handle_premise.handle_pl_semen_le_2(0):
                 character_data.second_behavior[1009] = 1
             else:
                 # 忍住射精
-                endure_flag = ejaculation_panel.show_endure_ejaculation_panel()
-                if endure_flag:
-                    return
+                if not skip_undure:
+                    endure_flag = ejaculation_panel.show_endure_ejaculation_panel()
+                    if endure_flag:
+                        return
                 # 普
                 if character_data.h_state.endure_not_shot_count == 0:
                     character_data.second_behavior[1009] = 1
