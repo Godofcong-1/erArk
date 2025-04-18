@@ -822,6 +822,9 @@ class Field_Commission_Panel:
             for npc_id in npc_id_got_list:
                 if npc_id == 0:
                     continue
+                # 跳过访客
+                if handle_premise.handle_self_visitor_flag_1(npc_id):
+                    continue
                 # 跳过2、7异常的角色
                 if not handle_premise.handle_normal_2(npc_id) :
                     continue

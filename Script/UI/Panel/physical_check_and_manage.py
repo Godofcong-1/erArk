@@ -928,10 +928,11 @@ class Physical_Check_And_Manage_Panel:
             ask_text = _("请输入1~10的数字\n")
             ask_panel = panel.AskForOneMessage()
             ask_panel.set(ask_text, 99)
+            value = ask_panel.draw()
             # 防止玩家输入非数字的内容
-            if not ask_panel.draw() or not ask_panel.draw().isdigit():
+            if not value or not value.isdigit():
                 return
-            new_num = int(ask_panel.draw()) - 1
+            new_num = int(value) - 1
             if new_num < 0:
                 new_num = 0
             elif new_num > 9:
