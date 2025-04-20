@@ -52,6 +52,11 @@ class InScenePanel:
         while 1:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
                 break
+            # web模式下清屏
+            if cache.web_mode:
+                from Script.Core import io_init
+                io_init.clear_screen()
+                io_init.clear_order()
             # 绘制的开始时间
             start_draw = time.time()
             # 和上一次主界面绘制之间的空行数量，由系统设置决定
@@ -85,7 +90,7 @@ class InScenePanel:
             # print("character_handle_panel.text_list :",character_handle_panel.text_list)
             # 游戏时间
             game_time_draw = game_info_panel.GameTimeInfoPanel(self.width / 2)
-            game_time_draw.now_draw.width = len(game_time_draw)
+            # game_time_draw.now_draw.width = len(game_time_draw)
             game_time_draw.draw()
             # 当前位置
             position_text = attr_text.get_scene_path_text(pl_character_data.position)

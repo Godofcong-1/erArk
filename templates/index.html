@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>erArk</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <!-- 添加Socket.IO客户端库 -->
+    <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
+    <!-- 添加配置加载器脚本 -->
+    <script src="/static/config_loader.js"></script>
+</head>
+<body>
+    <div class="game-wrapper">
+        <div class="game-header">
+            <h1>erArk - Web版</h1>
+        </div>
+        <div id="game-container" class="game-container">
+            <!-- 游戏内容将通过JavaScript动态插入 -->
+            <div id="game-content" class="game-content"></div>
+            <div id="game-buttons" class="game-buttons"></div>
+            <!-- 添加滚动指示器，帮助用户理解滚动状态 -->
+            <div id="scroll-indicator" class="scroll-indicator" style="display:none;">
+                <span>↓ 新内容 ↓</span>
+            </div>
+        </div>
+        <div class="game-footer">
+            <p>erArk WebUI - 本地运行版本</p>
+            <!-- 添加手动滚动按钮，解决在某些设备上可能的问题 -->
+            <button id="scroll-to-bottom-btn" class="scroll-button">滚动到底部</button>
+        </div>
+    </div>
+    <script src="/static/game.js"></script>
+</body>
+</html>

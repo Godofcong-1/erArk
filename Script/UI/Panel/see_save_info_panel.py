@@ -160,7 +160,7 @@ class SaveInfoDraw:
 
     def draw_save_handle(self):
         """处理读写存档"""
-        py_cmd.clr_cmd()
+        # py_cmd.clr_cmd()
         line_feed.draw()
         if self.save_exist_judge:
             now_ask_list = []

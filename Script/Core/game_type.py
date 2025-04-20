@@ -193,6 +193,8 @@ class NormalConfig:
     """ 版本时间 """
     debug: bool
     """ 是否开启debug模式 """
+    web_draw: bool
+    """ 是否开启Web绘制 """
     background: str
     """ 背景色 """
     language: str
@@ -1334,6 +1336,8 @@ class Cache:
         """ 退出存档面板 """
         self.wframe_mouse: WFrameMouse = WFrameMouse()
         """ 主页监听控制流程用变量组 """
+        self.web_mode: bool = False
+        """ 是否为web模式 """
         self.current_draw_elements: List = []
         """ 当前绘制的元素列表 """
         self.current_return_list: List = []

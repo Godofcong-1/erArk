@@ -135,6 +135,7 @@ def input_load_save(save_id: str):
     new_cache.rhodes_island = basement.get_base_zero()
     update_count = 0
 
+
     # 从存档中加载字典
     loaded_dict = load_save(save_id).__dict__
 
@@ -147,6 +148,9 @@ def input_load_save(save_id: str):
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
     # 更新角色预设
     update_count += update_tem_character(loaded_dict)
+
+    # 更新绘制模式
+    loaded_dict["web_mode"] = cache.web_mode
 
     # 遍历更新全角色属性
     cloth_update_count = 0

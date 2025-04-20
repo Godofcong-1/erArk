@@ -42,7 +42,7 @@ class CharacterImageListDraw:
         head_width = min(head_width,160) # 最多修正十个人
         center_fix = text_handle.align("*" * head_width, "center", 1, 1)
         fix_draw = draw.NormalDraw()
-        fix_draw.width = self.width
+        # fix_draw.width = self.width
         fix_draw.text = center_fix
         fix_draw.draw()
         self.return_list = []
@@ -50,7 +50,6 @@ class CharacterImageListDraw:
         # 优先绘制当前交互对象
         if len(self.character_list):
             text_draw = draw.NormalDraw()
-            text_draw.width = 1
             text_draw.text = "▷ "
             text_draw.draw()
 
@@ -70,7 +69,6 @@ class CharacterImageListDraw:
                 text_draw.draw()
 
             text_draw = draw.NormalDraw()
-            text_draw.width = 1
             text_draw.text = " ◁ "
             text_draw.draw()
 

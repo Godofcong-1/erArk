@@ -2,8 +2,32 @@
 import threading
 import queue
 import json
+import sys
+import importlib
 from Script.Core import main_frame
 from Script.Config import game_config, normal_config
+from Script.Core import cache_control
+
+# 获取全局缓存
+cache = cache_control.cache
+
+# 判断是否使用Web模式
+WEB_MODE = cache.web_mode
+""" 是否使用Web模式，由game.py中设置 """
+
+# 尝试导入Web版IO模块
+web_io = None
+try:
+    # 导入Web版IO模块
+    from Script.Core import io_web
+    # 导入Web服务器模块
+    from Script.Core.web_server import update_game_state
+    # Web IO模块加载成功
+    web_io = io_web
+    print("Web IO模块加载成功")
+except ImportError:
+    # 导入失败时，保持使用原始IO
+    web_io = None
 
 input_evnet = threading.Event()
 _send_queue = queue.Queue()
@@ -14,58 +38,113 @@ order_swap = None
 def _input_evnet_set(order):
     """
     推送一个命令
-    Keyword arguments:
-    order -- 命令
+    
+    参数:
+    order (str) -- 命令
+    
+    返回值类型：无
+    功能描述：将命令推送到队列中
     """
-    put_order(order)
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的推送命令函数
+        web_io._input_event_set(order)
+    else:
+        # 原始逻辑
+        put_order(order)
 
 
 def get_order():
     """
     获取一个命令
+    
+    参数：无
+    
+    返回值类型：str
+    功能描述：从命令队列中获取一个命令
     """
-    return _order_queue.get()
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的获取命令函数
+        return web_io.get_order()
+    else:
+        # 原始逻辑
+        return _order_queue.get()
 
 
-main_frame.bind_return(_input_evnet_set)
-main_frame.bind_queue(_send_queue)
+# tkinter模式下的绑定
+if not WEB_MODE:
+    main_frame.bind_return(_input_evnet_set)
+    main_frame.bind_queue(_send_queue)
 
 
 def _get_input_event():
     """
     获取输入事件锁
+    
+    参数：无
+    
+    返回值类型：threading.Event
+    功能描述：获取用于同步的输入事件锁
     """
+    # Web模式下也使用同样的事件锁
     return input_evnet
 
 
 def run(open_func: object):
     """
     运行游戏
-    Keyword arguments:
-    open_func -- 开场流程函数
+    
+    参数:
+    open_func (function) -- 开场流程函数
+    
+    返回值类型：无
+    功能描述：启动游戏主流程
     """
-    global _flowthread
-    _flowthread = threading.Thread(target=open_func, name="flowthread")
-    _flowthread.start()
-    main_frame.run()
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的运行函数
+        return web_io.run(open_func)
+    else:
+        # 原始逻辑
+        global _flowthread
+        _flowthread = threading.Thread(target=open_func, name="flowthread")
+        _flowthread.start()
+        main_frame.run()
 
 
 def put_queue(message: str):
     """
     向输出队列中推送信息
-    Keyword arguments:
-    message -- 推送的信息
+    
+    参数:
+    message (str) -- 推送的信息
+    
+    返回值类型：无
+    功能描述：将消息推送到输出队列中
     """
-    _send_queue.put_nowait(message)
+    # Web模式下不使用队列
+    if not WEB_MODE:
+        _send_queue.put_nowait(message)
 
 
 def put_order(message: str):
     """
     向命令队列中推送信息
-    Keyword arguments:
-    message -- 推送的信息
+    
+    参数:
+    message (str) -- 推送的命令信息
+    
+    返回值类型：无
+    功能描述：将命令推送到命令队列中
     """
-    _order_queue.put_nowait(message)
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的put_order函数
+        web_io.put_order(message)
+    else:
+        # 原始逻辑
+        _order_queue.put_nowait(message)
 
 
 # #######################################################################
@@ -75,6 +154,11 @@ def put_order(message: str):
 def new_json():
     """
     定义一个通用json结构
+    
+    参数：无
+    
+    返回值类型：dict
+    功能描述：创建一个基本的JSON结构
     """
     flow_json = {}
     flow_json["content"] = []
@@ -84,9 +168,13 @@ def new_json():
 def text_json(string: str, style: tuple or str):
     """
     定义一个文本json
-    Keyword arguments:
-    string -- 要显示的文本
-    style -- 显示时的样式
+    
+    参数:
+    string (str) -- 要显示的文本
+    style (tuple或str) -- 显示时的样式
+    
+    返回值类型：dict
+    功能描述：创建一个文本JSON对象
     """
     re = {}
     re["type"] = "text"
@@ -106,11 +194,15 @@ def cmd_json(
 ):
     """
     定义一个命令json
-    Keyword arguments:
-    cmd_str -- 命令文本
-    cmd_num -- 命令数字
-    normal_style -- 正常显示样式
-    on_style -- 鼠标在其上时显示样式
+    
+    参数:
+    cmd_str (str) -- 命令文本
+    cmd_num (int) -- 命令数字
+    normal_style (tuple或str) -- 正常显示样式
+    on_style (tuple或str) -- 鼠标在其上时显示样式
+    
+    返回值类型：dict
+    功能描述：创建一个命令JSON对象
     """
     re = {}
     re["type"] = "cmd"
@@ -139,15 +231,19 @@ def style_json(
 ):
     """
     定义一个样式json
-    Keyword arguments:
-    style_name -- 样式名称
-    foreground -- 前景色/字体颜色
-    background -- 背景色
-    font -- 字体
-    fontsize -- 字号
-    bold -- 加粗
-    underline -- 下划线
-    italic -- 斜体
+    
+    参数:
+    style_name (str) -- 样式名称
+    foreground (str) -- 前景色/字体颜色
+    background (str) -- 背景色
+    font (str) -- 字体
+    fontsize (str) -- 字号
+    bold (str) -- 加粗
+    underline (str) -- 下划线
+    italic (str) -- 斜体
+    
+    返回值类型：dict
+    功能描述：创建一个样式JSON对象
     """
     re = {}
     re["style_name"] = style_name
@@ -168,35 +264,65 @@ def style_json(
 def era_print(string: str, style="standard"):
     """
     输出命令
-    Keyword arguments:
-    string -- 输出文本
-    style -- 显示样式
+    
+    参数:
+    string (str) -- 输出文本
+    style (str) -- 显示样式
+    
+    返回值类型：无
+    功能描述：输出格式化文本到界面
     """
-    json_str = new_json()
-    json_str["content"].append(text_json(string, style))
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的era_print函数
+        web_io.era_print(string, style)
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        json_str["content"].append(text_json(string, style))
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def image_print(image_name: str):
     """
     图片输出命令
-    Keyword arguments:
-    image_name -- 图片名称
-    image_path -- 图片路径
+    
+    参数:
+    image_name (str) -- 图片名称
+    
+    返回值类型：无
+    功能描述：输出图片到界面
     """
-    json_str = new_json()
-    image_json = {"image_name": image_name}
-    json_str["image"] = image_json
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None and hasattr(web_io, 'image_print'):
+        # 使用Web版IO的image_print函数
+        web_io.image_print(image_name)
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        image_json = {"image_name": image_name}
+        json_str["image"] = image_json
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def clear_screen():
     """
     清屏
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：清空显示界面
     """
-    json_str = new_json()
-    json_str["clear_cmd"] = "true"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的clear_screen函数
+        web_io.clear_screen()
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        json_str["clear_cmd"] = "true"
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def frame_style_def(
@@ -211,102 +337,176 @@ def frame_style_def(
 ):
     """
     推送一条在前端定义样式的信息
-    Keyword arguments:
-    style_name -- 样式名称
-    foreground -- 前景色/字体颜色
-    background -- 背景色
-    font -- 字体
-    fontsize -- 字号
-    bold -- 加粗， 用1表示使用
-    underline -- 下划线，用1表示使用
-    italic -- 斜体，用1表示使用
+    
+    参数:
+    style_name (str) -- 样式名称
+    foreground (str) -- 前景色/字体颜色
+    background (str) -- 背景色
+    font (str) -- 字体
+    fontsize (str) -- 字号
+    bold (str) -- 加粗， 用1表示使用
+    underline (str) -- 下划线，用1表示使用
+    italic (str) -- 斜体，用1表示使用
+    
+    返回值类型：无
+    功能描述：定义一个样式并推送到前端
     """
-    json_str = new_json()
-    json_str["set_style"] = style_json(
-        style_name,
-        foreground,
-        background,
-        font,
-        fontsize,
-        bold,
-        underline,
-        italic,
-    )
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # Web模式下暂不处理样式定义
+    if not WEB_MODE:
+        json_str = new_json()
+        json_str["set_style"] = style_json(
+            style_name,
+            foreground,
+            background,
+            font,
+            fontsize,
+            bold,
+            underline,
+            italic,
+        )
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def set_background(color: str):
     """
     设置前端背景颜色
-    Keyword arguments:
-    color -- 颜色
+    
+    参数:
+    color (str) -- 颜色
+    
+    返回值类型：无
+    功能描述：设置界面的背景颜色
     """
-    json_str = new_json()
-    json_str["bgcolor"] = color
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None and hasattr(web_io, 'set_background'):
+        # 使用Web版IO的set_background函数
+        web_io.set_background(color)
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        json_str["bgcolor"] = color
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def clear_order():
     """
     清除前端已经设置的命令
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：清除界面上的所有命令按钮
     """
-    json_str = new_json()
-    json_str["clearorder_cmd"] = "true"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的clear_order函数
+        web_io.clear_order()
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        json_str["clearorder_cmd"] = "true"
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_style="onbutton"):
     """
     打印一条指令
-    Keyword arguments:
-    cmd_str -- 命令文本
-    cmd_number -- 命令数字
-    normal_style -- 正常显示样式
-    on_style -- 鼠标在其上时显示样式
+    
+    参数:
+    cmd_str (str) -- 命令文本
+    cmd_number (int) -- 命令数字
+    normal_style (str) -- 正常显示样式
+    on_style (str) -- 鼠标在其上时显示样式
+    
+    返回值类型：无
+    功能描述：在界面上显示一个可点击的命令按钮
     """
-    json_str = new_json()
-    json_str["content"].append(cmd_json(cmd_str, cmd_number, normal_style, on_style))
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的io_print_cmd函数
+        web_io.io_print_cmd(cmd_str, cmd_number, normal_style, on_style)
+    else:
+        # 原始逻辑
+        json_str = new_json()
+        json_str["content"].append(cmd_json(cmd_str, cmd_number, normal_style, on_style))
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def io_print_image_cmd(cmd_str: str, cmd_number: int):
     """
     打印图片指令
-    Keyword arguments:
-    cmd_str -- 命令文本
-    cmd_number -- 命令数字
+    
+    参数:
+    cmd_str (str) -- 命令文本
+    cmd_number (int) -- 命令数字
+    
+    返回值类型：无
+    功能描述：在界面上显示一个图片按钮
     """
-    json_str = new_json()
-    data = {}
-    data["type"] = "image_cmd"
-    data["text"] = cmd_str
-    data["num"] = cmd_number
-    json_str["content"].append(data)
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+    # Web模式下暂不支持图片命令
+    if not WEB_MODE:
+        json_str = new_json()
+        data = {}
+        data["type"] = "image_cmd"
+        data["text"] = cmd_str
+        data["num"] = cmd_number
+        json_str["content"].append(data)
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def io_clear_cmd(*cmd_numbers: int):
     """
     清除命令
-    Keyword arguments:
-    cmd_number -- 命令数字，不输入则清楚当前已有的全部命令
+    
+    参数:
+    cmd_numbers (int) -- 命令数字，不输入则清除当前已有的全部命令
+    
+    返回值类型：无
+    功能描述：清除指定的命令按钮，或者所有命令按钮
     """
-    json_str = new_json()
-    if cmd_numbers:
-        json_str["clearcmd_cmd"] = cmd_numbers
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None and hasattr(web_io, 'io_clear_cmd'):
+        # 使用Web版IO的io_clear_cmd函数
+        web_io.io_clear_cmd(*cmd_numbers)
     else:
-        json_str["clearcmd_cmd"] = "all"
-    put_queue(json.dumps(json_str, ensure_ascii=False))
+        # 原始逻辑
+        json_str = new_json()
+        if cmd_numbers:
+            json_str["clearcmd_cmd"] = cmd_numbers
+        else:
+            json_str["clearcmd_cmd"] = "all"
+        put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
 def style_def():
+    """
+    样式定义占位函数
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：提供一个样式定义的占位函数，会在init_style中被覆盖
+    """
     pass
 
 
 def init_style():
     """
     富文本样式初始化
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：初始化所有游戏中使用的样式
     """
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的init_style函数
+        if hasattr(web_io, 'init_style'):
+            web_io.init_style()
+        return
+    
+    # 原始逻辑
     global style_def
 
     def new_style_def(

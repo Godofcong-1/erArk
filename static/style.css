@@ -1,0 +1,502 @@
+/**
+ * 游戏主要CSS样式
+ * 定义游戏界面的视觉外观
+ */
+
+body {
+    /* 基础样式设置 */
+    background-color: #000;
+    color: #c8c8c8;
+    font-family: '等距更纱黑体 SC', SimHei, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.1; /* 基础行高设置 */
+    margin: 0.2em 0; /* 上下边距 */
+}
+
+/* 游戏包装容器 */
+.game-wrapper {
+    width: 100%;
+    max-width: 220ch;
+    margin: 0 auto;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* 游戏头部区域 */
+.game-header {
+    padding: 10px 20px;
+    background-color: #111;
+    border-bottom: 1px solid #333;
+}
+
+.game-header h1 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #ffd700; /* 金色标题 */
+    text-align: center;
+}
+
+/* 游戏主容器 */
+.game-container {
+    background-color: #000;
+    padding: 20px;
+    border: 1px solid #333;
+    flex-grow: 1;
+    min-height: 600px;
+    max-height: 80vh; /* 添加最大高度限制，确保在大屏幕上也能正常滚动 */
+    white-space: pre-wrap;
+    line-height: 0.2em;
+    overflow-y: auto;
+    position: relative;
+    scroll-behavior: smooth; /* 添加平滑滚动效果 */
+    will-change: transform; /* 优化性能 */
+}
+
+/**
+ * 游戏内容容器样式，确保内部内容正确渲染和滚动
+ */
+.game-content {
+    width: 100%;
+    height: auto;
+    position: relative;
+}
+
+/* 加载指示器 */
+.loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #666;
+    font-size: 1.2em;
+}
+
+/* 游戏底部区域 */
+.game-footer {
+    padding: 10px;
+    background-color: #111;
+    border-top: 1px solid #333;
+    text-align: center;
+    font-size: 0.8em;
+    color: #666;
+}
+
+/* 文本样式 */
+.text {
+    line-height: 1.1;
+    margin: 0.1em 0;
+    display: inline-block; /* 修改：改为内联块显示，允许元素显示在同一行 */
+}
+
+/* 块级文本样式 - 需要单独一行的文本 */
+.text.block {
+    display: block;
+    width: 100%;
+}
+
+/* 专门用于处理换行符的样式类 */
+.text-break {
+    display: block;
+    width: 100%;
+    margin: 0.2em 0;
+    line-height: 0.1;
+    content: "";
+    clear: both;
+}
+
+/* 用于连续换行符的特殊样式 - 添加额外空间 */
+.text-break.extra-space {
+    margin: 1em 0; /* 连续换行符时增加更大的间距 */
+    line-height: 1.5;
+}
+
+/* 对于需要内联显示的文本添加新的样式类 */
+.text-inline {
+    display: inline-block;
+}
+
+/* 按钮样式 */
+.button {
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 0.2em;
+    cursor: pointer;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background-color 0.2s;
+}
+
+.button:hover {
+    background-color: #333;
+    border-color: #666;
+}
+
+.button:active {
+    background-color: #444;
+}
+
+/* 游戏内容区域中的按钮样式 */
+.game-button {
+    background-color: #222;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 5px 10px;
+    margin: 0.2em; /* 从5px减小到3px，减少按钮间距 */
+    cursor: pointer;
+    border-radius: 3px;
+    display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
+    transition: background-color 0.2s;
+}
+
+/* 块级按钮样式 - 需要单独一行的按钮 */
+.game-button.block {
+    display: block;
+    width: 100%;
+}
+
+.game-button:hover {
+    background-color: #333;
+    border-color: #666;
+}
+
+.game-button:active {
+    background-color: #444;
+}
+
+/* 内联元素容器 - 用于包裹需要在同一行显示的多个元素 */
+.inline-container {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    }
+
+/* 按钮容器样式（此容器现在被隐藏，按钮直接显示在game-content中） */
+.game-buttons {
+    margin-top: 10px;
+    text-align: left;
+}
+
+.game-buttons.hidden {
+    display: none;
+}
+
+/* 标题样式 */
+.title {
+    font-size: 1.5em;
+    margin: 10px 0;
+    padding-bottom: 5px;
+    border-bottom: 1px solid #444;
+    color: #ffd700; /* 金色 */
+    width: 100%;
+    text-align: center;
+}
+
+/* 分隔线样式 */
+.line {
+    border: 0;
+    height: 1px;
+    background-color: #444;
+    margin: 10px 0;
+    width: 100%;
+}
+
+/* 等待文本样式 */
+.wait-text {
+    margin: 15px 0;
+    cursor: pointer;
+    padding: 5px;
+    border: 1px dashed #333;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 100%;
+}
+
+.wait-text:hover {
+    background-color: #222;
+}
+
+.continue-hint {
+    color: #999;
+    font-size: 0.8em;
+    text-align: right;
+    margin-top: 5px;
+    font-style: italic;
+}
+
+/* 特殊文本样式 */
+.gold_enrod {
+    color: #ffd700;
+}
+
+.red {
+    color: #ff4d4d;
+}
+
+.deep_gray {
+    color: #666;
+}
+
+.green {
+    color: #4dff4d;
+}
+
+.blue {
+    color: #4d4dff;
+}
+
+.normal {
+    /* 默认文本样式 */
+    color: #fff;
+}
+
+.onbutton {
+    background-color: #333;
+    padding: 2px 5px;
+    border-radius: 3px;
+}
+
+/* 按钮位置样式 */
+.left-button {
+    display: block;
+    text-align: left;
+}
+
+.center-button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+/* 状态等级文本样式 */
+.status-level {
+    font-weight: bold;
+    padding: 0 3px;
+}
+
+.levelz {
+    color: #777; /* 灰色，表示Z级 */
+}
+
+.levelf {
+    color: #a6a6ff; /* 浅蓝色，表示F级 */
+}
+
+.levele {
+    color: #86c5ff; /* 天蓝色，表示E级 */
+}
+
+.leveld {
+    color: #66ff66; /* 浅绿色，表示D级 */
+}
+
+.levelc {
+    color: #ffff66; /* 浅黄色，表示C级 */
+}
+
+.levelb {
+    color: #ffb866; /* 橙色，表示B级 */
+}
+
+.levela {
+    color: #ff6666; /* 红色，表示A级 */
+}
+
+.levels {
+    color: #ff66ff; /* 粉色，表示S级 */
+}
+
+.levelex {
+    color: #ffd700; /* 金色，表示EX级 */
+    text-shadow: 0 0 3px #ffd700;
+}
+
+/* 游戏图片样式 */
+.game-image {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+    margin: 2px;
+    /* 确保图片加载完成后能触发重新滚动 */
+    transition: height 0.01s ease;
+}
+
+/* 比例条容器样式 */
+.bar-container {
+    display: inline-flex;
+    align-items: center;
+    margin: 2px 0;
+}
+
+/* 比例条元素样式 */
+.bar-item {
+    display: inline-block;
+    height: 15px; /* 默认高度 */
+    vertical-align: middle;
+}
+
+/* 人物图片容器样式 */
+.character-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 10px 0;
+    width: 100%;
+}
+
+/* 人物图片元素样式 */
+.character-item {
+    max-width: 100%;
+    height: auto;
+    /* 确保图片加载完成后能触发重新滚动 */
+    transition: height 0.01s ease;
+}
+
+/* 带有文本和数值描述的比例条容器样式 */
+.info-bar-container {
+    display: flex;
+    align-items: center;
+    margin: 2px 0;
+    flex-wrap: wrap;
+}
+
+/* 带有文本和数值描述的比例条文本样式 */
+.info-bar-text {
+    margin: 0 2px;
+}
+
+/* 带有文本和数值描述的比例条样式 */
+.info-bar-items {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 带有文本的人物图像容器样式 */
+.info-character-container {
+    display: flex;
+    align-items: center;
+    margin: 5px 0;
+    flex-wrap: wrap;
+}
+
+/* 带有文本的人物图像文本样式 */
+.info-character-text {
+    margin: 0 2px;
+}
+
+/* 带有文本的人物图像比例条样式 */
+.info-character-bar {
+    display: inline-flex;
+    align-items: center;
+}
+
+/* 图片按钮样式 */
+.image-button {
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 2px;
+    cursor: pointer;
+    display: inline-block;
+    transition: transform 0.2s;
+}
+
+.image-button:hover {
+    transform: scale(1.05);
+}
+
+.image-button:active {
+    transform: scale(0.95);
+}
+
+.image-button img {
+    max-width: 100%;
+    height: auto;
+    vertical-align: middle;
+}
+
+/* 居中图片容器样式 */
+.center-image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 5px 0;
+}
+
+/* 居中图片样式 */
+.center-image {
+    max-width: 100%;
+    height: auto;
+    /* 确保图片加载完成后能触发重新滚动 */
+    transition: height 0.01s ease;
+}
+
+/**
+ * 滚动指示器样式
+ * 当新内容添加但用户未滚动到底部时显示
+ */
+.scroll-indicator {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    padding: 5px 10px;
+    border-radius: 5px;
+    border: 1px solid #666;
+    z-index: 1000;
+    cursor: pointer;
+    box-shadow: 0 0 5px rgba(255, 255, 255, 0.2);
+    animation: pulse 1.5s infinite;
+    font-size: 0.9em;
+    opacity: 0.8;
+    transition: opacity 0.3s;
+}
+
+.scroll-indicator:hover {
+    opacity: 1;
+}
+
+@keyframes pulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+}
+
+/**
+ * 滚动按钮样式
+ * 提供手动滚动到底部的按钮
+ */
+.scroll-button {
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    margin: 5px;
+    transition: background-color 0.2s;
+}
+
+.scroll-button:hover {
+    background-color: #444;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .game-container {
+        padding: 10px;
+    }
+    
+    .button {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        margin: 5px 0;
+    }
+}

@@ -24,7 +24,7 @@ class GameTimeInfoPanel:
         now_width = 0
         now_draw = draw.CenterMergeDraw(self.width)
         year_draw = draw.NormalDraw()
-        year_draw.width = self.width
+        # year_draw.width = self.width
         year_draw.text = f"{game_time.get_year_text()} "
         now_draw.draw_list.append(year_draw)
         now_width += len(year_draw)
@@ -33,7 +33,7 @@ class GameTimeInfoPanel:
         month_draw = draw.NormalDraw()
         month_draw.text = f"{game_time.get_month_text()} "
         month_draw.style = "season"
-        month_draw.width = self.width - now_width
+        # month_draw.width = self.width - now_width
         now_draw.draw_list.append(month_draw)
         now_width += len(month_draw)
         # 日和时间和星期
@@ -60,7 +60,7 @@ class GameTimeInfoPanel:
         if judge:
             sun_time_draw.text += _("(饭点)")
         sun_time_draw.text += " "
-        sun_time_draw.width = self.width - now_width
+        # sun_time_draw.width = self.width - now_width
         now_draw.draw_list.append(sun_time_draw)
         now_width += len(sun_time_draw)
         # 月相
@@ -69,7 +69,7 @@ class GameTimeInfoPanel:
             moon_phase_config = game_config.config_moon[moon_phase]
             moon_phase_draw = draw.NormalDraw()
             moon_phase_draw.text = f"{moon_phase_config.name} "
-            moon_phase_draw.width = self.width - now_width
+            # moon_phase_draw.width = self.width - now_width
             moon_phase_draw.style = "moon"
             now_draw.draw_list.append(moon_phase_draw)
             now_width += len(moon_phase_draw)
@@ -80,7 +80,7 @@ class GameTimeInfoPanel:
         work_ro_rest += " "
         work_ro_rest_draw = draw.NormalDraw()
         work_ro_rest_draw.text = work_ro_rest
-        work_ro_rest_draw.width = self.width - now_width
+        # work_ro_rest_draw.width = self.width - now_width
         now_draw.draw_list.append(work_ro_rest_draw)
         now_width += len(work_ro_rest_draw)
         self.width = now_width

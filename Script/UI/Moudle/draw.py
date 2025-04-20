@@ -292,6 +292,9 @@ class InfoBarDraw:
             bar_draw.width = now_max_width - len(info_draw) - len(value_draw)
         bar_draw.set(self.bar_id, max_value, value)
         fix_width = int((self.width - now_max_width) / 2)
+        # web绘制模式下修正宽度减少
+        if cache.web_mode:
+            fix_width = int(fix_width * 0.8)
         fix_draw = NormalDraw()
         fix_draw.text = " " * fix_width
         fix_draw.width = fix_width
@@ -745,7 +748,7 @@ class LittleTitleLineDraw:
     def draw(self):
         """绘制线条"""
         title_draw = NormalDraw()
-        title_draw.width = self.width
+        # title_draw.width = self.width
         title_draw.text = self.title
         title_draw.style = self.title_style
         line_a_width = int(self.width / 16) - len(title_draw)
