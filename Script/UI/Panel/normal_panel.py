@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, character, game_time, cooking
+from Script.Design import update, map_handle, instuct_judege, game_time, cooking
 
 panel_info_data = {}
 
@@ -168,7 +168,7 @@ class Read_Book_Panel:
 
     def read(self, book_id):
         """读选择的书"""
-        character.init_character_behavior_start_time(0, cache.game_time)
+        instuct_judege.init_character_behavior_start_time(0, cache.game_time)
         character_data: game_type.Character = cache.character_data[0]
         book_data = game_config.config_book[book_id]
         character_data.behavior.behavior_id = constant.Behavior.READ_BOOK
@@ -379,7 +379,7 @@ class Take_Care_Baby_Panel:
 
     def settle_take_care(self, instruct_id):
         """结算照顾指令"""
-        character.init_character_behavior_start_time(0, cache.game_time)
+        instuct_judege.init_character_behavior_start_time(0, cache.game_time)
         character_data: game_type.Character = cache.character_data[0]
         character_data.target_character_id = self.target_chara_id
 

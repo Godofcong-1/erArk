@@ -12,7 +12,7 @@ from Script.Core import (
 )
 from Script.Design import (
     game_time,
-    character,
+    instuct_judege,
     handle_premise,
     handle_premise_place,
     character_behavior,
@@ -186,7 +186,7 @@ def judge_character_follow(character_id: int) -> int:
 
     # 维持强制跟随的状态
     if character_data.sp_flag.is_follow == 2:
-        character.init_character_behavior_start_time(character_id, cache.game_time)
+        instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
         character_data.behavior.behavior_id = constant.Behavior.FOLLOW
         character_data.state = constant.CharacterStatus.STATUS_FOLLOW
         if character_data.position != cache.character_data[0].position:

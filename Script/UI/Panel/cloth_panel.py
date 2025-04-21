@@ -2,7 +2,7 @@ from typing import List
 from types import FunctionType
 from Script.Core import game_type, cache_control, rich_text, get_text, constant, py_cmd, text_handle, flow_handle
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise, clothing, update, character
+from Script.Design import attr_calculation, handle_premise, clothing, update, instuct_judege
 from Script.UI.Moudle import draw, panel
 
 cache: game_type.Cache = cache_control.cache
@@ -357,7 +357,7 @@ class SeeUndressButtonList:
 
     def chose_button(self):
         """玩家点击了选项"""
-        character.init_character_behavior_start_time(0, cache.game_time)
+        instuct_judege.init_character_behavior_start_time(0, cache.game_time)
         character_data = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.target_character_id]
         character_data.behavior.duration = 5

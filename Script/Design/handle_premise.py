@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type, get_text
-from Script.Design import map_handle, game_time, attr_calculation, character
+from Script.Design import map_handle, game_time, attr_calculation, instuct_judege
 from Script.Config import normal_config, game_config
 from Script.UI.Panel import dirty_panel
 
@@ -1380,7 +1380,7 @@ def handle_instruct_judge_low_obscenity(character_id: int) -> int:
     """
     if character_id == 0:
         return 0
-    if character.calculation_instuct_judege(0, character_id, _("初级骚扰"), not_draw_flag = True)[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_id, _("初级骚扰"), not_draw_flag = True)[0]:
         return 1
     return 0
 
@@ -1398,7 +1398,7 @@ def handle_target_instruct_judge_low_obscenity(character_id: int) -> int:
     if character_id == target_character_id:
         return 0
     # 判断交互对象是否满足低级骚扰条件（调用计算函数判断低级骚扰）
-    if character.calculation_instuct_judege(character_id, target_character_id, _("初级骚扰"), not_draw_flag=True)[0]:
+    if instuct_judege.calculation_instuct_judege(character_id, target_character_id, _("初级骚扰"), not_draw_flag=True)[0]:
         return 1
     return 0
 
@@ -1424,7 +1424,7 @@ def handle_instruct_judge_high_obscenity(character_id: int) -> int:
     """
     if character_id == 0:
         return 0
-    if character.calculation_instuct_judege(0, character_id, _("严重骚扰"), not_draw_flag = True)[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_id, _("严重骚扰"), not_draw_flag = True)[0]:
         return 1
     return 0
 
@@ -1446,7 +1446,7 @@ def handle_target_instruct_judge_high_obscenity(character_id: int) -> int:
     if character_id == target_character_id:
         return 0
     # 调用评价函数判断交互对象是否满足“严重骚扰”条件
-    if character.calculation_instuct_judege(character_id, target_character_id, _("严重骚扰"), not_draw_flag=True)[0]:
+    if instuct_judege.calculation_instuct_judege(character_id, target_character_id, _("严重骚扰"), not_draw_flag=True)[0]:
         return 1
     return 0
 
@@ -1474,7 +1474,7 @@ def handle_instruct_judge_h(character_id: int) -> int:
     """
     if character_id == 0:
         return 0
-    if character.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag = True)[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_id, _("H模式"), not_draw_flag = True)[0]:
         return 1
     return 0
 
@@ -1492,7 +1492,7 @@ def handle_target_instruct_judge_h(character_id: int) -> int:
     target_character_id = character_data.target_character_id
     if character_id == target_character_id:
         return 0
-    if character.calculation_instuct_judege(character_id, target_character_id, _("H模式"), not_draw_flag = True)[0]:
+    if instuct_judege.calculation_instuct_judege(character_id, target_character_id, _("H模式"), not_draw_flag = True)[0]:
         return 1
     return 0
 
@@ -1520,7 +1520,7 @@ def handle_instruct_judge_group_sex(character_id: int) -> int:
     """
     if character_id == 0:
         return 0
-    if character.calculation_instuct_judege(0, character_id, _("群交"), not_draw_flag = True)[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_id, _("群交"), not_draw_flag = True)[0]:
         return 1
     return 0
 

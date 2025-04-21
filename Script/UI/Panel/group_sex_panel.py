@@ -661,7 +661,7 @@ class Edit_Group_Sex_Temple_Panel:
 
     def show_invite_npc_panel(self):
         """绘制可邀请的NPC列表"""
-        from Script.Design import character
+        from Script.Design import instuct_judege
         from Script.UI.Panel import common_select_NPC
         now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
         # 当前地点的角色列表
@@ -683,7 +683,7 @@ class Edit_Group_Sex_Temple_Panel:
                 if chara_id in now_scene_character_list:
                     continue
                 # 判断实行值是否足够，不够的也跳过
-                if character.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+                if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
                     continue
                 # 判断是否被选择过
                 if handle_premise.handle_self_now_go_to_join_group_sex(chara_id):
@@ -761,7 +761,7 @@ class Edit_Group_Sex_Temple_Panel:
 
     def invite_npc(self, character_id: int):
         """邀请NPC"""
-        from Script.Design import character
+        from Script.Design import instuct_judege
         character_data = cache.character_data[character_id]
         if not handle_premise.handle_normal_24567(character_id):
             info_draw_text = _("***{0}状态异常，无法召集***\n").format(character_data.name)
@@ -770,7 +770,7 @@ class Edit_Group_Sex_Temple_Panel:
             character_data.sp_flag.go_to_join_group_sex = False
             info_draw_text = _("\n已取消对{0}的群交邀请，{0}不会来这里参加群交了\n").format(character_data.name)
             # 结算等待
-            character.init_character_behavior_start_time(character_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
             constant.handle_state_machine_data[0](character_id)
         # 否则邀请
         else:
@@ -779,7 +779,7 @@ class Edit_Group_Sex_Temple_Panel:
             # 赋予二段行为
             character_data.second_behavior[1366] = 1
             # 结算移动
-            character.init_character_behavior_start_time(character_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
             constant.handle_state_machine_data[503](character_id)
         # 绘制信息
         info_draw = draw.WaitDraw()

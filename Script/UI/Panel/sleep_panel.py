@@ -10,7 +10,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import normal_config
-from Script.Design import update, map_handle, character, game_time, handle_premise
+from Script.Design import update, map_handle, instuct_judege, game_time, handle_premise
 import math
 
 panel_info_data = {}
@@ -176,7 +176,7 @@ class Sleep_Panel:
                 # 睡眠
                 if self.sleep_time_min == 0:
                     self.sleep_time_min = self.sleep_time_hour * 60
-                character.init_character_behavior_start_time(0, cache.game_time)
+                instuct_judege.init_character_behavior_start_time(0, cache.game_time)
                 self.pl_character_data.behavior.duration = self.sleep_time_min
                 self.pl_character_data.behavior.behavior_id = constant.Behavior.SLEEP
                 self.pl_character_data.state = constant.CharacterStatus.STATUS_SLEEP
@@ -260,13 +260,13 @@ class Sleep_Panel:
             return
         # 如果开启了晚安问候、且还没有进行，则进行晚安问候
         if handle_premise.handle_assistant_night_salutation_on(self.pl_character_data.assistant_character_id) and handle_premise.handle_night_salutation_flag_0(self.pl_character_data.assistant_character_id):
-            character.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
             night_salutation_state_machine_id = 708 + assistant_character_data.assistant_services[6]
             constant.handle_state_machine_data[night_salutation_state_machine_id](self.pl_character_data.assistant_character_id)
             character_behavior.judge_character_status(self.pl_character_data.assistant_character_id)
         # 同居服务开启中，则直接睡觉
         if handle_premise.handle_assistant_live_together_on(self.pl_character_data.assistant_character_id):
-            character.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
             constant.handle_state_machine_data[44](self.pl_character_data.assistant_character_id)
             # 如果开启了早安服务，则睡到早安服务时间前十分钟醒来
             if handle_premise.handle_assistant_morning_salutation_on(self.pl_character_data.assistant_character_id):

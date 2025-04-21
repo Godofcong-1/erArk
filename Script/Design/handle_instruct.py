@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, character, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, handle_npc_ai, handle_npc_ai_in_h, handle_premise
+from Script.Design import update, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -117,7 +117,7 @@ def chara_handle_instruct_common_settle(
     """
     from Script.UI.Panel import group_sex_panel
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
-    character.init_character_behavior_start_time(character_id, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
     character_data: game_type.Character = cache.character_data[character_id]
     # 如果有指定目标角色id，则设置目标角色id
     if target_character_id != 0:
@@ -126,7 +126,7 @@ def chara_handle_instruct_common_settle(
         target_character_id = character_data.target_character_id
     # 如果有判断条件，则先进行判断
     if judge != "":
-        judge_list = character.calculation_instuct_judege(character_id, character_data.target_character_id, judge)
+        judge_list = instuct_judege.calculation_instuct_judege(character_id, character_data.target_character_id, judge)
         if judge_list[0] == 0:
             judge_to_state = {
                 _("初级骚扰"): constant.CharacterStatus.STATUS_LOW_OBSCENITY_ANUS,
@@ -160,7 +160,7 @@ def chara_handle_instruct_common_settle(
     character_data.behavior.duration = duration
     # 如果强制目标等待，则将目标角色状态设置为等待
     if target_character_id != character_id and force_taget_wait:
-        character.init_character_behavior_start_time(target_character_id, cache.game_time)
+        instuct_judege.init_character_behavior_start_time(target_character_id, cache.game_time)
         target_character_data: game_type.Character = cache.character_data[target_character_id]
         target_character_data.state = constant.CharacterStatus.STATUS_WAIT
         target_character_data.behavior.behavior_id = constant.Behavior.WAIT
@@ -497,7 +497,7 @@ def handle_see_fridge():
 )
 def handle_teach():
     """处理授课指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.behavior_id = constant.Behavior.TEACH
     character_data.behavior.duration = 45
@@ -1181,7 +1181,7 @@ def handle_massage():
 #     character_data: game_type.Character = cache.character_data[0]
 #     target_character_id = character_data.target_character_id
 #     if target_character_id not in character_data.collection_character:
-#         character_data.collection_character.add(target_character_id)
+#         character_data.collection_instuct_judege.add(target_character_id)
 
 
 # @add_instruct(
@@ -1195,7 +1195,7 @@ def handle_massage():
 #     character_data: game_type.Character = cache.character_data[0]
 #     target_character_id = character_data.target_character_id
 #     if target_character_id in character_data.collection_character:
-#         character_data.collection_character.remove(target_character_id)
+#         character_data.collection_instuct_judege.remove(target_character_id)
 
 
 # @add_instruct(
@@ -1252,7 +1252,7 @@ def handle_massage():
 # )
 # def handle_attend_class():
 #     """处理上课指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
+#     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
 #     character_data: game_type.Character = cache.character_data[0]
 #     end_time = 0
 #     school_id, phase = course.get_character_school_phase(0)
@@ -1291,7 +1291,7 @@ def handle_massage():
 # )
 # def handle_teach_a_lesson():
 #     """处理教课指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
+#     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
 #     character_data: game_type.Character = cache.character_data[0]
 #     end_time = 0
 #     now_week = cache.game_time.weekday()
@@ -1323,7 +1323,7 @@ def handle_massage():
 # )
 # def handle_play_guitar():
 #     """处理弹吉他指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
+#     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
 #     character_data = cache.character_data[0]
 #     character_data.behavior.duration = 10
 #     character_data.behavior.behavior_id = constant.Behavior.PLAY_GUITAR
@@ -1342,7 +1342,7 @@ def handle_massage():
 # )
 # def handle_self_study():
 #     """处理自习指令"""
-#     character.init_character_behavior_start_time(0, cache.game_time)
+#     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
 #     character_data: game_type.Character = cache.character_data[0]
 #     school_id, phase = course.get_character_school_phase(0)
 #     now_course_list = list(game_config.config_school_phase_course_data[school_id][phase])
@@ -1476,7 +1476,7 @@ def handle_all_npc_position():
 )
 def handle_followed():
     """处理邀请同行指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     character_data.behavior.behavior_id = constant.Behavior.FOLLOW
@@ -1515,7 +1515,7 @@ def handle_followed():
 )
 def handle_end_followed():
     """处理结束同行指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 1
     character_data.behavior.behavior_id = constant.Behavior.END_FOLLOW
@@ -1538,7 +1538,7 @@ def handle_end_followed():
 )
 def handle_apologize():
     """处理道歉指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 根据口才获取调整值#
@@ -1569,7 +1569,7 @@ def handle_apologize():
 )
 def handle_listen_complaint():
     """处理听牢骚指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 根据口才获取调整值#
@@ -1777,7 +1777,7 @@ def handle_check_locker():
 )
 def handle_collect_panty():
     """处理收起内裤指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -1793,7 +1793,7 @@ def handle_collect_panty():
 )
 def handle_ask_date():
     """处理邀请约会指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -1813,10 +1813,10 @@ def handle_ask_date():
 )
 def handle_confession():
     """处理告白指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if handle_premise.handle_target_trust_ge_200(0) and character.calculation_instuct_judege(0, character_data.target_character_id, _("告白"))[0]:
+    if handle_premise.handle_target_trust_ge_200(0) and instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("告白"))[0]:
         character_data.behavior.behavior_id = constant.Behavior.CONFESSION
         character_data.state = constant.CharacterStatus.STATUS_CONFESSION
         # 将对象的恋慕转为恋人，对方获得戒指
@@ -1856,10 +1856,10 @@ def handle_confession():
 )
 def handle_give_necklace():
     """处理戴上项圈指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if handle_premise.handle_target_trust_ge_200(0) and character.calculation_instuct_judege(0, character_data.target_character_id, _("戴上项圈"))[0]:
+    if handle_premise.handle_target_trust_ge_200(0) and instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("戴上项圈"))[0]:
         character_data.behavior.behavior_id = constant.Behavior.GIVE_NECKLACE
         character_data.state = constant.CharacterStatus.STATUS_GIVE_NECKLACE
         # 将对象的驯服转为宠物，增加项圈素质
@@ -1895,7 +1895,7 @@ def handle_give_necklace():
 )
 def handle_drink_alcohol():
     """处理劝酒指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -1952,7 +1952,7 @@ def handle_do_h():
     target_data = cache.character_data[character_data.target_character_id]
     now_draw = draw.WaitDraw()
     now_draw.width = width
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
         now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         if cache.scene_data[now_scene_str].close_flag == 0:
             now_draw = normal_panel.Close_Door_Panel(width)
@@ -1983,7 +1983,7 @@ def handle_do_h():
 def handle_prepare_training():
     """处理调教前准备指令"""
     from Script.UI.Panel import confinement_and_training
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     confinement_and_training.prepare_training()
     update.game_update_flow(10)
 
@@ -2016,7 +2016,7 @@ def handle_switch_to_h_interface():
 )
 def handle_sleep_obscenity():
     """处理睡眠猥亵指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -2045,7 +2045,7 @@ def handle_sleep_obscenity():
 def handle_stop_sleep_obscenity():
     """处理停止睡眠猥亵指令"""
     from Script.Settle import default
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.unconscious_h = 0
@@ -2123,7 +2123,7 @@ def handle_ask_hidden_sex():
     from Script.UI.Panel.Hidden_Sex_Mode_Panel import Select_Hidden_Sex_Mode_Panel
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character.calculation_instuct_judege(0, character_data.target_character_id, _("隐奸"))[0]:
+    if instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("隐奸"))[0]:
         target_data.sp_flag.is_follow = 0
         now_panel = Select_Hidden_Sex_Mode_Panel(width)
         now_panel.draw()
@@ -2154,7 +2154,7 @@ def handle_ask_group_sex():
     now_draw = draw.WaitDraw()
     now_draw.width = width
 
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     h_flag = True # 是否成功进入群交模式
     refuse_chara_list = [] # 拒绝的角色列表
@@ -2169,13 +2169,13 @@ def handle_ask_group_sex():
             # 遍历非玩家的角色
             if chara_id == 0:
                 continue
-            character.init_character_behavior_start_time(chara_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(chara_id, cache.game_time)
             now_character_data = cache.character_data[chara_id]
             now_character_data.behavior.behavior_id = constant.Behavior.WAIT
             now_character_data.state = constant.CharacterStatus.STATUS_WAIT
             now_character_data.behavior.duration = 1
             # 开始判定，TODO 根据已同意人数而增加额外实行值加值
-            if character.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
+            if instuct_judege.calculation_instuct_judege(0, chara_id, _("群交"), not_draw_flag = True)[0] == False:
                 h_flag = False
                 refuse_chara_list.append(chara_id)
 
@@ -2228,7 +2228,7 @@ def handle_wait_5_min_in_h():
 )
 def handle_end_h():
     """处理H结束指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     special_end_list = constant.special_end_H_list
@@ -2276,7 +2276,7 @@ def handle_end_h():
 )
 def handle_group_sex_end():
     """处理结束群交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     special_end_list = constant.special_end_H_list
@@ -2316,7 +2316,7 @@ def handle_group_sex_end():
 )
 def handle_singing():
     """处理唱歌指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再唱歌
     if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
@@ -2353,7 +2353,7 @@ def handle_singing():
 )
 def handle_play_instrument():
     """处理演奏乐器指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再演奏
     if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
@@ -2760,7 +2760,7 @@ def handle_official_work():
 )
 def handle_battle_command():
     """处理指挥作战指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -2915,7 +2915,7 @@ def handle_recruit():
 )
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     now_draw = draw.WaitDraw()
     now_draw.width = width
     now_draw.style = "gold_enrod"
@@ -4832,7 +4832,7 @@ def handle_philter():
 )
 def handle_enemas():
     """处理灌肠液指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5447,7 +5447,7 @@ def handle_stimulate_vagina():
 )
 def handle_double_penetration():
     """处理二穴插入指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5538,7 +5538,7 @@ def handle_ask_pee():
 )
 def handle_beat_breast():
     """处理打胸部指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5570,7 +5570,7 @@ def handle_spanking():
 )
 def handle_shame_play():
     """处理羞耻play指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5587,7 +5587,7 @@ def handle_shame_play():
 )
 def handle_take_shower():
     """处理淋浴指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5604,7 +5604,7 @@ def handle_take_shower():
 )
 def handle_bubble_bath():
     """处理泡泡浴指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)
@@ -5621,7 +5621,7 @@ def handle_bubble_bath():
 )
 def handle_give_blowjob():
     """处理给对方口交指令"""
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     character_data.behavior.duration = 5
     update.game_update_flow(5)

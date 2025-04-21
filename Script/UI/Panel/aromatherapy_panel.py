@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.Design import update, character
+from Script.Design import update, instuct_judege
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -239,7 +239,7 @@ class Aromatherapy_Panel:
             target_character_data.sp_flag.aromatherapy = self.now_choice_recipe_id
             # 行动时间
             cost_time = 60
-            character.init_character_behavior_start_time(0, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(0, cache.game_time)
             pl_character_data.behavior.duration = cost_time
             # 根据序号获得对应的状态
             aromatherapy_dict = {
@@ -253,7 +253,7 @@ class Aromatherapy_Panel:
             if self.now_choice_recipe_id in aromatherapy_dict:
                 pl_character_data.behavior.behavior_id, pl_character_data.state = aromatherapy_dict[self.now_choice_recipe_id]
             # 对方停止并等待同样的时间
-            character.init_character_behavior_start_time(pl_character_data.target_character_id, cache.game_time)
+            instuct_judege.init_character_behavior_start_time(pl_character_data.target_character_id, cache.game_time)
             target_character_data.target_character_id = pl_character_data.target_character_id
             target_character_data.behavior.behavior_id = constant.Behavior.WAIT
             target_character_data.behavior.duration = cost_time

@@ -3,6 +3,7 @@ from types import FunctionType
 from Script.Design import (
     settle_behavior,
     character,
+    instuct_judege,
     character_handle,
     map_handle,
     attr_calculation,
@@ -3413,7 +3414,7 @@ def handle_interrupt_target_activity(
                 if target_data.behavior.behavior_id == constant.Behavior.MOVE:
                     target_data.behavior = game_type.Behavior()
                     target_data.state = constant.CharacterStatus.STATUS_ARDER
-                    character.init_character_behavior_start_time(
+                    instuct_judege.init_character_behavior_start_time(
                         target_data.cid, character_data.behavior.start_time
                     )
                 else:

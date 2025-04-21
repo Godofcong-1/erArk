@@ -10,7 +10,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Design import (
-    character,
+    instuct_judege,
     handle_premise,
     handle_premise_place,
     update,
@@ -180,7 +180,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     if handle_premise.handle_action_sleep(character_data.target_character_id):
         target_data.sp_flag.sleep_h_awake = True
     # 同步玩家的行动开始时间
-    character.init_character_behavior_start_time(character_id, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
     # 玩家的行动时间设为10分钟，对方的行动时间设为15分钟
     character_data.behavior.duration = 10
     target_data.behavior.duration = 15
@@ -407,7 +407,7 @@ def npc_active_h():
     status_id = random.choice(all_stastus_list)
 
     # 赋予给玩家
-    character.init_character_behavior_start_time(0, cache.game_time)
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     pl_character_data.behavior.behavior_id = status_id
     pl_character_data.state = status_id
     pl_character_data.behavior.duration = 10

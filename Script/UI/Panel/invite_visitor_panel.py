@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, map_handle, game_time, character_handle, character, character_handle
+from Script.Design import attr_calculation, map_handle, game_time, character_handle, instuct_judege, character_handle
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import manage_basement_panel, recruit_panel
@@ -189,7 +189,7 @@ def judge_visitor_if_leave(visitor_id: int):
     # 获得访客角色数据
     character_data: game_type.Character = cache.character_data[visitor_id]
     # 计算访客留下概率
-    tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
+    tem_1, tem_2, stay_posibility = instuct_judege.calculation_instuct_judege(0, visitor_id, _("访客留下"))
     # 遍历所有留下态度
     for attitude_id in game_config.config_visitor_stay_attitude:
         attitude_data = game_config.config_visitor_stay_attitude[attitude_id]
@@ -229,7 +229,7 @@ def get_today_departing_visitors():
         # 判定今天结束后是否要离开
         if game_time.judge_date_big_or_small(judge_time, cache.rhodes_island.visitor_info[visitor_id]):
             # 计算访客留下概率
-            tem_1, tem_2, stay_posibility = character.calculation_instuct_judege(0, visitor_id, _("访客留下"))
+            tem_1, tem_2, stay_posibility = instuct_judege.calculation_instuct_judege(0, visitor_id, _("访客留下"))
             if stay_posibility < 0.5:
                 departing_visitors.append(visitor_id)
     return departing_visitors

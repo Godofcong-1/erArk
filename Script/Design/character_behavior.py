@@ -14,7 +14,7 @@ from Script.Core import (
 from Script.Design import (
     settle_behavior,
     game_time,
-    character,
+    instuct_judege,
     handle_premise,
     handle_premise_place,
     event,
@@ -98,7 +98,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     if character_data.dead:
         return
     if character_data.behavior.start_time is None:
-        character.init_character_behavior_start_time(character_id, pl_start_time)
+        instuct_judege.init_character_behavior_start_time(character_id, pl_start_time)
 
     # 处理特殊模式
     if character_id != 0:
@@ -318,7 +318,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             return 0
         # 当前时间等于行动结束时间
         elif time_judge == 2:
-            character.init_character_behavior_start_time(character_id, now_time)
+            instuct_judege.init_character_behavior_start_time(character_id, now_time)
             return 1
     return 1
 
