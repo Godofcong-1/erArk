@@ -8,7 +8,7 @@ from Script.Core import (
     flow_handle,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, handle_premise_place
+from Script.Design import handle_premise
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -142,7 +142,7 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
                 elif select_state["type"] == 5 and select_state["name"] not in character_data.name:
                     continue
                 # 同区块筛选
-                elif select_state["type"] == 6 and not handle_premise_place.handle_in_player_zone(npc_id):
+                elif select_state["type"] == 6 and not handle_premise.handle_in_player_zone(npc_id):
                     continue
                 # 无意识筛选
                 elif select_state["type"] == 7 and handle_premise.handle_unconscious_flag_0(npc_id):

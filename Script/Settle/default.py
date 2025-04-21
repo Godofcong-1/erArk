@@ -12,8 +12,7 @@ from Script.Design import (
     character_behavior,
     handle_npc_ai_in_h,
     handle_premise,
-    handle_premise_place,
-    clothing
+    clothing,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -5275,7 +5274,7 @@ def handle_self_h_state_reset(
         if behavior_data != 0 and (second_behavior_id in range(1100,1120) or second_behavior_id in range(1200,1250)):
             character_data.second_behavior[second_behavior_id] = 0
     # 囚犯干员回到自己监牢
-    if handle_premise.handle_imprisonment_1(character_id) and handle_premise_place.handle_not_in_dormitory(character_id):
+    if handle_premise.handle_imprisonment_1(character_id) and handle_premise.handle_not_in_dormitory(character_id):
         dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
         map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
     # 退出H模式
@@ -9216,7 +9215,7 @@ def handle_sleep_add_adjust(
     """
     if not add_time:
         return
-    if handle_premise_place.handle_in_dormitory(character_id):
+    if handle_premise.handle_in_dormitory(character_id):
         # 换睡衣
         clothing.get_sleep_cloth(character_id)
         # 被要求不关门则不关门

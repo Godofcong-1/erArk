@@ -1,7 +1,7 @@
 import random
 from types import FunctionType
 from Script.Core import cache_control, game_type, value_handle, get_text, constant
-from Script.Design import map_handle, handle_premise, handle_premise_place
+from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import normal_config, game_config
 
@@ -34,7 +34,7 @@ def handle_talk(character_id: int):
         character_id == 0 and
         target_data.sp_flag.is_follow == 1 and
         behavior_id == constant.Behavior.MOVE and
-        handle_premise_place.handle_move_to_same_target_with_pl(character_data.target_character_id)
+        handle_premise.handle_move_to_same_target_with_pl(character_data.target_character_id)
     ):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
@@ -341,7 +341,7 @@ def check_not_draw_talk(character_id: int, now_behavior_id: int, unusual_talk_fl
             # print(f"debug {character_data.name}设置为屏蔽，不显示移动文本")
             return True
         # 跟随博士的移动不触发
-        if character_data.sp_flag.is_follow == 1 and handle_premise_place.handle_move_to_same_target_with_pl(character_id):
+        if character_data.sp_flag.is_follow == 1 and handle_premise.handle_move_to_same_target_with_pl(character_id):
             # print(f"debug 智能跟随模式下，{character_data.name}在跟随博士，不显示移动文本")
             return True
         # 当前小时内已触发过的不触发

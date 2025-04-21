@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise_place
+from Script.Design import handle_premise
 from Script.UI.Panel import dirty_panel
 
 panel_info_data = {}
@@ -173,7 +173,7 @@ class Select_Hidden_Sex_Mode_Panel:
                 can_use = True
                 if i >= 1:
                     can_use = False
-                    if handle_premise_place.handle_scene_only_two(0) or handle_premise_place.handle_scene_all_others_unconscious_or_sleep(0):
+                    if handle_premise.handle_scene_only_two(0) or handle_premise.handle_scene_all_others_unconscious_or_sleep(0):
                         can_use = True
                 # debug模式下不限制
                 if cache.debug_mode:

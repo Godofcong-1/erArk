@@ -1,7 +1,7 @@
 import random
 from types import FunctionType
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_premise_place, handle_npc_ai
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_npc_ai
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -1203,7 +1203,7 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     character_id -- 角色id
     """
     # 如果是关闭了隔间门的房间的话，则不会被看到
-    if handle_premise_place.handle_place_inside_door_close(character_id):
+    if handle_premise.handle_place_inside_door_close(character_id):
         return
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -1672,7 +1672,7 @@ def character_pee(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.PEE
     character_data.state = constant.CharacterStatus.STATUS_PEE
     character_data.behavior.duration = 5
-    if handle_premise.handle_urinate_ge_125(character_id) and handle_premise_place.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
+    if handle_premise.handle_urinate_ge_125(character_id) and handle_premise.handle_not_in_toilet(character_id) and character_data.position == cache.character_data[0].position:
         now_draw = draw.WaitDraw()
         now_draw.text = _("尿意达到了极限的{0}实在无法继续憋下去，被迫当场尿了出来\n").format(character_data.name)
         now_draw.draw()

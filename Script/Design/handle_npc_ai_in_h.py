@@ -12,7 +12,6 @@ from Script.Core import (
 from Script.Design import (
     instuct_judege,
     handle_premise,
-    handle_premise_place,
     update,
     character_behavior,
     attr_calculation,
@@ -121,7 +120,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             character_data.behavior.duration = past_time
 
     # 如果不在同一位置
-    if handle_premise_place.handle_not_in_player_scene(character_id):
+    if handle_premise.handle_not_in_player_scene(character_id):
 
         # 如果不在同一位置，则结束H状态和无意识状态
         if character_data.sp_flag.is_h:

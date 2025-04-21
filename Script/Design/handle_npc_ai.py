@@ -14,7 +14,6 @@ from Script.Design import (
     game_time,
     instuct_judege,
     handle_premise,
-    handle_premise_place,
     character_behavior,
     character_move,
     attr_calculation,
@@ -218,7 +217,7 @@ def judge_character_cant_move(character_id: int) -> int:
     if character_data.sp_flag.imprisonment:
         cant_move_flag = True
         # 如果不在自己的监狱，且玩家不在关押区，不在H中，则瞬移回自己的监狱
-        if not handle_premise_place.handle_in_detention_area(0) and handle_premise_place.handle_not_in_dormitory(character_id) and not character_data.sp_flag.is_h:
+        if not handle_premise.handle_in_detention_area(0) and handle_premise.handle_not_in_dormitory(character_id) and not character_data.sp_flag.is_h:
             dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
             map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
 
@@ -322,7 +321,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         # 进行工作
         if judge == 0:
             # 判断是否存在自动ai工作流程
-            if work_type_data.auto_ai and (handle_premise_place.common_place_judge_by_SceneName(character_id, work_type_data.place) or handle_premise_place.common_place_judge_by_SceneTag(character_id, work_type_data.place_tag)):
+            if work_type_data.auto_ai and (handle_premise.common_place_judge_by_SceneName(character_id, work_type_data.place) or handle_premise.common_place_judge_by_SceneTag(character_id, work_type_data.place_tag)):
                 state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=False, work_flag=True)
                 premise_data = new_premise_data
                 if state_machine_id:
@@ -356,7 +355,7 @@ def find_character_target(character_id: int, now_time: datetime.datetime):
         # 进行娱乐
         if judge == 0:
             # 判断是否存在自动ai娱乐流程
-            if entertainment_type_data.auto_ai and (handle_premise_place.common_place_judge_by_SceneName(character_id, entertainment_type_data.place) or handle_premise_place.common_place_judge_by_SceneTag(character_id, entertainment_type_data.place_tag)):
+            if entertainment_type_data.auto_ai and (handle_premise.common_place_judge_by_SceneName(character_id, entertainment_type_data.place) or handle_premise.common_place_judge_by_SceneTag(character_id, entertainment_type_data.place_tag)):
                 state_machine_id, new_premise_data = npc_auto_work_or_entertainment(character_id, premise_data, move_flag=False, work_flag=False)
                 premise_data = new_premise_data
                 if state_machine_id:

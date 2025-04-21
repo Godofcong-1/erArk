@@ -1,8 +1,17 @@
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type, get_text
-from Script.Design import map_handle, handle_premise
+from Script.Design import map_handle
 from Script.Config import game_config
+
+from Script.Design.handle_premise import (
+    handle_self_not_fall,
+    handle_self_fall_1,
+    handle_action_sleep,
+    handle_hp_1,
+    handle_unconscious_flag_ge_1,
+    handle_unconscious_flag_0,
+)
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -341,7 +350,7 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_self_not_fall(chara_id):
+                if handle_self_not_fall(chara_id):
                     return 999
     return 0
 
@@ -364,7 +373,7 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_hp_1(chara_id):
+                if handle_hp_1(chara_id):
                     return 1
     return 0
 
@@ -387,7 +396,7 @@ def handle_scene_someone_unconscious(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                if handle_unconscious_flag_ge_1(chara_id):
                     return 1
     return 0
 
@@ -410,7 +419,7 @@ def handle_scene_someone_not_unconscious(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_unconscious_flag_0(chara_id):
+                if handle_unconscious_flag_0(chara_id):
                     return 1
     return 0
 
@@ -433,7 +442,7 @@ def handle_scene_all_unconscious(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_unconscious_flag_0(chara_id):
+                if handle_unconscious_flag_0(chara_id):
                     return 0
         return 1
     return 0
@@ -457,9 +466,9 @@ def handle_scene_all_unconscious_or_sleep(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                if handle_unconscious_flag_ge_1(chara_id):
                     continue
-                if handle_premise.handle_action_sleep(chara_id):
+                if handle_action_sleep(chara_id):
                     continue
                 return 0
         return 1
@@ -485,9 +494,9 @@ def handle_scene_all_others_unconscious_or_sleep(character_id: int) -> int:
             # 遍历非自己、非交互对象的角色
             if chara_id == character_id or chara_id == character_data.target_character_id:
                 continue
-            if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+            if handle_unconscious_flag_ge_1(chara_id):
                 continue
-            if handle_premise.handle_action_sleep(chara_id):
+            if handle_action_sleep(chara_id):
                 continue
             return 0
         return 1
@@ -560,7 +569,7 @@ def handle_scene_someone_fall_le_1(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_self_not_fall(chara_id) or handle_premise.handle_self_fall_1(chara_id):
+                if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
                     return 1
     return 0
 
@@ -583,7 +592,7 @@ def handle_scene_all_fall_ge_2(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_self_not_fall(chara_id) or handle_premise.handle_self_fall_1(chara_id):
+                if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
                     return 0
         return 1
     return 0
@@ -607,7 +616,7 @@ def handle_scene_all_not_tired(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_premise.handle_hp_1(chara_id):
+                if handle_hp_1(chara_id):
                     return 0
         return 1
     return 0

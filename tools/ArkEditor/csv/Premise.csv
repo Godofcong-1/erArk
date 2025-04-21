@@ -5,8 +5,6 @@ debug_mode_on,DEBUG_MODE_ON,系统状态,现在是debug模式
 debug_mode_off,DEBUG_MODE_OFF,系统状态,现在不是debug模式
 is_h,IS_H,系统状态,当前为H模式
 not_h,NOT_H,系统状态,当前不是H模式
-is_unconscious_h,IS_UNCONSCIOUS_H,系统状态,当前为无意识奸模式
-not_unconscious_h,NOT_UNCONSCIOUS_H,系统状态,当前不是无意识奸模式
 group_sex_mode_on,GROUP_SEX_MODE_ON,系统状态,群交模式开启中
 group_sex_mode_off,GROUP_SEX_MODE_OFF,系统状态,群交模式未开启
 option_son,OPTION_SON,系统状态,选项的子事件
@@ -20,6 +18,10 @@ work_panel_show,WORK_PANEL_SHOW,系统状态,当前工作指令面板可见
 arts_panel_show,ARTS_PANEL_SHOW,系统状态,当前技艺指令面板可见
 obscenity_panel_show,OBSCENITY_PANEL_SHOW,系统状态,当前猥亵指令面板可见
 sex_panel_show,SEX_PANEL_SHOW,系统状态,当前性爱指令面板可见
+now_show_non_h_instruct,NOW_SHOW_NON_H_INSTRUCT,系统状态,当前显示非H类指令
+now_show_h_instruct,NOW_SHOW_H_INSTRUCT,系统状态,当前显示H类指令
+show_non_h_in_hidden_sex,SHOW_NON_H_IN_HIDDEN_SEX,系统状态,在隐奸中显示非H类指令
+not_show_non_h_in_hidden_sex,NOT_SHOW_NON_H_IN_HIDDEN_SEX,系统状态,不在隐奸中显示非H类指令
 generate_by_ai,GENERATE_BY_AI,系统状态,该文本由AI自动生成
 ai_chat_on,AI_CHAT_ON,系统状态,AI文本生成开启中
 
@@ -555,7 +557,6 @@ assistant_night_salutation_1,ASSISTANT_NIGHT_SALUTATION_1,属性_助理,自己�
 assistant_night_salutation_2,ASSISTANT_NIGHT_SALUTATION_2,属性_助理,自己的助理属性中的晚安问候服务为-晚安吻
 assistant_night_salutation_3,ASSISTANT_NIGHT_SALUTATION_3,属性_助理,自己的助理属性中的晚安问候服务为-晚安咬
 assistant_salutation_of_ai_disable,ASSISTANT_SALUTATION_OF_AI_DISABLE,属性_助理,自己的助理属性中的问候服务不影响AI行动的情况（包括未开启，开启但当前非问候时间）
-in_assistant_ai_link,IN_ASSISTANT_AI_LINK,属性_助理,自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候
 assistant_live_together_on,ASSISTANT_LIVE_TOGETHER_ON,属性_助理,自己的助理属性为正在同居
 assistant_live_together_off,ASSISTANT_LIVE_TOGETHER_OFF,属性_助理,自己的助理属性为未同居
 target_assistant_live_together_on,TARGET_ASSISTANT_LIVE_TOGETHER_ON,属性_助理,交互对象的助理属性为正在同居
@@ -671,6 +672,7 @@ morning_salutation_flag_2,MORIING_SALUTATION_FLAG_2,特殊flag_助理,自身已�
 night_salutation_flag_0,NIGHT_SALUTATION_FLAG_0,特殊flag_助理,自身没有晚安问候状态
 night_salutation_flag_1,NIGHT_SALUTATION_FLAG_1,特殊flag_助理,自身要晚安问候状态（权重100）
 night_salutation_flag_2,NIGHT_SALUTATION_FLAG_2,特殊flag_助理,自身已晚安问候状态
+in_assistant_ai_link,IN_ASSISTANT_AI_LINK,特殊flag_助理,自己正在助理服务的行动链中（AI判断专用），包括送饭和早晚问候
 
 be_bagged_0,BE_BAGGED_0,特殊flag_监禁,自身没有被装袋搬走
 be_bagged_1,BE_BAGGED_1,特殊flag_监禁,自身被装袋搬走
@@ -710,6 +712,8 @@ masturebate_bofore_sleep_flag_1,MASTUREBATE_BOFORE_SLEEP_FLAG_1,特殊flag_自�
 masturebate_bofore_sleep_flag_2,MASTUREBATE_BOFORE_SLEEP_FLAG_2,特殊flag_自慰,自身已睡前自慰状态
 not_need_masturebate_before_sleep_or_already_masturebate,NOT_NEED_MASTUREBATE_BEFORE_SLEEP_OR_ALREADY_MASTUREBATE,特殊flag_自慰,自身不需要睡前自慰或已经睡前自慰
 
+is_unconscious_h,IS_UNCONSCIOUS_H,特殊flag_无意识,当前为无意识奸模式
+not_unconscious_h,NOT_UNCONSCIOUS_H,特殊flag_无意识,当前不是无意识奸模式
 unconscious_flag_0,UNCONSCIOUS_FLAG_0,特殊flag_无意识,自身没有无意识状态
 unconscious_flag_ge_1,UNCONSCIOUS_FLAG_GE_1,特殊flag_无意识,自身有无意识状态
 unconscious_hypnosis_flag,UNCONSCIOUS_HYPNOSIS_FLAG,特殊flag_无意识,自身有无意识_任意一种催眠状态

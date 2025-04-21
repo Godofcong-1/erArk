@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import map_handle, handle_premise, handle_premise_place
+from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -162,7 +162,7 @@ class All_Npc_Position_Panel:
                         elif self.select_type == 5 and self.name_search not in character_data.name:
                             continue
                         # 同区块筛选
-                        elif self.select_type == 6 and not handle_premise_place.handle_in_player_zone(npc_id):
+                        elif self.select_type == 6 and not handle_premise.handle_in_player_zone(npc_id):
                             continue
                         # 无意识筛选
                         elif self.select_type == 7 and handle_premise.handle_unconscious_flag_0(npc_id):

@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, attr_calculation, character_handle, map_handle, handle_premise_place, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
+from Script.Design import update, attr_calculation, character_handle, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
 from Script.UI.Panel import normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -2319,7 +2319,7 @@ def handle_singing():
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再唱歌
-    if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
+    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
         while 1:
             now_draw = draw.WaitDraw()
             now_draw.width = width
@@ -2356,7 +2356,7 @@ def handle_play_instrument():
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
     # 如果音乐等级过低，且周围有其他角色，则进行需要确认再演奏
-    if character_data.ability[44] <= 2 and handle_premise_place.handle_scene_over_one(0):
+    if character_data.ability[44] <= 2 and handle_premise.handle_scene_over_one(0):
         while 1:
             now_draw = draw.WaitDraw()
             now_draw.width = width

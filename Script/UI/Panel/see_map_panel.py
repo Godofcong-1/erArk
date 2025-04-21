@@ -11,7 +11,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import map_handle, attr_text, character_move, handle_premise_place
+from Script.Design import map_handle, attr_text, character_move, handle_premise
 from Script.Config import game_config
 import random
 
@@ -763,7 +763,7 @@ class CollectionSceneNamePanel:
 
             line_feed.draw()
             # 根据玩家当前位置判断是否已收藏，决定显示“收藏当前地点”或“取消收藏当前地点”按钮
-            if handle_premise_place.handle_place_in_collection_list(0):
+            if handle_premise.handle_place_in_collection_list(0):
                 # 当前地点已收藏，设置按钮显示文字为“取消收藏当前地点”
                 btn_text: str = _(" [取消收藏当前地点] ")
                 collect_flag = False

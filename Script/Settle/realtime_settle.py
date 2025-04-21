@@ -11,7 +11,6 @@ from Script.Core import (
 from Script.Design import (
     game_time,
     handle_premise,
-    handle_premise_place,
     handle_npc_ai_in_h,
     attr_calculation,
 )
@@ -92,7 +91,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     # 休息时回复体力、气力
     if now_character_data.state == constant.CharacterStatus.STATUS_REST:
         # 休息室对回复效果的影响
-        if handle_premise_place.handle_in_rest_room_or_dormitory(character_id):
+        if handle_premise.handle_in_rest_room_or_dormitory(character_id):
             final_adjust = 1
             # 休息室等级对回复效果的影响
             now_level = cache.rhodes_island.facility_level[31]
@@ -275,7 +274,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 结算周围有其他人、状态12正常下，不穿胸衣和内裤时的羞耻值增加
             if (
                 handle_premise.handle_not_wear_bra_or_pan(character_id) and 
-                handle_premise_place.handle_scene_over_two(character_id) and 
+                handle_premise.handle_scene_over_two(character_id) and 
                 handle_premise.handle_normal_1(character_id) and 
                 handle_premise.handle_normal_2(character_id)
                 ):
