@@ -24,7 +24,7 @@ try:
     from Script.Core.web_server import update_game_state
     # Web IO模块加载成功
     web_io = io_web
-    print("Web IO模块加载成功")
+    print("Web IO loaded successfully.")
 except ImportError:
     # 导入失败时，保持使用原始IO
     web_io = None

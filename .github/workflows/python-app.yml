@@ -37,6 +37,7 @@ jobs:
 
       - name: Build Game Cache
         run: |
+          $env:PYTHONIOENCODING="utf-8"
           python init_data.py
 
       - name: Copy Game Files
