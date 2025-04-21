@@ -1651,8 +1651,24 @@ class CharacterBodyText:
             ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             now_text += f"  {ui_text}\n"
             # 怀孕情况
+            start_date = cache.game_time
+            end_date = character_data.pregnancy.fertilization_time
+            past_day = (start_date - end_date).days
+            if character_data.talent[20]:
+                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("但从外表上还看不出来\n")
+            elif character_data.talent[21]:
+                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("[妊娠]中，肚子已经大起来了\n")
+            elif character_data.talent[22]:
+                now_text += _("  已受精{0}天，").format(past_day)
+                now_text += _("[临盆]中，即将诞下爱的结晶\n")
+            elif character_data.talent[23]:
+                now_text += _("  正在[产后]休息\n")
+            elif character_data.talent[24]:
+                now_text += _("  [育儿]中，正在给宝宝喂奶\n")
             if character_data.experience[86] == 0:
-                now_text += _("  未怀孕过\n")
+                now_text += _("  未分娩过\n")
             else:
                 now_text += _("  为博士生下了  ")
                 for chara_id in character_data.relationship.child_id_list:
