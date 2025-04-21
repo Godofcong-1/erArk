@@ -4,14 +4,6 @@ from Script.Core import cache_control, constant, constant_promise, game_type, ge
 from Script.Design import map_handle
 from Script.Config import game_config
 
-from Script.Design.handle_premise import (
-    handle_self_not_fall,
-    handle_self_fall_1,
-    handle_action_sleep,
-    handle_hp_1,
-    handle_unconscious_flag_ge_1,
-    handle_unconscious_flag_0,
-)
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -341,6 +333,9 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_self_not_fall,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -364,6 +359,9 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_hp_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -387,6 +385,9 @@ def handle_scene_someone_unconscious(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_unconscious_flag_ge_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -410,6 +411,9 @@ def handle_scene_someone_not_unconscious(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_unconscious_flag_0,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -433,6 +437,9 @@ def handle_scene_all_unconscious(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_unconscious_flag_0,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -457,6 +464,10 @@ def handle_scene_all_unconscious_or_sleep(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_action_sleep,
+        handle_unconscious_flag_ge_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -484,6 +495,10 @@ def handle_scene_all_others_unconscious_or_sleep(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_action_sleep,
+        handle_unconscious_flag_ge_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -560,6 +575,10 @@ def handle_scene_someone_fall_le_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_self_not_fall,
+        handle_self_fall_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -583,6 +602,10 @@ def handle_scene_all_fall_ge_2(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_self_not_fall,
+        handle_self_fall_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -607,6 +630,9 @@ def handle_scene_all_not_tired(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    from Script.Design.handle_premise import (
+        handle_hp_1,
+    )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
