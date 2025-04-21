@@ -683,7 +683,7 @@ def check_unconscious_effect(
     change_data -- 状态变更信息记录对象
     now_time -- 结算时间
     """
-    from Script.Settle import default_experience
+    from Script.Settle import common_default
 
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
@@ -704,25 +704,25 @@ def check_unconscious_effect(
                 if experience_id in range(0, 8):
                     # 根据经验序号转化为对应的经验id
                     new_exp_id = experience_id + 70
-                    default_experience.base_chara_experience_common_settle(character_id, new_exp_id, target_flag=True, change_data = change_data)
+                    common_default.base_chara_experience_common_settle(character_id, new_exp_id, target_flag=True, change_data = change_data)
                 # 绝顶经验
                 elif experience_id in range(10, 18):
-                    default_experience.base_chara_experience_common_settle(character_id, 78, target_flag=True, change_data = change_data)
+                    common_default.base_chara_experience_common_settle(character_id, 78, target_flag=True, change_data = change_data)
                 # 性交经验
                 elif experience_id in range(61, 65):
-                    default_experience.base_chara_experience_common_settle(character_id, 79, target_flag=True, change_data = change_data)
+                    common_default.base_chara_experience_common_settle(character_id, 79, target_flag=True, change_data = change_data)
                     # 睡姦经验与被睡姦经验
                     if handle_premise.handle_unconscious_flag_1(target_character_id):
-                        default_experience.base_chara_experience_common_settle(character_id, 120, change_data = change_data)
-                        default_experience.base_chara_experience_common_settle(character_id, 121, target_flag=True, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 120, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 121, target_flag=True, change_data = change_data)
                     # 催眠姦经验与被催眠姦经验
                     elif handle_premise.handle_unconscious_hypnosis_flag(target_character_id):
-                        default_experience.base_chara_experience_common_settle(character_id, 126, change_data = change_data)
-                        default_experience.base_chara_experience_common_settle(character_id, 127, target_flag=True, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 126, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 127, target_flag=True, change_data = change_data)
                     # 时姦经验与被时姦经验
                     elif handle_premise.handle_unconscious_flag_3(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
-                        default_experience.base_chara_experience_common_settle(character_id, 124, change_data = change_data)
-                        default_experience.base_chara_experience_common_settle(character_id, 125, target_flag=True, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 124, change_data = change_data)
+                        common_default.base_chara_experience_common_settle(character_id, 125, target_flag=True, change_data = change_data)
 
     return target_character_data.sp_flag.unconscious_h
 
@@ -781,12 +781,12 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
             character_data.second_behavior[position_index] = 1
         # 如果玩家当前有性交姿势数据
         if pl_character_data.h_state.current_sex_position != -1:
-            from Script.Settle import default_experience
+            from Script.Settle import common_default
             # 自己增加对应姿势的经验
             exp_id = 140 + pl_character_data.h_state.current_sex_position
-            default_experience.base_chara_experience_common_settle(character_id, exp_id, change_data = change_data)
+            common_default.base_chara_experience_common_settle(character_id, exp_id, change_data = change_data)
             # 玩家增加对应姿势的经验
-            default_experience.base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
+            common_default.base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
 
 
 def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange, skip_undure: bool = False):

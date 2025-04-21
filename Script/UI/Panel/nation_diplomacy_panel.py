@@ -47,7 +47,7 @@ def judge_diplomatic_policy():
     结算外交方针
     """
 
-    from Script.Settle import default_experience
+    from Script.Settle import common_default
 
     all_reputation, all_infection_rate = 0, 0
     # 遍历所有势力
@@ -65,8 +65,8 @@ def judge_diplomatic_policy():
 
         # 外交官增加对话经验和学识经验
         for i in range(diplomatic_policy_data.difficulty):
-            default_experience.base_chara_experience_common_settle(diplomat_chara_id, 80)
-            default_experience.base_chara_experience_common_settle(diplomat_chara_id, 82)
+            common_default.base_chara_experience_common_settle(diplomat_chara_id, 80)
+            common_default.base_chara_experience_common_settle(diplomat_chara_id, 82)
 
         # 能力修正
         ability_adjust = attr_calculation.get_ability_adjust(diplomat_chara_data.ability[40])
