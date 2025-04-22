@@ -375,3 +375,8 @@ def judge_before_pl_behavior():
 
     # 结算上次进行聊天的时间，以重置聊天计数器#
     settle_behavior.change_character_talkcount_for_time(0, pl_character_data.behavior.start_time)
+
+    # 隐奸的被察觉情况结算
+    if handle_premise.handle_hidden_sex_mode_ge_1(0):
+        from Script.UI.Panel import hidden_sex_panel
+        hidden_sex_panel.increase_hidden_value_by_action(0)

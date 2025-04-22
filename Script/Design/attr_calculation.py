@@ -7,7 +7,6 @@ from Script.Core import (
 )
 from Script.Design import game_time
 from Script.Config import game_config
-from Script.UI.Panel import dirty_panel
 
 _: FunctionType = get_text._
 """ 翻译api """

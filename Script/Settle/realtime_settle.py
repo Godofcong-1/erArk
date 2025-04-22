@@ -424,19 +424,18 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
             extra += 1
         if handle_premise.handle_not_wear_pan(character_id):
             extra += 2
-        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0,
-                                              ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
+        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
-        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0,
-                                              ability_level=now_char.ability[15], extra_adjust=extra, tenths_add=False)
+        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char.ability[15], extra_adjust=extra, tenths_add=False)
     # 捆绑时欲情、羞耻、苦痛
     if handle_premise.handle_self_now_bondage(character_id):
         bond_id = now_char.h_state.bondage
         data = game_config.config_bondage[bond_id]
         adjust = data.level * 0.5
         for sid in (12,16,17):
-            default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0,
-                                                  ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15],
-                                                  extra_adjust=adjust, tenths_add=False)
+            default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
+    # 隐奸中增加羞耻
+    if handle_premise.handle_hidden_sex_mode_2(character_id) or handle_premise.handle_hidden_sex_mode_2(character_id):
+        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)

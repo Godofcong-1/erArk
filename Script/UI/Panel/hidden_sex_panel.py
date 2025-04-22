@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise
+from Script.Design import handle_premise, attr_calculation, map_handle
 from Script.UI.Panel import dirty_panel
 
 panel_info_data = {}
@@ -42,6 +42,58 @@ def get_hidden_level(value: int):
             continue
         else:
             return now_cid,now_data.name
+
+
+def increase_hidden_value_by_action(character_id = 0) -> None:
+    """
+    根据玩家当前的动作强度来增加角色的隐蔽值
+    参数:
+        character_id (int): 角色id，默认为0，表示玩家角色
+    返回:
+        None
+    """
+    character_data = cache.character_data[character_id]
+    # 获取当前行为
+    now_state_id = character_data.state
+    status_data = game_config.config_status[now_state_id]
+    # 根据行为类型判断是否需要增加隐蔽值
+    add_flag = False
+    for tag in {_("猥亵"), _("性爱")}:
+        if tag in status_data.tag:
+            add_flag = True
+            break
+    # 时间
+    now_duration = character_data.behavior.duration
+    # 强度
+    now_intensity = 1
+    tag_list = status_data.tag.split("|")
+    for tag in tag_list:
+        if tag == _("道具"):
+            now_intensity = max(4, now_intensity)
+        elif tag == _("插入"):
+            now_intensity = max(3, now_intensity)
+        elif tag == _("侍奉"):
+            now_intensity = max(2, now_intensity)
+    # 隐蔽能力
+    now_ability_lv = character_data.ability[90]
+    abi_adjust = attr_calculation.get_ability_adjust(now_ability_lv)
+    # 在场人数
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    other_chara_adjust = max(len(scene_data.character_list) - 2, 1)
+    # 增加
+    if add_flag:
+        adjust = now_intensity / abi_adjust * other_chara_adjust
+    # 减少
+    else:
+        adjust = -2 * abi_adjust
+    # 最终值
+    delta = int(now_duration * adjust)
+    # 将计算出的增益累加到角色隐蔽发现度上
+    character_data.h_state.hidden_sex_discovery_dregree += delta
+    # 最大为100，最小为0
+    character_data.h_state.hidden_sex_discovery_dregree = min(character_data.h_state.hidden_sex_discovery_dregree, 100)
+    character_data.h_state.hidden_sex_discovery_dregree = max(character_data.h_state.hidden_sex_discovery_dregree, 0)
 
 
 class See_Hidden_Sex_InfoPanel:
