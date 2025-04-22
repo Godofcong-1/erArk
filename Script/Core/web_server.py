@@ -42,7 +42,7 @@ app.config['USE_RELOADER'] = False
 # 初始化SocketIO，指定异步模式和超时配置
 socketio = SocketIO(app, 
                     cors_allowed_origins="*",
-                    async_mode=None,  # 修改为None让Flask-SocketIO自动选择最合适的异步模式
+                    async_mode='threading',
                     ping_timeout=60,
                     ping_interval=25,
                     logger=False,

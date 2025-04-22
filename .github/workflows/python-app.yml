@@ -28,7 +28,7 @@ jobs:
 
       - name: Run PyInstaller
         run: |
-          pyinstaller -F game.py
+          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading
 
       - name: Build Game Config
         run: |
