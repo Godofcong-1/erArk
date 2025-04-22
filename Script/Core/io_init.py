@@ -17,17 +17,18 @@ WEB_MODE = cache.web_mode
 
 # 尝试导入Web版IO模块
 web_io = None
-try:
-    # 导入Web版IO模块
-    from Script.Core import io_web
-    # 导入Web服务器模块
-    from Script.Core.web_server import update_game_state
-    # Web IO模块加载成功
-    web_io = io_web
-    print("Web IO loaded successfully.")
-except ImportError:
-    # 导入失败时，保持使用原始IO
-    web_io = None
+if WEB_MODE:
+    try:
+        # 导入Web版IO模块
+        from Script.Core import io_web
+        # 导入Web服务器模块
+        from Script.Core.web_server import update_game_state
+        # Web IO模块加载成功
+        web_io = io_web
+        print("Web IO loaded successfully.")
+    except ImportError:
+        # 导入失败时，保持使用原始IO
+        web_io = None
 
 input_evnet = threading.Event()
 _send_queue = queue.Queue()
