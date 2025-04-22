@@ -18573,6 +18573,20 @@ def handle_t_postpartum_1(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_PARTURIENT_OR_POSTPARTUM)
+def handle_self_parturient_or_postpartum(character_id: int) -> int:
+    """
+    自己正在临盆或产后
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_parturient_1(character_id) or handle_postpartum_1(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.REARING_0)
 def handle_rearing_0(character_id: int) -> int:
     """

@@ -2070,6 +2070,8 @@ class Premise:
     """ 素质_妊娠 交互对象产后==0 """
     T_POSTPARTUM_1 = "t_postpartum_1"
     """ 素质_妊娠 交互对象产后==1 """
+    SELF_PARTURIENT_OR_POSTPARTUM = "self_parturient_or_postpartum"
+    """ 素质_妊娠 自己正在临盆或产后 """
     REARING_0 = "rearing_0"
     """ 素质_妊娠 自己育儿==0 """
     REARING_1 = "rearing_1"
