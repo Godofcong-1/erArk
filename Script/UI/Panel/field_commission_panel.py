@@ -251,9 +251,9 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             elif text_list[0] == "t":
                 for character_id in send_npc_list:
                     if item_num > 0:
-                        cache.character_data[character_id].talent[item_id] = True
+                        cache.character_data[character_id].talent[item_id] = 1
                     elif item_num < 0:
-                        cache.character_data[character_id].talent[item_id] = False
+                        cache.character_data[character_id].talent[item_id] = 0
             # 角色
             elif text_list[0] == "c":
                 # 如果未获得该干员，则获得
@@ -320,9 +320,11 @@ def judge_field_commission_finish():
     draw_text = ""
     for commision_id in now_ongoing_field_commissions:
         end_time = cache.rhodes_island.ongoing_field_commissions[commision_id][1]
-        if game_time.judge_date_big_or_small(cache.game_time, end_time):
+        if game_time.judge_date_big_or_small(cache.game_time, end_time) or cache.debug_mode:
+            # 获取派遣人员列表
+            send_npc_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
             # 获取奖励
-            reward_return_list = get_commission_demand_and_reward(commision_id, [], True, True)
+            reward_return_list = get_commission_demand_and_reward(commision_id, send_npc_list, True, True)
             reward_text = reward_return_list[2]
             # 加入已完成的委托
             if commision_id not in cache.rhodes_island.finished_field_commissions_set:
@@ -330,8 +332,6 @@ def judge_field_commission_finish():
             # 奖励信息
             commision_name = game_config.config_commission[commision_id].name
             draw_text += "\n"
-            # 派遣人员上线
-            send_npc_list = cache.rhodes_island.ongoing_field_commissions[commision_id][0]
             # 结算队长
             if len(send_npc_list):
                 leader_id = send_npc_list[0]
@@ -340,6 +340,7 @@ def judge_field_commission_finish():
             # 遍历派遣人员
             for character_id in send_npc_list:
                 cache.character_data[character_id].sp_flag.field_commission = 0
+                # 派遣人员上线
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
             # 载具损坏与回收
