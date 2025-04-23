@@ -115,10 +115,9 @@ def check_fertilization(character_id: int):
             draw_text += _("\n因为{0}还没有迎来初潮，所以精子只能在阴道内徒劳地寻找不存在的卵子，无法完成受精\n").format(character_data.name)
 
         # 种族是机械的则需要判断是否有生育模组
-        elif character_data.race == 2:
-            if character_data.talent[171] == 0:
-                character_data.pregnancy.fertilization_rate = 0
-                draw_text += _("\n{0}是机械体，且未安装生育模组，无法受精\n").format(character_data.name)
+        elif character_data.race == 2 and character_data.talent[171] == 0:
+            character_data.pregnancy.fertilization_rate = 0
+            draw_text += _("\n{0}是机械体，且未安装生育模组，无法受精\n").format(character_data.name)
 
         # 正常情况下可以受精
         else:
