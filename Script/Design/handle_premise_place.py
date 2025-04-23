@@ -428,6 +428,33 @@ def handle_scene_someone_not_unconscious(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_IN_HIDDEN_AND_CONSCIOUS)
+def handle_place_someone_not_in_hidden_and_conscious(character_id: int) -> int:
+    """
+    场景中存在未处于隐奸模式且处于有意识状态的角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design.handle_premise import (
+        handle_unconscious_flag_0, handle_hidden_sex_mode_0
+    )
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 跳过玩家
+            if chara_id == 0:
+                continue
+            if handle_hidden_sex_mode_0(chara_id) and handle_unconscious_flag_0(chara_id):
+                return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SCENE_ALL_UNCONSCIOUS)
 def handle_scene_all_unconscious(character_id: int) -> int:
     """

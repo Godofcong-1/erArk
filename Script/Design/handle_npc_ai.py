@@ -44,7 +44,7 @@ def judge_character_tired_sleep(character_id : int):
     from Script.Design import handle_instruct
 
     character_data: game_type.Character = cache.character_data[character_id]
-    #交互对象结算
+    # 交互对象结算
     if character_id:
         # 疲劳判定
         if character_data.hit_point <= 1 and not character_data.sp_flag.tired:

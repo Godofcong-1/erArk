@@ -263,6 +263,8 @@ class Behavior:
     """ H时被人目击闯入中断 """
     NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
+    HIDDEN_SEX_INTERRUPT = 368
+    """ 隐奸被发现中断 """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372
@@ -271,6 +273,10 @@ class Behavior:
     """ 戴上项圈 """
     GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    DISCOVER_HIDDEN_SEX_AND_INTERRUPT = 376
+    """ 发现隐奸并打断 """
+    DISCOVER_HIDDEN_SEX_AND_JOIN = 377
+    """ 发现隐奸并加入转群交 """
     ASK_HIDDEN_SEX = 378
     """ 邀请隐奸 """
     ASK_HIDDEN_SEX_FAIL = 379

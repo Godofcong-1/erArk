@@ -379,4 +379,4 @@ def judge_before_pl_behavior():
     # 隐奸的被察觉情况结算
     if handle_premise.handle_hidden_sex_mode_ge_1(0):
         from Script.UI.Panel import hidden_sex_panel
-        hidden_sex_panel.increase_hidden_value_by_action(0)
+        hidden_sex_panel.handle_hidden_sex_flow()

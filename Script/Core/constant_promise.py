@@ -248,6 +248,8 @@ class Premise:
     """ 地点_角色 该地点有无意识状态的角色 """
     SCENE_SOMEONE_NOT_UNCONSCIOUS = "place_someone_not_unconscious"
     """ 地点_角色 该地点有非无意识状态的角色 """
+    SCENE_SOMEONE_NOT_IN_HIDDEN_AND_CONSCIOUS = "place_someone_not_in_hidden_and_conscious"
+    """ 地点_角色 场景中存在未处于隐奸模式且处于有意识状态的角色 """
     SCENE_ALL_UNCONSCIOUS = "place_all_unconscious"
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都处于无意识状态 """
     SCENE_ALL_UNCONSCIOUS_OR_SLEEP = "place_all_unconscious_or_sleep"

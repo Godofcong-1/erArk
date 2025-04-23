@@ -9,8 +9,10 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, attr_calculation, map_handle
+from Script.Design import handle_premise, attr_calculation, map_handle, character_behavior
 from Script.UI.Panel import dirty_panel
+
+import random
 
 panel_info_data = {}
 
@@ -25,6 +27,43 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+def handle_hidden_sex_flow(character_id: int = 0) -> None:
+    """
+    处理隐奸整体流程：先结算隐蔽值，再判断是否被发现
+    参数:
+        character_id (int): 角色id，默认为0（玩家）
+    返回:
+        None
+    """
+    # 先结算隐蔽值增减
+    settle_hidden_value_by_action(character_id)
+    # 需要场景中存在未处于隐奸模式且处于有意识状态的角色
+    if not handle_premise.handle_place_someone_not_in_hidden_and_conscious(character_id):
+        return
+    # 获取角色数据
+    character_data = cache.character_data[character_id]
+    # 判断是否被发现
+    discovered = check_hidden_sex_discovery(character_data.h_state.hidden_sex_discovery_dregree)
+    # 被发现时
+    if discovered:
+        # from Script.Design import update
+        # 寻找是否会打断的人
+        interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
+        # 存在则打断
+        if len(interrupt_chara_list):
+            for chara_id in interrupt_chara_list:
+                now_chara_data = cache.character_data[chara_id]
+                # 触发打断
+                now_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_HIDDEN_SEX_AND_INTERRUPT
+                now_chara_data.state = constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_INTERRUPT
+                now_chara_data.behavior.duration = 1
+                character_behavior.judge_character_status(character_id)
+            # 触发被打断
+            character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_INTERRUPT
+            character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_INTERRUPT
+            character_data.behavior.duration = 1
+            character_behavior.judge_character_status(character_id)
 
 
 def get_hidden_level(value: int):
@@ -42,11 +81,49 @@ def get_hidden_level(value: int):
             continue
         else:
             return now_cid,now_data.name
+    # 如果没有找到对应的等级，则返回最大等级
+    return 3, game_config.config_hidden_level[3].name
 
-
-def increase_hidden_value_by_action(character_id = 0) -> None:
+def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
     """
-    根据玩家当前的动作强度来增加角色的隐蔽值
+    功能: 返回指定角色所在地点中，不在隐奸中，实行值不足以群交且有意识且未睡眠的其他角色列表
+    参数:
+        character_id (int): 角色id
+    返回:
+        List[int]: 符合条件的角色id列表
+    """
+    # 获取角色当前位置对应的场景路径字符串
+    position = cache.character_data[character_id].position
+    scene_path = map_handle.get_map_system_path_str_for_list(position)
+    # 从缓存中取出该场景数据
+    scene_data: game_type.Scene = cache.scene_data[scene_path]
+
+    result: List[int] = []
+    # 遍历场景中所有角色
+    for chara_cid in scene_data.character_list:
+        if chara_cid == character_id:
+            # 排除自身
+            continue
+        # 去掉在隐奸中
+        if handle_premise.handle_hidden_sex_mode_ge_1(chara_cid):
+            continue
+        # 跳过无意识或睡眠状态的角色
+        if handle_premise.handle_unconscious_flag_ge_1(chara_cid):
+            continue
+        if handle_premise.handle_action_sleep(chara_cid):
+            continue
+        # 跳过足以群交的角色
+        if handle_premise.handle_instruct_judge_group_sex(chara_cid):
+            continue
+
+        # 符合所有条件，添加到结果列表
+        result.append(chara_cid)
+
+    return result
+
+def settle_hidden_value_by_action(character_id = 0) -> None:
+    """
+    根据玩家当前的动作强度来结算角色的隐蔽值
     参数:
         character_id (int): 角色id，默认为0，表示玩家角色
     返回:
@@ -95,6 +172,27 @@ def increase_hidden_value_by_action(character_id = 0) -> None:
     character_data.h_state.hidden_sex_discovery_dregree = min(character_data.h_state.hidden_sex_discovery_dregree, 100)
     character_data.h_state.hidden_sex_discovery_dregree = max(character_data.h_state.hidden_sex_discovery_dregree, 0)
 
+
+def check_hidden_sex_discovery(now_degree: int) -> bool:
+    """
+    判断隐奸行为是否被发现
+    参数:
+        now_degree (int): 当前隐蔽值
+    返回:
+        bool: True-已被发现, False-未被发现
+    """
+    # 根据发现度获取等级
+    hidden_lv, _ = get_hidden_level(now_degree)
+    # 小于2级则直接返回未被发现
+    if hidden_lv < 2:
+        return False
+    # 获取被发现概率
+    discover_rate = (now_degree - game_config.config_hidden_level[1].hidden_point) * 3
+    # 用随机数判断是否被发现
+    random_value = random.randint(0, 100)
+    if discover_rate >= random_value:
+        return True
+    return False
 
 class See_Hidden_Sex_InfoPanel:
     """

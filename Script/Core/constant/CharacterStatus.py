@@ -261,6 +261,8 @@ class CharacterStatus:
     """ H时被人目击闯入中断 """
     STATUS_NO_CONSCIOUS_H_END = 367
     """ 结束无意识H """
+    STATUS_HIDDEN_SEX_INTERRUPT = 368
+    """ 隐奸被发现中断 """
     STATUS_CONFESSION = 371
     """ 告白 """
     STATUS_CONFESSION_FAILED = 372
@@ -269,6 +271,10 @@ class CharacterStatus:
     """ 戴上项圈 """
     STATUS_GIVE_NECKLACE_FAILED = 374
     """ 戴上项圈失败 """
+    STATUS_DISCOVER_HIDDEN_SEX_AND_INTERRUPT = 376
+    """ 发现隐奸并打断 """
+    STATUS_DISCOVER_HIDDEN_SEX_AND_JOIN = 377
+    """ 发现隐奸并加入转群交 """
     STATUS_ASK_HIDDEN_SEX = 378
     """ 邀请隐奸 """
     STATUS_ASK_HIDDEN_SEX_FAIL = 379
