@@ -5,7 +5,7 @@
 重新实现流程控制函数，适配Web UI
 """
 from Script.Core import cache_control, io_init, constant
-from Script.Core.web_server import get_button_response, get_wait_response, get_input_response
+from Script.Core.web_server import get_button_response, get_wait_response, get_input_response, update_game_state
 import time
 from typing import List, Optional
 
@@ -28,6 +28,8 @@ def askfor_all(return_list: List[str]) -> str:
     
     在Web UI中，这变成等待用户通过API发送选择
     """
+    # 更新Web界面状态
+    update_game_state(cache.current_draw_elements, None)
     # 将当前的返回列表保存到缓存中
     cache.current_return_list = return_list
     
@@ -226,7 +228,6 @@ def order_deal(flag: str = "order", print_order: bool = True, donot_return_null_
     
     # 如果需要打印命令，将其添加到绘制元素
     if print_order and response:
-        from Script.Core.web_server import update_game_state
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         
@@ -236,9 +237,6 @@ def order_deal(flag: str = "order", print_order: bool = True, donot_return_null_
             "text": f"\n{response}\n",
             "style": "normal"
         })
-        
-        # 更新界面状态
-        update_game_state(cache.current_draw_elements)
     
     return response if response is not None else ""
 
@@ -281,7 +279,6 @@ def print_cmd(cmd_str: str, cmd_number: str, cmd_func=None, arg: tuple = (),
     bind_cmd(cmd_number, cmd_func, arg, kw)
     
     # 在Web版本中，创建按钮元素并添加到当前绘制元素列表
-    from Script.Core.web_server import update_game_state
     if not hasattr(cache, "current_draw_elements"):
         cache.current_draw_elements = []
     
@@ -296,9 +293,6 @@ def print_cmd(cmd_str: str, cmd_number: str, cmd_func=None, arg: tuple = (),
     # 添加到当前绘制元素列表
     cache.current_draw_elements.append(button_element)
     
-    # 更新Web界面状态
-    update_game_state(cache.current_draw_elements)
-    
     return cmd_str
 
 def cmd_clear(*numbers) -> None:
@@ -312,7 +306,6 @@ def cmd_clear(*numbers) -> None:
     """
     
     # 在Web版本中，从绘制元素中移除按钮并清除命令映射
-    from Script.Core.web_server import update_game_state
     
     if not hasattr(cache, "current_draw_elements"):
         cache.current_draw_elements = []
@@ -334,9 +327,6 @@ def cmd_clear(*numbers) -> None:
         # 从绘制元素中移除所有按钮
         cache.current_draw_elements = [elem for elem in cache.current_draw_elements 
                                      if elem.get('type') != 'button']
-    
-    # 更新Web界面状态
-    update_game_state(cache.current_draw_elements)
 
 
 

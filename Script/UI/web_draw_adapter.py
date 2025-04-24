@@ -43,9 +43,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_center_draw(center_draw: draw.CenterDraw):
@@ -71,9 +68,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
 
     @staticmethod
     def adapt_right_draw(right_draw: draw.RightDraw):
@@ -100,9 +94,6 @@ class WebDrawAdapter:
             cache.current_draw_elements = []
         # 将右对齐文本元素添加到绘制列表中
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态，刷新显示绘制列表
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_button(button: draw.Button):
@@ -132,9 +123,6 @@ class WebDrawAdapter:
         # 关键修复：调用py_cmd.pcmd()注册按钮事件处理函数
         from Script.Core import flow_handle
         flow_handle.bind_cmd(button.return_text, button.cmd_func, button.args)
-
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
         
 
     @staticmethod
@@ -160,9 +148,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_title_line_draw(title_line: draw.TitleLineDraw):
@@ -187,9 +172,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_wait_draw(wait_draw: draw.WaitDraw):
@@ -214,9 +196,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
 
     @staticmethod
     def adapt_image_draw(image_draw: draw.ImageDraw):
@@ -240,9 +219,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_bar_draw(bar_draw: draw.BarDraw):
@@ -275,9 +251,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_chara_draw(chara_draw: draw.CharaDraw):
@@ -310,9 +283,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_info_bar_draw(info_bar_draw: draw.InfoBarDraw):
@@ -374,9 +344,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_info_chara_draw(info_chara_draw: draw.InfoCharaDraw):
@@ -430,9 +397,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_image_button(image_button: draw.ImageButton):
@@ -461,9 +425,6 @@ class WebDrawAdapter:
         # 关键修复：调用py_cmd.pimagecmd()注册图片按钮事件处理函数
         from Script.Core import flow_handle
         flow_handle.bind_cmd(image_button.return_text, image_button.cmd_func, image_button.args)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
     
     @staticmethod
     def adapt_center_draw_image(center_draw_image: draw.CenterDrawImage):
@@ -488,9 +449,6 @@ class WebDrawAdapter:
         if not hasattr(cache, "current_draw_elements"):
             cache.current_draw_elements = []
         cache.current_draw_elements.append(web_element)
-        
-        # 更新Web界面状态
-        web_server.update_game_state(cache.current_draw_elements, None)
 
 # 包装原始绘制类的draw方法，使其在Web模式下调用适配器
 

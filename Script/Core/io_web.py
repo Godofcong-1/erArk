@@ -101,9 +101,6 @@ def era_print(string, style="standard"):
     if not hasattr(cache, "current_draw_elements"):
         cache.current_draw_elements = []
     cache.current_draw_elements.append(text_element)
-    
-    # 更新Web界面状态
-    update_game_state(cache.current_draw_elements, None)
 
 def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutton"):
     """
@@ -130,9 +127,6 @@ def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutto
     if not hasattr(cache, "current_draw_elements"):
         cache.current_draw_elements = []
     cache.current_draw_elements.append(button_element)
-    
-    # 更新Web界面状态
-    update_game_state(cache.current_draw_elements, None)
 
 def set_background(color):
     """
@@ -155,9 +149,6 @@ def clear_order():
     # 清除命令相关元素
     if hasattr(cache, "current_draw_elements"):
         cache.current_draw_elements = [elem for elem in cache.current_draw_elements if elem.get("type") != "button"]
-    
-    # 更新Web界面状态
-    update_game_state(cache.current_draw_elements, None)
 
 def init_style():
     """
