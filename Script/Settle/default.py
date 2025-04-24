@@ -5265,6 +5265,8 @@ def handle_self_h_state_reset(
     character_data.sp_flag.masturebate = 0
     # 清零前往群交
     character_data.sp_flag.go_to_join_group_sex = False
+    # 清零隐奸模式
+    character_data.sp_flag.hidden_sex_mode = 0
     # 记录高潮进度
     for orgasm in range(8):
         now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])

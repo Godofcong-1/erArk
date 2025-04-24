@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,377,0,high_1,{Name}察觉了{PlayerName}和{PlayerTargetName}的隐奸，并打算加入其中
+0,369,0,high_1,{PlayerName}和{Name}的隐奸被{HInterruptCharaName}发现了，于是干脆邀请大家开始群交

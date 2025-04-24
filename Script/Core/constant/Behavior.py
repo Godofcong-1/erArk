@@ -265,6 +265,8 @@ class Behavior:
     """ 结束无意识H """
     HIDDEN_SEX_INTERRUPT = 368
     """ 隐奸被发现中断 """
+    HIDDEN_SEX_TO_GROUP_SEX = 369
+    """ 隐奸被发现转群交 """
     CONFESSION = 371
     """ 告白 """
     CONFESSION_FAILED = 372

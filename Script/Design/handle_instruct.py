@@ -2112,7 +2112,6 @@ def handle_do_h_in_love_hotel():
     constant.InstructType.OBSCENITY,
     _("邀请隐奸"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},

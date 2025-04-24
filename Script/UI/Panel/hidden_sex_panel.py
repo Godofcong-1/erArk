@@ -47,24 +47,7 @@ def handle_hidden_sex_flow(character_id: int = 0) -> None:
     discovered = check_hidden_sex_discovery(character_data.h_state.hidden_sex_discovery_dregree)
     # 被发现时
     if discovered:
-        # from Script.Design import update
-        # 寻找是否会打断的人
-        interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
-        # 存在则打断
-        if len(interrupt_chara_list):
-            for chara_id in interrupt_chara_list:
-                now_chara_data = cache.character_data[chara_id]
-                # 触发打断
-                now_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_HIDDEN_SEX_AND_INTERRUPT
-                now_chara_data.state = constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_INTERRUPT
-                now_chara_data.behavior.duration = 1
-                character_behavior.judge_character_status(character_id)
-            # 触发被打断
-            character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_INTERRUPT
-            character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_INTERRUPT
-            character_data.behavior.duration = 1
-            character_behavior.judge_character_status(character_id)
-
+        settle_discovered(character_id)
 
 def get_hidden_level(value: int):
     """
@@ -83,6 +66,32 @@ def get_hidden_level(value: int):
             return now_cid,now_data.name
     # 如果没有找到对应的等级，则返回最大等级
     return 3, game_config.config_hidden_level[3].name
+
+def get_hidden_sex_targets(character_id: int) -> List[int]:
+    """
+    功能: 返回指定玩家的隐奸对象角色id列表
+    参数:
+        character_id (int): 玩家角色id
+    返回:
+        List[int]: 同场景中除玩家以外处于隐奸模式的角色id列表
+    """
+    # 获取玩家当前位置
+
+    position = cache.character_data[character_id].position
+    scene_path = map_handle.get_map_system_path_str_for_list(position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path]
+    result: List[int] = []
+    # 遍历场景中所有角色
+    for chara_id in scene_data.character_list:
+        # 跳过玩家自身
+        if chara_id == character_id:
+            continue
+        # 如果该角色处于隐奸模式，则加入结果列表
+        if handle_premise.handle_hidden_sex_mode_ge_1(chara_id):
+            result.append(chara_id)
+
+    # 返回所有符合条件的角色id
+    return result
 
 def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
     """
@@ -110,8 +119,8 @@ def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
         # 跳过无意识或睡眠状态的角色
         if handle_premise.handle_unconscious_flag_ge_1(chara_cid):
             continue
-        if handle_premise.handle_action_sleep(chara_cid):
-            continue
+        # if handle_premise.handle_action_sleep(chara_cid):
+        #     continue
         # 跳过足以群交的角色
         if handle_premise.handle_instruct_judge_group_sex(chara_cid):
             continue
@@ -123,7 +132,7 @@ def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
 
 def settle_hidden_value_by_action(character_id = 0) -> None:
     """
-    根据玩家当前的动作强度来结算角色的隐蔽值
+    根据玩家当前的行为和其他因素来结算角色的隐蔽值
     参数:
         character_id (int): 角色id，默认为0，表示玩家角色
     返回:
@@ -172,7 +181,6 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
     character_data.h_state.hidden_sex_discovery_dregree = min(character_data.h_state.hidden_sex_discovery_dregree, 100)
     character_data.h_state.hidden_sex_discovery_dregree = max(character_data.h_state.hidden_sex_discovery_dregree, 0)
 
-
 def check_hidden_sex_discovery(now_degree: int) -> bool:
     """
     判断隐奸行为是否被发现
@@ -193,6 +201,68 @@ def check_hidden_sex_discovery(now_degree: int) -> bool:
     if discover_rate >= random_value:
         return True
     return False
+
+def settle_discovered(character_id: int) -> None:
+    """
+    隐奸被发现时的结算函数
+    参数:
+        character_id (int): 角色id
+    返回:
+        None
+    """
+    # 获取角色数据
+    character_data = cache.character_data[character_id]
+    # 退出隐奸模式
+    character_data.sp_flag.hidden_sex_mode = 0
+    # 获取隐奸对象
+    hidden_sex_target_id_list = get_hidden_sex_targets(character_id)
+    if len(hidden_sex_target_id_list):
+        character_data.target_character_id = hidden_sex_target_id_list[0]
+        hidden_sex_target_chara_data = cache.character_data[hidden_sex_target_id_list[0]]
+    # 寻找是否会打断的人
+    interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
+    # 存在则打断
+    if len(interrupt_chara_list):
+        for chara_id in interrupt_chara_list:
+            now_chara_data = cache.character_data[chara_id]
+            # 触发打断
+            now_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_HIDDEN_SEX_AND_INTERRUPT
+            now_chara_data.state = constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_INTERRUPT
+            now_chara_data.behavior.duration = 10
+            now_chara_data.target_character_id = character_id
+            # 手动结算该状态
+            character_behavior.judge_character_status(chara_id)
+            character_data.behavior.h_interrupt_chara_name = now_chara_data.name
+        # 触发被打断
+        character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_INTERRUPT
+        character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_INTERRUPT
+        character_data.behavior.duration = 1
+    # 否则变成群交
+    else:
+        from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+        # 玩家结算
+        # character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_TO_GROUP_SEX
+        # character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_TO_GROUP_SEX
+        position = character_data.position
+        scene_path = map_handle.get_map_system_path_str_for_list(position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path]
+        for chara_id in scene_data.character_list:
+            # 跳过玩家
+            if chara_id == character_id:
+                continue
+            # 隐奸中的角色
+            if handle_premise.handle_hidden_sex_mode_ge_1(chara_id):
+                chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIDDEN_SEX_TO_GROUP_SEX, character_id=chara_id, target_character_id=0)
+            # 跳过无意识状态的角色
+            elif handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                continue
+            # 其他角色
+            else:
+                chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_JOIN, character_id=chara_id, target_character_id=0)
+                hidden_sex_target_chara_data.behavior.h_interrupt_chara_name = cache.character_data[chara_id].name
+            # 手动结算该状态
+            character_behavior.judge_character_status(chara_id)
+
 
 class See_Hidden_Sex_InfoPanel:
     """
