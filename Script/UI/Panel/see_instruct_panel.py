@@ -200,6 +200,9 @@ class SeeInstructPanel:
             # 不在H模式中则过滤H指令
             if handle_premise.handle_now_show_non_h_instruct(0) and now_type == constant.InstructType.SEX:
                 continue
+            # 男隐或双隐中对非H角色无法使用指令
+            if handle_premise.handle_hidden_sex_mode_3_or_4(0) and handle_premise.handle_target_not_in_hidden_sex_mode(0):
+                continue
             # 需要是注册过的指令类型，或者是系统指令
             if now_type in constant.instruct_type_data or now_type == constant.InstructType.SYSTEM:
                 for instruct in constant.instruct_type_data[now_type]:

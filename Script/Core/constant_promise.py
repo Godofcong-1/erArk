@@ -1498,6 +1498,8 @@ class Premise:
     """ 特殊flag_隐奸 自己处于双隐模式中 """
     HIDDEN_SEX_MODE_1_OR_2 = "hidden_sex_mode_1_or_2"
     """ 特殊flag_隐奸 自己处于双不隐或女隐模式中 """
+    HIDDEN_SEX_MODE_3_OR_4 = "hidden_sex_mode_3_or_4"
+    """ 特殊flag_隐奸 自己处于男隐或双隐模式中 """
     SLEEP_H_OR_HIDDEN_SEX = "sleep_h_or_hidden_sex"
     """ 特殊flag_隐奸 在睡奸或隐奸模式中 """
 

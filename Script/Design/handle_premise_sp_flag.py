@@ -2088,6 +2088,19 @@ def handle_hidden_sex_mode_1_or_2(character_id: int) -> int:
     return character_data.sp_flag.hidden_sex_mode == 1 or character_data.sp_flag.hidden_sex_mode == 2
 
 
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_3_OR_4)
+def handle_hidden_sex_mode_3_or_4(character_id: int) -> int:
+    """
+    自己处于男隐或双隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于双隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.hidden_sex_mode == 3 or character_data.sp_flag.hidden_sex_mode == 4
+
+
 @add_premise(constant_promise.Premise.SLEEP_H_OR_HIDDEN_SEX)
 def handle_sleep_h_or_hidden_sex(character_id: int) -> int:
     """
