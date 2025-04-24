@@ -2113,6 +2113,8 @@ def handle_do_h_in_love_hotel():
     _("邀请隐奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.HIDDEN_SEX_MODE_0,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_ASK_HIDDEN_SEX,
@@ -5730,7 +5732,7 @@ def handle_edit_group_sex_temple():
     {
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
-        constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2,
+        constant_promise.Premise.HIDDEN_SEX_MODE_1,
         constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
     })
 def handle_switch_to_non_h_interface():
