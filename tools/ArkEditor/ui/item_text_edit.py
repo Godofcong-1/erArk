@@ -75,6 +75,7 @@ class ItemTextEdit(QWidget):
             {"text": "文本触发者名字", "slot": lambda: self.insert_text('{Name}')},
             {"text": "文本触发者的交互对象名字", "slot": lambda: self.insert_text('{TargetName}')},
             {"text": "玩家名字", "slot": lambda: self.insert_text('{PlayerName}')},
+            {"text": "玩家的交互对象的名字", "slot": lambda: self.insert_text('{PlayerTargetName}')},
             {"text": "当前场景中随机一名角色名字", "slot": lambda: self.insert_text('{SceneOneCharaName}')},
             {"text": "移动目标场景中随机一名角色名字", "slot": lambda: self.insert_text('{TargetOneCharaName}')},
             {"text": "移动出发场景中随机一名角色名字", "slot": lambda: self.insert_text('{SrcOneCharaName}')},

@@ -435,6 +435,13 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     if target_nick_name_to_pl == "":
         target_nick_name_to_pl = player_data.nick_name
 
+    # 玩家的交互对象
+    pl_target_id = player_data.target_character_id
+    pl_target_name = ""
+    if pl_target_id != 0:
+        pl_target_data: game_type.Character = cache.character_data[pl_target_id]
+        pl_target_name = pl_target_data.name
+
     # 包中食物
     all_food_name = ""
     all_food_count = 0
@@ -539,6 +546,7 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
         NickNameToPl=nick_name_to_pl,
         PlayerName=player_data.name,
         PlayerNickName=pl_nick_name,
+        PlayerTargetName=pl_target_name,
         TargetName=target_data.name,
         TargetNickName=target_nick_name,
         TargetNickNameToPl=target_nick_name_to_pl,
