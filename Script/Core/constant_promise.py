@@ -1496,6 +1496,10 @@ class Premise:
     """ 特殊flag_隐奸 自己处于男隐模式中 """
     HIDDEN_SEX_MODE_4 = "hidden_sex_mode_4"
     """ 特殊flag_隐奸 自己处于双隐模式中 """
+    HIDDEN_SEX_MODE_1_OR_2 = "hidden_sex_mode_1_or_2"
+    """ 特殊flag_隐奸 自己处于双不隐或女隐模式中 """
+    SLEEP_H_OR_HIDDEN_SEX = "sleep_h_or_hidden_sex"
+    """ 特殊flag_隐奸 在睡奸或隐奸模式中 """
 
     FIND_FOOD_WEIRD_FLAG_0 = "find_food_weird_flag_0"
     """ 特殊flag_其他 自身没有发现食物有问题 """

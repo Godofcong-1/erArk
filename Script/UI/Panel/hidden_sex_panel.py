@@ -148,6 +148,9 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
         if tag in status_data.tag:
             add_flag = True
             break
+    # 等待状态减少隐蔽值
+    if now_state_id == constant.CharacterStatus.STATUS_WAIT:
+        add_flag = False
     # 时间
     now_duration = character_data.behavior.duration
     # 强度

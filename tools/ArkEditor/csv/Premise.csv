@@ -122,6 +122,7 @@ place_someone_no_fall,SCENE_SOMEONE_NO_FALL,地点_角色,该地点有未拥有�
 place_someone_hp_1,SCENE_SOMEONE_HP_1,地点_角色,该地点有HP1或太疲劳的角色
 place_someone_unconscious,SCENE_SOMEONE_UNCONSCIOUS,地点_角色,该地点有无意识状态的角色
 place_someone_not_unconscious,SCENE_SOMEONE_NOT_UNCONSCIOUS,地点_角色,该地点有非无意识状态的角色
+place_someone_not_in_hidden_and_conscious,SCENE_SOMEONE_NOT_IN_HIDDEN_AND_CONSCIOUS,地点_角色,场景中存在未处于隐奸模式且处于有意识状态的角色
 place_all_unconscious,SCENE_ALL_UNCONSCIOUS,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识状态
 place_all_unconscious_or_sleep,SCENE_ALL_UNCONSCIOUS_OR_SLEEP,地点_角色,该地点有玩家以外的角色，且所有角色都处于无意识或睡眠状态
 scene_all_others_unconscious_or_sleep,SCENE_ALL_OTHERS_UNCONSCIOUS_OR_SLEEP,地点_角色,该地点除了自己和交互对象以外的角色都处于无意识或睡眠状态
@@ -753,6 +754,8 @@ hidden_sex_mode_1,HIDDEN_SEX_MODE_1,特殊flag_隐奸,自己处于双不隐模�
 hidden_sex_mode_2,HIDDEN_SEX_MODE_2,特殊flag_隐奸,自己处于女隐模式中
 hidden_sex_mode_3,HIDDEN_SEX_MODE_3,特殊flag_隐奸,自己处于男隐模式中
 hidden_sex_mode_4,HIDDEN_SEX_MODE_4,特殊flag_隐奸,自己处于双隐模式中
+hidden_sex_mode_1_or_2,HIDDEN_SEX_MODE_1_OR_2,特殊flag_隐奸,自己处于双不隐或女隐模式中
+sleep_h_or_hidden_sex,SLEEP_H_OR_HIDDEN_SEX,特殊flag_隐奸,在睡奸或隐奸模式中
 
 find_food_weird_flag_0,FIND_FOOD_WEIRD_FLAG_0,特殊flag_其他,自身没有发现食物有问题
 find_food_weird_flag_1,FIND_FOOD_WEIRD_FLAG_1,特殊flag_其他,自身发现食物有问题
@@ -1046,6 +1049,7 @@ postpartum_0,POSTPARTUM_0,素质_妊娠,自己产后==0
 postpartum_1,POSTPARTUM_1,素质_妊娠,自己产后==1
 t_postpartum_0,T_POSTPARTUM_0,素质_妊娠,交互对象产后==0
 t_postpartum_1,T_POSTPARTUM_1,素质_妊娠,交互对象产后==1
+self_parturient_or_postpartum,SELF_PARTURIENT_OR_POSTPARTUM,素质_妊娠,自己正在临盆或产后
 rearing_0,REARING_0,素质_妊娠,自己育儿==0
 rearing_1,REARING_1,素质_妊娠,自己育儿==1
 t_rearing_0,T_REARING_0,素质_妊娠,交互对象育儿==0

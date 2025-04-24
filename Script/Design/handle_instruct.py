@@ -2208,7 +2208,7 @@ def handle_ask_group_sex():
     constant.InstructType.SEX,
     _("等待五分钟"),
     {constant_promise.Premise.IS_H,
-     constant_promise.Premise.T_ACTION_SLEEP,},
+     constant_promise.Premise.SLEEP_H_OR_HIDDEN_SEX,},
 )
 def handle_wait_5_min_in_h():
     """处理等待五分钟指令"""
@@ -5730,7 +5730,7 @@ def handle_edit_group_sex_temple():
     {
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
-        constant_promise.Premise.HIDDEN_SEX_MODE_GE_1,
+        constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2,
         constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
     })
 def handle_switch_to_non_h_interface():
