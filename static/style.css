@@ -101,8 +101,9 @@ body {
 .text-break {
     display: block;
     width: 100%;
-    margin: 0.2em 0;
-    line-height: 0.1;
+    margin: 0;
+    height: 0;
+    line-height: 0;
     content: "";
     clear: both;
 }
@@ -111,6 +112,7 @@ body {
 .text-break.extra-space {
     margin: 1em 0; /* 连续换行符时增加更大的间距 */
     line-height: 1.5;
+    height: auto;
 }
 
 /* 对于需要内联显示的文本添加新的样式类 */
@@ -146,7 +148,7 @@ body {
     border: 1px solid #444;
     color: #fff;
     padding: 5px 10px;
-    margin: 0.2em; /* 从5px减小到3px，减少按钮间距 */
+    margin: 0.2em;
     cursor: pointer;
     border-radius: 3px;
     display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
@@ -165,6 +167,33 @@ body {
 }
 
 .game-button:active {
+    background-color: #444;
+}
+
+/* 游戏内容区域中的地图按钮样式 */
+.map-button {
+    background-color: #222;
+    color: #fff;
+    padding: 0px 0px;
+    margin: 0em;
+    cursor: pointer;
+    border-radius: 0px;
+    display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
+    transition: background-color 0.2s;
+}
+
+/* 块级按钮样式 - 需要单独一行的按钮 */
+.map-button.block {
+    display: block;
+    width: 100%;
+}
+
+.map-button:hover {
+    background-color: #333;
+    border-color: #666;
+}
+
+.map-button:active {
     background-color: #444;
 }
 

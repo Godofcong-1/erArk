@@ -384,6 +384,7 @@ class Button:
             on_mouse_style="onbutton",
             cmd_func=None,
             args=(),
+            web_type="",
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -400,6 +401,8 @@ class Button:
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
+        self.web_type: str = web_type
+        """ Web绘制类型 """
 
     def __len__(self) -> int:
         """
@@ -516,6 +519,7 @@ class CenterButton:
             on_mouse_style="onbutton",
             cmd_func: FunctionType = None,
             args=(),
+            web_type="",
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -534,6 +538,8 @@ class CenterButton:
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
+        self.web_type: str = web_type
+        """ Web绘制类型 """
 
     def __len__(self) -> int:
         """

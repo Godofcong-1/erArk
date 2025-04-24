@@ -437,6 +437,12 @@ function renderGameState(state) {
                 
                 // 设置按钮宽度
                 element.style.width = item.width ? `${item.width}ch` : 'auto';
+
+                // 如果是地图类按钮，则特殊处理
+                if (item.web_type === 'map') {
+                    element.className = 'map-button';
+                    element.style.width = 'auto';
+                }
                 
                 // 如果需要块级显示，添加block类
                 if (item.style && item.style.includes('block')) {

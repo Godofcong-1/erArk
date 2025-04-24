@@ -112,7 +112,8 @@ class WebDrawAdapter:
             "text": button.text,
             "return_text": button.return_text,
             "font": button.normal_style,
-            "width": button.width
+            "width": button.width,
+            "web_type": button.web_type,
         }
         
         # 添加到当前绘制元素列表

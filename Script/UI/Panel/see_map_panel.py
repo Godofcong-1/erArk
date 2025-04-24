@@ -118,7 +118,7 @@ class SeeMapPanel:
                             # 如果当前地点可以进入则正常绘制
                             if map_handle.judge_scene_accessible(full_scene_str, 0, False) == "open":
                                 now_draw = draw.Button(
-                                    draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,)
+                                    draw_text.text, draw_text.text, cmd_func=self.move_now, args=(scene_path,), web_type="map"
                                 )
                                 # 如果是有NPC在那么显示为绿色
                                 if len(cache.scene_data[full_scene_str].character_list):
@@ -126,7 +126,7 @@ class SeeMapPanel:
                             # 如果当前地点不可进入则绘制灰色按钮
                             else:
                                 now_draw = draw.Button(
-                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_now, args=(scene_path,)
+                                    draw_text.text, draw_text.text,normal_style="deep_gray", cmd_func=self.move_now, args=(scene_path,), web_type="map"
                                 )
                             now_draw.width = self.width
                             now_draw.draw()
@@ -137,14 +137,14 @@ class SeeMapPanel:
                             now_draw = draw.NormalDraw()
                             now_draw.style = "gold_enrod"
                             now_draw.text = draw_text.text
-                            now_draw.width = self.width
+                            # now_draw.width = self.width
                             now_draw.draw()
                     # 如果不是地点按钮，则正常绘制文本
                     else:
                         now_draw = draw.NormalDraw()
                         now_draw.style = draw_text.style
                         now_draw.text = draw_text.text
-                        now_draw.width = self.width
+                        # now_draw.width = self.width
                         now_draw.draw()
                 line_feed.draw()
             path_edge = map_data.path_edge
