@@ -240,6 +240,8 @@ class Premise:
     """ 地点_角色 该角色与玩家有相同的移动目标地点 """
     SCENE_SOMEONE_IS_H = "place_is_h"
     """ 地点_角色 该地点有其他角色在和玩家H """
+    SCENE_SOMEONE_H_BUT_NOT_HIDDEN_SEX = "scene_someone_h_but_not_hidden_sex"
+    """ 地点_角色 该地点有其他角色在和玩家进行非隐奸的H """
     SCENE_SOMEONE_NO_FALL = "place_someone_no_fall"
     """ 地点_角色 该地点有未拥有陷落素质的角色 """
     SCENE_SOMEONE_HP_1 = "place_someone_hp_1"

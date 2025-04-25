@@ -738,8 +738,13 @@ def judge_character_first_meet(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
-    # 需要状态6正常，且不是睡觉状态
-    if handle_premise.handle_normal_6(character_id) and handle_premise.handle_action_not_sleep(character_id):
+    # 需要NPC状态6正常，且不是睡觉状态，玩家不在男隐或双隐的隐奸中，且没在睡觉
+    if (
+        handle_premise.handle_normal_6(character_id) and
+        handle_premise.handle_action_not_sleep(character_id) and
+        not handle_premise.handle_hidden_sex_mode_3_or_4(0) and
+        handle_premise.handle_action_not_sleep(0)
+        ):
         # 优先输出初见，次要输出每日招呼
         if character_data.first_record.first_meet and character_data.position == pl_character_data.position:
             character_data.second_behavior[1331] = 1
