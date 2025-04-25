@@ -525,7 +525,9 @@ class BehaviorEffect:
     DOOR_CLOSE_RESET = 753
     """ 系统量_地点 当前场景取消关门状态 """
     MOVE_TO_PRE_SCENE = 761
-    """ 系统量_地点 角色移动至前一场景 """
+    """ 系统量_地点 自己移动至前一场景 """
+    TARGET_MOVE_TO_PRE_SCENE = 762
+    """ 系统量_地点 交互对象移动至前一场景 """
 
     SCENE_ALL_CHARACTERS_PENIS_IN_RESET = 800
     """ H_阴茎位置 场景内所有角色的当前阴茎位置归零 """

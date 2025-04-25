@@ -268,7 +268,8 @@ cid,effect_name,effect_type,effect
 751,MOVE_TO_TARGET_SCENE,系统量_地点,移动至目标场景
 752,DOOR_CLOSE,系统量_地点,当前场景进入关门状态
 753,DOOR_CLOSE_RESET,系统量_地点,当前场景取消关门状态
-761,MOVE_TO_PRE_SCENE,系统量_地点,角色移动至前一场景
+761,MOVE_TO_PRE_SCENE,系统量_地点,自己移动至前一场景
+762,TARGET_MOVE_TO_PRE_SCENE,系统量_地点,交互对象移动至前一场景
 
 800,SCENE_ALL_CHARACTERS_PENIS_IN_RESET,H_阴茎位置,场景内所有角色的当前阴茎位置归零
 801,PENIS_IN_T_RESET,H_阴茎位置,改变当前阴茎位置为交互对象_双方归零

@@ -1023,6 +1023,18 @@ def handle_place_inside_door_close(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PLACE_INSIDE_DOOR_NOT_CLOSE)
+def handle_place_inside_door_not_close(character_id: int) -> int:
+    """
+    该地点没有已关门的内隔间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_place_inside_door_close(character_id)
+
+
 @add_premise(constant_promise.Premise.PLACE_LADIES_ONLY)
 def handle_place_ladies_only(character_id: int) -> int:
     """

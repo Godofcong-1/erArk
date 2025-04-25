@@ -5233,10 +5233,33 @@ def handle_move_to_pre_scene(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if len(character_data.behavior.move_src) and not character_id:
-        character_data.behavior.move_target = character_data.behavior.move_src
+    if len(character_data.action_info.past_move_position_list) and not character_id:
+        character_data.behavior.move_target = character_data.action_info.past_move_position_list[-1]
+        # 删除掉前一场景的移动数据
+        character_data.action_info.past_move_position_list.pop(-1)
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
         character_data.sp_flag.move_stop = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
+def handle_target_move_to_pre_scene(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象移动至前一场景
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_move_to_pre_scene(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_H_STATE_RESET)

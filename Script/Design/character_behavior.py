@@ -294,6 +294,12 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.last_state.append(character_data.state)
         if len(character_data.last_state) > 5:
             character_data.last_state.pop(0)
+        # 保留移动的来源位置
+        tem_move_src = character_data.behavior.move_src
+        if len(character_data.action_info.past_move_position_list) == 0 or (len(character_data.action_info.past_move_position_list) and tem_move_src != character_data.action_info.past_move_position_list[-1]):
+            character_data.action_info.past_move_position_list.append(tem_move_src)
+            if len(character_data.action_info.past_move_position_list) > 10:
+                character_data.action_info.past_move_position_list.pop(0)
         # 移动状态下则不完全重置行动数据，保留最终目标数据
         if character_data.state == constant.CharacterStatus.STATUS_MOVE:
             tem_move_final_target = character_data.behavior.move_final_target
@@ -301,6 +307,8 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             character_data.behavior.move_final_target = tem_move_final_target
         else:
             character_data.behavior = game_type.Behavior()
+        # 赋予移动来源
+        character_data.behavior.move_src = tem_move_src
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.event.event_id = ""
         character_data.event.son_event_id = ""
