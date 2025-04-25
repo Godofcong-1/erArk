@@ -153,6 +153,14 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
         add_flag = False
     # 时间
     now_duration = character_data.behavior.duration
+    # 模式
+    mode_adjust = 1
+    # 双不隐容易被发现
+    if handle_premise.handle_hidden_sex_mode_1(character_id):
+        mode_adjust = 2
+    # 双隐不容易被发现
+    elif handle_premise.handle_hidden_sex_mode_4(character_id):
+        mode_adjust = 0.5
     # 强度
     now_intensity = 1
     tag_list = status_data.tag.split("|")
@@ -172,10 +180,10 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
     other_chara_adjust = max(len(scene_data.character_list) - 2, 1)
     # 增加
     if add_flag:
-        adjust = now_intensity / abi_adjust * other_chara_adjust
+        adjust = now_intensity * mode_adjust / abi_adjust * other_chara_adjust
     # 减少
     else:
-        adjust = -2 * abi_adjust
+        adjust = -2 / mode_adjust * abi_adjust
     # 最终值
     delta = int(now_duration * adjust)
     # 将计算出的增益累加到角色隐蔽发现度上

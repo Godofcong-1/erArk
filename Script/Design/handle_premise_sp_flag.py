@@ -2023,6 +2023,20 @@ def handle_hidden_sex_mode_ge_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode > 0
 
+
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1)
+def handle_t_hidden_sex_mode_ge_1(character_id: int) -> int:
+    """
+    交互对象在某个隐奸模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_ge_1(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_1)
 def handle_hidden_sex_mode_1(character_id: int) -> int:
     """
@@ -2034,6 +2048,19 @@ def handle_hidden_sex_mode_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode == 1
+
+
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1)
+def handle_t_hidden_sex_mode_1(character_id: int) -> int:
+    """
+    交互对象处于双不隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于双不隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_1(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_2)
@@ -2049,6 +2076,19 @@ def handle_hidden_sex_mode_2(character_id: int) -> int:
     return character_data.sp_flag.hidden_sex_mode == 2
 
 
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2)
+def handle_t_hidden_sex_mode_2(character_id: int) -> int:
+    """
+    交互对象处于女隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于女隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_2(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_3)
 def handle_hidden_sex_mode_3(character_id: int) -> int:
     """
@@ -2060,6 +2100,19 @@ def handle_hidden_sex_mode_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode == 3
+
+
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3)
+def handle_t_hidden_sex_mode_3(character_id: int) -> int:
+    """
+    交互对象处于男隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于男隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_3(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_4)
@@ -2075,6 +2128,19 @@ def handle_hidden_sex_mode_4(character_id: int) -> int:
     return character_data.sp_flag.hidden_sex_mode == 4
 
 
+@add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_4)
+def handle_t_hidden_sex_mode_4(character_id: int) -> int:
+    """
+    交互对象处于双隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于男隐模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_hidden_sex_mode_4(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2)
 def handle_hidden_sex_mode_1_or_2(character_id: int) -> int:
     """
@@ -2082,7 +2148,7 @@ def handle_hidden_sex_mode_1_or_2(character_id: int) -> int:
     参数:
         character_id (int): 角色id
     返回:
-        int: 权重，若角色处于双隐模式中则返回1，否则返回0
+        int: 权重
     """
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode == 1 or character_data.sp_flag.hidden_sex_mode == 2
@@ -2095,16 +2161,28 @@ def handle_hidden_sex_mode_3_or_4(character_id: int) -> int:
     参数:
         character_id (int): 角色id
     返回:
-        int: 权重，若角色处于双隐模式中则返回1，否则返回0
+        int: 权重
     """
     character_data = cache.character_data[character_id]
     return character_data.sp_flag.hidden_sex_mode == 3 or character_data.sp_flag.hidden_sex_mode == 4
 
 
+@add_premise(constant_promise.Premise.PL_NOT_HIDDEN_SEX_MODE_3_OR_4)
+def handle_pl_not_hidden_sex_mode_3_or_4(character_id: int) -> int:
+    """
+    玩家不处于男隐或双隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    return not handle_hidden_sex_mode_3_or_4(0)
+
+
 @add_premise(constant_promise.Premise.SLEEP_H_OR_HIDDEN_SEX)
 def handle_sleep_h_or_hidden_sex(character_id: int) -> int:
     """
-    在睡奸或隐奸模式中
+    自己在睡奸或隐奸模式中
     参数:
         character_id (int): 角色id
     返回:
@@ -2115,6 +2193,19 @@ def handle_sleep_h_or_hidden_sex(character_id: int) -> int:
     if handle_t_unconscious_flag_1(character_id):
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_SLEEP_H_OR_HIDDEN_SEX)
+def handle_t_sleep_h_or_hidden_sex(character_id: int) -> int:
+    """
+    交互对象在睡奸或隐奸模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于双隐模式中则返回1，否则返回0
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_sleep_h_or_hidden_sex(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.FIND_FOOD_WEIRD_FLAG_0)

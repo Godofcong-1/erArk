@@ -1994,6 +1994,7 @@ def handle_prepare_training():
     _("切换到H"),
     {
         constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.TO_DO,
         constant_promise.Premise.IS_H,
         constant_promise.Premise.HIDDEN_SEX_MODE_GE_1,
         constant_promise.Premise.SHOW_NON_H_IN_HIDDEN_SEX,
@@ -2113,7 +2114,6 @@ def handle_do_h_in_love_hotel():
     _("邀请隐奸"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.HIDDEN_SEX_MODE_0,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
@@ -2210,7 +2210,8 @@ def handle_ask_group_sex():
     constant.InstructType.SEX,
     _("等待五分钟"),
     {constant_promise.Premise.IS_H,
-     constant_promise.Premise.SLEEP_H_OR_HIDDEN_SEX,},
+     constant_promise.Premise.TARGET_SLEEP_H_OR_HIDDEN_SEX,},
+    constant.CharacterStatus.STATUS_WAIT,
 )
 def handle_wait_5_min_in_h():
     """处理等待五分钟指令"""
@@ -5732,6 +5733,7 @@ def handle_edit_group_sex_temple():
     {
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.IS_H,
+        constant_promise.Premise.TO_DO,
         constant_promise.Premise.HIDDEN_SEX_MODE_1,
         constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
     })
