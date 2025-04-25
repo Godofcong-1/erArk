@@ -87,3 +87,5 @@ organ_data: dict = {}
 """ 性器官数据 """
 bondage_data: dict = {}
 """ 绑缚数据 """
+roleplay_data: dict = {}
+""" 角色扮演数据 """

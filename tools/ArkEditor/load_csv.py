@@ -19,7 +19,7 @@ body_path = "csv/BodyPart.csv"
 clothing_path = "csv/ClothingType.csv"
 organ_path = "csv/Organ.csv"
 bondage_path = "csv/Bondage.csv"
-
+roleplay_path = "csv/Roleplay.csv"
 
 def load_config():
     """载入配置文件"""
@@ -194,3 +194,14 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.bondage_data[i["cid"]] = i["name"]
+    with open(roleplay_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "角色扮演列表":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.roleplay_data[i["cid"]] = i["name"]

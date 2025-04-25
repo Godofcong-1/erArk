@@ -22136,6 +22136,10 @@ msgstr ""
 msgid "进去|{Name}在源石技艺的帮助下，没有让任何人发现，悄悄地溜了进来"
 msgstr ""
 
+#: Event:976252af-5006-49d8-b723-ec3f5c9c197a
+msgid "{Name}把{PlayerName}很生气地赶出来了"
+msgstr ""
+
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75
 msgid "{TargetName}不打算接受你的邀请，要使用杀手锏吗"
 msgstr ""
