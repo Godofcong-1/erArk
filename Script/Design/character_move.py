@@ -23,6 +23,7 @@ def own_charcter_move(target_scene: list):
     """
     while 1:
         character_data: game_type.Character = cache.character_data[0]
+        move_now = "end"
         if character_data.sp_flag.move_stop:
             character_data.sp_flag.move_stop = 0
             break
@@ -49,11 +50,12 @@ def own_charcter_move(target_scene: list):
             # print(f"debug pl start_time = {character_data.behavior.start_time}")
             update.game_update_flow(now_need_time)
         else:
-            move_now = "end"
             break
     cache.character_data[0].target_character_id = 0
+    # 继续留在地图页面
     if move_now in ["Null","wait_open","door_lock"]:
         cache.now_panel_id = constant.Panel.SEE_MAP
+    # 回到主页面
     else:
         cache.now_panel_id = constant.Panel.IN_SCENE
 
