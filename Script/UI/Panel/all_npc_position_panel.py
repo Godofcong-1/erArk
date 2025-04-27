@@ -79,7 +79,7 @@ class All_Npc_Position_Panel:
             info_text = _("选择人员筛选方式：")
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
-            info_draw.width = self.width
+            # info_draw.width = self.width
             info_draw.draw()
             for select_type_id in range(len(select_type_list)):
                 # 每五个换行
@@ -87,7 +87,7 @@ class All_Npc_Position_Panel:
                     line_feed.draw()
                     empty_draw = draw.NormalDraw()
                     empty_draw.text = "  " * len(info_text)
-                    empty_draw.width = self.width
+                    # empty_draw.width = self.width
                     empty_draw.draw()
                 # 已选中的为高亮显示
                 if select_type_id == self.select_type:
@@ -97,7 +97,7 @@ class All_Npc_Position_Panel:
                     now_draw = draw.NormalDraw()
                     now_draw.text = select_type_text
                     now_draw.style = "gold_enrod"
-                    now_draw.width = self.width / 3
+                    # now_draw.width = self.width / 3
                     now_draw.draw()
                 # 未选中的为按钮
                 else:
@@ -114,7 +114,7 @@ class All_Npc_Position_Panel:
             info_text = _("选择召集/移动方式：")
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
-            info_draw.width = self.width
+            # info_draw.width = self.width
             info_draw.draw()
             for move_type_id in range(len(move_type_list)):
                 # 仅在debug模式下显示debug用对方智能跟随
@@ -126,7 +126,7 @@ class All_Npc_Position_Panel:
                     now_draw = draw.NormalDraw()
                     now_draw.text = move_type_text
                     now_draw.style = "gold_enrod"
-                    now_draw.width = self.width / 3
+                    # now_draw.width = self.width / 3
                     now_draw.draw()
                 else:
                     draw_text = f"  {move_type_text}  "
