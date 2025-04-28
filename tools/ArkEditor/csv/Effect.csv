@@ -218,7 +218,7 @@ cid,effect_name,effect_type,effect
 524,MASTUREBATE_ADD_ADJUST,指令_专用结算,（自慰用）选择自己最高感度的部位，增加该部位快感和经验
 525,DIRTY_RESET_IN_SHOWER,指令_专用结算,自身部分部位污浊保留一定比例，其他污浊体归零
 526,ORGASM_EDGE_RELEASE,指令_专用结算,（绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶
-527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶
+527,TIME_STOP_ORGASM_RELEASE,指令_专用结算,（解除时停）所有角色变为时停解放状态，结算时停绝顶和时停精液
 528,END_H_ADD_HPMP_MAX,指令_专用结算,（结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
 529,GROUP_SEX_END_H_ADD_HPMP_MAX,指令_专用结算,（群交结束H）在场全部角色根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限
 530,GROUP_SEX_FAIL_ADD_JUST,指令_专用结算,（群交失败）在场全部角色减体力气力，拒绝者进行邀请H失败结算
@@ -411,6 +411,7 @@ cid,effect_name,effect_type,effect
 1244,TARGET_NOT_BE_CARRIED_IN_TIME_STOP,源石技艺,清零自己的当前时停搬运对象
 1245,TARGET_BE_FREE_IN_TIME_STOP,源石技艺,将交互对象设为时停中自由状态（含理智消耗）
 1246,TARGET_NOT_BE_FREE_IN_TIME_STOP,源石技艺,清零自己的让某人时停中自由状态
+1247,ALL_CHARACTERS_TIME_STOP_SEMEN_RESET,源石技艺,清零所有角色的时停精液情况
 
 1401,NPC_ACTIVE_H_ON,属性_H,自己开启主动H
 1402,NPC_ACTIVE_H_OFF,属性_H,自己关闭主动H

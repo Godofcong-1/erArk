@@ -2068,6 +2068,28 @@ def handle_target_not_be_free_in_time_stop(
     character_data.pl_ability.free_in_time_stop_chara_id = 0
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_CHARACTERS_TIME_STOP_SEMEN_RESET)
+def handle_all_character_time_stop_semen_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清零所有角色的时停精液情况
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    for chara_id, character_data in cache.character_data.items():
+        character_data.dirty.body_semen_in_time_stop = []
+        character_data.dirty.cloth_semen_in_time_stop = []
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_ON)
 def handle_npc_active_h_on(
         character_id: int,
@@ -7129,7 +7151,7 @@ def handle_time_stop_orgasm_release(
         now_time: datetime.datetime,
 ):
     """
-    （解除时停）交互对象变为时停解放状态，将时停绝顶计数转化为绝顶
+    （解除时停）交互对象变为时停解放状态，结算时停绝顶和时停精液
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7149,6 +7171,13 @@ def handle_time_stop_orgasm_release(
         # 清零时停绝顶计数
         for body_part in game_config.config_body_part:
             character_data.h_state.time_stop_orgasm_count[body_part] = 0
+        # 触发角色的部位精液二段行为
+        for body_part in character_data.dirty.body_semen_in_time_stop:
+            second_behavior_id = 1260 + body_part
+            character_data.second_behavior[second_behavior_id] = 1
+        for cloth_part in character_data.dirty.cloth_semen_in_time_stop:
+            second_behavior_id = 1280 + cloth_part
+            character_data.second_behavior[second_behavior_id] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.END_H_ADD_HPMP_MAX)
@@ -7808,7 +7837,7 @@ def handle_eat_add_just(
             semen_ml = now_food.special_seasoning_amount
             # 加精液到口腔
             cache.shoot_position = 2    # 口腔
-            ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml)
+            ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml, update_shoot_position_flag=False)
         # 药物食物则获得对应药物效果
         elif character_data.behavior.food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)

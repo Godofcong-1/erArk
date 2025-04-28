@@ -216,8 +216,13 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     if update_shoot_position_flag:
         if part_type == 0:
             character_data.h_state.shoot_position_body = part_cid
+            # 时停中则记录部位精液
+            if handle_premise.handle_time_stop_on(0):
+                character_data.dirty.body_semen_in_time_stop.append(part_cid)
         else:
             character_data.h_state.shoot_position_cloth = part_cid
+            if handle_premise.handle_time_stop_on(0):
+                character_data.dirty.cloth_semen_in_time_stop.append(part_cid)
     # A部位射精时如果已经持有灌肠肛塞道具，且设置已开启，则结算精液灌肠
     if (
         part_type == 0 and

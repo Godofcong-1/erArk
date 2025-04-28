@@ -472,7 +472,7 @@ def start_server():
     server_running = True
     
     # 设置Flask日志级别为WARNING，减少控制台输出
-    logging.getLogger('werkzeug').setLevel(logging.WARNING)
+    logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     
     # 尝试查找可用端口
     server_port = find_free_port()

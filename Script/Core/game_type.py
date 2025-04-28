@@ -305,6 +305,10 @@ class DIRTY:
         """ 衣柜里的服装精液情况    
         同衣服类型，编号int:[0部位名str,1当前精液量int,2当前精液等级int,3总精液量int]    
         """
+        self.body_semen_in_time_stop: list = []
+        """ 时停中的身体精液情况，同身体部位，编号int """
+        self.cloth_semen_in_time_stop: list = []
+        """ 时停中的服装精液情况，同服装类型，编号int """
         self.a_clean: int = 0
         """ A是否干净 [0脏污,1灌肠中,2已灌肠,3精液灌肠中,4已精液灌肠] """
         self.enema_capacity: int = 0

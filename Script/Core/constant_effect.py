@@ -428,7 +428,7 @@ class BehaviorEffect:
     ORGASM_EDGE_RELEASE = 526
     """ 指令_专用结算 （绝顶解放）交互对象变为寸止解放状态，将寸止计数转化为绝顶 """
     TIME_STOP_ORGASM_RELEASE = 527
-    """ 指令_专用结算 （解除时停）所有角色变为时停解放状态，将时停绝顶计数转化为绝顶 """
+    """ 指令_专用结算 （解除时停）所有角色变为时停解放状态，结算时停绝顶和时停精液 """
     END_H_ADD_HPMP_MAX = 528
     """ 指令_专用结算 （结束H）自己和交互对象根据本次H中的绝顶次数增加体力气力上限，玩家根据射精次数增加精液量上限 """
     GROUP_SEX_END_H_ADD_HPMP_MAX = 529
@@ -803,6 +803,8 @@ class BehaviorEffect:
     """ 源石技艺 将交互对象设为时停中自由状态（含理智消耗） """
     TARGET_NOT_BE_FREE_IN_TIME_STOP = 1246
     """ 源石技艺 清零自己的让某人时停中自由状态 """
+    ALL_CHARACTERS_TIME_STOP_SEMEN_RESET = 1247
+    """ 源石技艺 清零所有角色的时停精液情况 """
 
     NPC_ACTIVE_H_ON = 1401
     """ 属性_H 自己开启主动H """

@@ -12445,330 +12445,462 @@ msgid "结算W绝顶被寸止"
 msgstr ""
 
 #: .\data\csv\Status.csv:513
-msgid "结算获得思慕"
+msgid "结算时停后头发出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:514
-msgid "结算获得恋慕"
+msgid "结算时停后脸部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:515
-msgid "结算获得恋人(含赠予信物)"
+msgid "结算时停后口腔出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:516
-msgid "结算获得爱侣"
+msgid "结算时停后胸部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:517
-msgid "结算获得屈从"
+msgid "结算时停后腋部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:518
-msgid "结算获得驯服"
+msgid "结算时停后手部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:519
-msgid "结算获得宠物(含赠予信物)"
+msgid "结算时停后小穴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:520
-msgid "结算获得奴隶"
+msgid "结算时停后子宫出现精液"
+msgstr ""
+
+#: .\data\csv\Status.csv:521
+msgid "结算时停后后穴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:522
-msgid "结算获得受精"
+msgid "结算时停后尿道出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:523
-msgid "结算受精失败"
+msgid "结算时停后腿部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:524
-msgid "结算获得妊娠"
+msgid "结算时停后脚部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:525
-msgid "结算获得临盆"
+msgid "结算时停后尾巴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:526
-msgid "生产前的对话"
+msgid "结算时停后兽角出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:527
-msgid "生产后的对话+获得产后"
+msgid "结算时停后兽耳出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:528
-msgid "结算获得育儿"
+msgid "结算时停后胃部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:529
-msgid "结算育儿完成"
+msgid "结算时停后胯部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:530
-msgid "结算幼女长成萝莉"
+msgid "结算时停后腹部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:531
-msgid "结算萝莉长成少女"
+msgid "结算时停后背部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:533
-msgid "初次见面"
+msgid "结算时停后帽子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:534
-msgid "每日打招呼"
+msgid "结算时停后眼镜出现精液"
+msgstr ""
+
+#: .\data\csv\Status.csv:535
+msgid "结算时停后耳饰出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:536
-msgid "新周目告别"
+msgid "结算时停后脖饰出现精液"
+msgstr ""
+
+#: .\data\csv\Status.csv:537
+msgid "结算时停后口饰出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:538
-msgid "以队长身份出发执行外勤委托"
+msgid "结算时停后上衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:539
-msgid "以队长身份完成外勤委托归舰"
+msgid "结算时停后胸衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:540
-msgid "被邀请加入群交，开始前往群交地点"
+msgid "结算时停后手套出现精液"
+msgstr ""
+
+#: .\data\csv\Status.csv:541
+msgid "结算时停后下衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:542
-msgid "被任命为本地外交官"
+msgid "结算时停后内裤出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:543
-msgid "被解除本地外交官的任命"
+msgid "结算时停后袜子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:544
-msgid "被任命为外派外交官"
+msgid "结算时停后鞋子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:545
-msgid "被解除外派外交官的任命"
+msgid "结算时停后武器出现精液"
 msgstr ""
 
-#: .\data\csv\Status.csv:547
-msgid "被选为助理"
+#: .\data\csv\Status.csv:546
+msgid "结算时停后附属物出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:548
-msgid "不再为助理"
+msgid "结算获得思慕"
 msgstr ""
 
 #: .\data\csv\Status.csv:549
-msgid "关闭智能跟随"
+msgid "结算获得恋慕"
 msgstr ""
 
 #: .\data\csv\Status.csv:550
-msgid "开启智能跟随"
+msgid "结算获得恋人(含赠予信物)"
 msgstr ""
 
 #: .\data\csv\Status.csv:551
-msgid "要求前往办公室"
+msgid "结算获得爱侣"
 msgstr ""
 
 #: .\data\csv\Status.csv:552
-msgid "关闭辅佐服务"
+msgid "结算获得屈从"
 msgstr ""
 
 #: .\data\csv\Status.csv:553
-msgid "开启辅佐服务"
+msgid "结算获得驯服"
 msgstr ""
 
 #: .\data\csv\Status.csv:554
-msgid "关闭送饭服务"
+msgid "结算获得宠物(含赠予信物)"
 msgstr ""
 
 #: .\data\csv\Status.csv:555
-msgid "开启帮忙买午饭服务"
-msgstr ""
-
-#: .\data\csv\Status.csv:556
-msgid "开启亲手做午饭服务"
+msgid "结算获得奴隶"
 msgstr ""
 
 #: .\data\csv\Status.csv:557
-msgid "开启亲手做三餐服务"
+msgid "结算获得受精"
 msgstr ""
 
 #: .\data\csv\Status.csv:558
-msgid "关闭早安服务"
+msgid "结算受精失败"
 msgstr ""
 
 #: .\data\csv\Status.csv:559
-msgid "开启早上叫起床服务"
+msgid "结算获得妊娠"
 msgstr ""
 
 #: .\data\csv\Status.csv:560
-msgid "开启早安吻服务"
+msgid "结算获得临盆"
 msgstr ""
 
 #: .\data\csv\Status.csv:561
-msgid "开启早安咬服务"
+msgid "生产前的对话"
 msgstr ""
 
 #: .\data\csv\Status.csv:562
-msgid "关闭晚安服务"
+msgid "生产后的对话+获得产后"
 msgstr ""
 
 #: .\data\csv\Status.csv:563
-msgid "开启晚上催睡觉服务"
+msgid "结算获得育儿"
 msgstr ""
 
 #: .\data\csv\Status.csv:564
-msgid "开启晚安吻服务"
+msgid "结算育儿完成"
 msgstr ""
 
 #: .\data\csv\Status.csv:565
-msgid "开启晚安咬服务"
+msgid "结算幼女长成萝莉"
 msgstr ""
 
 #: .\data\csv\Status.csv:566
-msgid "关闭同居服务"
-msgstr ""
-
-#: .\data\csv\Status.csv:567
-msgid "开启同居服务"
+msgid "结算萝莉长成少女"
 msgstr ""
 
 #: .\data\csv\Status.csv:568
-msgid "关闭助攻服务"
+msgid "初次见面"
 msgstr ""
 
 #: .\data\csv\Status.csv:569
-msgid "开启助攻服务"
+msgid "每日打招呼"
 msgstr ""
 
 #: .\data\csv\Status.csv:571
-msgid "被要求每天上交内裤"
-msgstr ""
-
-#: .\data\csv\Status.csv:572
-msgid "被要求每天上交袜子"
+msgid "新周目告别"
 msgstr ""
 
 #: .\data\csv\Status.csv:573
-msgid "被要求以后不再穿胸衣"
+msgid "以队长身份出发执行外勤委托"
 msgstr ""
 
 #: .\data\csv\Status.csv:574
-msgid "被要求以后睡觉时不穿衣服裸睡"
+msgid "以队长身份完成外勤委托归舰"
 msgstr ""
 
 #: .\data\csv\Status.csv:575
-msgid "在每日招呼时上交今天的内裤"
-msgstr ""
-
-#: .\data\csv\Status.csv:576
-msgid "在每日招呼时上交今天的袜子"
+msgid "被邀请加入群交，开始前往群交地点"
 msgstr ""
 
 #: .\data\csv\Status.csv:577
-msgid "被要求每天穿不同的袜子"
+msgid "被任命为本地外交官"
 msgstr ""
 
 #: .\data\csv\Status.csv:578
-msgid "被要求白天时戴着乳头夹"
+msgid "被解除本地外交官的任命"
 msgstr ""
 
 #: .\data\csv\Status.csv:579
-msgid "被要求白天时戴着阴蒂夹"
+msgid "被任命为外派外交官"
 msgstr ""
 
 #: .\data\csv\Status.csv:580
-msgid "被要求白天时V里插着振动棒"
-msgstr ""
-
-#: .\data\csv\Status.csv:581
-msgid "被要求白天时A里插着振动棒"
+msgid "被解除外派外交官的任命"
 msgstr ""
 
 #: .\data\csv\Status.csv:582
-msgid "被要求睡觉时戴着乳头夹"
+msgid "被选为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:583
-msgid "被要求睡觉时戴着阴蒂夹"
+msgid "不再为助理"
 msgstr ""
 
 #: .\data\csv\Status.csv:584
-msgid "被要求睡觉时V里插着振动棒"
+msgid "关闭智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:585
-msgid "被要求睡觉时A里插着振动棒"
+msgid "开启智能跟随"
 msgstr ""
 
 #: .\data\csv\Status.csv:586
-msgid "被要求洗澡时不再清洗阴道内的精液"
+msgid "要求前往办公室"
 msgstr ""
 
 #: .\data\csv\Status.csv:587
-msgid "被要求每天晚上睡前都要自慰"
+msgid "关闭辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:588
-msgid "被要求禁止自慰"
+msgid "开启辅佐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:589
-msgid "被要求晚上睡觉不锁门"
+msgid "关闭送饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:590
-msgid "被要求进行吮吸与吞咽力练习"
+msgid "开启帮忙买午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:591
-msgid "被要求进行腋下夹持力练习"
+msgid "开启亲手做午饭服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:592
-msgid "被要求进行胸部夹持力练习"
+msgid "开启亲手做三餐服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:593
-msgid "被要求进行手部灵活度练习"
+msgid "关闭早安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:594
-msgid "被要求进行足部灵活度练习"
+msgid "开启早上叫起床服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:595
-msgid "被要求进行阴道紧致度练习"
+msgid "开启早安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:596
-msgid "被要求进行肠道紧致度练习"
+msgid "开启早安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:597
-msgid "被要求进行尾巴灵活度练习"
+msgid "关闭晚安服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:598
-msgid "被要求进行触手灵活度练习"
+msgid "开启晚上催睡觉服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:599
+msgid "开启晚安吻服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:600
-msgid "获得被浅层催眠素质"
+msgid "开启晚安咬服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:601
-msgid "获得被深层催眠素质"
+msgid "关闭同居服务"
 msgstr ""
 
 #: .\data\csv\Status.csv:602
+msgid "开启同居服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:603
+msgid "关闭助攻服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:604
+msgid "开启助攻服务"
+msgstr ""
+
+#: .\data\csv\Status.csv:606
+msgid "被要求每天上交内裤"
+msgstr ""
+
+#: .\data\csv\Status.csv:607
+msgid "被要求每天上交袜子"
+msgstr ""
+
+#: .\data\csv\Status.csv:608
+msgid "被要求以后不再穿胸衣"
+msgstr ""
+
+#: .\data\csv\Status.csv:609
+msgid "被要求以后睡觉时不穿衣服裸睡"
+msgstr ""
+
+#: .\data\csv\Status.csv:610
+msgid "在每日招呼时上交今天的内裤"
+msgstr ""
+
+#: .\data\csv\Status.csv:611
+msgid "在每日招呼时上交今天的袜子"
+msgstr ""
+
+#: .\data\csv\Status.csv:612
+msgid "被要求每天穿不同的袜子"
+msgstr ""
+
+#: .\data\csv\Status.csv:613
+msgid "被要求白天时戴着乳头夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:614
+msgid "被要求白天时戴着阴蒂夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:615
+msgid "被要求白天时V里插着振动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:616
+msgid "被要求白天时A里插着振动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:617
+msgid "被要求睡觉时戴着乳头夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:618
+msgid "被要求睡觉时戴着阴蒂夹"
+msgstr ""
+
+#: .\data\csv\Status.csv:619
+msgid "被要求睡觉时V里插着振动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:620
+msgid "被要求睡觉时A里插着振动棒"
+msgstr ""
+
+#: .\data\csv\Status.csv:621
+msgid "被要求洗澡时不再清洗阴道内的精液"
+msgstr ""
+
+#: .\data\csv\Status.csv:622
+msgid "被要求每天晚上睡前都要自慰"
+msgstr ""
+
+#: .\data\csv\Status.csv:623
+msgid "被要求禁止自慰"
+msgstr ""
+
+#: .\data\csv\Status.csv:624
+msgid "被要求晚上睡觉不锁门"
+msgstr ""
+
+#: .\data\csv\Status.csv:625
+msgid "被要求进行吮吸与吞咽力练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:626
+msgid "被要求进行腋下夹持力练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:627
+msgid "被要求进行胸部夹持力练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:628
+msgid "被要求进行手部灵活度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:629
+msgid "被要求进行足部灵活度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:630
+msgid "被要求进行阴道紧致度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:631
+msgid "被要求进行肠道紧致度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:632
+msgid "被要求进行尾巴灵活度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:633
+msgid "被要求进行触手灵活度练习"
+msgstr ""
+
+#: .\data\csv\Status.csv:635
+msgid "获得被浅层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:636
+msgid "获得被深层催眠素质"
+msgstr ""
+
+#: .\data\csv\Status.csv:637
 msgid "获得被完全催眠素质"
 msgstr ""
 
