@@ -158,17 +158,30 @@ class Physical_Check_And_Manage_Panel:
                 button2_draw.draw()
 
             if 1:
-                button3_text = _("[003]调整体检日程")
+                button3_text = _("[003]取消身体管理")
                 button3_draw = draw.LeftButton(
                     _(button3_text),
                     _("3"),
                     window_width,
-                    cmd_func=self.adjust_physical_check_schedule,
+                    cmd_func=self.cancle_physical_manage_panel,
                     args=(),
                     )
                 line_feed.draw()
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
+
+            if 1:
+                button4_text = _("[004]调整体检日程")
+                button4_draw = draw.LeftButton(
+                    _(button4_text),
+                    _("4"),
+                    window_width,
+                    cmd_func=self.adjust_physical_check_schedule,
+                    args=(),
+                    )
+                line_feed.draw()
+                button4_draw.draw()
+                return_list.append(button4_draw.return_text)
 
             if len(self.done_check_status_id_set) > 0:
                 button11_text = _("[011]查看检查报告")
@@ -594,6 +607,45 @@ class Physical_Check_And_Manage_Panel:
                     basement.update_facility_people()
                     info_text += _("因为没有进行性爱的相关练习，所以{0}的特殊职业-{1}被取消了\n").format(target_character_data.name, game_config.config_work_type[193].name)
 
+        info_draw = draw.WaitDraw()
+        info_draw.text = info_text
+        info_draw.draw()
+
+    def cancle_physical_manage_panel(self):
+        """取消身体管理"""
+
+        info_text = _("请选择要取消身体管理的干员，将取消其全部管理：\n")
+        # 使用通用角色选择按钮列表函数
+        from Script.UI.Panel import common_select_NPC
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        select_state = {}
+        while 1:
+            final_list = []
+            # 遍历角色id
+            for npc_id in cache.npc_id_got:
+                # 跳过玩家
+                if npc_id == 0:
+                    continue
+                now_character_data = cache.character_data[npc_id]
+                for body_manage_cid in game_config.config_body_manage_requirement:
+                    # 如果当前干员的身体管理数据不为0，则加入列表
+                    if now_character_data.body_manage[body_manage_cid] > 0:
+                        now_list = [npc_id, self.cancle_physical_manage, []]
+                        final_list.append(now_list)
+                        break
+            now_draw_panel.text_list = final_list
+            # 调用通用选择按钮列表函数
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("取消身体管理"), info_text, select_state)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == _("返回"):
+                break
+
+    def cancle_physical_manage(self, target_character_id: int):
+        """取消目标角色的身体管理"""
+        target_character_data = cache.character_data[target_character_id]
+        # 取消所有的身体管理
+        target_character_data.body_manage = attr_calculation.get_body_manage_zero()
+        info_text = _("\n取消了对{0}的全部身体管理，将在明天睡醒后生效。\n").format(target_character_data.name)
         info_draw = draw.WaitDraw()
         info_draw.text = info_text
         info_draw.draw()
