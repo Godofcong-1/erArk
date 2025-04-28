@@ -22693,7 +22693,7 @@ msgid "“你别想了，我是不可能屈服的。”{TargetName}眼中依然�
 msgstr ""
 
 #: Event:b884eb17-ea13-4762-88bf-ceaa0a0d5831
-msgid "“想，想什么呢...我只是觉得舒服才...”\n“总之，让我当你的性奴，还早着呢！”{TargetName}的理性依然占据着主导权。\n看来{TargetName}还没有完全屈服，需要进行更多的调教。"
+msgid "“想，想什么呢...我只是觉得舒服才...”{TargetName}说着说着脸颊突然红了起来。\n“谁会喜欢服侍你啊！你这变态！”不知道为什么{TargetName}突然生气了。\n“总之，想让我当你的性奴，还早着呢！”{TargetName}的理性依然占据着主导权。\n看来{TargetName}还没有完全屈服，需要进行更多的调教。"
 msgstr ""
 
 #: Event:354a567b-abbc-429d-84ac-a28fe44973a4
@@ -22714,6 +22714,10 @@ msgstr ""
 
 #: Event:9c0a6e3d-6f2c-4dc1-8616-187a54b17285
 msgid "“诶？！谁要和你做啊！”{TargetName}嫌弃地看着{PlayerName}。"
+msgstr ""
+
+#: Event:648f8f51-5d16-4844-ab03-630b7c30afbf
+msgid "现在{TargetName}对{PlayerName}充满了怨恨，把她放出来还是太危险了，最好不要这样做。\n等调教到一定程度后再考虑吧。"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
