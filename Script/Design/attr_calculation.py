@@ -290,7 +290,10 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
         h_state_data.orgasm_edge_count[body_part] = 0
         h_state_data.extra_orgasm_feel[body_part] = 0
         # 时停绝顶保留
-        h_state_data.time_stop_orgasm_count[body_part] = old_h_state_data.time_stop_orgasm_count[body_part]
+        if body_part in old_h_state_data.time_stop_orgasm_count:
+            h_state_data.time_stop_orgasm_count[body_part] = old_h_state_data.time_stop_orgasm_count[body_part]
+        else:
+            h_state_data.time_stop_orgasm_count[body_part] = 0
 
     # 群交字典
     h_state_data.group_sex_body_template_dict = {
