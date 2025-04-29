@@ -1942,6 +1942,7 @@ def handle_collect():
      constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
+     constant_promise.Premise.PLACE_DOOR_LOCKABLE,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TIRED_LE_74},
     constant.CharacterStatus.STATUS_H,
@@ -1952,19 +1953,22 @@ def handle_do_h():
     target_data = cache.character_data[character_data.target_character_id]
     now_draw = draw.WaitDraw()
     now_draw.width = width
+    now_draw_text = "\n"
     if instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("H模式"))[0]:
         now_scene_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        # 如果没关门，则自动将门关上
         if cache.scene_data[now_scene_str].close_flag == 0:
-            now_draw = normal_panel.Close_Door_Panel(width)
-            door_return = now_draw.draw()
-            if door_return == -1:
-                return
+            cache.scene_data[now_scene_str].close_flag = cache.scene_data[now_scene_str].close_type
+            now_draw_text += _("已自动关门\n")
         target_data.sp_flag.is_follow = 0
-        now_draw.text = _("\n进入H模式\n")
+        now_draw_text += _("进入H模式\n\n")
+        now_draw.text = now_draw_text
+        now_draw.style = 'gold_enrod'
         now_draw.draw()
         chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
     else:
-        now_draw.text = _("\n进入H模式失败\n")
+        now_draw.text = _("\n进入H模式失败\n\n")
+        now_draw.style = 'warning'
         now_draw.draw()
         chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DO_H_FAIL)
 
