@@ -161,7 +161,7 @@ def judge_assistant_character(character_id: int) -> int:
     now_time_hour = character_data.behavior.start_time.hour
     # 如果超过了12点，则清零早安问候
     if now_time_hour >= 12:
-        character_data.sp_flag.morning_salutation = 0
+        character_data.sp_flag.morning_salutation = 2
     # 如果早于18点且不是睡觉时间，则清零晚安问候
     if now_time_hour < 18 and not handle_premise.handle_game_time_is_sleep_time(character_id):
         character_data.sp_flag.night_salutation = 0

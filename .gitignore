@@ -1,6 +1,6 @@
 # 测试文件
-test.py
-test_2.py
+test.*
+test_2.*
 example/口上测试.csv
 
 # 缓存文件
