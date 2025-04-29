@@ -17,7 +17,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import event_option_panel, originium_arts, ejaculation_panel
+from Script.UI.Panel import dirty_panel, event_option_panel, originium_arts, ejaculation_panel
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,
@@ -1632,6 +1632,8 @@ def handle_hypnosis_cancel(
     target_character_data.hypnosis.blockhead = False
     target_character_data.hypnosis.active_h = False
     target_character_data.hypnosis.roleplay = 0
+    # 结算部位精液
+    dirty_panel.settle_unconscious_semen(target_character_data.cid)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON)
@@ -2066,28 +2068,6 @@ def handle_target_not_be_free_in_time_stop(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.pl_ability.free_in_time_stop_chara_id = 0
-
-
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_CHARACTERS_TIME_STOP_SEMEN_RESET)
-def handle_all_character_time_stop_semen_reset(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    清零所有角色的时停精液情况
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    for chara_id, character_data in cache.character_data.items():
-        character_data.dirty.body_semen_in_time_stop = []
-        character_data.dirty.cloth_semen_in_time_stop = []
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_ACTIVE_H_ON)
@@ -5427,6 +5407,28 @@ def handle_scene_all_characters_h_state_reset(
         handle_self_h_state_reset(chara_id, add_time, change_data, now_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_CHARACTERS_UNCONSCIOUS_SEMEN_RESET)
+def handle_all_character_unconscious_semen_reset(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清零所有角色的无意识精液情况
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    for chara_id, character_data in cache.character_data.items():
+        character_data.dirty.body_semen_in_unconscious = []
+        character_data.dirty.cloth_semen_in_unconscious = []
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CHARA_OFF_LINE)
 def handle_chara_off_line(
         character_id: int,
@@ -7172,12 +7174,7 @@ def handle_time_stop_orgasm_release(
         for body_part in game_config.config_body_part:
             character_data.h_state.time_stop_orgasm_count[body_part] = 0
         # 触发角色的部位精液二段行为
-        for body_part in character_data.dirty.body_semen_in_time_stop:
-            second_behavior_id = 1260 + body_part
-            character_data.second_behavior[second_behavior_id] = 1
-        for cloth_part in character_data.dirty.cloth_semen_in_time_stop:
-            second_behavior_id = 1280 + cloth_part
-            character_data.second_behavior[second_behavior_id] = 1
+        dirty_panel.settle_unconscious_semen(chara_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.END_H_ADD_HPMP_MAX)

@@ -31,6 +31,34 @@ def get_v_and_w_semen_count(character_id: int) -> int:
     all_semen_count = character_data.dirty.body_semen[6][1] + character_data.dirty.body_semen[7][1]
     return all_semen_count
 
+def settle_unconscious_semen(character_id: int) -> None:
+    """
+    结算角色在无意识期间的部位精液的二段行为
+    参数:
+        character_id: int -- 角色ID
+    返回:
+        None -- 该函数只更新角色脏污数据，无返回值
+    功能描述:
+        当角色处于无意识状态时，对其身体与服装各部位射精后，会在恢复意识时触发该部位的二段行为。
+    """
+    # 从缓存中获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 对数据进行去重
+    character_data.dirty.body_semen_in_unconscious = list(set(character_data.dirty.body_semen_in_unconscious))
+    character_data.dirty.cloth_semen_in_unconscious = list(set(character_data.dirty.cloth_semen_in_unconscious))
+    # 触发角色的部位精液二段行为
+    for body_part in character_data.dirty.body_semen_in_unconscious:
+        second_behavior_id = 1260 + body_part
+        character_data.second_behavior[second_behavior_id] = 1
+    for cloth_part in character_data.dirty.cloth_semen_in_unconscious:
+        # 如果自己身上没穿着该部位的衣服，则跳过
+        if len(character_data.cloth.cloth_wear[cloth_part]) == 0:
+            continue
+        second_behavior_id = 1280 + cloth_part
+        character_data.second_behavior[second_behavior_id] = 1
+    # 数据清零
+    character_data.dirty.body_semen_in_unconscious = []
+    character_data.dirty.cloth_semen_in_unconscious = []
 
 class Dirty_Panel:
     """

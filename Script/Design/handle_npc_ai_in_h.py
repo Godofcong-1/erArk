@@ -19,6 +19,7 @@ from Script.Design import (
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import dirty_panel
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -145,7 +146,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
 
 def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     """
-    从无意识H中恢复意识的结算\n
+    交互对象从无意识H中恢复意识的结算\n
     Keyword arguments:\n
     character_id -- 角色id\n
     """
@@ -183,6 +184,9 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     # 玩家的行动时间设为10分钟，对方的行动时间设为15分钟
     character_data.behavior.duration = 10
     target_data.behavior.duration = 15
+
+    # 结算无意识期间的精液情况
+    dirty_panel.settle_unconscious_semen(character_id)
 
     # 如果交互对象是监禁状态，则直接通过
     if handle_premise.handle_t_imprisonment_1(character_id):

@@ -256,6 +256,7 @@ def load_talk_data_to_cache():
     for idnex, value in enumerate(now_data):
         now_talk: game_type.Talk = game_type.Talk()
         now_talk.__dict__ = value
+        # print(f"debug now_talk = {now_talk.__dict__}")
 
         # 类型名转化
         if 'context' in value:

@@ -12445,135 +12445,135 @@ msgid "结算W绝顶被寸止"
 msgstr ""
 
 #: .\data\csv\Status.csv:513
-msgid "结算时停后头发出现精液"
+msgid "结算恢复意识后发现头发出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:514
-msgid "结算时停后脸部出现精液"
+msgid "结算恢复意识后发现脸部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:515
-msgid "结算时停后口腔出现精液"
+msgid "结算恢复意识后发现口腔出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:516
-msgid "结算时停后胸部出现精液"
+msgid "结算恢复意识后发现胸部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:517
-msgid "结算时停后腋部出现精液"
+msgid "结算恢复意识后发现腋部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:518
-msgid "结算时停后手部出现精液"
+msgid "结算恢复意识后发现手部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:519
-msgid "结算时停后小穴出现精液"
+msgid "结算恢复意识后发现小穴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:520
-msgid "结算时停后子宫出现精液"
+msgid "结算恢复意识后发现子宫出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:521
-msgid "结算时停后后穴出现精液"
+msgid "结算恢复意识后发现后穴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:522
-msgid "结算时停后尿道出现精液"
+msgid "结算恢复意识后发现尿道出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:523
-msgid "结算时停后腿部出现精液"
+msgid "结算恢复意识后发现腿部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:524
-msgid "结算时停后脚部出现精液"
+msgid "结算恢复意识后发现脚部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:525
-msgid "结算时停后尾巴出现精液"
+msgid "结算恢复意识后发现尾巴出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:526
-msgid "结算时停后兽角出现精液"
+msgid "结算恢复意识后发现兽角出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:527
-msgid "结算时停后兽耳出现精液"
+msgid "结算恢复意识后发现兽耳出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:528
-msgid "结算时停后胃部出现精液"
+msgid "结算恢复意识后发现胃部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:529
-msgid "结算时停后胯部出现精液"
+msgid "结算恢复意识后发现胯部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:530
-msgid "结算时停后腹部出现精液"
+msgid "结算恢复意识后发现腹部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:531
-msgid "结算时停后背部出现精液"
+msgid "结算恢复意识后发现背部出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:533
-msgid "结算时停后帽子出现精液"
+msgid "结算恢复意识后发现帽子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:534
-msgid "结算时停后眼镜出现精液"
+msgid "结算恢复意识后发现眼镜出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:535
-msgid "结算时停后耳饰出现精液"
+msgid "结算恢复意识后发现耳饰出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:536
-msgid "结算时停后脖饰出现精液"
+msgid "结算恢复意识后发现脖饰出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:537
-msgid "结算时停后口饰出现精液"
+msgid "结算恢复意识后发现口饰出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:538
-msgid "结算时停后上衣出现精液"
+msgid "结算恢复意识后发现上衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:539
-msgid "结算时停后胸衣出现精液"
+msgid "结算恢复意识后发现胸衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:540
-msgid "结算时停后手套出现精液"
+msgid "结算恢复意识后发现手套出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:541
-msgid "结算时停后下衣出现精液"
+msgid "结算恢复意识后发现下衣出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:542
-msgid "结算时停后内裤出现精液"
+msgid "结算恢复意识后发现内裤出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:543
-msgid "结算时停后袜子出现精液"
+msgid "结算恢复意识后发现袜子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:544
-msgid "结算时停后鞋子出现精液"
+msgid "结算恢复意识后发现鞋子出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:545
-msgid "结算时停后武器出现精液"
+msgid "结算恢复意识后发现武器出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:546
-msgid "结算时停后附属物出现精液"
+msgid "结算恢复意识后发现附属物出现精液"
 msgstr ""
 
 #: .\data\csv\Status.csv:548

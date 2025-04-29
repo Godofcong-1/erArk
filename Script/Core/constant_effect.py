@@ -324,6 +324,8 @@ class BehaviorEffect:
     """ 属性_结构体 场景内所有角色同步高潮程度记录 """
     SCENE_ALL_CHARACTERS_H_STATE_RESET = 407
     """ 属性_结构体 场景内所有角色H状态结构体归零，同步高潮程度记录，清零H相关二段状态 """
+    ALL_CHARACTERS_UNCONSCIOUS_SEMEN_RESET = 408
+    """ 属性_结构体 清零所有角色的无意识精液情况 """
     CHARA_OFF_LINE = 411
     """ 属性_结构体 角色离线，归零若干数据结构体，从当前干员列表中移除，离开地图 """
     CHARA_ON_LINE = 412
@@ -803,8 +805,6 @@ class BehaviorEffect:
     """ 源石技艺 将交互对象设为时停中自由状态（含理智消耗） """
     TARGET_NOT_BE_FREE_IN_TIME_STOP = 1246
     """ 源石技艺 清零自己的让某人时停中自由状态 """
-    ALL_CHARACTERS_TIME_STOP_SEMEN_RESET = 1247
-    """ 源石技艺 清零所有角色的时停精液情况 """
 
     NPC_ACTIVE_H_ON = 1401
     """ 属性_H 自己开启主动H """
