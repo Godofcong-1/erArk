@@ -346,6 +346,8 @@ def handle_instruct_data(
         check_second_effect(now_character_data.target_character_id, target_change, pl_to_npc = True)
     # 进行无意识结算
     check_unconscious_effect(character_id, add_time, change_data, now_time)
+    # 进行额外经验结算
+    extra_exp_settle(character_id, change_data)
     return change_data
 
 
@@ -726,6 +728,43 @@ def check_unconscious_effect(
 
     return target_character_data.sp_flag.unconscious_h
 
+
+def extra_exp_settle(
+        character_id: int,
+        change_data: game_type.CharacterStatusChange,
+):
+    """
+    处理额外经验结算
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    from Script.Settle import common_default
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 自己在H中且群交已开启，则群交经验+1
+    if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
+        common_default.base_chara_experience_common_settle(0, 56, change_data=change_data)
+
+    # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1
+    if character_id == 0 and handle_premise.handle_hidden_sex_mode_ge_1(character_id):
+        # 获取当前行为
+        now_state_id = character_data.state
+        status_data = game_config.config_status[now_state_id]
+        # 猥亵或性爱指令
+        add_flag = False
+        for tag in {_("猥亵"), _("性爱")}:
+            if tag in status_data.tag:
+                add_flag = True
+                break
+        # 非等待
+        if now_state_id == constant.CharacterStatus.STATUS_WAIT:
+            add_flag = False
+        # 增加隐奸经验
+        if add_flag:
+            common_default.base_chara_experience_common_settle(0, 35, change_data=change_data)
+            common_default.base_chara_experience_common_settle(0, 35, target_flag=True, change_data=change_data)
 
 def judge_character_first_meet(character_id: int) -> int:
     """
