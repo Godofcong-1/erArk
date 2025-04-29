@@ -320,6 +320,9 @@ def pl_get_chara_pan(character_id: int):
             # 脱掉内裤
             character_data.cloth.cloth_wear[9] = []
             character_data.cloth.cloth_see[9] = True
+            # 如果该角色在无意识中，则标注无意识flag
+            if handle_premise.handle_unconscious_flag_ge_1(character_id):
+                character_data.cloth.stolen_panties_in_unconscious = True
             # 绘制信息
             now_draw = draw.WaitDraw()
             now_draw.width = window_width
@@ -350,6 +353,9 @@ def pl_get_chara_socks(character_id: int):
             # 脱掉袜子
             character_data.cloth.cloth_wear[10] = []
             character_data.cloth.cloth_see[10] = True
+            # 如果该角色在无意识中，则标注无意识flag
+            if handle_premise.handle_unconscious_flag_ge_1(character_id):
+                character_data.cloth.stolen_socks_in_unconscious = True
             # 绘制信息
             now_draw = draw.WaitDraw()
             now_draw.width = window_width

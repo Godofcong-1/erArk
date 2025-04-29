@@ -185,8 +185,8 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     character_data.behavior.duration = 10
     target_data.behavior.duration = 15
 
-    # 结算无意识期间的精液情况
-    dirty_panel.settle_unconscious_semen(character_id)
+    # 结算恢复无意识的二段行为
+    settle_unconscious_semen_and_cloth(character_id)
 
     # 如果交互对象是监禁状态，则直接通过
     if handle_premise.handle_t_imprisonment_1(character_id):
@@ -255,6 +255,43 @@ def judge_weak_up_in_sleep_h(character_id: int):
         info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
         # 结算醒来
         recover_from_unconscious_h(character_id, info_text)
+
+
+def settle_unconscious_semen_and_cloth(character_id: int) -> None:
+    """
+    结算角色在无意识期间的部位精液与服装偷窃的二段行为
+    参数:
+        character_id: int -- 角色ID
+    返回:
+        None -- 该函数只更新角色脏污数据，无返回值
+    功能描述:
+        当角色在恢复意识时触发的二段行为。
+    """
+    # 从缓存中获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 对数据进行去重
+    character_data.dirty.body_semen_in_unconscious = list(set(character_data.dirty.body_semen_in_unconscious))
+    character_data.dirty.cloth_semen_in_unconscious = list(set(character_data.dirty.cloth_semen_in_unconscious))
+    # 触发角色的部位精液二段行为
+    for body_part in character_data.dirty.body_semen_in_unconscious:
+        second_behavior_id = 1260 + body_part
+        character_data.second_behavior[second_behavior_id] = 1
+    for cloth_part in character_data.dirty.cloth_semen_in_unconscious:
+        # 如果自己身上没穿着该部位的衣服，则跳过
+        if len(character_data.cloth.cloth_wear[cloth_part]) == 0:
+            continue
+        second_behavior_id = 1280 + cloth_part
+        character_data.second_behavior[second_behavior_id] = 1
+    # 触发角色的服装失窃行为
+    if character_data.cloth.stolen_panties_in_unconscious:
+        character_data.second_behavior[1296] = 1
+    if character_data.cloth.stolen_socks_in_unconscious:
+        character_data.second_behavior[1297] = 1
+    # 数据清零
+    character_data.dirty.body_semen_in_unconscious = []
+    character_data.dirty.cloth_semen_in_unconscious = []
+    character_data.cloth.stolen_panties_in_unconscious = False
+    character_data.cloth.stolen_socks_in_unconscious = False
 
 
 def evaluate_npc_body_part_prefs(character_id: int) -> int:

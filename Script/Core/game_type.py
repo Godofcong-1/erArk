@@ -412,7 +412,10 @@ class CLOTH:
         """ 角色放在宿舍衣柜里的服装 部位:衣服id"""
         self.cloth_see: Dict[int, bool] = {}
         """ 角色穿着的服装能否被看见 部位:能否"""
-
+        self.stolen_panties_in_unconscious: bool = False
+        """ 角色在无意识中被偷走了内裤 """
+        self.stolen_socks_in_unconscious: bool = False
+        """ 角色在无意识中被偷走了袜子 """
 
 class BODY_H_STATE:
     """H状态结构体"""

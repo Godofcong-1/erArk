@@ -320,6 +320,11 @@ class SecondBehavior:
     IN_UNCONSCIOUS_CUM_ON_ACCESSORY = 1293
     """ 恢复意识后发现附属物出现精液 """
 
+    IN_UNCONSCIOUS_STOLEN_PANTY = 1296
+    """ 恢复意识后发现内裤被偷 """
+    IN_UNCONSCIOUS_STOLEN_SOCKS = 1297
+    """ 恢复意识后发现袜子被偷 """
+
     LOVE_1 = 1301
     """ 结算获得思慕 """
     LOVE_2 = 1302

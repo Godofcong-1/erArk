@@ -1632,8 +1632,8 @@ def handle_hypnosis_cancel(
     target_character_data.hypnosis.blockhead = False
     target_character_data.hypnosis.active_h = False
     target_character_data.hypnosis.roleplay = 0
-    # 结算部位精液
-    dirty_panel.settle_unconscious_semen(target_character_data.cid)
+    # 结算二段行为
+    handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_INCREASE_BODY_SENSITIVITY_ON)
@@ -7173,8 +7173,8 @@ def handle_time_stop_orgasm_release(
         # 清零时停绝顶计数
         for body_part in game_config.config_body_part:
             character_data.h_state.time_stop_orgasm_count[body_part] = 0
-        # 触发角色的部位精液二段行为
-        dirty_panel.settle_unconscious_semen(chara_id)
+        # 触发角色的二段行为
+        handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(chara_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.END_H_ADD_HPMP_MAX)
