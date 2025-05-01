@@ -181,7 +181,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if final_character_id == 0:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1] and "Dirty" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -198,7 +198,20 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     elif premise_all_value_list[1][0] == "E":
         final_value = final_character_data.experience.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "S":
-        final_value = final_character_data.status_data.get(type_son_id, 0)
+        if "ShootPos" in premise_all_value_list[1]:
+            b2_value = premise_all_value_list[1].split("ShootPos|")[1]
+            part_type = b2_value[0]
+            part_cid = int(b2_value[1:])
+            # 区分是身体还是服装
+            if part_type == "B":
+                if final_character_data.h_state.shoot_position_body == part_cid:
+                    return 1
+            else:
+                if final_character_data.h_state.shoot_position_cloth == part_cid:
+                    return 1
+            return 0
+        else:
+            final_value = final_character_data.status_data.get(type_son_id, 0)
     elif premise_all_value_list[1][0] == "F":
         if "Flag" in premise_all_value_list[1]:
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
@@ -238,9 +251,12 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             part_cid = int(b2_value[1:])
             # 区分是身体还是服装
             if part_type == "B":
-                final_value = final_character_data.h_state.insert_position
+                if final_character_data.h_state.insert_position == part_cid:
+                    return 1
             else:
-                final_value = final_character_data.h_state.insert_position - 20
+                if final_character_data.h_state.insert_position - 20 == part_cid:
+                    return 1
+            return 0
 
 
     # 进行方式C和数值D的判别

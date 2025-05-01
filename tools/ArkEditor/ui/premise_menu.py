@@ -280,7 +280,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -380,6 +380,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "Roleplay|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "阴茎位置":
             cvp_b_value = "PenisPos|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "射精位置":
+            cvp_b_value = "ShootPos|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -562,5 +564,17 @@ class CVPMenu(QDialog):
                 self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
-            self.cvp_text.setText("检测当前玩家阴茎插入目标角色的部位，包括身体部位与服装部位\n等于1为插入该部位，等于0为没有插入该部位\n在游戏中会显示插入XX中，或XX交中，或蹭XX中\n\n在口腔、小穴、子宫、后穴等部位的实际行动表现一般为插入洞内摩擦\n在头发、胸衣、内裤等部位的表现应为包裹摩擦\n在兽角、脸部、饰品、武器等部位应为表面摩擦\n手、足、尾巴等较为灵活的身体部位与其穿着的手套袜子鞋子等可自由适用以上多类\n\n如果玩家没有在插入，则全部位为0\n如果角色没有该部位，比如没有兽角，或者没有穿内裤等，则该部位无法插入，也是0")
+            self.cvp_d.setText("1")
+            self.cvp_text.setText("检测当前玩家阴茎插入目标角色的部位，包括身体部位与服装部位\n等于1为插入该部位\n在游戏中会显示插入XX中，或XX交中，或蹭XX中\n\n在口腔、小穴、子宫、后穴等部位的实际行动表现一般为插入洞内摩擦\n在头发、胸衣、内裤等部位的表现应为包裹摩擦\n在兽角、脸部、饰品、武器等部位应为表面摩擦\n手、足、尾巴等较为灵活的身体部位与其穿着的手套袜子鞋子等可自由适用以上多类\n\n如果玩家没有在插入，则全部位为0\n如果角色没有该部位，比如没有兽角，或者没有穿内裤等，则该部位无法插入，也是0")
+        elif index == 19:
+            self.cvp_a.setVisible(False)
+            self.cvp_b2.clear()
+            for body_id, body_name in cache_control.body_data.items():
+                self.cvp_b2.addItem(f"B{body_id}|{body_name}")
+            for cloth_id, cloth_name in cache_control.clothing_data.items():
+                self.cvp_b2.addItem(f"C{cloth_id}|{cloth_name}")
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["等于"])
+            self.cvp_d.setText("1")
+            self.cvp_text.setText("检测当前玩家阴茎在目标角色的哪个部位射精，包括身体部位与服装部位\n等于1为在该部位射精\n用于和二段行为_射精/大量射精/超大量射精配套使用")
         self.cvp_b = self.cvp_b2
