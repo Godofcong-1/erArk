@@ -372,15 +372,27 @@ if BUILD_TALK:
     print("开始写入角色口上数据，该处理耗时较长，仅在第一次启动游戏时处理")
     talk_file_list = os.listdir(talk_dir)
     for i in talk_file_list:
-        # 跳过ai文件夹
+        # 跳过 ai 文件夹
         if i == "ai":
             continue
-        now_dir = os.path.join(talk_dir, i)
-        for f in os.listdir(now_dir):
-            config_def_str += "\n"
-            # config_def_str += "\n\n\n"
-            now_f = os.path.join(now_dir, f)
-            build_csv_config(now_f, f, 1, 0)
+        now_path = os.path.join(talk_dir, i)
+        # 如果是目录，则递归遍历其子目录
+        if os.path.isdir(now_path):
+            for root, dirs, files in os.walk(now_path):
+                for f in files:
+                    # 跳过非 csv 文件
+                    if not f.endswith(".csv"):
+                        continue
+                    # 在配置定义字符串中添加空行
+                    config_def_str += "\n"
+                    # 构建子目录下的 talk csv 配置
+                    csv_path = os.path.join(root, f)
+                    build_csv_config(csv_path, f, True, False)
+        else:
+            # 如果是单个 csv 文件，则直接构建
+            if i.endswith(".csv"):
+                config_def_str += "\n"
+                build_csv_config(now_path, i, True, False)
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
         json.dump(character_talk_data, talk_data_file, ensure_ascii=0)

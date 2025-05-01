@@ -174,6 +174,7 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     update_shoot_position_flag -- 是否更新射精部位
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data: game_type.Character = cache.character_data[0]
 
     # 判断部位类型
     if part_type == 0:
@@ -207,22 +208,26 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     # 该部位增加当前精液量
     now_semen_data[1] += semen_count
     now_semen_data[1] = max(now_semen_data[1], 0)
-    # 该部位增加总精液量
+    # 在精液量为正的情况下
     if semen_count > 0:
+        # 该部位增加总精液量
         now_semen_data[3] += semen_count
     # 该部位更新精液等级
     now_semen_data[2] = attr_calculation.get_semen_now_level(now_semen_data[1], part_cid, part_type)
     # 记录射精部位
     if update_shoot_position_flag:
         if part_type == 0:
-            character_data.h_state.shoot_position_body = part_cid
+            pl_character_data.h_state.shoot_position_body = part_cid
             # 无意识中则记录部位精液
             if handle_premise.handle_unconscious_flag_ge_1(character_id) and part_cid not in character_data.dirty.body_semen_in_unconscious:
                 character_data.dirty.body_semen_in_unconscious.append(part_cid)
         else:
-            character_data.h_state.shoot_position_cloth = part_cid
+            pl_character_data.h_state.shoot_position_cloth = part_cid
             if handle_premise.handle_unconscious_flag_ge_1(character_id) and part_cid not in character_data.dirty.cloth_semen_in_unconscious:
                 character_data.dirty.cloth_semen_in_unconscious.append(part_cid)
+        # 重置部位插入
+        if semen_count > 0:
+            pl_character_data.h_state.insert_position = -1
     # A部位射精时如果已经持有灌肠肛塞道具，且设置已开启，则结算精液灌肠
     if (
         part_type == 0 and
@@ -246,7 +251,6 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
             character_data.h_state.insert_position = -1
         # 如果此时在群交中，且阴茎状态为肛交，则清零阴茎状态
         if handle_premise.handle_group_sex_mode_on(0):
-            pl_character_data: game_type.Character = cache.character_data[0]
             now_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
             state_id = now_template_data[0]["penis"][1]
             # 如果没有阴茎状态，则不处理
@@ -452,7 +456,7 @@ class Ejaculation_Panel:
             return False
         elif body_part_cid == 9 and not handle_premise.handle_penis_in_t_nrethral(0):
             return False
-        elif body_part_cid == 15:
+        elif body_part_cid == 15 and not handle_premise.handle_last_cmd_deep_throat(0):
             return False
         # 没有长对应器官，则无法射在对应部位
         elif body_part_cid == 12 and not target_data.talent[113]:
@@ -587,6 +591,9 @@ class Ejaculation_Panel:
         character_data: game_type.Character = cache.character_data[0]
         if part_type == 0:
             character_data.h_state.insert_position = part_cid
+            # 如果是深喉插入状态，则将部位改为食道射精
+            if handle_premise.handle_last_cmd_deep_throat(0):
+                part_cid = 15
         else:
             character_data.h_state.insert_position = part_cid + 20
         ejaculation_flow(part_cid, part_type)
