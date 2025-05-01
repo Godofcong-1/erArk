@@ -583,4 +583,10 @@ class Ejaculation_Panel:
     def shoot_here(self, part_cid: int, part_type: int):
         """结算射精"""
         py_cmd.clr_cmd()
+        # 更新阴茎插入部位
+        character_data: game_type.Character = cache.character_data[0]
+        if part_type == 0:
+            character_data.h_state.insert_position = part_cid
+        else:
+            character_data.h_state.insert_position = part_cid + 20
         ejaculation_flow(part_cid, part_type)

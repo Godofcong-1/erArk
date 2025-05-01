@@ -181,7 +181,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         if final_character_id == 0:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置
     if len(premise_all_value_list[1]) > 1 and "Time" not in premise_all_value_list[1] and "Dirty" not in premise_all_value_list[1]:
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -231,6 +231,16 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 1
             else:
                 final_value = 0
+    elif premise_all_value_list[1][0] == "P":
+        if "PenisPos" in premise_all_value_list[1]:
+            b2_value = premise_all_value_list[1].split("PenisPos|")[1]
+            part_type = b2_value[0]
+            part_cid = int(b2_value[1:])
+            # 区分是身体还是服装
+            if part_type == "B":
+                final_value = final_character_data.h_state.insert_position
+            else:
+                final_value = final_character_data.h_state.insert_position - 20
 
 
     # 进行方式C和数值D的判别
