@@ -1298,6 +1298,7 @@ class Debug_Panel:
                 draw_text_list.append(f"[005]:身体部位:当前精液等级int，输入5,0,1即可把0号部位的精液等级改为1")
                 draw_text_list.append(f"[006]:服装部位:当前精液量int，输入6,1,5即可把1号服装的精液量改为5")
                 draw_text_list.append(f"[007]:服装部位:当前精液等级int，输入7,1,1即可把1号服装的精液等级改为1")
+                draw_text_list.append(f"[008]:增加身体、服装、衣柜服装全部位精液量int")
 
                 # 进行显示
                 for i in range(len(draw_text_list)):
@@ -1322,6 +1323,16 @@ class Debug_Panel:
                     # 根据第几项更改对应值
                     if value_index == 3:
                         target_data.dirty.a_clean = new_value
+                    elif value_index == 8:
+                        for i in range(len(target_data.dirty.body_semen)):
+                            target_data.dirty.body_semen[i][1] += new_value
+                            target_data.dirty.body_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.body_semen[i][1], i, 0)
+                        for i in range(len(target_data.dirty.cloth_semen)):
+                            target_data.dirty.cloth_semen[i][1] += new_value
+                            target_data.dirty.cloth_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_semen[i][1], i, 1)
+                        for i in range(len(target_data.dirty.cloth_locker_semen)):
+                            target_data.dirty.cloth_locker_semen[i][1] += new_value
+                            target_data.dirty.cloth_locker_semen[i][2] = attr_calculation.get_semen_now_level(target_data.dirty.cloth_locker_semen[i][1], i, 2)
                     elif value_index[0] == 0:
                         target_data.dirty.body_semen[value_index[1]][value_index[2]] = new_value
                     elif value_index[0] == 1:
