@@ -161,11 +161,11 @@ class SecondBehavior:
     """ 结算利尿剂 """
     SLEEPING_PILLS = 1109
     """ 结算安眠药 """
-    SLEEPING_CLOMID = 1110
+    OVULATION_PROMOTION_DRUGS = 1110
     """ 结算排卵促进药 """
-    SLEEPING_BIRTH_CONTROL_PILLS_BEFORE = 1111
+    BIRTH_CONTROL_PILLS_BEFORE = 1111
     """ 结算事前避孕药 """
-    SLEEPING_BIRTH_CONTROL_PILLS_AFTER = 1112
+    BIRTH_CONTROL_PILLS_AFTER = 1112
     """ 结算事后避孕药 """
     GAG = 1114
     """ 结算口球 """
@@ -177,7 +177,7 @@ class SecondBehavior:
     """ 结算发交中 """
     PENIS_IN_FACE = 1202
     """ 结算阴茎蹭脸中 """
-    PENIS_IN_MOUSE = 1203
+    PENIS_IN_MOUTH = 1203
     """ 结算口交中 """
     PENIS_IN_BREAST = 1204
     """ 结算乳交中 """
@@ -235,21 +235,21 @@ class SecondBehavior:
     PENIS_IN_TROUSERS_JOB = 1234
     """ 结算裤子交中 """
 
-    N_ORGASM_SUPER = 1250
+    N_ORGASM_EDGE = 1250
     """ 结算N绝顶被寸止 """
-    B_ORGASM_SUPER = 1251
+    B_ORGASM_EDGE = 1251
     """ 结算B绝顶被寸止 """
-    C_ORGASM_SUPER = 1252
+    C_ORGASM_EDGE = 1252
     """ 结算C绝顶被寸止 """
-    P_ORGASM_SUPER = 1253
+    P_ORGASM_EDGE = 1253
     """ 结算射精被寸止 """
-    V_ORGASM_SUPER = 1254
+    V_ORGASM_EDGE = 1254
     """ 结算V绝顶被寸止 """
-    A_ORGASM_SUPER = 1255
+    A_ORGASM_EDGE = 1255
     """ 结算A绝顶被寸止 """
-    U_ORGASM_SUPER = 1256
+    U_ORGASM_EDGE = 1256
     """ 结算U绝顶被寸止 """
-    W_ORGASM_SUPER = 1257
+    W_ORGASM_EDGE = 1257
     """ 结算W绝顶被寸止 """
 
     IN_UNCONSCIOUS_CUM_ON_HAIR = 1260
