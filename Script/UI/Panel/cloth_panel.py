@@ -156,47 +156,8 @@ class SeeCharacterClothPanel:
         # 如果有脱下的衣服，且在H中则显示
         if count != 0 and handle_premise.handle_is_h(0):
             now_text += off_text
-
-        if self.center_status:
-            now_draw = panel.CenterDrawTextListPanel()
-        else:
-            now_draw = panel.LeftDrawTextListPanel()
-
-        # 富文本模组
-        now_style_list = rich_text.get_rich_text_print(now_text, "standard")
-        new_x_list = rich_text.remove_rich_cache(now_text)
-        # test_flag = False
-        # if 'emoji' in now_style_list:
-        #     test_flag = True
-        #     print(f"debug 总：now_style_list = {now_style_list}")
-        #     print(f"debug 总：new_x_list = {new_x_list}")
-        while 1:
-            if not len(new_x_list):
-                break
-            # now_rich_draw = game_type.MapDrawText()
-            now_rich_draw = draw.NormalDraw()
-            now_rich_draw.text = new_x_list[0]
-            now_rich_draw.style = now_style_list[0]
-            now_style_list = now_style_list[1:]
-            new_x_list = new_x_list[1:]
-            # if test_flag:
-            #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
-            while 1:
-                if not len(new_x_list):
-                    break
-                if now_style_list[0] != now_rich_draw.style:
-                    break
-                now_rich_draw.text += new_x_list[0]
-                now_style_list = now_style_list[1:]
-                new_x_list = new_x_list[1:]
-                # if test_flag:
-                #     print(f"debug 分：now_rich_draw.text = {now_rich_draw.text}")
-                #     print(f"debug 分：now_style_list = {now_style_list}")
-                #     print(f"debug 分：new_x_list = {new_x_list}")
-            now_draw.draw_list.append(now_rich_draw)
-            now_draw.width += len(now_rich_draw.text)
-
-        # now_draw.set(cloth_text_list, self.width, self.column)
+        # 获取富文本绘制对象
+        now_draw = rich_text.get_rich_text_draw_panel(now_text)
         self.draw_list.extend(now_draw.draw_list)
 
     def draw(self):

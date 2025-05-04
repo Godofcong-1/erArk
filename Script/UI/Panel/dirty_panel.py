@@ -2,7 +2,7 @@ from turtle import position
 from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
+from Script.Core import cache_control, game_type, get_text, flow_handle, rich_text, constant, py_cmd
 from Script.Design import map_handle, clothing, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
@@ -281,8 +281,6 @@ class SeeCharacterBodyPanel:
 
         type_line = draw.LittleTitleLineDraw(_("身体"), width, ":")
         # print("type_data.name :",type_data.name)
-        now_draw = panel.LeftDrawTextListPanel()
-        text_draw = draw.NormalDraw()
 
         # 全部位文本
         all_part_text_list = []
@@ -356,7 +354,8 @@ class SeeCharacterBodyPanel:
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
                     now_part_text = game_config.ui_text_data['dirty_full'][text_index]
-                    now_part_text = _(' [爱液]') + now_part_text + '\n'
+                    now_part_text = f"<lavender>{now_part_text}</lavender>\n"
+                    now_part_text = _(' [爱液]:') + now_part_text
                 else:
                     now_part_text = game_config.ui_text_data['dirty'][text_index]
                 all_part_text_list.append(f" {now_part_text}")
@@ -374,7 +373,8 @@ class SeeCharacterBodyPanel:
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
                     now_part_text = game_config.ui_text_data['dirty_full'][text_index]
-                    now_part_text = _(' [尿液]:') + now_part_text + '\n'
+                    now_part_text = f"<khaki>{now_part_text}</khaki>\n"
+                    now_part_text = _(' [尿液]:') + now_part_text
                 else:
                     now_part_text = game_config.ui_text_data['dirty'][text_index]
                 all_part_text_list.append(f" {now_part_text}")
@@ -386,34 +386,12 @@ class SeeCharacterBodyPanel:
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
                     dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
-                    dirty_text_context += '\n'
+                    dirty_text_context = f"<semen>{dirty_text_context}</semen>\n"
                     now_part_text = f"  [{part_name}]:{dirty_text_context}"
                 else:
                     dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                     now_part_text = f" {part_name}{dirty_text_context}"
                 all_part_text_list.append(now_part_text)
-
-        # 灌肠文本
-        if target_character_data.dirty.a_clean:
-            text_index = f"灌肠{str(target_character_data.dirty.a_clean)}"
-            # 是否显示完整污浊文本
-            if cache.all_system_setting.draw_setting[10]:
-                enemas_text = game_config.ui_text_data['dirty_full'][text_index]
-                enemas_text = _(' [肠道]:') + enemas_text + '\n'
-                all_part_text_list.append(f" {enemas_text}")
-            else:
-                enemas_text = game_config.ui_text_data['dirty'][text_index]
-                all_part_text_list.append(f" <{enemas_text}>")
-        if target_character_data.dirty.enema_capacity:
-            text_index = f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"
-            # 是否显示完整污浊文本
-            if cache.all_system_setting.draw_setting[10]:
-                enema_capacity_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
-                enema_capacity_text = _(' [灌肠]:') + enema_capacity_text + '\n'
-                all_part_text_list.append(f" {enema_capacity_text}")
-            else:
-                enema_capacity_text = game_config.ui_text_data['dirty'][dirty_text_cid]
-                all_part_text_list.append(f" <{enema_capacity_text}>")
 
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
@@ -423,11 +401,36 @@ class SeeCharacterBodyPanel:
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
                     dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
-                    dirty_text_context = _(' [腹部]:') + dirty_text_context + '\n'
+                    dirty_text_context = f"<semen>{dirty_text_context}</semen>\n"
+                    dirty_text_context = _(' [腹部]:') + dirty_text_context
                 else:
                     dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                 now_part_text = f" {dirty_text_context}"
                 all_part_text_list.append(now_part_text)
+
+        # 灌肠文本
+        if target_character_data.dirty.a_clean:
+            text_index = f"灌肠{str(target_character_data.dirty.a_clean)}"
+            # 是否显示完整污浊文本
+            if cache.all_system_setting.draw_setting[10]:
+                enemas_text = game_config.ui_text_data['dirty_full'][text_index]
+                enemas_text = f"<semen>{enemas_text}</semen>\n"
+                enemas_text = _(' [肠道]:') + enemas_text
+                all_part_text_list.append(f" {enemas_text}")
+            else:
+                enemas_text = game_config.ui_text_data['dirty'][text_index]
+                all_part_text_list.append(f" <{enemas_text}>")
+        if target_character_data.dirty.enema_capacity:
+            text_index = f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"
+            # 是否显示完整污浊文本
+            if cache.all_system_setting.draw_setting[10]:
+                enema_capacity_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                enema_capacity_text = f"<semen>{enema_capacity_text}</semen>\n"
+                enema_capacity_text = _(' [灌肠]:') + enema_capacity_text
+                all_part_text_list.append(f" {enema_capacity_text}")
+            else:
+                enema_capacity_text = game_config.ui_text_data['dirty'][dirty_text_cid]
+                all_part_text_list.append(f" <{enema_capacity_text}>")
 
         # 如果有腔内透视
         if visual_flag >= 2:
@@ -510,9 +513,9 @@ class SeeCharacterBodyPanel:
                 # 如果文本的最后不是换行符，则加入换行符
                 if i == len(all_part_text_list) - 1 and all_part_text[-1] != "\n":
                     all_part_text += "\n"
-        text_draw.text = all_part_text
-        now_draw.draw_list.append(text_draw)
-        now_draw.width += len(text_draw.text)
+
+        # 获取富文本绘制对象
+        now_draw = rich_text.get_rich_text_draw_panel(all_part_text)
 
         self.draw_list.extend(now_draw.draw_list)
 

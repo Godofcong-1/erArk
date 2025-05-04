@@ -45,11 +45,11 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 39,pink,#ffc0cb,,,,,,,,粉红
 40,light_pink,#ffb6c1,,,,,,,,浅粉红
 41,purple,#800080,,,,,,,,紫色
-42,khaki,#f0e68c,,,,,,,,黄褐色（卡其布）
+42,khaki,#f0e68c,,,,,,,,黄褐色（卡其布）（尿液颜色）
 43,beige,#f5f5dc,,,,,,,,米色
 44,medium_spring_green,#00ff7f,,,,,,,,适中的春天的绿色
 45,spring_green,#3cb371,,,,,,,,春天的绿色
-46,crimson,#dc143c,,,,,,,,猩红
+46,crimson,#dc143c,,,,,,,,猩红（SM）
 47,summer_green,#96bbab,,,,,,,,夏日绿
 48,pumice,#c2cac4,,,,,,,,浮石色
 49,myrtle_green,#317873,,,,,,,,桃金娘绿
@@ -61,8 +61,9 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 55,cornflower_blue,#6495ed,,,,,,,,矢车菊蓝
 56,pale_cerulean,#9bc4e2,,,,,,,,浅蔚蓝
 57,light_steel_blue,#b0c4de,,,,,,,,浅钢蓝（技艺颜色）
-58,princess_perfume,#ff85cf,,,,,,,,公主香水
-59,rose_pink,#ff66cc,,,,,,,,玫瑰粉
+58,princess_perfume,#ff85cf,,,,,,,,公主香水（药物）
+59,rose_pink,#ff66cc,,,,,,,,玫瑰粉（道具）
 60,pastel_magenta,#f49ac2,,,,,,,,淡洋红
 61,amarath_pink,#f19cbb,,,,,,,,紫红（性爱颜色）
 62,grullo,#a99a86,,,,,,,,灰褐色（工作颜色）
+63,lavender,#e6e6fa,,,,,,,,熏衣草花的淡紫色
