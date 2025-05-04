@@ -443,9 +443,9 @@ class Ejaculation_Panel:
 
     def part_can_choose(self, body_part_cid: int):
         """判断该部位是否可以绘制"""
+        from Script.Design import clothing
 
         character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
         # 不插在对应部位，则无法射在对应部位
         if body_part_cid == 6 and not (handle_premise.handle_penis_in_t_vagina(0) or handle_premise.handle_penis_in_t_womb(0)):
@@ -458,35 +458,14 @@ class Ejaculation_Panel:
             return False
         elif body_part_cid == 15 and not handle_premise.handle_last_cmd_deep_throat(0):
             return False
-        # 没有长对应器官，则无法射在对应部位
-        elif body_part_cid == 12 and not target_data.talent[113]:
-            return False
-        elif body_part_cid == 13 and not target_data.talent[112]:
-            return False
-        elif body_part_cid == 14 and not target_data.talent[111]:
-            return False
 
-        # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
-        body_cloth = [0, 4, 4, [5, 6], 5, 7, -1, -1, -1, -1, [8, 10], 11, -1, -1, -1, -1, [8, 9], 8, 5]
-        clothing = {}
+        # 获取没有穿衣服的部位列表
+        no_cloth_body_list = clothing.get_exposed_body_parts(character_data.target_character_id, ignore_panties=True)
 
-        for clothing_type in game_config.config_clothing_type:
-            if len(target_data.cloth.cloth_wear[clothing_type]):
-                clothing[clothing_type] = target_data.cloth.cloth_wear[clothing_type]
-
-        # 对应部位有衣服，则无法射在对应部位
-        if isinstance(body_cloth[body_part_cid], list):
-            def cloth_list(bbc):
-                for bc in bbc:
-                    if bc in clothing.keys():
-                        return False
-                return True
-            if not cloth_list(body_cloth[body_part_cid]):
-                return False
-        else:
-            if body_cloth[body_part_cid] in clothing.keys():
-                return False
-        return True
+        # 如果该部位没有穿衣服，则可以
+        if body_part_cid in no_cloth_body_list:
+            return True
+        return False
 
     def draw_choose_target_chara_in_group_sex(self):
         """绘制选择射精对象"""

@@ -22,7 +22,7 @@ def get_system_setting_zero() -> game_type.System_Setting:
     # 基础设定
     base_default_dict = {1:0, 2:1, 3:0, 6:1, 7:0, 8:1}
     # 绘制设定
-    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1}
+    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1, 10:1}
     # 难度设定
     difficulty_default_dict = {1:3, 2:3, 3:3, 11:2, 12:0}
     # 赋予默认值
@@ -771,6 +771,9 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
             # 如果超过最大值，则返回最大值
             if i == len(voluem_data_list) - 1:
                 now_level = i + 1
+                # 如果最大值是2，则返回3
+                if now_level == 2:
+                    now_level = 3
     else:
         voluem_data_list = game_config.config_clothing_type_volume[part_cid]
         for i in range(len(voluem_data_list)):
@@ -780,6 +783,9 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
             # 如果超过最大值，则返回最大值
             if i == len(voluem_data_list) - 1:
                 now_level = i + 1
+                # 如果最大值是2，则返回3
+                if now_level == 2:
+                    now_level = 3
     # print(f"debug value = {value},now_level = {now_level}")
     return now_level
 

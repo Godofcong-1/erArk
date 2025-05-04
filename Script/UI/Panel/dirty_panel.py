@@ -3,7 +3,7 @@ from typing import Tuple, List
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, attr_text, attr_calculation
+from Script.Design import map_handle, clothing, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -289,6 +289,22 @@ class SeeCharacterBodyPanel:
         # 腹部整体精液量统计
         abdomen_all_semen = 0
 
+        # 获取没有穿服装的部位列表
+        no_cloth_body_list = clothing.get_exposed_body_parts(character_data.target_character_id)
+
+        # 是否透视中
+        visual_flag = 0
+        if character_data.pl_ability.visual:
+            # 生理透视
+            if character_data.talent[309]:
+                visual_flag = 3
+            # 腔内透视
+            elif character_data.talent[308]:
+                visual_flag = 2
+            # 服装透视
+            else:
+                visual_flag = 1
+
         # 遍历全部位并输出结果
         for i in range(len(game_config.config_body_part)):
             body_part_data = game_config.config_body_part[i]
@@ -302,50 +318,126 @@ class SeeCharacterBodyPanel:
             if i in [5,7,8,15]:
                 abdomen_all_semen += target_character_data.dirty.body_semen[i][1]
 
+            # 判定部位是否被衣服遮挡，且没有透视中
+            if i not in no_cloth_body_list and visual_flag == 0:
+                continue
+
             # 然后腔内透视判定
-            if i in {6,7,8,9,15}:
-                if not (character_data.pl_ability.visual and character_data.talent[308]):
+            if visual_flag <= 1:
+                if i in {7,9,15}:
                     continue
+                # 处子血判定
+                elif i == 6:
+                    if not character_data.talent[0]:
+                        now_day = cache.game_time.day
+                        first_day = character_data.first_record.first_sex_time.day
+                        if now_day == first_day:
+                            # 是否显示完整污浊文本
+                            dirty_text_cid = "破处血1"
+                            if cache.all_system_setting.draw_setting[10]:
+                                dirty_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                                dirty_text += '\n'
+                                all_part_text_list.append(f" {dirty_text}")
+                            else:
+                                dirty_text = game_config.ui_text_data['dirty'][dirty_text_cid]
+                                all_part_text_list.append(f" <{dirty_text}>")
 
             # 爱液文本
             if i == 6 and target_character_data.status_data[8]:
                 level = attr_calculation.get_status_level(target_character_data.status_data[8])
                 if level <= 2:
-                    now_part_text = game_config.ui_text_data['dirty'][f"爱液1"]
+                    text_index = "爱液1"
                 elif level <= 4:
-                    now_part_text = game_config.ui_text_data['dirty'][f"爱液2"]
+                    text_index = "爱液2"
                 elif level <= 6:
-                    now_part_text = game_config.ui_text_data['dirty'][f"爱液3"]
+                    text_index = "爱液3"
                 else:
-                    now_part_text = game_config.ui_text_data['dirty'][f"爱液4"]
-                all_part_text_list.append(now_part_text)
+                    text_index = "爱液4"
+                # 是否显示完整污浊文本
+                if cache.all_system_setting.draw_setting[10]:
+                    now_part_text = game_config.ui_text_data['dirty_full'][text_index]
+                    now_part_text = _(' [爱液]') + now_part_text + '\n'
+                else:
+                    now_part_text = game_config.ui_text_data['dirty'][text_index]
+                all_part_text_list.append(f" {now_part_text}")
 
-            # 污浊判定
+            # 尿液污浊
+            if i == 9:
+                if target_character_data.urinate_point <= 30:
+                    text_index = "尿液0"
+                elif target_character_data.urinate_point <= 120:
+                    text_index = "尿液1"
+                elif target_character_data.urinate_point <= 191:
+                    text_index = "尿液2"
+                else:
+                    text_index = "尿液3"
+                # 是否显示完整污浊文本
+                if cache.all_system_setting.draw_setting[10]:
+                    now_part_text = game_config.ui_text_data['dirty_full'][text_index]
+                    now_part_text = _(' [尿液]:') + now_part_text + '\n'
+                else:
+                    now_part_text = game_config.ui_text_data['dirty'][text_index]
+                all_part_text_list.append(f" {now_part_text}")
+
+            # 精液污浊判定
             if target_character_data.dirty.body_semen[i][2]:
                 semen_level = target_character_data.dirty.body_semen[i][2]
                 dirty_text_cid = f"{_(part_name, revert_translation = True)}精液污浊{str(semen_level)}"
-                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-                now_part_text = f" {part_name}{dirty_text_context}"
+                # 是否显示完整污浊文本
+                if cache.all_system_setting.draw_setting[10]:
+                    dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                    dirty_text_context += '\n'
+                    now_part_text = f"  [{part_name}]:{dirty_text_context}"
+                else:
+                    dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                    now_part_text = f" {part_name}{dirty_text_context}"
                 all_part_text_list.append(now_part_text)
+
+        # 灌肠文本
+        if target_character_data.dirty.a_clean:
+            text_index = f"灌肠{str(target_character_data.dirty.a_clean)}"
+            # 是否显示完整污浊文本
+            if cache.all_system_setting.draw_setting[10]:
+                enemas_text = game_config.ui_text_data['dirty_full'][text_index]
+                enemas_text = _(' [肠道]:') + enemas_text + '\n'
+                all_part_text_list.append(f" {enemas_text}")
+            else:
+                enemas_text = game_config.ui_text_data['dirty'][text_index]
+                all_part_text_list.append(f" <{enemas_text}>")
+        if target_character_data.dirty.enema_capacity:
+            text_index = f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"
+            # 是否显示完整污浊文本
+            if cache.all_system_setting.draw_setting[10]:
+                enema_capacity_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                enema_capacity_text = _(' [灌肠]:') + enema_capacity_text + '\n'
+                all_part_text_list.append(f" {enema_capacity_text}")
+            else:
+                enema_capacity_text = game_config.ui_text_data['dirty'][dirty_text_cid]
+                all_part_text_list.append(f" <{enema_capacity_text}>")
 
         # 如果腹部整体有精液，则显示腹部整体精液污浊
         if abdomen_all_semen:
             now_level = attr_calculation.get_semen_now_level(abdomen_all_semen, 20, 0)
             if now_level >= 2:
                 dirty_text_cid = f"腹部整体精液污浊{str(now_level)}"
-                dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                # 是否显示完整污浊文本
+                if cache.all_system_setting.draw_setting[10]:
+                    dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                    dirty_text_context = _(' [腹部]:') + dirty_text_context + '\n'
+                else:
+                    dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                 now_part_text = f" {dirty_text_context}"
                 all_part_text_list.append(now_part_text)
 
-        # 如果有腔内透视，则显示当前生理周期与受精概率
-        if character_data.pl_ability.visual and character_data.talent[308]:
+        # 如果有腔内透视
+        if visual_flag >= 2:
             # 如果有奶水，则显示奶水量
             if target_character_data.pregnancy.milk:
                 lactation_text = _(" 乳汁量为{0}ml").format(target_character_data.pregnancy.milk)
                 all_part_text_list.append(lactation_text)
 
         # 如果有生理透视，则显示当前生理周期、受精概率、欲望值
-        if character_data.pl_ability.visual and character_data.talent[309]:
+        if visual_flag >= 3:
             # 生理周期文本
             reproduction_period = target_character_data.pregnancy.reproduction_period
             now_reproduction_period_type = game_config.config_reproduction_period[reproduction_period].type
@@ -400,14 +492,6 @@ class SeeCharacterBodyPanel:
             condom_text = _(" 用掉了{0}个避孕套，总精液量{1}ml").format(str(character_data.h_state.condom_count[0]), str(character_data.h_state.condom_count[1]))
             all_part_text_list.append(condom_text)
 
-        # 灌肠文本
-        if target_character_data.dirty.a_clean:
-            enemas_text = game_config.ui_text_data['dirty'][f"灌肠{str(target_character_data.dirty.a_clean)}"]
-            all_part_text_list.append(f" <{enemas_text}>")
-        if target_character_data.dirty.enema_capacity:
-            enema_capacity_text = game_config.ui_text_data['dirty'][f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"]
-            all_part_text_list.append(f" <{enema_capacity_text}>")
-
         # 香薰疗愈文本
         if target_character_data.sp_flag.aromatherapy != 0:
             aromatherapy_text = game_config.config_aromatherapy_recipes[target_character_data.sp_flag.aromatherapy].name
@@ -421,7 +505,7 @@ class SeeCharacterBodyPanel:
             for i in range(len(all_part_text_list)):
                 now_text = all_part_text_list[i]
                 all_part_text += now_text
-                if i % 6 == 0 and i != 0:
+                if i % 6 == 0 and i != 0 and now_text[-1] != "\n":
                     all_part_text += "\n"
                 # 如果文本的最后不是换行符，则加入换行符
                 if i == len(all_part_text_list) - 1 and all_part_text[-1] != "\n":

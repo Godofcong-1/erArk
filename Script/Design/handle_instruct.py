@@ -388,7 +388,10 @@ def handle_owner_abl_up():
 
 
 @add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("查看污浊情况"),
-              {constant_promise.Premise.HAVE_TARGET})
+              {
+                  constant_promise.Premise.HAVE_TARGET,
+                  constant_promise.Premise.TO_DO,
+                  })
 def see_dirty():
     """处理查看污浊情况指令"""
     cache.now_panel_id = constant.Panel.DIRTY

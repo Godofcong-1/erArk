@@ -1014,6 +1014,8 @@ class Status:
 
     cid: int
     """ 状态id """
+    en_name: str
+    """ 英文名称 """
     name: str
     """ 描述 """
     duration: int
@@ -1022,6 +1024,19 @@ class Status:
     """ 触发人 """
     tag: str
     """ 标签 """
+
+
+class Status_copy:
+    """ 状态描述配置 """
+
+    cid: int
+    """ 状态id """
+    en_name: str
+    """ 英文名称 """
+    name: str
+    """ 描述 """
+    introduce: str
+    """ 状态介绍 """
 
 
 class SunTime:

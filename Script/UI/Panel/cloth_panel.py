@@ -92,6 +92,9 @@ class SeeCharacterClothPanel:
                 # 当显示到下衣8的时候，换行
                 if clothing_type == 8 and now_text != "":
                     now_text += "\n"
+                # 或者在完整污浊显示时换行
+                elif now_text != "" and cache.all_system_setting.draw_setting[10]:
+                    now_text += "\n"
                 now_text += f"  [{type_name}]:"
                 # 如果有多个衣服，则依次显示
                 for cloth_id in target_character_data.cloth.cloth_wear[clothing_type]:
@@ -103,9 +106,16 @@ class SeeCharacterClothPanel:
                         target_character_data.dirty.cloth_semen = empty_dirty_data.cloth_semen
                     # 如果该部位有精液，则显示精液信息
                     if target_character_data.dirty.cloth_semen[clothing_type][1] != 0:
+                        dirty_text_context = ""
                         semen_level = target_character_data.dirty.cloth_semen[clothing_type][2]
                         dirty_text_cid = "{0}精液污浊{1}".format(_(type_name, revert_translation = True), str(semen_level))
-                        dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
+                        # 是否显示完整污浊文本，仅在最后一件衣服上显示
+                        if cache.all_system_setting.draw_setting[10] and cloth_id == target_character_data.cloth.cloth_wear[clothing_type][-1]:
+                            dirty_text_context = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                        elif cache.all_system_setting.draw_setting[10] and cloth_id != target_character_data.cloth.cloth_wear[clothing_type][-1]:
+                            continue
+                        else:
+                            dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         now_text += f"<semen>({dirty_text_context})</semen>"
             # 当显示到下衣8的时候，换行
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:

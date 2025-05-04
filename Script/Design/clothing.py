@@ -544,6 +544,62 @@ def locker_cloth_semen_to_wear_cloth_semen(character_id: int):
         clean_locker_semen(character_id)
 
 
+def get_exposed_body_parts(character_id: int, ignore_panties: bool = False):
+    """
+    获得角色暴露在外的身体部位
+    参数:
+        character_id (int): 角色id
+        ignore_panties (bool): 是否忽略内裤的覆盖效果，True表示忽略内裤
+    返回:
+        List[int]: 可暴露的身体部位序号列表
+    """
+    # 初始化返回列表
+    return_list = []
+    # 获取角色数据
+    character_data = cache.character_data[character_id]
+    
+    # 身体部位所对应的服装部位，-1表示无对应部位，列表表示多个对应部位
+    body_cloth_list = [0, 4, 4, [5, 6], 5, 7, 9, -1, 9, 9, -1, 11, -1, -1, -1, -1, [8, 9], 8, 5]
+
+    # 遍历所有身体部位
+    for body_part_cid in game_config.config_body_part:
+        # 如果角色没有该身体部位则跳过
+        if body_part_cid == 12 and not character_data.talent[113]:
+            continue
+        elif body_part_cid == 13 and not character_data.talent[112]:
+            continue
+        elif body_part_cid == 14 and not character_data.talent[111]:
+            continue
+
+        now_body_cloth_cid = body_cloth_list[body_part_cid]
+        # 判断对应项是否为多个服装部位
+        if isinstance(now_body_cloth_cid, list):
+            # 遍历所有对应的服装部位
+            for cloth_type in now_body_cloth_cid:
+                # 如果该服装为内裤且忽略内裤标记为True，则跳过检测这一项
+                if cloth_type == 9 and ignore_panties:
+                    continue
+                # 如果身体部位对应的服装非空，则跳出循环
+                if len(character_data.cloth.cloth_wear[cloth_type]):
+                    break
+            else:
+                # 如果所有对应部位均无服装，则将该身体部位加入返回列表
+                return_list.append(body_part_cid)
+        else:
+            # 如果对应部位为-1，表示无需服装，直接加入返回列表
+            if now_body_cloth_cid == -1:
+                return_list.append(body_part_cid)
+            # 如果对应服装为内裤且忽略内裤标记为True，则视为未穿着
+            elif now_body_cloth_cid == 9 and ignore_panties:
+                return_list.append(body_part_cid)
+            # 如果对应服装为空，则加入返回列表
+            elif len(character_data.cloth.cloth_wear[now_body_cloth_cid]) == 0:
+                return_list.append(body_part_cid)
+
+    # 返回可暴露的身体部位列表
+    return return_list
+
+
 '''
 不用的旧函数
 
