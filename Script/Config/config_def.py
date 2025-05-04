@@ -1026,7 +1026,7 @@ class Status:
     """ 标签 """
 
 
-class Status_copy:
+class Status_Introduce:
     """ 状态描述配置 """
 
     cid: int
@@ -1271,6 +1271,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:
