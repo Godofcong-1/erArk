@@ -142,6 +142,8 @@ class InScenePanel:
                 ask_list.append(return_text)
                 return_text = self.draw_show_and_hide_button(4, _("收起图片栏"), _("展开图片栏"))
                 ask_list.append(return_text)
+                return_text = self.draw_show_and_hide_button(5, _("收起详细污浊"), _("展开详细污浊"))
+                ask_list.append(return_text)
                 line_feed.draw()
                 line_draw = draw.LineDraw(".--", self.width)
                 line_draw.draw()
@@ -347,30 +349,47 @@ class InScenePanel:
             end_draw = time.time()
             logging.debug(f'指令部分绘制总时间为{end_draw - mid_draw}')
 
-    def draw_show_and_hide_button(self, index, hide_text, show_text):
-        """绘制显示与隐藏按钮"""
-        if cache.scene_panel_show[index]:
-            now_button = draw.CenterButton(
-                f" [{hide_text}] ",
-                hide_text,
-                (len(hide_text) + 4) * 2,
-                cmd_func=self.show_and_hide_panel,
-                args=(index,),
-            )
-        else:
-            now_button = draw.CenterButton(
-                f" [{show_text}] ",
-                show_text,
-                (len(show_text) + 4) * 2,
-                cmd_func=self.show_and_hide_panel,
-                args=(index,),
-            )
+    def draw_show_and_hide_button(self, index: int, hide_text: str, show_text: str) -> str:
+        """
+        根据索引绘制显示或隐藏按钮
+        参数:
+            index (int): 面板索引
+            hide_text (str): 隐藏按钮文本
+            show_text (str): 显示按钮文本
+        返回:
+            str: 按钮返回文本
+        功能:
+            根据当前状态绘制对应的按钮，并返回按钮执行时的返回文本
+        """
+        # 判断当前面板状态（详细污浊单独处理）
+        condition = cache.all_system_setting.draw_setting[10] if index == 5 else cache.scene_panel_show[index]
+        # 根据状态确定按钮显示文本
+        button_text = hide_text if condition else show_text
+        # 计算按钮宽度，宽度与文本长度相关
+        button_width = (len(button_text) + 4) * 2
+        # 创建并绘制中心按钮对象
+        now_button = draw.CenterButton(
+            f" [{button_text}] ",
+            button_text,
+            button_width,
+            cmd_func=self.show_and_hide_panel,
+            args=(index,),
+        )
         now_button.draw()
         return now_button.return_text
 
-    def show_and_hide_panel(self, index):
-        """显示与隐藏面板栏"""
-        if cache.scene_panel_show[index]:
-            cache.scene_panel_show[index] = False
+    def show_and_hide_panel(self, index: int) -> None:
+        """
+        根据索引显示或隐藏面板栏
+        参数:
+            index (int): 面板索引
+        返回:
+            None
+        功能:
+            切换相应面板的显示状态
+        """
+        # 切换面板状态（详细污浊单独处理）
+        if index == 5:
+            cache.all_system_setting.draw_setting[10] = not cache.all_system_setting.draw_setting[10]
         else:
-            cache.scene_panel_show[index] = True
+            cache.scene_panel_show[index] = not cache.scene_panel_show[index]
