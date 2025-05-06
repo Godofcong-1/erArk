@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,140,0,in_toilet_or_dormitory,{Name}脱下了裤子，对准马桶，开始小便
+0,140,0,in_toilet_or_dormitory,{Name}脱下了裤子，坐在马桶上，开始小便
 1,140,0,in_toilet_or_dormitory,{Name}蹲在马桶上，开始小便
 2,140,0,in_toilet_or_dormitory,{Name}轻轻地走进厕所，解开裤子，开始小便
 3,140,0,in_toilet_or_dormitory,{Name}在马桶上坐下，放松身体，小便流出
