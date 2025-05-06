@@ -1260,10 +1260,10 @@ def handle_self_need_health_check_now(character_id: int) -> int:
 def handle_first_kiss_in_today(character_id: int) -> int:
     """
     自己今天失去了初吻
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
     """
     character_data = cache.character_data[character_id]
     if game_time.count_day_for_datetime(character_data.first_record.first_kiss_time, cache.game_time) == 0:
@@ -1275,10 +1275,10 @@ def handle_first_kiss_in_today(character_id: int) -> int:
 def handle_first_sex_in_today(character_id: int) -> int:
     """
     自己今天失去了V处女
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
     """
     character_data = cache.character_data[character_id]
     if game_time.count_day_for_datetime(character_data.first_record.first_sex_time, cache.game_time) == 0:
@@ -1290,15 +1290,63 @@ def handle_first_sex_in_today(character_id: int) -> int:
 def handle_first_a_sex_in_today(character_id: int) -> int:
     """
     自己今天失去了A处女
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
     """
     character_data = cache.character_data[character_id]
     if game_time.count_day_for_datetime(character_data.first_record.first_a_sex_time, cache.game_time) == 0:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_FIRST_KISS_IN_TODAY)
+def handle_target_first_kiss_in_today(character_id: int) -> int:
+    """
+    校验交互对象今天是否失去了初吻
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的初吻函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_kiss_in_today(target_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_FIRST_SEX_IN_TODAY)
+def handle_target_first_sex_in_today(character_id: int) -> int:
+    """
+    校验交互对象今天是否失去了V处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的V处女函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_sex_in_today(target_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_FIRST_A_SEX_IN_TODAY)
+def handle_target_first_a_sex_in_today(character_id: int) -> int:
+    """
+    校验交互对象今天是否失去了A处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的A处女函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_a_sex_in_today(target_id)
 
 
 @add_premise(constant_promise.Premise.IS_MAN)
