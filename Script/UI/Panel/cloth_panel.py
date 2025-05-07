@@ -90,12 +90,8 @@ class SeeCharacterClothPanel:
                     if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
                 # 当显示到下衣8的时候，换行
-                if clothing_type == 8 and now_text != "":
+                if clothing_type == 8 and now_text != "" and now_text[-1] != "\n":
                     now_text += "\n"
-                # 或者在完整污浊显示时换行
-                elif now_text != "" and cache.all_system_setting.draw_setting[10]:
-                    if clothing_type > 1 and target_character_data.dirty.cloth_semen[clothing_type - 1][2] != 0:
-                        now_text += "\n"
                 now_text += f"  [{type_name}]:"
                 # 如果有多个衣服，则依次显示
                 for cloth_id in target_character_data.cloth.cloth_wear[clothing_type]:
@@ -118,9 +114,14 @@ class SeeCharacterClothPanel:
                         else:
                             dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         now_text += f"<semen>({dirty_text_context})</semen>"
-            # 当显示到下衣8的时候，换行
+
+            # 当显示到下衣8，且此时没有衣服的时候，换行
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:
                 now_text += "\n"
+            # 或者在完整污浊显示时换行
+            elif now_text != "" and now_text[-1] != "\n" and cache.all_system_setting.draw_setting[10]:
+                if target_character_data.dirty.cloth_semen[clothing_type][2] != 0:
+                    now_text += "\n"
             # 真空的胸衣和内裤单独显示
             if clothing_type in {6, 9} and not len(target_character_data.cloth.cloth_wear[clothing_type]):
                 if not cache.debug_mode:
@@ -128,7 +129,9 @@ class SeeCharacterClothPanel:
                     if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
                 now_text += _("  [{0}]: 真空").format(type_name)
-        now_text += "\n"
+        # 穿着服装的显示最后，如果不是换行符，则补个换行符
+        if now_text != "" and now_text[-1] != "\n":
+            now_text += "\n"
         # cloth_text_list.append(now_text)
 
         no_cloth_flag = True
