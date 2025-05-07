@@ -2451,12 +2451,13 @@ def character_work_maintenance_2(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.MAINTENANCE_FACILITIES
-    need_time = 60
+    need_time = 5
     character_data.state = constant.CharacterStatus.STATUS_MAINTENANCE_FACILITIES
     # 获取当前位置
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     # 检查是否在损坏设施数据中
     if scene_path_str in cache.rhodes_island.facility_damage_data:
+        need_time = 60
         # 1级损坏，10分钟修复
         if cache.rhodes_island.facility_damage_data[scene_path_str] == 1:
             need_time = 10
@@ -2468,6 +2469,7 @@ def character_work_maintenance_2(character_id: int):
     ability_adjust = 0.05 * ability_level
     ability_adjust = max(ability_adjust, 0.5)
     need_time = int(need_time * (1 - ability_adjust))
+    need_time = max(need_time, 1)
     # 记录维修时间
     character_data.behavior.duration = need_time
 
