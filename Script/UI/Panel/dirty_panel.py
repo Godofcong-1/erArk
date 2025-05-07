@@ -321,24 +321,8 @@ class SeeCharacterBodyPanel:
                 continue
 
             # 然后腔内透视判定
-            if visual_flag <= 1:
-                if i in {7,9,15}:
-                    continue
-                # 处子血判定
-                elif i == 6:
-                    if not character_data.talent[0]:
-                        now_day = cache.game_time.day
-                        first_day = character_data.first_record.first_sex_time.day
-                        if now_day == first_day:
-                            # 是否显示完整污浊文本
-                            dirty_text_cid = "破处血1"
-                            if cache.all_system_setting.draw_setting[10]:
-                                dirty_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
-                                dirty_text += '\n'
-                                all_part_text_list.append(f" {dirty_text}")
-                            else:
-                                dirty_text = game_config.ui_text_data['dirty'][dirty_text_cid]
-                                all_part_text_list.append(f" <{dirty_text}>")
+            if visual_flag <= 1 and i in {7,9,15}:
+                continue
 
             # 爱液文本
             if i == 6 and target_character_data.status_data[8]:
@@ -359,6 +343,22 @@ class SeeCharacterBodyPanel:
                 else:
                     now_part_text = game_config.ui_text_data['dirty'][text_index]
                 all_part_text_list.append(f" {now_part_text}")
+
+            # 处子血判定
+            if i == 6 and visual_flag >= 2:
+                if not character_data.talent[0]:
+                    now_day = cache.game_time.day
+                    first_day = character_data.first_record.first_sex_time.day
+                    if now_day == first_day:
+                        # 是否显示完整污浊文本
+                        dirty_text_cid = "破处血1"
+                        if cache.all_system_setting.draw_setting[10]:
+                            dirty_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                            dirty_text += '\n'
+                            all_part_text_list.append(f"  [破处]:{dirty_text}")
+                        else:
+                            dirty_text = game_config.ui_text_data['dirty'][dirty_text_cid]
+                            all_part_text_list.append(f" <{dirty_text}>")
 
             # 尿液污浊
             if i == 9:
