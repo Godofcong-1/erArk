@@ -424,12 +424,12 @@ class SeeCharacterBodyPanel:
             text_index = f"灌肠液量{str(target_character_data.dirty.enema_capacity)}"
             # 是否显示完整污浊文本
             if cache.all_system_setting.draw_setting[10]:
-                enema_capacity_text = game_config.ui_text_data['dirty_full'][dirty_text_cid]
+                enema_capacity_text = game_config.ui_text_data['dirty_full'][text_index]
                 enema_capacity_text = f"<semen>{enema_capacity_text}</semen>\n"
                 enema_capacity_text = _(' [灌肠]:') + enema_capacity_text
                 all_part_text_list.append(f" {enema_capacity_text}")
             else:
-                enema_capacity_text = game_config.ui_text_data['dirty'][dirty_text_cid]
+                enema_capacity_text = game_config.ui_text_data['dirty'][text_index]
                 all_part_text_list.append(f" <{enema_capacity_text}>")
 
         # 如果有腔内透视

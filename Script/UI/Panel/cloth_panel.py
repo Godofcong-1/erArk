@@ -94,7 +94,8 @@ class SeeCharacterClothPanel:
                     now_text += "\n"
                 # 或者在完整污浊显示时换行
                 elif now_text != "" and cache.all_system_setting.draw_setting[10]:
-                    now_text += "\n"
+                    if clothing_type > 1 and target_character_data.dirty.cloth_semen[clothing_type - 1][2] != 0:
+                        now_text += "\n"
                 now_text += f"  [{type_name}]:"
                 # 如果有多个衣服，则依次显示
                 for cloth_id in target_character_data.cloth.cloth_wear[clothing_type]:
