@@ -73,11 +73,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     settle_tired(character_id, true_add_time)
 
     # 休息时回复体力、气力
-    if now_character_data.state == constant.CharacterStatus.STATUS_REST:
+    if now_character_data.behavior.behavior_id == constant.Behavior.REST:
         settle_rest(character_id, true_add_time)
 
     # 睡觉时大量减少疲劳值，增加熟睡值，回复体力、气力
-    elif now_character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    elif now_character_data.behavior.behavior_id == constant.Behavior.SLEEP:
         settle_sleep(character_id, true_add_time)
 
     # 结算尿意值
@@ -383,10 +383,10 @@ def settle_sleep_h(character_id: int, true_add_time: int) -> None:
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
-    if target_data.state == constant.CharacterStatus.STATUS_SLEEP and target_data.sp_flag.unconscious_h == 1:
+    if target_data.behavior.behavior_id == constant.Behavior.SLEEP and target_data.sp_flag.unconscious_h == 1:
         # 如果是等待指令或安眠药中则无事发生
         if (
-            now_character_data.state == constant.CharacterStatus.STATUS_WAIT or
+            now_character_data.behavior.behavior_id == constant.Behavior.WAIT or
             now_character_data.h_state.body_item[9][1] == 1
         ):
             # 赋值为2来规避吵醒判定

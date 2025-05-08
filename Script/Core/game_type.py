@@ -1365,8 +1365,8 @@ class Cache:
         """ 玩家指令输入记录（最大20）"""
         self.daily_intsruce: List[str] = []
         """ 每日指令输入记录 """
-        self.pl_pre_status_instruce: List[int] = []
-        """ 玩家过去状态指令记录，最大长度为10 """
+        self.pl_pre_behavior_instruce: List[int] = []
+        """ 玩家过去行为指令记录，最大长度为10 """
         self.taiggered_event_record: Set = set()
         """ 触发过的事件记录 """
         self.today_taiggered_event_record: Set = set()

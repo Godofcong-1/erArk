@@ -334,8 +334,8 @@ def handle_instruct_data(
             target_character_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
             target_character_data.action_info.interacting_character_end_info = [character_id, end_time]
         # 娱乐和工作类的指令则进行一次设施损坏检测
-        if behavior_id in game_config.config_status:
-            status_data = game_config.config_status[behavior_id]
+        if behavior_id in game_config.config_behavior:
+            status_data = game_config.config_behavior[behavior_id]
             if _('娱乐') in status_data.tag or _('工作') in status_data.tag:
                 constant.settle_behavior_effect_data[1751](character_id, add_time, change_data, now_time)
     # 进行二段结算
@@ -750,16 +750,16 @@ def extra_exp_settle(
     # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1
     if character_id == 0 and handle_premise.handle_hidden_sex_mode_ge_1(character_id):
         # 获取当前行为
-        now_state_id = character_data.state
-        status_data = game_config.config_status[now_state_id]
+        now_behavior_id = character_data.behavior.behavior_id
+        behavior_data = game_config.config_behavior[now_behavior_id]
         # 猥亵或性爱指令
         add_flag = False
         for tag in {_("猥亵"), _("性爱")}:
-            if tag in status_data.tag:
+            if tag in behavior_data.tag:
                 add_flag = True
                 break
         # 非等待
-        if now_state_id == constant.CharacterStatus.STATUS_WAIT:
+        if now_behavior_id == constant.Behavior.WAIT:
             add_flag = False
         # 增加隐奸经验
         if add_flag:

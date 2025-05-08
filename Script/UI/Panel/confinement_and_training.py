@@ -359,7 +359,7 @@ def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_sel
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False, skip_h_judge=True)
             # 进一步检查是否可用
             if filter_judge:
-                status_data = game_config.config_status[status_id]
+                status_data = game_config.config_behavior[status_id]
                 status_tag_list = status_data.tag
                 status_tag_list = status_data.tag.split("|")
                 # 跳过仅玩家可用的指令
@@ -418,8 +418,8 @@ def get_state_id_of_sex_assistant() -> int:
         # 获取玩家当前的状态id
         pl_character_data = cache.character_data[0]
         state_id = pl_character_data.behavior.behavior_id
-        if state_id in game_config.config_status:
-            state_data = game_config.config_status[state_id]
+        if state_id in game_config.config_behavior:
+            state_data = game_config.config_behavior[state_id]
             # 遍历部位列表，获取存在与tag中的部位
             part_str_list = ["U", "W", "V", "A", "C", "B", "N"]
             now_part = ""
@@ -712,7 +712,7 @@ class Confinement_And_Training_Manage_Panel:
             count = 0
             for status_id in new_status_id_list:
                 # 获取状态数据
-                status_data = game_config.config_status[status_id]
+                status_data = game_config.config_behavior[status_id]
                 # 获取指令id
                 instruct_id = constant.state_id_to_instruct_id[status_id]
                 # 绘制格式

@@ -185,8 +185,8 @@ def get_second_behavior_zero(second_behavior_dict) -> dict:
     """
     将二段行为全项归零，读取配置文件中的二段行为，将其归零
     """
-    for status_cid in game_config.config_status:
-        if "二段结算" in game_config.config_status[status_cid].tag:
+    for status_cid in game_config.config_behavior:
+        if "二段结算" in game_config.config_behavior[status_cid].tag:
             second_behavior_dict[status_cid] = 0
     return second_behavior_dict
 
@@ -271,8 +271,7 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     """
     重置H状态结构体
     """
-    zero_h_state = game_type.BODY_H_STATE()
-    h_state_data = zero_h_state
+    h_state_data = game_type.BODY_H_STATE()
 
     # 身体道具
     for i in game_config.config_h_item_index:

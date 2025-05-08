@@ -256,7 +256,7 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
             # 如果没有阴茎状态，则不处理
             if state_id == -1:
                 return
-            status_data = game_config.config_status[state_id]
+            status_data = game_config.config_behavior[state_id]
             # 如果为肛交，则清零阴茎状态
             if "A" in status_data.tag:
                 now_template_data[0]["penis"] = [-1, -1]

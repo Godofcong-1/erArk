@@ -1172,9 +1172,9 @@ def handle_first_sex(
     item_flag = False
 
     # 获取玩家最后一个指令的中文名
-    status_id = cache.pl_pre_status_instruce[-1]
-    status_data = game_config.config_status[status_id]
-    instruct_name = status_data.name
+    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    behavior_data = game_config.config_behavior[behavior_id]
+    instruct_name = behavior_data.name
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -1260,9 +1260,9 @@ def handle_first_a_sex(
         item_flag = True
 
     # 获取玩家最后一个指令的中文名
-    status_id = cache.pl_pre_status_instruce[-1]
-    status_data = game_config.config_status[status_id]
-    instruct_name = status_data.name
+    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    behavior_data = game_config.config_behavior[behavior_id]
+    instruct_name = behavior_data.name
 
     if character_data.talent[5] == 1 and (not item_flag):
         character_data.talent[5] = 0
@@ -2740,7 +2740,7 @@ def handle_interrupt_target_activity(
         return
     if character_data.target_character_id == 0:
         return
-    # if target_data.state == constant.CharacterStatus.STATUS_DEAD:
+    # if target_data.behavior.behavior_id == constant.Behavior.DEAD:
     #     return
     if target_data.behavior.behavior_id:
         if target_data.behavior.start_time <= character_data.behavior.start_time:
@@ -2989,7 +2989,7 @@ def handle_target_to_masturebate(
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 检测是否在自慰
-                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                if other_character_data.behavior.behavior_id == constant.Behavior.MASTUREBATE:
                     character_data.target_character_id = chara_id
                     break
 
@@ -7636,7 +7636,7 @@ def handle_teach_add_just(
             else:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 如果对方在听课
-                if other_character_data.state == constant.CharacterStatus.STATUS_ATTENT_CLASS:
+                if other_character_data.behavior.behavior_id == constant.Behavior.ATTENT_CLASS:
 
                     # 增加习得和学识经验
                     base_chara_state_common_settle(chara_id, add_time, 9, ability_level = character_data.ability[45], change_data_to_target_change = change_data)

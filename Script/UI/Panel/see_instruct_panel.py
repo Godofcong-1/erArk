@@ -318,8 +318,10 @@ class SeeInstructPanel:
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = f"{instruct_name}"
         # 如果是重复指令，则加上连续标记
-        if len(cache.pl_pre_status_instruce) >= 2:
-            if cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+        if len(cache.pl_pre_behavior_instruce):
+            last_behavior_id = cache.pl_pre_behavior_instruce[-1]
+            last_behavior_data = game_config.config_behavior[last_behavior_id]
+            if instruct_name == last_behavior_data.name:
                 now_draw_1.text += _("(连续)")
         now_draw_1.text += "\n"
         now_draw_1.draw()
@@ -342,10 +344,6 @@ class SeeInstructPanel:
         instruct_name = option_text
         now_draw_1 = draw.NormalDraw()
         now_draw_1.text = f"{instruct_name}"
-        # 如果是重复指令，则加上连续标记
-        if len(cache.pl_pre_status_instruce) >= 2:
-            if cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
-                now_draw_1.text += _("(连续)")
         now_draw_1.text += "\n"
         now_draw_1.draw()
         line = draw.LineDraw("-", self.width)
@@ -355,4 +353,3 @@ class SeeInstructPanel:
         pl_character_data.event.event_id = event_id
         pl_character_data.event.chara_diy_event_flag = True
         handle_instruct.handle_instruct(constant.Instruct.CHARA_DIY_INSTRUCT)
-

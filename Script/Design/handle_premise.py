@@ -78,7 +78,7 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     # 无意识模式判定
     if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
         # 有技艺tag的行为则直接通过
-        status_data = game_config.config_status[behavior_id]
+        status_data = game_config.config_behavior[behavior_id]
         if _("技艺") in status_data.tag:
             unconscious_pass_flag = True
         # 需要前提里有无意识的判定
@@ -281,12 +281,12 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     # 前指令的单独计算
     if premise_all_value_list[1][0] == "I":
         if "Instruct" in premise_all_value_list[1]:
-            len_pre_status = len(cache.pl_pre_status_instruce)
+            len_pre_behavior = len(cache.pl_pre_behavior_instruce)
             type_son_id = int(premise_all_value_list[1].split("|")[1])
             # 指令计数
             count = 0
-            for i in range(len_pre_status):
-                last_cmd = cache.pl_pre_status_instruce[len_pre_status - 1 - i]
+            for i in range(len_pre_behavior):
+                last_cmd = cache.pl_pre_behavior_instruce[len_pre_behavior - 1 - i]
                 # 跳过当前指令
                 if count == 0:
                     count += 1
@@ -8913,9 +8913,9 @@ def handle_last_cmd_deep_throat(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if len(cache.pl_pre_status_instruce):
-        last_state = cache.pl_pre_status_instruce[-1]
-        if last_state == constant.CharacterStatus.STATUS_DEEP_THROAT:
+    if len(cache.pl_pre_behavior_instruce):
+        last_behavior = cache.pl_pre_behavior_instruce[-1]
+        if last_behavior == constant.Behavior.DEEP_THROAT:
             return 1
     return 0
 
@@ -18913,10 +18913,10 @@ def handle_pl_action_sleep(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[0]
-    last_state = character_data.last_state[-1]
-    if last_state == constant.CharacterStatus.STATUS_SLEEP:
-        return 1
+    if len(cache.pl_pre_behavior_instruce):
+        last_behavior = cache.pl_pre_behavior_instruce[-1]
+        if last_behavior == constant.Behavior.SLEEP:
+            return 1
     return 0
 
 
@@ -18929,11 +18929,7 @@ def handle_pl_action_not_sleep(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[0]
-    last_state = character_data.last_state[-1]
-    if last_state == constant.CharacterStatus.STATUS_SLEEP:
-        return 0
-    return 1
+    return not handle_pl_action_sleep(character_id)
 
 
 @add_premise(constant_promise.Premise.ACTION_SLEEP)
@@ -18946,7 +18942,7 @@ def handle_action_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return 1
     return 0
 
@@ -18961,7 +18957,7 @@ def handle_action_not_sleep(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return 0
     return 1
 
@@ -18977,7 +18973,7 @@ def handle_t_action_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return 1
     return 0
 
@@ -18993,7 +18989,7 @@ def handle_t_action_not_sleep(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    if target_data.state == constant.CharacterStatus.STATUS_SLEEP:
+    if target_data.behavior.behavior_id == constant.Behavior.SLEEP:
         return 0
     return 1
 
@@ -19008,7 +19004,7 @@ def handle_action_rest(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_REST:
+    if character_data.behavior.behavior_id == constant.Behavior.REST:
         return 1
     return 0
 
@@ -19037,7 +19033,7 @@ def handle_action_move(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+    if character_data.behavior.behavior_id == constant.Behavior.MOVE:
         return 1
     return 0
 

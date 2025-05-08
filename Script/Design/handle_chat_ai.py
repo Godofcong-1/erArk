@@ -50,7 +50,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         # 判断是否设置了指令类型
         if cache.ai_setting.ai_chat_setting[2] == 0:
             safe_flag = False
-            status_data = game_config.config_status[behavior_id]
+            status_data = game_config.config_behavior[behavior_id]
             # 判断是否是安全标签
             for safe_tag in ["日常", "娱乐", "工作"]:
                 if safe_tag in status_data.tag:
@@ -213,7 +213,7 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
     Location = character_data.position[-1]
     Season = game_time.get_month_text()
     time_str = game_time.get_day_and_time_text()
-    Behavior_Name = game_config.config_status[behavior_id].name
+    Behavior_Name = game_config.config_behavior[behavior_id].name
 
     # 玩家与NPC的区分
     pl_name = Name

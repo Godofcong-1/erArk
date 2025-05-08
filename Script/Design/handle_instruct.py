@@ -97,7 +97,7 @@ def chara_handle_instruct_common_settle(
         state_id: int,
         character_id: int = 0,
         target_character_id: int = 0,
-        behevior_id: int = 0,
+        behavior_id: int = 0,
         duration: int = 0,
         judge: str = "",
         game_update_flag: bool = False,
@@ -146,14 +146,15 @@ def chara_handle_instruct_common_settle(
         elif judge_list[0] == -1:
             return 0
     character_data.state = state_id
-    status_data = game_config.config_status[state_id]
     # 如果行动id为0，则行动id等于状态id
-    if behevior_id == 0:
-        behevior_id = state_id
-    character_data.behavior.behavior_id = behevior_id
+    if behavior_id == 0:
+        behavior_id = state_id
+    # 获取行为数据
+    behavior_data = game_config.config_behavior[behavior_id]
+    character_data.behavior.behavior_id = behavior_id
     # 查表获取行动持续时间
     if duration == 0:
-        duration = status_data.duration
+        duration = behavior_data.duration
         # 如果持续时间小于等于0，则持续时间为1
         if duration <= 0:
             duration = 1

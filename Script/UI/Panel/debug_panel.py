@@ -248,7 +248,7 @@ class TALK_QUICK_TEST:
                     draw_text += _("  博士当前交互对象是该角色(√)\n")
                 # 指令状态
                 now_behavior_id = game_config.config_talk[full_talk_id].behavior_id
-                draw_text += _("\n指令状态：{0}\n").format(game_config.config_status[now_behavior_id].name)
+                draw_text += _("\n指令状态：{0}\n").format(game_config.config_behavior[now_behavior_id].name)
                 # 判断触发人与交互对象
                 draw_text += _("\n触发人与交互对象：\n")
                 if "sys_0" in game_config.config_talk_premise_data[full_talk_id]:
@@ -258,13 +258,13 @@ class TALK_QUICK_TEST:
                     draw_text += _("  触发人：NPC\n")
                     start_chara_id = target_chara_id
                 else:
-                    if game_config.config_status[now_behavior_id].trigger == "npc":
+                    if game_config.config_behavior[now_behavior_id].trigger == "npc":
                         draw_text += _("  触发人：未填写，本测试中默认选择为NPC\n")
                         start_chara_id = target_chara_id
                     else:
                         draw_text += _("  触发人：未填写，本测试中默认选择为博士\n")
                         start_chara_id = 0
-                if "二段结算" in game_config.config_status[now_behavior_id].tag:
+                if "二段结算" in game_config.config_behavior[now_behavior_id].tag:
                     draw_text += _("  交互对象：同触发人，二段结算的交互对象只能是触发人自己\n")
                     end_chara_id = start_chara_id
                 elif "sys_4" in game_config.config_talk_premise_data[full_talk_id]:
@@ -1082,7 +1082,7 @@ class Debug_Panel:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.second_behavior:
-                    name = game_config.config_status[cid].name
+                    name = game_config.config_behavior[cid].name
                     info_text += f"({cid}){name}:{target_data.second_behavior[cid]}  "
                     if cid % 5 == 0:
                         info_text += "\n"

@@ -107,17 +107,17 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     if character_id == 0:
         # 记录玩家的指令文本
         cache.daily_intsruce += character_instruct_record(0)
-        cache.pl_pre_status_instruce.append(character_data.state)
-        if len(cache.pl_pre_status_instruce) > 10:
-            cache.pl_pre_status_instruce.pop(0)
+        cache.pl_pre_behavior_instruce.append(character_data.behavior.behavior_id)
+        if len(cache.pl_pre_behavior_instruce) > 10:
+            cache.pl_pre_behavior_instruce.pop(0)
 
-        if character_data.state == constant.CharacterStatus.STATUS_ARDER:
+        if character_data.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY:
             cache.over_behavior_character.add(character_id)
             # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
             # 结算玩家在移动时同场景里的NPC的跟随情况
-            if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+            if character_data.behavior.behavior_id == constant.Behavior.MOVE:
                 handle_npc_ai.judge_same_position_npc_follow()
             # 在玩家行动前的前置结算
             judge_before_pl_behavior()
@@ -144,13 +144,13 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         # if character_data.name == "阿米娅":
         #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
-        if character_data.state == constant.CharacterStatus.STATUS_ARDER:
+        if character_data.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY:
             # 寻找可用行动
             handle_npc_ai.find_character_target(character_id, now_time)
             # 结算状态与事件
             judge_character_status(character_id)
         # 移动情况下也直接结算
-        elif character_data.state == constant.CharacterStatus.STATUS_MOVE:
+        elif character_data.behavior.behavior_id == constant.Behavior.MOVE:
             # 结算状态与事件
             judge_character_status(character_id)
         # 刷新会根据时间即时增加的角色数值
@@ -282,7 +282,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
         character_data.behavior.start_time = now_time
         character_data.behavior.duration = 1
         # 等待状态下则不转为空闲状态，直接跳出
-        if character_data.state == constant.CharacterStatus.STATUS_WAIT:
+        if character_data.behavior.behavior_id == constant.Behavior.WAIT:
             return 1
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}的add_time = 0，已重置为当前时间：start_time = {character_data.behavior.start_time}")
@@ -301,7 +301,7 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
             if len(character_data.action_info.past_move_position_list) > 10:
                 character_data.action_info.past_move_position_list.pop(0)
         # 移动状态下则不完全重置行动数据，保留最终目标数据
-        if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+        if character_data.behavior.behavior_id == constant.Behavior.MOVE:
             tem_move_final_target = character_data.behavior.move_final_target
             character_data.behavior = game_type.Behavior()
             character_data.behavior.move_final_target = tem_move_final_target
@@ -338,7 +338,7 @@ def character_instruct_record(character_id: int) -> str:
     now_time = character_data.behavior.start_time.strftime("%H:%M")
     instruct_text += _("{0}在{1}，").format(name, now_time)
     # 移动指令则记录移动路径
-    if character_data.state == constant.CharacterStatus.STATUS_MOVE:
+    if character_data.behavior.behavior_id == constant.Behavior.MOVE:
         move_src = character_data.behavior.move_src[-1]
         if move_src == "0":
             move_src =  character_data.behavior.move_src[-2] + "出口"
@@ -349,7 +349,7 @@ def character_instruct_record(character_id: int) -> str:
             instruct_text += _("从{0}移动至{1}\n").format(move_src, move_target)
     # 其他指令则记录状态
     else:
-        now_chara_state = game_config.config_status[character_data.state].name
+        now_chara_state = game_config.config_behavior[character_data.state].name
         # 如果是交互指令则记录交互对象
         if character_data.target_character_id != character_id:
             target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -378,7 +378,7 @@ def judge_before_pl_behavior():
             target_character_data.h_state.shoot_position_cloth = -1
 
     # 睡眠时间在6h及以上的额外恢复
-    if pl_character_data.state == constant.CharacterStatus.STATUS_SLEEP and pl_character_data.behavior.duration >= 360:
+    if pl_character_data.behavior.behavior_id == constant.Behavior.SLEEP and pl_character_data.behavior.duration >= 360:
         sleep_settle.refresh_temp_semen_max() # 刷新玩家临时精液上限
 
     # 结算上次进行聊天的时间，以重置聊天计数器#

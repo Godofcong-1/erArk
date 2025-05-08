@@ -89,8 +89,8 @@ class Physical_Check_And_Manage_Panel:
         """ 绘制的文本列表 """
         self.pl_character_data = cache.character_data[0]
         """ 玩家的角色数据 """
-        self.done_check_status_id_set = set()
-        """ 已经检查过的状态id集合 """
+        self.done_check_behavior_id_set = set()
+        """ 已经检查过的行为id集合 """
 
     def draw(self):
         """绘制对象"""
@@ -110,7 +110,7 @@ class Physical_Check_And_Manage_Panel:
 
             # 如果对象已经在体检数据中，则直接显示体检数据
             if target_character_id in cache.rhodes_island.today_physical_examination_chara_id_dict:
-                self.done_check_status_id_set = cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id]
+                self.done_check_behavior_id_set = cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id]
                 button1_text = _("[001]检查身体情况（今日已体检）")
                 button1_draw = draw.NormalDraw()
                 button1_draw.text = button1_text
@@ -137,7 +137,7 @@ class Physical_Check_And_Manage_Panel:
                 button1_draw.width = self.width
                 button1_draw.draw()
 
-            if len(self.done_check_status_id_set) > 0:
+            if len(self.done_check_behavior_id_set) > 0:
                 button2_text = _("[002]对{0}进行身体管理").format(target_character_data.name)
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -183,7 +183,7 @@ class Physical_Check_And_Manage_Panel:
                 button4_draw.draw()
                 return_list.append(button4_draw.return_text)
 
-            if len(self.done_check_status_id_set) > 0:
+            if len(self.done_check_behavior_id_set) > 0:
                 button11_text = _("[011]查看检查报告")
                 button11_draw = draw.LeftButton(
                     _(button11_text),
@@ -217,10 +217,10 @@ class Physical_Check_And_Manage_Panel:
     def settle_finish_physical_check(self, target_character_id: int):
         """结算完成的体检"""
         # 如果已经体检了
-        if len(self.done_check_status_id_set) > 0:
+        if len(self.done_check_behavior_id_set) > 0:
             target_character_data = cache.character_data[target_character_id]
             # 记录到今日已体检角色数据中
-            cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id] = self.done_check_status_id_set
+            cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id] = self.done_check_behavior_id_set
             # 加入周期内已体检角色名单
             cache.rhodes_island.examined_operator_ids.add(target_character_id)
             # 从等待体检名单中移除
@@ -271,7 +271,7 @@ class Physical_Check_And_Manage_Panel:
             py_cmd.clr_cmd()
             # 获取医术等级与可用次数，次数为(等级+1)*4-已使用次数
             now_ability_lv = self.pl_character_data.ability[46]
-            done_times = len(self.done_check_status_id_set)
+            done_times = len(self.done_check_behavior_id_set)
             now_ability_times = (now_ability_lv + 1) * 4 - done_times
             # 绘制提示信息
             info_text = _("\n可以进行的检查项目/已进行的检查项目：{0}/{1}（每级医术技能+4）\n").format(now_ability_times, done_times)
@@ -281,34 +281,34 @@ class Physical_Check_And_Manage_Panel:
             info_draw.draw()
             # 检索所有的身体检查状态
             count = 0
-            for status_id in range(850, 899):
-                if status_id in game_config.config_status:
+            for behavior_id in range(850, 899):
+                if behavior_id in game_config.config_behavior:
                     count += 1
                     done_flag = False
                     # 已经检查过的不可用
-                    if status_id in self.done_check_status_id_set:
+                    if behavior_id in self.done_check_behavior_id_set:
                         done_flag = True
                     # 部分指令需要有前置指令才能使用
-                    if status_id in cmd_able_dict and cmd_able_dict[status_id] not in self.done_check_status_id_set:
+                    if behavior_id in cmd_able_dict and cmd_able_dict[behavior_id] not in self.done_check_behavior_id_set:
                         continue
                     # 部分指令需要未破处则不可用
-                    if (status_id == 874 or status_id == 875) and target_character_data.talent[0]:
+                    if (behavior_id == 874 or behavior_id == 875) and target_character_data.talent[0]:
                         done_flag = True
-                    elif status_id == 877 and target_character_data.talent[1]:
+                    elif behavior_id == 877 and target_character_data.talent[1]:
                         done_flag = True
                     # 部分指令需要有对应部位的器官才能使用
-                    if status_id in body_talent_map:
-                        talent_id = body_talent_map[status_id]
+                    if behavior_id in body_talent_map:
+                        talent_id = body_talent_map[behavior_id]
                         if not target_character_data.talent[talent_id]:
                             continue
                     # 如果使用次数已经用完，则不可用
                     if now_ability_times <= 0:
                         done_flag = True
                     # 绘制按钮
-                    status_data = game_config.config_status[status_id]
+                    status_data = game_config.config_behavior[behavior_id]
                     status_text = f"[{str(count).rjust(2,'0')}]：{status_data.name}"
                     if done_flag:
-                        if status_id in self.done_check_status_id_set:
+                        if behavior_id in self.done_check_behavior_id_set:
                             status_text += _("(已检查)")
                         status_draw = draw.NormalDraw()
                         status_draw.text = status_text
@@ -321,7 +321,7 @@ class Physical_Check_And_Manage_Panel:
                             _(str(count)),
                             window_width,
                             cmd_func=self.settle_target_physical_status,
-                            args=(status_id),
+                            args=(behavior_id),
                         )
                         status_draw.draw()
                         return_list.append(status_draw.return_text)
@@ -337,13 +337,13 @@ class Physical_Check_And_Manage_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def settle_target_physical_status(self, status_id: int):
+    def settle_target_physical_status(self, behavior_id: int):
         """结算目标角色的身体状态"""
-        self.done_check_status_id_set.add(status_id)
+        self.done_check_behavior_id_set.add(behavior_id)
         line = draw.LineDraw("-", window_width)
         line.draw()
         line_feed.draw()
-        handle_instruct.chara_handle_instruct_common_settle(status_id, force_taget_wait = True)
+        handle_instruct.chara_handle_instruct_common_settle(behavior_id, force_taget_wait = True)
         info_draw = draw.WaitDraw()
         info_draw.text = "\n"
         info_draw.draw()
@@ -375,10 +375,10 @@ class Physical_Check_And_Manage_Panel:
             for manage_cid in game_config.config_body_manage_requirement:
                 body_manage_data = game_config.config_body_manage_requirement[manage_cid]
                 body_manage_second_behavior_id = body_manage_data.second_behavior_id
-                examine_status_id = body_manage_data.need_examine_id
-                status_name = game_config.config_status[body_manage_second_behavior_id].name
+                examine_behavior_id = body_manage_data.need_examine_id
+                behavior_name = game_config.config_behavior[body_manage_second_behavior_id].name
                 # 去掉status_name里的"被要求"字样
-                status_name = status_name.replace(_("被要求"), "")
+                behavior_name = behavior_name.replace(_("被要求"), "")
                 count += 1
 
                 # 跳过未实装的
@@ -396,7 +396,7 @@ class Physical_Check_And_Manage_Panel:
                     judge_result = True
                 else:
                     # 跳过没有进行前置检查的
-                    if examine_status_id > 0 and examine_status_id not in self.done_check_status_id_set:
+                    if examine_behavior_id > 0 and examine_behavior_id not in self.done_check_behavior_id_set:
                         continue
 
                 # debug模式下直接通过
@@ -405,7 +405,7 @@ class Physical_Check_And_Manage_Panel:
 
                 # 绘制按钮
                 if judge_result:
-                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name}"
+                    manage_text = f"[{str(count).rjust(2,'0')}]：{behavior_name}"
                     # 如果已进行该身体管理，则显示进行中
                     if target_character_data.body_manage[manage_cid]:
                         manage_text += _("(进行中)")
@@ -420,7 +420,7 @@ class Physical_Check_And_Manage_Panel:
                     manage_draw.draw()
                     line_feed.draw()
                 else:
-                    manage_text = f"[{str(count).rjust(2,'0')}]：{status_name.ljust(20, '　')}（ {require_text} ）\n"
+                    manage_text = f"[{str(count).rjust(2,'0')}]：{behavior_name.ljust(20, '　')}（ {require_text} ）\n"
                     manage_draw = draw.NormalDraw()
                     manage_draw.text = manage_text
                     manage_draw.style = "deep_gray"
@@ -582,7 +582,7 @@ class Physical_Check_And_Manage_Panel:
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 1
             handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
-            info_text += _("对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+            info_text += _("对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_behavior[body_manage_second_behavior_id].name)
             # 练习类的身体管理
             if manage_cid in range(31, 40):
                 # 如果当前职业不是性爱工作，则调整为性爱练习生工作
@@ -597,7 +597,7 @@ class Physical_Check_And_Manage_Panel:
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 0
             handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
-            info_text += _("取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_status[body_manage_second_behavior_id].name)
+            info_text += _("取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_behavior[body_manage_second_behavior_id].name)
             # 练习类的身体管理
             if manage_cid in range(31, 40):
                 # 如果已经没有练习，且还是性爱工作，则取消该工作
@@ -858,7 +858,7 @@ class Physical_Check_And_Manage_Panel:
             report_text += _("{0}%\n").format(target_character_data.hypnosis.hypnosis_degree)
         # 各指令的遍历
         for cmd_id in cmd_ablility_dict:
-            if cmd_id not in self.done_check_status_id_set:
+            if cmd_id not in self.done_check_behavior_id_set:
                 continue
             ability_id = cmd_ablility_dict[cmd_id][0]
             now_name = cmd_ablility_dict[cmd_id][1]

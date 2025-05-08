@@ -196,7 +196,6 @@ def judge_character_follow(character_id: int) -> int:
             character_data.behavior.behavior_id = constant.Behavior.MOVE
             character_data.behavior.move_target = move_path
             character_data.behavior.duration = move_time
-            character_data.state = constant.CharacterStatus.STATUS_MOVE
             return 1
     return 0
 
@@ -707,7 +706,6 @@ def judge_same_position_npc_follow():
             move_flag, wait_flag = character_move.judge_character_move_to_private(character_id, move_path)
             if move_flag:
                 character_data.behavior.behavior_id = constant.Behavior.MOVE
-                character_data.state = constant.CharacterStatus.STATUS_MOVE
                 character_data.behavior.move_target = move_path
                 character_data.behavior.move_final_target = pl_character_data.behavior.move_final_target
                 character_data.behavior.duration = move_time
@@ -715,7 +713,6 @@ def judge_same_position_npc_follow():
                 character_data.target_character_id = character_id
                 character_data.action_info.follow_wait_time = 0
             elif wait_flag:
-                character_data.state = constant.CharacterStatus.STATUS_WAIT
                 character_data.behavior.behavior_id = constant.Behavior.WAIT
                 character_data.behavior.duration = 5
                 character_data.action_info.follow_wait_time += 5

@@ -59,25 +59,25 @@ def init(main_flow: object):
             run_main_flow()
         except Exception:
             # 最近玩家指令状态
-            instruct_state_name_test = ""
-            for state_id in cache.pl_pre_status_instruce:
-                if state_id in game_config.config_status:
-                    state_data = game_config.config_status[state_id]
-                    instruct_state_name_test += state_data.name + "，"
-            if instruct_state_name_test[-1] == "，":
-                instruct_state_name_test = instruct_state_name_test[:-1]
+            instruct_cn_name_list = ""
+            for behavior_id in cache.pl_pre_behavior_instruce:
+                if behavior_id in game_config.config_behavior:
+                    behavior_data = game_config.config_behavior[behavior_id]
+                    instruct_cn_name_list += behavior_data.name + "，"
+            if instruct_cn_name_list[-1] == "，":
+                instruct_cn_name_list = instruct_cn_name_list[:-1]
             # 向error_log写入回溯用信息
             with open(error_path, "a", encoding="utf-8") as e:
                 e.write(f"\n版本信息：{normal_config.config_normal.verson}\n")
                 e.write(f"最近输入指令：{cache.input_cache}\n")
-                e.write(f"玩家最近状态：{instruct_state_name_test}\n")
+                e.write(f"玩家最近状态：{instruct_cn_name_list}\n")
                 e.write(f"当前游戏内时间：{game_time.get_date_text(cache.game_time)}\n")
             traceback.print_exc(file=open(error_path, "a"))
             # 向游戏内写入错误信息
             error_text = "\n"
             error_text += _("版本信息：{0}\n").format(normal_config.config_normal.verson)
             error_text += _("最近输入指令：{0}\n").format(cache.input_cache)
-            error_text += _("玩家最近状态：{0}\n").format(instruct_state_name_test)
+            error_text += _("玩家最近状态：{0}\n").format(instruct_cn_name_list)
             error_text += _("当前游戏内时间：{0}\n").format(game_time.get_date_text(cache.game_time))
             error_text += traceback.format_exc()
             error_text += _("\n\n游戏发生错误，已将上述错误信息写入error.log\n\n")

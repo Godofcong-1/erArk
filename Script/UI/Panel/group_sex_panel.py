@@ -89,7 +89,7 @@ def group_sex_settle(
         now_template_data[0]["anal"] = [target_character_id, state_id]
 
     # 特殊指令特殊处理
-    status_data = game_config.config_status[state_id]
+    status_data = game_config.config_behavior[state_id]
     if status_data.name == _("六九式"):
         now_template_data[0]["mouth"] = [target_character_id, state_id]
         now_template_data[1] = [[target_character_id], state_id]
@@ -201,7 +201,7 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 去掉有破处判定且当前为处的
             if filter_judge:
-                status_data = game_config.config_status[status_id]
+                status_data = game_config.config_behavior[status_id]
                 status_tag_list = status_data.tag
                 status_tag_list = status_data.tag.split("|")
                 pl_character_data = cache.character_data[0]
@@ -313,7 +313,7 @@ class SeeGroupSexInfoPanel:
             if state_id != -1:
                 target_chara_id = now_template_data[0][body_part][0]
                 target_chara_name = cache.character_data[target_chara_id].name
-                state_name = game_config.config_status[state_id].name
+                state_name = game_config.config_behavior[state_id].name
                 body_part_name = body_part_name_dict[body_part]
                 all_part_text += _("{0}-{1}-{2} ").format(body_part_name, state_name, target_chara_name)
 
@@ -321,7 +321,7 @@ class SeeGroupSexInfoPanel:
         target_chara_id_list = now_template_data[1][0]
         state_id = now_template_data[1][1]
         if state_id != -1:
-            state_name = game_config.config_status[state_id].name
+            state_name = game_config.config_behavior[state_id].name
             all_target_chara_name = ""
             for target_chara_id in target_chara_id_list:
                 all_target_chara_name += cache.character_data[target_chara_id].name
@@ -418,7 +418,7 @@ class Edit_Group_Sex_Temple_Panel:
                 if state_id == -1:
                     state_name = _("未选择指令")
                 else:
-                    state_name = game_config.config_status[state_id].name
+                    state_name = game_config.config_behavior[state_id].name
                 state_name_button = draw.CenterButton(
                     f"▶{state_name}", body_part_name + state_name, self.width / 5, cmd_func=self.show_status_list, args=("A", body_part)
                 )
@@ -453,7 +453,7 @@ class Edit_Group_Sex_Temple_Panel:
                     if state_id == -1:
                         state_name = _("未选择指令")
                     else:
-                        state_name = game_config.config_status[state_id].name
+                        state_name = game_config.config_behavior[state_id].name
                     state_name_button = draw.CenterButton(
                         f"▶{state_name}", body_part_name + state_name, self.width / 5, cmd_func=self.show_status_list, args=("A", _("侍奉"))
                     )
@@ -626,7 +626,7 @@ class Edit_Group_Sex_Temple_Panel:
             # 生成状态名的按钮，让玩家选择
             status_count = 0
             for status_id in new_status_id_list:
-                status_data = game_config.config_status[status_id]
+                status_data = game_config.config_behavior[status_id]
                 button_text = f"[{str(status_id).rjust(4,'0')}]{status_data.name}"
                 name_draw = draw.LeftButton(button_text, status_data.name, self.width / 5, cmd_func=self.set_status, args=(temple_id, body_part, status_id))
                 name_draw.draw()

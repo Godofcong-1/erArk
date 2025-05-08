@@ -591,7 +591,7 @@ def handle_scene_someone_is_masturebate(character_id: int) -> int:
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 检测是否在自慰
-                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                if other_character_data.behavior.behavior_id == constant.Behavior.MASTUREBATE:
                     return 1
     return 0
 
@@ -739,7 +739,7 @@ def handle_teacher_teaching_in_classroom(character_id: int) -> int:
         # 首先需要是老师，然后正在授课
         if (
             character_data.work.work_type == 151
-            and character_data.state == constant.CharacterStatus.STATUS_TEACH
+            and character_data.behavior.behavior_id == constant.Behavior.TEACH
         ):
             # 接着需要地点在教室里
             now_position = character_data.position
@@ -4195,7 +4195,7 @@ def handle_move_to_someone_masturebate(character_id: int) -> int:
             if chara_id != character_id and chara_id != 0:
                 other_character_data: game_type.Character = cache.character_data[chara_id]
                 # 检测是否在自慰
-                if other_character_data.state == constant.CharacterStatus.STATUS_MASTUREBATE:
+                if other_character_data.behavior.behavior_id == constant.Behavior.MASTUREBATE:
                     return 1
     return 0
 

@@ -999,9 +999,9 @@ class Chose_Hypnosis_Type_Panel:
             # 遍历体控选项数据库，输出按钮
             for cid in range_list:
                 # 如果不存在该选项则跳过
-                if cid not in game_config.config_status:
+                if cid not in game_config.config_behavior:
                     continue
-                status_data = game_config.config_status[cid]
+                status_data = game_config.config_behavior[cid]
                 draw_text = f"[{cid}]{status_data.name}"
                 button_draw = draw.LeftButton(
                     _(draw_text),

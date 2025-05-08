@@ -66,7 +66,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             character_data.h_state.just_shoot = 0
         # 二次确认H意外结束的归零结算
         special_end_list = constant.special_end_H_list
-        if len(cache.pl_pre_status_instruce) and cache.pl_pre_status_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
+        if len(cache.pl_pre_behavior_instruce) and cache.pl_pre_behavior_instruce[-1] in special_end_list and character_data.behavior.behavior_id not in special_end_list:
             default.handle_both_h_state_reset(0, 1, change_data=game_type.CharacterStatusChange(), now_time=datetime.datetime)
         # 如果在时停中搬运角色，则直接移动到玩家同一地点
         if (
@@ -92,7 +92,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外
-        if character_data.state == constant.CharacterStatus.STATUS_SLEEP:
+        if character_data.behavior.behavior_id == constant.Behavior.SLEEP:
             return 1
         # 6异常时例外
         if not handle_premise.handle_normal_6(character_id):
@@ -383,9 +383,9 @@ def npc_active_h():
     # 遍历全状态
     all_stastus_list = []
     now_premise_data = {}
-    for status_id in game_config.config_status:
+    for status_id in game_config.config_behavior:
         # 获得各状态的tag
-        status_data = game_config.config_status[status_id]
+        status_data = game_config.config_behavior[status_id]
         status_tag_list = status_data.tag.split("|")
         # 跳过其中非性爱类，道具类、药物类、SM类、非逆推类
         if(
@@ -518,7 +518,8 @@ def npc_ai_in_group_sex(character_id: int):
     # 否则，自己进入要自慰状态
     else:
         character_data.sp_flag.masturebate = 3
-        character_data.state == constant.CharacterStatus.STATUS_ARDER
+        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY
         # print(f"debug {character_data.name}进入了要自慰状态")
 
 def npc_ai_in_group_sex_type_3():
@@ -602,6 +603,7 @@ def npc_ai_in_group_sex_type_3():
     for character_id in new_chara_id_list:
         character_data = cache.character_data[character_id]
         character_data.sp_flag.masturebate = 3
-        character_data.state == constant.CharacterStatus.STATUS_ARDER
+        character_data.state = constant.CharacterStatus.STATUS_ARDER
+        character_data.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY
         # print(f"debug {character_data.name}进入了要自慰状态")
 

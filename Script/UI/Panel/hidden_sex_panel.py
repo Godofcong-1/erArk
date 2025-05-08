@@ -140,16 +140,16 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
     """
     character_data = cache.character_data[character_id]
     # 获取当前行为
-    now_state_id = character_data.state
-    status_data = game_config.config_status[now_state_id]
+    now_behavior_id = character_data.behavior.behavior_id
+    behavior_data = game_config.config_behavior[now_behavior_id]
     # 根据行为类型判断是否需要增加隐蔽值
     add_flag = False
     for tag in {_("猥亵"), _("性爱")}:
-        if tag in status_data.tag:
+        if tag in behavior_data.tag:
             add_flag = True
             break
     # 等待状态减少隐蔽值
-    if now_state_id == constant.CharacterStatus.STATUS_WAIT:
+    if now_behavior_id == constant.Behavior.WAIT:
         add_flag = False
     # 时间
     now_duration = character_data.behavior.duration
@@ -163,7 +163,7 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
         mode_adjust = 0.5
     # 强度
     now_intensity = 1
-    tag_list = status_data.tag.split("|")
+    tag_list = behavior_data.tag.split("|")
     for tag in tag_list:
         if tag == _("道具"):
             now_intensity = max(4, now_intensity)

@@ -202,16 +202,16 @@ def base_chara_state_common_settle(
     # 连续重复指令减值，非负面数值，仅玩家的交互对象
     if state_id not in bad_state_set and character_id == pl_character_data.target_character_id:
         # 判断是否为连续指令
-        if len(cache.pl_pre_status_instruce) >= 2 and cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+        if len(cache.pl_pre_behavior_instruce) >= 2 and cache.pl_pre_behavior_instruce[-1] == cache.pl_pre_behavior_instruce[-2]:
             # 统计连续指令次数
-            last_instr = cache.pl_pre_status_instruce[-1]
+            last_instr = cache.pl_pre_behavior_instruce[-1]
             # 如果last_instr属于基础指令则跳过连续相关处理
             if last_instr in [0, 1, 2]:
                 pass
             else:
                 instruct_count = 0
                 # 从后往前遍历
-                for instr in reversed(cache.pl_pre_status_instruce):
+                for instr in reversed(cache.pl_pre_behavior_instruce):
                     if instr == last_instr:
                         instruct_count += 1
                     else:
@@ -525,16 +525,16 @@ def base_chara_favorability_and_trust_common_settle(
         # 连续重复指令减值
         continuous_adjust = 1
         # 判断是否为连续指令
-        if len(cache.pl_pre_status_instruce) >= 2 and cache.pl_pre_status_instruce[-1] == cache.pl_pre_status_instruce[-2]:
+        if len(cache.pl_pre_behavior_instruce) >= 2 and cache.pl_pre_behavior_instruce[-1] == cache.pl_pre_behavior_instruce[-2]:
             # 统计连续指令次数
-            last_instr = cache.pl_pre_status_instruce[-1]
+            last_instr = cache.pl_pre_behavior_instruce[-1]
             # 如果last_instr属于基础指令则跳过连续相关处理
             if last_instr in [0, 1, 2]:
                 pass
             else:
                 instruct_count = 0
                 # 从后往前遍历
-                for instr in reversed(cache.pl_pre_status_instruce):
+                for instr in reversed(cache.pl_pre_behavior_instruce):
                     if instr == last_instr:
                         instruct_count += 1
                     else:

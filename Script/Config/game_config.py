@@ -232,10 +232,12 @@ config_random_npc_sex_region: Dict[int, int] = {}
 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
-config_status: Dict[int, config_def.Status] = {}
-""" 角色状态类型配置数据 """
+config_behavior: Dict[int, config_def.Status] = {}
+""" 角色行为数据 """
 config_status_id_list_of_group_sex_body_part: Dict[str, list] = {}
 """ 群交时身体部位占用所对应的的状态id列表 """
+config_str_behavior: Dict[str, config_def.Status] = {}
+""" 以英文名为键的角色行为数据 """
 config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
@@ -1103,7 +1105,9 @@ def load_status():
     for tem_data in now_data["data"]:
         now_tem = config_def.Status()
         now_tem.__dict__ = tem_data
-        config_status[now_tem.cid] = now_tem
+        config_behavior[now_tem.cid] = now_tem
+        # 以英文名为键的数据
+        config_str_behavior[now_tem.en_name] = now_tem
         # 拆解tag为列表
         tag_list = now_tem.tag.split("|")
         if not len(tag_list):
