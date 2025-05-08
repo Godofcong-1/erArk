@@ -346,9 +346,9 @@ class SeeCharacterBodyPanel:
 
             # 处子血判定
             if i == 6 and visual_flag >= 2:
-                if not character_data.talent[0]:
+                if not target_character_data.talent[0]:
                     now_day = cache.game_time.day
-                    first_day = character_data.first_record.first_sex_time.day
+                    first_day = target_character_data.first_record.first_sex_time.day
                     if now_day == first_day:
                         # 是否显示完整污浊文本
                         dirty_text_cid = "破处血1"
