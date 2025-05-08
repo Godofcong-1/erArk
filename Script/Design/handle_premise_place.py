@@ -1452,6 +1452,19 @@ def handle_in_dormitory_or_hotel(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_TARGET_DORMITORY)
+def handle_in_target_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在自己宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_in_dormitory(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.IN_TOILET_MAN)
 def handle_in_toilet_man(character_id: int) -> int:
     """

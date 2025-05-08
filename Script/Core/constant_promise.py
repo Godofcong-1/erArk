@@ -363,6 +363,8 @@ class Premise:
     """ 地点_定位 不在自己宿舍中 """
     IN_DORMITORY_OR_HOTEL = "in_dor_or_hotel"
     """ 地点_定位 在自己宿舍中或在已经入住的旅馆中 """
+    IN_TARGET_DORMITORY = "in_target_dor"
+    """ 地点_定位 在交互对象宿舍中 """
     IN_TOILET_MAN = "in_toilet_man"
     """ 地点_定位 在男士洗手间 """
     IN_TOILET_FEMALE = "in_toilet_female"

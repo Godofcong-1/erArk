@@ -15380,35 +15380,31 @@ msgstr ""
 msgid "企鹅物流员工，单兵作战能力出类拔萃。于合约期内任企鹅物流驻罗德岛联络人员，同时为罗德岛的多项行动提供协助。"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:15
-msgid "#8B0000"
-msgstr ""
-
-#: .\data\character\0102_德克萨斯.csv:28
+#: .\data\character\0102_德克萨斯.csv:29
 msgid "带员工证的黑色披肩"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:29
+#: .\data\character\0102_德克萨斯.csv:30
 msgid "白色无帽卫衣"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:30
+#: .\data\character\0102_德克萨斯.csv:31
 msgid "棕色露指手套"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:32
+#: .\data\character\0102_德克萨斯.csv:33
 msgid "黑色连身丝袜"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:33
+#: .\data\character\0102_德克萨斯.csv:34
 msgid "黑色高帮运动鞋"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:34
+#: .\data\character\0102_德克萨斯.csv:35
 msgid "绑带腰包"
 msgstr ""
 
-#: .\data\character\0102_德克萨斯.csv:35
+#: .\data\character\0102_德克萨斯.csv:36
 msgid "大腿绑带"
 msgstr ""
 
