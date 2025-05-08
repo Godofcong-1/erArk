@@ -2385,6 +2385,8 @@ class Premise:
     """ 属性_源石技艺 没有在时停中搬运干员 """
     CARRY_SOMEBODY_IN_TIME_STOP = "carry_somebody_in_time_stop"
     """ 属性_源石技艺 正在时停中搬运干员 """
+    TARGET_IS_CARRIED_IN_TIME_STOP = "target_is_carried_in_time_stop"
+    """ 属性_源石技艺 交互对象是自己正在时停中搬运的干员 """
     NOBODY_FREE_IN_TIME_STOP = "nobody_free_in_time_stop"
     """ 属性_源石技艺 没有指定可以在时停中自由活动的干员 """
     SOMEBODY_FREE_IN_TIME_STOP = "somebody_free_in_time_stop"

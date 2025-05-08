@@ -7505,6 +7505,22 @@ def handle_carry_somebody_in_time_stop(character_id: int) -> int:
     return not handle_not_carry_anybody_in_time_stop(character_id)
 
 
+@add_premise(constant_promise.Premise.TARGET_IS_CARRIED_IN_TIME_STOP)
+def handle_target_is_carried_in_time_stop(character_id: int) -> int:
+    """
+    交互对象是自己正在时停中搬运的干员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.pl_ability.carry_chara_id_in_time_stop > 0:
+        if pl_character_data.target_character_id == pl_character_data.pl_ability.carry_chara_id_in_time_stop:
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SOMEBODY_FREE_IN_TIME_STOP)
 def handle_somebody_free_in_time_stop(character_id: int) -> int:
     """

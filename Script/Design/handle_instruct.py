@@ -1056,7 +1056,7 @@ def handle_carry_target():
     {constant_promise.Premise.INTERMEDIATE_TIME_STOP,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_ON,
-     constant_promise.Premise.CARRY_SOMEBODY_IN_TIME_STOP,
+     constant_promise.Premise.TARGET_IS_CARRIED_IN_TIME_STOP,
      constant_promise.Premise.TIRED_LE_84},
     constant.CharacterStatus.STATUS_STOP_CARRY_TARGET,
 )

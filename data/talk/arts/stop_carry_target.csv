@@ -4,4 +4,4 @@ str,int,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 0,944,0,high_1,{Name}把扛在肩上的{TargetName}放了下来
-1,943,0,high_1,{Name}抱着的{TargetName}放了下来
+1,944,0,high_1,{Name}抱着的{TargetName}放了下来
