@@ -303,6 +303,11 @@ def update_work_people():
             cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
 
+            # 如果不是检修工程师，则清空该角色的检修目标
+            if character_data.work.work_type != 21:
+                if chara_id in cache.rhodes_island.maintenance_place:
+                    cache.rhodes_island.maintenance_place.pop(chara_id)
+
             # 招聘专员如果没有安排到招聘线，则随机分配
             if character_data.work.work_type == 71:
                 select_index = -1
