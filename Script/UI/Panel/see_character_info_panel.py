@@ -656,10 +656,6 @@ class CharacterInfoHead:
                 int(character_data.semen_point + character_data.tem_extra_semen_point),
                 _("精液"),
             )
-        # status_text = game_config.config_status[character_data.state].name
-        # status_draw = draw.CenterDraw()
-        # status_draw.width = width / 4
-        # status_draw.text = _(" ").format(status_text=status_text)
         None_draw = draw.CenterDraw()
         None_draw.width = 1
         None_draw.text = (" ")

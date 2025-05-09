@@ -762,7 +762,7 @@ def handle_student_not_study_in_classroom(character_id: int) -> int:
     for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
         # 首先需要是学生，而且没有在上课
-        if character_data.work.work_type == 152 and character_data.state != constant.CharacterStatus.STATUS_ATTENT_CLASS:
+        if character_data.work.work_type == 152 and character_data.behavior.behavior_id != constant.Behavior.ATTENT_CLASS:
             # 接着需要地点在教室里
             now_position = character_data.position
             now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)

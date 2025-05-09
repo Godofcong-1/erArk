@@ -258,7 +258,7 @@ def settle_tired(character_id: int, true_add_time: int) -> None:
     if true_add_time == 5:
         tired_change = 1
     # 不睡觉时、且不是时停中，结算疲劳值
-    if now_character_data.state not in {constant.CharacterStatus.STATUS_SLEEP} and handle_premise.handle_time_stop_off(character_id):
+    if now_character_data.behavior.behavior_id not in {constant.Behavior.SLEEP} and handle_premise.handle_time_stop_off(character_id):
         now_character_data.tired_point += tired_change
         now_character_data.tired_point = min(now_character_data.tired_point,160)
 

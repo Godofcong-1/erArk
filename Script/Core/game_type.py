@@ -1223,8 +1223,8 @@ class Character:
         """ 欲望值 1m=10点，10min=100点(max)"""
         self.state: int = 0
         """ 角色当前状态 """
-        self.last_state: List = [0]
-        """ 角色之前的状态 """
+        self.last_behavior_id_list: List = [0]
+        """ 角色之前的行为列表 """
         self.talk_size: int = 0
         """ 角色口上大小，单位kb """
         self.text_color: str = ""

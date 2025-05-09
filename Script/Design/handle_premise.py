@@ -19120,7 +19120,7 @@ def handle_action_work_or_entertainment(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 151 <= character_data.state <= 250:
+    if 151 <= character_data.behavior.behavior_id <= 250:
         return 1
     return 0
 

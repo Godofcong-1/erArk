@@ -142,7 +142,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     # 再处理NPC部分
     if character_id:
         # if character_data.name == "阿米娅":
-        #     print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
+            # print(f"debug 前：{character_data.name}，behavior_id = {game_config.config_behavior[character_data.behavior.behavior_id].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}")
         # 空闲状态下寻找、执行、结算可用行动
         if character_data.behavior.behavior_id == constant.Behavior.SHARE_BLANKLY:
             # 寻找可用行动
@@ -163,7 +163,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
         if time_judge:
             cache.over_behavior_character.add(character_id)
         # if character_data.name == "阿米娅":
-        #     print(f"debug 后：{character_data.name}，time_judge = {time_judge}，behavior_id = {game_config.config_status[character_data.state].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}, duration = {character_data.behavior.duration}, end_time = {game_time.get_sub_date(minute=character_data.behavior.duration, old_date=character_data.behavior.start_time)}")
+        #     print(f"debug 后：{character_data.name}，time_judge = {time_judge}，behavior_id = {game_config.config_behavior[character_data.behavior.behavior_id].name}，start_time = {character_data.behavior.start_time}, game_time = {now_time}, duration = {character_data.behavior.duration}, end_time = {game_time.get_sub_date(minute=character_data.behavior.duration, old_date=character_data.behavior.start_time)}")
 
     # 自动获得对应素质和能力
     handle_talent.gain_talent(character_id,now_gain_type = 0)
@@ -290,10 +290,10 @@ def judge_character_status_time_over(character_id: int, now_time: datetime.datet
     if end_now:
         time_judge = end_now
     if time_judge:
-        # 记录并刷新旧状态列表
-        character_data.last_state.append(character_data.state)
-        if len(character_data.last_state) > 5:
-            character_data.last_state.pop(0)
+        # 记录并刷新旧行为列表
+        character_data.last_behavior_id_list.append(character_data.behavior.behavior_id)
+        if len(character_data.last_behavior_id_list) > 5:
+            character_data.last_behavior_id_list.pop(0)
         # 保留移动的来源位置
         tem_move_src = character_data.behavior.move_src
         if len(character_data.action_info.past_move_position_list) == 0 or (len(character_data.action_info.past_move_position_list) and tem_move_src != character_data.action_info.past_move_position_list[-1]):
@@ -349,14 +349,14 @@ def character_instruct_record(character_id: int) -> str:
             instruct_text += _("从{0}移动至{1}\n").format(move_src, move_target)
     # 其他指令则记录状态
     else:
-        now_chara_state = game_config.config_behavior[character_data.state].name
+        now_chara_behavior_name = game_config.config_behavior[character_data.behavior.behavior_id].name
         # 如果是交互指令则记录交互对象
         if character_data.target_character_id != character_id:
             target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
             target_name = target_character_data.name
-            instruct_text += _("对{0}进行了{1}\n").format(target_name, now_chara_state)
+            instruct_text += _("对{0}进行了{1}\n").format(target_name, now_chara_behavior_name)
         else:
-            instruct_text += _("进行了{0}\n").format(now_chara_state)
+            instruct_text += _("进行了{0}\n").format(now_chara_behavior_name)
     return instruct_text
 
 

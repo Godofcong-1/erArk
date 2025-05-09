@@ -150,17 +150,17 @@ def input_name_func(ask_text: str) -> str:
     return return_name
 
 
-def character_rest_to_time(character_id: int, need_time: int):
-    """
-    设置角色状态为休息指定时间
-    Keyword arguments:
-    character_id -- 角色id
-    need_time -- 休息时长(分钟)
-    """
-    character_data = cache.character_data[character_id]
-    character_data.behavior["Duration"] = need_time
-    character_data.behavior["BehaviorId"] = constant.Behavior.REST
-    character_data.state = constant.CharacterStatus.STATUS_REST
+# def character_rest_to_time(character_id: int, need_time: int):
+#     """
+#     设置角色状态为休息指定时间
+#     Keyword arguments:
+#     character_id -- 角色id
+#     need_time -- 休息时长(分钟)
+#     """
+#     character_data = cache.character_data[character_id]
+#     character_data.behavior["Duration"] = need_time
+#     character_data.behavior["BehaviorId"] = constant.Behavior.REST
+#     character_data.state = constant.CharacterStatus.STATUS_REST
 
 
 # def calculation_favorability(character_id: int, target_character_id: int, favorability: int) -> int:
