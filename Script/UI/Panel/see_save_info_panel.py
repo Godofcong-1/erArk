@@ -204,6 +204,21 @@ class SaveInfoDraw:
 
     def load_save(self):
         """载入存档"""
+        # 进行二次确认
+        while 1:
+            line_feed.draw()
+            sure_draw = draw.LeftButton(_("[000]确认读取存档?"), _("0"), self.width)
+            sure_draw.draw()
+            line_feed.draw()
+            back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
+            back_draw.draw()
+            line_feed.draw()
+            yrn = flow_handle.askfor_all([sure_draw.return_text, back_draw.return_text])
+            py_cmd.clr_cmd()
+            if yrn == sure_draw.return_text:
+                break
+            elif yrn == back_draw.return_text:
+                return
         save_handle.input_load_save(str(self.text))
         cache.now_panel_id = constant.Panel.IN_SCENE
         cache.back_save_panel = 1
