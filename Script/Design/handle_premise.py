@@ -14416,6 +14416,14 @@ def handle_cloth_off(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     for clothing_type in game_config.config_clothing_type:
         if len(character_data.cloth.cloth_wear[clothing_type]):
+            # 如果是3脖饰的话，则只有项圈的情况下依然算全裸
+            if clothing_type == 3:
+                if len(character_data.cloth.cloth_wear[clothing_type]) == 1 and character_data.cloth.cloth_wear[clothing_type][0] == 352:
+                    continue
+            # 如果是7手套的话，则只有戒指的情况下依然算全裸
+            elif clothing_type == 7:
+                if len(character_data.cloth.cloth_wear[clothing_type]) == 1 and character_data.cloth.cloth_wear[clothing_type][0] == 751:
+                    continue
             return 0
     return 1
 
