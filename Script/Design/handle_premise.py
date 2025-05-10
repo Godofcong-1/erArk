@@ -128,8 +128,15 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
                 now_premise_data[premise] = now_add_weight
             # 其他正常口上判定
             else:
-                now_add_weight = constant.handle_premise_data[premise](character_id)
-                now_premise_data[premise] = now_add_weight
+                # 正常前提
+                if premise in constant.handle_premise_data:
+                    now_add_weight = constant.handle_premise_data[premise](character_id)
+                    now_premise_data[premise] = now_add_weight
+                # 不存在的前提
+                else:
+                    now_add_weight = 0
+                    now_premise_data[premise] = 0
+                    print(f"\ndebug 前提{premise}不存在，请检查前提是否正确\n")
             # 计算总权重
             if now_add_weight:
                 if weight_all_to_1_flag and not high_flag:

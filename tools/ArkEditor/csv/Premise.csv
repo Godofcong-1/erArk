@@ -181,6 +181,7 @@ in_command_room_or_out_exit,IN_COMMAND_ROOM_OR_OUT_EXIT,地点_定位,在指挥�
 in_dor,IN_DORMITORY,地点_定位,在自己宿舍中
 not_in_dor,NOT_IN_DORMITORY,地点_定位,不在自己宿舍中
 in_dor_or_hotel,IN_DORMITORY_OR_HOTEL,地点_定位,在自己宿舍中或在已经入住的旅馆中
+in_target_dor,IN_TARGET_DORMITORY,地点_定位,在交互对象宿舍中
 in_toilet_man,IN_TOILET_MAN,地点_定位,在男士洗手间
 in_toilet_female,IN_TOILET_FEMALE,地点_定位,在女士洗手间
 not_in_toilet_female,NOT_IN_TOILET_FEMALE,地点_定位,不在女士洗手间
@@ -248,6 +249,7 @@ in_spa_room,IN_SPA_ROOM,地点_定位,在水疗房中
 not_in_spa_room,NOT_IN_SPA_ROOM,地点_定位,不在水疗房中
 in_onsen,IN_ONSEN,地点_定位,在温泉中
 not_in_onsen,NOT_IN_ONSEN,地点_定位,不在温泉中
+in_locker_room,IN_LOCKER_ROOM,地点_定位,在任意更衣室中
 in_bathzone_locker_room,IN_BATHZONE_LOCKER_ROOM,地点_定位,在大浴场的更衣室
 not_in_bathzone_locker_room,NOT_IN_BATHZONE_LOCKER_ROOM,地点_定位,不在大浴场的更衣室
 in_bathzone_rest_room,IN_BATHZONE_REST_ROOM,地点_定位,在大浴场的休息室
@@ -382,6 +384,9 @@ self_need_health_check_now,SELF_NEED_HEALTH_CHECK_NOW,时间_角色,自己现在
 first_kiss_in_today,FIRST_KISS_IN_TODAY,时间_初次,自己今天失去了初吻
 first_sex_in_today,FIRST_SEX_IN_TODAY,时间_初次,自己今天失去了V处女
 first_a_sex_in_today,FIRST_A_SEX_IN_TODAY,时间_初次,自己今天失去了A处女
+t_first_kiss_in_today,TARGET_FIRST_KISS_IN_TODAY,时间_初次,交互对象今天失去了初吻
+t_first_sex_in_today,TARGET_FIRST_SEX_IN_TODAY,时间_初次,交互对象今天失去了V处女
+t_first_a_sex_in_today,TARGET_FIRST_A_SEX_IN_TODAY,时间_初次,交互对象今天失去了A处女
 
 time_day,TIME_DAY,时间_当前,时间:白天（6点~18点）
 time_night,TIME_NIGHT,时间_当前,时间:夜晚（18点~6点）
@@ -1202,6 +1207,7 @@ time_stop_off,TIME_STOP_OFF,属性_源石技艺,时停关闭中
 time_stop_judge_for_move,TIME_STOP_JUDGE_FOR_MOVE,属性_源石技艺,(移动用)未开启时停，或时停开启且有中级时停
 not_carry_anybody_in_time_stop,NOT_CARRY_ANYBODY_IN_TIME_STOP,属性_源石技艺,没有在时停中搬运干员
 carry_somebody_in_time_stop,CARRY_SOMEBODY_IN_TIME_STOP,属性_源石技艺,正在时停中搬运干员
+target_is_carried_in_time_stop,TARGET_IS_CARRIED_IN_TIME_STOP,属性_源石技艺,交互对象是自己正在时停中搬运的干员
 nobody_free_in_time_stop,NOBODY_FREE_IN_TIME_STOP,属性_源石技艺,没有指定可以在时停中自由活动的干员
 somebody_free_in_time_stop,SOMEBODY_FREE_IN_TIME_STOP,属性_源石技艺,玩家已指定可以在时停中自由活动的干员
 self_free_in_time_stop,SELF_FREE_IN_TIME_STOP,属性_源石技艺,自己是在时停中自由活动的干员

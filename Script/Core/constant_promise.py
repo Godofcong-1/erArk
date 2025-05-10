@@ -499,6 +499,8 @@ class Premise:
     """ 地点_定位 在温泉中 """
     NOT_IN_ONSEN = "not_in_onsen"
     """ 地点_定位 不在温泉中 """
+    IN_LOCKER_ROOM = "in_locker_room"
+    """ 地点_定位 在任意更衣室中 """
     IN_BATHZONE_LOCKER_ROOM = "in_bathzone_locker_room"
     """ 地点_定位 在大浴场的更衣室 """
     NOT_IN_BATHZONE_LOCKER_ROOM = "not_in_bathzone_locker_room"
