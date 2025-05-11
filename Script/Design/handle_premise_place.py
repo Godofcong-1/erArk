@@ -1597,6 +1597,24 @@ def handle_in_rest_room_or_dormitory(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.IN_CORRIDOR)
+def handle_in_corridor(character_id: int) -> int:
+    """
+    校验角色是否在走廊中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Corridor" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.IN_MUSIC_ROOM)
 def handle_in_music_room(character_id: int) -> int:
     """
@@ -2858,6 +2876,24 @@ def handle_not_in_bathroom(character_id: int) -> int:
     if handle_in_bathroom(character_id):
         return 0
     return 1
+
+
+@add_premise(constant_promise.Premise.IN_BATHROOM_EXCEPT_DR_ROOM)
+def handle_in_bathroom_except_dr_room(character_id: int) -> int:
+    """
+    校验角色是否在淋浴区且不在博士房间
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Bathroom" in now_scene_data.scene_tag and "Dr_room" not in now_scene_data.scene_tag:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.IN_FOOT_BATH)

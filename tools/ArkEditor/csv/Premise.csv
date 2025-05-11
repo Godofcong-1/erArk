@@ -190,6 +190,7 @@ in_toilet_or_dormitory,IN_TOILET_OR_DORMITORY,地点_定位,在洗手间或自�
 in_restroom,IN_REST_ROOM,地点_定位,在休息室中
 not_in_restroom,NOT_IN_REST_ROOM,地点_定位,不在休息室中
 in_restroom_or_dormitory,IN_REST_ROOM_OR_DORMITORY,地点_定位,在休息室或自己宿舍中
+in_corridor,IN_CORRIDOR,地点_定位,在走廊中
 in_music_room,IN_MUSIC_ROOM,地点_定位,在音乐室中
 in_classic_music_room,IN_CLASSIC_MUSIC_ROOM,地点_定位,在夕照区音乐室中
 not_in_classic_music_room,NOT_IN_CLASSIC_MUSIC_ROOM,地点_定位,不在夕照区音乐室中
@@ -241,6 +242,7 @@ not_in_hr_office,NOT_IN_HR_OFFICE,地点_定位,不在人事部办公室中
 in_hr_meeting_room,IN_HR_MEETING_ROOM,地点_定位,在人事部会议室中
 in_bathroom,IN_BATHROOM,地点_定位,在淋浴区
 not_in_bathroom,NOT_IN_BATHROOM,地点_定位,不在淋浴区
+in_bathroom_except_dr_room,IN_BATHROOM_EXCEPT_DR_ROOM,地点_定位,在淋浴区且不在博士房间
 in_foot_bath,IN_FOOT_BATH,地点_定位,在足浴区
 not_in_foot_bath,NOT_IN_FOOT_BATH,地点_定位,不在足浴区
 in_sauna,IN_SAUNA,地点_定位,在桑拿房
