@@ -82,6 +82,10 @@ class Instruct:
     """ 邀请同行 """
     END_FOLLOW = 0
     """ 结束同行 """
+    ASK_TARGET_REST = 0
+    """ 让对方去休息 """
+    ASK_TARGET_SLEEP = 0
+    """ 让对方去睡觉 """
     APOLOGIZE = 0
     """ 道歉 """
     LISTEN_COMPLAINT = 0

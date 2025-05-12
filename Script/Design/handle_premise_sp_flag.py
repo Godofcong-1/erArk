@@ -60,6 +60,35 @@ def handle_hp_g_1(character_id: int) -> int:
         return 1
 
 
+@add_premise(constant_promise.Premise.TARGET_HP_1)
+def target_handle_hp_1(character_id: int) -> int:
+    """
+    交互对象疲劳（体力=1）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if target_data.sp_flag.tired == 1:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_HP_G_1)
+def target_target_hp_g_1(character_id: int) -> int:
+    """
+    交互对象未疲劳（体力=1）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not target_handle_hp_1(character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_OR_TARGET_HP_1)
 def handle_self_or_target_hp_1(character_id: int) -> int:
     """

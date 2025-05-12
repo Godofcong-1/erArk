@@ -1927,24 +1927,6 @@ def handle_normal_7(character_id: int) -> int:
         return 1
 
 
-@add_premise(constant_promise.Premise.T_NORMAL_6)
-def handle_t_normal_6(character_id: int) -> int:
-    """
-    交互对象6正常的普通状态
-    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    character_data = cache.character_data[character_id]
-    target_chara_id = character_data.target_character_id
-    if handle_normal_6(target_chara_id):
-        return 1
-    else:
-        return 0
-
-
 @add_premise(constant_promise.Premise.NORMAL_2_4)
 def handle_normal_2_4(character_id: int) -> int:
     """
@@ -2197,6 +2179,23 @@ def handle_normal_123467(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_NORMAL_1)
+def handle_t_normal_1(character_id: int) -> int:
+    """
+    交互对象1正常的普通状态
+    \n1:基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if handle_normal_2(character_data.target_character_id):
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.T_NORMAL_2)
 def handle_t_normal_2(character_id: int) -> int:
     """
@@ -2209,6 +2208,24 @@ def handle_t_normal_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if handle_normal_2(character_data.target_character_id):
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_NORMAL_6)
+def handle_t_normal_6(character_id: int) -> int:
+    """
+    交互对象6正常的普通状态
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_normal_6(target_chara_id):
         return 1
     else:
         return 0
@@ -2812,6 +2829,26 @@ def handle_self_and_target_hp_ge_70(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_HP_OR_MP_LOW)
+def handle_t_hp_or_mp_low(character_id: int) -> int:
+    """
+    交互对象体力或气力有一项低于30%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    value1 = target_data.hit_point / target_data.hit_point_max
+    value2 = target_data.mana_point / target_data.mana_point_max
+    if value1 < 0.3:
+        return 1
+    elif value2 < 0.3:
+        return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TIRED_LE_0)

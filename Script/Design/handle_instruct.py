@@ -1530,6 +1530,48 @@ def handle_end_followed():
 
 
 @add_instruct(
+    constant.Instruct.ASK_TARGET_REST,
+    constant.InstructType.DAILY,
+    _("让对方休息"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TARGET_HP_OR_MP_LOW,
+        constant_promise.Premise.T_NORMAL_1,
+        constant_promise.Premise.T_NORMAL_2,
+        constant_promise.Premise.T_NORMAL_6,
+    },
+)
+def handle_ask_target_rest():
+    """处理让对方休息指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.sp_flag.rest = 1
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1)
+
+
+@add_instruct(
+    constant.Instruct.ASK_TARGET_SLEEP,
+    constant.InstructType.DAILY,
+    _("让对方去睡觉"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.TARGET_TIRED_GE_75,
+        constant_promise.Premise.T_NORMAL_1,
+        constant_promise.Premise.T_NORMAL_2,
+        constant_promise.Premise.T_NORMAL_6,
+    },
+)
+def handle_ask_target_sleep():
+    """处理让对方睡觉指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.sp_flag.tired = 1
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1)
+
+
+@add_instruct(
     constant.Instruct.APOLOGIZE,
     constant.InstructType.DAILY,
     _("道歉"),
