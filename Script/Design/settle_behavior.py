@@ -820,9 +820,13 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
         ):
         # 非群交模式
         if handle_premise.handle_group_sex_mode_off(character_id):
-            # 身体部位与服装部位通用均为+1200
-            position_index = 1201 + character_data.h_state.insert_position
-            character_data.second_behavior[position_index] = 1
+            # 如果不等于，则说明是本次指令改变了插入位置，因此不触发二段结算
+            if character_data.h_state.insert_position_change_save != character_data.h_state.insert_position:
+                character_data.h_state.insert_position_change_save = character_data.h_state.insert_position
+            else:
+                # 身体部位与服装部位通用均为+1200
+                position_index = 1201 + character_data.h_state.insert_position
+                character_data.second_behavior[position_index] = 1
         # 如果玩家当前有性交姿势数据
         if pl_character_data.h_state.current_sex_position != -1:
             from Script.Settle import common_default

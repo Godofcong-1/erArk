@@ -463,6 +463,8 @@ class BODY_H_STATE:
 
         self.insert_position: int = -1
         """ 阴茎插入位置，int，-1为未插入，0开始同身体部位，20开始同服装部位 """
+        self.insert_position_change_save: int = -1
+        """ 阴茎插入位置改变记录，用于在插入指令当时不触发阴茎位置二段结算 """
         self.shoot_position_body: int = -1
         """ 身体上的射精位置，int，-1为未射精，其他同身体部位 """
         self.shoot_position_cloth: int = -1
