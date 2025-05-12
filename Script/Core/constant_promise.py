@@ -629,7 +629,7 @@ class Premise:
     """ 地点_定位 在温室 """
     NOT_IN_GREENHOUSE = "not_in_greenhouse"
     """ 地点_定位 不在温室 """
-    IN_AROMATHERAPY_ROOM = "in_Aromatherapy_room"
+    IN_AROMATHERAPY_ROOM = "in_aromatherapy_room"
     """ 地点_定位 在香薰治疗室 """
     NOT_IN_AROMATHERAPY_ROOM = "not_in_aromatherapy_room"
     """ 地点_定位 不在香薰治疗室 """
