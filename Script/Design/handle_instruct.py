@@ -3289,6 +3289,23 @@ def handle_ask_for_socks():
 
 
 @add_instruct(
+    constant.Instruct.INVITE_TO_BATH,
+    constant.InstructType.OBSCENITY,
+    _("一起洗澡"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TO_DO,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_BATHROOM,
+     constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.CharacterStatus.STATUS_INVITE_TO_BATH,
+)
+def handle_invite_to_bath():
+    """处理一起洗澡指令"""
+    chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_INVITE_TO_BATH, judge = _("严重骚扰"), force_taget_wait = True)
+
+
+@add_instruct(
     constant.Instruct.STEAL_PAN,
     constant.InstructType.OBSCENITY,
     _("偷走内裤"),

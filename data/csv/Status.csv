@@ -118,10 +118,11 @@ int,str,str,int,str,str
 315,raise_skirt,掀起裙子,5,both,猥亵
 316,ask_for_pan,索要内裤,5,both,猥亵
 317,ask_for_socks,索要袜子,5,both,猥亵
+318,invite_to_bath,一起洗澡,30,pl,猥亵
 331,touch_clitoris,阴蒂爱抚,5,both,猥亵
 332,touch_vagina,手指插入（V）,5,both,猥亵
 333,touch_anus,手指插入（A）,5,both,猥亵
-336,milk,挤奶,30,both,猥亵
+336,milk,挤奶,10,both,猥亵
 341,smell_underwear,闻内衣,1,pl,猥亵
 342,steal_pan,偷走内裤,5,pl,猥亵
 343,steal_socks,偷走袜子,5,pl,猥亵

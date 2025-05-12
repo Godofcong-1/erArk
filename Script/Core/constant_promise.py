@@ -2763,6 +2763,10 @@ class Premise:
     """ H_地点 在爱情旅馆中入住房间为情趣主题房 """
     LOVE_HOTEL_ROOM_V3 = "love_hotel_room_v3"
     """ H_地点 在爱情旅馆中入住房间为顶级套房 """
+    H_IN_BATHROOM = "h_in_bathroom"
+    """ H_地点 正在浴室中H """
+    H_NOT_IN_BATHROOM = "h_not_in_bathroom"
+    """ H_地点 不在浴室中H """
 
     PENIS_IN_T_HAIR = "penis_in_t_hair"
     """ H_阴茎位置 当前阴茎位置为交互对象_发交中 """

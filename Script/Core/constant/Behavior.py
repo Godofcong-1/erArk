@@ -225,6 +225,8 @@ class Behavior:
     """ 索要内裤 """
     ASK_FOR_SOCKS = 317
     """ 索要袜子 """
+    INVITE_TO_BATH = 318
+    """ 一起洗澡 """
     TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = 332

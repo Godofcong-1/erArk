@@ -7521,6 +7521,25 @@ def handle_recover_from_unconscious_add_adjust(
         handle_npc_ai_in_h.recover_from_unconscious_h(character_id)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_DIRTY_RESET_IN_SHOWER)
+def handle_target_dirty_reset_in_shower(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象进行污浊清洗(525)
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_dirty_reset_in_shower(character_data.target_character_id, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
 def handle_read_add_adjust(
         character_id: int,

@@ -310,6 +310,8 @@ class Instruct:
     """ 索要内裤 """
     ASK_FOR_SOCKS = 0
     """ 索要袜子 """
+    INVITE_TO_BATH = 0
+    """ 一起洗澡 """
     STEAL_PAN = 0
     """ 偷走内裤 """
     STEAL_SOCKS = 0

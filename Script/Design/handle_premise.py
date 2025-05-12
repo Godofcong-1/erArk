@@ -9556,6 +9556,33 @@ def handle_love_hotel_room_v3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.H_IN_BATHROOM)
+def handle_h_in_bathroom(character_id: int) -> int:
+    """
+    当前正在浴室中H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.h_state.h_in_bathroom:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.H_NOT_IN_BATHROOM)
+def handle_h_not_in_bathroom(character_id: int) -> int:
+    """
+    当前不在浴室中H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_h_in_bathroom(character_id)
+
+
 @add_premise(constant_promise.Premise.PENIS_IN_T_HAIR)
 def handle_penis_in_t_hair(character_id: int) -> int:
     """

@@ -223,6 +223,8 @@ class CharacterStatus:
     """ 索要内裤 """
     STATUS_ASK_FOR_SOCKS = 317
     """ 索要袜子 """
+    STATUS_INVITE_TO_BATH = 318
+    """ 一起洗澡 """
     STATUS_TOUCH_CLITORIS = 331
     """ 阴蒂爱抚 """
     STATUS_TOUCH_VAGINA = 332

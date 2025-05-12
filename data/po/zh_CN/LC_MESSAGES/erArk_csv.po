@@ -23524,6 +23524,22 @@ msgstr ""
 msgid "现在{TargetName}对{PlayerName}充满了怨恨，把她放出来还是太危险了，最好不要这样做。\n等调教到一定程度后再考虑吧。"
 msgstr ""
 
+#: Event:68fb2370-8a52-48c3-97f3-075e024089e3
+msgid "{PlayerName}不断地玩弄{TargetName}，自己却先体力不支了。\n{TargetName}被{PlayerName}多次玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕。\n[调教进度+2]"
+msgstr ""
+
+#: Event:b3f23da8-c105-484a-a4ae-4f5cd29a9be1
+msgid "{PlayerName}不断地玩弄{TargetName}，自己却先体力不支了。\n{TargetName}被{PlayerName}不断玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕，她的内心有些向{PlayerName}屈服了。\n[调教进度+3]"
+msgstr ""
+
+#: Event:5f57448f-339b-4b1c-90ce-a9f7874e23f3
+msgid "{PlayerName}不断地玩弄{TargetName}，让她体力不支昏倒过去，翻着白眼，一脸被玩坏的表情。\n{TargetName}被{PlayerName}多次玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕。\n[调教进度+2]"
+msgstr ""
+
+#: Event:3eba04e2-d03d-49fe-864a-b3f4ead0b415
+msgid "{PlayerName}不断地玩弄{TargetName}，让她体力不支昏倒过去，翻着白眼，一脸被玩坏的表情。\n{TargetName}被{PlayerName}不断玩弄到绝顶，体会到了作为女人的快乐，内心的防线出现了些许裂痕，她的内心有些向{PlayerName}屈服了。\n[调教进度+3]"
+msgstr ""
+
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
 msgid "要怎么做呢"
 msgstr ""

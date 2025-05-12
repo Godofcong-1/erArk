@@ -501,6 +501,8 @@ class BODY_H_STATE:
         """ NPC主动H """
         self.h_in_love_hotel: bool = False
         """ 当前正在爱情旅馆中H """
+        self.h_in_bathroom: bool = False
+        """ 当前正在浴室中H """
         self.group_sex_lock_flag: bool = False
         """ 群交的模板锁定标记 """
         self.all_group_sex_temple_run: bool = False

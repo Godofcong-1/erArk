@@ -225,6 +225,8 @@ class BehaviorStr:
     """ 索要内裤 """
     ASK_FOR_SOCKS = "ask_for_socks"
     """ 索要袜子 """
+    INVITE_TO_BATH = "invite_to_bath"
+    """ 一起洗澡 """
     TOUCH_CLITORIS = "touch_clitoris"
     """ 阴蒂爱抚 """
     TOUCH_VAGINA = "touch_vagina"
