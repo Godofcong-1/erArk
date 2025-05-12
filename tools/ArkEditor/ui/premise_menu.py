@@ -412,7 +412,7 @@ class CVPMenu(QDialog):
         elif cache_control.now_edit_type_flag == 0:
             cache_control.now_talk_data[cache_control.now_select_id].premise[cvp_value_str] = 1
         cache_control.item_premise_list.update()
-        self.close()
+        # self.close()
 
     def cancel(self):
         """点击取消按钮"""
