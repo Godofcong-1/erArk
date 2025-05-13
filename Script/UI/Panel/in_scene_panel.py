@@ -120,7 +120,7 @@ class InScenePanel:
             elif (
                 len(character_list) and
                 pl_character_data.target_character_id not in character_list and
-                len(pl_character_data.target_character_id) and
+                len(cache.pl_pre_behavior_instruce) and
                 cache.pl_pre_behavior_instruce[-1] == constant.Behavior.MOVE
                 ):
                 pl_character_data.target_character_id = character_list[0]
