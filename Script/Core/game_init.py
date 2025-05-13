@@ -64,7 +64,7 @@ def init(main_flow: object):
                 if behavior_id in game_config.config_behavior:
                     behavior_data = game_config.config_behavior[behavior_id]
                     instruct_cn_name_list += behavior_data.name + "，"
-            if instruct_cn_name_list[-1] == "，":
+            if len(instruct_cn_name_list) and instruct_cn_name_list[-1] == "，":
                 instruct_cn_name_list = instruct_cn_name_list[:-1]
             # 向error_log写入回溯用信息
             with open(error_path, "a", encoding="utf-8") as e:

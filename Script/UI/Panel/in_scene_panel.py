@@ -117,7 +117,12 @@ class InScenePanel:
             if len(character_list) and pl_character_data.target_character_id != 0 and pl_character_data.target_character_id not in character_list:
                 pl_character_data.target_character_id = character_list[0]
             # 如果场景中有角色，交互对象不在场景中，刚移动到一个新地点，则将交互对象设为场景中的第一个角色
-            elif len(character_list) and pl_character_data.target_character_id not in character_list and cache.pl_pre_behavior_instruce[-1] == constant.Behavior.MOVE:
+            elif (
+                len(character_list) and
+                pl_character_data.target_character_id not in character_list and
+                len(pl_character_data.target_character_id) and
+                cache.pl_pre_behavior_instruce[-1] == constant.Behavior.MOVE
+                ):
                 pl_character_data.target_character_id = character_list[0]
             # 如果场景中没有NPC角色，则将交互对象设为自己
             elif not len(character_list):
