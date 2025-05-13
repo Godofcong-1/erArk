@@ -207,7 +207,7 @@ class SaveInfoDraw:
         # 进行二次确认
         while 1:
             line_feed.draw()
-            sure_draw = draw.LeftButton(_("[000]确认读取存档?"), _("0"), self.width)
+            sure_draw = draw.LeftButton(_("[000]确认读取存档"), _("0"), self.width)
             sure_draw.draw()
             line_feed.draw()
             back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
@@ -228,7 +228,7 @@ class SaveInfoDraw:
         # 进行二次确认
         while 1:
             line_feed.draw()
-            sure_draw = draw.LeftButton(_("[000]确认删除存档?"), _("0"), self.width)
+            sure_draw = draw.LeftButton(_("[000]确认删除存档"), _("0"), self.width)
             sure_draw.draw()
             line_feed.draw()
             back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)
@@ -247,7 +247,7 @@ class SaveInfoDraw:
         # 进行二次确认
         while 1:
             line_feed.draw()
-            sure_draw = draw.LeftButton(_("[000]确认覆盖存档?"), _("0"), self.width)
+            sure_draw = draw.LeftButton(_("[000]确认覆盖存档"), _("0"), self.width)
             sure_draw.draw()
             line_feed.draw()
             back_draw = draw.LeftButton(_("[001]取消"), _("1"), self.width)

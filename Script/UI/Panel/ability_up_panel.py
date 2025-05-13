@@ -1,5 +1,9 @@
-from typing import Tuple, List
+from math import e
+import re
+from typing import Dict, List
 from types import FunctionType
+
+from numpy import info
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import see_character_info_panel, talent_up_panel
 from Script.Core import (
@@ -42,8 +46,6 @@ class Characterabi_show_Text:
         """ 当前最大可绘制宽度 """
         self.return_list: List[str] = []
         """ 监听的按钮列表 """
-        # self.column = column
-        # """ 每行状态最大个数 """
         self.character_data = cache.character_data[self.character_id]
         """ 角色数据 """
 
@@ -207,12 +209,23 @@ class Characterabi_show_Text:
 
     def mark_down_show(self, ability_id: int):
         """显示刻印降级面板"""
+        # 调整使用的宝珠
         # 获取刻印降级数据
         now_mark_level = self.character_data.ability[ability_id]
         mark_down_data_id = game_config.config_mark_down_data_by_ability[ability_id][now_mark_level]
         mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
         need_juel_all_value = mark_down_data.need_juel_all_value
-        now_juel_all_value, juel_text = settle_behavior.get_now_juel_all_value_and_text_from_mark_down_data(mark_down_data_id, self.character_id)
+        # 宝珠信息
+        juel_type_id_list = []
+        juel_type_id_list.append(mark_down_data.need_juel_1)
+        juel_type_id_list.append(mark_down_data.need_juel_2)
+        juel_type_id_list.append(mark_down_data.need_juel_3)
+        # 如果有1号，则替换为全快感珠
+        if '1' in juel_type_id_list:
+            juel_type_id_list.remove('1')
+            for i in range(8):
+                juel_type_id_list.append(str(i))
+        self.jewel_use_dict: Dict[int, int] = {}
         # 关押区的等级效果
         now_level = cache.rhodes_island.facility_level[19]
         facility_cid = game_config.config_facility_effect_data[_("关押区")][int(now_level)]
@@ -225,15 +238,10 @@ class Characterabi_show_Text:
         if handle_premise.handle_imprisonment_1(self.character_id):
             need_juel_all_value = int(need_juel_all_value * (1 - facility_effect / 100))
             info_text += _("该干员已被关押，当前关押区等级为{0}，降级所需宝珠值降低{1}%，降级所需宝珠值为{2}\n").format(now_level, facility_effect, need_juel_all_value)
-        info_text += _("当前角色宝珠可以提供的总值为：")
-        # 如果为空，则输出无
-        if juel_text == "":
-            juel_text = _("无")
-        # 加到文本信息中
-        info_text += juel_text + "\n"
 
         # 开始绘制
         while 1:
+            mark_down_data_all_value = 0
             return_list = []
             title_line = draw.TitleLineDraw(_("使用宝珠降低刻印"), self.width, ":")
             title_line.draw()
@@ -243,9 +251,36 @@ class Characterabi_show_Text:
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
+            # 遍历可用宝珠
+            for need_juel in juel_type_id_list:
+                # 跳过空值
+                if need_juel == '0':
+                    continue
+                if '|' in need_juel:
+                    juel_id = int(need_juel.split('|')[0])
+                    adjust = float(need_juel.split('|')[1])
+                else:
+                    juel_id = int(need_juel)
+                    adjust = 1
+                # 初始化使用量
+                self.jewel_use_dict.setdefault(juel_id, 0)
+                jewel_name = game_config.config_juel[juel_id].name
+                now_jewel_value = int(self.jewel_use_dict[juel_id] * adjust)
+                # 绘制调整按钮
+                button_text = _("[{0}]{1} 当前用量:{2}，当前总值{3}").format(juel_id, jewel_name, self.jewel_use_dict[juel_id], now_jewel_value)
+                btn = draw.LeftButton(button_text, _(jewel_name), self.width/5, cmd_func=self.input_juel_count, args=(juel_id, adjust, mark_down_data_all_value, need_juel_all_value))
+                btn.draw()
+                return_list.append(btn.return_text)
+                mark_down_data_all_value += now_jewel_value
+                line_feed.draw()
+            # 计算当前宝珠总值
+            juel_info_text = ("\n当前宝珠总值为：{0}\n").format(mark_down_data_all_value)
+            info_draw.text = juel_info_text
+            info_draw.draw()
+            line_feed.draw()
             # 如果当前宝珠足够，绘制降低按钮
-            if now_juel_all_value >= need_juel_all_value:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id, mark_down_data_id, need_juel_all_value))
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id))
+            if mark_down_data_all_value >= need_juel_all_value:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             # 绘制返回按钮
@@ -256,8 +291,39 @@ class Characterabi_show_Text:
             yrn = flow_handle.askfor_all(return_list)
             py_cmd.clr_cmd()
             line_feed.draw()
-            if yrn in return_list:
+            if yrn == back_draw.return_text or yrn == yes_draw.return_text:
                 break
+
+    def input_juel_count(self, juel_id: int, adjust: float, mark_down_data_all_value: int, need_juel_all_value: int):
+        """
+        输入宝珠使用量
+        参数:
+        juel_id: int -- 宝珠id
+        adjust: float -- 宝珠调整值
+        mark_down_data_all_value: int -- 当前宝珠总值
+        need_juel_all_value: int -- 需要的宝珠总值
+        """
+        max_count = self.character_data.juel[juel_id]
+        guess_num = 0
+        # 计算预计需要的宝珠数量
+        if mark_down_data_all_value >= need_juel_all_value:
+            guess_num = 0
+        else:
+            guess_num = int((need_juel_all_value - mark_down_data_all_value) / adjust)
+        ask_text = _("\n最多可以使用{0}个{1}，当前使用量为{2}，预计需要{3}个\n").format(max_count, game_config.config_juel[juel_id].name, self.jewel_use_dict[juel_id], guess_num)
+        ask_panel = panel.AskForOneMessage()
+        ask_panel.set(ask_text, 99)
+        # 获取输入
+        get_text = ask_panel.draw()
+        # 如果输入不是数字，则返回
+        if get_text.isdigit() == False:
+            return
+        new_num = int(get_text)
+        if new_num < 0:
+            new_num = 0
+        elif new_num > max_count:
+            new_num = max_count
+        self.jewel_use_dict[juel_id] = new_num
 
     def mark_up(self, ability_id: int, need_juel: int):
         """升级刻印"""
@@ -275,50 +341,17 @@ class Characterabi_show_Text:
         # 结算二段行为
         settle_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
 
-    def mark_down(self, ability_id: int, mark_down_data_id: int, need_juel_all_value: int):
+    def mark_down(self, ability_id: int):
         """降级刻印"""
         # 刻印等级-1
         self.character_data.ability[ability_id] -= 1
         # 扣除宝珠
-        mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
-        mark_down_data_need_juel_list = []
-        mark_down_data_need_juel_list.append(mark_down_data.need_juel_1)
-        mark_down_data_need_juel_list.append(mark_down_data.need_juel_2)
-        mark_down_data_need_juel_list.append(mark_down_data.need_juel_3)
-        # 如果有1号，则替换为全快感珠
-        if '1' in mark_down_data_need_juel_list:
-            mark_down_data_need_juel_list.remove('1')
-            for i in range(8):
-                mark_down_data_need_juel_list.append(str(i))
-        mark_down_data_all_value = 0
-        # 遍历宝珠需求
-        for need_juel in mark_down_data_need_juel_list:
-            # 跳过空值
-            if need_juel == '0':
-                continue
-            # 如果存在|符号，说明有权重调整
-            if '|' in need_juel:
-                juel_id = int(need_juel.split('|')[0])
-                adjust = float(need_juel.split('|')[1])
-            else:
-                juel_id = int(need_juel)
-                adjust = 1
-            # 计算当前宝珠值
-            now_juel_value = int(self.character_data.juel[juel_id] * adjust)
-            # 如果不足以扣除，扣除后继续计算下一个宝珠
-            if mark_down_data_all_value + now_juel_value < need_juel_all_value:
-                self.character_data.juel[juel_id] = 0
-                mark_down_data_all_value += now_juel_value
-            # 如果足够扣除，则扣除到刚刚好等于需求值
-            else:
-                # 计算扣除值
-                now_need_juel = need_juel_all_value - mark_down_data_all_value
-                # 扣除宝珠
-                self.character_data.juel[juel_id] -= int(now_need_juel / adjust)
-                break
+        for juel_id in self.jewel_use_dict:
+            # 扣除宝珠
+            self.character_data.juel[juel_id] -= self.jewel_use_dict[juel_id]
         # 输出降级信息
         info_draw = draw.WaitDraw()
-        info_draw.text = _("刻印降级成功，{0}降至{1}级\n").format(game_config.config_ability[ability_id].name, self.character_data.ability[ability_id])
+        info_draw.text = _("\n刻印降级成功，{0}降至{1}级\n").format(game_config.config_ability[ability_id].name, self.character_data.ability[ability_id])
         info_draw.style = "gold_enrod"
         info_draw.draw()
 
@@ -335,6 +368,7 @@ class Characterabi_cmd_Text:
     Keyword arguments:
     character_id -- 角色id
     width -- 最大宽度
+    ability_id -- 能力id
     """
 
     def __init__(self, character_id: int, width: int, ability_id: int):
