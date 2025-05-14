@@ -180,7 +180,7 @@ def judge_character_follow(character_id: int) -> int:
     # 智能跟随
     if character_data.sp_flag.is_follow == 1:
         # 取消所有工作和娱乐状态
-        default.handle_cancel_all_work_and_entertainment_flag(character_id, 1, game_type.CharacterStatusChange, datetime.datetime)
+        default.handle_cancel_all_work_and_entertainment_flag(character_id, 1, game_type.CharacterStatusChange(), datetime.datetime)
         return 1
 
     # 维持强制跟随的状态

@@ -346,26 +346,34 @@ def settle_player_ability(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
-    now_char = cache.character_data[character_id]
+    character_data = cache.character_data[character_id]
     # 视觉系技艺消耗
-    if now_char.pl_ability.visual:
+    if character_data.pl_ability.visual:
         down_sp = max(int(true_add_time / 12), 1)
-        multiple = now_char.talent[307] + now_char.talent[308] + now_char.talent[309]
+        multiple = character_data.talent[307] + character_data.talent[308] + character_data.talent[309]
         down_sp *= max(multiple, 1)
-        down_sp = min(down_sp, now_char.sanity_point)
-        now_char.sanity_point -= down_sp
-        now_char.pl_ability.today_sanity_point_cost += down_sp
+        down_sp = min(down_sp, character_data.sanity_point)
+        character_data.sanity_point -= down_sp
+        character_data.pl_ability.today_sanity_point_cost += down_sp
     # 时停系技艺消耗
     if handle_premise.handle_time_stop_on(character_id):
-        down_sp = min(max(true_add_time * 2, 1), now_char.sanity_point)
-        now_char.sanity_point -= down_sp
-        now_char.pl_ability.today_sanity_point_cost += down_sp
+        down_sp = min(max(true_add_time * 2, 1), character_data.sanity_point)
+        character_data.sanity_point -= down_sp
+        character_data.pl_ability.today_sanity_point_cost += down_sp
     # 中断技艺
-    if handle_premise.handle_at_least_one_arts_on(character_id) and now_char.sanity_point <= 0:
-        draw_wait = draw.WaitDraw(); draw_wait.width = window_width; draw_wait.style = "red"
-        draw_wait.text = _("\n理智值不足，开启的源石技艺已全部中断\n"); draw_wait.draw()
-        now_char.sanity_point = 0; now_char.pl_ability.visual = False
-        target = cache.character_data[now_char.target_character_id]
+    if (
+        handle_premise.handle_at_least_one_arts_on(character_id) and
+        character_data.sanity_point <= 0 and
+        character_data.behavior.behavior_id not in {constant.Behavior.HYPNOSIS_CANCEL, constant.Behavior.TIME_STOP_OFF, constant.Behavior.LOW_OBSCENITY_ANUS, constant.Behavior.HIGH_OBSCENITY_ANUS, constant.Behavior.DO_H_FAIL}
+        ):
+        draw_wait = draw.WaitDraw()
+        draw_wait.width = window_width
+        draw_wait.style = "red"
+        draw_wait.text = _("\n理智值不足，开启的源石技艺已全部中断\n")
+        draw_wait.draw()
+        character_data.sanity_point = 0
+        character_data.pl_ability.visual = False
+        target = cache.character_data[character_data.target_character_id]
         from Script.Design import handle_instruct
         if target.sp_flag.unconscious_h >= 4:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_CANCEL)

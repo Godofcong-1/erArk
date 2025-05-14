@@ -2465,6 +2465,27 @@ def handle_self_join_group_sex_off(
     character_data.sp_flag.go_to_join_group_sex = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAR_GROUP_SEX_TEMPLATE)
+def handle_clear_group_sex_template(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清空自己的群交模板
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.h_state.group_sex_body_template_dict = attr_calculation.get_h_state_reset(character_data.h_state).group_sex_body_template_dict
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_GET_WEEKNESSS_BY_DR)
 def handle_target_get_weeknesss_by_dr(
         character_id: int,

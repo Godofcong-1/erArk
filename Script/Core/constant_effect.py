@@ -844,6 +844,8 @@ class BehaviorEffect:
     """ 属性_H 自己开始加入群交 """
     SELF_JOIN_GROUP_SEX_OFF = 1418
     """ 属性_H 自己停止加入群交 """
+    CLEAR_GROUP_SEX_TEMPLATE = 1419
+    """ 属性_H 清空自己的群交模板 """
 
     # 1500+见属性_基础
 

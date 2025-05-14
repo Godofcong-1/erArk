@@ -228,6 +228,7 @@ cid,effect_name,effect_type,effect
 534,MAINTENANCE_ADD_ADJUST,指令_专用结算,（维护设施用）修复当前地点的损坏设施
 535,TRAIN_PRISONERS_ADD_ADJUST,指令_专用结算,（训练囚犯用）对所有被关押的囚犯进行日常训练
 536,RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST,指令_专用结算,交互对象从无意识H中恢复意识的结算
+537,TARGET_DIRTY_RESET_IN_SHOWER,指令_专用结算,交互对象进行污浊清洗(525)
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视
@@ -431,6 +432,7 @@ cid,effect_name,effect_type,effect
 1416,ALL_GROUP_SEX_TEMPLE_OFF,属性_H,关闭全群交模板，进行单轮群交
 1417,SELF_JOIN_GROUP_SEX_ON,属性_H,自己开始加入群交
 1418,SELF_JOIN_GROUP_SEX_OFF,属性_H,自己停止加入群交
+1419,CLEAR_GROUP_SEX_TEMPLATE,属性_H,清空自己的群交模板
 
 
 1601,TARGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
