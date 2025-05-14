@@ -7103,21 +7103,24 @@ def handle_dirty_reset_in_shower(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     # 保留比例
-    keep_rate_dict = {6 : 0.2, 7 : 0.7, 8 : 0.3}
+    keep_rate_dict = {6 : 0.2, 7 : 0.7, 8 : 0.3, 15 : 1}
     # 身体管理被要求不洗精液时则上调比例
     if handle_premise.handle_ask_not_wash_semen(character_id):
         keep_rate_dict[6] = 0.8
         keep_rate_dict[7] = 0.9
     # 保留数据
-    keep_data = {6 : 0, 7 : 0, 8 : 0}
-    # 保留部位
-    for body_cid in [6, 7, 8]:
+    keep_data = {}
+    for body_cid in keep_rate_dict:
+        # 先清零
+        keep_data[body_cid] = 0
+        # 计算保留数据，使用原数据以继承0号和3号元素
         body_dirty = character_data.dirty.body_semen[body_cid].copy()
         keep_rate = keep_rate_dict[body_cid]
         new_dirty = body_dirty[1] * keep_rate
         # 如果保留后小于5，则归零
         if new_dirty < 5:
             new_dirty = 0
+        # 获取新的等级
         new_lv = attr_calculation.get_semen_now_level(new_dirty, body_cid, 0)
         body_dirty[1] = new_dirty
         body_dirty[2] = new_lv
@@ -7125,9 +7128,8 @@ def handle_dirty_reset_in_shower(
 
     # 数据归零后再赋值
     character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
-    character_data.dirty.body_semen[6] = keep_data[6]
-    character_data.dirty.body_semen[7] = keep_data[7]
-    character_data.dirty.body_semen[8] = keep_data[8]
+    for body_cid in keep_rate_dict:
+        character_data.dirty.body_semen[body_cid] = keep_data[body_cid]
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ORGASM_EDGE_RELEASE)

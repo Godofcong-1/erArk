@@ -123,6 +123,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if len(now_character_data.dirty.semen_flow):
             settle_semen_flow(character_id, true_add_time)
 
+        # 结算精液消化吸收
+        if now_character_data.dirty.body_semen[8][1] > 0:
+            semen_absorb(character_id, true_add_time, 8)
+        if now_character_data.dirty.body_semen[15][1] > 0:
+            semen_absorb(character_id, true_add_time, 15)
+
         # 结算乳汁量，仅结算有泌乳素质的
         if now_character_data.talent[27]:
             milk_change = int(true_add_time * 2 / 3)
@@ -212,6 +218,32 @@ def settle_semen_flow(character_id: int, true_add_time: int):
     # 更新流动的源头列表
     now_character_data.dirty.semen_flow = new_flow_list
     # print(f"debug {now_character_data.name}的精液流动完毕，剩余流动列表为{now_character_data.dirty.semen_flow}")
+
+def semen_absorb(character_id: int, true_add_time: int, body_part: int):
+    """
+    结算精液吸收\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    true_add_time -- 实际行动时间\n
+    body_part -- 身体部位id\n
+    """
+    now_character_data: game_type.Character = cache.character_data[character_id]
+    # 计算吸收的精液量，公式为每5分钟吸收1毫升或当前精液量的1%中较大的那个
+    absorb_ml = max(true_add_time // 5, now_character_data.dirty.body_semen[body_part][1] * 0.01)
+    absorb_ml = int(absorb_ml)
+    # 不得高于当前精液量
+    absorb_ml = min(absorb_ml, now_character_data.dirty.body_semen[body_part][1])
+    # 从角色身体中吸收精液
+    now_character_data.dirty.body_semen[body_part][1] -= absorb_ml
+    # 更新吸收精液量
+    now_character_data.dirty.absorbed_total_semen += absorb_ml
+    # 如果现存量小于3ml，则清零
+    if now_character_data.dirty.body_semen[body_part][1] < 3:
+        now_character_data.dirty.body_semen[body_part][1] = 0
+    # 计算新的等级量
+    new_lv = attr_calculation.get_semen_now_level(now_character_data.dirty.body_semen[body_part][1], body_part, 0)
+    # 更新等级
+    now_character_data.dirty.body_semen[body_part][2] = new_lv
 
 def change_character_persistent_state(character_id: int):
     """

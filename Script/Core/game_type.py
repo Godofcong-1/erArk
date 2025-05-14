@@ -330,6 +330,8 @@ class DIRTY:
         """
         self.penis_dirty_dict: dict = {}
         """ 阴茎的污浊属性 [semen精液, blood处子血] """
+        self.absorbed_total_semen: int = 0
+        """ 累计吸收的精液总量，int类 """
 
 
 class PREGNANCY:
