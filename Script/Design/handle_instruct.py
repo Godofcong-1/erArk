@@ -3293,7 +3293,6 @@ def handle_ask_for_socks():
     constant.InstructType.OBSCENITY,
     _("一起洗澡"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_BATHROOM,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,

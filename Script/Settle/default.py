@@ -7127,6 +7127,9 @@ def handle_dirty_reset_in_shower(
         keep_data[body_cid] = body_dirty
 
     # 数据归零后再赋值
+    # 暂时注释仅身体污浊的清零，使服装污浊也一起清零
+    # new_dirty = attr_calculation.get_dirty_reset(character_data.dirty)
+    # character_data.dirty.body_semen = new_dirty.body_semen
     character_data.dirty = attr_calculation.get_dirty_reset(character_data.dirty)
     for body_cid in keep_rate_dict:
         character_data.dirty.body_semen[body_cid] = keep_data[body_cid]
