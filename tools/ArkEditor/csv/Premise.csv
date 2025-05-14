@@ -441,6 +441,7 @@ normal_4,NORMAL_4,属性_异常状态,4正常(服装异常)
 normal_5,NORMAL_5,属性_异常状态,5正常(意识模糊)
 normal_6,NORMAL_6,属性_异常状态,6正常(完全意识不清醒)
 normal_7,NORMAL_7,属性_异常状态,7正常(角色离线)
+t_normal_1,T_NORMAL_1,属性_异常状态,交互对象1正常
 t_normal_2,T_NORMAL_2,属性_异常状态,交互对象2正常
 t_normal_6,T_NORMAL_6,属性_异常状态,交互对象6正常
 normal_2_4,NORMAL_2_4,属性_异常状态,24正常的普通状态
@@ -460,6 +461,7 @@ unnormal,UNNORMAL,属性_异常状态,有特殊需求的异常状态
 unnormal_2,UNNORMAL_2,属性_异常状态,2异常
 unnormal_27,UNNORMAL_27,属性_异常状态,27异常（AI停止或离线）
 t_normal_5_6,T_NORMAL_5_6,属性_异常状态,交互对象56正常
+t_normal_5_6_or_unconscious_flag_4,T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4,属性_异常状态,交互对象56正常或平然
 t_unnormal_5_6,T_UNNORMAL_5_6,属性_异常状态,交互对象5异常或6异常
 t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
 unnormal_567,UNNORMAL_567,属性_异常状态,自身5或6或7异常
@@ -483,6 +485,7 @@ t_hp_ne_1,TARGET_HP_NE_1,属性_基础,交互对象体力不等于1
 t_mp_0,TARGET_MP_0,属性_基础,交互对象气力为0
 t_mp_low,TARGET_MP_LOW,属性_基础,交互对象气力低于30%
 t_mp_high,TARGET_MP_HIGH,属性_基础,交互对象气力高于70%
+t_hp_or_mp_low,TARGET_HP_OR_MP_LOW,属性_基础,交互对象体力或气力有一项低于30%
 self_and_target_hp_ge_70,SELF_AND_TARGET_HP_GE_70,属性_基础,自身和交互对象体力都高于70%
 tired_le_0,TIRED_LE_0,属性_基础,疲劳条≤0%
 tired_ge_10,TIRED_GE_10,属性_基础,疲劳条≥10%
@@ -626,6 +629,8 @@ jj_3,JJ_3,属性_身体部位,自身阴茎大小为巨根
 
 hp_1,HP_1,特殊flag_生活,自身疲劳（体力=1）
 hp_g_1,HP_G_1,特殊flag_生活,自身未疲劳（体力>1）
+target_hp_1,TARGET_HP_1,特殊flag_生活,交互对象疲劳（体力=1）
+target_hp_g_1,TARGET_HP_G_1,特殊flag_生活,交互对象未疲劳（体力=1）
 self_or_target_hp_1,SELF_OR_TARGET_HP_1,特殊flag_生活,自身或交互对象疲劳（体力=1）
 self_and_target_hp_g_1,SELF_AND_TARGET_HP_G_1,特殊flag_生活,自身和交互对象均未疲劳（体力>1）
 shower_flag_0,SHOWER_FLAG_0,特殊flag_生活,自身没有洗澡状态
@@ -1393,6 +1398,8 @@ live_inlove_hotel,LIVE_IN_LOVE_HOTEL,H_地点,已在爱情旅馆中入住
 love_hotel_room_v1,LOVE_HOTEL_ROOM_V1,H_地点,在爱情旅馆中入住房间为标间
 love_hotel_room_v2,LOVE_HOTEL_ROOM_V2,H_地点,在爱情旅馆中入住房间为情趣主题房
 love_hotel_room_v3,LOVE_HOTEL_ROOM_V3,H_地点,在爱情旅馆中入住房间为顶级套房
+h_in_bathroom,H_IN_BATHROOM,H_地点,正在浴室中H
+h_not_in_bathroom,H_NOT_IN_BATHROOM,H_地点,不在浴室中H
 
 penis_in_t_hair,PENIS_IN_T_HAIR,H_阴茎位置,当前阴茎位置为交互对象_发交中
 penis_in_t_face,PENIS_IN_T_FACE,H_阴茎位置,当前阴茎位置为交互对象_阴茎蹭脸中
