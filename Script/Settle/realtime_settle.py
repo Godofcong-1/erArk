@@ -366,11 +366,11 @@ def settle_player_ability(character_id: int, true_add_time: int) -> None:
         draw_wait.text = _("\n理智值不足，开启的源石技艺已全部中断\n"); draw_wait.draw()
         now_char.sanity_point = 0; now_char.pl_ability.visual = False
         target = cache.character_data[now_char.target_character_id]
+        from Script.Design import handle_instruct
         if target.sp_flag.unconscious_h >= 4:
-            default.handle_hypnosis_cancel(0, 1, game_type.CharacterStatusChange, datetime.datetime)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_CANCEL)
         if handle_premise.handle_time_stop_on(character_id):
-            from Script.Design import handle_instruct
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_TIME_STOP_OFF)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.TIME_STOP_OFF)
 
 def settle_sleep_h(character_id: int, true_add_time: int) -> None:
     """

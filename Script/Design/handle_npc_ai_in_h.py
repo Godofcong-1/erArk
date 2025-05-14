@@ -155,12 +155,8 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     # 如果角色不在无意识H状态，则直接返回
-    if character_data.sp_flag.unconscious_h == 0:
+    if target_data.sp_flag.unconscious_h == 0:
         return
-
-    # 停止对方的无意识状态与H状态
-    target_data.sp_flag.unconscious_h = 0
-    target_data.sp_flag.is_h = False
 
     # 是否继续H
     continue_h = False
@@ -181,9 +177,9 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         target_data.sp_flag.sleep_h_awake = True
     # 同步玩家的行动开始时间
     instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
-    # 玩家的行动时间设为10分钟，对方的行动时间设为15分钟
-    character_data.behavior.duration = 10
-    target_data.behavior.duration = 15
+    # 玩家的行动时间设为5分钟，对方的行动时间设为10分钟
+    character_data.behavior.duration = 5
+    target_data.behavior.duration = 10
 
     # 结算恢复无意识的二段行为
     settle_unconscious_semen_and_cloth(character_id)
@@ -217,20 +213,26 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
 
     # 如果继续H
     if continue_h:
-        character_data.behavior.behavior_id = constant.Behavior.H
-        character_data.state = constant.CharacterStatus.STATUS_H
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
         target_data.behavior.behavior_id = constant.Behavior.WAIT
         target_data.state = constant.CharacterStatus.STATUS_WAIT
-       # 睡眠中，则对方获得装睡状态
+        # 睡眠中，则对方获得装睡状态
         if handle_premise.handle_action_sleep(character_data.target_character_id):
             target_data.h_state.pretend_sleep = True
+        # 其他情况下取消无意识H
+        else:
+            target_data.sp_flag.unconscious_h = 0
     # 否则
     else:
+        # 停止对方的无意识状态与H状态
+        target_data.sp_flag.unconscious_h = 0
+        target_data.sp_flag.is_h = False
         # 重置双方H结构体和相关数据
         default.handle_both_h_state_reset(0, 1, game_type.CharacterStatusChange, datetime.datetime)
 
-    # 时间推进十分钟
-    update.game_update_flow(10)
+    # 时间推进5分钟
+    update.game_update_flow(5)
 
 
 def judge_weak_up_in_sleep_h(character_id: int):
