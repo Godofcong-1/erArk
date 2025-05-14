@@ -300,11 +300,17 @@ class SeeInstructPanel:
                 cache.instruct_sex_type_filter[now_type] = 0
             else:
                 cache.instruct_sex_type_filter[now_type] = 1
+            # 如果是技艺类的话，则也同时变动非H中的技艺类
+            if now_type == constant.SexInstructSubType.ARTS:
+                cache.instruct_type_filter[constant.InstructType.ARTS] = cache.instruct_sex_type_filter[now_type]
         else:
             if cache.instruct_type_filter[now_type]:
                 cache.instruct_type_filter[now_type] = 0
             else:
                 cache.instruct_type_filter[now_type] = 1
+            # 如果是技艺类的话，则也同时变动H中的技艺类
+            if now_type == constant.InstructType.ARTS:
+                cache.instruct_sex_type_filter[constant.SexInstructSubType.ARTS] = cache.instruct_type_filter[now_type]
 
     def handle_instruct(self, instruct_id: int):
         """
