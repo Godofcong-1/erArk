@@ -9341,6 +9341,8 @@ def handle_urinate_point_zero(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.urinate_point = 0
+    character_data.dirty.body_semen[9][1] = 0
+    character_data.dirty.body_semen[9][2] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_URINATE_POINT_ZERO)
@@ -9361,8 +9363,7 @@ def handle_target_urinate_point_zero(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.urinate_point = 0
+    handle_urinate_point_zero(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HUNGER_POINT_ZERO)

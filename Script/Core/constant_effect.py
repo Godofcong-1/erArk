@@ -64,9 +64,9 @@ class BehaviorEffect:
     NOT_TIRED = 31
     """ 属性_基础 从疲劳中恢复 """
     URINATE_POINT_ZERO = 32
-    """ 属性_基础 尿意值归零 """
+    """ 属性_基础 尿意值归零并清空尿道精液 """
     TARGET_URINATE_POINT_ZERO = 33
-    """ 属性_基础 交互对象尿意值归零 """
+    """ 属性_基础 交互对象尿意值归零并清空尿道精液 """
     HUNGER_POINT_ZERO = 34
     """ 属性_基础 饥饿值归零 """
     TARGET_HUNGER_POINT_ZERO = 35

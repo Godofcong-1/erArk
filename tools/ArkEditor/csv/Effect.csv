@@ -33,8 +33,8 @@ cid,effect_name,effect_type,effect
 23,DOWN_INTERACTION_FAVORABILITY,属性_基础,降低基础互动好感
 24,DOWN_SMALL_TRUST,属性_基础,降低基础互动信赖
 31,NOT_TIRED,属性_基础,从疲劳中恢复
-32,URINATE_POINT_ZERO,属性_基础,尿意值归零
-33,TARGET_URINATE_POINT_ZERO,属性_基础,交互对象尿意值归零
+32,URINATE_POINT_ZERO,属性_基础,尿意值归零并清空尿道精液
+33,TARGET_URINATE_POINT_ZERO,属性_基础,交互对象尿意值归零并清空尿道精液
 34,HUNGER_POINT_ZERO,属性_基础,饥饿值归零
 35,TARGET_HUNGER_POINT_ZERO,属性_基础,交互对象饥饿值归零
 36,SLEEP_POINT_ZERO,属性_基础,熟睡值归零
