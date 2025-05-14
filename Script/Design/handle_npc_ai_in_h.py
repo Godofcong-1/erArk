@@ -170,7 +170,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         name_text = target_data.name
         # 如果在群交中
         if handle_premise.handle_group_sex_mode_on(character_id):
-            name_text = _("等人")
+            name_text += _("等人")
         now_draw.text = _("\n{0}从无意识状态中恢复过来\n").format(name_text)
     else:
         now_draw.text = info_text
@@ -196,7 +196,7 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         # 关闭群交状态
         default.handle_group_sex_mode_off(character_id, 1, game_type.CharacterStatusChange(), datetime.datetime)
         # 暂存玩家的行为
-        tem_behavior = character_data.behavior
+        tem_behavior_id = character_data.behavior.behavior_id
         tem_state = character_data.state
         # 结算交互对象以外的其他角色
         for chara_id in scene_data.character_list:
@@ -207,13 +207,10 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
             if chara_id == target_data.cid:
                 continue
             # 结算其他角色
-            handle_npc_instruct_condition(chara_id, False, chara_id, True)
-            # 停止对方的无意识状态与H状态
-            target_data.sp_flag.unconscious_h = 0
-            target_data.sp_flag.is_h = False
+            handle_npc_instruct_condition(character_id, False, chara_id, True)
         # 恢复玩家的交互对象与行为
         character_data.target_character_id = target_data.cid
-        character_data.behavior = tem_behavior
+        character_data.behavior.behavior_id = tem_behavior_id
         character_data.state = tem_state
 
     # 结算是否继续H
@@ -236,9 +233,6 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
             target_data.sp_flag.unconscious_h = 1
     # 否则
     else:
-        # 停止对方的无意识状态与H状态
-        target_data.sp_flag.unconscious_h = 0
-        target_data.sp_flag.is_h = False
         # 对象行为时间改为1分钟
         target_data.behavior.duration = 1
         # 重置双方H结构体和相关数据
@@ -274,6 +268,10 @@ def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_targe
     else:
         target_character_id = character_data.target_character_id
     target_data: game_type.Character = cache.character_data[target_character_id]
+
+    # 停止对方的无意识状态与H状态
+    target_data.sp_flag.unconscious_h = 0
+    target_data.sp_flag.is_h = False
 
     # 如果交互对象处于监禁状态，则直接满足条件
     if handle_premise.handle_t_imprisonment_1(character_id):
