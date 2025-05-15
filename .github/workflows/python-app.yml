@@ -50,7 +50,6 @@ jobs:
           Copy-Item update.log dist/
           Copy-Item "todo list.txt" dist/
           Copy-Item package.json dist/
-          Copy-Item logo.png dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
 
