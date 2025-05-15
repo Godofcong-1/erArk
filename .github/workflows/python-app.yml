@@ -28,7 +28,7 @@ jobs:
 
       - name: Run PyInstaller
         run: |
-          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading
+          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading --icon=logo.png
 
       - name: Build Game Config
         run: |
@@ -50,6 +50,7 @@ jobs:
           Copy-Item update.log dist/
           Copy-Item "todo list.txt" dist/
           Copy-Item package.json dist/
+          Copy-Item logo.png dist/
           Copy-Item example dist/ -Recurse
           Rename-Item dist erArk
 
