@@ -50,8 +50,9 @@ def get_resource_path(file_name: str) -> str:
         str: 资源文件的绝对路径
     """
     # 如果是 PyInstaller 打包后的环境，资源会被解压到 _MEIPASS 目录
-    if getattr(sys, 'frozen', False):
-        base_path = sys._MEIPASS
+    if getattr(sys, "frozen", False):
+        # 获取当前工作目录作为资源根路径
+        base_path = os.getcwd()
     else:
         # 开发环境：资源在项目根目录
         base_path = os.path.abspath(
