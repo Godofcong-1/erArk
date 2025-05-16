@@ -3679,7 +3679,7 @@ def handle_anal_caress():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
-     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4,
+     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_MAKE_MASTUREBATE,
 )
@@ -3696,7 +3696,7 @@ def handle_make_masturebate():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_NOT_GAG,
-     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4,
+     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
      constant_promise.Premise.IS_H},
     constant.CharacterStatus.STATUS_MAKE_LICK_ANAL,
 )
@@ -5588,7 +5588,7 @@ def handle_urethral_sex():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TARGET_URINATE_GE_80,
      constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4,
+     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
     },
     constant.CharacterStatus.STATUS_ASK_PEE,
 )

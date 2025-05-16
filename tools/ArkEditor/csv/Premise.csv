@@ -461,7 +461,7 @@ unnormal,UNNORMAL,属性_异常状态,有特殊需求的异常状态
 unnormal_2,UNNORMAL_2,属性_异常状态,2异常
 unnormal_27,UNNORMAL_27,属性_异常状态,27异常（AI停止或离线）
 t_normal_5_6,T_NORMAL_5_6,属性_异常状态,交互对象56正常
-t_normal_5_6_or_unconscious_flag_4,T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4,属性_异常状态,交互对象56正常或平然
+t_normal_5_6_or_unconscious_flag_4_7,T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,属性_异常状态,交互对象56正常或平然心控
 t_unnormal_5_6,T_UNNORMAL_5_6,属性_异常状态,交互对象5异常或6异常
 t_unnormal_6,T_UNNORMAL_6,属性_异常状态,交互对象6异常
 unnormal_567,UNNORMAL_567,属性_异常状态,自身5或6或7异常

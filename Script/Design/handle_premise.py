@@ -2315,10 +2315,10 @@ def handle_t_normal_5_6(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4)
-def handle_t_normal_5_6_or_unconscious_flag_4(character_id: int) -> int:
+@add_premise(constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7)
+def handle_t_normal_5_6_or_unconscious_flag_4_7(character_id: int) -> int:
     """
-    交互对象56正常或平然
+    交互对象56正常或平然或心控
     \n包括5:意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
     \n包括6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
     Keyword arguments:
@@ -2326,7 +2326,7 @@ def handle_t_normal_5_6_or_unconscious_flag_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_t_normal_5_6(character_id) or handle_t_unconscious_flag_4(character_id):
+    if handle_t_normal_5_6(character_id) or handle_t_unconscious_flag_4(character_id) or handle_t_unconscious_flag_7(character_id):
         return 1
     else:
         return 0
