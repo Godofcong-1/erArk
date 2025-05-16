@@ -4,6 +4,7 @@ import json
 import uuid
 import psutil
 import signal
+import sys
 from tkinter import (
     ttk,
     Tk,
@@ -40,6 +41,24 @@ def close_window():
         process.send_signal(signal.SIGTERM)
     os._exit(0)
 
+def get_resource_path(file_name: str) -> str:
+    """
+    获取资源文件绝对路径
+    参数:
+        file_name (str): 资源文件相对路径，例如 "image/logo.png"
+    返回:
+        str: 资源文件的绝对路径
+    """
+    # 如果是 PyInstaller 打包后的环境，资源会被解压到 _MEIPASS 目录
+    if getattr(sys, 'frozen', False):
+        base_path = sys._MEIPASS
+    else:
+        # 开发环境：资源在项目根目录
+        base_path = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
+        )
+    # 将类似 "image/logo.png" 拆分并拼接成正确的绝对路径
+    return os.path.join(base_path, *file_name.split('/'))
 
 # 显示主框架
 game_name = normal_config.config_normal.game_name
@@ -86,14 +105,8 @@ main_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 main_frame.columnconfigure(0, weight=1)
 main_frame.rowconfigure(0, weight=1)
 
-# 获取项目根目录下 image/logo.png 的路径
-logo_path = os.path.join(
-    os.path.dirname(__file__),  # 当前文件所在目录 Script/Core
-    os.pardir,                   # Script/Core 的上级目录 Script
-    os.pardir,                   # Script 的上级目录（项目根目录）
-    "image",                     # 根目录下的 image 文件夹
-    "logo.png"                   # image 文件夹下的 logo.png
-)
+# 使用通用函数获取 logo.png 的绝对路径，兼容打包与开发环境
+logo_path = get_resource_path("image/logo.png")
 
 # 将 logo.png 设为主窗口图标，后续所有 Toplevel 窗口会继承该图标
 root.iconphoto(True, PhotoImage(file=logo_path))
