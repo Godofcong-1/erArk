@@ -17,6 +17,7 @@ from tkinter import (
     VERTICAL,
     font,
     Entry,
+    PhotoImage,
 )
 from Script.Core import (
     text_handle,
@@ -84,6 +85,18 @@ main_frame = ttk.Frame(root, borderwidth=2)
 main_frame.grid(column=0, row=0, sticky=(N, W, E, S))
 main_frame.columnconfigure(0, weight=1)
 main_frame.rowconfigure(0, weight=1)
+
+# 获取项目根目录下 image/logo.png 的路径
+logo_path = os.path.join(
+    os.path.dirname(__file__),  # 当前文件所在目录 Script/Core
+    os.pardir,                   # Script/Core 的上级目录 Script
+    os.pardir,                   # Script 的上级目录（项目根目录）
+    "image",                     # 根目录下的 image 文件夹
+    "logo.png"                   # image 文件夹下的 logo.png
+)
+
+# 将 logo.png 设为主窗口图标，后续所有 Toplevel 窗口会继承该图标
+root.iconphoto(True, PhotoImage(file=logo_path))
 
 # 显示窗口
 textbox = Text(
