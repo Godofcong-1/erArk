@@ -562,6 +562,7 @@ def npc_ai_in_group_sex(character_id: int):
     # 如果设定NPC为仅自慰，则进入要自慰后返回
     if handle_premise.handle_npc_ai_type_1_in_group_sex(character_id):
         character_data.sp_flag.masturebate = 3
+        character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}进入了要自慰状态")
         return

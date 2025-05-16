@@ -1854,7 +1854,7 @@ def handle_target_hypnosis_active_h_switch_change(
         character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
         change_data.sanity_point -= santi_down
         character_data.pl_ability.today_sanity_point_cost += santi_down
-        handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_H)
+        handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.H)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_ACTIVE_H_OFF)

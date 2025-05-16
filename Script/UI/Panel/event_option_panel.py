@@ -29,8 +29,8 @@ def get_target_chara_diy_instruct(character_id: int = 0):
     if character_data.target_character_id:
         target_character_data = cache.character_data[character_data.target_character_id]
         # 判断是否存在该行为对应的事件
-        if constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT in game_config.config_event_status_data_by_chara_adv:
-            all_chara_diy_instruct_event_list = game_config.config_event_status_data_by_chara_adv[constant.CharacterStatus.STATUS_CHARA_DIY_INSTRUCT]
+        if constant.Behavior.CHARA_DIY_INSTRUCT in game_config.config_event_status_data_by_chara_adv:
+            all_chara_diy_instruct_event_list = game_config.config_event_status_data_by_chara_adv[constant.Behavior.CHARA_DIY_INSTRUCT]
             # 判断交互对象是否有该行为事件
             if target_character_data.adv in all_chara_diy_instruct_event_list:
                 target_diy_instruct_event_list = all_chara_diy_instruct_event_list[target_character_data.adv]

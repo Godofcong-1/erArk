@@ -11,6 +11,8 @@ class BehaviorStr:
     """ 换衣服 """
     CHARA_DIY_INSTRUCT = "chara_diy_instruct"
     """ 角色自定义指令 """
+    AI_CHAT_INSTRUCT = "ai_chat_instruct"
+    """ AI对话用特殊指令 """
     EMPTY_INSTRUCT = "empty_instruct"
     """ 空白示范指令 """
     CHAT = "chat"

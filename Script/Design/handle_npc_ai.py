@@ -67,7 +67,7 @@ def judge_character_tired_sleep(character_id : int):
                 elif handle_premise.handle_group_sex_mode_on(character_id):
                     # 自己退出
                     character_data.target_character_id = character_id
-                    handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_GROUP_SEX_NPC_HP_0_END, character_id)
+                    handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GROUP_SEX_NPC_HP_0_END, character_id)
                     # 检测当前场景中的NPC角色数量
                     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
                     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
