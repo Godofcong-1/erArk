@@ -1117,9 +1117,9 @@ class GomokuPanel:
 
         # 结算状态
         if winner == 0:
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PL_WIN_IN_BOARD_GAME, force_taget_wait = True)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.PL_WIN_IN_BOARD_GAME, force_taget_wait = True)
         else:
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_PL_LOSE_IN_BOARD_GAME, force_taget_wait = True)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.PL_LOSE_IN_BOARD_GAME, force_taget_wait = True)
 
     def choose_first_player(self):
         """选择先后手"""

@@ -71,7 +71,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             if handle_premise.handle_sex_assistant_on(character_id) and handle_premise.handle_t_work_is_not_warden(character_id):
                 from Script.UI.Panel import confinement_and_training
                 # 进行性爱助手结算
-                state_id = confinement_and_training.get_state_id_of_sex_assistant()
+                state_id = confinement_and_training.get_behavior_id_of_sex_assistant()
                 if state_id != 0:
                     warden_character_id = cache.rhodes_island.current_warden_id
                     warden_character_data = cache.character_data[warden_character_id]

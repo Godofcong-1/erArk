@@ -57,11 +57,11 @@ def group_sex_settle(
     if character_data.h_state.group_sex_lock_flag:
         return
     # 阴茎插入
-    if state_id in game_config.config_status_id_list_of_group_sex_body_part[_("插入")]:
+    if state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("插入")]:
         now_template_data[0]["penis"] = [target_character_id, state_id]
         now_template_data[1] = [[-1], -1]
     # 阴茎侍奉
-    elif state_id in game_config.config_status_id_list_of_group_sex_body_part[_("侍奉")]:
+    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("侍奉")]:
         now_template_data[0]["penis"] = [-1, -1]
         # 如果新指令，则重置数据
         if now_template_data[1][1] != state_id:
@@ -70,10 +70,10 @@ def group_sex_settle(
         elif target_character_id not in now_template_data[1][0]:
             now_template_data[1][0].append(target_character_id)
     # 口
-    elif state_id in game_config.config_status_id_list_of_group_sex_body_part[_("口")]:
+    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("口")]:
         now_template_data[0]["mouth"] = [target_character_id, state_id]
     # 手
-    elif state_id in game_config.config_status_id_list_of_group_sex_body_part[_("手")]:
+    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("手")]:
         # 如果L是空的，或当前对象是L对象，则赋给L
         if now_template_data[0]["L_hand"][1] == -1 or now_template_data[0]["L_hand"][0] == target_character_id:
             now_template_data[0]["L_hand"] = [target_character_id, state_id]
@@ -85,7 +85,7 @@ def group_sex_settle(
             now_template_data[0]["L_hand"] = now_template_data[0]["R_hand"]
             now_template_data[0]["R_hand"] = [target_character_id, state_id]
     # 肛
-    elif state_id in game_config.config_status_id_list_of_group_sex_body_part[_("肛")]:
+    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("肛")]:
         now_template_data[0]["anal"] = [target_character_id, state_id]
 
     # 特殊指令特殊处理
@@ -181,22 +181,22 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
     new_status_id_list = []
     # 获取状态id列表
     if body_part == "mouth":
-        status_id_list = game_config.config_status_id_list_of_group_sex_body_part[_("口")]
+        status_id_list = game_config.config_behavior_id_list_of_group_sex_body_part[_("口")]
     elif body_part == "L_hand" or body_part == "R_hand":
-        status_id_list = game_config.config_status_id_list_of_group_sex_body_part[_("手")]
+        status_id_list = game_config.config_behavior_id_list_of_group_sex_body_part[_("手")]
     elif body_part == "penis":
-        status_id_list = game_config.config_status_id_list_of_group_sex_body_part[_("插入")]
+        status_id_list = game_config.config_behavior_id_list_of_group_sex_body_part[_("插入")]
     elif body_part == _("侍奉"):
-        status_id_list = game_config.config_status_id_list_of_group_sex_body_part[_("侍奉")]
+        status_id_list = game_config.config_behavior_id_list_of_group_sex_body_part[_("侍奉")]
     elif body_part == "anal":
-        status_id_list = game_config.config_status_id_list_of_group_sex_body_part[_("肛")]
+        status_id_list = game_config.config_behavior_id_list_of_group_sex_body_part[_("肛")]
     # 遍历状态id
     now_premise_data = {}
     new_status_id_list = []
     for status_id in status_id_list:
-        if status_id in constant.state_id_to_instruct_id:
+        if status_id in constant.behavior_id_to_instruct_id:
             # 获取指令id
-            instruct_id = constant.state_id_to_instruct_id[status_id]
+            instruct_id = constant.behavior_id_to_instruct_id[status_id]
             # 检查指令是否可用
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 去掉有破处判定且当前为处的

@@ -307,6 +307,14 @@ class BehaviorEffect:
     """ 特殊flag_基础 自身变成要游泳状态 """
     CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG = 361
     """ 特殊flag_基础 自身取消所有工作和娱乐状态 """
+    SELF_INTELLIGENT_FOLLOW_ON = 362
+    """ 特殊flag_基础 自身进入智能跟随状态 """
+    TARGET_INTELLIGENT_FOLLOW_ON = 363
+    """ 特殊flag_基础 交互对象进入智能跟随状态 """
+    SELF_INTELLIGENT_FOLLOW_OFF = 364
+    """ 特殊flag_基础 自身退出智能跟随状态 """
+    TARGET_INTELLIGENT_FOLLOW_OFF = 365
+    """ 特殊flag_基础 交互对象退出智能跟随状态 """
     MAINTENANCE_FLAG_TO_0 = 371
     """ 特殊flag_基础 自身清零要检修状态 """
 

@@ -502,9 +502,9 @@ def npc_active_h():
             continue
 
         # 跳过不满足前提的
-        if status_id in constant.state_id_to_instruct_id:
+        if status_id in constant.behavior_id_to_instruct_id:
             # 获取指令id
-            instruct_id = constant.state_id_to_instruct_id[status_id]
+            instruct_id = constant.behavior_id_to_instruct_id[status_id]
             # 检查指令是否可用
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 跳过

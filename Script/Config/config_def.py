@@ -115,6 +115,23 @@ class BehaviorEffect:
     """ 结算器id """
 
 
+class Behavior_Data:
+    """ 状态描述配置 """
+
+    cid: int
+    """ 状态id """
+    en_name: str
+    """ 英文名称 """
+    name: str
+    """ 描述 """
+    duration: int
+    """ 耗时 """
+    trigger: str
+    """ 触发人 """
+    tag: str
+    """ 标签 """
+
+
 class Birthplace:
     """ 出生地列表 """
 

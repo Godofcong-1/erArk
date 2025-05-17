@@ -158,6 +158,10 @@ cid,effect_name,effect_type,effect
 356,SWIM_FLAG_TO_1,特殊flag_基础,自身变成要换泳衣状态
 357,SWIM_FLAG_TO_2,特殊flag_基础,自身变成要游泳状态
 361,CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG,特殊flag_基础,自身取消所有工作和娱乐状态
+362,SELF_INTELLIGENT_FOLLOW_ON,特殊flag_基础,自身进入智能跟随状态
+363,TARGET_INTELLIGENT_FOLLOW_ON,特殊flag_基础,交互对象进入智能跟随状态
+364,SELF_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,自身退出智能跟随状态
+365,TARGET_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,交互对象退出智能跟随状态
 371,MAINTENANCE_FLAG_TO_0,特殊flag_基础,自身清零要检修状态
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零

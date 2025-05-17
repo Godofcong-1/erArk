@@ -232,11 +232,11 @@ config_random_npc_sex_region: Dict[int, int] = {}
 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
-config_behavior: Dict[int, config_def.Status] = {}
+config_behavior: Dict[int, config_def.Behavior_Data] = {}
 """ 角色行为数据 """
-config_status_id_list_of_group_sex_body_part: Dict[str, list] = {}
-""" 群交时身体部位占用所对应的的状态id列表 """
-config_str_behavior: Dict[str, config_def.Status] = {}
+config_behavior_id_list_of_group_sex_body_part: Dict[str, list] = {}
+""" 群交时身体部位占用所对应的的行为id列表 """
+config_str_behavior: Dict[str, config_def.Behavior_Data] = {}
 """ 以英文名为键的角色行为数据 """
 config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
@@ -1098,12 +1098,12 @@ def load_solar_period():
         config_solar_period[now_tem.cid] = now_tem
 
 
-def load_status():
-    """载入状态类型配置数据"""
-    now_data = config_data["Status"]
+def load_behavior():
+    """载入行为数据"""
+    now_data = config_data["Behavior_Data"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
-        now_tem = config_def.Status()
+        now_tem = config_def.Behavior_Data()
         now_tem.__dict__ = tem_data
         config_behavior[now_tem.cid] = now_tem
         # 以英文名为键的数据
@@ -1115,8 +1115,8 @@ def load_status():
         # 以tag为键，存储对应的状态id列表
         for tag_name in ["插入", "侍奉", "口", "手", "肛", "道具"]:
             if tag_name in tag_list:
-                config_status_id_list_of_group_sex_body_part.setdefault(tag_name, [])
-                config_status_id_list_of_group_sex_body_part[tag_name].append(now_tem.cid)
+                config_behavior_id_list_of_group_sex_body_part.setdefault(tag_name, [])
+                config_behavior_id_list_of_group_sex_body_part[tag_name].append(now_tem.cid)
                 # 每个状态仅存进一个组中
                 break
 
@@ -1746,7 +1746,7 @@ def init():
     load_tip()
     load_tip_chara()
     load_solar_period()
-    load_status()
+    load_behavior()
     load_sun_time()
     load_talk()
     load_talent_type()

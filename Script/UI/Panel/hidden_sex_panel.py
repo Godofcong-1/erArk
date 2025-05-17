@@ -263,13 +263,13 @@ def settle_discovered(character_id: int) -> None:
                 continue
             # 隐奸中的角色
             if handle_premise.handle_hidden_sex_mode_ge_1(chara_id):
-                chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_HIDDEN_SEX_TO_GROUP_SEX, character_id=chara_id, target_character_id=0)
+                chara_handle_instruct_common_settle(constant.Behavior.HIDDEN_SEX_TO_GROUP_SEX, character_id=chara_id, target_character_id=0)
             # 跳过无意识状态的角色
             elif handle_premise.handle_unconscious_flag_ge_1(chara_id):
                 continue
             # 其他角色
             else:
-                chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_JOIN, character_id=chara_id, target_character_id=0)
+                chara_handle_instruct_common_settle(constant.Behavior.DISCOVER_HIDDEN_SEX_AND_JOIN, character_id=chara_id, target_character_id=0)
                 hidden_sex_target_chara_data.behavior.h_interrupt_chara_name = cache.character_data[chara_id].name
             # 手动结算该状态
             character_behavior.judge_character_status(chara_id)

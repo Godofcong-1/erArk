@@ -581,7 +581,7 @@ class Physical_Check_And_Manage_Panel:
             target_character_data.second_behavior[body_manage_second_behavior_id] = 1
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 1
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 1, force_taget_wait = True)
             info_text += _("对{0}进行了{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_behavior[body_manage_second_behavior_id].name)
             # 练习类的身体管理
             if manage_cid in range(31, 40):
@@ -596,7 +596,7 @@ class Physical_Check_And_Manage_Panel:
         else:
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 0
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_WAIT, duration = 1, force_taget_wait = True)
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 1, force_taget_wait = True)
             info_text += _("取消了对{0}的{1}的身体管理，将在明天睡醒后生效。\n").format(target_character_data.name, game_config.config_behavior[body_manage_second_behavior_id].name)
             # 练习类的身体管理
             if manage_cid in range(31, 40):

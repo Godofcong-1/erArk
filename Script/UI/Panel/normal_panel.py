@@ -272,10 +272,10 @@ class Bondage_Panel:
         target_character_data.h_state.bondage = bondage_id
         # 如果捆绑id为0，则解除捆绑
         if bondage_id == 0:
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_UNBIND, judge = _("SM"))
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.UNBIND, judge = _("SM"))
         # 否则进行捆绑
         else:
-            handle_instruct.chara_handle_instruct_common_settle(constant.CharacterStatus.STATUS_BIND, judge = _("SM"))
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.BIND, judge = _("SM"))
 
 
 class Take_Care_Baby_Panel:

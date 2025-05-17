@@ -331,74 +331,74 @@ def prepare_training():
     pl_character_data.target_character_id = target_character_id
 
 
-def get_all_can_use_instruct_id_for_sex_assistant(select_part: str = "", not_selet_part: str = "") -> List[int]:
+def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_selet_part: str = "") -> List[int]:
     """
-    获取调教助手所有可用的指令id
+    获取调教助手所有可用的行为id
     Keyword arguments:
     select_part -- 选择的部位
     not_selet_part -- 不选择的部位
     Return arguments:
-    List[int] -- 可用的指令id列表
+    List[int] -- 可用的行为id列表
     """
     from Script.UI.Panel import see_instruct_panel
     # 获取所有可用的状态id
-    status_id_list = []
-    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("口")])
-    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("手")])
-    status_id_list.extend(game_config.config_status_id_list_of_group_sex_body_part[_("道具")])
+    behavior_id_list = []
+    behavior_id_list.extend(game_config.config_behavior_id_list_of_group_sex_body_part[_("口")])
+    behavior_id_list.extend(game_config.config_behavior_id_list_of_group_sex_body_part[_("手")])
+    behavior_id_list.extend(game_config.config_behavior_id_list_of_group_sex_body_part[_("道具")])
     # 去重
-    status_id_list = list(set(status_id_list))
+    behavior_id_list = list(set(behavior_id_list))
     # 遍历状态id
     now_premise_data = {}
-    new_status_id_list = []
-    for status_id in status_id_list:
-        if status_id in constant.state_id_to_instruct_id:
+    new_behavior_id_list = []
+    for behavior_id in behavior_id_list:
+        if behavior_id in constant.behavior_id_to_instruct_id:
             # 获取指令id
-            instruct_id = constant.state_id_to_instruct_id[status_id]
+            instruct_id = constant.behavior_id_to_instruct_id[behavior_id]
             # 检查指令是否可用
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False, skip_h_judge=True)
             # 进一步检查是否可用
             if filter_judge:
-                status_data = game_config.config_behavior[status_id]
-                status_tag_list = status_data.tag
-                status_tag_list = status_data.tag.split("|")
+                behavior_data = game_config.config_behavior[behavior_id]
+                behavior_tag_list = behavior_data.tag
+                behavior_tag_list = behavior_data.tag.split("|")
                 # 跳过仅玩家可用的指令
-                if status_data.trigger == 'pl':
+                if behavior_data.trigger == 'pl':
                     continue
                 # 如果指定了部位
-                if select_part != "" and select_part not in status_tag_list:
+                if select_part != "" and select_part not in behavior_tag_list:
                     continue
                 # 如果指定了不使用的部位
-                if not_selet_part != "" and not_selet_part in status_tag_list:
+                if not_selet_part != "" and not_selet_part in behavior_tag_list:
                     continue
                 # 如果指定了部位或者不使用的部位，则也跳过被ban的指令id
                 if select_part != "" or not_selet_part != "":
-                    if status_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
+                    if behavior_id in cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list:
                         continue
                 pl_character_data = cache.character_data[0]
                 if pl_character_data.target_character_id == 0:
                     target_character_data = cache.character_data[pl_character_data.target_character_id]
                     # 如果NPC为处，则跳过破处类
-                    if target_character_data.talent[0] and _("V") in status_tag_list and _("破处") in status_tag_list:
+                    if target_character_data.talent[0] and _("V") in behavior_tag_list and _("破处") in behavior_tag_list:
                         continue
-                    if target_character_data.talent[1] and _("A") in status_tag_list and _("破处") in status_tag_list:
+                    if target_character_data.talent[1] and _("A") in behavior_tag_list and _("破处") in behavior_tag_list:
                         continue
-                    if target_character_data.talent[2] and _("U") in status_tag_list and _("破处") in status_tag_list:
+                    if target_character_data.talent[2] and _("U") in behavior_tag_list and _("破处") in behavior_tag_list:
                         continue
-                    if target_character_data.talent[3] and _("W") in status_tag_list and _("破处") in status_tag_list:
+                    if target_character_data.talent[3] and _("W") in behavior_tag_list and _("破处") in behavior_tag_list:
                         continue
-                    if target_character_data.talent[4] and _("N") in status_tag_list and _("破处") in status_tag_list:
+                    if target_character_data.talent[4] and _("N") in behavior_tag_list and _("破处") in behavior_tag_list:
                         continue
 
                 # 加入到新列表中
-                new_status_id_list.append(status_id)
-    return new_status_id_list
+                new_behavior_id_list.append(behavior_id)
+    return new_behavior_id_list
 
-def get_state_id_of_sex_assistant() -> int:
+def get_behavior_id_of_sex_assistant() -> int:
     """
-    获取调教助手的状态id
+    获取调教助手的行为id
     Return arguments:
-    int -- 调教助手的状态id
+    int -- 调教助手的行为id
     """
     # 如果没有开启性爱助手，则返回0
     if handle_premise.handle_sex_assistant_off(0):
@@ -411,15 +411,15 @@ def get_state_id_of_sex_assistant() -> int:
     if not handle_premise.handle_normal_6(warden_id) or handle_premise.handle_self_now_bondage(warden_id):
         return 0
     # 如果是指定指令列表，则直接随机选择
-    if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_status_list) > 0:
-        state_id = random.choice(cache.rhodes_island.sex_assistant_ai_status_list)
-        return state_id
+    if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_behavior_id_list) > 0:
+        behavior_id = random.choice(cache.rhodes_island.sex_assistant_ai_behavior_id_list)
+        return behavior_id
     else:
         # 获取玩家当前的状态id
         pl_character_data = cache.character_data[0]
-        state_id = pl_character_data.behavior.behavior_id
-        if state_id in game_config.config_behavior:
-            state_data = game_config.config_behavior[state_id]
+        behavior_id = pl_character_data.behavior.behavior_id
+        if behavior_id in game_config.config_behavior:
+            state_data = game_config.config_behavior[behavior_id]
             # 遍历部位列表，获取存在与tag中的部位
             part_str_list = ["U", "W", "V", "A", "C", "B", "N"]
             now_part = ""
@@ -432,20 +432,20 @@ def get_state_id_of_sex_assistant() -> int:
                 return 0
             # 如果目标为玩家同部位
             if handle_premise.handle_sex_assistant_1(0):
-                # 获取目标的状态id
-                new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant(select_part=now_part)
-                # 随机选择一个状态id
-                if len(new_status_id_list) > 0:
-                    state_id = random.choice(new_status_id_list)
-                    return state_id
+                # 获取目标的行为id
+                new_behavior_id_list = get_all_can_use_behavior_id_for_sex_assistant(select_part=now_part)
+                # 随机选择一个行为id
+                if len(new_behavior_id_list) > 0:
+                    behavior_id = random.choice(new_behavior_id_list)
+                    return behavior_id
             # 如果为非玩家同部位
             elif handle_premise.handle_sex_assistant_2(0):
-                # 获取目标的状态id
-                new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant(not_selet_part=now_part)
-                # 随机选择一个状态id
-                if len(new_status_id_list) > 0:
-                    state_id = random.choice(new_status_id_list)
-                    return state_id
+                # 获取目标的行为id
+                new_behavior_id_list = get_all_can_use_behavior_id_for_sex_assistant(not_selet_part=now_part)
+                # 随机选择一个行为id
+                if len(new_behavior_id_list) > 0:
+                    behavior_id = random.choice(new_behavior_id_list)
+                    return behavior_id
     return 0
 
 class Confinement_And_Training_Manage_Panel:
@@ -702,7 +702,7 @@ class Confinement_And_Training_Manage_Panel:
 
     def adjust_sex_assistant_instruct_list(self, ban_flag: bool = False):
         """调整调教助手指令列表"""
-        new_status_id_list = get_all_can_use_instruct_id_for_sex_assistant()
+        new_status_id_list = get_all_can_use_behavior_id_for_sex_assistant()
         while 1:
             return_list = []
             line = draw.LineDraw("-", self.width)
@@ -714,15 +714,15 @@ class Confinement_And_Training_Manage_Panel:
                 # 获取状态数据
                 status_data = game_config.config_behavior[status_id]
                 # 获取指令id
-                instruct_id = constant.state_id_to_instruct_id[status_id]
+                instruct_id = constant.behavior_id_to_instruct_id[status_id]
                 # 绘制格式
                 button_text = f" [{status_data.name}] "
                 button_len = max(len(button_text) * 2, 30)
                 # 选择下，选择变黄
-                if not ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_status_list:
+                if not ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_behavior_id_list:
                     draw_style = 'gold_enrod'
                 # 禁止下，选择变灰
-                elif ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
+                elif ban_flag and status_id in cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list:
                     draw_style = 'deep_gray'
                 else:
                     draw_style = 'standard'
@@ -759,12 +759,12 @@ class Confinement_And_Training_Manage_Panel:
         ban_flag -- 是否禁止该指令
         """
         if not ban_flag:
-            if instruct_id in cache.rhodes_island.sex_assistant_ai_status_list:
-                cache.rhodes_island.sex_assistant_ai_status_list.remove(instruct_id)
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_behavior_id_list:
+                cache.rhodes_island.sex_assistant_ai_behavior_id_list.remove(instruct_id)
             else:
-                cache.rhodes_island.sex_assistant_ai_status_list.append(instruct_id)
+                cache.rhodes_island.sex_assistant_ai_behavior_id_list.append(instruct_id)
         else:
-            if instruct_id in cache.rhodes_island.sex_assistant_ai_ban_status_list:
-                cache.rhodes_island.sex_assistant_ai_ban_status_list.remove(instruct_id)
+            if instruct_id in cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list:
+                cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list.remove(instruct_id)
             else:
-                cache.rhodes_island.sex_assistant_ai_ban_status_list.append(instruct_id)
+                cache.rhodes_island.sex_assistant_ai_ban_behavior_id_list.append(instruct_id)
