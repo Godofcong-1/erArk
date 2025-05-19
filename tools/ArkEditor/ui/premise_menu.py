@@ -1,3 +1,4 @@
+from math import e
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QDialog,
@@ -280,7 +281,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -382,6 +383,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "PenisPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "射精位置":
             cvp_b_value = "ShootPos|" + self.cvp_b2.currentText().split("|")[0]
+        elif cvp_b1 == "身份关系":
+            cvp_b_value = "Relationship|" + self.cvp_b2.currentText()
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -395,6 +398,8 @@ class CVPMenu(QDialog):
             cvp_c_value = "LE"
         elif cvp_c == "不等于":
             cvp_c_value = "NE"
+        else:
+            cvp_c_value = cvp_c
         cvp_d = self.cvp_d.toPlainText()
         cvp_d_value = cvp_d
 
@@ -577,4 +582,13 @@ class CVPMenu(QDialog):
             self.cvp_c.addItems(["等于"])
             self.cvp_d.setText("1")
             self.cvp_text.setText("检测当前玩家阴茎在目标角色的哪个部位射精，包括身体部位与服装部位\n等于1为在该部位射精\n用于和二段行为_射精/大量射精/超大量射精配套使用")
+        elif index == 20:
+            self.cvp_b2.clear()
+            self.cvp_b2.addItems(["是玩家的", "是自己的", "是交互对象的", "是指定id角色的"])
+            self.cvp_b2.setCurrentIndex(0)
+            self.cvp_c.clear()
+            self.cvp_c.addItems(["女儿", "父亲", "母亲"])
+            self.cvp_c.setCurrentIndex(0)
+            self.cvp_d.setText("0")
+            self.cvp_text.setText("身份关系前提，用于判断角色间是否为女儿、父亲、母亲等关系\n\n如果不限定是特定角色的女儿或者其他关系，则使用默认为0的角色id即可\n如果是想限定某个干员生的女儿，可以使用[是指定id角色的]，然后将角色id填入文本框\n\n如[交互对象][是玩家的][女儿][0]，则表示交互对象是玩家的女儿，通用所有女儿角色\n如[交互对象][是指定id角色的][女儿][100]，则表示交互对象是角色id为100的角色的女儿")
         self.cvp_b = self.cvp_b2

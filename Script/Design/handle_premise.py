@@ -2,7 +2,7 @@ import datetime
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type, get_text
-from Script.Design import map_handle, game_time, attr_calculation, instuct_judege
+from Script.Design import map_handle, game_time, attr_calculation, instuct_judege, character
 from Script.Config import normal_config, game_config
 from Script.UI.Panel import dirty_panel
 
@@ -176,25 +176,19 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         final_character_data = cache.character_data[character_data.target_character_id]
     elif premise_all_value_list[0][:2] == "A3":
         final_character_adv = int(premise_all_value_list[0][3:])
-        final_character_id = 0
-        # 遍历拥有的全角色，找到对应的角色
-        for character_id in cache.npc_id_got:
-            tem_character_data = cache.character_data[character_id]
-            if tem_character_data.adv == final_character_adv:
-                final_character_id = character_id
-                final_character_data = cache.character_data[character_id]
-                break
+        final_character_id = character.get_character_id_from_adv(final_character_adv)
         # 如果还没拥有该角色，则返回0
-        if final_character_id == 0:
+        if final_character_id not in cache.npc_id_got:
             return 0
 
-    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置
+    # 进行数值B的判别,A能力,T素质,Time时间,J宝珠,E经验,S状态,F好感度,Flag作者用flag,X信赖,G攻略程度,Instruct指令,Son子嵌套事件,OtherChara其他角色在场,Dirty污浊,Bondage绳子捆绑,Roleplay角色扮演,PenisPos阴茎位置,ShootPos射精位置,Relationship身份关系
     if (
         len(premise_all_value_list[1]) > 1 and
         "Time" not in premise_all_value_list[1] and
         "Dirty" not in premise_all_value_list[1] and
         "PenisPos" not in premise_all_value_list[1] and
-        "ShootPos" not in premise_all_value_list[1]
+        "ShootPos" not in premise_all_value_list[1] and
+        "Relationship" not in premise_all_value_list[1]
         ):
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -257,6 +251,26 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 1
             else:
                 final_value = 0
+        elif "Relationship" in premise_all_value_list[1]:
+            target_character_type = premise_all_value_list[1].split("|")[1]
+            if target_character_type == "是玩家的":
+                target_character_data = cache.character_data[0]
+            elif target_character_type == "是自己的":
+                target_character_data = final_character_data
+            elif target_character_type == "是交互对象的":
+                target_character_data = cache.character_data[final_character_data.target_character_id]
+            elif target_character_type == "是指定id角色的":
+                target_character_adv = int(premise_all_value_list[3])
+                target_character_id = character.get_character_id_from_adv(target_character_adv)
+                target_character_data = cache.character_data[target_character_id]
+            relation_type = premise_all_value_list[2]
+            if relation_type == "父亲":
+                return final_character_id == target_character_data.relationship.father_id
+            elif relation_type == "母亲":
+                return final_character_id == target_character_data.relationship.mother_id
+            elif relation_type == "女儿":
+                return final_character_id in target_character_data.relationship.child_id_list
+
     elif premise_all_value_list[1][0] == "P":
         if "PenisPos" in premise_all_value_list[1]:
             b2_value = premise_all_value_list[1].split("PenisPos|")[1]

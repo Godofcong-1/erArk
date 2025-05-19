@@ -25,6 +25,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("Roleplay", "角色扮演")
     cvp_str_list[2] = cvp_str_list[2].replace("PenisPos", "阴茎位置")
     cvp_str_list[2] = cvp_str_list[2].replace("ShootPos", "射精位置")
+    cvp_str_list[2] = cvp_str_list[2].replace("Relationship", "身份关系")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
@@ -100,6 +101,9 @@ def read_CVP(cvp_value_str: str):
         else:
             b2_name = cache_control.clothing_data[b2_value[1:]]
         cvp_str = cvp_str.replace(f"射精位置|{b2_value}", f"射精位置{b2_name}")
+    elif "身份关系" in cvp_str:
+        b2_value = cvp_str_list[2].split("身份关系|")[1]
+        cvp_str = cvp_str.replace(f"身份关系|{b2_value}", f"身份关系{b2_value}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str
