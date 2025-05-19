@@ -236,8 +236,10 @@ config_behavior: Dict[int, config_def.Behavior_Data] = {}
 """ 角色行为数据 """
 config_behavior_id_list_of_group_sex_body_part: Dict[str, list] = {}
 """ 群交时身体部位占用所对应的的行为id列表 """
-config_str_behavior: Dict[str, config_def.Behavior_Data] = {}
+config_behavior_by_str: Dict[str, config_def.Behavior_Data] = {}
 """ 以英文名为键的角色行为数据 """
+config_behavior_by_cid: Dict[int, config_def.Behavior_Data] = {}
+""" 以cid为键的角色行为数据 """
 config_talk: Dict[int, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
@@ -1107,7 +1109,8 @@ def load_behavior():
         now_tem.__dict__ = tem_data
         config_behavior[now_tem.cid] = now_tem
         # 以英文名为键的数据
-        config_str_behavior[now_tem.en_name] = now_tem
+        config_behavior_by_str[now_tem.en_name] = now_tem
+        config_behavior_by_cid[now_tem.cid] = now_tem
         # 拆解tag为列表
         tag_list = now_tem.tag.split("|")
         if not len(tag_list):

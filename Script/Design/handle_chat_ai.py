@@ -50,10 +50,10 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
         # 判断是否设置了指令类型
         if cache.ai_setting.ai_chat_setting[2] == 0:
             safe_flag = False
-            status_data = game_config.config_behavior[behavior_id]
+            behavior_data = game_config.config_behavior[behavior_id]
             # 判断是否是安全标签
             for safe_tag in ["日常", "娱乐", "工作"]:
-                if safe_tag in status_data.tag:
+                if safe_tag in behavior_data.tag:
                     safe_flag = True
                     break
             if not safe_flag:

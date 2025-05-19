@@ -7,6 +7,7 @@ from Script.Core.constant.Behavior import Behavior
 from Script.Core.constant.StateMachine import StateMachine
 from Script.Core.constant.SecondBehavior import SecondBehavior
 from Script.Core.constant.Instruct import Instruct
+from Script.Core.constant.Behavior_Int import Behavior_Int
 
 _: FunctionType = get_text._
 """ 翻译api """

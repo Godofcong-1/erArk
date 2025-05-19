@@ -460,51 +460,51 @@ def npc_active_h():
     # 遍历全状态
     all_stastus_list = []
     now_premise_data = {}
-    for status_id in game_config.config_behavior:
+    for behavior_id in game_config.config_behavior:
         # 获得各状态的tag
-        status_data = game_config.config_behavior[status_id]
-        status_tag_list = status_data.tag.split("|")
+        behavior_data = game_config.config_behavior[behavior_id]
+        behavior_tag_list = behavior_data.tag.split("|")
         # 跳过其中非性爱类，道具类、药物类、SM类、非逆推类
         if(
-            _("性爱") not in status_tag_list or
-            _("道具") in status_tag_list or
-            _("药物") in status_tag_list or
-            _("SM") in status_tag_list or
-            _("非逆推") in status_tag_list
+            _("性爱") not in behavior_tag_list or
+            _("道具") in behavior_tag_list or
+            _("药物") in behavior_tag_list or
+            _("SM") in behavior_tag_list or
+            _("非逆推") in behavior_tag_list
         ):
             continue
         # 如果NPC为处，则跳过破处类
-        if part_id == 0 and target_character_data.talent[4] and _("破处") in status_tag_list:
+        if part_id == 0 and target_character_data.talent[4] and _("破处") in behavior_tag_list:
             continue
-        if part_id == 4 and target_character_data.talent[0] and _("破处") in status_tag_list:
+        if part_id == 4 and target_character_data.talent[0] and _("破处") in behavior_tag_list:
             continue
-        if part_id == 5 and target_character_data.talent[1] and _("破处") in status_tag_list:
+        if part_id == 5 and target_character_data.talent[1] and _("破处") in behavior_tag_list:
             continue
-        if part_id == 6 and target_character_data.talent[2] and _("破处") in status_tag_list:
+        if part_id == 6 and target_character_data.talent[2] and _("破处") in behavior_tag_list:
             continue
-        if part_id == 7 and target_character_data.talent[3] and _("破处") in status_tag_list:
+        if part_id == 7 and target_character_data.talent[3] and _("破处") in behavior_tag_list:
             continue
 
         # 跳过非当前部位
-        if part_id == 0 and "N" not in status_tag_list:
+        if part_id == 0 and "N" not in behavior_tag_list:
             continue
-        elif part_id == 1 and "B" not in status_tag_list:
+        elif part_id == 1 and "B" not in behavior_tag_list:
             continue
-        elif part_id == 2 and "C" not in status_tag_list:
+        elif part_id == 2 and "C" not in behavior_tag_list:
             continue
-        elif part_id == 4 and "V" not in status_tag_list:
+        elif part_id == 4 and "V" not in behavior_tag_list:
             continue
-        elif part_id == 5 and "A" not in status_tag_list:
+        elif part_id == 5 and "A" not in behavior_tag_list:
             continue
-        elif part_id == 6 and "U" not in status_tag_list:
+        elif part_id == 6 and "U" not in behavior_tag_list:
             continue
-        elif part_id == 7 and "W" not in status_tag_list:
+        elif part_id == 7 and "W" not in behavior_tag_list:
             continue
 
         # 跳过不满足前提的
-        if status_id in constant.behavior_id_to_instruct_id:
+        if behavior_id in constant.behavior_id_to_instruct_id:
             # 获取指令id
-            instruct_id = constant.behavior_id_to_instruct_id[status_id]
+            instruct_id = constant.behavior_id_to_instruct_id[behavior_id]
             # 检查指令是否可用
             filter_judge, now_premise_data = see_instruct_panel.judge_single_instruct_filter(instruct_id, now_premise_data, constant.InstructType.SEX, use_type_filter_flag=False)
             # 跳过
@@ -512,7 +512,7 @@ def npc_active_h():
                 continue
 
         # 开始加入列表中
-        all_stastus_list.append(status_id)
+        all_stastus_list.append(behavior_id)
 
     # 如果没有符合条件的状态，则返回
     if len(all_stastus_list) == 0:
@@ -521,12 +521,12 @@ def npc_active_h():
     # print(f"debug 全列表为{all_stastus_list}")
 
     # 随机选择一个状态
-    status_id = random.choice(all_stastus_list)
+    behavior_id = random.choice(all_stastus_list)
 
     # 赋予给玩家
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
-    pl_character_data.behavior.behavior_id = status_id
-    pl_character_data.state = status_id
+    pl_character_data.behavior.behavior_id = behavior_id
+    pl_character_data.state = behavior_id
     pl_character_data.behavior.duration = 10
     update.game_update_flow(10)
 

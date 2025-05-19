@@ -7,6 +7,7 @@ import platform
 from types import FunctionType
 from Script.Core import (
     cache_control,
+    constant,
     game_path_config,
     game_type,
     get_text,
@@ -469,6 +470,20 @@ def update_character_config_data(value):
                 item_name = game_config.config_item[item_id].name
                 value.h_state.body_item[key] = [item_name,False,None]
                 update_count += 1
+    # 行为
+    # 如果行为id是int的话
+    if isinstance(value.behavior.behavior_id, int):
+        # 遍历Behavior，找到和当前行为id一致的行为键名
+        for key in vars(constant.Behavior_Int).keys():
+            # 跳过 Python 内置属性
+            if key.startswith('__'):
+                continue
+            # 如果当前行为 ID 与常量值匹配，则更新为常量名称
+            if value.behavior.behavior_id == getattr(constant.Behavior_Int, key):
+                value.behavior.behavior_id = getattr(constant.Behavior, key)
+                # update_count += 1
+                # print(f"debug 更新了行为id: {key} -> {value.behavior.behavior_id}")
+                break
     return update_count
 
 

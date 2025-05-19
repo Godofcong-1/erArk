@@ -37,7 +37,7 @@ body_part_name_dict = {
 def group_sex_settle(
         character_id: int,
         target_character_id: int,
-        state_id: int,
+        behavior_id: int,
 ):
     """
     群交结算
@@ -57,42 +57,42 @@ def group_sex_settle(
     if character_data.h_state.group_sex_lock_flag:
         return
     # 阴茎插入
-    if state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("插入")]:
-        now_template_data[0]["penis"] = [target_character_id, state_id]
+    if behavior_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("插入")]:
+        now_template_data[0]["penis"] = [target_character_id, behavior_id]
         now_template_data[1] = [[-1], -1]
     # 阴茎侍奉
-    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("侍奉")]:
+    elif behavior_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("侍奉")]:
         now_template_data[0]["penis"] = [-1, -1]
         # 如果新指令，则重置数据
-        if now_template_data[1][1] != state_id:
-            now_template_data[1] = [[target_character_id], state_id]
+        if now_template_data[1][1] != behavior_id:
+            now_template_data[1] = [[target_character_id], behavior_id]
         # 否则则只将角色id加进角色列表里
         elif target_character_id not in now_template_data[1][0]:
             now_template_data[1][0].append(target_character_id)
     # 口
-    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("口")]:
-        now_template_data[0]["mouth"] = [target_character_id, state_id]
+    elif behavior_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("口")]:
+        now_template_data[0]["mouth"] = [target_character_id, behavior_id]
     # 手
-    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("手")]:
+    elif behavior_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("手")]:
         # 如果L是空的，或当前对象是L对象，则赋给L
         if now_template_data[0]["L_hand"][1] == -1 or now_template_data[0]["L_hand"][0] == target_character_id:
-            now_template_data[0]["L_hand"] = [target_character_id, state_id]
+            now_template_data[0]["L_hand"] = [target_character_id, behavior_id]
         # R同理
         elif now_template_data[0]["R_hand"][1] == -1 or now_template_data[0]["R_hand"][0] == target_character_id:
-            now_template_data[0]["R_hand"] = [target_character_id, state_id]
+            now_template_data[0]["R_hand"] = [target_character_id, behavior_id]
         # 否则，全部更新，左等于右，右等于新
         else:
             now_template_data[0]["L_hand"] = now_template_data[0]["R_hand"]
-            now_template_data[0]["R_hand"] = [target_character_id, state_id]
+            now_template_data[0]["R_hand"] = [target_character_id, behavior_id]
     # 肛
-    elif state_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("肛")]:
-        now_template_data[0]["anal"] = [target_character_id, state_id]
+    elif behavior_id in game_config.config_behavior_id_list_of_group_sex_body_part[_("肛")]:
+        now_template_data[0]["anal"] = [target_character_id, behavior_id]
 
     # 特殊指令特殊处理
-    status_data = game_config.config_behavior[state_id]
-    if status_data.name == _("六九式"):
-        now_template_data[0]["mouth"] = [target_character_id, state_id]
-        now_template_data[1] = [[target_character_id], state_id]
+    behavior_data = game_config.config_behavior[behavior_id]
+    if behavior_data.name == _("六九式"):
+        now_template_data[0]["mouth"] = [target_character_id, behavior_id]
+        now_template_data[1] = [[target_character_id], behavior_id]
 
 
 def count_group_sex_instruct_list():

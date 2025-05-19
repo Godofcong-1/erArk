@@ -25,6 +25,7 @@ int,str,str,int,str,str
 118,apologize_failed,道歉失败,60,pl,日常
 119,listen_complaint,听牢骚,45,pl,日常
 131,make_coffee,泡咖啡,15,both,日常
+132,make_coffee_add,泡咖啡（加料）,15,both,日常
 133,ask_make_coffee,让对方泡咖啡,15,pl,日常
 134,make_food,做饭,-1,both,日常
 135,eat,进食,5,both,日常
@@ -444,6 +445,7 @@ int,str,str,int,str,str
 1084,quintuple_orgasm,结算五重绝顶,0,npc,二段结算
 1085,sextuple_orgasm,结算六重绝顶,0,npc,二段结算
 1086,septuple_orgasm,结算七重绝顶,0,npc,二段结算
+1087,octuple_orgasm,结算八重绝顶,0,npc,二段结算
 
 1090,n_orgasm_super,结算N超强绝顶,0,npc,二段结算
 1091,b_orgasm_super,结算B超强绝顶,0,npc,二段结算

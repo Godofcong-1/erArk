@@ -78,8 +78,8 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     # 无意识模式判定
     if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
         # 有技艺tag的行为则直接通过
-        status_data = game_config.config_behavior[behavior_id]
-        if _("技艺") in status_data.tag:
+        behavior_data = game_config.config_behavior[behavior_id]
+        if _("技艺") in behavior_data.tag:
             unconscious_pass_flag = True
         # 需要前提里有无意识的判定
         for now_premise in premise_dict:
@@ -19230,7 +19230,8 @@ def handle_action_work_or_entertainment(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if 151 <= character_data.behavior.behavior_id <= 250:
+    behavior_data = game_config.config_behavior[character_data.behavior.behavior_id]
+    if "工作" in behavior_data.tag or "娱乐" in behavior_data.tag:
         return 1
     return 0
 

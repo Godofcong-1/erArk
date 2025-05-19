@@ -252,13 +252,13 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
         # 如果此时在群交中，且阴茎状态为肛交，则清零阴茎状态
         if handle_premise.handle_group_sex_mode_on(0):
             now_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]
-            state_id = now_template_data[0]["penis"][1]
+            behavior_id = now_template_data[0]["penis"][1]
             # 如果没有阴茎状态，则不处理
-            if state_id == -1:
+            if behavior_id == -1:
                 return
-            status_data = game_config.config_behavior[state_id]
+            behavior_data = game_config.config_behavior[behavior_id]
             # 如果为肛交，则清零阴茎状态
-            if "A" in status_data.tag:
+            if "A" in behavior_data.tag:
                 now_template_data[0]["penis"] = [-1, -1]
     # print(f"debug update_semen_dirty name = {character_data.name}, part_cid = {part_cid}, part_type = {part_type}, semen_count = {semen_count}")
 

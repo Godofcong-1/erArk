@@ -267,14 +267,14 @@ class MoveSonPanel:
         # 输出地点信息
         now_draw_text += f":{scene_position_str}   "
 
-        status_text = game_config.config_behavior[character_data.behavior.behavior_id].name
+        behavior_text = game_config.config_behavior[character_data.behavior.behavior_id].name
         # 如果是在移动，则输出目的地
         # BUG 需要查明在什么情况下会导致虽然在移动但是move_final_target为空
-        if status_text == _("移动") and len(character_data.behavior.move_final_target):
+        if behavior_text == _("移动") and len(character_data.behavior.move_final_target):
             now_draw_text += _("移动目的地:{0}").format(character_data.behavior.move_final_target[-1])
         # 否则输出状态
         else:
-            now_draw_text += _("正在：{0}").format(status_text)
+            now_draw_text += _("正在：{0}").format(behavior_text)
 
         # 如果有口上颜色的话，使用口上颜色
         if character_data.text_color:
