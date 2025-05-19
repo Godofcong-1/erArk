@@ -177,6 +177,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     elif premise_all_value_list[0][:2] == "A3":
         final_character_adv = int(premise_all_value_list[0][3:])
         final_character_id = character.get_character_id_from_adv(final_character_adv)
+        final_character_data = cache.character_data[final_character_id]
         # 如果还没拥有该角色，则返回0
         if final_character_id not in cache.npc_id_got:
             return 0
