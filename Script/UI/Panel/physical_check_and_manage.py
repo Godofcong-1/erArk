@@ -235,32 +235,32 @@ class Physical_Check_And_Manage_Panel:
 
         # 指令与前置指令的对应表
         cmd_able_dict = {
-            851: 850,  # 测试头发
-            853: 852,  # 测试口腔
-            855: 854,  # 测试腋下
-            857: 856,  # 检查乳头
-            858: 856,  # 测试胸部
-            861: 860,  # 测试手部
-            863: 862,  # 测试足部
-            872: 871,  # 检查内阴
-            873: 872,  # 检查处女膜
-            874: 872,  # 检查子宫口
-            875: 872,  # 测试阴道
-            877: 876,  # 测试肠道
-            879: 878,  # 测试排尿
-            882: 881,  # 测试尾巴
-            888: 887,  # 测试触手
+            "examine_hair_smoothness": "examine_hair",  # 测试头发
+            "examine_sucking_and_swallowing": "examine_oral",  # 测试口腔
+            "examine_armpit_clamping": "examine_armpit",  # 测试腋下
+            "examine_nipple_and_areola": "examine_breast",  # 检查乳头
+            "examine_breast_clamping": "examine_breast",  # 测试胸部
+            "examine_hands_flexibility": "examine_hands",  # 测试手部
+            "examine_foots_flexibility": "examine_foot",  # 测试足部
+            "examine_vagina_and_folds": "examine_vulva_and_shape",  # 检查内阴
+            "examine_hymen": "examine_vagina_and_folds",  # 检查处女膜
+            "examine_orifice": "examine_vagina_and_folds",  # 检查子宫口
+            "examine_vagina_firmness": "examine_vagina_and_folds",  # 测试阴道
+            "examine_intestine_firmness": "examine_anus",  # 测试肠道
+            "examine_urination_status": "examine_urethra",  # 测试排尿
+            "examine_tail_flexibility": "examine_tail",  # 测试尾巴
+            "examine_tentacle_flexibility": "examine_tentacle",  # 测试触手
         }
 
         # 部位与素质的对应表
         body_talent_map = {
-            881: 113,  # 尾巴
-            882: 113,  # 尾巴
-            883: 112,  # 兽角
-            884: 111,  # 兽耳
-            885: 115,  # 翅膀
-            886: 114,  # 光环
-            887: 116   # 触手
+            "examine_tail": 113,  # 尾巴
+            "examine_tail_flexibility": 113,  # 尾巴
+            "examine_horn": 112,  # 兽角
+            "examine_ears": 111,  # 兽耳
+            "examine_wing": 115,  # 翅膀
+            "examine_ring": 114,  # 光环
+            "examine_tentacle": 116   # 触手
         }
 
         while 1:
@@ -281,51 +281,53 @@ class Physical_Check_And_Manage_Panel:
             info_draw.draw()
             # 检索所有的身体检查状态
             count = 0
-            for behavior_id in range(850, 899):
-                if behavior_id in game_config.config_behavior:
-                    count += 1
-                    done_flag = False
-                    # 已经检查过的不可用
-                    if behavior_id in self.done_check_behavior_id_set:
-                        done_flag = True
-                    # 部分指令需要有前置指令才能使用
-                    if behavior_id in cmd_able_dict and cmd_able_dict[behavior_id] not in self.done_check_behavior_id_set:
+            for behavior_id in game_config.config_behavior:
+                behavior_data = game_config.config_behavior[behavior_id]
+                # 跳过非检查类的行为
+                if behavior_data.tag != "猥亵|检查":
+                    continue
+                count += 1
+                done_flag = False
+                # 已经检查过的不可用
+                if behavior_id in self.done_check_behavior_id_set:
+                    done_flag = True
+                # 部分指令需要有前置指令才能使用
+                if behavior_id in cmd_able_dict and cmd_able_dict[behavior_id] not in self.done_check_behavior_id_set:
+                    continue
+                # 部分指令需要未破处则不可用
+                if (behavior_id == "examine_orifice" or behavior_id == "examine_vagina_firmness") and target_character_data.talent[0]:
+                    done_flag = True
+                elif behavior_id == "examine_intestine_firmness" and target_character_data.talent[1]:
+                    done_flag = True
+                # 部分指令需要有对应部位的器官才能使用
+                if behavior_id in body_talent_map:
+                    talent_id = body_talent_map[behavior_id]
+                    if not target_character_data.talent[talent_id]:
                         continue
-                    # 部分指令需要未破处则不可用
-                    if (behavior_id == 874 or behavior_id == 875) and target_character_data.talent[0]:
-                        done_flag = True
-                    elif behavior_id == 877 and target_character_data.talent[1]:
-                        done_flag = True
-                    # 部分指令需要有对应部位的器官才能使用
-                    if behavior_id in body_talent_map:
-                        talent_id = body_talent_map[behavior_id]
-                        if not target_character_data.talent[talent_id]:
-                            continue
-                    # 如果使用次数已经用完，则不可用
-                    if now_ability_times <= 0:
-                        done_flag = True
-                    # 绘制按钮
-                    status_data = game_config.config_behavior[behavior_id]
-                    status_text = f"[{str(count).rjust(2,'0')}]：{status_data.name}"
-                    if done_flag:
-                        if behavior_id in self.done_check_behavior_id_set:
-                            status_text += _("(已检查)")
-                        status_draw = draw.NormalDraw()
-                        status_draw.text = status_text
-                        status_draw.style = "deep_gray"
-                        status_draw.width = window_width
-                        status_draw.draw()
-                    else:
-                        status_draw = draw.LeftButton(
-                            _(status_text),
-                            _(str(count)),
-                            window_width,
-                            cmd_func=self.settle_target_physical_status,
-                            args=(behavior_id),
-                        )
-                        status_draw.draw()
-                        return_list.append(status_draw.return_text)
-                    line_feed.draw()
+                # 如果使用次数已经用完，则不可用
+                if now_ability_times <= 0:
+                    done_flag = True
+                # 绘制按钮
+                behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
+                if done_flag:
+                    if behavior_id in self.done_check_behavior_id_set:
+                        behavior_text += _("(已检查)")
+                    status_draw = draw.NormalDraw()
+                    status_draw.text = behavior_text
+                    status_draw.style = "deep_gray"
+                    status_draw.width = window_width
+                    status_draw.draw()
+                else:
+                    status_draw = draw.LeftButton(
+                        _(behavior_text),
+                        _(str(count)),
+                        window_width,
+                        cmd_func=self.settle_target_physical_status,
+                        args=(behavior_id),
+                    )
+                    status_draw.draw()
+                    return_list.append(status_draw.return_text)
+                line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -396,7 +398,7 @@ class Physical_Check_And_Manage_Panel:
                     judge_result = True
                 else:
                     # 跳过没有进行前置检查的
-                    if examine_behavior_id > 0 and examine_behavior_id not in self.done_check_behavior_id_set:
+                    if examine_behavior_id != "0" and examine_behavior_id not in self.done_check_behavior_id_set:
                         continue
 
                 # debug模式下直接通过
@@ -753,30 +755,30 @@ class Physical_Check_And_Manage_Panel:
 
         # 指令与能力id的对应表
         cmd_ablility_dict = {
-            853: [71, _("【舌部机动】")],
-            856: [0, _("【胸部敏感】")],
-            858: [73, _("【乳压强度】")],
-            859: [2, _("【阴蒂敏感】")],
-            861: [70, _("【手部机动】")],
-            863: [72, _("【足部机动】")],
-            871: [4, _("【阴道敏感】")],
-            874: [7, _("【子宫敏感】")],
-            875: [74, _("【阴道技巧】")],
-            876: [5, _("【肛门敏感】")],
-            877: [75, _("【肛门技巧】")],
-            879: [6, _("【尿道敏感】")],
-            882: [30, _("【尾部机动】")],
-            888: [30, _("【触手机动】")],
+            "examine_sucking_and_swallowing": [71, _("【舌部机动】")],
+            "examine_breast": [0, _("【胸部敏感】")],
+            "examine_breast_clamping": [73, _("【乳压强度】")],
+            "examine_cilitoris": [2, _("【阴蒂敏感】")],
+            "examine_hands_flexibility": [70, _("【手部机动】")],
+            "examine_foots_flexibility": [72, _("【足部机动】")],
+            "examine_vulva_and_shape": [4, _("【阴道敏感】")],
+            "examine_orifice": [7, _("【子宫敏感】")],
+            "examine_vagina_firmness": [74, _("【阴道技巧】")],
+            "examine_anus": [5, _("【肛门敏感】")],
+            "examine_intestine_firmness": [75, _("【肛门技巧】")],
+            "examine_urination_status": [6, _("【尿道敏感】")],
+            "examine_tail_flexibility": [30, _("【尾部机动】")],
+            "examine_tentacle_flexibility": [30, _("【触手机动】")],
         }
 
         # TODO 指令与前置指令的对应表
         # cmd_able_dict = {
-        #     # 872: "阴唇形状",  # 检查内阴
-        #     # 873: "处女膜",  # 检查处女膜
-        #     # 874: "子宫口",  # 检查子宫口
-        #     875: "穴压强度",  # 测试阴道
-        #     877: "菊压强度",  # 测试肠道
-        #     # 879: "排尿情况",  # 测试排尿
+        #     # "examine_vagina_and_folds": "阴唇形状",  # 检查内阴
+        #     # "examine_hymen": "处女膜",  # 检查处女膜
+        #     # "examine_orifice": "子宫口",  # 检查子宫口
+        #     "examine_vagina_firmness": "穴压强度",  # 测试阴道
+        #     "examine_intestine_firmness": "菊压强度",  # 测试肠道
+        #     # "examine_urination_status": "排尿情况",  # 测试排尿
         # }
 
         target_character_id = self.pl_character_data.target_character_id
