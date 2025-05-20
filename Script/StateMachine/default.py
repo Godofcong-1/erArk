@@ -880,8 +880,14 @@ def character_move_to_maintenance_place(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.rhodes_island.maintenance_place[character_id])
-    general_movement_module(character_id, to_maintenance_place_shop)
+    # 正常情况下
+    if character_id in cache.rhodes_island.maintenance_place:
+        to_maintenance_place_shop = map_handle.get_map_system_path_for_str(cache.rhodes_island.maintenance_place[character_id])
+        general_movement_module(character_id, to_maintenance_place_shop)
+    # 如果检修地点已不存在则取消检修状态
+    else:
+        character_data: game_type.Character = cache.character_data[character_id]
+        character_data.sp_flag.work_maintenance = False
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_PRODUCTION_WORKSHOP)
