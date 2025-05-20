@@ -326,6 +326,10 @@ class SeeInstructPanel:
         # 如果是重复指令，则加上连续标记
         if len(cache.pl_pre_behavior_instruce):
             last_behavior_id = cache.pl_pre_behavior_instruce[-1]
+            # 适配旧存档
+            if isinstance(last_behavior_id, int):
+                cache.pl_pre_behavior_instruce = []
+                last_behavior_id = "share_blankly"
             last_behavior_data = game_config.config_behavior[last_behavior_id]
             if instruct_name == last_behavior_data.name:
                 now_draw_1.text += _("(连续)")
