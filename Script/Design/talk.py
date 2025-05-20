@@ -310,6 +310,8 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
             mark_name = _("恐怖")
         elif "hate" in second_behavior_id:
             mark_name = _("反发")
+        elif "unconscious" in second_behavior_id:
+            mark_name = _("无觉")
         # 获取刻印程度
         mark_degree = second_behavior_id[-1]
         info_text = _("\n{0}获得了{1}刻印{2}\n").format(chara_name, mark_name, mark_degree)
