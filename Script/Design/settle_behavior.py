@@ -658,6 +658,9 @@ def second_behavior_effect(
                 continue
             # 遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_behavior_effect_data[behavior_id]:
+                if effect_id not in constant.settle_second_behavior_effect_data:
+                    print(f"debug behavior_id = {behavior_id}，effect_id = {effect_id}没有找到对应的结算效果")
+                    continue
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
             # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
             # 触发后该行为值归零
