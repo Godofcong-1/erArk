@@ -69,10 +69,10 @@ str,str,int,str,str
 1097,w_orgasm_super,0,high_1,{Name}触发了W超强绝顶的地文
 
 1108,diuretics,0,high_1,\n{Name}体内的利尿剂发挥着作用，让{Name}不断地想要上厕所
-1109,sleeping_pills,0,high_1,\n{Name}体内的安眠药发挥着作用，让{Name}保持在深度的昏睡中
+1109,second_sleeping_pills,0,high_1,\n{Name}体内的安眠药发挥着作用，让{Name}保持在深度的昏睡中
 1110,ovulation_promotion_drugs,0,high_1,\n{Name}体内的排卵促进药发挥着作用，让{Name}的身体做好了排卵的准备
-1111,birth_control_pills_before,0,high_1,\n{Name}体内的事前避孕药发挥着作用，让{Name}的身体不会怀孕
-1112,birth_control_pills_after,0,high_1,\n{Name}体内的事后避孕药发挥着作用，让{Name}的身体不会怀孕
+1111,second_birth_control_pills_before,0,high_1,\n{Name}体内的事前避孕药发挥着作用，让{Name}的身体不会怀孕
+1112,second_birth_control_pills_after,0,high_1,\n{Name}体内的事后避孕药发挥着作用，让{Name}的身体不会怀孕
 
 1201,penis_in_body_0,0,high_1,\n{Name}的头发缠绕在{PlayerName}的阴茎上，不断摩擦着，让{PlayerName}感到异常的快感
 1202,penis_in_body_1,0,high_1,\n{PlayerName}的阴茎在{Name}的脸上蹭来蹭去，让{PlayerName}感觉到异常的快感和征服感

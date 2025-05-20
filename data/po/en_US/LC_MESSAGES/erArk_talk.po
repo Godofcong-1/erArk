@@ -14332,7 +14332,7 @@ msgstr "{Name} triggered the event of taking off milking machine"
 msgid "{Name}触发了乳头跳蛋指令的地文"
 msgstr "{Name} triggered the event of using nipple love eggs"
 
-#: .\data\talk\sex\nipple_clamp.csv:6
+#: .\data\talk\sex\second_nipple_clamp.csv:6
 msgid "{Name}触发了乳头夹指令的地文"
 msgstr "{Name} triggered the event of putting on nipple clamps"
 

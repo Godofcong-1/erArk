@@ -19231,9 +19231,10 @@ def handle_action_work_or_entertainment(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    behavior_data = game_config.config_behavior[character_data.behavior.behavior_id]
-    if "工作" in behavior_data.tag or "娱乐" in behavior_data.tag:
-        return 1
+    if character_data.behavior.behavior_id in game_config.config_behavior:
+        behavior_data = game_config.config_behavior[character_data.behavior.behavior_id]
+        if "工作" in behavior_data.tag or "娱乐" in behavior_data.tag:
+            return 1
     return 0
 
 

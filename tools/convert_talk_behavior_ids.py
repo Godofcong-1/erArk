@@ -123,6 +123,10 @@ def process_file(file_path, id_to_name, dry_run=False):
                     try:
                         # 尝试将behavior_id转换为整数
                         behavior_id = int(parts[behavior_id_idx])
+                        # 跳过ID为0的情况
+                        if behavior_id == 0:
+                            new_lines.append(line)
+                            continue
                         if behavior_id in id_to_name:
                             # 替换为对应的en_name
                             parts[behavior_id_idx] = id_to_name[behavior_id]
