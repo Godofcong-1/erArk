@@ -263,7 +263,7 @@ def load_talk_data_to_cache():
             now_talk.text = now_talk.context
         else:
             now_talk.text = ""
-        now_talk.status_id = str(now_talk.behavior_id)
+        now_talk.behavior_id = str(now_talk.behavior_id)
         now_talk.adv_id = str(now_talk.adv_id)
 
         # 前提转化
@@ -314,16 +314,16 @@ def update_status_menu():
     """更新状态菜单"""
     data_list.status_menu.clear()
     status_group = QActionGroup(data_list.status_menu)
-    for status_type in cache_control.status_type_data:
+    for status_type in cache_control.behavior_type_data:
         # 如果是事件编辑模式，则跳过二段结算
         if cache_control.now_edit_type_flag == 1 and "二段结算"in status_type:
             continue
         status_menu = QMenu(status_type, data_list.status_menu)
-        for cid in cache_control.status_type_data[status_type]:
+        for cid in cache_control.behavior_type_data[status_type]:
             if cid == "0":
                 continue
             now_action: QWidgetAction = QWidgetAction(data_list)
-            now_action.setText(cache_control.status_data[cid])
+            now_action.setText(cache_control.behavior_data[cid])
             now_action.setActionGroup(status_group)
             now_action.setData(cid)
             status_menu.addAction(now_action)
@@ -339,20 +339,20 @@ def change_status_menu(action: QWidgetAction):
     action -- 触发的菜单
     """
     cid = action.data()
-    data_list.status_menu.setTitle(cache_control.status_data[cid])
-    cache_control.now_status = cid
+    data_list.status_menu.setTitle(cache_control.behavior_data[cid])
+    cache_control.now_behavior = cid
     update_status_menu()
     # 如果有选中的条目，则更新该条目的状态
     if cache_control.now_select_id != '':
-        status_cid = cache_control.now_status
+        behavior_cid = cache_control.now_behavior
         # 更新状态id
         if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].status_id = status_cid
+            cache_control.now_event_data[cache_control.now_select_id].behavior_id = behavior_cid
         elif cache_control.now_edit_type_flag == 0:
-            cache_control.now_talk_data[cache_control.now_select_id].status_id = status_cid
+            cache_control.now_talk_data[cache_control.now_select_id].behavior_id = behavior_cid
         # 更新状态的触发人和持续时间
-        status_duration = int(cache_control.status_all_data[status_cid]["duration"])
-        status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+        status_duration = int(cache_control.behavior_all_data[behavior_cid]["duration"])
+        status_trigger = cache_control.behavior_all_data[behavior_cid]["trigger"]
         info_text = "耗时"
         if status_duration >= 0:
             info_text += f"{status_duration}分"
@@ -368,7 +368,7 @@ def change_status_menu(action: QWidgetAction):
         data_list.label3_text.setText(info_text)
 
         # 根据文字长度设置菜单栏宽度
-        status_menu_width = data_list.status_menu.fontMetrics().boundingRect(cache_control.status_data[cache_control.now_status]).width()
+        status_menu_width = data_list.status_menu.fontMetrics().boundingRect(cache_control.behavior_data[cache_control.now_behavior]).width()
         status_menu_width = max(status_menu_width * 1.5, 100)
         if cache_control.now_edit_type_flag == 1:
             status_menu_width = max(status_menu_width * 1.5, 160)

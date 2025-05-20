@@ -504,12 +504,12 @@ class CVPMenu(QDialog):
             self.cvp_b2.clear()
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于", "不等于"])
-            for status_id, status_name in cache_control.status_data.items():
+            for status_id, status_name in cache_control.behavior_data.items():
                 # 到二次结算则中断
                 if int(status_id) >= 1000:
                     break
                 # 跳过玩家无法触发的状态
-                status_data = cache_control.status_all_data[status_id]
+                status_data = cache_control.behavior_all_data[status_id]
                 if status_data["trigger"] == "npc":
                     continue
                 self.cvp_b2.addItem(f"{status_id}|{status_name}")

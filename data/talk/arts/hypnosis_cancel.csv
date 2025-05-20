@@ -1,8 +1,8 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,913,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_0&CVP_A1_T|334_E_0,{Name}重新拿起穿绳硬币，和进入催眠时一样，在{TargetName}的眼前机械地摇晃着，在发动源石技艺的同时嘴里念着解除催眠的词句：\n“接下来我会数五个数……在我数到5的时候……你会醒过来并忘记刚才发生的一切……”
-1,913,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_1&CVP_A1_T|334_E_0,{Name}将源石技艺凝聚在自己的瞳孔中，紧紧盯着{TargetName}无神的眼睛\n“你开始从海里上浮……我每数一个数你就会感到心里轻松很多……3……你已经能看到上方带着光亮的海面了……”
-2,913,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_1&CVP_A1_T|334_E_1,{Name}打了个响指，{TargetName}的眼睛瞬间清醒，就这么简单。
+0,hypnosis_cancel,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_0&CVP_A1_T|334_E_0,{Name}重新拿起穿绳硬币，和进入催眠时一样，在{TargetName}的眼前机械地摇晃着，在发动源石技艺的同时嘴里念着解除催眠的词句：\n“接下来我会数五个数……在我数到5的时候……你会醒过来并忘记刚才发生的一切……”
+1,hypnosis_cancel,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_1&CVP_A1_T|334_E_0,{Name}将源石技艺凝聚在自己的瞳孔中，紧紧盯着{TargetName}无神的眼睛\n“你开始从海里上浮……我每数一个数你就会感到心里轻松很多……3……你已经能看到上方带着光亮的海面了……”
+2,hypnosis_cancel,0,CVP_A1_T|331_E_1&CVP_A1_T|332_E_1&CVP_A1_T|334_E_1,{Name}打了个响指，{TargetName}的眼睛瞬间清醒，就这么简单。

@@ -138,13 +138,13 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
     return now_talk_data
 
 
-def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id = 0):
+def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id = ""):
     """
     处理行为结算对话的输出
     Keyword arguments:
     character_id -- 角色id
     now_talk_data -- 口上数据
-    second_behavior_id -- 二段行为id，默认为0
+    second_behavior_id -- 二段行为id，默认为""
     """
     from Script.Design import handle_chat_ai
 
@@ -157,7 +157,7 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
         now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
     # 二段结算前会单独绘制一个信息文本
-    if second_behavior_id > 0:
+    if second_behavior_id != "":
         second_behavior_info_text(character_id, second_behavior_id)
     if now_talk != "":
         # 检测是否需要跳过
@@ -219,13 +219,13 @@ def must_show_talk_check(character_id: int):
         if behavior_data != 0:
             # print(f"debug 检测到{second_behavior_id}可能需要显示")
             # 需要有必须显示
-            if 998 in game_config.config_second_behavior_effect_data[second_behavior_id]:
+            if 998 in game_config.config_behavior_effect_data[second_behavior_id]:
                 # 进行绘制
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
                 handle_talk_draw(character_id, now_talk_data, second_behavior_id)
                 # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
                 change_data = game_type.CharacterStatusChange()
-                for effect_id in game_config.config_second_behavior_effect_data[second_behavior_id]:
+                for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
                     constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
@@ -243,70 +243,85 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
     info_draw = draw.WaitDraw()
     info_text = ""
     info_draw.style = "standard"
+    # 多重绝顶
+    if "plural_orgasm" in second_behavior_id:
+        count_name_list = [_("双重"), _("三重"), _("四重"), _("五重"), _("六重"), _("七重"), _("八重"), _("九重"), _("十重")]
+        count_int =  int(second_behavior_id.split("plural_orgasm_")[-1])
+        count_name = count_name_list[count_int - 2]
+        info_text = _("\n{0}{1}绝顶\n").format(chara_name, count_name)
+    # 饮精绝顶
+    elif second_behavior_id == "semen_drinking_climax":
+        info_text = _("\n{0}饮精绝顶\n").format(chara_name)
+    # 额外绝顶
+    elif second_behavior_id == "extra_orgasm":
+        info_text = _("\n{0}额外绝顶\n").format(chara_name)
     # 部位绝顶
-    if 1000 <= second_behavior_id < 1030 or 1090 <= second_behavior_id < 1100:
+    elif "orgasm" in second_behavior_id:
         # 玩家
         if character_id == 0:
-            orgasm_degree_list = [_("射精"), _("大量射精"), _("超大量射精")]
-            orgasm_degree = _(orgasm_degree_list[second_behavior_id % 3 - 1])
+            if "normal" in second_behavior_id:
+                orgasm_degree = _("大量射精")
+            elif "strong" in second_behavior_id:
+                orgasm_degree = _("超大量射精")
+            else:
+                orgasm_degree = _("射精")
             info_text = "\n{0}{1}\n".format(chara_name, orgasm_degree)
             info_draw.style = "semen"
         # NPC
         else:
-            # 定义映射字典和列表
-            orgasm_name_map = {
-                (1000, 1001, 1002, 1090): "N",
-                (1003, 1004, 1005, 1091): "B",
-                (1006, 1007, 1008, 1092): "C",
-                (1009, 1010, 1011, 1093): "P",
-                (1012, 1013, 1014, 1094): "V",
-                (1015, 1016, 1017, 1095): "A",
-                (1018, 1019, 1020, 1096): "U",
-                (1021, 1022, 1023, 1097): "W",
-                (1026,): "额外",
-                (1027,): "饮精",
-            }
-            orgasm_degree_list = [_("小"), _("普"), _("强")]
-            # 查找对应的部位名与绝顶程度名
-            orgasm_name = next((name for key, name in orgasm_name_map.items() if second_behavior_id in key), None)
-            orgasm_degree = _(orgasm_degree_list[second_behavior_id % 3 - 1])
-            if second_behavior_id >= 1090:
-                orgasm_degree = _("超强")
+            # 获取部位名称
+            if second_behavior_id[0] == "n":
+                orgasm_name = _("通用")
+            elif second_behavior_id[0] == "b":
+                orgasm_name = _("胸部")
+            elif second_behavior_id[0] == "c":
+                orgasm_name = _("阴蒂")
+            elif second_behavior_id[0] == "v":
+                orgasm_name = _("阴道")
+            elif second_behavior_id[0] == "a":
+                orgasm_name = _("肛肠")
+            elif second_behavior_id[0] == "u":
+                orgasm_name = _("尿道")
+            elif second_behavior_id[0] == "w":
+                orgasm_name = _("子宫")
+            # 绝顶程度
+            if "normal" in second_behavior_id:
+                orgasm_degree = _("绝顶")
+            elif "strong" in second_behavior_id:
+                orgasm_degree = _("强绝顶")
+            elif "super" in second_behavior_id:
+                orgasm_degree = _("超强绝顶")
+            else:
+                orgasm_degree = _("小绝顶")
             # 最后文本
-            info_text = _("\n{0}{1}{2}绝顶\n").format(chara_name, orgasm_name, orgasm_degree)
-    # 饮精绝顶
-    elif second_behavior_id == 1027:
-        info_text = _("\n{0}饮精绝顶\n").format(chara_name, count_name)
-    # 多重绝顶
-    elif 1081 <= second_behavior_id < 1090:
-        count_name_list = [_("双重"), _("三重"), _("四重"), _("五重"), _("六重"), _("七重"), _("八重"), _("九重"), _("十重")]
-        count_name = count_name_list[second_behavior_id - 1081]
-        info_text = _("\n{0}{1}绝顶\n").format(chara_name, count_name)
+            info_text = _("\n{0}{1}{2}\n").format(chara_name, orgasm_name, orgasm_degree)
     # 一般刻印
-    elif 1030 <= second_behavior_id < 1050:
-        # 定义映射字典和列表
-        mark_name_map = {
-            range(1030, 1033): "快乐",
-            range(1033, 1036): "屈服",
-            range(1036, 1039): "苦痛",
-            range(1039, 1042): "时姦",
-            range(1042, 1045): "恐怖",
-            range(1045, 1048): "反发",
-        }
-        mark_name = next((name for key, name in mark_name_map.items() if second_behavior_id in key), None)
-        mark_degree = (second_behavior_id % 3)
-        if mark_degree == 0:
-            mark_degree = 3
+    elif "mark" in second_behavior_id:
+        # 获取刻印名称
+        if "happy" in second_behavior_id:
+            mark_name = _("快乐")
+        elif "yield" in second_behavior_id:
+            mark_name = _("屈服")
+        elif "pain" in second_behavior_id:
+            mark_name = _("苦痛")
+        elif "time" in second_behavior_id:
+            mark_name = _("时姦")
+        elif "terror" in second_behavior_id:
+            mark_name = _("恐怖")
+        elif "hate" in second_behavior_id:
+            mark_name = _("反发")
+        # 获取刻印程度
+        mark_degree = second_behavior_id[-1]
         info_text = _("\n{0}获得了{1}刻印{2}\n").format(chara_name, mark_name, mark_degree)
         # 如果是恐怖和反发刻印，则将绘制变成猩红
-        if second_behavior_id in range(1042, 1048):
+        if mark_name == _("恐怖") or mark_name == _("反发"):
             info_draw.style = "crimson"
     # B绝顶喷乳
-    elif second_behavior_id == 1071:
+    elif second_behavior_id == "b_orgasm_to_milk":
         info_text = _("\n{0}因B绝顶而被迫喷乳\n").format(chara_name)
         info_draw.style = "semen"
     # U绝顶漏尿
-    elif second_behavior_id == 1072:
+    elif second_behavior_id == "u_orgasm_to_pee":
         info_text = _("\n{0}因U绝顶而被迫漏尿\n").format(chara_name)
         info_draw.style = "khaki"
 

@@ -29,14 +29,10 @@ config_bar_data: Dict[str, int] = {}
 """ 比例条名字对应比例条id """
 config_image_data: Dict[int, int] = {}
 """ 人物图片对应图片id """
-config_behavior_effect: Dict[int, config_def.BehaviorEffect] = {}
+config_behavior_effect: Dict[int, config_def.Behavior_Effect] = {}
 """ 行为结算器配置 """
 config_behavior_effect_data: Dict[int, List] = {}
 """ 行为所包含的结算器id数据 """
-config_second_behavior_effect: Dict[int, config_def.SecondEffect] = {}
-""" 二段行为结算器配置 """
-config_second_behavior_effect_data: Dict[int, Set] = {}
-""" 二段行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
 config_book_type_data: Dict[int, Set] = {}
@@ -374,6 +370,8 @@ config_reputation_level: Dict[int, config_def.Reputation_Level] = {}
 """ 声望等级数据 """
 config_bondage: Dict[int, config_def.Bondage] = {}
 """ 绳子捆绑数据 """
+config_body_item: Dict[int, config_def.Body_Item] = {}
+""" 身体上装备的H道具数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -653,10 +651,10 @@ def load_bar_data():
 
 def load_behavior_effect_data():
     """载入行为结算器配置"""
-    now_data = config_data["BehaviorEffect"]
+    now_data = config_data["Behavior_Effect"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
-        now_tem = config_def.BehaviorEffect()
+        now_tem = config_def.Behavior_Effect()
         now_tem.__dict__ = tem_data
         config_behavior_effect[now_tem.cid] = now_tem
         config_behavior_effect_data.setdefault(now_tem.behavior_id, [])
@@ -678,25 +676,6 @@ def load_behavior_effect_data():
                 # 否则是字符串，直接添加
                 else:
                     config_behavior_effect_data[now_tem.behavior_id].append(effect)
-
-
-def load_second_behavior_effect_data():
-    """载入二段行为结算器配置"""
-    now_data = config_data["SecondEffect"]
-    translate_data(now_data)
-    for tem_data in now_data["data"]:
-        now_tem = config_def.SecondEffect()
-        now_tem.__dict__ = tem_data
-        config_second_behavior_effect[now_tem.cid] = now_tem
-        config_second_behavior_effect_data.setdefault(now_tem.behavior_id, set())
-        # config_second_behavior_effect_data[now_tem.behavior_id].add(now_tem.effect_id)
-
-        if "|" not in now_tem.effect_id:
-            config_second_behavior_effect_data[now_tem.behavior_id].add(int(now_tem.effect_id))
-        else:
-            effect_list = now_tem.effect_id.split('|')
-            for effect in effect_list:
-                config_second_behavior_effect_data[now_tem.behavior_id].add(int(effect))
 
 
 def load_book_data():
@@ -1107,7 +1086,7 @@ def load_behavior():
     for tem_data in now_data["data"]:
         now_tem = config_def.Behavior_Data()
         now_tem.__dict__ = tem_data
-        config_behavior[now_tem.cid] = now_tem
+        config_behavior[now_tem.en_name] = now_tem
         # 以英文名为键的数据
         config_behavior_by_str[now_tem.en_name] = now_tem
         config_behavior_by_cid[now_tem.cid] = now_tem
@@ -1119,7 +1098,7 @@ def load_behavior():
         for tag_name in ["插入", "侍奉", "口", "手", "肛", "道具"]:
             if tag_name in tag_list:
                 config_behavior_id_list_of_group_sex_body_part.setdefault(tag_name, [])
-                config_behavior_id_list_of_group_sex_body_part[tag_name].append(now_tem.cid)
+                config_behavior_id_list_of_group_sex_body_part[tag_name].append(now_tem.en_name)
                 # 每个状态仅存进一个组中
                 break
 
@@ -1147,9 +1126,9 @@ def load_talk():
         config_talk_data.setdefault(now_tem.behavior_id, set())
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
-        config_talk_data_by_chara_adv.setdefault(int(now_tem.behavior_id), {})
-        config_talk_data_by_chara_adv[int(now_tem.behavior_id)].setdefault(int(now_tem.adv_id), [])
-        config_talk_data_by_chara_adv[int(now_tem.behavior_id)][int(now_tem.adv_id)].append(now_tem.cid)
+        config_talk_data_by_chara_adv.setdefault(now_tem.behavior_id, {})
+        config_talk_data_by_chara_adv[now_tem.behavior_id].setdefault(int(now_tem.adv_id), [])
+        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].append(now_tem.cid)
 
         config_talk_premise_data.setdefault(now_tem.cid, set())
         # print(f"debug now_tem.context = {now_tem.context}")
@@ -1239,11 +1218,11 @@ def load_event():
         now_tem = game_type.Event()
         now_tem.__dict__ = tem_data
         config_event[now_tem.uid] = now_tem
-        config_event_status_data.setdefault(int(now_tem.status_id), [])
-        config_event_status_data[int(now_tem.status_id)].append(now_tem.uid)
-        config_event_status_data_by_chara_adv.setdefault(int(now_tem.status_id), {})
-        config_event_status_data_by_chara_adv[int(now_tem.status_id)].setdefault(int(now_tem.adv_id), [])
-        config_event_status_data_by_chara_adv[int(now_tem.status_id)][int(now_tem.adv_id)].append(now_tem.uid)
+        config_event_status_data.setdefault(now_tem.status_id, [])
+        config_event_status_data[now_tem.status_id].append(now_tem.uid)
+        config_event_status_data_by_chara_adv.setdefault(now_tem.status_id, {})
+        config_event_status_data_by_chara_adv[now_tem.status_id].setdefault(int(now_tem.adv_id), [])
+        config_event_status_data_by_chara_adv[now_tem.status_id][int(now_tem.adv_id)].append(now_tem.uid)
 
 
 def load_event_target():
@@ -1683,6 +1662,16 @@ def load_bondage():
         config_bondage[now_tem.cid] = now_tem
 
 
+def load_body_item():
+    """载入身体道具数据"""
+    now_data = config_data["Body_Item"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Body_Item()
+        now_tem.__dict__ = tem_data
+        config_body_item[now_tem.cid] = now_tem
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1705,7 +1694,6 @@ def init():
     load_ability_up_data()
     load_bar_data()
     load_behavior_effect_data()
-    load_second_behavior_effect_data()
     load_book_data()
     load_book_type()
     load_board_game()
@@ -1794,3 +1782,4 @@ def init():
     load_vehicle()
     load_reputation_level()
     load_bondage()
+    load_body_item()

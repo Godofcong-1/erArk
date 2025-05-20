@@ -1,16 +1,16 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1,116,0,sys_0,{Name}的事已经办完了，不需要{TargetName}再跟着自己了
-2,116,0,sys_0,{Name}暂时不再需要{TargetName}的帮助了，让{TargetName}自由行动
-3,116,0,sys_0,{Name}感谢{TargetName}抽出时间来陪自己，结束了这次共同行动
-4,116,0,sys_0,{Name}因为有其他事要办，所以得和{TargetName}先暂时分别
-5,116,0,sys_0,{Name}和{TargetName}一起行动的过程中有了足够的收获，于是和{TargetName}作别
-6,116,0,sys_0,{Name}需要一点自己的个人空间，于是不再让{TargetName}跟着自己
-7,116,0,sys_0,{Name}希望{TargetName}能够有更多的自由，于是选择了独自前行
-8,116,0,sys_0,{Name}为了让{TargetName}能够专注于自己的事情，决定暂时分开行动
-9,116,0,sys_0,{Name}相信{TargetName}需要时间去做她自己的事情，于是决定让她离开
-10,116,0,sys_0,{Name}觉得让{TargetName}跟随自己的目的已经达到了，现在是该分开的时候了
+1,end_follow,0,sys_0,{Name}的事已经办完了，不需要{TargetName}再跟着自己了
+2,end_follow,0,sys_0,{Name}暂时不再需要{TargetName}的帮助了，让{TargetName}自由行动
+3,end_follow,0,sys_0,{Name}感谢{TargetName}抽出时间来陪自己，结束了这次共同行动
+4,end_follow,0,sys_0,{Name}因为有其他事要办，所以得和{TargetName}先暂时分别
+5,end_follow,0,sys_0,{Name}和{TargetName}一起行动的过程中有了足够的收获，于是和{TargetName}作别
+6,end_follow,0,sys_0,{Name}需要一点自己的个人空间，于是不再让{TargetName}跟着自己
+7,end_follow,0,sys_0,{Name}希望{TargetName}能够有更多的自由，于是选择了独自前行
+8,end_follow,0,sys_0,{Name}为了让{TargetName}能够专注于自己的事情，决定暂时分开行动
+9,end_follow,0,sys_0,{Name}相信{TargetName}需要时间去做她自己的事情，于是决定让她离开
+10,end_follow,0,sys_0,{Name}觉得让{TargetName}跟随自己的目的已经达到了，现在是该分开的时候了
 

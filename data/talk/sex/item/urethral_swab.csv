@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,473,0,high_1,{Name}拿着无菌的棉棒，小心翼翼地在{TargetName}的尿道口来回刺激，控制着每一次探入的深浅，耐心地开发着
+0,urethral_swab,0,high_1,{Name}拿着无菌的棉棒，小心翼翼地在{TargetName}的尿道口来回刺激，控制着每一次探入的深浅，耐心地开发着

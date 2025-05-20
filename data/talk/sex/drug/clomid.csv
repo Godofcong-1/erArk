@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,459,0,high_1,{Name}给{TargetName}喂下了排卵促进药，让她含在嘴里展示给自己看后，再和水一起吞服下去\n这样{TargetName}的卵子就会被刺激排出，从而更容易地被{Name}的精子所玷污，最终怀孕
-1,459,0,high_1,在{Name}的指示下，排卵促进药顺着{TargetName}的喉咙进入了{TargetName}的体内。\n大量的雌激素在{TargetName}体内奔流着，将{TargetName}熟透了的卵子推到了输卵管的边缘。
-2,459,0,high_1,{Name}将排卵促进药放置在了{TargetName}的舌尖，微微浸开的甜味诱惑着{TargetName}吞下这粉色的药片，将自己的卵巢，子宫，和卵子都奉献给{Name}。
-3,459,0,high_1,{Name}将排卵促进药用指尖压入了{TargetName}的口腔，随后捏住{TargetName}的脸颊，迫使{TargetName}抬起头，咽下那象征着卵巢屈服的药片。
-4,459,0,high_1,{Name}用双指捏起一片粉红色的排卵促进药，在{TargetName}面前摇晃着，{TargetName}的眼睛死死盯着排卵促进药，毫不顾忌地流露出渴望。\n终于，在{Name}的许可下，{TargetName}迫不及待地连着{Name}的指尖一起含入口腔，在微妙的甜味下加速着自己卵子的成熟。
+0,clomid,0,high_1,{Name}给{TargetName}喂下了排卵促进药，让她含在嘴里展示给自己看后，再和水一起吞服下去\n这样{TargetName}的卵子就会被刺激排出，从而更容易地被{Name}的精子所玷污，最终怀孕
+1,clomid,0,high_1,在{Name}的指示下，排卵促进药顺着{TargetName}的喉咙进入了{TargetName}的体内。\n大量的雌激素在{TargetName}体内奔流着，将{TargetName}熟透了的卵子推到了输卵管的边缘。
+2,clomid,0,high_1,{Name}将排卵促进药放置在了{TargetName}的舌尖，微微浸开的甜味诱惑着{TargetName}吞下这粉色的药片，将自己的卵巢，子宫，和卵子都奉献给{Name}。
+3,clomid,0,high_1,{Name}将排卵促进药用指尖压入了{TargetName}的口腔，随后捏住{TargetName}的脸颊，迫使{TargetName}抬起头，咽下那象征着卵巢屈服的药片。
+4,clomid,0,high_1,{Name}用双指捏起一片粉红色的排卵促进药，在{TargetName}面前摇晃着，{TargetName}的眼睛死死盯着排卵促进药，毫不顾忌地流露出渴望。\n终于，在{Name}的许可下，{TargetName}迫不及待地连着{Name}的指尖一起含入口腔，在微妙的甜味下加速着自己卵子的成熟。

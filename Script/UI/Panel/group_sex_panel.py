@@ -777,7 +777,7 @@ class Edit_Group_Sex_Temple_Panel:
             character_data.sp_flag.go_to_join_group_sex = True
             info_draw_text = _("\n已邀请{0}来这里参加群交\n").format(character_data.name)
             # 赋予二段行为
-            character_data.second_behavior[1366] = 1
+            character_data.second_behavior["be_invited_join_group_sex"] = 1
             # 结算移动
             instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
             constant.handle_state_machine_data[503](character_id)

@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,525,0,high_1,{Name}从背面抱着{TargetName}，让{TargetName}坐在自己身上，{Name}的阴茎插入了{TargetName}的菊穴
+0,back_seat_anal_sex,0,high_1,{Name}从背面抱着{TargetName}，让{TargetName}坐在自己身上，{Name}的阴茎插入了{TargetName}的菊穴

@@ -1,7 +1,7 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,342,0,high_1,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了
-1,342,0,is_unconscious_h,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了
+0,steal_pan,0,high_1,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了
+1,steal_pan,0,is_unconscious_h,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了

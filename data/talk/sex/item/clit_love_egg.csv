@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,483,0,high_1,{Name}把跳蛋放在{TargetName}的阴蒂上，控制着震动幅度的大小，给{TargetName}带来一阵阵的快感
-1,483,0,high_1,{Name}控制着正在全速运作的跳蛋，试探着和{TargetName}阴蒂的距离。\n在跳蛋接触到{TargetName}阴蒂的瞬间，{Name}停止了推进，跳蛋在这个微妙的距离将往复的电机运动转化为了不断重复的轻微撞击，挑战着{TargetName}的快感极限。
-2,483,0,high_1,{Name}用指尖将跳蛋紧紧按在{TargetName}的阴蒂上，来自往复电机的动力震得{Name}的手指微微发麻。\n而位于跳蛋另一侧的更为敏感的阴蒂所收到的刺激则将{TargetName}的大脑化作甜美粘稠的快感糖液。
-3,483,0,high_1,{Name}将跳蛋紧密地贴在{TargetName}的阴蒂上，在{TargetName}期待的炙热视线下，{Name}随心所欲地调整着跳蛋的强度，引得{TargetName}快乐的声音也起起伏伏着。
-4,483,0,high_1,{Name}用双指捏着跳蛋，在{TargetName}阴蒂周边缓慢地画着圈。\n非敏感部位收到的刺激煎熬着{TargetName}的意志，对快感的渴求压倒了{TargetName}的其他想法，{TargetName}猛地将自己的阴蒂撞击到跳蛋上以获取自己等待已久的高潮。
+0,clit_love_egg,0,high_1,{Name}把跳蛋放在{TargetName}的阴蒂上，控制着震动幅度的大小，给{TargetName}带来一阵阵的快感
+1,clit_love_egg,0,high_1,{Name}控制着正在全速运作的跳蛋，试探着和{TargetName}阴蒂的距离。\n在跳蛋接触到{TargetName}阴蒂的瞬间，{Name}停止了推进，跳蛋在这个微妙的距离将往复的电机运动转化为了不断重复的轻微撞击，挑战着{TargetName}的快感极限。
+2,clit_love_egg,0,high_1,{Name}用指尖将跳蛋紧紧按在{TargetName}的阴蒂上，来自往复电机的动力震得{Name}的手指微微发麻。\n而位于跳蛋另一侧的更为敏感的阴蒂所收到的刺激则将{TargetName}的大脑化作甜美粘稠的快感糖液。
+3,clit_love_egg,0,high_1,{Name}将跳蛋紧密地贴在{TargetName}的阴蒂上，在{TargetName}期待的炙热视线下，{Name}随心所欲地调整着跳蛋的强度，引得{TargetName}快乐的声音也起起伏伏着。
+4,clit_love_egg,0,high_1,{Name}用双指捏着跳蛋，在{TargetName}阴蒂周边缓慢地画着圈。\n非敏感部位收到的刺激煎熬着{TargetName}的意志，对快感的渴求压倒了{TargetName}的其他想法，{TargetName}猛地将自己的阴蒂撞击到跳蛋上以获取自己等待已久的高潮。

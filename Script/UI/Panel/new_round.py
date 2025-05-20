@@ -524,7 +524,7 @@ class New_Round_Handle:
         # 输出送别干员的送别口上
         if self.farewell_npc_id:
             now_character_data = cache.character_data[self.farewell_npc_id]
-            now_character_data.second_behavior[1351] = 1
+            now_character_data.second_behavior["new_round_farewell"] = 1
             line_draw = draw.LineDraw("-", self.width)
             line_draw.draw()
             line_feed_draw.draw()

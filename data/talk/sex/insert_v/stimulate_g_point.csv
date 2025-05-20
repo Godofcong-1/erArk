@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,511,0,high_1,{Name}找到了{TargetName}阴道里的G点，开始用阴茎重点进攻这里，{TargetName}的身体开始颤抖，发出了一连串的呻吟声
+0,stimulate_g_point,0,high_1,{Name}找到了{TargetName}阴道里的G点，开始用阴茎重点进攻这里，{TargetName}的身体开始颤抖，发出了一连串的呻吟声

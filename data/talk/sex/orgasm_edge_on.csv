@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,751,0,high_1,{Name}开始小心地使用技巧来控制{TargetName}的快感累积，每当{TargetName}即将抵达绝顶前的一瞬间，{Name}就会准确地停下来，让{TargetName}的快感得不到释放。
+0,orgasm_edge_on,0,high_1,{Name}开始小心地使用技巧来控制{TargetName}的快感累积，每当{TargetName}即将抵达绝顶前的一瞬间，{Name}就会准确地停下来，让{TargetName}的快感得不到释放。

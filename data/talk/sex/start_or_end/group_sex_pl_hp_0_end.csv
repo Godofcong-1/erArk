@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,383,0,high_1,因为体力不足，{Name}只能结束了这次群交
-1,383,0,high_1,在多人的轮番榨取下，{Name}耗尽了体力，不得不提前退场。
-2,383,0,high_1,双拳难敌四掌，更何况{Name}只能使用一把圣剑去面对那么多如饥似渴的家伙们。
-3,383,0,high_1,耗尽体力的{Name}看着面前仍然不满足的众人不由得流下冷汗，为了生命着想，{Name}赶紧尿遁离开了这次群交。
-4,383,0,high_1,{Name}的体力在多人的车轮战之下被消耗殆尽，只得提前离开群交，放下饥渴的众人先去休息。
+0,group_sex_pl_hp_0_end,0,high_1,因为体力不足，{Name}只能结束了这次群交
+1,group_sex_pl_hp_0_end,0,high_1,在多人的轮番榨取下，{Name}耗尽了体力，不得不提前退场。
+2,group_sex_pl_hp_0_end,0,high_1,双拳难敌四掌，更何况{Name}只能使用一把圣剑去面对那么多如饥似渴的家伙们。
+3,group_sex_pl_hp_0_end,0,high_1,耗尽体力的{Name}看着面前仍然不满足的众人不由得流下冷汗，为了生命着想，{Name}赶紧尿遁离开了这次群交。
+4,group_sex_pl_hp_0_end,0,high_1,{Name}的体力在多人的车轮战之下被消耗殆尽，只得提前离开群交，放下饥渴的众人先去休息。

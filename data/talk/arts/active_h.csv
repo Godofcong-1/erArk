@@ -1,7 +1,7 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,925,0,t_not_hypnosis_active_h,{Name}对{TargetName}使用了体控催眠-逆推，{TargetName}的身体会不再受其想法控制，只能眼睁睁看着自己的身体主动对{Name}进行性行为
-1,925,0,t_hypnosis_active_h,{Name}停止了对{TargetName}使用的体控催眠-逆推，{TargetName}的身体恢复了正常
+0,hypnosis_active_h,0,t_not_hypnosis_active_h,{Name}对{TargetName}使用了体控催眠-逆推，{TargetName}的身体会不再受其想法控制，只能眼睁睁看着自己的身体主动对{Name}进行性行为
+1,hypnosis_active_h,0,t_hypnosis_active_h,{Name}停止了对{TargetName}使用的体控催眠-逆推，{TargetName}的身体恢复了正常

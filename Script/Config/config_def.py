@@ -104,17 +104,6 @@ class BarConfig:
     """ 图片绘制宽度 """
 
 
-class BehaviorEffect:
-    """ 行为结算器配置 """
-
-    cid: int
-    """ 表id """
-    behavior_id: int
-    """ 行为id """
-    effect_id: str
-    """ 结算器id """
-
-
 class Behavior_Data:
     """ 状态描述配置 """
 
@@ -130,6 +119,41 @@ class Behavior_Data:
     """ 触发人 """
     tag: str
     """ 标签 """
+
+
+class Behavior_Effect:
+    """ 行为结算器配置 """
+
+    cid: int
+    """ 表id """
+    behavior_id: str
+    """ 行为id """
+    effect_id: str
+    """ 结算器id """
+
+
+class Behavior_Effect_bak:
+    """ 行为结算器配置 """
+
+    cid: int
+    """ 表id """
+    behavior_id: int
+    """ 行为id """
+    effect_id: str
+    """ 结算器id """
+
+
+class Behavior_Introduce:
+    """ 状态描述配置 """
+
+    cid: int
+    """ 状态id """
+    en_name: str
+    """ 英文名称 """
+    name: str
+    """ 描述 """
+    introduce: str
+    """ 状态介绍 """
 
 
 class Birthplace:
@@ -171,12 +195,25 @@ class BodyPart:
     """ 额外流通表 """
 
 
+class Body_Item:
+    """ 身体道具 """
+
+    cid: int
+    """ 身体道具id """
+    name: str
+    """ 身体道具名 """
+    type: int
+    """ 道具类型 """
+    behavior_id: str
+    """ 二段结算id """
+
+
 class Body_Manage_Requirement:
     """ 身体管理需要满足的条件 """
 
     cid: int
     """ 序号 """
-    second_behavior_id: int
+    second_behavior_id: str
     """ 二段行为id """
     need_examine_id: int
     """ 需要的检查状态id """
@@ -572,7 +609,7 @@ class Hypnosis_Talent_Of_Npc:
     """ 催眠深度 """
     need_talent_id: int
     """ 前置素质id """
-    second_behavior_id: int
+    second_behavior_id: str
     """ 二段行为id """
 
 
@@ -725,7 +762,7 @@ class Mark_Up:
     """ 能力id """
     now_level: int
     """ 当前等级 """
-    second_behavior: int
+    second_behavior: str
     """ 二段行为id """
     need_state_all_value: int
     """ 升级需求的总状态值 """
@@ -1026,36 +1063,6 @@ class SolarPeriod:
     """ 所属季节id """
 
 
-class Status:
-    """ 状态描述配置 """
-
-    cid: int
-    """ 状态id """
-    en_name: str
-    """ 英文名称 """
-    name: str
-    """ 描述 """
-    duration: int
-    """ 耗时 """
-    trigger: str
-    """ 触发人 """
-    tag: str
-    """ 标签 """
-
-
-class Status_Introduce:
-    """ 状态描述配置 """
-
-    cid: int
-    """ 状态id """
-    en_name: str
-    """ 英文名称 """
-    name: str
-    """ 描述 """
-    introduce: str
-    """ 状态介绍 """
-
-
 class SunTime:
     """ 太阳时间配置 """
 
@@ -1102,7 +1109,7 @@ class TalentGain:
     """ 编号id """
     talent_id: int
     """ 素质id """
-    second_behavior_id: int
+    second_behavior_id: str
     """ 二段行为结算id """
     gain_type: int
     """ 获得类型(0随时自动，1手动，2指令绑定，3睡觉自动) """
@@ -1280,7 +1287,7 @@ class Talk:
 
     cid: str
     """ 口上id """
-    behavior_id: int
+    behavior_id: str
     """ 触发口上的行为id """
     adv_id: int
     """ 口上限定的剧情npcid """
@@ -1288,7 +1295,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 
 
 class TargetEffect:

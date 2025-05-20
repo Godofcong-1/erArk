@@ -16,7 +16,7 @@ class ToolsBar(QMenuBar):
         self.npc_menu: QMenu = QMenu("0", self)
         self.npc_menu.setFixedWidth(50)
         self.addMenu(self.npc_menu)
-        self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
+        self.status_menu: QMenu = QMenu(cache_control.behavior_data[cache_control.now_behavior], self)
         self.status_menu.setFont(self.font)
         self.addMenu(self.status_menu)
         self.type_menu: QMenu = QMenu(cache_control.now_type, self)

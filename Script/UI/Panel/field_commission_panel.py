@@ -335,7 +335,7 @@ def judge_field_commission_finish():
             # 结算队长
             if len(send_npc_list):
                 leader_id = send_npc_list[0]
-                cache.character_data[leader_id].second_behavior[1362] = 1
+                cache.character_data[leader_id].second_behavior["end_field_commission_as_leader"] = 1
                 talk.must_show_talk_check(leader_id)
             # 遍历派遣人员
             for character_id in send_npc_list:
@@ -1015,7 +1015,7 @@ class Field_Commission_Panel:
             self.send_npc_list.remove(self.lead_chara_id)
             self.send_npc_list.insert(0, self.lead_chara_id)
             # 二段行为
-            lead_character_data.second_behavior[1361] = 1
+            lead_character_data.second_behavior["start_field_commission_as_leader"] = 1
             talk.must_show_talk_check(self.lead_chara_id)
 
         # 绘制委托信息

@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,402,0,high_1,{Name}和{TargetName}亲吻着，舌头伸进对方的嘴里，交换彼此的唾液
-1,402,0,high_1,{Name}的舌头在{TargetName}的口腔中索取着，两人的唾液在嘴唇间混合着，发出了湿润的水声。
-2,402,0,high_1,{Name}灵活的舌头侵略了{TargetName}的口腔，肆无忌惮地从内部刺激着{TargetName}。
-3,402,0,high_1,{Name}贪婪地亲吻着{TargetName}，不断吸取{TargetName}口腔内的空气，直到{TargetName}因缺氧而不得不中断热吻。
-4,402,0,high_1,{Name}轻轻咬住{TargetName}的嘴唇，随后将舌头滑入{TargetName}的口腔，他人的体温在{TargetName}的唇齿间划过。\n{TargetName}情不自禁地用舌头迎了上去。
+0,kiss_h,0,high_1,{Name}和{TargetName}亲吻着，舌头伸进对方的嘴里，交换彼此的唾液
+1,kiss_h,0,high_1,{Name}的舌头在{TargetName}的口腔中索取着，两人的唾液在嘴唇间混合着，发出了湿润的水声。
+2,kiss_h,0,high_1,{Name}灵活的舌头侵略了{TargetName}的口腔，肆无忌惮地从内部刺激着{TargetName}。
+3,kiss_h,0,high_1,{Name}贪婪地亲吻着{TargetName}，不断吸取{TargetName}口腔内的空气，直到{TargetName}因缺氧而不得不中断热吻。
+4,kiss_h,0,high_1,{Name}轻轻咬住{TargetName}的嘴唇，随后将舌头滑入{TargetName}的口腔，他人的体温在{TargetName}的唇齿间划过。\n{TargetName}情不自禁地用舌头迎了上去。

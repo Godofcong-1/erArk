@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,386,0,high_1,{Name}加入了群交
-1,386,0,high_1,面前的活春宫刺激着{Name}的视网膜，{Name}按耐不住地走近加入了这场群交。
-2,386,0,high_1,铺面而来的淫乱气息模糊了{Name}的意识，在本能的驱动下，{Name}站定在原地，显然是不打算什么都不做就离开。
-3,386,0,high_1,{Name}的手不老实的探入了自己的衣服。显然已经做好了加入群交的准备。
-4,386,0,high_1,色情的声响在空气中凝结，{Name}充满情欲的双眼望着已经在淫趴中的众人，加入了这场多人运动。
+0,join_group_sex,0,high_1,{Name}加入了群交
+1,join_group_sex,0,high_1,面前的活春宫刺激着{Name}的视网膜，{Name}按耐不住地走近加入了这场群交。
+2,join_group_sex,0,high_1,铺面而来的淫乱气息模糊了{Name}的意识，在本能的驱动下，{Name}站定在原地，显然是不打算什么都不做就离开。
+3,join_group_sex,0,high_1,{Name}的手不老实的探入了自己的衣服。显然已经做好了加入群交的准备。
+4,join_group_sex,0,high_1,色情的声响在空气中凝结，{Name}充满情欲的双眼望着已经在淫趴中的众人，加入了这场多人运动。

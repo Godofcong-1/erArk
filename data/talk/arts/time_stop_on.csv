@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,941,0,high_1,时间啊，停下来吧——！\n虽然还是会有一些微小的运动，但是整个世界仿佛被一股无形的力量所束缚，时间仿佛被凝固在了这一刻。\n
+0,time_stop_on,0,high_1,时间啊，停下来吧——！\n虽然还是会有一些微小的运动，但是整个世界仿佛被一股无形的力量所束缚，时间仿佛被凝固在了这一刻。\n

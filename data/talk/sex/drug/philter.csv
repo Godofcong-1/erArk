@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,454,0,high_1,{Name}让{TargetName}喝下了媚药，{TargetName}的身体开始变得异常敏感，情欲不断攀升，每一次的触碰都会让{TargetName}的身体颤抖不已
+0,philter,0,high_1,{Name}让{TargetName}喝下了媚药，{TargetName}的身体开始变得异常敏感，情欲不断攀升，每一次的触碰都会让{TargetName}的身体颤抖不已

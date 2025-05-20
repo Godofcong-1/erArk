@@ -1,9 +1,9 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,132,0,high_1,{Name}泡了加料咖啡
-1,132,0,sys_0,{Name}为{TargetName}泡了加料咖啡
-2,132,0,sys_0&place_11,{Name}为{TargetName}以及在场的干员冲泡了加料咖啡
-3,132,0,sys_1&sys_4&high_5,{Name}对{TargetName}{PlayerNickName}泡了加料咖啡
+0,make_coffee_add,0,high_1,{Name}泡了加料咖啡
+1,make_coffee_add,0,sys_0,{Name}为{TargetName}泡了加料咖啡
+2,make_coffee_add,0,sys_0&place_11,{Name}为{TargetName}以及在场的干员冲泡了加料咖啡
+3,make_coffee_add,0,sys_1&sys_4&high_5,{Name}对{TargetName}{PlayerNickName}泡了加料咖啡

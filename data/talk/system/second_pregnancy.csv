@@ -1,30 +1,30 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 
-2,1311,0,high_1&CVP_A1_T|102_G_0,{Name}稚嫩的卵子沐浴在{PlayerName}滚烫、成熟的精液中，\n精力旺盛的精子疯狂地侵袭着这位年幼少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。
-3,1311,0,high_1&CVP_A1_T|103_G_0,{Name}娇嫩的卵子沐浴在{PlayerName}滚烫、浓稠的精液中，\n精力旺盛的精子疯狂地侵袭着这位娇小少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。
-4,1311,0,high_1&CVP_A1_T|104_G_0,{PlayerName}浓郁的精液浸润着{Name}粉嫩的卵子。\n疯狂的精子们围绕着健康的卵子，试图进入其中，在不泄的围攻下，一位幸运儿捷足先登，与粉嫩的卵子融为一体。\n{Name}的卵子最终受精，准备进入着床阶段。
-5,1311,0,high_1&CVP_A1_T|105_G_0,{PlayerName}强壮有力的精子疯狂入侵{Name}那娇嫩多汁的卵子，\n{Name}那正适合繁育年龄的卵子终于迎来了她的目标，\n毫无意外的和{PlayerName}的精子结合了。
-6,1311,0,high_1&CVP_A1_T|106_G_0,{PlayerName}滚烫浓稠的精液浇灌在{Name}成熟的卵子上，\n精子凶猛有力，撞击着完全成熟的卵壁，\n最终{Name}多年未育子宫中的卵子遵循着本能与精子结合完毕，等待着进一步的着床。
-7,1311,0,high_1&CVP_A1_T|107_G_0,{Name}红润的卵子浸泡在{PlayerName}粘稠的精液中，年轻气盛精子争先恐后钻入{Name}烂熟硕大的卵子中，\n比起原有的丈夫，这一次{Name}的子宫将孕育{PlayerName}的后代。\n{Name}的卵子毫无抵抗地接受了不是丈夫的{PlayerName}的基因。
-8,1311,0,high_1&CVP_A1_T|108_G_0,在{PlayerName}的精液持续的浇灌和沐浴下，\n即使是贵为长生者的{Name}的卵子\n也开始顺从于欲望和本能，\n最终向{PlayerName}的粘稠精液完全屈服了。
+2,fertilization,0,high_1&CVP_A1_T|102_G_0,{Name}稚嫩的卵子沐浴在{PlayerName}滚烫、成熟的精液中，\n精力旺盛的精子疯狂地侵袭着这位年幼少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。
+3,fertilization,0,high_1&CVP_A1_T|103_G_0,{Name}娇嫩的卵子沐浴在{PlayerName}滚烫、浓稠的精液中，\n精力旺盛的精子疯狂地侵袭着这位娇小少女的卵子，\n{Name}的卵子毫无抵抗之力，很快就被{PlayerName}的精子攻陷并受精了。
+4,fertilization,0,high_1&CVP_A1_T|104_G_0,{PlayerName}浓郁的精液浸润着{Name}粉嫩的卵子。\n疯狂的精子们围绕着健康的卵子，试图进入其中，在不泄的围攻下，一位幸运儿捷足先登，与粉嫩的卵子融为一体。\n{Name}的卵子最终受精，准备进入着床阶段。
+5,fertilization,0,high_1&CVP_A1_T|105_G_0,{PlayerName}强壮有力的精子疯狂入侵{Name}那娇嫩多汁的卵子，\n{Name}那正适合繁育年龄的卵子终于迎来了她的目标，\n毫无意外的和{PlayerName}的精子结合了。
+6,fertilization,0,high_1&CVP_A1_T|106_G_0,{PlayerName}滚烫浓稠的精液浇灌在{Name}成熟的卵子上，\n精子凶猛有力，撞击着完全成熟的卵壁，\n最终{Name}多年未育子宫中的卵子遵循着本能与精子结合完毕，等待着进一步的着床。
+7,fertilization,0,high_1&CVP_A1_T|107_G_0,{Name}红润的卵子浸泡在{PlayerName}粘稠的精液中，年轻气盛精子争先恐后钻入{Name}烂熟硕大的卵子中，\n比起原有的丈夫，这一次{Name}的子宫将孕育{PlayerName}的后代。\n{Name}的卵子毫无抵抗地接受了不是丈夫的{PlayerName}的基因。
+8,fertilization,0,high_1&CVP_A1_T|108_G_0,在{PlayerName}的精液持续的浇灌和沐浴下，\n即使是贵为长生者的{Name}的卵子\n也开始顺从于欲望和本能，\n最终向{PlayerName}的粘稠精液完全屈服了。
 
-11,1312,0,high_1,在{Name}湿润温暖的子宫内，{PlayerName}射出的上亿精子争先恐后地游向卵子。\n它们穿过层层阻碍，一个个精子触及卵子表面，但却都未能顺利融合。\n{Name}卵子抗拒着它们。\n
+11,fertilization_failed,0,high_1,在{Name}湿润温暖的子宫内，{PlayerName}射出的上亿精子争先恐后地游向卵子。\n它们穿过层层阻碍，一个个精子触及卵子表面，但却都未能顺利融合。\n{Name}卵子抗拒着它们。\n
 
-21,1313,0,high_10&CVP_A1_T|222_G_0,{Name}的肚子一点点大了起来，不过性知识尚且匮乏的她。\n还不知道究竟发生了什么。
-22,1313,0,high_1&self_not_fall,{Name}的小腹开始随着时间愈发隆起，\n意外的怀孕使得她愈发的不安，\n无法知悉孩子的父亲究竟是谁。
-23,1313,0,high_1&CVP_A1_F_L_2000,{Name}怀孕了，肚子开始一天天隆起，\n{Name}怀着忐忑的心情向{PlayerName}汇报了身体的变化。
-24,1313,0,high_1&CVP_A1_F_GE_2000,{Name}兴奋地抚摸着微微隆起的小腹，眼中闪烁着喜悦的光芒。\n{Name}汇报着身体的发生的变化，告知了{PlayerName}自己已经怀孕的情况。
-25,1313,0,high_10&CVP_A1_T|7_G_0,{Name}的幼小的肚子一点点大了起来，\n对年幼的{Name}来说，这份爱的结晶可能太过沉重，\n总之继续努力吧。
+21,pregnancy,0,high_10&CVP_A1_T|222_G_0,{Name}的肚子一点点大了起来，不过性知识尚且匮乏的她。\n还不知道究竟发生了什么。
+22,pregnancy,0,high_1&self_not_fall,{Name}的小腹开始随着时间愈发隆起，\n意外的怀孕使得她愈发的不安，\n无法知悉孩子的父亲究竟是谁。
+23,pregnancy,0,high_1&CVP_A1_F_L_2000,{Name}怀孕了，肚子开始一天天隆起，\n{Name}怀着忐忑的心情向{PlayerName}汇报了身体的变化。
+24,pregnancy,0,high_1&CVP_A1_F_GE_2000,{Name}兴奋地抚摸着微微隆起的小腹，眼中闪烁着喜悦的光芒。\n{Name}汇报着身体的发生的变化，告知了{PlayerName}自己已经怀孕的情况。
+25,pregnancy,0,high_10&CVP_A1_T|7_G_0,{Name}的幼小的肚子一点点大了起来，\n对年幼的{Name}来说，这份爱的结晶可能太过沉重，\n总之继续努力吧。
 
-1313,1313,0,high_1,\n{Name}触发了获得[妊娠]的地文
-1314,1314,0,high_1,\n{Name}触发了获得[临盆]的地文
-1315,1315,0,high_1,\n{Name}触发了生产前的对话的地文
-1317,1317,0,high_1,\n{Name}触发了生产后的对话+获得[产后]的地文
-1318,1318,0,high_1,\n{Name}触发了获得[育儿]的地文
-1319,1319,0,high_1,\n{Name}触发了育儿完成的地文
-1320,1320,0,high_1,\n{Name}触发了幼女长成萝莉的地文
-1321,1321,0,high_1,\n{Name}触发了萝莉长成少女的地文
+1313,pregnancy,0,high_1,\n{Name}触发了获得[妊娠]的地文
+1314,parturient,0,high_1,\n{Name}触发了获得[临盆]的地文
+1315,born,0,high_1,\n{Name}触发了生产前的对话的地文
+1317,postpartum,0,high_1,\n{Name}触发了生产后的对话+获得[产后]的地文
+1318,rearing,0,high_1,\n{Name}触发了获得[育儿]的地文
+1319,rearing_complete,0,high_1,\n{Name}触发了育儿完成的地文
+1320,child_to_loli,0,high_1,\n{Name}触发了幼女长成萝莉的地文
+1321,loli_to_girl,0,high_1,\n{Name}触发了萝莉长成少女的地文

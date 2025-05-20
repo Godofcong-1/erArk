@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,385,0,high_1,因为其他人已经离开了，所以{Name}又回到了和{TargetName}的单人H中
-1,385,0,high_1,{Name}完成了多人的挑战，现在在他面前的只有{Name}一人了。
-2,385,0,high_1,激烈的性爱过后，唯有{TargetName}和{Name}还留在淫趴上，等待着决战的到来。
-3,385,0,high_1,其他人陆陆续续的离开了这场性爱，只有{Name}和{TargetName}还在淫靡的气息中注视着对方，等待着下半场。
-4,385,0,high_1,{Name}和干员们团队战结束了，再次回到了和{TargetName}的单人性爱之中。
+0,group_sex_to_h,0,high_1,因为其他人已经离开了，所以{Name}又回到了和{TargetName}的单人H中
+1,group_sex_to_h,0,high_1,{Name}完成了多人的挑战，现在在他面前的只有{Name}一人了。
+2,group_sex_to_h,0,high_1,激烈的性爱过后，唯有{TargetName}和{Name}还留在淫趴上，等待着决战的到来。
+3,group_sex_to_h,0,high_1,其他人陆陆续续的离开了这场性爱，只有{Name}和{TargetName}还在淫靡的气息中注视着对方，等待着下半场。
+4,group_sex_to_h,0,high_1,{Name}和干员们团队战结束了，再次回到了和{TargetName}的单人性爱之中。

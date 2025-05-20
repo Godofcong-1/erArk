@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,942,0,high_1,时间啊，重新开始流动吧——！\n仿佛是一股无形的力量被解除，时间重新开始流动，世界恢复了原本的运转。
+0,time_stop_off,0,high_1,时间啊，重新开始流动吧——！\n仿佛是一股无形的力量被解除，时间重新开始流动，世界恢复了原本的运转。

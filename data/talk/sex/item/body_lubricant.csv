@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,455,0,high_1,{Name}在{TargetName}的穴口和自己的肉棒上都涂上了润滑液，以便减少插入时的疼痛感
-1,455,0,high_1,{Name}在自己手心倒上滑腻的润滑液，简单在肉棒上抹匀后将剩余的润滑液涂抹到了{TargetName}的穴口，以为后续的狂野性交做好准备。
-2,455,0,high_1,{Name}将冰冷的润滑液倾倒在{TargetName}的穴口，随后用滚烫的阴茎将润滑液涂抹开来，直到{TargetName}的穴口和{Name}的肉棒都做好了进入下一步的准备。
-3,455,0,high_1,{Name}用手掌和肉棒将冰冷的润滑液缓慢加热到贴近体温，随后用龟头反复磨蹭着{TargetName}的穴口，在润滑液的作用下，{TargetName}的穴口很快做好了粗暴性爱的准备。
-4,455,0,high_1,{Name}用手掌将一捧润滑液淋到了自己的肉棒上，随后流淌到下方{TargetName}的穴口，几次反复润滑后，{Name}的阴茎和{TargetName}的穴口都准备好了插入的准备。
+0,enemas,0,high_1,{Name}在{TargetName}的穴口和自己的肉棒上都涂上了润滑液，以便减少插入时的疼痛感
+1,enemas,0,high_1,{Name}在自己手心倒上滑腻的润滑液，简单在肉棒上抹匀后将剩余的润滑液涂抹到了{TargetName}的穴口，以为后续的狂野性交做好准备。
+2,enemas,0,high_1,{Name}将冰冷的润滑液倾倒在{TargetName}的穴口，随后用滚烫的阴茎将润滑液涂抹开来，直到{TargetName}的穴口和{Name}的肉棒都做好了进入下一步的准备。
+3,enemas,0,high_1,{Name}用手掌和肉棒将冰冷的润滑液缓慢加热到贴近体温，随后用龟头反复磨蹭着{TargetName}的穴口，在润滑液的作用下，{TargetName}的穴口很快做好了粗暴性爱的准备。
+4,enemas,0,high_1,{Name}用手掌将一捧润滑液淋到了自己的肉棒上，随后流淌到下方{TargetName}的穴口，几次反复润滑后，{Name}的阴茎和{TargetName}的穴口都准备好了插入的准备。

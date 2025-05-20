@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,531,0,sys_0,{Name}找准了位置，开始用阴茎隔着{TargetName}的肠壁刺激另一端的阴道，{TargetName}的身体开始颤抖，发出了一连串的呻吟声
+0,stimulate_vagina,0,sys_0,{Name}找准了位置，开始用阴茎隔着{TargetName}的肠壁刺激另一端的阴道，{TargetName}的身体开始颤抖，发出了一连串的呻吟声

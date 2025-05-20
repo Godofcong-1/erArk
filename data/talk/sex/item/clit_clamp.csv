@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,484,0,high_1,{Name}给{TargetName}的阴蒂挂上了阴蒂夹，电动的小夹子牢牢地固定在阴蒂上，而且不停地震动着，让{TargetName}感到一阵阵的快感
-1,484,0,high_1,{Name}将阴蒂夹牢牢固定到了{TargetName}身上，来自阴蒂夹的压力挤压着{TargetName}的敏感点，游走在皮下的神经被这反差的刺激绷紧，随后忠实地将电动马达的振动传递到身体各处，
-2,484,0,high_1,冰冷的阴蒂夹被{Name}固定到了{TargetName}的阴蒂上，振动开始的瞬间狂乱的快感就摧毁了{TargetName}的理性，只有无穷的快感快速分食着{TargetName}的理性。
-3,484,0,high_1,在阴蒂夹的作用下，{TargetName}的阴蒂在{Name}面前暴露无遗。\n被强迫挺立的阴蒂在超出人类极限的频率下榨取着{TargetName}体内的所有液体，不断喷洒的潮水在强力的振动下被雾化成了一阵阵漂浮的薄云。
-4,484,0,high_1,无情的振动刺激在{Name}的操作下通过阴蒂夹传递到了{TargetName}过分充血的阴蒂上，低沉的马达声和{TargetName}尖锐的欢泣声将这场欢愉的折磨推向了更高潮。
+0,clit_clamp_on,0,high_1,{Name}给{TargetName}的阴蒂挂上了阴蒂夹，电动的小夹子牢牢地固定在阴蒂上，而且不停地震动着，让{TargetName}感到一阵阵的快感
+1,clit_clamp_on,0,high_1,{Name}将阴蒂夹牢牢固定到了{TargetName}身上，来自阴蒂夹的压力挤压着{TargetName}的敏感点，游走在皮下的神经被这反差的刺激绷紧，随后忠实地将电动马达的振动传递到身体各处，
+2,clit_clamp_on,0,high_1,冰冷的阴蒂夹被{Name}固定到了{TargetName}的阴蒂上，振动开始的瞬间狂乱的快感就摧毁了{TargetName}的理性，只有无穷的快感快速分食着{TargetName}的理性。
+3,clit_clamp_on,0,high_1,在阴蒂夹的作用下，{TargetName}的阴蒂在{Name}面前暴露无遗。\n被强迫挺立的阴蒂在超出人类极限的频率下榨取着{TargetName}体内的所有液体，不断喷洒的潮水在强力的振动下被雾化成了一阵阵漂浮的薄云。
+4,clit_clamp_on,0,high_1,无情的振动刺激在{Name}的操作下通过阴蒂夹传递到了{TargetName}过分充血的阴蒂上，低沉的马达声和{TargetName}尖锐的欢泣声将这场欢愉的折磨推向了更高潮。

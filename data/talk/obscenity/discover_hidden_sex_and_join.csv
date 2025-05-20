@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,377,0,high_1,{Name}察觉了{PlayerName}和{PlayerTargetName}的隐奸，并打算加入其中
+0,discover_hidden_sex_and_join,0,high_1,{Name}察觉了{PlayerName}和{PlayerTargetName}的隐奸，并打算加入其中

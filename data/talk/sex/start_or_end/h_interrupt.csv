@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,366,0,high_1,{Name}在和{TargetName}的H时被{HInterruptCharaName}的闯入中断了
-1,366,0,high_1,正在兴头上的{Name}和{TargetName}在{HInterruptCharaName}的闯入下被打断了。
-2,366,0,high_1,{Name}和{TargetName}将视线从彼此身上抽离，意外地看着闯入的{HInterruptCharaName}，随后在尴尬中中断了性爱。
-3,366,0,high_1,{HInterruptCharaName}的意外到来迫使{Name}和{TargetName}停下了性事。
-4,366,0,high_1,在{HInterruptCharaName}的突入和注视下，{Name}和{TargetName}选择中断和彼此的肉体连接。
+0,h_interrupt,0,high_1,{Name}在和{TargetName}的H时被{HInterruptCharaName}的闯入中断了
+1,h_interrupt,0,high_1,正在兴头上的{Name}和{TargetName}在{HInterruptCharaName}的闯入下被打断了。
+2,h_interrupt,0,high_1,{Name}和{TargetName}将视线从彼此身上抽离，意外地看着闯入的{HInterruptCharaName}，随后在尴尬中中断了性爱。
+3,h_interrupt,0,high_1,{HInterruptCharaName}的意外到来迫使{Name}和{TargetName}停下了性事。
+4,h_interrupt,0,high_1,在{HInterruptCharaName}的突入和注视下，{Name}和{TargetName}选择中断和彼此的肉体连接。

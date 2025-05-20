@@ -33,13 +33,13 @@ premise_type_data: Dict[str, Set] = {}
 """ 前提类型数据 """
 premise_group_data: Dict[str, List] = {}
 """ 前提组数据 """
-status_data: dict = {}
+behavior_data: dict = {}
 """ 当前状态数据 """
-status_all_data: dict = {}
+behavior_all_data: dict = {}
 """ 当前状态全部数据 """
-status_type_data: Dict[str, List] = {}
+behavior_type_data: Dict[str, List] = {}
 """ 状态类型数据 """
-now_status: str = "1"
+now_behavior: str = "share_blankly"
 """ 当前事件状态 """
 now_type: str = "跳过指令"
 """ 当前事件类型 """

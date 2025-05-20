@@ -1,9 +1,9 @@
 cid,hypnosis_talent_id,hypnosis_degree,need_talent_id,second_behavior_id
 cid,该素质id,催眠深度,前置素质id,二段行为id
-int,int,int,int,int
+int,int,int,int,str
 0,0,0,0,0
 干员获得被催眠素质,,,,
 
-00,71,50,331,1501
-01,72,100,332,1502
-02,73,200,334,1503
+00,71,50,331,has_been_primary_hypnosis
+01,72,100,332,has_been_deep_hypnosis
+02,73,200,334,has_been_complete_hypnosis

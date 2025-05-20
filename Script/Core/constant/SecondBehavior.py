@@ -1,501 +1,500 @@
 class SecondBehavior:
     """二段结算行为函数"""
 
-    N_orgasm_small = 1000
+    N_orgasm_small = "n_orgasm_small"
     """ 结算N小绝顶 """
-    N_orgasm_normal = 1001
+    N_orgasm_normal = "n_orgasm_normal"
     """ 结算N普绝顶 """
-    N_orgasm_strong = 1002
+    N_orgasm_strong = "n_orgasm_strong"
     """ 结算N强绝顶 """
-    B_orgasm_small = 1003
+    B_orgasm_small = "b_orgasm_small"
     """ 结算B小绝顶 """
-    B_orgasm_normal = 1004
+    B_orgasm_normal = "b_orgasm_normal"
     """ 结算B普绝顶 """
-    B_orgasm_strong = 1005
+    B_orgasm_strong = "b_orgasm_strong"
     """ 结算B强绝顶 """
-    C_orgasm_small = 1006
+    C_orgasm_small = "c_orgasm_small"
     """ 结算C小绝顶 """
-    C_orgasm_normal = 1007
+    C_orgasm_normal = "c_orgasm_normal"
     """ 结算C普绝顶 """
-    C_orgasm_strong = 1008
+    C_orgasm_strong = "c_orgasm_strong"
     """ 结算C强绝顶 """
-    P_orgasm_small = 1009
+    P_orgasm_small = "p_orgasm_small"
     """ 结算射精 """
-    P_orgasm_normal = 1010
+    P_orgasm_normal = "p_orgasm_normal"
     """ 结算大量射精 """
-    P_orgasm_strong = 1011
+    P_orgasm_strong = "p_orgasm_strong"
     """ 结算超大量射精 """
-    V_orgasm_small = 1012
+    V_orgasm_small = "v_orgasm_small"
     """ 结算V小绝顶 """
-    V_orgasm_normal = 1013
+    V_orgasm_normal = "v_orgasm_normal"
     """ 结算V普绝顶 """
-    V_orgasm_strong = 1014
+    V_orgasm_strong = "v_orgasm_strong"
     """ 结算V强绝顶 """
-    A_orgasm_small = 1015
+    A_orgasm_small = "a_orgasm_small"
     """ 结算A小绝顶 """
-    A_orgasm_normal = 1016
+    A_orgasm_normal = "a_orgasm_normal"
     """ 结算A普绝顶 """
-    A_orgasm_strong = 1017
+    A_orgasm_strong = "a_orgasm_strong"
     """ 结算A强绝顶 """
-    U_orgasm_small = 1018
+    U_orgasm_small = "u_orgasm_small"
     """ 结算U小绝顶 """
-    U_orgasm_normal = 1019
+    U_orgasm_normal = "u_orgasm_normal"
     """ 结算U普绝顶 """
-    U_orgasm_strong = 1020
+    U_orgasm_strong = "u_orgasm_strong"
     """ 结算U强绝顶 """
-    W_orgasm_small = 1021
+    W_orgasm_small = "w_orgasm_small"
     """ 结算W小绝顶 """
-    W_orgasm_normal = 1022
+    W_orgasm_normal = "w_orgasm_normal"
     """ 结算W普绝顶 """
-    W_orgasm_strong = 1023
+    W_orgasm_strong = "w_orgasm_strong"
     """ 结算W强绝顶 """
-    EXTRA_ORGASM = 1026
+    EXTRA_ORGASM = "extra_orgasm"
     """ 结算额外绝顶 """
-    SEMEN_DRINKING_CLIMAX = 1027
+    SEMEN_DRINKING_CLIMAX = "semen_drinking_climax"
     """ 结算饮精绝顶 """
-    HAPPY_MARK_1 = 1030
+    HAPPY_MARK_1 = "happy_mark_1"
     """ 结算快乐刻印1 """
-    HAPPY_MARK_2 = 1031
+    HAPPY_MARK_2 = "happy_mark_2"
     """ 结算快乐刻印2 """
-    HAPPY_MARK_3 = 1032
+    HAPPY_MARK_3 = "happy_mark_3"
     """ 结算快乐刻印3 """
-    YIELD_MARK_1 = 1033
+    YIELD_MARK_1 = "yield_mark_1"
     """ 结算屈服刻印1 """
-    YIELD_MARK_2 = 1034
+    YIELD_MARK_2 = "yield_mark_2"
     """ 结算屈服刻印2 """
-    YIELD_MARK_3 = 1035
+    YIELD_MARK_3 = "yield_mark_3"
     """ 结算屈服刻印3 """
-    PAIN_MARK_1 = 1036
+    PAIN_MARK_1 = "pain_mark_1"
     """ 结算苦痛刻印1 """
-    PAIN_MARK_2 = 1037
+    PAIN_MARK_2 = "pain_mark_2"
     """ 结算苦痛刻印2 """
-    PAIN_MARK_3 = 1038
+    PAIN_MARK_3 = "pain_mark_3"
     """ 结算苦痛刻印3 """
-    TIME_MARK_1 = 1039
+    TIME_MARK_1 = "time_mark_1"
     """ 结算时姦刻印1 """
-    TIME_MARK_2 = 1040
+    TIME_MARK_2 = "time_mark_2"
     """ 结算时姦刻印2 """
-    TIME_MARK_3 = 1041
+    TIME_MARK_3 = "time_mark_3"
     """ 结算时姦刻印3 """
-    TERROR_MARK_1 = 1042
+    TERROR_MARK_1 = "terror_mark_1"
     """ 结算恐怖刻印1 """
-    TERROR_MARK_2 = 1043
+    TERROR_MARK_2 = "terror_mark_2"
     """ 结算恐怖刻印2 """
-    TERROR_MARK_3 = 1044
+    TERROR_MARK_3 = "terror_mark_3"
     """ 结算恐怖刻印3 """
-    HATE_MARK_1 = 1045
+    HATE_MARK_1 = "hate_mark_1"
     """ 结算反发刻印1 """
-    HATE_MARK_2 = 1046
+    HATE_MARK_2 = "hate_mark_2"
     """ 结算反发刻印2 """
-    HATE_MARK_3 = 1047
+    HATE_MARK_3 = "hate_mark_3"
     """ 结算反发刻印3 """
-    FIRST_KISS = 1050
+    FIRST_KISS = "first_kiss"
     """ 结算初吻 """
-    FIRST_SEX = 1051
+    FIRST_SEX = "first_sex"
     """ 结算处女 """
-    FIRST_A_SEX = 1052
+    FIRST_A_SEX = "first_a_sex"
     """ 结算A处女 """
-    UNCONSCIOUS_MARK_1 = 1061
+    UNCONSCIOUS_MARK_1 = "unconscious_mark_1"
     """ 结算无觉刻印1 """
-    UNCONSCIOUS_MARK_2 = 1062
+    UNCONSCIOUS_MARK_2 = "unconscious_mark_2"
     """ 结算无觉刻印2 """
-    UNCONSCIOUS_MARK_3 = 1063
+    UNCONSCIOUS_MARK_3 = "unconscious_mark_3"
     """ 结算无觉刻印3 """
-    UNCONSCIOUS_MARK_4 = 1064
+    UNCONSCIOUS_MARK_4 = "unconscious_mark_4"
     """ 结算无觉刻印4 """
-    UNCONSCIOUS_MARK_5 = 1065
+    UNCONSCIOUS_MARK_5 = "unconscious_mark_5"
     """ 结算无觉刻印5 """
-    UNCONSCIOUS_MARK_6 = 1066
+    UNCONSCIOUS_MARK_6 = "unconscious_mark_6"
     """ 结算无觉刻印6 """
 
-    B_ORGASM_TO_MILK = 1071
+    B_ORGASM_TO_MILK = "b_orgasm_to_milk"
     """ 结算因B绝顶而被迫喷乳 """
-    U_ORGASM_TO_PEE = 1072
+    U_ORGASM_TO_PEE = "u_orgasm_to_pee"
     """ 结算因U绝顶而被迫漏尿 """
 
-    DOUBLE_ORGASM = 1081
+    DOUBLE_ORGASM = "plural_orgasm_2"
     """ 结算双重绝顶 """
-    TRIPLE_ORGASM = 1082
+    TRIPLE_ORGASM = "plural_orgasm_3"
     """ 结算三重绝顶 """
-    QUADRUPLE_ORGASM = 1083
+    QUADRUPLE_ORGASM = "plural_orgasm_4"
     """ 结算四重绝顶 """
-    QUINTUPLE_ORGASM = 1084
+    QUINTUPLE_ORGASM = "plural_orgasm_5"
     """ 结算五重绝顶 """
-    SEXTUPLE_ORGASM = 1085
+    SEXTUPLE_ORGASM = "plural_orgasm_6"
     """ 结算六重绝顶 """
-    SEPTUPLE_ORGASM = 1086
+    SEPTUPLE_ORGASM = "plural_orgasm_7"
     """ 结算七重绝顶 """
 
-    N_ORGASM_SUPER = 1090
+    N_ORGASM_SUPER = "n_orgasm_super"
     """ 结算N超强绝顶 """
-    B_ORGASM_SUPER = 1091
+    B_ORGASM_SUPER = "b_orgasm_super"
     """ 结算B超强绝顶 """
-    C_ORGASM_SUPER = 1092
+    C_ORGASM_SUPER = "c_orgasm_super"
     """ 结算C超强绝顶 """
-    V_ORGASM_SUPER = 1094
+    V_ORGASM_SUPER = "v_orgasm_super"
     """ 结算V超强绝顶 """
-    A_ORGASM_SUPER = 1095
+    A_ORGASM_SUPER = "a_orgasm_super"
     """ 结算A超强绝顶 """
-    U_ORGASM_SUPER = 1096
+    U_ORGASM_SUPER = "u_orgasm_super"
     """ 结算U超强绝顶 """
-    W_ORGASM_SUPER = 1097
+    W_ORGASM_SUPER = "w_orgasm_super"
     """ 结算W超强绝顶 """
 
-    NIPPLE_CLAMP = 1100
+    NIPPLE_CLAMP = "nipple_clamp"
     """ 结算乳头夹 """
-    CLIT_CLAMP = 1101
+    CLIT_CLAMP = "clit_clamp"
     """ 结算阴蒂夹 """
-    VIBRATOR_INSERTION = 1102
+    VIBRATOR_INSERTION = "vibrator_insertion"
     """ 结算震动棒 """
-    VIBRATOR_INSERTION_ANAL = 1103
+    VIBRATOR_INSERTION_ANAL = "vibrator_insertion_anal"
     """ 结算肛门振动棒 """
-    MILKING_MACHINE = 1104
+    MILKING_MACHINE = "milking_machine"
     """ 结算搾乳机 """
-    URINE_COLLECTOR = 1105
+    URINE_COLLECTOR = "urine_collector"
     """ 结算采尿器 """
-    PATCH = 1106
+    PATCH = "patch"
     """ 结算眼罩 """
-    ANAL_BEADS = 1107
+    ANAL_BEADS = "anal_beads"
     """ 结算肛门拉珠 """
-    DIURETICS = 1108
+    DIURETICS = "diuretics"
     """ 结算利尿剂 """
-    SLEEPING_PILLS = 1109
+    SLEEPING_PILLS = "sleeping_pills"
     """ 结算安眠药 """
-    OVULATION_PROMOTION_DRUGS = 1110
+    OVULATION_PROMOTION_DRUGS = "ovulation_promotion_drugs"
     """ 结算排卵促进药 """
-    BIRTH_CONTROL_PILLS_BEFORE = 1111
+    BIRTH_CONTROL_PILLS_BEFORE = "birth_control_pills_before"
     """ 结算事前避孕药 """
-    BIRTH_CONTROL_PILLS_AFTER = 1112
+    BIRTH_CONTROL_PILLS_AFTER = "birth_control_pills_after"
     """ 结算事后避孕药 """
-    GAG = 1114
+    GAG = "gag"
     """ 结算口球 """
 
-    CONDAGE = 1161
+    CONDAGE = "condage"
     """ 结算绳子捆绑 """
-
-    PENIS_IN_HAIR = 1201
+    PENIS_IN_HAIR = "penis_in_body_0"
     """ 结算发交中 """
-    PENIS_IN_FACE = 1202
+    PENIS_IN_FACE = "penis_in_body_1"
     """ 结算阴茎蹭脸中 """
-    PENIS_IN_MOUTH = 1203
+    PENIS_IN_MOUTH = "penis_in_body_2"
     """ 结算口交中 """
-    PENIS_IN_BREAST = 1204
+    PENIS_IN_BREAST = "penis_in_body_3"
     """ 结算乳交中 """
-    PENIS_IN_AXILLA = 1205
+    PENIS_IN_AXILLA = "penis_in_body_4"
     """ 结算腋交中 """
-    PENIS_IN_HAND = 1206
+    PENIS_IN_HAND = "penis_in_body_5"
     """ 结算手交中 """
-    PENIS_IN_VAGINA = 1207
+    PENIS_IN_VAGINA = "penis_in_body_6"
     """ 结算V插入中 """
-    PENIS_IN_WOMB = 1208
+    PENIS_IN_WOMB = "penis_in_body_7"
     """ 结算W插入中 """
-    PENIS_IN_ANAL = 1209
+    PENIS_IN_ANAL = "penis_in_body_8"
     """ 结算A插入中 """
-    PENIS_IN_URETHRAL = 1210
+    PENIS_IN_URETHRAL = "penis_in_body_9"
     """ 结算U插入中 """
-    PENIS_IN_LEG = 1211
+    PENIS_IN_LEG = "penis_in_body_10"
     """ 结算腿交中 """
-    PENIS_IN_FOOT = 1212
+    PENIS_IN_FOOT = "penis_in_body_11"
     """ 结算足交中 """
-    PENIS_IN_TAIL = 1213
+    PENIS_IN_TAIL = "penis_in_body_12"
     """ 结算尾交中 """
-    PENIS_IN_HORN = 1214
+    PENIS_IN_HORN = "penis_in_body_13"
     """ 结算阴茎蹭角中 """
-    PENIS_IN_EARS = 1215
+    PENIS_IN_EARS = "penis_in_body_14"
     """ 结算阴茎蹭耳朵中 """
-    PENIS_IN_RUB_BUTTOCK = 1216
+    PENIS_IN_RUB_BUTTOCK = "penis_in_rub_buttock"
     """ 结算素股中 """
 
-    PENIS_IN_HAT_JOB = 1221
+    PENIS_IN_HAT_JOB = "penis_in_cloth_0"
     """ 结算帽子交中 """
-    PENIS_IN_GLASSES_JOB = 1222
+    PENIS_IN_GLASSES_JOB = "penis_in_cloth_1"
     """ 结算眼镜交中 """
-    PENIS_IN_EAR_ORNAMENT_JOB = 1223
+    PENIS_IN_EAR_ORNAMENT_JOB = "penis_in_cloth_2"
     """ 结算耳饰交中 """
-    PENIS_IN_NECK_ORNAMENT_JOB = 1224
+    PENIS_IN_NECK_ORNAMENT_JOB = "penis_in_cloth_3"
     """ 结算脖饰交中 """
-    PENIS_IN_MOUTH_ORNAMENT_JOB = 1225
+    PENIS_IN_MOUTH_ORNAMENT_JOB = "penis_in_cloth_4"
     """ 结算口罩交中 """
-    PENIS_IN_TOP_JOB = 1226
+    PENIS_IN_TOP_JOB = "penis_in_cloth_5"
     """ 结算上衣交中 """
-    PENIS_IN_CORSET_JOB = 1227
+    PENIS_IN_CORSET_JOB = "penis_in_cloth_6"
     """ 结算胸衣交中 """
-    PENIS_IN_GLOVES_JOB = 1228
+    PENIS_IN_GLOVES_JOB = "penis_in_cloth_7"
     """ 结算手套交中 """
-    PENIS_IN_SKIRT_JOB = 1229
+    PENIS_IN_SKIRT_JOB = "penis_in_cloth_8_skirt"
     """ 结算裙子交中 """
-    PENIS_IN_UNDERWEAR_JOB = 1230
+    PENIS_IN_UNDERWEAR_JOB = "penis_in_cloth_9"
     """ 结算内裤交中 """
-    PENIS_IN_SOCKS_JOB = 1231
+    PENIS_IN_SOCKS_JOB = "penis_in_cloth_10"
     """ 结算袜子交中 """
-    PENIS_IN_SHOES_JOB = 1232
+    PENIS_IN_SHOES_JOB = "penis_in_cloth_11"
     """ 结算鞋子交中 """
-    PENIS_IN_WEAPONS_JOB = 1233
+    PENIS_IN_WEAPONS_JOB = "penis_in_cloth_12"
     """ 结算武器交中 """
-    PENIS_IN_TROUSERS_JOB = 1234
+    PENIS_IN_TROUSERS_JOB = "penis_in_cloth_8_trousers"
     """ 结算裤子交中 """
 
-    N_ORGASM_EDGE = 1250
+    N_ORGASM_EDGE = "n_orgasm_edge"
     """ 结算N绝顶被寸止 """
-    B_ORGASM_EDGE = 1251
+    B_ORGASM_EDGE = "b_orgasm_edge"
     """ 结算B绝顶被寸止 """
-    C_ORGASM_EDGE = 1252
+    C_ORGASM_EDGE = "c_orgasm_edge"
     """ 结算C绝顶被寸止 """
-    P_ORGASM_EDGE = 1253
+    P_ORGASM_EDGE = "p_orgasm_edge"
     """ 结算射精被寸止 """
-    V_ORGASM_EDGE = 1254
+    V_ORGASM_EDGE = "v_orgasm_edge"
     """ 结算V绝顶被寸止 """
-    A_ORGASM_EDGE = 1255
+    A_ORGASM_EDGE = "a_orgasm_edge"
     """ 结算A绝顶被寸止 """
-    U_ORGASM_EDGE = 1256
+    U_ORGASM_EDGE = "u_orgasm_edge"
     """ 结算U绝顶被寸止 """
-    W_ORGASM_EDGE = 1257
+    W_ORGASM_EDGE = "w_orgasm_edge"
     """ 结算W绝顶被寸止 """
 
-    IN_UNCONSCIOUS_CUM_ON_HAIR = 1260
+    IN_UNCONSCIOUS_CUM_ON_HAIR = "in_unconscious_cum_on_body_0"
     """ 恢复意识后发现头发出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_FACE = 1261
+    IN_UNCONSCIOUS_CUM_ON_FACE = "in_unconscious_cum_on_body_1"
     """ 恢复意识后发现脸部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_MOUTH = 1262
+    IN_UNCONSCIOUS_CUM_ON_MOUTH = "in_unconscious_cum_on_body_2"
     """ 恢复意识后发现口腔出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_CHEST = 1263
+    IN_UNCONSCIOUS_CUM_ON_CHEST = "in_unconscious_cum_on_body_3"
     """ 恢复意识后发现胸部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_ARMPIT = 1264
+    IN_UNCONSCIOUS_CUM_ON_ARMPIT = "in_unconscious_cum_on_body_4"
     """ 恢复意识后发现腋部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_HAND = 1265
+    IN_UNCONSCIOUS_CUM_ON_HAND = "in_unconscious_cum_on_body_5"
     """ 恢复意识后发现手部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_VAGINA = 1266
+    IN_UNCONSCIOUS_CUM_ON_VAGINA = "in_unconscious_cum_on_body_6"
     """ 恢复意识后发现小穴出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_WOMB = 1267
+    IN_UNCONSCIOUS_CUM_ON_WOMB = "in_unconscious_cum_on_body_7"
     """ 恢复意识后发现子宫出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_ANUS = 1268
+    IN_UNCONSCIOUS_CUM_ON_ANUS = "in_unconscious_cum_on_body_8"
     """ 恢复意识后发现后穴出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_URETHRA = 1269
+    IN_UNCONSCIOUS_CUM_ON_URETHRA = "in_unconscious_cum_on_body_9"
     """ 恢复意识后发现尿道出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_LEG = 1270
+    IN_UNCONSCIOUS_CUM_ON_LEG = "in_unconscious_cum_on_body_10"
     """ 恢复意识后发现腿部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_FOOT = 1271
+    IN_UNCONSCIOUS_CUM_ON_FOOT = "in_unconscious_cum_on_body_11"
     """ 恢复意识后发现脚部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_TAIL = 1272
+    IN_UNCONSCIOUS_CUM_ON_TAIL = "in_unconscious_cum_on_body_12"
     """ 恢复意识后发现尾巴出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_HORN = 1273
+    IN_UNCONSCIOUS_CUM_ON_HORN = "in_unconscious_cum_on_body_13"
     """ 恢复意识后发现兽角出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_EARS = 1274
+    IN_UNCONSCIOUS_CUM_ON_EARS = "in_unconscious_cum_on_body_14"
     """ 恢复意识后发现兽耳出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_STOMACH = 1275
+    IN_UNCONSCIOUS_CUM_ON_STOMACH = "in_unconscious_cum_on_body_15"
     """ 恢复意识后发现胃部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_CROTCH = 1276
+    IN_UNCONSCIOUS_CUM_ON_CROTCH = "in_unconscious_cum_on_body_16"
     """ 恢复意识后发现胯部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_BELLY = 1277
+    IN_UNCONSCIOUS_CUM_ON_BELLY = "in_unconscious_cum_on_body_17"
     """ 恢复意识后发现腹部出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_BACK = 1278
+    IN_UNCONSCIOUS_CUM_ON_BACK = "in_unconscious_cum_on_body_18"
     """ 恢复意识后发现背部出现精液 """
 
-    IN_UNCONSCIOUS_CUM_ON_HAT = 1280
+    IN_UNCONSCIOUS_CUM_ON_HAT = "in_unconscious_cum_on_cloth_0"
     """ 恢复意识后发现帽子出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_GLASSES = 1281
+    IN_UNCONSCIOUS_CUM_ON_GLASSES = "in_unconscious_cum_on_cloth_1"
     """ 恢复意识后发现眼镜出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_EAR_ORNAMENT = 1282
+    IN_UNCONSCIOUS_CUM_ON_EAR_ORNAMENT = "in_unconscious_cum_on_cloth_2"
     """ 恢复意识后发现耳饰出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_NECK_ORNAMENT = 1283
+    IN_UNCONSCIOUS_CUM_ON_NECK_ORNAMENT = "in_unconscious_cum_on_cloth_3"
     """ 恢复意识后发现脖饰出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_MOUTH_ORNAMENT = 1284
+    IN_UNCONSCIOUS_CUM_ON_MOUTH_ORNAMENT = "in_unconscious_cum_on_cloth_4"
     """ 恢复意识后发现口饰出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_TOP = 1285
+    IN_UNCONSCIOUS_CUM_ON_TOP = "in_unconscious_cum_on_cloth_5"
     """ 恢复意识后发现上衣出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_CORSET = 1286
+    IN_UNCONSCIOUS_CUM_ON_CORSET = "in_unconscious_cum_on_cloth_6"
     """ 恢复意识后发现胸衣出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_GLOVES = 1287
+    IN_UNCONSCIOUS_CUM_ON_GLOVES = "in_unconscious_cum_on_cloth_7"
     """ 恢复意识后发现手套出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_SKIRT = 1288
+    IN_UNCONSCIOUS_CUM_ON_SKIRT = "in_unconscious_cum_on_cloth_8"
     """ 恢复意识后发现下衣出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_UNDERWEAR = 1289
+    IN_UNCONSCIOUS_CUM_ON_UNDERWEAR = "in_unconscious_cum_on_cloth_9"
     """ 恢复意识后发现内裤出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_SOCKS = 1290
+    IN_UNCONSCIOUS_CUM_ON_SOCKS = "in_unconscious_cum_on_cloth_10"
     """ 恢复意识后发现袜子出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_SHOES = 1291
+    IN_UNCONSCIOUS_CUM_ON_SHOES = "in_unconscious_cum_on_cloth_11"
     """ 恢复意识后发现鞋子出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_WEAPONS = 1292
+    IN_UNCONSCIOUS_CUM_ON_WEAPONS = "in_unconscious_cum_on_cloth_12"
     """ 恢复意识后发现武器出现精液 """
-    IN_UNCONSCIOUS_CUM_ON_ACCESSORY = 1293
+    IN_UNCONSCIOUS_CUM_ON_ACCESSORY = "in_unconscious_cum_on_cloth_13"
     """ 恢复意识后发现附属物出现精液 """
 
-    IN_UNCONSCIOUS_STOLEN_PANTY = 1296
+    IN_UNCONSCIOUS_STOLEN_PANTY = "in_unconscious_stolen_panty"
     """ 恢复意识后发现内裤被偷 """
-    IN_UNCONSCIOUS_STOLEN_SOCKS = 1297
+    IN_UNCONSCIOUS_STOLEN_SOCKS = "in_unconscious_stolen_socks"
     """ 恢复意识后发现袜子被偷 """
 
-    LOVE_1 = 1301
+    LOVE_1 = "love_1"
     """ 结算获得思慕 """
-    LOVE_2 = 1302
+    LOVE_2 = "love_2"
     """ 结算获得恋慕 """
-    LOVE_3 = 1303
+    LOVE_3 = "love_3"
     """ 结算获得恋人(含赠予信物) """
-    LOVE_4 = 1304
+    LOVE_4 = "love_4"
     """ 结算获得爱侣 """
-    OBEY_1 = 1305
+    OBEY_1 = "obey_1"
     """ 结算获得屈从 """
-    OBEY_2 = 1306
+    OBEY_2 = "obey_2"
     """ 结算获得驯服 """
-    OBEY_3 = 1307
+    OBEY_3 = "obey_3"
     """ 结算获得宠物(含赠予信物)  """
-    OBEY_4 = 1308
+    OBEY_4 = "obey_4"
     """ 结算获得奴隶 """
 
-    FERTILIZATION = 1311
+    FERTILIZATION = "fertilization"
     """ 结算获得受精 """
-    FERTILIZATION_FAILD = 1312
+    FERTILIZATION_FAILD = "fertilization_faild"
     """ 结算受精失败 """
-    PREGNANCY = 1313
+    PREGNANCY = "pregnancy"
     """ 结算获得妊娠 """
-    PARTURIENT = 1314
+    PARTURIENT = "parturient"
     """ 结算获得临盆 """
-    BORN = 1315
+    BORN = "born"
     """ 生产前的对话 """
-    POSTPARTUM = 1317
+    POSTPARTUM = "postpartum"
     """ 生产后的对话+获得产后 """
-    REARING = 1318
+    REARING = "rearing"
     """ 结算获得育儿 """
-    REARING_COMPLETE = 1319
+    REARING_COMPLETE = "rearing_complete"
     """ 结算育儿完成 """
-    CHILD_TO_LOLI = 1320
+    CHILD_TO_LOLI = "child_to_loli"
     """ 结算幼女长成萝莉 """
-    LOLI_TO_GIRL = 1321
+    LOLI_TO_GIRL = "loli_to_girl"
     """ 结算萝莉长成少女 """
 
-    FIRST_MEET = 1331
+    FIRST_MEET = "first_meet"
     """ 初次见面 """
-    DAY_HELLO = 1332
+    DAY_HELLO = "day_hello"
     """ 每日打招呼 """
 
-    NEW_ROUND_FAREWELL = 1351
+    NEW_ROUND_FAREWELL = "new_round_farewell"
     """ 新周目告别 """
 
-    START_FIELD_COMMISSION_AS_LEADER = 1361
+    START_FIELD_COMMISSION_AS_LEADER = "start_field_commission_as_leader"
     """ 以队长身份出发执行外勤委托 """
-    END_FIELD_COMMISSION_AS_LEADER = 1362
+    END_FIELD_COMMISSION_AS_LEADER = "end_field_commission_as_leader"
     """ 以队长身份完成外勤委托归舰 """
 
-    BE_INVITED_JOIN_GROUP_SEX = 1366
+    BE_INVITED_JOIN_GROUP_SEX = "be_invited_join_group_sex"
     """ 被邀请加入群交，开始前往群交地点 """
 
-    APPOINNTED_AS_DIPLOMAT_LOCAL = 1371
+    APPOINNTED_AS_DIPLOMAT_LOCAL = "appoinnted_as_diplomat_local"
     """ 被任命为本地外交官 """
-    RELIEVED_OF_DIPLOMAT_LOCAL = 1372
+    RELIEVED_OF_DIPLOMAT_LOCAL = "relieved_of_diplomat_local"
     """ 被解除本地外交官的任命 """
-    APPOINNTED_AS_DIPLOMAT_OUT = 1373
+    APPOINNTED_AS_DIPLOMAT_OUT = "appoinnted_as_diplomat_out"
     """ 被任命为外派外交官 """
-    RELIEVED_OF_DIPLOMAT_OUT = 1374
+    RELIEVED_OF_DIPLOMAT_OUT = "relieved_of_diplomat_out"
     """ 被解除外派外交官的任命 """
 
-    CHOSEN_AS_ASSISTANT = 1401
+    CHOSEN_AS_ASSISTANT = "chosen_as_assistant"
     """ 被选为助理 """
-    NOT_AS_ASSISTANT = 1402
+    NOT_AS_ASSISTANT = "not_as_assistant"
     """ 不再为助理 """
-    AI_FOLLOW_OFF = 1403
+    AI_FOLLOW_OFF = "ai_follow_0"
     """ 关闭智能跟随 """
-    AI_FOLLOW_ON = 1404
+    AI_FOLLOW_ON = "ai_follow_1"
     """ 开启智能跟随 """
-    COME_TO_OFFICE = 1405
+    COME_TO_OFFICE = "ai_follow_3"
     """ 要求前往办公室 """
-    SUPPORT_SERVICE_OFF = 1406
+    SUPPORT_SERVICE_OFF = "support_service_off"
     """ 关闭辅佐服务 """
-    SUPPORT_SERVICE_ON = 1407
+    SUPPORT_SERVICE_ON = "support_service_on"
     """ 开启辅佐服务 """
-    SEND_FOOD_SERVICE_OFF = 1408
+    SEND_FOOD_SERVICE_OFF = "assistant_send_food_0"
     """ 关闭送饭服务 """
-    BUY_LUNGCH = 1409
+    BUY_LUNGCH = "assistant_send_food_1"
     """ 开启帮忙买午饭服务 """
-    MAKE_LUNGCH = 1410
+    MAKE_LUNGCH = "assistant_send_food_2"
     """ 开启亲手做午饭服务 """
-    MAKE_THREE_MEALS = 1411
+    MAKE_THREE_MEALS = "assistant_send_food_3"
     """ 开启亲手做三餐服务 """
-    MORNING_SERVICE_OFF = 1412
+    MORNING_SERVICE_OFF = "morning_service_0"
     """ 关闭早安服务 """
-    MORNING_SALUTATION = 1413
+    MORNING_SALUTATION = "morning_service_1"
     """ 开启早上叫起床服务 """
-    MORNING_KISS = 1414
+    MORNING_KISS = "morning_service_2"
     """ 开启早安吻服务 """
-    MORNING_BLOWJOB = 1415
+    MORNING_BLOWJOB = "morning_service_3"
     """ 开启早安咬服务 """
-    NIGHT_SERVICE_OFF = 1416
+    NIGHT_SERVICE_OFF = "night_service_0"
     """ 关闭晚安服务 """
-    NIGHT_SALUTATION = 1417
+    NIGHT_SALUTATION = "night_service_1"
     """ 开启晚上催睡觉服务 """
-    NIGHT_KISS = 1418
+    NIGHT_KISS = "night_service_2"
     """ 开启晚安吻服务 """
-    NIGHT_BLOWJOB = 1419
+    NIGHT_BLOWJOB = "night_service_3"
     """ 开启晚安咬服务 """
-    COHABITATION_OFF = 1420
+    COHABITATION_OFF = "cohabitation_off"
     """ 关闭同居服务 """
-    COHABITATION_ON = 1421
+    COHABITATION_ON = "cohabitation_on"
     """ 开启同居服务 """
-    LOVE_SUPPORT_OFF = 1422
+    LOVE_SUPPORT_OFF = "love_support_off"
     """ 关闭助攻服务 """
-    LOVE_SUPPORT_ON = 1423
+    LOVE_SUPPORT_ON = "love_support_on"
     """ 开启助攻服务 """
 
-    ASK_GIVE_PAN_EVERYDAY = 1451
+    ASK_GIVE_PAN_EVERYDAY = "ask_give_pan_everyday"
     """ 被要求每天上交内裤 """
-    ASK_GIVE_SOCKS_EVERYDAY = 1452
+    ASK_GIVE_SOCKS_EVERYDAY = "ask_give_socks_everyday"
     """ 被要求每天上交袜子 """
-    ASK_NOT_WEAR_CORSET = 1453
+    ASK_NOT_WEAR_CORSET = "ask_not_wear_corset"
     """ 被要求以后不再穿胸衣 """
-    ASK_NOT_WEAR_CLOTH_IN_SLEEP = 1454
+    ASK_NOT_WEAR_CLOTH_IN_SLEEP = "ask_not_wear_cloth_in_sleep"
     """ 被要求以后睡觉时不穿衣服裸睡 """
-    GIVE_PAN_IN_DAY_FIRST_MEET = 1455
+    GIVE_PAN_IN_DAY_FIRST_MEET = "give_pan_in_day_first_meet"
     """ 在每日招呼时上交今天的内裤 """
-    GIVE_SOCKS_IN_DAY_FIRST_MEET = 1456
+    GIVE_SOCKS_IN_DAY_FIRST_MEET = "give_socks_in_day_first_meet"
     """ 在每日招呼时上交今天的袜子 """
-    ASK_WEAR_DIFFERENT_SOCKS_EVERYDAY = 1457
+    ASK_WEAR_DIFFERENT_SOCKS_EVERYDAY = "ask_wear_different_socks_everyday"
     """ 被要求每天穿不同的袜子 """
-    ASK_EQUP_NIPPLE_CLAMP_IN_DAY = 1461
+    ASK_EQUP_NIPPLE_CLAMP_IN_DAY = "ask_equp_nipple_clamp_in_day"
     """ 被要求白天时戴着乳头夹 """
-    ASK_EQUP_CLIT_CLAMP_IN_DAY = 1462
+    ASK_EQUP_CLIT_CLAMP_IN_DAY = "ask_equp_clit_clamp_in_day"
     """ 被要求白天时戴着阴蒂夹 """
-    ASK_EQUP_V_VIBRATOR_IN_DAY = 1463
+    ASK_EQUP_V_VIBRATOR_IN_DAY = "ask_equp_v_vibrator_in_day"
     """ 被要求白天时V里插着振动棒 """
-    ASK_EQUP_A_VIBRATOR_IN_DAY = 1464
+    ASK_EQUP_A_VIBRATOR_IN_DAY = "ask_equp_a_vibrator_in_day"
     """ 被要求白天时A里插着振动棒 """
-    ASK_EQUP_NIPPLE_CLAMP_IN_SLEEP = 1465
+    ASK_EQUP_NIPPLE_CLAMP_IN_SLEEP = "ask_equp_nipple_clamp_in_sleep"
     """ 被要求睡觉时戴着乳头夹 """
-    ASK_EQUP_CLIT_CLAMP_IN_SLEEP = 1466
+    ASK_EQUP_CLIT_CLAMP_IN_SLEEP = "ask_equp_clit_clamp_in_sleep"
     """ 被要求睡觉时戴着阴蒂夹 """
-    ASK_EQUP_V_VIBRATOR_IN_SLEEP = 1467
+    ASK_EQUP_V_VIBRATOR_IN_SLEEP = "ask_equp_v_vibrator_in_sleep"
     """ 被要求睡觉时V里插着振动棒 """
-    ASK_EQUP_A_VIBRATOR_IN_SLEEP = 1468
+    ASK_EQUP_A_VIBRATOR_IN_SLEEP = "ask_equp_a_vibrator_in_sleep"
     """ 被要求睡觉时A里插着振动棒 """
-    ASK_NOT_WASH_SEMEN = 1471
+    ASK_NOT_WASH_SEMEN = "ask_not_wash_semen"
     """ 被要求洗澡时不再清洗阴道内的精液 """
-    ASK_MASTURBATION_BEFORE_SLEEP = 1472
+    ASK_MASTURBATION_BEFORE_SLEEP = "ask_masturbation_before_sleep"
     """ 被要求每天晚上睡前都要自慰 """
-    ASK_NOT_MASTURBATION = 1473
+    ASK_NOT_MASTURBATION = "ask_not_masturbation"
     """ 被要求禁止自慰 """
-    ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING = 1474
+    ASK_NOT_LOCK_DOOR_BEFORE_SLEEPING = "ask_not_lock_door_before_sleeping"
     """ 被要求晚上睡觉不锁门 """
-    ASK_SUCKING_AND_SWALLOWING_EXERCISES = 1481
+    ASK_SUCKING_AND_SWALLOWING_EXERCISES = "ask_sucking_and_swallowing_exercises"
     """ 被要求进行吮吸与吞咽力练习 """
-    ASK_ARMPIT_CLAMPING_EXERCISES = 1482
+    ASK_ARMPIT_CLAMPING_EXERCISES = "ask_armpit_clamping_exercises"
     """ 被要求进行腋下夹持力练习 """
-    ASK_BREAST_CLAMPING_EXERCISES = 1483
+    ASK_BREAST_CLAMPING_EXERCISES = "ask_breast_clamping_exercises"
     """ 被要求进行胸部夹持力练习 """
-    ASK_HANDS_FLEXIBILITY_EXERCISES = 1484
+    ASK_HANDS_FLEXIBILITY_EXERCISES = "ask_hands_flexibility_exercises"
     """ 被要求进行手部灵活度练习 """
-    ASK_FOOTS_FLEXIBILITY_EXERCISES = 1485
+    ASK_FOOTS_FLEXIBILITY_EXERCISES = "ask_foots_flexibility_exercises"
     """ 被要求进行足部灵活度练习 """
-    ASK_VAGINA_FIRMNESS_EXERCISES = 1486
+    ASK_VAGINA_FIRMNESS_EXERCISES = "ask_vagina_firmness_exercises"
     """ 被要求进行阴道紧致度练习 """
-    ASK_INTESTINE_FIRMNESS_EXERCISES = 1487
+    ASK_INTESTINE_FIRMNESS_EXERCISES = "ask_intestine_firmness_exercises"
     """ 被要求进行肠道紧致度练习 """
-    ASK_TAIL_FLEXIBILITY_EXERCISES = 1488
+    ASK_TAIL_FLEXIBILITY_EXERCISES = "ask_tail_flexibility_exercises"
     """ 被要求进行尾巴灵活度练习 """
-    ASK_TENTACLE_FLEXIBILITY_EXERCISES = 1489
+    ASK_TENTACLE_FLEXIBILITY_EXERCISES = "ask_tentacle_flexibility_exercises"
     """ 被要求进行触手灵活度练习 """
 
-    HAS_BEEN_PRIMARY_HYPNOSIS = 1501
+    HAS_BEEN_PRIMARY_HYPNOSIS = "has_been_primary_hypnosis"
     """ 获得被浅层催眠素质 """
-    HAS_BEEN_DEEP_HYPNOSIS = 1502
+    HAS_BEEN_DEEP_HYPNOSIS = "has_been_deep_hypnosis"
     """ 获得被深层催眠素质 """
-    HAS_BEEN_COMPLETE_HYPNOSIS = 1503
+    HAS_BEEN_COMPLETE_HYPNOSIS = "has_been_complete_hypnosis"
     """ 获得被完全催眠素质 """
 

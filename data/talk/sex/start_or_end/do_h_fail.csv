@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,363,0,high_1,{Name}邀请{TargetName}H失败了，{TargetName}拒绝了{Name}的邀请，并愤怒地质问着{Name}为什么要这样做
-1,363,0,high_1,{TargetName}拒绝了{Name}对自己的渴求，{TargetName}冰冷的表情毫不掩饰地表达了自己的厌恶。
-2,363,0,high_1,{Name}向{TargetName}发起了共度欢愉的邀请，然而{TargetName}并不领情，一把将{Name}伸出的手打到一旁。
-3,363,0,high_1,{Name}将手搭到{TargetName}的腰间，暧昧地请求和{TargetName}进行身体层面的进一步交流，然而这一举动却遭到了{TargetName}的厌恶。
-4,363,0,high_1,{Name}向{TargetName}表达了想要进行肉体缠绵的想法，{TargetName}否决了这一提议，转过脸去不再理睬{Name}。
+0,do_h_fail,0,high_1,{Name}邀请{TargetName}H失败了，{TargetName}拒绝了{Name}的邀请，并愤怒地质问着{Name}为什么要这样做
+1,do_h_fail,0,high_1,{TargetName}拒绝了{Name}对自己的渴求，{TargetName}冰冷的表情毫不掩饰地表达了自己的厌恶。
+2,do_h_fail,0,high_1,{Name}向{TargetName}发起了共度欢愉的邀请，然而{TargetName}并不领情，一把将{Name}伸出的手打到一旁。
+3,do_h_fail,0,high_1,{Name}将手搭到{TargetName}的腰间，暧昧地请求和{TargetName}进行身体层面的进一步交流，然而这一举动却遭到了{TargetName}的厌恶。
+4,do_h_fail,0,high_1,{Name}向{TargetName}表达了想要进行肉体缠绵的想法，{TargetName}否决了这一提议，转过脸去不再理睬{Name}。

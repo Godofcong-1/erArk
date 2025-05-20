@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,541,0,high_1,{Name}把手指慢慢插进了{TargetName}的尿道里，开始缓慢抽插起来
+0,urethral_finger_insertion,0,high_1,{Name}把手指慢慢插进了{TargetName}的尿道里，开始缓慢抽插起来

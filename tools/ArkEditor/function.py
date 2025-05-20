@@ -67,7 +67,7 @@ def read_CVP(cvp_value_str: str):
         cvp_str = cvp_str.replace(f"S|{b2_value}", f"状态{b2_name}")
     elif "Instruct" in cvp_str:
         b2_value = cvp_str_list[2].split("Instruct|")[1]
-        b2_name = cache_control.status_data[b2_value]
+        b2_name = cache_control.behavior_data[b2_value]
         cvp_str = cvp_str.replace(f"Instruct|{b2_value}", f"前指令{b2_name}")
     elif "部位污浊" in cvp_str:
         b2_value = cvp_str_list[2].split("部位污浊|")[1]
@@ -192,7 +192,7 @@ def read_CSE(cse_value_str: str):
         cse_str = cse_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
     # 然后处理B属性部分
     # print(f"debug cse_str_list[2] = {cse_str_list[2]}")
-    cse_b_value = cache_control.status_data[(cse_str_list[2])]
+    cse_b_value = cache_control.behavior_data[(cse_str_list[2])]
     cse_str = cse_str.replace(f"{cse_str_list[2]}", f" 进行 {cse_b_value}")
     # print(f"debug cse_str = {cse_str}")
     return cse_str
@@ -229,7 +229,7 @@ def save_talk_data():
         # 遍历数据
         for k in cache_control.now_talk_data:
             now_talk: game_type.Talk = cache_control.now_talk_data[k]
-            out_data += f"{now_talk.cid},{now_talk.status_id},{now_talk.adv_id},"
+            out_data += f"{now_talk.cid},{now_talk.behavior_id},{now_talk.adv_id},"
             # 如果前提为空，就写入空白前提
             if len(now_talk.premise) == 0:
                 out_data += "high_1"

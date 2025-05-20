@@ -784,7 +784,7 @@ def base_chara_climix_common_settle(
     part_id -- 部位id，即性器官id\n
     base_value -- 基础固定值\n
     adjust -- 系数\n
-    degree -- 绝顶程度，默认-1，0小1普中强\n
+    degree -- 绝顶程度，默认-1，0小1普2强3超\n
     change_data -- 结算信息记录对象
     change_data_to_target_change -- 结算信息记录对象
     """
@@ -807,21 +807,24 @@ def base_chara_climix_common_settle(
             adjust = random_adjust
         base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
-    # 触发绝顶
-    num = part_id * 3 + 1000  # 通过num值来判断是二段行为记录的哪个位置
-    # 如果指定了程度，则直接使用指定的程度
-    if degree >= 0:
-        character_data.second_behavior[num + degree] = 1
-    # 否则根据之前的高潮程度来判断
-    else:
-        pre_data = character_data.h_state.orgasm_level[part_id] # 记录里的前高潮程度
-        if pre_data % 3 == 0:
-            character_data.second_behavior[num] = 1
-        elif pre_data % 3 == 1:
-            character_data.second_behavior[num + 1] = 1
-        elif pre_data % 3 == 2:
-            character_data.second_behavior[num + 2] = 1
-    character_data.h_state.orgasm_level[4] += 1
+        # 触发绝顶
+        part_dict = {0 : "n", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w"}
+        degree_dict = {0 : "small", 1 : "normal", 2 : "strong", 3 : "super"}
+        # 如果指定了程度，则直接使用指定的程度
+        if degree >= 0:
+            behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
+        # 否则根据之前的高潮程度来判断
+        else:
+            pre_data = character_data.h_state.orgasm_level[part_id] # 记录里的前高潮程度
+            if pre_data % 3 == 0:
+                degree = 0
+            elif pre_data % 3 == 1:
+                degree = 1
+            elif pre_data % 3 == 2:
+                degree = 2
+            behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
+        character_data.second_behavior[behavior_id] = 1
+        character_data.h_state.orgasm_level[part_id] += 1
 
     # 触发射精面板
     if part_id == 3:

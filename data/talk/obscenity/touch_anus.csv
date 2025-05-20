@@ -1,9 +1,9 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,333,0,high_1,{Name}的手指插入了{TargetName}的肛门中，感受着肠壁的挤压，{TargetName}也在不停的扭动着屁股，发出了一些奇怪的声音
-1,333,0,high_1,{Name}的手指在{TargetName}的后穴中来回插动，{TargetName}发出了有些苦闷的声音，但是还是感觉到了一些快感
-2,333,0,high_1,{TargetName}因为自己菊穴里{Name}的手指的抽插而身体不停的颤抖，发出了一些奇怪的声音
+0,touch_anus,0,high_1,{Name}的手指插入了{TargetName}的肛门中，感受着肠壁的挤压，{TargetName}也在不停的扭动着屁股，发出了一些奇怪的声音
+1,touch_anus,0,high_1,{Name}的手指在{TargetName}的后穴中来回插动，{TargetName}发出了有些苦闷的声音，但是还是感觉到了一些快感
+2,touch_anus,0,high_1,{TargetName}因为自己菊穴里{Name}的手指的抽插而身体不停的颤抖，发出了一些奇怪的声音
 

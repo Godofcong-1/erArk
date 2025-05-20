@@ -796,7 +796,7 @@ class Behavior:
         """ 行为开始时间 """
         self.duration: int = 0
         """ 行为持续时间(单位分钟) """
-        self.behavior_id: int = 0
+        self.behavior_id: str = "share_blankly"
         """ 行为id """
         self.move_target: List[str] = []
         """ 移动行为的目标坐标 """
@@ -1247,7 +1247,7 @@ class Character:
         """ 角色的衣服数据 """
         self.behavior: Behavior = Behavior()
         """ 角色当前行为状态数据 """
-        self.second_behavior: Dict[int, int] = {}
+        self.second_behavior: Dict[str, int] = {}
         """ 角色当前二段行为状态数据 """
         self.event: Chara_Event = Chara_Event()
         """ 角色当前事件状态数据 """

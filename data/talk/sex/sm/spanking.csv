@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,771,0,high_1,{Name}拍打着{TargetName}的屁股，发出清脆的声响，{TargetName}的屁股也因此泛起了一片红晕，腰也扭动了起来
+0,spanking,0,high_1,{Name}拍打着{TargetName}的屁股，发出清脆的声响，{TargetName}的屁股也因此泛起了一片红晕，腰也扭动了起来

@@ -137,12 +137,12 @@ def check_fertilization(character_id: int):
                     draw_text += _("\n{0}获得了[无意识妊娠]\n").format(character_data.name)
                     draw_text += "\n※※※※※※※※※\n"
                 # 触发受精的二段行动
-                character_data.second_behavior[1311] = 1
+                character_data.second_behavior["fertilization"] = 1
             else:
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
                     draw_text += _("\n在避孕药的影响下——")
                 draw_text += _("\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
-                character_data.second_behavior[1312] = 1
+                character_data.second_behavior["fertilization_faild"] = 1
 
         character_data.pregnancy.fertilization_rate = 0
     else:
@@ -179,7 +179,7 @@ def check_pregnancy(character_id: int):
                 if character_data.talent[talent_id]:
                     character_data.pregnancy.milk_max = 150 + (talent_id - 121) * 40
                     break
-            character_data.second_behavior[1313] = 1
+            character_data.second_behavior["pregnancy"] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n随着怀孕的进程，{0}挺起了大肚子，隆起的曲线下是正在孕育的新生命\n").format(character_data.name)
@@ -212,7 +212,7 @@ def check_near_born(character_id: int):
             # 赋予对应素质和二段行动
             character_data.talent[21] = 0
             character_data.talent[22] = 1
-            character_data.second_behavior[1314] = 1
+            character_data.second_behavior["parturient"] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n随着怀孕的进程，{0}临近生产，即将诞下爱的结晶\n").format(character_data.name)
@@ -261,7 +261,7 @@ def check_rearing(character_id: int):
         if past_day >= 2:
             character_data.talent[23] = 0
             character_data.talent[24] = 1
-            character_data.second_behavior[1318] = 1
+            character_data.second_behavior["rearing"] = 1
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的产后休息结束了\n").format(character_data.name)
@@ -292,7 +292,7 @@ def check_rearing_complete(character_id: int):
             character_data.talent[24] = 0
             character_data.talent[27] = 0
             character_handle.get_new_character(child_id)
-            character_data.second_behavior[1319] = 1
+            character_data.second_behavior["rearing_complete"] = 1
             talk.must_show_talk_check(character_id)
             child_character_data.talent[101] = 0
             child_character_data.talent[102] = 1
@@ -327,7 +327,7 @@ def check_grow_to_loli(character_id: int):
         past_day = (start_date - end_date).days
         # 在幼女后又过了两个月
         if past_day >= 270:
-            character_data.second_behavior[1320] = 1
+            character_data.second_behavior["child_to_loli"] = 1
             talk.must_show_talk_check(character_id)
             character_data.talent[102] = 0
             character_data.talent[103] = 1
@@ -359,7 +359,7 @@ def check_grow_to_girl(character_id: int):
         past_day = (start_date - end_date).days
         # 在萝莉后又过了两个月
         if past_day >= 450:
-            character_data.second_behavior[1321] = 1
+            character_data.second_behavior["loli_to_girl"] = 1
             talk.must_show_talk_check(character_id)
             character_data.talent[103] = 0
             character_data.talent[104] = 1

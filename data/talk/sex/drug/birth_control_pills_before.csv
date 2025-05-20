@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,452,0,high_1,{Name}把事前避孕药递给了{TargetName}，让她接下来一个月每日服用，以便安心地享受性爱
+0,birth_control_pills_before,0,high_1,{Name}把事前避孕药递给了{TargetName}，让她接下来一个月每日服用，以便安心地享受性爱

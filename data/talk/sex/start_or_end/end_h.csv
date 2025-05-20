@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,362,0,high_1,{Name}结束了和{TargetName}的H，两人感到满足，互相拥抱着休息了一下
-1,362,0,high_1,{Name}在{TargetName}身上的发泄暂时告一段落，两人依偎着，无言地享受着这片刻宁静。
-2,362,0,high_1,{Name}和{TargetName}欲望均已消解，{TargetName}在{Name}怀里享受着{Name}温柔的爱抚。
-3,362,0,high_1,{Name}满足地将{TargetName}拥入怀中，手掌在{TargetName}的发间一次次滑过，安抚着{TargetName}尚存余韵的精神。
-4,362,0,high_1,激烈的性爱告一段落，{TargetName}伏在{Name}胸口微微喘息着，任由{Name}整理着自己在先前运动中乱掉了的头发。
+0,end_h,0,high_1,{Name}结束了和{TargetName}的H，两人感到满足，互相拥抱着休息了一下
+1,end_h,0,high_1,{Name}在{TargetName}身上的发泄暂时告一段落，两人依偎着，无言地享受着这片刻宁静。
+2,end_h,0,high_1,{Name}和{TargetName}欲望均已消解，{TargetName}在{Name}怀里享受着{Name}温柔的爱抚。
+3,end_h,0,high_1,{Name}满足地将{TargetName}拥入怀中，手掌在{TargetName}的发间一次次滑过，安抚着{TargetName}尚存余韵的精神。
+4,end_h,0,high_1,激烈的性爱告一段落，{TargetName}伏在{Name}胸口微微喘息着，任由{Name}整理着自己在先前运动中乱掉了的头发。

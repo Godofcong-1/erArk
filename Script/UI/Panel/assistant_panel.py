@@ -132,8 +132,8 @@ def assistant_replace(new_assistant_id: int):
         new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         new_assistant_data.sp_flag.is_follow = 1
         new_assistant_data.assistant_services[2] = 1
-        new_assistant_data.second_behavior[1402] = 0
-        new_assistant_data.second_behavior[1401] = 1
+        new_assistant_data.second_behavior["not_as_assistant"] = 0
+        new_assistant_data.second_behavior["chosen_as_assistant"] = 1
         info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         # 同步换助理的选项
         if old_assistant_flag:
@@ -141,8 +141,8 @@ def assistant_replace(new_assistant_id: int):
                 new_assistant_data.assistant_services[10] = 1
     # 取消旧助理的结算
     if old_assistant_flag:
-        old_assistant_data.second_behavior[1401] = 0
-        old_assistant_data.second_behavior[1402] = 1
+        old_assistant_data.second_behavior["chosen_as_assistant"] = 0
+        old_assistant_data.second_behavior["not_as_assistant"] = 1
         info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
     info_draw.text = info_text
     info_draw.width = window_width
@@ -301,29 +301,47 @@ class Assistant_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
-        # 计算二段结算的开头、结尾、当前索引
-        start_index_dict = {3:1406, 4:1408, 5:1412, 6:1416, 7:1420, 8:1422}
-        start_index = start_index_dict[service_cid]
-        end_index = start_index + service_option_len
-        now_index = start_index + target_data.assistant_services[service_cid]
-        # print(f"debug start_index = {start_index}, end_index = {end_index}, now_index = {now_index}")
 
         # 去掉选助理的1号选项
         if service_cid >= 2:
+            # 定义多选项行为前缀
+            behavior_prefixes = {
+                2: "ai_follow_",
+                4: "assistant_send_food_",
+                5: "morning_service_",
+                6: "night_service_"
+            }
+            # 定义二值开关行为前缀
+            binary_prefixes = {
+                3: "support_service_",
+                7: "cohabitation_",
+                8: "love_support_"
+            }
 
-            # 清除和赋予二段结算
-            # 跟随服务单独计算
-            if service_cid == 2:
-                for i in {1403,1404,1405}:
-                    target_data.second_behavior[i] = 0
-                now_index = target_data.sp_flag.is_follow + 1403
-                target_data.second_behavior[now_index] = 1
-            else:
-                # 先清零同类下的其他二段结算
-                for i in range(start_index, end_index):
-                    target_data.second_behavior[i] = 0
-                # 再设置当前二段结算
-                target_data.second_behavior[now_index] = 1
+            # 处理多选项行为
+            if service_cid in behavior_prefixes:
+                prefix = behavior_prefixes[service_cid]
+                # 清除同类所有二段结算标记
+                for i in range(service_option_len):
+                    key = f"{prefix}{i}"
+                    target_data.second_behavior[key] = 0
+                # 设置当前选项对应的二段结算
+                current_index = target_data.assistant_services[service_cid]
+                key_now = f"{prefix}{current_index}"
+                target_data.second_behavior[key_now] = 1
+            # 处理二值开关行为
+            elif service_cid in binary_prefixes:
+                prefix = binary_prefixes[service_cid]
+                # 清除“on”和“off”旧状态
+                key_on = f"{prefix}on"
+                key_off = f"{prefix}off"
+                target_data.second_behavior[key_on] = 0
+                target_data.second_behavior[key_off] = 0
+                # 根据当前服务开关状态赋值
+                if target_data.assistant_services[service_cid]:
+                    target_data.second_behavior[key_on] = 1
+                else:
+                    target_data.second_behavior[key_off] = 1
 
             # 同居服务的宿舍改变
             # 此处不可以用翻译地点

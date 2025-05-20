@@ -77,7 +77,7 @@ class Born_Panel:
                 line.draw()
                 return_list = []
 
-                mom_character_data.second_behavior[1315] = 1
+                mom_character_data.second_behavior["born"] = 1
                 talk.must_show_talk_check(self.mother_character_id)
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
@@ -112,7 +112,7 @@ class Born_Panel:
                 line_feed.draw()
                 break
 
-            mom_character_data.second_behavior[1317] = 1
+            mom_character_data.second_behavior["postpartum"] = 1
             talk.must_show_talk_check(self.mother_character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的生产结束了，但她仍需要在住院部休息几天\n").format(mom_character_data.name)

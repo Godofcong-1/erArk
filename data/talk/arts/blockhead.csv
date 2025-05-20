@@ -1,7 +1,7 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,924,0,t_not_hypnosis_blockhead,{Name}对{TargetName}使用了体控催眠-木头人，{TargetName}的精神虽然清醒，但身体会变得完全无法动弹了
-1,924,0,t_hypnosis_blockhead,{Name}停止了对{TargetName}使用的体控催眠-木头人，{TargetName}的身体恢复了正常
+0,hypnosis_blockhead,0,t_not_hypnosis_blockhead,{Name}对{TargetName}使用了体控催眠-木头人，{TargetName}的精神虽然清醒，但身体会变得完全无法动弹了
+1,hypnosis_blockhead,0,t_hypnosis_blockhead,{Name}停止了对{TargetName}使用的体控催眠-木头人，{TargetName}的身体恢复了正常

@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,458,0,high_1,{Name}让{TargetName}服下了安眠药\n很快，沉重的睡意不受控制地袭来，{TargetName}昏昏沉沉地倒在了床上，对外界的一切毫无反应
+0,sleeping_pills,0,high_1,{Name}让{TargetName}服下了安眠药\n很快，沉重的睡意不受控制地袭来，{TargetName}昏昏沉沉地倒在了床上，对外界的一切毫无反应

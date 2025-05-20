@@ -4,7 +4,7 @@ import cache_control
 
 premise_path = "csv/Premise.csv"
 premise_group_path = "csv/PremiseGroup.csv"
-status_path = "csv/Status.csv"
+behavior_data_path = "csv/Behavior_Data.csv"
 effect_path = "csv/Effect.csv"
 ability_path = "csv/Ability.csv"
 state_path = "csv/CharacterState.csv"
@@ -36,14 +36,21 @@ def load_config():
                 promise_list = i["premise_cid"].split("&")
                 if len(promise_list) > 1:
                     cache_control.premise_group_data[i["cid"]] = promise_list
-    with open(status_path, encoding="utf-8") as now_file:
+    with open(behavior_data_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
+        read_flag = False
         for i in now_read:
-            cache_control.status_data[i["cid"]] = i["status"]
-            cache_control.status_all_data[i["cid"]] = i
+            if read_flag == False:
+                if i["cid"] != "状态描述配置":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.behavior_data[i["en_name"]] = i["name"]
+            cache_control.behavior_all_data[i["en_name"]] = i
             # print(f"debug i[cid] = {i['cid']}, type = {type(i['cid'])}, status = {i['status']}, type = {type(i['status'])}")
-            cache_control.status_type_data.setdefault(i["type"], [])
-            cache_control.status_type_data[i["type"]].append(i["cid"])
+            cache_control.behavior_type_data.setdefault(i["type"], [])
+            cache_control.behavior_type_data[i["type"]].append(i["en_name"])
     with open(effect_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
         for i in now_read:

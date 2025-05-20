@@ -1,9 +1,9 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1,378,0,hidden_sex_mode_1,{Name}邀请{TargetName}和自己仅靠遮挡别人视线的方式偷偷H。
-2,378,0,hidden_sex_mode_2,{Name}让{TargetName}藏在自己旁边，在别人看不到的地方和自己偷偷H。
-3,378,0,hidden_sex_mode_3,{Name}藏在了{TargetName}的旁边，在别人看不到的地方和{TargetName}偷偷H。
-4,378,0,hidden_sex_mode_4,{Name}邀请{TargetName}一起藏起来，在别人看不到的地方和{TargetName}偷偷H。
+1,ask_hidden_sex,0,hidden_sex_mode_1,{Name}邀请{TargetName}和自己仅靠遮挡别人视线的方式偷偷H。
+2,ask_hidden_sex,0,hidden_sex_mode_2,{Name}让{TargetName}藏在自己旁边，在别人看不到的地方和自己偷偷H。
+3,ask_hidden_sex,0,hidden_sex_mode_3,{Name}藏在了{TargetName}的旁边，在别人看不到的地方和{TargetName}偷偷H。
+4,ask_hidden_sex,0,hidden_sex_mode_4,{Name}邀请{TargetName}一起藏起来，在别人看不到的地方和{TargetName}偷偷H。

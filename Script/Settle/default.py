@@ -1116,7 +1116,7 @@ def handle_first_kiss(
             # now_draw.width = window_width
             # now_draw.draw()
             # 初吻的二段结算
-            target_data.second_behavior[1050] = 1
+            target_data.second_behavior["first_kiss"] = 1
 
 
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
@@ -1197,7 +1197,7 @@ def handle_first_sex(
         target_data.first_record.first_sex_time = cache.game_time
         target_data.first_record.first_sex_place = target_data.position
         target_data.first_record.first_sex_posture = instruct_name
-        target_data.second_behavior[1051] = 1
+        target_data.second_behavior["first_sex"] = 1
         # 失去性无知
         if target_data.talent[222] == 1:
             target_data.talent[222] = 0
@@ -1297,7 +1297,7 @@ def handle_first_a_sex(
             # now_draw.width = window_width
             # now_draw.draw()
             # 处女的二段结算
-            target_data.second_behavior[1052] = 1
+            target_data.second_behavior["first_a_sex"] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_0)
@@ -1377,7 +1377,7 @@ def handle_first_kiss_to_penis(
         target_data.first_record.first_kiss_body_part = 1
         if (not character_id) or (not target_data.cid):
             # 初吻的二段结算
-            target_data.second_behavior[1050] = 1
+            target_data.second_behavior["first_kiss"] = 1
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
@@ -5318,9 +5318,11 @@ def handle_self_h_state_reset(
         now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
         character_data.h_state.orgasm_level[orgasm] = now_data
     # 清零H相关二段状态
-    for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0 and (second_behavior_id in range(1100,1120) or second_behavior_id in range(1200,1250)):
-            character_data.second_behavior[second_behavior_id] = 0
+    for second_behavior_id, behavior_value in character_data.second_behavior.items():
+        if behavior_value != 0:
+            behavior_data = game_config.config_behavior[second_behavior_id]
+            if "H装备" in behavior_data.tag or "侍奉" in behavior_data.tag:
+                character_data.second_behavior[second_behavior_id] = 0
     # 囚犯干员回到自己监牢
     if handle_premise.handle_imprisonment_1(character_id) and handle_premise.handle_not_in_dormitory(character_id):
         dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)

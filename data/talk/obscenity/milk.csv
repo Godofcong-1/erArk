@@ -1,8 +1,8 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,336,0,high_1,{Name}使用搾乳机，给{TargetName}把乳房中的奶水吸出来，装进了瓶子里
-1,336,0,high_1,{Name}熟练地挤压着{TargetName}的乳房，开始榨乳，直到奶水干瘪为止
-2,336,0,high_1,{Name}用手指轻轻揉捏着{TargetName}的膨大乳头，将奶汁慢慢挤出来，然后装进了瓶子里
+0,milk,0,high_1,{Name}使用搾乳机，给{TargetName}把乳房中的奶水吸出来，装进了瓶子里
+1,milk,0,high_1,{Name}熟练地挤压着{TargetName}的乳房，开始榨乳，直到奶水干瘪为止
+2,milk,0,high_1,{Name}用手指轻轻揉捏着{TargetName}的膨大乳头，将奶汁慢慢挤出来，然后装进了瓶子里

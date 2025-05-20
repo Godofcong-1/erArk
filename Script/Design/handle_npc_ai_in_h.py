@@ -351,19 +351,19 @@ def settle_unconscious_semen_and_cloth(character_id: int) -> None:
     character_data.dirty.cloth_semen_in_unconscious = list(set(character_data.dirty.cloth_semen_in_unconscious))
     # 触发角色的部位精液二段行为
     for body_part in character_data.dirty.body_semen_in_unconscious:
-        second_behavior_id = 1260 + body_part
+        second_behavior_id = "in_unconscious_cum_on_body_" + str(body_part)
         character_data.second_behavior[second_behavior_id] = 1
     for cloth_part in character_data.dirty.cloth_semen_in_unconscious:
         # 如果自己身上没穿着该部位的衣服，则跳过
         if len(character_data.cloth.cloth_wear[cloth_part]) == 0:
             continue
-        second_behavior_id = 1280 + cloth_part
+        second_behavior_id = "in_unconscious_cum_on_cloth_" + str(cloth_part)
         character_data.second_behavior[second_behavior_id] = 1
     # 触发角色的服装失窃行为
     if character_data.cloth.stolen_panties_in_unconscious:
-        character_data.second_behavior[1296] = 1
+        character_data.second_behavior["in_unconscious_stolen_panty"] = 1
     if character_data.cloth.stolen_socks_in_unconscious:
-        character_data.second_behavior[1297] = 1
+        character_data.second_behavior["in_unconscious_stolen_socks"] = 1
     # 数据清零
     character_data.dirty.body_semen_in_unconscious = []
     character_data.dirty.cloth_semen_in_unconscious = []

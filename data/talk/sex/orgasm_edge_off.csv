@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,752,0,high_1,{Name}不再控制{TargetName}的快感，反过来对目前所有控制的部位进行强烈的刺激，让目前为止积攒的所有绝顶一口气全部释放出来。
+0,orgasm_edge_off,0,high_1,{Name}不再控制{TargetName}的快感，反过来对目前所有控制的部位进行强烈的刺激，让目前为止积攒的所有绝顶一口气全部释放出来。

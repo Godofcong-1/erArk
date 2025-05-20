@@ -74,7 +74,7 @@ class DataList(QWidget):
         self.chara_id_text_edit.textChanged.connect(self.update_adv_id)
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
-        self.status_menu: QMenu = QMenu(cache_control.status_data[cache_control.now_status], self)
+        self.status_menu: QMenu = QMenu(cache_control.behavior_data[cache_control.now_behavior], self)
         self.type_menu : QMenu = QMenu(cache_control.now_type, self)
         self.menu_bar.addMenu(self.status_menu)
         self.menu_bar.addMenu(self.type_menu)
@@ -82,7 +82,7 @@ class DataList(QWidget):
         self.type_menu.setFont(self.font)
 
         # 根据文字长度设置菜单栏宽度
-        status_menu_width = self.status_menu.fontMetrics().boundingRect(cache_control.status_data[cache_control.now_status]).width()
+        status_menu_width = self.status_menu.fontMetrics().boundingRect(cache_control.behavior_data[cache_control.now_behavior]).width()
         type_menu_width = self.type_menu.fontMetrics().boundingRect(cache_control.now_type).width()
         menu_bar_width = max(status_menu_width, type_menu_width) * 2
         self.menu_bar.setFixedWidth(menu_bar_width)
@@ -271,7 +271,7 @@ class DataList(QWidget):
         item.uid = str(uuid.uuid4())
         event = game_type.Event()
         event.uid = item.uid
-        event.status_id = cache_control.now_status
+        event.behavior_id = cache_control.now_behavior
         event.adv_id = cache_control.now_adv_id
         if cache_control.now_type == "跳过指令":
             event.type = 0
@@ -303,7 +303,7 @@ class DataList(QWidget):
         new_item.uid = str(uuid.uuid4())
         event = game_type.Event()
         event.uid = new_item.uid
-        event.status_id = old_event.status_id
+        event.behavior_id = old_event.behavior_id
         event.type = old_event.type
         event.adv_id = old_event.adv_id
         for premise in old_event.premise:
@@ -324,7 +324,7 @@ class DataList(QWidget):
             item.uid += 1
         talk = game_type.Talk()
         talk.cid = str(item.uid)
-        talk.status_id = cache_control.now_status
+        talk.behavior_id = cache_control.now_behavior
         talk.adv_id = str(cache_control.now_adv_id)
         talk.text = item.text()
         talk.premise["high_1"] = 1
@@ -354,7 +354,7 @@ class DataList(QWidget):
 
         talk = game_type.Talk()
         talk.cid = str(new_item.uid)
-        talk.status_id = old_talk.status_id
+        talk.behavior_id = old_talk.behavior_id
         talk.adv_id = old_talk.adv_id
         for premise_id in old_talk.premise:
             talk.premise[premise_id] = old_talk.premise[premise_id]
@@ -558,7 +558,7 @@ class DataList(QWidget):
         self.edited_item = None
         self.list_widget.clear()
         self.update_clear = 0
-        status_cid = cache_control.now_status
+        status_cid = cache_control.now_behavior
         self.now_in_moving_flag = False
 
         if cache_control.now_edit_type_flag == 0:
@@ -573,7 +573,7 @@ class DataList(QWidget):
                 item.uid = cid
                 # 仅显示当前指令
                 if self.select_now_instruct_flag:
-                    if now_talk.status_id != cache_control.now_status:
+                    if now_talk.behavior_id != cache_control.now_behavior:
                         continue
                 # 搜索
                 if self.text_search_flag:
@@ -590,10 +590,10 @@ class DataList(QWidget):
                         continue
                 self.list_widget.addItem(item)
             if cache_control.now_select_id:
-                status_cid = cache_control.now_talk_data[cache_control.now_select_id].status_id
-                status_text = cache_control.status_data[status_cid]
+                status_cid = cache_control.now_talk_data[cache_control.now_select_id].behavior_id
+                status_text = cache_control.behavior_data[status_cid]
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
-                cache_control.now_status = status_cid
+                cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
                 self.chara_id_text_edit.setText(chara_id)
                 self.text_id_text_edit.setText(cache_control.now_select_id)
@@ -638,7 +638,7 @@ class DataList(QWidget):
                 # if type_text_list[now_event.type] != cache_control.now_type:
                 #     continue
                 if self.select_now_instruct_flag:
-                    if now_event.status_id != cache_control.now_status:
+                    if now_event.behavior_id != cache_control.now_behavior:
                         continue
                 if self.text_search_flag:
                     if self.text_search_edit.toPlainText() not in now_event.text:
@@ -656,12 +656,12 @@ class DataList(QWidget):
                 item.uid = uid
                 self.list_widget.addItem(item)
             if cache_control.now_select_id and cache_control.now_select_id in cache_control.now_event_data:
-                status_cid = cache_control.now_event_data[cache_control.now_select_id].status_id
-                status_text = cache_control.status_data[status_cid]
+                status_cid = cache_control.now_event_data[cache_control.now_select_id].behavior_id
+                status_text = cache_control.behavior_data[status_cid]
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
-                cache_control.now_status = status_cid
+                cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
                 self.chara_id_text_edit.setText(str(chara_id))
@@ -679,8 +679,8 @@ class DataList(QWidget):
                         break
 
         # 更新状态耗时与触发人信息
-        status_duration = int(cache_control.status_all_data[status_cid]["duration"])
-        status_trigger = cache_control.status_all_data[status_cid]["trigger"]
+        status_duration = int(cache_control.behavior_all_data[status_cid]["duration"])
+        status_trigger = cache_control.behavior_all_data[status_cid]["trigger"]
         info_text = "耗时"
         if status_duration >= 0:
             info_text += f"{status_duration}分"

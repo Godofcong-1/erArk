@@ -1,10 +1,10 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,485,0,high_1,{Name}拿着电动按摩棒，刺激着{TargetName}身上的各个敏感部位
-1,485,0,high_1,{Name}的电动按摩棒在{TargetName}身体的各个敏感点游走着，为{TargetName}带来来自不同方向的刺激。
-2,485,0,high_1,{Name}随机地使用电子按摩棒刺激着{TargetName}的身体各处，无法预测的快感令{TargetName}无法提前做出任何对快感的心理建设。
-3,485,0,high_1,{Name}握住电动按摩棒刁钻地按压着{TargetName}试图藏起来的身体敏感部位，高频的震动逐渐升高了{TargetName}的体温。
-4,485,0,high_1,{Name}拿着电动按摩棒，在{TargetName}的身上探索着敏感点。
+0,electric_message_stick,0,high_1,{Name}拿着电动按摩棒，刺激着{TargetName}身上的各个敏感部位
+1,electric_message_stick,0,high_1,{Name}的电动按摩棒在{TargetName}身体的各个敏感点游走着，为{TargetName}带来来自不同方向的刺激。
+2,electric_message_stick,0,high_1,{Name}随机地使用电子按摩棒刺激着{TargetName}的身体各处，无法预测的快感令{TargetName}无法提前做出任何对快感的心理建设。
+3,electric_message_stick,0,high_1,{Name}握住电动按摩棒刁钻地按压着{TargetName}试图藏起来的身体敏感部位，高频的震动逐渐升高了{TargetName}的体温。
+4,electric_message_stick,0,high_1,{Name}拿着电动按摩棒，在{TargetName}的身上探索着敏感点。

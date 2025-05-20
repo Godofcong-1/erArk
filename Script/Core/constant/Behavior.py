@@ -1,718 +1,717 @@
 class Behavior:
-    """行为id"""
+    """行为id字符串常量"""
 
-    SHARE_BLANKLY = 0
+    SHARE_BLANKLY = "share_blankly"
     """ 发呆 """
-    MOVE = 1
+    MOVE = "move"
     """ 移动 """
-    WAIT = 2
+    WAIT = "wait"
     """ 等待 """
-    CHANGE_CLOTH = 3
+    CHANGE_CLOTH = "change_cloth"
     """ 换衣服 """
-    CHARA_DIY_INSTRUCT = 5
+    CHARA_DIY_INSTRUCT = "chara_diy_instruct"
     """ 角色自定义指令 """
-    AI_CHAT_INSTRUCT = 6
+    AI_CHAT_INSTRUCT = "ai_chat_instruct"
     """ AI对话用特殊指令 """
-    EMPTY_INSTRUCT = 99
+    EMPTY_INSTRUCT = "empty_instruct"
     """ 空白示范指令 """
-    CHAT = 101
+    CHAT = "chat"
     """ 聊天 """
-    CHAT_FAILED = 102
+    CHAT_FAILED = "chat_failed"
     """ 谈话次数过多而失败 """
-    STROKE = 103
+    STROKE = "stroke"
     """ 身体接触 """
-    MASSAGE = 104
+    MASSAGE = "massage"
     """ 按摩 """
-    REST = 110
+    REST = "rest"
     """ 休息 """
-    SLEEP = 111
+    SLEEP = "sleep"
     """ 睡觉 """
-    TAKE_SHOWER = 112
+    TAKE_SHOWER = "take_shower"
     """ 淋浴 """
-    GET_UP = 113
+    GET_UP = "get_up"
     """ 起床 """
-    FOLLOW = 115
+    FOLLOW = "follow"
     """ 让NPC跟随玩家 """
-    END_FOLLOW = 116
+    END_FOLLOW = "end_follow"
     """ 让NPC停止跟随玩家 """
-    APOLOGIZE = 117
+    APOLOGIZE = "apologize"
     """ 道歉 """
-    APOLOGIZE_FAILED = 118
+    APOLOGIZE_FAILED = "apologize_failed"
     """ 道歉失败 """
-    LISTEN_COMPLAINT = 119
+    LISTEN_COMPLAINT = "listen_complaint"
     """ 听牢骚 """
-    MAKE_COFFEE = 131
+    MAKE_COFFEE = "make_coffee"
     """ 泡咖啡 """
-    MAKE_COFFEE_ADD = 132
+    MAKE_COFFEE_ADD = "make_coffee_add"
     """ 泡咖啡（加料） """
-    ASK_MAKE_COFFEE = 133
+    ASK_MAKE_COFFEE = "ask_make_coffee"
     """ 让对方泡咖啡 """
-    MAKE_FOOD = 134
+    MAKE_FOOD = "make_food"
     """ 做饭 """
-    EAT = 135
+    EAT = "eat"
     """ 进食 """
-    REFUSE_EAT = 136
+    REFUSE_EAT = "refuse_eat"
     """ 拒绝进食 """
-    BUY_FOOD = 137
+    BUY_FOOD = "buy_food"
     """ 购买食物 """
-    PEE = 140
+    PEE = "pee"
     """ 解手 """
-    CLOTH_OFF = 141
+    CLOTH_OFF = "cloth_off"
     """ 脱掉全部衣服 """
-    PUT_SHOWER_CLOTH = 142
+    PUT_SHOWER_CLOTH = "put_shower_cloth"
     """ 换上浴帽和浴巾 """
-    PUT_SLEEP_CLOTH = 143
+    PUT_SLEEP_CLOTH = "put_sleep_cloth"
     """ 换上睡衣和内衣 """
-    WEAR_TO_LOCKER = 144
+    WEAR_TO_LOCKER = "wear_to_locker"
     """ 身上衣服脱到衣柜 """
-    LOCKER_TO_WEAR = 145
+    LOCKER_TO_WEAR = "locker_to_wear"
     """ 衣柜衣服穿回身上 """
-    READY_TO_SWIM = 146
+    READY_TO_SWIM = "ready_to_swim"
     """ 脱掉衣服并换上泳衣并进入要游泳状态 """
-    FOOT_CLOTH_TO_LOCKER =147
+    FOOT_CLOTH_TO_LOCKER = "foot_cloth_to_locker"
     """ 袜子和鞋子转移到衣柜里 """
-    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = 148
+    WEAR_TO_LOCKER_AND_GET_SHOWER_CLOTH = "wear_to_locker_and_get_shower_cloth"
     """ 身上衣服脱到衣柜并换上浴帽和浴巾 """
-    CLEAN_WEAR_AND_LOCKER_TO_WEAR = 149
+    CLEAN_WEAR_AND_LOCKER_TO_WEAR = "clean_wear_and_locker_to_wear"
     """ 清空身上的衣服然后穿回衣柜的衣服 """
-    SINGING = 151
+    SINGING = "singing"
     """ 唱歌 """
-    PLAY_INSTRUMENT = 152
+    PLAY_INSTRUMENT = "play_instrument"
     """ 演奏乐器 """
-    WATCH_MOVIE = 153
+    WATCH_MOVIE = "watch_movie"
     """ 看电影 """
-    PHOTOGRAPHY = 154
+    PHOTOGRAPHY = "photography"
     """ 摄影 """
-    PLAY_WATER = 155
+    PLAY_WATER = "play_water"
     """ 玩水 """
-    PLAY_CHESS = 156
+    PLAY_CHESS = "play_chess"
     """ 下棋 """
-    PLAY_MAHJONG = 157
+    PLAY_MAHJONG = "play_mahjong"
     """ 打麻将 """
-    PLAY_CARDS = 158
+    PLAY_CARDS = "play_cards"
     """ 打牌 """
-    REHEARSE_DANCE = 159
+    REHEARSE_DANCE = "rehearse_dance"
     """ 排演舞剧 """
-    PLAY_ARCADE_GAME = 160
+    PLAY_ARCADE_GAME = "play_arcade_game"
     """ 玩街机游戏 """
-    SWIMMING = 161
+    SWIMMING = "swimming"
     """ 游泳 """
-    TASTE_WINE = 162
+    TASTE_WINE = "taste_wine"
     """ 品酒 """
-    TASTE_TEA = 163
+    TASTE_TEA = "taste_tea"
     """ 品茶 """
-    TASTE_COFFEE = 164
+    TASTE_COFFEE = "taste_coffee"
     """ 品咖啡 """
-    TASTE_DESSERT = 165
+    TASTE_DESSERT = "taste_dessert"
     """ 品尝点心 """
-    TASTE_FOOD = 166
+    TASTE_FOOD = "taste_food"
     """ 品尝美食 """
-    PLAY_HOUSE = 167
+    PLAY_HOUSE = "play_house"
     """ 过家家 """
-    STYLE_HAIR = 168
+    STYLE_HAIR = "style_hair"
     """ 修整发型 """
-    FULL_BODY_STYLING = 169
+    FULL_BODY_STYLING = "full_body_styling"
     """ 全身造型服务 """
-    LISTEN_INFLATION = 171
+    LISTEN_INFLATION = "listen_inflation"
     """ 听肚子里的动静 """
-    PLAY_WITH_CHILD = 172
+    PLAY_WITH_CHILD = "play_with_child"
     """ 一起玩耍 """
-    PL_WIN_IN_BOARD_GAME = 173
+    PL_WIN_IN_BOARD_GAME = "pl_win_in_board_game"
     """ 博士在桌游中获胜 """
-    PL_LOSE_IN_BOARD_GAME = 174
+    PL_LOSE_IN_BOARD_GAME = "pl_lose_in_board_game"
     """ 博士在桌游中输了 """
-    SOAK_FEET = 181
+    SOAK_FEET = "soak_feet"
     """ 泡脚 """
-    STEAM_SAUNA = 182
+    STEAM_SAUNA = "steam_sauna"
     """ 蒸桑拿 """
-    HYDROTHERAPY_TREATMENT = 183
+    HYDROTHERAPY_TREATMENT = "hydrotherapy_treatment"
     """ 水疗护理 """
-    ONSEN_BATH = 184
+    ONSEN_BATH = "onsen_bath"
     """ 泡温泉 """
-    AROMATHERAPY_1 = 191
+    AROMATHERAPY_1 = "aromatherapy_1"
     """ 香薰疗愈_回复 """
-    AROMATHERAPY_2 = 192
+    AROMATHERAPY_2 = "aromatherapy_2"
     """ 香薰疗愈_习得 """
-    AROMATHERAPY_3 = 193
+    AROMATHERAPY_3 = "aromatherapy_3"
     """ 香薰疗愈_反感 """
-    AROMATHERAPY_4 = 194
+    AROMATHERAPY_4 = "aromatherapy_4"
     """ 香薰疗愈_快感 """
-    AROMATHERAPY_5 = 195
+    AROMATHERAPY_5 = "aromatherapy_5"
     """ 香薰疗愈_好感 """
-    AROMATHERAPY_6 = 196
+    AROMATHERAPY_6 = "aromatherapy_6"
     """ 香薰疗愈_催眠 """
-    OFFICIAL_WORK = 201
+    OFFICIAL_WORK = "official_work"
     """ 处理公务 """
-    BATTLE_COMMAND = 202
+    BATTLE_COMMAND = "battle_command"
     """ 指挥作战 """
-    ASSISTANT_ADJUSTMENTS = 204
+    ASSISTANT_ADJUSTMENTS = "assistant_adjustments"
     """ 助理相关调整 """
-    TRAINING = 205
+    TRAINING = "training"
     """ 战斗训练 """
-    EXERCISE = 206
+    EXERCISE = "exercise"
     """ 锻炼身体 """
-    CURE_PATIENT = 207
+    CURE_PATIENT = "cure_patient"
     """ 诊疗病人 """
-    RECRUIT = 208
+    RECRUIT = "recruit"
     """ 招募干员 """
-    INVITE_VISITOR = 209
+    INVITE_VISITOR = "invite_visitor"
     """ 邀请访客 """
-    READ_BOOK = 210
+    READ_BOOK = "read_book"
     """ 读书 """
-    TEACH = 213
+    TEACH = "teach"
     """ 授课 """
-    ATTENT_CLASS = 214
+    ATTENT_CLASS = "attent_class"
     """ 上学 """
-    MAINTENANCE_FACILITIES = 215
+    MAINTENANCE_FACILITIES = "maintenance_facilities"
     """ 维护设施 """
-    REPAIR_EQUIPMENT = 216
+    REPAIR_EQUIPMENT = "repair_equipment"
     """ 维修装备 """
-    NPC_WORK_COOK = 217
+    NPC_WORK_COOK = "npc_work_cook"
     """ 干员工作做饭 """
-    PRODUCE = 218
+    PRODUCE = "produce"
     """ 制造产品 """
-    PLANT_MANAGE_CROP = 219
+    PLANT_MANAGE_CROP = "plant_manage_crop"
     """ 种植与养护作物 """
-    DEAL_WITH_DIPLOMACY = 221
+    DEAL_WITH_DIPLOMACY = "deal_with_diplomacy"
     """ 处理外交事宜 """
-    TRAIN_PRISONER = 222
+    TRAIN_PRISONER = "train_prisoner"
     """ 训练囚犯 """
 
-    MORNING_SALUTATION_1 = 251
+    MORNING_SALUTATION_1 = "morning_salutation_1"
     """ 早安问候：叫起床 """
-    MORNING_SALUTATION_2 = 252
+    MORNING_SALUTATION_2 = "morning_salutation_2"
     """ 早安问候：早安吻 """
-    MORNING_SALUTATION_3 = 253
+    MORNING_SALUTATION_3 = "morning_salutation_3"
     """ 早安问候：早安咬 """
-    NIGHT_SALUTATION_1 = 254
+    NIGHT_SALUTATION_1 = "night_salutation_1"
     """ 晚安问候：催睡觉 """
-    NIGHT_SALUTATION_2 = 255
+    NIGHT_SALUTATION_2 = "night_salutation_2"
     """ 晚安问候：晚安吻 """
-    NIGHT_SALUTATION_3 = 256
+    NIGHT_SALUTATION_3 = "night_salutation_3"
     """ 晚安问候：晚安咬 """
-    NPC_ASSISTANT_COOK = 261
+    NPC_ASSISTANT_COOK = "npc_assistant_cook"
     """ 干员助理做饭 """
 
-    TOUCH_HEAD = 301
+    TOUCH_HEAD = "touch_head"
     """ 摸头 """
-    TOUCH_BREAST = 302
+    TOUCH_BREAST = "touch_breast"
     """ 摸胸 """
-    TOUCH_BUTTOCKS = 303
+    TOUCH_BUTTOCKS = "touch_buttocks"
     """ 摸屁股 """
-    TOUCH_EARS = 304
+    TOUCH_EARS = "touch_ears"
     """ 摸耳朵 """
-    TOUCH_HORN = 305
+    TOUCH_HORN = "touch_horn"
     """ 摸角 """
-    TOUCH_TAIL = 306
+    TOUCH_TAIL = "touch_tail"
     """ 摸尾巴 """
-    TOUCH_RING = 307
+    TOUCH_RING = "touch_ring"
     """ 摸光环 """
-    TOUCH_WING = 308
+    TOUCH_WING = "touch_wing"
     """ 摸翅膀 """
-    TOUCH_TENTACLE = 309
+    TOUCH_TENTACLE = "touch_tentacle"
     """ 摸触手 """
-    TOUCH_CAR = 310
+    TOUCH_CAR = "touch_car"
     """ 摸小车 """
-    HAND_IN_HAND = 311
+    HAND_IN_HAND = "hand_in_hand"
     """ 牵手 """
-    EMBRACE = 312
+    EMBRACE = "embrace"
     """ 拥抱 """
-    KISS = 313
+    KISS = "kiss"
     """ 亲吻 """
-    LAP_PILLOW = 314
+    LAP_PILLOW = "lap_pillow"
     """ 膝枕 """
-    RAISE_SKIRT = 315
+    RAISE_SKIRT = "raise_skirt"
     """ 掀起裙子 """
-    ASK_FOR_PAN = 316
+    ASK_FOR_PAN = "ask_for_pan"
     """ 索要内裤 """
-    ASK_FOR_SOCKS = 317
+    ASK_FOR_SOCKS = "ask_for_socks"
     """ 索要袜子 """
-    INVITE_TO_BATH = 318
+    INVITE_TO_BATH = "invite_to_bath"
     """ 一起洗澡 """
-    TOUCH_CLITORIS = 331
+    TOUCH_CLITORIS = "touch_clitoris"
     """ 阴蒂爱抚 """
-    TOUCH_VAGINA = 332
+    TOUCH_VAGINA = "touch_vagina"
     """ 手指插入（V） """
-    TOUCH_ANUS = 333
+    TOUCH_ANUS = "touch_anus"
     """ 手指插入（A） """
-    MILK = 336
+    MILK = "milk"
     """ 挤奶 """
-    SMELL_UNDERWEAR = 341
+    SMELL_UNDERWEAR = "smell_underwear"
     """ 闻内衣 """
-    STEAL_PAN = 342
+    STEAL_PAN = "steal_pan"
     """ 偷走内裤 """
-    STEAL_SOCKS = 343
+    STEAL_SOCKS = "steal_socks"
     """ 偷走袜子 """
-    STEAL_SCENE_ALL_PAN = 344
+    STEAL_SCENE_ALL_PAN = "steal_scene_all_pan"
     """ 偷走所有人内裤 """
-    STEAL_SCENE_ALL_SOCKS = 345
+    STEAL_SCENE_ALL_SOCKS = "steal_scene_all_socks"
     """ 偷走所有人袜子 """
-    BAGGING_AND_MOVING = 351
+    BAGGING_AND_MOVING = "bagging_and_moving"
     """ 装袋搬走 """
-    PUT_INTO_PRISON = 352
+    PUT_INTO_PRISON = "put_into_prison"
     """ 投入监牢 """
-    SET_FREE = 353
+    SET_FREE = "set_free"
     """ 解除囚禁 """
-    H = 361
+    H = "h"
     """ 进入H状态 """
-    END_H = 362
+    END_H = "end_h"
     """ 结束H """
-    DO_H_FAIL = 363
+    DO_H_FAIL = "do_h_fail"
     """ 邀请H失败 """
-    H_HP_0 = 364
+    H_HP_0 = "h_hp_0"
     """ H时博士体力为零中断 """
-    T_H_HP_0 = 365
+    T_H_HP_0 = "t_h_hp_0"
     """ H时交互对象体力为零中断 """
-    H_INTERRUPT = 366
+    H_INTERRUPT = "h_interrupt"
     """ H时被人目击闯入中断 """
-    NO_CONSCIOUS_H_END = 367
+    NO_CONSCIOUS_H_END = "no_conscious_h_end"
     """ 结束无意识H """
-    HIDDEN_SEX_INTERRUPT = 368
+    HIDDEN_SEX_INTERRUPT = "hidden_sex_interrupt"
     """ 隐奸被发现中断 """
-    HIDDEN_SEX_TO_GROUP_SEX = 369
+    HIDDEN_SEX_TO_GROUP_SEX = "hidden_sex_to_group_sex"
     """ 隐奸被发现转群交 """
-    CONFESSION = 371
+    CONFESSION = "confession"
     """ 告白 """
-    CONFESSION_FAILED = 372
+    CONFESSION_FAILED = "confession_failed"
     """ 告白失败 """
-    GIVE_NECKLACE = 373
+    GIVE_NECKLACE = "give_necklace"
     """ 戴上项圈 """
-    GIVE_NECKLACE_FAILED = 374
+    GIVE_NECKLACE_FAILED = "give_necklace_failed"
     """ 戴上项圈失败 """
-    DISCOVER_HIDDEN_SEX_AND_INTERRUPT = 376
+    DISCOVER_HIDDEN_SEX_AND_INTERRUPT = "discover_hidden_sex_and_interrupt"
     """ 发现隐奸并打断 """
-    DISCOVER_HIDDEN_SEX_AND_JOIN = 377
+    DISCOVER_HIDDEN_SEX_AND_JOIN = "discover_hidden_sex_and_join"
     """ 发现隐奸并加入转群交 """
-    ASK_HIDDEN_SEX = 378
+    ASK_HIDDEN_SEX = "ask_hidden_sex"
     """ 邀请隐奸 """
-    ASK_HIDDEN_SEX_FAIL = 379
+    ASK_HIDDEN_SEX_FAIL = "ask_hidden_sex_fail"
     """ 邀请隐奸失败 """
-    ASK_GROUP_SEX = 380
+    ASK_GROUP_SEX = "ask_group_sex"
     """ 邀请群交 """
-    ASK_GROUP_SEX_FAIL = 381
+    ASK_GROUP_SEX_FAIL = "ask_group_sex_fail"
     """ 邀请群交失败 """
-    GROUP_SEX_END = 382
+    GROUP_SEX_END = "group_sex_end"
     """ 结束群交 """
-    GROUP_SEX_PL_HP_0_END = 383
+    GROUP_SEX_PL_HP_0_END = "group_sex_pl_hp_0_end"
     """ 群交时博士体力为零中断 """
-    GROUP_SEX_NPC_HP_0_END = 384
+    GROUP_SEX_NPC_HP_0_END = "group_sex_npc_hp_0_end"
     """ 群交时自己体力为零退出 """
-    GROUP_SEX_TO_H = 385
+    GROUP_SEX_TO_H = "group_sex_to_h"
     """ 群交时NPC数量不足转为单人H """
-    JOIN_GROUP_SEX = 386
+    JOIN_GROUP_SEX = "join_group_sex"
     """ 自己加入群交 """
-    SEE_H = 396
+    SEE_H = "see_h"
     """ 目睹玩家与其他角色H """
-    KISS_FAIL = 397
+    KISS_FAIL = "kiss_fail"
     """ 亲吻失败 """
-    HIGH_OBSCENITY_ANUS = 398
+    HIGH_OBSCENITY_ANUS = "high_obscenity_anus"
     """ 重度猥亵失败 """
-    LOW_OBSCENITY_ANUS = 399
+    LOW_OBSCENITY_ANUS = "low_obscenity_anus"
     """ 轻度猥亵失败 """
-    MAKING_OUT = 401
+    MAKING_OUT = "making_out"
     """ 身体爱抚 """
-    KISS_H = 402
+    KISS_H = "kiss_h"
     """ 接吻 """
-    BREAST_CARESS = 403
+    BREAST_CARESS = "breast_caress"
     """ 胸爱抚 """
-    TWIDDLE_NIPPLES = 404
+    TWIDDLE_NIPPLES = "twiddle_nipples"
     """ 玩弄乳头 """
-    BREAST_SUCKING = 405
+    BREAST_SUCKING = "breast_sucking"
     """ 舔吸乳头 """
-    CLIT_CARESS = 406
+    CLIT_CARESS = "clit_caress"
     """ 阴蒂爱抚 """
-    OPEN_LABIA = 407
+    OPEN_LABIA = "open_labia"
     """ 掰开阴唇观察 """
-    OPEN_ANUS = 408
+    OPEN_ANUS = "open_anus"
     """ 掰开肛门观察 """
-    CUNNILINGUS = 409
+    CUNNILINGUS = "cunnilingus"
     """ 舔阴 """
-    LICK_ANAL = 410
+    LICK_ANAL = "lick_anal"
     """ 舔肛 """
-    FINGER_INSERTION = 411
+    FINGER_INSERTION = "finger_insertion"
     """ 手指插入(V) """
-    ANAL_CARESS = 412
+    ANAL_CARESS = "anal_caress"
     """ 手指插入(A) """
-    MAKE_MASTUREBATE = 413
+    MAKE_MASTUREBATE = "make_masturebate"
     """ 命令对方自慰 """
-    MAKE_LICK_ANAL = 414
+    MAKE_LICK_ANAL = "make_lick_anal"
     """ 命令对方舔自己肛门 """
-    KEEP_ENJOY = 415
+    KEEP_ENJOY = "keep_enjoy"
     """ 继续享受 """
-    SEDECU = 416
+    SEDECU = "sedecu"
     """ 诱惑对方 """
-    ASK_PEE = 417
+    ASK_PEE = "ask_pee"
     """ 命令对方小便 """
-    MASTUREBATE = 418
+    MASTUREBATE = "masturebate"
     """ 自慰(女) """
-    HANDJOB = 420
+    HANDJOB = "handjob"
     """ 手交 """
-    BLOWJOB = 421
+    BLOWJOB = "blowjob"
     """ 口交 """
-    PAIZURI = 422
+    PAIZURI = "paizuri"
     """ 乳交 """
-    FOOTJOB = 423
+    FOOTJOB = "footjob"
     """ 足交 """
-    HAIRJOB = 424
+    HAIRJOB = "hairjob"
     """ 发交 """
-    AXILLAJOB = 425
+    AXILLAJOB = "axillajob"
     """ 腋交 """
-    RUB_BUTTOCK = 426
+    RUB_BUTTOCK = "rub_buttock"
     """ 素股 """
-    HAND_BLOWJOB = 427
+    HAND_BLOWJOB = "hand_blowjob"
     """ 手交口交 """
-    TITS_BLOWJOB = 428
+    TITS_BLOWJOB = "tits_blowjob"
     """ 乳交口交 """
-    FOCUS_BLOWJOB = 429
+    FOCUS_BLOWJOB = "focus_blowjob"
     """ 真空口交 """
-    DEEP_THROAT = 430
+    DEEP_THROAT = "deep_throat"
     """ 深喉插入 """
-    SIXTY_NINE = 431
+    SIXTY_NINE = "sixty_nine"
     """ 六九式 """
-    LEGJOB = 432
+    LEGJOB = "legjob"
     """ 腿交 """
-    TAILJOB = 433
+    TAILJOB = "tailjob"
     """ 尾交 """
-    FACE_RUB = 434
+    FACE_RUB = "face_rub"
     """ 阴茎蹭脸 """
-    HORN_RUB = 435
+    HORN_RUB = "horn_rub"
     """ 阴茎蹭角 """
-    EARS_RUB = 436
+    EARS_RUB = "ears_rub"
     """ 阴茎蹭耳朵 """
-    CLEAN_BLOWJOB = 437
+    CLEAN_BLOWJOB = "clean_blowjob"
     """ 清洁口交 """
-    BODY_LUBRICANT = 451
+    BODY_LUBRICANT = "body_lubricant"
     """ 润滑液 """
-    BIRTH_CONTROL_PILLS_BEFORE = 452
+    BIRTH_CONTROL_PILLS_BEFORE = "birth_control_pills_before"
     """ 事前避孕药 """
-    BIRTH_CONTROL_PILLS_AFTER = 453
+    BIRTH_CONTROL_PILLS_AFTER = "birth_control_pills_after"
     """ 事后避孕药 """
-    PHILTER = 454
+    PHILTER = "philter"
     """ 媚药 """
-    ENEMAS = 455
+    ENEMAS = "enemas"
     """ 灌肠液 """
-    DIURETICS_ONCE = 456
+    DIURETICS_ONCE = "diuretics_once"
     """ 一次性利尿剂 """
-    DIURETICS_PERSISTENT = 457
+    DIURETICS_PERSISTENT = "diuretics_persistent"
     """ 持续性利尿剂 """
-    SLEEPING_PILLS = 458
+    SLEEPING_PILLS = "sleeping_pills"
     """ 安眠药 """
-    CLOMID = 459
+    CLOMID = "clomid"
     """ 排卵促进药 """
-    PUT_CONDOM = 471
+    PUT_CONDOM = "put_condom"
     """ 戴上避孕套 """
-    SAFE_CANDLES = 472
+    SAFE_CANDLES = "safe_candles"
     """ 滴蜡 """
-    URETHRAL_SWAB = 473
+    URETHRAL_SWAB = "urethral_swab"
     """ 尿道棉棒 """
-    TAKE_CONDOM_OUT = 474
+    TAKE_CONDOM_OUT = "take_condom_out"
     """ 摘掉避孕套 """
-    NIPPLES_LOVE_EGG = 481
+    NIPPLES_LOVE_EGG = "nipples_love_egg"
     """ 乳头跳蛋 """
-    NIPPLE_CLAMP_ON = 482
+    NIPPLE_CLAMP_ON = "nipple_clamp_on"
     """ 戴上乳头夹 """
-    CLIT_LOVE_EGG = 483
+    CLIT_LOVE_EGG = "clit_love_egg"
     """ 阴蒂跳蛋 """
-    CLIT_CLAMP_ON = 484
+    CLIT_CLAMP_ON = "clit_clamp_on"
     """ 戴上阴蒂夹 """
-    ELECTRIC_MESSAGE_STICK = 485
+    ELECTRIC_MESSAGE_STICK = "electric_message_stick"
     """ 电动按摩棒 """
-    VIBRATOR_INSERTION = 486
+    VIBRATOR_INSERTION = "vibrator_insertion"
     """ V插入震动棒 """
-    BIG_VIBRATOR_INSERTION = 487
+    BIG_VIBRATOR_INSERTION = "big_vibrator_insertion"
     """ 加粗震动棒 """
-    HUGE_VIBRATOR_INSERTION = 488
+    HUGE_VIBRATOR_INSERTION = "huge_vibrator_insertion"
     """ 巨型震动棒 """
-    VIBRATOR_INSERTION_ANAL = 489
+    VIBRATOR_INSERTION_ANAL = "vibrator_insertion_anal"
     """ A插入震动棒 """
-    BIG_VIBRATOR_INSERTION_ANAL = 490
+    BIG_VIBRATOR_INSERTION_ANAL = "big_vibrator_insertion_anal"
     """ 加粗肛门震动棒 """
-    HUGE_VIBRATOR_INSERTION_ANAL = 491
+    HUGE_VIBRATOR_INSERTION_ANAL = "huge_vibrator_insertion_anal"
     """ 巨型肛门震动棒 """
-    CLYSTER = 492
+    CLYSTER = "clyster"
     """ 灌肠 """
-    ANAL_PLUG = 493
+    ANAL_PLUG = "anal_plug"
     """ 肛塞 """
-    ANAL_BEADS = 494
+    ANAL_BEADS = "anal_beads"
     """ 塞入肛门拉珠 """
-    CLYSTER_END = 495
+    CLYSTER_END = "clyster_end"
     """ 拔出肛塞 """
-    NIPPLE_CLAMP_OFF = 496
+    NIPPLE_CLAMP_OFF = "nipple_clamp_off"
     """ 取下乳头夹 """
-    CLIT_CLAMP_OFF = 497
+    CLIT_CLAMP_OFF = "clit_clamp_off"
     """ 取下阴蒂夹 """
-    VIBRATOR_INSERTION_OFF = 498
+    VIBRATOR_INSERTION_OFF = "vibrator_insertion_off"
     """ 拔出震动棒 """
-    VIBRATOR_INSERTION_ANAL_OFF = 499
+    VIBRATOR_INSERTION_ANAL_OFF = "vibrator_insertion_anal_off"
     """ 拔出肛门震动棒 """
-    ANAL_BEADS_OFF = 500
+    ANAL_BEADS_OFF = "anal_beads_off"
     """ 拔出肛门拉珠 """
-    NORMAL_SEX = 501
+    NORMAL_SEX = "normal_sex"
     """ 正常位 """
-    BACK_SEX = 502
+    BACK_SEX = "back_sex"
     """ 背后位 """
-    RIDING_SEX = 503
+    RIDING_SEX = "riding_sex"
     """ 对面骑乘位 """
-    FACE_SEAT_SEX = 504
+    FACE_SEAT_SEX = "face_seat_sex"
     """ 对面座位 """
-    BACK_SEAT_SEX = 505
+    BACK_SEAT_SEX = "back_seat_sex"
     """ 背面座位 """
-    FACE_STAND_SEX = 506
+    FACE_STAND_SEX = "face_stand_sex"
     """ 对面立位 """
-    BACK_STAND_SEX = 507
+    BACK_STAND_SEX = "back_stand_sex"
     """ 背面立位 """
-    BACK_RIDING_SEX = 508
+    BACK_RIDING_SEX = "back_riding_sex"
     """ 背面骑乘位 """
-    STIMULATE_G_POINT = 511
+    STIMULATE_G_POINT = "stimulate_g_point"
     """ 刺激G点 """
-    WOMB_OS_CARESS = 512
+    WOMB_OS_CARESS = "womb_os_caress"
     """ 玩弄子宫口 """
-    WOMB_INSERTION = 513
+    WOMB_INSERTION = "womb_insertion"
     """ 插入子宫口 """
-    WOMB_SEX = 514
+    WOMB_SEX = "womb_sex"
     """ 子宫姦 """
-    EXTERNAL_WOMB_MASSAGE = 515
+    EXTERNAL_WOMB_MASSAGE = "external_womb_massage"
     """ 体外子宫按摩 """
-    NORMAL_ANAL_SEX = 521
+    NORMAL_ANAL_SEX = "normal_anal_sex"
     """ 正常位肛交 """
-    BACK_ANAL_SEX = 522
+    BACK_ANAL_SEX = "back_anal_sex"
     """ 后背位肛交 """
-    RIDING_ANAL_SEX = 523
+    RIDING_ANAL_SEX = "riding_anal_sex"
     """ 对面骑乘位肛交 """
-    FACE_SEAT_ANAL_SEX = 524
+    FACE_SEAT_ANAL_SEX = "face_seat_anal_sex"
     """ 对面座位肛交 """
-    BACK_SEAT_ANAL_SEX = 525
+    BACK_SEAT_ANAL_SEX = "back_seat_anal_sex"
     """ 背面座位肛交 """
-    FACE_STAND_ANAL_SEX = 526
+    FACE_STAND_ANAL_SEX = "face_stand_anal_sex"
     """ 对面立位肛交 """
-    BACK_STAND_ANAL_SEX = 527
+    BACK_STAND_ANAL_SEX = "back_stand_anal_sex"
     """ 背面立位肛交 """
-    BACK_RIDING_ANAL_SEX = 528
+    BACK_RIDING_ANAL_SEX = "back_riding_anal_sex"
     """ 背面骑乘位肛交 """
-    STIMULATE_SIGMOID_COLON = 530
+    STIMULATE_SIGMOID_COLON = "stimulate_sigmoid_colon"
     """ 玩弄s状结肠 """
-    STIMULATE_VAGINA = 531
+    STIMULATE_VAGINA = "stimulate_vagina"
     """ 隔着刺激阴道 """
-    URETHRAL_FINGER_INSERTION = 541
+    URETHRAL_FINGER_INSERTION = "urethral_finger_insertion"
     """ 尿道指姦 """
-    URETHRAL_SEX = 542
+    URETHRAL_SEX = "urethral_sex"
     """ 尿道姦 """
-    FACE_HUG_SEX = 551
+    FACE_HUG_SEX = "face_hug_sex"
     """ 对面抱位 """
-    BACK_HUG_SEX = 552
+    BACK_HUG_SEX = "back_hug_sex"
     """ 背面抱位 """
-    FACE_LAY_SEX = 553
+    FACE_LAY_SEX = "face_lay_sex"
     """ 对面卧位 """
-    BACK_LAY_SEX = 554
+    BACK_LAY_SEX = "back_lay_sex"
     """ 背面卧位 """
-    FACE_HUG_ANAL_SEX = 561
+    FACE_HUG_ANAL_SEX = "face_hug_anal_sex"
     """ 对面抱位肛交 """
-    BACK_HUG_ANAL_SEX = 562
+    BACK_HUG_ANAL_SEX = "back_hug_anal_sex"
     """ 背面抱位肛交 """
-    FACE_LAY_ANAL_SEX = 563
+    FACE_LAY_ANAL_SEX = "face_lay_anal_sex"
     """ 对面卧位肛交 """
-    BACK_LAY_ANAL_SEX = 564
+    BACK_LAY_ANAL_SEX = "back_lay_anal_sex"
     """ 背面卧位肛交 """
 
-    MILKING_MACHINE_ON = 601
+    MILKING_MACHINE_ON = "milking_machine_on"
     """ 装上搾乳机 """
-    URINE_COLLECTOR_ON = 602
+    URINE_COLLECTOR_ON = "urine_collector_on"
     """ 装上采尿器 """
-    BIND = 603
+    BIND = "bind"
     """ 捆绑 """
-    PATCH_ON = 604
+    PATCH_ON = "patch_on"
     """ 戴上眼罩 """
-    WHIP = 605
+    WHIP = "whip"
     """ 鞭子 """
-    NEEDLE = 606
+    NEEDLE = "needle"
     """ 针 """
-    GAG_ON = 607
+    GAG_ON = "gag_on"
     """ 戴上口球 """
 
-    MILKING_MACHINE_OFF = 631
+    MILKING_MACHINE_OFF = "milking_machine_off"
     """ 取下搾乳机 """
-    URINE_COLLECTOR_OFF = 632
+    URINE_COLLECTOR_OFF = "urine_collector_off"
     """ 取下采尿器 """
-    UNBIND = 633
+    UNBIND = "unbind"
     """ 解除捆绑 """
-    PATCH_OFF = 634
+    PATCH_OFF = "patch_off"
     """ 摘下眼罩 """
-    GAG_OFF = 635
+    GAG_OFF = "gag_off"
     """ 摘下口球 """
 
-    EXERCISE_SUCKING_AND_SWALLOWING = 681
+    EXERCISE_SUCKING_AND_SWALLOWING = "exercise_sucking_and_swallowing"
     """ 练习吮吸与吞咽力 """
-    EXERCISE_ARMPIT_FLEXIBILITY = 682
+    EXERCISE_ARMPIT_FLEXIBILITY = "exercise_armpit_flexibility"
     """ 练习腋下夹持力 """
-    EXERCISE_BREAST_CLAMPING = 683
+    EXERCISE_BREAST_CLAMPING = "exercise_breast_clamping"
     """ 练习胸部夹持力 """
-    EXERCISE_HANDS_CLAMPING = 684
+    EXERCISE_HANDS_CLAMPING = "exercise_hands_clamping"
     """ 练习手部灵活度 """
-    EXERCISE_FOOTS_FLEXIBILITY = 685
+    EXERCISE_FOOTS_FLEXIBILITY = "exercise_foots_flexibility"
     """ 练习足部灵活度 """
-    EXERCISE_VAGINA_FIRMNESS = 686
+    EXERCISE_VAGINA_FIRMNESS = "exercise_vagina_firmness"
     """ 练习阴道紧致度 """
-    EXERCISE_INTESTINE_FIRMNESS = 687
+    EXERCISE_INTESTINE_FIRMNESS = "exercise_intestine_firmness"
     """ 练习肠道紧致度 """
-    EXERCISE_TAIL_FLEXIBILITY = 688
+    EXERCISE_TAIL_FLEXIBILITY = "exercise_tail_flexibility"
     """ 练习尾巴灵活度 """
-    EXERCISE_TENTACLE_FLEXIBILITY = 689
+    EXERCISE_TENTACLE_FLEXIBILITY = "exercise_tentacle_flexibility"
     """ 练习触手灵活度 """
 
-    UNDRESS = 701
+    UNDRESS = "undress"
     """ 脱衣服 """
 
-    HAT_JOB = 710
+    HAT_JOB = "hat_job"
     """ 帽子交 """
-    GLASSES_JOB = 711
+    GLASSES_JOB = "glasses_job"
     """ 眼镜交 """
-    EAR_ORNAMENT_JOB = 712
+    EAR_ORNAMENT_JOB = "ear_ornament_job"
     """ 耳饰交 """
-    NECK_ORNAMENT_JOB = 713
+    NECK_ORNAMENT_JOB = "neck_ornament_job"
     """ 脖饰交 """
-    MOUTH_ORNAMENT_JOB = 714
+    MOUTH_ORNAMENT_JOB = "mouth_ornament_job"
     """ 口罩交 """
-    TOP_JOB = 715
+    TOP_JOB = "top_job"
     """ 上衣交 """
-    CORSET_JOB = 716
+    CORSET_JOB = "corset_job"
     """ 胸衣交 """
-    GLOVES_JOB = 717
+    GLOVES_JOB = "gloves_job"
     """ 手套交 """
-    SKIRT_JOB = 718
+    SKIRT_JOB = "skirt_job"
     """ 裙子交 """
-    UNDERWEAR_JOB = 719
+    UNDERWEAR_JOB = "underwear_job"
     """ 内裤交 """
-    SOCKS_JOB = 720
+    SOCKS_JOB = "socks_job"
     """ 袜子交 """
-    SHOES_JOB = 721
+    SHOES_JOB = "shoes_job"
     """ 鞋子交 """
-    WEAPONS_JOB = 722
+    WEAPONS_JOB = "weapons_job"
     """ 武器交 """
-    TROUSERS_JOB = 723
+    TROUSERS_JOB = "trousers_job"
     """ 裤子交 """
 
-    ORGASM_EDGE_ON = 751
+    ORGASM_EDGE_ON = "orgasm_edge_on"
     """ 绝顶寸止 """
-    ORGASM_EDGE_OFF = 752
+    ORGASM_EDGE_OFF = "orgasm_edge_off"
     """ 绝顶解放 """
 
-    SPANKING = 771
+    SPANKING = "spanking"
     """ 打屁股 """
 
-    HOLD_CHILD = 801
+    HOLD_CHILD = "hold_child"
     """ 抱小孩 """
-    SING_CHILDREN_SONG = 802
+    SING_CHILDREN_SONG = "sing_children_song"
     """ 哼唱儿歌 """
-    NUIRSE_CHILD = 803
+    NUIRSE_CHILD = "nuirse_child"
     """ 喂奶 """
-    CHANGE_DIAPERS = 804
+    CHANGE_DIAPERS = "change_diapers"
     """ 换尿布 """
-    TEACH_TALK = 805
+    TEACH_TALK = "teach_talk"
     """ 教说话 """
-    GIVE_TOY = 806
+    GIVE_TOY = "give_toy"
     """ 给玩具 """
 
-    EXAMINE_HAIR = 850
+    EXAMINE_HAIR = "examine_hair"
     """ 检查头发 """
-    EXAMINE_HAIR_SMOOTHNESS = 851
+    EXAMINE_HAIR_SMOOTHNESS = "examine_hair_smoothness"
     """ 测试头发柔顺度 """
-    EXAMINE_ORAL = 852
+    EXAMINE_ORAL = "examine_oral"
     """ 检查口腔内部 """
-    EXAMINE_SUCKING_AND_SWALLOWING = 853
+    EXAMINE_SUCKING_AND_SWALLOWING = "examine_sucking_and_swallowing"
     """ 测试口腔吮吸与吞咽力 """
-    EXAMINE_ARMPIT = 854
+    EXAMINE_ARMPIT = "examine_armpit"
     """ 检查腋下 """
-    EXAMINE_ARMPIT_CLAMPING = 855
+    EXAMINE_ARMPIT_CLAMPING = "examine_armpit_clamping"
     """ 测试腋下夹持力 """
-    EXAMINE_BREAST = 856
+    EXAMINE_BREAST = "examine_breast"
     """ 检查胸部 """
-    EXAMINE_NIPPLE_AND_AREOLA = 857
+    EXAMINE_NIPPLE_AND_AREOLA = "examine_nipple_and_areola"
     """ 检查乳头与乳晕 """
-    EXAMINE_BREAST_CLAMPING = 858
+    EXAMINE_BREAST_CLAMPING = "examine_breast_clamping"
     """ 测试胸部夹持力 """
-    EXAMINE_CILITORIS = 859
+    EXAMINE_CILITORIS = "examine_cilitoris"
     """ 检查阴蒂 """
-    EXAMINE_HANDS = 860
+    EXAMINE_HANDS = "examine_hands"
     """ 检查手部 """
-    EXAMINE_HANDS_FLEXIBILITY = 861
+    EXAMINE_HANDS_FLEXIBILITY = "examine_hands_flexibility"
     """ 测试手部灵活度 """
-    EXAMINE_FOOT = 862
+    EXAMINE_FOOT = "examine_foot"
     """ 检查足部 """
-    EXAMINE_FOOTS_FLEXIBILITY = 863
+    EXAMINE_FOOTS_FLEXIBILITY = "examine_foots_flexibility"
     """ 测试足部灵活度 """
-    EXAMINE_VULVA_AND_SHAPE = 871
+    EXAMINE_VULVA_AND_SHAPE = "examine_vulva_and_shape"
     """ 检查外阴形状 """
-    EXAMINE_VAGINA_AND_FOLDS = 872
+    EXAMINE_VAGINA_AND_FOLDS = "examine_vagina_and_folds"
     """ 检查内阴褶皱 """
-    EXAMINE_HYMEN = 873
+    EXAMINE_HYMEN = "examine_hymen"
     """ 检查处女膜 """
-    EXAMINE_ORIFICE = 874
+    EXAMINE_ORIFICE = "examine_orifice"
     """ 检查子宫口 """
-    EXAMINE_VAGINA_FIRMNESS = 875
+    EXAMINE_VAGINA_FIRMNESS = "examine_vagina_firmness"
     """ 测试阴道紧致度 """
-    EXAMINE_ANUS = 876
+    EXAMINE_ANUS = "examine_anus"
     """ 检查菊穴 """
-    EXAMINE_INTESTINE_FIRMNESS = 877
+    EXAMINE_INTESTINE_FIRMNESS = "examine_intestine_firmness"
     """ 测试肠道紧致度 """
-    EXAMINE_URETHRA = 878
+    EXAMINE_URETHRA = "examine_urethra"
     """ 检查尿道 """
-    EXAMINE_URINATION_STATUS = 879
+    EXAMINE_URINATION_STATUS = "examine_urination_status"
     """ 测试现场排尿 """
-    EXAMINE_TAIL = 881
+    EXAMINE_TAIL = "examine_tail"
     """ 检查尾巴 """
-    EXAMINE_TAIL_FLEXIBILITY = 882
+    EXAMINE_TAIL_FLEXIBILITY = "examine_tail_flexibility"
     """ 测试尾巴灵活度 """
-    EXAMINE_HORN = 883
+    EXAMINE_HORN = "examine_horn"
     """ 检查兽角 """
-    EXAMINE_EARS = 884
+    EXAMINE_EARS = "examine_ears"
     """ 检查兽耳 """
-    EXAMINE_WING = 885
+    EXAMINE_WING = "examine_wing"
     """ 检查翅膀 """
-    EXAMINE_RING = 886
+    EXAMINE_RING = "examine_ring"
     """ 检查光环 """
-    EXAMINE_TENTACLE = 887
+    EXAMINE_TENTACLE = "examine_tentacle"
     """ 检查触手 """
-    EXAMINE_TENTACLE_FLEXIBILITY = 888
+    EXAMINE_TENTACLE_FLEXIBILITY = "examine_tentacle_flexibility"
     """ 测试触手灵活度 """
 
-    PENETRATING_VISION_ON = 901
+    PENETRATING_VISION_ON = "penetrating_vision_on"
     """ 开启透视 """
-    PENETRATING_VISION_OFF = 902
+    PENETRATING_VISION_OFF = "penetrating_vision_off"
     """ 关闭透视 """
-    HORMONE_ON = 903
+    HORMONE_ON = "hormone_on"
     """ 开启信息素 """
-    HORMONE_OFF = 904
+    HORMONE_OFF = "hormone_off"
     """ 关闭信息素 """
-    HYPNOSIS_ONE = 911
+    HYPNOSIS_ONE = "hypnosis_one"
     """ 单人催眠 """
-    HYPNOSIS_ALL = 912
+    HYPNOSIS_ALL = "hypnosis_all"
     """ 集体催眠 """
-    HYPNOSIS_CANCEL = 913
+    HYPNOSIS_CANCEL = "hypnosis_cancel"
     """ 解除催眠 """
-    HYPNOSIS_INCREASE_BODY_SENSITIVITY = 921
+    HYPNOSIS_INCREASE_BODY_SENSITIVITY = "hypnosis_increase_body_sensitivity"
     """ 体控-敏感度提升 """
-    HYPNOSIS_FORCE_CLIMAX = 922
+    HYPNOSIS_FORCE_CLIMAX = "hypnosis_force_climax"
     """ 体控-强制高潮 """
-    HYPNOSIS_FORCE_OVULATION = 923
+    HYPNOSIS_FORCE_OVULATION = "hypnosis_force_ovulation"
     """ 体控-强制排卵 """
-    HYPNOSIS_BLOCKHEAD = 924
+    HYPNOSIS_BLOCKHEAD = "hypnosis_blockhead"
     """ 体控-木头人 """
-    HYPNOSIS_ACTIVE_H = 925
+    HYPNOSIS_ACTIVE_H = "hypnosis_active_h"
     """ 体控-逆推 """
-    HYPNOSIS_ROLEPLAY = 931
+    HYPNOSIS_ROLEPLAY = "hypnosis_roleplay"
     """ 心控-角色扮演 """
-    HYPNOSIS_PAIN_AS_PLEASURE = 932
+    HYPNOSIS_PAIN_AS_PLEASURE = "hypnosis_pain_as_pleasure"
     """ 心控-苦痛快感化 """
-    TIME_STOP_ON = 941
+    TIME_STOP_ON = "time_stop_on"
     """ 时间停止流动 """
-    TIME_STOP_OFF = 942
+    TIME_STOP_OFF = "time_stop_off"
     """ 时间重新流动 """
-    CARRY_TARGET = 943
+    CARRY_TARGET = "carry_target"
     """ 搬运对方 """
-    STOP_CARRY_TARGET = 944
+    STOP_CARRY_TARGET = "stop_carry_target"
     """ 停止搬运对方 """
-    TARGET_FREE_IN_TIME_STOP = 945
+    TARGET_FREE_IN_TIME_STOP = "target_free_in_time_stop"
     """ 对方在时停中获得自由 """
-    TARGET_STOP_IN_TIME_STOP = 946
+    TARGET_STOP_IN_TIME_STOP = "target_stop_in_time_stop"
     """ 对方在时停中再次停止 """
-

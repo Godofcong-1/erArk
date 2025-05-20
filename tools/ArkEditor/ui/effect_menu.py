@@ -470,15 +470,15 @@ class CSEMenu(QDialog):
         status_group.triggered.connect(self.change_status_menu)
 
         # 添加每个状态作为一个动作到菜单中
-        for status_type in cache_control.status_type_data:
+        for status_type in cache_control.behavior_type_data:
             status_menu = QMenu(status_type, self.status_menu)
-            for cid in cache_control.status_type_data[status_type]:
-                if cid is cache_control.now_status:
+            for cid in cache_control.behavior_type_data[status_type]:
+                if cid is cache_control.now_behavior:
                     continue
                 if cid == "0":
                     continue
                 now_action: QWidgetAction = QWidgetAction(self)
-                now_action.setText(cache_control.status_data[cid])
+                now_action.setText(cache_control.behavior_data[cid])
                 now_action.setActionGroup(status_group)
                 now_action.setData(cid)
                 status_menu.addAction(now_action)
@@ -509,16 +509,16 @@ class CSEMenu(QDialog):
         action -- 触发的菜单
         """
         cid = action.data()
-        self.status_menu.setTitle(cache_control.status_data[cid])
+        self.status_menu.setTitle(cache_control.behavior_data[cid])
         self.status_menu.clear()
         status_group = QActionGroup(self.status_menu)
-        for status_type in cache_control.status_type_data:
+        for status_type in cache_control.behavior_type_data:
             status_menu = QMenu(status_type, self.status_menu)
-            for cid in cache_control.status_type_data[status_type]:
+            for cid in cache_control.behavior_type_data[status_type]:
                 if cid == "0":
                     continue
                 now_action: QWidgetAction = QWidgetAction(self)
-                now_action.setText(cache_control.status_data[cid])
+                now_action.setText(cache_control.behavior_data[cid])
                 now_action.setActionGroup(status_group)
                 now_action.setData(cid)
                 status_menu.addAction(now_action)
@@ -541,8 +541,8 @@ class CSEMenu(QDialog):
 
         # cse_b为状态的名字，cse_b_value为状态的cid
         cse_b = self.status_menu.title()
-        for cid in cache_control.status_data:
-            if cache_control.status_data[cid] == cse_b:
+        for cid in cache_control.behavior_data:
+            if cache_control.behavior_data[cid] == cse_b:
                 cse_b_value = cid
                 break
 

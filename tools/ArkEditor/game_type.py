@@ -7,7 +7,7 @@ class Talk:
         """ 口上id """
         self.adv_id: str = ""
         """ 口上限定的剧情npcid """
-        self.status_id: str = ""
+        self.behavior_id: str = ""
         """ 触发口上的行为状态id """
         self.text: str = ""
         """ 口上文本 """
@@ -23,7 +23,7 @@ class Event:
         """ 事件唯一id """
         self.adv_id: str = ""
         """ 事件所属advnpcid """
-        self.status_id: str = ""
+        self.behavior_id: str = ""
         """ 事件所属状态id """
         self.start: bool = 0
         """ 是否是状态开始时的事件 """

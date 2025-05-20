@@ -1,6 +1,6 @@
 cid,behavior_id,adv_id,premise,context
 口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,int,int,str,str
+str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,481,0,high_1,{Name}把跳蛋放在{TargetName}的乳头上，控制着震动幅度的大小，给{TargetName}带来一阵阵的快感
+0,nipples_love_egg,0,high_1,{Name}把跳蛋放在{TargetName}的乳头上，控制着震动幅度的大小，给{TargetName}带来一阵阵的快感
