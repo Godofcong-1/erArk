@@ -2859,10 +2859,10 @@ def character_work_sex_exercises(character_id: int):
     character_data.target_character_id = character_id
     # 从目前的性爱练习列表中随机选一个
     exercises_list = []
-    for i in range(30,40):
-        if i in character_data.body_manage and character_data.body_manage[i]:
-            status_id = i + 650
-            exercises_list.append(status_id)
+    for i in character_data.body_manage:
+        if character_data.body_manage[i]:
+            body_manage_data = game_config.config_body_manage_requirement[i]
+            exercises_list.append(body_manage_data.second_behavior_id)
     # 赋予行为
     if len(exercises_list):
         now_exercises = random.choice(exercises_list)
