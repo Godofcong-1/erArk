@@ -16,7 +16,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instruct_flag = 1):
+def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event_flag = 1):
     """
     处理结算角色行为并输出对应文本
     Keyword arguments:
@@ -33,7 +33,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
     add_time = int((now_time - start_time).seconds / 60)
 
     behavior_id = now_character_data.behavior.behavior_id
-    if instruct_flag > 0:
+    if event_flag > 0:
         # 玩家在群P模式的结算
         if (
             character_id == 0 and
@@ -86,7 +86,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, instr
             # 进行指令相关数据的结算
             change_data = handle_instruct_data(character_id, behavior_id, now_time, add_time, change_data)
 
-    if instruct_flag != 1:
+    if event_flag != 1:
         # 主事件
         event_id = now_character_data.event.event_id
         change_data = handle_event_data(event_id, character_id, add_time, change_data, now_time)
@@ -318,8 +318,11 @@ def handle_instruct_data(
     now_character_data: game_type.Character = cache.character_data[character_id]
     # 进行一段结算
     if behavior_id in game_config.config_behavior_effect_data:
-        # 先结算口上
-        talk.handle_talk(character_id)
+        # 先结算口上，并判断是否需要跳过，跳过来源于事件的特殊结算
+        if now_character_data.event.skip_instruct_talk == False:
+            talk.handle_talk(character_id)
+        else:
+            now_character_data.event.skip_instruct_talk = False
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             # 综合数值结算判定
             # 如果effect_id是str类型，则说明是综合数值结算
@@ -372,7 +375,10 @@ def handle_event_data(event_id, character_id, add_time, change_data, now_time):
                 handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
             # 综合指令状态结算判定
             elif "CSE" in effect:
-                effect_all_value_list = effect.split("_")[1:]
+                effect_all_value_str = effect.split("_", 1)[1]
+                A = effect_all_value_str.split("_", 1)[0]
+                behavior_id = effect_all_value_str.split("_", 1)[1]
+                effect_all_value_list = [A, behavior_id]
                 handle_instruct.handle_comprehensive_state_effect(effect_all_value_list, character_id, add_time, change_data, now_time)
             # 其他结算判定
             else:

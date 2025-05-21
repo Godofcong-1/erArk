@@ -27,7 +27,7 @@
         },
         "settle": {},
         "effect": {
-            "CSE_A2_363": 1
+            "CSE_A2_do_h_fail": 1
         }
     },
     "4cc1e31d-f1f6-4053-91c0-58846f0dea31": {
@@ -43,7 +43,7 @@
         },
         "settle": {},
         "effect": {
-            "CSE_A2_361": 1,
+            "CSE_A2_h": 1,
             "CVE_A2_T|402_E_0": 1
         }
     },

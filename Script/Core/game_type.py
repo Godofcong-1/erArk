@@ -844,6 +844,8 @@ class Chara_Event:
         """ 角色当前子事件id """
         self.chara_diy_event_flag: bool = False
         """ 角色自定义事件标记 """
+        self.skip_instruct_talk: bool = False
+        """ 跳过指令口上标记 """
 
 
 class Map:

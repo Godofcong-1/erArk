@@ -179,7 +179,7 @@ def handle_comprehensive_state_effect(
         now_time: datetime.datetime,
 ):
     """
-    综合指令状态结算
+    综合指令行为结算
     Keyword arguments:
     effect_all_value_list -- 结算的各项数值
     character_id -- 角色id
@@ -208,8 +208,8 @@ def handle_comprehensive_state_effect(
         if target_character_id not in cache.npc_id_got:
             return 0
 
-    status_id = int(effect_all_value_list[1])
-    chara_handle_instruct_common_settle(status_id, target_character_id = target_character_id, game_update_flag = True)
+    behavior_id = effect_all_value_list[1]
+    chara_handle_instruct_common_settle(behavior_id, target_character_id = target_character_id, game_update_flag = True)
 
 
 @add_instruct(
