@@ -395,6 +395,8 @@ class SecondBehavior:
     """ 关闭智能跟随 """
     AI_FOLLOW_ON = "ai_follow_1"
     """ 开启智能跟随 """
+    COME_TO_DOCTOR = "ai_follow_2"
+    """ 要求前往博士所在位置 """
     COME_TO_OFFICE = "ai_follow_3"
     """ 要求前往办公室 """
     SUPPORT_SERVICE_OFF = "support_service_off"
