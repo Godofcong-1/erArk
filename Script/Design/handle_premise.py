@@ -10585,6 +10585,21 @@ def handle_pl_semen_le_2(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PL_SEMEN_G_2)
+def handle_pl_semen_g_2(character_id: int) -> int:
+    """
+    玩家当前精液量大于2ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point > 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.PL_SEMEN_LE_50)
 def handle_pl_semen_le_50(character_id: int) -> int:
     """
@@ -10611,6 +10626,21 @@ def handle_pl_semen_ge_50(character_id: int) -> int:
     """
     pl_character_data = cache.character_data[0]
     if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point >= 50:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_SEMEN_L_100)
+def handle_pl_semen_l_100(character_id: int) -> int:
+    """
+    玩家当前精液量小于100ml
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.semen_point + pl_character_data.tem_extra_semen_point < 100:
         return 1
     return 0
 
@@ -10715,6 +10745,34 @@ def handle_pl_eja_point_extreme(character_id: int) -> int:
     """
     pl_character_data = cache.character_data[0]
     if pl_character_data.eja_point > 900:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_EJA_POINT_LOW_OR_MIDDLE)
+def handle_pl_eja_point_low_or_middle(character_id: int) -> int:
+    """
+    玩家当前射精欲低或中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_pl_eja_point_low(character_id) or handle_pl_eja_point_middle(character_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.PL_EJA_POINT_HIGH_OR_EXTREME)
+def handle_pl_eja_point_low_or_middle(character_id: int) -> int:
+    """
+    玩家当前射精欲高或极
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_pl_eja_point_high(character_id) or handle_pl_eja_point_extreme(character_id):
         return 1
     return 0
 

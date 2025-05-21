@@ -1454,8 +1454,10 @@ shoot_in_t_horn,SHOOT_IN_T_HORN,H_射精,在交互对象的兽角射精
 shoot_in_t_ears,SHOOT_IN_T_EARS,H_射精,在交互对象的兽耳射精
 shoot_in_t_cloth,SHOOT_IN_T_CLOTH,H_射精,在交互对象的衣服上射精（含全部位）
 pl_semen_le_2,PL_SEMEN_LE_2,H_射精,玩家当前精液量小于等于2ml
+pl_semen_g_2,PL_SEMEN_G_2,H_射精,玩家当前精液量大于2ml
 pl_semen_le_50,PL_SEMEN_LE_50,H_射精,玩家当前精液量小于等于50ml
 pl_semen_ge_50,PL_SEMEN_GE_50,H_射精,玩家当前精液量大于等于50ml
+pl_semen_l_100,PL_SEMEN_L_100,H_射精,玩家当前精液量小于100ml
 pl_semen_ge_100,PL_SEMEN_GE_100,H_射精,玩家当前精液量大于等于100ml
 pl_just_shoot,PL_JUST_SHOOT,H_射精,玩家前指令射精了
 pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精,玩家前指令未射精
@@ -1463,6 +1465,8 @@ pl_eja_point_low,PL_EJA_POINT_LOW,H_射精,玩家当前射精欲低
 pl_eja_point_middle,PL_EJA_POINT_MIDDLE,H_射精,玩家当前射精欲中
 pl_eja_point_high,PL_EJA_POINT_HIGH,H_射精,玩家当前射精欲高
 pl_eja_point_extreme,PL_EJA_POINT_EXTREME,H_射精,玩家当前射精欲极
+pl_eja_point_low_or_middle,PL_EJA_POINT_LOW_OR_MIDDLE,H_射精,玩家当前射精欲低或中
+pl_eja_point_high_or_extreme,PL_EJA_POINT_HIGH_OR_EXTREME,H_射精,玩家当前射精欲高或极
 
 t_turn_orgasm_0,T_TURN_ORGASM_0,H_绝顶,交互对象本次H中还没有绝顶
 t_turn_orgasm_g_1,T_TURN_ORGASM_G_1,H_绝顶,交互对象本次H中绝顶次数>1
