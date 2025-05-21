@@ -2,7 +2,7 @@
     "ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58": {
         "uid": "ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "要怎么做呢",
@@ -19,7 +19,7 @@
     "61c94960-5277-46e8-8258-50b779ee91c4": {
         "uid": "61c94960-5277-46e8-8258-50b779ee91c4",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸  手 | 轻轻触碰{TargetName}的手，冰冷的感觉从指间传来\\n“我可以把这个，当成一种友好的信号吗”",
@@ -35,7 +35,7 @@
     "63cad05e-2863-4814-820a-d4a0603466a8": {
         "uid": "63cad05e-2863-4814-820a-d4a0603466a8",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "揉  肩 | 绕到{TargetName}背后，小心翼翼的揉着她的肩膀\\n“讨好我什么的，大可不必了”",
@@ -51,7 +51,7 @@
     "660aab8a-2c4a-41f7-8c1c-998a6f4647e9": {
         "uid": "660aab8a-2c4a-41f7-8c1c-998a6f4647e9",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸头发 | 把手搭在{TargetName}的肩上，让一缕发丝从掌心滑过\\n“我的头发，有什么奇怪的地方吗”",
@@ -67,7 +67,7 @@
     "c27ddd31-ef76-47f1-bccd-ee96a1992dc0": {
         "uid": "c27ddd31-ef76-47f1-bccd-ee96a1992dc0",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸脖子 | 用手指轻轻戳了一下{TargetName}的侧颈部\\n“海嗣化的问题我会好好控制的，即使最坏的情况也不会给地上的人带来麻烦”",
@@ -83,7 +83,7 @@
     "5297733c-ac0d-48d2-a79e-74aa63008290": {
         "uid": "5297733c-ac0d-48d2-a79e-74aa63008290",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "要怎么做呢",
@@ -100,7 +100,7 @@
     "e9ad807d-c34b-49a7-82f3-7318a2cbaf24": {
         "uid": "e9ad807d-c34b-49a7-82f3-7318a2cbaf24",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸  手 | 轻轻托着{TargetName}的手，一点清凉感从掌心传来\\n“......”\\n“还要来吗”",
@@ -116,7 +116,7 @@
     "792c6a25-3011-40cd-ac2a-9561c382ab6c": {
         "uid": "792c6a25-3011-40cd-ac2a-9561c382ab6c",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "揉  肩 | 从背后为{TargetName}揉肩，应该不需要那么拘谨了吧\\n“怎么，还要等我感谢你吗”",
@@ -132,7 +132,7 @@
     "aead34ff-bd66-47c9-aa5b-2fab75c3dccc": {
         "uid": "aead34ff-bd66-47c9-aa5b-2fab75c3dccc",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸头发 | 从背后抚摸着{TargetName}的头发，一如既往的顺滑呢\\n“我的头发就那么有吸引力吗”",
@@ -148,7 +148,7 @@
     "29802c98-5209-4644-ac8a-71d3b24fb29a": {
         "uid": "29802c98-5209-4644-ac8a-71d3b24fb29a",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸脖子 | 凑近{TargetName}的脖子，用一只手轻轻摸了上去\\n“不许闻气味！”",
@@ -164,7 +164,7 @@
     "2533580b-b997-44e5-aa67-a61129e01170": {
         "uid": "2533580b-b997-44e5-aa67-a61129e01170",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "搂  腰 | 单手搂着{TargetName}的腰，感觉不到拒绝的意思呢\\n{TargetName}想说什么，但最终还是没有说出口",
@@ -180,7 +180,7 @@
     "5f0528b7-6024-41f9-9935-77d90d6c197d": {
         "uid": "5f0528b7-6024-41f9-9935-77d90d6c197d",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸耳朵 | 轻触{TargetName}的耳朵\\n“适可而止吧”",
@@ -196,7 +196,7 @@
     "650e18f5-ecb8-4755-b676-fb3b555b67e9": {
         "uid": "650e18f5-ecb8-4755-b676-fb3b555b67e9",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "要怎么做呢",
@@ -213,7 +213,7 @@
     "80506d4a-44b6-46d5-a985-ad0c69456189": {
         "uid": "80506d4a-44b6-46d5-a985-ad0c69456189",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "亲吻手 | 握着{TargetName}的手，轻吻她的指节，似乎可以闻到淡淡的香气\\n“可以噢”",
@@ -229,7 +229,7 @@
     "184dc1f7-5313-4d3a-b72d-88ba7041d658": {
         "uid": "184dc1f7-5313-4d3a-b72d-88ba7041d658",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "揉  肩 | 和往常一样为{TargetName}揉肩\\n“确实有时候会感觉僵硬，陆地上干燥的空气没那么容易适应”",
@@ -245,7 +245,7 @@
     "b1db4c67-8f7d-4250-a3f9-884f1c98ceaa": {
         "uid": "b1db4c67-8f7d-4250-a3f9-884f1c98ceaa",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸头发 | 贴近{TargetName}的头发，一缕一缕仔细触摸着\\n“平时有在好好保养的”\\n的确闻到了清新的气息",
@@ -261,7 +261,7 @@
     "54a7bfcc-64db-4802-aa52-85b6c7da8fbe": {
         "uid": "54a7bfcc-64db-4802-aa52-85b6c7da8fbe",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "闻脖子 | 从身后把脸靠在脖子上，从领口呼吸着{TargetName}散发出来的体香\\n“喜欢我的气味什么的，亏你说得出口”",
@@ -277,7 +277,7 @@
     "cd775c0b-605e-4eea-95e4-5b08d79447bd": {
         "uid": "cd775c0b-605e-4eea-95e4-5b08d79447bd",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "环抱腰 | 靠在{TargetName}的身后，双手抱着她的腰\\n“安心的感觉”",
@@ -293,7 +293,7 @@
     "f9f1951b-dfc8-4257-bf44-fa9e341be230": {
         "uid": "f9f1951b-dfc8-4257-bf44-fa9e341be230",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "向耳朵吹气 | 靠近{TargetName}的耳朵，轻轻向里面吹气，{TargetName}的身体瞬间紧绷了起来\\n“喂...等一下...”\\n“你在干什么啊!”\\n并没有生气",
@@ -309,7 +309,7 @@
     "8496681d-afe9-4cf0-ba60-813bc7aaec19": {
         "uid": "8496681d-afe9-4cf0-ba60-813bc7aaec19",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "贴上去 | 紧紧靠在{TargetName}的身上\\n虽然{TargetName}没有说什么，但可以听到{TargetName}心跳变快了",
@@ -325,7 +325,7 @@
     "cc5c6868-2eb1-4635-ac8d-bc0152bf79a3": {
         "uid": "cc5c6868-2eb1-4635-ac8d-bc0152bf79a3",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "要怎么做呢",
@@ -341,7 +341,7 @@
     "4242f5ae-c09a-429a-8028-949b140b2088": {
         "uid": "4242f5ae-c09a-429a-8028-949b140b2088",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "舔手指 | 托着{TargetName}的手，吮吸着她的手指\\n迷人的味道\\n“真是无可救药了”",
@@ -356,7 +356,7 @@
     "aeebe4a3-4fc3-4cd3-bb0d-707c684c5bae": {
         "uid": "aeebe4a3-4fc3-4cd3-bb0d-707c684c5bae",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "抱着肩 | 从背后双手抱着{TargetName}的肩膀\\n“只是这样就满足了吗”",
@@ -371,7 +371,7 @@
     "63020a25-016e-46cd-8427-cdbf0d06ebc6": {
         "uid": "63020a25-016e-46cd-8427-cdbf0d06ebc6",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "摸头发 | 用脸紧紧贴在{TargetName}的头发上\\n“这么喜欢的话，下次你帮我梳头发吧”",
@@ -386,7 +386,7 @@
     "464c8afb-9b03-4675-a860-8f22fdf8c729": {
         "uid": "464c8afb-9b03-4675-a860-8f22fdf8c729",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "亲脖子 | 抱着{TargetName}的脖子，不由自主的亲了上去\\n“要留下吻痕吗”\\n“如果你真的这么做了，我也只好给你留下我的吻痕了”",
@@ -401,7 +401,7 @@
     "3e49c9be-e21d-4c65-81d9-2f9d1c3b19b4": {
         "uid": "3e49c9be-e21d-4c65-81d9-2f9d1c3b19b4",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "环抱腰 | 双手搂着{TargetName}的腰，双手抚摸着{TargetName}的小腹\\n“手在...啊！”\\n“不，没什么”",
@@ -416,7 +416,7 @@
     "e42f9070-6069-4a60-a163-86536b4addf3": {
         "uid": "e42f9070-6069-4a60-a163-86536b4addf3",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "舔耳朵 | 从{TargetName}耳朵边缘舔了过去\\n“不，不行，已经很敏感了”",
@@ -431,7 +431,7 @@
     "e11286f0-69c8-4222-838e-eacf39c1f876": {
         "uid": "e11286f0-69c8-4222-838e-eacf39c1f876",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "贴上去 | 紧紧靠在{TargetName}的身上，{TargetName}也转过身给予了积极的回应\\n“得寸进尺的家伙”",
@@ -446,7 +446,7 @@
     "74ca0e76-3311-4863-9dc5-deb81a2ec755": {
         "uid": "74ca0e76-3311-4863-9dc5-deb81a2ec755",
         "adv_id": "474",
-        "status_id": "stroke",
+        "behavior_id": "stroke",
         "start": 0,
         "type": 0,
         "text": "闻腋下 | 脸贴近{TargetName}的腋下呼吸着她的气息，诱人的费洛蒙气息瞬间充满了大脑\\n“啊！”\\n“！！”\\n“......”\\n“变态！”",
@@ -461,7 +461,7 @@
     "4b0730e5-fd66-4754-aac3-80223804a1af": {
         "uid": "4b0730e5-fd66-4754-aac3-80223804a1af",
         "adv_id": "474",
-        "status_id": "kiss",
+        "behavior_id": "kiss",
         "start": 0,
         "type": 0,
         "text": "抱着{TargetName}，夺去了她的嘴唇\\n温柔的包裹着那冰凉的唇，侵入了更加甜美的地方\\n{TargetName}的瞳孔中郁积了柔和的光\\n但这光突然毫无征兆地冻结了\\n\\n被一把推开了\\n{TargetName}急促地喘息着，肩膀剧烈颤抖着\\n“啊...啊...为什么...”\\n“为什么你会这么熟练啊！”\\n“你到底和多少女人接吻过了”\\n“你还要，还要把我甩开多远啊”",
@@ -485,7 +485,7 @@
     "0aca3a25-b2db-4ee6-8df7-926c77fef61f": {
         "uid": "0aca3a25-b2db-4ee6-8df7-926c77fef61f",
         "adv_id": "474",
-        "status_id": "touch_head",
+        "behavior_id": "touch_head",
         "start": 0,
         "type": 0,
         "text": "伸手去摸{TargetName}的头\\n{TargetName}似乎先一步察觉到了，把帽子摘下来抱在身前，长发从衣领处滑落\\n“呼......”\\n好感度上升了，仅仅摸头就能拉近关系的好事果然是存在的",
@@ -503,7 +503,7 @@
     "97fe92a7-3578-4ab2-ad1b-60696a640606": {
         "uid": "97fe92a7-3578-4ab2-ad1b-60696a640606",
         "adv_id": "474",
-        "status_id": "chat",
+        "behavior_id": "chat",
         "start": 0,
         "type": 0,
         "text": "“看来...和劳伦缇娜有了不错的进展啊...”\\n“...”\\n“这样啊...”\\n“...是这样啊”\\n“从什么时候开始的呢？”\\n{TargetName}眼睛盯着地面上的某个不存在的位置\\n“看来花了不少精力啊”\\n“太好了...真是太好了。劳伦缇娜给你这样的家伙，还真是有点浪费呢”\\n{TargetName}抬起头，盯着这边，又躲开了视线\\n“劳伦缇娜她，真的是个好女孩呢。即使你找遍全世界，也没有她这样完美的恋人了”\\n“可爱、善良、高雅、充满魅力，而且还是一心一意的......”\\n{TargetName}似乎努力搜索着词语\\n“真是，恭喜你们了...”",
@@ -526,7 +526,7 @@
     "926e2e80-dfa0-4590-b0ce-9e91cba8fbfb": {
         "uid": "926e2e80-dfa0-4590-b0ce-9e91cba8fbfb",
         "adv_id": "474",
-        "status_id": "chat",
+        "behavior_id": "chat",
         "start": 0,
         "type": 0,
         "text": "“看到了吗，阿戈尔就是这样的地方”\\n“悲哀的地方，也是可怕的地方，被污染的地方，也是值得怀念的地方”\\n“未来的某个时候，我一定会带着我的同胞们回去那里的，一定”\\n{TargetName}不动声色的贴了过来\\n“在那之前，恐怕还有相当艰难的命运要去击碎”\\n“在和它们战斗中我会变成什么样啊”\\n手心感受到了{TargetName}的温度\\n“即使我在海洋的深处丢掉了理性，也会在心智的深处保留你的记忆的火种的”\\n“那种时候，就靠你来找到我了”",
@@ -548,7 +548,7 @@
     "87451895-094b-44f4-ab37-9ea6be22c109": {
         "uid": "87451895-094b-44f4-ab37-9ea6be22c109",
         "adv_id": "474",
-        "status_id": "normal_sex",
+        "behavior_id": "normal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -564,7 +564,7 @@
     "6fc4b1b4-e737-4f8e-aa8e-eab64ca6c187": {
         "uid": "6fc4b1b4-e737-4f8e-aa8e-eab64ca6c187",
         "adv_id": "474",
-        "status_id": "normal_anal_sex",
+        "behavior_id": "normal_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -580,7 +580,7 @@
     "a6120294-7747-463d-80a9-997486db4f96": {
         "uid": "a6120294-7747-463d-80a9-997486db4f96",
         "adv_id": "474",
-        "status_id": "h",
+        "behavior_id": "h",
         "start": 0,
         "type": 1,
         "text": "",
@@ -595,7 +595,7 @@
     "5d3e3d6f-470a-4b02-94eb-c4b036aadf77": {
         "uid": "5d3e3d6f-470a-4b02-94eb-c4b036aadf77",
         "adv_id": "474",
-        "status_id": "h",
+        "behavior_id": "h",
         "start": 0,
         "type": 1,
         "text": "",
@@ -610,7 +610,7 @@
     "759caa82-ed81-4c06-b6e8-db9f00c091ca": {
         "uid": "759caa82-ed81-4c06-b6e8-db9f00c091ca",
         "adv_id": "474",
-        "status_id": "deep_throat",
+        "behavior_id": "deep_throat",
         "start": 0,
         "type": 2,
         "text": "",
@@ -626,7 +626,7 @@
     "77d7643c-7ae4-4fa8-aad2-d7ff3899bf2d": {
         "uid": "77d7643c-7ae4-4fa8-aad2-d7ff3899bf2d",
         "adv_id": "474",
-        "status_id": "cunnilingus",
+        "behavior_id": "cunnilingus",
         "start": 0,
         "type": 2,
         "text": "",
@@ -641,7 +641,7 @@
     "4bf48653-2785-46c5-accc-b0cb0d615707": {
         "uid": "4bf48653-2785-46c5-accc-b0cb0d615707",
         "adv_id": "474",
-        "status_id": "lick_anal",
+        "behavior_id": "lick_anal",
         "start": 0,
         "type": 2,
         "text": "",
@@ -656,7 +656,7 @@
     "1069fcff-a285-4872-9619-a132b17b864d": {
         "uid": "1069fcff-a285-4872-9619-a132b17b864d",
         "adv_id": "474",
-        "status_id": "love_1",
+        "behavior_id": "love_1",
         "start": 0,
         "type": 2,
         "text": "坚冰开始融化了",
@@ -672,7 +672,7 @@
     "f170b59f-6087-43c5-97f2-448db7ab53df": {
         "uid": "f170b59f-6087-43c5-97f2-448db7ab53df",
         "adv_id": "474",
-        "status_id": "love_2",
+        "behavior_id": "love_2",
         "start": 0,
         "type": 2,
         "text": "接下来的相处会容易许多吧",
@@ -688,7 +688,7 @@
     "70d686f9-04f7-406d-a8d1-58cca39841a8": {
         "uid": "70d686f9-04f7-406d-a8d1-58cca39841a8",
         "adv_id": "474",
-        "status_id": "love_3",
+        "behavior_id": "love_3",
         "start": 0,
         "type": 2,
         "text": "冰下包裹着的是炽热的爱",
@@ -704,7 +704,7 @@
     "45a45f10-f8c7-4fc8-9d6c-7bcc0dd6b679": {
         "uid": "45a45f10-f8c7-4fc8-9d6c-7bcc0dd6b679",
         "adv_id": "474",
-        "status_id": "move",
+        "behavior_id": "move",
         "start": 0,
         "type": 2,
         "text": "",
@@ -723,7 +723,7 @@
     "b6ac4f4e-d8fe-44a8-ad3a-1a406a4cabc1": {
         "uid": "b6ac4f4e-d8fe-44a8-ad3a-1a406a4cabc1",
         "adv_id": "474",
-        "status_id": "move",
+        "behavior_id": "move",
         "start": 0,
         "type": 2,
         "text": "",
@@ -741,7 +741,7 @@
     "80cc953e-3daa-43ec-9b76-0b0d59867ea8": {
         "uid": "80cc953e-3daa-43ec-9b76-0b0d59867ea8",
         "adv_id": "474",
-        "status_id": "move",
+        "behavior_id": "move",
         "start": 0,
         "type": 2,
         "text": "",
@@ -759,7 +759,7 @@
     "05078ca4-eacb-41a5-9c05-57fad4bd6d9e": {
         "uid": "05078ca4-eacb-41a5-9c05-57fad4bd6d9e",
         "adv_id": "474",
-        "status_id": "back_sex",
+        "behavior_id": "back_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -775,7 +775,7 @@
     "395516ff-ed90-46dc-bc2a-f48f31389508": {
         "uid": "395516ff-ed90-46dc-bc2a-f48f31389508",
         "adv_id": "474",
-        "status_id": "riding_sex",
+        "behavior_id": "riding_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -791,7 +791,7 @@
     "1c771684-96f4-4258-a132-0b02e53365fa": {
         "uid": "1c771684-96f4-4258-a132-0b02e53365fa",
         "adv_id": "474",
-        "status_id": "face_seat_sex",
+        "behavior_id": "face_seat_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -807,7 +807,7 @@
     "8d37f4b1-0087-436f-a613-a3d258890b13": {
         "uid": "8d37f4b1-0087-436f-a613-a3d258890b13",
         "adv_id": "474",
-        "status_id": "back_seat_sex",
+        "behavior_id": "back_seat_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -823,7 +823,7 @@
     "02420281-d982-494a-ab56-d260a9ddc9fb": {
         "uid": "02420281-d982-494a-ab56-d260a9ddc9fb",
         "adv_id": "474",
-        "status_id": "face_stand_sex",
+        "behavior_id": "face_stand_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -839,7 +839,7 @@
     "319cc52b-f14b-4e65-bbb7-8c08aa2d9ee5": {
         "uid": "319cc52b-f14b-4e65-bbb7-8c08aa2d9ee5",
         "adv_id": "474",
-        "status_id": "back_stand_sex",
+        "behavior_id": "back_stand_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -855,7 +855,7 @@
     "d1f8c910-b2aa-4796-a12d-d872c2428dc3": {
         "uid": "d1f8c910-b2aa-4796-a12d-d872c2428dc3",
         "adv_id": "474",
-        "status_id": "back_anal_sex",
+        "behavior_id": "back_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -871,7 +871,7 @@
     "78f0560a-dd7a-4748-a7ac-d424c7d95a67": {
         "uid": "78f0560a-dd7a-4748-a7ac-d424c7d95a67",
         "adv_id": "474",
-        "status_id": "riding_anal_sex",
+        "behavior_id": "riding_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -887,7 +887,7 @@
     "821aa136-2c9f-4814-b5a8-bbf76e247a46": {
         "uid": "821aa136-2c9f-4814-b5a8-bbf76e247a46",
         "adv_id": "474",
-        "status_id": "face_seat_anal_sex",
+        "behavior_id": "face_seat_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -903,7 +903,7 @@
     "baa537ac-d89b-4de2-b6f2-45b118b8f9d2": {
         "uid": "baa537ac-d89b-4de2-b6f2-45b118b8f9d2",
         "adv_id": "474",
-        "status_id": "back_seat_anal_sex",
+        "behavior_id": "back_seat_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -919,7 +919,7 @@
     "10e0d5b5-fb2e-44b3-9c40-ef8c4806a71e": {
         "uid": "10e0d5b5-fb2e-44b3-9c40-ef8c4806a71e",
         "adv_id": "474",
-        "status_id": "face_stand_anal_sex",
+        "behavior_id": "face_stand_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",
@@ -935,7 +935,7 @@
     "2cdd7784-ea2f-4df7-b943-7573622858fd": {
         "uid": "2cdd7784-ea2f-4df7-b943-7573622858fd",
         "adv_id": "474",
-        "status_id": "back_stand_anal_sex",
+        "behavior_id": "back_stand_anal_sex",
         "start": 0,
         "type": 2,
         "text": "",

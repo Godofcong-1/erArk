@@ -1218,11 +1218,11 @@ def load_event():
         now_tem = game_type.Event()
         now_tem.__dict__ = tem_data
         config_event[now_tem.uid] = now_tem
-        config_event_status_data.setdefault(now_tem.status_id, [])
-        config_event_status_data[now_tem.status_id].append(now_tem.uid)
-        config_event_status_data_by_chara_adv.setdefault(now_tem.status_id, {})
-        config_event_status_data_by_chara_adv[now_tem.status_id].setdefault(int(now_tem.adv_id), [])
-        config_event_status_data_by_chara_adv[now_tem.status_id][int(now_tem.adv_id)].append(now_tem.uid)
+        config_event_status_data.setdefault(now_tem.behavior_id, [])
+        config_event_status_data[now_tem.behavior_id].append(now_tem.uid)
+        config_event_status_data_by_chara_adv.setdefault(now_tem.behavior_id, {})
+        config_event_status_data_by_chara_adv[now_tem.behavior_id].setdefault(int(now_tem.adv_id), [])
+        config_event_status_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].append(now_tem.uid)
 
 
 def load_event_target():

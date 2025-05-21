@@ -17,6 +17,8 @@ class BehaviorEffect:
     """ 系统量_基础 开启群交模式 """
     GROUP_SEX_MODE_OFF = 10011
     """ 系统量_基础 关闭群交模式 """
+    RETAIN_COMMAND_WITH_EVENT_TEXT = 10012
+    """ 用事件文本代替指令文本，限指令后置 """
 
     INTERRUPT_TARGET_ACTIVITY = 10000
     """ 系统量_交互 打断交互对象活动 """

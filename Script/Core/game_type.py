@@ -1545,8 +1545,8 @@ class Event:
         """ 事件唯一id """
         self.adv_id: str = ""
         """ 事件所属advnpcid """
-        self.status_id: str = ""
-        """ 事件所属状态id """
+        self.behavior_id: str = ""
+        """ 事件所属行为id """
         self.start: bool = 0
         """ 是否是行为开始时的事件 """
         self.type: int = 1

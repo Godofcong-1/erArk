@@ -74,6 +74,8 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
         now_event_id = random.choice(list(now_event_data[event_weight]))
         event_config = game_config.config_event[now_event_id]
         # 如果是事件前置指令后置类型，则判断是否存在跳过口上的结算
+        if event_config.type == 2 and '10012' in event_config.effect:
+            character_data.event.skip_instruct_talk = True
     if now_event_id != "":
         # print(f"debug now_event_id:{now_event_id}")
         return draw_event_text_panel.DrawEventTextPanel(now_event_id, character_id, event_config.type)

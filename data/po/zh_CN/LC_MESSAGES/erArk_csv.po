@@ -2833,202 +2833,206 @@ msgid "开启智能跟随"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:590
-msgid "要求前往办公室"
+msgid "要求前往博士所在位置"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:591
-msgid "关闭辅佐服务"
+msgid "要求前往办公室"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:592
-msgid "开启辅佐服务"
+msgid "关闭辅佐服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:593
-msgid "关闭送饭服务"
+msgid "开启辅佐服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:594
-msgid "开启帮忙买午饭服务"
+msgid "关闭送饭服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:595
-msgid "开启亲手做午饭服务"
+msgid "开启帮忙买午饭服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:596
-msgid "开启亲手做三餐服务"
+msgid "开启亲手做午饭服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:597
-msgid "关闭早安服务"
+msgid "开启亲手做三餐服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:598
-msgid "开启早上叫起床服务"
+msgid "关闭早安服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:599
-msgid "开启早安吻服务"
+msgid "开启早上叫起床服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:600
-msgid "开启早安咬服务"
+msgid "开启早安吻服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:601
-msgid "关闭晚安服务"
+msgid "开启早安咬服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:602
-msgid "开启晚上催睡觉服务"
+msgid "关闭晚安服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:603
-msgid "开启晚安吻服务"
+msgid "开启晚上催睡觉服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:604
-msgid "开启晚安咬服务"
+msgid "开启晚安吻服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:605
-msgid "关闭同居服务"
+msgid "开启晚安咬服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:606
-msgid "开启同居服务"
+msgid "关闭同居服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:607
-msgid "关闭助攻服务"
+msgid "开启同居服务"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:608
+msgid "关闭助攻服务"
+msgstr ""
+
+#: .\data\csv\Behavior_Data.csv:609
 msgid "开启助攻服务"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:610
+#: .\data\csv\Behavior_Data.csv:611
 msgid "被要求每天上交内裤"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:611
+#: .\data\csv\Behavior_Data.csv:612
 msgid "被要求每天上交袜子"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:612
+#: .\data\csv\Behavior_Data.csv:613
 msgid "被要求以后不再穿胸衣"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:613
+#: .\data\csv\Behavior_Data.csv:614
 msgid "被要求以后睡觉时不穿衣服裸睡"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:614
+#: .\data\csv\Behavior_Data.csv:615
 msgid "在每日招呼时上交今天的内裤"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:615
+#: .\data\csv\Behavior_Data.csv:616
 msgid "在每日招呼时上交今天的袜子"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:616
+#: .\data\csv\Behavior_Data.csv:617
 msgid "被要求每天穿不同的袜子"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:617
+#: .\data\csv\Behavior_Data.csv:618
 msgid "被要求白天时戴着乳头夹"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:618
+#: .\data\csv\Behavior_Data.csv:619
 msgid "被要求白天时戴着阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:619
+#: .\data\csv\Behavior_Data.csv:620
 msgid "被要求白天时V里插着振动棒"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:620
+#: .\data\csv\Behavior_Data.csv:621
 msgid "被要求白天时A里插着振动棒"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:621
+#: .\data\csv\Behavior_Data.csv:622
 msgid "被要求睡觉时戴着乳头夹"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:622
+#: .\data\csv\Behavior_Data.csv:623
 msgid "被要求睡觉时戴着阴蒂夹"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:623
+#: .\data\csv\Behavior_Data.csv:624
 msgid "被要求睡觉时V里插着振动棒"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:624
+#: .\data\csv\Behavior_Data.csv:625
 msgid "被要求睡觉时A里插着振动棒"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:625
+#: .\data\csv\Behavior_Data.csv:626
 msgid "被要求洗澡时不再清洗阴道内的精液"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:626
+#: .\data\csv\Behavior_Data.csv:627
 msgid "被要求每天晚上睡前都要自慰"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:627
+#: .\data\csv\Behavior_Data.csv:628
 msgid "被要求禁止自慰"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:628
+#: .\data\csv\Behavior_Data.csv:629
 msgid "被要求晚上睡觉不锁门"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:629
+#: .\data\csv\Behavior_Data.csv:630
 msgid "被要求进行吮吸与吞咽力练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:630
+#: .\data\csv\Behavior_Data.csv:631
 msgid "被要求进行腋下夹持力练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:631
+#: .\data\csv\Behavior_Data.csv:632
 msgid "被要求进行胸部夹持力练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:632
+#: .\data\csv\Behavior_Data.csv:633
 msgid "被要求进行手部灵活度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:633
+#: .\data\csv\Behavior_Data.csv:634
 msgid "被要求进行足部灵活度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:634
+#: .\data\csv\Behavior_Data.csv:635
 msgid "被要求进行阴道紧致度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:635
+#: .\data\csv\Behavior_Data.csv:636
 msgid "被要求进行肠道紧致度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:636
+#: .\data\csv\Behavior_Data.csv:637
 msgid "被要求进行尾巴灵活度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:637
+#: .\data\csv\Behavior_Data.csv:638
 msgid "被要求进行触手灵活度练习"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:639
+#: .\data\csv\Behavior_Data.csv:640
 msgid "获得被浅层催眠素质"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:640
+#: .\data\csv\Behavior_Data.csv:641
 msgid "获得被深层催眠素质"
 msgstr ""
 
-#: .\data\csv\Behavior_Data.csv:641
+#: .\data\csv\Behavior_Data.csv:642
 msgid "获得被完全催眠素质"
 msgstr ""
 
@@ -23034,6 +23038,10 @@ msgstr ""
 
 #: Event:b1f2b926-d298-48f5-8e0f-a3c3ad868859
 msgid "在一天的激战后，{TargetName}的胸部所感受过的快感在睡梦中一觉而散"
+msgstr ""
+
+#: Event:f61b5bc9-1476-4f4c-bc1c-9845ddb8b09a
+msgid "该事件会在维持【身体接触】的原结算不变的情况下，将其文本改为本事件的文本。\n用于在某些情况下，不想调整某个指令的结算，仅想让它必定显示某文本时使用。"
 msgstr ""
 
 #: Event:a1b48e8a-3950-4b60-8e2f-e215c72660a7

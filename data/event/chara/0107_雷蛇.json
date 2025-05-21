@@ -2,7 +2,7 @@
     "a1b48e8a-3950-4b60-8e2f-e215c72660a7": {
         "uid": "a1b48e8a-3950-4b60-8e2f-e215c72660a7",
         "adv_id": "107",
-        "status_id": "day_hello",
+        "behavior_id": "day_hello",
         "start": 0,
         "type": 1,
         "text": "又是新的一天，清空雷蛇当前的涩乱损伤",
@@ -18,7 +18,7 @@
     "33ed7275-7ab9-4822-9105-216acfa42ed4": {
         "uid": "33ed7275-7ab9-4822-9105-216acfa42ed4",
         "adv_id": "107",
-        "status_id": "chat",
+        "behavior_id": "chat",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +5",
@@ -35,7 +35,7 @@
     "7f876475-cfc3-4aef-91dd-7e95e816a36b": {
         "uid": "7f876475-cfc3-4aef-91dd-7e95e816a36b",
         "adv_id": "107",
-        "status_id": "chat",
+        "behavior_id": "chat",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +10",
@@ -53,7 +53,7 @@
     "89bc11f1-1ec9-4f11-8e4d-c4886a23263b": {
         "uid": "89bc11f1-1ec9-4f11-8e4d-c4886a23263b",
         "adv_id": "107",
-        "status_id": "listen_complaint",
+        "behavior_id": "listen_complaint",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +60",
@@ -68,7 +68,7 @@
     "4c698b62-5e6e-4086-90dc-6a9c2740752d": {
         "uid": "4c698b62-5e6e-4086-90dc-6a9c2740752d",
         "adv_id": "107",
-        "status_id": "listen_complaint",
+        "behavior_id": "listen_complaint",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +90",
@@ -84,7 +84,7 @@
     "28009084-3557-43de-861d-aff58e7ee412": {
         "uid": "28009084-3557-43de-861d-aff58e7ee412",
         "adv_id": "107",
-        "status_id": "make_coffee",
+        "behavior_id": "make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +25",
@@ -100,7 +100,7 @@
     "331ffc89-d224-4f0f-be54-ab7b35c8bd54": {
         "uid": "331ffc89-d224-4f0f-be54-ab7b35c8bd54",
         "adv_id": "107",
-        "status_id": "make_coffee",
+        "behavior_id": "make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +50",
@@ -117,7 +117,7 @@
     "1582635e-9467-49b5-878a-31799509afd2": {
         "uid": "1582635e-9467-49b5-878a-31799509afd2",
         "adv_id": "107",
-        "status_id": "make_coffee",
+        "behavior_id": "make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +35",
@@ -134,7 +134,7 @@
     "3528a345-2187-4aa6-a621-46b2cfcb6845": {
         "uid": "3528a345-2187-4aa6-a621-46b2cfcb6845",
         "adv_id": "107",
-        "status_id": "make_coffee",
+        "behavior_id": "make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +60",
@@ -152,7 +152,7 @@
     "d776db3f-3f00-4ca7-9eb4-582374eb7f45": {
         "uid": "d776db3f-3f00-4ca7-9eb4-582374eb7f45",
         "adv_id": "107",
-        "status_id": "ask_make_coffee",
+        "behavior_id": "ask_make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +35",
@@ -168,7 +168,7 @@
     "f5253aa8-645e-49da-adab-8af16276d139": {
         "uid": "f5253aa8-645e-49da-adab-8af16276d139",
         "adv_id": "107",
-        "status_id": "ask_make_coffee",
+        "behavior_id": "ask_make_coffee",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 +60",
@@ -185,7 +185,7 @@
     "bd9fcadc-8824-41c0-95bf-95ab5d724191": {
         "uid": "bd9fcadc-8824-41c0-95bf-95ab5d724191",
         "adv_id": "107",
-        "status_id": "wait",
+        "behavior_id": "wait",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【精神损伤】 达到了1000，触发特殊状态 【精神爆发】\\n\\n雷蛇的精神随着与{PlayerName}的交互慢慢扭曲，最后到了一个只要有{PlayerName}在，就会绝对快乐的情况",
@@ -206,7 +206,7 @@
     "7794a781-2a3e-43bf-947d-0e8128a4b067": {
         "uid": "7794a781-2a3e-43bf-947d-0e8128a4b067",
         "adv_id": "107",
-        "status_id": "official_work",
+        "behavior_id": "official_work",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -222,7 +222,7 @@
     "338b7934-ec31-40a4-ae58-de36caaff5aa": {
         "uid": "338b7934-ec31-40a4-ae58-de36caaff5aa",
         "adv_id": "107",
-        "status_id": "official_work",
+        "behavior_id": "official_work",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -238,7 +238,7 @@
     "1e04e6ca-586a-4a00-80aa-7af2449170a6": {
         "uid": "1e04e6ca-586a-4a00-80aa-7af2449170a6",
         "adv_id": "107",
-        "status_id": "training",
+        "behavior_id": "training",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +240",
@@ -254,7 +254,7 @@
     "880b4831-56eb-423d-9bf3-c36b9a94eb10": {
         "uid": "880b4831-56eb-423d-9bf3-c36b9a94eb10",
         "adv_id": "107",
-        "status_id": "training",
+        "behavior_id": "training",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -270,7 +270,7 @@
     "2a8fb53b-cf72-49ad-8761-e16e69e5f539": {
         "uid": "2a8fb53b-cf72-49ad-8761-e16e69e5f539",
         "adv_id": "107",
-        "status_id": "exercise",
+        "behavior_id": "exercise",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -286,7 +286,7 @@
     "0fc6bfc6-5383-48a3-83fe-7e3139dc4e74": {
         "uid": "0fc6bfc6-5383-48a3-83fe-7e3139dc4e74",
         "adv_id": "107",
-        "status_id": "exercise",
+        "behavior_id": "exercise",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -302,7 +302,7 @@
     "79f289ee-1914-4aba-bce7-9bd88f05369d": {
         "uid": "79f289ee-1914-4aba-bce7-9bd88f05369d",
         "adv_id": "107",
-        "status_id": "cure_patient",
+        "behavior_id": "cure_patient",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -318,7 +318,7 @@
     "004cb46d-1db1-410d-8662-e702456ddb50": {
         "uid": "004cb46d-1db1-410d-8662-e702456ddb50",
         "adv_id": "107",
-        "status_id": "cure_patient",
+        "behavior_id": "cure_patient",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +30",
@@ -334,7 +334,7 @@
     "b12d03d8-112b-41c5-b874-530267c93677": {
         "uid": "b12d03d8-112b-41c5-b874-530267c93677",
         "adv_id": "107",
-        "status_id": "recruit",
+        "behavior_id": "recruit",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -350,7 +350,7 @@
     "b832e0c1-ba65-4296-9816-41ca7b2f1660": {
         "uid": "b832e0c1-ba65-4296-9816-41ca7b2f1660",
         "adv_id": "107",
-        "status_id": "recruit",
+        "behavior_id": "recruit",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -366,7 +366,7 @@
     "68f74fb9-9b9c-4ec9-89eb-7de312fe3405": {
         "uid": "68f74fb9-9b9c-4ec9-89eb-7de312fe3405",
         "adv_id": "107",
-        "status_id": "invite_visitor",
+        "behavior_id": "invite_visitor",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -382,7 +382,7 @@
     "c799c7ff-c9d3-4fb1-8d00-6149f24b400a": {
         "uid": "c799c7ff-c9d3-4fb1-8d00-6149f24b400a",
         "adv_id": "107",
-        "status_id": "invite_visitor",
+        "behavior_id": "invite_visitor",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -398,7 +398,7 @@
     "cceb38a5-1874-411a-bc0e-da69823e9579": {
         "uid": "cceb38a5-1874-411a-bc0e-da69823e9579",
         "adv_id": "107",
-        "status_id": "teach",
+        "behavior_id": "teach",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +90",
@@ -414,7 +414,7 @@
     "66e81a89-2cb9-4d50-84b6-809977c624db": {
         "uid": "66e81a89-2cb9-4d50-84b6-809977c624db",
         "adv_id": "107",
-        "status_id": "teach",
+        "behavior_id": "teach",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +45",
@@ -430,7 +430,7 @@
     "7973597c-82ce-45e5-9d10-b9714ebe4caa": {
         "uid": "7973597c-82ce-45e5-9d10-b9714ebe4caa",
         "adv_id": "107",
-        "status_id": "maintenance_facilities",
+        "behavior_id": "maintenance_facilities",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -446,7 +446,7 @@
     "b0212d77-2959-4607-8304-1a62a2f02f87": {
         "uid": "b0212d77-2959-4607-8304-1a62a2f02f87",
         "adv_id": "107",
-        "status_id": "maintenance_facilities",
+        "behavior_id": "maintenance_facilities",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -462,7 +462,7 @@
     "7639cbbe-33c7-460a-8fe8-2f9c86a7747a": {
         "uid": "7639cbbe-33c7-460a-8fe8-2f9c86a7747a",
         "adv_id": "107",
-        "status_id": "repair_equipment",
+        "behavior_id": "repair_equipment",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -478,7 +478,7 @@
     "7ae7e572-65e9-4118-8cb5-65ff9cf46b30": {
         "uid": "7ae7e572-65e9-4118-8cb5-65ff9cf46b30",
         "adv_id": "107",
-        "status_id": "repair_equipment",
+        "behavior_id": "repair_equipment",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -494,7 +494,7 @@
     "56aff885-be20-47b3-96a9-2df6ab7181ca": {
         "uid": "56aff885-be20-47b3-96a9-2df6ab7181ca",
         "adv_id": "107",
-        "status_id": "npc_work_cook",
+        "behavior_id": "npc_work_cook",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -510,7 +510,7 @@
     "25a0d7b5-9d00-4816-8ee9-0e37dd1ada63": {
         "uid": "25a0d7b5-9d00-4816-8ee9-0e37dd1ada63",
         "adv_id": "107",
-        "status_id": "npc_work_cook",
+        "behavior_id": "npc_work_cook",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +30",
@@ -526,7 +526,7 @@
     "6f64cad1-f655-4dbe-ae8a-05e9879f99e3": {
         "uid": "6f64cad1-f655-4dbe-ae8a-05e9879f99e3",
         "adv_id": "107",
-        "status_id": "produce",
+        "behavior_id": "produce",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -542,7 +542,7 @@
     "f1d4e47a-d1bf-4107-8b8c-ed4aba4d77f7": {
         "uid": "f1d4e47a-d1bf-4107-8b8c-ed4aba4d77f7",
         "adv_id": "107",
-        "status_id": "produce",
+        "behavior_id": "produce",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +30",
@@ -558,7 +558,7 @@
     "c15558d2-8227-42cb-97b7-8b0f4f62a566": {
         "uid": "c15558d2-8227-42cb-97b7-8b0f4f62a566",
         "adv_id": "107",
-        "status_id": "plant_manage_crop",
+        "behavior_id": "plant_manage_crop",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +120",
@@ -574,7 +574,7 @@
     "3babec90-e1c2-4485-9ace-2c90feb6a46b": {
         "uid": "3babec90-e1c2-4485-9ace-2c90feb6a46b",
         "adv_id": "107",
-        "status_id": "plant_manage_crop",
+        "behavior_id": "plant_manage_crop",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 +60",
@@ -590,7 +590,7 @@
     "d9461043-5fd5-427f-b2b6-b424224d16eb": {
         "uid": "d9461043-5fd5-427f-b2b6-b424224d16eb",
         "adv_id": "107",
-        "status_id": "wait",
+        "behavior_id": "wait",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【腐蚀损伤】 达到了1000，触发特殊状态 【腐蚀心态】\\n\\n大量的工作把雷蛇压得喘不过气，情绪快崩溃的她很想要找个排泄口疏解一下",
@@ -610,7 +610,7 @@
     "40bef3c0-7b85-453e-a490-8d3a4515289d": {
         "uid": "40bef3c0-7b85-453e-a490-8d3a4515289d",
         "adv_id": "107",
-        "status_id": "touch_head",
+        "behavior_id": "touch_head",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +10",
@@ -625,7 +625,7 @@
     "96ba5d07-d785-4685-ba57-50bfa54f6691": {
         "uid": "96ba5d07-d785-4685-ba57-50bfa54f6691",
         "adv_id": "107",
-        "status_id": "touch_head",
+        "behavior_id": "touch_head",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -641,7 +641,7 @@
     "02f4e093-1828-4b72-bf95-7e74872df2ca": {
         "uid": "02f4e093-1828-4b72-bf95-7e74872df2ca",
         "adv_id": "107",
-        "status_id": "touch_breast",
+        "behavior_id": "touch_breast",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -656,7 +656,7 @@
     "1df36a0c-1c56-49fd-a08d-fb15c20592af": {
         "uid": "1df36a0c-1c56-49fd-a08d-fb15c20592af",
         "adv_id": "107",
-        "status_id": "touch_breast",
+        "behavior_id": "touch_breast",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +40",
@@ -672,7 +672,7 @@
     "a6a6a3d2-f938-4a6b-ac67-6e4d9e4db6b8": {
         "uid": "a6a6a3d2-f938-4a6b-ac67-6e4d9e4db6b8",
         "adv_id": "107",
-        "status_id": "touch_buttocks",
+        "behavior_id": "touch_buttocks",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -687,7 +687,7 @@
     "2b94bc12-3b9c-4179-9e98-12e4d4383ceb": {
         "uid": "2b94bc12-3b9c-4179-9e98-12e4d4383ceb",
         "adv_id": "107",
-        "status_id": "touch_buttocks",
+        "behavior_id": "touch_buttocks",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +40",
@@ -703,7 +703,7 @@
     "9521f725-1a51-4cd4-afff-8b9587a0dc7b": {
         "uid": "9521f725-1a51-4cd4-afff-8b9587a0dc7b",
         "adv_id": "107",
-        "status_id": "touch_ears",
+        "behavior_id": "touch_ears",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +10",
@@ -718,7 +718,7 @@
     "238d1a2f-96cb-4cd1-aad0-0d7af6f6d5cc": {
         "uid": "238d1a2f-96cb-4cd1-aad0-0d7af6f6d5cc",
         "adv_id": "107",
-        "status_id": "touch_ears",
+        "behavior_id": "touch_ears",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -734,7 +734,7 @@
     "7f4ad0c4-676a-4dfb-8487-49e41dd88ade": {
         "uid": "7f4ad0c4-676a-4dfb-8487-49e41dd88ade",
         "adv_id": "107",
-        "status_id": "touch_horn",
+        "behavior_id": "touch_horn",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +10",
@@ -749,7 +749,7 @@
     "267f84ca-8702-4b23-aeb5-15fc9dfb559a": {
         "uid": "267f84ca-8702-4b23-aeb5-15fc9dfb559a",
         "adv_id": "107",
-        "status_id": "touch_horn",
+        "behavior_id": "touch_horn",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -765,7 +765,7 @@
     "d87f4283-3d39-4918-94b9-dd95a296240b": {
         "uid": "d87f4283-3d39-4918-94b9-dd95a296240b",
         "adv_id": "107",
-        "status_id": "touch_tail",
+        "behavior_id": "touch_tail",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +20",
@@ -780,7 +780,7 @@
     "aa0ab571-ef00-41ad-b410-393e299003f1": {
         "uid": "aa0ab571-ef00-41ad-b410-393e299003f1",
         "adv_id": "107",
-        "status_id": "touch_tail",
+        "behavior_id": "touch_tail",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 +40",
@@ -796,7 +796,7 @@
     "e4432b97-5261-4ac0-8562-c930316e32bd": {
         "uid": "e4432b97-5261-4ac0-8562-c930316e32bd",
         "adv_id": "107",
-        "status_id": "wait",
+        "behavior_id": "wait",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【热情损伤】 达到了1000，触发特殊状态 【热情强冲】\\n\\n雷蛇被{PlayerName}的动作搞得控制不住欲望，直接朝{PlayerName}扑了上去",
@@ -817,7 +817,7 @@
     "f2bd953b-1e74-482f-a87c-ad3a5b6e0692": {
         "uid": "f2bd953b-1e74-482f-a87c-ad3a5b6e0692",
         "adv_id": "107",
-        "status_id": "handjob",
+        "behavior_id": "handjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -832,7 +832,7 @@
     "51dcf50b-b342-4097-a5e9-591d6591bb16": {
         "uid": "51dcf50b-b342-4097-a5e9-591d6591bb16",
         "adv_id": "107",
-        "status_id": "handjob",
+        "behavior_id": "handjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -848,7 +848,7 @@
     "fc1ba7f9-4ace-4670-aeaa-09a2ff1a5caf": {
         "uid": "fc1ba7f9-4ace-4670-aeaa-09a2ff1a5caf",
         "adv_id": "107",
-        "status_id": "blowjob",
+        "behavior_id": "blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -863,7 +863,7 @@
     "393acfdc-2841-43cc-8c96-75f9f92ad532": {
         "uid": "393acfdc-2841-43cc-8c96-75f9f92ad532",
         "adv_id": "107",
-        "status_id": "blowjob",
+        "behavior_id": "blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -879,7 +879,7 @@
     "16156d47-576b-405a-a4d7-712f805c422b": {
         "uid": "16156d47-576b-405a-a4d7-712f805c422b",
         "adv_id": "107",
-        "status_id": "paizuri",
+        "behavior_id": "paizuri",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -894,7 +894,7 @@
     "23178b6e-a3e6-4218-bd9f-b2d0a1ba9528": {
         "uid": "23178b6e-a3e6-4218-bd9f-b2d0a1ba9528",
         "adv_id": "107",
-        "status_id": "paizuri",
+        "behavior_id": "paizuri",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -910,7 +910,7 @@
     "fb810cb9-54d6-4ce3-a9b2-5e83a55c8dff": {
         "uid": "fb810cb9-54d6-4ce3-a9b2-5e83a55c8dff",
         "adv_id": "107",
-        "status_id": "footjob",
+        "behavior_id": "footjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -925,7 +925,7 @@
     "72c8236b-0f30-419c-a66f-288f08e548f7": {
         "uid": "72c8236b-0f30-419c-a66f-288f08e548f7",
         "adv_id": "107",
-        "status_id": "footjob",
+        "behavior_id": "footjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -941,7 +941,7 @@
     "58399cb9-befb-4332-93e7-501129926e53": {
         "uid": "58399cb9-befb-4332-93e7-501129926e53",
         "adv_id": "107",
-        "status_id": "hairjob",
+        "behavior_id": "hairjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -956,7 +956,7 @@
     "92ff31b3-b374-4b21-ae63-39bd02c1afb5": {
         "uid": "92ff31b3-b374-4b21-ae63-39bd02c1afb5",
         "adv_id": "107",
-        "status_id": "hairjob",
+        "behavior_id": "hairjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -972,7 +972,7 @@
     "e1d242c4-4e49-4461-b9d5-ed011601cd28": {
         "uid": "e1d242c4-4e49-4461-b9d5-ed011601cd28",
         "adv_id": "107",
-        "status_id": "axillajob",
+        "behavior_id": "axillajob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -987,7 +987,7 @@
     "a3e93eb3-28da-4106-8d05-9c5972a522af": {
         "uid": "a3e93eb3-28da-4106-8d05-9c5972a522af",
         "adv_id": "107",
-        "status_id": "axillajob",
+        "behavior_id": "axillajob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1003,7 +1003,7 @@
     "73676e1e-3975-4556-b653-a095d3d887ad": {
         "uid": "73676e1e-3975-4556-b653-a095d3d887ad",
         "adv_id": "107",
-        "status_id": "rub_buttock",
+        "behavior_id": "rub_buttock",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1018,7 +1018,7 @@
     "f8cf83a8-c10b-4fa8-8c6f-d6fff9673c29": {
         "uid": "f8cf83a8-c10b-4fa8-8c6f-d6fff9673c29",
         "adv_id": "107",
-        "status_id": "rub_buttock",
+        "behavior_id": "rub_buttock",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1034,7 +1034,7 @@
     "45f3d069-1bc7-4630-b58a-b433b061757a": {
         "uid": "45f3d069-1bc7-4630-b58a-b433b061757a",
         "adv_id": "107",
-        "status_id": "hand_blowjob",
+        "behavior_id": "hand_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +40",
@@ -1049,7 +1049,7 @@
     "da8f524f-7c27-48f1-a532-cf598d9dba7f": {
         "uid": "da8f524f-7c27-48f1-a532-cf598d9dba7f",
         "adv_id": "107",
-        "status_id": "hand_blowjob",
+        "behavior_id": "hand_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1065,7 +1065,7 @@
     "df9781a5-1b1e-48ba-9c89-1b8d6d5be22e": {
         "uid": "df9781a5-1b1e-48ba-9c89-1b8d6d5be22e",
         "adv_id": "107",
-        "status_id": "tits_blowjob",
+        "behavior_id": "tits_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +40",
@@ -1080,7 +1080,7 @@
     "e4cddfdf-e402-47ab-a5da-c41ba443d0af": {
         "uid": "e4cddfdf-e402-47ab-a5da-c41ba443d0af",
         "adv_id": "107",
-        "status_id": "tits_blowjob",
+        "behavior_id": "tits_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1097,7 +1097,7 @@
     "4889534b-e7cc-4933-a0d1-dba2e2b9f0a7": {
         "uid": "4889534b-e7cc-4933-a0d1-dba2e2b9f0a7",
         "adv_id": "107",
-        "status_id": "focus_blowjob",
+        "behavior_id": "focus_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +40",
@@ -1112,7 +1112,7 @@
     "267edb7f-aabe-4109-8552-bafed8a7580b": {
         "uid": "267edb7f-aabe-4109-8552-bafed8a7580b",
         "adv_id": "107",
-        "status_id": "focus_blowjob",
+        "behavior_id": "focus_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1128,7 +1128,7 @@
     "68484e6d-d0f0-4547-b1d0-a612fe38f3d2": {
         "uid": "68484e6d-d0f0-4547-b1d0-a612fe38f3d2",
         "adv_id": "107",
-        "status_id": "deep_throat",
+        "behavior_id": "deep_throat",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +60",
@@ -1143,7 +1143,7 @@
     "8c352981-9239-4acc-87c0-29add6117bbd": {
         "uid": "8c352981-9239-4acc-87c0-29add6117bbd",
         "adv_id": "107",
-        "status_id": "deep_throat",
+        "behavior_id": "deep_throat",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1159,7 +1159,7 @@
     "1e94f276-790b-490a-a2b2-31a7aa51d9c8": {
         "uid": "1e94f276-790b-490a-a2b2-31a7aa51d9c8",
         "adv_id": "107",
-        "status_id": "sixty_nine",
+        "behavior_id": "sixty_nine",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1174,7 +1174,7 @@
     "c65fa0b9-b3d4-4b4b-913f-724dc4c9d207": {
         "uid": "c65fa0b9-b3d4-4b4b-913f-724dc4c9d207",
         "adv_id": "107",
-        "status_id": "sixty_nine",
+        "behavior_id": "sixty_nine",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1190,7 +1190,7 @@
     "61147bc9-5dc6-432d-b8ce-82096bce7a7d": {
         "uid": "61147bc9-5dc6-432d-b8ce-82096bce7a7d",
         "adv_id": "107",
-        "status_id": "legjob",
+        "behavior_id": "legjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -1205,7 +1205,7 @@
     "262476c6-ca91-4378-b11c-81648b1016e8": {
         "uid": "262476c6-ca91-4378-b11c-81648b1016e8",
         "adv_id": "107",
-        "status_id": "legjob",
+        "behavior_id": "legjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1221,7 +1221,7 @@
     "33cb2119-9f41-416f-a755-2e157c84833d": {
         "uid": "33cb2119-9f41-416f-a755-2e157c84833d",
         "adv_id": "107",
-        "status_id": "tailjob",
+        "behavior_id": "tailjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +20",
@@ -1236,7 +1236,7 @@
     "f1fdfb42-ebc6-4eb2-9d0d-58b2415cf77e": {
         "uid": "f1fdfb42-ebc6-4eb2-9d0d-58b2415cf77e",
         "adv_id": "107",
-        "status_id": "tailjob",
+        "behavior_id": "tailjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1252,7 +1252,7 @@
     "df030c01-bef9-448e-87f1-3605c122651e": {
         "uid": "df030c01-bef9-448e-87f1-3605c122651e",
         "adv_id": "107",
-        "status_id": "clean_blowjob",
+        "behavior_id": "clean_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +40",
@@ -1267,7 +1267,7 @@
     "e9f2b43b-e84a-44aa-9696-bfa0a9d15d72": {
         "uid": "e9f2b43b-e84a-44aa-9696-bfa0a9d15d72",
         "adv_id": "107",
-        "status_id": "clean_blowjob",
+        "behavior_id": "clean_blowjob",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1283,7 +1283,7 @@
     "4d75bd53-420d-4db7-94fd-63b1ec5998f1": {
         "uid": "4d75bd53-420d-4db7-94fd-63b1ec5998f1",
         "adv_id": "107",
-        "status_id": "normal_sex",
+        "behavior_id": "normal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1298,7 +1298,7 @@
     "f5842016-c98e-402a-af06-193aa51f4ffe": {
         "uid": "f5842016-c98e-402a-af06-193aa51f4ffe",
         "adv_id": "107",
-        "status_id": "normal_sex",
+        "behavior_id": "normal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1314,7 +1314,7 @@
     "3225a5b5-b510-4e47-a96a-61451dbb4d83": {
         "uid": "3225a5b5-b510-4e47-a96a-61451dbb4d83",
         "adv_id": "107",
-        "status_id": "back_sex",
+        "behavior_id": "back_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1329,7 +1329,7 @@
     "cdaed78c-c76d-4839-97c3-3b0684245714": {
         "uid": "cdaed78c-c76d-4839-97c3-3b0684245714",
         "adv_id": "107",
-        "status_id": "back_sex",
+        "behavior_id": "back_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1345,7 +1345,7 @@
     "483ed8fb-70ad-4e02-ad81-be63e1e5e0d3": {
         "uid": "483ed8fb-70ad-4e02-ad81-be63e1e5e0d3",
         "adv_id": "107",
-        "status_id": "riding_sex",
+        "behavior_id": "riding_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1360,7 +1360,7 @@
     "a066f8d6-6595-4906-a821-d760b151aa9d": {
         "uid": "a066f8d6-6595-4906-a821-d760b151aa9d",
         "adv_id": "107",
-        "status_id": "riding_sex",
+        "behavior_id": "riding_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1376,7 +1376,7 @@
     "e232c58d-dc97-4c0f-b095-aff54c39fc55": {
         "uid": "e232c58d-dc97-4c0f-b095-aff54c39fc55",
         "adv_id": "107",
-        "status_id": "face_seat_sex",
+        "behavior_id": "face_seat_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1391,7 +1391,7 @@
     "7131b3cf-4c54-4b82-9697-27b3c2579b40": {
         "uid": "7131b3cf-4c54-4b82-9697-27b3c2579b40",
         "adv_id": "107",
-        "status_id": "face_seat_sex",
+        "behavior_id": "face_seat_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1407,7 +1407,7 @@
     "410d3be6-a0c2-4446-9f61-ef7d0f736a80": {
         "uid": "410d3be6-a0c2-4446-9f61-ef7d0f736a80",
         "adv_id": "107",
-        "status_id": "back_seat_sex",
+        "behavior_id": "back_seat_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1422,7 +1422,7 @@
     "db2cac2e-0bc9-4992-9101-b18795e34319": {
         "uid": "db2cac2e-0bc9-4992-9101-b18795e34319",
         "adv_id": "107",
-        "status_id": "back_seat_sex",
+        "behavior_id": "back_seat_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1438,7 +1438,7 @@
     "998616a6-375f-4aaf-8bca-cdf07115464b": {
         "uid": "998616a6-375f-4aaf-8bca-cdf07115464b",
         "adv_id": "107",
-        "status_id": "face_stand_sex",
+        "behavior_id": "face_stand_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1453,7 +1453,7 @@
     "798f3792-591b-494a-a119-4a4ab177c2f8": {
         "uid": "798f3792-591b-494a-a119-4a4ab177c2f8",
         "adv_id": "107",
-        "status_id": "face_stand_sex",
+        "behavior_id": "face_stand_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1469,7 +1469,7 @@
     "38f59d5e-0414-42ad-b9f2-c958efbd2e13": {
         "uid": "38f59d5e-0414-42ad-b9f2-c958efbd2e13",
         "adv_id": "107",
-        "status_id": "back_stand_sex",
+        "behavior_id": "back_stand_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1484,7 +1484,7 @@
     "95064ecc-c39c-4d06-8248-118af25fd908": {
         "uid": "95064ecc-c39c-4d06-8248-118af25fd908",
         "adv_id": "107",
-        "status_id": "back_stand_sex",
+        "behavior_id": "back_stand_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1500,7 +1500,7 @@
     "9fe2e0c2-0b90-40f9-8d79-99321b8e987c": {
         "uid": "9fe2e0c2-0b90-40f9-8d79-99321b8e987c",
         "adv_id": "107",
-        "status_id": "stimulate_g_point",
+        "behavior_id": "stimulate_g_point",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1515,7 +1515,7 @@
     "b9d4ed68-4542-41f9-b39d-bc7d6132edc3": {
         "uid": "b9d4ed68-4542-41f9-b39d-bc7d6132edc3",
         "adv_id": "107",
-        "status_id": "stimulate_g_point",
+        "behavior_id": "stimulate_g_point",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1531,7 +1531,7 @@
     "ae93f393-abc5-49aa-874f-eb940b131da1": {
         "uid": "ae93f393-abc5-49aa-874f-eb940b131da1",
         "adv_id": "107",
-        "status_id": "womb_os_caress",
+        "behavior_id": "womb_os_caress",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1546,7 +1546,7 @@
     "4a06c1ef-fb15-484a-b592-232d0caa372e": {
         "uid": "4a06c1ef-fb15-484a-b592-232d0caa372e",
         "adv_id": "107",
-        "status_id": "womb_os_caress",
+        "behavior_id": "womb_os_caress",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1562,7 +1562,7 @@
     "25e6192e-220b-4a79-bbf0-89ac0e9b25c0": {
         "uid": "25e6192e-220b-4a79-bbf0-89ac0e9b25c0",
         "adv_id": "107",
-        "status_id": "womb_insertion",
+        "behavior_id": "womb_insertion",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1577,7 +1577,7 @@
     "a063bf70-0e9f-4398-bed9-cd04c1acbc80": {
         "uid": "a063bf70-0e9f-4398-bed9-cd04c1acbc80",
         "adv_id": "107",
-        "status_id": "womb_insertion",
+        "behavior_id": "womb_insertion",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1593,7 +1593,7 @@
     "f7c2e3e1-8c74-4175-a02f-3c693f5b530e": {
         "uid": "f7c2e3e1-8c74-4175-a02f-3c693f5b530e",
         "adv_id": "107",
-        "status_id": "womb_sex",
+        "behavior_id": "womb_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +150",
@@ -1608,7 +1608,7 @@
     "0638a35a-a4a5-4c60-a55e-8305562bc9b2": {
         "uid": "0638a35a-a4a5-4c60-a55e-8305562bc9b2",
         "adv_id": "107",
-        "status_id": "womb_sex",
+        "behavior_id": "womb_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1624,7 +1624,7 @@
     "a6acef38-be78-459a-99c2-ffcf61e08e84": {
         "uid": "a6acef38-be78-459a-99c2-ffcf61e08e84",
         "adv_id": "107",
-        "status_id": "normal_anal_sex",
+        "behavior_id": "normal_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1639,7 +1639,7 @@
     "0e7777f6-d131-4760-8adf-35751faf34a3": {
         "uid": "0e7777f6-d131-4760-8adf-35751faf34a3",
         "adv_id": "107",
-        "status_id": "normal_anal_sex",
+        "behavior_id": "normal_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1655,7 +1655,7 @@
     "e5fb5571-0cdd-40bd-9585-992db78260a2": {
         "uid": "e5fb5571-0cdd-40bd-9585-992db78260a2",
         "adv_id": "107",
-        "status_id": "back_anal_sex",
+        "behavior_id": "back_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1670,7 +1670,7 @@
     "2a38ba31-c7d1-4e2c-88d2-150c290b6c9a": {
         "uid": "2a38ba31-c7d1-4e2c-88d2-150c290b6c9a",
         "adv_id": "107",
-        "status_id": "back_anal_sex",
+        "behavior_id": "back_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1686,7 +1686,7 @@
     "4ebfba9d-a3f0-406f-a053-cf2452945151": {
         "uid": "4ebfba9d-a3f0-406f-a053-cf2452945151",
         "adv_id": "107",
-        "status_id": "riding_anal_sex",
+        "behavior_id": "riding_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1701,7 +1701,7 @@
     "12ca4629-a41b-44e3-b8d3-221601560f89": {
         "uid": "12ca4629-a41b-44e3-b8d3-221601560f89",
         "adv_id": "107",
-        "status_id": "riding_anal_sex",
+        "behavior_id": "riding_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1717,7 +1717,7 @@
     "d549a60c-1529-4428-9d38-ad62b50e8ce7": {
         "uid": "d549a60c-1529-4428-9d38-ad62b50e8ce7",
         "adv_id": "107",
-        "status_id": "face_seat_anal_sex",
+        "behavior_id": "face_seat_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1732,7 +1732,7 @@
     "d124ef8d-fc74-45c0-9517-5735d86d1a22": {
         "uid": "d124ef8d-fc74-45c0-9517-5735d86d1a22",
         "adv_id": "107",
-        "status_id": "face_seat_anal_sex",
+        "behavior_id": "face_seat_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1748,7 +1748,7 @@
     "f2cf17a2-e67b-4b57-b610-d19548fb12f3": {
         "uid": "f2cf17a2-e67b-4b57-b610-d19548fb12f3",
         "adv_id": "107",
-        "status_id": "back_seat_anal_sex",
+        "behavior_id": "back_seat_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1763,7 +1763,7 @@
     "82708e3b-48e5-4d90-b1c6-aad2ed49be2c": {
         "uid": "82708e3b-48e5-4d90-b1c6-aad2ed49be2c",
         "adv_id": "107",
-        "status_id": "back_seat_anal_sex",
+        "behavior_id": "back_seat_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1779,7 +1779,7 @@
     "b280bd20-0a3f-4360-8636-c9114f0fea8f": {
         "uid": "b280bd20-0a3f-4360-8636-c9114f0fea8f",
         "adv_id": "107",
-        "status_id": "face_stand_anal_sex",
+        "behavior_id": "face_stand_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1794,7 +1794,7 @@
     "ea4d5c4b-96c6-4060-8abe-d0b648a3f0cc": {
         "uid": "ea4d5c4b-96c6-4060-8abe-d0b648a3f0cc",
         "adv_id": "107",
-        "status_id": "face_stand_anal_sex",
+        "behavior_id": "face_stand_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1810,7 +1810,7 @@
     "07f36a56-7ffb-42e1-b69f-b93e2a8f5654": {
         "uid": "07f36a56-7ffb-42e1-b69f-b93e2a8f5654",
         "adv_id": "107",
-        "status_id": "back_stand_anal_sex",
+        "behavior_id": "back_stand_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +50",
@@ -1825,7 +1825,7 @@
     "3e7f816d-9ee7-446f-bd6d-947eda47fce9": {
         "uid": "3e7f816d-9ee7-446f-bd6d-947eda47fce9",
         "adv_id": "107",
-        "status_id": "back_stand_anal_sex",
+        "behavior_id": "back_stand_anal_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1841,7 +1841,7 @@
     "63741ce5-b56b-4f99-919e-d217819ebb9a": {
         "uid": "63741ce5-b56b-4f99-919e-d217819ebb9a",
         "adv_id": "107",
-        "status_id": "stimulate_sigmoid_colon",
+        "behavior_id": "stimulate_sigmoid_colon",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1856,7 +1856,7 @@
     "47e734b8-8980-4685-bddb-da73d2ca6dfa": {
         "uid": "47e734b8-8980-4685-bddb-da73d2ca6dfa",
         "adv_id": "107",
-        "status_id": "stimulate_sigmoid_colon",
+        "behavior_id": "stimulate_sigmoid_colon",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1872,7 +1872,7 @@
     "87122f81-3dfa-455e-be11-bde92a4a5f32": {
         "uid": "87122f81-3dfa-455e-be11-bde92a4a5f32",
         "adv_id": "107",
-        "status_id": "stimulate_vagina",
+        "behavior_id": "stimulate_vagina",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1887,7 +1887,7 @@
     "eecf8abc-2ce8-407b-8dc6-0af0152590cc": {
         "uid": "eecf8abc-2ce8-407b-8dc6-0af0152590cc",
         "adv_id": "107",
-        "status_id": "stimulate_vagina",
+        "behavior_id": "stimulate_vagina",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1904,7 +1904,7 @@
     "e10b0226-6e75-461f-9257-1cb815f770ed": {
         "uid": "e10b0226-6e75-461f-9257-1cb815f770ed",
         "adv_id": "107",
-        "status_id": "urethral_sex",
+        "behavior_id": "urethral_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 +100",
@@ -1919,7 +1919,7 @@
     "441ca322-13b3-49f4-ae11-4564dcfbe746": {
         "uid": "441ca322-13b3-49f4-ae11-4564dcfbe746",
         "adv_id": "107",
-        "status_id": "urethral_sex",
+        "behavior_id": "urethral_sex",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落淫身】 触发",
@@ -1935,7 +1935,7 @@
     "a6fdebf7-5755-42ce-abe3-7bc47890c6bf": {
         "uid": "a6fdebf7-5755-42ce-abe3-7bc47890c6bf",
         "adv_id": "107",
-        "status_id": "kiss_h",
+        "behavior_id": "kiss_h",
         "start": 0,
         "type": 1,
         "text": "雷蛇 【堕落损伤】 达到了1000，触发特殊状态 【堕落淫身】\\n\\n无尽的性行为成功击溃了雷蛇身体的防线，全身瞬间比平常敏感了十倍",

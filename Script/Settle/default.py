@@ -2940,6 +2940,24 @@ def handle_group_sex_mode_off(
     cache.group_sex_mode = False
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RETAIN_COMMAND_WITH_EVENT_TEXT)
+def handle_retain_command_with_event_text(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    用事件文本代替指令文本，限指令后置
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    pass
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PL_TARGET_TO_ME)
 def handle_pl_target_to_me(
         character_id: int,
