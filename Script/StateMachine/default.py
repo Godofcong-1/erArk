@@ -1,3 +1,4 @@
+from calendar import c
 import random
 from types import FunctionType
 from Script.Config import game_config
@@ -2862,7 +2863,9 @@ def character_work_sex_exercises(character_id: int):
     for i in character_data.body_manage:
         if character_data.body_manage[i]:
             body_manage_data = game_config.config_body_manage_requirement[i]
-            exercises_list.append(body_manage_data.second_behavior_id)
+            if body_manage_data.behavior_id == "0":
+                continue
+            exercises_list.append(body_manage_data.behavior_id)
     # 赋予行为
     if len(exercises_list):
         now_exercises = random.choice(exercises_list)

@@ -215,8 +215,10 @@ class Body_Manage_Requirement:
     """ 序号 """
     second_behavior_id: str
     """ 二段行为id """
-    need_examine_id: int
+    need_examine_id: str
     """ 需要的检查状态id """
+    behavior_id: str
+    """ 进行的一段行为id """
     need_value_1: int
     """ 需要数值1 """
     need_value_2: int
@@ -1015,17 +1017,6 @@ class Seasoning:
     """ 调味名字 """
 
 
-class SecondEffect:
-    """ 行为结算器配置 """
-
-    cid: int
-    """ 表id """
-    behavior_id: int
-    """ 行为id """
-    effect_id: str
-    """ 结算器id """
-
-
 class SexTem:
     """ 性别对应描述和性别器官模板 """
 
@@ -1295,6 +1286,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 
 
 class TargetEffect:
