@@ -222,7 +222,7 @@ def save_talk_data():
         out_data = ""
         out_data += "cid,behavior_id,adv_id,premise,context\n"
         out_data += "口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容\n"
-        out_data += "str,int,int,str,str\n"
+        out_data += "str,str,int,str,str\n"
         out_data += "0,0,0,0,1\n"
         out_data += "口上配置数据,,,,\n"
 
