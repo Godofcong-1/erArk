@@ -9360,7 +9360,7 @@ msgid "且部分区块设施出现较大故障，"
 msgstr "and some facilities are requiring fixing, "
 
 msgid "因此今日罗德岛的各设施的总效率为{0}%\n"
-msgstr "hence efficiency of all facilities increased to {1}%\n"
+msgstr "hence efficiency of all facilities increased to {0}%\n"
 
 msgid "医疗部设施损坏，效率降低{0}%\n"
 msgstr "Medical Department have broken facilities, efficiency -{0}%\n"
@@ -9707,3 +9707,682 @@ msgstr " ▶[{0} Settings]"
 
 msgid " [修改已禁止干员列表] "
 msgstr " [Change banned Operators]"
+
+msgid "玩家最近状态：{0}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"角色口上选择设置已更新，如有需要请手动修改\n"
+msgstr ""
+
+msgid "语言。如果文本中有有{ }括起来的字符，请原样保留。请原样保留文本中的换行符。以下是需要翻译的文本："
+msgstr ""
+
+msgid " 双方是正常的爱情关系。如果用数字等级来表示爱情的程度，1表示有些懵懂的好感，4表示至死不渝的爱人，那么{0}和{1}的关系大概是{2}。"
+msgstr ""
+
+msgid " 双方是扭曲的服从和支配关系。如果用数字等级来表示服从的程度，1代表有些讨好，4代表无比尊敬，那么{0}对{1}的服从程度大概是{2}。"
+msgstr ""
+
+msgid " 在当前的场景里，{0}是医药公司的领导人，被称为博士，{1}是一家医药公司的员工。"
+msgstr ""
+
+msgid ""
+" {0}正在对{1}进行的动作是{2}。你要弄清楚是谁对谁做了什么，{0}是做这个动作的人，{1}是被做了这个动作的人。你需要仅描述这个动作的过程。"
+msgstr ""
+
+msgid " 互动文本里的“我”都是指{0}，你都是指“{1}”。"
+msgstr ""
+
+msgid " 互动的文本的全文是：{0}。互动文本到这里结束了。"
+msgstr ""
+
+msgid " 你要将该互动的内容补充完善，并进一步续写对该互动的反应。"
+msgstr ""
+
+msgid " 在当前的场景里，{0}是医药公司的领导人之一，被称为博士，正在进行的动作是{1}。"
+msgstr ""
+
+msgid ""
+"\n"
+"你要根据以下格式返回文本，并且不需要任何其他的解释：\n"
+msgstr ""
+
+msgid "第一行：time:int，用于表示互动行为持续的时间，单位为分钟，如 time:5 代表互动持续了5分钟\n"
+msgstr ""
+
+msgid "第二行：tired:int，用于表示本次行为对体力的消耗程度，分为三个等级：\n"
+msgstr ""
+
+msgid "  1 - 接近静止状态下的很少消耗，如坐着看书\n"
+msgstr ""
+
+msgid "  2 - 正常消耗，如肢体动作、进行非体力劳动的工作\n"
+msgstr ""
+
+msgid "  3 - 非常严重的消耗，如高强度健身、搬运重物\n"
+msgstr ""
+
+msgid "第三行：relationship:int，用于表示本次行为对关系的影响程度，分为四个等级：\n"
+msgstr ""
+
+msgid "  1 - 关系变差，如吵架、争执等负面行为\n"
+msgstr ""
+
+msgid "  2 - 关系不变，如没有营养的对话、无聊的行为等\n"
+msgstr ""
+
+msgid "  3 - 关系稍微变好，如共同工作、共同娱乐、轻度肢体交流等行为\n"
+msgstr ""
+
+msgid "  4 - 关系快速变好，如约会、亲密行为等正面行为\n"
+msgstr ""
+
+msgid "第四行：character_state:int，用于表示本次行为对角色状态的影响。\n"
+msgstr ""
+
+msgid "如果本次行为应该提升某个状态，则等于该状态的id值，如果要同时提升多个状态，中间用逗号隔开，不提升任何属状态则为-1。\n"
+msgstr ""
+
+msgid ""
+"角色状态代表了该行为之后角色的心理变化，比如读书学习和勤奋工作会提高【习得】的状态，亲密的肢体接触会提高【好意】的状态，性唤起会提高【欲情】的状态，害羞或者暴露自我会提高【羞耻】的状态，疼痛或者受伤会提高【苦痛】的状态，令人反感或者讨厌的行为会提高【反感】的状态。\n"
+msgstr ""
+
+msgid "所有的状态与其id如下："
+msgstr ""
+
+msgid "{0}：{1}，"
+msgstr ""
+
+msgid "第五行：experience:int，用于表示本次行为对角色经验的提升。\n"
+msgstr ""
+
+msgid "如果本次行为与某个经验类型相吻合，则等于该经验的id值，如果要同时提升多个经验，中间用逗号隔开，不符合任何经验类型则为-1。\n"
+msgstr ""
+
+msgid "角色经验反映了角色在特定领域的技能成熟度，例如聊天增加对话经验，做饭提升料理经验，学习提升学识经验，唱歌提升音乐经验。\n"
+msgstr ""
+
+msgid "所有经验类型与其id如下："
+msgstr ""
+
+msgid "第六行及以后：text:str，用于返回你生成的场景描述文本，只在该行出现一次text:。\n"
+msgstr ""
+
+msgid ""
+"\n"
+"请描述你想要进行的动作：\n"
+msgstr ""
+
+msgid ""
+"\n"
+"AI回复：\n"
+msgstr ""
+
+msgid "与文本生成AI对话"
+msgstr ""
+
+msgid "让对方休息"
+msgstr ""
+
+msgid "让对方去睡觉"
+msgstr ""
+
+msgid "对自己交互"
+msgstr ""
+
+msgid "锁上门内侧锁"
+msgstr ""
+
+msgid "解开门内侧锁"
+msgstr ""
+
+msgid ""
+"\n"
+"告白失败，需要[恋慕]、信赖≥200%、且满足实行值\n"
+msgstr ""
+
+msgid ""
+"\n"
+"戴上项圈失败，需要[驯服]、信赖≥200%、且满足实行值\n"
+msgstr ""
+
+msgid "已自动关门\n"
+msgstr ""
+
+msgid ""
+"进入H模式\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"进入H模式失败\n"
+"\n"
+msgstr ""
+
+msgid "切换到H"
+msgstr ""
+
+msgid "邀请隐奸"
+msgstr ""
+
+msgid "隐奸"
+msgstr ""
+
+msgid ""
+"\n"
+"邀请隐奸失败\n"
+msgstr ""
+
+msgid "一起洗澡"
+msgstr ""
+
+msgid "绳艺"
+msgstr ""
+
+msgid "戴上口球"
+msgstr ""
+
+msgid "摘下口球"
+msgstr ""
+
+msgid "对面骑乘位"
+msgstr ""
+
+msgid "背面骑乘位"
+msgstr ""
+
+msgid "对面抱位"
+msgstr ""
+
+msgid "背面抱位"
+msgstr ""
+
+msgid "对面卧位"
+msgstr ""
+
+msgid "背面卧位"
+msgstr ""
+
+msgid "对面骑乘位肛交"
+msgstr ""
+
+msgid "背面骑乘位肛交"
+msgstr ""
+
+msgid "对面抱位肛交"
+msgstr ""
+
+msgid "背面抱位肛交"
+msgstr ""
+
+msgid "对面卧位肛交"
+msgstr ""
+
+msgid "背面卧位肛交"
+msgstr ""
+
+msgid "切换到非H"
+msgstr ""
+
+msgid "等人"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}从无意识状态中恢复过来\n"
+msgstr ""
+
+msgid "猥亵"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}额外绝顶\n"
+msgstr ""
+
+msgid "通用"
+msgstr ""
+
+msgid "阴蒂"
+msgstr ""
+
+msgid "阴道"
+msgstr ""
+
+msgid "肛肠"
+msgstr ""
+
+msgid "尿道"
+msgstr ""
+
+msgid "子宫"
+msgstr ""
+
+msgid "绝顶"
+msgstr ""
+
+msgid "强绝顶"
+msgstr ""
+
+msgid "超强绝顶"
+msgstr ""
+
+msgid "小绝顶"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}{1}{2}\n"
+msgstr ""
+
+msgid "快乐"
+msgstr ""
+
+msgid "屈服"
+msgstr ""
+
+msgid "苦痛"
+msgstr ""
+
+msgid "时姦"
+msgstr ""
+
+msgid "恐怖"
+msgstr ""
+
+msgid "反发"
+msgstr ""
+
+msgid "无觉"
+msgstr ""
+
+msgid " 其他设定：\n"
+msgstr ""
+
+msgid " [系统设定] "
+msgstr ""
+
+msgid " [口上版本设定] "
+msgstr ""
+
+msgid "[{0}]{1} 当前用量:{2}，当前总值{3}"
+msgstr ""
+
+msgid ""
+"\n"
+"最多可以使用{0}个{1}，当前使用量为{2}，预计需要{3}个\n"
+msgstr ""
+
+msgid ""
+"\n"
+"刻印降级成功，{0}降至{1}级\n"
+msgstr ""
+
+msgid "当前助理为 [{0}]{1}，请选择新的助理：\n"
+msgstr ""
+
+msgid "当前无助理，请选择新的助理：\n"
+msgstr ""
+
+msgid "选择助理"
+msgstr ""
+
+msgid "  已受精{0}天，"
+msgstr ""
+
+msgid "但从外表上还看不出来\n"
+msgstr ""
+
+msgid "[妊娠]中，肚子已经大起来了\n"
+msgstr ""
+
+msgid "[临盆]中，即将诞下爱的结晶\n"
+msgstr ""
+
+msgid "  正在[产后]休息\n"
+msgstr ""
+
+msgid "  [育儿]中，正在给宝宝喂奶\n"
+msgstr ""
+
+msgid "  未分娩过\n"
+msgstr ""
+
+msgid ""
+"\n"
+" 【其他】"
+msgstr ""
+
+msgid "  肠胃一共吸收了{0}ml精液\n"
+msgstr ""
+
+msgid " [调整发送的数据] "
+msgstr ""
+
+msgid "选择发送给AI的数据"
+msgstr ""
+
+msgid ""
+" \n"
+" ○发送的数据越多，AI可以利用的信息就越多，理论效果会越好\n"
+msgstr ""
+
+msgid "  但同时消耗的tokens和响应时间也越多，也可能因为信息太多而抓不住重点或超出上下文长度\n"
+msgstr ""
+
+msgid "  每项的数据量有小、中、大三级区分\n"
+msgstr ""
+
+msgid "  发送数据的文件路径为：data\\csv\\Ai_Chat_Send_Data.csv，可根据需要自行修改提示词\n"
+msgstr ""
+
+msgid "大"
+msgstr ""
+
+msgid "未知"
+msgstr ""
+
+msgid "【必选】"
+msgstr ""
+
+msgid "[√]"
+msgstr ""
+
+msgid "[×]"
+msgstr ""
+
+msgid ""
+"\n"
+"摆放藏品结束\n"
+msgstr ""
+
+msgid "按能力等级筛选"
+msgstr ""
+
+msgid "选择要筛选的能力"
+msgstr ""
+
+msgid "输入能力等级(正整数)，将会筛选出能力等级大于等于该值的干员"
+msgstr ""
+
+msgid "目前没有囚犯\n"
+msgstr ""
+
+msgid "目前的囚犯有："
+msgstr ""
+
+msgid " [{0}]{1} - {2}  "
+msgstr ""
+
+msgid " [调整指令列表] "
+msgstr ""
+
+msgid "指令列表"
+msgstr ""
+
+msgid " [调整禁止指令列表] "
+msgstr ""
+
+msgid "禁止指令列表"
+msgstr ""
+
+msgid "全局变量一览："
+msgstr ""
+
+msgid " [爱液]:"
+msgstr ""
+
+msgid " [尿液]:"
+msgstr ""
+
+msgid " [腹部]:"
+msgstr ""
+
+msgid " [肠道]:"
+msgstr ""
+
+msgid " [灌肠]:"
+msgstr ""
+
+msgid "以{0}"
+msgstr ""
+
+msgid " 被绳子捆成了{0}"
+msgstr ""
+
+msgid "可派遣人员（需要{0}人）：\n"
+msgstr ""
+
+msgid "队长："
+msgstr ""
+
+msgid "。队员："
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+msgstr ""
+
+msgid "调整派遣人员"
+msgstr ""
+
+msgid "▶重置模板"
+msgstr ""
+
+msgid "重置模板"
+msgstr ""
+
+msgid "当前模板已重置\n"
+msgstr ""
+
+msgid " 隐蔽程度：{0}"
+msgstr ""
+
+msgid "悄悄地以{0}对{1}"
+msgstr ""
+
+msgid "{0}正在偷偷给你"
+msgstr ""
+
+msgid "选择隐奸模式"
+msgstr ""
+
+msgid ""
+"\n"
+"请选择要进行的隐奸：\n"
+msgstr ""
+
+msgid "○需要在没有其他人，或者其他人都无意识下才可以选择单方或者双方隐藏\n"
+msgstr ""
+
+msgid "  隐奸被发现的概率取决于隐奸模式、隐蔽技能等级、指令动作、在场人数、地点环境等\n"
+msgstr ""
+
+msgid "[1]不隐藏：双方身体均暴露在外，仅靠视线遮挡来避免被发现，容易被察觉"
+msgstr ""
+
+msgid "[2]干员隐藏：博士不隐藏，干员藏起来不让别人看见，隐蔽程度中等"
+msgstr ""
+
+msgid "[3]博士隐藏：干员不隐藏，博士藏起来不让别人看见，隐蔽程度中等"
+msgstr ""
+
+msgid "[4]双方隐藏：博士和干员都藏起来不让别人看见，很难被察觉"
+msgstr ""
+
+msgid "[100]提前结算访客离开"
+msgstr ""
+
+msgid "(锁)"
+msgstr ""
+
+msgid "收起详细污浊"
+msgstr ""
+
+msgid "展开详细污浊"
+msgstr ""
+
+msgid ""
+"\n"
+" ↓点击[部门名]或[系统名]可查看对应详情，没有系统也没有工作的部门是未实装的空白部门\n"
+"\n"
+msgstr ""
+
+msgid "  囚犯 — {0}"
+msgstr ""
+
+msgid ""
+"\n"
+"  当前外勤委托情况："
+msgstr ""
+
+msgid "不足一天"
+msgstr ""
+
+msgid "{0}天"
+msgstr ""
+
+msgid ""
+"\n"
+"  [{0}]：{1}，剩余{2}"
+msgstr ""
+
+msgid ""
+"\n"
+"  无"
+msgstr ""
+
+msgid ""
+"\n"
+"  当前载具情况："
+msgstr ""
+
+msgid ""
+"\n"
+"  [{0}]：可用{1}辆，出动中{2}辆"
+msgstr ""
+
+msgid "调整干员工作岗位"
+msgstr ""
+
+msgid "[展开所有类别]"
+msgstr ""
+
+msgid "[收起所有类别]"
+msgstr ""
+
+msgid "[0]博士的源石技艺"
+msgstr ""
+
+msgid "[1]博士的能力与经验"
+msgstr ""
+
+msgid "[2]博士的属性上限成长"
+msgstr ""
+
+msgid ""
+"  属性上限成长：当前体力上限{0}(→{1})，气力上限{2}(→{3})，理智上限{4}(→{5})，精液上限{6}(→{7})\n"
+"\n"
+msgstr ""
+
+msgid "[3]博士的收藏品"
+msgstr ""
+
+msgid ""
+"\n"
+"[4]干员的好感与信任"
+msgstr ""
+
+msgid ""
+"\n"
+"[5]干员的能力与经验"
+msgstr ""
+
+msgid "玩家属性上限成长继承完毕\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○捆绑下会持续获得欲情与苦痛，根据绑法的不同分为三级捆绑程度，程度越高的绑法获得的欲情与苦痛值越多\n"
+msgstr ""
+
+msgid "  当前被捆绑的状态为："
+msgstr ""
+
+msgid "[003]取消身体管理"
+msgstr ""
+
+msgid "[004]调整体检日程"
+msgstr ""
+
+msgid "请选择要取消身体管理的干员，将取消其全部管理：\n"
+msgstr ""
+
+msgid "取消身体管理"
+msgstr ""
+
+msgid ""
+"\n"
+"取消了对{0}的全部身体管理，将在明天睡醒后生效。\n"
+msgstr ""
+
+msgid "当前选择版本：{0}             "
+msgstr ""
+
+msgid " [版本切换] "
+msgstr ""
+
+msgid "○一个角色可能会有多个版本的文本，只能选择其中一个版本，或者不选择任何版本。\n"
+msgstr ""
+
+msgid "  选择一个版本后，将仅显示该版本的口上与事件。\n"
+msgstr ""
+
+msgid ""
+"  选择不使用版本时，该角色将回到只有地文的通用角色状态，不再使用任何口上。\n"
+"\n"
+msgstr ""
+
+msgid "(当前版本)"
+msgstr ""
+
+msgid " [选择该版本] "
+msgstr ""
+
+msgid " [不使用任何版本] "
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整策略或移动至其他国家 ※\n"
+"\n"
+msgstr ""
+
+msgid " <隐>"
+msgstr ""
+
+msgid " [取消收藏当前地点] "
+msgstr ""
+
+msgid " [收藏当前地点] "
+msgstr ""
+
+msgid "[000]确认读取存档"
+msgstr ""
+
+msgid "[000]确认删除存档"
+msgstr ""
+
+msgid "[000]确认覆盖存档"
+msgstr ""
+
+msgid " [文本生成AI设置] "
+msgstr ""
+
+msgid " [指令过滤] "
+msgstr ""

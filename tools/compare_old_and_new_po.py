@@ -1,8 +1,9 @@
 import os
 import polib
 
-old_po_path = os.path.join("data", "po", "en_US", "LC_MESSAGES", "erArk_py.po")
-new_po_path = os.path.join("data", "po", "zh_CN", "LC_MESSAGES", "erArk_py.po")
+base_dir = r"c:\code\era\erArk"
+old_po_path = os.path.join(base_dir, "data", "po", "en_US", "LC_MESSAGES", "erArk_py.po")
+new_po_path = os.path.join(base_dir, "data", "po", "zh_CN", "LC_MESSAGES", "erArk_py.po")
 
 # 读取PO文件
 po = polib.pofile(old_po_path)
