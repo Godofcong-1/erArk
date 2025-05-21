@@ -1221,7 +1221,7 @@ def handle_have_not_wake_up(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     now_time = cache.game_time
     wake_up_time = character_data.action_info.wake_time
-    if wake_up_time.day != now_time.day:
+    if wake_up_time.day != now_time.day and wake_up_time.day != character_data.behavior.start_time.day:
         return 1
     return 0
 
