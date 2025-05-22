@@ -1286,6 +1286,19 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+class Talk_Common:
+    """ 组件配置数据 """
+
+    cid: str
+    """ 组件id """
+    type_id: str
+    """ 组件类型名 """
+    adv_id: int
+    """ 组件限定的剧情npcid """
+    premise: str
+    """ 前提id """
+    context: str
+    """ 组件内容 """
 
 
 

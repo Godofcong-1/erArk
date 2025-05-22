@@ -8,6 +8,8 @@ int,str,str
 3,change_cloth,9999
 5,chara_diy_instruct,9999
 
+98,test_instruct,9999
+
 101,chat,21 - 12 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 53 - 55 - 501
 102,chat_failed,12
 103,stroke,21 - 13 - 14 - 54 - 55 - 58 - 62

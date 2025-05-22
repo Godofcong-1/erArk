@@ -13,6 +13,8 @@ character_talk_path = os.path.join("data", "Character_Talk.json")
 """ 原始角色文本文件路径 """
 character_event_path = os.path.join("data", "Character_Event.json")
 """ 原始角色事件文件路径 """
+talk_common_path = os.path.join("data", "Talk_Common.json")
+""" 原始通用文本文件路径 """
 ui_text_path = os.path.join("data", "ui_text.json")
 """ 原始ui文本数据文件路径 """
 config_data = {}
@@ -21,6 +23,8 @@ character_data = {}
 """ 原始角色数据 """
 character_talk_data = {}
 """ 原始角色口上数据 """
+talk_common_data = {}
+""" 原始通用文本数据 """
 ui_text_data = {}
 """ 原始ui文本数据 """
 config_bar: Dict[int, config_def.BarConfig] = {}
@@ -246,6 +250,12 @@ config_talk_data_by_chara_adv: Dict[int, int] = {}
 # """ 口上前提配置 """
 config_talk_premise_data: Dict[int, Set] = {}
 """ 口上前提配置数据 """
+config_talk_common_data: Dict[int, config_def.Talk_Common] = {}
+""" 通用口上配置数据 """
+config_talk_common_cid_list_by_type: Dict[str, List] = {}
+""" 根据类型获取的通用口上cid集合 """
+config_talk_common_premise_data: Dict[int, Set] = {}
+""" 通用口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
 """ 目标配置数据 """
 config_target_premise_data: Dict[int, Set] = {}
@@ -375,12 +385,13 @@ config_body_item: Dict[int, config_def.Body_Item] = {}
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
-    global config_data,character_data,ui_text_data,character_talk_data,character_event_data
+    global config_data, character_data, ui_text_data, character_talk_data, character_event_data, talk_common_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
     ui_text_data = json_handle.load_json(ui_text_path)
     character_talk_data = json_handle.load_json(character_talk_path)
     character_event_data = json_handle.load_json(character_event_path)
+    talk_common_data = json_handle.load_json(talk_common_path)
 
 def reload_talk_data():
     """重新载入口上配置数据"""
@@ -1140,6 +1151,26 @@ def load_talk():
                 config_talk_premise_data[now_tem.cid].add(premise)
 
 
+def load_talk_common():
+    """载入通用文本配置"""
+    now_data = talk_common_data["Talk_Common"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Talk_Common()
+        now_tem.__dict__ = tem_data
+        config_talk_common_data[now_tem.cid] = now_tem
+        config_talk_common_cid_list_by_type.setdefault(now_tem.type_id, [])
+        config_talk_common_cid_list_by_type[now_tem.type_id].append(now_tem.cid)
+
+        config_talk_common_premise_data.setdefault(now_tem.cid, set())
+        if "&" not in now_tem.premise:
+            config_talk_common_premise_data[now_tem.cid].add(now_tem.premise)
+        else:
+            premise_list = now_tem.premise.split('&')
+            for premise in premise_list:
+                config_talk_common_premise_data[now_tem.cid].add(premise)
+
+
 # def load_talk_premise():
 #     """载入口上前提配置"""
 #     now_data = config_data["TalkPremise"]
@@ -1740,6 +1771,7 @@ def init():
     load_behavior()
     load_sun_time()
     load_talk()
+    load_talk_common()
     load_talent_type()
     load_talent_type_data()
     load_talent_gain_data()

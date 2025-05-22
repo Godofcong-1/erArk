@@ -36,6 +36,8 @@ class Instruct:
     """ debug数值调整 """
     CHARA_DIY_INSTRUCT = 0
     """ 角色自定义特殊指令 """
+    TEST_INSTRUCT = 0
+    """ 测试用临时指令 """
     TALK_QUICK_TEST = 0
     """ 快速测试口上 """
 

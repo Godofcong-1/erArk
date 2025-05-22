@@ -7,6 +7,7 @@ import ast
 config_dir = os.path.join("data", "csv")
 event_dir = os.path.join("data", "event")
 talk_dir = os.path.join("data", "talk")
+talk_common_dir = os.path.join("data", "talk_common")
 target_dir = os.path.join("data", "target")
 character_dir = os.path.join("data","character")
 ui_text_dir = os.path.join("data", "ui_text")
@@ -17,6 +18,7 @@ config_data_path = os.path.join("data", "data.json")
 ui_text_data_path = os.path.join("data", "ui_text.json")
 character_talk_data_path = os.path.join("data", "Character_Talk.json")
 character_event_data_path = os.path.join("data", "Character_Event.json")
+talk_common_data_path = os.path.join("data", "Talk_Common.json")
 config_path = os.path.join("Script", "Config", "config_def.py")
 
 # 全局变量
@@ -25,6 +27,7 @@ character_data = {}
 ui_text_data = {}
 character_talk_data = {}
 character_event_data = {}
+talk_common_data = {}
 built = []
 msgData = set()
 class_data = set()
@@ -35,6 +38,7 @@ config_po, talk_po = "", ""
 BUILD_CONFIG = True
 BUILD_EVENT = True
 BUILD_TALK = True
+BUILD_TALK_COMMON = True
 BUILD_CHARACTER = True
 BUILD_UI_TEXT = True
 BUILD_TARGET = True
@@ -49,7 +53,7 @@ if os.path.exists(character_talk_data_path):
 try:
     if BUILD_CHARA_ID == 0:
         character_talk_data = {}
-        character_evrnt_data = {}
+        character_event_data = {}
     else:
         with open(character_talk_data_path, "r", encoding="utf-8") as f:
             character_talk_data = json.load(f)
@@ -65,13 +69,14 @@ try:
 except:
     character_talk_data = {}
 
-def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
+def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False):
     """
     输入：
         file_path (str): 文件路径
         file_name (str): 文件名
         talk (bool): 是否为talk
         target (bool): 是否为target
+        talk_common (bool): 是否为talk_common
     返回：None
     功能：读取csv并更新全局配置数据
     """
@@ -100,10 +105,16 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                 type_text = "TargetPremise"
             elif "effect" in file_name:
                 type_text = "TargetEffect"
+        if talk_common:
+            type_text = "Talk_Common"
         if talk:
             character_talk_data.setdefault(type_text, {})
             character_talk_data[type_text].setdefault("data", [])
             character_talk_data[type_text].setdefault("gettext", {})
+        elif talk_common:
+            talk_common_data.setdefault(type_text, {})
+            talk_common_data[type_text].setdefault("data", [])
+            talk_common_data[type_text].setdefault("gettext", {})
         else:
             config_data.setdefault(type_text, {})
             config_data[type_text].setdefault("data", [])
@@ -148,9 +159,12 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                     row[k] = int(row[k])
                 elif now_type == "float":
                     row[k] = float(row[k])
+                # 使用文件名+cid名作为数据内的cid，以防不同文件的cid冲突
                 if k == "cid" and talk:
                     # if "-" in file_id:
                     #     print(f"debug file_id = {file_id}")
+                    row[k] = file_id + row[k]
+                if k == "cid" and talk_common:
                     row[k] = file_id + row[k]
                 if k == "talk_id" and talk:
                     row[k] = file_id.split("-")[0] + row[k]
@@ -162,10 +176,14 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool):
                     build_config_po(row[k], file_path, now_index, talk)
             if talk:
                 character_talk_data[type_text]["data"].append(row)
+            elif talk_common:
+                talk_common_data[type_text]["data"].append(row)
             else:
                 config_data[type_text]["data"].append(row)
         if talk:
             character_talk_data[type_text]["gettext"] = get_text_data
+        elif talk_common:
+            talk_common_data[type_text]["gettext"] = get_text_data
         else:
             config_data[type_text]["gettext"] = get_text_data
         build_config_def(type_text, now_type_data, now_docstring_data, class_text)
@@ -400,6 +418,31 @@ if BUILD_TALK:
 else:
     # 不覆盖 talk 数据，保持原有数据
     pass
+
+if BUILD_TALK_COMMON:
+    talk_common_file_list = os.listdir(talk_common_dir)
+    for i in talk_common_file_list:
+        now_path = os.path.join(talk_common_dir, i)
+        # 如果是目录，则递归遍历其子目录
+        if os.path.isdir(now_path):
+            for root, dirs, files in os.walk(now_path):
+                for f in files:
+                    # 跳过非 csv 文件
+                    if not f.endswith(".csv"):
+                        continue
+                    # 在配置定义字符串中添加空行
+                    config_def_str += "\n"
+                    # 构建子目录下的 talk csv 配置
+                    csv_path = os.path.join(root, f)
+                    build_csv_config(csv_path, f, False, False, talk_common=True)
+        else:
+            # 如果是单个 csv 文件，则直接构建
+            if i.endswith(".csv"):
+                config_def_str += "\n"
+                build_csv_config(now_path, i, False, False, talk_common=True)
+    # 写入 talk_common 数据
+    with open(talk_common_data_path, "w", encoding="utf-8") as talk_common_data_file:
+        json.dump(talk_common_data, talk_common_data_file, ensure_ascii=0)
 
 # 在写入 target 数据时根据 BUILD_TARGET 判断是否覆盖
 if BUILD_TARGET:

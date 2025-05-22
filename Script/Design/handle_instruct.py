@@ -1710,6 +1710,17 @@ def handle_chara_diy_instruct():
 
 
 @add_instruct(
+    constant.Instruct.TEST_INSTRUCT,
+    constant.InstructType.SYSTEM,
+    _("测试用临时指令"),
+    {constant_promise.Premise.DEBUG_MODE_ON},
+)
+def handle_test_instruct():
+    """处理测试用临时指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.TEST_INSTRUCT)
+
+
+@add_instruct(
     constant.Instruct.LISTEN_INFLATION,
     constant.InstructType.DAILY,
     _("听肚子里的动静"),

@@ -1,4 +1,5 @@
 import random
+import re
 from types import FunctionType
 from Script.Core import cache_control, game_type, value_handle, get_text, constant
 from Script.Design import map_handle, handle_premise
@@ -403,7 +404,43 @@ def special_code_judge(now_talk: str):
 
     return now_talk, special_code
 
-
+def talk_common_judge(now_talk: str, character_id: int) -> str:
+    """
+    转换文本中的通用占位符为对应文本
+    参数:
+        now_talk (str): 原始文本，包含 {key} 占位符
+        character_id (int): 角色 ID
+    返回:
+        str: 转换后的文本
+    """
+    # 遍历所有通用占位符的 key 和对应的 cid 集合
+    for key, cid_list in game_config.config_talk_common_cid_list_by_type.items():
+        # 构造匹配 "{key}" 的正则表达式
+        pattern = re.compile(r'\{' + re.escape(key) + r'\}')
+        # 如果文本中存在该占位符
+        if pattern.search(now_talk):
+            # 构建权重字典：weight -> set(cid)
+            now_talk_data: dict = {}
+            for talk_common_cid in cid_list:
+                # 读取前提配置
+                premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                # 计算权重
+                weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id)
+                if weight:
+                    now_talk_data.setdefault(weight, set()).add(talk_common_cid)
+            # 如果有可替换的候选文本
+            if now_talk_data:
+                # 定义替换函数：每次匹配都随机挑选一条文本
+                def _replacer(match):
+                    # 随机选择一个权重
+                    w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
+                    # 从该权重对应的 cid 集合中随机选一个
+                    cid = random.choice(list(now_talk_data[w]))
+                    # 返回对应的文本内容
+                    return game_config.config_talk_common_data[cid].context
+                # 使用 sub 回调逐个替换相同的占位符
+                now_talk = pattern.sub(_replacer, now_talk)
+    return now_talk
 
 def code_text_to_draw_text(now_talk: str, character_id: int):
     """
@@ -420,6 +457,9 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
 
     # 输入的原文本
     now_talk_text, special_code = special_code_judge(now_talk)
+
+    # 替换通用文本
+    now_talk_text = talk_common_judge(now_talk_text, character_id)
 
     # 专属称呼处理
     # 他人对自己的称呼

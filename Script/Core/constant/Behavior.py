@@ -13,6 +13,8 @@ class Behavior:
     """ 角色自定义指令 """
     AI_CHAT_INSTRUCT = "ai_chat_instruct"
     """ AI对话用特殊指令 """
+    TEST_INSTRUCT = "test_instruct"
+    """ 测试用临时指令 """
     EMPTY_INSTRUCT = "empty_instruct"
     """ 空白示范指令 """
     CHAT = "chat"
