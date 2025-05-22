@@ -10,7 +10,6 @@ from Script.UI.Panel import (
     assistant_panel,
     building_panel,
     collection_panel,
-    dirty_panel,
     ejaculation_panel,
     make_food_panel,
     food_bag_panel,
@@ -64,13 +63,6 @@ def building_flow():
 def collection_flow():
     """收藏品面板"""
     now_panel = collection_panel.Collection_Panel(width)
-    now_panel.draw()
-
-
-@handle_panel.add_panel(constant.Panel.DIRTY)
-def dirty_flow():
-    """污浊面板"""
-    now_panel = dirty_panel.Dirty_Panel(width)
     now_panel.draw()
 
 

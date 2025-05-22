@@ -613,14 +613,12 @@ def check_second_effect(
         insert_position_effect(character_id, change_data)
         # 道具结算
         item_effect(character_id, pl_to_npc)
-        # 单独遍历道具
-        second_behavior_effect(character_id, change_data, item_list)
-        # 高潮结算
-        orgasm_judge(character_id, change_data)
-        # 素质结算
-
         # 进行结算
         second_behavior_effect(character_id, change_data)
+        # 高潮结算
+        orgasm_judge(character_id, change_data)
+        # 单独遍历结算高潮
+        second_behavior_effect(character_id, change_data, orgasm_list)
 
         # 刻印结算
         mark_effect(character_id, change_data)
@@ -652,25 +650,25 @@ def second_behavior_effect(
         return
 
     # 遍历二段行为id，进行结算
-    for behavior_id, behavior_data in character_data.second_behavior.items():
+    for second_behavior_id, behavior_data in character_data.second_behavior.items():
         if behavior_data != 0:
-            if second_behavior_list and behavior_id not in second_behavior_list:
+            if second_behavior_list and second_behavior_id not in second_behavior_list:
                 continue
             # 触发二段行为的口上
-            talk.handle_second_talk(character_id, behavior_id)
+            talk.handle_second_talk(character_id, second_behavior_id)
             # 如果没找到对应的结算效果，则直接跳过
-            if behavior_id not in game_config.config_behavior_effect_data:
-                print(f"debug behavior_id = {behavior_id}没有找到对应的结算效果")
+            if second_behavior_id not in game_config.config_behavior_effect_data:
+                print(f"debug behavior_id = {second_behavior_id}没有找到对应的结算效果")
                 continue
             # 遍历该二段行为的所有结算效果，挨个触发
-            for effect_id in game_config.config_behavior_effect_data[behavior_id]:
+            for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
                 if effect_id not in constant.settle_second_behavior_effect_data:
-                    print(f"debug behavior_id = {behavior_id}，effect_id = {effect_id}没有找到对应的结算效果")
+                    print(f"debug behavior_id = {second_behavior_id}，effect_id = {effect_id}没有找到对应的结算效果")
                     continue
                 constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
             # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
             # 触发后该行为值归零
-            character_data.second_behavior[behavior_id] = 0
+            character_data.second_behavior[second_behavior_id] = 0
 
 
 def must_settle_check(character_id: int):
