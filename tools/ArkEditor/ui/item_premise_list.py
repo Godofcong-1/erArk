@@ -101,10 +101,10 @@ class ItemPremiseList(QWidget):
             if add_now_talk_weight:
                 draw_text += f" + {add_now_talk_weight}"
                 final_weight += add_now_talk_weight
-            # 是NPC的专属口上时，权重翻三倍
+            # 是NPC的专属口上时，权重翻10倍
             if cache_control.now_adv_id != 0 and cache_control.now_adv_id != "0":
-                draw_text += f"，角色口上再乘3"
-                final_weight = final_weight * 3
+                draw_text += f"，角色口上再乘10"
+                final_weight = final_weight * 10
             if final_weight != 1:
                 draw_text += f"，最终权重：{final_weight}"
         self.info_label.setText(draw_text)

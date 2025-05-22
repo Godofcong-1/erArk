@@ -131,9 +131,9 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
         premise_dict = game_config.config_talk_premise_data[talk_id]
         now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
         if now_weight:
-            # 如果该句文本是角色口上，则权重乘以三
+            # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
-                now_weight *= 3
+                now_weight *= 10
             now_talk_data.setdefault(now_weight, set())
             now_talk_data[now_weight].add(talk_id)
     return now_talk_data
