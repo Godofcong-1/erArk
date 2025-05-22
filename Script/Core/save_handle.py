@@ -486,9 +486,11 @@ def update_character_config_data(value):
                 # print(f"debug 更新了行为id: {key} -> {value.behavior.behavior_id}")
                 break
     second_behavior_copy = value.second_behavior.copy()
+    # 遍历原始的二级行为字典，处理整型键的更新或删除
     for second_behavior_id, behavior_data in second_behavior_copy.items():
+        # 仅处理整型键
         if isinstance(second_behavior_id, int):
-            # 遍历Behavior，找到和当前行为id一致的行为键名
+            # 查找匹配的常量名称
             for key in vars(constant.SecondBehavior_Int).keys():
                 # 跳过 Python 内置属性
                 if key.startswith('__'):
@@ -496,11 +498,14 @@ def update_character_config_data(value):
                 # 如果当前行为 ID 与常量值匹配，则更新为常量名称
                 if second_behavior_id == getattr(constant.SecondBehavior_Int, key):
                     new_behavior_id = getattr(constant.SecondBehavior, key)
+                    # 添加新的键值对，并删除旧的整型键
                     value.second_behavior[new_behavior_id] = behavior_data
                     del value.second_behavior[second_behavior_id]
-                    # update_count += 1
-                    # print(f"debug 更新了行为id: {second_behavior_id} -> {new_behavior_id}")
+                    # 匹配成功后跳出查找
                     break
+            else:
+                # 如果未找到匹配的常量，也删除该整型键
+                del value.second_behavior[second_behavior_id]
     return update_count
 
 
