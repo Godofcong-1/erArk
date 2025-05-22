@@ -343,7 +343,7 @@ class SecondBehavior:
 
     FERTILIZATION = "fertilization"
     """ 结算获得受精 """
-    FERTILIZATION_FAILD = "fertilization_faild"
+    FERTILIZATION_FAILED = "fertilization_failed"
     """ 结算受精失败 """
     PREGNANCY = "pregnancy"
     """ 结算获得妊娠 """

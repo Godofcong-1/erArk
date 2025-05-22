@@ -142,7 +142,7 @@ def check_fertilization(character_id: int):
                 if character_data.h_state.body_item[11][1] or character_data.h_state.body_item[12][1]:
                     draw_text += _("\n在避孕药的影响下——")
                 draw_text += _("\n精子在{0}的阴道中游荡，但未能成功受精\n").format(character_data.name)
-                character_data.second_behavior["fertilization_faild"] = 1
+                character_data.second_behavior["fertilization_failed"] = 1
 
         character_data.pregnancy.fertilization_rate = 0
     else:

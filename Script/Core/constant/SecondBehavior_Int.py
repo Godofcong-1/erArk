@@ -344,7 +344,7 @@ class SecondBehavior_Int:
 
     FERTILIZATION = 1311
     """ 结算获得受精 """
-    FERTILIZATION_FAILD = 1312
+    FERTILIZATION_FAILED = 1312
     """ 结算受精失败 """
     PREGNANCY = 1313
     """ 结算获得妊娠 """
