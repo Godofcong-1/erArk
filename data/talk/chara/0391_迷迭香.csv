@@ -28,7 +28,7 @@ str,str,int,str,str
 23,training,391,high_1&sys_0,“放心吧，我能控制好我的法术。”
 24,make_coffee,391,high_1&sys_0&cook_le_1,给迷迭香泡咖啡。\n倒入牛奶与糖，静置。\n等了好一会。
 25,hypnosis_one,391,high_999&sys_0,“不用做什么，只要呆在这里就好？”\n“博士，你有点怪怪的……”
-26,do_h_fail,391,sys_0&high_999,“{Name}，是想做坏事吧？”\n“……不、不行，博士。”\n”{Name}变成坏人，会变得很坏很坏的！”
+26,do_h_fail,391,sys_0&high_999,“{Name}，是想做坏事吧？”\n“……不、不行，博士。”\n“{Name}变成坏人，会变得很坏很坏的！”
 27,h,391,high_1&high_999&sys_0&instruct_judge_h,……喉咙变得干渴，\n{Name}和迷迭香的身躯彼此颤抖着，\n却没有一人是出于恐惧——\n而是出于兴奋、期待、渴望……
 28,chosen_as_assistant,391,high_999&sys_0,“那个，博士…我担心会做不好助理，可以换个工作值班吗？”\n“没有什么要做，待着就好了吗？”\n“…啊…助理，是这样子的吗？”
 29,not_as_assistant,391,high_999&sys_0,迷迭香打开了终端，\n“嗯，我记住了。”\n“博士，下次会是什么时候？”

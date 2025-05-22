@@ -4,9 +4,9 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 1,first_meet,129,high_999&high_1&place_0,抬起頭，一名帶著淡淡微笑的粉髮安努拉少女對你點了點頭\n''初次見面，我是藍毒，想必您已經聽凱爾希醫生提起过我，那麼，''\n''該如何運用我這“毒物”的能力，就交由{PlayerName}博士，您，来决定了。''
-2,chat,129,sys_0,{PlayerName}博士，你是說凱爾希醫生為何常常找我嗎?\n面對{PlayerName}的提問，{Name}想了想說\n"因為我身體中的毒素也是一種優質的藥品原料，所以凱爾希醫生經常把我叫去她的實驗室......"
-5,chat,129,sys_0,嗯?你是說我的眼睛嗎?聽到{PlayerName}的疑問，{Name}眨了眨雙眼\n"是很罕見沒錯呢....."{Name}微微笑了笑"這算是在稱讚我嗎?{PlayerName}博士"
-103,make_coffee,129,cook_1,嗯?咖啡嗎?{Name}接過了你遞過去的咖啡杯"多謝你了，不過要是味道能在好些就不錯了呢"
+2,chat,129,sys_0,{PlayerName}博士，你是說凱爾希醫生為何常常找我嗎?\n面對{PlayerName}的提問，{Name}想了想說\n“因為我身體中的毒素也是一種優質的藥品原料，所以凱爾希醫生經常把我叫去她的實驗室......”
+5,chat,129,sys_0,嗯?你是說我的眼睛嗎?聽到{PlayerName}的疑問，{Name}眨了眨雙眼\n“是很罕見沒錯呢.....”{Name}微微笑了笑“這算是在稱讚我嗎?{PlayerName}博士”
+103,make_coffee,129,cook_1,嗯?咖啡嗎?{Name}接過了你遞過去的咖啡杯“多謝你了，不過要是味道能在好些就不錯了呢”
 105,ask_make_coffee,129,sys_0,適當的休息，也是为了工作更有狀態哦。\n說罷，{Name}將手中剛泡好，還冒著熱氣的咖啡遞到了{PlayerName}的面前
-700,chat,129,sys_0&t_reproduction_period_2&now_not_condom&love_3&penis_in_t_vagina,{PlayerName}......今天可是會懷上的日子喔....\n懷中的{Name}貼在{PlayerName}的耳邊輕輕說道\n"喔?變大了呢，是下定決心想讓我懷上嗎?"\n{Name}嬌喘著摸著自己的小腹，感受著{PlayerName}身體的另一部份在自己體內\n"沒關西的喔"{Name}趴在{PlayerName}的胸膛上\n"我....不論身體或心靈，早就都是{PlayerName}你的了"\n\n
-1009,p_orgasm_small,999,high_1&penis_in_t_vagina,{PlayerName}感到腦海中一片空白，接著就將精華全都注入了{Name}裡面\n"射了嗎?"{Name}大口喘著氣，歲後緊緊地握著{PlayerName}的手
+700,chat,129,sys_0&t_reproduction_period_2&now_not_condom&love_3&penis_in_t_vagina,{PlayerName}......今天可是會懷上的日子喔....\n懷中的{Name}貼在{PlayerName}的耳邊輕輕說道\n“喔?變大了呢，是下定決心想讓我懷上嗎?”\n{Name}嬌喘著摸著自己的小腹，感受著{PlayerName}身體的另一部份在自己體內\n“沒關西的喔”{Name}趴在{PlayerName}的胸膛上\n“我....不論身體或心靈，早就都是{PlayerName}你的了”\n\n
+1009,p_orgasm_small,999,high_1&penis_in_t_vagina,{PlayerName}感到腦海中一片空白，接著就將精華全都注入了{Name}裡面\n“射了嗎?”{Name}大口喘著氣，歲後緊緊地握著{PlayerName}的手
