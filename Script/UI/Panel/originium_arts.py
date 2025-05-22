@@ -982,12 +982,17 @@ class Chose_Hypnosis_Type_Panel:
         """
         pl_character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
-        if body_or_mind_flag == 0:
-            type_text = _("身体")
-            range_list = range(920,930)
-        else:
-            type_text = _("心灵")
-            range_list = range(930,940)
+        range_list = []
+        for cid in game_config.config_behavior:
+            behavior_data = game_config.config_behavior[cid]
+            if body_or_mind_flag == 0:
+                type_text = _("身体")
+                if "体控" in behavior_data.tag:
+                    range_list.append(cid)
+            else:
+                type_text = _("心灵")
+                if "心控" in behavior_data.tag:
+                    range_list.append(cid)
         while 1:
             return_list = []
             title_draw = draw.TitleLineDraw(_("选择{0}控制选项").format(type_text), self.width)
@@ -996,16 +1001,17 @@ class Chose_Hypnosis_Type_Panel:
             info_text = _("\n可以对{0}使用的控制指令：\n\n").format(target_data.name)
             info_draw.text = info_text
             info_draw.draw()
-            # 遍历体控选项数据库，输出按钮
+            # 遍历选项数据库，输出按钮
+            count = 0
             for cid in range_list:
                 # 如果不存在该选项则跳过
                 if cid not in game_config.config_behavior:
                     continue
-                status_data = game_config.config_behavior[cid]
-                draw_text = f"[{cid}]{status_data.name}"
+                behavior_data = game_config.config_behavior[cid]
+                draw_text = f"[{count}]{behavior_data.name}"
                 button_draw = draw.LeftButton(
                     _(draw_text),
-                    _(status_data.name),
+                    _(behavior_data.name),
                     window_width,
                     cmd_func=self.son_instruct,
                     args=(cid,),
@@ -1013,6 +1019,7 @@ class Chose_Hypnosis_Type_Panel:
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
                 line_feed.draw()
+                count += 1
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -1029,7 +1036,7 @@ class Chose_Hypnosis_Type_Panel:
         line_draw.draw()
 
         # 心控-角色扮演需要单独绘制面板
-        if cid == 931:
+        if cid == "hypnosis_roleplay":
             now_draw = Chose_Roleplay_Type_Panel(self.width)
             now_draw.draw()
             character_data: game_type.Character = cache.character_data[0]

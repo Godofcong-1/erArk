@@ -228,7 +228,7 @@ config_random_npc_sex_region: Dict[int, int] = {}
 """
 config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
-config_behavior: Dict[int, config_def.Behavior_Data] = {}
+config_behavior: Dict[str, config_def.Behavior_Data] = {}
 """ 角色行为数据 """
 config_behavior_id_list_of_group_sex_body_part: Dict[str, list] = {}
 """ 群交时身体部位占用所对应的的行为id列表 """
