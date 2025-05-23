@@ -137,6 +137,10 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
             # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
                 now_weight *= 10
+            # 如果该角色是女儿，且前提中有女儿相关前提，则权重乘以5
+            elif handle_premise.handle_self_is_player_daughter(character_id) or handle_premise.handle_target_is_player_daughter(character_id):
+                if "self_is_player_daughter" in talk_premise_dict or "target_is_player_daughter" in talk_premise_dict:
+                    now_weight *= 5
             now_talk_data.setdefault(now_weight, set())
             now_talk_data[now_weight].add(talk_id)
     return now_talk_data
