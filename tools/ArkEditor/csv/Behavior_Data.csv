@@ -24,6 +24,7 @@ int,str,str,int,str,str
 117,apologize,道歉,60,pl,日常
 118,apologize_failed,道歉失败,60,pl,日常
 119,listen_complaint,听牢骚,45,pl,日常
+120,give_gift,赠送礼物,5,pl,日常
 131,make_coffee,泡咖啡,15,both,日常
 132,make_coffee_add,泡咖啡（加料）,15,both,日常
 133,ask_make_coffee,让对方泡咖啡,15,pl,日常

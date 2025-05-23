@@ -28,7 +28,7 @@ str,str,int,str,str
 23,play_instrument,254,high_5&sys_0&CVP_A1_A|44_L_2,「好吵啊，{PlayerName}在干什么，不要再弹吉他了啦！！」
 24,touch_ears,254,high_5&sys_0,「呼……要是再摸我耳朵的话，我就让小莫提咬你哦！」
 25,chat,254,sys_0&high_5,「{PlayerName}要给我买衣服的话，倒也没什么想要的，嗯……倒是想看看书上大小姐的样子」\n你用通讯装置急速询问了爱丽丝关于小时候穿搭的搭配和购置
-26,low_obscenity_anus,254,sys_0&high_5&CVP_A1_Instruct|317_E_0,「哼#你要是这么喜欢脚的话干脆跟源石鸡过一辈子去把#」\n你的脚底一直好痒不知道为啥
+26,low_obscenity_anus,254,sys_0&high_5&CVP_A1_Instruct|ask_for_socks_E_0,「哼#你要是这么喜欢脚的话干脆跟源石鸡过一辈子去把#」\n你的脚底一直好痒不知道为啥
 27,chat,254,high_1&sys_0&high_5,「是眼镜嘛，要我戴上，嗯好哦。」\n「为什么一脸宠溺的看着我，不要……不要拍了啦#要摘下来了哦」
 28,touch_head,254,sys_0&high_5,「再摸下去{PlayerName}的手就要在我耳朵上筑巢了，好痒啊#」
 29,rest,254,t_tired_ge_75&sys_0&high_5,「为什么要拖着劳累的身体不睡觉呢？睡吧，睡吧……{PlayerName}要是睡不着的话，巫恋给你讲故事哦♪」
@@ -46,7 +46,7 @@ str,str,int,str,str
 41,touch_buttocks,254,sys_0&high_5,「要是你再摸，我就让小莫提捅你屁眼子哦#」
 42,chat,254,sys_0&high_5,「略略略～～兜帽萝莉控」
 43,ask_for_socks,254,sys_0&not_fall&high_5,「#蛆鄙野夫！窒息在你那恶心的丝袜窒息里！」
-44,high_obscenity_anus,254,high_1&CVP_A1_Instruct|421_E_0,「你要让我咬！我就把{PlayerName}你的蘑菇头咬下来！」
+44,high_obscenity_anus,254,high_1&CVP_A1_Instruct|blowjob_E_0,「你要让我咬！我就把{PlayerName}你的蘑菇头咬下来！」
 45,pee,254,sys_0&high_5&place_0,「检查巫恋尿尿的地方完了吗？再看一会我也会害羞的，下次让我看看{PlayerName}吧。」
 46,touch_buttocks,254,high_5&sys_0&not_fall,「再摸巫恋的屁股的话，我就去告诉凯尔希老师！让她把你挂舰桥上」
 47,touch_buttocks,254,sys_0&high_5&obey_ge_1,「{PlayerName}不乖要打屁股咯♪来再叫的大声点～～嘻嘻」
@@ -157,7 +157,7 @@ str,str,int,str,str
 152,chat,254,high_1&sys_0&not_fall,「落花如流水花别许今日，君在我不在，君见我曾在，，，」\n手里拿着好像是别样的炎国文学
 153,kiss,254,high_1&sys_0&t_lubrication_ge_3&t_intimacy_ge_5&obey_ge_3,「{PlayerName}我很可爱吧，那，，抱抱我？。。。好吗（哭腔）」\n「想逃避进动物本能的快感里，那终究不是永远的，{PlayerName}迟早也要继续面对这残酷的世界，至少现在巫恋会接受{PlayerName}的全部，坏的也好好的也罢我一直在这里看着你」\n「哈姆❤哈嗯！呼舌头伸进来的感觉好特别，呼呼呼，继续吗」
 154,kiss,254,high_1&sys_0,深吻着女孩的嘴唇，软绵的细舌伸进了带有奶香味女孩的口腔中，交缠的快感蔓延着巫恋的大脑\n她垂恋着你的唾液，一点也不愿放手
-155,handjob,254,high_1&CVP_A1_Instruct|402_E_0&sys_0&obey_ge_2,「好大好可爱，跟{PlayerName}比起来，咱还受不了这么激烈的情感，但吻在一起的感受是忘不掉的」\n「哈啊~！不行就这样，不行不行就这么点快感怎么可以停下，不能停下，喜欢我的你撩了就想跑？不 会 让 你 所愿！！今天轮到巫恋把你吃干抹尽！舌吻了咱还想跑，你的蛋蛋巫恋不会留下一点！！我要洗得一干二净！用我的舌头」
+155,handjob,254,high_1&CVP_A1_Instruct|kiss_h_E_0&sys_0&obey_ge_2,「好大好可爱，跟{PlayerName}比起来，咱还受不了这么激烈的情感，但吻在一起的感受是忘不掉的」\n「哈啊~！不行就这样，不行不行就这么点快感怎么可以停下，不能停下，喜欢我的你撩了就想跑？不 会 让 你 所愿！！今天轮到巫恋把你吃干抹尽！舌吻了咱还想跑，你的蛋蛋巫恋不会留下一点！！我要洗得一干二净！用我的舌头」
 156,cunnilingus,254,high_1&sys_0&obey_ge_1,「放过你？怎么能放过你！！吸吸人家的小豆豆，哈啊~~~咱的分泌液被你弄出来了呢，还想要，，更舒服的事情」
 157,p_orgasm_small,254,high_1&last_cmd_blowjob_or_handjob&last_cmd_blowjob_or_paizuri&sys_0,「不听话的博士要打屁股！！大大特打！！（piapia）」\n「被小萝莉打屁股有这么快感嘛~~~哥哥的棒子没打一下就尿出来了点白色的液体呢，，斯有点甜，哥哥要不还是戒糖吧，，，」\n「哥哥要是戒的话，我就允许你天天抱着巫恋的脚哦~~」
 158,touch_vagina,254,high_1&sys_1&sys_0&obey_ge_3,是巫恋看着你那鼓起来的下体隔着衣服靠着脑袋磨磨蹭蹭的引导着你射精好呢\n还是直接偷偷的拉着你到房间掏出来 直接坐着用屁股好\n「要不简单点，我直接坐在办公室跟着你一整天」\n「嘞露嘞露嘞露，怎么？不塞进嘴里用我的舌头在外面舔不高兴？」\n「啊呀呀，真是吃不了细羹啊」\n「看呀我的小拇指戳进了你的马眼哦，感受得到嘛，要不还是等你要射的时候赌气来吧，那样肯定很可爱~~」
@@ -218,6 +218,6 @@ str,str,int,str,str
 213,chat,254,high_1&sys_0,「{PlayerName}一直都在吃东西啊，真的很饿嘛，那巫恋以后做些小饼干给你吃吧，{PlayerName}喜欢吃甜腻的还是清爽的」
 214,make_coffee,254,high_1&in_medical_zone&work_is_doctor&sys_0,「这里是助手护士～～医用物品都准备好了，有需要叫巫恋」\n
 215,singing,254,high_1&sys_0,「嗯嗯嗯，好好听啊，那个什么，什么来着。简直就是天籁之音美轮美奂（拔耳塞）」
-216,making_out,254,high_1&CVP_A1_Instruct|604_E_0&sys_0,「摸摸也是可以的哦，蒙着眼睛还是有点可怕，不过{PlayerName}摸着就不一样了，很安心……」
+216,making_out,254,high_1&CVP_A1_Instruct|patch_on_E_0&sys_0,「摸摸也是可以的哦，蒙着眼睛还是有点可怕，不过{PlayerName}摸着就不一样了，很安心……」
 217,chat,254,high_1&sys_0&love_ge_3,「啊zzz，干嘛#叫我干嘛zzz」\n「为什么这么困……#哼是谁在床上睡觉的时候左踹右踹……是谁在巫恋被冻醒的时候发现某人的脚在鼻孔旁#」\n「对！说的就是你！睡姿超差的家伙！！」
 218,rest,254,high_1&sys_0&love_ge_3,「喵～～快看{PlayerName}罗德岛时不时也有大家养的猫♪毛绒绒的真可爱，不过巫恋比较喜欢大家伙类似小狗狗的那种♪」\n你膝盖着地突出舌头\n「#能收回刚刚的话吗###」\n巫恋红着脸闭上眼睛有点羞耻得继续摸着猫咪尽量无视地上汪汪叫的{PlayerName}

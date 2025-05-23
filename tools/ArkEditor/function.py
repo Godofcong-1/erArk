@@ -10,6 +10,20 @@ font.setFamily(cache_control.now_font_name)
 
 def read_CVP(cvp_value_str: str):
     """读取CVP字符串 A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖"""
+    # 需要提前处理的字符串
+    if "Instruct" in cvp_value_str:
+        # 处理前指令属性，b2_value 可能包含下划线，需要精确提取
+        # 从"Instruct|"后面到"_E_0"前面为止
+        instruct_prefix = "Instruct|"
+        instruct_start = cvp_value_str.find(instruct_prefix) + len(instruct_prefix)
+        instruct_end = cvp_value_str.find("_E_0")
+        if instruct_end == -1:
+            # 如果没有"_E_0"，则取到字符串结尾
+            b2_value = cvp_value_str[instruct_start:]
+        else:
+            b2_value = cvp_value_str[instruct_start:instruct_end]
+        b2_name = cache_control.behavior_data[b2_value]
+        cvp_value_str = cvp_value_str.replace(f"Instruct|{b2_value}", f"前指令{b2_name}")
     cvp_str_list = cvp_value_str.split("_")
     # print(f"cvp_str_list = {cvp_str_list}")
     cvp_str_list[0] = cvp_str_list[0].replace("CVP", "综合数值前提  ")
@@ -65,10 +79,6 @@ def read_CVP(cvp_value_str: str):
         b2_value = cvp_str_list[2].split("S|")[1]
         b2_name = cache_control.state_data[b2_value]
         cvp_str = cvp_str.replace(f"S|{b2_value}", f"状态{b2_name}")
-    elif "Instruct" in cvp_str:
-        b2_value = cvp_str_list[2].split("Instruct|")[1]
-        b2_name = cache_control.behavior_data[b2_value]
-        cvp_str = cvp_str.replace(f"Instruct|{b2_value}", f"前指令{b2_name}")
     elif "部位污浊" in cvp_str:
         b2_value = cvp_str_list[2].split("部位污浊|")[1]
         part_type = b2_value[0]

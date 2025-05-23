@@ -89,3 +89,7 @@ bondage_data: dict = {}
 """ 绑缚数据 """
 roleplay_data: dict = {}
 """ 角色扮演数据 """
+item_data: dict = {}
+""" 道具数据 """
+gift_items_data: dict = {}
+""" 礼物数据 """

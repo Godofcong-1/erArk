@@ -85,6 +85,8 @@ jobs:
           Copy-Item data/csv/Race.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Roleplay.csv dist_ArkEditor/csv/
           Copy-Item data/csv/Profession.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Item.csv dist_ArkEditor/csv/
+          Copy-Item data/csv/Gift_Items.csv dist_ArkEditor/csv/
           Copy-Item example/0999_口上编辑器教程文件.csv dist_ArkEditor/
           Copy-Item example/0999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/0999_事件编辑器教程文件.json dist_ArkEditor/
