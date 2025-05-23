@@ -145,7 +145,7 @@ def main():
     """
     主函数
     """
-    base_dir = r"c:\code\era\erArk"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
     
     behavior_data_path = os.path.join(base_dir, "data", "csv", "Behavior_Data.csv")
     behavior_effect_path = os.path.join(base_dir, "data", "csv", "BehaviorEffect.csv")

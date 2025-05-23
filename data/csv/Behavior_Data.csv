@@ -9,7 +9,7 @@ int,str,str,int,str,str
 2,wait,等待,-1,both,日常
 3,change_cloth,换衣服,5,npc,日常
 5,chara_diy_instruct,角色特殊指令,10,pl,日常
-6,ai_special_instruct,AI对话用特殊指令,-1,pl,日常
+6,ai_chat_instruct,AI对话用特殊指令,-1,pl,日常
 98,test_instruct,测试用临时指令,1,both,日常
 99,empty_instruct,空白示范指令,1,both,日常
 101,chat,聊天,5,both,日常
@@ -25,6 +25,7 @@ int,str,str,int,str,str
 117,apologize,道歉,60,pl,日常
 118,apologize_failed,道歉失败,60,pl,日常
 119,listen_complaint,听牢骚,45,pl,日常
+120,give_gift,赠送礼物,5,pl,日常
 131,make_coffee,泡咖啡,15,both,日常
 132,make_coffee_add,泡咖啡（加料）,15,both,日常
 133,ask_make_coffee,让对方泡咖啡,15,pl,日常
@@ -91,7 +92,7 @@ int,str,str,int,str,str
 253,morning_salutation_3,早安问候：早安咬,10,npc,工作
 254,night_salutation_1,晚安问候：催睡觉,5,npc,工作
 255,night_salutation_2,晚安问候：晚安吻,5,npc,工作
-256,night_salutation_3,晚安咬,10,npc,工作
+256,night_salutation_3,晚安问候：晚安咬,10,npc,工作
 257,npc_assistant_cook,干员助理做饭,30,npc,工作
 
 261,hold_child,抱小孩,30,both,工作

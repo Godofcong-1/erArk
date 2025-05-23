@@ -9,7 +9,7 @@ int,str,str,int,str,str
 2,wait,等待,-1,both,日常
 3,change_cloth,换衣服,5,npc,日常
 5,chara_diy_instruct,角色特殊指令,10,pl,日常
-6,ai_special_instruct,AI对话用特殊指令,-1,pl,日常
+6,ai_chat_instruct,AI对话用特殊指令,-1,pl,日常
 99,empty_instruct,空白示范指令,1,both,日常
 101,chat,聊天,5,both,日常
 102,chat_failed,谈话次数过多而失败,5,pl,日常

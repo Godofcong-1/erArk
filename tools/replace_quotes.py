@@ -61,5 +61,7 @@ def batch_process_directory(directory):
 
 if __name__ == '__main__':
     # 指定要处理的目录路径
-    root_dir = r"c:\code\era\erArk\data\talk"
+    base_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    # 文件路径
+    root_dir = os.path.join(base_dir, 'data', 'talk')
     batch_process_directory(root_dir)
