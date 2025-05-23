@@ -92,6 +92,8 @@ class Instruct:
     """ 道歉 """
     LISTEN_COMPLAINT = 0
     """ 听牢骚 """
+    GIVE_GIFT = 0
+    """ 赠送礼物 """
     COLLCET_PANTY = 0
     """ 收起内裤 """
     ASK_DATE = 0

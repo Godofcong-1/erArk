@@ -832,6 +832,8 @@ class Behavior:
         """ 前提结算用:桌游类型 """
         self.board_game_ai_difficulty: int = 0
         """ 前提结算用:桌游AI难度 """
+        self.gift_id: int = 0
+        """ 前提结算用:礼物id """
 
 
 class Chara_Event:

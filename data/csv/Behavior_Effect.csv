@@ -24,6 +24,7 @@ int,str,str
 117,apologize,1511 - 1512 - 62 - CVE_A1_E|80_G_1 - 341
 118,apologize_failed,23 - 1511 - 1512 - 53 - CVE_A1_E|80_G_1
 119,listen_complaint,21 - 1511 - 1512 - 53 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1
+117,give_gift,1511 - 1512 - 53 - 341
 
 131,make_coffee,21 - 11 - 12 - 22 - 39 - 52 - 53 - CVE_A1_E|83_G_1 - 502
 132,make_coffee_add,21 - 11 - 12 - 22 - 52 - 53 - CVE_A1_E|83_G_1 - 54 - 62 - 502

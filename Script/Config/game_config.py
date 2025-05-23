@@ -382,6 +382,8 @@ config_bondage: Dict[int, config_def.Bondage] = {}
 """ 绳子捆绑数据 """
 config_body_item: Dict[int, config_def.Body_Item] = {}
 """ 身体上装备的H道具数据 """
+config_gift_items: Dict[int, config_def.Gift_Items] = {}
+""" 礼物数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1703,6 +1705,16 @@ def load_body_item():
         config_body_item[now_tem.cid] = now_tem
 
 
+def load_gift_items():
+    """载入礼物数据"""
+    now_data = config_data["Gift_Items"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Gift_Items()
+        now_tem.__dict__ = tem_data
+        config_gift_items[now_tem.cid] = now_tem
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1815,3 +1827,4 @@ def init():
     load_reputation_level()
     load_bondage()
     load_body_item()
+    load_gift_items()

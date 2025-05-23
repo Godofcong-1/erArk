@@ -1613,6 +1613,25 @@ def handle_listen_complaint():
 
 
 @add_instruct(
+    constant.Instruct.GIVE_GIFT,
+    constant.InstructType.DAILY,
+    _("赠送礼物"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+        constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
+        },
+    constant.Behavior.GIVE_GIFT,
+)
+def handle_give_gift():
+    """处理赠送礼物指令"""
+    now_draw = normal_panel.Gift_Panel(width)
+    now_draw.draw()
+
+
+@add_instruct(
     constant.Instruct.ORIGINIUM_ARTS,
     constant.InstructType.SYSTEM,
     _("源石技艺"),

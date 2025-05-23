@@ -589,6 +589,21 @@ class Food_Quality:
     """ 料理技能上限 """
 
 
+class Gift_Items:
+    """ 礼物物品 """
+
+    cid: int
+    """ 编号id """
+    item_id: int
+    """ 道具id """
+    type: int
+    """ 礼物类型 """
+    todo: int
+    """ 是否未实装 """
+    info: str
+    """ 描述 """
+
+
 class Hidden_Level:
     """ 隐蔽等级 """
 
@@ -1286,6 +1301,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 class Talk_Common:
     """ 组件配置数据 """
 
