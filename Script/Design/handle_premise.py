@@ -193,7 +193,8 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         "Dirty" not in premise_all_value_list[1] and
         "PenisPos" not in premise_all_value_list[1] and
         "ShootPos" not in premise_all_value_list[1] and
-        "Relationship" not in premise_all_value_list[1]
+        "Relationship" not in premise_all_value_list[1] and
+        "Instruct" not in premise_all_value_list[1]
         ):
         type_son_id = int(premise_all_value_list[1].split("|")[1])
     if "Son" in premise_all_value_list[1]:
@@ -290,6 +291,34 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                     return 1
             return 0
 
+    # 前指令的单独计算
+    elif premise_all_value_list[1][0] == "I":
+        if "Instruct" in premise_all_value_list[1]:
+            len_pre_behavior = len(cache.pl_pre_behavior_instruce)
+            behavior_id_str = "_".join(premise_all_value_list[1:-2])
+            premise_all_value_list[1] = behavior_id_str
+            premise_all_value_list = premise_all_value_list[:2] + premise_all_value_list[-2:]
+            behavior_id = behavior_id_str.split("|")[1]
+            print(f"debug behavior_id = {behavior_id}, premise_all_value_list = {premise_all_value_list}")
+            # 指令计数
+            count = 0
+            for i in range(len_pre_behavior):
+                last_cmd = cache.pl_pre_behavior_instruce[len_pre_behavior - 1 - i]
+                # 跳过当前指令
+                if count == 0:
+                    count += 1
+                    continue
+                if last_cmd == behavior_id:
+                    # 判定是否为该指令
+                    if premise_all_value_list[2] == "E":
+                        return 1
+                    if premise_all_value_list[2] == "NE":
+                        return 0
+                if premise_all_value_list[2] == "E":
+                    return 0
+                if premise_all_value_list[2] == "NE":
+                    return 1
+            return 0
 
     # 进行方式C和数值D的判别
     judge_value = int(premise_all_value_list[3])
@@ -304,30 +333,6 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         elif premise_all_value_list[2] in {"L", "LE"} and judge_value > 0:
             final_value = max(0, final_value)
 
-    # 前指令的单独计算
-    if premise_all_value_list[1][0] == "I":
-        if "Instruct" in premise_all_value_list[1]:
-            len_pre_behavior = len(cache.pl_pre_behavior_instruce)
-            type_son_id = int(premise_all_value_list[1].split("|")[1])
-            # 指令计数
-            count = 0
-            for i in range(len_pre_behavior):
-                last_cmd = cache.pl_pre_behavior_instruce[len_pre_behavior - 1 - i]
-                # 跳过当前指令
-                if count == 0:
-                    count += 1
-                    continue
-                if last_cmd == type_son_id:
-                    # 判定是否为该指令
-                    if premise_all_value_list[2] == "E":
-                        return 1
-                    if premise_all_value_list[2] == "NE":
-                        return 0
-                if premise_all_value_list[2] == "E":
-                    return 0
-                if premise_all_value_list[2] == "NE":
-                    return 1
-            return 0
 
     # 其他角色在场的判定
     if premise_all_value_list[1][0] == "O":

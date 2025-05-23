@@ -505,13 +505,13 @@ class CVPMenu(QDialog):
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于", "不等于"])
             for status_id, status_name in cache_control.behavior_data.items():
-                # 到二次结算则中断
-                if int(status_id) >= 1000:
-                    break
-                # 跳过玩家无法触发的状态
                 status_data = cache_control.behavior_all_data[status_id]
+                # 跳过玩家无法触发的状态
                 if status_data["trigger"] == "npc":
                     continue
+                # 跳过二段结算
+                if "二段结算" in status_data["type"]:
+                    break
                 self.cvp_b2.addItem(f"{status_id}|{status_name}")
             self.cvp_b2.setCurrentIndex(0)
             self.cvp_text.setText("前指令可以用来检测玩家上一次输入的指令，用于实现两次指令之间的联动效果\n本前提只判断玩家，所以角色选择会锁定为玩家，且只能使用[等于]或者[不等于]，没有其他逻辑")
