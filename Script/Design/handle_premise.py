@@ -54,12 +54,13 @@ def handle_premise(premise: str, character_id: int) -> int:
         return 0
 
 
-def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> int:
+def get_weight_from_premise_dict(talk_premise_dict: dict, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> int:
     """
     遍历前提字典，计算总权重
     Keyword arguments:
-    premise_dict -- 前提字典
+    talk_premise_dict -- 当前口上的前提字典
     character_id -- 角色id
+    calculated_premise_dict -- 已计算的前提字典，默认空字典
     weight_all_to_1_flag -- 将所有非high的前提权重转换为1，默认为False
     unconscious_h_pass_flag -- 跳过无意识判定，默认为false，不可以跳过
     Return arguments:
@@ -70,9 +71,11 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     target_character_id = character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
     behavior_id = character_data.behavior.behavior_id
-    target_behavior_id = target_character_data.behavior.behavior_id
     now_weight = 0 # 总权重
     now_premise_data = {} # 记录已经计算过的前提
+    if calculated_premise_dict:
+        # 如果有已计算的前提，则直接使用
+        now_premise_data = calculated_premise_dict
     fixed_weight = 0 # 固定权重
 
     # 无意识模式判定
@@ -82,23 +85,24 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
         if _("技艺") in behavior_data.tag:
             unconscious_pass_flag = True
         # 需要前提里有无意识的判定
-        for now_premise in premise_dict:
+        for now_premise in talk_premise_dict:
             # 如果前提里有无意识，则正常通过
             if "unconscious" in now_premise:
                 unconscious_pass_flag = True
                 break
         # 如果没有无意识的前提，则直接返回0
         if not unconscious_pass_flag:
-            return 0
+            return 0, now_premise_data
 
     # 口球判定
-    if handle_self_now_gag(character_id) and "self_now_gag" not in premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}:
-        return 0
-    if handle_self_now_gag(target_character_id) and "target_now_gag" not in premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}:
-        return 0
+    if (
+        (handle_self_now_gag(character_id) and "self_now_gag" not in talk_premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}) or
+        handle_self_now_gag(target_character_id) and "target_now_gag" not in talk_premise_dict and behavior_id not in {constant.Behavior.GAG_ON, constant.Behavior.GAG_OFF, constant.SecondBehavior.GAG}
+        ):
+        return 0, now_premise_data
 
     # 遍历前提字典
-    for premise in premise_dict:
+    for premise in talk_premise_dict:
         # 判断是否为权重类空白前提
         if premise[:5] == "high_":
             high_flag = True
@@ -149,7 +153,7 @@ def get_weight_from_premise_dict(premise_dict: dict, character_id: int, weight_a
     # 如果权重大于0且有固定权重，则变为固定权重
     if now_weight > 0 and fixed_weight > 0:
         now_weight = fixed_weight
-    return now_weight
+    return now_weight, now_premise_data
 
 
 def handle_comprehensive_value_premise(character_id: int, premise_all_value_list: list) -> int:

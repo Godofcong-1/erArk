@@ -34,11 +34,13 @@ def get_target_chara_diy_instruct(character_id: int = 0):
             # 判断交互对象是否有该行为事件
             if target_character_data.adv in all_chara_diy_instruct_event_list:
                 target_diy_instruct_event_list = all_chara_diy_instruct_event_list[target_character_data.adv]
+                # 已计算过的前提字典
+                calculated_premise_dict = {}
                 # 遍历事件列表
                 for event_id in target_diy_instruct_event_list:
                     event_config = game_config.config_event[event_id]
                     # 计算总权重
-                    now_weight = handle_premise.get_weight_from_premise_dict(event_config.premise, character_id, unconscious_pass_flag = True)
+                    now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(event_config.premise, character_id, calculated_premise_dict, unconscious_pass_flag = True)
                     # 判定通过，加入到子事件的列表中
                     if now_weight:
                         son_event_list.append(event_id)
@@ -58,6 +60,8 @@ def check_son_event_list_from_event_list(event_list: list, character_id: int, ev
     son_event_list -- 子事件列表\n
     """
     son_event_list = [] # 子事件列表
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
 
     # 开始遍历当前行为的事件表
     for event_id in event_list:
@@ -72,7 +76,7 @@ def check_son_event_list_from_event_list(event_list: list, character_id: int, ev
             # 如果前提集不为空
             if len(premise_dict):
                 # 计算总权重
-                now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, unconscious_pass_flag = True)
+                now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, calculated_premise_dict, unconscious_pass_flag = True)
                 # 判定通过，加入到子事件的列表中
                 if now_weight:
                     son_event_list.append(event_id)

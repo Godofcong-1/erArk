@@ -115,7 +115,10 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
             cache.all_system_setting.character_text_version[target_data.adv] > 0
             ):
             tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][target_data.adv]
-    now_talk_data = {} # 正式口上数据
+    # 正式口上数据
+    now_talk_data = {}
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     # 遍历口上列表
     for talk_id in tem_talk_list:
         talk_config = game_config.config_talk[talk_id]
@@ -128,8 +131,8 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
         if cache.all_system_setting.draw_setting[2] == 0 and talk_config.adv_id == 0:
             continue
         # 计算前提字典的总权重
-        premise_dict = game_config.config_talk_premise_data[talk_id]
-        now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
+        talk_premise_dict = game_config.config_talk_premise_data[talk_id]
+        now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(talk_premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
         if now_weight:
             # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
@@ -413,6 +416,8 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
     返回:
         str: 转换后的文本
     """
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     # 遍历所有通用占位符的 key 和对应的 cid 集合
     for key, cid_list in game_config.config_talk_common_cid_list_by_type.items():
         # 构造匹配 "{key}" 的正则表达式
@@ -425,7 +430,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                 # 读取前提配置
                 premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
                 # 计算权重
-                weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id)
+                weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag = True)
                 if weight:
                     now_talk_data.setdefault(weight, set()).add(talk_common_cid)
             # 如果有可替换的候选文本

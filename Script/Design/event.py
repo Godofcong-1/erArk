@@ -23,7 +23,8 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     target_character_data = cache.character_data[target_character_id]
     behavior_id = character_data.behavior.behavior_id
     now_event_data = {}
-    now_premise_data = {}
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     if (
         behavior_id in game_config.config_event_status_data
     ):
@@ -64,7 +65,7 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
             if len(event_config.premise):
                 # 计算前提字典的总权重
                 premise_dict = event_config.premise
-                now_weight = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, unconscious_pass_flag = True)
+                now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, calculated_premise_dict, unconscious_pass_flag = True)
             if now_weight:
                 now_event_data.setdefault(now_weight, set())
                 now_event_data[now_weight].add(event_id)
