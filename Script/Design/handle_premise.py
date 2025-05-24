@@ -9672,6 +9672,18 @@ def handle_penis_in_t_mouse(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PENIS_NOT_IN_T_MOUSE)
+def handle_penis_not_in_t_mouse(character_id: int) -> int:
+    """
+    当前阴茎位置不为交互对象_口交中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_penis_in_t_mouse(character_id)
+
+
 @add_premise(constant_promise.Premise.PENIS_IN_T_BREAST)
 def handle_penis_in_t_breast(character_id: int) -> int:
     """
@@ -9768,6 +9780,18 @@ def handle_penis_in_t_anal(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PENIS_NOT_IN_T_ANAL)
+def handle_penis_not_in_t_anal(character_id: int) -> int:
+    """
+    当前阴茎位置不为交互对象_A插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_penis_in_t_anal(character_id)
+
+
 @add_premise(constant_promise.Premise.PENIS_IN_T_URETHRAL)
 def handle_penis_in_t_nrethral(character_id: int) -> int:
     """
@@ -9782,6 +9806,18 @@ def handle_penis_in_t_nrethral(character_id: int) -> int:
     if target_data.h_state.insert_position == 9:
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.PENIS_NOT_IN_T_URETHRAL)
+def handle_penis_not_in_t_nrethral(character_id: int) -> int:
+    """
+    当前阴茎位置不为交互对象_U插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_penis_in_t_nrethral(character_id)
 
 
 @add_premise(constant_promise.Premise.PENIS_IN_T_LEG)
@@ -9904,6 +9940,18 @@ def handle_penis_in_t_vagina_or_womb(character_id: int) -> int:
     if handle_penis_in_t_vagina(character_id) or handle_penis_in_t_womb(character_id):
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.PENIS_NOT_IN_T_VAGINA_OR_WOMB)
+def handle_penis_not_in_t_vagina_or_womb(character_id: int) -> int:
+    """
+    当前阴茎位置不为交互对象_V插入中且不为W插入中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_penis_in_t_vagina_or_womb(character_id)
 
 
 @add_premise(constant_promise.Premise.DR_POSITION_NULL)
