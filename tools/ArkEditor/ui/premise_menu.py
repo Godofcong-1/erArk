@@ -439,6 +439,7 @@ class CVPMenu(QDialog):
             self.cvp_a.addItems(["自己", "交互对象", "角色id为"])
             self.cvp_a.setVisible(True)
         self.cvp_b2.setVisible(True)
+        self.cvp_b2.clear()
 
         self.cvp_c.clear()
         self.cvp_c.addItems(["大于", "小于", "等于", "大于等于", "小于等于", "不等于"])
