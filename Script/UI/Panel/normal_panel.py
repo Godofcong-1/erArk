@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import update, map_handle, instuct_judege, game_time, cooking
+from Script.Design import handle_premise, update, map_handle, instuct_judege, game_time, cooking
 
 panel_info_data = {}
 
@@ -244,12 +244,18 @@ class Bondage_Panel:
                     level_draw.text = "●" + level_text + "：\n"
                     level_draw.draw()
 
+                    # 指技等级判定
                     need_lv = bondage_lvel * 2
                     if character_data.ability[70] < need_lv:
                         level_draw.text = _("(需要[指技]等级>={0})").format(need_lv)
                         cant_flag = True
                         level_draw.draw()
                         break
+
+                # 地点判定
+                if bondage_data.need_facility and handle_premise.handle_not_in_humiliation_room(0):
+                    bondage_text += _("(需要在调教室施展)")
+                    cant_flag = True
 
                 # 如果不能施展则不显示按钮，仅打印灰色文本
                 if cant_flag:

@@ -238,6 +238,12 @@ class Bondage:
     """ 绳子捆绑名 """
     level: int
     """ 捆绑等级 """
+    affect_walking: int
+    """ 影响行走 """
+    need_facility: int
+    """ 需要设施 """
+    description: str
+    """ 捆绑介绍 """
 
 
 class Book:

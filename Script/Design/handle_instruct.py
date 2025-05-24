@@ -4702,7 +4702,6 @@ def handle_urine_collector_off():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
-     constant_promise.Premise.IN_HUMILIATION_ROOM,
      constant_promise.Premise.HAVE_BONDAGE},
     constant.Behavior.BIND,
     constant.SexInstructSubType.SM,

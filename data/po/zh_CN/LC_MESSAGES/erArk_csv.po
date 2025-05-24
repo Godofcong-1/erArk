@@ -3300,6 +3300,10 @@ msgstr ""
 msgid "未捆绑"
 msgstr ""
 
+#: .\data\csv\Bondage.csv:6
+msgid "0"
+msgstr ""
+
 #: .\data\csv\Bondage.csv:7
 msgid "双手缚"
 msgstr ""
@@ -3330,6 +3334,10 @@ msgstr ""
 
 #: .\data\csv\Bondage.csv:14
 msgid "吊缚"
+msgstr ""
+
+#: .\data\csv\Bondage.csv:14
+msgid "1"
 msgstr ""
 
 #: .\data\csv\Bondage.csv:15
@@ -9586,10 +9594,6 @@ msgstr ""
 
 #: .\data\csv\Food_Quality.csv:10
 msgid "绝珍"
-msgstr ""
-
-#: .\data\csv\Gift_Items.csv:6
-msgid "0"
 msgstr ""
 
 #: .\data\csv\Gift_Items.csv:6
