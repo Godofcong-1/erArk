@@ -151,6 +151,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     judge += judge_weakness
     if judge_weakness:
         calculation_text += _("+持有对方把柄(+") + str(judge_weakness) + ")"
+    # 女儿修正
+    judge_daughter = target_data.talent[451] * 100
+    judge += judge_daughter
+    if judge_daughter:
+        calculation_text += _("+女儿(+") + str(judge_daughter) + ")"
 
     # 仅性爱指令
     if judge_data_type == "S":
