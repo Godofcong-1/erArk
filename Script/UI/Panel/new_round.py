@@ -707,6 +707,7 @@ class New_Round_Handle:
         """
         重置游戏数据
         """
+        global cache
         from Script.Design import attr_calculation, basement, game_time
         from Script.UI.Flow import creator_character_flow
         from Script.Config import map_config
@@ -720,9 +721,11 @@ class New_Round_Handle:
         new_game_round = old_cache.game_round + 1
         new_character_data = old_cache.character_data
         new_npc_id_got = old_cache.npc_id_got
+        new_world_setting = old_cache.world_setting
+        new_system_setting = old_cache.all_system_setting
 
         # 开始重置
-        cache = game_type.Cache()
+        cache_control.cache = cache
         map_config.init_map_data()
         game_time.init_time()
         cache.rhodes_island = basement.get_base_zero()
@@ -731,13 +734,16 @@ class New_Round_Handle:
         info_draw_text += _("游戏数据重置完毕\n")
 
         # 覆盖要保留的数据
+        creator_character_flow.first_bonus_and_setting_updata()
+        cache.world_setting = new_world_setting
+        cache.all_system_setting = new_system_setting
         cache.game_round = new_game_round
         cache.character_data = new_character_data
         cache.npc_id_got = new_npc_id_got
-        cache = creator_character_flow.game_start()
+        creator_character_flow.game_start()
 
         # 根据继承的角色，将有人住的宿舍设为开放
-        for now_id in cache.npc_id_got:
+        for now_id in new_npc_id_got:
             # 获取地点数据
             now_character_data = cache.character_data[now_id]
             now_dormitory = now_character_data.dormitory
@@ -749,7 +755,6 @@ class New_Round_Handle:
                 if cache.rhodes_island.facility_open[open_cid] == False:
                     cache.rhodes_island.facility_open[open_cid] = True
 
-        cache_control.cache = cache
         info_draw_text += _("继承数据覆盖完毕\n")
         info_draw.text = info_draw_text
         info_draw.draw()

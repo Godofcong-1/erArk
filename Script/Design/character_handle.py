@@ -255,6 +255,7 @@ def init_character_dormitory():
     分配角色宿舍
     角色分配到csv里所写的宿舍名所对应的房间坐标
     """
+    cache = cache_control.cache
     dormitory = {
         key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
     }
@@ -370,6 +371,7 @@ def new_character_get_dormitory(character_id: int):
 
 def init_character_position():
     """初始化角色位置"""
+    cache = cache_control.cache
     id_list = cache.npc_id_got
     id_list.add(0)
     for character_id in id_list:
@@ -384,6 +386,7 @@ def init_character_position():
 
 def init_character_entertainment():
     """初始化角色娱乐"""
+    cache = cache_control.cache
     id_list = cache.npc_id_got
     id_list.add(0)
     for character_id in id_list:
@@ -392,6 +395,7 @@ def init_character_entertainment():
 
 def init_character_facility_open():
     """初始化角色开放设施"""
+    cache = cache_control.cache
     for open_cid in game_config.config_facility_open:
         if game_config.config_facility_open[open_cid].NPC_id == 0:
             continue
@@ -544,6 +548,7 @@ def handle_character_setting():
     """
     处理角色的初始世界设置
     """
+    cache = cache_control.cache
     # 遍历所有角色
     for character_id in cache.character_data:
         if character_id == 0:

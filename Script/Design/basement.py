@@ -85,6 +85,7 @@ def get_base_updata():
     """
     遍历基地情况结构体，根据设施等级更新全部数值
     """
+    cache = cache_control.cache
 
     cache.rhodes_island.power_use = 0
 

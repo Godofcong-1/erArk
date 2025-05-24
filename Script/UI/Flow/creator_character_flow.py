@@ -49,6 +49,7 @@ def creator_character_panel():
 
 def first_bonus_and_setting_updata():
     """刷新初始奖励和设定"""
+    cache = cache_control.cache
     for cid in game_config.config_first_bonus:
         cache.first_bonus[cid] = False
     for cid in game_config.config_world_setting:
@@ -62,6 +63,7 @@ def first_bonus_and_setting_updata():
 
 def game_start():
     """初始化游戏数据"""
+    cache = cache_control.cache
     from Script.Design import cooking
 
     character_handle.init_character_dormitory()
@@ -75,7 +77,6 @@ def game_start():
     basement.get_base_updata()
     character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面
     # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")
-    return cache
 
 def confirm_game_info_panel():
     """确认游戏说明面板"""

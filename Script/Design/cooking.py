@@ -15,6 +15,7 @@ _: FunctionType = get_text._
 
 def init_recipes():
     """初始化菜谱数据"""
+    cache = cache_control.cache
     cache.recipe_data = {}
     for recipe_id in game_config.config_recipes:
         recipe_data = game_config.config_recipes[recipe_id]
@@ -220,6 +221,7 @@ def init_food_shop_data(update_restaurant_id: int = -2, new_day_flag: bool = Fal
     update_restaurant_id -- 餐馆id，默认为-2，如果不是-2则仅刷新对应id的餐馆的食物\n
     new_day_flag -- 是否为新的一天，默认为False\n
     """
+    cache = cache_control.cache
     # 如果是新的一天则清空食物数据
     if new_day_flag:
         cache.rhodes_island.dining_hall_data = {}
