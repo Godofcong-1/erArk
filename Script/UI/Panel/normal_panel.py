@@ -214,6 +214,7 @@ class Bondage_Panel:
             # 输出提示信息
             info_draw = draw.NormalDraw()
             info_text = _("\n○捆绑下会持续获得欲情与苦痛，根据绑法的不同分为三级捆绑程度，程度越高的绑法获得的欲情与苦痛值越多\n")
+            info_text += _("  越高级的捆绑需要越高级的[指技]才能施展\n")
             info_text += _("  当前被捆绑的状态为：")
             info_text += now_bondage_data.name
             info_draw.text = info_text
@@ -231,6 +232,8 @@ class Bondage_Panel:
                 bondage_id_text = str(bondage_id).rjust(2,'0')
                 bondage_lvel = bondage_data.level
                 bondage_text = f"[{bondage_id_text}]{bondage_data.name}"
+                # 用于判断是否可以施展捆绑
+                cant_flag = False
 
                 # 用于在捆绑等级变化时更新文本
                 if bondage_lvel > level_count:
@@ -238,19 +241,35 @@ class Bondage_Panel:
                     line_feed.draw()
                     level_text = level_text_list[level_count]
                     level_draw = draw.NormalDraw()
-                    level_draw.text = "  " + level_text + "："
+                    level_draw.text = "●" + level_text + "：\n"
                     level_draw.draw()
 
-                button_draw = draw.LeftButton(
-                    _(bondage_text),
-                    _(str(bondage_id)),
-                    20,
-                    cmd_func=self.select_bondage,
-                    args=(bondage_id,),
-                    )
-                # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
-                return_list.append(button_draw.return_text)
-                button_draw.draw()
+                    need_lv = bondage_lvel * 2
+                    if character_data.ability[70] < need_lv:
+                        level_draw.text = _("(需要[指技]等级>={0})").format(need_lv)
+                        cant_flag = True
+                        level_draw.draw()
+                        break
+
+                # 如果不能施展则不显示按钮，仅打印灰色文本
+                if cant_flag:
+                    text_draw = draw.NormalDraw()
+                    text_draw.text = bondage_text
+                    text_draw.style = 'deep_gray'
+                    text_draw.draw()
+                # 如果可以施展则显示按钮
+                else:
+                    button_draw = draw.LeftButton(
+                        _(bondage_text),
+                        _(str(bondage_id)),
+                        20,
+                        cmd_func=self.select_bondage,
+                        args=(bondage_id,),
+                        )
+                    # print(f"debug button_draw.text = {button_draw.text},button_draw.normal_style = {button_draw.normal_style}")
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                line_feed.draw()
 
             line_feed.draw()
             line_feed.draw()
