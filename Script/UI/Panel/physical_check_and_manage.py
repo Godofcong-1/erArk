@@ -286,19 +286,27 @@ class Physical_Check_And_Manage_Panel:
                 # 跳过非检查类的行为
                 if behavior_data.tag != "猥亵|检查":
                     continue
+                behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
                 count += 1
-                done_flag = False
+                cant_flag = False
                 # 已经检查过的不可用
                 if behavior_id in self.done_check_behavior_id_set:
-                    done_flag = True
+                    cant_flag = True
+                    behavior_text += _("(已检查)")
                 # 部分指令需要有前置指令才能使用
                 if behavior_id in cmd_able_dict and cmd_able_dict[behavior_id] not in self.done_check_behavior_id_set:
                     continue
                 # 部分指令需要未破处则不可用
                 if (behavior_id == "examine_orifice" or behavior_id == "examine_vagina_firmness") and target_character_data.talent[0]:
-                    done_flag = True
+                    cant_flag = True
+                    behavior_text += _("(未破处)")
                 elif behavior_id == "examine_intestine_firmness" and target_character_data.talent[1]:
-                    done_flag = True
+                    cant_flag = True
+                    behavior_text += _("(未破处)")
+                # 观察处女膜指令需要是处女或者今日破处才能使用
+                if behavior_id == "examine_hymen" and not (handle_premise.handle_have_virgin(target_character_id) or handle_premise.handle_first_sex_in_today(target_character_id)):
+                    cant_flag = True
+                    behavior_text += _("(需要是处女或者今日刚破处)")
                 # 部分指令需要有对应部位的器官才能使用
                 if behavior_id in body_talent_map:
                     talent_id = body_talent_map[behavior_id]
@@ -306,12 +314,9 @@ class Physical_Check_And_Manage_Panel:
                         continue
                 # 如果使用次数已经用完，则不可用
                 if now_ability_times <= 0:
-                    done_flag = True
+                    cant_flag = True
                 # 绘制按钮
-                behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
-                if done_flag:
-                    if behavior_id in self.done_check_behavior_id_set:
-                        behavior_text += _("(已检查)")
+                if cant_flag:
                     status_draw = draw.NormalDraw()
                     status_draw.text = behavior_text
                     status_draw.style = "deep_gray"
