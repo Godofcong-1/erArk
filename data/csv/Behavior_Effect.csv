@@ -74,11 +74,11 @@ int,str,str
 183,hydrotherapy_treatment,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
 184,onsen_bath,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
 
-191,aromatherapy_1,1511 - 1512 - 21 - 22 - 521
-192,aromatherapy_2,1511 - 1512 - 21 - 22 - 521
-193,aromatherapy_3,1511 - 1512 - 21 - 22 - 521
-194,aromatherapy_4,1511 - 1512 - 21 - 22 - 521
-195,aromatherapy_5,1511 - 1512 - 21 - 22 - 521
+191,aromatherapy_1,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
+192,aromatherapy_2,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
+193,aromatherapy_3,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
+194,aromatherapy_4,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
+195,aromatherapy_5,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 
 201,official_work,21 - 11 - 12 - 22 - 71 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 506
 205,training,21 - 15 - 16 - 22 - 71 - CVE_A2_E|81_G_1 - CVE_A1_E|81_G_1 - 701
@@ -273,7 +273,7 @@ int,str,str
 
 601,milking_machine_on,13 - 14 - 21 - 22 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 921
 602,urine_collector_on,13 - 14 - 21 - 22 - 58 - 116 - CVE_A2_E|7_G_1 - CVE_A2_E|51_G_1 - 923
-603,bind,15 - 16 - 21 - 59 - 81 - 86 - CVE_A2_E|52_G_1
+603,bind,15 - 16 - 21 - 59 - 81 - 86 - CVE_A1_E|70_G_1 - CVE_A2_E|52_G_1
 604,patch_on,13 - 14 - 21 - 22 - 60 - CVE_A2_E|51_G_1 - 925
 605,whip,13 - 14 - 21 - 23 - 52 - 57 - 59 - 59 - 60 - 62 - 81 - 110 - 135 - CVE_A2_E|32_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1
 607,gag_on,13 - 14 - 21 - 22 - 60 - CVE_A2_E|51_G_1 - 927
