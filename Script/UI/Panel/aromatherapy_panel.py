@@ -143,11 +143,11 @@ class Aromatherapy_Panel:
 
     def select_recipe(self):
         """选择配方"""
+        pl_character_data = cache.character_data[0]
         while 1:
             line = draw.LineDraw("-", window_width)
             line.draw()
             all_info_draw = draw.NormalDraw()
-            all_info_draw.width = self.width
             return_list = []
 
             now_text = ""
@@ -159,16 +159,21 @@ class Aromatherapy_Panel:
                 recipes_data = game_config.config_aromatherapy_recipes[recipes_id]
                 if recipes_id == 0:
                     continue
+                recipes_text = f"[{str(recipes_id).rjust(3,'0')}]{recipes_data.name}"
                 # 判断当前配方是否可以生产，未解锁则跳过
                 flag_open = True
-                # now_level = 1
-                # if recipes_data.difficulty > now_level:
-                #     flag_open = False
+                # 指技等级判定
+                need_lv = recipes_data.difficulty * 2
+                if pl_character_data.ability[47] < need_lv:
+                    recipes_text += _("(需要[农业技能]等级>={0})").format(need_lv)
+                    flag_open = False
+                recipes_text += f"：{recipes_data.info}"
+
                 # 可以生产的话则输出
                 if flag_open:
                     line_feed.draw()
                     button_draw = draw.LeftButton(
-                        f"[{str(recipes_id).rjust(3,'0')}]{recipes_data.name}：{recipes_data.info}",
+                        recipes_text,
                         f"\n{recipes_id}",
                         window_width ,
                         cmd_func=self.change_now_choice_recipe_id,
@@ -176,9 +181,10 @@ class Aromatherapy_Panel:
                     )
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
+                    line_feed.draw()
 
                     formula_text = recipes_data.formula
-                    now_text = _("\n     调香消耗：")
+                    now_text = _("     调香消耗：")
                     # 以&为分割判定是否有多个需求
                     if "&" not in formula_text:
                         need_list = []
@@ -192,7 +198,12 @@ class Aromatherapy_Panel:
 
                     all_info_draw.text = now_text
                     all_info_draw.draw()
-                    line_feed.draw()
+                else:
+                    text_draw = draw.NormalDraw()
+                    text_draw.text = recipes_text
+                    text_draw.style = 'deep_gray'
+                    text_draw.draw()
+                line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
