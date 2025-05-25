@@ -183,6 +183,8 @@ class Sleep_Panel:
 
                 self.pl_character_data.action_info.sleep_time = cache.game_time # 记录睡觉时间
                 self.pl_character_data.action_info.wake_time = game_time.get_sub_date(minute=self.sleep_time_min, old_date=cache.game_time) # 记录醒来时间
+                # 关闭玩家的透视
+                self.pl_character_data.pl_ability.visual = False
                 # print(f"debug 玩家睡觉，睡觉时间 = {pl_character_data.action_info.sleep_time},醒来时间 = {pl_character_data.action_info.wake_time}")
                 # cache.wframe_mouse.w_frame_skip_wait_mouse = 1
                 self.assistant_sleep_settle()
