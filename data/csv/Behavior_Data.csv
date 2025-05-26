@@ -580,9 +580,9 @@ int,str,str,int,str,str
 1362,end_field_commission_as_leader,以队长身份完成外勤委托归舰,0,npc,二段结算
 1366,be_invited_join_group_sex,被邀请加入群交，开始前往群交地点,0,npc,二段结算
 
-1371,appointed_as_diplomat_local,被任命为本地外交官,0,npc,二段结算
+1371,appoinnted_as_diplomat_local,被任命为本地外交官,0,npc,二段结算
 1372,relieved_of_diplomat_local,被解除本地外交官的任命,0,npc,二段结算
-1373,appointed_as_diplomat_out,被任命为外派外交官,0,npc,二段结算
+1373,appoinnted_as_diplomat_out,被任命为外派外交官,0,npc,二段结算
 1374,relieved_of_diplomat_out,被解除外派外交官的任命,0,npc,二段结算
 
 1401,chosen_as_assistant,被选为助理,0,npc,二段结算|助理

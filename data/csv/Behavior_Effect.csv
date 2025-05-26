@@ -569,9 +569,9 @@ int,str,str
 1361,start_field_commission_as_leader,998
 1362,end_field_commission_as_leader,998
 1366,be_invited_join_group_sex,998
-1371,appointed_as_diplomat_local,998
+1371,appoinnted_as_diplomat_local,998
 1372,relieved_of_diplomat_local,998
-1373,appointed_as_diplomat_out,998
+1373,appoinnted_as_diplomat_out,998
 1374,relieved_of_diplomat_out,998
 
 1401,chosen_as_assistant,998
