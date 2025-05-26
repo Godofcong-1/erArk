@@ -1097,6 +1097,14 @@ class SecondEffect:
     """ 结算多重绝顶(快乐+屈服) """
     BONDAGE_EFFECT = 410
     """ 结算绳子捆绑效果(已弃用) """
+    EXPOSED_ORGASM_SMALL_IN_HIDDEN_SEX = 411
+    """ 结算因隐奸中的小绝顶而导致的暴露 """
+    EXPOSED_ORGASM_NORMAL_IN_HIDDEN_SEX = 412
+    """ 结算因隐奸中的普绝顶而导致的暴露 """
+    EXPOSED_ORGASM_STRONG_IN_HIDDEN_SEX = 413
+    """ 结算因隐奸中的强绝顶而导致的暴露 """
+    EXPOSED_ORGASM_SUPER_IN_HIDDEN_SEX = 414
+    """ 结算因隐奸中的超强绝顶而导致的暴露 """
 
     PENIS_IN_T_RESET = 501
     """ 改变当前阴茎位置为交互对象_双方归零 """

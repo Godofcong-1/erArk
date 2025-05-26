@@ -28,19 +28,22 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
-def handle_hidden_sex_flow(character_id: int = 0) -> None:
+def handle_hidden_sex_flow(character_id: int = 0, add_flag = None, now_duration = 0, now_intensity = 0) -> None:
     """
     处理隐奸整体流程：先结算隐蔽值，再判断是否被发现
     参数:
         character_id (int): 角色id，默认为0（玩家）
+        add_flag (bool): 是否增加隐蔽值，默认为None，表示根据行为类型判断
+        now_duration (int): 行为持续时间，默认为0，表示使用当前行为的持续时间
+        now_intensity (int): 行为强度，默认为0，表示使用当前行为的默认强度
     返回:
         None
     """
-    # 先结算隐蔽值增减
-    settle_hidden_value_by_action(character_id)
     # 需要场景中存在未处于隐奸模式且处于有意识状态的角色
     if not handle_premise.handle_place_someone_not_in_hidden_and_conscious(character_id):
         return
+    # 先结算隐蔽值增减
+    settle_hidden_value_by_action(character_id, add_flag, now_duration, now_intensity)
     # 获取角色数据
     character_data = cache.character_data[character_id]
     # 判断是否被发现
@@ -130,11 +133,14 @@ def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
 
     return result
 
-def settle_hidden_value_by_action(character_id = 0) -> None:
+def settle_hidden_value_by_action(character_id = 0, add_flag = None, now_duration = 0, now_intensity = 0) -> None:
     """
     根据玩家当前的行为和其他因素来结算角色的隐蔽值
     参数:
         character_id (int): 角色id，默认为0，表示玩家角色
+        add_flag (bool): 是否增加隐蔽值，默认为None，表示根据行为类型判断
+        now_duration (int): 行为持续时间，默认为0，表示使用当前行为的持续时间
+        now_intensity (int): 行为强度，默认为0，表示使用当前行为的默认强度
     返回:
         None
     """
@@ -142,17 +148,19 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
     # 获取当前行为
     now_behavior_id = character_data.behavior.behavior_id
     behavior_data = game_config.config_behavior[now_behavior_id]
-    # 根据行为类型判断是否需要增加隐蔽值
-    add_flag = False
-    for tag in {_("猥亵"), _("性爱")}:
-        if tag in behavior_data.tag:
-            add_flag = True
-            break
-    # 等待状态减少隐蔽值
-    if now_behavior_id == constant.Behavior.WAIT:
+    # 如果没有指定，则根据行为类型判断是否需要增加隐蔽值
+    if add_flag == None:
         add_flag = False
-    # 时间
-    now_duration = character_data.behavior.duration
+        for tag in {_("猥亵"), _("性爱")}:
+            if tag in behavior_data.tag:
+                add_flag = True
+                break
+        # 等待状态减少隐蔽值
+        if now_behavior_id == constant.Behavior.WAIT:
+            add_flag = False
+    # 如果没有指定时间，则获取行为持续时间
+    if now_duration == 0:
+        now_duration = character_data.behavior.duration
     # 模式
     mode_adjust = 1
     # 双不隐容易被发现
@@ -161,16 +169,17 @@ def settle_hidden_value_by_action(character_id = 0) -> None:
     # 双隐不容易被发现
     elif handle_premise.handle_hidden_sex_mode_4(character_id):
         mode_adjust = 0.5
-    # 强度
-    now_intensity = 1
-    tag_list = behavior_data.tag.split("|")
-    for tag in tag_list:
-        if tag == _("道具"):
-            now_intensity = max(4, now_intensity)
-        elif tag == _("插入"):
-            now_intensity = max(3, now_intensity)
-        elif tag == _("侍奉"):
-            now_intensity = max(2, now_intensity)
+    # 如果没有指定强度，则根据行为类型获取默认强度
+    if now_intensity == 0:
+        now_intensity = 1
+        tag_list = behavior_data.tag.split("|")
+        for tag in tag_list:
+            if tag == _("道具"):
+                now_intensity = max(4, now_intensity)
+            elif tag == _("插入"):
+                now_intensity = max(3, now_intensity)
+            elif tag == _("侍奉"):
+                now_intensity = max(2, now_intensity)
     # 隐蔽能力
     now_ability_lv = character_data.ability[90]
     abi_adjust = attr_calculation.get_ability_adjust(now_ability_lv)

@@ -2,10 +2,11 @@ from types import FunctionType
 from Script.Design import (
     settle_behavior,
     attr_calculation,
-    handle_premise
+    handle_premise,
+    map_handle
 )
-from Script.Core import cache_control, constant, constant_effect, game_type, get_text
-from Script.Config import game_config, normal_config
+from Script.Core import cache_control, constant_effect, game_type, get_text
+from Script.Config import normal_config
 from Script.UI.Moudle import draw
 from Script.Settle import default
 
@@ -2835,6 +2836,78 @@ def handle_plural_orgasm(
     # base_chara_state_common_settle(character_id, add_time=character_data.behavior.duration, state_id=12, base_value=0, ability_level=character_data.ability[33], extra_adjust=bondage_adjust, tenths_add=False)
     # # 苦痛
     # base_chara_state_common_settle(character_id, add_time=character_data.behavior.duration, state_id=17, base_value=0, ability_level=character_data.ability[15], extra_adjust=bondage_adjust, tenths_add=False)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXPOSED_ORGASM_SMALL_IN_HIDDEN_SEX)
+def handle_exposed_orgasm_small_in_hidden_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因隐奸中的小绝顶而导致的暴露
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在隐奸中则返回
+    if handle_premise.handle_hidden_sex_mode_0(character_id):
+        return
+    from Script.UI.Panel import hidden_sex_panel
+    hidden_sex_panel.handle_hidden_sex_flow(character_id = 0, add_flag = True, now_duration = 5, now_intensity = 2)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXPOSED_ORGASM_NORMAL_IN_HIDDEN_SEX)
+def handle_exposed_orgasm_normal_in_hidden_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因隐奸中的普绝顶而导致的暴露
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在隐奸中则返回
+    if handle_premise.handle_hidden_sex_mode_0(character_id):
+        return
+    from Script.UI.Panel import hidden_sex_panel
+    hidden_sex_panel.handle_hidden_sex_flow(character_id = 0, add_flag = True, now_duration = 6, now_intensity = 3)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXPOSED_ORGASM_STRONG_IN_HIDDEN_SEX)
+def handle_exposed_orgasm_strong_in_hidden_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因隐奸中的强绝顶而导致的暴露
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在隐奸中则返回
+    if handle_premise.handle_hidden_sex_mode_0(character_id):
+        return
+    from Script.UI.Panel import hidden_sex_panel
+    hidden_sex_panel.handle_hidden_sex_flow(character_id = 0, add_flag = True, now_duration = 7, now_intensity = 4)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXPOSED_ORGASM_SUPER_IN_HIDDEN_SEX)
+def handle_exposed_orgasm_super_in_hidden_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因隐奸中的超强绝顶而导致的暴露
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在隐奸中则返回
+    if handle_premise.handle_hidden_sex_mode_0(character_id):
+        return
+    from Script.UI.Panel import hidden_sex_panel
+    hidden_sex_panel.handle_hidden_sex_flow(character_id = 0, add_flag = True, now_duration = 10, now_intensity = 5)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)
