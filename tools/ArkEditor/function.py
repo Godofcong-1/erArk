@@ -33,6 +33,7 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("PenisPos", "阴茎位置")
     cvp_str_list[2] = cvp_str_list[2].replace("ShootPos", "射精位置")
     cvp_str_list[2] = cvp_str_list[2].replace("Relationship", "身份关系")
+    cvp_str_list[2] = cvp_str_list[2].replace("Gift", "礼物")
     cvp_str_list[2] = cvp_str_list[2].replace("F", "好感")
     cvp_str_list[2] = cvp_str_list[2].replace("X", "信赖")
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
@@ -111,6 +112,11 @@ def read_CVP(cvp_value_str: str):
     elif "身份关系" in cvp_str:
         b2_value = cvp_str_list[2].split("身份关系|")[1]
         cvp_str = cvp_str.replace(f"身份关系|{b2_value}", f"身份关系{b2_value}")
+    elif "礼物" in cvp_str:
+        b2_value = cvp_str_list[2].split("礼物|")[1]
+        item_id = cache_control.gift_items_data[b2_value]
+        b2_name = cache_control.item_data[item_id]
+        cvp_str = cvp_str.replace(f"礼物|{b2_value}", f"礼物{b2_name}")
     # 最后去掉所有的下划线
     cvp_str = cvp_str.replace("_", "")
     return cvp_str

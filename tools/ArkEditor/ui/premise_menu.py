@@ -281,7 +281,7 @@ class CVPMenu(QDialog):
 
         # B数值为属性，A能力,T素质,J宝珠,E经验,S状态,F好感度,X信赖
         self.cvp_b1 = QComboBox()
-        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系"])
+        self.cvp_b1.addItems(["待选择", "好感", "信赖", "能力", "素质", "宝珠", "经验", "状态", "攻略程度", "时间", "口上用flag", "前指令", "嵌套子事件", "其他角色在场", "部位污浊", "触发权重", "绳子捆绑", "角色扮演", "阴茎位置", "射精位置", "身份关系", "礼物"])
         self.cvp_b1.setCurrentIndex(0)
         self.cvp_b1.setFont(self.font)
         self.ABCD_button_layout.addWidget(self.cvp_b1)
@@ -385,6 +385,8 @@ class CVPMenu(QDialog):
             cvp_b_value = "ShootPos|" + self.cvp_b2.currentText().split("|")[0]
         elif cvp_b1 == "身份关系":
             cvp_b_value = "Relationship|" + self.cvp_b2.currentText()
+        elif cvp_b1 == "礼物":
+            cvp_b_value = "Gift|" + self.cvp_b2.currentText().split("|")[0]
         cvp_c = self.cvp_c.currentText()
         if cvp_c == "大于":
             cvp_c_value = "G"
@@ -446,6 +448,8 @@ class CVPMenu(QDialog):
         self.cvp_c.setCurrentIndex(0)
         self.cvp_c.setFont(self.font)
         self.cvp_c.setVisible(True)
+
+        self.cvp_d.setVisible(True)
 
     def change_b2(self, index: int):
         """改变b2的选项"""
@@ -592,4 +596,14 @@ class CVPMenu(QDialog):
             self.cvp_c.setCurrentIndex(0)
             self.cvp_d.setText("0")
             self.cvp_text.setText("身份关系前提，用于判断角色间是否为女儿、父亲、母亲等关系\n\n如果不限定是特定角色的女儿或者其他关系，则使用默认为0的角色id即可\n如果是想限定某个干员生的女儿，可以使用[是指定id角色的]，然后将角色id填入文本框\n\n如[交互对象][是玩家的][女儿][0]，则表示交互对象是玩家的女儿，通用所有女儿角色\n如[交互对象][是指定id角色的][女儿][100]，则表示交互对象是角色id为100的角色的女儿")
+        elif index == 21:
+            self.cvp_b2.clear()
+            for gift_id, item_id in cache_control.gift_items_data.items():
+                item_name = cache_control.item_data[item_id]
+                self.cvp_b2.addItem(f"{gift_id}|{item_name}")
+            self.cvp_b2.setCurrentIndex(0)
+            self.cvp_c.setVisible(False)
+            self.cvp_d.setVisible(False)
+            self.cvp_text.setText("用于在赠送礼物指令中判断当前赠送的是哪个礼物，人物应选择礼物的赠送方\n如自己送给对方道歉礼物")
+
         self.cvp_b = self.cvp_b2

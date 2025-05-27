@@ -20,6 +20,8 @@ clothing_path = "csv/ClothingType.csv"
 organ_path = "csv/Organ.csv"
 bondage_path = "csv/Bondage.csv"
 roleplay_path = "csv/Roleplay.csv"
+item_path = "csv/Item.csv"
+gift_items_path = "csv/Gift_Items.csv"
 
 def load_config():
     """载入配置文件"""
@@ -212,3 +214,27 @@ def load_config():
                     read_flag = True
                     continue
             cache_control.roleplay_data[i["cid"]] = i["name"]
+    with open(item_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "道具配置数据":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            cache_control.item_data[i["cid"]] = i["name"]
+    with open(gift_items_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "礼物物品":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            if i["item_id"] == '0':
+                continue
+            cache_control.gift_items_data[i["cid"]] = i["item_id"]

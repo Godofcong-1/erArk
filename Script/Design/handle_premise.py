@@ -244,6 +244,12 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             else:
                 final_value = final_character_data.dirty.cloth_semen[part_cid][1]
     elif premise_all_value_list[1][0] == "G":
+        # 礼物前提
+        if "Gift" in premise_all_value_list[1]:
+            if final_character_data.behavior.gift_id == type_son_id:
+                return 1
+            else:
+                return 0
         final_value = attr_calculation.get_character_fall_level(final_character_id, minus_flag=True)
     elif premise_all_value_list[1][0] == "B":
         if "Bondage" in premise_all_value_list[1]:

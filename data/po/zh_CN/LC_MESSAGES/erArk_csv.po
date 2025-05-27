@@ -25305,7 +25305,7 @@ msgid "“要喝咖啡吗？好的~”{TargetName}收到泡咖啡的请求，去
 msgstr ""
 
 #: Event:4925fd01-a009-4af5-bf10-957ff228d79f
-msgid "调教指令前提|1|驯服及以下：\n部位扩张调教：非处女，非A处女，调教室，被监禁，非无意识\n敏感度调教：持有媚药，调教室，被监禁，非无意识\n催眠调教：非处女，已催眠-极，被监禁，非无意识\n夺取处女：处女，调教室，被监禁，非无意识\n夺取A处女：非处女，A处女，调教室，被监禁，非无意识\n侍奉调教：饥饿，被监禁，非无意识\n自慰调教：被监禁，非无意识\n榨乳调教：持有震动棒，榨乳机，非处女，调教室，被监禁，非无意识"
+msgid "调教指令前提|1|驯服及以下：\n部位扩张调教：非处女，非A处女，调教室，被监禁，非无意识\n敏感度调教：持有媚药，调教室，被监禁，非无意识\n催眠调教：非处女，已催眠-极，被监禁，非无意识\n夺取处女：处女，调教室，被监禁，非无意识\n夺取A处女：非处女，A处女，调教室，被监禁，非无意识\n侍奉调教：饥饿，被监禁，非无意识\n自慰调教：被监禁，非无意识\n榨乳调教：持有震动棒，榨乳机，非处女，调教室，被监禁，非无意识\n宠物及以上\n获得素质：满足各种经验要求后即可使用，可以获得各种性爱相关素质"
 msgstr ""
 
 #: Event:c7e1a6bb-9caf-4e6b-a2fd-eaaf8f97bef5
@@ -25325,7 +25325,7 @@ msgid "催眠调教|20|{PlayerName}一个响指，被完全催眠的{TargetName}
 msgstr ""
 
 #: Event:f8926acc-6982-4ced-ae3a-bb1feac0274f
-msgid "夺取处女|10|{TargetName}被脱光了衣服绑在调教台上，阴部暴露在{PlayerName}面前。\n“真是漂亮的小穴啊，之前考虑到你的感受，所以一直没有让你破处。”{PlayerName}的手指轻轻滑过阴唇。\n“不过既然现在决定把你调教成性奴，那今天就享用一下处女小穴吧。”{PlayerName}掰开{TargetName}的小穴，将龟头顶在穴口。\n“不，不要，插进来的话，我真的会杀了你。”{TargetName}威胁着，但现在失去力量的她根本吓不到{PlayerName}。\n随着肉棒插入阴道，捅破处女膜，破瓜之痛传入{TargetName}脑中，泪珠从她的眼角流下。\n“真是紧致的小穴呢，好好调教的话一定会成为非常好用的肉穴吧~”{PlayerName}凑到{TargetName}耳边挑衅着。\n失去反抗力量的{TargetName}只能闭上眼睛咬着牙，默默忍受着被玷污的事实。\n[调教进度+1]"
+msgid "夺取处女|10|{TargetName}被脱光了衣服绑在调教台上，阴部暴露在{PlayerName}面前。\n“真是漂亮的小穴啊，之前考虑到你的感受，所以一直没有让你破处。”{PlayerName}的手指轻轻滑过阴唇。\n“不过既然现在决定把你调教成性奴，那今天就享用一下处女小穴吧。”{PlayerName}掰开{TargetName}的小穴，将龟头顶在穴口。\n“不，不要，插进来的话，我真的会杀了你。”{TargetName}威胁着，但现在失去力量的她根本吓不到{PlayerName}。\n随着肉棒插入阴道，捅破处女膜，破瓜之痛传入{TargetName}脑中，泪珠从她的眼角流下。\n“真是紧致的小穴呢，好好调教的话一定会成为非常好用的肉穴吧~”{PlayerName}凑到{TargetName}耳边挑衅着。\n失去反抗力量的{TargetName}只能闭上眼睛咬着牙，默默忍受着被玷污的事实。\n{PlayerName}将手指伸入{TargetName}嘴中，不停地侵犯着{TargetName}的处女小穴。\n渐渐地，{TargetName}不再挣扎，“原来是这种感觉...”，{TargetName}心中似乎有什么觉醒了。\n[调教进度+1]"
 msgstr ""
 
 #: Event:52474aa7-373c-4669-8e59-d58bb7cf2cbc
@@ -25430,6 +25430,42 @@ msgstr ""
 
 #: Event:5be8df27-cd35-4d48-a85a-8b34ad01993a
 msgid "“嗯...嗯？诶？！你这家伙！在干什么啊！”{TargetName}从时停中解放，看见眼前的{PlayerName}一丝不挂，正在侵犯自己，吓得一下子将其推开。\n“看来现在还是不要解除时停比较好。”{PlayerName}重新对{TargetName}施展了时停技艺，{TargetName}再次被停止了。"
+msgstr ""
+
+#: Event:147eea29-a547-4ae0-9f50-b0ce962bb4de
+msgid "获得素质|1|{TargetName}多次被{PlayerName}插入小穴中射精，身体已经喜欢上阴道被注入滚烫的精液的感觉了。\n“哈~人家的小穴~好想吃主人的精液~”{TargetName}看着{PlayerName}，一脸渴望的表情。\n{TargetName}获得了【膣射中毒】"
+msgstr ""
+
+#: Event:87936ce8-ea9a-4b12-b359-0175ad41bc0e
+msgid "获得素质|1|{TargetName}多次在口交侍奉{PlayerName}时吞下精液并绝顶，身体逐渐喜欢上了这个味道。\n“主人的精液~好美味~”{TargetName}舔了舔嘴唇，充满期待地看着{PlayerName}。\n{TargetName}获得了【精爱味觉】"
+msgstr ""
+
+#: Event:2488bb73-57e3-4ba5-8f1c-5258d3cbb59f
+msgid "获得素质|1|{TargetName}多次在口交侍奉{PlayerName}时吞下精液，身体逐渐喜欢上了被从口中灌入精液的感觉。\n“主人~要来这个嘛~”{TargetName}伸出舌头，用手做着空气口交，充满期待地看着{PlayerName}。\n{TargetName}获得了【饮精中毒】"
+msgstr ""
+
+#: Event:5e62a89e-2bf6-4ca6-8c88-942fce6d8c49
+msgid "获得素质|1|在多次的高潮中，{TargetName}的身体和精神逐渐爱上了被{PlayerName}玩弄到绝顶的感觉，变得想要追求更加激烈的性爱了。\n{TargetName}获得了【淫乱】"
+msgstr ""
+
+#: Event:3b593fb7-8312-497a-b42b-3ea882155d20
+msgid "获得素质|1|{TargetName}被{PlayerName}随意地用精液玷污，已经逐渐习惯，甚至是爱上了浑身沾染着精液的感觉。\n“哈~精液的气味~”{TargetName}光是闻着精液的气味，身体就变得相当兴奋，甚至快要达到高潮了。\n{TargetName}获得了【精液中毒】"
+msgstr ""
+
+#: Event:a273e1e3-a680-4933-86ec-0afef4d3cade
+msgid "获得素质|1|{TargetName}经常被{PlayerName}命令表演自慰，以至于即使没有命令，{TargetName}也常常会偷偷自慰。\n“嗯~主人~”{TargetName}一边幻想着被{PlayerName}侵犯，一边偷偷地玩弄自己的身体，发出一声声闷哼。\n{TargetName}获得了【自慰中毒】"
+msgstr ""
+
+#: Event:72ad6b02-b6a2-4985-a355-c60aba570f3e
+msgid "获得素质|1|{TargetName}多次被{PlayerName}插入屁穴中射精，身体已经喜欢上肠道被注入滚烫的精液的感觉了。\n“哈~人家的屁穴~好想吃主人的精液~”{TargetName}看着{PlayerName}，一脸渴望的表情。\n{TargetName}获得了【肛射中毒】"
+msgstr ""
+
+#: Event:069f9d20-b0cc-443c-9922-ca94af879392
+msgid "获得素质|1|{TargetName}在被{PlayerName}虐待的过程中，也逐渐享受起苦痛带来的快乐了。\n“还想被主人虐待~”{TargetName}跪在{PlayerName}面前，像个抖M母狗般乞求着。\n{TargetName}获得了【受虐狂】"
+msgstr ""
+
+#: Event:6632a8ba-4198-4b3b-b128-1c1938de8727
+msgid "获得素质|1|{TargetName}在多次用手侍奉{PlayerName}后，手指逐渐变得灵活了。\n“现在主人要试试人家的手活吗~”{TargetName}微笑着看着{PlayerName}。\n{TargetName}获得了【灵活手指】"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
