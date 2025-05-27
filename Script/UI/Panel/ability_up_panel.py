@@ -411,28 +411,61 @@ class Characterabi_cmd_Text:
                 need_value = int(need_text.split('|')[1])
                 if need_type == "A":
                     abi_name = game_config.config_ability[need_type_id].name
-                    button_text = _("需要能力 : ") + abi_name + _(" 至少为") + str(need_value) + "\n"
-                    if self.character_data.ability[need_type_id] < need_value:
-                        judge = 0
+                    now_value = self.character_data.ability[need_type_id]
+                    button_text = _("需要能力 : {0} 至少为{1}，当前为{2}\n").format(abi_name, need_value, now_value)
                 elif need_type == "J":
                     juel_name = game_config.config_juel[need_type_id].name
-                    button_text = _("需要宝珠 : ") + juel_name + _(" 至少为") + str(need_value) + "\n"
-                    if self.character_data.juel[need_type_id] < need_value:
-                        judge = 0
+                    now_value = self.character_data.juel[need_type_id]
+                    button_text = _("需要宝珠 : {0} 至少为{1}，当前为{2}\n").format(juel_name, need_value, now_value)
                     self.jule_dict[need_type_id] = need_value
                 elif need_type == "E":
                     experience_name = game_config.config_experience[need_type_id].name
-                    button_text = _("需要经验 : ") + experience_name + _(" 至少为") + str(need_value) + "\n"
-                    if self.character_data.experience[need_type_id] < need_value:
-                        judge = 0
+                    now_value = self.character_data.experience[need_type_id]
+                    button_text = _("需要经验 : {0} 至少为{1}，当前为{2}\n").format(experience_name, need_value, now_value)
+                if now_value < need_value:
+                    judge = 0
                 now_draw = draw.NormalDraw()
                 now_draw.text = button_text
                 now_draw.draw()
+
+            # 技巧的额外处理
+            if self.ability_id == 30:
+                # 玩家的情况
+                if self.character_id == 0:
+                    now_ability_level = self.character_data.ability[self.ability_id]
+                    now_other_ability_level = 0
+                    for tem_ability_cid in game_config.config_ability:
+                        if game_config.config_ability[tem_ability_cid].ability_type == 5:
+                            now_other_ability_level += self.character_data.ability[tem_ability_cid]
+                    info_text = _("博士的技巧升级需要额外满足以下条件：\n")
+                    info_text += _("○[指技]、[舌技]、[腰技]、[隐蔽]能力等级之和大于等于技巧等级*2\n")
+                    info_text += _("  当前技巧等级为{0}，当前[指技]、[舌技]、[腰技]等级之和为{1}\n").format(now_ability_level, now_other_ability_level)
+                    if now_other_ability_level < now_ability_level * 2:
+                        judge = 0
+                    now_draw = draw.NormalDraw()
+                    now_draw.text = info_text
+                    now_draw.draw()
+                # NPC的情况
+                else:
+                    now_ability_level = self.character_data.ability[self.ability_id]
+                    now_other_ability_level = 0
+                    for tem_ability_cid in game_config.config_ability:
+                        if game_config.config_ability[tem_ability_cid].ability_type == 5:
+                            now_other_ability_level += self.character_data.ability[tem_ability_cid]
+                    info_text = _("干员的技巧升级需要额外满足以下条件：\n")
+                    info_text += _("○全子性技的等级之和，即[指技]、[舌技]、[足技]、[胸技]、[膣技]、[肛技]、[隐蔽]能力等级之和大于等于技巧等级*3\n")
+                    info_text += _("  当前技巧等级为{0}，当前全子性技的等级和为{1}\n").format(now_ability_level, now_other_ability_level)
+                    if now_other_ability_level < now_ability_level * 3:
+                        judge = 0
+                    now_draw = draw.NormalDraw()
+                    now_draw.text = info_text
+                    now_draw.draw()
 
             # debug模式下无需判断
             if cache.debug_mode:
                 judge = 1
 
+            line_feed.draw()
             # 判断是否可以升级
             if self.ability_level == 8:
                 now_draw = draw.NormalDraw()

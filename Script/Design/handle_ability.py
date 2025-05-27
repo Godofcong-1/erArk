@@ -87,6 +87,15 @@ def gain_ability(character_id: int):
 
             # 调用独立函数判断升级需求是否满足，并获取需要消耗的珠
             judge, jule_dict = check_upgrade_requirements(need_list, character_id)
+            # 如果是技巧能力，则额外判断其他性技能力等级
+            if ability_cid == 30:
+                now_other_ability_level = 0
+                # 需要其他性技能力等级满足要求
+                for tem_ability_cid in game_config.config_ability:
+                    if game_config.config_ability[tem_ability_cid].ability_type == 5:
+                        now_other_ability_level += character_data.ability[tem_ability_cid]
+                if now_other_ability_level < ability_level * 3:
+                    judge = False
             if not judge:
                 break
 
