@@ -382,8 +382,23 @@ class Gift_Panel:
         character_data: game_type.Character = cache.character_data[0]
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]
+        gift_data = game_config.config_gift_items[gift_id]
+        # 好感礼物的情况
+        if gift_data.type == 3:
+            last_gift_time = target_character_data.action_info.last_gift_time
+            days_diff = game_time.count_day_for_datetime(last_gift_time, cache.game_time)
+            # 如果和今天是同一天，则不能重复赠送
+            if days_diff <= 0:
+                now_draw = draw.WaitDraw()
+                draw_text = _("\n  {0}今天已经收过好感礼物了，不能重复赠送\n").format(target_character_data.name)
+                now_draw.text = draw_text
+                now_draw.draw()
+                return
+            else:
+                # 更新最后赠送时间
+                target_character_data.action_info.last_gift_time = cache.game_time
         # 道歉礼物的情况
-        if gift_id == 2:
+        elif gift_data.type == 2:
             if target_character_data.ability[18] == 0 and target_character_data.sp_flag.angry_with_player == False:
                 now_draw = draw.WaitDraw()
                 draw_text = _("\n  {0}没有生气，不需要赠送道歉礼物\n").format(target_character_data.name)
@@ -405,7 +420,7 @@ class Gift_Panel:
                 now_draw.draw()
 
         # 礼物持有数量-1
-        item_id = game_config.config_gift_items[gift_id].item_id
+        item_id = gift_data.item_id
         character_data.item[item_id] -= 1
         # 开始赠送礼物
         character_data.behavior.gift_id = gift_id

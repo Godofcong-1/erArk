@@ -459,6 +459,8 @@ class BehaviorEffect:
     """ 指令_专用结算 交互对象从无意识H中恢复意识的结算 """
     TARGET_DIRTY_RESET_IN_SHOWER = 537
     """ 指令_专用结算 交互对象进行污浊清洗(525) """
+    FAVORABILITY_GIFT_ADD_ADJUST = 538
+    """ 指令_专用结算 （赠送礼物用）根据好感礼物的类型增加交互对象的好感与信赖 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

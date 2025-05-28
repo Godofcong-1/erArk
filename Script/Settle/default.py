@@ -1,6 +1,8 @@
 import datetime
 import random, math
 from types import FunctionType
+
+from numpy import add
 from Script.Design import (
     settle_behavior,
     instuct_judege,
@@ -7668,6 +7670,49 @@ def handle_target_dirty_reset_in_shower(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     handle_dirty_reset_in_shower(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FAVORABILITY_GIFT_ADD_ADJUST)
+def handle_favorability_gift_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （赠送礼物用）根据好感礼物的类型增加交互对象的数值
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    gift_id = character_data.behavior.gift_id
+    # 如果没有礼物则返回
+    if gift_id == 0:
+        return
+    gift_data = game_config.config_gift_items[gift_id]
+    # 道歉礼物
+    if gift_data.item_id == 171:
+        base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, 0, change_data)
+        base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+        handle_target_angry_with_player_flag_to_0(character_id, add_time, change_data, now_time)
+    # 好感礼物小
+    elif gift_data.item_id == 172:
+        base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, 0, change_data)
+        base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+    # 好感礼物中
+    elif gift_data.item_id == 173:
+        base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, 0, change_data)
+        base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, 0, change_data)
+        base_chara_state_common_settle(character_data.target_character_id, 30, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+    # 好感礼物大
+    elif gift_data.item_id == 174:
+        base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, 0, change_data)
+        base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, 0, change_data)
+        base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

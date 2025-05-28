@@ -607,6 +607,8 @@ class ACTION_INFO:
         """ 正在对自己进行交互的对方角色信息，0对方角色id，1对方行动结束时间 """
         self.past_move_position_list: List[str] = []
         """ 角色的过去移动位置记录，list类型，最大长度为10 """
+        self.last_gift_time: datetime.datetime = datetime.datetime(1, 1, 1)
+        """ 角色上次被赠送好感礼物的时间 """
 
 
 class AUTHOR_FLAG:
