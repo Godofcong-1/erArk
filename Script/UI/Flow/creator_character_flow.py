@@ -647,6 +647,7 @@ class Character_FirstNPC:
             line_feed_draw.draw()
             # 特殊角色面板
             if self.show_special_chara_handle_panel:
+                chara_count = 0
                 for character_id in self.special_chara_list:
                     npc_character_data = cache.character_data[character_id]
                     # 跳过没有口上的
@@ -663,9 +664,13 @@ class Character_FirstNPC:
                     draw_text = f"[{str(npc_character_data.adv).rjust(4,'0')}]：{npc_character_data.name}"
                     draw_text += f"({npc_character_data.talk_size}kb)"
                     npc_draw.text = draw_text
-                    npc_draw.width = self.width
+                    npc_draw.width = self.width / 5
                     npc_draw.style = now_style
                     npc_draw.draw()
+                    # 每五个换行
+                    chara_count += 1
+                    if chara_count % 5 == 0:
+                        line_feed_draw.draw()
             line_feed_draw.draw()
             line_feed_draw.draw()
 
