@@ -354,11 +354,15 @@ int,str,str,int,str,str
 881,examine_tail,检查尾巴,1,pl,猥亵|检查
 882,examine_tail_flexibility,测试尾巴灵活度,3,pl,猥亵|检查
 883,examine_horn,检查兽角,1,pl,猥亵|检查
-884,examine_ears,检查兽耳,1,pl,猥亵|检查
-885,examine_wing,检查翅膀,1,pl,猥亵|检查
-886,examine_ring,检查光环,1,pl,猥亵|检查
-887,examine_tentacle,检查触手,1,pl,猥亵|检查
-888,examine_tentacle_flexibility,测试触手灵活度,3,pl,猥亵|检查
+884,examine_horn_sensitivity,测试兽角敏感度,3,pl,猥亵|检查
+885,examine_ears,检查兽耳,1,pl,猥亵|检查
+886,examine_ears_sensitivity,测试兽耳敏感度,3,pl,猥亵|检查
+887,examine_wing,检查翅膀,1,pl,猥亵|检查
+888,examine_wing_sensitivity,测试翅膀敏感度,3,pl,猥亵|检查
+889,examine_ring,检查光环,1,pl,猥亵|检查
+890,examine_ring_sensitivity,测试光环敏感度,3,pl,猥亵|检查
+891,examine_tentacle,检查触手,1,pl,猥亵|检查
+892,examine_tentacle_flexibility,测试触手灵活度,3,pl,猥亵|检查
 
 901,penetrating_vision_on,开启透视,1,pl,技艺
 902,penetrating_vision_off,关闭透视,1,pl,技艺
