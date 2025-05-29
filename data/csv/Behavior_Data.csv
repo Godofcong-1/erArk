@@ -358,7 +358,7 @@ int,str,str,int,str,str
 885,examine_ears,检查兽耳,1,pl,猥亵|检查
 886,examine_ears_sensitivity,测试兽耳敏感度,3,pl,猥亵|检查
 887,examine_wing,检查翅膀,1,pl,猥亵|检查
-888,examine_wing_sensitivity,测试翅膀敏感度,3,pl,猥亵|检查
+888,examine_wing_flexibility,测试翅膀灵活度,3,pl,猥亵|检查
 889,examine_ring,检查光环,1,pl,猥亵|检查
 890,examine_ring_sensitivity,测试光环敏感度,3,pl,猥亵|检查
 891,examine_tentacle,检查触手,1,pl,猥亵|检查

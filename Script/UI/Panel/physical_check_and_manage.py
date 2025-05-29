@@ -251,7 +251,7 @@ class Physical_Check_And_Manage_Panel:
             "examine_tail_flexibility": "examine_tail",  # 测试尾巴
             "examine_horn_sensitivity": "examine_horn",  # 测试兽角
             "examine_ears_sensitivity": "examine_ears",  # 测试兽耳
-            "examine_wing_sensitivity": "examine_wing",  # 测试翅膀
+            "examine_wing_flexibility": "examine_wing",  # 测试翅膀
             "examine_ring_sensitivity": "examine_ring",  # 测试光环
             "examine_tentacle_flexibility": "examine_tentacle",  # 测试触手
         }

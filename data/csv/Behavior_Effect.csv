@@ -350,7 +350,7 @@ int,str,str
 885,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
 886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 887,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-888,examine_wing_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 889,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
 890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
