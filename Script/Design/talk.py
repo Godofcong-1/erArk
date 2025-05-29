@@ -134,6 +134,10 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
         talk_premise_dict = game_config.config_talk_premise_data[talk_id]
         now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(talk_premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
         if now_weight:
+            # 时停解放时，有时停前提的权重*10
+            if handle_premise.handle_self_time_stop_orgasm_relase(character_id) or handle_premise.handle_target_time_stop_orgasm_relase(character_id):
+                if "self_time_stop_orgasm_relase" in talk_premise_dict or "target_time_stop_orgasm_relase" in talk_premise_dict:
+                    now_weight *= 10
             # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
                 now_weight *= 10
