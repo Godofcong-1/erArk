@@ -7713,6 +7713,7 @@ def handle_favorability_gift_add_adjust(
         base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, 0, change_data)
         base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, 0, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+        base_chara_experience_common_settle(character_data.target_character_id, 40, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)
