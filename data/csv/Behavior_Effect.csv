@@ -346,11 +346,15 @@ int,str,str
 881,examine_tail,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
 882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 883,examine_horn,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-884,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-885,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-886,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-887,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
-888,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+885,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+887,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+888,examine_wing_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+889,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 
 901,penetrating_vision_on,1201
 902,penetrating_vision_off,1202
@@ -366,7 +370,7 @@ int,str,str
 925,hypnosis_active_h,1511 - 1512 - 1228
 932,hypnosis_pain_as_pleasure,1511 - 1512 - 1230
 941,time_stop_on,1241
-942,time_stop_off,1244 - 1246 - 527 - 536 - 1242
+942,time_stop_off,1244 - 1246 - 536 - 1242 - 527
 943,carry_target,1243
 944,stop_carry_target,1244
 945,target_free_in_time_stop,1245
