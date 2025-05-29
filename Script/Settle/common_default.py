@@ -812,7 +812,7 @@ def base_chara_climix_common_settle(
         degree_dict = {0 : "small", 1 : "normal", 2 : "strong", 3 : "super"}
         # 如果指定了程度，则直接使用指定的程度
         if degree >= 0:
-            behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
+            second_behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
         # 否则根据之前的高潮程度来判断
         else:
             pre_data = character_data.h_state.orgasm_level[part_id] # 记录里的前高潮程度
@@ -822,8 +822,8 @@ def base_chara_climix_common_settle(
                 degree = 1
             elif pre_data % 3 == 2:
                 degree = 2
-            behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
-        character_data.second_behavior[behavior_id] = 1
+            second_behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
+        character_data.second_behavior[second_behavior_id] = 1
         character_data.h_state.orgasm_level[part_id] += 1
 
     # 触发射精面板

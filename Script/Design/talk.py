@@ -299,6 +299,8 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
                 orgasm_degree = _("强绝顶")
             elif "super" in second_behavior_id:
                 orgasm_degree = _("超强绝顶")
+            elif "edge" in second_behavior_id:
+                orgasm_degree = _("绝顶寸止")
             else:
                 orgasm_degree = _("小绝顶")
             # 最后文本
