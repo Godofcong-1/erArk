@@ -320,40 +320,41 @@ int,str,str
 805,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
 806,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
 
-850,examine_hair,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+850,examine_hair,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 851,examine_hair_smoothness,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|45_G_1 - 70
-852,examine_oral,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+852,examine_oral,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 853,examine_sucking_and_swallowing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|42_G_1 - 142
-854,examine_armpit,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+854,examine_armpit,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 855,examine_armpit_clamping,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|46_G_1 - 120
-856,examine_breast,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1
-857,examine_nipple_and_areola,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1
+856,examine_breast,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1 - 81 - CVE_A1_E|88_G_1
+857,examine_nipple_and_areola,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1 - 81 - CVE_A1_E|88_G_1
 858,examine_breast_clamping,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|43_G_1 - 144
-859,examine_cilitoris,21 - 11 - 12 - 57 - 58 - 112 - CVE_A2_E|2_G_1
-860,examine_hands,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+859,examine_cilitoris,21 - 11 - 12 - 57 - 58 - 112 - CVE_A2_E|2_G_1 - 81 - CVE_A1_E|88_G_1
+860,examine_hands,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 861,examine_hands_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|41_G_1 - 141
-862,examine_foot,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+862,examine_foot,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 863,examine_foots_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|44_G_1 - 143
-871,examine_vulva_and_shape,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1
-872,examine_vagina_and_folds,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1
-873,examine_hymen,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1
-874,examine_orifice,21 - 11 - 12 - 57 - 58 - 117 - CVE_A2_E|7_G_1
+871,examine_vulva_and_shape,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1 - 81 - CVE_A1_E|88_G_1
+872,examine_vagina_and_folds,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1 - 81 - CVE_A1_E|88_G_1
+873,examine_hymen,21 - 11 - 12 - 57 - 58 - 114 - CVE_A2_E|4_G_1 - 81 - CVE_A1_E|88_G_1
+874,examine_orifice,21 - 11 - 12 - 57 - 58 - 117 - CVE_A2_E|7_G_1 - 81 - CVE_A1_E|88_G_1
 875,examine_vagina_firmness,21 - 11 - 12 - 57 - 58 - 122 - 131 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - 145
-876,examine_anus,21 - 11 - 12 - 57 - 58 - 115 - CVE_A2_E|5_G_1
+876,examine_anus,21 - 11 - 12 - 57 - 58 - 115 - CVE_A2_E|5_G_1 - 81 - CVE_A1_E|88_G_1
 877,examine_intestine_firmness,21 - 11 - 12 - 57 - 58 - 123 - 132 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - 146
-878,examine_urethra,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1
-879,examine_urination_status,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1
-881,examine_tail,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+878,examine_urethra,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1 - CVE_A2_E|67_G_1 - 81 - CVE_A1_E|88_G_1
+879,examine_urination_status,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1 - 81 - CVE_A1_E|88_G_1
+880,examine_urethra_firmness,21 - 11 - 12 - 57 - 58 - 124 - 133 - CVE_A2_E|6_G_1 - CVE_A2_E|63_G_1 - CVE_A2_E|67_G_1 - 120
+881,examine_tail,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-883,examine_horn,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+883,examine_horn,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-885,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+885,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-887,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+887,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-889,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+889,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1
+891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
 
 901,penetrating_vision_on,1201
