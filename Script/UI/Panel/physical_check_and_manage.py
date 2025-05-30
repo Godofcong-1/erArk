@@ -248,6 +248,7 @@ class Physical_Check_And_Manage_Panel:
             "examine_vagina_firmness": "examine_vagina_and_folds",  # 测试阴道
             "examine_intestine_firmness": "examine_anus",  # 测试肠道
             "examine_urination_status": "examine_urethra",  # 测试排尿
+            "examine_urethra_firmness": "examine_urethra",  # 测试尿道
             "examine_tail_flexibility": "examine_tail",  # 测试尾巴
             "examine_horn_sensitivity": "examine_horn",  # 测试兽角
             "examine_ears_sensitivity": "examine_ears",  # 测试兽耳
@@ -305,6 +306,9 @@ class Physical_Check_And_Manage_Panel:
                     cant_flag = True
                     behavior_text += _("(未破处)")
                 elif behavior_id == "examine_intestine_firmness" and target_character_data.talent[1]:
+                    cant_flag = True
+                    behavior_text += _("(未破处)")
+                elif behavior_id == "examine_urethra_firmness" and target_character_data.talent[2]:
                     cant_flag = True
                     behavior_text += _("(未破处)")
                 # 观察处女膜指令需要是处女或者今日破处才能使用

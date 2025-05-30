@@ -351,6 +351,7 @@ int,str,str,int,str,str
 877,examine_intestine_firmness,测试肠道紧致度,3,pl,猥亵|检查
 878,examine_urethra,检查尿道,1,pl,猥亵|检查
 879,examine_urination_status,测试现场排尿,3,pl,猥亵|检查
+880,examine_urethra_firmness,测试尿道紧致度,3,pl,猥亵|检查
 881,examine_tail,检查尾巴,1,pl,猥亵|检查
 882,examine_tail_flexibility,测试尾巴灵活度,3,pl,猥亵|检查
 883,examine_horn,检查兽角,1,pl,猥亵|检查

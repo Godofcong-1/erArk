@@ -649,6 +649,8 @@ class Behavior:
     """ 检查尿道 """
     EXAMINE_URINATION_STATUS = "examine_urination_status"
     """ 测试现场排尿 """
+    EXAMINE_URETHRA_FIRMNESS = "examine_urethra_firmness"
+    """ 测试尿道紧致度 """
     EXAMINE_TAIL = "examine_tail"
     """ 检查尾巴 """
     EXAMINE_TAIL_FLEXIBILITY = "examine_tail_flexibility"
