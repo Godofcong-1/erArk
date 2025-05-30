@@ -151,14 +151,17 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 if not len(row[k]):
                     del row[k]
                     continue
-                if now_type == "int":
-                    row[k] = int(row[k])
-                elif now_type == "str":
-                    row[k] = str(row[k]).replace('"','\\"') # 转义引号防止造成po文件混乱
-                elif now_type == "bool":
-                    row[k] = int(row[k])
-                elif now_type == "float":
-                    row[k] = float(row[k])
+                try:
+                    if now_type == "int":
+                        row[k] = int(row[k])
+                    elif now_type == "str":
+                        row[k] = str(row[k]).replace('"','\\"') # 转义引号防止造成po文件混乱
+                    elif now_type == "bool":
+                        row[k] = int(row[k])
+                    elif now_type == "float":
+                        row[k] = float(row[k])
+                except Exception as e:
+                    print(f"Error processing row: {row}, key: {k}, type: {now_type}, error: {e}")
                 # 使用文件名+cid名作为数据内的cid，以防不同文件的cid冲突
                 if k == "cid" and talk:
                     # if "-" in file_id:
