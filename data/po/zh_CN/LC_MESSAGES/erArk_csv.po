@@ -13665,27 +13665,51 @@ msgid "婴儿"
 msgstr ""
 
 #: .\data\csv\Talent.csv:80
-msgid "身体年龄特征"
+msgid "还是婴儿阶段，身体极为娇小，四肢短小而圆润，皮肤光滑细腻。头部比例较大，眼睛大而明亮，表情天真无邪。行为主要以哭泣、咿呀学语和简单的手脚动作为主，完全依赖他人照顾。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:81
 msgid "幼女"
 msgstr ""
 
+#: .\data\csv\Talent.csv:81
+msgid "体型娇小但比婴儿更加协调，脸部轮廓柔和可爱，大眼睛占据脸部较大比例。四肢纤细但带有幼童特有的圆润。行为天真活泼，充满童趣，举手投足间带有稚气和纯真。"
+msgstr ""
+
+#: .\data\csv\Talent.csv:82
+msgid "身材娇小但已初现少女轮廓，身体还在发育中。肢体纤细，脸部保留着孩童的圆润与稚气，但已有了些许少女感。性格和行为举止往往兼具天真与早熟的矛盾特质。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:83
 msgid "少女"
+msgstr ""
+
+#: .\data\csv\Talent.csv:83
+msgid "身体已基本发育完全，但仍保持青春的活力与线条。皮肤富有弹性且光滑细腻，脸部轮廓清晰但柔和。举止间充满朝气与活力，眼神中透露出对世界的好奇与热情。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:84
 msgid "大姐姐"
 msgstr ""
 
+#: .\data\csv\Talent.csv:84
+msgid "身体已完全发育成熟，展现出成年女性的丰满与线条美。肌肤保持弹性但开始呈现成熟质感，脸部轮廓更为分明。举止优雅从容，眼神中既有成熟也有亲切，给人可靠的印象。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:85
 msgid "熟女"
 msgstr ""
 
+#: .\data\csv\Talent.csv:85
+msgid "身体保持着成熟女性的魅力，皮肤开始有细微的岁月痕迹。体态丰腴有致，举手投足间散发着沉稳与从容。眼角可能有浅浅的笑纹，整体散发出经历世事后的成熟魅力。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:86
 msgid "人妻"
+msgstr ""
+
+#: .\data\csv\Talent.csv:86
+msgid "身体散发着已为人妻的成熟韵味，体态丰满而不失优雅。举止间流露出生活的历练与智慧，眼神温柔而坚定。气质中兼具家庭的温暖与独立的魅力，行为举止透露出责任感与包容力。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:87
@@ -13696,24 +13720,52 @@ msgstr ""
 msgid "可与以上几个叠加"
 msgstr ""
 
+#: .\data\csv\Talent.csv:89
+msgid "柔软的动物耳朵长在头顶，能灵活地随情绪变化而转动。耳朵内侧覆盖着细腻的绒毛，轻触会引起敏感的反应。根据不同种类可能呈现出各种形态，从小巧可爱到修长优雅不等。"
+msgstr ""
+
+#: .\data\csv\Talent.csv:90
+msgid "头部长出的角质结构，质地坚硬光滑，可能是短小圆润的，也可能是修长弯曲的。角的表面可能有独特的纹路或花纹，触碰时会传递轻微的感觉。在阳光下可呈现出微妙的光泽。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:91
 msgid "兽尾"
+msgstr ""
+
+#: .\data\csv\Talent.csv:91
+msgid "从尾椎骨延伸出的柔软尾巴，覆盖着与兽耳相同特性的毛发。尾巴能自主活动，反映主人的情绪变化。长度和形态各异，从短小蓬松到修长灵活，都能展现出独特的魅力与性感。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:92
 msgid "光环"
 msgstr ""
 
+#: .\data\csv\Talent.csv:92
+msgid "头顶上方漂浮着的圆形光芒，散发出柔和而神圣的光辉。光环不受物理约束，可随主人移动而保持稳定悬浮。根据情绪变化，光环的亮度和颜色可能会有微妙变化。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:93
 msgid "翅膀"
+msgstr ""
+
+#: .\data\csv\Talent.csv:93
+msgid "背部生长出的翼状结构，覆盖着细腻的羽毛或薄如蝉翼的膜。翅膀可以自由展开收拢，充分展开时能达到身高的一到两倍宽度。羽翼轻盈而富有弹性，有着极高的审美价值。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:94
 msgid "触手"
 msgstr ""
 
+#: .\data\csv\Talent.csv:94
+msgid "身体某处可以长出柔软灵活的触手组织，表面光滑且略带黏性。这些触手能够自由延展收缩，具有惊人的力量和灵敏度。触手末端的感知极为敏锐，可以感知微小的温度和质地变化。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:95
 msgid "小车"
+msgstr ""
+
+#: .\data\csv\Talent.csv:95
+msgid "带着小车。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:97
@@ -13784,16 +13836,32 @@ msgstr ""
 msgid "细腿"
 msgstr ""
 
+#: .\data\csv\Talent.csv:105
+msgid "修长纤细的双腿，肌肉线条若隐若现，关节处形成优美的轮廓。腿部肌肤光滑细腻，充满了视觉上的美感。行走时姿态轻盈，给人以高挑优雅的印象。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:106
 msgid "肉腿"
+msgstr ""
+
+#: .\data\csv\Talent.csv:106
+msgid "腿部肌肉丰满有力，线条圆润饱满。大腿内侧和小腿肚都有着恰到好处的肉感，触感柔软而富有弹性。行走时肌肉的轻微起伏展现出健康与活力。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:107
 msgid "小足"
 msgstr ""
 
+#: .\data\csv\Talent.csv:107
+msgid "脚掌纤巧玲珑，足弓高挑优雅。脚趾排列紧凑整齐，比例和谐。足背皮肤细腻，踝关节处轮廓分明。整体呈现出精致小巧的美感，走路时动作轻盈。"
+msgstr ""
+
 #: .\data\csv\Talent.csv:108
 msgid "长足"
+msgstr ""
+
+#: .\data\csv\Talent.csv:108
+msgid "双足修长，脚掌与小腿比例和谐。足弓线条流畅优美，脚趾排列整齐修长。踝关节轮廓清晰，整体呈现出优雅成熟的魅力。步态稳健而优美，展现出独特的韵律感。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:110
@@ -22836,6 +22904,46 @@ msgstr ""
 msgid "红隼，萨尔贡人，舒巴特-阿尔萨兰地区前部落战士，曾与她的兄弟姐妹们一起被当地王酋军强制奴役。在一次逃离后与罗德岛相遇，重返矿场解救了与自己一同受难的工友，后主动申请加入罗德岛。现作为罗德岛萨尔贡办事处干员，接受治疗的同时参与各类外勤任务。"
 msgstr ""
 
+#: .\data\character\4026_忍冬.csv:4
+msgid "忍冬"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:13
+msgid "一串手工制作的流苏挂饰，不知道是叙拉古还是东国的习俗，总之忍冬将它交给你以表尊敬和谢意。"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:14
+msgid "英格丽，铃兰干员的母亲，曾为叙拉古灰厅十二家族之一——威尼斯家族的核心成员，多执行暗杀任务，擅长歼灭战与突袭战，后因故从家族脱离。现以罗德岛驻舰干员身份活动，代号忍冬。"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:30
+msgid "红色花纹领巾"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:31
+msgid "黑色金纹大衣"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:32
+msgid "黑色修身马甲"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:34
+msgid "棕色皮制手套"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:35
+msgid "黑色渐变长裙"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:36
+msgid "深色花纹长袜"
+msgstr ""
+
+#: .\data\character\4026_忍冬.csv:39
+msgid "腰间御守"
+msgstr ""
+
 #: .\data\character\4027_霍尔海雅.csv:4
 msgid "霍尔海雅"
 msgstr ""
@@ -23670,6 +23778,38 @@ msgstr ""
 
 #: .\data\character\4177_水灯心.csv:38
 msgid "部落风旅行皮革包"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:13
+msgid "一颗苹果，一盆土。吃掉它，种下它，等到它开花的时候，她希望你摘下花朵送还给她。"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:14
+msgid "蕾缪安，拉特兰公民，适用于拉特兰一至十三项公民权益，现任拉特兰教皇厅第七厅枢机。"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:30
+msgid "黑色拉链皮夹克"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:31
+msgid "白色荷叶边蕾丝衬衫"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:32
+msgid "黑色花边短裤"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:33
+msgid "黑色厚底花饰系带长筒靴"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:34
+msgid "大口径狙击步枪"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:35
+msgid "“弹匣与花窗”"
 msgstr ""
 
 #: .\data\character\450_死芒.csv:4
