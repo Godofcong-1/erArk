@@ -386,9 +386,15 @@ self_need_health_check_now,SELF_NEED_HEALTH_CHECK_NOW,时间_角色,自己现在
 first_kiss_in_today,FIRST_KISS_IN_TODAY,时间_初次,自己今天失去了初吻
 first_sex_in_today,FIRST_SEX_IN_TODAY,时间_初次,自己今天失去了V处女
 first_a_sex_in_today,FIRST_A_SEX_IN_TODAY,时间_初次,自己今天失去了A处女
+first_u_sex_in_today,FIRST_U_SEX_IN_TODAY,时间_初次,自己今天失去了U处女
+first_w_sex_in_today,FIRST_W_SEX_IN_TODAY,时间_初次,自己今天失去了W处女
+first_m_sex_in_today,FIRST_M_SEX_IN_TODAY,时间_初次,自己今天失去了M处女
 t_first_kiss_in_today,TARGET_FIRST_KISS_IN_TODAY,时间_初次,交互对象今天失去了初吻
 t_first_sex_in_today,TARGET_FIRST_SEX_IN_TODAY,时间_初次,交互对象今天失去了V处女
 t_first_a_sex_in_today,TARGET_FIRST_A_SEX_IN_TODAY,时间_初次,交互对象今天失去了A处女
+t_first_u_sex_in_today,TARGET_FIRST_U_SEX_IN_TODAY,时间_初次,交互对象今天失去了U处女
+t_first_w_sex_in_today,TARGET_FIRST_W_SEX_IN_TODAY,时间_初次,交互对象今天失去了W处女
+t_first_m_sex_in_today,TARGET_FIRST_M_SEX_IN_TODAY,时间_初次,交互对象今天失去了M处女
 
 time_day,TIME_DAY,时间_当前,时间:白天（6点~18点）
 time_night,TIME_NIGHT,时间_当前,时间:夜晚（18点~6点）
