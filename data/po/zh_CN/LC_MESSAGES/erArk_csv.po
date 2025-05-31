@@ -20476,10 +20476,6 @@ msgstr ""
 msgid "塞茜莉亚"
 msgstr ""
 
-#: .\data\character\0353_蕾缪安.csv:4
-msgid "蕾缪安"
-msgstr ""
-
 #: .\data\character\0357_帕蒂亚.csv:4
 msgid "帕蒂亚"
 msgstr ""
@@ -22312,6 +22308,38 @@ msgstr ""
 msgid "直接与黑钢创始人接触的黑钢国际的成员。达维镇的事件尘埃落定后和海伦娜一起在某处等待某人。"
 msgstr ""
 
+#: .\data\character\1041_新约能天使.csv:4
+msgid "新约能天使"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:13
+msgid "无敌绝世老板奖章。集满五颗最佳老板奖章可以兑换一枚超强老板奖章，集齐一百枚超强老板奖章可以兑换一枚无敌绝世老板奖章。能天使在被问起奖章是否还会继续迭代时微笑不语。"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:14
+msgid "能天使，拉特兰公民，适用拉特兰一至十三项公民权益。在合约期间，于秘密联络、武装押运等多项行动中为罗德岛提供帮助。现应本人要求，将其登记的合作身份更新为：企鹅物流资深员工，拉特兰新创物流公司“苹果派物流”老板。"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:28
+msgid "黑色短款夹克"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:29
+msgid "白色修身开叉连衣裙"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:31
+msgid "十字架白色过膝长袜"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:32
+msgid "黑色运动短靴"
+msgstr ""
+
+#: .\data\character\1041_新约能天使.csv:33
+msgid "黑色大型铳枪"
+msgstr ""
+
 #: .\data\character\1067_厄尔苏拉.csv:4
 msgid "厄尔苏拉"
 msgstr ""
@@ -23782,6 +23810,10 @@ msgstr ""
 
 #: .\data\character\4177_水灯心.csv:38
 msgid "部落风旅行皮革包"
+msgstr ""
+
+#: .\data\character\4193_蕾缪安.csv:4
+msgid "蕾缪安"
 msgstr ""
 
 #: .\data\character\4193_蕾缪安.csv:13
