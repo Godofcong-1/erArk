@@ -15307,7 +15307,65 @@ def handle_have_collection(character_id: int) -> int:
 @add_premise(constant_promise.Premise.IS_H)
 def handle_is_h(character_id: int) -> int:
     """
-    玩家已启用H模式
+    当前自己或交互对象为H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if character_data.sp_flag.is_h or target_data.sp_flag.is_h:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.NOT_H)
+def handle_not_h(character_id: int) -> int:
+    """
+    当前自己和交互对象均不是H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    target_data = cache.character_data[character_data.target_character_id]
+    if character_data.ability.is_h or target_data.sp_flag.is_h:
+        return 0
+    return 1
+
+
+@add_premise(constant_promise.Premise.SELF_IS_H)
+def handle_self_is_h(character_id: int) -> int:
+    """
+    自己在H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    return character_data.sp_flag.is_h
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_H)
+def handle_self_not_h(character_id: int) -> int:
+    """
+    自己不在H模式
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[0]
+    return not character_data.sp_flag.is_h
+
+
+@add_premise(constant_promise.Premise.TARGET_IS_H)
+def handle_t_is_h(character_id: int) -> int:
+    """
+    交互对象在H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -15318,10 +15376,10 @@ def handle_is_h(character_id: int) -> int:
     return target_data.sp_flag.is_h
 
 
-@add_premise(constant_promise.Premise.NOT_H)
-def handle_not_h(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_NOT_H)
+def handle_t_not_h(character_id: int) -> int:
     """
-    玩家未启用H模式
+    交互对象不在H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
