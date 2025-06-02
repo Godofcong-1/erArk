@@ -9,12 +9,15 @@ from Script.Core import (
     cache_control,
     game_type,
 )
-from Script.Config import game_config
+from Script.Config import game_config, normal_config
 
 bar_list = set(game_config.config_bar_data.keys())
 chara_list = set(game_config.config_image_data.keys())
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
+
+window_width = normal_config.config_normal.text_width
+""" 屏幕宽度 """
 
 
 class NormalDraw:
@@ -42,19 +45,27 @@ class NormalDraw:
         return int(text_index)
 
     def draw(self):
-        """绘制文本"""
-        if int(len(self)) > int(self.width):
-            now_text = ""
-            if self.width > 0:
-                for i in self.text:
-                    if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        now_text += i
-                    else:
-                        break
-                now_text = now_text[:-2] + "~"
-            io_init.era_print(now_text, self.style)
-        else:
+        """
+        绘制文本，超出宽度时自动换行显示
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按照 self.width 自动分行输出，保证所有内容完整显示。
+        """
+        if self.width <= 0 or not self.text:
             io_init.era_print(self.text, self.style)
+            return
+        text = self.text
+        while text:
+            now_text = ""
+            for i, ch in enumerate(text):
+                if text_handle.get_text_index(now_text + ch) > self.width:
+                    break
+                now_text += ch
+            if not now_text:
+                # 防止死循环，强制输出一个字符
+                now_text = text[0]
+            io_init.era_print(now_text, self.style)
+            text = text[len(now_text):]
 
 
 class FullDraw(NormalDraw):
@@ -69,51 +80,80 @@ class WaitDraw(NormalDraw):
     """绘制并等待玩家鼠标左右键或输入回车"""
 
     def draw(self):
-        """绘制文本"""
-        if int(len(self)) > int(self.width):
-            now_text = ""
-            if self.width > 0:
-                for i in self.text:
-                    if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        now_text += i
-                    else:
-                        break
-                now_text = now_text[:-2] + "~"
-            io_init.era_print(now_text, self.style)
-        else:
+        """
+        绘制文本，超出宽度时自动换行显示，并在末尾等待玩家操作
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按照 self.width 自动分行输出，保证所有内容完整显示，输出后等待玩家操作。
+        """
+        # 如果没有设置宽度或文本为空，直接输出
+        if self.width <= 0 or not self.text:
             io_init.era_print(self.text, self.style)
-        # 暂时注释掉，即使已经是跳过状态也要等待
-        # if not cache.wframe_mouse.w_frame_skip_wait_mouse and int(len(self)):
+            if int(len(self.text)):
+                flow_handle.askfor_wait()
+            return
+        text = self.text
+        # 当前剩余待输出的文本
+        while text:
+            now_text = ""
+            # 逐字符累加，直到达到最大宽度
+            for i, ch in enumerate(text):
+                # 计算当前行的宽度
+                if text_handle.get_text_index(now_text + ch) > self.width:
+                    break
+                now_text += ch
+            if not now_text:
+                # 防止死循环，强制输出一个字符
+                now_text = text[0]
+            # 输出当前行
+            io_init.era_print(now_text, self.style)
+            # 剩余文本继续处理
+            text = text[len(now_text):]
+        # 输出后等待玩家操作
         if int(len(self.text)):
             flow_handle.askfor_wait()
 
-
 class LineFeedWaitDraw(NormalDraw):
-    """每次换行时等待玩家左右键输入或输入回车"""
+    """
+    每次换行时等待玩家左右键输入或输入回车
+
+    输入参数：无
+    输出参数：无
+    功能描述：将 self.text 按 \n 分段，每段超出宽度时自动换行，且每行输出后等待玩家操作。
+    """
 
     def draw(self):
-        """绘制文本"""
+        """
+        每次换行时等待玩家左右键输入或输入回车，超出宽度自动换行
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按 \n 分段，每段超出宽度时自动换行，且每行输出后等待玩家操作。
+        """
+        # 按 \n 分割文本
         text_list = self.text.split(r"\n")
         for text in text_list:
-            now_width = text_handle.get_text_index(text)
-            if int(now_width) > int(self.width):
+            remain = text
+            while remain:
                 now_text = ""
-                if now_width > 0:
-                    for i in text:
-                        if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < now_width:
-                            now_text += i
-                        else:
-                            break
-                    now_text = now_text[:-2] + "~"
+                # 逐字符累加，直到达到最大宽度
+                for i, ch in enumerate(remain):
+                    if text_handle.get_text_index(now_text + ch) > self.width:
+                        break
+                    now_text += ch
+                if not now_text:
+                    # 防止死循环，强制输出一个字符
+                    now_text = remain[0]
                 io_init.era_print(now_text, self.style)
-            else:
-                io_init.era_print(text, self.style)
-            if not cache.wframe_mouse.w_frame_skip_wait_mouse:
-                flow_handle.askfor_wait()
-            else:
-                time.sleep(0.001)
+                remain = remain[len(now_text):]
+                # 如果还有剩余内容，先输出一个换行符
+                if remain:
+                    io_init.era_print("\n")
+                # 等待玩家操作
+                if not cache.wframe_mouse.w_frame_skip_wait_mouse:
+                    flow_handle.askfor_wait()
+                else:
+                    time.sleep(0.001)
             io_init.era_print("\n")
-
 
 class ImageDraw:
     """
@@ -781,36 +821,29 @@ class CenterDraw(NormalDraw):
         return int(len(self)) > int(len(other))
 
     def draw(self):
-        """绘制文本"""
-        self.width = int(self.width)
-        # print("int(len(self)) :",int(len(self)))
-        # print("int(self.width) :",int(self.width))
-        # print("self.text :",self.text)
-        if int(len(self)) > int(self.width):
-            # print("第一个分支")
+        """
+        居中绘制文本，超出宽度时自动换行显示
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按照 self.width 自动分行居中输出，保证所有内容完整显示。
+        """
+        if self.width <= 0 or not self.text:
+            io_init.era_print(self.text, self.style)
+            return
+        text = self.text
+        while text:
             now_text = ""
-            if self.width > 0:
-                for i in self.text:
-                    print("i :", i)
-                    if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        # print("now_text（中间的第一次） :",now_text)
-                        now_text += i
-                        # print("now_text（中间的第二次） :",now_text)
-                    else:
-                        break
-                now_text = now_text[:-2] + "~"
-            # print("now_text（第一次） :",now_text)
+            for i, ch in enumerate(text):
+                if text_handle.get_text_index(now_text + ch) > self.width:
+                    break
+                now_text += ch
+            if not now_text:
+                # 防止死循环，强制输出一个字符
+                now_text = text[0]
+            # 居中对齐
+            now_text = text_handle.align(now_text, "center", 0, 1, self.width)
             io_init.era_print(now_text, self.style)
-        elif int(len(self)) > int(self.width) - 1:
-            now_text = " " + self.text
-        elif int(len(self)) > int(self.width) - 2:
-            now_text = " " + self.text + " "
-        else:
-            now_text = text_handle.align(self.text, "center", 0, 1, self.width)
-        if int(len(self)) < int(self.width):
-            now_text += " " * (int(self.width) - text_handle.get_text_index(now_text))
-        # print("now_text（第二次） :",now_text)
-        io_init.era_print(now_text, self.style)
+            text = text[len(now_text):]
 
 
 class CenterDrawImage(NormalDraw):
@@ -932,40 +965,58 @@ class RightDraw(NormalDraw):
     """右对齐绘制文本"""
 
     def draw(self):
-        """绘制文本"""
-        if int(len(self)) > int(self.width):
+        """
+        右对齐绘制文本，超出宽度时自动换行显示
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按照 self.width 自动分行右对齐输出，保证所有内容完整显示。
+        """
+        if self.width <= 0 or not self.text:
+            io_init.era_print(self.text, self.style)
+            return
+        text = self.text
+        while text:
             now_text = ""
-            if self.width:
-                for i in self.text:
-                    if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        now_text += i
-                    else:
-                        break
-                now_text = now_text[:-2] + "~"
-        elif int(len(self)) > int(self.width) - 2:
-            now_text = " " + self.text
-        else:
-            now_text = text_handle.align(self.text, "right", 0, 1, self.width)
-        io_init.era_print(now_text, self.style)
-
+            for i, ch in enumerate(text):
+                if text_handle.get_text_index(now_text + ch) > self.width:
+                    break
+                now_text += ch
+            if not now_text:
+                # 防止死循环，强制输出一个字符
+                now_text = text[0]
+            # 右对齐
+            now_text = text_handle.align(now_text, "right", 0, 1, self.width)
+            io_init.era_print(now_text, self.style)
+            text = text[len(now_text):]
+            
 
 class LeftDraw(NormalDraw):
     """左对齐绘制文本"""
 
     def draw(self):
-        """绘制文本"""
-        if int(len(self)) > int(self.width):
+        """
+        左对齐绘制文本，超出宽度时自动换行显示
+        输入参数：无
+        输出参数：无
+        功能描述：将 self.text 按照 self.width 自动分行左对齐输出，保证所有内容完整显示。
+        """
+        if self.width <= 0 or not self.text:
+            io_init.era_print(self.text, self.style)
+            return
+        text = self.text
+        while text:
             now_text = ""
-            if self.width:
-                for i in self.text:
-                    if text_handle.get_text_index(now_text) + text_handle.get_text_index(i) < self.width:
-                        now_text += i
-                    else:
-                        break
-                now_text = now_text[:-2] + "~"
-        else:
-            now_text = text_handle.align(self.text, "left", 0, 1, self.width)
-        io_init.era_print(now_text, self.style)
+            for i, ch in enumerate(text):
+                if text_handle.get_text_index(now_text + ch) > self.width:
+                    break
+                now_text += ch
+            if not now_text:
+                # 防止死循环，强制输出一个字符
+                now_text = text[0]
+            # 左对齐
+            now_text = text_handle.align(now_text, "left", 0, 1, self.width)
+            io_init.era_print(now_text, self.style)
+            text = text[len(now_text):]
 
 
 class ExpLevelDraw:
