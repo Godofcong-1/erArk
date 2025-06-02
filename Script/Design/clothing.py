@@ -311,6 +311,7 @@ def pl_get_chara_pan(character_id: int):
         # 如果角色穿了内裤
         if len(character_data.cloth.cloth_wear[9]):
             TagetPanId = character_data.cloth.cloth_wear[9][-1]
+            cloth_use_type = game_config.config_clothing_tem[TagetPanId].tag
             # 加到玩家的内裤收藏里
             pl_character_data.pl_collection.npc_panties_tem.setdefault(character_id, [])
             pl_character_data.pl_collection.npc_panties_tem[character_id].append(TagetPanId)
@@ -320,6 +321,10 @@ def pl_get_chara_pan(character_id: int):
             # 脱掉内裤
             character_data.cloth.cloth_wear[9] = []
             character_data.cloth.cloth_see[9] = True
+            # 如果该服装为泳装，则将胸衣也一起脱掉
+            if cloth_use_type == 3:
+                character_data.cloth.cloth_wear[6] = []
+                character_data.cloth.cloth_see[6] = True
             # 如果该角色在无意识中，则标注无意识flag
             if handle_premise.handle_unconscious_flag_ge_1(character_id):
                 character_data.cloth.stolen_panties_in_unconscious = True
