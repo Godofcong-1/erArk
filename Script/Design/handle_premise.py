@@ -15331,7 +15331,7 @@ def handle_not_h(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[0]
     target_data = cache.character_data[character_data.target_character_id]
-    if character_data.ability.is_h or target_data.sp_flag.is_h:
+    if character_data.sp_flag.is_h or target_data.sp_flag.is_h:
         return 0
     return 1
 
