@@ -497,10 +497,18 @@ class Manage_Basement_Panel:
         self.show_resource_type_dict[resouce_type] = not self.show_resource_type_dict[resouce_type]
 
     def see_attr(self, character_id: int):
-        now_draw = see_character_info_panel.SeeCharacterInfoInScenePanel(
-            character_id, self.width
+        # 获取所有npc的列表，用于上一页下一页功能
+        npc_list = list(cache.npc_id_got)
+        if 0 in npc_list:
+            npc_list.remove(0)  # 移除玩家
+        # 使用 SeeCharacterInfoHandleInScene 而不是 SeeCharacterInfoInScenePanel
+        # 因为后者会基于当前场景限制角色列表
+        now_draw = see_character_info_panel.SeeCharacterInfoHandleInScene(
+            character_id, self.width, npc_list
         )
         now_draw.draw()
+        # 设置返回后的面板id
+        cache.now_panel_id = constant.Panel.IN_SCENE
 
 
 class Change_Npc_Work_Panel:
