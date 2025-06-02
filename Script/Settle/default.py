@@ -7694,6 +7694,8 @@ def handle_favorability_gift_add_adjust(
     if gift_id == 0:
         return
     gift_data = game_config.config_gift_items[gift_id]
+    # 话术修正
+    talk_adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 道歉礼物
     if gift_data.item_id == 171:
         base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, 0, change_data)
@@ -7701,17 +7703,21 @@ def handle_favorability_gift_add_adjust(
         handle_target_angry_with_player_flag_to_0(character_id, add_time, change_data, now_time)
     # 好感礼物小
     elif gift_data.item_id == 172:
-        base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, 0, change_data)
+        base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, talk_adjust * 1.5, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
     # 好感礼物中
     elif gift_data.item_id == 173:
-        base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, 0, change_data)
-        base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, 0, change_data)
+        # 补正到至少4级话术
+        talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(4))
+        base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, talk_adjust * 2, change_data)
+        base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, talk_adjust * 2, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 30, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
     # 好感礼物大
     elif gift_data.item_id == 174:
-        base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, 0, change_data)
-        base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, 0, change_data)
+        # 补正到至少6级话术
+        talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(6))
+        base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, talk_adjust * 3, change_data)
+        base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, talk_adjust * 3, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
         base_chara_experience_common_settle(character_data.target_character_id, 40, change_data_to_target_change = change_data)
 
