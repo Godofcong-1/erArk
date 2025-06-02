@@ -323,34 +323,49 @@ def new_character_get_dormitory(character_id: int):
     character_data = cache.character_data[character_id]
     # 分为访客和普通干员
     if character_id in cache.rhodes_island.visitor_info:
+        from Script.UI.Panel import invite_visitor_panel
         guest_room = {
             key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
         }
-        guest_room = {
-            x: 0 for j in [k[1] for k in sorted(guest_room.items(), key=lambda x: x[0])] for x in j
-        }
+        
+        # 按照客房编号进行数字排序
+        guest_room_sorted = sorted(guest_room["Guest_Room"], key=invite_visitor_panel.sort_guest_room_key)
+        
         final_room_list = []
         for room_id in game_config.config_facility_open:
             # 跳过非客房和未开放的客房
-            if _("客房") not in game_config.config_facility_open[room_id].name:
+            room_name = game_config.config_facility_open[room_id].name
+            if _("客房") not in room_name:
                 continue
             # 跳过未开放的客房
             cache.rhodes_island.facility_open.setdefault(room_id,False)
             if not cache.rhodes_island.facility_open[room_id]:
                 continue
-            # 遍历检查是否有同名客房
-            for room_full_path in guest_room:
-                if game_config.config_facility_open[room_id].name in room_full_path:
+            # 遍历检查是否有同名客房，使用排序后的列表
+            for room_full_path in guest_room_sorted:
+                if game_config.config_facility_open[room_id].name == room_full_path.split("\\")[-1]:
                     final_room_list.append(room_full_path)
-        npc_count = 0
-        for now_character_id in cache.rhodes_island.visitor_info:
-            now_character_data = cache.character_data[now_character_id]
-            # 客房每个人住一间
-            if "客房" in now_character_data.dormitory:
-                npc_count += 1
-        n = npc_count
-        now_room = final_room_list[n]
-        character_data.dormitory = now_room
+        
+        # 查找第一个空闲的客房
+        for room_path in final_room_list:
+            room_occupied = False
+            # 检查是否有其他访客已经住在这个房间
+            for now_character_id in cache.rhodes_island.visitor_info:
+                if now_character_id == character_id:
+                    continue
+                now_character_data = cache.character_data[now_character_id]
+                if now_character_data.dormitory == room_path:
+                    room_occupied = True
+                    break
+            # 如果房间未被占用，则分配给当前角色
+            if not room_occupied:
+                character_data.dormitory = room_path
+                return
+        
+        # 如果所有客房都满了，则分配到列表之外（这种情况理论上不应该发生）
+        if len(final_room_list) > 0:
+            character_data.dormitory = final_room_list[0]
+            print(f"警告：所有客房都已满，{character_data.name}被分配到{final_room_list[0]}。请检查访客区设施。")
     else:
         dormitory = {
             key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
@@ -416,7 +431,6 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     visitor_flag -- 是否为访客
     """
     from Script.Settle import default
-    from Script.UI.Panel import invite_visitor_panel
 
     # 角色上线
     default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
@@ -442,26 +456,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
                 cache.rhodes_island.facility_open[open_cid] = True
 
     # 分配角色宿舍
-    if visitor_flag == False:
-        new_character_get_dormitory(character_id)
-    # 客人则分配客房
-    else:
-        # 获得空闲客房id
-        guest_room_id = invite_visitor_panel.get_empty_guest_room_id()
-        if guest_room_id:
-            # 全客房列表
-            guest_room_dict = {
-                key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
-            }
-            # 遍历到同名客房
-            for guest_room_full_path in guest_room_dict:
-                guest_room_name = guest_room_full_path.split('\\')
-                now_room = game_config.config_facility_open[guest_room_id].name
-                if now_room == guest_room_name[-1]:
-                    character_data.dormitory = guest_room_full_path
-                    break
-        else:
-            new_character_get_dormitory(character_id)
+    new_character_get_dormitory(character_id)
 
     # 初始化新角色位置
     character_position = character_data.position

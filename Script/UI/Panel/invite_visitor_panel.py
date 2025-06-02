@@ -24,7 +24,7 @@ def get_empty_guest_room_id():
     判断是否有空闲客房，如果有的话返回客房id
     """
     # 遍历全部客房
-    guest_rooms = [room_id for room_id in cache.rhodes_island.facility_open if 1200 < room_id < 1300]
+    guest_rooms = [room_id for room_id in cache.rhodes_island.facility_open if 2000 < room_id < 2100]
     for room_id in guest_rooms:
         # 跳过未开放的客房
         if not cache.rhodes_island.facility_open[room_id]:
@@ -44,6 +44,24 @@ def get_empty_guest_room_id():
             return room_id
     # 如果没有空闲客房，则返回False
     return False
+
+def sort_guest_room_key(room_path):
+    """
+    按照客房编号进行数字排序的函数
+    Keyword arguments:
+    room_path -- 客房路径字符串，例如 "访客\\客房10"
+    return: int -- 提取的客房编号，如果无法解析则返回999
+    """
+    # 提取客房编号，例如从 "访客\\客房10" 中提取 10
+    room_name = room_path.split("\\")[-1]
+    if "客房" in room_name:
+        try:
+            room_number = int(room_name.replace("客房", ""))
+            return room_number
+        except:
+            return 999  # 如果无法解析，返回一个大数字
+    return 999
+
 
 def update_invite_visitor():
     """刷新邀请访客栏位"""
