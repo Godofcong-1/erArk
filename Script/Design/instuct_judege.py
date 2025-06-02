@@ -300,6 +300,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         # 完全催眠直接通过
         if handle_premise.handle_self_has_been_complete_hypnosis(target_character_id):
             judge_hypnosis = 9999
+            judge += judge_hypnosis
+            calculation_text += _("+完全催眠(+9999)")
         # 否则仅在实行值不足时生效，需要消耗理智
         elif judge < judge_data_value:
             # 性骚扰级别需要至少50%催眠深度，性行为需要2级催眠和至少100%催眠深度
