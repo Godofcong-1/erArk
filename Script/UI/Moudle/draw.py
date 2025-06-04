@@ -1000,23 +1000,36 @@ class LeftDraw(NormalDraw):
         输出参数：无
         功能描述：将 self.text 按照 self.width 自动分行左对齐输出，保证所有内容完整显示。
         """
+        # 如果没有设置宽度或文本为空，直接输出
         if self.width <= 0 or not self.text:
             io_init.era_print(self.text, self.style)
             return
         text = self.text
+        # 循环处理剩余文本
         while text:
             now_text = ""
+            # 逐字符累加，直到达到最大宽度
             for i, ch in enumerate(text):
+                # 判断当前行加上新字符后是否超出宽度
                 if text_handle.get_text_index(now_text + ch) > self.width:
                     break
                 now_text += ch
             if not now_text:
                 # 防止死循环，强制输出一个字符
                 now_text = text[0]
-            # 左对齐
-            now_text = text_handle.align(now_text, "left", 0, 1, self.width)
+            # 记录未对齐前的 now_text 长度，防止对齐后长度变化导致字符丢失
+            raw_len = len(now_text)
+            # 判断是否还有剩余文本未绘制
+            if len(text) > raw_len:
+                # 如果还有剩余文本，则不进行左对齐填充，防止字符丢失
+                pass
+            else:
+                # 如果没有剩余文本，则进行左对齐填充
+                now_text = text_handle.align(now_text, "left", 0, 1, self.width)
+            # 输出当前行
             io_init.era_print(now_text, self.style)
-            text = text[len(now_text):]
+            # 截取剩余文本，使用未对齐前的长度，防止丢失字符
+            text = text[raw_len:]
 
 
 class ExpLevelDraw:

@@ -42,20 +42,30 @@ def align(text: str, just="left", only_fix=False, columns=1, text_width=None) ->
 def get_text_index(text: str) -> int:
     """
     计算文本最终显示的真实长度
-    Keyword arguments:
+    输入参数：
     text -- 要进行长度计算的文本
+    输出参数：
+    int -- 文本的显示宽度
+    功能描述：计算文本在终端中的实际显示宽度，处理样式标签和特殊字符
     """
     text_index = 0
     style_width = 0
     style_name_list = list(game_config.config_font_data.keys())
+    # 移除样式标签
     for i in range(0, len(style_name_list)):
         style_text_head = "<" + style_name_list[i] + ">"
         style_text_tail = "</" + style_name_list[i] + ">"
         if style_text_head in text:
             text = text.replace(style_text_head, "")
             text = text.replace(style_text_tail, "")
+    # 逐字符计算显示宽度
     for i in range(len(text)):
-        text_index += wcswidth(text[i])
+        # 获取单个字符的显示宽度，如果wcswidth返回None则使用默认宽度
+        char_width = wcswidth(text[i])
+        if char_width is None:
+            # 对于控制字符或无效字符，使用默认宽度1
+            char_width = 1
+        text_index += char_width
     now_width = text_index + style_width
     if now_width < 0:
         now_width = 0
