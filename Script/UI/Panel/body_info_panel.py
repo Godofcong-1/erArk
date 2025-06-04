@@ -86,7 +86,14 @@ class CharacterBodyText:
             if character_data.dirty.body_semen[2][3] == 0:
                 now_text += _("  未品尝过精液\n")
             else:
-                now_text += _("  总共喝过{0}ml精液\n").format(character_data.dirty.body_semen[2][3])
+                if character_data.dirty.body_semen[15][3] == 0:
+                    now_text += _("  总共喝过{0}ml精液\n").format(character_data.dirty.body_semen[2][3])
+                else:
+                    add_semen = character_data.dirty.body_semen[2][3] + character_data.dirty.body_semen[15][3]
+                    now_text += _("  总共喝过{0}ml精液（有{1}ml精液在食道直接射进了胃里）\n").format(
+                        add_semen,
+                        character_data.dirty.body_semen[15][3],
+                    )
             body_text_list.append(now_text)
             # 胸部信息#
             now_text = _("\n 【胸】\n")
@@ -144,10 +151,10 @@ class CharacterBodyText:
                 ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             # V感觉描述
             now_text += f"  {ui_text}\n"
-            if character_data.dirty.body_semen[7][3] == 0:
+            if character_data.dirty.body_semen[6][3] == 0:
                 now_text += _("  未射入过精液\n")
             else:
-                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[7][3])
+                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[6][3])
             body_text_list.append(now_text)
             # 肛部信息#
             now_text = _("\n 【肛】\n")
@@ -172,7 +179,7 @@ class CharacterBodyText:
                 ui_text_lv = min(4, ui_text_lv)
                 ui_text_cid = f"A感觉{ui_text_lv}"
                 ui_text = game_config.ui_text_data['ability'][ui_text_cid]
-            # A感觉描述
+            # 精液量描述
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[8][3] == 0:
                 now_text += _("  未射入过精液\n")
@@ -186,6 +193,13 @@ class CharacterBodyText:
             ui_text_cid = f"W感觉{ui_text_lv}"
             ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             now_text += f"  {ui_text}\n"
+            # 精液量描述
+            now_text += f"  {ui_text}\n"
+            if character_data.dirty.body_semen[7][3] == 0:
+                now_text += _("  未射入过精液\n")
+            else:
+                now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[7][3])
+            body_text_list.append(now_text)
             # 怀孕情况
             start_date = cache.game_time
             end_date = character_data.pregnancy.fertilization_time

@@ -547,11 +547,11 @@ class Originium_Arts_Panel:
                     now_semen_count, now_exp_count = 0, 0
                     for chara_id in cache.npc_id_got:
                         character_data = cache.character_data[chara_id]
-                        for part_id in [2,3,6,7,8,9,15]:
+                        for part_id in [2,6,7,8,9,15]:
                             now_semen_count += character_data.dirty.body_semen[part_id][3]
                         now_exp_count += character_data.experience[20]
                     # 绘制
-                    draw_text += _("：需要全干员体内被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_semen_count, talent_of_arts_data.lv_up_value2, now_exp_count)
+                    draw_text += _("：需要全干员的体内部位被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）").format(talent_of_arts_data.lv_up_value1, now_semen_count, talent_of_arts_data.lv_up_value2, now_exp_count)
                     now_contion = now_semen_count >= talent_of_arts_data.lv_up_value1 and now_exp_count >= talent_of_arts_data.lv_up_value2
                     return_list = self.draw_lv_up_button(now_contion, draw_text, cid, return_list)
                 # 生理透视
