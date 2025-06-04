@@ -799,6 +799,13 @@ def direct_chat_with_ai() -> str:
     Return arguments:
     reply_text -- AI回复文本
     """
+    if not handle_premise.handle_ai_chat_on(0):
+        info_text = _("\nAI对话功能未开启，请前往【系统设置】中的【文本生成AI设置】中开启。\n")
+        info_draw = draw.WaitDraw()
+        info_draw.style = "gold_enrod"
+        info_draw.text = info_text
+        info_draw.draw()
+        return
     # 提示信息
     ask_text = _("\n请描述你想要进行的动作：\n")
 
