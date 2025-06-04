@@ -1,0 +1,14 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(python:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(sed:*)",
+      "Bash(grep -n \"status_data\" /mnt/c/code/erArk/Script/Design/character.py)",
+      "Bash(grep -n \"def get_status_zero\" /mnt/c/code/erArk/Script/Design/attr_calculation.py)"
+    ],
+    "deny": []
+  }
+}

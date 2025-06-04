@@ -199,8 +199,8 @@ class BehaviorEffect:
     ADD_SMALL_SHY = 88
     """ 属性_状态 自己增加少量羞耻（露出补正） """
 
-    TECH_ADD_N_ADJUST = 110
-    """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行N快、欲情调整 """
+    TECH_ADD_S_ADJUST = 110
+    """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行S快、欲情调整 """
     TECH_ADD_B_ADJUST = 111
     """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行B快、欲情调整 """
     TECH_ADD_C_ADJUST = 112
@@ -215,6 +215,10 @@ class BehaviorEffect:
     """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行U快、欲情调整 """
     TECH_ADD_W_ADJUST = 117
     """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行W快、欲情调整 """
+    TECH_ADD_M_ADJUST = 118
+    """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行M快、欲情调整 """
+    TECH_ADD_F_ADJUST = 119
+    """ 属性_状态特殊补正 根据发起者的技巧技能和交互对象的感度，对交互对象进行F快、欲情调整 """
     TECH_ADD_PL_P_ADJUST = 120
     """ 属性_状态特殊补正 根据交互对象的技巧技能对发起者进行P快调整 """
     TARGET_LUBRICATION_ADJUST_ADD_PAIN = 121
@@ -235,8 +239,8 @@ class BehaviorEffect:
     """ 属性_状态特殊补正 根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整 """
     TARGET_W_ADJUST_ADD_BY_SEX = 134
     """ 属性_状态特殊补正 根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整 """
-    TARGET_PAIN_TO_N_ADJUST = 135
-    """ 属性_状态特殊补正 根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整 """
+    TARGET_PAIN_TO_H_ADJUST = 135
+    """ 属性_状态特殊补正 根据发起者的技巧、交互对象的受虐对其进行H快、欲情、苦痛调整 """
 
     FINGER_TECH_ADD_PL_P_ADJUST = 141
     """ 属性_状态特殊补正 根据交互对象的技巧+指技对发起者进行P快调整 """
@@ -890,7 +894,7 @@ class SecondEffect:
     """ 必须计算但不必须显示的空白结算 """
 
     ADD_1_NClimax_EXPERIENCE = 210
-    """ 增加1N绝顶经验 """
+    """ 增加1S绝顶经验 """
     ADD_1_BClimax_EXPERIENCE = 211
     """ 增加1B绝顶经验 """
     ADD_1_CClimax_EXPERIENCE = 212
@@ -905,8 +909,12 @@ class SecondEffect:
     """ 增加1U绝顶经验 """
     ADD_1_WClimax_EXPERIENCE = 217
     """ 增加1W绝顶经验 """
-    # ADD_1_Climax_EXPERIENCE = 220
-    # """ 增加1绝顶经验 """
+    ADD_1_MClimax_EXPERIENCE = 218
+    """ 增加1M绝顶经验 """
+    ADD_1_FClimax_EXPERIENCE = 219
+    """ 增加1F绝顶经验 """
+    ADD_1_HClimax_EXPERIENCE = 220
+    """ 增加1H绝顶经验 """
     ADD_1_Cumming_EXPERIENCE = 221
     """ 增加1射精经验 """
     ADD_1_Milking_EXPERIENCE = 222
@@ -1077,6 +1085,24 @@ class SecondEffect:
     """ 减少大量苦痛（苦痛刻印补正） """
     DOWN_LARGE_DISGUST = 306
     """ 减少大量反感（反发刻印补正） """
+    ADD_SMALL_M_FEEL = 310
+    """ 增加少量Ｍ快（M感补正） """
+    ADD_SMALL_F_FEEL = 311
+    """ 增加少量Ｆ快（F感补正） """
+    ADD_SMALL_H_FEEL = 312
+    """ 增加少量Ｈ快（H感补正） """
+    ADD_MIDDLE_M_FEEL = 313
+    """ 增加中量Ｍ快（M感补正） """
+    ADD_MIDDLE_F_FEEL = 314
+    """ 增加中量Ｆ快（F感补正） """
+    ADD_MIDDLE_H_FEEL = 315
+    """ 增加中量Ｈ快（H感补正） """
+    ADD_LARGE_M_FEEL = 316
+    """ 增加大量Ｍ快（M感补正） """
+    ADD_LARGE_F_FEEL = 317
+    """ 增加大量Ｆ快（F感补正） """
+    ADD_LARGE_H_FEEL = 318
+    """ 增加大量Ｈ快（H感补正） """
     ADD_LARGE_PAIN_FIRST_SEX = 400
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401
@@ -1148,3 +1174,9 @@ class SecondEffect:
     """ 属性_经验 自己增加1U经验 """
     ADD_1_W_EXPERIENCE = 617
     """ 属性_经验 自己增加1W经验 """
+    ADD_1_M_EXPERIENCE = 618
+    """ 属性_经验 自己增加1M经验 """
+    ADD_1_F_EXPERIENCE = 619
+    """ 属性_经验 自己增加1F经验 """
+    ADD_1_H_EXPERIENCE = 620
+    """ 属性_经验 自己增加1H经验 """

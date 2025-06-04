@@ -312,62 +312,84 @@ class SeeCharacterStatusPanel:
         # print("game_config.config_character_state_type :",game_config.config_character_state_type)
         # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
         for status_type in game_config.config_character_state_type_data:
-            if status_type == type_number:
-                type_data = game_config.config_character_state_type[status_type]
-                type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
-                # print("type_data.name :",type_data.name)
-                self.draw_list.append(type_line)
-                type_set = game_config.config_character_state_type_data[status_type]
-                draw_count = 0
+            type_data = game_config.config_character_state_type[status_type]
+            type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
+            # print("type_data.name :",type_data.name)
+            self.draw_list.append(type_line)
+            type_set = game_config.config_character_state_type_data[status_type]
+            draw_count = 0
+            
+            # 如果是状态类型0，需要特殊处理快感状态的顺序
+            if status_type == 0:
+                # 定义快感状态的ID和其他状态ID
+                pleasure_status_ids = [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23]  # S快, B快, C快, P快, V快, A快, U快, W快, M快, F快, H快
+                other_status_ids = [id for id in type_set if id not in pleasure_status_ids]
+                
+                # 先处理快感状态
+                for status_id in pleasure_status_ids:
+                    if status_id in type_set:
+                        if self._draw_status_bar(character_data, status_id):
+                            draw_count += 1
+                            if draw_count % self.column == 0:
+                                self.draw_list.append(line_feed)
+                
+                # 进行一次换行
+                if draw_count % self.column != 0:
+                    draw_count = 0
+                    self.draw_list.append(line_feed)
+                
+                # 然后处理其他状态
+                for status_id in other_status_ids:
+                    if self._draw_status_bar(character_data, status_id):
+                        draw_count += 1
+                        if draw_count % self.column == 0:
+                            self.draw_list.append(line_feed)
+            else:
+                # 其他类型按原有顺序处理
                 for status_id in type_set:
-                    # print("status_type :",status_type)
-                    # print("status_id :",status_id)
-                    # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])
-                    # print("game_config.config_character_state[status_id].name :",game_config.config_character_state[status_id].name)
-                    if status_type == 0:
-                        if character_data.sex == 0:
-                            if status_id in {2, 4, 7}:
-                                continue
-                        elif character_data.sex == 1:
-                            if status_id == 3:
-                                continue
-                    # 计算状态数值和等级
-                    status_text = game_config.config_character_state[status_id].name
-                    status_value = 0
-                    if status_id in character_data.status_data:
-                        status_value = character_data.status_data[status_id]
-                    # if status_id in character_data.status:
-                    #     status_value = character_data.status[status_id]
-                    status_value = round(status_value)
-                    # status_value = int(attr_text.get_value_text(status_value))
-                    status_level = attr_calculation.get_status_level(status_value)
-                    # 计算当前等级的最大值
-                    next_level_value = game_config.config_character_state_level[status_level].max_value
-                    now_text = f"{status_text}lv{status_level}"
-                    # 绘制状态文本，已废弃，改为在InfoBarDraw中绘制
-                    # now_draw = draw.LeftDraw()
-                    # now_draw.width = self.width / self.column / 2
-                    # now_draw.text = now_text
-                    # self.draw_list.append(now_draw)
-
-                    # 绘制状态条
-                    bar_draw = draw.InfoBarDraw()
-                    bar_draw.width = self.width / self.column
-                    bar_draw.scale = 0.8
-                    bar_draw.chara_state = True
-                    bar_draw.set(
-                        "StatusPointbar",
-                        next_level_value,
-                        status_value,
-                        now_text,
-                    )
-                    self.draw_list.append(bar_draw)
-
-                    # 如果是最后一个状态则换行
-                    draw_count += 1
-                    if draw_count % self.column == 0:
-                        self.draw_list.append(line_feed)
+                    if self._draw_status_bar(character_data, status_id):
+                        draw_count += 1
+                        if draw_count % self.column == 0:
+                            self.draw_list.append(line_feed)
+            
+            # 确保在该类型结束时换行
+            if draw_count % self.column != 0:
                 self.draw_list.append(line_feed)
+    
+    def _draw_status_bar(self, character_data, status_id):
+        """绘制单个状态条
+        返回True表示成功绘制，False表示跳过"""
+        # 性别过滤
+        if status_id in {2, 4, 7} and character_data.sex == 0:
+            return False
+        if status_id == 3 and character_data.sex == 1:
+            return False
+        
+        # 计算状态数值和等级
+        status_text = game_config.config_character_state[status_id].name
+        status_value = 0
+        if status_id in character_data.status_data:
+            status_value = character_data.status_data[status_id]
+        status_value = round(status_value)
+        status_level = attr_calculation.get_status_level(status_value)
+        
+        # 计算当前等级的最大值
+        next_level_value = game_config.config_character_state_level[status_level].max_value
+        now_text = f"{status_text}lv{status_level}"
+        
+        # 绘制状态条
+        bar_draw = draw.InfoBarDraw()
+        bar_draw.width = self.width / self.column
+        bar_draw.scale = 0.8
+        bar_draw.chara_state = True
+        bar_draw.set(
+            "StatusPointbar",
+            next_level_value,
+            status_value,
+            now_text,
+        )
+        self.draw_list.append(bar_draw)
+        return True
 
     def draw(self):
         """绘制面板"""
@@ -993,8 +1015,8 @@ class CharacterabiText:
                 now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
                 new_draw = draw.LeftMergeDraw(width / 10)
-                # 技能类能力里在八个前补个换行
-                if ability_id == 48:
+                # 同类能力里在八个前补个换行
+                if ability_id == 48 or ability_id == 101:
                     new_draw_n = draw.NormalDraw()
                     new_draw_n.text = "\n"
                     new_draw_n.width = 1

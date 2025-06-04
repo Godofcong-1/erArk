@@ -62,6 +62,7 @@ int,str,str,int,str,str
 182,steam_sauna,蒸桑拿,30,both,娱乐
 183,hydrotherapy_treatment,水疗护理,60,both,娱乐
 184,onsen_bath,泡温泉,60,both,娱乐
+
 191,aromatherapy_1,对目标香薰疗愈_回复,60,pl,娱乐
 192,aromatherapy_2,对目标香薰疗愈_习得,60,pl,娱乐
 193,aromatherapy_3,对目标香薰疗愈_反感,60,pl,娱乐
@@ -243,11 +244,13 @@ int,str,str,int,str,str
 506,face_stand_sex,对面立位,10,both,性爱|插入|V|破处
 507,back_stand_sex,背面立位,10,both,性爱|插入|V|破处|非逆推
 508,back_riding_sex,背面骑乘位,10,both,性爱|插入|V|破处
+
 511,stimulate_g_point,刺激G点,10,both,性爱|插入|V|破处
 512,womb_os_caress,玩弄子宫口,10,both,性爱|插入|W|破处
 513,womb_insertion,插入子宫口,10,both,性爱|插入|W|破处
 514,womb_sex,子宫姦,10,both,性爱|插入|W|破处
 515,external_womb_massage,体外子宫按摩,5,both,性爱|W|手
+
 521,normal_anal_sex,正常位肛交,10,both,性爱|插入|A|破处
 522,back_anal_sex,后背位肛交,10,both,性爱|插入|A|破处|非逆推
 523,riding_anal_sex,对面骑乘位肛交,10,both,性爱|插入|A|破处
@@ -258,8 +261,10 @@ int,str,str,int,str,str
 528,back_riding_anal_sex,背面骑乘位肛交,10,both,性爱|插入|A|破处
 530,stimulate_sigmoid_colon,玩弄s状结肠,10,both,性爱|插入|A|破处
 531,stimulate_vagina,隔着刺激阴道,10,both,性爱|插入|V|A|破处
+
 541,urethral_finger_insertion,尿道指姦,10,both,性爱|U|手
 542,urethral_sex,尿道姦,10,both,性爱|插入|U|破处
+
 551,face_hug_sex,对面抱位,10,both,性爱|插入|V|破处
 552,back_hug_sex,背面抱位,10,both,性爱|插入|V|破处|非逆推
 553,face_lay_sex,对面卧位,10,both,性爱|插入|V|破处
@@ -281,7 +286,7 @@ int,str,str,int,str,str
 633,unbind,解除捆绑,3,both,性爱|SM|道具
 634,patch_off,摘下眼罩,1,both,性爱|SM|道具
 635,gag_off,摘下口球,1,both,性爱|SM|道具
-472,safe_candles,滴蜡,10,both,性爱|N|SM|道具
+636,safe_candles,滴蜡,10,both,性爱|N|SM|道具
 
 681,exercise_sucking_and_swallowing,练习吮吸与吞咽力,30,npc,性爱|非逆推|练习
 682,exercise_armpit_flexibility,练习腋下夹持力,30,npc,性爱|非逆推|练习
@@ -386,10 +391,10 @@ int,str,str,int,str,str
 945,target_free_in_time_stop,对方在时停中获得自由,1,pl,技艺|时停
 946,target_stop_in_time_stop,对方在时停中再次停止,1,pl,技艺|时停
 
-1000,n_orgasm_small,结算N小绝顶,0,npc,二段结算
-1001,n_orgasm_normal,结算N普绝顶,0,npc,二段结算
-1002,n_orgasm_strong,结算N强绝顶,0,npc,二段结算
-1003,n_orgasm_super,结算N超强绝顶,0,npc,二段结算
+1000,s_orgasm_small,结算S小绝顶,0,npc,二段结算
+1001,s_orgasm_normal,结算S普绝顶,0,npc,二段结算
+1002,s_orgasm_strong,结算S强绝顶,0,npc,二段结算
+1003,s_orgasm_super,结算S超强绝顶,0,npc,二段结算
 1004,b_orgasm_small,结算B小绝顶,0,npc,二段结算
 1005,b_orgasm_normal,结算B普绝顶,0,npc,二段结算
 1006,b_orgasm_strong,结算B强绝顶,0,npc,二段结算
@@ -417,21 +422,31 @@ int,str,str,int,str,str
 1029,w_orgasm_normal,结算W普绝顶,0,npc,二段结算
 1030,w_orgasm_strong,结算W强绝顶,0,npc,二段结算
 1031,w_orgasm_super,结算W超强绝顶,0,npc,二段结算
+1032,m_orgasm_small,结算M小绝顶,0,npc,二段结算
+1033,m_orgasm_normal,结算M普绝顶,0,npc,二段结算
+1034,m_orgasm_strong,结算M强绝顶,0,npc,二段结算
+1035,m_orgasm_super,结算M超强绝顶,0,npc,二段结算
+1036,f_orgasm_small,结算F小绝顶,0,npc,二段结算
+1037,f_orgasm_normal,结算F普绝顶,0,npc,二段结算
+1038,f_orgasm_strong,结算F强绝顶,0,npc,二段结算
+1039,f_orgasm_super,结算F超强绝顶,0,npc,二段结算
+1040,h_orgasm_small,结算H小绝顶,0,npc,二段结算
+1041,h_orgasm_normal,结算H普绝顶,0,npc,二段结算
+1042,h_orgasm_strong,结算H强绝顶,0,npc,二段结算
+1043,h_orgasm_super,结算H超强绝顶,0,npc,二段结算
 
-1040,extra_orgasm,结算额外绝顶,0,npc,二段结算
-1041,semen_drinking_climax,结算饮精绝顶,0,npc,二段结算
-1046,b_orgasm_to_milk,结算因B绝顶而被迫喷乳,0,npc,二段结算
-1047,u_orgasm_to_pee,结算因U绝顶而被迫漏尿,0,npc,二段结算
+1050,plural_orgasm_2,结算双重绝顶,0,npc,二段结算
+1051,plural_orgasm_3,结算三重绝顶,0,npc,二段结算
+1052,plural_orgasm_4,结算四重绝顶,0,npc,二段结算
+1053,plural_orgasm_5,结算五重绝顶,0,npc,二段结算
+1054,plural_orgasm_6,结算六重绝顶,0,npc,二段结算
+1055,plural_orgasm_7,结算七重绝顶,0,npc,二段结算
+1056,plural_orgasm_8,结算八重绝顶,0,npc,二段结算
+1057,plural_orgasm_9,结算九重绝顶,0,npc,二段结算
+1058,plural_orgasm_10,结算十重绝顶,0,npc,二段结算
+1059,plural_orgasm_11,结算十一重绝顶,0,npc,二段结算
 
-1051,plural_orgasm_2,结算双重绝顶,0,npc,二段结算
-1052,plural_orgasm_3,结算三重绝顶,0,npc,二段结算
-1053,plural_orgasm_4,结算四重绝顶,0,npc,二段结算
-1054,plural_orgasm_5,结算五重绝顶,0,npc,二段结算
-1055,plural_orgasm_6,结算六重绝顶,0,npc,二段结算
-1056,plural_orgasm_7,结算七重绝顶,0,npc,二段结算
-1057,plural_orgasm_8,结算八重绝顶,0,npc,二段结算
-
-1060,n_orgasm_edge,结算N绝顶被寸止,0,npc,二段结算
+1060,s_orgasm_edge,结算S绝顶被寸止,0,npc,二段结算
 1061,b_orgasm_edge,结算B绝顶被寸止,0,npc,二段结算
 1062,c_orgasm_edge,结算C绝顶被寸止,0,npc,二段结算
 1063,p_orgasm_edge,结算射精被寸止,0,npc,二段结算
@@ -439,6 +454,14 @@ int,str,str,int,str,str
 1065,a_orgasm_edge,结算A绝顶被寸止,0,npc,二段结算
 1066,u_orgasm_edge,结算U绝顶被寸止,0,npc,二段结算
 1067,w_orgasm_edge,结算W绝顶被寸止,0,npc,二段结算
+1068,m_orgasm_edge,结算M绝顶被寸止,0,npc,二段结算
+1069,f_orgasm_edge,结算F绝顶被寸止,0,npc,二段结算
+1070,h_orgasm_edge,结算H绝顶被寸止,0,npc,二段结算
+
+1080,extra_orgasm,结算额外绝顶,0,npc,二段结算
+1081,semen_drinking_climax,结算饮精绝顶,0,npc,二段结算
+1086,b_orgasm_to_milk,结算因B绝顶而被迫喷乳,0,npc,二段结算
+1087,u_orgasm_to_pee,结算因U绝顶而被迫漏尿,0,npc,二段结算
 
 1090,first_kiss,结算初吻,0,npc,二段结算
 1091,first_sex,结算处女,0,npc,二段结算

@@ -96,8 +96,7 @@ def settle_character_juel(character_id: int) -> int:
     bool -- 本次update时间切片内活动是否已完成
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    type_set = game_config.config_character_state_type_data[0]
-    for status_id in type_set:
+    for status_id in game_config.config_character_state:
         # print("status_type :",status_type)
         # print("status_id :",status_id)
         # print("game_config.config_character_state[status_id] :",game_config.config_character_state[status_id])

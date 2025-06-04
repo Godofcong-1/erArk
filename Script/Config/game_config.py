@@ -151,6 +151,10 @@ config_ability: Dict[int,config_def.Ability] = {}
 """ 能力类型表 """
 config_experience: Dict[int, config_def.Experience] = {}
 """ 经验配置 """
+config_experience_relations: Dict[int, config_def.Experience_Relations] = {}
+""" 快感经验之间的关系配置 """
+config_experience_types: Dict[int, config_def.Experience_Types] = {}
+""" 经验类型配置 """
 config_juel: Dict[int, config_def.Juel] = {}
 """ 宝珠配置 """
 config_profession: Dict[int, config_def.Profession] = {}
@@ -532,6 +536,26 @@ def load_experience():
         now_tem = config_def.Experience()
         now_tem.__dict__ = tem_data
         config_experience[now_tem.cid] = now_tem
+
+
+def load_experience_relations():
+    """载入快感经验之间的关系数据"""
+    now_data = config_data["Experience_Relations"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Experience_Relations()
+        now_tem.__dict__ = tem_data
+        config_experience_relations[now_tem.base_exp_id] = now_tem
+
+
+def load_experience_types():
+    """载入经验类型数据"""
+    now_data = config_data["Experience_Types"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Experience_Types()
+        now_tem.__dict__ = tem_data
+        config_experience_types[now_tem.type_id] = now_tem
 
 
 def load_juel():
@@ -1757,6 +1781,8 @@ def init():
     load_facility_open()
     load_resouce()
     load_experience()
+    load_experience_relations()
+    load_experience_types()
     load_font_data()
     load_instruct_type()
     load_instruct_sex_type()

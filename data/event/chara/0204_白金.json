@@ -96,7 +96,7 @@
         "text": "因为全身难以压抑的兴奋之情，紧紧地拥抱住{PlayerName}的{TargetName}紧紧咬着颤抖的嘴唇。\\n仿佛不知道发生了什么一样，带着情欲和迷茫的双眼盯着{PlayerName}，急促地开始了深呼吸。\\n“仅仅只是，摸摸亲亲什么的……哈……”过了好久才能正常说话的{TargetName}发出了困惑的声音。",
         "premise": {
             "love_le_2": 1,
-            "t_turn_n_orgasm_g_3": 1,
+            "t_turn_s_orgasm_g_3": 1,
             "high_2": 1
         },
         "settle": {},
@@ -216,7 +216,7 @@
         "text": "在{PlayerName}打算结束的时候，{TargetName}从身后抱上了{PlayerName}的身体。\\n“呼……等一下，想要{PlayerName}再陪一会。”\\n身体逐渐冷静下来的{TargetName}在肩头上像是小猫一样磨蹭了一会之后才放开。\\n“只是在{PlayerName}身边，被抱着就感觉很舒服。呼……”",
         "premise": {
             "love_ge_2": 1,
-            "t_turn_n_orgasm_g_3": 1,
+            "t_turn_s_orgasm_g_3": 1,
             "high_2": 1
         },
         "settle": {},

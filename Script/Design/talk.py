@@ -296,6 +296,14 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
                 orgasm_name = _("尿道")
             elif second_behavior_id[0] == "w":
                 orgasm_name = _("子宫")
+            elif second_behavior_id[0] == "s":
+                orgasm_name = _("皮肤")
+            elif second_behavior_id[0] == "m":
+                orgasm_name = _("口喉")
+            elif second_behavior_id[0] == "f":
+                orgasm_name = _("兽部")
+            elif second_behavior_id[0] == "h":
+                orgasm_name = _("心理")
             # 绝顶程度
             if "normal" in second_behavior_id:
                 orgasm_degree = _("绝顶")

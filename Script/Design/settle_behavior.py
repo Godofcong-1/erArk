@@ -658,14 +658,20 @@ def second_behavior_effect(
             talk.handle_second_talk(character_id, second_behavior_id)
             # 如果没找到对应的结算效果，则直接跳过
             if second_behavior_id not in game_config.config_behavior_effect_data:
-                print(f"debug behavior_id = {second_behavior_id}没有找到对应的结算效果")
+                print(f"debug second_behavior_id = {second_behavior_id}没有找到对应的结算效果")
                 continue
             # 遍历该二段行为的所有结算效果，挨个触发
             for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
-                if effect_id not in constant.settle_second_behavior_effect_data:
-                    print(f"debug behavior_id = {second_behavior_id}，effect_id = {effect_id}没有找到对应的结算效果")
-                    continue
-                constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+                # 综合数值结算判定
+                # 如果effect_id是str类型，则说明是综合数值结算
+                if isinstance(effect_id, str) and "CVE" in effect_id:
+                    effect_all_value_list = effect_id.split("_")[1:]
+                    handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
+                else:
+                    if effect_id not in constant.settle_second_behavior_effect_data:
+                        print(f"debug second_behavior_id = {second_behavior_id}，effect_id = {effect_id}没有找到对应的结算效果")
+                        continue
+                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
             # print(f"debug {character_data.name}触发二段行为效果，behavior_id = {behavior_id}")
             # 触发后该行为值归零
             character_data.second_behavior[second_behavior_id] = 0
@@ -722,16 +728,17 @@ def check_unconscious_effect(
         if handle_premise.handle_unconscious_flag_ge_1(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
             # 经验结算
             for experience_id in target_change.experience.copy():
+                experience_type = game_config.config_experience[experience_id].type
                 # 普通部位
-                if experience_id in range(0, 8):
+                if experience_type == 1:
                     # 根据经验序号转化为对应的经验id
-                    new_exp_id = experience_id + 70
+                    new_exp_id = game_config.config_experience_relations[experience_id].unconscious_exp_id
                     common_default.base_chara_experience_common_settle(character_id, new_exp_id, target_flag=True, change_data = change_data)
                 # 绝顶经验
-                elif experience_id in range(10, 18):
+                elif experience_type == 2:
                     common_default.base_chara_experience_common_settle(character_id, 78, target_flag=True, change_data = change_data)
                 # 性交经验
-                elif experience_id in range(61, 65):
+                elif experience_type == 3:
                     common_default.base_chara_experience_common_settle(character_id, 79, target_flag=True, change_data = change_data)
                     # 睡姦经验与被睡姦经验
                     if handle_premise.handle_unconscious_flag_1(target_character_id):
@@ -909,7 +916,11 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
         normal_orgasm_dict = {}  # 高潮结算字典
         extra_orgasm_dict = {}  # 额外高潮结算字典
         un_count_orgasm_dict = {}  # 不计数高潮结算字典
-        for orgasm in range(8):
+        orgasm_part_list = []  # 高潮部位列表
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                orgasm_part_list.append(state_id)
+        for orgasm in orgasm_part_list:
             # 跳过射精槽
             if orgasm == 3:
                 continue
@@ -976,12 +987,12 @@ def orgasm_settle(
 
     character_data = cache.character_data[character_id]
     # print(f"进入{character_data.name}的高潮结算")
-    part_dict = {0 : "n", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w"}
+    part_dict = {0 : "s", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w", 21 : "m", 22 : "f", 23 : "h"}
     degree_dict = {0 : "small", 1 : "normal", 2 : "strong", 3 : "super"}
 
     part_count = 0  # 部位高潮计数
     tem_orgasm_set = set()  # 临时高潮部位集合
-    for orgasm in range(8):
+    for orgasm in part_dict:
         # 跳过射精槽
         if orgasm == 3:
             continue
@@ -1084,14 +1095,14 @@ def judge_orgasm_degree(level_count: int) -> int:
     int -- 高潮程度，0小绝顶，1普通绝顶，2强绝顶，3超强绝顶
     """
     # 小、普、强的基础概率
-    base_probability = [0.90, 0.09, 0.01]
+    base_probability = [0.98, 0.02, 0.00]
     # 开始根据高潮次数计算概率
     for _ in range(level_count - 1):
         # 前半段减少小的，增加普的和强的
         if base_probability[0] > 0:
-            base_probability[0] -= 0.1
-            base_probability[1] += 0.07
-            base_probability[2] += 0.03
+            base_probability[0] -= 0.12
+            base_probability[1] += 0.10
+            base_probability[2] += 0.02
         # 后半段减少普的0.05，增加强的0.05
         else:
             base_probability[1] -= 0.05
@@ -1206,8 +1217,9 @@ def get_now_juel_all_value_and_text_from_mark_down_data(mark_down_id: int, chara
     # 如果有1号，则替换为全快感珠
     if '1' in mark_down_data_need_juel_list:
         mark_down_data_need_juel_list.remove('1')
-        for i in range(8):
-            mark_down_data_need_juel_list.append(str(i))
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                mark_down_data_need_juel_list.append(str(state_id))
     mark_down_data_all_value = 0
     mark_down_data_text = ""
     for need_juel in mark_down_data_need_juel_list:
@@ -1251,9 +1263,10 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # 或检测单次H中总绝顶次数，5次快乐1,20次快乐2,50次快乐3
     single_happy_count = 0
     all_happy_count = 0
-    for orgasm in range(8):
-        single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
-        all_happy_count += character_data.h_state.orgasm_count[orgasm][1]
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            single_happy_count += character_data.h_state.orgasm_count[state_id][0]
+            all_happy_count += character_data.h_state.orgasm_count[state_id][1]
     # print(f"debug happy_count = {happy_count}")
     if character_data.ability[13] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):
         character_data.ability[13] = 1
@@ -1334,8 +1347,9 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     # 无觉刻印检测无意识下的绝顶，前3级同快乐，后3级仅检测无意识绝顶经验
     if handle_premise.handle_unconscious_flag_ge_1(character_id):
         all_happy_count = 0
-        for orgasm in range(8):
-            single_happy_count += character_data.h_state.orgasm_count[orgasm][0]
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                single_happy_count += character_data.h_state.orgasm_count[state_id][0]
         all_happy_count = character_data.experience[78]
         # print(f"debug happy_count = {happy_count}")
         if character_data.ability[19] <= 0 and (single_happy_count >= 2 or all_happy_count >= 5):

@@ -246,7 +246,7 @@ def handle_sub_both_medium_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=1, target_flag=True, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, degree=1, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_MEDIUM_MANA_POINT)
@@ -264,7 +264,7 @@ def handle_sub_both_medium_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=1, target_flag=True, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, degree=1, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_LARGE_HIT_POINT)
@@ -282,7 +282,7 @@ def handle_sub_both_large_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=2, target_flag=True, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, degree=2, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_BOTH_LARGE_MANA_POINT)
@@ -300,7 +300,7 @@ def handle_sub_both_large_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, target_flag=True, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, degree=2, target_flag=True, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_SMALL_HIT_POINT)
@@ -354,7 +354,7 @@ def handle_sub_self_medium_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=1, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_MEDIUM_MANA_POINT)
@@ -372,7 +372,7 @@ def handle_sub_self_medium_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=1, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_LARGE_HIT_POINT)
@@ -390,7 +390,7 @@ def handle_sub_self_large_hit_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, dregree=2, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, hp_value=-1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_SELF_LARGE_MANA_POINT)
@@ -408,7 +408,7 @@ def handle_sub_self_large_mana_point(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_id, add_time, mp_value=-1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_MEDIUM_HIT_POINT)
@@ -427,7 +427,7 @@ def handle_sub_target_medium_hit_point(
     now_time -- 结算的时间
     """
     character_data = cache.character_data[character_id]
-    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, dregree=1, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_MEDIUM_MANA_POINT)
@@ -446,7 +446,7 @@ def handle_sub_target_medium_mana_point(
     now_time -- 结算的时间
     """
     character_data = cache.character_data[character_id]
-    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, dregree=1, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_LARGE_HIT_POINT)
@@ -465,7 +465,7 @@ def handle_sub_target_large_hit_point(
     now_time -- 结算的时间
     """
     character_data = cache.character_data[character_id]
-    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, dregree=2, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, hp_value=-1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DOWN_TARGET_LARGE_MANA_POINT)
@@ -484,7 +484,7 @@ def handle_sub_target_large_mana_point(
     now_time -- 结算的时间
     """
     character_data = cache.character_data[character_id]
-    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, dregree=2, change_data=change_data)
+    base_chara_hp_mp_common_settle(character_data.target_character_id, add_time, mp_value=-1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOOD_TO_GOOD)
@@ -4907,6 +4907,7 @@ def handle_add_small_p_feel(
         return
     now_lust_multiple = 10
     now_add_lust = add_time + now_lust_multiple + character_data.eja_point * 0.4
+    now_add_lust = int(now_add_lust)
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
     character_data.action_info.last_eaj_add_time = now_time
@@ -5334,9 +5335,10 @@ def handle_self_h_state_reset(
     # 清零隐奸模式
     character_data.sp_flag.hidden_sex_mode = 0
     # 记录高潮进度
-    for orgasm in range(8):
-        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-        character_data.h_state.orgasm_level[orgasm] = now_data
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            now_data = attr_calculation.get_status_level(character_data.status_data[state_id])
+            character_data.h_state.orgasm_level[state_id] = now_data
     # 清零H相关二段状态
     for second_behavior_id, behavior_value in character_data.second_behavior.items():
         if behavior_value != 0:
@@ -5392,11 +5394,12 @@ def handle_update_orgasm_level(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    for orgasm in range(8):
-        now_data = attr_calculation.get_status_level(character_data.status_data[orgasm])
-        character_data.h_state.orgasm_level[orgasm] = now_data
-        now_data = attr_calculation.get_status_level(target_data.status_data[orgasm])
-        target_data.h_state.orgasm_level[orgasm] = now_data
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            now_data = attr_calculation.get_status_level(character_data.status_data[state_id])
+            character_data.h_state.orgasm_level[state_id] = now_data
+            now_data = attr_calculation.get_status_level(target_data.status_data[state_id])
+            target_data.h_state.orgasm_level[state_id] = now_data
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_UPDATE_ORGASM_LEVEL)
@@ -5421,9 +5424,10 @@ def handle_scene_all_characters_update_orgasm_level(
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
     for chara_id in scene_data.character_list:
         now_character_data = cache.character_data[chara_id]
-        for orgasm in range(8):
-            now_data = attr_calculation.get_status_level(now_character_data.status_data[orgasm])
-            now_character_data.h_state.orgasm_level[orgasm] = now_data
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                now_data = attr_calculation.get_status_level(now_character_data.status_data[state_id])
+                now_character_data.h_state.orgasm_level[state_id] = now_data
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARACTERS_H_STATE_RESET)
@@ -7566,12 +7570,13 @@ def handle_train_prisoners_add_adjust(
     if now_train_id == 1:
         # 根据部位感度等级进行加权选择目标部位
         all_part_data = {}
-        for part_id in range(8):
-            # 跳过P
-            if part_id == 3:
-                continue
-            all_part_data[part_id] = character_data.ability[part_id]
-            all_part_data[part_id] = max(all_part_data[part_id], 1)
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                # 跳过P
+                if state_id == 3:
+                    continue
+                all_part_data[state_id] = character_data.ability[state_id]
+                all_part_data[state_id] = max(all_part_data[state_id], 1)
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)
         def now_tarin(now_prisoner_cid):
@@ -7627,7 +7632,7 @@ def handle_train_prisoners_add_adjust(
         if not handle_premise.handle_normal_1(now_prisoner_cid) or handle_premise.handle_action_sleep(now_prisoner_cid):
             continue
         now_tarin(now_prisoner_cid)
-        base_chara_hp_mp_common_settle(now_prisoner_cid, add_time, hp_value=-1, mp_value=-1, dregree=1, change_data_to_target_change=change_data)
+        base_chara_hp_mp_common_settle(now_prisoner_cid, add_time, hp_value=-1, mp_value=-1, degree=1, change_data_to_target_change=change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST)
@@ -8274,6 +8279,7 @@ def handle_play_instrument_add_adjust(
                 now_add_lust += now_lust / 8
             else:
                 now_add_lust *= (adjust - 1)
+            now_add_lust = int(now_add_lust)
             target_data.status_data[11] += now_add_lust
             target_data.status_data[11] = min(99999, target_data.status_data[11])
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8292,6 +8298,7 @@ def handle_play_instrument_add_adjust(
                     else:
                         now_add_lust *= (5 - adjust)
                         now_add_lust += now_lust / 8
+                    now_add_lust = int(now_add_lust)
                     target_data.status_data[i] += now_add_lust
                     target_data.status_data[i] = min(99999, target_data.status_data[i])
                     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8300,15 +8307,15 @@ def handle_play_instrument_add_adjust(
                     target_change.status_data[i] += now_add_lust
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_N_ADJUST)
-def handle_tech_add_n_adjust(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_S_ADJUST)
+def handle_tech_add_s_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧技能和交互对象的感度，和交互对象的感度，对交互对象进行N快、欲情调整
+    根据发起者的技巧技能和交互对象的感度，和交互对象的感度，对交互对象进行S快、欲情调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -8583,6 +8590,70 @@ def handle_tech_add_w_adjust(
         base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], change_data_to_target_change = change_data)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_M_ADJUST)
+def handle_tech_add_m_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行M快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 21, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_F_ADJUST)
+def handle_tech_add_f_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    根据发起者的技巧技能和交互对象的感度，对交互对象进行F快、欲情调整
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    if character_data.target_character_id != character_id and (
+            not character_id or not character_data.target_character_id):
+
+        if character_data.dead:
+            return
+        if target_data.dead:
+            return
+        # 快感
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 22, 50, ability_level = character_data.ability[30], change_data_to_target_change = change_data)
+        # 欲情
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], change_data_to_target_change = change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TECH_ADD_PL_P_ADJUST)
 def handle_tech_add_pl_p_adjust(
         character_id: int,
@@ -8837,7 +8908,7 @@ def handle_target_w_adjust_add_pain(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_V_ADJUST_ADD_BY_SEX)
-def handle_tech_add_v_adjust(
+def handle_target_v_adjust_add_by_sex(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -8879,7 +8950,7 @@ def handle_tech_add_v_adjust(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_A_ADJUST_ADD_BY_SEX)
-def handle_tech_add_a_adjust(
+def handle_target_a_adjust_add_by_sex(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -8921,7 +8992,7 @@ def handle_tech_add_a_adjust(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_U_ADJUST_ADD_BY_SEX)
-def handle_tech_add_u_adjust(
+def handle_target_u_adjust_add_by_sex(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -8963,7 +9034,7 @@ def handle_tech_add_u_adjust(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_W_ADJUST_ADD_BY_SEX)
-def handle_tech_add_w_adjust(
+def handle_target_w_adjust_add_by_sex(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -9004,15 +9075,15 @@ def handle_tech_add_w_adjust(
         base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[7], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PAIN_TO_N_ADJUST)
-def handle_pain_to_n_adjust(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_PAIN_TO_H_ADJUST)
+def handle_target_pain_to_h_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整
+    根据发起者的技巧、交互对象的受虐对其进行H快、欲情、苦痛调整
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -9041,7 +9112,7 @@ def handle_pain_to_n_adjust(
         extra_adjust = tech_adjust + masochism_adjust
 
         # 快感
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 0, 50, ability_level = character_data.ability[30], extra_adjust = masochism_adjust, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 23, 50, ability_level = character_data.ability[30], extra_adjust = masochism_adjust, change_data_to_target_change = change_data)
         # 欲情
         base_chara_state_common_settle(character_data.target_character_id, add_time, 12, 50, ability_level = target_data.ability[33], extra_adjust = extra_adjust, change_data_to_target_change = change_data)
         # 苦痛

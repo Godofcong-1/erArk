@@ -938,8 +938,9 @@ class Debug_Panel:
                     new_value = int(change_value_panel.draw())
                     target_id = cache.character_data[0].target_character_id
                     target_character_data = cache.character_data[target_id]
-                    for i in range(8):
-                        target_character_data.status_data[i] += new_value
+                    for state_id in game_config.config_character_state:
+                        if game_config.config_character_state[state_id].type == 0:
+                            target_character_data.status_data[state_id] += new_value
                 # 招募指定adv_id的干员
                 elif key_index == 16:
                     from Script.Design import character

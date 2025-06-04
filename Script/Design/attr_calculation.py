@@ -283,16 +283,18 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
             h_state_data.body_item[i] = old_h_state_data.body_item[i]
 
     # 部位绝顶
-    for body_part in game_config.config_body_part:
-        h_state_data.orgasm_level[body_part] = 0
-        h_state_data.orgasm_count[body_part] = [0, 0]
-        h_state_data.orgasm_edge_count[body_part] = 0
-        h_state_data.extra_orgasm_feel[body_part] = 0
-        # 时停绝顶保留
-        if body_part in old_h_state_data.time_stop_orgasm_count:
-            h_state_data.time_stop_orgasm_count[body_part] = old_h_state_data.time_stop_orgasm_count[body_part]
-        else:
-            h_state_data.time_stop_orgasm_count[body_part] = 0
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            body_part = state_id
+            h_state_data.orgasm_level[body_part] = 0
+            h_state_data.orgasm_count[body_part] = [0, 0]
+            h_state_data.orgasm_edge_count[body_part] = 0
+            h_state_data.extra_orgasm_feel[body_part] = 0
+            # 时停绝顶保留
+            if body_part in old_h_state_data.time_stop_orgasm_count:
+                h_state_data.time_stop_orgasm_count[body_part] = old_h_state_data.time_stop_orgasm_count[body_part]
+            else:
+                h_state_data.time_stop_orgasm_count[body_part] = 0
 
     # 群交字典
     h_state_data.group_sex_body_template_dict = {

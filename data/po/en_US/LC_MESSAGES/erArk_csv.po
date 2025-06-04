@@ -14851,13 +14851,13 @@ msgstr "Strip down till nakes"
 msgid "收起内裤"
 msgstr "Take off underwear"
 
-msgid "结算N小绝顶"
+msgid "结算S小绝顶"
 msgstr "Settling N small orgasm"
 
-msgid "结算N普绝顶"
+msgid "结算S普绝顶"
 msgstr "Settling N medium orgasm"
 
-msgid "结算N强绝顶"
+msgid "结算S强绝顶"
 msgstr "Settling N strong orgasm"
 
 msgid "结算B小绝顶"
@@ -18671,7 +18671,7 @@ msgstr "Target was free during timestop"
 msgid "对方在时停中再次停止"
 msgstr "Target was halted during timestop"
 
-msgid "结算N超强绝顶"
+msgid "结算S超强绝顶"
 msgstr "Settling N super orgasm"
 
 msgid "结算B超强绝顶"
@@ -18734,7 +18734,7 @@ msgstr "Settling weaponjob"
 msgid "结算裤子交中"
 msgstr "Settling pantjob"
 
-msgid "结算N绝顶被寸止"
+msgid "结算S绝顶被寸止"
 msgstr "Settling N orgasm edged"
 
 msgid "结算B绝顶被寸止"

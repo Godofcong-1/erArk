@@ -1,12 +1,12 @@
 class SecondBehavior_Int:
     """二段结算行为函数"""
 
-    N_orgasm_small = 1000
-    """ 结算N小绝顶 """
-    N_orgasm_normal = 1001
-    """ 结算N普绝顶 """
-    N_orgasm_strong = 1002
-    """ 结算N强绝顶 """
+    S_orgasm_small = 1000
+    """ 结算S小绝顶 """
+    S_ORGASM_NORMAL = 1001
+    """ 结算S普绝顶 """
+    S_ORGASM_STRONG = 1002
+    """ 结算S强绝顶 """
     B_orgasm_small = 1003
     """ 结算B小绝顶 """
     B_orgasm_normal = 1004
@@ -126,8 +126,8 @@ class SecondBehavior_Int:
     SEPTUPLE_ORGASM = 1086
     """ 结算七重绝顶 """
 
-    N_ORGASM_SUPER = 1090
-    """ 结算N超强绝顶 """
+    S_ORGASM_SUPER = 1090
+    """ 结算S超强绝顶 """
     B_ORGASM_SUPER = 1091
     """ 结算B超强绝顶 """
     C_ORGASM_SUPER = 1092
@@ -235,8 +235,8 @@ class SecondBehavior_Int:
     PENIS_IN_TROUSERS_JOB = 1234
     """ 结算裤子交中 """
 
-    N_ORGASM_EDGE = 1250
-    """ 结算N绝顶被寸止 """
+    S_ORGASM_EDGE = 1250
+    """ 结算S绝顶被寸止 """
     B_ORGASM_EDGE = 1251
     """ 结算B绝顶被寸止 """
     C_ORGASM_EDGE = 1252

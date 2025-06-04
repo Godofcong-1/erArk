@@ -234,3 +234,10 @@ When `web_draw = 1`, the game runs as a web server:
 - Use `io_init.era_print()` for all text output
 - Test both modes when making UI changes
 - Web mode requires the web server running on port 5000
+
+## Data Processing Workflow Documentation
+
+The `.github/prompts/数据处理工作流` directory contains important MD files that explain relationships between different systems and code components. When working on related features, refer to these documents for understanding:
+- System interconnections and dependencies
+- Code component relationships
+- Data flow between different modules

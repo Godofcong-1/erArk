@@ -9,7 +9,7 @@ cid,effect_name,effect_type,effect
 10009,ADD_THIS_EVENT_TO_TODAY_TRIGGERED_RECORD,系统量_基础,将玩家当前触发的事件加入今日已触发记录
 10010,GROUP_SEX_MODE_ON,系统量_基础,开启群交模式
 10011,GROUP_SEX_MODE_OFF,系统量_基础,关闭群交模式
-10012,RETAIN_COMMAND_WITH_EVENT_TEXT,系统量_基础,用事件文本代替指令文本，限指令后置
+10012,RETAIN_COMMAND_WITH_EVENT_TEXT,二段结算,用事件文本代替指令文本，限指令后置
 
 10000,INTERRUPT_TARGET_ACTIVITY,系统量_交互,打断交互对象活动
 10002,TARGET_TO_PLAYER,系统量_交互,将交互对象设为对玩家交互
@@ -102,7 +102,7 @@ cid,effect_name,effect_type,effect
 87,ADD_SMALL_SUBMIT,属性_状态,自己增加少量屈服（屈服刻印补正）
 88,ADD_SMALL_SHY,属性_状态,自己增加少量羞耻（露出补正）
 
-110,TECH_ADD_N_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行N快、欲情调整
+110,TECH_ADD_S_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行S快、欲情调整
 111,TECH_ADD_B_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行B快、欲情调整
 112,TECH_ADD_C_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行C快、欲情调整
 113,TECH_ADD_P_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行P快、欲情调整
@@ -110,6 +110,8 @@ cid,effect_name,effect_type,effect
 115,TECH_ADD_A_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行A快、欲情调整
 116,TECH_ADD_U_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行U快、欲情调整
 117,TECH_ADD_W_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行W快、欲情调整
+118,TECH_ADD_M_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行M快、欲情调整
+119,TECH_ADD_F_ADJUST,属性_状态特殊补正,根据发起者的技巧技能和交互对象的感度，对交互对象进行F快、欲情调整
 120,TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧技能对发起者进行P快调整
 121,TARGET_LUBRICATION_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的润滑情况对其进行苦痛调整
 122,TARGET_V_ADJUST_ADD_PAIN,属性_状态特殊补正,根据交互对象的V属性(润滑+腰技+扩张+阴茎大小)对其进行苦痛调整
@@ -120,7 +122,7 @@ cid,effect_name,effect_type,effect
 132,TARGET_A_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行A快、欲情调整
 133,TARGET_U_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行U快、欲情调整
 134,TARGET_W_ADJUST_ADD_BY_SEX,属性_状态特殊补正,根据发起者的技巧+腰技+阴茎大小对交互目标进行W快、欲情调整
-135,TARGET_PAIN_TO_N_ADJUST,属性_状态特殊补正,根据发起者的技巧、交互对象的受虐对其进行N快、欲情、苦痛调整
+135,TARGET_PAIN_TO_H_ADJUST,属性_状态特殊补正,根据发起者的技巧、交互对象的受虐对其进行H快、欲情、苦痛调整
 
 141,FINGER_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+指技对发起者进行P快调整
 142,TONGUE_TECH_ADD_PL_P_ADJUST,属性_状态特殊补正,根据交互对象的技巧+舌技对发起者进行P快调整
@@ -234,6 +236,7 @@ cid,effect_name,effect_type,effect
 535,TRAIN_PRISONERS_ADD_ADJUST,指令_专用结算,（训练囚犯用）对所有被关押的囚犯进行日常训练
 536,RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST,指令_专用结算,交互对象从无意识H中恢复意识的结算
 537,TARGET_DIRTY_RESET_IN_SHOWER,指令_专用结算,交互对象进行污浊清洗(525)
+538,FAVORABILITY_GIFT_ADD_ADJUST,指令_专用结算,（赠送礼物用）根据好感礼物的类型增加交互对象的好感与信赖
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

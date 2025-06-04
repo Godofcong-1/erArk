@@ -4,7 +4,7 @@ class Ability:
     cid: int
     """ 能力id """
     ability_type: int
-    """ 类型(0:感觉,1:扩张,2:刻印,3:基础,4:技能,5:性技) """
+    """ 类型(0:感度,1:扩张,2:刻印,3:基础,4:技能,5:性技) """
     name: str
     """ 名字 """
 
@@ -482,6 +482,36 @@ class Experience:
     """ 经验id """
     name: str
     """ 经验名 """
+    type: int
+    """ 经验类型 """
+
+
+class Experience_Relations:
+    """ 快感经验之间的关系 """
+
+    base_exp_id: int
+    """ 基础经验id """
+    base_exp_name: str
+    """ 基础经验名 """
+    climax_exp_id: int
+    """ 绝顶经验id """
+    sex_exp_id: int
+    """ 性交经验id """
+    unconscious_exp_id: int
+    """ 无意识经验id """
+    expansion_exp_id: int
+    """ 扩张经验id """
+
+
+class Experience_Types:
+    """ 经验类型 """
+
+    type_id: int
+    """ 经验类型id """
+    type_name: str
+    """ 经验类型名 """
+    description: str
+    """ 经验类型具体说明 """
 
 
 class Facility:
@@ -1307,6 +1337,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 class Talk_Common:
     """ 组件配置数据 """
 

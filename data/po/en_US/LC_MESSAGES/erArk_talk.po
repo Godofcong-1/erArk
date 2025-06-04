@@ -14521,15 +14521,15 @@ msgid "触发读写存档指令的地文"
 msgstr "Triggered the event of loading save file"
 
 #: .\data\talk\system\second.csv:7
-msgid "\\n{Name}触发了N小绝顶的地文"
+msgid "\\n{Name}触发了S小绝顶的地文"
 msgstr "\\n{Name} triggered the event of small N climax"
 
 #: .\data\talk\system\second.csv:8
-msgid "\\n{Name}触发了N普绝顶的地文"
+msgid "\\n{Name}触发了S普绝顶的地文"
 msgstr "\\n{Name} triggered the event of medium N climax"
 
 #: .\data\talk\system\second.csv:9
-msgid "\\n{Name}触发了N强绝顶的地文"
+msgid "\\n{Name}触发了S强绝顶的地文"
 msgstr "\\n{Name} triggered the event of strong N climax"
 
 #: .\data\talk\system\second.csv:10
@@ -14689,15 +14689,15 @@ msgid "\\n{Name}触发了反发刻印3的地文"
 msgstr "\\n{Name} triggered the event of Hatred Engraving 3"
 
 #: .\data\talk\system\second.csv:7
-msgid "{Name}触发了N小绝顶的地文"
+msgid "{Name}触发了S小绝顶的地文"
 msgstr "{Name} triggered the event of small N climax"
 
 #: .\data\talk\system\second.csv:8
-msgid "{Name}触发了N普绝顶的地文"
+msgid "{Name}触发了S普绝顶的地文"
 msgstr "{Name} triggered the event of medium N climax"
 
 #: .\data\talk\system\second.csv:9
-msgid "{Name}触发了N强绝顶的地文"
+msgid "{Name}触发了S强绝顶的地文"
 msgstr "{Name} triggered the event of strong N climax"
 
 #: .\data\talk\system\second.csv:10

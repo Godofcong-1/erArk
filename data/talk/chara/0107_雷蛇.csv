@@ -389,9 +389,9 @@ str,str,int,str,str
 1632,womb_sex,107,high_10,“哈啊……哈啊……”
 1633,womb_sex,107,high_10&CVP_A2_T|0_E_0,“还没出来的话……你那么急干什么？”
 10000,first_sex,107,high_999,“别别别，快停下……”\n雷蛇慌张的看着你，眼里凸显出恐惧。\n“我还没准备好……不行……”\n“拜托，求你了，别……啊啊啊~”\n随着处血的流出，雷蛇彻底失去了纯洁。\n“……”\n“……”\n
-10001,n_orgasm_small,107,high_999,“怎么身体有点怪怪的……”
-10002,n_orgasm_normal,107,high_999,“好像要……更多……”
-10003,n_orgasm_strong,107,high_999,“别……别停下……”
+10001,s_orgasm_small,107,high_999,“怎么身体有点怪怪的……”
+10002,s_orgasm_normal,107,high_999,“好像要……更多……”
+10003,s_orgasm_strong,107,high_999,“别……别停下……”
 10011,b_orgasm_small,107,high_999,“胸部有点怪怪的……”
 10012,b_orgasm_normal,107,high_999,“感觉乳汁要喷出来了……”
 10013,b_orgasm_strong,107,high_999,“继续……把我的乳汁全部逼出来！”

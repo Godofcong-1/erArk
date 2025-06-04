@@ -19,13 +19,13 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
 
-# @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.N_orgasm_small)
-# def handle_n_orgasm_small(
+# @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.S_orgasm_small)
+# def handle_s_orgasm_small(
 #     character_id: int,
 #     change_data: game_type.CharacterStatusChange,
 # ):
 #     """
-#     结算N小绝顶
+#     结算S小绝顶
 #     Keyword arguments:
 #     character_id -- 角色id
 #     change_data -- 状态变更信息记录对象
@@ -86,7 +86,7 @@ def handle_add_1_nclimax_experience(
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加1N绝顶经验
+    增加1S绝顶经验
     Keyword arguments:
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
@@ -547,7 +547,7 @@ def handle_down_small_hit_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 10, -1, dregree=0, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 10, -1, degree=0, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_SMALL_MANA_POINT)
@@ -563,7 +563,7 @@ def handle_down_small_mana_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 20, mp_value=-1, dregree=0, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 20, mp_value=-1, degree=0, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_HIT_POINT)
@@ -579,7 +579,7 @@ def handle_down_middle_hit_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 20, -1, dregree=1, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 20, -1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_MIDDLE_MANA_POINT)
@@ -595,7 +595,7 @@ def handle_down_middle_mana_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 25, mp_value=-1, dregree=1, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 25, mp_value=-1, degree=1, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_HIT_POINT)
@@ -611,7 +611,7 @@ def handle_down_large_hit_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 30, -1, dregree=2, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 30, -1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.DOWN_LARGE_MANA_POINT)
@@ -627,7 +627,7 @@ def handle_down_large_mana_point(
     """
 
     from Script.Settle import default
-    default.base_chara_hp_mp_common_settle(character_id, 30, mp_value=-1, dregree=2, change_data=change_data)
+    default.base_chara_hp_mp_common_settle(character_id, 30, mp_value=-1, degree=2, change_data=change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
@@ -845,6 +845,169 @@ def handle_add_small_w_feel(
     character_data.status_data[7] = min(99999, character_data.status_data[7])
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_M_FEEL)
+def handle_add_small_m_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量Ｍ快（M感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加少量口喉快感。
+    """
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 读取当前口喉快感值
+    now_lust = character_data.status_data[21]
+    # 设定基础增加量
+    now_add_lust = 20
+    # 计算能力修正
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    now_add_lust *= adjust
+    # 按当前快感值微调
+    now_add_lust += now_lust / 20
+    # 增加快感并限制最大值
+    character_data.status_data[21] += now_add_lust
+    character_data.status_data[21] = min(99999, character_data.status_data[21])
+    # 记录变更
+    change_data.status_data.setdefault(21, 0)
+    change_data.status_data[21] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_M_FEEL)
+def handle_add_middle_m_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加中量Ｍ快（M感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加中量口喉快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[21]
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[21] += now_add_lust
+    character_data.status_data[21] = min(99999, character_data.status_data[21])
+    change_data.status_data.setdefault(21, 0)
+    change_data.status_data[21] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_F_FEEL)
+def handle_add_small_f_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量Ｆ快（F感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加少量兽部快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[22]
+    now_add_lust = 20
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 20
+    character_data.status_data[22] += now_add_lust
+    character_data.status_data[22] = min(99999, character_data.status_data[22])
+    change_data.status_data.setdefault(22, 0)
+    change_data.status_data[22] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_F_FEEL)
+def handle_add_middle_f_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加中量Ｆ快（F感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加中量兽部快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[22]
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[22] += now_add_lust
+    character_data.status_data[22] = min(99999, character_data.status_data[22])
+    change_data.status_data.setdefault(22, 0)
+    change_data.status_data[22] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_H_FEEL)
+def handle_add_small_h_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加少量Ｈ快（H感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加少量心理快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[23]
+    now_add_lust = 20
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 20
+    character_data.status_data[23] += now_add_lust
+    character_data.status_data[23] = min(99999, character_data.status_data[23])
+    change_data.status_data.setdefault(23, 0)
+    change_data.status_data[23] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_H_FEEL)
+def handle_add_middle_h_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加中量Ｈ快（H感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加中量心理快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[23]
+    now_add_lust = 100
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[23] += now_add_lust
+    character_data.status_data[23] = min(99999, character_data.status_data[23])
+    change_data.status_data.setdefault(23, 0)
+    change_data.status_data[23] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_LUBRICATION_PLUS)
@@ -1989,6 +2152,84 @@ def handle_add_large_w_feel(
     character_data.status_data[7] = min(99999, character_data.status_data[7])
     change_data.status_data.setdefault(7, 0)
     change_data.status_data[7] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_M_FEEL)
+def handle_add_large_m_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加大量Ｍ快（M感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加大量口喉快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[21]
+    now_add_lust = 200
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[21] += now_add_lust
+    character_data.status_data[21] = min(99999, character_data.status_data[21])
+    change_data.status_data.setdefault(21, 0)
+    change_data.status_data[21] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_F_FEEL)
+def handle_add_large_f_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加大量Ｆ快（F感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加大量兽部快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[22]
+    now_add_lust = 200
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[22] += now_add_lust
+    character_data.status_data[22] = min(99999, character_data.status_data[22])
+    change_data.status_data.setdefault(22, 0)
+    change_data.status_data[22] += now_add_lust
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_H_FEEL)
+def handle_add_large_h_feel(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加大量Ｈ快（H感补正）
+    参数：
+        character_id (int): 角色id
+        change_data (game_type.CharacterStatusChange): 状态变更信息记录对象
+    返回值：
+        None
+    功能描述：为角色增加大量心理快感。
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    now_lust = character_data.status_data[23]
+    now_add_lust = 200
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    now_add_lust *= adjust
+    now_add_lust += now_lust / 10
+    character_data.status_data[23] += now_add_lust
+    character_data.status_data[23] = min(99999, character_data.status_data[23])
+    change_data.status_data.setdefault(23, 0)
+    change_data.status_data[23] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
@@ -3280,4 +3521,136 @@ def handle_add_1_w_experience(
     character_data.experience[7] += 1
     change_data.experience.setdefault(7, 0)
     change_data.experience[7] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_MClimax_EXPERIENCE)
+def handle_add_1_mclimax_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1M绝顶经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(156, 0)
+    character_data.experience[156] += 1
+    character_data.experience.setdefault(20, 0)
+    character_data.experience[20] += 1
+    change_data.experience.setdefault(156, 0)
+    change_data.experience[156] += 1
+    change_data.experience.setdefault(20, 0)
+    change_data.experience[20] += 1
+    if character_data.sp_flag.is_h == 1:
+        character_data.h_state.orgasm_count[8][0] += 1
+        character_data.h_state.orgasm_count[8][1] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_FClimax_EXPERIENCE)
+def handle_add_1_fclimax_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1F绝顶经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(157, 0)
+    character_data.experience[157] += 1
+    character_data.experience.setdefault(20, 0)
+    character_data.experience[20] += 1
+    change_data.experience.setdefault(157, 0)
+    change_data.experience[157] += 1
+    change_data.experience.setdefault(20, 0)
+    change_data.experience[20] += 1
+    if character_data.sp_flag.is_h == 1:
+        character_data.h_state.orgasm_count[9][0] += 1
+        character_data.h_state.orgasm_count[9][1] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_HClimax_EXPERIENCE)
+def handle_add_1_hclimax_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加1H绝顶经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.experience.setdefault(158, 0)
+    character_data.experience[158] += 1
+    character_data.experience.setdefault(20, 0)
+    character_data.experience[20] += 1
+    change_data.experience.setdefault(158, 0)
+    change_data.experience[158] += 1
+    change_data.experience.setdefault(20, 0)
+    change_data.experience[20] += 1
+    if character_data.sp_flag.is_h == 1:
+        character_data.h_state.orgasm_count[10][0] += 1
+        character_data.h_state.orgasm_count[10][1] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_M_EXPERIENCE)
+def handle_add_1_m_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1M经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[153] += 1
+    change_data.experience.setdefault(153, 0)
+    change_data.experience[153] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_F_EXPERIENCE)
+def handle_add_1_f_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1F经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[154] += 1
+    change_data.experience.setdefault(154, 0)
+    change_data.experience[154] += 1
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_H_EXPERIENCE)
+def handle_add_1_h_experience(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    自己增加1H经验
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.experience[155] += 1
+    change_data.experience.setdefault(155, 0)
+    change_data.experience[155] += 1
 

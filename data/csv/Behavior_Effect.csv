@@ -3,13 +3,14 @@ cid,behavior_id,effect_id
 int,str,str
 0,0,0
 行为结算器配置,,
+0,share_blankly,9999
 1,move,751
 2,wait,9999
 3,change_cloth,9999
 5,chara_diy_instruct,9999
-
+6,ai_chat_instruct,9999
 98,test_instruct,9999
-
+99,empty_instruct,9999
 101,chat,21 - 12 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 53 - 55 - 501
 102,chat_failed,12
 103,stroke,21 - 13 - 14 - 54 - 55 - 58 - 62
@@ -18,14 +19,12 @@ int,str,str
 111,sleep,31 - 36 - 301 - 321 - 489 - 457 - 509 - 606 - 634 - 648 - 932 - 1504 - 1505 - 1751
 112,take_shower,12 - 304 - 525 - 702 - 1751
 113,get_up,649 - 703 - 931
-
 115,follow,363 - 9999
 116,end_follow,365 - 9999
 117,apologize,1511 - 1512 - 62 - CVE_A1_E|80_G_1 - 341
 118,apologize_failed,23 - 1511 - 1512 - 53 - CVE_A1_E|80_G_1
 119,listen_complaint,21 - 1511 - 1512 - 53 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1
-117,give_gift,1511 - 1512 - 538
-
+120,give_gift,1511 - 1512 - 538
 131,make_coffee,21 - 11 - 12 - 22 - 39 - 52 - 53 - CVE_A1_E|83_G_1 - 502
 132,make_coffee_add,21 - 11 - 12 - 22 - 52 - 53 - CVE_A1_E|83_G_1 - 54 - 62 - 502
 133,ask_make_coffee,21 - 11 - 12 - 22 - 38 - 52 - 53 - CVE_A2_E|83_G_1 - 503
@@ -33,15 +32,7 @@ int,str,str
 135,eat,516
 136,refuse_eat,152 - 991
 137,buy_food,9999
-
 140,pee,32 - 331 - 1751
-142,put_shower_cloth,305 - 633 - 647
-144,wear_to_locker,303 - 642
-145,locker_to_wear,643
-146,ready_to_swim,357 - 644
-147,foot_cloth_to_locker,353 - 646
-148,wear_to_locker_and_get_shower_cloth,353 - 642 - 633
-149,clean_wear_and_locker_to_wear,632 - 643
 
 151,singing,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 504
 152,play_instrument,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 505
@@ -62,13 +53,10 @@ int,str,str
 167,play_house,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|80_G_1
 168,style_hair,1511 - 1512 - 21 - 22 - 53 - 81
 169,full_body_styling,1513 - 1514 - 21 - 22 - 53 - 81
-
 171,listen_inflation,1511 - 1512 - 21 - 22 - 55 - 58
 172,play_with_child,13 - 14 - 21 - 22 - 71 - 53
-
 173,pl_win_in_board_game,12 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 532
 174,pl_lose_in_board_game,12 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 533
-
 181,soak_feet,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
 182,steam_sauna,13 - 14 - 21 - 22 - 53 - 54 - 55 - 58 - 62
 183,hydrotherapy_treatment,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
@@ -79,8 +67,10 @@ int,str,str
 193,aromatherapy_3,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 194,aromatherapy_4,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 195,aromatherapy_5,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
+196,aromatherapy_6,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 
 201,official_work,21 - 11 - 12 - 22 - 71 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 506
+202,battle_command,9999
 205,training,21 - 15 - 16 - 22 - 71 - CVE_A2_E|81_G_1 - CVE_A1_E|81_G_1 - 701
 206,exercise,21 - 15 - 16 - 22 - 71 - 508
 207,cure_patient,21 - 13 - 14 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 507
@@ -96,157 +86,168 @@ int,str,str
 219,plant_manage_crop,15 - 16 - 21 - 22 - 71 - CVE_A1_E|89_G_1
 221,deal_with_diplomacy,11 - 12 - 21 - 22 - 71 - CVE_A1_E|80_G_1 - CVE_A1_E|82_G_1
 222,train_prisoner,1511 - 1514 - 81 - 82 - 86 - 535
+
 251,morning_salutation_1,11 - 12 - 21 - 22
-252,morning_salutation_2,11 - 12 - 21 - 22 - 110 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1
-253,morning_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - 520
+252,morning_salutation_2,11 - 12 - 21 - 22 - 118 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1
+253,morning_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - CVE_A1_E|153_G_1 - 520
 254,night_salutation_1,9999
-255,night_salutation_2,11 - 12 - 21 - 22 - 110 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1
-256,night_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - 520
-261,npc_assistant_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 995 - 995
+255,night_salutation_2,11 - 12 - 21 - 22 - 118 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1
+256,night_salutation_3,11 - 12 - 21 - 22 - 71 - 113 - CVE_A2_E|3_G_1 - CVE_A2_E|21_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|25_G_1 - CVE_A1_E|153_G_1 - 520
+257,npc_assistant_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 995 - 995
 
-301,touch_head,21 - 11 - 12 - 22 - 52 - 53 - 55 - 58 - 62
-302,touch_breast,21 - 11 - 12 - 58 - 62 - 111 - CVE_A2_E|1_G_1 - CVE_A1_E|41_G_1
-303,touch_buttocks,21 - 11 - 12 - 54 - 57 - 58 - 59 - 62
-304,touch_ears,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-305,touch_horn,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-306,touch_tail,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-307,touch_ring,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-308,touch_wing,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-309,touch_tentacle,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-310,touch_car,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-311,hand_in_hand,21 - 11 - 12 - 22 - 52 - 55 - 62
-312,embrace,21 - 11 - 12 - 22 - 53 - 55 - 58 - 62
-313,kiss,21 - 11 - 12 - 22 - 1101 - 51 - 53 - 58 - 62 - 110 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1
-314,lap_pillow,21 - 11 - 12 - 22 - 53 - 56 - 58 - 62
-315,raise_skirt,21 - 11 - 12 - 54 - 58 - 62 - 605
-316,ask_for_pan,21 - 11 - 12 - 57 - 58 - 62 - 621
-317,ask_for_socks,21 - 11 - 12 - 57 - 58 - 62 - 622
-318,invite_to_bath,11 - 12 - 21 - 22 - 537 - 702
-331,touch_clitoris,21 - 11 - 12 - 49 - 57 - 58 - 60 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A1_E|41_G_1
-332,touch_vagina,21 - 11 - 12 - 49 - 57 - 58 - 59 - 60 - 62 - 114 - CVE_A2_E|4_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|41_G_1
-333,touch_anus,21 - 11 - 12 - 49 - 57 - 58 - 59 - 60 - 62 - 115 - CVE_A2_E|5_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|41_G_1
-336,milk,21 - 11 - 12 - 21 - 22 - 42 - 54 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|22_G_1 - 336 - 519
+261,hold_child,1513 - 1514 - 21 - 22 - 71 - 53
+262,sing_children_song,1513 - 1514 - 21 - 22 - 71 - 53
+263,nuirse_child,1513 - 1514 - 21 - 22 - 71 - 53
+264,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53
+265,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
+266,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
 
-342,steal_pan,1513 - 1514 - 621
-343,steal_socks,1513 - 1514 - 622
-344,steal_scene_all_pan,1513 - 1514 - 623
-345,steal_scene_all_socks,1513 - 1514 - 624
+301,hand_in_hand,21 - 11 - 12 - 22 - 52 - 55 - 62
+302,embrace,21 - 11 - 12 - 22 - 53 - 55 - 58 - 62
+303,lap_pillow,21 - 11 - 12 - 22 - 53 - 56 - 58 - 62
+304,kiss,21 - 11 - 12 - 22 - 1101 - 51 - 53 - 58 - 62 - 118 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1
+305,kiss_fail,11 - 12 - 62
+310,touch_head,21 - 11 - 12 - 22 - 52 - 53 - 55 - 58 - 62
+311,touch_breast,21 - 11 - 12 - 58 - 62 - 111 - CVE_A2_E|1_G_1 - CVE_A1_E|41_G_1
+312,touch_buttocks,21 - 11 - 12 - 54 - 57 - 58 - 59 - 62 - CVE_A2_E|0_G_1
+313,touch_ears,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+314,touch_horn,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+315,touch_tail,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+316,touch_ring,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+317,touch_wing,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+318,touch_tentacle,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+319,touch_car,21 - 11 - 12 - 22 - 52 - 53 - 58 - 62 - 119 - CVE_A2_E|154_G_1 - CVE_A1_E|41_G_1
+320,touch_clitoris,21 - 11 - 12 - 49 - 57 - 58 - 60 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A1_E|41_G_1
+321,touch_vagina,21 - 11 - 12 - 49 - 57 - 58 - 59 - 60 - 62 - 114 - CVE_A2_E|4_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|41_G_1
+322,touch_anus,21 - 11 - 12 - 49 - 57 - 58 - 59 - 60 - 62 - 115 - CVE_A2_E|5_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|41_G_1
+323,milk,21 - 11 - 12 - 21 - 22 - 42 - 54 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|22_G_1 - 336 - 519
+324,invite_to_bath,11 - 12 - 21 - 22 - 537 - 702
 
-351,bagging_and_moving,1515 - 1516 - 513 - 952
-352,put_into_prison,1515 - 1516 - 514 - 153
-353,set_free,1511 - 1512 - 515
+331,raise_skirt,21 - 11 - 12 - 54 - 58 - 62 - 605
+332,smell_underwear,9999
+333,ask_for_pan,21 - 11 - 12 - 57 - 58 - 62 - 621
+334,ask_for_socks,21 - 11 - 12 - 57 - 58 - 62 - 622
+335,steal_pan,1513 - 1514 - 621
+336,steal_socks,1513 - 1514 - 622
+337,steal_scene_all_pan,1513 - 1514 - 623
+338,steal_scene_all_socks,1513 - 1514 - 624
+
+341,bagging_and_moving,1515 - 1516 - 513 - 952
+342,put_into_prison,1515 - 1516 - 514 - 153
+343,set_free,1511 - 1512 - 515
+
+351,confession,11 - 12 - 53 - 54 - 55 - 950
+352,confession_failed,11 - 12 - 62
+353,give_necklace,11 - 12 - 56 - 57 - 58 - 951
+354,give_necklace_failed,11 - 12 - 62
+356,low_obscenity_anus,13 - 14 - 62 - 151
+357,high_obscenity_anus,13 - 14 - 62 - 152
 
 361,h,405 - 464 - 603 - 605 - 752 - 1409
 362,end_h,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-363,do_h_fail,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801 - 153
-364,h_hp_0,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-365,t_h_hp_0,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-366,h_interrupt,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-367,no_conscious_h_end,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-368,hidden_sex_interrupt,40 - 473 - 526 - 753 - 528 - 404 - 473 - 631 - 801
-369,hidden_sex_to_group_sex,406 - 465 - 473 - 608 - 753 - 1410 - 10010
+363,no_conscious_h_end,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
+364,do_h_fail,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801 - 153
+365,h_hp_0,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
+366,t_h_hp_0,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
+367,h_interrupt,40 - 526 - 753 - 528 - 404 - 473 - 631 - 801
+368,see_h,23 - 24 - 1524
 
-371,confession,11 - 12 - 53 - 54 - 55 - 950
-372,confession_failed,11 - 12 - 62
-373,give_necklace,11 - 12 - 56 - 57 - 58 - 951
-374,give_necklace_failed,11 - 12 - 62
+370,ask_group_sex,406 - 465 - 608 - 753 - 1410 - 10010
+371,group_sex_end,1531 - 529 - 407 - 636 - 800 - 10011
+372,ask_group_sex_fail,530
+373,group_sex_pl_hp_0_end,1531 - 529 - 407 - 636 - 800 - 10011
+374,group_sex_npc_hp_0_end,1503 - 528 - 403 - 635
+375,group_sex_to_h,9999
+376,join_group_sex,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
 
-376,discover_hidden_sex_and_interrupt,23 - 24 - 1524
-377,discover_hidden_sex_and_join,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
-378,ask_hidden_sex,405 - 464 - 603 - 605 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
-379,ask_hidden_sex_fail,40 - 526 - 528 - 404 - 631 - 801 - 153
-380,ask_group_sex,406 - 465 - 608 - 753 - 1410 - 10010
-381,ask_group_sex_fail,530
-382,group_sex_end,1531 - 529 - 407 - 636 - 800 - 10011
-383,group_sex_pl_hp_0_end,1531 - 529 - 407 - 636 - 800 - 10011
-384,group_sex_npc_hp_0_end,1503 - 528 - 403 - 635
-385,group_sex_to_h,9999
-386,join_group_sex,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
+380,ask_hidden_sex,405 - 464 - 603 - 605 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
+381,ask_hidden_sex_fail,40 - 526 - 528 - 404 - 631 - 801 - 153
+382,hidden_sex_interrupt,40 - 473 - 526 - 753 - 528 - 404 - 473 - 631 - 801
+383,discover_hidden_sex_and_interrupt,23 - 24 - 1524
+384,hidden_sex_to_group_sex,406 - 465 - 473 - 608 - 753 - 1410 - 10010
+385,discover_hidden_sex_and_join,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
 
-396,see_h,23 - 24 - 1524
-397,kiss_fail,11 - 12 - 62
-398,high_obscenity_anus,13 - 14 - 62 - 152
-399,low_obscenity_anus,13 - 14 - 62 - 151
 401,making_out,21 - 13 - 14 - 22 - 49 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
-402,kiss_h,21 - 13 - 14 - 22 - 1101 - 49 - 110 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - 840
+402,kiss_h,21 - 13 - 14 - 22 - 1101 - 49 - 118 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1 - 840
 403,breast_caress,21 - 13 - 14 - 22 - 49 - 111 - CVE_A2_E|1_G_1 - CVE_A1_E|41_G_1
 404,twiddle_nipples,21 - 13 - 14 - 22 - 49 - 111 - CVE_A2_E|1_G_1 - CVE_A1_E|41_G_1
-405,breast_sucking,21 - 13 - 14 - 22 - 49 - 111 - CVE_A2_E|1_G_1 - CVE_A1_E|42_G_1
+405,breast_sucking,21 - 13 - 14 - 22 - 49 - 111 - 118 - CVE_A2_E|1_G_1 - CVE_A1_E|153_G_1
 406,clit_caress,21 - 13 - 14 - 22 - 49 - 112 - CVE_A2_E|2_G_1 - CVE_A1_E|41_G_1
 407,open_labia,21 - 13 - 14 - 22 - 49 - 112 - CVE_A2_E|2_G_1 - CVE_A1_E|41_G_1
 408,open_anus,21 - 13 - 14 - 22 - 49 - 115 - CVE_A2_E|5_G_1 - CVE_A1_E|41_G_1
-409,cunnilingus,21 - 13 - 14 - 22 - 49 - 112 - 114 - CVE_A2_E|4_G_1 - CVE_A1_E|42_G_1
-410,lick_anal,21 - 13 - 14 - 22 - 49 - 115 - CVE_A2_E|5_G_1 - CVE_A1_E|42_G_1
+409,cunnilingus,21 - 13 - 14 - 22 - 49 - 112 - 114 - 118 - CVE_A2_E|4_G_1 - CVE_A1_E|42_G_1 - CVE_A1_E|153_G_1
+410,lick_anal,21 - 13 - 14 - 22 - 49 - 115 - 118 - CVE_A2_E|5_G_1 - CVE_A1_E|153_G_1
 411,finger_insertion,21 - 13 - 14 - 22 - 49 - 55 - 58 - 62 - 114 - CVE_A2_E|4_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|41_G_1
 412,anal_caress,21 - 13 - 14 - 22 - 49 - 58 - 60 - 62 - 115 - CVE_A2_E|5_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|41_G_1
 413,make_masturebate,21 - 13 - 14 - 22 - 41 - 49 - 51 - 54 - 57 - 58 - 62 - CVE_A2_E|41_G_1 - CVE_A2_E|47_G_1
-414,make_lick_anal,21 - 13 - 14 - 22 - 51 - 56 - 57 - 58 - 62 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1
+414,make_lick_anal,21 - 13 - 14 - 22 - 51 - 56 - 57 - 58 - 62 - 118 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|153_G_1
 415,keep_enjoy,51 - 58 - 62
 416,sedecu,21 - 13 - 14 - 22 - 53 - 54 - 56
 417,ask_pee,21 - 13 - 14 - 33 - 47 - 57 - 58 - 62 - CVE_A2_E|6_G_1 - CVE_A2_E|23_G_1 - CVE_A2_E|34_G_1
 418,masturebate,1513 - 1514 - 21 - 1503 - 1521 - 49 - 54 - 58 - 81 - CVE_A1_E|54_G_1 - 456 - 458 - 524
-420,handjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 141 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - 807
-421,blowjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - 804 - 1107
-422,paizuri,21 - 13 - 14 - 22 - 42 - 49 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 144 - CVE_A2_E|1_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|43_G_1 - 805
-423,footjob,21 - 13 - 14 - 22 - 51 - 54 - 56 - 58 - 62 - 70 - 143 - CVE_A2_E|30_G_1 - CVE_A2_E|44_G_1 - 813
+
+420,handjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 110 - 141 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - 807
+421,blowjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107
+422,paizuri,21 - 13 - 14 - 22 - 42 - 49 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 111 - 144 - CVE_A2_E|1_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|43_G_1 - 805
+423,footjob,21 - 13 - 14 - 22 - 51 - 54 - 56 - 58 - 62 - 70 - 110 - 143 - CVE_A2_E|30_G_1 - CVE_A2_E|44_G_1 - 813
 424,hairjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 141 - CVE_A2_E|30_G_1 - CVE_A2_E|45_G_1 - 802
-425,axillajob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|46_G_1 - 806
-426,rub_buttock,21 - 13 - 14 - 22 - 43 - 49 - 51 - 52 - 56 - 58 - 62 - 70 - 143 - CVE_A2_E|4_G_1 - CVE_A2_E|30_G_1 - 812
-427,hand_blowjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - CVE_A2_E|42_G_1 - 804 - 1107
-428,tits_blowjob,21 - 13 - 14 - 22 - 42 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 142 - CVE_A2_E|1_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - CVE_A2_E|43_G_1 - 804 - 1107
-429,focus_blowjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - 804 - 1107
-430,deep_throat,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 59 - 60 - 62 - 70 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|42_G_1 - 804 - 1107
-431,sixty_nine,21 - 13 - 14 - 22 - 49 - 51 - 56 - 58 - 62 - 70 - 114 - 142 - CVE_A2_E|4_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A1_E|42_G_1 - 804 - 1107
-432,legjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 143 - CVE_A2_E|30_G_1 - 812
-433,tailjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 120 - CVE_A2_E|30_G_1 - 814
-434,face_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 120 - CVE_A2_E|30_G_1 - 803
-435,horn_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 120 - CVE_A2_E|30_G_1 - 815
-436,ears_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 120 - CVE_A2_E|30_G_1 - 816
-437,clean_blowjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - 804 - 1107 - 1406
+425,axillajob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 110 - 120 - CVE_A2_E|30_G_1 - CVE_A2_E|46_G_1 - 806
+426,rub_buttock,21 - 13 - 14 - 22 - 43 - 49 - 51 - 52 - 56 - 58 - 62 - 70 - 110 - 143 - CVE_A2_E|4_G_1 - CVE_A2_E|30_G_1 - 812
+427,hand_blowjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107
+428,tits_blowjob,21 - 13 - 14 - 22 - 42 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|1_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|41_G_1 - CVE_A2_E|43_G_1 - CVE_A2_E|153_G_1 - 804 - 1107
+429,focus_blowjob,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107
+430,deep_throat,21 - 13 - 14 - 22 - 51 - 52 - 54 - 56 - 58 - 59 - 60 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107
+431,sixty_nine,21 - 13 - 14 - 22 - 49 - 51 - 56 - 58 - 62 - 70 - 114 - 118 - 142 - CVE_A2_E|4_G_1 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A1_E|42_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1 - 804 - 1107
+432,legjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 110 - 143 - CVE_A2_E|30_G_1 - 812
+433,tailjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 56 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - 814
+434,face_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 110 - 120 - CVE_A2_E|30_G_1 - 803
+435,horn_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - 815
+436,ears_rub,21 - 13 - 14 - 22 - 41 - 51 - 52 - 57 - 58 - 62 - 70 - 119 - 120 - CVE_A2_E|30_G_1 - 816
+437,clean_blowjob,21 - 13 - 14 - 22 - 41 - 51 - 52 - 54 - 56 - 58 - 62 - 70 - 118 - 142 - CVE_A2_E|30_G_1 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - 804 - 1107 - 1406
 
 451,body_lubricant,21 - 13 - 14 - 58 - 62 - 941 - 1001
 452,birth_control_pills_before,21 - 13 - 14 - 62 - 948 - 1009
 453,birth_control_pills_after,21 - 13 - 14 - 58 - 62 - 949 - 1010
 454,philter,21 - 13 - 14 - 62 - 942 - 1002
+455,enemas,9999
 456,diuretics_once,21 - 13 - 14 - 62 - 944 - 1005
 457,diuretics_persistent,21 - 13 - 14 - 62 - 945 - 1006
 458,sleeping_pills,21 - 13 - 14 - 62 - 946 - 1007
 459,clomid,21 - 13 - 14 - 58 - 62 - 947 - 1008
+
 471,put_condom,1514 - 58 - 953 - 1011
-472,safe_candles,1511 - 1512 - 1519 - 1520 - 49 - 52 - 57 - 58 - 60 - 62 - 110 - 135 - CVE_A2_E|0_G_1 - CVE_A2_E|34_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1 - 955
+472,take_condom_out,1511 - 1012
 473,urethral_swab,13 - 14 - 21 - 39 - 57 - 58 - 60 - 62 - 116 - 522 - CVE_A2_E|6_G_1 - CVE_A2_E|67_G_1 - 954
-474,take_condom_out,1511 - 1012
+474,electric_message_stick,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
 481,nipples_love_egg,21 - 13 - 14 - 22 - 49 - 55 - 62 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1
 482,nipple_clamp_on,21 - 13 - 14 - 22 - 42 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 915
-483,clit_love_egg,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
-484,clit_clamp_on,21 - 13 - 14 - 22 - 43 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1 - 917
-485,electric_message_stick,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
-486,vibrator_insertion,21 - 13 - 14 - 22 - 1103 - 45 - 49 - 54 - 59 - 62 - CVE_A2_E|4_G_1 - CVE_A2_E|51_G_1 - 911
-489,vibrator_insertion_anal,21 - 13 - 14 - 22 - 1104 - 46 - 49 - 54 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 913
-492,clyster,21 - 13 - 14 - 22 - 57 - 58 - 59 - 62 - 71 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 943 - 1003 - 115 - CVE_A2_E|53_G_1
-494,anal_beads,21 - 13 - 14 - 22 - 46 - 57 - 58 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 919
-495,clyster_end,21 - 13 - 14 - 22 - 55 - 57 - 58 - 62 - 71 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 1004 - 115
-496,nipple_clamp_off,916
-497,clit_clamp_off,918
-498,vibrator_insertion_off,912
-499,vibrator_insertion_anal_off,914
-500,anal_beads_off,920
+483,nipple_clamp_off,916
+484,clit_love_egg,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
+485,clit_clamp_on,21 - 13 - 14 - 22 - 43 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1 - 917
+486,clit_clamp_off,918
+491,vibrator_insertion,21 - 13 - 14 - 22 - 1103 - 45 - 49 - 54 - 59 - 62 - CVE_A2_E|4_G_1 - CVE_A2_E|51_G_1 - 911
+492,vibrator_insertion_off,912
+493,vibrator_insertion_anal,21 - 13 - 14 - 22 - 1104 - 46 - 49 - 54 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 913
+494,vibrator_insertion_anal_off,914
+495,anal_beads,21 - 13 - 14 - 22 - 46 - 57 - 58 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 919
+496,anal_beads_off,920
+497,clyster,21 - 13 - 14 - 22 - 57 - 58 - 59 - 62 - 71 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 943 - 1003 - 115 - CVE_A2_E|53_G_1
+498,anal_plug,9999
+499,clyster_end,21 - 13 - 14 - 22 - 55 - 57 - 58 - 62 - 71 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 1004 - 115
 
 501,normal_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 53 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 851
 502,back_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 57 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 852
-503,riding_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 56 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 853
+503,riding_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 56 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 854
 504,face_seat_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 52 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 855
 505,back_seat_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 52 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 856
 506,face_stand_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 58 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 857
 507,back_stand_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 58 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 858
-503,riding_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 56 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 854
-
+508,back_riding_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 56 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 854
 511,stimulate_g_point,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808
 512,womb_os_caress,21 - 15 - 16 - 22 - 1103 - 48 - 49 - 51 - 62 - 70 - 125 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|7_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A2_E|68_G_1 - CVE_A1_E|60_G_1 - 808
 513,womb_insertion,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 62 - 70 - 125 - 131 - 134 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|7_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|64_G_1 - CVE_A2_E|65_G_1 - CVE_A2_E|68_G_1 - CVE_A1_E|60_G_1 - 809
 514,womb_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 62 - 70 - 125 - 131 - 134 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|7_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|64_G_1 - CVE_A2_E|65_G_1 - CVE_A2_E|68_G_1 - CVE_A1_E|60_G_1 - 809
 515,external_womb_massage,21 - 13 - 14 - 22 - 49 - 62 - 81 - 117 - CVE_A2_E|7_G_1 - CVE_A1_E|41_G_1
-
 521,normal_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 53 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 851
 522,back_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 57 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 852
 523,riding_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 56 - 51 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 853
@@ -255,13 +256,10 @@ int,str,str
 526,face_stand_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 58 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 857
 527,back_stand_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 58 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 858
 528,back_riding_anal_sex,21 - 15 - 16 - 22 - 1104 - 49 - 56 - 51 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810 - 854
-
 530,stimulate_sigmoid_colon,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 62 - 70 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810
 531,stimulate_vagina,21 - 15 - 16 - 22 - 1104 - 49 - 51 - 62 - 70 - 131 - 123 - 132 - 146 - CVE_A2_E|5_G_1 - CVE_A2_E|62_G_1 - CVE_A2_E|66_G_1 - CVE_A1_E|60_G_1 - 810
-
 541,urethral_finger_insertion,15 - 16 - 21 - 39 - 57 - 58 - 60 - 62 - 116 - 523 - CVE_A2_E|6_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|67_G_1
 542,urethral_sex,15 - 16 - 21 - 22 - 39 - 57 - 58 - 60 - 62 - 133 - 120 - 124 - CVE_A2_E|6_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|63_G_1 - CVE_A2_E|67_G_1 - 811 - 851
-
 551,face_hug_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 54 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 859
 552,back_hug_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 54 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 860
 553,face_lay_sex,21 - 15 - 16 - 22 - 1103 - 49 - 51 - 53 - 62 - 70 - 122 - 131 - 145 - CVE_A2_E|4_G_1 - CVE_A2_E|61_G_1 - CVE_A2_E|65_G_1 - CVE_A1_E|60_G_1 - 808 - 861
@@ -275,24 +273,31 @@ int,str,str
 602,urine_collector_on,13 - 14 - 21 - 22 - 58 - 116 - CVE_A2_E|7_G_1 - CVE_A2_E|51_G_1 - 923
 603,bind,15 - 16 - 21 - 59 - 81 - 86 - CVE_A1_E|70_G_1 - CVE_A2_E|52_G_1
 604,patch_on,13 - 14 - 21 - 22 - 60 - CVE_A2_E|51_G_1 - 925
-605,whip,13 - 14 - 21 - 23 - 52 - 57 - 59 - 59 - 60 - 62 - 81 - 110 - 135 - CVE_A2_E|32_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1
+605,whip,13 - 14 - 21 - 23 - 52 - 57 - 59 - 59 - 60 - 62 - 81 - 135 - CVE_A2_E|32_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1
+606,needle,9999
 607,gag_on,13 - 14 - 21 - 22 - 60 - CVE_A2_E|51_G_1 - 927
 631,milking_machine_off,13 - 14 - 21 - 22 - 58 - 111 - CVE_A2_E|1_G_1 - 922
 632,urine_collector_off,13 - 14 - 21 - 22 - 58 - 116 - CVE_A2_E|7_G_1 - 924
 633,unbind,15 - 16 - 21 - 81
 634,patch_off,13 - 14 - 21 - 22 - 60 - 926
 635,gag_off,13 - 14 - 21 - 22 - 60 - 928
+636,safe_candles,1511 - 1512 - 1519 - 1520 - 49 - 52 - 57 - 58 - 60 - 62 - 110 - 135 - CVE_A2_E|0_G_1 - CVE_A2_E|34_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1 - 955
 
-681,exercise_sucking_and_swallowing,1512 - 1513 - 41 - 81 - 84 - 86 - 88
+681,exercise_sucking_and_swallowing,1512 - 1513 - 41 - 81 - 84 - 86 - 88 - 118
 682,exercise_armpit_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88
 683,exercise_breast_clamping,1512 - 1513 - 42 - 81 - 84 - 86 - 88
 684,exercise_hands_clamping,1512 - 1513 - 41 - 81 - 84 - 86 - 88
 685,exercise_foots_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88
 686,exercise_vagina_firmness,1512 - 1513 - 45 - 81 - 84 - 86 - 88
 687,exercise_intestine_firmness,1512 - 1513 - 46 - 81 - 84 - 86 - 88
-688,exercise_tail_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88
-689,exercise_tentacle_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88
+688,exercise_tail_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88 - 119
+689,exercise_tentacle_flexibility,1512 - 1513 - 41 - 81 - 84 - 86 - 88 - 119
 
+701,undress,9999
+702,undress_to_underwear,9999
+703,undress_to_socks_gloves,9999
+704,undress_to_naked,9999
+705,remove_underwear,9999
 710,hat_job,1513 - 12 - 21 - 57 - 58 - 62 - 70 - 71 - CVE_A2_E|30_G_1 - CVE_A2_E|47_G_1 - 821
 711,glasses_job,1513 - 12 - 21 - 57 - 58 - 62 - 70 - 71 - CVE_A2_E|30_G_1 - CVE_A2_E|47_G_1 - 822
 712,ear_ornament_job,1513 - 12 - 21 - 57 - 58 - 62 - 70 - 71 - CVE_A2_E|30_G_1 - CVE_A2_E|47_G_1 - 823
@@ -313,17 +318,20 @@ int,str,str
 
 771,spanking,13 - 14 - 21 - 57 - 58 - 59 - 135 - CVE_A2_E|32_G_1 - CVE_A1_E|33_G_1
 
-801,hold_child,1513 - 1514 - 21 - 22 - 71 - 53
-802,sing_children_song,1513 - 1514 - 21 - 22 - 71 - 53
-803,nuirse_child,1513 - 1514 - 21 - 22 - 71 - 53
-804,change_diapers,1513 - 1514 - 21 - 22 - 71 - 53
-805,teach_talk,1513 - 1514 - 21 - 22 - 71 - 53
-806,give_toy,1513 - 1514 - 21 - 22 - 71 - 53
+801,cloth_off,9999
+802,put_shower_cloth,305 - 633 - 647
+803,put_sleep_cloth,9999
+804,wear_to_locker,303 - 642
+805,locker_to_wear,643
+806,ready_to_swim,357 - 644
+807,foot_cloth_to_locker,353 - 646
+808,wear_to_locker_and_get_shower_cloth,353 - 642 - 633
+809,clean_wear_and_locker_to_wear,632 - 643
 
 850,examine_hair,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 851,examine_hair_smoothness,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|45_G_1 - 70
-852,examine_oral,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-853,examine_sucking_and_swallowing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|42_G_1 - 142
+852,examine_oral,21 - 11 - 12 - 57 - 58 - 118 - CVE_A2_E|153_G_1 - 81 - CVE_A1_E|88_G_1
+853,examine_sucking_and_swallowing,21 - 11 - 12 - 57 - 58 - 118 - CVE_A2_E|42_G_1 - CVE_A2_E|153_G_1 - CVE_A2_E|42_G_1 - 142
 854,examine_armpit,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 855,examine_armpit_clamping,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|46_G_1 - 120
 856,examine_breast,21 - 11 - 12 - 57 - 58 - 111 - CVE_A2_E|1_G_1 - 81 - CVE_A1_E|88_G_1
@@ -344,18 +352,18 @@ int,str,str
 878,examine_urethra,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1 - CVE_A2_E|67_G_1 - 81 - CVE_A1_E|88_G_1
 879,examine_urination_status,21 - 11 - 12 - 57 - 58 - 116 - CVE_A2_E|6_G_1 - 81 - CVE_A1_E|88_G_1
 880,examine_urethra_firmness,21 - 11 - 12 - 57 - 58 - 124 - 133 - CVE_A2_E|6_G_1 - CVE_A2_E|63_G_1 - CVE_A2_E|67_G_1 - 120
-881,examine_tail,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-883,examine_horn,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-885,examine_ears,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-887,examine_wing,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-889,examine_ring,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
-891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
-892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 120
+881,examine_tail,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+882,examine_tail_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
+883,examine_horn,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+884,examine_horn_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
+885,examine_ears,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+886,examine_ears_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
+887,examine_wing,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+888,examine_wing_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
+889,examine_ring,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+890,examine_ring_sensitivity,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
+891,examine_tentacle,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
+892,examine_tentacle_flexibility,21 - 11 - 12 - 57 - 58 - 119 - CVE_A2_E|0_G_1 - 120
 
 901,penetrating_vision_on,1201
 902,penetrating_vision_off,1202
@@ -369,6 +377,7 @@ int,str,str
 923,hypnosis_force_ovulation,1511 - 1512 - 1224
 924,hypnosis_blockhead,1511 - 1512 - 1226
 925,hypnosis_active_h,1511 - 1512 - 1228
+931,hypnosis_roleplay,9999
 932,hypnosis_pain_as_pleasure,1511 - 1512 - 1230
 941,time_stop_on,1241
 942,time_stop_off,1244 - 1246 - 536 - 1242 - 527
@@ -377,80 +386,81 @@ int,str,str
 945,target_free_in_time_stop,1245
 946,target_stop_in_time_stop,1246
 
-1000,n_orgasm_small,210 - 228 - 232 - 265 - 266 - 411 - 997
-1001,n_orgasm_normal,210 - 228 - 231 - 232 - 278 - 279 - 412 - 997
-1002,n_orgasm_strong,210 - 229 - 231 - 234 - 291 - 292 - 413 - 997
-1003,b_orgasm_small,211 - 228 - 232 - 265 - 266 - 411 - 997
-1004,b_orgasm_normal,211 - 228 - 231 - 232 - 278 - 279 - 412 - 997
-1005,b_orgasm_strong,211 - 229 - 231 - 234 - 291 - 292 - 413 - 997
-1006,c_orgasm_small,212 - 228 - 232 - 265 - 266 - 411 - 997
-1007,c_orgasm_normal,212 - 228 - 231 - 232 - 278 - 279 - 412 - 997
-1008,c_orgasm_strong,212 - 229 - 231 - 234 - 291 - 292 - 413 - 997
-1009,p_orgasm_small,221 - 224 - 225 - 231 - 232 - 411 - 501 - 997
-1010,p_orgasm_normal,221 - 224 - 226 - 233 - 234 - 412 - 501 - 997
-1011,p_orgasm_strong,221 - 224 - 237 - 235 - 236 - 413 - 501 - 997
+1000,s_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|10_G_1
+1001,s_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|10_G_1
+1002,s_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|10_G_1
+1003,s_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|10_G_1
+1004,b_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|11_G_1
+1005,b_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|11_G_1
+1006,b_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|11_G_1
+1007,b_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|11_G_1
+1008,c_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|12_G_1
+1009,c_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|12_G_1
+1010,c_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|12_G_1
+1011,c_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|12_G_1
+1012,p_orgasm_small,225 - 231 - 232 - 411 - 501 - 997 - CVE_A1_E|21_G_1 - CVE_A2_E|24_G_1
+1013,p_orgasm_normal,226 - 233 - 234 - 412 - 501 - 997 - CVE_A1_E|21_G_1 - CVE_A2_E|24_G_1
+1014,p_orgasm_strong,227 - 235 - 236 - 413 - 501 - 997 - CVE_A1_E|21_G_1 - CVE_A2_E|24_G_1
+1016,v_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|14_G_1
+1017,v_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|14_G_1
+1018,v_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|14_G_1
+1019,v_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|14_G_1
+1020,a_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|15_G_1
+1021,a_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|15_G_1
+1022,a_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|15_G_1
+1023,a_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|15_G_1
+1024,u_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|16_G_1
+1025,u_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|16_G_1
+1026,u_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|16_G_1
+1027,u_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|16_G_1
+1028,w_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|17_G_1
+1029,w_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|17_G_1
+1030,w_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|17_G_1
+1031,w_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|17_G_1
+1032,m_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|156_G_1
+1033,m_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|156_G_1
+1034,m_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|156_G_1
+1035,m_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|156_G_1
+1036,f_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|157_G_1
+1037,f_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|157_G_1
+1038,f_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|157_G_1
+1039,f_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|157_G_1
+1040,h_orgasm_small,228 - 232 - 265 - 266 - 411 - 997 - CVE_A1_E|158_G_1
+1041,h_orgasm_normal,228 - 231 - 232 - 266 - 278 - 301 - 302 - 412 - 997 - CVE_A1_E|158_G_1
+1042,h_orgasm_strong,229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 997 - CVE_A1_E|158_G_1
+1043,h_orgasm_super,230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 997 - CVE_A1_E|158_G_1
 
-1012,v_orgasm_small,214 - 228 - 232 - 265 - 266 - 301 - 302 - 411 - 997
-1013,v_orgasm_normal,214 - 228 - 231 - 232 - 278 - 279 - 301 - 302 - 412 - 997
-1014,v_orgasm_strong,214 - 229 - 231 - 234 - 291 - 292 - 301 - 302 - 413 - 997
-1015,a_orgasm_small,215 - 228 - 232 - 265 - 266 - 301 - 302 - 411 - 997
-1016,a_orgasm_normal,215 - 228 - 231 - 232 - 278 - 279 - 303 - 304 - 412 - 997
-1017,a_orgasm_strong,215 - 229 - 231 - 234 - 291 - 292 - 303 - 304 - 413 - 997
-1018,u_orgasm_small,216 - 228 - 232 - 265 - 266 - 303 - 304 - 411 - 997
-1019,u_orgasm_normal,216 - 228 - 231 - 232 - 278 - 279 - 303 - 304 - 412 - 997
-1020,u_orgasm_strong,216 - 229 - 231 - 234 - 291 - 292 - 305 - 306 - 413 - 997
-1021,w_orgasm_small,217 - 228 - 232 - 265 - 266 - 305 - 306 - 411 - 997
-1022,w_orgasm_normal,217 - 228 - 231 - 232 - 278 - 279 - 305 - 306 - 412 - 997
-1023,w_orgasm_strong,217 - 229 - 231 - 234 - 291 - 292 - 305 - 306 - 413 - 997
-1026,extra_orgasm,408
-1027,semen_drinking_climax,999
-1030,happy_mark_1,266 - 998
-1031,happy_mark_2,279 - 998
-1032,happy_mark_3,292 - 998
-1033,yield_mark_1,268 - 998
-1034,yield_mark_2,281 - 998
-1035,yield_mark_3,294 - 998
-1036,pain_mark_1,270 - 998
-1037,pain_mark_2,283 - 998
-1038,pain_mark_3,296 - 998
-1039,time_mark_1,265 - 998
-1040,time_mark_2,278 - 998
-1041,time_mark_3,291 - 998
-1042,terror_mark_1,271 - 998
-1043,terror_mark_2,284 - 998
-1044,terror_mark_3,297 - 998
-1045,hate_mark_1,273 - 998
-1046,hate_mark_2,286 - 998
-1047,hate_mark_3,299 - 998
-1050,first_kiss,264 - 998
-1051,first_sex,400 - 998
-1052,first_a_sex,401 - 998
-1061,unconscious_mark_1,998
-1062,unconscious_mark_2,998
-1063,unconscious_mark_3,998
-1064,unconscious_mark_4,998
-1065,unconscious_mark_5,998
-1066,unconscious_mark_6,998
+1050,plural_orgasm_2,409 - 301
+1051,plural_orgasm_3,409 - 301 - 302
+1052,plural_orgasm_4,409 - 303 - 302
+1053,plural_orgasm_5,409 - 303 - 302
+1054,plural_orgasm_6,409 - 303 - 304
+1055,plural_orgasm_7,409 - 303 - 304
+1056,plural_orgasm_8,409 - 303 - 304
+1057,plural_orgasm_9,409 - 305 - 306
+1058,plural_orgasm_10,409 - 305 - 306
+1059,plural_orgasm_11,409 - 305 - 306
 
-1071,b_orgasm_to_milk,222 - 232 - 246 - 281 - 282 - 406 - 998
-1072,u_orgasm_to_pee,223 - 232 - 251 - 281 - 282 - 407 - 998
+1060,s_orgasm_edge,998
+1061,b_orgasm_edge,998
+1062,c_orgasm_edge,998
+1063,p_orgasm_edge,998
+1064,v_orgasm_edge,998
+1065,a_orgasm_edge,998
+1066,u_orgasm_edge,998
+1067,w_orgasm_edge,998
+1068,m_orgasm_edge,998
+1069,f_orgasm_edge,998
+1070,h_orgasm_edge,998
 
-1081,plural_orgasm_2,409 - 301
-1082,plural_orgasm_3,409 - 301 - 302
-1083,plural_orgasm_4,409 - 303 - 302
-1083,plural_orgasm_5,409 - 303 - 302
-1084,plural_orgasm_6,409 - 303 - 304
-1085,plural_orgasm_7,409 - 303 - 304
-1086,plural_orgasm_8,409 - 303 - 304
-1087,plural_orgasm_9,409 - 305 - 306
+1080,extra_orgasm,408
+1081,semen_drinking_climax,999
+1086,b_orgasm_to_milk,222 - 232 - 246 - 281 - 282 - 406 - 998
+1087,u_orgasm_to_pee,223 - 232 - 251 - 281 - 282 - 407 - 998
 
-1090,n_orgasm_super,210 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1091,b_orgasm_super,211 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1092,c_orgasm_super,212 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1094,v_orgasm_super,214 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1095,a_orgasm_super,215 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1096,u_orgasm_super,216 - 230 - 233 - 236 - 291 - 292 -  414 - 997
-1097,w_orgasm_super,217 - 230 - 233 - 236 - 291 - 292 -  414 - 997
+1090,first_kiss,264 - 998
+1091,first_sex,400 - 998
+1092,first_a_sex,401 - 998
 
 1100,nipple_clamp,231 - 232 - 238 - 270 - 611
 1101,clit_clamp,231 - 232 - 239 - 270 - 612
@@ -460,30 +470,55 @@ int,str,str
 1105,urine_collector,231 - 232 - 243 - 405 - 616
 1106,patch,271
 1107,second_anal_beads,231 - 232 - 242 - 615
-1108,diuretics,402
-1109,second_sleeping_pills,403
-1110,ovulation_promotion_drugs,999
-1111,second_birth_control_pills_before,999
-1112,second_birth_control_pills_after,999
-1114,gag,999
+1108,gag,999
+1109,condage,410
 
-1161,condage,410
+1120,diuretics,402
+1121,second_sleeping_pills,403
+1122,ovulation_promotion_drugs,999
+1123,second_birth_control_pills_before,999
+1124,second_birth_control_pills_after,999
+
+1150,happy_mark_1,266 - 998
+1151,happy_mark_2,279 - 998
+1152,happy_mark_3,292 - 998
+1153,yield_mark_1,268 - 998
+1154,yield_mark_2,281 - 998
+1155,yield_mark_3,294 - 998
+1156,pain_mark_1,270 - 998
+1157,pain_mark_2,283 - 998
+1158,pain_mark_3,296 - 998
+1159,time_mark_1,265 - 998
+1160,time_mark_2,278 - 998
+1161,time_mark_3,291 - 998
+1162,terror_mark_1,271 - 998
+1163,terror_mark_2,284 - 998
+1164,terror_mark_3,297 - 998
+1165,hate_mark_1,273 - 998
+1166,hate_mark_2,286 - 998
+1167,hate_mark_3,299 - 998
+1168,unconscious_mark_1,998
+1169,unconscious_mark_2,998
+1170,unconscious_mark_3,998
+1171,unconscious_mark_4,998
+1172,unconscious_mark_5,998
+1173,unconscious_mark_6,998
 
 1201,penis_in_body_0,231 - 232 - 240
-1202,penis_in_body_1,231 - 232 - 240
-1203,penis_in_body_2,231 - 232 - 240 - 237
+1202,penis_in_body_1,231 - 232 - 240 - 237
+1203,penis_in_body_2,231 - 232 - 240 - 310
 1204,penis_in_body_3,231 - 232 - 240 - 238
-1205,penis_in_body_4,231 - 232 - 240
-1206,penis_in_body_5,231 - 232 - 240
+1205,penis_in_body_4,231 - 232 - 240 - 237
+1206,penis_in_body_5,231 - 232 - 240 - 237
 1207,penis_in_body_6,231 - 232 - 240 - 241 - 601 - 605
 1208,penis_in_body_7,231 - 232 - 240 - 244 - 604 - 608
 1209,penis_in_body_8,231 - 232 - 240 - 242 - 602 - 606
 1210,penis_in_body_9,231 - 232 - 240 - 243 - 603 - 607
-1211,penis_in_body_10,231 - 232 - 240
-1212,penis_in_body_11,231 - 232 - 240
-1213,penis_in_body_12,231 - 232 - 240 - 237
-1214,penis_in_body_13,231 - 232 - 240
-1215,penis_in_body_14,231 - 232 - 240 - 237
+1211,penis_in_body_10,231 - 232 - 240 - 237
+1212,penis_in_body_11,231 - 232 - 240 - 237
+1213,penis_in_body_12,231 - 232 - 240 - 311
+1214,penis_in_body_13,231 - 232 - 240 - 311
+1215,penis_in_body_14,231 - 232 - 240 - 311
 1216,penis_in_rub_buttock,231 - 232 - 240
 
 1221,penis_in_cloth_0,231 - 232 - 240
@@ -500,15 +535,6 @@ int,str,str
 1232,penis_in_cloth_11,231 - 232 - 240
 1233,penis_in_cloth_12,231 - 232 - 240
 1234,penis_in_cloth_8_trousers,231 - 232 - 240
-
-1250,n_orgasm_edge,997
-1251,b_orgasm_edge,998
-1252,c_orgasm_edge,998
-1253,p_orgasm_edge,998
-1254,v_orgasm_edge,998
-1255,a_orgasm_edge,998
-1256,u_orgasm_edge,998
-1257,w_orgasm_edge,998
 
 1260,in_unconscious_cum_on_body_0,997
 1261,in_unconscious_cum_on_body_1,997
@@ -570,10 +596,13 @@ int,str,str
 
 1331,first_meet,999
 1332,day_hello,999
+
 1351,new_round_farewell,998
+
 1361,start_field_commission_as_leader,998
 1362,end_field_commission_as_leader,998
 1366,be_invited_join_group_sex,998
+
 1371,appoinnted_as_diplomat_local,998
 1372,relieved_of_diplomat_local,998
 1373,appoinnted_as_diplomat_out,998

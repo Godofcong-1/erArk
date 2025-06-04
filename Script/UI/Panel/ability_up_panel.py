@@ -223,8 +223,9 @@ class Characterabi_show_Text:
         # 如果有1号，则替换为全快感珠
         if '1' in juel_type_id_list:
             juel_type_id_list.remove('1')
-            for i in range(8):
-                juel_type_id_list.append(str(i))
+            for state_id in game_config.config_character_state:
+                if game_config.config_character_state[state_id].type == 0:
+                    juel_type_id_list.append(str(state_id))
         self.jewel_use_dict: Dict[int, int] = {}
         # 关押区的等级效果
         now_level = cache.rhodes_island.facility_level[19]

@@ -386,8 +386,9 @@ def evaluate_npc_body_part_prefs(character_id: int) -> int:
 
     # 按照部位统计权重，初始权重为1
     part_weight = {}
-    for i in range(8):
-        part_weight[i] = 1
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            part_weight[state_id] = 1
 
     # 部位经验权重为1
     for experience_id in game_config.config_experience:
@@ -414,13 +415,15 @@ def evaluate_npc_body_part_prefs(character_id: int) -> int:
     # 能力等级权重为10
     for ability_id in game_config.config_ability:
         # 去掉非部位的能力
-        if ability_id >= 13:
+        if game_config.config_ability[ability_id].ability_type not in [0, 1]:
             continue
         if ability_id <= 8:
             part_id = ability_id
         # 将扩张的序号转换为部位序号
-        else:
+        elif game_config.config_ability[ability_id].ability_type == 1: 
             part_id = ability_id - 5
+        else:
+            part_id = ability_id - 79
         now_ability = character_data.ability[ability_id]
         part_weight[part_id] += now_ability * 10
 

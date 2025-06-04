@@ -4,9 +4,9 @@ str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
 
-1000,n_orgasm_small,0,high_1,尽管并不是性器官受到了刺激，但{Name}还是微微颤抖了一下，嘴里发出了一声轻轻的呻吟
-1001,n_orgasm_normal,0,high_1,来自于身体的快感让{Name}的脸颊微微泛红，她的呼吸变得急促，身体变得僵硬，猛地抖了抖，然后很快放松下来
-1002,n_orgasm_strong,0,high_1,宛如性器官高潮一样的快感从身体各处强烈地袭来，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离
+1000,s_orgasm_small,0,high_1,尽管并不是性器官受到了刺激，但{Name}还是微微颤抖了一下，嘴里发出了一声轻轻的呻吟
+1001,s_orgasm_normal,0,high_1,来自于身体的快感让{Name}的脸颊微微泛红，她的呼吸变得急促，身体变得僵硬，猛地抖了抖，然后很快放松下来
+1002,s_orgasm_strong,0,high_1,宛如性器官高潮一样的快感从身体各处强烈地袭来，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离
 1003,b_orgasm_small,0,to_do,{Name}的乳房在快感中变得异常敏感，乳头也在充血下缓缓地膨胀起来
 1004,b_orgasm_normal,0,to_do,{Name}因为胸部的快感而浑身颤抖，急促地呼吸着，身体变得僵硬，然后猛地抖了抖，很快放松下来
 1005,b_orgasm_strong,0,to_do,如潮水般汹涌而来的快感从胸部蔓延到全身，{Name}的身体猛烈地颤抖着，腰不受控制地向后仰去，双足不停地踢动\n在快感总算结束后，{Name}的身体变得软绵绵的，躺在地上，呼吸急促，脸颊泛红，眼神迷离
@@ -60,7 +60,7 @@ str,str,int,str,str
 1085,plural_orgasm_6,0,high_1,{Name}触发了六重绝顶的地文
 1086,plural_orgasm_7,0,high_1,{Name}触发了七重绝顶的地文
 
-1090,n_orgasm_super,0,high_1,{Name}触发了N超强绝顶的地文
+1090,s_orgasm_super,0,high_1,{Name}触发了S超强绝顶的地文
 1096,u_orgasm_super,0,high_1,{Name}触发了U超强绝顶的地文
 1097,w_orgasm_super,0,high_1,{Name}触发了W超强绝顶的地文
 
@@ -96,7 +96,7 @@ str,str,int,str,str
 1233,penis_in_cloth_12,0,high_1,\n{PlayerName}的阴茎在{Name}的武器上不断摩擦着，让{PlayerName}感到异常的快感
 1234,penis_in_cloth_8_trousers,0,high_1,\n{PlayerName}的阴茎在{Name}的裤子上不断摩擦着，让{PlayerName}感到异常的快感
 
-1250,n_orgasm_edge,0,high_1,\n{Name}的绝顶被寸止了，虽然身体上涌来了快感，但是却无法达到高潮
+1250,s_orgasm_edge,0,high_1,\n{Name}的绝顶被寸止了，虽然身体上涌来了快感，但是却无法达到高潮
 1251,b_orgasm_edge,0,high_1,\n{Name}的绝顶被寸止了，虽然从胸部涌来了快感，但是却无法达到高潮
 1252,c_orgasm_edge,0,high_1,\n{Name}的绝顶被寸止了，虽然从阴蒂涌来了快感，但是却无法达到高潮
 1253,p_orgasm_edge,0,high_1,\n{Name}的射精被寸止了，虽然从阴茎涌来了快感，但是却无法达到高潮

@@ -136,7 +136,7 @@ pip install -r requirements.txt
 - **实时更新**：`realtime_settle.character_aotu_change_value()` 应用基于时间的变化
 - **状态持续**：更新持续中的状态和条件
 - **完成检查**：`judge_character_status_time_over()` 判断行为是否完成
-- **天赋获得**：基于行动自动获得天赋
+- **素质获得**：基于行动自动获得素质
 
 ### 5. 结算系统
 - **行为效果**：`settle_behavior.handle_settle_behavior()` 计算数值变化

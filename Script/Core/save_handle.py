@@ -406,7 +406,7 @@ def update_character_config_data(value):
     value -- 角色数据
     """
     update_count = 0
-    # 更新角色素质、经验、宝珠、能力、设置、身体管理
+    # 更新角色的各种属性
     # 素质
     if len(value.talent) != len(game_config.config_talent):
         for key in game_config.config_talent:
@@ -432,6 +432,14 @@ def update_character_config_data(value):
     for key in game_config.config_ability:
         if key not in value.ability:
             value.ability[key] = 0
+            update_count += 1
+    # 状态
+    for key in game_config.config_character_state:
+        if key not in value.status_data:
+            value.status_data[key] = 0
+            # 该状态的性高潮记录
+            if game_config.config_character_state[key].type == 0:
+                value.h_state.orgasm_level.setdefault(key, 0)
             update_count += 1
     # 设置
     if len(value.chara_setting) != len(game_config.config_chara_setting):
@@ -506,6 +514,15 @@ def update_character_config_data(value):
             else:
                 # 如果未找到匹配的常量，也删除该整型键
                 del value.second_behavior[second_behavior_id]
+    # 遍历二段行为数据库
+    for behavior_id in game_config.config_behavior:
+        if '二段结算' not in game_config.config_behavior[behavior_id].tag:
+            continue
+        # 如果二段行为不在角色的二段行为中，则添加
+        if behavior_id not in value.second_behavior:
+            value.second_behavior[behavior_id] = 0
+            update_count += 1
+            # print(f"debug 添加了二段行为: {behavior_id}")
     return update_count
 
 

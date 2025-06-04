@@ -1,4 +1,5 @@
 from types import FunctionType
+from typing import Optional
 from Script.Design import (
     character_handle,
     map_handle,
@@ -7,7 +8,7 @@ from Script.Design import (
     handle_premise,
 )
 from Script.Core import cache_control, game_type, get_text
-from Script.Config import normal_config
+from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import ejaculation_panel, system_setting
 
@@ -27,10 +28,10 @@ def base_chara_hp_mp_common_settle(
         add_time: int = 0,
         hp_value: int = 0,
         mp_value: int = 0,
-        dregree: int = 0,
+        degree: int = 0,
         target_flag: bool = False,
-        change_data: game_type.CharacterStatusChange = None,
-        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        change_data: Optional[game_type.CharacterStatusChange] = None,
+        change_data_to_target_change: Optional[game_type.CharacterStatusChange] = None,
         ):
     """
     基础角色体力与气力通用结算函数\n
@@ -60,8 +61,8 @@ def base_chara_hp_mp_common_settle(
         1: [3, 6],
         2: [5, 10],
     }
-    hp_adjust = dregree_dict[dregree][0]
-    mp_adjust = dregree_dict[dregree][1]
+    hp_adjust = dregree_dict[degree][0]
+    mp_adjust = dregree_dict[degree][1]
     # 群交中消耗减少
     if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
         # 玩家减为三分之一
@@ -74,7 +75,7 @@ def base_chara_hp_mp_common_settle(
             mp_adjust /= 2
     # 气力结算
     if mp_value in [-1, 1]:
-        mp_value *= add_time * mp_adjust
+        mp_value = int(add_time * mp_adjust * mp_value)
     if mp_value != 0:
         # 进行结算
         character_data.mana_point += mp_value
@@ -111,7 +112,7 @@ def base_chara_hp_mp_common_settle(
             target_character_data.mana_point = min(target_character_data.mana_point_max, target_character_data.mana_point)
     # 体力结算
     if hp_value in [-1, 1]:
-        hp_value *= add_time * hp_adjust
+        hp_value = int(add_time * hp_adjust * hp_value)
     if hp_value != 0:
         # 气力为0时体力消耗3倍
         if character_data.mana_point == 0 and hp_value < 0:
@@ -157,8 +158,8 @@ def base_chara_state_common_settle(
         ability_level: int = -1,
         extra_adjust: float = 0,
         tenths_add: bool = True,
-        change_data: game_type.CharacterStatusChange = None,
-        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        change_data: Optional[game_type.CharacterStatusChange] = None,
+        change_data_to_target_change: Optional[game_type.CharacterStatusChange] = None,
         ):
     """
     基础角色状态通用结算函数\n
@@ -178,7 +179,10 @@ def base_chara_state_common_settle(
     if character_data.dead:
         return
 
-    feel_state_set = {0, 1, 2, 3, 4, 5, 6, 7} # 快感状态，N~W快
+    feel_state_set = [] # 快感状态
+    for tem_state_id in game_config.config_character_state:
+        if game_config.config_character_state[tem_state_id].type == 0:
+            feel_state_set.append(tem_state_id)
     good_state_set = {8, 9, 10, 11, 12, 13, 14, 15, 16} # 正面状态
     bad_state_set = {18, 19, 20} # 负面状态，恐怖抑郁反感
     body_state_set = {8, 12, 17} # 身体状态，润滑欲情苦痛
@@ -229,10 +233,11 @@ def base_chara_state_common_settle(
         tenths_value = character_data.status_data[state_id] / 10
         tenths_value = min(3 * final_value, tenths_value)
         final_value += tenths_value
+    final_value = int(final_value)
 
     # 心控-苦痛快感化，将苦痛状态转化为快感状态
     if state_id == 17 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
         return
 
     # 结算最终值
@@ -270,7 +275,17 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 系数加成
     final_adjust = 0
     # 部位感觉
-    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[state_id])
+    feel_ability_id = state_id
+    # 口喉
+    if state_id == 21:
+        feel_ability_id = 100
+    # 兽部
+    elif state_id == 22:
+        feel_ability_id = 101
+    # 心理
+    elif state_id == 23:
+        feel_ability_id = 102
+    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[feel_ability_id])
     final_adjust += feel_adjust
     # 技巧
     if ability_level >= 0:
@@ -464,13 +479,13 @@ def extra_feel_settle(character_id: int, state_id: int, final_value: float, chan
 
     # 施虐对先导
     if state_id == 14 and character_data.ability[35] >= 5:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 露出对羞耻
     elif state_id == 16 and character_data.ability[34] >= 5:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[34], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[34], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 受虐对苦痛
     elif state_id == 17 and character_data.ability[36] >= 5:
-        base_chara_state_common_settle(character_id, final_value, 0, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
 
 def base_chara_favorability_and_trust_common_settle(
@@ -479,7 +494,7 @@ def base_chara_favorability_and_trust_common_settle(
         favorability_flag: bool,
         base_value: int = 0,
         extra_adjust: float = 0,
-        change_data: game_type.CharacterStatusChange = None,
+        change_data: Optional[game_type.CharacterStatusChange] = None,
         target_character_id: int = 0,
         ):
     """
@@ -578,7 +593,7 @@ def base_chara_favorability_and_trust_common_settle(
                 final_adjust *= difficulty_adjust
 
             # 结算最终值
-            add_favorability *= final_adjust
+            add_favorability = int(final_adjust * add_favorability)
             character_handle.add_favorability(character_id, target_character_id, add_favorability, change_data, target_change)
 
         # 信赖
@@ -614,6 +629,7 @@ def base_chara_favorability_and_trust_common_settle(
 
             # 结算最终值
             add_trust *= final_adjust
+            add_trust = int(add_trust)
             if character_id == 0 and character_data.target_character_id != 0:
                 target_data.trust += add_trust
                 target_data.trust = min(300, target_data.trust)
@@ -701,7 +717,7 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     # 空气催眠置为零
     if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
         fix = 0
-    favorability *= fix
+    favorability = int(fix * favorability)
     return favorability
 
 def calculation_trust(character_id: int, target_character_id: int, add_time: int) -> int:
@@ -765,6 +781,7 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
         fix = 0
     trust_add = add_time / 60 * fix
+    trust_add = int(trust_add)
     return trust_add
 
 
@@ -772,10 +789,10 @@ def base_chara_climix_common_settle(
         character_id: int,
         part_id: int = 0,
         base_value: int = 500,
-        adjust: int = -1,
+        adjust: float = -1,
         degree: int = -1,
-        change_data: game_type.CharacterStatusChange = None,
-        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        change_data: Optional[game_type.CharacterStatusChange] = None,
+        change_data_to_target_change: Optional[game_type.CharacterStatusChange] = None,
         ):
     """
     基础角色绝顶通用结算函数\n
@@ -792,7 +809,8 @@ def base_chara_climix_common_settle(
     if character_data.dead:
         return
     # 只能选择正确部位
-    if part_id < 0 or part_id > 7:
+    part_dict = {0 : "s", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w", 21 : "m", 22 : "f", 23 : "h"}
+    if part_id not in part_dict:
         return
     # 只有玩家有P部位
     if character_id != 0 and part_id == 3:
@@ -808,7 +826,6 @@ def base_chara_climix_common_settle(
         base_chara_state_common_settle(character_data.target_character_id, base_value, part_id, extra_adjust = adjust, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
         # 触发绝顶
-        part_dict = {0 : "n", 1 : "b", 2 : "c", 3 : "p", 4 : "v", 5 : "a", 6 : "u", 7 : "w"}
         degree_dict = {0 : "small", 1 : "normal", 2 : "strong", 3 : "super"}
         # 如果指定了程度，则直接使用指定的程度
         if degree >= 0:
