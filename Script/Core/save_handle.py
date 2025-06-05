@@ -446,6 +446,9 @@ def update_character_config_data(value):
             value.h_state.extra_orgasm_feel.setdefault(key, 0)
             value.h_state.time_stop_orgasm_count.setdefault(key, 0)
             update_count += 1
+            # 对错误数据的修复
+            if  value.h_state.orgasm_count[key] == 0:
+                value.h_state.orgasm_count[key] = [0, 0]
     # 设置
     if len(value.chara_setting) != len(game_config.config_chara_setting):
         for key in game_config.config_chara_setting:
