@@ -441,7 +441,7 @@ def update_character_config_data(value):
         # 该状态的性高潮记录
         if game_config.config_character_state[key].type == 0:
             value.h_state.orgasm_level.setdefault(key, 0)
-            value.h_state.orgasm_count.setdefault(key, 0)
+            value.h_state.orgasm_count.setdefault(key, [0, 0])
             value.h_state.orgasm_edge_count.setdefault(key, 0)
             value.h_state.extra_orgasm_feel.setdefault(key, 0)
             value.h_state.time_stop_orgasm_count.setdefault(key, 0)
