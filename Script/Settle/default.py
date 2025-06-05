@@ -1958,8 +1958,9 @@ def handle_time_stop_on(
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 3
         # 重置时停中的角色的时停高潮计数
-        for body_part in game_config.config_body_part:
-            chara_data.h_state.time_stop_orgasm_count[body_part] = 0
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                chara_data.h_state.time_stop_orgasm_count[state_id] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_OFF)
@@ -2316,8 +2317,9 @@ def handle_self_orgasm_edge_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.h_state.orgasm_edge = 1
-    for body_part in game_config.config_body_part:
-        character_data.h_state.orgasm_edge_count[body_part] = 0
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            character_data.h_state.orgasm_edge_count[state_id] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_ORGASM_EDGE_OFF)
@@ -7277,8 +7279,9 @@ def handle_orgasm_edge_release(
     # 将寸止计数转化为绝顶
     settle_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
     # 清零寸止计数
-    for body_part in game_config.config_body_part:
-        target_data.h_state.orgasm_edge_count[body_part] = 0
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            target_data.h_state.orgasm_edge_count[state_id] = 0
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TIME_STOP_ORGASM_RELEASE)
@@ -7307,8 +7310,9 @@ def handle_time_stop_orgasm_release(
         # 将时停绝顶计数转化为绝顶
         settle_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
         # 清零时停绝顶计数
-        for body_part in game_config.config_body_part:
-            character_data.h_state.time_stop_orgasm_count[body_part] = 0
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                character_data.h_state.time_stop_orgasm_count[state_id] = 0
         # 触发角色的二段行为
         handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(chara_id)
 
@@ -7342,8 +7346,9 @@ def handle_end_h_add_hpmp_max(
             settle_behavior.second_behavior_effect(chara_id, change_data)
         # 统计绝顶次数
         orgasm_count = 0
-        for body_part in game_config.config_body_part:
-            orgasm_count += now_character_data.h_state.orgasm_count[body_part][0]
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                orgasm_count += now_character_data.h_state.orgasm_count[state_id][0]
         # 如果有绝顶，则增加体力气力上限
         if orgasm_count > 0:
             now_character_data.hit_point_max += orgasm_count * 2
@@ -7385,8 +7390,9 @@ def handle_group_sex_end_h_add_hpmp_max(
     for chara_id in scene_data.character_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
         orgasm_count = 0
-        for body_part in game_config.config_body_part:
-            orgasm_count += now_character_data.h_state.orgasm_count[body_part][0]
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                orgasm_count += now_character_data.h_state.orgasm_count[state_id][0]
         if orgasm_count > 0:
             now_character_data.hit_point_max += orgasm_count * 2
             now_character_data.mana_point_max += orgasm_count * 3

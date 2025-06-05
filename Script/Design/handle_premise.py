@@ -10505,9 +10505,10 @@ def handle_t_turn_orgasm_0(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    for body_part in game_config.config_body_part:
-        if target_data.h_state.orgasm_count[body_part][1]:
-            return 0
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            if target_data.h_state.orgasm_count[state_id][1]:
+                return 0
     return 1
 
 
@@ -10523,10 +10524,11 @@ def handle_t_turn_orgasm_g_1(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     count = 0
-    for body_part in game_config.config_body_part:
-        count += target_data.h_state.orgasm_count[body_part][1]
-        if count > 1:
-            return 1
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            count += target_data.h_state.orgasm_count[state_id][1]
+            if count > 1:
+                return 1
     return 0
 
 
@@ -10542,10 +10544,11 @@ def handle_t_turn_orgasm_g_5(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     count = 0
-    for body_part in game_config.config_body_part:
-        count += target_data.h_state.orgasm_count[body_part][1]
-        if count > 5:
-            return 1
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            count += target_data.h_state.orgasm_count[state_id][1]
+            if count > 5:
+                return 1
     return 0
 
 
@@ -10561,10 +10564,11 @@ def handle_t_turn_orgasm_g_10(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     count = 0
-    for body_part in game_config.config_body_part:
-        count += target_data.h_state.orgasm_count[body_part][1]
-        if count > 10:
-            return 1
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            count += target_data.h_state.orgasm_count[state_id][1]
+            if count > 10:
+                return 1
     return 0
 
 

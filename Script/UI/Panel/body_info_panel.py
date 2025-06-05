@@ -55,7 +55,7 @@ class CharacterBodyText:
         self.draw_list.append(type_line)
         body_text_list = []
         if character_id != 0:
-            # 尿道信息#
+            # 总信息#
             now_text = _("\n 【总】\n")
             semen_count = 0
             for body_part in game_config.config_body_part:
