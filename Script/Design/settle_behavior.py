@@ -692,7 +692,13 @@ def must_settle_check(character_id: int):
                 # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
                 change_data = game_type.CharacterStatusChange()
                 for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
-                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+                    # 综合数值结算判定
+                    # 如果effect_id是str类型，则说明是综合数值结算
+                    if isinstance(effect_id, str) and "CVE" in effect_id:
+                        effect_all_value_list = effect_id.split("_")[1:]
+                        handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
+                    else:
+                        constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
 
