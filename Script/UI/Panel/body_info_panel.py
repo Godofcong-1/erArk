@@ -194,12 +194,10 @@ class CharacterBodyText:
             ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             now_text += f"  {ui_text}\n"
             # 精液量描述
-            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[7][3] == 0:
                 now_text += _("  未射入过精液\n")
             else:
                 now_text += _("  总共被射入过{0}ml精液\n").format(character_data.dirty.body_semen[7][3])
-            body_text_list.append(now_text)
             # 怀孕情况
             start_date = cache.game_time
             end_date = character_data.pregnancy.fertilization_time
