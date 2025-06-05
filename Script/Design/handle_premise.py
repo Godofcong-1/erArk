@@ -305,7 +305,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             premise_all_value_list[1] = behavior_id_str
             premise_all_value_list = premise_all_value_list[:2] + premise_all_value_list[-2:]
             behavior_id = behavior_id_str.split("|")[1]
-            print(f"debug behavior_id = {behavior_id}, premise_all_value_list = {premise_all_value_list}")
+            # print(f"debug behavior_id = {behavior_id}, premise_all_value_list = {premise_all_value_list}")
             # 指令计数
             count = 0
             for i in range(len_pre_behavior):

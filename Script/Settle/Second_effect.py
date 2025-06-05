@@ -868,7 +868,7 @@ def handle_add_small_m_feel(
     # 设定基础增加量
     now_add_lust = 20
     # 计算能力修正
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[100])
     now_add_lust *= adjust
     # 按当前快感值微调
     now_add_lust += now_lust / 20
@@ -897,7 +897,7 @@ def handle_add_middle_m_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[21]
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[100])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[21] += now_add_lust
@@ -923,7 +923,7 @@ def handle_add_small_f_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[22]
     now_add_lust = 20
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
     character_data.status_data[22] += now_add_lust
@@ -949,7 +949,7 @@ def handle_add_middle_f_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[22]
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[22] += now_add_lust
@@ -975,7 +975,7 @@ def handle_add_small_h_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[23]
     now_add_lust = 20
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
     character_data.status_data[23] += now_add_lust
@@ -1001,7 +1001,7 @@ def handle_add_middle_h_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[23]
     now_add_lust = 100
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[23] += now_add_lust
@@ -2171,7 +2171,7 @@ def handle_add_large_m_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[21]
     now_add_lust = 200
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[21])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[100])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[21] += now_add_lust
@@ -2197,7 +2197,7 @@ def handle_add_large_f_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[22]
     now_add_lust = 200
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[22])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[22] += now_add_lust
@@ -2223,7 +2223,7 @@ def handle_add_large_h_feel(
     character_data: game_type.Character = cache.character_data[character_id]
     now_lust = character_data.status_data[23]
     now_add_lust = 200
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[23])
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
     character_data.status_data[23] += now_add_lust
