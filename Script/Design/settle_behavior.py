@@ -1058,6 +1058,22 @@ def orgasm_settle(
             for i in range(climax_count):
                 # 判断高潮程度
                 now_degree = judge_orgasm_degree(now_data)
+                # 超强绝顶需要该部位敏感度至少为6级
+                if now_degree >= 3:
+                    if orgasm <= 7:
+                        ability_id = orgasm
+                    else:
+                        ability_id = orgasm + 79
+                    if character_data.ability[ability_id] < 6:
+                        now_degree = 2
+                # 强绝顶需要该部位敏感度至少为3级
+                elif now_degree >= 2:
+                    if orgasm <= 7:
+                        ability_id = orgasm
+                    else:
+                        ability_id = orgasm + 79
+                    if character_data.ability[ability_id] < 3:
+                        now_degree = 1
                 # 赋予二次行为
                 second_behavior_id = f"{part_dict[orgasm]}_orgasm_{degree_dict[now_degree]}"
                 character_data.second_behavior[second_behavior_id] = 1
