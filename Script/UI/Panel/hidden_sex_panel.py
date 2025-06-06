@@ -122,8 +122,8 @@ def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
         # 跳过无意识或睡眠状态的角色
         if handle_premise.handle_unconscious_flag_ge_1(chara_cid):
             continue
-        # if handle_premise.handle_action_sleep(chara_cid):
-        #     continue
+        if handle_premise.handle_action_sleep(chara_cid):
+            continue
         # 跳过足以群交的角色
         if handle_premise.handle_instruct_judge_group_sex(chara_cid):
             continue
@@ -273,8 +273,10 @@ def settle_discovered(character_id: int) -> None:
             # 隐奸中的角色
             if handle_premise.handle_hidden_sex_mode_ge_1(chara_id):
                 chara_handle_instruct_common_settle(constant.Behavior.HIDDEN_SEX_TO_GROUP_SEX, character_id=chara_id, target_character_id=0)
-            # 跳过无意识状态的角色
+            # 跳过无意识状态和睡觉中的角色
             elif handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                continue
+            elif handle_premise.handle_action_sleep(chara_id):
                 continue
             # 其他角色
             else:
