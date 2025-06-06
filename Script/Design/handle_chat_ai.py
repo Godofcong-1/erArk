@@ -821,7 +821,7 @@ def direct_chat_with_ai() -> str:
         
     # 获取当前玩家角色ID和目标角色ID
     character_id = 0  # 假设0是玩家角色
-    behavior_id = 0   # 默认行为ID，可以根据实际情况调整
+    behavior_id = "ai_chat_instruct"   # 默认行为ID，可以根据实际情况调整
     
     # 调用判断函数，启用直接对话模式
     reply_text = judge_use_text_ai(character_id, behavior_id, user_input, direct_mode=True)
