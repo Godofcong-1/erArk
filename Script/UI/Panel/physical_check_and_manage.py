@@ -1035,7 +1035,7 @@ class Physical_Check_And_Manage_Panel:
             now_draw_panel.text_list = final_list
 
             # 调用通用选择按钮列表函数
-            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("体检对象名单"), select_state)
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("体检对象名单"), select_state = select_state)
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == _("返回"):

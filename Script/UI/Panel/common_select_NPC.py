@@ -67,7 +67,7 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
         line_draw.draw()
     line_feed.draw()
     # 绘制信息
-    if info_text:
+    if len(info_text):
         info_draw = draw.NormalDraw()
         info_draw.text = info_text
         info_draw.width = window_width
