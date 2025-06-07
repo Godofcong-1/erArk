@@ -629,7 +629,6 @@ def base_chara_favorability_and_trust_common_settle(
 
             # 结算最终值
             add_trust *= final_adjust
-            add_trust = int(add_trust)
             if character_id == 0 and character_data.target_character_id != 0:
                 target_data.trust += add_trust
                 target_data.trust = min(300, target_data.trust)

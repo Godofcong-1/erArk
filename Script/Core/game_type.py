@@ -1289,7 +1289,7 @@ class Character:
         # """ 角色社交关系数据 角色id:关系类型 """
         self.favorability: Dict[int, int] = {}
         """ 角色好感度数据 角色id:好感度 """
-        self.trust: int = 0
+        self.trust: float = 0
         """ 角色信赖度数据 """
         self.food_bag: Dict[UUID, Food] = {}
         """ 角色持有的食物数据 """
