@@ -8178,8 +8178,8 @@ def handle_sing_add_adjust(
                 base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data, chara_id)
                 base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data, chara_id)
             else:
-                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust - 1, change_data, chara_id)
-                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust - 1, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust - 1.3, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust - 1.3, change_data, chara_id)
 
             # 好意变化#
             target_data.status_data.setdefault(11, 0)
@@ -8272,8 +8272,8 @@ def handle_play_instrument_add_adjust(
                 base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust * 2, change_data, chara_id)
                 base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust * 2, change_data, chara_id)
             else:
-                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, (adjust - 1) * 2, change_data, chara_id)
-                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, (adjust - 1) * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, (adjust - 1.3) * 2, change_data, chara_id)
+                base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, (adjust - 1.3) * 2, change_data, chara_id)
 
             # 好意变化#
             target_data.status_data.setdefault(11, 0)
