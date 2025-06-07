@@ -720,7 +720,7 @@ def calculation_favorability(character_id: int, target_character_id: int, favora
     favorability = int(fix * favorability)
     return favorability
 
-def calculation_trust(character_id: int, target_character_id: int, add_time: int) -> int:
+def calculation_trust(character_id: int, target_character_id: int, add_time: int) -> float:
     """
     按角色当前状态、素质和能力计算最终增加的信赖度
     Keyword arguments:
@@ -728,7 +728,7 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     target_character_id -- 目标角色id
     add_time -- 指令的时间
     Return arguments:
-    int -- 最终的信赖度
+    float -- 最终的信赖度
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[target_character_id]
@@ -781,7 +781,6 @@ def calculation_trust(character_id: int, target_character_id: int, add_time: int
     if target_data.sp_flag.unconscious_h == 5 and character_data.position == character_data.pl_ability.air_hypnosis_position:
         fix = 0
     trust_add = add_time / 60 * fix
-    trust_add = int(trust_add)
     return trust_add
 
 
