@@ -2208,6 +2208,18 @@ def handle_pl_not_hidden_sex_mode_3_or_4(character_id: int) -> int:
     return not handle_hidden_sex_mode_3_or_4(0)
 
 
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_3)
+def handle_hidden_sex_mode_1_or_3(character_id: int) -> int:
+    """
+    自己处于双不隐或男隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    return handle_hidden_sex_mode_1(character_id) or handle_hidden_sex_mode_3(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_3)
 def handle_t_hidden_sex_mode_1_or_3(character_id: int) -> int:
     """
@@ -2218,6 +2230,18 @@ def handle_t_hidden_sex_mode_1_or_3(character_id: int) -> int:
         int: 权重
     """
     return handle_t_hidden_sex_mode_1(character_id) or handle_t_hidden_sex_mode_3(character_id)
+
+
+@add_premise(constant_promise.Premise.HIDDEN_SEX_MODE_2_OR_4)
+def handle_hidden_sex_mode_2_or_4(character_id: int) -> int:
+    """
+    交互对象处于双隐或女隐模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    return handle_hidden_sex_mode_2(character_id) or handle_hidden_sex_mode_4(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2_OR_4)

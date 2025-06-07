@@ -53,7 +53,7 @@ def handle_talk(character_id: int):
                 handle_talk_draw(chara_id, now_talk_data)
 
 
-def handle_second_talk(character_id: int, behavior_id: int = 0):
+def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     """
     处理二段行为结算对话\n
     Keyword arguments:\n
@@ -68,7 +68,7 @@ def handle_second_talk(character_id: int, behavior_id: int = 0):
             return
 
     # 自己
-    if behavior_id == 0:
+    if behavior_id == "share_blankly":
         for second_behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data != 0:
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id)
