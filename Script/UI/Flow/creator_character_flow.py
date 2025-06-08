@@ -950,7 +950,7 @@ class Character_Bonus:
         self.bonus_now = bonus_all
 
         info_talent_draw = draw.LeftDraw()
-        info_talent_draw.width = 1
+        # info_talent_draw.width = 1
         info_talent_draw.text = _(" 可选奖励有：\n")
         info_talent_draw.text += _("  （未选择的源石能力均可在游戏中满足特定条件解锁）\n")
         now_draw.draw_list.append(info_talent_draw)
@@ -998,7 +998,7 @@ class Character_Bonus:
             now_draw.width += 1
 
         info_draw = draw.LeftDraw()
-        info_draw.width = 1
+        # info_draw.width = 1
         info_draw.text = _(" \n 当前为第 {0} 周目\n").format(str(cache.game_round))
         info_draw.text += _(" 当前剩余奖励点数 =")
         info_draw.text += _(" {0} = [周目数 * 20]").format(self.bonus_now)
@@ -1136,7 +1136,7 @@ class World_Setting:
         now_draw.draw_list.append(line)
 
         setting_info_draw = draw.LeftDraw()
-        setting_info_draw.width = 1
+        # setting_info_draw.width = 1
         draw_text = _(" 当前世界设定为：\n")
         draw_text += _("   ●基础世界设定：美好的黄油IF世界线，无具体时间线和剧情线，凡是有立绘的角色（包括敌我双方、路人、已便当的）均可招募上岛\n")
         draw_text += _("   ●基础角色设定：NPC为纯女性角色（伪娘、扶她均不存在，女性小车存在），且全员处女\n")
