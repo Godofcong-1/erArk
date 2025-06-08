@@ -490,6 +490,18 @@ function renderGameState(state) {
                 // 更新上一个元素类型为换行符
                 lastElementType = 'linebreak';
                 isLastElementLinebreak = true;
+            } else if (item.type === 'text' && item.text.startsWith('\n')) { // 新增对以 \n 开头的文本处理
+                // 如果文本以换行符开头，先强制换行
+                currentLine = document.createElement('div');
+                currentLine.className = 'inline-container';
+                gameContent.appendChild(currentLine);
+
+                // 创建文本元素处理剩余部分
+                element = createGameElement({ ...item, text: item.text.substring(1) }); // 传递移除了首个 \n 的文本
+
+                // 更新上一个元素类型
+                lastElementType = item.type;
+                isLastElementLinebreak = false; // 因为我们已经处理了开头的换行
             } else {
                 // 创建其他类型的元素（文本、标题等）
                 element = createGameElement(item);
