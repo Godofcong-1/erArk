@@ -443,6 +443,14 @@ function renderGameState(state) {
                     element.className = 'map-button';
                     element.style.width = 'auto';
                 }
+
+                // 如果是左对齐按钮，则改为左对齐
+                if (item.align === 'left') {
+                    element.style.textAlign = 'left';
+                } else if (item.align === 'right') {
+                    // 如果是右对齐按钮，则改为右对齐
+                    element.style.textAlign = 'right';
+                }
                 
                 // 如果需要块级显示，添加block类
                 if (item.style && item.style.includes('block')) {

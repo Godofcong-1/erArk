@@ -106,6 +106,12 @@ class WebDrawAdapter:
         返回值类型: 无
         功能描述: 将按钮绘制适配到Web界面，同时保持原有的命令处理流程
         """
+        # 如果是左对齐按钮，则align属性为'left'
+        if isinstance(button, draw.LeftButton):
+            align = 'left'
+        # 否则默认为'center'
+        else:
+            align = 'center'
         # 创建Web按钮元素
         web_element = {
             "type": "button",
@@ -113,7 +119,8 @@ class WebDrawAdapter:
             "return_text": button.return_text,
             "font": button.normal_style,
             "width": button.width,
-            "web_type": button.web_type,
+            "web_type": button.web_type, # 特殊的绘制类型
+            "align": align  # 对齐属性
         }
         
         # 添加到当前绘制元素列表
