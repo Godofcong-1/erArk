@@ -174,12 +174,16 @@ body {
 .map-button {
     background-color: #222;
     color: #fff;
-    padding: 0px 0px;
+    padding: 0; /* 修改：移除内边距 */
     margin: 0em;
     cursor: pointer;
+    border: none; /* 修改：移除边框 */
     border-radius: 0px;
     display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
     transition: background-color 0.2s;
+    width: auto; /* 新增：确保宽度根据内容自适应，或者可以尝试 fit-content */
+    font-size: inherit; /* 新增：确保字体大小与周围文本一致 */
+    line-height: inherit; /* 新增：确保行高与周围文本一致 */
 }
 
 /* 块级按钮样式 - 需要单独一行的按钮 */

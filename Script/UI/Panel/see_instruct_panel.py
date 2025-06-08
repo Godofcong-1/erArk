@@ -129,9 +129,6 @@ class SeeInstructPanel:
         start_instruct = time.time()
         self.return_list = []
 
-        line = draw.LineDraw("-.-", self.width)
-        line.draw()
-        fix_draw = draw.NormalDraw()
         # 根据是否是显示H指令，进行指令类型过滤相关变量的区分
         if handle_premise.handle_now_show_h_instruct(0):
             instruct_type_len = len(cache.instruct_sex_type_filter) + 1
@@ -141,13 +138,11 @@ class SeeInstructPanel:
             instruct_type_len = len(cache.instruct_type_filter) - 1
             now_instruct_type_list = cache.instruct_type_filter
             now_instruct_config = game_config.config_instruct_type
-        # 排版修正用的宽度
-        fix_width = int(
-            (self.width - int(self.width / instruct_type_len) * instruct_type_len) / 2
-        )
-        fix_draw.width = fix_width
-        fix_draw.text = " " * fix_width
-        fix_draw.draw()
+
+        # 分隔符
+        line = draw.LineDraw("-.-", self.width)
+        line.draw()
+
         for now_type in now_instruct_type_list:
             # 正常模式下，跳过系统类和性爱类的大类选择按钮
             if handle_premise.handle_now_show_non_h_instruct(0):
