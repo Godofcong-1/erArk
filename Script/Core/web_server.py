@@ -342,6 +342,36 @@ def find_free_port(start_port=5000, max_attempts=10):
     # 如果都失败了，返回一个随机端口
     return start_port + 1000 + (int(time.time()) % 1000)
 
+
+def update_input_request(current_input_request):
+    """
+    更新输入请求状态并向前端推送更新
+    
+    参数:
+    current_input_request (dict): 当前输入请求数据，包含请求类型、提示文本和默认值
+    
+    返回值类型：无
+    功能描述：更新游戏状态中的输入请求数据并通过WebSocket推送到前端
+    """
+    global game_state
+    
+    # 使用线程锁保护状态更新
+    with state_lock:
+        # 更新游戏状态数据中的输入请求部分
+        # 如果 game_state 中尚不存在 input_request 键，则初始化它
+        if "input_request" not in game_state:
+            game_state["input_request"] = {}
+            
+        game_state["input_request"] = current_input_request
+    
+    # 使用函数来发送更新
+    # 这会发送整个 game_state，包括更新后的 input_request
+    _emit_game_state_update()
+    
+    # 日志记录，辅助调试
+    logging.debug(f"输入请求已更新: {current_input_request}")
+
+
 def update_game_state(elements, panel_id=None):
     """
     更新游戏状态并向前端推送更新

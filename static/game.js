@@ -6,6 +6,10 @@
 // WebSocket连接对象
 let socket;
 
+// 新增：用于存储活动输入请求和当前全局状态
+let activeInputRequest = null;
+let currentGlobalState = null;
+
 // 存储所有图片路径的字典
 // 键：图片名称（不含扩展名）
 // 值：图片的完整相对路径
@@ -384,6 +388,14 @@ function renderGameState(state) {
     const gameContent = document.getElementById('game-content');
     const gameButtons = document.getElementById('game-buttons');
     
+    // 更新全局状态和活动输入请求
+    currentGlobalState = state;
+    activeInputRequest = state.input_request || null;
+    
+    // 调试日志：打印接收到的完整状态和 input_request
+    console.log('Received state:', JSON.stringify(state, null, 2));
+    console.log('Input request from state:', state.input_request);
+    
     // 检查状态数据是否有效
     if (!state) {
         console.error('无效的游戏状态数据');
@@ -501,10 +513,10 @@ function renderGameState(state) {
                 forceNewLine = true;
             }
         });
-        
-        // 修改：使用智能滚动到底部功能
-        scrollToBottom();
     }
+    
+    // 确保滚动到底部在所有内容渲染后执行
+    scrollToBottom();
 }
 
 /**
@@ -951,82 +963,6 @@ function sendWaitResponse() {
 }
 
 /**
- * 处理字符串输入
- * 当游戏需要用户输入字符串时调用
- * 
- * @param {Object} inputRequest - 输入请求数据
- */
-function handleStringInput(inputRequest) {
-    // 创建输入对话框
-    const input = prompt(inputRequest.message, inputRequest.default || '');
-    
-    // 发送用户输入到服务器
-    if (input !== null) {
-        fetch('/api/string_input', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                value: input
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // 如果不使用WebSocket，且提交成功，立即获取新状态
-            if (data.success && !socket) {
-                getGameState();
-                
-                // 使用智能滚动到底部功能
-                scrollToBottom();
-            }
-        })
-        .catch(error => console.error('字符串输入请求失败:', error));
-    }
-}
-
-/**
- * 处理整数输入
- * 当游戏需要用户输入整数时调用
- * 
- * @param {Object} inputRequest - 输入请求数据
- */
-function handleIntegerInput(inputRequest) {
-    // 创建输入对话框
-    const input = prompt(inputRequest.message, inputRequest.default || '0');
-    
-    // 验证是否为有效整数
-    const parsedValue = parseInt(input);
-    if (input !== null && !isNaN(parsedValue)) {
-        // 发送用户输入到服务器
-        fetch('/api/integer_input', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                value: parsedValue
-            }),
-        })
-        .then(response => response.json())
-        .then(data => {
-            // 如果不使用WebSocket，且提交成功，立即获取新状态
-            if (data.success && !socket) {
-                getGameState();
-                
-                // 使用智能滚动到底部功能
-                scrollToBottom();
-            }
-        })
-        .catch(error => console.error('整数输入请求失败:', error));
-    } else if (input !== null) {
-        // 输入无效
-        alert('请输入有效的整数!');
-        handleIntegerInput(inputRequest);
-    }
-}
-
-/**
  * 初始化图片路径字典
  * 从服务器获取所有图片文件路径并构建查找字典
  * 
@@ -1161,11 +1097,111 @@ function setupImageLoadObserver() {
 }
 
 /**
+ * 新增或修改的辅助函数来发送输入到服务器
+ * 
+ * @param {string} inputType - 输入类型（string 或 integer）
+ * @param {string|number} value - 用户输入的值
+ */
+function sendInputToServer(inputType, value) {
+    let endpoint = '';
+    if (inputType === 'string') {
+        endpoint = '/api/string_input';
+    } else if (inputType === 'integer') {
+        endpoint = '/api/integer_input';
+    } else {
+        console.error('Unknown input type:', inputType);
+        return;
+    }
+
+    fetch(endpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ value: value }),
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            // 输入成功后，后端会清除 input_request 并更新游戏状态。
+            // 如果不是WebSocket模式，前端可能需要主动获取新状态。
+            if (!socket) {
+                getGameState();
+            }
+        } else {
+            console.error('Input submission failed:', data);
+            alert('提交输入失败: ' + (data.error || '未知错误'));
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting input:', error);
+        alert('提交输入时发生错误。');
+    });
+}
+
+/**
+ * 新增：处理持久输入框提交的函数
+ */
+function handlePersistentInputSubmit() {
+    const persistentInput = document.getElementById('persistent-input');
+    if (!persistentInput) return;
+
+    const inputValue = persistentInput.value.trim();
+    if (inputValue === '') {
+        return; // 如果输入为空，则不执行任何操作
+    }
+
+    // 1. 尝试匹配按钮
+    const buttons = document.querySelectorAll('.game-button[data-id]');
+    for (const button of buttons) {
+        if (button.dataset.id === inputValue) {
+            console.log(`Input '${inputValue}' matches button with data-id. Simulating click.`);
+            handleButtonClick(inputValue);
+            persistentInput.value = ''; // 清空输入框
+            return;
+        }
+    }
+
+    // 2. 如果没有按钮匹配，并且存在活动的通用输入请求
+    if (activeInputRequest) {
+        console.log(`Input '${inputValue}' submitted for activeInputRequest type: ${activeInputRequest.type}`);
+        sendInputToServer(activeInputRequest.type, inputValue);
+        persistentInput.value = ''; // 清空输入框
+        return;
+    }
+
+    // 3. 如果既不匹配按钮，也没有活动的通用输入请求
+    console.log(`Input '${inputValue}' did not match any button and no active input request.`);
+    persistentInput.value = ''; // 清空输入框
+}
+
+/**
  * 初始化函数
  * 页面加载完成后初始化游戏
  */
 async function initialize() {
     console.log('初始化游戏界面');
+    
+    // 获取持久输入框和提交按钮的引用
+    const persistentInput = document.getElementById('persistent-input');
+    const persistentSubmitButton = document.getElementById('persistent-submit-button');
+
+    // 为持久输入框添加 'Enter' 键监听
+    if (persistentInput) {
+        persistentInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // 防止默认的回车行为（如表单提交）
+                handlePersistentInputSubmit();
+            }
+        });
+    }
+
+    // 为持久提交按钮添加点击监听
+    if (persistentSubmitButton) {
+        persistentSubmitButton.addEventListener('click', () => {
+            handlePersistentInputSubmit();
+        });
+    }
     
     // 先初始化图片路径字典
     await initImagePathDict();

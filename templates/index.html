@@ -19,12 +19,18 @@
             <!-- 游戏内容将通过JavaScript动态插入 -->
             <div id="game-content" class="game-content"></div>
             <div id="game-buttons" class="game-buttons"></div>
+            <!-- 添加加载消息元素 -->
+            <div id="loading-message" class="loading hidden">实时连接中...</div>
             <!-- 添加滚动指示器，帮助用户理解滚动状态 -->
             <div id="scroll-indicator" class="scroll-indicator" style="display:none;">
                 <span>↓ 新内容 ↓</span>
             </div>
         </div>
         <div class="game-footer">
+            <div id="persistent-input-container">
+                <input type="text" id="persistent-input" placeholder="输入命令或文本...">
+                <button id="persistent-submit-button">提交</button>
+            </div>
             <p>erArk WebUI - 本地运行版本</p>
             <!-- 添加手动滚动按钮，解决在某些设备上可能的问题 -->
             <button id="scroll-to-bottom-btn" class="scroll-button">滚动到底部</button>

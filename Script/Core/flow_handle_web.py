@@ -5,7 +5,7 @@
 重新实现流程控制函数，适配Web UI
 """
 from Script.Core import cache_control, io_init, constant
-from Script.Core.web_server import get_button_response, get_wait_response, get_input_response, update_game_state
+from Script.Core.web_server import get_button_response, get_wait_response, get_input_response, update_game_state, update_input_request
 import time
 from typing import List, Optional
 
@@ -131,6 +131,9 @@ def askfor_str(message: str, default_str: str = "") -> str:
         "message": message,
         "default": default_str
     }
+    # 将请求发送给前端
+    update_game_state(cache.current_draw_elements, None)
+    update_input_request(cache.current_input_request)
     
     # 轮询等待用户输入
     response = None
@@ -162,6 +165,9 @@ def askfor_int(message: str, default_int: int = 0) -> int:
         "message": message,
         "default": default_int
     }
+    # 将请求发送给前端
+    update_game_state(cache.current_draw_elements, None)
+    update_input_request(cache.current_input_request)
     
     # 轮询等待用户输入
     response = None
