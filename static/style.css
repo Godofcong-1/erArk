@@ -127,6 +127,17 @@ body {
     display: inline-block;
 }
 
+/* 增加多行文本内部行间距的样式 - 只对包含换行符的多行文本生效 */
+.text.text-inline {
+    white-space: pre-line; /* 保持换行符，这样才能检测到多行 */
+}
+
+/* 使用CSS的:has()伪类选择器（仅在支持的浏览器中生效）或JavaScript来处理 */
+/* 由于CSS无法直接检测文本内容是否包含换行符，我们使用JavaScript方案 */
+.text.text-inline.multi-line {
+    line-height: 1.4; /* 只对标记为多行的元素增加行间距 */
+}
+
 /* 按钮样式 */
 .button {
     background-color: #222;

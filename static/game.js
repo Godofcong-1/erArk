@@ -599,6 +599,11 @@ function createGameElement(item) {
             element.style.whiteSpace = 'pre-wrap';
             element.innerText = item.text;
             
+            // 检测是否为多行文本并添加相应的类
+            if (element.classList.contains('text-inline') && item.text.includes('\n')) {
+                element.classList.add('multi-line');
+            }
+            
             // 应用字体样式
             if (item.font) {
                 element = applyFontStyle(element, item.font);
