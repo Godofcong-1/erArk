@@ -453,18 +453,25 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
         None
     """
     now_char = cache.character_data[character_id]
-    # 未穿胸衣和内裤、周围多人、自己非临盆或产后时羞耻
-    if (
-        handle_premise.handle_not_wear_bra_or_pan(character_id) and
-        handle_premise.handle_scene_over_two(character_id) and
-        not handle_premise.handle_self_parturient_or_postpartum(character_id)
-        ):
-        extra = 0
-        if handle_premise.handle_not_wear_bra(character_id):
-            extra += 1
-        if handle_premise.handle_not_wear_pan(character_id):
-            extra += 2
-        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
+    # 和周围其他人相关的结算
+    if handle_premise.handle_scene_over_two(character_id):
+        # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
+        if handle_premise.handle_scene_others_conscious(character_id):
+            # 自己未穿胸衣和内裤、自己非临盆或产后时羞耻
+            if (
+                handle_premise.handle_not_wear_bra_or_pan(character_id) and
+                not handle_premise.handle_self_parturient_or_postpartum(character_id)
+                ):
+                extra = 0
+                if handle_premise.handle_not_wear_bra(character_id):
+                    extra += 1
+                if handle_premise.handle_not_wear_pan(character_id):
+                    extra += 2
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
+            # 隐奸中增加羞耻和心理快感
+            if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
@@ -476,6 +483,3 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
         adjust = data.level * 0.5
         for sid in (12,16,17):
             default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
-    # 隐奸中周围有人时增加羞耻
-    if handle_premise.handle_hidden_sex_mode_ge_1(character_id) and handle_premise.handle_scene_over_two(character_id):
-        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
