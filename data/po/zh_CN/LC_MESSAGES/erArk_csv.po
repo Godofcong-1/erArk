@@ -15336,6 +15336,210 @@ msgstr ""
 msgid "所有角色获得【泌乳】素质"
 msgstr ""
 
+#: .\data\talk_common\action_A\penis_in_mouth.csv:7
+msgid "{Name}的{penis}深深地插入{TargetName}的{mouth}内，快速抽动着。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:8
+msgid "{Name}按住{TargetName}的头部，缓慢而有力地将{penis}送入{TargetName}的{mouth}中。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:9
+msgid "{TargetName}的{mouth}被{Name}的{penis}塞得满满当当。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:10
+msgid "{Name}抓住{TargetName}的头发，将{penis}在{TargetName}的{mouth}中快速抽动。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:11
+msgid "{Name}的{penis}在{TargetName}的{mouth}里不断进出。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:12
+msgid "{Name}托着{TargetName}的下巴，让{penis}更深入地侵入{TargetName}的{mouth}。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:13
+msgid "{Name}双手扶住{TargetName}的头，节奏性地将{penis}送进{TargetName}的{mouth}深处。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:14
+msgid "{TargetName}的{mouth}因{Name}的{penis}而鼓起，显示出其形状。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:15
+msgid "{Name}轻轻摆动腰部，让{penis}在{TargetName}的{mouth}中缓慢地研磨着。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:16
+msgid "{Name}紧握{TargetName}的肩膀，将{penis}深深地埋入{TargetName}的{mouth}中。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:17
+msgid "{TargetName}的{mouth}包裹着{Name}的{penis}，随着抽动发出湿润的声音。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:18
+msgid "{Name}挺动腰部，让{penis}在{TargetName}的{mouth}中进进出出。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:19
+msgid "{Name}的{penis}几乎完全撤出后又猛地插入{TargetName}的{mouth}深处。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:20
+msgid "{Name}的{penis}撑开了{TargetName}的{mouth}，以稳定的节奏抽插着。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:21
+msgid "{Name}将{penis}深深地顶入{TargetName}的{mouth}，然后缓缓抽出大部分再重新插入。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth.csv:22
+msgid "{Name}轻按{TargetName}的后脑勺，控制着{penis}在{mouth}中的进出速度。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:7
+msgid "每一次的挺入都让{TargetName}发出闷哼声，脸颊因吞吐的动作而凹陷，眼角泛起生理性的泪水，喉咙深处不断传来吞咽的声音。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:8
+msgid "{Name}感受着舌头和口腔黏膜带来的柔软触感，{TargetName}的脸颊因为吮吸的动作而凹陷，唾液从嘴角溢出，顺着下巴滴落。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:9
+msgid "{Name}双手扶着{TargetName}的头部，有节奏地前后摆动着腰部，每一次深入都顶到喉咙深处，引起{TargetName}一阵阵本能的吞咽反应，喉结上下滚动着。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:10
+msgid "{TargetName}的口腔被完全填满，舌头被迫贴在下方，随着{Name}的动作发出湿润的水声，双手无力地扶在{Name}的大腿上。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:11
+msgid "{Name}享受着{TargetName}口腔的温暖与湿润，每次抽送都伴随着啧啧的水声，{TargetName}的眼神逐渐迷离，呼吸变得急促。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:12
+msgid "{Name}感受着{TargetName}口腔内的每一处褶皱和舌头的触感，享受着这种湿润温暖的包裹感，{TargetName}的眼中闪烁着水光，倒映着{Name}的身影。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:13
+msgid "{Name}轻轻抓住{TargetName}的头发，控制着进出的深度，{TargetName}的喉咙发出呜咽声，眼中泛起水光，嘴角流下晶莹的唾液。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:14
+msgid "随着{Name}的动作，{TargetName}的头部被迫前后摆动，唇舌尽力包裹着侵入的异物，发出含糊不清的呻吟声。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:15
+msgid "{Name}感受到{TargetName}口腔内的温度逐渐升高，唾液分泌增多，使得每一次抽送都变得更加顺滑，快感如电流般窜过全身。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:16
+msgid "随着动作的持续，{TargetName}的呼吸愈发急促，脸颊因缺氧而泛红，却仍然努力配合着{Name}的节奏，表现出无比的顺从。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:17
+msgid "{Name}的手掌抚过{TargetName}的脸颊，感受着自己在口腔中的形状，{TargetName}顺从地配合着节奏，喉咙深处发出模糊的呻吟。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:18
+msgid "每当{Name}深入到喉咙时，{TargetName}都会本能地收缩喉部肌肉，带来一阵紧致的挤压感，让{Name}忍不住发出满足的叹息。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:19
+msgid "{TargetName}的嘴唇被迫张开，唾液与前液混合在一起，在抽送间形成细丝，随着动作牵连出银丝，画面格外淫靡。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:20
+msgid "{Name}按住{TargetName}的后脑，加快了挺动的频率，{TargetName}努力适应着这节奏，鼻息变得急促，手指无意识地抓紧了{Name}的衣物。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:21
+msgid "{Name}轻柔地捏住{TargetName}的下巴，控制着对方的动作，{TargetName}的眼神中混合着顺从与迷离，口中发出含糊不清的呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:7
+msgid "{TargetName}的舌头舐着柱身，双颊因为用力吮吸而凹陷，眼神迷离，唾液与前液混合的液体顺着嘴角流下，在下巴上留下一道道晶莹的痕迹。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:8
+msgid "{TargetName}努力张大嘴巴配合着，舌头舔弄着敏感的前端，同时双手扶在{Name}的大腿上保持平衡，脸颊随着吞吐的节奏一鼓一凹，发出啧啧的水声，眼睛因为强烈的刺激而微微湿润。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:9
+msgid "{TargetName}闭着眼睛专注于服务，双颊因反复吮吸而变得凹陷，时而发出轻微的哽咽声，身体微微颤抖。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:10
+msgid "{TargetName}的舌头灵活地舔舐着{Name}的敏感部位，引得{Name}情不自禁地加快了挺动的节奏，{TargetName}的脸颊染上一层潮红。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:11
+msgid "{TargetName}的舌尖灵巧地在敏感处打转，同时口腔形成真空状态吮吸着，让{Name}感到一阵阵电流般的快感从下腹涌向全身。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:7
+msgid "{Name}每一次的挺入都能感受到{TargetName}喉咙深处的挤压，温暖湿润的口腔包裹着敏感的顶端，那种紧致的吸吮感让{Name}忍不住发出满足的叹息。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:8
+msgid "柔软的舌头和口腔黏膜带来的触感让{Name}全身战栗，{TargetName}吮吸时的负压感和舌尖时不时掠过敏感点的刺激，让快感如电流般蔓延至全身。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:9
+msgid "当{Name}深入到{TargetName}的喉咙时，那种被紧致肌肉环状包裹的感觉让人欲罢不能，每一次{TargetName}吞咽反应带来的挤压都让快感成倍增长。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:10
+msgid "{Name}感受着{TargetName}口腔的高温和湿润，灵活的舌头时而轻舔时而用力按压，这种多变的刺激让{Name}的快感如波浪般起伏，难以自持。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:11
+msgid "随着抽送的节奏，{Name}能感受到前端被{TargetName}的舌尖舔舐的酥麻，口腔内壁的每一次摩擦都带来难以言喻的快感，让{Name}的呼吸变得粗重。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:12
+msgid "{TargetName}口腔内的每一处褶皱和舌头的触感都在刺激着{Name}的神经末梢，那种被湿润温暖完全包裹的感觉让快感一波波涌向下腹，让人欲望高涨。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:13
+msgid "控制着{TargetName}头部的节奏，{Name}感受到每一次深入都带来全新的快感浪潮，特别是当顶端触碰到喉咙深处那紧致的肌肉环时，快感如同闪电般直击脊髓。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:14
+msgid "{Name}沉浸在{TargetName}口腔带来的愉悦中，那湿润柔软的包裹感和舌头时不时的刮擦，加上吮吸时产生的负压，让快感层层叠加。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:15
+msgid "随着{TargetName}口腔温度的升高和唾液的增多，每一次抽送都变得更加顺滑，摩擦产生的快感更为强烈，让{Name}全身的肌肉都不自觉地绷紧。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:16
+msgid "{TargetName}的配合让{Name}感受到更强烈的愉悦，每当{TargetName}用力吸吮时，那种被紧紧包围的压迫感和吸力带来的刺激让下腹部的快感不断积累。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:17
+msgid "当{Name}的手掌感受到{TargetName}脸颊的凹陷，视觉和触觉的双重刺激让快感倍增，特别是看到{TargetName}顺从的眼神时，心理上的满足感更是无与伦比。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:18
+msgid "{TargetName}喉咙深处的收缩带给{Name}一种被紧紧吸住的快感，那种环状肌肉的按摩效果让快感积聚得更快，每一次深入都像是推向高潮的阶梯。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:19
+msgid "{Name}注视着{TargetName}吞吐的样子，唾液与前液的混合物随着抽送形成细丝，这淫靡的画面加上身体感受到的湿润温暖，让愉悦感更加强烈。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:20
+msgid "加快挺动频率时，{Name}感受到一种更为激烈的快感冲击，{TargetName}口腔的温度和紧致度似乎也随之提高，让人感到一种即将失控的兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth.csv:21
+msgid "轻柔捏住{TargetName}下巴控制节奏时，{Name}能够精准地寻找最能带来快感的角度和深度，{TargetName}的每一次吞咽和吮吸都让快感如潮水般涌来。"
+msgstr ""
+
 #: .\data\talk_common\body_part\mouth.csv:7
 msgid "内壁光滑稚嫩，几乎没有感觉的幼小口腔"
 msgstr ""
