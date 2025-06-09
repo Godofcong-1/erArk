@@ -193,6 +193,9 @@ def base_chara_state_common_settle(
 
     # 系数加成，区分快感状态和普通状态
     if state_id in feel_state_set:
+        # 无意识或睡眠状态下不结算心理快感
+        if game_config.config_character_state[state_id].name == _("心理") and (handle_premise.handle_unconscious_flag_ge_1(character_id) or handle_premise.handle_action_sleep(character_id)):
+            return
         final_adjust = chara_feel_state_adjust(character_id, state_id, ability_level) + extra_adjust
     else:
         # 意识模糊下，不结算负面状态
