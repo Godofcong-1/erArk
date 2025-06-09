@@ -1067,7 +1067,7 @@ def orgasm_settle(
                     if character_data.ability[ability_id] < 6:
                         now_degree = 2
                 # 强绝顶需要该部位敏感度至少为3级
-                elif now_degree >= 2:
+                if now_degree >= 2:
                     if orgasm <= 7:
                         ability_id = orgasm
                     else:
