@@ -1058,14 +1058,6 @@ def orgasm_settle(
             for i in range(climax_count):
                 # 判断高潮程度
                 now_degree = judge_orgasm_degree(now_data)
-                # 超强绝顶需要该部位敏感度至少为6级
-                if now_degree >= 3:
-                    if orgasm <= 7:
-                        ability_id = orgasm
-                    else:
-                        ability_id = orgasm + 79
-                    if character_data.ability[ability_id] < 6:
-                        now_degree = 2
                 # 强绝顶需要该部位敏感度至少为3级
                 if now_degree >= 2:
                     if orgasm <= 7:
@@ -1079,7 +1071,15 @@ def orgasm_settle(
                 character_data.second_behavior[second_behavior_id] = 1
             # 绝顶解放状态下（含寸止解放与时停解放），如果次数大于等于3，则触发超强绝顶
             if handle_premise.handle_self_orgasm_edge_relase_or_time_stop_orgasm_relase(character_id) and climax_count >= 3:
-                second_behavior_id = f"{part_dict[orgasm]}_orgasm_super"
+                # 超强绝顶需要该部位敏感度至少为6级，否则变为强绝顶
+                now_degree = 3
+                if orgasm <= 7:
+                    ability_id = orgasm
+                else:
+                    ability_id = orgasm + 79
+                if character_data.ability[ability_id] < 6:
+                    now_degree = 2
+                second_behavior_id = f"{part_dict[orgasm]}_orgasm_{degree_dict[now_degree]}"
                 character_data.second_behavior[second_behavior_id] = 1
             # B绝顶喷乳，需要乳汁量到80%
             if orgasm == 1 and handle_premise.handle_milk_ge_80(character_id):
