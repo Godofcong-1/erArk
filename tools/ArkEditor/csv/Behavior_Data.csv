@@ -101,7 +101,7 @@ int,str,str,int,str,str
 253,morning_salutation_3,早安问候：早安咬,10,npc,工作_助理
 254,night_salutation_1,晚安问候：催睡觉,5,npc,工作_助理
 255,night_salutation_2,晚安问候：晚安吻,5,npc,工作_助理
-256,night_salutation_3,晚安咬,10,npc,工作_助理
+256,night_salutation_3,晚安问候：晚安咬,10,npc,工作_助理
 261,npc_assistant_cook,干员助理做饭,30,npc,工作_助理
 
 301,hand_in_hand,牵手,10,both,猥亵

@@ -3196,15 +3196,15 @@ def handle_target_a_item_off(
         target_data.h_state.body_item[i][2] = None
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_N_FEEL)
-def handle_target_add_small_n_feel(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_SMALL_S_FEEL)
+def handle_target_add_small_s_feel(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    交互对象增加少量Ｎ快（N感补正）
+    交互对象增加少量S快（S感补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间

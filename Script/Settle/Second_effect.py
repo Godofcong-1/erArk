@@ -630,13 +630,13 @@ def handle_down_large_mana_point(
     default.base_chara_hp_mp_common_settle(character_id, 30, mp_value=-1, degree=2, change_data=change_data)
 
 
-@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_N_FEEL)
-def handle_add_small_n_feel(
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_S_FEEL)
+def handle_add_small_s_feel(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
     """
-    增加少量Ｎ快（N感补正）
+    增加少量Ｎ快（S感补正）
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
