@@ -96,6 +96,7 @@ body {
     line-height: 1.1;
     margin: 0.1em 0;
     display: inline-block; /* 修改：改为内联块显示，允许元素显示在同一行 */
+    white-space: pre-wrap; /* 保留空格和换行符 */
 }
 
 /* 块级文本样式 - 需要单独一行的文本 */
@@ -125,11 +126,12 @@ body {
 /* 对于需要内联显示的文本添加新的样式类 */
 .text-inline {
     display: inline-block;
+    white-space: pre-wrap; /* 保留空格和换行符 */
 }
 
 /* 增加多行文本内部行间距的样式 - 只对包含换行符的多行文本生效 */
 .text.text-inline {
-    white-space: pre-line; /* 保持换行符，这样才能检测到多行 */
+    white-space: pre-wrap; /* 保持换行符和空格 */
 }
 
 /* 使用CSS的:has()伪类选择器（仅在支持的浏览器中生效）或JavaScript来处理 */

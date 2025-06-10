@@ -301,7 +301,7 @@ function fallbackToPolling() {
     // 显示提示信息
     const loadingMessage = document.getElementById('loading-message');
     loadingMessage.classList.remove('hidden');
-    loadingMessage.innerText = '实时连接失败，使用轮询模式...';
+    loadingMessage.textContent = '实时连接失败，使用轮询模式...';
     
     // 设置定时获取游戏状态
     setInterval(getGameState, POLL_INTERVAL);
@@ -323,7 +323,7 @@ function getGameState() {
         })
         .catch(error => {
             console.error('获取游戏状态出错:', error);
-            document.getElementById('loading-message').innerText = '连接服务器失败，请刷新页面重试...';
+            document.getElementById('loading-message').textContent = '连接服务器失败，请刷新页面重试...';
         });
 }
 
@@ -440,7 +440,12 @@ function renderGameState(state) {
                 // 创建按钮元素
                 element = document.createElement('button');
                 element.className = `game-button ${item.style || 'standard'}`;
-                element.innerText = item.text;
+                // 处理可能包含的<br>标签
+                let processedTextButton = item.text;
+                if (processedTextButton.includes('<br>')) {
+                    processedTextButton = processedTextButton.replace(/<br>/g, '\n');
+                }
+                element.textContent = processedTextButton;
                 
                 // 设置按钮ID和点击事件
                 const buttonId = item.return_text;
@@ -490,18 +495,34 @@ function renderGameState(state) {
                 // 更新上一个元素类型为换行符
                 lastElementType = 'linebreak';
                 isLastElementLinebreak = true;
-            } else if (item.type === 'text' && item.text.startsWith('\n')) { // 新增对以 \n 开头的文本处理
-                // 如果文本以换行符开头，先强制换行
-                currentLine = document.createElement('div');
-                currentLine.className = 'inline-container';
-                gameContent.appendChild(currentLine);
-
-                // 创建文本元素处理剩余部分
-                element = createGameElement({ ...item, text: item.text.substring(1) }); // 传递移除了首个 \n 的文本
-
+            } else if (item.type === 'text' && item.text.includes('\n') && item.text !== '\n') {
+                // 如果文本包含换行符（但不是纯换行符），需要特殊处理
+                const lines = item.text.split('\n');
+                lines.forEach((line, lineIndex) => {
+                    if (lineIndex > 0) {
+                        // 对于非第一行，创建新的行容器
+                        currentLine = document.createElement('div');
+                        currentLine.className = 'inline-container';
+                        gameContent.appendChild(currentLine);
+                    }
+                    
+                    if (line !== '') {
+                        // 创建文本元素
+                        const textElement = createGameElement({ ...item, text: line });
+                        if (textElement) {
+                            currentLine.appendChild(textElement);
+                        }
+                    }
+                });
+                
+                // 如果文本以换行符结尾，标记需要在下一个元素前换行
+                if (item.text.endsWith('\n')) {
+                    forceNewLine = true;
+                }
+                
                 // 更新上一个元素类型
                 lastElementType = item.type;
-                isLastElementLinebreak = false; // 因为我们已经处理了开头的换行
+                isLastElementLinebreak = false;
             } else {
                 // 创建其他类型的元素（文本、标题等）
                 element = createGameElement(item);
@@ -597,7 +618,8 @@ function createGameElement(item) {
             
             // 添加white-space: pre-wrap样式确保换行符能够正常显示
             element.style.whiteSpace = 'pre-wrap';
-            element.innerText = item.text;
+            // 使用textContent而不是innerText，以保留换行符
+            element.textContent = item.text;
             
             // 检测是否为多行文本并添加相应的类
             if (element.classList.contains('text-inline') && item.text.includes('\n')) {
@@ -625,7 +647,12 @@ function createGameElement(item) {
             // 创建标题元素
             element = document.createElement('h2');
             element.className = `title ${item.style || ''}`;
-            element.innerText = item.text;
+            // 处理可能包含的<br>标签
+            let processedTextTitle = item.text;
+            if (processedTextTitle.includes('<br>')) {
+                processedTextTitle = processedTextTitle.replace(/<br>/g, '\n');
+            }
+            element.textContent = processedTextTitle;
             // 更新上一个元素类型
             lastElementType = 'title';
             isLastElementLinebreak = false;
@@ -645,12 +672,17 @@ function createGameElement(item) {
             // 创建等待元素
             element = document.createElement('div');
             element.className = 'wait-text';
-            element.innerText = item.text;
+            // 处理可能包含的<br>标签
+            let processedTextWait = item.text;
+            if (processedTextWait.includes('<br>')) {
+                processedTextWait = processedTextWait.replace(/<br>/g, '\n');
+            }
+            element.textContent = processedTextWait;
             
             // 添加点击继续的提示
             const continueHint = document.createElement('div');
             continueHint.className = 'continue-hint';
-            continueHint.innerText = '点击继续...';
+            continueHint.textContent = '点击继续...';
             element.appendChild(continueHint);
             
             // 添加点击事件
@@ -751,7 +783,12 @@ function createGameElement(item) {
                         case 'text':
                             childElement = document.createElement('span');
                             childElement.className = `info-bar-text ${drawItem.style || ''}`;
-                            childElement.innerText = drawItem.text;
+                            // 处理可能包含的<br>标签
+                            let processedTextChild = drawItem.text;
+                            if (processedTextChild.includes('<br>')) {
+                                processedTextChild = processedTextChild.replace(/<br>/g, '\n');
+                            }
+                            childElement.textContent = processedTextChild;
                             break;
                             
                         case 'bar':
@@ -780,7 +817,12 @@ function createGameElement(item) {
                         case 'status_level':
                             childElement = document.createElement('span');
                             childElement.className = `status-level ${drawItem.style || ''}`;
-                            childElement.innerText = drawItem.text;
+                            // 处理可能包含的<br>标签
+                            let processedTextStatus = drawItem.text;
+                            if (processedTextStatus.includes('<br>')) {
+                                processedTextStatus = processedTextStatus.replace(/<br>/g, '\n');
+                            }
+                            childElement.textContent = processedTextStatus;
                             break;
                     }
                     
@@ -810,7 +852,12 @@ function createGameElement(item) {
                         case 'text':
                             childElement = document.createElement('span');
                             childElement.className = `info-character-text ${drawItem.style || ''}`;
-                            childElement.innerText = drawItem.text;
+                            // 处理可能包含的<br>标签
+                            let processedTextChild = drawItem.text;
+                            if (processedTextChild.includes('<br>')) {
+                                processedTextChild = processedTextChild.replace(/<br>/g, '\n');
+                            }
+                            childElement.textContent = processedTextChild;
                             break;
                             
                         case 'bar':
