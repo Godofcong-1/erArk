@@ -442,27 +442,65 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
         pattern = re.compile(r'\{' + re.escape(key) + r'\}')
         # 如果文本中存在该占位符
         if pattern.search(now_talk):
-            # 构建权重字典：weight -> set(cid)
-            now_talk_data: dict = {}
-            for talk_common_cid in cid_list:
-                # 读取前提配置
-                premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
-                # 计算权重
-                weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag = True)
-                if weight:
-                    now_talk_data.setdefault(weight, set()).add(talk_common_cid)
-            # 如果有可替换的候选文本
-            if now_talk_data:
-                # 定义替换函数：每次匹配都随机挑选一条文本
-                def _replacer(match):
-                    # 随机选择一个权重
-                    w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
-                    # 从该权重对应的 cid 集合中随机选一个
-                    cid = random.choice(list(now_talk_data[w]))
-                    # 返回对应的文本内容
-                    return game_config.config_talk_common_data[cid].context
+            # 如果该key存在于部位列表中
+            if key in game_config.config_talk_common_cid_list_by_part:
+                # 获取对应的部位字典
+                part_dict = game_config.config_talk_common_cid_list_by_part[key]
+                # 定义替换函数：每次匹配都随机挑选每个部位一条文本进行拼接
+                def _part_replacer(match):
+                    """
+                    部位占位符替换函数，每次匹配都随机挑选每个部位一条文本进行拼接
+                    参数:
+                        match: 正则匹配对象（未使用）
+                    返回:
+                        str: 替换后的文本
+                    """
+                    nonlocal calculated_premise_dict  # 声明使用外部变量
+                    part_str = ""
+                    for part in part_dict:
+                        now_talk_data: dict = {}
+                        talk_common_cid_list = part_dict[part]
+                        for talk_common_cid in talk_common_cid_list:
+                            # 读取前提配置
+                            premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                            # 计算权重
+                            weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
+                                premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True
+                            )
+                            if weight:
+                                now_talk_data.setdefault(weight, []).append(talk_common_cid)
+                        # 如果有可替换的候选文本
+                        if now_talk_data:
+                            w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
+                            cid = random.choice(now_talk_data[w])
+                            part_str += game_config.config_talk_common_data[cid].context
+                        else:
+                            part_str += ""
+                    return part_str
                 # 使用 sub 回调逐个替换相同的占位符
-                now_talk = pattern.sub(_replacer, now_talk)
+                now_talk = pattern.sub(_part_replacer, now_talk)
+            # 否则为非部位占位符
+            else:
+                # 构建权重字典：weight -> set(cid)
+                now_talk_data: dict = {}
+                for talk_common_cid in cid_list:
+                    # 读取前提配置
+                    premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                    # 计算权重
+                    weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
+                        premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True
+                    )
+                    if weight:
+                        now_talk_data.setdefault(weight, []).append(talk_common_cid)
+                # 如果有可替换的候选文本
+                if now_talk_data:
+                    # 定义替换函数：每次匹配都随机挑选一条文本
+                    def _replacer(match):
+                        w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
+                        cid = random.choice(now_talk_data[w])
+                        return game_config.config_talk_common_data[cid].context
+                    # 使用 sub 回调逐个替换相同的占位符
+                    now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
 
 def code_text_to_draw_text(now_talk: str, character_id: int):

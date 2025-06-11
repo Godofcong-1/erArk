@@ -15413,15 +15413,15 @@ msgid "{Name}双手扶着{TargetName}的头部，有节奏地前后摆动着腰�
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:10
-msgid "{TargetName}的口腔被完全填满，舌头被迫贴在下方，随着{Name}的动作发出湿润的水声，双手无力地扶在{Name}的大腿上。"
+msgid "{TargetName}的{mouth_s}被完全填满，舌头被迫贴在下方，随着{Name}的动作发出湿润的水声，双手无力地扶在{Name}的大腿上。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:11
-msgid "{Name}享受着{TargetName}口腔的温暖与湿润，每次抽送都伴随着啧啧的水声，{TargetName}的眼神逐渐迷离，呼吸变得急促。"
+msgid "{Name}享受着{TargetName}{mouth_s}的温暖与湿润，每次抽送都伴随着啧啧的水声，{TargetName}的眼神逐渐迷离，呼吸变得急促。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:12
-msgid "{Name}感受着{TargetName}口腔内的每一处褶皱和舌头的触感，享受着这种湿润温暖的包裹感，{TargetName}的眼中闪烁着水光，倒映着{Name}的身影。"
+msgid "{Name}感受着{TargetName}{mouth_s}内的每一处褶皱和舌头的触感，享受着这种湿润温暖的包裹感，{TargetName}的眼中闪烁着水光，倒映着{Name}的身影。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:13
@@ -15429,11 +15429,11 @@ msgid "{Name}轻轻抓住{TargetName}的头发，控制着进出的深度，{Tar
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:14
-msgid "随着{Name}的动作，{TargetName}的头部被迫前后摆动，唇舌尽力包裹着侵入的异物，发出含糊不清的呻吟声。"
+msgid "随着{Name}的动作，{TargetName}的头部被迫前后摆动，唇舌尽力包裹着侵入的{penis_s}，发出含糊不清的呻吟声。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:15
-msgid "{Name}感受到{TargetName}口腔内的温度逐渐升高，唾液分泌增多，使得每一次抽送都变得更加顺滑，快感如电流般窜过全身。"
+msgid "{Name}感受到{TargetName}{mouth_s}内的温度逐渐升高，唾液分泌增多，使得每一次抽送都变得更加顺滑，快感如电流般窜过全身。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:16
@@ -15441,7 +15441,7 @@ msgid "随着动作的持续，{TargetName}的呼吸愈发急促，脸颊因缺�
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:17
-msgid "{Name}的手掌抚过{TargetName}的脸颊，感受着自己在口腔中的形状，{TargetName}顺从地配合着节奏，喉咙深处发出模糊的呻吟。"
+msgid "{Name}的手掌抚过{TargetName}的脸颊，感受着{penis_s}在{mouth_s}中的形状，{TargetName}顺从地配合着节奏，喉咙深处发出模糊的呻吟。"
 msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth.csv:18
@@ -15460,24 +15460,544 @@ msgstr ""
 msgid "{Name}轻柔地捏住{TargetName}的下巴，控制着对方的动作，{TargetName}的眼神中混合着顺从与迷离，口中发出含糊不清的呜咽声。"
 msgstr ""
 
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:23
+msgid "{Name}生涩地挺动腰部，将{penis_s}在{TargetName}的{mouth_s}内缓慢抽送，尽管技巧不足，却因对方被迫含着的顺从模样而内心升起一股强烈的征服感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:24
+msgid "{Name}按住{TargetName}的头部，笨拙地将{penis_s}在对方{mouth_s}中进出，虽然节奏不稳但小巧的尺寸让{TargetName}能够完全吞入，引起内心一阵淫秽的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:25
+msgid "{Name}抓着{TargetName}的头发，毫无章法地让{penis_s}在{mouth_s}内戳刺，短小的阴茎让动作显得有些滑稽，却也让{Name}享受着对{TargetName}口腔的完全占有。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:26
+msgid "{Name}扶着{TargetName}的下巴，粗暴地抽动{penis_s}，技巧虽差但看到{TargetName}被迫吞吐的模样，心中涌起一阵征服和蹂躏的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:27
+msgid "{Name}手按着{TargetName}的后脑，不熟练地将{penis_s}往{mouth_s}深处送，尽管动作生硬但小巧的尺寸使{TargetName}不至于太难受，这种支配感令{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:29
+msgid "{Name}轻握{TargetName}的头发，以稳定的节奏让{penis_s}在{mouth_s}内进出，短小的尺寸配合中等技巧，让{TargetName}能轻松吞吐的同时体验到被掌控的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:30
+msgid "{Name}双手捧着{TargetName}的脸颊，有规律地将{penis_s}送入{mouth_s}深处，虽然阴茎不大但娴熟的节奏让每次进入都能触碰到敏感的喉咙入口。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:31
+msgid "{Name}扶着{TargetName}的下颌，以平稳的速度让{penis_s}在{mouth_s}内抽送，小巧的龟头精准地摩擦着口腔上颚，引发{TargetName}一阵阵轻微的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:32
+msgid "{Name}引导{TargetName}的头部，让{penis_s}在{mouth_s}中保持适中的进出频率，短小的阴茎在熟练的技巧下被完全吞入喉咙，带来意想不到的深度快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:33
+msgid "{Name}轻抚{TargetName}的头发，以均匀的节奏将{penis_s}插入{mouth_s}，虽然尺寸有限但配合得当的动作让龟头能够恰到好处地抵达喉咙深处。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:35
+msgid "{Name}以娴熟的腰技控制{penis_s}在{TargetName}的{mouth_s}中进出，精确把握着每一次抽送的深度和速度，让短小的阴茎在口腔内部发挥最大的刺激效果。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:36
+msgid "{Name}手指轻抚{TargetName}的喉结，同时以精湛技巧让{penis_s}在{mouth_s}深浅交替，巧妙利用短小尺寸在喉咙入口处快速抖动，引发一连串强烈的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:37
+msgid "{Name}轻握{TargetName}的头发，腰部动作如行云流水般让{penis_s}在{mouth_s}中快进慢出，尽管阴茎不大但高超的技巧使每一下都精准刺激到口腔敏感点。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:38
+msgid "{Name}双手轻扶{TargetName}的脸颊，以令人叹服的节奏控制{penis_s}在{mouth_s}内的律动，短小的阴茎在完美技巧下变成极致快感的源泉，龟头准确擦过上颚每一处敏感区域。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:39
+msgid "{Name}微微扬起下巴，以精确的腰部控制让{penis_s}深入{TargetName}的{mouth_s}，短小的尺寸配合完美的节奏变化，使得每次抽送都如艺术般优雅而淫靡。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:41
+msgid "{Name}抓着{TargetName}的头发，毫无规律地将{penis_s}往{mouth_s}里送，中等尺寸的阴茎让{TargetName}不时发出呜咽声，这种生涩却充满掌控的快感让{Name}更加兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:42
+msgid "{Name}扶住{TargetName}的后脑，笨拙地让{penis_s}在{mouth_s}中抽动，虽然技巧不足但适中的尺寸足以撑满对方口腔，带来强烈的视觉刺激和征服感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:43
+msgid "{Name}按着{TargetName}的头部，生硬地挺动腰肢使{penis_s}进出{mouth_s}，动作虽然不连贯但中等尺寸的阴茎每次都能让{TargetName}的脸颊鼓起，显出被塞满的淫靡模样。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:44
+msgid "{Name}粗暴地抓住{TargetName}的头发，让{penis_s}在{mouth_s}中毫无章法地抽插，技巧虽然欠佳但{TargetName}被迫张大嘴巴承受的样子激发了{Name}内心最原始的欲望。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:45
+msgid "{Name}单手固定{TargetName}的下巴，缺乏技巧地将{penis_s}塞进{mouth_s}深处，中等的阴茎尺寸让{TargetName}的颈部微微鼓起，这种强制感让{Name}体验到前所未有的控制快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:47
+msgid "{Name}扶着{TargetName}的头部，以稳定的节奏让{penis_s}在{mouth_s}内有规律地进出，适中的尺寸和娴熟的技巧相结合，让每次抽送都带来显著的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:48
+msgid "{Name}轻按{TargetName}的后脑，腰部以平稳频率挺动，让{penis_s}在{mouth_s}中深浅交替，龟头时而擦过上颚，时而触碰喉咙入口，引发一阵阵吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:49
+msgid "{Name}双手固定{TargetName}的头部，以熟练的动作将{penis_s}送入{mouth_s}深处，适中的尺寸恰好能让龟头抵达喉咙入口，带来强烈而不过分的刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:50
+msgid "{Name}控制着{TargetName}的下颌，让{penis_s}在{mouth_s}中保持均匀的抽送节奏，中等尺寸的阴茎被完全包裹，每次进出都带出晶莹的唾液。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:51
+msgid "{Name}引导{TargetName}的头部前后移动，同时腰部配合着挺动，让{penis_s}在{mouth_s}内形成流畅的抽插节奏，龟头每次都能精准地触碰到敏感区域。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:53
+msgid "{Name}以精湛的技巧控制{penis_s}在{TargetName}的{mouth_s}中律动，腰部动作如同精密仪器般运作，每一次抽送都恰到好处地刺激口腔每个敏感点。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:54
+msgid "{Name}轻抚{TargetName}的喉结，同时以完美的节奏让{penis_s}在{mouth_s}内深浅交替，中等尺寸的阴茎在高超技巧下，龟头精确地擦过上颚的每一处敏感区域。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:55
+msgid "{Name}手指穿过{TargetName}的头发，以令人叹服的腰技将{penis_s}送入{mouth_s}深处，快慢结合的频率变化让{TargetName}来不及反应，只能被动承受这极致的口腔刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:56
+msgid "{Name}双手轻扶{TargetName}的脸颊，腰部动作如舞蹈般优雅，让{penis_s}在{mouth_s}中形成完美的进出节奏，每一次都能引发{TargetName}无法控制的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:57
+msgid "{Name}微调{TargetName}头部的角度，同时以精确无比的腰技控制{penis_s}在{mouth_s}内的每一下抽送，中等尺寸配合完美技巧，使龟头每次都能触及最敏感的喉咙入口。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:59
+msgid "{Name}用力按住{TargetName}的头部，笨拙地将{penis_s}往{mouth_s}内塞，粗大的尺寸使{TargetName}的嘴唇被撑到极限，眼角因吃力而泛红，这种征服感让{Name}更加兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:60
+msgid "{Name}抓着{TargetName}的头发，毫无技巧地让{penis_s}在{mouth_s}入口处进出，粗壮的阴茎让{TargetName}无法完全吞入，只能勉强含住龟头部分，唾液从嘴角不断溢出。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:61
+msgid "{Name}扶着{TargetName}的下巴，生硬地尝试将{penis_s}塞进{mouth_s}深处，但过粗的尺寸让{TargetName}不时发出呜咽声，这种勉强承受的模样却让{Name}获得强烈的支配快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:62
+msgid "{Name}按压{TargetName}的后脑，粗暴地让{penis_s}往{mouth_s}里送，虽然技巧欠佳但粗大的阴茎带来的视觉冲击和被紧紧包裹的感觉足以弥补这一点。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:63
+msgid "{Name}双手固定{TargetName}的头部，缺乏节奏地将{penis_s}往{mouth_s}深处顶，粗壮的肉棒使{TargetName}的脸颊被迫鼓起，这种被塞满的视觉享受让{Name}无比满足。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:65
+msgid "{Name}扶着{TargetName}的头部，以稳定的频率让{penis_s}在{mouth_s}中进出，粗大的尺寸让{TargetName}的口腔被完全撑开，唾液随着抽送的动作从嘴角溢出。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:66
+msgid "{Name}轻按{TargetName}的后脑，有节奏地将{penis_s}送入{mouth_s}，让粗壮的龟头在喉咙入口处浅浅戳刺，引发一阵阵吞咽反射和轻微的呕吐感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:67
+msgid "{Name}引导{TargetName}的头部，控制着让{penis_s}在{mouth_s}中保持平稳的抽送，粗大的阴茎让{TargetName}的嘴巴难以完全容纳，但熟练的动作减轻了不适感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:68
+msgid "{Name}双手捧着{TargetName}的脸颊，以均匀的节奏让{penis_s}在{mouth_s}内进出，粗壮的柱身被紧紧包裹，每次抽送都伴随着湿润的水声。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:69
+msgid "{Name}控制着{TargetName}的下颌，让{penis_s}保持适中速度在{mouth_s}中抽动，粗大的尺寸和熟练的节奏相结合，让{TargetName}的脸庞呈现出被塞满的淫靡表情。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:71
+msgid "{Name}以精湛的技巧控制{penis_s}在{TargetName}的{mouth_s}中进出，精确把握每一次抽送的深度，粗大的阴茎被完美运用，让{TargetName}在窒息的边缘体验极致快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:72
+msgid "{Name}手指轻抚{TargetName}的喉结，同时以令人叹服的腰技让{penis_s}在{mouth_s}内快进慢出，粗壮的龟头精准地刺激口腔各处敏感点，引发一连串强烈的生理反应。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:73
+msgid "{Name}轻握{TargetName}的头发，腰部动作如行云流水般让{penis_s}在{mouth_s}中形成完美的律动，粗大的尺寸在高超技巧下变成极致快感的源泉。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:74
+msgid "{Name}双手扶着{TargetName}的脸颊，以精确的频率控制{penis_s}在{mouth_s}内的深浅变化，粗壮的阴茎被完美操控，每次都恰到好处地触及喉咙敏感区域。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:75
+msgid "{Name}微调{TargetName}头部的角度，以完美的腰技将{penis_s}送入{mouth_s}深处，巧妙地利用粗大尺寸在喉咙入口处快速抖动，带来难以言喻的强烈刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:77
+msgid "{Name}用力按着{TargetName}的头部，笨拙地想将{penis_s}塞进{mouth_s}，但惊人的尺寸让{TargetName}只能勉强含住龟头，脸色因吃力而涨红，这种视觉冲击让{Name}无比兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:78
+msgid "{Name}双手固定{TargetName}的头部，毫无技巧地让{penis_s}在{mouth_s}入口处磨蹭，巨大的阴茎根本无法完全进入，只能浅浅地插入一小部分，却带来强烈的征服快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:79
+msgid "{Name}抓着{TargetName}的头发，生硬地尝试将{penis_s}往{mouth_s}深处送，巨大的阴茎让{TargetName}的嘴角被撑到极限，眼泪不受控制地流出，这种勉强的模样激发了{Name}的支配欲。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:80
+msgid "{Name}扶着{TargetName}的下巴，缺乏节奏地用{penis_s}抽插{mouth_s}入口，巨根的尺寸让深入变得几乎不可能，但这种视觉上的强烈对比让{Name}获得前所未有的满足感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:81
+msgid "{Name}按住{TargetName}的后脑，粗暴地让{penis_s}在{mouth_s}浅处进出，虽然技巧生疏但恐怖的尺寸已经足以让{TargetName}的脸颊鼓起，呈现出被完全支配的淫靡画面。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:83
+msgid "{Name}扶着{TargetName}的头部，以稳定的节奏让{penis_s}浅浅地进出{mouth_s}，巨大的尺寸让{TargetName}无法完全吞入，但有规律的动作减轻了不适感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:84
+msgid "{Name}轻按{TargetName}的后脑，控制着让{penis_s}在{mouth_s}入口处有节奏地抽送，巨根的龟头部分已经足以让{TargetName}的口腔被完全撑满。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:85
+msgid "{Name}引导{TargetName}的头部，让{penis_s}保持适中速度在{mouth_s}浅处进出，惊人的尺寸带来的视觉冲击和部分进入的紧致感相结合，产生强烈的性快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:86
+msgid "{Name}双手捧着{TargetName}的脸颊，以均匀的频率让{penis_s}在{mouth_s}中浅入深出，巨大的阴茎让{TargetName}的脸部肌肉绷紧，唾液不断从嘴角流出。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:87
+msgid "{Name}控制着{TargetName}的下颌，让{penis_s}有规律地在{mouth_s}入口处磨蹭，熟练的技巧弥补了无法完全进入的缺憾，每次浅插都带来独特的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:89
+msgid "{Name}以精湛的技巧控制{penis_s}在{TargetName}的{mouth_s}入口处进出，巧妙地利用巨大尺寸的龟头刺激口腔各处敏感区域，带来难以形容的强烈快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:90
+msgid "{Name}手指轻抚{TargetName}的喉结，同时以令人叹服的腰技让{penis_s}在{mouth_s}浅处快速抽送，巨根虽然无法完全进入但在完美控制下成为极致的快感工具。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:91
+msgid "{Name}轻握{TargetName}的头发，腰部动作如精密仪器般控制{penis_s}在{mouth_s}入口的进出深度，惊人的尺寸在高超技巧下被发挥到极致，每一下都精准刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:92
+msgid "{Name}双手扶着{TargetName}的脸颊，以完美的节奏让{penis_s}浅浅地刺入{mouth_s}，巨大的龟头在精确控制下刚好触及最敏感的区域，引发{TargetName}不断的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:93
+msgid "{Name}微调{TargetName}头部的角度，以精确无比的腰技让{penis_s}在{mouth_s}入口处形成完美的律动，虽然只有部分进入但高超的技巧使每一次接触都如电流般刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:96
+msgid "{Name}笨拙地前后晃动着腰部，{penis_s}在{TargetName}的{mouth_s}中进出，动作虽然生疏但{TargetName}被迫吞吐的模样让{Name}体验到了前所未有的征服快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:97
+msgid "{Name}按住{TargetName}的头，毫无技巧地将{penis_s}塞进{mouth_s}深处，虽然尺寸短小但看到{TargetName}被迫服从的样子，内心的征服欲得到极大满足。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:98
+msgid "{Name}抓着{TargetName}的头发，毫无节奏地将{penis_s}插入{mouth_s}，虽然动作不连贯但{TargetName}的嘴唇包裹着阴茎的视觉刺激让{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:99
+msgid "{Name}握住{TargetName}的下巴，缓慢而笨拙地将{penis_s}在{TargetName}的{mouth_s}中抽插，技巧虽差但支配感带来的心理快感弥补了一切。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:100
+msgid "{Name}手扶着{TargetName}的头部，粗鲁地将{penis_s}往{mouth_s}里送，虽然动作缺乏技巧，却在{TargetName}被迫吞吐的画面中获得了强烈的心理满足。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:102
+msgid "{Name}抚摸着{TargetName}的头发，以稳定的节奏让{penis_s}在{mouth_s}中浅入深出，短小的尺寸使{TargetName}能轻松吞吐，舌头细致地舔舐着每一处敏感点。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:103
+msgid "{Name}轻轻按住{TargetName}的后脑，有节奏地让{penis_s}在{mouth_s}中抽送，小巧的阴茎被灵活的舌头包裹，带来均匀而持久的刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:104
+msgid "{Name}扶着{TargetName}的脸颊，让{penis_s}在{mouth_s}里进进出出，虽然尺寸不大但流畅的动作和恰当的力度让{TargetName}的吮吸更加有效。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:105
+msgid "{Name}双手捧着{TargetName}的脸，以适中的速度让{penis_s}在{mouth_s}内抽送，技巧虽不精湛但足够连贯，小巧的阴茎完全被温热的口腔包裹。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:106
+msgid "{Name}引导着{TargetName}的头部，让{penis_s}在{mouth_s}中保持平稳的抽插频率，短小的尺寸正好让{TargetName}能轻松地用舌尖刺激龟头最敏感的部位。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:108
+msgid "{Name}以精湛的技巧控制着{penis_s}在{TargetName}的{mouth_s}中的每一次律动，短小的尺寸在完美的节奏下被充分利用，引发{TargetName}喉咙一阵阵愉悦的收缩。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:109
+msgid "{Name}手指轻抚{TargetName}的喉结，同时以娴熟的腰技让{penis_s}在{mouth_s}内快慢交替，短小的阴茎在高超技巧下精准刺激着每一处敏感点。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:110
+msgid "{Name}轻握{TargetName}的后颈，腰部动作如行云流水般让{penis_s}在{mouth_s}中进出，小巧的尺寸在完美技巧下成为了极致快感的来源。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:111
+msgid "{Name}以令人叹服的控制力让{penis_s}在{TargetName}的{mouth_s}中缓进急出，龟头精确地擦过敏感的上颚，引发{TargetName}一阵阵情不自禁的吮吸。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:112
+msgid "{Name}轻抚着{TargetName}的发丝，以超凡的技巧让{penis_s}在{mouth_s}中以变化无穷的角度和节奏抽送，每一次动作都让{TargetName}的舌头无法抵抗地缠绕上来。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:114
+msgid "{Name}笨拙地握住{TargetName}的头发，将{penis_s}塞进{mouth_s}深处，虽然技巧生疏但中等尺寸已足以让{TargetName}的嘴巴被撑开，喉咙发出吃力的呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:115
+msgid "{Name}按住{TargetName}的肩膀，毫无章法地将{penis_s}往{mouth_s}里送，动作虽然生涩但{TargetName}被迫张大嘴巴吞吐的样子让{Name}感到强烈的征服快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:116
+msgid "{Name}抓着{TargetName}的头部，毫无节奏地让{penis_s}在{mouth_s}中进出，技巧虽差但{TargetName}被撑满的嘴唇和通红的脸颊带来极大的视觉刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:117
+msgid "{Name}扶着{TargetName}的脸，粗鲁地将{penis_s}往{mouth_s}深处顶，虽然动作生疏但{TargetName}被中等尺寸的阴茎填满口腔的样子让{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:118
+msgid "{Name}双手捧着{TargetName}的头，毫无技巧地让{penis_s}在{mouth_s}中抽送，虽然动作不连贯但{TargetName}吃力吞吐的模样带来强烈的精神满足感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:120
+msgid "{Name}以适中的节奏让{penis_s}在{TargetName}的{mouth_s}中进出，恰到好处的尺寸使每一次抽送都能带来充实的满足感，{TargetName}的舌头不断舔舐着柱身。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:121
+msgid "{Name}轻按{TargetName}的后颈，有规律地让{penis_s}在{mouth_s}内抽送，龟头时而顶到喉咙入口，引发{TargetName}一阵阵轻微的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:122
+msgid "{Name}扶着{TargetName}的头部，让{penis_s}在{mouth_s}中有节奏地抽插，中等的尺寸正好填满口腔，每次抽出都带出一丝暧昧的银丝。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:123
+msgid "{Name}双手轻扶{TargetName}的脸颊，以稳定的频率让{penis_s}在{mouth_s}中进退，阴茎表面的青筋被柔软的舌头细细描绘，带来持久的刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:124
+msgid "{Name}轻按{TargetName}的头顶，以平稳的节奏让{penis_s}在{mouth_s}中浅进深出，适中的尺寸让每一次抽送都能带来均匀的快感，{TargetName}的嘴唇紧紧包裹着柱身。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:126
+msgid "{Name}以出神入化的技巧控制着{penis_s}在{TargetName}的{mouth_s}中的每一次动作，完美的节奏让{TargetName}的舌头和喉咙不由自主地配合着吞吐，带来双重的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:127
+msgid "{Name}手指轻抚{TargetName}的脸颊，同时以精湛的腰技让{penis_s}在{mouth_s}内深浅交替，龟头精准地擦过喉咙入口的敏感点，引发一阵阵紧缩。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:128
+msgid "{Name}以惊人的控制力让{penis_s}在{TargetName}的{mouth_s}中进行各种角度的刺激，中等尺寸在高超技巧下变成了完美的快感工具，{TargetName}的眼神逐渐迷离。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:129
+msgid "{Name}轻握{TargetName}的发丝，腰部动作如同精密机器般让{penis_s}在{mouth_s}中有规律地律动，每一次抽送都恰到好处地刺激最敏感的区域。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:130
+msgid "{Name}以令人叹服的节奏感让{penis_s}在{TargetName}的{mouth_s}中快慢交替，适中的尺寸在完美掌控下被发挥到极致，{TargetName}不自觉地吮吸着，沉醉于这种技巧中。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:132
+msgid "{Name}粗鲁地将{penis_s}往{TargetName}的{mouth_s}里塞，粗大的尺寸让{TargetName}的嘴唇被撑到极限，眼角因为吃力而泛红，唾液不受控制地从嘴角溢出。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:133
+msgid "{Name}抓着{TargetName}的头发，毫无技巧地让{penis_s}在{mouth_s}中进进出出，虽然动作生疏但粗大的阴茎已让{TargetName}的脸颊鼓起，喉咙发出难受的呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:134
+msgid "{Name}按住{TargetName}的肩膀，笨拙地将{penis_s}塞进{mouth_s}深处，粗壮的尺寸让{TargetName}不得不张大嘴巴，泪水在眼眶中打转。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:135
+msgid "{Name}扶着{TargetName}的脸，毫无章法地将{penis_s}往{mouth_s}里送，{TargetName}的嘴唇被撑得发白，粗大的龟头几乎抵到了喉咙深处。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:136
+msgid "{Name}双手固定住{TargetName}的头部，生硬地让{penis_s}在{mouth_s}中抽送，粗壮的阴茎让{TargetName}的下颚酸痛，但{Name}只顾着满足自己的欲望。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:138
+msgid "{Name}以稳定的节奏让{penis_s}在{TargetName}的{mouth_s}中进出，粗大的尺寸让{TargetName}的嘴唇被完全撑开，每次深入都引发一阵轻微的干呕反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:139
+msgid "{Name}轻按{TargetName}的后脑，有节奏地让{penis_s}在{mouth_s}中浅进深出，粗壮的阴茎让{TargetName}的脸颊鼓起，唾液顺着下巴流淌。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:140
+msgid "{Name}扶着{TargetName}的头部，让{penis_s}在{mouth_s}中有规律地抽插，粗大的龟头每次都顶到喉咙入口，引发{TargetName}一阵阵条件反射的吞咽。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:141
+msgid "{Name}双手轻扶{TargetName}的脸，以平稳的速度让{penis_s}在{mouth_s}中抽送，粗壮的尺寸让{TargetName}的嘴巴酸痛，但有节奏的动作让她逐渐适应。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:142
+msgid "{Name}控制着抽送的力度，让{penis_s}在{TargetName}的{mouth_s}中进进出出，粗大的阴茎让{TargetName}只能含住一部分，剩余部分由手辅助套弄着。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:144
+msgid "{Name}以精湛的技巧控制着{penis_s}在{TargetName}的{mouth_s}中的律动，粗大的尺寸在高超技巧下变成了极致快感的源泉，{TargetName}的喉咙不自觉地做着吞咽动作。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:145
+msgid "{Name}手指轻抚{TargetName}的喉结，同时以娴熟的腰技让{penis_s}在{mouth_s}内快慢交替，粗壮的龟头精准地刺激着喉咙敏感区域，引发一阵阵紧缩。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:146
+msgid "{Name}以令人叹服的控制力让{penis_s}在{TargetName}的{mouth_s}中进行各种角度的刺激，粗大的阴茎在完美技巧下每一次抽送都带来极致的视觉和身体双重刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:147
+msgid "{Name}轻握{TargetName}的发丝，腰部动作如行云流水般让{penis_s}在{mouth_s}中深浅交替，粗壮的尺寸虽然让{TargetName}吃力但精湛的技巧让她逐渐沉醉其中。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:148
+msgid "{Name}以出神入化的节奏感让{penis_s}在{TargetName}的{mouth_s}中有规律地进出，粗大的阴茎被完美控制，每次抽送都精准刺激最敏感的区域，引发{TargetName}一阵阵急促的呼吸。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:150
+msgid "{Name}强硬地将{penis_s}往{TargetName}的{mouth_s}里塞，巨大的尺寸让{TargetName}只能勉强含住龟头部分，嘴唇被撑到极限，眼泪不受控制地流下。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:151
+msgid "{Name}抓着{TargetName}的头发，笨拙地试图让{penis_s}进入{mouth_s}深处，但惊人的尺寸让{TargetName}无法吞咽，只能用手辅助套弄着剩余部分。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:152
+msgid "{Name}按住{TargetName}的肩膀，毫无章法地将{penis_s}往{TargetName}的{mouth_s}里送，巨大的龟头撑满了整个口腔，让{TargetName}的下颚酸痛不已。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:153
+msgid "{Name}扶着{TargetName}的脸，粗鲁地让{penis_s}在{mouth_s}入口处摩擦，惊人的尺寸让深入变得困难，但视觉上的冲击让{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:154
+msgid "{Name}双手固定住{TargetName}的头部，生硬地尝试让{penis_s}深入{mouth_s}，但只能进入一小部分，{TargetName}的嘴角已经因为过度拉伸而微微撕裂。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:156
+msgid "{Name}以平稳的节奏让{penis_s}在{TargetName}的{mouth_s}入口处进出，巨大的尺寸让深入变得困难，但{Name}还是有节奏地让龟头部分在口腔内浅浅抽送。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:157
+msgid "{Name}轻按{TargetName}的后脑，有规律地让{penis_s}的前端在{mouth_s}中抽送，惊人的粗细让{TargetName}的嘴唇被撑到极限，双手还需要配合套弄着露在外面的大部分。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:158
+msgid "{Name}扶着{TargetName}的头部，让{penis_s}在{mouth_s}入口处有节奏地摩擦，龟头偶尔浅浅进入，引发{TargetName}一阵阵吃力的吞咽反应。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:159
+msgid "{Name}双手轻扶{TargetName}的脸，以稳定的频率让{penis_s}的顶端在{mouth_s}中进出，巨大的尺寸形成强烈的视觉冲击，{TargetName}的下颚因长时间张开而酸痛。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:160
+msgid "{Name}控制着力度和深度，让{penis_s}在{TargetName}的{mouth_s}外部和入口处交替摩擦，巨大的龟头偶尔进入口腔，带来强烈的占有感和视觉刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:162
+msgid "{Name}以精湛的技巧控制着{penis_s}在{TargetName}的{mouth_s}入口处的每一次动作，龟头精准地在唇部和口腔浅部来回刺激，带来极致的视觉和身体双重快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:163
+msgid "{Name}手指轻抚{TargetName}的脸颊，同时以娴熟的腰技让{penis_s}的前端在{mouth_s}中浅浅进出，巨大的尺寸成为了视觉冲击的完美来源，配合高超技巧更是锦上添花。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:164
+msgid "{Name}以令人叹服的控制力让{penis_s}在{TargetName}的{mouth_s}入口处进行精准刺激，龟头时而浅入时而在唇上摩擦，每一次动作都恰到好处。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:165
+msgid "{Name}轻握{TargetName}的发丝，腰部动作如同精密机器般让{penis_s}的顶端在{mouth_s}中有节奏地律动，巨大的尺寸在高超技巧下反而成为了极致快感的催化剂。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth.csv:166
+msgid "{Name}以出神入化的节奏感让{penis_s}在{TargetName}的{mouth_s}周围和入口处交替刺激，完美的控制力让这种尺寸的阴茎也能带给{TargetName}舒适而强烈的口腔体验。"
+msgstr ""
+
 #: .\data\talk_common\action_B2\penis_in_mouth.csv:7
-msgid "{TargetName}的舌头舐着柱身，双颊因为用力吮吸而凹陷，眼神迷离，唾液与前液混合的液体顺着嘴角流下，在下巴上留下一道道晶莹的痕迹。"
+msgid "{TargetName}卖力地吞吐着，每一次动作都让自己发出闷哼声，脸颊因吞吐的动作而凹陷，眼角泛起生理性的泪水，喉咙深处不断传来吞咽的声音。"
 msgstr ""
 
 #: .\data\talk_common\action_B2\penis_in_mouth.csv:8
-msgid "{TargetName}努力张大嘴巴配合着，舌头舔弄着敏感的前端，同时双手扶在{Name}的大腿上保持平衡，脸颊随着吞吐的节奏一鼓一凹，发出啧啧的水声，眼睛因为强烈的刺激而微微湿润。"
+msgid "{TargetName}灵活地运用舌头和口腔黏膜带来柔软触感，因为吮吸的动作而使脸颊凹陷，唾液从嘴角溢出，顺着下巴滴落。"
 msgstr ""
 
 #: .\data\talk_common\action_B2\penis_in_mouth.csv:9
-msgid "{TargetName}闭着眼睛专注于服务，双颊因反复吮吸而变得凹陷，时而发出轻微的哽咽声，身体微微颤抖。"
+msgid "{TargetName}主动前后摆动着头部，有节奏地吞吐着，每一次都尝试深入到喉咙深处，引起自己一阵阵本能的吞咽反应，喉结上下滚动着。"
 msgstr ""
 
 #: .\data\talk_common\action_B2\penis_in_mouth.csv:10
-msgid "{TargetName}的舌头灵活地舔舐着{Name}的敏感部位，引得{Name}情不自禁地加快了挺动的节奏，{TargetName}的脸颊染上一层潮红。"
+msgid "{TargetName}的口腔被完全填满，舌头被迫贴在下方，主动发出湿润的水声，双手扶在{Name}的大腿上借力调整角度。"
 msgstr ""
 
 #: .\data\talk_common\action_B2\penis_in_mouth.csv:11
-msgid "{TargetName}的舌尖灵巧地在敏感处打转，同时口腔形成真空状态吮吸着，让{Name}感到一阵阵电流般的快感从下腹涌向全身。"
+msgid "{TargetName}努力取悦着{Name}，口腔提供温暖与湿润，每次吞吐都伴随着啧啧的水声，眼神逐渐迷离，呼吸变得急促。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:12
+msgid "{TargetName}用口腔内的每一处褶皱和舌头去感受对方，主动提供湿润温暖的包裹感，眼中闪烁着水光，倒映着{Name}的身影。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:13
+msgid "{TargetName}任由{Name}抓住自己的头发，适应着对方控制的深度，喉咙发出呜咽声，眼中泛起水光，嘴角流下晶莹的唾液。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:14
+msgid "{TargetName}配合着{Name}的节奏前后摆动头部，唇舌尽力包裹着口中的硬物，发出含糊不清的呻吟声。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:15
+msgid "{TargetName}感到口腔内的温度逐渐升高，刻意增加唾液分泌，使得每一次吞吐都变得更加顺滑，希望给{Name}带来更强烈的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:16
+msgid "随着动作的持续，{TargetName}的呼吸愈发急促，脸颊因缺氧而泛红，却仍然努力保持节奏，表现出无比的热情与顺从。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:17
+msgid "{TargetName}感受到{Name}的手掌抚过自己的脸颊，更加卖力地吞吐着，喉咙深处发出模糊的呻吟，展示着自己的服务热忱。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:18
+msgid "{TargetName}每当感到深入到喉咙时，都会刻意收缩喉部肌肉，提供一阵紧致的挤压感，让{Name}忍不住发出满足的叹息。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:19
+msgid "{TargetName}大张着嘴唇，让唾液与前液混合在一起，在吞吐间故意形成细丝，随着动作牵连出银丝，画面格外淫靡。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:20
+msgid "{TargetName}感受到{Name}按住自己的后脑，努力适应着加快的频率，鼻息变得急促，手指无意识地抓紧了{Name}的衣物。"
+msgstr ""
+
+#: .\data\talk_common\action_B2\penis_in_mouth.csv:21
+msgid "{TargetName}顺从地任由{Name}捏住自己的下巴控制动作，眼神中混合着服从与迷离，口中发出含糊不清的呜咽声。"
 msgstr ""
 
 #: .\data\talk_common\action_C1\penis_in_mouth.csv:7
@@ -15540,1804 +16060,2184 @@ msgstr ""
 msgid "轻柔捏住{TargetName}下巴控制节奏时，{Name}能够精准地寻找最能带来快感的角度和深度，{TargetName}的每一次吞咽和吮吸都让快感如潮水般涌来。"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:7
-msgid "内壁光滑稚嫩，几乎没有感觉的幼小口腔"
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:7
+msgid "{TargetName}感受到每一次被{Name}深入喉咙的压迫感，口腔被完全填满的饱胀感让{TargetName}难以呼吸，却又带来一种奇异的满足感。"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:8
-msgid "牙齿细小整齐，舌头几乎没有任何刺激反应的幼女嘴巴"
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:8
+msgid "{TargetName}的舌头被迫贴附在口腔底部，随着{Name}的抽送，敏感的口腔黏膜被摩擦的感觉让{TargetName}全身发热，意识开始变得模糊。"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:9
-msgid "异常紧小干燥，对入侵物几乎没有知觉的幼女小嘴"
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:9
+msgid "当{Name}深入到喉咙时，{TargetName}感到一阵窒息的紧张，但同时喉咙被撑开的饱满感却带来了一种难以言喻的兴奋，让{TargetName}忍不住收缩喉部肌肉。"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:10
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:10
+msgid "{TargetName}的口腔被{Name}完全占据，灵活的舌头无法自由活动，每次吞咽时喉咙与前端接触的刺激感让{TargetName}下身也开始变得湿润。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:11
+msgid "随着{Name}的抽送节奏，{TargetName}的呼吸变得困难，但这种被控制的感觉却激发了更强的欲望，让{TargetName}不自觉地想要更多。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:12
+msgid "{TargetName}的嘴角因长时间张开而感到酸痛，但看到{Name}享受的表情却带来一种成就感，让{TargetName}更加卖力地用舌头和口腔服侍着。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:13
+msgid "被{Name}控制头部的感觉让{TargetName}陷入一种奇妙的臣服状态，喉咙深处被顶撞的刺激直接传递到大脑，引发全身一阵阵颤栗。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:14
+msgid "{TargetName}努力调整呼吸的节奏，口腔和喉咙被完全填满的充实感让{TargetName}的思维变得恍惚，甚至开始享受这种被支配的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:15
+msgid "随着时间推移，{TargetName}的唾液分泌越来越多，口腔变得更加湿润滑腻，这种失控的生理反应让{TargetName}感到一阵羞耻却又带着兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:16
+msgid "{TargetName}努力配合着{Name}的动作，每次主动吸吮时都能看到{Name}满足的表情，这种取悦他人的快感让{TargetName}内心充满了成就感。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:17
+msgid "{TargetName}的脸颊因用力吸吮而凹陷，口腔和喉咙的酸痛感与快感交织在一起，眼眶因生理反应而湿润，却依然顺从地接纳着{Name}的侵入。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:18
+msgid "喉咙深处被反复刺激的感觉让{TargetName}产生了一种异样的快感，这种被占有的满足感从口腔蔓延到全身，让{TargetName}甚至忘记了呼吸的节奏。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:19
+msgid "{TargetName}能感受到唾液与前液混合的液体从嘴角溢出，这种淫靡的状态让{TargetName}感到既羞耻又兴奋，下身的反应也变得更加明显。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:20
+msgid "当{Name}加快频率时，{TargetName}的意识开始变得模糊，喉咙和口腔的酸胀感已经转化为一种奇特的快感，让{TargetName}不自觉地发出呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_C2\penis_in_mouth.csv:21
+msgid "被{Name}捏住下巴控制的感觉让{TargetName}完全臣服，这种被掌控的状态与口腔被填满的充实感相结合，让{TargetName}陷入了恍惚状态。"
+msgstr ""
+
+#: .\data\talk_common\body\mouth.csv:7
+msgid "内壁光滑稚嫩，对性刺激几乎没有感觉的幼小口腔"
+msgstr ""
+
+#: .\data\talk_common\body\mouth.csv:8
+msgid "牙齿细小整齐，舌头对性刺激几乎没有反应的幼女嘴巴"
+msgstr ""
+
+#: .\data\talk_common\body\mouth.csv:9
+msgid "异常紧小干燥，对入侵物的性刺激没有反应的幼女小嘴"
+msgstr ""
+
+#: .\data\talk_common\body\mouth.csv:10
 msgid "唾液分泌不足，内壁对摩擦感知迟钝的幼小肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:11
-msgid "咽喉空间狭小紧致，但对刺激几乎没有反应的幼女唇齿"
+#: .\data\talk_common\body\mouth.csv:11
+msgid "咽喉空间狭小紧致，但对性刺激几乎没有反应的幼女唇齿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:12
-msgid "樱桃般小巧的嘴唇内，舌头被触碰没有快感的幼嫩口穴"
+#: .\data\talk_common\body\mouth.csv:12
+msgid "樱桃般小巧的嘴唇内，舌头被触碰还没有性快感的幼嫩口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:13
+#: .\data\talk_common\body\mouth.csv:13
 msgid "内腔感觉迟钝，唾液稀少，喉咙进入困难的幼女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:14
+#: .\data\talk_common\body\mouth.csv:14
 msgid "内壁光滑细嫩，对深入探索几乎没有反应的幼女嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:15
+#: .\data\talk_common\body\mouth.csv:15
 msgid "小巧干净，对任何性刺激都几乎没有反应的幼童小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:16
+#: .\data\talk_common\body\mouth.csv:16
 msgid "内腔细嫩紧致，却对性刺激几乎没反应的幼女嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:18
-msgid "口腔湿润温暖，舌头对触碰有明显快感反应的幼女小肉洞"
+#: .\data\talk_common\body\mouth.csv:18
+msgid "湿润温暖，舌头对触碰有明显快感反应的幼女小肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:19
+#: .\data\talk_common\body\mouth.csv:19
 msgid "内壁柔软，对轻轻舔舐就有反应的幼嫩敏感嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:20
+#: .\data\talk_common\body\mouth.csv:20
 msgid "小巧的嘴唇内藏着敏感的舌头，被刺激会分泌唾液的小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:21
-msgid "咽喉黏膜分布着敏感点，被轻触就有快感的幼女肉穴"
+#: .\data\talk_common\body\mouth.csv:21
+msgid "咽喉黏膜分布着敏感点，被轻触就有快感的幼女嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:22
+#: .\data\talk_common\body\mouth.csv:22
 msgid "内腔湿热紧致，对摩擦产生明显性快感的嫩滑幼女口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:23
+#: .\data\talk_common\body\mouth.csv:23
 msgid "唇齿唾液丰富，被舔舐时会流出更多液体的幼小樱口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:24
+#: .\data\talk_common\body\mouth.csv:24
 msgid "舌头柔软多汁，轻触就有明显反应的幼嫩嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:25
+#: .\data\talk_common\body\mouth.csv:25
 msgid "内壁细嫩湿润，对性刺激能产生明显反应的幼小唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:26
+#: .\data\talk_common\body\mouth.csv:26
 msgid "咽部黏膜敏感，被舔舐时全身会微微发抖的幼女小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:27
+#: .\data\talk_common\body\mouth.csv:27
 msgid "内腔温暖湿润，轻轻吸吮就有明显快感的幼小嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:29
+#: .\data\talk_common\body\mouth.csv:29
 msgid "小嘴异常敏感，轻轻触碰就会全身颤抖的极致幼女口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:30
+#: .\data\talk_common\body\mouth.csv:30
 msgid "咽喉神经过度发达，被侵犯就会引起强烈快感的幼小肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:31
+#: .\data\talk_common\body\mouth.csv:31
 msgid "幼嫩内腔黏膜高度敏感，被侵犯就会达到口部高潮的樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:32
+#: .\data\talk_common\body\mouth.csv:32
 msgid "舌头和唇齿黏膜神经异常发达，轻触就引起强烈性反应的淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:33
+#: .\data\talk_common\body\mouth.csv:33
 msgid "嘴儿湿热多汁，被轻触就会达到强烈高潮的极品幼小肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:34
+#: .\data\talk_common\body\mouth.csv:34
 msgid "唇瓣和舌头异常敏感，轻轻刺激就会浑身发抖的幼女口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:35
+#: .\data\talk_common\body\mouth.csv:35
 msgid "咽部敏感度极高，被侵犯就会分泌大量唾液的幼嫩淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:36
+#: .\data\talk_common\body\mouth.csv:36
 msgid "内腔过度敏感，对任何刺激都会产生电击般快感的幼女小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:37
+#: .\data\talk_common\body\mouth.csv:37
 msgid "唇舌黏膜极度敏感，稍微刺激就会引起全身痉挛的幼嫩嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:38
+#: .\data\talk_common\body\mouth.csv:38
 msgid "小小的嘴巴内神经密布，轻微刺激就会引起强烈高潮的樱口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:40
+#: .\data\talk_common\body\mouth.csv:40
 msgid "内壁粉红稚嫩，舌头柔软却不够灵活的青涩萝莉口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:41
+#: .\data\talk_common\body\mouth.csv:41
 msgid "牙齿整齐细小，湿润度适中的萝莉嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:42
+#: .\data\talk_common\body\mouth.csv:42
 msgid "双唇樱桃般小巧，对刺激不太敏感的青涩小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:43
+#: .\data\talk_common\body\mouth.csv:43
 msgid "内壁粉嫩柔软，但被侵入时只有轻微反应的萝莉咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:44
+#: .\data\talk_common\body\mouth.csv:44
 msgid "对刺激的反应十分有限，湿润度不足的萝莉肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:45
+#: .\data\talk_common\body\mouth.csv:45
 msgid "唇舌青涩，温暖却感觉迟钝的萝莉口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:46
+#: .\data\talk_common\body\mouth.csv:46
 msgid "内壁光滑却唾液分泌不够充分的萝莉樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:47
+#: .\data\talk_common\body\mouth.csv:47
 msgid "空间小巧却对深入探索反应迟钝的萝莉嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:48
+#: .\data\talk_common\body\mouth.csv:48
 msgid "内部柔软紧致却缺乏敏感点的萝莉唇齿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:49
+#: .\data\talk_common\body\mouth.csv:49
 msgid "双唇粉嫩，舌头温度适中的萝莉小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:51
+#: .\data\talk_common\body\mouth.csv:51
 msgid "内壁湿润红嫩，舌头灵活敏感的萝莉小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:52
+#: .\data\talk_common\body\mouth.csv:52
 msgid "温暖潮湿，舌尖敏感灵活的嫩滑嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:53
+#: .\data\talk_common\body\mouth.csv:53
 msgid "唇瓣粉嫩柔软，敏感度适中的萝莉口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:54
+#: .\data\talk_common\body\mouth.csv:54
 msgid "樱桃咽喉内壁湿润光滑，被摩擦时会分泌更多唾液的萝莉肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:55
+#: .\data\talk_common\body\mouth.csv:55
 msgid "内腔黏膜幼嫩，对侵入有明显快感的萝莉口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:56
+#: .\data\talk_common\body\mouth.csv:56
 msgid "唇舌空间湿热紧致，被吮吸时会产生酥麻感的萝莉樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:57
+#: .\data\talk_common\body\mouth.csv:57
 msgid "嘴儿唾液丰富，内壁敏感多汁的湿滑萝莉肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:58
+#: .\data\talk_common\body\mouth.csv:58
 msgid "青涩却已开始觉醒情欲的小巧萝莉嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:59
+#: .\data\talk_common\body\mouth.csv:59
 msgid "唇齿内分布着足够多的快感神经的粉嫩萝莉肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:60
+#: .\data\talk_common\body\mouth.csv:60
 msgid "咽部内壁光滑温热，湿润敏感的萝莉小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:62
-msgid "口腔异常敏感，舌尖被轻触就引起强烈电流般快感的萝莉肉洞"
+#: .\data\talk_common\body\mouth.csv:62
+msgid "异常敏感，舌尖被轻触就引起强烈电流般快感的萝莉肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:63
+#: .\data\talk_common\body\mouth.csv:63
 msgid "粉嫩内腔黏膜，布满了过度敏感的神经末梢的性爱专用萝莉口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:64
+#: .\data\talk_common\body\mouth.csv:64
 msgid "咽喉高度敏感，轻微刺激就会全身酥麻的萝莉嫩滑嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:65
+#: .\data\talk_common\body\mouth.csv:65
 msgid "樱桃小嘴内的每一处黏膜都异常敏感的极致萝莉樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:66
+#: .\data\talk_common\body\mouth.csv:66
 msgid "充满过度敏感神经的，湿热紧致的萝莉淫荡嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:67
+#: .\data\talk_common\body\mouth.csv:67
 msgid "唇齿内壁娇嫩过敏，连唾液都变得粘稠的萝莉肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:68
+#: .\data\talk_common\body\mouth.csv:68
 msgid "内腔黏膜极度敏感，被深入时会被性快感刺激到流泪的萝莉唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:69
+#: .\data\talk_common\body\mouth.csv:69
 msgid "唾液分泌旺盛的咽部内壁敏感点密集的萝莉淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:70
+#: .\data\talk_common\body\mouth.csv:70
 msgid "嘴唇神经异常敏感，被刺激会导致口部高潮的萝莉小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:71
+#: .\data\talk_common\body\mouth.csv:71
 msgid "樱口感觉神经过度发达，轻微刺激就会高潮的萝莉肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:73
-msgid "口腔青涩不敏感，对侵入反应有限的少女柔软小嘴"
+#: .\data\talk_common\body\mouth.csv:73
+msgid "青涩不敏感，对侵入反应有限的少女柔软小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:74
+#: .\data\talk_common\body\mouth.csv:74
 msgid "双唇丰满，却对摩擦刺激感知迟钝的少女嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:75
+#: .\data\talk_common\body\mouth.csv:75
 msgid "湿润度正常但舌头不够灵活的少女咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:76
+#: .\data\talk_common\body\mouth.csv:76
 msgid "唇形优美，但还没有觉醒摩擦快感的少女内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:77
+#: .\data\talk_common\body\mouth.csv:77
 msgid "内壁湿润温暖，却对性爱刺激反应平淡的少女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:78
+#: .\data\talk_common\body\mouth.csv:78
 msgid "唇齿黏膜光滑，对快感反应迟缓的少女口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:79
+#: .\data\talk_common\body\mouth.csv:79
 msgid "舌头柔软但对深入刺激几乎无反应的少女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:80
+#: .\data\talk_common\body\mouth.csv:80
 msgid "温暖但干燥，唾液分泌不足的青涩少女嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:81
+#: .\data\talk_common\body\mouth.csv:81
 msgid "喉咙深处对冲击毫无感觉的青涩少女唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:82
+#: .\data\talk_common\body\mouth.csv:82
 msgid "唇瓣动作生硬，对性刺激没有足够反应的少女小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:84
+#: .\data\talk_common\body\mouth.csv:84
 msgid "内壁敏感湿润，舌头灵活有力的少女口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:85
+#: .\data\talk_common\body\mouth.csv:85
 msgid "粉嫩红唇包裹的湿热多汁敏感少女小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:86
+#: .\data\talk_common\body\mouth.csv:86
 msgid "灵巧的舌头能主动缠绕吮吸的敏感少女嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:87
+#: .\data\talk_common\body\mouth.csv:87
 msgid "唾液丰富，对摩擦有快感反应的少女嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:88
+#: .\data\talk_common\body\mouth.csv:88
 msgid "湿润温暖，被侵入时会轻微颤抖的少女咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:89
+#: .\data\talk_common\body\mouth.csv:89
 msgid "喉咙深处对冲击有明显反应的敏感少女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:90
+#: .\data\talk_common\body\mouth.csv:90
 msgid "内腔肌肉熟练，湿热紧致的少女口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:91
+#: .\data\talk_common\body\mouth.csv:91
 msgid "被侵入时会发出满足呻吟的敏感少女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:92
+#: .\data\talk_common\body\mouth.csv:92
 msgid "舌头布满细密感觉神经的温热少女嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:93
+#: .\data\talk_common\body\mouth.csv:93
 msgid "唇舌协调灵活，能产生快感的多汁少女唇齿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:95
-msgid "口腔极度敏感，轻微刺激就会浑身颤抖的少女淫嘴"
+#: .\data\talk_common\body\mouth.csv:95
+msgid "极度敏感，轻微刺激就会浑身颤抖的少女淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:96
+#: .\data\talk_common\body\mouth.csv:96
 msgid "性感红唇内布满超敏感神经的极致少女咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:97
+#: .\data\talk_common\body\mouth.csv:97
 msgid "舌尖每一处都是快感源点的极敏感少女嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:98
+#: .\data\talk_common\body\mouth.csv:98
 msgid "内腔内壁稍微触碰就会引发强烈快感的少女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:99
+#: .\data\talk_common\body\mouth.csv:99
 msgid "唾液不断泛滥，随时处于高潮边缘的少女淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:100
+#: .\data\talk_common\body\mouth.csv:100
 msgid "喉咙深处对冲击极度敏感的淫荡少女口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:101
+#: .\data\talk_common\body\mouth.csv:101
 msgid "舌头如同阴蒂般敏感多汁的少女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:102
+#: .\data\talk_common\body\mouth.csv:102
 msgid "轻易就可以抵达唇部高潮的极度敏感少女嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:103
+#: .\data\talk_common\body\mouth.csv:103
 msgid "被深入时会全身痉挛抽搐的性爱超敏感少女唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:104
+#: .\data\talk_common\body\mouth.csv:104
 msgid "舌尖的每一次吮吸都能带来灭顶快感的极品少女小口"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:106
+#: .\data\talk_common\body\mouth.csv:106
 msgid "唇瓣小巧紧闭，舔舐反应迟钝的女儿口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:107
+#: .\data\talk_common\body\mouth.csv:107
 msgid "牙齿整齐干净，对摩擦感知迟缓的女儿小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:108
+#: .\data\talk_common\body\mouth.csv:108
 msgid "唾液分泌不足，对侵入几无感觉的亲生女儿嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:109
+#: .\data\talk_common\body\mouth.csv:109
 msgid "咽喉湿润度不足，对深入刺激不敏感的女儿嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:110
+#: .\data\talk_common\body\mouth.csv:110
 msgid "内壁光滑却感觉迟钝，对扩张无反应的女儿内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:111
+#: .\data\talk_common\body\mouth.csv:111
 msgid "舌头柔软却不灵活，对触碰反应平淡的亲女儿肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:112
+#: .\data\talk_common\body\mouth.csv:112
 msgid "喉咙狭窄干燥，对深入缺乏快感的亲生女儿口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:113
+#: .\data\talk_common\body\mouth.csv:113
 msgid "唇齿黏膜稚嫩，但对侵犯几无感觉的女儿樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:114
+#: .\data\talk_common\body\mouth.csv:114
 msgid "温暖却对摩擦没有快感反应的亲女儿嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:115
+#: .\data\talk_common\body\mouth.csv:115
 msgid "内部柔软紧致，却对性刺激反应迟钝的女儿唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:117
+#: .\data\talk_common\body\mouth.csv:117
 msgid "唇舌湿润柔软，对轻舔就有反应的女儿敏感口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:118
+#: .\data\talk_common\body\mouth.csv:118
 msgid "咽喉黏膜湿滑敏感，被侵入会颤抖的女儿小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:119
+#: .\data\talk_common\body\mouth.csv:119
 msgid "内壁光滑湿润，舔舐会流出更多唾液的女儿嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:120
+#: .\data\talk_common\body\mouth.csv:120
 msgid "内腔内壁分布着明显的敏感带的亲女儿口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:121
+#: .\data\talk_common\body\mouth.csv:121
 msgid "舌头柔软灵活，品尝时会有明显反应的女儿嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:122
+#: .\data\talk_common\body\mouth.csv:122
 msgid "喉咙湿润有弹性，被深入能产生快感的女儿肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:123
+#: .\data\talk_common\body\mouth.csv:123
 msgid "唾液分泌丰富，被占满时会有愉悦感的亲生女儿樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:124
+#: .\data\talk_common\body\mouth.csv:124
 msgid "唇齿温度较高，舌头对刺激敏感的亲女儿肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:125
+#: .\data\talk_common\body\mouth.csv:125
 msgid "咽部内壁柔嫩敏感，被侵犯时会发出呻吟的女儿嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:126
+#: .\data\talk_common\body\mouth.csv:126
 msgid "湿热紧致，唾液带着甜味的敏感女儿唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:128
-msgid "口腔极度敏感，轻触就会引起强烈颤抖的女儿淫嘴"
+#: .\data\talk_common\body\mouth.csv:128
+msgid "极度敏感，轻触就会引起强烈颤抖的女儿淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:129
+#: .\data\talk_common\body\mouth.csv:129
 msgid "舌头布满密集神经，轻微刺激就会高潮的亲生女儿咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:130
+#: .\data\talk_common\body\mouth.csv:130
 msgid "内腔黏膜过度敏感，被侵入就会痉挛的女儿肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:131
+#: .\data\talk_common\body\mouth.csv:131
 msgid "喉咙深处异常敏感，高潮时会紧缩的女儿嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:132
+#: .\data\talk_common\body\mouth.csv:132
 msgid "唇齿每一处都布满敏感点的极品女儿嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:133
+#: .\data\talk_common\body\mouth.csv:133
 msgid "舌头和内腔内壁异常灵敏，轻触就颤抖的亲女儿口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:134
+#: .\data\talk_common\body\mouth.csv:134
 msgid "唾液过度分泌，被舔舐就会达到高潮的女儿淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:135
+#: .\data\talk_common\body\mouth.csv:135
 msgid "咽部神经过度发达，被侵犯就会流水的亲生女儿肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:136
+#: .\data\talk_common\body\mouth.csv:136
 msgid "喉咙极度敏感，深入时会引发全身痉挛的女儿樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:137
+#: .\data\talk_common\body\mouth.csv:137
 msgid "嘴儿湿热多汁，轻微刺激就会高潮连连的女儿淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:139
+#: .\data\talk_common\body\mouth.csv:139
 msgid "唇舌动作僵硬，对刺激感知迟钝的大姐姐口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:140
+#: .\data\talk_common\body\mouth.csv:140
 msgid "温度适宜但湿润度不足，对深入刺激反应有限的大姐姐嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:141
+#: .\data\talk_common\body\mouth.csv:141
 msgid "咽喉黏膜略显青涩，对舔舐刺激反应平淡的性感小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:142
+#: .\data\talk_common\body\mouth.csv:142
 msgid "红唇丰满却对刺激不太有快感的大姐姐内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:143
+#: .\data\talk_common\body\mouth.csv:143
 msgid "唇齿湿润度正常但对摩擦无明显感觉的大姐姐肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:144
+#: .\data\talk_common\body\mouth.csv:144
 msgid "唇形性感却对舌尖刺激毫无反应的成熟口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:145
+#: .\data\talk_common\body\mouth.csv:145
 msgid "技巧纯熟但嘴儿感官迟钝的大姐姐肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:146
+#: .\data\talk_common\body\mouth.csv:146
 msgid "喉咙深处紧致但几乎感觉不到刺激的大姐姐樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:147
+#: .\data\talk_common\body\mouth.csv:147
 msgid "唾液分泌正常但对口交几乎没有快感的成熟唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:148
+#: .\data\talk_common\body\mouth.csv:148
 msgid "唇形性感却内腔快感迟钝的大姐姐嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:150
+#: .\data\talk_common\body\mouth.csv:150
 msgid "唇舌灵活敏感，对深入能产生明显快感的大姐姐口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:151
+#: .\data\talk_common\body\mouth.csv:151
 msgid "湿润温暖，喉咙对抽插反应良好的大姐姐小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:152
+#: .\data\talk_common\body\mouth.csv:152
 msgid "咽喉黏膜敏感，舌尖能主动寻找快感的大姐姐嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:153
+#: .\data\talk_common\body\mouth.csv:153
 msgid "丰满红唇包裹着敏感的，会自动收缩的大姐姐淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:154
+#: .\data\talk_common\body\mouth.csv:154
 msgid "内腔湿热紧致，对摩擦有良好反应的大姐姐肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:155
+#: .\data\talk_common\body\mouth.csv:155
 msgid "唾液分泌丰富，对舔舐反应明显的大姐姐口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:156
+#: .\data\talk_common\body\mouth.csv:156
 msgid "口技熟练且自身能获得充分快感的大姐姐樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:157
+#: .\data\talk_common\body\mouth.csv:157
 msgid "喉咙柔软湿润，对深入冲击有快感的姐姐嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:158
+#: .\data\talk_common\body\mouth.csv:158
 msgid "舌尖灵活，唇齿黏膜有足够敏感度的成熟肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:159
+#: .\data\talk_common\body\mouth.csv:159
 msgid "技巧娴熟且体验良好，会主动吸吮的大姐姐唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:161
+#: .\data\talk_common\body\mouth.csv:161
 msgid "异常敏感的口腔黏膜，轻触就会颤抖的大姐姐淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:162
+#: .\data\talk_common\body\mouth.csv:162
 msgid "舌尖过度敏感，轻微刺激就能口喉高潮的大姐姐骚嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:163
+#: .\data\talk_common\body\mouth.csv:163
 msgid "咽喉内壁布满敏感点，被侵犯就会失神的大姐姐肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:164
+#: .\data\talk_common\body\mouth.csv:164
 msgid "内腔神经过度发达，深喉就会潮吹的大姐姐淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:165
+#: .\data\talk_common\body\mouth.csv:165
 msgid "喉咙极度敏感，插入就会全身痉挛的姐姐嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:166
+#: .\data\talk_common\body\mouth.csv:166
 msgid "唾液腺异常发达，被刺激就会湿透的大姐姐口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:167
+#: .\data\talk_common\body\mouth.csv:167
 msgid "唇齿敏感度过高，轻舔就能高潮的大姐姐肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:168
+#: .\data\talk_common\body\mouth.csv:168
 msgid "唇舌过度敏感，被入侵就会浑身发抖的成熟樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:169
+#: .\data\talk_common\body\mouth.csv:169
 msgid "嘴儿快感神经密布，能体验极致高潮的大姐姐嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:170
+#: .\data\talk_common\body\mouth.csv:170
 msgid "内腔刺激就能轻易达到高潮的极品姐姐淫荡唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:172
+#: .\data\talk_common\body\mouth.csv:172
 msgid "成熟丰满的红唇却对刺激感知迟钝的熟女嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:173
+#: .\data\talk_common\body\mouth.csv:173
 msgid "咽喉黏膜温度适宜，但对性爱快感钝感的熟女口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:174
+#: .\data\talk_common\body\mouth.csv:174
 msgid "舌头灵活熟练却对被刺激几乎没反应的熟女肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:175
+#: .\data\talk_common\body\mouth.csv:175
 msgid "唾液分泌正常但对深处侵入无明显感觉的熟女小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:176
+#: .\data\talk_common\body\mouth.csv:176
 msgid "喉咙经验丰富但被刺激时几乎无快感的成熟内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:177
+#: .\data\talk_common\body\mouth.csv:177
 msgid "唇齿动作纯熟但自身感觉缺失的熟女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:178
+#: .\data\talk_common\body\mouth.csv:178
 msgid "嘴儿内壁柔软却对摩擦几乎没体验的成熟口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:179
-msgid "喉咙深度适宜但对冲击无感的熟女专用樱唇"
+#: .\data\talk_common\body\mouth.csv:179
+msgid "喉咙深度适宜但对冲击无感的熟女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:180
+#: .\data\talk_common\body\mouth.csv:180
 msgid "舌头动作灵活但咽部被填满时无感的成熟熟女唇舌"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:181
+#: .\data\talk_common\body\mouth.csv:181
 msgid "温度湿度适中但感觉神经迟钝的熟女嘴唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:183
+#: .\data\talk_common\body\mouth.csv:183
 msgid "口技娴熟且能自我满足的熟女湿润口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:184
+#: .\data\talk_common\body\mouth.csv:184
 msgid "丰满的红唇包裹着对刺激敏感的熟女嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:185
+#: .\data\talk_common\body\mouth.csv:185
 msgid "成熟熟练的舌头能主动寻找快感的熟女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:186
+#: .\data\talk_common\body\mouth.csv:186
 msgid "喉咙经验丰富且对深入有明显反应的熟女小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:187
+#: .\data\talk_common\body\mouth.csv:187
 msgid "咽喉黏膜分布着敏感带的熟练熟女内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:188
+#: .\data\talk_common\body\mouth.csv:188
 msgid "唾液分泌充足，被舔舐时会兴奋的成熟口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:189
+#: .\data\talk_common\body\mouth.csv:189
 msgid "唇齿内壁富有弹性，对摩擦反应良好的熟女肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:190
+#: .\data\talk_common\body\mouth.csv:190
 msgid "既能取悦对方也能满足自己的湿热熟女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:191
+#: .\data\talk_common\body\mouth.csv:191
 msgid "老练技巧与自身快感并存的熟女嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:192
+#: .\data\talk_common\body\mouth.csv:192
 msgid "喉咙深处紧致湿润，对冲击有良好体验的熟女嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:194
-msgid "口腔过度敏感，轻度刺激就能湿透的熟女骚嘴"
+#: .\data\talk_common\body\mouth.csv:194
+msgid "过度敏感，轻度刺激就能湿透的熟女骚嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:195
+#: .\data\talk_common\body\mouth.csv:195
 msgid "舌头敏感至极，稍微刺激就能引发强烈高潮的熟女淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:196
+#: .\data\talk_common\body\mouth.csv:196
 msgid "喉咙异常敏感，深入就会失控痉挛的熟女咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:197
+#: .\data\talk_common\body\mouth.csv:197
 msgid "内腔神经密集，侵入就会潮喷的成熟骚穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:198
+#: .\data\talk_common\body\mouth.csv:198
 msgid "丰满红唇包裹着的极度敏感的熟女淫荡嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:199
+#: .\data\talk_common\body\mouth.csv:199
 msgid "唾液分泌过度旺盛，唇齿高潮会流水的熟女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:200
+#: .\data\talk_common\body\mouth.csv:200
 msgid "嘴儿内壁每一寸都敏感至极的熟女极品口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:201
+#: .\data\talk_common\body\mouth.csv:201
 msgid "成熟咽部布满神经末梢，轻触就会高潮的熟女淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:202
+#: .\data\talk_common\body\mouth.csv:202
 msgid "口喉被深入时会痉挛抽搐到失神的极品熟女肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:203
+#: .\data\talk_common\body\mouth.csv:203
 msgid "喉咙深处极度敏感，能带来极致高潮的熟女樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:205
+#: .\data\talk_common\body\mouth.csv:205
 msgid "经验丰富但对自身快感迟钝的人妻口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:206
+#: .\data\talk_common\body\mouth.csv:206
 msgid "技巧纯熟却对口交刺激几乎无感的人妻嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:207
+#: .\data\talk_common\body\mouth.csv:207
 msgid "舌头配合度高但自身快感缺失的已婚人妻咽喉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:208
+#: .\data\talk_common\body\mouth.csv:208
 msgid "唇舌动作熟练但对被侵入感觉平淡的人妻肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:209
+#: .\data\talk_common\body\mouth.csv:209
 msgid "内腔湿润度适中但感觉神经迟钝的人妻口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:210
+#: .\data\talk_common\body\mouth.csv:210
 msgid "喉咙深度适宜但对冲击无明显反应的已婚小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:211
+#: .\data\talk_common\body\mouth.csv:211
 msgid "丰满诱人的红唇但内部感觉缺乏的人妻内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:212
+#: .\data\talk_common\body\mouth.csv:212
 msgid "唇齿温度适中但对摩擦几乎无感的已婚嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:213
+#: .\data\talk_common\body\mouth.csv:213
 msgid "唾液分泌量正常但对吮吸无反应的人妻樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:214
+#: .\data\talk_common\body\mouth.csv:214
 msgid "口交取悦技术高超但自身享受有限的人妻嘴儿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:216
+#: .\data\talk_common\body\mouth.csv:216
 msgid "口技娴熟且自身能获得明显快感的人妻口腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:217
+#: .\data\talk_common\body\mouth.csv:217
 msgid "唇舌熟练灵活，对被侵入有敏感反应的已婚嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:218
+#: .\data\talk_common\body\mouth.csv:218
 msgid "湿润温暖的咽喉内壁分布着敏感点的背德肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:219
+#: .\data\talk_common\body\mouth.csv:219
 msgid "喉咙深度适宜且对顶入能产生快感的人妻小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:220
+#: .\data\talk_common\body\mouth.csv:220
 msgid "唾液分泌丰富，舌头能主动寻找快感的已婚内腔"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:221
+#: .\data\talk_common\body\mouth.csv:221
 msgid "唇齿动作老道且对侵入会湿润反应的人妻肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:222
+#: .\data\talk_common\body\mouth.csv:222
 msgid "既能满足对方又能享受自己的已婚女性口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:223
+#: .\data\talk_common\body\mouth.csv:223
 msgid "丰满红唇下藏着能给自己带来快感的人妻樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:224
+#: .\data\talk_common\body\mouth.csv:224
 msgid "嘴儿黏膜敏感，被摩擦时会呻吟的背德已婚嘴穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:225
+#: .\data\talk_common\body\mouth.csv:225
 msgid "喉咙深处对摩擦冲击有明显快感的人妻肉穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:227
-msgid "口腔过度敏感，在偷情下的刺激能轻易高潮的人妻淫嘴"
+#: .\data\talk_common\body\mouth.csv:227
+msgid "过度敏感，在偷情下的刺激能轻易高潮的人妻淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:228
+#: .\data\talk_common\body\mouth.csv:228
 msgid "舌头敏感至极，轻触就会浑身颤抖的背德人妻肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:229
+#: .\data\talk_common\body\mouth.csv:229
 msgid "咽喉神经密布，被侵入就会失控痉挛的已婚口穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:230
+#: .\data\talk_common\body\mouth.csv:230
 msgid "喉咙异常敏感，深喉能达到极致高潮的人妻嘴巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:231
+#: .\data\talk_common\body\mouth.csv:231
 msgid "内腔内壁每处都能引发强烈快感的背德人妻淫穴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:232
+#: .\data\talk_common\body\mouth.csv:232
 msgid "唾液腺异常发达，口交就能湿透下体的人妻骚嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:233
+#: .\data\talk_common\body\mouth.csv:233
 msgid "丰满红唇含着超敏感的，会高潮抽搐的已婚小嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:234
+#: .\data\talk_common\body\mouth.csv:234
 msgid "唇齿感觉过度发达，轻吻就能达到高潮的人妻肉洞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:235
+#: .\data\talk_common\body\mouth.csv:235
 msgid "喉咙深处极度敏感，能因口喉刺激而潮喷的背德已婚樱唇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth.csv:236
+#: .\data\talk_common\body\mouth.csv:236
 msgid "嘴儿快感异常强烈，被侵入就会失神的人妻淫嘴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:6
+#: .\data\talk_common\body\penis.csv:6
 msgid "小巧纤细，血管不明显的稚嫩阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:7
+#: .\data\talk_common\body\penis.csv:7
 msgid "短小但已勃起坚硬的粉嫩肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:8
+#: .\data\talk_common\body\penis.csv:8
 msgid "龟头小巧饱满，柱身细窄的迷你阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:9
+#: .\data\talk_common\body\penis.csv:9
 msgid "短小但异常硬挺的可爱鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:10
+#: .\data\talk_common\body\penis.csv:10
 msgid "颜色浅粉，尺寸小巧但形状姣好的肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:11
+#: .\data\talk_common\body\penis.csv:11
 msgid "小巧但硬度十足的短小性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:12
+#: .\data\talk_common\body\penis.csv:12
 msgid "长度有限但已完全勃起的粉嫩肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:13
+#: .\data\talk_common\body\penis.csv:13
 msgid "短小玲珑，龟头与柱身比例协调的男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:14
+#: .\data\talk_common\body\penis.csv:14
 msgid "尺寸虽小但质地坚硬的可爱小肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:15
+#: .\data\talk_common\body\penis.csv:15
 msgid "热度适中，尺寸小巧的肉质鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:17
+#: .\data\talk_common\body\penis.csv:17
 msgid "短小却已胀到极限，马眼微张的阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:18
+#: .\data\talk_common\body\penis.csv:18
 msgid "小巧玲珑但硬如烙铁，龟头涨红的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:19
+#: .\data\talk_common\body\penis.csv:19
 msgid "尺寸有限但已经胀到极限，不断跳动的阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:20
+#: .\data\talk_common\body\penis.csv:20
 msgid "短小但马眼已经湿润，随时要喷发的鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:21
+#: .\data\talk_common\body\penis.csv:21
 msgid "龟头异常红润，前液不断溢出的小巧肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:22
+#: .\data\talk_common\body\penis.csv:22
 msgid "虽然短小但青筋毕露，极度充血的硬挺性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:23
+#: .\data\talk_common\body\penis.csv:23
 msgid "尺寸不大但已濒临爆发，不停颤抖的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:24
+#: .\data\talk_common\body\penis.csv:24
 msgid "小巧但涨得通红，马眼不断张合的男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:25
+#: .\data\talk_common\body\penis.csv:25
 msgid "短小却硬如铁棍，龟头胀大泛紫的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:26
+#: .\data\talk_common\body\penis.csv:26
 msgid "尺寸有限但热度惊人，即将爆发的小鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:28
+#: .\data\talk_common\body\penis.csv:28
 msgid "刚刚射精，顶端还挂着白浊液体的短小阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:29
+#: .\data\talk_common\body\penis.csv:29
 msgid "沾满刚射出的粘稠精液的小巧肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:30
+#: .\data\talk_common\body\penis.csv:30
 msgid "刚喷发过，马眼还在滴落精液的娇小尺寸阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:31
+#: .\data\talk_common\body\penis.csv:31
 msgid "布满了刚射出的白色精液的短小肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:32
+#: .\data\talk_common\body\penis.csv:32
 msgid "刚爆发过，精液沿柱身滑落的小巧鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:33
+#: .\data\talk_common\body\penis.csv:33
 msgid "刚射精过，敏感异常的小尺寸湿润肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:34
+#: .\data\talk_common\body\penis.csv:34
 msgid "精液仍在滴落，短小而敏感的刚喷射性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:35
+#: .\data\talk_common\body\penis.csv:35
 msgid "表面覆盖着新鲜射出浊液的小巧可爱肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:36
+#: .\data\talk_common\body\penis.csv:36
 msgid "龟头还沾着白色精华的短小男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:37
+#: .\data\talk_common\body\penis.csv:37
 msgid "刚刚爆发，满是精液的娇小尺寸敏感鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:39
+#: .\data\talk_common\body\penis.csv:39
 msgid "大小适中，勃起坚硬的健康阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:40
+#: .\data\talk_common\body\penis.csv:40
 msgid "尺寸正常，血管若隐若现的硬挺肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:41
+#: .\data\talk_common\body\penis.csv:41
 msgid "形状正常，长度适中的勃发阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:42
+#: .\data\talk_common\body\penis.csv:42
 msgid "龟头饱满，柱身笔直的标准鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:43
+#: .\data\talk_common\body\penis.csv:43
 msgid "长度与粗细均适中，硬度适宜的肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:44
+#: .\data\talk_common\body\penis.csv:44
 msgid "颜色健康，尺寸均衡的勃起性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:45
+#: .\data\talk_common\body\penis.csv:45
 msgid "正常充血，形状标准的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:46
+#: .\data\talk_common\body\penis.csv:46
 msgid "大小适中，青筋微凸的标准男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:47
+#: .\data\talk_common\body\penis.csv:47
 msgid "表皮光滑，尺寸正常的硬挺肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:48
+#: .\data\talk_common\body\penis.csv:48
 msgid "温度适中，质地坚实的标准鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:50
+#: .\data\talk_common\body\penis.csv:50
 msgid "已胀到极限，马眼微张的阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:51
+#: .\data\talk_common\body\penis.csv:51
 msgid "硬如烙铁，龟头涨红的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:52
+#: .\data\talk_common\body\penis.csv:52
 msgid "已极度充血，不断跳动的阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:53
+#: .\data\talk_common\body\penis.csv:53
 msgid "马眼已湿润，随时要喷发的鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:54
+#: .\data\talk_common\body\penis.csv:54
 msgid "龟头充血胀大，青筋暴起的正常肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:55
+#: .\data\talk_common\body\penis.csv:55
 msgid "热度惊人，前液不断溢出的性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:56
+#: .\data\talk_common\body\penis.csv:56
 msgid "已濒临爆发，不停颤抖的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:57
+#: .\data\talk_common\body\penis.csv:57
 msgid "涨得通红，不断抽动的硬挺男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:58
+#: .\data\talk_common\body\penis.csv:58
 msgid "极度敏感，即将喷发的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:59
+#: .\data\talk_common\body\penis.csv:59
 msgid "硬度惊人，马眼微张的勃发鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:61
+#: .\data\talk_common\body\penis.csv:61
 msgid "顶端还挂着白浊液体的刚刚射精阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:62
+#: .\data\talk_common\body\penis.csv:62
 msgid "沾满刚射出的粘稠精液的尺寸适中的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:63
+#: .\data\talk_common\body\penis.csv:63
 msgid "刚喷发过，马眼还在滴落精液的阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:64
+#: .\data\talk_common\body\penis.csv:64
 msgid "布满了刚射出的白色黏液的中等尺寸的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:65
+#: .\data\talk_common\body\penis.csv:65
 msgid "精液沿柱身滑落，刚爆发过的正常形状鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:66
+#: .\data\talk_common\body\penis.csv:66
 msgid "刚射精过，敏感异常的湿润肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:67
+#: .\data\talk_common\body\penis.csv:67
 msgid "精液仍在龟头滴落的敏感性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:68
+#: .\data\talk_common\body\penis.csv:68
 msgid "表面覆盖着新鲜射出的浊液，适中大小的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:69
+#: .\data\talk_common\body\penis.csv:69
 msgid "龟头还闪着湿润光泽的刚刚释放过的正常男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:70
+#: .\data\talk_common\body\penis.csv:70
 msgid "刚刚爆发，沾满精液的敏感鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:72
+#: .\data\talk_common\body\penis.csv:72
 msgid "粗壮硕大，青筋明显的健壮阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:73
+#: .\data\talk_common\body\penis.csv:73
 msgid "尺寸粗大，勃起挺拔的威猛肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:74
+#: .\data\talk_common\body\penis.csv:74
 msgid "龟头膨大，柱身粗壮的狰狞阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:75
+#: .\data\talk_common\body\penis.csv:75
 msgid "长度惊人，粗细可观的雄伟鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:76
+#: .\data\talk_common\body\penis.csv:76
 msgid "表面血管突起，尺寸超规格的粗壮肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:77
+#: .\data\talk_common\body\penis.csv:77
 msgid "大小惊人，质地坚硬的粗大性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:78
+#: .\data\talk_common\body\penis.csv:78
 msgid "勃起后尺寸骇人，形状狰狞的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:79
+#: .\data\talk_common\body\penis.csv:79
 msgid "粗长硕大，颜色深沉的雄伟男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:80
+#: .\data\talk_common\body\penis.csv:80
 msgid "粗壮有力，血管凸显的壮观肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:81
+#: .\data\talk_common\body\penis.csv:81
 msgid "冠状沟明显，整体粗大的惊人鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:83
+#: .\data\talk_common\body\penis.csv:83
 msgid "尺寸惊人且已胀到极限，青筋爆起的巨大阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:84
+#: .\data\talk_common\body\penis.csv:84
 msgid "粗壮如臂，硬如烙铁，龟头涨红的狰狞肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:85
+#: .\data\talk_common\body\penis.csv:85
 msgid "巨大粗长且极度充血，不断搏动的恐怖阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:86
+#: .\data\talk_common\body\penis.csv:86
 msgid "粗壮威猛且马眼已湿润，随时要喷发的巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:87
+#: .\data\talk_common\body\penis.csv:87
 msgid "龟头如拳头大小，血管暴起的巨型肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:88
+#: .\data\talk_common\body\penis.csv:88
 msgid "粗大的肉柱已经胀到极限，前液溢出的狰狞鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:89
+#: .\data\talk_common\body\penis.csv:89
 msgid "尺寸骇人且已濒临爆发，剧烈颤抖的巨型性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:90
+#: .\data\talk_common\body\penis.csv:90
 msgid "粗壮如儿臂，涨得通红，充满爆发力的硬挺男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:91
+#: .\data\talk_common\body\penis.csv:91
 msgid "惊人尺寸且极度敏感，即将喷发的巨型肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:92
+#: .\data\talk_common\body\penis.csv:92
 msgid "长度恐怖且硬度惊人，龟头胀到极限的巨型鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:94
+#: .\data\talk_common\body\penis.csv:94
 msgid "顶端还挂着大量白浊液体的粗壮阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:95
+#: .\data\talk_common\body\penis.csv:95
 msgid "沾满刚射出的浓稠精液的尺寸惊人的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:96
+#: .\data\talk_common\body\penis.csv:96
 msgid "刚喷发过，马眼还在涌出精液的巨大狰狞阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:97
+#: .\data\talk_common\body\penis.csv:97
 msgid "布满了刚射出的大量白浊的粗壮威猛的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:98
+#: .\data\talk_common\body\penis.csv:98
 msgid "刚爆发过，精液如瀑布般滑落的巨大鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:99
+#: .\data\talk_common\body\penis.csv:99
 msgid "刚射精过，敏感异常的恐怖尺寸湿漉肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:100
+#: .\data\talk_common\body\penis.csv:100
 msgid "精液仍在少量流出，粗壮如儿臂的敏感性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:101
+#: .\data\talk_common\body\penis.csv:101
 msgid "每一寸表面都覆盖着新鲜射出浊液的巨大肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:102
+#: .\data\talk_common\body\penis.csv:102
 msgid "刚刚释放过，龟头还在吐出余精的粗壮男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:103
+#: .\data\talk_common\body\penis.csv:103
 msgid "尺寸骇人且刚刚爆发，浸满精液的硕大鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:105
+#: .\data\talk_common\body\penis.csv:105
 msgid "异常巨大，如小臂粗细的狰狞阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:106
+#: .\data\talk_common\body\penis.csv:106
 msgid "尺寸骇人，成人手臂般粗长的怪物肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:107
+#: .\data\talk_common\body\penis.csv:107
 msgid "龟头如苹果大小，柱身粗如腕的巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:108
+#: .\data\talk_common\body\penis.csv:108
 msgid "长度惊骇，粗得吓人的狰狞阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:109
+#: .\data\talk_common\body\penis.csv:109
 msgid "表面青筋如蚯蚓蠕动，尺寸恐怖的怪物鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:110
+#: .\data\talk_common\body\penis.csv:110
 msgid "大小令人畏惧，形状狰狞的异常巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:111
+#: .\data\talk_common\body\penis.csv:111
 msgid "勃起后如婴儿手臂，颜色深沉的恐怖肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:112
+#: .\data\talk_common\body\penis.csv:112
 msgid "粗长到让人恐惧，冠状沟突起的超大性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:113
+#: .\data\talk_common\body\penis.csv:113
 msgid "几乎不似人类，硕大狰狞的巨型肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:114
+#: .\data\talk_common\body\penis.csv:114
 msgid "比成人小腿还粗，颜色深沉的怪物男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:116
+#: .\data\talk_common\body\penis.csv:116
 msgid "比手臂还粗且已胀到极限，青筋如虫爬行的巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:117
+#: .\data\talk_common\body\penis.csv:117
 msgid "粗如婴儿腿，硬如铁棍，龟头怪异涨大的肉怪"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:118
+#: .\data\talk_common\body\penis.csv:118
 msgid "尺寸超出人类极限且充血狰狞，剧烈跳动的凶器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:119
+#: .\data\talk_common\body\penis.csv:119
 msgid "粗大令人窒息且马眼大张，随时要喷发的巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:120
+#: .\data\talk_common\body\penis.csv:120
 msgid "龟头大如拳头并胀到发紫，血管如蟒蛇的巨型阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:121
+#: .\data\talk_common\body\penis.csv:121
 msgid "超过人类尺寸极限且膨胀到极点的狰狞肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:122
+#: .\data\talk_common\body\penis.csv:122
 msgid "粗如儿臂且濒临爆发，剧烈痉挛的怪物阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:123
+#: .\data\talk_common\body\penis.csv:123
 msgid "尺寸恐怖且涨得发紫，前液不断溢出的巨大鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:124
+#: .\data\talk_common\body\penis.csv:124
 msgid "大得令人恐惧且极度敏感，即将爆发的狰狞肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:125
+#: .\data\talk_common\body\penis.csv:125
 msgid "粗大如儿童腿且硬度惊人，马眼翕张的恐怖性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:127
+#: .\data\talk_common\body\penis.csv:127
 msgid "刚刚喷发，仍在吐出大量白浊液体的恐怖巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:128
+#: .\data\talk_common\body\penis.csv:128
 msgid "尺寸如儿臂，满是刚射出的浓稠精液的巨大肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:129
+#: .\data\talk_common\body\penis.csv:129
 msgid "狰狞巨大且刚大量喷发，马眼如泉涌般溢精的阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:130
+#: .\data\talk_common\body\penis.csv:130
 msgid "粗大得令人窒息，布满了刚射出的大量精华的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:131
+#: .\data\talk_common\body\penis.csv:131
 msgid "刚爆发过，精液如瀑布般喷涌而出的拳头粗细的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:132
+#: .\data\talk_common\body\penis.csv:132
 msgid "尺寸恐怖且刚射精过，敏感肿胀的湿滑怪物阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:133
+#: .\data\talk_common\body\penis.csv:133
 msgid "粗如小腿且高度敏感，精液仍在流出的鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:134
+#: .\data\talk_common\body\penis.csv:134
 msgid "每一寸表面都被新鲜射出的精液覆盖的骇人巨大肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:135
+#: .\data\talk_common\body\penis.csv:135
 msgid "龟头张开的马眼仍在喷精，刚刚释放的狰狞性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:136
+#: .\data\talk_common\body\penis.csv:136
 msgid "尺寸非人且刚刚爆发，浸透在精液中的恐怖男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:138
+#: .\data\talk_common\body\penis.csv:138
 msgid "几乎看不见青筋的干瘪细小阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:139
+#: .\data\talk_common\body\penis.csv:139
 msgid "柱身短小萎靡，几乎没有精液的稀疏肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:140
+#: .\data\talk_common\body\penis.csv:140
 msgid "龟头小巧干燥，精液已经耗尽的短小阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:141
+#: .\data\talk_common\body\penis.csv:141
 msgid "表面褶皱松弛，几乎射不出液体的小巧鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:142
+#: .\data\talk_common\body\penis.csv:142
 msgid "尺寸迷你，精液已空的疲软鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:143
+#: .\data\talk_common\body\penis.csv:143
 msgid "干瘪无力，铃口干涩无液的短小肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:144
+#: .\data\talk_common\body\penis.csv:144
 msgid "短小松软，明显无精可射的可怜性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:145
+#: .\data\talk_common\body\penis.csv:145
 msgid "龟头颜色暗淡，精液已空的微小肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:146
+#: .\data\talk_common\body\penis.csv:146
 msgid "表面皮肤松弛，射无可射的短小男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:147
+#: .\data\talk_common\body\penis.csv:147
 msgid "体积迷你，精囊已空的疲惫肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:149
+#: .\data\talk_common\body\penis.csv:149
 msgid "短小但充满精液的坚挺小肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:150
+#: .\data\talk_common\body\penis.csv:150
 msgid "尺寸有限但精液充足的硬挺阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:151
+#: .\data\talk_common\body\penis.csv:151
 msgid "粉嫩短小却饱含精液的勃起小鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:152
+#: .\data\talk_common\body\penis.csv:152
 msgid "迷你却坚硬充实的精液满满小阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:153
+#: .\data\talk_common\body\penis.csv:153
 msgid "尺寸迷你但冠状沟饱满的精液充足肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:154
+#: .\data\talk_common\body\penis.csv:154
 msgid "短小龟头却胀满精液的坚挺小鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:155
+#: .\data\talk_common\body\penis.csv:155
 msgid "体积不足却精液丰沛的硬挺小肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:156
+#: .\data\talk_common\body\penis.csv:156
 msgid "长度有限但精囊饱满的坚硬性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:157
+#: .\data\talk_common\body\penis.csv:157
 msgid "短小粗细但精液充足的勃起男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:158
+#: .\data\talk_common\body\penis.csv:158
 msgid "尺寸不足但充满精液的硬挺小肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:160
+#: .\data\talk_common\body\penis.csv:160
 msgid "短小却精液过量的胀痛肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:161
+#: .\data\talk_common\body\penis.csv:161
 msgid "尺寸迷你但精囊鼓胀得几乎爆炸的阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:162
+#: .\data\talk_common\body\penis.csv:162
 msgid "短小龟头下连接着不成比例的饱胀精囊的鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:163
+#: .\data\talk_common\body\penis.csv:163
 msgid "体积不足却装满过量精液的涨痛阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:164
+#: .\data\talk_common\body\penis.csv:164
 msgid "长度迷你却因精液过多而胀痛的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:165
+#: .\data\talk_common\body\penis.csv:165
 msgid "短小可怜却精液鼓胀到极限的鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:166
+#: .\data\talk_common\body\penis.csv:166
 msgid "迷你阴茎配着不相称的极度鼓胀肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:167
+#: .\data\talk_common\body\penis.csv:167
 msgid "短小肉茎却因过量精液而青筋暴起的性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:168
+#: .\data\talk_common\body\penis.csv:168
 msgid "尺寸微小却因精液过多而胀得发疼的男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:169
+#: .\data\talk_common\body\penis.csv:169
 msgid "短小坚挺却因过量精液而涨成深红色的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:171
+#: .\data\talk_common\body\penis.csv:171
 msgid "已射空精液的疲软阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:172
+#: .\data\talk_common\body\penis.csv:172
 msgid "精液耗尽的萎靡肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:173
+#: .\data\talk_common\body\penis.csv:173
 msgid "无精液可射的疲惫鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:174
+#: .\data\talk_common\body\penis.csv:174
 msgid "精囊干枯的疲惫阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:175
+#: .\data\talk_common\body\penis.csv:175
 msgid "精液耗尽的半硬肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:176
+#: .\data\talk_common\body\penis.csv:176
 msgid "毫无精液的疲惫鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:177
+#: .\data\talk_common\body\penis.csv:177
 msgid "无精可射的干瘪肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:178
+#: .\data\talk_common\body\penis.csv:178
 msgid "精囊空虚的疲软性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:179
+#: .\data\talk_common\body\penis.csv:179
 msgid "精液已空的半勃男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:180
+#: .\data\talk_common\body\penis.csv:180
 msgid "射无可射的疲惫肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:182
+#: .\data\talk_common\body\penis.csv:182
 msgid "尺寸适中，精液充足的硬挺肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:183
+#: .\data\talk_common\body\penis.csv:183
 msgid "标准尺寸，饱含精液的坚硬阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:184
+#: .\data\talk_common\body\penis.csv:184
 msgid "中等大小，精囊饱满的勃起鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:185
+#: .\data\talk_common\body\penis.csv:185
 msgid "粗细适中，富含精液的坚挺阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:186
+#: .\data\talk_common\body\penis.csv:186
 msgid "尺寸均匀，精液充沛的硬挺肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:187
+#: .\data\talk_common\body\penis.csv:187
 msgid "标准粗长，满载精液的坚硬鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:188
+#: .\data\talk_common\body\penis.csv:188
 msgid "长度适中，精囊鼓胀的可口肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:189
+#: .\data\talk_common\body\penis.csv:189
 msgid "中等大小，精液充盈的青筋性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:190
+#: .\data\talk_common\body\penis.csv:190
 msgid "尺寸标准，富含精液的挺翘男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:191
+#: .\data\talk_common\body\penis.csv:191
 msgid "粗细均匀，精液饱满的坚挺肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:193
+#: .\data\talk_common\body\penis.csv:193
 msgid "尺寸适中却因过量精液而青筋暴突的肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:194
+#: .\data\talk_common\body\penis.csv:194
 msgid "精液超量的胀痛阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:195
+#: .\data\talk_common\body\penis.csv:195
 msgid "中等大小却装满过量精液的紫红色鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:196
+#: .\data\talk_common\body\penis.csv:196
 msgid "精囊异常鼓胀的阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:197
+#: .\data\talk_common\body\penis.csv:197
 msgid "长度标准却因精液过多而筋脉突起的肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:198
+#: .\data\talk_common\body\penis.csv:198
 msgid "精液超量涨痛的硬挺鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:199
+#: .\data\talk_common\body\penis.csv:199
 msgid "尺寸适中却因精液过多而胀成深紫色的肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:200
+#: .\data\talk_common\body\penis.csv:200
 msgid "精囊大得不成比例的性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:201
+#: .\data\talk_common\body\penis.csv:201
 msgid "普通尺寸却因精液超量而阴囊紧绷的男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:202
+#: .\data\talk_common\body\penis.csv:202
 msgid "中等大小却充满过量精液的胀痛肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:204
+#: .\data\talk_common\body\penis.csv:204
 msgid "尺寸粗大但精液已空的疲软大肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:205
+#: .\data\talk_common\body\penis.csv:205
 msgid "明显粗长却无精可射的半硬阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:206
+#: .\data\talk_common\body\penis.csv:206
 msgid "体积粗大但精液耗尽的疲惫大鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:207
+#: .\data\talk_common\body\penis.csv:207
 msgid "尺寸惊人却铃口干涩无液的无精阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:208
+#: .\data\talk_common\body\penis.csv:208
 msgid "因精液耗空而半软不硬的粗长肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:209
+#: .\data\talk_common\body\penis.csv:209
 msgid "分量十足却已无精可射的大鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:210
+#: .\data\talk_common\body\penis.csv:210
 msgid "远超常人却精囊干瘪的疲软大肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:211
+#: .\data\talk_common\body\penis.csv:211
 msgid "尺寸傲人却毫无精液的半勃巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:212
+#: .\data\talk_common\body\penis.csv:212
 msgid "因射精过度而疲惫不堪的粗长性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:213
+#: .\data\talk_common\body\penis.csv:213
 msgid "体积夸张却已经射无可射的疲软男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:215
+#: .\data\talk_common\body\penis.csv:215
 msgid "粗大雄伟，精液充足的硬挺肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:216
+#: .\data\talk_common\body\penis.csv:216
 msgid "尺寸惊人，满载精液的勃起大阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:217
+#: .\data\talk_common\body\penis.csv:217
 msgid "粗长壮硕，精囊饱满的坚挺大鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:218
+#: .\data\talk_common\body\penis.csv:218
 msgid "远超常人，充盈精液的雄壮阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:219
+#: .\data\talk_common\body\penis.csv:219
 msgid "尺寸傲人，精液丰沛的粗壮肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:220
+#: .\data\talk_common\body\penis.csv:220
 msgid "长度可观，精液充沛的青筋大肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:221
+#: .\data\talk_common\body\penis.csv:221
 msgid "粗壮肉茎，精囊鼓胀的硬挺大鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:222
+#: .\data\talk_common\body\penis.csv:222
 msgid "体积硕大，精液丰富的坚挺肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:223
+#: .\data\talk_common\body\penis.csv:223
 msgid "分量十足，精液满满的粗壮大性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:224
+#: .\data\talk_common\body\penis.csv:224
 msgid "规模夸张，精液充足的硬挺大男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:226
+#: .\data\talk_common\body\penis.csv:226
 msgid "粗大夸张且因精液过多而胀痛的大肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:227
+#: .\data\talk_common\body\penis.csv:227
 msgid "尺寸惊人且精液超量的青筋暴突大阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:228
+#: .\data\talk_common\body\penis.csv:228
 msgid "壮硕龟头下连接着超量精液的鼓胀肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:229
+#: .\data\talk_common\body\penis.csv:229
 msgid "粗长巨物因精液过多而变得更加狰狞的鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:230
+#: .\data\talk_common\body\penis.csv:230
 msgid "体积惊人却因过量精液而疼痛难忍的阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:231
+#: .\data\talk_common\body\penis.csv:231
 msgid "尺寸傲人却因精液超量而筋脉暴凸的鸡鸡"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:232
+#: .\data\talk_common\body\penis.csv:232
 msgid "粗长雄壮且因精液过多而呈紫红色的大肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:233
+#: .\data\talk_common\body\penis.csv:233
 msgid "规模惊人且精囊鼓胀得不成比例的大性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:234
+#: .\data\talk_common\body\penis.csv:234
 msgid "壮硕粗长且因精液过量而胀痛的巨大男根"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:235
+#: .\data\talk_common\body\penis.csv:235
 msgid "分量十足且因超量精液而胀得像要爆炸的肉柱"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:237
+#: .\data\talk_common\body\penis.csv:237
 msgid "巨大无比却已射空精液的疲软怪物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:238
+#: .\data\talk_common\body\penis.csv:238
 msgid "尺寸骇人但精液耗尽的半软巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:239
+#: .\data\talk_common\body\penis.csv:239
 msgid "超乎想象大小却无精可射的巨型阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:240
+#: .\data\talk_common\body\penis.csv:240
 msgid "体积恐怖却因射尽精液而萎靡的怪物肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:241
+#: .\data\talk_common\body\penis.csv:241
 msgid "罕见巨大却毫无精液可射的疲软巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:242
+#: .\data\talk_common\body\penis.csv:242
 msgid "犹如婴儿手臂粗细却已无精可射的巨型阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:243
+#: .\data\talk_common\body\penis.csv:243
 msgid "令人窒息的巨大尺寸却精液耗尽的疲软鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:244
+#: .\data\talk_common\body\penis.csv:244
 msgid "夸张到不切实际却已射空精液的软垂阳物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:245
+#: .\data\talk_common\body\penis.csv:245
 msgid "堪比小孩前臂却无精可射的疲惫巨型肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:246
+#: .\data\talk_common\body\penis.csv:246
 msgid "尺寸令人恐惧却因射精过度而疲软的巨型性器"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:248
+#: .\data\talk_common\body\penis.csv:248
 msgid "骇人听闻的尺寸，精液充足的硬挺巨肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:249
+#: .\data\talk_common\body\penis.csv:249
 msgid "堪比婴儿手臂，精液满满的坚硬巨阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:250
+#: .\data\talk_common\body\penis.csv:250
 msgid "尺寸超乎想象，精囊饱满的狰狞巨鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:251
+#: .\data\talk_common\body\penis.csv:251
 msgid "令人窒息的巨大，精液充沛的硬挺怪物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:252
+#: .\data\talk_common\body\penis.csv:252
 msgid "犹如小孩前臂，精液丰富的坚挺巨阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:253
+#: .\data\talk_common\body\penis.csv:253
 msgid "体积惊人恐怖，精囊鼓胀的硬挺巨棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:254
+#: .\data\talk_common\body\penis.csv:254
 msgid "尺寸令人恐惧，精液满载的青筋暴突巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:255
+#: .\data\talk_common\body\penis.csv:255
 msgid "粗如婴儿小腿，精液充足的坚硬巨肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:256
+#: .\data\talk_common\body\penis.csv:256
 msgid "夸张到难以置信，精液丰沛的狰狞巨阳物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:257
+#: .\data\talk_common\body\penis.csv:257
 msgid "体积几乎不合理，精液充盈的恐怖巨肉棍"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:259
+#: .\data\talk_common\body\penis.csv:259
 msgid "巨大得可怕且装满过量精液的胀痛巨物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:260
+#: .\data\talk_common\body\penis.csv:260
 msgid "尺寸令人恐惧且因精液过多而青筋爆突的巨茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:261
+#: .\data\talk_common\body\penis.csv:261
 msgid "体积堪比婴儿手臂且精液超量的胀痛巨棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:262
+#: .\data\talk_common\body\penis.csv:262
 msgid "骇人尺寸且因精液过量而呈深紫色的恐怖阴茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:263
+#: .\data\talk_common\body\penis.csv:263
 msgid "巨大狰狞且因超量精液而疼痛难忍的怪物肉棒"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:264
+#: .\data\talk_common\body\penis.csv:264
 msgid "尺寸超乎想象且精囊胀得像要爆炸的巨型鸡巴"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:265
+#: .\data\talk_common\body\penis.csv:265
 msgid "粗如小孩前臂且因精液过量而筋脉暴起的巨型阳具"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:266
+#: .\data\talk_common\body\penis.csv:266
 msgid "体积恐怖且因过量精液而胀成紫红色的巨大肉茎"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:267
+#: .\data\talk_common\body\penis.csv:267
 msgid "夸张尺寸且精囊鼓胀到不自然程度的巨大阳物"
 msgstr ""
 
-#: .\data\talk_common\body_part\penis.csv:268
+#: .\data\talk_common\body\penis.csv:268
 msgid "罕见巨大尺寸且因精液超量而痛苦不堪的怪物肉棍"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:7
+msgid "温热"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:8
+msgid "湿润"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:9
+msgid "温暖"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:10
+msgid "柔软"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:11
+msgid "湿热"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:12
+msgid "光滑"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:15
+msgid "幼小"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:16
+msgid "稚嫩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:17
+msgid "紧小"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:18
+msgid "狭小"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:19
+msgid "幼嫩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:20
+msgid "细嫩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:21
+msgid "幼童"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:22
+msgid "娇嫩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:25
+msgid "青涩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:26
+msgid "小巧"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:27
+msgid "粉嫩"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:30
+msgid "紧致"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:34
+msgid "嫩滑"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:39
+msgid "优美"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:40
+msgid "灵活"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:41
+msgid "多汁"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:44
+msgid "亲生女儿"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:45
+msgid "亲女儿"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:48
+msgid "性感"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:49
+msgid "成熟"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:51
+msgid "丰满"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:56
+msgid "老练"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:57
+msgid "娴熟"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:58
+msgid "纯熟"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:64
+msgid "已婚"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:65
+msgid "熟练"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:66
+msgid "背德"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:68
+msgid "诱人"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:8
+msgid "嘴巴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:9
+msgid "肉洞"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:10
+msgid "口穴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:11
+msgid "樱唇"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:12
+msgid "嘴唇"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:13
+msgid "嘴穴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:15
+msgid "小嘴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:16
+msgid "小口"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:17
+msgid "嘴儿"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:18
+msgid "樱口"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:26
+msgid "骚嘴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:27
+msgid "淫嘴"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_B.csv:28
+msgid "淫口"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:9
+msgid "可爱"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:11
+msgid "勃起"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:12
+msgid "硬挺"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:13
+msgid "勃发"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:14
+msgid "笔直"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:15
+msgid "坚硬"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:16
+msgid "充血"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:17
+msgid "青筋"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:18
+msgid "坚实"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:20
+msgid "健壮"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:22
+msgid "膨大"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:23
+msgid "雄伟"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:24
+msgid "粗壮"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:25
+msgid "粗长"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:27
+msgid "狰狞"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:28
+msgid "怪物"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:29
+msgid "腕粗"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:30
+msgid "骇人"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:32
+msgid "超大"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_A.csv:33
+msgid "巨型"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:7
+msgid "肉棒"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:8
+msgid "阳具"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:9
+msgid "肉棍"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:10
+msgid "性器"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:11
+msgid "肉柱"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:12
+msgid "男根"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:13
+msgid "肉茎"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:14
+msgid "鸡巴"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:16
+msgid "鸡鸡"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:17
+msgid "小柱"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:19
+msgid "巨茎"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:20
+msgid "巨物"
+msgstr ""
+
+#: .\data\talk_common\body_part\penis_s_B.csv:21
+msgid "巨棒"
 msgstr ""
 
 #: .\data\character\0001_阿米娅.csv:4

@@ -64,6 +64,7 @@ class ItemTextEdit(QWidget):
         # 创建四个一级菜单
         chara_menu = self.right_click_menu.addMenu("角色名")
         chara_nick_menu = self.right_click_menu.addMenu("角色称呼")
+        common_text_menu = self.right_click_menu.addMenu("纸娃娃文本")
         clothing_menu = self.right_click_menu.addMenu("服装名")
         scene_menu = self.right_click_menu.addMenu("场景名")
         food_menu = self.right_click_menu.addMenu("食物名")
@@ -89,6 +90,14 @@ class ItemTextEdit(QWidget):
             {"text": "玩家对交互对象的称呼", "slot": lambda: self.insert_text('{TargetNickName}')},
             {"text": "交互对象对玩家的称呼", "slot": lambda: self.insert_text('{TargetNickNameToPl}')},
             {"text": "触发者与交互对象中非玩家的那个对玩家的称呼", "slot": lambda: self.insert_text('{PlayerNickName}')},
+        ]
+
+        # 纸娃娃文本菜单项
+        common_text_items = [
+            {"text": "自己阴茎描述长句", "slot": lambda: self.insert_text('{penis}')},
+            {"text": "自己阴茎描述短词", "slot": lambda: self.insert_text('{penis_s}')},
+            {"text": "交互对象口腔描述长句", "slot": lambda: self.insert_text('{mouth}')},
+            {"text": "交互对象口上描述短句", "slot": lambda: self.insert_text('{mouth_s}')},
         ]
 
         # 服装名菜单项
@@ -130,6 +139,7 @@ class ItemTextEdit(QWidget):
         menu_items = [
             (chara_menu, chara_items),
             (chara_nick_menu, chara_nick_items),
+            (common_text_menu, common_text_items),
             (clothing_menu, clothing_items),
             (scene_menu, scene_items),
             (food_menu, food_items),

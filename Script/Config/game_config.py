@@ -258,6 +258,8 @@ config_talk_common_data: Dict[int, config_def.Talk_Common] = {}
 """ 通用口上配置数据 """
 config_talk_common_cid_list_by_type: Dict[str, List] = {}
 """ 根据类型获取的通用口上cid集合 """
+config_talk_common_cid_list_by_part: Dict[str, Dict] = {}
+""" 根据分段的部分类型获取的通用口上cid集合 """
 config_talk_common_premise_data: Dict[int, Set] = {}
 """ 通用口上前提配置数据 """
 config_target: Dict[int, config_def.Target] = {}
@@ -1185,8 +1187,17 @@ def load_talk_common():
         now_tem = config_def.Talk_Common()
         now_tem.__dict__ = tem_data
         config_talk_common_data[now_tem.cid] = now_tem
-        config_talk_common_cid_list_by_type.setdefault(now_tem.type_id, [])
-        config_talk_common_cid_list_by_type[now_tem.type_id].append(now_tem.cid)
+        real_type_id = now_tem.type_id
+        # 判断是否为分段式
+        if "part" in real_type_id:
+            # 真实id是"part_"之后的部分
+            part_id = real_type_id[-1]
+            real_type_id = real_type_id.split("part_")[-1][:-2]
+            config_talk_common_cid_list_by_part.setdefault(real_type_id, {})
+            config_talk_common_cid_list_by_part[real_type_id].setdefault(part_id, [])
+            config_talk_common_cid_list_by_part[real_type_id][part_id].append(now_tem.cid)
+        config_talk_common_cid_list_by_type.setdefault(real_type_id, [])
+        config_talk_common_cid_list_by_type[real_type_id].append(now_tem.cid)
 
         config_talk_common_premise_data.setdefault(now_tem.cid, set())
         if "&" not in now_tem.premise:

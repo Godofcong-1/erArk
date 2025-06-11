@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,test_instruct,0,high_1,{Name}把{penis}插进了{TargetName}的{mouth}里
+0,test_instruct,0,high_1,{Name}对{TargetName}的纸娃娃文本测试\n阴茎长文：penis1，{penis}，penis2，{penis}。\n阴茎短文：测试p1，{penis_s}，测试p2，{penis_s}\n口腔长文，mouth1，{mouth}，mouth2，{mouth}\n口腔短文：测试m1，{mouth_s}，测试m2，{mouth_s}

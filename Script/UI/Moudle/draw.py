@@ -130,7 +130,7 @@ class LineFeedWaitDraw(NormalDraw):
         功能描述：将 self.text 按 \n 分段，每段超出宽度时自动换行，且每行输出后等待玩家操作。
         """
         # 按 \n 分割文本
-        text_list = self.text.split(r"\n")
+        text_list = self.text.splitlines()
         for text in text_list:
             remain = text
             while remain:
