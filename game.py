@@ -80,7 +80,7 @@ if __name__ == "__main__":
         # 启动Web服务器（现在会返回实际使用的端口）
         try:
             active_port = start_server()
-            print(f"游戏运行中，请在浏览器中访问 http://localhost:{active_port}")
+            print(f"游戏运行中，请在浏览器中访问 http://127.0.0.1:{active_port}")
             # 获取本机IP地址
             try:
                 import socket
@@ -93,6 +93,11 @@ if __name__ == "__main__":
                 print(f"无法获取本机IP地址: {e}")
         except Exception as e:
             print(f"Web服务器启动失败: {e}")
+            print("可能的解决方案:")
+            print("1. 关闭占用端口的其他程序")
+            print("2. 检查系统防火墙设置")
+            print("3. 以管理员权限运行程序")
+            print("4. 重启计算机后重试")
             sys.exit(1)
     
         # 添加退出处理函数

@@ -18,6 +18,7 @@ import logging
 import sys
 import time
 import socket
+import psutil
 
 # 导入Flask相关模块
 from flask import Flask, render_template, jsonify, request, current_app
@@ -316,32 +317,86 @@ def handle_disconnect():
     """
     logging.info("客户端已断开连接")
 
-def find_free_port(start_port=5000, max_attempts=10):
+def find_free_port(start_port=5000, max_attempts=50):
     """
     查找可用的端口号
     
     参数：
     start_port (int): 起始端口号，默认5000
-    max_attempts (int): 最大尝试次数，默认10
+    max_attempts (int): 最大尝试次数，默认50
     
     返回值类型：int
     功能描述：从起始端口开始查找可用的端口号，最多尝试max_attempts次
     """
-    for port in range(start_port, start_port + max_attempts):
+    print(f"正在查找可用端口，从端口 {start_port} 开始...")
+    
+    # 首先检查默认端口的占用情况
+    is_occupied, process_info = check_port_usage(start_port)
+    if is_occupied and process_info:
+        print(f"检测到端口 {start_port} 被占用:")
+        print(f"  进程名: {process_info['name']}")
+        print(f"  进程ID: {process_info['pid']}")
+        if process_info['cmdline']:
+            print(f"  命令行: {process_info['cmdline']}")
+        print(f"正在自动查找其他可用端口...")
+    
+    for port in range(start_port + 1, start_port + max_attempts):
         sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         try:
+            # 设置socket选项，允许端口重用
+            sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
             # 尝试绑定端口，成功则表示端口可用
             sock.bind(('0.0.0.0', port))
             sock.close()
+            if port != start_port:
+                print(f"已找到可用端口: {port}")
+            else:
+                print(f"端口 {port} 可用")
             return port
-        except socket.error:
+        except socket.error as e:
             # 端口被占用，尝试下一个
-            logging.info(f"端口 {port} 已被占用，尝试下一个端口")
+            if port == start_port:
+                pass  # 已经在上面显示了详细信息
+            else:
+                logging.debug(f"端口 {port} 已被占用，继续尝试下一个端口")
+            sock.close()
             continue
     
-    # 如果都失败了，返回一个随机端口
-    return start_port + 1000 + (int(time.time()) % 1000)
+    # 如果前面的端口都被占用，尝试使用更高的端口范围
+    print(f"端口 {start_port}-{start_port + max_attempts - 1} 都被占用，尝试使用更高的端口...")
+    fallback_port = start_port + 1000 + (int(time.time()) % 1000)
+    print(f"使用备用端口 {fallback_port}")
+    return fallback_port
 
+def check_port_usage(port):
+    """
+    检查指定端口的占用情况
+    
+    参数:
+    port (int): 要检查的端口号
+    
+    返回值类型：tuple
+    功能描述：返回(是否被占用, 占用进程信息)的元组
+    """
+    try:
+        # 获取所有网络连接
+        connections = psutil.net_connections()
+        for conn in connections:
+            if conn.laddr.port == port and conn.status == psutil.CONN_LISTEN:
+                try:
+                    # 获取进程信息
+                    process = psutil.Process(conn.pid)
+                    return True, {
+                        'pid': conn.pid,
+                        'name': process.name(),
+                        'cmdline': ' '.join(process.cmdline()[:3])  # 只取前3个命令行参数
+                    }
+                except (psutil.NoSuchProcess, psutil.AccessDenied):
+                    return True, {'pid': conn.pid, 'name': '未知进程', 'cmdline': ''}
+        return False, None
+    except Exception as e:
+        logging.debug(f"检查端口占用时出错: {e}")
+        return False, None
 
 def update_input_request(current_input_request):
     """
@@ -489,14 +544,14 @@ def start_server():
     
     参数：无
     
-    返回值类型：无
-    功能描述：在单独的线程中启动Flask应用服务器
+    返回值类型：int
+    功能描述：在单独的线程中启动Flask应用服务器，返回实际使用的端口号
     """
     global server_running, server_thread, server_port
     
     # 避免重复启动
     if server_running:
-        return
+        return server_port
     
     # 设置状态为运行中
     server_running = True
@@ -504,53 +559,77 @@ def start_server():
     # 设置Flask日志级别为WARNING，减少控制台输出
     logging.getLogger('werkzeug').setLevel(logging.DEBUG)
     
-    # 尝试查找可用端口
-    server_port = find_free_port()
+    # 最大重试次数
+    max_retries = 3
     host = '0.0.0.0'
     
-    # 创建一个单独的线程启动服务器
-    def run_server():
-        """
-        内部函数：运行服务器
-        
-        参数：无
-        
-        返回值类型：无
-        功能描述：实际启动socketio服务器的函数
-        """
+    for attempt in range(max_retries):
         try:
-            # 使用线程模式运行SocketIO应用
-            socketio.run(app, host=host, port=server_port, debug=False, use_reloader=False, allow_unsafe_werkzeug=True)
+            # 尝试查找可用端口
+            server_port = find_free_port(start_port=5000 + attempt * 10)
+            
+            # 创建一个单独的线程启动服务器
+            def run_server():
+                """
+                内部函数：运行服务器
+                
+                参数：无
+                
+                返回值类型：无
+                功能描述：实际启动socketio服务器的函数
+                """
+                try:
+                    # 使用线程模式运行SocketIO应用
+                    socketio.run(app, host=host, port=server_port, debug=False, use_reloader=False, allow_unsafe_werkzeug=True)
+                except Exception as e:
+                    logging.error(f"服务器在端口 {server_port} 启动失败: {str(e)}")
+                    global server_running
+                    server_running = False
+            
+            # 确保之前的服务器线程已关闭
+            if server_thread and server_thread.is_alive():
+                try:
+                    socketio.stop()
+                    time.sleep(0.5)  # 给予服务器关闭的时间
+                except:
+                    pass
+            
+            # 在专用线程中启动服务器
+            server_thread = threading.Thread(target=run_server)
+            server_thread.daemon = True  # 设置为守护线程，主程序退出时自动结束
+            server_thread.start()
+            
+            # 等待服务器启动
+            time.sleep(2)
+            
+            # 检查服务器是否成功启动
+            if server_running and server_thread.is_alive():
+                print(f"游戏服务已启动，请访问: http://localhost:{server_port} 或 http://127.0.0.1:{server_port}")
+                
+                # 自动打开浏览器
+                try:
+                    webbrowser.open(f'http://localhost:{server_port}')
+                except:
+                    # 打开浏览器失败，不阻止程序运行
+                    pass
+                
+                return server_port
+            else:
+                print(f"服务器在端口 {server_port} 启动失败，尝试重新启动...")
+                server_running = False
+                
         except Exception as e:
-            logging.error(f"服务器启动失败: {str(e)}")
-            global server_running
+            print(f"第 {attempt + 1} 次启动尝试失败: {str(e)}")
             server_running = False
+            
+        # 如果不是最后一次尝试，等待一下再重试
+        if attempt < max_retries - 1:
+            time.sleep(1)
     
-    # 确保之前的服务器线程已关闭
-    if server_thread and server_thread.is_alive():
-        try:
-            socketio.stop()
-            time.sleep(0.5)  # 给予服务器关闭的时间
-        except:
-            pass
-    
-    # 在专用线程中启动服务器
-    server_thread = threading.Thread(target=run_server)
-    server_thread.daemon = True  # 设置为守护线程，主程序退出时自动结束
-    server_thread.start()
-    
-    # 等待服务器启动
-    time.sleep(2)
-    
-    # 自动打开浏览器
-    try:
-        webbrowser.open(f'http://localhost:{server_port}')
-    except:
-        # 打开浏览器失败，不阻止程序运行
-        pass
-    
-    print(f"游戏服务已启动，请访问: http://localhost:{server_port}")
-    return server_port
+    # 所有尝试都失败了
+    print("服务器启动失败，已尝试多个端口但均无法启动")
+    server_running = False
+    raise Exception("无法启动Web服务器，请检查端口占用情况或系统防火墙设置")
 
 def stop_server():
     """
