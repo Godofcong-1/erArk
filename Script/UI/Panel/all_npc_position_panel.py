@@ -316,7 +316,7 @@ class MoveSonPanel:
             elif self.move_type == 3:
                 character_data.sp_flag.is_follow = 1
                 now_draw.text = character_data.name + _("收到了博士的信息，开始智能跟随\n")
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
         # 博士前往干员位置的情况
         else:

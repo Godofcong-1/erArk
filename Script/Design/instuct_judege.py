@@ -403,7 +403,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             while 1:
                 return_list = []
                 ask_draw = draw.WaitDraw()
-                ask_draw.width = 1
+                # ask_draw.width = 1
                 ask_draw.text = ask_text
                 ask_draw.draw()
 
@@ -426,14 +426,14 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if judge_data_type != "V":
             calculation_text += " = " + str(judge) + "\n"
             now_draw = draw.WaitDraw()
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.text = calculation_text
             now_draw.draw()
 
         # 合意获得的结算，大前提是1.5倍实行值、有意识、非监禁
         if judge_rate >= 1.5 and handle_premise.handle_unconscious_flag_0(target_character_id) and handle_premise.handle_imprisonment_0(target_character_id):
             agree_draw = draw.WaitDraw()
-            agree_draw.width = 1
+            # agree_draw.width = 1
             draw_text = ""
             if instruct_name == _("亲吻") and target_data.talent[11] == 0:
                 target_data.talent[11] = 1

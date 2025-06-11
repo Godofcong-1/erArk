@@ -386,16 +386,6 @@ def handle_owner_abl_up():
     now_draw.draw()
 
 
-@add_instruct(constant.Instruct.SEE_DIRTY, constant.InstructType.SYSTEM, _("查看污浊情况"),
-              {
-                  constant_promise.Premise.HAVE_TARGET,
-                  constant_promise.Premise.TO_DO,
-                  })
-def see_dirty():
-    """处理查看污浊情况指令"""
-    cache.now_panel_id = constant.Panel.DIRTY
-
-
 @add_instruct(constant.Instruct.DEBUG_MODE_ON, constant.InstructType.SYSTEM, _("开启DEBUG模式"),
               {constant_promise.Premise.DEBUG_MODE_SETTING_ON,
                constant_promise.Premise.DEBUG_MODE_OFF})
@@ -1492,7 +1482,7 @@ def handle_followed():
                 if other_character_data.sp_flag.is_follow:
                     other_character_data.sp_flag.is_follow = 0
                     now_draw.text += _("当前最大跟随数量：1人，{0}退出跟随模式\n").format(other_character_data.name)
-    now_draw.width = 1
+    # now_draw.width = 1
     now_draw.draw()
 
     chara_handle_instruct_common_settle(constant.Behavior.FOLLOW, duration = 5)

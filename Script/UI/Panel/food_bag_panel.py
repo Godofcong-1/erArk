@@ -108,7 +108,7 @@ class FoodBagPanel:
             line.draw()
             now_draw = draw.NormalDraw()
             now_draw.text = _("◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n")
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
             line_feed.draw()
 
@@ -119,7 +119,7 @@ class FoodBagPanel:
             now_draw.text = _("○正常调味食物\n")
             if handle_premise.handle_hunger_le_79(0):
                 now_draw.text += _("  现在不饿，无法吃东西。\n\n")
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
             self.handle_panel_normal.draw()
             line_feed.draw()
@@ -130,7 +130,7 @@ class FoodBagPanel:
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
             elif handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
             self.handle_panel_special.draw()
 

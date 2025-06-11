@@ -53,7 +53,6 @@ class Character_talent_show_Text:
         type_line.draw()
         # 前提说明#
         text_draw_introduce = draw.NormalDraw()
-        text_draw_introduce.width = 1
         text_draw_introduce_text = _("陷落系素质\n 共通基础前提：")
 
         # 检测共通基础前提
@@ -97,7 +96,6 @@ class Character_talent_show_Text:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_love = draw.NormalDraw()
-            info_draw_love.width = 1
             text_draw_love_text = _("爱情路线前提：")
 
             # 检测爱情路线前提
@@ -141,7 +139,6 @@ class Character_talent_show_Text:
             line = draw.LineDraw("-", self.width)
             line.draw()
             info_draw_obey = draw.NormalDraw()
-            info_draw_obey.width = 1
             text_draw_obey_text = _("隶属路线前提：")
 
             # 检测隶属路线前提

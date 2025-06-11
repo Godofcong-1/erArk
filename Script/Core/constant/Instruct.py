@@ -22,8 +22,6 @@ class Instruct:
     """ 属性升级 """
     OWNER_ABL_UP = 0
     """ 自身属性升级 """
-    SEE_DIRTY = 0
-    """ 查看污浊情况 """
     SYSTEM_SETTING = 0
     """ 系统设置 """
     CHAT_WITH_AI = 0

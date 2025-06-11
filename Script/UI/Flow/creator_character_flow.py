@@ -211,7 +211,7 @@ class Character_Sex:
         now_draw = panel.LeftDrawTextListPanel()
 
         sex_draw = draw.LeftDraw()
-        sex_draw.width = 1
+        # sex_draw.width = 1
         sex_draw.text = _("\n 性别：{0}      ").format(sex_text)
         now_draw.draw_list.append(sex_draw)
         now_draw.width += len(sex_draw.text)
@@ -271,7 +271,7 @@ class Character_JJ:
         now_draw = panel.LeftDrawTextListPanel()
 
         jj_draw = draw.LeftDraw()
-        jj_draw.width = 1
+        # jj_draw.width = 1
         jj_draw.text = _("\n 阴茎大小：{0}      ").format(jj_text)
         now_draw.draw_list.append(jj_draw)
         now_draw.width += len(jj_draw.text)
@@ -421,7 +421,7 @@ class Character_FirstNPC:
         now_draw.draw_list.append(line)
 
         info_draw = draw.LeftDraw()
-        info_draw.width = 1
+        # info_draw.width = 1
         info_draw.text = _(" 当前初始干员有：")
         info_draw.text += _("\n   基础:")
         npc_id_got_list = sorted(cache.npc_id_got)
@@ -467,7 +467,7 @@ class Character_FirstNPC:
         now_draw.width += 1
 
         info_last_draw = draw.LeftDraw()
-        info_last_draw.width = 1
+        # info_last_draw.width = 1
         if cache.debug_mode:
             self.npc_select_now = 999
         else:
@@ -1110,7 +1110,7 @@ class Character_Bonus:
         # 点数不足信息绘制
         if fail_flag:
             info_last_draw = draw.WaitDraw()
-            info_last_draw.width = 1
+            # info_last_draw.width = 1
             info_last_draw.text = _("\n 当前剩余奖励不足\n")
             info_last_draw.draw()
 
@@ -1212,7 +1212,7 @@ class Other_Settings:
         now_draw.draw_list.append(line)
 
         setting_info_draw = draw.LeftDraw()
-        setting_info_draw.width = 1
+        # setting_info_draw.width = 1
         draw_text = _(" 其他设定：\n")
         setting_info_draw.text = draw_text
         now_draw.draw_list.append(setting_info_draw)

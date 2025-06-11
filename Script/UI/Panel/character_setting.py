@@ -55,7 +55,7 @@ class CharacterSetting:
             # 输出提示信息
             info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
             now_draw.text = info_text
-            now_draw.width = self.width
+            # now_draw.width = self.width
             now_draw.draw()
 
             # 遍历全部设置
@@ -98,7 +98,7 @@ class CharacterSetting:
                 else:
                     info_text = _(" {0}(  更改{1})").format(button_text, reason)
                     now_draw.text = info_text
-                    now_draw.width = self.width
+                    # now_draw.width = self.width
                     now_draw.draw()
 
             line_feed.draw()

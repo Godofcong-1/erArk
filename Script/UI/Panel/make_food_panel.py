@@ -79,7 +79,7 @@ class Make_food_Panel:
             now_seasoning_name = game_config.config_seasoning[self.special_seasoning].name
             now_draw = draw.NormalDraw()
             now_draw.text = _("○当前的调味： {0}").format(now_seasoning_name)
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
 
             # 加料面板
@@ -91,20 +91,20 @@ class Make_food_Panel:
                     button_width = self.width/16
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  基础:    ")
-                    now_draw.width = 1
+                    # now_draw.width = 1
                     now_draw.draw()
                 # 精液或下药则换行并加长文本宽度
                 if seasoning_cid == 11:
                     button_width = self.width/4
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  精液:    ")
-                    now_draw.width = 1
+                    # now_draw.width = 1
                     now_draw.draw()
                 elif seasoning_cid == 102:
                     button_width = self.width/8
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  药物:    ")
-                    now_draw.width = 1
+                    # now_draw.width = 1
                     now_draw.draw()
                 # 如果是加药物需要已拥有药物
                 if seasoning_cid > 100:
@@ -128,7 +128,7 @@ class Make_food_Panel:
             # 食物面板
             now_draw = draw.NormalDraw()
             now_draw.text = _("○选择要制作的食物：\n")
-            now_draw.width = 1
+            # now_draw.width = 1
             now_draw.draw()
             food_name_list = list(
                 cooking.get_cook_from_makefood_data_by_food_type(self.now_panel).items()

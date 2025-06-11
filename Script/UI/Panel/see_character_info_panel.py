@@ -1007,14 +1007,13 @@ class CharacterabiText:
                 now_draw.text = game_config.config_ability[ability_id].name
                 # 这个_1是为了补空格让格式对齐#
                 now_draw_1 = draw.NormalDraw()
-                now_draw_1.text = " "
-                now_draw_1.width = 1
-                now_draw.width = width / len(type_set)
+                now_draw_1.text = "　"
+                now_draw_1.width = 2
                 now_exp = 0
                 now_exp = character_data.ability[ability_id]
                 now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
-                new_draw = draw.LeftMergeDraw(width / 10)
+                new_draw = draw.LeftMergeDraw(self.width / 16)
                 # 同类能力里在八个前补个换行
                 if ability_id == 48 or ability_id == 101:
                     new_draw_n = draw.NormalDraw()
@@ -1025,15 +1024,15 @@ class CharacterabiText:
                 new_draw.draw_list.append(now_draw)
                 new_draw.draw_list.append(now_draw_1)
                 # 根据不同的类型补不同数量的空格#
-                if anility_type != 2 and anility_type != 4 and anility_type != 6:
+                if anility_type == 3 or anility_type == 5:
                     new_draw.draw_list.append(now_draw_1)
                     new_draw.draw_list.append(now_draw_1)
-                    if anility_type == 3 or anility_type == 5:
-                        new_draw.draw_list.append(now_draw_1)
-                        new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(level_draw)
                 new_draw.draw_list.append(now_draw_1)
                 new_draw.draw_list.append(now_draw_value)
+                if anility_type == 3 or anility_type == 5:
+                    new_draw.draw_list.append(now_draw_1)
+                    new_draw.draw_list.append(now_draw_1)
                 self.draw_list.append(new_draw)
             # 只有不是最后一个类型就补个换行#
             if anility_type != 6:
