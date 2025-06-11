@@ -51,6 +51,7 @@ jobs:
           Copy-Item "todo list.txt" dist/
           Copy-Item package.json dist/
           Copy-Item example dist/ -Recurse
+          Copy-Item static dist/ -Recurse
           Copy-Item templates dist/ -Recurse
           Rename-Item dist erArk
 

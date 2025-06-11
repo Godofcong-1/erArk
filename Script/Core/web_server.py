@@ -30,10 +30,22 @@ from Script.Core import cache_control, constant, game_type
 # 获取全局缓存
 cache = cache_control.cache
 
+# 获取当前脚本的绝对路径，用于确定模板和静态文件的位置
+current_dir = os.path.dirname(os.path.abspath(__file__))
+# 项目根目录（从 Script/Core 向上两级）
+project_root = os.path.dirname(os.path.dirname(current_dir))
+template_folder = os.path.join(project_root, 'templates')
+static_folder = os.path.join(project_root, 'static')
+
+print(f"模板文件夹路径: {template_folder}")
+print(f"静态文件夹路径: {static_folder}")
+print(f"模板文件夹存在: {os.path.exists(template_folder)}")
+print(f"静态文件夹存在: {os.path.exists(static_folder)}")
+
 # 创建Flask应用
 app = Flask(__name__, 
-            template_folder='../../templates', 
-            static_folder='../../static')
+            template_folder=template_folder, 
+            static_folder=static_folder)
 
 # 配置Flask应用
 app.config['SECRET_KEY'] = 'erArk_web_secret_key'
