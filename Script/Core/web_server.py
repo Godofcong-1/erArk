@@ -34,8 +34,20 @@ cache = cache_control.cache
 current_dir = os.path.dirname(os.path.abspath(__file__))
 # 项目根目录（从 Script/Core 向上两级）
 project_root = os.path.dirname(os.path.dirname(current_dir))
-template_folder = os.path.join(project_root, 'templates')
-static_folder = os.path.join(project_root, 'static')
+
+# 检查是否在打包环境中运行
+if hasattr(sys, '_MEIPASS'):
+    # PyInstaller打包后的环境
+    # 在打包后，templates和static文件夹应该在exe同级目录
+    exe_dir = os.path.dirname(sys.executable)
+    template_folder = os.path.join(exe_dir, 'templates')
+    static_folder = os.path.join(exe_dir, 'static')
+    print(f"检测到打包环境，使用exe目录: {exe_dir}")
+else:
+    # 开发环境
+    template_folder = os.path.join(project_root, 'templates')
+    static_folder = os.path.join(project_root, 'static')
+    print(f"检测到开发环境，使用项目根目录: {project_root}")
 
 print(f"模板文件夹路径: {template_folder}")
 print(f"静态文件夹路径: {static_folder}")
@@ -51,6 +63,7 @@ app = Flask(__name__,
 app.config['SECRET_KEY'] = 'erArk_web_secret_key'
 app.config['DEBUG'] = False
 app.config['USE_RELOADER'] = False
+app.config['PROPAGATE_EXCEPTIONS'] = True  # 传播异常以便更好地调试
 
 # 初始化SocketIO，指定异步模式和超时配置
 socketio = SocketIO(app, 
@@ -91,7 +104,15 @@ def index():
     返回值类型：str
     功能描述：返回主页HTML内容
     """
-    return render_template('index.html')
+    try:
+        return render_template('index.html')
+    except Exception as e:
+        import traceback
+        error_msg = f"渲染主页时出错: {str(e)}\n{traceback.format_exc()}"
+        print(error_msg)
+        logging.error(error_msg)
+        # 返回错误信息以便调试
+        return f"<pre>{error_msg}</pre>", 500
 
 @app.route('/api/get_state')
 def get_state():
@@ -215,7 +236,14 @@ def get_image_paths():
     
     # 处理图片路径，转换为相对路径格式
     image_paths = []
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+    
+    # 根据环境确定基础目录
+    if hasattr(sys, '_MEIPASS'):
+        # 打包环境：使用exe所在目录
+        base_dir = os.path.dirname(sys.executable)
+    else:
+        # 开发环境：使用项目根目录
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
     
     # 遍历image_path_data字典，将所有图片路径转换为相对于web根目录的路径
     for image_name, image_path in image_path_data.items():
@@ -250,11 +278,15 @@ def serve_image(filename):
     from flask import send_from_directory
     import os
     
-    # 获取游戏根目录的绝对路径
-    base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
-    
-    # 构建完整的图片文件夹路径
-    image_dir = os.path.join(base_dir, 'image')
+    # 根据环境确定基础目录和图片文件夹路径
+    if hasattr(sys, '_MEIPASS'):
+        # 打包环境：图片文件夹在exe同级目录
+        base_dir = os.path.dirname(sys.executable)
+        image_dir = os.path.join(base_dir, 'image')
+    else:
+        # 开发环境：使用项目根目录
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+        image_dir = os.path.join(base_dir, 'image')
     
     # 使用send_from_directory提供文件，自动处理中文路径编码问题
     return send_from_directory(image_dir, filename)
@@ -328,6 +360,23 @@ def handle_disconnect():
     功能描述：处理WebSocket客户端断开连接事件
     """
     logging.info("客户端已断开连接")
+
+@app.errorhandler(Exception)
+def handle_exception(e):
+    """
+    全局异常处理器
+    
+    参数：
+    e (Exception): 捕获的异常
+    
+    返回值类型：tuple
+    功能描述：处理所有未捕获的异常并返回错误信息
+    """
+    import traceback
+    error_msg = f"服务器内部错误: {str(e)}\n{traceback.format_exc()}"
+    print(error_msg)
+    logging.error(error_msg)
+    return jsonify({'error': str(e), 'traceback': traceback.format_exc()}), 500
 
 def find_free_port(start_port=5000, max_attempts=50):
     """
@@ -568,8 +617,12 @@ def start_server():
     # 设置状态为运行中
     server_running = True
     
-    # 设置Flask日志级别为WARNING，减少控制台输出
-    logging.getLogger('werkzeug').setLevel(logging.DEBUG)
+    # 设置Flask日志级别
+    logging.getLogger('werkzeug').setLevel(logging.INFO)
+    # 设置Flask应用日志级别
+    app.logger.setLevel(logging.DEBUG)
+    # 启用详细的错误日志
+    logging.basicConfig(level=logging.DEBUG)
     
     # 最大重试次数
     max_retries = 3
