@@ -115,14 +115,22 @@ def build_chara_talk(chara_adv_id : int = 0):
         character_talk_data = {}
 
     talk_file_list = os.listdir(talk_dir)
+    # 遍历 talk 文件夹下的所有文件和子目录
     for i in talk_file_list:
-        # 跳过ai文件夹
+        # 跳过 ai 文件夹
         if i == "ai":
             continue
         now_dir = os.path.join(talk_dir, i)
-        for f in os.listdir(now_dir):
-            now_f = os.path.join(now_dir, f)
-            build_csv_config(now_f, f, chara_adv_id, character_talk_data)
+        # 判断当前路径是否为目录
+        if os.path.isdir(now_dir):
+            # 如果是目录，则递归遍历子目录
+            for root, dirs, files in os.walk(now_dir):
+                for f in files:
+                    now_f = os.path.join(root, f)
+                    build_csv_config(now_f, f, chara_adv_id, character_talk_data)
+        else:
+            # 如果不是目录，直接处理文件
+            build_csv_config(now_dir, i, chara_adv_id, character_talk_data)
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
         json.dump(character_talk_data, talk_data_file, ensure_ascii=0)
