@@ -7190,10 +7190,7 @@ def handle_masturebate_add_adjust(
     # 增加快感
     base_chara_state_common_settle(character_id, add_time, part_id, 50, ability_level = character_data.ability[30], change_data = change_data)
     # 增加经验
-    character_data.experience.setdefault(part_id, 0)
-    character_data.experience[part_id] += 1
-    change_data.experience.setdefault(part_id, 0)
-    change_data.experience[part_id] += 1
+    base_chara_experience_common_settle(character_id, part_id, 1, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET_IN_SHOWER)
@@ -7753,7 +7750,6 @@ def handle_read_add_adjust(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
     if character_data.dead:
         return
@@ -7789,16 +7785,10 @@ def handle_read_add_adjust(
 
     # 遍历集合增加对应经验
     for experience_index in experience_index_set:
-        character_data.experience[experience_index] += 1
-        change_data.experience.setdefault(experience_index, 0)
-        change_data.experience[experience_index] += 1
+        base_chara_experience_common_settle(character_id, experience_index, 1, change_data = change_data)
         # 如果有交互对象，则交互对象也加
         if character_data.target_character_id != character_id:
-            target_data.experience[experience_index] += 1
-            change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
-            target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
-            target_change.experience.setdefault(experience_index, 0)
-            target_change.experience[experience_index] += 1
+            base_chara_experience_common_settle(character_data.target_character_id, experience_index, 1, change_data = change_data)
 
     # NPC的还书判定
     if character_id:

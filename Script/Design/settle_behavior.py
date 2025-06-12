@@ -4,6 +4,7 @@ from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
 from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
+from Script.Settle import common_default
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel, originium_arts
@@ -1098,9 +1099,7 @@ def orgasm_settle(
     if part_count >= 1:
         # 饮精绝顶经验
         if character_data.h_state.shoot_position_body in [2, 15]:
-            character_data.experience[111] += 1
-            change_data.experience.setdefault(111, 0)
-            change_data.experience[111] += 1
+            common_default.base_chara_experience_common_settle(character_id, 111, change_data=change_data)
     # 如果部位高潮计数大于等于2，则结算多重绝顶
     if part_count >= 2:
         second_behavior_id = f"plural_orgasm_{part_count}"
