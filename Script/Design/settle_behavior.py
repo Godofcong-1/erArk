@@ -4,7 +4,6 @@ from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle
 from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
-from Script.Settle import common_default
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import ejaculation_panel, originium_arts
@@ -712,13 +711,14 @@ def extra_exp_settle(
     character_id -- 角色id
     change_data -- 状态变更信息记录对象
     """
-    from Script.Settle import common_default
+    # 导入常用结算函数，避免循环导入
+    from Script.Settle.common_default import base_chara_experience_common_settle
 
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 自己在H中且群交已开启，则群交经验+1
     if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
-        common_default.base_chara_experience_common_settle(0, 56, change_data=change_data)
+        base_chara_experience_common_settle(0, 56, change_data=change_data)
 
     # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1
     if character_id == 0 and handle_premise.handle_hidden_sex_mode_ge_1(character_id):
@@ -736,8 +736,8 @@ def extra_exp_settle(
             add_flag = False
         # 增加隐奸经验
         if add_flag:
-            common_default.base_chara_experience_common_settle(0, 35, change_data=change_data)
-            common_default.base_chara_experience_common_settle(0, 35, target_flag=True, change_data=change_data)
+            base_chara_experience_common_settle(0, 35, change_data=change_data)
+            base_chara_experience_common_settle(0, 35, target_flag=True, change_data=change_data)
 
 def judge_character_first_meet(character_id: int) -> int:
     """
@@ -783,6 +783,8 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
     character_id -- 角色id
     change_data: game_type.CharacterStatusChange,
     """
+    # 导入常用结算函数，避免循环导入
+    from Script.Settle.common_default import base_chara_experience_common_settle
 
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
@@ -811,12 +813,11 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
                 character_data.second_behavior[second_behavior_id] = 1
         # 如果玩家当前有性交姿势数据
         if pl_character_data.h_state.current_sex_position != -1:
-            from Script.Settle import common_default
             # 自己增加对应姿势的经验
             exp_id = 140 + pl_character_data.h_state.current_sex_position
-            common_default.base_chara_experience_common_settle(character_id, exp_id, change_data = change_data)
+            base_chara_experience_common_settle(character_id, exp_id, change_data = change_data)
             # 玩家增加对应姿势的经验
-            common_default.base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
+            base_chara_experience_common_settle(0, exp_id, change_data_to_target_change = change_data)
 
 
 def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange, skip_undure: bool = False):
@@ -827,6 +828,8 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
     change_data -- 状态变更信息记录对象
     skip_undure -- 是否跳过忍耐高潮的结算
     """
+    # 导入常用结算函数，避免循环导入
+    from Script.Settle.common_default import base_chara_experience_common_settle
 
     # print()
     character_data: game_type.Character = cache.character_data[character_id]
@@ -930,6 +933,8 @@ def orgasm_settle(
     extra_orgasm_dict -- 额外高潮字典
     un_count_orgasm_dict -- 不计数高潮字典
     """
+    # 导入常用结算函数，避免循环导入
+    from Script.Settle.common_default import base_chara_experience_common_settle
 
     character_data = cache.character_data[character_id]
     # print(f"进入{character_data.name}的高潮结算")
@@ -1038,7 +1043,7 @@ def orgasm_settle(
     if part_count >= 1:
         # 饮精绝顶经验
         if character_data.h_state.shoot_position_body in [2, 15]:
-            common_default.base_chara_experience_common_settle(character_id, 111, change_data=change_data)
+            base_chara_experience_common_settle(character_id, 111, change_data=change_data)
     # 如果部位高潮计数大于等于2，则结算多重绝顶
     if part_count >= 2:
         second_behavior_id = f"plural_orgasm_{part_count}"
@@ -1432,9 +1437,10 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     Return arguments:
     bool -- 是否结算成功
     """
+    # 导入常用结算函数，避免循环导入
+    from Script.Settle.common_default import base_chara_experience_common_settle, base_chara_climix_common_settle
     from Script.UI.Panel import event_option_panel
     from Script.Design import character
-    from Script.Settle import common_default
 
     character_data: game_type.Character = cache.character_data[character_id]
     # print(f"debug character_id = {character_id}, effect_all_value_list = {effect_all_value_list}")
@@ -1516,7 +1522,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
             exp_value = int(effect_all_value_list[3])
             if operation == "L":
                 exp_value = -int(effect_all_value_list[3])
-            common_default.base_chara_experience_common_settle(final_character_id, type_son_id, base_value = exp_value, change_data = final_change_data)
+            base_chara_experience_common_settle(final_character_id, type_son_id, base_value = exp_value, change_data = final_change_data)
         # 角色口上flag
         elif attribute_name == "flag":
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
@@ -1524,10 +1530,10 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         # 绝顶
         elif attribute_name == "climax":
             if operation == "E":
-                common_default.base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
+                base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
             elif operation == "G":
                 for i in range(int(effect_all_value_list[3]) + 1):
-                    common_default.base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
+                    base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
         # 父子嵌套事件
         elif attribute_name == "father":
             # print(f"debug effect_all_value_list = {effect_all_value_list}")

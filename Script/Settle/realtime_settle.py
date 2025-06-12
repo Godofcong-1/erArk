@@ -17,7 +17,6 @@ from Script.Design import (
 from Script.UI.Moudle import draw
 from Script.UI.Panel import ejaculation_panel
 from Script.Config import game_config, normal_config
-from Script.Settle import default
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -452,13 +451,14 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
+    from Script.Settle import common_default
     now_char = cache.character_data[character_id]
     # 和周围其他人相关的结算
     if handle_premise.handle_scene_over_two(character_id):
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
-            default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
-            default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
         # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
         if handle_premise.handle_scene_others_conscious(character_id):
             # 自己未穿胸衣和内裤、自己非临盆或产后时羞耻
@@ -471,19 +471,19 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
                     extra += 1
                 if handle_premise.handle_not_wear_pan(character_id):
                     extra += 2
-                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
+                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
             # 隐奸中增加羞耻和心理快感
             if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
-                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
-                default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
-        default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char.ability[15], extra_adjust=extra, tenths_add=False)
+        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char.ability[15], extra_adjust=extra, tenths_add=False)
     # 捆绑时欲情、羞耻、苦痛
     if handle_premise.handle_self_now_bondage(character_id):
         bond_id = now_char.h_state.bondage
         data = game_config.config_bondage[bond_id]
         adjust = data.level * 0.5
         for sid in (12,16,17):
-            default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
+            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
