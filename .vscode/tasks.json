@@ -1,0 +1,44 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "启动PRTS MCP服务器",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "-m", 
+                "prts_character_downloader"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/tools/MCP"
+            },
+            "group": "build",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "new"
+            },
+            "isBackground": true,
+            "problemMatcher": []
+        },
+        {
+            "label": "测试PRTS下载器",
+            "type": "shell",
+            "command": "python",
+            "args": [
+                "test_downloader.py"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}/tools/MCP/prts_character_downloader"
+            },
+            "group": "test",
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": true,
+                "panel": "new"
+            }
+        }
+    ]
+}

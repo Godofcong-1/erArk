@@ -1,0 +1,15 @@
+{
+    "servers": {
+        "prts-character-downloader": {
+            "type": "stdio",
+            "command": "python",
+            "args": [
+                "-m",
+                "prts_character_downloader"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/tools/MCP"
+            }
+        }
+    }
+}
