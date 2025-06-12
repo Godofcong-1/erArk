@@ -4,29 +4,29 @@ str,str,int,str,str
 0,0,0,0,1
 组件配置数据,,,,
 
-100,bodypart_mouth_s_B,0,high_1,口腔
-101,bodypart_mouth_s_B,0,high_1,嘴巴
-102,bodypart_mouth_s_B,0,high_1,肉洞
-103,bodypart_mouth_s_B,0,high_1,口穴
-104,bodypart_mouth_s_B,0,high_1,樱唇
-105,bodypart_mouth_s_B,0,high_1,嘴唇
-105,bodypart_mouth_s_B,0,high_1,嘴穴
+100,body_part_mouth_s_B,0,high_1,口腔
+101,body_part_mouth_s_B,0,high_1,嘴巴
+102,body_part_mouth_s_B,0,high_1,肉洞
+103,body_part_mouth_s_B,0,high_1,口穴
+104,body_part_mouth_s_B,0,high_1,樱唇
+105,body_part_mouth_s_B,0,high_1,嘴唇
+105,body_part_mouth_s_B,0,high_1,嘴穴
 
-1000,bodypart_mouth_s_B,0,CVP_A2_T|102_E_1,小嘴
-1003,bodypart_mouth_s_B,0,CVP_A2_T|102_E_1,小口
-1004,bodypart_mouth_s_B,0,CVP_A2_T|102_E_1,嘴儿
-1005,bodypart_mouth_s_B,0,CVP_A2_T|102_E_1,樱口
+1000,body_part_mouth_s_B,0,CVP_A2_T|102_E_1,小嘴
+1003,body_part_mouth_s_B,0,CVP_A2_T|102_E_1,小口
+1004,body_part_mouth_s_B,0,CVP_A2_T|102_E_1,嘴儿
+1005,body_part_mouth_s_B,0,CVP_A2_T|102_E_1,樱口
 
-1030,bodypart_mouth_s_B,0,CVP_A2_T|103_E_1,小嘴
-1031,bodypart_mouth_s_B,0,CVP_A2_T|103_E_1,小口
-1032,bodypart_mouth_s_B,0,CVP_A2_T|103_E_1,嘴儿
+1030,body_part_mouth_s_B,0,CVP_A2_T|103_E_1,小嘴
+1031,body_part_mouth_s_B,0,CVP_A2_T|103_E_1,小口
+1032,body_part_mouth_s_B,0,CVP_A2_T|103_E_1,嘴儿
 
-1060,bodypart_mouth_s_B,0,CVP_A2_T|104_E_1,小嘴
+1060,body_part_mouth_s_B,0,CVP_A2_T|104_E_1,小嘴
 
-1170,bodypart_mouth_s_B,0,CVP_A2_T|106_E_1,骚嘴
-1171,bodypart_mouth_s_B,0,CVP_A2_T|106_E_1,淫嘴
-1172,bodypart_mouth_s_B,0,CVP_A2_T|106_E_1,淫口
+1170,body_part_mouth_s_B,0,CVP_A2_T|106_E_1,骚嘴
+1171,body_part_mouth_s_B,0,CVP_A2_T|106_E_1,淫嘴
+1172,body_part_mouth_s_B,0,CVP_A2_T|106_E_1,淫口
 
-1200,bodypart_mouth_s_B,0,CVP_A2_T|107_E_1,骚嘴
-1201,bodypart_mouth_s_B,0,CVP_A2_T|107_E_1,淫嘴
-1202,bodypart_mouth_s_B,0,CVP_A2_T|107_E_1,淫口
+1200,body_part_mouth_s_B,0,CVP_A2_T|107_E_1,骚嘴
+1201,body_part_mouth_s_B,0,CVP_A2_T|107_E_1,淫嘴
+1202,body_part_mouth_s_B,0,CVP_A2_T|107_E_1,淫口

@@ -3,20 +3,20 @@ cid,type_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 组件配置数据,,,,
-100,bodypart_penis_s_B,0,high_1,阴茎
-101,bodypart_penis_s_B,0,high_1,肉棒
-102,bodypart_penis_s_B,0,high_1,阳具
-104,bodypart_penis_s_B,0,high_1,肉棍
-105,bodypart_penis_s_B,0,high_1,性器
-106,bodypart_penis_s_B,0,high_1,肉柱
-107,bodypart_penis_s_B,0,high_1,男根
-108,bodypart_penis_s_B,0,high_1,肉茎
-109,bodypart_penis_s_B,0,high_1,鸡巴
+100,body_part_penis_s_B,0,high_1,阴茎
+101,body_part_penis_s_B,0,high_1,肉棒
+102,body_part_penis_s_B,0,high_1,阳具
+104,body_part_penis_s_B,0,high_1,肉棍
+105,body_part_penis_s_B,0,high_1,性器
+106,body_part_penis_s_B,0,high_1,肉柱
+107,body_part_penis_s_B,0,high_1,男根
+108,body_part_penis_s_B,0,high_1,肉茎
+109,body_part_penis_s_B,0,high_1,鸡巴
 
-1000,bodypart_penis_s_B,0,jj_0,鸡鸡
-1001,bodypart_penis_s_B,0,jj_0,小柱
+1000,body_part_penis_s_B,0,jj_0,鸡鸡
+1001,body_part_penis_s_B,0,jj_0,小柱
 
-1090,bodypart_penis_s_B,0,jj_3,巨茎
-1091,bodypart_penis_s_B,0,jj_3,巨物
-1092,bodypart_penis_s_B,0,jj_3,巨棒
-1093,bodypart_penis_s_B,0,jj_3,巨茎
+1090,body_part_penis_s_B,0,jj_3,巨茎
+1091,body_part_penis_s_B,0,jj_3,巨物
+1092,body_part_penis_s_B,0,jj_3,巨棒
+1093,body_part_penis_s_B,0,jj_3,巨茎
