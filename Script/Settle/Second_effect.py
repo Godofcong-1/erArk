@@ -94,14 +94,8 @@ def handle_add_1_nclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(10, 0)
-    character_data.experience[10] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(10, 0)
-    change_data.experience[10] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 10, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[0][0] += 1
         character_data.h_state.orgasm_count[0][1] += 1
@@ -121,14 +115,8 @@ def handle_add_1_bclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(11, 0)
-    character_data.experience[11] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(11, 0)
-    change_data.experience[11] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 11, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[1][0] += 1
         character_data.h_state.orgasm_count[1][1] += 1
@@ -147,14 +135,8 @@ def handle_add_1_cclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(12, 0)
-    character_data.experience[12] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(12, 0)
-    change_data.experience[12] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 12, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[2][0] += 1
         character_data.h_state.orgasm_count[2][1] += 1
@@ -198,14 +180,8 @@ def handle_add_1_vclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(14, 0)
-    character_data.experience[14] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(14, 0)
-    change_data.experience[14] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 14, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[4][0] += 1
         character_data.h_state.orgasm_count[4][1] += 1
@@ -224,14 +200,8 @@ def handle_add_1_aclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(15, 0)
-    character_data.experience[15] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(15, 0)
-    change_data.experience[15] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 15, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[5][0] += 1
         character_data.h_state.orgasm_count[5][1] += 1
@@ -250,14 +220,8 @@ def handle_add_1_uclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(16, 0)
-    character_data.experience[16] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(16, 0)
-    change_data.experience[16] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 16, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[6][0] += 1
         character_data.h_state.orgasm_count[6][1] += 1
@@ -276,14 +240,8 @@ def handle_add_1_wclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(17, 0)
-    character_data.experience[17] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(17, 0)
-    change_data.experience[17] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 17, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
         character_data.h_state.orgasm_count[7][0] += 1
         character_data.h_state.orgasm_count[7][1] += 1
@@ -3537,17 +3495,11 @@ def handle_add_1_mclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(156, 0)
-    character_data.experience[156] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(156, 0)
-    change_data.experience[156] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 156, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
-        character_data.h_state.orgasm_count[8][0] += 1
-        character_data.h_state.orgasm_count[8][1] += 1
+        character_data.h_state.orgasm_count[21][0] += 1
+        character_data.h_state.orgasm_count[21][1] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_FClimax_EXPERIENCE)
@@ -3564,17 +3516,11 @@ def handle_add_1_fclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(157, 0)
-    character_data.experience[157] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(157, 0)
-    change_data.experience[157] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 157, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
-        character_data.h_state.orgasm_count[9][0] += 1
-        character_data.h_state.orgasm_count[9][1] += 1
+        character_data.h_state.orgasm_count[22][0] += 1
+        character_data.h_state.orgasm_count[22][1] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_HClimax_EXPERIENCE)
@@ -3591,17 +3537,11 @@ def handle_add_1_hclimax_experience(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    character_data.experience.setdefault(158, 0)
-    character_data.experience[158] += 1
-    character_data.experience.setdefault(20, 0)
-    character_data.experience[20] += 1
-    change_data.experience.setdefault(158, 0)
-    change_data.experience[158] += 1
-    change_data.experience.setdefault(20, 0)
-    change_data.experience[20] += 1
+    default.base_chara_experience_common_settle(character_id, 158, change_data)
+    default.base_chara_experience_common_settle(character_id, 20, change_data)
     if character_data.sp_flag.is_h == 1:
-        character_data.h_state.orgasm_count[10][0] += 1
-        character_data.h_state.orgasm_count[10][1] += 1
+        character_data.h_state.orgasm_count[23][0] += 1
+        character_data.h_state.orgasm_count[23][1] += 1
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_1_M_EXPERIENCE)

@@ -894,29 +894,29 @@ class SecondEffect:
     """ 必须计算但不必须显示的空白结算 """
 
     ADD_1_NClimax_EXPERIENCE = 210
-    """ 增加1S绝顶经验 """
+    """ 增加1S绝顶相关经验 """
     ADD_1_BClimax_EXPERIENCE = 211
-    """ 增加1B绝顶经验 """
+    """ 增加1B绝顶相关经验 """
     ADD_1_CClimax_EXPERIENCE = 212
-    """ 增加1C绝顶经验 """
+    """ 增加1C绝顶相关经验 """
     # ADD_1_PClimax_EXPERIENCE = 213
     # """ 增加1P绝顶经验 """
     ADD_1_VClimax_EXPERIENCE = 214
-    """ 增加1V绝顶经验 """
+    """ 增加1V绝顶相关经验 """
     ADD_1_AClimax_EXPERIENCE = 215
-    """ 增加1A绝顶经验 """
+    """ 增加1A绝顶相关经验 """
     ADD_1_UClimax_EXPERIENCE = 216
-    """ 增加1U绝顶经验 """
+    """ 增加1U绝顶相关经验 """
     ADD_1_WClimax_EXPERIENCE = 217
-    """ 增加1W绝顶经验 """
+    """ 增加1W绝顶相关经验 """
     ADD_1_MClimax_EXPERIENCE = 218
-    """ 增加1M绝顶经验 """
+    """ 增加1M绝顶相关经验 """
     ADD_1_FClimax_EXPERIENCE = 219
-    """ 增加1F绝顶经验 """
+    """ 增加1F绝顶相关经验 """
     ADD_1_HClimax_EXPERIENCE = 220
-    """ 增加1H绝顶经验 """
+    """ 增加1H绝顶相关经验 """
     ADD_1_Cumming_EXPERIENCE = 221
-    """ 增加1射精经验 """
+    """ 增加1射精相关经验 """
     ADD_1_Milking_EXPERIENCE = 222
     """ 增加1喷乳经验 """
     ADD_1_Peeing_EXPERIENCE = 223
