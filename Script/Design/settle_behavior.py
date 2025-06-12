@@ -348,8 +348,6 @@ def handle_instruct_data(
     if character_id == 0 and now_character_data.target_character_id != 0:
         target_change: game_type.TargetChange = change_data.target_change[now_character_data.target_character_id]
         check_second_effect(now_character_data.target_character_id, target_change, pl_to_npc = True)
-    # 进行无意识结算
-    check_unconscious_effect(character_id, add_time, change_data, now_time)
     # 进行额外经验结算
     extra_exp_settle(character_id, change_data)
     return change_data
@@ -702,65 +700,6 @@ def must_settle_check(character_id: int):
                         constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
                 # 触发后该行为值归零
                 character_data.second_behavior[second_behavior_id] = 0
-
-
-def check_unconscious_effect(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    处理无意识结算
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 行动已经过时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算时间
-    """
-    from Script.Settle import common_default
-
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_character_id = character_data.target_character_id
-    target_character_data: game_type.Character = cache.character_data[target_character_id]
-    change_data.target_change.setdefault(target_character_data.cid, game_type.TargetChange())
-    target_change: game_type.TargetChange = change_data.target_change[target_character_id]
-    # target_change: game_type.TargetChange = status_data.target_change[target_character_id]
-    # print()
-    # print("进入无意识结算")
-
-    # 玩家对交互目标进行结算
-    if character_id == 0 and target_character_id != 0:
-        # 目标处于无意识状态
-        if handle_premise.handle_unconscious_flag_ge_1(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
-            # 经验结算
-            for experience_id in target_change.experience.copy():
-                experience_type = game_config.config_experience[experience_id].type
-                # 普通部位
-                if experience_type == 1:
-                    # 根据经验序号转化为对应的经验id
-                    new_exp_id = game_config.config_experience_relations[experience_id].unconscious_exp_id
-                    common_default.base_chara_experience_common_settle(character_id, new_exp_id, target_flag=True, change_data = change_data)
-                # 绝顶经验
-                elif experience_type == 2:
-                    common_default.base_chara_experience_common_settle(character_id, 78, target_flag=True, change_data = change_data)
-                # 性交经验
-                elif experience_type == 3:
-                    common_default.base_chara_experience_common_settle(character_id, 79, target_flag=True, change_data = change_data)
-                    # 睡姦经验与被睡姦经验
-                    if handle_premise.handle_unconscious_flag_1(target_character_id):
-                        common_default.base_chara_experience_common_settle(character_id, 120, change_data = change_data)
-                        common_default.base_chara_experience_common_settle(character_id, 121, target_flag=True, change_data = change_data)
-                    # 催眠姦经验与被催眠姦经验
-                    elif handle_premise.handle_unconscious_hypnosis_flag(target_character_id):
-                        common_default.base_chara_experience_common_settle(character_id, 126, change_data = change_data)
-                        common_default.base_chara_experience_common_settle(character_id, 127, target_flag=True, change_data = change_data)
-                    # 时姦经验与被时姦经验
-                    elif handle_premise.handle_unconscious_flag_3(target_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(target_character_id):
-                        common_default.base_chara_experience_common_settle(character_id, 124, change_data = change_data)
-                        common_default.base_chara_experience_common_settle(character_id, 125, target_flag=True, change_data = change_data)
-
-    return target_character_data.sp_flag.unconscious_h
 
 
 def extra_exp_settle(
@@ -1495,6 +1434,7 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
     """
     from Script.UI.Panel import event_option_panel
     from Script.Design import character
+    from Script.Settle import common_default
 
     character_data: game_type.Character = cache.character_data[character_id]
     # print(f"debug character_id = {character_id}, effect_all_value_list = {effect_all_value_list}")
@@ -1571,18 +1511,23 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         # 信赖
         elif attribute_name == "trust":
             final_character_data.trust = operation_func(final_character_data.trust, int(effect_all_value_list[3]))
+        # 经验
+        elif attribute_name == "experience" and operation in ["G", "L"]:
+            exp_value = int(effect_all_value_list[3])
+            if operation == "L":
+                exp_value = -int(effect_all_value_list[3])
+            common_default.base_chara_experience_common_settle(final_character_id, type_son_id, base_value = exp_value, change_data = final_change_data)
         # 角色口上flag
         elif attribute_name == "flag":
             final_character_data.author_flag.chara_int_flag_dict.setdefault(type_son_id, 0)
             final_character_data.author_flag.chara_int_flag_dict[type_son_id] = operation_func(final_character_data.author_flag.chara_int_flag_dict[type_son_id], int(effect_all_value_list[3]))
         # 绝顶
         elif attribute_name == "climax":
-            from Script.Settle.default import base_chara_climix_common_settle
             if operation == "E":
-                base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
+                common_default.base_chara_climix_common_settle(final_character_id, type_son_id, degree = int(effect_all_value_list[3]))
             elif operation == "G":
                 for i in range(int(effect_all_value_list[3]) + 1):
-                    base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
+                    common_default.base_chara_climix_common_settle(final_character_id, type_son_id,  degree = i)
         # 父子嵌套事件
         elif attribute_name == "father":
             # print(f"debug effect_all_value_list = {effect_all_value_list}")

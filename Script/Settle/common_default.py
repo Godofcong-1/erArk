@@ -872,6 +872,7 @@ def base_chara_experience_common_settle(
     change_data_to_target_change -- 交互对象结算信息记录对象
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    experience_type = game_config.config_experience[experience_id].type
     final_character_id = character_id
     if character_data.dead:
         return
@@ -880,10 +881,38 @@ def base_chara_experience_common_settle(
         final_character_id = character_data.target_character_id
         character_data = cache.character_data[final_character_id]
 
-    # 深度无意识下部分经验不结算
-    conscious_experience_set = {30, 31, 32, 33, 34}
-    if experience_id in conscious_experience_set and not handle_premise.handle_normal_6(final_character_id):
+    # 深度无意识下心理经验不结算
+    if experience_type == 7 and not handle_premise.handle_normal_6(final_character_id):
         return
+
+    # 结算无意识经验
+    if (
+        final_character_id != 0 and
+        handle_premise.handle_unconscious_flag_ge_1(final_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(final_character_id)
+        ):
+        # 普通部位
+        if experience_type == 1:
+            # 根据经验序号转化为对应的经验id
+            new_exp_id = game_config.config_experience_relations[experience_id].unconscious_exp_id
+            base_chara_experience_common_settle(final_character_id, new_exp_id, change_data = change_data)
+        # 绝顶经验
+        elif experience_type == 2:
+            base_chara_experience_common_settle(final_character_id, 78, change_data = change_data)
+        # 性交经验
+        elif experience_type == 3:
+            base_chara_experience_common_settle(final_character_id, 79, change_data = change_data)
+            # 睡姦经验与被睡姦经验
+            if handle_premise.handle_unconscious_flag_1(final_character_id):
+                base_chara_experience_common_settle(0, 120, change_data = change_data)
+                base_chara_experience_common_settle(final_character_id, 121, change_data = change_data)
+            # 催眠姦经验与被催眠姦经验
+            elif handle_premise.handle_unconscious_hypnosis_flag(final_character_id):
+                base_chara_experience_common_settle(0, 126, change_data = change_data)
+                base_chara_experience_common_settle(final_character_id, 127, change_data = change_data)
+            # 时姦经验与被时姦经验
+            elif handle_premise.handle_unconscious_flag_3(final_character_id) or handle_premise.handle_self_time_stop_orgasm_relase(final_character_id):
+                base_chara_experience_common_settle(0, 124, change_data = change_data)
+                base_chara_experience_common_settle(final_character_id, 125, change_data = change_data)
 
     # 结算最终值
     character_data.experience.setdefault(experience_id, 0)
@@ -896,8 +925,8 @@ def base_chara_experience_common_settle(
         change_data.target_change.setdefault(final_character_id, game_type.TargetChange())
         final_change_data: game_type.TargetChange = change_data.target_change[final_character_id]
     elif change_data_to_target_change != None:
-        change_data_to_target_change.target_change.setdefault(character_id, game_type.TargetChange())
-        final_change_data: game_type.TargetChange = change_data_to_target_change.target_change[character_id]
+        change_data_to_target_change.target_change.setdefault(final_character_id, game_type.TargetChange())
+        final_change_data: game_type.TargetChange = change_data_to_target_change.target_change[final_character_id]
 
     # 结算信息记录对象增加经验
     if final_change_data != None:
