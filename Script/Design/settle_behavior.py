@@ -884,7 +884,7 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
             extra_orgasm_dict[orgasm] = 0
             un_count_orgasm_dict[orgasm] = 0
             # 饮精绝顶
-            if orgasm == 0 and character_data.talent[31]:
+            if orgasm == 21 and character_data.talent[31]:
                 if character_data.h_state.shoot_position_body in [2, 15]:
                     un_count_data += 1
             un_count_orgasm_dict[orgasm] = un_count_data
