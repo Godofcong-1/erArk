@@ -272,6 +272,8 @@ class BookType:
     """ 书本大类 """
     son_type_name: str
     """ 书本小类 """
+    exp_id: int
+    """ 对应经验id """
 
 
 class Book_Excerpt:
@@ -291,6 +293,23 @@ class Book_Excerpt:
     """ 内容节选4 """
     excerpt5: str
     """ 内容节选5 """
+
+
+class Book_Extended:
+    """ 书籍配置表 """
+
+    cid: int
+    """ 书本id """
+    name: str
+    """ 名字 """
+    type: int
+    """ 类型 """
+    difficulty: int
+    """ 难度 """
+    use: int
+    """ 特殊用途 """
+    info: str
+    """ 介绍 """
 
 
 class CharacterState:

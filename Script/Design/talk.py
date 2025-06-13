@@ -168,13 +168,13 @@ def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id 
         now_talk = game_config.config_talk[now_talk_id].context
         now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
+        # 玩家读书时额外绘制当前书籍的内容节选
+        if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
+            from Script.UI.Panel import read_book_panel
+            read_book_panel.draw_book_fragment(character_data.behavior.book_id)
     # 二段结算前会单独绘制一个信息文本
     if second_behavior_id != "":
         second_behavior_info_text(character_id, second_behavior_id)
-    # 玩家读书时额外绘制当前书籍的内容节选
-    if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
-        from Script.UI.Panel import read_book_panel
-        read_book_panel.draw_book_fragment(character_data.behavior.book_id)
     if now_talk != "":
         # 检测是否需要跳过
         not_draw_flag = check_not_draw_talk(character_id, now_behavior_id, unusual_talk_flag)

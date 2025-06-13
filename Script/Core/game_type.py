@@ -726,6 +726,8 @@ class CHARA_ENTERTAINMENT:
         """ 角色归还当前阅读书籍的可能性比例 """
         self.board_game_settle_data: list = [0, 0]
         """ 桌游结算用数据，0桌游类型(0无，1五子棋)，1AI难度(0最简单，越高越难) """
+        self.read_book_progress: Dict[int, int] = {}
+        """ 已阅读书籍进度记录，int键为书籍编号，int值为阅读进度，100为阅读完毕 """
 
 
 class PLAYER_COLLECTION:

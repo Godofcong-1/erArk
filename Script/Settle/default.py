@@ -2,7 +2,7 @@ import datetime
 import random, math
 from types import FunctionType
 
-from numpy import add
+from numpy import add, info
 from Script.Design import (
     settle_behavior,
     instuct_judege,
@@ -7755,40 +7755,64 @@ def handle_read_add_adjust(
         return
     book_id = character_data.behavior.book_id
     book_data = game_config.config_book[book_id]
+    difficulty = book_data.difficulty
     book_type = book_data.type
-    experience_index_set = set()
-    experience_index_set.add(92)
-    # 技能书籍的额外经验增长
-    if book_type == 11:
-        experience_index_set.add(80)
-    elif book_type == 12:
-        experience_index_set.add(87)
-    elif book_type == 13:
-        experience_index_set.add(81)
-    elif book_type == 14:
-        experience_index_set.add(83)
-    elif book_type == 15:
-        experience_index_set.add(85)
-    elif book_type == 16:
-        experience_index_set.add(82)
-    elif book_type == 17:
-        experience_index_set.add(88)
-    elif book_type == 18:
-        experience_index_set.add(89)
-    elif book_type == 19:
-        experience_index_set.add(90)
-    elif book_type == 20:
-        experience_index_set.add(91)
-    # 色情书籍额外加色情阅读经验
-    elif 31 <= book_type <= 59:
-        experience_index_set.add(93)
+    exp_id = game_config.config_book_type[book_type].exp_id
+
+    # 经验结算
+    experience_index_list = []
+    experience_index_list.append(92)
+    # 书籍的额外经验增长
+    for i in range(difficulty):
+        if exp_id != 0:
+            experience_index_list.append(exp_id)
 
     # 遍历集合增加对应经验
-    for experience_index in experience_index_set:
+    for experience_index in experience_index_list:
         base_chara_experience_common_settle(character_id, experience_index, 1, change_data = change_data)
         # 如果有交互对象，则交互对象也加
         if character_data.target_character_id != character_id:
             base_chara_experience_common_settle(character_data.target_character_id, experience_index, 1, change_data = change_data)
+
+    # 结算书籍的阅读进度
+    character_data.entertainment.read_book_progress.setdefault(book_id, 0)
+    info_text = _("\n{0}阅读了{1}，").format(character_data.name, book_data.name)
+    if character_data.entertainment.read_book_progress[book_id] < 100:
+        base = 5
+        adjust = attr_calculation.get_ability_adjust(character_data.ability[45]) / difficulty
+        # 计算阅读进度
+        read_progress = int(base * adjust * random.uniform(0.5, 1.5))
+        old_progress = character_data.entertainment.read_book_progress[book_id]
+        character_data.entertainment.read_book_progress[book_id] += read_progress
+        # 绘制提示信息
+        info_text += _("阅读进度增加了{0}%，从{1}%增加到{2}%").format(read_progress, old_progress, character_data.entertainment.read_book_progress[book_id])
+        # 如果阅读进度大于等于100，则结算读完的奖励
+        if character_data.entertainment.read_book_progress[book_id] >= 100 or cache.debug_mode:
+            character_data.entertainment.read_book_progress[book_id] = 100
+            # 如果是技能书籍，则增加对应技能的经验
+            if exp_id != 0:
+                if difficulty == 1:
+                    add_value = 10
+                elif difficulty == 2:
+                    add_value = 20
+                elif difficulty == 3:
+                    add_value = 40
+                base_chara_experience_common_settle(character_id, exp_id, add_value, change_data = change_data)
+            # 结算习得
+            extra_adjust = difficulty * difficulty
+            base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = extra_adjust, change_data = change_data)
+            # 绘制信息
+            info_text += _("，读完了这本书，获得了大量的知识和经验。\n")
+        else:
+            info_text += "。\n"
+    else:
+        info_text += _("不过已经读完过了，无法再增加阅读进度。\n")
+    # 仅在是玩家的情况下输出该提示信息
+    if character_id == 0:
+        info_draw = draw.NormalDraw()
+        info_draw.text = info_text
+        info_draw.style = 'gold_enrod'
+        info_draw.draw()
 
     # NPC的还书判定
     if character_id:
