@@ -255,6 +255,8 @@ class Book:
     """ 名字 """
     type: int
     """ 类型 """
+    difficulty: int
+    """ 难度 """
     use: int
     """ 特殊用途 """
     info: str
@@ -270,6 +272,25 @@ class BookType:
     """ 书本大类 """
     son_type_name: str
     """ 书本小类 """
+
+
+class Book_Excerpt:
+    """ 书籍节选配置表 """
+
+    cid: int
+    """ 书本id """
+    name: str
+    """ 名字 """
+    excerpt1: str
+    """ 内容节选1 """
+    excerpt2: str
+    """ 内容节选2 """
+    excerpt3: str
+    """ 内容节选3 """
+    excerpt4: str
+    """ 内容节选4 """
+    excerpt5: str
+    """ 内容节选5 """
 
 
 class CharacterState:

@@ -540,7 +540,8 @@ def handle_borrow_book():
     })
 def handle_read_book():
     """处理读书指令"""
-    now_draw = normal_panel.Read_Book_Panel(width)
+    from Script.UI.Panel import read_book_panel
+    now_draw = read_book_panel.Read_Book_Panel(width)
     now_draw.draw()
 
 

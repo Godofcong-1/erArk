@@ -45,6 +45,10 @@ config_book_type: Dict[int, config_def.BookType] = {}
 """ 书籍类型配表数据 """
 config_book_type_name_data: Dict[str, Set] = {}
 """ 书籍类型配表数据集合 父类型名:子类型名 """
+config_book_excerpt_data: Dict[int, config_def.Book_Excerpt] = {}
+""" 书籍摘录数据 """
+config_book_excerpt_list: Dict[int, List] = {}
+""" 书籍摘录的列表 """
 config_board_game: Dict[int, config_def.Board_Game] = {}
 """ 桌游类型数据 """
 config_character_state: Dict[int, config_def.CharacterState] = {}
@@ -739,6 +743,22 @@ def load_book_type():
         config_book_type[now_type.cid] = now_type
         config_book_type_name_data.setdefault(now_type.father_type_name, set())
         config_book_type_name_data[now_type.father_type_name].add(now_type.son_type_name)
+
+
+def load_book_excerpt():
+    """载入书籍摘录配置数据"""
+    now_data = config_data["Book_Excerpt"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Book_Excerpt()
+        now_tem.__dict__ = tem_data
+        config_book_excerpt_data[now_tem.cid] = now_tem
+        config_book_excerpt_list.setdefault(now_tem.cid, [])
+        config_book_excerpt_list[now_tem.cid].append(now_tem.excerpt1)
+        config_book_excerpt_list[now_tem.cid].append(now_tem.excerpt2)
+        config_book_excerpt_list[now_tem.cid].append(now_tem.excerpt3)
+        config_book_excerpt_list[now_tem.cid].append(now_tem.excerpt4)
+        config_book_excerpt_list[now_tem.cid].append(now_tem.excerpt5)
 
 
 def load_board_game():
@@ -1774,6 +1794,7 @@ def init():
     load_behavior_effect_data()
     load_book_data()
     load_book_type()
+    load_book_excerpt()
     load_board_game()
     load_character_state_data()
     load_character_state_type_data()

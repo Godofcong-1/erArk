@@ -3541,7 +3541,7 @@ msgid "《世间的美与丑》"
 msgstr ""
 
 #: .\data\csv\Book.csv:14
-msgid "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为“本世代的艺术大典”。\n然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为“血钻”的刺客谋害。"
+msgid "十五年前出版于维多利亚的传奇书籍，这本书简单地记述了作者对审美的理解，记载了大量文学、艺术、音乐相关的知识与历史。该书的内容涵盖古今，通俗易懂，被誉为\"本世代的艺术大典\"。\n然而据说该书的作者只是某个小剧团的剧团长，数年前被一个代号为\"血钻\"的刺客谋害。"
 msgstr ""
 
 #: .\data\csv\Book.csv:15
@@ -3549,167 +3549,327 @@ msgid "《无名诗集》"
 msgstr ""
 
 #: .\data\csv\Book.csv:15
-msgid "“酒杯的碎屑在我皮肉里欢唱，鲜血自指缝间攀上脊索。饮下尖锐的晶莹光彩，脏腑随之璨烂流落。”"
+msgid "酒杯的碎屑在我皮肉里欢唱，鲜血自指缝间攀上脊索。饮下尖锐的晶莹光彩，脏腑随之璨烂流落。"
 msgstr ""
 
 #: .\data\csv\Book.csv:17
-msgid "测试书籍_技能_话术"
+msgid "《罗德岛社交礼仪指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:17
+msgid "一本专为罗德岛干员编写的社交礼仪手册，内容包括如何与不同种族的干员愉快相处，以及在各种场合下的基本礼仪规范。"
 msgstr ""
 
 #: .\data\csv\Book.csv:18
-msgid "测试书籍_技能_指挥"
+msgid "《小队指挥基础》"
+msgstr ""
+
+#: .\data\csv\Book.csv:18
+msgid "罗德岛培训部门编写的指挥入门书籍，用简单易懂的语言介绍了小队作战的基本指挥原则和沟通技巧。"
 msgstr ""
 
 #: .\data\csv\Book.csv:19
-msgid "测试书籍_技能_战斗"
+msgid "《基础格斗技巧》"
+msgstr ""
+
+#: .\data\csv\Book.csv:19
+msgid "一本图文并茂的格斗入门书，详细介绍了各种基础的防身术和简单的攻击技巧，适合初学者练习。"
 msgstr ""
 
 #: .\data\csv\Book.csv:20
-msgid "测试书籍_技能_料理"
+msgid "《舰船厨房料理大全》"
+msgstr ""
+
+#: .\data\csv\Book.csv:20
+msgid "专门为在移动舰船上生活的人员编写的料理指南，介绍了如何在有限的空间和食材条件下制作美味营养的餐食。"
 msgstr ""
 
 #: .\data\csv\Book.csv:21
-msgid "测试书籍_技能_音乐"
+msgid "《泰拉大陆民谣集》"
+msgstr ""
+
+#: .\data\csv\Book.csv:21
+msgid "收录了泰拉大陆各国最受欢迎的民谣和简单乐器演奏技巧，适合音乐爱好者入门学习。"
 msgstr ""
 
 #: .\data\csv\Book.csv:22
-msgid "测试书籍_技能_学识"
+msgid "《泰拉常识百科》"
+msgstr ""
+
+#: .\data\csv\Book.csv:22
+msgid "一本涵盖泰拉大陆基础地理、历史、文化常识的通俗读物，是了解这个世界的入门书籍。"
 msgstr ""
 
 #: .\data\csv\Book.csv:23
-msgid "测试书籍_技能_医疗"
+msgid "《罗德岛医疗常识》"
+msgstr ""
+
+#: .\data\csv\Book.csv:23
+msgid "罗德岛医疗部门编写的基础医疗知识手册，介绍了常见疾病的预防和简单治疗方法。"
 msgstr ""
 
 #: .\data\csv\Book.csv:24
-msgid "测试书籍_技能_农业"
+msgid "《移动城市农业技术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:24
+msgid "介绍了在移动城市环境下进行农业生产的基础技术，包括水培、无土栽培等适合舰船环境的种植方法。"
 msgstr ""
 
 #: .\data\csv\Book.csv:25
-msgid "测试书籍_技能_制造"
+msgid "《简易工具制作指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:25
+msgid "教授如何使用常见材料制作日常生活中需要的简单工具和用品，适合初学者掌握基本制造技能。"
 msgstr ""
 
 #: .\data\csv\Book.csv:26
-msgid "测试书籍_技能_绘画"
+msgid "《素描入门教程》"
+msgstr ""
+
+#: .\data\csv\Book.csv:26
+msgid "一本图文并茂的绘画入门书，从最基础的线条练习开始，逐步教授素描的基本技巧。"
 msgstr ""
 
 #: .\data\csv\Book.csv:28
-msgid "测试书籍_色情_手交"
+msgid "《爱抚的艺术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:28
+msgid "一本详细介绍手部爱抚技巧的成人读物，通过图文并茂的方式展示了如何用手指挑起伴侣的欲望，书中包含了各种手法和角度的详细描述，让读者能够轻松掌握这门古老而神秘的技艺。"
 msgstr ""
 
 #: .\data\csv\Book.csv:29
-msgid "测试书籍_色情_口交"
+msgid "《唇舌之欢》"
+msgstr ""
+
+#: .\data\csv\Book.csv:29
+msgid "这本书以大胆直白的语言描述了口部服务的各种技巧，从基础到进阶，一应俱全，特别强调了如何通过唇舌的配合带给伴侣极致的快感，读来令人血脉偾张。"
 msgstr ""
 
 #: .\data\csv\Book.csv:30
-msgid "测试书籍_色情_足交"
+msgid "《玉足诱惑》"
+msgstr ""
+
+#: .\data\csv\Book.csv:30
+msgid "一本专门讲述足部情趣的图文指南，详细描述了如何利用双足挑逗伴侣的敏感部位，书中精美的插图和露骨的文字描述完美结合，让人一边阅读一边沉浸在激情的幻想中。"
 msgstr ""
 
 #: .\data\csv\Book.csv:31
-msgid "测试书籍_色情_乳交"
+msgid "《丰满之间》"
+msgstr ""
+
+#: .\data\csv\Book.csv:31
+msgid "这本通俗易懂的成人指南详细介绍了胸部按摩和抚弄技巧，以及如何在丰满的双峰之间创造愉悦体验，内容生动直白，配图丰富，让读者仿佛能感受到那柔软与温暖。"
 msgstr ""
 
 #: .\data\csv\Book.csv:32
-msgid "测试书籍_色情_本番"
+msgid "《欢爱指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:32
+msgid "一本毫无遮掩地描述男女交合之事的实用手册，内容涵盖各种姿势和技巧，从浅入深地讲解如何增进彼此的满足感，文字描述细腻入微，令人读后心跳加速，欲罢不能。"
 msgstr ""
 
 #: .\data\csv\Book.csv:33
-msgid "测试书籍_色情_肛交"
+msgid "《禁忌之门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:33
+msgid "这是一本探索特殊情趣的入门书籍，用直白的语言和详细的图解向读者展示了后门之欢的各种技巧和注意事项，内容大胆露骨，充满对禁忌领域的详尽描述，让人读后心驰神往。"
 msgstr ""
 
 #: .\data\csv\Book.csv:34
-msgid "测试书籍_色情_榨精"
+msgid "《极乐榨取术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:34
+msgid "一本专注于描述如何让伴侣达到极致快感并不断释放的专业指南，书中详细介绍了各种榨取技巧和持久战术，文字描述香艳露骨，令人读后心神摇曳，体验阅读的极度快感。"
 msgstr ""
 
 #: .\data\csv\Book.csv:36
-msgid "测试书籍_色情_纯爱"
+msgid "《龙门的雨是初恋的味道》"
+msgstr ""
+
+#: .\data\csv\Book.csv:36
+msgid "一本描写纯真爱情的小说，讲述了两位年轻人在龙门相遇相知相恋的甜蜜故事，情节温馨感人。"
 msgstr ""
 
 #: .\data\csv\Book.csv:37
-msgid "测试书籍_色情_后宫"
+msgid "《总督的三位夫人》"
+msgstr ""
+
+#: .\data\csv\Book.csv:37
+msgid "以某个移动城市总督为主角的小说，描述了他与三位不同性格女性的复杂情感关系。"
 msgstr ""
 
 #: .\data\csv\Book.csv:38
-msgid "测试书籍_色情_萝莉"
+msgid "《小天使的秘密日记》"
+msgstr ""
+
+#: .\data\csv\Book.csv:38
+msgid "一本以年幼的萝莉角色为主角的小说，内容涉及她的成长烦恼和初次体验，在某些圈子里颇受欢迎。"
 msgstr ""
 
 #: .\data\csv\Book.csv:39
-msgid "测试书籍_色情_强奸"
+msgid "《乌萨斯的征服者》"
+msgstr ""
+
+#: .\data\csv\Book.csv:39
+msgid "一本以乌萨斯军官为主角的小说，描述了战争中发生的强制性情节，尤其是对女战俘的性拷问，内容相当激烈。"
 msgstr ""
 
 #: .\data\csv\Book.csv:40
-msgid "测试书籍_色情_逆强奸"
+msgid "《女王的反击》"
+msgstr ""
+
+#: .\data\csv\Book.csv:40
+msgid "讲述了一位强势的萨尔贡女王如何主导情感关系的小说，颠覆了传统的角色设定，情节颇为大胆。"
 msgstr ""
 
 #: .\data\csv\Book.csv:41
-msgid "测试书籍_色情_怀孕与母乳"
+msgid "《母亲的光辉》"
+msgstr ""
+
+#: .\data\csv\Book.csv:41
+msgid "以怀孕和育儿为主题的成人小说，描述了女性在这一特殊时期的身心变化和相关体验。"
 msgstr ""
 
 #: .\data\csv\Book.csv:42
-msgid "测试书籍_色情_角色扮演"
+msgid "《角色扮演游戏》"
+msgstr ""
+
+#: .\data\csv\Book.csv:42
+msgid "一本介绍各种角色扮演情节的小说，包含了医生与病人、老师与学生等各种设定。"
 msgstr ""
 
 #: .\data\csv\Book.csv:43
-msgid "测试书籍_色情_情趣服装"
+msgid "《时尚的诱惑》"
+msgstr ""
+
+#: .\data\csv\Book.csv:43
+msgid "以各种特殊服装为主题的小说，描述了不同服装所带来的独特魅力和体验。"
 msgstr ""
 
 #: .\data\csv\Book.csv:44
-msgid "测试书籍_色情_调教与凌辱"
+msgid "《驯服的艺术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:44
+msgid "一本探讨主从关系的小说，详细描述了各种调教和支配的情节，内容相当刺激。"
 msgstr ""
 
 #: .\data\csv\Book.csv:45
-msgid "测试书籍_色情_近亲"
+msgid "《血缘的禁忌》"
+msgstr ""
+
+#: .\data\csv\Book.csv:45
+msgid "一本涉及禁忌关系的小说，讲述了家族内部发生的复杂情感纠葛，内容颇具争议性。"
 msgstr ""
 
 #: .\data\csv\Book.csv:46
-msgid "测试书籍_色情_露出"
+msgid "《公开的秘密》"
+msgstr ""
+
+#: .\data\csv\Book.csv:46
+msgid "以在公共场所进行隐秘行为为主题的小说，描述了各种刺激的露出体验。"
 msgstr ""
 
 #: .\data\csv\Book.csv:47
-msgid "测试书籍_色情_成人玩具"
+msgid "《特殊道具使用指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:47
+msgid "一本介绍各种特殊用品的使用方法和体验的书籍，内容相当详细和实用。"
 msgstr ""
 
 #: .\data\csv\Book.csv:48
-msgid "测试书籍_色情_校园"
+msgid "《校园春色》"
+msgstr ""
+
+#: .\data\csv\Book.csv:48
+msgid "以学校为背景的成人小说，讲述了在校园环境中发生的各种浪漫和刺激的故事。"
 msgstr ""
 
 #: .\data\csv\Book.csv:50
-msgid "测试书籍_娱乐_童话绘本"
+msgid "《乔弗瑞古今童话集》精装本"
+msgstr ""
+
+#: .\data\csv\Book.csv:50
+msgid "经典童话的精装本，收录了乔弗瑞的所有童话作品，是一本非常适合家庭阅读的书籍。"
 msgstr ""
 
 #: .\data\csv\Book.csv:51
-msgid "测试书籍_娱乐_科幻小说/漫画"
+msgid "《哥伦比亚科幻文学精选》"
+msgstr ""
+
+#: .\data\csv\Book.csv:51
+msgid "哥伦比亚现代科幻作家的作品合集，想象了源石技术进一步发展的未来世界。"
 msgstr ""
 
 #: .\data\csv\Book.csv:52
-msgid "测试书籍_娱乐_推理小说/漫画"
+msgid "《维多利亚推理小说经典》"
+msgstr ""
+
+#: .\data\csv\Book.csv:52
+msgid "维多利亚著名推理作家的代表作品，以严密的逻辑和精巧的情节著称。"
 msgstr ""
 
 #: .\data\csv\Book.csv:53
-msgid "测试书籍_娱乐_武侠小说/漫画"
+msgid "《炎国武侠传奇》"
+msgstr ""
+
+#: .\data\csv\Book.csv:53
+msgid "炎国古典武侠小说选集，讲述了江湖豪杰的恩怨情仇和武学传承。"
 msgstr ""
 
 #: .\data\csv\Book.csv:54
-msgid "测试书籍_娱乐_仙侠小说/漫画"
+msgid "《炎国仙侠演义》"
+msgstr ""
+
+#: .\data\csv\Book.csv:54
+msgid "以炎国古代神话为背景的仙侠小说，充满了神秘的法术和超凡的境界。"
 msgstr ""
 
 #: .\data\csv\Book.csv:55
-msgid "测试书籍_娱乐_言情小说/漫画"
+msgid "《卡西米尔骑士恋歌》"
+msgstr ""
+
+#: .\data\csv\Book.csv:55
+msgid "以卡西米尔骑士为主角的浪漫爱情小说，描绘了骑士与贵族小姐的爱情故事。"
 msgstr ""
 
 #: .\data\csv\Book.csv:56
-msgid "测试书籍_娱乐_悬疑小说/漫画"
+msgid "《雷姆必拓悬疑档案》"
+msgstr ""
+
+#: .\data\csv\Book.csv:56
+msgid "以雷姆必拓都市为背景的悬疑小说集，情节紧张刺激，充满都市传说色彩。"
 msgstr ""
 
 #: .\data\csv\Book.csv:57
-msgid "测试书籍_娱乐_历史小说/漫画"
+msgid "《乌萨斯帝国兴衰史》"
+msgstr ""
+
+#: .\data\csv\Book.csv:57
+msgid "以乌萨斯帝国历史为背景的历史小说，再现了帝国的辉煌与衰落。"
 msgstr ""
 
 #: .\data\csv\Book.csv:58
-msgid "测试书籍_娱乐_军事小说/漫画"
+msgid "《黑钢国际战争纪实》"
+msgstr ""
+
+#: .\data\csv\Book.csv:58
+msgid "记录黑钢国际参与的各场冲突的军事文学作品，展现了现代战争的残酷。"
 msgstr ""
 
 #: .\data\csv\Book.csv:59
-msgid "测试书籍_娱乐_诗歌"
+msgid "《萨卡兹古诗集》"
+msgstr ""
+
+#: .\data\csv\Book.csv:59
+msgid "收录萨卡兹族古老诗歌的文学作品，语言古朴，意境深远。"
 msgstr ""
 
 #: .\data\csv\Book.csv:61
@@ -3785,122 +3945,114 @@ msgid "莱塔尼亚的音乐杂志，双月刊，内容涵盖了以古典乐为�
 msgstr ""
 
 #: .\data\csv\Book.csv:70
-msgid "《乔弗瑞古今童话集》精装本"
-msgstr ""
-
-#: .\data\csv\Book.csv:70
-msgid "经典童话的精装本，收录了乔弗瑞的所有童话作品，是一本非常适合家庭阅读的书籍。"
-msgstr ""
-
-#: .\data\csv\Book.csv:71
 msgid "《最后的骑士》"
 msgstr ""
 
-#: .\data\csv\Book.csv:71
-msgid "卡西米尔家喻户晓的经典骑士小说，讲述了一位骑士伊比利亚的成长与奋斗，最后与巨浪搏斗直至消失的故事，是卡西米尔骑士的精神象征。“如果觉得浪涛吵闹，就去令大海平静。”"
+#: .\data\csv\Book.csv:70
+msgid "卡西米尔家喻户晓的经典骑士小说，讲述了一位骑士伊比利亚的成长与奋斗，最后与巨浪搏斗直至消失的故事，是卡西米尔骑士的精神象征。\"如果觉得浪涛吵闹，就去令大海平静。\""
 msgstr ""
 
-#: .\data\csv\Book.csv:72
+#: .\data\csv\Book.csv:71
 msgid "《白牙》"
 msgstr ""
 
-#: .\data\csv\Book.csv:72
+#: .\data\csv\Book.csv:71
 msgid "鲁珀坎民间叙事曲，讲述的是一个鲁珀少年收起獠牙的古老传说。"
 msgstr ""
 
-#: .\data\csv\Book.csv:73
+#: .\data\csv\Book.csv:72
 msgid "《瓦伊凡耕种养殖方法》"
 msgstr ""
 
-#: .\data\csv\Book.csv:73
+#: .\data\csv\Book.csv:72
 msgid "一本关于农业的实用书籍，详细介绍了瓦伊凡地区的农业技术，可惜瓦伊凡农民们大多都没看过。"
 msgstr ""
 
-#: .\data\csv\Book.csv:74
+#: .\data\csv\Book.csv:73
 msgid "《瓦伊凡爱情》"
 msgstr ""
 
-#: .\data\csv\Book.csv:74
+#: .\data\csv\Book.csv:73
 msgid "瓦伊凡战争年代的爱情小说，在雇佣兵组织势均力敌的混乱时代，女主角为了爱情，不惜孤身闯入爱人的佣兵部队，乞求队长答应他们的私奔......！"
 msgstr ""
 
-#: .\data\csv\Book.csv:75
+#: .\data\csv\Book.csv:74
 msgid "《大炎风情志》"
 msgstr ""
 
-#: .\data\csv\Book.csv:75
+#: .\data\csv\Book.csv:74
 msgid "炎国的地理教科书，讲述了炎国人的风土人情，以及各地的地理风貌。但是在天灾的影响下，书中的内容大多已经不再适用。"
 msgstr ""
 
-#: .\data\csv\Book.csv:76
+#: .\data\csv\Book.csv:75
 msgid "《不含传说的高塔》"
 msgstr ""
 
-#: .\data\csv\Book.csv:76
+#: .\data\csv\Book.csv:75
 msgid "讲述了一个高塔内发生的一系列离奇事件，但是作者却没有将这些事件归结为传说，而是用蹩脚的推理来解释这些事件，以反向隐瞒其背后的真相。"
 msgstr ""
 
-#: .\data\csv\Book.csv:77
+#: .\data\csv\Book.csv:76
 msgid "《哥伦比亚司法观察笔记》"
 msgstr ""
 
-#: .\data\csv\Book.csv:77
+#: .\data\csv\Book.csv:76
 msgid "一本关于哥伦比亚司法的观察笔记，内容涵盖了哥伦比亚的司法制度、司法实践、司法改革等方面的内容，是一本非常专业的书籍。"
 msgstr ""
 
-#: .\data\csv\Book.csv:78
+#: .\data\csv\Book.csv:77
 msgid "《征服与同化》"
 msgstr ""
 
-#: .\data\csv\Book.csv:78
+#: .\data\csv\Book.csv:77
 msgid "详细介绍了阿斯兰帝国的征服与同化政策，以及这些政策对于帝国和现代种族制度的影响。"
 msgstr ""
 
-#: .\data\csv\Book.csv:79
+#: .\data\csv\Book.csv:78
 msgid "《离自信只差一步》"
 msgstr ""
 
-#: .\data\csv\Book.csv:79
+#: .\data\csv\Book.csv:78
 msgid "一本关于自信心的书籍，内容涵盖了自信心的重要性、自信心的培养方法、自信心的应用技巧等方面的内容，帮助读者克服自己的心理障碍，提升自己的自信心。"
 msgstr ""
 
-#: .\data\csv\Book.csv:80
+#: .\data\csv\Book.csv:79
 msgid "《你一定能成功》"
 msgstr ""
 
-#: .\data\csv\Book.csv:80
+#: .\data\csv\Book.csv:79
 msgid "一本关于成功学的书籍，内容涵盖了成功学的基本理论、成功学的实践方法、成功学的成功案例等方面的内容，帮助读者了解成功学的基本知识，提升自己的成功学水平。"
 msgstr ""
 
-#: .\data\csv\Book.csv:81
+#: .\data\csv\Book.csv:80
 msgid "《100天教你如何学会企业管理》"
 msgstr ""
 
-#: .\data\csv\Book.csv:81
+#: .\data\csv\Book.csv:80
 msgid "一本关于企业管理的书籍，内容涵盖了企业管理的基本理论、企业管理的实践方法、企业管理的成功案例等方面的内容，帮助读者了解企业管理的基本知识，提升自己的企业管理水平。"
 msgstr ""
 
-#: .\data\csv\Book.csv:82
+#: .\data\csv\Book.csv:81
 msgid "《萨尔贡史》"
 msgstr ""
 
-#: .\data\csv\Book.csv:82
+#: .\data\csv\Book.csv:81
 msgid "举世闻名的浩瀚典籍，基础版一套长达五十卷。一个萨尔贡最古老的史官家族用那支古老的灯芯草笔记录下了这个巨人般的国家，在此后时光中所历经的那段波澜壮阔的英雄岁月。"
 msgstr ""
 
-#: .\data\csv\Book.csv:83
+#: .\data\csv\Book.csv:82
 msgid "《午间邮报》"
 msgstr ""
 
-#: .\data\csv\Book.csv:83
+#: .\data\csv\Book.csv:82
 msgid "叙拉古的一份小报，因为印刷技术的限制，只出版过一次，内容涵盖了叙拉古的政治、经济、文化、社会等方面的内容，是一份非常有价值的小报。"
 msgstr ""
 
-#: .\data\csv\Book.csv:84
+#: .\data\csv\Book.csv:83
 msgid "《帝国军事史》"
 msgstr ""
 
-#: .\data\csv\Book.csv:84
+#: .\data\csv\Book.csv:83
 msgid "一本关于维多利亚军事史的教科书，内容涵盖了军事的基本理论、战阵指挥、军事战略等方面的内容，是维多利亚军校的必备教材。"
 msgstr ""
 
@@ -4050,6 +4202,1466 @@ msgstr ""
 
 #: .\data\csv\BookType.csv:49
 msgid "诗歌"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:6
+msgid "天灾的规律并非毫无章法可循，关键在于观察源石浓度的变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:6
+msgid "风暴过后的废墟中，源石尘埃往往是最致命的隐患。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:6
+msgid "移动城市的防护系统必须能够应对至少三级天灾的冲击。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:6
+msgid "天灾预警网络的建立需要天灾信使和各城邦间的密切合作。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:6
+msgid "源石活跃区域的天灾频率通常比其他地区高出40%以上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:7
+msgid "出血时首先要找到出血点，用干净的布料进行压迫止血。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:7
+msgid "骨折患者在搬运前必须先进行简单的固定处理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:7
+msgid "源石病患者的伤口愈合速度会明显下降，需要特别注意感染。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:7
+msgid "休克患者应立即平卧，抬高下肢以促进血液回流。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:7
+msgid "中毒症状出现时，保持呼吸道通畅比催吐更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:8
+msgid "遇到野兽时千万不要背对着它们奔跑，这会激发它们的捕猎本能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:8
+msgid "在荒野中迷路时，跟随水源向下游走通常能找到人类聚落。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:8
+msgid "夜间宿营要选择背风且视野开阔的高地，避免低洼潮湿的区域。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:8
+msgid "携带少量盐巴可以在紧急时刻用于消毒和保存食物。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:8
+msgid "看起来人畜无害的小动物往往是最危险的，特别是色彩鲜艳的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:9
+msgid "乌拉！为了乌萨斯的荣光，前进！"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:9
+msgid "真正的战士不会在敌人面前退缩半步！"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:9
+msgid "拳头要握紧，但手腕要保持灵活，这样打击力度更大。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:9
+msgid "战吼不仅能鼓舞士气，还能在心理上震慑对手。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:9
+msgid "记住，气势比技巧更重要，先声夺人才能占据主动。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:10
+msgid "江湖路远，恩怨如山，唯有手中这把电锯能为我讨回公道。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:10
+msgid "师父说过，失去一臂并不可怕，可怕的是失去复仇的决心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:10
+msgid "电锯轰鸣声中，往昔的血仇终将得到清算。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:10
+msgid "武功再高，也敌不过科技的进步，这就是新时代的江湖。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:10
+msgid "续集预告：《独臂电锯客大战机械门派》即将上市！"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:11
+msgid "地表人竟然每天都要看到那个叫\"太阳\"的巨大火球，真是令人费解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:11
+msgid "他们把水从天空中掉下来的现象叫做\"雨\"，这在地下是绝对不可能的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:11
+msgid "地表人居然不需要挖掘就能找到食物，那些\"植物\"真是神奇的存在。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:11
+msgid "最奇怪的是，地表人晚上会进入一种叫\"睡眠\"的状态，而不是继续工作。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:11
+msgid "我观察到地表人会为了一些闪亮的小石头争斗，这些\"源石\"到底有什么魔力？"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:12
+msgid "克莱布拉松一词源于古高卢语\"klei-bra-son\"，意为\"黏土丘陵\"。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:12
+msgid "古文献中的地名变迁往往反映了民族迁徙和政治变革的轨迹。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:12
+msgid "高卢地区的地名构词法具有明显的语系特征。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:12
+msgid "通过对比不同时期的地图，可以发现许多\"消失\"的城邦遗迹。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:12
+msgid "语言学研究表明，地名是研究古代文明最可靠的活化石。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:13
+msgid "第十三条规定：源石开采权归国家所有，私人开采一律严惩。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:13
+msgid "贸易垄断政策的实施标志着高卢从共和制向帝制的转变。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:13
+msgid "税收改革将直接税和间接税的比例调整为3:7，极大充实了国库。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:13
+msgid "强制性的技术标准化使得高卢工业产品在国际市场上具备了压倒性优势。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:13
+msgid "这部法案的核心在于通过经济手段实现政治统一和对外扩张。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:14
+msgid "真正的美不在于华丽的装饰，而在于能够触动人心的那一瞬间。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:14
+msgid "艺术的价值不应该用金钱来衡量，因为灵魂的共鸣是无价的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:14
+msgid "维多利亚古典音乐的和谐源于对数学比例的精确掌握。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:14
+msgid "绘画中的光影变化可以表现出比文字更丰富的情感层次。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:14
+msgid "作者在最后一章写道：\"美会消逝，但对美的追求将永恒传承。\""
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:15
+msgid "萨卡兹的诗歌总是带着死亡的气息，如同荒原上的风。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:15
+msgid "痛苦是诗人最忠实的伴侣，它从不离弃，也从不欺骗。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:15
+msgid "每一滴血都是一首诗，每一道伤疤都是一行诗句。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:15
+msgid "在黑暗中行走的人，心中必须有一盏不灭的明灯。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:15
+msgid "诗歌不是为了取悦他人而存在，而是为了记录灵魂的颤抖。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:17
+msgid "与萨卡兹族干员交谈时，避免谈论家乡和过去的话题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:17
+msgid "在食堂用餐时请排队，不要因为种族差异而产生偏见。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:17
+msgid "乌萨斯干员喜欢直率的交流方式，不必过于拘谨。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:17
+msgid "参加会议时请准时到达，迟到会被视为不礼貌的行为。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:17
+msgid "记住每个干员的名字比记住他们的种族更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:18
+msgid "有效的指挥首先要建立在相互信任的基础之上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:18
+msgid "在战斗中保持冷静比任何战术都更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:18
+msgid "简洁明了的指令能够减少执行中的误解和延迟。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:18
+msgid "了解每个队员的特长才能制定出最适合的作战计划。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:18
+msgid "撤退不是失败，而是为了下一次更好的进攻。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:19
+msgid "保持重心稳定是所有格斗技巧的基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:19
+msgid "出拳时要用腰部发力，而不是仅仅依靠手臂的力量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:19
+msgid "防守时双手要保护好头部和躯干的要害部位。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:19
+msgid "步法移动要轻盈灵活，避免被对手抓住破绽。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:19
+msgid "记住，技巧比力量更重要，巧劲胜过蛮力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:20
+msgid "在舰船上做饭要特别注意火候控制，避免浓烟影响通风系统。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:20
+msgid "储存食材时要做好防潮防虫工作，密封是关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:20
+msgid "简单的调料搭配往往能创造出意想不到的美味。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:20
+msgid "利用舰船的震动可以更好地腌制食材，这是陆地厨房没有的优势。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:20
+msgid "团体用餐时要考虑不同种族的饮食习惯和禁忌。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:21
+msgid "维多利亚的民谣旋律优美，歌词往往带有淡淡的忧伤。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:21
+msgid "炎国的民歌节拍明快，充满了对生活的热爱和希望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:21
+msgid "乌萨斯的战歌雄壮有力，能够激发人们内心的勇气。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:21
+msgid "萨尔贡的沙漠之歌悠远绵长，如同沙丘上的风声。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:21
+msgid "卡西米尔的骑士谣曲讲述着英雄的传说和荣誉的价值。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:22
+msgid "泰拉大陆被源石技术彻底改变了文明的发展轨迹。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:22
+msgid "移动城市的出现是人类适应天灾环境的伟大创举。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:22
+msgid "不同种族之间的文化差异造就了丰富多彩的泰拉文明。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:22
+msgid "源石病的传播改变了整个大陆的社会结构和价值观念。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:22
+msgid "了解各国历史有助于理解当前的政治格局和冲突根源。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:23
+msgid "源石病的早期症状包括皮肤硬化和轻微的结晶析出。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:23
+msgid "定期体检能够及早发现潜在的健康问题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:23
+msgid "保持良好的个人卫生习惯是预防感染的最佳方法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:23
+msgid "在舰船环境中要特别注意空气质量和饮水安全。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:23
+msgid "心理健康和身体健康同样重要，不要忽视情绪管理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:24
+msgid "水培系统的营养液配比需要根据不同植物进行调整。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:24
+msgid "在移动环境中，植物的根系固定比土壤种植更加重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:24
+msgid "LED补光系统可以有效替代自然光照，提高产量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:24
+msgid "循环利用水资源是移动农业的核心原则之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:24
+msgid "选择生长周期短、产量高的作物品种更适合舰船种植。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:25
+msgid "废弃的金属片可以制作成实用的切割工具。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:25
+msgid "绳索的编织技巧在很多情况下都能派上用场。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:25
+msgid "简单的杠杆原理能够帮助你制作各种省力工具。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:25
+msgid "木材加工时要注意纹理方向，这决定了工具的耐用性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:25
+msgid "安全永远是制作工具时的第一考虑因素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:26
+msgid "线条的粗细变化能够表现出物体的立体感和质感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:26
+msgid "观察光影关系是素描写生的关键技能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:26
+msgid "比例准确是一幅好素描的基础，可以通过测量来辅助判断。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:26
+msgid "阴影的处理要遵循光源的逻辑，不能随意添加。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:26
+msgid "多练习手部和眼部的协调配合，这需要长期的训练。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:28
+msgid "温柔的触摸胜过千言万语，指尖的温度能传递最深的情意。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:28
+msgid "节奏的掌控是艺术的精髓，快慢缓急皆有其妙处。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:28
+msgid "每个人的敏感点都不相同，需要耐心探索和发现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:28
+msgid "眼神的交流能够让简单的触碰变得更加深刻动人。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:28
+msgid "真正的技巧在于倾听对方身体的反应和呼吸的变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:29
+msgid "唇的柔软和舌的灵活组合起来能创造无穷的变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:29
+msgid "温度和湿润度的控制是基础技能，需要反复练习。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:29
+msgid "呼吸的调节不仅影响持久度，也影响整体的体验质量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:29
+msgid "变换角度和深度能够带来截然不同的感受。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:29
+msgid "专注和投入的态度比任何技巧都更能打动人心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:30
+msgid "足部的柔软弧线蕴含着独特的魅力和诱惑力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:30
+msgid "轻盈的踩踏和温柔的摩擦能够激起意想不到的快感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:30
+msgid "足趾的灵活运用可以创造出手指无法达到的微妙触感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:30
+msgid "保持足部的清洁和柔嫩是基本的礼仪要求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:30
+msgid "不同的姿势和角度会带来完全不同的刺激效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:31
+msgid "温柔的环抱能够带来安全感和亲密感的双重体验。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:31
+msgid "适当的按摩力度能够促进血液循环，增加敏感度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:31
+msgid "丰满的曲线为各种创意姿势提供了无限可能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:31
+msgid "温暖柔软的触感是最自然的安慰和慰藉。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:31
+msgid "呼吸和体温的变化能够增强整体的感官体验。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:32
+msgid "情感的投入是技巧的基础，没有爱的结合只是空虚的动作。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:32
+msgid "沟通和理解比任何花哨的姿势都更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:32
+msgid "耐心和体贴能够让平凡的夜晚变得美妙无比。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:32
+msgid "每一次的相遇都应该是独特的，不要拘泥于固定的模式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:32
+msgid "真正的满足来自于心灵和身体的完美融合。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:33
+msgid "禁忌往往蕴含着最强烈的刺激和快感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:33
+msgid "充分的准备工作是安全和愉悦的前提条件。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:33
+msgid "润滑和放松是成功的两个关键要素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:33
+msgid "循序渐进的方式能够减少不适感，增加愉悦度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:33
+msgid "相互信任和尊重是探索禁忌领域的基本原则。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:34
+msgid "控制节奏是延长愉悦时间的核心技巧。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:34
+msgid "观察和感受对方的反应能够找到最敏感的触发点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:34
+msgid "适当的停顿和间歇能够积累更强烈的爆发力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:34
+msgid "多重刺激的组合能够达到单一手段无法企及的效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:34
+msgid "耐心和持久力是通往极乐境界的必备素质。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:36
+msgid "雨滴打在窗台上的声音，就像初次相遇时心跳的节拍。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:36
+msgid "龙门的街道见证了我们从陌生到熟悉的每一个瞬间。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:36
+msgid "你的笑容比龙门最美的夜景还要璀璨动人。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:36
+msgid "即使是普通的咖啡，和你一起喝也变得格外香甜。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:36
+msgid "初恋的美好在于那份纯真，不掺杂任何杂质的真心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:37
+msgid "权力的高峰往往也是孤独的开始，即使拥有三位佳人相伴。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:37
+msgid "每一位夫人都有她独特的魅力，温柔、聪慧、热情各不相同。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:37
+msgid "政治联姻的背后，是否还能保留一丝真情的火花？"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:37
+msgid "在城市的治理中，家庭的和谐同样需要智慧和平衡。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:37
+msgid "总督发现最难管理的不是城市，而是三颗女人的心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:38
+msgid "今天我发现自己的身体开始发生一些奇怪的变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:38
+msgid "大人们总是说我还小，但我觉得自己已经长大了。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:38
+msgid "学校里的同学开始用奇怪的眼神看我，让我很困惑。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:38
+msgid "我在日记里记录下这些不能对任何人说的小秘密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:38
+msgid "成长的路上有太多疑问，但没有人能给我答案。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:39
+msgid "地下室中，军官用两种温度的金属器具摩擦战俘的下体，让她在极冷与灼热之间痛苦颤抖。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:39
+msgid "鞭打是最基础的审讯手段，但乌萨斯军官更偏好在鞭子上附加特殊的粉末，让伤痕更加难以愈合。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:39
+msgid "女战俘被绑在特制的木架上，四肢大开，任由审讯官用各种工具在敏感部位施加令人崩溃的刺激。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:39
+msgid "连续多轮性爱过后，精疲力尽的俘虏在床上快要失去意识，而这正是军官开始下一轮审讯的最佳时机。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:39
+msgid "军官最喜欢的方法是用蒙上战俘的眼睛，同时刺激身上的每个洞，直到精神彻底崩溃为止。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:40
+msgid "在我的王座前，所有的男人都必须俯首称臣。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:40
+msgid "权力是最好的催情剂，也是最有效的征服工具。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:40
+msgid "我要让那些自以为是的贵族们明白，谁才是真正的主宰。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:40
+msgid "他的眼中闪烁着不屈的火花，这让我更加渴望驯服这匹野马。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:40
+msgid "蜡烛的热滴落在皮肤上的刺痛，就像我对臣服者的恩赐与惩罚。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:41
+msgid "孕育新生命的过程让我体验到了前所未有的充实感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:41
+msgid "身体的变化带来了意想不到的新感受和敏感度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:41
+msgid "母性的光辉在我身上闪闪发亮，让我变得更加美丽动人。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:41
+msgid "怀孕期间的特殊体验成为了我们爱情的新篇章。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:41
+msgid "即将到来的小生命让我们的关系变得更加紧密和神圣。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:42
+msgid "今天我是你的医生，你必须完全信任我的专业判断。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:42
+msgid "课堂上的师生关系在放学后发生了微妙的变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:42
+msgid "制服的魅力在于它代表的权威和禁忌的结合。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:42
+msgid "不同的角色带来不同的刺激，每一种都有其独特的魅力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:42
+msgid "在游戏中我们可以成为任何想成为的人，释放内心的渴望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:43
+msgid "丝绸的质感在肌肤上滑过，带来难以名状的快感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:43
+msgid "蕾丝的透明和遮掩之间，隐藏着最诱人的秘密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:43
+msgid "皮革的紧致约束激发出内心深处的渴望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:43
+msgid "每一件服装都是一种态度，一种对美和欲望的表达。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:43
+msgid "时尚不仅仅是外表的装饰，更是内心情感的延伸。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:44
+msgid "真正的驯服不是肉体的征服，而是心灵的完全臣服。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:44
+msgid "在这个游戏中，界限是最重要的规则，也是最容易被打破的禁忌。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:44
+msgid "服从与支配的关系需要绝对的信任作为基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:44
+msgid "每一次的调教都是对彼此极限的探索和突破。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:44
+msgid "在看似不平等的关系中，双方都能找到属于自己的满足。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:45
+msgid "血脉相连的羁绊有时会超越道德的界限。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:45
+msgid "家族的秘密往往比外人想象的更加复杂和黑暗。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:45
+msgid "禁忌之所以诱人，正因为它违背了所有的社会准则。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:45
+msgid "在这个封闭的家族中，爱情和欲望交织成复杂的网络。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:45
+msgid "有些感情一旦萌芽，就再也无法用理智来阻止。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:46
+msgid "在众目睽睽之下保持平静，内心却波涛汹涌。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:46
+msgid "公共场所的刺激来自于被发现的风险和快感的对比。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:46
+msgid "人群中的秘密游戏让平凡的日常变得充满激情。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:46
+msgid "最大的兴奋往往来自于做着不该做的事情而不被发现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:46
+msgid "在这个开放的社会里，我们学会了如何隐藏最私密的欲望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:47
+msgid "工具只是辅助，真正的快感来自于使用者的想象力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:47
+msgid "每一件道具都有其特定的用途和最佳的使用方法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:47
+msgid "安全永远是第一原则，快感建立在安全的基础之上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:47
+msgid "创新的使用方法往往能带来意想不到的惊喜体验。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:47
+msgid "选择合适的道具就像选择合适的伴侣一样重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:48
+msgid "青春的荷尔蒙在校园的每一个角落里都在燃烧。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:48
+msgid "放学后的空教室成为了我们秘密约会的地点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:48
+msgid "学生时代的恋爱总是带着一种纯真和冲动的美好。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:48
+msgid "校服下隐藏的青春身体散发着无法抗拒的魅力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:48
+msgid "那些年在校园里发生的故事，成为了最美好的回忆。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:50
+msgid "从前有一位善良的公主，她的眼泪能够治愈所有的伤痛。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:50
+msgid "森林深处住着一只会说话的狐狸，它知道所有宝藏的秘密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:50
+msgid "勇敢的小裁缝用智慧战胜了三个巨人，赢得了国王的赞赏。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:50
+msgid "魔法豆苗长到了云端，小杰克发现了巨人的城堡。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:50
+msgid "善良的心灵比任何魔法都更加强大，这是童话想要告诉我们的道理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:51
+msgid "源石能源的普及让人类文明进入了全新的时代。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:51
+msgid "人工智能与源石技术的结合创造出了前所未有的可能性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:51
+msgid "移动都市的超远距离航行或许并不是梦想，关键在于源石频率的精确调控。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:51
+msgid "未来的城市将完全由源石驱动，天灾也将成为历史。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:51
+msgid "科技的进步总是伴随着新的道德和伦理问题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:52
+msgid "真相往往隐藏在最不起眼的细节之中。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:52
+msgid "每一个看似无关紧要的线索都可能是解开谜题的关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:52
+msgid "凶手总是会在无意中留下破绽，这是人性的弱点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:52
+msgid "逻辑推理的魅力在于能够从混乱中找出秩序。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:52
+msgid "最完美的犯罪往往败在最微小的疏忽上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:53
+msgid "侠之大者，为国为民，这是武林中最崇高的境界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:53
+msgid "剑法的精髓不在于招式的华丽，而在于心境的纯净。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:53
+msgid "江湖路远，恩怨如潮，唯有义字当头才能行走天下。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:53
+msgid "武功再高，也敌不过内心的魔障和执念。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:53
+msgid "真正的高手从不轻易出手，因为他们明白武力的可贵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:54
+msgid "修仙之路漫漫，需要的不只是天赋，更需要坚定的道心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:54
+msgid "天地之间的灵气正在逐渐稀薄，仙门大道越来越难寻。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:54
+msgid "御剑飞行只是小术，真正的仙法在于顺应天道自然。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:54
+msgid "长生不老虽好，但失去了人性就失去了修仙的意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:54
+msgid "仙凡之别不在于法力高低，而在于心境的超脱程度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:55
+msgid "真正的骑士会为了爱情放弃一切，包括荣誉和生命。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:55
+msgid "贵族小姐的眼泪比珍珠更加珍贵，也更能触动骑士的心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:55
+msgid "在竞技场上的胜利算不了什么，赢得佳人芳心才是真正的胜利。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:55
+msgid "骑士的誓言不仅是对主君的承诺，也是对爱人的永恒守护。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:55
+msgid "爱情使得骑士变得更加勇敢，也使得贵族变得更加温柔。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:56
+msgid "雷姆必拓的夜晚总是充满着不为人知的秘密和危险。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:56
+msgid "都市传说往往建立在真实事件的基础之上，只是真相被掩盖了。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:56
+msgid "在这个科技发达的城市里，最古老的恐惧依然存在。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:56
+msgid "每一个案件背后都隐藏着更大的阴谋和真相。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:56
+msgid "有些事情知道得越多，反而越危险。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:57
+msgid "帝国的辉煌建立在无数士兵的鲜血和人民的汗水之上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:57
+msgid "权力的顶峰往往也是衰落的开始，这是历史的铁律。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:57
+msgid "乌萨斯的严冬见证了帝国的崛起，也将见证它的陨落。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:57
+msgid "真正的英雄不是征服者，而是在困境中依然坚持理想的人。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:57
+msgid "历史总是在重复，只是参与者换了一批又一批。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:58
+msgid "现代战争不再是英雄的舞台，而是技术和资源的较量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:58
+msgid "雇佣兵的生活充满了不确定性，今天的盟友可能就是明天的敌人。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:58
+msgid "在战场上，活下来比证明勇敢更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:58
+msgid "每一场战争都会改变参与者，无论胜利者还是失败者。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:58
+msgid "黑钢国际的信条很简单：完成任务，保护队友，活着回家。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:59
+msgid "流浪是萨卡兹族的宿命，家乡永远只存在于诗歌和回忆之中。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:59
+msgid "苦难是诗歌的源泉，也是萨卡兹族精神财富的根基。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:59
+msgid "在荒芜的土地上行走，心中必须保持对美好的渴望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:59
+msgid "古老的语言承载着祖先的智慧和对后代的希望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:59
+msgid "诗歌不会因为民族的消失而消失，它们将永远传唱下去。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:61
+msgid "今夏最流行的颜色是珊瑚粉，能够完美衬托各种肤色。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:61
+msgid "选择轻薄透气的面料是夏日穿搭的基本原则。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:61
+msgid "配饰的选择要与整体风格保持一致，不要过于复杂。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:61
+msgid "防晒不仅要涂防晒霜，衣物的选择同样重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:61
+msgid "舒适度永远比时尚度更重要，美丽不应该以牺牲健康为代价。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:62
+msgid "动圈式耳机的音质表现在中频部分尤为出色。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:62
+msgid "选择耳机时要考虑阻抗匹配，避免推力不足影响音质。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:62
+msgid "开放式设计能够提供更好的音场表现，但隔音效果较差。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:62
+msgid "耳机的佩戴舒适度对长时间使用非常重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:62
+msgid "价格不是衡量耳机好坏的唯一标准，适合自己的才是最好的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:63
+msgid "伊里奇的死亡现场没有任何打斗的痕迹，这让案件更加扑朔迷离。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:63
+msgid "所有的证人都有充分的不在场证明，但真相往往隐藏在谎言之中。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:63
+msgid "凶器至今没有找到，这成为了破案的关键难点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:63
+msgid "死者生前的社会关系复杂，任何人都有作案的动机。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:63
+msgid "最后的真相往往出人意料，凶手可能就隐藏在最不可能的人当中。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:64
+msgid "战争的本质是政治通过其他手段的延续，这是不变的真理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:64
+msgid "现代战争中，信息优势往往比火力优势更加重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:64
+msgid "军事理论必须与实践相结合，纸上谈兵永远无法赢得胜利。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:64
+msgid "指挥官的决策能力在关键时刻能够决定整场战争的走向。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:64
+msgid "防御和进攻的转换时机掌握是战术运用的最高境界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:65
+msgid "地底深处据说存在着一个完全相反的世界，那里的人都是蜘蛛变的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:65
+msgid "有人声称见过会说话的源石，它们在抱怨人类的过度开采。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:65
+msgid "杜林族的祖先可能来自地心，这能解释他们为什么如此适应地下生活。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:65
+msgid "某个读者在边注中写道：\"这些都是真的，我就是证人！\""
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:65
+msgid "最荒诞的理论往往包含着最深刻的真理，关键在于如何解读。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:66
+msgid "骑士竞技产业的发展为卡西米尔经济注入了新的活力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:66
+msgid "近期的政治改革提案在议会中引起了激烈的辩论。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:66
+msgid "国际贸易的新政策将在下个月正式实施。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:66
+msgid "专家分析认为，源石技术的发展将改变整个行业格局。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:66
+msgid "本报记者深入一线，为您带来最真实的新闻报道。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:67
+msgid "独家！著名骑士夜袭神秘会所，真相令人震惊！"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:67
+msgid "爆料：某位明星骑士的恋情曝光，对象竟然是贵族千金！"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:67
+msgid "现场直击：竞技场后台的明星骑士们都在做什么？"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:67
+msgid "知情人士透露：即将退役的老牌骑士正在筹备告别演出。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:67
+msgid "八卦虽然不登大雅之堂，但它满足了人们对明星私生活的好奇心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:68
+msgid "本赛季的冠军争夺战将在下周末正式拉开帷幕。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:68
+msgid "新人骑士的表现令人眼前一亮，有望成为未来的明星。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:68
+msgid "骑士协会宣布了新的比赛规则，旨在提高比赛的观赏性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:68
+msgid "专业解说员分析：技术型骑士正在逐渐占据主导地位。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:68
+msgid "竞技精神是骑士文化的核心，每一场比赛都是对这种精神的诠释。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:69
+msgid "巴赫的复调音乐体现了数学与艺术的完美结合。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:69
+msgid "现代作曲家们正在探索源石音响技术在音乐中的应用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:69
+msgid "室内乐的魅力在于音乐家之间的默契配合和情感交流。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:69
+msgid "音乐评论不应该拘泥于技巧分析，更应该关注情感表达。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:69
+msgid "年轻一代的音乐家们正在为古典音乐注入新的活力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:70
+msgid "伊比利亚握紧手中的长剑，面对滔天巨浪毫无畏惧。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:70
+msgid "真正的骑士不是为了荣誉而战，而是为了保护无辜的人们。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:70
+msgid "即使知道前方是死路，骑士也绝不会退缩半步。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:70
+msgid "大海可以吞噬我的身体，但永远无法征服我的意志。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:70
+msgid "骑士的传说将永远激励着后来的人们勇敢面对困难。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:71
+msgid "少年收起了锋利的獠牙，选择用微笑面对这个世界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:71
+msgid "野性的呼唤在血液中流淌，但理智告诉他要克制自己。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:71
+msgid "森林中的同族无法理解他的选择，认为这是对传统的背叛。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:71
+msgid "收起獠牙并不意味着放弃力量，而是学会了更智慧的使用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:71
+msgid "真正的成长在于学会控制自己的本能，而不是被本能控制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:72
+msgid "瓦伊凡地区的土壤含有丰富的矿物质，特别适合根茎类作物。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:72
+msgid "轮作制度能够有效保持土壤肥力，避免连作障碍。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:72
+msgid "家畜的饲养要注意营养搭配，不能单纯依靠牧草。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:72
+msgid "天气预测对农业生产至关重要，要学会观察自然现象。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:72
+msgid "现代农业技术与传统经验相结合才能获得最好的效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:73
+msgid "战火纷飞的年代，爱情成为了最珍贵也最脆弱的存在。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:73
+msgid "她穿过战场的硝烟，只为了见他最后一面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:73
+msgid "雇佣兵的生活没有明天，所以今天的爱情格外珍贵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:73
+msgid "队长沉默地看着这对恋人，想起了自己曾经失去的爱情。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:73
+msgid "在这个混乱的时代，能够为爱情而活已经是最大的幸福。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:74
+msgid "炎国南方的水乡以桥梁众多而闻名，有\"百桥之乡\"的美誉。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:74
+msgid "北方草原上的游牧民族保持着古老的生活方式和传统文化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:74
+msgid "东海沿岸的渔村在日出时分最为美丽，渔船归来的景象令人难忘。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:74
+msgid "西部山区的茶园层层叠叠，春茶的香味能够传遍整个山谷。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:74
+msgid "天灾改变了地貌，但改变不了炎国人对故土的深深眷恋。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:75
+msgid "高塔的第十三层从来没有人能够到达，所有的楼梯都在第十二层戛然而止。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:75
+msgid "夜晚时分经常能听到高塔顶端传来的神秘钟声，但白天却找不到任何钟。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:75
+msgid "作者坚持认为这些都是物理现象，可他的解释比传说本身更加离奇。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:75
+msgid "每个试图探索真相的人最后都放弃了，仿佛被什么力量阻止了。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:75
+msgid "也许有些真相不应该被揭开，保持神秘反而是最好的结局。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:76
+msgid "哥伦比亚的陪审团制度体现了民主参与的司法理念。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:76
+msgid "法官的中立性是司法公正的基石，任何偏见都是不被允许的。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:76
+msgid "司法改革必须在效率和公正之间找到平衡点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:76
+msgid "法律条文的解释权在很大程度上影响着司法实践的结果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:76
+msgid "司法独立是现代法治国家的重要标志，不容任何势力干涉。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:77
+msgid "阿斯兰帝国的征服策略是先军事占领，后文化同化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:77
+msgid "语言统一政策是帝国同化战略的核心组成部分。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:77
+msgid "宗教改革往往伴随着政治征服，这是历史的常见模式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:77
+msgid "被征服民族的反抗往往采用文化保护的形式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:77
+msgid "现代种族问题的根源可以追溯到古代帝国的征服政策。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:78
+msgid "自信不是盲目的自大，而是对自己能力的正确认知。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:78
+msgid "每天早晨对着镜子说\"我可以\"，这是建立自信的第一步。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:78
+msgid "失败并不可怕，可怕的是因为失败而失去尝试的勇气。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:78
+msgid "自信的人更容易获得他人的信任和支持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:78
+msgid "相信自己是成功的前提，没有自信就没有成功的可能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:79
+msgid "成功的定义因人而异，但努力是所有成功的共同要素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:79
+msgid "设定明确的目标是成功的第一步，目标越具体越容易实现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:79
+msgid "坚持不懈是成功最重要的品质，半途而废永远到不了终点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:79
+msgid "学会从失败中总结经验，每一次挫折都是成长的机会。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:79
+msgid "成功不是终点，而是一个不断前进的过程。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:80
+msgid "有效的管理始于清晰的沟通，确保每个人都理解自己的职责。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:80
+msgid "授权是管理的艺术，知道何时放手比知道何时控制更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:80
+msgid "团队合作的效率往往超过个人努力的简单相加。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:80
+msgid "危机管理能力是衡量管理者水平的重要标准。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:80
+msgid "持续学习和适应变化是现代企业管理的基本要求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:81
+msgid "萨尔贡帝国的兴起始于对水源的控制，这奠定了其霸权基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:81
+msgid "古代萨尔贡的法典体系影响了整个地区的法律发展。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:81
+msgid "帝国的衰落往往始于内部的腐败和外部的压力并存。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:81
+msgid "史官家族的记录虽然详尽，但也带有明显的政治倾向性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:81
+msgid "读史使人明智，萨尔贡的兴衰为后世提供了宝贵的历史借鉴。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:82
+msgid "叙拉古港口的贸易繁荣为整个城邦带来了前所未有的财富。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:82
+msgid "新兴的艺术家们正在挑战传统的审美观念，引起了社会热议。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:82
+msgid "城邦议会通过了新的税收法案，市民们反应不一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:82
+msgid "本地的橄榄油品质优异，已经成为了出口的主要商品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:82
+msgid "虽然只出版了一次，但这份报纸记录了叙拉古历史上的重要时刻。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:83
+msgid "维多利亚海军的崛起改变了整个大陆的海上力量平衡。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:83
+msgid "步兵方阵的战术革新在历史上多次决定了战争的胜负。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:83
+msgid "后勤补给往往比前线战斗更能决定战争的最终结果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:83
+msgid "优秀的军事指挥官必须同时具备战略眼光和战术素养。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:83
+msgid "研究军事史的目的不是为了战争，而是为了和平。"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:6
@@ -10601,7 +12213,7 @@ msgid "博士"
 msgstr ""
 
 #: .\data\csv\Nation.csv:7
-msgid "待填写"
+msgid "致力于矿石病研究和感染者救治的国际性医疗机构。以治疗感染者为名义，实际上是一个武装组织，拥有强大的军事实力和医疗技术。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:8
@@ -10612,12 +12224,20 @@ msgstr ""
 msgid "凯尔希"
 msgstr ""
 
+#: .\data\csv\Nation.csv:8
+msgid "罗德岛内部的高级作战人员组织，由经验丰富、实力强大的干员组成，负责执行最危险和重要的任务。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:9
 msgid "S.W.E.E.P"
 msgstr ""
 
 #: .\data\csv\Nation.csv:9
 msgid "阿斯卡纶"
+msgstr ""
+
+#: .\data\csv\Nation.csv:9
+msgid "罗德岛内部的特殊行动小组，专门负责清理和收容工作，处理各种危险物质和异常情况。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:10
@@ -10628,20 +12248,44 @@ msgstr ""
 msgid "特蕾西娅"
 msgstr ""
 
+#: .\data\csv\Nation.csv:10
+msgid "罗德岛的前身组织，由萨卡兹王特蕾西娅建立，旨在为感染者寻求和平共存的道路，后因特蕾西娅之死而重组为罗德岛。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:11
 msgid "行动组A4"
+msgstr ""
+
+#: .\data\csv\Nation.csv:11
+msgid "待填写"
+msgstr ""
+
+#: .\data\csv\Nation.csv:11
+msgid "罗德岛的精英作战单位之一，负责执行高难度的战术任务和重要区域的作战行动。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:12
 msgid "行动预备组A1"
 msgstr ""
 
+#: .\data\csv\Nation.csv:12
+msgid "罗德岛的预备作战单位，主要负责新人训练和一般性作战任务，是培养未来精英干员的重要组织。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:13
 msgid "行动预备组A4"
 msgstr ""
 
+#: .\data\csv\Nation.csv:13
+msgid "罗德岛的预备作战单位分支，专门负责特定区域和特定类型的作战任务准备工作。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:14
 msgid "行动预备组A6"
+msgstr ""
+
+#: .\data\csv\Nation.csv:14
+msgid "罗德岛的预备作战单位分支，负责后勤支援和战场救援等辅助性作战任务。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:15
@@ -10656,12 +12300,28 @@ msgstr ""
 msgid "歌蕾蒂娅"
 msgstr ""
 
+#: .\data\csv\Nation.csv:16
+msgid "隶属于深海国家阿戈尔的军事力量，主要在阿戈尔地区活动。深海猎人成立的宗旨是对抗海洋生物“海嗣”及其追随者深海教会，以避免其对阿戈尔地区乃至泰拉世界进行突袭。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:18
 msgid "坎黛拉"
 msgstr ""
 
+#: .\data\csv\Nation.csv:18
+msgid "玻利瓦尔境内的一个重要城市，以其独特的旅游和赌博文化而闻名，是玻利瓦尔的经济和文化中心。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:19
 msgid "多种族混居的国家，官方语言为东国语，拥有神道文化，东国的武士刀在收藏界价格不菲。\n目前东国正处于南北朝的内战状态，北方由光严氏当家，南方由光元氏当家。八大家族掌握着全国军权。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:20
+msgid "哥伦比亚总统"
+msgstr ""
+
+#: .\data\csv\Nation.csv:20
+msgid "以科技和工业发达著称的现代化国家，拥有先进的科技企业和军工产业，是泰拉大陆的技术强国之一。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:21
@@ -10672,16 +12332,44 @@ msgstr ""
 msgid "克丽斯腾"
 msgstr ""
 
+#: .\data\csv\Nation.csv:21
+msgid "又称莱茵生命实验室、莱茵生命医学研究所，通称“莱茵生命”，是一家位于哥伦比亚的科技公司，致力于拓展生命科学、化学制造、生物应用等技术领域，也是哥伦比亚重点扶持的科技团体。公司由总辖构件科主任克丽斯腾·莱特和前防卫科主任塞雷娅联合创立。总部位于移动城市特里蒙，总设十科，以总辖构件科为首，下设五个科研科（结构科、能量科、源石技艺应用科、生态科、科学考察科）和四个事务科（商务科、防卫科、工程科、人力资源考察科）。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:22
 msgid "黑钢国际"
+msgstr ""
+
+#: .\data\csv\Nation.csv:22
+msgid "弗兰卡"
+msgstr ""
+
+#: .\data\csv\Nation.csv:22
+msgid "简称“黑钢”，是一家总部设立于哥伦比亚的大型跨国私人安全顾问和安全承包公司，向各国提供包括小到保镖雇佣、大到军事介入的各种安全服务。业务以提供私人安全顾问与防务承包相关的服务为核心，包括灾后后勤、工程抢险等多个领域的安保服务。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:23
+msgid "以骑士竞技闻名的国家，拥有深厚的骑士文化传统，竞技骑士在国内享有崇高地位，商业联合会掌握实际权力。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:24
 msgid "红松骑士团"
 msgstr ""
 
+#: .\data\csv\Nation.csv:24
+msgid "焰尾"
+msgstr ""
+
+#: .\data\csv\Nation.csv:24
+msgid "卡西米尔的感染者骑士团，与其他感染者骑士一样，力求争取卡西米尔感染者骑士的地位。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:25
 msgid "临光家族"
+msgstr ""
+
+#: .\data\csv\Nation.csv:25
+msgid "卡西米尔的古老贵族家族，以培养优秀骑士而闻名，家族成员多为杰出的骑士。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:26
@@ -10693,27 +12381,47 @@ msgid "常年内战的国家，国内目前已处于无政府状态。卡兹戴�
 msgstr ""
 
 #: .\data\csv\Nation.csv:28
-msgid "拉特兰，或称拉特兰城，是位于泰拉大陆中部的神权国家。北邻叙拉古，维多利亚和莱塔尼亚；南邻伊比利亚；东邻雷姆必拓。在泰拉千年的战火与混乱中独树一帜，屹立不倒。"
+msgid "教皇"
+msgstr ""
+
+#: .\data\csv\Nation.csv:28
+msgid "拉特兰，或称拉特兰城，是位于泰拉大陆中部的神权国家。北邻叙拉古，维多利亚和莱塔尼亚；南邻伊比利亚；东邻雷姆必拓。在泰拉千年的战火与混乱中独树一帜，屹立不倒。所有萨科塔族民众都拥有天使般的光环和翅膀。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:29
+msgid "以源石技术和法术研究著称的国家，拥有发达的魔法教育体系和研究机构，在源石法术应用方面处于世界领先地位。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:30
-msgid "以矿业为主要产业，参与与谢拉格的贸易。历史上与维多利亚围绕矿业问题爆发过冲突，导致“围栏事件”爆发。"
+msgid "以矿业为主要产业，参与与谢拉格的贸易。历史上与维多利亚围绕矿业问题爆发过冲突，导致\"围栏事件\"爆发。境内拥有丰富的矿产资源。"
 msgstr ""
 
-#: .\data\csv\Nation.csv:31
-msgid "前身为古阿加门王国。曾受到萨尔贡的殖民入侵，激起民众的强烈反抗，最终在十二英雄的领导下将萨尔贡军驱逐。"
+#: .\data\csv\Nation.csv:32
+msgid "拥有广阔沙漠和古老文明的国家，以商贸和雇佣兵文化闻名，国内部族众多，政治结构复杂，历史上曾是强大的殖民帝国。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:33
-msgid "新近并入萨尔贡的地区，处于无政府状态，治安混乱。"
+msgid "新近并入萨尔贡的地区，处于无政府状态，治安混乱。当地部族文化浓厚，民风彪悍，抵制外来统治。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:34
-msgid "地处泰拉大陆北部的国家，终年严寒，发展落后，遭受北原邪魔的坍缩影响，该地的萨米雪祀与独眼巨人共同抵御坍缩威胁。"
+msgid "地处泰拉大陆北部的国家，终年严寒，发展落后，遭受北原邪魔的坍缩影响，该地的萨米雪祀与独眼巨人共同抵御坍缩威胁。拥有独特的萨满文化和冰雪适应技术。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:35
+msgid "传统的君主制国家，拥有悠久的历史和强大的工业基础，以蒸汽技术和重工业闻名，曾是泰拉大陆的霸主之一。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:36
 msgid "格拉斯哥帮"
+msgstr ""
+
+#: .\data\csv\Nation.csv:36
+msgid "维娜"
+msgstr ""
+
+#: .\data\csv\Nation.csv:36
+msgid "混迹于维多利亚伦蒂尼姆的一个中等规模帮派，据传，其至少控制了伦蒂尼姆数百个城邦地块中的一至两个。最初由因陀罗和摩根带领，现任领导者为推进之王，而现其部分成员在推进之王的领导下离开维多利亚并加入了罗德岛。格拉斯哥帮是一个“白天务工、晚上打架”的街头团体。她们严禁从当地居民身上获取经济利益，并且会通过以暴制暴的方式阻止其他犯罪团体骚扰他们的“地盘”，这也让格拉斯哥帮在当地建立了奇特的威信，当地居民也会热情招待她们。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:37
@@ -10724,52 +12432,140 @@ msgstr ""
 msgid "塔拉"
 msgstr ""
 
+#: .\data\csv\Nation.csv:39
+msgid "乌萨斯皇帝"
+msgstr ""
+
+#: .\data\csv\Nation.csv:39
+msgid "幅员辽阔的北方帝国，拥有严酷的气候和强大的军事力量，以重工业和军事技术著称，政治制度威权专制。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:40
 msgid "乌萨斯学生自治团"
+msgstr ""
+
+#: .\data\csv\Nation.csv:40
+msgid "凛冬"
+msgstr ""
+
+#: .\data\csv\Nation.csv:40
+msgid "是一个由真理提议组建，以凛冬为核心形成的松散学生社团。成立于切尔诺伯格陷落后，被整合运动封锁的彼得海姆中学，成员均为当时被困于彼得海姆中学的学生。社团的成立帮助社团内幸存的学生们合力度过了最初的孤立和互信阶段，他们以“学生自治团”的名义进行自卫、援助和逃亡行动，最终在一间学生餐厅中被罗德岛救出，休养后决定加入罗德岛。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:41
+msgid "谢拉格圣女"
+msgstr ""
+
+#: .\data\csv\Nation.csv:41
+msgid "位于高山地区的小国，拥有丰富的矿产资源和独特的宗教文化，实行政教合一制度，与外界贸易往来频繁。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:42
 msgid "喀兰贸易"
 msgstr ""
 
-#: .\data\csv\Nation.csv:43
-msgid "主要城市为帕勒莫。黑帮势力盛行，由几大黑帮家族支配政权。"
+#: .\data\csv\Nation.csv:42
+msgid "恩希欧迪斯"
+msgstr ""
+
+#: .\data\csv\Nation.csv:42
+msgid "谢拉格最大的贸易公司，垄断了该国的对外贸易，在国际商业中具有重要地位，实际控制着谢拉格的经济命脉。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:45
 msgid "岁"
 msgstr ""
 
+#: .\data\csv\Nation.csv:45
+msgid "是大炎神明碎片的化身。每个神明都各取一字作为真名。神明曾背叛同族加入狩猎其他神明的战争，最终化为十二块碎片，遍布于大炎各地，后化为人形，彼此以兄弟姐妹互称，或隐居于世，成为诗人或画家，或入仕朝廷为官。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:46
+msgid "魏彦吾"
+msgstr ""
+
+#: .\data\csv\Nation.csv:46
+msgid "炎国境内的现代化都市，是重要的金融和贸易中心，拥有高度发达的商业体系和现代化的城市管理。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:47
 msgid "龙门近卫局"
+msgstr ""
+
+#: .\data\csv\Nation.csv:47
+msgid "陈"
+msgstr ""
+
+#: .\data\csv\Nation.csv:47
+msgid "简称“近卫局”，是龙门警备力量与安全部门的结合体。是龙门的颜面、支柱、最出色的常规力量之一，龙门市民的心理支柱。近卫局在处理问题上，集中，无情，但有效，尤其是在面对天灾带来的感染者泛滥的问题上。"
 msgstr ""
 
 #: .\data\csv\Nation.csv:48
 msgid "鲤氏侦探事务所"
 msgstr ""
 
+#: .\data\csv\Nation.csv:48
+msgid "鲤"
+msgstr ""
+
+#: .\data\csv\Nation.csv:48
+msgid "龙门的私人侦探机构，专门处理各种民事纠纷和私人调查业务，在当地享有良好声誉。"
+msgstr ""
+
 #: .\data\csv\Nation.csv:49
 msgid "企鹅物流"
 msgstr ""
 
-#: .\data\csv\Nation.csv:53
-msgid "彩虹小队"
+#: .\data\csv\Nation.csv:49
+msgid "大帝"
 msgstr ""
 
-#: .\data\csv\Nation.csv:55
+#: .\data\csv\Nation.csv:49
+msgid "是一家小型私人物流企业，提供要人护卫、货物运输等常规服务。因业务发展需要转移至龙门并开始以龙门作为核心业务区域。企鹅物流明面上开展的业务是正常的物流运输业务，包括货物保全、保密运输、私人高级运输服务等，暗地里却开展着情报贩卖、武装押运、秘密运输等游走于法律边缘的业务。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:52
+msgid "杜林族的重要城市，位于地下深处，是杜林族的政治和文化中心，拥有独特的地下城市建筑风格。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:54
 msgid "使徒"
 msgstr ""
 
-#: .\data\csv\Nation.csv:56
+#: .\data\csv\Nation.csv:54
+msgid "闪灵"
+msgstr ""
+
+#: .\data\csv\Nation.csv:54
+msgid "由萨卡兹流浪医师闪灵建立的个人组织，目前的成员除闪灵外，仅有前卡西米尔耀骑士临光和萨卡兹医者夜莺。“使徒”是一个感染者援助团体，行走各地为感染者提供医疗援助，同时也并不避讳暴力冲突，在数年的游历过程中多次使用过明确的暴力手段，以阻止人道灾难的发生。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:55
 msgid "整合运动"
 msgstr ""
 
-#: .\data\csv\Nation.csv:57
+#: .\data\csv\Nation.csv:55
+msgid "塔露拉"
+msgstr ""
+
+#: .\data\csv\Nation.csv:55
+msgid "是一个无种族立场，极端排外的感染者组织。整合运动仇视歧视和压迫他们的社会，宣称感染者“应对自己的身份感到骄傲，积极去获取并使用属于自己的力量”，试图用暴力手段争夺社会对感染者的公正。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:56
 msgid "深海教会"
 msgstr ""
 
-#: .\data\csv\Nation.csv:58
+#: .\data\csv\Nation.csv:56
+msgid "伊比利亚“大静谧”事件后，由“海嗣”及其崇拜者在伊比利亚国内创建的邪教团体，现已扩散到整个大陆。教义认为与尔虞我诈、争斗不休的人类相比，集群意识的“海嗣”是更高级的生命形式，个体应为“种群”进行无私奉献，实现“海嗣”群体的进化。"
+msgstr ""
+
+#: .\data\csv\Nation.csv:57
 msgid "锈锤"
+msgstr ""
+
+#: .\data\csv\Nation.csv:57
+msgid "由活动于荒地的一群流民组成的暴力组织，他们自喻为“荒地的征服者”，远离一切文明，依靠狩猎野兽、开垦土地，互相照应着生存在荒原之上，利用自制的武器战胜敌人。“锈锤”因犯有袭击贵族的队伍等罪行而恶名远扬，被形容为一群残暴野蛮，以杀戮为乐的荒地暴徒。"
 msgstr ""
 
 #: .\data\csv\Organ.csv:7
@@ -18284,10 +20080,6 @@ msgstr ""
 msgid "#e95353"
 msgstr ""
 
-#: .\data\character\0010_陈.csv:4
-msgid "陈"
-msgstr ""
-
 #: .\data\character\0010_陈.csv:13
 msgid "在漫长时光中尘封许久的物件。她并非是将之忘记，而仅仅是不忍再次抚摸它锈蚀的棱角；兴许在某一天，它会重新焕发出过往的炽热吧。"
 msgstr ""
@@ -18558,10 +20350,6 @@ msgstr ""
 
 #: .\data\character\0075_依娜姆.csv:29
 msgid "绷带"
-msgstr ""
-
-#: .\data\character\0078_塔露拉.csv:4
-msgid "塔露拉"
 msgstr ""
 
 #: .\data\character\0078_塔露拉.csv:26
@@ -18990,10 +20778,6 @@ msgstr ""
 
 #: .\data\character\0113_W.csv:35
 msgid "黑色油光厚连裤袜"
-msgstr ""
-
-#: .\data\character\0115_凛冬.csv:4
-msgid "凛冬"
 msgstr ""
 
 #: .\data\character\0115_凛冬.csv:13
@@ -19674,10 +21458,6 @@ msgstr ""
 
 #: .\data\character\0145_普罗旺斯.csv:14
 msgid "普罗旺斯，天灾信使。于战术协同，精准射击等行动中展现出较为优秀的作战能力。现作为狙击干员于罗德岛干员组任职，并提供天灾区调查与天灾预警等相关服务。"
-msgstr ""
-
-#: .\data\character\0147_闪灵.csv:4
-msgid "闪灵"
 msgstr ""
 
 #: .\data\character\0147_闪灵.csv:13
@@ -24022,10 +25802,6 @@ msgstr ""
 
 #: .\data\character\0416_森蚺.csv:38
 msgid "机械动力装甲"
-msgstr ""
-
-#: .\data\character\0420_焰尾.csv:4
-msgid "焰尾"
 msgstr ""
 
 #: .\data\character\0420_焰尾.csv:13
