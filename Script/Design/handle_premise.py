@@ -335,6 +335,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
     # 攻略程度的不过0处理
     if premise_all_value_list[1][0] == "G":
+        # 如果当前值与判定值的正负号不同，则直接返回0
+        if (final_value > 0 and judge_value < 0) or (final_value < 0 and judge_value > 0):
+            return 0
         # 如果是在大于，或者大于等于负数的情况下，则当前值最大为0
         if premise_all_value_list[2] in {"G", "GE"} and judge_value < 0:
             final_value = min(0, final_value)
