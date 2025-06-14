@@ -80,17 +80,6 @@ if __name__ == "__main__":
         # 启动Web服务器（现在会返回实际使用的端口）
         try:
             active_port = start_server()
-            print(f"游戏运行中，请在浏览器中访问 http://127.0.0.1:{active_port}")
-            # 获取本机IP地址
-            try:
-                import socket
-                # 获取本机计算机名称
-                hostname = socket.gethostname()
-                # 获取本机IP
-                ip_address = socket.gethostbyname(hostname)
-                print(f"同一局域网内的设备也可以访问 http://{ip_address}:{active_port}")
-            except Exception as e:
-                print(f"无法获取本机IP地址: {e}")
         except Exception as e:
             print(f"Web服务器启动失败: {e}")
             print("可能的解决方案:")

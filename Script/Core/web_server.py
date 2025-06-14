@@ -618,7 +618,7 @@ def start_server():
     server_running = True
     
     # 设置Flask日志级别
-    logging.getLogger('werkzeug').setLevel(logging.INFO)
+    logging.getLogger('werkzeug').setLevel(logging.WARNING)  # 提高日志级别以减少输出
     # 设置Flask应用日志级别
     app.logger.setLevel(logging.DEBUG)
     # 启用详细的错误日志
@@ -671,8 +671,73 @@ def start_server():
             if server_running and server_thread.is_alive():
                 print(f"游戏服务已启动，请访问: http://localhost:{server_port} 或 http://127.0.0.1:{server_port}")
                 
+                # 获取并显示局域网IP地址
+                def get_lan_ip():
+                    """获取局域网IP地址"""
+                    import platform
+                    import subprocess
+                    
+                    # 方法1: 使用UDP socket连接外部地址来获取路由IP
+                    try:
+                        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+                        s.connect(("8.8.8.8", 80))
+                        ip = s.getsockname()[0]
+                        s.close()
+                        if ip and not ip.startswith("127.") and not ip.startswith("198.18."):
+                            return [ip]
+                    except:
+                        pass
+                    
+                    # 方法2: 在Windows上使用更可靠的方法
+                    if platform.system() == "Windows":
+                        try:
+                            # 尝试使用socket.getaddrinfo获取更准确的地址
+                            host_name = socket.gethostname()
+                            info = socket.getaddrinfo(host_name, None, socket.AF_INET, socket.SOCK_DGRAM)
+                            ips = list(set([addr[4][0] for addr in info]))
+                            valid_ips = [ip for ip in ips if ip.startswith("192.168.") or ip.startswith("10.") or ip.startswith("172.")]
+                            if valid_ips:
+                                return valid_ips
+                        except:
+                            pass
+                    
+                    # 方法3: 尝试获取所有网络接口
+                    try:
+                        import subprocess
+                        if platform.system() == "Windows":
+                            # 使用ipconfig命令获取IP地址
+                            result = subprocess.run(['ipconfig'], capture_output=True, text=True, encoding='gbk')
+                            lines = result.stdout.split('\n')
+                            ips = []
+                            for i, line in enumerate(lines):
+                                if "IPv4" in line or "IP Address" in line:
+                                    # 提取IP地址
+                                    parts = line.split(':')
+                                    if len(parts) > 1:
+                                        ip = parts[1].strip()
+                                        if ip and (ip.startswith("192.168.") or ip.startswith("10.") or ip.startswith("172.")):
+                                            ips.append(ip)
+                            if ips:
+                                return ips
+                    except:
+                        pass
+                    
+                    return []
+                
+                try:
+                    lan_ips = get_lan_ip()
+                    if lan_ips:
+                        print(f"已自动检测到局域网ip，同一局域网内的设备也可以访问以下地址:")
+                        for ip in lan_ips:
+                            print(f"http://{ip}:{server_port}")
+                    else:
+                        logging.debug("无法自动获取局域网IP地址")
+                except Exception as e:
+                    logging.debug(f"获取IP地址时出错: {e}")
+                
                 # 自动打开浏览器
                 try:
+                    print("正在尝试自动打开默认浏览器...")
                     webbrowser.open(f'http://localhost:{server_port}')
                 except:
                     # 打开浏览器失败，不阻止程序运行
