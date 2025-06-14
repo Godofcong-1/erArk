@@ -264,6 +264,36 @@ def get_image_paths():
     # 返回所有图片路径的列表
     return jsonify(image_paths)
 
+@app.route('/favicon.ico')
+def favicon():
+    """
+    提供网站图标
+    
+    参数：无
+    
+    返回值类型：Response对象
+    功能描述：返回网站图标，使用游戏根目录下的image/logo.png
+    """
+    from flask import send_from_directory, abort
+    import os
+    
+    # 根据环境确定基础目录和图片文件夹路径
+    if hasattr(sys, '_MEIPASS'):
+        # 打包环境：图片文件夹在exe同级目录
+        base_dir = os.path.dirname(sys.executable)
+        image_dir = os.path.join(base_dir, 'image')
+    else:
+        # 开发环境：使用项目根目录
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+        image_dir = os.path.join(base_dir, 'image')
+    
+    # 尝试提供logo.png作为网站图标
+    try:
+        return send_from_directory(image_dir, 'logo.png')
+    except:
+        # 如果文件不存在，返回204 No Content，避免404错误
+        abort(204)
+
 @app.route('/image/<path:filename>')
 def serve_image(filename):
     """
