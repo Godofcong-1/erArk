@@ -166,6 +166,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
     int -- 前提权重加成
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_character_data = cache.character_data[0]
+    pl_target_character_id = pl_character_data.target_character_id
+    pl_target_character_data = cache.character_data[pl_target_character_id]
     # print(f"debug character_id = {character_id}, premise_all_value_list = {premise_all_value_list}")
 
     # 进行主体A的判别，A1为自己，A2为交互对象，A3为指定id角色(格式为A3|15)
@@ -217,10 +220,10 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             part_cid = int(b2_value[1:])
             # 区分是身体还是服装
             if part_type == "B":
-                if final_character_data.h_state.shoot_position_body == part_cid:
+                if pl_target_character_data.h_state.shoot_position_body == part_cid:
                     return 1
             else:
-                if final_character_data.h_state.shoot_position_cloth == part_cid:
+                if pl_target_character_data.h_state.shoot_position_cloth == part_cid:
                     return 1
             return 0
         else:
@@ -290,10 +293,10 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
             part_cid = int(b2_value[1:])
             # 区分是身体还是服装
             if part_type == "B":
-                if final_character_data.h_state.insert_position == part_cid:
+                if pl_target_character_data.h_state.insert_position == part_cid:
                     return 1
             else:
-                if final_character_data.h_state.insert_position - 20 == part_cid:
+                if pl_target_character_data.h_state.insert_position - 20 == part_cid:
                     return 1
             return 0
 

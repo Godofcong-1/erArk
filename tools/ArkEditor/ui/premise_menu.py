@@ -566,6 +566,7 @@ class CVPMenu(QDialog):
             self.cvp_c.addItems(["等于"])
             self.cvp_text.setText("角色扮演前提，用于判断是否有角色扮演的状态\n等于1则为该角色扮演，等于0则为非该角色扮演")
         elif index == 18:
+            self.cvp_a.clear()
             self.cvp_a.setVisible(False)
             self.cvp_b2.clear()
             for body_id, body_name in cache_control.body_data.items():
@@ -577,6 +578,7 @@ class CVPMenu(QDialog):
             self.cvp_d.setText("1")
             self.cvp_text.setText("检测当前玩家阴茎插入目标角色的部位，包括身体部位与服装部位\n等于1为插入该部位\n在游戏中会显示插入XX中，或XX交中，或蹭XX中\n\n在口腔、小穴、子宫、后穴等部位的实际行动表现一般为插入洞内摩擦\n在头发、胸衣、内裤等部位的表现应为包裹摩擦\n在兽角、脸部、饰品、武器等部位应为表面摩擦\n手、足、尾巴等较为灵活的身体部位与其穿着的手套袜子鞋子等可自由适用以上多类\n\n如果玩家没有在插入，则全部位为0\n如果角色没有该部位，比如没有兽角，或者没有穿内裤等，则该部位无法插入，也是0")
         elif index == 19:
+            self.cvp_a.clear()
             self.cvp_a.setVisible(False)
             self.cvp_b2.clear()
             for body_id, body_name in cache_control.body_data.items():

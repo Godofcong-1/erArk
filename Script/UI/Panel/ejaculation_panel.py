@@ -217,17 +217,18 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
     # 记录射精部位
     if update_shoot_position_flag:
         if part_type == 0:
-            pl_character_data.h_state.shoot_position_body = part_cid
+            character_data.h_state.shoot_position_body = part_cid
             # 无意识中则记录部位精液
             if handle_premise.handle_unconscious_flag_ge_1(character_id) and part_cid not in character_data.dirty.body_semen_in_unconscious:
                 character_data.dirty.body_semen_in_unconscious.append(part_cid)
         else:
-            pl_character_data.h_state.shoot_position_cloth = part_cid
+            character_data.h_state.shoot_position_cloth = part_cid
             if handle_premise.handle_unconscious_flag_ge_1(character_id) and part_cid not in character_data.dirty.cloth_semen_in_unconscious:
                 character_data.dirty.cloth_semen_in_unconscious.append(part_cid)
         # 重置部位插入
         if semen_count > 0:
             pl_character_data.h_state.insert_position = -1
+            character_data.h_state.insert_position = -1
     # A部位射精时如果已经持有灌肠肛塞道具，且设置已开启，则结算精液灌肠
     if (
         part_type == 0 and
@@ -568,11 +569,14 @@ class Ejaculation_Panel:
         py_cmd.clr_cmd()
         # 更新阴茎插入部位
         character_data: game_type.Character = cache.character_data[0]
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
         if part_type == 0:
             character_data.h_state.insert_position = part_cid
+            target_character_data.h_state.insert_position = part_cid
             # 如果是深喉插入状态，则将部位改为食道射精
             if handle_premise.handle_last_cmd_deep_throat(0):
                 part_cid = 15
         else:
             character_data.h_state.insert_position = part_cid + 20
+            target_character_data.h_state.insert_position = part_cid + 20
         ejaculation_flow(part_cid, part_type)
