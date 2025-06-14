@@ -701,7 +701,7 @@ class CharacterStatus:
     STATUS_STOP_CARRY_TARGET = 944
     """ 停止搬运对方 """
     STATUS_TARGET_FREE_IN_TIME_STOP = 945
-    """ 对方在时停中获得自由 """
+    """ 在时停中正常行动 """
     STATUS_TARGET_STOP_IN_TIME_STOP = 946
-    """ 对方在时停中再次停止 """
+    """ 在时停中再次停止 """
 

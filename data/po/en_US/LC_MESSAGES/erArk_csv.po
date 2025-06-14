@@ -18665,10 +18665,10 @@ msgstr "Move target"
 msgid "停止搬运对方"
 msgstr "Stops moving target"
 
-msgid "对方在时停中获得自由"
+msgid "在时停中正常行动"
 msgstr "Target was free during timestop"
 
-msgid "对方在时停中再次停止"
+msgid "在时停中再次停止"
 msgstr "Target was halted during timestop"
 
 msgid "结算S超强绝顶"

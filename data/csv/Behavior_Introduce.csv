@@ -381,5 +381,5 @@ int,str,str,str
 942,time_stop_off,时间重新流动,解除时间停止状态，恢复正常时间流动。
 943,carry_target,搬运对方,在时间停止状态下搬动静止的目标。
 944,stop_carry_target,停止搬运对方,结束搬运状态，将目标放置在特定位置。
-945,target_free_in_time_stop,对方在时停中获得自由,使特定目标在时间停止状态下能够活动。
-946,target_stop_in_time_stop,对方在时停中再次停止,使已获自由的目标重新回到时间停止状态。
+945,target_free_in_time_stop,在时停中正常行动,使特定目标在时间停止状态下能够活动。
+946,target_stop_in_time_stop,在时停中再次停止,使已获自由的目标重新回到时间停止状态。

@@ -11,7 +11,7 @@ from Script.Core import (
     py_cmd,
 )
 from Script.Design import handle_instruct, handle_premise, talk
-from Script.Config import game_config
+from Script.Config import game_config, normal_config
 import time
 
 cache: game_type.Cache = cache_control.cache
@@ -127,6 +127,7 @@ class SeeInstructPanel:
     def draw(self):
         """绘制操作菜单面板"""
         start_instruct = time.time()
+        SINGLE_LINE_INSTRUCT_NUM = int(cache.all_system_setting.draw_setting[11]) + 1  # 单行显示的指令数量
         self.return_list = []
 
         # 根据是否是显示H指令，进行指令类型过滤相关变量的区分
@@ -210,7 +211,7 @@ class SeeInstructPanel:
                     if filter_judge:
                         now_instruct_list.append(instruct)
         now_instruct_list.sort()
-        instruct_group = value_handle.list_of_groups(now_instruct_list, 5)
+        instruct_group = value_handle.list_of_groups(now_instruct_list, SINGLE_LINE_INSTRUCT_NUM)
         now_draw_list = []
         system_draw_list = []
         # 遍历指令绘制
@@ -222,7 +223,7 @@ class SeeInstructPanel:
                 now_draw = draw.LeftButton(
                     now_text,
                     str(instruct_id),
-                    int(self.width / 5),
+                    int(self.width / SINGLE_LINE_INSTRUCT_NUM),
                     cmd_func=self.handle_instruct,
                     args=(instruct_id,),
                 )
@@ -262,7 +263,7 @@ class SeeInstructPanel:
                 now_draw = draw.LeftButton(
                     now_text,
                     return_text,
-                    int(self.width / 5),
+                    int(self.width / SINGLE_LINE_INSTRUCT_NUM),
                     cmd_func=self.handle_chara_diy_instruct,
                     args=(event_id,),
                 )
@@ -272,7 +273,7 @@ class SeeInstructPanel:
                 now_draw_list.append(now_draw)
                 self.return_list.append(now_draw.return_text)
         now_draw = panel.DrawTextListPanel()
-        now_draw.set(now_draw_list, self.width, 5)
+        now_draw.set(now_draw_list, self.width, SINGLE_LINE_INSTRUCT_NUM)
         # now_draw = panel.VerticalDrawTextListGroup(self.width)
         # now_group = value_handle.list_of_groups(now_draw_list, 5)
         # now_draw.draw_list = now_group
@@ -281,7 +282,7 @@ class SeeInstructPanel:
         line = draw.LineDraw("-.-", self.width)
         line.draw()
         system_draw = panel.DrawTextListPanel()
-        system_draw.set(system_draw_list, self.width, 5)
+        system_draw.set(system_draw_list, self.width, SINGLE_LINE_INSTRUCT_NUM)
         system_draw.draw()
 
     def change_filter(self, now_type: int):

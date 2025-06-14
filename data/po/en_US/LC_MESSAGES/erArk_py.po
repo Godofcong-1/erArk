@@ -7650,10 +7650,10 @@ msgstr "Stop timeflow"
 msgid "时间重新流动"
 msgstr "Resume timeflow"
 
-msgid "让对方在时停中获得自由"
+msgid "让在时停中正常行动"
 msgstr "Allows movement"
 
-msgid "让对方在时停中再次停止"
+msgid "让在时停中再次停止"
 msgstr "Stop movement"
 
 msgid "角色特殊指令"
@@ -8175,10 +8175,10 @@ msgstr "Move target"
 msgid "停止搬运对方"
 msgstr "Stops moving target"
 
-msgid "对方在时停中获得自由_未实装"
+msgid "在时停中正常行动_未实装"
 msgstr ""
 
-msgid "对方在时停中再次停止_未实装"
+msgid "在时停中再次停止_未实装"
 msgstr ""
 
 msgid "角色特殊指令_特殊调用"

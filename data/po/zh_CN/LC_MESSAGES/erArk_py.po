@@ -1194,11 +1194,11 @@ msgid "停止搬运对方"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1070
-msgid "对方在时停中获得自由_未实装"
+msgid "在时停中正常行动_未实装"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1088
-msgid "对方在时停中再次停止_未实装"
+msgid "在时停中再次停止_未实装"
 msgstr ""
 
 #: .\Script\Design\handle_instruct.py:1104 .\Script\UI\Panel\diary_panel.py:42

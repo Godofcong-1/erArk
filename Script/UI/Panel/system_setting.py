@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -212,11 +212,26 @@ class System_Setting_Panel:
             setting[cid] += 1
         else:
             setting[cid] = 0
-        # 全角色是否使用通用文本
-        if type_name == _("绘制") and cid == 2:
-            for character_id in cache.character_data:
-                character_data = cache.character_data[character_id]
-                character_data.chara_setting[1] = cache.all_system_setting.draw_setting[cid]
+        if type_name == _("绘制"):
+            # 全角色是否使用通用文本
+            if cid == 2:
+                for character_id in cache.character_data:
+                    character_data = cache.character_data[character_id]
+                    character_data.chara_setting[1] = cache.all_system_setting.draw_setting[cid]
+            elif cid == 11:
+                line_feed.draw()
+                line_draw = draw.LineDraw("-", self.width)
+                line_draw.draw()
+                line_feed.draw()
+                ask_text = _("请输入1~10的数字\n")
+                ask_panel = panel.AskForOneMessage()
+                ask_panel.set(ask_text, 99)
+                new_num = int(ask_panel.draw()) - 1
+                if new_num < 0:
+                    new_num = 0
+                elif new_num > 9:
+                    new_num = 9
+                cache.all_system_setting.draw_setting[cid] = new_num
 
     def change_ban_list(self):
         """修改已禁止干员列表"""

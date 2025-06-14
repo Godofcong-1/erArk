@@ -227,28 +227,12 @@ class NormalConfig:
     """ 游戏存档数量上限 """
     save_page: int
     """ 存档显示页面单页存档数 """
-    characterlist_show: int
-    """ 角色列表单页显示角色数 """
     text_wait: int
     """ 步进文本等待时间 """
     home_url: str
     """ 开发者主页链接 """
     licenses_url: str
     """ 知识产权共享协议链接 """
-    random_npc_max: int
-    """ 最大随机npc数量 """
-    insceneseeplayer_max: int
-    """ 场景单页显示角色数上限 """
-    seecharacterclothes_max: int
-    """ 角色服装列表单页显示服装数上限 """
-    seecharacterwearitem_max: int
-    """ 角色可穿戴道具列表单页显示上限 """
-    seecharacteritem_max: int
-    """ 角色背包单页显示道具数上限 """
-    food_shop_item_max: int
-    """ 食物商店单页显示道具数上限 """
-    food_shop_type_max: int
-    """ 食物商店单页显示食物种类数上限 """
     font: str
     """ 字体 """
     font_size: int

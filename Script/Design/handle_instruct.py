@@ -1057,7 +1057,7 @@ def handle_stop_carry_target():
 @add_instruct(
     constant.Instruct.TARGET_FREE_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("对方在时停中获得自由_未实装"),
+    _("在时停中正常行动_未实装"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -1067,7 +1067,7 @@ def handle_stop_carry_target():
     constant.Behavior.TARGET_FREE_IN_TIME_STOP,
 )
 def handle_target_free_in_time_stop():
-    """处理让对方在时停中获得自由"""
+    """处理让在时停中正常行动"""
     # TODO，到写隐奸和露出的时候一起写
     chara_handle_instruct_common_settle(constant.Behavior.TARGET_FREE_IN_TIME_STOP)
 
@@ -1075,7 +1075,7 @@ def handle_target_free_in_time_stop():
 @add_instruct(
     constant.Instruct.TARGET_STOP_IN_TIME_STOP,
     constant.InstructType.ARTS,
-    _("对方在时停中再次停止_未实装"),
+    _("在时停中再次停止_未实装"),
     {constant_promise.Premise.ADVANCED_TIME_STOP,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.NOT_H,
@@ -1085,7 +1085,7 @@ def handle_target_free_in_time_stop():
     constant.Behavior.TARGET_STOP_IN_TIME_STOP,
 )
 def handle_target_stop_in_time_stop():
-    """处理对方在时停中再次停止"""
+    """处理在时停中再次停止"""
     # TODO，到写隐奸和露出的时候一起写
     chara_handle_instruct_common_settle(constant.Behavior.TARGET_STOP_IN_TIME_STOP)
 

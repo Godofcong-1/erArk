@@ -381,8 +381,8 @@ int,str,str,int,str,str
 942,time_stop_off,时间重新流动,1,pl,技艺
 943,carry_target,搬运对方,1,pl,技艺
 944,stop_carry_target,停止搬运对方,1,pl,技艺
-945,target_free_in_time_stop,对方在时停中获得自由,1,pl,技艺
-946,target_stop_in_time_stop,对方在时停中再次停止,1,pl,技艺
+945,target_free_in_time_stop,在时停中正常行动,1,pl,技艺
+946,target_stop_in_time_stop,在时停中再次停止,1,pl,技艺
 
 1000,s_orgasm_small,结算S小绝顶,0,npc,二段结算_绝顶
 1001,s_orgasm_normal,结算S普绝顶,0,npc,二段结算_绝顶

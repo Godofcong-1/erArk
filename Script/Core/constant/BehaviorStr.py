@@ -712,6 +712,6 @@ class BehaviorStr:
     STOP_CARRY_TARGET = "stop_carry_target"
     """ 停止搬运对方 """
     TARGET_FREE_IN_TIME_STOP = "target_free_in_time_stop"
-    """ 对方在时停中获得自由 """
+    """ 在时停中正常行动 """
     TARGET_STOP_IN_TIME_STOP = "target_stop_in_time_stop"
-    """ 对方在时停中再次停止 """
+    """ 在时停中再次停止 """

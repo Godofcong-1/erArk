@@ -271,9 +271,9 @@ class Instruct:
     STOP_CARRY_TARGET = 0
     """ 停止搬运对方 """
     TARGET_FREE_IN_TIME_STOP = 0
-    """ 对方在时停中获得自由 """
+    """ 在时停中正常行动 """
     TARGET_STOP_IN_TIME_STOP = 0
-    """ 对方在时停中再次停止 """
+    """ 在时停中再次停止 """
 
     #猥亵#
     MAKE_COFFEE_ADD = 0
