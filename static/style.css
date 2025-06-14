@@ -576,6 +576,49 @@ body {
     background-color: #444;
 }
 
+/* 横屏提示覆盖层 */
+.landscape-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.95);
+    color: #fff;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    font-family: '等距更纱黑体 SC', SimHei, sans-serif;
+    text-align: center;
+    padding: 20px;
+}
+
+.landscape-overlay h2 {
+    color: #ffd700;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.landscape-overlay p {
+    margin-bottom: 15px;
+    line-height: 1.4;
+    color: #c8c8c8;
+}
+
+.landscape-overlay .rotate-icon {
+    font-size: 3em;
+    margin: 20px 0;
+    animation: rotateIcon 2s ease-in-out infinite;
+    color: #ffd700;
+}
+
+@keyframes rotateIcon {
+    0%, 100% { transform: rotate(0deg); }
+    50% { transform: rotate(90deg); }
+}
+
 /* 响应式设计 */
 @media (max-width: 768px) {
     .game-container {
@@ -587,5 +630,44 @@ body {
         width: 100%;
         box-sizing: border-box;
         margin: 5px 0;
+    }
+}
+
+/* 移动设备特定样式 */
+@media screen and (max-width: 1024px) and (orientation: portrait) {
+    /* 在移动设备竖屏模式下显示横屏提示 */
+    .landscape-overlay.show-for-mobile {
+        display: flex;
+    }
+    
+    /* 隐藏主要游戏内容 */
+    .game-wrapper.hide-for-portrait {
+        display: none;
+    }
+}
+
+/* 平板设备特定样式 */
+@media screen and (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    /* 在平板设备竖屏模式下显示横屏提示 */
+    .landscape-overlay.show-for-tablet {
+        display: flex;
+    }
+    
+    /* 隐藏主要游戏内容 */
+    .game-wrapper.hide-for-portrait {
+        display: none;
+    }
+}
+
+/* 手机设备特定样式 */
+@media screen and (max-width: 767px) and (orientation: portrait) {
+    /* 在手机竖屏模式下显示横屏提示 */
+    .landscape-overlay.show-for-phone {
+        display: flex;
+    }
+    
+    /* 隐藏主要游戏内容 */
+    .game-wrapper.hide-for-portrait {
+        display: none;
     }
 }

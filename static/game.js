@@ -3,6 +3,180 @@
  * 实现游戏状态获取、渲染和用户交互
  */
 
+/**
+ * 设备检测工具
+ * 检测当前设备类型和屏幕方向
+ */
+const DeviceDetector = {
+    /**
+     * 检测是否为移动设备
+     * @return {boolean} 是否为移动设备
+     */
+    isMobile() {
+        return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    },
+    
+    /**
+     * 检测是否为平板设备
+     * @return {boolean} 是否为平板设备
+     */
+    isTablet() {
+        const userAgent = navigator.userAgent.toLowerCase();
+        const isIpad = /ipad/.test(userAgent);
+        const isAndroidTablet = /android/.test(userAgent) && !/mobile/.test(userAgent);
+        const isLargeScreen = window.innerWidth >= 768 && window.innerWidth <= 1024;
+        return isIpad || isAndroidTablet || (this.isMobile() && isLargeScreen);
+    },
+    
+    /**
+     * 检测是否为手机设备
+     * @return {boolean} 是否为手机设备
+     */
+    isPhone() {
+        return this.isMobile() && !this.isTablet();
+    },
+    
+    /**
+     * 检测当前屏幕方向
+     * @return {string} 'portrait' 或 'landscape'
+     */
+    getOrientation() {
+        if (window.screen && window.screen.orientation) {
+            return window.screen.orientation.angle === 0 || window.screen.orientation.angle === 180 
+                ? 'portrait' : 'landscape';
+        }
+        // 兼容性处理
+        return window.innerHeight > window.innerWidth ? 'portrait' : 'landscape';
+    },
+    
+    /**
+     * 检测是否需要显示横屏提示
+     * @return {boolean} 是否需要显示横屏提示
+     */
+    shouldShowLandscapeHint() {
+        const orientation = this.getOrientation();
+        return (this.isPhone() || this.isTablet()) && orientation === 'portrait';
+    }
+};
+
+/**
+ * 横屏提示管理器
+ * 管理横屏提示的显示和隐藏
+ */
+const LandscapeManager = {
+    /**
+     * 初始化横屏提示
+     */
+    init() {
+        this.createLandscapeOverlay();
+        this.bindEvents();
+        this.checkOrientation();
+    },
+    
+    /**
+     * 创建横屏提示覆盖层
+     */
+    createLandscapeOverlay() {
+        // 检查是否已存在覆盖层
+        if (document.getElementById('landscape-overlay')) {
+            return;
+        }
+        
+        const overlay = document.createElement('div');
+        overlay.id = 'landscape-overlay';
+        overlay.className = 'landscape-overlay';
+        
+        overlay.innerHTML = `
+            <h2>建议横屏游玩</h2>
+            <div class="rotate-icon">📱</div>
+            <p>为了获得更好的游戏体验，建议将设备旋转至横屏模式。</p>
+            <p>横屏模式下可以显示更多内容，操作也更加便利。</p>
+        `;
+        
+        document.body.appendChild(overlay);
+    },
+    
+    /**
+     * 绑定方向变化事件
+     */
+    bindEvents() {
+        // 监听屏幕方向变化
+        window.addEventListener('orientationchange', () => {
+            // 延迟检查，等待方向变化完成
+            setTimeout(() => {
+                this.checkOrientation();
+            }, 500);
+        });
+        
+        // 监听窗口大小变化（兼容性处理）
+        window.addEventListener('resize', () => {
+            // 防抖处理
+            clearTimeout(this.resizeTimeout);
+            this.resizeTimeout = setTimeout(() => {
+                this.checkOrientation();
+            }, 300);
+        });
+    },
+    
+    /**
+     * 检查屏幕方向并显示/隐藏提示
+     */
+    checkOrientation() {
+        const overlay = document.getElementById('landscape-overlay');
+        const gameWrapper = document.querySelector('.game-wrapper');
+        
+        if (!overlay || !gameWrapper) {
+            return;
+        }
+        
+        if (DeviceDetector.shouldShowLandscapeHint()) {
+            // 显示横屏提示
+            this.showLandscapeHint(overlay, gameWrapper);
+        } else {
+            // 隐藏横屏提示
+            this.hideLandscapeHint(overlay, gameWrapper);
+        }
+    },
+    
+    /**
+     * 显示横屏提示
+     * @param {HTMLElement} overlay - 覆盖层元素
+     * @param {HTMLElement} gameWrapper - 游戏主容器元素
+     */
+    showLandscapeHint(overlay, gameWrapper) {
+        // 根据设备类型添加相应的CSS类
+        overlay.className = 'landscape-overlay';
+        
+        if (DeviceDetector.isPhone()) {
+            overlay.classList.add('show-for-phone');
+        } else if (DeviceDetector.isTablet()) {
+            overlay.classList.add('show-for-tablet');
+        } else {
+            overlay.classList.add('show-for-mobile');
+        }
+        
+        // 隐藏游戏主内容
+        gameWrapper.classList.add('hide-for-portrait');
+        
+        console.log('显示横屏提示 - 设备类型:', DeviceDetector.isPhone() ? '手机' : '平板');
+    },
+    
+    /**
+     * 隐藏横屏提示
+     * @param {HTMLElement} overlay - 覆盖层元素
+     * @param {HTMLElement} gameWrapper - 游戏主容器元素
+     */
+    hideLandscapeHint(overlay, gameWrapper) {
+        // 移除所有显示类
+        overlay.className = 'landscape-overlay';
+        
+        // 显示游戏主内容
+        gameWrapper.classList.remove('hide-for-portrait');
+        
+        console.log('隐藏横屏提示 - 当前方向:', DeviceDetector.getOrientation());
+    }
+};
+
 // WebSocket连接对象
 let socket;
 
@@ -1245,6 +1419,18 @@ function handlePersistentInputSubmit() {
  */
 async function initialize() {
     console.log('初始化游戏界面');
+    
+    // 首先初始化设备检测和横屏提示
+    console.log('设备检测结果:', {
+        isMobile: DeviceDetector.isMobile(),
+        isTablet: DeviceDetector.isTablet(),
+        isPhone: DeviceDetector.isPhone(),
+        orientation: DeviceDetector.getOrientation(),
+        shouldShowLandscapeHint: DeviceDetector.shouldShowLandscapeHint()
+    });
+    
+    // 初始化横屏管理器
+    LandscapeManager.init();
     
     // 获取持久输入框和提交按钮的引用
     const persistentInput = document.getElementById('persistent-input');
