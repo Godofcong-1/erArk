@@ -736,7 +736,7 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
                         # 替换掉换行符
                         display_text = display_text.replace("\\n", "\n")
                         now_draw.text = display_text
-                        now_draw.width = 1
+                        # now_draw.width = 1
                         now_draw.draw()
                 # 如果是"text"，则再等待一个":"之后开始绘制
                 elif chunk_text.strip() == "text" and not text_started:
@@ -751,7 +751,7 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
                         # 替换掉换行符
                         display_text = display_text.replace("\\n", "\n")
                         now_draw.text = display_text
-                        now_draw.width = 1
+                        # now_draw.width = 1
                         now_draw.draw()
                 # 如果已经开始text部分，直接显示文本
                 elif text_started:
@@ -762,12 +762,12 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
                         chunk_text = chunk_text.replace("n", "\n")
                         last_text = ""
                     now_draw.text = chunk_text.replace("text:", "")
-                    now_draw.width = 1
+                    # now_draw.width = 1
                     now_draw.draw()
             # 非直接对话模式下直接显示文本
             else:
                 now_draw.text = chunk_text
-                now_draw.width = 1
+                # now_draw.width = 1
                 now_draw.draw()
     except Exception as e:
         print(f"处理流式响应出错: {e}", flush=True)
@@ -781,7 +781,7 @@ def process_stream_response(stream: object, direct_mode: bool, extractor: object
             # 替换掉换行符
             display_text = display_text.replace("\\n", "\n")
             now_draw.text = display_text
-            now_draw.width = 1
+            # now_draw.width = 1  # Commented out: width=1 can cause layout issues
             now_draw.draw()
 
     # 绘制一个空白的等待
