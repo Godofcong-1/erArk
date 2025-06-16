@@ -4064,6 +4064,1202 @@ msgstr ""
 msgid "一本关于维多利亚军事史的教科书，内容涵盖了军事的基本理论、战阵指挥、军事战略等方面的内容，是维多利亚军校的必备教材。"
 msgstr ""
 
+#: .\data\csv\Book.csv:87
+msgid "《萨尔贡商人谈判心得》"
+msgstr ""
+
+#: .\data\csv\Book.csv:87
+msgid "一位经验丰富的萨尔贡商人记录的谈判技巧，用简单易懂的语言介绍了在集市上讨价还价的基本方法，适合初学者阅读。"
+msgstr ""
+
+#: .\data\csv\Book.csv:88
+msgid "《拉特兰教皇的演讲集》"
+msgstr ""
+
+#: .\data\csv\Book.csv:88
+msgid "收录了拉特兰历代教皇的经典演讲片段，这些演讲展现了萨科塔族的智慧和话术技巧，是学习公开演讲的入门读物。"
+msgstr ""
+
+#: .\data\csv\Book.csv:89
+msgid "《哥伦比亚销售入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:89
+msgid "哥伦比亚某企业培训部门编写的销售手册，用通俗的语言介绍了基本的销售话术和客户沟通技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:90
+msgid "《龙门茶馆闲谈录》"
+msgstr ""
+
+#: .\data\csv\Book.csv:90
+msgid "记录了龙门茶馆中老茶客们的闲聊智慧，包含了许多实用的日常交流技巧和社交礼仪，语言生动有趣。"
+msgstr ""
+
+#: .\data\csv\Book.csv:91
+msgid "《炎国酒桌文化》"
+msgstr ""
+
+#: .\data\csv\Book.csv:91
+msgid "介绍炎国人在酒桌上的交流方式和敬酒礼仪，对于理解炎国文化和商务交往很有帮助。"
+msgstr ""
+
+#: .\data\csv\Book.csv:92
+msgid "《萨卡兹王庭议事规则》"
+msgstr ""
+
+#: .\data\csv\Book.csv:92
+msgid "详细记录了萨卡兹王庭中的议事程序和仪式规则，其中包含的政治智慧和话术技巧至今仍有重要参考价值。"
+msgstr ""
+
+#: .\data\csv\Book.csv:93
+msgid "《哥伦比亚法庭辩论术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:93
+msgid "以哥伦比亚法庭的辩论传统为基础，系统介绍了逻辑辩论的方法和技巧，是法律从业者的必读书籍。"
+msgstr ""
+
+#: .\data\csv\Book.csv:94
+msgid "《谢拉格商会议事录》"
+msgstr ""
+
+#: .\data\csv\Book.csv:94
+msgid "谢拉格商会内部的议事记录，展现了高级商务谈判中的策略运用和话术技巧，对于理解商业政治很有价值。"
+msgstr ""
+
+#: .\data\csv\Book.csv:95
+msgid "《伊比利亚海商贸易经验》"
+msgstr ""
+
+#: .\data\csv\Book.csv:95
+msgid "记录了伊比利亚海商在各国港口进行贸易时的沟通经验，包含了跨文化交流的宝贵智慧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:96
+msgid "《东国茶道与话术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:96
+msgid "以东国茶道为载体，深入探讨了在茶道仪式中的言语艺术和心理交流，体现了东国文化的精髓。"
+msgstr ""
+
+#: .\data\csv\Book.csv:97
+msgid "《阿戈尔深海外交密录》"
+msgstr ""
+
+#: .\data\csv\Book.csv:97
+msgid "记录了阿戈尔与地表各国进行外交接触时的高级话术技巧，内容涉及复杂的政治博弈和心理战术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:98
+msgid "《维多利亚外交礼仪详解》"
+msgstr ""
+
+#: .\data\csv\Book.csv:98
+msgid "维多利亚外交学院编写的专业教材，详细介绍了各种外交场合的礼仪规范和沟通技巧，内容专业而全面。"
+msgstr ""
+
+#: .\data\csv\Book.csv:99
+msgid "《叙拉古黑手党谈判艺术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:99
+msgid "虽然来源可疑，但这本书记录了叙拉古地下势力在谈判中使用的高级心理技巧，内容深刻而危险。"
+msgstr ""
+
+#: .\data\csv\Book.csv:100
+msgid "《莱茵生命商务谈判指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:100
+msgid "莱茵生命内部培训教材，结合实际案例详细讲解了商务谈判的策略和技巧，具有很强的实用性。"
+msgstr ""
+
+#: .\data\csv\Book.csv:101
+msgid "《炎国官场厚黑学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:101
+msgid "以炎国官场为背景，深入分析了复杂政治环境中的生存智慧和话术技巧，内容晦涩但极具参考价值。"
+msgstr ""
+
+#: .\data\csv\Book.csv:103
+msgid "《罗德岛小队指挥手册》"
+msgstr ""
+
+#: .\data\csv\Book.csv:103
+msgid "罗德岛培训部门为新任小队长编写的基础指挥手册，用简单的图表和案例介绍了基本的队伍管理方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:104
+msgid "《黑钢国际安保指挥基础》"
+msgstr ""
+
+#: .\data\csv\Book.csv:104
+msgid "黑钢国际内部培训教材的简化版，介绍了私人安保任务中的基本指挥原则和团队协调方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:105
+msgid "《卡西米尔骑士团队合作》"
+msgstr ""
+
+#: .\data\csv\Book.csv:105
+msgid "以卡西米尔骑士竞技为背景，介绍了团队竞技中的基本指挥和配合技巧，适合初学者了解团队合作。"
+msgstr ""
+
+#: .\data\csv\Book.csv:106
+msgid "《企鹅物流配送管理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:106
+msgid "企鹅物流内部的管理手册，用通俗易懂的语言介绍了物流配送中的基本管理和指挥方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:107
+msgid "《维多利亚民兵组织手册》"
+msgstr ""
+
+#: .\data\csv\Book.csv:107
+msgid "维多利亚地方政府发布的民兵组织指南，介绍了基本的民兵指挥和管理方法，内容简单实用。"
+msgstr ""
+
+#: .\data\csv\Book.csv:108
+msgid "《乌萨斯军校指挥学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:108
+msgid "乌萨斯帝国军事学院的经典教材，系统介绍了军事指挥的基本理论和实践方法，是军事指挥学的入门经典。"
+msgstr ""
+
+#: .\data\csv\Book.csv:109
+msgid "《哥伦比亚企业管理学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:109
+msgid "哥伦比亚商学院的管理学教材，结合现代企业管理实践，详细介绍了团队管理和项目指挥的方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:110
+msgid "《莱塔尼亚战术指挥研究》"
+msgstr ""
+
+#: .\data\csv\Book.csv:110
+msgid "萨卡兹军事委员会的高级战略教材，深入分析了大规模军事行动的指挥艺术，内容复杂而深奥。"
+msgstr ""
+
+#: .\data\csv\Book.csv:111
+msgid "《萨卡兹军事委员会战略学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:111
+msgid "阿戈尔深海猎人部队的内部教材，介绍了在复杂海洋环境中进行战术指挥的专业知识和经验。"
+msgstr ""
+
+#: .\data\csv\Book.csv:112
+msgid "《东国八家武士统御术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:112
+msgid "记录了东国八大家族在统御武士方面的传统智慧，包含了许多关于领导力和指挥艺术的珍贵经验。"
+msgstr ""
+
+#: .\data\csv\Book.csv:113
+msgid "《深海猎人作战指挥》"
+msgstr ""
+
+#: .\data\csv\Book.csv:114
+msgid "《维多利亚皇家军官学院战略论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:114
+msgid "维多利亚最权威的军事战略著作，汇集了帝国军事专家的智慧，是高级指挥官的必读书籍。"
+msgstr ""
+
+#: .\data\csv\Book.csv:115
+msgid "《拉特兰教廷组织管理学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:115
+msgid "研究拉特兰教廷内部组织结构和管理体系的专业著作，其中的管理智慧对现代组织管理有重要启发。"
+msgstr ""
+
+#: .\data\csv\Book.csv:116
+msgid "《雷姆必拓矿业集团管理哲学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:116
+msgid "分析雷姆必拓大型矿业集团管理模式的学术著作，探讨了复杂组织的管理理论和实践。"
+msgstr ""
+
+#: .\data\csv\Book.csv:117
+msgid "《炎国兵家三十六计注解》"
+msgstr ""
+
+#: .\data\csv\Book.csv:117
+msgid "对炎国古代兵法经典的深度注解，结合现代战争实例分析了各种战略战术的运用，是高级指挥学的珍贵参考。"
+msgstr ""
+
+#: .\data\csv\Book.csv:119
+msgid "《罗德岛干员格斗训练》"
+msgstr ""
+
+#: .\data\csv\Book.csv:119
+msgid "罗德岛训练部门编写的基础格斗手册，用图解方式介绍了简单的防身术和基本格斗技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:120
+msgid "《黑钢国际近身格斗》"
+msgstr ""
+
+#: .\data\csv\Book.csv:120
+msgid "黑钢国际安保人员的入门格斗教材，重点介绍了实用的近身搏斗技巧和自卫方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:121
+msgid "《卡西米尔骑士基础剑术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:121
+msgid "卡西米尔骑士学院的入门剑术教材，用简单的图示介绍了基本的剑术动作和练习方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:122
+msgid "《乌萨斯拳击入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:122
+msgid "介绍乌萨斯传统拳击的基础教材，以强调力量训练和基本拳法为主，适合初学者练习。"
+msgstr ""
+
+#: .\data\csv\Book.csv:123
+msgid "《炎国武馆基础功法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:123
+msgid "炎国民间武馆的入门教材，介绍了传统武术的基本功法和简单套路，注重内功修炼。"
+msgstr ""
+
+#: .\data\csv\Book.csv:124
+msgid "《维多利亚皇家卫队格斗术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:124
+msgid "维多利亚皇家卫队的专业格斗教材，系统介绍了近身搏斗的高级技巧和战术运用。"
+msgstr ""
+
+#: .\data\csv\Book.csv:125
+msgid "《莱塔尼亚源石格斗学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:125
+msgid "结合源石法术的格斗技巧研究，探讨了法术与武技结合的实战应用，是莱塔尼亚特色的格斗学科。"
+msgstr ""
+
+#: .\data\csv\Book.csv:126
+msgid "《伊比利亚海战武技》"
+msgstr ""
+
+#: .\data\csv\Book.csv:126
+msgid "伊比利亚海军精英的战斗技巧集成，结合了海战环境的特殊性，是极其高深的武技流派。"
+msgstr ""
+
+#: .\data\csv\Book.csv:127
+msgid "《东国忍者秘传武技》"
+msgstr ""
+
+#: .\data\csv\Book.csv:127
+msgid "记录了东国忍者传统的隐秘武技，包含了许多独特的暗杀技巧和潜行战斗方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:128
+msgid "《萨尔贡角斗士搏击术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:128
+msgid "萨尔贡角斗场流传的专业搏击技巧，以实战为核心，介绍了各种残酷而有效的格斗方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:129
+msgid "《萨卡兹王庭御前武技》"
+msgstr ""
+
+#: .\data\csv\Book.csv:129
+msgid "萨卡兹王庭护卫的最高级武技秘籍，记录了只有王庭精英才能掌握的高深格斗技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:130
+msgid "《拉特兰铳骑战技全书》"
+msgstr ""
+
+#: .\data\csv\Book.csv:130
+msgid "拉特兰教廷铳骑的战斗技巧集成，融合了射击与近战武技的最高境界，极难掌握。"
+msgstr ""
+
+#: .\data\csv\Book.csv:131
+msgid "《皇帝内卫训练计划书》"
+msgstr ""
+
+#: .\data\csv\Book.csv:131
+msgid "乌萨斯培养内卫的机密文件，作为皇帝的利刃，其训练内容包含了各种高深的致命技法，学习风险极高。"
+msgstr ""
+
+#: .\data\csv\Book.csv:132
+msgid "《谢拉格雪山武道》"
+msgstr ""
+
+#: .\data\csv\Book.csv:132
+msgid "谢拉格雪山某位半隐居武者的武道精髓，需要极高的身体素质和武学天赋才能理解其中的奥义。"
+msgstr ""
+
+#: .\data\csv\Book.csv:133
+msgid "《深海猎人作战标准》"
+msgstr ""
+
+#: .\data\csv\Book.csv:133
+msgid "阿戈尔深海猎人的专业作战手册，介绍了在水下和特殊环境中的格斗技巧和战术方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:135
+msgid "《罗德岛食堂家常菜》"
+msgstr ""
+
+#: .\data\csv\Book.csv:135
+msgid "罗德岛食堂大厨编写的家常菜谱，用简单的食材和做法制作美味的日常餐食，适合初学者。"
+msgstr ""
+
+#: .\data\csv\Book.csv:136
+msgid "《企鹅物流便当制作》"
+msgstr ""
+
+#: .\data\csv\Book.csv:136
+msgid "企鹅物流员工的便当制作指南，介绍了如何在忙碌的工作中快速制作营养便当。"
+msgstr ""
+
+#: .\data\csv\Book.csv:137
+msgid "《维多利亚家庭烘焙》"
+msgstr ""
+
+#: .\data\csv\Book.csv:137
+msgid "维多利亚家庭主妇的烘焙入门书，教授制作简单糕点和面包的基本方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:138
+msgid "《炎国街头小吃》"
+msgstr ""
+
+#: .\data\csv\Book.csv:138
+msgid "收录了炎国各地流行的街头小吃制作方法，用料简单，制作便捷，口味地道。"
+msgstr ""
+
+#: .\data\csv\Book.csv:139
+msgid "《乌萨斯冬季暖汤》"
+msgstr ""
+
+#: .\data\csv\Book.csv:139
+msgid "专门介绍乌萨斯寒冷地区传统暖汤的制作方法，营养丰富，制作简单。"
+msgstr ""
+
+#: .\data\csv\Book.csv:140
+msgid "《哥伦比亚精致料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:140
+msgid "哥伦比亚高级餐厅的料理技法，介绍了现代烹饪技术和精致摆盘的专业方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:141
+msgid "《萨尔贡香料烹饪学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:141
+msgid "深入研究萨尔贡丰富香料的使用方法，教授如何用各种香料制作正宗的萨尔贡菜肴。"
+msgstr ""
+
+#: .\data\csv\Book.csv:142
+msgid "《拉特兰素食料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:142
+msgid "拉特兰教廷传统的素食料理技法，注重营养搭配和健康理念，制作工艺精湛。"
+msgstr ""
+
+#: .\data\csv\Book.csv:143
+msgid "《卡兹戴尔战地料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:143
+msgid "在卡兹戴尔恶劣战争环境中发展出的特殊料理技法，需要在极限条件下制作营养丰富的食物。"
+msgstr ""
+
+#: .\data\csv\Book.csv:144
+msgid "《伊比利亚海鲜料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:144
+msgid "伊比利亚沿海地区的海鲜料理专业教材，介绍了各种海鲜的处理方法和烹饪技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:145
+msgid "《莱塔尼亚分子料理学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:145
+msgid "莱塔尼亚利用源石技术开发的前沿料理学，运用分子技术改变食物的形态和口感。"
+msgstr ""
+
+#: .\data\csv\Book.csv:146
+msgid "《阿戈尔深海料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:146
+msgid "阿戈尔独特的深海食材料理方法，需要高超的技艺才能处理这些特殊的海洋食材。"
+msgstr ""
+
+#: .\data\csv\Book.csv:147
+msgid "《谢拉格高山珍馐》"
+msgstr ""
+
+#: .\data\csv\Book.csv:147
+msgid "谢拉格高山地区的珍贵食材料理技法，制作难度极高，需要丰富的经验和精湛的技艺。"
+msgstr ""
+
+#: .\data\csv\Book.csv:148
+msgid "《叙拉古家族秘传料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:148
+msgid "叙拉古古老家族世代相传的料理秘方，制作工艺复杂，口味独特，极难掌握。"
+msgstr ""
+
+#: .\data\csv\Book.csv:149
+msgid "《东国怀石料理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:149
+msgid "东国传统的怀石料理制作方法，强调食材的原味和季节性，是东国料理文化的精髓。"
+msgstr ""
+
+#: .\data\csv\Book.csv:151
+msgid "《泰拉民谣入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:151
+msgid "收录了泰拉大陆各国最简单易学的民谣，配有基础的乐谱和演唱技巧指导。"
+msgstr ""
+
+#: .\data\csv\Book.csv:152
+msgid "《罗德岛音乐社活动手册》"
+msgstr ""
+
+#: .\data\csv\Book.csv:152
+msgid "罗德岛音乐社团的活动指南，介绍了简单的乐器演奏和合唱技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:153
+msgid "《维多利亚流行音乐》"
+msgstr ""
+
+#: .\data\csv\Book.csv:153
+msgid "维多利亚当前流行的音乐风格介绍，包含简单的吉他弹唱和流行歌曲。"
+msgstr ""
+
+#: .\data\csv\Book.csv:154
+msgid "《炎国传统丝竹》"
+msgstr ""
+
+#: .\data\csv\Book.csv:154
+msgid "炎国传统丝竹乐器的入门教程，介绍了笛子、古筝等乐器的基本演奏方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:155
+msgid "《乌萨斯民族音乐》"
+msgstr ""
+
+#: .\data\csv\Book.csv:155
+msgid "乌萨斯各民族传统音乐的介绍，包含了简单的民族乐器演奏技巧。"
+msgstr ""
+
+#: .\data\csv\Book.csv:156
+msgid "《谢拉格雪山天籁》"
+msgstr ""
+
+#: .\data\csv\Book.csv:156
+msgid "谢拉格高山地区的神秘音乐，据说能够与自然产生共鸣。"
+msgstr ""
+
+#: .\data\csv\Book.csv:157
+msgid "《莱塔尼亚古典音乐理论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:157
+msgid "莱塔尼亚音乐学院的理论教材，系统介绍了古典音乐的理论基础和作曲技法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:158
+msgid "《东国雅乐演奏法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:158
+msgid "东国宫廷雅乐的演奏教程，需要扎实的音乐基础和对东国文化的深入理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:159
+msgid "《拉特兰圣歌合唱》"
+msgstr ""
+
+#: .\data\csv\Book.csv:159
+msgid "拉特兰教廷圣歌的合唱技法，要求参与者具备良好的声乐素养和宗教理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:160
+msgid "《萨尔贡部族战歌》"
+msgstr ""
+
+#: .\data\csv\Book.csv:160
+msgid "萨尔贡各部族的传统战歌，需要强有力的声音和对部族文化的深入了解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:161
+msgid "《阿戈尔深海回响》"
+msgstr ""
+
+#: .\data\csv\Book.csv:161
+msgid "阿戈尔独特的深海音乐形式，运用特殊的声学原理，只有音乐大师才能掌握。"
+msgstr ""
+
+#: .\data\csv\Book.csv:162
+msgid "《蓝卡坞电影配乐大师课》"
+msgstr ""
+
+#: .\data\csv\Book.csv:162
+msgid "蓝卡坞顶级电影配乐师的高级教程，涵盖了复杂的管弦乐编曲和音效设计技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:163
+msgid "《萨卡兹古老吟唱》"
+msgstr ""
+
+#: .\data\csv\Book.csv:163
+msgid "萨卡兹族最古老的吟唱传统，蕴含着深奥的魔法力量，只有天赋异禀者才能领悟。"
+msgstr ""
+
+#: .\data\csv\Book.csv:164
+msgid "《叙拉古歌剧大师课》"
+msgstr ""
+
+#: .\data\csv\Book.csv:164
+msgid "叙拉古歌剧院大师级的表演技法，需要多年的专业训练和天赋才能达到这个水平。"
+msgstr ""
+
+#: .\data\csv\Book.csv:165
+msgid "《伊比利亚海妖之歌》"
+msgstr ""
+
+#: .\data\csv\Book.csv:165
+msgid "传说中伊比利亚海妖的歌声技法，极其危险和神秘，学习者需要承担巨大风险。"
+msgstr ""
+
+#: .\data\csv\Book.csv:167
+msgid "《泰拉大陆地理常识》"
+msgstr ""
+
+#: .\data\csv\Book.csv:167
+msgid "介绍泰拉大陆基本地理知识的通俗读物，包含各国的位置、气候和基本文化。"
+msgstr ""
+
+#: .\data\csv\Book.csv:168
+msgid "《明日方舟历史简述》"
+msgstr ""
+
+#: .\data\csv\Book.csv:168
+msgid "以简单易懂的语言介绍泰拉大陆的基本历史，适合初学者了解这个世界。"
+msgstr ""
+
+#: .\data\csv\Book.csv:169
+msgid "《各国货币兑换指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:169
+msgid "介绍泰拉大陆各国货币制度和兑换方法的实用手册，对旅行者很有帮助。"
+msgstr ""
+
+#: .\data\csv\Book.csv:170
+msgid "《源石基础知识》"
+msgstr ""
+
+#: .\data\csv\Book.csv:170
+msgid "介绍源石的基本性质和日常应用的科普读物，内容通俗易懂。"
+msgstr ""
+
+#: .\data\csv\Book.csv:171
+msgid "《感染者权益保护》"
+msgstr ""
+
+#: .\data\csv\Book.csv:171
+msgid "介绍感染者基本权益和保护措施的宣传手册，帮助感染者了解自己的权利。"
+msgstr ""
+
+#: .\data\csv\Book.csv:172
+msgid "《维多利亚帝国史》"
+msgstr ""
+
+#: .\data\csv\Book.csv:172
+msgid "系统介绍维多利亚帝国发展历程的史学著作，内容详实，史料丰富。"
+msgstr ""
+
+#: .\data\csv\Book.csv:173
+msgid "《哥伦比亚科技发展史》"
+msgstr ""
+
+#: .\data\csv\Book.csv:173
+msgid "记录哥伦比亚科技发展历程的专业著作，分析了科技进步对社会的影响。"
+msgstr ""
+
+#: .\data\csv\Book.csv:174
+msgid "《源石技术应用研究》"
+msgstr ""
+
+#: .\data\csv\Book.csv:174
+msgid "深入研究源石技术在各个领域应用的学术著作，需要一定的理工科基础。"
+msgstr ""
+
+#: .\data\csv\Book.csv:175
+msgid "《卡兹戴尔内战分析》"
+msgstr ""
+
+#: .\data\csv\Book.csv:175
+msgid "分析卡兹戴尔长期内战原因和影响的政治学著作，观点深刻，分析透彻。"
+msgstr ""
+
+#: .\data\csv\Book.csv:176
+msgid "《炎国古代哲学思想》"
+msgstr ""
+
+#: .\data\csv\Book.csv:176
+msgid "研究炎国古代哲学思想的学术著作，需要深厚的文化底蕴才能理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:177
+msgid "《泰拉大陆生态学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:177
+msgid "研究泰拉大陆生物多样性和生态系统的高深学术著作，内容极其专业。"
+msgstr ""
+
+#: .\data\csv\Book.csv:178
+msgid "《源石物理学原理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:178
+msgid "深入研究源石物理性质的高等学术著作，需要扎实的物理学基础。"
+msgstr ""
+
+#: .\data\csv\Book.csv:179
+msgid "《古代萨卡兹文明考古》"
+msgstr ""
+
+#: .\data\csv\Book.csv:179
+msgid "研究古代萨卡兹文明的考古学专著，内容晦涩，需要考古学专业知识。"
+msgstr ""
+
+#: .\data\csv\Book.csv:180
+msgid "《天灾成因机制研究》"
+msgstr ""
+
+#: .\data\csv\Book.csv:180
+msgid "研究天灾产生机制的高深学术著作，涉及复杂的地质学和气象学理论。"
+msgstr ""
+
+#: .\data\csv\Book.csv:181
+msgid "《跨维度理论物理学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:181
+msgid "探讨跨维度物理现象的前沿理论著作，只有顶级物理学家才能理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:183
+msgid "《罗德岛医疗急救》"
+msgstr ""
+
+#: .\data\csv\Book.csv:183
+msgid "罗德岛医疗部门编写的急救手册，介绍了基本的急救方法和常见外伤处理。"
+msgstr ""
+
+#: .\data\csv\Book.csv:184
+msgid "《感染者日常护理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:184
+msgid "专门为感染者编写的日常护理指南，介绍了感染者的基本保健方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:185
+msgid "《源石病预防常识》"
+msgstr ""
+
+#: .\data\csv\Book.csv:185
+msgid "介绍源石病预防方法的科普读物，帮助普通人了解如何避免感染。"
+msgstr ""
+
+#: .\data\csv\Book.csv:186
+msgid "《家庭常用药物》"
+msgstr ""
+
+#: .\data\csv\Book.csv:186
+msgid "介绍家庭常备药物用法的实用手册，包含了基本的用药常识。"
+msgstr ""
+
+#: .\data\csv\Book.csv:187
+msgid "《健康生活指南》"
+msgstr ""
+
+#: .\data\csv\Book.csv:187
+msgid "介绍健康生活方式的通俗读物，包含饮食、运动、作息等方面的建议。"
+msgstr ""
+
+#: .\data\csv\Book.csv:188
+msgid "《维多利亚医学院教程》"
+msgstr ""
+
+#: .\data\csv\Book.csv:188
+msgid "维多利亚医学院的专业教材，系统介绍了临床医学的基础理论和实践。"
+msgstr ""
+
+#: .\data\csv\Book.csv:189
+msgid "《哥伦比亚外科手术学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:189
+msgid "哥伦比亚医学院的外科教材，详细介绍了各种外科手术的操作方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:190
+msgid "《莱茵生命药物研发》"
+msgstr ""
+
+#: .\data\csv\Book.csv:190
+msgid "莱茵生命制药部门的研发手册，介绍了现代药物的研发过程和测试方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:191
+msgid "《拉特兰医疗传统》"
+msgstr ""
+
+#: .\data\csv\Book.csv:191
+msgid "拉特兰教廷医疗传统的记录，结合了宗教信仰与医疗实践的独特方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:192
+msgid "《炎国中医理论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:192
+msgid "炎国传统中医的理论基础，包含了经络学说、药物配伍等传统医学知识。"
+msgstr ""
+
+#: .\data\csv\Book.csv:193
+msgid "《源石病机理研究》"
+msgstr ""
+
+#: .\data\csv\Book.csv:193
+msgid "深入研究源石病发病机理的高深医学著作，只有资深医学专家才能理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:194
+msgid "《神经源石技术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:194
+msgid "研究源石技术在神经医学中应用的前沿著作，涉及复杂的神经科学理论。"
+msgstr ""
+
+#: .\data\csv\Book.csv:195
+msgid "《萨卡兹古代医术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:195
+msgid "记录萨卡兹族古老医疗传统的珍贵典籍，其中包含了许多失传的医疗秘法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:196
+msgid "《阿戈尔深海医学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:196
+msgid "阿戈尔独特的深海医学理论，需要对深海环境和生物学有深入了解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:197
+msgid "《生命工程学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:197
+msgid "研究生命工程技术的前沿学科，涉及基因工程、细胞再生等高深技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:199
+msgid "《移动城市蔬菜种植》"
+msgstr ""
+
+#: .\data\csv\Book.csv:199
+msgid "介绍在移动城市环境中种植蔬菜的基本方法，包含了简单的水培和土培技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:200
+msgid "《罗德岛温室管理》"
+msgstr ""
+
+#: .\data\csv\Book.csv:200
+msgid "罗德岛农业部门的温室管理手册，介绍了基本的温室种植和管理方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:201
+msgid "《家庭园艺入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:201
+msgid "适合家庭的小型园艺指南，教授如何在有限空间内种植花草和蔬菜。"
+msgstr ""
+
+#: .\data\csv\Book.csv:202
+msgid "《常见作物种植》"
+msgstr ""
+
+#: .\data\csv\Book.csv:202
+msgid "介绍常见农作物种植方法的实用手册，包含了播种、施肥、收获等基本技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:203
+msgid "《小型养殖技术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:203
+msgid "介绍小规模家禽养殖的基本方法，适合初学者了解养殖业。"
+msgstr ""
+
+#: .\data\csv\Book.csv:204
+msgid "《维多利亚现代农业》"
+msgstr ""
+
+#: .\data\csv\Book.csv:204
+msgid "维多利亚农业学院的专业教材，系统介绍了现代农业技术和管理方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:205
+msgid "《哥伦比亚设施农业》"
+msgstr ""
+
+#: .\data\csv\Book.csv:205
+msgid "哥伦比亚发达的设施农业技术手册，介绍了温室、大棚等现代农业设施。"
+msgstr ""
+
+#: .\data\csv\Book.csv:206
+msgid "《炎国传统农法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:206
+msgid "炎国数千年农业传统的总结，包含了丰富的传统农业智慧和技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:207
+msgid "《萨尔贡沙漠农业》"
+msgstr ""
+
+#: .\data\csv\Book.csv:207
+msgid "萨尔贡在沙漠环境中发展农业的专业技术，适应恶劣环境的农业方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:208
+msgid "《乌萨斯寒地种植》"
+msgstr ""
+
+#: .\data\csv\Book.csv:208
+msgid "乌萨斯寒冷地区的农业技术，介绍了如何在严寒环境中进行农业生产。"
+msgstr ""
+
+#: .\data\csv\Book.csv:209
+msgid "《源石农业技术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:209
+msgid "运用源石技术改进农业生产的前沿研究，涉及复杂的源石应用理论。"
+msgstr ""
+
+#: .\data\csv\Book.csv:210
+msgid "《基因改良作物学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:210
+msgid "研究作物基因改良技术的高深学科，需要深厚的生物学和遗传学基础。"
+msgstr ""
+
+#: .\data\csv\Book.csv:211
+msgid "《极地农业工程》"
+msgstr ""
+
+#: .\data\csv\Book.csv:211
+msgid "在极地环境中进行农业生产的高难度技术，需要丰富的工程学知识。"
+msgstr ""
+
+#: .\data\csv\Book.csv:212
+msgid "《深海水产养殖》"
+msgstr ""
+
+#: .\data\csv\Book.csv:212
+msgid "阿戈尔独特的深海水产养殖技术，需要对深海环境有深入的理解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:213
+msgid "《天灾后农业重建》"
+msgstr ""
+
+#: .\data\csv\Book.csv:213
+msgid "研究天灾后如何快速重建农业生产的专业技术，难度极高。"
+msgstr ""
+
+#: .\data\csv\Book.csv:215
+msgid "《基础工具制作》"
+msgstr ""
+
+#: .\data\csv\Book.csv:215
+msgid "介绍如何制作日常生活中基本工具的入门手册，包含了简单的木工和金工技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:216
+msgid "《罗德岛设备维护》"
+msgstr ""
+
+#: .\data\csv\Book.csv:216
+msgid "罗德岛工程部门的设备维护手册，教授基本的机械维修和保养方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:217
+msgid "《家具制作入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:217
+msgid "适合初学者的家具制作指南，介绍了简单家具的制作方法和工具使用。"
+msgstr ""
+
+#: .\data\csv\Book.csv:218
+msgid "《金属加工基础》"
+msgstr ""
+
+#: .\data\csv\Book.csv:218
+msgid "介绍基本金属加工技术的入门书籍，包含了锻造、焊接等基础技能。"
+msgstr ""
+
+#: .\data\csv\Book.csv:219
+msgid "《纺织品制作》"
+msgstr ""
+
+#: .\data\csv\Book.csv:219
+msgid "介绍纺织品制作过程的手工艺指南，从纺纱到织布的完整流程。"
+msgstr ""
+
+#: .\data\csv\Book.csv:220
+msgid "《维多利亚精密制造》"
+msgstr ""
+
+#: .\data\csv\Book.csv:220
+msgid "维多利亚工业学院的制造技术教材，介绍了精密机械制造的专业方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:221
+msgid "《哥伦比亚电子制造》"
+msgstr ""
+
+#: .\data\csv\Book.csv:221
+msgid "哥伦比亚电子工业的制造技术手册，涉及电子元件和设备的生产方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:222
+msgid "《炎国传统工艺》"
+msgstr ""
+
+#: .\data\csv\Book.csv:222
+msgid "炎国传统手工艺技术的传承，包含了陶瓷、丝绸、金属工艺等技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:223
+msgid "《源石设备制造》"
+msgstr ""
+
+#: .\data\csv\Book.csv:223
+msgid "运用源石技术制造各种设备的专业教材，需要对源石技术有深入了解。"
+msgstr ""
+
+#: .\data\csv\Book.csv:224
+msgid "《乌萨斯重工业》"
+msgstr ""
+
+#: .\data\csv\Book.csv:224
+msgid "乌萨斯重工业的制造技术，介绍了大型机械设备的制造方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:225
+msgid "《莱茵生命生物制造》"
+msgstr ""
+
+#: .\data\csv\Book.csv:225
+msgid "莱茵生命的生物制造技术，涉及生物材料和生物设备的前沿制造方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:226
+msgid "《源石核心工程》"
+msgstr ""
+
+#: .\data\csv\Book.csv:226
+msgid "源石核心技术的高深工程学，只有顶级工程师才能掌握的制造技术。"
+msgstr ""
+
+#: .\data\csv\Book.csv:227
+msgid "《拉特兰铳械制造维护手册》"
+msgstr ""
+
+#: .\data\csv\Book.csv:227
+msgid "拉特兰教廷铳骑部队的机密技术手册，详细记录了各种先进铳械的制造工艺和维护方法，需要极高的机械工程水平。"
+msgstr ""
+
+#: .\data\csv\Book.csv:228
+msgid "《移动城市核心结构工程学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:228
+msgid "研究移动城市地块核心结构建造的顶级工程技术，涉及复杂的动力学和材料工程学，只有资深城市工程师才能掌握。"
+msgstr ""
+
+#: .\data\csv\Book.csv:229
+msgid "《哥伦比亚飞行器设计制造》"
+msgstr ""
+
+#: .\data\csv\Book.csv:229
+msgid "哥伦比亚航空工业的前沿飞行器设计与制造技术，包含了空气动力学和推进系统的高深理论，制造难度极高。"
+msgstr ""
+
+#: .\data\csv\Book.csv:231
+msgid "《素描基础教程》"
+msgstr ""
+
+#: .\data\csv\Book.csv:231
+msgid "从最基础的线条练习开始，逐步教授素描的基本技巧和观察方法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:232
+msgid "《水彩画入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:232
+msgid "适合初学者的水彩画教程，介绍了水彩的基本技法和色彩搭配。"
+msgstr ""
+
+#: .\data\csv\Book.csv:233
+msgid "《儿童绘画指导》"
+msgstr ""
+
+#: .\data\csv\Book.csv:233
+msgid "专门为儿童绘画教育编写的指导手册，注重培养创造力和想象力。"
+msgstr ""
+
+#: .\data\csv\Book.csv:234
+msgid "《漫画创作基础》"
+msgstr ""
+
+#: .\data\csv\Book.csv:234
+msgid "介绍漫画创作的基本知识，包含了人物设计、故事构思等内容。"
+msgstr ""
+
+#: .\data\csv\Book.csv:235
+msgid "《传统国画入门》"
+msgstr ""
+
+#: .\data\csv\Book.csv:235
+msgid "炎国传统国画的入门教程，介绍了基本的笔法和画法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:236
+msgid "《维多利亚油画技法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:236
+msgid "维多利亚艺术学院的油画教材，系统介绍了油画的专业技法和理论。"
+msgstr ""
+
+#: .\data\csv\Book.csv:237
+msgid "《现代设计理论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:237
+msgid "现代设计的理论基础，包含了色彩学、构图学等专业知识。"
+msgstr ""
+
+#: .\data\csv\Book.csv:238
+msgid "《雕塑艺术技法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:238
+msgid "介绍雕塑艺术创作的专业技法，从材料选择到造型技巧的全面指导。"
+msgstr ""
+
+#: .\data\csv\Book.csv:239
+msgid "《东国书法艺术》"
+msgstr ""
+
+#: .\data\csv\Book.csv:239
+msgid "东国传统书法的艺术理论和实践技法，需要深厚的文化底蕴。"
+msgstr ""
+
+#: .\data\csv\Book.csv:240
+msgid "《拉特兰宗教绘画》"
+msgstr ""
+
+#: .\data\csv\Book.csv:240
+msgid "拉特兰教廷宗教绘画的传统技法，融合了宗教思想与艺术表现。"
+msgstr ""
+
+#: .\data\csv\Book.csv:241
+msgid "《抽象艺术理论》"
+msgstr ""
+
+#: .\data\csv\Book.csv:241
+msgid "研究抽象艺术的高深理论，需要深厚的艺术修养和理论基础。"
+msgstr ""
+
+#: .\data\csv\Book.csv:242
+msgid "《视觉心理学》"
+msgstr ""
+
+#: .\data\csv\Book.csv:242
+msgid "研究视觉感知与心理的关系，对艺术创作有重要指导意义。"
+msgstr ""
+
+#: .\data\csv\Book.csv:243
+msgid "《四维绘画技法》"
+msgstr ""
+
+#: .\data\csv\Book.csv:243
+msgid "传说中的四维绘画技术，能够在画面中表现时间的流逝。"
+msgstr ""
+
+#: .\data\csv\Book.csv:244
+msgid "《炎国岁片山水画》"
+msgstr ""
+
+#: .\data\csv\Book.csv:244
+msgid "炎国传统山水画的最高境界，能够将四季变化和时间流逝融入画作中，据说观看者能从画中感受到岁月的轮回和自然的永恒，只有天赋异禀的画师才能掌握这种神秘技法。"
+msgstr ""
+
+#: .\data\csv\Book.csv:245
+msgid "《源石艺术创作》"
+msgstr ""
+
+#: .\data\csv\Book.csv:245
+msgid "运用源石能量进行艺术创作的前沿技法，极其危险且神秘。"
+msgstr ""
+
 #: .\data\csv\BookType.csv:7
 msgid "话术"
 msgstr ""
@@ -4233,23 +5429,23 @@ msgid "源石活跃区域的天灾频率通常比其他地区高出40%以上。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:7
-msgid "出血时首先要找到出血点，用干净的布料进行压迫止血。"
+msgid "在野外遇到源石病感染者时，要戴好防护手套再进行救治，避免接触体液。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:7
-msgid "骨折患者在搬运前必须先进行简单的固定处理。"
+msgid "胸外心脏按压的频率应保持在每分钟100-120次，按压深度至少5厘米。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:7
-msgid "源石病患者的伤口愈合速度会明显下降，需要特别注意感染。"
+msgid "对于严重烧伤患者，不要撕掉粘在伤口上的衣物，应该剪掉周围的布料。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:7
-msgid "休克患者应立即平卧，抬高下肢以促进血液回流。"
+msgid "毒蛇咬伤后切勿吸吮伤口，应立即用绷带在伤口上方进行环扎减缓毒液扩散。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:7
-msgid "中毒症状出现时，保持呼吸道通畅比催吐更重要。"
+msgid "高原反应的症状包括头痛、恶心、呼吸困难，严重时会导致肺水肿和脑水肿。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:8
@@ -4321,7 +5517,7 @@ msgid "他们把水从天空中掉下来的现象叫做\"雨\"，这在地下是
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:11
-msgid "地上人也太坏了，我能想到最恶毒的事也只是往别人的酒里掺醋而已。"
+msgid "地上人也太坏了，我能想到最恶毒的事也只是往别人的酒里掺醋而已，他们竟然能干出那种事！"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:11
@@ -4329,7 +5525,7 @@ msgid "最奇怪的是，地上人为什么人人都这么高，他们是吃什�
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:11
-msgid "我观察到地上人会为了一些闪亮的小石头争斗，这些\"源石\"到底有什么魔力？"
+msgid "我观察到地上人会为了一些闪亮的小石头争斗，和我们在地震的时候遇到的情况很像。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:12
@@ -4341,7 +5537,7 @@ msgid "古文献中的地名变迁往往反映了民族迁徙和政治变革的�
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:12
-msgid "高卢地区的地名构词法具有明显的语系特征。"
+msgid "许多以\"-dunum\"结尾的地名都是古代要塞或城堡的遗址标记。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:12
@@ -5673,7 +6869,7 @@ msgid "虽然只出版了一次，但这份报纸记录了叙拉古历史上的�
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:84
-msgid "维多利亚海军的崛起改变了整个大陆的海上力量平衡。"
+msgid "维多利亚军队的崛起改变了整个大陆的国家力量平衡。"
 msgstr ""
 
 #: .\data\csv\Book_Excerpt.csv:84
@@ -5692,1204 +6888,3004 @@ msgstr ""
 msgid "研究军事史的目的不是为了战争，而是为了和平。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:7
-msgid "《萨尔贡商人谈判心得》"
+#: .\data\csv\Book_Excerpt.csv:87
+msgid "萨尔贡集市的讨价还价是一门艺术，首先要了解商品的真实价值。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:7
-msgid "一位经验丰富的萨尔贡商人记录的谈判技巧，用简单易懂的语言介绍了在集市上讨价还价的基本方法，适合初学者阅读。"
+#: .\data\csv\Book_Excerpt.csv:87
+msgid "与萨尔贡商人交易时，切记不要在第一轮就接受他们的报价。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:8
-msgid "《拉特兰教皇的演讲集》"
+#: .\data\csv\Book_Excerpt.csv:87
+msgid "沙漠民族重视信誉，一旦建立了信任关系，生意就会越来越好做。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:8
-msgid "收录了拉特兰历代教皇的经典演讲片段，这些演讲展现了萨科塔族的智慧和话术技巧，是学习公开演讲的入门读物。"
+#: .\data\csv\Book_Excerpt.csv:87
+msgid "学会观察对方的眼神和手势，这些细节往往能透露他们的底价。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:9
-msgid "《哥伦比亚销售入门》"
+#: .\data\csv\Book_Excerpt.csv:87
+msgid "在萨尔贡，一杯薄荷茶的时间足够完成一笔大生意的谈判。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:9
-msgid "哥伦比亚某企业培训部门编写的销售手册，用通俗的语言介绍了基本的销售话术和客户沟通技巧。"
+#: .\data\csv\Book_Excerpt.csv:88
+msgid "萨科塔族的智慧在于能够用最简单的语言表达最深刻的道理。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:10
-msgid "《龙门茶馆闲谈录》"
+#: .\data\csv\Book_Excerpt.csv:88
+msgid "真正的演讲不是为了炫耀口才，而是为了传递内心的信念。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:10
-msgid "记录了龙门茶馆中老茶客们的闲聊智慧，包含了许多实用的日常交流技巧和社交礼仪，语言生动有趣。"
+#: .\data\csv\Book_Excerpt.csv:88
+msgid "拉特兰教皇曾说：'言语是心灵的镜子，诚意比技巧更重要。'"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:11
-msgid "《炎国酒桌文化》"
+#: .\data\csv\Book_Excerpt.csv:88
+msgid "在神圣的讲台上，每一个词语都承载着对信徒的责任。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:11
-msgid "介绍炎国人在酒桌上的交流方式和敬酒礼仪，对于理解炎国文化和商务交往很有帮助。"
+#: .\data\csv\Book_Excerpt.csv:88
+msgid "光辉会指引我们的话语，让真理传遍整个泰拉大陆。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:12
-msgid "《维多利亚外交礼仪详解》"
+#: .\data\csv\Book_Excerpt.csv:89
+msgid "哥伦比亚的销售理念强调客户至上，满足需求是成功的关键。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:12
-msgid "维多利亚外交学院编写的专业教材，详细介绍了各种外交场合的礼仪规范和沟通技巧，内容专业而全面。"
+#: .\data\csv\Book_Excerpt.csv:89
+msgid "学会倾听比学会说话更重要，了解客户真正的需求才能提供合适的产品。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:13
-msgid "《卡西米尔骑士法庭辩论术》"
+#: .\data\csv\Book_Excerpt.csv:89
+msgid "销售不是欺骗，而是帮助客户找到最适合他们的解决方案。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:13
-msgid "以卡西米尔骑士法庭的辩论传统为基础，系统介绍了逻辑辩论的方法和技巧，是法律从业者的必读书籍。"
+#: .\data\csv\Book_Excerpt.csv:89
+msgid "在哥伦比亚，一个好的销售员能够让客户感觉自己是在购买梦想。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:14
-msgid "《莱茵生命商务谈判指南》"
+#: .\data\csv\Book_Excerpt.csv:89
+msgid "持续的售后服务是维持客户关系的根本，一次性交易没有未来。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:14
-msgid "莱茵生命内部培训教材，结合实际案例详细讲解了商务谈判的策略和技巧，具有很强的实用性。"
+#: .\data\csv\Book_Excerpt.csv:90
+msgid "龙门的老茶客们常说：'话不在多，在于说到点子上。'"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:15
-msgid "《伊比利亚海商贸易经验》"
+#: .\data\csv\Book_Excerpt.csv:90
+msgid "茶馆里的闲聊看似随意，实际上蕴含着深厚的人情世故。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:15
-msgid "记录了伊比利亚海商在各国港口进行贸易时的沟通经验，包含了跨文化交流的宝贵智慧。"
+#: .\data\csv\Book_Excerpt.csv:90
+msgid "与人交谈时要学会察言观色，适时的沉默比滔滔不绝更有智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:16
-msgid "《东国茶道与话术》"
+#: .\data\csv\Book_Excerpt.csv:90
+msgid "在龙门，请人喝茶是表示尊重的传统方式，茶水的温度体现了主人的用心。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:16
-msgid "以东国茶道为载体，深入探讨了在茶道仪式中的言语艺术和心理交流，体现了东国文化的精髓。"
+#: .\data\csv\Book_Excerpt.csv:90
+msgid "真正的交流发生在心与心之间，语言只是媒介而不是目的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:17
-msgid "《阿戈尔深海外交密录》"
+#: .\data\csv\Book_Excerpt.csv:91
+msgid "炎国人在酒桌上讲究'礼'字当头，座次安排体现了对长者的尊重。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:17
-msgid "记录了阿戈尔与地表各国进行外交接触时的高级话术技巧，内容涉及复杂的政治博弈和心理战术。"
+#: .\data\csv\Book_Excerpt.csv:91
+msgid "敬酒的顺序和方式都有规矩，初学者最好先观察再行动。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:18
-msgid "《萨卡兹王庭议事规则》"
+#: .\data\csv\Book_Excerpt.csv:91
+msgid "在炎国，酒量不重要，重要的是诚意和对传统的尊重。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:18
-msgid "详细记录了萨卡兹王庭中的议事程序和辩论规则，其中包含的政治智慧和话术技巧至今仍有重要参考价值。"
+#: .\data\csv\Book_Excerpt.csv:91
+msgid "酒桌上的话题要适度，既要热闹又不能失了分寸。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:19
-msgid "《叙拉古黑手党谈判艺术》"
+#: .\data\csv\Book_Excerpt.csv:91
+msgid "真正的友谊往往在推杯换盏中建立，酒是催化剂，情是根本。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:19
-msgid "虽然来源可疑，但这本书记录了叙拉古地下势力在谈判中使用的高级心理技巧，内容深刻而危险。"
+#: .\data\csv\Book_Excerpt.csv:93
+msgid "萨卡兹王庭的议事传统可以追溯到古代，每个环节都有深刻的政治含义。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:20
-msgid "《谢拉格商会议事录》"
+#: .\data\csv\Book_Excerpt.csv:93
+msgid "在王庭发言时，必须先向王座行礼，这体现了对王权的绝对尊重。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:20
-msgid "谢拉格商会内部的议事记录，展现了高级商务谈判中的策略运用和话术技巧，对于理解商业政治很有价值。"
+#: .\data\csv\Book_Excerpt.csv:93
+msgid "议事中的修辞技巧往往决定了政策的走向，言辞的分量胜过武力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:21
-msgid "《炎国官场厚黑学》"
+#: .\data\csv\Book_Excerpt.csv:93
+msgid "萨卡兹贵族的辩论风格激烈而优雅，每个词语都可能成为政治武器。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:21
-msgid "以炎国官场为背景，深入分析了复杂政治环境中的生存智慧和话术技巧，内容晦涩但极具参考价值。"
+#: .\data\csv\Book_Excerpt.csv:93
+msgid "王庭的最高智慧在于在激烈争论中寻找平衡，维护王国的统一。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:23
-msgid "《罗德岛小队指挥手册》"
+#: .\data\csv\Book_Excerpt.csv:94
+msgid "法庭辩论的核心在于逻辑的严密性，情绪化的表达往往适得其反。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:23
-msgid "罗德岛培训部门为新任小队长编写的基础指挥手册，用简单的图表和案例介绍了基本的队伍管理方法。"
+#: .\data\csv\Book_Excerpt.csv:94
+msgid "一个优秀的律师必须能够从对方的论据中找到破绽和矛盾之处。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:24
-msgid "《黑钢国际安保指挥基础》"
+#: .\data\csv\Book_Excerpt.csv:94
+msgid "在法庭上，事实比口才更重要，但如何呈现事实却需要技巧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:24
-msgid "黑钢国际内部培训教材的简化版，介绍了私人安保任务中的基本指挥原则和团队协调方法。"
+#: .\data\csv\Book_Excerpt.csv:94
+msgid "哥伦比亚的法律传统强调程序正义，每个步骤都不能省略。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:25
-msgid "《卡西米尔骑士团队合作》"
+#: .\data\csv\Book_Excerpt.csv:94
+msgid "真理不辩不明，法庭辩论是寻求正义的神圣过程。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:25
-msgid "以卡西米尔骑士竞技为背景，介绍了团队竞技中的基本指挥和配合技巧，适合初学者了解团队合作。"
+#: .\data\csv\Book_Excerpt.csv:95
+msgid "谢拉格商人的谈判风格温和而坚定，从不轻易暴露自己的底线。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:26
-msgid "《企鹅物流配送管理》"
+#: .\data\csv\Book_Excerpt.csv:95
+msgid "在高海拔地区做生意需要耐心，就像适应稀薄的空气一样。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:26
-msgid "企鹅物流内部的管理手册，用通俗易懂的语言介绍了物流配送中的基本管理和指挥方法。"
+#: .\data\csv\Book_Excerpt.csv:95
+msgid "商会议事时的每个决定都要考虑长远影响，短期利益不能损害信誉。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:27
-msgid "《维多利亚民兵组织手册》"
+#: .\data\csv\Book_Excerpt.csv:95
+msgid "谢拉格的商业传统注重契约精神，一旦签约就要严格履行。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:27
-msgid "维多利亚地方政府发布的民兵组织指南，介绍了基本的民兵指挥和管理方法，内容简单实用。"
+#: .\data\csv\Book_Excerpt.csv:95
+msgid "山地民族的智慧在于稳重，宁可少赚也不能冒险。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:28
-msgid "《乌萨斯军校指挥学》"
+#: .\data\csv\Book_Excerpt.csv:96
+msgid "海上贸易充满不确定性，成功的海商必须具备冒险精神和谨慎态度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:28
-msgid "乌萨斯帝国军事学院的经典教材，系统介绍了军事指挥的基本理论和实践方法，是军事指挥学的入门经典。"
+#: .\data\csv\Book_Excerpt.csv:96
+msgid "在不同的港口要学会说当地的话，语言是打开市场的钥匙。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:29
-msgid "《哥伦比亚企业管理学》"
+#: .\data\csv\Book_Excerpt.csv:96
+msgid "伊比利亚海商的传统是诚信经营，欺骗客户等于自断后路。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:29
-msgid "哥伦比亚商学院的管理学教材，结合现代企业管理实践，详细介绍了团队管理和项目指挥的方法。"
+#: .\data\csv\Book_Excerpt.csv:96
+msgid "海风和潮汐教会了我们顺应自然规律，商业也是如此。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:30
-msgid "《莱塔尼亚战术指挥研究》"
+#: .\data\csv\Book_Excerpt.csv:96
+msgid "每一次远航都是对未知的探索，贸易让不同文明得以交流。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:30
-msgid "莱塔尼亚军事研究院的专业著作，以源石法术战术为核心，深入研究了现代战争中的指挥艺术。"
+#: .\data\csv\Book_Excerpt.csv:97
+msgid "东国茶道强调'和、敬、清、寂'，每个动作都有深刻的哲学内涵。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:31
-msgid "《深海猎人作战指挥》"
+#: .\data\csv\Book_Excerpt.csv:97
+msgid "在茶室中，沉默比言语更能传达敬意和理解。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:31
-msgid "阿戈尔深海猎人部队的内部教材，介绍了在复杂海洋环境中进行战术指挥的专业知识和经验。"
+#: .\data\csv\Book_Excerpt.csv:97
+msgid "茶具的选择和使用体现了主人的修养和对客人的重视程度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:32
-msgid "《东国八家武士统御术》"
+#: .\data\csv\Book_Excerpt.csv:97
+msgid "真正的茶道大师能够通过一杯茶传达千言万语。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:32
-msgid "记录了东国八大家族在统御武士方面的传统智慧，包含了许多关于领导力和指挥艺术的珍贵经验。"
+#: .\data\csv\Book_Excerpt.csv:97
+msgid "茶道教导我们在快节奏的生活中寻找内心的宁静。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:33
-msgid "《萨卡兹军事委员会战略学》"
+#: .\data\csv\Book_Excerpt.csv:99
+msgid "深海民族的外交风格如海洋般深邃，表面平静下暗流涌动。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:33
-msgid "萨卡兹军事委员会的高级战略教材，深入分析了大规模军事行动的指挥艺术，内容复杂而深奥。"
+#: .\data\csv\Book_Excerpt.csv:99
+msgid "与地表国家谈判时，要充分考虑文化差异和价值观念的冲突。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:34
-msgid "《维多利亚皇家军官学院战略论》"
+#: .\data\csv\Book_Excerpt.csv:99
+msgid "阿戈尔的外交官必须具备在陆地和海洋两种环境下的生存能力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:34
-msgid "维多利亚最权威的军事战略著作，汇集了帝国军事专家的智慧，是高级指挥官的必读书籍。"
+#: .\data\csv\Book_Excerpt.csv:99
+msgid "深海的秘密是我们最大的筹码，但也是最大的负担。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:35
-msgid "《拉特兰教廷组织管理学》"
+#: .\data\csv\Book_Excerpt.csv:99
+msgid "真正的外交艺术在于在不暴露核心利益的前提下达成共识。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:35
-msgid "研究拉特兰教廷内部组织结构和管理体系的专业著作，其中的管理智慧对现代组织管理有重要启发。"
+#: .\data\csv\Book_Excerpt.csv:100
+msgid "维多利亚的外交传统强调优雅和风度，每个细节都体现着帝国的威严。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:36
-msgid "《雷姆必拓矿业集团管理哲学》"
+#: .\data\csv\Book_Excerpt.csv:100
+msgid "在正式外交场合，服装、仪态、用词都有严格的规定和标准。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:36
-msgid "分析雷姆必拓大型矿业集团管理模式的学术著作，探讨了复杂组织的管理理论和实践。"
+#: .\data\csv\Book_Excerpt.csv:100
+msgid "维多利亚外交官的培养需要多年的训练，礼仪是基础，智慧是核心。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:37
-msgid "《炎国兵家三十六计注解》"
+#: .\data\csv\Book_Excerpt.csv:100
+msgid "帝国的外交政策兼顾实力和道德，既要维护利益又要保持形象。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:37
-msgid "对炎国古代兵法经典的深度注解，结合现代战争实例分析了各种战略战术的运用，是高级指挥学的珍贵参考。"
+#: .\data\csv\Book_Excerpt.csv:100
+msgid "真正的贵族风范不在于出身，而在于言行举止的修养。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:39
-msgid "《罗德岛干员格斗训练》"
+#: .\data\csv\Book_Excerpt.csv:101
+msgid "在叙拉古的地下世界，威慑和诱惑并用是谈判的基本策略。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:39
-msgid "罗德岛训练部门编写的基础格斗手册，用图解方式介绍了简单的防身术和基本格斗技巧。"
+#: .\data\csv\Book_Excerpt.csv:101
+msgid "真正的威胁往往不需要说出口，一个眼神就足以表达一切。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:40
-msgid "《黑钢国际近身格斗》"
+#: .\data\csv\Book_Excerpt.csv:101
+msgid "叙拉古家族的谈判桌上，荣誉比金钱更重要，但两者都不能缺少。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:40
-msgid "黑钢国际安保人员的入门格斗教材，重点介绍了实用的近身搏斗技巧和自卫方法。"
+#: .\data\csv\Book_Excerpt.csv:101
+msgid "地下势力的智慧在于明白何时用暴力，何时用智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:41
-msgid "《卡西米尔骑士基础剑术》"
+#: .\data\csv\Book_Excerpt.csv:101
+msgid "在黑暗中生存的人最懂得如何利用光明。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:41
-msgid "卡西米尔骑士学院的入门剑术教材，用简单的图示介绍了基本的剑术动作和练习方法。"
+#: .\data\csv\Book_Excerpt.csv:102
+msgid "科技企业的谈判重点在于技术优势和市场前景的展示。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:42
-msgid "《乌萨斯拳击入门》"
+#: .\data\csv\Book_Excerpt.csv:102
+msgid "莱茵生命的成功经验表明，创新能力是商务谈判中最强的武器。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:42
-msgid "介绍乌萨斯传统拳击的基础教材，以强调力量训练和基本拳法为主，适合初学者练习。"
+#: .\data\csv\Book_Excerpt.csv:102
+msgid "在与传统企业谈判时，要学会用他们能理解的语言解释新技术。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:43
-msgid "《炎国武馆基础功法》"
+#: .\data\csv\Book_Excerpt.csv:102
+msgid "商务谈判的艺术在于让对方觉得合作是双赢而非零和游戏。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:43
-msgid "炎国民间武馆的入门教材，介绍了传统武术的基本功法和简单套路，注重内功修炼。"
+#: .\data\csv\Book_Excerpt.csv:102
+msgid "技术的价值需要通过实际应用来证明，空谈无法说服任何人。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:44
-msgid "《维多利亚皇家卫队格斗术》"
+#: .\data\csv\Book_Excerpt.csv:103
+msgid "炎国官场的复杂性要求从政者必须具备高超的政治智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:44
-msgid "维多利亚皇家卫队的专业格斗教材，系统介绍了近身搏斗的高级技巧和战术运用。"
+#: .\data\csv\Book_Excerpt.csv:103
+msgid "在官场中，表面的和谐往往掩盖着深层的利益冲突。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:45
-msgid "《莱塔尼亚源石格斗学》"
+#: .\data\csv\Book_Excerpt.csv:103
+msgid "真正的政治高手能够在复杂的人际关系中游刃有余。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:45
-msgid "结合源石法术的格斗技巧研究，探讨了法术与武技结合的实战应用，是莱塔尼亚特色的格斗学科。"
+#: .\data\csv\Book_Excerpt.csv:103
+msgid "官场如战场，不是你死就是我活，但表面上要保持君子风度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:46
-msgid "《深海猎人特种作战》"
+#: .\data\csv\Book_Excerpt.csv:103
+msgid "厚黑学的精髓不在于无耻，而在于深谙人性的复杂。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:46
-msgid "阿戈尔深海猎人的专业作战手册，介绍了在水下和特殊环境中的格斗技巧和战术方法。"
+#: .\data\csv\Book_Excerpt.csv:105
+msgid "小队指挥的首要原则是确保每个队员都清楚自己的任务和责任。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:47
-msgid "《东国忍者秘传武技》"
+#: .\data\csv\Book_Excerpt.csv:105
+msgid "在紧急情况下，简洁明了的指令比复杂的战术更重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:47
-msgid "记录了东国忍者传统的隐秘武技，包含了许多独特的暗杀技巧和潜行战斗方法。"
+#: .\data\csv\Book_Excerpt.csv:105
+msgid "了解每个队员的特长和弱点是制定作战计划的基础。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:48
-msgid "《萨尔贡角斗士搏击术》"
+#: .\data\csv\Book_Excerpt.csv:105
+msgid "优秀的小队长不仅要会指挥，更要会激励和保护队员。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:48
-msgid "萨尔贡角斗场流传的专业搏击技巧，以实战为核心，介绍了各种残酷而有效的格斗方法。"
+#: .\data\csv\Book_Excerpt.csv:105
+msgid "团队的凝聚力往往比个人能力更能决定任务的成败。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:49
-msgid "《萨卡兹王庭御前武技》"
+#: .\data\csv\Book_Excerpt.csv:106
+msgid "私人安保的核心是预防而非应对，防患于未然是最高境界。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:49
-msgid "萨卡兹王庭护卫的最高级武技秘籍，记录了只有王庭精英才能掌握的高深格斗技巧。"
+#: .\data\csv\Book_Excerpt.csv:106
+msgid "黑钢国际的指挥原则强调灵活性，没有一成不变的标准答案。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:50
-msgid "《拉特兰天使战技全书》"
+#: .\data\csv\Book_Excerpt.csv:106
+msgid "在安保任务中，观察力比武力更重要，发现问题比解决问题更关键。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:50
-msgid "拉特兰教廷护法天使的战斗技巧集成，融合了神圣力量与武技的最高境界，极难掌握。"
+#: .\data\csv\Book_Excerpt.csv:106
+msgid "客户的安全是第一优先级，其他一切都可以妥协。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:51
-msgid "《叙拉古家族秘传杀技》"
+#: .\data\csv\Book_Excerpt.csv:106
+msgid "专业的安保人员必须具备冷静的判断力和果断的执行力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:51
-msgid "叙拉古古老家族世代相传的暗杀技巧，内容包含了各种高深的致命技法，学习风险极高。"
+#: .\data\csv\Book_Excerpt.csv:107
+msgid "骑士竞技场上的胜利属于团队，个人英雄主义往往导致失败。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:52
-msgid "《谢拉格雪山武道》"
+#: .\data\csv\Book_Excerpt.csv:107
+msgid "真正的骑士精神体现在为队友牺牲自己利益的时刻。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:52
-msgid "谢拉格雪山隐居武者的武道精髓，需要极高的身体素质和武学天赋才能理解其中的奥义。"
+#: .\data\csv\Book_Excerpt.csv:107
+msgid "在骑士竞技中，配合的默契比个人技巧更能决定胜负。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:53
-msgid "《伊比利亚海战武技》"
+#: .\data\csv\Book_Excerpt.csv:107
+msgid "卡西米尔的传统教导我们，荣誉是集体的而非个人的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:53
-msgid "伊比利亚海军精英的战斗技巧集成，结合了海战环境的特殊性，是极其高深的武技流派。"
+#: .\data\csv\Book_Excerpt.csv:107
+msgid "团队合作的艺术在于发挥每个人的长处，弥补彼此的不足。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:55
-msgid "《罗德岛食堂家常菜》"
+#: .\data\csv\Book_Excerpt.csv:108
+msgid "物流管理的核心是效率，每一分钟的延误都可能造成连锁反应。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:55
-msgid "罗德岛食堂大厨编写的家常菜谱，用简单的食材和做法制作美味的日常餐食，适合初学者。"
+#: .\data\csv\Book_Excerpt.csv:108
+msgid "企鹅物流的成功秘诀在于灵活应对各种突发情况。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:56
-msgid "《企鹅物流便当制作》"
+#: .\data\csv\Book_Excerpt.csv:108
+msgid "配送员的安全比货物的及时送达更重要，这是企鹅物流的基本原则。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:56
-msgid "企鹅物流员工的便当制作指南，介绍了如何在忙碌的工作中快速制作营养便当。"
+#: .\data\csv\Book_Excerpt.csv:108
+msgid "客户满意度不仅取决于服务质量，也取决于服务态度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:57
-msgid "《维多利亚家庭烘焙》"
+#: .\data\csv\Book_Excerpt.csv:108
+msgid "在物流行业，信誉是最宝贵的资产，一次失误可能毁掉多年努力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:57
-msgid "维多利亚家庭主妇的烘焙入门书，教授制作简单糕点和面包的基本方法。"
+#: .\data\csv\Book_Excerpt.csv:109
+msgid "民兵组织的目的是保卫家园，每个公民都有保护国家的义务。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:58
-msgid "《炎国街头小吃》"
+#: .\data\csv\Book_Excerpt.csv:109
+msgid "基础训练虽然枯燥，但这是战时发挥作用的基础。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:58
-msgid "收录了炎国各地流行的街头小吃制作方法，用料简单，制作便捷，口味地道。"
+#: .\data\csv\Book_Excerpt.csv:109
+msgid "民兵指挥官必须深入了解当地地形和民情。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:59
-msgid "《乌萨斯冬季暖汤》"
+#: .\data\csv\Book_Excerpt.csv:109
+msgid "团结就是力量，分散的个人无法对抗有组织的敌人。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:59
-msgid "专门介绍乌萨斯寒冷地区传统暖汤的制作方法，营养丰富，制作简单。"
+#: .\data\csv\Book_Excerpt.csv:109
+msgid "维多利亚的民兵传统体现了民主国家的国防理念。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:60
-msgid "《哥伦比亚精致料理》"
+#: .\data\csv\Book_Excerpt.csv:111
+msgid "乌萨斯帝国的军事传统强调纪律和等级，命令必须无条件执行。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:60
-msgid "哥伦比亚高级餐厅的料理技法，介绍了现代烹饪技术和精致摆盘的专业方法。"
+#: .\data\csv\Book_Excerpt.csv:111
+msgid "伟大的指挥官不仅要有战略眼光，更要有钢铁般的意志。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:61
-msgid "《萨尔贡香料烹饪学》"
+#: .\data\csv\Book_Excerpt.csv:111
+msgid "在严酷的战场环境中，士气往往比装备更重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:61
-msgid "深入研究萨尔贡丰富香料的使用方法，教授如何用各种香料制作正宗的萨尔贡菜肴。"
+#: .\data\csv\Book_Excerpt.csv:111
+msgid "乌萨斯军人的荣誉在于为帝国献身，个人得失微不足道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:62
-msgid "《拉特兰素食料理》"
+#: .\data\csv\Book_Excerpt.csv:111
+msgid "真正的军事天才能够在最不利的条件下创造奇迹。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:62
-msgid "拉特兰教廷传统的素食料理技法，注重营养搭配和健康理念，制作工艺精湛。"
+#: .\data\csv\Book_Excerpt.csv:112
+msgid "现代企业管理的核心是人力资源的有效配置和激励。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:63
-msgid "《东国怀石料理》"
+#: .\data\csv\Book_Excerpt.csv:112
+msgid "哥伦比亚的企业文化重视创新和效率，同时保持人性化管理。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:63
-msgid "东国传统的怀石料理制作方法，强调食材的原味和季节性，是东国料理文化的精髓。"
+#: .\data\csv\Book_Excerpt.csv:112
+msgid "市场竞争激烈，只有不断学习和适应的企业才能生存。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:64
-msgid "《伊比利亚海鲜料理》"
+#: .\data\csv\Book_Excerpt.csv:112
+msgid "成功的企业领导者必须具备前瞻性思维和决断力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:64
-msgid "伊比利亚沿海地区的海鲜料理专业教材，介绍了各种海鲜的处理方法和烹饪技巧。"
+#: .\data\csv\Book_Excerpt.csv:113
+msgid "莱塔尼亚的战术思想强调源石法术与传统军事的结合。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:65
-msgid "《莱塔尼亚分子料理学》"
+#: .\data\csv\Book_Excerpt.csv:113
+msgid "法师部队的指挥需要特殊的战术素养和法术知识。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:65
-msgid "莱塔尼亚利用源石技术开发的前沿料理学，运用分子技术改变食物的形态和口感。"
+#: .\data\csv\Book_Excerpt.csv:113
+msgid "在现代战争中，信息优势往往比火力优势更重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:66
-msgid "《阿戈尔深海料理》"
+#: .\data\csv\Book_Excerpt.csv:113
+msgid "战术的灵活性来源于对敌我双方能力的准确评估。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:66
-msgid "阿戈尔独特的深海食材料理方法，需要高超的技艺才能处理这些特殊的海洋食材。"
+#: .\data\csv\Book_Excerpt.csv:113
+msgid "优秀的战术指挥官能够化腐朽为神奇，以弱胜强。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:67
-msgid "《谢拉格高山珍馐》"
+#: .\data\csv\Book_Excerpt.csv:114
+msgid "萨卡兹民族的战争史就是一部流浪和抗争的历史。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:67
-msgid "谢拉格高山地区的珍贵食材料理技法，制作难度极高，需要丰富的经验和精湛的技艺。"
+#: .\data\csv\Book_Excerpt.csv:114
+msgid "游击战术是萨卡兹军事传统的核心，适合民族特点。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:68
-msgid "《叙拉古家族秘传料理》"
+#: .\data\csv\Book_Excerpt.csv:114
+msgid "在没有固定根据地的情况下，机动性是生存的关键。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:68
-msgid "叙拉古古老家族世代相传的料理秘方，制作工艺复杂，口味独特，极难掌握。"
+#: .\data\csv\Book_Excerpt.csv:114
+msgid "萨卡兹战士的韧性和顽强是任何教科书都无法传授的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:69
-msgid "《卡兹戴尔战地料理》"
+#: .\data\csv\Book_Excerpt.csv:114
+msgid "真正的战略大师能够在绝望中寻找希望，在困境中创造机遇。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:69
-msgid "在卡兹戴尔恶劣战争环境中发展出的特殊料理技法，需要在极限条件下制作营养丰富的食物。"
+#: .\data\csv\Book_Excerpt.csv:115
+msgid "东国的武士传统强调忠诚和服从，这是统御的基础。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:71
-msgid "《泰拉民谣入门》"
+#: .\data\csv\Book_Excerpt.csv:115
+msgid "八大家族的兴衰历史展现了权力斗争的残酷和智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:71
-msgid "收录了泰拉大陆各国最简单易学的民谣，配有基础的乐谱和演唱技巧指导。"
+#: .\data\csv\Book_Excerpt.csv:115
+msgid "真正的领导者不仅要会用人，更要会识人。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:72
-msgid "《罗德岛音乐社活动手册》"
+#: .\data\csv\Book_Excerpt.csv:115
+msgid "在东国的乱世中，统御之术往往决定家族的生死存亡。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:72
-msgid "罗德岛音乐社团的活动指南，介绍了简单的乐器演奏和合唱技巧。"
+#: .\data\csv\Book_Excerpt.csv:115
+msgid "武士的道德修养和战斗技能同等重要，缺一不可。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:73
-msgid "《维多利亚流行音乐》"
+#: .\data\csv\Book_Excerpt.csv:117
+msgid "深海环境的特殊性要求指挥官具备独特的战术思维。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:73
-msgid "维多利亚当前流行的音乐风格介绍，包含简单的吉他弹唱和流行歌曲。"
+#: .\data\csv\Book_Excerpt.csv:117
+msgid "与海嗣的战斗需要完全不同于陆地战争的策略和技巧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:74
-msgid "《炎国传统丝竹》"
+#: .\data\csv\Book_Excerpt.csv:117
+msgid "深海猎人的指挥艺术在于利用水压和海流等自然因素。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:74
-msgid "炎国传统丝竹乐器的入门教程，介绍了笛子、古筝等乐器的基本演奏方法。"
+#: .\data\csv\Book_Excerpt.csv:117
+msgid "在深海中，通讯困难使得预先制定的计划变得极其重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:75
-msgid "《乌萨斯民族音乐》"
+#: .\data\csv\Book_Excerpt.csv:117
+msgid "阿戈尔的战士必须能够在极端环境下保持冷静和判断力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:75
-msgid "乌萨斯各民族传统音乐的介绍，包含了简单的民族乐器演奏技巧。"
+#: .\data\csv\Book_Excerpt.csv:118
+msgid "帝国的军事战略必须服务于政治目标，战争是政治的延续。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:76
-msgid "《卡西米尔骑士颂歌》"
+#: .\data\csv\Book_Excerpt.csv:118
+msgid "维多利亚的军事传统强调绅士风度，即使在战场上也要保持体面。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:76
-msgid "卡西米尔骑士传统的颂歌集，需要一定的声乐基础才能完整演唱这些庄严的颂歌。"
+#: .\data\csv\Book_Excerpt.csv:118
+msgid "现代战争的复杂性要求军官具备多学科的知识背景。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:77
-msgid "《莱塔尼亚古典音乐理论》"
+#: .\data\csv\Book_Excerpt.csv:118
+msgid "帝国的军事优势建立在技术、训练和传统的完美结合之上。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:77
-msgid "莱塔尼亚音乐学院的理论教材，系统介绍了古典音乐的理论基础和作曲技法。"
+#: .\data\csv\Book_Excerpt.csv:118
+msgid "真正的军事贵族不仅要会打仗，更要会治理和建设。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:78
-msgid "《东国雅乐演奏法》"
+#: .\data\csv\Book_Excerpt.csv:119
+msgid "宗教组织的管理需要平衡神圣性和世俗性的要求。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:78
-msgid "东国宫廷雅乐的演奏教程，需要扎实的音乐基础和对东国文化的深入理解。"
+#: .\data\csv\Book_Excerpt.csv:119
+msgid "拉特兰教廷的等级制度体现了秩序和权威的重要性。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:79
-msgid "《拉特兰圣歌合唱》"
+#: .\data\csv\Book_Excerpt.csv:119
+msgid "信仰的力量是最强大的组织凝聚力，但也需要制度来维护。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:79
-msgid "拉特兰教廷圣歌的合唱技法，要求参与者具备良好的声乐素养和宗教理解。"
+#: .\data\csv\Book_Excerpt.csv:119
+msgid "教廷的决策过程复杂但慎重，每个决定都关系到信徒的福祉。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:80
-msgid "《萨尔贡部族战歌》"
+#: .\data\csv\Book_Excerpt.csv:119
+msgid "真正的宗教领袖必须具备深厚的神学修养和实际的管理能力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:80
-msgid "萨尔贡各部族的传统战歌，需要强有力的声音和对部族文化的深入了解。"
+#: .\data\csv\Book_Excerpt.csv:120
+msgid "大型企业的管理哲学必须与企业文化和市场环境相适应。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:81
-msgid "《阿戈尔深海回响》"
+#: .\data\csv\Book_Excerpt.csv:120
+msgid "雷姆必拓的成功在于将传统管理智慧与现代科技完美结合。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:81
-msgid "阿戈尔独特的深海音乐形式，运用特殊的声学原理，只有音乐大师才能掌握。"
+#: .\data\csv\Book_Excerpt.csv:120
+msgid "企业的社会责任不仅是道德要求，也是长期发展的保障。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:82
-msgid "《谢拉格雪山天籁》"
+#: .\data\csv\Book_Excerpt.csv:120
+msgid "在当今时代，跨文化管理能力是企业领导者的必备素质。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:82
-msgid "谢拉格高山地区的神秘音乐，据说能够与自然产生共鸣，学习难度极高。"
+#: .\data\csv\Book_Excerpt.csv:120
+msgid "可持续发展理念正在改变传统的商业模式和管理思维。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:83
-msgid "《萨卡兹古老吟唱》"
+#: .\data\csv\Book_Excerpt.csv:121
+msgid "兵不厌诈，但诈术也要建立在实力的基础之上。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:83
-msgid "萨卡兹族最古老的吟唱传统，蕴含着深奥的魔法力量，只有天赋异禀者才能领悟。"
+#: .\data\csv\Book_Excerpt.csv:121
+msgid "三十六计的精髓在于因时制宜，灵活运用而非生搬硬套。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:84
-msgid "《叙拉古歌剧大师课》"
+#: .\data\csv\Book_Excerpt.csv:121
+msgid "现代战争虽然技术先进，但古代兵法的智慧仍然適用。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:84
-msgid "叙拉古歌剧院大师级的表演技法，需要多年的专业训练和天赋才能达到这个水平。"
+#: .\data\csv\Book_Excerpt.csv:121
+msgid "计谋的成功取决于对人性和局势的深刻理解。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:85
-msgid "《伊比利亚海妖之歌》"
+#: .\data\csv\Book_Excerpt.csv:121
+msgid "最高明的计策往往是让敌人觉得失败是他们自己的选择。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:85
-msgid "传说中伊比利亚海妖的歌声技法，极其危险和神秘，学习者需要承担巨大风险。"
+#: .\data\csv\Book_Excerpt.csv:123
+msgid "格斗训练的目的不是好勇斗狠，而是在关键时刻保护自己和他人。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:87
-msgid "《泰拉大陆地理常识》"
+#: .\data\csv\Book_Excerpt.csv:123
+msgid "基础动作的反复练习虽然枯燥，但这是掌握高级技巧的前提。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:87
-msgid "介绍泰拉大陆基本地理知识的通俗读物，包含各国的位置、气候和基本文化。"
+#: .\data\csv\Book_Excerpt.csv:123
+msgid "在实战中，冷静的头脑比熟练的技巧更重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:88
-msgid "《明日方舟历史简述》"
+#: .\data\csv\Book_Excerpt.csv:123
+msgid "每个干员的身体条件不同，训练方法也要因人而异。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:88
-msgid "以简单易懂的语言介绍泰拉大陆的基本历史，适合初学者了解这个世界。"
+#: .\data\csv\Book_Excerpt.csv:123
+msgid "格斗技能只是工具，如何使用它才体现了一个人的品格。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:89
-msgid "《各国货币兑换指南》"
+#: .\data\csv\Book_Excerpt.csv:124
+msgid "私人安保的格斗技能强调实用性，花哨的动作在实战中毫无意义。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:89
-msgid "介绍泰拉大陆各国货币制度和兑换方法的实用手册，对旅行者很有帮助。"
+#: .\data\csv\Book_Excerpt.csv:124
+msgid "黑钢国际的格斗理念是快速制敌，避免长时间缠斗。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:90
-msgid "《源石基础知识》"
+#: .\data\csv\Book_Excerpt.csv:124
+msgid "在保护客户时，有时撤退比战斗更明智。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:90
-msgid "介绍源石的基本性质和日常应用的科普读物，内容通俗易懂。"
+#: .\data\csv\Book_Excerpt.csv:124
+msgid "格斗技能需要与团队配合相结合，单打独斗很难成功。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:91
-msgid "《感染者权益保护》"
+#: .\data\csv\Book_Excerpt.csv:124
+msgid "专业的安保人员必须知道何时用武力，何时用智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:91
-msgid "介绍感染者基本权益和保护措施的宣传手册，帮助感染者了解自己的权利。"
+#: .\data\csv\Book_Excerpt.csv:125
+msgid "剑术的精髓在于人剑合一，武器是手臂的延伸。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:92
-msgid "《维多利亚帝国史》"
+#: .\data\csv\Book_Excerpt.csv:125
+msgid "卡西米尔的剑术传统强调优雅和效率的完美结合。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:92
-msgid "系统介绍维多利亚帝国发展历程的史学著作，内容详实，史料丰富。"
+#: .\data\csv\Book_Excerpt.csv:125
+msgid "基础功夫扎实的骑士往往比那些急于求成的人走得更远。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:93
-msgid "《哥伦比亚科技发展史》"
+#: .\data\csv\Book_Excerpt.csv:125
+msgid "真正的剑术大师能够在最简单的动作中体现最深刻的道理。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:93
-msgid "记录哥伦比亚科技发展历程的专业著作，分析了科技进步对社会的影响。"
+#: .\data\csv\Book_Excerpt.csv:125
+msgid "剑不仅是武器，更是骑士精神和荣誉的象征。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:94
-msgid "《源石技术应用研究》"
+#: .\data\csv\Book_Excerpt.csv:126
+msgid "乌萨斯拳击强调力量和韧性，这与帝国人民的性格相符。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:94
-msgid "深入研究源石技术在各个领域应用的学术著作，需要一定的理工科基础。"
+#: .\data\csv\Book_Excerpt.csv:126
+msgid "在严寒的气候中训练，能够锻炼出坚强的意志和强健的体魄。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:95
-msgid "《卡兹戴尔内战分析》"
+#: .\data\csv\Book_Excerpt.csv:126
+msgid "拳击不仅是运动，更是乌萨斯人表达勇气和决心的方式。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:95
-msgid "分析卡兹戴尔长期内战原因和影响的政治学著作，观点深刻，分析透彻。"
+#: .\data\csv\Book_Excerpt.csv:126
+msgid "真正的拳击手不会随意使用暴力，因为他们知道力量的可怕。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:96
-msgid "《炎国古代哲学思想》"
+#: .\data\csv\Book_Excerpt.csv:126
+msgid "每一次出拳都要全力以赴，这是对对手的尊重也是对自己的要求。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:96
-msgid "研究炎国古代哲学思想的学术著作，需要深厚的文化底蕴才能理解。"
+#: .\data\csv\Book_Excerpt.csv:127
+msgid "内功修炼需要持之以恒，不能急功近利。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:97
-msgid "《泰拉大陆生态学》"
+#: .\data\csv\Book_Excerpt.csv:127
+msgid "炎国武术的精髓在于内外兼修，身心并重。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:97
-msgid "研究泰拉大陆生物多样性和生态系统的高深学术著作，内容极其专业。"
+#: .\data\csv\Book_Excerpt.csv:127
+msgid "基础功法看似简单，实际上蕴含着深刻的哲理。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:98
-msgid "《源石物理学原理》"
+#: .\data\csv\Book_Excerpt.csv:127
+msgid "真正的武者追求的不是打败别人，而是超越自己。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:98
-msgid "深入研究源石物理性质的高等学术著作，需要扎实的物理学基础。"
+#: .\data\csv\Book_Excerpt.csv:127
+msgid "武术的最高境界是化干戈为玉帛，以德服人。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:99
-msgid "《古代萨卡兹文明考古》"
+#: .\data\csv\Book_Excerpt.csv:129
+msgid "皇家卫队的格斗术融合了多种武术流派的精华。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:99
-msgid "研究古代萨卡兹文明的考古学专著，内容晦涩，需要考古学专业知识。"
+#: .\data\csv\Book_Excerpt.csv:129
+msgid "保护皇室的职责要求卫队成员具备最高水平的格斗技能。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:100
-msgid "《天灾成因机制研究》"
+#: .\data\csv\Book_Excerpt.csv:129
+msgid "维多利亚的格斗传统强调绅士风度，即使在战斗中也要保持优雅。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:100
-msgid "研究天灾产生机制的高深学术著作，涉及复杂的地质学和气象学理论。"
+#: .\data\csv\Book_Excerpt.csv:129
+msgid "皇家卫队的训练严格而科学，每个动作都有明确的目的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:101
-msgid "《跨维度理论物理学》"
+#: .\data\csv\Book_Excerpt.csv:129
+msgid "真正的精英战士不仅要有强大的战斗力，更要有高尚的品格。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:101
-msgid "探讨跨维度物理现象的前沿理论著作，只有顶级物理学家才能理解。"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "《莱塔尼亚源石音律学》"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:103
-msgid "《罗德岛医疗急救》"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "源石法术与音律技巧的结合开创了全新的战斗风格。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:103
-msgid "罗德岛医疗部门编写的急救手册，介绍了基本的急救方法和常见外伤处理。"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "法术格斗需要对源石能量的精确控制和深刻理解。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:104
-msgid "《感染者日常护理》"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "在近身战斗中使用法术需要极高的专注力和反应速度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:104
-msgid "专门为感染者编写的日常护理指南，介绍了感染者的基本保健方法。"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "莱塔尼亚的术士必须同时掌握法术理论和实战技巧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:105
-msgid "《源石病预防常识》"
+#: .\data\csv\Book_Excerpt.csv:130
+msgid "源石的力量虽然强大，但使用不当也会伤害自己。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:105
-msgid "介绍源石病预防方法的科普读物，帮助普通人了解如何避免感染。"
+#: .\data\csv\Book_Excerpt.csv:131
+msgid "海战环境的特殊性要求战士具备独特的平衡感和适应能力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:106
-msgid "《家庭常用药物》"
+#: .\data\csv\Book_Excerpt.csv:131
+msgid "伊比利亚的海战传统强调团队配合和船舰操作的协调。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:106
-msgid "介绍家庭常备药物用法的实用手册，包含了基本的用药常识。"
+#: .\data\csv\Book_Excerpt.csv:131
+msgid "在摇摆的甲板上战斗需要完全不同的技巧和心理素质。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:107
-msgid "《健康生活指南》"
+#: .\data\csv\Book_Excerpt.csv:131
+msgid "海风和海浪是天然的盟友，懂得利用它们的人才能获胜。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:107
-msgid "介绍健康生活方式的通俗读物，包含饮食、运动、作息等方面的建议。"
+#: .\data\csv\Book_Excerpt.csv:131
+msgid "真正的海战高手能够在任何天气条件下保持战斗力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:108
-msgid "《维多利亚医学院教程》"
+#: .\data\csv\Book_Excerpt.csv:132
+msgid "忍者的精髓在于隐蔽和突袭，正面对抗不是忍者的强项。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:108
-msgid "维多利亚医学院的专业教材，系统介绍了临床医学的基础理论和实践。"
+#: .\data\csv\Book_Excerpt.csv:132
+msgid "东国忍术强调利用环境和心理战术制胜。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:109
-msgid "《哥伦比亚外科手术学》"
+#: .\data\csv\Book_Excerpt.csv:132
+msgid "真正的忍者能够在不被发现的情况下完成任务。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:109
-msgid "哥伦比亚医学院的外科教材，详细介绍了各种外科手术的操作方法。"
+#: .\data\csv\Book_Excerpt.csv:132
+msgid "忍者的训练包括身体技能和心理修养两个方面。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:110
-msgid "《莱茵生命药物研发》"
+#: .\data\csv\Book_Excerpt.csv:132
+msgid "忍术的最高境界是让敌人在不知不觉中败亡。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:110
-msgid "莱茵生命制药部门的研发手册，介绍了现代药物的研发过程和测试方法。"
+#: .\data\csv\Book_Excerpt.csv:133
+msgid "角斗场的残酷环境造就了最实用的格斗技巧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:111
-msgid "《拉特兰医疗传统》"
+#: .\data\csv\Book_Excerpt.csv:133
+msgid "萨尔贡的搏击风格强调生存至上，没有什么是不可以使用的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:111
-msgid "拉特兰教廷医疗传统的记录，结合了宗教信仰与医疗实践的独特方法。"
+#: .\data\csv\Book_Excerpt.csv:133
+msgid "在角斗场上，观众的欢呼和嘘声都可能影响战斗的结果。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:112
-msgid "《炎国中医理论》"
+#: .\data\csv\Book_Excerpt.csv:133
+msgid "真正的角斗士不仅要有强大的身体，更要有坚韧的精神。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:112
-msgid "炎国传统中医的理论基础，包含了经络学说、药物配伍等传统医学知识。"
+#: .\data\csv\Book_Excerpt.csv:133
+msgid "自由是用鲜血和汗水换来的，每一场胜利都来之不易。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:113
-msgid "《源石病机理研究》"
+#: .\data\csv\Book_Excerpt.csv:135
+msgid "王庭武技代表了萨卡兹武术的最高水平，每个动作都近乎完美。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:113
-msgid "深入研究源石病发病机理的高深医学著作，只有资深医学专家才能理解。"
+#: .\data\csv\Book_Excerpt.csv:135
+msgid "能够学习王庭武技的人必须经过严格的选拔和长期的考验。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:114
-msgid "《神经源石技术》"
+#: .\data\csv\Book_Excerpt.csv:135
+msgid "御前武技不仅是战斗技能，更是萨卡兹文化和传统的体现。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:114
-msgid "研究源石技术在神经医学中应用的前沿著作，涉及复杂的神经科学理论。"
+#: .\data\csv\Book_Excerpt.csv:135
+msgid "王庭护卫的职责神圣而艰巨，他们的武技也必须相匹配。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:115
-msgid "《萨卡兹古代医术》"
+#: .\data\csv\Book_Excerpt.csv:135
+msgid "这些古老的武技中蕴含着萨卡兹民族的智慧和尊严。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:115
-msgid "记录萨卡兹族古老医疗传统的珍贵典籍，其中包含了许多失传的医疗秘法。"
+#: .\data\csv\Book_Excerpt.csv:136
+msgid "铳骑的战斗风格融合了远程射击和近身格斗的优势。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:116
-msgid "《阿戈尔深海医学》"
+#: .\data\csv\Book_Excerpt.csv:136
+msgid "拉特兰的战士必须同时掌握枪械技巧和近身格斗。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:116
-msgid "阿戈尔独特的深海医学理论，需要对深海环境和生物学有深入了解。"
+#: .\data\csv\Book_Excerpt.csv:136
+msgid "在高速移动中进行精确射击需要天赋和大量训练。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:117
-msgid "《生命工程学》"
+#: .\data\csv\Book_Excerpt.csv:136
+msgid "铳骑战技的精髓在于攻防转换的流畅性。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:117
-msgid "研究生命工程技术的前沿学科，涉及基因工程、细胞再生等高深技术。"
+#: .\data\csv\Book_Excerpt.csv:136
+msgid "光辉指引着拉特兰战士的每一次攻击和每一次防御。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:119
-msgid "《移动城市蔬菜种植》"
+#: .\data\csv\Book_Excerpt.csv:137
+msgid "内卫的训练方法严格保密，外人永远无法得知全部内容。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:119
-msgid "介绍在移动城市环境中种植蔬菜的基本方法，包含了简单的水培和土培技术。"
+#: .\data\csv\Book_Excerpt.csv:137
+msgid "能够成为皇帝内卫的人必须具备超越常人的意志和技能。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:120
-msgid "《罗德岛温室管理》"
+#: .\data\csv\Book_Excerpt.csv:137
+msgid "内卫的忠诚度比武艺更重要，背叛者的下场不堪设想。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:120
-msgid "罗德岛农业部门的温室管理手册，介绍了基本的温室种植和管理方法。"
+#: .\data\csv\Book_Excerpt.csv:137
+msgid "这份训练计划记录了乌萨斯内卫国度的来源——邪魔本身。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:121
-msgid "《家庭园艺入门》"
+#: .\data\csv\Book_Excerpt.csv:137
+msgid "内卫的存在是皇权稳定的最后保障，也是帝国的最高机密。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:121
-msgid "适合家庭的小型园艺指南，教授如何在有限空间内种植花草和蔬菜。"
+#: .\data\csv\Book_Excerpt.csv:138
+msgid "雪山环境的严酷造就了谢拉格独特的武道风格。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:122
-msgid "《常见作物种植》"
+#: .\data\csv\Book_Excerpt.csv:138
+msgid "在高海拔地区练武需要克服缺氧和严寒的双重挑战。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:122
-msgid "介绍常见农作物种植方法的实用手册，包含了播种、施肥、收获等基本技术。"
+#: .\data\csv\Book_Excerpt.csv:138
+msgid "雪山武道强调与自然环境的和谐统一。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:123
-msgid "《小型养殖技术》"
+#: .\data\csv\Book_Excerpt.csv:138
+msgid "真正的雪山武者能够利用身体的每一个细微的动作。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:123
-msgid "介绍小规模家禽养殖的基本方法，适合初学者了解养殖业。"
+#: .\data\csv\Book_Excerpt.csv:138
+msgid "山的沉稳和雪的纯净体现在每一个武道动作中。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:124
-msgid "《维多利亚现代农业》"
+#: .\data\csv\Book_Excerpt.csv:139
+msgid "深海猎人的作战标准是在与海嗣的无数次战斗中总结出来的。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:124
-msgid "维多利亚农业学院的专业教材，系统介绍了现代农业技术和管理方法。"
+#: .\data\csv\Book_Excerpt.csv:139
+msgid "在深海环境中，标准的作战程序往往能够拯救生命。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:125
-msgid "《哥伦比亚设施农业》"
+#: .\data\csv\Book_Excerpt.csv:139
+msgid "每一个深海猎人都必须熟记这些标准并严格执行。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:125
-msgid "哥伦比亚发达的设施农业技术手册，介绍了温室、大棚等现代农业设施。"
+#: .\data\csv\Book_Excerpt.csv:139
+msgid "与海嗣的战斗没有妥协的余地，只有胜利或死亡。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:126
-msgid "《炎国传统农法》"
+#: .\data\csv\Book_Excerpt.csv:139
+msgid "阿戈尔的安全取决于每一个深海猎人的专业水准。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:126
-msgid "炎国数千年农业传统的总结，包含了丰富的传统农业智慧和技术。"
+#: .\data\csv\Book_Excerpt.csv:141
+msgid "舰船生活虽然单调，但美味的家常菜能够给大家带来温暖。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:127
-msgid "《萨尔贡沙漠农业》"
+#: .\data\csv\Book_Excerpt.csv:141
+msgid "简单的食材经过用心烹饪也能制作出令人满意的佳肴。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:127
-msgid "萨尔贡在沙漠环境中发展农业的专业技术，适应恶劣环境的农业方法。"
+#: .\data\csv\Book_Excerpt.csv:141
+msgid "考虑到不同种族的饮食习惯，菜谱的搭配要尽量兼顾。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:128
-msgid "《乌萨斯寒地种植》"
+#: .\data\csv\Book_Excerpt.csv:141
+msgid "食堂大厨的经验告诉我们，用心比用料更重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:128
-msgid "乌萨斯寒冷地区的农业技术，介绍了如何在严寒环境中进行农业生产。"
+#: .\data\csv\Book_Excerpt.csv:141
+msgid "一顿热腾腾的家常菜往往比任何药物都更能治愈疲惫的心灵。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:129
-msgid "《源石农业技术》"
+#: .\data\csv\Book_Excerpt.csv:142
+msgid "便当的制作要考虑营养搭配和便携性两个因素。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:129
-msgid "运用源石技术改进农业生产的前沿研究，涉及复杂的源石应用理论。"
+#: .\data\csv\Book_Excerpt.csv:142
+msgid "企鹅物流的配送员经常在路上用餐，便当是最佳选择。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:130
-msgid "《基因改良作物学》"
+#: .\data\csv\Book_Excerpt.csv:142
+msgid "制作便当时要注意食材的保鲜和口味的保持。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:130
-msgid "研究作物基因改良技术的高深学科，需要深厚的生物学和遗传学基础。"
+#: .\data\csv\Book_Excerpt.csv:142
+msgid "简单快手的便当制作方法特别适合忙碌的现代生活。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:131
-msgid "《极地农业工程》"
+#: .\data\csv\Book_Excerpt.csv:142
+msgid "一个精心制作的便当体现了对工作伙伴的关心和体贴。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:131
-msgid "在极地环境中进行农业生产的高难度技术，需要丰富的工程学知识。"
+#: .\data\csv\Book_Excerpt.csv:143
+msgid "维多利亚的烘焙传统强调精致和优雅，每个细节都要精心处理。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:132
-msgid "《深海水产养殖》"
+#: .\data\csv\Book_Excerpt.csv:143
+msgid "家庭烘焙的乐趣在于与家人一起制作和分享美食的过程。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:132
-msgid "阿戈尔独特的深海水产养殖技术，需要对深海环境有深入的理解。"
+#: .\data\csv\Book_Excerpt.csv:143
+msgid "面粉、黄油、糖的比例是烘焙成功的基础。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:133
-msgid "《天灾后农业重建》"
+#: .\data\csv\Book_Excerpt.csv:143
+msgid "烘焙需要耐心和细心，急躁往往导致失败。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:133
-msgid "研究天灾后如何快速重建农业生产的专业技术，难度极高。"
+#: .\data\csv\Book_Excerpt.csv:143
+msgid "一个温馨的家庭离不开烘焙食品的香甜味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:135
-msgid "《基础工具制作》"
+#: .\data\csv\Book_Excerpt.csv:144
+msgid "街头小吃是炎国饮食文化的重要组成部分，承载着民间智慧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:135
-msgid "介绍如何制作日常生活中基本工具的入门手册，包含了简单的木工和金工技术。"
+#: .\data\csv\Book_Excerpt.csv:144
+msgid "简单的制作方法往往能够创造出最地道的味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:136
-msgid "《罗德岛设备维护》"
+#: .\data\csv\Book_Excerpt.csv:144
+msgid "每个地区的街头小吃都有其独特的风味和制作秘诀。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:136
-msgid "罗德岛工程部门的设备维护手册，教授基本的机械维修和保养方法。"
+#: .\data\csv\Book_Excerpt.csv:144
+msgid "街头小吃的魅力在于亲民的价格和丰富的口味选择。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:137
-msgid "《家具制作入门》"
+#: .\data\csv\Book_Excerpt.csv:144
+msgid "品尝街头小吃是了解当地文化最直接的方式。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:137
-msgid "适合初学者的家具制作指南，介绍了简单家具的制作方法和工具使用。"
+#: .\data\csv\Book_Excerpt.csv:145
+msgid "在严寒的乌萨斯，一碗热汤是最好的御寒良品。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:138
-msgid "《金属加工基础》"
+#: .\data\csv\Book_Excerpt.csv:145
+msgid "乌萨斯的传统暖汤注重营养和热量的补充。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:138
-msgid "介绍基本金属加工技术的入门书籍，包含了锻造、焊接等基础技能。"
+#: .\data\csv\Book_Excerpt.csv:145
+msgid "汤的制作时间虽长，但慢火熬煮才能出好味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:139
-msgid "《纺织品制作》"
+#: .\data\csv\Book_Excerpt.csv:145
+msgid "不同的食材搭配能够产生不同的滋补效果。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:139
-msgid "介绍纺织品制作过程的手工艺指南，从纺纱到织布的完整流程。"
+#: .\data\csv\Book_Excerpt.csv:145
+msgid "寒冬中的热汤不仅温暖身体，更能温暖心灵。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:140
-msgid "《维多利亚精密制造》"
+#: .\data\csv\Book_Excerpt.csv:147
+msgid "精致料理的核心在于对食材品质和制作工艺的极致追求。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:140
-msgid "维多利亚工业学院的制造技术教材，介绍了精密机械制造的专业方法。"
+#: .\data\csv\Book_Excerpt.csv:147
+msgid "哥伦比亚的现代烹饪技术为传统料理注入了新的活力。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:141
-msgid "《哥伦比亚电子制造》"
+#: .\data\csv\Book_Excerpt.csv:147
+msgid "摆盘艺术是精致料理不可分割的一部分，视觉享受同样重要。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:141
-msgid "哥伦比亚电子工业的制造技术手册，涉及电子元件和设备的生产方法。"
+#: .\data\csv\Book_Excerpt.csv:147
+msgid "精致料理不仅是食物，更是一种艺术表达形式。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:142
-msgid "《炎国传统工艺》"
+#: .\data\csv\Book_Excerpt.csv:147
+msgid "真正的大厨能够在简单的食材中发现无限的可能性。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:142
-msgid "炎国传统手工艺技术的传承，包含了陶瓷、丝绸、金属工艺等技术。"
+#: .\data\csv\Book_Excerpt.csv:148
+msgid "萨尔贡丰富的香料资源为烹饪提供了无限的创意空间。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:143
-msgid "《源石设备制造》"
+#: .\data\csv\Book_Excerpt.csv:148
+msgid "不同香料的搭配和使用时机直接影响菜肴的最终味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:143
-msgid "运用源石技术制造各种设备的专业教材，需要对源石技术有深入了解。"
+#: .\data\csv\Book_Excerpt.csv:148
+msgid "香料的研磨程度和新鲜度是决定香味浓郁程度的关键因素。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:144
-msgid "《乌萨斯重工业》"
+#: .\data\csv\Book_Excerpt.csv:148
+msgid "萨尔贡料理的精髓在于平衡各种香料的味道，创造和谐的口感。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:144
-msgid "乌萨斯重工业的制造技术，介绍了大型机械设备的制造方法。"
+#: .\data\csv\Book_Excerpt.csv:148
+msgid "掌握香料烹饪学需要敏锐的味觉和丰富的实践经验。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:145
-msgid "《莱茵生命生物制造》"
+#: .\data\csv\Book_Excerpt.csv:149
+msgid "素食料理不意味着营养不足，关键在于合理的搭配和烹饪方法。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:145
-msgid "莱茵生命的生物制造技术，涉及生物材料和生物设备的前沿制造方法。"
+#: .\data\csv\Book_Excerpt.csv:149
+msgid "拉特兰的素食传统体现了对生命的尊重和内心的平静。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:146
-msgid "《源石核心工程》"
+#: .\data\csv\Book_Excerpt.csv:149
+msgid "蔬菜、谷物、豆类的巧妙组合能够提供全面的营养。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:146
-msgid "源石核心技术的高深工程学，只有顶级工程师才能掌握的制造技术。"
+#: .\data\csv\Book_Excerpt.csv:149
+msgid "素食料理的制作需要更多的创意和技巧来丰富口味。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:147
-msgid "《纳米制造技术》"
+#: .\data\csv\Book_Excerpt.csv:149
+msgid "清淡的素食有助于保持身心的健康和纯净。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:147
-msgid "纳米级制造技术的前沿研究，需要极高的科技水平和专业知识。"
+#: .\data\csv\Book_Excerpt.csv:150
+msgid "战地环境恶劣，但合理的食物搭配能够维持战士的体力和士气。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:148
-msgid "《空间工程制造》"
+#: .\data\csv\Book_Excerpt.csv:150
+msgid "在资源有限的情况下，创造性地利用现有食材是关键技能。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:148
-msgid "用于太空或特殊环境的制造技术，涉及极端条件下的工程制造。"
+#: .\data\csv\Book_Excerpt.csv:150
+msgid "战地料理必须考虑便携性、营养价值和制作速度。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:149
-msgid "《时空装置制造》"
+#: .\data\csv\Book_Excerpt.csv:150
+msgid "即使在最困难的条件下，也要尽力为战友提供可口的食物。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:149
-msgid "传说中的时空装置制造技术，内容极其神秘和危险。"
+#: .\data\csv\Book_Excerpt.csv:150
+msgid "战地料理的精神在于在绝望中寻找希望，在苦难中创造温暖。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:151
-msgid "《素描基础教程》"
+#: .\data\csv\Book_Excerpt.csv:151
+msgid "海鲜料理的成功取决于食材的新鲜程度和处理技巧。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:151
-msgid "从最基础的线条练习开始，逐步教授素描的基本技巧和观察方法。"
+#: .\data\csv\Book_Excerpt.csv:151
+msgid "伊比利亚沿海地区的海鲜资源丰富，为料理提供了优质原料。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:152
-msgid "《水彩画入门》"
+#: .\data\csv\Book_Excerpt.csv:151
+msgid "不同种类的海鲜需要不同的烹饪方法来保持最佳口感。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:152
-msgid "适合初学者的水彩画教程，介绍了水彩的基本技法和色彩搭配。"
+#: .\data\csv\Book_Excerpt.csv:151
+msgid "海鲜料理的调味要清淡，突出海鲜本身的鲜美味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:153
-msgid "《儿童绘画指导》"
+#: .\data\csv\Book_Excerpt.csv:151
+msgid "掌握海鲜料理需要了解海洋生物的习性和季节性变化。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:153
-msgid "专门为儿童绘画教育编写的指导手册，注重培养创造力和想象力。"
+#: .\data\csv\Book_Excerpt.csv:153
+msgid "分子料理学将科学原理应用于烹饪，创造出前所未有的味觉体验。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:154
-msgid "《漫画创作基础》"
+#: .\data\csv\Book_Excerpt.csv:153
+msgid "源石技术的运用使得分子料理能够实现传统烹饪无法达到的效果。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:154
-msgid "介绍漫画创作的基本知识，包含了人物设计、故事构思等内容。"
+#: .\data\csv\Book_Excerpt.csv:153
+msgid "分子料理不仅改变食物的形态，更能创造全新的口感和味道。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:155
-msgid "《传统国画入门》"
+#: .\data\csv\Book_Excerpt.csv:153
+msgid "这门学科要求厨师具备深厚的化学知识和精确的操作技能。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:155
-msgid "炎国传统国画的入门教程，介绍了基本的笔法和画法。"
+#: .\data\csv\Book_Excerpt.csv:153
+msgid "分子料理的未来在于将科技与传统烹饪智慧完美结合。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:156
-msgid "《维多利亚油画技法》"
+#: .\data\csv\Book_Excerpt.csv:154
+msgid "深海食材的特殊性要求厨师具备专业的处理知识和技能。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:156
-msgid "维多利亚艺术学院的油画教材，系统介绍了油画的专业技法和理论。"
+#: .\data\csv\Book_Excerpt.csv:154
+msgid "阿戈尔的深海料理传统已有数千年历史，技艺精湛。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:157
-msgid "《现代设计理论》"
+#: .\data\csv\Book_Excerpt.csv:154
+msgid "深海环境造就了独特的食材，它们的营养价值极高。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:157
-msgid "现代设计的理论基础，包含了色彩学、构图学等专业知识。"
+#: .\data\csv\Book_Excerpt.csv:154
+msgid "处理深海食材需要特殊的工具和技术，一般厨师难以掌握。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:158
-msgid "《雕塑艺术技法》"
+#: .\data\csv\Book_Excerpt.csv:154
+msgid "深海料理的神秘和珍贵使其成为最高级的料理艺术。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:158
-msgid "介绍雕塑艺术创作的专业技法，从材料选择到造型技巧的全面指导。"
+#: .\data\csv\Book_Excerpt.csv:155
+msgid "高山地区的珍贵食材生长缓慢，但营养价值极高。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:159
-msgid "《东国书法艺术》"
+#: .\data\csv\Book_Excerpt.csv:155
+msgid "谢拉格的高山料理注重原味，最少的调料最大的保留食材本味。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:159
-msgid "东国传统书法的艺术理论和实践技法，需要深厚的文化底蕴。"
+#: .\data\csv\Book_Excerpt.csv:155
+msgid "高海拔环境下的烹饪需要特殊的技巧和设备。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:160
-msgid "《拉特兰宗教绘画》"
+#: .\data\csv\Book_Excerpt.csv:155
+msgid "高山珍馐的制作工艺复杂，需要世代传承的经验。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:160
-msgid "拉特兰教廷宗教绘画的传统技法，融合了宗教思想与艺术表现。"
+#: .\data\csv\Book_Excerpt.csv:155
+msgid "能够品尝到正宗高山珍馐的人寥寥无几，这是真正的奢侈。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:161
-msgid "《抽象艺术理论》"
+#: .\data\csv\Book_Excerpt.csv:156
+msgid "古老家族的料理秘方承载着数百年的历史和传统。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:161
-msgid "研究抽象艺术的高深理论，需要深厚的艺术修养和理论基础。"
+#: .\data\csv\Book_Excerpt.csv:156
+msgid "每个家族的秘传料理都有其独特的制作工艺和神秘配方。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:162
-msgid "《视觉心理学》"
+#: .\data\csv\Book_Excerpt.csv:156
+msgid "这些料理技法往往与家族的兴衰历史紧密相连。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:162
-msgid "研究视觉感知与心理的关系，对艺术创作有重要指导意义。"
+#: .\data\csv\Book_Excerpt.csv:156
+msgid "掌握家族秘传料理需要高超的技艺和绝对的保密意识。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:163
-msgid "《四维绘画技法》"
+#: .\data\csv\Book_Excerpt.csv:156
+msgid "这些珍贵的料理技艺是叙拉古文化的重要组成部分。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:163
-msgid "传说中的四维绘画技术，能够在画面中表现时间的流逝。"
+#: .\data\csv\Book_Excerpt.csv:157
+msgid "怀石料理体现了东国对季节变化和自然美学的深刻理解。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:164
-msgid "《灵魂绘画学》"
+#: .\data\csv\Book_Excerpt.csv:157
+msgid "每道菜的制作都要考虑颜色、形状、香味的完美搭配。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:164
-msgid "萨卡兹族的神秘绘画技法，据说能够将灵魂融入画作之中。"
+#: .\data\csv\Book_Excerpt.csv:157
+msgid "怀石料理不仅是食物，更是一种文化仪式和艺术表达。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:165
-msgid "《源石艺术创作》"
+#: .\data\csv\Book_Excerpt.csv:157
+msgid "制作怀石料理需要多年的修行和对东国文化的深入理解。"
 msgstr ""
 
-#: .\data\csv\Book_Extended.csv:165
-msgid "运用源石能量进行艺术创作的前沿技法，极其危险且神秘。"
+#: .\data\csv\Book_Excerpt.csv:157
+msgid "真正的怀石料理大师能够通过食物传达深刻的哲学思想。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:159
+msgid "维多利亚的田园之歌总是从清晨的露珠开始，简单的三四和弦就能唱出故乡的味道。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:159
+msgid "炎国民谣讲究字正腔圆，每个字的发音都要清晰准确，这样才能传达出歌词的意境。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:159
+msgid "乌萨斯的民族歌谣往往节拍强烈，配合着脚步声演唱，仿佛在行军中传唱。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:159
+msgid "学会这些基础民谣后，你就能在任何聚会上成为最受欢迎的人，音乐是最好的交流语言。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:159
+msgid "第一步要练习的是呼吸，正确的腹式呼吸能让你的歌声更加悠长动听。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:160
+msgid "每周都有社团固定活动时间，请各位成员准时参加练习。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:160
+msgid "初学者建议从竖笛开始学习，它的指法简单，容易掌握，音色也很优美。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:160
+msgid "合唱时要注意听其他人的声部，和谐比个人的突出表现更重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:160
+msgid "乐器维护很重要，每次使用后都要妥善清洁和保养你的乐器。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:160
+msgid "在罗德岛，音乐不仅是爱好，更是我们生活的一部分，它能让我们在忙碌的工作中找到乐趣和放松。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:161
+msgid "当前最流行的是带有淡淡忧郁色彩的流行歌曲，反映了都市年轻人的心声。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:161
+msgid "吉他弹唱只需要掌握几个基本和弦就能演奏大部分流行歌曲。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:161
+msgid "维多利亚的流行音乐受古典音乐影响很深，旋律线条流畅优美。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:161
+msgid "歌词通常描写爱情、友情和对美好生活的向往，贴近普通人的生活。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:161
+msgid "学会这些歌曲，你就能在咖啡厅或酒吧里进行简单的演出了。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:162
+msgid "古筝的音色如山泉流水，清脆悦耳，是丝竹乐队中不可缺少的乐器。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:162
+msgid "竹笛的演奏要求气息悠长，初学者要多练习呼吸控制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:162
+msgid "丝竹乐的合奏讲究你中有我，我中有你，各种乐器相互呼应。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:162
+msgid "二胡虽然只有两根弦，但能表现出丰富的情感色彩，从欢快到哀伤。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:162
+msgid "传统曲目《茉莉花》是学习丝竹乐必练的经典曲目之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:163
+msgid "乌萨斯北方民族的歌谣往往配合着打击乐器，节奏感非常强烈。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:163
+msgid "手风琴是乌萨斯最具代表性的民族乐器，能够表现草原的辽阔。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:163
+msgid "民族舞蹈与音乐密不可分，学音乐的同时也要了解舞蹈的基本步法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:163
+msgid "乌萨斯南方的民歌旋律更加优美抒情，表现了农牧民的淳朴生活。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:163
+msgid "篝火晚会上的集体歌唱能够增进部落成员之间的团结和友谊。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:165
+msgid "高山音乐能够与山谷的回音产生共鸣，形成震撼人心的天然音响效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:165
+msgid "雪山的寒冷会影响乐器的音准，演奏者必须掌握特殊的调音技巧。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:165
+msgid "谢拉格的萨满使用这种音乐与自然界的灵魂进行沟通。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:165
+msgid "音乐的节奏必须与山风的节律保持一致，这需要对自然的深刻理解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:165
+msgid "传说中，只有心灵纯净的人才能听到雪山最深层的音乐秘密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:166
+msgid "和声学是古典音乐的基础，不同和弦的进行决定了音乐的情感色彩。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:166
+msgid "对位法要求旋律线条的独立性和整体性并存，这需要大量的练习。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:166
+msgid "古典音乐的结构通常遵循严格的形式，如奏鸣曲式、回旋曲式等。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:166
+msgid "调性的转换是古典音乐中制造戏剧效果的重要手段。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:166
+msgid "莱塔尼亚音乐学院的学生必须熟练掌握这些理论才能毕业。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:167
+msgid "雅乐的演奏要求内心平静如水，任何急躁的情绪都会影响音乐的品质。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:167
+msgid "笙、箫、筝、琵琶等传统乐器各有其特定的演奏技法和音色特点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:167
+msgid "宫廷雅乐的节拍极其缓慢，需要极强的耐心和定力来维持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:167
+msgid "演奏时要穿着传统服装，这有助于演奏者进入正确的精神状态。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:167
+msgid "东国雅乐追求的是天人合一的境界，而非单纯的技巧展示。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:168
+msgid "圣歌的演唱需要虔诚的信仰作为支撑，技巧只是表达信仰的工具。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:168
+msgid "各声部的配合要达到天衣无缝的效果，象征着信徒的团结。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:168
+msgid "歌词的发音必须准确，每个音节都承载着神圣的意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:168
+msgid "合唱团的指挥需要深厚的神学知识，才能准确传达圣歌的精神内涵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:168
+msgid "在教堂的回音环境中演唱，声音的混响效果会增强圣歌的神圣感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:169
+msgid "战歌必须用最有力的声音演唱，这样才能激发战士们的斗志。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:169
+msgid "鼓点的节奏模拟着战马的蹄声，每一下都击打在战士的心上。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:169
+msgid "不同部族的战歌有着各自独特的旋律，但都充满了对胜利的渴望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:169
+msgid "战歌的歌词往往描述英雄的事迹和部族的荣誉，激励后人奋勇作战。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:169
+msgid "只有经历过真正战斗的战士才能完全理解这些战歌的深刻含义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:171
+msgid "深海音乐利用水的传导特性，能够在广阔的海域中传播声音信息。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:171
+msgid "这种音乐形式需要对声学原理有深入的理解，错误的频率可能导致危险。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:171
+msgid "深海猎人使用这种音乐技术进行远距离通信和海洋生物的驱散。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:171
+msgid "音乐的共鸣频率必须精确计算，以免干扰深海生态系统的平衡。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:171
+msgid "掌握这项技术的音乐家寥寥无几，它需要天赋和多年的专业训练。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:172
+msgid "电影配乐需要与画面节奏完美同步，每个音符都要为情节服务。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:172
+msgid "管弦乐团的编曲要考虑每个声部的特色，创造出丰富的音响层次。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:172
+msgid "音效设计不仅仅是背景音乐，它能够增强观众的情感体验和沉浸感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:172
+msgid "配乐师必须深刻理解剧本和导演意图，用音乐语言来讲述故事。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:172
+msgid "顶级的电影配乐能够独立于电影存在，成为经典的音乐作品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:173
+msgid "古老的萨卡兹吟唱据说蕴含着失传的魔法力量，能够影响源石的活性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:173
+msgid "这种吟唱形式极其危险，错误的发音可能导致源石能量的失控。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:173
+msgid "只有萨卡兹族中天赋异禀的个体才能承受这种音乐形式的负荷。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:173
+msgid "吟唱的旋律似乎能够唤醒古代萨卡兹王族血脉中沉睡的记忆。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:173
+msgid "学习这种吟唱需要承担巨大的风险，许多尝试者都因此失去了生命。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:174
+msgid "歌剧演唱需要完美结合声乐技巧、戏剧表演和情感表达三个方面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:174
+msgid "气息控制是歌剧演唱的根本，必须能够支撑长达数分钟的连续演唱。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:174
+msgid "不同角色需要完全不同的声音表现，这考验着歌唱家的技艺深度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:174
+msgid "舞台表演时要与乐队保持完美的配合，任何偏差都会影响整体效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:174
+msgid "成为歌剧大师需要数十年的刻苦训练和无数次舞台实践的积累。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:175
+msgid "传说中的海妖之歌能够迷惑船员的心智，使其失去方向感和判断力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:175
+msgid "这种歌声技法极其危险，学习者可能会在练习过程中迷失自我。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:175
+msgid "海妖之歌的频率能够与人类大脑的共振频率产生干涉，造成幻觉。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:175
+msgid "伊比利亚的研究者警告，绝不要在海边练习这种歌声技法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:175
+msgid "掌握海妖之歌的人必须有极强的意志力，才能避免被自己的歌声所迷惑。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:177
+msgid "泰拉大陆被天灾塑造成了复杂多样的地形，移动城市因此应运而生。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:177
+msgid "维多利亚位于大陆西部，气候温和湿润，是重要的工业和贸易中心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:177
+msgid "乌萨斯疆域辽阔，北部是永久冻土，南部是肥沃的草原和农田。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:177
+msgid "炎国地处东部，拥有丰富的文化传统和先进的农业技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:177
+msgid "了解各国地理有助于理解不同文化的形成和发展脉络。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:178
+msgid "源石的发现彻底改变了泰拉大陆的历史进程，开启了新的文明时代。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:178
+msgid "天灾的出现迫使人类建造了移动城市，这是人类适应环境的伟大创举。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:178
+msgid "各国之间的冲突往往源于源石资源的争夺和感染者问题的处理方式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:178
+msgid "罗德岛的成立标志着感染者权益保护运动的兴起。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:178
+msgid "历史告诉我们，只有团结合作才能面对天灾和源石病的挑战。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:179
+msgid "龙门币是国际贸易中最稳定的货币之一，广泛被各国接受。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:179
+msgid "哥伦比亚元与科技产业的发展密切相关，汇率波动较大。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:179
+msgid "在边境地区，货币兑换往往存在黑市汇率，需要格外小心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:179
+msgid "旅行时最好携带多种货币，以应对不同地区的支付需求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:179
+msgid "了解汇率变化趋势有助于做出更好的旅行和贸易决策。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:180
+msgid "源石是一种天然的能量载体，能够放大某些法术特征。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:180
+msgid "源石技术广泛应用于工业生产、交通运输和日常生活各个方面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:180
+msgid "长期接触源石可能导致源石病感染，需要采取必要的防护措施。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:180
+msgid "不同地区的源石品质和能量密度存在显著差异。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:180
+msgid "正确使用源石能带来便利，但滥用则可能造成严重后果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:181
+msgid "感染者拥有与普通人同等的基本人权，不应受到歧视和不公正待遇。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:181
+msgid "雇主不得因源石病感染状况而拒绝合理的就业申请。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:181
+msgid "感染者有权获得必要的医疗救治和康复服务。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:181
+msgid "社会应该为感染者提供适当的职业培训和再就业机会。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:181
+msgid "消除对感染者的偏见需要全社会的共同努力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:183
+msgid "维多利亚从高卢的尸骸上成为泰拉大陆的强国，工业革命是其崛起的关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:183
+msgid "工业革命使维多利亚在军事和经济上占据了压倒性优势，奠定了帝国基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:183
+msgid "维多利亚的贵族制度既是其文化传统的体现，也是社会矛盾的根源。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:183
+msgid "帝国的衰落始于源石时代的到来，新技术冲击了传统的权力结构。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:183
+msgid "维多利亚历史上的殖民政策对被殖民地区产生了深远而复杂的影响。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:184
+msgid "哥伦比亚是第一个将源石技术大规模应用于工业生产的国家。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:184
+msgid "源石电力技术的发明彻底改变了哥伦比亚的城市面貌和生活方式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:184
+msgid "科技企业之间的激烈竞争推动了哥伦比亚整体技术水平的快速提升。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:184
+msgid "哥伦比亚的教育体系重视实用技能培养，为科技发展提供了人才基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:184
+msgid "源石技术的发展也带来了环境污染和社会分化等负面问题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:185
+msgid "源石能量转换效率的提高是当前技术发展的重点方向之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:185
+msgid "源石技术在医疗领域的应用为许多疑难杂症提供了治疗可能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:185
+msgid "源石驱动的交通工具大大提高了运输效率和机动性能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:185
+msgid "源石技术的军事应用改变了传统战争的形态和规模。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:185
+msgid "源石废料的安全处理是源石技术可持续发展面临的重大挑战。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:186
+msgid "卡兹戴尔内战的根源在于魔王权柄带来的斗争。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:186
+msgid "资源的稀缺和长久以来的刻板印象加剧了内战的激烈程度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:186
+msgid "外国势力的介入使卡兹戴尔内战问题进一步复杂化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:186
+msgid "长期战争导致了大量萨卡兹族人流离失所，成为难民和雇佣兵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:186
+msgid "解决卡兹戴尔问题需要各方都作出妥协和让步。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:187
+msgid "炎国古代哲学强调人与自然的和谐统一，这一思想影响了整个东方文明。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:187
+msgid "儒家思想重视社会秩序和道德修养，成为炎国传统文化的核心。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:187
+msgid "道家哲学追求自然无为，提倡顺应天道的生活方式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:187
+msgid "法家思想注重制度建设和法律约束，对炎国政治发展产生了重要影响。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:187
+msgid "这些古代哲学思想在现代社会仍然具有重要的指导意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:189
+msgid "天灾频发的环境塑造了泰拉大陆独特的生态系统和物种进化模式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:189
+msgid "源石污染对生物多样性产生了复杂的双重影响，既有破坏也有促进。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:189
+msgid "不同地理环境中的生物群落呈现出明显的区域性特征和适应性变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:189
+msgid "人类活动与自然生态之间的相互作用关系越来越复杂和重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:189
+msgid "维护生态平衡需要跨国合作和综合性的环境保护策略。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:190
+msgid "源石的能量释放过程涉及复杂的量子力学和热力学原理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:190
+msgid "源石晶体结构的微小变化会导致能量输出特性的显著差异。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:190
+msgid "源石与生物体的相互作用机制仍然是物理学研究的前沿课题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:190
+msgid "源石能量场的分布规律遵循特定的数学模型和物理定律。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:190
+msgid "理解源石物理学原理对于开发更安全高效的源石技术至关重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:191
+msgid "考古发现表明古代萨卡兹文明曾经拥有高度发达的源石技术和文化艺术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:191
+msgid "萨卡兹古代王陵中发现的文物揭示了其复杂的社会等级制度和宗教信仰。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:191
+msgid "古代萨卡兹文字系统的解读工作仍在进行中，已有部分重要发现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:191
+msgid "萨卡兹文明的衰落可能与某次大规模天灾事件有关。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:191
+msgid "考古研究为理解现代萨卡兹族的文化传统提供了重要线索。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:192
+msgid "天灾的形成与源石能量场的异常波动存在密切的关联关系。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:192
+msgid "大气环流模式的改变是触发天灾的重要气象条件之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:192
+msgid "地质构造活动会影响天灾的发生频率和强度分布。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:192
+msgid "天灾预测需要综合考虑多种地球物理和环境因素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:192
+msgid "深入理解天灾机制有助于开发更有效的预警和防护系统。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:193
+msgid "理论物理学家提出存在多个平行维度的可能性，源石能量可能是连接不同维度的桥梁。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:193
+msgid "跨维度物理现象的数学模型需要运用最先进的拓扑学和群论知识。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:193
+msgid "某些异常的源石现象可能是跨维度效应的表现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:193
+msgid "跨维度理论对于理解源石技术的极限和潜力具有重要意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:193
+msgid "这一理论领域的研究刚刚起步，需要更多的实验验证和理论完善。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:195
+msgid "遇到外伤出血时，首先要止血，然后清洁伤口，最后包扎固定。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:195
+msgid "对于昏迷患者，要确保其呼吸道通畅，采用恢复体位进行护理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:195
+msgid "源石病急性发作时，要立即使用抑制剂，并及时联系专业医护人员。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:195
+msgid "心肺复苏的黄金时间是4-6分钟，超过这个时间抢救成功率会大幅下降。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:195
+msgid "急救箱中必须常备的药品包括止痛药、消毒液、绷带和基础抑制剂。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:196
+msgid "感染者要避免过度劳累，充足的休息有助于控制病情发展。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:196
+msgid "饮食上要注意营养均衡，多摄入维生素和蛋白质，少吃刺激性食物。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:196
+msgid "定期监测体表结晶化程度，发现异常变化要及时就医。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:196
+msgid "保持皮肤清洁干燥，避免继发性感染的发生。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:196
+msgid "心理健康同样重要，感染者需要家人和朋友的理解与支持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:197
+msgid "在源石矿区工作时必须佩戴防护设备，避免直接接触源石粉尘。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:197
+msgid "定期进行源石病筛查，早发现早治疗能够有效控制病情。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:197
+msgid "居住环境要保持通风良好，减少源石粉尘的积累。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:197
+msgid "不要购买来源不明的源石制品，可能存在感染的风险。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:197
+msgid "健康的生活方式和正确的观念是预防源石病的最佳保障。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:198
+msgid "解热镇痛药物要按说明书剂量服用，儿童用药量需要根据体重调整。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:198
+msgid "抗菌药物必须按疗程使用，不能症状好转就立即停药。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:198
+msgid "外用药膏在使用前要清洁患处，薄薄涂抹一层即可。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:198
+msgid "过期药物要及时处理，不能继续使用，以免产生副作用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:198
+msgid "家庭药箱要放在儿童接触不到的地方，确保用药安全。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:199
+msgid "每天保证8小时充足睡眠，规律的作息有利于身体机能的正常运转。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:199
+msgid "适量运动能够增强免疫力，建议每周至少进行3次有氧运动。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:199
+msgid "均衡饮食要包含蛋白质、碳水化合物、脂肪、维生素和矿物质。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:199
+msgid "定期体检能够及早发现健康问题，建议每年至少检查一次。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:199
+msgid "保持良好的心态对健康同样重要，学会调节压力和情绪。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:201
+msgid "人体解剖学是医学的基础，必须准确掌握各器官的位置和功能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:201
+msgid "病理学研究疾病的发生发展规律，是诊断和治疗的理论基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:201
+msgid "临床诊断要结合患者的症状、体征和实验室检查结果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:201
+msgid "外科手术需要精湛的技艺和丰富的经验，任何细节都不能疏忽。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:201
+msgid "医学伦理要求医生以患者利益为重，保守医疗秘密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:202
+msgid "无菌操作是外科手术的基本原则，任何污染都可能导致感染。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:202
+msgid "手术前的详细规划和器械准备是手术成功的重要保障。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:202
+msgid "麻醉技术的发展使复杂手术成为可能，但仍需谨慎使用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:202
+msgid "手术过程中要密切监测患者的生命体征变化。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:202
+msgid "术后护理对于患者康复同样重要，不能忽视任何并发症的征象。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:203
+msgid "新药研发需要经过严格的实验室测试和临床试验程序。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:203
+msgid "药物的有效性和安全性是评估新药的两个核心指标。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:203
+msgid "源石成分的药物开发为许多疾病治疗带来了新的可能性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:203
+msgid "药物研发周期长、投入大，需要大量的资金和人力支持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:203
+msgid "药物上市后仍需要持续监测其长期效果和副作用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:204
+msgid "拉特兰的医疗传统将治疗疾病视为净化灵魂的过程。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:204
+msgid "祈祷和药物治疗相结合是拉特兰医学的特色之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:204
+msgid "医疗从业者必须具备深厚的宗教知识和医学技能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:204
+msgid "拉特兰的康复理念强调心灵治愈与身体治愈的统一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:204
+msgid "传统医学与现代医学的结合为患者提供了更全面的治疗方案。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:205
+msgid "中医强调整体观念，认为人体是一个有机的统一整体。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:205
+msgid "阴阳平衡是中医理论的核心，疾病往往源于阴阳失调。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:205
+msgid "经络学说解释了人体气血运行的规律和穴位治疗的原理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:205
+msgid "中药配伍讲究君臣佐使，不同药物的组合能产生协同效应。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:205
+msgid "望闻问切四诊合参是中医诊断的基本方法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:207
+msgid "源石病的发病机制涉及复杂的免疫反应和细胞凋亡过程。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:207
+msgid "源石粒子与人体细胞的相互作用会触发异常的生理反应。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:207
+msgid "不同个体对源石病的易感性存在显著的遗传学差异。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:207
+msgid "源石病的进展速度与患者的免疫状态和环境因素密切相关。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:207
+msgid "深入研究源石病机理是开发特效治疗方法的关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:208
+msgid "源石技术在神经医学中的应用为脑部疾病治疗开辟了新途径。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:208
+msgid "神经源石植入需要精确的定位和微创手术技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:208
+msgid "源石刺激对神经元活动的调节机制仍需进一步研究。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:208
+msgid "神经源石技术的副作用和长期影响需要密切监测。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:208
+msgid "这项技术的伦理问题引发了医学界的广泛讨论。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:209
+msgid "古代萨卡兹医术运用源石能量进行治疗，效果神奇但风险极高。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:209
+msgid "萨卡兹族的传统医学典籍记录了许多失传的治疗方法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:209
+msgid "古代医术与现代医学的结合可能带来意想不到的突破。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:209
+msgid "学习古代医术需要对萨卡兹文化和语言有深入的了解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:209
+msgid "这些珍贵的医学遗产急需得到保护和传承。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:210
+msgid "深海环境对人体生理机能产生的影响需要特殊的医学理论来解释。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:210
+msgid "阿戈尔医学发展出了独特的压力医学和水生医学分支。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:210
+msgid "深海生物的生理特性为医学研究提供了新的思路和方向。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:210
+msgid "深海医学的研究成果对于太空医学也具有重要参考价值。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:210
+msgid "阿戈尔的医学技术在处理特殊环境疾病方面具有独特优势。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:211
+msgid "基因编辑技术为治疗遗传性疾病提供了全新的可能性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:211
+msgid "生物材料工程在器官移植和组织再生领域发挥着重要作用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:211
+msgid "生命工程学的发展引发了关于生命本质和人类未来的深度思考。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:211
+msgid "干细胞技术的应用为再生医学带来了革命性的进展。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:211
+msgid "生命工程学需要严格的伦理规范来约束其发展方向。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:213
+msgid "移动城市的种植箱要选择透气性好的材料，确保根系健康生长。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:213
+msgid "水培蔬菜生长快产量高，但需要严格控制营养液的浓度和酸碱度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:213
+msgid "在有限的空间里，垂直种植是提高产量的有效方法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:213
+msgid "选择适合移动环境的蔬菜品种，如叶菜类和小型果菜类。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:213
+msgid "定期清洁种植设备，预防病虫害的发生和传播。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:214
+msgid "温室内的温度和湿度控制是影响作物生长的关键因素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:214
+msgid "合理的通风系统能够预防病害的发生，保持空气流通。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:214
+msgid "灌溉系统要定期维护，确保水分供应的稳定性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:214
+msgid "选择抗病性强的品种能够减少农药的使用量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:214
+msgid "温室管理需要记录详细的生产日志，便于总结经验和改进技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:215
+msgid "阳台种植要考虑光照条件，选择适合的植物种类。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:215
+msgid "土壤的选择很重要，要疏松透气，富含有机质。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:215
+msgid "浇水要掌握见干见湿的原则，避免积水导致根部腐烂。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:215
+msgid "定期施肥能够提供植物生长所需的营养元素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:215
+msgid "园艺不仅能美化环境，还能带来收获的喜悦和成就感。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:216
+msgid "播种前要对种子进行处理，提高发芽率和抗病能力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:216
+msgid "田间管理包括除草、施肥、病虫害防治等多个环节。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:216
+msgid "适时收获能够保证作物的品质和产量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:216
+msgid "作物轮作能够改善土壤结构，减少病虫害的累积。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:216
+msgid "农业机械的使用能够大大提高劳动效率。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:217
+msgid "选择健康的种畜是养殖成功的基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:217
+msgid "饲养环境要保持清洁卫生，定期消毒防疫。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:217
+msgid "饲料的营养搭配要科学合理，满足动物不同生长阶段的需求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:217
+msgid "观察动物的行为变化，及时发现和处理疾病。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:217
+msgid "养殖记录的建立有助于总结经验和提高管理水平。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:219
+msgid "精准农业技术的应用大大提高了土地利用效率和作物产量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:219
+msgid "农业机械化是维多利亚农业现代化的重要标志之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:219
+msgid "科学的土壤管理和肥料施用是可持续农业的基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:219
+msgid "病虫害综合防治策略减少了化学农药的使用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:219
+msgid "农产品质量标准化是维多利亚农业参与国际竞争的重要保障。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:220
+msgid "温控大棚技术使农业生产不再完全依赖自然气候条件。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:220
+msgid "自动化灌溉系统实现了水资源的精确利用和管理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:220
+msgid "无土栽培技术为城市农业发展开辟了新的道路。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:220
+msgid "设施农业的投入成本高，但产出效益也相应提高。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:220
+msgid "技术创新是哥伦比亚设施农业保持领先地位的关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:221
+msgid "炎国农民数千年来积累的经验蕴含着深刻的科学道理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:221
+msgid "轮作制度能够维持土壤肥力，实现农业的可持续发展。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:221
+msgid "传统的生物防治方法环保有效，值得现代农业借鉴。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:221
+msgid "因地制宜是炎国传统农业的重要特色之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:221
+msgid "传统农法与现代技术的结合为农业发展提供了新思路。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:222
+msgid "沙漠农业需要克服水资源稀缺和土壤贫瘠的双重挑战。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:222
+msgid "滴灌技术是沙漠地区最有效的灌溉方式之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:222
+msgid "选择耐旱耐盐的作物品种是沙漠农业成功的关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:222
+msgid "防风固沙措施对于保护农田免受风沙侵害至关重要。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:222
+msgid "沙漠农业的发展为干旱地区的人民提供了生存希望。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:223
+msgid "短暂的生长季节要求选择生长周期短的作物品种。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:223
+msgid "温室和大棚技术延长了北方地区的种植季节。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:223
+msgid "土壤改良是寒地农业发展的重要技术措施。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:223
+msgid "抗寒育种技术培育出了适应严寒环境的作物品种。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:223
+msgid "寒地农业的机械化程度相对较高，以提高劳动效率。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:225
+msgid "源石能量场的调节能够促进植物的生长发育和产量提高。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:225
+msgid "源石技术在植物育种领域的应用加速了新品种的培育过程。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:225
+msgid "源石辐射对土壤微生物活性的影响需要进一步研究。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:225
+msgid "源石农业技术的安全性评估是推广应用的前提条件。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:225
+msgid "合理控制源石技术的使用强度，避免对环境造成负面影响。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:226
+msgid "基因工程技术能够快速改良作物的特定性状。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:226
+msgid "转基因作物的安全性评价需要经过严格的科学检验。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:226
+msgid "基因改良在提高作物抗病性方面显示出巨大潜力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:226
+msgid "分子标记技术加速了育种进程，提高了选择效率。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:226
+msgid "基因改良作物的推广需要考虑社会接受度和伦理问题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:227
+msgid "极地环境下的农业生产需要完全人工创造的生长环境。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:227
+msgid "能源供应是极地农业工程面临的最大技术挑战。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:227
+msgid "极地农业设施的建造需要考虑极端天气的影响。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:227
+msgid "密闭循环系统是极地农业的核心技术之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:227
+msgid "极地农业研究为太空农业发展提供了重要的技术基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:228
+msgid "深海环境的高压和低温对水产养殖技术提出了特殊要求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:228
+msgid "深海鱼类的营养价值高，但养殖难度也相应增大。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:228
+msgid "深海养殖设施的维护和管理是技术发展的重点。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:228
+msgid "深海水产养殖对于缓解陆地资源压力具有重要意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:228
+msgid "阿戈尔在深海水产养殖技术方面处于世界领先地位。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:229
+msgid "天灾过后的土壤修复是农业重建的首要任务。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:229
+msgid "快速恢复农业生产需要应急农业技术的支持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:229
+msgid "天灾后的种子供应和农资调配是重建工作的关键环节。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:229
+msgid "农业保险制度有助于降低天灾对农民的经济损失。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:229
+msgid "天灾后农业重建需要政府、企业和农民的共同努力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:231
+msgid "选择合适的材料是制作耐用工具的前提，硬木和优质金属是首选。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:231
+msgid "基本的锤子制作需要掌握锻造和手柄安装的技巧。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:231
+msgid "刀具制作时要注意刀刃角度的控制，这决定了切削效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:231
+msgid "简单的螺丝刀可以用废弃的金属棒材和基本工具制作完成。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:231
+msgid "工具制作过程中安全防护非常重要，要佩戴护目镜和手套。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:232
+msgid "定期检查设备的磨损程度，及时更换易损件能延长使用寿命。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:232
+msgid "润滑保养是机械设备维护的基础，要使用合适型号的润滑油。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:232
+msgid "电气设备维护时要先断电，确保操作安全。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:232
+msgid "建立设备维护档案，记录每次保养和维修的详细情况。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:232
+msgid "预防性维护比故障后维修更经济有效。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:233
+msgid "选择木材时要注意纹理方向，顺纹切割能获得更好的表面质量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:233
+msgid "榫卯结构是传统家具制作的核心技术，需要精确的测量和切割。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:233
+msgid "砂纸打磨要从粗到细逐步进行，最终获得光滑的表面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:233
+msgid "木器漆的涂装能保护木材并增加美观性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:233
+msgid "家具设计要考虑实用性和美观性的平衡。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:234
+msgid "金属锻造需要掌握加热温度和锤击力度的控制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:234
+msgid "焊接作业要选择合适的焊条和焊接参数。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:234
+msgid "金属切削加工要根据材料硬度选择合适的刀具。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:234
+msgid "金属表面处理能提高抗腐蚀性和外观质量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:234
+msgid "安全操作规程在金属加工中必须严格遵守。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:235
+msgid "纺纱的关键是控制纤维的拉伸和扭转，获得均匀的纱线。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:235
+msgid "织布机的调试需要精确控制经纬线的张力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:235
+msgid "染色工艺要掌握染料的配比和温度控制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:235
+msgid "不同纤维材料的处理方法有所不同，需要分别掌握。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:235
+msgid "手工纺织虽然效率不高，但能制作出独特的艺术品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:237
+msgid "精密制造要求极高的尺寸精度和表面质量控制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:237
+msgid "数控机床的编程和操作是现代精密制造的核心技能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:237
+msgid "质量检测贯穿整个制造过程，不合格品必须及时剔除。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:237
+msgid "精密制造环境要求洁净无尘，温湿度控制严格。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:237
+msgid "技术工人的技能水平直接影响产品质量和生产效率。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:238
+msgid "电子元件的焊接需要精确控制温度和时间。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:238
+msgid "印刷电路板的设计要考虑信号完整性和电磁兼容性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:238
+msgid "自动化生产线提高了电子产品的制造效率和一致性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:238
+msgid "电子产品的测试和调试是保证质量的重要环节。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:238
+msgid "电子制造业对环境保护要求很高，需要严格的废料处理。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:239
+msgid "陶瓷制作需要对泥料性质和烧制温度有深入了解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:239
+msgid "丝绸织造是炎国传统工艺的代表，技术复杂精湛。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:239
+msgid "金属工艺中的镶嵌和雕刻技术达到了艺术级水平。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:239
+msgid "传统工艺的传承需要师父的言传身教和学徒的刻苦练习。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:239
+msgid "现代技术与传统工艺的结合创造出了新的发展可能。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:240
+msgid "源石设备的制造需要特殊的防辐射材料和工艺。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:240
+msgid "源石能量的控制和调节是设备设计的核心问题。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:240
+msgid "源石设备的安全性测试必须在专门的防护环境中进行。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:240
+msgid "源石技术的应用为设备制造带来了新的设计理念。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:240
+msgid "源石设备制造工人需要接受专门的安全培训。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:241
+msgid "重型机械的制造需要大型工厂和专业设备的支持。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:241
+msgid "钢铁冶炼是重工业的基础，技术水平决定了产品质量。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:241
+msgid "重工业产品的运输和安装需要特殊的设备和技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:241
+msgid "乌萨斯重工业以皮实耐用著称，适应恶劣环境。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:241
+msgid "重工业发展需要大量的资金投入和技术积累。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:243
+msgid "生物制造技术利用生物体系生产所需的材料和产品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:243
+msgid "细胞培养技术是生物制造的基础，需要严格的无菌环境。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:243
+msgid "基因工程改造的微生物能够生产传统方法难以获得的产品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:243
+msgid "生物制造的产品通常具有良好的生物相容性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:243
+msgid "生物制造技术代表了制造业的未来发展方向之一。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:244
+msgid "源石核心是高能源石技术的集成应用，制造难度极高。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:244
+msgid "核心的能量密度控制需要精确到分子级别的技术水平。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:244
+msgid "源石核心制造过程中的任何失误都可能导致灾难性后果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:244
+msgid "只有最顶级的工程师团队才能承担源石核心的研制工作。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:244
+msgid "源石核心技术的掌握标志着一个国家科技实力的顶峰。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:245
+msgid "拉特兰铳械的制造工艺融合了传统手工艺和现代精密技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:245
+msgid "每把铳械都需要经过严格的射击精度和可靠性测试。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:245
+msgid "铳械维护要定期清洁枪管和检查机械部件的磨损情况。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:245
+msgid "不同类型的弹药对铳械性能有不同的影响和要求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:245
+msgid "铳械制造的核心技术被拉特兰教廷严格保密。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:246
+msgid "移动城市的核心结构必须能够承受巨大的动态载荷。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:246
+msgid "防震减振系统是保证城市正常运行的关键技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:246
+msgid "能源供应系统的冗余设计确保了城市的持续运行能力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:246
+msgid "城市核心结构的维护需要专门的工程团队和设备。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:246
+msgid "移动城市工程学代表了当代建筑和机械工程的最高水平。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:247
+msgid "飞行器设计需要综合考虑空气动力学、结构力学和推进技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:247
+msgid "轻量化材料的应用是现代飞行器制造的重要发展方向。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:247
+msgid "飞行器的制造精度要求极高，任何缺陷都可能导致安全隐患。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:247
+msgid "飞行试验是验证设计方案的最终环节，风险很高。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:247
+msgid "哥伦比亚的飞行器技术在民用和军用领域都处于领先地位。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:249
+msgid "握笔姿势的正确与否直接影响线条的质量和手部的疲劳程度。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:249
+msgid "观察是素描的基础，要学会用艺术家的眼睛去看待世界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:249
+msgid "从几何形体开始练习，掌握物体的基本造型规律。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:249
+msgid "光影关系的处理是表现立体感的关键技法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:249
+msgid "大量的练习是提高素描技能的唯一途径，没有捷径可走。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:250
+msgid "水彩颜料的特点是透明度高，色彩鲜艳，但不易修改。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:250
+msgid "湿画法和干画法是水彩画的两种基本技法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:250
+msgid "纸张的选择对水彩画效果有重要影响，要选择吸水性适中的纸张。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:250
+msgid "色彩的调和要在调色板上进行，避免在画面上直接混色。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:250
+msgid "水彩画要趁湿作画，掌握好水分的控制是关键。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:251
+msgid "儿童绘画教育要注重培养想象力和创造力，不要过分强调技法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:251
+msgid "鼓励孩子大胆用色，表达自己的情感和想法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:251
+msgid "绘画材料要安全无毒，适合儿童使用。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:251
+msgid "通过游戏的方式进行绘画教学，增加学习的趣味性。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:251
+msgid "每个孩子都有自己独特的艺术语言，要尊重个体差异。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:252
+msgid "人物造型设计要突出特色，让读者一眼就能记住。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:252
+msgid "故事情节的设计要有起承转合，保持读者的阅读兴趣。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:252
+msgid "分镜头的安排决定了故事的节奏和视觉效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:252
+msgid "对话框的设计要简洁明了，不要遮挡重要的画面内容。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:252
+msgid "漫画创作需要大量的时间和耐心，要做好长期创作的准备。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:253
+msgid "笔墨纸砚是国画的基本工具，每一样都有其特定的用法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:253
+msgid "国画讲究意境，要在有限的画面中表现无限的空间。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:253
+msgid "写意画重在表现神韵，工笔画重在细节刻画。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:253
+msgid "国画的构图讲究虚实结合，留白也是画面的重要组成部分。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:253
+msgid "学习国画需要了解中国传统文化，才能真正理解其精神内涵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:255
+msgid "油画颜料干燥缓慢，为画家提供了充分的修改和调整时间。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:255
+msgid "油画的色彩层次丰富，可以通过多次罩染获得复杂的色彩效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:255
+msgid "油画布的选择和底色处理对最终效果有重要影响。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:255
+msgid "油画技法包括厚涂、薄涂、干擦等多种表现手法。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:255
+msgid "维多利亚油画传统注重写实性和细节表现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:256
+msgid "设计的本质是解决问题，美观只是解决方案的一个方面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:256
+msgid "色彩心理学在设计中的应用能够影响观者的情绪和行为。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:256
+msgid "简约设计原则强调\"少即是多\"，去除不必要的装饰元素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:256
+msgid "用户体验设计需要从使用者的角度考虑产品的功能和界面。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:256
+msgid "设计趋势在不断变化，设计师需要保持敏锐的观察力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:257
+msgid "雕塑材料的选择决定了作品的表现力和保存寿命。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:257
+msgid "石雕需要对材料的纹理和硬度有深入的了解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:257
+msgid "泥塑是学习雕塑的基础，能够快速表现创意和修改造型。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:257
+msgid "雕塑工具的使用技巧需要长期的练习才能熟练掌握。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:257
+msgid "雕塑作品的空间感和体积感是其独特的艺术魅力。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:258
+msgid "书法是东国文化的精髓，体现了文字的艺术美。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:258
+msgid "笔法、字法、章法是书法艺术的三个基本要素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:258
+msgid "不同的书体有不同的特点和适用场合。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:258
+msgid "书法练习需要临摹经典作品，学习古人的笔法和结构。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:258
+msgid "书法不仅是技艺，更是修身养性的途径。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:259
+msgid "宗教绘画要表现神圣性和庄严感，色彩和构图都有特定要求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:259
+msgid "圣像画的绘制有严格的程序和规范，不能随意改动。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:259
+msgid "金箔的使用为宗教绘画增添了神圣的光辉效果。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:259
+msgid "宗教绘画的创作需要深厚的宗教知识和虔诚的信仰。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:259
+msgid "拉特兰宗教绘画传统影响了整个泰拉大陆的艺术发展。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:261
+msgid "抽象艺术摒弃了对现实的直接模仿，追求纯粹的艺术表现。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:261
+msgid "色彩、线条、形状成为抽象艺术的基本语言要素。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:261
+msgid "抽象艺术的理解需要观者的主观参与和情感投入。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:261
+msgid "不同的抽象艺术流派有着不同的理论基础和表现方式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:261
+msgid "抽象艺术的价值在于拓展了艺术表现的可能性边界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:262
+msgid "人类的视觉系统对不同颜色和形状有着特定的反应模式。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:262
+msgid "视觉错觉现象揭示了大脑处理视觉信息的复杂机制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:262
+msgid "色彩对情绪的影响有着深层的生理和心理基础。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:262
+msgid "视觉注意力的分配规律对设计和艺术创作具有指导意义。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:262
+msgid "视觉心理学的研究成果广泛应用于艺术、设计和广告领域。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:263
+msgid "四维绘画试图在平面上表现时间的流逝和变化过程。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:263
+msgid "这种技法需要艺术家对时间概念有深刻的哲学理解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:263
+msgid "四维绘画的观赏需要特殊的观看方式和时间投入。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:263
+msgid "掌握四维绘画技法的艺术家凤毛麟角，作品极其珍贵。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:263
+msgid "四维绘画挑战了传统绘画的时空限制。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:264
+msgid "岁片山水画能够在一幅画中表现四季的更替和岁月的流逝。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:264
+msgid "观看这种画作时，观者能够感受到时间的律动和自然的永恒。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:264
+msgid "岁片技法的掌握需要画家对自然规律有深入的观察和理解。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:264
+msgid "这种绘画形式融合了哲学思考和艺术表现的最高境界。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:264
+msgid "炎国岁片山水画代表了东方艺术的独特智慧和美学追求。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:265
+msgid "源石艺术利用源石的能量特性创造出会发光和变化的艺术品。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:265
+msgid "这种创作形式极其危险，艺术家需要承担巨大的健康风险。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:265
+msgid "源石艺术作品具有独特的视觉效果和感官体验。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:265
+msgid "源石艺术的创作需要同时掌握艺术技巧和源石技术。"
+msgstr ""
+
+#: .\data\csv\Book_Excerpt.csv:265
+msgid "这种前卫的艺术形式代表了艺术与科技结合的最新探索。"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:6
