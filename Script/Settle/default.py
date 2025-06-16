@@ -7756,6 +7756,7 @@ def handle_read_add_adjust(
     book_id = character_data.behavior.book_id
     book_data = game_config.config_book[book_id]
     difficulty = book_data.difficulty
+    difficulty = max(difficulty, 1)  # 确保难度至少为1
     book_type = book_data.type
     exp_id = game_config.config_book_type[book_type].exp_id
 
