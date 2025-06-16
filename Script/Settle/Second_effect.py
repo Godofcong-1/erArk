@@ -2629,9 +2629,7 @@ def handle_add_large_pain_first_sex(
     增加巨量苦痛（破处修正）
     Keyword arguments:
     character_id -- 角色id
-    add_time -- 结算时间
     change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -2646,20 +2644,14 @@ def handle_add_large_pain_first_sex(
     adjust = adjust/3 if adjust >=2 else adjust/2
     now_add_lust *= adjust
     # print("欲情修正", now_add_lust)
-    # 痛苦刻印修正
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
-    # print("痛苦刻印修正", now_add_lust)
     # V扩张修正
     adjust = attr_calculation.get_ability_adjust(character_data.ability[9])
     now_add_lust /= adjust * adjust
     # print("V扩张修正", now_add_lust)
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
     # print("破处修正", now_add_lust)
+
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_A_SEX)
 def handle_add_large_pain_first_a_sex(
@@ -2670,9 +2662,7 @@ def handle_add_large_pain_first_a_sex(
     增加巨量苦痛（A破处修正）
     Keyword arguments:
     character_id -- 角色id
-    add_time -- 结算时间
     change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -2685,17 +2675,11 @@ def handle_add_large_pain_first_a_sex(
     adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
     adjust = adjust/3 if adjust >=2 else adjust/2
     now_add_lust *= adjust
-    # 痛苦刻印修正
-    adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
-    now_add_lust *= adjust
     # A扩张修正
     adjust = attr_calculation.get_ability_adjust(character_data.ability[10])
     now_add_lust /= adjust * adjust
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_URINATE)
