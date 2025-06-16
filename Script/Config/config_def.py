@@ -274,6 +274,8 @@ class BookType:
     """ 书本小类 """
     exp_id: int
     """ 对应经验id """
+    ability_id: int
+    """ 对应能力id """
 
 
 class Book_Excerpt:

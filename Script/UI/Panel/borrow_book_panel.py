@@ -96,6 +96,56 @@ def check_random_borrow_book(character_id):
         return 0
 
 
+def can_read_book(character_id: int, book_cid: int) -> bool:
+    """
+    检查角色是否能够阅读指定书籍
+
+    参数:
+        character_id (int): 角色的ID
+        book_cid (int): 书籍的ID
+
+    返回:
+        bool: 是否能够阅读该书籍
+
+    功能描述:
+        根据书籍的难度和角色的对应能力等级，判断角色是否有资格阅读该书籍。
+        难度为2时需要能力大于3级，难度为3时需要能力大于6级，其他情况均可阅读。
+    """
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 获取书籍数据
+    book_data = game_config.config_book[book_cid]
+    # 获取书籍难度
+    book_difficulty = book_data.difficulty
+    # 获取书籍类型ID
+    book_type_id = book_data.type
+    # 获取书籍类型数据
+    book_type_data = game_config.config_book_type[book_type_id]
+    # 获取书籍对应的能力ID
+    book_ability_id = book_type_data.ability_id
+    # 如果能力ID为0，则不需要能力判断
+    if book_ability_id == 0:
+        return True
+
+    # 如果书籍属于技能类，则判断能力是否达标
+    if book_type_data.father_type_name == _("技能"):
+        # 难度为3时需要能力大于6级
+        if book_difficulty == 3 and character_data.ability[book_ability_id] < 6:
+            return False
+        # 难度为2时需要能力大于3级
+        if book_difficulty == 2 and character_data.ability[book_ability_id] < 3:
+            return False
+    # 如果书籍属于色情类，则只判断NPC
+    elif book_type_data.father_type_name == _("色情") and character_id != 0:
+        # 难度为3时需要能力大于6级
+        if book_difficulty == 3 and character_data.ability[book_ability_id] < 6:
+            return False
+        # 难度为2时需要能力大于3级
+        if book_difficulty == 2 and character_data.ability[book_ability_id] < 3:
+            return False
+    # 其他情况均可阅读
+    return True
+
 class Borrow_Book_Panel:
     """
     用于显示借书界面面板对象
@@ -261,10 +311,23 @@ class Borrow_Book_Panel:
         book_data = game_config.config_book[book_cid]
         book_name = book_data.name
         book_info = book_data.info
+        book_difficulty = book_data.difficulty
+        bood_difficulty_text = ""
+        if book_difficulty == 1:
+            bood_difficulty_text = _("（难度：简单）")
+        elif book_difficulty == 2:
+            bood_difficulty_text = _("（难度：普通，需要对应能力大于等于3级）")
+        elif book_difficulty == 3:
+            bood_difficulty_text = _("（难度：困难，需要对应能力大于等于6级）")
+        else:
+            bood_difficulty_text = _("（难度：未知）")
+        # 判断是否能力足够阅读
+        ability_pass = can_read_book(0, book_cid)
+
         # 处理换行符
         if "\\n" in book_info:
             book_info = book_info.replace("\\n", "\n")
-        book_text = f"\n{book_name}\n\n{book_info}\n"
+        book_text = f"\n{book_name}\n{bood_difficulty_text}\n\n{book_info}\n"
         while 1:
             line = draw.LineDraw("-", self.width)
             line.draw()
@@ -276,17 +339,29 @@ class Borrow_Book_Panel:
             line_feed.draw()
 
             # 如果已借该书，则显示还书按钮
+            button_draw_flag = True
             if cache.rhodes_island.book_borrow_dict[book_cid] == 0:
                 borrow_buttin_text = _("[归还]")
             # 未借该书，则显示借书按钮
             else:
                 borrow_buttin_text = _("[借阅]")
+                # 如果能力不足，则不能借阅
+                if not ability_pass:
+                    borrow_buttin_text = _("[无法借阅]（对应能力不足，这本书对你来说太难了，需要提升对应能力）")
+                    button_draw_flag = False
 
-            borrow_button = draw.CenterButton(
-                borrow_buttin_text, borrow_buttin_text, window_width / 2, cmd_func=self.borrow, args=(book_cid,)
-            )
-            borrow_button.draw()
-            return_list.append(borrow_button.return_text)
+            if button_draw_flag:
+                borrow_button = draw.CenterButton(
+                    borrow_buttin_text, borrow_buttin_text, window_width / 2, cmd_func=self.borrow, args=(book_cid,)
+                )
+                borrow_button.draw()
+                return_list.append(borrow_button.return_text)
+            else:
+                borrow_button = draw.NormalDraw()
+                borrow_button.text = borrow_buttin_text
+                borrow_button.draw()
+                line_feed.draw()
+                line_feed.draw()
 
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
             back_draw.draw()
