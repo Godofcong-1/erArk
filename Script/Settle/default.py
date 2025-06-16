@@ -7782,6 +7782,7 @@ def handle_read_add_adjust(
         adjust = attr_calculation.get_ability_adjust(character_data.ability[45]) / difficulty
         # 计算阅读进度
         read_progress = int(base * adjust * random.uniform(0.5, 1.5))
+        read_progress = max(read_progress, 1)
         old_progress = character_data.entertainment.read_book_progress[book_id]
         character_data.entertainment.read_book_progress[book_id] += read_progress
         # 绘制提示信息

@@ -79,12 +79,18 @@ def check_random_borrow_book(character_id):
         # 遍历获得所有没借的书id
         recommend_book_id_set,book_id_set = [],[]
         for book_id in cache.rhodes_island.book_borrow_dict:
-            # 未被借出则加入book_id_set
-            if cache.rhodes_island.book_borrow_dict[book_id] == -1:
-                book_id_set.append(book_id)
-                # 如果类型在推荐列表里，则加入recommend_book_id_set
-                if game_config.config_book[book_id].type in cache.rhodes_island.recommend_book_type_set:
-                    recommend_book_id_set.append(book_id)
+            # 已借出则跳过
+            if cache.rhodes_island.book_borrow_dict[book_id] != -1:
+                continue
+            # 能力不够则无法借出
+            ability_pass = can_read_book(character_id, book_id)
+            if not ability_pass:
+                continue
+            # 加入book_id_set
+            book_id_set.append(book_id)
+            # 如果类型在推荐列表里，则加入recommend_book_id_set
+            if game_config.config_book[book_id].type in cache.rhodes_island.recommend_book_type_set:
+                recommend_book_id_set.append(book_id)
         # 如果推荐列表有书，则有一半的概率在推荐列表里借书，否则在全列表里借书
         if len(recommend_book_id_set) and random.randint(0,1) == 1:
             borrow_book_id = random.choice(recommend_book_id_set)
