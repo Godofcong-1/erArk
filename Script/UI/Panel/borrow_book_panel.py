@@ -321,6 +321,9 @@ class Borrow_Book_Panel:
             bood_difficulty_text = _("（难度：困难，需要对应能力大于等于6级）")
         else:
             bood_difficulty_text = _("（难度：未知）")
+        if book_cid in cache.character_data[0].entertainment.read_book_progress:
+            book_progress = cache.character_data[0].entertainment.read_book_progress[book_cid]
+            book_info += f"\n\n{_('阅读进度：')}{book_progress}%"
         # 判断是否能力足够阅读
         ability_pass = can_read_book(0, book_cid)
 

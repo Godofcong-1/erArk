@@ -96,7 +96,9 @@ class Read_Book_Panel:
                 for book_id in book_id_set:
                     book_data = game_config.config_book[book_id]
                     son_type_name = game_config.config_book_type[book_data.type].son_type_name
-                    book_text = f"  [{str(book_id).rjust(3,'0')}]({son_type_name}){book_data.name}"
+                    now_progress = character_data.entertainment.read_book_progress.get(book_id, 0)
+                    progress_text = _("（阅读进度：{0}%）").format(now_progress)
+                    book_text = f"  [{str(book_id).rjust(3,'0')}]({son_type_name}){book_data.name} {progress_text}"
 
                     button_draw = draw.LeftButton(
                         _(book_text),
