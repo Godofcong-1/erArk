@@ -291,10 +291,18 @@ class InScenePanel:
 
             # ↓以下为服装栏的内容↓#
             if cache.scene_panel_show[1] and pl_character_data.target_character_id:
-                character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
-                    pl_character_data.cid, self.width, 20, 0, 0
-                )
+                # 如果是在H中，则切换为按钮型的点选服装穿脱面板
+                if handle_premise.handle_is_h(0):
+                    character_cloth_draw = cloth_panel.SwitchCharacterClothPanel(
+                        pl_character_data.cid, self.width, 20, 0, 0
+                    )
+                # 否则为正常文本绘制服装面板
+                else:
+                    character_cloth_draw = cloth_panel.SeeCharacterClothPanel(
+                        pl_character_data.cid, self.width, 20, 0, 0
+                    )
                 character_cloth_draw.draw()
+                ask_list.extend(character_cloth_draw.return_list)
 
             # ↓以下为身体栏的内容↓#
             if cache.scene_panel_show[2] and pl_character_data.target_character_id:
