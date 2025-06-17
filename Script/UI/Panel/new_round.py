@@ -57,6 +57,8 @@ class New_Round_Handle:
         """ 所有陷落干员列表 """
         self.farewell_npc_id = 0
         """ 送别干员id """
+        self.show_world_setting = False
+        """ 显示世界设定面板 """
 
 
     def draw(self):
@@ -329,6 +331,29 @@ class New_Round_Handle:
             info_draw.text = info_text
             info_draw.draw()
 
+            # 世界设定部分
+            info_text = _("\n○世界设定（不消耗周目点数）")
+            info_draw.text = info_text
+            info_draw.draw()
+            # 世界设定按钮
+            button_text = _(" [更改世界设定] ")
+            if self.show_world_setting:
+                button_text = _(" [隐藏世界设定] ")
+            button = draw.CenterButton(button_text, button_text, len(button_text) * 2, cmd_func=self.toggle_world_setting)
+            self.return_list.append(button_text)
+            button.draw()
+            line_feed_draw.draw()
+            
+            # 显示世界设定面板
+            world_setting_return_list = []
+            if self.show_world_setting:
+                from Script.UI.Flow import creator_character_flow
+                world_setting_panel = creator_character_flow.World_Setting(self.width)
+                world_setting_panel.draw()
+                # 保存世界设定面板的返回列表，但不立即添加到主返回列表
+                world_setting_return_list = world_setting_panel.return_list.copy()
+                line_feed_draw.draw()
+
             # 选择送别干员
             info_text = _("\n○送别干员：")
             if self.farewell_npc_id:
@@ -352,7 +377,13 @@ class New_Round_Handle:
                 yes_draw.draw()
                 self.return_list.append(yes_draw.return_text)
                 line_feed_draw.draw()
+            
+            # 将世界设定的返回列表添加到主返回列表
+            self.return_list.extend(world_setting_return_list)
+            
             yrn = flow_handle.askfor_all(self.return_list)
+            
+            # 只有点击主面板的确定按钮才会退出
             if yrn == yes_draw.return_text:
                 self.start_new_round()
                 cache.now_panel_id = constant.Panel.IN_SCENE
@@ -514,6 +545,12 @@ class New_Round_Handle:
         chara_id -- 干员id
         """
         self.farewell_npc_id = chara_id
+
+    def toggle_world_setting(self):
+        """
+        切换世界设定面板的显示状态
+        """
+        self.show_world_setting = not self.show_world_setting
 
     def start_new_round(self):
         """

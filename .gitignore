@@ -44,7 +44,6 @@ save
 # 原图
 image/断面图/原图
 downloaded_images
-downloaded_images_common_clothes
 
 # 错误log
 error.log
