@@ -86,6 +86,10 @@ def check_random_borrow_book(character_id):
             ability_pass = can_read_book(character_id, book_id)
             if not ability_pass:
                 continue
+            # 如果这本书自己已经看过了，则跳过
+            if book_id in character_data.entertainment.read_book_progress:
+                if character_data.entertainment.read_book_progress[book_id] >= 100:
+                    continue
             # 加入book_id_set
             book_id_set.append(book_id)
             # 如果类型在推荐列表里，则加入recommend_book_id_set

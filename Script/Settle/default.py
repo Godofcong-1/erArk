@@ -7809,18 +7809,15 @@ def handle_read_add_adjust(
             info_text += "。\n"
     else:
         info_text += _("不过已经读完过了，无法再增加阅读进度。\n")
+        # NPC的还书判定
+        if character_id:
+            borrow_book_panel.check_return_book(character_id)
     # 仅在是玩家的情况下输出该提示信息
     if character_id == 0:
         info_draw = draw.NormalDraw()
         info_draw.text = info_text
         info_draw.style = 'gold_enrod'
         info_draw.draw()
-
-    # NPC的还书判定
-    if character_id:
-        return_rate = 20 + random.randint(1,20)
-        character_data.entertainment.book_return_possibility += return_rate
-        borrow_book_panel.check_return_book(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)
