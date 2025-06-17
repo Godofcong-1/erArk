@@ -1,0 +1,39 @@
+name: Sync Docs to Wiki
+
+on:
+  push:
+    paths:
+      - '.github/prompts/数据处理工作流/*.md'
+      - '.github/workflows/sync-wiki.yml'
+
+jobs:
+  sync-wiki:
+    runs-on: ubuntu-latest
+    steps:
+      # 拉取主仓库代码
+      - name: Checkout Repo
+        uses: actions/checkout@v4
+
+      # 配置Git用户信息
+      - name: Setup Git
+        run: |
+          git config --global user.email "your_email@example.com"
+          git config --global user.name "GitHub Actions Bot"
+
+      # 克隆Wiki仓库
+      - name: Clone Wiki
+        run: |
+          git clone https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.wiki.git wiki
+
+      # 复制md文件到Wiki仓库
+      - name: Copy Docs
+        run: |
+          cp .github/prompts/数据处理工作流/*.md wiki/
+
+      # 推送到Wiki仓库
+      - name: Push to Wiki
+        run: |
+          cd wiki
+          git add .
+          git commit -m "Sync docs from main repo"
+          git push
