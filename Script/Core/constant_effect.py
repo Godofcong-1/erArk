@@ -321,6 +321,8 @@ class BehaviorEffect:
     """ 特殊flag_基础 自身退出智能跟随状态 """
     TARGET_INTELLIGENT_FOLLOW_OFF = 365
     """ 特殊flag_基础 交互对象退出智能跟随状态 """
+    SELF_INTELLIGENT_FOLLOW_ON_IF_ASSISTANT = 366
+    """ 特殊flag_基础 如果自己是助理且打开了跟随服务，则自己进入智能跟随状态 """
     MAINTENANCE_FLAG_TO_0 = 371
     """ 特殊flag_基础 自身清零要检修状态 """
 

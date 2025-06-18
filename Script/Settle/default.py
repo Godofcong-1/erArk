@@ -6098,6 +6098,27 @@ def handle_target_intelligent_follow_off(
     handle_self_intelligent_follow_off(character_data.target_character_id, add_time, change_data, now_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_INTELLIGENT_FOLLOW_ON_IF_ASSISTANT)
+def handle_self_intelligent_follow_on_if_assistant(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    如果自己是助理且打开了跟随服务，则自己进入智能跟随状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    if handle_premise.handle_is_assistant(character_id) and handle_premise.handle_assistant_follow_1(character_id):
+        handle_self_intelligent_follow_on(character_id, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_0)
 def handle_h_flag_to_0(
         character_id: int,
