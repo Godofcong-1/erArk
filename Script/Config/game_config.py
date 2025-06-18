@@ -248,7 +248,7 @@ config_behavior_by_str: Dict[str, config_def.Behavior_Data] = {}
 """ 以英文名为键的角色行为数据 """
 config_behavior_by_cid: Dict[int, config_def.Behavior_Data] = {}
 """ 以cid为键的角色行为数据 """
-config_talk: Dict[int, config_def.Talk] = {}
+config_talk: Dict[str, config_def.Talk] = {}
 """ 口上配置 """
 config_talk_data: Dict[int, Set] = {}
 """ 角色行为对应口上集合 状态id:口上id列表 """

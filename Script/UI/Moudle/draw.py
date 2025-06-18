@@ -131,8 +131,21 @@ class LineFeedWaitDraw(NormalDraw):
         """
         # 按 \n 分割文本
         text_list = self.text.split(r"\n")
+        # 如果只有一行，尝试用 splitlines() 再分割一次
         if len(text_list) == 1:
             text_list = self.text.splitlines()
+        # 检查每个元素是否还包含换行符，如果有则继续拆分
+        i = 0
+        while i < len(text_list):
+            # 如果当前元素中还有换行符，则继续拆分
+            if "\n" in text_list[i]:
+                # 用 \n 拆分当前元素
+                sub_lines = text_list[i].split("\n")
+                # 用拆分后的内容替换原位置，并将后续内容后移
+                text_list = text_list[:i] + sub_lines + text_list[i+1:]
+                # 不递增 i，继续检查新插入的内容
+            else:
+                i += 1
         for text in text_list:
             remain = text
             while remain:

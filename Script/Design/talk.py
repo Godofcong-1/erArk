@@ -41,7 +41,8 @@ def handle_talk(character_id: int):
         return
     # 第一段行为结算的口上
     now_talk_data = handle_talk_sub(character_id, behavior_id)
-    handle_talk_draw(character_id, now_talk_data)
+    talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+    handle_talk_draw(character_id, talk_text, now_talk_id)
 
     # 玩家移动到NPC位置时，NPC的打招呼文本
     if character_id == 0 and behavior_id == constant.Behavior.MOVE:
@@ -50,7 +51,8 @@ def handle_talk(character_id: int):
             # 要求对象是NPC，且没有跟随玩家
             if chara_id > 0 and handle_premise.handle_not_follow(chara_id):
                 now_talk_data = handle_talk_sub(chara_id, behavior_id)
-                handle_talk_draw(chara_id, now_talk_data)
+                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+                handle_talk_draw(chara_id, talk_text, now_talk_id)
 
 
 def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
@@ -72,10 +74,12 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
         for second_behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data != 0:
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id)
-                handle_talk_draw(character_id, now_talk_data, second_behavior_id)
+                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
+                handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id)
     else:
         now_talk_data = handle_talk_sub(character_id, behavior_id)
-        handle_talk_draw(character_id, now_talk_data, behavior_id)
+        talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
 
     # 交互对象
     # if character_id == 0 and character_data.target_character_id:
@@ -150,43 +154,75 @@ def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag =
     return now_talk_data
 
 
-def handle_talk_draw(character_id: int, now_talk_data: dict, second_behavior_id = ""):
+def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly"):
+    """
+    处理行为结算对话的输出
+    Keyword arguments:
+    now_talk_data -- 口上数据
+    behavior_id -- 行为id，默认为"share_blankly"
+    Return arguments:
+    talk_text -- 口上文本
+    """
+    talk_text = ""
+    now_talk_id = ""
+    if len(now_talk_data):
+        talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
+        now_talk_id = random.choice(list(now_talk_data[talk_weight]))
+        talk_text = game_config.config_talk[now_talk_id].context
+        unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
+        # 如果不是特殊口上，且行为id在通用口上列表中，则有一半几率使用纸娃娃地文
+        if not unusual_talk_flag and behavior_id in game_config.config_talk_common_cid_list_by_type and cache.all_system_setting.draw_setting[2] == 1:
+            if random.randint(0, 1) == 0:
+                talk_text = '{' + behavior_id + '}'
+                now_talk_id = ""
+    else:
+        # 在没有口上的情况下，如果行为id在通用口上列表中，则调用纸娃娃地文
+        if behavior_id in game_config.config_talk_common_cid_list_by_type and cache.all_system_setting.draw_setting[2] == 1:
+            talk_text = '{' + behavior_id + '}'
+    return talk_text, now_talk_id
+
+def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second_behavior_id = ""):
     """
     处理行为结算对话的输出
     Keyword arguments:
     character_id -- 角色id
-    now_talk_data -- 口上数据
+    talk_text -- 口上文本
+    now_talk_id -- 当前口上id
     second_behavior_id -- 二段行为id，默认为""
     """
     from Script.Design import handle_chat_ai
 
-    now_talk = ""
     character_data: game_type.Character = cache.character_data[character_id]
-    if len(now_talk_data):
-        talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
-        now_talk_id = random.choice(list(now_talk_data[talk_weight]))
-        now_talk = game_config.config_talk[now_talk_id].context
-        now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
-        unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
+    # 二段结算前会单独绘制一个信息文本
+    if second_behavior_id != "":
+        second_behavior_info_text(character_id, second_behavior_id)
+    if talk_text != "":
+        # 更新行为id和特殊口上标志
+        now_behavior_id = ""
+        unusual_talk_flag = 0
+        # 如果存在当前口上id，则获取当前行为id和特殊口上标志
+        if now_talk_id and now_talk_id in game_config.config_talk:
+            now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
+            unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
+        # 如果口上文本是大括号的地文文本，则获取行为id
+        elif talk_text.startswith("{") and talk_text.endswith("}"):
+            now_behavior_id = talk_text[1:-1]
+            character_id = 0
         # 玩家读书时额外绘制当前书籍的内容节选
         if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
             from Script.UI.Panel import read_book_panel
             read_book_panel.draw_book_fragment(character_data.behavior.book_id)
-    # 二段结算前会单独绘制一个信息文本
-    if second_behavior_id != "":
-        second_behavior_info_text(character_id, second_behavior_id)
-    if now_talk != "":
         # 检测是否需要跳过
         not_draw_flag = check_not_draw_talk(character_id, now_behavior_id, unusual_talk_flag)
         if not_draw_flag:
             return
         # 特殊符号检测
-        tem_text, special_code = special_code_judge(now_talk)
+        tem_text, special_code = special_code_judge(talk_text)
         now_draw = draw.LineFeedWaitDraw()
         # 跳过每次的等待
         if special_code[0]:
             now_draw = draw.NormalDraw()
-        now_talk_text = code_text_to_draw_text(now_talk, character_id)
+        now_talk_text = code_text_to_draw_text(talk_text, character_id)
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         # 角色口上
@@ -238,7 +274,8 @@ def must_show_talk_check(character_id: int):
             if 998 in game_config.config_behavior_effect_data[second_behavior_id]:
                 # 进行绘制
                 now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
-                handle_talk_draw(character_id, now_talk_data, second_behavior_id)
+                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
+                handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id)
                 # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
                 change_data = game_type.CharacterStatusChange()
                 for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
@@ -364,7 +401,7 @@ def second_behavior_info_text(character_id: int, second_behavior_id: int):
     return info_text
 
 
-def check_not_draw_talk(character_id: int, now_behavior_id: int, unusual_talk_flag: int):
+def check_not_draw_talk(character_id: int, now_behavior_id: str, unusual_talk_flag: int):
     """
     检测是否需要跳过
     Keyword arguments:
@@ -478,6 +515,9 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                             w = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
                             cid = random.choice(now_talk_data[w])
                             part_str += game_config.config_talk_common_data[cid].context
+                            # 如果是动作类，则添加换行符
+                            if 'action' in game_config.config_talk_common_data[cid].type_id:
+                                part_str += '\n'
                         else:
                             part_str += ""
                     return part_str
