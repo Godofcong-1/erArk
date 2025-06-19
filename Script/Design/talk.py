@@ -1,6 +1,8 @@
 import random
 import re
 from types import FunctionType
+
+from flask.config import T
 from Script.Core import cache_control, game_type, value_handle, get_text, constant
 from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw
@@ -505,9 +507,14 @@ def talk_common_judge(now_talk: str) -> str:
                         for talk_common_cid in talk_common_cid_list:
                             # 读取前提配置
                             premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                            # 判断是部位类还是动作类，部位类则跳过无意识判断
+                            body_part_flag = True
+                            type_id = game_config.config_talk_common_data[talk_common_cid].type_id
+                            if 'action' in type_id:
+                                body_part_flag = False
                             # 计算权重
                             weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                                premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True
+                                premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                             )
                             if weight:
                                 now_talk_data.setdefault(weight, []).append(talk_common_cid)
@@ -531,9 +538,14 @@ def talk_common_judge(now_talk: str) -> str:
                 for talk_common_cid in cid_list:
                     # 读取前提配置
                     premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                    # 判断是部位类还是动作类，部位类则跳过无意识判断
+                    body_part_flag = True
+                    type_id = game_config.config_talk_common_data[talk_common_cid].type_id
+                    if 'action' in type_id:
+                        body_part_flag = False
                     # 计算权重
                     weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                        premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True
+                        premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                     )
                     if weight:
                         now_talk_data.setdefault(weight, []).append(talk_common_cid)
