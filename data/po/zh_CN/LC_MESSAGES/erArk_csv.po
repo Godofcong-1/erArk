@@ -24768,6 +24768,406 @@ msgstr ""
 msgid "{Name}轻按{TargetName}的后脑勺，控制着{penis}在{mouth}中的进出速度。"
 msgstr ""
 
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:24
+msgid "{Name}的{penis}在熟睡中的{TargetName}的{mouth}里缓慢抽送，享受着无意识状态下的温暖湿润。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:25
+msgid "熟睡中的{TargetName}无法抵抗，{Name}肆意将{penis}在她的{mouth}中进出，发出淫靡的水声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:26
+msgid "{TargetName}睡梦中的{mouth}被{Name}的{penis}撑满，唾液无意识地从嘴角溢出。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:27
+msgid "{Name}握着{TargetName}的头部，将{penis}插入熟睡中毫无防备的{mouth}里肆意玩弄。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:28
+msgid "睡梦中的{TargetName}被迫接纳{Name}的{penis}，她的{mouth}随着抽插动作发出微弱的呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:30
+msgid "装睡的{TargetName}感受到{Name}的{penis}在{mouth}内抽动，却故意保持平稳呼吸装作毫不知情。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:31
+msgid "{Name}的{penis}在{TargetName}假装熟睡的{mouth}中肆意进出，而她则暗中调整呼吸配合着抽插节奏。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:32
+msgid "明明已经醒来却假装熟睡的{TargetName}任由{Name}的{penis}在{mouth}里进进出出，偷偷享受口中的充实感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:33
+msgid "{Name}用{penis}撑开{TargetName}假装沉睡的{mouth}，她则趁机用舌头偷偷舔弄着肉棒却装作是无意识的反应。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:34
+msgid "装睡的{TargetName}感受着{mouth}被{Name}的{penis}填满的压迫感，故意放松喉咙以便更深入的侵犯。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:36
+msgid "醉酒的{TargetName}迷迷糊糊地含着{Name}的{penis}，她的{mouth}不时发出含混不清的醉酒呻吟。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:37
+msgid "{Name}的{penis}在酒醉的{TargetName}的{mouth}中肆意抽插，她只能醉意朦胧地承受这淫靡行为。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:38
+msgid "酒精麻痹了{TargetName}的意识，她的{mouth}被{Name}的{penis}撑开，发出断断续续的醉酒呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:39
+msgid "{Name}扶着醉得一塌糊涂的{TargetName}的头，{penis}在她的{mouth}里粗暴地进出。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:40
+msgid "酒醉的{TargetName}无力地含着{Name}的{penis}，她的{mouth}因醉意而格外松弛，唾液不受控制地流淌。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:42
+msgid "在时间停止中，{Name}的{penis}在的{TargetName}的{mouth}里自由进出，享受着这禁忌的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:43
+msgid "时间停滞的空间里，{Name}肆意用{penis}侵犯着{TargetName}的{mouth}，无需担心任何反抗。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:44
+msgid "停止的时间中，{TargetName}的{mouth}被{Name}的{penis}撑开，定格在接纳肉棒的瞬间，毫无反应。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:45
+msgid "{Name}握住时间静止中的{TargetName}的头发，让{penis}在她的{mouth}里随心所欲地抽插。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:46
+msgid "在静止的世界里，{Name}的{penis}塞满了{TargetName}的{mouth}，随意享用着这禁忌的快乐。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:48
+msgid "被催眠的{TargetName}面无表情地含着{Name}的{penis}，她的{mouth}机械地动作着，仿佛这是再平常不过的事。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:49
+msgid "{Name}的{penis}在{TargetName}的{mouth}中抽送，她则以平静的态度继续吞吐，就像完成一项普通任务。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:50
+msgid "催眠状态下的{TargetName}任由{Name}的{penis}在{mouth}中进出，毫无羞耻感地接受着这淫秽行为。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:51
+msgid "{TargetName}的{mouth}机械地服务着{Name}的{penis}，她的眼神空洞，仿佛这只是日常中的一部分。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:52
+msgid "在催眠影响下，{TargetName}的{mouth}平静地容纳{Name}的{penis}，像是在执行一项再普通不过的指令。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:54
+msgid "{TargetName}完全忽视插在{mouth}里的{Name}的{penis}，继续专注于手头的事情，仿佛口中空无一物。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:55
+msgid "{Name}的{penis}在{TargetName}的{mouth}里肆意抽动，而她却视若无睹，依然进行着日常活动。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:56
+msgid "被催眠的{TargetName}的{mouth}含着{Name}的{penis}，却对此毫无察觉，仍然若无其事地进行自己的活动。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:57
+msgid "{Name}把{penis}深深插入{TargetName}的{mouth}中，而她却像是完全感觉不到般继续忙碌自己的事情。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:58
+msgid "被催眠的{TargetName}对{mouth}里的{Name}的{penis}毫无反应，唾液无意识地从嘴角流下却浑然不觉。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:60
+msgid "{Name}的{penis}在无法动弹的{TargetName}的{mouth}里抽送，她意识清醒却只能用充满怨恨的眼神表达抗议。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:61
+msgid "被控制的{TargetName}只能眼睁睁看着{Name}的{penis}在自己的{mouth}中进出，身体却无法做出任何抵抗。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:62
+msgid "{TargetName}的{mouth}被{Name}的{penis}侵犯着，内心充满屈辱却只能如木偶般任人摆布。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:63
+msgid "无法动弹的{TargetName}被迫承受着{Name}将{penis}塞进{mouth}的屈辱，眼中满是无助与不甘。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:64
+msgid "{Name}肆意用{penis}玩弄着被控制的{TargetName}的{mouth}，她意识清晰却无法闭合嘴巴拒绝这一切。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:66
+msgid "被控制的{TargetName}主动吞吐着{Name}的{penis}，心中尖叫抗拒却无法阻止{mouth}卖力服务的动作。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:67
+msgid "{TargetName}在精神控制下热情地用{mouth}服侍{Name}的{penis}，内心却羞耻得想要昏过去。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:68
+msgid "被控制的{TargetName}骑在{Name}身上，贪婪地用{mouth}吸吮着{penis}，内心却在绝望地哭喊。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:69
+msgid "{TargetName}的身体违背意志主动让{mouth}含住{Name}的{penis}，甚至卖力地舔弄着，内心却充满耻辱。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:70
+msgid "精神被控制的{TargetName}用{mouth}贪婪地品尝着{Name}的{penis}，表现出与内心抗拒完全相反的淫荡姿态。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:73
+msgid "{Name}的{penis}在{TargetName}的{mouth}里抽动着，两人假装无事发生，却时不时引来路人好奇的目光。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:74
+msgid "{TargetName}的{mouth}含着{Name}的{penis}，两人表面上若无其事，只有细微的水声暴露着淫乱的行为。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:75
+msgid "{Name}挺动腰部，让{penis}在{TargetName}的{mouth}里搅动，周围人不时投来怀疑的目光。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:76
+msgid "{TargetName}嘴巴被{Name}的{penis}撑满，两人装作平常，却无法完全掩饰淫荡的气息。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:77
+msgid "{Name}的{penis}在{TargetName}的{mouth}中进出，他们仅凭视线遮挡掩护，随时可能被发现的刺激让快感倍增。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:79
+msgid "{TargetName}躲在隐蔽处，卖力地用{mouth}服务着{Name}的{penis}，而{Name}则若无其事地站在那里。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:80
+msgid "{Name}假装正常交谈，实际上{penis}正插在隐藏着的{TargetName}的{mouth}深处，享受着隐秘的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:81
+msgid "藏在隐蔽处的{TargetName}用{mouth}卖力吞吐着{Name}的{penis}，而{Name}表面上正常应对着周围人的目光。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:82
+msgid "{Name}的{penis}被躲在暗处的{TargetName}的{mouth}包裹着，他面不改色地与他人交谈掩饰着淫乱行为。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:83
+msgid "{TargetName}的{mouth}隐秘地吮吸着{Name}的{penis}，而{Name}却装作若无其事，偶尔因快感而颤抖。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:85
+msgid "隐藏的{Name}将{penis}塞入站在外面的{TargetName}的{mouth}中，{TargetName}强装镇定应对着他人目光。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:86
+msgid "{TargetName}装作正常站立，实际上{mouth}里含着躲在暗处的{Name}的{penis}，尽力掩饰着淫荡的事实。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:87
+msgid "躲在一旁的{Name}将{penis}插入{TargetName}的{mouth}，{TargetName}则强忍快感继续与他人互动。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:88
+msgid "{TargetName}的{mouth}被隐藏着的{Name}的{penis}侵犯着，她却不得不假装正常与他人交谈。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:89
+msgid "藏在阴影中的{Name}用{penis}抽插着{TargetName}的{mouth}，而{TargetName}则装作若无其事地面对周围人。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:91
+msgid "藏在暗处的{Name}和{TargetName}激烈交合，{penis}在{mouth}中抽动着，二人极力压抑着呻吟和水声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:92
+msgid "隐蔽处内，{TargetName}的{mouth}被{Name}的{penis}塞满，两人战战兢兢地进行着禁忌之事，生怕被外面的人发现。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:93
+msgid "躲在暗角，{Name}的{penis}在{TargetName}的{mouth}进出，每当有脚步声接近，两人都紧张地停下动作。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:94
+msgid "{TargetName}的{mouth}贪婪地吞吐着{Name}的{penis}，两人藏在角落，随时可能被发现的危险感让快感更加强烈。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:95
+msgid "隐藏处内，{Name}的{penis}被{TargetName}的{mouth}紧紧包裹，他们偷偷地进行着淫乱行为，听着外面人的声音小心控制着节奏。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:97
+msgid "{Name}的{penis}在{TargetName}的{mouth}中轻轻抽动，她羞耻地低垂着眼帘，不敢与周围的目光接触，身体因紧张而微微发抖。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:98
+msgid "{TargetName}用{mouth}含着{Name}的{penis}，却试图用双手遮挡自己的脸，生怕被其他人看到自己这副淫荡的样子。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:99
+msgid "在众人的注视下，{TargetName}的{mouth}包裹着{Name}的{penis}，她涨红着脸拼命压抑自己的呻吟声，想要尽量不引人注目。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:100
+msgid "{Name}的{penis}在{TargetName}的{mouth}中进出，她的身体因羞耻而颤抖，每当感受到其他人的视线就会不自觉地收紧口腔。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:101
+msgid "{TargetName}蜷缩着身体服务着{Name}的{penis}，她的{mouth}动作生涩而紧张，被围观的羞耻感让她几乎想逃离现场。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:103
+msgid "{TargetName}故意夸张地吮吸着{Name}的{penis}，她的{mouth}发出响亮的水声，挑衅般地看向其他女性，展示自己的口技。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:104
+msgid "{Name}的{penis}深深地插入{TargetName}的{mouth}，她故意调整角度让所有人都能看清楚，享受着被注视时的快感与兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:105
+msgid "{TargetName}的{mouth}贪婪地含着{Name}的{penis}，时不时退出来用舌尖挑逗，炫耀般地向周围女性展示自己的特权与技巧。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:106
+msgid "在众人目光下，{TargetName}的{mouth}积极服务着{Name}的{penis}，她甚至抬眼挑衅地看向其他女性，享受着被羡慕的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:107
+msgid "{Name}的{penis}被{TargetName}的{mouth}完全包裹，她大胆地在众目睽睽下吞吐着，时而发出夸张的呻吟声，满足于成为注意力的焦点。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:109
+msgid "{TargetName}主动含住{Name}的{penis}，她的{mouth}灵活地上下运动，掌握着节奏，让{Name}只能靠在椅背上享受她的服务。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:110
+msgid "{TargetName}的{mouth}熟练地吞吐着{Name}的{penis}，她完全掌控着局面，时而加快速度时而放慢，让{Name}发出舒服的喘息。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:111
+msgid "{TargetName}用{mouth}主动服务着{Name}的{penis}，她的舌尖灵巧地舔舐每一处敏感点，引导着{Name}逐渐攀向巅峰。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:112
+msgid "{TargetName}掌握主动权，她的{mouth}热情地套弄着{Name}的{penis}，时而吮吸时而轻咬，让{Name}舒服得仰起头来。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:113
+msgid "{Name}的{penis}被{TargetName}的{mouth}含住，她自信地掌握着节奏，眼中闪烁着控制一切的快感，让{Name}沉醉在她的服务中。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:115
+msgid "{Name}的{penis}在{TargetName}被迫张开的{mouth}中进出，看着她眼中的怨恨和屈辱，享受着这种强制的征服感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:116
+msgid "被锁链束缚的{TargetName}无法反抗，只能被动地接受{penis}在她{mouth}内的肆意抽动，眼神中充满了屈辱和痛苦。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:117
+msgid "{Name}粗暴地抓着{TargetName}的头发，强迫她的{mouth}吞吐着{penis}，她眼角流下的泪水更增添了一丝凄美的色情感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:118
+msgid "尽管内心厌恶与反抗，监禁中的{TargetName}不得不让{mouth}服侍着{Name}那根肆意进出的{penis}。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:119
+msgid "{Name}摁住被监禁的{TargetName}的头部，{penis}在她不情愿的{mouth}中来回抽送，享受着这种完全掌控的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:121
+msgid "{TargetName}麻木地让{mouth}包裹着{Name}的{penis}，长时间的监禁已经磨灭了她的大部分反抗意志。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:122
+msgid "在长期的调教下，{TargetName}已经习惯了用{mouth}侍奉{Name}的{penis}，但她空洞的眼神仍透露出内心的挣扎。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:123
+msgid "{Name}的{penis}在{TargetName}半推半就的{mouth}中抽动，她已不再强烈抗拒，但偶尔闪过的厌恶神情暴露了她尚未完全屈服的内心。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:124
+msgid "认命的{TargetName}跪在地上，任由{Name}的{penis}在她的{mouth}里进出，脸上的表情介于厌恶与接受之间。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:125
+msgid "{Name}轻按着{TargetName}的头部，{penis}缓慢地在她妥协的{mouth}中抽送，她闭着眼睛，似乎是为了逃避现实。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:127
+msgid "完全顺从的{TargetName}跪在地上，贪婪地让{mouth}吞吐着主人的{penis}，眼神中充满了对{Name}的依恋和渴望。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:128
+msgid "{TargetName}主动让{mouth}包裹住{Name}的{penis}，热情地吮吸着，全心全意地为主人服务，渴望得到夸奖和疼爱。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:129
+msgid "即使戴着镣铐，{TargetName}也毫不在意，她专注于用{mouth}取悦{Name}的{penis}，脸上洋溢着陶醉和满足的神情。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:130
+msgid "{Name}的{penis}在{TargetName}温顺的{mouth}中抽送，她沉醉于取悦主人的快感中，眼神中满是崇拜和服从。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:131
+msgid "被调教成性奴的{TargetName}乖巧地用{mouth}服侍着{Name}的{penis}，不时发出满足的呜咽声，感谢主人的恩赐。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:133
+msgid "在爱情旅馆暧昧的灯光下，{TargetName}的{mouth}热情地包裹着{Name}的{penis}，镜面天花板倒映出淫靡的画面。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:134
+msgid "{Name}靠在旅馆特制的情趣椅上，{penis}深入{TargetName}的{mouth}中，周围环绕的情趣道具让这场口交更加刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:135
+msgid "爱情旅馆的圆床上，{TargetName}俯身含住{Name}的{penis}，她的{mouth}随着暧昧的背景音乐节奏吞吐着，制造出下流的水声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:136
+msgid "在旅馆墙上的大镜子前，{TargetName}跪着用{mouth}服务{Name}的{penis}，二人同时欣赏着镜中淫靡不堪的自己。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:137
+msgid "{Name}坐在爱情旅馆奢华的按摩浴缸边，{penis}在{TargetName}贪婪的{mouth}中抽送，情欲的温度比浴缸里的水还要滚烫。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:139
+msgid "浴室的热气模糊了镜面，{TargetName}的{mouth}在湿滑的瓷砖上吞吐着{Name}的{penis}，水珠从二人交合处滴落。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:140
+msgid "温热的水流从花洒喷洒而下，{Name}的{penis}在{TargetName}的{mouth}中进出，混合着水声与吮吸声，回荡在整个浴室。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:141
+msgid "{TargetName}跪在浴缸中，水面漾起涟漪，她的{mouth}贪婪地吞吐着{Name}的{penis}，发出啧啧的水声。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:142
+msgid "蒸汽弥漫的浴室里，{Name}靠在墙上，{penis}被{TargetName}的{mouth}包裹，水珠顺着两人的身体缓缓流下，画面淫靡而色情。"
+msgstr ""
+
+#: .\data\talk_common\action_A\penis_in_mouth_A.csv:143
+msgid "浴室的瓷砖冰凉而滑腻，{TargetName}的{mouth}却火热地含着{Name}的{penis}，唾液与水汽混合在一起，使这场口交更加湿滑黏腻。"
+msgstr ""
+
 #: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:7
 msgid "每一次的挺入都让{TargetName}发出闷哼声，脸颊因吞吐的动作而凹陷，眼角泛起生理性的泪水，喉咙深处不断传来吞咽的声音。"
 msgstr ""
@@ -25306,6 +25706,166 @@ msgstr ""
 
 #: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:166
 msgid "{Name}以出神入化的节奏感让{penis_s}在{TargetName}的{mouth_s}周围和入口处交替刺激，完美的控制力让这种尺寸的阴茎也能带给{TargetName}舒适而强烈的口腔体验。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:169
+msgid "{Name}轻柔地将{penis_s}在熟睡中的{TargetName}的{mouth_s}里缓慢抽动，深入浅出地摩擦着柔软的舌头，享受着无意识状态下的温暖包裹和湿润触感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:170
+msgid "{Name}抓住熟睡中{TargetName}的头发，控制着节奏将{penis_s}在她的{mouth_s}内来回捣弄，龟头不时顶到喉咙深处，引发一阵无意识的吞咽反射。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:171
+msgid "{Name}掰开{TargetName}熟睡中的嘴唇，将{penis_s}整根插入她的{mouth_s}，享受着她本能反应下舌头的轻微蠕动和喉头的紧缩感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:172
+msgid "{Name}一手扶着{TargetName}的下巴，一手扶着自己的{penis_s}在她的{mouth_s}里快速抽送，睡梦中的她无意识地发出含糊的呜咽声。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:173
+msgid "{Name}用{penis_s}拍打熟睡中{TargetName}的嘴唇后，缓缓插入她的{mouth_s}，温热的口腔立即包裹住敏感的龟头，引发一阵强烈的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:175
+msgid "{Name}将{penis_s}插入装睡的{TargetName}嘴里，感受到她有意识地收紧{mouth_s}，舌头轻轻舔舐着敏感的龟头，却依然闭着眼假装熟睡。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:176
+msgid "{Name}抽送着{penis_s}，明显感觉到装睡中的{TargetName}在配合，她的舌头有技巧地缠绕着{penis_s}，却仍然保持着均匀的呼吸节奏伪装睡眠。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:177
+msgid "{Name}加快了在{TargetName}{mouth_s}中的抽插速度，她虽然装睡但喉咙明显在主动配合吞咽，嘴角甚至泛起一丝不易察觉的情欲。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:178
+msgid "{Name}将{penis_s}深入{TargetName}的{mouth_s}深处，她虽然装作熟睡，但明显正用舌尖挑逗着敏感的冠状沟，双颊还有节奏地收缩着增强吸力。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:179
+msgid "{Name}双手捧着装睡的{TargetName}的脸，{penis_s}在她的{mouth_s}里快进慢出，她虽然眼睛紧闭，却用唇舌熟练地服侍着每一寸敏感肌肤。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:181
+msgid "{Name}趁{TargetName}醉酒迷糊之际，将{penis_s}插入她的{mouth_s}，酒精作用下的她意识模糊，舌头无力地搅动着口中的硬物。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:182
+msgid "{Name}扶着醉醺醺的{TargetName}的头，让{penis_s}在她的{mouth_s}里抽插，酒后的她眼神迷离，本能地吮吸着嘴里的异物，唾液沿嘴角滑落。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:183
+msgid "{Name}控制着醉酒的{TargetName}的下巴，{penis_s}在她的{mouth_s}中进出，她醉意朦胧地发出含糊呻吟，酒精麻痹下的舌头胡乱舔舐。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:184
+msgid "{Name}把{penis_s}深入酒醉的{TargetName}的{mouth_s}，她在醉酒状态下不时吮吸龟头，动作虽然凌乱却因酒后放纵而格外淫荡。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:185
+msgid "{Name}按住醉到神志不清的{TargetName}的后脑勺，{penis_s}粗暴地在她的{mouth_s}里进出，她酒后迷糊中不自觉地吞咽着口水和前液的混合物。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:187
+msgid "{Name}在时间静止中掰开{TargetName}一动不动的嘴唇，将{penis_s}插入她的{mouth_s}，在这暂停的瞬间肆意享用她的口腔。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:188
+msgid "{Name}抽动着{penis_s}，享受着时间停止中{TargetName}的{mouth_s}保持着同一个姿势，舌头僵在某个位置，无法闭合的嘴唇任由侵犯。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:189
+msgid "{Name}在时停状态下将{penis_s}深入{TargetName}的喉咙深处，她的表情凝固着，无法呼吸也无法反抗，成为完美的性爱工具。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:190
+msgid "{Name}握住时间静止中{TargetName}的头发，在她的{mouth_s}中来回抽送{penis_s}，享受着这种对静止对象的完全支配感。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:191
+msgid "{Name}在时间停滞的世界里，用{penis_s}撑开{TargetName}的{mouth_s}，肆意玩弄她无法闭合的嘴唇和僵硬的舌头，留下淫靡的体液痕迹。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:193
+msgid "{Name}命令被催眠的{TargetName}张开嘴，她面无表情地接受{penis_s}在{mouth_s}里的抽送，仿佛这只是再平常不过的日常行为。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:194
+msgid "{Name}看着被催眠的{TargetName}平静地吞吐着{penis_s}，她的眼神空洞，动作机械而精准，对嘴里的巨物既不反感也不享受。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:195
+msgid "{Name}抓着{TargetName}的头发，粗暴地在她的{mouth_s}里抽插{penis_s}，而处于催眠状态的她表情依然平淡，机械地承受着这一切。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:196
+msgid "{Name}命令被催眠的{TargetName}用舌头服务，她毫不犹豫地舔弄着{penis_s}的每一寸，眼神中没有任何羞耻或厌恶，只有平静的服从。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:197
+msgid "{Name}将{penis_s}深入催眠状态下{TargetName}的喉咙，即使呼吸困难她也保持着平静的表情，仿佛深喉只是一种普通的社交礼仪。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:199
+msgid "{Name}将{penis_s}插入被催眠的{TargetName}嘴里，而她继续专注于手头的事务，仿佛嘴里含着的异物完全不存在一般。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:200
+msgid "{Name}抽送着{penis_s}，而{TargetName}依旧若无其事地活动着，偶尔因{mouth_s}被占用而发出些许呜咽声，却丝毫没有意识到自己正在为人口交。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:201
+msgid "{Name}扳过\"视而不见\"的{TargetName}的头，让{penis_s}在她的{mouth_s}内肆意进出，她眼神透过{Name}看向远方，仿佛嘴里的硬物只是幻觉。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:202
+msgid "{Name}享受着被催眠的{TargetName}的{mouth_s}，而她继续进行着日常活动，唯有偶尔的吞咽动作和口水滴落才表明她的口腔正被侵犯着。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:203
+msgid "{Name}将{penis_s}深入无视自己的{TargetName}的喉咙，她因生理反应而轻微咳嗽，却依然对嘴里的巨物视而不见，继续专注于自己的世界。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:205
+msgid "{Name}掰开无法动弹的{TargetName}的嘴，{penis_s}在她的{mouth_s}中抽插，她眼中充满屈辱和愤怒，却无法控制自己的身体做出任何反抗。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:206
+msgid "{Name}抓住{TargetName}的头发，在她被控制无法移动的{mouth_s}中快速抽插{penis_s}，欣赏着她眼中清醒的恐惧与羞耻。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:207
+msgid "{Name}掰开被控制的{TargetName}的{mouth_s}，然后将{penis_s}深入她的喉咙，看着她想要呕吐却无法完成这个动作的痛苦表情。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:208
+msgid "{Name}将{penis_s}在体控状态的{TargetName}的{mouth_s}内旋转抽送，她的眼睛流露出愤怒和无助，但身体只能僵硬地保持着姿势任由摆布。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:209
+msgid "{Name}扶着{penis_s}拍打被控制的{TargetName}的脸颊，然后插入她无法闭合的{mouth_s}，享受着她眼中清醒的屈辱感和被迫服务的视觉刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:211
+msgid "{Name}看着被控制的{TargetName}主动用{mouth_s}含住{penis_s}卖力吞吐，她的眼神中充满了抗拒和清醒的羞耻，与淫荡动作形成鲜明对比。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:212
+msgid "{Name}享受着{TargetName}被控制的身体主动为自己深喉，她的舌头熟练地舔舐着{penis_s}，眼中却闪烁着无助的泪光和无声的抗议。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:213
+msgid "{Name}按住{TargetName}的头部，感受着她被迫主动吮吸{penis_s}的{mouth_s}，她的动作狂热而色情，内心却在绝望地呐喊抵抗。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:214
+msgid "{Name}抚摸着{TargetName}的脸颊，她在精神控制下淫荡地舔弄{penis_s}的每一寸，发出浪荡的呻吟声，眼中却流露出与行为不符的清醒与绝望。"
+msgstr ""
+
+#: .\data\talk_common\action_B1\penis_in_mouth_B1.csv:215
+msgid "{Name}欣赏着被控制的{TargetName}卖力地用{mouth_s}服务{penis_s}，她主动双手配合着口交动作，表情淫乱放荡，内心却清醒地感受着每一分耻辱。"
 msgstr ""
 
 #: .\data\talk_common\action_B2\penis_in_mouth_B2.csv:7
@@ -26446,6 +27006,166 @@ msgstr ""
 
 #: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:94
 msgid "{Name}的{penis_s}享受着{TargetName}提供的专业级口交体验，她精确地掌握着每一个敏感点的位置和反应，即使只能含住顶端，也让{Name}体验到了灵魂出窍般的极致快感，精液蓄势待发。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:96
+msgid "{Name}的{penis_s}在熟睡中的{TargetName}的{mouth_s}里缓慢抽动，湿润的触感和温暖的包裹让{Name}感到一阵阵舒爽，无人抵抗的深入更是带来了强烈的征服感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:97
+msgid "{Name}感受着{penis_s}被{TargetName}的{mouth_s}包裹着，熟睡中的她无意识地吞咽动作刺激着敏感的龟头，这种毫无防备的刺激带来的快感比平时强烈数倍。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:98
+msgid "{Name}观察着熟睡中的{TargetName}，将{penis_s}在她的{mouth_s}中来回摩擦，柔嫩的口腔黏膜和不时碰触的牙齿给{Name}带来既刺激又危险的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:99
+msgid "{Name}将{penis_s}深深插入熟睡的{TargetName}的{mouth_s}中，感受着喉咙深处的挤压，她偶尔的无意识吞咽反应简直要把{Name}的魂都吸走了。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:100
+msgid "{penis_s}在{TargetName}的{mouth_s}中进出，{Name}享受着她熟睡时松弛的喉咙带来的深入感，这种对无意识少女的侵犯让{Name}的快感混合着罪恶感变得更加强烈。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:102
+msgid "{Name}的{penis_s}在\"熟睡\"的{TargetName}口中抽送，她偶尔微妙的舌头动作暴露了清醒的事实，这种默许的背德感让{Name}的快感更加强烈。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:103
+msgid "{Name}感受到{TargetName}的{mouth_s}虽然装睡却有意识地包裹着{penis_s}，她刻意控制的呼吸节奏和偶尔无法抑制的吞咽动作，让{Name}明白这场\"睡奸\"其实是双方默契的游戏。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:104
+msgid "{Name}的{penis_s}被装睡的{TargetName}的{mouth_s}含着，她看似无意却明显刻意的舌头动作刺激着冠状沟，这种装睡中的主动服务让{Name}爽得差点呻吟出声。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:105
+msgid "{Name}享受着{penis_s}被{TargetName}的{mouth_s}包裹的感觉，她虽然闭着眼睛装睡，但口腔内的迎合动作和时不时的吸吮明显是有意识的行为，这让{Name}的快感成倍增加。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:106
+msgid "{penis_s}在装睡的{TargetName}口中进出，{Name}注意到她微微颤动的睫毛和偶尔主动的吞咽动作，这种明明清醒却装作熟睡任人摆布的样子反而更加刺激{Name}的性欲。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:108
+msgid "{Name}的{penis_s}插在醉酒的{TargetName}着的{mouth_s}里，她因醉意而变得松弛的口腔和无规律的舌头动作，带来一种混乱却异常刺激的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:109
+msgid "{Name}感受着醉酒的{TargetName}的{mouth_s}含着{penis_s}，她时而主动时而被动的吞吐和醉醺醺的呻吟声，让{Name}的下体硬得发疼，快感一波接一波。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:110
+msgid "{Name}享受着{TargetName}的{mouth_s}服务，她因酒精作用而放松的喉咙让{penis_s}能够更深入，那种无意识的吸吮和吞咽让{Name}快要控制不住射精的冲动。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:111
+msgid "{penis_s}在{TargetName}的{mouth_s}中进出，她散发着酒气的呼吸喷在{Name}的腹部，时而清醒时而恍惚的眼神和不协调的动作反而给{Name}带来别样刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:112
+msgid "{Name}将{penis_s}插入醉得意识模糊的{TargetName}的{mouth_s}，她酒后失去控制的舌头无规律地舔舐着柱身，这种近乎本能的服务让{Name}感受到野性的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:114
+msgid "{Name}的{penis_s}在时间停止中静止不动的{TargetName}的{mouth_s}里抽插，她凝固的表情和无法反应的身体让{Name}可以完全按照自己的节奏获取快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:115
+msgid "{Name}将{penis_s}缓慢插入时停中的{TargetName}的{mouth_s}，她保持着张嘴的姿势一动不动，这种可以随意摆布的状态和完全支配的感觉让{Name}的性欲高涨到极点。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:116
+msgid "{Name}感受着{penis_s}被时间凝固中的{TargetName}的{mouth_s}包围，她静止的舌头和不会闭合的嘴唇可以被{Name}完全控制位置和深度，这种绝对掌控的快感无与伦比。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:117
+msgid "{penis_s}在静止时间里的{TargetName}口中进出，{Name}欣赏着她凝固的表情和姿态，随意调整角度和力度，彻底掌握着每一分快感的来源，爽得几乎要叫出声来。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:118
+msgid "{Name}享受着在时间停止中对{TargetName}的{mouth_s}的完全支配，{penis_s}可以在她毫无反应的口腔中任意摩擦最敏感的部位，这种单方面的索取让{Name}的满足感加倍提升。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:120
+msgid "{Name}的{penis_s}被催眠状态下的{TargetName}的{mouth_s}包裹着，她平静地执行着口交动作，脸上没有任何厌恶或享受的表情，这种机械般的服务反而让{Name}有种别样的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:121
+msgid "{Name}感受着被催眠的{TargetName}的{mouth_s}包裹{penis_s}的感觉，她如同完成日常任务般自然地吞吐着，这种诡异的平静与顺从让{Name}的征服欲得到了极大的满足。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:122
+msgid "{penis_s}在催眠状态的{TargetName}口中进出，她面无表情地执行着指令，舌头机械地舔舐着柱身，这种没有感情色彩的纯粹生理刺激让{Name}专注于自己的快感。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:123
+msgid "{Name}将{penis_s}深入{TargetName}被催眠后顺从的{mouth_s}中，她平静地接受着喉咙深处的侵入，没有任何不适或抗拒，这种完全接纳的感觉让{Name}爽得头皮发麻。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:124
+msgid "{Name}享受着{TargetName}在催眠状态下提供的口交服务，她认真而平常地舔弄着{penis_s}，就像这是再正常不过的事情，这种违和感与快感的混合让{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:126
+msgid "{Name}的{penis_s}在{TargetName}完全无视自己存在的{mouth_s}中抽动，她继续进行着自己的活动，口腔却被{Name}占据和使用，这种矛盾的画面给{Name}带来强烈的视觉与心理刺激。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:127
+msgid "{Name}感受着{penis_s}被{TargetName}的{mouth_s}包围，而她却仿佛感觉不到口中异物般继续说话或做事，这种诡异的情景和背德的快感让{Name}的心跳加速，性欲高涨。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:128
+msgid "{penis_s}在被催眠忽视{Name}存在的{TargetName}口中进出，她的口腔不时因正常活动而收缩或舔舐，这些无意识的刺激反而比刻意的服务更让{Name}感到兴奋。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:129
+msgid "{Name}将{penis_s}插入{TargetName}的{mouth_s}，她完全忽视这一行为继续着自己的日常，偶尔吞咽或说话的动作给予{Name}意想不到的刺激，这种现实与幻觉交织的感觉令人头晕目眩。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:130
+msgid "{Name}享受着{penis_s}在无视状态下的{TargetName}的{mouth_s}中的感觉，她的舌头因说话或其他原因的活动无意中舔过最敏感的部位，这些自然而随机的刺激让{Name}的快感来得既突然又强烈。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:132
+msgid "{Name}的{penis_s}插在被精神控制成木头人状态的{TargetName}的{mouth_s}中，她的眼神中充满了清醒的羞耻和愤怒，但身体却无法反抗，这种矛盾的反应激发了{Name}的施虐欲。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:133
+msgid "{Name}感受着{penis_s}被{TargetName}的{mouth_s}包围，从她愤怒而绝望的眼神中{Name}能读出她内心的抗拒，这种精神上的挣扎与身体的无力形成的对比让{Name}的快感倍增。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:134
+msgid "{penis_s}在被控制无法动弹的{TargetName}口中肆意抽插，{Name}欣赏着她眼中的泪水和无声的抗议，身体却只能僵硬地接受侵犯，这种完全掌控的感觉让{Name}兴奋不已。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:135
+msgid "{Name}将{penis_s}深深插入被控成木头人的{TargetName}的{mouth_s}，她的喉咙无法作出排斥反应，只能眼睁睁地承受，这种身体被强制服从的画面让{Name}感到一种黑暗的满足。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:136
+msgid "{Name}享受着{penis_s}在{TargetName}的{mouth_s}中的感觉，她清醒的意识和被控制的身体形成鲜明对比，眼中的恐惧和愤怒反而刺激着{Name}的征服欲，让快感成倍增长。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:138
+msgid "{Name}的{penis_s}被精神控制下主动服务的{TargetName}的{mouth_s}包裹，她眼中闪烁着羞耻和抗拒，嘴上却热情地吞吐舔舐，这种矛盾的画面极大地刺激了{Name}的感官。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:139
+msgid "{Name}感受着被控制的{TargetName}主动用{mouth_s}服务{penis_s}的快感，她高超的技巧和眼中的清醒屈辱形成强烈对比，这种精神与肉体的分离让{Name}的性欲达到前所未有的高度。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:140
+msgid "{penis_s}享受着{TargetName}在精神控制下的主动口交，她违背意愿却热情地舔弄着每一处敏感点，眼中的羞耻与无助与动作的淫荡形成的强烈反差让{Name}快感连连。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:141
+msgid "{Name}看着{TargetName}被控制却主动吞吐着{penis_s}的画面，她一边流泪一边卖力地服务，发出淫荡的呻吟与吞咽声，这种意识与行为的分裂感让{Name}兴奋到极点。"
+msgstr ""
+
+#: .\data\talk_common\action_C1\penis_in_mouth_C1.csv:142
+msgid "{Name}享受着{TargetName}在控制下主动为{penis_s}口交的服务，她表现出与平时性格截然相反的淫荡和技巧，眼中却充满了清醒的绝望，这种反差带来的快感让{Name}忍不住想要更加粗暴地对待她。"
 msgstr ""
 
 #: .\data\talk_common\action_C2\penis_in_mouth_C2.csv:7
@@ -29244,411 +29964,411 @@ msgstr ""
 msgid "梦中"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:82
-msgid "装睡"
+#: .\data\talk_common\body_part\mouth_s_A.csv:81
+msgid "半张"
 msgstr ""
 
 #: .\data\talk_common\body_part\mouth_s_A.csv:83
-msgid "假寐"
+msgid "装睡"
 msgstr ""
 
 #: .\data\talk_common\body_part\mouth_s_A.csv:84
-msgid "微颤"
+msgid "假寐"
 msgstr ""
 
 #: .\data\talk_common\body_part\mouth_s_A.csv:85
+msgid "微颤"
+msgstr ""
+
+#: .\data\talk_common\body_part\mouth_s_A.csv:86
 msgid "紧张"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:87
+#: .\data\talk_common\body_part\mouth_s_A.csv:88
 msgid "醉意"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:88
+#: .\data\talk_common\body_part\mouth_s_A.csv:89
 msgid "酒气"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:89
+#: .\data\talk_common\body_part\mouth_s_A.csv:90
 msgid "迷糊"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:90
-msgid "失控"
-msgstr ""
-
-#: .\data\talk_common\body_part\mouth_s_A.csv:91
+#: .\data\talk_common\body_part\mouth_s_A.csv:92
 msgid "微醺"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:92
+#: .\data\talk_common\body_part\mouth_s_A.csv:93
 msgid "酒香"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:93
+#: .\data\talk_common\body_part\mouth_s_A.csv:94
 msgid "朦胧"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:95
+#: .\data\talk_common\body_part\mouth_s_A.csv:96
 msgid "静止"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:96
+#: .\data\talk_common\body_part\mouth_s_A.csv:97
 msgid "凝固"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:97
+#: .\data\talk_common\body_part\mouth_s_A.csv:98
 msgid "定格"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:98
+#: .\data\talk_common\body_part\mouth_s_A.csv:99
 msgid "停滞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:99
+#: .\data\talk_common\body_part\mouth_s_A.csv:100
 msgid "冷冻般"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:100
+#: .\data\talk_common\body_part\mouth_s_A.csv:101
 msgid "暂停"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:102
+#: .\data\talk_common\body_part\mouth_s_A.csv:103
 msgid "平静"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:103
+#: .\data\talk_common\body_part\mouth_s_A.csv:104
 msgid "如常"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:104
+#: .\data\talk_common\body_part\mouth_s_A.csv:105
 msgid "麻木"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:108
+#: .\data\talk_common\body_part\mouth_s_A.csv:109
 msgid "无视"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:109
+#: .\data\talk_common\body_part\mouth_s_A.csv:110
 msgid "忽略"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:110
+#: .\data\talk_common\body_part\mouth_s_A.csv:111
 msgid "无反应"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:111
+#: .\data\talk_common\body_part\mouth_s_A.csv:112
 msgid "无察觉"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:112
+#: .\data\talk_common\body_part\mouth_s_A.csv:113
 msgid "漠视"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:114
+#: .\data\talk_common\body_part\mouth_s_A.csv:115
 msgid "僵硬"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:115
+#: .\data\talk_common\body_part\mouth_s_A.csv:116
 msgid "动不了"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:116
+#: .\data\talk_common\body_part\mouth_s_A.csv:117
 msgid "被迫"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:117
+#: .\data\talk_common\body_part\mouth_s_A.csv:118
 msgid "不抵抗"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:118
+#: .\data\talk_common\body_part\mouth_s_A.csv:119
 msgid "被控制"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:119
+#: .\data\talk_common\body_part\mouth_s_A.csv:120
 msgid "木头人"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:120
+#: .\data\talk_common\body_part\mouth_s_A.csv:121
 msgid "大张"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:122
+#: .\data\talk_common\body_part\mouth_s_A.csv:123
 msgid "主动"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:123
+#: .\data\talk_common\body_part\mouth_s_A.csv:124
 msgid "积极"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:124
+#: .\data\talk_common\body_part\mouth_s_A.csv:125
 msgid "违心"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:125
+#: .\data\talk_common\body_part\mouth_s_A.csv:126
 msgid "渴望"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:126
+#: .\data\talk_common\body_part\mouth_s_A.csv:127
 msgid "被操控"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:127
+#: .\data\talk_common\body_part\mouth_s_A.csv:128
 msgid "不由己"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:129
+#: .\data\talk_common\body_part\mouth_s_A.csv:130
 msgid "羞涩"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:130
+#: .\data\talk_common\body_part\mouth_s_A.csv:131
 msgid "害臊"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:132
+#: .\data\talk_common\body_part\mouth_s_A.csv:133
 msgid "尴尬"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:133
+#: .\data\talk_common\body_part\mouth_s_A.csv:134
 msgid "害羞"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:134
+#: .\data\talk_common\body_part\mouth_s_A.csv:135
 msgid "窘迫"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:136
+#: .\data\talk_common\body_part\mouth_s_A.csv:137
 msgid "炫耀"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:137
+#: .\data\talk_common\body_part\mouth_s_A.csv:138
 msgid "挑逗"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:138
+#: .\data\talk_common\body_part\mouth_s_A.csv:139
 msgid "大胆"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:139
+#: .\data\talk_common\body_part\mouth_s_A.csv:140
 msgid "享受"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:140
+#: .\data\talk_common\body_part\mouth_s_A.csv:141
 msgid "表演般"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:141
+#: .\data\talk_common\body_part\mouth_s_A.csv:142
 msgid "自信"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:146
+#: .\data\talk_common\body_part\mouth_s_A.csv:147
 msgid "有经验"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:147
+#: .\data\talk_common\body_part\mouth_s_A.csv:148
 msgid "主导"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:149
+#: .\data\talk_common\body_part\mouth_s_A.csv:150
 msgid "假装正常"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:150
+#: .\data\talk_common\body_part\mouth_s_A.csv:151
 msgid "维持平静"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:151
+#: .\data\talk_common\body_part\mouth_s_A.csv:152
 msgid "表面如常"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:152
+#: .\data\talk_common\body_part\mouth_s_A.csv:153
 msgid "掩饰"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:153
+#: .\data\talk_common\body_part\mouth_s_A.csv:154
 msgid "装作无事"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:154
+#: .\data\talk_common\body_part\mouth_s_A.csv:155
 msgid "强装镇定"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:156
+#: .\data\talk_common\body_part\mouth_s_A.csv:157
 msgid "隐藏"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:157
+#: .\data\talk_common\body_part\mouth_s_A.csv:158
 msgid "躲避"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:158
+#: .\data\talk_common\body_part\mouth_s_A.csv:159
 msgid "小心"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:160
+#: .\data\talk_common\body_part\mouth_s_A.csv:161
 msgid "谨慎"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:162
+#: .\data\talk_common\body_part\mouth_s_A.csv:163
 msgid "懵懂"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:163
+#: .\data\talk_common\body_part\mouth_s_A.csv:164
 msgid "迷茫"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:164
+#: .\data\talk_common\body_part\mouth_s_A.csv:165
 msgid "悸动"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:165
+#: .\data\talk_common\body_part\mouth_s_A.csv:166
 msgid "期待"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:166
+#: .\data\talk_common\body_part\mouth_s_A.csv:167
 msgid "好奇"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:167
+#: .\data\talk_common\body_part\mouth_s_A.csv:168
 msgid "茫然"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:169
+#: .\data\talk_common\body_part\mouth_s_A.csv:170
 msgid "暗恋"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:171
+#: .\data\talk_common\body_part\mouth_s_A.csv:172
 msgid "含情"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:173
+#: .\data\talk_common\body_part\mouth_s_A.csv:174
 msgid "犹豫"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:174
+#: .\data\talk_common\body_part\mouth_s_A.csv:175
 msgid "热切"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:176
+#: .\data\talk_common\body_part\mouth_s_A.csv:177
 msgid "甜蜜"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:177
+#: .\data\talk_common\body_part\mouth_s_A.csv:178
 msgid "热恋"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:178
+#: .\data\talk_common\body_part\mouth_s_A.csv:179
 msgid "爱意"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:179
+#: .\data\talk_common\body_part\mouth_s_A.csv:180
 msgid "爱情"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:180
+#: .\data\talk_common\body_part\mouth_s_A.csv:181
 msgid "幸福"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:181
+#: .\data\talk_common\body_part\mouth_s_A.csv:182
 msgid "恋爱"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:183
+#: .\data\talk_common\body_part\mouth_s_A.csv:184
 msgid "深情"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:184
+#: .\data\talk_common\body_part\mouth_s_A.csv:185
 msgid "相知"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:185
+#: .\data\talk_common\body_part\mouth_s_A.csv:186
 msgid "默契"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:186
+#: .\data\talk_common\body_part\mouth_s_A.csv:187
 msgid "真挚"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:187
+#: .\data\talk_common\body_part\mouth_s_A.csv:188
 msgid "深爱"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:188
+#: .\data\talk_common\body_part\mouth_s_A.csv:189
 msgid "坚定"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:190
+#: .\data\talk_common\body_part\mouth_s_A.csv:191
 msgid "勉强"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:191
+#: .\data\talk_common\body_part\mouth_s_A.csv:192
 msgid "不情愿"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:192
+#: .\data\talk_common\body_part\mouth_s_A.csv:193
 msgid "不满"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:194
+#: .\data\talk_common\body_part\mouth_s_A.csv:195
 msgid "抵触"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:195
+#: .\data\talk_common\body_part\mouth_s_A.csv:196
 msgid "紧绷"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:197
+#: .\data\talk_common\body_part\mouth_s_A.csv:198
 msgid "驯顺"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:198
+#: .\data\talk_common\body_part\mouth_s_A.csv:199
 msgid "信任"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:199
+#: .\data\talk_common\body_part\mouth_s_A.csv:200
 msgid "接受"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:200
+#: .\data\talk_common\body_part\mouth_s_A.csv:201
 msgid "专业"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:201
+#: .\data\talk_common\body_part\mouth_s_A.csv:202
 msgid "理解"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:202
+#: .\data\talk_common\body_part\mouth_s_A.csv:203
 msgid "尽责"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:204
+#: .\data\talk_common\body_part\mouth_s_A.csv:205
 msgid "忠诚"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:206
+#: .\data\talk_common\body_part\mouth_s_A.csv:207
 msgid "依恋"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:208
+#: .\data\talk_common\body_part\mouth_s_A.csv:209
 msgid "服从"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:209
+#: .\data\talk_common\body_part\mouth_s_A.csv:210
 msgid "讨好"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:211
+#: .\data\talk_common\body_part\mouth_s_A.csv:212
 msgid "臣服"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:212
+#: .\data\talk_common\body_part\mouth_s_A.csv:213
 msgid "奴性"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:213
+#: .\data\talk_common\body_part\mouth_s_A.csv:214
 msgid "崇拜"
 msgstr ""
 
-#: .\data\talk_common\body_part\mouth_s_A.csv:216
+#: .\data\talk_common\body_part\mouth_s_A.csv:217
 msgid "狂热"
 msgstr ""
 
