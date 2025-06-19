@@ -10,6 +10,8 @@ str,str,int,str,str
 103,body_part_mouth_s_A,0,high_1,柔软
 104,body_part_mouth_s_A,0,high_1,湿热
 105,body_part_mouth_s_A,0,high_1,光滑
+106,body_part_mouth_s_A,0,high_1,湿滑
+107,body_part_mouth_s_A,0,high_1,嫩滑
 
 1000,body_part_mouth_s_A,0,CVP_A2_T|102_E_1,幼女
 1001,body_part_mouth_s_A,0,CVP_A2_T|102_E_1,幼小
@@ -99,18 +101,22 @@ str,str,int,str,str
 2033,body_part_mouth_s_A,0,t_unconscious_flag_3,停滞
 2034,body_part_mouth_s_A,0,t_unconscious_flag_3,冷冻般
 2035,body_part_mouth_s_A,0,t_unconscious_flag_3,暂停
+2036,body_part_mouth_s_A,0,t_unconscious_flag_3,凝滞
+2037,body_part_mouth_s_A,0,t_unconscious_flag_3,不动
 
 2040,body_part_mouth_s_A,0,t_unconscious_flag_4,平静
 2041,body_part_mouth_s_A,0,t_unconscious_flag_4,如常
 2043,body_part_mouth_s_A,0,t_unconscious_flag_4,麻木
 2044,body_part_mouth_s_A,0,t_unconscious_flag_4,顺从
 2045,body_part_mouth_s_A,0,t_unconscious_flag_4,机械
+2046,body_part_mouth_s_A,0,t_unconscious_flag_4,平然
 
 2050,body_part_mouth_s_A,0,t_unconscious_flag_5,无视
 2051,body_part_mouth_s_A,0,t_unconscious_flag_5,忽略
 2052,body_part_mouth_s_A,0,t_unconscious_flag_5,无反应
 2054,body_part_mouth_s_A,0,t_unconscious_flag_5,无察觉
 2055,body_part_mouth_s_A,0,t_unconscious_flag_5,漠视
+2056,body_part_mouth_s_A,0,t_unconscious_flag_5,放松
 
 2060,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,僵硬
 2061,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,动不了
@@ -143,9 +149,8 @@ str,str,int,str,str
 
 2100,body_part_mouth_s_A,0,t_npc_active_h,主动
 2101,body_part_mouth_s_A,0,t_npc_active_h,娴熟
+2102,body_part_mouth_s_A,0,t_npc_active_h,主导
 2103,body_part_mouth_s_A,0,t_npc_active_h,灵活
-2104,body_part_mouth_s_A,0,t_npc_active_h,有经验
-2105,body_part_mouth_s_A,0,t_npc_active_h,主导
 
 2110,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,假装正常
 2111,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,维持平静
