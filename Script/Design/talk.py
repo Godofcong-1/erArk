@@ -466,15 +466,16 @@ def special_code_judge(now_talk: str):
 
     return now_talk, special_code
 
-def talk_common_judge(now_talk: str, character_id: int) -> str:
+def talk_common_judge(now_talk: str) -> str:
     """
     转换文本中的通用占位符为对应文本
     参数:
         now_talk (str): 原始文本，包含 {key} 占位符
-        character_id (int): 角色 ID
     返回:
         str: 转换后的文本
     """
+    # 固定为玩家触发
+    character_id = 0
     # 已计算过的前提字典
     calculated_premise_dict = {}
     # 遍历所有通用占位符的 key 和对应的 cid 集合
@@ -564,7 +565,7 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     now_talk_text, special_code = special_code_judge(now_talk)
 
     # 替换通用文本
-    now_talk_text = talk_common_judge(now_talk_text, character_id)
+    now_talk_text = talk_common_judge(now_talk_text)
 
     # 专属称呼处理
     # 他人对自己的称呼

@@ -94,10 +94,10 @@ class ItemTextEdit(QWidget):
 
         # 纸娃娃文本菜单项
         common_text_items = [
-            {"text": "自己阴茎描述长句", "slot": lambda: self.insert_text('{penis}')},
-            {"text": "自己阴茎描述短词", "slot": lambda: self.insert_text('{penis_s}')},
-            {"text": "交互对象口腔描述长句", "slot": lambda: self.insert_text('{mouth}')},
-            {"text": "交互对象口上描述短句", "slot": lambda: self.insert_text('{mouth_s}')},
+            {"text": "玩家阴茎描述长句", "slot": lambda: self.insert_text('{penis}')},
+            {"text": "玩家阴茎描述短词", "slot": lambda: self.insert_text('{penis_s}')},
+            {"text": "玩家交互对象口腔描述长句", "slot": lambda: self.insert_text('{mouth}')},
+            {"text": "玩家交互对象口腔描述短句", "slot": lambda: self.insert_text('{mouth_s}')},
         ]
 
         # 服装名菜单项
