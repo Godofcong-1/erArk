@@ -1,6 +1,9 @@
 cid,type_id,adv_id,premise,context
 组件id,组件类型名,组件限定剧情npcid,前提id,组件内容
 str,str,int,str,str
+0,0,0,0,1
+组件配置数据,,,,
+
 0,body_part_hair_s_A,0,high_1,柔顺
 1,body_part_hair_s_A,0,high_1,顺滑
 2,body_part_hair_s_A,0,high_1,自然
@@ -19,6 +22,7 @@ str,str,int,str,str
 107,body_part_hair_s_A,0,CVP_A2_T|102_E_1,短小
 108,body_part_hair_s_A,0,CVP_A2_T|102_E_1,俏皮
 109,body_part_hair_s_A,0,CVP_A2_T|102_E_1,细致
+110,body_part_hair_s_A,0,CVP_A2_T|102_E_1,幼女
 
 120,body_part_hair_s_A,0,CVP_A2_T|103_E_1,青涩
 121,body_part_hair_s_A,0,CVP_A2_T|103_E_1,细腻
@@ -26,26 +30,31 @@ str,str,int,str,str
 123,body_part_hair_s_A,0,CVP_A2_T|103_E_1,可爱
 124,body_part_hair_s_A,0,CVP_A2_T|103_E_1,清新
 125,body_part_hair_s_A,0,CVP_A2_T|103_E_1,灵动
+126,body_part_hair_s_A,0,CVP_A2_T|103_E_1,萝莉
 
 140,body_part_hair_s_A,0,CVP_A2_T|104_E_1,亮丽
 141,body_part_hair_s_A,0,CVP_A2_T|104_E_1,飘逸
 142,body_part_hair_s_A,0,CVP_A2_T|104_E_1,乌黑
 143,body_part_hair_s_A,0,CVP_A2_T|104_E_1,亮黑
 144,body_part_hair_s_A,0,CVP_A2_T|104_E_1,丝滑
+145,body_part_hair_s_A,0,CVP_A2_T|104_E_1,少女
 
 160,body_part_hair_s_A,0,CVP_A2_T|105_E_1,成熟
 161,body_part_hair_s_A,0,CVP_A2_T|105_E_1,温柔
 162,body_part_hair_s_A,0,CVP_A2_T|105_E_1,优雅
+163,body_part_hair_s_A,0,CVP_A2_T|105_E_1,大姐姐
 
 180,body_part_hair_s_A,0,CVP_A2_T|106_E_1,丰盈
 181,body_part_hair_s_A,0,CVP_A2_T|106_E_1,优雅
 182,body_part_hair_s_A,0,CVP_A2_T|106_E_1,成熟
 183,body_part_hair_s_A,0,CVP_A2_T|106_E_1,浓密
+184,body_part_hair_s_A,0,CVP_A2_T|106_E_1,熟女
 
 200,body_part_hair_s_A,0,CVP_A2_T|107_E_1,端庄
 201,body_part_hair_s_A,0,CVP_A2_T|107_E_1,温婉
 202,body_part_hair_s_A,0,CVP_A2_T|107_E_1,细腻
 203,body_part_hair_s_A,0,CVP_A2_T|107_E_1,温柔
+204,body_part_hair_s_A,0,CVP_A2_T|107_E_1,人妻
 
 220,body_part_hair_s_A,0,target_is_player_daughter,柔软
 221,body_part_hair_s_A,0,target_is_player_daughter,可爱
@@ -53,6 +62,7 @@ str,str,int,str,str
 223,body_part_hair_s_A,0,target_is_player_daughter,俏皮
 224,body_part_hair_s_A,0,target_is_player_daughter,细腻
 225,body_part_hair_s_A,0,target_is_player_daughter,光滑
+226,body_part_hair_s_A,0,target_is_player_daughter,女儿
 
 240,body_part_hair_s_A,0,t_is_assistant,干练
 241,body_part_hair_s_A,0,t_is_assistant,整齐

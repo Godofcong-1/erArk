@@ -98,6 +98,10 @@ class ItemTextEdit(QWidget):
             {"text": "玩家阴茎描述短词", "slot": lambda: self.insert_text('{penis_s}')},
             {"text": "玩家交互对象口腔描述长句", "slot": lambda: self.insert_text('{mouth}')},
             {"text": "玩家交互对象口腔描述短句", "slot": lambda: self.insert_text('{mouth_s}')},
+            {"text": "玩家交互对象头发描述长句", "slot": lambda: self.insert_text('{hair}')},
+            {"text": "玩家交互对象头发描述短词", "slot": lambda: self.insert_text('{hair_s}')},
+            {"text": "玩家交互对象脸部描述长句", "slot": lambda: self.insert_text('{face}')},
+            {"text": "玩家交互对象脸部描述短词", "slot": lambda: self.insert_text('{face_s}')},
         ]
 
         # 服装名菜单项

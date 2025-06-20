@@ -1,6 +1,9 @@
 cid,type_id,adv_id,premise,context
 组件id,组件类型名,组件限定剧情npcid,前提id,组件内容
 str,str,int,str,str
+0,0,0,0,1
+组件配置数据,,,,
+
 0,body_part_face_s_A,0,high_1,白皙
 1,body_part_face_s_A,0,high_1,细腻
 2,body_part_face_s_A,0,high_1,光滑
@@ -31,6 +34,7 @@ str,str,int,str,str
 110,body_part_face_s_A,0,CVP_A2_T|102_E_1,小巧
 111,body_part_face_s_A,0,CVP_A2_T|102_E_1,纯真
 112,body_part_face_s_A,0,CVP_A2_T|102_E_1,幼嫩
+113,body_part_face_s_A,0,CVP_A2_T|102_E_1,幼女
 
 120,body_part_face_s_A,0,CVP_A2_T|103_E_1,青涩
 121,body_part_face_s_A,0,CVP_A2_T|103_E_1,细腻
@@ -45,6 +49,7 @@ str,str,int,str,str
 130,body_part_face_s_A,0,CVP_A2_T|103_E_1,甜美
 131,body_part_face_s_A,0,CVP_A2_T|103_E_1,活泼
 132,body_part_face_s_A,0,CVP_A2_T|103_E_1,娇小
+133,body_part_face_s_A,0,CVP_A2_T|103_E_1,萝莉
 
 140,body_part_face_s_A,0,CVP_A2_T|104_E_1,亮丽
 141,body_part_face_s_A,0,CVP_A2_T|104_E_1,青春
@@ -58,6 +63,7 @@ str,str,int,str,str
 149,body_part_face_s_A,0,CVP_A2_T|104_E_1,婉约
 150,body_part_face_s_A,0,CVP_A2_T|104_E_1,甜美
 151,body_part_face_s_A,0,CVP_A2_T|104_E_1,俏皮
+152,body_part_face_s_A,0,CVP_A2_T|104_E_1,少女
 
 160,body_part_face_s_A,0,CVP_A2_T|105_E_1,成熟
 161,body_part_face_s_A,0,CVP_A2_T|105_E_1,温柔
@@ -70,6 +76,7 @@ str,str,int,str,str
 168,body_part_face_s_A,0,CVP_A2_T|105_E_1,迷人
 169,body_part_face_s_A,0,CVP_A2_T|105_E_1,柔美
 170,body_part_face_s_A,0,CVP_A2_T|105_E_1,风情
+171,body_part_face_s_A,0,CVP_A2_T|105_E_1,大姐姐
 
 180,body_part_face_s_A,0,CVP_A2_T|106_E_1,丰润
 181,body_part_face_s_A,0,CVP_A2_T|106_E_1,妖艳
@@ -82,6 +89,7 @@ str,str,int,str,str
 188,body_part_face_s_A,0,CVP_A2_T|106_E_1,饱满
 189,body_part_face_s_A,0,CVP_A2_T|106_E_1,诱惑
 190,body_part_face_s_A,0,CVP_A2_T|106_E_1,妖冶
+191,body_part_face_s_A,0,CVP_A2_T|106_E_1,熟女
 
 200,body_part_face_s_A,0,CVP_A2_T|107_E_1,端庄
 201,body_part_face_s_A,0,CVP_A2_T|107_E_1,温婉
@@ -94,6 +102,7 @@ str,str,int,str,str
 208,body_part_face_s_A,0,CVP_A2_T|107_E_1,娴静
 209,body_part_face_s_A,0,CVP_A2_T|107_E_1,成熟
 210,body_part_face_s_A,0,CVP_A2_T|107_E_1,艳丽
+211,body_part_face_s_A,0,CVP_A2_T|107_E_1,人妻
 
 220,body_part_face_s_A,0,target_is_player_daughter,娇俏
 221,body_part_face_s_A,0,target_is_player_daughter,可爱
@@ -103,8 +112,8 @@ str,str,int,str,str
 225,body_part_face_s_A,0,target_is_player_daughter,甜美
 226,body_part_face_s_A,0,target_is_player_daughter,水嫩
 227,body_part_face_s_A,0,target_is_player_daughter,灵动
-228,body_part_face_s_A,0,target_is_player_daughter,稚气
-229,body_part_face_s_A,0,target_is_player_daughter,天真
+228,body_part_face_s_A,0,target_is_player_daughter,天真
+229,body_part_face_s_A,0,target_is_player_daughter,女儿
 
 240,body_part_face_s_A,0,t_is_assistant,干练
 241,body_part_face_s_A,0,t_is_assistant,精明
