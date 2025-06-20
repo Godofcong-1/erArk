@@ -10,11 +10,11 @@ def game_update_flow(add_time: int):
     add_time -- 游戏步进的时间
     """
     # 检查是否已经在游戏更新流程中，防止递归调用导致死循环
-    if cache_control.cache.game_update_flow_running:
+    if cache_control.cache.game_update_flow_running >= 2:
         return
     
     # 设置游戏更新流程运行标志
-    cache_control.cache.game_update_flow_running = True
+    cache_control.cache.game_update_flow_running += 1
     
     try:
         # 去掉了第一次结算
@@ -24,4 +24,4 @@ def game_update_flow(add_time: int):
         py_cmd.focus_cmd()
     finally:
         # 无论是否发生异常，都要清除运行标志
-        cache_control.cache.game_update_flow_running = False
+        cache_control.cache.game_update_flow_running = 0

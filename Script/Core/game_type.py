@@ -1429,7 +1429,7 @@ class Cache:
         # """ 可穿戴道具类型数据 """
         self.over_behavior_character: Set = set()
         """ 本次update中已结束结算的npc """
-        self.game_update_flow_running: bool = False
+        self.game_update_flow_running: int = 0
         """ 游戏更新流程运行状态标志，用于防止递归调用导致的死循环 """
         self.pl_sleep_save_flag: bool = False
         """ 玩家睡觉，要进行存档 """
