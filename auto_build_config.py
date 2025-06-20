@@ -48,6 +48,9 @@ BUILD_CHARA_ID = 0
 # 如果存在character_talk_data_path，则将BUILD_TALK设置为False
 if os.path.exists(character_talk_data_path):
     BUILD_TALK = False
+# 如果存在talk_common_data_path，则将BUILD_TALK_COMMON设置为False
+if os.path.exists(talk_common_data_path):
+    BUILD_TALK_COMMON = False
 
 # 在开始时读取 JSON，若读取失败则用空对象
 try:
