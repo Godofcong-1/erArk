@@ -132,6 +132,12 @@ class DataList(QWidget):
         self.layout.setColumnStretch(1, 1)
         self.layout.setColumnStretch(2, 1)
 
+        # 启用条目拖拽移动功能
+        self.list_widget.setDragDropMode(QAbstractItemView.InternalMove)
+        self.list_widget.setDefaultDropAction(Qt.MoveAction)
+        self.list_widget.setSelectionMode(QAbstractItemView.SingleSelection)
+        self.list_widget.model().rowsMoved.connect(self.on_rows_moved)
+
     def update_font(self, font):
         print(font)
         self.font = font
@@ -283,6 +289,7 @@ class DataList(QWidget):
         event.effect["9999"] = 1
         cache_control.now_event_data[event.uid] = event
         self.list_widget.addItem(item)
+        self.refresh_item_flags()
         cache_control.now_select_id = event.uid
         self.update()
 
@@ -330,6 +337,7 @@ class DataList(QWidget):
         talk.premise["high_1"] = 1
         cache_control.now_talk_data[talk.cid] = talk
         self.list_widget.addItem(item)
+        self.refresh_item_flags()
         cache_control.now_select_id = talk.cid
         self.update()
 
@@ -553,6 +561,35 @@ class DataList(QWidget):
             return
         self.update()
 
+    def refresh_item_flags(self):
+        """
+        为所有条目设置可拖拽和可放置标志
+        """
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            item.setFlags(item.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled | Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+
+    def on_rows_moved(self, parent, start, end, dest, row):
+        # 拖拽后，按界面顺序重建数据
+        if cache_control.now_edit_type_flag == 0:
+            # 口上模式
+            new_order = []
+            for i in range(self.list_widget.count()):
+                item = self.list_widget.item(i)
+                new_order.append(item.uid)
+            new_data = {uid: cache_control.now_talk_data[uid] for uid in new_order}
+            cache_control.now_talk_data = new_data
+        elif cache_control.now_edit_type_flag == 1:
+            # 事件模式
+            new_order = []
+            for i in range(self.list_widget.count()):
+                item = self.list_widget.item(i)
+                new_order.append(item.uid)
+            new_data = {uid: cache_control.now_event_data[uid] for uid in new_order}
+            cache_control.now_event_data = new_data
+        # 刷新界面
+        self.update()
+
     def update(self):
         """根据选项刷新当前绘制的列表"""
         self.edited_item = None
@@ -562,9 +599,8 @@ class DataList(QWidget):
         self.now_in_moving_flag = False
 
         if cache_control.now_edit_type_flag == 0:
-            # 按cid排序整个cache_control.now_talk_data
-            cache_control.now_talk_data = dict(sorted(cache_control.now_talk_data.items(), key=lambda x: int(x[0])))
-            # self.menu_bar 中去掉 self.type_menu
+            # 不再排序，直接按当前字典顺序遍历
+            # cache_control.now_talk_data = dict(sorted(cache_control.now_talk_data.items(), key=lambda x: int(x[0])))
             self.menu_bar.removeAction(self.type_menu.menuAction())
             for cid in cache_control.now_talk_data:
                 now_talk: game_type.Talk = cache_control.now_talk_data[cid]

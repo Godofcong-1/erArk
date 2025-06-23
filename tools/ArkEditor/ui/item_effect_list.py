@@ -53,6 +53,11 @@ class ItemEffectList(QWidget):
         self.item_list.setContextMenuPolicy(Qt.CustomContextMenu)
         self.item_list.customContextMenuRequested.connect(self.show_context_menu)
         self.item_list.itemDoubleClicked.connect(self.change_this_item)
+        # 启用拖拽移动功能
+        self.item_list.setDragDropMode(QListWidget.InternalMove)
+        self.item_list.setDefaultDropAction(Qt.MoveAction)
+        self.item_list.setSelectionMode(QListWidget.SingleSelection)
+        self.item_list.model().rowsMoved.connect(self.on_rows_moved)
         list_layout.addWidget(self.item_list)
         main_layout.addWidget(info_label)
         main_layout.addLayout(list_layout)
@@ -154,3 +159,22 @@ class ItemEffectList(QWidget):
         if cache_control.now_select_id != "":
             menu = CSEMenu()
             menu.exec()
+
+    def on_rows_moved(self, parent, start, end, dest, row):
+        """
+        拖拽移动结算条目后，更新数据顺序
+        """
+        if cache_control.now_edit_type_flag == 1 and cache_control.now_select_id != "":
+            data = cache_control.now_event_data[cache_control.now_select_id]
+            # 重新按界面顺序排列effect
+            new_order = []
+            for i in range(self.item_list.count()):
+                text = self.item_list.item(i).text()
+                # 通过文本反查cid
+                for cid, val in cache_control.effect_data.items():
+                    if val == text and cid in data.effect:
+                        new_order.append(cid)
+                        break
+            # 重新构建effect字典
+            new_effect = {cid: data.effect[cid] for cid in new_order}
+            data.effect = new_effect

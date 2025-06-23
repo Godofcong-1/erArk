@@ -61,6 +61,9 @@ class CommissionListWidget(QWidget):
         self.search_name_btn.setFont(font)
         self.search_desc_btn.setFont(font)
         self.reset_btn.setFont(font)
+        # 启用拖拽移动功能
+        self.list_widget.setDragDropMode(QListWidget.InternalMove)
+        self.list_widget.model().rowsMoved.connect(self.on_rows_moved)
 
     def refresh_list(self):
         """
@@ -208,4 +211,28 @@ class CommissionListWidget(QWidget):
         """
         self.commissions = commissions
         self.filtered_commissions = commissions.copy()
+        self.refresh_list()
+
+    def on_rows_moved(self, parent, start, end, dest, row):
+        """
+        拖拽移动条目后，更新self.commissions和self.filtered_commissions的顺序
+        参数:
+            start: int 被拖动的起始行
+            end: int 被拖动的结束行（通常等于start）
+            row: int 目标插入位置
+        """
+        # 只支持单条目拖动
+        if start == end:
+            item = self.filtered_commissions.pop(start)
+            # 拖到下方时row会+1，需修正
+            if row > start:
+                row = row - 1
+            self.filtered_commissions.insert(row, item)
+            # 同步原始数据顺序
+            # 先清空self.commissions，再按filtered顺序重排
+            id_map = {c.cid: c for c in self.commissions}
+            self.commissions.clear()
+            for c in self.filtered_commissions:
+                self.commissions.append(id_map[c.cid])
+        # 刷新列表，保持当前顺序
         self.refresh_list()

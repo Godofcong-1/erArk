@@ -59,6 +59,11 @@ class ItemPremiseList(QWidget):
         main_layout.addWidget(self.info_label)
         main_layout.addLayout(list_layout)
         self.setLayout(main_layout)
+        # 启用拖拽移动功能
+        self.item_list.setDragDropMode(QListWidget.InternalMove)
+        self.item_list.setDefaultDropAction(Qt.MoveAction)
+        self.item_list.setSelectionMode(QListWidget.SingleSelection)
+        self.item_list.model().rowsMoved.connect(self.on_rows_moved)
 
     def update(self):
         """更新前提列表"""
@@ -215,4 +220,28 @@ class ItemPremiseList(QWidget):
             now_file.write(f"{new_cid},{'&'.join(premise_list)}\n")
         # 更新前提列表
         self.update()
+
+    def on_rows_moved(self, parent, start, end, dest, row):
+        """
+        拖拽移动前提条目后，更新数据顺序
+        """
+        if cache_control.now_select_id != "":
+            if cache_control.now_edit_type_flag == 0:
+                # 口上
+                data = cache_control.now_talk_data[cache_control.now_select_id]
+            elif cache_control.now_edit_type_flag == 1:
+                # 事件
+                data = cache_control.now_event_data[cache_control.now_select_id]
+            # 重新按界面顺序排列premise
+            new_order = []
+            for i in range(self.item_list.count()):
+                text = self.item_list.item(i).text()
+                # 通过文本反查cid
+                for cid, val in cache_control.premise_data.items():
+                    if val == text and cid in data.premise:
+                        new_order.append(cid)
+                        break
+            # 重新构建premise字典
+            new_premise = {cid: data.premise[cid] for cid in new_order}
+            data.premise = new_premise
 
