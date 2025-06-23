@@ -182,7 +182,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 if nation_data.country == now_country:
                     item_id = nation_id
                     item_name = nation_data.name + item_name
-                    now_have_item_num = cache.country.nation_reputation[nation_id]
+                    now_have_item_num = cache.country.nation_reputation[nation_id] * 100
                     break
         else:
             item_name = game_config.config_nation[item_id].name + item_name

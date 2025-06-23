@@ -1132,7 +1132,7 @@ class Country:
     """大地图国家数据"""
 
     def __init__(self):
-        self.nation_reputation: Dict[int, int] = {}
+        self.nation_reputation: Dict[int, float] = {}
         """ 势力声望 """
         self.country_infection_rate: Dict[int, int] = {}
         """ 国家矿石病感染率 """
