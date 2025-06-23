@@ -53,11 +53,16 @@ def update_sleep():
         if character_id == 0:
             sanity_point_grow() # 玩家理智成长
             character_data.eja_point = 0 # 清零射精槽
-            # 如果此时助理在睡眠中，则清零助理晚安问候
             assistant_id = character_data.assistant_character_id
-            assistant_character_data: game_type.Character = cache.character_data[assistant_id]
-            if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
-                assistant_character_data.sp_flag.night_salutation = 0
+            # 对玩家助理结算
+            if assistant_id > 0:
+                assistant_character_data: game_type.Character = cache.character_data[assistant_id]
+                # 如果此时助理在睡眠中，则清零助理晚安问候
+                if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
+                    assistant_character_data.sp_flag.night_salutation = 0
+                # 如果助理的跟随服务已开启，且没有在跟随，则让助理跟随
+                if assistant_character_data.sp_flag.is_follow != 1 and handle_premise.handle_not_follow_1(assistant_id):
+                    assistant_character_data.sp_flag.is_follow = 1
             # 检查是否有可以升级的能力
             if cache.all_system_setting.base_setting[1]:
                 handle_ability.gain_ability(character_id)
