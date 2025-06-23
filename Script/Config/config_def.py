@@ -1034,7 +1034,7 @@ class Reputation_Level:
     """ 声望阈值 """
 
 
-class Resouce:
+class Resource:
     """ 各类基地使用资源一览 """
 
     cid: int

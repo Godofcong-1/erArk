@@ -110,7 +110,7 @@ config_facility_open_name_set: Set = set()
 """ 设施开放名称集合 """
 config_facility_open_name_to_cid: Dict[str, int] = {}
 """ 设施开放名称对应编号 """
-config_resouce: Dict[int, config_def.Resouce] = {}
+config_resouce: Dict[int, config_def.Resource] = {}
 """ 资源数据 """
 config_resouce_data_of_nation: Dict[int, List] = {}
 """ 势力特产的资源数据 """
@@ -970,10 +970,10 @@ def load_facility_open():
 
 def load_resouce():
     """载入资源数据"""
-    now_data = config_data["Resouce"]
+    now_data = config_data["Resource"]
     translate_data(now_data)
     for tem_data in now_data["data"]:
-        now_tem = config_def.Resouce()
+        now_tem = config_def.Resource()
         now_tem.__dict__ = tem_data
         config_resouce[now_tem.cid] = now_tem
         # 势力对应资源
