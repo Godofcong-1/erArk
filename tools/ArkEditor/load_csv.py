@@ -22,6 +22,7 @@ bondage_path = "csv/Bondage.csv"
 roleplay_path = "csv/Roleplay.csv"
 item_path = "csv/Item.csv"
 gift_items_path = "csv/Gift_Items.csv"
+resource_path = "csv/Resource.csv"
 
 def load_config():
     """载入配置文件"""
@@ -238,3 +239,74 @@ def load_config():
             if i["item_id"] == '0':
                 continue
             cache_control.gift_items_data[i["cid"]] = i["item_id"]
+    with open(resource_path, encoding="utf-8") as now_file:
+        now_read = csv.DictReader(now_file)
+        read_flag = False
+        for i in now_read:
+            if read_flag == False:
+                if i["cid"] != "各类基地使用资源一览":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            new_cid = str(int(i["cid"]))
+            cache_control.resource_data[new_cid] = i["name"]
+            if i["specialty"] != '0':
+                cache_control.specialty_data.setdefault(i["specialty"], [])
+                cache_control.specialty_data[i["specialty"]].append(new_cid)
+
+def load_commission_csv(file_path):
+    """
+    读取外勤委托CSV文件
+    参数:
+        file_path: str 文件路径
+    返回:
+        commissions: list[Commission] 委托对象列表
+    功能:
+        解析CSV文件，生成委托对象列表
+    """
+    from game_type import Commission  # 修正为本地导入，避免包路径问题
+    commissions = []
+    with open(file_path, encoding="utf-8-sig") as f:
+        reader = csv.DictReader(f)
+        read_flag = False
+        for row in reader:
+            if read_flag == False:
+                if row["cid"] != "委托任务表":
+                    continue
+                else:
+                    read_flag = True
+                    continue
+            # 创建Commission对象并加入列表
+            commission = Commission(
+                row["cid"], row["name"], row["country_id"], row["level"], row["type"],
+                row["people"], row["time"], row["demand"], row["reward"],
+                row["related_id"], row["special"], row["description"]
+            )
+            commissions.append(commission)
+    return commissions
+
+def save_commission_csv(file_path, commissions):
+    """
+    保存外勤委托CSV文件
+    参数:
+        file_path: str 文件路径
+        commissions: list[Commission] 委托对象列表
+    返回:
+        None
+    功能:
+        将委托对象列表写回CSV文件
+    """
+    fieldnames = ["cid", "name", "country_id", "level", "type", "people", "time", "demand", "reward", "related_id", "special", "description"]
+    text = "委托id,委托名字,国家id(-1为通用),委托等级,委托类型,派遣人数,耗时天数,具体需求,具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位),关联的委托id,特殊委托,委托介绍\nint,str,int,int,str,int,int,str,str,int,int,str\n0,1,0,0,0,0,0,0,0,0,0,1\n委托任务表,,,,,,,,,,,"
+    with open(file_path, "w", encoding="utf-8-sig", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=fieldnames)
+        writer.writeheader()
+        # 写入文件头部的说明信息
+        f.write(text + "\n")
+        for c in commissions:
+            writer.writerow({
+                "cid": c.cid, "name": c.name, "country_id": c.country_id, "level": c.level, "type": c.type,
+                "people": c.people, "time": c.time, "demand": c.demand, "reward": c.reward,
+                "related_id": c.related_id, "special": c.special, "description": c.description
+            })

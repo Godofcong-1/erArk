@@ -75,6 +75,31 @@ class MenuBar(QMenuBar):
         chara_menu.setFont(self.font)
         self.addMenu(chara_menu)
 
+        # 外勤委托菜单
+        commission_menu = QMenu("外勤委托", self)
+        self.select_commission_file_action = QWidgetAction(self)
+        self.select_commission_file_action.setText("读取外勤委托文件")
+        commission_menu.addAction(self.select_commission_file_action)
+        self.commission_path_info_action = QWidgetAction(self)
+        self.commission_path_info_action.setText("外勤委托文件路径说明")
+        commission_menu.addAction(self.commission_path_info_action)
+        commission_menu.setFont(self.font)
+        self.addMenu(commission_menu)
+        # 绑定说明弹窗
+        def show_commission_path_info():
+            dialog = QDialog(self)
+            dialog.setWindowTitle("外勤委托文件路径说明")
+            layout = QVBoxLayout(dialog)
+            text = QTextEdit(dialog)
+            text.setReadOnly(True)
+            text.setFont(self.font)
+            text.setPlainText("外勤委托文件路径为游戏本体目录下，\\data\\csv\\Commission.csv。")
+            layout.addWidget(text)
+            dialog.setLayout(layout)
+            dialog.resize(400, 120)
+            dialog.exec()
+        self.commission_path_info_action.triggered.connect(show_commission_path_info)
+
         # 设置菜单
         setting_menu = QMenu("设置", self)
         self.setting_action = QAction("设置", self)

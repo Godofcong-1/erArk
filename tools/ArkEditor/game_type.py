@@ -77,3 +77,39 @@ class Chara_Data:
         """ 素质 """
         self.Cloth: dict = {}
         """ 服装 """
+
+class Commission:
+    """
+    外勤委托数据结构
+    参数:
+        cid: int 委托ID
+        name: str 委托名称
+        country_id: int 国家ID
+        level: int 委托等级
+        type: str 委托类型
+        people: int 需要人数
+        time: int 耗时天数
+        demand: str 需求字符串
+        reward: str 奖励字符串
+        related_id: int 前置委托ID
+        special: int 是否特殊委托
+        description: str 委托描述
+    返回:
+        None
+    功能:
+        存储单个外勤委托的全部属性
+    """
+    def __init__(self, cid, name, country_id, level, type, people, time, demand, reward, related_id, special, description):
+        # 初始化各属性
+        self.cid = int(cid)
+        self.name = name
+        self.country_id = int(country_id)
+        self.level = int(level)
+        self.type = type
+        self.people = int(people)
+        self.time = int(time)
+        self.demand = demand
+        self.reward = reward
+        self.related_id = int(related_id)
+        self.special = int(special)
+        self.description = description

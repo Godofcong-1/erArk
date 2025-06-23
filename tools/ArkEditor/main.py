@@ -436,6 +436,45 @@ def font_update():
     item_text_edit.setFont(font)
 
 
+def load_commission_data():
+    """
+    载入外勤委托CSV文件并显示在编辑器中
+    参数: 无
+    返回: 无
+    功能:
+        选择CSV文件，读取所有委托，左侧显示列表，右侧显示属性，可编辑并保存。
+    """
+    from ui.commission_list import CommissionListWidget
+    from ui.commission_edit import CommissionEditWidget
+    import load_csv
+    import game_type
+    from PySide6.QtWidgets import QFileDialog
+    # 选择CSV文件
+    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择委托文件", ".", "*.csv")
+    file_path = csv_file[0]
+    if not file_path:
+        return
+    # 读取所有委托
+    commissions = load_csv.load_commission_csv(file_path)
+    # 创建UI组件
+    commission_list = CommissionListWidget(commissions)
+    commission_edit = CommissionEditWidget()
+    # 选中委托时，右侧显示属性
+    def on_select(commission):
+        commission_edit.set_commission(commission)
+    commission_list.commission_selected.connect(on_select)
+    # 保存修改时，写回CSV
+    def on_save(commission):
+        load_csv.save_commission_csv(file_path, commissions)
+    commission_edit.commission_saved.connect(on_save)
+    # 显示布局（左：列表，右：属性编辑），上方不再留大空白区域，仿照事件编辑模式
+    # 只占用一行，避免上方大空白
+    main_window.main_layout.addWidget(commission_list, 0, 0, 1, 1)
+    main_window.main_layout.addWidget(commission_edit, 0, 1, 1, 1)
+    main_window.main_layout.setColumnStretch(0, 1)
+    main_window.main_layout.setColumnStretch(1, 1)
+    main_window.completed_layout()
+
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 update_status_menu()
 
@@ -473,6 +512,8 @@ menu_bar.save_talk_action.triggered.connect(function.save_data)
 menu_bar.select_chara_file_action.triggered.connect(load_chara_data)
 menu_bar.new_chara_file_action.triggered.connect(create_chara_data)
 menu_bar.setting_action.triggered.connect(font_update)
+# 绑定外勤委托菜单的信号到主函数
+menu_bar.select_commission_file_action.triggered.connect(load_commission_data)
 
 # 将文本编辑器的保存键绑定到口上事件列表的更新与文件的更新
 item_text_edit.save_button.clicked.connect(data_list.update)

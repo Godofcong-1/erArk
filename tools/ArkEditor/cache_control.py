@@ -93,3 +93,7 @@ item_data: dict = {}
 """ 道具数据 """
 gift_items_data: dict = {}
 """ 礼物数据 """
+resource_data: dict = {}
+""" 资源数据 """
+specialty_data: dict = {}
+""" 特产数据 """
