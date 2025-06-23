@@ -98,8 +98,10 @@ def check_random_borrow_book(character_id):
         # 如果推荐列表有书，则有一半的概率在推荐列表里借书，否则在全列表里借书
         if len(recommend_book_id_set) and random.randint(0,1) == 1:
             borrow_book_id = random.choice(recommend_book_id_set)
-        else:
+        elif len(book_id_set):
             borrow_book_id = random.choice(book_id_set)
+        else:
+            return 0
         cache.rhodes_island.book_borrow_dict[borrow_book_id] = character_id
         character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
         # print(f"debug {character_data.name}借了书{borrow_book_id}")
