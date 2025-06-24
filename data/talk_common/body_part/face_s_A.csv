@@ -17,8 +17,6 @@ str,str,int,str,str
 10,body_part_face_s_A,0,high_1,娇媚
 11,body_part_face_s_A,0,high_1,俏丽
 12,body_part_face_s_A,0,high_1,迷人
-13,body_part_face_s_A,0,high_1,性感
-14,body_part_face_s_A,0,high_1,诱人
 15,body_part_face_s_A,0,high_1,艳丽
 
 100,body_part_face_s_A,0,CVP_A2_T|102_E_1,稚嫩
@@ -30,13 +28,10 @@ str,str,int,str,str
 106,body_part_face_s_A,0,CVP_A2_T|102_E_1,娇嫩
 107,body_part_face_s_A,0,CVP_A2_T|102_E_1,天真
 108,body_part_face_s_A,0,CVP_A2_T|102_E_1,稚气
-109,body_part_face_s_A,0,CVP_A2_T|102_E_1,柔软
 110,body_part_face_s_A,0,CVP_A2_T|102_E_1,小巧
 111,body_part_face_s_A,0,CVP_A2_T|102_E_1,纯真
 112,body_part_face_s_A,0,CVP_A2_T|102_E_1,幼嫩
-113,body_part_face_s_A,0,CVP_A2_T|102_E_1,幼女
 
-120,body_part_face_s_A,0,CVP_A2_T|103_E_1,青涩
 121,body_part_face_s_A,0,CVP_A2_T|103_E_1,细腻
 122,body_part_face_s_A,0,CVP_A2_T|103_E_1,俏丽
 123,body_part_face_s_A,0,CVP_A2_T|103_E_1,可爱
@@ -44,12 +39,10 @@ str,str,int,str,str
 125,body_part_face_s_A,0,CVP_A2_T|103_E_1,灵动
 126,body_part_face_s_A,0,CVP_A2_T|103_E_1,嫩滑
 127,body_part_face_s_A,0,CVP_A2_T|103_E_1,娇俏
-128,body_part_face_s_A,0,CVP_A2_T|103_E_1,羞涩
 129,body_part_face_s_A,0,CVP_A2_T|103_E_1,稚气
 130,body_part_face_s_A,0,CVP_A2_T|103_E_1,甜美
 131,body_part_face_s_A,0,CVP_A2_T|103_E_1,活泼
 132,body_part_face_s_A,0,CVP_A2_T|103_E_1,娇小
-133,body_part_face_s_A,0,CVP_A2_T|103_E_1,萝莉
 
 140,body_part_face_s_A,0,CVP_A2_T|104_E_1,亮丽
 141,body_part_face_s_A,0,CVP_A2_T|104_E_1,青春
@@ -63,10 +56,7 @@ str,str,int,str,str
 149,body_part_face_s_A,0,CVP_A2_T|104_E_1,婉约
 150,body_part_face_s_A,0,CVP_A2_T|104_E_1,甜美
 151,body_part_face_s_A,0,CVP_A2_T|104_E_1,俏皮
-152,body_part_face_s_A,0,CVP_A2_T|104_E_1,少女
 
-160,body_part_face_s_A,0,CVP_A2_T|105_E_1,成熟
-161,body_part_face_s_A,0,CVP_A2_T|105_E_1,温柔
 162,body_part_face_s_A,0,CVP_A2_T|105_E_1,优雅
 163,body_part_face_s_A,0,CVP_A2_T|105_E_1,妩媚
 164,body_part_face_s_A,0,CVP_A2_T|105_E_1,柔媚
@@ -76,20 +66,16 @@ str,str,int,str,str
 168,body_part_face_s_A,0,CVP_A2_T|105_E_1,迷人
 169,body_part_face_s_A,0,CVP_A2_T|105_E_1,柔美
 170,body_part_face_s_A,0,CVP_A2_T|105_E_1,风情
-171,body_part_face_s_A,0,CVP_A2_T|105_E_1,大姐姐
 
 180,body_part_face_s_A,0,CVP_A2_T|106_E_1,丰润
 181,body_part_face_s_A,0,CVP_A2_T|106_E_1,妖艳
 182,body_part_face_s_A,0,CVP_A2_T|106_E_1,风韵
 183,body_part_face_s_A,0,CVP_A2_T|106_E_1,妩媚
-184,body_part_face_s_A,0,CVP_A2_T|106_E_1,成熟
-185,body_part_face_s_A,0,CVP_A2_T|106_E_1,妖娆
 186,body_part_face_s_A,0,CVP_A2_T|106_E_1,艳丽
 187,body_part_face_s_A,0,CVP_A2_T|106_E_1,媚人
 188,body_part_face_s_A,0,CVP_A2_T|106_E_1,饱满
 189,body_part_face_s_A,0,CVP_A2_T|106_E_1,诱惑
 190,body_part_face_s_A,0,CVP_A2_T|106_E_1,妖冶
-191,body_part_face_s_A,0,CVP_A2_T|106_E_1,熟女
 
 200,body_part_face_s_A,0,CVP_A2_T|107_E_1,端庄
 201,body_part_face_s_A,0,CVP_A2_T|107_E_1,温婉
@@ -100,9 +86,7 @@ str,str,int,str,str
 206,body_part_face_s_A,0,CVP_A2_T|107_E_1,妩媚
 207,body_part_face_s_A,0,CVP_A2_T|107_E_1,风韵
 208,body_part_face_s_A,0,CVP_A2_T|107_E_1,娴静
-209,body_part_face_s_A,0,CVP_A2_T|107_E_1,成熟
 210,body_part_face_s_A,0,CVP_A2_T|107_E_1,艳丽
-211,body_part_face_s_A,0,CVP_A2_T|107_E_1,人妻
 
 220,body_part_face_s_A,0,target_is_player_daughter,娇俏
 221,body_part_face_s_A,0,target_is_player_daughter,可爱
@@ -113,7 +97,6 @@ str,str,int,str,str
 226,body_part_face_s_A,0,target_is_player_daughter,水嫩
 227,body_part_face_s_A,0,target_is_player_daughter,灵动
 228,body_part_face_s_A,0,target_is_player_daughter,天真
-229,body_part_face_s_A,0,target_is_player_daughter,女儿
 
 240,body_part_face_s_A,0,t_is_assistant,干练
 241,body_part_face_s_A,0,t_is_assistant,精明
@@ -126,81 +109,30 @@ str,str,int,str,str
 248,body_part_face_s_A,0,t_is_assistant,清丽
 249,body_part_face_s_A,0,t_is_assistant,优雅
 
-2000,body_part_face_s_A,0,t_unconscious_flag,无意识
 
-2001,body_part_face_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,无防备
-2002,body_part_face_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,熟睡
 2003,body_part_face_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,松弛
-2005,body_part_face_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,梦中
 
-2010,body_part_face_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,装睡
-2011,body_part_face_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,假寐
-2013,body_part_face_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,微颤
-2015,body_part_face_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,紧张
 
-2020,body_part_face_s_A,0,t_unconscious_flag_2,醉意
 2021,body_part_face_s_A,0,t_unconscious_flag_2,酒气
-2022,body_part_face_s_A,0,t_unconscious_flag_2,迷糊
 2023,body_part_face_s_A,0,t_unconscious_flag_2,半张
-2024,body_part_face_s_A,0,t_unconscious_flag_2,微醺
 2025,body_part_face_s_A,0,t_unconscious_flag_2,酒香
-2026,body_part_face_s_A,0,t_unconscious_flag_2,朦胧
 
-2030,body_part_face_s_A,0,t_unconscious_flag_3,静止
-2031,body_part_face_s_A,0,t_unconscious_flag_3,凝固
-2032,body_part_face_s_A,0,t_unconscious_flag_3,定格
-2033,body_part_face_s_A,0,t_unconscious_flag_3,停滞
-2034,body_part_face_s_A,0,t_unconscious_flag_3,冷冻般
-2035,body_part_face_s_A,0,t_unconscious_flag_3,暂停
-2036,body_part_face_s_A,0,t_unconscious_flag_3,凝滞
-2037,body_part_face_s_A,0,t_unconscious_flag_3,不动
 
-2040,body_part_face_s_A,0,t_unconscious_flag_4,平静
-2041,body_part_face_s_A,0,t_unconscious_flag_4,如常
-2043,body_part_face_s_A,0,t_unconscious_flag_4,麻木
-2044,body_part_face_s_A,0,t_unconscious_flag_4,顺从
 2045,body_part_face_s_A,0,t_unconscious_flag_4,机械
-2046,body_part_face_s_A,0,t_unconscious_flag_4,平然
 
-2050,body_part_face_s_A,0,t_unconscious_flag_5,无视
-2051,body_part_face_s_A,0,t_unconscious_flag_5,忽略
-2052,body_part_face_s_A,0,t_unconscious_flag_5,无反应
-2054,body_part_face_s_A,0,t_unconscious_flag_5,无察觉
-2055,body_part_face_s_A,0,t_unconscious_flag_5,漠视
-2056,body_part_face_s_A,0,t_unconscious_flag_5,放松
 
-2060,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,僵硬
-2061,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,动不了
 2062,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,被迫
-2063,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,不抵抗
-2064,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,被控制
-2065,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,木头人
 
-2070,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,主动
-2071,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,积极
-2072,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,违心
-2073,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,渴望
-2074,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,被操控
-2075,body_part_face_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,不由己
 
-2080,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,羞涩
-2081,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,害臊
-2082,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,紧张
 2083,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,尴尬
-2084,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,害羞
 2085,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,窘迫
 
 2090,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,炫耀
 2091,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,挑逗
 2092,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,大胆
-2093,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,享受
 2094,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,表演般
 2095,body_part_face_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,自信
 
-2100,body_part_face_s_A,0,t_npc_active_h,主动
-2101,body_part_face_s_A,0,t_npc_active_h,娴熟
-2102,body_part_face_s_A,0,t_npc_active_h,主导
-2103,body_part_face_s_A,0,t_npc_active_h,灵活
 
 2110,body_part_face_s_A,0,t_hidden_sex_mode_1_or_3,假装正常
 2111,body_part_face_s_A,0,t_hidden_sex_mode_1_or_3,维持平静
@@ -215,45 +147,4 @@ str,str,int,str,str
 2123,body_part_face_s_A,0,t_hidden_sex_mode_2_or_4,隐蔽
 2124,body_part_face_s_A,0,t_hidden_sex_mode_2_or_4,谨慎
 
-2130,body_part_face_s_A,0,CVP_A2_G_E_1,懵懂
-2131,body_part_face_s_A,0,CVP_A2_G_E_1,迷茫
-2132,body_part_face_s_A,0,CVP_A2_G_E_1,悸动
-2133,body_part_face_s_A,0,CVP_A2_G_E_1,期待
-2134,body_part_face_s_A,0,CVP_A2_G_E_1,好奇
-2135,body_part_face_s_A,0,CVP_A2_G_E_1,茫然
-
-2140,body_part_face_s_A,0,CVP_A2_G_E_2,暗恋
-2141,body_part_face_s_A,0,CVP_A2_G_E_2,羞涩
-2142,body_part_face_s_A,0,CVP_A2_G_E_2,含情
-2143,body_part_face_s_A,0,CVP_A2_G_E_2,期待
-2144,body_part_face_s_A,0,CVP_A2_G_E_2,犹豫
-
-2150,body_part_face_s_A,0,CVP_A2_G_E_3,恋人
-2151,body_part_face_s_A,0,CVP_A2_G_E_3,热恋
-2152,body_part_face_s_A,0,CVP_A2_G_E_3,爱意
-2155,body_part_face_s_A,0,CVP_A2_G_E_3,恋爱
-
-2160,body_part_face_s_A,0,CVP_A2_G_E_4,爱侣
-2162,body_part_face_s_A,0,CVP_A2_G_E_4,默契
-
-2170,body_part_face_s_A,0,CVP_A2_G_E_-1,勉强
-2171,body_part_face_s_A,0,CVP_A2_G_E_-1,不情愿
-2172,body_part_face_s_A,0,CVP_A2_G_E_-1,不满
-2173,body_part_face_s_A,0,CVP_A2_G_E_-1,顺从
-2174,body_part_face_s_A,0,CVP_A2_G_E_-1,抵触
 2175,body_part_face_s_A,0,CVP_A2_G_E_-1,紧绷
-
-2180,body_part_face_s_A,0,CVP_A2_G_E_-2,驯顺
-2181,body_part_face_s_A,0,CVP_A2_G_E_-2,听话
-2182,body_part_face_s_A,0,CVP_A2_G_E_-2,温顺
-
-2191,body_part_face_s_A,0,CVP_A2_G_E_-3,宠物
-2192,body_part_face_s_A,0,CVP_A2_G_E_-3,依恋
-2193,body_part_face_s_A,0,CVP_A2_G_E_-3,渴望
-2194,body_part_face_s_A,0,CVP_A2_G_E_-3,服从
-2195,body_part_face_s_A,0,CVP_A2_G_E_-3,讨好
-
-2200,body_part_face_s_A,0,CVP_A2_G_E_-4,臣服
-2201,body_part_face_s_A,0,CVP_A2_G_E_-4,奴性
-2202,body_part_face_s_A,0,CVP_A2_G_E_-4,献身
-2203,body_part_face_s_A,0,CVP_A2_G_E_-4,奴隶
