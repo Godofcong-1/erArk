@@ -122,9 +122,8 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
 
     # 如果不在同一位置
     if handle_premise.handle_not_in_player_scene(character_id):
-
-        # 如果不在同一位置，则结束H状态和无意识状态
-        if character_data.sp_flag.is_h:
+        # 结束H状态
+        if handle_premise.handle_is_h(character_id):
             character_data.sp_flag.is_h = False
             character_data.sp_flag.unconscious_h = 0
             character_data.behavior.behavior_id = constant.Behavior.END_H
@@ -132,14 +131,15 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             character_data.behavior.start_time = pl_start_time
             character_data.behavior.duration = 1
             character_data.target_character_id = character_id
-
-        # 如果不在同一位置，则结束睡眠猥亵状态
-        elif character_data.sp_flag.unconscious_h == 1:
+        # 结束睡眠猥亵状态
+        if handle_premise.handle_unconscious_flag_1(character_id):
             character_data.sp_flag.unconscious_h = 0
-
-        # 如果不在同一位置，则结束空气催眠
-        elif character_data.sp_flag.unconscious_h == 5 and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
+        # 结束空气催眠
+        if handle_premise.handle_unconscious_flag_5(character_id) and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
             character_data.sp_flag.unconscious_h = 0
+        # 结束隐奸状态
+        if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
+            character_data.sp_flag.hidden_sex_mode = 0
 
     return 1
 

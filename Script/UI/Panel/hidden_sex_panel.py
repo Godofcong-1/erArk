@@ -239,6 +239,9 @@ def settle_discovered(character_id: int) -> None:
     if len(hidden_sex_target_id_list):
         character_data.target_character_id = hidden_sex_target_id_list[0]
         hidden_sex_target_chara_data = cache.character_data[hidden_sex_target_id_list[0]]
+    else:
+        print(f"debug : 隐奸被发现时未找到隐奸对象，角色id:{character_id}")
+        return
     # 寻找是否会打断的人
     interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
     # 存在则打断
