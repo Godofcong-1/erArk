@@ -102,6 +102,14 @@ class ItemTextEdit(QWidget):
             {"text": "玩家交互对象头发描述短词", "slot": lambda: self.insert_text('{hair_s}')},
             {"text": "玩家交互对象脸部描述长句", "slot": lambda: self.insert_text('{face}')},
             {"text": "玩家交互对象脸部描述短词", "slot": lambda: self.insert_text('{face_s}')},
+            {"text": "玩家交互对象胸部描述短词", "slot": lambda: self.insert_text('{breast_s}')},
+            {"text": "玩家交互对象腋部描述短词", "slot": lambda: self.insert_text('{armpit_s}')},
+            {"text": "玩家交互对象手部描述短词", "slot": lambda: self.insert_text('{hands_s}')},
+            {"text": "玩家交互对象阴道描述短词", "slot": lambda: self.insert_text('{vagina_s}')},
+            {"text": "玩家交互对象子宫描述短词", "slot": lambda: self.insert_text('{womb_s}')},
+            {"text": "玩家交互对象后穴描述短词", "slot": lambda: self.insert_text('{anal_s}')},
+            {"text": "玩家交互对象尿道描述短词", "slot": lambda: self.insert_text('{urethra_s}')},
+            {"text": "玩家交互对象腿部描述短词", "slot": lambda: self.insert_text('{legs_s}')},
         ]
 
         # 服装名菜单项

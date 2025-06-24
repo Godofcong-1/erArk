@@ -73,6 +73,14 @@ str,str,int,str,str
 1189,body_part_mouth_s_A,0,CVP_A2_T|107_E_1,娴熟
 1190,body_part_mouth_s_A,0,CVP_A2_T|107_E_1,性感
 
+1200,body_part_armpit_s_A,0,t_is_assistant,助理
+1201,body_part_armpit_s_A,0,t_is_assistant,秘书
+1202,body_part_armpit_s_A,0,t_is_assistant,服务
+1203,body_part_armpit_s_A,0,t_is_assistant,义务
+
+1210,body_part_armpit_s_A,0,target_visitor_flag_1,访客
+1211,body_part_armpit_s_A,0,target_visitor_flag_1,来客
+
 2000,body_part_mouth_s_A,0,t_unconscious_flag,无意识
 
 2001,body_part_mouth_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,无防备
@@ -81,6 +89,7 @@ str,str,int,str,str
 2004,body_part_mouth_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,半开
 2005,body_part_mouth_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,梦中
 2006,body_part_mouth_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,半张
+2007,body_part_mouth_s_A,0,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,沉睡
 
 2010,body_part_mouth_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,装睡
 2011,body_part_mouth_s_A,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,假寐
@@ -94,6 +103,8 @@ str,str,int,str,str
 2024,body_part_mouth_s_A,0,t_unconscious_flag_2,微醺
 2025,body_part_mouth_s_A,0,t_unconscious_flag_2,酒香
 2026,body_part_mouth_s_A,0,t_unconscious_flag_2,朦胧
+2027,body_part_mouth_s_A,0,t_unconscious_flag_2,迷醉
+2028,body_part_mouth_s_A,0,t_unconscious_flag_2,恍惚
 
 2030,body_part_mouth_s_A,0,t_unconscious_flag_3,静止
 2031,body_part_mouth_s_A,0,t_unconscious_flag_3,凝固
@@ -108,7 +119,7 @@ str,str,int,str,str
 2041,body_part_mouth_s_A,0,t_unconscious_flag_4,如常
 2043,body_part_mouth_s_A,0,t_unconscious_flag_4,麻木
 2044,body_part_mouth_s_A,0,t_unconscious_flag_4,顺从
-2045,body_part_mouth_s_A,0,t_unconscious_flag_4,机械
+2045,body_part_mouth_s_A,0,t_unconscious_flag_4,淡然
 2046,body_part_mouth_s_A,0,t_unconscious_flag_4,平然
 
 2050,body_part_mouth_s_A,0,t_unconscious_flag_5,无视
@@ -124,7 +135,8 @@ str,str,int,str,str
 2063,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,不抵抗
 2064,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,被控制
 2065,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,木头人
-2065,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,大张
+2066,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,大张
+2067,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_blockhead,禁锢
 
 2070,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,主动
 2071,body_part_mouth_s_A,0,t_unconscious_flag_6&t_hypnosis_active_h,积极
@@ -139,6 +151,7 @@ str,str,int,str,str
 2083,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,尴尬
 2084,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,害羞
 2085,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,窘迫
+2086,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_LE_4,羞耻
 
 2090,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,炫耀
 2091,body_part_mouth_s_A,0,group_sex_mode_on&CVP_A2_A|34_G_4,挑逗
@@ -151,6 +164,8 @@ str,str,int,str,str
 2101,body_part_mouth_s_A,0,t_npc_active_h,娴熟
 2102,body_part_mouth_s_A,0,t_npc_active_h,主导
 2103,body_part_mouth_s_A,0,t_npc_active_h,灵活
+2104,body_part_mouth_s_A,0,t_npc_active_h,配合
+2105,body_part_mouth_s_A,0,t_npc_active_h,迎合
 
 2110,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,假装正常
 2111,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,维持平静
@@ -158,6 +173,7 @@ str,str,int,str,str
 2113,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,掩饰
 2114,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,装作无事
 2115,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,强装镇定
+2116,body_part_mouth_s_A,0,t_hidden_sex_mode_1_or_3,克制
 
 2120,body_part_mouth_s_A,0,t_hidden_sex_mode_2_or_4,隐藏
 2121,body_part_mouth_s_A,0,t_hidden_sex_mode_2_or_4,躲避
@@ -177,21 +193,17 @@ str,str,int,str,str
 2142,body_part_mouth_s_A,0,CVP_A2_G_E_2,含情
 2143,body_part_mouth_s_A,0,CVP_A2_G_E_2,期待
 2144,body_part_mouth_s_A,0,CVP_A2_G_E_2,犹豫
-2145,body_part_mouth_s_A,0,CVP_A2_G_E_2,热切
+2145,body_part_mouth_s_A,0,CVP_A2_G_E_2,思慕
 
-2150,body_part_mouth_s_A,0,CVP_A2_G_E_3,甜蜜
-2151,body_part_mouth_s_A,0,CVP_A2_G_E_3,热恋
-2152,body_part_mouth_s_A,0,CVP_A2_G_E_3,爱意
-2153,body_part_mouth_s_A,0,CVP_A2_G_E_3,爱情
-2154,body_part_mouth_s_A,0,CVP_A2_G_E_3,幸福
-2155,body_part_mouth_s_A,0,CVP_A2_G_E_3,恋爱
+2150,body_part_mouth_s_A,0,CVP_A2_G_E_3,恋人
+2151,body_part_mouth_s_A,0,CVP_A2_G_E_3,爱意
+2152,body_part_mouth_s_A,0,CVP_A2_G_E_3,恋爱
+2153,body_part_mouth_s_A,0,CVP_A2_G_E_3,热恋
+2154,body_part_mouth_s_A,0,CVP_A2_G_E_3,温柔
+2155,body_part_mouth_s_A,0,CVP_A2_G_E_3,恋慕
 
-2160,body_part_mouth_s_A,0,CVP_A2_G_E_4,深情
-2161,body_part_mouth_s_A,0,CVP_A2_G_E_4,相知
-2162,body_part_mouth_s_A,0,CVP_A2_G_E_4,默契
-2163,body_part_mouth_s_A,0,CVP_A2_G_E_4,真挚
-2164,body_part_mouth_s_A,0,CVP_A2_G_E_4,深爱
-2165,body_part_mouth_s_A,0,CVP_A2_G_E_4,坚定
+2160,body_part_mouth_s_A,0,CVP_A2_G_E_4,爱侣
+2161,body_part_mouth_s_A,0,CVP_A2_G_E_4,默契
 
 2170,body_part_mouth_s_A,0,CVP_A2_G_E_-1,勉强
 2171,body_part_mouth_s_A,0,CVP_A2_G_E_-1,不情愿
@@ -199,15 +211,14 @@ str,str,int,str,str
 2173,body_part_mouth_s_A,0,CVP_A2_G_E_-1,顺从
 2174,body_part_mouth_s_A,0,CVP_A2_G_E_-1,抵触
 2175,body_part_mouth_s_A,0,CVP_A2_G_E_-1,紧绷
+2176,body_part_mouth_s_A,0,CVP_A2_G_E_-1,僵硬
 
 2180,body_part_mouth_s_A,0,CVP_A2_G_E_-2,驯顺
-2181,body_part_mouth_s_A,0,CVP_A2_G_E_-2,信任
-2182,body_part_mouth_s_A,0,CVP_A2_G_E_-2,接受
-2183,body_part_mouth_s_A,0,CVP_A2_G_E_-2,专业
-2184,body_part_mouth_s_A,0,CVP_A2_G_E_-2,理解
-2185,body_part_mouth_s_A,0,CVP_A2_G_E_-2,尽责
+2181,body_part_mouth_s_A,0,CVP_A2_G_E_-2,听话
+2182,body_part_mouth_s_A,0,CVP_A2_G_E_-2,温顺
+2183,body_part_mouth_s_A,0,CVP_A2_G_E_-2,屈服
+2184,body_part_mouth_s_A,0,CVP_A2_G_E_-2,认命
 
-2190,body_part_mouth_s_A,0,CVP_A2_G_E_-3,忠诚
 2191,body_part_mouth_s_A,0,CVP_A2_G_E_-3,宠物
 2192,body_part_mouth_s_A,0,CVP_A2_G_E_-3,依恋
 2193,body_part_mouth_s_A,0,CVP_A2_G_E_-3,渴望
@@ -216,7 +227,6 @@ str,str,int,str,str
 
 2200,body_part_mouth_s_A,0,CVP_A2_G_E_-4,臣服
 2201,body_part_mouth_s_A,0,CVP_A2_G_E_-4,奴性
-2202,body_part_mouth_s_A,0,CVP_A2_G_E_-4,崇拜
+2202,body_part_mouth_s_A,0,CVP_A2_G_E_-4,献身
 2203,body_part_mouth_s_A,0,CVP_A2_G_E_-4,奴隶
-2204,body_part_mouth_s_A,0,CVP_A2_G_E_-4,忠诚
-2205,body_part_mouth_s_A,0,CVP_A2_G_E_-4,狂热
+2204,body_part_mouth_s_A,0,CVP_A2_G_E_-4,卑微
