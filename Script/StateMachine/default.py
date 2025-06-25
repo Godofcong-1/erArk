@@ -1289,7 +1289,12 @@ def character_entertain_read(character_id: int):
     from Script.UI.Panel import borrow_book_panel
     character_data: game_type.Character = cache.character_data[character_id]
     # 检查是否要借书
-    borrow_book_panel.check_random_borrow_book(character_id)
+    can_borrow = borrow_book_panel.check_random_borrow_book(character_id)
+    if not can_borrow:
+        character_data.behavior.behavior_id = constant.Behavior.WAIT
+        character_data.behavior.duration = 1
+        character_data.state = constant.CharacterStatus.STATUS_WAIT
+        return
 
     for book_id_all in character_data.entertainment.borrow_book_id_set:
         book_id = book_id_all
@@ -2416,7 +2421,12 @@ def character_work_library_2(character_id: int):
         )
         general_movement_module(character_id, to_library)
     else:
-        borrow_book_panel.check_random_borrow_book(character_id)# 检查是否要借书
+        can_borrow = borrow_book_panel.check_random_borrow_book(character_id)# 检查是否要借书
+        if not can_borrow:
+            character_data.behavior.behavior_id = constant.Behavior.WAIT
+            character_data.behavior.duration = 1
+            character_data.state = constant.CharacterStatus.STATUS_WAIT
+            return
         for book_id_all in character_data.entertainment.borrow_book_id_set:
             book_id = book_id_all
         book_data = game_config.config_book[book_id]

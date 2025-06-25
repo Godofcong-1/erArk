@@ -73,7 +73,7 @@ def check_random_borrow_book(character_id):
 
     # 已借书则跳过
     if len(character_data.entertainment.borrow_book_id_set):
-        return 1
+        return 0
     # 未借书则随机借书
     else:
         # 遍历获得所有没借的书id
@@ -105,7 +105,7 @@ def check_random_borrow_book(character_id):
         cache.rhodes_island.book_borrow_dict[borrow_book_id] = character_id
         character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
         # print(f"debug {character_data.name}借了书{borrow_book_id}")
-        return 0
+        return 1
 
 
 def can_read_book(character_id: int, book_cid: int) -> bool:
