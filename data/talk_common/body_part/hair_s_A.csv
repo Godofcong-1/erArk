@@ -12,6 +12,7 @@ str,str,int,str,str
 5,body_part_hair_s_A,0,high_1,垂顺
 6,body_part_hair_s_A,0,high_1,亮泽
 7,body_part_hair_s_A,0,high_1,清香
+8,body_part_hair_s_A,0,high_1,浓密
 
 100,body_part_hair_s_A,0,CVP_A2_T|102_E_1,细软
 101,body_part_hair_s_A,0,CVP_A2_T|102_E_1,蓬松
@@ -38,7 +39,6 @@ str,str,int,str,str
 
 180,body_part_hair_s_A,0,CVP_A2_T|106_E_1,丰盈
 181,body_part_hair_s_A,0,CVP_A2_T|106_E_1,优雅
-183,body_part_hair_s_A,0,CVP_A2_T|106_E_1,浓密
 
 200,body_part_hair_s_A,0,CVP_A2_T|107_E_1,端庄
 201,body_part_hair_s_A,0,CVP_A2_T|107_E_1,温婉
@@ -57,3 +57,11 @@ str,str,int,str,str
 
 260,body_part_hair_s_A,0,target_visitor_flag_1,清爽
 261,body_part_hair_s_A,0,target_visitor_flag_1,整洁
+
+301,body_part_hair_s_A,0,t_unconscious_flag_2,凌乱
+302,body_part_hair_s_A,0,t_unconscious_flag_2,酒气
+303,body_part_hair_s_A,0,t_unconscious_flag_2,散乱
+
+401,body_part_hair_s_A,0,h_in_bathroom,湿漉漉
+402,body_part_hair_s_A,0,h_in_bathroom,湿透
+403,body_part_hair_s_A,0,h_in_bathroom,滴水的
