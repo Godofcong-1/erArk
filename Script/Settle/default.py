@@ -7678,7 +7678,7 @@ def handle_recover_from_unconscious_add_adjust(
         return
     # 如果交互对象是在H中，则进行恢复意识结算
     character_data: game_type.Character = cache.character_data[character_id]
-    if handle_premise.handle_is_h(character_data.target_character_id):
+    if handle_premise.handle_self_is_h(character_data.target_character_id):
         handle_npc_ai_in_h.recover_from_unconscious_h(character_id)
 
 

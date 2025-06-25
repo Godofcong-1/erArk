@@ -717,7 +717,7 @@ def extra_exp_settle(
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 自己在H中且群交已开启，则群交经验+1
-    if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
+    if handle_premise.handle_self_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
         base_chara_experience_common_settle(0, 56, change_data=change_data)
 
     # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1

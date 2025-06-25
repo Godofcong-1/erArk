@@ -15598,7 +15598,7 @@ def handle_now_show_h_instruct(character_id: int) -> int:
     int -- 权重
     """
     # H中
-    if handle_is_h(0):
+    if handle_self_is_h(0):
         # 隐奸且已经切换到正常模式，则不显示
         if handle_hidden_sex_mode_ge_1(0) and handle_show_non_h_in_hidden_sex(0):
             return 0

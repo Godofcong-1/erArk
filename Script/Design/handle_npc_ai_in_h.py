@@ -123,7 +123,7 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     # 如果不在同一位置
     if handle_premise.handle_not_in_player_scene(character_id):
         # 结束H状态
-        if handle_premise.handle_is_h(character_id):
+        if handle_premise.handle_self_is_h(character_id):
             character_data.sp_flag.is_h = False
             character_data.sp_flag.unconscious_h = 0
             character_data.behavior.behavior_id = constant.Behavior.END_H

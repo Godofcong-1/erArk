@@ -64,7 +64,7 @@ def base_chara_hp_mp_common_settle(
     hp_adjust = dregree_dict[degree][0]
     mp_adjust = dregree_dict[degree][1]
     # 群交中消耗减少
-    if handle_premise.handle_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
+    if handle_premise.handle_self_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
         # 玩家减为三分之一
         if character_id == 0:
             hp_adjust /= 3
