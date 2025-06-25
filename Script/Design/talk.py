@@ -491,7 +491,7 @@ def talk_common_judge(now_talk: str) -> str:
                 # 获取对应的部位字典
                 part_dict = game_config.config_talk_common_cid_list_by_part[key]
                 # 如果是部位的短词，则把通用A也加到A键里
-                if "_s" in key:
+                if "_s" in key and "penis" not in key and "hair" not in key:
                     common_s_A_list = game_config.config_talk_common_cid_list_by_part["common_s"]["A"]
                     if "A" in part_dict:
                         part_dict["A"] += common_s_A_list
