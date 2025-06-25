@@ -110,6 +110,7 @@ class ItemTextEdit(QWidget):
             {"text": "玩家交互对象后穴描述短词", "slot": lambda: self.insert_text('{anal_s}')},
             {"text": "玩家交互对象尿道描述短词", "slot": lambda: self.insert_text('{urethra_s}')},
             {"text": "玩家交互对象腿部描述短词", "slot": lambda: self.insert_text('{legs_s}')},
+            {"text": "玩家交互对象腿部描述短词", "slot": lambda: self.insert_text('{feet_s}')},
         ]
 
         # 服装名菜单项
