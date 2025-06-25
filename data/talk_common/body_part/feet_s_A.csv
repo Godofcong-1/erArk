@@ -1,4 +1,7 @@
 cid,type_id,adv_id,premise,context
+组件id,组件类型名,组件限定的剧情npcid,前提id,组件内容
+str,str,int,str,str
+0,0,0,0,1
 组件配置数据,,,,
 
 100,body_part_feet_s_A,0,high_1,纤细
@@ -107,4 +110,3 @@ cid,type_id,adv_id,premise,context
 2320,body_part_feet_s_A,0,CVP_A2_A|0_G_6,敏感
 2321,body_part_feet_s_A,0,CVP_A2_A|0_G_6,极敏
 2323,body_part_feet_s_A,0,CVP_A2_A|0_G_6,超敏
-2324,body_part_feet_s_A,0,CVP_A2_A|0_G_6,过敏
