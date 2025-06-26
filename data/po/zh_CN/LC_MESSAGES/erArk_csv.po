@@ -19001,15 +19001,107 @@ msgid "节日礼物"
 msgstr ""
 
 #: .\data\csv\Gift_Items.csv:11
-msgid "药物"
+msgid "21"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:11
+msgid "丰胸药"
 msgstr ""
 
 #: .\data\csv\Gift_Items.csv:12
-msgid "服装"
+msgid "22"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:12
+msgid "缩胸药"
 msgstr ""
 
 #: .\data\csv\Gift_Items.csv:13
+msgid "23"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:13
+msgid "丰臀药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:14
+msgid "24"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:14
+msgid "缩臀药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:15
+msgid "25"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:15
+msgid "丰腿药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:16
+msgid "26"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:16
+msgid "瘦腿药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:17
+msgid "27"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:17
+msgid "丰足药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:18
+msgid "28"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:18
+msgid "瘦足药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:19
+msgid "31"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:19
+msgid "外表年龄增长药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:20
+msgid "32"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:20
+msgid "外表年龄减少药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:21
+msgid "33"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:21
+msgid "泌乳药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:22
+msgid "34"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:22
+msgid "停乳药"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:23
 msgid "自己的阴茎倒模"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:24
+msgid "服装"
 msgstr ""
 
 #: .\data\csv\Hidden_Level.csv:6
@@ -19102,6 +19194,10 @@ msgstr ""
 
 #: .\data\csv\InstructJudge.csv:19
 msgid "道具"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:20
+msgid "药物"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:21
@@ -19205,15 +19301,7 @@ msgid "使用后会让自己的阴茎缩小一个级别，越小的阴茎带来�
 msgstr ""
 
 #: .\data\csv\Item.csv:13
-msgid "丰胸药"
-msgstr ""
-
-#: .\data\csv\Item.csv:13
 msgid "使用后会让对方的胸部增大一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:14
-msgid "缩胸药"
 msgstr ""
 
 #: .\data\csv\Item.csv:14
@@ -19221,15 +19309,7 @@ msgid "使用后会让对方的胸部缩小一个级别"
 msgstr ""
 
 #: .\data\csv\Item.csv:15
-msgid "丰臀药"
-msgstr ""
-
-#: .\data\csv\Item.csv:15
 msgid "使用后会让对方的臀部增大一个级别"
-msgstr ""
-
-#: .\data\csv\Item.csv:16
-msgid "缩臀药"
 msgstr ""
 
 #: .\data\csv\Item.csv:16
@@ -19237,15 +19317,7 @@ msgid "使用后会让对方的臀部缩小一个级别"
 msgstr ""
 
 #: .\data\csv\Item.csv:17
-msgid "丰腿药"
-msgstr ""
-
-#: .\data\csv\Item.csv:17
 msgid "使用后会让对方的腿部变成丰满的肉腿"
-msgstr ""
-
-#: .\data\csv\Item.csv:18
-msgid "瘦腿药"
 msgstr ""
 
 #: .\data\csv\Item.csv:18
@@ -19253,15 +19325,7 @@ msgid "使用后会让对方的腿部变成纤细的细腿"
 msgstr ""
 
 #: .\data\csv\Item.csv:19
-msgid "丰足药"
-msgstr ""
-
-#: .\data\csv\Item.csv:19
 msgid "使用后会让对方的脚部变成细长的长足"
-msgstr ""
-
-#: .\data\csv\Item.csv:20
-msgid "瘦足药"
 msgstr ""
 
 #: .\data\csv\Item.csv:20
@@ -19269,15 +19333,7 @@ msgid "使用后会让对方的脚部变成小巧的小足"
 msgstr ""
 
 #: .\data\csv\Item.csv:21
-msgid "外表年龄增长药"
-msgstr ""
-
-#: .\data\csv\Item.csv:21
 msgid "使用后会让对方的外表年龄增长一个级别，最大为【人妻】"
-msgstr ""
-
-#: .\data\csv\Item.csv:22
-msgid "外表年龄减少药"
 msgstr ""
 
 #: .\data\csv\Item.csv:22
@@ -19285,15 +19341,7 @@ msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝�
 msgstr ""
 
 #: .\data\csv\Item.csv:23
-msgid "泌乳药"
-msgstr ""
-
-#: .\data\csv\Item.csv:23
 msgid "使用后会让对方的乳房开始分泌奶水"
-msgstr ""
-
-#: .\data\csv\Item.csv:24
-msgid "停乳药"
 msgstr ""
 
 #: .\data\csv\Item.csv:24
