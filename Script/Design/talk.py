@@ -209,7 +209,6 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         # 如果口上文本是大括号的地文文本，则获取行为id
         elif talk_text.startswith("{") and talk_text.endswith("}"):
             now_behavior_id = talk_text[1:-1]
-            character_id = 0
         # 玩家读书时额外绘制当前书籍的内容节选
         if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
             from Script.UI.Panel import read_book_panel
@@ -468,16 +467,18 @@ def special_code_judge(now_talk: str):
 
     return now_talk, special_code
 
-def talk_common_judge(now_talk: str) -> str:
+def talk_common_judge(now_talk: str, character_id: int) -> str:
     """
     转换文本中的通用占位符为对应文本
     参数:
         now_talk (str): 原始文本，包含 {key} 占位符
+        character_id (int): 角色ID，用于获取相关配置
     返回:
         str: 转换后的文本
     """
     # 固定为玩家触发
-    character_id = 0
+    pl_character_id = 0
+    pl_character_data: game_type.Character = cache.character_data[0]
     # 已计算过的前提字典
     calculated_premise_dict = {}
     # 遍历所有通用占位符的 key 和对应的 cid 集合
@@ -486,6 +487,10 @@ def talk_common_judge(now_talk: str) -> str:
         pattern = re.compile(r'\{' + re.escape(key) + r'\}')
         # 如果文本中存在该占位符
         if pattern.search(now_talk):
+            # print(f"debug 在纸娃娃地文中处理通用占位符 {key}，角色ID: {character_id}")
+            # 该角色非玩家，非玩家交互对象，与玩家在同一地点，则将玩家的交互对象设置为该角色
+            if character_id != 0 and pl_character_data.target_character_id != character_id and handle_premise.handle_in_player_scene(character_id):
+                pl_character_data.target_character_id = character_id
             # 如果该key存在于部位列表中
             if key in game_config.config_talk_common_cid_list_by_part:
                 # 获取对应的部位字典
@@ -519,7 +524,7 @@ def talk_common_judge(now_talk: str) -> str:
                                 body_part_flag = False
                             # 计算权重
                             weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                                premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
+                                premise_dict, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                             )
                             if weight:
                                 now_talk_data.setdefault(weight, []).append(talk_common_cid)
@@ -550,7 +555,7 @@ def talk_common_judge(now_talk: str) -> str:
                         body_part_flag = False
                     # 计算权重
                     weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                        premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
+                        premise_dict, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                     )
                     if weight:
                         now_talk_data.setdefault(weight, []).append(talk_common_cid)
@@ -565,7 +570,7 @@ def talk_common_judge(now_talk: str) -> str:
                     now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
 
-def code_text_to_draw_text(now_talk: str, character_id: int):
+def code_text_to_draw_text(talk_text: str, character_id: int):
     """
     将文本中的代码转化为对应的文本 \n
     Keyword arguments: \n
@@ -578,11 +583,22 @@ def code_text_to_draw_text(now_talk: str, character_id: int):
     player_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
+    # 如果口上文本是大括号的地文文本，则获取行为id
+    common_talk_flag = False
+    if talk_text.startswith("{") and talk_text.endswith("}"):
+        common_talk_flag = True
+
     # 输入的原文本
-    now_talk_text, special_code = special_code_judge(now_talk)
+    now_talk_text, special_code = special_code_judge(talk_text)
 
     # 替换通用文本
-    now_talk_text = talk_common_judge(now_talk_text)
+    now_talk_text = talk_common_judge(now_talk_text, character_id)
+
+    # 如果是纸娃娃地文文本，则将当前id改为玩家id
+    if common_talk_flag:
+        character_id = 0
+        character_data = cache.character_data[character_id]
+        target_data = cache.character_data[character_data.target_character_id]
 
     # 专属称呼处理
     # 他人对自己的称呼
