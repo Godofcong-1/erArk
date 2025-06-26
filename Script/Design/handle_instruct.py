@@ -1617,7 +1617,8 @@ def handle_listen_complaint():
 )
 def handle_give_gift():
     """处理赠送礼物指令"""
-    now_draw = normal_panel.Gift_Panel(width)
+    from Script.UI.Panel import gift_panel
+    now_draw = gift_panel.Gift_Panel(width)
     now_draw.draw()
 
 
