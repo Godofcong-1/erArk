@@ -3,8 +3,8 @@ cid,premise_name,premise_type,premise
 debug_mode_setting_on,DEBUG_MODE_SETTING_ON,系统状态,设置里可以开启debug模式
 debug_mode_on,DEBUG_MODE_ON,系统状态,现在是debug模式
 debug_mode_off,DEBUG_MODE_OFF,系统状态,现在不是debug模式
-is_h,IS_H,系统状态,当前自己或交互对象为H模式
-not_h,NOT_H,系统状态,当前自己和交互对象均不是H模式
+is_h,IS_H,系统状态,当前玩家或玩家交互对象为H模式
+not_h,NOT_H,系统状态,当前玩家或玩家交互对象均不是H模式
 self_is_h,SELF_IS_H,系统状态,当前自己为H模式
 self_not_h,SELF_NOT_H,系统状态,当前自己不是H模式
 t_is_h,TARGET_IS_H,系统状态,当前交互对象为H模式

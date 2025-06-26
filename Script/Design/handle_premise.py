@@ -15317,7 +15317,7 @@ def handle_have_collection(character_id: int) -> int:
 @add_premise(constant_promise.Premise.IS_H)
 def handle_is_h(character_id: int) -> int:
     """
-    当前自己或交互对象为H模式
+    当前玩家或玩家交互对象为H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -15333,7 +15333,7 @@ def handle_is_h(character_id: int) -> int:
 @add_premise(constant_promise.Premise.NOT_H)
 def handle_not_h(character_id: int) -> int:
     """
-    当前自己和交互对象均不是H模式
+    当前玩家或玩家交互对象均不是H模式
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -15355,7 +15355,7 @@ def handle_self_is_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[0]
+    character_data: game_type.Character = cache.character_data[character_id]
     return character_data.sp_flag.is_h
 
 
@@ -15368,8 +15368,7 @@ def handle_self_not_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[0]
-    return not character_data.sp_flag.is_h
+    return not handle_self_is_h(character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_IS_H)
@@ -15381,9 +15380,8 @@ def handle_t_is_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[0]
-    target_data = cache.character_data[character_data.target_character_id]
-    return target_data.sp_flag.is_h
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_is_h(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_NOT_H)
@@ -15395,9 +15393,8 @@ def handle_t_not_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[0]
-    target_data = cache.character_data[character_data.target_character_id]
-    return not target_data.sp_flag.is_h
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_t_is_h(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.GROUP_SEX_MODE_ON)
