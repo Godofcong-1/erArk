@@ -235,16 +235,14 @@ class ItemNameDraw:
     def use_drug(self):
         """使用药剂"""
         pl_character_data = cache.character_data[0]
-        target_character_id = pl_character_data.target_character_id
-        target_character_data = cache.character_data[target_character_id]
         # 根据道具id获取道具效果
         item_data = game_config.config_item[self.item_id]
         sanity_point_add = item_data.effect
         item_tag = item_data.tag
-        # 如果是对NPC使用的药剂，且当前没有NPC交互对象，则输出错误信息并返回
-        if item_tag == "npc_use" and target_character_id == 0:
+        # 如果是对NPC使用的药剂，提示玩家通过赠送礼物系统使用
+        if item_tag == "npc_use":
             now_draw = draw.WaitDraw()
-            now_draw.text = _("\n当前没有交互对象，无法使用{0}\n\n").format(item_data.name)
+            now_draw.text = _("\n{0}需要通过【赠送礼物】功能对NPC使用\n\n").format(item_data.name)
             now_draw.width = window_width
             now_draw.draw()
             return
@@ -272,56 +270,6 @@ class ItemNameDraw:
             pl_character_data.pl_ability.jj_size = max(pl_character_data.pl_ability.jj_size, 0)
             size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
             now_draw.text += _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
-        # 丰胸药
-        elif self.item_id == 21:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [121, 122, 123, 124, 125], True, _("胸部"))
-        # 缩胸药
-        elif self.item_id == 22:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [121, 122, 123, 124, 125], False, _("胸部"))
-        # 丰臀药
-        elif self.item_id == 23:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [126, 127, 128], True, _("臀部"))
-        # 缩臀药
-        elif self.item_id == 24:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [126, 127, 128], False, _("臀部"))
-        # 丰腿药
-        elif self.item_id == 25:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [129, 130], True, _("腿部"))
-        # 瘦腿药
-        elif self.item_id == 26:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [129, 130], False, _("腿部"))
-        # 丰足药
-        elif self.item_id == 27:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [131, 132], True, _("足部"))
-        # 瘦足药
-        elif self.item_id == 28:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [131, 132], False, _("足部"))
-        # 外表年龄增长药
-        elif self.item_id == 31:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [103, 104, 105, 106, 107], True, _("外表年龄"))
-        # 外表年龄减少药
-        elif self.item_id == 32:
-            now_draw.text += handle_talent.body_part_talent_update(target_character_id, [103, 104, 105, 106, 107], False, _("外表年龄"))
-        # 泌乳药
-        elif self.item_id == 33:
-            # 如果已经有泌乳，则不再增加
-            if target_character_data.talent[27] == 1:
-                now_draw.text += _("{0}已经有【泌乳】了，无法再获得【泌乳】\n".format(target_character_data.name))
-                # 道具数量增加1
-                pl_character_data.item[self.item_id] += 1
-            else:
-                target_character_data.talent[27] = 1
-                now_draw.text += _("{0}获得了【泌乳】\n".format(target_character_data.name))
-        # 停乳药
-        elif self.item_id == 34:
-            # 如果没有泌乳，则不再减少
-            if target_character_data.talent[27] == 0:
-                now_draw.text += _("{0}没有【泌乳】，无法失去【泌乳】\n".format(target_character_data.name))
-                # 道具数量增加1
-                pl_character_data.item[self.item_id] += 1
-            else:
-                target_character_data.talent[27] = 0
-                now_draw.text += _("{0}失去了【泌乳】\n".format(target_character_data.name))
 
         # 绘制使用道具信息
         now_draw.width = window_width

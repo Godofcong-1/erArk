@@ -7722,7 +7722,13 @@ def handle_favorability_gift_add_adjust(
     # 如果没有礼物则返回
     if gift_id == 0:
         return
+    
     gift_data = game_config.config_gift_items[gift_id]
+    if gift_data.type == 11:
+        # 这是药物ID，执行药物使用逻辑
+        from Script.UI.Panel import gift_panel
+        gift_panel.handle_drug_use_effect(character_data.target_character_id, gift_id)
+        return
     # 话术修正
     talk_adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
     # 道歉礼物
