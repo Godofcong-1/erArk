@@ -788,6 +788,11 @@ def insert_position_effect(character_id: int, change_data: game_type.CharacterSt
 
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
+    # 当前不在H中，当前有阴茎插入，则重置插入
+    if not handle_premise.handle_self_is_h(character_id) and character_data.h_state.insert_position != -1:
+        # 重置插入位置
+        character_data.h_state.insert_position = -1
+        character_data.h_state.insert_position_change_save = -1
     # 当前有阴茎插入、当前位置为玩家位置
     if (
         character_data.h_state.insert_position != -1 and
