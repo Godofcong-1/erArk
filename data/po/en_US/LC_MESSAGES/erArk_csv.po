@@ -18367,7 +18367,7 @@ msgstr "After usage, increase the target's age by one stage, up to [Wife]"
 msgid "外表年龄减少药"
 msgstr "Age decreasing medicine"
 
-msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝莉】"
+msgid "使用后会让对方的外表年龄减少一个级别，最小为【幼女】"
 msgstr "After usage, decrease the target's age by one stage, up to [Wife]"
 
 msgid "泌乳药"

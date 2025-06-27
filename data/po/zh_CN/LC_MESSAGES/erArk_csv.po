@@ -19337,7 +19337,7 @@ msgid "使用后会让对方的外表年龄增长一个级别，最大为【人�
 msgstr ""
 
 #: .\data\csv\Item.csv:22
-msgid "使用后会让对方的外表年龄减少一个级别，最小为【萝莉】"
+msgid "使用后会让对方的外表年龄减少一个级别，最小为【幼女】"
 msgstr ""
 
 #: .\data\csv\Item.csv:23
