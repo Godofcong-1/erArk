@@ -243,22 +243,73 @@ class Gift_Panel:
         drug_id -- 药物ID
         target_character_data -- 目标角色数据
         """
-        return_flag = True
+        effective_flag = True
+        draw_text = ""
+        # 丰胸药：如果目标已是爆乳则无效
+        if drug_id == 21:
+            effective_flag = not target_character_data.talent[125]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最大的【爆乳】了，无法使用丰胸药\n").format(target_character_data.name)
+        # 缩胸药：如果目标已是绝壁则无效
+        elif drug_id == 22:
+            effective_flag = not target_character_data.talent[121]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最小的【绝壁】了，无法使用缩胸药\n").format(target_character_data.name)
+        # 丰臀药：如果目标已是巨臀则无效
+        elif drug_id == 23:
+            effective_flag = not target_character_data.talent[128]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最大的【巨臀】了，无法使用丰臀药\n").format(target_character_data.name)
+        # 缩臀药：如果目标已是小臀则无效
+        elif drug_id == 24:
+            effective_flag = not target_character_data.talent[126]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最小的【小臀】了，无法使用缩臀药\n").format(target_character_data.name)
+        # 丰腿药：如果目标已是肉腿则无效
+        elif drug_id == 25:
+            effective_flag = not target_character_data.talent[130]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是【肉腿】了，无法使用丰腿药\n").format(target_character_data.name)
+        # 瘦腿药：如果目标已是细腿则无效
+        elif drug_id == 26:
+            effective_flag = not target_character_data.talent[129]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是【细腿】了，无法使用瘦腿药\n").format(target_character_data.name)
+        # 丰足药：如果目标已是长足则无效
+        elif drug_id == 27:
+            effective_flag = not target_character_data.talent[132]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是【长足】了，无法使用丰足药\n").format(target_character_data.name)
+        # 瘦足药：如果目标已是小足则无效
+        elif drug_id == 28:
+            effective_flag = not target_character_data.talent[131]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是【小足】了，无法使用瘦足药\n").format(target_character_data.name)
+        # 外表年龄增长药：如果目标已是人妻则无效
+        elif drug_id == 31:
+            effective_flag = not target_character_data.talent[107]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最大的【人妻】了，无法使用外表年龄增长药\n").format(target_character_data.name)
+        # 外表年龄减少药：如果目标已是幼女则无效
+        elif drug_id == 32:
+            effective_flag = not target_character_data.talent[102]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经是最小的【幼女】了，无法使用外表年龄减少药\n").format(target_character_data.name)
         # 泌乳药：如果目标已有泌乳素质则无效
-        if drug_id == 33:
-            return_flag = not target_character_data.talent[27]
-            if not return_flag:
-                now_draw = draw.WaitDraw()
-                draw_text = _("\n  {0}已经有泌乳素质了，无法使用泌乳药\n").format(target_character_data.name)
-                now_draw.text = draw_text
-                now_draw.draw()
+        elif drug_id == 33:
+            effective_flag = not target_character_data.talent[27]
+            if not effective_flag:
+                draw_text = _("\n  {0}已经在【泌乳】了，无法使用泌乳药\n").format(target_character_data.name)
         # 停乳药：如果目标没有泌乳素质则无效
         elif drug_id == 34:
-            return_flag = target_character_data.talent[27]
-            if return_flag:
-                now_draw = draw.WaitDraw()
-                draw_text = _("\n  {0}没有泌乳素质，无法使用停乳药\n").format(target_character_data.name)
-                now_draw.text = draw_text
-                now_draw.draw()
-        # 其他药物都有效（身体部位修改药物等）
-        return return_flag
+            effective_flag = target_character_data.talent[27]
+            if not effective_flag:
+                draw_text = _("\n  {0}没有在【泌乳】，无法使用停乳药\n").format(target_character_data.name)
+        
+        # 如果药物无效，则绘制提示信息
+        if not effective_flag:
+            now_draw = draw.WaitDraw()
+            now_draw.text = draw_text
+            now_draw.draw()
+
+        return effective_flag
