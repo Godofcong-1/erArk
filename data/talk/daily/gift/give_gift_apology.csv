@@ -3,7 +3,7 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-1,give_gift,0,sys_0&CVP_A1_Gift|2_G_0,{Name}向{TargetName}赠送了用于道歉的礼物，获得了她的原谅
+1,give_gift,0,to_do&CVP_A1_Gift|2_G_0,{Name}向{TargetName}赠送了用于道歉的礼物，获得了她的原谅
 1000,give_gift,0,CVP_A2_T|102_E_1&CVP_A1_Gift|2_G_0,{Name}面带歉意地走向{TargetName}，小心翼翼地递出一份包装精美的礼物。\n年幼的{TargetName}好奇地接过礼物，眨着天真无邪的大眼睛。\n{Name}低声向她道歉，为之前那次过于粗暴的行为表示深深的歉意，承诺不会再犯类似的错误。\n小小的{TargetName}似乎并不完全理解发生了什么，但看到{Name}真诚的态度和漂亮的礼物，天真地点点头表示原谅，稚嫩的小手紧紧抱住礼物，脸上绽放出纯真的笑容。
 1001,give_gift,0,CVP_A2_T|102_E_1&CVP_A1_Gift|2_G_0,{Name}手捧精心挑选的礼物，怀着忐忑的心情来到{TargetName}面前。\n幼小的{TargetName}看到{Name}后，身体微微颤抖，似乎还记得那次不愉快的经历。\n{Name}温柔地将礼物递给她，轻声道歉，表示为之前的不当举动感到羞愧。\n{TargetName}小心翼翼地接过礼物，打开后眼睛立刻亮了起来，她童真地笑着接受了道歉，稚嫩的脸上重新恢复了纯真与信任。
 1002,give_gift,0,CVP_A2_T|102_E_1&CVP_A1_Gift|2_G_0,带着歉意的{Name}找到了正在角落里玩耍的{TargetName}，轻轻地呼唤着她的名字。\n年幼的{TargetName}起初有些畏缩，但看到{Name}手中拿着的精美礼物后，眼中闪烁起好奇的光芒。\n{Name}单膝跪地，将自己降到与{TargetName}相同的高度，真诚地为之前那次过火的行为道歉，并承诺会更加尊重她。\n小小的{TargetName}虽然不能完全理解成人世界的复杂，但她感受到了{Name}的诚意，开心地接受了礼物，稚嫩的笑容表明她已经原谅了{Name}。

@@ -55,9 +55,9 @@ def handle_drug_use_effect(character_id: int, drug_id: int):
     elif drug_id == 28:  # 瘦足药
         now_draw.text += handle_talent.body_part_talent_update(character_id, [131, 132], False, _("足部"))
     elif drug_id == 31:  # 外表年龄增长药
-        now_draw.text += handle_talent.body_part_talent_update(character_id, [103, 104, 105, 106, 107], True, _("外表年龄"))
+        now_draw.text += handle_talent.body_part_talent_update(character_id, [102, 103, 104, 105, 106, 107], True, _("外表年龄"))
     elif drug_id == 32:  # 外表年龄减少药
-        now_draw.text += handle_talent.body_part_talent_update(character_id, [103, 104, 105, 106, 107], False, _("外表年龄"))
+        now_draw.text += handle_talent.body_part_talent_update(character_id, [102, 103, 104, 105, 106, 107], False, _("外表年龄"))
     elif drug_id == 33:  # 泌乳药
         character_data.talent[27] = 1
         now_draw.text += _("{0}获得了【泌乳】\n").format(character_data.name)
