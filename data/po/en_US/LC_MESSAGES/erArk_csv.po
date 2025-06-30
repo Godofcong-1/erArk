@@ -18361,7 +18361,7 @@ msgstr "After usage, transforms the target's feet to small feet"
 msgid "外表年龄增长药"
 msgstr "Age increasing medicine"
 
-msgid "使用后会让对方的外表年龄增长一个级别，最大为【人妻】"
+msgid "使用后会让对方的外表年龄增长一个级别，最大为【熟女】"
 msgstr "After usage, increase the target's age by one stage, up to [Wife]"
 
 msgid "外表年龄减少药"

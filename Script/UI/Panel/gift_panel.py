@@ -285,11 +285,12 @@ class Gift_Panel:
             effective_flag = not target_character_data.talent[131]
             if not effective_flag:
                 draw_text = _("\n  {0}已经是【小足】了，无法使用瘦足药\n").format(target_character_data.name)
-        # 外表年龄增长药：如果目标已是人妻则无效
+        # 外表年龄增长药：如果目标已是熟女或人妻则无效
         elif drug_id == 31:
-            effective_flag = not target_character_data.talent[107]
+            if target_character_data.talent[106] or target_character_data.talent[107]:
+                effective_flag = False
             if not effective_flag:
-                draw_text = _("\n  {0}已经是最大的【人妻】了，无法使用外表年龄增长药\n").format(target_character_data.name)
+                draw_text = _("\n  {0}已经是最大的【熟女】或【人妻】了，无法使用外表年龄增长药\n").format(target_character_data.name)
         # 外表年龄减少药：如果目标已是幼女则无效
         elif drug_id == 32:
             effective_flag = not target_character_data.talent[102]
