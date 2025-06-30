@@ -746,6 +746,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         socks_name = player_data.behavior.socks_name
     if socks_name == "":
         socks_name = _("没有穿袜子的双腿")
+    up_cloth_name = ""
     if character_id != 0 and len(character_data.cloth.cloth_wear[5]):
         for Up_cloth_Id in character_data.cloth.cloth_wear[5]:
             up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
