@@ -660,7 +660,7 @@ class Chat_Ai_Setting_Panel:
 
     def get_completion(self, client, key_type):
         """获取AI的返回结果"""
-        if key_type == "OPENAI_API_KEY":
+        if key_type == "OPENAI_API_KEY" or key_type == "DEEPSEEK_API_KEY":
             return client.chat.completions.create(
                 model=cache.ai_setting.ai_chat_setting[5],
                 messages=[
@@ -677,3 +677,5 @@ class Chat_Ai_Setting_Panel:
             )
         elif key_type == "GEMINI_API_KEY":
             return client.generate_content("这是一条测试消息，如果收到请指直接回复1即可，不需要思考，不需要回复其他内容")
+        else:
+            raise ValueError(_("不支持的API密钥类型：{0}").format(key_type))
