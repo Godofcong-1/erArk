@@ -3785,11 +3785,11 @@ msgid "“诶……变态。”稍微有点困扰地用淡金色的眼睛看着{
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:432
-msgid "“不行。”果断地拒绝了的{TargetName}抱着胸口斜着身体看着{Name}，“不行……就算你这样求我……”\n“……诶……明明就是一块布而已不需要做到这种程度吧。”因为执着的{Name}，{TargetName}明显地露出了困扰的表情。\n“不，再怎么说也是女孩子的内衣……”皱着眉头拗不过{Name}的{TargetName}微微红着脸叹了一口气，“好了好了知道了，稍微让开一点。”\\n{TargetName}遮住重要的地方把{TagetPanName}拖了下来，把脸别到别的方向将内裤递给{Name}，“不许拿出去给别人看，知道了吗？”"
+msgid "“不行。”果断地拒绝了的{TargetName}抱着胸口斜着身体看着{Name}，“不行……就算你这样求我……”\n“……诶……明明就是一块布而已不需要做到这种程度吧。”因为执着的{Name}，{TargetName}明显地露出了困扰的表情。\n“不，再怎么说也是女孩子的内衣……”皱着眉头拗不过{Name}的{TargetName}微微红着脸叹了一口气，“好了好了知道了，稍微让开一点。”\\n{TargetName}遮住重要的地方把{TargetPanName}拖了下来，把脸别到别的方向将内裤递给{Name}，“不许拿出去给别人看，知道了吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:433
-msgid "{TargetName}带着惊讶和一点困扰的表情盯了{Name}一会。\n“……{PlayerNickName}还有这种奇怪的兴趣，明明只是少女身上的一块布料而已。”\n“虽然可以理解像{PlayerNickName}这种好色的雄性的想法啦，唉”轻轻地叹了一口气，用衣袖遮挡着私处将内裤慢慢脱了下来。\n一只手捏着刚刚脱下来还有点微热的{TagetPanName}递给{Name}一边严肃地嘱咐，“不许拿去做奇怪的事情，知道了吗？”"
+msgid "{TargetName}带着惊讶和一点困扰的表情盯了{Name}一会。\n“……{PlayerNickName}还有这种奇怪的兴趣，明明只是少女身上的一块布料而已。”\n“虽然可以理解像{PlayerNickName}这种好色的雄性的想法啦，唉”轻轻地叹了一口气，用衣袖遮挡着私处将内裤慢慢脱了下来。\n一只手捏着刚刚脱下来还有点微热的{TargetPanName}递给{Name}一边严肃地嘱咐，“不许拿去做奇怪的事情，知道了吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:434
@@ -3797,11 +3797,11 @@ msgid "“咕唔……”盯着{Name}的{TargetName}发出了奇怪的声音。\
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:435
-msgid "“诶……要内裤吗？”{TargetName}困扰地看着{Name}的眼睛，“明明只是女孩子身上的布而已……”\n“这样啊，很想要的话那就没办法了。”低垂下眼睛的{TargetName}开始脱掉下身的衣服，放下抬起的腿将还带着一些温度的{TagetPanName}塞进{Name}的手里。\n“……？没什么，只是一片布料的话也没有什么损失。”{TargetName}看向了别的地方。\n“而且只是因为被{PlayerNickName}请求了而已，请不要把{TargetName}和那些随便的女人相提并论。”"
+msgid "“诶……要内裤吗？”{TargetName}困扰地看着{Name}的眼睛，“明明只是女孩子身上的布而已……”\n“这样啊，很想要的话那就没办法了。”低垂下眼睛的{TargetName}开始脱掉下身的衣服，放下抬起的腿将还带着一些温度的{TargetPanName}塞进{Name}的手里。\n“……？没什么，只是一片布料的话也没有什么损失。”{TargetName}看向了别的地方。\n“而且只是因为被{PlayerNickName}请求了而已，请不要把{TargetName}和那些随便的女人相提并论。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:436
-msgid "“色狼……”听到了{Name}的请求之后，{TargetName}慢慢地红了脸。\n咬着下嘴唇似乎是进行了一些思想斗争之后{TargetName}叹了一口气，转过身慢慢地脱下了自己的内裤。\n“嗯……不给你的话估计会变得很麻烦，所以……”一只手捂着已经变成了真空的下腹部，一只手将刚刚脱下的{TagetPanName}塞到了{Name}的手中。\n害羞着用无奈的眼神看着{Name}的{TargetName}耷拉着耳朵，“要是拿去做奇怪的事情的话，不会原谅你的。”"
+msgid "“色狼……”听到了{Name}的请求之后，{TargetName}慢慢地红了脸。\n咬着下嘴唇似乎是进行了一些思想斗争之后{TargetName}叹了一口气，转过身慢慢地脱下了自己的内裤。\n“嗯……不给你的话估计会变得很麻烦，所以……”一只手捂着已经变成了真空的下腹部，一只手将刚刚脱下的{TargetPanName}塞到了{Name}的手中。\n害羞着用无奈的眼神看着{Name}的{TargetName}耷拉着耳朵，“要是拿去做奇怪的事情的话，不会原谅你的。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:437
@@ -3817,19 +3817,19 @@ msgid "“嗯……过来一点。”拉着{Name}的手，让{Name}靠近一点�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:440
-msgid "{TargetName}红着脸困扰地看着{Name}，“那个……脱掉的话里面会变成真空。”\n“想要看到{TargetName}真空的样子……诶……痴汉。”\n稍微有点生气地鼓着脸，将自己的{TagetPanName}脱下来的{TargetName}一边不安地磨蹭着什么都没有的股间，一边把内裤递给了{Name}。\n“到底是要内裤还是想要看女孩子真空啊……这个笨蛋”{TargetName}气呼呼地嘟囔着。"
+msgid "{TargetName}红着脸困扰地看着{Name}，“那个……脱掉的话里面会变成真空。”\n“想要看到{TargetName}真空的样子……诶……痴汉。”\n稍微有点生气地鼓着脸，将自己的{TargetPanName}脱下来的{TargetName}一边不安地磨蹭着什么都没有的股间，一边把内裤递给了{Name}。\n“到底是要内裤还是想要看女孩子真空啊……这个笨蛋”{TargetName}气呼呼地嘟囔着。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:441
-msgid "带着幽怨的表情，{TargetName}微微侧着头将刚刚脱下来还散发着热气的{TagetSocName}递给{Name}。\n一副似乎想说什么的样子的{TargetName}，细微地吐着害羞的热气，用漂亮的眼眸盯了{Name}好一会才移开。\n“明明直接用这边就好了……”"
+msgid "带着幽怨的表情，{TargetName}微微侧着头将刚刚脱下来还散发着热气的{TargetSocName}递给{Name}。\n一副似乎想说什么的样子的{TargetName}，细微地吐着害羞的热气，用漂亮的眼眸盯了{Name}好一会才移开。\n“明明直接用这边就好了……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:442
-msgid "“……”沉默着低垂着眼睛的{TargetName}用嘴叼着自己的上衣下摆，将腹部完全暴露在了{Name}的面前。\n一边红着脸一边一件件脱掉下半身的衣物，直至拉下自己的{TagetPanName}露出白嫩的下腹部。\n……略微有点慌张地把下半身的衣服一件件穿好的{TargetName}，一只手捂着变成了真空的下体，一只手将还带着些许湿气的{TagetPanName}递给{Name}。\n因为极度地害羞{TargetName}带着一些湿气的眼睛看着了其他方向，“请好好使用……”"
+msgid "“……”沉默着低垂着眼睛的{TargetName}用嘴叼着自己的上衣下摆，将腹部完全暴露在了{Name}的面前。\n一边红着脸一边一件件脱掉下半身的衣物，直至拉下自己的{TargetPanName}露出白嫩的下腹部。\n……略微有点慌张地把下半身的衣服一件件穿好的{TargetName}，一只手捂着变成了真空的下体，一只手将还带着些许湿气的{TargetPanName}递给{Name}。\n因为极度地害羞{TargetName}带着一些湿气的眼睛看着了其他方向，“请好好使用……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:443
-msgid "“诶……”{TargetName}露出了有些不知所措的表情，“变态的家伙。”\\n{TargetName}转过身，背对着{Name}翘起屁股一只一只地抬起脚将{TagetPanName}从股间脱下。\n短小的上衣完全没法遮盖{TargetName}的臀部。\n“好了，给。”淡色的眼睛带着幽怨的情绪看着{Name}，“不要用的太过头了。”"
+msgid "“诶……”{TargetName}露出了有些不知所措的表情，“变态的家伙。”\\n{TargetName}转过身，背对着{Name}翘起屁股一只一只地抬起脚将{TargetPanName}从股间脱下。\n短小的上衣完全没法遮盖{TargetName}的臀部。\n“好了，给。”淡色的眼睛带着幽怨的情绪看着{Name}，“不要用的太过头了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:444
@@ -3837,19 +3837,19 @@ msgid "听到了奇怪的要求的{TargetName}前后抖着耳朵思考了一会�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:445
-msgid "“……那样的话，可以请{PlayerNickName}帮忙脱下来吗？”\n高高地抬起脱掉了鞋子的腿的{TargetName}用惊人的柔韧性将小腿搭在了{Name}的肩膀上。\n牵着{Name}的手放在{TagetSocName}的边缘，一字马地大大地张开腿，完全不在意地大片大片漏出的春光的样子。\n“按照{PlayerNickName}的想法慢慢脱也可以，反正已经送给{PlayerNickName}了。”指尖从脚背一路下滑直到手指消失在大腿的根部，{TargetName}用充满暗示的眼神盯着{Name}的眼睛。"
+msgid "“……那样的话，可以请{PlayerNickName}帮忙脱下来吗？”\n高高地抬起脱掉了鞋子的腿的{TargetName}用惊人的柔韧性将小腿搭在了{Name}的肩膀上。\n牵着{Name}的手放在{TargetSocName}的边缘，一字马地大大地张开腿，完全不在意地大片大片漏出的春光的样子。\n“按照{PlayerNickName}的想法慢慢脱也可以，反正已经送给{PlayerNickName}了。”指尖从脚背一路下滑直到手指消失在大腿的根部，{TargetName}用充满暗示的眼神盯着{Name}的眼睛。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:446
-msgid "“想要穿着的袜子？意义不明……”\n双手抱在胸前的{TargetName}有点困扰地刮着自己的脸颊，“明明不是什么干净的东西，诶，真的很想要吗？”\n困扰地皱着眉毛勉强同意了的{TargetName}抬起腿慢慢脱掉自己的{TagetSocName}，露出了纤细的双足。\n“之后记得洗干净还给我哦。”"
+msgid "“想要穿着的袜子？意义不明……”\n双手抱在胸前的{TargetName}有点困扰地刮着自己的脸颊，“明明不是什么干净的东西，诶，真的很想要吗？”\n困扰地皱着眉毛勉强同意了的{TargetName}抬起腿慢慢脱掉自己的{TargetSocName}，露出了纤细的双足。\n“之后记得洗干净还给我哦。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:447
-msgid "{TargetName}稍微认真地盯着{Name}的脸看了一会，“不太好吧……因为是女孩子贴身的东西。”\n“……真的很想要吗？诶……不可思议。”托着下巴稍微思考了一会之后{TargetName}勉强同意了。\n一边扶着大腿脱掉脚上的{TagetSocName}递给{Name}一边叮嘱着，“不许拿去做奇怪的事情知道了吗？”"
+msgid "{TargetName}稍微认真地盯着{Name}的脸看了一会，“不太好吧……因为是女孩子贴身的东西。”\n“……真的很想要吗？诶……不可思议。”托着下巴稍微思考了一会之后{TargetName}勉强同意了。\n一边扶着大腿脱掉脚上的{TargetSocName}递给{Name}一边叮嘱着，“不许拿去做奇怪的事情知道了吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:448
-msgid "“答应我不要拿去做奇怪的事情哦。”抬起白嫩的大腿脱下{TagetSocName}的{TargetName}郑重地嘱咐{Name}。\n“有女孩子愿意给{PlayerNickName}穿过的袜子就已经很好了。”{TargetName}将还有点温度的{TagetSocName}放在{Name}的手中。\n“要是知道被拿去弄上了一些奇怪的液体的话，我是会生气的。”{TargetName}微红着脸平静地看着{Name}。"
+msgid "“答应我不要拿去做奇怪的事情哦。”抬起白嫩的大腿脱下{TargetSocName}的{TargetName}郑重地嘱咐{Name}。\n“有女孩子愿意给{PlayerNickName}穿过的袜子就已经很好了。”{TargetName}将还有点温度的{TargetSocName}放在{Name}的手中。\n“要是知道被拿去弄上了一些奇怪的液体的话，我是会生气的。”{TargetName}微红着脸平静地看着{Name}。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:449
@@ -3857,23 +3857,23 @@ msgid "{TargetName}盯着{Name}的眼睛似乎是在评估要不要给{Name}的�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:450
-msgid "“过来帮我一下。”示意{Name}扶住自己的腰的{TargetName}抬起腿将{TagetSocName}从自己的脚上脱了下来。\n递到{Name}的手中叠好的袜子还带着一些温度，“给你，不过刚刚买的新袜子这么快就被{PlayerNickName}要走了总感觉有点微妙。”\n“……？没什么，只是袜子的话之后再去买一双就好了。{PlayerNickName}喜欢就行。”{TargetName}微红着脸看向了别的地方。"
+msgid "“过来帮我一下。”示意{Name}扶住自己的腰的{TargetName}抬起腿将{TargetSocName}从自己的脚上脱了下来。\n递到{Name}的手中叠好的袜子还带着一些温度，“给你，不过刚刚买的新袜子这么快就被{PlayerNickName}要走了总感觉有点微妙。”\n“……？没什么，只是袜子的话之后再去买一双就好了。{PlayerNickName}喜欢就行。”{TargetName}微红着脸看向了别的地方。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:451
-msgid "“诶……明明穿着才好看吧。”弯下腰一点点脱掉自己的{TagetSocName}的{TargetName}变成了裸足。\n露出些许无奈的表情的{TargetName}将刚刚脱下来的{TagetSocName}递给{Name}。\n“虽然不是说想不出来{Name}之后会拿去做什么，但是请不要随意糟蹋了。”"
+msgid "“诶……明明穿着才好看吧。”弯下腰一点点脱掉自己的{TargetSocName}的{TargetName}变成了裸足。\n露出些许无奈的表情的{TargetName}将刚刚脱下来的{TargetSocName}递给{Name}。\n“虽然不是说想不出来{Name}之后会拿去做什么，但是请不要随意糟蹋了。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:452
-msgid "“关于袜子的，请求吗？嘛，虽然也不是不可以。”{TargetName}将{TagetSocName}脱下递给了{Name}。\n“只是因为被{PlayerNickName}拜托了所以愿意给而已。”似乎是不适应没穿袜子的感觉的{TargetName}似乎很在意自己露出来的脚。\n“脱掉了果然感觉很不舒服，不过被{PlayerNickName}拜托了也没有什么办法……”"
+msgid "“关于袜子的，请求吗？嘛，虽然也不是不可以。”{TargetName}将{TargetSocName}脱下递给了{Name}。\n“只是因为被{PlayerNickName}拜托了所以愿意给而已。”似乎是不适应没穿袜子的感觉的{TargetName}似乎很在意自己露出来的脚。\n“脱掉了果然感觉很不舒服，不过被{PlayerNickName}拜托了也没有什么办法……”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:453
-msgid "轻巧地从{TagetSocName}中抽出精致的双足的{TargetName}，平淡地用淡金色的眼瞳观察着{Name}，最后得出了一个结论。\n“……大变态。”\n裸着白嫩的双腿，{TargetName}将刚刚脱下的{TagetSocName}放入{Name}的手中。\n一副不在意地表情，红着脸的{TargetName}低声地补充了一句要求，“如果想要使用的话，记得报告一下感想。”"
+msgid "轻巧地从{TargetSocName}中抽出精致的双足的{TargetName}，平淡地用淡金色的眼瞳观察着{Name}，最后得出了一个结论。\n“……大变态。”\n裸着白嫩的双腿，{TargetName}将刚刚脱下的{TargetSocName}放入{Name}的手中。\n一副不在意地表情，红着脸的{TargetName}低声地补充了一句要求，“如果想要使用的话，记得报告一下感想。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:454
-msgid "“喜欢袜子的大色狼……”小声地骂了一句，弯下腰开始脱{TagetSocName}的{TargetName}不知道为什么左右摇晃着尾巴。\n刘海半遮挡着低垂的眼睛，似乎有些害羞的{TargetName}把还残留着温度的{TagetSocName}的递给{Name}。\n“虽然说是送给你了，但是不要用太过头了，好吗？”"
+msgid "“喜欢袜子的大色狼……”小声地骂了一句，弯下腰开始脱{TargetSocName}的{TargetName}不知道为什么左右摇晃着尾巴。\n刘海半遮挡着低垂的眼睛，似乎有些害羞的{TargetName}把还残留着温度的{TargetSocName}的递给{Name}。\n“虽然说是送给你了，但是不要用太过头了，好吗？”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:455
@@ -3893,7 +3893,7 @@ msgid "“呼……唔”露出来的小腹前后收缩着，从鼻息之间吐�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:459
-msgid "{TargetName}不满地看着从后面抱住自己的腰，将手指伸入{TagetPanName}的{Name}。\n“{PlayerNickName}……粗鲁的家伙……这样随意地玩弄女孩子重要的地方，{TagetPanName}也是会生气的。”\n虽然嘴上这样说着但是没有做出什么强迫{Name}停止的行为。\n“……唉……因为拒绝很麻烦所以这一次就特别允许{PlayerNickName}了。”无奈地叹了口气，{TagetPanName}被抚摸着微微颤抖起身体低垂下了眼睛。"
+msgid "{TargetName}不满地看着从后面抱住自己的腰，将手指伸入{TargetPanName}的{Name}。\n“{PlayerNickName}……粗鲁的家伙……这样随意地玩弄女孩子重要的地方，{TargetPanName}也是会生气的。”\n虽然嘴上这样说着但是没有做出什么强迫{Name}停止的行为。\n“……唉……因为拒绝很麻烦所以这一次就特别允许{PlayerNickName}了。”无奈地叹了口气，{TargetPanName}被抚摸着微微颤抖起身体低垂下了眼睛。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:460
@@ -3929,7 +3929,7 @@ msgid "“……”被做着过分的性骚扰的{TargetName}有些无奈地用�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:468
-msgid "被手指侵入了{TagetPanName}，抓住小小的阴蒂揉搓的{TargetName}皱起眉头。\n“反正没有什么感觉，跟自慰差不多。”仿佛是在小声地说给自己听的一样。\\n{TargetName}看向房间里面什么都没有的角落忍受着性骚扰，用大腿夹着{Name}上下搓弄的手指表示抗议。"
+msgid "被手指侵入了{TargetPanName}，抓住小小的阴蒂揉搓的{TargetName}皱起眉头。\n“反正没有什么感觉，跟自慰差不多。”仿佛是在小声地说给自己听的一样。\\n{TargetName}看向房间里面什么都没有的角落忍受着性骚扰，用大腿夹着{Name}上下搓弄的手指表示抗议。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:469
@@ -3945,7 +3945,7 @@ msgid "被{Name}的手指按住阴蒂的的{TargetName}抖了一下身体，瞪�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:472
-msgid "{TargetName}沉默着按住钻进了{TagetPanName}中的手腕，红着脸左右摇头。\n“……不行”微微颤抖地唇齿之间挤出了拒绝的词汇。\n……\n“嗯……嗯嗯……”，涣散着眼神捂着自己的嘴努力地压抑喘息声的{TargetName}被{Name}托着颤抖不止地腹部玩弄着。\n娇嫩的小豆豆只是简单地抚摸几下就变得湿润地不行，直到{Name}满足为止{TargetName}都因为阴蒂的快感而下流地抬着屁股，抓着{Name}的手腕努力地想要反抗。"
+msgid "{TargetName}沉默着按住钻进了{TargetPanName}中的手腕，红着脸左右摇头。\n“……不行”微微颤抖地唇齿之间挤出了拒绝的词汇。\n……\n“嗯……嗯嗯……”，涣散着眼神捂着自己的嘴努力地压抑喘息声的{TargetName}被{Name}托着颤抖不止地腹部玩弄着。\n娇嫩的小豆豆只是简单地抚摸几下就变得湿润地不行，直到{Name}满足为止{TargetName}都因为阴蒂的快感而下流地抬着屁股，抓着{Name}的手腕努力地想要反抗。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:473
@@ -4037,7 +4037,7 @@ msgid "因为手指的入侵，还没经过怎么开发的膣穴用力地缠住�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:495
-msgid "分开{TargetName}股间的{TagetPanName}，向小穴中插入了手指。\n“……！”{TargetName}就发出了疑惑的叫声。\n还不能好好地理解快感的锻炼过的紧致小穴用力地缠在了手指上，“快点，拔出去。”带着愠怒的表情，{TargetName}紧紧地盯着{Name}。"
+msgid "分开{TargetName}股间的{TargetPanName}，向小穴中插入了手指。\n“……！”{TargetName}就发出了疑惑的叫声。\n还不能好好地理解快感的锻炼过的紧致小穴用力地缠在了手指上，“快点，拔出去。”带着愠怒的表情，{TargetName}紧紧地盯着{Name}。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:496
@@ -4049,7 +4049,7 @@ msgid "“……嗯！？”露出难以置信地表情的{TargetName}拒绝似�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:498
-msgid "从背后挑开股间的{TagetPanName}，向着{TargetName}的膣穴插入的手指很顺利地陷了进去，两侧的肉壁有些慌乱地挤压在插入的手指上。\n“等……嗯……”想要反抗的{TargetName}因为被顶到了舒服的地方，抖着大腿向前扶住东西撑起自己的身体。\n“坏人……快点……嗯……出去。”小腹不安地上下起伏着，{TargetName}带着羞怒的表情回头看着{Name}。"
+msgid "从背后挑开股间的{TargetPanName}，向着{TargetName}的膣穴插入的手指很顺利地陷了进去，两侧的肉壁有些慌乱地挤压在插入的手指上。\n“等……嗯……”想要反抗的{TargetName}因为被顶到了舒服的地方，抖着大腿向前扶住东西撑起自己的身体。\n“坏人……快点……嗯……出去。”小腹不安地上下起伏着，{TargetName}带着羞怒的表情回头看着{Name}。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:499
@@ -4401,11 +4401,11 @@ msgid "{TargetName}面无表情地挑起阴茎，用两脚夹住慢慢地撸动�
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:586
-msgid "“确定要用脚吗？”穿着{TagetSocName}的双足从两边压在了阴茎上。\n慢慢地夹住开始了撸动，“这样子感觉舒服吗？嘛，{PlayerNickName}觉得可以就好。”"
+msgid "“确定要用脚吗？”穿着{TargetSocName}的双足从两边压在了阴茎上。\n慢慢地夹住开始了撸动，“这样子感觉舒服吗？嘛，{PlayerNickName}觉得可以就好。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:587
-msgid "{TargetName}伸出灵巧的脚尖用脚趾夹住{Name}的阴茎尖端慢慢地撸动着。\n明显能够感觉到{TagetSocName}特别的触感，“没有感觉不舒服的话，就这样可以吗？”\n“感觉触感太粗糙了的话停下来也可以。”"
+msgid "{TargetName}伸出灵巧的脚尖用脚趾夹住{Name}的阴茎尖端慢慢地撸动着。\n明显能够感觉到{TargetSocName}特别的触感，“没有感觉不舒服的话，就这样可以吗？”\n“感觉触感太粗糙了的话停下来也可以。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:588
@@ -4425,7 +4425,7 @@ msgid "“……！”{TargetName}下意识地放开了踩在阴茎上的脚。\
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:592
-msgid "“啊……射出来了。”正用{TagetSocName}包裹着的脚底按压阴茎的{TargetName}，露出了困扰的表情。\n“虽然{PlayerNickName}能够射出来这边也高兴，但是感觉脚上黏糊糊……想脱掉。”\\n{TargetName}抬起了穿着被精液濡湿的{TagetSocName}的脚底，淡淡地叹了口气。"
+msgid "“啊……射出来了。”正用{TargetSocName}包裹着的脚底按压阴茎的{TargetName}，露出了困扰的表情。\n“虽然{PlayerNickName}能够射出来这边也高兴，但是感觉脚上黏糊糊……想脱掉。”\\n{TargetName}抬起了穿着被精液濡湿的{TargetSocName}的脚底，淡淡地叹了口气。"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:593
@@ -5013,7 +5013,7 @@ msgid "“故意留下不必要的东西，{PlayerNickName}，恶趣味。”\\n
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:739
-msgid "{TargetName}整理了一下双腿上的{TagetSocName}，更加勾勒出自己修长的双腿。\n因为强烈的裸露感，脸颊微微泛红的{TargetName}淡淡地吐气，“{PlayerNickName}，可以不要再一直盯着看了吗？”\n“这种类似日常又实际上是裸着的反差感……感觉很羞耻，呃……嗯。”"
+msgid "{TargetName}整理了一下双腿上的{TargetSocName}，更加勾勒出自己修长的双腿。\n因为强烈的裸露感，脸颊微微泛红的{TargetName}淡淡地吐气，“{PlayerNickName}，可以不要再一直盯着看了吗？”\n“这种类似日常又实际上是裸着的反差感……感觉很羞耻，呃……嗯。”"
 msgstr ""
 
 #: .\data\talk\chara\0204_白金.csv:740
@@ -8181,43 +8181,43 @@ msgid "蹲下来抱住{TargetName}吻了上去\n“博…博士…咕…啾\n…
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:36
-msgid "在{SceneName}对{TargetName}提出了膝枕的请求\n“膝…膝枕？在这里？”\\n{TargetName}扫视着{SceneName}的情况，犹豫了一下\n“好吧，既然是博士的请求的话，{TargetName}都会满足的…不过！不准把头对着肚子枕哦…”\\n{TargetName}勉强的答应了{PlayerName}的要求\n整理着自己穿着的{TagetSkiName}，找地方坐了下来\n“那么…请吧”\\n{PlayerName}靠在了{TargetName}的腿上\n腿部{TagetSocName}的触感\n让{PlayerName}感到安心\n差点就睡在这里了"
+msgid "在{SceneName}对{TargetName}提出了膝枕的请求\n“膝…膝枕？在这里？”\\n{TargetName}扫视着{SceneName}的情况，犹豫了一下\n“好吧，既然是博士的请求的话，{TargetName}都会满足的…不过！不准把头对着肚子枕哦…”\\n{TargetName}勉强的答应了{PlayerName}的要求\n整理着自己穿着的{TargetSkiName}，找地方坐了下来\n“那么…请吧”\\n{PlayerName}靠在了{TargetName}的腿上\n腿部{TargetSocName}的触感\n让{PlayerName}感到安心\n差点就睡在这里了"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:37
-msgid "对{TargetName}提出了膝枕的请求\n“膝枕？真拿博士没办法…”\\n{TargetName}整理着自己穿着的{TagetSkiName}，找地方坐了下来\n“好了~博士”\\n{TargetName}抱着{PlayerName}的头靠在自己腿上\n腿上{TagetSocName}的触感\n让{PlayerName}感到安心\n偷偷的看了一下裙底，今天是{TagetPanName}"
+msgid "对{TargetName}提出了膝枕的请求\n“膝枕？真拿博士没办法…”\\n{TargetName}整理着自己穿着的{TargetSkiName}，找地方坐了下来\n“好了~博士”\\n{TargetName}抱着{PlayerName}的头靠在自己腿上\n腿上{TargetSocName}的触感\n让{PlayerName}感到安心\n偷偷的看了一下裙底，今天是{TargetPanName}"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:38
-msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TagetSkiName}掀了起来露出了{TagetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“？！啊？啊？！刀客塔！！你在做什么呀…！”\n可怜的{TargetName}突然就急得要哭出来了一样，\n“鬼畜…下流……”\\n{TargetName}咬牙切齿又无可奈何的皱着眉看着{PlayerName}"
+msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TargetSkiName}掀了起来露出了{TargetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“？！啊？啊？！刀客塔！！你在做什么呀…！”\n可怜的{TargetName}突然就急得要哭出来了一样，\n“鬼畜…下流……”\\n{TargetName}咬牙切齿又无可奈何的皱着眉看着{PlayerName}"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:39
-msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TagetSkiName}掀了起来露出了{TagetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“哈啊…唔…唔啊~”\n被突然袭击的{TargetName}发出了微小的呻吟声，咬住了自己的手指\n“变态…博士❤咿啊…今天的是{TagetPanName}哦…”\\n{TargetName}轻轻的推开{PlayerName}的头\n拉起{TagetSkiName}对着{PlayerName}博士展示起来"
+msgid "在{SceneName}突然失去理智的{PlayerName}把{TargetName}的{TargetSkiName}掀了起来露出了{TargetPanName}\n把头埋进去深深的闻着少女特有的芬芳\n“哈啊…唔…唔啊~”\n被突然袭击的{TargetName}发出了微小的呻吟声，咬住了自己的手指\n“变态…博士❤咿啊…今天的是{TargetPanName}哦…”\\n{TargetName}轻轻的推开{PlayerName}的头\n拉起{TargetSkiName}对着{PlayerName}博士展示起来"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:40
-msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}，走到{TargetName}面前\n“博？博士？…”\\n{TargetName}抬起头看着{PlayerName}眼神里带着一丝疑惑\n拉起{TagetSkiName}的一角，往上拉了起来\n“诶？”\\n{TargetName}愣在了那里\n清楚地看到了{TargetName}正穿着{TagetPanName}\n“发生…发生什么了...”"
+msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}，走到{TargetName}面前\n“博？博士？…”\\n{TargetName}抬起头看着{PlayerName}眼神里带着一丝疑惑\n拉起{TargetSkiName}的一角，往上拉了起来\n“诶？”\\n{TargetName}愣在了那里\n清楚地看到了{TargetName}正穿着{TargetPanName}\n“发生…发生什么了...”"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:41
-msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}\n“…今天是{TagetPanName}”\\n{TargetName}不等{PlayerName}走过来，就爆出了自己的内裤样式\n“反正博士就是想看这个吧…”\\n{TargetName}双手拉住{TagetSkiName}的边角，提了起来\n“看到了吧？没有骗你哦”"
+msgid "看着{TargetName}在自己面前忙碌的样子，脑子里却突然出现了这个问题\\n{TargetName}今天的内裤，是什么样式的呢…？\n叫住了{TargetName}\n“…今天是{TargetPanName}”\\n{TargetName}不等{PlayerName}走过来，就爆出了自己的内裤样式\n“反正博士就是想看这个吧…”\\n{TargetName}双手拉住{TargetSkiName}的边角，提了起来\n“看到了吧？没有骗你哦”"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:42
-msgid "在{SceneName}的时候脑内突然闪过一道电光！感受到了{TagetPanName}的气息！\n来了吗…！这个感觉…是{TargetName}吗！\n欸…！只要能脱下来的东西就不必穿在身上…！\\n{TargetName}哟…是你的话一定能理解我的吧？！\\n{PlayerName}突然以三倍的速度突进来到{TargetName}面前，\n众人只看到了一抹赤色如同彗星般从{TargetName}身边掠过\\n{TargetName}感觉到身下一凉\n“没…没了？！”\\n{TargetName}大惊失色\n“好快…！”\\n"
+msgid "在{SceneName}的时候脑内突然闪过一道电光！感受到了{TargetPanName}的气息！\n来了吗…！这个感觉…是{TargetName}吗！\n欸…！只要能脱下来的东西就不必穿在身上…！\\n{TargetName}哟…是你的话一定能理解我的吧？！\\n{PlayerName}突然以三倍的速度突进来到{TargetName}面前，\n众人只看到了一抹赤色如同彗星般从{TargetName}身边掠过\\n{TargetName}感觉到身下一凉\n“没…没了？！”\\n{TargetName}大惊失色\n“好快…！”\\n"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:43
-msgid "对{TargetName}提出，想要正在穿着的胖次\\n{TargetName}似乎有些意外{PlayerName}的请求，呆呆地看着{PlayerName}，一时之间竟不知如何作答。\n但很快{TargetName}就回过神来，眼神中流露出难以掩饰的羞涩。\\n{TargetName}轻咬着下唇，脸上泛起一层淡淡的红晕。扭捏地笑了笑，有些不好意思地说\n“{PlayerName}博士，您的要求实在太出乎意料了…虽然已经知道博士很变态啦…但是居然当面就要这样…”\n她并没有拒绝，缓缓地站起来，面对着{PlayerName}脱下了自己的内裤。她将那条{TagetPanName}捧在手里，递给{PlayerName}。\n“这个，送给博士吧…如果博士喜欢的话…”\\n{TargetName}声音越来越小，似乎有些不好意思。\\n{PlayerName}将{TagetPanName}珍重地收好"
+msgid "对{TargetName}提出，想要正在穿着的胖次\\n{TargetName}似乎有些意外{PlayerName}的请求，呆呆地看着{PlayerName}，一时之间竟不知如何作答。\n但很快{TargetName}就回过神来，眼神中流露出难以掩饰的羞涩。\\n{TargetName}轻咬着下唇，脸上泛起一层淡淡的红晕。扭捏地笑了笑，有些不好意思地说\n“{PlayerName}博士，您的要求实在太出乎意料了…虽然已经知道博士很变态啦…但是居然当面就要这样…”\n她并没有拒绝，缓缓地站起来，面对着{PlayerName}脱下了自己的内裤。她将那条{TargetPanName}捧在手里，递给{PlayerName}。\n“这个，送给博士吧…如果博士喜欢的话…”\\n{TargetName}声音越来越小，似乎有些不好意思。\\n{PlayerName}将{TargetPanName}珍重地收好"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:44
-msgid "在{SceneName}看到了{TargetName}穿着{TagetSocName}在自己面前走过\n飘过的风中带着{TargetName}身上特有的少女气息\\n{PlayerName}望着{TargetName}的背影，踩在鞋子里的{TagetSocName}吸引了{PlayerName}的注意\n想要知道{TagetSocName}的味道\n看着{TargetName}走过了拐角，{PlayerName}的意识突然断线了\\n\n等{PlayerName}的意识重新连接的时候\n手正插在兜里，不过兜里多了什么东西？\n看了一眼是{TagetSocName}\n抬起头，发现了变成裸足的{TargetName}的背影\\n"
+msgid "在{SceneName}看到了{TargetName}穿着{TargetSocName}在自己面前走过\n飘过的风中带着{TargetName}身上特有的少女气息\\n{PlayerName}望着{TargetName}的背影，踩在鞋子里的{TargetSocName}吸引了{PlayerName}的注意\n想要知道{TargetSocName}的味道\n看着{TargetName}走过了拐角，{PlayerName}的意识突然断线了\\n\n等{PlayerName}的意识重新连接的时候\n手正插在兜里，不过兜里多了什么东西？\n看了一眼是{TargetSocName}\n抬起头，发现了变成裸足的{TargetName}的背影\\n"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:45
-msgid "当{TargetName}正在{PlayerName}面前打扫的时候，盯着{TargetName}正穿着的{TagetSocName}看。\\n{TargetName}似乎对我的目光有些不解，她歪着头问道\n“博士，您为什么一直在盯着我看？有什么不对劲吗？”\\n{PlayerName}尴尬地移开视线，说自己只是在想事情而已。\n但很快又将目光锁定在{TargetName}的身上，紧紧盯着她的双足。\\n{TargetName}今天穿的是一双{TagetSocName}，搭配着{TagetSkiName}，显得既纯洁又性感\\n{PlayerName}看得出神，几乎忘记了这双玉足主人的存在。\n我可以…要你的一样东西吗？\\n{TargetName}闻言一愣，随后看着{PlayerName}直直的视线立刻明白了{PlayerName}的意思\n脸腾地一下红了\n“博士，您…您要我的袜子？”\n她结结巴巴地问。\n没有回答，只是点点头，目光仍死死地锁在那双{TagetSocName}上。\\n{TargetName}虽然害羞，但并没有真正反对的意思。\n她咬了咬嘴唇，最终还是点了点头。\n“好吧…如果博士真的很在意的话…”\n说完便红着脸脱掉了左脚的袜子，望着博士慢慢又扯下另一只\n折叠起来后塞进了我的手里。羞涩地低下了头，不敢与我直视。\\n{PlayerName}知道，{TargetName}是很乐意满足自己这个小小要求的。"
+msgid "当{TargetName}正在{PlayerName}面前打扫的时候，盯着{TargetName}正穿着的{TargetSocName}看。\\n{TargetName}似乎对我的目光有些不解，她歪着头问道\n“博士，您为什么一直在盯着我看？有什么不对劲吗？”\\n{PlayerName}尴尬地移开视线，说自己只是在想事情而已。\n但很快又将目光锁定在{TargetName}的身上，紧紧盯着她的双足。\\n{TargetName}今天穿的是一双{TargetSocName}，搭配着{TargetSkiName}，显得既纯洁又性感\\n{PlayerName}看得出神，几乎忘记了这双玉足主人的存在。\n我可以…要你的一样东西吗？\\n{TargetName}闻言一愣，随后看着{PlayerName}直直的视线立刻明白了{PlayerName}的意思\n脸腾地一下红了\n“博士，您…您要我的袜子？”\n她结结巴巴地问。\n没有回答，只是点点头，目光仍死死地锁在那双{TargetSocName}上。\\n{TargetName}虽然害羞，但并没有真正反对的意思。\n她咬了咬嘴唇，最终还是点了点头。\n“好吧…如果博士真的很在意的话…”\n说完便红着脸脱掉了左脚的袜子，望着博士慢慢又扯下另一只\n折叠起来后塞进了我的手里。羞涩地低下了头，不敢与我直视。\\n{PlayerName}知道，{TargetName}是很乐意满足自己这个小小要求的。"
 msgstr ""
 
 #: .\data\talk\chara\0358_铃兰.csv:46
@@ -12035,87 +12035,87 @@ msgid "{Name}向{TargetName}提出想要胖次的想法。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:10
-msgid "{Name}向{TargetName}提出想要一条胖次的请求，{TargetName}点头回应，并走到阴暗角落里将{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}提出想要一条胖次的请求，{TargetName}点头回应，并走到阴暗角落里将{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:11
-msgid "{Name}向{TargetName}索要内裤，{TargetName}点了点头，转身走到遮蔽的角落将身上的{TagetPanName}脱下来送给你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}点了点头，转身走到遮蔽的角落将身上的{TargetPanName}脱下来送给你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:12
-msgid "{Name}向{TargetName}索要内裤，{TargetName}在隐蔽的角落将身上穿着的{TagetPanName}脱下来送给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}在隐蔽的角落将身上穿着的{TargetPanName}脱下来送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:13
-msgid "{Name}向{TargetName}提出想要胖次的想法，{TargetName}点了点头，走到没人注意的隐蔽处将身上的{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的想法，{TargetName}点了点头，走到没人注意的隐蔽处将身上的{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:14
-msgid "{Name}向{TargetName}提出想要胖次的想法，尽管{TargetName}注意到门扉没有关上，但拗不过你的再三请求。\\n{TargetName}红着脸将自己的{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的想法，尽管{TargetName}注意到门扉没有关上，但拗不过你的再三请求。\\n{TargetName}红着脸将自己的{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:15
-msgid "{Name}向{TargetName}索要内裤，{TargetName}躲在开启的门扉后小心翼翼地将{TagetPanName}脱下交给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}躲在开启的门扉后小心翼翼地将{TargetPanName}脱下交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:16
-msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}在思考片刻后选择躲在门扉后面，将身上穿着的{TagetPanName}脱下送给了你。"
+msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}在思考片刻后选择躲在门扉后面，将身上穿着的{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:17
-msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}在思考片刻后，即便是在开着门的地方也决定将身上的{TagetPanName}脱下来送给你。"
+msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}在思考片刻后，即便是在开着门的地方也决定将身上的{TargetPanName}脱下来送给你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:18
-msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}对你在暴露地点提出变态请求感到惊讶……\n不过，{TargetName}最终还是点头答应了你的要求，并将{TagetPanName}脱下来送给你。"
+msgid "{Name}对{TargetName}提出想要内裤的请求，{TargetName}对你在暴露地点提出变态请求感到惊讶……\n不过，{TargetName}最终还是点头答应了你的要求，并将{TargetPanName}脱下来送给你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:19
-msgid "{Name}向{TargetName}索要内裤，{TargetName}对你在暴露地点提出变态请求感到不可思议……\n短暂的思考后，{TargetName}将今天穿的{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}对你在暴露地点提出变态请求感到不可思议……\n短暂的思考后，{TargetName}将今天穿的{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:20
-msgid "{Name}向{TargetName}索要内裤，{TargetName}对你在暴露地点提出变态请求有些难以置信……\n不过，在你的一次次请求下，{TargetName}还是将{TagetPanName}脱了下来并交给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}对你在暴露地点提出变态请求有些难以置信……\n不过，在你的一次次请求下，{TargetName}还是将{TargetPanName}脱了下来并交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:21
-msgid "{Name}向{TargetName}表示，想要一条胖次。{TargetName}在沉默一会儿后，走到相对而言没那么明显的地方将{TagetPanName}脱下迅速交给了你。"
+msgid "{Name}向{TargetName}表示，想要一条胖次。{TargetName}在沉默一会儿后，走到相对而言没那么明显的地方将{TargetPanName}脱下迅速交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:22
-msgid "{Name}向{TargetName}索要内裤，{TargetName}看着一旁男士止步的标志，无可奈何的将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}看着一旁男士止步的标志，无可奈何的将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:23
-msgid "{Name}向{TargetName}索要内裤，{TargetName}拉着你进入了女厕所的隔间，面对面，{TargetName}将{TagetPanName}从身上脱下来交给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}拉着你进入了女厕所的隔间，面对面，{TargetName}将{TargetPanName}从身上脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:24
-msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}拉着你进入了更衣室的角落并迅速将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}拉着你进入了更衣室的角落并迅速将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:25
-msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}在更衣室里将{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}在更衣室里将{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:26
-msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}点了点头……\n你注意到脱下{TagetPanName}的{TargetName}，裙子里完全是真空状态。"
+msgid "{Name}向{TargetName}提出想要内裤的请求，{TargetName}点了点头……\n你注意到脱下{TargetPanName}的{TargetName}，裙子里完全是真空状态。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:27
-msgid "{Name}向{TargetName}索要胖次，{TargetName}将{TagetPanName}从裙中脱下交给了你。"
+msgid "{Name}向{TargetName}索要胖次，{TargetName}将{TargetPanName}从裙中脱下交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:28
-msgid "{Name}向{TargetName}索要胖次，{TargetName}看了看四周，在发现并没有其他人后放下心来，将{TagetPanName}脱下交给了你。"
+msgid "{Name}向{TargetName}索要胖次，{TargetName}看了看四周，在发现并没有其他人后放下心来，将{TargetPanName}脱下交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:29
-msgid "{Name}向{TargetName}索要胖次，{TargetName}紧张的四处张望，确认没人之后才将{TagetPanName}脱下来交给你。"
+msgid "{Name}向{TargetName}索要胖次，{TargetName}紧张的四处张望，确认没人之后才将{TargetPanName}脱下来交给你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:30
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}在确认了四下无人后，放下心来将{TagetPanName}脱下递到你的手中。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}在确认了四下无人后，放下心来将{TargetPanName}脱下递到你的手中。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:31
@@ -12123,43 +12123,43 @@ msgid "{Name}向{TargetName}提出想要胖次的请求，有些紧张的{Target
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:32
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}十分震惊地问你是否看得见这里还有别人。\n在得知你的期待后，{TargetName}咬牙将{TagetPanName}脱下来交给你，并尽量不去在意地点里其他人的反应。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}十分震惊地问你是否看得见这里还有别人。\n在得知你的期待后，{TargetName}咬牙将{TargetPanName}脱下来交给你，并尽量不去在意地点里其他人的反应。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:33
-msgid "{Name}向{TargetName}索要内裤，{TargetName}看着这个地方还有其他人在，再三询问后得知了你难以控制的欲望……\\n{TargetName}闭上眼睛忍耐着心中的羞耻感，并将{TagetPanName}从身上脱下交给了你、"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}看着这个地方还有其他人在，再三询问后得知了你难以控制的欲望……\\n{TargetName}闭上眼睛忍耐着心中的羞耻感，并将{TargetPanName}从身上脱下交给了你、"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:34
-msgid "{Name}向{TargetName}提出想要一条内裤，{TargetName}对你在有其他人在场的地方提出这种要求感到意外，不过{TargetName}还是找了个机会，鼓起勇气将{TagetPanName}脱下交给了你。"
+msgid "{Name}向{TargetName}提出想要一条内裤，{TargetName}对你在有其他人在场的地方提出这种要求感到意外，不过{TargetName}还是找了个机会，鼓起勇气将{TargetPanName}脱下交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:35
-msgid "{Name}向{TargetName}提出想要一条胖次，{TargetName}在得知你并不是开玩笑后感到震惊并表示还要其他人在场。\n你点了点头，{TargetName}只能在你的一次次言语劝诱下遵从了你的想法，将{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}提出想要一条胖次，{TargetName}在得知你并不是开玩笑后感到震惊并表示还要其他人在场。\n你点了点头，{TargetName}只能在你的一次次言语劝诱下遵从了你的想法，将{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:36
-msgid "{Name}向{TargetName}表明了想要内裤的想法，{TargetName}对你的请求感到意外。\n努力无视掉其他人怀疑的视线，{TargetName}悄悄将{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}表明了想要内裤的想法，{TargetName}对你的请求感到意外。\n努力无视掉其他人怀疑的视线，{TargetName}悄悄将{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:37
-msgid "{Name}向{TargetName}索要内裤，{TargetName}点了点头，将附着有你精液的{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}点了点头，将附着有你精液的{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:38
-msgid "{Name}向{TargetName}索要胖次，{TargetName}将沾有精液的{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}索要胖次，{TargetName}将沾有精液的{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:39
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}将被精液弄到湿哒哒的{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}将被精液弄到湿哒哒的{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:40
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}将身上穿着的精液胖次脱了下来送给你。\\n{TagetPanName}上面散发着浓厚的雌性气味和精液腥臭。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}将身上穿着的精液胖次脱了下来送给你。\\n{TargetPanName}上面散发着浓厚的雌性气味和精液腥臭。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:41
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}红着脸将精液沾染的{TagetPanName}脱下来交给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}红着脸将精液沾染的{TargetPanName}脱下来交给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:42
@@ -12175,51 +12175,51 @@ msgid "{Name}向{TargetName}提出想要一条胖次，看在你如此坚持的�
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:45
-msgid "{Name}向{TargetName}委婉的表达想要内裤的愿望，{TargetName}点了点头，答应了心中恋慕的你。\\n{TargetName}将{TagetPanName}从身上脱了下来交到你手中。"
+msgid "{Name}向{TargetName}委婉的表达想要内裤的愿望，{TargetName}点了点头，答应了心中恋慕的你。\\n{TargetName}将{TargetPanName}从身上脱了下来交到你手中。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:46
-msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}看着当前隐蔽的环境，爽快地答应下来，并将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的请求，{TargetName}看着当前隐蔽的环境，爽快地答应下来，并将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:47
-msgid "{Name}向{TargetName}隐晦地表达想要胖次的愿望，点头答应的{TargetName}走到墙角，将今天穿的{TagetPanName}脱下来当作礼物送给了你。"
+msgid "{Name}向{TargetName}隐晦地表达想要胖次的愿望，点头答应的{TargetName}走到墙角，将今天穿的{TargetPanName}脱下来当作礼物送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:48
-msgid "{Name}向{TargetName}表示想要一条胖次留作他用，{TargetName}似乎明白你在指什么。\n默许你将内裤拿来当配菜，{TargetName}将今天穿的{TagetPanName}脱下来送给了你。"
+msgid "{Name}向{TargetName}表示想要一条胖次留作他用，{TargetName}似乎明白你在指什么。\n默许你将内裤拿来当配菜，{TargetName}将今天穿的{TargetPanName}脱下来送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:49
-msgid "{Name}向{TargetName}表示想要一条胖次留作他用，似乎明白你在指什么的{TargetName}默许你将内裤拿来当配菜，并走到角落里将今天穿的{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}表示想要一条胖次留作他用，似乎明白你在指什么的{TargetName}默许你将内裤拿来当配菜，并走到角落里将今天穿的{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:50
-msgid "{Name}向{TargetName}提出想要胖次，{TargetName}用粉拳轻轻砸了下你的胸口，便独自走到角落脱下{TagetPanName}交到你的手中。"
+msgid "{Name}向{TargetName}提出想要胖次，{TargetName}用粉拳轻轻砸了下你的胸口，便独自走到角落脱下{TargetPanName}交到你的手中。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:51
-msgid "{Name}向{TargetName}提出想要胖次，{TargetName}看着敞开的门扉虽有些迟疑，但一想到这是你的愿望，还是找了个稍微隐蔽一点的地方脱下{TagetPanName}送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次，{TargetName}看着敞开的门扉虽有些迟疑，但一想到这是你的愿望，还是找了个稍微隐蔽一点的地方脱下{TargetPanName}送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:52
-msgid "{Name}向{TargetName}提出想要胖次，{TargetName}虽然有些在意敞开的房门，但一想到你的好感，{TargetName}还是决定走到角落将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次，{TargetName}虽然有些在意敞开的房门，但一想到你的好感，{TargetName}还是决定走到角落将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:53
-msgid "{Name}向{TargetName}表示想要一条胖次，{TargetName}看了一眼敞开的门扉。\n尽管知道存在被人发现的风险，{TargetName}也还是将{TagetPanName}脱下，送给了恋慕的你。"
+msgid "{Name}向{TargetName}表示想要一条胖次，{TargetName}看了一眼敞开的门扉。\n尽管知道存在被人发现的风险，{TargetName}也还是将{TargetPanName}脱下，送给了恋慕的你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:54
-msgid "{Name}向{TargetName}提出想要胖次的愿望，{TargetName}一边点头，一边因敞开的房门而害羞着。\n在你的注视下，{TargetName}缓缓将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}提出想要胖次的愿望，{TargetName}一边点头，一边因敞开的房门而害羞着。\n在你的注视下，{TargetName}缓缓将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:55
-msgid "{Name}向{TargetName}索要内裤，{TargetName}看着周围还有其他人在场，涨红了脸颊。\n一边抱怨你的不解风情，一边又将{TagetPanName}脱下送给了你。"
+msgid "{Name}向{TargetName}索要内裤，{TargetName}看着周围还有其他人在场，涨红了脸颊。\n一边抱怨你的不解风情，一边又将{TargetPanName}脱下送给了你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:56
-msgid "{Name}向{TargetName}提出想要胖次，{TargetName}嗔怪着轻锤你的胸膛。\n最终，{TargetName}答应了你的要求，并将你的身子作为遮挡，躲在你身后将{TagetPanName}脱下。"
+msgid "{Name}向{TargetName}提出想要胖次，{TargetName}嗔怪着轻锤你的胸膛。\n最终，{TargetName}答应了你的要求，并将你的身子作为遮挡，躲在你身后将{TargetPanName}脱下。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:57
@@ -12227,7 +12227,7 @@ msgid "{Name}向{TargetName}提出想要胖次的愿望，{TargetName}在短暂�
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:58
-msgid "{Name}向{TargetName}表示，想要一条{TargetName}的胖次。\\n{TargetName}对你在有其他人在场的情况下提出这种要求感到惊讶，但是很快，羞耻与兴奋取代了{TargetName}心中的抵触情绪。\n支支吾吾的答应下来后，{TargetName}跑到你身后，将你当作遮蔽脱下了自己的{TagetPanName}。"
+msgid "{Name}向{TargetName}表示，想要一条{TargetName}的胖次。\\n{TargetName}对你在有其他人在场的情况下提出这种要求感到惊讶，但是很快，羞耻与兴奋取代了{TargetName}心中的抵触情绪。\n支支吾吾的答应下来后，{TargetName}跑到你身后，将你当作遮蔽脱下了自己的{TargetPanName}。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:59
@@ -12235,15 +12235,15 @@ msgid "{Name}向{TargetName}索要胖次，{TargetName}脸颊涨得通红，明�
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:60
-msgid "{Name}向{TargetName}索要胖次，{TargetName}脸颊涨得通红，在其他人面前悄悄脱下内裤？\n觉醒暴露欲望的{TargetName}有些期待地脱去{TagetPanName}交到你手上。"
+msgid "{Name}向{TargetName}索要胖次，{TargetName}脸颊涨得通红，在其他人面前悄悄脱下内裤？\n觉醒暴露欲望的{TargetName}有些期待地脱去{TargetPanName}交到你手上。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_pan.csv:61
-msgid "{Name}向{TargetName}提出想要胖次，幻想着将内裤送给你后将是真空状态，{TargetName}感到一阵兴奋。\n躲在你身后，{TargetName}用颤抖的手将{TagetPanName}递给你。"
+msgid "{Name}向{TargetName}提出想要胖次，幻想着将内裤送给你后将是真空状态，{TargetName}感到一阵兴奋。\n躲在你身后，{TargetName}用颤抖的手将{TargetPanName}递给你。"
 msgstr ""
 
 #: .\data\talk\obscenity\ask_for_socks.csv:6
-msgid "{Name}{PlayerNickName}触发了索要袜子指令的地文，{TargetName}把穿着的{TagetSocName}脱下来给了你"
+msgid "{Name}{PlayerNickName}触发了索要袜子指令的地文，{TargetName}把穿着的{TargetSocName}脱下来给了你"
 msgstr ""
 
 #: .\data\talk\obscenity\bagging_and_moving.csv:6
@@ -12755,9 +12755,9 @@ msgid "{Name}触发了将{TargetName}投入监牢指令的地文"
 msgstr "{Name} triggered the event of putting {TargetName} into prison"
 
 #: .\data\talk\obscenity\raise_skirt.csv:6
-msgid "{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TagetSkiName}，露出了下面穿着的{TagetPanName}"
+msgid "{Name}触发了掀起裙子指令的地文，掀起了{TargetName}的{TargetSkiName}，露出了下面穿着的{TargetPanName}"
 msgstr "{Name} triggered the event of lifting up skirt,\\n"
-"lifting {TargetName}'s {TagetSkiName} up and revealing the {TagetPanName} inside"
+"lifting {TargetName}'s {TargetSkiName} up and revealing the {TargetPanName} inside"
 
 #: .\data\talk\obscenity\see_h.csv:6
 msgid "{Name}触发了目睹玩家与其他角色H并打断的地文"
@@ -12772,14 +12772,14 @@ msgid "{Name}触发了闻内衣指令的地文"
 msgstr "{Name} triggered the event of smelling bra"
 
 #: .\data\talk\obscenity\steal_pan.csv:6
-msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetName}穿着的{TagetPanName}脱下来偷走了"
+msgid "{Name}{PlayerNickName}触发了偷走内裤指令的地文，把{TargetName}穿着的{TargetPanName}脱下来偷走了"
 msgstr "{Name} {PlayerNickName} triggered the event of stealing underwear,\\n"
-"took off and stole {TargetName}'s {TagetPanName}"
+"took off and stole {TargetName}'s {TargetPanName}"
 
 #: .\data\talk\obscenity\steal_socks.csv:6
-msgid "{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TagetSocName}脱下来偷走了"
+msgid "{Name}{PlayerNickName}触发了偷走袜子指令的地文，把{TargetName}穿着的{TargetSocName}脱下来偷走了"
 msgstr "{Name} {PlayerNickName} triggered the event of stealing underwear,\\n"
-"took off and stole {TargetName}'s {TagetSocName}"
+"took off and stole {TargetName}'s {TargetSocName}"
 
 #: .\data\talk\obscenity\touch_anus.csv:6
 msgid "{Name}触发了手指插入（A）指令的地文"
@@ -13953,11 +13953,11 @@ msgid "{Name}一下子将手指戳到了{TargetName}肠壁，引得{TargetName}�
 msgstr ""
 
 #: .\data\talk\sex\anal_caress.csv:9
-msgid "分开{TargetName}下身穿着的{TagetPanName}，{Name}将手指放在了后庭入口处慢慢磨蹭。"
+msgid "分开{TargetName}下身穿着的{TargetPanName}，{Name}将手指放在了后庭入口处慢慢磨蹭。"
 msgstr ""
 
 #: .\data\talk\sex\anal_caress.csv:10
-msgid "分开{TargetName}下身穿着的{TagetPanName}，{Name}将手指深入进去大概5厘米的深度。"
+msgid "分开{TargetName}下身穿着的{TargetPanName}，{Name}将手指深入进去大概5厘米的深度。"
 msgstr ""
 
 #: .\data\talk\sex\ask_pee.csv:6

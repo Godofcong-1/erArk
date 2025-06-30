@@ -127,10 +127,10 @@ str,str,int,str,str
 122,raise_skirt,101,CVP_A2_G_GE_2&high_999,“啊！”空双手下意识的拉下了被掀起的裙摆。\n“下次不要这么突然......吓了空一跳......”\n“想知道穿的是什么吗？悄悄给你看一眼哦~”轻轻拉起裙摆露出了底下的黑色安全裤。\n“演出时自然要做好防止走光的措施了~”
 123,raise_skirt,101,CVP_A2_G_GE_2&high_999,“啊！”空下意识的抬起了手想要抽在{PlayerName}的脸上，但最后却抱住了{PlayerName}。\n“是想知道空今天穿的是什么吗？那就悄悄告诉你了~”\n空凑到了{PlayerName}的耳边小声的说了出来。\n“今天空的安全裤里面穿的是{PanName}，怎么样喜欢吗？”
 124,ask_for_pan,101,CVP_A2_G_L_2,“变态！下流！”空一膝踢在了{PlayerName}的下体上，剧烈的疼痛从那里传遍了全身。“没想到这里还真有德克萨斯说的那种变态......”
-125,ask_for_pan,101,high_999&CVP_A2_G_GE_2,“{TargetNickNameToPl}，既然一定想要的话就......就勉强作为礼物送你了吧，但不要向其他人说。”\n说完空拉着你到了一个无人的角落脱掉了黑色安全裤，将她的{TagetPanName}脱了下来塞到了{PlayerName}的手中。
+125,ask_for_pan,101,high_999&CVP_A2_G_GE_2,“{TargetNickNameToPl}，既然一定想要的话就......就勉强作为礼物送你了吧，但不要向其他人说。”\n说完空拉着你到了一个无人的角落脱掉了黑色安全裤，将她的{TargetPanName}脱了下来塞到了{PlayerName}的手中。
 126,ask_for_socks,101,CVP_A2_G_L_2,“{PlayerName}你这是什么癖好啊！那些私生饭干的事都没你恶心......”\n#空用着看垃圾一般的眼神看着你。
-127,ask_for_socks,101,high_999&CVP_A2_G_GE_2,“袜子？这个要求有些奇怪啊，但是是{TargetNickNameToPl}的话就作为礼物送给你了，但不要拿来做什么奇怪的事情。”\n说完空拉着博士到了一个无人的角落脱下了她的{TagetSocName}将它叠好塞给了{PlayerName}。
-128,ask_for_socks,101,high_999&CVP_A2_G_GE_2&hp_low,“袜子？这个要求有些奇怪啊，但是是{TargetNickNameToPl}的话就作为礼物送给你了，但不要拿来做什么奇怪的事情。”\n说完空拉着博士到了一个无人的角落脱下了她的{TagetSocName}将它叠好塞给了{PlayerName}。\n“今天运动量有些大......可能会有一些味道，希望你能不介意。”\n空低着头两只耳朵自然的向前垂下，双手背在身后十分的不好意思。
+127,ask_for_socks,101,high_999&CVP_A2_G_GE_2,“袜子？这个要求有些奇怪啊，但是是{TargetNickNameToPl}的话就作为礼物送给你了，但不要拿来做什么奇怪的事情。”\n说完空拉着博士到了一个无人的角落脱下了她的{TargetSocName}将它叠好塞给了{PlayerName}。
+128,ask_for_socks,101,high_999&CVP_A2_G_GE_2&hp_low,“袜子？这个要求有些奇怪啊，但是是{TargetNickNameToPl}的话就作为礼物送给你了，但不要拿来做什么奇怪的事情。”\n说完空拉着博士到了一个无人的角落脱下了她的{TargetSocName}将它叠好塞给了{PlayerName}。\n“今天运动量有些大......可能会有一些味道，希望你能不介意。”\n空低着头两只耳朵自然的向前垂下，双手背在身后十分的不好意思。
 129,touch_clitoris,101,CVP_A2_G_L_2,空看见{PlayerName}伸向自己下体的手直接打了上去。\n“信不信我告诉德克萨斯！”
 130,touch_clitoris,101,CVP_A2_G_L_2,空看见{PlayerName}伸向自己下体的手直接打了上去。\n“你觉得这么做是对的吗？想要潜规则你推的偶像。”
 131,touch_clitoris,101,CVP_A2_G_GE_2&high_10,空的两只耳朵渐渐垂了下去，害羞的低着头看着{PlayerName}的手在抚摸着她的私处。\n“唔......感觉有些奇怪......空是不会对这种东西感兴趣的......”

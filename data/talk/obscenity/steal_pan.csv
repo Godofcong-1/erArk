@@ -3,5 +3,5 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,steal_pan,0,high_1,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了
-1,steal_pan,0,is_unconscious_h,{Name}{PlayerNickName}把{TargetName}穿着的{TagetPanName}脱下来偷走了
+0,steal_pan,0,high_1,{Name}{PlayerNickName}把{TargetName}穿着的{TargetPanName}脱下来偷走了
+1,steal_pan,0,is_unconscious_h,{Name}{PlayerNickName}把{TargetName}穿着的{TargetPanName}脱下来偷走了

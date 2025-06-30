@@ -166,8 +166,8 @@ str,str,int,str,str
 161,chat,377,high_1&sys_0&place_0&CVP_A3|377_G_GE_1,“博士，要是你想要剪頭髮的話，可以帶我一起去喔，我會幫你做一個很。獨。特。的造型喔!”
 162,chat,377,high_1&CVP_A3|377_G_GE_1&place_0&place_10&sys_1,眼睛突然被摀住了\n“博士~猜猜我是誰~”\n你嗅著熟悉的淡香，笑著說\n“嗯...是偷偷用了小蘇茜的洗髮水的夏櫟小姐嗎?”\n“姆~博士您又欺負人家!”
 163,stroke,377,high_1&place_0&place_10&CVP_A3|377_X_G_50&sys_0,“您想幫我掏耳朵? 嗯....可以喔”\n澄閃有些拘謹的枕在你的大腿上\n“輕一些，我怕疼.....”\n\n-------------(一段時間後)------\n\n“要、要化掉惹~~”\n你精湛的技藝成功讓理髮師小姐化成一攤菲林\n
-164,foot_cloth_to_locker,377,high_1&CVP_A3|377_G_GE_1&place_0&place_10,你欣賞著澄閃優雅的抬起腳，取下了鞋子，拉下{TagetSocName}，露出了圓潤的腳趾\n
-165,foot_cloth_to_locker,377,high_1&place_0&place_10&CVP_A3|377_G_GE_2,你欣賞著澄閃優雅的抬起腳，取下了鞋子，拉下{TagetSocName}，露出了圓潤的腳趾\n“博士，別一直盯著看了，好害羞...'
+164,foot_cloth_to_locker,377,high_1&CVP_A3|377_G_GE_1&place_0&place_10,你欣賞著澄閃優雅的抬起腳，取下了鞋子，拉下{TargetSocName}，露出了圓潤的腳趾\n
+165,foot_cloth_to_locker,377,high_1&place_0&place_10&CVP_A3|377_G_GE_2,你欣賞著澄閃優雅的抬起腳，取下了鞋子，拉下{TargetSocName}，露出了圓潤的腳趾\n“博士，別一直盯著看了，好害羞...'
 166,pl_win_in_board_game,377,high_1&place_0&place_10&CVP_A3|377_G_GE_0,“呀...果然贏不了博士呢...不過這遊戲可真有趣!'
 167,pl_win_in_board_game,377,high_1&place_0&place_10&CVP_A3|377_G_GE_2,“博士，下次稍微放水一下啦!!'\n話雖如此，澄閃也沒有露出不悅地表情\n是撒嬌呢~~
 168,pl_lose_in_board_game,377,high_1&place_0&place_10&CVP_A3|377_G_GE_1,“好耶，我贏了!!'\n澄閃看著你，突然【噗哧】一聲笑了出來\n“突然感覺，博士也是個普通人呢，也有自己不太擅長的事情...之類的?'
