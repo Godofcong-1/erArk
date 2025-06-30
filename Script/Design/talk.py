@@ -690,6 +690,18 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
             break
 
     # 服装，来自于NPC当前穿的衣服，或行动传入的变量
+    target_up_cloth_name = ""
+    if character_id == 0 and len(target_data.cloth.cloth_wear[5]):
+        for Up_cloth_Id in target_data.cloth.cloth_wear[5]:
+            target_up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
+    if target_up_cloth_name == "":
+        target_up_cloth_name = _("没有穿上衣的裸露身体")
+    target_down_cloth_name = ""
+    if character_id == 0 and len(target_data.cloth.cloth_wear[8]):
+        for Down_cloth_Id in target_data.cloth.cloth_wear[8]:
+            target_down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
+    if target_down_cloth_name == "":
+        target_down_cloth_name = _("没有穿下衣的裸露身体")
     target_bra_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[6]):
         for BraId in target_data.cloth.cloth_wear[6]:
@@ -734,6 +746,17 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         socks_name = player_data.behavior.socks_name
     if socks_name == "":
         socks_name = _("没有穿袜子的双腿")
+    if character_id != 0 and len(character_data.cloth.cloth_wear[5]):
+        for Up_cloth_Id in character_data.cloth.cloth_wear[5]:
+            up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
+    if up_cloth_name == "":
+        up_cloth_name = _("没有穿上衣的裸露身体")
+    down_cloth_name = ""
+    if character_id != 0 and len(character_data.cloth.cloth_wear[8]):
+        for Down_cloth_Id in character_data.cloth.cloth_wear[8]:
+            down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
+    if down_cloth_name == "":
+        down_cloth_name = _("没有穿下衣的裸露身体")
 
     # 最后总结转化
     now_talk_text = now_talk_text.format(
@@ -762,10 +785,14 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         SrcSceneName=src_scene_name,
         SrcOneCharaName=src_random_chara_name,
 
+        TargetUpClothName=target_up_cloth_name,
+        TargetDownClothName=target_down_cloth_name,
         TagetBraName=target_bra_name,
         TagetSkiName=target_ski_name,
         TagetPanName=target_pan_name,
         TagetSocName=target_soc_name,
+        UpClothName=up_cloth_name,
+        DownClothName=down_cloth_name,
         PanName=pan_name,
         SocName=socks_name,
     )
