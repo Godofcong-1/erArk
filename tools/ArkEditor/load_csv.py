@@ -238,6 +238,9 @@ def load_config():
                     continue
             if i["item_id"] == '0':
                 continue
+            # 跳过没实装的礼物
+            if i["todo"] == '1':
+                continue
             cache_control.gift_items_data[i["cid"]] = i["item_id"]
     with open(resource_path, encoding="utf-8") as now_file:
         now_read = csv.DictReader(now_file)
