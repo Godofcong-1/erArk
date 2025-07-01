@@ -10,6 +10,7 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import update, instuct_judege
+from Script.UI.Panel import borrow_book_panel
 import random
 
 panel_info_data = {}
@@ -131,4 +132,6 @@ class Read_Book_Panel:
         character_data.behavior.book_id = book_id
         character_data.behavior.book_name = book_data.name
         character_data.behavior.duration = 30
+        # 更新历史记录中的阅读次数
+        borrow_book_panel.update_read_count_in_history(0, book_id)
         update.game_update_flow(30)

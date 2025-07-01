@@ -60,6 +60,8 @@ def check_return_book(character_id):
             for book_id in character_data.entertainment.borrow_book_id_set:
                 cache.rhodes_island.book_borrow_dict[book_id] = -1
                 character_data.entertainment.borrow_book_id_set.discard(book_id)
+                # 更新还书历史记录
+                update_return_history_record(character_id, book_id)
                 # print(f"debug {character_data.name}还了书{book_id}")
                 return 1
         return 0
@@ -104,6 +106,8 @@ def check_random_borrow_book(character_id):
             return 0
         cache.rhodes_island.book_borrow_dict[borrow_book_id] = character_id
         character_data.entertainment.borrow_book_id_set.add(borrow_book_id)
+        # 添加借书历史记录
+        add_borrow_history_record(character_id, borrow_book_id)
         # print(f"debug {character_data.name}借了书{borrow_book_id}")
         return 1
 
@@ -157,6 +161,84 @@ def can_read_book(character_id: int, book_cid: int) -> bool:
             return False
     # 其他情况均可阅读
     return True
+
+
+def add_borrow_history_record(character_id: int, book_id: int):
+    """
+    添加借书历史记录
+    
+    参数:
+        character_id (int): 角色ID
+        book_id (int): 书籍ID
+    """
+    character_data = cache.character_data[character_id]
+    
+    # 确保借阅历史记录列表存在
+    if not hasattr(character_data.entertainment, 'borrow_book_history'):
+        character_data.entertainment.borrow_book_history = []
+    
+    # 获取书籍信息
+    book_name = _("未知书籍")
+    if book_id in game_config.config_book:
+        book_name = game_config.config_book[book_id].name
+    
+    # 创建新的借阅记录
+    new_record = {
+        'book_id': book_id,
+        'book_name': book_name,
+        'borrow_time': cache.game_time,
+        'return_time': None,
+        'total_read_count': 0
+    }
+    
+    character_data.entertainment.borrow_book_history.append(new_record)
+
+
+def update_return_history_record(character_id: int, book_id: int):
+    """
+    更新还书历史记录
+    
+    参数:
+        character_id (int): 角色ID
+        book_id (int): 书籍ID
+    """
+    character_data = cache.character_data[character_id]
+    
+    # 确保借阅历史记录列表存在
+    if not hasattr(character_data.entertainment, 'borrow_book_history'):
+        return
+    
+    # 找到最近的未还书记录并更新
+    for record in reversed(character_data.entertainment.borrow_book_history):
+        if record['book_id'] == book_id and record['return_time'] is None:
+            record['return_time'] = cache.game_time
+            # 计算这本书的阅读次数（从角色的阅读进度记录中获取）
+            if book_id in character_data.entertainment.read_book_progress:
+                # 简单的估算：进度除以30作为阅读次数（假设每次阅读增加30%左右进度）
+                estimated_reads = max(1, character_data.entertainment.read_book_progress[book_id] // 30)
+                record['total_read_count'] = estimated_reads
+            break
+
+
+def update_read_count_in_history(character_id: int, book_id: int):
+    """
+    更新历史记录中的阅读次数
+    
+    参数:
+        character_id (int): 角色ID
+        book_id (int): 书籍ID
+    """
+    character_data = cache.character_data[character_id]
+    
+    # 确保借阅历史记录列表存在
+    if not hasattr(character_data.entertainment, 'borrow_book_history'):
+        return
+    
+    # 找到当前借阅记录并更新阅读次数
+    for record in reversed(character_data.entertainment.borrow_book_history):
+        if record['book_id'] == book_id and record['return_time'] is None:
+            record['total_read_count'] += 1
+            break
 
 class Borrow_Book_Panel:
     """
@@ -401,10 +483,14 @@ class Borrow_Book_Panel:
         if cache.rhodes_island.book_borrow_dict[book_cid] == 0:
             cache.rhodes_island.book_borrow_dict[book_cid] = -1
             character_data.entertainment.borrow_book_id_set.discard(book_cid)
+            # 更新还书历史记录
+            update_return_history_record(0, book_cid)
         # 未借该书，且借书数量不到上限，则借书
         elif borrow_count < 3:
             cache.rhodes_island.book_borrow_dict[book_cid] = 0
             character_data.entertainment.borrow_book_id_set.add(book_cid)
+            # 添加借书历史记录
+            add_borrow_history_record(0, book_cid)
         # 未借该书，且借书数量已达上限，则输出错误信息
         else:
             borrow_limit_draw = draw.WaitDraw()

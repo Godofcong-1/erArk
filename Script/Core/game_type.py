@@ -712,6 +712,8 @@ class CHARA_ENTERTAINMENT:
         """ 桌游结算用数据，0桌游类型(0无，1五子棋)，1AI难度(0最简单，越高越难) """
         self.read_book_progress: Dict[int, int] = {}
         """ 已阅读书籍进度记录，int键为书籍编号，int值为阅读进度，100为阅读完毕 """
+        self.borrow_book_history: List[Dict[str, any]] = []
+        """ 借书历史记录，每个记录包含：book_id, book_name, borrow_time, return_time, total_read_count """
 
 
 class PLAYER_COLLECTION:

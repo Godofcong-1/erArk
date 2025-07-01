@@ -1,10 +1,9 @@
-from typing import Tuple, Dict, List
+from typing import List
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, attr_calculation, update, attr_text
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
+from Script.UI.Panel import common_select_NPC
 from Script.Config import game_config, normal_config
-import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -103,6 +102,19 @@ class Manage_Library_Panel:
                 line_feed.draw()
                 button3_draw.draw()
                 return_list.append(button3_draw.return_text)
+
+            if 1:
+                button4_text = _("[005]借阅历史记录")
+                button4_draw = draw.LeftButton(
+                    _(button4_text),
+                    _("5"),
+                    window_width,
+                    cmd_func=self.borrowing_history,
+                    args=(),
+                    )
+                line_feed.draw()
+                button4_draw.draw()
+                return_list.append(button4_draw.return_text)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -290,6 +302,149 @@ class Manage_Library_Panel:
 
             # 再把指定日子变成读书会
             cache.rhodes_island.party_day_of_week[week_day] = 101
+
+    def borrowing_history(self):
+        """借阅历史记录查看"""
+        
+        # 创建角色列表，包含所有有借阅历史的角色
+        character_list = []
+        for character_id in cache.character_data:
+            if character_id == 0:  # 跳过玩家
+                continue
+            character_data = cache.character_data[character_id]
+            # 检查是否有借阅历史记录
+            if hasattr(character_data.entertainment, 'borrow_book_history') and len(character_data.entertainment.borrow_book_history) > 0:
+                character_list.append([character_id, self.show_character_history, []])
+        
+        # 如果没有任何角色有借阅历史
+        if not character_list:
+            while 1:
+                line_feed.draw()
+                line = draw.LineDraw("-", window_width)
+                line.draw()
+                
+                no_history_draw = draw.NormalDraw()
+                no_history_draw.width = window_width
+                no_history_draw.text = _("\n  暂无任何角色的借阅历史记录\n")
+                no_history_draw.draw()
+                
+                line_feed.draw()
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+                back_draw.draw()
+                yrn = flow_handle.askfor_all([back_draw.return_text])
+                
+                if yrn == back_draw.return_text:
+                    break
+        else:
+            # 保存原始角色列表
+            original_character_list = character_list.copy()
+            # 创建分页面板来显示角色列表
+            self.character_handle_panel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 10, 5, window_width, 1, 0, 0)
+            select_state = {}
+            
+            while 1:
+                info_text = _("以下角色拥有借阅历史记录：\n\n")
+                
+                # 在每次循环开始时恢复原始列表，避免筛选累积
+                self.character_handle_panel.text_list = original_character_list.copy()
+                
+                # 使用通用角色选择面板
+                return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(
+                    self.character_handle_panel, 
+                    _("借阅历史记录"), 
+                    info_text,
+                    select_state
+                )
+                
+                yrn = flow_handle.askfor_all(return_list)
+                
+                # 如果点击返回按钮，退出面板
+                if yrn == _("返回"):
+                    break
+
+    def show_character_history(self, character_id: int):
+        """显示指定角色的借阅历史"""
+        
+        character_data = cache.character_data[character_id]
+        
+        while 1:
+            return_list = []
+            
+            # 显示标题
+            title_text = _("[{0}]的借书卡记录").format(character_data.name)
+            title_draw = draw.TitleLineDraw(title_text, window_width)
+            title_draw.draw()
+            line_feed.draw()
+            
+            # 检查是否有借阅历史
+            if not hasattr(character_data.entertainment, 'borrow_book_history') or len(character_data.entertainment.borrow_book_history) == 0:
+                no_history_draw = draw.NormalDraw()
+                no_history_draw.width = window_width
+                no_history_draw.text = _("\n  该角色暂无借阅历史记录\n")
+                no_history_draw.draw()
+            else:
+                # 显示借阅历史统计信息
+                total_books = len(character_data.entertainment.borrow_book_history)
+                total_reads = sum(record.get('total_read_count', 0) for record in character_data.entertainment.borrow_book_history)
+                
+                stats_draw = draw.NormalDraw()
+                stats_draw.width = window_width
+                stats_text = _("\n  借阅历史统计：共借阅过{0}本书，累计阅读{1}次\n").format(total_books, total_reads)
+                stats_draw.text = stats_text
+                stats_draw.draw()
+                
+                line_feed.draw()
+                
+                # 显示详细的借阅记录
+                for i, record in enumerate(reversed(character_data.entertainment.borrow_book_history)):
+                    book_id = record.get('book_id', 0)
+                    book_name = record.get('book_name', _('未知书籍'))
+                    borrow_time = record.get('borrow_time', None)
+                    return_time = record.get('return_time', None)
+                    read_count = record.get('total_read_count', 0)
+                    
+                    # 格式化时间显示
+                    borrow_time_str = ""
+                    return_time_str = ""
+                    if borrow_time:
+                        if isinstance(borrow_time, str):
+                            borrow_time_str = borrow_time
+                        else:
+                            borrow_time_str = borrow_time.strftime("%Y年%m月%d日 %H:%M")
+                    
+                    if return_time:
+                        if isinstance(return_time, str):
+                            return_time_str = return_time
+                        else:
+                            return_time_str = return_time.strftime("%Y年%m月%d日 %H:%M")
+                    else:
+                        return_time_str = _("仍在借阅中")
+                    
+                    # 构建记录文本
+                    record_text = _("  [{0}] 《{1}》").format(str(i+1).rjust(2,'0'), book_name)
+                    if book_id in game_config.config_book:
+                        book_type_data = game_config.config_book_type[game_config.config_book[book_id].type]
+                        record_text += _(" ({0})").format(book_type_data.son_type_name)
+                    
+                    record_text += _("\n      借书时间：{0}").format(borrow_time_str)
+                    record_text += _("\n      还书时间：{0}").format(return_time_str)
+                    record_text += _("\n      阅读次数：{0}次\n").format(read_count)
+                    
+                    record_draw = draw.NormalDraw()
+                    record_draw.width = window_width
+                    record_draw.text = record_text
+                    record_draw.draw()
+                    
+                    line_feed.draw()
+            
+            # 返回按钮
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
 
 
 class SelectRecommendBookButton:
