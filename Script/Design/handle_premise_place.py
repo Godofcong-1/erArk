@@ -386,7 +386,7 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design.handle_premise import (
-        handle_hp_1,
+        handle_self_tired,
     )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -397,7 +397,7 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_hp_1(chara_id):
+                if handle_self_tired(chara_id):
                     return 1
     return 0
 
@@ -712,7 +712,7 @@ def handle_scene_all_not_tired(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design.handle_premise import (
-        handle_hp_1,
+        handle_self_tired,
     )
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
@@ -723,7 +723,7 @@ def handle_scene_all_not_tired(character_id: int) -> int:
         for chara_id in scene_data.character_list:
             # 遍历非玩家的角色
             if chara_id:
-                if handle_hp_1(chara_id):
+                if handle_self_tired(chara_id):
                     return 0
         return 1
     return 0

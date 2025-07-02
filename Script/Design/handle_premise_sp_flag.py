@@ -28,10 +28,10 @@ def add_premise(premise: str) -> FunctionType:
     return decoraror
 
 
-@add_premise(constant_promise.Premise.HP_1)
-def handle_hp_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_TIRED)
+def handle_self_tired(character_id: int) -> int:
     """
-    自身疲劳（体力=1）
+    自身疲劳
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -44,10 +44,10 @@ def handle_hp_1(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.HP_G_1)
-def handle_hp_g_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_NOT_TIRED)
+def handle_self_not_tired(character_id: int) -> int:
     """
-    自身未疲劳（体力>1）
+    自身未疲劳
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -61,7 +61,7 @@ def handle_hp_g_1(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_HP_1)
-def target_handle_hp_1(character_id: int) -> int:
+def handle_target_hp_1(character_id: int) -> int:
     """
     交互对象疲劳（体力=1）
     Keyword arguments:
@@ -77,20 +77,20 @@ def target_handle_hp_1(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.TARGET_HP_G_1)
-def target_target_hp_g_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_NOT_TIRED)
+def handle_target_not_tired(character_id: int) -> int:
     """
-    交互对象未疲劳（体力=1）
+    交互对象未疲劳
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    return not target_handle_hp_1(character_id)
+    return not handle_target_hp_1(character_id)
 
 
-@add_premise(constant_promise.Premise.SELF_OR_TARGET_HP_1)
-def handle_self_or_target_hp_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_OR_TARGET_TIRED)
+def handle_self_or_target_tired(character_id: int) -> int:
     """
     自身或交互对象疲劳（体力=1）
     Keyword arguments:
@@ -108,8 +108,8 @@ def handle_self_or_target_hp_1(character_id: int) -> int:
         return 0
 
 
-@add_premise(constant_promise.Premise.SELF_AND_TARGET_HP_G_1)
-def handle_self_and_target_hp_g_1(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_AND_TARGET_BOTH_NOT_TIRED)
+def handle_self_and_target_both_not_tired(character_id: int) -> int:
     """
     自身和交互对象均未疲劳（体力>1）
     Keyword arguments:
@@ -117,7 +117,7 @@ def handle_self_and_target_hp_g_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_self_or_target_hp_1(character_id):
+    if handle_self_or_target_tired(character_id):
         return 0
     else:
         return 1

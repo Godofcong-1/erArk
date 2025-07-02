@@ -234,7 +234,8 @@ def handle_rest():
     _("购买食物"),
     {constant_promise.Premise.IN_FOOD_SHOP,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
 )
 def handle_buy_food():
     """处理购买食物指令"""
@@ -259,7 +260,8 @@ def handle_eat():
     {constant_promise.Premise.HAVE_FOOD,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_TAKE_FOOD,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1}
 )
 def handle_put_selfmade_food_in():
     """处理放入正常食物指令"""
@@ -300,6 +302,7 @@ def handle_see_attr():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
     },
     constant.Behavior.CHAT
@@ -522,6 +525,7 @@ def handle_teach():
         constant_promise.Premise.IN_LIBRARY,
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
     })
 def handle_borrow_book():
     """处理借阅书籍指令"""
@@ -552,6 +556,7 @@ def handle_read_book():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE,
         constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER,
         constant_promise.Premise.T_NORMAL_24567,
@@ -568,6 +573,7 @@ def handle_manage_library():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_PRODUCTION_WORKSHOP,
     })
 def handle_manage_library():
@@ -584,6 +590,7 @@ def handle_manage_library():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_HERB_GARDEN,
     })
 def handle_manage_agriculture():
@@ -600,6 +607,7 @@ def handle_manage_agriculture():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_GARAGE,
     })
 def handle_manage_vehicle():
@@ -615,7 +623,8 @@ def handle_manage_vehicle():
     _("身体检查与管理"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_PHYSICAL_EXAMINATION,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
 )
 def handle_physical_check_and_manage():
     """处理身体检查与管理指令"""
@@ -629,6 +638,7 @@ def handle_physical_check_and_manage():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.T_WORK_IS_WARDEN,
     })
 def handle_manage_vehicle():
@@ -645,6 +655,7 @@ def handle_manage_vehicle():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_RESOURCE_EXCHANGE,
     })
 def handle_manage_library():
@@ -694,7 +705,8 @@ def handle_manage_basement():
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_ONE
 )
 def handle_hypnosis_one():
@@ -719,7 +731,8 @@ def handle_hypnosis_one():
      constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.T_UNCONSCIOUS_HYPNOSIS_FLAG,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1}
 )
 def handle_deepening_hypnosis():
     """处理加深催眠"""
@@ -736,7 +749,8 @@ def handle_deepening_hypnosis():
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.SANITY_POINT_GE_5,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_ALL
 )
 def handle_hypnosis_all():
@@ -767,7 +781,8 @@ def handle_hypnosis_all():
     _("切换催眠模式"),
     {constant_promise.Premise.PRIMARY_HYPNOSIS,
      constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.SexInstructSubType.ARTS,
 )
 def handle_change_hypnosis_mode():
@@ -786,7 +801,8 @@ def handle_change_hypnosis_mode():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.SCENE_ALL_UNCONSCIOUS,
      constant_promise.Premise.TARGET_IN_HYPNOSIS,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_CANCEL
 )
 def handle_hypnosis_cancel():
@@ -803,7 +819,8 @@ def handle_hypnosis_cancel():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_20,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_INCREASE_BODY_SENSITIVITY,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_INCREASE_BODY_SENSITIVITY,
     constant.SexInstructSubType.ARTS,
 )
@@ -820,7 +837,8 @@ def handle_hypnosis_increase_body_sensitivity():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_FORCE_CLIMAX,
     constant.SexInstructSubType.ARTS,
 )
@@ -839,7 +857,8 @@ def handle_hypnosis_force_climax():
      constant_promise.Premise.T_REPRODUCTION_PERIOD_3,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_FORCE_OVULATION,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_FORCE_OVULATION,
     constant.SexInstructSubType.ARTS,
 )
@@ -857,7 +876,8 @@ def handle_hypnosis_force_ovulation():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ACTIVE_H,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_BLOCKHEAD,
     constant.SexInstructSubType.ARTS,
 )
@@ -876,7 +896,8 @@ def handle_hypnosis_blockhead():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_6,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_BLOCKHEAD,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_ACTIVE_H,
     constant.SexInstructSubType.ARTS,
 )
@@ -894,7 +915,8 @@ def handle_hypnosis_active_h():
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
      constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_ROLEPLAY,
     constant.SexInstructSubType.ARTS,
 )
@@ -917,7 +939,8 @@ def handle_hypnosis_roleplay():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_PAIN_AS_PLEASURE,
     constant.SexInstructSubType.ARTS,
 )
@@ -1123,7 +1146,8 @@ def handle_sleep():
     _("淋浴"),
     {constant_promise.Premise.IN_BATHROOM,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TAKE_SHOWER,
 )
 def handle_take_shower():
@@ -1138,7 +1162,8 @@ def handle_take_shower():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.STROKE,
 )
 def handle_stroke():
@@ -1154,7 +1179,8 @@ def handle_stroke():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TECHNIQUE_GE_3,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.MASSAGE,
 )
 def handle_massage():
@@ -1390,6 +1416,7 @@ def handle_wait_6_hour():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,
      constant_promise.Premise.TARGET_URINATE_LE_49,
      constant_promise.Premise.T_NORMAL_24567,},
     constant.Behavior.MAKE_COFFEE,
@@ -1406,7 +1433,8 @@ def handle_make_coffee():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.SCENE_ONLY_ONE,
-     constant_promise.Premise.TIRED_LE_84}
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1}
 )
 def handle_make_coffee_add():
     """处理泡咖啡（加料）指令"""
@@ -1423,6 +1451,7 @@ def handle_make_coffee_add():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,
      constant_promise.Premise.URINATE_LE_49,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      },
@@ -1585,6 +1614,7 @@ def handle_apologize():
      constant_promise.Premise.TARGET_NOT_ANGRY_WITH_PLAYER,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,
      },
     constant.Behavior.LISTEN_COMPLAINT,
 )
@@ -1609,6 +1639,7 @@ def handle_listen_complaint():
     {
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
         constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
@@ -1738,7 +1769,8 @@ def handle_test_instruct():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_INFLATION_1,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.LISTEN_INFLATION,
 )
 def handle_listen_inflation():
@@ -1754,7 +1786,8 @@ def handle_listen_inflation():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_IN_TOILET,
      constant_promise.Premise.T_CHILD_OR_LOLI_1,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.PLAY_WITH_CHILD,
 )
 def handle_play_with_child():
@@ -1768,7 +1801,8 @@ def handle_play_with_child():
     _("照顾婴儿"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
 )
 def handle_take_care_baby():
     """处理照顾婴儿指令"""
@@ -1796,6 +1830,7 @@ def handle_order_hotel_room():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
+        constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_FIELD_ASSEMBLY_POINT
     },
 )
@@ -1812,7 +1847,8 @@ def handle_field_commission():
     _("检查衣柜"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_LOCKER_ROOM_OR_DORMITORY,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
 )
 def handle_check_locker():
     """处理检查衣柜指令"""
@@ -1960,7 +1996,8 @@ def handle_drink_alcohol():
     {constant_promise.Premise.IN_TOILET_MAN,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.URINATE_GE_80,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.PEE,
 )
 def handle_pee():
@@ -3029,7 +3066,8 @@ def handle_repair_equipment():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.EMBRACE,
 )
 def handle_embrace():
@@ -3045,7 +3083,8 @@ def handle_embrace():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.PENIS_NOT_IN_T_MOUSE,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.KISS,
 )
 def handle_kiss():
@@ -3060,7 +3099,8 @@ def handle_kiss():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_HEAD,
 )
 def handle_touch_head():
@@ -3075,7 +3115,8 @@ def handle_touch_head():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_BREAST,
 )
 def handle_touch_breast():
@@ -3090,7 +3131,8 @@ def handle_touch_breast():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_BUTTOCKS,
 )
 def handle_touch_buttocks():
@@ -3106,6 +3148,7 @@ def handle_touch_buttocks():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,
     },
     constant.Behavior.TOUCH_EARS,
 )
@@ -3122,7 +3165,8 @@ def handle_touch_ears():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_HORN,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_HORN,
 )
 def handle_touch_horn():
@@ -3138,7 +3182,8 @@ def handle_touch_horn():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TAIL,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_TAIL,
 )
 def handle_touch_tail():
@@ -3154,7 +3199,8 @@ def handle_touch_tail():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_RING,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_RING,
 )
 def handle_touch_ring():
@@ -3170,7 +3216,8 @@ def handle_touch_ring():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_WING,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_WING,
 )
 def handle_touch_wing():
@@ -3186,7 +3233,8 @@ def handle_touch_wing():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_TENTACLE,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_TENTACLE,
 )
 def handle_touch_tentacle():
@@ -3202,7 +3250,8 @@ def handle_touch_tentacle():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_HAVE_CAR,
-     constant_promise.Premise.TIRED_LE_84,},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1,},
     constant.Behavior.TOUCH_CAR,
 )
 def handle_touch_car():
@@ -3217,7 +3266,8 @@ def handle_touch_car():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.HAND_IN_HAND,
 )
 def handle_handle_in_handle():
@@ -3233,7 +3283,8 @@ def handle_handle_in_handle():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.PLACE_FURNITURE_GE_1,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.LAP_PILLOW,
 )
 def handle_lap_pillow():
@@ -3249,7 +3300,8 @@ def handle_lap_pillow():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_WEAR_SKIRT,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.RAISE_SKIRT,
 )
 def handle_raise_skirt():
@@ -3266,7 +3318,8 @@ def handle_raise_skirt():
      constant_promise.Premise.T_NORMAL_6,
      constant_promise.Premise.TARGET_WEAR_PAN,
      constant_promise.Premise.COLLECT_BONUS_102,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.ASK_FOR_PAN,
 )
 def handle_ask_for_pan():
@@ -3283,7 +3336,8 @@ def handle_ask_for_pan():
      constant_promise.Premise.T_NORMAL_6,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
      constant_promise.Premise.COLLECT_BONUS_202,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.ASK_FOR_SOCKS,
 )
 def handle_ask_for_socks():
@@ -3299,7 +3353,8 @@ def handle_ask_for_socks():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_BATHROOM,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.INVITE_TO_BATH,
 )
 def handle_invite_to_bath():
@@ -3315,7 +3370,8 @@ def handle_invite_to_bath():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.TARGET_WEAR_PAN,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.STEAL_PAN,
 )
 def handle_steal_pan():
@@ -3331,7 +3387,8 @@ def handle_steal_pan():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_UNNORMAL_5_6,
      constant_promise.Premise.TARGET_WEAR_SOCKS,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.STEAL_SOCKS,
 )
 def handle_steal_socks():
@@ -3347,7 +3404,8 @@ def handle_steal_socks():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.SCENE_ALL_UNCONSCIOUS_OR_SLEEP,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.STEAL_SCENE_ALL_PAN,
 )
 def handle_steal_scene_all_pan():
@@ -3363,7 +3421,8 @@ def handle_steal_scene_all_pan():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.SCENE_OVER_TWO,
      constant_promise.Premise.SCENE_ALL_UNCONSCIOUS_OR_SLEEP,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.STEAL_SCENE_ALL_SOCKS,
 )
 def handle_steal_scene_all_socks():
@@ -3378,7 +3437,8 @@ def handle_steal_scene_all_socks():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_CLITORIS,
 )
 def handle_touch_clitoris():
@@ -3393,7 +3453,8 @@ def handle_touch_clitoris():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_VAGINA,
 )
 def handle_touch_vagina():
@@ -3408,7 +3469,8 @@ def handle_touch_vagina():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.TOUCH_ANUS,
 )
 def handle_touch_anus():
@@ -3424,7 +3486,8 @@ def handle_touch_anus():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.T_NORMAL_56_OR_UNCONSCIOUS_FLAG,
      constant_promise.Premise.TARGET_MILK_GE_30,
-     constant_promise.Premise.TIRED_LE_84},
+     constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.HP_G_1},
     constant.Behavior.MILK,
 )
 def handle_milk():

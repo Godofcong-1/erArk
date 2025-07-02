@@ -470,7 +470,7 @@ class CharacterInfoHead:
         tired_draw = draw.LeftDraw()
         tired_draw.style = "little_dark_slate_blue"
         tired_text = ""
-        if handle_premise.handle_hp_1(character_id):
+        if handle_premise.handle_self_tired(character_id):
             tired_text = _(" <累>")
         tired_draw.text = tired_text
 

@@ -2709,7 +2709,7 @@ def handlefind_t_food_weird_flag_1(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.HP_G_1)
-def handle_hp_g_1(character_id: int) -> int:
+def handle_self_not_tired(character_id: int) -> int:
     """
     自身体力大于1
     Keyword arguments:

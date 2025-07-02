@@ -640,12 +640,12 @@ jj_1,JJ_1,属性_身体部位,自身阴茎大小为普通
 jj_2,JJ_2,属性_身体部位,自身阴茎大小为粗大
 jj_3,JJ_3,属性_身体部位,自身阴茎大小为巨根
 
-hp_1,HP_1,特殊flag_生活,自身疲劳（体力=1）
-hp_g_1,HP_G_1,特殊flag_生活,自身未疲劳（体力>1）
+self_tired,SELF_TIRED,特殊flag_生活,自身疲劳
+self_not_tired,SELF_NOT_TIRED,特殊flag_生活,自身未疲劳
 target_hp_1,TARGET_HP_1,特殊flag_生活,交互对象疲劳（体力=1）
-target_hp_g_1,TARGET_HP_G_1,特殊flag_生活,交互对象未疲劳（体力=1）
-self_or_target_hp_1,SELF_OR_TARGET_HP_1,特殊flag_生活,自身或交互对象疲劳（体力=1）
-self_and_target_hp_g_1,SELF_AND_TARGET_HP_G_1,特殊flag_生活,自身和交互对象均未疲劳（体力>1）
+target_not_tired,TARGET_NOT_TIRED,特殊flag_生活,交互对象未疲劳
+self_or_target_tired,SELF_OR_TARGET_TIRED,特殊flag_生活,自身或交互对象疲劳
+self_and_target_both_not_tired,SELF_AND_TARGET_BOTH_NOT_TIRED,特殊flag_生活,自身和交互对象均未疲劳
 shower_flag_0,SHOWER_FLAG_0,特殊flag_生活,自身没有洗澡状态
 shower_flag_ge_1,SHOWER_FLAG_GE_1,特殊flag_生活,自身有某一种洗澡状态
 shower_flag_123,SHOWER_FLAG_123,特殊flag_生活,自身有正在进行的洗澡状态
