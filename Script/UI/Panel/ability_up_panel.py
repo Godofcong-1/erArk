@@ -269,7 +269,7 @@ class Characterabi_show_Text:
                 now_jewel_value = int(self.jewel_use_dict[juel_id] * adjust)
                 # 绘制调整按钮
                 button_text = _("[{0}]{1} 当前用量:{2}，当前总值{3}").format(juel_id, jewel_name, self.jewel_use_dict[juel_id], now_jewel_value)
-                btn = draw.LeftButton(button_text, _(jewel_name), self.width/5, cmd_func=self.input_juel_count, args=(juel_id, adjust, mark_down_data_all_value, need_juel_all_value))
+                btn = draw.LeftButton(button_text, _(jewel_name), self.width, cmd_func=self.input_juel_count, args=(juel_id, adjust, mark_down_data_all_value, need_juel_all_value))
                 btn.draw()
                 return_list.append(btn.return_text)
                 mark_down_data_all_value += now_jewel_value
@@ -311,7 +311,7 @@ class Characterabi_show_Text:
             guess_num = 0
         else:
             guess_num = int((need_juel_all_value - mark_down_data_all_value) / adjust)
-        ask_text = _("\n最多可以使用{0}个{1}，当前使用量为{2}，预计需要{3}个\n").format(max_count, game_config.config_juel[juel_id].name, self.jewel_use_dict[juel_id], guess_num)
+        ask_text = _("\n请输入要使用的宝珠数量，最多可以使用{0}个{1}，当前使用量为{2}，预计需要{3}个\n").format(max_count, game_config.config_juel[juel_id].name, self.jewel_use_dict[juel_id], guess_num)
         ask_panel = panel.AskForOneMessage()
         ask_panel.set(ask_text, 99)
         # 获取输入
