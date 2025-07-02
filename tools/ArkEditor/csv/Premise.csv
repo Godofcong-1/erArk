@@ -419,6 +419,7 @@ sleep_time,SLEEP_TIME,时间_当前,角色行动开始时间为睡觉时间（�
 not_sleep_time,NOT_SLEEP_TIME,时间_当前,角色行动开始时间不是睡觉时间（晚上10点到早上6点）
 game_time_is_sleep_time,GAME_TIME_IS_SLEEP_TIME,时间_当前,游戏系统时间为睡觉时间（晚上10点到早上6点）
 tired_ge_75_or_sleep_time,TIRED_GE_75_OR_SLEEP_TIME,时间_当前,疲劳条≥75%或到了睡觉的时间
+tired_ge_75_or_sleep_time_or_hp_1,TIRED_GE_75_OR_SLEEP_TIME_OR_HP_1,时间_当前,疲劳条≥75%或到了睡觉的时间或体力为1
 to_work_time,TO_WORK_TIME,时间_当前,到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00）
 work_time,WORK_TIME,时间_当前,工作时间（工作日早上9:00~中午12:00，下午14:00~下午18:00）
 to_work_time_or_work_time,TO_WORK_TIME_OR_WORK_TIME,时间_当前,到岗时间或工作时间（工作日早上8:40~中午12:00，下午13:40~下午18:00）
@@ -481,6 +482,7 @@ t_normal_56_or_unconscious_flag,T_NORMAL_56_OR_UNCONSCIOUS_FLAG,属性_异常状
 t_unnormal_567,T_UNNORMAL_567,属性_异常状态,交互对象5或6或7异常
 normal_all_except_special_hypnosis,NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS,属性_异常状态,没有任何异常的普通状态或被空气或体控催眠中
 
+hp_g_1,HP_G_1,属性_基础,自身体力大于1
 hp_low,HP_LOW,属性_基础,自身体力低于30%
 hp_high,HP_HIGH,属性_基础,自身体力高于70%
 hp_max,HP_MAX,属性_基础,自身体力等于100%

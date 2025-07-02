@@ -549,6 +549,23 @@ def handle_tired_ge_75_or_sleep_time(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME_OR_HP_1)
+def handle_tired_ge_75_or_sleep_time_or_hp1(character_id: int) -> int:
+    """
+    疲劳条≥75%或到了睡觉的时间或体力为1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_tired_ge_75_or_sleep_time(character_id):
+        return 1
+    elif character_data.hit_point <= 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TO_WORK_TIME)
 def handle_to_work_time(character_id: int) -> int:
     """
@@ -2689,6 +2706,19 @@ def handlefind_t_food_weird_flag_1(character_id: int) -> int:
         return 1
     else:
         return 0
+
+
+@add_premise(constant_promise.Premise.HP_G_1)
+def handle_hp_g_1(character_id: int) -> int:
+    """
+    自身体力大于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.hit_point > 1
 
 
 @add_premise(constant_promise.Premise.HP_LOW)

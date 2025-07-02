@@ -833,6 +833,8 @@ class Premise:
     """ 时间_当前 游戏系统时间为睡觉时间（晚上10点到早上6点） """
     TIRED_GE_75_OR_SLEEP_TIME = "tired_ge_75_or_sleep_time"
     """ 时间_当前 疲劳条≥75%或到了睡觉的时间 """
+    TIRED_GE_75_OR_SLEEP_TIME_OR_HP_1 = "tired_ge_75_or_sleep_time_or_hp_1"
+    """ 时间_当前 疲劳条≥75%或到了睡觉的时间或体力为1 """
     TO_WORK_TIME = "to_work_time"
     """ 时间_当前 到岗时间（工作日早上8:40~早上9:00，下午13:40~下午14:00） """
     WORK_TIME = "work_time"
@@ -964,6 +966,8 @@ class Premise:
     NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS = "normal_all_except_special_hypnosis"
     """ 属性_异常状态 没有任何异常的普通状态或被空气或体控催眠中 """
 
+    HP_G_1 = "hp_g_1"
+    """ 属性_基础 自身体力大于1 """
     HP_LOW = "hp_low"
     """ 属性_基础 自身体力低于30% """
     HP_HIGH = "hp_high"

@@ -1107,7 +1107,7 @@ def handle_diary():
     {constant_promise.Premise.IN_DORMITORY_OR_HOTEL,
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_OFF,
-     constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME},
+     constant_promise.Premise.TIRED_GE_75_OR_SLEEP_TIME_OR_HP_1},
     constant.Behavior.SLEEP,
 )
 def handle_sleep():
