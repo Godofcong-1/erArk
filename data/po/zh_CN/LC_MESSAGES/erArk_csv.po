@@ -6145,7 +6145,7 @@ msgid "色情"
 msgstr ""
 
 #: .\data\csv\BookType.csv:22
-msgid "本番"
+msgid "性交"
 msgstr ""
 
 #: .\data\csv\BookType.csv:23
@@ -16816,6 +16816,34 @@ msgstr ""
 msgid "无意识心理经验"
 msgstr ""
 
+#: .\data\csv\Experience.csv:129
+msgid "手交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:130
+msgid "口交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:131
+msgid "足交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:132
+msgid "乳交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:133
+msgid "性交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:134
+msgid "肛交理论经验"
+msgstr ""
+
+#: .\data\csv\Experience.csv:135
+msgid "榨精理论经验"
+msgstr ""
+
 #: .\data\csv\Experience_Types.csv:6
 msgid "其他经验"
 msgstr ""
@@ -16910,6 +16938,14 @@ msgstr ""
 
 #: .\data\csv\Experience_Types.csv:17
 msgid "日常生活和社交方面的技能经验，包括对话、战斗、学识、料理、约会、音乐等各种生活技能的掌握程度"
+msgstr ""
+
+#: .\data\csv\Experience_Types.csv:18
+msgid "理论经验"
+msgstr ""
+
+#: .\data\csv\Experience_Types.csv:18
+msgid "针对各种性交行为和技巧的理论知识和理解，包括手交、口交、足交、乳交、性交、肛交、榨精等方面的理论学习和掌握"
 msgstr ""
 
 #: .\data\csv\Facility.csv:7
@@ -19162,10 +19198,6 @@ msgstr ""
 
 #: .\data\csv\InstructJudge.csv:8
 msgid "约会"
-msgstr ""
-
-#: .\data\csv\InstructJudge.csv:10
-msgid "性交"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:11
@@ -24380,31 +24412,31 @@ msgstr ""
 msgid "大家好 这里是GeniusGD，各位可以直接称呼为雷蛇哥 是个雷蛇厨（不然嘞）\n雷蛇口上就是兴趣写的 偶尔会翻译+处理数值\n啥 你不要听废话？那直接把雷蛇的机制说一遍吧\n\n雷蛇目前写好的有四大淫乱损伤 当然之后有什么会加上\n【精神损伤】触发时会当场自慰 基本为免费获得把柄\n【腐蚀损伤】触发时会拉高欲望 被推了不关雷蛇的事 谁叫你留在那里\n【热情损伤】触发时会直接送你上床 小心被其他干员看到\n【堕落损伤】触发时会提高雷蛇身体的敏感度 要刷刻印啥的就趁现在\n损伤最多一天触发一次 睡觉时重置损伤和冷却 当然不一定正常 bug炸了麻烦上dc找我或者git填issue"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:21
+#: .\data\csv\Tip_Chara.csv:22
 msgid "喔，小馬，總是充滿活力的小馬。想我當年就是因為一張小馬的美圖才開始了解方舟的。露著大腿外側的褲子，想必內褲是高腰細繩的那種...\n問我為什麼喜歡小馬呢...\n原本小馬對我來說只是個漂亮的姑娘，直到在nga看到一篇格拉尼的特雷森入(原帖被斃了，但作者有另外開)被小馬的英姿打動到了，經數個月的發酵後某天就\"好漂亮的一姑娘!!\"\n(然後就跑去玩賽馬娘了)\n請各位賽博女婿們能喜歡我寫的格拉尼，目前仍在嘗試在嘗試有天能在甲板上舉辦屬於我們的羅德島大賞賽，2500，左旋!!\n(個人私心覺得格拉尼是方舟最適合跑賽馬的庫蘭塔了，我還有藏勝者舞台在口上裡喔，獻給博士的勝者舞台)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:22
+#: .\data\csv\Tip_Chara.csv:23
 msgid "阿，夏洛特...當時正值羅德島活動結束，當大家都沉浸在緬懷殿下(或前文明)而傷神，我卻被這位大姑娘的劇情擊中了\n試想她一個大姑娘，就這麼陪著博士和阿米婭，在大地上旅行了這麼久，是在什麼樣的心情下說出那句\"如果你願意，我們可以給阿米婭一個家\"\n又是在一聽到羅德島時馬上跑去找凱貓貓...不行，我不能忍受大家聊到暴行時大家只會調侃\"她的胡蘿蔔派很好吃\"、\"她本有機會贏的，可惜和博士的記憶被刪光光了\"\n本世界線，我的夏洛特必會大贏特贏，善良的人應得到該有的獎賞"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:27
+#: .\data\csv\Tip_Chara.csv:28
 msgid "巫恋的文本更的会慢点但会一直更，同时ooc的人设在一起在古堡里待半年因为不这么加我确实没法想着角色写，文笔较差会慢慢进步\n同时很多的文本和诗怀雅一样采用E=1+a+b＋n的形式，可能上秒没感情下秒说喜欢，这是正常的，大概等写的差不多了再进行重新排序，暂且就这样\n顺带一提博士的人设是活了很久很屑很无厘头同时保留记忆，所以会比较怪"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:30
+#: .\data\csv\Tip_Chara.csv:31
 msgid "喔，小車，羅德島的機械媽咪～\n一開始為了整活而寫，最後卻讓群組的大家想破腦袋的一位幹員\n小車的性交部分要怎麼寫呢？被車輪壓牛子算足交嗎？⋯種種哲學問題總是引人辯論\n但是，小車是不可能變機娘的，這是對原教旨主義者的背叛（振聲\n努力的試著寫出媽咪的感覺\n希望大家能用愛包容這位特殊的幹員喔\n（小車的內容仍偏少，也希望有想法的博士能踴躍參與）"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:39
+#: .\data\csv\Tip_Chara.csv:40
 msgid "喔，澄閃，一位善良、正質、偶爾缺乏點運氣的小貓咪，這片大地上不該只有不公，善良之人應得一個美好的故事，試問誰又不是如蘇茜一般努力過著日子呢\n(只可惜鷹角又在密錄裡把貓貓當成駱駝澄子開涮，鷹角壞!)\n好像還要給玩家一點建議來著....那，希望溫柔的人都能被溫柔以待\n(說貓貓是豬豬的人聽著，YOU!!  馬上到你家門口!!)"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:40
+#: .\data\csv\Tip_Chara.csv:41
 msgid "迷迭香是个可爱的孩子，也是罗德岛坚强的小小感染者战士，我被这样的设定背景与人物表现所吸引，东拼西凑成了一点点口上。\n\n虽然本坑有打算继续完善的计划，但做好了抛砖引玉的心理准备，\n不过此刻，三分热度的初篇已经成功憋出来，我也没什么心理负担，可以安心继续活下去了。\n谢谢你，迷迭香。"
 msgstr ""
 
-#: .\data\csv\Tip_Chara.csv:48
+#: .\data\csv\Tip_Chara.csv:49
 msgid "博士對刻俄柏瑟瑟，博士壞! 但小刻最喜歡博士了，所以小刻好!\n\n小刻的口上寫起來最讓人開心了，誰不喜歡一隻活力無限，傻呼呼的同時又愛你且聽話的巨乳狗狗呢。\n文本裡大量使用了各類壯聲詞和口語化的口癖來凸顯小刻的活潑可愛，筆者是寫的很治癒啦，就不知道現在看著這段文字的你怎麼想了\n出於偏愛，除了身體接觸，還寫了不少教小刻做飯、念書、品酒、戰鬥和設備維護的篇幅，大家有興趣可以看看喔\n雖然寫這段時發情期系統尚未實裝，但寫了不少篇幅，一想到平時活潑可愛的大姑娘一到時間就變得扭捏，滿腦子只想和博士貼貼跟瑟瑟，一想就覺得這簡直要瑟瘋了\n\n希望大家都能喜歡我的小刻喔，讓小刻成為幸福的刻俄柏吧!"
 msgstr ""
 
@@ -26113,30 +26145,34 @@ msgid "幽灵鲨"
 msgstr ""
 
 #: .\data\character\0143_幽灵鲨.csv:13
-msgid "一幅难以描述的绘画。斑驳的留白令人茫然若失。"
+msgid "这是劳伦提娜与幽灵鲨共同为你制作的雕像，其中的细节令你感叹"
 msgstr ""
 
 #: .\data\character\0143_幽灵鲨.csv:14
 msgid "幽灵鲨，身份不明，履历缺失。在对抗大型生物与破坏硬目标等行动中展现出极强的技巧，推测与其过往战斗经验相关。现作为近卫干员于罗德岛某作战小队任职。"
 msgstr ""
 
-#: .\data\character\0143_幽灵鲨.csv:28
-msgid "长檐修女帽"
-msgstr ""
-
-#: .\data\character\0143_幽灵鲨.csv:29
-msgid "灰黑色披肩"
-msgstr ""
-
-#: .\data\character\0143_幽灵鲨.csv:30
-msgid "灰黑色长袖风衣"
+#: .\data\character\0143_幽灵鲨.csv:15
+msgid "#65646C"
 msgstr ""
 
 #: .\data\character\0143_幽灵鲨.csv:31
-msgid "黑色高开叉短修女裙"
+msgid "长檐修女帽"
+msgstr ""
+
+#: .\data\character\0143_幽灵鲨.csv:32
+msgid "灰黑色披肩"
+msgstr ""
+
+#: .\data\character\0143_幽灵鲨.csv:33
+msgid "灰黑色长袖风衣"
 msgstr ""
 
 #: .\data\character\0143_幽灵鲨.csv:34
+msgid "黑色高开叉短修女裙"
+msgstr ""
+
+#: .\data\character\0143_幽灵鲨.csv:37
 msgid "绑带（右）"
 msgstr ""
 
@@ -27100,39 +27136,39 @@ msgstr ""
 msgid "早露，切尔诺伯格事变前于切城某中学就读，并担任学生会长。事变后加入罗德岛，隶属后勤部门，工作期间风评极佳。现经本人申请，作为狙击干员转入前线。"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:29
+#: .\data\character\0197_早露.csv:30
 msgid "深蓝金徽学生帽"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:30
+#: .\data\character\0197_早露.csv:31
 msgid "鲜红绸缎大蝴蝶结"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:31
+#: .\data\character\0197_早露.csv:32
 msgid "白底蓝边水手衬衫"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:32
+#: .\data\character\0197_早露.csv:33
 msgid "深蓝毛边军装大衣"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:33
+#: .\data\character\0197_早露.csv:34
 msgid "纯白高腰百褶短裙"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:35
+#: .\data\character\0197_早露.csv:36
 msgid "纯黑不透明连裤袜"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:36
+#: .\data\character\0197_早露.csv:37
 msgid "灰白毛球系带军靴"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:37
+#: .\data\character\0197_早露.csv:38
 msgid "乌萨斯重型狙击弩炮"
 msgstr ""
 
-#: .\data\character\0197_早露.csv:38
+#: .\data\character\0197_早露.csv:39
 msgid "学生会肩章"
 msgstr ""
 
@@ -28056,35 +28092,35 @@ msgstr ""
 msgid "#FF69B4"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:46
+#: .\data\character\0254_巫恋.csv:45
 msgid "墨黑色小礼帽"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:47
+#: .\data\character\0254_巫恋.csv:46
 msgid "白色发箍麻花辫半扎发"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:48
+#: .\data\character\0254_巫恋.csv:47
 msgid "哥特式半袖垂膝露背式黑色连衣裙"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:49
+#: .\data\character\0254_巫恋.csv:48
 msgid "“妈妈”赠送的西洋式薄绸"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:50
+#: .\data\character\0254_巫恋.csv:49
 msgid "女童式花纹黑色薄丝安全裤"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:51
+#: .\data\character\0254_巫恋.csv:50
 msgid "白色渐变透肉及腰连裤袜"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:52
+#: .\data\character\0254_巫恋.csv:51
 msgid "黑色蕾丝边绑腿绸带"
 msgstr ""
 
-#: .\data\character\0254_巫恋.csv:53
+#: .\data\character\0254_巫恋.csv:52
 msgid "黑色带蝴蝶结安全女童鞋"
 msgstr ""
 
@@ -33852,35 +33888,35 @@ msgstr ""
 msgid "刻俄柏"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:12
-msgid "#be7f52"
-msgstr ""
-
-#: .\data\character\2013_刻俄柏.csv:14
+#: .\data\character\2013_刻俄柏.csv:13
 msgid "花了好长时间才叠出来的短刀纸模。歪歪扭扭，满是折痕，不怎么精致。收到的人会喜欢吗？"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:15
+#: .\data\character\2013_刻俄柏.csv:14
 msgid "流浪者，从有意识开始就在四处流浪，在流浪途中被野外恶劣环境感染，凭着常人所不具备的直觉和意志一直撑到了现在。现已被罗德岛救助并顺利通过干员测试，成为罗德岛的一员。"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:29
+#: .\data\character\2013_刻俄柏.csv:15
+msgid "#be7f52"
+msgstr ""
+
+#: .\data\character\2013_刻俄柏.csv:31
 msgid "战术冲锋衣"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:30
+#: .\data\character\2013_刻俄柏.csv:32
 msgid "高领战术直筒连衣短裙"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:32
+#: .\data\character\2013_刻俄柏.csv:34
 msgid "超高筒系带运动靴"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:33
+#: .\data\character\2013_刻俄柏.csv:35
 msgid "很重的枪"
 msgstr ""
 
-#: .\data\character\2013_刻俄柏.csv:34
+#: .\data\character\2013_刻俄柏.csv:36
 msgid "裝滿武器的帆布包"
 msgstr ""
 
