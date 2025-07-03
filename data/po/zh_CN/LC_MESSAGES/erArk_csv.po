@@ -22424,6 +22424,10 @@ msgstr ""
 msgid "0"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:7
+msgid "不进行角色扮演"
+msgstr ""
+
 #: .\data\csv\Roleplay.csv:8
 msgid "妻子"
 msgstr ""
@@ -22432,68 +22436,332 @@ msgstr ""
 msgid "家庭"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:8
+msgid "对方是自己的妻子，和自己感情十分深厚"
+msgstr ""
+
 #: .\data\csv\Roleplay.csv:9
 msgid "姐姐"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:9
+msgid "对方是自己的亲姐姐，对自己这个弟弟十分照顾"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:10
 msgid "妹妹"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:10
+msgid "对方是自己的亲妹妹，很依赖自己这个哥哥"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:11
+msgid "对方是自己的亲生女儿，天真可爱，非常依赖自己，什么话都听自己的"
+msgstr ""
+
 #: .\data\csv\Roleplay.csv:12
 msgid "妈妈"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:12
+msgid "对方是自己的妈妈，对自己有强烈的保护欲和溺爱"
+msgstr ""
+
 #: .\data\csv\Roleplay.csv:13
-msgid "女仆"
+msgid "小学生"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:13
 msgid "职业"
 msgstr ""
 
+#: .\data\csv\Roleplay.csv:13
+msgid "对方是正在上小学的学生，天真无邪，充满好奇心"
+msgstr ""
+
 #: .\data\csv\Roleplay.csv:14
-msgid "老师"
+msgid "初中生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:14
+msgid "对方是正在上初中的学生，正值叛逆期，同时又对大人充满依赖"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:15
-msgid "学生"
+msgid "高中生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:15
+msgid "对方是正在上高中的学生，青春活泼，面临升学压力，渴望被理解和支持"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:16
-msgid "护士"
+msgid "大学生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:16
+msgid "对方是正在上大学的学生，追求梦想，渴望独立和自我实现"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:17
-msgid "警察"
+msgid "教师"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:17
+msgid "对方是学校的教师，负责教导学生，关心学生的成长与学习"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:18
-msgid "宠物猫"
+msgid "护士"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:18
-msgid "宠物"
+msgid "对方是照顾病人的护士，温柔体贴，专业素养高，对病人有耐心"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:19
-msgid "宠物狗"
+msgid "警察"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:19
+msgid "对方是维护社会秩序的警察，工作认真严肃，但私下里性格可能截然不同"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:20
-msgid "电车痴汉"
+msgid "白领"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:20
-msgid "场景"
+msgid "对方是公司职员，工作繁忙压力大，渴望在私生活中得到放松和慰藉"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:21
-msgid "户外当众"
+msgid "偶像"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:21
+msgid "对方是国民级的美少女偶像，拥有无与伦比的歌唱和舞蹈才华"
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:22
-msgid "公共厕所"
+msgid "老师"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:22
+msgid "关系"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:22
+msgid "对方是教导自己的老师，知识渊博，严厉中带着温柔，对自己这个学生有特殊关心"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:23
+msgid "学生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:23
+msgid "对方是自己教导的学生，青涩可爱，对自己这个老师充满敬仰和依赖"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:24
+msgid "同学"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:24
+msgid "对方是自己的同班同学，关系亲密，常常一起学习和活动"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:25
+msgid "宠物猫"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:25
+msgid "人外"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:25
+msgid "特殊"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:25
+msgid "对方以为自己是一只猫，不会说话，拥有猫的所有特征和习性，娇小可爱，有时傲娇，喜欢被抚摸和关爱"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:26
+msgid "宠物狗"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:26
+msgid "对方以为自己是一只狗，不会说话，拥有狗的所有特征和习性，忠诚可爱，喜欢撒娇和陪伴主人"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:27
+msgid "魅魔"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:27
+msgid "对方以为自己是魅魔，必须以吸取精气为生，性感妖艳，擅长诱惑"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:28
+msgid "电车痴汉"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:28
+msgid "场景"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:28
+msgid "陌生"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:28
+msgid "在拥挤的电车上，对方被自己这个陌生人进行痴汉行为，但又不敢反抗，只能默默忍受"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:29
+msgid "户外当众"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:29
+msgid "在可能被他人看见的公共场所进行亲密行为，刺激感和羞耻感倍增"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:30
+msgid "公共厕所（主动）"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:30
+msgid "对方把自己捆在公共厕所的隔间里，等待不认识的陌生人把自己当做肉便器使用，然后等来了自己"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:31
+msgid "公共厕所（被动）"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:31
+msgid "对方被自己绑架后捆在公共厕所的隔间里，被自己当做肉便器使用"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:32
+msgid "俘虏拷问"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:32
+msgid "对方是被俘虏的敌人，自己是审讯官，通过各种手段逼迫对方屈服"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:33
+msgid "榨精护士"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:33
+msgid "对方是医院的护士，负责对自己这个病人进行特殊的精液采集和处理"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:34
+msgid "战败魔法少女"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:34
+msgid "对方是强大的魔法少女，自己是魔物或怪人，对方被自己打败后沦为自己的玩物，必须接受各种羞辱和调教"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:35
+msgid "VTuber直播中"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:35
+msgid "对方是正在直播的VTuber，自己在对方直播中突然闯入，进行亲密行为，对方必须在观众面前维持表面上的正常"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:36
+msgid "女仆咖啡厅里菜单"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:36
+msgid "对方是女仆咖啡厅的女仆，自己是重要的客人，点了特殊的菜单，女仆必须满足自己的任何要求"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:37
+msgid "女仆惩罚调教"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:37
+msgid "对方是自己家雇佣的女仆，自己是主人，对方做了错事，必须接受主人的惩罚和调教"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:38
+msgid "偶像台前准备室"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:38
+msgid "对方是国民级的偶像，自己在对方上台演出前，在准备室里对偶像进行特殊的准备和调教"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:39
+msgid "偶像单人LIVE"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:39
+msgid "对方是国民级的偶像，对方为自己单独开了一场私人演出，演出中对方会进行各种亲密的互动和表演"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:40
+msgid "偶像演出后粉丝答谢"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:40
+msgid "对方是国民级的偶像，对方在演出结束后邀请自己到爱情旅馆进行特殊的粉丝答谢活动，期间会有各种亲密的互动和调教"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:41
+msgid "偶像枕营业"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:41
+msgid "对方是国民级的偶像，自己是有钱有势的高层，偶像为了能够上台表演，必须接受自己的枕边营业，期间会有各种亲密的互动和调教，自己无论做什么对方都必须接受"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:42
+msgid "放学后教室H"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:42
+msgid "自己和对方在空无一人的教室里偷偷进行性行为"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:43
+msgid "体育仓库H"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:43
+msgid "自己和对方在存放体育器材的仓库中偷偷进行性行为"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:44
+msgid "天台H"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:44
+msgid "自己和对方在学校的天台上进行性行为"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:45
+msgid "学校厕所H"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:45
+msgid "自己和对方在学校的厕所里进行性行为"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:46
+msgid "保健室H"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:46
+msgid "自己和对方藏在保健室的同一张床上进行性行为"
 msgstr ""
 
 #: .\data\csv\Season.csv:6
@@ -23681,6 +23949,10 @@ msgid "隶属系第二阶段"
 msgstr ""
 
 #: .\data\csv\Talent.csv:139
+msgid "宠物"
+msgstr ""
+
+#: .\data\csv\Talent.csv:139
 msgid "隶属系第三阶段"
 msgstr ""
 
@@ -24686,10 +24958,6 @@ msgstr ""
 
 #: .\data\csv\WorkType.csv:19
 msgid "邀请各界人士来罗德岛访问，拓宽罗德岛的人脉"
-msgstr ""
-
-#: .\data\csv\WorkType.csv:20
-msgid "教师"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:20

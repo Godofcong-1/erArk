@@ -533,6 +533,12 @@ def update_character_config_data(value):
             value.second_behavior[behavior_id] = 0
             update_count += 1
             # print(f"debug 添加了二段行为: {behavior_id}")
+    # 角色扮演的跨版本数据结构处理，如果是int类型，则将其转化为列表
+    if isinstance(value.hypnosis.roleplay, int):
+        value.hypnosis.roleplay = []
+        update_count += 1
+        # print(f"debug 更新了角色扮演数据: {value.roleplay}")
+
     return update_count
 
 

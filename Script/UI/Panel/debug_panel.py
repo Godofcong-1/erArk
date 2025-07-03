@@ -1750,7 +1750,7 @@ class Debug_Panel:
                     elif value_index[0] == 4:
                         target_data.hypnosis.active_h = value_index[1]
                     elif value_index[0] == 5:
-                        target_data.hypnosis.roleplay = value_index[1]
+                        target_data.hypnosis.roleplay.append(value_index[1])
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
                     continue

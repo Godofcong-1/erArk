@@ -564,7 +564,7 @@ class CVPMenu(QDialog):
             self.cvp_b2.setCurrentIndex(0)
             self.cvp_c.clear()
             self.cvp_c.addItems(["等于"])
-            self.cvp_text.setText("角色扮演前提，用于判断是否有角色扮演的状态\n等于1则为该角色扮演，等于0则为非该角色扮演")
+            self.cvp_text.setText("角色扮演前提，用于判断[心控催眠-角色扮演]的状态\n等于1则正在进行该角色扮演，等于0则没有进行该角色扮演")
         elif index == 18:
             self.cvp_a.clear()
             self.cvp_a.setVisible(False)

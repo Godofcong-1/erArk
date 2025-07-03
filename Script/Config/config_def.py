@@ -1073,6 +1073,10 @@ class Roleplay:
     """ 角色扮演名 """
     type: str
     """ 角色扮演类型 """
+    sub_type: str
+    """ 角色扮演子类型 """
+    info: str
+    """ 角色扮演介绍 """
 
 
 class Season:
@@ -1375,6 +1379,7 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
+
 
 
 class TargetEffect:

@@ -262,7 +262,7 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
                 final_value = 0
     elif premise_all_value_list[1][0] == "R":
         if "Roleplay" in premise_all_value_list[1]:
-            if final_character_data.hypnosis.roleplay == type_son_id:
+            if type_son_id in final_character_data.hypnosis.roleplay:
                 final_value = 1
             else:
                 final_value = 0
@@ -7421,7 +7421,7 @@ def handle_hypnosis_roleplay(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    return character_data.hypnosis.roleplay
+    return len(character_data.hypnosis.roleplay)
 
 
 @add_premise(constant_promise.Premise.NOT_HYPNOSIS_ROLEPLAY)
@@ -7473,7 +7473,11 @@ def handle_target_hypnosis_roleplay_1(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 1
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("妻子") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_2)
@@ -7487,7 +7491,11 @@ def handle_target_hypnosis_roleplay_2(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 2
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("妹妹") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_3)
@@ -7501,7 +7509,11 @@ def handle_target_hypnosis_roleplay_3(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 3
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("女儿") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_4)
@@ -7515,7 +7527,11 @@ def handle_target_hypnosis_roleplay_4(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 4
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("女仆") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_5)
@@ -7529,7 +7545,11 @@ def handle_target_hypnosis_roleplay_5(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 5
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("宠物猫") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_ROLEPLAY_6)
@@ -7543,7 +7563,11 @@ def handle_target_hypnosis_roleplay_6(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
-    return target_data.hypnosis.roleplay == 6
+    for cid in game_config.config_roleplay:
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.name == _("宠物狗") and cid in target_data.hypnosis.roleplay:
+            return 1
+    return 0
 
 
 @add_premise(constant_promise.Premise.HYPNOSIS_PAIN_AS_PLEASURE)

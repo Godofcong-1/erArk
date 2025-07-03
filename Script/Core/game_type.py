@@ -375,8 +375,8 @@ class HYPNOSIS:
         """ 体控-木头人 """
         self.active_h: bool = False
         """ 体控-逆推 """
-        self.roleplay: int = 0
-        """ 心控-角色扮演，0为无，其他见Roleplay.csv """
+        self.roleplay: list = []
+        """ 心控-角色扮演，空为无，其他见Roleplay.csv """
         self.pain_as_pleasure: bool = False
         """ 心控-苦痛快感化 """
 

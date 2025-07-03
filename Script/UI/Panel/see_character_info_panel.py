@@ -551,17 +551,21 @@ class CharacterInfoHead:
                 hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
                 hypnosis_text += _(":{0}").format(hypnosis_name)
             if handle_premise.handle_hypnosis_increase_body_sensitivity(character_id):
-                hypnosis_text += _("(敏感度提升)")
+                hypnosis_text += _("(敏感)")
             if handle_premise.handle_hypnosis_force_ovulation(character_id):
-                hypnosis_text += _("(强制排卵)")
+                hypnosis_text += _("(排卵)")
             if handle_premise.handle_hypnosis_blockhead(character_id):
                 hypnosis_text += _("(木头人)")
             if handle_premise.handle_hypnosis_active_h(character_id):
                 hypnosis_text += _("(逆推)")
             if handle_premise.handle_hypnosis_roleplay(character_id):
-                hypnosis_text += _("(角色扮演)")
+                hypnosis_text += _("(扮演")
+                for role_play_cid in character_data.hypnosis.roleplay:
+                    role_play_name = game_config.config_roleplay[role_play_cid].name
+                    hypnosis_text += f"-{role_play_name}"
+                hypnosis_text += ")"
             if handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
-                hypnosis_text += _("(苦痛快感化)")
+                hypnosis_text += _("(痛→快感)")
             hypnosis_text += ">"
         hypnosis_draw.text = hypnosis_text
 

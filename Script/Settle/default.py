@@ -1633,7 +1633,7 @@ def handle_hypnosis_cancel(
     target_character_data.hypnosis.increase_body_sensitivity = False
     target_character_data.hypnosis.blockhead = False
     target_character_data.hypnosis.active_h = False
-    target_character_data.hypnosis.roleplay = 0
+    target_character_data.hypnosis.roleplay = []
     # 结算二段行为
     handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
 
@@ -6588,7 +6588,7 @@ def handle_hypnosis_flag_to_0(
     character_data.hypnosis.blockhead = False
     character_data.hypnosis.active_h = False
     character_data.hypnosis.pain_as_pleasure = False
-    character_data.hypnosis.roleplay = 0
+    character_data.hypnosis.roleplay = []
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0)

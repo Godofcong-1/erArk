@@ -1041,7 +1041,7 @@ class Chose_Hypnosis_Type_Panel:
             now_draw.draw()
             character_data: game_type.Character = cache.character_data[0]
             target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            if target_data.hypnosis.roleplay != 0:
+            if len(target_data.hypnosis.roleplay) != 0:
                 handle_instruct.chara_handle_instruct_common_settle(cid)
         else:
             handle_instruct.chara_handle_instruct_common_settle(cid)
@@ -1072,13 +1072,29 @@ class Chose_Roleplay_Type_Panel:
             target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
             info_draw = draw.NormalDraw()
             info_text = _("\n○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n")
+            info_text += _("  （当前版本中，该催眠的文本对应较少，仅有功能和数值上的效果）\n")
             info_text += _("\n  要催眠为哪一种角色扮演呢？")
             info_text += _("（当前为：")
 
-            if target_data.hypnosis.roleplay == 0:
+            # 如果当前没有角色扮演则显示无
+            if len(target_data.hypnosis.roleplay) == 0:
                 info_text += _("无）\n")
+            # 如果有角色扮演则遍历输出
             else:
-                info_text += _("{0}）\n").format(game_config.config_roleplay[target_data.hypnosis.roleplay].name)
+                # 先排序角色扮演ID
+                target_data.hypnosis.roleplay.sort()
+                # 遍历角色扮演ID，输出对应的名称
+                for role_play_cid in target_data.hypnosis.roleplay:
+                    # 如果角色扮演ID不存在则跳过
+                    if role_play_cid not in game_config.config_roleplay:
+                        continue
+                    role_play_cid_data = game_config.config_roleplay[role_play_cid]
+                    # 如果角色扮演名称为无则跳过
+                    if role_play_cid_data.name == _("无"):
+                        continue
+                    info_text += _("{0} ").format(role_play_cid_data.name)
+                # 输出结束括号
+                info_text += "）\n"
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
@@ -1113,11 +1129,21 @@ class Chose_Roleplay_Type_Panel:
         """选择该类型"""
         pl_character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
-        target_data.hypnosis.roleplay = cid
-
-        # 绘制提示信息
-        info_draw = draw.WaitDraw()
-        info_draw.style = "purple"
-        info_text = _("\n{0}被催眠了，开始进行{1}的扮演\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
-        info_draw.text = info_text
-        info_draw.draw()
+        if cid not in game_config.config_roleplay:
+            return
+        if cid not in target_data.hypnosis.roleplay:
+            target_data.hypnosis.roleplay.append(cid)
+            # 绘制提示信息
+            info_draw = draw.WaitDraw()
+            info_draw.style = "purple"
+            info_text = _("\n{0}被催眠了，开始进行{1}的扮演\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
+            info_draw.text = info_text
+            info_draw.draw()
+        else:
+            target_data.hypnosis.roleplay.remove(cid)
+            # 绘制提示信息
+            info_draw = draw.WaitDraw()
+            info_draw.style = "purple"
+            info_text = _("\n{0}停止进行{1}的扮演了\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
+            info_draw.text = info_text
+            info_draw.draw()

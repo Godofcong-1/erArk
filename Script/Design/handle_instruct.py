@@ -914,7 +914,6 @@ def handle_hypnosis_active_h():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_7,
      constant_promise.Premise.SANITY_POINT_GE_50,
-     constant_promise.Premise.TARGET_NOT_HYPNOSIS_ROLEPLAY,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.HP_G_1},
     constant.Behavior.HYPNOSIS_ROLEPLAY,
@@ -927,7 +926,7 @@ def handle_hypnosis_roleplay():
     now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.hypnosis.roleplay != 0:
+    if target_data.hypnosis.roleplay != []:
         chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_ROLEPLAY)
 
 
