@@ -6,7 +6,7 @@ from Script.Core import cache_control, constant, game_type, get_text, text_handl
 from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import ejaculation_panel, originium_arts
+from Script.UI.Panel import ejaculation_panel, hypnosis_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -221,7 +221,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 name = f"\n{target_data.name}"
                 # 输出无意识状态的提示信息
                 if target_data.sp_flag.unconscious_h:
-                    name += _("({0})").format(originium_arts.unconscious_list[target_data.sp_flag.unconscious_h])
+                    name += _("({0})").format(hypnosis_panel.unconscious_list[target_data.sp_flag.unconscious_h])
                 now_text = name + ":"
 
                 # 体力/气力/好感/信赖/催眠度的结算输出

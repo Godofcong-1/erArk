@@ -19,7 +19,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import dirty_panel, event_option_panel, originium_arts, ejaculation_panel
+from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,
@@ -1501,21 +1501,21 @@ def handle_hypnosis_one(
     if character_data.dead:
         return
     # 结算理智消耗
-    santi_down = originium_arts.calculate_hypnosis_sanity_cost(character_data.target_character_id)
+    santi_down = hypnosis_panel.calculate_hypnosis_sanity_cost(character_data.target_character_id)
     character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
     change_data.sanity_point -= santi_down
     character_data.pl_ability.today_sanity_point_cost += santi_down
     # 结算催眠度增加
-    hypnosis_degree_grow = originium_arts.hypnosis_degree_calculation(character_data.target_character_id)
+    hypnosis_degree_grow = hypnosis_panel.hypnosis_degree_calculation(character_data.target_character_id)
     # debug下催眠增加到999
     if cache.debug_mode:
         hypnosis_degree_grow = 999
     new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
     # 赋予到角色数据
-    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, originium_arts.hypnosis_degree_limit_calculation())
+    target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, hypnosis_panel.hypnosis_degree_limit_calculation())
     target_change.hypnosis_degree += hypnosis_degree_grow
     # 判断催眠完成
-    originium_arts.evaluate_hypnosis_completion(character_data.target_character_id)
+    hypnosis_panel.evaluate_hypnosis_completion(character_data.target_character_id)
     # 判断是否理智已耗尽导致催眠结束
     if character_data.sanity_point == 0 and target_character_data.sp_flag.unconscious_h:
         # 空气催眠则重置催眠地点和解开门锁
@@ -1561,7 +1561,7 @@ def handle_hypnosis_all(
     # 遍历角色列表
     for target_id in scene_character_list:
         # 计算理智消耗
-        santi_down = originium_arts.calculate_hypnosis_sanity_cost(target_id)
+        santi_down = hypnosis_panel.calculate_hypnosis_sanity_cost(target_id)
         sanity_point_cost += santi_down
         hypnosis_character_list.append(target_id)
         # 如果超出了现有理智，则取现有理智
@@ -1580,16 +1580,16 @@ def handle_hypnosis_all(
         if target_character_data.dead:
             continue
         # 结算催眠度增加
-        hypnosis_degree_grow = originium_arts.hypnosis_degree_calculation(target_id)
+        hypnosis_degree_grow = hypnosis_panel.hypnosis_degree_calculation(target_id)
         # debug下催眠增加到999
         if cache.debug_mode:
             hypnosis_degree_grow = 999
         new_hypnosis_degree = target_character_data.hypnosis.hypnosis_degree + hypnosis_degree_grow
         # 赋予到角色数据
-        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, originium_arts.hypnosis_degree_limit_calculation())
+        target_character_data.hypnosis.hypnosis_degree = min(new_hypnosis_degree, hypnosis_panel.hypnosis_degree_limit_calculation())
         target_change.hypnosis_degree += hypnosis_degree_grow
         # 判断催眠完成
-        originium_arts.evaluate_hypnosis_completion(target_id)
+        hypnosis_panel.evaluate_hypnosis_completion(target_id)
     # 判断是否理智已耗尽导致催眠结束
     if character_data.sanity_point == 0:
         for target_id in scene_character_list:

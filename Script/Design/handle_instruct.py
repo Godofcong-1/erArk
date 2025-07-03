@@ -787,8 +787,8 @@ def handle_hypnosis_all():
 )
 def handle_change_hypnosis_mode():
     """处理切换催眠模式"""
-    from Script.UI.Panel import originium_arts
-    now_panel = originium_arts.Chose_Hypnosis_Type_Panel(width, instruct_flag = True)
+    from Script.UI.Panel import hypnosis_panel
+    now_panel = hypnosis_panel.Chose_Hypnosis_Type_Panel(width, instruct_flag = True)
     now_panel.draw()
 
 
@@ -921,8 +921,8 @@ def handle_hypnosis_active_h():
 )
 def handle_hypnosis_roleplay():
     """处理心控-角色扮演"""
-    from Script.UI.Panel import originium_arts
-    now_draw = originium_arts.Chose_Roleplay_Type_Panel(width)
+    from Script.UI.Panel import hypnosis_panel
+    now_draw = hypnosis_panel.Chose_Roleplay_Type_Panel(width)
     now_draw.draw()
     character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
