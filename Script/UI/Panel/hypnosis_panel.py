@@ -1,3 +1,4 @@
+import re
 from typing import List
 from types import FunctionType
 import random
@@ -368,38 +369,82 @@ class Chose_Roleplay_Type_Panel:
     """
 
     def __init__(self, width: int):
-        """初始化绘制对象"""
+        """
+        初始化绘制对象
+        参数：
+            width (int): 绘制的最大宽度
+        输出：
+            None
+        功能：
+            初始化面板宽度、文本列表和类型展开标志
+        """
         self.width: int = width
-        """ 绘制的最大宽度 """
+        # 绘制的最大宽度
         self.draw_list: List[draw.NormalDraw] = []
-        """ 绘制的文本列表 """
+        # 绘制的文本列表
+        # 统计所有type类型，初始化展开标志为False（收起）
+        self.type_expand_flag = {}
+        # 获取所有type类型，保持顺序，并将sub_type为"特殊"的归为特殊类
+        type_list = []  # 用于存储普通类型，保持顺序
+        special_type = _("特殊")
+        has_special = False
+        for cid in game_config.config_roleplay:
+            if cid == 0:
+                continue
+            roleplay_data = game_config.config_roleplay[cid]
+            # 判断是否为特殊类
+            if roleplay_data.sub_type == special_type:
+                has_special = True
+                continue
+            # 普通类型按顺序加入
+            if roleplay_data.type not in type_list:
+                type_list.append(roleplay_data.type)
+        # 初始化普通类型的flag
+        for t in type_list:
+            self.type_expand_flag[t] = False
+        # 如果有特殊类，添加特殊类flag
+        if has_special:
+            self.type_expand_flag[special_type] = False
+        # 保存type_list和特殊类名，供draw使用
+        self.type_list = type_list
+        self.special_type = special_type
+        self.has_special = has_special
+        # 初始化角色扮演选择缓存
+        self.selected_roleplay_cache = []
+        pl_character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        # 如果对方有角色扮演数据，则将其缓存到selected_roleplay_cache中
+        if len(target_data.hypnosis.roleplay):
+            self.selected_roleplay_cache = target_data.hypnosis.roleplay[:]
 
     def draw(self):
-        """绘制对象"""
-
+        """
+        绘制对象
+        输入：无
+        输出：无
+        功能：
+            绘制角色扮演类型选择界面，支持按类型展开/收起
+        """
         title_text = _("选择角色扮演类型")
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
             return_list = []
             title_draw.draw()
-            pl_character_data: game_type.Character = cache.character_data[0]
-            target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
             info_draw = draw.NormalDraw()
             info_text = _("\n○被催眠后会完全带入对应的角色或场景，直到催眠解除为止\n")
+            info_text += _("○非特殊类里，每类可各选一个，同时起效\n")
+            info_text += _("○特殊类与其他催眠相冲突，只能单独起效\n")
             info_text += _("  （当前版本中，该催眠的文本对应较少，仅有功能和数值上的效果）\n")
             info_text += _("\n  要催眠为哪一种角色扮演呢？")
             info_text += _("（当前为：")
 
-            # 如果当前没有角色扮演则显示无
-            if len(target_data.hypnosis.roleplay) == 0:
+            # 显示缓存中的内容
+            if len(self.selected_roleplay_cache) == 0:
                 info_text += _("无）\n")
             # 如果有角色扮演则遍历输出
             else:
-                # 先排序角色扮演ID
-                target_data.hypnosis.roleplay.sort()
-                # 遍历角色扮演ID，输出对应的名称
-                for role_play_cid in target_data.hypnosis.roleplay:
-                    # 如果角色扮演ID不存在则跳过
+                self.selected_roleplay_cache.sort()
+                for role_play_cid in self.selected_roleplay_cache:
                     if role_play_cid not in game_config.config_roleplay:
                         continue
                     role_play_cid_data = game_config.config_roleplay[role_play_cid]
@@ -413,51 +458,340 @@ class Chose_Roleplay_Type_Panel:
             info_draw.draw()
             line_feed.draw()
 
-            # 遍历角色扮演数据库，输出按钮
+            # 构建type到cid的映射，特殊类单独处理
+            type_dict = {}
+            special_type = self.special_type
+            for t in self.type_list:
+                type_dict[t] = []
+            if self.has_special:
+                type_dict[special_type] = []
             for cid in game_config.config_roleplay:
                 if cid == 0:
                     continue
                 roleplay_data = game_config.config_roleplay[cid]
-                draw_text = f"[{cid}]{roleplay_data.name}"
+                # 特殊类归入特殊
+                if roleplay_data.sub_type == special_type:
+                    if self.has_special:
+                        type_dict[special_type].append(cid)
+                else:
+                    if roleplay_data.type in type_dict:
+                        type_dict[roleplay_data.type].append(cid)
+
+            # 检查当前已选的特殊类cid
+            selected_special_cid = None
+            for cid in self.selected_roleplay_cache:
+                if cid in type_dict.get(special_type, []):
+                    selected_special_cid = cid
+                    break
+
+            # 记录每个普通类型已选的cid
+            selected_type_cid = {}
+            for t in self.type_list:
+                for cid in type_dict[t]:
+                    if cid in self.selected_roleplay_cache:
+                        selected_type_cid[t] = cid
+                        break
+
+            # 按type_list顺序绘制普通类型
+            for t in self.type_list:
+                line_feed.draw()
+                # 按类型绘制展开/收起按钮
+                if self.type_expand_flag.get(t, False):
+                    btn_text = f"▼{t}"
+                else:
+                    btn_text = f"▶{t}"
                 button_draw = draw.LeftButton(
-                    _(draw_text),
-                    _(roleplay_data.name),
-                    window_width,
-                    cmd_func=self.choose_this_type,
-                    args=(cid,),
+                    _(btn_text),
+                    _(btn_text),
+                    window_width / 4,
+                    cmd_func=self.toggle_type_expand,
+                    args=(t,),
                 )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
                 line_feed.draw()
+                # 如果该类型已展开，绘制该类型下的所有角色扮演选项
+                if self.type_expand_flag.get(t, False):
+                    count = 0
+                    for cid in type_dict[t]:
+                        roleplay_data = game_config.config_roleplay[cid]
+                        can_select = self.judge_can_select(cid, selected_special_cid, selected_type_cid, t, self.selected_roleplay_cache)
+                        # 可选（未选或是已选项）
+                        if can_select or cid in self.selected_roleplay_cache:
+                            draw_text = f"[{cid}]"
+                            # 有子类则在前缀显示子类
+                            if roleplay_data.sub_type != _("无"):
+                                draw_text += f"({roleplay_data.sub_type})"
+                            draw_text += roleplay_data.name
+                            draw_style = "standard"
+                            if cid in self.selected_roleplay_cache:
+                                # 如果是已选项，则显示为已选
+                                draw_style = "gold_enrod"
+                                draw_text += _("(已选)")
+                            button_draw = draw.LeftButton(
+                                _(draw_text),
+                                _(roleplay_data.name),
+                                window_width / 5,
+                                normal_style=draw_style,
+                                cmd_func=self.choose_this_type,
+                                args=(cid,),
+                            )
+                            return_list.append(button_draw.return_text)
+                            button_draw.draw()
+                        # 不可选（已选特殊类或是其他已选项）
+                        else:
+                            draw_text = f"[{cid}]"
+                            if roleplay_data.sub_type != _("无"):
+                                draw_text += f"({roleplay_data.sub_type})"
+                            draw_text += roleplay_data.name
+                            now_draw = draw.LeftDraw()
+                            now_draw.text = _(draw_text)
+                            now_draw.style = "deep_gray"
+                            now_draw.width = window_width / 5
+                            now_draw.draw()
+                        # 每5个选项后换行
+                        count += 1
+                        if count % 5 == 0:
+                            line_feed.draw()
+                    line_feed.draw()
+            # 最后绘制特殊类
+            if self.has_special:
+                line_feed.draw()
+                t = special_type
+                if self.type_expand_flag.get(t, False):
+                    btn_text = f"▼{t}"
+                else:
+                    btn_text = f"▶{t}"
+                button_draw = draw.LeftButton(
+                    _(btn_text),
+                    _(btn_text),
+                    window_width / 4,
+                    cmd_func=self.toggle_type_expand,
+                    args=(t,),
+                )
+                return_list.append(button_draw.return_text)
+                button_draw.draw()
+                line_feed.draw()
+                if self.type_expand_flag.get(t, False):
+                    count = 0
+                    for cid in type_dict[t]:
+                        roleplay_data = game_config.config_roleplay[cid]
+                        # 如果已选特殊类，只有已选项可取消
+                        if selected_special_cid is not None and cid != selected_special_cid:
+                            draw_text = f"[{cid}]{roleplay_data.name}"
+                            now_draw = draw.LeftDraw()
+                            now_draw.text = _(draw_text)
+                            now_draw.style = "deep_gray"
+                            now_draw.width = window_width / 5
+                            now_draw.draw()
+                        else:
+                            draw_text = f"[{cid}]{roleplay_data.name}"
+                            button_draw = draw.LeftButton(
+                                _(draw_text),
+                                _(roleplay_data.name),
+                                window_width / 5,
+                                cmd_func=self.choose_this_type,
+                                args=(cid,),
+                            )
+                            return_list.append(button_draw.return_text)
+                            button_draw.draw()
+                        # 每5个选项后换行
+                        count += 1
+                        if count % 5 == 0:
+                            line_feed.draw()
+                    line_feed.draw()
 
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            yes_draw = draw.CenterButton(_("[确认]"), _("确认"), window_width / 2)
+            return_list.append(yes_draw.return_text)
+            if len(self.selected_roleplay_cache):
+                yes_draw.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width / 2)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list:
+            if yrn == yes_draw.return_text:
+                # 结算角色扮演选择
+                self.settle_roleplay_selection()
+                break
+            elif yrn == back_draw.return_text:
                 break
 
+    def toggle_type_expand(self, t):
+        """
+        切换类型展开/收起状态
+        参数：
+            t (str): 类型名
+        输出：
+            None
+        功能：
+            切换type_expand_flag中对应类型的布尔值
+        """
+        self.type_expand_flag[t] = not self.type_expand_flag.get(t, False)
+
+    def judge_can_select(self, cid, selected_special_cid, selected_type_cid, t, selected_roleplay_cache):
+        """
+        判断是否可以选择该角色扮演类型
+        参数：
+            cid (int): 角色扮演ID
+            selected_special_cid (int): 已选的特殊类ID，如果没有则为None
+            selected_type_cid (dict): 已选的普通类ID字典，键为类型名，值为已选的角色扮演ID
+            t (str): 当前类型名
+            selected_roleplay_cache (list): 当前已选的角色扮演ID缓存
+        输出：
+            bool: 是否可以选择该角色扮演类型
+        功能：
+            根据当前已选的特殊类和普通类判断是否可以选择该角色扮演类型。
+        """
+        roleplay_data = game_config.config_roleplay[cid]
+        can_select = True
+        main_type = roleplay_data.type
+        sub_type = roleplay_data.sub_type
+        # 如果已选特殊类，则普通类全部不可选
+        if selected_special_cid is not None:
+            can_select = False
+        # 如果该类已选，且cid不是已选的那个，则不可选
+        elif t in selected_type_cid and cid != selected_type_cid[t]:
+            can_select = False
+        # 如果当前子类是非家庭，且已选家庭，则不可选
+        if can_select and sub_type == _("非家庭") and selected_type_cid.get(_("家庭"), None) is not None:
+            can_select = False
+        # 如果当前大类是非职业，且子类是非通用和无
+        if can_select and main_type != _("职业") and sub_type not in [_("通用"), _("无")]:
+            can_select = False
+            # 如果没选职业则不可选
+            if selected_type_cid.get(_("职业"), None) is None:
+                can_select = False
+            else:
+                # 遍历已选的职业
+                for selected_cid in selected_roleplay_cache:
+                    if selected_cid in game_config.config_roleplay and game_config.config_roleplay[selected_cid].type == _("职业"):
+                        # 如果当前子类与已选职业的子类相同，则可选
+                        if game_config.config_roleplay[selected_cid].sub_type == sub_type:
+                            can_select = True
+                            break
+        # 如果关系是同学的话对方的职业是教师则不可选
+        if can_select and roleplay_data.name == _("同学"):
+            can_select = True
+            for selected_cid in selected_roleplay_cache:
+                if selected_cid in game_config.config_roleplay and game_config.config_roleplay[selected_cid].name == _("教师"):
+                    can_select = False
+                    break
+        return can_select
+
     def choose_this_type(self, cid):
-        """选择该类型"""
-        pl_character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        """
+        选择该类型
+        参数：
+            cid (int): 角色扮演ID
+        输出：
+            None
+        功能：
+            选择普通类时，若已选特殊类则先移除特殊类；选择特殊类时，清空所有，仅保留自己。
+        """
         if cid not in game_config.config_roleplay:
             return
-        if cid not in target_data.hypnosis.roleplay:
-            target_data.hypnosis.roleplay.append(cid)
-            # 绘制提示信息
-            info_draw = draw.WaitDraw()
-            info_draw.style = "purple"
-            info_text = _("\n{0}被催眠了，开始进行{1}的扮演\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
-            info_draw.text = info_text
-            info_draw.draw()
+        # 操作缓存而不是直接操作数据
+        if cid not in self.selected_roleplay_cache:
+            while 1:
+                line = draw.LineDraw("-", self.width)
+                line.draw()
+                return_list = []
+                line_feed.draw()
+                role_play_data = game_config.config_roleplay[cid]
+                # 处理绘制信息
+                info_text = _("\n{0}：{1}\n").format(role_play_data.name, role_play_data.info)
+                if role_play_data.type == _("职业") and role_play_data.sub_type != _("无"):
+                    info_text += _("进行该扮演后，可进一步选择其他类中带有{0}前缀的子项。\n").format(role_play_data.sub_type)
+                info_text += _("是否确定进行该扮演？\n")
+                # 绘制提示信息
+                info_draw = draw.NormalDraw()
+                info_draw.text = info_text
+                info_draw.draw()
+                line_feed.draw()
+                # 绘制确认按钮
+                confirm_draw = draw.CenterButton(
+                    _("[确认]"),
+                    _( "确认"),
+                    window_width / 2,
+                    cmd_func=self.confirm_roleplay,
+                    args=(cid,),
+                )
+                confirm_draw.draw()
+                return_list.append(confirm_draw.return_text)
+                # 绘制取消按钮
+                cancel_draw = draw.CenterButton(
+                    _("[取消]"),
+                    _( "取消"),
+                    window_width / 2,
+                )
+                cancel_draw.draw()
+                return_list.append(cancel_draw.return_text)
+                line_feed.draw()
+                # 等待用户选择
+                yrn = flow_handle.askfor_all(return_list)
+                if yrn in return_list:
+                    break
         else:
-            target_data.hypnosis.roleplay.remove(cid)
-            # 绘制提示信息
-            info_draw = draw.WaitDraw()
-            info_draw.style = "purple"
-            info_text = _("\n{0}停止进行{1}的扮演了\n\n").format(target_data.name, game_config.config_roleplay[cid].name)
-            info_draw.text = info_text
-            info_draw.draw()
+            self.selected_roleplay_cache.remove(cid)
+
+    def confirm_roleplay(self, cid):
+        """
+        确认进行角色扮演
+        参数：
+            cid (int): 角色扮演ID
+        输出：
+            None
+        功能：
+            将角色扮演添加到缓存中
+        """
+        # 新增：只操作缓存，不直接操作数据
+        # 获取特殊类cid集合
+        special_cids = set()
+        special_type = self.special_type
+        for scid in game_config.config_roleplay:
+            if scid == 0:
+                continue
+            roleplay_data = game_config.config_roleplay[scid]
+            if roleplay_data.sub_type == special_type:
+                special_cids.add(scid)
+        # 判断是否为特殊类
+        if cid in special_cids:
+            # 选择特殊类，清空所有，仅保留自己
+            self.selected_roleplay_cache.clear()
+        # 如果当前是家庭或职业类，则清空所有非家庭或职业类的角色扮演
+        roleplay_data = game_config.config_roleplay[cid]
+        if roleplay_data.type in [_("家庭"), _( "职业")]:
+            # 清空所有非家庭或职业类的角色扮演
+            for rid in self.selected_roleplay_cache[:]:
+                if rid in game_config.config_roleplay and game_config.config_roleplay[rid].type not in [_("家庭"), _( "职业")]:
+                    self.selected_roleplay_cache.remove(rid)
+        # 添加角色扮演到缓存
+        self.selected_roleplay_cache.append(cid)
+
+    def settle_roleplay_selection(self):
+        """
+        结算角色扮演选择，将缓存的值赋予到目标角色的催眠状态中
+        输入：无
+        输出：无
+        功能：
+            将self.selected_roleplay_cache赋值到target_data.hypnosis.roleplay，并输出提示信息
+        """
+        pl_character_data: game_type.Character = cache.character_data[0]
+        target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
+        # 赋值缓存到数据
+        target_data.hypnosis.roleplay = self.selected_roleplay_cache[:]
+        # 输出提示信息
+        info_draw = draw.WaitDraw()
+        info_draw.style = "purple"
+        info_text = _("\n已为{0}开始进行以下的角色扮演了：").format(target_data.name)
+        if not target_data.hypnosis.roleplay:
+            info_text += _( "无\n")
+        else:
+            for cid in target_data.hypnosis.roleplay:
+                if cid in game_config.config_roleplay:
+                    info_text += _("{0} ").format(game_config.config_roleplay[cid].name)
+            info_text += "\n"
+        info_draw.text = info_text
+        info_draw.draw()
