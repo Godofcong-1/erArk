@@ -82,7 +82,7 @@ def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, t
 
     # 获取ai返回文本
     ai_result = text_ai(character_id, behavior_id, original_text, translator=translator, direct_mode=direct_mode)
-    # print(f"ai_text_result = {ai_result}")
+    # print(f"debug AI文本生成返回文本 = {ai_result}")
     
     # 处理直接对话模式的返回值
     if direct_mode:
@@ -281,10 +281,51 @@ def build_user_prompt(character_id: int, behavior_id: int, original_text: str, t
     # 催眠
     hypnosis_name, hypnosis_effect = "", ""
     if tem_send_data_flags[61]:
-        hypnosis_id = npc_character_data.sp_flag.unconscious_h
-        hypnosis_data = game_config.config_hypnosis_type[hypnosis_id]
-        hypnosis_name = hypnosis_data.name
-        hypnosis_effect = hypnosis_data.introduce
+        hypnosis_id = npc_character_data.sp_flag.unconscious_h - 3
+        if hypnosis_id in game_config.config_hypnosis_type:
+            hypnosis_data = game_config.config_hypnosis_type[hypnosis_id]
+            hypnosis_name = hypnosis_data.name
+            hypnosis_effect = hypnosis_data.introduce
+            # 体控与心控的单独处理
+            new_info = ""
+            if handle_premise.handle_hypnosis_increase_body_sensitivity(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[1].name
+                sub_info = game_config.config_hypnosis_sub_type[1].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+            if handle_premise.handle_hypnosis_force_ovulation(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[3].name
+                sub_info = game_config.config_hypnosis_sub_type[3].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+            if handle_premise.handle_hypnosis_blockhead(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[4].name
+                sub_info = game_config.config_hypnosis_sub_type[4].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+            if handle_premise.handle_hypnosis_active_h(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[5].name
+                sub_info = game_config.config_hypnosis_sub_type[5].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+            if handle_premise.handle_hypnosis_pain_as_pleasure(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[11].name
+                sub_info = game_config.config_hypnosis_sub_type[11].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+            if handle_premise.handle_hypnosis_roleplay(npc_character_id):
+                sub_name = game_config.config_hypnosis_sub_type[12].name
+                sub_info = game_config.config_hypnosis_sub_type[12].introduce
+                hypnosis_name += " " + sub_name
+                new_info += sub_info
+                if len(npc_character_data.hypnosis.roleplay):
+                    for roleplay_id in npc_character_data.hypnosis.roleplay:
+                        roleplay_data = game_config.config_roleplay[roleplay_id]
+                        roleplay_info = roleplay_data.info
+                        new_info += " " + roleplay_info
+            # 如果有新的信息，则更新催眠效果
+            if len(new_info) > 0:
+                hypnosis_effect = new_info
 
     # 服装
     cloth_text = ""
@@ -870,15 +911,15 @@ def settle_direct_instruct(ai_result: dict) -> None:
         # 如果是列表，则遍历添加
         if isinstance(ai_result["character_state"], list):
             for chara_state_id in ai_result["character_state"]:
-                if chara_state_id >= 9:
+                if 9 <= chara_state_id and chara_state_id <= 20:
                     effect_id = chara_state_id + 42
                     game_config.config_behavior_effect_data[tem_behavior_id].append(effect_id)
         # 否则直接添加
         else:
             chara_state_id = ai_result["character_state"]
-            if chara_state_id >= 9:
+            if 9 <= chara_state_id and chara_state_id <= 20:
                 effect_id = chara_state_id + 42
-            game_config.config_behavior_effect_data[tem_behavior_id].append(effect_id)
+                game_config.config_behavior_effect_data[tem_behavior_id].append(effect_id)
     # 经验变化
     if ai_result["experience"] != -1:
         # 如果是列表，则遍历添加

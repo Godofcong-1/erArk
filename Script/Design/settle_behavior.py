@@ -330,6 +330,9 @@ def handle_instruct_data(
                 effect_all_value_list = effect_id.split("_")[1:]
                 handle_comprehensive_value_effect(character_id, effect_all_value_list, change_data)
             else:
+                if effect_id not in constant.settle_behavior_effect_data:
+                    print(f"error 不存在的结算 = {effect_id}")
+                    continue
                 constant.settle_behavior_effect_data[effect_id](character_id, add_time, change_data, now_time)
         # 如果是对他人的行为，则将自己的id与行动结束时间记录到对方的数据中
         if now_character_data.target_character_id != character_id:

@@ -28,7 +28,7 @@ int,str,int,int,int,str
 54,访客,0,1,1,{name}不是公司的员工，是前来拜访的访客。
 55,角色称呼,0,1,0,{name}会称呼{pl_name}为{nick_name_to_pl}，{pl_name}称呼{name}为{nick_name}。
 
-61,催眠与催眠类型,0,2,0,{name}被{pl_name}催眠了，催眠的类型是{hypnosis_name}，催眠的效果是{hypnosis_effect}。
+61,催眠与催眠类型,0,3,0,{name}被{pl_name}催眠了，催眠的类型是{hypnosis_name}，催眠的效果是{hypnosis_effect}。
 62,监禁,0,1,1,{name}被{pl_name}监禁在监狱里了。
 63,时停,0,1,1,{name}正处在停止的时间中，无法做出任何反应。
 
