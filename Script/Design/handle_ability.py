@@ -57,9 +57,13 @@ def check_upgrade_requirements(need_list: list, character_id: int) -> Tuple[bool
 
 def gain_ability(character_id: int):
     """
-    结算可以获得的能力\n
-    Keyword arguments:
-    character_id -- 角色id\n
+    结算可以获得的能力
+    参数:
+        character_id (int): 角色id
+    返回值:
+        None
+    功能描述:
+        遍历所有能力，判断是否满足升级条件，支持主需求和备选需求（AbilityUp.csv的up_need和up_need2），满足任一即可升级。
     """
     character_data: game_type.Character = cache.character_data[character_id]
     # 遍历全能力
@@ -83,11 +87,18 @@ def gain_ability(character_id: int):
                 if ability_cid == 3:
                     break
 
+            # 先尝试主需求
             need_list = game_config.config_ability_up_data[ability_cid][ability_level]
-
             # 调用独立函数判断升级需求是否满足，并获取需要消耗的珠
             judge, jule_dict = check_upgrade_requirements(need_list, character_id)
-            # 如果是技巧能力，则额外判断其他性技能力等级
+            # 如果主需求不满足，尝试备选需求
+            if not judge and ability_cid in game_config.config_ability_up2_data and ability_level in game_config.config_ability_up2_data[ability_cid]:
+                need_list2 = game_config.config_ability_up2_data[ability_cid][ability_level]
+                judge2, jule_dict2 = check_upgrade_requirements(need_list2, character_id)
+                if judge2:
+                    judge = True
+                    jule_dict = jule_dict2
+            # 技巧能力的额外判断
             if ability_cid == 30:
                 now_other_ability_level = 0
                 # 需要其他性技能力等级满足要求
@@ -107,6 +118,7 @@ def gain_ability(character_id: int):
             for need_type_id in jule_dict:
                 character_data.juel[need_type_id] -= jule_dict[need_type_id]
 
+            # 输出升级信息
             now_draw_succed = draw.NormalDraw()
             now_draw_succed.text = _("{0}的{1}提升到{2}级\n").format(character_data.name, ability_name, str(ability_level+1))
             now_draw_succed.draw()

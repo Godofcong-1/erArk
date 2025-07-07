@@ -190,9 +190,14 @@ config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
 # config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
 # """ 根据能力id和等级来判断升级的前提编号 """
-config_ability_up_data: Dict[int, Dict[int, config_def.AbilityUp]] = {}
+config_ability_up_data: Dict[int, Dict[int, list]] = {}
 """
 能力升级数据
+能力id:当前等级:需求分项:需求内容
+"""
+config_ability_up2_data: Dict[int, Dict[int, list]] = {}
+"""
+能力升级备选数据
 能力id:当前等级:需求分项:需求内容
 """
 config_talent_gain: Dict[int, config_def.TalentGain] = {}
@@ -474,15 +479,26 @@ def load_ability_up_data():
         now_tem = config_def.AbilityUp()
         now_tem.__dict__ = tem_data
         config_ability_up_data.setdefault(now_tem.ability_id, {})
-        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.now_level, set())
+        config_ability_up_data[now_tem.ability_id].setdefault(now_tem.now_level, [])
 
         # 以&为分割判定是否有多个需求
         if "&" not in now_tem.up_need:
-            config_ability_up_data[now_tem.ability_id][now_tem.now_level].add(now_tem.up_need)
+            config_ability_up_data[now_tem.ability_id][now_tem.now_level].append(now_tem.up_need)
         else:
             up_need_list = now_tem.up_need.split('&')
             for up_need in up_need_list:
-                config_ability_up_data[now_tem.ability_id][now_tem.now_level].add(up_need)
+                config_ability_up_data[now_tem.ability_id][now_tem.now_level].append(up_need)
+
+        # 新增：处理up_need2列，若不为'无'，则存入config_ability_up2_data
+        if hasattr(now_tem, 'up_need2') and now_tem.up_need2 and now_tem.up_need2 != ('无'):
+            config_ability_up2_data.setdefault(now_tem.ability_id, {})
+            config_ability_up2_data[now_tem.ability_id].setdefault(now_tem.now_level, [])
+            if "&" not in now_tem.up_need2:
+                config_ability_up2_data[now_tem.ability_id][now_tem.now_level].append(now_tem.up_need2)
+            else:
+                up_need2_list = now_tem.up_need2.split('&')
+                for up_need2 in up_need2_list:
+                    config_ability_up2_data[now_tem.ability_id][now_tem.now_level].append(up_need2)
 
         # print("tem_data :",tem_data)
         # print("now_tem.cid :",now_tem.cid)

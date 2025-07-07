@@ -29,6 +29,8 @@ class AbilityUp:
     """ 当前等级 """
     up_need: str
     """ 升级需求 """
+    up_need2: str
+    """ 升级需求2 """
 
 
 class Ai_Chat_Send_Data:
