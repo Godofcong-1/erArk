@@ -1741,6 +1741,7 @@ def handle_target_hypnosis_force_ovulation_on(
         return
     santi_down = 10
     target_character_data.hypnosis.force_ovulation = True
+    target_character_data.pregnancy.reproduction_period = 5
     character_data.sanity_point = max(character_data.sanity_point - santi_down, 0)
     change_data.sanity_point -= santi_down
     character_data.pl_ability.today_sanity_point_cost += santi_down

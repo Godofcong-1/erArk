@@ -5750,6 +5750,47 @@ def handle_t_reproduction_period_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.T_REPRODUCTION_PERIOD_NOT_3)
+def handle_t_reproduction_period_not_3(character_id: int) -> int:
+    """
+    交互对象当前不是排卵期
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_t_reproduction_period_3(character_id)
+
+
+@add_premise(constant_promise.Premise.T_FERTILIZATION_OR_PREGNANCY)
+def handle_t_fertilization_or_pregnancy(character_id: int) -> int:
+    """
+    交互对象受精或怀孕
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[20] or target_data.talent[21] or target_data.talent[22] or target_data.talent[23]:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.T_NOT_FERTILIZATION_OR_PREGNANCY)
+def handle_t_not_fertilization_or_pregnancy(character_id: int) -> int:
+    """
+    交互对象未受精或怀孕
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_t_fertilization_or_pregnancy(character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_IS_PLAYER_DAUGHTER)
 def handle_self_is_player_daughter(character_id: int) -> int:
     """
