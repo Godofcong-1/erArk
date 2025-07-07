@@ -2,6 +2,7 @@ import csv
 import os
 import json
 import ast
+import time
 
 # 文件路径
 config_dir = os.path.join("data", "csv")
@@ -386,7 +387,55 @@ for i in file_list:
 
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
 if BUILD_TALK:
+    # 获取talk目录下的文件列表
     talk_file_list = os.listdir(talk_dir)
+    # 递归统计talk目录及其所有子目录下的csv文件总数
+    def count_csv_files(dir_path):
+        """
+        输入：
+            dir_path (str): 目录路径
+        返回：int，总的csv文件数量
+        功能：递归统计目录下所有csv文件数量
+        """
+        count = 0
+        for entry in os.listdir(dir_path):
+            full_path = os.path.join(dir_path, entry)
+            if os.path.isdir(full_path):
+                count += count_csv_files(full_path)
+            elif entry.endswith('.csv'):
+                count += 1
+        return count
+
+    # 递归统计talk目录及其所有子目录下的csv文件总数和总大小
+    def count_csv_files_and_size(dir_path):
+        """
+        输入：
+            dir_path (str): 目录路径
+        返回：(int, int)，总的csv文件数量和总字节数
+        功能：递归统计目录下所有csv文件数量和总大小
+        """
+        count = 0
+        total_size = 0
+        for entry in os.listdir(dir_path):
+            full_path = os.path.join(dir_path, entry)
+            if os.path.isdir(full_path):
+                sub_count, sub_size = count_csv_files_and_size(full_path)
+                count += sub_count
+                total_size += sub_size
+            elif entry.endswith('.csv'):
+                count += 1
+                total_size += os.path.getsize(full_path)
+        return count, total_size
+
+    # 统计talk目录及其所有子目录下的csv文件总数和总大小
+    total_files, total_bytes = count_csv_files_and_size(talk_dir)
+    # 已处理文件计数
+    processed_files = 0
+    # 已处理文件字节数
+    processed_bytes = 0
+    # 记录上次打印进度的时间
+    last_print_time = time.time()
+    print(f"[进度] 开始处理角色口上，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
     for i in talk_file_list:
         # 跳过 ai 文件夹
         if i == "ai":
@@ -404,11 +453,33 @@ if BUILD_TALK:
                     # 构建子目录下的 talk csv 配置
                     csv_path = os.path.join(root, f)
                     build_csv_config(csv_path, f, True, False)
+                    # 每处理完一个csv文件，计数加一
+                    processed_files += 1
+                    # 累加已处理文件的字节数
+                    processed_bytes += os.path.getsize(csv_path)
+                    # 获取当前时间
+                    now_time = time.time()
+                    # 如果距离上次打印超过1秒，则打印进度
+                    if now_time - last_print_time >= 1 or processed_files == total_files:
+                        percent = processed_files / total_files * 100
+                        print(f"[进度] 已处理 {processed_files}/{total_files} 个文件 ({percent:.2f}%)，已处理 {processed_bytes/1024/1024:.2f}/{total_bytes/1024/1024:.2f} MB")
+                        last_print_time = now_time
         else:
             # 如果是单个 csv 文件，则直接构建
             if i.endswith(".csv"):
                 config_def_str += "\n"
                 build_csv_config(now_path, i, True, False)
+                # 每处理完一个csv文件，计数加一
+                processed_files += 1
+                # 累加已处理文件的字节数
+                processed_bytes += os.path.getsize(now_path)
+                # 获取当前时间
+                now_time = time.time()
+                # 如果距离上次打印超过1秒，则打印进度
+                if now_time - last_print_time >= 1 or processed_files == total_files:
+                    percent = processed_files / total_files * 100
+                    print(f"[进度] 已处理 {processed_files}/{total_files} 个文件 ({percent:.2f}%)，已处理 {processed_bytes/1024/1024:.2f}/{total_bytes/1024/1024:.2f} MB")
+                    last_print_time = now_time
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
         json.dump(character_talk_data, talk_data_file, ensure_ascii=0)
