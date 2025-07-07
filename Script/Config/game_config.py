@@ -373,6 +373,10 @@ config_world_setting: Dict[int, config_def.World_Setting] = {}
 """ 世界设定 """
 config_hypnosis_type: Dict[int, config_def.Hypnosis_Type] = {}
 """ 催眠类型 """
+config_hypnosis_sub_type: Dict[int, config_def.Hypnosis_Sub_Type] = {}
+""" 催眠子类型 """
+config_hypnosis_sub_type_by_behaivor: Dict[str, int] = {}
+""" 催眠子类型按行为对应的数据id """
 config_hypnosis_talent_of_npc: Dict[int, config_def.Hypnosis_Talent_Of_Npc] = {}
 """ 干员获得被催眠素质 """
 config_hypnosis_talent_of_pl: Dict[int, config_def.Hypnosis_Talent_Of_Pl] = {}
@@ -1452,6 +1456,17 @@ def load_hypnosis_type():
         config_hypnosis_type[now_tem.cid] = now_tem
 
 
+def load_hypnosis_sub_type():
+    """载入催眠子类型"""
+    now_data = config_data["Hypnosis_Sub_Type"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Hypnosis_Sub_Type()
+        now_tem.__dict__ = tem_data
+        config_hypnosis_sub_type[now_tem.cid] = now_tem
+        config_hypnosis_sub_type_by_behaivor[now_tem.behavior_id] = now_tem.cid
+
+
 def load_hypnosis_talent_of_npc():
     """载入催眠npc素质"""
     now_data = config_data["Hypnosis_Talent_Of_Npc"]
@@ -1891,6 +1906,7 @@ def init():
     load_recruitment_strategy()
     load_world_setting()
     load_hypnosis_type()
+    load_hypnosis_sub_type()
     load_hypnosis_talent_of_npc()
     load_hypnosis_talent_of_player()
     load_talent_of_arts()

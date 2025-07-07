@@ -3,7 +3,7 @@ from typing import List
 from types import FunctionType
 import random
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Design import handle_talent, map_handle, attr_calculation
+from Script.Design import handle_premise, handle_talent, map_handle, attr_calculation
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
@@ -298,16 +298,16 @@ class Chose_Hypnosis_Type_Panel:
         pl_character_data: game_type.Character = cache.character_data[0]
         target_data: game_type.Character = cache.character_data[pl_character_data.target_character_id]
         range_list = []
-        for cid in game_config.config_behavior:
-            behavior_data = game_config.config_behavior[cid]
+        for behavbior_cid in game_config.config_behavior:
+            behavior_data = game_config.config_behavior[behavbior_cid]
             if body_or_mind_flag == 0:
                 type_text = _("身体")
                 if "体控" in behavior_data.tag:
-                    range_list.append(cid)
+                    range_list.append(behavbior_cid)
             else:
                 type_text = _("心灵")
                 if "心控" in behavior_data.tag:
-                    range_list.append(cid)
+                    range_list.append(behavbior_cid)
         while 1:
             return_list = []
             title_draw = draw.TitleLineDraw(_("选择{0}控制选项").format(type_text), self.width)
@@ -318,18 +318,22 @@ class Chose_Hypnosis_Type_Panel:
             info_draw.draw()
             # 遍历选项数据库，输出按钮
             count = 0
-            for cid in range_list:
+            for behavbior_cid in range_list:
                 # 如果不存在该选项则跳过
-                if cid not in game_config.config_behavior:
+                if behavbior_cid not in game_config.config_behavior:
                     continue
-                behavior_data = game_config.config_behavior[cid]
+                behavior_data = game_config.config_behavior[behavbior_cid]
+                sub_type_id = game_config.config_hypnosis_sub_type_by_behaivor.get(behavbior_cid, 0)
                 draw_text = f"[{count}]{behavior_data.name}"
+                if sub_type_id > 0:
+                    sub_type_data = game_config.config_hypnosis_sub_type[sub_type_id]
+                    draw_text += f"：{sub_type_data.introduce}"
                 button_draw = draw.LeftButton(
                     _(draw_text),
                     _(behavior_data.name),
                     window_width,
                     cmd_func=self.son_instruct,
-                    args=(cid,),
+                    args=(behavbior_cid,),
                 )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
@@ -344,22 +348,30 @@ class Chose_Hypnosis_Type_Panel:
             if yrn in return_list:
                 break
 
-    def son_instruct(self, cid):
+    def son_instruct(self, behavbior_cid):
         """进行子选项"""
         from Script.Design import handle_instruct
         line_draw = draw.LineDraw("-", self.width)
         line_draw.draw()
 
         # 心控-角色扮演需要单独绘制面板
-        if cid == "hypnosis_roleplay":
+        if behavbior_cid == "hypnosis_roleplay":
             now_draw = Chose_Roleplay_Type_Panel(self.width)
             now_draw.draw()
             character_data: game_type.Character = cache.character_data[0]
             target_data: game_type.Character = cache.character_data[character_data.target_character_id]
             if len(target_data.hypnosis.roleplay) != 0:
-                handle_instruct.chara_handle_instruct_common_settle(cid)
+                handle_instruct.chara_handle_instruct_common_settle(behavbior_cid)
         else:
-            handle_instruct.chara_handle_instruct_common_settle(cid)
+            # 如果是强制排卵，则检测是否满足条件
+            if behavbior_cid == "hypnosis_force_ovulation":
+                if handle_premise.handle_t_reproduction_period_3(0) or handle_premise.handle_t_fertilization_or_pregnancy(0):
+                    now_draw = draw.WaitDraw()
+                    now_draw.text = _("\n当前干员不满足条件，无法进行强制排卵\n")
+                    now_draw.draw()
+                    return
+
+            handle_instruct.chara_handle_instruct_common_settle(behavbior_cid)
 
 class Chose_Roleplay_Type_Panel:
     """

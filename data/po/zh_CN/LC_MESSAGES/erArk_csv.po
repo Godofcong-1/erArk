@@ -19152,6 +19152,58 @@ msgstr ""
 msgid "随时暴露"
 msgstr ""
 
+#: .\data\csv\Hypnosis_Sub_Type.csv:7
+msgid "敏感度提升"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:7
+msgid "持续性效果，被催眠的干员的全部位敏感度都会获得较大的提升，任何轻微的触碰都会让干员感到强烈的快感。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:8
+msgid "强制高潮"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:8
+msgid "瞬间效果，被催眠的干员会立刻当场高潮，高潮的部位与各部位的开发程度有关，根据权重随机选择一个部位进行高潮。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:9
+msgid "强制排卵"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:9
+msgid "瞬间效果，被催眠的干员会立刻排卵，当天变为排卵期，极大地增加怀孕概率，只能对未怀孕、非排卵期的干员使用。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:10
+msgid "木头人"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:10
+msgid "持续性效果，被催眠的干员的精神和思考一切正常，但身体会完全无法动弹，任由博士摆布。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:11
+msgid "逆推"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:11
+msgid "持续性效果，被催眠的干员的精神和思考一切正常，但身体会不受控制地主动对博士进行各种性行为。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:12
+msgid "苦痛快感化"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:12
+msgid "持续性效果，被催眠的干员会无法认知到苦痛，并将所有苦痛的感觉都转化为心理上的快感，任何疼痛都会让干员感到强烈的快感。"
+msgstr ""
+
+#: .\data\csv\Hypnosis_Sub_Type.csv:13
+msgid "持续性效果，被催眠的干员会完全沉浸在角色扮演中，会认为自己就是博士要求扮演的角色，完全接受所有设定，对自己服装、周围场景等也会有相应的认知。"
+msgstr ""
+
 #: .\data\csv\Hypnosis_Type.csv:7
 msgid " 无 "
 msgstr ""
@@ -22545,238 +22597,278 @@ msgid "对方是国民级的美少女偶像，拥有无与伦比的歌唱和舞�
 msgstr ""
 
 #: .\data\csv\Roleplay.csv:22
+msgid "家庭女仆"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:22
+msgid "对方是自己家雇佣的女仆，负责照顾家庭起居，处理家务事宜和提供服务"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:23
+msgid "咖啡厅女仆"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:23
+msgid "对方是在女仆咖啡厅工作的女仆，负责为客人提供服务和娱乐"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:24
+msgid "巫女"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:24
+msgid "对方是神社的巫女，负责进行祭祀和祈福活动，对神灵有着深厚的信仰和敬畏"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:25
 msgid "陌生人"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:22
+#: .\data\csv\Roleplay.csv:25
 msgid "关系"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:22
+#: .\data\csv\Roleplay.csv:25
 msgid "非家庭"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:22
+#: .\data\csv\Roleplay.csv:25
 msgid "自己对方的陌生人，和对方之间没有任何关系"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:23
+#: .\data\csv\Roleplay.csv:26
 msgid "师生"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:23
+#: .\data\csv\Roleplay.csv:26
 msgid "对方和自己是教导的师生关系，一方是老师，另一方是学生，老师对学生有特殊的关爱和指导"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:24
+#: .\data\csv\Roleplay.csv:27
 msgid "同学"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:24
+#: .\data\csv\Roleplay.csv:27
 msgid "对方是自己的同班同学，关系亲密，常常一起学习和活动"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:25
+#: .\data\csv\Roleplay.csv:28
 msgid "同事"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:25
+#: .\data\csv\Roleplay.csv:28
 msgid "对方是自己的同事，工作上互相支持，私下里也有一定的交情"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:26
+#: .\data\csv\Roleplay.csv:29
 msgid "邻居"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:26
+#: .\data\csv\Roleplay.csv:29
 msgid "对方是住在自己隔壁的邻居，关系友好，常常互相帮助"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:27
+#: .\data\csv\Roleplay.csv:30
 msgid "宠物猫"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:27
+#: .\data\csv\Roleplay.csv:30
 msgid "人外"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:27
+#: .\data\csv\Roleplay.csv:30
 msgid "特殊"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:27
+#: .\data\csv\Roleplay.csv:30
 msgid "对方以为自己是一只猫，不会说话，拥有猫的所有特征和习性，娇小可爱，有时傲娇，喜欢被抚摸和关爱"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:28
+#: .\data\csv\Roleplay.csv:31
 msgid "宠物狗"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:28
+#: .\data\csv\Roleplay.csv:31
 msgid "对方以为自己是一只狗，不会说话，拥有狗的所有特征和习性，忠诚可爱，喜欢撒娇和陪伴主人"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:29
+#: .\data\csv\Roleplay.csv:32
 msgid "魅魔"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:29
+#: .\data\csv\Roleplay.csv:32
 msgid "对方以为自己是魅魔，以吸取精气为生，现在正在发情期，必须尽快摄入精液"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:30
+#: .\data\csv\Roleplay.csv:33
 msgid "电车痴汉"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:30
+#: .\data\csv\Roleplay.csv:33
 msgid "场景"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:30
+#: .\data\csv\Roleplay.csv:33
 msgid "在拥挤的电车上，对方被自己进行痴汉行为，但又不敢反抗，只能默默忍受"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:31
+#: .\data\csv\Roleplay.csv:34
 msgid "户外当众"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:31
+#: .\data\csv\Roleplay.csv:34
 msgid "在可能被他人看见的公共场所进行亲密行为，刺激感和羞耻感倍增"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:32
+#: .\data\csv\Roleplay.csv:35
 msgid "公共厕所（主动）"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:32
+#: .\data\csv\Roleplay.csv:35
 msgid "对方把自己捆在公共厕所的隔间里，等待不认识的陌生人把自己当做肉便器使用，然后等来了自己"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:33
+#: .\data\csv\Roleplay.csv:36
 msgid "公共厕所（被动）"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:33
+#: .\data\csv\Roleplay.csv:36
 msgid "对方被自己绑架后捆在公共厕所的隔间里，被自己当做肉便器使用"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:34
+#: .\data\csv\Roleplay.csv:37
 msgid "俘虏拷问"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:34
+#: .\data\csv\Roleplay.csv:37
 msgid "对方是被俘虏的敌人，自己是审讯官，通过各种手段逼迫对方屈服"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:35
+#: .\data\csv\Roleplay.csv:38
 msgid "榨精护士"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:35
+#: .\data\csv\Roleplay.csv:38
 msgid "对方是医院的护士，负责对自己这个病人进行特殊的精液采集和处理"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:36
+#: .\data\csv\Roleplay.csv:39
 msgid "战败魔法少女"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:36
+#: .\data\csv\Roleplay.csv:39
 msgid "对方是强大的魔法少女，自己是魔物或怪人，对方被自己打败后沦为自己的玩物，必须接受各种羞辱和调教"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:37
+#: .\data\csv\Roleplay.csv:40
 msgid "VTuber直播中"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:37
+#: .\data\csv\Roleplay.csv:40
 msgid "对方是正在直播的VTuber，自己在对方直播中突然闯入，进行亲密行为，对方必须在观众面前维持表面上的正常"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:38
-msgid "女仆咖啡厅里菜单"
+#: .\data\csv\Roleplay.csv:41
+msgid "向神灵祭祀"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:38
-msgid "对方是女仆咖啡厅的女仆，自己是重要的客人，点了特殊的菜单，女仆必须满足自己的任何要求"
+#: .\data\csv\Roleplay.csv:41
+msgid "对方是神社的巫女，自己是神灵的信徒，双方要进行特殊的祭祀活动，在神像面前进行交合"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:39
+#: .\data\csv\Roleplay.csv:42
+msgid "向自己祭祀"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:42
+msgid "对方是神社的巫女，自己是神灵的化身，对方要对自己进行特殊的祭祀活动，与自己进行交合"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:43
 msgid "女仆惩罚调教"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:39
+#: .\data\csv\Roleplay.csv:43
 msgid "对方是自己家雇佣的女仆，自己是主人，对方做了错事，必须接受主人的惩罚和调教"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:40
+#: .\data\csv\Roleplay.csv:44
+msgid "女仆咖啡厅里菜单"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:44
+msgid "对方是女仆咖啡厅的女仆，自己是重要的客人，点了特殊的菜单，女仆必须满足自己的任何要求"
+msgstr ""
+
+#: .\data\csv\Roleplay.csv:45
 msgid "偶像台前准备室"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:40
+#: .\data\csv\Roleplay.csv:45
 msgid "对方是国民级的偶像，自己在对方上台演出前，在准备室里对偶像进行特殊的准备和调教"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:41
+#: .\data\csv\Roleplay.csv:46
 msgid "偶像单人LIVE"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:41
+#: .\data\csv\Roleplay.csv:46
 msgid "对方是国民级的偶像，对方为自己单独开了一场私人演出，演出中对方会进行各种亲密的互动和表演"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:42
+#: .\data\csv\Roleplay.csv:47
 msgid "偶像演出后粉丝答谢"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:42
+#: .\data\csv\Roleplay.csv:47
 msgid "对方是国民级的偶像，对方在演出结束后邀请自己到爱情旅馆进行特殊的粉丝答谢活动，期间会有各种亲密的互动和调教"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:43
+#: .\data\csv\Roleplay.csv:48
 msgid "偶像枕营业"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:43
+#: .\data\csv\Roleplay.csv:48
 msgid "对方是国民级的偶像，自己是有钱有势的高层，偶像为了能够上台表演，必须与自己发生关系，自己无论做什么对方都必须接受"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:44
+#: .\data\csv\Roleplay.csv:49
 msgid "放学后教室H"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:44
+#: .\data\csv\Roleplay.csv:49
 msgid "自己和对方在空无一人的教室里偷偷进行性行为"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:45
+#: .\data\csv\Roleplay.csv:50
 msgid "体育仓库H"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:45
+#: .\data\csv\Roleplay.csv:50
 msgid "自己和对方在存放体育器材的仓库中偷偷进行性行为"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:46
+#: .\data\csv\Roleplay.csv:51
 msgid "天台H"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:46
+#: .\data\csv\Roleplay.csv:51
 msgid "自己和对方在学校的天台上进行性行为"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:47
+#: .\data\csv\Roleplay.csv:52
 msgid "学校厕所H"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:47
+#: .\data\csv\Roleplay.csv:52
 msgid "自己和对方在学校的厕所里进行性行为"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:48
+#: .\data\csv\Roleplay.csv:53
 msgid "保健室H"
 msgstr ""
 
-#: .\data\csv\Roleplay.csv:48
+#: .\data\csv\Roleplay.csv:53
 msgid "自己和对方藏在保健室的同一张床上进行性行为"
 msgstr ""
 

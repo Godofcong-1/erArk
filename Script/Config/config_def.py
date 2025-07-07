@@ -678,6 +678,21 @@ class Hidden_Level:
     """ 当前等级隐蔽值上限 """
 
 
+class Hypnosis_Sub_Type:
+    """ 催眠子类型 """
+
+    cid: int
+    """ 催眠类型id """
+    name: str
+    """ 名称 """
+    behavior_id: str
+    """ 行为名 """
+    type: int
+    """ 所属类型 """
+    introduce: str
+    """ 介绍 """
+
+
 class Hypnosis_Talent_Of_Npc:
     """ 干员获得被催眠素质 """
 
