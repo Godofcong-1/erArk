@@ -8209,6 +8209,12 @@ def handle_sing_add_adjust(
             # 跳过玩家自己
             if chara_id == character_id:
                 continue
+            # 跳过无意识的角色
+            if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                continue
+            # 跳过睡觉中的角色
+            if handle_premise.handle_action_sleep(chara_id):
+                continue
             target_data: game_type.Character = cache.character_data[chara_id]
 
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8301,6 +8307,12 @@ def handle_play_instrument_add_adjust(
         for chara_id in cache.scene_data[map_handle.get_map_system_path_str_for_list(character_data.position)].character_list:
             # 跳过玩家自己
             if chara_id == character_id:
+                continue
+            # 跳过无意识的角色
+            if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+                continue
+            # 跳过睡觉中的角色
+            if handle_premise.handle_action_sleep(chara_id):
                 continue
             target_data: game_type.Character = cache.character_data[chara_id]
 
