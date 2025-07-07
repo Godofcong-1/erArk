@@ -2,7 +2,6 @@ import random
 import re
 from types import FunctionType
 
-from flask.config import T
 from Script.Core import cache_control, game_type, value_handle, get_text, constant
 from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw
