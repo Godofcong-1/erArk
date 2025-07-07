@@ -487,3 +487,7 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
         adjust = data.level * 0.5
         for sid in (12,16,17):
             common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
+    # 被监禁状态下持续增长屈服和恐怖
+    if handle_premise.handle_imprisonment_1(character_id):
+        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=15, base_value=0, ability_level=now_char.ability[14], extra_adjust=3, tenths_add=False)
+        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=18, base_value=0, ability_level=now_char.ability[17], extra_adjust=3, tenths_add=False)
