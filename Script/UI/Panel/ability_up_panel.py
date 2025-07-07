@@ -1,9 +1,6 @@
-from math import e
-import re
 from typing import Dict, List
 from types import FunctionType
 
-from numpy import info
 from Script.UI.Moudle import draw, panel
 from Script.UI.Panel import see_character_info_panel, talent_up_panel
 from Script.Core import (
@@ -14,7 +11,7 @@ from Script.Core import (
     flow_handle,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, settle_behavior, handle_premise
+from Script.Design import attr_calculation, settle_behavior, handle_premise, handle_ability
 
 panel_info_data = {}
 
@@ -419,40 +416,12 @@ class Characterabi_cmd_Text:
                 info_draw.draw()
                 judge2, jule_dict_2 = self.draw_need_list(need_list2)
 
-            # 技巧的额外处理
-            if self.ability_id == 30:
-                # 玩家的情况
-                if self.character_id == 0:
-                    now_ability_level = self.character_data.ability[self.ability_id]
-                    now_other_ability_level = 0
-                    for tem_ability_cid in game_config.config_ability:
-                        if game_config.config_ability[tem_ability_cid].ability_type == 5:
-                            now_other_ability_level += self.character_data.ability[tem_ability_cid]
-                    info_text = _("博士的技巧升级需要额外满足以下条件：\n")
-                    info_text += _("○[指技]、[舌技]、[腰技]、[隐蔽]能力等级之和大于等于技巧等级*2\n")
-                    info_text += _("  当前技巧等级为{0}，当前[指技]、[舌技]、[腰技]等级之和为{1}\n").format(now_ability_level, now_other_ability_level)
-                    if now_other_ability_level < now_ability_level * 2:
-                        judge = 0
-                        judge2 = 0
-                    now_draw = draw.NormalDraw()
-                    now_draw.text = info_text
-                    now_draw.draw()
-                # NPC的情况
-                else:
-                    now_ability_level = self.character_data.ability[self.ability_id]
-                    now_other_ability_level = 0
-                    for tem_ability_cid in game_config.config_ability:
-                        if game_config.config_ability[tem_ability_cid].ability_type == 5:
-                            now_other_ability_level += self.character_data.ability[tem_ability_cid]
-                    info_text = _("干员的技巧升级需要额外满足以下条件：\n")
-                    info_text += _("○全子性技的等级之和，即[指技]、[舌技]、[足技]、[胸技]、[膣技]、[肛技]、[隐蔽]能力等级之和大于等于技巧等级*3\n")
-                    info_text += _("  当前技巧等级为{0}，当前全子性技的等级和为{1}\n").format(now_ability_level, now_other_ability_level)
-                    if now_other_ability_level < now_ability_level * 3:
-                        judge = 0
-                        judge2 = 0
-                    now_draw = draw.NormalDraw()
-                    now_draw.text = info_text
-                    now_draw.draw()
+            # 额外条件在独立函数处理
+            extra_judge = handle_ability.extra_ability_check(ability_id= self.ability_id, character_id=self.character_id, draw_flag=True)
+            # 如果额外条件不满足，则将judge置为0
+            if extra_judge == 0:
+                judge = 0
+                judge2 = 0
 
             # debug模式下无需判断
             if cache.debug_mode:
@@ -476,24 +445,24 @@ class Characterabi_cmd_Text:
                 now_draw_failed.draw()
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), self.width / 3)
             back_draw.draw()
             self.return_list.append(back_draw.return_text)
             if not len(need_list2):
                 if judge:
                     # 如果满足条件且没有第二个需求列表，则绘制升级按钮
-                    yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
+                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
                     yes_draw.draw()
                     self.return_list.append(yes_draw.return_text)
             else:
                 # 按照主要求进行升级
                 if judge:
-                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _("确定(主需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
+                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
                     yes_1_draw.draw()
                     self.return_list.append(yes_1_draw.return_text)
                 # 按照第二要求进行升级
                 if judge2:
-                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _("确定(次需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_2)
+                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_2)
                     yes_2_draw.draw()
                     self.return_list.append(yes_2_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
