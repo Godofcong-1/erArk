@@ -474,8 +474,10 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
                 common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
             # 隐奸中增加羞耻和心理快感
             if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
-                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
-                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+                hidden_sex_mode = now_char.sp_flag.hidden_sex_mode
+                extra_add = 4 - hidden_sex_mode
+                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra_add, tenths_add=False)
+                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra_add, tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
