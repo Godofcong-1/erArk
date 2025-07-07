@@ -196,16 +196,16 @@ str,str,int,str,str
 2059,chat,0,in_office,{Name}和{TargetName}在办公室里聊天，谈论着罗德岛内部的信息传达机制和沟通效率的提升方法
 2060,chat,0,in_office,{Name}与{TargetName}在办公室中讨论着办公设备的使用技巧和维护保养的注意事项
 
-2061,chat,0,in_dr_office,{Name}和{TargetName}在博士办公室里聊天，讨论着罗德岛的战略规划和未来发展方向的思考
-2062,chat,0,in_dr_office,{Name}与{TargetName}在博士办公室中谈论着指挥决策的复杂性和需要考虑的多重因素
-2063,chat,0,in_dr_office,{Name}和{TargetName}在博士办公室里聊天，交流着关于领导力和团队管理的理念与实践经验
-2064,chat,0,in_dr_office,{Name}与{TargetName}在博士办公室中讨论着罗德岛各部门工作的协调统筹和资源分配优化
-2065,chat,0,in_dr_office,{Name}和{TargetName}在博士办公室里聊天，谈论着如何平衡工作责任与个人成长的关系
-2066,chat,0,in_dr_office,{Name}与{TargetName}在博士办公室中交流着对于重大决策制定过程的理解和思考方式
-2067,chat,0,in_dr_office,{Name}和{TargetName}在博士办公室里聊天，讨论着罗德岛文化建设和价值观传承的重要意义
-2068,chat,0,in_dr_office,{Name}与{TargetName}在博士办公室中谈论着工作中遇到的挑战和解决问题的创新思路
-2069,chat,0,in_dr_office,{Name}和{TargetName}在博士办公室里聊天，交流着关于知识管理和信息整合的方法与心得
-2070,chat,0,in_dr_office,{Name}与{TargetName}在博士办公室中讨论着长远规划与短期目标之间的平衡和协调关系
+2061,chat,0,in_dr_off,{Name}和{TargetName}在博士办公室里聊天，讨论着罗德岛的战略规划和未来发展方向的思考
+2062,chat,0,in_dr_off,{Name}与{TargetName}在博士办公室中谈论着指挥决策的复杂性和需要考虑的多重因素
+2063,chat,0,in_dr_off,{Name}和{TargetName}在博士办公室里聊天，交流着关于领导力和团队管理的理念与实践经验
+2064,chat,0,in_dr_off,{Name}与{TargetName}在博士办公室中讨论着罗德岛各部门工作的协调统筹和资源分配优化
+2065,chat,0,in_dr_off,{Name}和{TargetName}在博士办公室里聊天，谈论着如何平衡工作责任与个人成长的关系
+2066,chat,0,in_dr_off,{Name}与{TargetName}在博士办公室中交流着对于重大决策制定过程的理解和思考方式
+2067,chat,0,in_dr_off,{Name}和{TargetName}在博士办公室里聊天，讨论着罗德岛文化建设和价值观传承的重要意义
+2068,chat,0,in_dr_off,{Name}与{TargetName}在博士办公室中谈论着工作中遇到的挑战和解决问题的创新思路
+2069,chat,0,in_dr_off,{Name}和{TargetName}在博士办公室里聊天，交流着关于知识管理和信息整合的方法与心得
+2070,chat,0,in_dr_off,{Name}与{TargetName}在博士办公室中讨论着长远规划与短期目标之间的平衡和协调关系
 
 2071,chat,0,in_dr_room,{Name}和{TargetName}在博士房间里聊天，谈论着工作之余的休息放松方式和个人兴趣爱好
 2072,chat,0,in_dr_room,{Name}与{TargetName}在博士房间中交流着关于生活品质提升和居住环境营造的心得体会
