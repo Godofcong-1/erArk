@@ -207,7 +207,12 @@ class CharacterBodyText:
                 now_text += _("但从外表上还看不出来\n")
             elif character_data.talent[21]:
                 now_text += _("  已受精{0}天，").format(past_day)
-                now_text += _("[妊娠]中，肚子已经大起来了\n")
+                now_text += _("[妊娠]中，肚子已经大起来了")
+                last_day = 261 - past_day
+                if last_day > 0:
+                    now_text += _("，距离临盆预计还有{0}天左右\n").format(last_day)
+                else:
+                    now_text += "\n"
             elif character_data.talent[22]:
                 now_text += _("  已受精{0}天，").format(past_day)
                 now_text += _("[临盆]中，即将诞下爱的结晶\n")

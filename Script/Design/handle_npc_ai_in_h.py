@@ -1,7 +1,6 @@
 import random
 import datetime
 from types import FunctionType
-from typing import Dict
 from Script.Core import (
     cache_control,
     game_path_config,
@@ -19,7 +18,6 @@ from Script.Design import (
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import dirty_panel
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
