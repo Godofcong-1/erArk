@@ -237,7 +237,82 @@ When `web_draw = 1`, the game runs as a web server:
 
 ## Data Processing Workflow Documentation
 
-The `.github/prompts/数据处理工作流` directory contains important MD files that explain relationships between different systems and code components. When working on related features, refer to these documents for understanding:
-- System interconnections and dependencies
-- Code component relationships
-- Data flow between different modules
+The `.github/prompts/数据处理工作流` directory contains 47 detailed system documentation files. These documents explain the relationships between different systems and code components. When working on related features, refer to these documents for understanding system interconnections, dependencies, and data flow.
+
+### 🏗️ Core System Architecture Documents
+- **[角色行为系统](./github/prompts/数据处理工作流/角色行为系统.md)** - Core behavior loop, time management, status changes
+- **[结算系统](./github/prompts/数据处理工作流/结算系统.md)** - Behavior settlement, numerical calculations, status updates
+- **[前提系统](./github/prompts/数据处理工作流/前提系统.md)** - Condition verification for behaviors and events
+- **[口上系统](./github/prompts/数据处理工作流/口上系统.md)** - Text and dialogue system
+- **[事件系统](./github/prompts/数据处理工作流/事件系统.md)** - Story events and special trigger mechanisms
+
+### 🔧 Technical & Tool Systems
+- **[CSV数据加载机制说明](./github/prompts/数据处理工作流/CSV数据加载机制说明.md)** - CSV data loading and processing
+- **[AI文本生成系统](./github/prompts/数据处理工作流/AI文本生成系统.md)** - AI text generation functionality
+- **[存档系统](./github/prompts/数据处理工作流/存档系统.md)** - Save system and cross-version compatibility
+- **[通用结算函数函数](./github/prompts/数据处理工作流/通用结算函数函数.md)** - Universal calculation functions
+- **[多周目结算与继承系统](./github/prompts/数据处理工作流/多周目结算与继承系统.md)** - Multi-playthrough data inheritance
+- **[ArkEditor编辑器系统说明](./github/prompts/数据处理工作流/ArkEditor编辑器系统说明.md)** - Built-in editor system
+
+### 🎮 User Interface Systems
+- **[主场景互动界面](./github/prompts/数据处理工作流/主场景互动界面.md)** - Main scene interaction interface
+- **[指令面板系统](./github/prompts/数据处理工作流/指令面板系统.md)** - Player instruction panels
+- **[通用NPC选择面板](./github/prompts/数据处理工作流/通用NPC选择面板.md)** - Universal NPC selection panels
+- **[系统设置系统](./github/prompts/数据处理工作流/系统设置系统.md)** - System configuration interface
+- **[全干员位置面板](./github/prompts/数据处理工作流/全干员位置面板.md)** - All character position panel
+- **[PRTS系统](./github/prompts/数据处理工作流/PRTS系统.md)** - PRTS communication system
+
+### 🗺️ Scene & Map Systems
+- **[地图系统](./github/prompts/数据处理工作流/地图系统.md)** - Map data structure and management
+- **[导航系统](./github/prompts/数据处理工作流/导航系统.md)** - Navigation and scene transitions
+
+### 👥 Character Creation & Growth
+- **[角色创建流程](./github/prompts/数据处理工作流/角色创建流程.md)** - Character creation workflow
+- **[能力升级面板](./github/prompts/数据处理工作流/能力升级面板.md)** - Ability upgrade interface
+
+### 👗 Appearance & Decoration Systems
+- **[服装系统说明](./github/prompts/数据处理工作流/服装系统说明.md)** - Clothing system details
+- **[衣柜检查功能](./github/prompts/数据处理工作流/衣柜检查功能.md)** - Wardrobe inspection features
+- **[收藏品系统](./github/prompts/数据处理工作流/收藏品系统.md)** - Collectible management
+- **[角色图片系统](./github/prompts/数据处理工作流/角色图片系统.md)** - Character image resources
+
+### 👨‍⚕️ Body Status Systems
+- **[身体信息面板系统](./github/prompts/数据处理工作流/身体信息面板系统.md)** - Body information display
+- **[射精面板系统](./github/prompts/数据处理工作流/射精面板系统.md)** - Ejaculation status panels
+- **[妊娠系统](./github/prompts/数据处理工作流/妊娠系统.md)** - Pregnancy state management
+
+### 🎯 Rhodes Island Department Systems
+- **[管理罗德岛系统](./github/prompts/数据处理工作流/管理罗德岛系统.md)** - Rhodes Island base management
+- **[助理系统](./github/prompts/数据处理工作流/助理系统.md)** - Assistant character functions
+- **[基建系统](./github/prompts/数据处理工作流/基建系统.md)** - Construction and building management
+- **[农业生产系统](./github/prompts/数据处理工作流/农业生产系统.md)** - Agricultural production
+- **[工业生产系统](./github/prompts/数据处理工作流/工业生产系统.md)** - Industrial production
+- **[资源交易系统](./github/prompts/数据处理工作流/资源交易系统.md)** - Resource trading and markets
+- **[招募系统](./github/prompts/数据处理工作流/招募系统.md)** - Character recruitment mechanisms
+- **[外勤委托系统](./github/prompts/数据处理工作流/外勤委托系统.md)** - External mission commissioning
+- **[邀请访客系统](./github/prompts/数据处理工作流/邀请访客系统.md)** - Visitor invitation system
+- **[势力外交系统](./github/prompts/数据处理工作流/势力外交系统.md)** - Faction diplomacy
+- **[载具管理系统](./github/prompts/数据处理工作流/载具管理系统.md)** - Vehicle management
+- **[读书系统](./github/prompts/数据处理工作流/读书系统.md)** - Reading and learning functionality
+- **[身体检查与管理系统](./github/prompts/数据处理工作流/身体检查与管理系统.md)** - Body examination and health management
+
+### 🛍️ Items & Equipment Systems
+- **[道具背包系统](./github/prompts/数据处理工作流/道具背包系统.md)** - Item inventory management
+- **[礼物系统](./github/prompts/数据处理工作流/礼物系统.md)** - Gift giving and receiving
+- **[食物系统](./github/prompts/数据处理工作流/食物系统.md)** - Food preparation and consumption
+
+### 🌟 Originium Arts Systems
+- **[源石技艺系统](./github/prompts/数据处理工作流/源石技艺系统.md)** - Originium arts learning and management
+- **[时间停止系统](./github/prompts/数据处理工作流/时间停止系统.md)** - Time stop special functionality
+- **[催眠系统](./github/prompts/数据处理工作流/催眠系统.md)** - Hypnosis functionality and mechanisms
+
+### 🎭 Special H-Mode Systems
+- **[群交系统](./github/prompts/数据处理工作流/群交系统.md)** - Group interaction functionality
+- **[监禁调教系统](./github/prompts/数据处理工作流/监禁调教系统.md)** - Confinement and training
+- **[睡眠系统](./github/prompts/数据处理工作流/睡眠系统.md)** - Sleep state management
+- **[隐奸系统](./github/prompts/数据处理工作流/隐奸系统.md)** - Hidden behavior system
+
+### Usage Guidelines
+1. **Browse by Category**: Select the appropriate category based on the system type you're working on
+2. **System Dependencies**: Many systems are interconnected - refer to related system documentation
+3. **Document Structure**: Each document typically contains system overview, core components, data structures, workflow explanations, configuration details, technical implementation, and extension guides
