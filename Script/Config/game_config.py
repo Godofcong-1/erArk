@@ -55,7 +55,7 @@ config_character_state: Dict[int, config_def.CharacterState] = {}
 """ 角色状态属性配表数据 """
 config_character_state_type: Dict[int, config_def.CharacterStateType] = {}
 """ 角色状态类型配表数据 """
-config_character_state_type_data: Dict[int, Set] = {}
+config_character_state_type_data: Dict[int, List] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
 config_character_state_level: Dict[int, config_def.Character_State_Level] = {}
 """ 角色状态等级配置 """
@@ -799,8 +799,8 @@ def load_character_state_data():
         now_tem = config_def.CharacterState()
         now_tem.__dict__ = tem_data
         config_character_state[now_tem.cid] = now_tem
-        config_character_state_type_data.setdefault(now_tem.type, set())
-        config_character_state_type_data[now_tem.type].add(now_tem.cid)
+        config_character_state_type_data.setdefault(now_tem.type, [])
+        config_character_state_type_data[now_tem.type].append(now_tem.cid)
 
 
 def load_character_state_type_data():

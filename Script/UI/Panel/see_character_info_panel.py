@@ -311,32 +311,27 @@ class SeeCharacterStatusPanel:
         character_data = cache.character_data[character_id]
         # print("game_config.config_character_state_type :",game_config.config_character_state_type)
         # print("game_config.config_character_state_type_data :",game_config.config_character_state_type_data)
+
+        # 润滑单独处理，归到快感里
+        other_status_ids = [8]
+
         for status_type in game_config.config_character_state_type_data:
             type_data = game_config.config_character_state_type[status_type]
             type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
             # print("type_data.name :",type_data.name)
             self.draw_list.append(type_line)
-            type_set = game_config.config_character_state_type_data[status_type]
+            type_list = game_config.config_character_state_type_data[status_type]
             draw_count = 0
             
             # 如果是状态类型0，需要特殊处理快感状态的顺序
             if status_type == 0:
-                # 定义快感状态的ID和其他状态ID
-                pleasure_status_ids = [0, 1, 2, 3, 4, 5, 6, 7, 21, 22, 23]  # S快, B快, C快, P快, V快, A快, U快, W快, M快, F快, H快
-                other_status_ids = [id for id in type_set if id not in pleasure_status_ids]
                 
                 # 先处理快感状态
-                for status_id in pleasure_status_ids:
-                    if status_id in type_set:
-                        if self._draw_status_bar(character_data, status_id):
-                            draw_count += 1
-                            if draw_count % self.column == 0:
-                                self.draw_list.append(line_feed)
-                
-                # 进行一次换行
-                if draw_count % self.column != 0:
-                    draw_count = 0
-                    self.draw_list.append(line_feed)
+                for status_id in type_list:
+                    if self._draw_status_bar(character_data, status_id):
+                        draw_count += 1
+                        if draw_count % self.column == 0:
+                            self.draw_list.append(line_feed)
                 
                 # 然后处理其他状态
                 for status_id in other_status_ids:
@@ -344,9 +339,17 @@ class SeeCharacterStatusPanel:
                         draw_count += 1
                         if draw_count % self.column == 0:
                             self.draw_list.append(line_feed)
+
+                # 进行一次换行
+                if draw_count % self.column != 0:
+                    draw_count = 0
+                    self.draw_list.append(line_feed)
             else:
                 # 其他类型按原有顺序处理
-                for status_id in type_set:
+                for status_id in type_list:
+                    # 跳过其他类
+                    if status_id in other_status_ids:
+                        continue
                     if self._draw_status_bar(character_data, status_id):
                         draw_count += 1
                         if draw_count % self.column == 0:
