@@ -93,6 +93,7 @@ jobs:
           Copy-Item example/0999_口上编辑器教程文件.csv dist_ArkEditor/
           Copy-Item example/0999_模板人物属性文件.csv dist_ArkEditor/
           Copy-Item example/0999_事件编辑器教程文件.json dist_ArkEditor/
+          Copy-Item example/0999_口上模板.csv dist_ArkEditor/
           Copy-Item example/事件测试用例_移动.json dist_ArkEditor/例子/
           Copy-Item example/事件测试用例_自定义指令.json dist_ArkEditor/例子/
           Copy-Item example/事件测试用例_替换指令文本.json dist_ArkEditor/例子/
