@@ -4666,6 +4666,31 @@ def handle_self_fall_4(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_FALL_3_or_4)
+def handle_self_fall_3_or_4(character_id: int) -> int:
+    """
+    自己有3级或4级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return handle_self_fall_3(character_id) or handle_self_fall_4(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_FALL_3_or_4)
+def handle_target_fall_3_or_4(character_id: int) -> int:
+    """
+    交互对象有3级或4级陷落素质
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_fall_3(character_data.target_character_id) or handle_self_fall_4(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.SELF_FALL_LOVE)
 def handle_self_fall_love(character_id: int) -> int:
     """

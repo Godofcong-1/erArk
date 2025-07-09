@@ -1007,6 +1007,8 @@ self_fall_1,SELF_FALL_1,素质_陷落,自己有1级陷落素质
 self_fall_2,SELF_FALL_2,素质_陷落,自己有2级陷落素质
 self_fall_3,SELF_FALL_3,素质_陷落,自己有3级陷落素质
 self_fall_4,SELF_FALL_4,素质_陷落,自己有4级陷落素质
+self_fall_3_or_4,SELF_FALL_3_or_4,素质_陷落,自己有3级或4级陷落素质
+target_fall_3_or_4,TARGET_FALL_3_or_4,素质_陷落,交互对象有3级或4级陷落素质
 self_fall_love,SELF_FALL_LOVE,素质_陷落,自己有爱情系陷落素质
 self_not_fall_love,SELF_NOT_FALL_LOVE,素质_陷落,自己没有爱情系陷落素质
 self_fall_obey,SELF_FALL_OBEY,素质_陷落,自己有隶属系陷落素质
@@ -1666,16 +1668,17 @@ pl_action_not_move,PL_ACTION_NOT_MOVE,行动,玩家没有在移动
 t_action_move,T_ACTION_MOVE,行动,交互对象正在移动
 t_action_not_move,T_ACTION_NOT_MOVE,行动,交互对象没有在移动
 action_work_or_entertainment,ACTION_WORK_OR_ENTERTAINMENT,行动,自己正在工作或娱乐
-pl_action_food_normal,PL_ACTION_FOOD_NORMAL,行动,食物调味_正常
-pl_action_food_sour,PL_ACTION_FOOD_SOUR,行动,食物调味_酸
-pl_action_food_sweet,PL_ACTION_FOOD_SWEET,行动,食物调味_甜
-pl_action_food_bitter,PL_ACTION_FOOD_BITTER,行动,食物调味_苦
-pl_action_food_spicy,PL_ACTION_FOOD_SPICY,行动,食物调味_辣
-pl_action_food_sement_hidden,PL_ACTION_FOOD_SEMEN_HIDDEN,行动,食物调味_巧妙加精液
-pl_action_food_sement_direct,PL_ACTION_FOOD_SEMEN_DIRECT,行动,食物调味_直接加精液
-pl_action_food_medicine,PL_ACTION_FOOD_MEDICINE,行动,食物调味_加药
 ai_eat_in_restaurant,AI_EAT_IN_RESTAURANT,行动,AI要在餐厅吃饭
 ai_not_eat_in_restaurant,AI_NOT_EAT_IN_RESTAURANT,行动,AI不在餐厅吃饭(即在食堂吃)
+
+pl_action_food_normal,PL_ACTION_FOOD_NORMAL,食物,食物调味_正常
+pl_action_food_sour,PL_ACTION_FOOD_SOUR,食物,食物调味_酸
+pl_action_food_sweet,PL_ACTION_FOOD_SWEET,食物,食物调味_甜
+pl_action_food_bitter,PL_ACTION_FOOD_BITTER,食物,食物调味_苦
+pl_action_food_spicy,PL_ACTION_FOOD_SPICY,食物,食物调味_辣
+pl_action_food_sement_hidden,PL_ACTION_FOOD_SEMEN_HIDDEN,食物,食物调味_巧妙加精液
+pl_action_food_sement_direct,PL_ACTION_FOOD_SEMEN_DIRECT,食物,食物调味_直接加精液
+pl_action_food_medicine,PL_ACTION_FOOD_MEDICINE,食物,食物调味_加药
 
 flag_baby_exist,FLAG_BABY_EXIST,生育,当前有婴儿存在
 position_in_nursery_and_flag_baby_exist,POSITION_IN_IN_NURSERY_AND_FLAG_BABY_EXIST,生育,当前自己在育儿室且育儿室有婴儿存在

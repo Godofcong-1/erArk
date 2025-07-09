@@ -26,11 +26,8 @@ str,str,int,str,str
 1110,follow,0,sys_1,{Name}称自己需要{TargetName}的指导，想要跟着其共同前行
 1111,follow,0,sys_1,{Name}说自己有个东西掉在附近了，打算陪{TargetName}逛逛顺便找一下
 1112,follow,0,sys_1,{Name}表示自己想要了解{TargetName}的兴趣爱好，期望能和{TargetName}一起度过愉快的时光
-1113,follow,0,sys_1,{Name}表示自己最近在学习一种新技能，但需要先多研究一下{TargetName}的习惯，所以要跟着观察一段时间
 1114,follow,0,sys_1,{Name}对这附近的区域很好奇，想要{TargetName}带着参观一下
 1115,follow,0,sys_1,{Name}想知道{TargetName}的日常生活习惯是什么样的，想要跟着{TargetName}多走走
-1116,follow,0,sys_1,{Name}说自己想要锻炼身体，希望能跟随{TargetName}进行运动
+1116,follow,0,sys_1,{Name}说自己想要锻炼自己，希望能跟随{TargetName}一起行动
 1117,follow,0,sys_1,{Name}说自己想要拓展人际关系，希望能跟随{TargetName}结识新朋友
 1118,follow,0,sys_1,{Name}以寻找创作素材为借口，想要和{TargetName}一起观察生活
-1119,follow,0,sys_1,{Name}以参加公益活动为名，表示想要跟着{TargetName}一起帮助他人
-1120,follow,0,sys_1,{Name}表示自己想要了解{TargetName}的梦想，期望能和{TargetName}一起追求理想
