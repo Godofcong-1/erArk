@@ -158,6 +158,15 @@ class DataList(DataListIdEditMixin, QWidget):
         self.list_widget.setSelectionMode(QAbstractItemView.SingleSelection)
         self.list_widget.model().rowsMoved.connect(self.on_rows_moved)
 
+        # 撤销删除功能：用于存储最近删除的条目信息的栈
+        # 每个元素为字典，包含type（'talk'或'event'）、item、数据对象、原始索引等
+        self.undo_stack = []
+
+        # 快捷键Ctrl+Z绑定撤销删除操作
+        from PySide6.QtGui import QKeySequence, QShortcut
+        self.undo_shortcut = QShortcut(QKeySequence('Ctrl+Z'), self)
+        self.undo_shortcut.activated.connect(self.undo_delete)
+
     def update_font(self, font):
         print(font)
         self.font = font
@@ -314,10 +323,29 @@ class DataList(DataListIdEditMixin, QWidget):
         self.update()
 
     def delete_event(self):
-        """删除事件"""
+        """
+        删除事件，并支持撤销（Ctrl+Z）
+        无参数，无返回值。
+        """
         event_index = self.list_widget.currentRow()
         item = self.list_widget.item(event_index)
+        if item is None:
+            return
+        # 记录删除前的事件数据到撤销栈
         if not self.update_clear:
+            event_data = cache_control.now_event_data[item.uid]
+            # 深拷贝事件对象，防止后续修改影响撤销内容
+            import copy
+            event_copy = copy.deepcopy(event_data)
+            item_copy = ListItem(item.text())
+            item_copy.uid = item.uid
+            self.undo_stack.append({
+                'type': 'event',
+                'uid': item.uid,
+                'data': event_copy,
+                'item': item_copy,
+                'row': event_index
+            })
             del cache_control.now_event_data[item.uid]
         self.list_widget.takeItem(event_index)
 
@@ -362,10 +390,28 @@ class DataList(DataListIdEditMixin, QWidget):
         self.update()
 
     def delete_talk(self):
-        """删除口上"""
+        """
+        删除口上，并支持撤销（Ctrl+Z）
+        无参数，无返回值。
+        """
         talk_index = self.list_widget.currentRow()
         item = self.list_widget.item(talk_index)
+        if item is None:
+            return
+        # 记录删除前的口上数据到撤销栈
         if not self.update_clear:
+            talk_data = cache_control.now_talk_data[item.uid]
+            import copy
+            talk_copy = copy.deepcopy(talk_data)
+            item_copy = ListItem(item.text())
+            item_copy.uid = item.uid
+            self.undo_stack.append({
+                'type': 'talk',
+                'uid': item.uid,
+                'data': talk_copy,
+                'item': item_copy,
+                'row': talk_index
+            })
             del cache_control.now_talk_data[item.uid]
         self.list_widget.takeItem(talk_index)
 
@@ -413,6 +459,57 @@ class DataList(DataListIdEditMixin, QWidget):
             self.text_id_text_edit.setText("事件没有序号")
             return
         self.update()
+
+    def _insert_dict_at(self, d, key, value, index):
+        """
+        辅助函数：将key-value插入到字典d的指定index位置，返回新字典。
+        参数：
+            d (dict): 原字典
+            key: 要插入的key
+            value: 要插入的value
+            index (int): 插入位置
+        返回：
+            dict: 新字典
+        """
+        # 拆分为有序插入
+        from collections import OrderedDict
+        items = list(d.items())
+        items.insert(index, (key, value))
+        return OrderedDict(items)
+
+    def undo_delete(self):
+        """
+        撤销上一次删除的条目（Ctrl+Z）
+        无参数，无返回值。
+        """
+        if not self.undo_stack:
+            return
+        undo_info = self.undo_stack.pop()
+        # 撤销时将数据插入到字典的原row位置
+        if undo_info['type'] == 'talk':
+            cache_control.now_talk_data = self._insert_dict_at(
+                cache_control.now_talk_data,
+                undo_info['uid'],
+                undo_info['data'],
+                undo_info['row']
+            )
+            cache_control.now_select_id = undo_info['uid']
+        elif undo_info['type'] == 'event':
+            cache_control.now_event_data = self._insert_dict_at(
+                cache_control.now_event_data,
+                undo_info['uid'],
+                undo_info['data'],
+                undo_info['row']
+            )
+            cache_control.now_select_id = undo_info['uid']
+        self.update()
+        # update后自动定位到该行
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            if hasattr(item, 'uid') and item.uid == undo_info['uid']:
+                self.list_widget.setCurrentRow(i)
+                self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+                break
 
     def update(self):
         """根据选项刷新当前绘制的列表"""
