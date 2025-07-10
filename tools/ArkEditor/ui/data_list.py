@@ -6,12 +6,14 @@ from ui.list_item import ListItem
 import cache_control
 import game_type
 import function
+from .data_list_change_chara_id import DataListIdEditMixin
+from .data_list_move_item import move_item, move_to_up, move_to_down, move_cancel, refresh_item_flags, on_rows_moved
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
 font.setFamily(cache_control.now_font_name)
 
-class DataList(QWidget):
+class DataList(DataListIdEditMixin, QWidget):
     """表单主体"""
 
     def __init__(self):
@@ -70,8 +72,6 @@ class DataList(QWidget):
         self.update_clear = 0
         self.now_in_moving_flag = False # 是否正在移动条目
 
-        # 连接 self.text_edit 的 textChanged 信号到 update_adv_id 方法
-        self.chara_id_text_edit.textChanged.connect(self.update_adv_id)
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
         self.status_menu: QMenu = QMenu(cache_control.behavior_data[cache_control.now_behavior], self)
@@ -80,6 +80,14 @@ class DataList(QWidget):
         self.menu_bar.addMenu(self.type_menu)
         self.status_menu.setFont(self.font)
         self.type_menu.setFont(self.font)
+
+        # 修改当前角色id、修改全部角色id
+        self.change_current_chara_id_button = QPushButton("修改当前角色id")
+        self.change_current_chara_id_button.setToolTip("只修改当前选中条目的角色id")
+        self.change_current_chara_id_button.clicked.connect(self.change_current_chara_id)
+        self.change_all_chara_id_button = QPushButton("修改全部角色id")
+        self.change_all_chara_id_button.setToolTip("批量修改所有条目的角色id")
+        self.change_all_chara_id_button.clicked.connect(self.change_all_chara_id)
 
         # 根据文字长度设置菜单栏宽度
         status_menu_width = self.status_menu.fontMetrics().boundingRect(cache_control.behavior_data[cache_control.now_behavior]).width()
@@ -96,6 +104,9 @@ class DataList(QWidget):
         # 上方布局
         self.top_layout.addWidget(label1_text)
         self.top_layout.addWidget(self.chara_id_text_edit)
+        # 将按钮插入到角色id输入框后面
+        self.top_layout.addWidget(self.change_current_chara_id_button)
+        self.top_layout.addWidget(self.change_all_chara_id_button)
         self.top_layout.addWidget(self.label4_text)
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
@@ -131,6 +142,15 @@ class DataList(QWidget):
         self.layout.setColumnStretch(0, 1)
         self.layout.setColumnStretch(1, 1)
         self.layout.setColumnStretch(2, 1)
+
+
+        # 绑定移动相关方法到实例
+        self.move_item = move_item.__get__(self)
+        self.move_to_up = move_to_up.__get__(self)
+        self.move_to_down = move_to_down.__get__(self)
+        self.move_cancel = move_cancel.__get__(self)
+        self.refresh_item_flags = refresh_item_flags.__get__(self)
+        self.on_rows_moved = on_rows_moved.__get__(self)
 
         # 启用条目拖拽移动功能
         self.list_widget.setDragDropMode(QAbstractItemView.InternalMove)
@@ -373,173 +393,6 @@ class DataList(QWidget):
         cache_control.now_select_id = talk.cid
         self.update()
 
-    def move_item(self):
-        """移动条目"""
-        # 重置所有筛选
-        self.select_now_instruct_flag = 0
-        self.text_search_reset()
-        self.premise_search_reset()
-        self.update()
-        # 设置移动标志
-        self.now_in_moving_flag = True
-        self.edited_item = self.list_widget.currentItem()
-        if self.edited_item is not None:
-            self.edited_item.setBackground(QColor("light green"))
-
-    def move_to_up(self):
-        """移至选中条目上方"""
-        if self.edited_item is None:
-            return
-        # 获取当前选中的条目的cid
-        current_select_cid = self.list_widget.currentItem().uid
-        # 获取要移动的条目的cid
-        need_move_cid = self.edited_item.uid
-        if current_select_cid == need_move_cid:
-            return
-        # 获取当前选中的条目
-        current_row = self.list_widget.currentRow()
-        if current_row == -1:
-            return
-        # 判断编辑类型
-        if cache_control.now_edit_type_flag == 0:
-            # 将其加入临时数据中，然后删除原始数据中的要移动的条目
-            cache_control.tem_talk_data[str(int(current_select_cid))] = cache_control.now_talk_data[need_move_cid]
-            cache_control.tem_talk_data[str(int(current_select_cid))].cid = str(int(current_select_cid))
-            del cache_control.now_talk_data[need_move_cid]
-            # 更新当前选中的条目的cid
-            cache_control.now_select_id = current_select_cid
-            # 遍历全部条目
-            for i in range(self.list_widget.count()):
-                # 获取cid
-                now_cid = self.list_widget.item(i).uid
-                # 跳过与移动的条目相同的条目
-                if now_cid == need_move_cid:
-                    continue
-                # 检测是否为当前选中的条目
-                if now_cid == current_select_cid:
-                    # 将其序号+1然后加入临时数据中
-                    # print(f"debug now_cid: {now_cid},type = {type(now_cid)}")
-                    cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
-                    cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
-                    # 删除原始数据中的当前选中的条目
-                    del cache_control.now_talk_data[now_cid]
-                    # 序号+1来更新当前选中的条目的cid
-                    current_select_cid = str(int(current_select_cid) + 1)
-            # 如果临时数据中有数据，则将其更新至原始数据中
-            if len(cache_control.tem_talk_data):
-                cache_control.now_talk_data.update(cache_control.tem_talk_data)
-                cache_control.tem_talk_data.clear()
-                self.now_in_moving_flag = False
-        # 处理事件移动
-        elif cache_control.now_edit_type_flag == 1:
-            # print("开始处理事件移动，移动到上方")
-            # 获取事件 uid
-            need_move_uid = self.edited_item.uid
-            # 获取当前选中的事件 uid
-            current_select_item = self.list_widget.currentItem()
-            if not current_select_item:
-                return
-            current_select_uid = current_select_item.uid
-            # print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
-            # 新建一个空白字典，用于存放移动后的事件
-            new_event_data = {}
-            # 遍历事件数据，将选中的事件之前的事件加入新的事件数据中，到选中的事件时，将要移动的事件加入新的事件数据中，然后加入选中的事件，最后将选中的事件之后的事件加入新的事件数据中
-            for uid in cache_control.now_event_data:
-                if uid == need_move_uid:
-                    continue
-                if uid == current_select_uid:
-                    new_event_data[need_move_uid] = cache_control.now_event_data[need_move_uid]
-                new_event_data[uid] = cache_control.now_event_data[uid]
-            cache_control.now_event_data = new_event_data
-            self.now_in_moving_flag = False
-
-        # 更新界面
-        self.update()
-
-    def move_to_down(self):
-        """移至选中条目下方"""
-        if self.edited_item is None:
-            return
-        # 获取当前选中的条目的cid
-        current_select_cid = self.list_widget.currentItem().uid
-        # 获取要移动的条目的cid
-        need_move_cid = self.edited_item.uid
-        if current_select_cid == need_move_cid:
-            return
-        # 获取当前选中的条目
-        current_row = self.list_widget.currentRow()
-        if current_row == -1:
-            return
-        # 判断编辑类型
-        if cache_control.now_edit_type_flag == 0:
-            # 将其加入临时数据中，然后删除原始数据中的要移动的条目
-            cache_control.tem_talk_data[str(int(current_select_cid) + 1)] = cache_control.now_talk_data[need_move_cid]
-            cache_control.tem_talk_data[str(int(current_select_cid) + 1)].cid = str(int(current_select_cid) + 1)
-            del cache_control.now_talk_data[need_move_cid]
-            # 更新当前选中的条目的cid
-            current_select_cid = str(int(current_select_cid) + 1)
-            cache_control.now_select_id = current_select_cid
-            # 遍历全部条目
-            for i in range(self.list_widget.count()):
-                # 获取cid
-                now_cid = self.list_widget.item(i).uid
-                # 跳过与移动的条目相同的条目
-                if now_cid == need_move_cid:
-                    continue
-                # 检测是否为当前选中的条目
-                if now_cid == current_select_cid:
-                    # 将其序号+1然后加入临时数据中
-                    cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
-                    cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
-                    # 删除原始数据中的当前选中的条目
-                    del cache_control.now_talk_data[now_cid]
-                    # 序号+1来更新当前选中的条目的cid
-                    current_select_cid = str(int(current_select_cid) + 1)
-            # 如果临时数据中有数据，则将其更新至原始数据中
-            if len(cache_control.tem_talk_data):
-                cache_control.now_talk_data.update(cache_control.tem_talk_data)
-                cache_control.tem_talk_data.clear()
-                self.now_in_moving_flag = False
-        # 处理事件移动
-        elif cache_control.now_edit_type_flag == 1:
-            # print("开始处理事件移动，移动到下方")
-            # 获取事件 uid
-            need_move_uid = need_move_cid
-            # 获取当前选中的事件 uid
-            current_select_uid = current_select_cid
-            # print(f"debug need_move_uid: {need_move_uid}, current_select_uid: {current_select_uid}")
-            # 新建一个空白字典，用于存放移动后的事件
-            new_event_data = {}
-            # 遍历事件数据，将选中的事件之前的事件加入新的事件数据中，到选中的事件时，将要移动的事件加入新的事件数据中，然后加入选中的事件，最后将选中的事件之后的事件加入新的事件数据中
-            skip_flag = False
-            for uid in cache_control.now_event_data:
-                if uid == need_move_uid:
-                    continue
-                new_event_data[uid] = cache_control.now_event_data[uid]
-                if uid == current_select_uid and not skip_flag:
-                    new_event_data[need_move_uid] = cache_control.now_event_data[need_move_uid]
-                    skip_flag = True
-                    # print(f"移动到下方，加入{need_move_uid}")
-            # print(f"debug 前now_event_data: {cache_control.now_event_data}")
-            cache_control.now_event_data = new_event_data
-            # print(f"debug 后now_event_data: {cache_control.now_event_data}")
-            self.now_in_moving_flag = False
-        # 更新界面
-        self.update()
-
-    def move_cancel(self):
-        """取消移动"""
-        self.now_in_moving_flag = False
-        self.edited_item.setBackground(QColor("white"))
-
-    def update_adv_id(self):
-        """根据文本编辑框更新当前的角色id"""
-        cache_control.now_adv_id = self.chara_id_text_edit.toPlainText()
-        if cache_control.now_edit_type_flag == 1:
-            cache_control.now_event_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
-        elif cache_control.now_edit_type_flag == 0:
-            cache_control.now_talk_data[cache_control.now_select_id].adv_id = cache_control.now_adv_id
-
     def update_text_id(self):
         """根据文本编辑框更新当前的条目序号"""
         now_text_id = self.text_id_text_edit.toPlainText()
@@ -559,35 +412,6 @@ class DataList(QWidget):
         elif cache_control.now_edit_type_flag == 1:
             self.text_id_text_edit.setText("事件没有序号")
             return
-        self.update()
-
-    def refresh_item_flags(self):
-        """
-        为所有条目设置可拖拽和可放置标志
-        """
-        for i in range(self.list_widget.count()):
-            item = self.list_widget.item(i)
-            item.setFlags(item.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled | Qt.ItemIsSelectable | Qt.ItemIsEnabled)
-
-    def on_rows_moved(self, parent, start, end, dest, row):
-        # 拖拽后，按界面顺序重建数据
-        if cache_control.now_edit_type_flag == 0:
-            # 口上模式
-            new_order = []
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                new_order.append(item.uid)
-            new_data = {uid: cache_control.now_talk_data[uid] for uid in new_order}
-            cache_control.now_talk_data = new_data
-        elif cache_control.now_edit_type_flag == 1:
-            # 事件模式
-            new_order = []
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                new_order.append(item.uid)
-            new_data = {uid: cache_control.now_event_data[uid] for uid in new_order}
-            cache_control.now_event_data = new_data
-        # 刷新界面
         self.update()
 
     def update(self):

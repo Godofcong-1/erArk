@@ -1,0 +1,178 @@
+"""
+move_item_utils.py
+用于处理DataList中条目移动相关的功能。
+"""
+from PySide6.QtGui import QColor
+import cache_control
+
+# 以下函数为条目移动相关的功能，供DataList调用
+
+def move_item(self):
+    """
+    移动条目
+    输入参数：self（DataList实例）
+    返回值：无
+    功能描述：重置所有筛选，设置移动标志，准备移动条目。
+    """
+    # 重置所有筛选
+    self.select_now_instruct_flag = 0
+    self.text_search_reset()
+    self.premise_search_reset()
+    self.update()
+    # 设置移动标志
+    self.now_in_moving_flag = True
+    self.edited_item = self.list_widget.currentItem()
+    if self.edited_item is not None:
+        self.edited_item.setBackground(QColor("light green"))
+
+def move_to_up(self):
+    """
+    移至选中条目上方
+    输入参数：self（DataList实例）
+    返回值：无
+    功能描述：将被编辑的条目移动到当前选中条目的上方。
+    """
+    if self.edited_item is None:
+        return
+    current_select_cid = self.list_widget.currentItem().uid
+    need_move_cid = self.edited_item.uid
+    if current_select_cid == need_move_cid:
+        return
+    current_row = self.list_widget.currentRow()
+    if current_row == -1:
+        return
+    if cache_control.now_edit_type_flag == 0:
+        # 口上模式
+        cache_control.tem_talk_data[str(int(current_select_cid))] = cache_control.now_talk_data[need_move_cid]
+        cache_control.tem_talk_data[str(int(current_select_cid))].cid = str(int(current_select_cid))
+        del cache_control.now_talk_data[need_move_cid]
+        cache_control.now_select_id = current_select_cid
+        for i in range(self.list_widget.count()):
+            now_cid = self.list_widget.item(i).uid
+            if now_cid == need_move_cid:
+                continue
+            if now_cid == current_select_cid:
+                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
+                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
+                del cache_control.now_talk_data[now_cid]
+                current_select_cid = str(int(current_select_cid) + 1)
+        if len(cache_control.tem_talk_data):
+            cache_control.now_talk_data.update(cache_control.tem_talk_data)
+            cache_control.tem_talk_data.clear()
+            self.now_in_moving_flag = False
+    elif cache_control.now_edit_type_flag == 1:
+        # 事件模式
+        need_move_uid = self.edited_item.uid
+        current_select_item = self.list_widget.currentItem()
+        if not current_select_item:
+            return
+        current_select_uid = current_select_item.uid
+        new_event_data = {}
+        for uid in cache_control.now_event_data:
+            if uid == need_move_uid:
+                continue
+            if uid == current_select_uid:
+                new_event_data[need_move_uid] = cache_control.now_event_data[need_move_uid]
+            new_event_data[uid] = cache_control.now_event_data[uid]
+        cache_control.now_event_data = new_event_data
+        self.now_in_moving_flag = False
+    self.update()
+
+def move_to_down(self):
+    """
+    移至选中条目下方
+    输入参数：self（DataList实例）
+    返回值：无
+    功能描述：将被编辑的条目移动到当前选中条目的下方。
+    """
+    if self.edited_item is None:
+        return
+    current_select_cid = self.list_widget.currentItem().uid
+    need_move_cid = self.edited_item.uid
+    if current_select_cid == need_move_cid:
+        return
+    current_row = self.list_widget.currentRow()
+    if current_row == -1:
+        return
+    if cache_control.now_edit_type_flag == 0:
+        cache_control.tem_talk_data[str(int(current_select_cid) + 1)] = cache_control.now_talk_data[need_move_cid]
+        cache_control.tem_talk_data[str(int(current_select_cid) + 1)].cid = str(int(current_select_cid) + 1)
+        del cache_control.now_talk_data[need_move_cid]
+        current_select_cid = str(int(current_select_cid) + 1)
+        cache_control.now_select_id = current_select_cid
+        for i in range(self.list_widget.count()):
+            now_cid = self.list_widget.item(i).uid
+            if now_cid == need_move_cid:
+                continue
+            if now_cid == current_select_cid:
+                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
+                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
+                del cache_control.now_talk_data[now_cid]
+                current_select_cid = str(int(current_select_cid) + 1)
+        if len(cache_control.tem_talk_data):
+            cache_control.now_talk_data.update(cache_control.tem_talk_data)
+            cache_control.tem_talk_data.clear()
+            self.now_in_moving_flag = False
+    elif cache_control.now_edit_type_flag == 1:
+        need_move_uid = need_move_cid
+        current_select_uid = current_select_cid
+        new_event_data = {}
+        skip_flag = False
+        for uid in cache_control.now_event_data:
+            if uid == need_move_uid:
+                continue
+            new_event_data[uid] = cache_control.now_event_data[uid]
+            if uid == current_select_uid and not skip_flag:
+                new_event_data[need_move_uid] = cache_control.now_event_data[need_move_uid]
+                skip_flag = True
+        cache_control.now_event_data = new_event_data
+        self.now_in_moving_flag = False
+    self.update()
+
+def move_cancel(self):
+    """
+    取消移动
+    输入参数：self（DataList实例）
+    返回值：无
+    功能描述：取消条目移动，恢复背景色。
+    """
+    self.now_in_moving_flag = False
+    self.edited_item.setBackground(QColor("white"))
+
+def refresh_item_flags(self):
+    """
+    为所有条目设置可拖拽和可放置标志
+    输入参数：self（DataList实例）
+    返回值：无
+    功能描述：遍历所有条目，设置拖拽、放置、选择、启用标志。
+    """
+    from PySide6.QtCore import Qt
+    for i in range(self.list_widget.count()):
+        item = self.list_widget.item(i)
+        item.setFlags(item.flags() | Qt.ItemIsDragEnabled | Qt.ItemIsDropEnabled | Qt.ItemIsSelectable | Qt.ItemIsEnabled)
+
+def on_rows_moved(self, parent, start, end, dest, row):
+    """
+    拖拽后重建数据顺序
+    输入参数：self（DataList实例），parent, start, end, dest, row（拖拽信号参数）
+    返回值：无
+    功能描述：根据拖拽后界面顺序，重建数据字典顺序。
+    """
+    if cache_control.now_edit_type_flag == 0:
+        # 口上模式
+        new_order = []
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            new_order.append(item.uid)
+        new_data = {uid: cache_control.now_talk_data[uid] for uid in new_order}
+        cache_control.now_talk_data = new_data
+    elif cache_control.now_edit_type_flag == 1:
+        # 事件模式
+        new_order = []
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            new_order.append(item.uid)
+        new_data = {uid: cache_control.now_event_data[uid] for uid in new_order}
+        cache_control.now_event_data = new_data
+    # 刷新界面
+    self.update()
