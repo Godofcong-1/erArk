@@ -4,6 +4,8 @@ from PySide6.QtCore import Qt
 import cache_control
 import function
 from ui.premise_menu import PremiseMenu, CVPMenu
+import os
+import csv
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
@@ -11,6 +13,8 @@ font.setFamily(cache_control.now_font_name)
 
 class ItemPremiseList(QWidget):
     """前提表单主体"""
+
+    QUICK_INSERT_FILE = "快速插入前提.csv"
 
     def __init__(self):
         """初始化前提表单主体"""
@@ -43,7 +47,7 @@ class ItemPremiseList(QWidget):
         button_layout2.addWidget(add_group_button)
         title_layout.addLayout(button_layout2)
 
-        # 新增：插入/移除四个常用前提的按钮行
+        # 插入/移除四个常用前提的按钮行
         button_layout3 = QHBoxLayout()
         # 插入玩家触发前提按钮
         self.btn_sys0 = QPushButton("插入玩家触发前提")
@@ -63,6 +67,12 @@ class ItemPremiseList(QWidget):
         button_layout3.addWidget(self.btn_sys5)
         # 将新按钮行加入标题布局
         title_layout.addLayout(button_layout3)
+
+        # 快速插入按钮区（多行，每行最多4个按钮）
+        self.quick_insert_button_layouts = []  # 存储所有快速插入按钮行
+        self.quick_insert_button_area = QVBoxLayout()
+        title_layout.addLayout(self.quick_insert_button_area)
+        self.refresh_quick_insert_buttons()  # 初始化时刷新
 
         main_layout.addLayout(title_layout)
         # 文字说明
@@ -192,6 +202,11 @@ class ItemPremiseList(QWidget):
             delete_action = menu.addAction("删除")
             copy_action = menu.addAction("复制")  # 添加“复制”按钮，将复制当前项的文本
             paste_action = menu.addAction("粘贴")  # 添加“粘贴”按钮，用于将复制的文本粘贴到列表中
+            # 自定义快速插入菜单项
+            if self.is_in_quick_insert(premise_cid):
+                quick_action = menu.addAction("从快速插入列表中删除")
+            else:
+                quick_action = menu.addAction("加入到快速插入列表")
             # 显示菜单，等待用户选择操作
             action = menu.exec_(self.item_list.mapToGlobal(pos))
             # 删除
@@ -218,6 +233,14 @@ class ItemPremiseList(QWidget):
                         data.premise[premise_cid] = 1
                     # 在列表中添加新的项
                     self.item_list.addItem(cache_control.premise_data[cache_control.now_copied_premise])
+            # 快速插入菜单逻辑
+            elif action == quick_action:
+                if self.is_in_quick_insert(premise_cid):
+                    self.remove_from_quick_insert(premise_cid)
+                else:
+                    self.add_to_quick_insert(premise_cid)
+                # 快速插入按钮区需要刷新
+                self.refresh_quick_insert_buttons()
 
     def add_group(self):
         """将当前的所有前提设为新前提组"""
@@ -268,7 +291,7 @@ class ItemPremiseList(QWidget):
 
     def toggle_premise(self, premise_cid: str):
         """
-        切换指定前提（sys_0、sys_1、sys_4、sys_5）
+        切换指定前提（sys_0、sys_1、sys_4、sys_5 及快速插入）
         参数：
             premise_cid (str): 要切换的前提ID
         返回值：
@@ -294,4 +317,101 @@ class ItemPremiseList(QWidget):
             data.premise[premise_cid] = 1
         # 刷新前提列表
         self.update()
+        # 若是快速插入按钮，刷新按钮区（防止文本变化）
+        self.refresh_quick_insert_buttons()
+
+    def read_quick_insert_list(self):
+        """
+        读取快速插入前提csv文件，返回前提cid列表。
+        返回值：
+            list[str]，快速插入前提cid列表
+        """
+        if not os.path.exists(self.QUICK_INSERT_FILE):
+            return []
+        result = []
+        try:
+            with open(self.QUICK_INSERT_FILE, "r", encoding="utf-8") as f:
+                reader = csv.reader(f)
+                for row in reader:
+                    if row and row[0]:
+                        result.append(row[0])
+        except Exception as e:
+            print(f"读取快速插入前提csv失败: {e}")
+        return result
+
+    def add_to_quick_insert(self, cid: str):
+        """
+        将指定前提cid加入快速插入csv文件。
+        参数：
+            cid (str): 前提cid
+        返回值：None
+        """
+        quick_list = self.read_quick_insert_list()
+        if cid in quick_list:
+            return
+        try:
+            with open(self.QUICK_INSERT_FILE, "a", encoding="utf-8", newline='') as f:
+                writer = csv.writer(f)
+                writer.writerow([cid])
+        except Exception as e:
+            print(f"写入快速插入前提csv失败: {e}")
+
+    def remove_from_quick_insert(self, cid: str):
+        """
+        从快速插入csv文件中移除指定前提cid。
+        参数：
+            cid (str): 前提cid
+        返回值：None
+        """
+        quick_list = self.read_quick_insert_list()
+        if cid not in quick_list:
+            return
+        quick_list.remove(cid)
+        try:
+            with open(self.QUICK_INSERT_FILE, "w", encoding="utf-8", newline='') as f:
+                writer = csv.writer(f)
+                for c in quick_list:
+                    writer.writerow([c])
+        except Exception as e:
+            print(f"移除快速插入前提csv失败: {e}")
+
+    def is_in_quick_insert(self, cid: str) -> bool:
+        """
+        判断指定cid是否在快速插入csv中。
+        参数：
+            cid (str): 前提cid
+        返回值：bool
+        """
+        return cid in self.read_quick_insert_list()
+
+    def refresh_quick_insert_buttons(self):
+        """
+        刷新快速插入按钮区，根据csv文件内容动态生成按钮。
+        每行最多4个按钮，超出则换行。
+        """
+        # 清空原有按钮行
+        for layout in self.quick_insert_button_layouts:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget:
+                    widget.deleteLater()
+        self.quick_insert_button_layouts.clear()
+        # 读取快速插入前提cid列表
+        quick_list = self.read_quick_insert_list()
+        # 按4个一组分行
+        for i in range(0, len(quick_list), 4):
+            row = quick_list[i:i+4]
+            row_layout = QHBoxLayout()
+            for cid in row:
+                # 获取前提显示文本
+                text = cache_control.premise_data.get(cid, cid)
+                btn = QPushButton(text)
+                btn.setToolTip(cid)
+                # 修正lambda闭包问题，使用functools.partial确保参数绑定
+                import functools
+                btn.clicked.connect(functools.partial(self.toggle_premise, cid))
+                row_layout.addWidget(btn)
+            self.quick_insert_button_area.addLayout(row_layout)
+            self.quick_insert_button_layouts.append(row_layout)
 
