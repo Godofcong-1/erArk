@@ -404,8 +404,15 @@ class ItemPremiseList(QWidget):
             row = quick_list[i:i+4]
             row_layout = QHBoxLayout()
             for cid in row:
-                # 获取前提显示文本
+                # 获取前提显示文本，如果未找到且为CVP前提则用read_CVP获取
                 text = cache_control.premise_data.get(cid, cid)
+                # 如果text等于cid且cid中包含CVP，尝试用read_CVP获取
+                if text == cid and "CVP" in cid:
+                    try:
+                        import function  # 避免循环引用
+                        text = function.read_CVP(cid)
+                    except Exception as e:
+                        text = cid  # 若解析失败则回退为cid
                 btn = QPushButton(text)
                 btn.setToolTip(cid)
                 # 修正lambda闭包问题，使用functools.partial确保参数绑定
