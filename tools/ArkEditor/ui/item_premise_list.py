@@ -50,19 +50,19 @@ class ItemPremiseList(QWidget):
         # 插入/移除四个常用前提的按钮行
         button_layout3 = QHBoxLayout()
         # 插入玩家触发前提按钮
-        self.btn_sys0 = QPushButton("插入玩家触发前提")
+        self.btn_sys0 = QPushButton("玩家触发的该指令")
         self.btn_sys0.clicked.connect(lambda: self.toggle_premise('sys_0'))
         button_layout3.addWidget(self.btn_sys0)
         # 插入NPC触发前提按钮
-        self.btn_sys1 = QPushButton("插入NPC触发前提")
+        self.btn_sys1 = QPushButton("NPC触发的该指令")
         self.btn_sys1.clicked.connect(lambda: self.toggle_premise('sys_1'))
         button_layout3.addWidget(self.btn_sys1)
         # 插入交互对象为玩家前提按钮
-        self.btn_sys4 = QPushButton("插入交互对象为玩家前提")
+        self.btn_sys4 = QPushButton("交互对象是玩家角色")
         self.btn_sys4.clicked.connect(lambda: self.toggle_premise('sys_4'))
         button_layout3.addWidget(self.btn_sys4)
         # 插入交互对象为NPC前提按钮
-        self.btn_sys5 = QPushButton("插入交互对象为NPC前提")
+        self.btn_sys5 = QPushButton("交互对象不是玩家")
         self.btn_sys5.clicked.connect(lambda: self.toggle_premise('sys_5'))
         button_layout3.addWidget(self.btn_sys5)
         # 将新按钮行加入标题布局
