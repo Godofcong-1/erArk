@@ -10,14 +10,13 @@ str,str,int,str,str
 3,body_part_face_s_A,0,high_1,红润
 4,body_part_face_s_A,0,high_1,柔和
 5,body_part_face_s_A,0,high_1,精致
-6,body_part_face_s_A,0,high_1,立体
 7,body_part_face_s_A,0,high_1,温婉
 8,body_part_face_s_A,0,high_1,姣好
-9,body_part_face_s_A,0,high_1,妩媚
 10,body_part_face_s_A,0,high_1,娇媚
 11,body_part_face_s_A,0,high_1,俏丽
 12,body_part_face_s_A,0,high_1,迷人
-15,body_part_face_s_A,0,high_1,艳丽
+13,body_part_face_s_A,0,high_1,白嫩
+14,body_part_face_s_A,0,high_1,娇嫩
 
 100,body_part_face_s_A,0,CVP_A2_T|102_E_1,稚嫩
 101,body_part_face_s_A,0,CVP_A2_T|102_E_1,圆润
@@ -31,6 +30,7 @@ str,str,int,str,str
 110,body_part_face_s_A,0,CVP_A2_T|102_E_1,小巧
 111,body_part_face_s_A,0,CVP_A2_T|102_E_1,纯真
 112,body_part_face_s_A,0,CVP_A2_T|102_E_1,幼嫩
+113,body_part_face_s_A,0,CVP_A2_T|102_E_1,圆圆
 
 121,body_part_face_s_A,0,CVP_A2_T|103_E_1,细腻
 122,body_part_face_s_A,0,CVP_A2_T|103_E_1,俏丽
