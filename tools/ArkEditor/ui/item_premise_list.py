@@ -43,6 +43,27 @@ class ItemPremiseList(QWidget):
         button_layout2.addWidget(add_group_button)
         title_layout.addLayout(button_layout2)
 
+        # 新增：插入/移除四个常用前提的按钮行
+        button_layout3 = QHBoxLayout()
+        # 插入玩家触发前提按钮
+        self.btn_sys0 = QPushButton("插入玩家触发前提")
+        self.btn_sys0.clicked.connect(lambda: self.toggle_premise('sys_0'))
+        button_layout3.addWidget(self.btn_sys0)
+        # 插入NPC触发前提按钮
+        self.btn_sys1 = QPushButton("插入NPC触发前提")
+        self.btn_sys1.clicked.connect(lambda: self.toggle_premise('sys_1'))
+        button_layout3.addWidget(self.btn_sys1)
+        # 插入交互对象为玩家前提按钮
+        self.btn_sys4 = QPushButton("插入交互对象为玩家前提")
+        self.btn_sys4.clicked.connect(lambda: self.toggle_premise('sys_4'))
+        button_layout3.addWidget(self.btn_sys4)
+        # 插入交互对象为NPC前提按钮
+        self.btn_sys5 = QPushButton("插入交互对象为NPC前提")
+        self.btn_sys5.clicked.connect(lambda: self.toggle_premise('sys_5'))
+        button_layout3.addWidget(self.btn_sys5)
+        # 将新按钮行加入标题布局
+        title_layout.addLayout(button_layout3)
+
         main_layout.addLayout(title_layout)
         # 文字说明
         self.info_label = QLabel()
@@ -244,4 +265,33 @@ class ItemPremiseList(QWidget):
             # 重新构建premise字典
             new_premise = {cid: data.premise[cid] for cid in new_order}
             data.premise = new_premise
+
+    def toggle_premise(self, premise_cid: str):
+        """
+        切换指定前提（sys_0、sys_1、sys_4、sys_5）
+        参数：
+            premise_cid (str): 要切换的前提ID
+        返回值：
+            None
+        功能：
+            如果当前条目已有该前提，则移除；否则添加。操作后刷新前提列表。
+        """
+        # 判断当前是否有选中条目
+        if cache_control.now_select_id == "":
+            return
+        # 根据编辑类型获取当前数据对象
+        if cache_control.now_edit_type_flag == 1:
+            data = cache_control.now_event_data[cache_control.now_select_id]
+        elif cache_control.now_edit_type_flag == 0:
+            data = cache_control.now_talk_data[cache_control.now_select_id]
+        else:
+            return
+        # 若为前提组，需特殊处理（此处只处理单前提）
+        # 切换前提：有则删，无则加
+        if premise_cid in data.premise:
+            del data.premise[premise_cid]
+        else:
+            data.premise[premise_cid] = 1
+        # 刷新前提列表
+        self.update()
 

@@ -1,4 +1,3 @@
-from math import e
 from PySide6.QtWidgets import (
     QHBoxLayout,
     QDialog,
