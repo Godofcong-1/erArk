@@ -402,6 +402,8 @@ class CLOTH:
         """ 角色在无意识中被偷走了内裤 """
         self.stolen_socks_in_unconscious: bool = False
         """ 角色在无意识中被偷走了袜子 """
+        self.equipment_damage: int = 0
+        """ 角色装备损坏程度，0为无损坏，1为轻微损坏，2为中度损坏，3为严重损坏 """
 
 class BODY_H_STATE:
     """H状态结构体"""

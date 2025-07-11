@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import game_time, attr_calculation, talk, handle_premise
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -312,8 +313,6 @@ def judge_field_commission_finish():
     判断与结算外勤委托的完成
     """
 
-    import random
-    from Script.UI.Panel import recruit_panel
     from Script.Settle import default
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
@@ -344,41 +343,10 @@ def judge_field_commission_finish():
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
             # 载具损坏与回收
-            send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
-            # 损坏概率与等级相关
-            base_rate = 0.05 * game_config.config_commission[commision_id].level
-            for vehicle_id in send_vehicle_list:
-                # 根据基准概率判断载具是否损坏
-                if random.random() < base_rate:
-                    cache.rhodes_island.vehicles[vehicle_id][0] += -1
-                    cache.rhodes_island.vehicles[vehicle_id][1] += -1
-                    draw_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
-                    # 如果损坏了，则概率下降一半，以免连续损坏
-                    base_rate *= 0.5
-                else:
-                    cache.rhodes_island.vehicles[vehicle_id][1] -= 1
+            vehicle_text = settle_vehicle(commision_id)
+            draw_text += vehicle_text
             # 判断是否会招募到新干员
-            # 招募概率与等级相关
-            base_rate = 0.01 * game_config.config_commission[commision_id].level
-            recruited_text = ""
-            if random.random() < base_rate:
-                recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
-                wait_id_list = []
-                # 只能招募到当地的干员
-                for chara_id in recruitable_npc_id_list:
-                    character_data = cache.character_data[chara_id]
-                    # 筛选出出生地是当前罗德岛所在地的角色
-                    if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
-                        continue
-                    else:
-                        wait_id_list.append(chara_id)
-                # 如果有符合条件的干员，随机招募一个
-                if len(wait_id_list):
-                    choice_id = random.choice(wait_id_list)
-                    cache.rhodes_island.recruited_id.add(choice_id)
-                    # 绘制招募信息
-                    recruited_text = "※ " + cache.character_data[choice_id].name
-                    recruited_text += _("汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n")
+            recruited_text = settle_recruit_new_chara(commision_id)
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
             # 最后总结
@@ -392,6 +360,65 @@ def judge_field_commission_finish():
         info_draw.style = "gold_enrod"
         info_draw.width = window_width
         info_draw.draw()
+
+def settle_vehicle(commision_id: int) -> str:
+    """
+    结算载具损坏与回收
+    Keyword arguments:
+    commision_id -- 委托编号
+    Return arguments:
+    vehicle_text -- 载具损坏与回收信息
+    """
+    vehicle_text = ""
+    send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
+    # 损坏概率与等级相关
+    base_rate = 0.05 * game_config.config_commission[commision_id].level
+    for vehicle_id in send_vehicle_list:
+        # 根据基准概率判断载具是否损坏
+        if random.random() < base_rate:
+            cache.rhodes_island.vehicles[vehicle_id][0] += -1
+            cache.rhodes_island.vehicles[vehicle_id][1] += -1
+            vehicle_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
+            # 如果损坏了，则概率下降一半，以免连续损坏
+            base_rate *= 0.5
+        else:
+            cache.rhodes_island.vehicles[vehicle_id][1] -= 1
+
+    return vehicle_text
+
+def settle_recruit_new_chara(commision_id: int) -> str:
+    """
+    结算新干员招募
+    Keyword arguments:
+    commision_id -- 委托编号
+    Return arguments:
+    recruited_text -- 招募信息
+    """
+    from Script.UI.Panel import recruit_panel
+    recruited_text = ""
+    # 招募概率与等级相关
+    base_rate = 0.01 * game_config.config_commission[commision_id].level
+    recruited_text = ""
+    if random.random() < base_rate:
+        recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
+        wait_id_list = []
+        # 只能招募到当地的干员
+        for chara_id in recruitable_npc_id_list:
+            character_data = cache.character_data[chara_id]
+            # 筛选出出生地是当前罗德岛所在地的角色
+            if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
+                continue
+            else:
+                wait_id_list.append(chara_id)
+        # 如果有符合条件的干员，随机招募一个
+        if len(wait_id_list):
+            choice_id = random.choice(wait_id_list)
+            cache.rhodes_island.recruited_id.add(choice_id)
+            # 绘制招募信息
+            recruited_text = "※ " + cache.character_data[choice_id].name
+            recruited_text += _("汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n")
+
+    return recruited_text
 
 
 def find_nation_field_commission():
