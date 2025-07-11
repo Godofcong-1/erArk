@@ -502,6 +502,9 @@ class BODY_H_STATE:
         self.hidden_sex_discovery_dregree: int = 0
         """ 隐奸中被发现的程度，int，初始为0，100时被发现 """
 
+        self.shoot_semen_amount: int = 0
+        """ H中射精的精液量，int，单位ml """
+
 
 class FIRST_RECORD:
     """初次状态记录结构体"""

@@ -7359,6 +7359,7 @@ def handle_end_h_add_hpmp_max(
         id_list.append(character_data.target_character_id)
     for chara_id in id_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
+        info_text = now_character_data.name
         # 如果有精液寸止，则射出
         if now_character_data.h_state.endure_not_shot_count > 0:
             settle_behavior.orgasm_judge(chara_id, change_data, skip_undure = True)
@@ -7367,12 +7368,21 @@ def handle_end_h_add_hpmp_max(
         orgasm_count = 0
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:
-                orgasm_count += now_character_data.h_state.orgasm_count[state_id][0]
+                now_part_count = now_character_data.h_state.orgasm_count[state_id][0]
+                orgasm_count += now_part_count
+                if now_part_count > 0:
+                    if chara_id == 0 and state_id == 3:
+                        info_text += _("射精{0}次，总射精{1}ml，").format(now_part_count, now_character_data.h_state.shoot_semen_amount)
+                        now_character_data.h_state.shoot_semen_amount = 0
+                    else:
+                        info_text += _("{0}绝顶{1}次，").format(game_config.config_character_state[state_id].name, now_part_count)
         # 如果有绝顶，则增加体力气力上限
         if orgasm_count > 0:
+            # 去掉最后的逗号，换成换行符
+            info_text = info_text[:-1] + "\n"
             now_character_data.hit_point_max += orgasm_count * 2
             now_character_data.mana_point_max += orgasm_count * 3
-            info_text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
+            info_text += _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             # 玩家则额外增加精液量上限
             if chara_id == 0 and now_character_data.semen_point_max < 999:
                 now_character_data.semen_point_max += orgasm_count
@@ -7409,13 +7419,24 @@ def handle_group_sex_end_h_add_hpmp_max(
     for chara_id in scene_data.character_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
         orgasm_count = 0
+        info_text = now_character_data.name
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:
-                orgasm_count += now_character_data.h_state.orgasm_count[state_id][0]
+                now_part_count = now_character_data.h_state.orgasm_count[state_id][0]
+                orgasm_count += now_part_count
+                if now_part_count > 0:
+                    if chara_id == 0 and state_id == 3:
+                        info_text += _("射精{0}次，总射精{1}ml，").format(now_part_count, now_character_data.h_state.shoot_semen_amount)
+                        now_character_data.h_state.shoot_semen_amount = 0
+                    else:
+                        info_text += _("{0}绝顶{1}次，").format(game_config.config_character_state[state_id].name, now_part_count)
+        # 如果有绝顶，则增加体力气力上限
         if orgasm_count > 0:
+            # 去掉最后的逗号，换成换行符
+            info_text = info_text[:-1] + "\n"
             now_character_data.hit_point_max += orgasm_count * 2
             now_character_data.mana_point_max += orgasm_count * 3
-            info_text = _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
+            info_text += _("在激烈的H之后，{0}的体力上限增加了{1}，气力上限增加了{2}").format(now_character_data.name, orgasm_count * 2, orgasm_count * 3)
             # 玩家则额外增加精液量上限
             if chara_id == 0 and now_character_data.semen_point_max < 999:
                 now_character_data.semen_point_max += orgasm_count

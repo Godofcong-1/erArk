@@ -345,6 +345,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     semen_text, semen_count = common_ejaculation()
 
     if semen_count > 0:
+        # 记录射精量
+        character_data.h_state.shoot_semen_amount += semen_count
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
             # 获取射精文本
