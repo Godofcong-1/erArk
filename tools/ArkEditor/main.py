@@ -4,6 +4,7 @@
 import sys
 import os
 import csv
+import configparser
 
 import PySide6
 dirname = os.path.dirname(PySide6.__file__) 
@@ -46,6 +47,24 @@ font = QFont()
 font.setPointSize(cache_control.now_font_size)
 font.setFamily(cache_control.now_font_name)
 
+# 记忆上次打开文件的路径，持久化到editor_config.ini
+CONFIG_FILE = "editor_config.ini"
+config = configparser.ConfigParser()
+if os.path.exists(CONFIG_FILE):
+    config.read(CONFIG_FILE, encoding="utf-8")
+    last_open_dir = config.get("Editor", "last_open_dir", fallback=".")
+else:
+    last_open_dir = "."
+
+def save_last_open_dir():
+    """保存last_open_dir到配置文件"""
+    global last_open_dir
+    if "Editor" not in config:
+        config["Editor"] = {}
+    config["Editor"]["last_open_dir"] = last_open_dir
+    with open(CONFIG_FILE, "w", encoding="utf-8") as f:
+        config.write(f)
+
 # envpath = '/home/diyun/anaconda3/envs/transformer_py38/lib/python3.8/site-packages/cv2/qt/plugins/platforms'
 # os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = envpath
 
@@ -55,9 +74,12 @@ font.setFamily(cache_control.now_font_name)
 
 def load_event_data():
     """载入事件文件"""
-    now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.json")
+    global last_open_dir
+    now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
     if file_path:
+        last_open_dir = os.path.dirname(file_path)
+        save_last_open_dir()
         cache_control.now_event_data = {}
         cache_control.now_file_path = file_path
         now_data = json_handle.load_json(file_path)
@@ -94,16 +116,19 @@ def load_event_data():
 
 def create_event_data():
     """新建事件文件"""
+    global last_open_dir
     cache_control.now_edit_type_flag = 1
-    # 选择路径，创建一个json文件
-    now_file = QFileDialog.getSaveFileName(menu_bar, "选择文件", ".", "*.json")
+    now_file = QFileDialog.getSaveFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
-    if not file_path.endswith(".json"):
-        file_path += ".json"
-    cache_control.now_file_path = file_path
-    # 自动打开文件
-    function.save_data()
-    load_event_data()
+    if file_path:
+        last_open_dir = os.path.dirname(file_path)
+        save_last_open_dir()
+        if not file_path.endswith(".json"):
+            file_path += ".json"
+        cache_control.now_file_path = file_path
+        # 自动打开文件
+        function.save_data()
+        load_event_data()
 
 
 def create_chara_data():
@@ -113,9 +138,13 @@ def create_chara_data():
 
 def load_chara_data(path = ""):
     """载入属性文件"""
+    global last_open_dir
     if path != "":
-        csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
+        csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.csv")
         file_path = csv_file[0]
+        if file_path:
+            last_open_dir = os.path.dirname(file_path)
+            save_last_open_dir()
     else:
         file_path = path
     if file_path:
@@ -203,9 +232,12 @@ def load_chara_data_to_cache():
 
 def load_talk_data():
     """载入口上文件"""
-    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", ".", "*.csv")
+    global last_open_dir
+    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.csv")
     file_path = csv_file[0]
     if file_path:
+        last_open_dir = os.path.dirname(file_path)
+        save_last_open_dir()
         cache_control.now_file_path = file_path
         load_talk_data_to_cache()
 
@@ -291,19 +323,23 @@ def load_talk_data_to_cache():
 
 def create_talk_data():
     """新建口上文件"""
+    global last_open_dir
     dialog: QFileDialog = QFileDialog(menu_bar)
     dialog.setFileMode(QFileDialog.AnyFile)
+    dialog.setDirectory(last_open_dir)
     dialog.setNameFilter("CSV (*.csv)")
     if dialog.exec():
         file_names = dialog.selectedFiles()
         file_path: str = file_names[0]
-        if not file_path.endswith(".csv"):
-            file_path += ".csv"
-        cache_control.now_file_path = file_path
-        cache_control.now_edit_type_flag = 0
-        function.save_talk_data()
-        load_talk_data_to_cache()
-
+        if file_path:
+            last_open_dir = os.path.dirname(file_path)
+            save_last_open_dir()
+            if not file_path.endswith(".csv"):
+                file_path += ".csv"
+            cache_control.now_file_path = file_path
+            cache_control.now_edit_type_flag = 0
+            function.save_talk_data()
+            load_talk_data_to_cache()
 
 def exit_editor():
     """关闭编辑器"""
@@ -444,16 +480,19 @@ def load_commission_data():
     功能:
         选择CSV文件，读取所有委托，左侧显示列表，右侧显示属性，可编辑并保存。
     """
+    global last_open_dir
     from ui.commission_list import CommissionListWidget
     from ui.commission_edit import CommissionEditWidget
     import load_csv
     import game_type
     from PySide6.QtWidgets import QFileDialog
     # 选择CSV文件
-    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择委托文件", ".", "*.csv")
+    csv_file = QFileDialog.getOpenFileName(menu_bar, "选择委托文件", last_open_dir, "*.csv")
     file_path = csv_file[0]
     if not file_path:
         return
+    last_open_dir = os.path.dirname(file_path)
+    save_last_open_dir()
     # 读取所有委托
     commissions = load_csv.load_commission_csv(file_path)
     # 创建UI组件
