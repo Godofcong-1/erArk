@@ -175,6 +175,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif text_list[0] == _("声望"):
         item_name = _("声望")
         item_type = _("声望")
+        # 声望的显示为实际值的百分之一
+        item_num *= 0.01
         # 0为当前国家
         if item_id == 0:
             now_country = cache.rhodes_island.current_location[0]
@@ -183,7 +185,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 if nation_data.country == now_country:
                     item_id = nation_id
                     item_name = nation_data.name + item_name
-                    now_have_item_num = cache.country.nation_reputation[nation_id] * 100
+                    now_have_item_num = cache.country.nation_reputation[nation_id]
                     break
         else:
             item_name = game_config.config_nation[item_id].name + item_name
@@ -231,7 +233,6 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             if deduction_or_increase and text_list[0] == "r":
                 cache.rhodes_island.materials_resouce[item_id] -= item_num
             elif deduction_or_increase and text_list[0] == _("声望"):
-                item_num *= 0.01
                 cache.country.nation_reputation[item_id] -= item_num
     # 奖励
     else:
