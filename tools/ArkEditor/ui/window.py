@@ -60,4 +60,3 @@ class Window(QMainWindow):
         layout.addWidget(main_widget)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        self.showMaximized()

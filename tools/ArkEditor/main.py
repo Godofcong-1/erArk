@@ -43,25 +43,34 @@ cache_control.item_effect_list = item_effect_list
 item_text_edit: ItemTextEdit = ItemTextEdit()
 cache_control.item_text_edit = item_text_edit
 
-font = QFont()
-font.setPointSize(cache_control.now_font_size)
-font.setFamily(cache_control.now_font_name)
-
 # 记忆上次打开文件的路径，持久化到editor_config.ini
 CONFIG_FILE = "editor_config.ini"
 config = configparser.ConfigParser()
 if os.path.exists(CONFIG_FILE):
     config.read(CONFIG_FILE, encoding="utf-8")
     last_open_dir = config.get("Editor", "last_open_dir", fallback=".")
+    # 读取字体设置
+    cache_control.now_font_name = config.get("Editor", "font_name", fallback=cache_control.now_font_name)
+    cache_control.now_font_size = config.getint("Editor", "font_size", fallback=cache_control.now_font_size)
+    cache_control.now_font_bold = config.getboolean("Editor", "font_bold", fallback=cache_control.now_font_bold)
 else:
     last_open_dir = "."
 
-def save_last_open_dir():
-    """保存last_open_dir到配置文件"""
+# 初始化字体对象，使用cache_control中的值
+font = QFont()
+font.setPointSize(cache_control.now_font_size)
+font.setFamily(cache_control.now_font_name)
+font.setBold(cache_control.now_font_bold)
+
+# 保存字体和路径到配置
+def save_editor_config():
     global last_open_dir
     if "Editor" not in config:
         config["Editor"] = {}
     config["Editor"]["last_open_dir"] = last_open_dir
+    config["Editor"]["font_name"] = str(cache_control.now_font_name)
+    config["Editor"]["font_size"] = str(cache_control.now_font_size)
+    config["Editor"]["font_bold"] = str(cache_control.now_font_bold)
     with open(CONFIG_FILE, "w", encoding="utf-8") as f:
         config.write(f)
 
@@ -79,7 +88,7 @@ def load_event_data():
     file_path = now_file[0]
     if file_path:
         last_open_dir = os.path.dirname(file_path)
-        save_last_open_dir()
+        save_editor_config()
         cache_control.now_event_data = {}
         cache_control.now_file_path = file_path
         now_data = json_handle.load_json(file_path)
@@ -122,7 +131,7 @@ def create_event_data():
     file_path = now_file[0]
     if file_path:
         last_open_dir = os.path.dirname(file_path)
-        save_last_open_dir()
+        save_editor_config()
         if not file_path.endswith(".json"):
             file_path += ".json"
         cache_control.now_file_path = file_path
@@ -144,7 +153,7 @@ def load_chara_data(path = ""):
         file_path = csv_file[0]
         if file_path:
             last_open_dir = os.path.dirname(file_path)
-            save_last_open_dir()
+            save_editor_config()
     else:
         file_path = path
     if file_path:
@@ -237,7 +246,7 @@ def load_talk_data():
     file_path = csv_file[0]
     if file_path:
         last_open_dir = os.path.dirname(file_path)
-        save_last_open_dir()
+        save_editor_config()
         cache_control.now_file_path = file_path
         load_talk_data_to_cache()
 
@@ -333,7 +342,7 @@ def create_talk_data():
         file_path: str = file_names[0]
         if file_path:
             last_open_dir = os.path.dirname(file_path)
-            save_last_open_dir()
+            save_editor_config()
             if not file_path.endswith(".csv"):
                 file_path += ".csv"
             cache_control.now_file_path = file_path
@@ -461,6 +470,7 @@ def font_update():
     function.show_setting()
     font.setPointSize(cache_control.now_font_size)
     font.setFamily(cache_control.now_font_name)
+    font.setBold(cache_control.now_font_bold)
     main_window.setFont(font)
     menu_bar.setFont(font)
     tools_bar.setFont(font)
@@ -470,6 +480,7 @@ def font_update():
     item_premise_list.setFont(font)
     item_effect_list.setFont(font)
     item_text_edit.setFont(font)
+    save_editor_config()
 
 
 def load_commission_data():
@@ -492,7 +503,7 @@ def load_commission_data():
     if not file_path:
         return
     last_open_dir = os.path.dirname(file_path)
-    save_last_open_dir()
+    save_editor_config()
     # 读取所有委托
     commissions = load_csv.load_commission_csv(file_path)
     # 创建UI组件
@@ -565,5 +576,18 @@ main_window.completed_layout()
 # QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
 QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,function.save_data)
 QShortcut(QKeySequence(main_window.tr("Ctrl+Q")),main_window,exit_editor)
-main_window.show()
+
+# 启动时自动应用字体设置
+main_window.setFont(font)
+menu_bar.setFont(font)
+tools_bar.setFont(font)
+data_list.setFont(font)
+data_list.list_widget.setFont(font)
+chara_list.setFont(font)
+item_premise_list.setFont(font)
+item_effect_list.setFont(font)
+item_text_edit.setFont(font)
+
+# main_window.showMaximized() 必须在所有布局和 completed_layout 之后调用
+main_window.showMaximized()
 app.exec()
