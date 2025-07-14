@@ -24,6 +24,13 @@ def move_item(self):
     self.edited_item = self.list_widget.currentItem()
     if self.edited_item is not None:
         self.edited_item.setBackground(QColor("light green"))
+    # 记录移动前顺序到撤销栈
+    if cache_control.now_edit_type_flag == 0:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'talk_move', 'order': order})
+    elif cache_control.now_edit_type_flag == 1:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'event_move', 'order': order})
 
 def move_to_up(self):
     """
@@ -76,6 +83,13 @@ def move_to_up(self):
             new_event_data[uid] = cache_control.now_event_data[uid]
         cache_control.now_event_data = new_event_data
         self.now_in_moving_flag = False
+    # 记录移动前顺序到撤销栈
+    if cache_control.now_edit_type_flag == 0:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'talk_move', 'order': order})
+    elif cache_control.now_edit_type_flag == 1:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'event_move', 'order': order})
     self.update()
 
 def move_to_down(self):
@@ -127,6 +141,13 @@ def move_to_down(self):
                 skip_flag = True
         cache_control.now_event_data = new_event_data
         self.now_in_moving_flag = False
+    # 记录移动前顺序到撤销栈
+    if cache_control.now_edit_type_flag == 0:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'talk_move', 'order': order})
+    elif cache_control.now_edit_type_flag == 1:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'event_move', 'order': order})
     self.update()
 
 def move_cancel(self):
@@ -158,6 +179,13 @@ def on_rows_moved(self, parent, start, end, dest, row):
     返回值：无
     功能描述：根据拖拽后界面顺序，重建数据字典顺序。
     """
+    # 记录拖拽前顺序到撤销栈
+    if cache_control.now_edit_type_flag == 0:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'talk_move', 'order': order})
+    elif cache_control.now_edit_type_flag == 1:
+        order = [item.uid for item in [self.list_widget.item(i) for i in range(self.list_widget.count())]]
+        self.undo_stack.append({'type': 'event_move', 'order': order})
     if cache_control.now_edit_type_flag == 0:
         # 口上模式
         new_order = []
