@@ -1,4 +1,5 @@
 from PySide6.QtWidgets import QHBoxLayout, QVBoxLayout, QMainWindow, QWidget, QGridLayout, QLabel
+import os
 
 
 class Window(QMainWindow):
@@ -7,7 +8,7 @@ class Window(QMainWindow):
     def __init__(self):
         """初始化编辑器主窗体"""
         super(Window, self).__init__()
-        self.setWindowTitle("ErArk口上事件编辑器")
+        self.setWindowTitle("ErArk编辑器")
         self.main_layout: QGridLayout = QGridLayout()
         self.tool_layout: QVBoxLayout = QVBoxLayout()
 
@@ -60,3 +61,21 @@ class Window(QMainWindow):
         layout.addWidget(main_widget)
         widget.setLayout(layout)
         self.setCentralWidget(widget)
+
+    def set_dynamic_title(self, filename: str = None, modified: bool = False):
+        """
+        设置动态窗口标题，显示当前文件名和修改状态
+        输入：
+            filename: str，当前文件名（可为None）
+            modified: bool，是否已修改
+        输出：无
+        """
+        # 基础标题
+        title = "ErArk编辑器"
+        # 如果有文件名，追加到标题
+        if filename:
+            title += f" - {os.path.basename(filename)}"
+        # 如果已修改，追加星号
+        if modified:
+            title += "（*）"
+        self.setWindowTitle(title)

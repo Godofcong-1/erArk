@@ -26,9 +26,11 @@ class ItemEffectList(QWidget):
         # 按钮布局
         button_layout1 = QHBoxLayout()
         change_button = QPushButton("整体修改")
+        change_button.setObjectName("btn_change_all")
         change_button.clicked.connect(self.change)
         button_layout1.addWidget(change_button)
         reset_button = QPushButton("整体清零")
+        reset_button.setObjectName("btn_reset_all")
         reset_button.clicked.connect(self.reset)
         button_layout1.addWidget(reset_button)
         title_layout.addLayout(button_layout1)

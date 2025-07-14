@@ -11,7 +11,7 @@ dirname = os.path.dirname(PySide6.__file__)
 plugin_path = os.path.join(dirname, 'plugins', 'platforms')
 os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = plugin_path
 
-from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction, QMenu
+from PySide6.QtWidgets import QApplication, QFileDialog, QWidgetAction, QMenu, QPushButton
 from PySide6.QtGui import QActionGroup, QKeySequence, QShortcut
 from PySide6.QtCore import QModelIndex
 from PySide6.QtGui import QFont
@@ -62,6 +62,13 @@ font.setPointSize(cache_control.now_font_size)
 font.setFamily(cache_control.now_font_name)
 font.setBold(cache_control.now_font_bold)
 
+# 编辑状态标志
+is_modified = False
+
+def update_window_title():
+    """根据当前文件和编辑状态刷新窗口标题"""
+    main_window.set_dynamic_title(cache_control.now_file_path if hasattr(cache_control, 'now_file_path') else None, is_modified)
+
 # 保存字体和路径到配置
 def save_editor_config():
     global last_open_dir
@@ -81,9 +88,21 @@ def save_editor_config():
 # os.environ['QT_QPA_PLATFORM_PLUGIN_PATH'] = 'D:\venvforqt\Lib\site-packages\PyQt5\Qt5\plugins\platforms'
 
 
+def mark_modified():
+    """标记为已编辑并刷新标题"""
+    global is_modified
+    is_modified = True
+    update_window_title()
+
+def mark_saved():
+    """标记为已保存并刷新标题"""
+    global is_modified
+    is_modified = False
+    update_window_title()
+
 def load_event_data():
     """载入事件文件"""
-    global last_open_dir
+    global last_open_dir, is_modified
     now_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
     if file_path:
@@ -121,11 +140,12 @@ def load_event_data():
         data_list.update()
         main_window.add_grid_event_layout(data_list,item_premise_list,item_effect_list,item_text_edit)
         main_window.completed_layout()
-
+        is_modified = False
+        update_window_title()
 
 def create_event_data():
     """新建事件文件"""
-    global last_open_dir
+    global last_open_dir, is_modified
     cache_control.now_edit_type_flag = 1
     now_file = QFileDialog.getSaveFileName(menu_bar, "选择文件", last_open_dir, "*.json")
     file_path = now_file[0]
@@ -138,16 +158,20 @@ def create_event_data():
         # 自动打开文件
         function.save_data()
         load_event_data()
-
+        is_modified = False
+        update_window_title()
 
 def create_chara_data():
     """新建属性文件"""
     cache_control.now_file_path = "0999_模板人物属性文件.csv"
     load_chara_data_to_cache()
+    global is_modified
+    is_modified = False
+    update_window_title()
 
 def load_chara_data(path = ""):
     """载入属性文件"""
-    global last_open_dir
+    global last_open_dir, is_modified
     if path != "":
         csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.csv")
         file_path = csv_file[0]
@@ -159,6 +183,8 @@ def load_chara_data(path = ""):
     if file_path:
         cache_control.now_file_path = file_path
         load_chara_data_to_cache()
+        is_modified = False
+        update_window_title()
 
 def load_chara_data_to_cache():
     """将属性数据传输到缓存中"""
@@ -241,7 +267,7 @@ def load_chara_data_to_cache():
 
 def load_talk_data():
     """载入口上文件"""
-    global last_open_dir
+    global last_open_dir, is_modified
     csv_file = QFileDialog.getOpenFileName(menu_bar, "选择文件", last_open_dir, "*.csv")
     file_path = csv_file[0]
     if file_path:
@@ -249,6 +275,8 @@ def load_talk_data():
         save_editor_config()
         cache_control.now_file_path = file_path
         load_talk_data_to_cache()
+        is_modified = False
+        update_window_title()
 
 
 def load_talk_data_to_cache():
@@ -332,7 +360,7 @@ def load_talk_data_to_cache():
 
 def create_talk_data():
     """新建口上文件"""
-    global last_open_dir
+    global last_open_dir, is_modified
     dialog: QFileDialog = QFileDialog(menu_bar)
     dialog.setFileMode(QFileDialog.AnyFile)
     dialog.setDirectory(last_open_dir)
@@ -349,6 +377,8 @@ def create_talk_data():
             cache_control.now_edit_type_flag = 0
             function.save_talk_data()
             load_talk_data_to_cache()
+            is_modified = False
+            update_window_title()
 
 def exit_editor():
     """关闭编辑器"""
@@ -524,6 +554,9 @@ def load_commission_data():
     main_window.main_layout.setColumnStretch(0, 1)
     main_window.main_layout.setColumnStretch(1, 1)
     main_window.completed_layout()
+    global is_modified
+    is_modified = False
+    update_window_title()
 
 data_list.list_widget.clicked.connect(update_premise_and_settle_list)
 update_status_menu()
@@ -565,16 +598,60 @@ menu_bar.setting_action.triggered.connect(font_update)
 # 绑定外勤委托菜单的信号到主函数
 menu_bar.select_commission_file_action.triggered.connect(load_commission_data)
 
+# 编辑操作：所有可编辑控件的内容变更都应调用 mark_modified
+# 文本编辑区
+item_text_edit.label_text.textChanged.connect(mark_modified)
+# 条目列表相关
+# 新增/复制/删除条目按钮
+for btn in [data_list.new_text_button, data_list.copy_text_button, data_list.delete_text_button]:
+    btn.clicked.connect(mark_modified)
+# 拖拽移动条目
+if hasattr(data_list.list_widget.model(), 'rowsMoved'):
+    data_list.list_widget.model().rowsMoved.connect(mark_modified)
+# 角色id/序号编辑框
+for edit in [data_list.chara_id_text_edit, data_list.text_id_text_edit]:
+    edit.textChanged.connect(mark_modified)
+# 搜索框
+for edit in [data_list.text_search_edit, data_list.premise_search_edit]:
+    edit.textChanged.connect(mark_modified)
+# 角色属性编辑区
+chara_list.apply_button.clicked.connect(mark_modified)
+# 前提/结算列表：双击编辑、拖拽移动、整体修改/清零
+item_premise_list.item_list.itemDoubleClicked.connect(mark_modified)
+item_premise_list.item_list.model().rowsMoved.connect(mark_modified)
+item_premise_list.findChild(QPushButton, 'btn_change_all').clicked.connect(mark_modified)
+item_premise_list.findChild(QPushButton, 'btn_reset_all').clicked.connect(mark_modified)
+item_effect_list.item_list.itemDoubleClicked.connect(mark_modified)
+item_effect_list.item_list.model().rowsMoved.connect(mark_modified)
+item_effect_list.findChild(QPushButton, 'btn_change_all').clicked.connect(mark_modified)
+item_effect_list.findChild(QPushButton, 'btn_reset_all').clicked.connect(mark_modified)
+# ...如有其它可编辑控件，均应绑定 mark_modified
+
+# 保存操作：保存时调用 mark_saved
+
+def save_data_and_mark():
+    function.save_data()
+    mark_saved()
+
+def save_talk_data_and_mark():
+    function.save_talk_data()
+    mark_saved()
+
+menu_bar.save_event_action.triggered.connect(save_data_and_mark)
+menu_bar.save_talk_action.triggered.connect(save_data_and_mark)
+item_text_edit.save_button.clicked.connect(save_data_and_mark)
 # 将文本编辑器的保存键绑定到口上事件列表的更新与文件的更新
 item_text_edit.save_button.clicked.connect(data_list.update)
 item_text_edit.save_button.clicked.connect(function.save_data)
+# 新增：保存后刷新编辑状态和标题
+item_text_edit.save_button.clicked.connect(mark_saved)
 
 # main_window.setMenuBar(menu_bar)
 main_window.add_tool_widget(menu_bar)
 main_window.completed_layout()
 # QShortcut(QKeySequence(main_window.tr("Ctrl+O")),main_window,load_event_data)
 # QShortcut(QKeySequence(main_window.tr("Ctrl+N")),main_window,create_event_data)
-QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,function.save_data)
+QShortcut(QKeySequence(main_window.tr("Ctrl+S")),main_window,save_data_and_mark)
 QShortcut(QKeySequence(main_window.tr("Ctrl+Q")),main_window,exit_editor)
 
 # 启动时自动应用字体设置

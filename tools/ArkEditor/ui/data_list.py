@@ -546,7 +546,7 @@ class DataList(DataListIdEditMixin, QWidget):
                     if not premise_flag:
                         continue
                 self.list_widget.addItem(item)
-            if cache_control.now_select_id:
+            if cache_control.now_select_id and cache_control.now_select_id in cache_control.now_talk_data:
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].behavior_id
                 status_text = cache_control.behavior_data[status_cid]
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id

@@ -31,9 +31,11 @@ class ItemPremiseList(QWidget):
         # 按钮布局
         button_layout1 = QHBoxLayout()
         change_button = QPushButton("整体修改")
+        change_button.setObjectName("btn_change_all")
         change_button.clicked.connect(self.change)
         button_layout1.addWidget(change_button)
         reset_button = QPushButton("整体清零")
+        reset_button.setObjectName("btn_reset_all")
         reset_button.clicked.connect(self.reset)
         button_layout1.addWidget(reset_button)
         title_layout.addLayout(button_layout1)
@@ -224,7 +226,7 @@ class ItemPremiseList(QWidget):
                 premise_cid = cache_control.now_copied_premise
                 # 检查全局复制变量是否有内容，如果有则判断列表中不存在该前提，再创建一个新的列表项并显示
                 if premise_cid != "":
-                    # 遍历前提组数据，判断是否存在该前提组，如果存在则将该前提添加到该组中
+                    # 遍历前提组数据，判断是否存在该前提组，如果存在则将该前提添加到该前提组中
                     if premise_cid in cache_control.premise_group_data:
                         for now_cid in cache_control.premise_group_data[premise_cid]:
                             data.premise[now_cid] = 1
