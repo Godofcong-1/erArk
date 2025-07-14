@@ -9,7 +9,8 @@ from PySide6.QtWidgets import (
     QTextEdit,
     QVBoxLayout,
     QMenu,
-    QLabel
+    QLabel,
+    QLineEdit  # 新增 QLineEdit
 )
 from PySide6.QtGui import QFont, Qt
 import cache_control
@@ -42,10 +43,12 @@ class PremiseMenu(QDialog):
         self.layout: QVBoxLayout = QVBoxLayout()
         self.resize(1000,1000)
         # 增加一个搜索框，确定键，重置键，三个合在一起，放在最上面作为一个横向的搜索栏
-        self.search_text = QTextEdit()
+        # 将搜索框改为 QLineEdit，便于回车直接触发搜索
+        self.search_text = QLineEdit()
         self.search_text.setFont(self.font)
         self.search_text.setFixedHeight(32)
         self.search_text.setFixedWidth(200)
+        self.search_text.returnPressed.connect(self.search)  # 回车直接触发搜索
         self.search_button = QPushButton("搜索")
         self.search_button.clicked.connect(self.search)
         self.reset_button = QPushButton("重置")
@@ -193,25 +196,30 @@ class PremiseMenu(QDialog):
 
     def search(self):
         """搜索前提"""
-        search_text = self.search_text.toPlainText()
+        search_text = self.search_text.text()  # QLineEdit 获取文本用 text()
         if not len(search_text):
             return
         for tree in self.tree_list:
             for root_index in range(tree.topLevelItemCount()):
                 root = tree.topLevelItem(root_index)
+                has_visible_child = False  # 标记该type下是否有可见子项
                 for child_index in range(root.childCount()):
                     child = root.child(child_index)
                     if search_text in child.text(0):
                         child.setHidden(False)
+                        has_visible_child = True
                     else:
                         child.setHidden(True)
+                # 如果没有任何子项可见，则隐藏该type（root）
+                root.setHidden(not has_visible_child)
 
     def reset(self):
         """重置搜索"""
-        self.search_text.setText("")
+        self.search_text.setText("")  # QLineEdit 设置文本
         for tree in self.tree_list:
             for root_index in range(tree.topLevelItemCount()):
                 root = tree.topLevelItem(root_index)
+                root.setHidden(False)  # 重置时显示所有type
                 for child_index in range(root.childCount()):
                     child = root.child(child_index)
                     child.setHidden(False)
@@ -608,3 +616,17 @@ class CVPMenu(QDialog):
             self.cvp_text.setText("用于在赠送礼物指令中判断当前赠送的是哪个礼物，人物应选择礼物的赠送方\n如自己送给对方道歉礼物")
 
         self.cvp_b = self.cvp_b2
+
+    def eventFilter(self, obj, event):
+        """
+        事件过滤器：在搜索栏按下回车时触发搜索
+        输入：obj -- 事件源对象，event -- 事件对象
+        输出：bool，是否拦截事件
+        """
+        # 判断事件源是否为搜索栏，且事件类型为按键按下
+        if obj == self.search_text and event.type() == event.KeyPress:
+            # 判断是否为回车键
+            if event.key() in (Qt.Key_Return, Qt.Key_Enter):
+                self.search()
+                return True  # 拦截事件，不再向下传递
+        return super().eventFilter(obj, event)

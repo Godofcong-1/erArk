@@ -11,7 +11,8 @@ from PySide6.QtWidgets import (
     QMenu,
     QComboBox,
     QMenuBar,
-    QWidgetAction
+    QWidgetAction,
+    QLineEdit  # 新增 QLineEdit
 )
 from PySide6.QtGui import QFont, Qt, QActionGroup
 import cache_control
@@ -41,10 +42,12 @@ class EffectMenu(QDialog):
         self.layout: QVBoxLayout = QVBoxLayout()
         self.resize(1000,1000)
         # 增加一个搜索框，确定键，重置键，三个合在一起，放在最上面作为一个横向的搜索栏
-        self.search_text = QTextEdit()
+        # 搜索框改为 QLineEdit，便于回车直接触发搜索
+        self.search_text = QLineEdit()
         self.search_text.setFont(self.font)
         self.search_text.setFixedHeight(32)
         self.search_text.setFixedWidth(200)
+        self.search_text.returnPressed.connect(self.search)  # 回车直接触发搜索
         self.search_button = QPushButton("搜索")
         self.search_button.clicked.connect(self.search)
         self.reset_button = QPushButton("重置")
@@ -116,18 +119,22 @@ class EffectMenu(QDialog):
 
     def search(self):
         """搜索结算器"""
-        search_text = self.search_text.toPlainText()
+        search_text = self.search_text.text()  # QLineEdit 获取文本用 text()
         if not len(search_text):
             return
         for tree in self.tree_list:
             for i in range(tree.topLevelItemCount()):
                 root = tree.topLevelItem(i)
+                has_visible_child = False  # 标记该type下是否有可见子项
                 for child_index in range(root.childCount()):
                     child = root.child(child_index)
                     if search_text in child.text(0):
                         child.setHidden(False)
+                        has_visible_child = True
                     else:
                         child.setHidden(True)
+                # 如果没有任何子项可见，则隐藏该type（root）
+                root.setHidden(not has_visible_child)
 
     def reset(self):
         """清零前提列表"""
@@ -135,6 +142,7 @@ class EffectMenu(QDialog):
         for tree in self.tree_list:
             for root_index in range(tree.topLevelItemCount()):
                 root = tree.topLevelItem(root_index)
+                root.setHidden(False)  # 重置时显示所有type
                 for child_index in range(root.childCount()):
                     child = root.child(child_index)
                     child.setHidden(False)
