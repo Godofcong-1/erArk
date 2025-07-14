@@ -3,7 +3,8 @@ from PySide6.QtGui import QFont
 from PySide6.QtCore import Qt
 import cache_control
 import function
-from ui.premise_menu import PremiseMenu, CVPMenu
+from ui.premise_menu import PremiseMenu
+from ui.CVP_menu import CVPMenu
 import os
 import csv
 

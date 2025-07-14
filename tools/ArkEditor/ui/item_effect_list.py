@@ -2,7 +2,9 @@ from PySide6.QtWidgets import QListWidgetItem, QListWidget, QWidget, QVBoxLayout
 from PySide6.QtGui import QFont, QActionGroup
 from PySide6.QtCore import Qt
 import cache_control
-from ui.effect_menu import EffectMenu, CVEMenu, CSEMenu
+from ui.effect_menu import EffectMenu
+from ui.CVE_menu import CVEMenu
+from ui.CSE_menu import CSEMenu
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
