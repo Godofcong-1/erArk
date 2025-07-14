@@ -166,6 +166,9 @@ class DataList(DataListIdEditMixin, QWidget):
         from PySide6.QtGui import QKeySequence, QShortcut
         self.undo_shortcut = QShortcut(QKeySequence('Ctrl+Z'), self)
         self.undo_shortcut.activated.connect(self.undo_delete)
+        # 绑定Delete键快捷键，按下时触发删除条目
+        self.delete_shortcut = QShortcut(QKeySequence(Qt.Key_Delete), self)
+        self.delete_shortcut.activated.connect(self.delete_text)
 
     def update_font(self, font):
         print(font)
