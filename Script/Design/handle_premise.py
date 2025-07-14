@@ -1331,6 +1331,20 @@ def handle_first_kiss_in_today(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.FIRST_KISS_BEFORE_TODAY)
+def handle_first_kiss_before_today(character_id: int) -> int:
+    """
+    自己今天之前已经失去了初吻
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    if handle_self_kiss_0(character_id) and not handle_first_kiss_in_today(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FIRST_SEX_IN_TODAY)
 def handle_first_sex_in_today(character_id: int) -> int:
     """
@@ -1342,6 +1356,20 @@ def handle_first_sex_in_today(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if game_time.count_day_for_datetime(character_data.first_record.first_sex_time, cache.game_time) == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FIRST_SEX_BEFORE_TODAY)
+def handle_first_sex_before_today(character_id: int) -> int:
+    """
+    自己今天之前已经失去了V处女
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    if handle_no_virgin(character_id) and not handle_first_sex_in_today(character_id):
         return 1
     return 0
 
@@ -1361,6 +1389,20 @@ def handle_first_a_sex_in_today(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.FIRST_A_SEX_BEFORE_TODAY)
+def handle_first_a_sex_before_today(character_id: int) -> int:
+    """
+    自己今天之前已经失去了A处女
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    if handle_self_a_virgin_0(character_id) and not handle_first_a_sex_in_today(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FIRST_U_SEX_IN_TODAY)
 def handle_first_u_sex_in_today(character_id: int) -> int:
     """
@@ -1376,6 +1418,20 @@ def handle_first_u_sex_in_today(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.FIRST_U_SEX_BEFORE_TODAY)
+def handle_first_u_sex_before_today(character_id: int) -> int:
+    """
+    自己今天之前已经失去了U处女
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    if handle_self_u_virgin_0(character_id) and not handle_first_u_sex_in_today(character_id):
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.FIRST_W_SEX_IN_TODAY)
 def handle_first_w_sex_in_today(character_id: int) -> int:
     """
@@ -1387,6 +1443,20 @@ def handle_first_w_sex_in_today(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     if game_time.count_day_for_datetime(character_data.first_record.first_w_sex_time, cache.game_time) == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.FIRST_W_SEX_BEFORE_TODAY)
+def handle_first_w_sex_before_today(character_id: int) -> int:
+    """
+    自己今天之前已经失去了W处女
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重
+    """
+    if handle_self_w_virgin_0(character_id) and not handle_first_w_sex_in_today(character_id):
         return 1
     return 0
 
@@ -1422,6 +1492,22 @@ def handle_target_first_kiss_in_today(character_id: int) -> int:
     return handle_first_kiss_in_today(target_id)
 
 
+@add_premise(constant_promise.Premise.TARGET_FIRST_KISS_BEFORE_TODAY)
+def handle_target_first_kiss_before_today(character_id: int) -> int:
+    """
+    校验交互对象今天之前已经失去了初吻
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的初吻函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_kiss_before_today(target_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_FIRST_SEX_IN_TODAY)
 def handle_target_first_sex_in_today(character_id: int) -> int:
     """
@@ -1436,6 +1522,22 @@ def handle_target_first_sex_in_today(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_id = character_data.target_character_id
     return handle_first_sex_in_today(target_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_FIRST_SEX_BEFORE_TODAY)
+def handle_target_first_sex_before_today(character_id: int) -> int:
+    """
+    校验交互对象今天之前已经失去了V处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_sex_before_today(target_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_FIRST_A_SEX_IN_TODAY)
@@ -1454,6 +1556,22 @@ def handle_target_first_a_sex_in_today(character_id: int) -> int:
     return handle_first_a_sex_in_today(target_id)
 
 
+@add_premise(constant_promise.Premise.TARGET_FIRST_A_SEX_BEFORE_TODAY)
+def handle_target_first_a_sex_before_today(character_id: int) -> int:
+    """
+    校验交互对象今天之前已经失去了A处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_a_sex_before_today(target_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_FIRST_U_SEX_IN_TODAY)
 def handle_target_first_u_sex_in_today(character_id: int) -> int:
     """
@@ -1470,6 +1588,22 @@ def handle_target_first_u_sex_in_today(character_id: int) -> int:
     return handle_first_u_sex_in_today(target_id)
 
 
+@add_premise(constant_promise.Premise.TARGET_FIRST_U_SEX_BEFORE_TODAY)
+def handle_target_first_u_sex_before_today(character_id: int) -> int:
+    """
+    校验交互对象今天之前已经失去了U处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_u_sex_before_today(target_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_FIRST_W_SEX_IN_TODAY)
 def handle_target_first_w_sex_in_today(character_id: int) -> int:
     """
@@ -1484,6 +1618,22 @@ def handle_target_first_w_sex_in_today(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_id = character_data.target_character_id
     return handle_first_w_sex_in_today(target_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_FIRST_W_SEX_BEFORE_TODAY)
+def handle_target_first_w_sex_before_today(character_id: int) -> int:
+    """
+    校验交互对象今天之前已经失去了W处女
+    参数:
+        character_id (int): 角色id（当前角色）
+    返回:
+        int: 权重
+    说明:
+        直接调用自己的函数，传入交互对象的角色id
+    """
+    character_data = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    return handle_first_w_sex_before_today(target_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_FIRST_M_SEX_IN_TODAY)
@@ -5351,16 +5501,43 @@ def handle_no_a_virgin(character_id: int) -> int:
     return 1
 
 
-@add_premise(constant_promise.Premise.TARGET_NO_FIRST_KISS)
-def handle_target_no_first_kiss(character_id: int) -> int:
+@add_premise(constant_promise.Premise.SELF_FIRST_KISS_0)
+def handle_self_kiss_0(character_id: int) -> int:
     """
-    校验交互对象是否初吻不在了
+    自己未保有初吻
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
-    return not handle_target_have_first_kiss(character_id)
+    return not handle_self_kiss_1(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_FIRST_KISS_1)
+def handle_self_kiss_1(character_id: int) -> int:
+    """
+    自己保有初吻
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[4] == 1
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)
+def handle_target_have_first_kiss(character_id: int) -> int:
+    """
+    校验交互对象是否初吻还在
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    return target_data.talent[4] == 1
 
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)
@@ -5428,6 +5605,31 @@ def handle_target_have_virgin(character_id: int) -> int:
     return target_data.talent[0] == 1
 
 
+@add_premise(constant_promise.Premise.SELF_NO_A_VIRGIN)
+def handle_self_a_virgin_0(character_id: int) -> int:
+    """
+    校验自己是否非A处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_a_virgin_1(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_A_VIRGIN)
+def handle_self_a_virgin_1(character_id: int) -> int:
+    """
+    校验自己是A处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[1] == 1
+
+
 @add_premise(constant_promise.Premise.TARGET_NO_A_VIRGIN)
 def handle_target_no_a_virgin(character_id: int) -> int:
     """
@@ -5452,6 +5654,56 @@ def handle_target_have_a_virgin(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     return target_data.talent[1] == 1
+
+
+@add_premise(constant_promise.Premise.SELF_NO_U_VIRGIN)
+def handle_self_u_virgin_0(character_id: int) -> int:
+    """
+    校验自己是否非U处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_u_virgin_1(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_U_VIRGIN)
+def handle_self_u_virgin_1(character_id: int) -> int:
+    """
+    校验自己是U处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[2] == 1
+
+
+@add_premise(constant_promise.Premise.SELF_NO_W_VIRGIN)
+def handle_self_w_virgin_0(character_id: int) -> int:
+    """
+    校验自己是否非W处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_u_virgin_1(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_W_VIRGIN)
+def handle_self_w_virgin_1(character_id: int) -> int:
+    """
+    校验自己是W处女
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.talent[3] == 1
 
 
 @add_premise(constant_promise.Premise.IS_MEDICAL)
