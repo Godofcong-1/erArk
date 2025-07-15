@@ -8,6 +8,7 @@ import game_type
 import function
 from .data_list_change_chara_id import DataListIdEditMixin
 from .data_list_move_item import move_item, move_to_up, move_to_down, move_cancel, refresh_item_flags, on_rows_moved
+from .data_list_undo_snapshot import undo_snapshot_manager  # 导入快照式撤销管理器
 
 font = QFont()
 font.setPointSize(cache_control.now_font_size)
@@ -241,6 +242,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def buton_add(self):
         """新增条目"""
+        # 新建前保存快照
+        undo_snapshot_manager.save_snapshot()
         if cache_control.now_edit_type_flag == 1:
             self.create_event()
         elif cache_control.now_edit_type_flag == 0:
@@ -252,6 +255,8 @@ class DataList(DataListIdEditMixin, QWidget):
         old_item = self.list_widget.currentItem()
         if old_item is None:
             return
+        # 复制前保存快照
+        undo_snapshot_manager.save_snapshot()
         if cache_control.now_edit_type_flag == 1:
             self.copy_event()
         elif cache_control.now_edit_type_flag == 0:
@@ -305,6 +310,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def create_event(self):
         """新增事件"""
+        # 数据变更前保存快照
+        undo_snapshot_manager.save_snapshot()
         item = ListItem("空事件")
         item.uid = str(uuid.uuid4())
         event = game_type.Event()
@@ -361,6 +368,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def copy_event(self):
         """复制事件"""
+        # 数据变更前保存快照
+        undo_snapshot_manager.save_snapshot()
         event_index = self.list_widget.currentRow()
         old_item = self.list_widget.item(event_index)
         old_event = cache_control.now_event_data[old_item.uid]
@@ -390,6 +399,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def create_talk(self):
         """新增口上"""
+        # 数据变更前保存快照
+        undo_snapshot_manager.save_snapshot()
         item = ListItem("空口上")
         item.uid = 1
         while str(item.uid) in cache_control.now_talk_data:
@@ -444,6 +455,8 @@ class DataList(DataListIdEditMixin, QWidget):
         无参数，无返回值。
         新条目插入到符合其cid编号的顺序位置。
         """
+        # 数据变更前保存快照
+        undo_snapshot_manager.save_snapshot()
         talk_index = self.list_widget.currentRow()
         old_item = self.list_widget.item(talk_index)
         old_talk = cache_control.now_talk_data[old_item.uid]
@@ -510,110 +523,14 @@ class DataList(DataListIdEditMixin, QWidget):
             return
         self.update()
 
-    def _insert_dict_at(self, d, key, value, index):
-        """
-        辅助函数：将key-value插入到字典d的指定index位置，返回新字典。
-        参数：
-            d (dict): 原字典
-            key: 要插入的key
-            value: 要插入的value
-            index (int): 插入位置
-        返回：
-            dict: 新字典
-        """
-        # 拆分为有序插入
-        from collections import OrderedDict
-        items = list(d.items())
-        items.insert(index, (key, value))
-        return OrderedDict(items)
-
     def undo_delete(self):
         """
-        撤销上一次删除的条目（Ctrl+Z）或撤销上一次新增/复制/移动的条目
+        快照式撤销（Ctrl+Z）
         无参数，无返回值。
         """
-        if not self.undo_stack:
-            return
-        undo_info = self.undo_stack.pop()
-        # 撤销删除
-        if undo_info['type'] == 'talk_delete':
-            cache_control.now_talk_data = self._insert_dict_at(
-                cache_control.now_talk_data,
-                undo_info['uid'],
-                undo_info['data'],
-                undo_info['row']
-            )
-            cache_control.now_select_id = undo_info['uid']
-        elif undo_info['type'] == 'event_delete':
-            cache_control.now_event_data = self._insert_dict_at(
-                cache_control.now_event_data,
-                undo_info['uid'],
-                undo_info['data'],
-                undo_info['row']
-            )
-            cache_control.now_select_id = undo_info['uid']
-        # 撤销新增
-        elif undo_info['type'] == 'talk_add':
-            # 删除刚刚新增的口上
-            if undo_info['uid'] in cache_control.now_talk_data:
-                del cache_control.now_talk_data[undo_info['uid']]
-            # 删除列表项
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                if hasattr(item, 'uid') and item.uid == undo_info['uid']:
-                    self.list_widget.takeItem(i)
-                    break
-            cache_control.now_select_id = None
-        elif undo_info['type'] == 'event_add':
-            if undo_info['uid'] in cache_control.now_event_data:
-                del cache_control.now_event_data[undo_info['uid']]
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                if hasattr(item, 'uid') and item.uid == undo_info['uid']:
-                    self.list_widget.takeItem(i)
-                    break
-            cache_control.now_select_id = None
-        # 撤销复制
-        elif undo_info['type'] == 'talk_copy':
-            if undo_info['uid'] in cache_control.now_talk_data:
-                del cache_control.now_talk_data[undo_info['uid']]
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                if hasattr(item, 'uid') and item.uid == undo_info['uid']:
-                    self.list_widget.takeItem(i)
-                    break
-            cache_control.now_select_id = None
-        elif undo_info['type'] == 'event_copy':
-            if undo_info['uid'] in cache_control.now_event_data:
-                del cache_control.now_event_data[undo_info['uid']]
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                if hasattr(item, 'uid') and item.uid == undo_info['uid']:
-                    self.list_widget.takeItem(i)
-                    break
-            cache_control.now_select_id = None
-        # 撤销移动
-        elif undo_info['type'] == 'talk_move':
-            # 恢复口上顺序
-            new_data = {uid: cache_control.now_talk_data[uid] for uid in undo_info['order'] if uid in cache_control.now_talk_data}
-            cache_control.now_talk_data = new_data
+        if undo_snapshot_manager.undo():
             self.update()
-            return
-        elif undo_info['type'] == 'event_move':
-            # 恢复事件顺序
-            new_data = {uid: cache_control.now_event_data[uid] for uid in undo_info['order'] if uid in cache_control.now_event_data}
-            cache_control.now_event_data = new_data
-            self.update()
-            return
         self.update()
-        # update后自动定位到该行（仅对删除撤销有效）
-        if 'uid' in undo_info and undo_info['type'] in ('talk_delete', 'event_delete'):
-            for i in range(self.list_widget.count()):
-                item = self.list_widget.item(i)
-                if hasattr(item, 'uid') and item.uid == undo_info['uid']:
-                    self.list_widget.setCurrentRow(i)
-                    self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
-                    break
 
     def update(self):
         """根据选项刷新当前绘制的列表"""

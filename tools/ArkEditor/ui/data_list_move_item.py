@@ -5,6 +5,7 @@ move_item_utils.py
 from PySide6.QtGui import QColor
 import cache_control
 from collections import OrderedDict
+from .data_list_undo_snapshot import undo_snapshot_manager  # 导入快照式撤销管理器
 
 # 以下函数为条目移动相关的功能，供DataList调用
 
@@ -15,6 +16,8 @@ def move_item(self):
     返回值：无
     功能描述：重置所有筛选，设置移动标志，准备移动条目。
     """
+    # 移动前保存快照
+    undo_snapshot_manager.save_snapshot()
     # 重置所有筛选
     self.select_now_instruct_flag = 0
     self.text_search_reset()
