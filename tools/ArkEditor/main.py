@@ -5,6 +5,8 @@ import sys
 import os
 import csv
 import configparser
+import shutil
+from datetime import datetime
 
 import PySide6
 dirname = os.path.dirname(PySide6.__file__) 
@@ -106,6 +108,26 @@ def mark_saved():
     if hasattr(cache_control, 'item_text_edit') and hasattr(cache_control.item_text_edit, 'save_button'):
         cache_control.item_text_edit.save_button.setText("保存")
 
+def backup_file(file_path):
+    """
+    备份指定文件到根目录下的'备份'文件夹，文件名加上当天日期。
+    输入: file_path(str) - 需要备份的文件路径
+    输出: 无
+    """
+    # 获取根目录
+    root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+    backup_dir = os.path.join(root_dir, '备份')
+    if not os.path.exists(backup_dir):
+        os.makedirs(backup_dir)
+    if not os.path.isfile(file_path):
+        return
+    base_name = os.path.basename(file_path)
+    name, ext = os.path.splitext(base_name)
+    today = datetime.now().strftime('%Y%m%d')
+    backup_name = f"{name}_{today}{ext}"
+    backup_path = os.path.join(backup_dir, backup_name)
+    shutil.copy2(file_path, backup_path)
+
 def load_event_data():
     """载入事件文件"""
     global last_open_dir, is_modified
@@ -114,6 +136,8 @@ def load_event_data():
     if file_path:
         last_open_dir = os.path.dirname(file_path)
         save_editor_config()
+        # 读取前先备份
+        backup_file(file_path)
         cache_control.now_event_data = {}
         cache_control.now_file_path = file_path
         now_data = json_handle.load_json(file_path)
@@ -279,6 +303,8 @@ def load_talk_data():
     if file_path:
         last_open_dir = os.path.dirname(file_path)
         save_editor_config()
+        # 读取前先备份
+        backup_file(file_path)
         cache_control.now_file_path = file_path
         load_talk_data_to_cache()
         is_modified = False
@@ -638,10 +664,16 @@ item_effect_list.findChild(QPushButton, 'btn_reset_all').clicked.connect(mark_mo
 
 def save_data_and_mark():
     function.save_data()
+    # 保存时同步备份
+    if hasattr(cache_control, 'now_file_path') and cache_control.now_file_path:
+        backup_file(cache_control.now_file_path)
     mark_saved()
 
 def save_talk_data_and_mark():
     function.save_talk_data()
+    # 保存时同步备份
+    if hasattr(cache_control, 'now_file_path') and cache_control.now_file_path:
+        backup_file(cache_control.now_file_path)
     mark_saved()
 
 menu_bar.save_event_action.triggered.connect(save_data_and_mark)
