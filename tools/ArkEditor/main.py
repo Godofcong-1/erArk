@@ -93,12 +93,18 @@ def mark_modified():
     global is_modified
     is_modified = True
     update_window_title()
+    # 文件已修改时，保存按钮显示星号
+    if hasattr(cache_control, 'item_text_edit') and hasattr(cache_control.item_text_edit, 'save_button'):
+        cache_control.item_text_edit.save_button.setText("保存*")
 
 def mark_saved():
     """标记为已保存并刷新标题"""
     global is_modified
     is_modified = False
     update_window_title()
+    # 文件已保存时，保存按钮不显示星号
+    if hasattr(cache_control, 'item_text_edit') and hasattr(cache_control.item_text_edit, 'save_button'):
+        cache_control.item_text_edit.save_button.setText("保存")
 
 def load_event_data():
     """载入事件文件"""
@@ -493,6 +499,7 @@ def update_premise_and_settle_list(model_index: QModelIndex):
         item_effect_list.update()
         item_text_edit.update()
         data_list.update()
+        mark_saved()
 
 
 def font_update():
@@ -664,6 +671,8 @@ chara_list.setFont(font)
 item_premise_list.setFont(font)
 item_effect_list.setFont(font)
 item_text_edit.setFont(font)
+# 启动时同步保存按钮文本
+item_text_edit.save_button.setText("保存*" if is_modified else "保存")
 
 # main_window.showMaximized() 必须在所有布局和 completed_layout 之后调用
 main_window.showMaximized()
