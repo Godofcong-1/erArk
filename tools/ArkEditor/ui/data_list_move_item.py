@@ -4,6 +4,7 @@ move_item_utils.py
 """
 from PySide6.QtGui import QColor
 import cache_control
+from collections import OrderedDict
 
 # 以下函数为条目移动相关的功能，供DataList调用
 
@@ -37,7 +38,7 @@ def move_to_up(self):
     移至选中条目上方
     输入参数：self（DataList实例）
     返回值：无
-    功能描述：将被编辑的条目移动到当前选中条目的上方。
+    功能描述：将被编辑的条目移动到当前选中条目的上方，并重新编号受影响区间。
     """
     if self.edited_item is None:
         return
@@ -49,24 +50,31 @@ def move_to_up(self):
     if current_row == -1:
         return
     if cache_control.now_edit_type_flag == 0:
-        # 口上模式
-        cache_control.tem_talk_data[str(int(current_select_cid))] = cache_control.now_talk_data[need_move_cid]
-        cache_control.tem_talk_data[str(int(current_select_cid))].cid = str(int(current_select_cid))
-        del cache_control.now_talk_data[need_move_cid]
-        cache_control.now_select_id = current_select_cid
-        for i in range(self.list_widget.count()):
-            now_cid = self.list_widget.item(i).uid
-            if now_cid == need_move_cid:
-                continue
-            if now_cid == current_select_cid:
-                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
-                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
-                del cache_control.now_talk_data[now_cid]
-                current_select_cid = str(int(current_select_cid) + 1)
-        if len(cache_control.tem_talk_data):
-            cache_control.now_talk_data.update(cache_control.tem_talk_data)
-            cache_control.tem_talk_data.clear()
-            self.now_in_moving_flag = False
+        # 口上模式，精确控制顺序和编号，仅调整受影响区间
+        items = list(cache_control.now_talk_data.items())
+        move_idx = next((i for i, (cid, _) in enumerate(items) if cid == need_move_cid), None)
+        target_idx = next((i for i, (cid, _) in enumerate(items) if cid == current_select_cid), None)
+        if move_idx is None or target_idx is None:
+            return
+        item = items.pop(move_idx)
+        # 如果移动后索引大于原索引，需要-1
+        if target_idx > move_idx:
+            target_idx -= 1
+        items.insert(target_idx, item)
+        # 只调整受影响区间的cid，区间内编号递增
+        affected_start = min(move_idx, target_idx)
+        affected_end = max(move_idx, target_idx)
+        # 获取区间内原编号的最小值
+        min_cid = min(int(items[i][0]) for i in range(affected_start, affected_end+1))
+        for offset, idx in enumerate(range(affected_start, affected_end+1)):
+            new_cid = str(min_cid + offset)
+            items[idx][1].cid = new_cid
+            items[idx] = (new_cid, items[idx][1])
+        # 其它区间编号不变
+        new_data = OrderedDict((cid, talk) for cid, talk in items)
+        cache_control.now_talk_data = new_data
+        cache_control.now_select_id = items[target_idx][0]
+        self.now_in_moving_flag = False
     elif cache_control.now_edit_type_flag == 1:
         # 事件模式
         need_move_uid = self.edited_item.uid
@@ -97,7 +105,7 @@ def move_to_down(self):
     移至选中条目下方
     输入参数：self（DataList实例）
     返回值：无
-    功能描述：将被编辑的条目移动到当前选中条目的下方。
+    功能描述：将被编辑的条目移动到当前选中条目的下方，并重新编号受影响区间。
     """
     if self.edited_item is None:
         return
@@ -109,25 +117,31 @@ def move_to_down(self):
     if current_row == -1:
         return
     if cache_control.now_edit_type_flag == 0:
-        cache_control.tem_talk_data[str(int(current_select_cid) + 1)] = cache_control.now_talk_data[need_move_cid]
-        cache_control.tem_talk_data[str(int(current_select_cid) + 1)].cid = str(int(current_select_cid) + 1)
-        del cache_control.now_talk_data[need_move_cid]
-        current_select_cid = str(int(current_select_cid) + 1)
-        cache_control.now_select_id = current_select_cid
-        for i in range(self.list_widget.count()):
-            now_cid = self.list_widget.item(i).uid
-            if now_cid == need_move_cid:
-                continue
-            if now_cid == current_select_cid:
-                cache_control.tem_talk_data[str(int(now_cid) + 1)] = cache_control.now_talk_data[now_cid]
-                cache_control.tem_talk_data[str(int(now_cid) + 1)].cid = str(int(now_cid) + 1)
-                del cache_control.now_talk_data[now_cid]
-                current_select_cid = str(int(current_select_cid) + 1)
-        if len(cache_control.tem_talk_data):
-            cache_control.now_talk_data.update(cache_control.tem_talk_data)
-            cache_control.tem_talk_data.clear()
-            self.now_in_moving_flag = False
+        # 口上模式，精确控制顺序和编号，仅调整受影响区间
+        items = list(cache_control.now_talk_data.items())
+        move_idx = next((i for i, (cid, _) in enumerate(items) if cid == need_move_cid), None)
+        target_idx = next((i for i, (cid, _) in enumerate(items) if cid == current_select_cid), None)
+        if move_idx is None or target_idx is None:
+            return
+        item = items.pop(move_idx)
+        # 下方插入，目标索引+1（如果移动后索引大于原索引则不变）
+        if target_idx < move_idx:
+            target_idx += 1
+        items.insert(target_idx, item)
+        # 只调整受影响区间的cid，区间内编号递增
+        affected_start = min(move_idx, target_idx)
+        affected_end = max(move_idx, target_idx)
+        min_cid = min(int(items[i][0]) for i in range(affected_start, affected_end+1))
+        for offset, idx in enumerate(range(affected_start, affected_end+1)):
+            new_cid = str(min_cid + offset)
+            items[idx][1].cid = new_cid
+            items[idx] = (new_cid, items[idx][1])
+        new_data = OrderedDict((cid, talk) for cid, talk in items)
+        cache_control.now_talk_data = new_data
+        cache_control.now_select_id = items[target_idx][0]
+        self.now_in_moving_flag = False
     elif cache_control.now_edit_type_flag == 1:
+        # 事件模式
         need_move_uid = need_move_cid
         current_select_uid = current_select_cid
         new_event_data = {}
