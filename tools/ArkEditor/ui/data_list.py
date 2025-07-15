@@ -440,33 +440,52 @@ class DataList(DataListIdEditMixin, QWidget):
         self.list_widget.takeItem(talk_index)
 
     def copy_talk(self):
-        """复制口上"""
+        """复制口上
+        无参数，无返回值。
+        新条目插入到符合其cid编号的顺序位置。
+        """
         talk_index = self.list_widget.currentRow()
         old_item = self.list_widget.item(talk_index)
         old_talk = cache_control.now_talk_data[old_item.uid]
         new_item = ListItem(old_item.text() + "(复制)")
-
+        # 计算新cid
         new_item.uid = int(old_talk.cid) + 1
         while str(new_item.uid) in cache_control.now_talk_data:
             new_item.uid += 1
-
         talk = game_type.Talk()
         talk.cid = str(new_item.uid)
         talk.behavior_id = old_talk.behavior_id
         talk.adv_id = old_talk.adv_id
         for premise_id in old_talk.premise:
             talk.premise[premise_id] = old_talk.premise[premise_id]
-        # talk.premise = old_talk.premise # 因为是引用类型，所以这样赋值会导致原始数据被修改
         talk.text = old_talk.text + "(复制)"
-        cache_control.now_talk_data[talk.cid] = talk
-        insert_row = talk_index + 1
-        self.list_widget.insertItem(insert_row, new_item)
+        # 在数据字典按cid顺序插入
+        from collections import OrderedDict
+        items = list(cache_control.now_talk_data.items())
+        insert_index = len(items)
+        for i, (cid, _) in enumerate(items):
+            try:
+                if int(cid) > new_item.uid:
+                    insert_index = i
+                    break
+            except Exception:
+                continue
+        items.insert(insert_index, (talk.cid, talk))
+        cache_control.now_talk_data = OrderedDict(items)
+        self.update()
+        # update后，找到新条目并高亮
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            if hasattr(item, 'uid') and str(item.uid) == talk.cid:
+                self.list_widget.setCurrentRow(i)
+                self.list_widget.scrollToItem(item, QAbstractItemView.PositionAtCenter)
+                break
         cache_control.now_select_id = talk.cid
         # 新增：将复制操作推入撤销栈
         self.undo_stack.append({
             'type': 'talk_copy',
             'uid': talk.cid,
-            'row': insert_row
+            'row': insert_index
         })
         self.update()
 
