@@ -403,6 +403,14 @@ config_body_item: Dict[int, config_def.Body_Item] = {}
 """ 身体上装备的H道具数据 """
 config_gift_items: Dict[int, config_def.Gift_Items] = {}
 """ 礼物数据 """
+config_equipment_condition: Dict[int, config_def.Equipment_Condition] = {}
+""" 装备情况数据 """
+config_equipment_damage_rate: Dict[int, config_def.Equipment_Damage_Rate] = {}
+""" 装备损坏概率数据 """
+config_equipment_maintain_setting: Dict[int, config_def.Equipment_Maintain_Setting] = {}
+""" 装备维护设置数据 """
+config_equipment_maintain_setting_option: Dict[int, Dict[int, str]] = {}
+""" 装备维护设置数据的选项数据 设置id:选项序号:选项内容 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1801,6 +1809,43 @@ def load_gift_items():
         config_gift_items[now_tem.cid] = now_tem
 
 
+def load_equipment_condition():
+    """载入装备情况数据"""
+    now_data = config_data["Equipment_Condition"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Equipment_Condition()
+        now_tem.__dict__ = tem_data
+        config_equipment_condition[now_tem.cid] = now_tem
+
+
+def load_equipment_damage_rate():
+    """载入装备损坏概率数据"""
+    now_data = config_data["Equipment_Damage_Rate"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Equipment_Damage_Rate()
+        now_tem.__dict__ = tem_data
+        config_equipment_damage_rate[now_tem.cid] = now_tem
+
+
+def load_equipment_maintain_setting():
+    """载入装备维护设置数据"""
+    now_data = config_data["Equipment_Maintain_Setting"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Equipment_Maintain_Setting()
+        now_tem.__dict__ = tem_data
+        config_equipment_maintain_setting[now_tem.cid] = now_tem
+
+        option_text = now_tem.option
+        # 以|为分割判定是否有多个选项
+        if "|" not in option_text:
+            config_equipment_maintain_setting_option[now_tem.cid] = []
+            config_equipment_maintain_setting_option[now_tem.cid].append(option_text)
+        else:
+            config_equipment_maintain_setting_option[now_tem.cid] = option_text.split('|')
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1918,3 +1963,6 @@ def init():
     load_bondage()
     load_body_item()
     load_gift_items()
+    load_equipment_condition()
+    load_equipment_damage_rate()
+    load_equipment_maintain_setting()

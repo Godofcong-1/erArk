@@ -1,3 +1,6 @@
+from tkinter import E
+
+
 class Instruct:
     """指令id"""
 
@@ -196,6 +199,8 @@ class Instruct:
     """ 助理相关调整 """
     BUILDING = 0
     """ 基建系统 """
+    EQUIPMENT_MAINTAIN = 0
+    """ 管理装备维护 """
     VISITOR_SYSTEM = 0
     """ 访客系统 """
     INVITE_VISITOR = 0

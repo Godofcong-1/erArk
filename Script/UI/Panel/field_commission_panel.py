@@ -319,7 +319,7 @@ def judge_field_commission_finish():
     """
 
     from Script.Settle import default
-    from Script.UI.Panel import manage_vehicle_panel
+    from Script.UI.Panel import manage_vehicle_panel, equipmen_panel
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -351,6 +351,9 @@ def judge_field_commission_finish():
             # 载具损坏与回收
             vehicle_text = manage_vehicle_panel.settle_vehicle(commision_id)
             draw_text += vehicle_text
+            # 装备损坏
+            # equipment_damage_text = equipmen_panel.settle_equipment_damage_in_commission(commision_id)
+            # draw_text += equipment_damage_text
             # 判断是否会招募到新干员
             recruited_text = settle_recruit_new_chara(commision_id)
             # 移除委托

@@ -502,6 +502,49 @@ class Entertainment:
     """ 描述 """
 
 
+class Equipment_Condition:
+    """ 装备情况等级 """
+
+    cid: int
+    """ 装备情况cid """
+    name: str
+    """ 装备情况名 """
+    value: int
+    """ 数值 """
+
+
+class Equipment_Damage_Rate:
+    """ 装备损坏概率 """
+
+    cid: int
+    """ 装备损坏概率cid """
+    commision_lv: int
+    """ 委托等级 """
+    rate_0: float
+    """ 不损坏概率 """
+    rate_1: float
+    """ 状况-1概率 """
+    rate_2: float
+    """ 状况-2概率 """
+    rate_3: float
+    """ 状况-3概率 """
+    rate_4: float
+    """ 状况-4概率 """
+
+
+class Equipment_Maintain_Setting:
+    """ 装备维修保养设置 """
+
+    cid: int
+    """ 选项id """
+    name: str
+    """ 选项名 """
+    info: str
+    """ 选项介绍 """
+    option: str
+    """ 各个选项 """
+
+
 class Experience:
     """ 经验名字 """
 
@@ -1396,7 +1439,6 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
-
 
 
 class TargetEffect:

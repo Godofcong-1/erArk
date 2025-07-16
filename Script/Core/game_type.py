@@ -402,8 +402,8 @@ class CLOTH:
         """ 角色在无意识中被偷走了内裤 """
         self.stolen_socks_in_unconscious: bool = False
         """ 角色在无意识中被偷走了袜子 """
-        self.equipment_damage: int = 0
-        """ 角色装备损坏程度，0为无损坏，1为轻微损坏，2为中度损坏，3为严重损坏 """
+        self.equipment_condition: float = 0
+        """ 角色装备情况，见对应csv文件 """
 
 class BODY_H_STATE:
     """H状态结构体"""
@@ -985,6 +985,10 @@ class Rhodes_Island:
         """ 当前每个角色的待检修地点，角色id:地点 """
         self.facility_damage_data: Dict[str, int] = {}
         """ 设施损坏数据，地点名str:损坏值int """
+        self.equipment_maintain_setting: Dict[int, Tuple[int]] = {}
+        """ 装备维护设置 设置id:设置值 """
+        self.equipment_maintain_operator_ids: List[int] = []
+        """ 手动选择的装备维护对象干员id列表 """
 
         # 仓储区
         self.warehouse_capacity: int = 0

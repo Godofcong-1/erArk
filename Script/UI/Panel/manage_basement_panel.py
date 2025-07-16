@@ -50,6 +50,7 @@ class Manage_Basement_Panel:
         panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
             _("工程部"):[_("[基建系统]")],
+            # _("工程部"):[_("[基建系统]"), _("[装备维护系统]")],
             _("制造加工区"):[_("[生产系统]")],
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
@@ -289,10 +290,12 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training, equipmen_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
+        elif _("装备维护系统") in son_panel:
+            now_panel = equipmen_panel.Equipment_Maintain_Panel(self.width)
         elif _("生产系统") in son_panel:
             now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(self.width)
         elif _("图书馆管理系统") in son_panel:

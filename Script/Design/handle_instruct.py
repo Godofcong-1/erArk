@@ -2882,6 +2882,21 @@ def handle_building():
 
 
 @add_instruct(
+    constant.Instruct.EQUIPMENT_MAINTAIN, constant.InstructType.WORK, _("管理装备维护"),
+    {
+        constant_promise.Premise.NOT_H,
+        constant_promise.Premise.IN_BLACKSMITH_SHOP,
+        constant_promise.Premise.TO_DO,
+        }
+)
+def handle_equipment_maintain():
+    """处理管理装备维护指令"""
+    from Script.UI.Panel import equipmen_panel
+    now_draw_panel = equipmen_panel.Equipment_Maintain_Panel(width)
+    now_draw_panel.draw()
+
+
+@add_instruct(
     constant.Instruct.RECRUITMENT, constant.InstructType.WORK, _("招募情况"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_HR_OFFICE, }
