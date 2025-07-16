@@ -16376,6 +16376,66 @@ msgstr ""
 msgid "在温泉泡温泉。"
 msgstr ""
 
+#: .\data\csv\Equipment_Condition.csv:6
+msgid "严重损坏"
+msgstr ""
+
+#: .\data\csv\Equipment_Condition.csv:7
+msgid "中度损坏"
+msgstr ""
+
+#: .\data\csv\Equipment_Condition.csv:8
+msgid "轻微损坏"
+msgstr ""
+
+#: .\data\csv\Equipment_Condition.csv:9
+msgid "无损坏"
+msgstr ""
+
+#: .\data\csv\Equipment_Condition.csv:10
+msgid "良好保养"
+msgstr ""
+
+#: .\data\csv\Equipment_Condition.csv:11
+msgid "完美保养"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:6
+msgid "装备维修优先度"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:6
+msgid "维修时优先选择损坏程度高还是低的装备"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:6
+msgid "优先低损坏度|优先高损坏度"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:7
+msgid "是否进行装备保养"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:7
+msgid "除维修之外，是否对装备进行保养"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:7
+msgid "不保养|保养到良好|保养到完美"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:8
+msgid "装备保养对象"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:8
+msgid "选择需要保养装备的干员范围"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:8
+msgid "全部干员|仅保养指定目标装备"
+msgstr ""
+
 #: .\data\csv\Experience.csv:6
 msgid "皮肤经验"
 msgstr ""
