@@ -3,6 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -24,6 +25,31 @@ def update_basement_vehicle_data():
         if vehicle_id not in cache.rhodes_island.vehicles:
             cache.rhodes_island.vehicles[vehicle_id] = [0, 0]
 
+
+def settle_vehicle(commision_id: int) -> str:
+    """
+    结算载具损坏与回收
+    Keyword arguments:
+    commision_id -- 委托编号
+    Return arguments:
+    vehicle_text -- 载具损坏与回收信息
+    """
+    vehicle_text = ""
+    send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
+    # 损坏概率与等级相关
+    base_rate = 0.05 * game_config.config_commission[commision_id].level
+    for vehicle_id in send_vehicle_list:
+        # 根据基准概率判断载具是否损坏
+        if random.random() < base_rate:
+            cache.rhodes_island.vehicles[vehicle_id][0] += -1
+            cache.rhodes_island.vehicles[vehicle_id][1] += -1
+            vehicle_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
+            # 如果损坏了，则概率下降一半，以免连续损坏
+            base_rate *= 0.5
+        else:
+            cache.rhodes_island.vehicles[vehicle_id][1] -= 1
+
+    return vehicle_text
 
 class Manage_Vehicle_Panel:
     """

@@ -17,6 +17,13 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def update_field_commission():
+    """
+    刷新外勤委托的相关数据
+    """
+    judge_field_commission_finish()
+    find_nation_field_commission()
+
 def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List:
     """
     获取委托需求或奖励\n
@@ -306,20 +313,13 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     return type_text, full_text, satify_flag
 
 
-def update_field_commission():
-    """
-    刷新外勤委托的相关数据
-    """
-    judge_field_commission_finish()
-    find_nation_field_commission()
-
-
 def judge_field_commission_finish():
     """
     判断与结算外勤委托的完成
     """
 
     from Script.Settle import default
+    from Script.UI.Panel import manage_vehicle_panel
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -349,7 +349,7 @@ def judge_field_commission_finish():
                 default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 draw_text += f"{cache.character_data[character_id].name} "
             # 载具损坏与回收
-            vehicle_text = settle_vehicle(commision_id)
+            vehicle_text = manage_vehicle_panel.settle_vehicle(commision_id)
             draw_text += vehicle_text
             # 判断是否会招募到新干员
             recruited_text = settle_recruit_new_chara(commision_id)
@@ -367,30 +367,6 @@ def judge_field_commission_finish():
         info_draw.width = window_width
         info_draw.draw()
 
-def settle_vehicle(commision_id: int) -> str:
-    """
-    结算载具损坏与回收
-    Keyword arguments:
-    commision_id -- 委托编号
-    Return arguments:
-    vehicle_text -- 载具损坏与回收信息
-    """
-    vehicle_text = ""
-    send_vehicle_list = cache.rhodes_island.ongoing_field_commissions[commision_id][2]
-    # 损坏概率与等级相关
-    base_rate = 0.05 * game_config.config_commission[commision_id].level
-    for vehicle_id in send_vehicle_list:
-        # 根据基准概率判断载具是否损坏
-        if random.random() < base_rate:
-            cache.rhodes_island.vehicles[vehicle_id][0] += -1
-            cache.rhodes_island.vehicles[vehicle_id][1] += -1
-            vehicle_text += _("({0}损坏)").format(game_config.config_vehicle[vehicle_id].name)
-            # 如果损坏了，则概率下降一半，以免连续损坏
-            base_rate *= 0.5
-        else:
-            cache.rhodes_island.vehicles[vehicle_id][1] -= 1
-
-    return vehicle_text
 
 def settle_recruit_new_chara(commision_id: int) -> str:
     """
@@ -421,8 +397,7 @@ def settle_recruit_new_chara(commision_id: int) -> str:
             choice_id = random.choice(wait_id_list)
             cache.rhodes_island.recruited_id.add(choice_id)
             # 绘制招募信息
-            recruited_text = "※ " + cache.character_data[choice_id].name
-            recruited_text += _("汇报说，在进行委托时意外遇到了一个同行的路人，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n")
+            recruited_text = _("※ 在进行委托时队员们意外遇到了一个同行的路人{0}，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n\n").format(cache.character_data[choice_id].name)
 
     return recruited_text
 
