@@ -495,7 +495,7 @@ class SwitchCharacterClothPanel:
                     if not target_character_data.cloth.cloth_see[clothing_type]:
                         continue
                 vac_draw = draw.NormalDraw()
-                vac_draw.text = _(f"  [{type_name}]: 真空")
+                vac_draw.text = _("  [{0}]: 真空").format(type_name)
                 vac_draw.width = self.width
                 now_row.append(vac_draw)
         # 最后一行补换行

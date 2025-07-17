@@ -16389,7 +16389,7 @@ msgid "轻微损坏"
 msgstr ""
 
 #: .\data\csv\Equipment_Condition.csv:9
-msgid "无损坏"
+msgid "正常状态"
 msgstr ""
 
 #: .\data\csv\Equipment_Condition.csv:10
@@ -16434,6 +16434,18 @@ msgstr ""
 
 #: .\data\csv\Equipment_Maintain_Setting.csv:8
 msgid "全部干员|仅保养指定目标装备"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:9
+msgid "是否要优先保养"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:9
+msgid "是否优先对装备进行保养而不是维修"
+msgstr ""
+
+#: .\data\csv\Equipment_Maintain_Setting.csv:9
+msgid "优先维修|优先保养"
 msgstr ""
 
 #: .\data\csv\Experience.csv:6

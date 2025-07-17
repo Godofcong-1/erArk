@@ -2,7 +2,6 @@ import datetime
 import random, math
 from types import FunctionType
 
-from numpy import add, info
 from Script.Design import (
     settle_behavior,
     instuct_judege,
@@ -7777,6 +7776,32 @@ def handle_favorability_gift_add_adjust(
         base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, talk_adjust * 3, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
         base_chara_experience_common_settle(character_data.target_character_id, 40, change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAINTAIN_EQUIPMENT_ADD_ADJUST)
+def handle_maintain_equipment_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （维护装备用）进行一次装备的维修保养
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    from Script.UI.Panel import equipmen_panel
+    # 如果和玩家在同一个地方，则触发绘制信息
+    draw_flag = False
+    if handle_premise.handle_in_player_scene(character_id):
+        draw_flag = True
+    # 进行装备维护
+    equipmen_panel.smith_maintain_equipment_once(character_id, draw_flag)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.READ_ADD_ADJUST)

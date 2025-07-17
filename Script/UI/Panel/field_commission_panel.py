@@ -121,6 +121,15 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         item_name = game_config.config_ability[item_id].name
         item_type = item_name
         now_have_item_num = sum(cache.character_data[character_id].ability[item_id] for character_id in send_npc_list)
+        now_have_item_num = 0
+        for character_id in send_npc_list:
+            now_have_item_num += cache.character_data[character_id].ability[item_id]
+            # 如果装备完美维护，则能力值+1，但不超过8级
+            if handle_premise.handle_self_equipment_maintenance_ge_2(character_id) and cache.character_data[character_id].ability[item_id] < 8:
+                now_have_item_num += 1
+            # 如果装备中度损坏，则能力值-1，但不低于0
+            if handle_premise.handle_self_equipment_damaged_ge_2(character_id) and cache.character_data[character_id].ability[item_id] > 0:
+                now_have_item_num -= 1
     # 经验
     elif text_list[0] == "e":
         item_name = game_config.config_experience[item_id].name
@@ -352,8 +361,8 @@ def judge_field_commission_finish():
             vehicle_text = manage_vehicle_panel.settle_vehicle(commision_id)
             draw_text += vehicle_text
             # 装备损坏
-            # equipment_damage_text = equipmen_panel.settle_equipment_damage_in_commission(commision_id)
-            # draw_text += equipment_damage_text
+            equipment_damage_text = equipmen_panel.settle_equipment_damage_in_commission(commision_id)
+            draw_text += equipment_damage_text
             # 判断是否会招募到新干员
             recruited_text = settle_recruit_new_chara(commision_id)
             # 移除委托
@@ -813,6 +822,7 @@ class Field_Commission_Panel:
 
         while 1:
             info_text = _("可派遣人员（需要{0}人）：\n").format(commision_people)
+            info_text += _("（无意识状态下，或装备在严重损坏及以上、或助理、监狱长等特殊职位的干员无法出勤）\n")
             info_text += _("队长：")
             if self.lead_chara_id != 0:
                 info_text += cache.character_data[self.lead_chara_id].name
@@ -837,6 +847,9 @@ class Field_Commission_Panel:
                 # 跳过访客
                 if handle_premise.handle_self_visitor_flag_1(npc_id):
                     continue
+                # 跳过助理
+                if handle_premise.handle_is_assistant(npc_id):
+                    continue
                 # 跳过监狱长
                 if handle_premise.handle_work_is_warden(npc_id):
                     continue
@@ -844,6 +857,9 @@ class Field_Commission_Panel:
                 if not handle_premise.handle_normal_2(npc_id) :
                     continue
                 if not handle_premise.handle_normal_7(npc_id):
+                    continue
+                # 跳过装备严重损坏及以上的角色
+                if handle_premise.handle_self_equipment_damaged_ge_3(npc_id):
                     continue
                 now_list = [npc_id, self.select_this_npc, self.send_npc_list]
                 final_list.append(now_list)

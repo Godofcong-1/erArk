@@ -989,6 +989,8 @@ class Rhodes_Island:
         """ 装备维护设置 设置id:设置值 """
         self.equipment_maintain_operator_ids: List[int] = []
         """ 手动选择的装备维护对象干员id列表 """
+        self.maintenance_equipment_chara_id: Dict[int, int] = {}
+        """ 当前每个角色正在维护中的装备的所属角色id，角色id:角色id """
 
         # 仓储区
         self.warehouse_capacity: int = 0

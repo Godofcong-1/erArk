@@ -80,7 +80,7 @@ int,str,str
 213,teach,1513 - 1514 - 512
 214,attent_class,1511 - 1512
 215,maintenance_facilities,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1 - 534 - 371
-216,repair_equipment,15 - 16 - 21 - 22 - 71 - CVE_A1_E|90_G_1
+216,repair_equipment,15 - 16 - 21 - 22 - 71 - 539 - CVE_A1_E|90_G_1
 217,npc_work_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 993
 218,produce,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1
 219,plant_manage_crop,15 - 16 - 21 - 22 - 71 - CVE_A1_E|89_G_1
