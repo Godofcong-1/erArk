@@ -49,8 +49,7 @@ class Manage_Basement_Panel:
         title_text = _("管理罗德岛")
         panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
-            _("工程部"):[_("[基建系统]")],
-            # _("工程部"):[_("[基建系统]"), _("[装备维护系统]")],
+            _("工程部"):[_("[基建系统]"), _("[装备维护系统]")],
             _("制造加工区"):[_("[生产系统]")],
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
@@ -295,7 +294,16 @@ class Manage_Basement_Panel:
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
         elif _("装备维护系统") in son_panel:
-            now_panel = equipmen_panel.Equipment_Maintain_Panel(self.width)
+            # 如果铁匠铺还没有开放，则不显示装备维护系统
+            if not handle_premise.handle_blacksmith_shop_open(0):
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n○铁匠铺未开放，无法进入装备维护系统\n")
+                info_draw.style = "gold_enrod"
+                info_draw.width = self.width
+                info_draw.draw()
+                return
+            else:
+                now_panel = equipmen_panel.Equipment_Maintain_Panel(self.width)
         elif _("生产系统") in son_panel:
             now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(self.width)
         elif _("图书馆管理系统") in son_panel:

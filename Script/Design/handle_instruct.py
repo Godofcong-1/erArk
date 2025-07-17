@@ -2886,7 +2886,6 @@ def handle_building():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_BLACKSMITH_SHOP,
-        constant_promise.Premise.TO_DO,
         }
 )
 def handle_equipment_maintain():

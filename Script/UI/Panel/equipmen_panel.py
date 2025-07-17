@@ -37,6 +37,68 @@ def get_equipment_condition_name(value: float) -> str:
             break
     return result_name
 
+def show_damaged_equipment():
+    """
+    显示所有装备损坏（equipment_condition < 0）的干员及其装备情况
+    输入/输出：无
+    """
+    title_text = _("装备损坏情况一览")
+    title_draw = draw.TitleLineDraw(title_text, window_width)
+    while 1:
+        title_draw.draw()
+        info_draw = draw.NormalDraw()
+        now_text = _("○中度损坏的装备会降低进行外勤委托的干员的能力值，如果装备严重损坏了则无法安排进行外勤委托\n\n")
+        damaged_count = 0
+        for npc_id in cache.npc_id_got:
+            npc_data = cache.character_data[npc_id]
+            condition_val = npc_data.cloth.equipment_condition
+            if condition_val < 0:
+                condition_name = get_equipment_condition_name(condition_val)
+                now_text += f"  {npc_data.name}：{condition_name} ({condition_val})\n"
+                damaged_count += 1
+        if damaged_count == 0:
+            now_text += _( "  当前无装备损坏的干员\n")
+        info_draw.text = now_text
+        info_draw.draw()
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        yrn = flow_handle.askfor_all([back_draw.return_text])
+        if yrn == back_draw.return_text:
+            break
+
+def show_maintained_equipment():
+    """
+    显示所有装备保养（equipment_condition > 0）的干员及其装备情况
+    输入/输出：无
+    """
+    title_text = _("装备保养情况一览")
+    title_draw = draw.TitleLineDraw(title_text, window_width)
+    while 1:
+        title_draw.draw()
+        info_draw = draw.NormalDraw()
+        now_text = _("○良好保养的装备有更高的耐久度，完美保养的装备还可以为外勤干员提供额外的能力加成\n\n")
+        maintained_count = 0
+        for npc_id in cache.npc_id_got:
+            npc_data = cache.character_data[npc_id]
+            condition_val = npc_data.cloth.equipment_condition
+            if condition_val > 0:
+                condition_name = get_equipment_condition_name(condition_val)
+                now_text += f"  {npc_data.name}：{condition_name} ({condition_val})\n"
+                maintained_count += 1
+        if maintained_count == 0:
+            now_text += _( "  当前无装备保养的干员\n")
+        info_draw.text = now_text
+        info_draw.draw()
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        yrn = flow_handle.askfor_all([back_draw.return_text])
+        if yrn == back_draw.return_text:
+            break
+
 
 def settle_equipment_damage_in_commission(commision_id: int) -> str:
     """
@@ -303,7 +365,7 @@ class Equipment_Maintain_Panel:
             # 装备损坏一览按钮
             button_text3 = _("[003]干员装备损坏情况一览")
             button_draw3 = draw.LeftButton(
-                button_text3, button_text3, len(button_text3) * 3, cmd_func=self.show_damaged_equipment
+                button_text3, button_text3, len(button_text3) * 3, cmd_func=show_damaged_equipment
             )
             button_draw3.draw()
             return_list.append(button_draw3.return_text)
@@ -311,7 +373,7 @@ class Equipment_Maintain_Panel:
             # 装备保养一览按钮
             button_text4 = _("[004]干员装备保养情况一览")
             button_draw4 = draw.LeftButton(
-                button_text4, button_text4, len(button_text4) * 3, cmd_func=self.show_maintained_equipment
+                button_text4, button_text4, len(button_text4) * 3, cmd_func=show_maintained_equipment
             )
             button_draw4.draw()
             return_list.append(button_draw4.return_text)
@@ -447,67 +509,3 @@ class Equipment_Maintain_Panel:
             cache.rhodes_island.equipment_maintain_operator_ids.remove(character_id)
         else:
             cache.rhodes_island.equipment_maintain_operator_ids.append(character_id)
-
-    def show_damaged_equipment(self):
-        """
-        显示所有装备损坏（equipment_condition < 0）的干员及其装备情况
-        输入/输出：无
-        """
-        title_text = _("装备损坏情况一览")
-        title_draw = draw.TitleLineDraw(title_text, self.width)
-        while 1:
-            title_draw.draw()
-            info_draw = draw.NormalDraw()
-            info_draw.width = self.width
-            now_text = _("○中度损坏的装备会降低进行外勤委托的干员的能力值，如果装备严重损坏了则无法安排进行外勤委托\n\n")
-            damaged_count = 0
-            for npc_id in cache.npc_id_got:
-                npc_data = cache.character_data[npc_id]
-                condition_val = npc_data.cloth.equipment_condition
-                if condition_val < 0:
-                    condition_name = get_equipment_condition_name(condition_val)
-                    now_text += f"  {npc_data.name}：{condition_name} ({condition_val})\n"
-                    damaged_count += 1
-            if damaged_count == 0:
-                now_text += _( "  当前无装备损坏的干员\n")
-            info_draw.text = now_text
-            info_draw.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            yrn = flow_handle.askfor_all([back_draw.return_text])
-            if yrn == back_draw.return_text:
-                break
-
-    def show_maintained_equipment(self):
-        """
-        显示所有装备保养（equipment_condition > 0）的干员及其装备情况
-        输入/输出：无
-        """
-        title_text = _("装备保养情况一览")
-        title_draw = draw.TitleLineDraw(title_text, self.width)
-        while 1:
-            title_draw.draw()
-            info_draw = draw.NormalDraw()
-            info_draw.width = self.width
-            now_text = _("○良好保养的装备有更高的耐久度，完美保养的装备还可以为外勤干员提供额外的能力加成\n\n")
-            maintained_count = 0
-            for npc_id in cache.npc_id_got:
-                npc_data = cache.character_data[npc_id]
-                condition_val = npc_data.cloth.equipment_condition
-                if condition_val > 0:
-                    condition_name = get_equipment_condition_name(condition_val)
-                    now_text += f"  {npc_data.name}：{condition_name} ({condition_val})\n"
-                    maintained_count += 1
-            if maintained_count == 0:
-                now_text += _( "  当前无装备保养的干员\n")
-            info_draw.text = now_text
-            info_draw.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width)
-            back_draw.draw()
-            line_feed.draw()
-            yrn = flow_handle.askfor_all([back_draw.return_text])
-            if yrn == back_draw.return_text:
-                break

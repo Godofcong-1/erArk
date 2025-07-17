@@ -1150,6 +1150,18 @@ def handle_health_check_done_not_need_check_again(character_id: int) -> int:
     return not handle_health_check_done_need_check_again(character_id)
 
 
+@add_premise(constant_promise.Premise.BLACKSMITH_SHOP_OPEN)
+def handle_blacksmith_shop_open(character_id: int) -> int:
+    """
+    铁匠铺已开放
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return cache.rhodes_island.facility_open[13]
+
+
 @add_premise(constant_promise.Premise.HAVE_MOVED)
 def handle_have_moved(character_id: int) -> int:
     """

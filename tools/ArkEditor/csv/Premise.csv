@@ -376,6 +376,7 @@ visitor_zone_have_target,VISITOR_ZONE_HAVE_TARGET,设施,访客区当前有已�
 periodic_health_check_on,PERIODIC_HEALTH_CHECK_ON,设施,当前已开启定期体检
 health_check_done_need_check_again,HEALTH_CHECK_DONE_NEED_CHECK_AGAIN,设施,已体检的仍需要再次体检
 health_check_done_not_need_check_again,HEALTH_CHECK_DONE_NOT_NEED_CHECK_AGAIN,设施,已体检的不需要再次体检
+blacksmith_shop_open,BLACKSMITH_SHOP_OPEN,设施,铁匠铺已开放
 
 ai_moved,HAVE_MOVED,时间_角色,自己距离上次移动已经至少经过了1小时
 ai_wait,AI_WAIT,时间_角色,自己需要进行一次5分钟的等待（wait_flag=1）

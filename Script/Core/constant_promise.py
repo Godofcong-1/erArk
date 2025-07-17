@@ -750,6 +750,8 @@ class Premise:
     """ 设施 已体检的仍需要再次体检 """
     HEALTH_CHECK_DONE_NOT_NEED_CHECK_AGAIN = "health_check_done_not_need_check_again"
     """ 设施 已体检的不需要再次体检 """
+    BLACKSMITH_SHOP_OPEN = "blacksmith_shop_open"
+    """ 设施 铁匠铺已开放 """
 
     HAVE_MOVED = "ai_moved"
     """ 时间_角色 自己距离上次移动已经至少经过了1小时 """
