@@ -1045,29 +1045,9 @@ class Field_Commission_Panel:
             lead_character_data.second_behavior["start_field_commission_as_leader"] = 1
             talk.must_show_talk_check(self.lead_chara_id)
 
-        # 绘制委托信息
-        draw_text = ""
-        draw_text += _("\n\n已派遣 ")
-        for character_id in self.send_npc_list:
-            character_data = cache.character_data[character_id]
-            character_name = character_data.name
-            draw_text += f"{character_name} "
-        draw_text += _("执行委托：")
-        commision_name = commision_data.name
-        draw_text += commision_name
-        draw_text += _("，耗时：")
+        # 初步预估时间
         commision_time = int(commision_data.time)
-        draw_text += str(commision_time)
-        draw_text += _("天，将在 ")
         new_time = game_time.get_sub_date(day=commision_time)
-        new_time_text = game_time.get_date_until_day(new_time)
-        draw_text += new_time_text
-        draw_text += _(" 返回\n\n")
-        info_draw = draw.WaitDraw()
-        info_draw.text = draw_text
-        info_draw.style = "gold_enrod"
-        info_draw.width = window_width
-        info_draw.draw()
 
         # 添加到进行中的委托
         cache.rhodes_island.ongoing_field_commissions[commision_id] = [self.send_npc_list, new_time, []]
@@ -1096,8 +1076,32 @@ class Field_Commission_Panel:
             # 每点速度则将总时间乘以0.9
             commision_time_by_min = int(commision_time_by_min * (0.9 ** min_speed))
             new_time_by_speed = game_time.get_sub_date(minute=commision_time_by_min)
+            new_day = round(commision_time_by_min / 1440, 1)
             # 重新设置时间
             cache.rhodes_island.ongoing_field_commissions[commision_id][1] = new_time_by_speed
+
+        # 绘制委托信息
+        draw_text = ""
+        draw_text += _("\n\n已派遣 ")
+        for character_id in self.send_npc_list:
+            character_data = cache.character_data[character_id]
+            character_name = character_data.name
+            draw_text += f"{character_name} "
+        draw_text += _("执行委托：")
+        commision_name = commision_data.name
+        draw_text += commision_name
+        draw_text += _("，耗时：")
+        draw_text += str(new_day)
+        draw_text += _("天，将在 ")
+        new_time_text = game_time.get_date_until_day(new_time_by_speed)
+        draw_text += new_time_text
+        draw_text += _(" 返回\n\n")
+        info_draw = draw.WaitDraw()
+        info_draw.text = draw_text
+        info_draw.style = "gold_enrod"
+        info_draw.width = window_width
+        info_draw.draw()
+
         # 清空派遣人员与载具
         self.send_npc_list = []
         self.send_vehicle_dict = {}
