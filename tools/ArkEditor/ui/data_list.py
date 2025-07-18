@@ -571,6 +571,7 @@ class DataList(DataListIdEditMixin, QWidget):
                 status_cid = cache_control.now_talk_data[cache_control.now_select_id].behavior_id
                 status_text = cache_control.behavior_data[status_cid]
                 chara_id = cache_control.now_talk_data[cache_control.now_select_id].adv_id
+                cache_control.now_adv_id = chara_id
                 cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
                 self.chara_id_text_edit.setText(chara_id)
@@ -639,6 +640,7 @@ class DataList(DataListIdEditMixin, QWidget):
                 type_id = cache_control.now_event_data[cache_control.now_select_id].type
                 type_text = type_text_list[type_id]
                 chara_id = cache_control.now_event_data[cache_control.now_select_id].adv_id
+                cache_control.now_adv_id = chara_id
                 cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
