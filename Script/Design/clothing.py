@@ -30,12 +30,17 @@ def get_npc_cloth(character_id: int):
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
         tem_character = cache.npc_tem_data[character_id - 1]
 
-        for cloth_id in tem_character.Cloth:
-            type = game_config.config_clothing_tem[cloth_id].clothing_type
-            # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
-            character_data.cloth.cloth_wear[type].append(cloth_id)
-        get_underwear(character_id)
-        chara_special_wear_cloth(character_id)
+        # 如果装备严重损坏，则换为通用衣服
+        if handle_premise.handle_self_equipment_damaged_ge_3(character_id):
+            get_common_cloth(character_id)
+        # 否则正常换衣服
+        else:
+            for cloth_id in tem_character.Cloth:
+                type = game_config.config_clothing_tem[cloth_id].clothing_type
+                # print(f"debug cloth_id = {cloth_id},name = {game_config.config_clothing_tem[cloth_id].name},type = {type}")
+                character_data.cloth.cloth_wear[type].append(cloth_id)
+            get_underwear(character_id)
+            chara_special_wear_cloth(character_id)
 
 
 def get_cloth_from_dormitory_locker(character_id: int):
@@ -396,6 +401,7 @@ def get_shower_cloth(character_id: int):
         character_data.cloth.cloth_wear[0].append(51)
         character_data.cloth.cloth_wear[5].append(551)
         character_data.cloth.cloth_wear[8].append(851)
+        chara_special_wear_cloth(character_id)
 
 
 def get_sleep_cloth(character_id: int):
@@ -417,6 +423,7 @@ def get_sleep_cloth(character_id: int):
             character_data.cloth.cloth_wear[5].append(553)
             character_data.cloth.cloth_wear[8].append(853)
         get_underwear(character_id, part_flag = 2)
+        chara_special_wear_cloth(character_id)
 
 
 def get_swim_cloth(character_id: int):
@@ -449,6 +456,27 @@ def get_prison_cloth(character_id: int):
         get_cloth_wear_zero_except_need(character_id)
         character_data.cloth.cloth_wear[5].append(561)
         character_data.cloth.cloth_wear[8].append(861)
+        chara_special_wear_cloth(character_id)
+
+
+def get_common_cloth(character_id: int):
+    """
+    清零其他衣服并换上通用的衣服和随机内衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        get_cloth_wear_zero_except_need(character_id)
+        character_data.cloth.cloth_wear[5].append(581)
+        character_data.cloth.cloth_wear[5].append(582)
+        down_cloth_random = random.randint(0, 1)
+        character_data.cloth.cloth_wear[8].append(881 + down_cloth_random)
+        shoes_random = random.randint(0, 3)
+        character_data.cloth.cloth_wear[11].append(1181 + shoes_random)
+        get_underwear(character_id, part_flag = 2)
         chara_special_wear_cloth(character_id)
 
 
@@ -604,56 +632,3 @@ def get_exposed_body_parts(character_id: int, ignore_panties: bool = False):
     # 返回可暴露的身体部位列表
     return return_list
 
-
-'''
-不用的旧函数
-
-def creator_suit(suit_id: int, sex: int) -> Dict[int, game_type.Clothing]:
-    """
-    创建套装
-    Keyword arguments:
-    suit_name -- 套装模板
-    sex -- 性别模板
-    Return arguments:
-    Dict[int,game_type.Clothing] -- 套装数据 服装穿戴位置:服装数据
-    """
-    suit_data = game_config.config_clothing_suit_data[suit_id][sex]
-    clothing_data = {}
-    for clothing_id in suit_data:
-        clothing = creator_clothing(clothing_id)
-        clothing_data[clothing.wear] = clothing
-    return clothing_data
-
-
-def creator_clothing(clothing_tem_id: int) -> game_type.Clothing:
-    """
-    创建服装的基础函数
-    Keyword arguments:
-    clothing_tem_id -- 服装id
-    Return arguments:
-    game_type.Clothing -- 生成的服装数据
-    """
-    clothing_data = game_type.Clothing()
-    clothing_data.uid = uuid.uuid4()
-    clothing_data.sexy = random.randint(1, 1000)
-    clothing_data.handsome = random.randint(1, 1000)
-    clothing_data.elegant = random.randint(1, 1000)
-    clothing_data.fresh = random.randint(1, 1000)
-    clothing_data.sweet = random.randint(1, 1000)
-    clothing_data.warm = random.randint(0, 30)
-    clothing_data.price = sum(
-        [
-            clothing_data.__dict__[x]
-            for x in clothing_data.__dict__
-            if isinstance(clothing_data.__dict__[x], int)
-        ]
-    )
-    clothing_data.cleanliness = 100
-    clothing_data.evaluation = game_config.config_clothing_evaluate_list[
-        math.floor(clothing_data.price / 480) - 1
-    ]
-    clothing_data.tem_id = clothing_tem_id
-    clothing_data.wear = game_config.config_clothing_tem[clothing_tem_id].clothing_type
-    return clothing_data
-
-'''

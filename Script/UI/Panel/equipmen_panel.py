@@ -127,15 +127,17 @@ def settle_equipment_damage_in_commission(commision_id: int) -> str:
         random_damage_rate = random.random()
         # 根据装备损坏概率获取损坏等级
         damage_lv = 0
+        count_damage_rate = 0
         for i, rate in enumerate(damage_rate_list):
-            if random_damage_rate < rate:
+            count_damage_rate += rate
+            if random_damage_rate < count_damage_rate:
                 damage_lv = i
                 break
         # 如果损坏等级大于0，则进行装备损坏
         if damage_lv > 0:
-            send_npc_data.cloth.equipment_condition = damage_lv
+            send_npc_data.cloth.equipment_condition = damage_lv * -1
             # 获取装备损坏情况
-            equipment_condition = game_config.config_equipment_condition[damage_lv].name
+            equipment_condition = get_equipment_condition_name(send_npc_data.cloth.equipment_condition)
             # 绘制装备损坏信息
             equipment_damage_text += _("{0}的装备损坏了，损坏情况为{1}，需要进行维修。\n").format(send_npc_data.name, equipment_condition)
 
@@ -269,7 +271,7 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     # 获取铁匠角色数据和维修能力
     smith_chara_data = cache.character_data[smith_chara_id]
     ability_lv = smith_chara_data.ability[48]
-    maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 2
+    maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 4
     # 根据随机数变成0.8~1.2倍
     maintain_value *= random.uniform(0.8, 1.2)
     # 是否进行装备保养

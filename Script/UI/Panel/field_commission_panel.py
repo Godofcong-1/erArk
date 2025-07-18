@@ -360,16 +360,16 @@ def judge_field_commission_finish():
             # 载具损坏与回收
             vehicle_text = manage_vehicle_panel.settle_vehicle(commision_id)
             draw_text += vehicle_text
-            # 装备损坏
-            equipment_damage_text = equipmen_panel.settle_equipment_damage_in_commission(commision_id)
-            draw_text += equipment_damage_text
             # 判断是否会招募到新干员
             recruited_text = settle_recruit_new_chara(commision_id)
+            # 装备损坏
+            equipment_damage_text = equipmen_panel.settle_equipment_damage_in_commission(commision_id)
             # 移除委托
             cache.rhodes_island.ongoing_field_commissions.pop(commision_id)
             # 最后总结
             draw_text += _("完成了委托：{0}，获得奖励：{1}\n\n").format(commision_name, reward_text)
             draw_text += recruited_text
+            draw_text += equipment_damage_text
 
     # 绘制完成委托
     if len(draw_text):
