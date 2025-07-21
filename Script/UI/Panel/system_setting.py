@@ -161,6 +161,18 @@ class System_Setting_Panel:
                 now_setting_flag = setting[cid] # 当前设置的值
                 option_len = len(setting_option[cid]) # 选项的长度
 
+                # 如果是绘制设置的第12项，则加一个[修改字体大小]的按钮
+                if type_name == _("绘制") and cid == 12:
+                    if cache.font_size == 0:
+                        cache.font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width * 2)
+                    new_button_text = _(f" {cache.font_size} ")
+                    new_button_len = max(len(new_button_text) * 2, 30)
+                    new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_font_size)
+                    new_button_draw.draw()
+                    return_list.append(new_button_draw.return_text)
+                    line_feed.draw()
+                    continue
+
                 # 当前选择的选项的名字
                 button_text = f" [{setting_option[cid][now_setting_flag]}] "
                 button_len = max(len(button_text) * 2, 20)
@@ -232,6 +244,42 @@ class System_Setting_Panel:
                 elif new_num > 9:
                     new_num = 9
                 cache.all_system_setting.draw_setting[cid] = new_num
+
+    def change_font_size(self):
+        """修改字体大小"""
+        import os
+        line_feed.draw()
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+        line_feed.draw()
+        ask_text = _("请输入新的字体大小（1~50），数字越大字体就越大，默认为21，改变字体大小可能会导致绘制提前截断、错行、对不齐等排版问题，对游戏性没有影响\n")
+        ask_panel = panel.AskForOneMessage()
+        ask_panel.set(ask_text, 99)
+        new_size = int(ask_panel.draw())
+        if new_size < 1:
+            new_size = 1
+        elif new_size > 50:
+            new_size = 50
+        cache.font_size = new_size
+        normal_config.config_normal.font_size = new_size
+        normal_config.config_normal.order_font_size = new_size - 2
+        # 修改根目录下的config.ini文件中的字体大小
+        config_ini_path = "config.ini"
+        if os.path.exists(config_ini_path):
+            import configparser
+            ini_config = configparser.ConfigParser()
+            ini_config.read(config_ini_path, encoding="utf8")
+            ini_config["game"]["font_size"] = str(new_size)
+            ini_config["game"]["text_width"] = str(int(normal_config.config_normal.window_width / new_size * 2))
+            with open(config_ini_path, "w", encoding="utf8") as config_file:
+                ini_config.write(config_file)
+
+        # 输出提示信息
+        now_draw = draw.WaitDraw()
+        info_text = _("\n\n字体大小已修改为{0}，重启游戏后生效\n\n").format(new_size)
+        now_draw.text = info_text
+        now_draw.style = 'gold_enrod'
+        now_draw.draw()
 
     def change_ban_list(self):
         """修改已禁止干员列表"""

@@ -1414,6 +1414,8 @@ class Cache:
         """ 富文本样式记录 """
         self.text_one_by_one_rich_cache: dict = {}
         """ 富文本精确样式记录 """
+        self.font_size: int = 0
+        """ 字体大小 """
         self.image_id: int = 0
         """ 图片id """
         self.cmd_data: dict = {}

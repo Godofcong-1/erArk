@@ -23424,6 +23424,18 @@ msgstr ""
 msgid "即主界面每行显示的指令数量，默认为6个，最少为1个，最大为10个"
 msgstr ""
 
+#: .\data\csv\System_Setting.csv:28
+msgid "字体大小"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:28
+msgid "即主界面中显示的字体大小，默认为21"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:28
+msgid "1"
+msgstr ""
+
 #: .\data\csv\Talent.csv:7
 msgid "处女"
 msgstr ""
