@@ -49,7 +49,7 @@ str,str,int,str,str
 
 1020,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,形状美好发育匀称，形状适中柔软的{breast_s}
 1021,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,手感柔软大小适中，弹性十足的{breast_s}
-1022,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,形状优美尺寸普通，乳头粉嫩挺立的{breast_s}
+1022,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,形状优美尺寸正好，乳头粉嫩挺立的{breast_s}
 1023,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,肌肤细腻发育匀称，乳晕适中娇嫩的{breast_s}
 1024,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,手感舒适标准大小，温热柔软弹性好的{breast_s}
 1025,breast,0,CVP_A2_T|102_E_1&CVP_A2_T|123_E_1,皮肤光滑柔嫩，乳头如樱桃般粉红的{breast_s}
@@ -106,7 +106,7 @@ str,str,int,str,str
 1071,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,肌肤细腻尺寸适中，柔软有弹性的{breast_s}
 1072,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,轮廓匀称优美，圆润饱满的{breast_s}
 1073,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,皮肤白皙尺寸标准，乳头粉红挺立的{breast_s}
-1074,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,肌肤光滑大小普通，温热柔嫩的{breast_s}
+1074,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,肌肤光滑大小适中，温热柔嫩的{breast_s}
 1075,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,尺寸匀称发育完美，乳晕适中的{breast_s}
 1076,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,皮肤柔嫩尺寸正常，弹性十足的{breast_s}
 1077,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|123_E_1,肌肤细滑匀称发育，形状完美的{breast_s}
@@ -127,14 +127,13 @@ str,str,int,str,str
 1090,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,尺寸异常夸张，乳肉量惊人的{breast_s}
 1091,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,体型与尺寸极不协调，重量夸张的{breast_s}
 1092,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,肌肤白皙尺寸惊人，乳肉波涛汹涌的{breast_s}
-1093,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,皮肤柔嫩巨大剧烈摇晃，青涩与巨大反差的{breast_s}
+1093,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,皮肤柔嫩巨大剧烈摇晃，青涩与巨大形成反差的{breast_s}
 1094,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,身躯娇小却尺寸惊人，乳沟深不见底的{breast_s}
 1095,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,肌肤细嫩尺寸超大难以掌控，庞大乳肉的{breast_s}
 1096,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,体型与胸前的体积形成鲜明对比，乳肉丰腴过度的{breast_s}
 1097,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,整体尺寸异常巨大，乳晕宽大的{breast_s}
 1098,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,娇小身躯上尺寸惊人，压倒性重量感的{breast_s}
-1099,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,肤质细腻却尺寸爆炸，乳肉如海浪的{breast_s}
-
+1099,breast,0,CVP_A2_T|103_E_1&CVP_A2_T|125_E_1,肤质细腻却尺寸巨大，乳肉如海浪的{breast_s}
 
 1100,breast,0,CVP_A2_T|104_E_1&CVP_A2_T|121_E_1,平坦光滑，只有两点粉嫩乳头的{breast_s}
 1101,breast,0,CVP_A2_T|104_E_1&CVP_A2_T|121_E_1,肌肤白皙表面平坦，乳头娇嫩敏感的{breast_s}
@@ -260,40 +259,40 @@ str,str,int,str,str
 1210,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,胸前微微鼓起纤细轮廓，娇小可爱的{breast_s}
 1211,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,成熟肌肤覆盖微小轮廓，柔软温热的{breast_s}
 1212,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,成熟身躯与微凸轮廓形成对比，乳头粉嫩挺立的{breast_s}
-1213,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,成熟女性皮肤细腻略有弧度，乳晕浅粉的{breast_s}
+1213,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,皮肤细腻略有弧度，乳晕浅粉的{breast_s}
 1214,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,轮廓如未发育般微小，温润柔嫩的{breast_s}
 1215,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,胸前曲线纤细，乳头娇嫩的{breast_s}
-1216,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,成熟女性肌肤细腻微凸，柔嫩有弹性的{breast_s}
+1216,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,成熟肌肤细腻微凸，柔嫩有弹性的{breast_s}
 1217,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,形状娇小玲珑精致，乳头如樱桃般的{breast_s}
-1218,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,身形纤细与贫乳，皮肤细腻光滑的{breast_s}
+1218,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,身形纤细皮肤细腻光滑，但乳量较小的{breast_s}
 1219,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|122_E_1,微小形状与肌肤成熟，乳晕粉嫩娇小的{breast_s}
 
 1220,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,胸前均匀发育丰满，普乳尺寸匀称的{breast_s}
 1221,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,成熟肌肤覆盖适中形态，柔软有弹性的{breast_s}
 1222,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,胸前匀称丰满，圆润饱满的{breast_s}
 1223,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,皮肤细腻尺寸标准，乳头粉红挺立的{breast_s}
-1224,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,肌肤白皙大小普通，温热柔嫩的{breast_s}
-1225,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,成熟皮肤光滑发育完美，乳晕适中的{breast_s}
-1226,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,尺寸正常触感极佳，弹性十足的熟女{breast_s}
+1224,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,肌肤白皙大小适中，温热柔嫩的{breast_s}
+1225,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,成熟光滑发育完美，乳晕适中的{breast_s}
+1226,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,尺寸正常触感极佳，弹性十足的{breast_s}
 1227,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,胸前匀称发育，形状完美的{breast_s}
-1228,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,成熟女性表面光滑丰满，乳头娇嫩粉红的{breast_s}
+1228,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,表面光滑成熟丰满，乳头娇嫩粉红的{breast_s}
 1229,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|123_E_1,肌肤柔嫩尺寸适中，柔软温暖的{breast_s}
 
-1230,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,发育丰满的熟女巨乳，沉重诱人的{breast_s}
+1230,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,发育丰满富有弹性，沉重诱人的{breast_s}
 1231,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,身躯与规模形成反差，乳肉丰腴诱人的{breast_s}
 1232,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,成熟肌肤富有弹性，随呼吸轻摇的{breast_s}
-1233,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,成熟女性超常丰满，乳沟深邃的{breast_s}
+1233,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,成熟的皮肤下包裹着超常的丰满，乳沟深邃的{breast_s}
 1234,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,胸前尺寸惊人，重量感十足的{breast_s}
 1235,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,沉甸肉感十足成熟，乳头被乳肉包围的{breast_s}
 1236,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,胸前尺寸超大，柔软溢出的{breast_s}
 1237,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,规模宏大成熟诱人，晃动波澜起伏的{breast_s}
 1238,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,胸前丰满饱满，乳晕较大粉嫩的{breast_s}
-1239,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,成熟与丰满并存完美，成熟与丰满结合的{breast_s}
+1239,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|124_E_1,成熟与丰满完美并存，成熟与丰满结合的{breast_s}
 
 1240,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,胸前尺寸惊人震撼，庞大惊人的{breast_s}
 1241,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,异常发育规模超大夸张，重量夸张的{breast_s}
 1242,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,成熟肌肤与尺寸形成强烈对比，乳肉波涛汹涌的{breast_s}
-1243,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,巨大规模随动作剧烈摇晃，成熟与巨大对比的{breast_s}
+1243,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,随着动作剧烈摇晃，与身躯形成明显对比的{breast_s}
 1244,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,体型与规模极不协调，乳沟深不见底的{breast_s}
 1245,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,体积超大几乎无法掌控，庞大乳肉的{breast_s}
 1246,breast,0,CVP_A2_T|106_E_1&CVP_A2_T|125_E_1,成熟肌肤覆盖惊人规模，乳肉丰腴过度的{breast_s}
