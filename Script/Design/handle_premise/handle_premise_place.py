@@ -4,7 +4,6 @@ from Script.Core import cache_control, constant, constant_promise, game_type, ge
 from Script.Design import map_handle
 from Script.Config import game_config
 
-
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._

@@ -7,7 +7,6 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
-
 def add_premise(premise: str) -> FunctionType:
     """
     添加前提
