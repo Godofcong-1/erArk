@@ -238,6 +238,20 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         character_id = item_id
         item_name = cache.character_data[character_id].name + item_name
         now_have_item_num = attr_calculation.get_character_fall_level(character_id)
+    # 招募
+    elif text_list[0] == _("招募"):
+        if item_num == 0:
+            item_name = _("未招募")
+        else:
+            item_name = _("已招募")
+        item_type = _("招募")
+        item_id = character.get_character_id_from_adv(item_id)
+        character_id = item_id
+        item_name =  item_name + cache.character_data[character_id].name
+        now_have_item_num = 1
+        # 如果不在当前干员中，且没有离线，则未招募
+        if character_id not in cache.npc_id_got and handle_premise.handle_normal_7(character_id):
+            now_have_item_num = 0
     # 追捕
     elif text_list[0] == _("追捕"):
         item_name = _("追捕")

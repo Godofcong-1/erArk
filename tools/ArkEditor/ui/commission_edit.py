@@ -163,6 +163,19 @@ def explain_commission_text(text: str) -> str:
                 result.append(f"[{chara_name}]攻略等级为{value}")
             else:
                 result.append(item)
+        # 招募类 招募_角色ID_0/1
+        elif item.startswith('招募_'):
+            parts = item.split('_')
+            if len(parts) == 3:
+                chara_id = parts[1]
+                flag = parts[2]
+                chara_name = cache_control.now_chara_data.Name if hasattr(cache_control.now_chara_data, 'Name') else f"ID{chara_id}"
+                if flag == '1':
+                    result.append(f"招募角色[{chara_name}]")
+                else:
+                    result.append(f"未招募角色[{chara_name}]")
+            else:
+                result.append(item)
         # 其他类型，直接显示
         else:
             result.append(item)
@@ -362,7 +375,7 @@ class CommissionItemAddDialog(QDialog):
         # A: 类型选择下拉框
         self.type_combo = QComboBox(); self.type_combo.setFont(font)
         self.type_combo.addItems([
-            "能力", "资源", "经验", "宝珠", "素质", "角色", "任务", "声望", "特产", "好感", "信赖", "攻略"
+            "能力", "资源", "经验", "宝珠", "素质", "角色", "任务", "声望", "特产", "好感", "信赖", "攻略", "招募"
         ])
         # 设置类型下拉框宽度
         self.type_combo.setMinimumWidth(120)
@@ -502,5 +515,7 @@ class CommissionItemAddDialog(QDialog):
             return f"信赖_{sub_id}_{value}"
         elif type_name == "攻略":
             return f"攻略_{sub_id}_{value}"
+        elif type_name == "招募":
+            return f"招募_{sub_id}_{value}"
         else:
             return ""
