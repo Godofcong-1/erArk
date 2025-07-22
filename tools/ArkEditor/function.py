@@ -203,9 +203,10 @@ def read_CSE(cse_value_str: str):
     if "A3" in cse_str:
         a3_value = cse_str.split("A3|")[1].split("_")[0]
         cse_str = cse_str.replace(f"A3|{a3_value}", f"角色id为{a3_value}")
-    # 然后处理B属性部分
+    # 然后处理B属性部分，B是第二个下划线之后的所有内容
     # print(f"debug cse_str_list[2] = {cse_str_list[2]}")
-    cse_b_value = cache_control.behavior_data[(cse_str_list[2])]
+    b_str = cse_value_str.split("_", 2)[2]
+    cse_b_value = cache_control.behavior_data[b_str]
     cse_str = cse_str.replace(f"{cse_str_list[2]}", f" 进行 {cse_b_value}")
     # print(f"debug cse_str = {cse_str}")
     return cse_str
