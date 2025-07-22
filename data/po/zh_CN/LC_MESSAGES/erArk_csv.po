@@ -15444,719 +15444,1119 @@ msgstr ""
 msgid "有鑑於日發嚴峻的形勢，幹員杜賓希望透過一場短期對抗演習以培養幹員戰鬥意識"
 msgstr ""
 
+#: .\data\csv\Commission.csv:22
+msgid "村庄医疗宣传"
+msgstr ""
+
+#: .\data\csv\Commission.csv:22
+msgid "干员前往源石病患者在郊区的村庄，参与医疗知识普及活动，向村民讲解源石病防治与自我保护方法，促进医患理解，推动罗德岛与地方医疗合作。"
+msgstr ""
+
 #: .\data\csv\Commission.csv:23
+msgid "医患沟通调解"
+msgstr ""
+
+#: .\data\csv\Commission.csv:23
+msgid "干员前往受源石病影响严重的边境小镇，协助当地医疗机构与患者家属沟通，调解因治疗方案分歧引发的矛盾，帮助建立信任关系，缓解医患冲突，提升罗德岛在当地的声誉。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:24
+msgid "灾区心理疏导"
+msgstr ""
+
+#: .\data\csv\Commission.csv:24
+msgid "干员小队前往天灾刚刚结束的受灾城市，组织心理疏导讲座，帮助灾民和医护人员缓解心理压力，调解因资源分配产生的矛盾，促进灾后社会稳定。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:25
+msgid "医患危机公关"
+msgstr ""
+
+#: .\data\csv\Commission.csv:25
+msgid "干员前往因医疗资源分配不均引发舆论风波的合作医院，协助院方与媒体、政府沟通，安抚患者家属，处理危机事件，维护罗德岛及合作方的社会形象。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:26
+msgid "国际医疗谈判"
+msgstr ""
+
+#: .\data\csv\Commission.csv:26
+msgid "干员代表罗德岛前往参与多国医疗合作谈判，协调各方利益，推动源石病防治技术交流，提升罗德岛国际影响力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:27
+msgid "民兵防卫协助"
+msgstr ""
+
+#: .\data\csv\Commission.csv:27
+msgid "干员前往地方民兵队，协助指挥作战，应对突发感染生物袭击，保障医疗物资安全抵达，提升干员现场指挥能力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:28
+msgid "灾区救援指挥"
+msgstr ""
+
+#: .\data\csv\Commission.csv:28
+msgid "干员受命前往附近的天灾受灾区，组织医疗救援队伍，协调多方资源，指挥现场救援行动，确保伤员及时得到救治。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:29
+msgid "城市防暴行动"
+msgstr ""
+
+#: .\data\csv\Commission.csv:29
+msgid "干员小队前往附近的动荡城市，协助地方安保部队指挥防暴行动，保护医疗设施与人员安全，平息骚乱。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:30
+msgid "跨国联合演习"
+msgstr ""
+
+#: .\data\csv\Commission.csv:30
+msgid "干员参与跨国联合防卫演习，指挥多支罗德岛作战小队，统筹多国干员协作，提升应急响应能力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:31
+msgid "大型灾害应急指挥"
+msgstr ""
+
+#: .\data\csv\Commission.csv:31
+msgid "干员前往当地重要城市，指挥多支医疗与安保队伍应对大规模天灾，协调资源分配，保障灾民与医护安全。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:32
+msgid "感染生物清理"
+msgstr ""
+
+#: .\data\csv\Commission.csv:32
+msgid "干员前往郊外农场，协助清理因源石病变异的野生动物，保护当地居民与医疗队安全，确保农场恢复生产。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:33
+msgid "物资护送行动"
+msgstr ""
+
+#: .\data\csv\Commission.csv:33
+msgid "干员护送医疗物资车队穿越荒野，途中需应对暴徒和野兽袭击，确保物资安全送达灾区。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:34
+msgid "疫区外围防线"
+msgstr ""
+
+#: .\data\csv\Commission.csv:34
+msgid "干员小队前往天灾影响地区的疫区外围，协助设立防线，抵御感染生物与暴力分子入侵，保障医疗队正常工作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:35
+msgid "安保设施防护"
+msgstr ""
+
+#: .\data\csv\Commission.csv:35
+msgid "干员参与边境医疗站安保设施防护，协助地方安保部队平息骚乱，保护医疗设备与人员。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:36
+msgid "高风险救援"
+msgstr ""
+
+#: .\data\csv\Commission.csv:36
+msgid "干员组成作战小队前往动乱地区的中心位置，执行高风险医疗救援任务，确保关键医护人员和病患安全撤离。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:37
+msgid "社区义煮活动"
+msgstr ""
+
+#: .\data\csv\Commission.csv:37
+msgid "干员协助举办阿卡胡拉社区义煮活动，增进罗德岛与当地居民的交流，提升团队凝聚力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:38
+msgid "特殊饮食方案制定"
+msgstr ""
+
+#: .\data\csv\Commission.csv:38
+msgid "干员前往当地合作医院，为源石病患者制定特殊饮食方案，提升治疗效果，促进医患关系。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:39
+msgid "灾区食品保障"
+msgstr ""
+
+#: .\data\csv\Commission.csv:39
+msgid "干员前往灾区临时安置点，协助准备基础餐食，保障医护人员与灾民的营养供给，缓解粮食短缺。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:40
+msgid "灾区食品分发"
+msgstr ""
+
+#: .\data\csv\Commission.csv:40
+msgid "干员前往当地灾区，负责食品分发工作，确保物资合理分配，缓解灾民饥荒。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:41
+msgid "国际美食交流"
+msgstr ""
+
+#: .\data\csv\Commission.csv:41
+msgid "干员代表罗德岛前往附近的国际美食节，展示特色医疗营养餐，促进文化与技术交流，提升罗德岛影响力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:42
+msgid "灾区慰问演奏"
+msgstr ""
+
+#: .\data\csv\Commission.csv:42
+msgid "干员前往灾区临时救助点，为患者和医护人员演奏舒缓音乐，缓解治疗过程中的紧张情绪，提升士气。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:43
+msgid "灾后慰问演出"
+msgstr ""
+
+#: .\data\csv\Commission.csv:43
+msgid "干员参与灾后慰问演出，安抚受灾群众，促进社区恢复，提升罗德岛形象。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:44
+msgid "心理疗愈音乐会"
+msgstr ""
+
+#: .\data\csv\Commission.csv:44
+msgid "干员协助当地干员开展音乐疗法，为灾民和医护人员举办疗愈音乐会，帮助恢复心理健康。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:45
+msgid "医护士气提升"
+msgstr ""
+
+#: .\data\csv\Commission.csv:45
+msgid "干员在当地医疗站组织小型音乐会，提升医护人员士气，营造积极工作氛围，促进团队协作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:46
+msgid "国际医疗峰会表演"
+msgstr ""
+
+#: .\data\csv\Commission.csv:46
+msgid "干员受邀前往国际医疗峰会，担任表演嘉宾，展示罗德岛在音乐源石技艺与源石病治疗结合领域的研究成果，促进国际合作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:47
+msgid "图书档案整理"
+msgstr ""
+
+#: .\data\csv\Commission.csv:47
+msgid "干员前往当地图书馆，协助整理书籍档案，学习相关知识，提升专业素养。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:48
+msgid "灾后政务处理"
+msgstr ""
+
+#: .\data\csv\Commission.csv:48
+msgid "干员协助当地受灾地区的官员进行灾后重建指导，组织人员工作，管理物资调动，提升实际能力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:49
+msgid "开展学科讲座"
+msgstr ""
+
+#: .\data\csv\Commission.csv:49
+msgid "干员受邀前往当地大学，开展学科讲座，与学生们分享最新研究进展，提升理论水平，推动学术交流。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:50
+msgid "跨学科研讨会"
+msgstr ""
+
+#: .\data\csv\Commission.csv:50
+msgid "干员参与跨学科研讨会，推动技术创新与知识共享，促进多国合作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:51
+msgid "科研中心交流"
+msgstr ""
+
+#: .\data\csv\Commission.csv:51
+msgid "干员前往科研中心主持学术交流，推动源石利用技术发展，提升罗德岛科研实力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:52
+msgid "基础诊疗支援"
+msgstr ""
+
+#: .\data\csv\Commission.csv:52
+msgid "干员前往乡村诊所，协助基础诊疗工作，为轻症患者提供初步治疗与护理，缓解当地医疗压力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:53
+msgid "急救演练指导"
+msgstr ""
+
+#: .\data\csv\Commission.csv:53
+msgid "干员受邀前往灾区，参与急救演练，提升干员在突发事件中的医疗应变能力，保障灾民安全。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:54
+msgid "复杂手术协助"
+msgstr ""
+
+#: .\data\csv\Commission.csv:54
+msgid "干员协助灾区医疗队进行复杂手术，提升团队协作与技术水平，促进技术交流。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:55
+msgid "灾区医疗救援"
+msgstr ""
+
+#: .\data\csv\Commission.csv:55
+msgid "干员参与灾区紧急医疗救援，处理大规模伤患，提升应急能力，保障灾民生命安全。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:56
+msgid "高难度手术主持"
+msgstr ""
+
+#: .\data\csv\Commission.csv:56
+msgid "干员受邀前往当地医疗中心主持高难度手术，培训新晋医疗干员，推动技术进步。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:57
+msgid "农场种植支援"
+msgstr ""
+
+#: .\data\csv\Commission.csv:57
+msgid "干员前往当地农场协助种植基础作物，保障医疗物资自给，缓解粮食危机。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:58
+msgid "药用植物改良"
+msgstr ""
+
+#: .\data\csv\Commission.csv:58
+msgid "干员参与当地研究所，协助改良药用植物，为源石病患者提供特殊药材，提升治疗效果。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:59
+msgid "灾区农田恢复"
+msgstr ""
+
+#: .\data\csv\Commission.csv:59
+msgid "干员协助灾区农田恢复生产，缓解粮食危机，支援当地居民，促进社会稳定。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:60
+msgid "跨国农业合作"
+msgstr ""
+
+#: .\data\csv\Commission.csv:60
+msgid "干员参与跨国农业合作项目，推广先进种植技术，提升地区农业水平。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:61
+msgid "农技交流展示"
+msgstr ""
+
+#: .\data\csv\Commission.csv:61
+msgid "干员受邀前往国际农技交流会，展示罗德岛农技成果，促进技术与资源共享。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:62
+msgid "临时医疗设施搭建"
+msgstr ""
+
+#: .\data\csv\Commission.csv:62
+msgid "干员协助灾区搭建临时医疗设施，提升应急响应能力，保障灾民救治。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:63
+msgid "医疗器械维修"
+msgstr ""
+
+#: .\data\csv\Commission.csv:63
+msgid "干员前往医疗器械工厂，协助维修诊疗设备，保障医疗设施正常运转，提升技术水平。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:64
+msgid "大型设备生产"
+msgstr ""
+
+#: .\data\csv\Commission.csv:64
+msgid "干员参与大型医疗设备生产项目，支援多地医疗需求，提升罗德岛影响力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:65
+msgid "新型器械研发"
+msgstr ""
+
+#: .\data\csv\Commission.csv:65
+msgid "干员参与医疗器械研发中心的合作项目，协助开发新型诊疗设备，提升罗德岛技术储备。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:66
+msgid "国际医疗展展示"
+msgstr ""
+
+#: .\data\csv\Commission.csv:66
+msgid "干员受邀前往国际医疗展，展示罗德岛自主研发设备，促进技术交流与合作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:67
+msgid "灾区宣传画创作"
+msgstr ""
+
+#: .\data\csv\Commission.csv:67
+msgid "干员参与灾区宣传画创作，提升罗德岛形象，促进医患沟通，增强社区凝聚力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:68
+msgid "艺术疗愈活动"
+msgstr ""
+
+#: .\data\csv\Commission.csv:68
+msgid "干员协助当地社区举办艺术展活动，帮助患者恢复心理健康，促进医患交流。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:69
+msgid "医疗区艺术创作"
+msgstr ""
+
+#: .\data\csv\Commission.csv:69
+msgid "干员前往合作医院，为医疗区绘制温馨壁画和艺术装修设计，营造舒适治疗环境，缓解患者压力，提升医院形象。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:70
+msgid "医疗展览布置"
+msgstr ""
+
+#: .\data\csv\Commission.csv:70
+msgid "干员负责医疗交流展览布置，促进文化交流与合作，提升罗德岛影响力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:71
+msgid "艺术节主题作品"
+msgstr ""
+
+#: .\data\csv\Commission.csv:71
+msgid "干员受邀前往国际艺术节，展示主题艺术作品和相关源石技艺的应用，提升团队凝聚力与社会影响力，促进多国交流。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:72
 msgid "调查前方的天灾受灾区"
 msgstr ""
 
-#: .\data\csv\Commission.csv:23
+#: .\data\csv\Commission.csv:72
 msgid "前方有高浓度源石反应，并且有可见源石云，疑似为刚结束的小型天灾。\n需要派遣数名干员前去调查灾害情况，并搜救受灾群众。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:24
+#: .\data\csv\Commission.csv:73
 msgid "为受灾难民提供医疗支援"
 msgstr ""
 
-#: .\data\csv\Commission.csv:24
+#: .\data\csv\Commission.csv:73
 msgid "受灾区域内发现了一处幸存聚落，有大量伤患者需要医疗支援。\n需要派遣数名医疗干员前去支援。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:25
+#: .\data\csv\Commission.csv:74
 msgid "清理受灾区域的感染生物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:25
+#: .\data\csv\Commission.csv:74
 msgid "受灾区域内出现了大量感染生物，会危及到聚落的安全。\n需要派遣数名战斗干员前去清理。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:26
+#: .\data\csv\Commission.csv:75
 msgid "修复受灾区域的基础设施"
 msgstr ""
 
-#: .\data\csv\Commission.csv:26
+#: .\data\csv\Commission.csv:75
 msgid "受灾聚落内的基础设施受到了严重破坏，需要进行修复。\n需要派遣数名工程干员前去修复。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:27
+#: .\data\csv\Commission.csv:76
 msgid "调查源石矿洞"
 msgstr ""
 
-#: .\data\csv\Commission.csv:27
+#: .\data\csv\Commission.csv:76
 msgid "当地有一处废弃的源石矿洞，但已经很久没有人进去过了，可能还有一定的矿藏量，需要派遣干员前去调查。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:28
+#: .\data\csv\Commission.csv:77
 msgid "打败矿洞中的暴徒"
 msgstr ""
 
-#: .\data\csv\Commission.csv:28
+#: .\data\csv\Commission.csv:77
 msgid "矿洞内发现了一伙暴徒，他们可能是为了矿藏而进入矿洞的。\n需要将这些暴徒无力化后进一步调查。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:29
+#: .\data\csv\Commission.csv:78
 msgid "消灭矿洞内的感染生物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:29
+#: .\data\csv\Commission.csv:78
 msgid "矿洞内深处发现了大量感染生物，说明其中确实有很大可能性存在源石矿藏。\n需要消灭这些感染生物，然后再进一步调查。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:30
+#: .\data\csv\Commission.csv:79
 msgid "战胜矿洞内的巨型感染生物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:30
+#: .\data\csv\Commission.csv:79
 msgid "在消灭了大群感染生物后，一只变异的巨型感染生物出现在了矿洞深处，在它的旁边有着大量的源石结晶。\n需要将这只巨型感染生物击败。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:31
+#: .\data\csv\Commission.csv:80
 msgid "挖掘矿洞内的源石结晶"
 msgstr ""
 
-#: .\data\csv\Commission.csv:31
+#: .\data\csv\Commission.csv:80
 msgid "在战胜了巨型感染生物后，矿洞内的源石结晶暴露在了干员们的面前。接下来就是挖掘和运输的工作了。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:32
+#: .\data\csv\Commission.csv:81
 msgid "阿卡胡拉生物採集"
 msgstr ""
 
-#: .\data\csv\Commission.csv:32
+#: .\data\csv\Commission.csv:81
 msgid "最近雨林中大量產出稀有生物樣本，其中不乏有特殊功用的動植物，我們有必要將其研究歸檔"
 msgstr ""
 
-#: .\data\csv\Commission.csv:33
+#: .\data\csv\Commission.csv:82
 msgid "灰蕈的研究"
 msgstr ""
 
-#: .\data\csv\Commission.csv:33
+#: .\data\csv\Commission.csv:82
 msgid "在某次出勤報告中稱，雨林中存有一種特殊的菌類，有至幻作用，但有食用人聲稱其意識來到了特殊的空間，我們可以嘗試對其進行研究"
 msgstr ""
 
-#: .\data\csv\Commission.csv:34
+#: .\data\csv\Commission.csv:83
 msgid "意識帝國?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:34
+#: .\data\csv\Commission.csv:83
 msgid "經系統性的研究，我們合理懷疑食用該菌類後，其食用人意識會來到一與現實相似的維度，我們可以徵集一隻探險隊對該維度進行探索"
 msgstr ""
 
-#: .\data\csv\Commission.csv:35
+#: .\data\csv\Commission.csv:84
 msgid "凱爾西的警告"
 msgstr ""
 
-#: .\data\csv\Commission.csv:35
+#: .\data\csv\Commission.csv:84
 msgid "意識帝國的探索不甚順利，精神上的疲勞在探險隊員的身上累積，凱爾西醫生知道此事後嚴正警告了我們的動作"
 msgstr ""
 
-#: .\data\csv\Commission.csv:36
+#: .\data\csv\Commission.csv:85
 msgid "也許我們該聽她的"
 msgstr ""
 
-#: .\data\csv\Commission.csv:36
+#: .\data\csv\Commission.csv:85
 msgid "凱爾西醫生說的有道理，這不是我們現在該踏足了領域，我們應銷毀實驗記錄並封存相關數據"
 msgstr ""
 
-#: .\data\csv\Commission.csv:37
+#: .\data\csv\Commission.csv:86
 msgid "扎實理論"
 msgstr ""
 
-#: .\data\csv\Commission.csv:37
+#: .\data\csv\Commission.csv:86
 msgid "你相信你的理論模型，也相信工程部的能力。我們應該暫時無視凱爾西的警告，根據現有的資料來做出一台溝通兩界的試驗機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:38
+#: .\data\csv\Commission.csv:87
 msgid "試驗機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:38
+#: .\data\csv\Commission.csv:87
 msgid "秘密工程的進度很順利，理論上你只要把試驗機啟動，它就能產生一道溝通兩界的裂隙了"
 msgstr ""
 
-#: .\data\csv\Commission.csv:39
+#: .\data\csv\Commission.csv:88
 msgid "失控的試驗機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:39
+#: .\data\csv\Commission.csv:88
 msgid "實驗失控了，現在羅德島旁出現了一道亞空間裂隙，一些探險隊曾提到的意識帝國危險生物這在湧出，我們須立刻組織一支斬首小隊摧毀裂隙中央的試驗機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:40
+#: .\data\csv\Commission.csv:89
 msgid "關閉的裂隙"
 msgstr ""
 
-#: .\data\csv\Commission.csv:40
+#: .\data\csv\Commission.csv:89
 msgid "在斬首小隊的突擊下，裂隙終於被關閉，意識帝國的生物在失去亞空間的聯繫後也跟著消失了，你決定派人清理一下戰場，看看有沒有什麼能回收的物資來彌補損失"
 msgstr ""
 
-#: .\data\csv\Commission.csv:42
+#: .\data\csv\Commission.csv:90
 msgid "保卫钢铁萝卜矿场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:42
+#: .\data\csv\Commission.csv:90
 msgid "位于雷姆必拓移动城市“钢铁萝卜城”航线周边的一处矿场，因意外挖掘到源石虫巢穴而荒废。\n近期雷姆必拓矿业联合需要重启该矿洞的挖掘工作，苦于人手不足，将防卫任务外包给了罗德岛。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:43
+#: .\data\csv\Commission.csv:91
 msgid "恢复多伦矿场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:43
+#: .\data\csv\Commission.csv:91
 msgid "维多利亚多伦郡文森特伯爵旗下产业，因周边地区动荡导致矿场被暴徒占领。伯爵经由特殊渠道联系到罗德岛，希望罗德岛能够尽快帮助多伦矿场恢复生产。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:44
+#: .\data\csv\Commission.csv:92
 msgid "清理格里布采矿平台"
 msgstr ""
 
-#: .\data\csv\Commission.csv:44
+#: .\data\csv\Commission.csv:92
 msgid "乌萨斯罗斯托夫实业旗下一座已经退役的移动采矿平台，为节约成本，罗斯托夫实业预将其整修后重新投入使用，经早露与罗德岛取得联系，请求罗德岛协助进行相关清理工作。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:45
+#: .\data\csv\Commission.csv:93
 msgid "清理斯沃玛加工平台"
 msgstr ""
 
-#: .\data\csv\Commission.csv:45
+#: .\data\csv\Commission.csv:93
 msgid "一起原料泄漏事故导致斯沃玛食品彻底弃用这座食品加工平台，平台中储存的废弃原料让这里成了感染生物与暴徒的巢穴，严重影响附近航道安全。\n商业联合会勒令斯沃玛处理此事，而斯沃玛向罗德岛发出了平台清理委托。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:46
+#: .\data\csv\Commission.csv:94
 msgid "草也会长石头的吗"
 msgstr ""
 
-#: .\data\csv\Commission.csv:46
+#: .\data\csv\Commission.csv:94
 msgid "最近阿卡胡拉丛林中植物的长势有些过于喜人，罕见地对当地居民的生活造成了严重困扰，据说一切的起因都来自一只半植物半源石虫的危险生物。\n依娜姆把清除这一生物的工作委托给了嘉维尔，而忙于医疗工作的嘉维尔头也不回地把这份活计转包给了罗德岛。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:47
+#: .\data\csv\Commission.csv:95
 msgid "地上移动黑拳竞技场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:47
+#: .\data\csv\Commission.csv:95
 msgid "多索雷斯在建的城市地块之一，在抵达目的地之前遭到了一伙荒地暴徒的袭击，并被他们据为己有。\n据说暴徒们的首领希望将其改造成一座黑拳竞技场。\n坎黛拉女士委托你先给那伙暴徒一个教训，然后把首领请来多索雷斯一叙，她相信对方会接受她的诚意。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:48
+#: .\data\csv\Commission.csv:96
 msgid "好消息是漏气，坏消息是毒气"
 msgstr ""
 
-#: .\data\csv\Commission.csv:48
+#: .\data\csv\Commission.csv:96
 msgid "雷神工业的一个尖端武器测试平台最近出现了大量请病假的员工，管理人员经过检查，认定此事是某种低毒的工业气体泄漏所致。\n平台在被转移到荒地上准备处理时遭到暴徒占领，员工知晓原因后也纷纷提出工伤赔偿，管理人员焦头烂额，委托罗德岛夺回这座平台，如果能顺便处理气体泄漏就更好了。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:49
+#: .\data\csv\Commission.csv:97
 msgid "逆女施工队的紧急公关"
 msgstr ""
 
-#: .\data\csv\Commission.csv:49
+#: .\data\csv\Commission.csv:97
 msgid "一位约翰老妈的前员工在离开几年之后再次出现在了约翰老妈为了安置员工新建的地块上，忽悠了施土队为自己制造海量武器，大肆摧毁前公司的各项设施。\n记者发布了在地块附近拍摄到的影像，各地销售量断崖式下跌，出于声誉考虑，约翰老妈委托罗德岛解决这一问题。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:50
+#: .\data\csv\Commission.csv:98
 msgid "荒废灯塔历险记"
 msgstr ""
 
-#: .\data\csv\Commission.csv:50
+#: .\data\csv\Commission.csv:98
 msgid "伊比利亚近海的一处荒废灯塔吸引了许多探险者的关注，然而潜入其中的探险者无一例外全都没能返回。\n虽然灯塔外观上没有任何异常，但审判庭怀疑该区域已被深海侵蚀，将其封锁并请求罗德岛协助调查。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:51
+#: .\data\csv\Commission.csv:99
 msgid "过剩的喷射冰淇淋"
 msgstr ""
 
-#: .\data\csv\Commission.csv:51
+#: .\data\csv\Commission.csv:99
 msgid "拉特兰城郊外一处甜品制作平台近日突发事故，起因是为了满足拉特兰城内增长的冰淇淋需求，技术部门改造生产线导致产能溢出，操作人员因吃了太多冰淇淋而纷纷请了病假。\n现在自动生产线上四处喷射冰淇淋，货运无人机大量涌入城内，缠着民众兜售。为了挽救冰淇淋的声誉，阿尔斯特修道院请求罗德岛协助解决这场危机。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:52
+#: .\data\csv\Commission.csv:100
 msgid "制霸自走机械搏斗场"
 msgstr ""
 
-#: .\data\csv\Commission.csv:52
+#: .\data\csv\Commission.csv:100
 msgid "“巨大的终极丑东西杯”自走机械对战选拔赛是杜林人发起的一项只有三个月历史的赛事，该赛事办到第十届时，场面变得空前疯狂。\n蜜酿协会和烈酒协会的成员更是在现场爆发了冲突，看台上的装饰都成了他们的“武器”。\n于是，一封来自“杜林保护协会”的信送至罗德岛，请求帮忙维持赛场秩序。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:53
+#: .\data\csv\Commission.csv:101
 msgid "合成食品大战天然作物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:53
+#: .\data\csv\Commission.csv:101
 msgid "塔山生物科技在雷姆必拓的一处农业科研实验平台近日被一帮“自然饮食主义者”占据，占据者声称实验污染了当地的农产品。\n他们劫持了大量无人机散布不实言论，编造“二十条腿的沙虫”“草莓味的萝卜”等虚假案例，严重抹黑了公司的名誉。\n塔山生物科技请求罗德岛协助夺回平台，制止他们的行为。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:54
+#: .\data\csv\Commission.csv:102
 msgid "摇晃勾爪式旋转抓取法"
 msgstr ""
 
-#: .\data\csv\Commission.csv:54
+#: .\data\csv\Commission.csv:102
 msgid "盒牌工业为了捉回那些为新产品发布会造势而准备的“任性生物”，开动了最新的大型载具“抓娃娃机”，然而它被竞争对手动了手脚，完全失控了！\n现在，载具正驶向多索雷斯的繁华街道，人们却以为这是计划内的全城表演。\n盒牌工业为了保住自己的口碑，也为了居民的安全，向罗德岛发来了援助请求。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:55
+#: .\data\csv\Commission.csv:103
 msgid "依法治理噪音污染扰民案件"
 msgstr ""
 
-#: .\data\csv\Commission.csv:55
+#: .\data\csv\Commission.csv:103
 msgid "莱塔尼亚边境的一座城镇中日夜回响着阴森嘈杂的曲调，阻碍了杂音纠治乐团前去演出。\n经调查，此地似乎笼罩着非比寻常的“阴郁法术”，而法术造成的荒芜还在向城外蔓延。为了如期进行演出，杂音纠治乐团向罗德岛提出协助请求。\n搞清楚“阴郁法术”的来源，让乐团得以突破噪音的阻拦吧。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:57
+#: .\data\csv\Commission.csv:104
 msgid "新婚信使"
 msgstr ""
 
-#: .\data\csv\Commission.csv:57
+#: .\data\csv\Commission.csv:104
 msgid "出於某些惡趣味，你決定讓安潔莉娜自己將你們的喜帖遞給她在敘拉古的父母，你還慷慨的給她披了一周的假，希望她玩的開心"
 msgstr ""
 
-#: .\data\csv\Commission.csv:58
+#: .\data\csv\Commission.csv:105
 msgid "回娘家"
 msgstr ""
 
-#: .\data\csv\Commission.csv:58
+#: .\data\csv\Commission.csv:105
 msgid "新婚後，你決定給蘇茜批個假，好讓她帶著你的親筆信與禮物回維多利亞的老家好好休息一下，希望岳母大人不會因為女兒結婚的消息感到驚嚇"
 msgstr ""
 
-#: .\data\csv\Commission.csv:59
+#: .\data\csv\Commission.csv:106
 msgid "驕傲的灰兔子"
 msgstr ""
 
-#: .\data\csv\Commission.csv:59
+#: .\data\csv\Commission.csv:106
 msgid "在歷經諸多磨難後終於抱得佳人歸(你是那個佳人)的夏洛特決定請假一段時間\n她要回老家一趟，好跟鄉里那些當初不相信你存在的人們看看，她，夏洛特，終於追愛成功"
 msgstr ""
 
-#: .\data\csv\Commission.csv:60
+#: .\data\csv\Commission.csv:107
 msgid "騎警回鄉"
 msgstr ""
 
-#: .\data\csv\Commission.csv:60
+#: .\data\csv\Commission.csv:107
 msgid "小格拉尼的收到了過去同事的喜帖，所以決定帶著新婚的好消息回去參加宴會"
 msgstr ""
 
-#: .\data\csv\Commission.csv:61
+#: .\data\csv\Commission.csv:108
 msgid "佩洛的回禮"
 msgstr ""
 
-#: .\data\csv\Commission.csv:61
+#: .\data\csv\Commission.csv:108
 msgid "博士送了小刻一個漂亮的戒指，但小刻不知道該送什麼給博士，小刻可以出去看看有什麼好吃的嗎?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:62
+#: .\data\csv\Commission.csv:109
 msgid "返廠改裝"
 msgstr ""
 
-#: .\data\csv\Commission.csv:62
+#: .\data\csv\Commission.csv:109
 msgid "可露希爾找上了你，說是想借Lancet-2幾天，並神秘兮兮的說你後半生的幸福就靠在她身上了?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:63
+#: .\data\csv\Commission.csv:110
 msgid "純屬意外？"
 msgstr ""
 
-#: .\data\csv\Commission.csv:63
+#: .\data\csv\Commission.csv:110
 msgid "你從其他途徑得知了關於獎卷的事，就算蘇茜可以接受，但你不介意用你的方式解決這個問題"
 msgstr ""
 
-#: .\data\csv\Commission.csv:64
+#: .\data\csv\Commission.csv:111
 msgid "失去的【前途】"
 msgstr ""
 
-#: .\data\csv\Commission.csv:64
+#: .\data\csv\Commission.csv:111
 msgid "商談的很順利，你的信使只是略微向維多利亞的承辦人表達了你的為難，事情就有人自動辦好了。\n卡拉頓的一切照常運轉，不過是一家洗髮水工廠換了負責人，與一名前廠長意外死於車禍而已，真是令人遺憾"
 msgstr ""
 
-#: .\data\csv\Commission.csv:65
+#: .\data\csv\Commission.csv:112
 msgid "外出取材"
 msgstr ""
 
-#: .\data\csv\Commission.csv:65
+#: .\data\csv\Commission.csv:112
 msgid "萊娜上交了一張假單，說是附近的有種特殊的香料，想下船去收集一些"
 msgstr ""
 
-#: .\data\csv\Commission.csv:66
+#: .\data\csv\Commission.csv:113
 msgid "情有所屬"
 msgstr ""
 
-#: .\data\csv\Commission.csv:66
+#: .\data\csv\Commission.csv:113
 msgid "萊娜歸來後，送給你一個精緻的香囊。閉上眼，那淡淡的香味讓你聯想到眼前這位愛你的沃爾柏姑娘。\n在你追問這香氣的名字時，萊娜只是墊起腳尖，在你的唇上留下輕輕一吻"
 msgstr ""
 
-#: .\data\csv\Commission.csv:67
+#: .\data\csv\Commission.csv:114
 msgid "反重力科研項目"
 msgstr ""
 
-#: .\data\csv\Commission.csv:67
+#: .\data\csv\Commission.csv:114
 msgid "這裡是可露希爾，也許我們能通過研究幹員安潔莉娜的源石技藝運作方式，開發一種新的載具，博士不試試嗎?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:68
+#: .\data\csv\Commission.csv:115
 msgid "理論驗證機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:68
+#: .\data\csv\Commission.csv:115
 msgid "嘶......搞了好久終於模仿出安潔莉娜的源石迴路，但材料也用完了。博士，再撥點材料下來嘛~"
 msgstr ""
 
-#: .\data\csv\Commission.csv:69
+#: .\data\csv\Commission.csv:116
 msgid "推進裝置"
 msgstr ""
 
-#: .\data\csv\Commission.csv:69
+#: .\data\csv\Commission.csv:116
 msgid "呃，我們確實搞出了可以長時間穩定懸浮的平台，但如您所見...沒有好的推進方案的話它也只會懸浮而已。\n別打我，您去幫我薅一套蒸氣騎士的火箭推進器我馬上完成項目"
 msgstr ""
 
-#: .\data\csv\Commission.csv:70
+#: .\data\csv\Commission.csv:117
 msgid "速攻艇原型機"
 msgstr ""
 
-#: .\data\csv\Commission.csv:70
+#: .\data\csv\Commission.csv:117
 msgid "嘿嘿，這玩意可以穩定懸浮於低空，加上火箭推進後速度更是超越這片大地以往任何載具，按照慣例，就依照技術提供者來命名吧~!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:72
+#: .\data\csv\Commission.csv:118
 msgid "死魂靈安撫儀式"
 msgstr ""
 
-#: .\data\csv\Commission.csv:72
+#: .\data\csv\Commission.csv:118
 msgid "卡茲戴爾的重建進度已經進行的差不多，是時候更換一下這座移動城市的動力來源了，先從安撫這些勞苦功高的老祖宗開始吧"
 msgstr ""
 
-#: .\data\csv\Commission.csv:73
+#: .\data\csv\Commission.csv:119
 msgid "爆炸的熔爐"
 msgstr ""
 
-#: .\data\csv\Commission.csv:73
+#: .\data\csv\Commission.csv:119
 msgid "該說不出意外的出了意外，在一陣雞飛狗跳之後，熔爐爆炸了。\n有沒有哪個倒楣蛋...富有正義心且樂於助人的女士願意幫我們把死魂靈們收集回來呢，就決定是你了，妮芙!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:74
+#: .\data\csv\Commission.csv:120
 msgid "四散的祖宗"
 msgstr ""
 
-#: .\data\csv\Commission.csv:74
+#: .\data\csv\Commission.csv:120
 msgid "咳咳...小妮芙，我們這就認命你為死魂靈應對小組的組長，去尋找街上那些同樣倒楣...富有正義之心且助人為樂的夥伴們，將四散的死魂靈們請回來"
 msgstr ""
 
-#: .\data\csv\Commission.csv:75
+#: .\data\csv\Commission.csv:121
 msgid "死魂靈安撫·續"
 msgstr ""
 
-#: .\data\csv\Commission.csv:75
+#: .\data\csv\Commission.csv:121
 msgid "巫妖的學徒私下找上了你，希望舉辦一場...不那麼正規了安魂儀式，還叮囑千萬不要告訴老巫妖這檔事，這傢伙真的靠谱嗎?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:76
+#: .\data\csv\Commission.csv:122
 msgid "構思的開始"
 msgstr ""
 
-#: .\data\csv\Commission.csv:76
+#: .\data\csv\Commission.csv:122
 msgid "果然，這就不是那麼簡單就能由學徒來完成，不過在錫人先生的引導下，魂靈熔爐就變得像...娛樂設施一樣!!\n博士，我們能在不忙的情況下去給熔爐內的祖宗們講故事嗎!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:77
+#: .\data\csv\Commission.csv:123
 msgid "憧憬未來"
 msgstr ""
 
-#: .\data\csv\Commission.csv:77
+#: .\data\csv\Commission.csv:123
 msgid "可惡，偷偷進熔爐時被弗萊蒙特先生抓住了，還被說教了好久，可是給祖宗們說故事真的很有趣嘛...不行! 得想想法子在混進去"
 msgstr ""
 
-#: .\data\csv\Commission.csv:78
+#: .\data\csv\Commission.csv:124
 msgid "雙王計"
 msgstr ""
 
-#: .\data\csv\Commission.csv:78
+#: .\data\csv\Commission.csv:124
 msgid "博士博士，這次的野史絕對勁爆，在故事的彼端，特雷西婭小姐和特雷西斯先生同時成為魔王囉!\n而且在阿米婭進來撈我們的時候，兩位魔王大人還露出了懷念的表情，真想知道最後阿米婭和他們的悄悄話說了些什麼"
 msgstr ""
 
-#: .\data\csv\Commission.csv:79
+#: .\data\csv\Commission.csv:125
 msgid "天使之城"
 msgstr ""
 
-#: .\data\csv\Commission.csv:79
+#: .\data\csv\Commission.csv:125
 msgid "哇...在新的故事中，薩科塔們居然是由現在的薩卡茲轉化而成埃，曾經的純血溫迪哥背生光翼，成為銃騎\n而像阿爾圖羅小姐那種，則化為了現行的石翼魔薩卡茲，在最後博卓卡斯替先生去找時任教宗談判了，也不知道他成功了沒有..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:80
+#: .\data\csv\Commission.csv:126
 msgid "遁入阇那"
 msgstr ""
 
-#: .\data\csv\Commission.csv:80
+#: .\data\csv\Commission.csv:126
 msgid "嗯，雖然出來了，但覺者奎隆...或是說青色怒火，前魔王奎隆先生的話好難懂喔...\n啊，博士，我說的是另一個事件線喔，奎隆先生建了佛國，傳授佛法，卡茲戴爾在悟道的薩卡茲們轉化而成的阿納薩們的建設下變得很美好呢\n他還託我給您帶句話，“安存法度之外，或不失于梦幻泡影，奇妙”，果然好難懂啊"
 msgstr ""
 
-#: .\data\csv\Commission.csv:81
+#: .\data\csv\Commission.csv:127
 msgid "迫近的陰影"
 msgstr ""
 
-#: .\data\csv\Commission.csv:81
+#: .\data\csv\Commission.csv:127
 msgid "好奇怪，但...最近入熔爐的時候，好像...被什麼人盯著一樣..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:82
+#: .\data\csv\Commission.csv:128
 msgid "空無前兆"
 msgstr ""
 
-#: .\data\csv\Commission.csv:82
+#: .\data\csv\Commission.csv:128
 msgid "啊~~博士!!聽的到嗎!!\n我這次只是試著讓死魂靈祖宗們講自己的故事，然後、然後就失控啦!!\n博士，快想想辦法!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:83
+#: .\data\csv\Commission.csv:129
 msgid "孤注一擲"
 msgstr ""
 
-#: .\data\csv\Commission.csv:83
+#: .\data\csv\Commission.csv:129
 msgid "我原本只是想結束這個故事而已，但現在!!\n幻境變得混沌，有一股“終結故事的存在”正在從空無中現身，博士!!\n它、它正在封存其他的故事，而且，還是以阿米婭的模樣，我們得阻止..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:84
+#: .\data\csv\Commission.csv:130
 msgid "不容拒絕"
 msgstr ""
 
-#: .\data\csv\Commission.csv:84
+#: .\data\csv\Commission.csv:130
 msgid "您好，初次見面...博士..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:85
+#: .\data\csv\Commission.csv:131
 msgid "爐芯終曲"
 msgstr ""
 
-#: .\data\csv\Commission.csv:85
+#: .\data\csv\Commission.csv:131
 msgid "呼，終於出來了\n自從遇到裡面那位...魔王阿米婭後，我做了好一陣子的噩夢了，那將一切包裹的悲傷與停滯...\n沒事沒事，不知怎麼了，出來看到博士和阿米婭小姐後，感覺像是放下了一塊大石頭..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:86
+#: .\data\csv\Commission.csv:132
 msgid "熔爐之外"
 msgstr ""
 
-#: .\data\csv\Commission.csv:86
+#: .\data\csv\Commission.csv:132
 msgid "我擊碎了一切束縛、虛妄，最終站在了這扇終點的大門之前。阿米婭，如果累了，就請休息一下，然後，跟著我出去吧"
 msgstr ""
 
-#: .\data\csv\Commission.csv:87
+#: .\data\csv\Commission.csv:133
 msgid "新生具現"
 msgstr ""
 
-#: .\data\csv\Commission.csv:87
+#: .\data\csv\Commission.csv:133
 msgid "博士，您...唉? 為、為什麼她也在，博士你連這種事情都做得到嗎!!?\n什麼叫她已經失去把人包裹在源石繭的能力了，那就好，被慢慢變成繭的回憶我是無論如何都不想再試了"
 msgstr ""
 
-#: .\data\csv\Commission.csv:88
+#: .\data\csv\Commission.csv:134
 msgid "迫近的歲獸"
 msgstr ""
 
-#: .\data\csv\Commission.csv:88
+#: .\data\csv\Commission.csv:134
 msgid "博士，很抱歉在這個時間紧急打扰貴司。\n但龍門正面臨著前所未有的危機，我們需要一切人手來協助...守歲，詳細情況請等我們見面再說明"
 msgstr ""
 
-#: .\data\csv\Commission.csv:89
+#: .\data\csv\Commission.csv:135
 msgid "溫度異常"
 msgstr ""
 
-#: .\data\csv\Commission.csv:89
+#: .\data\csv\Commission.csv:135
 msgid "您好，您就是羅德島的博士嗎?\n有數個城區的溫度出現不明原因的上升，且沒有源石反應，請幫我派人查看一下"
 msgstr ""
 
-#: .\data\csv\Commission.csv:90
+#: .\data\csv\Commission.csv:136
 msgid "兵俑"
 msgstr ""
 
-#: .\data\csv\Commission.csv:90
+#: .\data\csv\Commission.csv:136
 msgid "整合運動? ...不對，是兵俑! 所有人，列陣! 歲獸來了"
 msgstr ""
 
-#: .\data\csv\Commission.csv:91
+#: .\data\csv\Commission.csv:137
 msgid "超載"
 msgstr ""
 
-#: .\data\csv\Commission.csv:91
+#: .\data\csv\Commission.csv:137
 msgid "超載當前所有的源石器械，最後查看到底哪裡沒有源石反應，歲獸一定就在那裏!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:92
+#: .\data\csv\Commission.csv:138
 msgid "正主"
 msgstr ""
 
-#: .\data\csv\Commission.csv:92
+#: .\data\csv\Commission.csv:138
 msgid "博士，我想我找到歲獸了，在我牽制住她的時候，麻煩趕快把人派來支援!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:93
+#: .\data\csv\Commission.csv:139
 msgid "推進"
 msgstr ""
 
-#: .\data\csv\Commission.csv:93
+#: .\data\csv\Commission.csv:139
 msgid "好啦，作為一個反派，沒有點壓迫感怎麼能行呢。我現在將從這裡，一步一步向前，直到走到你們大本營然後摧毀它，試著攔住我吧!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:94
+#: .\data\csv\Commission.csv:140
 msgid "城防砲牌爆竹"
 msgstr ""
 
-#: .\data\csv\Commission.csv:94
+#: .\data\csv\Commission.csv:140
 msgid "計畫就是，我堵在年的路徑上，然後拉響這個用城防炮核心改裝的二踢腳給年來一下狠的!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:95
+#: .\data\csv\Commission.csv:141
 msgid "任性的導演"
 msgstr ""
 
-#: .\data\csv\Commission.csv:95
+#: .\data\csv\Commission.csv:141
 msgid "不要，我的劇情還可以再加點什麼。龍門，站起來吧!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:96
+#: .\data\csv\Commission.csv:142
 msgid "卡"
 msgstr ""
 
-#: .\data\csv\Commission.csv:96
+#: .\data\csv\Commission.csv:142
 msgid "夠了!\n博士，【慶祝新年的小短片】的相關企劃全部取消，鎮壓年並把她帶回來，不要再讓她胡鬧下去了。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:97
+#: .\data\csv\Commission.csv:143
 msgid "洪爐示歲"
 msgstr ""
 
-#: .\data\csv\Commission.csv:97
+#: .\data\csv\Commission.csv:143
 msgid "哎呀~~博士，沒想到那個老女人這次這麼生氣，還押著上島好抵銷拍片的損失。我的電影也只能依據現有的畫面有多少剪多少囉~~"
 msgstr ""
 
-#: .\data\csv\Commission.csv:98
+#: .\data\csv\Commission.csv:144
 msgid "人才派駐"
 msgstr ""
 
-#: .\data\csv\Commission.csv:98
+#: .\data\csv\Commission.csv:144
 msgid "阿諾~~博士你好，經文月夫人推薦，我被派來加深與羅德島在工程方面的合作了"
 msgstr ""
 
-#: .\data\csv\Commission.csv:99
+#: .\data\csv\Commission.csv:145
 msgid "護身符"
 msgstr ""
 
-#: .\data\csv\Commission.csv:99
+#: .\data\csv\Commission.csv:145
 msgid "拜託啦，炎蓉妹妹。博士都批准這次外勤了，還同意讓克洛斯和你一起去喔\n要是你成功把我那瓜妹妹找回來，我額外答應你一個要求如何?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:100
+#: .\data\csv\Commission.csv:146
 msgid "婆山鎮？"
 msgstr ""
 
-#: .\data\csv\Commission.csv:100
+#: .\data\csv\Commission.csv:146
 msgid "嗨嗨，這裡是定期聯絡喔，刀客塔。\n雖然我們按照年小姐的描述來到了目標附近，但並沒有找到叫【婆山鎮】的聚落誒...阿勒，那是?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:101
+#: .\data\csv\Commission.csv:147
 msgid "日月當空"
 msgstr ""
 
-#: .\data\csv\Commission.csv:101
+#: .\data\csv\Commission.csv:147
 msgid "萬幸還聯繫的上您，博士。長話短說，我們確實到達了任務目標婆山鎮，但卻是因不明原因進來的\n我們正在嘗試釐清狀況，會在明天6點展開下次定期聯絡"
 msgstr ""
 
-#: .\data\csv\Commission.csv:102
+#: .\data\csv\Commission.csv:148
 msgid "獸災"
 msgstr ""
 
-#: .\data\csv\Commission.csv:102
+#: .\data\csv\Commission.csv:148
 msgid "這裡是定期聯絡，博士。這裡簡直感覺不出時間流逝，日月位置永不變，還有不時來襲的獸災...看來年的妹妹確實有古怪"
 msgstr ""
 
-#: .\data\csv\Commission.csv:103
+#: .\data\csv\Commission.csv:149
 msgid "外來人"
 msgstr ""
 
-#: .\data\csv\Commission.csv:103
+#: .\data\csv\Commission.csv:149
 msgid "喔喔，居然還真能聯絡上外界。那小僧就長話短說了，此界乃夕大家的畫卷，但至於出去的辦法...嘿嘿，小僧也不甚明朗"
 msgstr ""
 
-#: .\data\csv\Commission.csv:104
+#: .\data\csv\Commission.csv:150
 msgid "無懼朝陽"
 msgstr ""
 
-#: .\data\csv\Commission.csv:104
+#: .\data\csv\Commission.csv:150
 msgid "那些墨魎...不是懼怕陽光嗎? 牠們正在襲擊鎮民!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:105
+#: .\data\csv\Commission.csv:151
 msgid "再啟"
 msgstr ""
 
-#: .\data\csv\Commission.csv:105
+#: .\data\csv\Commission.csv:151
 msgid "說來也奇怪，只要所有的畫外人都闔了眼，那這畫卷便會悄悄的變回本來的面貌，每觉醒来，都是如此，小僧早已习惯啦。"
 msgstr ""
 
-#: .\data\csv\Commission.csv:106
+#: .\data\csv\Commission.csv:152
 msgid "難得清醒"
 msgstr ""
 
-#: .\data\csv\Commission.csv:106
+#: .\data\csv\Commission.csv:152
 msgid "唉，也不知她...為何將你們困在這方寸之間。請讓我來幫忙吧，就當是，我的一點小心思"
 msgstr ""
 
-#: .\data\csv\Commission.csv:107
+#: .\data\csv\Commission.csv:153
 msgid "爆竹（真）"
 msgstr ""
 
-#: .\data\csv\Commission.csv:107
+#: .\data\csv\Commission.csv:153
 msgid "雖然黎小姐告訴了我們那些墨魎真正怕的是爆竹，但真的有用嗎? 年小姐也不怕爆竹啊，更何況是這種竹子做的..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:108
+#: .\data\csv\Commission.csv:154
 msgid "問"
 msgstr ""
 
-#: .\data\csv\Commission.csv:108
+#: .\data\csv\Commission.csv:154
 msgid "如果我们也不过是画中人，随便哪天便烟消云散，怎还能如此泰然处之？"
 msgstr ""
 
-#: .\data\csv\Commission.csv:109
+#: .\data\csv\Commission.csv:155
 msgid "答"
 msgstr ""
 
-#: .\data\csv\Commission.csv:110
+#: .\data\csv\Commission.csv:156
 msgid "古鑄造物"
 msgstr ""
 
-#: .\data\csv\Commission.csv:110
+#: .\data\csv\Commission.csv:156
 msgid "夕大家，感謝您讓我在您的百餘幅畫卷中遊歷，小僧不勝感激。對了，炎熔施主讓我把這個交給..."
 msgstr ""
 
-#: .\data\csv\Commission.csv:111
+#: .\data\csv\Commission.csv:157
 msgid "晖冶寒淬照云清！"
 msgstr ""
 
-#: .\data\csv\Commission.csv:111
+#: .\data\csv\Commission.csv:157
 msgid "瓜妹妹，吃我一計，全长八尺宽三尺，采用泰拉前所未见的科技引爆的特大號二踢腳口牙!!"
 msgstr ""
 
-#: .\data\csv\Commission.csv:112
+#: .\data\csv\Commission.csv:158
 msgid "看山是山，看水是水"
 msgstr ""
 
-#: .\data\csv\Commission.csv:112
+#: .\data\csv\Commission.csv:158
 msgid "只记得第一个见得的，是如今的小僧，最后一个见得，还是如今的小僧\n至于中间万重山水，皆如过眼云烟，想来可能是小僧的种种念想吧"
 msgstr ""
 
-#: .\data\csv\Commission.csv:113
+#: .\data\csv\Commission.csv:159
 msgid "畫中人"
 msgstr ""
 
-#: .\data\csv\Commission.csv:113
+#: .\data\csv\Commission.csv:159
 msgid "先說好，我是看在年的面子上才來的。我從不送畫，也別用些【幹員義務】之類的藉口打擾我作畫"
 msgstr ""
 
-#: .\data\csv\Commission.csv:114
+#: .\data\csv\Commission.csv:160
 msgid "出畫"
 msgstr ""
 
-#: .\data\csv\Commission.csv:114
+#: .\data\csv\Commission.csv:160
 msgid "先別急著拒絕，黎小姐。人世間難得走一遭，不知你聽說過，源石轉錄技術嗎?"
 msgstr ""
 
-#: .\data\csv\Commission.csv:115
+#: .\data\csv\Commission.csv:161
 msgid "迷路小僧"
 msgstr ""
 
-#: .\data\csv\Commission.csv:115
+#: .\data\csv\Commission.csv:161
 msgid "既然這就是炎蓉施主提到的羅德島，而您又是她口中所言之博士，相逢即是有緣，就容小僧在此艦停留一段時日吧!"
 msgstr ""
 
