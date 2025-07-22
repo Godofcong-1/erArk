@@ -98,6 +98,7 @@ jobs:
           Copy-Item example/事件测试用例_自定义指令.json dist_ArkEditor/例子/
           Copy-Item example/事件测试用例_替换指令文本.json dist_ArkEditor/例子/
           Copy-Item example/纸娃娃文本测试用例.csv dist_ArkEditor/例子/
+          Copy-Item example/0999_外勤委托模板.csv dist_ArkEditor/例子/
 
       - name: Get the last merged commit SHA from the master branch
         run: |
