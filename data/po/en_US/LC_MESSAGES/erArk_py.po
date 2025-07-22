@@ -10386,3 +10386,582 @@ msgstr ""
 
 msgid " [指令过滤] "
 msgstr ""
+
+msgid " [指令过滤] "
+msgstr ""
+
+msgid "技巧"
+msgstr ""
+
+msgid ""
+"\n"
+"○博士的技巧升级需要额外满足以下条件：\n"
+msgstr ""
+
+msgid "  [指技]、[舌技]、[腰技]、[隐蔽]能力等级之和大于等于技巧等级*2\n"
+msgstr ""
+
+msgid "  当前技巧等级为{0}，当前[指技]、[舌技]、[腰技]等级之和为{1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○干员的技巧升级需要额外满足以下条件：\n"
+msgstr ""
+
+msgid "  全子性技的等级之和，即[指技]、[舌技]、[足技]、[胸技]、[膣技]、[肛技]、[隐蔽]能力等级之和大于等于技巧等级*3\n"
+msgstr ""
+
+msgid "  当前技巧等级为{0}，当前全子性技的等级和为{1}\n"
+msgstr ""
+
+msgid "顺从"
+msgstr ""
+
+msgid "屈服刻印"
+msgstr ""
+
+msgid ""
+"\n"
+"○顺从能力的提升需要额外满足以下条件：\n"
+msgstr ""
+
+msgid "  屈服刻印等级大于等于{0}级\n"
+msgstr ""
+
+msgid "  当前屈服刻印等级为{0}级\n"
+msgstr ""
+
+msgid "欲望"
+msgstr ""
+
+msgid "快乐刻印"
+msgstr ""
+
+msgid ""
+"\n"
+"○欲望能力的提升需要额外满足以下条件：\n"
+msgstr ""
+
+msgid "  快乐刻印等级大于等于{0}级\n"
+msgstr ""
+
+msgid "  当前快乐刻印等级为{0}级\n"
+msgstr ""
+
+msgid "受虐"
+msgstr ""
+
+msgid "苦痛刻印"
+msgstr ""
+
+msgid ""
+"\n"
+"○受虐能力的提升需要额外满足以下条件：\n"
+msgstr ""
+
+msgid "  苦痛刻印等级大于等于{0}级\n"
+msgstr ""
+
+msgid "  当前苦痛刻印等级为{0}级\n"
+msgstr ""
+
+msgid ""
+"\n"
+"AI对话功能未开启，请前往【系统设置】中的【文本生成AI设置】中开启。\n"
+msgstr ""
+
+msgid "赠送礼物"
+msgstr ""
+
+msgid "测试用临时指令"
+msgstr ""
+
+msgid "管理装备维护"
+msgstr ""
+
+msgid "+女儿(+"
+msgstr ""
+
+msgid "+完全催眠(+9999)"
+msgstr ""
+
+msgid "皮肤"
+msgstr ""
+
+msgid "口喉"
+msgstr ""
+
+msgid "兽部"
+msgstr ""
+
+msgid "心理"
+msgstr ""
+
+msgid "没有穿上衣的裸露身体"
+msgstr ""
+
+msgid "没有穿下衣的裸露身体"
+msgstr ""
+
+msgid "妻子"
+msgstr ""
+
+msgid "妹妹"
+msgstr ""
+
+msgid "女儿"
+msgstr ""
+
+msgid "女仆"
+msgstr ""
+
+msgid "宠物猫"
+msgstr ""
+
+msgid "宠物狗"
+msgstr ""
+
+msgid "射精{0}次，总射精{1}ml，"
+msgstr ""
+
+msgid "{0}绝顶{1}次，"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}阅读了{1}，"
+msgstr ""
+
+msgid "阅读进度增加了{0}%，从{1}%增加到{2}%"
+msgstr ""
+
+msgid "，读完了这本书，获得了大量的知识和经验。\n"
+msgstr ""
+
+msgid "不过已经读完过了，无法再增加阅读进度。\n"
+msgstr ""
+
+msgid ""
+"\n"
+"请输入要使用的宝珠数量，最多可以使用{0}个{1}，当前使用量为{2}，预计需要{3}个\n"
+msgstr ""
+
+msgid "○如果满足以下条件，则可以使用次需求进行升级：\n"
+msgstr ""
+
+msgid "[确定(主需求)]"
+msgstr ""
+
+msgid "确定(主需求)"
+msgstr ""
+
+msgid "[确定(次需求)]"
+msgstr ""
+
+msgid "确定(次需求)"
+msgstr ""
+
+msgid "需要能力 : {0} 至少为{1}，当前为{2}\n"
+msgstr ""
+
+msgid "需要宝珠 : {0} 至少为{1}，当前为{2}\n"
+msgstr ""
+
+msgid "需要经验 : {0} 至少为{1}，当前为{2}\n"
+msgstr ""
+
+msgid "(需要[农业技能]等级>={0})"
+msgstr ""
+
+msgid "     调香消耗："
+msgstr ""
+
+msgid "  总共喝过{0}ml精液（有{1}ml精液在食道直接射进了胃里）\n"
+msgstr ""
+
+msgid "[妊娠]中，肚子已经大起来了"
+msgstr ""
+
+msgid "，距离临盆预计还有{0}天左右\n"
+msgstr ""
+
+msgid "技能"
+msgstr ""
+
+msgid "色情"
+msgstr ""
+
+msgid "未知书籍"
+msgstr ""
+
+msgid "（难度：简单）"
+msgstr ""
+
+msgid "（难度：普通，需要对应能力大于等于3级）"
+msgstr ""
+
+msgid "（难度：困难，需要对应能力大于等于6级）"
+msgstr ""
+
+msgid "（难度：未知）"
+msgstr ""
+
+msgid "[无法借阅]（对应能力不足，这本书对你来说太难了，需要提升对应能力）"
+msgstr ""
+
+msgid ""
+"  gpt模型示例：gpt-3.5-turbo, gpt-4, gpt-4-turbo, gpt-4o, gpt-4o-mini, gpt-4.1, "
+"o4-mini\n"
+msgstr ""
+
+msgid ""
+"  gemini模型示例：gemini-1.5-pro, gemini-1.5-flash，gemini-2.0-flash-exp, "
+"gemini-2.5-flash, gemini-2.5-pro\n"
+msgstr ""
+
+msgid "不支持的API密钥类型：{0}"
+msgstr ""
+
+msgid "装备损坏情况一览"
+msgstr ""
+
+msgid ""
+"○中度损坏的装备会降低进行外勤委托的干员的能力值，如果装备严重损坏了则无法安排进行外勤委托\n"
+"\n"
+msgstr ""
+
+msgid "  当前无装备损坏的干员\n"
+msgstr ""
+
+msgid "装备保养情况一览"
+msgstr ""
+
+msgid ""
+"○良好保养的装备有更高的耐久度，完美保养的装备还可以为外勤干员提供额外的能力加成\n"
+"\n"
+msgstr ""
+
+msgid "  当前无装备保养的干员\n"
+msgstr ""
+
+msgid "{0}的装备损坏了，损坏情况为{1}，需要进行维修。\n"
+msgstr ""
+
+msgid "没有可维修或可保养的装备。"
+msgstr ""
+
+msgid "{0}维修了{1}的装备，当前情况：{2} ({3})\n"
+msgstr ""
+
+msgid "{0}保养了{1}的装备，当前情况：{2} ({3})\n"
+msgstr ""
+
+msgid "装备维护"
+msgstr ""
+
+msgid "[001]指定维护策略"
+msgstr ""
+
+msgid "[002]变更铁匠人数"
+msgstr ""
+
+msgid "[003]干员装备损坏情况一览"
+msgstr ""
+
+msgid "[004]干员装备保养情况一览"
+msgstr ""
+
+msgid "调整装备维护策略和保养目标"
+msgstr ""
+
+msgid "装备维护对象名单"
+msgstr ""
+
+msgid "出勤"
+msgstr ""
+
+msgid "禁止出勤"
+msgstr ""
+
+msgid ""
+"※ 在进行委托时队员们意外遇到了一个同行的路人{0}，在短暂的相处中，她对罗德岛产生了兴趣，愿意加入我们成为一名新的干员（请前往博士办公室确认） ※\n"
+"\n"
+msgstr ""
+
+msgid "（无意识状态下，或装备在严重损坏及以上、或助理、监狱长等特殊职位的干员无法出勤）\n"
+msgstr ""
+
+msgid "▼药物类"
+msgstr ""
+
+msgid "▶药物类"
+msgstr ""
+
+msgid "(未拥有)"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}今天已经收过好感礼物了，不能重复赠送\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}没有生气，不需要赠送道歉礼物\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}的反发刻印大于等于2级，道歉礼物无效，需要先降低到1级\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}的反发刻印从1级降为了0\n"
+"\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最大的【爆乳】了，无法使用丰胸药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最小的【绝壁】了，无法使用缩胸药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最大的【巨臀】了，无法使用丰臀药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最小的【小臀】了，无法使用缩臀药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是【肉腿】了，无法使用丰腿药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是【细腿】了，无法使用瘦腿药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是【长足】了，无法使用丰足药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是【小足】了，无法使用瘦足药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最大的【熟女】或【人妻】了，无法使用外表年龄增长药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经是最小的【幼女】了，无法使用外表年龄减少药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经在【泌乳】了，无法使用泌乳药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}没有在【泌乳】，无法使用停乳药\n"
+msgstr ""
+
+msgid ""
+"\n"
+"当前干员不满足条件，无法进行强制排卵\n"
+msgstr ""
+
+msgid "特殊"
+msgstr ""
+
+msgid "○非特殊类里，每类可各选一个，同时起效\n"
+msgstr ""
+
+msgid "○特殊类与其他催眠相冲突，只能单独起效\n"
+msgstr ""
+
+msgid "  （当前版本中，该催眠的文本对应较少，仅有功能和数值上的效果）\n"
+msgstr ""
+
+msgid "{0} "
+msgstr ""
+
+msgid "(已选)"
+msgstr ""
+
+msgid "非家庭"
+msgstr ""
+
+msgid "家庭"
+msgstr ""
+
+msgid "职业"
+msgstr ""
+
+msgid "同学"
+msgstr ""
+
+msgid "教师"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}：{1}\n"
+msgstr ""
+
+msgid "进行该扮演后，可进一步选择其他类中带有{0}前缀的子项。\n"
+msgstr ""
+
+msgid "是否确定进行该扮演？\n"
+msgstr ""
+
+msgid ""
+"\n"
+"已为{0}开始进行以下的角色扮演了："
+msgstr ""
+
+msgid "无\n"
+msgstr ""
+
+msgid "[装备维护系统]"
+msgstr ""
+
+msgid "装备维护系统"
+msgstr ""
+
+msgid ""
+"\n"
+"○铁匠铺未开放，无法进入装备维护系统\n"
+msgstr ""
+
+msgid "[005]借阅历史记录"
+msgstr ""
+
+msgid ""
+"\n"
+"  暂无任何角色的借阅历史记录\n"
+msgstr ""
+
+msgid ""
+"以下角色拥有借阅历史记录：\n"
+"\n"
+msgstr ""
+
+msgid "借阅历史记录"
+msgstr ""
+
+msgid "[{0}]的借书卡记录"
+msgstr ""
+
+msgid ""
+"\n"
+"  该角色暂无借阅历史记录\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  借阅历史统计：共借阅过{0}本书，累计阅读{1}次\n"
+msgstr ""
+
+msgid "仍在借阅中"
+msgstr ""
+
+msgid "  [{0}] 《{1}》"
+msgstr ""
+
+msgid " ({0})"
+msgstr ""
+
+msgid ""
+"\n"
+"      借书时间：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"      还书时间：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"      阅读次数：{0}次\n"
+msgstr ""
+
+msgid ""
+"\n"
+"○世界设定（不消耗周目点数）"
+msgstr ""
+
+msgid " [更改世界设定] "
+msgstr ""
+
+msgid " [隐藏世界设定] "
+msgstr ""
+
+msgid "  越高级的捆绑需要越高级的[指技]才能施展\n"
+msgstr ""
+
+msgid "(需要[指技]等级>={0})"
+msgstr ""
+
+msgid "(需要在调教室施展)"
+msgstr ""
+
+msgid "：需要全干员的体内部位被射精总量≥{0}ml（当前{1}ml），全干员总绝顶经验≥{2}（当前{3}）"
+msgstr ""
+
+msgid "(未破处)"
+msgstr ""
+
+msgid "(需要是处女或者今日刚破处)"
+msgstr ""
+
+msgid "（阅读进度：{0}%）"
+msgstr ""
+
+msgid "(敏感)"
+msgstr ""
+
+msgid "(排卵)"
+msgstr ""
+
+msgid "(扮演"
+msgstr ""
+
+msgid "(痛→快感)"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}需要通过【赠送礼物】功能对NPC使用\n"
+"\n"
+msgstr ""
+
+msgid " {cache.font_size} "
+msgstr ""
+
+msgid "请输入新的字体大小（1~50），数字越大字体就越大，默认为21，改变字体大小可能会导致绘制提前截断、错行、对不齐等排版问题，对游戏性没有影响\n"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"字体大小已修改为{0}，重启游戏后生效\n"
+"\n"
+msgstr ""
