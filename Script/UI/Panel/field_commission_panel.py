@@ -120,6 +120,9 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif text_list[0] == "a":
         item_name = game_config.config_ability[item_id].name
         item_type = item_name
+        # 如果字符串里带"技能"，则删去
+        if _("技能") in item_name:
+            item_type = item_name.replace(_("技能"), "")
         now_have_item_num = sum(cache.character_data[character_id].ability[item_id] for character_id in send_npc_list)
         now_have_item_num = 0
         for character_id in send_npc_list:
@@ -515,6 +518,7 @@ class Field_Commission_Panel:
 
         title_text = _("外勤委托")
         commission_type_list = [_("常规外勤"), _("特殊外勤")]
+        self.handle_panel = panel.PageHandlePanel([], CommissionDraw, 20, 1, self.width)
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -582,6 +586,7 @@ class Field_Commission_Panel:
             all_commision_list = now_country_commision_list + common_commision_list
 
             # 绘制委托信息
+            final_commision_list = []
             for commision_id in all_commision_list:
                 commision_data = game_config.config_commission[commision_id]
                 # 跳过非当前面板的委托
@@ -611,44 +616,14 @@ class Field_Commission_Panel:
                                 break
                         else:
                             continue
-                # 委托信息
-                commision_name = commision_data.name
-                commision_level = str(commision_data.level)
-                commision_type = commision_data.type
-                commision_people = str(commision_data.people) + _("人")
-                commision_time = str(commision_data.time) + _("天")
-                commision_people_and_time = f"{commision_people}  {commision_time}"
-                demand_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list)
-                commision_demand = demand_return_list[1]
-                reward_return_list = get_commission_demand_and_reward(commision_id, self.send_npc_list, True)
-                commision_reward = reward_return_list[1]
-                # 修正文本宽度
-                text_width = int((self.width - 1) / (len(info_text_list)))
-                str_text_width = int(text_width / 2)
-                if commision_id in cache.rhodes_island.ongoing_field_commissions:
-                    commision_name += _("（进行中）")
-                # 最终文本
-                commision_text = f"{commision_level.center(text_width,' ')}{commision_type.center(str_text_width,'　')}{commision_name.center(str_text_width,'　')}{commision_people_and_time.center(text_width,' ')}{commision_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
+                # 如果满足条件，则加入最终委托列表
+                final_commision_list.append(commision_id)
 
-                # 可以进行的，绘制为按钮
-                if commision_id not in cache.rhodes_island.ongoing_field_commissions:
-                    commision_draw = draw.LeftButton(
-                        commision_text,
-                        "\n" + commision_name,
-                        self.width,
-                        cmd_func=self.commision_info,
-                        args=(commision_id,),
-                    )
-                    commision_draw.draw()
-                    return_list.append(commision_draw.return_text)
-                # 正在进行的，绘制为灰色文字
-                else:
-                    commision_draw = draw.NormalDraw()
-                    commision_draw.text = commision_text
-                    commision_draw.width = self.width
-                    commision_draw.style = "deep_gray"
-                    commision_draw.draw()
-                line_feed.draw()
+            # 遍历最终委托列表，绘制委托信息
+            self.handle_panel.text_list = final_commision_list
+            self.handle_panel.update()
+            self.handle_panel.draw()
+            return_list.extend(self.handle_panel.return_list)
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
@@ -667,6 +642,80 @@ class Field_Commission_Panel:
         """
 
         self.now_panel = building_type
+
+class CommissionDraw:
+    """
+    用于绘制外勤委托的绘制对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, commission_id: int, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.commission_id: int = commission_id
+        """ 委托编号 """
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.is_button: bool = is_button
+        """ 是否为按钮 """
+        self.num_button: bool = num_button
+        """ 是否为数字按钮 """
+        self.button_id: int = button_id
+        """ 按钮编号 """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.button_return: str = ""
+        """ 按钮返回文本 """
+        self.send_npc_list = []
+        """ 派遣人员列表 """
+        self.send_vehicle_dict = {}
+        """ 派遣载具字典 """
+
+    def draw(self):
+        """绘制对象"""
+        info_text_list = ["委托等级", "委托类型", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
+
+        commission_data = game_config.config_commission[self.commission_id]
+        # 委托信息
+        commission_name = commission_data.name
+        commission_level = str(commission_data.level)
+        commission_type = commission_data.type
+        commission_people = str(commission_data.people) + _("人")
+        commission_time = str(commission_data.time) + _("天")
+        commission_people_and_time = f"{commission_people}  {commission_time}"
+        demand_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list)
+        commission_demand = demand_return_list[1]
+        reward_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list, True)
+        commision_reward = reward_return_list[1]
+        # 修正文本宽度
+        text_width = int((self.width - 1) / (len(info_text_list)))
+        str_text_width = int(text_width / 2)
+        if self.commission_id in cache.rhodes_island.ongoing_field_commissions:
+            commission_name += _("（进行中）")
+        # 最终文本
+        commision_text = f"{commission_level.center(text_width,' ')}{commission_type.center(str_text_width,'　')}{commission_name.center(str_text_width,'　')}{commission_people_and_time.center(text_width,' ')}{commission_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
+        # print(f"commision_text: {commision_text}")
+
+        # 可以进行的，绘制为按钮
+        if self.commission_id not in cache.rhodes_island.ongoing_field_commissions:
+            commision_draw = draw.LeftButton(
+                commision_text,
+                "\n" + commission_name,
+                self.width,
+                cmd_func=self.commision_info,
+                args=(self.commission_id,),
+            )
+            commision_draw.draw()
+            self.button_return = commision_draw.return_text
+        # 正在进行的，绘制为灰色文字
+        else:
+            commision_draw = draw.NormalDraw()
+            commision_draw.text = commision_text
+            commision_draw.width = self.width
+            commision_draw.style = "deep_gray"
+            commision_draw.draw()
+        self.draw_text = commision_draw.text
+
 
     def commision_info(self, commision_id: int):
         """
@@ -872,106 +921,6 @@ class Field_Commission_Panel:
             if yrn == _("返回"):
                 break
 
-
-    def adjust_send_vehicle(self, commision_capacity_int: int):
-        """
-        调整派遣载具
-        Keyword arguments:
-        commision_capacity_int -- 需要的载具运量
-        """
-
-        while 1:
-            return_list = []
-            line = draw.LineDraw("-", self.width)
-            line.draw()
-
-            # 绘制可派遣载具
-            info_draw_2 = draw.NormalDraw()
-            info_draw_2.text = _("\n可派遣载具：\n\n")
-            info_draw_2.width = self.width
-            info_draw_2.draw()
-
-            for vehicle_cid in cache.rhodes_island.vehicles:
-                # 如果没有可以派遣的载具，则不绘制
-                vehicle_count = cache.rhodes_island.vehicles[vehicle_cid][0] - cache.rhodes_island.vehicles[vehicle_cid][1]
-                if vehicle_count <= 0:
-                    continue
-                vehicle_data = game_config.config_vehicle[vehicle_cid]
-                vehicle_speed = str(vehicle_data.speed)
-                vehicle_capacity = str(vehicle_data.capacity)
-                vehicle_special = vehicle_data.special
-                now_choice_count = 0
-                if vehicle_cid in self.send_vehicle_dict:
-                    now_choice_count = self.send_vehicle_dict[vehicle_cid]
-
-                draw_text = _("[{0}] {1} 当前选择/可选择：{2}/{3} 速度：{4} 运载量：{5} 特殊效果：{6}\n").format(str(vehicle_cid).rjust(2,'0'), vehicle_data.name, now_choice_count, vehicle_count, vehicle_speed, vehicle_capacity, vehicle_special)
-                info_draw = draw.NormalDraw()
-                info_draw.text = draw_text
-                info_draw.width = self.width
-                info_draw.draw()
-
-                # 增加一辆
-                button_draw = draw.CenterButton(
-                    _("[增加一辆]"),
-                    f"\n{vehicle_cid}+1",
-                    self.width / 6,
-                    cmd_func=self.add_this_vehicle,
-                    args=vehicle_cid,
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-                # 减少一辆
-                button_draw = draw.CenterButton(
-                    _("[减少一辆]"),
-                    f"\n{vehicle_cid}-1",
-                    self.width / 6,
-                    cmd_func=self.reduce_this_vehicle,
-                    args=vehicle_cid,
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-                line_feed.draw()
-
-            now_capacity = 0 # 当前运载量
-            now_speed = 99 # 当前速度
-            now_effect = [] # 当前效果
-
-            # 遍历已选择的载具
-            for vehicle_id in self.send_vehicle_dict:
-                vehicle_data = game_config.config_vehicle[vehicle_id]
-                now_capacity += vehicle_data.capacity * self.send_vehicle_dict[vehicle_id]
-                now_speed = min(now_speed, vehicle_data.speed)
-                if vehicle_data.special != "无" and vehicle_data.special not in now_effect:
-                    now_effect.append(vehicle_data.special)
-            if now_speed == 99:
-                now_speed = 1
-
-            # 遍历效果，输出效果文本
-            effect_text = ""
-            for effect in now_effect:
-                effect_text += f"{effect} "
-
-            # 绘制当前载具的总信息
-            info_draw = draw.NormalDraw()
-            info_draw_text = _("\n")
-            info_draw_text += _("当前总运载量/需要运载量：{0}/{1}\n").format(now_capacity, commision_capacity_int)
-            info_draw_text += _("当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n").format(now_speed)
-            info_draw_text += _("其他效果（未实装）：{0}\n").format(effect_text)
-            info_draw.text = info_draw_text
-            info_draw.width = self.width
-            info_draw.draw()
-
-            line_feed.draw()
-            line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-            back_draw.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-
     def select_this_npc(self, character_id: int):
         """
         选择当前人物
@@ -1105,3 +1054,103 @@ class Field_Commission_Panel:
         # 清空派遣人员与载具
         self.send_npc_list = []
         self.send_vehicle_dict = {}
+
+
+    def adjust_send_vehicle(self, commision_capacity_int: int):
+        """
+        调整派遣载具
+        Keyword arguments:
+        commision_capacity_int -- 需要的载具运量
+        """
+
+        while 1:
+            return_list = []
+            line = draw.LineDraw("-", self.width)
+            line.draw()
+
+            # 绘制可派遣载具
+            info_draw_2 = draw.NormalDraw()
+            info_draw_2.text = _("\n可派遣载具：\n\n")
+            info_draw_2.width = self.width
+            info_draw_2.draw()
+
+            for vehicle_cid in cache.rhodes_island.vehicles:
+                # 如果没有可以派遣的载具，则不绘制
+                vehicle_count = cache.rhodes_island.vehicles[vehicle_cid][0] - cache.rhodes_island.vehicles[vehicle_cid][1]
+                if vehicle_count <= 0:
+                    continue
+                vehicle_data = game_config.config_vehicle[vehicle_cid]
+                vehicle_speed = str(vehicle_data.speed)
+                vehicle_capacity = str(vehicle_data.capacity)
+                vehicle_special = vehicle_data.special
+                now_choice_count = 0
+                if vehicle_cid in self.send_vehicle_dict:
+                    now_choice_count = self.send_vehicle_dict[vehicle_cid]
+
+                draw_text = _("[{0}] {1} 当前选择/可选择：{2}/{3} 速度：{4} 运载量：{5} 特殊效果：{6}\n").format(str(vehicle_cid).rjust(2,'0'), vehicle_data.name, now_choice_count, vehicle_count, vehicle_speed, vehicle_capacity, vehicle_special)
+                info_draw = draw.NormalDraw()
+                info_draw.text = draw_text
+                info_draw.width = self.width
+                info_draw.draw()
+
+                # 增加一辆
+                button_draw = draw.CenterButton(
+                    _("[增加一辆]"),
+                    f"\n{vehicle_cid}+1",
+                    self.width / 6,
+                    cmd_func=self.add_this_vehicle,
+                    args=vehicle_cid,
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                # 减少一辆
+                button_draw = draw.CenterButton(
+                    _("[减少一辆]"),
+                    f"\n{vehicle_cid}-1",
+                    self.width / 6,
+                    cmd_func=self.reduce_this_vehicle,
+                    args=vehicle_cid,
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+
+                line_feed.draw()
+
+            now_capacity = 0 # 当前运载量
+            now_speed = 99 # 当前速度
+            now_effect = [] # 当前效果
+
+            # 遍历已选择的载具
+            for vehicle_id in self.send_vehicle_dict:
+                vehicle_data = game_config.config_vehicle[vehicle_id]
+                now_capacity += vehicle_data.capacity * self.send_vehicle_dict[vehicle_id]
+                now_speed = min(now_speed, vehicle_data.speed)
+                if vehicle_data.special != "无" and vehicle_data.special not in now_effect:
+                    now_effect.append(vehicle_data.special)
+            if now_speed == 99:
+                now_speed = 1
+
+            # 遍历效果，输出效果文本
+            effect_text = ""
+            for effect in now_effect:
+                effect_text += f"{effect} "
+
+            # 绘制当前载具的总信息
+            info_draw = draw.NormalDraw()
+            info_draw_text = _("\n")
+            info_draw_text += _("当前总运载量/需要运载量：{0}/{1}\n").format(now_capacity, commision_capacity_int)
+            info_draw_text += _("当前速度（取决于所有载具中最慢的，能够减少委托时间）：{0}\n").format(now_speed)
+            info_draw_text += _("其他效果（未实装）：{0}\n").format(effect_text)
+            info_draw.text = info_draw_text
+            info_draw.width = self.width
+            info_draw.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
