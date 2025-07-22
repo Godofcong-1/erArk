@@ -28,6 +28,166 @@ def add_premise(premise: str) -> FunctionType:
     return decoraror
 
 
+@add_premise(constant_promise.Premise.T_LOVE_SENSE_TASTE_0)
+def handle_t_love_sense_taste_0(character_id: int) -> int:
+    """
+    校验交互对象是否精爱味觉==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[31] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_SEXUAL_IGNORANCE_0)
+def handle_self_sexual_ignorance_0(character_id: int) -> int:
+    """
+    校验自己没有性无知
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[222] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_SEXUAL_IGNORANCE_1)
+def handle_self_sexual_ignorance_1(character_id: int) -> int:
+    """
+    校验自己有性无知
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[222] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_LOVE_SENSE_TASTE_1)
+def handle_t_love_sense_taste_1(character_id: int) -> int:
+    """
+    校验交互对象是否精爱味觉==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[31] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_SADISM_0)
+def handle_t_sadism_0(character_id: int) -> int:
+    """
+    校验交互对象是否施虐狂==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[229] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_SADISM_1)
+def handle_t_sadism_1(character_id: int) -> int:
+    """
+    校验交互对象是否施虐狂==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[229] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_MASOCHISM_0)
+def handle_t_masochism_0(character_id: int) -> int:
+    """
+    校验交互对象是否受虐狂==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[230] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_MASOCHISM_1)
+def handle_t_masochism_1(character_id: int) -> int:
+    """
+    校验交互对象是否受虐狂==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[230] == 1:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_OESTRUS_0)
+def handle_t_oestrus_0(character_id: int) -> int:
+    """
+    校验交互对象是否发情期==0
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[62] == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_OESTRUS_1)
+def handle_t_oestrus_1(character_id: int) -> int:
+    """
+    校验交互对象是否发情期==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_data = cache.character_data[character_data.target_character_id]
+    if target_data.talent[62] == 1:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.SELF_IS_CHILD)
 def handle_self_is_child(character_id: int) -> int:
     """
