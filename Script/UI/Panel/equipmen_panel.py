@@ -303,10 +303,10 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
         if maintain_list:
             # 优先低损坏度
             maintain_list.sort(key=lambda x: x[1])
-            target_id, cond = maintain_list[0]
+            target_chara_id, cond = maintain_list[0]
     # 如果有需要保养的角色，则进行保养，最大为0
     if target_chara_id > 0:
-        npc_data = cache.character_data[target_id]
+        npc_data = cache.character_data[target_chara_id]
         # 如果工作是铁匠，则记录维修角色
         if handle_premise.handle_work_is_blacksmith(smith_chara_id):
             cache.rhodes_island.maintenance_equipment_chara_id[smith_chara_id] = target_chara_id
