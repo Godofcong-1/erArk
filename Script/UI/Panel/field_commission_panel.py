@@ -671,8 +671,6 @@ class CommissionDraw:
         self.send_vehicle_dict = {}
         """ 派遣载具字典 """
 
-    def draw(self):
-        """绘制对象"""
         info_text_list = ["委托等级", "委托类型", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
 
         commission_data = game_config.config_commission[self.commission_id]
@@ -705,7 +703,6 @@ class CommissionDraw:
                 cmd_func=self.commision_info,
                 args=(self.commission_id,),
             )
-            commision_draw.draw()
             self.button_return = commision_draw.return_text
         # 正在进行的，绘制为灰色文字
         else:
@@ -713,8 +710,12 @@ class CommissionDraw:
             commision_draw.text = commision_text
             commision_draw.width = self.width
             commision_draw.style = "deep_gray"
-            commision_draw.draw()
         self.draw_text = commision_draw.text
+        self.now_draw = commision_draw
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
 
 
     def commision_info(self, commision_id: int):
