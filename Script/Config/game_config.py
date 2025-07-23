@@ -59,6 +59,8 @@ config_character_state_type_data: Dict[int, List] = {}
 """ 角色状态类型下状态属性集合 类型id:属性集合 """
 config_character_state_level: Dict[int, config_def.Character_State_Level] = {}
 """ 角色状态等级配置 """
+config_pleasure_relations: Dict[int, config_def.Pleasure_Relations] = {}
+""" 快感关系配置数据 """
 # config_clothing_suit: Dict[int, config_def.ClothingSuit] = {}
 # """ 衣服套装配置列表 """
 # config_clothing_suit_data: Dict[int, Dict[int, Set]] = {}
@@ -830,6 +832,15 @@ def load_character_state_level():
         now_tem.__dict__ = tem_data
         config_character_state_level[now_tem.cid] = now_tem
 
+
+def load_pleasure_relations():
+    """载入快感关系配置数据"""
+    now_data = config_data["Pleasure_Relations"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Pleasure_Relations()
+        now_tem.__dict__ = tem_data
+        config_pleasure_relations[now_tem.cid] = now_tem
 
 # def load_clothing_suit():
 #     """载入衣服套装配置数据"""

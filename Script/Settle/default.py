@@ -7620,7 +7620,8 @@ def handle_train_prisoners_add_adjust(
                 # 跳过P
                 if state_id == 3:
                     continue
-                all_part_data[state_id] = character_data.ability[state_id]
+                ability_id = game_config.config_pleasure_relations[state_id].ability_id
+                all_part_data[state_id] = character_data.ability[ability_id]
                 all_part_data[state_id] = max(all_part_data[state_id], 1)
         # 选择部位
         target_part_id = value_handle.get_random_for_weight(all_part_data)

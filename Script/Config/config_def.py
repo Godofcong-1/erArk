@@ -438,7 +438,7 @@ class Commission:
     demand: str
     """ 具体需求 """
     reward: str
-    """ 具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位) """
+    """ 具体奖励(a能力、e经验、j宝珠、t_素质编号_0为取消1为获得、r资源、c_角色adv编号_0不包含1包含、招募_adv编号_0未招募1已招募、攻略_adv编号_程度0~4、m_委托编号_-1不可完成0可以进行1已完成、声望_0为当地其他为对应势力id_加值为小数点后两位) """
     related_id: int
     """ 关联的委托id """
     special: int
@@ -992,6 +992,19 @@ class Physical_Exam_Setting:
     """ 选项介绍 """
     option: str
     """ 各个选项 """
+
+
+class Pleasure_Relations:
+    """ 快感属性之间的关系 """
+
+    cid: int
+    """ 角色快感id """
+    state_name: str
+    """ 快感名 """
+    ability_id: int
+    """ 能力id """
+    experience_id: int
+    """ 经验id """
 
 
 class ProductFormula:
