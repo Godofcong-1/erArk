@@ -1043,6 +1043,10 @@ class CommissionDraw:
             new_day = round(commision_time_by_min / 1440, 1)
             # 重新设置时间
             cache.rhodes_island.ongoing_field_commissions[commision_id][1] = new_time_by_speed
+        # 如果没有实际速度加成，则不减少时间
+        else:
+            new_time_by_speed = new_time
+            new_day = commision_time
 
         # 绘制委托信息
         draw_text = ""
