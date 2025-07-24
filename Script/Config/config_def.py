@@ -33,6 +33,27 @@ class AbilityUp:
     """ 升级需求2 """
 
 
+class Achievement:
+    """ 成就数据表 """
+
+    cid: int
+    """ 成就cid """
+    name: str
+    """ 成就名 """
+    type: str
+    """ 成就类型 """
+    difficulty: int
+    """ 成就难度 """
+    value: int
+    """ 成就数值需求 """
+    pre_id: int
+    """ 前置成就需求id """
+    todo: int
+    """ 是否未实装 """
+    description: str
+    """ 成就介绍 """
+
+
 class Ai_Chat_Send_Data:
     """ 向AI发送的数据 """
 
@@ -1452,6 +1473,7 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
+
 
 
 class TargetEffect:

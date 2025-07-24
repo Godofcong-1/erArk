@@ -413,6 +413,8 @@ config_equipment_maintain_setting: Dict[int, config_def.Equipment_Maintain_Setti
 """ 装备维护设置数据 """
 config_equipment_maintain_setting_option: Dict[int, Dict[int, str]] = {}
 """ 装备维护设置数据的选项数据 设置id:选项序号:选项内容 """
+config_achievement: Dict[int, config_def.Achievement] = {}
+""" 成就数据 """
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1857,6 +1859,17 @@ def load_equipment_maintain_setting():
         else:
             config_equipment_maintain_setting_option[now_tem.cid] = option_text.split('|')
 
+
+def load_achievement():
+    """载入成就数据"""
+    now_data = config_data["Achievement"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Achievement()
+        now_tem.__dict__ = tem_data
+        config_achievement[now_tem.cid] = now_tem
+
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -1977,3 +1990,4 @@ def init():
     load_equipment_condition()
     load_equipment_damage_rate()
     load_equipment_maintain_setting()
+    load_achievement()
