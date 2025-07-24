@@ -8,7 +8,7 @@ str,str,int,str,str
 1002,action_part_penis_in_body_1_B,0,high_1,{TargetName}闭上眼睛，轻轻将{face_s}贴在{penis_s}上，缓慢地前后移动，让{penis_s}从额头滑到下巴，享受着这种淫靡的触感。
 1003,action_part_penis_in_body_1_B,0,high_1,{TargetName}用{face_s}轻轻碾压着{penis_s}，舌尖偶尔伸出舔舐一下顶端，双颊因此染上一层诱人的粉红色。
 1004,action_part_penis_in_body_1_B,0,high_1,{TargetName}将{Name}的{penis_s}夹在自己的{face_s}和颈间，快速摩擦着，不时用嘴唇轻轻蹭过敏感的顶端。
-1005,action_part_penis_in_body_1_B,0,high_1,{TargetName}双手捧着{penis_s}，让它在自己的{face_s}上画着圈，每当龟头滑过嘴角时，都会故意发出"啾"的一声。
+1005,action_part_penis_in_body_1_B,0,high_1,{TargetName}双手捧着{penis_s}，让它在自己的{face_s}上画着圈，每当龟头滑过嘴角时，都会故意发出“啾”的一声。
 1006,action_part_penis_in_body_1_B,0,high_1,{TargetName}侧过脸，让{Name}的{penis_s}在自己柔嫩的{face_s}上来回滑动，摩擦的温度让她脸颊发烫，眼神越发迷离。
 1007,action_part_penis_in_body_1_B,0,high_1,{TargetName}上下摆动着头部，让{Name}的{penis_s}从额头滑到下巴，再从下巴滑到额头，享受着这种淫靡的玩法。
 1008,action_part_penis_in_body_1_B,0,high_1,{TargetName}双手托着{penis_s}，用{face_s}的两侧轮流摩擦着，同时发出细微的呻吟声，眼中带着青涩的淫欲。
@@ -60,7 +60,7 @@ str,str,int,str,str
 1112,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{TargetName}闭眼装睡，任由{penis_s}在她{face_s}各处游走，龟头蹭过她的嘴角时，她的嘴唇不自觉地轻轻颤抖。
 1113,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,明明醒着却闭眼装睡的{TargetName}，感受着{penis_s}在她{face_s}上的每一次摩擦，身体微微僵硬却强装无知觉。
 1114,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{TargetName}故意保持平稳的呼吸，默许{penis_s}在她{face_s}上肆意妄为，粗壮的阴茎每次擦过嘴唇都让她忍不住吞咽唾液。
-1115,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,装睡的{TargetName}眼皮微微颤动，感受着{penis_s}在{face_s}上留下的湿滑触感，却假装毫无察觉地继续"沉睡"。
+1115,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,装睡的{TargetName}眼皮微微颤动，感受着{penis_s}在{face_s}上留下的湿滑触感，却假装毫无察觉地继续“沉睡”。
 1116,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{TargetName}的呼吸略显急促，却依然紧闭双眼装睡，任由{penis_s}在她{face_s}上描绘出羞耻的轨迹。
 1117,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,装睡中的{TargetName}默许{penis_s}拍打她的{face_s}，龟头故意撞击她的脸颊时，她不得不咬紧牙关抑制表情变化。
 1118,action_part_penis_in_body_1_B,0,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{TargetName}佯装熟睡，{penis_s}在她{face_s}上滑行的每一处触感都无比清晰，但她选择继续这场羞耻的伪装。
@@ -412,8 +412,8 @@ str,str,int,str,str
 1460,action_part_penis_in_body_1_B,0,target_is_player_daughter,{TargetName}羞怯地用{face_s}磨蹭父亲的{penis_s}，乱伦的禁忌让她既害怕又兴奋，女儿的脸蛋轻轻蹭过父亲的龟头，引来{Name}的阵阵颤抖。
 1461,action_part_penis_in_body_1_B,0,target_is_player_daughter,女儿{TargetName}将父亲的{penis_s}夹在柔嫩的脸颊间，轻轻摇晃着头部，让肉棒在她的{face_s}上滑动，父女关系的禁忌让这一幕更加淫靡。
 1462,action_part_penis_in_body_1_B,0,target_is_player_daughter,{TargetName}闭着眼睛，让父亲的{penis_s}在她的{face_s}上游走，从额头到鼻尖再到脸颊，乱伦的刺激让她的呼吸变得急促。
-1463,action_part_penis_in_body_1_B,0,target_is_player_daughter,女儿{TargetName}用微微泛红的{face_s}轻蹭父亲的{penis_s}，一边小声叫着"爸爸"，一边让龟头在自己年轻的脸上留下湿漉漉的痕迹。
-1464,action_part_penis_in_body_1_B,0,target_is_player_daughter,{TargetName}用{face_s}蹭着父亲的{penis_s}，时而轻声呼唤"爸爸"，时而用嘴唇轻碰龟头，禁忌的父女关系让这场脸交更加刺激。
+1463,action_part_penis_in_body_1_B,0,target_is_player_daughter,女儿{TargetName}用微微泛红的{face_s}轻蹭父亲的{penis_s}，一边小声叫着“爸爸”，一边让龟头在自己年轻的脸上留下湿漉漉的痕迹。
+1464,action_part_penis_in_body_1_B,0,target_is_player_daughter,{TargetName}用{face_s}蹭着父亲的{penis_s}，时而轻声呼唤“爸爸”，时而用嘴唇轻碰龟头，禁忌的父女关系让这场脸交更加刺激。
 1465,action_part_penis_in_body_1_B,0,target_is_player_daughter,女儿{TargetName}将父亲的{penis_s}贴在脸侧磨蹭，{face_s}与父亲充血的肉棒形成鲜明对比，乱伦的背德感让两人都格外兴奋。
 
 1500,action_part_penis_in_body_1_B,0,CVP_A2_G_E_0,{TargetName}带着迷茫的表情，犹豫地用{face_s}蹭着{penis_s}，眼神中充满疑惑，不确定自己为何要做这样的事情，却还是缓慢地移动着脸颊。
@@ -498,7 +498,7 @@ str,str,int,str,str
 1578,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-1,{TargetName}忍着内心的抵触，用{face_s}缓慢地摩擦着{penis_s}，眼神躲闪，嘴角紧绷，显示出她内心的挣扎和无奈。
 1579,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-1,作为部下的{TargetName}被迫用{face_s}蹭动{penis_s}，表情冷淡且僵硬，每一下动作都透露出她内心的不满和被迫服从的屈辱感。
 1580,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,{TargetName}展现出专业的态度，认真地用{face_s}来回摩擦{penis_s}，虽有些迟疑但仍保持着信赖上司的执行力，就像完成一项特殊任务。
-1581,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,信任{Name}的{TargetName}用{face_s}有节奏地蹭着{penis_s}，偶尔抬眼观察上司的反应，努力以专业的态度完成这项"特殊服务"。
+1581,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,信任{Name}的{TargetName}用{face_s}有节奏地蹭着{penis_s}，偶尔抬眼观察上司的反应，努力以专业的态度完成这项“特殊服务”。
 1582,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,{TargetName}像执行重要任务般，用{face_s}仔细地摩擦{penis_s}的每一寸，虽然超出了工作范围，但她专注而认真地完成着上司交代的事情。
 1583,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,作为驯服的部下，{TargetName}将{face_s}紧贴在{penis_s}上细致地摩擦，眼中流露出对上司的信任，仿佛这只是另一种形式的工作考验。
 1584,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,{TargetName}顺从地将{face_s}贴近{penis_s}，以专业且流畅的动作来回摩擦，眼神中透露出对上司命令的接受和理解。
@@ -506,7 +506,7 @@ str,str,int,str,str
 1586,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,{TargetName}将这视为一种特殊的信任测试，用{face_s}认真地贴着{penis_s}来回移动，眼神中带着专注和对上司决定的无条件接受。
 1587,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,信赖上司的{TargetName}将{face_s}轻轻压在{penis_s}上，保持着均匀的节奏来回摩擦，表情认真如同处理其他重要工作一般。
 1588,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,{TargetName}理解这是上司的特殊需求，于是用{face_s}细致地蹭着{penis_s}的每一处，动作虽然超出常规但她仍保持着专业的执行力。
-1589,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,作为{Name}信任的部下，{TargetName}用{face_s}沿着{penis_s}的轮廓细致摩擦，眼神中流露出对这份"特殊任务"的理解和执行的决心。
+1589,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-2,作为{Name}信任的部下，{TargetName}用{face_s}沿着{penis_s}的轮廓细致摩擦，眼神中流露出对这份“特殊任务”的理解和执行的决心。
 1590,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-3,{TargetName}像忠诚的宠物一样，主动用{face_s}贴着{penis_s}来回蹭动，眼中流露出能为主人服务的喜悦，甚至发出满足的轻哼声。
 1591,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-3,作为主人的性宠，{TargetName}双眼微闭，享受地将{face_s}贴在{penis_s}上磨蹭，偶尔轻吻几下，用宠物般的亲昵动作表达着依恋。
 1592,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-3,{TargetName}乖巧地将{face_s}埋入{penis_s}周围，像小猫一样用脸颊和鼻尖轻轻蹭动，眼神中满是能够取悦主人的满足感。
@@ -518,7 +518,7 @@ str,str,int,str,str
 1598,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-3,{TargetName}享受着自己宠物的身份，用{face_s}的每一寸肌肤细致地感受{penis_s}的温度和形状，脸上洋溢着被需要的喜悦。
 1599,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-3,乖顺的{TargetName}闭着眼睛，用{face_s}虔诚地蹭着{penis_s}，偶尔伸出舌尖轻舔几下然后继续用脸颊摩擦，全身心享受着服侍主人的过程。
 1600,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,完全臣服的奴隶{TargetName}虔诚地将{face_s}贴在{penis_s}上疯狂摩擦，眼中只有对主人的狂热崇拜，仿佛这是她生命中最神圣的仪式。
-1601,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,{TargetName}彻底放弃了自我意识，用{face_s}狂热地蹭动{penis_s}的每一寸，嘴里不断重复着"主人"二字，眼中闪烁着奴性的光芒。
+1601,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,{TargetName}彻底放弃了自我意识，用{face_s}狂热地蹭动{penis_s}的每一寸，嘴里不断重复着“主人”二字，眼中闪烁着奴性的光芒。
 1602,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,沦为性奴的{TargetName}将{face_s}完全奉献给主人的{penis_s}，疯狂地左右摩擦，同时不断亲吻和赞美，眼中只有对主人的绝对服从。
 1603,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,{TargetName}彻底沉浸在奴隶的角色中，用{face_s}贪婪地摩擦着{penis_s}，每一次接触都让她满足地呻吟，仿佛这就是她存在的全部意义。
 1604,action_part_penis_in_body_1_B,0,CVP_A2_G_E_-4,性奴{TargetName}跪地将{face_s}高高仰起，让{penis_s}在上面滑动，表情陶醉且狂热，眼中只有对主人的无限崇拜和服从。
