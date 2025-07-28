@@ -110,6 +110,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     text_list = now_text.split("_")
     item_id = int(text_list[1])
     item_num = int(text_list[2])
+    item_type = ""
+    item_name = ""
 
     # 资源
     if text_list[0] == "r":
@@ -182,7 +184,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 now_have_item_num = -1
                 satify_flag = False
     # 特产
-    elif text_list[0] == _("特产"):
+    elif text_list[0] == "特产":
         # 默认值
         item_name = _("特产")
         item_type = _("特产")
@@ -196,7 +198,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             item_name = game_config.config_resouce[item_id].name
             now_have_item_num = cache.rhodes_island.materials_resouce[item_id]
     # 声望
-    elif text_list[0] == _("声望"):
+    elif text_list[0] == "声望":
         item_name = _("声望")
         item_type = _("声望")
         # 声望的显示为实际值的百分之一
@@ -215,7 +217,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             item_name = game_config.config_nation[item_id].name + item_name
             now_have_item_num = cache.country.nation_reputation[item_id]
     # 好感
-    elif text_list[0] == _("好感"):
+    elif text_list[0] == "好感":
         item_name = _("好感")
         item_type = _("好感")
         item_id = character.get_character_id_from_adv(item_id)
@@ -223,7 +225,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         item_name = cache.character_data[character_id].name + item_name
         now_have_item_num = cache.character_data[character_id].favorability[0]
     # 信赖
-    elif text_list[0] == _("信赖"):
+    elif text_list[0] == "信赖":
         item_name = _("信赖")
         item_type = _("信赖")
         item_id = character.get_character_id_from_adv(item_id)
@@ -231,7 +233,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         item_name = cache.character_data[character_id].name + item_name
         now_have_item_num = cache.character_data[character_id].trust
     # 攻略
-    elif text_list[0] == _("攻略"):
+    elif text_list[0] == "攻略":
         item_name = _("攻略程度")
         item_type = _("攻略程度")
         item_id = character.get_character_id_from_adv(item_id)
@@ -253,7 +255,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         if character_id not in cache.npc_id_got and handle_premise.handle_normal_7(character_id):
             now_have_item_num = 0
     # 追捕
-    elif text_list[0] == _("追捕"):
+    elif text_list[0] == "追捕":
         item_name = _("追捕")
         item_type = _("追捕")
         item_id = character.get_character_id_from_adv(item_id)
@@ -502,7 +504,7 @@ def create_capture_fugitive_commission(fugitive_id: int):
         people=3,
         time=3,
         demand=demand_text,
-        reward=_("追捕_{0}_1").format(fugitive_id),
+        reward="追捕_{0}_1".format(fugitive_id),
         description=_("囚犯{0}从监狱逃跑了，请尽快将其抓回。").format(fugitive_character.name),
     )
 
