@@ -747,6 +747,42 @@ class PLAYER_COLLECTION:
         """ 收集的各角色总圣水量，单位毫升 """
 
 
+class ACHIEVEMENT:
+    """成就结构体"""
+
+    def __init__(self):
+        self.achievement_dict: Dict[int, bool] = {}
+        """ 成就字典，键为成就编号，值为是否完成 """
+        self.visitor_count: int = 0
+        """ 累积邀请访客数量 """
+        self.buy_item_count: int = 0
+        """ 累积购买道具数量 """
+        self.field_commission_count: int = 0
+        """ 累积完成的外勤委托数量 """
+        self.equipment_maintenance_count: int = 0
+        """ 累积维修的装备数量 """
+        self.equipment_maintenance_count: int = 0
+        """ 累积保养的装备数量 """
+        self.time_stop_duration: int = 0
+        """ 累积时间停止的时长，单位分钟 """
+        self.production_count: int = 0
+        """ 累积生产的产品数量 """
+        self.harvest_count: int = 0
+        """ 累积收获的农作物数量 """
+        self.handle_official_business_count: int = 0
+        """ 累积处理公务的次数 """
+        self.read_book_count: int = 0
+        """ 累积读完的书的数量 """
+        self.make_food_count: int = 0
+        """ 累积制作的食物数量 """
+        self.gift_count: int = 0
+        """ 累积赠送的礼物数量 """
+        self.health_check_count: int = 0
+        """ 累积进行的身体检查人数 """
+        self.aromatherapy_count: int = 0
+        """ 累积对别人进行香薰疗愈的次数 """
+
+
 class PLAYER_ABILITY:
     """玩家能力结构体"""
 
@@ -1336,6 +1372,8 @@ class Character:
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
         """ 玩家的收藏品 """
+        self.achievement: ACHIEVEMENT = ACHIEVEMENT()
+        """ 玩家的成就 """
         self.sp_flag: SPECIAL_FLAG = SPECIAL_FLAG()
         """ 特殊flag """
         self.action_info: ACTION_INFO = ACTION_INFO()
