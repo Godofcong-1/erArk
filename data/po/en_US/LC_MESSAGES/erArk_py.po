@@ -7994,13 +7994,13 @@ msgstr ""
 "Time-type abilities (2 Sanity per minute): \n"
 
 msgid "：需要全干员无意识性交经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
-msgstr ": Total Unconscious Sex EXP ≥{0} {Currently {1}}, Total Unconscious Orgasm EXP ≥{2} {Currently {3}}"
+msgstr ": Total Unconscious Sex EXP ≥{0} （Currently {1}）, Total Unconscious Orgasm EXP ≥{2} {Currently {3}}"
 
 msgid "：需要对干员的时姦经验≥{0}（当前{1}），全干员总无意识绝顶经验≥{2}（当前{3}）"
-msgstr ": Timed Rape EXP ≥{0} {Currently {1}}, Total Unconscious Orgasm EXP ≥{2} {Currently {3}}"
+msgstr ": Timed Rape EXP ≥{0} （Currently {1}）, Total Unconscious Orgasm EXP ≥{2} （Currently {3}）"
 
 msgid "：需要对干员的睡姦经验≥{0}（当前{1}）"
-msgstr ": Sleep Rape EXP ≥{0} {Currently {1}}"
+msgstr ": Sleep Rape EXP ≥{0} （Currently {1}）"
 
 msgid ""
 "\n"
