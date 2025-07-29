@@ -4,6 +4,27 @@ str,str,int,str,str
 0,0,0,0,1
 组件配置数据,,,,
 
+100,mouth,0,high_1,湿润温暖光滑细腻，散发着甜美气息的{mouth_s}
+101,mouth,0,high_1,柔软湿润微微泛红，触感温热诱人的{mouth_s}
+102,mouth,0,high_1,温度适宜内壁光滑，带着轻微甜味的{mouth_s}
+103,mouth,0,high_1,黏膜细腻湿润透亮，触感温热舒适的{mouth_s}
+104,mouth,0,high_1,舌尖灵活湿润粉嫩，散发诱人气息的{mouth_s}
+105,mouth,0,high_1,内壁光滑湿润紧致，充满弹性触感的{mouth_s}
+106,mouth,0,high_1,唇瓣柔软内腔温热，散发淡淡甜香的{mouth_s}
+107,mouth,0,high_1,咽喉湿润触感细腻，散发迷人气息的{mouth_s}
+108,mouth,0,high_1,舌面光滑湿润灵活，带着微微体温的{mouth_s}
+109,mouth,0,high_1,内腔温度宜人湿度适中，触感柔嫩的{mouth_s}
+110,mouth,0,high_1,唇齿间湿润光滑，触碰时带来舒适感的{mouth_s}
+111,mouth,0,high_1,粉嫩湿润内壁细腻，散发微甜气息的{mouth_s}
+112,mouth,0,high_1,喉咙深处温暖湿润，触感柔软舒适的{mouth_s}
+113,mouth,0,high_1,唾液适中内壁光滑，散发淡淡香气的{mouth_s}
+114,mouth,0,high_1,口腔内壁细嫩湿润，温度恰到好处的{mouth_s}
+115,mouth,0,high_1,舌尖柔软灵活敏感，带着微微湿润的{mouth_s}
+116,mouth,0,high_1,内腔湿润富有弹性，散发迷人体香的{mouth_s}
+117,mouth,0,high_1,唇舌间温热湿滑，触感细腻舒适的{mouth_s}
+118,mouth,0,high_1,黏膜光滑有光泽，带着适宜温度的{mouth_s}
+119,mouth,0,high_1,唇齿湿润口腔温暖，散发诱人气息的{mouth_s}
+
 1000,hair,0,high_1,垂落腰间柔顺光亮，散发诱人体香的{hair_s}
 1001,hair,0,high_1,乌黑发亮如瀑布般垂落，触感丝滑的{hair_s}
 1002,hair,0,high_1,丝丝缠绕指间，透着青涩甜美气息的{hair_s}
