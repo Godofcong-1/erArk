@@ -307,6 +307,19 @@ def handle_target_love_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_LOVE_4)
+def handle_self_love_4(character_id: int) -> int:
+    """
+    校验自己是否是爱侣,爱情系第四阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.talent[204]
+
+
 @add_premise(constant_promise.Premise.TARGET_LOVE_4)
 def handle_target_love_4(character_id: int) -> int:
     """
@@ -317,10 +330,7 @@ def handle_target_love_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[204]:
-        return 1
-    return 0
+    return handle_self_love_4(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_LOVE_GE_1)
@@ -473,6 +483,19 @@ def handle_target_obey_3(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SELF_OBEY_4)
+def handle_self_obey_4(character_id: int) -> int:
+    """
+    校验自己是否是奴隶,隶属系第四阶段
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.talent[214]
+
+
 @add_premise(constant_promise.Premise.TARGET_OBEY_4)
 def handle_target_obey_4(character_id: int) -> int:
     """
@@ -483,10 +506,7 @@ def handle_target_obey_4(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    target_data = cache.character_data[character_data.target_character_id]
-    if target_data.talent[214]:
-        return 1
-    return 0
+    return handle_self_obey_4(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_OBEY_GE_1)

@@ -1008,6 +1008,7 @@ target_not_fall_obey,TARGET_NOT_FALL_OBEY,素质_陷落,交互对象没有隶属
 love_1,TARGET_LOVE_1,素质_陷落,交互对象拥有思慕（爱情系第一阶段）
 love_2,TARGET_LOVE_2,素质_陷落,交互对象拥有恋慕（爱情系第二阶段）
 love_3,TARGET_LOVE_3,素质_陷落,交互对象拥有恋人（爱情系第三阶段）
+self_love_4,SELF_LOVE_4,素质_陷落,自己拥有爱侣（爱情系第四阶段）
 love_4,TARGET_LOVE_4,素质_陷落,交互对象拥有爱侣（爱情系第四阶段）
 love_ge_1,TARGET_LOVE_GE_1,素质_陷落,交互对象爱情系且>=思慕
 love_ge_2,TARGET_LOVE_GE_2,素质_陷落,交互对象爱情系且>=恋慕
@@ -1018,6 +1019,7 @@ love_0_or_le_2,TARGET_LOVE_0_OR_LE_2,素质_陷落,交互对象无陷落或爱�
 obey_1,TARGET_OBEY_1,素质_陷落,交互对象拥有屈从（隶属系第一阶段）
 obey_2,TARGET_OBEY_2,素质_陷落,交互对象拥有驯服（隶属系第二阶段）
 obey_3,TARGET_OBEY_3,素质_陷落,交互对象拥有宠物（隶属系第三阶段）
+self_obey_4,SELF_OBEY_4,素质_陷落,自己拥有奴隶（隶属系第四阶段）
 obey_4,TARGET_OBEY_4,素质_陷落,交互对象拥有奴隶（隶属系第四阶段）
 obey_ge_1,TARGET_OBEY_GE_1,素质_陷落,交互对象隶属系且>=屈从
 obey_ge_2,TARGET_OBEY_GE_2,素质_陷落,交互对象隶属系且>=驯服
