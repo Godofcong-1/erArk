@@ -48,6 +48,8 @@ class Achievement:
     """ 成就数值需求 """
     pre_id: int
     """ 前置成就需求id """
+    special: int
+    """ 是否为特殊成就 """
     todo: int
     """ 是否未实装 """
     description: str
@@ -1473,7 +1475,6 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
-
 
 
 class TargetEffect:

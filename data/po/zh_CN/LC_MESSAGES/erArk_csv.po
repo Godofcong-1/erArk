@@ -29004,28 +29004,36 @@ msgstr ""
 msgid "企鹅物流员工，于合约期内任企鹅物流驻罗德岛外派干员。 擅长防守，能同时牵制数个敌人，并拥有怪力，能用巨锤轻松击飞瘦弱的敌人。"
 msgstr ""
 
-#: .\data\character\0201_可颂.csv:29
-msgid "黑色毛领夹克"
-msgstr ""
-
-#: .\data\character\0201_可颂.csv:30
-msgid "黑色运动内衣"
+#: .\data\character\0201_可颂.csv:15
+msgid "#F5DEB3"
 msgstr ""
 
 #: .\data\character\0201_可颂.csv:31
-msgid "白色战斗手套"
+msgid "电瓶车长檐遮阳帽"
 msgstr ""
 
 #: .\data\character\0201_可颂.csv:32
-msgid "深蓝色热裤"
+msgid "企鹅物流毛领皮夹克"
 msgstr ""
 
 #: .\data\character\0201_可颂.csv:33
-msgid "黑白色运动靴"
+msgid "黑色露脐上衣"
 msgstr ""
 
 #: .\data\character\0201_可颂.csv:34
-msgid "金属棺材盾"
+msgid "防滑白色手套"
+msgstr ""
+
+#: .\data\character\0201_可颂.csv:35
+msgid "可以系腰带的黑色热裤"
+msgstr ""
+
+#: .\data\character\0201_可颂.csv:36
+msgid "带有护具的黑色短靴"
+msgstr ""
+
+#: .\data\character\0201_可颂.csv:37
+msgid "可颂的重装用盾牌"
 msgstr ""
 
 #: .\data\character\0202_塞雷娅.csv:4
@@ -29322,6 +29330,10 @@ msgstr ""
 
 #: .\data\character\0218_安哲拉.csv:14
 msgid "伊比利亚出身，干员白炽的保镖，与白炽一同接受罗德岛的雇佣。拥有良好的狙击素养，接受专业培训后，作为狙击干员活跃在各类任务中。"
+msgstr ""
+
+#: .\data\character\0218_安哲拉.csv:28
+msgid "黑色毛领夹克"
 msgstr ""
 
 #: .\data\character\0218_安哲拉.csv:29
@@ -36746,10 +36758,6 @@ msgstr ""
 
 #: .\data\character\4078_截云.csv:14
 msgid "截云，生活在炎国西北部沙漠中的阿纳萨少女，经槐琥介绍来到罗德岛在大炎的办事处接受治疗，同时担任外勤干员。"
-msgstr ""
-
-#: .\data\character\4078_截云.csv:27
-msgid "黑色露脐上衣"
 msgstr ""
 
 #: .\data\character\4078_截云.csv:28
