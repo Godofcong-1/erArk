@@ -9,8 +9,12 @@ str,str,int,str,str
 102,body_part_common_s_A,0,high_1,滑嫩
 
 1000,body_part_common_s_A,0,CVP_A2_T|102_E_1,幼女
+1001,body_part_common_s_A,0,CVP_A2_T|102_E_1,稚嫩
+1002,body_part_common_s_A,0,CVP_A2_T|102_E_1,娇嫩
+1003,body_part_common_s_A,0,CVP_A2_T|102_E_1,幼嫩
 
 1030,body_part_common_s_A,0,CVP_A2_T|103_E_1,萝莉
+1002,body_part_common_s_A,0,CVP_A2_T|102_E_1,娇嫩
 
 1060,body_part_common_s_A,0,CVP_A2_T|104_E_1,少女
 1062,body_part_common_s_A,0,CVP_A2_T|104_E_1,青涩
@@ -45,7 +49,6 @@ str,str,int,str,str
 1203,body_part_armpit_s_A,0,t_is_assistant,义务
 
 1210,body_part_armpit_s_A,0,target_visitor_flag_1,访客
-1211,body_part_armpit_s_A,0,target_visitor_flag_1,来客
 
 2000,body_part_common_s_A,0,t_unconscious_flag,无意识
 
