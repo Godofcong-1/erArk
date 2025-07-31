@@ -7996,7 +7996,7 @@ def handle_put_into_prison_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    from Script.UI.Panel import confinement_and_training
+    from Script.UI.Panel import confinement_and_training, achievement_panel
     if not add_time:
         return
     # 获取角色数据
@@ -8013,6 +8013,8 @@ def handle_put_into_prison_add_just(
     confinement_and_training.chara_become_prisoner(target_id)
     # 角色上线
     handle_chara_on_line(target_id, add_time, change_data, now_time)
+    # 囚犯成就
+    # achievement_panel.achievement_flow(_("囚犯"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)

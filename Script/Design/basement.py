@@ -503,6 +503,7 @@ def settle_income():
     """
     结算收入
     """
+    from Script.UI.Panel import achievement_panel
 
     # 计算医疗部收入
     today_cure_income = int(cache.rhodes_island.cure_income)
@@ -534,6 +535,8 @@ def settle_income():
     now_draw.text = now_draw_text
     now_draw.draw()
 
+    # 结算龙门币成就
+    # achievement_panel.achievement_flow(_("龙门币"))
 
 def settle_pink_certificate():
     """

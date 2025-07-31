@@ -36,6 +36,7 @@ def update_sleep():
     Return arguments:
     无
     """
+    from Script.UI.Panel import achievement_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -90,6 +91,8 @@ def update_sleep():
 
     # 非角色部分
     cache.pl_sleep_save_flag = True
+    # 结算周目成就
+    # achievement_panel.achievement_flow(_("周目"))
 
 
 def settle_character_juel(character_id: int) -> int:

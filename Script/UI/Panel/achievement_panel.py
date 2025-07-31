@@ -29,6 +29,8 @@ def achievement_flow(achievement_type: str):
         _("关系"): settle_chara_relationship,
         _("招募"): settle_recruit_achievement,
         _("访客"): settle_invite_achievement,
+        _("囚犯"): settle_prisoner_achievement,
+        _("龙门币"): settle_money_achievement,
     }
     # 根据类型获取对应的结算函数
     func = achievement_type_func_dict.get(achievement_type)
@@ -62,22 +64,36 @@ def draw_achievement_notice(achievement_id_list: list[int]):
         now_draw.style = 'gold_enrod'
         now_draw.draw()
 
+def settle_achievement(judge_value: int, achievement_ids):
+    """
+    通用成就结算函数（支持单个或批量）\n
+    输入：\n
+    - judge_value: int，判断值\n
+    - achievement_ids: int 或 list[int]，成就ID或成就ID列表\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID\n
+    功能：判断是否达成成就，如果达成则更新缓存中的成就
+    """
+    # 如果achievement_ids是单个成就ID，则转换为列表
+    if isinstance(achievement_ids, int):
+        achievement_ids = [achievement_ids]
+    return_list = []
+    for achievement_id in achievement_ids:
+        # 判断是否达成成就
+        if judge_value >= game_config.config_achievement[achievement_id].value and not cache.achievement.achievement_dict.get(achievement_id, False):
+            cache.achievement.achievement_dict[achievement_id] = True
+            return_list.append(achievement_id)
+    return return_list
+
+
 def settle_round_achievement():
     """
     结算周目类的成就\n
     返回：\n
     - return_list: 成就列表，包含已达成的成就ID
     """
-    return_list = []
-    # 成就1，首次创建角色
-    if cache.game_round >= game_config.config_achievement[1].value and cache.achievement.achievement_dict.get(1, False) == False:
-        cache.achievement.achievement_dict[1] = True
-        return_list.append(1)
-    # 成就2，进入第二周目
-    if cache.game_round >= game_config.config_achievement[2].value and cache.achievement.achievement_dict.get(2, False) == False:
-        cache.achievement.achievement_dict[2] = True
-        return_list.append(2)
-    return return_list
+    return settle_achievement(cache.game_round, [1, 2])
+
 
 def settle_chara_relationship():
     """
@@ -142,16 +158,8 @@ def settle_recruit_achievement():
     返回：\n
     - return_list: 成就列表，包含已达成的成就ID
     """
-    return_list = []
-    # 成就101，招募1个干员
-    if cache.achievement.recruit_count >= game_config.config_achievement[101] and cache.achievement.achievement_dict.get(101, False) == False:
-        cache.achievement.achievement_dict[101] = True
-        return_list.append(101)
-    # 成就102，招募100个干员
-    if cache.achievement.recruit_count >= game_config.config_achievement[102].value and cache.achievement.achievement_dict.get(102, False) == False:
-        cache.achievement.achievement_dict[102] = True
-        return_list.append(102)
-    return return_list
+    return settle_achievement(cache.achievement.recruit_count, [101, 102])
+
 
 def settle_invite_achievement():
     """
@@ -159,17 +167,27 @@ def settle_invite_achievement():
     返回：\n
     - return_list: 成就列表，包含已达成的成就ID
     """
-    return_list = []
-    # 成就111，邀请1个访客
-    if cache.achievement.visitor_count >= game_config.config_achievement[111] and cache.achievement.achievement_dict.get(111, False) == False:
-        cache.achievement.achievement_dict[111] = True
-        return_list.append(111)
-    # 成就112，邀请30个访客
-    if cache.achievement.visitor_count >= game_config.config_achievement[112] and cache.achievement.achievement_dict.get(112, False) == False:
-        cache.achievement.achievement_dict[112] = True
-        return_list.append(112)
-    return return_list
+    return settle_achievement(cache.achievement.visitor_count, [111, 112])
 
+
+def settle_prisoner_achievement():
+    """
+    结算囚犯数量的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    prisoner_count = len(cache.rhodes_island.current_prisoners)
+    return settle_achievement(prisoner_count, [121, 122])
+
+
+def settle_money_achievement():
+    """
+    结算龙门币成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    money = cache.rhodes_island.materials_resouce[1]
+    return settle_achievement(money, [201, 202, 203])
 
 class Achievement_Panel:
     """
