@@ -16,6 +16,7 @@ translation_dict = {}
 # 可能每种语言都有多个.mo文件，这里是.mo文件的名称列表
 mo_files_per_language = {
     "en_US": ["erArk", "erArk_py", "erArk_csv", "erArk_talk"],
+    "ko_KR": ["erArk", "erArk_py", "erArk_csv", "erArk_talk"],
 }
 
 # 接受一个语言和对应的.mo文件列表，然后为这些文件创建一个GNUTranslations实例链
