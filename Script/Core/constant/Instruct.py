@@ -109,6 +109,12 @@ class Instruct:
     """ 照顾婴儿 """
     ORDER_HOTEL_ROOM = 0
     """ 预定房间 """
+    SEE_COLLECTION = 0
+    """ 查看收藏品 """
+    SEE_ACHIEVEMENT = 0
+    """ 查看成就 """
+    SEE_FRIDGE = 0
+    """ 查看冰箱 """
 
     #娱乐#
     SINGING = 0
@@ -227,10 +233,6 @@ class Instruct:
     """ 资源交易 """
     NAVIGATION = 0
     """ 导航 """
-    SEE_COLLECTION = 0
-    """ 查看收藏品 """
-    SEE_FRIDGE = 0
-    """ 查看冰箱 """
     MANAGE_BASEMENT = 0
     """ 管理罗德岛 """
 

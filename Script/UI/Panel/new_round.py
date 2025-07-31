@@ -557,6 +557,7 @@ class New_Round_Handle:
         开始新的周目
         """
         from Script.Design import talk
+        from Script.UI.Panel import achievement_panel
 
         # 输出送别干员的送别口上
         if self.farewell_npc_id:
@@ -600,6 +601,7 @@ class New_Round_Handle:
             button_draw.draw()
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
+                # achievement_panel.achievement_flow(_("周目"))
                 break
 
     def build_new_character_data(self, character_id: int):

@@ -108,7 +108,7 @@ def settle_visitor_arrivals(visitor_id = 0):
     return 0 时，没有访客抵达
     return 1 时，有访客抵达
     """
-    from Script.UI.Panel import recruit_panel
+    from Script.UI.Panel import recruit_panel, achievement_panel
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
     now_draw.style = "gold_enrod"
@@ -141,6 +141,9 @@ def settle_visitor_arrivals(visitor_id = 0):
         # 输出提示信息
         now_draw.text = _("\n ○【{0}】作为临时访客抵达了罗德岛\n").format(cache.character_data[visitor_id].name)
         now_draw.draw()
+        # 结算访客成就
+        cache.achievement.visitor_count += 1
+        # achievement_panel.achievement_flow(_("访客"))
         return 1
 
 def visitor_leave(character_id: int):

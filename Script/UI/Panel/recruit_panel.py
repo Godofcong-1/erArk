@@ -1,4 +1,4 @@
-from typing import Tuple, Dict, List
+from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import attr_calculation, basement, handle_premise
@@ -18,6 +18,45 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+def recruit_new_chara():
+    """
+    招募新干员\n
+    输入：无\n
+    返回：bool，是否招募成功\n
+    说明：\n
+    - 如果宿舍已满，则提示宿舍不足，无法招募\n
+    - 如果有待确认的招募干员，则随机招募一名新干员，并更新缓存数据\n
+    - 如果没有待确认的招募干员，则提示没有可招募的干员\n
+    """
+    from Script.Design import character_handle
+    from Script.UI.Panel import achievement_panel
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.style = "gold_enrod"
+    now_draw.text = ""
+
+    if len(cache.npc_id_got) >= cache.rhodes_island.people_max:
+        now_draw.text += _("\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
+        now_draw.draw()
+        return False
+
+    elif len(cache.rhodes_island.recruited_id):
+        # 从待招募的干员中选择
+        new_chara_id = cache.rhodes_island.recruited_id.pop()
+        # 招募该干员
+        character_handle.get_new_character(new_chara_id)
+        character_data = cache.character_data[new_chara_id]
+        now_draw.text += _("\n\n   ※ 成功招募了{0} ※\n\n").format(character_data.name)
+        now_draw.draw()
+        # 招募人数成就计数
+        cache.achievement.recruit_count += 1
+        # 招募成就结算
+        # achievement_panel.achievement_flow(_("招募"))
+        return True
+    else:
+        return False
+
 
 def find_recruitable_npc() -> List[int]:
     """

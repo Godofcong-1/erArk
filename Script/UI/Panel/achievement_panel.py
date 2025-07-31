@@ -1,4 +1,5 @@
 from types import FunctionType
+from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import handle_premise
 from Script.UI.Moudle import draw, panel
@@ -15,16 +16,26 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-def achievement_flow():
+def achievement_flow(achievement_type: str):
     """
     成就系统流程\n
-    1. 结算成就获得\n
-    2. 绘制成就获得提示
+    输入：\n
+    - achievement_type: str，成就类型\n
+    功能：根据类型结算成就并绘制获得提示
     """
-    achievement_id_list = []
-    # 结算角色关系类成就
-    relationship_achievement_list = settle_chara_relationship()
-    achievement_id_list.extend(relationship_achievement_list)
+    # 成就类型与结算函数的映射字典
+    achievement_type_func_dict = {
+        _("周目"): settle_round_achievement,
+        _("关系"): settle_chara_relationship,
+        _("招募"): settle_recruit_achievement,
+        _("访客"): settle_invite_achievement,
+    }
+    # 根据类型获取对应的结算函数
+    func = achievement_type_func_dict.get(achievement_type)
+    if func is None:
+        return
+    # 调用结算函数，获得成就ID列表
+    achievement_id_list = func()
     # 绘制成就获得提示
     draw_achievement_notice(achievement_id_list)
 
@@ -42,12 +53,31 @@ def draw_achievement_notice(achievement_id_list: list[int]):
         # 获取成就信息
         achievement_data = game_config.config_achievement[achievement_id]
         name = achievement_data.name
+        description = achievement_data.description
         # 绘制成就获得提示
-        now_draw = draw.NormalDraw()
-        draw_text = _("\n获得成就：{name}\n").format(name=name)
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n\n   ○ 获得成就：{name} ○\n").format(name=name)
+        draw_text += _("      （{description}）\n\n\n").format(description=description)
         now_draw.text = draw_text
         now_draw.style = 'gold_enrod'
         now_draw.draw()
+
+def settle_round_achievement():
+    """
+    结算周目类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 成就1，首次创建角色
+    if cache.game_round >= game_config.config_achievement[1].value and cache.achievement.achievement_dict.get(1, False) == False:
+        cache.achievement.achievement_dict[1] = True
+        return_list.append(1)
+    # 成就2，进入第二周目
+    if cache.game_round >= game_config.config_achievement[2].value and cache.achievement.achievement_dict.get(2, False) == False:
+        cache.achievement.achievement_dict[2] = True
+        return_list.append(2)
+    return return_list
 
 def settle_chara_relationship():
     """
@@ -80,29 +110,187 @@ def settle_chara_relationship():
         if handle_premise.handle_self_obey_4(chara_id):
             slave_count += 1
 
-    pl_character_data = cache.character_data[0]
     # 成就51，首次爱情线路
-    if love_flag and pl_character_data.achievement.achievement_dict.get(51, False) == False:
-        pl_character_data.achievement.achievement_dict[51] = True
+    if love_flag and cache.achievement.achievement_dict.get(51, False) == False:
+        cache.achievement.achievement_dict[51] = True
         return_list.append(51)
     # 成就52，首个爱侣
-    if lover_count > 0 and pl_character_data.achievement.achievement_dict.get(52, False) == False:
-        pl_character_data.achievement.achievement_dict[52] = True
+    if lover_count >= game_config.config_achievement[52].value and cache.achievement.achievement_dict.get(52, False) == False:
+        cache.achievement.achievement_dict[52] = True
         return_list.append(52)
     # 成就53，爱侣人数100
-    if lover_count >= 100 and pl_character_data.achievement.achievement_dict.get(53, False) == False:
-        pl_character_data.achievement.achievement_dict[53] = True
+    if lover_count >= game_config.config_achievement[53].value and cache.achievement.achievement_dict.get(53, False) == False:
+        cache.achievement.achievement_dict[53] = True
         return_list.append(53)
     # 成就61，首次隶属线路
-    if obey_flag and pl_character_data.achievement.achievement_dict.get(61, False) == False:
-        pl_character_data.achievement.achievement_dict[61] = True
+    if obey_flag and cache.achievement.achievement_dict.get(61, False) == False:
+        cache.achievement.achievement_dict[61] = True
         return_list.append(61)
     # 成就62，首个奴隶
-    if slave_count > 0 and pl_character_data.achievement.achievement_dict.get(62, False) == False:
-        pl_character_data.achievement.achievement_dict[62] = True
+    if slave_count >= game_config.config_achievement[62].value and cache.achievement.achievement_dict.get(62, False) == False:
+        cache.achievement.achievement_dict[62] = True
         return_list.append(62)
     # 成就63，奴隶人数100
-    if slave_count >= 100 and pl_character_data.achievement.achievement_dict.get(63, False) == False:
-        pl_character_data.achievement.achievement_dict[63] = True
+    if slave_count >= game_config.config_achievement[63].value and cache.achievement.achievement_dict.get(63, False) == False:
+        cache.achievement.achievement_dict[63] = True
         return_list.append(63)
     return return_list
+
+def settle_recruit_achievement():
+    """
+    结算招募干员数量的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 成就101，招募1个干员
+    if cache.achievement.recruit_count >= game_config.config_achievement[101] and cache.achievement.achievement_dict.get(101, False) == False:
+        cache.achievement.achievement_dict[101] = True
+        return_list.append(101)
+    # 成就102，招募100个干员
+    if cache.achievement.recruit_count >= game_config.config_achievement[102].value and cache.achievement.achievement_dict.get(102, False) == False:
+        cache.achievement.achievement_dict[102] = True
+        return_list.append(102)
+    return return_list
+
+def settle_invite_achievement():
+    """
+    结算邀请访客数量的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 成就111，邀请1个访客
+    if cache.achievement.visitor_count >= game_config.config_achievement[111] and cache.achievement.achievement_dict.get(111, False) == False:
+        cache.achievement.achievement_dict[111] = True
+        return_list.append(111)
+    # 成就112，邀请30个访客
+    if cache.achievement.visitor_count >= game_config.config_achievement[112] and cache.achievement.achievement_dict.get(112, False) == False:
+        cache.achievement.achievement_dict[112] = True
+        return_list.append(112)
+    return return_list
+
+
+class Achievement_Panel:
+    """
+    用于显示成就界面面板对象
+    Keyword arguments:
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 绘制的最大宽度 """
+        self.draw_list: List[draw.NormalDraw] = []
+        """ 绘制的文本列表 """
+
+    def draw(self):
+        """绘制对象"""
+
+        title_text = _("成就")
+
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+        handle_sub_panel = panel.PageHandlePanel([], Achievement_Draw, 10, 1, self.width, 1, 1, 0)
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            info_text = _("○高难成就需要前置成就才能解锁，隐藏成就才达成前不显示解锁条件\n")
+            info_text += _("当前成绩达成：")
+            len_got = 0
+            for cid in cache.achievement.achievement_dict:
+                if cache.achievement.achievement_dict[cid]:
+                    len_got += 1
+            total = len(game_config.config_achievement)
+            info_text += f"{len_got}/{total}\n"
+
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.draw()
+
+            line_feed.draw()
+
+            # 遍历成就列表
+            draw_achievement_list = []
+            for cid in game_config.config_achievement:
+                achievement_data = game_config.config_achievement[cid]
+                cache.achievement.achievement_dict.setdefault(cid, False)
+                # 跳过未实装的
+                if achievement_data.todo == 1:
+                    continue
+                # 跳过有前置需求且前置需求没满足的
+                if achievement_data.pre_id and not cache.achievement.achievement_dict.get(achievement_data.pre_id, False):
+                    continue
+                # 跳过未达成的隐藏成就
+                if achievement_data.special and not cache.achievement.achievement_dict.get(cid, False):
+                    continue
+                draw_achievement_list.append(cid)
+
+            # 更新当前面板
+            handle_sub_panel.text_list = draw_achievement_list
+            handle_sub_panel.update()
+            handle_sub_panel.draw()
+
+            return_list.extend(handle_sub_panel.return_list)
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+class Achievement_Draw:
+    """
+    信物绘制对象
+    Keyword arguments:
+    text -- 道具id
+    width -- 最大宽度
+    """
+
+    def __init__(self, achievement_cid: int, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.achievement_cid: int = achievement_cid
+        """ 成就id """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.is_button: bool = is_button
+        """ 是否为按钮 """
+        self.num_button: bool = num_button
+        """ 是否为数字按钮 """
+        self.button_id: int = button_id
+        """ 按钮编号 """
+
+        # 成就数据
+        achievement_data = game_config.config_achievement[achievement_cid]
+        # 判断是否已达成
+        get_flag = cache.achievement.achievement_dict.get(achievement_cid, False)
+        if get_flag:
+            achievement_text = "●"
+            draw_style = 'standard'
+            # 特殊成就特殊标志
+            if achievement_data.special:
+                achievement_text = "★"
+                draw_style = 'gold_enrod'
+        else:
+            achievement_text = "○"
+            draw_style = 'deep_gray'
+
+        achievement_name = achievement_data.name
+        achievement_description = achievement_data.description
+        achievement_text += f"{achievement_name}：{achievement_description}"
+        # 绘制
+        achievement_draw = draw.NormalDraw()
+        achievement_draw.text = achievement_text
+        achievement_draw.style = draw_style
+        self.draw_text = ""
+        self.now_draw = achievement_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()

@@ -3,6 +3,7 @@ from Script.Design import attr_calculation, handle_premise
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
+from Script.UI.Panel import achievement_panel
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -68,6 +69,9 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
             now_draw_succed.text = _("\n{0}获得了【{1}】\n").format(character_data.name, talent_name)
             now_draw_succed.draw()
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
+
+    # 结算陷落素质的成就
+    # achievement_panel.achievement_flow(_("关系"))
 
     # 特殊素质获得
     if now_gain_type == 0:

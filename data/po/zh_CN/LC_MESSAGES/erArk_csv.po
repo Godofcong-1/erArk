@@ -241,7 +241,7 @@ msgid "首次创建角色"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:7
-msgid "第二人生"
+msgid "再次醒来"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:7
@@ -30868,39 +30868,39 @@ msgstr ""
 msgid "惊蛰，炎国大理寺所属官员，与罗德岛签署搜查协议后暂居于罗德岛。身具久经训练的战斗技巧与独特的源石技艺，在歼灭战、阵地战中表现优异，但因其身份特殊、动机暧昧，建议在交流中采用被动不合作态度。"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:27
+#: .\data\character\0306_惊蛰.csv:28
 msgid "工作证"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:28
+#: .\data\character\0306_惊蛰.csv:29
 msgid "皮质钉刺项圈"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:29
+#: .\data\character\0306_惊蛰.csv:30
 msgid "白色落肩单排扣喇叭袖垂带轻羽绒服"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:30
+#: .\data\character\0306_惊蛰.csv:31
 msgid "拼接款高腰式侧开口修身无袖高领单层布其纱哑光连衣裙"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:31
+#: .\data\character\0306_惊蛰.csv:32
 msgid "哑光黑裤袜"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:32
+#: .\data\character\0306_惊蛰.csv:33
 msgid "黑色棉质护膝"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:33
+#: .\data\character\0306_惊蛰.csv:34
 msgid "黑色绑带超高跟鞋"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:34
+#: .\data\character\0306_惊蛰.csv:35
 msgid "长柄蓄能原石法杖"
 msgstr ""
 
-#: .\data\character\0306_惊蛰.csv:35
+#: .\data\character\0306_惊蛰.csv:36
 msgid "浮游单元"
 msgstr ""
 
@@ -37474,6 +37474,58 @@ msgstr ""
 
 #: .\data\character\4177_水灯心.csv:38
 msgid "部落风旅行皮革包"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:4
+msgid "蒂比"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:13
+msgid "一个喷漆罐，嗞——可以拿它在墙上喷绘你喜欢的图案，但不要随便乱涂乱画哦。"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:14
+msgid "蒂比，蓝卡坞场景喷绘师。由本人主动联系，希望推动罗德岛与蓝卡坞双方，就为蓝卡坞感染者员工和演员提供医疗服务的问题，建立相关合作关系，同时根据本人意愿，作为特种干员为罗德岛提供服务。"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:30
+msgid "粉饰涂鸦棒球帽"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:31
+msgid "涂鸦风宽松连帽夹克"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:32
+msgid "亮黄色工装背带胸兜"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:33
+msgid "白色纯棉内搭背心"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:34
+msgid "黄色防滑工作手套"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:35
+msgid "蓝色牛仔工装短裤"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:36
+msgid "破洞深色小腿袜"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:37
+msgid "多绑带厚底机能靴"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:38
+msgid "便携式喷漆枪"
+msgstr ""
+
+#: .\data\character\4191_蒂比.csv:39
+msgid "浮空装置"
 msgstr ""
 
 #: .\data\character\4193_蕾缪安.csv:4

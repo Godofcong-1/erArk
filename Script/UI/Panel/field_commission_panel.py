@@ -573,7 +573,6 @@ class Field_Commission_Panel:
 
             facility_info_draw = draw.NormalDraw()
             facility_info_draw.text = facility_info_text
-            facility_info_draw.width = self.width
             facility_info_draw.draw()
             line = draw.LineDraw("+", self.width)
             line.draw()

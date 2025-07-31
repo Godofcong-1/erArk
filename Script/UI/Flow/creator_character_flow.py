@@ -65,6 +65,7 @@ def game_start():
     """初始化游戏数据"""
     cache = cache_control.cache
     from Script.Design import cooking
+    from Script.UI.Panel import achievement_panel
 
     character_handle.init_character_dormitory()
     character_handle.init_character_position()
@@ -76,6 +77,7 @@ def game_start():
     cache.country = attr_calculation.get_country_reset(cache.country)
     basement.get_base_updata()
     character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面
+    # achievement_panel.achievement_flow(_("周目"))
     # print(f"debug 2facility_open = {cache.base_resouce.facility_open}")
 
 def confirm_game_info_panel():

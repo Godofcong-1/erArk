@@ -753,6 +753,8 @@ class ACHIEVEMENT:
     def __init__(self):
         self.achievement_dict: Dict[int, bool] = {}
         """ 成就字典，键为成就编号，值为是否完成 """
+        self.recruit_count: int = 0
+        """ 累积招募干员数量 """
         self.visitor_count: int = 0
         """ 累积邀请访客数量 """
         self.buy_item_count: int = 0
@@ -1372,8 +1374,6 @@ class Character:
         """ 玩家的特殊能力 """
         self.pl_collection: PLAYER_COLLECTION = PLAYER_COLLECTION()
         """ 玩家的收藏品 """
-        self.achievement: ACHIEVEMENT = ACHIEVEMENT()
-        """ 玩家的成就 """
         self.sp_flag: SPECIAL_FLAG = SPECIAL_FLAG()
         """ 特殊flag """
         self.action_info: ACTION_INFO = ACTION_INFO()
@@ -1524,6 +1524,8 @@ class Cache:
         """ ai设定 """
         self.country: Country = Country()
         """ 大地图国家数据 """
+        self.achievement: ACHIEVEMENT = ACHIEVEMENT()
+        """ 成就 """
 
 class TargetChange:
     """交互对象角色变化结构体"""

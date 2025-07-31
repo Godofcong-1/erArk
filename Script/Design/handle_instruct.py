@@ -454,30 +454,6 @@ def handle_chat_with_ai():
 
 
 @add_instruct(
-    constant.Instruct.SEE_COLLECTION,
-    constant.InstructType.WORK,
-    _("查看收藏品"),
-    {
-        constant_promise.Premise.IN_COLLECTION_ROOM
-    })
-def handle_see_collection():
-    """处理查看收藏品指令"""
-    cache.now_panel_id = constant.Panel.COLLECTION
-
-
-@add_instruct(
-    constant.Instruct.SEE_FRIDGE,
-    constant.InstructType.WORK,
-    _("查看冰箱"),
-    {
-        constant_promise.Premise.IN_KITCHEN
-    })
-def handle_see_fridge():
-    """处理查看冰箱指令"""
-    cache.now_panel_id = constant.Panel.FRIDGE
-
-
-@add_instruct(
     constant.Instruct.TEACH,
     constant.InstructType.WORK,
     _("授课"),
@@ -1824,6 +1800,45 @@ def handle_order_hotel_room():
 
 
 @add_instruct(
+    constant.Instruct.SEE_COLLECTION,
+    constant.InstructType.DAILY,
+    _("查看收藏品"),
+    {
+        constant_promise.Premise.IN_COLLECTION_ROOM
+    })
+def handle_see_collection():
+    """处理查看收藏品指令"""
+    cache.now_panel_id = constant.Panel.COLLECTION
+
+
+@add_instruct(
+    constant.Instruct.SEE_ACHIEVEMENT,
+    constant.InstructType.DAILY,
+    _("查看成就"),
+    {
+        constant_promise.Premise.IN_COLLECTION_ROOM,
+        constant_promise.Premise.TO_DO
+    })
+def handle_see_achievement():
+    """处理查看成就指令"""
+    from Script.UI.Panel import achievement_panel
+    now_panel = achievement_panel.Achievement_Panel(width)
+    now_panel.draw()
+
+
+@add_instruct(
+    constant.Instruct.SEE_FRIDGE,
+    constant.InstructType.DAILY,
+    _("查看冰箱"),
+    {
+        constant_promise.Premise.IN_KITCHEN
+    })
+def handle_see_fridge():
+    """处理查看冰箱指令"""
+    cache.now_panel_id = constant.Panel.FRIDGE
+
+
+@add_instruct(
     constant.Instruct.FIELD_COMMISSION,
     constant.InstructType.WORK,
     _("外勤委托"),
@@ -3024,21 +3039,8 @@ def handle_recruit():
 )
 def handle_confim_recruit():
     """处理确认已招募干员指令"""
-    now_draw = draw.WaitDraw()
-    now_draw.width = width
-    now_draw.style = "gold_enrod"
-    now_draw.text = ""
-
-    if len(cache.npc_id_got) >= cache.rhodes_island.people_max:
-        now_draw.text += _("\n\n   ※ 空余宿舍不足，无法招募 ※\n\n")
-        now_draw.draw()
-
-    elif len(cache.rhodes_island.recruited_id):
-        new_chara_id = cache.rhodes_island.recruited_id.pop()
-        character_handle.get_new_character(new_chara_id)
-        character_data = cache.character_data[new_chara_id]
-        now_draw.text += _("\n\n   ※ 成功招募了{0} ※\n\n").format(character_data.name)
-        now_draw.draw()
+    from Script.UI.Panel import recruit_panel
+    if recruit_panel.recruit_new_chara():
         chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 5)
 
 
