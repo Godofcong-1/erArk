@@ -120,14 +120,16 @@ class Collection_Panel:
     def draw(self):
         """绘制对象"""
 
-        character_data: game_type.Character = cache.character_data[0]
+        pl_character_data: game_type.Character = cache.character_data[0]
         refresh_all_bonus()
 
         title_text = _("收藏品")
         collection_type_list = [_("信物"), _("内裤"), _("袜子")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        handle_panel = panel.PageHandlePanel([], collection_Draw, 10, 5, self.width, 1, 1, 0)
+        handle_token_panel = panel.PageHandlePanel([], Token_Draw, 10, 1, self.width, 1, 1, 0)
+        handle_pan_panel = panel.PageHandlePanel([], Pan_Draw, 10, 1, self.width, 1, 1, 0)
+        handle_socks_panel = panel.PageHandlePanel([], Socks_Draw, 10, 1, self.width, 1, 1, 0)
         while 1:
             return_list = []
             title_draw.draw()
@@ -167,7 +169,7 @@ class Collection_Panel:
             for cid in game_config.config_collection_bonus_data:
 
                 # 判断是否已经解锁前段奖励
-                un_lock_flag = not (cid in [1,101,201] or character_data.pl_collection.collection_bonus[cid - 1])
+                un_lock_flag = not (cid in [1,101,201] or pl_character_data.pl_collection.collection_bonus[cid - 1])
 
                 now_bonus = game_config.config_collection_bonus_data[cid]
                 bonus_text = ""
@@ -192,7 +194,7 @@ class Collection_Panel:
                 # 仅绘制当前面板，且根据是否已解锁来判断是绘制文本还是按钮
                 if draw_flag:
                     line_feed.draw()
-                    if character_data.pl_collection.collection_bonus[cid] or un_lock_flag:
+                    if pl_character_data.pl_collection.collection_bonus[cid] or un_lock_flag:
                         bonus_draw = draw.NormalDraw()
                         bonus_draw.text = "  ●" + bonus_text
                         # bonus_draw.style = "onbutton"
@@ -218,82 +220,66 @@ class Collection_Panel:
             if self.now_panel == _("信物"):
                 # 统计当前信物收集数
                 self.token_count = 0
+                token_chara_list = []
                 for npc_id in cache.npc_id_got:
                     if npc_id == 0:
                         continue
-                    if character_data.pl_collection.token_list[npc_id]:
-                        npc_name = cache.character_data[npc_id].name
-                        npc_token = cache.character_data[npc_id].token_text
-                        collection_text += f"\n  {npc_name}：{npc_token}"
+                    if pl_character_data.pl_collection.token_list[npc_id]:
+                        token_chara_list.append(npc_id)
                         self.token_count += 1
+                # 更新当前面板，并清空其他面板
+                handle_token_panel.text_list = token_chara_list
+                handle_token_panel.update()
+                handle_pan_panel.text_list = []
+                handle_socks_panel.text_list = []
                 collection_text += _("\n当前共{0}个\n").format(self.token_count)
 
             elif self.now_panel == _("内裤"):
 
                 # 统计当前内裤收集数
                 self.pan_count = 0
+                pan_chara_list = []
 
                 for npc_id in cache.npc_id_got:
-                    if npc_id != 0:
+                    if npc_id == 0:
+                        continue
+                    # 如果有收集到该角色的处子胖次或其他普通胖次
+                    if pl_character_data.pl_collection.first_panties[npc_id] != "" or len(pl_character_data.pl_collection.npc_panties[npc_id]):
+                        pan_chara_list.append(npc_id)
+                        # 处子血胖次
+                        if npc_id in pl_character_data.pl_collection.first_panties and pl_character_data.pl_collection.first_panties[npc_id] != "":
+                            self.pan_count += 1
+                        if npc_id in pl_character_data.pl_collection.npc_panties:
+                            # 统计当前角色的普通胖次数量
+                            self.pan_count += len(pl_character_data.pl_collection.npc_panties[npc_id])
 
-                        # 如果有收集到该角色的处子胖次或其他普通胖次则开始绘制
-                        if character_data.pl_collection.first_panties[npc_id] != "" or len(character_data.pl_collection.npc_panties[npc_id]):
-
-                            # 首先对列表进行排序
-                            character_data.pl_collection.npc_panties[npc_id].sort()
-
-                            npc_name = cache.character_data[npc_id].name
-                            collection_text += f"\n  {npc_name}："
-                            if npc_id in character_data.pl_collection.first_panties and character_data.pl_collection.first_panties[npc_id] != "":
-                                collection_text += f" {character_data.pl_collection.first_panties[npc_id]}"
-                                self.pan_count += 1
-                            if npc_id in character_data.pl_collection.npc_panties:
-
-                                # 统计当前角色的普通胖次数量
-                                self.pan_count += len(character_data.pl_collection.npc_panties[npc_id])
-
-                                # 通过字典统计，输出每种内裤的数量
-                                pan_counts = {}
-                                for pan in character_data.pl_collection.npc_panties[npc_id]:
-                                    pan_counts[pan] = pan_counts.get(pan, 0) + 1
-                                
-                                for pan, count in pan_counts.items():
-                                    collection_text += f" {pan}({count})"
-
-                            collection_text += f"\n"
+                # 更新当前面板，并清空其他面板
+                handle_pan_panel.text_list = pan_chara_list
+                handle_pan_panel.update()
+                handle_token_panel.text_list = []
+                handle_socks_panel.text_list = []
                 collection_text += _("\n当前共{0}条\n").format(self.pan_count)
-
 
 
             elif self.now_panel == _("袜子"):
 
                 # 统计当前袜子收集数
                 self.sock_count = 0
+                socks_chara_list = []
 
                 for npc_id in cache.npc_id_got:
-                    if npc_id != 0:
-
-                        if len(character_data.pl_collection.npc_socks[npc_id]):
-
-                            # 首先对列表进行排序
-                            character_data.pl_collection.npc_socks[npc_id].sort()
-
-                            npc_name = cache.character_data[npc_id].name
-                            collection_text += f"\n  {npc_name}："
-                            if npc_id in character_data.pl_collection.npc_socks:
-
-                                # 统计当前角色的袜子数量
-                                self.sock_count += len(character_data.pl_collection.npc_socks[npc_id])
-
-                                # 通过字典统计，输出每种袜子的数量
-                                sock_counts = {}
-                                for sock in character_data.pl_collection.npc_socks[npc_id]:
-                                    sock_counts[sock] = sock_counts.get(sock, 0) + 1
-
-                                for sock, count in sock_counts.items():
-                                    collection_text += f" {sock}({count})"
-
-                            collection_text += f"\n"
+                    if npc_id == 0:
+                        continue
+                    if len(pl_character_data.pl_collection.npc_socks[npc_id]):
+                        socks_chara_list.append(npc_id)
+                        if npc_id in pl_character_data.pl_collection.npc_socks:
+                            # 统计当前角色的袜子数量
+                            self.sock_count += len(pl_character_data.pl_collection.npc_socks[npc_id])
+                # 更新当前面板，并清空其他面板
+                handle_socks_panel.text_list = socks_chara_list
+                handle_socks_panel.update()
+                handle_token_panel.text_list = []
+                handle_pan_panel.text_list = []
                 collection_text += _("\n当前共{0}双\n").format(self.sock_count)
 
 
@@ -301,8 +287,18 @@ class Collection_Panel:
             collection_draw.width = self.width
             collection_draw.draw()
 
+            # 绘制信物、内裤、袜子信息
+            if len(handle_token_panel.text_list):
+                handle_token_panel.draw()
+            if len(handle_pan_panel.text_list):
+                handle_pan_panel.draw()
+            if len(handle_socks_panel.text_list):
+                handle_socks_panel.draw()
 
-            return_list.extend(handle_panel.return_list)
+            return_list.extend(handle_token_panel.return_list)
+            return_list.extend(handle_pan_panel.return_list)
+            return_list.extend(handle_socks_panel.return_list)
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             return_list.append(back_draw.return_text)
@@ -366,27 +362,136 @@ class Collection_Panel:
         info_draw.draw()
 
 
-class collection_Draw:
+class Token_Draw:
     """
-    收藏品绘制对象
+    信物绘制对象
     Keyword arguments:
     text -- 道具id
     width -- 最大宽度
     """
 
-    def __init__(self, text: int, width: int):
+    def __init__(self, character_id: int, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
+        self.character_id: int = character_id
+        """ 角色id """
         self.draw_text: str = ""
         """ 绘制文本 """
         self.width: int = width
         """ 最大宽度 """
+        self.is_button: bool = is_button
+        """ 是否为按钮 """
+        self.num_button: bool = num_button
+        """ 是否为数字按钮 """
+        self.button_id: int = button_id
+        """ 按钮编号 """
 
-        name_draw = draw.NormalDraw()
-
-        name_draw.text = ""
-        name_draw.width = self.width
+        token_draw = draw.NormalDraw()
+        npc_name = cache.character_data[self.character_id].name
+        npc_token = cache.character_data[self.character_id].token_text
+        token_text = f"\n  {npc_name}：{npc_token}"
+        token_draw.text = token_text
         self.draw_text = ""
-        self.now_draw = name_draw
+        self.now_draw = token_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+
+class Pan_Draw:
+    """
+    内裤绘制对象
+    Keyword arguments:
+    text -- 道具id
+    width -- 最大宽度
+    """
+
+    def __init__(self, character_id: int, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.character_id: int = character_id
+        """ 角色id """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.is_button: bool = is_button
+        """ 是否为按钮 """
+        self.num_button: bool = num_button
+        """ 是否为数字按钮 """
+        self.button_id: int = button_id
+        """ 按钮编号 """
+
+        pl_character_data: game_type.Character = cache.character_data[0]
+        npc_name = cache.character_data[self.character_id].name
+
+        pan_text = f"\n  {npc_name}："
+        # 处子血胖次
+        if self.character_id in pl_character_data.pl_collection.first_panties and pl_character_data.pl_collection.first_panties[self.character_id] != "":
+            pan_text += f" {pl_character_data.pl_collection.first_panties[self.character_id]}"
+        # 常规胖次
+        if self.character_id in pl_character_data.pl_collection.npc_panties:
+            # 通过字典统计，输出每种内裤的数量
+            pan_counts = {}
+            for pan in pl_character_data.pl_collection.npc_panties[self.character_id]:
+                pan_counts[pan] = pan_counts.get(pan, 0) + 1
+            
+            for pan, count in pan_counts.items():
+                pan_text += f" {pan}({count})"
+
+        # 创建绘制对象
+        pan_draw = draw.NormalDraw()
+        pan_draw.text = pan_text
+        self.draw_text = ""
+        self.now_draw = pan_draw
+        """ 绘制的对象 """
+
+    def draw(self):
+        """绘制对象"""
+        self.now_draw.draw()
+
+
+class Socks_Draw:
+    """
+    袜子绘制对象
+    Keyword arguments:
+    text -- 道具id
+    width -- 最大宽度
+    """
+
+    def __init__(self, character_id: int, width: int, is_button: bool, num_button: bool, button_id: int):
+        """初始化绘制对象"""
+        self.character_id: int = character_id
+        """ 角色id """
+        self.draw_text: str = ""
+        """ 绘制文本 """
+        self.width: int = width
+        """ 最大宽度 """
+        self.is_button: bool = is_button
+        """ 是否为按钮 """
+        self.num_button: bool = num_button
+        """ 是否为数字按钮 """
+        self.button_id: int = button_id
+        """ 按钮编号 """
+
+        pl_character_data: game_type.Character = cache.character_data[0]
+        npc_name = cache.character_data[self.character_id].name
+
+        socks_text = f"\n  {npc_name}："
+        # 常规胖次
+        if self.character_id in pl_character_data.pl_collection.npc_socks:
+            # 通过字典统计，输出每种袜子的数量
+            sock_counts = {}
+            for sock in pl_character_data.pl_collection.npc_socks[self.character_id]:
+                sock_counts[sock] = sock_counts.get(sock, 0) + 1
+            for sock, count in sock_counts.items():
+                socks_text += f" {sock}({count})"
+
+        # 创建绘制对象
+        socks_draw = draw.NormalDraw()
+        socks_draw.text = socks_text
+        self.draw_text = ""
+        self.now_draw = socks_draw
         """ 绘制的对象 """
 
     def draw(self):
