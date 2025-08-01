@@ -163,6 +163,7 @@ def npc_gain_hypnosis_talent(character_id: int):
             now_draw_succed.text = _("\n○{0}的催眠深度达到{1}%，获得了[{2}]\n").format(character_data.name, now_data.hypnosis_degree, talent_name)
             now_draw_succed.draw()
             break
+    # achievement_panel.achievement_flow(_("催眠"))
 
 def npc_gain_and_lost_cumflation(character_id: int):
     """

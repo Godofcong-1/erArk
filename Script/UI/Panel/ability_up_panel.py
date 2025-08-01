@@ -2,7 +2,7 @@ from typing import Dict, List
 from types import FunctionType
 
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import see_character_info_panel, talent_up_panel
+from Script.UI.Panel import achievement_panel, see_character_info_panel, talent_up_panel
 from Script.Core import (
     cache_control,
     get_text,
@@ -510,6 +510,8 @@ class Characterabi_cmd_Text:
         for need_type_id in jule_dict:
             cache.character_data[self.character_id].juel[need_type_id] -= jule_dict[need_type_id]
         cache.character_data[self.character_id].ability[self.ability_id] += 1
+        # 结算成就
+        # achievement_panel.achievement_flow(_("技能"))
 
 
 class Character_abi_up_main_Handle:

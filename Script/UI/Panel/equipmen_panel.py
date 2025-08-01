@@ -6,6 +6,8 @@ from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_premise
 import random
 
+from Script.UI.Panel import achievement_panel
+
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -257,6 +259,9 @@ def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
         # 如果维修后装备已无损坏，则清除维修记录
         if smith_chara_id in cache.rhodes_island.maintenance_equipment_chara_id and npc_data.cloth.equipment_condition >= 0:
             del cache.rhodes_island.maintenance_equipment_chara_id[smith_chara_id]
+            # 结算成就
+            cache.achievement.equipment_repair_count += 1
+            # achievement_panel.achievement_flow(_("维修"))
     return repair_flag, repair_text
 
 
@@ -317,6 +322,9 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
         # 如果保养后装备已达到保养目标，则清除保养记录
         if smith_chara_id in cache.rhodes_island.maintenance_equipment_chara_id and npc_data.cloth.equipment_condition >= maintain_enable:
             del cache.rhodes_island.maintenance_equipment_chara_id[smith_chara_id]
+            # 结算成就
+            cache.achievement.equipment_maintenance_count += 1
+            # achievement_panel.achievement_flow(_("保养"))
     return maintain_flag, maintain_text
 
 

@@ -286,6 +286,7 @@ class BuyItemByItemNameDraw:
 
     def buy_item(self, number: int = 1):
         """购买道具"""
+        from Script.UI.Panel import achievement_panel
         py_cmd.clr_cmd()
         line = draw.LineDraw("-", window_width)
         line.draw()
@@ -296,6 +297,8 @@ class BuyItemByItemNameDraw:
             self.character_data.item[self.text] = min(self.character_data.item[self.text], 99)
             cache.rhodes_island.materials_resouce[4] -= now_price
             now_text = _("{0}花费了{1}粉红凭证，购买了{2}个{3}").format(self.character_data.nick_name, now_price, number, item_config.name)
+            # 结算成就
+            cache.achievement.buy_item_count_list.append(self.text)
         elif self.character_data.item[self.text] == 99:
             now_text = _("已达到最高堆叠上限")
         else:
@@ -306,3 +309,5 @@ class BuyItemByItemNameDraw:
         now_draw.draw()
         line_feed.draw()
         line_feed.draw()
+        # 结算成就
+        # achievement_panel.achievement_flow(_("购买道具"))

@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import attr_calculation, basement
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import manage_basement_panel
+from Script.UI.Panel import achievement_panel, manage_basement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -56,8 +56,9 @@ def settle_agriculture_line(draw_flag = True):
 
             # 结算实际生产
             if produce_num > 0:
-                # 结算实际生产的产品
+                # 结算实际生产的作物
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+                cache.achievement.harvest_count += produce_num
 
                 now_text = _("\n今日药田共生产了{0}个{1}").format(produce_num, resouce_data.name)
                 # 如果有设备故障，则输出信息
@@ -98,6 +99,7 @@ def settle_agriculture_line(draw_flag = True):
             if produce_num > 0:
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[resouce_id] += produce_num
+                cache.achievement.harvest_count += produce_num
 
                 now_text = _("\n今日温室共生产了{0}个{1}").format(produce_num, resouce_data.name)
                 # 如果有设备故障，则输出信息
@@ -118,6 +120,9 @@ def settle_agriculture_line(draw_flag = True):
 
         # 重置收菜时间
         cache.rhodes_island.green_house_line[agriculture_line_id][4] = cache.game_time.hour
+
+    # 结算成就
+    # achievement_panel.achievement_flow(_("种植"))
 
     return un_normal, return_text
 

@@ -91,7 +91,7 @@ def update_sleep():
 
     # 非角色部分
     cache.pl_sleep_save_flag = True
-    # 结算周目成就
+    # 结算成就
     # achievement_panel.achievement_flow(_("周目"))
 
 

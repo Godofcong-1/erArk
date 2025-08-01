@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import attr_calculation, basement
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import manage_basement_panel
+from Script.UI.Panel import achievement_panel, manage_basement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -75,6 +75,7 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
                     cache.rhodes_island.materials_resouce[need_type] -= produce_num * formula_data_now[need_type]
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[product_id] += produce_num
+                cache.achievement.production_count += produce_num
 
                 now_text = _("\n 流水线{0}:").format(assembly_line_id)
                 now_text += _("上次结算是{0}时，到现在已过{1}小时，").format(cache.rhodes_island.assembly_line[assembly_line_id][4], max_time)
@@ -100,6 +101,8 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
 
         # 重置收菜时间
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
+    # 结算成就
+    # achievement_panel.achievement_flow(_("生产"))
 
     return un_normal, return_text
 

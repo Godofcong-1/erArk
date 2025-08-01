@@ -50,7 +50,11 @@ def init_character_behavior():
             character_behavior(0, cache.game_time, pl_start_time)
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
+            from Script.UI.Panel import achievement_panel
+            cache.achievement.time_stop_duration += pl_duration
             game_time.sub_time_now(minute = -pl_duration)
+            # 结算成就
+            # achievement_panel.achievement_flow(_("时停"))
             break
         field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()

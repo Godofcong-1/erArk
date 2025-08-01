@@ -288,6 +288,7 @@ class Manage_Vehicle_Panel:
         Keyword arguments:
         vehicle_id -- 载具编号
         """
+        from Script.UI.Panel import achievement_panel
 
         vehicle_data = game_config.config_vehicle[vehicle_id]
         vehicle_price = vehicle_data.price
@@ -303,6 +304,8 @@ class Manage_Vehicle_Panel:
             info_draw.text = _("\n资金不足，无法购买\n")
             info_draw.style = "red"
         info_draw.draw()
+        # 结算成就
+        # achievement_panel.achievement_flow(_("载具"))
 
     def sell_vehicle(self, vehicle_id: int):
         """

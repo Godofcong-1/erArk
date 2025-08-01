@@ -18,7 +18,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
-from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel
+from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,
@@ -6862,6 +6862,9 @@ def handle_official_work_add_adjust(
         now_draw.draw()
     # 输出待办事项
     basement.draw_todo()
+    # 结算成就
+    cache.achievement.handle_official_business_count += 1
+    # achievement_panel.achievement_flow(_("公务"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
@@ -7996,7 +7999,7 @@ def handle_put_into_prison_add_just(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
-    from Script.UI.Panel import confinement_and_training, achievement_panel
+    from Script.UI.Panel import confinement_and_training
     if not add_time:
         return
     # 获取角色数据
@@ -8214,7 +8217,8 @@ def handle_add_hpmp_max(
         now_draw.text = "\n"
         now_draw.width = 1
         now_draw.draw()
-
+    # 结算成就
+    # achievement_panel.achievement_flow(_("锻炼"))
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SING_ADD_ADJUST)
 def handle_sing_add_adjust(

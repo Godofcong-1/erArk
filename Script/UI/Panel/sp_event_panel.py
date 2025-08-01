@@ -11,6 +11,8 @@ from Script.Config import normal_config
 from Script.Design import character_handle, talk
 import random
 
+from Script.UI.Panel import achievement_panel
+
 panel_info_data = {}
 
 cache: game_type.Cache = cache_control.cache
@@ -142,6 +144,9 @@ class Born_Panel:
             now_draw = draw.WaitDraw()
             now_draw.text = "\n"
             now_draw.draw()
+
+            # 结算成就
+            # achievement_panel.achievement_flow(_("生育"))
 
             break
 

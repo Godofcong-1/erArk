@@ -101,6 +101,33 @@ def handle_special_hypnosis(character_id: int) -> int:
     return character_data.talent[334]
 
 
+@add_premise(constant_promise.Premise.SELF_HYPNOSIS_0)
+def handle_self_hypnosis_0(character_id: int) -> int:
+    """
+    自己的被催眠程度为0%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.hypnosis.hypnosis_degree == 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_HYPNOSIS_NE_0)
+def handle_self_hypnosis_ne_0(character_id: int) -> int:
+    """
+    自己的被催眠程度不是0%
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_hypnosis_0(character_id)
+
+
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_0)
 def handle_target_hypnosis_0(character_id: int) -> int:
     """
@@ -111,10 +138,7 @@ def handle_target_hypnosis_0(character_id: int) -> int:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    if target_data.hypnosis.hypnosis_degree == 0:
-        return 1
-    return 0
+    return handle_self_hypnosis_0(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.TARGET_HYPNOSIS_NE_0)
@@ -126,9 +150,8 @@ def handle_target_hypnosis_ne_0(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_target_hypnosis_0(character_id):
-        return 0
-    return 1
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_self_hypnosis_0(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.SELF_HAS_BEEN_HYPNOSIS)

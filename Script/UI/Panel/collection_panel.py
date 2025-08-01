@@ -19,6 +19,7 @@ def collapse_collection():
     """
     收起收集品
     """
+    from Script.UI.Panel import achievement_panel
 
     character_data: game_type.Character = cache.character_data[0]
 
@@ -83,6 +84,8 @@ def collapse_collection():
     now_draw.text = _("\n摆放藏品结束\n")
     now_draw.draw()
 
+    # 结算成就
+    # achievement_panel.achievement_flow(_("收藏服装"))
 
 def refresh_all_bonus():
     """

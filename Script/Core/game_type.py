@@ -757,11 +757,11 @@ class ACHIEVEMENT:
         """ 累积招募干员数量 """
         self.visitor_count: int = 0
         """ 累积邀请访客数量 """
-        self.buy_item_count: int = 0
-        """ 累积购买道具数量 """
+        self.buy_item_count_list: List[int] = []
+        """ 购买过道具种类列表 """
         self.field_commission_count: int = 0
         """ 累积完成的外勤委托数量 """
-        self.equipment_maintenance_count: int = 0
+        self.equipment_repair_count: int = 0
         """ 累积维修的装备数量 """
         self.equipment_maintenance_count: int = 0
         """ 累积保养的装备数量 """
