@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.Design import update, instuct_judege
+from Script.UI.Panel import achievement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -271,3 +272,6 @@ class Aromatherapy_Panel:
             target_character_data.state = constant.CharacterStatus.STATUS_WAIT
             # 更新游戏时间
             update.game_update_flow(cost_time)
+            # 结算成就
+            cache.achievement.aromatherapy_count += 1
+            # achievement_panel.achievement_flow(_("调香"))

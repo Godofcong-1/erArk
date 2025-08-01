@@ -1141,6 +1141,8 @@ primary_hypnosis,PRIMARY_HYPNOSIS,属性_源石技艺,自己拥有初级催眠
 intermediate_hypnosis,INTERMEDIATE_HYPNOSIS,属性_源石技艺,自己拥有中级催眠
 advanced_hypnosis,ADVANCED_HYPNOSIS,属性_源石技艺,自己拥有高级催眠
 special_hypnosis,SPECIAL_HYPNOSIS,属性_源石技艺,自己拥有特级催眠
+self_hypnosis_0,SELF_HYPNOSIS_0,属性_源石技艺,自己的被催眠程度为0%
+self_hypnosis_ne_0,SELF_HYPNOSIS_NE_0,属性_源石技艺,自己的被催眠程度不是0%
 t_hypnosis_0,TARGET_HYPNOSIS_0,属性_源石技艺,交互对象的被催眠程度为0%
 t_hypnosis_ne_0,TARGET_HYPNOSIS_NE_0,属性_源石技艺,交互对象的被催眠程度不是0%
 self_has_been_hypnosis,SELF_HAS_BEEN_HYPNOSIS,属性_源石技艺,自己有至少一种被催眠素质

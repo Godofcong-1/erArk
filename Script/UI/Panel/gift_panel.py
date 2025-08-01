@@ -10,6 +10,7 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
+from Script.UI.Panel import achievement_panel
 
 panel_info_data = {}
 
@@ -232,9 +233,12 @@ class Gift_Panel:
         # 礼物持有数量-1
         item_id = gift_data.item_id
         character_data.item[item_id] -= 1
+        cache.achievement.gift_count += 1
         # 开始赠送礼物
         character_data.behavior.gift_id = gift_id
         handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT,force_taget_wait=True)
+        # 结算成就
+        # achievement_panel.achievement_flow(_("礼物"))
 
     def is_drug_effective(self, drug_id: int, target_character_data: game_type.Character) -> bool:
         """

@@ -7881,6 +7881,9 @@ def handle_read_add_adjust(
             # 结算习得
             extra_adjust = difficulty * difficulty
             base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = extra_adjust, change_data = change_data)
+            # 结算成就
+            if character_id == 0:
+                cache.achievement.read_book_count += 1
             # 绘制信息
             info_text += _("，读完了这本书，获得了大量的知识和经验。\n")
         else:
@@ -7896,6 +7899,8 @@ def handle_read_add_adjust(
         info_draw.text = info_text
         info_draw.style = 'gold_enrod'
         info_draw.draw()
+        # 结算成就
+        # achievement_panel.achievement_flow(_("读书"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)

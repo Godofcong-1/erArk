@@ -8,7 +8,7 @@ from Script.Core import (
     flow_handle,
 )
 from Script.Config import normal_config
-from Script.Design import character_handle, talk
+from Script.Design import character_handle, handle_premise, talk
 import random
 
 from Script.UI.Panel import achievement_panel
@@ -147,6 +147,9 @@ class Born_Panel:
 
             # 结算成就
             # achievement_panel.achievement_flow(_("生育"))
+            # 与女儿生育了孩子
+            if handle_premise.handle_self_is_player_daughter(self.mother_character_id):
+                achievement_panel.achievement_flow(_("生育"), 707)
 
             break
 

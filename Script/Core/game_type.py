@@ -781,6 +781,8 @@ class ACHIEVEMENT:
         """ 累积赠送的礼物数量 """
         self.health_check_count: int = 0
         """ 累积进行的身体检查人数 """
+        self.body_report_chara_count_list: List[int] = []
+        """ 出具过身体检查报告的干员id列表 """
         self.aromatherapy_count: int = 0
         """ 累积对别人进行香薰疗愈的次数 """
 

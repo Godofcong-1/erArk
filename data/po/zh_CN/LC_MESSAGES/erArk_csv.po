@@ -393,7 +393,7 @@ msgid "好货到手"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:23
-msgid "道具"
+msgid "购买道具"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:23
@@ -413,7 +413,7 @@ msgid "贴身衣物"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:25
-msgid "服装"
+msgid "收藏服装"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:25
@@ -445,7 +445,7 @@ msgid "外勤"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:28
-msgid "完成第一次外勤委托"
+msgid "第一次完成外勤委托"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:29
@@ -465,423 +465,423 @@ msgid "累计完成1000次外勤委托"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:31
+msgid "哼，想逃？"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:31
+msgid "完成了抓捕逃狱的犯人干员的外勤委托"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:32
 msgid "新手上路"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:31
+#: .\data\csv\Achievement.csv:32
 msgid "载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:31
+#: .\data\csv\Achievement.csv:32
 msgid "首次拥有载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:32
+#: .\data\csv\Achievement.csv:33
 msgid "豪车收藏"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:32
+#: .\data\csv\Achievement.csv:33
 msgid "拥有20辆载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:33
+#: .\data\csv\Achievement.csv:34
 msgid "换个配件"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:33
+#: .\data\csv\Achievement.csv:34
 msgid "维修"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:33
+#: .\data\csv\Achievement.csv:34
 msgid "首次维修装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:34
+#: .\data\csv\Achievement.csv:35
 msgid "巧手修复"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:34
+#: .\data\csv\Achievement.csv:35
 msgid "累计维修100件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:35
+#: .\data\csv\Achievement.csv:36
 msgid "万能胶水"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:35
+#: .\data\csv\Achievement.csv:36
 msgid "累计维修1000件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:36
+#: .\data\csv\Achievement.csv:37
 msgid "擦拭干净"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:36
+#: .\data\csv\Achievement.csv:37
 msgid "保养"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:36
+#: .\data\csv\Achievement.csv:37
 msgid "首次保养装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:37
+#: .\data\csv\Achievement.csv:38
 msgid "养护达人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:37
+#: .\data\csv\Achievement.csv:38
 msgid "累计保养100件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:38
+#: .\data\csv\Achievement.csv:39
 msgid "能传三代"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:38
+#: .\data\csv\Achievement.csv:39
 msgid "累计保养1000件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:39
+#: .\data\csv\Achievement.csv:40
 msgid "强身健体"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:39
+#: .\data\csv\Achievement.csv:40
 msgid "锻炼"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:39
+#: .\data\csv\Achievement.csv:40
 msgid "博士的体力与气力最大值均大于1100"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:40
+#: .\data\csv\Achievement.csv:41
 msgid "体能大师"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:40
+#: .\data\csv\Achievement.csv:41
 msgid "博士的体力与气力最大值均大于3000"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:41
+#: .\data\csv\Achievement.csv:42
 msgid "肉身巅峰"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:41
+#: .\data\csv\Achievement.csv:42
 msgid "博士的体力与气力最大值均大于5000"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:42
+#: .\data\csv\Achievement.csv:43
 msgid "吐字清晰"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:42
+#: .\data\csv\Achievement.csv:43
 msgid "博士的话术技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:43
+#: .\data\csv\Achievement.csv:44
 msgid "舌灿莲花"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:43
+#: .\data\csv\Achievement.csv:44
 msgid "博士的话术技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:44
+#: .\data\csv\Achievement.csv:45
 msgid "谈笑风生"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:44
+#: .\data\csv\Achievement.csv:45
 msgid "博士的话术技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:45
+#: .\data\csv\Achievement.csv:46
 msgid "列队站好"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:45
+#: .\data\csv\Achievement.csv:46
 msgid "博士的指挥技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:46
+#: .\data\csv\Achievement.csv:47
 msgid "运筹帷幄"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:46
+#: .\data\csv\Achievement.csv:47
 msgid "博士的指挥技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:47
+#: .\data\csv\Achievement.csv:48
 msgid "号令三军"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:47
+#: .\data\csv\Achievement.csv:48
 msgid "博士的指挥技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:48
+#: .\data\csv\Achievement.csv:49
 msgid "中杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:48
+#: .\data\csv\Achievement.csv:49
 msgid "博士的战斗技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:49
+#: .\data\csv\Achievement.csv:50
 msgid "大杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:49
+#: .\data\csv\Achievement.csv:50
 msgid "博士的战斗技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:50
+#: .\data\csv\Achievement.csv:51
 msgid "超大杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:50
+#: .\data\csv\Achievement.csv:51
 msgid "博士的战斗技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:51
+#: .\data\csv\Achievement.csv:52
 msgid "做熟就行"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:51
+#: .\data\csv\Achievement.csv:52
 msgid "博士的料理技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:52
+#: .\data\csv\Achievement.csv:53
 msgid "油盐酱醋"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:52
+#: .\data\csv\Achievement.csv:53
 msgid "博士的料理技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:53
+#: .\data\csv\Achievement.csv:54
 msgid "灶里乾坤"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:53
+#: .\data\csv\Achievement.csv:54
 msgid "博士的料理技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:54
+#: .\data\csv\Achievement.csv:55
 msgid "看懂曲谱"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:54
+#: .\data\csv\Achievement.csv:55
 msgid "博士的音乐技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:55
+#: .\data\csv\Achievement.csv:56
 msgid "心扉之乐"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:55
+#: .\data\csv\Achievement.csv:56
 msgid "博士的音乐技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:56
+#: .\data\csv\Achievement.csv:57
 msgid "金律乐章"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:56
+#: .\data\csv\Achievement.csv:57
 msgid "博士的音乐技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:57
+#: .\data\csv\Achievement.csv:58
 msgid "义务教育"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:57
+#: .\data\csv\Achievement.csv:58
 msgid "博士的学识技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:58
+#: .\data\csv\Achievement.csv:59
 msgid "博闻强记"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:58
+#: .\data\csv\Achievement.csv:59
 msgid "博士的学识技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:59
+#: .\data\csv\Achievement.csv:60
 msgid "学贯泰拉"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:59
+#: .\data\csv\Achievement.csv:60
 msgid "博士的学识技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:60
+#: .\data\csv\Achievement.csv:61
 msgid "绷带包扎"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:60
+#: .\data\csv\Achievement.csv:61
 msgid "博士的医术技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:61
+#: .\data\csv\Achievement.csv:62
 msgid "回春妙手"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:61
+#: .\data\csv\Achievement.csv:62
 msgid "博士的医术技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:62
+#: .\data\csv\Achievement.csv:63
 msgid "冥土追魂"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:62
+#: .\data\csv\Achievement.csv:63
 msgid "博士的医术技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:63
+#: .\data\csv\Achievement.csv:64
 msgid "出芽新绿"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:63
+#: .\data\csv\Achievement.csv:64
 msgid "博士的农业技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:64
+#: .\data\csv\Achievement.csv:65
 msgid "百谷长青"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:64
+#: .\data\csv\Achievement.csv:65
 msgid "博士的农业技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:65
+#: .\data\csv\Achievement.csv:66
 msgid "离离枯荣"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:65
+#: .\data\csv\Achievement.csv:66
 msgid "博士的农业技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:66
+#: .\data\csv\Achievement.csv:67
 msgid "巧手学徒"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:66
+#: .\data\csv\Achievement.csv:67
 msgid "博士的制造技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:67
+#: .\data\csv\Achievement.csv:68
 msgid "工坊新秀"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:67
+#: .\data\csv\Achievement.csv:68
 msgid "博士的制造技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:68
+#: .\data\csv\Achievement.csv:69
 msgid "工艺大师"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:68
+#: .\data\csv\Achievement.csv:69
 msgid "博士的制造技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:69
+#: .\data\csv\Achievement.csv:70
 msgid "涂涂画画"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:69
+#: .\data\csv\Achievement.csv:70
 msgid "博士的绘画技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:70
+#: .\data\csv\Achievement.csv:71
 msgid "泼墨淋漓"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:70
+#: .\data\csv\Achievement.csv:71
 msgid "博士的绘画技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:71
+#: .\data\csv\Achievement.csv:72
 msgid "写意胜形"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:71
+#: .\data\csv\Achievement.csv:72
 msgid "博士的绘画技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:72
+#: .\data\csv\Achievement.csv:73
 msgid "荒时之匙"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:72
+#: .\data\csv\Achievement.csv:73
 msgid "时停"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:72
+#: .\data\csv\Achievement.csv:73
 msgid "累计时间停止1分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:73
+#: .\data\csv\Achievement.csv:74
 msgid "序时之锁"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:73
+#: .\data\csv\Achievement.csv:74
 msgid "累计时间停止60分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:74
+#: .\data\csv\Achievement.csv:75
 msgid "白锁与黑匙"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:74
+#: .\data\csv\Achievement.csv:75
 msgid "累计时间停止1440分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:75
+#: .\data\csv\Achievement.csv:76
 msgid "梦境呓语"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:75
+#: .\data\csv\Achievement.csv:76
 msgid "催眠"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:75
+#: .\data\csv\Achievement.csv:76
 msgid "初次催眠1名角色"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:76
+#: .\data\csv\Achievement.csv:77
 msgid "安眠旋律"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:76
+#: .\data\csv\Achievement.csv:77
 msgid "完全催眠1名角色"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:77
+#: .\data\csv\Achievement.csv:78
 msgid "梦乡摇篮"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:77
+#: .\data\csv\Achievement.csv:78
 msgid "完全催眠50名角色"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:78
+#: .\data\csv\Achievement.csv:79
 msgid "新生命"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:78
+#: .\data\csv\Achievement.csv:79
 msgid "生育"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:78
+#: .\data\csv\Achievement.csv:79
 msgid "首次生育孩子"
-msgstr ""
-
-#: .\data\csv\Achievement.csv:79
-msgid "再要一胎"
-msgstr ""
-
-#: .\data\csv\Achievement.csv:79
-msgid "累计生育2个孩子"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:80
@@ -1089,7 +1089,7 @@ msgid "身高体重"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:102
-msgid "体检"
+msgid "身体检查"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:102
@@ -1113,38 +1113,50 @@ msgid "累计进行了1000次身体检查"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:105
-msgid "出具报告"
+msgid "破掉的膜"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:105
+msgid "在干员的破处当天进行处女膜检查"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:106
+msgid "出具报告"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:106
+msgid "体检报告"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:106
 msgid "首次对干员出具身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
+#: .\data\csv\Achievement.csv:107
 msgid "档案汇总"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
-msgid "累计对干员出具100份身体检查报告"
+#: .\data\csv\Achievement.csv:107
+msgid "累计对100个干员出具了身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:108
 msgid "香气初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
-msgid "香薰"
+#: .\data\csv\Achievement.csv:108
+msgid "调香"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:108
 msgid "首次对干员进行香薰疗愈"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:109
 msgid "芳香使者"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:109
 msgid "累计香薰疗愈100次"
 msgstr ""
 
@@ -20556,6 +20568,10 @@ msgstr ""
 msgid "自己的阴茎倒模"
 msgstr ""
 
+#: .\data\csv\Gift_Items.csv:24
+msgid "服装"
+msgstr ""
+
 #: .\data\csv\Hidden_Level.csv:6
 msgid "完全隐蔽"
 msgstr ""
@@ -20690,6 +20706,10 @@ msgstr ""
 
 #: .\data\csv\InstructJudge.csv:17
 msgid "U开发"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:19
+msgid "道具"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:20
@@ -35004,6 +35024,38 @@ msgstr ""
 msgid "黑色大型铳枪"
 msgstr ""
 
+#: .\data\character\1043_司霆惊蛰.csv:4
+msgid "司霆惊蛰"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:13
+msgid "一张五雷镇宅符。好歹不是某种训诫，而是她对你的祝福。"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:14
+msgid "麟青砚，曾官居炎国大理寺少卿，现已辞去官职，回到天师府研修雷法。游历途中暂居罗德岛，参与部分外勤任务。"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:31
+msgid "金色流云纹外披"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:32
+msgid "黑色修身道袍"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:33
+msgid "白色长款手套"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:34
+msgid "黑色修身长袍"
+msgstr ""
+
+#: .\data\character\1043_司霆惊蛰.csv:37
+msgid "黑色角环"
+msgstr ""
+
 #: .\data\character\1067_厄尔苏拉.csv:4
 msgid "厄尔苏拉"
 msgstr ""
@@ -37562,6 +37614,42 @@ msgstr ""
 
 #: .\data\character\4193_蕾缪安.csv:35
 msgid "“弹匣与花窗”"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:4
+msgid "电弧"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:13
+msgid "一枚不知名的金属元件，似乎是“小轴”核心结构的一部分，她说这是机械进行精密度升级时留下的残余，如同孩子落下的乳齿。"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:14
+msgid "电弧，罗德岛精英干员。曾为巴别塔提供通讯支援，主导罗德岛早期的通讯系统建设，为相关通讯工作提供了必要的框架支持。"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:32
+msgid "白色山茶花发饰"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:34
+msgid "灰色战术机能夹克"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:35
+msgid "黑色多功能战术胸挂"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:36
+msgid "黑粉撞色战术手套"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:38
+msgid "深灰色工装短靴"
+msgstr ""
+
+#: .\data\character\4195_电弧.csv:39
+msgid "“小树”与“小轴”"
 msgstr ""
 
 #: .\data\character\450_死芒.csv:4

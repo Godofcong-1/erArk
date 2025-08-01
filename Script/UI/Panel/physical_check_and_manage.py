@@ -6,6 +6,8 @@ from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import random
 
+from Script.UI.Panel import achievement_panel
+
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -362,6 +364,9 @@ class Physical_Check_And_Manage_Panel:
         info_draw = draw.WaitDraw()
         info_draw.text = "\n"
         info_draw.draw()
+        # 结算成就
+        cache.achievement.health_check_count += 1
+        # achievement_panel.achievement_flow(_("身体检查"))
 
     def manage_target_physical(self, target_character_id: int):
         """对目标角色进行身体管理"""
@@ -951,6 +956,8 @@ class Physical_Check_And_Manage_Panel:
         # 检查人与时间
         report_text += _("\n检查人：Dr.{0}\n").format(self.pl_character_data.name)
         report_text += _("检查日期：{0}\n").format(game_time.get_date_until_day()[3:])
+        # 成就记录
+        cache.achievement.body_report_chara_count_list.append(target_character_id)
 
         while 1:
 
@@ -970,6 +977,9 @@ class Physical_Check_And_Manage_Panel:
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
                 break
+
+        # 结算成就
+        # achievement_panel.achievement_flow(_("体检报告"))
 
     def draw_info(self, cid: int):
         """绘制体检设置的详细信息"""

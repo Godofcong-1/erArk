@@ -5,7 +5,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, text_ha
 from Script.Design import map_handle, cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import ejaculation_panel
+from Script.UI.Panel import achievement_panel, ejaculation_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -313,6 +313,8 @@ class SeeFoodListByFoodNameDraw:
         if self.special_seasoning in {11,12} :
             semen_text, semen_count = ejaculation_panel.common_ejaculation()
             cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].special_seasoning_amount = semen_count
+        # 成就
+        cache.achievement.make_food_count += 1
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = self.make_food_time
@@ -321,6 +323,8 @@ class SeeFoodListByFoodNameDraw:
         character_data.behavior.duration = self.make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
         update.game_update_flow(self.make_food_time)
+        # 结算成就
+        # achievement_panel.achievement_flow(_("烹饪"))
 
     def draw(self):
         """绘制对象"""

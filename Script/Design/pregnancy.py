@@ -10,11 +10,12 @@ from Script.Core import (
 from Script.Design import (
     character_handle,
     game_time,
+    handle_premise,
     talk,
     attr_calculation
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import sp_event_panel
+from Script.UI.Panel import achievement_panel, sp_event_panel
 from Script.Config import game_config, normal_config
 
 game_path = game_path_config.game_path
@@ -155,6 +156,14 @@ def check_fertilization(character_id: int):
     now_draw.width = window_width
     now_draw.text = draw_text
     now_draw.draw()
+    # 结算成就
+    if character_data.talent[20]:
+        # 破处当天受精
+        if handle_premise.handle_first_sex_in_today(character_id):
+            achievement_panel.achievement_flow(_("生育"), 706)
+        # 育儿中的角色受精怀孕
+        if character_data.talent[24]:
+            achievement_panel.achievement_flow(_("生育"), 708)
 
 
 def check_pregnancy(character_id: int):

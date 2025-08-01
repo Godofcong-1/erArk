@@ -54,6 +54,12 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("生产"): [cache.achievement.production_count, [801, 802, 803]],
         _("种植"): [cache.achievement.harvest_count, [811, 812, 813]],
         _("公务"): [cache.achievement.handle_official_business_count, [1001, 1002, 1003]],
+        _("读书"): [cache.achievement.read_book_count, [1011, 1012, 1013]],
+        _("烹饪"): [cache.achievement.make_food_count, [1021, 1022, 1023]],
+        _("礼物"): [cache.achievement.gift_count, [1031, 1032]],
+        _("身体检查"): [cache.achievement.health_check_count, [1041, 1042, 1043]],
+        _("体检报告"): [len(cache.achievement.body_report_chara_count_list), [1051, 1052]],
+        _("调香"): [cache.achievement.aromatherapy_count, [1061, 1062]],
     }
     # 根据类型获取对应的结算函数
     func = achievement_type_func_dict.get(achievement_type, None)
