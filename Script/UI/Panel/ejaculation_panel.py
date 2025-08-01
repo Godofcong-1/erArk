@@ -58,7 +58,7 @@ def show_endure_ejaculation_panel():
 
         # 询问是否要忍住
         now_draw = draw.NormalDraw()
-        now_draw_text = _("要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n".format(now_count, endure_text))
+        now_draw_text = _("要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n").format(now_count, endure_text)
         now_draw.text = now_draw_text
         now_draw.width = window_width
         now_draw.draw()
