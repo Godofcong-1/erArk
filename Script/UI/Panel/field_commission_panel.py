@@ -391,9 +391,9 @@ def judge_field_commission_finish():
             draw_text += equipment_damage_text
             # 结算成就
             cache.achievement.field_commission_count += 1
-            # achievement_panel.achievement_flow(_("外勤"))
-            # if "追捕" in game_config.config_commission[commision_id].reward:
-            #     achievement_panel.achievement_flow(_("外勤"), 306)
+            achievement_panel.achievement_flow(_("外勤"))
+            if "追捕" in game_config.config_commission[commision_id].reward:
+                achievement_panel.achievement_flow(_("外勤"), 306)
 
     # 绘制完成委托
     if len(draw_text):

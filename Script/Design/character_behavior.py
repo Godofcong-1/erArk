@@ -53,8 +53,6 @@ def init_character_behavior():
             from Script.UI.Panel import achievement_panel
             cache.achievement.time_stop_duration += pl_duration
             game_time.sub_time_now(minute = -pl_duration)
-            # 结算成就
-            # achievement_panel.achievement_flow(_("时停"))
             break
         field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
@@ -81,6 +79,9 @@ def init_character_behavior():
         # 结束循环
         if len(cache.over_behavior_character) >= len(id_list) + 1:
             break
+    # 结算成就
+    achievement_panel.achievement_flow(_("时停"))
+    achievement_panel.achievement_flow(_("群交"))
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):

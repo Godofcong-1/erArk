@@ -601,7 +601,7 @@ class New_Round_Handle:
             button_draw.draw()
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
-                # achievement_panel.achievement_flow(_("周目"))
+                achievement_panel.achievement_flow(_("周目"))
                 break
 
     def build_new_character_data(self, character_id: int):

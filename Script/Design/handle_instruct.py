@@ -1817,7 +1817,6 @@ def handle_see_collection():
     _("查看成就"),
     {
         constant_promise.Premise.IN_COLLECTION_ROOM,
-        constant_promise.Premise.TO_DO
     })
 def handle_see_achievement():
     """处理查看成就指令"""

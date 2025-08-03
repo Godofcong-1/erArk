@@ -1,7 +1,7 @@
 from types import FunctionType
 from typing import List
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import handle_premise
+from Script.Design import handle_premise, map_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -28,19 +28,27 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
     # 成就类型与结算函数的映射字典
     achievement_type_func_dict = {
         _("关系"): settle_chara_relationship,
+        _("招募"): settle_chara_recruit,
+        _("访客"): settle_chara_visitor,
         _("收藏服装"): settle_chara_clothing,
         _("技能"): settle_chara_ability,
         _("催眠"): settle_chara_hypnosis,
+        _("群交"): settle_chara_group_sex,
     }
     # 统计载具数量
-    vehicles_count = 0
-    for cid in cache.rhodes_island.vehicles:
-        vehicles_count += cache.rhodes_island.vehicles[cid][0]
+    if achievement_type == _("载具"):
+        vehicles_count = 0
+        for cid in cache.rhodes_island.vehicles:
+            vehicles_count += cache.rhodes_island.vehicles[cid][0]
+    # 统计读书进度
+    elif achievement_type == _("读书"):
+        read_book_count = 0
+        for book_id in pl_character_data.entertainment.read_book_progress:
+            if pl_character_data.entertainment.read_book_progress[book_id] >= 100:
+                read_book_count += 1
     # 成就类型与结算值的映射字典
     achievement_type_value_dict = {
         _("周目"): [cache.game_round, [1, 2]],
-        _("招募"): [cache.achievement.recruit_count, [101, 102]],
-        _("访客"): [cache.achievement.visitor_count, [111, 112]],
         _("囚犯"): [len(cache.rhodes_island.current_prisoners), [121, 122]],
         _("龙门币"): [cache.rhodes_island.materials_resouce[1], [201, 202, 203]],
         _("购买道具"): [len(cache.achievement.buy_item_count_list), [211, 212]],
@@ -54,7 +62,7 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("生产"): [cache.achievement.production_count, [801, 802, 803]],
         _("种植"): [cache.achievement.harvest_count, [811, 812, 813]],
         _("公务"): [cache.achievement.handle_official_business_count, [1001, 1002, 1003]],
-        _("读书"): [cache.achievement.read_book_count, [1011, 1012, 1013]],
+        _("读书"): [read_book_count, [1011, 1012, 1013]],
         _("烹饪"): [cache.achievement.make_food_count, [1021, 1022, 1023]],
         _("礼物"): [cache.achievement.gift_count, [1031, 1032]],
         _("身体检查"): [cache.achievement.health_check_count, [1041, 1042, 1043]],
@@ -169,6 +177,48 @@ def settle_chara_relationship():
         return_list.extend(settle_achievement(judge_value, achievement_id))
     return return_list
 
+def settle_chara_recruit():
+    """
+    结算招募类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    # 已招募的角色数量
+    recruit_count = 0
+    for chara_id in cache.character_data:
+        # 跳过非角色
+        if chara_id == 0:
+            continue
+        # 跳过不在当前角色列表也不在异常状态7中的
+        if chara_id not in cache.npc_id_got and handle_premise.handle_normal_7(chara_id):
+            continue
+        recruit_count += 1
+    return_list = []
+    # 统一调用settle_achievement进行批量结算
+    return_list.extend(settle_achievement(recruit_count, [101, 102]))
+    return return_list
+
+def settle_chara_visitor():
+    """
+    结算访客类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    # 访客角色数量
+    visitor_count = 0
+    for chara_id in cache.character_data:
+        now_character_data: game_type.Character = cache.character_data[chara_id]
+        # 跳过非角色
+        if chara_id == 0:
+            continue
+        # 如果当前或曾经是访客，则增加访客数量
+        if now_character_data.sp_flag.vistor > 0:
+            visitor_count += 1
+    return_list = []
+    # 统一调用settle_achievement进行批量结算
+    return_list.extend(settle_achievement(visitor_count, [111, 112]))
+    return return_list
+
 def settle_chara_clothing():
     """
     结算角色服装类的成就\n
@@ -275,6 +325,96 @@ def settle_chara_hypnosis():
         return_list.extend(settle_achievement(judge_value, achievement_id))
     return return_list
 
+def settle_chara_group_sex():
+    """
+    结算群交类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 如果没有在群交中则返回
+    if handle_premise.handle_group_sex_mode_off(0):
+        return return_list
+    # 地点数据
+    pl_character_data: game_type.Character = cache.character_data[0]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 统计群交人数，有意识人数，无意识人数
+    group_sex_character_count = 0
+    conscious_count = 0
+    unconscious_count = 0
+    # 遍历当前角色列表
+    for chara_id in scene_data.character_list:
+        # 跳过非角色
+        if chara_id == 0:
+            continue
+        # 跳过不在H中
+        if handle_premise.handle_self_not_h(chara_id):
+            continue
+        group_sex_character_count += 1
+        # 无意识的角色
+        if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+            unconscious_count += 1
+        # 有意识的角色
+        else:
+            conscious_count += 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (conscious_count, 901),  # 与至少2名角色一起群交
+        (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
+        (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
+def settle_chara_hidden_sex():
+    """
+    结算隐奸类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 如果没有在隐奸中则返回
+    if handle_premise.handle_player_not_in_hidden_sex_mode(0):
+        return return_list
+    # 地点数据
+    pl_character_data: game_type.Character = cache.character_data[0]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 统计群交人数，有意识人数，无意识人数
+    group_sex_character_count = 0
+    conscious_count = 0
+    unconscious_count = 0
+    # 遍历当前角色列表
+    for chara_id in scene_data.character_list:
+        # 跳过非角色
+        if chara_id == 0:
+            continue
+        # 跳过不在H中
+        if handle_premise.handle_self_not_h(chara_id):
+            continue
+        group_sex_character_count += 1
+        # 无意识的角色
+        if handle_premise.handle_unconscious_flag_ge_1(chara_id):
+            unconscious_count += 1
+        # 有意识的角色
+        else:
+            conscious_count += 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (conscious_count, 901),  # 与至少2名角色一起群交
+        (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
+        (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
 
 class Achievement_Panel:
     """
@@ -296,7 +436,7 @@ class Achievement_Panel:
         title_text = _("成就")
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        handle_sub_panel = panel.PageHandlePanel([], Achievement_Draw, 10, 1, self.width, 1, 1, 0)
+        handle_sub_panel = panel.PageHandlePanel([], Achievement_Draw, 30, 1, self.width, 1, 1, 0)
         while 1:
             return_list = []
             title_draw.draw()
@@ -313,7 +453,18 @@ class Achievement_Panel:
             info_draw = draw.NormalDraw()
             info_draw.text = info_text
             info_draw.draw()
+            line_feed.draw()
 
+            # 刷新成就的按钮
+            update_button_draw = draw.CenterButton(
+                _("[刷新成就]"),
+                _("刷新成就列表"),
+                self.width / 4,
+                cmd_func=self.update_achievement,
+            )
+            update_button_draw.draw()
+            return_list.append(update_button_draw.return_text)
+            line_feed.draw()
             line_feed.draw()
 
             # 遍历成就列表
@@ -346,6 +497,28 @@ class Achievement_Panel:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+
+    def update_achievement(self):
+        """
+        更新成就列表
+        功能：重新加载成就数据并刷新面板
+        """
+        pl_character_data: game_type.Character = cache.character_data[0]
+        # 如果某道具已拥有，则添加到购买过的道具列表中
+        for item_id in pl_character_data.item:
+            if item_id not in cache.achievement.buy_item_count_list:
+                cache.achievement.buy_item_count_list.append(item_id)
+        # 如果外勤数小于已完成的外勤统计数，则等于外勤统计数量
+        if cache.achievement.field_commission_count < len(cache.rhodes_island.finished_field_commissions_set):
+            cache.achievement.field_commission_count = len(cache.rhodes_island.finished_field_commissions_set)
+        # 刷新所有成就
+        for achievement_id in game_config.config_achievement:
+            achievement_data = game_config.config_achievement[achievement_id]
+            # 跳过未实装的成就
+            if achievement_data.todo == 1:
+                continue
+            # 结算该成就
+            achievement_flow(achievement_data.type)
 
 class Achievement_Draw:
     """

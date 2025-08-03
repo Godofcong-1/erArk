@@ -310,4 +310,4 @@ class BuyItemByItemNameDraw:
         line_feed.draw()
         line_feed.draw()
         # 结算成就
-        # achievement_panel.achievement_flow(_("购买道具"))
+        achievement_panel.achievement_flow(_("购买道具"))

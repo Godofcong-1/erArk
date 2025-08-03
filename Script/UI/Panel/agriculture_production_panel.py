@@ -122,7 +122,7 @@ def settle_agriculture_line(draw_flag = True):
         cache.rhodes_island.green_house_line[agriculture_line_id][4] = cache.game_time.hour
 
     # 结算成就
-    # achievement_panel.achievement_flow(_("种植"))
+    achievement_panel.achievement_flow(_("种植"))
 
     return un_normal, return_text
 

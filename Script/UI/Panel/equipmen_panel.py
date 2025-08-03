@@ -261,7 +261,7 @@ def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
             del cache.rhodes_island.maintenance_equipment_chara_id[smith_chara_id]
             # 结算成就
             cache.achievement.equipment_repair_count += 1
-            # achievement_panel.achievement_flow(_("维修"))
+            achievement_panel.achievement_flow(_("维修"))
     return repair_flag, repair_text
 
 
@@ -324,7 +324,7 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
             del cache.rhodes_island.maintenance_equipment_chara_id[smith_chara_id]
             # 结算成就
             cache.achievement.equipment_maintenance_count += 1
-            # achievement_panel.achievement_flow(_("保养"))
+            achievement_panel.achievement_flow(_("保养"))
     return maintain_flag, maintain_text
 
 

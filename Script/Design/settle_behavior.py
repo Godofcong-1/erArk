@@ -983,6 +983,11 @@ def orgasm_settle(
             climax_count = normal_orgasm_data + un_count_orgasm_data
             # 刷新记录
             character_data.h_state.orgasm_level[orgasm] = now_data
+            # 群交状态下
+            if handle_premise.handle_group_sex_mode_on(character_id):
+                # 成就统计
+                if character_id not in cache.achievement.group_sex_record[2]:
+                    cache.achievement.group_sex_record[2].append(character_id)
             # 时停状态下
             if handle_premise.handle_unconscious_flag_3(character_id):
                 # 绝顶计入寸止计数

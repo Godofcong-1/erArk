@@ -102,7 +102,7 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
         # 重置收菜时间
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
     # 结算成就
-    # achievement_panel.achievement_flow(_("生产"))
+    achievement_panel.achievement_flow(_("生产"))
 
     return un_normal, return_text
 

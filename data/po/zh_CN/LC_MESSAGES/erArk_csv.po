@@ -35056,6 +35056,46 @@ msgstr ""
 msgid "黑色角环"
 msgstr ""
 
+#: .\data\character\1044_斩业星熊.csv:4
+msgid "斩业星熊"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:13
+msgid "一个用旧了的龙门近卫局督察证外壳。这些外壳她都留着，但送给别人还是第一次。"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:14
+msgid "星熊，现任龙门近卫局特别督察组组长。仍作为重装干员协助罗德岛行动，主要职能维持不变。"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:28
+msgid "金属发圈"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:29
+msgid "金属圆环颈圈"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:30
+msgid "开襟式黑色长风衣外套"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:31
+msgid "白色运动抹胸"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:32
+msgid "开衩白色武士袴"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:33
+msgid "赤色饰带高筒靴"
+msgstr ""
+
+#: .\data\character\1044_斩业星熊.csv:34
+msgid "般若"
+msgstr ""
+
 #: .\data\character\1067_厄尔苏拉.csv:4
 msgid "厄尔苏拉"
 msgstr ""
@@ -37650,6 +37690,98 @@ msgstr ""
 
 #: .\data\character\4195_电弧.csv:39
 msgid "“小树”与“小轴”"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:4
+msgid "遥"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:13
+msgid "一沓鳞兽形状的便利贴。她说自己会用这个记录接下来的日程，作为一种提醒。说完，她饶有兴趣地看着你，想知道你会在上面写些什么。"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:14
+msgid "遥，在东国南院有相当名气的艺人。本名紫野遥，艺名羽生萌萌香。受干员星熊推荐，与罗德岛签订合约，负责罗德岛与东国的交流工作。鉴于本人的要求，也会参与一部分外勤任务。"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:27
+msgid "红色缎带发饰"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:28
+msgid "金鱼流苏耳坠"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:29
+msgid "红色简约颈环"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:30
+msgid "白色泡泡袖外套"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:31
+msgid "蓝色抹胸连衣裙"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:32
+msgid "红色皮革手套"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:34
+msgid "红白拼色高筒靴"
+msgstr ""
+
+#: .\data\character\4202_遥.csv:35
+msgid "星盘泡泡法杖"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:4
+msgid "吉星"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:13
+msgid "几张图案新潮的贴纸。吉星在拉面店消费获得的系列贴纸，其中有一张是手绘的，她说自己终究还是缺一张，但想让你集满。"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:14
+msgid "吉星，活跃在锻冶町的珠宝鉴定师，杂货铺“吉星”的所有者，在金石会事件后失去了店铺与家，经介绍来到罗德岛接受矿石病治疗，现作为狙击干员为罗德岛提供服务。"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:28
+msgid "朋克风金属耳环"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:29
+msgid "金属骨头项链"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:30
+msgid "深蓝色领带"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:31
+msgid "白色渐变和服夹克"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:32
+msgid "爱心装饰抹胸"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:33
+msgid "拉链开衩高腰长裙"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:34
+msgid "黑红色小腿袜"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:35
+msgid "黑色厚底松糕鞋"
+msgstr ""
+
+#: .\data\character\4203_吉星.csv:36
+msgid "彩绘涂装铳"
 msgstr ""
 
 #: .\data\character\450_死芒.csv:4

@@ -753,10 +753,6 @@ class ACHIEVEMENT:
     def __init__(self):
         self.achievement_dict: Dict[int, bool] = {}
         """ 成就字典，键为成就编号，值为是否完成 """
-        self.recruit_count: int = 0
-        """ 累积招募干员数量 """
-        self.visitor_count: int = 0
-        """ 累积邀请访客数量 """
         self.buy_item_count_list: List[int] = []
         """ 购买过道具种类列表 """
         self.field_commission_count: int = 0
@@ -773,8 +769,6 @@ class ACHIEVEMENT:
         """ 累积收获的农作物数量 """
         self.handle_official_business_count: int = 0
         """ 累积处理公务的次数 """
-        self.read_book_count: int = 0
-        """ 累积读完的书的数量 """
         self.make_food_count: int = 0
         """ 累积制作的食物数量 """
         self.gift_count: int = 0
@@ -785,6 +779,8 @@ class ACHIEVEMENT:
         """ 出具过身体检查报告的干员id列表 """
         self.aromatherapy_count: int = 0
         """ 累积对别人进行香薰疗愈的次数 """
+        self.group_sex_record: Dict[int, list] = {}
+        """ 群交记录，1为对群交中被射精的干员的id列表，2为群交中绝顶的干员id列表 """
 
 
 class PLAYER_ABILITY:

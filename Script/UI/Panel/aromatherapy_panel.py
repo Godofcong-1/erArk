@@ -274,4 +274,4 @@ class Aromatherapy_Panel:
             update.game_update_flow(cost_time)
             # 结算成就
             cache.achievement.aromatherapy_count += 1
-            # achievement_panel.achievement_flow(_("调香"))
+            achievement_panel.achievement_flow(_("调香"))

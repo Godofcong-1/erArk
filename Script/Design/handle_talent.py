@@ -71,7 +71,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
     # 结算陷落素质的成就
-    # achievement_panel.achievement_flow(_("关系"))
+    achievement_panel.achievement_flow(_("关系"))
 
     # 特殊素质获得
     if now_gain_type == 0:
@@ -163,7 +163,7 @@ def npc_gain_hypnosis_talent(character_id: int):
             now_draw_succed.text = _("\n○{0}的催眠深度达到{1}%，获得了[{2}]\n").format(character_data.name, now_data.hypnosis_degree, talent_name)
             now_draw_succed.draw()
             break
-    # achievement_panel.achievement_flow(_("催眠"))
+    achievement_panel.achievement_flow(_("催眠"))
 
 def npc_gain_and_lost_cumflation(character_id: int):
     """

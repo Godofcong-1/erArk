@@ -511,7 +511,7 @@ class Characterabi_cmd_Text:
             cache.character_data[self.character_id].juel[need_type_id] -= jule_dict[need_type_id]
         cache.character_data[self.character_id].ability[self.ability_id] += 1
         # 结算成就
-        # achievement_panel.achievement_flow(_("技能"))
+        achievement_panel.achievement_flow(_("技能"))
 
 
 class Character_abi_up_main_Handle:

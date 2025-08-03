@@ -305,7 +305,7 @@ class Manage_Vehicle_Panel:
             info_draw.style = "red"
         info_draw.draw()
         # 结算成就
-        # achievement_panel.achievement_flow(_("载具"))
+        achievement_panel.achievement_flow(_("载具"))
 
     def sell_vehicle(self, vehicle_id: int):
         """

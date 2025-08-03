@@ -146,7 +146,7 @@ class Born_Panel:
             now_draw.draw()
 
             # 结算成就
-            # achievement_panel.achievement_flow(_("生育"))
+            achievement_panel.achievement_flow(_("生育"))
             # 与女儿生育了孩子
             if handle_premise.handle_self_is_player_daughter(self.mother_character_id):
                 achievement_panel.achievement_flow(_("生育"), 707)

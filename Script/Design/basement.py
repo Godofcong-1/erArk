@@ -536,7 +536,7 @@ def settle_income():
     now_draw.draw()
 
     # 结算龙门币成就
-    # achievement_panel.achievement_flow(_("龙门币"))
+    achievement_panel.achievement_flow(_("龙门币"))
 
 def settle_pink_certificate():
     """

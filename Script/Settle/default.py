@@ -2924,6 +2924,9 @@ def handle_group_sex_mode_on(
     now_time -- 结算的时间
     """
     cache.group_sex_mode = True
+    # 结算成就
+    cache.achievement.group_sex_record = {1: 0, 2: 0}
+    achievement_panel.achievement_flow(_("群交"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_MODE_OFF)
@@ -6864,7 +6867,7 @@ def handle_official_work_add_adjust(
     basement.draw_todo()
     # 结算成就
     cache.achievement.handle_official_business_count += 1
-    # achievement_panel.achievement_flow(_("公务"))
+    achievement_panel.achievement_flow(_("公务"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CURE_PATIENT_ADD_ADJUST)
@@ -7881,9 +7884,6 @@ def handle_read_add_adjust(
             # 结算习得
             extra_adjust = difficulty * difficulty
             base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = extra_adjust, change_data = change_data)
-            # 结算成就
-            if character_id == 0:
-                cache.achievement.read_book_count += 1
             # 绘制信息
             info_text += _("，读完了这本书，获得了大量的知识和经验。\n")
         else:
@@ -7900,7 +7900,7 @@ def handle_read_add_adjust(
         info_draw.style = 'gold_enrod'
         info_draw.draw()
         # 结算成就
-        # achievement_panel.achievement_flow(_("读书"))
+        achievement_panel.achievement_flow(_("读书"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TEACH_ADD_ADJUST)
@@ -8022,7 +8022,7 @@ def handle_put_into_prison_add_just(
     # 角色上线
     handle_chara_on_line(target_id, add_time, change_data, now_time)
     # 囚犯成就
-    # achievement_panel.achievement_flow(_("囚犯"))
+    achievement_panel.achievement_flow(_("囚犯"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SET_FREE_ADD_ADJUST)
@@ -8223,7 +8223,7 @@ def handle_add_hpmp_max(
         now_draw.width = 1
         now_draw.draw()
     # 结算成就
-    # achievement_panel.achievement_flow(_("锻炼"))
+    achievement_panel.achievement_flow(_("锻炼"))
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SING_ADD_ADJUST)
 def handle_sing_add_adjust(

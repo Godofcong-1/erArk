@@ -49,10 +49,8 @@ def recruit_new_chara():
         character_data = cache.character_data[new_chara_id]
         now_draw.text += _("\n\n   ※ 成功招募了{0} ※\n\n").format(character_data.name)
         now_draw.draw()
-        # 招募人数成就计数
-        cache.achievement.recruit_count += 1
         # 招募成就结算
-        # achievement_panel.achievement_flow(_("招募"))
+        achievement_panel.achievement_flow(_("招募"))
         return True
     else:
         return False

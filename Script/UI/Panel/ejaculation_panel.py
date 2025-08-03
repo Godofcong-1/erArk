@@ -347,6 +347,11 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
     if semen_count > 0:
         # 记录射精量
         character_data.h_state.shoot_semen_amount += semen_count
+        # 群交中
+        if handle_premise.handle_group_sex_mode_on(0):
+            # 成就记录
+            if target_character_id not in cache.achievement.group_sex_record[1]:
+                cache.achievement.group_sex_record[1].append(target_character_id)
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
             # 获取射精文本

@@ -142,8 +142,7 @@ def settle_visitor_arrivals(visitor_id = 0):
         now_draw.text = _("\n ○【{0}】作为临时访客抵达了罗德岛\n").format(cache.character_data[visitor_id].name)
         now_draw.draw()
         # 结算访客成就
-        cache.achievement.visitor_count += 1
-        # achievement_panel.achievement_flow(_("访客"))
+        achievement_panel.achievement_flow(_("访客"))
         return 1
 
 def visitor_leave(character_id: int):

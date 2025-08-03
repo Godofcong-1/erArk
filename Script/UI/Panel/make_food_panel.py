@@ -324,7 +324,7 @@ class SeeFoodListByFoodNameDraw:
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
         update.game_update_flow(self.make_food_time)
         # 结算成就
-        # achievement_panel.achievement_flow(_("烹饪"))
+        achievement_panel.achievement_flow(_("烹饪"))
 
     def draw(self):
         """绘制对象"""

@@ -85,7 +85,7 @@ def collapse_collection():
     now_draw.draw()
 
     # 结算成就
-    # achievement_panel.achievement_flow(_("收藏服装"))
+    achievement_panel.achievement_flow(_("收藏服装"))
 
 def refresh_all_bonus():
     """

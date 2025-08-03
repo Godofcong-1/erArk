@@ -366,7 +366,13 @@ class Physical_Check_And_Manage_Panel:
         info_draw.draw()
         # 结算成就
         cache.achievement.health_check_count += 1
-        # achievement_panel.achievement_flow(_("身体检查"))
+        achievement_panel.achievement_flow(_("身体检查"))
+        # 在干员的破处当天进行处女膜检查
+        pl_character_data = cache.character_data[0]
+        target_character_id = pl_character_data.target_character_id
+        if handle_premise.handle_first_sex_in_today(target_character_id) and behavior_id == "examine_hymen":
+            # 结算成就
+            achievement_panel.achievement_flow(_("身体检查"), 1046)
 
     def manage_target_physical(self, target_character_id: int):
         """对目标角色进行身体管理"""
@@ -979,7 +985,7 @@ class Physical_Check_And_Manage_Panel:
                 break
 
         # 结算成就
-        # achievement_panel.achievement_flow(_("体检报告"))
+        achievement_panel.achievement_flow(_("体检报告"))
 
     def draw_info(self, cid: int):
         """绘制体检设置的详细信息"""
