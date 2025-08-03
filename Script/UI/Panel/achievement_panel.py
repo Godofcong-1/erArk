@@ -34,6 +34,7 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("技能"): settle_chara_ability,
         _("催眠"): settle_chara_hypnosis,
         _("群交"): settle_chara_group_sex,
+        _("隐奸"): settle_chara_hidden_sex,
     }
     # 统计载具数量
     vehicles_count = 0
@@ -358,6 +359,10 @@ def settle_chara_group_sex():
         # 有意识的角色
         else:
             conscious_count += 1
+    # 904号成就
+    if cache.achievement.group_sex_record[1] >= 10 and cache.achievement.group_sex_record[2] >= 20:
+        # 如果满足条件则结算成就904
+        return_list.extend(settle_achievement(1, 904, force=True))
     # 构建成就结算列表
     achievement_checks = [
         # (判断值, 成就ID)
@@ -380,35 +385,24 @@ def settle_chara_hidden_sex():
     # 如果没有在隐奸中则返回
     if handle_premise.handle_player_not_in_hidden_sex_mode(0):
         return return_list
-    # 地点数据
-    pl_character_data: game_type.Character = cache.character_data[0]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 统计群交人数，有意识人数，无意识人数
-    group_sex_character_count = 0
-    conscious_count = 0
-    unconscious_count = 0
-    # 遍历当前角色列表
-    for chara_id in scene_data.character_list:
-        # 跳过非角色
-        if chara_id == 0:
-            continue
-        # 跳过不在H中
-        if handle_premise.handle_self_not_h(chara_id):
-            continue
-        group_sex_character_count += 1
-        # 无意识的角色
-        if handle_premise.handle_unconscious_flag_ge_1(chara_id):
-            unconscious_count += 1
-        # 有意识的角色
-        else:
-            conscious_count += 1
+    # 隐奸模式
+    mode_id = cache.achievement.hidden_sex_record[1]
+    # 在场其他角色人数
+    other_chara_count = cache.achievement.hidden_sex_record[2]
+    # 射精次数
+    ejaculation_count = cache.achievement.hidden_sex_record[3]
+    # 绝顶次数
+    climax_count = cache.achievement.hidden_sex_record[4]
+    # 成就913的特殊标志
+    flag_913 = 0
+    if mode_id == 1 and other_chara_count >= 10 and ejaculation_count >= 3 and climax_count >= 3:
+        flag_913 = 1
     # 构建成就结算列表
     achievement_checks = [
         # (判断值, 成就ID)
-        (conscious_count, 901),  # 与至少2名角色一起群交
-        (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
-        (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
+        (ejaculation_count, 911),  # 期间至少射精1次
+        (min(ejaculation_count, climax_count), 912),  # 期间至少射精3次，隐奸干员至少绝顶3次
+        (flag_913, 913),  # 在[不隐藏]模式下完成一次没有被发现的隐奸，期间至少射精3次，隐奸干员至少绝顶3次，在场不知情干员不少于10人
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:

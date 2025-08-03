@@ -352,6 +352,10 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 成就记录
             if target_character_id not in cache.achievement.group_sex_record[1]:
                 cache.achievement.group_sex_record[1].append(target_character_id)
+        # 隐奸状态下
+        elif handle_premise.handle_hidden_sex_mode_ge_1(0):
+            # 成就统计
+            cache.achievement.hidden_sex_record[3] += 1
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
             # 获取射精文本

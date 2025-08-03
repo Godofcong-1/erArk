@@ -6,8 +6,8 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, attr_calculation, character_handle, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
-from Script.UI.Panel import normal_panel
+from Script.Design import update, attr_calculation, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
+from Script.UI.Panel import achievement_panel, normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
 
@@ -1820,7 +1820,6 @@ def handle_see_collection():
     })
 def handle_see_achievement():
     """处理查看成就指令"""
-    from Script.UI.Panel import achievement_panel
     now_panel = achievement_panel.Achievement_Panel(width)
     now_panel.draw()
 
@@ -2358,6 +2357,8 @@ def handle_end_h():
                 handle_premise.handle_normal_6(character_data.target_character_id)
                 ):
                 target_data.sp_flag.is_follow = 1
+            # 结算成就
+            achievement_panel.achievement_flow(_("隐奸"))
 
     # 对方原地待机10分钟
     target_data.behavior.behavior_id = constant.Behavior.WAIT

@@ -454,3 +454,9 @@ class Select_Hidden_Sex_Mode_Panel:
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]
         target_character_data.sp_flag.hidden_sex_mode = mode_id
+        # 在场其他角色数量
+        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+        other_chara_count = len(scene_data.character_list) - 2
+        # 成就初始化
+        cache.achievement.hidden_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}

@@ -781,6 +781,8 @@ class ACHIEVEMENT:
         """ 累积对别人进行香薰疗愈的次数 """
         self.group_sex_record: Dict[int, list] = {}
         """ 群交记录，1为对群交中被射精的干员的id列表，2为群交中绝顶的干员id列表 """
+        self.hidden_sex_record: Dict[int, int] = {}
+        """ 隐奸记录，1为隐奸模式，2为在场其他干员人数，3为射精次数，4为隐奸干员绝顶次数 """
 
 
 class PLAYER_ABILITY:
