@@ -40,6 +40,7 @@ def init_character_behavior():
     """
     角色行为树总控制
     """
+    from Script.UI.Panel import achievement_panel
     cache.over_behavior_character = set()
     new_day_flag = True
     while 1:
@@ -50,7 +51,6 @@ def init_character_behavior():
             character_behavior(0, cache.game_time, pl_start_time)
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
-            from Script.UI.Panel import achievement_panel
             cache.achievement.time_stop_duration += pl_duration
             game_time.sub_time_now(minute = -pl_duration)
             break
