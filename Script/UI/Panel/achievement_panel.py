@@ -36,13 +36,13 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("群交"): settle_chara_group_sex,
     }
     # 统计载具数量
+    vehicles_count = 0
+    read_book_count = 0
     if achievement_type == _("载具"):
-        vehicles_count = 0
         for cid in cache.rhodes_island.vehicles:
             vehicles_count += cache.rhodes_island.vehicles[cid][0]
     # 统计读书进度
     elif achievement_type == _("读书"):
-        read_book_count = 0
         for book_id in pl_character_data.entertainment.read_book_progress:
             if pl_character_data.entertainment.read_book_progress[book_id] >= 100:
                 read_book_count += 1
@@ -441,8 +441,8 @@ class Achievement_Panel:
             return_list = []
             title_draw.draw()
 
-            info_text = _("○高难成就需要前置成就才能解锁，隐藏成就才达成前不显示解锁条件\n")
-            info_text += _("当前成绩达成：")
+            info_text = _("○高难成就需要前置成就才能解锁，隐藏成就在达成前不显示解锁条件\n")
+            info_text += _("当前成就达成：")
             len_got = 0
             for cid in cache.achievement.achievement_dict:
                 if cache.achievement.achievement_dict[cid]:
