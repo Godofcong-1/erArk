@@ -248,8 +248,8 @@ def base_chara_state_common_settle(
     character_data.status_data[state_id] = min(99999, character_data.status_data[state_id])
     character_data.status_data[state_id] = max(0, character_data.status_data[state_id])
 
-    # 露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
-    if state_id in [14, 16, 17]:
+    # 顺从对恭顺、露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
+    if state_id in [10, 14, 16, 17]:
         extra_feel_settle(character_id, state_id, final_value, change_data, change_data_to_target_change)
 
     # 结算信息记录对象
@@ -466,7 +466,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
 
 def extra_feel_settle(character_id: int, state_id: int, final_value: float, change_data: game_type.CharacterStatusChange, change_data_to_target_change: game_type.CharacterStatusChange):
     """
-    露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
+    顺从对恭顺、露出对羞耻、施虐对先导、受虐对苦痛而产生的额外快感
     Keyword arguments:
     character_id -- 角色id
     state_id -- 状态id
@@ -480,15 +480,22 @@ def extra_feel_settle(character_id: int, state_id: int, final_value: float, chan
     final_value = max(10, final_value / 20)
     final_value = int(final_value)
 
+    # 顺从对恭顺
+    if state_id == 10 and character_data.ability[31] >= 5:
+        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[31], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_experience_common_settle(character_id, 155, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 施虐对先导
-    if state_id == 14 and character_data.ability[35] >= 5:
+    elif state_id == 14 and character_data.ability[35] >= 5:
         base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[35], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_experience_common_settle(character_id, 155, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 露出对羞耻
     elif state_id == 16 and character_data.ability[34] >= 5:
         base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[34], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_experience_common_settle(character_id, 155, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
     # 受虐对苦痛
     elif state_id == 17 and character_data.ability[36] >= 5:
         base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
+        base_chara_experience_common_settle(character_id, 155, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
 
 
 def base_chara_favorability_and_trust_common_settle(
