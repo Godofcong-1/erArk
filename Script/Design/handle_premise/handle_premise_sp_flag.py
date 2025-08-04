@@ -2266,7 +2266,7 @@ def handle_sleep_h_or_hidden_sex(character_id: int) -> int:
     """
     if handle_hidden_sex_mode_ge_1(character_id):
         return 1
-    if handle_t_unconscious_flag_1(character_id):
+    if handle_unconscious_flag_1(character_id):
         return 1
     return 0
 
