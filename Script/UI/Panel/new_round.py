@@ -762,6 +762,7 @@ class New_Round_Handle:
         new_npc_id_got = old_cache.npc_id_got
         new_world_setting = old_cache.world_setting
         new_system_setting = old_cache.all_system_setting
+        new_achievement = old_cache.achievement
 
         # 开始重置
         cache_control.cache = cache
@@ -776,6 +777,7 @@ class New_Round_Handle:
         creator_character_flow.first_bonus_and_setting_updata()
         cache.world_setting = new_world_setting
         cache.all_system_setting = new_system_setting
+        cache.achievement = new_achievement
         cache.game_round = new_game_round
         cache.character_data = new_character_data
         cache.npc_id_got = new_npc_id_got
