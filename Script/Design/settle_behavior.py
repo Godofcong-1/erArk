@@ -992,6 +992,10 @@ def orgasm_settle(
             elif handle_premise.handle_hidden_sex_mode_ge_1(character_id):
                 # 成就统计
                 cache.achievement.hidden_sex_record[4] += 1
+            # 睡奸状态下
+            if handle_premise.handle_unconscious_flag_1(character_id):
+                # 成就统计
+                cache.achievement.sleep_sex_record[3] += 1
             # 时停状态下
             if handle_premise.handle_unconscious_flag_3(character_id):
                 # 绝顶计入寸止计数

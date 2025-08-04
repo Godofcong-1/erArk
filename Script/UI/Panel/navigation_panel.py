@@ -13,6 +13,7 @@ from Script.Core import (
 )
 from Script.Design import map_handle, attr_text, game_time
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import achievement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -57,6 +58,13 @@ def judge_arrive():
             now_draw.width = window_width
             now_draw.style = "gold_enrod"
             now_draw.draw()
+            # 如果炎不在列表中，则添加
+            if 17 not in cache.achievement.visited_nation_list:
+                cache.achievement.visited_nation_list.append(target_scene_id)
+            # 结算成就
+            if target_scene_id not in cache.achievement.visited_nation_list:
+                cache.achievement.visited_nation_list.append(target_scene_id)
+            achievement_panel.achievement_flow(_("导航"))
             return True
     return False
 

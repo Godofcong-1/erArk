@@ -229,6 +229,8 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         if handle_premise.handle_action_sleep(character_data.target_character_id):
             target_data.h_state.pretend_sleep = True
             target_data.sp_flag.unconscious_h = 1
+            # 成就刷新
+            cache.achievement.sleep_sex_record[1] = 1
     # 否则
     else:
         # 对象行为时间改为1分钟

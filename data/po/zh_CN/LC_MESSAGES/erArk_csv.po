@@ -1045,183 +1045,243 @@ msgid "在[不隐藏]模式下完成一次没有被发现的隐奸，期间至�
 msgstr ""
 
 #: .\data\csv\Achievement.csv:98
+msgid "睡美人"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:98
+msgid "睡奸"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:98
+msgid "完成一次没有被发现的睡奸，期间至少射精1次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:99
+msgid "梦中情人"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:99
+msgid "完成一次没有被发现的睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:100
+msgid "明知故犯"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:100
+msgid "在对方中间醒来又继续装睡的情况下，完成一次睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:101
 msgid "签字盖章"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:98
+#: .\data\csv\Achievement.csv:101
 msgid "公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:98
+#: .\data\csv\Achievement.csv:101
 msgid "首次处理公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:99
+#: .\data\csv\Achievement.csv:102
 msgid "公文如山"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:99
+#: .\data\csv\Achievement.csv:102
 msgid "累计处理100次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:100
+#: .\data\csv\Achievement.csv:103
 msgid "日理万机"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:100
+#: .\data\csv\Achievement.csv:103
 msgid "累计处理1000次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "书香初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "首次读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:102
+#: .\data\csv\Achievement.csv:105
 msgid "合上书页"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:102
+#: .\data\csv\Achievement.csv:105
 msgid "读完1本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:103
+#: .\data\csv\Achievement.csv:106
 msgid "博览群书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:103
+#: .\data\csv\Achievement.csv:106
 msgid "累计读完100本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "初试锅铲"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "烹饪"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "首次制作食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:105
+#: .\data\csv\Achievement.csv:108
 msgid "千锅百味"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:105
+#: .\data\csv\Achievement.csv:108
 msgid "累计制作100次食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
+#: .\data\csv\Achievement.csv:109
 msgid "泰拉饭"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
+#: .\data\csv\Achievement.csv:109
 msgid "累计制作1000份食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "初次赠礼"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "首次赠送礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:111
 msgid "礼尚往来"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:111
 msgid "累计赠送100次礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:109
+#: .\data\csv\Achievement.csv:112
 msgid "身高体重"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:109
+#: .\data\csv\Achievement.csv:112
 msgid "身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:109
+#: .\data\csv\Achievement.csv:112
 msgid "首次进行身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:110
+#: .\data\csv\Achievement.csv:113
 msgid "内外体格"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:110
+#: .\data\csv\Achievement.csv:113
 msgid "累计进行了100次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:111
+#: .\data\csv\Achievement.csv:114
 msgid "影像拍片"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:111
+#: .\data\csv\Achievement.csv:114
 msgid "累计进行了1000次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:112
+#: .\data\csv\Achievement.csv:115
 msgid "破掉的膜"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:112
+#: .\data\csv\Achievement.csv:115
 msgid "在干员的破处当天进行处女膜检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:113
+#: .\data\csv\Achievement.csv:116
 msgid "出具报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:113
+#: .\data\csv\Achievement.csv:116
 msgid "体检报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:113
+#: .\data\csv\Achievement.csv:116
 msgid "首次对干员出具身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:117
 msgid "档案汇总"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:117
 msgid "累计对100个干员出具了身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:118
 msgid "香气初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:118
 msgid "调香"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:118
 msgid "首次对干员进行香薰疗愈"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:119
 msgid "芳香使者"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:119
 msgid "累计香薰疗愈100次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:120
+msgid "大意食精粥"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:120
+msgid "进食"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:120
+msgid "让干员吃下了加入精液的食物"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:121
+msgid "跨国航行"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:121
+msgid "导航"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:121
+msgid "罗德岛首次移动到了一个新的国家"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:122
+msgid "大地巡旅"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:122
+msgid "罗德岛开遍了泰拉的所有国家"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:6
@@ -1782,10 +1842,6 @@ msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:32
 msgid "做饭"
-msgstr ""
-
-#: .\data\csv\Behavior_Data.csv:33
-msgid "进食"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:34

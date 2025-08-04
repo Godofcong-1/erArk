@@ -35,6 +35,7 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("催眠"): settle_chara_hypnosis,
         _("群交"): settle_chara_group_sex,
         _("隐奸"): settle_chara_hidden_sex,
+        _("睡奸"): settle_chara_sleep_sex,
     }
     # 统计载具数量
     vehicles_count = 0
@@ -69,6 +70,7 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("身体检查"): [cache.achievement.health_check_count, [1041, 1042, 1043]],
         _("体检报告"): [len(cache.achievement.body_report_chara_count_list), [1051, 1052]],
         _("调香"): [cache.achievement.aromatherapy_count, [1061, 1062]],
+        _("导航"): [len(cache.achievement.visited_nation_list), [1101, 1102]],
     }
     # 根据类型获取对应的结算函数
     func = achievement_type_func_dict.get(achievement_type, None)
@@ -409,6 +411,38 @@ def settle_chara_hidden_sex():
         return_list.extend(settle_achievement(judge_value, achievement_id))
     return return_list
 
+def settle_chara_sleep_sex():
+    """
+    结算睡奸类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 如果没有在睡奸中则返回
+    if not handle_premise.handle_t_unconscious_flag_1(0):
+        return return_list
+    # 睡奸模式
+    mode_id = cache.achievement.sleep_sex_record[1]
+    # 射精次数
+    ejaculation_count = cache.achievement.sleep_sex_record[2]
+    # 绝顶次数
+    climax_count = cache.achievement.sleep_sex_record[3]
+    # 成就923的特殊标志
+    flag_923 = 0
+    if mode_id == 1 and ejaculation_count >= 3 and climax_count >= 3:
+        flag_923 = 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (ejaculation_count, 921),  # 期间至少射精1次
+        (min(ejaculation_count, climax_count), 922),  # 期间至少射精3次，被睡奸的干员至少绝顶3次
+        (flag_923, 923),  # 在对方中间醒来又继续装睡的情况下，完成一次睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
 
 class Achievement_Panel:
     """
@@ -510,6 +544,9 @@ class Achievement_Panel:
             achievement_data = game_config.config_achievement[achievement_id]
             # 跳过未实装的成就
             if achievement_data.todo == 1:
+                continue
+            # 跳过隐藏成就
+            if achievement_data.special:
                 continue
             # 结算该成就
             achievement_flow(achievement_data.type)

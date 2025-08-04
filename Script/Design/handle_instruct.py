@@ -2188,6 +2188,9 @@ def handle_unconscious_h():
     now_draw.width = width
     now_draw.text = _("\n进入无意识奸模式\n")
     now_draw.draw()
+    # 成就初始化
+    if handle_premise.handle_unconscious_flag_1(character_data.target_character_id):
+        cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
     chara_handle_instruct_common_settle(constant.Behavior.H)
 
 
@@ -2347,6 +2350,8 @@ def handle_end_h():
         if target_data.sp_flag.unconscious_h > 0:
             character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
             character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
+            # 结算成就
+            achievement_panel.achievement_flow(_("睡奸"))
         else:
             character_data.behavior.behavior_id = constant.Behavior.END_H
             character_data.state = constant.CharacterStatus.STATUS_END_H

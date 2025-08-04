@@ -4,6 +4,7 @@ from Script.Core import get_text, game_type, cache_control, constant, flow_handl
 from Script.UI.Moudle import panel, draw
 from Script.Design import cooking, update, attr_calculation, handle_premise
 from Script.Config import normal_config, game_config
+from Script.UI.Panel import achievement_panel
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -296,6 +297,12 @@ class SeeFoodListByFoodNameDraw:
                 else:
                     character_data.behavior.behavior_id = constant.Behavior.REFUSE_EAT
                     character_data.state = constant.CharacterStatus.STATUS_REFUSE_EAT
+            # 接受的情况下
+            else:
+                # 成就结算
+                if now_food.special_seasoning in [11, 12] and now_food.special_seasoning_amount > 0:
+                    achievement_panel.achievement_flow(_("进食"), 1076)
+
         line_feed.draw()
         cache.now_panel_id = constant.Panel.IN_SCENE
         update.game_update_flow(5)
