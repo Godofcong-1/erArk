@@ -15,6 +15,7 @@ from Script.Design import (
 )
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+from Script.UI.Panel import achievement_panel
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -63,6 +64,8 @@ def update_sleep():
                 # 如果助理的跟随服务已开启，且没有在跟随，则让助理跟随
                 if assistant_character_data.sp_flag.is_follow != 1 and handle_premise.handle_not_follow_1(assistant_id):
                     assistant_character_data.sp_flag.is_follow = 1
+                # 助理成就
+                achievement_panel.achievement_flow(_("助理"))
             # 检查是否有可以升级的能力
             if cache.all_system_setting.base_setting[1]:
                 handle_ability.gain_ability(character_id)

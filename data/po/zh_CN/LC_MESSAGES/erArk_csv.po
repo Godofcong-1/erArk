@@ -361,927 +361,1007 @@ msgid "同时关押了8名囚犯干员"
 msgstr ""
 
 #: .\data\csv\Achievement.csv:20
+msgid "私人助理"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:20
+msgid "助理"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:20
+msgid "首次任命干员为自己的助理"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:21
+msgid "生活起居"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:21
+msgid "同一天内接受了同居助理提供的早安、午饭、晚安的服务"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:22
+msgid "忠心耿耿"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:22
+msgid "当前助理干员的好感度、信任度都达到EX"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:23
 msgid "小有积蓄"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:20
+#: .\data\csv\Achievement.csv:23
 msgid "龙门币"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:20
+#: .\data\csv\Achievement.csv:23
 msgid "拥有10000龙门币"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:21
+#: .\data\csv\Achievement.csv:24
 msgid "资产一鸭"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:21
+#: .\data\csv\Achievement.csv:24
 msgid "拥有100000000龙门币"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:22
+#: .\data\csv\Achievement.csv:25
 msgid "泰拉首富"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:22
+#: .\data\csv\Achievement.csv:25
 msgid "拥有1000000000龙门币"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:23
+#: .\data\csv\Achievement.csv:26
 msgid "好货到手"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:23
+#: .\data\csv\Achievement.csv:26
 msgid "购买道具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:23
+#: .\data\csv\Achievement.csv:26
 msgid "首次购买道具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:24
+#: .\data\csv\Achievement.csv:27
 msgid "道具通鉴"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:24
+#: .\data\csv\Achievement.csv:27
 msgid "累计购买50种不同道具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:25
+#: .\data\csv\Achievement.csv:28
 msgid "贴身衣物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:25
+#: .\data\csv\Achievement.csv:28
 msgid "收藏服装"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:25
+#: .\data\csv\Achievement.csv:28
 msgid "收藏1件干员服装"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:26
+#: .\data\csv\Achievement.csv:29
 msgid "塞爆衣柜"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:26
+#: .\data\csv\Achievement.csv:29
 msgid "收藏100件干员服装"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:27
+#: .\data\csv\Achievement.csv:30
 msgid "Panty & Stocking"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:27
+#: .\data\csv\Achievement.csv:30
 msgid "收藏1000件干员服装"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:28
+#: .\data\csv\Achievement.csv:31
 msgid "出门一趟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:28
+#: .\data\csv\Achievement.csv:31
 msgid "外勤"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:28
+#: .\data\csv\Achievement.csv:31
 msgid "第一次完成外勤委托"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:29
+#: .\data\csv\Achievement.csv:32
 msgid "外勤精英"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:29
+#: .\data\csv\Achievement.csv:32
 msgid "累计完成100次外勤委托"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:30
+#: .\data\csv\Achievement.csv:33
 msgid "万事屋"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:30
+#: .\data\csv\Achievement.csv:33
 msgid "累计完成1000次外勤委托"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:31
+#: .\data\csv\Achievement.csv:34
 msgid "哼，想逃？"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:31
+#: .\data\csv\Achievement.csv:34
 msgid "完成了抓捕逃狱的犯人干员的外勤委托"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:32
+#: .\data\csv\Achievement.csv:35
 msgid "新手上路"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:32
+#: .\data\csv\Achievement.csv:35
 msgid "载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:32
+#: .\data\csv\Achievement.csv:35
 msgid "首次拥有载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:33
+#: .\data\csv\Achievement.csv:36
 msgid "豪车收藏"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:33
+#: .\data\csv\Achievement.csv:36
 msgid "拥有20辆载具"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:34
+#: .\data\csv\Achievement.csv:37
 msgid "换个配件"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:34
+#: .\data\csv\Achievement.csv:37
 msgid "维修"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:34
+#: .\data\csv\Achievement.csv:37
 msgid "首次维修装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:35
+#: .\data\csv\Achievement.csv:38
 msgid "巧手修复"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:35
+#: .\data\csv\Achievement.csv:38
 msgid "累计维修100件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:36
+#: .\data\csv\Achievement.csv:39
 msgid "万能胶水"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:36
+#: .\data\csv\Achievement.csv:39
 msgid "累计维修1000件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:37
+#: .\data\csv\Achievement.csv:40
 msgid "擦拭干净"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:37
+#: .\data\csv\Achievement.csv:40
 msgid "保养"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:37
+#: .\data\csv\Achievement.csv:40
 msgid "首次保养装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:38
+#: .\data\csv\Achievement.csv:41
 msgid "养护达人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:38
+#: .\data\csv\Achievement.csv:41
 msgid "累计保养100件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:39
+#: .\data\csv\Achievement.csv:42
 msgid "能传三代"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:39
+#: .\data\csv\Achievement.csv:42
 msgid "累计保养1000件装备"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:40
+#: .\data\csv\Achievement.csv:43
 msgid "强身健体"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:40
+#: .\data\csv\Achievement.csv:43
 msgid "锻炼"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:40
+#: .\data\csv\Achievement.csv:43
 msgid "博士的体力与气力最大值均大于1100"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:41
+#: .\data\csv\Achievement.csv:44
 msgid "体能大师"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:41
+#: .\data\csv\Achievement.csv:44
 msgid "博士的体力与气力最大值均大于3000"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:42
+#: .\data\csv\Achievement.csv:45
 msgid "肉身巅峰"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:42
+#: .\data\csv\Achievement.csv:45
 msgid "博士的体力与气力最大值均大于5000"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:43
+#: .\data\csv\Achievement.csv:46
 msgid "吐字清晰"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:43
+#: .\data\csv\Achievement.csv:46
 msgid "博士的话术技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:44
+#: .\data\csv\Achievement.csv:47
 msgid "舌灿莲花"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:44
+#: .\data\csv\Achievement.csv:47
 msgid "博士的话术技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:45
+#: .\data\csv\Achievement.csv:48
 msgid "谈笑风生"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:45
+#: .\data\csv\Achievement.csv:48
 msgid "博士的话术技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:46
+#: .\data\csv\Achievement.csv:49
 msgid "列队站好"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:46
+#: .\data\csv\Achievement.csv:49
 msgid "博士的指挥技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:47
+#: .\data\csv\Achievement.csv:50
 msgid "运筹帷幄"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:47
+#: .\data\csv\Achievement.csv:50
 msgid "博士的指挥技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:48
+#: .\data\csv\Achievement.csv:51
 msgid "号令三军"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:48
+#: .\data\csv\Achievement.csv:51
 msgid "博士的指挥技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:49
+#: .\data\csv\Achievement.csv:52
 msgid "中杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:49
+#: .\data\csv\Achievement.csv:52
 msgid "博士的战斗技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:50
+#: .\data\csv\Achievement.csv:53
 msgid "大杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:50
+#: .\data\csv\Achievement.csv:53
 msgid "博士的战斗技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:51
+#: .\data\csv\Achievement.csv:54
 msgid "超大杯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:51
+#: .\data\csv\Achievement.csv:54
 msgid "博士的战斗技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:52
+#: .\data\csv\Achievement.csv:55
 msgid "做熟就行"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:52
+#: .\data\csv\Achievement.csv:55
 msgid "博士的料理技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:53
+#: .\data\csv\Achievement.csv:56
 msgid "油盐酱醋"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:53
+#: .\data\csv\Achievement.csv:56
 msgid "博士的料理技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:54
+#: .\data\csv\Achievement.csv:57
 msgid "灶里乾坤"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:54
+#: .\data\csv\Achievement.csv:57
 msgid "博士的料理技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:55
+#: .\data\csv\Achievement.csv:58
 msgid "看懂曲谱"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:55
+#: .\data\csv\Achievement.csv:58
 msgid "博士的音乐技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:56
+#: .\data\csv\Achievement.csv:59
 msgid "心扉之乐"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:56
+#: .\data\csv\Achievement.csv:59
 msgid "博士的音乐技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:57
+#: .\data\csv\Achievement.csv:60
 msgid "金律乐章"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:57
+#: .\data\csv\Achievement.csv:60
 msgid "博士的音乐技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:58
+#: .\data\csv\Achievement.csv:61
 msgid "义务教育"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:58
+#: .\data\csv\Achievement.csv:61
 msgid "博士的学识技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:59
+#: .\data\csv\Achievement.csv:62
 msgid "博闻强记"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:59
+#: .\data\csv\Achievement.csv:62
 msgid "博士的学识技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:60
+#: .\data\csv\Achievement.csv:63
 msgid "学贯泰拉"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:60
+#: .\data\csv\Achievement.csv:63
 msgid "博士的学识技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:61
+#: .\data\csv\Achievement.csv:64
 msgid "绷带包扎"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:61
+#: .\data\csv\Achievement.csv:64
 msgid "博士的医术技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:62
+#: .\data\csv\Achievement.csv:65
 msgid "回春妙手"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:62
+#: .\data\csv\Achievement.csv:65
 msgid "博士的医术技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:63
+#: .\data\csv\Achievement.csv:66
 msgid "冥土追魂"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:63
+#: .\data\csv\Achievement.csv:66
 msgid "博士的医术技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:64
+#: .\data\csv\Achievement.csv:67
 msgid "出芽新绿"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:64
+#: .\data\csv\Achievement.csv:67
 msgid "博士的农业技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:65
+#: .\data\csv\Achievement.csv:68
 msgid "百谷长青"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:65
+#: .\data\csv\Achievement.csv:68
 msgid "博士的农业技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:66
+#: .\data\csv\Achievement.csv:69
 msgid "离离枯荣"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:66
+#: .\data\csv\Achievement.csv:69
 msgid "博士的农业技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:67
+#: .\data\csv\Achievement.csv:70
 msgid "巧手学徒"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:67
+#: .\data\csv\Achievement.csv:70
 msgid "博士的制造技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:68
+#: .\data\csv\Achievement.csv:71
 msgid "工坊新秀"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:68
+#: .\data\csv\Achievement.csv:71
 msgid "博士的制造技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:69
+#: .\data\csv\Achievement.csv:72
 msgid "工艺大师"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:69
+#: .\data\csv\Achievement.csv:72
 msgid "博士的制造技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:70
+#: .\data\csv\Achievement.csv:73
 msgid "涂涂画画"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:70
+#: .\data\csv\Achievement.csv:73
 msgid "博士的绘画技能达到1级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:71
+#: .\data\csv\Achievement.csv:74
 msgid "泼墨淋漓"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:71
+#: .\data\csv\Achievement.csv:74
 msgid "博士的绘画技能达到4级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:72
+#: .\data\csv\Achievement.csv:75
 msgid "写意胜形"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:72
+#: .\data\csv\Achievement.csv:75
 msgid "博士的绘画技能达到8级"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:73
+#: .\data\csv\Achievement.csv:76
 msgid "荒时之匙"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:73
+#: .\data\csv\Achievement.csv:76
 msgid "时停"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:73
+#: .\data\csv\Achievement.csv:76
 msgid "累计时间停止1分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:74
+#: .\data\csv\Achievement.csv:77
 msgid "序时之锁"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:74
+#: .\data\csv\Achievement.csv:77
 msgid "累计时间停止60分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:75
+#: .\data\csv\Achievement.csv:78
 msgid "白锁与黑匙"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:75
+#: .\data\csv\Achievement.csv:78
 msgid "累计时间停止1440分钟"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:76
+#: .\data\csv\Achievement.csv:79
 msgid "梦境呓语"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:76
+#: .\data\csv\Achievement.csv:79
 msgid "催眠"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:76
+#: .\data\csv\Achievement.csv:79
 msgid "初次催眠1名干员"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:77
+#: .\data\csv\Achievement.csv:80
 msgid "安眠旋律"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:77
+#: .\data\csv\Achievement.csv:80
 msgid "完全催眠1名干员"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:78
+#: .\data\csv\Achievement.csv:81
 msgid "梦乡摇篮"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:78
+#: .\data\csv\Achievement.csv:81
 msgid "完全催眠50名干员"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:79
+#: .\data\csv\Achievement.csv:82
 msgid "新生命"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:79
+#: .\data\csv\Achievement.csv:82
 msgid "生育"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:79
+#: .\data\csv\Achievement.csv:82
 msgid "首次生育孩子"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:80
+#: .\data\csv\Achievement.csv:83
 msgid "种马"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:80
+#: .\data\csv\Achievement.csv:83
 msgid "累计生育10个孩子"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:81
+#: .\data\csv\Achievement.csv:84
 msgid "大种马"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:81
+#: .\data\csv\Achievement.csv:84
 msgid "累计生育100个孩子"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:82
+#: .\data\csv\Achievement.csv:85
 msgid "一发入魂"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:82
+#: .\data\csv\Achievement.csv:85
 msgid "干员在破处当天受精怀孕"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:83
+#: .\data\csv\Achievement.csv:86
 msgid "女儿的女儿"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:83
+#: .\data\csv\Achievement.csv:86
 msgid "与女儿生育了孩子"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:84
+#: .\data\csv\Achievement.csv:87
 msgid "产假接产假"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:84
+#: .\data\csv\Achievement.csv:87
 msgid "育儿中的干员受精怀孕"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:85
+#: .\data\csv\Achievement.csv:88
 msgid "生产起步"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:85
+#: .\data\csv\Achievement.csv:88
 msgid "生产"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:85
+#: .\data\csv\Achievement.csv:88
 msgid "首次生产产品"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:86
+#: .\data\csv\Achievement.csv:89
 msgid "生产专家"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:86
+#: .\data\csv\Achievement.csv:89
 msgid "累计生产100件产品"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:87
+#: .\data\csv\Achievement.csv:90
 msgid "工业巨擘"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:87
+#: .\data\csv\Achievement.csv:90
 msgid "累计生产1000件产品"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:88
+#: .\data\csv\Achievement.csv:91
 msgid "播种新手"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:88
+#: .\data\csv\Achievement.csv:91
 msgid "种植"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:88
+#: .\data\csv\Achievement.csv:91
 msgid "首次收获农作物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:89
+#: .\data\csv\Achievement.csv:92
 msgid "五谷丰登"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:89
+#: .\data\csv\Achievement.csv:92
 msgid "累计收获100份农作物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:90
+#: .\data\csv\Achievement.csv:93
 msgid "嘉禾盈仓"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:90
+#: .\data\csv\Achievement.csv:93
 msgid "累计收获1000份农作物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:91
+#: .\data\csv\Achievement.csv:94
 msgid "三人行"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:91
+#: .\data\csv\Achievement.csv:94
 msgid "群交"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:91
+#: .\data\csv\Achievement.csv:94
 msgid "与至少2名干员一起群交"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:92
+#: .\data\csv\Achievement.csv:95
 msgid "聚众淫乱"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:92
+#: .\data\csv\Achievement.csv:95
 msgid "同时与至少50名有意识的干员一起群交"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:93
+#: .\data\csv\Achievement.csv:96
 msgid "聚众淫乱(里)"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:93
+#: .\data\csv\Achievement.csv:96
 msgid "同时与至少50名无意识的干员一起群交"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:94
+#: .\data\csv\Achievement.csv:97
 msgid "雨露均沾"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:94
+#: .\data\csv\Achievement.csv:97
 msgid "在一次群交中至少对10名干员射精，且至少有20名干员绝顶"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:95
+#: .\data\csv\Achievement.csv:98
 msgid "隐蔽行事"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:95
+#: .\data\csv\Achievement.csv:98
 msgid "隐奸"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:95
+#: .\data\csv\Achievement.csv:98
 msgid "完成一次没有被发现的隐奸，期间至少射精1次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:96
+#: .\data\csv\Achievement.csv:99
 msgid "若无其事"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:96
+#: .\data\csv\Achievement.csv:99
 msgid "完成一次没有被发现的隐奸，期间至少射精3次，隐奸干员至少绝顶3次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:97
+#: .\data\csv\Achievement.csv:100
 msgid "灯下黑"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:97
+#: .\data\csv\Achievement.csv:100
 msgid "在[不隐藏]模式下完成一次没有被发现的隐奸，期间至少射精3次，隐奸干员至少绝顶3次，在场不知情干员不少于10人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:98
+#: .\data\csv\Achievement.csv:101
 msgid "睡美人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:98
+#: .\data\csv\Achievement.csv:101
 msgid "睡奸"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:98
+#: .\data\csv\Achievement.csv:101
 msgid "完成一次没有被发现的睡奸，期间至少射精1次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:99
+#: .\data\csv\Achievement.csv:102
 msgid "梦中情人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:99
+#: .\data\csv\Achievement.csv:102
 msgid "完成一次没有被发现的睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:100
+#: .\data\csv\Achievement.csv:103
 msgid "明知故犯"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:100
+#: .\data\csv\Achievement.csv:103
 msgid "在对方中间醒来又继续装睡的情况下，完成一次睡奸，期间至少射精3次，被睡奸的干员至少绝顶3次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "签字盖章"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:101
+#: .\data\csv\Achievement.csv:104
 msgid "首次处理公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:102
+#: .\data\csv\Achievement.csv:105
 msgid "公文如山"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:102
+#: .\data\csv\Achievement.csv:105
 msgid "累计处理100次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:103
+#: .\data\csv\Achievement.csv:106
 msgid "日理万机"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:103
+#: .\data\csv\Achievement.csv:106
 msgid "累计处理1000次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "书香初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:104
+#: .\data\csv\Achievement.csv:107
 msgid "首次读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:105
+#: .\data\csv\Achievement.csv:108
 msgid "合上书页"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:105
+#: .\data\csv\Achievement.csv:108
 msgid "读完1本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
+#: .\data\csv\Achievement.csv:109
 msgid "博览群书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:106
+#: .\data\csv\Achievement.csv:109
 msgid "累计读完100本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "初试锅铲"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "烹饪"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:107
+#: .\data\csv\Achievement.csv:110
 msgid "首次制作食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:111
 msgid "千锅百味"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:108
+#: .\data\csv\Achievement.csv:111
 msgid "累计制作100次食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:109
+#: .\data\csv\Achievement.csv:112
 msgid "泰拉饭"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:109
+#: .\data\csv\Achievement.csv:112
 msgid "累计制作1000份食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:110
+#: .\data\csv\Achievement.csv:113
 msgid "初次赠礼"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:110
+#: .\data\csv\Achievement.csv:113
 msgid "礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:110
+#: .\data\csv\Achievement.csv:113
 msgid "首次赠送礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:111
+#: .\data\csv\Achievement.csv:114
 msgid "礼尚往来"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:111
+#: .\data\csv\Achievement.csv:114
 msgid "累计赠送100次礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:112
+#: .\data\csv\Achievement.csv:115
 msgid "身高体重"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:112
+#: .\data\csv\Achievement.csv:115
 msgid "身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:112
+#: .\data\csv\Achievement.csv:115
 msgid "首次进行身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:113
+#: .\data\csv\Achievement.csv:116
 msgid "内外体格"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:113
+#: .\data\csv\Achievement.csv:116
 msgid "累计进行了100次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:117
 msgid "影像拍片"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:117
 msgid "累计进行了1000次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
-msgid "破掉的膜"
+#: .\data\csv\Achievement.csv:118
+msgid "落红未干"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:118
 msgid "在干员的破处当天进行处女膜检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:119
 msgid "出具报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:119
 msgid "体检报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:119
 msgid "首次对干员出具身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:117
+#: .\data\csv\Achievement.csv:120
 msgid "档案汇总"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:117
+#: .\data\csv\Achievement.csv:120
 msgid "累计对100个干员出具了身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:118
+#: .\data\csv\Achievement.csv:121
 msgid "香气初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:118
+#: .\data\csv\Achievement.csv:121
 msgid "调香"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:118
+#: .\data\csv\Achievement.csv:121
 msgid "首次对干员进行香薰疗愈"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:119
+#: .\data\csv\Achievement.csv:122
 msgid "芳香使者"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:119
+#: .\data\csv\Achievement.csv:122
 msgid "累计香薰疗愈100次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:120
+#: .\data\csv\Achievement.csv:123
 msgid "大意食精粥"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:120
+#: .\data\csv\Achievement.csv:123
 msgid "进食"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:120
+#: .\data\csv\Achievement.csv:123
 msgid "让干员吃下了加入精液的食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:121
+#: .\data\csv\Achievement.csv:124
 msgid "跨国航行"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:121
+#: .\data\csv\Achievement.csv:124
 msgid "导航"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:121
+#: .\data\csv\Achievement.csv:124
 msgid "罗德岛首次移动到了一个新的国家"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:122
+#: .\data\csv\Achievement.csv:125
 msgid "大地巡旅"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:122
+#: .\data\csv\Achievement.csv:125
 msgid "罗德岛开遍了泰拉的所有国家"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:126
+msgid "第一滴精"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:126
+msgid "射精"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:126
+msgid "首次射精"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:127
+msgid "精液水泵"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:127
+msgid "在一次H中射精至少20次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:128
+msgid "百战雄根"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:128
+msgid "累积射精次数超过1000次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:129
+msgid "白浊喷泉"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:129
+msgid "在H中，单名干员的阴道、子宫、肛门、尿道部位的合计被射精量超过500ml"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:130
+msgid "白浊嫁衣"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:130
+msgid "在H中，单名干员的所有服装部位的合计被射精量超过500ml"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:131
+msgid "精液膨腹"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:131
+msgid "在干员体内射精量多到使其腹部隆起"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:6
@@ -1402,10 +1482,6 @@ msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:23
 msgid "{name}是{pl_name}的女儿。"
-msgstr ""
-
-#: .\data\csv\Ai_Chat_Send_Data.csv:25
-msgid "助理"
 msgstr ""
 
 #: .\data\csv\Ai_Chat_Send_Data.csv:25
@@ -21917,11 +21993,11 @@ msgid "特种"
 msgstr ""
 
 #: .\data\csv\Prts.csv:6
-msgid "经常看到的部位字母缩写分别代表什么意思？"
+msgid "偶尔会看到的部位字母缩写分别代表什么意思？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:7
-msgid "Ｂ：Breast  ，胸部\nＣ：Clitoris，阴蒂\nＰ：Penis   ，阴茎\nＶ：Vagina  ，阴道\nＡ：Anus    ，肛门\nＵ：Urethra ，尿道\nＷ：Womb    ，子宫\nＮ：Normal  ，身体其他部位通用（如耳朵、尾巴、口腔、脖子、肚子、大腿、心理等）"
+msgid "S：Skin    ，皮肤\nB：Breast  ，胸部\nC：Clitoris，阴蒂\nP：Penis   ，阴茎\nV：Vagina  ，阴道\nA：Anus    ，肛门\nU：Urethra ，尿道\nW：Womb    ，子宫\nM：Mouse   ，口喉\nF：Furry   ，兽部\nH：Heart   ，心理"
 msgstr ""
 
 #: .\data\csv\Prts.csv:8
@@ -21933,99 +22009,99 @@ msgid "刻印是干员的一种特殊属性，在干员经历对她影响足够�
 msgstr ""
 
 #: .\data\csv\Prts.csv:10
-msgid "如何进行催眠？都有哪些催眠？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:11
-msgid "当博士通过开局选取或者使用至纯源石来学习催眠的源石技艺素质后，即可对干员进行催眠\n\n初期可以在与干员两人独处的时候进行【单人催眠】，在升级到高级催眠就可以直接对房间内全员进行【集体催眠】\n\n每次对干员进行催眠时会提升对方的催眠程度，到50%、100%、200%时分别对应浅层、深层、完全催眠\n\n当前催眠的种类共有平然、空气、体控、心控四种，分别更强的催眠效果，需要的深度也依次提升，默认手动选取每次进行催眠的种类，也可以在【源石技艺】更改为指定种类"
-msgstr ""
-
-#: .\data\csv\Prts.csv:12
 msgid "我的UI扭扭斜斜/地图支离破碎，和我看到的其他人的截图不太一样，是什么原因？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:13
+#: .\data\csv\Prts.csv:11
 msgid "游戏需要专门的字体，在该字体下UI和地图绘制在特定的字体下会有比较好的效果。虽然不确定你是在哪里发现该游戏的，但是一般来说在下载链接里会附带该字体，安装后即可解决该问题"
 msgstr ""
 
-#: .\data\csv\Prts.csv:15
-msgid "干员每天的日常行动是什么样的？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:16
-msgid "大体上可以分为工作和非工作（无工作或有工作但今天休息）两种状态\n\n对工作的干员来说，早上起床，然后去食堂吃早饭，上午工作，中午吃午饭，下午工作，下班后娱乐，晚饭，去大浴室洗澡，回宿舍睡觉\n非工作的干员则把工作的部分全部换成娱乐，其他都是一样的\n\n除了上述根据时间而来的主要行动之外，疲劳值和尿意值的逐渐累积也会影响干员的临时行动\n前者会使干员去休息或者睡觉来减轻疲惫，后者在让干员每一段时间就要去一次洗手间\n\n如果博士对干员的行动有干预，比如助理或者跟随的相关指令，则以博士的指令为优先，同时也会说一声然后去解决吃饭/休息/解手之类个人需求，解决后再回来\n\n以上所有行为都会基于动态权重和flag状态槽来梳理干员的行为树，尽可能模拟较为智能和合理的AI行动"
-msgstr ""
-
-#: .\data\csv\Prts.csv:17
-msgid "如何提升博士或干员的体力与气力上限？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:18
-msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用\n除此之外，在H结束后，也会根据本次H中射精/绝顶的次数而获得小幅度的提升"
-msgstr ""
-
-#: .\data\csv\Prts.csv:19
-msgid "如何提升博士的理智上限？"
-msgstr ""
-
-#: .\data\csv\Prts.csv:20
-msgid "每日多多使用源石技艺，将理智尽量消耗光，会根据消耗的量来缓慢提升理智上限\n如果想要快速提升的话，可以在[成人商店]中购买理智药剂，在恢复理智的同时，也提升了自己的消耗量，进而提升理智上限"
-msgstr ""
-
-#: .\data\csv\Prts.csv:21
+#: .\data\csv\Prts.csv:13
 msgid "博士每天都需要做什么？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:22
-msgid "没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\n可以根据自己的喜好和需求来安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等"
+#: .\data\csv\Prts.csv:14
+msgid "没有特别的要求，一般来说以攻略干员为主要目标，经营和发展罗德岛为次要目标。\n可以根据自己的喜好和需求自由安排每天的行动，比如去处理公务、练习源石技艺、和干员互动、看书、锻炼、收集藏品、招募新干员、看病制药、逛地图视察各部门的情况等等\n也可以去[藏品馆]里【查看成就】，去达成一些自己感兴趣的成就。"
 msgstr ""
 
-#: .\data\csv\Prts.csv:23
+#: .\data\csv\Prts.csv:15
+msgid "如何提升博士或干员的体力与气力上限？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:16
+msgid "可以在[训练场]的[健身区]中进行【锻炼身体】，需要注意的是该设施初期未解锁，需要在基建升级后才可使用\n除此之外，在H结束后，也会根据本次H中射精/绝顶的次数而获得小幅度的提升"
+msgstr ""
+
+#: .\data\csv\Prts.csv:17
+msgid "如何提升博士的理智上限？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:18
+msgid "每日多多使用源石技艺，将理智尽量消耗光，会根据消耗的量来缓慢提升理智上限\n如果想要快速提升的话，可以在[成人商店]中购买理智药剂，在恢复理智的同时，也提升了自己的消耗量，进而提升理智上限"
+msgstr ""
+
+#: .\data\csv\Prts.csv:19
+msgid "干员每天的日常行动是什么样的？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:20
+msgid "大体上可以分为工作和非工作（无工作或有工作但今天休息）两种状态\n\n对工作的干员来说，早上起床，然后去食堂吃早饭，上午工作，中午吃午饭，下午工作，下班后娱乐，晚饭，去大浴室洗澡，回宿舍睡觉\n非工作的干员则把工作的部分全部换成娱乐，其他都是一样的\n\n除了上述根据时间而来的主要行动之外，疲劳值和尿意值的逐渐累积也会影响干员的临时行动\n前者会使干员去休息或者睡觉来减轻疲惫，后者在让干员每一段时间就要去一次洗手间\n\n如果博士对干员的行动有干预，比如助理或者跟随的相关指令，则以博士的指令为优先，同时也会说一声然后去解决吃饭/休息/解手之类个人需求，解决后再回来\n\n以上所有行为都会基于动态权重和flag状态槽来梳理干员的行为树，尽可能模拟较为智能和合理的AI行动"
+msgstr ""
+
+#: .\data\csv\Prts.csv:21
 msgid "为了练料理，做了太多的菜，该怎么处理？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:24
+#: .\data\csv\Prts.csv:22
 msgid "只要是正常调味的食物，就可以在[生活娱乐区]的[取餐区]中选择【放入正常食物】，干员们会在打饭的时候取走吃掉"
 msgstr ""
 
-#: .\data\csv\Prts.csv:26
+#: .\data\csv\Prts.csv:24
 msgid "如何和干员处好关系？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:27
+#: .\data\csv\Prts.csv:25
 msgid "正常的和干员相处就会自然而然的关系要好起来了，最简单的方式就是把要攻略的目标设为助理，这样平常就一直在一起行动了\n一开始还是陌生的状态下，就不要急于进行性骚扰甚至做更过分的事情，日常系的指令都是不会出问题的，等到熟悉起来了再逐步尝试吧"
 msgstr ""
 
-#: .\data\csv\Prts.csv:28
+#: .\data\csv\Prts.csv:26
 msgid "惹干员生气了怎么办？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:29
-msgid "去诚恳的道歉，不行的话就多道几次歉，总会原谅你的。\n如果生气很严重，获得反发刻印或者恐怖刻印了的话，可以用源石技艺进行消除，或消耗大量宝珠来消除。"
+#: .\data\csv\Prts.csv:27
+msgid "去诚恳的道歉，不行的话就多道几次歉，总会原谅你的。\n如果生气很严重，获得反发刻印或者恐怖刻印了的话，可以用源石技艺进行消除，或消耗大量宝珠来消除。\n只是1级的反发刻印的话，还可以去[成人商店]购买道歉礼物，送给干员来表达歉意。"
 msgstr ""
 
-#: .\data\csv\Prts.csv:30
+#: .\data\csv\Prts.csv:28
 msgid "攻略路线是怎么样的？如何获得信物？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:31
+#: .\data\csv\Prts.csv:29
 msgid "攻略分为【爱情系】和【隶属系】两条路线，只能二选其一，两条路线在抵达第三阶段时均可获得该干员的【信物】。\n\n爱情系：以和干员相亲相爱为主要目标，通过日常中的点点滴滴拉近感情，最终坠入爱河，从低到高共有[思慕]、[恋慕]、[恋人]、[爱侣]四个阶段\n隶属系：以博士的意志为主要目标，通过强迫性指令和肉体快感调教等方式等方式，最终达到干员对博士的绝对服从，从低到高共有[屈从]、[驯服]、[宠物]、[奴隶]四个阶段\n\n最开始路线的选择是博士在属性提升中手动选择的，之后当前周目内就不能再更改了，请慎重选择"
 msgstr ""
 
-#: .\data\csv\Prts.csv:32
+#: .\data\csv\Prts.csv:30
 msgid "拿到的干员的内裤/袜子有什么用？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:33
+#: .\data\csv\Prts.csv:31
 msgid "内裤和袜子属于收集品，获得后可以在[图书馆]的[藏品馆]中使用【摆放藏品】，每收集一定数量后可以获得特定的解锁奖励。"
 msgstr ""
 
-#: .\data\csv\Prts.csv:34
+#: .\data\csv\Prts.csv:32
 msgid "如何获得更多的宝珠？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:35
+#: .\data\csv\Prts.csv:33
 msgid "主界面中的每种角色状态值都对应一种宝珠，可以用来提升角色的属性，在玩家睡觉时结算\n\n结算时，会根据该状态值的等级，按一定比例转换成宝珠值，等级越高比例越高\n所以要获得更多的某类宝珠，就在睡觉前尽量提升该角色的该状态值的等级吧"
+msgstr ""
+
+#: .\data\csv\Prts.csv:34
+msgid "如何进行催眠？都有哪些催眠？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:35
+msgid "当博士通过开局选取或者使用至纯源石来学习催眠的源石技艺素质后，即可对干员进行催眠\n\n初期可以在与干员两人独处的时候进行【单人催眠】，在升级到高级催眠就可以直接对房间内全员进行【集体催眠】\n\n每次对干员进行催眠时会提升对方的催眠程度，到50%、100%、200%时分别对应浅层、深层、完全催眠\n\n当前催眠的种类共有平然、空气、体控、心控四种，分别有不同的效果，需要的深度也依次提升\n默认手动选取每次进行催眠的种类，也可以在【源石技艺】更改为指定种类\n在体控和心控模式下会有额外的指令可供使用，如【体控-强制高潮】、【心控-角色扮演】等"
 msgstr ""
 
 #: .\data\csv\Prts.csv:37
@@ -22053,7 +22129,7 @@ msgid "除去还没有来初潮的干员之外，其他所有人都是可以怀�
 msgstr ""
 
 #: .\data\csv\Prts.csv:43
-msgid "我在射精时选定了指定部位，但发现还射到了其他部位上，这是怎么回事？"
+msgid "我在射精时选定了指定部位，但发现其他部位上也有精液，这是怎么回事？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:44
@@ -22073,7 +22149,7 @@ msgid "我想让干员怀孕，有什么办法提高受精几率吗？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:48
-msgid "干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\n\n\n目前已实装的提高概率的手段有（可叠加）：\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\n③如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\n④在身体管理中禁止干员清洗阴道内的精液\n\n\n其他相关功能：\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\n在子宫内射精（即子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
+msgid "干员的生理周期以七天为一个循环，包含安全日、普通日、危险日和排卵日四种日子\n在每个生理周期的排卵日(第6天)会根据整个周期内，安全日以外的其他日被射入精液总量来判断是否[受精]\n不同日子的概率高低列表是：排卵日＞危险日＞普通日＞安全日（=0）\n\n\n目前已实装的提高概率的手段有（可叠加）：\n①在成人商店里购买【排卵促进药】后直接让对方服用，或偷偷加在咖啡/食物中让对方服用\n②每天如果不射精的话，能够有一部分精液转化为临时精液而储存到下一天，最高可以储存到4倍，此时可以获得【浓厚精液】素质\n③如果该干员已经被完全催眠（200%催眠深度），可以切换到【体控催眠】，然后使用【体控-强制排卵】的源石技艺\n④在身体管理中禁止干员清洗阴道内的精液\n\n\n其他相关功能：\n使用【生理透视】的源石技艺（在透视系中）可以看到干员的生理周期与受精概率，方便进行判断\n在阴道内射精（即一般交合姿势指令时射精）的情况下，大部分精液会停留在阴道内，小部分会流到子宫，没有流到子宫内的阴道部分的精液会在干员当日去大浴场里洗澡时被洗掉，进而降低怀孕概率。\n在子宫内射精（即欺负子宫口或子宫奸等指令时射精）的情况下，大部分精液都会射进子宫内，只有小部分会向外流到阴道，因此不容易被清洗掉。\n当子宫内射精量足够多时，文字上会提示有腹部隆起等相关信息，同时如果开启了【腔内透视】的源石技艺的话，可以看到干员子宫和阴道的断面图，此时可以根据图片中子宫内的精液量和子宫的被撑大程度来进行判断。"
 msgstr ""
 
 #: .\data\csv\Prts.csv:49
@@ -22084,75 +22160,83 @@ msgstr ""
 msgid "【未初潮】是年幼干员的特殊生理素质，拥有该素质是无法怀孕的\n需要先对阴道和子宫进行一段时间的开发，让【V感度】和【W感度】升级到足够的等级后，即可提前迎来性成熟，失去该素质\n\n除此之外，如果是自己的女儿的话，对方是会随着时间而成长的。在从【幼女】成长为【萝莉】后，即可失去【未初潮】素质"
 msgstr ""
 
-#: .\data\csv\Prts.csv:52
-msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
+#: .\data\csv\Prts.csv:51
+msgid "在睡奸中，如何不让干员醒来？"
 msgstr ""
 
-#: .\data\csv\Prts.csv:53
-msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
+#: .\data\csv\Prts.csv:52
+msgid "在睡奸中，博士的每次指令都会让干员的睡眠程度减轻，减轻的程度与指令动作的剧烈程度有关\n如果想要不让干员醒来，可以在睡奸中使用一些轻柔的指令，或者耐心地【等待5分钟】，等待干员的睡眠程度比较深的时候，再进行下一步的动作\n\n在干员因动作被惊醒的时候，如果攻略程度比较高的话，干员也有可能会继续配合博士的行动，选择装睡，任由博士玩弄。"
 msgstr ""
 
 #: .\data\csv\Prts.csv:54
-msgid "如何招募新的干员？"
+msgid "如何便捷地查看整个罗德岛每个部门的经营情况？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:55
-msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
+msgid "在博士办公室使用【管理罗德岛】指令，可以总览基地的情况，快捷管理每个部门，以及调整人员的工作安排"
 msgstr ""
 
 #: .\data\csv\Prts.csv:56
-msgid "如何建造/升级设施？"
+msgid "如何招募新的干员？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:57
-msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
+msgid "需要在文职区的办公室进行【招募干员】，虽然博士可以亲自上场，不过还是建议任命干员来做。\n\n在进行招募干员的工作时，可以增长招募条，增长速度主要由话术等级决定\n当招募条到100%时，即招募到一名新的干员并重置招募条，此时会向博士发送提示信息，博士就可以到博士办公室里确认并欢迎新干员的加入\n\n可以使用【招募情况】来查看招募进度或调整招募策略"
 msgstr ""
 
 #: .\data\csv\Prts.csv:58
-msgid "都有哪些获得龙门币的方法？"
+msgid "如何建造/升级设施？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:59
-msgid "①医疗部每天治疗病人，能够获得稳定的龙门币收入\n②将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润\n③部分外勤委托会提供丰厚的龙门币奖励"
+msgid "在工程区的基建部可以使用【基建系统】指令，消耗龙门币来兴建或升级设施。\n其中[控制中枢]的等级影响所有区块的等级上限，[动力区]的等级影响供电量，其他各区块则影响各自区块内部的效果或功能解锁"
 msgstr ""
 
 #: .\data\csv\Prts.csv:60
-msgid "都有哪些获得粉红凭证的方法？"
+msgid "都有哪些获得龙门币的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:61
-msgid "①每日的干员好感度提升会换算为一定的粉红凭证\n②已攻略的干员会根据攻略程度每日提供固定的粉红凭证\n③部分外勤委托会提供粉红凭证作为奖励"
+msgid "①医疗部每天治疗病人，能够获得稳定的龙门币收入\n②将资源在制造加工区将其加工成药品或奢侈品，再在贸易区的[资源交易所]中卖出，能够获得较高的利润\n③部分外勤委托会提供丰厚的龙门币奖励"
 msgstr ""
 
 #: .\data\csv\Prts.csv:62
-msgid "都有哪些获得至纯源石的方法？"
+msgid "都有哪些获得粉红凭证的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:63
-msgid "①在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励\n②部分外勤委托会提供至纯源石作为报酬"
+msgid "①每日的干员好感度提升会换算为一定的粉红凭证\n②已攻略的干员会根据攻略程度每日提供固定的粉红凭证\n③部分外勤委托会提供粉红凭证作为奖励"
 msgstr ""
 
 #: .\data\csv\Prts.csv:64
-msgid "种植相关的基建系统是如何运作的？"
+msgid "都有哪些获得至纯源石的方法？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:65
-msgid "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
+msgid "①在图书馆的藏品馆中进行收集解锁，获得至纯源石奖励\n②部分外勤委托会提供至纯源石作为报酬"
 msgstr ""
 
 #: .\data\csv\Prts.csv:66
-msgid "外勤委托系统是如何运作的？"
+msgid "种植相关的基建系统是如何运作的？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:67
-msgid "在基建系统中，是在【机库】的【外勤集合点】来接受外勤委托。\n外勤委托需要选择满足条件的干员，根据委托的不同，往往还需要载具或者消耗特定的资源，完成后会获得对应的奖励。\n外勤委托所需要的载具可以在【机库】的【格纳库】中进行购买与管理，不同的载具除了运载量的不同以外，还会有特定的效果\n外勤委托分为普通委托和特殊委托，普通委托可以反复接受，特殊委托一般和某些剧情相关，只能执行一次\n可以接受的委托的数量和等级会与【机库】的等级，以及罗德岛现在的所在地有关，部分特殊委托则还需要拥有特定的干员，或者达成了某些特殊条件才能够解锁\n外勤委托的奖励多种多样，除了能够获得各种资源之外，还包括干员自身的成长、特殊解锁项，甚至能够在任务途中结识新的伙伴，将其吸纳为干员等。"
+msgid "在基建系统中，是由【疗养庭院】的【药田】和【温室】来种植作物，前者种植的是普通药材，后者种植的是香料。\n在解锁后可以安排干员到药田或温室工作，选择要种植的作物即可自动种植，每天自动收获。\n收获后的植物可以在【生产加工区】里加工成药品或者【香熏治疗室】里用来给目标干员进行调香。"
 msgstr ""
 
 #: .\data\csv\Prts.csv:68
-msgid "灰色的职业该如何解锁？"
+msgid "外勤委托系统是如何运作的？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:69
+msgid "在基建系统中，是在【机库】的【外勤集合点】来接受外勤委托。\n外勤委托需要选择满足条件的干员，根据委托的不同，往往还需要载具或者消耗特定的资源，完成后会获得对应的奖励。\n外勤委托所需要的载具可以在【机库】的【格纳库】中进行购买与管理，不同的载具除了运载量的不同以外，还会有特定的效果\n外勤委托分为普通委托和特殊委托，普通委托可以反复接受，特殊委托一般和某些剧情相关，只能执行一次\n可以接受的委托的数量和等级会与【机库】的等级，以及罗德岛现在的所在地有关，部分特殊委托则还需要拥有特定的干员，或者达成了某些特殊条件才能够解锁\n外勤委托的奖励多种多样，除了能够获得各种资源之外，还包括干员自身的成长、特殊解锁项，甚至能够在任务途中结识新的伙伴，将其吸纳为干员等。"
+msgstr ""
+
+#: .\data\csv\Prts.csv:70
+msgid "灰色的职业该如何解锁？"
+msgstr ""
+
+#: .\data\csv\Prts.csv:71
 msgid "监狱长：至少有一个囚犯，且自身至少为3级陷落\n性爱练习生：在医疗区-体检科中指定了性爱练习"
 msgstr ""
 
@@ -25006,10 +25090,6 @@ msgstr ""
 
 #: .\data\csv\Talent.csv:31
 msgid "经常性地在绝顶的同时被口内射精而获得的素质，尝到精液的味道就会条件反射性地绝顶"
-msgstr ""
-
-#: .\data\csv\Talent.csv:32
-msgid "精液膨腹"
 msgstr ""
 
 #: .\data\csv\Talent.csv:32

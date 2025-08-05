@@ -6,6 +6,8 @@ from Script.Config import game_config, normal_config
 
 import random
 
+from Script.UI.Panel import achievement_panel
+
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -414,6 +416,8 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         line_feed.draw()
         line_feed.draw()
 
+    # 结算成就
+    achievement_panel.achievement_flow(_("射精"))
 
 class Ejaculation_Panel:
     """

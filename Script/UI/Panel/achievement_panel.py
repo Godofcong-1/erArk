@@ -30,12 +30,14 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("关系"): settle_chara_relationship,
         _("招募"): settle_chara_recruit,
         _("访客"): settle_chara_visitor,
+        _("助理"): settle_chara_assistant,
         _("收藏服装"): settle_chara_clothing,
         _("技能"): settle_chara_ability,
         _("催眠"): settle_chara_hypnosis,
         _("群交"): settle_chara_group_sex,
         _("隐奸"): settle_chara_hidden_sex,
         _("睡奸"): settle_chara_sleep_sex,
+        _("射精"): settle_semen_shoot,
     }
     # 统计载具数量
     vehicles_count = 0
@@ -220,6 +222,40 @@ def settle_chara_visitor():
     return_list = []
     # 统一调用settle_achievement进行批量结算
     return_list.extend(settle_achievement(visitor_count, [111, 112]))
+    return return_list
+
+def settle_chara_assistant():
+    """
+    结算助理类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    pl_character_data: game_type.Character = cache.character_data[0]
+    assistant_chara_id = pl_character_data.assistant_character_id
+    # 如果没有助理则返回空列表
+    if assistant_chara_id == 0:
+        return return_list
+    assistant_chara_data = cache.character_data[assistant_chara_id]
+    # 132号成就的特殊标志
+    flag_132 = 1
+    for service_id in [4, 5, 6, 7]:
+        if assistant_chara_data.assistant_services[service_id] == 0:
+            flag_132 = 0
+    # 133号成就的特殊标志
+    flag_133 = 0
+    if pl_character_data.favorability[assistant_chara_id] >= game_config.config_favorability_level[-1].Favorability_point and assistant_chara_data.trust >= game_config.config_trust_level[-1].Trust_point:
+        flag_133 = 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (assistant_chara_id, 131),  # 首次任命干员为助理
+        (flag_132, 132),  # 同一天内接受了同居助理提供的早安、午饭、晚安的服务
+        (flag_133, 133),  # 助理干员的好感度、信任度都达到EX
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
     return return_list
 
 def settle_chara_clothing():
@@ -443,6 +479,51 @@ def settle_chara_sleep_sex():
         return_list.extend(settle_achievement(judge_value, achievement_id))
     return return_list
 
+def settle_semen_shoot():
+    """
+    结算射精类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    pl_character_data: game_type.Character = cache.character_data[0]
+    target_character_id = pl_character_data.target_character_id
+    target_character_data: game_type.Character = cache.character_data[target_character_id]
+    # 射精次数
+    if 3 not in pl_character_data.h_state.orgasm_count:
+        pl_character_data.h_state.orgasm_count[3] = [0, 0]
+    now_semen_shoot_count = pl_character_data.h_state.orgasm_count[3][0]
+    all_semen_shoot_count = pl_character_data.h_state.orgasm_count[3][1]
+    # 对方身上精液量
+    inner_all_semen = 0
+    cloth_all_semen = 0
+    for i in [6, 7, 8, 9]:
+        # 如果没有第[i]个，则补上
+        if i not in target_character_data.dirty.body_semen:
+            part_name = game_config.config_body_part[i].name
+            target_character_data.dirty.body_semen[i] = [part_name, 0, 0, 0]
+        inner_all_semen += target_character_data.dirty.body_semen[i][1]
+    for i in game_config.config_clothing_type:
+        # 如果没有第[i]个，则补上
+        if i not in target_character_data.dirty.cloth_semen:
+            part_name = game_config.config_clothing_type[i].name
+            target_character_data.dirty.cloth_semen[i] = [part_name, 0, 0, 0]
+        cloth_all_semen += target_character_data.dirty.cloth_semen[i][1]
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (now_semen_shoot_count, 1201),  # 首次射精
+        (now_semen_shoot_count, 1202),  # 在一次H中射精至少20次
+        (all_semen_shoot_count, 1203),  # 累积射精次数超过1000次
+        (inner_all_semen, 1204),  # 在一次H中，在单名干员的阴道、子宫、肛门、尿道里的总射精量超过500ml
+        (cloth_all_semen, 1205),  # 在一次H中，在单名干员的所有服装上的总射精量超过500ml
+        (target_character_data.talent[32], 1206),  # 在干员体内射精量多到使其腹部隆起
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
 
 class Achievement_Panel:
     """
@@ -553,12 +634,8 @@ class Achievement_Panel:
 
 class Achievement_Draw:
     """
-    信物绘制对象
-    Keyword arguments:
-    text -- 道具id
-    width -- 最大宽度
+    成就绘制对象
     """
-
     def __init__(self, achievement_cid: int, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
         self.achievement_cid: int = achievement_cid
