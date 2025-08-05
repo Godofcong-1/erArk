@@ -244,7 +244,7 @@ def settle_chara_assistant():
             flag_132 = 0
     # 133号成就的特殊标志
     flag_133 = 0
-    if pl_character_data.favorability[assistant_chara_id] >= game_config.config_favorability_level[-1].Favorability_point and assistant_chara_data.trust >= game_config.config_trust_level[-1].Trust_point:
+    if pl_character_data.favorability[assistant_chara_id] >= game_config.config_favorability_level[8].Favorability_point and assistant_chara_data.trust >= game_config.config_trust_level[8].Trust_point:
         flag_133 = 1
     # 构建成就结算列表
     achievement_checks = [
