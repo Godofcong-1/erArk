@@ -2925,7 +2925,7 @@ def handle_group_sex_mode_on(
     """
     cache.group_sex_mode = True
     # 结算成就
-    cache.achievement.group_sex_record = {1: 0, 2: 0}
+    cache.achievement.group_sex_record = {1: [], 2: []}
     achievement_panel.achievement_flow(_("群交"))
 
 

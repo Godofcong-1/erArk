@@ -2137,6 +2137,8 @@ def handle_sleep_obscenity():
     now_draw.width = width
     now_draw.text = _("\n进入睡眠猥亵模式\n")
     now_draw.draw()
+    # 虽然在无意识奸中会刷新该数值，但是为了防止仅睡奸猥亵不H，在这里也初始化一下
+    cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
 
 
 @add_instruct(
