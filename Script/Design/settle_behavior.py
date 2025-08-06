@@ -6,7 +6,7 @@ from Script.Core import cache_control, constant, game_type, get_text, text_handl
 from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import ejaculation_panel, hypnosis_panel
+from Script.UI.Panel import achievement_panel, ejaculation_panel, hypnosis_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -1075,6 +1075,13 @@ def orgasm_settle(
         second_behavior_id = f"plural_orgasm_{part_count}"
         character_data.second_behavior[second_behavior_id] = 1
         character_data.h_state.plural_orgasm_set = tem_orgasm_set.copy()
+        # 结算成就
+        if part_count >= 2:
+            achievement_panel.achievement_flow(_("绝顶"), 1221)
+        if part_count >= 6:
+            achievement_panel.achievement_flow(_("绝顶"), 1222)
+        if part_count >= 10:
+            achievement_panel.achievement_flow(_("绝顶"), 1223)
 
 
 def judge_orgasm_degree(level_count: int) -> int:

@@ -1364,6 +1364,34 @@ msgstr ""
 msgid "在干员体内射精量多到使其腹部隆起"
 msgstr ""
 
+#: .\data\csv\Achievement.csv:132
+msgid "双管齐下"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:132
+msgid "绝顶"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:132
+msgid "让干员同时两个部位绝顶"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:133
+msgid "六神无主"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:133
+msgid "让干员同时六个部位绝顶"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:134
+msgid "十面埋伏"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:134
+msgid "让干员同时十个部位绝顶"
+msgstr ""
+
 #: .\data\csv\Ai_Chat_Send_Data.csv:6
 msgid "角色名"
 msgstr ""
