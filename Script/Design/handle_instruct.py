@@ -1814,12 +1814,12 @@ def handle_see_collection():
 @add_instruct(
     constant.Instruct.SEE_ACHIEVEMENT,
     constant.InstructType.DAILY,
-    _("查看成就"),
+    _("查看蚀刻章"),
     {
         constant_promise.Premise.IN_COLLECTION_ROOM,
     })
 def handle_see_achievement():
-    """处理查看成就指令"""
+    """处理查看蚀刻章指令"""
     now_panel = achievement_panel.Achievement_Panel(width)
     now_panel.draw()
 

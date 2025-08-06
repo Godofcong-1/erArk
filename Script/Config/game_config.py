@@ -415,6 +415,9 @@ config_equipment_maintain_setting_option: Dict[int, Dict[int, str]] = {}
 """ 装备维护设置数据的选项数据 设置id:选项序号:选项内容 """
 config_achievement: Dict[int, config_def.Achievement] = {}
 """ 成就数据 """
+config_achievement_id_relation: Dict[int, int] = {}
+""" 成就数据的id关联数据，int键为成就cid编号，int值为关联该成就的后置id """
+
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
@@ -1868,6 +1871,9 @@ def load_achievement():
         now_tem = config_def.Achievement()
         now_tem.__dict__ = tem_data
         config_achievement[now_tem.cid] = now_tem
+        # 如果该成就有关联id，则
+        if now_tem.pre_id != 0:
+            config_achievement_id_relation[now_tem.pre_id] = now_tem.cid
 
 
     """

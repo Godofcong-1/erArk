@@ -132,7 +132,7 @@ def draw_achievement_notice(achievement_id_list: list[int]):
         description = achievement_data.description
         # 绘制成就获得提示
         now_draw = draw.WaitDraw()
-        draw_text = _("\n\n   ○ 获得成就：{name} ○\n").format(name=name)
+        draw_text = _("\n\n   ○ 获得蚀刻章：{name} ○\n").format(name=name)
         draw_text += _("      （{description}）\n\n\n").format(description=description)
         now_draw.text = draw_text
         now_draw.style = 'gold_enrod'
@@ -242,16 +242,16 @@ def settle_chara_assistant():
     for service_id in [4, 5, 6, 7]:
         if assistant_chara_data.assistant_services[service_id] == 0:
             flag_132 = 0
-    # 133号成就的特殊标志
-    flag_133 = 0
+    # 136号成就的特殊标志
+    flag_136 = 0
     if pl_character_data.favorability[assistant_chara_id] >= game_config.config_favorability_level[8].Favorability_point and assistant_chara_data.trust >= game_config.config_trust_level[8].Trust_point:
-        flag_133 = 1
+        flag_136 = 1
     # 构建成就结算列表
     achievement_checks = [
         # (判断值, 成就ID)
         (assistant_chara_id, 131),  # 首次任命干员为助理
         (flag_132, 132),  # 同一天内接受了同居助理提供的早安、午饭、晚安的服务
-        (flag_133, 133),  # 助理干员的好感度、信任度都达到EX
+        (flag_136, 136),  # 助理干员的好感度、信任度都达到EX
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:
@@ -398,7 +398,7 @@ def settle_chara_group_sex():
         else:
             conscious_count += 1
     # 904号成就
-    if cache.achievement.group_sex_record[1] >= 10 and cache.achievement.group_sex_record[2] >= 20:
+    if len(cache.achievement.group_sex_record[1]) >= 10 and len(cache.achievement.group_sex_record[2]) >= 20:
         # 如果满足条件则结算成就904
         return_list.extend(settle_achievement(1, 904, force=True))
     # 构建成就结算列表
@@ -542,16 +542,16 @@ class Achievement_Panel:
     def draw(self):
         """绘制对象"""
 
-        title_text = _("成就")
+        title_text = _("蚀刻章")
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        handle_sub_panel = panel.PageHandlePanel([], Achievement_Draw, 30, 1, self.width, 1, 1, 0)
+        handle_sub_panel = panel.PageHandlePanel([], Achievement_Draw, 25, 1, self.width)
         while 1:
             return_list = []
             title_draw.draw()
 
-            info_text = _("○高难成就需要前置成就才能解锁，隐藏成就在达成前不显示解锁条件\n")
-            info_text += _("当前成就达成：")
+            info_text = _("○高难蚀刻章需要前置才能解锁，隐藏蚀刻章在达成前不显示解锁条件\n")
+            info_text += _("蚀刻章一览：")
             len_got = 0
             for cid in cache.achievement.achievement_dict:
                 if cache.achievement.achievement_dict[cid]:
@@ -566,8 +566,8 @@ class Achievement_Panel:
 
             # 刷新成就的按钮
             update_button_draw = draw.CenterButton(
-                _("[刷新成就]"),
-                _("刷新成就列表"),
+                _("[刷新蚀刻章]"),
+                _("刷新蚀刻章列表"),
                 self.width / 4,
                 cmd_func=self.update_achievement,
             )
@@ -587,6 +587,11 @@ class Achievement_Panel:
                 # 跳过有前置需求且前置需求没满足的
                 if achievement_data.pre_id and not cache.achievement.achievement_dict.get(achievement_data.pre_id, False):
                     continue
+                # 跳过有后置升级且该后置已满足的
+                if cid in game_config.config_achievement_id_relation:
+                    next_achievement_id = game_config.config_achievement_id_relation[cid]
+                    if next_achievement_id and cache.achievement.achievement_dict.get(next_achievement_id, False):
+                        continue
                 # 跳过未达成的隐藏成就
                 if achievement_data.special and not cache.achievement.achievement_dict.get(cid, False):
                     continue
@@ -650,6 +655,10 @@ class Achievement_Draw:
         """ 是否为数字按钮 """
         self.button_id: int = button_id
         """ 按钮编号 """
+        self.button_return: str = ""
+        """ 按钮返回值 """
+        self.now_draw: draw.NormalDraw = None
+        """ 绘制的对象 """
 
         # 成就数据
         achievement_data = game_config.config_achievement[achievement_cid]
@@ -662,8 +671,17 @@ class Achievement_Draw:
             if achievement_data.special:
                 achievement_text = "★"
                 draw_style = 'gold_enrod'
+            # 带前置的成就标志
+            elif achievement_data.pre_id:
+                achievement_text = "●+"
+                # 如果有前置的前置
+                if game_config.config_achievement[achievement_data.pre_id].pre_id:
+                    achievement_text = "●++"
         else:
             achievement_text = "○"
+            # 如果该成就有前置
+            if achievement_data.pre_id:
+                achievement_text = " ┗○"
             draw_style = 'deep_gray'
 
         achievement_name = achievement_data.name
