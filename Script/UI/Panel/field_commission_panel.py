@@ -319,7 +319,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                     cache.rhodes_island.finished_field_commissions_set.add(item_id)
             # 声望
             elif text_list[0] == _("声望"):
-                item_num *= 0.01
+                # 在前面已经乘过了，不需要再乘一遍
+                # item_num *= 0.01
                 cache.country.nation_reputation[item_id] += item_num
             # 好感
             elif text_list[0] == _("好感"):
