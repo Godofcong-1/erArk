@@ -164,6 +164,7 @@ class InScenePanel:
             character_head_draw = see_character_info_panel.CharacterInfoHead(
                 pl_character_data.cid, self.width
             )
+            ask_list.extend(character_head_draw.return_list)
             target_head_draw = see_character_info_panel.CharacterInfoHead(
                 pl_character_data.target_character_id, self.width
             )

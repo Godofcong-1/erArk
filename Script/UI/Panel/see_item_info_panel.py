@@ -3,7 +3,6 @@ from types import FunctionType
 from Script.Core import cache_control, text_handle, get_text, flow_handle, constant, py_cmd, game_type
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
-from Script.Design import handle_talent
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -16,6 +15,75 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def use_drug(item_id: int):
+    """
+    使用药剂\n
+    Keyword arguments:
+    item_id -- 道具id
+    """
+    pl_character_data = cache.character_data[0]
+    # 根据道具id获取道具效果
+    item_data = game_config.config_item[item_id]
+    sanity_point_add = item_data.effect
+    item_tag = item_data.tag
+    # 如果是对NPC使用的药剂，提示玩家通过赠送礼物系统使用
+    if item_tag == "npc_use":
+        now_draw = draw.WaitDraw()
+        now_draw.text = _("\n{0}需要通过【赠送礼物】功能对NPC使用\n\n").format(item_data.name)
+        now_draw.width = window_width
+        now_draw.draw()
+        return
+    # 道具数量减少1
+    pl_character_data.item[item_id] -= 1
+    # 药剂效果
+    # 理智恢复剂
+    if item_id <= 3:
+        pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
+        now_draw_text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
+    # 精力恢复剂
+    elif item_id == 11:
+        pl_character_data.semen_point = min(pl_character_data.semen_point + sanity_point_add, pl_character_data.semen_point_max)
+        now_draw_text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
+    # 阴茎增大
+    elif item_id == 16:
+        pl_character_data.pl_ability.jj_size += 1
+        pl_character_data.pl_ability.jj_size = min(pl_character_data.pl_ability.jj_size, 3)
+        size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
+        now_draw_text += _("{0}的阴茎尺寸增加了，现在是{1}\n".format(pl_character_data.name, size_name))
+    # 阴茎缩小
+    elif item_id == 17:
+        pl_character_data.pl_ability.jj_size -= 1
+        pl_character_data.pl_ability.jj_size = max(pl_character_data.pl_ability.jj_size, 0)
+        size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
+        now_draw_text += _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
+
+    # 绘制使用道具信息
+    line_draw = draw.LineDraw("-", window_width)
+    line_draw.draw()
+    now_draw = draw.WaitDraw()
+    now_draw.text = now_draw_text
+    now_draw.width = window_width
+    now_draw.draw()
+
+def auto_use_sanity_drug():
+    """
+    自动使用理智药剂，优先使用最低级的理智药剂
+    """
+    pl_character_data = cache.character_data[0]
+    # 遍历理智药剂id
+    use_flag = False
+    for item_id in range(4):
+        # 如果持有该药剂
+        if pl_character_data.item[item_id] > 0:
+            # 使用该药剂
+            use_drug(item_id)
+            use_flag = True
+            break
+    if not use_flag:
+        # 如果没有理智药剂，提示玩家
+        now_draw = draw.WaitDraw()
+        now_draw.text = _("\n{0}没有理智药剂可以使用\n\n").format(pl_character_data.name)
+        now_draw.draw()
 
 class SeeCharacterItemBagPanel:
     """
@@ -198,7 +266,7 @@ class ItemNameDraw:
                     if self.use_consumables_flag:
                         self.use_consumables()
                     elif self.use_drug_flag:
-                        self.use_drug()
+                        use_drug(self.item_id)
                     break
                 elif yrn == return_draw.return_text:
                     break
@@ -228,49 +296,6 @@ class ItemNameDraw:
         # 改名卡
         if self.item_id == 161:
             pl_character_data.name = character.input_name_func(_("你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"))
-        # 绘制使用道具信息
-        now_draw.width = window_width
-        now_draw.draw()
-
-    def use_drug(self):
-        """使用药剂"""
-        pl_character_data = cache.character_data[0]
-        # 根据道具id获取道具效果
-        item_data = game_config.config_item[self.item_id]
-        sanity_point_add = item_data.effect
-        item_tag = item_data.tag
-        # 如果是对NPC使用的药剂，提示玩家通过赠送礼物系统使用
-        if item_tag == "npc_use":
-            now_draw = draw.WaitDraw()
-            now_draw.text = _("\n{0}需要通过【赠送礼物】功能对NPC使用\n\n").format(item_data.name)
-            now_draw.width = window_width
-            now_draw.draw()
-            return
-        # 道具数量减少1
-        pl_character_data.item[self.item_id] -= 1
-        # 药剂效果
-        now_draw = draw.WaitDraw()
-        # 理智恢复剂
-        if self.item_id <= 3:
-            pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
-            now_draw.text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
-        # 精力恢复剂
-        elif self.item_id == 11:
-            pl_character_data.semen_point = min(pl_character_data.semen_point + sanity_point_add, pl_character_data.semen_point_max)
-            now_draw.text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
-        # 阴茎增大
-        elif self.item_id == 16:
-            pl_character_data.pl_ability.jj_size += 1
-            pl_character_data.pl_ability.jj_size = min(pl_character_data.pl_ability.jj_size, 3)
-            size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
-            now_draw.text += _("{0}的阴茎尺寸增加了，现在是{1}\n".format(pl_character_data.name, size_name))
-        # 阴茎缩小
-        elif self.item_id == 17:
-            pl_character_data.pl_ability.jj_size -= 1
-            pl_character_data.pl_ability.jj_size = max(pl_character_data.pl_ability.jj_size, 0)
-            size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
-            now_draw.text += _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
-
         # 绘制使用道具信息
         now_draw.width = window_width
         now_draw.draw()

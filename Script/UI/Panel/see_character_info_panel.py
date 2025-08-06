@@ -428,6 +428,7 @@ class CharacterInfoHead:
         """ 是否绘制面板标题 """
 
         from Script.Design import handle_premise
+        from Script.UI.Panel.see_item_info_panel import use_drug, auto_use_sanity_drug
 
         character_data: game_type.Character = cache.character_data[character_id]
         # sex_text = game_config.config_sex_tem[character_data.sex].name
@@ -668,23 +669,38 @@ class CharacterInfoHead:
             _("气力"),
         )
         if character_id == 0:
-            sp_draw = draw.InfoBarDraw()
-            sp_draw.width = width / 6
-            sp_draw.scale = 0.8
-            sp_draw.set(
+            sanity_point_draw = draw.InfoBarDraw()
+            sanity_point_draw.width = width / 7.5
+            sanity_point_draw.scale = 1
+            sanity_point_draw.set(
                 "SanityPointbar",
                 int(character_data.sanity_point_max),
                 int(character_data.sanity_point),
                 _("理智"),
             )
-            semenpoint_draw = draw.InfoBarDraw()
-            semenpoint_draw.width = width / 6
-            semenpoint_draw.scale = 0.8
-            semenpoint_draw.set(
+            sanity_item_draw = draw.LeftButton(
+                "✚",
+                _("快速使用最小理智剂"),
+                1,
+                normal_style = "sanity",
+                cmd_func = auto_use_sanity_drug,
+            )
+            semen_point_draw = draw.InfoBarDraw()
+            semen_point_draw.width = width / 7.5
+            semen_point_draw.scale = 1
+            semen_point_draw.set(
                 "SemenPointBar",
                 int(character_data.semen_point_max),
                 int(character_data.semen_point + character_data.tem_extra_semen_point),
                 _("精液"),
+            )
+            semen_item_draw = draw.LeftButton(
+                "✚",
+                _("快速使用精力剂"),
+                1,
+                normal_style = "semen",
+                cmd_func = use_drug,
+                args = 11,
             )
         None_draw = draw.CenterDraw()
         None_draw.width = 1
@@ -693,8 +709,18 @@ class CharacterInfoHead:
             (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, time_stop_draw, hidden_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
-            self.draw_list[0] = self.draw_list[0] + (sp_draw,)
-            self.draw_list[0] = self.draw_list[0] + (semenpoint_draw,)
+            self.draw_list[0] = self.draw_list[0] + (None_draw, None_draw, sanity_point_draw,)
+            # 如果有理智恢复剂的话，显示快捷键
+            for item_id in [0, 1, 2, 3]:
+                if character_data.item[item_id] > 0:
+                    self.draw_list[0] = self.draw_list[0] + (sanity_item_draw,)
+                    self.return_list.append(sanity_item_draw.return_text)
+                    break
+            self.draw_list[0] = self.draw_list[0] + (None_draw, None_draw, semen_point_draw,)
+            # 如果有精力恢复剂的话，显示快捷键
+            if character_data.item[11] > 0:
+                self.draw_list[0] = self.draw_list[0] + (semen_item_draw,)
+                self.return_list.append(semen_item_draw.return_text)
         """ 要绘制的面板列表 """
 
     def draw(self):

@@ -20636,6 +20636,10 @@ msgstr ""
 msgid "熏衣草花的淡紫色"
 msgstr ""
 
+#: .\data\csv\FontConfig.csv:70
+msgid "理智的颜色"
+msgstr ""
+
 #: .\data\csv\Food_Quality.csv:6
 msgid "粗劣"
 msgstr ""
