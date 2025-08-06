@@ -1,3 +1,4 @@
+import os, configparser
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
@@ -22,7 +23,6 @@ def get_difficulty_coefficient(difficulty: int) -> float:
         return coefficients[difficulty]
     else:
         return 1.0
-
 
 class System_Setting_Panel:
     """
@@ -247,7 +247,6 @@ class System_Setting_Panel:
 
     def change_font_size(self):
         """修改字体大小"""
-        import os
         line_feed.draw()
         line_draw = draw.LineDraw("-", self.width)
         line_draw.draw()
@@ -266,7 +265,6 @@ class System_Setting_Panel:
         # 修改根目录下的config.ini文件中的字体大小
         config_ini_path = "config.ini"
         if os.path.exists(config_ini_path):
-            import configparser
             ini_config = configparser.ConfigParser()
             ini_config.read(config_ini_path, encoding="utf8")
             ini_config["game"]["font_size"] = str(new_size)
@@ -336,3 +334,84 @@ class System_Setting_Panel:
                 now_draw.text = info_text
                 now_draw.width = self.width
                 now_draw.draw()
+
+
+class Language_Panel:
+    """
+    修改语言面板
+    width -- 绘制宽度
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        """ 最大绘制宽度 """
+        self.return_list: List[str] = []
+        """ 当前面板监听的按钮列表 """
+
+    def draw(self):
+        """绘制对象"""
+        title_text = _("语言设置")
+        title_draw = draw.TitleLineDraw(title_text, window_width)
+
+        while True:
+            title_draw.draw()
+            return_list = []
+            # 显示可选语言
+            language_options = {
+                "zh_CN": _("简体中文"),
+                "en_US": _("English"),
+                "ko_KR": _("한국어")
+            }
+            # 显示当前语言
+            current_language = normal_config.config_normal.language
+            current_language_text = ""
+            current_language_text += _("○各语言的存档不共通，如果需要切换语言，请重新建档\n")
+            current_language_text += _("当前语言：{0}\n").format(language_options.get(current_language, _(_("未知语言"))))
+            current_language_text += _("可选语言：\n")
+            current_language_draw = draw.NormalDraw()
+            current_language_draw.text = current_language_text
+            current_language_draw.width = window_width
+            current_language_draw.draw()
+            line_feed.draw()
+            # 绘制语言选项按钮
+            for lang_code, lang_name in language_options.items():
+                button_text = f"[{lang_name}]"
+                button_draw = draw.CenterButton(
+                    button_text,
+                    lang_code,
+                    max(len(button_text) * 2, 30),
+                    cmd_func=self.change_language_cmd,
+                    args=(lang_code,)
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+            line_feed.draw()
+            # 添加返回按钮
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            # 获取用户输入
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                break
+
+    def change_language_cmd(self, lang_code: str):
+        """修改语言设置"""
+        # 修改配置中的语言
+        normal_config.config_normal.language = lang_code
+        # 修改config.ini文件中的语言设置
+        config_ini_path = "config.ini"
+        if os.path.exists(config_ini_path):
+            ini_config = configparser.ConfigParser()
+            ini_config.read(config_ini_path, encoding="utf8")
+            ini_config["game"]["language"] = lang_code
+            with open(config_ini_path, "w", encoding="utf8") as config_file:
+                ini_config.write(config_file)
+        # 输出提示信息
+        now_draw = draw.WaitDraw()
+        info_text = _("语言已修改为{0}，重启游戏后生效").format(normal_config.config_normal.language)
+        now_draw.text = info_text
+        now_draw.style = 'gold_enrod'
+        now_draw.draw()

@@ -2,7 +2,7 @@ import os
 from types import FunctionType
 from Script.Config import normal_config
 from Script.UI.Moudle import panel, draw
-from Script.UI.Panel import see_save_info_panel
+from Script.UI.Panel import see_save_info_panel, system_setting
 from Script.Design import handle_panel
 from Script.Core import constant, get_text, flow_handle, cache_control, game_type, py_cmd
 
@@ -38,7 +38,7 @@ def title_panel():
     lineFeed.draw()
     line = draw.LineDraw("=", width)
     line.draw()
-    now_list = [_(" -【初次唤醒】-"), _(" -【神经重载】-"), _(" -【断开连接】-")]
+    now_list = [_(" -【初次唤醒】-"), _(" -【神经重载】-"), _(" -【接入协议】-"), _(" -【断开连接】-")]
     button_panel = panel.OneMessageAndSingleColumnButton()
     button_panel.set(now_list, "", 0)
     button_panel.draw()
@@ -52,6 +52,9 @@ def title_panel():
         now_panel = see_save_info_panel.SeeSaveListPanel(width, 0)
         now_panel.draw()
     elif now_key == now_list[2]:
+        now_panel = system_setting.Language_Panel(width)
+        now_panel.draw()
+    elif now_key == now_list[3]:
         os._exit(0)
 
 def draw_logo():
