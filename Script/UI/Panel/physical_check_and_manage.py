@@ -476,84 +476,84 @@ class Physical_Check_And_Manage_Panel:
         judge_result = False
         require_text = ""
 
-        if body_manage_second_behavior_id == 1451:
+        if body_manage_second_behavior_id == 'ask_give_pan_everyday':
             # 内裤收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_panties[target_character_id])
             require_value_1 = body_manage_data.need_value_1
             require_text += _("内裤收藏数量{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1452:
+        elif body_manage_second_behavior_id == 'ask_give_socks_everyday':
             # 袜子收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_socks[target_character_id])
             require_value_1 = body_manage_data.need_value_1
             require_text += _("袜子收藏数量{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1453:
+        elif body_manage_second_behavior_id == 'ask_not_wear_corset':
             # 露出能力
             now_value_1 = target_character_data.ability[34]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("露出能力等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1454:
+        elif body_manage_second_behavior_id == 'ask_not_wear_cloth_in_sleep':
             # 被睡奸经验
             now_value_1 = target_character_data.experience[121]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("被睡姦经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1455:
+        elif body_manage_second_behavior_id == 'ask_wear_different_socks_everyday':
             # 内裤收藏数
             now_value_1 = len(self.pl_character_data.pl_collection.npc_panties[target_character_id])
             require_value_1 = body_manage_data.need_value_1
             require_text += _("内裤收藏数量{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1461 or body_manage_second_behavior_id == 1465:
+        elif body_manage_second_behavior_id == 'ask_equip_nipple_clamp_in_day' or body_manage_second_behavior_id == 'ask_equip_nipple_clamp_in_sleep':
             # Ｂ感觉能力
             now_value_1 = target_character_data.ability[1]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("Ｂ感觉等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1462 or body_manage_second_behavior_id == 1466:
+        elif body_manage_second_behavior_id == 'ask_equip_clit_clamp_in_day' or body_manage_second_behavior_id == 'ask_equip_clit_clamp_in_sleep':
             # Ｃ感觉能力
             now_value_1 = target_character_data.ability[2]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("Ｃ感觉等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1463 or body_manage_second_behavior_id == 1467:
+        elif body_manage_second_behavior_id == 'ask_equip_v_vibrator_in_day' or body_manage_second_behavior_id == 'ask_equip_v_vibrator_in_sleep':
             # Ｖ感觉能力
             now_value_1 = target_character_data.ability[4]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("Ｖ感觉等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1464 or body_manage_second_behavior_id == 1468:
+        elif body_manage_second_behavior_id == 'ask_equip_a_vibrator_in_day' or body_manage_second_behavior_id == 'ask_equip_a_vibrator_in_sleep':
             # Ａ感觉能力
             now_value_1 = target_character_data.ability[5]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("Ａ感觉等级{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1471:
+        elif body_manage_second_behavior_id == 'ask_not_wash_semen':
             # V与W总被射入精液
             now_value_1 = target_character_data.dirty.body_semen[6][3] + target_character_data.dirty.body_semen[7][3]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("V与W总被射入精液{0}ml/{1}ml").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1472 or body_manage_second_behavior_id == 1473:
+        elif body_manage_second_behavior_id == 'ask_masturbation_before_sleep' or body_manage_second_behavior_id == 'ask_not_masturbation':
             # 自慰经验
             now_value_1 = target_character_data.experience[54]
             require_value_1 = body_manage_data.need_value_1
             require_text += _("自慰经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
-        elif body_manage_second_behavior_id == 1474:
+        elif body_manage_second_behavior_id == 'ask_not_lock_door_before_sleeping':
             # 被睡奸经验
             now_value_1 = target_character_data.experience[121]
             require_value_1 = body_manage_data.need_value_1
