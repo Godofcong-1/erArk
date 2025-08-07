@@ -182,7 +182,7 @@ class System_Setting_Panel:
                 line_feed.draw()
 
                 # 如果是基础设置的第7项的话，则加一个[修改已禁止干员列表]的按钮
-                if type_name == "基础" and cid == 7 and cache.all_system_setting.base_setting[cid]:
+                if type_name == _("基础") and cid == 7 and cache.all_system_setting.base_setting[cid]:
                     new_button_text = _(" [修改已禁止干员列表] ")
                     new_button_len = max(len(new_button_text) * 2, 30)
                     new_button_draw = draw.LeftButton(new_button_text, "11" + new_button_text, new_button_len, cmd_func=self.change_ban_list)

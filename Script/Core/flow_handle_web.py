@@ -46,7 +46,7 @@ def askfor_all(return_list: List[str]) -> str:
                 # 然后判断值是否有效，有效则执行该命令
                 if _cmd_valid(response):
                     _cmd_deal(response)
-                elif response == "999":
+                elif response == "999" and cache.all_system_setting.base_setting[9]:
                     from Script.Core import save_handle
                     # 保存到自动存档
                     save_handle.establish_save("auto")
