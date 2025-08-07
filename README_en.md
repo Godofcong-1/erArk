@@ -15,7 +15,7 @@ All system code documentation: [README.md](.github/prompts/数据处理工作流
 
 Normal Non-developer Players
 ----
-The Releases section at the right has the coded exe, can be played immediately on click\
+The [Releases](https://github.com/Godofcong-1/erArk/releases) section at the right has the coded exe, can be played immediately on click\
 For better visual effect (mainly for AA map) , it’s recommended to download the suggested font in Releases\
 The editor for dialogues/events, erArkEditor, was also in Releases, allowing production of dialogues and events without the need of coding
 

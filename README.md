@@ -17,7 +17,7 @@ R18游戏，艹干员，纯爱向，无牛无G。\
 ----
 右边Releases有编译好的exe，点击即玩\
 为了更好的显示效果（主要是AA地图），建议安装Releases里推荐的字体\
-口上+事件的编辑器erArkEditor，也附在Releases里了，不需要写代码可以直接使用编辑器生成口上和事件
+编辑器erArkEditor也附在Releases里了，不需要写代码可以直接使用编辑器创作口上、事件、角色属性、委托等
 
 联系方式
 ----
@@ -73,7 +73,7 @@ Repo说明
 本游戏界面设计依赖 Sarasa Mono SC 字体，字体文件已附在Releases中 \
 若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
 顺便贴一下字体的git链接[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
-如果不喜欢，可通过修改 config.ini 中的 font 项自行更改字体，同样不能保证能否达到设计效果 \
+如果不喜欢，可通过修改 config.ini 中的 font 项自行更改字体，同样不能保证能否达到设计效果
 
 本地化
 ----
