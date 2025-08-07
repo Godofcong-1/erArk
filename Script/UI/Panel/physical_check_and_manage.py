@@ -291,7 +291,7 @@ class Physical_Check_And_Manage_Panel:
             for behavior_id in game_config.config_behavior:
                 behavior_data = game_config.config_behavior[behavior_id]
                 # 跳过非检查类的行为
-                if behavior_data.tag != "猥亵|检查":
+                if "检查" not in behavior_data.tag:
                     continue
                 behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
                 count += 1
@@ -356,11 +356,16 @@ class Physical_Check_And_Manage_Panel:
 
     def settle_target_physical_status(self, behavior_id: int):
         """结算目标角色的身体状态"""
+        behavior_data = game_config.config_behavior[behavior_id]
         self.done_check_behavior_id_set.add(behavior_id)
         line = draw.LineDraw("-", window_width)
         line.draw()
         line_feed.draw()
-        handle_instruct.chara_handle_instruct_common_settle(behavior_id, force_taget_wait = True)
+        # 测试类的需要判断轻度猥亵
+        if "测试" in behavior_data.tag:
+            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("初级骚扰"), force_taget_wait = True)
+        else:
+            handle_instruct.chara_handle_instruct_common_settle(behavior_id, force_taget_wait = True)
         info_draw = draw.WaitDraw()
         info_draw.text = "\n"
         info_draw.draw()

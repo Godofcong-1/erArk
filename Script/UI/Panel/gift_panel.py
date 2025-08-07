@@ -236,7 +236,11 @@ class Gift_Panel:
         cache.achievement.gift_count += 1
         # 开始赠送礼物
         character_data.behavior.gift_id = gift_id
-        handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT,force_taget_wait=True)
+        # 药剂礼物需要轻度猥亵条件
+        if gift_data.type == 11:
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("初级骚扰"), force_taget_wait=True)
+        else:
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, force_taget_wait=True)
         # 结算成就
         achievement_panel.achievement_flow(_("礼物"))
 
