@@ -7729,15 +7729,15 @@ def handle_target_dirty_reset_in_shower(
     handle_dirty_reset_in_shower(character_data.target_character_id, add_time, change_data, now_time)
 
 
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FAVORABILITY_GIFT_ADD_ADJUST)
-def handle_favorability_gift_add_adjust(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GIVE_GIFT_ADD_ADJUST)
+def handle_give_gift_add_adjust(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
     """
-    （赠送礼物用）根据好感礼物的类型增加交互对象的数值
+    （赠送礼物用）根据礼物的类型结算交互对象的对应数值
     Keyword arguments:
     character_id -- 角色id
     add_time -- 结算时间
@@ -7752,37 +7752,58 @@ def handle_favorability_gift_add_adjust(
         return
     
     gift_data = game_config.config_gift_items[gift_id]
-    if gift_data.type == 11:
-        # 这是药物ID，执行药物使用逻辑
-        from Script.UI.Panel import gift_panel
-        gift_panel.handle_drug_use_effect(character_data.target_character_id, gift_id)
-        return
-    # 话术修正
-    talk_adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 礼物持有数量-1
+    item_id = gift_data.item_id
+    character_data.item[item_id] -= 1
+    cache.achievement.gift_count += 1
+
+    # 好感礼物
+    if gift_data.type == 3:
+        # 话术修正
+        talk_adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+        # 更新最后赠送时间
+        target_data.action_info.last_gift_time = cache.game_time
+        # 好感礼物小
+        if gift_data.item_id == 172:
+            base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, talk_adjust * 1.5, change_data)
+            base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+        # 好感礼物中
+        elif gift_data.item_id == 173:
+            # 补正到至少4级话术
+            talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(4))
+            base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, talk_adjust * 2, change_data)
+            base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, talk_adjust * 2, change_data)
+            base_chara_state_common_settle(character_data.target_character_id, 30, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+        # 好感礼物大
+        elif gift_data.item_id == 174:
+            # 补正到至少6级话术
+            talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(6))
+            base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, talk_adjust * 3, change_data)
+            base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, talk_adjust * 3, change_data)
+            base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
+            base_chara_experience_common_settle(character_data.target_character_id, 40, change_data_to_target_change = change_data)
     # 道歉礼物
-    if gift_data.item_id == 171:
+    elif gift_data.type == 2:
+        # 降低反发刻印
+        target_data.ability[18] = 0
+        # 其他数据结算
         base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, 0, change_data)
         base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
         handle_target_angry_with_player_flag_to_0(character_id, add_time, change_data, now_time)
-    # 好感礼物小
-    elif gift_data.item_id == 172:
-        base_chara_favorability_and_trust_common_settle(character_id, 10, True, 0, talk_adjust * 1.5, change_data)
-        base_chara_state_common_settle(character_data.target_character_id, 10, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
-    # 好感礼物中
-    elif gift_data.item_id == 173:
-        # 补正到至少4级话术
-        talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(4))
-        base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, talk_adjust * 2, change_data)
-        base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, talk_adjust * 2, change_data)
-        base_chara_state_common_settle(character_data.target_character_id, 30, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
-    # 好感礼物大
-    elif gift_data.item_id == 174:
-        # 补正到至少6级话术
-        talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(6))
-        base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, talk_adjust * 3, change_data)
-        base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, talk_adjust * 3, change_data)
-        base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
-        base_chara_experience_common_settle(character_data.target_character_id, 40, change_data_to_target_change = change_data)
+        # 显示绘制信息
+        now_draw = draw.WaitDraw()
+        draw_text = _("\n  {0}的反发刻印从1级降为了0\n\n").format(target_data.name)
+        now_draw.style = 'gold_enrod'
+        now_draw.text = draw_text
+        now_draw.draw()
+    # 药物礼物
+    elif gift_data.type == 11:
+        # 这是药物ID，执行药物使用逻辑
+        from Script.UI.Panel import gift_panel
+        gift_panel.handle_drug_use_effect(character_data.target_character_id, gift_id)
+
+    # 结算成就
+    achievement_panel.achievement_flow(_("礼物"))
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAINTAIN_EQUIPMENT_ADD_ADJUST)

@@ -465,8 +465,8 @@ class BehaviorEffect:
     """ 指令_专用结算 交互对象从无意识H中恢复意识的结算 """
     TARGET_DIRTY_RESET_IN_SHOWER = 537
     """ 指令_专用结算 交互对象进行污浊清洗(525) """
-    FAVORABILITY_GIFT_ADD_ADJUST = 538
-    """ 指令_专用结算 （赠送礼物用）根据好感礼物的类型增加交互对象的好感与信赖 """
+    GIVE_GIFT_ADD_ADJUST = 538
+    """ 指令_专用结算 （赠送礼物用）根据礼物的类型结算交互对象的对应数值 """
     MAINTAIN_EQUIPMENT_ADD_ADJUST = 539
     """ 指令_专用结算 （维护装备用）进行一次装备的维修保养 """
 

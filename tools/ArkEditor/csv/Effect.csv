@@ -165,6 +165,7 @@ cid,effect_name,effect_type,effect
 363,TARGET_INTELLIGENT_FOLLOW_ON,特殊flag_基础,交互对象进入智能跟随状态
 364,SELF_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,自身退出智能跟随状态
 365,TARGET_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,交互对象退出智能跟随状态
+366,SELF_INTELLIGENT_FOLLOW_ON_IF_ASSISTANT,特殊flag_基础,如果自己是助理且打开了跟随服务，则自己进入智能跟随状态
 371,MAINTENANCE_FLAG_TO_0,特殊flag_基础,自身清零要检修状态
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
@@ -236,7 +237,8 @@ cid,effect_name,effect_type,effect
 535,TRAIN_PRISONERS_ADD_ADJUST,指令_专用结算,（训练囚犯用）对所有被关押的囚犯进行日常训练
 536,RECOVER_FROM_UNCONSCIOUS_ADD_ADJUST,指令_专用结算,交互对象从无意识H中恢复意识的结算
 537,TARGET_DIRTY_RESET_IN_SHOWER,指令_专用结算,交互对象进行污浊清洗(525)
-538,FAVORABILITY_GIFT_ADD_ADJUST,指令_专用结算,（赠送礼物用）根据好感礼物的类型增加交互对象的好感与信赖
+538,GIVE_GIFT_ADD_ADJUST,指令_专用结算,（赠送礼物用）根据礼物的类型结算交互对象的对应数值
+539,MAINTAIN_EQUIPMENT_ADD_ADJUST,指令_专用结算,（维护装备用）进行一次装备的维修保养
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

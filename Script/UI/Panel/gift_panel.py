@@ -10,7 +10,6 @@ from Script.Core import (
 )
 from Script.Config import game_config, normal_config
 from Script.Design import game_time
-from Script.UI.Panel import achievement_panel
 
 panel_info_data = {}
 
@@ -187,13 +186,35 @@ class Gift_Panel:
         """礼物的确认选择"""
         from Script.Design import handle_instruct
         character_data: game_type.Character = cache.character_data[0]
-        target_character_id = character_data.target_character_id
-        target_character_data: game_type.Character = cache.character_data[target_character_id]
+        gift_data = game_config.config_gift_items[gift_id]
+
+        # 检查是否可以赠送礼物
+        if not self.check_gift_available(gift_id):
+            return
+
+        # 将礼物id赋予角色行为数据
+        character_data.behavior.gift_id = gift_id
+        # 药剂礼物需要轻度猥亵条件
+        if gift_data.type == 11:
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("初级骚扰"), force_taget_wait=True)
+        else:
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, force_taget_wait=True)
+
+    def check_gift_available(self, gift_id: int) -> bool:
+        """
+        检查是否可以赠送礼物\n
+        Keyword arguments:\n
+        gift_id -- 礼物ID\n
+        Returns:\n
+        bool -- 是否可以赠送\n
+        """
+        character_data: game_type.Character = cache.character_data[0]
+        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
         gift_data = game_config.config_gift_items[gift_id]
         # 药物礼物的情况
         if gift_data.type == 11:
             if not self.is_drug_effective(gift_id, target_character_data):
-                return
+                return False
         # 好感礼物的情况
         elif gift_data.type == 3:
             last_gift_time = target_character_data.action_info.last_gift_time
@@ -204,45 +225,32 @@ class Gift_Panel:
                 draw_text = _("\n  {0}今天已经收过好感礼物了，不能重复赠送\n").format(target_character_data.name)
                 now_draw.text = draw_text
                 now_draw.draw()
-                return
-            else:
-                # 更新最后赠送时间
-                target_character_data.action_info.last_gift_time = cache.game_time
+                return False
         # 道歉礼物的情况
         elif gift_data.type == 2:
-            if target_character_data.ability[18] == 0 and target_character_data.sp_flag.angry_with_player == False:
-                now_draw = draw.WaitDraw()
-                draw_text = _("\n  {0}没有生气，不需要赠送道歉礼物\n").format(target_character_data.name)
-                now_draw.text = draw_text
-                now_draw.draw()
-                return
-            elif target_character_data.ability[18] >= 2:
+            if target_character_data.ability[18] >= 2:
                 now_draw = draw.WaitDraw()
                 draw_text = _("\n  {0}的反发刻印大于等于2级，道歉礼物无效，需要先降低到1级\n").format(target_character_data.name)
                 now_draw.text = draw_text
                 now_draw.draw()
-                return
-            else:
-                target_character_data.ability[18] = 0
+                return False
+            elif target_character_data.ability[18] == 0 and target_character_data.sp_flag.angry_with_player == False:
                 now_draw = draw.WaitDraw()
-                draw_text = _("\n  {0}的反发刻印从1级降为了0\n\n").format(target_character_data.name)
-                now_draw.style = 'gold_enrod'
+                draw_text = _("\n  {0}没有生气，不需要赠送道歉礼物\n").format(target_character_data.name)
                 now_draw.text = draw_text
                 now_draw.draw()
-
-        # 礼物持有数量-1
-        item_id = gift_data.item_id
-        character_data.item[item_id] -= 1
-        cache.achievement.gift_count += 1
-        # 开始赠送礼物
-        character_data.behavior.gift_id = gift_id
-        # 药剂礼物需要轻度猥亵条件
-        if gift_data.type == 11:
-            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("初级骚扰"), force_taget_wait=True)
-        else:
-            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, force_taget_wait=True)
-        # 结算成就
-        achievement_panel.achievement_flow(_("礼物"))
+                return False
+        # 阴茎倒模的情况
+        elif gift_data.type == 13:
+            # 检查对方是否已经拥有
+            if target_character_data.item[51] > 0:
+                now_draw = draw.WaitDraw()
+                draw_text = _("\n  {0}已经拥有了你的阴茎倒模，不能重复赠送\n").format(target_character_data.name)
+                now_draw.text = draw_text
+                now_draw.draw()
+                return False
+        # 否则返回True
+        return True
 
     def is_drug_effective(self, drug_id: int, target_character_data: game_type.Character) -> bool:
         """
