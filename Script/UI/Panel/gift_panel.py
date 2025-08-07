@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import game_time
+from Script.Design import game_time, handle_premise
 
 panel_info_data = {}
 
@@ -197,6 +197,9 @@ class Gift_Panel:
         # 药剂礼物需要轻度猥亵条件
         if gift_data.type == 11:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("初级骚扰"), force_taget_wait=True)
+        # 阴茎倒模需要严重猥亵条件
+        elif gift_data.type == 13:
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, judge = _("严重骚扰"), force_taget_wait=True)
         else:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.GIVE_GIFT, force_taget_wait=True)
 
@@ -243,7 +246,7 @@ class Gift_Panel:
         # 阴茎倒模的情况
         elif gift_data.type == 13:
             # 检查对方是否已经拥有
-            if target_character_data.item[51] > 0:
+            if handle_premise.handle_target_have_penis_mold(0):
                 now_draw = draw.WaitDraw()
                 draw_text = _("\n  {0}已经拥有了你的阴茎倒模，不能重复赠送\n").format(target_character_data.name)
                 now_draw.text = draw_text

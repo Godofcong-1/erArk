@@ -583,6 +583,12 @@ class Physical_Check_And_Manage_Panel:
             if target_character_data.talent[1]:
                 judge_result = False
 
+        # 持有阴茎倒模检查
+        if manage_cid in range(31, 40):
+            require_text += _(" 需要已送给对方自己的阴茎倒模")
+            if not handle_premise.handle_target_have_penis_mold(0):
+                judge_result = False
+
         # 冲突检查
         if manage_cid == 22 and handle_premise.handle_ask_not_masturbation(target_character_id):
             require_text += _(" 需要未选择[禁止自慰]")

@@ -3066,6 +3066,10 @@ class Premise:
     """ 道具_持有 已持有项圈 """
     HAVE_BAG = "have_bag"
     """ 道具_持有 已持有干员携袋 """
+    HAVE_PENIS_MOLD = "have_penis_mold"
+    """ 道具_持有 自己已持有阴茎倒模 """
+    TARGET_HAVE_PENIS_MOLD = "target_have_penis_mold"
+    """ 道具_持有 交互对象已持有阴茎倒模 """
 
     SELF_NOW_NIPPLE_CLAMP = "self_now_nipple_clamp"
     """ 道具_使用 自己正在乳头夹 """

@@ -3327,3 +3327,31 @@ def handle_have_bag(character_id: int) -> int:
         return 1
     return 0
 
+
+@add_premise(constant_promise.Premise.HAVE_PENIS_MOLD)
+def handle_have_penis_mold(character_id: int) -> int:
+    """
+    自己已持有阴茎倒模
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.item[175] > 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_PENIS_MOLD)
+def handle_target_have_penis_mold(character_id: int) -> int:
+    """
+    交互对象已持有阴茎倒模
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_have_penis_mold(character_data.target_character_id)
+

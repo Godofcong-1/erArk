@@ -7801,6 +7801,13 @@ def handle_give_gift_add_adjust(
         # 这是药物ID，执行药物使用逻辑
         from Script.UI.Panel import gift_panel
         gift_panel.handle_drug_use_effect(character_data.target_character_id, gift_id)
+    # 阴茎倒模
+    elif gift_data.type == 13:
+        # 对方获得阴茎倒模
+        target_data.item[175] += 1
+        # 增加好感与羞耻
+        base_chara_favorability_and_trust_common_settle(character_id, 100, True, change_data = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, 100, 16, ability_level = target_data.ability[34], change_data_to_target_change = change_data)
 
     # 结算成就
     achievement_panel.achievement_flow(_("礼物"))
