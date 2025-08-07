@@ -1905,6 +1905,7 @@ def init():
     load_character_state_data()
     load_character_state_type_data()
     load_character_state_level()
+    load_pleasure_relations()
     # load_clothing_suit()
     load_clothing_tem()
     load_clothing_type()
