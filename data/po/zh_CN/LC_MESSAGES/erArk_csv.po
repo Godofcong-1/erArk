@@ -20793,6 +20793,10 @@ msgid "停乳药"
 msgstr ""
 
 #: .\data\csv\Gift_Items.csv:23
+msgid "175"
+msgstr ""
+
+#: .\data\csv\Gift_Items.csv:23
 msgid "自己的阴茎倒模"
 msgstr ""
 
@@ -21292,15 +21296,23 @@ msgstr ""
 msgid "价值不菲的奢华礼物，展现了你的慷慨与诚意。赠送给干员后可以增加大量好感度和中量信赖度。"
 msgstr ""
 
-#: .\data\csv\Item.csv:64
-msgid "戒指"
+#: .\data\csv\Item.csv:63
+msgid "阴茎倒模"
 msgstr ""
 
-#: .\data\csv\Item.csv:64
-msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
+#: .\data\csv\Item.csv:63
+msgid "根据自己的阴茎倒模制作出来的1:1阴茎模型，完美复刻每一处细节，有着以假乱真的硬度和质感，可以作为礼物赠送给干员，干员会在自慰或者性爱练习中使用。"
 msgstr ""
 
 #: .\data\csv\Item.csv:65
+msgid "戒指"
+msgstr ""
+
+#: .\data\csv\Item.csv:65
+msgid "用来向已经是【恋慕】的干员告白，成功后可以成为彼此的【恋人】"
+msgstr ""
+
+#: .\data\csv\Item.csv:66
 msgid "用来戴在已经被【驯服】的干员脖子上，同意后将作为你的【宠物】"
 msgstr ""
 
@@ -24821,178 +24833,186 @@ msgid "开启后，如果持有灌肠套装道具，在干员的后穴里射精�
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:12
+msgid "是否开启紧急避险功能"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:12
+msgid "在主界面时，直接输入999并回车确认，会启动紧急避险功能，此时会快速将当前数据保存至自动存档栏，并直接关闭游戏"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:13
 msgid "干员的攻略难易度"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:12
+#: .\data\csv\System_Setting.csv:13
 msgid "对获得好感与信赖进行修正，仅影响正常加算时的最终乘积比例，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:12
+#: .\data\csv\System_Setting.csv:13
 msgid "极难|难|较难|标准|较易|容易|极易"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:13
+#: .\data\csv\System_Setting.csv:14
 msgid "干员的部位敏感度"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:13
+#: .\data\csv\System_Setting.csv:14
 msgid "对获得部位快感进行修正，仅影响正常加算时的最终乘积比例，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:13
+#: .\data\csv\System_Setting.csv:14
 msgid "极顿感|顿感|较顿感|标准|较敏感|敏感|极敏感"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:14
+#: .\data\csv\System_Setting.csv:15
 msgid "干员的心智强韧度"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:14
+#: .\data\csv\System_Setting.csv:15
 msgid "同时影响正面状态与负面状态，设为积极时对正面状态（如习得、恭顺、好意等）向上修正，对负面状态（如苦痛、恐怖、反感等）向下修正，设为消极时同理，不影响扣除结算、固定值结算等特殊结算"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:14
+#: .\data\csv\System_Setting.csv:15
 msgid "非常消极|消极|较消极|标准|较积极|积极|非常积极"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:15
+#: .\data\csv\System_Setting.csv:16
 msgid "全角色尿意值的增长速度"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:15
+#: .\data\csv\System_Setting.csv:16
 msgid "尿意值会随着时间流逝自然增加，当涨到上限的80%以上时会开始有尿意，越高则会越想去解手，解手后尿意值清零"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:15
+#: .\data\csv\System_Setting.csv:16
 msgid "不自然增加|慢，8h回满|中，4h回满|快，2h回满"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:17
 msgid "博士的尿意值自然增长"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:17
 msgid "博士是否和其他干员一样需要上厕所解手（该选项的优先度高于11号的全角色尿意值的增长速度选项）"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:16
+#: .\data\csv\System_Setting.csv:17
 msgid "否，博士的尿意值不再自然增加|是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:17
+#: .\data\csv\System_Setting.csv:18
 msgid "主界面每次刷新时的空行数量"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:17
+#: .\data\csv\System_Setting.csv:18
 msgid "主界面即主场景界面，每次使用指令后刷新。喜欢连在一起的可以调小，喜欢明确分隔的可以调大"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:17
+#: .\data\csv\System_Setting.csv:18
 msgid "1行|2行|3行|5行|10行|50行"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:18
+#: .\data\csv\System_Setting.csv:19
 msgid "全角色是否使用通用文本"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:18
+#: .\data\csv\System_Setting.csv:19
 msgid "指令文本分为通用文本和角色专属文本，通用文本可以被所有角色使用，角色专属文本只能被指定角色使用。注意，改变该项将会覆盖全角色的该个人选项，如需个别调整请手动调整对应角色"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:19
+#: .\data\csv\System_Setting.csv:20
 msgid "主界面中干员好感与信赖的显示"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:19
+#: .\data\csv\System_Setting.csv:20
 msgid "是否在主界面的角色信息中显示好感与信赖的情况，以及要显示多详细"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:19
+#: .\data\csv\System_Setting.csv:20
 msgid "不显示|仅显示好感与信赖等级|显示好感与信赖的等级与具体数值"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:20
+#: .\data\csv\System_Setting.csv:21
 msgid "主界面中干员催眠情况的显示"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:20
+#: .\data\csv\System_Setting.csv:21
 msgid "是否在主界面的角色信息中显示催眠的情况，以及要显示多详细"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:20
+#: .\data\csv\System_Setting.csv:21
 msgid "不显示|仅显示催眠类型|显示催眠类型和进度百分比"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:21
+#: .\data\csv\System_Setting.csv:22
 msgid "是否在处理公务时显示待处理事项"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:21
+#: .\data\csv\System_Setting.csv:22
 msgid "开启后会在处理公务时检测各部门的运作情况，对有问题需要博士处理的情况进行提示"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:22
+#: .\data\csv\System_Setting.csv:23
 msgid "是否显示玩家的指令结算数据"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:22
+#: .\data\csv\System_Setting.csv:23
 msgid "即指令结算中玩家部分的数据，默认为是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:23
+#: .\data\csv\System_Setting.csv:24
 msgid "是否显示干员的指令结算数据"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:23
+#: .\data\csv\System_Setting.csv:24
 msgid "即指令结算中干员部分的数据，默认为是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:24
+#: .\data\csv\System_Setting.csv:25
 msgid "是否显示干员的移动文本"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:24
+#: .\data\csv\System_Setting.csv:25
 msgid "即干员在移动时的目的地显示文本，默认为是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:25
+#: .\data\csv\System_Setting.csv:26
 msgid "是否显示干员的每日招呼文本"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:25
+#: .\data\csv\System_Setting.csv:26
 msgid "即干员在每日招呼时的文本，默认为全显示，可改为仅显示口上招呼，或均不显示"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:25
+#: .\data\csv\System_Setting.csv:26
 msgid "均不显示|全显示|仅显示口上招呼"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:26
+#: .\data\csv\System_Setting.csv:27
 msgid "是否显示完整的污浊信息"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:26
+#: .\data\csv\System_Setting.csv:27
 msgid "即污浊的详细信息，包括服装污浊、身体污浊、灌肠污浊等，默认为是"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:27
+#: .\data\csv\System_Setting.csv:28
 msgid "主界面中每行指令的绘制数量"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:27
+#: .\data\csv\System_Setting.csv:28
 msgid "即主界面每行显示的指令数量，默认为6个，最少为1个，最大为10个"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:28
+#: .\data\csv\System_Setting.csv:29
 msgid "字体大小"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:28
+#: .\data\csv\System_Setting.csv:29
 msgid "即主界面中显示的字体大小，默认为21"
 msgstr ""
 
-#: .\data\csv\System_Setting.csv:28
+#: .\data\csv\System_Setting.csv:29
 msgid "1"
 msgstr ""
 
