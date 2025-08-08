@@ -7216,8 +7216,16 @@ def handle_masturebate_add_adjust(
     part_id = handle_npc_ai_in_h.evaluate_npc_body_part_prefs(character_id)
     # 增加快感
     base_chara_state_common_settle(character_id, add_time, part_id, 50, ability_level = character_data.ability[30], change_data = change_data)
-    # 增加经验
+    # 增加部位经验
     base_chara_experience_common_settle(character_id, part_id, 1, change_data = change_data)
+    # 如果已持有玩家的阴茎倒模
+    if handle_premise.handle_have_penis_mold(character_id):
+        # 额外增加一次快感
+        base_chara_state_common_settle(character_id, add_time, part_id, 50, ability_level = character_data.ability[30], change_data = change_data)
+        # 增加1道具使用经验
+        base_chara_experience_common_settle(character_id, 51, 1, change_data = change_data)
+        # 增加对玩家好感
+        handle_add_interaction_favoravility(character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DIRTY_RESET_IN_SHOWER)
