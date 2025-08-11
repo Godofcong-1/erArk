@@ -473,10 +473,9 @@ class SwitchCharacterClothPanel:
                             continue
                         else:
                             dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
-                        semen_draw = draw.NormalDraw()
-                        semen_draw.text = f"<semen>({dirty_text_context})</semen>"
-                        semen_draw.width = self.width
-                        now_row.append(semen_draw)
+                        semen_draw_text = f"<semen>({dirty_text_context})</semen>"
+                        semen_draw = rich_text.get_rich_text_draw_panel(semen_draw_text)
+                        now_row.extend(semen_draw.draw_list)
             # 下衣8无衣服时换行
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:
                 if now_row:
