@@ -434,6 +434,10 @@ def chest_grow(character_id: int,print_flag = False):
         if mom_character_data.talent[i]:
             mom_chest_id = i
 
+    # 跳过机械
+    if mom_character_data.race == 2:
+        return now_text
+
     # 用随机数计算生长，可能长3、长2或者长1，母亲胸部越大生长比例就越高
     # 母亲胸部0时从长0~长3生长比例是 0.6 0.25 0.1 0.05，母亲胸部6时反过来
     randow_grow = random.randint(1,100)
@@ -479,6 +483,10 @@ def body_part_grow(character_id: int,print_flag = False):
     mom_id = character_data.relationship.mother_id
     mom_character_data: game_type.Character = cache.character_data[mom_id]
     now_text = ""
+
+    # 跳过机械
+    if mom_character_data.race == 2:
+        return now_text
 
     old_talent_id_list, new_talent_id_list = [], []
     # 获得本人的臀部大小和母亲的臀部大小
