@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-08-11 17:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -31944,31 +31944,31 @@ msgstr ""
 msgid "#ffa5ab"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:36
+#: .\data\character\0365_四月.csv:37
 msgid "头戴式耳机"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:37
+#: .\data\character\0365_四月.csv:38
 msgid "白色不对称衬衫"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:39
+#: .\data\character\0365_四月.csv:40
 msgid "白色短裙"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:41
+#: .\data\character\0365_四月.csv:42
 msgid "红白色绳系运动鞋"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:42
+#: .\data\character\0365_四月.csv:43
 msgid "复合弓"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:44
+#: .\data\character\0365_四月.csv:45
 msgid "四月的随身听"
 msgstr ""
 
-#: .\data\character\0365_四月.csv:45
+#: .\data\character\0365_四月.csv:46
 msgid "四月的通行证"
 msgstr ""
 
@@ -32760,27 +32760,27 @@ msgstr ""
 msgid "#e68328"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:31
+#: .\data\character\0426_卡涅利安.csv:32
 msgid "白色内衬"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:32
+#: .\data\character\0426_卡涅利安.csv:33
 msgid "白色长风衣"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:33
+#: .\data\character\0426_卡涅利安.csv:34
 msgid "皮质半手手套"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:34
+#: .\data\character\0426_卡涅利安.csv:35
 msgid "黑色皮质紧身短裙"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:35
+#: .\data\character\0426_卡涅利安.csv:36
 msgid "黑色绑带"
 msgstr ""
 
-#: .\data\character\0426_卡涅利安.csv:37
+#: .\data\character\0426_卡涅利安.csv:38
 msgid "提胸绑带"
 msgstr ""
 
@@ -33292,39 +33292,39 @@ msgstr ""
 msgid "#58597b"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:36
+#: .\data\character\0474_歌蕾蒂娅.csv:37
 msgid "侧向船型帽"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:37
+#: .\data\character\0474_歌蕾蒂娅.csv:38
 msgid "单侧黑色耳坠"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:38
+#: .\data\character\0474_歌蕾蒂娅.csv:39
 msgid "白色无袖露背紧身衣"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:39
+#: .\data\character\0474_歌蕾蒂娅.csv:40
 msgid "蓝黑色半透明露背衬衣"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:40
+#: .\data\character\0474_歌蕾蒂娅.csv:41
 msgid "披肩西装领大衣"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:41
+#: .\data\character\0474_歌蕾蒂娅.csv:42
 msgid "蓝黑色皮质手套"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:42
+#: .\data\character\0474_歌蕾蒂娅.csv:43
 msgid "白色紧身裤"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:43
+#: .\data\character\0474_歌蕾蒂娅.csv:44
 msgid "蓝黑色皮质长筒皮"
 msgstr ""
 
-#: .\data\character\0474_歌蕾蒂娅.csv:45
+#: .\data\character\0474_歌蕾蒂娅.csv:46
 msgid "槊"
 msgstr ""
 
@@ -37276,31 +37276,31 @@ msgstr ""
 msgid "#ff66cc"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:29
+#: .\data\character\4091_U-Official.csv:30
 msgid "黑色皮质项圈"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:30
+#: .\data\character\4091_U-Official.csv:31
 msgid "黑色外套"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:31
+#: .\data\character\4091_U-Official.csv:32
 msgid "一边粉色一边黑色的类水手服上衣"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:32
+#: .\data\character\4091_U-Official.csv:33
 msgid "淡紫色的百褶裙"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:33
+#: .\data\character\4091_U-Official.csv:34
 msgid "边线是粉色的白色胸罩"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:35
+#: .\data\character\4091_U-Official.csv:36
 msgid "黑色卡通仓鼠短袜"
 msgstr ""
 
-#: .\data\character\4091_U-Official.csv:37
+#: .\data\character\4091_U-Official.csv:38
 msgid "粉色洞洞鞋"
 msgstr ""
 
@@ -37572,43 +37572,43 @@ msgstr ""
 msgid "干员露托，曾在玻利瓦尔各交战地区活动，不从属于任何当地组织，以战场打扫工作为生。现今在本舰接受治疗，并与后勤部签订合作协议，偶尔以战场环境顾问的身份支援外勤任务。"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:39
+#: .\data\character\4130_露托.csv:40
 msgid "褪色的浅黄色丝巾"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:40
+#: .\data\character\4130_露托.csv:41
 msgid "玻利瓦尔士官外套"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:41
+#: .\data\character\4130_露托.csv:42
 msgid "白色上衣（宽大）"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:42
+#: .\data\character\4130_露托.csv:43
 msgid "黑色长护腕"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:44
+#: .\data\character\4130_露托.csv:45
 msgid "深绿色护膝"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:45
+#: .\data\character\4130_露托.csv:46
 msgid "玻利瓦尔制式盾牌（改装）"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:46
+#: .\data\character\4130_露托.csv:47
 msgid "黑色尖头锤"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:47
+#: .\data\character\4130_露托.csv:48
 msgid "黑色丝袜（破损）"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:48
+#: .\data\character\4130_露托.csv:49
 msgid "黑色劳保鞋"
 msgstr ""
 
-#: .\data\character\4130_露托.csv:49
+#: .\data\character\4130_露托.csv:50
 msgid "棕色背包"
 msgstr ""
 
@@ -37645,19 +37645,19 @@ msgid "巴别塔的创立者，特蕾西娅。\n一段来自过去的回响，�
 msgstr ""
 
 #: .\data\character\4134_魔王.csv:30
-msgid "长黑丝"
-msgstr ""
-
-#: .\data\character\4134_魔王.csv:31
 msgid "黑色高跟靴子"
 msgstr ""
 
-#: .\data\character\4134_魔王.csv:32
+#: .\data\character\4134_魔王.csv:31
 msgid "黑色高领毛衣"
 msgstr ""
 
-#: .\data\character\4134_魔王.csv:33
+#: .\data\character\4134_魔王.csv:32
 msgid "白色纱裙"
+msgstr ""
+
+#: .\data\character\4134_魔王.csv:34
+msgid "长黑丝"
 msgstr ""
 
 #: .\data\character\4137_深巡.csv:4

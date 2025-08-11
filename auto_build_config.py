@@ -544,11 +544,13 @@ if BUILD_CONFIG:  # 与po输出相关的配置
         po_file.write(config_po)
 
 if BUILD_PO:
-    with open(po_talk_path, "w", encoding="utf-8") as po_file:
-        po_file.write(talk_po)
-    with open(po_common_talk_path, "w", encoding="utf-8") as po_file:
-        po_file.write(common_talk_po)
-    with open(po_event_path, "w", encoding="utf-8") as po_file:
-        po_file.write(event_po)
+    if BUILD_TALK:
+        with open(po_talk_path, "w", encoding="utf-8") as po_file:
+            po_file.write(talk_po)
+        with open(po_event_path, "w", encoding="utf-8") as po_file:
+            po_file.write(event_po)
+    if BUILD_TALK_COMMON:
+        with open(po_common_talk_path, "w", encoding="utf-8") as po_file:
+            po_file.write(common_talk_po)
 
 print("加载完毕")
