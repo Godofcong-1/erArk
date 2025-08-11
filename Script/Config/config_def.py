@@ -1478,6 +1478,7 @@ class Talk_Common:
     """ 组件内容 """
 
 
+
 class TargetEffect:
     """ 执行目标所能达成的效果id """
 

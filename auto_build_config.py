@@ -13,6 +13,8 @@ character_dir = os.path.join("data","character")
 ui_text_dir = os.path.join("data", "ui_text")
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
+po_common_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_common_talk.po")
+po_event_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_event.po")
 data_path = os.path.join("data","Character.json")
 config_data_path = os.path.join("data", "data.json")
 ui_text_data_path = os.path.join("data", "ui_text.json")
@@ -33,6 +35,8 @@ msgData = set()
 class_data = set()
 config_def_str = ""
 config_po, talk_po = "", ""
+common_talk_po = ""
+event_po = ""
 
 # 是否覆盖原有数据
 BUILD_CONFIG = True
@@ -179,7 +183,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 elif k == "target_id" and target:
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
-                    build_config_po(row[k], file_path, now_index, talk)
+                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common)
             if talk:
                 character_talk_data[type_text]["data"].append(row)
             elif talk_common:
@@ -226,22 +230,32 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
             config_def_str = config_def_str[:-2]
 
 
-def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False):
+def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False, common_talk: bool = False, event: bool = False):
     """
     输入：
         message (str): 文本内容
         file_path (str): 文件路径
         now_index (int): 当前行数
         talk (bool): 是否为talk
+        common_talk (bool): 是否为common talk
+        event (bool): 是否为event
     返回：None
     功能：构建配置po文本
     """
-    global config_po, talk_po,built
+    global built, config_po, talk_po, common_talk_po, event_po
     if not message in built:
         if talk:
             talk_po += f"#: .\{file_path}:{now_index}\n"
             talk_po += f'msgid "{message}"\n'
             talk_po += 'msgstr ""\n\n'
+        elif common_talk:
+            common_talk_po += f"#: .\{file_path}:{now_index}\n"
+            common_talk_po += f'msgid "{message}"\n'
+            common_talk_po += 'msgstr ""\n\n'
+        elif event:
+            event_po += f"#: .\{file_path}:{now_index}\n"
+            event_po += f'msgid "{message}"\n'
+            event_po += 'msgstr ""\n\n'
         else:
             config_po += f"#: .\{file_path}:{now_index}\n"
             config_po += f'msgid "{message}"\n'
@@ -364,7 +378,7 @@ def build_po_text(po):
     po += 'msgstr ""\n'
     po += '"Project-Id-Version: PACKAGE VERSION\\n"\n'
     po += '"Report-Msgid-Bugs-To: \\n"\n'
-    po += '"POT-Creation-Date: 2024-03-11 08:00+0800\\n"\n'
+    po += '"POT-Creation-Date: 2024-08-11 08:00+0800\\n"\n'
     po += '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n'
     po += '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"\n'
     po += '"Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\\n"\n'
@@ -379,6 +393,8 @@ print("开始加载游戏数据\n")
 if BUILD_PO:
     config_po = build_po_text(config_po)
     talk_po = build_po_text(talk_po)
+    common_talk_po = build_po_text(common_talk_po)
+    event_po = build_po_text(event_po)
 
 file_list = os.listdir(config_dir)
 index = 0
@@ -488,9 +504,9 @@ if BUILD_EVENT:
                     event_list.append(now_event)
                     now_event_text = now_event["text"]
                     if now_event_text not in msgData and not now_event_text in built:
-                        config_po += f"#: Event:{event_id}\n"
-                        config_po += f'msgid "{now_event_text}"\n'
-                        config_po += 'msgstr ""\n\n'
+                        event_po += f"#: Event:{event_id}\n"
+                        event_po += f'msgid "{now_event_text}"\n'
+                        event_po += 'msgstr ""\n\n'
                         built.append(now_event_text)
                         msgData.add(now_event_text)
     character_event_data["Event"] = {}
@@ -530,5 +546,9 @@ if BUILD_CONFIG:  # 与po输出相关的配置
 if BUILD_PO:
     with open(po_talk_path, "w", encoding="utf-8") as po_file:
         po_file.write(talk_po)
+    with open(po_common_talk_path, "w", encoding="utf-8") as po_file:
+        po_file.write(common_talk_po)
+    with open(po_event_path, "w", encoding="utf-8") as po_file:
+        po_file.write(event_po)
 
 print("加载完毕")

@@ -14,6 +14,8 @@ character_dir = os.path.join("data","character")
 ui_text_dir = os.path.join("data", "ui_text")
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
+po_common_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_common_talk.po")
+po_event_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_event.po")
 data_path = os.path.join("data","Character.json")
 config_data_path = os.path.join("data", "data.json")
 ui_text_data_path = os.path.join("data", "ui_text.json")
@@ -34,6 +36,8 @@ msgData = set()
 class_data = set()
 config_def_str = ""
 config_po, talk_po = "", ""
+common_talk_po = ""
+event_po = ""
 
 # 是否覆盖原有数据
 BUILD_CONFIG = True
@@ -173,7 +177,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 elif k == "target_id" and target:
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
-                    build_config_po(row[k], file_path, now_index, talk)
+                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common)
             if talk:
                 character_talk_data[type_text]["data"].append(row)
             elif talk_common:
@@ -220,22 +224,32 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
             config_def_str = config_def_str[:-2]
 
 
-def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False):
+def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False, common_talk: bool = False, event: bool = False):
     """
     输入：
         message (str): 文本内容
         file_path (str): 文件路径
         now_index (int): 当前行数
         talk (bool): 是否为talk
+        common_talk (bool): 是否为common talk
+        event (bool): 是否为event
     返回：None
     功能：构建配置po文本
     """
-    global config_po, talk_po,built
+    global built, config_po, talk_po, common_talk_po, event_po
     if not message in built:
         if talk:
             talk_po += f"#: .\{file_path}:{now_index}\n"
             talk_po += f'msgid "{message}"\n'
             talk_po += 'msgstr ""\n\n'
+        elif common_talk:
+            common_talk_po += f"#: .\{file_path}:{now_index}\n"
+            common_talk_po += f'msgid "{message}"\n'
+            common_talk_po += 'msgstr ""\n\n'
+        elif event:
+            event_po += f"#: .\{file_path}:{now_index}\n"
+            event_po += f'msgid "{message}"\n'
+            event_po += 'msgstr ""\n\n'
         else:
             config_po += f"#: .\{file_path}:{now_index}\n"
             config_po += f'msgid "{message}"\n'
@@ -349,6 +363,7 @@ def build_po_text(po):
     返回：str
     功能：生成po文件的头部内容
     """
+    from datetime import datetime, timezone, timedelta
     po = "\n"
     po += '# SOME DESCRIPTIVE TITLE.\n'
     po += '# Copyright (C) YEAR Free Software Foundation, Inc.\n'
@@ -358,7 +373,8 @@ def build_po_text(po):
     po += 'msgstr ""\n'
     po += '"Project-Id-Version: PACKAGE VERSION\\n"\n'
     po += '"Report-Msgid-Bugs-To: \\n"\n'
-    po += '"POT-Creation-Date: 2024-03-11 08:00+0800\\n"\n'
+    creation_date = datetime.now(timezone(timedelta(hours=8))).strftime("%Y-%m-%d %H:%M%z")
+    po += f'"POT-Creation-Date: {creation_date}\\n"\n'
     po += '"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\\n"\n'
     po += '"Last-Translator: FULL NAME <EMAIL@ADDRESS>\\n"\n'
     po += '"Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\\n"\n'
@@ -373,6 +389,8 @@ print("开始加载游戏数据\n")
 if BUILD_PO:
     config_po = build_po_text(config_po)
     talk_po = build_po_text(talk_po)
+    common_talk_po = build_po_text(common_talk_po)
+    event_po = build_po_text(event_po)
 
 file_list = os.listdir(config_dir)
 index = 0
@@ -488,7 +506,34 @@ else:
     pass
 
 if BUILD_TALK_COMMON:
+    # 递归统计talk_common目录及其所有子目录下的csv文件总数和总大小
+    def count_csv_files_and_size(dir_path):
+        """
+        输入：
+            dir_path (str): 目录路径
+        返回：(int, int)，总的csv文件数量和总字节数
+        功能：递归统计目录下所有csv文件数量和总大小
+        """
+        count = 0
+        total_size = 0
+        for entry in os.listdir(dir_path):
+            full_path = os.path.join(dir_path, entry)
+            if os.path.isdir(full_path):
+                sub_count, sub_size = count_csv_files_and_size(full_path)
+                count += sub_count
+                total_size += sub_size
+            elif entry.endswith('.csv'):
+                count += 1
+                total_size += os.path.getsize(full_path)
+        return count, total_size
+
     talk_common_file_list = os.listdir(talk_common_dir)
+    # 统计talk_common目录及其所有子目录下的csv文件总数和总大小
+    total_files, total_bytes = count_csv_files_and_size(talk_common_dir)
+    processed_files = 0
+    processed_bytes = 0
+    last_print_time = time.time()
+    print(f"[进度] 开始处理通用口上，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
     for i in talk_common_file_list:
         now_path = os.path.join(talk_common_dir, i)
         # 如果是目录，则递归遍历其子目录
@@ -503,12 +548,27 @@ if BUILD_TALK_COMMON:
                     # 构建子目录下的 talk csv 配置
                     csv_path = os.path.join(root, f)
                     build_csv_config(csv_path, f, False, False, talk_common=True)
+                    processed_files += 1
+                    processed_bytes += os.path.getsize(csv_path)
+                    now_time = time.time()
+                    if now_time - last_print_time >= 1 or processed_files == total_files:
+                        percent = processed_files / total_files * 100 if total_files else 100
+                        print(f"[进度] 已处理 {processed_files}/{total_files} 个文件 ({percent:.2f}%)，已处理 {processed_bytes/1024/1024:.2f}/{total_bytes/1024/1024:.2f} MB")
+                        last_print_time = now_time
         else:
             # 如果是单个 csv 文件，则直接构建
             if i.endswith(".csv"):
                 config_def_str += "\n"
                 build_csv_config(now_path, i, False, False, talk_common=True)
     # 写入 talk_common 数据
+            # 文件总数和大小的处理过程打印
+                processed_files += 1
+                processed_bytes += os.path.getsize(now_path)
+                now_time = time.time()
+                if now_time - last_print_time >= 1 or processed_files == total_files:
+                    percent = processed_files / total_files * 100 if total_files else 100
+                    print(f"[进度] 已处理 {processed_files}/{total_files} 个文件 ({percent:.2f}%)，已处理 {processed_bytes/1024/1024:.2f}/{total_bytes/1024/1024:.2f} MB")
+                    last_print_time = now_time
     with open(talk_common_data_path, "w", encoding="utf-8") as talk_common_data_file:
         json.dump(talk_common_data, talk_common_data_file, ensure_ascii=0)
 
@@ -550,9 +610,9 @@ if BUILD_EVENT:
                     event_list.append(now_event)
                     now_event_text = now_event["text"]
                     if now_event_text not in msgData and not now_event_text in built:
-                        config_po += f"#: Event:{event_id}\n"
-                        config_po += f'msgid "{now_event_text}"\n'
-                        config_po += 'msgstr ""\n\n'
+                        event_po += f"#: Event:{event_id}\n"
+                        event_po += f'msgid "{now_event_text}"\n'
+                        event_po += 'msgstr ""\n\n'
                         built.append(now_event_text)
                         msgData.add(now_event_text)
     character_event_data["Event"] = {}
@@ -591,5 +651,9 @@ if BUILD_CONFIG:  # 与po输出相关的配置
 if BUILD_PO:
     with open(po_talk_path, "w", encoding="utf-8") as po_file:
         po_file.write(talk_po)
+    with open(po_common_talk_path, "w", encoding="utf-8") as po_file:
+        po_file.write(common_talk_po)
+    with open(po_event_path, "w", encoding="utf-8") as po_file:
+        po_file.write(event_po)
 
 print("加载完毕")
