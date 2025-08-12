@@ -1447,6 +1447,21 @@ class World_Setting:
     """ 设定名 """
     introduce: str
     """ 设定介绍 """
+
+class Talk:
+    """ 口上配置数据 """
+
+    cid: str
+    """ 口上id """
+    behavior_id: str
+    """ 触发口上的行为id """
+    adv_id: int
+    """ 口上限定的剧情npcid """
+    premise: str
+    """ 前提id """
+    context: str
+    """ 口上内容 """
+
 class Talk_Common:
     """ 组件配置数据 """
 
