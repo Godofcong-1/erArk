@@ -404,7 +404,7 @@ for i in file_list:
     if index:
         config_def_str += "\n\n\n"
     now_file = os.path.join(config_dir, i)
-    build_csv_config(now_file, i, 0, 0)
+    build_csv_config(now_file, i, False, False)
     index += 1
 
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
@@ -435,7 +435,7 @@ if BUILD_TALK:
                 build_csv_config(now_path, i, True, False)
     # 写入 talk 数据
     with open(character_talk_data_path, "w", encoding="utf-8") as talk_data_file:
-        json.dump(character_talk_data, talk_data_file, ensure_ascii=0)
+        json.dump(character_talk_data, talk_data_file, ensure_ascii=False)
     print("角色口上数据写入完成，路径为 data\Character_Talk.json")
 else:
     # 不覆盖 talk 数据，保持原有数据
@@ -464,7 +464,7 @@ if BUILD_TALK_COMMON:
                 build_csv_config(now_path, i, False, False, talk_common=True)
     # 写入 talk_common 数据
     with open(talk_common_data_path, "w", encoding="utf-8") as talk_common_data_file:
-        json.dump(talk_common_data, talk_common_data_file, ensure_ascii=0)
+        json.dump(talk_common_data, talk_common_data_file, ensure_ascii=False)
 
 # 在写入 target 数据时根据 BUILD_TARGET 判断是否覆盖
 if BUILD_TARGET:
@@ -474,7 +474,7 @@ if BUILD_TARGET:
         for f in os.listdir(now_dir):
             config_def_str += "\n\n\n"
             now_f = os.path.join(now_dir, f)
-            build_csv_config(now_f, f, 0, 1)
+            build_csv_config(now_f, f, False, True)
 
 if BUILD_CHARACTER:
     character_file_list = os.listdir(character_dir)
@@ -514,7 +514,7 @@ if BUILD_EVENT:
     character_event_data["Event"]["gettext"] = {}
     character_event_data["Event"]["gettext"]["text"] = 1
     with open(character_event_data_path, "w", encoding="utf-8") as event_data_file:
-        json.dump(character_event_data, event_data_file, ensure_ascii=0)
+        json.dump(character_event_data, event_data_file, ensure_ascii=False)
 else:
     # 不覆盖 event 数据，保持原有数据
     pass
@@ -525,7 +525,7 @@ build_scene_config(map_path)
 # 在写入时根据flag判断是否覆盖
 if BUILD_CHARACTER:
     with open(data_path,"w",encoding="utf-8") as character_data_file:
-        json.dump(character_data,character_data_file,ensure_ascii=0)
+        json.dump(character_data,character_data_file,ensure_ascii=False)
 
 config_def_str += "\n"
 if BUILD_CONFIG:
@@ -533,11 +533,11 @@ if BUILD_CONFIG:
     # with open(config_path, "w", encoding="utf-8") as config_file:
     #     config_file.write(config_def_str)
     with open(config_data_path, "w", encoding="utf-8") as config_data_file:
-        json.dump(config_data, config_data_file, ensure_ascii=0)
+        json.dump(config_data, config_data_file, ensure_ascii=False)
 
 if BUILD_UI_TEXT:
     with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
-        json.dump(ui_text_data, ui_text_data_file, ensure_ascii=0)
+        json.dump(ui_text_data, ui_text_data_file, ensure_ascii=False)
 
 if BUILD_CONFIG:  # 与po输出相关的配置
     with open(po_csv_path, "w", encoding="utf-8") as po_file:
