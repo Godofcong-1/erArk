@@ -503,7 +503,6 @@ class BODY_H_STATE:
         """ 性爱助手状态，False为不进行，True为进行 """
         self.hidden_sex_discovery_dregree: int = 0
         """ 隐奸中被发现的程度，int，初始为0，100时被发现 """
-
         self.shoot_semen_amount: int = 0
         """ H中射精的精液量，int，单位ml """
 
@@ -1165,7 +1164,7 @@ class Rhodes_Island:
         """ 当前监狱长的干员id """
         self.current_prisoners: Dict[int, Tuple[datetime.datetime, int]] = {}
         """ 当前囚犯干员的数据，干员id: (被关押的时间, 逃脱的概率) """
-        self.confinement_training_setting: Dict[int, Tuple[int]] = {}
+        self.confinement_training_setting: Dict[int, int] = {}
         """ 监禁调教设置 设置id:设置值 """
         self.pre_training_cleaning: bool = False
         """ 调教前清洗准备 """

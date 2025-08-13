@@ -1356,7 +1356,7 @@ def handle_pl_eja_point_low_or_middle(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.PL_EJA_POINT_HIGH_OR_EXTREME)
-def handle_pl_eja_point_low_or_middle(character_id: int) -> int:
+def handle_pl_eja_point_high_or_extreme(character_id: int) -> int:
     """
     玩家当前射精欲高或极
     Keyword arguments:
