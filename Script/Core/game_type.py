@@ -1,3 +1,4 @@
+import uuid
 from uuid import UUID
 from typing import List, Dict, Set, Tuple, Any
 import datetime
@@ -124,7 +125,7 @@ class Food:
         """ 食物配置表id """
         self.name: str = ""
         """ 食物名字 """
-        self.uid: UUID = UUID()
+        self.uid: UUID = uuid.uuid4()
         """ 食物对象的唯一id """
         self.quality: int = 0
         """ 食物品质 """
