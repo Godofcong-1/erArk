@@ -20,7 +20,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def get_base_zero() -> dict:
+def get_base_zero() -> game_type.Rhodes_Island:
     """
     基地情况结构体，设为空
     """
@@ -473,7 +473,7 @@ def settle_office_work():
     # 否则减少全局效率
     else:
         effectiveness_change -= max_damage_down
-    cache.rhodes_island.effectiveness = 100 + effectiveness_change
+    cache.rhodes_island.effectiveness = 100 + int(effectiveness_change)
     # 效率不会小于50，也不会大于200
     cache.rhodes_island.effectiveness = min(cache.rhodes_island.effectiveness,200)
     cache.rhodes_island.effectiveness = max(cache.rhodes_island.effectiveness,50)
@@ -520,7 +520,7 @@ def settle_income():
     cache.rhodes_island.materials_resouce[1] += today_all_income
 
     # 刷新新病人数量，已治愈病人数量和治疗收入归零
-    cache.rhodes_island.patient_now = random.randint(cache.rhodes_island.patient_max / 2,cache.rhodes_island.patient_max)
+    cache.rhodes_island.patient_now = random.randint(int(cache.rhodes_island.patient_max / 2), cache.rhodes_island.patient_max)
     cache.rhodes_island.patient_cured = 0
     cache.rhodes_island.cure_income = 0
     cache.rhodes_island.all_income = 0

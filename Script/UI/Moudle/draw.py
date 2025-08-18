@@ -1,6 +1,7 @@
 import time
-from typing import List
-from types import FunctionType
+from typing import List, Optional
+from types import MethodType
+
 from Script.Core import (
     text_handle,
     io_init,
@@ -452,7 +453,7 @@ class Button:
         """ 鼠标悬停时样式 """
         self.width: int = 0
         """ 按钮文本的最大宽度 """
-        self.cmd_func: FunctionType = cmd_func
+        self.cmd_func: Optional[MethodType] = cmd_func
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
@@ -532,7 +533,7 @@ class ImageButton:
         """ 点击按钮响应文本 """
         self.width: int = 0
         """ 按钮文本的最大宽度 """
-        self.cmd_func: FunctionType = cmd_func
+        self.cmd_func: Optional[MethodType] = cmd_func
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
@@ -572,7 +573,7 @@ class CenterButton:
             fix_text=" ",
             normal_style="standard",
             on_mouse_style="onbutton",
-            cmd_func: FunctionType = None,
+            cmd_func: Optional[MethodType] = None,
             args=(),
             web_type="",
     ):
@@ -589,7 +590,7 @@ class CenterButton:
         """ 鼠标悬停时样式 """
         self.width: int = width
         """ 按钮文本的最大宽度 """
-        self.cmd_func: FunctionType = cmd_func
+        self.cmd_func: Optional[MethodType] = cmd_func
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
@@ -626,7 +627,7 @@ class CenterButton:
                         break
                 now_text = now_text[:-2] + "~"
         else:
-            now_text = text_handle.align(self.text, "center", 0, 1, self.width)
+            now_text = text_handle.align(self.text, "center", False, 1, self.width)
             now_width = self.width - text_handle.get_text_index(now_text)
             now_text = " " * int(now_width) + now_text
         py_cmd.pcmd(
@@ -665,7 +666,7 @@ class LeftButton(CenterButton):
                         break
                 now_text = now_text[:-2] + "~"
         else:
-            now_text = text_handle.align(self.text, "left", 0, 1, self.width)
+            now_text = text_handle.align(self.text, "left", False, 1, self.width)
             now_width = self.width - text_handle.get_text_index(now_text)
             now_text = " " * int(now_width) + now_text
         py_cmd.pcmd(
@@ -856,7 +857,7 @@ class CenterDraw(NormalDraw):
                 # 防止死循环，强制输出一个字符
                 now_text = text[0]
             # 居中对齐
-            now_text = text_handle.align(now_text, "center", 0, 1, self.width)
+            now_text = text_handle.align(now_text, "center", False, 1, self.width)
             io_init.era_print(now_text, self.style)
             text = text[len(now_text):]
 
@@ -888,7 +889,7 @@ class CenterDrawImage(NormalDraw):
         elif int(len(self)) > int(self.width) - 2:
             now_image = " " + self.text + " "
         else:
-            now_image = text_handle.align(self.text, "center", 0, 1, self.width)
+            now_image = text_handle.align(self.text, "center", False, 1, self.width)
         if int(len(self)) < int(self.width):
             now_image += " " * (int(self.width) - text_handle.get_text_index(now_image))
         io_init.era_print(now_image)
@@ -921,7 +922,7 @@ class CenterMergeDraw:
         for value in self.draw_list:
             now_width += len(value)
         now_text = " " * now_width
-        fix_text = text_handle.align(now_text, "center", 1, 1, self.width)
+        fix_text = text_handle.align(now_text, "center", True, 1, self.width)
         fix_draw = NormalDraw()
         fix_draw.text = fix_text
         fix_draw.width = len(fix_text)
@@ -963,7 +964,7 @@ class LeftMergeDraw:
         for value in self.draw_list:
             now_width += len(value)
         now_text = " " * now_width
-        fix_text = text_handle.align(now_text, "left", 1, 1, self.width)
+        fix_text = text_handle.align(now_text, "left", True, 1, self.width)
         fix_draw = NormalDraw()
         fix_draw.text = fix_text
         fix_draw.width = len(fix_text)
@@ -1000,7 +1001,7 @@ class RightDraw(NormalDraw):
                 # 防止死循环，强制输出一个字符
                 now_text = text[0]
             # 右对齐
-            now_text = text_handle.align(now_text, "right", 0, 1, self.width)
+            now_text = text_handle.align(now_text, "right", False, 1, self.width)
             io_init.era_print(now_text, self.style)
             text = text[len(now_text):]
             
@@ -1040,7 +1041,7 @@ class LeftDraw(NormalDraw):
                 pass
             else:
                 # 如果没有剩余文本，则进行左对齐填充
-                now_text = text_handle.align(now_text, "left", 0, 1, self.width)
+                now_text = text_handle.align(now_text, "left", False, 1, self.width)
             # 输出当前行
             io_init.era_print(now_text, self.style)
             # 截取剩余文本，使用未对齐前的长度，防止丢失字符

@@ -35,7 +35,7 @@ config_image_data: Dict[int, int] = {}
 """ 人物图片对应图片id """
 config_behavior_effect: Dict[int, config_def.Behavior_Effect] = {}
 """ 行为结算器配置 """
-config_behavior_effect_data: Dict[int, List] = {}
+config_behavior_effect_data: Dict[str, List] = {}
 """ 行为所包含的结算器id数据 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
@@ -72,13 +72,13 @@ config_clothing_tem: Dict[int, config_def.ClothingTem] = {}
 """ 服装模板配置数据 """
 config_clothing_type: Dict[int, config_def.ClothingType] = {}
 """ 衣服种类配置数据 """
-config_clothing_type_volume: Dict[int, list] = {}
+config_clothing_type_volume: Dict[int, List] = {}
 """ 衣服种类容积配置数据 """
-config_cloth_part_normal_flow: Dict[int, list] = {}
+config_cloth_part_normal_flow: Dict[int, List] = {}
 """ 衣服部位正常流通配置数据 """
-config_cloth_part_full_flow: Dict[int, list] = {}
+config_cloth_part_full_flow: Dict[int, List] = {}
 """ 衣服部位满溢流通配置数据 """
-config_cloth_part_extra_flow: Dict[int, list] = {}
+config_cloth_part_extra_flow: Dict[int, List] = {}
 """ 衣服部位额外流通配置数据 """
 config_clothing_use_type: Dict[int, config_def.ClothingUseType] = {}
 """ 衣服用途配置数据 """
@@ -90,13 +90,13 @@ config_reproduction_period: Dict[int, config_def.Reproduction_period] = {}
 """ 生理周期数据 """
 config_body_part: Dict[int, config_def.BodyPart] = {}
 """ 身体部位配置数据 """
-config_body_part_volume: Dict[int, list] = {}
+config_body_part_volume: Dict[int, List] = {}
 """ 身体部位容积数据 """
-config_body_part_normal_flow: Dict[int, list] = {}
+config_body_part_normal_flow: Dict[int, List] = {}
 """ 身体部位正常流通数据 """
-config_body_part_full_flow: Dict[int, list] = {}
+config_body_part_full_flow: Dict[int, List] = {}
 """ 身体部位满溢流通数据 """
-config_body_part_extra_flow: Dict[int, list] = {}
+config_body_part_extra_flow: Dict[int, List] = {}
 """ 身体部位额外流通数据 """
 config_collection_bonus_data: Dict[int, config_def.Collection_bouns] = {}
 """ 收藏品解锁数据 """
@@ -104,7 +104,7 @@ config_facility: Dict[int, config_def.Facility] = {}
 """ 设施列表数据 """
 config_facility_effect: Dict[int, config_def.Facility_effect] = {}
 """ 设施效果总数据 """
-config_facility_effect_data: Dict[str, Set] = {}
+config_facility_effect_data: Dict[str, List] = {}
 """ 设施效果分类数据 """
 config_facility_open: Dict[int, config_def.Facility_open] = {}
 """ 设施开放数据 """
@@ -146,7 +146,7 @@ config_organ_data: Dict[int, Set] = {}
 性别对应器官列表配置数据
 性别 0:女 1:男 2: 通用
 """
-config_ability_type: Dict[int, config_def.AbilityType] = {}
+config_ability_type: Dict[int, config_def.Ability] = {}
 """ 能力种类配置 """
 config_ability_type_data: Dict[int, Set] = {}
 """
@@ -181,7 +181,7 @@ config_city: Dict[int, config_def.City] = {}
 """ 城市配置 """
 config_city_of_country: Dict[int, Set] = {}
 """ 大地点所属的城市配置 """
-config_talent_type: Dict[int, config_def.TalentType] = {}
+config_talent_type: Dict[int, config_def.Talent] = {}
 """ 素质种类配置 """
 config_talent_type_data: Dict[int, Set] = {}
 """
@@ -192,12 +192,12 @@ config_talent: Dict[int,config_def.Talent] = {}
 """ 素质类型表 """
 # config_ability_up_type: Dict[int, config_def.AbilityUpType] = {}
 # """ 根据能力id和等级来判断升级的前提编号 """
-config_ability_up_data: Dict[int, Dict[int, list]] = {}
+config_ability_up_data: Dict[int, Dict[int, List]] = {}
 """
 能力升级数据
 能力id:当前等级:需求分项:需求内容
 """
-config_ability_up2_data: Dict[int, Dict[int, list]] = {}
+config_ability_up2_data: Dict[int, Dict[int, List]] = {}
 """
 能力升级备选数据
 能力id:当前等级:需求分项:需求内容
@@ -249,7 +249,7 @@ config_solar_period: Dict[int, config_def.SolarPeriod] = {}
 """ 节气配置数据 """
 config_behavior: Dict[str, config_def.Behavior_Data] = {}
 """ 角色行为数据 """
-config_behavior_id_list_of_group_sex_body_part: Dict[str, list] = {}
+config_behavior_id_list_of_group_sex_body_part: Dict[str, List] = {}
 """ 群交时身体部位占用所对应的的行为id列表 """
 config_behavior_by_str: Dict[str, config_def.Behavior_Data] = {}
 """ 以英文名为键的角色行为数据 """
@@ -257,51 +257,51 @@ config_behavior_by_cid: Dict[int, config_def.Behavior_Data] = {}
 """ 以cid为键的角色行为数据 """
 config_talk: Dict[str, config_def.Talk] = {}
 """ 口上配置 """
-config_talk_data: Dict[int, Set] = {}
+config_talk_data: Dict[str, Set] = {}
 """ 角色行为对应口上集合 状态id:口上id列表 """
-config_talk_data_by_chara_adv: Dict[int, int] = {}
+config_talk_data_by_chara_adv: Dict[str, Dict] = {}
 """ 角色行为对应口上集合再根据角色adv分类 状态id:角色adv:口上id列表 """
 # config_talk_premise: Dict[int, config_def.TalkPremise] = {}
 # """ 口上前提配置 """
-config_talk_premise_data: Dict[int, Set] = {}
+config_talk_premise_data: Dict[str, Set] = {}
 """ 口上前提配置数据 """
-config_talk_common_data: Dict[int, config_def.Talk_Common] = {}
+config_talk_common_data: Dict[str, config_def.Talk_Common] = {}
 """ 通用口上配置数据 """
 config_talk_common_cid_list_by_type: Dict[str, List] = {}
 """ 根据类型获取的通用口上cid集合 """
 config_talk_common_cid_list_by_part: Dict[str, Dict] = {}
 """ 根据分段的部分类型获取的通用口上cid集合 """
-config_talk_common_premise_data: Dict[int, Set] = {}
+config_talk_common_premise_data: Dict[str, Set] = {}
 """ 通用口上前提配置数据 """
-config_target: Dict[int, config_def.Target] = {}
+config_target: Dict[str, config_def.Target] = {}
 """ 目标配置数据 """
-config_target_premise_data: Dict[int, Set] = {}
+config_target_premise_data: Dict[str, Set] = {}
 """ 目标前提配置数据 """
 config_target_type_index: Dict[int, List] = {}
 """ 目标配置数据的种类索引 """
 config_target_type: Dict[int, config_def.Target_Type] = {}
 """ 目标类型表 """
-config_target_effect: Dict[int, config_def.TargetEffect] = {}
+config_target_effect: Dict[str, config_def.TargetEffect] = {}
 """ 目标效果配置 """
-config_target_effect_data: Dict[int, Set] = {}
+config_target_effect_data: Dict[str, Set] = {}
 """ 目标效果配置数据 """
-config_effect_target_data: Dict[int, Set] = {}
+config_effect_target_data: Dict[str, Set] = {}
 """ 能达成效果的目标集合 """
 config_week_day: Dict[int, config_def.WeekDay] = {}
 """ 星期描述文本配置数据 """
 config_event: Dict[str, game_type.Event] = {}
 """ 事件配置数据 """
-config_event_status_data: Dict[int, List] = {}
+config_event_status_data: Dict[str, List] = {}
 """
 各个状态下事件列表
 状态id:事件id列表
 """
-config_event_status_data_by_chara_adv: Dict[int, int] = {}
+config_event_status_data_by_chara_adv: Dict[str, Dict] = {}
 """
 各个状态下事件列表
 状态id:角色adv:事件id列表
 """
-config_event_target: Dict[int, game_type.Target] = {}
+config_event_target: Dict[str, game_type.Target] = {}
 """ 目标配置数据 """
 config_event_effect_target_data: Dict[int, Set] = {}
 """ 能达成效果的目标集合 """
@@ -319,7 +319,7 @@ config_prts: Dict[int, config_def.Prts] = {}
 """ 教程数据 """
 config_food_quality: Dict[int, config_def.Food_Quality] = {}
 """ 食物质量数据 """
-config_prts_data: Dict[int, Dict[int, config_def.Prts]] = {}
+config_prts_data: Dict[int, Dict[int, Dict[int, config_def.Prts]]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
 config_productformula: Dict[int, config_def.ProductFormula] = {}
 """ 产品配方数据 条目cid:条目内容 """
@@ -333,37 +333,37 @@ config_first_bonus: Dict[int, config_def.First_Bouns] = {}
 """ 初始奖励数据 奖励id:奖励内容 """
 config_chara_setting: Dict[int, config_def.CharaSetting] = {}
 """ 角色设置数据 设置id:详细内容 """
-config_chara_setting_option: Dict[int, Dict[int, str]] = {}
+config_chara_setting_option: Dict[int, List] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
 config_system_setting: Dict[int, config_def.System_Setting] = {}
 """ 系统设置数据 设置id:详细内容 """
-config_system_setting_option: Dict[int, Dict[int, str]] = {}
+config_system_setting_option: Dict[int, List] = {}
 """ 系统设置数据的选项数据 设置id:选项序号:选项内容 """
 config_draw_setting: Dict[int, config_def.System_Setting] = {}
 """ 绘制设置数据 设置id:详细内容 """
-config_draw_setting_option: Dict[int, Dict[int, str]] = {}
+config_draw_setting_option: Dict[int, List] = {}
 """ 绘制设置数据的选项数据 设置id:选项序号:选项内容 """
 config_difficulty_setting: Dict[int, config_def.System_Setting] = {}
 """ 难度设置数据 设置id:详细内容 """
-config_difficulty_setting_option: Dict[int, Dict[int, str]] = {}
+config_difficulty_setting_option: Dict[int, List] = {}
 """ 难度设置数据的选项数据 设置id:选项序号:选项内容 """
 config_ai_chat_setting: Dict[int, config_def.Ai_Chat_Setting] = {}
 """ 文本生成AI设置数据 设置id:详细内容 """
-config_ai_chat_setting_option: Dict[int, Dict[int, str]] = {}
+config_ai_chat_setting_option: Dict[int, List] = {}
 """ 文本生成AI设置数据的选项数据 设置id:选项序号:选项内容 """
 config_ai_chat_send_data: Dict[int, config_def.Ai_Chat_Send_Data] = {}
 """ 文本生成AI发送数据 设置id:详细内容 """
 config_physical_exam_setting: Dict[int, config_def.Physical_Exam_Setting] = {}
 """ 体检设置数据 设置id:详细内容 """
-config_physical_exam_setting_option: Dict[int, Dict[int, str]] = {}
+config_physical_exam_setting_option: Dict[int, List] = {}
 """ 体检设置数据的选项数据 设置id:选项序号:选项内容 """
 config_assistant_services: Dict[int, config_def.AssistantServices] = {}
 """ 助理服务数据 服务id:详细内容 """
-config_assistant_services_option: Dict[int, Dict[int, str]] = {}
+config_assistant_services_option: Dict[int, Dict[int, List]] = {}
 """ 角色设置数据的选项数据 设置id:选项序号:选项内容 """
 config_confinement_training_setting: Dict[int, config_def.Confinement_Training_Setting] = {}
 """ 监禁调教设置数据 设置id:详细内容 """
-config_confinement_training_setting_option: Dict[int, Dict[int, str]] = {}
+config_confinement_training_setting_option: Dict[int, List] = {}
 """ 监禁调教设置数据的选项数据 设置id:选项序号:选项内容 """
 config_body_manage_requirement: Dict[int, config_def.Body_Manage_Requirement] = {}
 """ 身体管理需求数据 """
@@ -411,7 +411,7 @@ config_equipment_damage_rate: Dict[int, config_def.Equipment_Damage_Rate] = {}
 """ 装备损坏概率数据 """
 config_equipment_maintain_setting: Dict[int, config_def.Equipment_Maintain_Setting] = {}
 """ 装备维护设置数据 """
-config_equipment_maintain_setting_option: Dict[int, Dict[int, str]] = {}
+config_equipment_maintain_setting_option: Dict[int, List] = {}
 """ 装备维护设置数据的选项数据 设置id:选项序号:选项内容 """
 config_achievement: Dict[int, config_def.Achievement] = {}
 """ 成就数据 """
@@ -534,7 +534,6 @@ def load_talent_gain_data():
         now_tem = config_def.TalentGain()
         now_tem.__dict__ = tem_data
         config_talent_gain[now_tem.cid] = now_tem
-        config_talent_gain_data.setdefault(now_tem.talent_id, {})
         config_talent_gain_data[now_tem.talent_id] = now_tem
 
 def load_mark_up_data():
@@ -991,7 +990,7 @@ def load_facility_effect():
         now_tem = config_def.Facility_effect()
         now_tem.__dict__ = tem_data
         config_facility_effect[now_tem.cid] = now_tem
-        config_facility_effect_data.setdefault(now_tem.name, list())
+        config_facility_effect_data.setdefault(now_tem.name, [])
         # 补个0，让序号=等级
         if config_facility_effect_data[now_tem.name] == []:
             config_facility_effect_data[now_tem.name].append(0)

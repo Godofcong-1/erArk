@@ -1,14 +1,14 @@
 from uuid import UUID
-from typing import List, Dict, Set, Tuple
+from typing import List, Dict, Set, Tuple, Any
 import datetime
 
 
 class FlowContorl:
     """流程控制用结构体"""
 
-    restart_game: bool = 0
+    restart_game: bool = False
     """ 重启游戏 """
-    quit_game: bool = 0
+    quit_game: bool = False
     """ 退出游戏 """
 
 
@@ -54,7 +54,7 @@ class NpcTem:
         # self.Chest: int = 0
         # """ 罩杯模板 """
         # 以下为新加
-        self.Favorability: str = {}
+        self.Favorability: Dict[int, int] = {0:0}
         """ 好感度模板 """
         self.Trust: int = 0
         """ 信赖度模板 """
@@ -124,7 +124,7 @@ class Food:
         """ 食物配置表id """
         self.name: str = ""
         """ 食物名字 """
-        self.uid: UUID = None
+        self.uid: UUID = UUID()
         """ 食物对象的唯一id """
         self.quality: int = 0
         """ 食物品质 """
@@ -622,39 +622,39 @@ class SPECIAL_FLAG:
     """特殊的flag"""
 
     def __init__(self):
-        self.is_h: bool = 0
+        self.is_h: bool = False
         """ 在H模式中 """
         self.unconscious_h: int = 0
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.hidden_sex_mode: int = 0
         """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐] """
-        self.sleep_h_awake: bool = 0
+        self.sleep_h_awake: bool = False
         """ 睡奸中醒来 """
-        self.wait_flag: bool = 0
+        self.wait_flag: bool = False
         """ AI行动里的原地发呆判定 """
         self.is_follow: int = 0
         """ 跟随玩家，int [0不跟随,1智能跟随,2强制跟随,3前往博士办公室,4前往博士当前位置] """
-        self.tired: bool = 0
+        self.tired: bool = False
         """ 疲劳状态（HP=1） """
-        self.angry_with_player: bool = 0
+        self.angry_with_player: bool = False
         """ 被玩家惹生气 """
-        self.move_stop: bool = 0
+        self.move_stop: bool = False
         """ 角色停止移动 """
-        self.be_bagged: bool = 0
+        self.be_bagged: bool = False
         """ 被装袋搬走状态 """
         self.bagging_chara_id: int = 0
         """ 玩家正在装袋搬走的角色的id """
-        self.imprisonment: bool = 0
+        self.imprisonment: bool = False
         """ 被监禁状态 """
-        self.escaping: bool = 0
+        self.escaping: bool = False
         """ 逃跑中的状态 """
-        self.sleep: bool = 0
+        self.sleep: bool = False
         """ 要睡觉状态 """
-        self.rest: bool = 0
+        self.rest: bool = False
         """ 要休息状态 """
-        self.pee: bool = 0
+        self.pee: bool = False
         """ 要撒尿状态 """
-        self.milk: bool = 0
+        self.milk: bool = False
         """ 要挤奶状态 """
         self.masturebate: int = 0
         """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰,3群交自慰]"""
@@ -664,13 +664,13 @@ class SPECIAL_FLAG:
         """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
         self.eat_food: int = 0
         """ 吃饭状态，int [0无,1要取餐,2要吃饭] """
-        self.find_food_weird: bool = 0
+        self.find_food_weird: bool = False
         """ 发现食物不对劲 """
         self.swim: int = 0
         """ 游泳状态，int [0无,1要换泳衣,2要游泳] """
         self.bathhouse_entertainment: int = 0
         """ 大浴场娱乐状态，int [0无,1要更衣,2要娱乐] """
-        self.work_maintenance: bool = 0
+        self.work_maintenance: bool = False
         """ 要检修状态 """
         self.help_buy_food: int = 0
         """ 帮忙买饭状态，int [0无,1要买饭,2要买第二份饭,3要送饭] """
@@ -716,7 +716,7 @@ class CHARA_ENTERTAINMENT:
         """ 桌游结算用数据，0桌游类型(0无，1五子棋)，1AI难度(0最简单，越高越难) """
         self.read_book_progress: Dict[int, int] = {}
         """ 已阅读书籍进度记录，int键为书籍编号，int值为阅读进度，100为阅读完毕 """
-        self.borrow_book_history: List[Dict[str, any]] = []
+        self.borrow_book_history: List[Dict[str, Any]] = []
         """ 借书历史记录，每个记录包含：book_id, book_name, borrow_time, return_time, total_read_count """
 
 
@@ -834,7 +834,7 @@ class Behavior:
     """角色行为状态数据"""
 
     def __init__(self):
-        self.start_time: datetime.datetime = None
+        self.start_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 行为开始时间 """
         self.duration: int = 0
         """ 行为持续时间(单位分钟) """
@@ -846,7 +846,7 @@ class Behavior:
         """ 移动行为的出发坐标 """
         self.move_final_target: List[str] = []
         """ 移动行为的最终目标坐标 """
-        self.target_food: Food = None
+        self.target_food: Food = Food()
         """ 行为的食物对象 """
         self.food_name: str = ""
         """ 前提结算用:进食行为消耗的食物名字 """
@@ -938,7 +938,7 @@ class MapDrawText:
     def __init__(self):
         self.text: str = ""
         """ 要绘制的文本 """
-        self.is_button: bool = 0
+        self.is_button: bool = False
         """ 是否是场景按钮 """
         self.style: str = ""
         """ 绘制的样式 """
@@ -962,9 +962,9 @@ class Scene:
         """ 场景路径 """
         self.scene_name: str = ""
         """ 场景名字 """
-        self.in_door: bool = 0
+        self.in_door: bool = False
         """ 在室内 """
-        self.exposed: bool = 0
+        self.exposed: bool = False
         """ 地点暴露 """
         self.have_furniture: int = 0
         """ 有家具(1基础家具,2办公级家具,3卧室级家具) """
@@ -1010,7 +1010,7 @@ class Rhodes_Island:
         """ 基地当前所在位置，[0国家id,1城市id] """
         self.move_target_and_time: List = [0,0,0]
         """ 基地移动目标和时间, [0国家id,1城市id,2抵达时间] """
-        self.office_work: int = 0
+        self.office_work: float = 0
         """ 需要处理的公务 """
         self.effectiveness: int = 0
         """ 基地效率 """
@@ -1084,7 +1084,7 @@ class Rhodes_Island:
         """ 手动选择的每周的体检日列表 """
 
         # 文职区
-        self.recruit_line: Dict[int, Tuple[float, int ,set, float]] = {}
+        self.recruit_line: Dict[int, List] = {}
         """ 当前招募进度 招募线id:[0招募进度, 1招募类型id, 2负责该线的干员id集合, 3招募效率百分比(如2.5)] """
         self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
@@ -1106,7 +1106,7 @@ class Rhodes_Island:
         """ 商店开放列表 """
         self.love_hotel_room_lv: int = 0
         """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
-        self.restaurant_data: Dict[int, str, Dict[UUID, Food]] = {}
+        self.restaurant_data: Dict[int, Dict] = {}
         """
         餐馆内贩卖的食物数据
         餐馆id:食物名字:食物唯一id:食物对象
@@ -1118,7 +1118,7 @@ class Rhodes_Island:
         """
 
         # 制造加工区
-        self.assembly_line: Dict[int, int, set, int ,int] = {}
+        self.assembly_line: Dict[int, list] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区
@@ -1130,16 +1130,16 @@ class Rhodes_Island:
         """ 访客统计数据 访客id:[0停留开始时间] """
         self.last_visitor_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 上次访客到来时间 """
-        self.invite_visitor: List[int, float, float] = {}
+        self.invite_visitor: List = []
         """ 当前邀请进度 [0目标角色id, 1招募进度, 2招募效率百分比(如2.5)] """
-        self.diplomat_of_country: Dict[int, Tuple[int, int]] = {}
+        self.diplomat_of_country: Dict[int, List] = {}
         """ 负责各的外交官 出身地国家id:[0外交官角色id, 1外交方针id] """
 
         # 机库
-        self.ongoing_field_commissions: Dict[int, Tuple[List, datetime.datetime, List]] = {}
-        """ 进行中的外勤委托，委托id:0干员id列表，1返回时间，2使用的载具id列表 """
-        self.vehicles: Dict[int, Tuple[int, int]] = {}
-        """ 载具id:[0数量，1外勤中数量] """
+        self.ongoing_field_commissions: Dict[int, List] = {}
+        """ 进行中的外勤委托，委托id:0干员id列表List，1返回时间datetime，2使用的载具id列表List """
+        self.vehicles: Dict[int, List] = {}
+        """ 载具id:[0数量int，1外勤中数量int] """
         self.finished_field_commissions_set: Set = set()
         """ 已完成的外勤委托集合 """
         self.shut_down_field_commissions_set: Set = set()
@@ -1148,9 +1148,9 @@ class Rhodes_Island:
         # 教育区
 
         # 疗养庭院
-        self.herb_garden_line: Dict[int, Tuple[int, set, int]] = {}
+        self.herb_garden_line: Dict[int, List] = {}
         """ 药田生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
-        self.green_house_line: Dict[int, Tuple[int, set, int]] = {}
+        self.green_house_line: Dict[int, List] = {}
         """ 温室生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
         self.remaining_aromatherapy_sessions_today: int = 0
         """ 今日剩余调香次数 """
@@ -1162,8 +1162,8 @@ class Rhodes_Island:
         # 关押区
         self.current_warden_id: int = 0
         """ 当前监狱长的干员id """
-        self.current_prisoners: Dict[int, Tuple[datetime.datetime, int]] = {}
-        """ 当前囚犯干员的数据，干员id: (被关押的时间, 逃脱的概率) """
+        self.current_prisoners: Dict[int, List] = {}
+        """ 当前囚犯干员的数据，干员id: [被关押的时间datetime, 逃脱的概率int] """
         self.confinement_training_setting: Dict[int, int] = {}
         """ 监禁调教设置 设置id:设置值 """
         self.pre_training_cleaning: bool = False
@@ -1337,13 +1337,13 @@ class Character:
         """ 角色当前交互对象id """
         self.adv: int = 0
         """ 剧情npc校验 """
-        # self.no_wear: bool = 0
+        # self.no_wear: bool = False
         # """ 是否不想穿衣服 """
-        self.dead: bool = 0
+        self.dead: bool = False
         """ 角色已死亡 """
         self.collection_character: Set = set()
         """ 收藏的角色列表 """
-        self.last_hunger_time: datetime.datetime = None
+        self.last_hunger_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 最后一次结算饥饿的时间 """
         self.ability: Dict[int, int] = {}
         """ 角色能力 """
@@ -1399,7 +1399,7 @@ class Cache:
     """游戏缓存数据结构体"""
 
     def __init__(self):
-        self.back_save_panel: bool = 0
+        self.back_save_panel: bool = False
         """ 退出存档面板 """
         self.wframe_mouse: WFrameMouse = WFrameMouse()
         """ 主页监听控制流程用变量组 """
@@ -1493,7 +1493,7 @@ class Cache:
         """ 菜谱数据 """
         self.npc_name_data: Set = set()
         """ 已有的npc姓名集合 """
-        self.is_collection: bool = 0
+        self.is_collection: bool = False
         """ 启用收藏模式 """
         self.sun_phase: Dict[str, Dict[int, Dict[int, int]]] = {}
         """ 指定日期下每分钟太阳位置 日期:时:分:位置id """
@@ -1603,7 +1603,7 @@ class Event:
         """ 事件所属advnpcid """
         self.behavior_id: str = ""
         """ 事件所属行为id """
-        self.start: bool = 0
+        self.start: bool = False
         """ 是否是行为开始时的事件 """
         self.type: int = 1
         """ 事件类型(0跳过指令，1指令前事件后，2事件前指令后) """
