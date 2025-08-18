@@ -52,7 +52,7 @@ def init_character_behavior():
         # 如果当前是时停模式，则回退时间，然后结束循环
         if cache.time_stop_mode:
             cache.achievement.time_stop_duration += pl_duration
-            game_time.sub_time_now(minute = -pl_duration)
+            game_time.sub_time_now(minute = pl_duration * -1)
             break
         field_commission_panel.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
@@ -94,7 +94,7 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if character_data.behavior.start_time is None:
+    if character_data.behavior.start_time == datetime.datetime(1, 1, 1):
         instuct_judege.init_character_behavior_start_time(character_id, pl_start_time)
 
     # 处理特殊模式

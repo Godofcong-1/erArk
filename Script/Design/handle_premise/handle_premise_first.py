@@ -480,10 +480,10 @@ def handle_self_kiss_1(character_id: int) -> int:
     return character_data.talent[4] == 1
 
 
-@add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)
-def handle_target_have_first_kiss(character_id: int) -> int:
+@add_premise(constant_promise.Premise.TARGET_NO_FIRST_KISS)
+def handle_target_no_first_kiss(character_id: int) -> int:
     """
-    校验交互对象是否初吻还在
+    校验交互对象是否初吻不在
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -491,7 +491,7 @@ def handle_target_have_first_kiss(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    return target_data.talent[4] == 1
+    return target_data.talent[4] == 0
 
 
 @add_premise(constant_promise.Premise.TARGET_HAVE_FIRST_KISS)

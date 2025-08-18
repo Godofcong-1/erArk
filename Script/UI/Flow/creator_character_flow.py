@@ -140,7 +140,7 @@ def input_name_panel() -> bool:
     character_data = cache.character_data[0]
     character_data.name = character.input_name_func(_("你能回忆起自己的名字吗？（默认称呼为博士，此处仅输入姓名即可）"))
     character_data.nick_name = _("博士")
-    return 1
+    return True
 
 
 class Character_creat_Handle:
@@ -165,7 +165,7 @@ class Character_creat_Handle:
         other_settings_draw = Other_Settings(self.width)
         # abi_draw = see_character_info_panel.CharacterabiText(0, width)
         # tal_draw = see_character_info_panel.CharacterTalentText(0, width, 8, 0)
-        self.draw_list: List[draw.NormalDraw] = [
+        self.draw_list: List = [
             info_draw,
             # sex_draw,
             jj_draw,
@@ -222,7 +222,7 @@ class Character_Sex:
         sex_button_draw = draw.LeftButton(
             _(button_text),
             _('改变性别'),
-            self.width /10,
+            int(self.width /10),
             cmd_func=self.change)
         self.return_list.append(sex_button_draw.return_text)
 
@@ -282,7 +282,7 @@ class Character_JJ:
         jj_button_draw = draw.LeftButton(
             _(button_text),
             _('改变大小'),
-            self.width / 10,
+            int(self.width / 10),
             cmd_func=self.change)
         self.return_list.append(jj_button_draw.return_text)
 

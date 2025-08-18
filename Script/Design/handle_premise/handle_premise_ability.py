@@ -1029,7 +1029,7 @@ def handle_technique_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TECHNIQUE_GE_5)
-def handle_technique_ge_3(character_id: int) -> int:
+def handle_technique_ge_5(character_id: int) -> int:
     """
     校验角色是否技巧技能>=5
     Keyword arguments:
@@ -1060,7 +1060,7 @@ def handle_t_technique_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_TECHNIQUE_GE_5)
-def handle_t_technique_ge_3(character_id: int) -> int:
+def handle_t_technique_ge_5(character_id: int) -> int:
     """
     校验交互对象是否技巧技能>=5
     Keyword arguments:
@@ -1253,7 +1253,7 @@ def handle_target_intimacy_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_INTIMACY_GE_5)
-def handle_target_intimacy_ge_3(character_id: int) -> int:
+def handle_target_intimacy_ge_5(character_id: int) -> int:
     """
     校验交互对象是否亲密>=5
     Keyword arguments:
@@ -2205,7 +2205,7 @@ def handle_cook_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.COOK_GE_5)
-def handle_cook_ge_3(character_id: int) -> int:
+def handle_cook_ge_5(character_id: int) -> int:
     """
     校验角色是否料理技能>=5
     Keyword arguments:
@@ -2348,7 +2348,7 @@ def handle_target_cook_g_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_COOK_GE_5)
-def handle_target_cook_ge_3(character_id: int) -> int:
+def handle_target_cook_ge_5(character_id: int) -> int:
     """
     校验交互对象是否料理技能>=5
     Keyword arguments:
@@ -2454,7 +2454,7 @@ def handle_music_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.MUSIC_GE_5)
-def handle_music_ge_3(character_id: int) -> int:
+def handle_music_ge_5(character_id: int) -> int:
     """
     校验角色是否音乐技能>=5
     Keyword arguments:
@@ -2580,7 +2580,7 @@ def handle_target_music_ge_3(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.TARGET_MUSIC_GE_5)
-def handle_target_music_ge_3(character_id: int) -> int:
+def handle_target_music_ge_5(character_id: int) -> int:
     """
     校验交互对象是否音乐技能>=5
     Keyword arguments:

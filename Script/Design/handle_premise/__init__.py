@@ -67,7 +67,7 @@ def handle_premise(premise: str, character_id: int) -> int:
         return 0
 
 
-def get_weight_from_premise_dict(talk_premise_dict: dict, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> int:
+def get_weight_from_premise_dict(talk_premise_dict: dict, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> tuple[int, dict]:
     """
     遍历前提字典，计算总权重
     Keyword arguments:

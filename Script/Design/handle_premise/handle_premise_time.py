@@ -318,7 +318,7 @@ def handle_tired_ge_75_or_sleep_time(character_id: int) -> int:
     # now_time = game_time.get_sun_time(character_data.behavior.start_time)
     # return (now_time == 4) * 100
     # print(f"debug {character_data.name}的疲劳条≥75%或到了睡觉的时间前提判定，当前时间为{character_data.behavior.start_time}，疲劳值为{character_data.tired_point}")
-    if character_data.behavior.start_time is not None:
+    if character_data.behavior.start_time != datetime.datetime(1, 1, 1):
         if character_data.behavior.start_time.hour in {0, 1, 2, 3, 4, 5, 22, 23}:
             now_hour = character_data.behavior.start_time.hour if character_data.behavior.start_time.hour > 20 else character_data.behavior.start_time.hour + 24
             # print(f"debug {character_data.name}的睡觉前提判定，now_hour = {now_hour}，返回值为{(now_hour-21) *100}")
@@ -602,7 +602,7 @@ def handle_not_morning_salutation_time(character_id: int) -> int:
 
 
 @add_premise(constant_promise.Premise.BEFORE_MORNING_SALUTATION_TIME)
-def handle_morning_salutation_time(character_id: int) -> int:
+def handle_before_morning_salutation_time(character_id: int) -> int:
     """
     当前是早安问候时间之前（玩家醒来时间之前）
     Keyword arguments:
