@@ -568,7 +568,7 @@ class Achievement_Panel:
             update_button_draw = draw.CenterButton(
                 _("[刷新蚀刻章]"),
                 _("刷新蚀刻章列表"),
-                self.width / 4,
+                int(self.width / 4),
                 cmd_func=self.update_achievement,
             )
             update_button_draw.draw()
@@ -657,7 +657,7 @@ class Achievement_Draw:
         """ 按钮编号 """
         self.button_return: str = ""
         """ 按钮返回值 """
-        self.now_draw: draw.NormalDraw = None
+        self.now_draw: draw.NormalDraw = draw.NormalDraw()
         """ 绘制的对象 """
 
         # 成就数据

@@ -37,7 +37,7 @@ def judge_arrive():
         if game_time.judge_date_big_or_small(cache.game_time, cache.rhodes_island.move_target_and_time[2]):
             # 结算抵达
             now_scene_id = cache.rhodes_island.current_location[0]
-            cache.rhodes_island.base_move_visitor_flag = 1
+            cache.rhodes_island.base_move_visitor_flag = True
             target_scene_id = cache.rhodes_island.move_target_and_time[0]
             target_scene_name = game_config.config_birthplace[target_scene_id].name
             cache.rhodes_island.current_location[0] = target_scene_id
@@ -60,7 +60,7 @@ def judge_arrive():
             now_draw.draw()
             # 如果炎不在列表中，则添加
             if 17 not in cache.achievement.visited_nation_list:
-                cache.achievement.visited_nation_list.append(target_scene_id)
+                cache.achievement.visited_nation_list.append(17)
             # 结算成就
             if target_scene_id not in cache.achievement.visited_nation_list:
                 cache.achievement.visited_nation_list.append(target_scene_id)
@@ -285,7 +285,7 @@ class Navigation_Panel(Base_function_class):
             line.draw()
             back_id = text_handle.id_index(now_index)
             now_text = back_id + _("返回")
-            back_button = draw.CenterButton(now_text, str(now_index), self.width / 3)
+            back_button = draw.CenterButton(now_text, str(now_index), int(self.width / 3))
             back_button.draw()
             return_list.append(back_button.return_text)
             now_index += 1

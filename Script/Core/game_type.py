@@ -984,7 +984,7 @@ class Rhodes_Island:
     """罗德岛相关属性"""
 
     def __init__(self):
-        self.facility_level: Dict[int, Tuple[int]] = {}
+        self.facility_level: Dict[int, int] = {}
         """ 基地当前所有设施的等级 """
         self.facility_open: Dict[int, Tuple[bool]] = {}
         """ 基地当前所有待开放设施的开放情况 """
@@ -996,7 +996,7 @@ class Rhodes_Island:
         """ 干员人数上限 """
         self.all_income: int = 0
         """ 今日全部门总收入 """
-        self.party_day_of_week: Dict[int, Tuple[int]] = {}
+        self.party_day_of_week: Dict[int, int] = {}
         """ 一周内的派对计划，周一0~周日6:娱乐id """
         self.total_favorability_increased: int = 0
         """ 每日总好感度提升 """
@@ -1022,11 +1022,11 @@ class Rhodes_Island:
         """ 总可用电力 """
 
         # 工程部
-        self.maintenance_place: Dict[int, Tuple[str]] = {}
+        self.maintenance_place: Dict[int, str] = {}
         """ 当前每个角色的待检修地点，角色id:地点 """
         self.facility_damage_data: Dict[str, int] = {}
         """ 设施损坏数据，地点名str:损坏值int """
-        self.equipment_maintain_setting: Dict[int, Tuple[int]] = {}
+        self.equipment_maintain_setting: Dict[int, int] = {}
         """ 装备维护设置 设置id:设置值 """
         self.equipment_maintain_operator_ids: List[int] = []
         """ 手动选择的装备维护对象干员id列表 """
@@ -1036,13 +1036,13 @@ class Rhodes_Island:
         # 仓储区
         self.warehouse_capacity: int = 0
         """ 仓库容量 """
-        self.materials_resouce: Dict[int, Tuple[int]] = {}
+        self.materials_resouce: Dict[int, int] = {}
         """ 素材资源 """
 
         # 生活娱乐区
         self.life_zone_max: int = 0
         """ 生活娱乐区设施数量上限 """
-        self.milk_in_fridge: Dict[int, Tuple[int]] = {}
+        self.milk_in_fridge: Dict[int, int] = {}
         """ 冰箱里每个干员的当日母乳存量，干员id:母乳ml存量 """
         self.dining_hall_data: Dict[str, Dict[UUID, Food]] = {}
         """
@@ -1068,9 +1068,9 @@ class Rhodes_Island:
         """ 已治疗的患者总人数 """
         self.cure_income_all: int = 0
         """ 至今为止的治疗总收入 """
-        self.urine_in_fridge: Dict[int, Tuple[int]] = {}
+        self.urine_in_fridge: Dict[int, int] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
-        self.physical_examination_setting: Dict[int, Tuple[int]] = {}
+        self.physical_examination_setting: Dict[int, int] = {}
         """ 体检设置 设置id:设置值 """
         self.today_physical_examination_chara_id_dict: Dict[int, Tuple[set]] = {}
         """ 今日已体检的干员数据 干员id:体检项目id集合 """
@@ -1094,7 +1094,7 @@ class Rhodes_Island:
         # 图书档案区
         self.now_show_book_cid_of_type: Dict[int, Tuple[List]] = {}
         """ 当前展示的可借阅书籍，类别id：书籍id列表 """
-        self.book_borrow_dict: Dict[int, Tuple[int]] = {}
+        self.book_borrow_dict: Dict[int, int] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
         self.reader_now: int = 0
         """ 当前图书馆中的读者数量 """
@@ -1170,7 +1170,7 @@ class Rhodes_Island:
         """ 调教前清洗准备 """
         self.pre_training_lubrication: bool = False
         """ 调教前润滑准备 """
-        self.pre_training_tool_dict: Dict[int, Tuple[int]] = {}
+        self.pre_training_tool_dict: Dict[int, int] = {}
         """ 调教前道具使用，同BODY_H_STATE类的body_item """
         self.sex_assistant_ai_behavior_id_list: list = []
         """ 调教助手的AI行为列表 """
