@@ -81,7 +81,7 @@ class FoodShopPanel:
         title_draw = draw.TitleLineDraw(scene_name, self.width)
         food_type_list = [_("当前提供的食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 30, 5, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 30, 5, self.width, True, True, 0)
         food_name_list = []
 
         while 1:
@@ -92,11 +92,22 @@ class FoodShopPanel:
                 food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id="Stall_Vendor").items())
 
             # 根据场景标签查找对应的食物商店
+            break_flag = False
             if not len(food_name_list):
                 for restaurant_id in game_config.config_restaurant:
                     if game_config.config_restaurant[restaurant_id].tag_name in scene_tag:
                         food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel, restaurant_id=restaurant_id).items())
+                        # 如果食物列表为空，则输出空提示，然后返回
+                        if not len(food_name_list):
+                            info_draw = draw.NormalDraw()
+                            info_draw.text = _("\n该商店已经没有没有可购买的食物了，请明天再来\n")
+                            info_draw.draw()
+                            line_feed.draw()
+                            break_flag = True
                         break
+            # 返回
+            if break_flag:
+                break
             # 如果都没有找到，则默认为食堂
             if not len(food_name_list):
                 food_name_list = list(cooking.get_food_list_from_food_shop(self.now_panel).items())
@@ -136,6 +147,7 @@ class FoodShopPanel:
             if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
+        cache.now_panel_id = constant.Panel.IN_SCENE
 
     def change_panel(self, food_type: str):
         """

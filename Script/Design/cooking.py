@@ -98,33 +98,33 @@ def create_food(
     return food
 
 
-def separate_weight_food(old_food: Food, weight: int) -> Food:
-    """
-    从指定食物中分离出指定重量的食物并创建新食物对象
-    Keyword arguments:
-    old_food -- 原本的食物对象
-    Return arguments:
-    Food -- 分离得到的食物对象
-    """
-    new_food = Food()
-    if old_food.weight < weight:
-        weight = old_food.weight
-    new_food.cook = old_food.cook
-    new_food.eat = old_food.eat
-    new_food.fruit = old_food.fruit
-    new_food.id = old_food.id
-    new_food.uid = uuid.uuid4()
-    new_food.maker = old_food.maker
-    new_food.quality = old_food.quality
-    new_food.recipe = old_food.recipe
-    new_food.seasoning = old_food.seasoning
-    new_food.weight = weight
-    for feel in old_food.feel:
-        now_feel_num = old_food.feel[feel] / old_food.weight * weight
-        new_food.feel[feel] = now_feel_num
-        old_food.feel[feel] -= now_feel_num
-    old_food.weight -= weight
-    return new_food
+# def separate_weight_food(old_food: Food, weight: int) -> Food:
+#     """
+#     从指定食物中分离出指定重量的食物并创建新食物对象
+#     Keyword arguments:
+#     old_food -- 原本的食物对象
+#     Return arguments:
+#     Food -- 分离得到的食物对象
+#     """
+#     new_food = Food()
+#     if old_food.weight < weight:
+#         weight = old_food.weight
+#     new_food.cook = old_food.cook
+#     new_food.eat = old_food.eat
+#     new_food.fruit = old_food.fruit
+#     new_food.id = old_food.id
+#     new_food.uid = uuid.uuid4()
+#     new_food.maker = old_food.maker
+#     new_food.quality = old_food.quality
+#     new_food.recipe = old_food.recipe
+#     new_food.seasoning = old_food.seasoning
+#     new_food.weight = weight
+#     for feel in old_food.feel:
+#         now_feel_num = old_food.feel[feel] / old_food.weight * weight
+#         new_food.feel[feel] = now_feel_num
+#         old_food.feel[feel] -= now_feel_num
+#     old_food.weight -= weight
+#     return new_food
 
 
 def create_rand_food(food_id: str, food_weight=-1, food_quality=-1) -> Food:
@@ -405,11 +405,12 @@ def get_character_food_bag_type_list_buy_food_type(character_id: int, food_type:
     return food_list
 
 
-def get_food_list_from_food_shop(food_type: str, restaurant_id:int = -1) -> Dict[uuid.UUID, str]:
+def get_food_list_from_food_shop(food_type: str, restaurant_id = -1) -> Dict[uuid.UUID, str]:
     """
     获取餐馆内指定类型的食物种类
     Keyword arguments:
     food_type -- 食物类型
+    restaurant_id -- 餐馆id，默认为-1表示食堂
     Return arguments:
     dict -- 食物列表 食物id:食物名字
     """
@@ -507,10 +508,10 @@ def judge_accept_special_seasoning_food(character_id: int):
     # 普通调味直接进行判定
     if pl_character_data.behavior.food_seasoning <= 10:
         if return_d100 <= accept_rate:
-            target_data.sp_flag.find_food_weird = 0
+            target_data.sp_flag.find_food_weird = False
             return 1
         else:
-            target_data.sp_flag.find_food_weird = 1
+            target_data.sp_flag.find_food_weird = True
             return 0
     # 其他特殊调味
     else:
@@ -518,7 +519,7 @@ def judge_accept_special_seasoning_food(character_id: int):
         if pl_character_data.behavior.food_seasoning in {11,12}:
             # 精爱味觉或淫乱可以通过
             if target_data.talent[31] or target_data.talent[40]:
-                target_data.sp_flag.find_food_weird = 1
+                target_data.sp_flag.find_food_weird = True
                 # 精爱味觉触发一次绝顶
                 if target_data.talent[31]:
                     from Script.Settle.default import base_chara_climix_common_settle
@@ -526,7 +527,7 @@ def judge_accept_special_seasoning_food(character_id: int):
                 return 1
             # 性无知会直接接受精液食物
             if target_data.talent[222]:
-                target_data.sp_flag.find_food_weird = 0
+                target_data.sp_flag.find_food_weird = False
                 return 1
 
             # 精液_巧妙混合
@@ -534,37 +535,37 @@ def judge_accept_special_seasoning_food(character_id: int):
                 # 3级爱情系或至少2级隶属系的话才接受
                 for talent_id in {203,204,212,213,214}:
                     if target_data.talent[talent_id]:
-                        target_data.sp_flag.find_food_weird = 1
+                        target_data.sp_flag.find_food_weird = True
                         return 1
                 # 进行概率判定，难度*5，但不会高于50
                 if min(return_d100 * 5, 50) <= accept_rate:
-                    target_data.sp_flag.find_food_weird = 0
+                    target_data.sp_flag.find_food_weird = False
                     return 1
                 else:
-                    target_data.sp_flag.find_food_weird = 1
+                    target_data.sp_flag.find_food_weird = True
                     return 0
             # 精液_直接盖上
             elif pl_character_data.behavior.food_seasoning == 12:
                 # 4级爱情系或至少3级隶属系的话才接受
                 for talent_id in {204,213,214}:
                     if target_data.talent[talent_id]:
-                        target_data.sp_flag.find_food_weird = 1
+                        target_data.sp_flag.find_food_weird = True
                         return 1
                 # 进行概率判定，难度*10，但不会高于80
                 if min(return_d100 * 10, 80) <= accept_rate:
-                    target_data.sp_flag.find_food_weird = 0
+                    target_data.sp_flag.find_food_weird = False
                     return 1
                 else:
-                    target_data.sp_flag.find_food_weird = 1
+                    target_data.sp_flag.find_food_weird = True
                     return 0
         # 药物判定
         elif pl_character_data.behavior.food_seasoning >= 101:
             # 进行概率判定，难度*2，但不会高于40
             if min(return_d100 * 2, 40) <= accept_rate:
-                target_data.sp_flag.find_food_weird = 0
+                target_data.sp_flag.find_food_weird = False
                 return 1
             else:
-                target_data.sp_flag.find_food_weird = 1
+                target_data.sp_flag.find_food_weird = True
                 return 0
 
     return 0

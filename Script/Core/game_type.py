@@ -986,9 +986,9 @@ class Rhodes_Island:
     def __init__(self):
         self.facility_level: Dict[int, int] = {}
         """ 基地当前所有设施的等级 """
-        self.facility_open: Dict[int, Tuple[bool]] = {}
+        self.facility_open: Dict[int, bool] = {}
         """ 基地当前所有待开放设施的开放情况 """
-        self.all_work_npc_set: Dict[int, Tuple[set]] = {}
+        self.all_work_npc_set: Dict[int, set] = {}
         """ 所有工作的所属的干员id合集,工作id:干员id的集合 """
         self.work_people_now: int = 0
         """ 当前工作干员人数 """
@@ -1072,7 +1072,7 @@ class Rhodes_Island:
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
         self.physical_examination_setting: Dict[int, int] = {}
         """ 体检设置 设置id:设置值 """
-        self.today_physical_examination_chara_id_dict: Dict[int, Tuple[set]] = {}
+        self.today_physical_examination_chara_id_dict: Dict[int, set] = {}
         """ 今日已体检的干员数据 干员id:体检项目id集合 """
         self.examined_operator_ids: Set[int] = set()
         """ 本次体检周期内已体检过的干员id集合 """
@@ -1092,7 +1092,7 @@ class Rhodes_Island:
         # 训练场
 
         # 图书档案区
-        self.now_show_book_cid_of_type: Dict[int, Tuple[List]] = {}
+        self.now_show_book_cid_of_type: Dict[int, List] = {}
         """ 当前展示的可借阅书籍，类别id：书籍id列表 """
         self.book_borrow_dict: Dict[int, int] = {}
         """ 书籍借出情况 书籍id:借出人id(-1为未借出) """
@@ -1106,19 +1106,19 @@ class Rhodes_Island:
         """ 商店开放列表 """
         self.love_hotel_room_lv: int = 0
         """ 在爱情旅馆中的房间级别，0未入住，1标间，2情趣主题房，3顶级套房 """
-        self.restaurant_data: Dict[int, Tuple[str, Dict[UUID, Food]]] = {}
+        self.restaurant_data: Dict[int, str, Dict[UUID, Food]] = {}
         """
         餐馆内贩卖的食物数据
         餐馆id:食物名字:食物唯一id:食物对象
         """
-        self.stall_vendor_data: Dict[int, Tuple[Dict]] = {}
+        self.stall_vendor_data: Dict[int, Dict] = {}
         """
         地摊小贩的货物数据
         货物类型id（0为食物）:货物字典
         """
 
         # 制造加工区
-        self.assembly_line: Dict[int, Tuple[int, set, int ,int]] = {}
+        self.assembly_line: Dict[int, int, set, int ,int] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区
@@ -1126,7 +1126,7 @@ class Rhodes_Island:
         """ 访客人数上限 """
         self.base_move_visitor_flag: bool = False
         """ 因为基地移动而吸引访客 """
-        self.visitor_info: Dict[int, Tuple[datetime.datetime]] = {}
+        self.visitor_info: Dict[int, datetime.datetime] = {}
         """ 访客统计数据 访客id:[0停留开始时间] """
         self.last_visitor_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 上次访客到来时间 """
