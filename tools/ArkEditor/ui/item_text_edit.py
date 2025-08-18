@@ -20,6 +20,7 @@ class ItemTextEdit(QWidget):
         self.info_label = QLabel()
         self.info_label.setText("文本编辑")
         label_layout.addWidget(self.info_label)
+
         # 加入保存按钮
         self.save_button = QPushButton("保存")
         self.save_button.clicked.connect(self.save)
@@ -48,6 +49,19 @@ class ItemTextEdit(QWidget):
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
         label_layout.addWidget(self.label_text)
+
+        # 事件模式下的注释编辑栏（默认高度3行）
+        self.comment_label = QLabel("事件注释（仅事件模式可编辑）：")
+        self.comment_edit = QTextEdit()
+        self.comment_edit.setPlaceholderText("可填写事件注释，支持多行")
+        self.comment_edit.setFont(self.font)
+        self.comment_edit.setVisible(False)  # 默认隐藏，事件模式下显示
+        self.comment_label.setVisible(False)
+        self.comment_edit.setFixedHeight(self.comment_edit.fontMetrics().height() * 3 + 16)  # 3行高度，略加padding
+        label_layout.addWidget(self.comment_label)
+        label_layout.addWidget(self.comment_edit)
+
+        # 设置布局
         self.setLayout(label_layout)
 
         # 创建右键菜单
@@ -175,8 +189,8 @@ class ItemTextEdit(QWidget):
                 action.triggered.connect(item["slot"])
                 menu.addAction(action)
 
-    def show_right_click_menu(self, pos):
-        """显示右键菜单"""
+    def show_right_click_menu_event(self, pos):
+        """显示右键菜单（修正方法名避免遮盖）"""
         self.right_click_menu.exec_(self.label_text.mapToGlobal(pos))
 
     def insert_text(self, text):
@@ -186,9 +200,22 @@ class ItemTextEdit(QWidget):
     def update(self):
         """更新文本内容"""
         if cache_control.now_edit_type_flag == 1:
-            self.now_text = cache_control.now_event_data[cache_control.now_select_id].text
-        elif cache_control.now_edit_type_flag == 0:
-            self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
+            # 事件模式，显示注释栏
+            self.comment_label.setVisible(True)
+            self.comment_edit.setVisible(True)
+            event_obj = cache_control.now_event_data.get(cache_control.now_select_id)
+            self.now_text = event_obj.text if event_obj else ""
+            # 注释属性（comment）
+            comment = getattr(event_obj, "comment", "") if event_obj else ""
+            self.comment_edit.setText(comment.replace("\\n", "\n"))
+        else:
+            # 非事件模式，隐藏注释栏
+            self.comment_label.setVisible(False)
+            self.comment_edit.setVisible(False)
+            if cache_control.now_edit_type_flag == 0:
+                self.now_text = cache_control.now_talk_data[cache_control.now_select_id].text
+            else:
+                self.now_text = ""
         # 将换行符"\n"换成真正的换行
         self.now_text = self.now_text.replace("\\n", "\n")
         self.label_text.setText(self.now_text)
@@ -208,8 +235,11 @@ class ItemTextEdit(QWidget):
         now_text = now_text.replace(",", "，")
         # 检测换行符，换成"\n"，防止csv文件解析出错
         now_text = now_text.replace("\n", "\\n")
+        # 保存注释内容（仅事件模式）
         if cache_control.now_edit_type_flag == 1 and cache_control.now_select_id in cache_control.now_event_data:
             cache_control.now_event_data[cache_control.now_select_id].text = now_text
+            comment_text = self.comment_edit.toPlainText().replace("\n", "\\n")
+            cache_control.now_event_data[cache_control.now_select_id].comment = comment_text
         elif cache_control.now_edit_type_flag == 0 and cache_control.now_select_id in cache_control.now_talk_data:
             cache_control.now_talk_data[cache_control.now_select_id].text = now_text
         # 检测英文双引号，直接删除，防止csv文件解析出错

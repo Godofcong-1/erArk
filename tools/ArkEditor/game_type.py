@@ -37,6 +37,8 @@ class Event:
         """ 事件的结算器集合 """
         self.effect: dict = {}
         """ 事件的结算集合 """
+        self.comment: str = ""
+        """ 事件注释 """
 
 class Chara_Data:
     """角色属性对象"""
