@@ -1117,9 +1117,14 @@ class Rhodes_Island:
         地摊小贩的货物数据
         货物类型id（0为食物）:货物字典
         """
+        self.supply_demand_dict: Dict[int, float] = {}
+        """
+        供需关系字典
+        货物类型id: 供需系数值
+        """
 
         # 制造加工区
-        self.assembly_line: Dict[int, list] = {}
+        self.assembly_line: Dict[int, List] = {}
         """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
 
         # 访客区

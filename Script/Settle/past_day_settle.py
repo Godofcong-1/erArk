@@ -63,7 +63,7 @@ def update_new_day():
                 character_data.sp_flag.aromatherapy = 0
             # 清零食物不对劲的flag
             if character_data.sp_flag.find_food_weird != 0:
-                character_data.sp_flag.find_food_weird = 0
+                character_data.sp_flag.find_food_weird = False
             # 增加欲望值
             character_data.desire_point += random.randint(5, 15)
             # 每周一次，如果已陷落则提供粉红凭证
@@ -79,8 +79,11 @@ def update_new_day():
     # 每周一的助理轮换
     if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
         assistant_panel.select_random_assistant()
-    cache.today_taiggered_event_record = {} # 清空今日触发事件记录
+    # 清空今日触发事件记录
+    cache.today_taiggered_event_record = set()
+    # 更新游戏时间
     cache.pre_game_time = cache.game_time
+    # 每日指令输入记录
     cache.daily_intsruce.append('\n\n' + game_time.get_date_until_day() + '\n\n')
 
 def fall_chara_give_pink_voucher(character_id: int):

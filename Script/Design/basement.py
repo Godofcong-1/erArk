@@ -232,13 +232,13 @@ def get_base_updata():
 
 def update_base_resouce_newday():
     """
-    刷新基地资源数据\n
+    每日刷新基地资源数据\n
     Keyword arguments:
     无\n
     Return arguments:
     无
     """
-    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training
+    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -257,6 +257,8 @@ def update_base_resouce_newday():
     invite_visitor_panel.settle_visitor_arrivals_and_departures()
     # 结算收入
     settle_income()
+    # 结算资源的供需涨跌
+    resource_exchange_panel.daily_supply_demand_fluctuation()
     # 刷新香薰疗愈次数
     aromatherapy_panel.settle_aromatherapy_sessions()
     # 结算粉红凭证

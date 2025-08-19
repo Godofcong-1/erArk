@@ -1,8 +1,9 @@
-from typing import Tuple, Dict, List
+from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
+import random
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -15,6 +16,54 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def get_resouce_price(resouce_id: int, buy_or_sell_flag: bool):
+    """
+    获取指定资源的交易价格及波动百分比
+    输入: resouce_id(int) 资源ID, buy_or_sell_flag(bool) 买入(True)/卖出(False)
+    输出: (int价格, float波动百分比)
+    功能: 返回价格和供需波动百分比
+    """
+    resouce_data = game_config.config_resouce[resouce_id]
+    base_price = resouce_data.price
+    # 特产卖出价格为1.5倍
+    if resouce_data.type == _("特产") and not buy_or_sell_flag:
+        base_price = 1.5 * base_price
+    else:
+        base_price = 1.2 * base_price if buy_or_sell_flag else 0.8 * base_price
+    cache.rhodes_island.supply_demand_dict.setdefault(resouce_id, 1)
+    supply_demand = cache.rhodes_island.supply_demand_dict[resouce_id]
+    price = base_price * supply_demand
+    # 计算波动百分比（相对基础价格）
+    percent = (supply_demand - 1) * 100
+    return int(price), percent
+
+def daily_supply_demand_fluctuation():
+    """
+    每日供需关系自然波动
+    输入: 无
+    输出: 无
+    功能: 按当前供需系数，随机调整每种资源的供需，模拟经济学规律
+    """
+    # 供需字典初始化
+    supply_demand_dict = cache.rhodes_island.supply_demand_dict
+    for res_id in game_config.config_resouce:
+        # 跳过货币类（如龙门币）
+        if res_id == 1:
+            continue
+        # 当前供需系数
+        cur = supply_demand_dict.get(res_id, 1)
+        # 经济学规律：
+        # 1. 越偏离1，回归趋势越强（均值回归）
+        # 2. 随机波动幅度与偏离程度相关
+        # 3. 保证供需系数不为负
+        # 回归因子（越远离1，回归越强）
+        revert = (1 - cur) * 0.05
+        # 随机波动（基础±0.005，偏离越大波动越大）
+        rand_fluct = random.uniform(-0.005, 0.005) + random.uniform(-abs(cur-1)*0.02, abs(cur-1)*0.02)
+        # 总变化
+        delta = revert + rand_fluct
+        new_val = max(0.1, cur + delta)
+        supply_demand_dict[res_id] = round(new_val, 4)
 
 class Resource_Exchange_Line_Panel:
     """
@@ -33,16 +82,18 @@ class Resource_Exchange_Line_Panel:
         """ 绘制的文本列表 """
         self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False, _("特产"): False}
         """ 显示的资源类型 """
+        self.buy_or_sell_flag = True
+        """ 交易状态，True为买入，False为卖出 """
+        self.now_select_resouce_id = 11
+        """ 当前选择的资源id，默认为11号资源（龙门币） """
+        self.quantity_of_resouce = 0
+        """ 交易数量，默认为0 """
 
     def draw(self):
         """绘制对象"""
 
         title_text = _("资源交易")
         title_draw = draw.TitleLineDraw(title_text, self.width)
-
-        self.now_select_resouce_id = 11
-        self.buy_or_sell_flag = True # True为买入，False为卖出
-        self.quantity_of_resouce = 0
 
         while 1:
             return_list = []
@@ -105,13 +156,7 @@ class Resource_Exchange_Line_Panel:
             button_draw.draw()
 
             # 显示价格
-            price = resouce_data.price
-            # 特产的卖出价格为1.5倍
-            if resouce_data.type == _("特产") and not self.buy_or_sell_flag:
-                price = 1.5 * price
-            else:
-                price = 1.2 * price if self.buy_or_sell_flag else 0.8 * price
-            price = int(price)
+            price, percent = get_resouce_price(self.now_select_resouce_id, self.buy_or_sell_flag)
             all_info_draw.text = _("\n\n  交易的价格为      ：")
             all_info_draw.draw()
 
@@ -128,7 +173,14 @@ class Resource_Exchange_Line_Panel:
 
             # 无法买入的，不显示价格
             if (self.buy_or_sell_flag and not cant_buy_flag) or not self.buy_or_sell_flag:
-                all_info_draw.text = _(" {0}龙门币/1单位 ").format(price)
+                # 显示价格波动百分比
+                if percent > 0:
+                    percent_str = f"(+{percent:.1f}%)"
+                elif percent < 0:
+                    percent_str = f"({percent:.1f}%)"
+                else:
+                    percent_str = ""
+                all_info_draw.text = _(" {0}龙门币/1单位 {1} ").format(price, percent_str)
                 all_info_draw.draw()
             line_feed.draw()
 
@@ -160,10 +212,10 @@ class Resource_Exchange_Line_Panel:
                 ):
                 pass
             else:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width/2)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width/2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
@@ -172,14 +224,64 @@ class Resource_Exchange_Line_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn == yes_draw.return_text:
-                if self.buy_or_sell_flag:
-                    cache.rhodes_island.materials_resouce[self.now_select_resouce_id] += self.quantity_of_resouce
-                    cache.rhodes_island.materials_resouce[1] -= price * self.quantity_of_resouce
-                else:
-                    cache.rhodes_island.materials_resouce[self.now_select_resouce_id] -= self.quantity_of_resouce
-                    cache.rhodes_island.materials_resouce[1] += price * self.quantity_of_resouce
-                break
+                self.execute_trade()
 
+    def execute_trade(self):
+        """
+        执行资源交易
+        输入: 无
+        输出: 无
+        功能: 根据当前买入/卖出状态和数量，结算资源与龙门币变动
+        """
+        # 计算价格和总价
+        price, percent = get_resouce_price(self.now_select_resouce_id, self.buy_or_sell_flag)
+        total_price = price * self.quantity_of_resouce
+        # 买入
+        if self.buy_or_sell_flag:
+            cache.rhodes_island.materials_resouce[self.now_select_resouce_id] += self.quantity_of_resouce
+            cache.rhodes_island.materials_resouce[1] -= total_price
+            # 供需关系调整
+            cache.rhodes_island.supply_demand_dict.setdefault(self.now_select_resouce_id, 1)
+            if self.quantity_of_resouce > 50:
+                tem_quantity_of_resouce = self.quantity_of_resouce
+                while tem_quantity_of_resouce > 50:
+                    tem_quantity_of_resouce -= 50
+                    # 增加供需系数，回归越强则增加越少
+                    cur_sd = cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id]
+                    # 增量公式：基础0.001，越大越难涨
+                    delta_sd = 0.001 * 10 * (1 / cur_sd)
+                    cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = round(cur_sd + delta_sd, 4)
+                # 限制最大值
+                cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = min(5.0, cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id])
+        # 卖出
+        else:
+            cache.rhodes_island.materials_resouce[self.now_select_resouce_id] -= self.quantity_of_resouce
+            cache.rhodes_island.materials_resouce[1] += total_price
+            # 供需关系调整
+            cache.rhodes_island.supply_demand_dict.setdefault(self.now_select_resouce_id, 1)
+            if self.quantity_of_resouce > 50:
+                tem_quantity_of_resouce = self.quantity_of_resouce
+                while tem_quantity_of_resouce > 50:
+                    tem_quantity_of_resouce -= 50
+                    # 减少供需系数，回归越强则减少越少
+                    cur_sd = cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id]
+                    # 减量公式：基础0.01，越小越难跌
+                    delta_sd = 0.001 * 10 * (cur_sd / 1)
+                    cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = round(cur_sd - delta_sd, 4)
+                # 限制最小值
+                cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = max(0.1, cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id])
+        # 打印交易结果
+        info_draw = draw.WaitDraw()
+        info_draw.text = _("\n交易成功！\n当前龙门币数量：{0}({1})\n资源{2}数量：{3}/{4}({5})\n").format(
+            cache.rhodes_island.materials_resouce[1],
+            "-" + str(total_price) if self.buy_or_sell_flag else "+" + str(total_price),
+            game_config.config_resouce[self.now_select_resouce_id].name,
+            cache.rhodes_island.materials_resouce[self.now_select_resouce_id],
+            cache.rhodes_island.warehouse_capacity,
+            "+" + str(self.quantity_of_resouce) if self.buy_or_sell_flag else "-" + str(self.quantity_of_resouce)
+        )
+        info_draw.draw()
+        line_feed.draw()
 
     def select_exchange_resouce(self):
         """选择交易资源"""
@@ -243,11 +345,23 @@ class Resource_Exchange_Line_Panel:
                             now_text = _("\n      当前存量：{0}/{1}").format(cache.rhodes_island.materials_resouce[resouce_id], cache.rhodes_island.warehouse_capacity)
                             # 判断是否可以买入卖出
                             if resouce_data.cant_buy == 0:
-                                now_text += _("   买入:{0}龙门币/1单位").format(int(resouce_data.price * 1.2))
-                            if resouce_data.type == _("特产") and cache.rhodes_island.current_location[0] != resouce_data.specialty:
-                                now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 1.5))
+                                price_buy, percent_buy = get_resouce_price(resouce_id, True)
+                                if percent_buy > 0:
+                                    percent_str_buy = f"(+{percent_buy:.1f}%)"
+                                elif percent_buy < 0:
+                                    percent_str_buy = f"({percent_buy:.1f}%)"
+                                else:
+                                    percent_str_buy = "(0%)"
+                                now_text += _("   买入:{0}龙门币/1单位 {1}").format(price_buy, percent_str_buy)
+                            # 如果是卖出
+                            price_sell, percent_sell = get_resouce_price(resouce_id, False)
+                            if percent_sell > 0:
+                                percent_str_sell = f"(+{percent_sell:.1f}%)"
+                            elif percent_sell < 0:
+                                percent_str_sell = f"({percent_sell:.1f}%)"
                             else:
-                                now_text += _("   卖出:{0}龙门币/1单位\n").format(int(resouce_data.price * 0.8))
+                                percent_str_sell = ""
+                            now_text += _("   卖出:{0}龙门币/1单位 {1}\n").format(price_sell, percent_str_sell)
                             info_draw.text = now_text
                             info_draw.draw()
 
@@ -265,7 +379,7 @@ class Resource_Exchange_Line_Panel:
         self.now_select_resouce_id = resouce_id
         resouce_data  = game_config.config_resouce[self.now_select_resouce_id]
         # 默认变成买入，不可买入的则变成卖出
-        if self.now_select_resouce_id == 12 or resouce_data.type == "药剂":
+        if self.now_select_resouce_id == 12 or resouce_data.type == _("药剂"):
             self.buy_or_sell_flag = False
         # 特产商品仅在当地可以买入，其他地方只能卖出
         elif resouce_data.type == _("特产"):
