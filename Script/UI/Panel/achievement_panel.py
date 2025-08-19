@@ -498,16 +498,8 @@ def settle_semen_shoot():
     inner_all_semen = 0
     cloth_all_semen = 0
     for i in [6, 7, 8, 9]:
-        # 如果没有第[i]个，则补上
-        if i not in target_character_data.dirty.body_semen:
-            part_name = game_config.config_body_part[i].name
-            target_character_data.dirty.body_semen[i] = [part_name, 0, 0, 0]
         inner_all_semen += target_character_data.dirty.body_semen[i][1]
     for i in game_config.config_clothing_type:
-        # 如果没有第[i]个，则补上
-        if i not in target_character_data.dirty.cloth_semen:
-            part_name = game_config.config_clothing_type[i].name
-            target_character_data.dirty.cloth_semen[i] = [part_name, 0, 0, 0]
         cloth_all_semen += target_character_data.dirty.cloth_semen[i][1]
     # 构建成就结算列表
     achievement_checks = [

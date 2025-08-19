@@ -67,10 +67,10 @@ def show_endure_ejaculation_panel():
         line_feed.draw()
 
         # 选择是否忍住
-        yes_draw = draw.CenterButton(_("[忍住]"), _("忍住"), window_width / 3)
+        yes_draw = draw.CenterButton(_("[忍住]"), _("忍住"), int(window_width / 3))
         yes_draw.draw()
         return_list.append(yes_draw.return_text)
-        no_draw = draw.CenterButton(_("[射出]"), _("射出"), window_width / 3)
+        no_draw = draw.CenterButton(_("[射出]"), _("射出"), int(window_width / 3))
         no_draw.draw()
         return_list.append(no_draw.return_text)
 

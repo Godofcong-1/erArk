@@ -9724,6 +9724,7 @@ def handle_urinate_point_zero(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.urinate_point = 0
+    # 尿道的精液一起归零
     character_data.dirty.body_semen[9][1] = 0
     character_data.dirty.body_semen[9][2] = 0
 

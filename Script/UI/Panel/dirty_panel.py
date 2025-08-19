@@ -128,7 +128,7 @@ class SeeCharacterBodyPanel:
 
             # 检查脏污数据中是否包含该部位，如果没有则补上
             if len(target_character_data.dirty.body_semen) <= i:
-                target_character_data.dirty.body_semen.append([part_name,0,0,0])
+                target_character_data.dirty.body_semen[i] = [part_name,0,0,0]
 
             # 最开始先计算腹部整体的精液量累积
             if i in [5,7,8,15]:
