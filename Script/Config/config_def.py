@@ -1208,6 +1208,19 @@ class SexTem:
     """ 随机npc生成性别权重 """
 
 
+class Sex_Position:
+    """ 性交姿势列表 """
+
+    cid: int
+    """ 性交姿势id """
+    name: str
+    """ 性交姿势名 """
+    type: str
+    """ 性交姿势类型 """
+    info: str
+    """ 性交姿势介绍 """
+
+
 class Sleep_Level:
     """ 睡眠等级 """
 
@@ -1475,6 +1488,7 @@ class Talk_Common:
     """ 前提id """
     context: str
     """ 组件内容 """
+
 
 
 class TargetEffect:
