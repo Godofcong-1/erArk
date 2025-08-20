@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, hidden_sex_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel, see_instruct_panel, chara_image_list_panel
+from Script.UI.Panel import game_info_panel, hidden_sex_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel, see_instruct_panel, chara_image_list_panel, character_info_head
 from Script.Core import (
     get_text,
     cache_control,
@@ -161,11 +161,11 @@ class InScenePanel:
             #         now_draw_character_list.append(page_draw.character_id)
             # ↓角色信息面板↓#
             character_info_draw_list = []
-            character_head_draw = see_character_info_panel.CharacterInfoHead(
+            character_head_draw = character_info_head.CharacterInfoHead(
                 pl_character_data.cid, self.width
             )
             ask_list.extend(character_head_draw.return_list)
-            target_head_draw = see_character_info_panel.CharacterInfoHead(
+            target_head_draw = character_info_head.CharacterInfoHead(
                 pl_character_data.target_character_id, self.width
             )
             character_head_draw_list = [y for x in character_head_draw.draw_list for y in x]

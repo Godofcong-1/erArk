@@ -2,7 +2,7 @@ from typing import Dict, List
 from types import FunctionType
 
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import achievement_panel, see_character_info_panel, talent_up_panel
+from Script.UI.Panel import achievement_panel, see_character_info_panel, talent_up_panel, character_info_head
 from Script.Core import (
     cache_control,
     get_text,
@@ -626,7 +626,7 @@ class Character_abi_up_main_panel:
 
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
-        head_draw = see_character_info_panel.CharacterInfoHead(character_id, width)
+        head_draw = character_info_head.CharacterInfoHead(character_id, width)
         Juel_draw = see_character_info_panel.CharacterJuelText(character_id, width, 8, 0)
         Experience_draw = see_character_info_panel.CharacterExperienceText(character_id, width, 8, 0)
         abi_draw = Characterabi_show_Text(character_id, width)

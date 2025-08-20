@@ -161,8 +161,8 @@ class SeeCharacterClothPanel:
         if count != 0 and handle_premise.handle_is_h(0):
             now_text += off_text
         # 获取富文本绘制对象
-        now_draw = rich_text.get_rich_text_draw_panel(now_text)
-        self.draw_list.extend(now_draw.draw_list)
+        rich_text_draw_list = rich_text.get_rich_text_draw_list(now_text)
+        self.draw_list.extend(rich_text_draw_list)
 
     def draw(self):
         """绘制面板"""
@@ -474,8 +474,8 @@ class SwitchCharacterClothPanel:
                         else:
                             dirty_text_context = game_config.ui_text_data['dirty'][dirty_text_cid]
                         semen_draw_text = f"<semen>({dirty_text_context})</semen>"
-                        semen_draw = rich_text.get_rich_text_draw_panel(semen_draw_text)
-                        now_row.extend(semen_draw.draw_list)
+                        get_rich_text_draw_list = rich_text.get_rich_text_draw_list(semen_draw_text)
+                        now_row.extend(get_rich_text_draw_list)
             # 下衣8无衣服时换行
             if clothing_type == 8 and len(target_character_data.cloth.cloth_wear[8]) == 0:
                 if now_row:

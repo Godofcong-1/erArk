@@ -156,6 +156,28 @@ def evaluate_hypnosis_completion(character_id: int):
         now_draw.draw()
         return 0
 
+def get_hypnosis_degree_color(character_id: int) -> str:
+    """
+    输入角色id，输出角色催眠状态对应的字体颜色
+    参数:
+        character_id (int): 角色id
+    输出:
+        str: 催眠等级对应的字体颜色
+    功能:
+        根据角色的催眠等级返回对应的字体颜色字符串
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.hypnosis.hypnosis_degree == 0:
+        font_color = "standard"
+    elif character_data.hypnosis.hypnosis_degree < 50:
+        font_color = "pink"
+    elif character_data.hypnosis.hypnosis_degree < 100:
+        font_color = "hot_pink"
+    elif character_data.hypnosis.hypnosis_degree < 200:
+        font_color = "deep_pink"
+    else:
+        font_color = "purple"
+    return font_color
 
 class Chose_Hypnosis_Type_Panel:
     """

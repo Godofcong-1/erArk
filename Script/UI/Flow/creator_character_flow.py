@@ -151,10 +151,10 @@ class Character_creat_Handle:
 
     def __init__(self):
         """初始化绘制对象"""
-        from Script.UI.Panel import see_character_info_panel
+        from Script.UI.Panel import character_info_head
 
         self.width = normal_config.config_normal.text_width
-        info_draw = see_character_info_panel.CharacterInfoHead(0, width)
+        info_draw = character_info_head.CharacterInfoHead(0, width)
         info_draw.draw_title = False
         sex_draw = Character_Sex(self.width)
         jj_draw = Character_JJ(self.width)

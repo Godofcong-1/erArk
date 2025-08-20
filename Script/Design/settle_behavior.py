@@ -2,7 +2,7 @@ import datetime
 import random
 from functools import wraps
 from types import FunctionType
-from Script.Core import cache_control, constant, game_type, get_text, text_handle
+from Script.Core import cache_control, constant, game_type, get_text, text_handle, rich_text
 from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time
 from Script.UI.Moudle import panel, draw
 from Script.Config import game_config, normal_config
@@ -164,16 +164,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
             now_text = "\n" + now_character_data.name + now_character_data.nick_name + ": "
         else:
             now_text = "\n" + now_character_data.name + ": "
+            # 如果角色有口上颜色的话，则按口上颜色输出富文本的角色名
+            if now_character_data.text_color:
+                color_name = now_character_data.name
+                now_text = f"\n<{color_name}>{now_character_data.name}</{color_name}>:"
 
         # 体力/气力/射精/理智的结算输出
         if change_data.hit_point and round(change_data.hit_point, 2) != 0:
-            now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(change_data.hit_point))
+            now_text += "\n  <hp_point>" + _("体力") + text_handle.number_to_symbol_string(int(change_data.hit_point)) + "</hp_point>"
         if change_data.mana_point and round(change_data.mana_point, 2) != 0:
-            now_text += _("\n  气力") + text_handle.number_to_symbol_string(int(change_data.mana_point))
+            now_text += "\n  <mp_point>" + _("气力") + text_handle.number_to_symbol_string(int(change_data.mana_point)) + "</mp_point>"
         if change_data.eja_point and round(change_data.eja_point, 2) != 0:
-            now_text += _("\n  射精") + text_handle.number_to_symbol_string(int(change_data.eja_point))
+            now_text += "\n  <semen>" + _("射精") + text_handle.number_to_symbol_string(int(change_data.eja_point)) + "</semen>"
         if change_data.sanity_point and round(change_data.sanity_point, 2) != 0:
-            now_text += _("\n  理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point))
+            now_text += "\n  <sanity>" + _("理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point)) + "</sanity>"
 
         # 状态的结算输出
         if len(change_data.status_data) and not exchange_flag:
@@ -219,17 +223,21 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 else:
                     judge = 1
                 name = f"\n{target_data.name}"
+                # 输出口上颜色的角色名
+                if target_data.text_color:
+                    color_name = target_data.name
+                    name = f"\n<{color_name}>{target_data.name}</{color_name}>"
                 # 输出无意识状态的提示信息
                 if target_data.sp_flag.unconscious_h:
-                    name += _("({0})").format(hypnosis_panel.unconscious_list[target_data.sp_flag.unconscious_h])
+                    name += ("({0})").format(hypnosis_panel.unconscious_list[target_data.sp_flag.unconscious_h])
                 now_text = name + ":"
 
                 # 体力/气力/好感/信赖/催眠度的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
-                    now_text += _("\n  体力") + text_handle.number_to_symbol_string(int(target_change.hit_point))
+                    now_text += _("\n  <hp_point>") + _("体力") + text_handle.number_to_symbol_string(int(target_change.hit_point)) + "</hp_point>"
                     judge = 1
                 if target_change.mana_point and round(target_change.mana_point, 2) != 0:
-                    now_text += _("\n  气力") + text_handle.number_to_symbol_string(int(target_change.mana_point))
+                    now_text += "\n  <mp_point>" + _("气力") + text_handle.number_to_symbol_string(int(target_change.mana_point)) + "</mp_point>"
                     judge = 1
                 if target_change.favorability:
                     now_text += _("\n  对{character_name}{character_nick_name}好感").format(
@@ -244,7 +252,8 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     ) + text_handle.number_to_symbol_string(float(format(target_change.trust, '.2f'))) + "%"
                     judge = 1
                 if target_change.hypnosis_degree:
-                    now_text += _("\n  催眠度") + text_handle.number_to_symbol_string(float(format(target_change.hypnosis_degree, '.1f'))) + "%"
+                    hypnosis_color = hypnosis_panel.get_hypnosis_degree_color(target_character_id)
+                    now_text += f"\n  <{hypnosis_color}>" + _("催眠度") + text_handle.number_to_symbol_string(float(format(target_change.hypnosis_degree, '.1f'))) + f"%</{hypnosis_color}>"
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
@@ -289,8 +298,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
             now_text_time = "\n"
         if now_text_list:
             now_text_list.append(now_text_time)
-        now_panel = panel.LeftDrawTextListPanel()
-        now_panel.set(now_text_list, width, 8)
+        # now_panel = panel.LeftDrawTextListPanel()
+        now_text = "".join(now_text_list)
+        now_panel = rich_text.get_rich_text_draw_panel(now_text)
+        now_panel.width = width
+        now_panel.column = 8
         # now_panel.draw()
         # line = draw.LineDraw("-", width)
         # line.draw()

@@ -8,7 +8,7 @@ from Script.UI.Moudle import draw, panel
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 
-def get_rich_text_draw_panel(now_text: str) -> object:
+def get_rich_text_draw_panel(now_text: str) -> panel.LeftDrawTextListPanel:
     """
     根据带富文本标识的字符串构造富文本绘制面板
     参数:
@@ -18,6 +18,22 @@ def get_rich_text_draw_panel(now_text: str) -> object:
     """
     # 创建左侧文本绘制面板实例
     now_draw = panel.LeftDrawTextListPanel()
+    rich_text_draw_list = get_rich_text_draw_list(now_text)
+    # 将富文本绘制列表添加到绘制面板中
+    now_draw.draw_list.append(rich_text_draw_list)
+    # 计算绘制面板的总宽度
+    for rich_draw in rich_text_draw_list:
+        now_draw.width += len(rich_draw.text)
+    # 返回构造好的富文本绘制面板
+    return now_draw
+
+def get_rich_text_draw_list(now_text: str) -> list:
+    """
+    获取富文本绘制列表
+    Keyword arguments:
+    now_text -- 带富文本标识的字符串
+    """
+    rich_text_draw_list = []
     # 调用已有函数获取各字符对应的富文本样式列表
     now_style_list = get_rich_text_print(now_text, "standard")
     # 调用已有函数移除原始文本中的富文本标签，获得实际文本列表
@@ -25,7 +41,7 @@ def get_rich_text_draw_panel(now_text: str) -> object:
     # 循环处理文本列表，生成绘制对象并合并相同样式的连续文本
     while len(new_x_list) > 0:
         # 创建新的文本绘制对象实例
-        now_rich_draw = draw.LeftDraw()
+        now_rich_draw = draw.NormalDraw()
         # 为当前绘制对象初始化文本和样式
         now_rich_draw.text = new_x_list[0]
         now_rich_draw.style = now_style_list[0]
@@ -41,11 +57,10 @@ def get_rich_text_draw_panel(now_text: str) -> object:
             now_rich_draw.text += new_x_list[0]
             now_style_list = now_style_list[1:]
             new_x_list = new_x_list[1:]
-        # 将构造好的绘制对象添加到绘制面板中，并更新面板宽度
-        now_draw.draw_list.append(now_rich_draw)
-        now_draw.width += len(now_rich_draw.text)
-    # 返回构造好的富文本绘制面板
-    return now_draw
+        # 将构造好的绘制对象添加到绘制列表中
+        rich_text_draw_list.append(now_rich_draw)
+    # 返回构造好的富文本绘制列表
+    return rich_text_draw_list
 
 def get_rich_text_print(text_message: str, default_style: str) -> list:
     """
@@ -107,7 +122,6 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
                     style_list.append(cache.output_text_style)
         # print(f"debug style_list = {style_list}")
     return style_list
-
 
 def remove_rich_cache(string: str) -> str:
     """

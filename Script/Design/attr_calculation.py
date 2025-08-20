@@ -824,6 +824,7 @@ def get_sleep_level(value: int):
             continue
         else:
             return now_cid,now_data.name
+    return 3, game_config.config_sleep_level[3].name
 
 
 def get_food_quality(value: int):
@@ -867,7 +868,7 @@ def get_favorability_level(value: int):
     return max_cid,max_data.judge_add
 
 
-def get_trust_level(value: int):
+def get_trust_level(value: float):
     """
     按当前信赖度返回当前信赖等级的str
     Keyword arguments:

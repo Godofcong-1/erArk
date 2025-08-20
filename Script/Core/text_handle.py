@@ -102,7 +102,7 @@ def id_index(now_id: int) -> str:
     return f"[{str(now_id).zfill(3)}]"
 
 
-def number_to_symbol_string(value: int) -> str:
+def number_to_symbol_string(value: float) -> str:
     """
     数字转换为带正负数符号的数字字符串
     Keyword arguments:

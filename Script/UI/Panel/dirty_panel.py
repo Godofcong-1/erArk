@@ -331,9 +331,9 @@ class SeeCharacterBodyPanel:
                     all_part_text += "\n"
 
         # 获取富文本绘制对象
-        now_draw = rich_text.get_rich_text_draw_panel(all_part_text)
-
-        self.draw_list.extend(now_draw.draw_list)
+        rich_text_draw_list = rich_text.get_rich_text_draw_list(all_part_text)
+        # 加入到绘制列表中
+        self.draw_list.extend(rich_text_draw_list)
 
     def draw(self):
         """绘制面板"""

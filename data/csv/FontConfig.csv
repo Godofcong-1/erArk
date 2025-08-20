@@ -68,3 +68,5 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 62,grullo,#a99a86,,,,,,,,灰褐色（工作颜色）
 63,lavender,#e6e6fa,,,,,,,,熏衣草花的淡紫色
 74,sanity,#7272bc,,,,,,,,理智的颜色
+75,hp_point,#ff5a5a,,,,,,,,体力的颜色
+76,mp_point,#70c070,,,,,,,,气力的颜色
