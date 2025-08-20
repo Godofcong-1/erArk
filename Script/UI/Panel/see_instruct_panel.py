@@ -11,7 +11,7 @@ from Script.Core import (
     py_cmd,
 )
 from Script.Design import handle_instruct, handle_premise, talk
-from Script.Config import game_config, normal_config
+from Script.Config import game_config
 import time
 
 cache: game_type.Cache = cache_control.cache
@@ -40,7 +40,7 @@ def judge_single_instruct_filter(instruct_id: int, now_premise_data: dict, now_t
     filter_judge = True
     # 如果该指令不存在，则置为存在
     if instruct_id not in cache.instruct_index_filter:
-        cache.instruct_index_filter[instruct_id] = 1
+        cache.instruct_index_filter[instruct_id] = True
     # 如果在过滤列表里，则过滤
     if not cache.instruct_index_filter[instruct_id]:
         filter_judge = False
@@ -100,29 +100,29 @@ class SeeInstructPanel:
 
         # 初始化指令类型过滤
         if cache.instruct_type_filter == {}:
-            cache.instruct_type_filter[0] = 1
-            cache.instruct_type_filter[1] = 1
-            cache.instruct_type_filter[2] = 1
-            cache.instruct_type_filter[3] = 1
-            cache.instruct_type_filter[4] = 1
+            cache.instruct_type_filter[0] = True
+            cache.instruct_type_filter[1] = True
+            cache.instruct_type_filter[2] = True
+            cache.instruct_type_filter[3] = True
+            cache.instruct_type_filter[4] = True
         for instruct_type in game_config.config_instruct_type:
             if instruct_type not in cache.instruct_type_filter:
-                cache.instruct_type_filter[instruct_type] = 0
-        cache.instruct_type_filter[6] = 1
+                cache.instruct_type_filter[instruct_type] = False
+        cache.instruct_type_filter[6] = True
 
         # 初始化性爱子类类型过滤
         for instruct_type in game_config.config_instruct_sex_type:
             if instruct_type not in cache.instruct_sex_type_filter:
                 if instruct_type == 0:
-                    cache.instruct_sex_type_filter[instruct_type] = 1
+                    cache.instruct_sex_type_filter[instruct_type] = True
                 else:
-                    cache.instruct_sex_type_filter[instruct_type] = 0
+                    cache.instruct_sex_type_filter[instruct_type] = False
 
         # 初始化命令过滤
         if cache.instruct_index_filter == {}:
             for now_type in cache.instruct_type_filter:
                 for instruct in constant.instruct_type_data[now_type]:
-                    cache.instruct_index_filter[instruct] = 1
+                    cache.instruct_index_filter[instruct] = True
 
     def draw(self):
         """绘制操作菜单面板"""
@@ -157,7 +157,7 @@ class SeeInstructPanel:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (instruct_type_len - 1),
+                    int(self.width / (instruct_type_len - 1)),
                     " ",
                     now_instruct_config[now_type].color,
                     "standard",
@@ -168,7 +168,7 @@ class SeeInstructPanel:
                 now_button = draw.CenterButton(
                     f"[{now_config.name}]",
                     now_config.name,
-                    self.width / (instruct_type_len - 1),
+                    int(self.width / (instruct_type_len - 1)),
                     normal_style = "deep_gray",
                     cmd_func=self.change_filter,
                     args=(now_type,),
@@ -179,9 +179,9 @@ class SeeInstructPanel:
 
         # 如果交互对象是临盆、产后或婴儿的话，则在常规指令类里不显示技艺、猥亵、H类指令
         if handle_premise.handle_t_parturient_1(0) or handle_premise.handle_t_postpartum_1(0) or handle_premise.handle_t_baby_1(0):
-            cache.instruct_type_filter[4] = 0
-            cache.instruct_type_filter[5] = 0
-            cache.instruct_type_filter[6] = 0
+            cache.instruct_type_filter[4] = False
+            cache.instruct_type_filter[5] = False
+            cache.instruct_type_filter[6] = False
 
         line_feed.draw()
         line = draw.LineDraw("~..", self.width)
@@ -293,17 +293,17 @@ class SeeInstructPanel:
         """
         if handle_premise.handle_now_show_h_instruct(0):
             if cache.instruct_sex_type_filter[now_type]:
-                cache.instruct_sex_type_filter[now_type] = 0
+                cache.instruct_sex_type_filter[now_type] = False
             else:
-                cache.instruct_sex_type_filter[now_type] = 1
+                cache.instruct_sex_type_filter[now_type] = True
             # 如果是技艺类的话，则也同时变动非H中的技艺类
             if now_type == constant.SexInstructSubType.ARTS:
                 cache.instruct_type_filter[constant.InstructType.ARTS] = cache.instruct_sex_type_filter[now_type]
         else:
             if cache.instruct_type_filter[now_type]:
-                cache.instruct_type_filter[now_type] = 0
+                cache.instruct_type_filter[now_type] = False
             else:
-                cache.instruct_type_filter[now_type] = 1
+                cache.instruct_type_filter[now_type] = True
             # 如果是技艺类的话，则也同时变动H中的技艺类
             if now_type == constant.InstructType.ARTS:
                 cache.instruct_sex_type_filter[constant.SexInstructSubType.ARTS] = cache.instruct_type_filter[now_type]

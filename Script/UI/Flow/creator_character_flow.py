@@ -383,9 +383,9 @@ class Character_FirstNPC:
         """ 监听的按钮列表 """
         self.npc_select_now = 3
         """ 当前还可以选择的NPC数量 """
-        self.normal_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, 1, 0, 0)
+        self.normal_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 6, self.width, True, False, 0)
         """ 一般干员选择面板 """
-        self.talk_chara_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 5, self.width, 1, 0, 0)
+        self.talk_chara_handle_panel = panel.PageHandlePanel([], SelectFirstNPCButton, 999, 5, self.width, True, False, 0)
         """ 口上干员选择面板 """
         self.show_normal_handle_panel = False
         """ 是否显示一般干员选择面板 """
@@ -666,7 +666,7 @@ class Character_FirstNPC:
                     draw_text = f"[{str(npc_character_data.adv).rjust(4,'0')}]：{npc_character_data.name}"
                     draw_text += f"({npc_character_data.talk_size}kb)"
                     npc_draw.text = draw_text
-                    npc_draw.width = self.width / 5
+                    npc_draw.width = int(self.width / 5)
                     npc_draw.style = now_style
                     npc_draw.draw()
                     # 每五个换行
