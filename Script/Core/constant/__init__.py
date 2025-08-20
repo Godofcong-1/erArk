@@ -142,7 +142,7 @@ instruct_type_data: Dict[int, Set] = {}
 """ 指令类型拥有的指令集合 """
 instruct_sub_type_data: Dict[int, int] = {}
 """ 指令的子类型数据，指令id:子类id """
-behavior_id_to_instruct_id: Dict[int, int] = {}
+behavior_id_to_instruct_id: Dict[str, int] = {}
 """ 从状态id获取指令id，状态id:指令id """
 instruct_premise_data: Dict[int, Set] = {}
 """ 指令显示的所需前提集合 """

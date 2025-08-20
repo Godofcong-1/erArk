@@ -20,12 +20,12 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
-def judge_use_text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
+def judge_use_text_ai(character_id: int, behavior_id: str, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
     """
     判断是否使用文本生成AI
     参数:
         character_id: int 角色ID
-        behavior_id: int 行为ID
+        behavior_id: str 行为ID
         original_text: str 原始文本
         translator: bool 是否为翻译模式
         direct_mode: bool 是否为直接对话模式
@@ -124,12 +124,12 @@ def get_key_type() -> str:
         return 'OPENAI_API_KEY'
 
 
-def save_ai_talk_record(character_id: int, behavior_id: int, ai_generated_text: str) -> None:
+def save_ai_talk_record(character_id: int, behavior_id: str, ai_generated_text: str) -> None:
     """
     将AI生成的对话记录保存到CSV文件中
     参数:
         character_id: int 角色ID
-        behavior_id: int 行为ID
+        behavior_id: str 行为ID
         ai_generated_text: str AI生成的文本
     返回:
         None
@@ -182,12 +182,12 @@ def save_ai_talk_record(character_id: int, behavior_id: int, ai_generated_text: 
         f.write(f"{new_cid},{behavior_id},0,{premise_text},{ai_generated_text}\n")
 
 
-def build_user_prompt(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
+def build_user_prompt(character_id: int, behavior_id: str, original_text: str, translator: bool = False, direct_mode: bool = False) -> str:
     """
     构造用户提示词
     参数:
         character_id: int 角色ID
-        behavior_id: int 行为ID
+        behavior_id: str 行为ID
         original_text: str 原始文本
         translator: bool 是否为翻译模式
         direct_mode: bool 是否为直接对话模式
@@ -482,12 +482,12 @@ def create_tem_sned_data_flags(npc_character_id: int) -> list:
 
     return tem_send_data_flags
 
-def text_ai(character_id: int, behavior_id: int, original_text: str, translator: bool = False, direct_mode: bool = False) -> dict:
+def text_ai(character_id: int, behavior_id: str, original_text: str, translator: bool = False, direct_mode: bool = False) -> dict:
     """
     文本生成AI\n\n
     Keyword arguments:
     character_id: int 角色id\n
-    behavior_id: int 行为id\n
+    behavior_id: str 行为id\n
     original_text: str 原始文本\n
     translator -- 翻译模式\n
     direct_mode -- 直接对话模式\n

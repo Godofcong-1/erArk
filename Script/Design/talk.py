@@ -92,7 +92,7 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     #             handle_talk_draw(target_character_id, now_talk_data, second_behavior_id)
 
 
-def handle_talk_sub(character_id: int, behavior_id: int, unconscious_pass_flag = False):
+def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag = False):
     """
     处理行为结算对话的内置循环部分
     Keyword arguments:
@@ -284,7 +284,7 @@ def must_show_talk_check(character_id: int):
                 character_data.second_behavior[second_behavior_id] = 0
 
 
-def second_behavior_info_text(character_id: int, second_behavior_id: int):
+def second_behavior_info_text(character_id: int, second_behavior_id: str):
     """
     二段行为结算的信息文本
     Keyword arguments:

@@ -432,8 +432,6 @@ class Ejaculation_Panel:
         """ 绘制的最大宽度 """
         self.now_panel = _("身体")
         """ 当前绘制的射精页面 """
-        self.handle_panel: panel.PageHandlePanel = None
-        """ 当前名字列表控制面板 """
 
     def draw(self):
         """绘制对象"""

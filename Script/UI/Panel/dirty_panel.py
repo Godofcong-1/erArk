@@ -84,7 +84,7 @@ class SeeCharacterBodyPanel:
         """ 面板最大宽度 """
         self.column = column
         """ 每行状态最大个数 """
-        self.draw_list: List[draw.NormalDraw] = []
+        self.draw_list: List = []
         """ 绘制的文本列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """

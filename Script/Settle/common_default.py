@@ -1,5 +1,5 @@
 from types import FunctionType
-from typing import Optional
+from typing import Optional, Union
 from Script.Design import (
     character_handle,
     map_handle,
@@ -158,7 +158,7 @@ def base_chara_state_common_settle(
         ability_level: int = -1,
         extra_adjust: float = 0,
         tenths_add: bool = True,
-        change_data: Optional[game_type.CharacterStatusChange] = None,
+        change_data: Optional[Union[game_type.CharacterStatusChange, game_type.TargetChange]] = None,
         change_data_to_target_change: Optional[game_type.CharacterStatusChange] = None,
         ):
     """
@@ -504,7 +504,7 @@ def base_chara_favorability_and_trust_common_settle(
         favorability_flag: bool,
         base_value: int = 0,
         extra_adjust: float = 0,
-        change_data: Optional[game_type.CharacterStatusChange] = None,
+        change_data: Optional[Union[game_type.CharacterStatusChange, game_type.TargetChange]] = None,
         target_character_id: int = 0,
         ):
     """
@@ -639,6 +639,7 @@ def base_chara_favorability_and_trust_common_settle(
 
             # 结算最终值
             add_trust *= final_adjust
+            add_trust = int(add_trust)
             if character_id == 0 and character_data.target_character_id != 0:
                 target_data.trust += add_trust
                 target_data.trust = min(300, target_data.trust)
@@ -646,7 +647,8 @@ def base_chara_favorability_and_trust_common_settle(
             else:
                 character_data.trust += add_trust
                 character_data.trust = min(300, character_data.trust)
-                change_data.trust += add_trust
+                if change_data != None:
+                    change_data.trust += add_trust
 
     else:
         return
@@ -865,8 +867,8 @@ def base_chara_experience_common_settle(
         experience_id: int,
         base_value: int = 1,
         target_flag: bool = False,
-        change_data: game_type.CharacterStatusChange = None,
-        change_data_to_target_change: game_type.CharacterStatusChange = None,
+        change_data: Optional[Union[game_type.CharacterStatusChange, game_type.TargetChange]] = None,
+        change_data_to_target_change: Optional[Union[game_type.CharacterStatusChange, game_type.TargetChange]] = None,
         ):
     """
     基础角色经验通用结算函数\n

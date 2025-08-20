@@ -354,7 +354,7 @@ class Physical_Check_And_Manage_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
-    def settle_target_physical_status(self, behavior_id: int):
+    def settle_target_physical_status(self, behavior_id: str):
         """结算目标角色的身体状态"""
         behavior_data = game_config.config_behavior[behavior_id]
         self.done_check_behavior_id_set.add(behavior_id)

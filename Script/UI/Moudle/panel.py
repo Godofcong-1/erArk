@@ -749,18 +749,3 @@ class PageHandlePanel:
             self.now_page = total_page
         else:
             self.now_page -= 1
-
-
-class ClothingPageHandlePanel(PageHandlePanel):
-    """服装缩略信息分页绘制对象面板"""
-
-    def update_button(self):
-        """更新绘制宽度"""
-        id_width = 0
-        for value in self.draw_list:
-            if "id_width" in value.__dict__:
-                if value.id_width > id_width:
-                    id_width = value.id_width
-        for value in self.draw_list:
-            if "id_width" in value.__dict__:
-                value.id_width = id_width

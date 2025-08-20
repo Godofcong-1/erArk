@@ -80,6 +80,7 @@ def handle_add_small_hit_point(
     # 如果气力=0则恢复减半
     if character_data.mana_point == 0:
         now_add_hit_point /= 2
+    now_add_hit_point = int(now_add_hit_point)
     character_data.hit_point += now_add_hit_point
     change_data.hit_point += now_add_hit_point
     # 如果超过最大值则=最大值
@@ -108,6 +109,7 @@ def handle_add_small_mana_point(
     if character_data.dead:
         return
     add_mana_point = add_time * (20 + character_data.hit_point_max * 0.01)
+    add_mana_point = int(add_mana_point)
     character_data.mana_point += add_mana_point
     change_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
@@ -687,6 +689,7 @@ def handle_add_both_small_hit_point(
     # 如果气力=0则恢复减半
     if character_data.mana_point == 0:
         now_add_hit_point /= 2
+    now_add_hit_point = int(now_add_hit_point)
     character_data.hit_point += now_add_hit_point
     change_data.hit_point += now_add_hit_point
     # 如果超过最大值则=最大值
@@ -702,6 +705,7 @@ def handle_add_both_small_hit_point(
         # 如果气力=0则恢复减半
         if target_data.mana_point == 0:
             now_add_hit_point /= 2
+        now_add_hit_point = int(now_add_hit_point)
         target_data.hit_point += now_add_hit_point
         target_change.hit_point += now_add_hit_point
         # 如果超过最大值则=最大值
@@ -730,6 +734,7 @@ def handle_add_both_small_mana_point(
     if character_data.dead:
         return
     add_mana_point = add_time * (20 + character_data.hit_point_max * 0.01)
+    add_mana_point = int(add_mana_point)
     character_data.mana_point += add_mana_point
     change_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
@@ -740,6 +745,7 @@ def handle_add_both_small_mana_point(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
         add_mana_point = add_time * (20 + target_data.hit_point_max * 0.01)
+        add_mana_point = int(add_mana_point)
         target_data.mana_point += add_mana_point
         target_change.mana_point += add_mana_point
         # 如果超过最大值则=最大值
@@ -1915,7 +1921,7 @@ def handle_target_hypnosis_pain_as_pleasure_switch_change(
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_PAIN_AS_PLEASURE_OFF)
-def handle_target_hypnosis_active_h_off(
+def handle_target_hypnosis_pain_as_pleasure_off(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -2707,6 +2713,7 @@ def handle_add_medium_hit_point(
     if character_data.dead:
         return
     add_hit_point = add_time * (20 + character_data.hit_point_max * 0.01)
+    add_hit_point = int(add_hit_point)
     character_data.hit_point += add_hit_point
     if character_data.hit_point > character_data.hit_point_max:
         add_hit_point -= character_data.hit_point - character_data.hit_point_max
@@ -2735,6 +2742,7 @@ def handle_add_medium_mana_point(
     if character_data.dead:
         return
     add_mana_point = add_time * (30 + character_data.hit_point_max * 0.02)
+    add_mana_point = int(add_mana_point)
     character_data.mana_point += add_mana_point
     if character_data.mana_point > character_data.mana_point_max:
         add_mana_point -= character_data.mana_point - character_data.mana_point_max
@@ -3058,7 +3066,7 @@ def handle_not_tired(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.tired = 0
+    character_data.sp_flag.tired = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF)
@@ -3102,7 +3110,7 @@ def handle_target_item_off(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    handle_item_off(character_data.target_character_id, add_time, change_data)
+    handle_item_off(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ITEM_OFF_EXCEPT_PILL)
@@ -3148,7 +3156,7 @@ def handle_target_item_off_except_pill(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    handle_item_off_except_pill(character_data.target_character_id, add_time, change_data)
+    handle_item_off_except_pill(character_data.target_character_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_B_ITEM_OFF)
@@ -4464,8 +4472,7 @@ def handle_target_diuretics_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    add_time = datetime.timedelta(hours=4)
-    end_time = now_time + add_time
+    end_time = now_time + datetime.timedelta(hours=4)
     target_data.h_state.body_item[8][1] = True
     target_data.h_state.body_item[8][2] = end_time
 
@@ -5287,7 +5294,7 @@ def handle_move_to_pre_scene(
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
         handle_move_to_target_scene(character_id, add_time, change_data, now_time)
-        character_data.sp_flag.move_stop = 1
+        character_data.sp_flag.move_stop = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_MOVE_TO_PRE_SCENE)
@@ -5355,7 +5362,7 @@ def handle_self_h_state_reset(
         dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
         map_handle.character_move_scene(character_data.position, dormitory_list, character_id)
     # 退出H模式
-    character_data.sp_flag.is_h = 0
+    character_data.sp_flag.is_h = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_H_STATE_RESET)
@@ -5542,9 +5549,9 @@ def handle_chara_on_line(
     character_data.sleep_point = 0
     character_data.urinate_point = 0
     # 清零各特殊状态flag
-    if character_data.sp_flag.imprisonment == 1:
+    if character_data.sp_flag.imprisonment:
         character_data.sp_flag = game_type.SPECIAL_FLAG()
-        character_data.sp_flag.imprisonment = 1
+        character_data.sp_flag.imprisonment = True
     else:
         character_data.sp_flag = game_type.SPECIAL_FLAG()
     # 赋予默认行动数据
@@ -5581,7 +5588,7 @@ def handle_t_be_bagged(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.sp_flag.be_bagged = 1
+    target_data.sp_flag.be_bagged = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_IMPRISONMENT)
@@ -5603,7 +5610,7 @@ def handle_t_be_imprisonment(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.sp_flag.imprisonment = 1
+    target_data.sp_flag.imprisonment = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_1)
@@ -5823,7 +5830,7 @@ def handle_sleep_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.sleep = 0
+    character_data.sp_flag.sleep = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_FLAG_TO_1)
@@ -5844,7 +5851,7 @@ def handle_sleep_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.sleep = 1
+    character_data.sp_flag.sleep = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_0)
@@ -5865,7 +5872,7 @@ def handle_rest_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.rest = 0
+    character_data.sp_flag.rest = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_1)
@@ -5886,7 +5893,7 @@ def handle_rest_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.rest = 1
+    character_data.sp_flag.rest = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_0)
@@ -5907,7 +5914,7 @@ def handle_pee_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.pee = 0
+    character_data.sp_flag.pee = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_1)
@@ -5928,7 +5935,7 @@ def handle_pee_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.pee = 1
+    character_data.sp_flag.pee = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SWIM_FLAG_TO_1)
@@ -5991,7 +5998,7 @@ def handle_maintenance_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.work_maintenance = 0
+    character_data.sp_flag.work_maintenance = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG)
@@ -6014,7 +6021,7 @@ def handle_cancel_all_work_and_entertainment_flag(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.swim = 0
     character_data.sp_flag.bathhouse_entertainment = 0
-    character_data.sp_flag.work_maintenance = 0
+    character_data.sp_flag.work_maintenance = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_INTELLIGENT_FOLLOW_ON)
@@ -6140,7 +6147,7 @@ def handle_h_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.is_h = 0
+    character_data.sp_flag.is_h = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_FLAG_TO_1)
@@ -6161,7 +6168,7 @@ def handle_h_flag_to_1(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.is_h = 1
+    character_data.sp_flag.is_h = True
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_H_FLAG_TO_0)
@@ -6565,7 +6572,7 @@ def handle_milk_flag_to_0(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.milk = 0
+    character_data.sp_flag.milk = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_FLAG_TO_0)
@@ -6613,7 +6620,7 @@ def handle_target_angry_with_player_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     target_character = cache.character_data[character_data.target_character_id]
-    target_character.sp_flag.angry_with_player = 0
+    target_character.sp_flag.angry_with_player = False
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_FLAG_TO_0)
@@ -8021,7 +8028,7 @@ def handle_bagging_and_moving_add_just(
     # 玩家数据结算
     character_data.sp_flag.bagging_chara_id = character_data.target_character_id
     # 对方数据结算
-    target_data.sp_flag.be_bagged = 1
+    target_data.sp_flag.be_bagged = True
     handle_chara_off_line(character_data.target_character_id, add_time, change_data, now_time)
 
 
@@ -8081,7 +8088,7 @@ def handle_set_free_add_just(
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_data.sp_flag.imprisonment = 0
+    target_data.sp_flag.imprisonment = False
     # 回到旧宿舍
     if target_data.pre_dormitory != "":
         target_data.dormitory = target_data.pre_dormitory
@@ -8332,6 +8339,7 @@ def handle_sing_add_adjust(
                 now_add_lust += now_lust / 10
             else:
                 now_add_lust *= (adjust - 1)
+            now_add_lust = int(now_add_lust)
             target_data.status_data[11] += now_add_lust
             target_data.status_data[11] = min(99999, target_data.status_data[11])
             change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8350,6 +8358,7 @@ def handle_sing_add_adjust(
                     else:
                         now_add_lust *= (5 - adjust)
                         now_add_lust += now_lust / 10
+                    now_add_lust = int(now_add_lust)
                     target_data.status_data[i] += now_add_lust
                     target_data.status_data[i] = min(99999, target_data.status_data[i])
                     change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8594,6 +8603,7 @@ def handle_tech_add_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         target_data.eja_point += now_add_lust
         # change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         # target_change: game_type.TargetChange = change_data.target_change[target_data.cid]
@@ -8607,6 +8617,7 @@ def handle_tech_add_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 6
+        now_add_lust = int(now_add_lust)
         target_data.status_data[12] += now_add_lust
         target_data.status_data[12] = min(99999, target_data.status_data[12])
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -8843,6 +8854,7 @@ def handle_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9310,6 +9322,7 @@ def handle_finger_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9353,6 +9366,7 @@ def handle_tongue_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9396,6 +9410,7 @@ def handle_feet_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9439,6 +9454,7 @@ def handle_breast_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9482,6 +9498,7 @@ def handle_vagina_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9525,6 +9542,7 @@ def handle_anus_tech_add_pl_p_adjust(
         now_add_lust = add_time + now_lust_multiple
         now_add_lust *= adjust
         now_add_lust += now_lust / 8
+        now_add_lust = int(now_add_lust)
         character_data.eja_point += now_add_lust
         change_data.eja_point += now_add_lust
         character_data.action_info.last_eaj_add_time = now_time
@@ -9598,6 +9616,7 @@ def handle_high_obscenity_failed_adjust(
         adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         now_add_lust += now_lust / 2
+        now_add_lust = int(now_add_lust)
         target_data.status_data[20] += now_add_lust
         target_data.status_data[20] = min(99999, target_data.status_data[20])
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -9654,6 +9673,7 @@ def handle_do_h_failed_adjust(
         adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         now_add_lust += now_lust / 2
+        now_add_lust = int(now_add_lust)
         target_data.status_data[20] += now_add_lust
         target_data.status_data[20] = min(99999, target_data.status_data[20])
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())

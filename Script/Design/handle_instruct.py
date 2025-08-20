@@ -47,7 +47,7 @@ def handle_instruct(instruct: int):
         constant.handle_instruct_data[instruct]()
 
 
-def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: Set, behavior_id: int = 0, sub_type: int = 0):
+def add_instruct(instruct_id: int, instruct_type: int, name: str, premise_set: Set, behavior_id: str = "share_blankly", sub_type: int = 0):
     """
     添加指令处理
     Keyword arguments:
@@ -96,7 +96,7 @@ def instruct_filter_H_change(on_off_flag: bool):
 
 
 def chara_handle_instruct_common_settle(
-        behavior_id: int,
+        behavior_id: str,
         character_id: int = 0,
         target_character_id: int = 0,
         duration: int = 0,

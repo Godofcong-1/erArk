@@ -89,7 +89,7 @@ def update_sleep():
             # 清零H状态
             character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
             # 清零睡奸中醒来状态
-            character_data.sp_flag.sleep_h_awake = 0
+            character_data.sp_flag.sleep_h_awake = False
 
     # 非角色部分
     cache.pl_sleep_save_flag = True

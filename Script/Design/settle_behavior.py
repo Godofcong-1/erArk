@@ -301,7 +301,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
 def handle_instruct_data(
         character_id: int,
-        behavior_id: int,
+        behavior_id: str,
         now_time: datetime.datetime,
         add_time: int,
         change_data: game_type.CharacterStatusChange,

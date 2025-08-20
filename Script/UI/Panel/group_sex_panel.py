@@ -37,7 +37,7 @@ body_part_name_dict = {
 def group_sex_settle(
         character_id: int,
         target_character_id: int,
-        behavior_id: int,
+        behavior_id: str,
 ):
     """
     群交结算

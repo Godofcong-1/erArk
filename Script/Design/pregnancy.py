@@ -436,7 +436,7 @@ def chest_grow(character_id: int,print_flag = False):
 
     # 跳过机械
     if mom_character_data.race == 2:
-        return now_text
+        return ""
 
     # 用随机数计算生长，可能长3、长2或者长1，母亲胸部越大生长比例就越高
     # 母亲胸部0时从长0~长3生长比例是 0.6 0.25 0.1 0.05，母亲胸部6时反过来

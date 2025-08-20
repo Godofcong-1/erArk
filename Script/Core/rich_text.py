@@ -25,7 +25,7 @@ def get_rich_text_draw_panel(now_text: str) -> object:
     # 循环处理文本列表，生成绘制对象并合并相同样式的连续文本
     while len(new_x_list) > 0:
         # 创建新的文本绘制对象实例
-        now_rich_draw = draw.NormalDraw()
+        now_rich_draw = draw.LeftDraw()
         # 为当前绘制对象初始化文本和样式
         now_rich_draw.text = new_x_list[0]
         now_rich_draw.style = now_style_list[0]
@@ -57,7 +57,7 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
     style_name_list = game_config.config_font_data
     style_index = 0
     style_last_index = None
-    style_max_index = None
+    style_max_index = 0
     style_list = []
     for key in style_name_list:
         if key == default_style:

@@ -1550,7 +1550,7 @@ class TargetChange:
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
-        self.trust: int = 0
+        self.trust: float = 0
         """ 信赖度变化 """
         self.target_change: Dict[int, TargetChange] = {}
         """ 互动目标状态变化 """
@@ -1578,7 +1578,7 @@ class CharacterStatusChange:
         """ 状态变化 """
         self.favorability: int = 0
         """ 好感度变化 """
-        self.trust: int = 0
+        self.trust: float = 0
         """ 信赖度变化 """
         self.language: Dict[int, int] = {}
         """ 语言技能经验变化 """

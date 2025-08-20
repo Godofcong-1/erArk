@@ -37,6 +37,7 @@ def align(text: str, just="left", only_fix=False, columns=1, text_width=None) ->
             return " " * int(width_i - count_i)
         else:
             return " " * int(width_i - count_i) + text + " " * int(width_i - count_i)
+    return ""
 
 
 def get_text_index(text: str) -> int:
