@@ -183,7 +183,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 set_map_button = 0
                 now_draw = game_type.MapDrawText()
                 now_draw.text = now_cmd
-                now_draw.is_button = 1
+                now_draw.is_button = True
                 now_draw_list.draw_list.append(now_draw)
                 now_draw_list.width += text_handle.get_text_index(now_cmd)
                 now_cmd = ""
@@ -209,7 +209,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 # if test_flag:
                 #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
                 while 1:
-                    if not len(new_x_list):
+                    if not len(new_x_list) or not len(now_style_list):
                         break
                     if now_style_list[0] != now_rich_draw.style:
                         break
