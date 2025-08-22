@@ -199,7 +199,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
             #     print(f"debug 总：now_style_list = {now_style_list}")
             #     print(f"debug 总：new_x_list = {new_x_list}")
             while 1:
-                if not len(new_x_list):
+                if not len(new_x_list) or not len(now_style_list):
                     break
                 now_rich_draw = game_type.MapDrawText()
                 now_rich_draw.text = new_x_list[0]
@@ -209,7 +209,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                 # if test_flag:
                 #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
                 while 1:
-                    if not len(new_x_list) or not len(now_style_list):
+                    if not len(new_x_list):
                         break
                     if now_style_list[0] != now_rich_draw.style:
                         break

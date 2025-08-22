@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-08-22 21:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -17724,6 +17724,118 @@ msgstr ""
 msgid "既然這就是炎蓉施主提到的羅德島，而您又是她口中所言之博士，相逢即是有緣，就容小僧在此艦停留一段時日吧!"
 msgstr ""
 
+#: .\data\csv\Commission.csv:162
+msgid "滴水村救援行动"
+msgstr ""
+
+#: .\data\csv\Commission.csv:162
+msgid "滴水村继任者可萝尔被赏金猎人拘押拷打，罗德岛小队突入救出并转移至安全屋，稳定伤情并准备撤离。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:163
+msgid "林中突围与合作"
+msgstr ""
+
+#: .\data\csv\Commission.csv:163
+msgid "村外树林虫兽与赏金团纠缠不休，大鲍勃以震撼弹清场提出合作；小队在其引导下改变路线，规避搜索网。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:164
+msgid "符号与陷阱清理"
+msgstr ""
+
+#: .\data\csv\Commission.csv:164
+msgid "沿赏金猎人刻画的林间符号前进，拆除绊索与深坑等机关，清理“沾血的怪物符号”附近的威胁，确保通行。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:165
+msgid "负伤急救与转进"
+msgstr ""
+
+#: .\data\csv\Commission.csv:165
+msgid "与“上尉”交火后队友负伤，现场实施包扎与止血，掩护小队向北转进，保持队形与节奏不崩溃。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:166
+msgid "坑口交火与断后"
+msgstr ""
+
+#: .\data\csv\Commission.csv:166
+msgid "塔拉特山坑口与整合运动短兵相接，组织火力压制并轮换掩护，控制撤退通道，避免被包夹。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:167
+msgid "守洞口，护同伴"
+msgstr ""
+
+#: .\data\csv\Commission.csv:167
+msgid "按计划分工，战斗小队扼守洞口吸引火力，可萝尔入洞取物；现场指挥与掩护配合到位，防止敌方突入。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:168
+msgid "山崩新入口"
+msgstr ""
+
+#: .\data\csv\Commission.csv:168
+msgid "山体震动导致通道变形，临机处置坍塌与落石，清理并加固新出现的入口，恢复小队通行能力。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:169
+msgid "钥匙仪式准备"
+msgstr ""
+
+#: .\data\csv\Commission.csv:169
+msgid "确认钥匙需特定血脉与可能吸血致命，进行文献比对与物资准备（抑制剂、止血），制定应急预案。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:170
+msgid "风险揭示与抉择"
+msgstr ""
+
+#: .\data\csv\Commission.csv:170
+msgid "在对峙与谈判中揭示“钥匙需血”的真相，稳定现场局势，避免误战，完成目标物初步处置并撤离。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:171
+msgid "病房的梦与远行"
+msgstr ""
+
+#: .\data\csv\Commission.csv:171
+msgid "幽灵鲨反复梦魇，斯卡蒂探望后决定动身前往“秘密被埋葬之地”，隐线推进（记录与沟通）。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:172
+msgid "临光的长信"
+msgstr ""
+
+#: .\data\csv\Commission.csv:172
+msgid "研读临光来信，梳理骑士陵墓与黑市风险，形成行动备忘与舆情预案，完善后续处置建议。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:173
+msgid "善后与返航"
+msgstr ""
+
+#: .\data\csv\Commission.csv:173
+msgid "协助滴水村恢复秩序与物资分发，完成灾后走访与记录，整理报告后启程返航罗德岛。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:174
+msgid "信息换物"
+msgstr ""
+
+#: .\data\csv\Commission.csv:174
+msgid "斯卡蒂以“注血之物”与凯尔希进行等价交换，完成谈判与登记，获取必要情报推进研究。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:175
+msgid "阿戈尔的只言片语"
+msgstr ""
+
+#: .\data\csv\Commission.csv:175
+msgid "记录阿戈尔语只句与族裔线索，更新机密档案与后续调查方向，关闭本阶段事件。"
+msgstr ""
+
 #: .\data\csv\Confinement_Training_Setting.csv:6
 msgid "囚犯训练管理"
 msgstr ""
@@ -20637,14 +20749,26 @@ msgid "熏衣草花的淡紫色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:70
-msgid "理智的颜色"
+msgid "蓝色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:71
-msgid "体力的颜色"
+msgid "黄色"
 msgstr ""
 
 #: .\data\csv\FontConfig.csv:72
+msgid "橙色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:73
+msgid "理智的颜色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:74
+msgid "体力的颜色"
+msgstr ""
+
+#: .\data\csv\FontConfig.csv:75
 msgid "气力的颜色"
 msgstr ""
 
