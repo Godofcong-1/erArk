@@ -76,14 +76,23 @@ class ItemTextEdit(QWidget):
     def create_right_click_menu(self):
         """创建右键菜单"""
         # 创建四个一级菜单
-        chara_menu = self.right_click_menu.addMenu("角色名")
+    # 将子菜单和其项的显示字体统一为编辑器当前字体，避免系统默认样式导致不一致
+    chara_menu = self.right_click_menu.addMenu("角色名")
+    chara_menu.setFont(self.font)
         chara_nick_menu = self.right_click_menu.addMenu("角色称呼")
+        chara_nick_menu.setFont(self.font)
         common_text_menu = self.right_click_menu.addMenu("纸娃娃文本")
+        common_text_menu.setFont(self.font)
         clothing_menu = self.right_click_menu.addMenu("服装名")
+        clothing_menu.setFont(self.font)
         scene_menu = self.right_click_menu.addMenu("场景名")
+        scene_menu.setFont(self.font)
         food_menu = self.right_click_menu.addMenu("食物名")
+        food_menu.setFont(self.font)
         other_menu = self.right_click_menu.addMenu("其他")
+        other_menu.setFont(self.font)
         draw_menu = self.right_click_menu.addMenu("绘制")
+        draw_menu.setFont(self.font)
 
         # 角色名菜单项
         chara_items = [
@@ -163,11 +172,27 @@ class ItemTextEdit(QWidget):
         other_items = [
             {"text": "当前书籍名字", "slot": lambda: self.insert_text('{BookName}')},
             {"text": "当前行为榨出母乳的毫升数", "slot": lambda: self.insert_text('{MilkMl}')},
+            {"text": "跳过每行确认，直接显示到最后一行", "slot": lambda: self.insert_text('{Jump}')},
         ]
 
         # 绘制菜单项
         draw_items = [
-            {"text": "跳过每行确认，直接显示到最后一行", "slot": lambda: self.insert_text('{Jump}')},
+            {"text": "加粗", "slot": lambda: self.insert_text('<bold></bold>')},
+            {"text": "斜体", "slot": lambda: self.insert_text('<italic></italic>')},
+            {"text": "下划线", "slot": lambda: self.insert_text('<underline></underline>')},
+            {"text": "红色", "slot": lambda: self.insert_text('<red></red>')},
+            {"text": "绿色", "slot": lambda: self.insert_text('<green></green>')},
+            {"text": "蓝色", "slot": lambda: self.insert_text('<blue></blue>')},
+            {"text": "黄色", "slot": lambda: self.insert_text('<yellow></yellow>')},
+            {"text": "粉色", "slot": lambda: self.insert_text('<pink></pink>')},
+            {"text": "紫色", "slot": lambda: self.insert_text('<purple></purple>')},
+            {"text": "橙色", "slot": lambda: self.insert_text('<orange></orange>')},
+            {"text": "金黄色", "slot": lambda: self.insert_text('<gold_enrod></gold_enrod>')},
+            {"text": "体力颜色", "slot": lambda: self.insert_text('<hp_point></hp_point>')},
+            {"text": "气力颜色", "slot": lambda: self.insert_text('<mp_point></mp_point>')},
+            {"text": "理智颜色", "slot": lambda: self.insert_text('<sanity></sanity>')},
+            {"text": "精液颜色", "slot": lambda: self.insert_text('<semen></semen>')},
+            {"text": "尿液颜色", "slot": lambda: self.insert_text('<khaki></khaki>')},
         ]
 
         # 将菜单项添加到对应的一级菜单中

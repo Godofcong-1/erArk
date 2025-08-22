@@ -2,7 +2,7 @@ import random
 import re
 from types import FunctionType
 
-from Script.Core import cache_control, game_type, value_handle, get_text, constant
+from Script.Core import cache_control, game_type, value_handle, get_text, constant, rich_text
 from Script.Design import map_handle, handle_premise
 from Script.UI.Moudle import draw
 from Script.Config import normal_config, game_config
@@ -233,8 +233,10 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
             tar_text_color = target_character_data.text_color
             if text_color:
                 now_draw.style = character_data.name
+                final_color = character_data.name
             elif tar_text_color:
                 now_draw.style = target_character_data.name
+                final_color = target_character_data.name
             # 翻译口上
             if normal_config.config_normal.language != "zh_CN" and cache.ai_setting.ai_chat_translator_setting == 2:
                 now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text, translator=True)
@@ -252,7 +254,13 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
                 now_talk_text = handle_chat_ai.judge_use_text_ai(character_id, now_behavior_id, now_talk_text)
                 now_draw.width = normal_config.config_normal.text_width
                 now_draw.text = now_talk_text
-        now_draw.draw()
+        # 进行原文本的绘制，现已被富文本绘制替代
+        # now_draw.draw()
+        # 进行富文本的绘制
+        rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color)
+        for rich_text_draw in rich_text_draw_list:
+            rich_text_draw.width = normal_config.config_normal.text_width
+            rich_text_draw.draw()
         # 在最后进行一次换行和等待
         if special_code[0]:
             wait_draw = draw.LineFeedWaitDraw()

@@ -551,3 +551,49 @@ def init_style():
             style.underline,
             style.italic,
         )
+    # 额外注册三个通用修饰符 tag，便于在文本中单独使用或与基础样式组合：
+    # 这些 tag 注册时不改变前景色/背景色/字体，只设置字体属性（bold/underline/italic）
+    # 使用空的 foreground/background ("") 以及默认字体，以便只体现修饰符效果
+    modifier_font = normal_config.config_normal.font
+    modifier_size = normal_config.config_normal.font_size
+    # bold
+    style_def("bold", "", "", modifier_font, modifier_size, "1", "0", "0")
+    # underline
+    style_def("underline", "", "", modifier_font, modifier_size, "0", "1", "0")
+    # italic
+    style_def("italic", "", "", modifier_font, modifier_size, "0", "0", "1")
+    # 为了让修饰符与基础样式组合时也能生效，预先为每个基础样式注册所有修饰符的组合样式。
+    # 组合名采用 base_mod1_mod2 形式，例如 "green_bold_italic"，不会包含空格，方便前端作为 tag 使用。
+    modifier_names = ["bold", "underline", "italic"]
+    # 生成所有非空子集组合（共 2^3 - 1 = 7 种）
+    from itertools import combinations
+
+    base_style_names = list(game_config.config_font_data.keys())
+    for base in base_style_names:
+        # 找到基础样式的数据（若存在于 config_font）以复制颜色/字体设置
+        style_obj = None
+        if base in game_config.config_font_data:
+            base_id = game_config.config_font_data[base]
+            if base_id in game_config.config_font:
+                style_obj = game_config.config_font[base_id]
+        # 若没找到 style_obj，则使用标准样式作为基准
+        if style_obj is None:
+            style_obj = standard_data
+
+        # 对 1..3 个修饰符的所有组合进行注册
+        for r in range(1, len(modifier_names) + 1):
+            for combo in combinations(modifier_names, r):
+                combo_name = base + "_" + "_".join(combo)
+                bold_flag = "1" if "bold" in combo else "0"
+                underline_flag = "1" if "underline" in combo else "0"
+                italic_flag = "1" if "italic" in combo else "0"
+                style_def(
+                    combo_name,
+                    style_obj.foreground,
+                    style_obj.background,
+                    style_obj.font if hasattr(style_obj, 'font') and style_obj.font else normal_config.config_normal.font,
+                    normal_config.config_normal.font_size,
+                    bold_flag,
+                    underline_flag,
+                    italic_flag,
+                )
