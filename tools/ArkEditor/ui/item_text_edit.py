@@ -76,9 +76,9 @@ class ItemTextEdit(QWidget):
     def create_right_click_menu(self):
         """创建右键菜单"""
         # 创建四个一级菜单
-    # 将子菜单和其项的显示字体统一为编辑器当前字体，避免系统默认样式导致不一致
-    chara_menu = self.right_click_menu.addMenu("角色名")
-    chara_menu.setFont(self.font)
+        # 将子菜单和其项的显示字体统一为编辑器当前字体，避免系统默认样式导致不一致
+        chara_menu = self.right_click_menu.addMenu("角色名")
+        chara_menu.setFont(self.font)
         chara_nick_menu = self.right_click_menu.addMenu("角色称呼")
         chara_nick_menu.setFont(self.font)
         common_text_menu = self.right_click_menu.addMenu("纸娃娃文本")
