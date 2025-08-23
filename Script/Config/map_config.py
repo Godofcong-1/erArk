@@ -153,6 +153,9 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                     # now_rich_draw_list: List[game_type.MapDraw] = []  # 初始化富文本绘制列表
                     now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")  # 获取富文本样式列表
                     new_x_list = rich_text.remove_rich_cache(new_x_list)  # 清除富文本缓存
+                    # 确保 now_style_list 与 new_x_list 长度一致；若不足则用默认样式填充
+                    if len(now_style_list) < len(new_x_list):
+                        now_style_list.extend(["standard"] * (len(new_x_list) - len(now_style_list)))
                     while 1:
                         # 循环处理每个字符和对应的样式
                         if not len(new_x_list):
@@ -160,19 +163,24 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                             break
                         now_rich_draw = game_type.MapDrawText()  # 创建一个新的富文本绘制对象
                         now_rich_draw.text = new_x_list[0]  # 设置绘制文本为new_x_list的第一个字符
-                        now_rich_draw.style = now_style_list[0]  # 设置绘制样式为now_style_list的第一个样式
-                        now_style_list = now_style_list[1:]  # 移除已处理的样式
+                        # 安全获取样式：若样式列表为空则回退为默认
+                        now_rich_draw.style = now_style_list[0] if now_style_list else "standard"
+                        if now_style_list:
+                            now_style_list = now_style_list[1:]  # 移除已处理的样式
                         new_x_list = new_x_list[1:]  # 移除已处理的字符
                         while 1:
                             # 循环添加相同样式的字符到now_rich_draw.text
                             if not len(new_x_list):
                                 # 如果new_x_list为空，则跳出循环
                                 break
-                            if now_style_list[0] != now_rich_draw.style:
+                            # 若样式列表已耗尽或下一个样式不同则跳出
+                            next_style = now_style_list[0] if now_style_list else "standard"
+                            if next_style != now_rich_draw.style:
                                 # 如果下一个字符的样式与当前不同，则跳出循环
                                 break
                             now_rich_draw.text += new_x_list[0]  # 添加字符到now_rich_draw.text
-                            now_style_list = now_style_list[1:]  # 移除已处理的样式
+                            if now_style_list:
+                                now_style_list = now_style_list[1:]  # 移除已处理的样式
                             new_x_list = new_x_list[1:]  # 移除已处理的字符
                         now_draw_list.draw_list.append(now_rich_draw)  # 将now_rich_draw添加到绘制列表中
                         now_draw_list.width += len(now_rich_draw.text)  # 更新绘制列表的宽度
@@ -193,28 +201,34 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
             now_rich_draw_list:List[game_type.MapDraw] = []
             now_style_list = rich_text.get_rich_text_print(new_x_list, "standard")
             new_x_list = rich_text.remove_rich_cache(new_x_list)
-            # test_flag = False
+            # test_flag = True
             # if 'emoji' in now_style_list:
             #     test_flag = True
             #     print(f"debug 总：now_style_list = {now_style_list}")
             #     print(f"debug 总：new_x_list = {new_x_list}")
+            # 保证样式列表长度不小于字符数，缺失则填充默认样式，避免索引错误
+            if len(now_style_list) < len(new_x_list):
+                now_style_list.extend(["standard"] * (len(new_x_list) - len(now_style_list)))
             while 1:
-                if not len(new_x_list) or not len(now_style_list):
+                if not len(new_x_list):
                     break
                 now_rich_draw = game_type.MapDrawText()
                 now_rich_draw.text = new_x_list[0]
-                now_rich_draw.style = now_style_list[0]
-                now_style_list = now_style_list[1:]
+                now_rich_draw.style = now_style_list[0] if now_style_list else "standard"
+                if now_style_list:
+                    now_style_list = now_style_list[1:]
                 new_x_list = new_x_list[1:]
                 # if test_flag:
                 #     print(f"debug now_rich_draw.style = {now_rich_draw.style}")
                 while 1:
                     if not len(new_x_list):
                         break
-                    if now_style_list[0] != now_rich_draw.style:
+                    next_style = now_style_list[0] if now_style_list else "standard"
+                    if next_style != now_rich_draw.style:
                         break
                     now_rich_draw.text += new_x_list[0]
-                    now_style_list = now_style_list[1:]
+                    if now_style_list:
+                        now_style_list = now_style_list[1:]
                     new_x_list = new_x_list[1:]
                     # if test_flag:
                     #     print(f"debug 分：now_rich_draw.text = {now_rich_draw.text}")

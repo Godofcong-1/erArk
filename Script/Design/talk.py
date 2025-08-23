@@ -226,6 +226,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         # 角色口上
+        final_color = "standard"
         if unusual_talk_flag:
             # 口上文本的，角色文本颜色
             target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -257,7 +258,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         # 进行原文本的绘制，现已被富文本绘制替代
         # now_draw.draw()
         # 进行富文本的绘制
-        rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color)
+        rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color, wait_flag=True)
         for rich_text_draw in rich_text_draw_list:
             rich_text_draw.width = normal_config.config_normal.text_width
             rich_text_draw.draw()

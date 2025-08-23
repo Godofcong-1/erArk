@@ -44,8 +44,6 @@ def get_rich_text_draw_list(now_text: str, base_style: str = "standard", wait_fl
     while len(new_x_list) > 0:
         # 创建新的文本绘制对象实例
         now_rich_draw = draw.NormalDraw()
-        if wait_flag:
-            now_rich_draw = draw.LineFeedWaitDraw()
         # 为当前绘制对象初始化文本和样式
         now_rich_draw.text = new_x_list[0]
         now_rich_draw.style = now_style_list[0]
@@ -54,16 +52,26 @@ def get_rich_text_draw_list(now_text: str, base_style: str = "standard", wait_fl
         new_x_list = new_x_list[1:]
         # 合并连续字符样式相同的文本
         while len(new_x_list) > 0:
-            # 如果下一字符的样式与当前绘制对象样式不同，则跳出合并循环
-            if now_style_list[0] != now_rich_draw.style:
+            # 如果下一字符的样式与当前绘制对象样式不同，或文本为单换行符，则跳出合并循环
+            if now_style_list[0] != now_rich_draw.style or now_rich_draw.text == '\n':
+                # 如果当前文本最后为换行符，且需要等待绘制，则将当前绘制对象改为 LineFeedWaitDraw
+                if wait_flag and '\n' in now_rich_draw.text:
+                    now_text = now_rich_draw.text
+                    now_style = now_rich_draw.style
+                    now_rich_draw = draw.LineFeedWaitDraw()
+                    now_rich_draw.text = now_text
+                    now_rich_draw.style = now_style
+                    # print(f"[RICH_DEBUG] 变为换行绘制: {now_rich_draw.text}")
                 break
             # 合并文本，并移除合并的字符和对应样式
             now_rich_draw.text += new_x_list[0]
             now_style_list = now_style_list[1:]
             new_x_list = new_x_list[1:]
         # 将构造好的绘制对象添加到绘制列表中
+        # print(f"[RICH_DEBUG] now_rich_draw.text = {now_rich_draw.text}, now_rich_draw.style = {now_rich_draw.style}")
         rich_text_draw_list.append(now_rich_draw)
     # 返回构造好的富文本绘制列表
+    # print(f"[RICH_DEBUG] rich_text_draw_list = {rich_text_draw_list}")
     return rich_text_draw_list
 
 def get_rich_text_print(text_message: str, default_style: str) -> list:
@@ -82,6 +90,10 @@ def get_rich_text_print(text_message: str, default_style: str) -> list:
     # - 若只有基础样式（颜色）则为字符串，例如 "standard"；
     # - 若包含修饰符则为元组，例如 ("green", "bold", "italic")，以便在 tkinter/web 层
     #   将多个 tag 一起应用（Text.insert 接受一个样式元组）。
+
+    # 把字符串形式的换行符 "\\n" 转为真实换行，保持解析与 remove_rich_cache 一致
+    if '\\n' in text_message:
+        text_message = text_message.replace('\\n', '\n')
 
     # 可用的基础样式名集合（颜色/字体样式）
     style_name_set = set(game_config.config_font_data.keys())
@@ -188,25 +200,13 @@ def remove_rich_cache(string: str) -> str:
     Keyword arguments:
     string -- 原始文本
     """
-    # 移除基础样式标签（来自 config_font_data）以及我们新增的修饰符标签
-    style_name_list = list(game_config.config_font_data.keys())
-    modifier_names = ["bold", "underline", "italic"]
+    # 使用正则一次性移除所有形式的 <...> 标签，避免遗漏未在 config 注册的自定义标签
+    import re
 
-    for name in style_name_list:
-        head = "<" + name + ">"
-        tail = "</" + name + ">"
-        if head in string:
-            string = string.replace(head, "")
-        if tail in string:
-            string = string.replace(tail, "")
+    # 首先把文本中以两个字符表示的换行 '\n' 转回真实换行，
+    # 同时保留字符串中真正的换行符不被影响。
+    string = string.replace('\\n', '\n')
 
-    # 移除修饰符标签
-    for name in modifier_names:
-        head = f"<{name}>"
-        tail = f"</{name}>"
-        if head in string:
-            string = string.replace(head, "")
-        if tail in string:
-            string = string.replace(tail, "")
-
-    return string
+    # 匹配形如 <tag> 或 </tag> 或 <tag attr=".."> 之类的标签
+    cleaned = re.sub(r"<[^>]+>", "", string)
+    return cleaned

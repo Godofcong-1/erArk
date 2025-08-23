@@ -241,7 +241,7 @@ def judge_character_status(character_id: int) -> int:
             second_settle_panel.draw()
         #进行一次暂停以便玩家看输出信息
         if character_id == 0:
-            wait_draw = draw.LineFeedWaitDraw()
+            wait_draw = draw.WaitDraw()
             wait_draw.text = "\n"
             wait_draw.width = window_width
             wait_draw.draw()
