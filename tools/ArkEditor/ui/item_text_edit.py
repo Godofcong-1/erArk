@@ -33,6 +33,13 @@ class ItemTextEdit(QWidget):
         # 加入玩家名字按钮
         self.insert_player_name_button = QPushButton("插入玩家名字")
         self.insert_player_name_button.clicked.connect(lambda: self.insert_text('{PlayerName}'))
+        # 格式按钮：加粗/斜体/下划线
+        self.bold_button = QPushButton("加粗")
+        self.bold_button.clicked.connect(lambda: self.apply_inline_tag('bold'))
+        self.italic_button = QPushButton("斜体")
+        self.italic_button.clicked.connect(lambda: self.apply_inline_tag('italic'))
+        self.underline_button = QPushButton("下划线")
+        self.underline_button.clicked.connect(lambda: self.apply_inline_tag('underline'))
         # 加入一行文本提示
         self.max_length = 0
         self.info_label = QLabel()
@@ -43,6 +50,9 @@ class ItemTextEdit(QWidget):
         button_layout.addWidget(self.insert_name_button)
         button_layout.addWidget(self.insert_target_name_button)
         button_layout.addWidget(self.insert_player_name_button)
+        button_layout.addWidget(self.bold_button)
+        button_layout.addWidget(self.italic_button)
+        button_layout.addWidget(self.underline_button)
         label_layout.addLayout(button_layout)
         label_layout.addWidget(self.info_label)
         # 加入文本编辑框
@@ -217,6 +227,31 @@ class ItemTextEdit(QWidget):
     def show_right_click_menu_event(self, pos):
         """显示右键菜单（修正方法名避免遮盖）"""
         self.right_click_menu.exec_(self.label_text.mapToGlobal(pos))
+
+    def apply_inline_tag(self, tag_name: str):
+        """在选中文本两侧插入左右标签；若无选区则插入完整标签并把光标移到中间。
+
+        示例:
+            apply_inline_tag('bold') -> 若有选中文本：在选区前插入 '<bold>'，在选区后插入 '</bold>'
+                                    -> 若无选区：插入 '<bold></bold>' 并将光标放到标签中间
+        """
+        te = self.label_text
+        cursor = te.textCursor()
+        selected_text = cursor.selectedText()
+        left_tag = f'<{tag_name}>'
+        right_tag = f'</{tag_name}>'
+
+        if selected_text:
+            # 包裹选区：用左标签 + 选中文本 + 右标签替换选区
+            cursor.insertText(f'{left_tag}{selected_text}{right_tag}')
+            # 插入后光标默认在插入内容末端，无需额外调整
+        else:
+            # 无选区：插入完整标签并将光标移动到两标签之间
+            insert_pos = cursor.position()
+            cursor.insertText(f'{left_tag}{right_tag}')
+            # 将光标移动到左标签之后的位置以便用户继续输入
+            cursor.setPosition(insert_pos + len(left_tag))
+            te.setTextCursor(cursor)
 
     def insert_text(self, text):
         """右键菜单插入文本"""
