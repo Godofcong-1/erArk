@@ -40,25 +40,38 @@ class ItemTextEdit(QWidget):
         self.italic_button.clicked.connect(lambda: self.apply_inline_tag('italic'))
         self.underline_button = QPushButton("下划线")
         self.underline_button.clicked.connect(lambda: self.apply_inline_tag('underline'))
+        # 预览按钮（切换编辑/预览）
+        self.preview_button = QPushButton("预览")
+        self.preview_button.setCheckable(True)
+        self.preview_button.clicked.connect(self.toggle_preview)
         # 加入一行文本提示
         self.max_length = 0
         self.info_label = QLabel()
         self.info_label.setText(f"右键可浏览全部代码文本进行插入，当前最长行字符总长度为{self.max_length}，建议不要超过100")
-        # 上述三个按钮的布局变成横向
-        button_layout = QHBoxLayout()
-        button_layout.addWidget(self.save_button)
-        button_layout.addWidget(self.insert_name_button)
-        button_layout.addWidget(self.insert_target_name_button)
-        button_layout.addWidget(self.insert_player_name_button)
-        button_layout.addWidget(self.bold_button)
-        button_layout.addWidget(self.italic_button)
-        button_layout.addWidget(self.underline_button)
-        label_layout.addLayout(button_layout)
+        # 上述按钮的布局变成横向（包含预览切换）
+        insert_button_layout = QHBoxLayout()
+        insert_button_layout.addWidget(self.save_button)
+        insert_button_layout.addWidget(self.insert_name_button)
+        insert_button_layout.addWidget(self.insert_target_name_button)
+        insert_button_layout.addWidget(self.insert_player_name_button)
+        style_button_layout = QHBoxLayout()
+        style_button_layout.addWidget(self.bold_button)
+        style_button_layout.addWidget(self.italic_button)
+        style_button_layout.addWidget(self.underline_button)
+        style_button_layout.addWidget(self.preview_button)
+        label_layout.addLayout(insert_button_layout)
+        label_layout.addLayout(style_button_layout)
         label_layout.addWidget(self.info_label)
         # 加入文本编辑框
         self.now_text = ""
         self.label_text = QTextEdit(self.now_text)
         label_layout.addWidget(self.label_text)
+
+        # 预览区域（只读，用于展示渲染后的 HTML）
+        self.preview_edit = QTextEdit()
+        self.preview_edit.setReadOnly(True)
+        self.preview_edit.setVisible(False)
+        label_layout.addWidget(self.preview_edit)
 
         # 事件模式下的注释编辑栏（默认高度3行）
         self.comment_label = QLabel("事件注释（仅事件模式可编辑）：")
@@ -228,6 +241,36 @@ class ItemTextEdit(QWidget):
         """显示右键菜单（修正方法名避免遮盖）"""
         self.right_click_menu.exec_(self.label_text.mapToGlobal(pos))
 
+    def toggle_preview(self, checked: bool):
+        """切换编辑/预览模式；预览时把当前文本渲染为 HTML 显示在 preview_edit 中"""
+        if checked:
+            # 切换到预览模式
+            raw = self.label_text.toPlainText()
+            raw = raw.replace('\\n', '\n')
+            html = render_text_for_display(raw)
+            self.preview_edit.setHtml(html)
+            self.preview_edit.setVisible(True)
+            self.label_text.setVisible(False)
+            # 禁用其他控件以防误编辑
+            self.save_button.setEnabled(False)
+            self.insert_name_button.setEnabled(False)
+            self.insert_target_name_button.setEnabled(False)
+            self.insert_player_name_button.setEnabled(False)
+            self.bold_button.setEnabled(False)
+            self.italic_button.setEnabled(False)
+            self.underline_button.setEnabled(False)
+        else:
+            # 返回编辑模式
+            self.preview_edit.setVisible(False)
+            self.label_text.setVisible(True)
+            self.save_button.setEnabled(True)
+            self.insert_name_button.setEnabled(True)
+            self.insert_target_name_button.setEnabled(True)
+            self.insert_player_name_button.setEnabled(True)
+            self.bold_button.setEnabled(True)
+            self.italic_button.setEnabled(True)
+            self.underline_button.setEnabled(True)
+
     def apply_inline_tag(self, tag_name: str):
         """在选中文本两侧插入左右标签；若无选区则插入完整标签并把光标移到中间。
 
@@ -308,3 +351,50 @@ class ItemTextEdit(QWidget):
     def show_right_click_menu(self, pos):
         """显示右键菜单"""
         self.right_click_menu.exec_(self.label_text.mapToGlobal(pos))
+
+
+def render_text_for_display(raw_text: str) -> str:
+    """把自定义标签转换为 HTML 并返回完整的 HTML 字符串。
+
+    支持标签：bold/italic/underline -> b/i/u
+            颜色标签 (red, green, blue, yellow, pink, purple, orange, gold_enrod)
+            特殊颜色标签 (hp_point, mp_point, sanity, semen, khaki) 映射为样式颜色名或 hex
+    """
+    tag_map = {
+        'bold': ('b', None),
+        'italic': ('i', None),
+        'underline': ('u', None),
+        'red': ('span', 'color:red'),
+        'green': ('span', 'color:green'),
+        'blue': ('span', 'color:blue'),
+        'yellow': ('span', 'color:yellow'),
+        'pink': ('span', 'color:pink'),
+        'purple': ('span', 'color:purple'),
+        'orange': ('span', 'color:orange'),
+        'gold_enrod': ('span', 'color:goldenrod'),
+        'hp_point': ('span', 'color:#ff5a5a'),
+        'mp_point': ('span', 'color:#70c070'),
+        'sanity': ('span', 'color:#7272bc'),
+        'semen': ('span', 'color:#fffacd'),
+        'khaki': ('span', 'color:#f0e68c'),
+    }
+
+    html = raw_text
+    for custom_tag, (html_tag, style) in tag_map.items():
+        open_tag = f'<{custom_tag}>'
+        close_tag = f'</{custom_tag}>'
+        if style:
+            replacement_open = f'<{html_tag} style="{style}">'
+        else:
+            replacement_open = f'<{html_tag}>'
+        replacement_close = f'</{html_tag}>'
+        html = html.replace(open_tag, replacement_open).replace(close_tag, replacement_close)
+
+    # 将换行转换为 <br>
+    html = html.replace('\n', '<br>')
+
+    # 使用当前字体和大小包裹
+    font_name = getattr(cache_control, 'now_font_name', 'sans-serif')
+    font_size = getattr(cache_control, 'now_font_size', 12)
+    safe_html = f"<div style='font-family:{font_name}; font-size:{font_size}pt;'>{html}</div>"
+    return safe_html
