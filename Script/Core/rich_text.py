@@ -20,10 +20,11 @@ def get_rich_text_draw_panel(now_text: str) -> panel.LeftDrawTextListPanel:
     now_draw = panel.LeftDrawTextListPanel()
     rich_text_draw_list = get_rich_text_draw_list(now_text)
     # 将富文本绘制列表添加到绘制面板中
-    now_draw.draw_list.append(rich_text_draw_list)
-    # 计算绘制面板的总宽度
-    for rich_draw in rich_text_draw_list:
-        now_draw.width += len(rich_draw.text)
+    if rich_text_draw_list:
+        now_draw.draw_list.append(rich_text_draw_list)
+        # 计算绘制面板的总宽度
+        for rich_draw in rich_text_draw_list:
+            now_draw.width += len(rich_draw.text)
     # 返回构造好的富文本绘制面板
     return now_draw
 
@@ -36,6 +37,19 @@ def get_rich_text_draw_list(now_text: str, base_style: str = "standard", wait_fl
     wait_flag -- 是否需要等待绘制，默认为False
     """
     rich_text_draw_list = []
+    # 如果文本为空则直接返回空列表
+    if not now_text:
+        return rich_text_draw_list
+    # 如果文本为单换行符，则直接返回一个换行绘制对象
+    if now_text == '\n':
+        now_rich_draw = draw.NormalDraw()
+        now_rich_draw.text = '\n'
+        now_rich_draw.style = base_style
+        rich_text_draw_list.append(now_rich_draw)
+        return rich_text_draw_list
+    # 如果now_text的最后不是换行符，则添加一个换行符，确保文本正确结束
+    if now_text and now_text[-1] != '\n':
+        now_text += '\n'
     # 调用已有函数获取各字符对应的富文本样式列表
     now_style_list = get_rich_text_print(now_text, base_style)
     # 调用已有函数移除原始文本中的富文本标签，获得实际文本列表
