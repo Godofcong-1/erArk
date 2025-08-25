@@ -33,6 +33,8 @@ class Behavior:
     """ 淋浴 """
     GET_UP = "get_up"
     """ 起床 """
+    SIMPLE_SHOWER = "simple_shower"
+    """ 简易洗澡 """
     FOLLOW = "follow"
     """ 让NPC跟随玩家 """
     END_FOLLOW = "end_follow"

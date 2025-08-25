@@ -18,8 +18,9 @@ int,str,str,int,str,str
 104,massage,按摩,30,both,日常
 110,rest,休息,60,both,日常
 111,sleep,睡觉,-1,both,日常
-112,take_shower,淋浴,15,both,日常
+112,take_shower,淋浴,30,both,日常
 113,get_up,起床,5,npc,日常
+114,simple_shower,简易洗澡,10,npc,日常
 115,follow,让NPC跟随玩家,5,pl,日常
 116,end_follow,让NPC停止跟随玩家,5,pl,日常
 117,apologize,道歉,60,pl,日常

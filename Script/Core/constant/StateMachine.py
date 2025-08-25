@@ -23,6 +23,8 @@ class StateMachine:
     PEE = 50
     """ 解手 """
 
+    SIMPLE_SHOWER = 70
+    """ 简易洗澡 """
     START_SHOWER = 71
     """ 进入要脱衣服（洗澡）状态 """
     WEAR_TO_LOCKER = 72

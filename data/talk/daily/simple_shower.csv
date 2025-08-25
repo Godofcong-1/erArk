@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+1,simple_shower,0,high_1,{Name}打开水龙头，用水简单冲洗一下身上的汗渍和污垢，然后关掉了水龙头
+2,simple_shower,0,high_1,{Name}站在水流下，快速用水冲洗全身，简单清洁后关掉水
+3,simple_shower,0,high_1,{Name}打开水龙头，用水冲洗了一下身体，然后关掉了水龙头

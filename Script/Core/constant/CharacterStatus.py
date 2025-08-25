@@ -31,6 +31,8 @@ class CharacterStatus:
     """ 淋浴 """
     STATUS_GET_UP = 113
     """ 起床 """
+    STATUS_SIMPLE_SHOWER = 114
+    """ 简易洗澡 """
     STATUS_FOLLOW = 115
     """ NPC跟随玩家 """
     STATUS_END_FOLLOW = 116

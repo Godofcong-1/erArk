@@ -2077,6 +2077,19 @@ def character_take_shower(character_id: int):
     character_data.behavior.duration = 30
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.SIMPLE_SHOWER)
+def character_simple_shower(character_id: int):
+    """
+    角色简易洗澡
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.SIMPLE_SHOWER
+    character_data.behavior.duration = 10
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.GET_SHOWER_CLOTH_AND_CLEAN_LOCKER)
 def character_get_shower_cloth_and_clean_locker(character_id: int):
     """
