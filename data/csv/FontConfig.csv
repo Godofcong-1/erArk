@@ -34,7 +34,7 @@ int,str,str,str,str,int,bool,bool,bool,str,str
 28,green,#008000,,,,,,,,绿色，有NPC的地点
 29,dark_green,#006400,,,,,,,,深绿色
 30,hot_pink,#ff69b4,,,,,,,,亮粉
-31,deep_pink,#ff1493,,,,,,,,深粉
+31,deep_pink,#ff1493,,,,,,,,深粉，插入
 32,dark_slate_blue,#483d8b,,,,,,,,深岩暗蓝灰色（角色负面状态）
 33,little_dark_slate_blue,#5550aa,,,,,,,,比深岩暗蓝灰色亮一点（睡眠）
 34,slate_blue,#6a5acd,,,,,,,,岩暗蓝灰色

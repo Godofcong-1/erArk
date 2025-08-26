@@ -171,30 +171,52 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
         # 体力/气力/射精/理智的结算输出
         if change_data.hit_point and round(change_data.hit_point, 2) != 0:
-            now_text += "\n  <hp_point>" + _("体力") + text_handle.number_to_symbol_string(int(change_data.hit_point)) + "</hp_point>"
+            now_text += "\n  <hp_point>" + _("体力") + "　"*4 + text_handle.number_to_symbol_string(int(change_data.hit_point)) + "</hp_point>"
         if change_data.mana_point and round(change_data.mana_point, 2) != 0:
-            now_text += "\n  <mp_point>" + _("气力") + text_handle.number_to_symbol_string(int(change_data.mana_point)) + "</mp_point>"
+            now_text += "\n  <mp_point>" + _("气力") + "　"*4 + text_handle.number_to_symbol_string(int(change_data.mana_point)) + "</mp_point>"
         if change_data.eja_point and round(change_data.eja_point, 2) != 0:
-            now_text += "\n  <semen>" + _("射精") + text_handle.number_to_symbol_string(int(change_data.eja_point)) + "</semen>"
+            now_text += "\n  <semen>" + _("射精欲") + "　"*3 + text_handle.number_to_symbol_string(int(change_data.eja_point)) + "</semen>"
         if change_data.sanity_point and round(change_data.sanity_point, 2) != 0:
-            now_text += "\n  <sanity>" + _("理智") + text_handle.number_to_symbol_string(int(change_data.sanity_point)) + "</sanity>"
+            now_text += "\n  <sanity>" + _("理智") + "　"*4 + text_handle.number_to_symbol_string(int(change_data.sanity_point)) + "</sanity>"
 
         # 状态的结算输出
         if len(change_data.status_data) and not exchange_flag:
-            for i in change_data.status_data:
+            # 获取排序后的状态列表，按 type 排序（快感 type==0 在前）
+            resort_state_list = [
+                status_id
+                for status_id in game_config.config_character_state
+                if status_id in change_data.status_data and change_data.status_data[status_id] != 0
+            ]
+            resort_state_list.sort(key=lambda sid: game_config.config_character_state[sid].type)
+            # 遍历排序后的状态列表进行输出
+            for status_id in resort_state_list:
                 # 获取状态对应的富文本颜色
-                color_text = rich_text.get_chara_state_rich_color(i)
+                color_text = rich_text.get_chara_state_rich_color(status_id)
                 now_text += f"\n  <{color_text}>"
+                state_name = game_config.config_character_state[status_id].name
+                # 快感则增加快感文字
+                if game_config.config_character_state[status_id].type == 0:
+                    state_name += _("快感")
+                # 补全对齐
+                state_name = f"{state_name.ljust(6,'　')}"
                 now_text += (
-                    f"{game_config.config_character_state[i].name}{attr_text.get_value_text(int(change_data.status_data[i]))}"
+                    state_name + 
+                    attr_text.get_value_text(int(change_data.status_data[status_id]))
                 )
+                # 获取新旧状态等级
+                new_state_level = attr_calculation.get_status_level(now_character_data.status_data[status_id])
+                old_state_level = attr_calculation.get_status_level(now_character_data.status_data[status_id] - change_data.status_data[status_id])
+                # 如果状态等级有变化则显示
+                if new_state_level != old_state_level:
+                    now_text += f" (lv{old_state_level}->{new_state_level})"
                 now_text += f"</{color_text}>"
 
         # 经验的结算输出
         if len(change_data.experience):
-            for i in change_data.experience:
+            for experience_id in change_data.experience:
+                experience_name = f"{game_config.config_experience[experience_id].name.ljust(6,'　')}"
                 now_text += (
-                    f"\n  <medium_spring_green>{game_config.config_experience[i].name}{attr_text.get_value_text(int(change_data.experience[i]))}</medium_spring_green>"
+                    f"\n  <medium_spring_green>{experience_name}{attr_text.get_value_text(int(change_data.experience[experience_id]))}</medium_spring_green>"
                 )
 
         # 非常见结算输出
@@ -249,30 +271,20 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
 
                 # 体力/气力/好感/信赖/催眠度的结算输出
                 if target_change.hit_point and round(target_change.hit_point, 2) != 0:
-                    now_text += _("\n  <hp_point>") + _("体力") + text_handle.number_to_symbol_string(int(target_change.hit_point)) + "</hp_point>"
+                    now_text += _("\n  <hp_point>") + _("体力") + "　"*4 + text_handle.number_to_symbol_string(int(target_change.hit_point)) + "</hp_point>"
                     judge = 1
                 if target_change.mana_point and round(target_change.mana_point, 2) != 0:
-                    now_text += "\n  <mp_point>" + _("气力") + text_handle.number_to_symbol_string(int(target_change.mana_point)) + "</mp_point>"
+                    now_text += "\n  <mp_point>" + _("气力") + "　"*4 + text_handle.number_to_symbol_string(int(target_change.mana_point)) + "</mp_point>"
                     judge = 1
                 if target_change.favorability:
-                    now_text += "\n  <light_pink>"
-                    now_text += _("对{character_name}{character_nick_name}好感").format(
-                        character_name=now_character_data.name,
-                        character_nick_name=now_character_data.nick_name
-                    ) + text_handle.number_to_symbol_string(int(target_change.favorability))
-                    now_text += "</light_pink>"
+                    now_text += "\n  <light_pink>" + _("好感") + "　"*4 + text_handle.number_to_symbol_string(int(target_change.favorability)) + "</light_pink>"
                     judge = 1
                 if target_change.trust:
-                    now_text += "\n  <summer_green>"
-                    now_text += _("对{character_name}{character_nick_name}信赖").format(
-                        character_name=now_character_data.name,
-                        character_nick_name=now_character_data.nick_name
-                    ) + text_handle.number_to_symbol_string(float(format(target_change.trust, '.2f'))) + "%"
-                    now_text += "</summer_green>"
+                    now_text += "\n  <summer_green>" + _("信赖") + "　"*4 + text_handle.number_to_symbol_string(float(format(target_change.trust, '.2f'))) + "%</summer_green>"
                     judge = 1
                 if target_change.hypnosis_degree:
                     hypnosis_color = hypnosis_panel.get_hypnosis_degree_color(target_data.hypnosis.hypnosis_degree)
-                    now_text += f"\n  <{hypnosis_color}>" + _("催眠度") + text_handle.number_to_symbol_string(float(format(target_change.hypnosis_degree, '.1f'))) + f"%</{hypnosis_color}>"
+                    now_text += f"\n  <{hypnosis_color}>" + _("催眠度") + "　"*3 + text_handle.number_to_symbol_string(float(format(target_change.hypnosis_degree, '.1f'))) + f"%</{hypnosis_color}>"
                     judge = 1
                 # if target_change.new_social != target_change.old_social:
                 #     now_text += (
@@ -284,26 +296,44 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                 #     judge = 1
                 # 状态的结算输出
                 if len(target_change.status_data):
-                    for status_id in target_change.status_data:
-                        if target_change.status_data[status_id]:
-                            # 获取状态对应的富文本颜色
-                            color_text = rich_text.get_chara_state_rich_color(status_id)
-                            now_text += f"\n  <{color_text}>"
-                            now_text += (
-                                    game_config.config_character_state[status_id].name
-                                    + text_handle.number_to_symbol_string(
-                                int(target_change.status_data[status_id])
-                            )
-                            )
-                            now_text += f"</{color_text}>"
-                            judge = 1
+                    # 获取排序后的状态列表，按 type 排序（快感 type==0 在前）
+                    resort_state_list = [
+                        status_id
+                        for status_id in game_config.config_character_state
+                        if status_id in target_change.status_data and target_change.status_data[status_id] != 0
+                    ]
+                    resort_state_list.sort(key=lambda sid: game_config.config_character_state[sid].type)
+                    # 遍历排序后的状态列表进行输出
+                    for status_id in resort_state_list:
+                        # 获取状态对应的富文本颜色
+                        color_text = rich_text.get_chara_state_rich_color(status_id)
+                        now_text += f"\n  <{color_text}>"
+                        state_name = game_config.config_character_state[status_id].name
+                        # 快感则增加快感文字
+                        if game_config.config_character_state[status_id].type == 0:
+                            state_name += _("快感")
+                        # 补全对齐
+                        state_name = f"{state_name.ljust(6,'　')}"
+                        now_text += (
+                            state_name + 
+                            text_handle.number_to_symbol_string(int(target_change.status_data[status_id]))
+                        )
+                        # 获取新旧状态等级
+                        new_state_level = attr_calculation.get_status_level(target_data.status_data[status_id])
+                        old_state_level = attr_calculation.get_status_level(target_data.status_data[status_id] - target_change.status_data[status_id])
+                        # 如果状态等级有变化则显示
+                        if new_state_level != old_state_level:
+                            now_text += f" (lv{old_state_level}->{new_state_level})"
+                        now_text += f"</{color_text}>"
+                        judge = 1
                 # 经验的结算输出
                 if len(target_change.experience):
                     for experience_id in target_change.experience:
                         if target_change.experience[experience_id]:
+                            experience_name = f"{game_config.config_experience[experience_id].name.ljust(6,'　')}"
                             now_text += (
                                     "\n  <medium_spring_green>"
-                                    + game_config.config_experience[experience_id].name
+                                    + experience_name
                                     + text_handle.number_to_symbol_string(
                                 int(target_change.experience[experience_id])
                             )

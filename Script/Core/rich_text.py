@@ -238,8 +238,17 @@ def get_chara_state_rich_color(state_id: int) -> str:
     # 快感
     if now_status_data.type == 0:
         color_text = "pastel_magenta"
+    # 欲情、快乐
+    elif state_id in {12, 13}:
+        color_text = "rose_pink"
+    # 先导、屈服、羞耻
+    elif state_id in {14, 15, 16}:
+        color_text = "deep_pink"
+    # 苦痛
+    elif state_id == 17:
+        color_text = "crimson"
     # 负面的苦痛恐怖抑郁反感
-    elif now_status_data.type == 1 and state_id in {17, 18, 19, 20}:
+    elif state_id in {18, 19, 20}:
         color_text = "slate_blue"
     # 其他
     else:
