@@ -224,3 +224,41 @@ def remove_rich_cache(string: str) -> str:
     # 匹配形如 <tag> 或 </tag> 或 <tag attr=".."> 之类的标签
     cleaned = re.sub(r"<[^>]+>", "", string)
     return cleaned
+
+def get_chara_state_rich_color(state_id: int) -> str:
+    """
+    获取角色状态的富文本颜色
+    Keyword arguments:
+        state_id -- 状态ID
+    Returns:
+        str: 状态对应的颜色名称
+    """
+    now_status_data = game_config.config_character_state[state_id]
+    color_text = 'standard'
+    # 快感
+    if now_status_data.type == 0:
+        color_text = "pastel_magenta"
+    # 负面的苦痛恐怖抑郁反感
+    elif now_status_data.type == 1 and state_id in {17, 18, 19, 20}:
+        color_text = "slate_blue"
+    # 其他
+    else:
+        color_text = "pale_cerulean"
+    return color_text
+
+def get_chara_unconscious_rich_color(unconscious_flag: int) -> str:
+    """
+    获取角色无意识状态的富文本颜色
+    Keyword arguments:
+        unconscious_flag -- 无意识状态标志
+    Returns:
+        str: 无意识状态对应的颜色名称
+    """
+    color_text = 'standard'
+    # 睡眠
+    if unconscious_flag == 1:
+        color_text = "little_dark_slate_blue"
+    # 时停
+    elif unconscious_flag == 3:
+        color_text = "light_sky_blue"
+    return color_text

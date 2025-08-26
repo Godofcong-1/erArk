@@ -153,7 +153,7 @@ class CharacterInfoHead:
         ):
             hypnosis_text = _(" <催眠")
             # 根据催眠程度来区分颜色
-            hypnosis_draw.style = hypnosis_panel.get_hypnosis_degree_color(self.character_id)
+            hypnosis_draw.style = hypnosis_panel.get_hypnosis_degree_color(character_data.hypnosis.hypnosis_degree)
             # 是否显示具体数值
             if cache.all_system_setting.draw_setting[4] == 2:
                 # 显示到小数点后一位

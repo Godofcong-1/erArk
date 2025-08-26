@@ -412,6 +412,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         now_draw = draw.WaitDraw()
         now_draw.text = now_text
         now_draw.width = window_width
+        now_draw.style = 'semen'
         now_draw.draw()
         line_feed.draw()
         line_feed.draw()
