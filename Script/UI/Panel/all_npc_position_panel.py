@@ -29,7 +29,7 @@ class All_Npc_Position_Panel:
         """ 绘制的最大宽度 """
         self.now_panel = _("干员位置一览")
         """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 60, 3, window_width, 1, 0, 0)
+        self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 60, 3, window_width, True, False, 0)
         """ 当前名字列表控制面板 """
         self.select_type = 0
         """ 当前筛选类型 """
@@ -44,7 +44,7 @@ class All_Npc_Position_Panel:
 
         # 非中文则每行只显示两个
         if normal_config.config_normal.language != "zh_CN":
-            self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 40, 2, window_width, 1, 0, 0)
+            self.handle_panel: panel.PageHandlePanel = panel.PageHandlePanel([], MoveSonPanel, 40, 2, window_width, True, False, 0)
         select_type_list = [_("不筛选"), _("筛选收藏干员(可在角色设置中收藏)"), _("筛选访客干员"), _("筛选未陷落干员"), _("筛选已陷落干员"), _("按名称筛选"), _("筛选同区块干员"), _("筛选无意识干员")]
         move_type_list = [_("召集到办公室"), _("召集到自己当前位置"), _("自己前去对方位置"), _("debug用对方智能跟随")]
         self.break_flag = False
@@ -104,7 +104,7 @@ class All_Npc_Position_Panel:
                     draw_text = f"  {select_type_list[select_type_id]}    "
                     now_draw_width = min(len(draw_text) * 2, self.width / 2.5)
                     now_draw = draw.LeftButton(
-                        draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=self.select_type_change, args=(select_type_id,)
+                        draw_text, select_type_list[select_type_id], int(now_draw_width), cmd_func=self.select_type_change, args=(select_type_id,)
                     )
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
@@ -132,7 +132,7 @@ class All_Npc_Position_Panel:
                     draw_text = f"  {move_type_text}  "
                     now_draw_width = min(len(draw_text) * 2, self.width / 3)
                     now_draw = draw.LeftButton(
-                        draw_text, move_type_text, now_draw_width, cmd_func=self.move_type_change, args=(move_type_id,)
+                        draw_text, move_type_text, int(now_draw_width), cmd_func=self.move_type_change, args=(move_type_id,)
                     )
                     now_draw.draw()
                     return_list.append(now_draw.return_text)
@@ -259,11 +259,14 @@ class MoveSonPanel:
         # 输出干员名字
         now_draw_text = f"[{id}]{name}"
         # 输出跟随信息
-        if character_data.sp_flag.is_follow == 1:
+        if handle_premise.handle_is_follow_1(self.chara_id):
             now_draw_text += _("(跟)")
         # 输出访客信息
-        if self.chara_id in cache.rhodes_island.visitor_info:
+        if handle_premise.handle_self_visitor_flag_1(self.chara_id):
             now_draw_text += _("(访)")
+        # 输出囚犯信息
+        if handle_premise.handle_imprisonment_1(self.chara_id):
+            now_draw_text += _("(囚)")
         # 输出地点信息
         now_draw_text += f":{scene_position_str}   "
 
