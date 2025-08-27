@@ -237,7 +237,7 @@ def get_chara_state_rich_color(state_id: int) -> str:
     color_text = 'standard'
     # 快感
     if now_status_data.type == 0:
-        color_text = "pastel_magenta"
+        color_text = "persian_pink"
     # 欲情、快乐
     elif state_id in {12, 13}:
         color_text = "rose_pink"
