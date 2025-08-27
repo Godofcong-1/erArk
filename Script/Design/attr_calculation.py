@@ -420,7 +420,7 @@ def get_cloth_locker_in_dormitory_zero() -> dict:
     return cloth_locker_data
 
 
-def get_collection_zero() -> dict:
+def get_collection_zero() -> game_type.PLAYER_COLLECTION:
     """
     遍历玩家的收藏品结构体，设为空
     """

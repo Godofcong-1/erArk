@@ -442,7 +442,6 @@ def get_swim_cloth(character_id: int):
         character_data.cloth.cloth_wear[9].append(choic_type + 980)
         chara_special_wear_cloth(character_id)
 
-
 def get_prison_cloth(character_id: int):
     """
     清零其他衣服并换上囚服的上衣和下衣
@@ -458,6 +457,20 @@ def get_prison_cloth(character_id: int):
         character_data.cloth.cloth_wear[8].append(861)
         chara_special_wear_cloth(character_id)
 
+def get_patient_cloth(character_id: int):
+    """
+    清零其他衣服并换上病号服的上衣和下衣
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    无
+    """
+    if character_id:
+        character_data = cache.character_data[character_id]
+        get_cloth_wear_zero_except_need(character_id)
+        character_data.cloth.cloth_wear[5].append(562)
+        character_data.cloth.cloth_wear[8].append(862)
+        chara_special_wear_cloth(character_id)
 
 def get_common_cloth(character_id: int):
     """
@@ -505,6 +518,12 @@ def chara_special_wear_cloth(character_id: int):
                 character_data.cloth.cloth_wear[13].append(1301)
                 # print("换上监测环了")
             return_list.append(1301)
+        # 囚犯必须戴镣铐
+        if handle_premise.handle_imprisonment_1(character_id):
+            if 1302 not in character_data.cloth.cloth_wear[13]:
+                character_data.cloth.cloth_wear[13].append(1302)
+                # print("换上镣铐了")
+            return_list.append(1302)
         # 有戒指素质的必须戴戒指
         if character_data.talent[205]:
             if 751 not in character_data.cloth.cloth_wear[7]:
@@ -520,7 +539,7 @@ def chara_special_wear_cloth(character_id: int):
     return return_list
 
 
-def get_cloth_wear_zero_except_need(character_id: int) -> dict:
+def get_cloth_wear_zero_except_need(character_id: int):
     """
     遍历当前穿着服装类型，将首饰和必要物品以外的设为空
     """

@@ -30,7 +30,7 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-def judge_pl_real_time_data() -> int:
+def judge_pl_real_time_data():
     """
     玩家实时数据结算\n
     Keyword arguments:
@@ -457,14 +457,14 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
     if handle_premise.handle_scene_over_two(character_id):
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
-            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
-            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time/2, state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+            common_default.base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+            common_default.base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
         # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
         if handle_premise.handle_scene_others_conscious(character_id):
-            # 自己未穿胸衣和内裤、自己非临盆或产后时羞耻
+            # 自己未穿胸衣和内裤、自己异常2正常时羞耻
             if (
                 handle_premise.handle_not_wear_bra_or_pan(character_id) and
-                not handle_premise.handle_self_parturient_or_postpartum(character_id)
+                handle_premise.handle_normal_2(character_id)
                 ):
                 extra = 0
                 if handle_premise.handle_not_wear_bra(character_id):
