@@ -53,9 +53,13 @@ def get_cloth_from_dormitory_locker(character_id: int):
     """
     if character_id:
         character_data = cache.character_data[character_id]
-        # 是否被监禁
+        # 监禁的根据要求换对应服装
         if handle_premise.handle_imprisonment_1(character_id):
             handle_prisoner_clothing(character_id)
+            return
+        # 临盆或产后的换病号服
+        elif handle_premise.handle_self_parturient_or_postpartum(character_id):
+            get_patient_cloth(character_id)
             return
         tem_character = cache.npc_tem_data[character_id - 1]
         tem_cloth_list = tem_character.Cloth.copy()
