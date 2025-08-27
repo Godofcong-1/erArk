@@ -1,5 +1,5 @@
 import uuid
-from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox
+from PySide6.QtWidgets import QListWidget, QMenuBar, QWidgetAction, QListWidgetItem, QAbstractItemView, QPushButton, QHBoxLayout, QWidget, QTextEdit, QLabel, QGridLayout, QMenu, QCheckBox, QSizePolicy
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont, QCursor, QColor
 from ui.list_item import ListItem
@@ -90,11 +90,22 @@ class DataList(DataListIdEditMixin, QWidget):
         self.change_all_chara_id_button.setToolTip("批量修改所有条目的角色id")
         self.change_all_chara_id_button.clicked.connect(self.change_all_chara_id)
 
-        # 根据文字长度设置菜单栏宽度
-        status_menu_width = self.status_menu.fontMetrics().boundingRect(cache_control.behavior_data[cache_control.now_behavior]).width()
-        type_menu_width = self.type_menu.fontMetrics().boundingRect(cache_control.now_type).width()
-        menu_bar_width = max(status_menu_width, type_menu_width) * 2
-        self.menu_bar.setFixedWidth(menu_bar_width)
+        # 根据文字长度设置菜单栏最小宽度（使用 horizontalAdvance 更准确），并允许伸缩
+        fm = self.menu_bar.fontMetrics()
+        try:
+            # horizontalAdvance 返回横向像素宽度，比 boundingRect 更精确
+            status_menu_width = fm.horizontalAdvance(cache_control.behavior_data[cache_control.now_behavior])
+            type_menu_width = fm.horizontalAdvance(cache_control.now_type)
+        except Exception:
+            # 退回到 boundingRect（兼容老版本）
+            status_menu_width = fm.boundingRect(cache_control.behavior_data[cache_control.now_behavior]).width()
+            type_menu_width = fm.boundingRect(cache_control.now_type).width()
+        # 增加一点额外间距以防止靠边显示，并允许两个菜单都能显示完整文本
+        padding = 40
+        menu_bar_min_width = max(status_menu_width, type_menu_width) + padding
+        # 不再固定宽度，设置为最小宽度并允许在布局中伸缩
+        self.menu_bar.setMinimumWidth(menu_bar_min_width)
+        self.menu_bar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
 
         # 说明文本
         label1_text = QLabel("角色id")
@@ -402,11 +413,13 @@ class DataList(DataListIdEditMixin, QWidget):
         # 数据变更前保存快照
         undo_snapshot_manager.save_snapshot()
         item = ListItem("空口上")
-        item.uid = 1
-        while str(item.uid) in cache_control.now_talk_data:
-            item.uid += 1
+        # 计算一个可用的整数 cid，然后以字符串形式存入 item.uid 与 talk.cid
+        new_cid = 1
+        while str(new_cid) in cache_control.now_talk_data:
+            new_cid += 1
+        item.uid = str(new_cid)
         talk = game_type.Talk()
-        talk.cid = str(item.uid)
+        talk.cid = str(new_cid)
         talk.behavior_id = cache_control.now_behavior
         talk.adv_id = str(cache_control.now_adv_id)
         talk.text = item.text()
@@ -461,12 +474,13 @@ class DataList(DataListIdEditMixin, QWidget):
         old_item = self.list_widget.item(talk_index)
         old_talk = cache_control.now_talk_data[old_item.uid]
         new_item = ListItem(old_item.text() + "(复制)")
-        # 计算新cid
-        new_item.uid = int(old_talk.cid) + 1
-        while str(new_item.uid) in cache_control.now_talk_data:
-            new_item.uid += 1
+        # 计算新cid（使用整型局部变量，最后以字符串保存）
+        new_cid = int(old_talk.cid) + 1
+        while str(new_cid) in cache_control.now_talk_data:
+            new_cid += 1
+        new_item.uid = str(new_cid)
         talk = game_type.Talk()
-        talk.cid = str(new_item.uid)
+        talk.cid = str(new_cid)
         talk.behavior_id = old_talk.behavior_id
         talk.adv_id = old_talk.adv_id
         for premise_id in old_talk.premise:
@@ -478,7 +492,7 @@ class DataList(DataListIdEditMixin, QWidget):
         insert_index = len(items)
         for i, (cid, _) in enumerate(items):
             try:
-                if int(cid) > new_item.uid:
+                if int(cid) > new_cid:
                     insert_index = i
                     break
             except Exception:
@@ -501,6 +515,21 @@ class DataList(DataListIdEditMixin, QWidget):
             'row': insert_index
         })
         self.update()
+
+    def update_menu_min_width(self):
+        """重新计算并设置菜单栏的最小宽度（在菜单标题变化后调用）。"""
+        fm = self.menu_bar.fontMetrics()
+        try:
+            status_text = self.status_menu.title()
+            type_text = self.type_menu.title()
+            status_menu_width = fm.horizontalAdvance(status_text)
+            type_menu_width = fm.horizontalAdvance(type_text)
+        except Exception:
+            status_menu_width = fm.boundingRect(self.status_menu.title()).width()
+            type_menu_width = fm.boundingRect(self.type_menu.title()).width()
+        padding = 40
+        menu_bar_min_width = max(status_menu_width, type_menu_width) + padding
+        self.menu_bar.setMinimumWidth(menu_bar_min_width)
 
     def update_text_id(self):
         """根据文本编辑框更新当前的条目序号"""
@@ -574,6 +603,8 @@ class DataList(DataListIdEditMixin, QWidget):
                 cache_control.now_adv_id = chara_id
                 cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
+                # 标题变动后重新计算菜单最小宽度
+                self.update_menu_min_width()
                 self.chara_id_text_edit.setText(chara_id)
                 self.text_id_text_edit.setText(cache_control.now_select_id)
                 # self.text_id_text_edit.setText(cache_control.now_talk_data[cache_control.now_select_id].cid)
@@ -644,6 +675,8 @@ class DataList(DataListIdEditMixin, QWidget):
                 cache_control.now_behavior = status_cid
                 self.status_menu.setTitle(status_text)
                 self.type_menu.setTitle(type_text)
+                # 标题变动后重新计算菜单最小宽度
+                self.update_menu_min_width()
                 self.chara_id_text_edit.setText(str(chara_id))
 
                 # 遍历 list_widget 中的所有 item
