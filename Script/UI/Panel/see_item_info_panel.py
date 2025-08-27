@@ -49,13 +49,13 @@ def use_drug(item_id: int):
         pl_character_data.pl_ability.jj_size += 1
         pl_character_data.pl_ability.jj_size = min(pl_character_data.pl_ability.jj_size, 3)
         size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
-        now_draw_text += _("{0}的阴茎尺寸增加了，现在是{1}\n".format(pl_character_data.name, size_name))
+        now_draw_text = _("{0}的阴茎尺寸增加了，现在是{1}\n".format(pl_character_data.name, size_name))
     # 阴茎缩小
     elif item_id == 17:
         pl_character_data.pl_ability.jj_size -= 1
         pl_character_data.pl_ability.jj_size = max(pl_character_data.pl_ability.jj_size, 0)
         size_name = game_config.config_jj_tem[pl_character_data.pl_ability.jj_size].name
-        now_draw_text += _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
+        now_draw_text = _("{0}的阴茎尺寸减小了，现在是{1}\n".format(pl_character_data.name, size_name))
 
     # 绘制使用道具信息
     line_draw = draw.LineDraw("-", window_width)
@@ -133,7 +133,7 @@ class SeeCharacterItemBagPanel:
         self.item_list_all.append(item_list_H_Machine)
         self.item_list_all.append(item_list_SM)
 
-        item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 2, width, 1, 1, 0)
+        item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 2, width, True, True, 0)
         self.handle_panel = item_panel
         """ 页面控制对象 """
 
@@ -255,9 +255,9 @@ class ItemNameDraw:
         if self.use_drug_flag or self.use_consumables_flag:
             while 1:
                 line_feed.draw()
-                use_draw = draw.CenterButton(_("[使用]"), _("[使用]"), window_width / 2)
+                use_draw = draw.CenterButton(_("[使用]"), _("[使用]"), int(window_width / 2))
                 use_draw.draw()
-                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), int(window_width / 2))
                 return_draw.draw()
                 line_feed.draw()
                 yrn = flow_handle.askfor_all([use_draw.return_text, return_draw.return_text])
