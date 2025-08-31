@@ -98,6 +98,7 @@ class CVEMenu(QDialog):
         """点击确定按钮"""
         # 获得当前abcd的值
         cve_a = self.cve_a.currentText()
+        cve_a_value = "A1"
         if cve_a == "自己":
             cve_a_value = "A1"
         elif cve_a == "交互对象":
@@ -170,8 +171,6 @@ class CVEMenu(QDialog):
         # 更新结算列表
         if cache_control.now_edit_type_flag == 1:
             cache_control.now_event_data[cache_control.now_select_id].effect[cve_value_str] = 1
-        elif cache_control.now_edit_type_flag == 0:
-            cache_control.now_talk_data[cache_control.now_select_id].effect[cve_value_str] = 1
         cache_control.item_effect_list.update()
         # self.close()
 
