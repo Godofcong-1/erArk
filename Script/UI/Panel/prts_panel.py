@@ -4,6 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import character
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
+import unicodedata
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -23,7 +24,7 @@ def chara_talk_info():
     """
 
     handle_panel_normal = panel.PageHandlePanel(
-        [], ShowCharaNameDraw, 15, 1, window_width, 1, 0, 0
+        [], ShowCharaNameDraw, 20, 1, window_width, True, False, 0
     )
 
     while 1:
@@ -266,6 +267,8 @@ class ShowCharaNameDraw:
             # 获取角色id
             character_id = character.get_character_id_from_adv(self.chara_adv_id)
             character_data = cache.character_data[character_id]
+            # 姓名信息
+            name_text = character_data.name.ljust(12,'　')
             # 获取当前版本信息
             now_version = cache.all_system_setting.character_text_version[self.chara_adv_id]
             tip_cid_list = game_config.config_tip_chara_data_by_adv[self.chara_adv_id]
@@ -274,8 +277,21 @@ class ShowCharaNameDraw:
                 tip_chara_data = game_config.config_tip_chara_data[tip_cid]
                 if tip_chara_data.version_id == now_version:
                     version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, character_data.talk_size)
-            # 姓名信息
-            name_text = character_data.name.ljust(12,'　')
+            # 按显示宽度计算，中文等宽字符计为2，ASCII计为1，末尾以全角空格填充，每两个宽度用一个全角空格，剩余用半角空格补齐
+            def _display_width(s: str) -> int:
+                w = 0
+                for ch in s:
+                    if unicodedata.east_asian_width(ch) in ("F", "W"):
+                        w += 2
+                    else:
+                        w += 1
+                return w
+
+            target_width = 36
+            cur_width = _display_width(version_text)
+            if cur_width < target_width:
+                pad = target_width - cur_width
+                version_text += "　" * (pad // 2) + " " * (pad % 2)
             # 如果name_text中有英文字母或者数字，则按照其数量加上空格
             for char in name_text:
                 if char.isascii():
