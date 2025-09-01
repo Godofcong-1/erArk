@@ -105,21 +105,21 @@ def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag =
     if behavior_id in game_config.config_talk_data_by_chara_adv:
         # 获取通用口上
         if 0 in game_config.config_talk_data_by_chara_adv[behavior_id]:
-            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0]
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][0][1]
         # 获取触发者id的口上，需要自己adv不为0，有自己adv的口上，自己口上版本不是无
         if (
             character_data.adv != 0 and
             character_data.adv in game_config.config_talk_data_by_chara_adv[behavior_id] and
             cache.all_system_setting.character_text_version[character_data.adv] > 0
             ):
-            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][character_data.adv]
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][character_data.adv][cache.all_system_setting.character_text_version[character_data.adv]]
         # 获取交互目标的口上
         if (
             target_data.adv != 0 and
             target_data.adv in game_config.config_talk_data_by_chara_adv[behavior_id] and
             cache.all_system_setting.character_text_version[target_data.adv] > 0
             ):
-            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][target_data.adv]
+            tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][target_data.adv][cache.all_system_setting.character_text_version[target_data.adv]]
     # 正式口上数据
     now_talk_data = {}
     # 已计算过的前提字典

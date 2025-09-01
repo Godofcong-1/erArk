@@ -1229,8 +1229,9 @@ def load_talk():
         config_talk_data[now_tem.behavior_id].add(now_tem.cid)
 
         config_talk_data_by_chara_adv.setdefault(now_tem.behavior_id, {})
-        config_talk_data_by_chara_adv[now_tem.behavior_id].setdefault(int(now_tem.adv_id), [])
-        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].append(now_tem.cid)
+        config_talk_data_by_chara_adv[now_tem.behavior_id].setdefault(int(now_tem.adv_id), {})
+        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].setdefault(now_tem.version, [])
+        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)][now_tem.version].append(now_tem.cid)
 
         config_talk_premise_data.setdefault(now_tem.cid, set())
         # print(f"debug now_tem.context = {now_tem.context}")
