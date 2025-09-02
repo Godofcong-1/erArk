@@ -90,13 +90,23 @@ def find_files_and_get_size(directory, character):
     files = glob.glob(path)
     # print(f"debug files = {files}")
     # 全角色名为，文件名的.之前的部分
-    all_chara_name = [os.path.basename(file).split(".")[0].split("_")[1] for file in files]
-    # print(f"debug all_chara_name = {all_chara_name}")
+    all_chara_name = []
+    all_chara_version = []
+    for file in files:
+        # 文件名格式：前缀_角色名_版本.ext，取下划线后第1位为角色名，第2位为版本
+        base = os.path.basename(file).split(".")[0]
+        parts = base.split("_")
+        name = parts[1] if len(parts) > 1 else ""
+        # 版本默认为1，非数字也视为1
+        version = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 1
+        all_chara_name.append(name)
+        all_chara_version.append(version)
+    # print(f"debug all_chara_name = {all_chara_name}, all_chara_version = {all_chara_version}")
     # 如果角色名等于特定角色名，将文件名加入目标文件列表
     target_files = []
     for i in range(len(all_chara_name)):
         if character == all_chara_name[i]:
-            target_files = [files[i]]
+            target_files.append(files[i])
     # print(f"debug target_files = {target_files}")
     # 获取文件大小
     file_sizes = {}

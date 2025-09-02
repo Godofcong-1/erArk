@@ -1020,3 +1020,31 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
                 break
 
     return judge, reason
+
+
+def pad_display_width(s: str, target_width: int) -> str:
+    """
+    根据显示宽度（中文全角计2，其他字符计1）将字符串末尾补全到 target_width。
+    补全优先使用全角空格（每个占两列），不足一列时用半角空格补齐。
+
+    Args:
+        s: 原始字符串
+        target_width: 目标显示宽度（以列为单位）
+
+    Returns:
+        补齐后的字符串
+    """
+    import unicodedata
+    w = 0
+    for ch in s:
+        if unicodedata.east_asian_width(ch) in ("F", "W"):
+            w += 2
+        else:
+            w += 1
+    if w >= target_width:
+        return s
+    pad = target_width - w
+    # 每两个列用一个全角空格
+    full_spaces = pad // 2
+    half_space = pad % 2
+    return s + ("　" * full_spaces) + (" " * half_space)

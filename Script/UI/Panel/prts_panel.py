@@ -1,10 +1,9 @@
 from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import character
+from Script.Design import character, attr_calculation
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-import unicodedata
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -16,7 +15,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
-
 
 def chara_talk_info():
     """
@@ -276,22 +274,19 @@ class ShowCharaNameDraw:
             for tip_cid in tip_cid_list:
                 tip_chara_data = game_config.config_tip_chara_data[tip_cid]
                 if tip_chara_data.version_id == now_version:
-                    version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, character_data.talk_size)
-            # 按显示宽度计算，中文等宽字符计为2，ASCII计为1，末尾以全角空格填充，每两个宽度用一个全角空格，剩余用半角空格补齐
-            def _display_width(s: str) -> int:
-                w = 0
-                for ch in s:
-                    if unicodedata.east_asian_width(ch) in ("F", "W"):
-                        w += 2
+                    # 优先显示当前选择版本下实际文件大小（来自 data/talk 与 data/event 合计），
+                    try:
+                        sizes = self.get_chara_version_sizes()
+                        vsize = sizes.get(tip_chara_data.version_id, None)
+                    except Exception:
+                        vsize = None
+                    if vsize:
+                        version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, vsize)
+                    # 如果未找到，回退到 character_data.talk_size。
                     else:
-                        w += 1
-                return w
-
-            target_width = 36
-            cur_width = _display_width(version_text)
-            if cur_width < target_width:
-                pad = target_width - cur_width
-                version_text += "　" * (pad // 2) + " " * (pad % 2)
+                        version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, character_data.talk_size)
+            # 使用独立函数计算显示宽度并补齐到指定宽度
+            version_text = attr_calculation.pad_display_width(version_text, 36)
             # 如果name_text中有英文字母或者数字，则按照其数量加上空格
             for char in name_text:
                 if char.isascii():
@@ -323,6 +318,66 @@ class ShowCharaNameDraw:
         """绘制对象"""
         self.info_draw.draw()
         self.now_draw.draw()
+
+    def get_chara_version_sizes(self) -> dict:
+        """
+        计算当前 self.chara_adv_id 在 data/talk/chara 和 data/event/chara 下每个版本的总大小（字节），
+        并返回以 version_id 为键、KB（向上取整）为值的字典。
+        文件命名假定格式为 前缀_角色名_版本.ext 或 前缀_角色名.ext（无版本视为1）。
+        """
+        import os, glob
+        directory = os.path.join('data', 'talk', 'chara')
+        pattern = os.path.join(directory, '*')
+        files = glob.glob(pattern)
+        # 角色内部名：prts_panel 中使用 game_config 的 tip 数据或 character 数据去推断
+        # 在 character_config 中，文件名中使用的是角色名的简写（在字符名之后的下划线部分），
+        # 这里我们尝试从 cache.character_data 中取出 find_name（如果存在），否则使用 adv id 数字匹配文件名中的数字
+        # 近似匹配策略：匹配文件名中下划线分段中等于角色的部分或包含 adv id
+        # 构造候选名字
+        # 获取角色名（用于匹配文件名中的角色部分）
+        try:
+            character_id = character.get_character_id_from_adv(self.chara_adv_id)
+            character_data = cache.character_data[character_id]
+            find_name = character_data.name
+        except Exception:
+            find_name = str(self.chara_adv_id)
+
+        per_version_sizes = {}
+        for f in files:
+            base = os.path.basename(f).split('.')[0]
+            parts = base.split('_')
+            # 尝试解析 name 和 version
+            name = parts[1] if len(parts) > 1 else ''
+            version = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 1
+            if name == '' and str(self.chara_adv_id) not in base:
+                continue
+            # 匹配名字或 adv id
+            if name == find_name or name == str(self.chara_adv_id):
+                per_version_sizes.setdefault(version, 0)
+                per_version_sizes[version] += os.path.getsize(f)
+                # print("name, version, size, f:", name, version, os.path.getsize(f), f)
+
+        # 同理扫描事件文件夹
+        event_dir = os.path.join('data', 'event', 'chara')
+        event_pattern = os.path.join(event_dir, '*')
+        event_files = glob.glob(event_pattern)
+        for f in event_files:
+            base = os.path.basename(f).split('.')[0]
+            parts = base.split('_')
+            name = parts[1] if len(parts) > 1 else ''
+            version = int(parts[2]) if len(parts) > 2 and parts[2].isdigit() else 1
+            if name == '' and str(self.chara_adv_id) not in base:
+                continue
+            if name == find_name or name == str(self.chara_adv_id):
+                per_version_sizes.setdefault(version, 0)
+                per_version_sizes[version] += os.path.getsize(f)
+                # print("event name, version, size, f:", name, version, os.path.getsize(f), f)
+
+        # 转换为KB并向上取整
+        for k in list(per_version_sizes.keys()):
+            per_version_sizes[k] = int((per_version_sizes[k] / 1024) + 1)
+
+        return per_version_sizes
 
     def show_character_text_version(self):
         """
@@ -361,12 +416,18 @@ class ShowCharaNameDraw:
             now_version = cache.all_system_setting.character_text_version[self.chara_adv_id]
 
             # 遍历该角色的全版本
+            # 计算每个版本大小
+            version_sizes = self.get_chara_version_sizes()
             for tip_cid in tip_cid_list:
                 tip_chara_data = game_config.config_tip_chara_data[tip_cid]
 
                 # 显示当前版本的角色信息，以及该版本的选择按钮
-                now_text = f"版本：{tip_chara_data.version_id}  "
-                now_text += f"by {tip_chara_data.writer_name}"
+                size_text = ''
+                vs = version_sizes.get(tip_chara_data.version_id)
+                if vs:
+                    size_text = f' ({vs}kb)'
+                now_text = _("版本：{0}  ").format(tip_chara_data.version_id)
+                now_text += f"by {tip_chara_data.writer_name}{size_text}"
                 # 如果是当前版本，则加上当前版本的标记
                 if tip_chara_data.version_id == now_version:
                     now_text += _("(当前版本)")
