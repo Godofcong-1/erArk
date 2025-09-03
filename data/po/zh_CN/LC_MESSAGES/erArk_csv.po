@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-09-03 15:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -31585,7 +31585,7 @@ msgid "将人生的大半都交付于暗杀与战斗的狙击手，擅长隐秘�
 msgstr ""
 
 #: .\data\character\0340_黑.csv:15
-msgid "#B6ADB7"
+msgid "#B6A6B7"
 msgstr ""
 
 #: .\data\character\0340_黑.csv:36
