@@ -91,7 +91,15 @@ def build_csv_config(file_path: str, file_name: str, chara_adv_id: int, characte
                     # if "-" in file_id:
                     #     print(f"debug file_id = {file_id}")
                     row[k] = file_id + row[k]
+            # 设置版本号，默认为1
+            row["version"] = 1
+            # 如果口上的文件名中存在下划线标记的版本号，则将最后一个下划线之后的数字记录为版本号
+            if int(row["adv_id"]) != 0 and file_id.count("_") == 3:
+                # print(f"debug file_id = {file_id}")
+                row["version"] = int(file_id.rsplit("_", 1)[-1])
+            # 记录口上数据
             character_talk_data[type_text]["data"].append(row)
+        get_text_data["version"] = 0
         character_talk_data[type_text]["gettext"] = get_text_data
 
 def build_chara_talk(chara_adv_id : int = 0):
