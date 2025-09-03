@@ -37,8 +37,10 @@ class DataList(DataListIdEditMixin, QWidget):
         self.delete_text_button = QPushButton("删除条目")
         self.delete_text_button.clicked.connect(self.delete_text)
         # 只显示当前指令
-        self.select_now_instruct_check_box = QCheckBox("只显示当前指令")
+        self.select_now_instruct_check_box = QCheckBox("【筛选当前指令条目】—")
         self.select_now_instruct_check_box.stateChanged.connect(self.select_now_instruct)
+        # 将复选框的指示器放到文本的后面（右侧）
+        self.select_now_instruct_check_box.setLayoutDirection(Qt.RightToLeft)
         self.select_now_instruct_flag = 0
         # 文本搜索框
         self.text_search_edit = QTextEdit()
