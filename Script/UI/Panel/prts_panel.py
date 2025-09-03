@@ -286,6 +286,13 @@ class ShowCharaNameDraw:
                     else:
                         version_text = "by {0}({1}kb)".format(tip_chara_data.writer_name, character_data.talk_size)
             # 使用独立函数计算显示宽度并补齐到指定宽度
+            # 若该角色存在多个文本版本，在显示的版本信息后追加星号标记
+            try:
+                versions_set = {game_config.config_tip_chara_data[tc].version_id for tc in tip_cid_list}
+                if len(versions_set) > 1:
+                    version_text += "*"
+            except Exception:
+                pass
             version_text = attr_calculation.pad_display_width(version_text, 36)
             # 如果name_text中有英文字母或者数字，则按照其数量加上空格
             for char in name_text:
