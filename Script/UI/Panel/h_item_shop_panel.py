@@ -74,7 +74,7 @@ class HItemShopPanel:
         item_list = [i for i in game_config.config_item]
         for i in item_list:
             # 跳过等级高于设施等级的道具
-            if game_config.config_item[i].level > now_level:
+            if game_config.config_item[i].level >= now_level:
                 continue
             if game_config.config_item[i].type == "Drug":
                 item_list_Drug.append(i)
@@ -95,7 +95,7 @@ class HItemShopPanel:
         item_list_all.append(item_list_H_Machine)
         item_list_all.append(item_list_SM)
 
-        handle_panel = panel.PageHandlePanel([], BuyItemByItemNameDraw, 50, 3, self.width, 1, 1, 0)
+        handle_panel = panel.PageHandlePanel([], BuyItemByItemNameDraw, 50, 3, self.width, True, True, 0)
 
         while 1:
             return_list = []
@@ -238,21 +238,21 @@ class BuyItemByItemNameDraw:
             return_list = []
             line_feed.draw()
             if item_config.type in ["Drug","H_Drug","Consumables"]:
-                buy_one_draw = draw.CenterButton(_("[购买一个]"), _("[购买一个]"), window_width / 3, cmd_func=self.buy_item)
+                buy_one_draw = draw.CenterButton(_("[购买一个]"), _("[购买一个]"), int(window_width / 3), cmd_func=self.buy_item)
                 buy_one_draw.draw()
                 return_list.append(buy_one_draw.return_text)
-                buy_many_draw = draw.CenterButton(_("[购买多个]"), _("[购买多个]"), window_width / 3, cmd_func=self.buy_many)
+                buy_many_draw = draw.CenterButton(_("[购买多个]"), _("[购买多个]"), int(window_width / 3), cmd_func=self.buy_many)
                 buy_many_draw.draw()
                 return_list.append(buy_many_draw.return_text)
-                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 3)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), int(window_width / 3))
                 return_draw.draw()
                 return_list.append(return_draw.return_text)
                 line_feed.draw()
             else:
-                yes_draw = draw.CenterButton(_("[购买]"), _("[购买]"), window_width / 2, cmd_func=self.buy_item)
+                yes_draw = draw.CenterButton(_("[购买]"), _("[购买]"), int(window_width / 2), cmd_func=self.buy_item)
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
-                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), window_width / 2)
+                return_draw = draw.CenterButton(_("[返回]"), _("[返回]"), int(window_width / 2))
                 return_draw.draw()
                 return_list.append(return_draw.return_text)
                 line_feed.draw()
