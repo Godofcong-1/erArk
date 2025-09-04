@@ -44,22 +44,24 @@ def judge_character_tired_sleep(character_id : int):
     from Script.Design import handle_instruct
 
     character_data: game_type.Character = cache.character_data[character_id]
+    character_sp_flag = character_data.sp_flag
     # 交互对象结算
     if character_id:
         # 疲劳判定
-        if character_data.hit_point <= 1 and not character_data.sp_flag.tired:
+        if character_data.hit_point <= 1 and not character_sp_flag.tired:
             character_data.sp_flag.tired = True
+            character_sp_flag = character_data.sp_flag
         # 仅在H或跟随模式下再进行结算
-        if character_data.sp_flag.is_h or character_data.sp_flag.is_follow:
+        if character_sp_flag.is_h or character_sp_flag.is_follow:
             # 如果疲劳了
-            if character_data.sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
+            if character_sp_flag.tired or (attr_calculation.get_tired_level(character_data.tired_point) >= 2):
                 pl_character_data: game_type.Character = cache.character_data[0]
                 # 输出基础文本
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
                 # 跟随时，忽略H后停留的情况
-                if character_data.sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
-                    draw_text = _("太累了，无法继续跟随\n") if character_data.sp_flag.tired else _("太困了，无法继续跟随\n")
+                if character_sp_flag.is_follow and character_data.behavior.behavior_id != constant.Behavior.WAIT:
+                    draw_text = _("太累了，无法继续跟随\n") if character_sp_flag.tired else _("太困了，无法继续跟随\n")
                     now_draw.text = character_data.name + draw_text
                     now_draw.draw()
                     character_data.sp_flag.is_follow = 0
@@ -93,10 +95,10 @@ def judge_character_tired_sleep(character_id : int):
 
                 # H时，有意识H则正常检测，无意识H则不检测疲劳，只检测HP
                 elif (
-                    character_data.sp_flag.is_h and
+                    character_sp_flag.is_h and
                     (
-                        not character_data.sp_flag.unconscious_h or
-                        (character_data.sp_flag.unconscious_h and character_data.hit_point <= 1))
+                        not character_sp_flag.unconscious_h or
+                        (character_sp_flag.unconscious_h and character_data.hit_point <= 1))
                     ):
                     character_data.sp_flag.is_h = False
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
@@ -109,10 +111,8 @@ def judge_character_tired_sleep(character_id : int):
         # 玩家只进行HP1的疲劳判定
         if character_data.hit_point <= 1:
             # 绘制文本
-            if character_data.sp_flag.is_h:
-                draw_text = character_data.name + _("太累了")
-                draw_text = _("，无法继续H")
-                draw_text += "\n"
+            if character_sp_flag.is_h:
+                draw_text = character_data.name + _("太累了，无法继续H\n")
                 now_draw = draw.WaitDraw()
                 now_draw.width = window_width
                 now_draw.text = draw_text
@@ -147,7 +147,6 @@ def judge_assistant_character(character_id: int) -> int:
         return 0
 
     character_data: game_type.Character = cache.character_data[character_id]
-
     now_time_hour = character_data.behavior.start_time.hour
     # 如果超过了12点，则清零早安问候
     if now_time_hour >= 12:
@@ -155,6 +154,7 @@ def judge_assistant_character(character_id: int) -> int:
     # 如果早于18点且不是睡觉时间，则清零晚安问候
     if now_time_hour < 18 and not handle_premise.handle_game_time_is_sleep_time(character_id):
         character_data.sp_flag.night_salutation = 0
+    return 1
 
 def judge_character_follow(character_id: int) -> int:
     """

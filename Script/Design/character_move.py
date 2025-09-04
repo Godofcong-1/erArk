@@ -111,7 +111,7 @@ def character_move(character_id: int, target_scene: list) -> tuple[str, list, li
     return access_type, [], now_path_data[0], now_path_data[1]
 
 
-def judge_character_move_to_private(character_id: int, move_path: list) -> int:
+def judge_character_move_to_private(character_id: int, move_path: list) -> tuple[bool,bool]:
     """
     结算角色是否移动到私密房间\n
     Keyword arguments:\n

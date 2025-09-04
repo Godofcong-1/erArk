@@ -40,14 +40,15 @@ def judge_pl_real_time_data():
     """
 
     pl_character_data: game_type.Character = cache.character_data[0]
+    love_hotel_room_lv = cache.rhodes_island.love_hotel_room_lv
 
     # 酒店退房时间到了则退房
-    if cache.rhodes_island.love_hotel_room_lv > 0:
+    if love_hotel_room_lv > 0:
         if game_time.judge_date_big_or_small(cache.game_time, pl_character_data.action_info.check_out_time) > 0:
             # 输出提示信息
             room_name = [_("标间"),_("情趣主题房"),_("顶级套房")]
             now_draw = draw.NormalDraw()
-            now_draw.text = _("\n您入住的{0}到退房时间了，已自动退房\n").format(room_name[cache.rhodes_island.love_hotel_room_lv - 1])
+            now_draw.text = _("\n您入住的{0}到退房时间了，已自动退房\n").format(room_name[love_hotel_room_lv - 1])
             now_draw.draw()
             # 结算
             cache.rhodes_island.love_hotel_room_lv = 0
@@ -62,6 +63,7 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     now_time -- 指定时间
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
+    now_behavior_id = now_character_data.behavior.behavior_id
     if now_character_data.target_character_id not in cache.character_data:
         now_character_data.target_character_id = character_id
     target_data: game_type.Character = cache.character_data[now_character_data.target_character_id]
@@ -72,11 +74,11 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     settle_tired(character_id, true_add_time)
 
     # 休息时回复体力、气力
-    if now_character_data.behavior.behavior_id == constant.Behavior.REST:
+    if now_behavior_id == constant.Behavior.REST:
         settle_rest(character_id, true_add_time)
 
     # 睡觉时大量减少疲劳值，增加熟睡值，回复体力、气力
-    elif now_character_data.behavior.behavior_id == constant.Behavior.SLEEP:
+    elif now_behavior_id == constant.Behavior.SLEEP:
         settle_sleep(character_id, true_add_time)
 
     # 结算尿意值
@@ -85,13 +87,13 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
     else:
         add_urinate = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
         add_urinate *= cache.all_system_setting.difficulty_setting[11] / 2
-        now_character_data.urinate_point += int(add_urinate)
-        now_character_data.urinate_point = min(now_character_data.urinate_point,300)
+        new_urinate = min(now_character_data.urinate_point + int(add_urinate), 300)
+        now_character_data.urinate_point = new_urinate
 
     # 结算饥饿值
     add_hunger = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
-    now_character_data.hunger_point += add_hunger
-    now_character_data.hunger_point = min(now_character_data.hunger_point,240)
+    new_hunger = min(now_character_data.hunger_point + add_hunger, 240)
+    now_character_data.hunger_point = new_hunger
 
     # 结算玩家
     if character_id == 0:
@@ -101,12 +103,12 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
             # 上次射精时间距离现在超过30分钟则射精值减少
             last_time = now_character_data.action_info.last_eaj_add_time
             if (cache.game_time - last_time) > datetime.timedelta(minutes=30):
-                now_character_data.eja_point -= true_add_time * 10
-                now_character_data.eja_point = max(now_character_data.eja_point,0)
+                new_eja = max(now_character_data.eja_point - int(true_add_time * 10), 0)
+                now_character_data.eja_point = new_eja
 
         # 玩家缓慢恢复精液量
-        now_character_data.semen_point += int(true_add_time / 20)
-        now_character_data.semen_point = min(now_character_data.semen_point,now_character_data.semen_point_max)
+        new_semen = min(now_character_data.semen_point + int(true_add_time / 20), now_character_data.semen_point_max)
+        now_character_data.semen_point = new_semen
 
         # 结算玩家源石技艺的理智值消耗
         settle_player_ability(character_id, true_add_time)
@@ -132,8 +134,8 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         if now_character_data.talent[27]:
             milk_change = int(true_add_time * 2 / 3)
             add_milk = random.randint(int(milk_change * 0.8), int(milk_change * 1.2))
-            now_character_data.pregnancy.milk += add_milk
-            now_character_data.pregnancy.milk = min(now_character_data.pregnancy.milk,now_character_data.pregnancy.milk_max)
+            new_milk = min(now_character_data.pregnancy.milk + add_milk, now_character_data.pregnancy.milk_max)
+            now_character_data.pregnancy.milk = new_milk
 
         # 有意识下的部分持续结算
         if (
@@ -183,15 +185,15 @@ def settle_semen_flow(character_id: int, true_add_time: int):
     new_flow_list = []
     # 遍历每个部位的精液流动
     for all_flow_dict in now_character_data.dirty.semen_flow:
+        # 如果all_flow_dict没有键"targets"，则跳过
+        if "targets" not in all_flow_dict:
+            continue
         # 实际流动的精液总量
         all_real_flow = 0
         # 源头数据
         source_id = all_flow_dict["source"]["id"]
         source_type = all_flow_dict["source"]["type"]
         new_target_list = []
-        # 如果all_flow_dict没有键"targets"，则跳过
-        if "targets" not in all_flow_dict:
-            continue
         # 遍历每个流动的目标
         for now_flow_dict in all_flow_dict["targets"]:
             if now_flow_dict["remaining_volume"] > 0:
@@ -227,11 +229,11 @@ def semen_absorb(character_id: int, true_add_time: int, body_part: int):
     body_part -- 身体部位id\n
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
+    now_body_semen = now_character_data.dirty.body_semen[body_part][1]
     # 计算吸收的精液量，公式为每5分钟吸收1毫升或当前精液量的1%中较大的那个
-    absorb_ml = max(true_add_time // 5, now_character_data.dirty.body_semen[body_part][1] * 0.01)
-    absorb_ml = int(absorb_ml)
+    absorb_ml = max(true_add_time // 5, now_body_semen * 0.01)
     # 不得高于当前精液量
-    absorb_ml = min(absorb_ml, now_character_data.dirty.body_semen[body_part][1])
+    absorb_ml = int(min(absorb_ml, now_body_semen))
     # 从角色身体中吸收精液
     now_character_data.dirty.body_semen[body_part][1] -= absorb_ml
     # 更新吸收精液量
@@ -290,8 +292,8 @@ def settle_tired(character_id: int, true_add_time: int) -> None:
         tired_change = 1
     # 不睡觉时、且不是时停中，结算疲劳值
     if now_character_data.behavior.behavior_id not in {constant.Behavior.SLEEP} and handle_premise.handle_time_stop_off(character_id):
-        now_character_data.tired_point += tired_change
-        now_character_data.tired_point = min(now_character_data.tired_point,160)
+        new_tired = min(now_character_data.tired_point + tired_change, 160)
+        now_character_data.tired_point = new_tired
 
 def settle_rest(character_id: int, true_add_time: int) -> None:
     """
@@ -451,14 +453,15 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
-    from Script.Settle import common_default
+    from Script.Settle.common_default import base_chara_state_common_settle
     now_char = cache.character_data[character_id]
+    now_char_ability = now_char.ability
     # 和周围其他人相关的结算
     if handle_premise.handle_scene_over_two(character_id):
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
-            common_default.base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=16, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
-            common_default.base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=0, base_value=0, ability_level=now_char.ability[34], tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=16, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=0, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
         # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
         if handle_premise.handle_scene_others_conscious(character_id):
             # 自己未穿胸衣和内裤、自己异常2正常时羞耻
@@ -471,25 +474,25 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
                     extra += 1
                 if handle_premise.handle_not_wear_pan(character_id):
                     extra += 2
-                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra, tenths_add=False)
+                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra, tenths_add=False)
             # 隐奸中增加羞耻和心理快感
             if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
                 hidden_sex_mode = now_char.sp_flag.hidden_sex_mode
                 extra_add = 4 - hidden_sex_mode
-                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra_add, tenths_add=False)
-                common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char.ability[34], extra_adjust=extra_add, tenths_add=False)
+                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
+                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
-        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char.ability[15], extra_adjust=extra, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char_ability[15], extra_adjust=extra, tenths_add=False)
     # 捆绑时欲情、羞耻、苦痛
     if handle_premise.handle_self_now_bondage(character_id):
         bond_id = now_char.h_state.bondage
         data = game_config.config_bondage[bond_id]
         adjust = data.level * 0.5
         for sid in (12,16,17):
-            common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char.ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char_ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
     # 被监禁状态下持续增长屈服和恐怖
     if handle_premise.handle_imprisonment_1(character_id):
-        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=15, base_value=0, ability_level=now_char.ability[14], extra_adjust=3, tenths_add=False)
-        common_default.base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=18, base_value=0, ability_level=now_char.ability[17], extra_adjust=3, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=15, base_value=0, ability_level=now_char_ability[14], extra_adjust=3, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=18, base_value=0, ability_level=now_char_ability[17], extra_adjust=3, tenths_add=False)
