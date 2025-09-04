@@ -8096,6 +8096,8 @@ def handle_set_free_add_just(
     # 从囚犯数据中删除
     if character_data.target_character_id in cache.rhodes_island.current_prisoners:
         cache.rhodes_island.current_prisoners.pop(character_data.target_character_id)
+    # 刷新衣服
+    clothing.get_cloth_from_dormitory_locker(character_data.target_character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_ADD_ADJUST)
