@@ -290,7 +290,7 @@ class ShowCharaNameDraw:
             try:
                 versions_set = {game_config.config_tip_chara_data[tc].version_id for tc in tip_cid_list}
                 if len(versions_set) > 1:
-                    version_text += "*"
+                    version_text += _("(有{0}个版本)").format(len(versions_set))
             except Exception:
                 pass
             version_text = attr_calculation.pad_display_width(version_text, 36)
