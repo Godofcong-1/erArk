@@ -407,7 +407,7 @@ class CenterDrawButtonListPanel:
         width: int,
         column: int,
         null_text: str = "",
-        cmd_func: FunctionType = None,
+        cmd_func = None,
         func_args: List[Tuple] = [],
     ):
         """
@@ -482,7 +482,7 @@ class LeftDrawIDButtonListPanel:
         width: int,
         column: int,
         null_text: str = "",
-        cmd_func: FunctionType = None,
+        cmd_func = None,
         func_args: List[Tuple] = [],
     ):
         """
@@ -567,7 +567,7 @@ class PageHandleDrawType:
         """ 绘制按钮 """
         self.num_button: bool = num_button
         """ 绘制数字按钮 """
-        self.button_id: bool = button_id
+        self.button_id: int = button_id
         """ 数字按钮的id """
         self.button_return: str = ""
         """ 按钮返回值 """

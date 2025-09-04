@@ -81,22 +81,22 @@ class GetUpPanel:
         """ 当前面板监听的按钮列表 """
         self.title_draw = draw.TitleLineDraw(_("睡梦面板"), self.width)
         cache.now_panel_id = constant.Panel.IN_SCENE
-        self.back_draw = draw.CenterButton(_("[起床]"), _("返回"), self.width / 3)
-        self.time_draw = draw.CenterButton(_("[睡觉时间]"), _("返回"), self.width / 3)
+        self.back_draw = draw.CenterButton(_("[起床]"), _("返回"), int(self.width / 3))
+        self.time_draw = draw.CenterButton(_("[睡觉时间]"), _("返回"), int(self.width / 3))
         character_list = [0,1,2,3]
         now_list = list(character_list)
         self.now_character_panel = see_character_info_panel.SeeCharacterInfoHandle(self.character_id, self.width, now_list)
-        self.chara_data_draw = draw.CenterButton(_("[角色列表]"), _("角色列表"), self.width / 3, cmd_func=self.now_character_panel.draw)
+        self.chara_data_draw = draw.CenterButton(_("[角色列表]"), _("角色列表"), int(self.width / 3), cmd_func=self.now_character_panel.draw)
 
 
     def draw(self):
         """绘制面板"""
         
         old_button_draw = draw.CenterButton(
-            _("[上一人]"), _("上一人"), self.width / 3, cmd_func=self.old_character
+            _("[上一人]"), _("上一人"), int(self.width / 3), cmd_func=self.old_character
         )
         next_button_draw = draw.CenterButton(
-            _("[下一人]"), _("下一人"), self.width / 3, cmd_func=self.next_character
+            _("[下一人]"), _("下一人"), int(self.width / 3), cmd_func=self.next_character
         )
         while 1:
             self.title_draw.draw()

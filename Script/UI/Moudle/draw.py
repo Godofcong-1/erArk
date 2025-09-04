@@ -302,7 +302,7 @@ class InfoBarDraw:
         """ 比例条类型id """
         self.text: str = ""
         """ 比例条描述文本 """
-        self.draw_list: List[ImageDraw] = []
+        self.draw_list: List = []
         """ 比例条绘制对象列表 """
         self.scale: float = 1
         """ 比例条绘制区域占比 """
@@ -376,7 +376,7 @@ class InfoCharaDraw:
         """ 比例条类型id """
         self.text: str = ""
         """ 比例条描述文本 """
-        self.draw_list: List[ImageDraw] = []
+        self.draw_list: List = []
         """ 比例条绘制对象列表 """
         self.scale: float = 1
         """ 比例条绘制区域占比 """
@@ -573,7 +573,7 @@ class CenterButton:
             fix_text=" ",
             normal_style="standard",
             on_mouse_style="onbutton",
-            cmd_func: Optional[MethodType] = None,
+            cmd_func = None,
             args=(),
             web_type="",
     ):
@@ -590,7 +590,7 @@ class CenterButton:
         """ 鼠标悬停时样式 """
         self.width: int = width
         """ 按钮文本的最大宽度 """
-        self.cmd_func: Optional[MethodType] = cmd_func
+        self.cmd_func = cmd_func
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """

@@ -27,6 +27,42 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+
+def expand_juel_entries(juel_entries: List[str]) -> List[str]:
+    """
+    将可能包含占位符 '1' 的宝珠条目展开为具体的宝珠 id 字符串列表。
+    保持原始字符串格式（'id' 或 'id|adjust' 或 '0'）
+    """
+    result: List[str] = []
+    entries = list(juel_entries)
+    if '1' in entries:
+        entries = [x for x in entries if x != '1']
+        for state_id in game_config.config_character_state:
+            if game_config.config_character_state[state_id].type == 0:
+                entries.append(str(state_id))
+    for e in entries:
+        result.append(e)
+    return result
+
+def total_juel_value_from_entries(character_data, juel_entries: List[str]) -> int:
+    """
+    给定角色数据和宝珠条目列表，计算角色使用所有对应宝珠后可提供的总值。
+    juel_entries 中的每项可能为 '0'、'id' 或 'id|adjust'
+    """
+    total = 0
+    for need_juel in juel_entries:
+        if need_juel == '0':
+            continue
+        if '|' in need_juel:
+            juel_id = int(need_juel.split('|')[0])
+            adjust = float(need_juel.split('|')[1])
+        else:
+            juel_id = int(need_juel)
+            adjust = 1
+        have_count = character_data.juel.get(juel_id, 0)
+        total += int(have_count * adjust)
+    return total
+
 class Characterabi_show_Text:
     """
     角色能力升级显示面板
@@ -73,10 +109,14 @@ class Characterabi_show_Text:
                         now_mark_level < 3 and 
                         ability_id not in {17, 18}
                         ):
+                        # 如果可以升级，则额外标记
+                        can_up, can_down = self.check_ability_change_possible(ability_id)
+                        if can_up:
+                            button_text += "(+)"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
-                            self.width / 10,
+                            int(self.width / 10),
                             cmd_func=self.mark_up_show,
                             args=(ability_id),
                         )
@@ -87,10 +127,14 @@ class Characterabi_show_Text:
                         ability_id in game_config.config_mark_down_data_by_ability and 
                         now_mark_level > 0
                         ):
+                        # 如果可以降级，则额外标记
+                        can_up, can_down = self.check_ability_change_possible(ability_id)
+                        if can_up:
+                            button_text += "(-)"
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
-                            self.width / 10,
+                            int(self.width / 10),
                             cmd_func=self.mark_down_show,
                             args=(ability_id),
                         )
@@ -101,7 +145,7 @@ class Characterabi_show_Text:
                         button_draw = draw.LeftButton(
                             _(button_text),
                             _(game_config.config_ability[ability_id].name),
-                            self.width / 10,
+                            int(self.width / 10),
                             normal_style='deep_gray',
                             cmd_func=self.mark_can_up_show,
                         )
@@ -130,11 +174,15 @@ class Characterabi_show_Text:
                     button_text += attr_calculation.judge_grade(now_exp)
                     button_text += " "
                     button_text += str(now_exp)
+                    # 如果可以升级，则额外标记
+                    can_up, can_down = self.check_ability_change_possible(ability_id)
+                    if can_up:
+                        button_text += "(+)"
                     now_abi_up_panel = Characterabi_cmd_Text(self.character_id, self.width, ability_id)
                     button_draw = draw.LeftButton(
                         _(button_text),
                         _(game_config.config_ability[ability_id].name),
-                        self.width / 10,
+                        int(self.width / 10),
                         cmd_func=now_abi_up_panel.draw)
                     self.return_list.append(button_draw.return_text)
                     button_draw.draw()
@@ -190,11 +238,11 @@ class Characterabi_show_Text:
             line_feed.draw()
             # 如果当前宝珠足够，绘制升级按钮
             if now_juel >= need_juel:
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_up, args=(ability_id, need_juel))
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_up, args=(ability_id, need_juel))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             # 等待玩家选择
@@ -219,10 +267,8 @@ class Characterabi_show_Text:
         juel_type_id_list.append(mark_down_data.need_juel_3)
         # 如果有1号，则替换为全快感珠
         if '1' in juel_type_id_list:
-            juel_type_id_list.remove('1')
-            for state_id in game_config.config_character_state:
-                if game_config.config_character_state[state_id].type == 0:
-                    juel_type_id_list.append(str(state_id))
+            # 使用通用展开函数替换占位符
+            juel_type_id_list = expand_juel_entries(juel_type_id_list)
         self.jewel_use_dict: Dict[int, int] = {}
         # 关押区的等级效果
         now_level = cache.rhodes_island.facility_level[19]
@@ -277,12 +323,12 @@ class Characterabi_show_Text:
             info_draw.draw()
             line_feed.draw()
             # 如果当前宝珠足够，绘制降低按钮
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 3, cmd_func=self.mark_down, args=(ability_id))
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 3), cmd_func=self.mark_down, args=(ability_id))
             if mark_down_data_all_value >= need_juel_all_value:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
             # 绘制返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             # 等待玩家选择
@@ -359,6 +405,106 @@ class Characterabi_show_Text:
         now_draw = draw.WaitDraw()
         now_draw.text = _("\n该刻印当前无法使用宝珠升级\n")
         now_draw.draw()
+
+    def check_ability_change_possible(self, ability_id: int):
+        """
+        检查指定能力是否可升级或可降级
+        返回 (can_up: bool, can_down: bool)
+        """
+        can_up = False
+        can_down = False
+        try:
+            now_level = self.character_data.ability[ability_id]
+            # 刻印类能力的判断逻辑
+            if ability_id in game_config.config_mark_up_data_by_ability or ability_id in game_config.config_mark_down_data_by_ability:
+                # 升级判断：优先按标记原逻辑，再判断是否可通过消耗宝珠直接升级
+                if (
+                    ability_id in game_config.config_mark_up_data_by_ability
+                    and now_level < 3
+                    and ability_id not in {17, 18}
+                ):
+                    # 先基于状态值判断是否存在可升级空间
+                    # 使用 settle_behavior 提供的函数计算当前提供值和需求
+                    try:
+                        mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_level]
+                        mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
+                        need_state_all_value = mark_up_data.need_state_all_value
+                        now_state_all_value, _ = settle_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
+                        # 如果状态值足够，无需宝珠即可升级
+                        if now_state_all_value >= need_state_all_value:
+                            can_up = True
+                        else:
+                            # 计算还需宝珠数，比较角色拥有的该类型宝珠
+                            need_juel = int(need_state_all_value - now_state_all_value)
+                            need_juel = max(need_juel, 0)
+                            juel_type_id = mark_up_data.need_juel_type
+                            now_juel = self.character_data.juel.get(juel_type_id, 0)
+                            if now_juel >= need_juel:
+                                can_up = True
+                    except Exception:
+                        # 保守回退为可升级，以免隐藏按钮（除非 debug 模式）
+                        if cache.debug_mode:
+                            can_up = True
+                # 降级判断：如果记录了降级数据且等级大于0，判断使用全部可用宝珠能否满足降级需求
+                if ability_id in game_config.config_mark_down_data_by_ability and now_level > 0:
+                    try:
+                        mark_down_data_id = game_config.config_mark_down_data_by_ability[ability_id][now_level]
+                        mark_down_data = game_config.config_mark_down_data[mark_down_data_id]
+                        need_juel_all_value = mark_down_data.need_juel_all_value
+                        # 构建可用宝珠类型列表并计算角色能够提供的宝珠总值
+                        juel_type_id_list = [mark_down_data.need_juel_1, mark_down_data.need_juel_2, mark_down_data.need_juel_3]
+                        juel_type_id_list = expand_juel_entries(juel_type_id_list)
+                        total_value = total_juel_value_from_entries(self.character_data, juel_type_id_list)
+
+                        # 被关押区等级影响
+                        if handle_premise.handle_imprisonment_1(self.character_id):
+                            now_level_fac = cache.rhodes_island.facility_level[19]
+                            facility_cid = game_config.config_facility_effect_data[_("关押区")][int(now_level_fac)]
+                            facility_effect = game_config.config_facility_effect[facility_cid].effect
+                            need_juel_all_value = int(need_juel_all_value * (1 - facility_effect / 100))
+
+                        if total_value >= need_juel_all_value:
+                            can_down = True
+                    except Exception:
+                        if cache.debug_mode:
+                            can_down = True
+                return can_up, can_down
+
+            # 非刻印能力的升级判断
+            # 达到最高级则不可再升
+            if now_level >= 8:
+                return False, False
+            need_list = game_config.config_ability_up_data.get(ability_id, {}).get(now_level, [])
+            judge = 1
+            for need_text in need_list:
+                need_type = need_text.split('|')[0][0]
+                need_type_id = int(need_text.split('|')[0][1:])
+                need_value = int(need_text.split('|')[1])
+                if need_type == "A":
+                    now_value = self.character_data.ability.get(need_type_id, 0)
+                elif need_type == "J":
+                    now_value = self.character_data.juel.get(need_type_id, 0)
+                elif need_type == "E":
+                    now_value = self.character_data.experience.get(need_type_id, 0)
+                else:
+                    now_value = 0
+                if now_value < need_value:
+                    judge = 0
+                    break
+
+            # 额外条件检查（独立模块）
+            extra = handle_ability.extra_ability_check(ability_id=ability_id, character_id=self.character_id, draw_flag=False)
+            if extra == 0:
+                judge = 0
+            # debug 模式下强制允许
+            if cache.debug_mode:
+                judge = 1
+            can_up = bool(judge)
+            # 常规非刻印能力通常不支持直接降级
+            can_down = False
+            return can_up, can_down
+        except Exception:
+            return False, False
 
 class Characterabi_cmd_Text:
     """
@@ -445,24 +591,24 @@ class Characterabi_cmd_Text:
                 now_draw_failed.draw()
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), self.width / 3)
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), int(self.width / 3))
             back_draw.draw()
             self.return_list.append(back_draw.return_text)
             if not len(need_list2):
                 if judge:
                     # 如果满足条件且没有第二个需求列表，则绘制升级按钮
-                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
+                    yes_draw = draw.CenterButton(_("[确定]"), _( "确定"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
                     yes_draw.draw()
                     self.return_list.append(yes_draw.return_text)
             else:
                 # 按照主要求进行升级
                 if judge:
-                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_1)
+                    yes_1_draw = draw.CenterButton(_("[确定(主需求)]"), _( "确定(主需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_1)
                     yes_1_draw.draw()
                     self.return_list.append(yes_1_draw.return_text)
                 # 按照第二要求进行升级
                 if judge2:
-                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), self.width / 3, cmd_func=self.level_up, args=jule_dict_2)
+                    yes_2_draw = draw.CenterButton(_("[确定(次需求)]"), _( "确定(次需求)"), int(self.width / 3), cmd_func=self.level_up, args=jule_dict_2)
                     yes_2_draw.draw()
                     self.return_list.append(yes_2_draw.return_text)
             yrn = flow_handle.askfor_all(self.return_list)
@@ -534,7 +680,7 @@ class Character_abi_up_main_Handle:
 
     def draw(self):
         """绘制面板"""
-        back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 3)
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 3))
         now_panel_id = _("属性升级")
         while 1:
             self.return_list = []
@@ -627,19 +773,19 @@ class Character_abi_up_main_panel:
     def __init__(self, character_id: int, width: int):
         """初始化绘制对象"""
         head_draw = character_info_head.CharacterInfoHead(character_id, width)
-        Juel_draw = see_character_info_panel.CharacterJuelText(character_id, width, 8, 0)
-        Experience_draw = see_character_info_panel.CharacterExperienceText(character_id, width, 8, 0)
+        Juel_draw = see_character_info_panel.CharacterJuelText(character_id, width, 8, False)
+        Experience_draw = see_character_info_panel.CharacterExperienceText(character_id, width, 8, False)
         abi_draw = Characterabi_show_Text(character_id, width)
         tal_draw = talent_up_panel.Character_talent_show_Text(character_id, width)
         if character_id == 0:
-            self.draw_list: List[draw.NormalDraw] = [
+            self.draw_list: List = [
                 head_draw,
                 Juel_draw,
                 Experience_draw,
                 abi_draw,
             ]
         else:
-            self.draw_list: List[draw.NormalDraw] = [
+            self.draw_list: List = [
                 head_draw,
                 Juel_draw,
                 Experience_draw,
