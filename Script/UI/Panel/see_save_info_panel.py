@@ -60,7 +60,6 @@ class SeeSaveListPanel:
             line_feed.draw()
             title_draw = draw.TitleLineDraw(_("神经连接柜"), self.width)
             title_draw.draw()
-            line_feed.draw()
             self.return_list = []
             auto_save_draw = SaveInfoDraw(["auto", 0], self.width, True, False, 0)
             auto_save_draw.draw()
