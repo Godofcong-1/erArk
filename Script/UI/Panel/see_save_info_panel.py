@@ -41,21 +41,28 @@ class SeeSaveListPanel:
         """ 当前面板监听的按钮列表 """
         now_list = [(i, write_save) for i in range(normal_config.config_normal.max_save)]
         self.handle_panel = panel.PageHandlePanel(
-            now_list, SaveInfoDraw, normal_config.config_normal.save_page, 1, width, 1, 1, 0, "-"
+            now_list, SaveInfoDraw, normal_config.config_normal.save_page, 1, width, True, True, 0, "-"
         )
         """ 页面控制对象 """
+        # 如果配置文件里有上次的页码，则将分页面板跳到该页
+        try:
+            last_page = save_handle.get_last_save_page()
+            self.handle_panel.now_page = last_page
+        except Exception:
+            pass
 
     def draw(self):
         """绘制对象"""
         while 1:
             if cache.back_save_panel:
-                cache.back_save_panel = 0
+                cache.back_save_panel = False
                 break
             line_feed.draw()
             title_draw = draw.TitleLineDraw(_("神经连接柜"), self.width)
             title_draw.draw()
+            line_feed.draw()
             self.return_list = []
-            auto_save_draw = SaveInfoDraw(["auto", 0], self.width, 1, 0, 0)
+            auto_save_draw = SaveInfoDraw(["auto", 0], self.width, True, False, 0)
             auto_save_draw.draw()
             line_feed.draw()
             self.return_list.append("auto")
@@ -85,7 +92,7 @@ class SaveInfoDraw:
     button_id -- 数字按钮的id
     """
 
-    def __init__(self, text: str, width: int, is_button: bool, num_button: bool, button_id: int):
+    def __init__(self, text: List, width: int, is_button: bool, num_button: bool, button_id: int):
         """初始化绘制对象"""
         self.text: str = str(text[0])
         """ 存档id """
@@ -133,6 +140,14 @@ class SaveInfoDraw:
             save_name = f"No.{self.text} {save_head['game_verson']} {game_time_text}"
             save_name += _(" {0}博士").format(save_head['character_name'])
             save_name += f" {save_time_text}"
+            # 标记最新存档
+            try:
+                last_id = save_handle.get_last_save_id()
+                # 如果是最新存档，则在名字后面加上标记
+                if last_id != "" and str(last_id) == str(self.text):
+                    save_name += _(" (新!)")
+            except Exception:
+                pass
         if is_button:
             if num_button:
                 index_text = text_handle.id_index(button_id)
@@ -200,7 +215,17 @@ class SaveInfoDraw:
             flow_handle.askfor_all(now_ask_list)
             py_cmd.clr_cmd()
         else:
+            # 创建新存档，同时记录该存档所在的页码到缓存
             save_handle.establish_save(self.text)
+            try:
+                # 仅处理数字存档位
+                save_id = int(self.text)
+                page = int(save_id / normal_config.config_normal.save_page)
+                save_handle.set_last_save_page(page)
+                # 记录最后保存的存档id
+                save_handle.set_last_save_id(self.text)
+            except Exception:
+                pass
 
     def load_save(self):
         """载入存档"""
@@ -221,7 +246,7 @@ class SaveInfoDraw:
                 return
         save_handle.input_load_save(str(self.text))
         cache.now_panel_id = constant.Panel.IN_SCENE
-        cache.back_save_panel = 1
+        cache.back_save_panel = True
 
     def delete_save(self):
         """删除存档"""
@@ -260,3 +285,12 @@ class SaveInfoDraw:
             elif yrn == back_draw.return_text:
                 return
         save_handle.establish_save(self.text)
+        # 尝试记录该存档所在的页码到缓存
+        try:
+            save_id = int(self.text)
+            page = int(save_id / normal_config.config_normal.save_page)
+            save_handle.set_last_save_page(page)
+            # 记录最后保存的存档id
+            save_handle.set_last_save_id(self.text)
+        except Exception:
+            pass

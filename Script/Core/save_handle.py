@@ -17,6 +17,7 @@ from Script.Core import (
 from Script.Config import normal_config, game_config, character_config
 from Script.Design import attr_calculation, character_handle
 from Script.UI.Moudle import draw
+import json
 
 game_path = game_path_config.game_path
 cache: game_type.Cache = cache_control.cache
@@ -776,3 +777,65 @@ def remove_save(save_id: str):
     save_path = get_save_dir_path(save_id)
     if os.path.isdir(save_path):
         shutil.rmtree(save_path)
+
+
+def _get_save_info_path() -> str:
+    """
+    获取 save_info.json 的路径（用于记录界面相关的简单配置）
+    """
+    save_dir = os.path.join("save")
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    return os.path.join(save_dir, "save_info.json")
+
+def load_save_info_file() -> dict:
+    """
+    读取 save/save_info.json 并返回字典，文件不存在时返回空字典
+    """
+    path = _get_save_info_path()
+    try:
+        with open(path, "r", encoding="utf-8") as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+def save_save_info_file(data: dict) -> None:
+    """
+    将 data 字典写入 save/save_info.json（覆盖写）
+    """
+    path = _get_save_info_path()
+    try:
+        with open(path, "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=2)
+    except Exception:
+        # 忽略写入错误，避免影响保存流程
+        pass
+
+def get_last_save_page() -> int:
+    """方便的包装，返回保存的 last_save_page，默认 0"""
+    info = load_save_info_file()
+    try:
+        return int(info.get("last_save_page", 0))
+    except Exception:
+        return 0
+
+def set_last_save_page(page: int) -> None:
+    """方便的包装，写入 last_save_page 到 save_info.json"""
+    info = load_save_info_file()
+    info["last_save_page"] = int(page)
+    save_save_info_file(info)
+
+def get_last_save_id() -> str:
+    """返回上次保存的存档 id，默认空字符串"""
+    info = load_save_info_file()
+    try:
+        v = info.get("last_save_id", "")
+        return str(v) if v is not None else ""
+    except Exception:
+        return ""
+
+def set_last_save_id(save_id: str) -> None:
+    """写入上次保存的存档 id 到 save_info.json"""
+    info = load_save_info_file()
+    info["last_save_id"] = str(save_id)
+    save_save_info_file(info)
