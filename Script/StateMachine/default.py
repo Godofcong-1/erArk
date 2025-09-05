@@ -1,4 +1,3 @@
-from calendar import c
 import random
 from types import FunctionType
 from Script.Config import game_config

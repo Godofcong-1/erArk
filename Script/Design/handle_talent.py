@@ -25,6 +25,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     now_gain_type -- 素质获得类型(0随时自动，1手动，2指令绑定，3睡觉自动)\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    gain_talent_flag = False
     # 遍历全素质获得
     for gain_talent_cid in game_config.config_talent_gain:
         gain_talent_data = game_config.config_talent_gain[gain_talent_cid]
@@ -53,6 +54,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
         # 如果符合获得条件，则获得该素质
         if judge:
             character_data.talent[talent_id] = 1
+            gain_talent_flag = True
             talent_name = game_config.config_talent[talent_id].name
 
             # 触发对应的二段行为结算
@@ -71,7 +73,8 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     # print(f"debug {character_data.name}的睡觉结算素质结束，judge = {judge}")
 
     # 结算陷落素质的成就
-    achievement_panel.achievement_flow(_("关系"))
+    if gain_talent_flag:
+        achievement_panel.achievement_flow(_("关系"))
 
     # 特殊素质获得
     if now_gain_type == 0:

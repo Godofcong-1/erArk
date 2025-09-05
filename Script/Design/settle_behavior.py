@@ -1234,7 +1234,9 @@ def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, characte
     Return arguments:
     tuple -- 总值,提示文本
     """
+    # 本地化常用对象，减少每次循环访问全局模块属性的成本
     character_data: game_type.Character = cache.character_data[character_id]
+    character_status_data = character_data.status_data
     mark_up_data = game_config.config_mark_up_data[mark_up_id]
     mark_up_data_need_state_list = []
     mark_up_data_need_state_list.append(mark_up_data.need_state_1)
@@ -1252,12 +1254,12 @@ def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, characte
             state_id = int(need_state.split('|')[0])
             adjust = float(need_state.split('|')[1])
             # 计算当前状态值
-            now_state_value = int(character_data.status_data[state_id] * adjust)
+            now_state_value = int(character_status_data[state_id] * adjust)
             mark_up_data_all_value += now_state_value
             mark_up_data_text += f" {game_config.config_character_state[state_id].name}*{adjust} = {now_state_value} "
         else:
             state_id = int(need_state)
-            now_state_value = int(character_data.status_data[state_id])
+            now_state_value = int(character_status_data[state_id])
             mark_up_data_all_value += now_state_value
             mark_up_data_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
     return mark_up_data_all_value, mark_up_data_text

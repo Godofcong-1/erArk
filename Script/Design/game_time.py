@@ -189,9 +189,17 @@ def get_sub_date(
     """
     if old_date is None:
         old_date = cache.game_time
-    new_date = old_date + relativedelta.relativedelta(
-        years=year, months=month, days=day, hours=hour, minutes=minute
-    )
+    # 如果增加了月或年，则直接使用 relativedelta 进行计算
+    if month != 0 or year != 0:
+        new_date = old_date + relativedelta.relativedelta(
+            years=year, months=month, days=day, hours=hour, minutes=minute
+        )
+    # 否则使用更简单的 timedelta 进行计算
+    else:
+        new_date = old_date + datetime.timedelta(
+            days=day, hours=hour, minutes=minute
+        )
+
     # 进行月份调整，保留四个月为春夏秋冬四月，其他月份自动跳转为以上月份
     if new_date.month in {1,2}:
         new_date = new_date.replace(month = 3)

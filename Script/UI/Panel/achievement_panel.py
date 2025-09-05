@@ -26,19 +26,29 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
     """
     pl_character_data: game_type.Character = cache.character_data[0]
     # 成就类型与结算函数的映射字典
-    achievement_type_func_dict = {
-        _("关系"): settle_chara_relationship,
-        _("招募"): settle_chara_recruit,
-        _("访客"): settle_chara_visitor,
-        _("助理"): settle_chara_assistant,
-        _("收藏服装"): settle_chara_clothing,
-        _("技能"): settle_chara_ability,
-        _("催眠"): settle_chara_hypnosis,
-        _("群交"): settle_chara_group_sex,
-        _("隐奸"): settle_chara_hidden_sex,
-        _("睡奸"): settle_chara_sleep_sex,
-        _("射精"): settle_semen_shoot,
-    }
+    func = None
+    if achievement_type == _("关系"):
+        func = settle_chara_relationship
+    elif achievement_type == _("招募"):
+        func = settle_chara_recruit
+    elif achievement_type == _("访客"):
+        func = settle_chara_visitor
+    elif achievement_type == _("助理"):
+        func = settle_chara_assistant
+    elif achievement_type == _("收藏服装"):
+        func = settle_chara_clothing
+    elif achievement_type == _("技能"):
+        func = settle_chara_ability
+    elif achievement_type == _("催眠"):
+        func = settle_chara_hypnosis
+    elif achievement_type == _("群交"):
+        func = settle_chara_group_sex
+    elif achievement_type == _("隐奸"):
+        func = settle_chara_hidden_sex
+    elif achievement_type == _("睡奸"):
+        func = settle_chara_sleep_sex
+    elif achievement_type == _("射精"):
+        func = settle_semen_shoot
     # 统计载具数量
     vehicles_count = 0
     read_book_count = 0
@@ -74,8 +84,6 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("调香"): [cache.achievement.aromatherapy_count, [1061, 1062]],
         _("导航"): [len(cache.achievement.visited_nation_list), [1101, 1102]],
     }
-    # 根据类型获取对应的结算函数
-    func = achievement_type_func_dict.get(achievement_type, None)
     # 如果是其他类型，则使用结算值进行结算
     judge_value, achievement_ids = achievement_type_value_dict.get(achievement_type, (None, None))
     achievement_id_list = []

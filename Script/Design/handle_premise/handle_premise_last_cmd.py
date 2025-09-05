@@ -37,8 +37,9 @@ def handle_last_cmd_makeing_out(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.MAKING_OUT)):
         return 1
@@ -54,8 +55,9 @@ def handle_last_cmd_kiss_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.KISS_H)):
         return 1
@@ -71,8 +73,9 @@ def handle_last_cmd_breast_caress(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BREAST_CARESS)):
         return 1
@@ -88,8 +91,9 @@ def handle_last_cmd_twiddle_nipples(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TWIDDLE_NIPPLES)):
         return 1
@@ -105,8 +109,9 @@ def handle_last_cmd_breast_sucking(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.BREAST_SUCKING)):
         return 1
@@ -122,8 +127,9 @@ def handle_last_cmd_clit_caress(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.CLIT_CARESS)):
         return 1
@@ -139,8 +145,9 @@ def handle_last_cmd_open_labia(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.OPEN_LABIA)):
         return 1
@@ -156,8 +163,9 @@ def handle_last_cmd_cunnilingus(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.CUNNILINGUS)):
         return 1
@@ -173,8 +181,9 @@ def handle_last_cmd_finger_insertion(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FINGER_INSERTION)):
         return 1
@@ -190,8 +199,9 @@ def handle_last_cmd_anal_caress(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.ANAL_CARESS)):
         return 1
@@ -207,8 +217,9 @@ def handle_last_cmd_make_masturebate(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.MAKE_MASTUREBATE)):
         return 1
@@ -224,8 +235,9 @@ def handle_last_cmd_blowjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input and (last_cmd == str(constant.Instruct.BLOWJOB)):
         return 1
@@ -241,8 +253,9 @@ def handle_last_cmd_handjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HANDJOB)):
         return 1
@@ -258,8 +271,9 @@ def handle_last_cmd_paizuri(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.PAIZURI)):
         return 1
@@ -275,8 +289,9 @@ def handle_last_cmd_footjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FOOTJOB)):
         return 1
@@ -292,8 +307,9 @@ def handle_last_cmd_hairjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HAIRJOB)):
         return 1
@@ -309,8 +325,9 @@ def handle_last_cmd_axillajob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.AXILLAJOB)):
         return 1
@@ -326,8 +343,9 @@ def handle_last_cmd_rub_buttock(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.RUB_BUTTOCK)):
         return 1
@@ -343,8 +361,9 @@ def handle_last_cmd_legjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.LEGJOB)):
         return 1
@@ -360,8 +379,9 @@ def handle_last_cmd_tailjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TAILJOB)):
         return 1
@@ -377,8 +397,9 @@ def handle_last_cmd_face_rub(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FACE_RUB)):
         return 1
@@ -394,8 +415,9 @@ def handle_last_cmd_horn_rub(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HORN_RUB)):
         return 1
@@ -411,8 +433,9 @@ def handle_last_cmd_ears_rub(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.EARS_RUB)):
         return 1
@@ -428,8 +451,9 @@ def handle_last_cmd_hand_blowjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.HAND_BLOWJOB)):
         return 1
@@ -445,8 +469,9 @@ def handle_last_cmd_tits_blowjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.TITS_BLOWJOB)):
         return 1
@@ -478,8 +503,9 @@ def handle_last_cmd_focus_blowjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.FOCUS_BLOWJOB)):
         return 1
@@ -628,8 +654,9 @@ def handle_last_cmd_stimulate_g_point(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.STIMULATE_G_POINT)):
         return 1
@@ -645,8 +672,9 @@ def handle_last_cmd_womb_os_caress(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 2]
     if len_input and (last_cmd == str(constant.Instruct.WOMB_OS_CARESS)):
         return 1
@@ -710,8 +738,9 @@ def handle_last_cmd_blowjob_or_handjob(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.HANDJOB)):
@@ -728,8 +757,9 @@ def handle_last_cmd_blowjob_or_paizuri(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.PAIZURI)):
@@ -746,8 +776,9 @@ def handle_last_cmd_blowjob_or_cunnilingus(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     if len_input:
         if (last_cmd == str(constant.Instruct.BLOWJOB)) or (last_cmd == str(constant.Instruct.CUNNILINGUS)):
@@ -884,8 +915,9 @@ def handle_last_cmd_breast_caress_type(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.BREAST_CARESS), str(constant.Instruct.TWIDDLE_NIPPLES),
@@ -906,8 +938,9 @@ def handle_last_cmd_handjob_type(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.HANDJOB), str(constant.Instruct.HAND_BLOWJOB)
@@ -927,8 +960,9 @@ def handle_last_cmd_blowjob_type(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.BLOWJOB), str(constant.Instruct.HAND_BLOWJOB),
@@ -950,8 +984,9 @@ def handle_last_cmd_paizuri_type(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    len_input = cache.input_cache
-    len_input = len(len_input)
+    len_input = len(cache.input_cache)
+    if not len_input:
+        return 0
     last_cmd = cache.input_cache[len(cache.input_cache) - 1]
     sex = {
         str(constant.Instruct.PAIZURI), str(constant.Instruct.TITS_BLOWJOB)
