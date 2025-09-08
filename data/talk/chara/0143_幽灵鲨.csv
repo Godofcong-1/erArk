@@ -25,9 +25,9 @@ str,str,int,str,str
 20,follow,143,high_1&sys_0,“想让我跟着你，可以。但是请不要耽误我太多时间”
 21,morning_salutation_1,143,high_1,“{PlayerName}，该起床了。\n今天的你也有很多公务没有完成。”
 22,morning_salutation_1,143,CVP_A1_G_G_2&high_1&high_10,“还在赖着不起床吗？\n大懒虫快点起床啊，你也不想被鲨鱼的牙齿咬一口吧？”
-23,morning_salutation_2,143,high_1&t_kiss_ge_10,{TargetName}看见还在熟睡的{PlayerName}\n嘴对嘴的吻了上去\n事后{TargetName}的嘴角全是{PlayerName}和{TargetName}的唾沫
-24,morning_salutation_1,143,high_10&high_2&high_5&assistant_live_together_on,“该起床了啊”\n{TargetName}轻踹了{PlayerName}一脚\n“你醒了吧，我再睡会。”
-25,morning_salutation_3,143,jj_3,{TargetName}进入{PlayerName}的房间看见了一柱擎天的肉棒\n{TargetName}扒开{PlayerName}的裤子就开始吞吐肉棒\n“呼噜噜~哈~哈~是喜欢的味道”\n不久后，{PlayerName}的第一份浓精被{TargetName}给榨取了
+23,morning_salutation_2,143,high_1&t_kiss_ge_10,{Name}看见还在熟睡的{PlayerName}\n嘴对嘴的吻了上去\n事后{Name}的嘴角全是{PlayerName}和{Name}的唾沫
+24,morning_salutation_1,143,high_10&high_2&high_5&assistant_live_together_on,“该起床了啊”\n{Name}轻踹了{PlayerName}一脚\n“你醒了吧，我再睡会。”
+25,morning_salutation_3,143,jj_3,{Name}进入{PlayerName}的房间看见了一柱擎天的肉棒\n{Name}扒开{PlayerName}的裤子就开始吞吐肉棒\n“呼噜噜~哈~哈~是喜欢的味道”\n不久后，{PlayerName}的第一份浓精被{Name}给榨取了
 26,confession_failed,143,high_1,“可以再给我一点时间吗？\n这种事情我真的很需要去慎重对待。”
 27,confession_failed,143,high_1,“为什么你会想着对修女告白啊，你在想什么龌龊的事情”
 28,low_obscenity_anus,143,high_1,“有没有人和你说过这样对女孩子真的是一种十分不礼貌的行为呢？”
