@@ -1481,15 +1481,7 @@ def handle_normal_all_except_special_hypnosis(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
+    if handle_normal_all(character_id):
         return 1
     elif (
         handle_unconscious_flag_5(character_id) or

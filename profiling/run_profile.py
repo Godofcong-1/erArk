@@ -263,6 +263,23 @@ def init_game_environment(args):
     from Script.Config import game_config, name_config
     game_config.init()
 
+    # 尝试加载前提统计补丁（需在其余模块大量导入之前，以便覆盖装饰器）
+    premise_mod = None
+    if args.with_premise_profiler:
+        premise_mod = load_premise_profiler(args)
+        # 关键：提前激活代理并在其后导入 handle_premise 以触发注册
+        try:
+            if premise_mod:
+                activate = getattr(premise_mod, "activate_profiler", None)
+                if callable(activate):
+                    activate()
+                    # 强制导入以触发所有装饰器注册到代理字典
+                    import importlib
+                    importlib.import_module("Script.Design.handle_premise")
+                    log("前提统计代理已激活并完成注册拦截。")
+        except Exception as e:
+            log(f"激活前提统计代理失败: {e}")
+
     # 此时才能安全 import 其它会追溯到 main_frame / 字体的模块
     from Script.Config import character_config
     character_config.init_character_tem_data()
@@ -295,6 +312,7 @@ def init_game_environment(args):
     setattr(cc2.cache, "benchmark_mode", True)
 
     log("环境初始化完成.")
+    return premise_mod
 
 
 # ------------------------- 前提统计补丁检测 -------------------------
@@ -344,7 +362,7 @@ def profile_run(ticks, minutes_per_tick, warmup, profile_name, top_n):
 
     stats = pstats.Stats(pr)
     func_stats = []
-    for func, stat in stats.stats.items():
+    for func, stat in getattr(stats, "stats", {}).items():
         cc, nc, tt, ct, callers = stat  # primitive, total, tottime, cumtime
         filename, line, funcname = func
         func_stats.append({
@@ -413,12 +431,7 @@ def export_premise_stats(pmod, path):
 def main():
     args = parse_args()
 
-    # 尝试加载前提统计补丁（需在其余模块大量导入之前，以便覆盖装饰器）
-    premise_mod = None
-    if args.with_premise_profiler:
-        premise_mod = load_premise_profiler(args)
-
-    init_game_environment(args)
+    premise_mod = init_game_environment(args)
     patch_for_benchmark(no_patch_io=args.no_patch_io)
 
     profile_run(
@@ -433,6 +446,9 @@ def main():
         export_premise_stats(premise_mod, args.premise_stats_json)
 
     log("全部完成。可使用 snakeviz / py-spy / scalene 进行进一步分析。")
+
+    # 退出
+    sys.exit(0)
 
 
 if __name__ == "__main__":
