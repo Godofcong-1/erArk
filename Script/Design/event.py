@@ -1,8 +1,7 @@
 import random
-from Script.Core import cache_control, game_type, value_handle, constant
-from Script.Design import handle_premise
+from Script.Core import cache_control, game_type, value_handle
 from Script.UI.Panel import draw_event_text_panel
-from Script.Config import normal_config, game_config
+from Script.Config import game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -18,6 +17,7 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     draw.LineFeedWaitDraw -- 事件绘制文本
     str -- 事件id
     """
+    from Script.Design import handle_premise
     character_data: game_type.Character = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]

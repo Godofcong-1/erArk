@@ -1055,6 +1055,8 @@ class Premise:
     """ 属性_基础 睡眠等级：熟睡 """
     SLEEP_LEVEL_3 = "sleep_level_3"
     """ 属性_基础 睡眠等级：完全深眠 """
+    SLEEP_LEVEL_GE_1 = "sleep_level_ge_1"
+    """ 属性_基础 睡眠等级≥1 """
     SANITY_POINT_0 = "sanity_point_0"
     """ 属性_基础 理智值为0 """
     SANITY_POINT_G_0 = "sanity_point_g_0"

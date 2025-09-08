@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
 from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, map_handle
@@ -79,7 +79,7 @@ def calculate_escape_probability(character_id: int) -> float:
 
     return cache.rhodes_island.current_prisoners[character_id][1]
 
-def judge_can_escape(character_id: int) -> bool:
+def judge_can_escape(character_id: int) -> Tuple[bool, float, float]:
     """
     判断指定角色是否能逃脱成功。\n
     逃脱成功条件：\n
@@ -184,8 +184,8 @@ def chara_become_prisoner(character_id: int):
     character_data = cache.character_data[character_id]
 
     # flag结算
-    character_data.sp_flag.be_bagged = 0
-    character_data.sp_flag.imprisonment = 1
+    character_data.sp_flag.be_bagged = False
+    character_data.sp_flag.imprisonment = True
     character_data.sp_flag.escaping = False
     # 重置身体管理
     character_data.body_manage = attr_calculation.get_body_manage_zero()
@@ -331,14 +331,14 @@ def prepare_training():
     pl_character_data.target_character_id = target_character_id
 
 
-def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_selet_part: str = "") -> List[int]:
+def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_selet_part: str = "") -> List[str]:
     """
     获取调教助手所有可用的行为id
     Keyword arguments:
     select_part -- 选择的部位
     not_selet_part -- 不选择的部位
     Return arguments:
-    List[int] -- 可用的行为id列表
+    List[str] -- 可用的行为id列表
     """
     from Script.UI.Panel import see_instruct_panel
     # 获取所有可用的状态id
@@ -394,22 +394,22 @@ def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_sel
                 new_behavior_id_list.append(behavior_id)
     return new_behavior_id_list
 
-def get_behavior_id_of_sex_assistant() -> int:
+def get_behavior_id_of_sex_assistant() -> str:
     """
     获取调教助手的行为id
     Return arguments:
-    int -- 调教助手的行为id
+    str -- 调教助手的行为id
     """
     # 如果没有开启性爱助手，则返回0
     if handle_premise.handle_sex_assistant_off(0):
-        return 0
+        return '0'
     # 如果调教目标是仅囚犯干员的话，玩家的交互对象不是囚犯时返回0
     if cache.rhodes_island.confinement_training_setting[13] == 0 and handle_premise.handle_t_imprisonment_0(0):
-        return 0
+        return '0'
     # 6异常或者绳子捆绑则返回0
     warden_id = cache.rhodes_island.current_warden_id
     if not handle_premise.handle_normal_6(warden_id) or handle_premise.handle_self_now_bondage(warden_id):
-        return 0
+        return '0'
     # 如果是指定指令列表，则直接随机选择
     if handle_premise.handle_sex_assistant_3(0) and len(cache.rhodes_island.sex_assistant_ai_behavior_id_list) > 0:
         behavior_id = random.choice(cache.rhodes_island.sex_assistant_ai_behavior_id_list)
@@ -429,7 +429,7 @@ def get_behavior_id_of_sex_assistant() -> int:
                     break
             # 如果没有部位，则返回0
             if now_part == "":
-                return 0
+                return '0'
             # 如果目标为玩家同部位
             if handle_premise.handle_sex_assistant_1(0):
                 # 获取目标的行为id
@@ -446,7 +446,7 @@ def get_behavior_id_of_sex_assistant() -> int:
                 if len(new_behavior_id_list) > 0:
                     behavior_id = random.choice(new_behavior_id_list)
                     return behavior_id
-    return 0
+    return '0'
 
 class Confinement_And_Training_Manage_Panel:
     """

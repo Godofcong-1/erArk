@@ -1056,6 +1056,24 @@ def handle_sleep_level_3(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.SLEEP_LEVEL_GE_1)
+def handle_sleep_level_ge_1(character_id: int) -> int:
+    """
+    睡眠等级≥1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    level,tem = attr_calculation.get_sleep_level(character_data.sleep_point)
+    if level >= 1:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.SANITY_POINT_0)
 def handle_sanity_point_0(character_id: int) -> int:
     """

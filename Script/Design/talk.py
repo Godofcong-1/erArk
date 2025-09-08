@@ -286,21 +286,27 @@ def must_show_talk_check(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    for second_behavior_id, behavior_data in character_data.second_behavior.items():
-        if behavior_data != 0:
-            # print(f"debug 检测到{second_behavior_id}可能需要显示")
-            # 需要有必须显示
-            if 998 in game_config.config_behavior_effect_data[second_behavior_id]:
-                # 进行绘制
-                now_talk_data = handle_talk_sub(character_id, second_behavior_id, True)
-                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
-                handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id)
-                # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
-                change_data = game_type.CharacterStatusChange()
-                for effect_id in game_config.config_behavior_effect_data[second_behavior_id]:
-                    constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
-                # 触发后该行为值归零
-                character_data.second_behavior[second_behavior_id] = 0
+    second_behavior = character_data.second_behavior
+    eff_map = game_config.config_behavior_effect_data
+    # 获取所有必须显示的二段行为id
+    must_ids = game_config.config_behavior_must_show_cid_list
+    if not must_ids:
+        return
+    # 遍历所有必须显示的二段行为
+    for behavior_id in must_ids:
+        # 跳过值为0的行为
+        if behavior_id in second_behavior and second_behavior[behavior_id] == 0:
+            continue
+        # 进行绘制
+        now_talk_data = handle_talk_sub(character_id, behavior_id, True)
+        talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
+        # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
+        change_data = game_type.CharacterStatusChange()
+        for effect_id in eff_map[behavior_id]:
+            constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
+        # 触发后该行为值归零
+        character_data.second_behavior[behavior_id] = 0
 
 
 def second_behavior_info_text(character_id: int, second_behavior_id: str):

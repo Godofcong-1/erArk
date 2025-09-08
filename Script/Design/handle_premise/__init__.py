@@ -900,9 +900,7 @@ def handle_normal_6(character_id: int) -> int:
     int -- 权重
     """
     if(
-         (handle_sleep_level_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
-        or (handle_sleep_level_2(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
-        or (handle_sleep_level_3(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
+         (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_5(character_id)
         or (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
     ):

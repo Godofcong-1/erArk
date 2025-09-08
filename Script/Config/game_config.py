@@ -37,6 +37,10 @@ config_behavior_effect: Dict[int, config_def.Behavior_Effect] = {}
 """ 行为结算器配置 """
 config_behavior_effect_data: Dict[str, List] = {}
 """ 行为所包含的结算器id数据 """
+config_behavior_must_settle_cid_list: List[str] = []
+""" 必须计算的行为的cid集合 """
+config_behavior_must_show_cid_list: List[str] = []
+""" 必须显示的行为的cid集合 """
 config_book: Dict[int, config_def.Book] = {}
 """ 书籍配表数据 """
 config_book_type_data: Dict[int, Set] = {}
@@ -753,6 +757,12 @@ def load_behavior_effect_data():
                 # 否则是字符串，直接添加
                 else:
                     config_behavior_effect_data[now_tem.behavior_id].append(effect)
+        # 如果行为结算器中包含997效果，则将该行为id存入必须计算行为集合
+        if 997 in config_behavior_effect_data[now_tem.behavior_id]:
+            config_behavior_must_settle_cid_list.append(now_tem.behavior_id)
+        # 如果行为结算器中包含998效果，则将该行为id存入必须展示行为集合
+        if 998 in config_behavior_effect_data[now_tem.behavior_id]:
+            config_behavior_must_show_cid_list.append(now_tem.behavior_id)
 
 
 def load_book_data():
