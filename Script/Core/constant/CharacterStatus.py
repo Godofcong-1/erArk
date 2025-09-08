@@ -177,6 +177,8 @@ class CharacterStatus:
     """ 处理外交事宜 """
     STATUS_TRAIN_PRISONER = 222
     """ 训练囚犯 """
+    STATUS_MANAGE_FACILITY_POWER = 223
+    """ 调控设施供能 """
     STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     STATUS_MORNING_SALUTATION_2 = 252

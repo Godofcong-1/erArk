@@ -3067,6 +3067,21 @@ def handle_maintenance_facilities():
 
 
 @add_instruct(
+    constant.Instruct.MANAGE_FACILITY_POWER,
+    constant.InstructType.WORK,
+    _("调控设施供能"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_POWER_DISPATCH,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.MANAGE_FACILITY_POWER,
+)
+def handle_manage_facility_power():
+    """处理调控设施供能指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.MANAGE_FACILITY_POWER)
+
+
+@add_instruct(
     constant.Instruct.REPAIR_EQUIPMENT,
     constant.InstructType.WORK,
     _("维修装备"),

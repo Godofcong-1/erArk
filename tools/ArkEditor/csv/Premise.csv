@@ -196,6 +196,8 @@ in_restroom,IN_REST_ROOM,地点_定位,在休息室中
 not_in_restroom,NOT_IN_REST_ROOM,地点_定位,不在休息室中
 in_restroom_or_dormitory,IN_REST_ROOM_OR_DORMITORY,地点_定位,在休息室或自己宿舍中
 in_corridor,IN_CORRIDOR,地点_定位,在走廊中
+in_power_dispatch,IN_POWER_DISPATCH,地点_定位,在动力控制室中
+not_in_power_dispatch,NOT_IN_POWER_DISPATCH,地点_定位,不在动力控制室中
 in_music_room,IN_MUSIC_ROOM,地点_定位,在音乐室中
 in_classic_music_room,IN_CLASSIC_MUSIC_ROOM,地点_定位,在夕照区音乐室中
 not_in_classic_music_room,NOT_IN_CLASSIC_MUSIC_ROOM,地点_定位,不在夕照区音乐室中
@@ -526,6 +528,7 @@ sleep_level_0,SLEEP_LEVEL_0,属性_基础,睡眠等级：半梦半醒
 sleep_level_1,SLEEP_LEVEL_1,属性_基础,睡眠等级：浅睡
 sleep_level_2,SLEEP_LEVEL_2,属性_基础,睡眠等级：熟睡
 sleep_level_3,SLEEP_LEVEL_3,属性_基础,睡眠等级：完全深眠
+sleep_level_ge_1,SLEEP_LEVEL_GE_1,属性_基础,睡眠等级≥1
 sanity_point_0,SANITY_POINT_0,属性_基础,理智值为0
 sanity_point_g_0,SANITY_POINT_G_0,属性_基础,理智值不为0
 sanity_point_l_5,SANITY_POINT_L_5,属性_基础,理智值<5

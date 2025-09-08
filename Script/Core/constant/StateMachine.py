@@ -138,6 +138,8 @@ class StateMachine:
     """ 工作：健身锻炼 """
     WORK_TRAIN_PRISONER = 320
     """ 工作：对囚犯进行日常训练 """
+    WORK_MANAGE_FACILITY_POWER = 321
+    """ 工作：调控设施供能 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -295,6 +297,8 @@ class StateMachine:
     """ 移动至运维部 """
     MOVE_TO_BLACKSMITH_SHOP = 622
     """ 移动至铁匠铺 """
+    MOVE_TO_POWER_DISPATCH = 623
+    """ 移动至动力控制室 """
     MOVE_TO_DIPLOMATIC_OFFICE = 631
     """ 移动至外交官办公室 """
     MOVE_TO_HERB_GARDEN = 641

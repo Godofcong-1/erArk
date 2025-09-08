@@ -740,6 +740,19 @@ def character_move_to_blacksmith_shop(character_id: int):
     general_movement_module(character_id, to_blacksmith_shop)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_POWER_DISPATCH)
+def character_move_to_power_dispatch(character_id: int):
+    """
+    移动至动力控制室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_power_dispatch = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Power_Dispatch"])
+    )
+    general_movement_module(character_id, to_power_dispatch)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DIPLOMATIC_OFFICE)
 def character_move_to_diplomatic_office(character_id: int):
     """
@@ -2936,4 +2949,18 @@ def character_train_prisoner(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.TRAIN_PRISONER
     character_data.behavior.duration = 60
     character_data.state = constant.CharacterStatus.STATUS_TRAIN_PRISONER
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_MANAGE_FACILITY_POWER)
+def character_train_prisoner(character_id: int):
+    """
+    工作：调控设施供能
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.MANAGE_FACILITY_POWER
+    character_data.behavior.duration = 30
+    character_data.state = constant.CharacterStatus.STATUS_MANAGE_FACILITY_POWER
 
