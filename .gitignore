@@ -19,6 +19,9 @@ data/ui_text.json
 tem
 备份
 
+# 性能测试
+profiling_output
+
 # 打包相关文件
 build
 dist

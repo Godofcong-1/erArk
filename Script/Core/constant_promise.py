@@ -3421,4 +3421,6 @@ class Premise:
     TO_DO = "to_do"
     """ 未分类 未实装 """
 
+    HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM = "have_instrument_or_in_music_room"
+    """ 复合 已持有乐器或在乐器练习室里 """
 

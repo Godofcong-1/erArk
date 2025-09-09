@@ -2463,7 +2463,7 @@ def handle_singing():
     _("演奏乐器"),
     {
         constant_promise.Premise.NOT_H,
-        constant_promise.Premise.HAVE_INSTRUMENT,
+        constant_promise.Premise.HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM,
         constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
         constant_promise.Premise.TIRED_LE_74},
     constant.Behavior.PLAY_INSTRUMENT,

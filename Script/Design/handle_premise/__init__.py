@@ -1490,3 +1490,18 @@ def handle_normal_all_except_special_hypnosis(character_id: int) -> int:
         return 1
     else:
         return 0
+
+@add_premise(constant_promise.Premise.HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM)
+def handle_have_instrument_or_in_music_room(character_id: int) -> int:
+    """
+    校验角色是否已持有乐器或在乐器练习室里
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_have_instrument(character_id):
+        return 1
+    if handle_in_music_room(character_id):
+        return 1
+    return 0
