@@ -1021,30 +1021,50 @@ def judge_require(judge_text_list, character_id, hypnosis_replace_trust_flag = F
 
     return judge, reason
 
-
-def pad_display_width(s: str, target_width: int) -> str:
+def pad_display_width(input_text: str, target_width: int, align: str = "left") -> str:
     """
-    根据显示宽度（中文全角计2，其他字符计1）将字符串末尾补全到 target_width。
+    根据显示宽度（中文全角计2，其他字符计1）将字符串补全到 target_width。
     补全优先使用全角空格（每个占两列），不足一列时用半角空格补齐。
+
+    额外参数:
+        align: 对齐方式, 可选 "left"(默认), "center", "right"
 
     Args:
         s: 原始字符串
         target_width: 目标显示宽度（以列为单位）
+        align: 对齐方式
 
     Returns:
         补齐后的字符串
     """
     import unicodedata
-    w = 0
-    for ch in s:
-        if unicodedata.east_asian_width(ch) in ("F", "W"):
-            w += 2
-        else:
-            w += 1
+
+    def _display_width(text: str) -> int:
+        w = 0
+        for ch in text:
+            if unicodedata.east_asian_width(ch) in ("F", "W"):
+                w += 2
+            else:
+                w += 1
+        return w
+
+    def _make_pad(n: int) -> str:
+        # 每两个列用一个全角空格，剩余一列用半角空格
+        full_spaces = n // 2
+        half_space = n % 2
+        return "　" * full_spaces + " " * half_space
+
+    w = _display_width(input_text)
     if w >= target_width:
-        return s
+        return input_text
+
     pad = target_width - w
-    # 每两个列用一个全角空格
-    full_spaces = pad // 2
-    half_space = pad % 2
-    return s + ("　" * full_spaces) + (" " * half_space)
+    align = (align or "left").lower()
+    if align == "right":
+        return _make_pad(pad) + input_text
+    elif align == "center":
+        left = pad // 2
+        right = pad - left
+        return _make_pad(left) + input_text + _make_pad(right)
+    else:  # 默认左对齐
+        return input_text + _make_pad(pad)

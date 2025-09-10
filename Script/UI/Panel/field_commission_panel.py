@@ -24,7 +24,7 @@ def update_field_commission():
     judge_field_commission_finish()
     find_nation_field_commission()
 
-def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List:
+def get_commission_demand_and_reward(commission_id: int, send_npc_list = [], demand_or_reward: bool = False, deduction_or_increase: bool = False) -> List[str]:
     """
     获取委托需求或奖励\n
     Keyword arguments:\n
@@ -888,7 +888,7 @@ class CommissionDraw:
         self.now_commision_id = commision_id
 
         from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         select_state = {}
 
         while 1:

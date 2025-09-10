@@ -238,7 +238,7 @@ def update_base_resouce_newday():
     Return arguments:
     无
     """
-    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
+    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel, manage_power_system_panel
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -251,6 +251,8 @@ def update_base_resouce_newday():
     settle_milk()
     # 结算流水线
     manage_assembly_line_panel.settle_assembly_line(newdayflag=True)
+    # 结算动力系统（能源）
+    # manage_power_system_panel.settle_power_system(newdayflag=True)
     # 结算农业生产
     agriculture_production_panel.settle_agriculture_line()
     # 结算访客抵达和离开
@@ -305,6 +307,15 @@ def update_work_people():
         if character_data.work.work_type:
             cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
+
+            # 如果是供能调控员，则加入供能调控员列表
+            if character_data.work.work_type == 11:
+                if chara_id not in cache.rhodes_island.power_operator_ids_list:
+                    cache.rhodes_island.power_operator_ids_list.append(chara_id)
+            # 如果不是供能调控员，则从供能调控员列表中移除
+            else:
+                if chara_id in cache.rhodes_island.power_operator_ids_list:
+                    cache.rhodes_island.power_operator_ids_list.remove(chara_id)
 
             # 如果不是检修工程师，则清空该角色的检修目标
             if character_data.work.work_type != 21:

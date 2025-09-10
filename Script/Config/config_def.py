@@ -1252,6 +1252,17 @@ class SunTime:
     """ 太阳时间名 """
 
 
+class Supply_Strategy:
+    """ 供电策略 """
+
+    cid: int
+    """ 供电策略cid """
+    name: str
+    """ 策略名 """
+    adjust: float
+    """ 策略系数 """
+
+
 class System_Setting:
     """ 系统设置 """
 

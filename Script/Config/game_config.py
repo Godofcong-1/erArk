@@ -421,6 +421,8 @@ config_achievement: Dict[int, config_def.Achievement] = {}
 """ 成就数据 """
 config_achievement_id_relation: Dict[int, int] = {}
 """ 成就数据的id关联数据，int键为成就cid编号，int值为关联该成就的后置id """
+config_supply_strategy: Dict[int, config_def.Supply_Strategy] = {}
+""" 供电策略数据 """
 
 
 def load_data_json():
@@ -1885,6 +1887,14 @@ def load_achievement():
         if now_tem.pre_id != 0:
             config_achievement_id_relation[now_tem.pre_id] = now_tem.cid
 
+def load_supply_strategy():
+    """载入供电策略数据"""
+    now_data = config_data["Supply_Strategy"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Supply_Strategy()
+        now_tem.__dict__ = tem_data
+        config_supply_strategy[now_tem.cid] = now_tem
 
     """
     draw_text_list = []
@@ -2008,3 +2018,4 @@ def init():
     load_equipment_damage_rate()
     load_equipment_maintain_setting()
     load_achievement()
+    load_supply_strategy()

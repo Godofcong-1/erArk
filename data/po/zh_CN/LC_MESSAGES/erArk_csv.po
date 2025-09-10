@@ -24832,6 +24832,26 @@ msgstr ""
 msgid "深夜"
 msgstr ""
 
+#: .\data\csv\Supply_Strategy.csv:6
+msgid "标准"
+msgstr ""
+
+#: .\data\csv\Supply_Strategy.csv:7
+msgid "超额"
+msgstr ""
+
+#: .\data\csv\Supply_Strategy.csv:8
+msgid "断电"
+msgstr ""
+
+#: .\data\csv\Supply_Strategy.csv:9
+msgid "备用"
+msgstr ""
+
+#: .\data\csv\Supply_Strategy.csv:10
+msgid "节能"
+msgstr ""
+
 #: .\data\csv\System_Setting.csv:6
 msgid "是否在博士入睡结算时自动升级玩家的能力"
 msgstr ""

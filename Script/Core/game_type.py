@@ -1021,6 +1021,24 @@ class Rhodes_Island:
         """ 当前使用电力 """
         self.power_max: int = 0
         """ 总可用电力 """
+        self.power_storage: float = 0.0
+        """ 当前储能 """
+        self.power_storage_max: float = 0.0
+        """ 最大可储能，由蓄电池数量与等级计算 """
+        self.power_operator_ids_list: List[int] = []
+        """ 供能调控员id列表 """
+        self.main_power_facility_operator_ids: List[int] = [0, 0, 0, 0]
+        """ 主力供能设施的调控员id列表，0~3分别为火水风光发电 """
+        self.orundum_reactor_list: List[int] = [0, 0]
+        """ 源石反应炉的列表，0号为主反应炉等级，1为副反应炉数量 """
+        self.other_power_facility_list: List[int] = [0, 0, 0]
+        """ 其他供能设施列表，0为水力发电机数量，1为风能发电机数量，2为太阳能发电机数量 """
+        self.battery_list: List[int] = [0, 0, 0]
+        """ 蓄电池列表，0号为1级蓄电池数量，1号为2级蓄电池数量，2号为3级蓄电池数量 """
+        self.power_supply_strategy: Dict[int, int] = {}
+        """ 各主区块供电策略 facility_cid:策略id(0标准1节能2超额3断电4备用) """
+        self.last_power_settle_hour: int = 0
+        """ 上次动力系统结算所在的小时 (用于按小时增量结算) """
 
         # 工程部
         self.maintenance_place: Dict[int, str] = {}

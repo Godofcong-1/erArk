@@ -201,6 +201,8 @@ class Instruct:
     """ 维护设施 """
     MANAGE_FACILITY_POWER = 0
     """ 调控设施供能 """
+    MANAGE_POWER_SYSTEM = 0
+    """ 管理能源系统 """
     REPAIR_EQUIPMENT = 0
     """ 维修装备 """
     ASSISTANT_ADJUSTMENTS = 0
