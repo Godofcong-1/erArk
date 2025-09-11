@@ -70,7 +70,7 @@ def character_wait_5_min(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.WAIT
     character_data.behavior.duration = 5
     character_data.state = constant.CharacterStatus.STATUS_WAIT
-    character_data.sp_flag.wait_flag = 0
+    character_data.sp_flag.wait_flag = False
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WAIT_10_MIN)
@@ -130,7 +130,7 @@ def character_sleep(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.SLEEP
     character_data.behavior.duration = 480
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
-    character_data.sp_flag.tired = 0
+    character_data.sp_flag.tired = False
 
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
@@ -1895,7 +1895,7 @@ def character_start_milk(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.milk = 1
+    character_data.sp_flag.milk = True
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1969,7 +1969,7 @@ def character_reset_shower_status_and_get_normal_cloth(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 0
-    character_data.sp_flag.sleep_h_awake = 0
+    character_data.sp_flag.sleep_h_awake = False
     clothing.get_npc_cloth(character_id)
 
 
@@ -2296,7 +2296,7 @@ def character_start_sleep(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.sleep = 1
+    character_data.sp_flag.sleep = True
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2311,7 +2311,7 @@ def character_start_rest(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.rest = 1
+    character_data.sp_flag.rest = True
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2326,7 +2326,7 @@ def character_start_pee(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.pee = 1
+    character_data.sp_flag.pee = True
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2394,7 +2394,7 @@ def character_work_teach(character_id: int):
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_ATTENT_CLASS)
-def character_work_teach(character_id: int):
+def character_attend_class(character_id: int):
     """
     角色工作：上学
     Keyword arguments:
@@ -2471,7 +2471,7 @@ def character_work_maintenance_1(character_id: int):
     """
     from Script.Design import basement
     character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.work_maintenance = 1
+    character_data.sp_flag.work_maintenance = True
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2547,7 +2547,7 @@ def character_work_cook(character_id: int):
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.ASSISTANT_MAKE_FOOD)
-def character_work_cook(character_id: int):
+def character_assistant_work_cook(character_id: int):
     """
     角色助理：做饭
     Keyword arguments:
@@ -2610,7 +2610,7 @@ def character_morning_salutation_2(character_id: int):
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_3)
-def character_morning_salutation_2(character_id: int):
+def character_morning_salutation_3(character_id: int):
     """
     早安问候：早安咬
     Keyword arguments:
@@ -2958,7 +2958,7 @@ def character_train_prisoner(character_id: int):
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_MANAGE_FACILITY_POWER)
-def character_train_prisoner(character_id: int):
+def character_manage_facility_power(character_id: int):
     """
     工作：调控设施供能
     Keyword arguments:
