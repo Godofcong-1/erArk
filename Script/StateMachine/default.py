@@ -2647,6 +2647,8 @@ def character_night_salutation_1(character_id: int):
     # 仅在催睡觉的服务下，晚安问候flag才会变为2
     if handle_premise.handle_assistant_night_salutation_1(character_id):
         character_data.sp_flag.night_salutation = 2
+        # 如果此时还没有完成早安问候，则设为已早安问候
+        character_data.sp_flag.morning_salutation = 2
     info_draw = draw.WaitDraw()
     info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
     info_draw.style = "gold_enrod"
@@ -2668,6 +2670,8 @@ def character_night_salutation_2(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_2
     # 特殊flag进行对应更改
     character_data.sp_flag.night_salutation = 2
+    # 如果此时还没有完成早安问候，则设为已早安问候
+    character_data.sp_flag.morning_salutation = 2
     info_draw = draw.WaitDraw()
     info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
     info_draw.style = "gold_enrod"
@@ -2689,6 +2693,8 @@ def character_night_salutation_3(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_NIGHT_SALUTATION_3
     # 特殊flag进行对应更改
     character_data.sp_flag.night_salutation = 2
+    # 如果此时还没有完成早安问候，则设为已早安问候
+    character_data.sp_flag.morning_salutation = 2
     info_draw = draw.WaitDraw()
     info_draw.text = _("\n{0}来进行晚安问候了\n").format(character_data.name)
     info_draw.style = "gold_enrod"
@@ -2704,8 +2710,8 @@ def character_night_salutation_flag_2(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.night_salutation = 2
-    # 如果此时还没有完成早安问候，则清除早安问候flag
-    character_data.sp_flag.morning_salutation = 0
+    # 如果此时还没有完成早安问候，则设为已早安问候
+    character_data.sp_flag.morning_salutation = 2
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
