@@ -1,8 +1,8 @@
-from typing import Dict, List, Tuple, Callable
+from typing import Dict, List, Tuple
 from types import FunctionType
 
 # 依赖模块，与生产线面板保持一致的导入方式
-from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation
 from Script.UI.Moudle import draw, panel
@@ -26,37 +26,6 @@ line_feed.width = 1
  3. 管理发电设施：火力(源石反应炉主/副)、水力/风力/太阳能；显示建造上限与产能/燃料消耗。
  4. 管理蓄电：建造/拆除不同等级蓄电池，显示当前与最大储能，以及自放电情况。
  5. 结算每日发电：燃料燃烧→电力、清洁能源产出、蓄电池充放电与自放电。
-
-数据结构(动态附加，不修改 game_type 源文件)：
-  cache.rhodes_island.power_supply_strategy: Dict[int,int]
-      供电策略：设施大类cid -> 策略id
-  cache.rhodes_island.power_storage: int 当前已储存能量 (单位：度)
-  cache.rhodes_island.power_storage_max: int 当前最大可储能量 (根据蓄电池数量与等级计算)
-  cache.rhodes_island.last_power_settle_hour: int 上次结算发生的小时
-
-策略定义：
- 0 标准(100%)  1 节能(80%)  2 超额(120%)  3 断电(0%)  4 备用(40%)
- 影响：仅影响该区块的“有效耗电需求”，用于未来可扩展的优先级/宕机事件。
-
-发电设定(可调公式)：
-  火力(源石反应炉)：
-      主反应炉等级 L = orundum_reactor_list[0]
-      副反应炉数量 A = orundum_reactor_list[1]
-      基础每日燃料可燃量 base_fuel = 20 + 10*(L-1)
-      实际可燃 = base_fuel * (1 + 0.5*A)
-      燃料资源id = 15  (若不足则按库存部分燃烧)
-      每单位燃料产能 eff = 5 + 2*(L-1)  (受效率加成 adjust)
-      调控员效率加成 op_bonus = sum(单人制造能力系数) / 100 (安全下限0)
-      基地全局效率：cache.rhodes_island.effectiveness / 100
-      总产能 = fuel_used * eff * (1 + op_bonus) * global_eff
-  清洁能源(水/风/太阳能)：other_power_facility_list = [hydro, wind, solar]
-      设基础单台产能：hydro=60, wind=40, solar=30
-      动力区设施等级(设施cid=1) lv1 = cache.rhodes_island.facility_level.get(1,1)
-      清洁能源效率 = 1 + (lv1-1)*0.1
-      总产能 = Σ(数量 * 基础 * 效率 * global_eff)
-  蓄电池 battery_list = [lv1, lv2, lv3]
-      容量: lv1=500, lv2=1500, lv3=4000
-      自放电率: lv1=2%, lv2=1%, lv3=0.5% 每日
 
 UI 说明：
   为保持与现有面板风格一致，使用相似的 draw.Button / flow_handle.askfor_all 结构；
@@ -126,7 +95,17 @@ def _get_operator_power_bonus(type: int = -1) -> float:
 def _recalc_battery_capacity():
     """根据电池数量重算最大储能"""
     ri = cache.rhodes_island
-    cap_table = [500, 1500, 4000]
+    # 动态从配置读取电池容量
+    cap_table = []
+    for lv in (1,2,3):
+        try:
+            cid = game_config.config_power_storage_level_index.get("电池容量", {}).get(lv)
+            if cid:
+                cap_table.append(int(game_config.config_power_storage[cid].value))
+            else:
+                cap_table.append(0)
+        except Exception:
+            cap_table.append(0)
     ri.power_storage_max = 0
     for idx, num in enumerate(getattr(ri, "battery_list", [])):
         if idx < len(cap_table):
@@ -136,32 +115,74 @@ def _recalc_battery_capacity():
         ri.power_storage = ri.power_storage_max
 
 
-def get_theoretical_power_generation() -> float:
-    """计算当前配置下24小时理论可发电量(不考虑燃料库存、自放电)"""
+def get_theoretical_fire_generation(detail: bool = False) -> float:
+    """计算24h火力理论发电量(不考虑燃料库存)
+    detail: 是否返回更精细的结果(当前仅保留接口, 未来可扩展返回 dict)
+    """
     _init_power_runtime_fields()
     ri = cache.rhodes_island
-    global_eff = max(ri.effectiveness, 50) / 100 # 全局效率
-    # 主炉等级当前版本直接等于动力区的区块等级
-    now_facility_lv = ri.facility_level.get(1, 1)  # 动力区cid=1
+    global_eff = max(ri.effectiveness, 50) / 100
+    # 主炉等级与动力区等级同步
+    now_facility_lv = ri.facility_level.get(1, 1)
     ri.orundum_reactor_list[0] = now_facility_lv
-    # 火电部分
     main_level = ri.orundum_reactor_list[0] # 主炉等级
     aux_count = ri.orundum_reactor_list[1] # 副炉数量
-    base_fuel = 20 + 10 * max(main_level - 1, 0) # 每日基础燃料消耗
-    fuel_can_burn_daily = base_fuel * (1 + 0.5 * aux_count) # 理论每日可燃料
-    eff_per_fuel = 5 + 2 * max(main_level - 1, 0) # 每单位燃料产能
-    op_bonus = _get_operator_power_bonus(0) + 1 # 调控员效率加成
+    op_bonus = _get_operator_power_bonus(0) + 1 # 火力调控员加成
+    def _pg(cat:str, lv:int, default:float=0.0):
+        try:
+            cid = game_config.config_power_generation_level_index.get(cat, {}).get(lv)
+            if cid:
+                return float(game_config.config_power_generation[cid].value)
+        except Exception:
+            pass
+        return default
+    eff_per_fuel = _pg("主反应炉", main_level, 5 + 2 * max(main_level - 1,0))
+    aux_fuel_per = _pg("副反应炉", 1, 10) # 副炉燃料消耗
+    # 燃料消耗等于副炉数量*副炉燃料消耗
+    fuel_can_burn_daily = aux_count * aux_fuel_per
+    # 总火电=燃料消耗量*燃烧效率*调控员加成*全局效率
     fire_power = fuel_can_burn_daily * eff_per_fuel * op_bonus * global_eff
-    # 清洁能源
+    return round(fire_power, 2)
+
+
+def get_theoretical_clean_generation(kind: int = -1) -> float:
+    """计算24h清洁能源理论发电量
+    kind: -1=全部 0=水力 1=风力 2=光伏
+    """
+    _init_power_runtime_fields()
+    ri = cache.rhodes_island
+    global_eff = max(ri.effectiveness, 50) / 100
     hydro, wind, solar = ri.other_power_facility_list
-    facility_lv = ri.facility_level.get(1, 1)  # 动力区cid=1
-    clean_eff = 1 + 0.1 * (facility_lv - 1)
-    base_clean = [60, 40, 30]
+    # facility_lv = ri.facility_level.get(1, 1)  # 动力区等级，cid=1
+    # TODO 未实装天气功能，暂用等级对应不同环境强度:取 level=3 代表标准发电
+    base_clean = []
+    for cat, fallback in ((_("水力"),60),(_("风力"),40),(_("光伏"),30)):
+        cid_candidate = game_config.config_power_generation_level_index.get(cat, {}).get(3)
+        try:
+            if cid_candidate is not None and cid_candidate in game_config.config_power_generation:
+                base_clean.append(float(game_config.config_power_generation[cid_candidate].value))
+            else:
+                base_clean.append(fallback)
+        except Exception:
+            base_clean.append(fallback)
     hydro_bonus = _get_operator_power_bonus(1) + 1
     wind_bonus = _get_operator_power_bonus(2) + 1
     solar_bonus = _get_operator_power_bonus(3) + 1
-    clean_power = (hydro * base_clean[0] * hydro_bonus + wind * base_clean[1] * wind_bonus + solar * base_clean[2] * solar_bonus) * clean_eff * global_eff
-    return round(fire_power + clean_power, 2)
+    hydro_val = hydro * base_clean[0] * hydro_bonus * global_eff
+    wind_val = wind * base_clean[1] * wind_bonus * global_eff
+    solar_val = solar * base_clean[2] * solar_bonus * global_eff
+    if kind == 0:
+        return round(hydro_val, 2)
+    if kind == 1:
+        return round(wind_val, 2)
+    if kind == 2:
+        return round(solar_val, 2)
+    return round(hydro_val + wind_val + solar_val, 2)
+
+
+def get_theoretical_power_generation() -> float:
+    """兼容旧接口: 返回火力+清洁能源总理论产能"""
+    return round(get_theoretical_fire_generation() + get_theoretical_clean_generation(), 1)
 
 
 def _get_zone_adjust(zone_cid: int) -> float:
@@ -256,9 +277,9 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
     # ------------ 火力发电 ------------ #
     main_level = ri.orundum_reactor_list[0]
     aux_count = ri.orundum_reactor_list[1]
+    # 仍按原逻辑计算燃料规划，以便与理论值对比
     base_fuel = 20 + 10 * max(main_level - 1, 0)
     fuel_can_burn_daily = base_fuel * (1 + 0.5 * aux_count)
-    # 按小时比例(若小时不足24则按比例消耗)
     fuel_can_burn = fuel_can_burn_daily * (hours / 24)
     fuel_have = ri.materials_resouce.get(15, 0)
     fuel_use = min(fuel_can_burn, fuel_have)
@@ -266,30 +287,31 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
         un_normal = True
         text += _(" - 燃料不足：计划消耗 {0:.1f}，实际仅 {1:.1f}\n").format(fuel_can_burn, fuel_use)
     ri.materials_resouce[15] = fuel_have - int(fuel_use)
-    # 燃料转化效率
-    eff_per_fuel = 5 + 2 * max(main_level - 1, 0)
-    op_bonus = _get_operator_power_bonus()  # 例如 0.1234
+    # 复用理论火力获取效率参数: 需再计算瞬时效率以得到 fire_power 按实际燃料
+    # 获取单位燃料效率
+    try:
+        power_generation_cid = game_config.config_power_generation_level_index[_("主反应炉")][main_level]
+        eff_per_fuel = float(game_config.config_power_generation[power_generation_cid].value)
+    except Exception:
+        eff_per_fuel = 5 + 2 * max(main_level - 1, 0)
+    op_bonus = _get_operator_power_bonus()
     fire_power = fuel_use * eff_per_fuel * (1 + op_bonus) * global_eff
     text += _(" - 火力发电：消耗燃料 {0:.1f} 单位，产出 {1:.1f} 度 (调控员加成 {2:.2%})\n").format(fuel_use, fire_power, op_bonus)
 
     # ------------ 清洁能源 ------------ #
-    hydro, wind, solar = ri.other_power_facility_list
-    # 设施等级: 动力区 cid=1 (Facility.csv 中 001, 读取为 int 1)
-    facility_lv = ri.facility_level.get(1, 1)
-    clean_eff = 1 + 0.1 * (facility_lv - 1)
-    # 基础产能(每日)，按小时比例
-    base_clean = [60, 40, 30]  # hydro, wind, solar/day/台
-    # 分项清洁能源
-    hydro_power_daily = hydro * base_clean[0] * clean_eff * global_eff
-    wind_power_daily = wind * base_clean[1] * clean_eff * global_eff
-    solar_power_daily = solar * base_clean[2] * clean_eff * global_eff
-    clean_power_daily = hydro_power_daily + wind_power_daily + solar_power_daily
-    hydro_power = hydro_power_daily * (hours / 24)
-    wind_power = wind_power_daily * (hours / 24)
-    solar_power = solar_power_daily * (hours / 24)
+    # 分项(按24h)
+    hydro_full = get_theoretical_clean_generation(0)
+    wind_full = get_theoretical_clean_generation(1)
+    solar_full = get_theoretical_clean_generation(2)
+    # 按小时比例
+    ratio = hours / 24
+    hydro_power = hydro_full * ratio
+    wind_power = wind_full * ratio
+    solar_power = solar_full * ratio
     clean_power = hydro_power + wind_power + solar_power
-    text += _(" - 清洁能源：水{0}({3:.1f}) 风{1}({4:.1f}) 太阳能{2}({5:.1f}) 台，总产出 {6:.1f} 度 (效率x{7:.2f})\n").format(
-        hydro, wind, solar, hydro_power, wind_power, solar_power, clean_power, clean_eff * global_eff
+    text += _(" - 清洁能源(每小时)：水{0}({3:.1f}) 风{1}({4:.1f}) 太阳能{2}({5:.1f}) 台，总产出 {6:.1f} 度\n").format(
+        ri.other_power_facility_list[0], ri.other_power_facility_list[1], ri.other_power_facility_list[2],
+        hydro_power, wind_power, solar_power, clean_power
     )
 
     # ------------ 总产能 & 储能 ------------ #
@@ -307,7 +329,17 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
     # ------------ 自放电 ------------ #
     # 按每日自放电率，比例缩放小时
     battery_nums = ri.battery_list
-    discharge_rates = [0.02, 0.01, 0.005]
+    # 自放电率从配置读取
+    discharge_rates = []
+    for lv in (1,2,3):
+        try:
+            cid = game_config.config_power_storage_level_index.get(_("自放电率"), {}).get(lv)
+            if cid:
+                discharge_rates.append(float(game_config.config_power_storage[cid].value))
+            else:
+                discharge_rates.append(0.0)
+        except Exception:
+            discharge_rates.append(0.0)
     # 加权平均自放电率
     total_cells = sum(battery_nums) or 1
     avg_rate = 0
@@ -375,25 +407,17 @@ class Manage_Power_System_Panel:
             _recalc_battery_capacity()
             overview.append(_("  储能: {0}/{1}" ).format(ri.power_storage, ri.power_storage_max))
             overview.append(_("  调控员人数: {0}" ).format(len(ri.power_operator_ids_list)))
-            # 显示分项发电潜力(按24h理论值)
+            # 显示分项发电潜力(按24h理论值) 使用新函数
             main_level = ri.orundum_reactor_list[0]
             aux_count = ri.orundum_reactor_list[1]
-            base_fuel = 20 + 10 * max(main_level - 1, 0)
-            fuel_can_burn_daily = base_fuel * (1 + 0.5 * aux_count)
-            eff_per_fuel = 5 + 2 * max(main_level - 1, 0)
-            op_bonus = _get_operator_power_bonus()
-            global_eff = max(ri.effectiveness, 50) / 100
-            fire_theory = fuel_can_burn_daily * eff_per_fuel * (1 + op_bonus) * global_eff
+            fire_theory = get_theoretical_fire_generation()
             hydro, wind, solar = ri.other_power_facility_list
-            facility_lv = ri.facility_level.get(1, 1)
-            clean_eff = 1 + 0.1 * (facility_lv - 1)
-            base_clean = [60, 40, 30]
-            hydro_t = hydro * base_clean[0] * clean_eff * global_eff
-            wind_t = wind * base_clean[1] * clean_eff * global_eff
-            solar_t = solar * base_clean[2] * clean_eff * global_eff
-            overview.append(_("  源石反应炉 主:{0} 副:{1} 理论产出:{2:.1f}" ).format(main_level, aux_count, fire_theory))
-            overview.append(_("  清洁能源 水力:{0}({3:.1f}) 风能:{1}({4:.1f}) 光伏:{2}({5:.1f}) 总:{6:.1f}" ).format(
-                hydro, wind, solar, hydro_t, wind_t, solar_t, hydro_t+wind_t+solar_t))
+            hydro_t = get_theoretical_clean_generation(0)
+            wind_t = get_theoretical_clean_generation(1)
+            solar_t = get_theoretical_clean_generation(2)
+            overview.append(_("  源石反应炉(每小时) 主:{0} 副:{1} 理论产出:{2:.1f}" ).format(main_level, aux_count, fire_theory))
+            overview.append(_("  清洁能源(每小时) 水力:{0}({3:.1f}) 风能:{1}({4:.1f}) 光伏:{2}({5:.1f})" ).format(
+                hydro, wind, solar, hydro_t, wind_t, solar_t))
             overview.append(_("  蓄电池(L1/L2/L3): {0}/{1}/{2}" ).format(*ri.battery_list))
             overview.append(_("  上次结算小时:{0}" ).format(getattr(ri, "last_power_settle_hour", 0)))
             info.text = "\n".join(overview) + "\n"
@@ -520,7 +544,8 @@ class Manage_Power_System_Panel:
             return_list = []
             info = draw.NormalDraw(); info.width = self.width
             op_bonus = _get_operator_power_bonus()
-            info.text = _("当前调控员数量：{0}  总效率加成：{1:.2%}\n" ).format(len(ri.power_operator_ids_list), op_bonus)
+            info.text = _("当前调控员数量：{0}  总效率加成：{1:.2%}" ).format(len(ri.power_operator_ids_list), op_bonus)
+            info.text += " " * 4
             info.draw()
 
             button_text = _("[调控员增减]")
@@ -538,13 +563,14 @@ class Manage_Power_System_Panel:
 
             # 遍历显示各主调控员
             main_ops = ri.main_power_facility_operator_ids
+            type_name = [_("源石反应炉"), _("水力发电"), _("风力发电"), _("光伏发电")]
             for idx, cid in enumerate(main_ops):
                 name = self._get_chara_name(cid)
-                type_name = [_("源石反应炉"), _("水力发电　"), _("风能发电　"), _("光伏发电　")]
                 # 显示文本
                 chara_name = name if name else _("(空缺)")
                 chara_name = attr_calculation.pad_display_width(chara_name, 12)
-                main_text = _("{0}主调控员: {1}").format(type_name[idx], chara_name)
+                now_type_name = attr_calculation.pad_display_width(type_name[idx], 12)
+                main_text = _("{0}主调控员: {1}").format(now_type_name, chara_name)
                 main_draw = draw.NormalDraw(); main_draw.width = self.width
                 main_draw.text = main_text
                 main_draw.draw()
@@ -640,33 +666,68 @@ class Manage_Power_System_Panel:
         while 1:
             title = draw.TitleLineDraw(_("发电设施管理"), self.width)
             title.draw()
+            # 汇总
+            summary = draw.NormalDraw(); summary.width = self.width
+            summary.text = _("\n  理论总发电:{0}  理论总耗电:{1}\n").format(
+                get_theoretical_power_generation(), get_theoretical_power_consumption()
+            )
+            # 如果当前罗德岛在行驶中
+            move_flag = False
+            if ri.move_target_and_time[0] != 0:
+                summary.text += _("！当前罗德岛处于行驶中，水力与风力发电设施无法工作！\n")
+                move_flag = True
+            summary.draw()
+            line_feed.draw()
+            # 提示信息
+            info = draw.NormalDraw(); info.width = self.width
+            info.text = _("○ 如果每日发电量+已储存蓄电量不够覆盖当日总用电量，将会影响罗德岛整体运营效率\n")
+            info.text += _("○ 每日过剩的电量将优先充入蓄电池，溢出部分将被浪费\n")
+            info.text += _("○ 清洁能源设施的发电量受环境与天气影响较大，当前未实装地区环境与天气系统，暂为固定值乘以随机量\n")
+            info.draw()
+            line_feed.draw()
             lv = ri.facility_level.get(1,1)
             return_list = []
             head = draw.NormalDraw(); head.width = self.width
             facility_text = attr_calculation.pad_display_width(_("设施"), 12, "center")
+            value_text = attr_calculation.pad_display_width(_("数值"), 9, "center")
             info_text = attr_calculation.pad_display_width(_("信息"), 60, "center")
-            head.text = _(" {0} | 当前 | {1} | 操作\n").format(facility_text, info_text)
+            change_text = attr_calculation.pad_display_width(_("操作"), 14, "center")
+            head.text = _(" {0} | 当前 | {1} | {2} | {3}\n").format(facility_text, value_text, info_text, change_text)
             head.draw()
             # 主反应炉
             main_lv = ri.orundum_reactor_list[0]
             main_lv = str(main_lv).rjust(2, ' ')
-            main_info = attr_calculation.pad_display_width(_("主炉等级决定单位燃料的发电效率"), 60)
+            # 读取当前等级单位燃料效率
+            try:
+                cid_eff = game_config.config_power_generation_level_index[_("主反应炉")][int(main_lv)]
+                eff_value = float(game_config.config_power_generation[cid_eff].value)
+            except Exception:
+                eff_value = 5 + 2 * max(int(main_lv) - 1, 0)
+            eff_value_str = str(round(eff_value,1)).rjust(4)
+            main_info = attr_calculation.pad_display_width(_("主炉等级等于动力区等级，决定单位燃料的发电效率"), 60)
             row = draw.NormalDraw(); row.width = self.width
-            row.text = _(" 主源石反应炉 | {0}级 | {1} | ").format(main_lv, main_info)
+            row.text = _(" 主源石反应炉 | {0}级 | {1}/燃料 | {2} | ").format(main_lv, eff_value_str, main_info)
             row.draw()
-            def up_main():
-                ri.orundum_reactor_list[0] = min(ri.orundum_reactor_list[0] + 1, 10)
-            btn = draw.CenterButton(_("[升级]"), _("升级主源石反应炉"), 10, cmd_func=up_main); btn.draw(); return_list.append(btn.return_text)
+            # 主反应炉升级按钮(与动力区等级同步，故取消)
+            # def up_main():
+            #     ri.orundum_reactor_list[0] = min(ri.orundum_reactor_list[0] + 1, 10)
+            # btn = draw.CenterButton(_("[升级]"), _("升级主源石反应炉"), 10, cmd_func=up_main); btn.draw(); return_list.append(btn.return_text)
             line_feed.draw()
             # 副反应炉
             aux = ri.orundum_reactor_list[1]
             aux = str(aux).rjust(2, ' ')
+            # 副反应炉燃料增量(统一使用等级1配置数值作为单台每日燃料)
+            try:
+                cid_aux = game_config.config_power_generation_level_index[_("副反应炉")][1]
+                aux_fuel = float(game_config.config_power_generation[cid_aux].value)
+            except Exception:
+                aux_fuel = 10.0
             aux_info = attr_calculation.pad_display_width(_("副炉数量影响每日燃料的燃烧数量，启用台数越多燃料消耗越多"), 60)
             row = draw.NormalDraw(); row.width = self.width
-            row.text = _(" 副源石反应炉 | {0}台 | {1} | ").format(aux, aux_info)
+            row.text = _(" 副源石反应炉 | {0}台 | {1:.1f}/台日 | {2} | ").format(aux, aux_fuel, aux_info)
             row.draw()
             def add_aux():
-                ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, lv * 3)
+                ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, lv * 3 + ri.extra_orundum_reactor_count)
             def sub_aux():
                 if ri.orundum_reactor_list[1] > 0: ri.orundum_reactor_list[1] -= 1
             btn_add = draw.CenterButton(_("[+]"), _("增加副源石反应炉"), 8, cmd_func=add_aux); btn_add.draw(); return_list.append(btn_add.return_text)
@@ -674,14 +735,29 @@ class Manage_Power_System_Panel:
             line_feed.draw()
             # 清洁能源
             names = [_("水力发电轮组"), _("风力发电机组"), _("光伏发电板组")]
-            descs = [_("发电量小但稳定，仅在停靠时可用，行驶中无法使用"), _("发电量受风速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受日照影响大，停靠或行驶中均可使用")]
+            descs = [_("发电量受水流速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受风速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受日照影响大，停靠或行驶中均可使用")]
             limits = [lv * 5, lv * 8, lv * 8]
             for idx in range(3):
                 num = ri.other_power_facility_list[idx]
                 num = str(num).rjust(2, ' ')
+                # 对应类别名称与fallback
+                cat_map = {0:_("水力"), 1:_("风力"), 2:_("光伏")}
+                fallback_map = {0:60,1:40,2:30}
+                try:
+                    cid_lv3 = game_config.config_power_generation_level_index.get(cat_map[idx], {}).get(3)
+                    if cid_lv3 is not None and cid_lv3 in game_config.config_power_generation:
+                        base_val = float(game_config.config_power_generation[cid_lv3].value)
+                    else:
+                        base_val = fallback_map[idx]
+                except Exception:
+                    base_val = fallback_map[idx]
+                # 如果是在行驶中，则水力与风力发电设施无效
+                if move_flag and idx in (0,1):
+                    base_val = 0.0
+                base_val_str = str(round(base_val,1)).rjust(4)
                 row = draw.NormalDraw(); row.width = self.width
                 descs_now = attr_calculation.pad_display_width(descs[idx], 60)
-                row.text = f" {names[idx]} | {num}组 | {descs_now} | "
+                row.text = " {0} | {1}组 | {2}/组日 | {3} | ".format(names[idx], num, base_val_str, descs_now)
                 row.draw()
                 def _make_add(i):
                     return lambda : self._inc_clean(i, +1, limits)
@@ -715,8 +791,27 @@ class Manage_Power_System_Panel:
             head = draw.NormalDraw(); head.width = self.width
             head.text = _("类型 | 数量 | 容量/台 | 自放电 | 操作\n")
             head.draw()
-            cap_table = [500,1500,4000]
-            rate_table = [0.02,0.01,0.005]
+            # 动态容量与自放电率显示
+            cap_table = []
+            for lv in (1,2,3):
+                try:
+                    cid = game_config.config_power_storage_level_index.get(_("电池容量"), {}).get(lv)
+                    if cid:
+                        cap_table.append(int(game_config.config_power_storage[cid].value))
+                    else:
+                        cap_table.append(0)
+                except Exception:
+                    cap_table.append(0)
+            rate_table = []
+            for lv in (1,2,3):
+                try:
+                    cid = game_config.config_power_storage_level_index.get(_("自放电率"), {}).get(lv)
+                    if cid:
+                        rate_table.append(float(game_config.config_power_storage[cid].value))
+                    else:
+                        rate_table.append(0.0)
+                except Exception:
+                    rate_table.append(0.0)
             names = [_("L1"),_("L2"),_("L3")]
             for idx in range(3):
                 num = ri.battery_list[idx]

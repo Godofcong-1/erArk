@@ -1030,6 +1030,40 @@ class Pleasure_Relations:
     """ 经验id """
 
 
+class Power_Generation:
+    """ 发电数据 """
+
+    cid: int
+    """ 编号 """
+    category: str
+    """ 类别 """
+    level: int
+    """ 等级或分类 """
+    value: float
+    """ 数值 """
+    unit: str
+    """ 单位 """
+    note: str
+    """ 说明 """
+
+
+class Power_Storage:
+    """ 蓄电数据 """
+
+    cid: int
+    """ 编号 """
+    category: str
+    """ 类别 """
+    level: int
+    """ 等级 """
+    value: float
+    """ 数值 """
+    unit: str
+    """ 单位 """
+    note: str
+    """ 说明 """
+
+
 class ProductFormula:
     """ 产品配方 """
 

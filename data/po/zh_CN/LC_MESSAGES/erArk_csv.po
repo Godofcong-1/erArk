@@ -21996,6 +21996,174 @@ msgstr ""
 msgid "周末|手动选择"
 msgstr ""
 
+#: .\data\csv\Power_Generation.csv:6
+msgid "主反应炉"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:6
+msgid "kWh/燃料"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:6
+msgid "基础效率"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:7
+msgid "等级2: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:8
+msgid "等级3: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:9
+msgid "等级4: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:10
+msgid "等级5: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:11
+msgid "副反应炉"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:11
+msgid "燃料/日"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:16
+msgid "水力"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:16
+msgid "kWh/日"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:16
+msgid "低缓流(≈1-1.5m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:17
+msgid "中流(≈1.5-2m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:18
+msgid "较急(≈2-2.5m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:19
+msgid "急流(≈2.5-3m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:20
+msgid "激流(>3m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:21
+msgid "风力"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:21
+msgid "轻风(1-3m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:22
+msgid "微风(3-5m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:23
+msgid "和风(5-7m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:24
+msgid "清劲风(7-9m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:25
+msgid "强风(9-11m/s)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:26
+msgid "光伏"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:26
+msgid "弱光(阴天)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:27
+msgid "散射(多云)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:28
+msgid "良好(日晴)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:29
+msgid "强光(夏季晴)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:30
+msgid "极佳(高海拔强光)"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:31
+msgid "人力"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:31
+msgid "kWh/次"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:31
+msgid "小绝顶"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:32
+msgid "普绝顶"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:33
+msgid "强绝顶"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:34
+msgid "极强绝顶"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:6
+msgid "电池容量"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:6
+msgid "基础单体容量"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:7
+msgid "中级单体容量"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:8
+msgid "高级单体容量"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:9
+msgid "自放电率"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:9
+msgid "每日2%"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:10
+msgid "每日1%"
+msgstr ""
+
+#: .\data\csv\Power_Storage.csv:11
+msgid "每日0.5%"
+msgstr ""
+
 #: .\data\csv\Profession.csv:8
 msgid "先锋"
 msgstr ""

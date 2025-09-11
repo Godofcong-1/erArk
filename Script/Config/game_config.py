@@ -423,6 +423,14 @@ config_achievement_id_relation: Dict[int, int] = {}
 """ 成就数据的id关联数据，int键为成就cid编号，int值为关联该成就的后置id """
 config_supply_strategy: Dict[int, config_def.Supply_Strategy] = {}
 """ 供电策略数据 """
+config_power_generation: Dict[int, config_def.Power_Generation] = {}
+""" 发电数据: cid -> 数据对象 """
+config_power_generation_level_index: Dict[str, Dict[int, int]] = {}
+""" 发电数据索引: 发电类别 -> (等级/分类 -> cid) """
+config_power_storage: Dict[int, config_def.Power_Storage] = {}
+""" 蓄电数据: cid -> 数据对象 """
+config_power_storage_level_index: Dict[str, Dict[int, int]] = {}
+""" 蓄电数据索引: 蓄电类别 -> (等级 -> cid) """
 
 
 def load_data_json():
@@ -1896,6 +1904,44 @@ def load_supply_strategy():
         now_tem.__dict__ = tem_data
         config_supply_strategy[now_tem.cid] = now_tem
 
+def load_power_generation():
+    """载入发电数据
+
+    数据来源: Power_Generation.csv → json 构建后 config_data["Power_Generation"]\n
+    构建:
+        config_power_generation[cid] = 对象
+        config_power_generation_level_index[category][level] = cid
+    """
+    now_data = config_data["Power_Generation"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Power_Generation()
+        now_tem.__dict__ = tem_data
+        config_power_generation[now_tem.cid] = now_tem
+        # 建立类别->等级索引
+        if now_tem.category not in config_power_generation_level_index:
+            config_power_generation_level_index[now_tem.category] = {}
+        # 若已有同等级则后写覆盖(以最新为准)
+        config_power_generation_level_index[now_tem.category][now_tem.level] = now_tem.cid
+
+def load_power_storage():
+    """载入蓄电数据
+
+    数据来源: Power_Storage.csv → json 构建后 config_data["Power_Storage"]\n
+    构建:
+        config_power_storage[cid] = 对象
+        config_power_storage_level_index[category][level] = cid
+    """
+    now_data = config_data["Power_Storage"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Power_Storage()
+        now_tem.__dict__ = tem_data
+        config_power_storage[now_tem.cid] = now_tem
+        if now_tem.category not in config_power_storage_level_index:
+            config_power_storage_level_index[now_tem.category] = {}
+        config_power_storage_level_index[now_tem.category][now_tem.level] = now_tem.cid
+
     """
     draw_text_list = []
     for son_type in config_prts_data[0]:
@@ -2019,3 +2065,5 @@ def init():
     load_equipment_maintain_setting()
     load_achievement()
     load_supply_strategy()
+    load_power_generation()
+    load_power_storage()

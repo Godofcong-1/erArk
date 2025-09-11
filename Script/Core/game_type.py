@@ -1030,13 +1030,19 @@ class Rhodes_Island:
         self.main_power_facility_operator_ids: List[int] = [0, 0, 0, 0]
         """ 主力供能设施的调控员id列表，0~3分别为火水风光发电 """
         self.orundum_reactor_list: List[int] = [0, 0]
-        """ 源石反应炉的列表，0号为主反应炉等级，1为副反应炉数量 """
+        """ 源石反应炉的列表，0号为主反应炉等级，1为已启用的副反应炉数量 """
         self.other_power_facility_list: List[int] = [0, 0, 0]
         """ 其他供能设施列表，0为水力发电机数量，1为风能发电机数量，2为太阳能发电机数量 """
         self.battery_list: List[int] = [0, 0, 0]
         """ 蓄电池列表，0号为1级蓄电池数量，1号为2级蓄电池数量，2号为3级蓄电池数量 """
+        self.extra_orundum_reactor_count: int = 0
+        """ 额外源石反应炉数量 """
+        self.extra_clean_energy_module_count: List[int] = [0, 0]
+        """ 额外清洁能源模块数量，0为总数量，1为已启用数量 """
+        self.extra_battery_count: List[int] = [0, 0]
+        """ 额外蓄电池数量，0为总数量，1为已启用数量 """
         self.power_supply_strategy: Dict[int, int] = {}
-        """ 各主区块供电策略 facility_cid:策略id(0标准1节能2超额3断电4备用) """
+        """ 各主区块供电策略 facility_cid:策略id(见supply_strategy.csv) """
         self.last_power_settle_hour: int = 0
         """ 上次动力系统结算所在的小时 (用于按小时增量结算) """
 
