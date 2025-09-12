@@ -1035,12 +1035,10 @@ class Rhodes_Island:
         """ 其他供能设施列表，0为水力发电机数量，1为风能发电机数量，2为太阳能发电机数量 """
         self.battery_list: List[int] = [0, 0, 0]
         """ 蓄电池列表，0号为1级蓄电池数量，1号为2级蓄电池数量，2号为3级蓄电池数量 """
-        self.extra_orundum_reactor_count: int = 0
-        """ 额外源石反应炉数量 """
-        self.extra_clean_energy_module_count: List[int] = [0, 0]
-        """ 额外清洁能源模块数量，0为总数量，1为已启用数量 """
-        self.extra_battery_count: List[int] = [0, 0]
-        """ 额外蓄电池数量，0为总数量，1为已启用数量 """
+        self.now_used_extra_clean_energy_module_count: int = 0
+        """ 当前正在使用的额外清洁能源模块数量的记录，用于在卖出等减少数量操作时防止超出 """
+        self.now_used_extra_battery_count: int = 0
+        """ 当前正在使用的额外蓄电池数量的记录，用于在卖出等减少数量操作时防止超出 """
         self.power_supply_strategy: Dict[int, int] = {}
         """ 各主区块供电策略 facility_cid:策略id(见supply_strategy.csv) """
         self.last_power_settle_hour: int = 0

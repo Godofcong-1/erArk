@@ -663,7 +663,9 @@ class Manage_Power_System_Panel:
     def _panel_facilities(self):
         """发电设施管理子界面"""
         ri = cache.rhodes_island
+        lv = ri.facility_level.get(1,1)
         while 1:
+            return_list = []
             title = draw.TitleLineDraw(_("发电设施管理"), self.width)
             title.draw()
             # 汇总
@@ -677,16 +679,24 @@ class Manage_Power_System_Panel:
                 summary.text += _("！当前罗德岛处于行驶中，水力与风力发电设施无法工作！\n")
                 move_flag = True
             summary.draw()
+            # 显示文本
+            extra_module = draw.NormalDraw(); extra_module.width = self.width
+            extra_module.text = _("  副源石反应炉扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
+                ri.orundum_reactor_list[1], ri.materials_resouce[51] + lv * 3, lv * 3
+            )
+            extra_module.text += _("  清洁能源通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
+                sum(ri.other_power_facility_list), ri.materials_resouce[53] + lv, lv
+            )
+            extra_module.draw()
             line_feed.draw()
             # 提示信息
             info = draw.NormalDraw(); info.width = self.width
             info.text = _("○ 如果每日发电量+已储存蓄电量不够覆盖当日总用电量，将会影响罗德岛整体运营效率\n")
             info.text += _("○ 每日过剩的电量将优先充入蓄电池，溢出部分将被浪费\n")
+            info.text += _("○ 扩展模块可以在生产制造区的流水线上消耗资源进行制造\n")
             info.text += _("○ 清洁能源设施的发电量受环境与天气影响较大，当前未实装地区环境与天气系统，暂为固定值乘以随机量\n")
             info.draw()
             line_feed.draw()
-            lv = ri.facility_level.get(1,1)
-            return_list = []
             head = draw.NormalDraw(); head.width = self.width
             facility_text = attr_calculation.pad_display_width(_("设施"), 12, "center")
             value_text = attr_calculation.pad_display_width(_("数值"), 9, "center")
@@ -727,7 +737,7 @@ class Manage_Power_System_Panel:
             row.text = _(" 副源石反应炉 | {0}台 | {1:.1f}/台日 | {2} | ").format(aux, aux_fuel, aux_info)
             row.draw()
             def add_aux():
-                ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, lv * 3 + ri.extra_orundum_reactor_count)
+                ri.orundum_reactor_list[1] = min(ri.orundum_reactor_list[1] + 1, lv * 3 + ri.materials_resouce[51])
             def sub_aux():
                 if ri.orundum_reactor_list[1] > 0: ri.orundum_reactor_list[1] -= 1
             btn_add = draw.CenterButton(_("[+]"), _("增加副源石反应炉"), 8, cmd_func=add_aux); btn_add.draw(); return_list.append(btn_add.return_text)
@@ -736,7 +746,6 @@ class Manage_Power_System_Panel:
             # 清洁能源
             names = [_("水力发电轮组"), _("风力发电机组"), _("光伏发电板组")]
             descs = [_("发电量受水流速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受风速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受日照影响大，停靠或行驶中均可使用")]
-            limits = [lv * 5, lv * 8, lv * 8]
             for idx in range(3):
                 num = ri.other_power_facility_list[idx]
                 num = str(num).rjust(2, ' ')
@@ -760,12 +769,13 @@ class Manage_Power_System_Panel:
                 row.text = " {0} | {1}组 | {2}/组日 | {3} | ".format(names[idx], num, base_val_str, descs_now)
                 row.draw()
                 def _make_add(i):
-                    return lambda : self._inc_clean(i, +1, limits)
+                    return lambda : self._inc_clean(i, +1)
                 def _make_sub(i):
-                    return lambda : self._inc_clean(i, -1, limits)
+                    return lambda : self._inc_clean(i, -1)
                 btn_add = draw.CenterButton(_("[+]"), _("增加") + names[idx], 8, cmd_func=_make_add(idx)); btn_add.draw(); return_list.append(btn_add.return_text)
                 btn_sub = draw.CenterButton(_("[-]"), _("减少") + names[idx], 8, cmd_func=_make_sub(idx)); btn_sub.draw(); return_list.append(btn_sub.return_text)
                 line_feed.draw()
+
             line_feed.draw()
             back = draw.CenterButton(_("[返回]"), _("返回"), self.width)
             back.draw(); return_list.append(back.return_text)
@@ -774,10 +784,25 @@ class Manage_Power_System_Panel:
             if yrn == back.return_text:
                 break
 
-    def _inc_clean(self, idx: int, delta: int, limits: List[int]):
+    def _inc_clean(self, idx: int, delta: int):
         """增加或减少某类清洁能源设施"""
         ri = cache.rhodes_island
-        ri.other_power_facility_list[idx] = max(0, min(ri.other_power_facility_list[idx] + delta, limits[idx]))
+        lv = ri.facility_level.get(1, 1)
+        # 按类型上限先校验
+        new_val = max(0, ri.other_power_facility_list[idx] + delta)
+        # 全局三类总量上限：区块等级 + 额外模块总数
+        total_now = sum(ri.other_power_facility_list)
+        if delta > 0:
+            clean_total_limit = lv + ri.materials_resouce[53]
+            if total_now >= clean_total_limit:
+                self._hint(_("三种清洁能源设施总数已达上限({0})，可通过生产清洁能源模块扩展上限").format(clean_total_limit))
+                return
+            # 若未达上限，允许+1（在类型上限内）
+            ri.other_power_facility_list[idx] = new_val
+        else:
+            ri.other_power_facility_list[idx] = new_val
+        total_after = sum(ri.other_power_facility_list)
+        ri.now_used_extra_clean_energy_module_count = max(0, total_after - lv)
 
     # ---------- 蓄电池管理 ---------- #
     def _panel_battery(self):
@@ -826,6 +851,17 @@ class Manage_Power_System_Panel:
                 btn_sub = draw.CenterButton(_("[-]"), _("减少") + names[idx], 8, cmd_func=make_sub(idx)); btn_sub.draw(); return_list.append(btn_sub.return_text)
                 line_feed.draw()
             line_feed.draw()
+            # 蓄电池总量限制与生产入口
+            lv = ri.facility_level.get(1, 1)
+            total_batt = sum(ri.battery_list)
+            used_extra_batt = max(0, total_batt - lv)
+            used_extra_batt = min(used_extra_batt, ri.materials_resouce[52])
+            tip = draw.NormalDraw(); tip.width = self.width
+            tip.text = _("蓄电池扩展位：已用 {0} / 总 {1} （基础额度：{2}；总数上限=基础+扩展）\n").format(
+                used_extra_batt, ri.materials_resouce[52], lv
+            )
+            tip.draw()
+            line_feed.draw()
             total_draw = draw.NormalDraw(); total_draw.width = self.width
             total_draw.text = _("当前储能: {0}/{1}\n").format(ri.power_storage, ri.power_storage_max)
             total_draw.draw()
@@ -838,12 +874,29 @@ class Manage_Power_System_Panel:
 
     def _change_battery(self, level: int, delta: int):
         ri = cache.rhodes_island
+        lv = ri.facility_level.get(1, 1)
         if delta > 0:
+            total_now = sum(ri.battery_list)
+            total_limit = lv + ri.materials_resouce[52]
+            if total_now >= total_limit:
+                self._hint(_("蓄电池总数已达上限({0})，可通过生产蓄电池扩展上限").format(total_limit))
+                return
             ri.battery_list[level] += 1
         else:
             if ri.battery_list[level] > 0:
                 ri.battery_list[level] -= 1
         _recalc_battery_capacity()
+        # 更新已使用扩展位
+        total_after = sum(ri.battery_list)
+        used_extra_batt = max(0, total_after - lv)
+        ri.now_used_extra_battery_count = min(used_extra_batt, ri.materials_resouce[52])
+
+    # ---------- 小提示 ---------- #
+    def _hint(self, text: str):
+        msg = draw.WaitDraw()
+        msg.width = self.width
+        msg.text = "\n" + str(text) + "\n"
+        msg.draw()
 
     # ---------- 角色名工具 ---------- #
     def _get_chara_name(self, chara_id: int) -> str:
