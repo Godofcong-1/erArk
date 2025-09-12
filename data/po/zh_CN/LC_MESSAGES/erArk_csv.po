@@ -22153,15 +22153,15 @@ msgid "自放电率"
 msgstr ""
 
 #: .\data\csv\Power_Storage.csv:9
-msgid "每日2%"
+msgid "每日0.2%"
 msgstr ""
 
 #: .\data\csv\Power_Storage.csv:10
-msgid "每日1%"
+msgid "每日0.5%"
 msgstr ""
 
 #: .\data\csv\Power_Storage.csv:11
-msgid "每日0.5%"
+msgid "每日1%"
 msgstr ""
 
 #: .\data\csv\Profession.csv:8
