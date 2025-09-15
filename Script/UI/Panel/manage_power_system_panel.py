@@ -117,6 +117,85 @@ def _recalc_battery_capacity():
         ri.power_storage = ri.power_storage_max
 
 
+# ------------- 蓄电池自放电计算（模块级，复用） ------------- #
+def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[float, float]:
+    """
+    计算并应用蓄电池的自放电（按日）。
+    规则：
+    1) 如果当前储能为0或没有蓄电池，直接返回 (0.0, 0.0)
+    2) 从低级到高级遍历每一级电池，对每一台电池按其单体容量计算放电；
+       若当前剩余储能大于该电池的容量，则该电池按满容量计算放电并从剩余储能中扣除容量后继续；
+       否则仅对剩余储能部分计算放电并结束遍历。
+    返回 (discharge_amount, avg_rate)
+    """
+    # 快速返回
+    if getattr(ri_obj, "power_storage", 0) <= 0:
+        return 0.0, 0.0
+    battery_nums = ri_obj.battery_list
+    if not battery_nums or sum(battery_nums) == 0:
+        return 0.0, 0.0
+
+    # 读取不同等级的单体容量与自放电率表
+    cap_table: List[float] = []
+    rate_table: List[float] = []
+    for lv in (1, 2, 3):
+        try:
+            cid_cap = game_config.config_power_storage_level_index.get("电池容量", {}).get(lv)
+            if cid_cap:
+                cap_table.append(float(game_config.config_power_storage[cid_cap].value))
+            else:
+                cap_table.append(0.0)
+        except Exception:
+            cap_table.append(0.0)
+        try:
+            cid_rate = game_config.config_power_storage_level_index.get("自放电率", {}).get(lv)
+            if cid_rate:
+                rate_table.append(float(game_config.config_power_storage[cid_rate].value))
+            else:
+                rate_table.append(0.0)
+        except Exception:
+            rate_table.append(0.0)
+
+    remaining_storage = float(ri_obj.power_storage)
+    discharge_total = 0.0
+
+    # 遍历等级，从低级(1)到高级(3)
+    for lvl_idx, lv_count in enumerate(battery_nums):
+        if lv_count <= 0:
+            continue
+        unit_cap = cap_table[lvl_idx] if lvl_idx < len(cap_table) else 0.0
+        unit_rate = rate_table[lvl_idx] if lvl_idx < len(rate_table) else 0.0
+
+        # 每台电池依次消耗其容量
+        for _ in range(int(lv_count)):
+            if remaining_storage <= 0:
+                break
+            # 如果剩余储能 >= 单体容量，按单体容量计算放电
+            if remaining_storage >= unit_cap:
+                discharge = unit_cap * unit_rate
+                discharge_total += discharge
+                remaining_storage -= unit_cap
+            else:
+                # 部分电量对应部分放电
+                discharge = remaining_storage * unit_rate
+                discharge_total += discharge
+                remaining_storage = 0
+                break
+        if remaining_storage <= 0:
+            break
+
+    # 计算加权平均放电率（相对于初始储能）用于输出
+    try:
+        initial_storage = float(ri_obj.power_storage)
+        avg_rate = discharge_total / initial_storage if initial_storage > 0 else 0.0
+    except Exception:
+        avg_rate = 0.0
+
+    ri_obj.power_storage = max(0.0, remaining_storage)
+    return round(discharge_total, 2), round(avg_rate, 4)
+
+
+
 class FireGenerationDetail(TypedDict):
     fuel_daily_plan: float
     eff_per_fuel: float
@@ -376,28 +455,8 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
 
     # 分支二：发电 ≥ 耗电 → 先自放电，再将过剩电量充入电池
     else:
-        # 自放电（按日）
-        battery_nums = ri.battery_list
-        discharge_rates: List[float] = []
-        for lv in (1, 2, 3):
-            try:
-                cid = game_config.config_power_storage_level_index.get(_("自放电率"), {}).get(lv)
-                if cid:
-                    discharge_rates.append(float(game_config.config_power_storage[cid].value))
-                else:
-                    discharge_rates.append(0.0)
-            except Exception:
-                discharge_rates.append(0.0)
-        total_cells = sum(battery_nums)
-        if total_cells > 0:
-            avg_rate = 0.0
-            for idx, num in enumerate(battery_nums):
-                avg_rate += discharge_rates[idx] * num
-            avg_rate /= total_cells
-        else:
-            avg_rate = 0.0
-        discharge_amount = ri.power_storage * avg_rate
-        ri.power_storage = max(0.0, ri.power_storage - discharge_amount)
+        # 自放电（按日）——使用模块化函数计算并应用
+        discharge_amount, avg_rate = _calculate_battery_self_discharge(ri)
         text += _(" - 自放电：损失 {0:.1f} 度 (rate {1:.2%})，储能剩余 {2:.1f}\n").format(
             discharge_amount, avg_rate, ri.power_storage
         )
