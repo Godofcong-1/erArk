@@ -252,7 +252,7 @@ def update_base_resouce_newday():
     # 结算流水线
     manage_assembly_line_panel.settle_assembly_line(newdayflag=True)
     # 结算动力系统（能源）
-    # manage_power_system_panel.settle_power_system(newdayflag=True)
+    # manage_power_system_panel.settle_power_system(newdayflag=True, draw_flag=True)
     # 结算农业生产
     agriculture_production_panel.settle_agriculture_line()
     # 结算访客抵达和离开
