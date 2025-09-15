@@ -199,6 +199,9 @@ def chara_become_prisoner(character_id: int):
     character_data.dormitory = map_handle.get_map_system_path_str_for_list(character_data.position)
     # 给予屈服2，恐怖1，反发3，但如果有隶属系陷落，则可以减轻该效果
     target_fall = attr_calculation.get_character_fall_level(character_id, minus_flag=True)
+    if character_data.ability[14] <= 0:
+        character_data.ability[14] = 1
+        character_data.second_behavior["yield_mark_1"] = 1
     if character_data.ability[14] <= 1:
         character_data.ability[14] = 2
         character_data.second_behavior["yield_mark_2"] = 1
