@@ -238,7 +238,7 @@ def update_base_resouce_newday():
     Return arguments:
     无
     """
-    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel, manage_power_system_panel
+    from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -251,8 +251,6 @@ def update_base_resouce_newday():
     settle_milk()
     # 结算流水线
     manage_assembly_line_panel.settle_assembly_line(newdayflag=True)
-    # 结算动力系统（能源）
-    # manage_power_system_panel.settle_power_system(newdayflag=True, draw_flag=True)
     # 结算农业生产
     agriculture_production_panel.settle_agriculture_line()
     # 结算访客抵达和离开
@@ -486,6 +484,11 @@ def settle_office_work():
     # 否则减少全局效率
     else:
         effectiveness_change -= max_damage_down
+    # 结算能源系统
+    # from Script.UI.Panel import manage_power_system_panel
+    # shortage_ratio, text = manage_power_system_panel.settle_power_system(draw_flag=True)
+    # # 如果能源系统出现供电不足，则降低效率
+    # effectiveness_change -= shortage_ratio / 2
     cache.rhodes_island.effectiveness = 100 + int(effectiveness_change)
     # 效率不会小于50，也不会大于200
     cache.rhodes_island.effectiveness = min(cache.rhodes_island.effectiveness,200)
@@ -505,6 +508,10 @@ def settle_office_work():
         now_draw_text += _("且各区块设施运行基本正常，")
     else:
         now_draw_text += _("且部分区块设施出现较大故障，")
+    # if shortage_ratio == 0:
+    #     now_draw_text += _("能源系统供电充足，")
+    # else:
+    #     now_draw_text += _("但能源系统出现供电不足，")
     now_draw_text += _("因此今日罗德岛的各设施的总效率为{0}%\n").format(cache.rhodes_island.effectiveness)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width

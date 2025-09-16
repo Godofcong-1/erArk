@@ -1,3 +1,4 @@
+import random
 from typing import Dict, List, Tuple, Union, overload, Literal, TypedDict
 from types import FunctionType
 
@@ -194,16 +195,13 @@ def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[
     ri_obj.power_storage = max(0.0, remaining_storage)
     return round(discharge_total, 2), round(avg_rate, 4)
 
-
-
+# ---------------------------- 理论计算 ---------------------------- #
+# 字典类型，返回详细信息
 class FireGenerationDetail(TypedDict):
     fuel_daily_plan: float
     eff_per_fuel: float
     operator_bonus: float
-    global_eff: float
     theory_total: float
-
-# ---------------------------- 理论计算 ---------------------------- #
 # 使用 typing.overload 来实现根据 detail 参数的不同返回不同类型
 # 当 detail=True 时，返回 FireGenerationDetail 字典
 @overload
@@ -226,13 +224,11 @@ def get_theoretical_fire_generation(detail: bool = False) -> Union[float, FireGe
               'fuel_daily_plan': 当日计划燃烧燃料量,
               'eff_per_fuel': 单位燃料发电效率,
               'operator_bonus': 调控员系数(含1.0基线),
-              'global_eff': 全局效率系数,
               'theory_total': 理论总发电量
             }
     """
     _init_power_runtime_fields()
     ri = cache.rhodes_island
-    global_eff = max(ri.effectiveness, 50) / 100
     # 主炉等级与动力区等级同步
     now_facility_lv = ri.facility_level.get(1, 1)
     ri.orundum_reactor_list[0] = now_facility_lv
@@ -254,8 +250,8 @@ def get_theoretical_fire_generation(detail: bool = False) -> Union[float, FireGe
     aux_fuel_per = _pg(_("副反应炉"), 1, 10)  # 单台副炉的每日燃料消耗
     # 计划每日燃料消耗 = 副炉数量 * 单台副炉每日燃料消耗
     fuel_can_burn_daily = aux_count * aux_fuel_per
-    # 理论总火电=燃料消耗量*单位燃料效率*调控员加成*全局效率
-    theory_total = fuel_can_burn_daily * eff_per_fuel * op_bonus * global_eff
+    # 理论总火电=燃料消耗量*单位燃料效率*调控员加成
+    theory_total = fuel_can_burn_daily * eff_per_fuel * op_bonus
 
     # 无需详细信息时直接返回总量
     if not detail:
@@ -266,7 +262,6 @@ def get_theoretical_fire_generation(detail: bool = False) -> Union[float, FireGe
         "fuel_daily_plan": round(fuel_can_burn_daily, 2),
         "eff_per_fuel": round(eff_per_fuel, 4),
         "operator_bonus": round(op_bonus, 4),
-        "global_eff": round(global_eff, 4),
         "theory_total": round(theory_total, 2),
     }
 
@@ -277,7 +272,6 @@ def get_theoretical_clean_generation(kind: int = -1) -> float:
     """
     _init_power_runtime_fields()
     ri = cache.rhodes_island
-    global_eff = max(ri.effectiveness, 50) / 100
     hydro, wind, solar = ri.other_power_facility_list
     # facility_lv = ri.facility_level.get(1, 1)  # 动力区等级，cid=1
     # TODO 未实装天气功能，暂用等级对应不同环境强度:取 level=3 代表标准发电
@@ -291,12 +285,19 @@ def get_theoretical_clean_generation(kind: int = -1) -> float:
                 base_clean.append(fallback)
         except Exception:
             base_clean.append(fallback)
+    # 调控员加成(含1.0基线)
     hydro_bonus = _get_operator_power_bonus(1) + 1
     wind_bonus = _get_operator_power_bonus(2) + 1
     solar_bonus = _get_operator_power_bonus(3) + 1
-    hydro_val = hydro * base_clean[0] * hydro_bonus * global_eff
-    wind_val = wind * base_clean[1] * wind_bonus * global_eff
-    solar_val = solar * base_clean[2] * solar_bonus * global_eff
+    # 计算各类发电量
+    hydro_val = hydro * base_clean[0] * hydro_bonus
+    wind_val = wind * base_clean[1] * wind_bonus
+    solar_val = solar * base_clean[2] * solar_bonus
+    # 如果当前罗德岛在行驶中，则水力和风力发电为0
+    if ri.move_target_and_time[0] != 0:
+        hydro_val = 0
+        wind_val = 0
+    # 根据 kind 返回对应结果
     if kind == 0:
         return round(hydro_val, 2)
     if kind == 1:
@@ -374,23 +375,18 @@ def get_theoretical_power_consumption() -> float:
 
 
 # ---------------------------- 结算逻辑 ---------------------------- #
-def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tuple[bool, str]:
+def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     """每天结算动力系统发电与储能（按日）
     参数:
-        newdayflag: 是否跨天结算；仅当为 True 时执行结算
         draw_flag: 是否即时绘制信息
     返回:
-        (un_normal, text) -> 是否存在异常(燃料不足/供电赤字) 与 文本
+        (shortage_ratio, text) -> 供电缺口百分比 与 文本
     """
     _init_power_runtime_fields()
     ri = cache.rhodes_island
-
-    # 仅在跨天时进行“每日”结算，避免被频繁调用时重复结算
-    if not newdayflag:
-        return False, ""
+    shortage_ratio = 0.0
 
     text = _("\n能源结算\n")
-    un_normal = False
 
     # ------------ 火力发电（使用理论值 + 实际燃料占比折算）------------ #
     fire_detail = get_theoretical_fire_generation(detail=True)
@@ -410,7 +406,6 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
     fire_power = round(fire_power, 2)
 
     if fuel_use + 1e-6 < fuel_plan:
-        un_normal = True
         text += _(" - 火力发电：燃料不足（计划 {0:.1f}，实际 {1:.1f}），按比例产出 {2:.1f} 度\n").format(
             fuel_plan, fuel_use, fire_power
         )
@@ -418,10 +413,11 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
         pass
         text += _(" - 火力发电：消耗燃料 {0:.1f} 单位，产出 {1:.1f} 度\n").format(fuel_use, fire_power)
 
-    # ------------ 清洁能源（按日理论值）------------ #
-    hydro_full = get_theoretical_clean_generation(0)
-    wind_full = get_theoretical_clean_generation(1)
-    solar_full = get_theoretical_clean_generation(2)
+    # ------------ 清洁能源（按日理论值乘以随机数）------------ #
+    # 水力、风力、太阳能发电量
+    hydro_full = get_theoretical_clean_generation(0) * random.uniform(0.8, 1.2)
+    wind_full = get_theoretical_clean_generation(1) * random.uniform(0.8, 1.2)
+    solar_full = get_theoretical_clean_generation(2) * random.uniform(0.8, 1.2)
     clean_power = round(hydro_full + wind_full + solar_full, 2)
     text += _(" - 清洁能源：水{0} 风{1} 太阳能{2} 台，总产出 {3:.1f} 度\n").format(
         ri.other_power_facility_list[0], ri.other_power_facility_list[1], ri.other_power_facility_list[2], clean_power
@@ -445,9 +441,8 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
             gap, use_from_batt, ri.power_storage, ri.power_storage_max
         )
         if remain_gap > 1e-6:
-            un_normal = True
             shortage_ratio = remain_gap / total_consumption if total_consumption > 0 else 0
-            text += _(" - 警告：仍缺 {0:.1f} 度，占需求 {1:.1%}，预计当日运营效率下降 {1:.1%}\n").format(
+            text += _(" - 警告：仍缺 {0:.1f} 度，占需求 {1:.1%}\n").format(
                 remain_gap, shortage_ratio
             )
         else:
@@ -477,7 +472,7 @@ def settle_power_system(newdayflag: bool = False, draw_flag: bool = True) -> Tup
         draw_text.text = text
         draw_text.draw()
 
-    return un_normal, text
+    return shortage_ratio, text
 
 
 # ---------------------------- 面板类 ---------------------------- #
@@ -495,9 +490,6 @@ class Manage_Power_System_Panel:
             ri = cache.rhodes_island
             title = draw.TitleLineDraw(_("动力系统管理"), self.width)
             title.draw()
-
-            # 自动结算（按小时）
-            settle_power_system(draw_flag=False)
 
             info = draw.NormalDraw()
             info.width = self.width
