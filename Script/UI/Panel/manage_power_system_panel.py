@@ -757,10 +757,18 @@ class Manage_Power_System_Panel:
             return_list = []
             title = draw.TitleLineDraw(_("发电设施管理"), self.width)
             title.draw()
+
             # 汇总
             summary = draw.NormalDraw(); summary.width = self.width
             summary.text = _("\n  当前理论用电量: {0} / 理论供电量:{1}\n").format(
                 get_theoretical_power_consumption(), get_theoretical_power_generation()
+            )
+            # 燃料库存
+            now_have = ri.materials_resouce.get(15, 0)
+            daily_use = get_theoretical_fire_generation(detail=True).get("fuel_daily_plan", 0.0)
+            support_days = int(now_have // daily_use) if daily_use > 1e-6 else 9999
+            summary.text += _("  当前燃料库存: {0} 单位，每日计划消耗 {1:.1f} 单位，约可支持 {2} 天\n").format( 
+                now_have, daily_use, support_days
             )
             # 如果当前罗德岛在行驶中
             move_flag = False
