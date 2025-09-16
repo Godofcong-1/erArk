@@ -53,13 +53,13 @@ class Building_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{building_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(building_type_list)
+                    now_draw.width = int(self.width / len(building_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{building_type}]",
                         f"\n{building_type}",
-                        self.width / len(building_type_list),
+                        int(self.width / len(building_type_list)),
                         cmd_func=self.change_panel,
                         args=(building_type,),
                     )
@@ -238,7 +238,7 @@ class Building_Panel:
                     now_draw = draw.CenterButton(
                         _("【升级】"),
                         _("\n【升级】"),
-                        self.width / 10,
+                        int(self.width / 10),
                         cmd_func=self.level_up,
                         args=(facility_cid,),
                     )
@@ -254,7 +254,7 @@ class Building_Panel:
                 info_draw.draw()
 
             # 区块子建筑建设
-            button_draw = draw.CenterButton(_("【修建】"), _("\n【修建】"), self.width / 5)
+            button_draw = draw.CenterButton(_("【修建】"), _("\n【修建】"), int(self.width / 5))
             # 贸易区
             if facility_cid in [111, 112, 113, 114, 115]:
                 trade_draw = draw.NormalDraw()
@@ -285,7 +285,7 @@ class Building_Panel:
                     button_draw = draw.CenterButton(
                         _("【修建】"),
                         _("\n【修建】"),
-                        self.width / 5,
+                        int(self.width / 5),
                         cmd_func=self.build_trade_sub_panel,
                         args=(facility_cid,),
                     )
@@ -359,7 +359,7 @@ class Building_Panel:
                     now_draw = draw.LeftButton(
                         draw_text,
                         "\n{0}".format(open_data.name),
-                        self.width / 6,
+                        int(self.width / 6),
                         cmd_func=self.sure_build_trade,
                         args=(facility_open_cid),
                     )
@@ -401,7 +401,7 @@ class Building_Panel:
             button_draw = draw.CenterButton(
                 _("【确定】"),
                 _("\n【确定】"),
-                self.width / 5,
+                int(int(self.width / 5)),
                 cmd_func=self.build_trade,
                 args=(facility_open_cid,),
             )
@@ -424,7 +424,7 @@ class Building_Panel:
         facility_cid -- 建筑效果编号
         """
         open_data = game_config.config_facility_open[facility_open_cid]
-        cache.rhodes_island.facility_open[facility_open_cid] = 1
+        cache.rhodes_island.facility_open[facility_open_cid] = True
         cache.rhodes_island.shop_open_list.append(open_data.name)
         basement.get_base_updata()
 

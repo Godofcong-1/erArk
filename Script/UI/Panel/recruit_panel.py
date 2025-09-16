@@ -434,12 +434,12 @@ class Recruit_Panel:
                 line_feed.draw()
 
             line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
             # 如果有选择的干员，且目标招募线的人数未达上限则输出确定按钮
             if self.now_chara_id != -1 and len(cache.rhodes_island.recruit_line[self.target_position][2]) < self.max_hr_in_line:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)

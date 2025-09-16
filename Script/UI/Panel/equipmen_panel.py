@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise
+from Script.Design import attr_calculation, handle_premise, basement
 import random
 
 from Script.UI.Panel import achievement_panel
@@ -220,6 +220,8 @@ def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 2
     # 根据随机数变成0.8~1.2倍
     maintain_value *= random.uniform(0.8, 1.2)
+    # 设施加成
+    maintain_value *= basement.calc_facility_efficiency(2)
     # 获取维修优先度设置
     maintain_priority = cache.rhodes_island.equipment_maintain_setting.get(0, 0)
 
@@ -279,6 +281,8 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 4
     # 根据随机数变成0.8~1.2倍
     maintain_value *= random.uniform(0.8, 1.2)
+    # 设施加成
+    maintain_value *= basement.calc_facility_efficiency(2)
     # 是否进行装备保养
     maintain_enable = cache.rhodes_island.equipment_maintain_setting.get(1, 0)
     # 保养对象设置

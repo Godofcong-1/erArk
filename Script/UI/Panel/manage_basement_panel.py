@@ -77,13 +77,13 @@ class Manage_Basement_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{now_panel}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(panel_list)
+                    now_draw.width = int(self.width / len(panel_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{now_panel}]",
                         f"\n{now_panel}",
-                        self.width / len(panel_list),
+                        int(self.width / len(panel_list)),
                         cmd_func=self.change_panel,
                         args=(now_panel,),
                     )
@@ -251,7 +251,7 @@ class Manage_Basement_Panel:
                     character_data = cache.character_data[character_id]
                     name = character_data.name
                     id = str(character_data.adv).rjust(4,'0')
-                    draw_width = self.width / 6
+                    draw_width = int(self.width / 6)
                     # 输出干员名字
                     now_draw_text = f"[{id}]{name}"
                     name_draw = draw.LeftButton(
@@ -601,7 +601,7 @@ class Change_Npc_Work_Panel:
                 # 为了美观，在这里不显示工作类型的id
                 # button_text = f"{symbol}[{str(work_type_id).rjust(3,'0')}]{work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
                 button_text = f"{symbol} {work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
-                draw_width = self.width / 7
+                draw_width = int(self.width / 7)
                 type_button_draw = draw.LeftButton(
                     button_text, work_type_name, draw_width,
                     cmd_func=self.toggle_work_type, args=(work_type_id,)

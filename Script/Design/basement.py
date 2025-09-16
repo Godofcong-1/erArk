@@ -229,6 +229,39 @@ def get_base_updata():
             elif level <= 3:
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 1
 
+def calc_facility_efficiency(facility_cid: int = -1) -> float:
+    """
+    计算区块的工作效率（百分比）
+    输入:
+        facility_cid -- 设施编号，默认为-1表示计算全局效率
+    输出:
+        float - 效率（例如 1.1 表示 110%）
+    说明:
+        根据设施编号计算对应区块的工作效率，若设施编号为-1则计算全局效率
+    """
+    adjust = 1.0
+    # 参数校验
+    if facility_cid == -1 or facility_cid not in game_config.config_facility:
+        return adjust
+    # 获取设施数据
+    facility_data = game_config.config_facility[facility_cid]
+    facility_name = facility_data.name
+    now_level = cache.rhodes_island.facility_level[facility_cid]
+    # 设施效果数据
+    facility_effect_cid = game_config.config_facility_effect_data[facility_name][int(now_level)]
+    facility_effect = game_config.config_facility_effect[facility_effect_cid].effect
+    # 子设施获得父区块的供电策略
+    zone_cid = facility_cid
+    if facility_data.type >= 0:
+        zone_cid = facility_data.type
+    # 供电策略的调整
+    now_power_strategy = cache.rhodes_island.power_supply_strategy.get(zone_cid, 0)
+    now_power_strategy_adjust = game_config.config_supply_strategy[now_power_strategy].adjust
+    adjust *= now_power_strategy_adjust
+    # 博士办公室
+    if facility_cid == 22:
+        adjust += facility_effect / 100
+    return adjust
 
 def update_base_resouce_newday():
     """
@@ -585,13 +618,19 @@ def draw_todo():
     """
     绘制待办事项
     """
-    from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel, invite_visitor_panel
+    from Script.UI.Panel import manage_assembly_line_panel, agriculture_production_panel, invite_visitor_panel, manage_power_system_panel
 
     # 如果系统设置中关闭了待办事项，直接返回
     if cache.all_system_setting.draw_setting[5] == 0:
         return
 
     draw_text = ""
+
+    # 供电是否不足
+    power_generation = manage_power_system_panel.get_theoretical_power_generation()
+    power_consumption = manage_power_system_panel.get_theoretical_power_consumption()
+    # if power_generation < power_consumption:
+    #     draw_text += _("  当前供电不足，可能影响基地正常运转\n")
 
     # 是否有已招募待确认的干员
     if len(cache.rhodes_island.recruited_id):

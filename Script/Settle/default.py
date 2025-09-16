@@ -6851,11 +6851,8 @@ def handle_official_work_add_adjust(
         adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
         now_draw_text += _("在{0}的帮助下，").format(target_data.name)
-    # 根据博士办公室的房间等级来调整
-    now_level = cache.rhodes_island.facility_level[22]
-    facility_cid = game_config.config_facility_effect_data[_("博士办公室")][int(now_level)]
-    facility_effect = game_config.config_facility_effect[facility_cid].effect
-    adjust *= (1 + facility_effect / 100)
+    # 设施加成
+    adjust *= basement.calc_facility_efficiency(22)
     # 处理工作
     finish_work = int(add_time * adjust)
     cache.rhodes_island.office_work = int(max(cache.rhodes_island.office_work - finish_work, 0))
