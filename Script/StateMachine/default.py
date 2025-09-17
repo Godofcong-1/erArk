@@ -1,7 +1,7 @@
 import random
 from types import FunctionType
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_npc_ai
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_npc_ai, basement
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -2343,7 +2343,10 @@ def character_work_cure_patient(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.CURE_PATIENT
-    character_data.behavior.duration = 30
+    # 设施加成
+    adjust = basement.calc_facility_efficiency(6)
+    new_time = int(30 / adjust)
+    character_data.behavior.duration = new_time
     character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
 
 

@@ -262,12 +262,20 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
     # TODO 厨房，因为没有单独设施id所以用区块id代替
     if facility_cid == 5:
         room_full_str = map_handle.get_map_system_path_str_for_list(["生娱", "厨房"])
+    elif facility_cid == 6:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["医疗", "门诊室"])
+    elif facility_cid == 7:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["文职", "办公室"])
+    elif facility_cid == 9:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["训练", "健身区"])
+    elif facility_cid == 13:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["访客", "外交办公室"])
     elif facility_cid == 22:
         room_full_str = map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"])
     # 设施损坏调整
-    damage_adjust = 0.0
     if room_full_str in cache.rhodes_island.facility_damage_data:
-        damage_adjust = cache.rhodes_island.facility_damage_data[room_full_str] * 0.01
+        damage_adjust = cache.rhodes_island.facility_damage_data[room_full_str] * 0.02
+        adjust -= damage_adjust
     # 有特殊计算公式的区块
     # 宿舍区
     if facility_cid == 4:
@@ -275,10 +283,9 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
         adjust -= (1 - now_power_strategy_adjust) / 4
     # 其他直接乘以供电策略
     else:
-        # 厨房、博士办公室
-        if facility_cid in [5, 22]:
+        # 厨房、健身区、博士办公室
+        if facility_cid in [5, 7, 9, 13, 22]:
             adjust += facility_effect / 100
-            adjust -= damage_adjust
         adjust *= now_power_strategy_adjust
     # 效率不会小于20%
     adjust = max(adjust, 0.2)

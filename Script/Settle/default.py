@@ -3,6 +3,7 @@ import random, math
 from types import FunctionType
 
 from Script.Design import (
+    basement,
     settle_behavior,
     instuct_judege,
     map_handle,
@@ -6948,6 +6949,8 @@ def handle_recruit_add_just(
         return
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 设施效率
+    adjust *= basement.calc_facility_efficiency(7)
     # 获得加成 #
     now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
     # debug下直接拉满
@@ -7020,6 +7023,8 @@ def handle_invite_visitor_add_adjust(
 
     # 获取调整值#
     adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    # 设施效率
+    adjust *= basement.calc_facility_efficiency(13)
     # 获得加成 #
     now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
     # debug下直接拉满
@@ -8223,10 +8228,7 @@ def handle_add_hpmp_max(
     if character_data.dead:
         return
     # 设施效率
-    now_level = cache.rhodes_island.facility_level[9]
-    facility_cid = game_config.config_facility_effect_data[_("训练场")][int(now_level)]
-    facility_effect = game_config.config_facility_effect[facility_cid].effect
-    facility_adjust = 1 + facility_effect / 100
+    facility_adjust = basement.calc_facility_efficiency(9)
 
     # 指数曲线，x = [1000, 2000, 4000, 5000, 10000]， y = [50, 25, 15, 10, 5]
     add_hp = 128.961 * math.exp(-0.0016 * character_data.hit_point_max) + 28.578 * math.exp(-1.8453e-04 * character_data.hit_point_max)
@@ -8265,7 +8267,8 @@ def handle_add_hpmp_max(
         now_draw.width = 1
         now_draw.draw()
     # 结算成就
-    achievement_panel.achievement_flow(_("锻炼"))
+    if character_id == 0:
+        achievement_panel.achievement_flow(_("锻炼"))
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SING_ADD_ADJUST)
 def handle_sing_add_adjust(
