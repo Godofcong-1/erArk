@@ -102,4 +102,4 @@ str,str,int,str,str
 96,manage_facility_power,0,high_1,{Name}在控制室协助训练部门进行能耗演练，模拟高强度作业对电网的影响并制定相应的能耗限制与安全策略
 97,manage_facility_power,0,high_1,{Name}负责在控制台维护并同步罗德岛各级电力与能源数据库，确保各部门使用相同版本数据以便统一调度与统计
 98,manage_facility_power,0,high_1,{Name}在动力控制室监控并管理远程修复机器人充电计划，优先保障关键修复机器人的续航以缩短现场抢修响应时间
-99,manage_facility_power,0,high_1,{Name}定期在控制室内向指挥部提交电网健康报告，包含源石消耗、备用容量与潜在风险，为博士决策提供数据支持
+99,manage_facility_power,0,high_1,{Name}在动力控制室内向控制中枢提交电网健康报告，包含源石消耗、备用容量与潜在风险，为决策提供数据支持

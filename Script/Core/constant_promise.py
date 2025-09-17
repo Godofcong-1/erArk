@@ -643,6 +643,8 @@ class Premise:
     """ 地点_定位 在温室 """
     NOT_IN_GREENHOUSE = "not_in_greenhouse"
     """ 地点_定位 不在温室 """
+    IN_HERB_GARDEN_OR_GREENHOUSE = "in_herb_garden_or_greenhouse"
+    """ 地点_定位 在药田或温室 """
     IN_AROMATHERAPY_ROOM = "in_aromatherapy_room"
     """ 地点_定位 在香薰治疗室 """
     NOT_IN_AROMATHERAPY_ROOM = "not_in_aromatherapy_room"

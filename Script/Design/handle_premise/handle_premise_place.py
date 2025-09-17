@@ -3629,6 +3629,19 @@ def handle_not_in_greenhouse(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_HERB_GARDEN_OR_GREENHOUSE)
+def handle_in_herb_garden_or_greenhouse(character_id: int) -> int:
+    """
+    校验角色是否在药田或温室
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_herb_garden(character_id) or handle_in_greenhouse(character_id):
+        return 1
+    return 0
+
 @add_premise(constant_promise.Premise.IN_AROMATHERAPY_ROOM)
 def handle_in_aromatherapy_room(character_id: int) -> int:
     """

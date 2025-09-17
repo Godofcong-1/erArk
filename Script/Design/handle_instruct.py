@@ -560,6 +560,21 @@ def handle_manage_assembly_line():
 
 
 @add_instruct(
+    constant.Instruct.PLANT_MANAGE_CROP,
+    constant.InstructType.WORK,
+    _("种植与养护作物"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_HERB_GARDEN_OR_GREENHOUSE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.PLANT_MANAGE_CROP,
+)
+def handle_plant_manage_crop():
+    """处理种植与养护作物指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.PLANT_MANAGE_CROP)
+
+
+@add_instruct(
     constant.Instruct.MANAGE_AGRICULTURE,
     constant.InstructType.WORK,
     _("管理农业生产"),

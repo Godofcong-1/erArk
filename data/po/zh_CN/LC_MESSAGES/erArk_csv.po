@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-09-17 15:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -17684,6 +17684,190 @@ msgstr ""
 msgid "既然這就是炎蓉施主提到的羅德島，而您又是她口中所言之博士，相逢即是有緣，就容小僧在此艦停留一段時日吧!"
 msgstr ""
 
+#: .\data\csv\Commission.csv:162
+msgid "日正当中"
+msgstr ""
+
+#: .\data\csv\Commission.csv:162
+msgid "因为宝藏传说而动荡不安的滴水村，迎来了一位来自维多利亚的潇洒骑警：格拉尼。在救下了被严刑拷打的可萝尔后，格拉尼承诺会帮助滴水村。躲藏在阁楼之中的格拉尼和可萝尔详细讨论了关于宝藏的情报，可萝尔并没有全盘托出。就在二人打算行动之时，窗外竟然有人飞了出去？"
+msgstr ""
+
+#: .\data\csv\Commission.csv:163
+msgid "察言观色"
+msgstr ""
+
+#: .\data\csv\Commission.csv:163
+msgid "同样来自罗德岛的神秘干员为了寻找“她”而与赏金猎人交战，随后格拉尼也决定离开阁楼，却意外遇见了躲藏的赏金猎人们。被源石虫纠缠不清的格拉尼与可萝尔被突然出现的赏金猎人所救，而这位自称大鲍勃的赏金猎人竟然主动提出要与格拉尼合作。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:164
+msgid "意外之旅"
+msgstr ""
+
+#: .\data\csv\Commission.csv:164
+msgid "有了大鲍勃帮助，格拉尼二人得以顺利前行，并遭遇了神秘干员斯卡蒂后，却没料到斯卡蒂直接拔剑相向，众人被卷入了一场大乱斗中。交战中大鲍勃意外负伤，腿部结晶暴露了他是感染者的事实。而格拉尼完全不在意，为大鲍勃进行包扎。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:165
+msgid "污点证人"
+msgstr ""
+
+#: .\data\csv\Commission.csv:165
+msgid "安全之后，大鲍勃与格拉尼就斯卡蒂与罗德岛的问题展开争论，但尚未得出结果，突兀出现的整合运动就打断了对话。面对整合运动的猛攻，大鲍勃主动提出殿后来为格拉尼与可萝尔创造一线生机。而宝藏越发近在眼前，战斗也将越发频繁。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:166
+msgid "各抒己见"
+msgstr ""
+
+#: .\data\csv\Commission.csv:166
+msgid "为了让可萝尔顺利拿到宝藏，格拉尼选择一人一枪驻守洞口。此时，整合运动，赏金猎人以及斯卡蒂的三方混战也正式拉开帷幕。面对难以匹敌的斯卡蒂和涌入的赏金猎人，格拉尼只好撤退接应可萝尔。然而在洞穴深处等待她的，却是熟悉的战友。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:167
+msgid "黄金三角"
+msgstr ""
+
+#: .\data\csv\Commission.csv:167
+msgid "斯卡蒂，大鲍勃与格拉尼三方对峙，互不相让，他们各自都有坚持的东西。而可萝尔发现宝藏的惊喜呼喊打破了僵局，战斗一触即发。格拉尼选择主动献出血液开启宝藏，并拖着斯卡蒂帮村庄解决了游荡的赏金猎人。大鲍勃也在分得剩下的宝藏后，得以远走哥伦比亚。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:168
+msgid "碧血金沙"
+msgstr ""
+
+#: .\data\csv\Commission.csv:168
+msgid "卡西米尔出身的临光不放心格拉尼，而为她写了一份有关卡西米尔骑士宝藏的嘱咐信件。准备离开滴水村的格拉尼这才收到临光的信件，但事件早已解决，是时候踏上归途。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:169
+msgid "大地惊雷"
+msgstr ""
+
+#: .\data\csv\Commission.csv:169
+msgid "从古老的歌声中惊醒的幽灵鲨，面前是正准备出发的斯卡蒂，斯卡蒂探望后决定动身前往“秘密被埋葬之地”。斯卡蒂试图用“宝藏钥匙”从凯尔希那里换来有关幽灵鲨的信息。但凯尔希显然对斯卡蒂擅自行动的结果略显不快。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:170
+msgid "摇滚起来"
+msgstr ""
+
+#: .\data\csv\Commission.csv:170
+msgid "黑曜石节热闹开场，罗德岛一行来到了旅游都市汐斯塔，每个人似乎都在这里找到了乐趣。然而，就在博士也打算融入其中时，却收到了紧急通讯。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:171
+msgid "火山制造"
+msgstr ""
+
+#: .\data\csv\Commission.csv:171
+msgid "前往火山脚下实地考察的天火和普罗旺斯认为火山有些异常。不过，没等她们进一步判断，就听到了求救声。两人救下的竟是市长的女儿，锡兰•道尔科斯。而随着三人的讲述与论证，火山即将爆发的可能性浮出水面。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:172
+msgid "冲破藩篱"
+msgstr ""
+
+#: .\data\csv\Commission.csv:172
+msgid "艾雅法拉通过远程通讯印证了众人的猜想。一番讨论后，众人决定了接下来的行动方针。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:173
+msgid "演出继续"
+msgstr ""
+
+#: .\data\csv\Commission.csv:173
+msgid "博士与锡兰前往市政厅，试图说服市长秘书克洛宁。然而，交谈中对方却反而认为博士蒙骗锡兰，并要抓捕博士。博士和锡兰破门而出，锡兰此前介绍过的黑这时出现，却站在了两人的对立面。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:174
+msgid "竞走赛"
+msgstr ""
+
+#: .\data\csv\Commission.csv:174
+msgid "在沙滩区域与追击方短兵相接，而后，伊芙利特出现为两人解围。依托友军制造掩护并完成转场，避免引发更大范围的惊恐与踩踏风险。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:175
+msgid "影与抉择"
+msgstr ""
+
+#: .\data\csv\Commission.csv:175
+msgid "在与黑的交锋中，对方展现出极强的个人武力与职业素养，黑的身份恐怕不只是市长保镖这么简单，而这番猜测被锡兰听到，她不禁对自己的家人产生了动摇。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:176
+msgid "压力之下"
+msgstr ""
+
+#: .\data\csv\Commission.csv:176
+msgid "博士和锡兰一边散步一边谈心，最终，锡兰坚定了自己的想法，并制定了一个计划。在广播塔推进实名发布预警的方案评估，准备应对舆情冲击与秩序维持压力，确保信息准确与可执行建议同步落地。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:177
+msgid "别阻止我"
+msgstr ""
+
+#: .\data\csv\Commission.csv:177
+msgid "广播塔下，黑已经等待多时，但是她立刻发现，锡兰不过是诱饵。而另一边，红豆和博士顺利进入了市政厅。黑和锡兰的交谈还在继续。不过这一次，黑理解了锡兰的坚持，也发现了自己遭受蒙骗。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:178
+msgid "杀手女皇"
+msgstr ""
+
+#: .\data\csv\Commission.csv:178
+msgid "两人的交谈终于迎来了结果。黑与锡兰互相理解，而后，黑终于重新站到了锡兰这边。博士和红豆的突击也获得了成果，正在准备逃亡的克洛宁变了脸色，并打算不顾一切逃跑。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:179
+msgid "爱某个人"
+msgstr ""
+
+#: .\data\csv\Commission.csv:179
+msgid "热闹的live之中，市长的提前回归让克洛宁彻底撕破了脸皮，他决定孤注一掷。但另一边，种种迹象显示，时间可能不多了。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:180
+msgid "一锤定音"
+msgstr ""
+
+#: .\data\csv\Commission.csv:180
+msgid "被逼入绝境的克洛宁状若疯狂，指使手下向罗德岛一行发动了袭击。虽然打败了克洛宁，但一切似乎无法挽回。所幸，普罗旺斯带了好消息，为了制止这场火山爆发，所有人都开始了行动。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:181
+msgid "汐斯塔狂想曲"
+msgstr ""
+
+#: .\data\csv\Commission.csv:181
+msgid "火山溶洞中，天火向众人解释了阻止火山爆发的方法。而后，在溶洞深处，众人终于见到了火山之主——一只巨型源石虫。采取击退与诱导回巢而非歼灭的战术目标，控制震动与热量带来的次生风险。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:182
+msgid "此生挚爱"
+msgstr ""
+
+#: .\data\csv\Commission.csv:182
+msgid "火山延缓爆发，汐斯塔将被放弃，黑和锡兰前往罗德岛，事情迎来了相对可以接受的结果。虽然不甚完美，但是至少还有未来可以期待。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:183
+msgid "邂逅潮声"
+msgstr ""
+
+#: .\data\csv\Commission.csv:183
+msgid "音乐节期间刻刀、伊芙利特、蜜蜡等人的市井插曲与日落即逝乐队成员“Aya”的对话令人深思，应保持对深海议题的长期关注与跟踪。"
+msgstr ""
+
+#: .\data\csv\Commission.csv:184
+msgid "完美落幕：舞台与余音"
+msgstr ""
+
+#: .\data\csv\Commission.csv:184
+msgid "舞台秩序维持与人群风险防控并行，DJ 的自我突破、企鹅物流护场与“大帝”控场化解袭扰；医务室对谈又一次揭示了“深海”的线索——至此，活动完结。"
+msgstr ""
+
 #: .\data\csv\Confinement_Training_Setting.csv:6
 msgid "囚犯训练管理"
 msgstr ""
@@ -18785,23 +18969,23 @@ msgid "还没想好"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:13
-msgid "基础供电量为400，开放火力发电（未实装）"
+msgid "开放火力发电（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:14
-msgid "基础供电量提升至800、开放基础蓄电池（未实装）、副源石反应炉（未实装）"
+msgid "开放基础蓄电池（未实装）、副源石反应炉（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:15
-msgid "基础供电量提升至1500，开放水力发电（未实装）、L2级蓄电池（未实装）"
+msgid "开放水力发电（未实装）、L2级蓄电池（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:16
-msgid "基础供电量提升至2500，开放风力发电（未实装）、L3级蓄电池（未实装）"
+msgid "开放风力发电（未实装）、L3级蓄电池（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:17
-msgid "基础供电量提升至5000，开放光能发电（未实装）"
+msgid "开放光能发电（未实装）"
 msgstr ""
 
 #: .\data\csv\Facility_effect.csv:19
@@ -22009,15 +22193,15 @@ msgid "基础效率"
 msgstr ""
 
 #: .\data\csv\Power_Generation.csv:7
-msgid "等级2: +2"
+msgid "等级2: +1"
 msgstr ""
 
 #: .\data\csv\Power_Generation.csv:8
-msgid "等级3: +2"
+msgid "等级3: +1"
 msgstr ""
 
 #: .\data\csv\Power_Generation.csv:9
-msgid "等级4: +2"
+msgid "等级4: +1"
 msgstr ""
 
 #: .\data\csv\Power_Generation.csv:10
@@ -22030,6 +22214,22 @@ msgstr ""
 
 #: .\data\csv\Power_Generation.csv:11
 msgid "燃料/日"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:12
+msgid "等级2: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:13
+msgid "等级3: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:14
+msgid "等级4: +2"
+msgstr ""
+
+#: .\data\csv\Power_Generation.csv:15
+msgid "等级5: +7"
 msgstr ""
 
 #: .\data\csv\Power_Generation.csv:16

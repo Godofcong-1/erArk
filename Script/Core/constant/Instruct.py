@@ -225,6 +225,8 @@ class Instruct:
     """ 管理图书馆 """
     MANAGE_ASSEMBLY_LINE = 0
     """ 管理流水线 """
+    PLANT_MANAGE_CROP = 0
+    """ 种植与养护作物 """
     MANAGE_AGRICULTURE = 0
     """ 管理农业生产 """
     MANAGE_VEHICLE = 0
