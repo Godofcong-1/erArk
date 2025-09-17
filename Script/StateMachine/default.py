@@ -2543,6 +2543,7 @@ def character_work_cook(character_id: int):
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.NPC_WORK_COOK
     character_data.behavior.duration = 30
+    character_data.behavior.make_food_time = character_data.behavior.duration
     character_data.state = constant.CharacterStatus.STATUS_NPC_WORK_COOK
 
 

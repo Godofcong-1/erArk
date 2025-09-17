@@ -58,8 +58,8 @@ def _init_power_runtime_fields():
             if facility_data.type == -1 and facility_cid not in ri.power_supply_strategy:
                 cache.rhodes_island.power_supply_strategy[facility_cid] = 0  # 标准
                 # 未实装的区块，默认断电
-                if facility_cid in (8, 18, 20, 21):
-                    cache.rhodes_island.power_supply_strategy[facility_cid] = 2  # 断电 
+                if facility_cid in (8, 18, 20):
+                    cache.rhodes_island.power_supply_strategy[facility_cid] = 2  # 断电
         except Exception:
             continue
 

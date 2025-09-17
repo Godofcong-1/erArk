@@ -48,7 +48,7 @@ class Make_food_Panel:
             food_type_list = [_("咖啡")]
             self.now_panel = _("咖啡")
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
-        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0)
         while 1:
             cooking.init_makefood_data()
             py_cmd.clr_cmd()
@@ -166,7 +166,7 @@ class Make_food_Panel:
         food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
 
         self.handle_panel = panel.PageHandlePanel(
-            food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, 1, 1, 0
+            food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0
         )
 
     def choice_seasoning(self, seasoning_cid):
@@ -260,6 +260,7 @@ class SeeFoodListByFoodNameDraw:
 
     def make_food_for_sure(self):
         """确认是否制作食物"""
+        from Script.Design import basement
 
         line_feed.draw()
 
@@ -267,13 +268,23 @@ class SeeFoodListByFoodNameDraw:
         food_name = self.food_name
         food_diffucty = food_recipe.difficulty
         make_food_time = self.make_food_time
+        facility_adjust = basement.calc_facility_efficiency(5)
+        # 根据设施效率调整制作时间
+        facility_adjust_str = ""
+        if facility_adjust != 1.0:
+            make_food_time = int(make_food_time / facility_adjust)
+            rate = (make_food_time - self.make_food_time) / self.make_food_time
+            if rate > 0:
+                facility_adjust_str = _("（+{0:.1f}%）").format(rate * 100)
+            elif rate < 0:
+                facility_adjust_str = _("（{0:.1f}%）").format(rate * 100)
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
 
         # 输出食物的名字、预计制作耗时、介绍、调味，询问是否确认
         confirm_text = ""
         confirm_text += _("食物名字: {0}\n").format(food_name)
         confirm_text += _("菜谱难度: {0}\n").format(food_diffucty)
-        confirm_text += _("预计耗时: {0} 分钟\n").format(make_food_time)
+        confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
         confirm_text += _("当前调味: {0}\n").format(seasoning_name)
         confirm_text += _("是否确认制作该食物？")
 
@@ -292,10 +303,9 @@ class SeeFoodListByFoodNameDraw:
         # 确认则制作食物
         yrn = flow_handle.askfor_all([confirm_draw.return_text, cancel_draw.return_text])
         if yrn == confirm_draw.return_text:
-            self.make_food()
+            self.make_food(make_food_time)
 
-
-    def make_food(self):
+    def make_food(self, new_make_food_time: int = 0):
         """玩家制作食物"""
         character_data: game_type.Character = cache.character_data[0]
         # 赋予名字、作者和味道
@@ -316,12 +326,12 @@ class SeeFoodListByFoodNameDraw:
         cache.achievement.make_food_count += 1
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
-        character_data.behavior.make_food_time = self.make_food_time
+        character_data.behavior.make_food_time = new_make_food_time
         character_data.behavior.food_seasoning = self.special_seasoning
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
-        character_data.behavior.duration = self.make_food_time
+        character_data.behavior.duration = new_make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
-        update.game_update_flow(self.make_food_time)
+        update.game_update_flow(new_make_food_time)
         # 结算成就
         achievement_panel.achievement_flow(_("烹饪"))
 

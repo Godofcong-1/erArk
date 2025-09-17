@@ -257,10 +257,31 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
     # 供电策略的调整
     now_power_strategy = cache.rhodes_island.power_supply_strategy.get(zone_cid, 0)
     now_power_strategy_adjust = game_config.config_supply_strategy[now_power_strategy].adjust
-    adjust *= now_power_strategy_adjust
-    # 博士办公室
-    if facility_cid == 22:
-        adjust += facility_effect / 100
+    # 设施路径名
+    room_full_str = ""
+    # TODO 厨房，因为没有单独设施id所以用区块id代替
+    if facility_cid == 5:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["生娱", "厨房"])
+    elif facility_cid == 22:
+        room_full_str = map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"])
+    # 设施损坏调整
+    damage_adjust = 0.0
+    if room_full_str in cache.rhodes_island.facility_damage_data:
+        damage_adjust = cache.rhodes_island.facility_damage_data[room_full_str] * 0.01
+    # 有特殊计算公式的区块
+    # 宿舍区
+    if facility_cid == 4:
+        adjust += now_level * 0.02
+        adjust -= (1 - now_power_strategy_adjust) / 4
+    # 其他直接乘以供电策略
+    else:
+        # 厨房、博士办公室
+        if facility_cid in [5, 22]:
+            adjust += facility_effect / 100
+            adjust -= damage_adjust
+        adjust *= now_power_strategy_adjust
+    # 效率不会小于20%
+    adjust = max(adjust, 0.2)
     return adjust
 
 def update_base_resouce_newday():

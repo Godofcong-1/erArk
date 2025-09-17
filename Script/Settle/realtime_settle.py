@@ -9,6 +9,7 @@ from Script.Core import (
     get_text,
 )
 from Script.Design import (
+    basement,
     game_time,
     handle_premise,
     handle_npc_ai_in_h,
@@ -365,6 +366,9 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
             final_adjust *= 0.5
         elif setting == 2:
             final_adjust *= 1.5
+    # 宿舍的影响
+    else:
+        final_adjust *= basement.calc_facility_efficiency(4)
     hp_base = now_char.hit_point_max * 0.0025 + 3
     mp_base = now_char.mana_point_max * 0.005 + 6
     now_char.hit_point = min(now_char.hit_point + int(hp_base * true_add_time * final_adjust), now_char.hit_point_max)
