@@ -2,7 +2,7 @@ from typing import Tuple, Dict
 from types import FunctionType
 from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update
+from Script.Design import cooking, update
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel, ejaculation_panel
@@ -59,13 +59,13 @@ class Make_food_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{food_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(food_type_list)
+                    now_draw.width = int(self.width / len(food_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{food_type}]",
                         food_type,
-                        self.width / len(food_type_list),
+                        int(self.width / len(food_type_list)),
                         cmd_func=self.change_panel,
                         args=(food_type,),
                     )
@@ -88,20 +88,20 @@ class Make_food_Panel:
                 if self.now_panel == _("咖啡") and seasoning_cid <= 10:
                     continue
                 if seasoning_cid == 0:
-                    button_width = self.width/16
+                    button_width = int(self.width / 16)
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  基础:    ")
                     # now_draw.width = 1
                     now_draw.draw()
                 # 精液或下药则换行并加长文本宽度
                 if seasoning_cid == 11:
-                    button_width = self.width/4
+                    button_width = int(self.width / 4)
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  精液:    ")
                     # now_draw.width = 1
                     now_draw.draw()
                 elif seasoning_cid == 102:
-                    button_width = self.width/8
+                    button_width = int(self.width / 8)
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  药物:    ")
                     # now_draw.width = 1
@@ -246,7 +246,7 @@ class SeeFoodListByFoodNameDraw:
             else:
                 button_text = f"[{self.food_name}]"
                 name_draw = draw.CenterButton(
-                    button_text, self.text, self.width, cmd_func=self.make_food_for_sure
+                    button_text, str(self.text), self.width, cmd_func=self.make_food_for_sure
                 )
             self.button_return = name_draw.return_text
             self.draw_text = button_text
@@ -270,13 +270,12 @@ class SeeFoodListByFoodNameDraw:
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
 
         # 输出食物的名字、预计制作耗时、介绍、调味，询问是否确认
-        confirm_text = _(
-            f"食物名字: {food_name}\n"
-            f"菜谱难度: {food_diffucty}\n"
-            f"预计耗时: {make_food_time} 分钟\n"
-            f"当前调味: {seasoning_name}\n"
-            "是否确认制作该食物？"
-        )
+        confirm_text = ""
+        confirm_text += _("食物名字: {0}\n").format(food_name)
+        confirm_text += _("菜谱难度: {0}\n").format(food_diffucty)
+        confirm_text += _("预计耗时: {0} 分钟\n").format(make_food_time)
+        confirm_text += _("当前调味: {0}\n").format(seasoning_name)
+        confirm_text += _("是否确认制作该食物？")
 
         info_draw = draw.NormalDraw()
         info_draw.text = confirm_text
@@ -284,9 +283,9 @@ class SeeFoodListByFoodNameDraw:
         line_feed.draw()
         line_feed.draw()
 
-        confirm_draw = draw.CenterButton(_("[确认]"), _("确认"), window_width / 2)
+        confirm_draw = draw.CenterButton(_("[确认]"), _("确认"), int(window_width / 2))
         confirm_draw.draw()
-        cancel_draw = draw.CenterButton(_("[取消]"), _("取消"), window_width / 2)
+        cancel_draw = draw.CenterButton(_("[取消]"), _("取消"), int(window_width / 2))
         cancel_draw.draw()
         line_feed.draw()
 
