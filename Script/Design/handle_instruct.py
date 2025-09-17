@@ -86,9 +86,9 @@ def instruct_filter_H_change(on_off_flag: bool):
     if on_off_flag:
         cache.instruct_type_filter_cache = cache.instruct_type_filter.copy()
         # 自动开启性爱面板并关闭其他面板
-        cache.instruct_type_filter[6] = 1
+        cache.instruct_type_filter[6] = True
         for i in {1, 2, 3, 4, 5}:
-            cache.instruct_type_filter[i] = 0
+            cache.instruct_type_filter[i] = False
         # print(f"debug 开启H面板，关闭其他面板")
     elif len(cache.instruct_type_filter_cache):
         cache.instruct_type_filter = cache.instruct_type_filter_cache.copy()
@@ -350,7 +350,7 @@ def handle_item():
 def handle_save():
     """处理读写存档指令"""
     from Script.UI.Panel import see_save_info_panel
-    now_panel = see_save_info_panel.SeeSaveListPanel(width, 1)
+    now_panel = see_save_info_panel.SeeSaveListPanel(width, True)
     now_panel.draw()
 
 
@@ -552,7 +552,7 @@ def handle_manage_library():
         constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_PRODUCTION_WORKSHOP,
     })
-def handle_manage_library():
+def handle_manage_assembly_line():
     """处理管理流水线指令"""
     from Script.UI.Panel import manage_assembly_line_panel
     now_draw = manage_assembly_line_panel.Manage_Assembly_Line_Panel(width)
@@ -617,7 +617,7 @@ def handle_physical_check_and_manage():
         constant_promise.Premise.HP_G_1,
         constant_promise.Premise.T_WORK_IS_WARDEN,
     })
-def handle_manage_vehicle():
+def handle_manage_vonfinement_and_training():
     """处理管理监禁调教指令"""
     from Script.UI.Panel import confinement_and_training
     now_draw = confinement_and_training.Confinement_And_Training_Manage_Panel(width)
@@ -634,7 +634,7 @@ def handle_manage_vehicle():
         constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_RESOURCE_EXCHANGE,
     })
-def handle_manage_library():
+def handle_resource_exchange():
     """处理资源交易指令"""
     from Script.UI.Panel import resource_exchange_panel
     now_draw = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
@@ -759,6 +759,7 @@ def handle_hypnosis_all():
      constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.TIRED_LE_84,
      constant_promise.Premise.HP_G_1},
+    constant.Behavior.SHARE_BLANKLY,
     constant.SexInstructSubType.ARTS,
 )
 def handle_change_hypnosis_mode():
@@ -1526,7 +1527,7 @@ def handle_ask_target_rest():
     """处理让对方休息指令"""
     character_data: game_type.Character = cache.character_data[0]
     target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_character_data.sp_flag.rest = 1
+    target_character_data.sp_flag.rest = True
     chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 1)
 
 
@@ -1547,7 +1548,7 @@ def handle_ask_target_sleep():
     """处理让对方睡觉指令"""
     character_data: game_type.Character = cache.character_data[0]
     target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_character_data.sp_flag.tired = 1
+    target_character_data.sp_flag.tired = True
     chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 1)
 
 
@@ -1925,7 +1926,7 @@ def handle_confession():
         target_data.talent[203] = 1
         target_data.talent[205] = 1
         target_data.talent[411] = 1
-        character_data.pl_collection.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = True
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n告白成功，{0}收下了你赠予的[戒指]，[恋慕]转为[恋人]\n").format(target_data.name)
@@ -1968,7 +1969,7 @@ def handle_give_necklace():
         target_data.talent[213] = 1
         target_data.talent[215] = 1
         target_data.talent[411] = 1
-        character_data.pl_collection.token_list[character_data.target_character_id] = 1
+        character_data.pl_collection.token_list[character_data.target_character_id] = True
         now_draw = draw.WaitDraw()
         now_draw.width = width
         now_draw.text = _("\n{0}接受了项圈，戴在了自己的脖子上，[驯服]转为[宠物]\n").format(target_data.name)
@@ -2443,10 +2444,10 @@ def handle_singing():
             now_draw.text = _("\n当前音乐能力小于等于2，可能会让对方感觉不适，确认要继续吗\n\n")
             now_draw.draw()
             return_list = []
-            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), width / 3)
+            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), int(width / 3))
             back_draw.draw()
             return_list.append(back_draw.return_text)
-            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), width / 3,)
+            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), int(width / 3))
             yes_draw.draw()
             return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -2480,10 +2481,10 @@ def handle_play_instrument():
             now_draw.text = _("\n当前音乐能力小于等于2，可能会让对方感觉不适，确认要继续吗\n\n")
             now_draw.draw()
             return_list = []
-            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), width / 3)
+            back_draw = draw.CenterButton(_("[取消]"), _("\n取消"), int(width / 3))
             back_draw.draw()
             return_list.append(back_draw.return_text)
-            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), width / 3,)
+            yes_draw = draw.CenterButton(_("[确定]"), _("\n确定"), int(width / 3))
             yes_draw.draw()
             return_list.append(yes_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -2551,7 +2552,7 @@ def handle_play_water():
         constant_promise.Premise.T_NORMAL_5_6,
         constant_promise.Premise.TIRED_LE_74},
 )
-def handle_play_chess():
+def handle_play_gomoku():
     """处理下五子棋指令"""
     from Script.UI.Panel import play_gomoku_panel
     now_draw = play_gomoku_panel.GomokuPanel(width)
@@ -5403,7 +5404,7 @@ def handle_womb_insertion():
     constant.Behavior.WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
-def handle_womb_insertion():
+def handle_womb_sex():
     """处理子宫姦指令"""
     chara_handle_instruct_common_settle(constant.Behavior.WOMB_SEX, judge = _("性交"))
 
@@ -5649,6 +5650,7 @@ def handle_stimulate_vagina():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO,
      constant_promise.Premise.TECHNIQUE_GE_5},
+    constant.Behavior.SHARE_BLANKLY,
     constant.SexInstructSubType.INSERT,
 )
 def handle_double_penetration():
@@ -5741,6 +5743,7 @@ def handle_ask_pee():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
+    constant.Behavior.SHARE_BLANKLY,
     constant.SexInstructSubType.SM,
 )
 def handle_beat_breast():
@@ -5792,7 +5795,7 @@ def handle_shame_play():
      constant_promise.Premise.IS_H,
      constant_promise.Premise.TO_DO},
 )
-def handle_take_shower():
+def handle_take_shower_h():
     """处理淋浴指令"""
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
