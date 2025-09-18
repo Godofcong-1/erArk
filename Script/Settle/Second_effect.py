@@ -587,6 +587,7 @@ def handle_add_small_s_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[0])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[0] += now_add_lust
     character_data.status_data[0] = min(99999, character_data.status_data[0])
@@ -615,6 +616,7 @@ def handle_add_small_b_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[1])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[1] += now_add_lust
     character_data.status_data[1] = min(99999, character_data.status_data[1])
@@ -643,6 +645,7 @@ def handle_add_small_c_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[2])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[2] += now_add_lust
     character_data.status_data[2] = min(99999, character_data.status_data[2])
@@ -669,6 +672,7 @@ def handle_add_small_p_feel(
     now_add_lust = 100 + character_data.eja_point*0.4
     # adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
     # now_add_lust *= adjust
+    now_add_lust = int(now_add_lust)
     character_data.eja_point += now_add_lust
     change_data.eja_point += now_add_lust
     character_data.action_info.last_eaj_add_time = cache.game_time
@@ -695,6 +699,7 @@ def handle_add_small_v_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[4])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[4] += now_add_lust
     character_data.status_data[4] = min(99999, character_data.status_data[4])
@@ -722,6 +727,7 @@ def handle_add_small_a_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[5])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[5] += now_add_lust
     character_data.status_data[5] = min(99999, character_data.status_data[5])
@@ -749,6 +755,7 @@ def handle_add_small_u_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[6])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[6] += now_add_lust
     character_data.status_data[6] = min(99999, character_data.status_data[6])
@@ -776,6 +783,7 @@ def handle_add_small_w_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[7])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[7] += now_add_lust
     character_data.status_data[7] = min(99999, character_data.status_data[7])
@@ -808,6 +816,7 @@ def handle_add_small_m_feel(
     now_add_lust *= adjust
     # 按当前快感值微调
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
     # 增加快感并限制最大值
     character_data.status_data[21] += now_add_lust
     character_data.status_data[21] = min(99999, character_data.status_data[21])
@@ -836,6 +845,7 @@ def handle_add_middle_m_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[100])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[21] += now_add_lust
     character_data.status_data[21] = min(99999, character_data.status_data[21])
     change_data.status_data.setdefault(21, 0)
@@ -862,6 +872,7 @@ def handle_add_small_f_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
     character_data.status_data[22] += now_add_lust
     character_data.status_data[22] = min(99999, character_data.status_data[22])
     change_data.status_data.setdefault(22, 0)
@@ -888,6 +899,7 @@ def handle_add_middle_f_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[22] += now_add_lust
     character_data.status_data[22] = min(99999, character_data.status_data[22])
     change_data.status_data.setdefault(22, 0)
@@ -914,6 +926,7 @@ def handle_add_small_h_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
     character_data.status_data[23] += now_add_lust
     character_data.status_data[23] = min(99999, character_data.status_data[23])
     change_data.status_data.setdefault(23, 0)
@@ -940,6 +953,7 @@ def handle_add_middle_h_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[23] += now_add_lust
     character_data.status_data[23] = min(99999, character_data.status_data[23])
     change_data.status_data.setdefault(23, 0)
@@ -967,6 +981,7 @@ def handle_add_small_lubrication_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[33])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[8] += now_add_lust
     character_data.status_data[8] = min(99999, character_data.status_data[8])
@@ -995,6 +1010,7 @@ def handle_add_small_learn_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[9] += now_add_lust
     character_data.status_data[9] = min(99999, character_data.status_data[9])
@@ -1023,6 +1039,7 @@ def handle_add_small_respect_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[31])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[10] += now_add_lust
     character_data.status_data[10] = min(99999, character_data.status_data[10])
@@ -1051,6 +1068,7 @@ def handle_add_small_friendly(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[11] += now_add_lust
     character_data.status_data[11] = min(99999, character_data.status_data[11])
@@ -1078,6 +1096,7 @@ def handle_add_small_desire(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[33])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[12] += now_add_lust
     character_data.status_data[12] = min(99999, character_data.status_data[12])
@@ -1106,6 +1125,7 @@ def handle_add_small_happy(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[13] += now_add_lust
     character_data.status_data[13] = min(99999, character_data.status_data[13])
@@ -1134,6 +1154,7 @@ def handle_add_small_lead(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[35])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[14] += now_add_lust
     character_data.status_data[14] = min(99999, character_data.status_data[14])
@@ -1162,6 +1183,7 @@ def handle_add_small_submit(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[15] += now_add_lust
     character_data.status_data[15] = min(99999, character_data.status_data[15])
@@ -1190,6 +1212,7 @@ def handle_add_small_shy(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[34])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[16] += now_add_lust
     character_data.status_data[16] = min(99999, character_data.status_data[16])
@@ -1218,6 +1241,7 @@ def handle_add_small_pain(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[17] += now_add_lust
     character_data.status_data[17] = min(99999, character_data.status_data[17])
@@ -1246,6 +1270,7 @@ def handle_add_small_terror(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
     now_add_lust *= adjust
     now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[18] += now_add_lust
     character_data.status_data[18] = min(99999, character_data.status_data[18])
@@ -1271,6 +1296,7 @@ def handle_add_small_depression(
 
     now_lust = character_data.status_data[19]
     now_add_lust = 20
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[19] += now_add_lust
     character_data.status_data[19] = min(99999, character_data.status_data[19])
@@ -1318,6 +1344,7 @@ def handle_add_middle_n_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[0])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[0] += now_add_lust
     character_data.status_data[0] = min(99999, character_data.status_data[0])
@@ -1346,6 +1373,7 @@ def handle_add_middle_b_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[1])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[1] += now_add_lust
     character_data.status_data[1] = min(99999, character_data.status_data[1])
@@ -1374,6 +1402,7 @@ def handle_add_middle_c_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[2])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[2] += now_add_lust
     character_data.status_data[2] = min(99999, character_data.status_data[2])
@@ -1402,6 +1431,7 @@ def handle_add_middle_p_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[3] += now_add_lust
     character_data.status_data[3] = min(99999, character_data.status_data[3])
@@ -1430,6 +1460,7 @@ def handle_add_middle_v_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[4])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[4] += now_add_lust
     character_data.status_data[4] = min(99999, character_data.status_data[4])
@@ -1457,6 +1488,7 @@ def handle_add_middle_a_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[5])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[5] += now_add_lust
     character_data.status_data[5] = min(99999, character_data.status_data[5])
@@ -1484,6 +1516,7 @@ def handle_add_middle_u_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[6])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[6] += now_add_lust
     character_data.status_data[6] = min(99999, character_data.status_data[6])
@@ -1511,6 +1544,7 @@ def handle_add_middle_w_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[7])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[7] += now_add_lust
     character_data.status_data[7] = min(99999, character_data.status_data[7])
@@ -1539,6 +1573,7 @@ def handle_add_middle_lubrication_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[33])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[8] += now_add_lust
     character_data.status_data[8] = min(99999, character_data.status_data[8])
@@ -1567,6 +1602,7 @@ def handle_add_middle_learn_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[9] += now_add_lust
     character_data.status_data[9] = min(99999, character_data.status_data[9])
@@ -1595,6 +1631,7 @@ def handle_add_middle_respect_plus(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[31])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[10] += now_add_lust
     character_data.status_data[10] = min(99999, character_data.status_data[10])
@@ -1623,6 +1660,7 @@ def handle_add_middle_friendly(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[32])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[11] += now_add_lust
     character_data.status_data[11] = min(99999, character_data.status_data[11])
@@ -1650,6 +1688,7 @@ def handle_add_middle_desire(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[33])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[12] += now_add_lust
     character_data.status_data[12] = min(99999, character_data.status_data[12])
@@ -1678,6 +1717,7 @@ def handle_add_middle_happy(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[13])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[13] += now_add_lust
     character_data.status_data[13] = min(99999, character_data.status_data[13])
@@ -1706,6 +1746,7 @@ def handle_add_middle_lead(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[35])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[14] += now_add_lust
     character_data.status_data[14] = min(99999, character_data.status_data[14])
@@ -1734,6 +1775,7 @@ def handle_add_middle_submit(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[14])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[15] += now_add_lust
     character_data.status_data[15] = min(99999, character_data.status_data[15])
@@ -1762,6 +1804,7 @@ def handle_add_middle_shy(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[34])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[16] += now_add_lust
     character_data.status_data[16] = min(99999, character_data.status_data[16])
@@ -1790,6 +1833,7 @@ def handle_add_middle_pain(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[17] += now_add_lust
     character_data.status_data[17] = min(99999, character_data.status_data[17])
@@ -1818,6 +1862,7 @@ def handle_add_middle_terror(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[18] += now_add_lust
     character_data.status_data[18] = min(99999, character_data.status_data[18])
@@ -1890,6 +1935,7 @@ def handle_add_large_n_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[0])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[0] += now_add_lust
     character_data.status_data[0] = min(99999, character_data.status_data[0])
@@ -1918,6 +1964,7 @@ def handle_add_large_b_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[1])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[1] += now_add_lust
     character_data.status_data[1] = min(99999, character_data.status_data[1])
@@ -1946,6 +1993,7 @@ def handle_add_large_c_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[2])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[2] += now_add_lust
     character_data.status_data[2] = min(99999, character_data.status_data[2])
@@ -1974,6 +2022,7 @@ def handle_add_large_p_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[3] += now_add_lust
     character_data.status_data[3] = min(99999, character_data.status_data[3])
@@ -2002,6 +2051,7 @@ def handle_add_large_v_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[4])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[4] += now_add_lust
     character_data.status_data[4] = min(99999, character_data.status_data[4])
@@ -2029,6 +2079,7 @@ def handle_add_large_a_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[5])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[5] += now_add_lust
     character_data.status_data[5] = min(99999, character_data.status_data[5])
@@ -2056,6 +2107,7 @@ def handle_add_large_u_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[6])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[6] += now_add_lust
     character_data.status_data[6] = min(99999, character_data.status_data[6])
@@ -2083,6 +2135,7 @@ def handle_add_large_w_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[7])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[7] += now_add_lust
     character_data.status_data[7] = min(99999, character_data.status_data[7])
@@ -2110,6 +2163,7 @@ def handle_add_large_m_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[100])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[21] += now_add_lust
     character_data.status_data[21] = min(99999, character_data.status_data[21])
     change_data.status_data.setdefault(21, 0)
@@ -2136,6 +2190,7 @@ def handle_add_large_f_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[101])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[22] += now_add_lust
     character_data.status_data[22] = min(99999, character_data.status_data[22])
     change_data.status_data.setdefault(22, 0)
@@ -2162,6 +2217,7 @@ def handle_add_large_h_feel(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[102])
     now_add_lust *= adjust
     now_add_lust += now_lust / 10
+    now_add_lust = int(now_add_lust)
     character_data.status_data[23] += now_add_lust
     character_data.status_data[23] = min(99999, character_data.status_data[23])
     change_data.status_data.setdefault(23, 0)
@@ -2195,7 +2251,7 @@ def handle_add_large_lubrication_plus(
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LEARN)
-def handle_add_middle_learn_plus(
+def handle_add_large_learn_plus(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
@@ -2350,7 +2406,7 @@ def handle_add_large_lead(
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_SUBMIT)
-def handle_add_middle_submit(
+def handle_add_large_submit(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
@@ -2519,6 +2575,7 @@ def handle_down_small_pain(
 
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -50 - character_data.status_data[17] / 10
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
@@ -2539,6 +2596,7 @@ def handle_down_small_disgust(
 
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -50 - character_data.status_data[20] / 10
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
@@ -2558,6 +2616,7 @@ def handle_down_middle_pain(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -500 - character_data.status_data[17] / 5
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
@@ -2578,6 +2637,7 @@ def handle_down_middle_disgust(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -500 - character_data.status_data[20] / 5
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
@@ -2597,6 +2657,7 @@ def handle_down_large_pain(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -2000 - character_data.status_data[17] / 3
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
@@ -2616,6 +2677,7 @@ def handle_down_large_disgust(
     """
     character_data: game_type.Character = cache.character_data[character_id]
     now_add_lust = -2000 - character_data.status_data[20] / 3
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 20, base_value = 0, ability_level = character_data.ability[18], tenths_add = False, change_data = change_data)
 
@@ -2648,6 +2710,7 @@ def handle_add_large_pain_first_sex(
     adjust = attr_calculation.get_ability_adjust(character_data.ability[9])
     now_add_lust /= adjust * adjust
     # print("V扩张修正", now_add_lust)
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
     # print("破处修正", now_add_lust)
@@ -2678,6 +2741,7 @@ def handle_add_large_pain_first_a_sex(
     # A扩张修正
     adjust = attr_calculation.get_ability_adjust(character_data.ability[10])
     now_add_lust /= adjust * adjust
+    now_add_lust = int(now_add_lust)
 
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
@@ -2826,12 +2890,12 @@ def handle_b_orgasm_to_milk(
         return
 
     # 额外增加乳汁
-    add_milk = character_data.pregnancy.milk_max * 0.2
+    add_milk = int(character_data.pregnancy.milk_max * 0.2)
     character_data.pregnancy.milk += add_milk
     # 喷乳至回到最大值的40%，其余的喷出
     eject_milk = int(character_data.pregnancy.milk - character_data.pregnancy.milk_max * 0.4)
     if eject_milk > 0:
-        character_data.pregnancy.milk = character_data.pregnancy.milk_max * 0.4
+        character_data.pregnancy.milk = int(character_data.pregnancy.milk_max * 0.4)
         character_data.behavior.milk_ml += eject_milk
 
         # 如果已经装上搾乳机了，则收集至搾乳机中
@@ -2869,12 +2933,12 @@ def handle_u_orgasm_to_pee(
         return
 
     # 额外增加尿意
-    add_urine = 240 * 0.2
+    add_urine = int(240 * 0.2)
     character_data.urinate_point += add_urine
     # 喷至回到最大值的40%，其余的喷出
     eject_urine = int(character_data.urinate_point - 240 * 0.4)
     if eject_urine > 0:
-        character_data.urinate_point = 240 * 0.4
+        character_data.urinate_point = int(240 * 0.4)
 
         # 如果已经装上采尿器了，则收集至采尿器中
         if character_data.h_state.body_item[5][1]:
@@ -2919,9 +2983,11 @@ def handle_extra_orgasm(
         # 痛苦刻印修正
         adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
         extra_pain *= adjust
+        extra_pain = int(extra_pain)
         # 恐怖刻印修正
         adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[17])
         extra_terror *= adjust
+        extra_terror = int(extra_terror)
         # 结算苦痛和恐怖
         character_data.status_data[17] += extra_pain
         character_data.status_data[17] = min(99999, character_data.status_data[17])
@@ -2971,7 +3037,7 @@ def handle_plural_orgasm(
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.BONDAGE_EFFECT)
-def handle_plural_orgasm(
+def handle_bondage_effect(
     character_id: int,
     change_data: game_type.CharacterStatusChange,
 ):
@@ -3069,6 +3135,94 @@ def handle_exposed_orgasm_super_in_hidden_sex(
         return
     from Script.UI.Panel import hidden_sex_panel
     hidden_sex_panel.handle_hidden_sex_flow(character_id = 0, add_flag = True, now_duration = 10, now_intensity = 5)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_SMALL_ORGASM_CHARGE)
+def handle_store_small_orgasm_charge(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因小绝顶而获得的电量
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在人力发电室中则返回
+    if handle_premise.handle_not_in_human_power_room(character_id):
+        return
+    from Script.UI.Panel.manage_power_system_panel import store_power_by_human_power
+    draw_flag = False
+    # 如果和玩家在同一位置，则进行显示
+    if handle_premise.handle_in_player_scene(character_id):
+        draw_flag = True
+    store_power_by_human_power(1, draw_flag)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_NORMAL_ORGASM_CHARGE)
+def handle_store_normal_orgasm_charge(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因普绝顶而获得的电量
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在人力发电室中则返回
+    if handle_premise.handle_not_in_human_power_room(character_id):
+        return
+    from Script.UI.Panel.manage_power_system_panel import store_power_by_human_power
+    draw_flag = False
+    # 如果和玩家在同一位置，则进行显示
+    if handle_premise.handle_in_player_scene(character_id):
+        draw_flag = True
+    store_power_by_human_power(2, draw_flag)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_STRONG_ORGASM_CHARGE)
+def handle_store_strong_orgasm_charge(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因强绝顶而获得的电量
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在人力发电室中则返回
+    if handle_premise.handle_not_in_human_power_room(character_id):
+        return
+    from Script.UI.Panel.manage_power_system_panel import store_power_by_human_power
+    draw_flag = False
+    # 如果和玩家在同一位置，则进行显示
+    if handle_premise.handle_in_player_scene(character_id):
+        draw_flag = True
+    store_power_by_human_power(3, draw_flag)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_SUPER_ORGASM_CHARGE)
+def handle_store_super_orgasm_charge(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    结算因超强绝顶而获得的电量
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    # 不在人力发电室中则返回
+    if handle_premise.handle_not_in_human_power_room(character_id):
+        return
+    from Script.UI.Panel.manage_power_system_panel import store_power_by_human_power
+    draw_flag = False
+    # 如果和玩家在同一位置，则进行显示
+    if handle_premise.handle_in_player_scene(character_id):
+        draw_flag = True
+    store_power_by_human_power(4, draw_flag)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)

@@ -1016,6 +1016,7 @@ def orgasm_settle(
     """
     # 导入常用结算函数，避免循环导入
     from Script.Settle.common_default import base_chara_experience_common_settle
+    from Script.UI.Panel.manage_power_system_panel import store_power_by_human_power
 
     character_data = cache.character_data[character_id]
     # print(f"进入{character_data.name}的高潮结算")

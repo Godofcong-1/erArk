@@ -662,7 +662,7 @@ def get_juel(value: int) -> int:
     return juel
 
 
-def get_pain_adjust(value: int, level_flag = False) -> int:
+def get_pain_adjust(value: int, level_flag = False) -> float:
     """
     按润滑程度修正苦痛值比例
     Keyword arguments:

@@ -33,7 +33,6 @@ UI 说明：
   若上层仍未加载本面板新增字段，会在运行期自动初始化。
 
 可扩展点：
-  - 区块断电影响实际行为
   - 不足供电时随机事件
   - 蓄电优先级调度策略
   - 天气对风/太阳能修正
@@ -118,7 +117,6 @@ def _recalc_battery_capacity():
         ri.power_storage = ri.power_storage_max
 
 
-# ------------- 蓄电池自放电计算（模块级，复用） ------------- #
 def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[float, float]:
     """
     计算并应用蓄电池的自放电（按日）。
@@ -194,6 +192,35 @@ def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[
 
     ri_obj.power_storage = max(0.0, remaining_storage)
     return round(discharge_total, 2), round(avg_rate, 4)
+
+def store_power_by_human_power(climax_degree: int, draw_flag: bool = True) -> float:
+    """根据人力发电的绝顶程度而存储电能
+    参数:
+        climax_degree: 绝顶程度，1=小，2=普，3=强，4=超
+        draw_flag: 是否即时绘制信息
+    返回:
+        实际存入的电量
+    """
+    _init_power_runtime_fields()
+    # 无绝顶则不发电
+    if climax_degree <= 0:
+        return 0.0
+    # 读取人力发电效率表
+    cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(climax_degree, 0)
+    if cid and cid in game_config.config_power_generation:
+        per_degree = game_config.config_power_generation[cid].value
+    else:
+        return 0.0
+    # 计算发电量
+    cache.rhodes_island.power_storage += per_degree
+    _recalc_battery_capacity()
+    # 绘制信息
+    if draw_flag:
+        draw_text = draw.WaitDraw()
+        draw_text.width = window_width
+        draw_text.text = _("\n在人力发电下，存入了 {0:.1f} 度电\n").format(per_degree)
+        draw_text.draw()
+    return round(per_degree, 2)
 
 # ---------------------------- 理论计算 ---------------------------- #
 # 字典类型，返回详细信息
@@ -498,7 +525,7 @@ class Manage_Power_System_Panel:
             overview.append(_("--概览--"))
             overview.append(_("  当前理论用电量: {0} / 理论供电量:{1}" ).format(get_theoretical_power_consumption(), get_theoretical_power_generation()))
             _recalc_battery_capacity()
-            overview.append(_("  储能: {0}/{1}" ).format(ri.power_storage, ri.power_storage_max))
+            overview.append(_("  储能: {0:.1f}/{1:.1f}" ).format(ri.power_storage, ri.power_storage_max))
             overview.append(_("  调控员人数: {0}" ).format(len(ri.power_operator_ids_list)))
             # 显示分项发电潜力
             main_level = ri.orundum_reactor_list[0]
@@ -881,7 +908,7 @@ class Manage_Power_System_Panel:
                 descs_now = attr_calculation.pad_display_width(descs[idx], 60)
                 row.text = _(" {0} | {1}组 | {2}/组日 | {3} | ").format(names[idx], num, base_val_str, descs_now)
                 if idx == 3:
-                    row.text = _(" {0} | {1}人 |  按次计算 | {2} | ").format(names[idx], num, descs_now)
+                    row.text = _(" {0} | 人力 |  按次计算 | {1} | ").format(names[idx], descs_now)
                 row.draw()
                 # 如果设施不可用则不显示增减按钮
                 if cant_flag:
@@ -891,9 +918,6 @@ class Manage_Power_System_Panel:
                     continue
                 # 人力发电不允许调整
                 if idx == 3:
-                    cant_draw = draw.NormalDraw(); cant_draw.width = self.width
-                    cant_draw.text = _("（未实装）\n")
-                    cant_draw.draw()
                     continue
                 # 增减按钮
                 def _make_add(i):
@@ -949,7 +973,7 @@ class Manage_Power_System_Panel:
             summary.text = _("\n  当前理论用电量: {0} / 理论供电量:{1}\n").format(
                 get_theoretical_power_consumption(), get_theoretical_power_generation()
             )
-            summary.text += _("  当前储能: {0}/{1}\n").format(ri.power_storage, ri.power_storage_max)
+            summary.text += _("  当前储能: {0:.1f}/{1:.1f}\n").format(ri.power_storage, ri.power_storage_max)
             summary.text += _("  蓄电池通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
                 total_batt, ri.materials_resouce[52] + fac_lv, fac_lv
             )

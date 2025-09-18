@@ -1,3 +1,6 @@
+from psutil import POWER_TIME_UNKNOWN
+
+
 class BehaviorEffect:
     """行为结算效果函数"""
 
@@ -1137,6 +1140,14 @@ class SecondEffect:
     """ 结算因隐奸中的强绝顶而导致的暴露 """
     EXPOSED_ORGASM_SUPER_IN_HIDDEN_SEX = 414
     """ 结算因隐奸中的超强绝顶而导致的暴露 """
+    STORE_SMALL_ORGASM_CHARGE = 415
+    """ 结算因小绝顶而获得的电量 """
+    STORE_NORMAL_ORGASM_CHARGE = 416
+    """ 结算因普绝顶而获得的电量 """
+    STORE_STRONG_ORGASM_CHARGE = 417
+    """ 结算因强绝顶而获得的电量 """
+    STORE_SUPER_ORGASM_CHARGE = 418
+    """ 结算因超强绝顶而获得的电量 """
 
     PENIS_IN_T_RESET = 501
     """ 改变当前阴茎位置为交互对象_双方归零 """
