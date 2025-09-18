@@ -540,6 +540,7 @@ class Field_Commission_Panel:
 
         title_text = _("外勤委托")
         commission_type_list = [_("常规外勤"), _("特殊外勤")]
+        commission_type_list_len = int(self.width / len(commission_type_list))
         self.handle_panel = panel.PageHandlePanel([], CommissionDraw, 20, 1, self.width)
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
@@ -553,13 +554,13 @@ class Field_Commission_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{commission_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(commission_type_list)
+                    now_draw.width = commission_type_list_len
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{commission_type}]",
                         f"\n{commission_type}",
-                        self.width / len(commission_type_list),
+                        commission_type_list_len,
                         cmd_func=self.change_panel,
                         args=(commission_type,),
                     )
@@ -584,11 +585,12 @@ class Field_Commission_Panel:
             line.draw()
 
             # 绘制提示信息
-            info_text_list = ["委托等级", "委托类型", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
+            info_text_list = [_("委托等级"), _("委托类型"), _("委托名称"), _("派遣人数与耗时天数"), _("需求类型"), _("奖励类型")]
+            info_draw_len = int(self.width / len(info_text_list))
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
-                info_draw.text = info_text
-                info_draw.width = self.width / len(info_text_list)
+                info_draw.text = attr_calculation.pad_display_width(info_text, info_draw_len, "center")
+                info_draw.width = info_draw_len
                 info_draw.draw()
             line_feed.draw()
             line = draw.LineDraw("~", self.width)
@@ -693,26 +695,26 @@ class CommissionDraw:
         """ 派遣载具字典 """
 
         info_text_list = ["委托等级", "委托类型", "委托名称", "派遣人数与耗时天数", "需求类型", "奖励类型"]
+        # 修正文本宽度
+        text_width = int((self.width - 1) / (len(info_text_list)))
 
         commission_data = game_config.config_commission[self.commission_id]
         # 委托信息
         commission_name = commission_data.name
-        commission_level = str(commission_data.level)
-        commission_type = commission_data.type
-        commission_people = str(commission_data.people) + _("人")
-        commission_time = str(commission_data.time) + _("天")
-        commission_people_and_time = f"{commission_people}  {commission_time}"
-        demand_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list)
-        commission_demand = demand_return_list[1]
-        reward_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list, True)
-        commision_reward = reward_return_list[1]
-        # 修正文本宽度
-        text_width = int((self.width - 1) / (len(info_text_list)))
-        str_text_width = int(text_width / 2)
         if self.commission_id in cache.rhodes_island.ongoing_field_commissions:
             commission_name += _("（进行中）")
+        commission_name = attr_calculation.pad_display_width(commission_name, text_width, "center")
+        commission_level = attr_calculation.pad_display_width(str(commission_data.level), text_width, "center")
+        commission_type = attr_calculation.pad_display_width(commission_data.type, text_width, "center")
+        commission_people = str(commission_data.people) + _("人")
+        commission_time = str(commission_data.time) + _("天")
+        commission_people_and_time = attr_calculation.pad_display_width(f"{commission_people}  {commission_time}", text_width, "center")
+        demand_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list)
+        reward_return_list = get_commission_demand_and_reward(self.commission_id, self.send_npc_list, True)
+        commission_demand = attr_calculation.pad_display_width(demand_return_list[1], text_width, "center")
+        commision_reward = attr_calculation.pad_display_width(reward_return_list[1], text_width, "center")
         # 最终文本
-        commision_text = f"{commission_level.center(text_width,' ')}{commission_type.center(str_text_width,'　')}{commission_name.center(str_text_width,'　')}{commission_people_and_time.center(text_width,' ')}{commission_demand.center(str_text_width,'　')}{commision_reward.center(str_text_width,'　')}"
+        commision_text = f"{commission_level}{commission_type}{commission_name}{commission_people_and_time}{commission_demand}{commision_reward}"
         # print(f"commision_text: {commision_text}")
 
         # 可以进行的，绘制为按钮
@@ -836,7 +838,7 @@ class CommissionDraw:
             adjust_NPC_button_draw = draw.CenterButton(
                 _("【调整派遣人员】"),
                 _("\n【调整派遣人员】"),
-                self.width / 3,
+                int(self.width / 3),
                 cmd_func=self.adjust_send_npc,
                 args=(commision_id,),
             )
@@ -847,7 +849,7 @@ class CommissionDraw:
             adjust_vehicle_button_draw = draw.CenterButton(
                 _("【调整使用载具】"),
                 _("\n【调整使用载具】"),
-                self.width / 3,
+                int(self.width / 3),
                 cmd_func=self.adjust_send_vehicle,
                 args=(commision_capacity_int,),
             )
@@ -860,7 +862,7 @@ class CommissionDraw:
             yes_draw = draw.CenterButton(
                 _("[执行委托]"),
                 ("\n执行委托"),
-                self.width / 2,
+                int(self.width / 2),
                 cmd_func=self.send_commision,
                 args=(commision_id,),
             )
@@ -868,7 +870,7 @@ class CommissionDraw:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
 
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -1123,7 +1125,7 @@ class CommissionDraw:
                 button_draw = draw.CenterButton(
                     _("[增加一辆]"),
                     f"\n{vehicle_cid}+1",
-                    self.width / 6,
+                    int(self.width / 6),
                     cmd_func=self.add_this_vehicle,
                     args=vehicle_cid,
                 )
@@ -1134,7 +1136,7 @@ class CommissionDraw:
                 button_draw = draw.CenterButton(
                     _("[减少一辆]"),
                     f"\n{vehicle_cid}-1",
-                    self.width / 6,
+                    int(self.width / 6),
                     cmd_func=self.reduce_this_vehicle,
                     args=vehicle_cid,
                 )
