@@ -117,7 +117,7 @@ class Aromatherapy_Panel:
 
             line_feed.draw()
             line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
             # 判断是否可以进行调香，需要已选择配方，有剩余调香次数，对方今日未调香
             yes_show_flag = False
             if (
@@ -129,7 +129,7 @@ class Aromatherapy_Panel:
             if yes_show_flag:
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)

@@ -239,7 +239,8 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
     说明:
         根据设施编号计算对应区块的工作效率，若设施编号为-1则计算全局效率
     """
-    adjust = 1.0
+    # 基地整体效率
+    adjust = cache.rhodes_island.effectiveness / 100
     # 参数校验
     if facility_cid == -1 or facility_cid not in game_config.config_facility:
         return adjust
@@ -258,24 +259,46 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
     now_power_strategy = cache.rhodes_island.power_supply_strategy.get(zone_cid, 0)
     now_power_strategy_adjust = game_config.config_supply_strategy[now_power_strategy].adjust
     # 设施路径名
-    room_full_str = ""
+    room_full_str_list = []
     # TODO 厨房，因为没有单独设施id所以用区块id代替
     if facility_cid == 5:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["生娱", "厨房"])
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["生娱", "厨房"]))
     elif facility_cid == 6:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["医疗", "门诊室"])
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["医疗", "急诊室"]))
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["医疗", "门诊室"]))
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["医疗", "手术室"]))
     elif facility_cid == 7:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["文职", "办公室"])
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["文职", "办公室"]))
     elif facility_cid == 9:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["训练", "健身区"])
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["训练", "健身区"]))
+    elif facility_cid == 12:
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["制造加工", "生产车间1"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["制造加工", "生产车间2"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["制造加工", "生产车间3"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["制造加工", "生产车间4"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["制造加工", "生产车间5"]))
     elif facility_cid == 13:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["访客", "外交办公室"])
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["访客", "外交办公室"]))
+    elif facility_cid == 16:
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["疗养庭院", "药田"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["疗养庭院", "温室"]))
+    elif facility_cid == 19:
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "办公室"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢1"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢2"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢3"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢4"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢5"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢6"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢7"]))
+       room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢8"]))
     elif facility_cid == 22:
-        room_full_str = map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"])
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"]))
     # 设施损坏调整
-    if room_full_str in cache.rhodes_island.facility_damage_data:
-        damage_adjust = cache.rhodes_island.facility_damage_data[room_full_str] * 0.02
-        adjust -= damage_adjust
+    for room_full_str in room_full_str_list:
+        if room_full_str in cache.rhodes_island.facility_damage_data:
+            damage_adjust = cache.rhodes_island.facility_damage_data[room_full_str] * 0.02
+            adjust -= damage_adjust
     # 有特殊计算公式的区块
     # 宿舍区
     if facility_cid == 4:
@@ -588,15 +611,8 @@ def settle_income():
 
     # 计算医疗部收入
     today_cure_income = int(cache.rhodes_island.cure_income)
-    # 计算设施损坏
-    damage_down = 0
-    for facility_str in cache.rhodes_island.facility_damage_data:
-        if '医疗' in facility_str:
-            damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
-    # 计算总调整值
-    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
     # 计算总收入
-    today_all_income = int(today_cure_income * adjust)
+    today_all_income = today_cure_income
     # 转化为龙门币
     cache.rhodes_island.materials_resouce[1] += today_all_income
 
@@ -608,8 +624,6 @@ def settle_income():
 
     # 输出提示信息
     now_draw_text = "\n"
-    if damage_down:
-        now_draw_text += _("医疗部设施损坏，效率降低{0}%\n").format(damage_down)
     now_draw_text += _("今日罗德岛总收入为： 医疗部收入{0}，乘以效率后最终收入为{1}，已全部转化为龙门币\n").format(today_cure_income, today_all_income)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width

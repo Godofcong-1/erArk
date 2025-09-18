@@ -37,7 +37,7 @@ def settle_agriculture_line(draw_flag = True):
         if '疗养庭院' in facility_str:
             damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
     # 计算总调整值
-    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
+    adjust = basement.calc_facility_efficiency(16)
 
     # 遍历药田
     for agriculture_line_id in cache.rhodes_island.herb_garden_line:

@@ -39,7 +39,7 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
         if '制造加工' in facility_str:
             damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
     # 计算总调整值
-    adjust = (cache.rhodes_island.effectiveness - damage_down) / 100
+    adjust = basement.calc_facility_efficiency(12)
 
     # 遍历流水线
     for assembly_line_id in cache.rhodes_island.assembly_line:
@@ -164,24 +164,6 @@ class Manage_Assembly_Line_Panel:
                 formula_data = game_config.config_productformula[formula_id]
                 product_id = formula_data.product_id
                 product_data = game_config.config_resouce[product_id]
-
-                # 显示结算
-                # 改成自动结算了
-                # if formula_id != 0 and cache.base_resouce.assembly_line[assembly_line_id][4] != cache.game_time.hour:
-                #     line_feed.draw()
-                #     button_text = " [生产结算] "
-                #     button_draw = draw.CenterButton(
-                #         _(button_text),
-                #         _("{0}_{1}").format(button_text, assembly_line_id),
-                #         len(button_text) * 2,
-                #         cmd_func=basement.settle_assembly_line,
-                #         )
-                #     return_list.append(button_draw.return_text)
-                #     button_draw.draw()
-                # else:
-                #     now_text = f"\n    已结算"
-                #     all_info_draw.text = now_text
-                #     all_info_draw.draw()
 
                 # 生产产品
                 now_text = _("\n    当前生产：{0}(1/h)      ").format(product_data.name)

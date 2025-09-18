@@ -205,7 +205,7 @@ class Manage_Library_Panel:
     def read_recommend(self):
         """阅读推荐"""
 
-        self.handle_panel = panel.PageHandlePanel([], SelectRecommendBookButton, 999, 6, self.width, 1, 1, 0)
+        self.handle_panel = panel.PageHandlePanel([], SelectRecommendBookButton, 999, 6, self.width, True, True, 0)
 
         while 1:
 
@@ -339,7 +339,7 @@ class Manage_Library_Panel:
             # 保存原始角色列表
             original_character_list = character_list.copy()
             # 创建分页面板来显示角色列表
-            self.character_handle_panel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 10, 5, window_width, 1, 0, 0)
+            self.character_handle_panel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 10, 5, window_width, True, False, 0)
             select_state = {}
             
             while 1:

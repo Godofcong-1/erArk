@@ -1,8 +1,8 @@
 from typing import List, Tuple
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, map_handle
-from Script.UI.Moudle import draw, panel
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Design import basement, handle_premise, attr_calculation, map_handle
+from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 import random
 
@@ -62,6 +62,8 @@ def calculate_escape_probability(character_id: int) -> float:
     # 陷落降低系数
     now_fall = attr_calculation.get_character_fall_level(character_id)
     coefficient -= now_fall * 0.2
+    # 设施效率影响
+    coefficient /= basement.calc_facility_efficiency(19)
     # 乘以系数后的逃脱概率
     add_escape_probability = total_skill * coefficient
 
