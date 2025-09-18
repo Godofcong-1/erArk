@@ -218,7 +218,7 @@ def store_power_by_human_power(climax_degree: int, draw_flag: bool = True) -> fl
     if draw_flag:
         draw_text = draw.WaitDraw()
         draw_text.width = window_width
-        draw_text.text = _("\n在人力发电下，存入了 {0:.1f} 度电\n").format(per_degree)
+        draw_text.text = _("\n在人力发电下，存入了 {0:.1f} 单位电\n").format(per_degree)
         draw_text.draw()
     return round(per_degree, 2)
 
@@ -433,12 +433,12 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     fire_power = round(fire_power, 2)
 
     if fuel_use + 1e-6 < fuel_plan:
-        text += _(" - 火力发电：燃料不足（计划 {0:.1f}，实际 {1:.1f}），按比例产出 {2:.1f} 度\n").format(
+        text += _(" - 火力发电：燃料不足（计划 {0:.1f}，实际 {1:.1f}），按比例产出 {2:.1f} 单位电量\n").format(
             fuel_plan, fuel_use, fire_power
         )
     else:
         pass
-        text += _(" - 火力发电：消耗燃料 {0:.1f} 单位，产出 {1:.1f} 度\n").format(fuel_use, fire_power)
+        text += _(" - 火力发电：消耗燃料 {0:.1f} 单位，产出 {1:.1f} 单位电量\n").format(fuel_use, fire_power)
 
     # ------------ 清洁能源（按日理论值乘以随机数）------------ #
     # 水力、风力、太阳能发电量
@@ -446,14 +446,14 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     wind_full = get_theoretical_clean_generation(1) * random.uniform(0.8, 1.2)
     solar_full = get_theoretical_clean_generation(2) * random.uniform(0.8, 1.2)
     clean_power = round(hydro_full + wind_full + solar_full, 2)
-    text += _(" - 清洁能源：水{0} 风{1} 太阳能{2} 台，总产出 {3:.1f} 度\n").format(
+    text += _(" - 清洁能源：水{0} 风{1} 太阳能{2} 台，总产出 {3:.1f} 单位电量\n").format(
         ri.other_power_facility_list[0], ri.other_power_facility_list[1], ri.other_power_facility_list[2], clean_power
     )
 
     # ------------ 总发电 & 总耗电（按日）------------ #
     total_generated = round(fire_power + clean_power, 2)
     total_consumption = round(get_theoretical_power_consumption(), 2)
-    text += _(" - 汇总：总发电 {0:.1f} 度，总耗电 {1:.1f} 度\n").format(total_generated, total_consumption)
+    text += _(" - 汇总：总发电 {0:.1f} 单位电量，总耗电 {1:.1f} 单位电量\n").format(total_generated, total_consumption)
 
     # 先计算电池最大容量
     _recalc_battery_capacity()
@@ -464,12 +464,12 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
         use_from_batt = min(gap, ri.power_storage)
         ri.power_storage -= use_from_batt
         remain_gap = gap - use_from_batt
-        text += _(" - 亏电：缺口 {0:.1f} 度，已从蓄电池补充 {1:.1f} 度，剩余储能 {2:.1f}/{3}\n").format(
+        text += _(" - 亏电：缺口 {0:.1f} 单位电量，已从蓄电池补充 {1:.1f} 单位电量，剩余储能 {2:.1f}/{3}\n").format(
             gap, use_from_batt, ri.power_storage, ri.power_storage_max
         )
         if remain_gap > 1e-6:
             shortage_ratio = remain_gap / total_consumption if total_consumption > 0 else 0
-            text += _(" - 警告：仍缺 {0:.1f} 度，占需求 {1:.1%}\n").format(
+            text += _(" - 警告：仍缺 {0:.1f} 单位电量，占需求 {1:.1%}\n").format(
                 remain_gap, shortage_ratio
             )
         else:
@@ -479,7 +479,7 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     else:
         # 自放电（按日）——使用模块化函数计算并应用
         discharge_amount, avg_rate = _calculate_battery_self_discharge(ri)
-        text += _(" - 自放电：损失 {0:.1f} 度 (rate {1:.2%})，储能剩余 {2:.1f}\n").format(
+        text += _(" - 自放电：损失 {0:.1f} 单位电量 (rate {1:.2%})，储能剩余 {2:.1f}\n").format(
             discharge_amount, avg_rate, ri.power_storage
         )
 
@@ -489,7 +489,7 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
         charge = min(surplus, free_capacity)
         ri.power_storage += charge
         overflow = surplus - charge
-        text += _(" - 结余：过剩 {0:.1f} 度，充入 {1:.1f} 度，当前储能 {2:.1f}/{3}，溢出 {4:.1f} 度\n").format(
+        text += _(" - 结余：过剩 {0:.1f} 单位电量，充入 {1:.1f} 单位电量，当前储能 {2:.1f}/{3}，溢出 {4:.1f} 单位电量\n").format(
             surplus, charge, ri.power_storage, ri.power_storage_max, overflow
         )
 
@@ -832,12 +832,9 @@ class Manage_Power_System_Panel:
             main_lv = ri.orundum_reactor_list[0]
             main_lv = str(main_lv).rjust(2, ' ')
             # 读取当前等级单位燃料效率
-            try:
-                cid_eff = game_config.config_power_generation_level_index[_("主反应炉")][int(main_lv)]
-                eff_value = float(game_config.config_power_generation[cid_eff].value)
-            except Exception:
-                eff_value = 5 + 2 * max(int(main_lv) - 1, 0)
-            eff_value_str = str(round(eff_value,1)).rjust(4)
+            cid_eff = game_config.config_power_generation_level_index[_("主反应炉")][int(main_lv)]
+            eff_value = int(game_config.config_power_generation[cid_eff].value)
+            eff_value_str = str(eff_value).rjust(4)
             main_info = attr_calculation.pad_display_width(_("主炉等级等于动力区等级，决定单位燃料的发电效率"), 60)
             row = draw.NormalDraw(); row.width = self.width
             row.text = _(" 主源石反应炉 | {0}级 | {1}/燃料 | {2} | ").format(main_lv, eff_value_str, main_info)
@@ -851,14 +848,12 @@ class Manage_Power_System_Panel:
             aux = ri.orundum_reactor_list[1]
             aux = str(aux).rjust(2, ' ')
             # 副反应炉燃料增量(统一使用等级1配置数值作为单台每日燃料)
-            try:
-                cid_aux = game_config.config_power_generation_level_index[_("副反应炉")][1]
-                aux_fuel = float(game_config.config_power_generation[cid_aux].value)
-            except Exception:
-                aux_fuel = 10.0
+            cid_aux = game_config.config_power_generation_level_index[_("副反应炉")][1]
+            aux_fuel = int(game_config.config_power_generation[cid_aux].value)
+            aux_fuel_str = str(aux_fuel).rjust(4)
             aux_info = attr_calculation.pad_display_width(_("副炉数量影响每日燃料的燃烧数量，启用台数越多燃料消耗越多"), 60)
             row = draw.NormalDraw(); row.width = self.width
-            row.text = _(" 副源石反应炉 | {0}台 | {1:.1f}/台日 | {2} | ").format(aux, aux_fuel, aux_info)
+            row.text = _(" 副源石反应炉 | {0}台 | {1}/台日 | {2} | ").format(aux, aux_fuel_str, aux_info)
             row.draw()
             # 如果等级小于2则不允许调整，固定为3台
             if fac_lv < 2:
