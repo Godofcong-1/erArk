@@ -95,6 +95,7 @@ class CVPMenu(QDialog):
         """点击确定按钮"""
         # 获得当前abcd的值
         cvp_a = self.cvp_a.currentText()
+        cvp_a_value = "A1"
         if cvp_a == "自己":
             cvp_a_value = "A1"
         elif cvp_a == "交互对象":

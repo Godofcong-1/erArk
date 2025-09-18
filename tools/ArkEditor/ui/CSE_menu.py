@@ -135,6 +135,7 @@ class CSEMenu(QDialog):
         """点击确定按钮"""
         # 获得当前abcd的值
         cse_a = self.cse_a.currentText()
+        cse_a_value = "A1"
         if cse_a == "自己":
             cse_a_value = "A1"
         elif cse_a == "交互对象":
