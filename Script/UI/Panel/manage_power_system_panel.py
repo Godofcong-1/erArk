@@ -193,10 +193,11 @@ def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[
     ri_obj.power_storage = max(0.0, remaining_storage)
     return round(discharge_total, 2), round(avg_rate, 4)
 
-def store_power_by_human_power(climax_degree: int, draw_flag: bool = True) -> float:
+def store_power_by_human_power(climax_degree: int, character_id: int, draw_flag: bool = True) -> float:
     """根据人力发电的绝顶程度而存储电能
     参数:
-        climax_degree: 绝顶程度，1=小，2=普，3=强，4=超
+        climax_degree: 绝顶程度，1=小，2=普，3=强，4=超，>=5=多重绝顶
+        character_id: 进行人力发电的角色ID
         draw_flag: 是否即时绘制信息
     返回:
         实际存入的电量
@@ -206,11 +207,24 @@ def store_power_by_human_power(climax_degree: int, draw_flag: bool = True) -> fl
     if climax_degree <= 0:
         return 0.0
     # 读取人力发电效率表
-    cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(climax_degree, 0)
-    if cid and cid in game_config.config_power_generation:
-        per_degree = game_config.config_power_generation[cid].value
+    if climax_degree >= 5:
+        cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(4, 0)
+        base_per_degree = game_config.config_power_generation[cid].value
+        # 每超过1，则乘以2倍
+        per_degree = base_per_degree * (2 ** (climax_degree - 4))
     else:
-        return 0.0
+        cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(climax_degree, 0)
+        if cid and cid in game_config.config_power_generation:
+            per_degree = game_config.config_power_generation[cid].value
+        else:
+            return 0.0
+    # 玩家则额外乘以10倍
+    if character_id == 0:
+        per_degree *= 10
+    # 角色名
+    chara_name = cache.character_data[character_id].name
+    # 角色的欲情减半
+    cache.character_data[character_id].status_data[12] = int(cache.character_data[character_id].status_data[12] / 2)
     # 计算发电量
     cache.rhodes_island.power_storage += per_degree
     _recalc_battery_capacity()
@@ -218,7 +232,14 @@ def store_power_by_human_power(climax_degree: int, draw_flag: bool = True) -> fl
     if draw_flag:
         draw_text = draw.WaitDraw()
         draw_text.width = window_width
-        draw_text.text = _("\n在人力发电下，存入了 {0:.1f} 单位电\n").format(per_degree)
+        if climax_degree <= 4:
+            if character_id == 0:
+                draw_text.text = _("\n在{0}射精的同时，").format(chara_name)
+            else:
+                draw_text.text = _("\n在{0}绝顶的同时，").format(chara_name)
+        else:
+            draw_text.text = _("\n在{0}{1}重绝顶的同时，").format(chara_name, climax_degree - 3)
+        draw_text.text += _("性爱发电装置产生了 {0:.1f} 单位电量\n").format(per_degree)
         draw_text.draw()
     return round(per_degree, 2)
 

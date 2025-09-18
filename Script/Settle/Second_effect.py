@@ -3156,7 +3156,7 @@ def handle_store_small_orgasm_charge(
     # 如果和玩家在同一位置，则进行显示
     if handle_premise.handle_in_player_scene(character_id):
         draw_flag = True
-    store_power_by_human_power(1, draw_flag)
+    store_power_by_human_power(1, character_id, draw_flag)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_NORMAL_ORGASM_CHARGE)
@@ -3178,7 +3178,7 @@ def handle_store_normal_orgasm_charge(
     # 如果和玩家在同一位置，则进行显示
     if handle_premise.handle_in_player_scene(character_id):
         draw_flag = True
-    store_power_by_human_power(2, draw_flag)
+    store_power_by_human_power(2, character_id, draw_flag)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_STRONG_ORGASM_CHARGE)
@@ -3200,7 +3200,7 @@ def handle_store_strong_orgasm_charge(
     # 如果和玩家在同一位置，则进行显示
     if handle_premise.handle_in_player_scene(character_id):
         draw_flag = True
-    store_power_by_human_power(3, draw_flag)
+    store_power_by_human_power(3, character_id, draw_flag)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.STORE_SUPER_ORGASM_CHARGE)
@@ -3222,7 +3222,7 @@ def handle_store_super_orgasm_charge(
     # 如果和玩家在同一位置，则进行显示
     if handle_premise.handle_in_player_scene(character_id):
         draw_flag = True
-    store_power_by_human_power(4, draw_flag)
+    store_power_by_human_power(4, character_id, draw_flag)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.PENIS_IN_T_RESET)

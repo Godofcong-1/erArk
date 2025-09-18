@@ -1154,7 +1154,13 @@ def orgasm_settle(
             achievement_panel.achievement_flow(_("绝顶"), 1222)
         if part_count >= 10:
             achievement_panel.achievement_flow(_("绝顶"), 1223)
-
+        # 如果在人力发电室中，则增加人力发电量
+        if handle_premise.handle_in_human_power_room(character_id):
+            draw_flag = False
+            # 如果和玩家在同一位置，则进行显示
+            if handle_premise.handle_in_player_scene(character_id):
+                draw_flag = True
+            store_power_by_human_power(part_count + 3, character_id, draw_flag)
 
 def judge_orgasm_degree(level_count: int) -> int:
     """
