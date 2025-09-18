@@ -49,6 +49,7 @@ class Manage_Basement_Panel:
         title_text = _("管理罗德岛")
         panel_list = [(_("罗德岛资源总览")), (_("各部门工作概况")), (_("全干员一览"))]
         department_son_panel_button_dict = {
+            _("动力区"):[_("[能源系统]")],
             _("工程部"):[_("[基建系统]"), _("[装备维护系统]")],
             _("制造加工区"):[_("[生产系统]")],
             _("图书馆"):[_("[图书馆管理系统]")],
@@ -289,10 +290,12 @@ class Manage_Basement_Panel:
         panel -- 要切换的面板类型
         """
 
-        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training, equipmen_panel
+        from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training, equipmen_panel, manage_power_system_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
+        if _("能源系统") in son_panel:
+            now_panel = manage_power_system_panel.Manage_Power_System_Panel(self.width)
         elif _("装备维护系统") in son_panel:
             # 如果铁匠铺还没有开放，则不显示装备维护系统
             if not handle_premise.handle_blacksmith_shop_open(0):

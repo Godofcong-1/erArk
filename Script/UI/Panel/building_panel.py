@@ -1,10 +1,9 @@
-from turtle import position
 from typing import Tuple, List
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import basement,attr_text,attr_calculation
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
+from Script.Design import basement
 from Script.UI.Moudle import draw, panel
+from Script.UI.Panel import manage_power_system_panel
 from Script.Config import game_config, normal_config
 
 cache: game_type.Cache = cache_control.cache
@@ -46,6 +45,8 @@ class Building_Panel:
         while 1:
             return_list = []
             title_draw.draw()
+            power_consumption = manage_power_system_panel.get_theoretical_power_consumption()
+            power_generation = manage_power_system_panel.get_theoretical_power_generation() 
 
             # 绘制主面板
             for building_type in building_type_list:
@@ -71,14 +72,12 @@ class Building_Panel:
 
             resouce_draw = draw.NormalDraw()
             resouce_text = _("\n当前资源情况：")
-            power_use,power_max = str(cache.rhodes_island.power_use),str(cache.rhodes_island.power_max)
-            resouce_text += _("\n  当前使用电力/当前总供电：{0}/{1}").format(power_use, power_max)
+            resouce_text += _("  当前理论用电量: {0} / 理论供电量:{1}" ).format(power_consumption, power_generation)
             money = str(cache.rhodes_island.materials_resouce[1])
             resouce_text += _("\n  当前龙门币数量    ：{0}\n").format(money)
             # 碳素建材的编号是15
             # building_materials = str(cache.base_resouce.materials_resouce[15])
             # resouce_text += f"\n  当前碳素建材数量  ：{building_materials}\n"
-
 
             resouce_draw.text = resouce_text
             resouce_draw.width = self.width
@@ -112,9 +111,8 @@ class Building_Panel:
 
                     # 发电站单独显示供电
                     if all_cid == 1:
-                        facility_power_give = str(game_config.config_facility_effect[facility_cid].effect)
                         info_head = f"{facility_name.ljust(5,'　')} (lv{now_level})"
-                        info_head += _(" (供电:{0})").format(facility_power_give)
+                        info_head += _(" (供电:{0})").format(power_generation)
                     else:
                         info_head = f"{facility_name.ljust(5,'　')} (lv{now_level})"
                         info_head += _(" (耗电:{0})").format(facility_power_use)
@@ -171,6 +169,8 @@ class Building_Panel:
         Keyword arguments:
         facility_cid -- 建筑效果编号
         """
+        power_consumption = manage_power_system_panel.get_theoretical_power_consumption()
+        power_generation = manage_power_system_panel.get_theoretical_power_generation() 
 
         while 1:
             return_list = []
@@ -193,8 +193,7 @@ class Building_Panel:
                 # 最后展示资源情况
                 resouce_draw = draw.NormalDraw()
                 resouce_text = _("\n当前资源情况：")
-                power_use,power_max = str(cache.rhodes_island.power_use),str(cache.rhodes_island.power_max)
-                resouce_text += _("\n  当前使用电力/当前总供电：{0}/{1}").format(power_use, power_max)
+                resouce_text += _("  当前理论用电量: {0} / 理论供电量:{1}" ).format(power_consumption, power_generation)
                 money = str(cache.rhodes_island.materials_resouce[1])
                 resouce_text += _("\n  当前龙门币数量    ：{0}\n").format(money)
                 # 碳素建材的编号是15
@@ -209,12 +208,6 @@ class Building_Panel:
                 level_up_flag = True
                 up_info_draw = draw.NormalDraw()
                 up_info_draw.text = _("当前无法升级：")
-                # 电量
-                if cache.rhodes_island.power_max - cache.rhodes_island.power_use - facility_data_next.power_use + facility_data_now.power_use >= 0:
-                    pass
-                else:
-                    up_info_draw.text += _("\n  升级所需电量不足")
-                    level_up_flag = False
                 # 龙门币
                 if cache.rhodes_island.materials_resouce[1] >= facility_data_next.money_use:
                     pass

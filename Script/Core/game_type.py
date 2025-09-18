@@ -1018,9 +1018,9 @@ class Rhodes_Island:
 
         # 动力区
         self.power_use: int = 0
-        """ 当前使用电力 """
+        """ 当前使用电力（2025.9已废弃） """
         self.power_max: int = 0
-        """ 总可用电力 """
+        """ 总可用电力（2025.9已废弃） """
         self.power_storage: float = 0.0
         """ 当前储能 """
         self.power_storage_max: float = 0.0

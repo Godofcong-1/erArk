@@ -3102,7 +3102,6 @@ def handle_manage_facility_power():
     constant.InstructType.WORK,
     _("管理能源系统"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.DEBUG_MODE_ON,
      constant_promise.Premise.IN_POWER_DISPATCH,
      constant_promise.Premise.TIRED_LE_74},
     constant.Behavior.MANAGE_FACILITY_POWER,

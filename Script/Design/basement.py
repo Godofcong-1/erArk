@@ -87,8 +87,6 @@ def get_base_updata():
     """
     cache = cache_control.cache
 
-    cache.rhodes_island.power_use = 0
-
     # 遍历全设施清单
     for all_cid in game_config.config_facility:
         # 全设施等级设为对应值
@@ -98,7 +96,6 @@ def get_base_updata():
         facility_name = game_config.config_facility[all_cid].name
         facility_cid = game_config.config_facility_effect_data[facility_name][level]
         facility_effect = game_config.config_facility_effect[facility_cid].effect
-        cache.rhodes_island.power_use += game_config.config_facility_effect[facility_cid].power_use
 
         # 如果满足设施开放的前提条件，则开放该设施
         for open_cid in game_config.config_facility_open:
@@ -115,11 +112,8 @@ def get_base_updata():
 
     # print(f"debug power_use = {base_data.power_use}")
 
-        # 初始化供电量
-        if facility_name == _("动力区"):
-            cache.rhodes_island.power_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化仓库容量
-        elif facility_name == _("仓储区"):
+        if facility_name == _("仓储区"):
             cache.rhodes_island.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
         # 初始化干员人数上限
         elif facility_name == _("宿舍区"):
