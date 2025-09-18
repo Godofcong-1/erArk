@@ -1054,22 +1054,6 @@ def orgasm_settle(
             climax_count = normal_orgasm_data + un_count_orgasm_data
             # 刷新记录
             character_data.h_state.orgasm_level[orgasm] = now_data
-            # 群交状态下
-            if handle_premise.handle_group_sex_mode_on(character_id):
-                # 成就统计
-                cache.achievement.group_sex_record.setdefault(2, [])
-                if character_id not in cache.achievement.group_sex_record[2]:
-                    cache.achievement.group_sex_record[2].append(character_id)
-            # 隐奸状态下
-            elif handle_premise.handle_hidden_sex_mode_ge_1(character_id):
-                # 成就统计
-                cache.achievement.hidden_sex_record.setdefault(4, 0)
-                cache.achievement.hidden_sex_record[4] += 1
-            # 睡奸状态下
-            if handle_premise.handle_unconscious_flag_1(character_id):
-                # 成就统计
-                cache.achievement.sleep_sex_record.setdefault(3, 0)
-                cache.achievement.sleep_sex_record[3] += 1
             # 时停状态下
             if handle_premise.handle_unconscious_flag_3(character_id):
                 # 绝顶计入寸止计数
@@ -1092,6 +1076,22 @@ def orgasm_settle(
                 second_behavior_id = f"{part_dict[orgasm]}_orgasm_edge"
                 character_data.second_behavior[second_behavior_id] = 1
                 continue
+            # 群交状态下
+            if handle_premise.handle_group_sex_mode_on(character_id):
+                # 成就统计
+                cache.achievement.group_sex_record.setdefault(2, [])
+                if character_id not in cache.achievement.group_sex_record[2]:
+                    cache.achievement.group_sex_record[2].append(character_id)
+            # 隐奸状态下
+            elif handle_premise.handle_hidden_sex_mode_ge_1(character_id):
+                # 成就统计
+                cache.achievement.hidden_sex_record.setdefault(4, 0)
+                cache.achievement.hidden_sex_record[4] += 1
+            # 睡奸状态下
+            if handle_premise.handle_unconscious_flag_1(character_id):
+                # 成就统计
+                cache.achievement.sleep_sex_record.setdefault(3, 0)
+                cache.achievement.sleep_sex_record[3] += 1
             # 该部位高潮计数+1
             part_count += 1
             # 加入高潮部位记录
