@@ -198,6 +198,8 @@ in_restroom_or_dormitory,IN_REST_ROOM_OR_DORMITORY,地点_定位,在休息室或
 in_corridor,IN_CORRIDOR,地点_定位,在走廊中
 in_power_dispatch,IN_POWER_DISPATCH,地点_定位,在动力控制室中
 not_in_power_dispatch,NOT_IN_POWER_DISPATCH,地点_定位,不在动力控制室中
+in_human_power_room,IN_HUMAN_POWER_ROOM,地点_定位,在人力发电室中
+not_in_human_power_room,NOT_IN_HUMAN_POWER_ROOM,地点_定位,不在人力发电室中
 in_music_room,IN_MUSIC_ROOM,地点_定位,在音乐室中
 in_classic_music_room,IN_CLASSIC_MUSIC_ROOM,地点_定位,在夕照区音乐室中
 not_in_classic_music_room,NOT_IN_CLASSIC_MUSIC_ROOM,地点_定位,不在夕照区音乐室中
@@ -321,6 +323,7 @@ in_herb_garden,IN_HERB_GARDEN,地点_定位,在药田
 not_in_herb_garden,NOT_IN_HERB_GARDEN,地点_定位,不在药田
 in_greenhouse,IN_GREENHOUSE,地点_定位,在温室
 not_in_greenhouse,NOT_IN_GREENHOUSE,地点_定位,不在温室
+in_herb_garden_or_greenhouse,IN_HERB_GARDEN_OR_GREENHOUSE,地点_定位,在药田或温室
 in_aromatherapy_room,IN_AROMATHERAPY_ROOM,地点_定位,在香薰治疗室
 not_in_aromatherapy_room,NOT_IN_AROMATHERAPY_ROOM,地点_定位,不在香薰治疗室
 in_breeding_farm,IN_BREEDING_FARM,地点_定位,在磐蟹养殖场
@@ -1734,4 +1737,5 @@ target_not_player_daughter,TARGET_NOT_PLAYER_DAUGHTER,生育,交互对象不是�
 
 to_do,TO_DO,未分类,未实装
 
+have_instrument_or_in_music_room,HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM,复合,已持有乐器或在乐器练习室里
 

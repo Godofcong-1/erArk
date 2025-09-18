@@ -1135,13 +1135,7 @@ def handle_in_kitchen(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Kitchen" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Kitchen")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_KITCHEN)
@@ -1167,13 +1161,7 @@ def handle_in_dining_hall(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dining_hall" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Dining_hall")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_DINING_HALL)
@@ -1199,13 +1187,7 @@ def handle_in_take_food(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Take_Food_Area" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Take_Food_Area")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_TAKE_FOOD)
@@ -1231,13 +1213,7 @@ def handle_in_food_shop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Food_Shop" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Food_Shop")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_FOOD_SHOP)
@@ -1322,13 +1298,7 @@ def handle_in_dr_office(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_Office" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Dr_Office")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_DR_OFFICE)
@@ -1368,13 +1338,7 @@ def handle_in_dr_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Dr_room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Dr_room")
 
 
 @add_premise(constant_promise.Premise.IN_COMMAND_ROOM)
@@ -1386,13 +1350,7 @@ def handle_in_command_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Command_Room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Command_Room")
 
 
 @add_premise(constant_promise.Premise.IN_OUT_EXIT)
@@ -1404,13 +1362,7 @@ def handle_in_out_exit(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Out_Exit" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Out_Exit")
 
 
 @add_premise(constant_promise.Premise.IN_COMMAND_ROOM_OR_OUT_EXIT)
@@ -1501,13 +1453,7 @@ def handle_in_toilet_man(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Toilet_Male" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Toilet_Male")
 
 
 @add_premise(constant_promise.Premise.IN_TOILET_FEMALE)
@@ -1519,13 +1465,7 @@ def handle_in_toilet_female(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Toilet_Female" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Toilet_Female")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_TOILET_FEMALE)
@@ -1585,13 +1525,7 @@ def handle_in_rest_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Rest_Room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Rest_Room")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_REST_ROOM)
@@ -1633,13 +1567,7 @@ def handle_in_corridor(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Corridor" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Corridor")
 
 
 @add_premise(constant_promise.Premise.IN_POWER_DISPATCH)
@@ -1651,19 +1579,13 @@ def handle_in_power_dispatch(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Power_Dispatch" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Power_Dispatch")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_POWER_DISPATCH)
 def handle_not_in_power_dispatch(character_id: int) -> int:
     """
-    校验角色是否在动力控制室中
+    校验角色是否不在动力控制室中
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1671,6 +1593,27 @@ def handle_not_in_power_dispatch(character_id: int) -> int:
     """
     return not handle_in_power_dispatch(character_id)
 
+@add_premise(constant_promise.Premise.IN_HUMAN_POWER_ROOM)
+def handle_in_human_power_room(character_id: int) -> int:
+    """
+    校验角色是否在人力发电室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return common_place_judge_by_SceneTag(character_id, "Human_Power_Room")
+
+@add_premise(constant_promise.Premise.NOT_IN_HUMAN_POWER_ROOM)
+def handle_not_in_human_power_room(character_id: int) -> int:
+    """
+    校验角色是否不在人力发电室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_in_human_power_room(character_id)
 
 @add_premise(constant_promise.Premise.IN_MUSIC_ROOM)
 def handle_in_music_room(character_id: int) -> int:
@@ -1701,14 +1644,7 @@ def handle_in_classic_music_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Classic_Musicroom" in now_scene_data.scene_tag:
-        return 1
-    return 0
-
+    return common_place_judge_by_SceneTag(character_id, "Classic_Musicroom")
 
 @add_premise(constant_promise.Premise.NOT_IN_CLASSIC_MUSIC_ROOM)
 def handle_not_in_classic_music_room(character_id: int) -> int:
@@ -1733,14 +1669,7 @@ def handle_in_moden_music_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Modern_Musicroom" in now_scene_data.scene_tag:
-        return 1
-    return 0
-
+    return common_place_judge_by_SceneTag(character_id, "Modern_Musicroom")
 
 @add_premise(constant_promise.Premise.NOT_IN_MODEN_MUSIC_ROOM)
 def handle_not_in_moden_music_room(character_id: int) -> int:
@@ -1764,13 +1693,7 @@ def handle_in_multimedia_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Multimedia_Room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Multimedia_Room")
 
 @add_premise(constant_promise.Premise.NOT_IN_MULTIMEDIA_ROOM)
 def handle_not_in_multimedia_room(character_id: int) -> int:
@@ -1794,13 +1717,7 @@ def handle_in_photography_studio(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Photography_Studio" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Photography_Studio")
 
 @add_premise(constant_promise.Premise.NOT_IN_PHOTOGRAPHY_STUDIO)
 def handle_not_in_photography_studio(character_id: int) -> int:
@@ -1824,13 +1741,7 @@ def handle_in_aquapit_experientorium(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Aquapit_Experientorium" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Aquapit_Experientorium")
 
 @add_premise(constant_promise.Premise.NOT_IN_AQUAPIT_EXPERIENTORIUM)
 def handle_not_in_aquapit_experientorium(character_id: int) -> int:
@@ -1854,13 +1765,7 @@ def handle_in_board_games_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Board_Games_Room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Board_Games_Room")
 
 @add_premise(constant_promise.Premise.NOT_IN_BOARD_GAMES_ROOM)
 def handle_not_in_board_games_room(character_id: int) -> int:
@@ -1884,13 +1789,7 @@ def handle_in_fairy_banquet(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Fairy_Banquet" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Fairy_Banquet")
 
 @add_premise(constant_promise.Premise.NOT_IN_FAIRY_BANQUET)
 def handle_not_in_fairy_banquet(character_id: int) -> int:
@@ -1915,14 +1814,7 @@ def handle_in_broadcast_center(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Broadcast_Center" in now_scene_data.scene_tag:
-        return 1
-    return 0
-
+    return common_place_judge_by_SceneTag(character_id, "Broadcast_Center")
 
 @add_premise(constant_promise.Premise.NOT_IN_BROADCAST_CENTER)
 def handle_not_in_broadcast_center(character_id: int) -> int:
@@ -1947,13 +1839,7 @@ def handle_in_avant_garde_arcade(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Avant_Garde_Arcade" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Avant_Garde_Arcade")
 
 @add_premise(constant_promise.Premise.NOT_IN_AVANT_GARDE_ARCADE)
 def handle_not_in_avant_garde_arcade(character_id: int) -> int:
@@ -1977,13 +1863,7 @@ def handle_in_swimming_pool(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Swimming_Pool" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Swimming_Pool")
 
 @add_premise(constant_promise.Premise.NOT_IN_SWIMMING_POOL)
 def handle_not_in_swimming_pool(character_id: int) -> int:
@@ -2008,13 +1888,7 @@ def handle_in_bar(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Bar" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Bar")
 
 @add_premise(constant_promise.Premise.NOT_IN_BAR)
 def handle_not_in_bar(character_id: int) -> int:
@@ -2039,13 +1913,7 @@ def handle_in_hair_salon(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Hair_Salon" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Hair_Salon")
 
 @add_premise(constant_promise.Premise.NOT_IN_HAIR_SALON)
 def handle_not_in_hair_salon(character_id: int) -> int:
@@ -2070,13 +1938,7 @@ def handle_in_styling_studio(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Styling_Studio" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Styling_Studio")
 
 @add_premise(constant_promise.Premise.NOT_IN_STYLING_STUDIO)
 def handle_not_in_styling_studio(character_id: int) -> int:
@@ -2101,13 +1963,7 @@ def handle_in_walyria_cake_shop(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Walyria_Cake_Shop" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Walyria_Cake_Shop")
 
 @add_premise(constant_promise.Premise.NOT_IN_WALYRIA_CAKE_SHOP)
 def handle_not_in_walyria_cake_shop(character_id: int) -> int:
@@ -2132,13 +1988,7 @@ def handle_in_restaurant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Restaurant" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Restaurant")
 
 
 @add_premise(constant_promise.Premise.NOT_IN_RESTAURANT)
@@ -2164,13 +2014,7 @@ def handle_in_seven_cities_restaurant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Seven_Cities_Restaurant" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Seven_Cities_Restaurant")
 
 @add_premise(constant_promise.Premise.NOT_IN_SEVEN_CITIES_RESTAURANT)
 def handle_not_in_seven_cities_restaurant(character_id: int) -> int:
@@ -2195,13 +2039,7 @@ def handle_in_golden_game_room(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Golden_Game_Room" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Golden_Game_Room")
 
 @add_premise(constant_promise.Premise.NOT_IN_GOLDEN_GAME_ROOM)
 def handle_not_in_golden_game_room(character_id: int) -> int:
@@ -2226,13 +2064,7 @@ def handle_in_teahouse(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Teahouse" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Teahouse")
 
 @add_premise(constant_promise.Premise.NOT_IN_TEAHOUSE)
 def handle_not_in_teahouse(character_id: int) -> int:
@@ -2257,13 +2089,7 @@ def handle_in_burger_joint(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Burger" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Burger")
 
 @add_premise(constant_promise.Premise.NOT_IN_BURGER)
 def handle_not_in_burger_joint(character_id: int) -> int:
@@ -2288,13 +2114,7 @@ def handle_in_healthy_diner(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Healthy_Diner" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Healthy_Diner")
 
 @add_premise(constant_promise.Premise.NOT_IN_HEALTHY_DINER)
 def handle_not_in_healthy_diner(character_id: int) -> int:
@@ -2319,13 +2139,7 @@ def handle_in_lungmen_eatery(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Lungmen_Eatery" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Lungmen_Eatery")
 
 @add_premise(constant_promise.Premise.NOT_IN_LUNGMEN_EATERY)
 def handle_not_in_lungmen_eatery(character_id: int) -> int:
@@ -2350,13 +2164,7 @@ def handle_in_pizzeria(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Pizzeria" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Pizzeria")
 
 @add_premise(constant_promise.Premise.NOT_IN_PIZZERIA)
 def handle_not_in_pizzeria(character_id: int) -> int:
@@ -2381,13 +2189,7 @@ def handle_in_café(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Café" in now_scene_data.scene_tag:
-        return 1
-    return 0
+    return common_place_judge_by_SceneTag(character_id, "Café")
 
 @add_premise(constant_promise.Premise.NOT_IN_CAFÉ)
 def handle_not_in_café(character_id: int) -> int:
@@ -2402,7 +2204,6 @@ def handle_not_in_café(character_id: int) -> int:
         return 0
     return 1
 
-
 @add_premise(constant_promise.Premise.IN_LIGHT_STORE)
 def handle_in_light_store(character_id: int) -> int:
     """
@@ -2412,14 +2213,7 @@ def handle_in_light_store(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
-    now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    now_scene_data = cache.scene_data[now_scene_str]
-    if "Light_Store" in now_scene_data.scene_tag:
-        return 1
-    return 0
-
+    return common_place_judge_by_SceneTag(character_id, "Light_Store")
 
 @add_premise(constant_promise.Premise.NOT_IN_LIGHT_STORE)
 def handle_not_in_light_store(character_id: int) -> int:
