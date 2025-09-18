@@ -91,13 +91,13 @@ class Manage_Vehicle_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{commission_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(commission_type_list)
+                    now_draw.width = int(self.width / len(commission_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{commission_type}]",
                         f"\n{commission_type}",
-                        self.width / len(commission_type_list),
+                        int(self.width / len(commission_type_list)),
                         cmd_func=self.change_panel,
                         args=(commission_type,),
                     )
@@ -133,7 +133,7 @@ class Manage_Vehicle_Panel:
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
-                info_draw.width = self.width / len(info_text_list)
+                info_draw.width = int(self.width / len(info_text_list))
                 info_draw.draw()
             line_feed.draw()
             line = draw.LineDraw("~", self.width)
@@ -254,7 +254,7 @@ class Manage_Vehicle_Panel:
                 buy_vehicle_draw = draw.CenterButton(
                     _("【购买载具】"),
                     _("\n【购买载具】"),
-                    self.width / 3,
+                    int(self.width / 3),
                     cmd_func=self.buy_vehicle,
                     args=(vehicle_id,),
                 )
@@ -266,7 +266,7 @@ class Manage_Vehicle_Panel:
                 sell_vehicle_draw = draw.CenterButton(
                     _("【出售载具】"),
                     _("\n【出售载具】"),
-                    self.width / 3,
+                    int(self.width / 3),
                     cmd_func=self.sell_vehicle,
                     args=(vehicle_id,),
                 )
@@ -275,7 +275,7 @@ class Manage_Vehicle_Panel:
 
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -315,7 +315,7 @@ class Manage_Vehicle_Panel:
         """
 
         vehicle_data = game_config.config_vehicle[vehicle_id]
-        vehicle_price = vehicle_data.price * 0.8
+        vehicle_price = int(vehicle_data.price * 0.8)
         # 出售载具
         cache.rhodes_island.materials_resouce[1] += vehicle_price
         cache.rhodes_island.vehicles[vehicle_id][0] -= 1

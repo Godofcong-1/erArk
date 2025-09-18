@@ -850,22 +850,19 @@ class Manage_Power_System_Panel:
                 btn_sub = draw.CenterButton(_("[-]"), _("减少副源石反应炉"), 8, cmd_func=sub_aux); btn_sub.draw(); return_list.append(btn_sub.return_text)
                 line_feed.draw()
             # 清洁能源
-            names = [_("水力发电轮组"), _("风力发电机组"), _("光伏发电板组")]
-            descs = [_("发电量受水流速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受风速影响大，仅在停靠时可用，行驶中无法使用"), _("发电量受日照影响大，停靠或行驶中均可使用")]
-            for idx in range(3):
-                num = ri.other_power_facility_list[idx]
+            names = [_("水力发电轮组"), _("风力发电机组"), _("光伏发电板组"), _("人力性爱发电")]
+            descs = [_("发电量受水流速影响，仅在停靠时可用，行驶中无法使用"), _("发电量受风速影响，仅在停靠时可用，行驶中无法使用"), _("发电量受日照影响，停靠或行驶中均可使用"), _("在人力发电室中绝顶/射精即可发电，发电量受绝顶/射精程度影响")]
+            for idx in range(4):
+                if idx >= len(ri.other_power_facility_list):
+                    num = 0
+                else:
+                    num = ri.other_power_facility_list[idx]
                 num = str(num).rjust(2, ' ')
-                # 对应类别名称与fallback
-                cat_map = {0:_("水力"), 1:_("风力"), 2:_("光伏")}
-                fallback_map = {0:60,1:40,2:30}
-                try:
-                    cid_lv3 = game_config.config_power_generation_level_index.get(cat_map[idx], {}).get(3)
-                    if cid_lv3 is not None and cid_lv3 in game_config.config_power_generation:
-                        base_val = float(game_config.config_power_generation[cid_lv3].value)
-                    else:
-                        base_val = fallback_map[idx]
-                except Exception:
-                    base_val = fallback_map[idx]
+                # 对应类别名称
+                cat_map = {0:_("水力"), 1:_("风力"), 2:_("光伏"), 3:_("人力")}
+                cid_lv3 = game_config.config_power_generation_level_index.get(cat_map[idx], {}).get(3)
+                if cid_lv3 is not None and cid_lv3 in game_config.config_power_generation:
+                    base_val = float(game_config.config_power_generation[cid_lv3].value)
                 # 检测是否可以发电
                 cant_flag = False
                 # 如果是在行驶中，则水力与风力发电设施无效
@@ -883,11 +880,19 @@ class Manage_Power_System_Panel:
                 row = draw.NormalDraw(); row.width = self.width
                 descs_now = attr_calculation.pad_display_width(descs[idx], 60)
                 row.text = _(" {0} | {1}组 | {2}/组日 | {3} | ").format(names[idx], num, base_val_str, descs_now)
+                if idx == 3:
+                    row.text = _(" {0} | {1}人 |  按次计算 | {2} | ").format(names[idx], num, descs_now)
                 row.draw()
                 # 如果设施不可用则不显示增减按钮
                 if cant_flag:
                     cant_draw = draw.NormalDraw(); cant_draw.width = self.width
                     cant_draw.text = _("（当前设施不可用，无法调整数量）\n")
+                    cant_draw.draw()
+                    continue
+                # 人力发电不允许调整
+                if idx == 3:
+                    cant_draw = draw.NormalDraw(); cant_draw.width = self.width
+                    cant_draw.text = _("（未实装）\n")
                     cant_draw.draw()
                     continue
                 # 增减按钮
