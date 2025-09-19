@@ -122,7 +122,7 @@ class Manage_Assembly_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {_("药剂"): False, _("乳制品"): False, _("香水"): False}
+        self.show_resource_type_dict: Dict = {_("药剂"): False, _("乳制品"): False, _("香水"): False, _("基建"): False}
 
     def draw(self):
         """绘制对象"""
@@ -140,7 +140,7 @@ class Manage_Assembly_Line_Panel:
             now_text += _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
 
             # 遍历全资源类型
-            self.resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水")]
+            self.resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水"), _("基建")]
             for resouce in self.resouce_list:
                 now_text += f"\n {resouce}："
                 # 遍历该类型的资源
@@ -148,11 +148,11 @@ class Manage_Assembly_Line_Panel:
                     material_data  = game_config.config_resouce[material_id]
                     if material_data.type == resouce:
                         now_text += f"  {material_data.name}：{cache.rhodes_island.materials_resouce[material_id]}"
-                now_text += "\n"
 
             all_info_draw.text = now_text
             all_info_draw.width = self.width
             all_info_draw.draw()
+            line_feed.draw()
 
             for assembly_line_id in cache.rhodes_island.assembly_line:
                 now_text = _("\n {0}号流水线：").format(assembly_line_id+1)
@@ -271,7 +271,7 @@ class Manage_Assembly_Line_Panel:
                 info_draw.text = info_text
                 info_draw.draw()
 
-                resouce_list = [_("药剂"), _("乳制品"), _("香水")]
+                resouce_list = [_("药剂"), _("乳制品"), _("香水"), _("基建")]
 
                 # 遍历全资源类型
                 for resouce in resouce_list:

@@ -80,7 +80,7 @@ class Resource_Exchange_Line_Panel:
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
-        self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False, _("特产"): False}
+        self.show_resource_type_dict: Dict = {_("材料"): False, _("药剂"): False, _("乳制品"): False, _("香水"): False, _("基建"): False, _("特产"): False}
         """ 显示的资源类型 """
         self.buy_or_sell_flag = True
         """ 交易状态，True为买入，False为卖出 """
@@ -303,7 +303,7 @@ class Resource_Exchange_Line_Panel:
                 line_feed.draw()
 
                 # 遍历全资源类型
-                resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水"), _("特产")]
+                resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水"), _("基建"), _("特产")]
                 for resouce_type in resouce_list:
 
                     # 判断是否显示该类型的资源
