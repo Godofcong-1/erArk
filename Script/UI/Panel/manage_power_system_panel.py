@@ -75,7 +75,7 @@ def _get_operator_power_bonus(type: int = -1) -> float:
         try:
             # 获取角色数据
             character = cache.character_data[chara_id]
-            ability_value = attr_calculation.get_ability_adjust(character.ability[7]) - 1
+            ability_value = attr_calculation.get_ability_adjust(character.ability[48]) - 1
         except Exception:
             # 兜底，视为0级能力
             ability_value = attr_calculation.get_ability_adjust(0) - 1
@@ -85,9 +85,9 @@ def _get_operator_power_bonus(type: int = -1) -> float:
             ability_value = ability_value / 5
         # 如果说是主调控员，且指定了类型
         elif type != -1:
-            # 非当前类型的主调控员对其他类型的发电也减少效率
+            # 主调控员不影响其他类型的发电效率
             if chara_id != ri.main_power_facility_operator_ids[type]:
-                ability_value = ability_value / 3
+                ability_value = 0
         total += ability_value
     # 不为负数
     total = max(total, 0)
