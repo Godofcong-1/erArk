@@ -1,10 +1,9 @@
-from typing import List
+from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import attr_calculation, basement, handle_premise
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import manage_basement_panel
 
 import random
 
@@ -139,6 +138,77 @@ def update_recruit():
                 now_draw.draw()
                 cache.rhodes_island.recruit_line[recruit_line_id][1] = 11
 
+def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
+    """
+    计算某条招募线的效率，并返回描述字符串和效率值
+    Keyword arguments:
+    line_id -- 招募线id
+    Returns:
+    detail_str -- 描述字符串
+    total_bonus -- 效率值
+    """
+    if line_id not in cache.rhodes_island.recruit_line:
+        return _("无此招募线"), 0.0
+
+    recruitment_strategy_id = cache.rhodes_island.recruit_line[line_id][1]
+    recruitment_strategy_data = game_config.config_recruitment_strategy.get(recruitment_strategy_id)
+    if not recruitment_strategy_data:
+        return _("未知策略"), 0.0
+
+    # 当前设施数据
+    now_level = cache.rhodes_island.facility_level[7]
+    # 当前设施效率
+    facility_effect = basement.calc_facility_efficiency(7)
+
+    # 如果变量类型不是int，则改为0
+    if not isinstance(cache.rhodes_island.recruit_line[line_id][2], int):
+        cache.rhodes_island.recruit_line[line_id][2] = 0
+    # 招募效率(使用主/副招聘专员机制)
+    line_main_id = cache.rhodes_island.recruit_line[line_id][2]
+    main_name = cache.character_data[line_main_id].name if line_main_id in cache.character_data else _("空缺")
+    # 全部主招聘专员
+    main_ids = set()
+    # 全部主招聘专员如果不是int，则改为0
+    for i in cache.rhodes_island.recruit_line:
+        if not isinstance(cache.rhodes_island.recruit_line[i][2], int):
+            cache.rhodes_island.recruit_line[i][2] = 0
+        main_ids.add(cache.rhodes_island.recruit_line[i][2])
+    # 计算加成
+    total_bonus = 0.0
+    sub_bonus = 0.0
+    # 文本
+    detail_parts_str = ""
+    # 遍历所有招聘专员
+    for chara_id in cache.rhodes_island.hr_operator_ids_list:
+        if chara_id not in cache.character_data:
+            continue
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        character_data: game_type.Character = cache.character_data[chara_id]
+        base_effect = 2 * attr_calculation.get_ability_adjust(character_data.ability.get(40,0))
+        if chara_id == line_main_id:
+            total_bonus += base_effect
+            detail_parts_str += _("主:{0}(话术lv{1}:{2}%)").format(main_name, character_data.ability.get(40,0), round(base_effect,1))
+        elif chara_id in main_ids:
+            pass
+        else:
+            sub_bonus += base_effect / 5
+    # 如果文本为空，说明没有主招聘专员
+    if not detail_parts_str:
+        detail_parts_str = _("主:空缺")
+        total_bonus = 1.0
+    # 副专员
+    total_bonus += sub_bonus
+    detail_parts_str += _("，副:{0}%").format(round(sub_bonus,1))
+    # 乘以设施效率
+    total_bonus *= facility_effect
+    # 停止招募则为0
+    if recruitment_strategy_id == 11:
+        total_bonus = 0.0
+        detail_parts_str += _("，已停止招募")
+    detail_str = _("当前效率加成：[{0}] * 效率加成：设施(lv{1}:{2}%) = {3}%").format(detail_parts_str, now_level, facility_effect, round(total_bonus, 1))
+    return detail_str, total_bonus
 
 class Recruit_Panel:
     """
@@ -158,15 +228,14 @@ class Recruit_Panel:
 
     def draw(self):
         """绘制对象"""
+        # 刷新一下
+        basement.get_base_updata()
 
         title_text = _("招募")
         title_draw = draw.TitleLineDraw(title_text, self.width)
         # 当前设施数据
         now_level = cache.rhodes_island.facility_level[7]
-        facility_cid = game_config.config_facility_effect_data[_("文职部")][int(now_level)]
-        facility_effect = game_config.config_facility_effect[facility_cid].effect
         line_count = len(cache.rhodes_island.recruit_line)
-        self.max_hr_in_line = now_level * 2 # 每个招募线的hr上限
 
         # 开始获得招募npc的id
         recruitable_npc_id_list = find_recruitable_npc()
@@ -184,9 +253,9 @@ class Recruit_Panel:
             title_draw.draw()
 
             all_info_draw = draw.NormalDraw()
-            now_text = _("当前设施等级为：{0}，可同时有{1}条招募线，每条招募线最多有{2}人\n").format(now_level, line_count, self.max_hr_in_line)
+            now_text = _("  当前设施等级为：{0}，可同时有{1}条招募线\n").format(now_level, line_count)
             # 输出当前国家剩余可招募干员的数量
-            now_text += _("当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n").format(len(wait_id_list))
+            now_text += _("  当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n").format(len(wait_id_list))
             if len(cache.rhodes_island.recruited_id) == 0:
                 now_text += _("  当前没有已招募待确认的干员\n")
             else:
@@ -226,54 +295,29 @@ class Recruit_Panel:
                     )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
+                line_feed.draw()
 
-                # 招募效率
-                all_effect = 0
-                now_text = _("\n    当前效率加成：[")
-                # 遍历输出干员的能力效率加成，40号话术技能
-                for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
-                    # 第一次循环不加"+"，之后都加
-                    if all_effect != 0:
-                        now_text += " + "
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    all_effect += character_effect
-                    now_text += _("{0}(话术lv{1}:{2}%)").format(character_data.name, character_data.ability[40], round(character_effect, 1))
-                all_effect *= 1 + (facility_effect / 100)
-                now_text += _("] * 效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
-                # 如果是第11号策略，则不显示效率，并且将招募进度设为0
+                # 计算本线当前效率
+                detail_str, total_bonus = calculate_recruit_line_efficiency(recruit_line_id)
                 if recruitment_strategy_id == 11:
-                    all_effect = 0
-                    now_text += _("  （已停止招募）")
                     cache.rhodes_island.recruit_line[recruit_line_id][0] = 0
-                now_text += f" = {round(all_effect, 1)}%      "
-                all_info_draw.text = now_text
+                all_info_draw.text = "    " + detail_str
                 all_info_draw.draw()
 
                 line_feed.draw()
+            line_feed.draw()
 
-            line_feed.draw()
-            button_text = _("[001]人员增减")
+            button_text = _("[001]招聘专员管理")
             button_draw = draw.LeftButton(
                 _(button_text),
                 _(button_text),
-                self.width,
-                cmd_func=manage_basement_panel.change_npc_work_out,
-                args=self.width
-                )
-            return_list.append(button_draw.return_text)
-            button_draw.draw()
-            line_feed.draw()
-            button_text = _("[002]工位调整")
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _(button_text),
-                self.width,
+                int(self.width / 3),
                 cmd_func=self.select_npc_position,
                 )
             return_list.append(button_draw.return_text)
             button_draw.draw()
 
+            line_feed.draw()
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
@@ -287,171 +331,150 @@ class Recruit_Panel:
     def select_recruitment_strategy(self, recruit_line_id):
         """选择招募策略"""
         while 1:
-
-                line = draw.LineDraw("-", window_width)
-                line.draw()
-                info_draw = draw.NormalDraw()
-                info_draw.width = window_width
-                return_list = []
-
-                recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
-                recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
-
-                info_text = ""
-                info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
-
-                info_text += _("\n\n 当前可以选择的策略有：\n")
-                info_draw.text = info_text
-                info_draw.draw()
-
-                # 当前设施等级
-                now_level = cache.rhodes_island.facility_level[7]
-
-                # 遍历策略列表，获取每个策略的信息
-                for cid in game_config.config_recruitment_strategy.keys():
-                    recruitment_strategy_data = game_config.config_recruitment_strategy[cid]
-
-                    if now_level >= cid + 1 or cid == 11:
-
-                        # 输出策略信息
-                        button_draw = draw.LeftButton(
-                            f"[{str(cid).rjust(2,'0')}]{recruitment_strategy_data.name}：{recruitment_strategy_data.introduce}",
-                            f"\n{cid}",
-                            window_width ,
-                            cmd_func=self.change_recruit_line_produce,
-                            args=(recruit_line_id ,cid)
-                        )
-                        button_draw.draw()
-                        return_list.append(button_draw.return_text)
-
-                        line_feed.draw()
-
-                line_feed.draw()
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-                back_draw.draw()
-                line_feed.draw()
-                return_list.append(back_draw.return_text)
-                yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
-                    break
-
-    def select_npc_position(self):
-        """选择干员的工位"""
-
-        self.now_chara_id = -1
-        old_position = 0
-        self.target_position = 0
-
-        while 1:
-            return_list = []
             line = draw.LineDraw("-", window_width)
             line.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.width = window_width
+            return_list = []
 
-            if self.now_chara_id != -1:
-                now_character_data: game_type.Character = cache.character_data[self.now_chara_id]
-                now_select_npc_name = now_character_data.name
-                for recruit_line_id in cache.rhodes_island.recruit_line:
-                    if self.now_chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
-                        old_position = recruit_line_id
-                        break
-            else:
-                now_select_npc_name = _("未选择")
+            recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
+            recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
 
-            all_info_draw = draw.NormalDraw()
-            now_text = _("\n○当前的决定： 把 {0} 从 {1} 号招募调整到 {2} 号招募").format(now_select_npc_name, old_position + 1, self.target_position + 1)
-            all_info_draw.text = now_text
-            all_info_draw.draw()
+            info_text = ""
+            info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
 
-            # 遍历全干员
-            now_text = _("\n可选招募专员有：\n")
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-            flag_not_empty = False
-            # 去掉玩家
-            cache.npc_id_got.discard(0)
-            # 去掉访客
-            id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
-            for chara_id in id_list:
-                character_data: game_type.Character = cache.character_data[chara_id]
-                # 找到职业是招募专员的
-                if handle_premise.handle_work_is_hr(chara_id):
-                    character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    button_text = _(" [{0}(话术lv{1}:{2}%)] ").format(character_data.name, character_data.ability[40], round(character_effect, 1))
-                    button_draw = draw.CenterButton(
-                    _(button_text),
-                    _(button_text),
-                    int(len(button_text)*1.5),
-                    cmd_func=self.settle_npc_id,
-                    args=chara_id,
+            info_text += _("\n\n 当前可以选择的策略有：\n")
+            info_draw.text = info_text
+            info_draw.draw()
+            line_feed.draw()
+
+            # 当前设施等级
+            now_level = cache.rhodes_island.facility_level[7]
+
+            # 遍历策略列表，获取每个策略的信息
+            for cid in game_config.config_recruitment_strategy.keys():
+                recruitment_strategy_data = game_config.config_recruitment_strategy[cid]
+
+                if now_level >= cid + 1 or cid == 11:
+
+                    # 输出策略信息
+                    button_draw = draw.LeftButton(
+                        f"[{str(cid).rjust(2,'0')}]"+f"{recruitment_strategy_data.name}：{recruitment_strategy_data.introduce}",
+                        f"\n{cid}",
+                        window_width ,
+                        cmd_func=self.change_recruit_line_produce,
+                        args=(recruit_line_id ,cid)
                     )
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
-                    flag_not_empty = True
 
-            # 如果没有工作是招募专员的干员则输出提示
-            if not flag_not_empty:
-                now_text = _(" 暂无工作是招募专员的干员")
-                all_info_draw.text = now_text
-                all_info_draw.draw()
+                    line_feed.draw()
 
             line_feed.draw()
-
-            for recruit_line_id in cache.rhodes_island.recruit_line:
-                now_text = _("\n {0}号招募：").format(recruit_line_id+1)
-
-                # 人数
-                now_text += _("(当前人数：{0}/{1})").format(len(cache.rhodes_island.recruit_line[recruit_line_id][2]), self.max_hr_in_line)
-
-                # 招募策略
-                recruitment_strategy_id = cache.rhodes_island.recruit_line[recruit_line_id][1]
-                recruitment_strategy_data = game_config.config_recruitment_strategy[recruitment_strategy_id]
-                now_text += _("\n    当前招募策略：{0}      ").format(recruitment_strategy_data.name)
-
-                # 绘制
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-
-                button_text = _(" [将选择专员调整至该招募] ")
-                button_draw = draw.CenterButton(
-                _(button_text),
-                _("{0}_{1}").format(button_text, recruit_line_id),
-                int(len(button_text)*2),
-                cmd_func=self.settle_assembly_line_id,
-                args=recruit_line_id,
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-                # 生产效率
-                now_text = _("\n    当前招募专员：")
-                # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    now_text += _(" + {0}(话术lv{1}:{2}%)").format(character_data.name, character_data.ability[40], round(character_effect, 1))
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-                line_feed.draw()
-
-            line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
-            # 如果有选择的干员，且目标招募线的人数未达上限则输出确定按钮
-            if self.now_chara_id != -1 and len(cache.rhodes_island.recruit_line[self.target_position][2]) < self.max_hr_in_line:
-                yes_draw.draw()
-                return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
+            if yrn in return_list:
                 break
-            # 确定的话就进行id的转移结算
-            elif yrn == yes_draw.return_text:
-                cache.rhodes_island.recruit_line[old_position][2].discard(self.now_chara_id)
-                cache.rhodes_island.recruit_line[self.target_position][2].add(self.now_chara_id)
-                basement.get_base_updata()
+
+    def select_npc_position(self):
+        """招聘专员管理(任命各线主招聘专员)"""
+        ri = cache.rhodes_island
+        from Script.UI.Panel import manage_basement_panel
+        while 1:
+            # 刷新一下
+            basement.update_work_people()
+            title = draw.TitleLineDraw(_("招聘专员管理"), self.width)
+            title.draw()
+            return_list = []
+
+            info = draw.NormalDraw(); info.width = self.width
+            info.text = _("当前招聘专员数量：{0}").format(len(ri.hr_operator_ids_list))
+            info.text += "      "
+            info.draw()
+
+            # 增减按钮
+            button_text = _("[招聘专员增减]")
+            button_draw = draw.CenterButton(
+                _(button_text),
+                _(button_text),
+                len(button_text) * 2 + 2,
+                cmd_func=manage_basement_panel.change_npc_work_out,
+                args=self.width
+            )
+            return_list.append(button_draw.return_text)
+            button_draw.draw()
+            line_feed.draw(); line_feed.draw()
+
+            # 显示各线主招聘专员
+            for line_id in ri.recruit_line:
+                main_id = ri.recruit_line[line_id][2]
+                name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
+                row = draw.NormalDraw(); row.width = self.width
+                row.text = _("{0}号招募线 主招聘专员: {1}  ").format(line_id+1, name)
+                row.draw()
+                def _make(line_idx):
+                    return lambda : self._appoint_main_hr(line_idx)
+                btn = draw.CenterButton(_("[任命]"), _("任命")+str(line_id+1), 12, cmd_func=_make(line_id))
+                btn.draw(); return_list.append(btn.return_text)
+                line_feed.draw()
+            line_feed.draw()
+
+            # 其它副招聘专员
+            main_ids = {ri.recruit_line[i][2] for i in ri.recruit_line}
+            other_ops = [cid for cid in ri.hr_operator_ids_list if cid not in main_ids]
+            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            if other_ops:
+                names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
+                other_draw.text = _("副招聘专员：") + "、".join(names) + "\n"
+            else:
+                other_draw.text = _("副招聘专员：暂无\n")
+            other_draw.draw()
+            line_feed.draw(); line_feed.draw()
+
+            back = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back.draw(); return_list.append(back.return_text)
+            line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back.return_text:
                 break
+
+    def _appoint_main_hr(self, line_id: int):
+        """任命某条招募线主招聘专员(重复选择同一人可撤销)"""
+        ri = cache.rhodes_island
+        from Script.UI.Panel import common_select_NPC
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
+        select_state = {}
+        def _make(chara_id):
+            self._do_appoint_main_hr(line_id, chara_id)
+        while 1:
+            info_text = _("请选择一名招聘专员担任第{0}号招募线主招聘专员:\n").format(line_id+1)
+            final_list = []
+            for npc_id in ri.hr_operator_ids_list:
+                if npc_id == 0:
+                    continue
+                final_list.append([npc_id, _make, [ri.recruit_line[line_id][2]]])
+            now_draw_panel.text_list = final_list
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_draw_panel, _("任命主招聘专员"), info_text, select_state)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == _("返回"):
+                break
+
+    def _do_appoint_main_hr(self, line_id: int, chara_id: int):
+        ri = cache.rhodes_island
+        if chara_id not in ri.hr_operator_ids_list:
+            return
+        # 如果已经是该线主，则撤销
+        if ri.recruit_line[line_id][2] == chara_id:
+            ri.recruit_line[line_id][2] = 0
+        else:
+            # 先清除其在其它线的主身份
+            for lid in ri.recruit_line:
+                if lid != line_id and ri.recruit_line[lid][2] == chara_id:
+                    ri.recruit_line[lid][2] = 0
+            ri.recruit_line[line_id][2] = chara_id
 
     def change_recruit_line_produce(self, asrecruit_line_id, recruitment_strategy_cid):
         """更改招募线的策略"""

@@ -1106,7 +1106,9 @@ class Rhodes_Island:
 
         # 文职区
         self.recruit_line: Dict[int, List] = {}
-        """ 当前招募进度 招募线id:[0招募进度, 1招募类型id, 2负责该线的干员id集合, 3招募效率百分比(如2.5)] """
+        """ 招募线数据: 招募线id:[0招募进度%, 1招募策略id, 2该线主招聘专员id(0为空缺), 3招募效率百分比(如20.5%)] (2025.09重构) """
+        self.hr_operator_ids_list: List[int] = []
+        """ 招募专员id列表 """
         self.recruited_id: Set = set()
         """ 已招募待确认的干员id """
 

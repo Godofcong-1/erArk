@@ -64,8 +64,8 @@ def get_base_zero() -> game_type.Rhodes_Island:
     # 初始化流水线
     base_data.assembly_line[0] = [1,set(),0,0,0]
 
-    # 初始化招募
-    base_data.recruit_line[0] = [0,0,set(),0]
+    # 初始化招募(结构:[进度, 策略id, 主招聘专员id, 线效率])
+    base_data.recruit_line[0] = [0,0,0,0]
 
     # 初始化邀请
     base_data.invite_visitor = [0,0,0]
@@ -85,6 +85,7 @@ def get_base_updata():
     """
     遍历基地情况结构体，根据设施等级更新全部数值
     """
+    from Script.UI.Panel import recruit_panel
     cache = cache_control.cache
 
     # 遍历全设施清单
@@ -133,27 +134,19 @@ def get_base_updata():
             cache.rhodes_island.soldier_max = game_config.config_facility_effect[facility_cid].effect
         # 初始化招募条
         elif facility_name == _("文职部"):
+            # 初始化招募线，结构:[进度, 策略id, 主招聘专员id, 线效率%]
             if 0 not in cache.rhodes_island.recruit_line:
-                cache.rhodes_island.recruit_line[0] = [0,0,set(),0]
+                cache.rhodes_island.recruit_line[0] = [0,0,0,0]
             if level >= 3 and 1 not in cache.rhodes_island.recruit_line:
-                cache.rhodes_island.recruit_line[1] = [0,0,set(),0]
+                cache.rhodes_island.recruit_line[1] = [0,0,0,0]
             if level >= 4 and 2 not in cache.rhodes_island.recruit_line:
-                cache.rhodes_island.recruit_line[2] = [0,0,set(),0]
+                cache.rhodes_island.recruit_line[2] = [0,0,0,0]
             if level >= 5 and 3 not in cache.rhodes_island.recruit_line:
-                cache.rhodes_island.recruit_line[3] = [0,0,set(),0]
-            # 计算当前总效率
+                cache.rhodes_island.recruit_line[3] = [0,0,0,0]
+            # 计算各线当前效率
             for recruit_line_id in cache.rhodes_island.recruit_line:
-                # 遍历输出干员的能力效率加成
-                all_effect = 0
-                for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
-                    all_effect += character_effect
-                    # 检测角色的工作类型是否为招聘专员，如果不是则将工作类型改为招聘专员
-                    if character_data.work.work_type != 71:
-                        character_data.work.work_type = 71
-                all_effect *= 1 + (facility_effect / 100)
-                cache.rhodes_island.recruit_line[recruit_line_id][3] = all_effect
+                detail_str, total_bonus = recruit_panel.calculate_recruit_line_efficiency(recruit_line_id)
+                cache.rhodes_island.recruit_line[recruit_line_id][3] = round(total_bonus,1)
         elif facility_name == _("制造加工区"):
             # 初始化流水线
             if 0 not in cache.rhodes_island.assembly_line:
@@ -360,11 +353,12 @@ def update_work_people():
 
     # 清空各流水线中的角色
     for recruit_line_id in cache.rhodes_island.recruit_line:
-        for chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2].copy():
-            character_data = cache.character_data[chara_id]
-            # 如果已经不是招聘专员，则从该流水线中移除
+        main_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
+        if main_id and main_id in cache.character_data:
+            character_data = cache.character_data[main_id]
+            # 如果已经不是招聘专员，则撤销主招聘专员
             if character_data.work.work_type != 71:
-                cache.rhodes_island.recruit_line[recruit_line_id][2].discard(chara_id)
+                cache.rhodes_island.recruit_line[recruit_line_id][2] = 0
     for assembly_line_id in cache.rhodes_island.assembly_line:
         for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1].copy():
             character_data = cache.character_data[chara_id]
@@ -403,21 +397,13 @@ def update_work_people():
                 if chara_id in cache.rhodes_island.maintenance_equipment_chara_id:
                     cache.rhodes_island.maintenance_equipment_chara_id.pop(chara_id)
 
-            # 招聘专员如果没有安排到招聘线，则随机分配
+            # 招聘专员列表维护
             if character_data.work.work_type == 71:
-                select_index = -1
-                for recruit_line_id in cache.rhodes_island.recruit_line:
-                    # 已分配则跳过
-                    if chara_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
-                        select_index = recruit_line_id
-                        break
-                # 未分配则按顺序分配到没满人的招聘线
-                if select_index == -1:
-                    now_level = cache.rhodes_island.facility_level[7]
-                    for recruit_line_id in cache.rhodes_island.recruit_line:
-                        if len(cache.rhodes_island.recruit_line[recruit_line_id][2]) < 2 * now_level:
-                            cache.rhodes_island.recruit_line[recruit_line_id][2].add(chara_id)
-                            break
+                if chara_id not in cache.rhodes_island.hr_operator_ids_list:
+                    cache.rhodes_island.hr_operator_ids_list.append(chara_id)
+            else:
+                if chara_id in cache.rhodes_island.hr_operator_ids_list:
+                    cache.rhodes_island.hr_operator_ids_list.remove(chara_id)
 
             # 工人如果没有被分配到流水线，则随机分配
             if character_data.work.work_type == 121:

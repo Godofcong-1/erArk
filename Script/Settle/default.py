@@ -6947,30 +6947,36 @@ def handle_recruit_add_just(
         return
     if target_data.dead:
         return
-    # 获取调整值#
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
-    # 设施效率
-    adjust *= basement.calc_facility_efficiency(7)
-    # 获得加成 #
-    now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
-    # debug下直接拉满
-    if cache.debug_mode:
-        now_add_lust += 100
 
+    # 获取能力调整值
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+
+    # 确定使用哪个招募栏位
     select_index = -1
-    # 如果角色已经确定招募栏位，则直接使用
+    # 如果角色是主招聘专员，则使用其指定的栏位
     for recruit_line_id in cache.rhodes_island.recruit_line:
-        if character_id in cache.rhodes_island.recruit_line[recruit_line_id][2]:
+        if character_id == cache.rhodes_island.recruit_line[recruit_line_id][2]:
             select_index = recruit_line_id
             break
-    # 如果角色没有确定招募栏位或是玩家来招募，则随机一个指派过去
+    # 如果不是或是玩家来招募，则随机一个指派过去
     if select_index == -1 or character_id == 0:
         line_id_list = list(cache.rhodes_island.recruit_line.keys())
         select_index = random.choice(line_id_list)
+        # 如果不是主招聘专员也不是玩家，则降低效率
+        if character_id != 0:
+            adjust /= 5
 
     # 如果该招募槽的策略为11号停止招募，则直接返回
     if cache.rhodes_island.recruit_line[select_index][1] == 11:
         return
+
+    # 设施效率
+    adjust *= basement.calc_facility_efficiency(7)
+    # 获得加成
+    now_add_lust = adjust * 2 * random.uniform(0.8, 1.2)
+    # debug下直接拉满
+    if cache.debug_mode:
+        now_add_lust += 100
 
     # 如果是玩家在招募或玩家与招募者在同一位置的话，显示招募进度的增加情况
     if character_data.position == cache.character_data[0].position:

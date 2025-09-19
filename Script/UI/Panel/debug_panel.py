@@ -944,7 +944,7 @@ class Debug_Panel:
                 # 重置文职部的招募数据
                 elif key_index == 14:
                     for i in range(len(cache.rhodes_island.recruit_line)):
-                        cache.rhodes_island.recruit_line[i] = [0,0,set(),0]
+                        cache.rhodes_island.recruit_line[i] = [0,0,0,0]
                     cache.rhodes_island.recruited_id = set()
                 # 交互对象全部位快感增加
                 elif key_index == 15:
