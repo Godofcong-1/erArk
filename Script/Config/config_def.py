@@ -1138,6 +1138,10 @@ class Recruitment_Strategy:
     """ 招聘策略id """
     name: str
     """ 招聘策略名 """
+    lv: int
+    """ 开放该策略所需的设施等级 """
+    adjust: float
+    """ 策略难度调整，越大越容易 """
     introduce: str
     """ 招聘策略介绍 """
 

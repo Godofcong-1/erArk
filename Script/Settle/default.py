@@ -6966,9 +6966,17 @@ def handle_recruit_add_just(
         if character_id != 0:
             adjust /= 5
 
+    # 招募线数据
+    recruit_line_data = cache.rhodes_island.recruit_line[select_index]
+    # 获得招募策略
+    recruit_strategy_id = recruit_line_data[1]
     # 如果该招募槽的策略为11号停止招募，则直接返回
-    if cache.rhodes_island.recruit_line[select_index][1] == 11:
+    if recruit_strategy_id == 11:
         return
+    else:
+        recruit_strategy_data = game_config.config_recruitment_strategy[recruit_strategy_id]
+        # 乘以策略调整值
+        adjust *= recruit_strategy_data.adjust
 
     # 设施效率
     adjust *= basement.calc_facility_efficiency(7)

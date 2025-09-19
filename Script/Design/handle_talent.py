@@ -84,6 +84,56 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     if now_gain_type == 3:
         npc_lost_no_menarche_talent(character_id)
 
+def have_age_talent(character_id: int):
+    """
+    返回年龄素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [101, 102, 103, 104, 105, 106, 107]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_chest_talent(character_id: int):
+    """
+    返回胸部大小素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [121, 122, 123, 124, 125]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_hip_talent(character_id: int):
+    """
+    返回臀部大小素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [126, 127, 128]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_leg_talent(character_id: int):
+    """
+    返回腿部大小素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [129, 130]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
+def have_foot_talent(character_id: int):
+    """
+    返回脚部大小素质\n
+    """
+    character_data = cache.character_data[character_id]
+    for talent_id in [131, 132]:
+        if character_data.talent[talent_id]:
+            return talent_id
+    return 0
+
 def have_hypnosis_talent():
     """
     验证是否有催眠系素质\n

@@ -1,7 +1,7 @@
 from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, basement, handle_premise
+from Script.Design import attr_calculation, basement, handle_premise, handle_talent
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -113,6 +113,9 @@ def update_recruit():
             # 开始获得招募npc的id
             recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
             wait_id_list = []
+            # 主招募专员
+            line_main_chara_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
+            line_main_chara_data = cache.character_data[line_main_chara_id]
             for chara_id in recruitable_npc_id_list:
                 # 本地招募
                 if recruitment_strategy == 0:
@@ -120,11 +123,61 @@ def update_recruit():
                     # 筛选出出生地是当前罗德岛所在地的角色
                     if character_data.relationship.birthplace != cache.rhodes_island.current_location[0]:
                         continue
-                    else:
-                        wait_id_list.append(chara_id)
+                    wait_id_list.append(chara_id)
                 # 全泰拉招募
-                # TODO 当前其他招聘策略均由全泰拉招聘代替，需要实装
-                elif recruitment_strategy == 1 or recruitment_strategy in {2,3,4}:
+                elif recruitment_strategy == 1:
+                    wait_id_list.append(chara_id)
+                # 同势力干员
+                elif recruitment_strategy == 2:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出势力相同的角色
+                    if character_data.relationship.nation != line_main_chara_data.relationship.nation:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同出身地干员
+                elif recruitment_strategy == 3:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出出身地相同的角色
+                    if character_data.relationship.birthplace != line_main_chara_data.relationship.birthplace:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同职业干员
+                elif recruitment_strategy == 4:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出职业相同的角色
+                    if character_data.profession != line_main_chara_data.profession:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同种族干员
+                elif recruitment_strategy == 5:
+                    character_data = cache.character_data[chara_id]
+                    # 筛选出种族相同的角色
+                    if character_data.race != line_main_chara_data.race:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同外表年龄干员
+                elif recruitment_strategy == 6:
+                    character_data = cache.character_data[chara_id]
+                    line_main_chara_age_talent = handle_talent.have_age_talent(line_main_chara_id)
+                    # 筛选出外表年龄相同的角色
+                    if character_data.talent[line_main_chara_age_talent] != 1:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同胸部大小干员
+                elif recruitment_strategy == 7:
+                    character_data = cache.character_data[chara_id]
+                    line_main_chara_bust_talent = handle_talent.have_chest_talent(line_main_chara_id)
+                    # 筛选出胸部大小相同的角色
+                    if character_data.talent[line_main_chara_bust_talent] != 1:
+                        continue
+                    wait_id_list.append(chara_id)
+                # 同臀部大小干员
+                elif recruitment_strategy == 8:
+                    character_data = cache.character_data[chara_id]
+                    line_main_chara_hip_talent = handle_talent.have_hip_talent(line_main_chara_id)
+                    # 筛选出臀部大小相同的角色
+                    if character_data.talent[line_main_chara_hip_talent] != 1:
+                        continue
                     wait_id_list.append(chara_id)
             if len(wait_id_list):
                 choice_id = random.choice(wait_id_list)
@@ -133,7 +186,7 @@ def update_recruit():
                 now_draw.text = _("\n\n   ※ 招募到了新的干员，请前往博士办公室确认 ※\n\n")
                 now_draw.draw()
             else:
-                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整策略或移动至其他国家 ※\n\n")
+                now_draw.text = _("\n\n   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整招募策略 ※\n\n")
                 now_draw.style = "warning"
                 now_draw.draw()
                 cache.rhodes_island.recruit_line[recruit_line_id][1] = 11
@@ -177,7 +230,7 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
     total_bonus = 0.0
     sub_bonus = 0.0
     # 文本
-    detail_parts_str = ""
+    hr_parts_str = "["
     # 遍历所有招聘专员
     for chara_id in cache.rhodes_island.hr_operator_ids_list:
         if chara_id not in cache.character_data:
@@ -189,25 +242,29 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
         base_effect = 2 * attr_calculation.get_ability_adjust(character_data.ability.get(40,0))
         if chara_id == line_main_id:
             total_bonus += base_effect
-            detail_parts_str += _("主:{0}(话术lv{1}:{2}%)").format(main_name, character_data.ability.get(40,0), round(base_effect,1))
+            hr_parts_str += _("主:{0}(话术lv{1}:{2}%)").format(main_name, character_data.ability.get(40,0), round(base_effect,1))
         elif chara_id in main_ids:
             pass
         else:
             sub_bonus += base_effect / 5
     # 如果文本为空，说明没有主招聘专员
-    if not detail_parts_str:
-        detail_parts_str = _("主:空缺")
+    if hr_parts_str == "[":
+        hr_parts_str += _("主:空缺")
         total_bonus = 1.0
     # 副专员
     total_bonus += sub_bonus
-    detail_parts_str += _("，副:{0}%").format(round(sub_bonus,1))
+    hr_parts_str += _("，副:{0}%]").format(round(sub_bonus,1))
+    # 除以策略难度调整
+    total_bonus /= recruitment_strategy_data.adjust
+    strategy_str = _(" * 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
     # 乘以设施效率
     total_bonus *= facility_effect
+    facility_effect_str = _("* 设施效率调整{0}%").format(round(facility_effect,1))
     # 停止招募则为0
     if recruitment_strategy_id == 11:
         total_bonus = 0.0
-        detail_parts_str += _("，已停止招募")
-    detail_str = _("当前效率加成：[{0}] * 效率加成：设施(lv{1}:{2}%) = {3}%").format(detail_parts_str, now_level, facility_effect, round(total_bonus, 1))
+        hr_parts_str += _("，已停止招募")
+    detail_str = _("当前效率加成：{0} {1} {2} = {2}%").format(hr_parts_str, strategy_str, facility_effect_str, round(total_bonus, 1))
     return detail_str, total_bonus
 
 class Recruit_Panel:
@@ -343,7 +400,7 @@ class Recruit_Panel:
             info_text = ""
             info_text += _(" {0}号招募当前的策略为：{1}").format(recruit_line_id+1, recruitment_strategy_data.name)
 
-            info_text += _("\n\n 当前可以选择的策略有：\n")
+            info_text += _("\n\n 当前可以选择的策略有（系数越高越简单）：\n")
             info_draw.text = info_text
             info_draw.draw()
             line_feed.draw()
@@ -354,21 +411,60 @@ class Recruit_Panel:
             # 遍历策略列表，获取每个策略的信息
             for cid in game_config.config_recruitment_strategy.keys():
                 recruitment_strategy_data = game_config.config_recruitment_strategy[cid]
+                # 如果设施等级不够，则跳过
+                if now_level < recruitment_strategy_data.lv:
+                    continue
 
-                if now_level >= cid + 1 or cid == 11:
+                # 输出策略信息
+                button_draw_text = f"[{str(cid).rjust(2,'0')}]"
+                button_draw_text += attr_calculation.pad_display_width(recruitment_strategy_data.name, 24)
+                button_draw_text += _("(调整系数{0})").format(recruitment_strategy_data.adjust)
+                button_draw_text += "："
+                button_draw_text += recruitment_strategy_data.introduce
+                # 主招聘专员id
+                line_main_chara_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
+                # 招聘当地随机干员
+                if cid == 0:
+                    birthplace_id = cache.rhodes_island.current_location[0]
+                    add_text = game_config.config_birthplace[birthplace_id].name
+                    button_draw_text += _("（{0}）").format(add_text)
+                # 对于同主招聘专员的策略，进行补充说明
+                elif cid in (2, 3, 4, 5, 6, 7, 8) and line_main_chara_id != 0:
+                    line_main_chara_data = cache.character_data[line_main_chara_id]
+                    add_text = ""
+                    if cid == 2:
+                        nation_id = line_main_chara_data.relationship.nation
+                        add_text = game_config.config_nation[nation_id].name
+                    elif cid == 3:
+                        birthplace_id = line_main_chara_data.relationship.birthplace
+                        add_text = game_config.config_birthplace[birthplace_id].name
+                    elif cid == 4:
+                        profession_id = line_main_chara_data.profession
+                        add_text = game_config.config_profession[profession_id].name
+                    elif cid == 5:
+                        race_id = line_main_chara_data.race
+                        add_text = game_config.config_race[race_id].name
+                    elif cid == 6:
+                        age_talent_id = handle_talent.have_age_talent(line_main_chara_id)
+                        add_text = game_config.config_talent[age_talent_id].name
+                    elif cid == 7:
+                        chest_talent_id = handle_talent.have_chest_talent(line_main_chara_id)
+                        add_text = game_config.config_talent[chest_talent_id].name
+                    elif cid == 8:
+                        hip_talent_id = handle_talent.have_hip_talent(line_main_chara_id)
+                        add_text = game_config.config_talent[hip_talent_id].name    
+                    button_draw_text += _("（{0}）").format(add_text)
+                button_draw = draw.LeftButton(
+                    button_draw_text,
+                    f"\n{cid}",
+                    window_width ,
+                    cmd_func=self.change_recruit_line_produce,
+                    args=(recruit_line_id ,cid)
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
 
-                    # 输出策略信息
-                    button_draw = draw.LeftButton(
-                        f"[{str(cid).rjust(2,'0')}]"+f"{recruitment_strategy_data.name}：{recruitment_strategy_data.introduce}",
-                        f"\n{cid}",
-                        window_width ,
-                        cmd_func=self.change_recruit_line_produce,
-                        args=(recruit_line_id ,cid)
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-
-                    line_feed.draw()
+                line_feed.draw()
 
             line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
