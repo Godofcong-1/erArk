@@ -353,6 +353,9 @@ def update_work_people():
 
     # 清空各流水线中的角色
     for recruit_line_id in cache.rhodes_island.recruit_line:
+        # 如果变量类型不是int，则改为0
+        if not isinstance(cache.rhodes_island.recruit_line[recruit_line_id][2], int):
+            cache.rhodes_island.recruit_line[recruit_line_id][2] = 0
         main_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
         if main_id and main_id in cache.character_data:
             character_data = cache.character_data[main_id]
