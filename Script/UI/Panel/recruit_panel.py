@@ -207,6 +207,9 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
     recruitment_strategy_data = game_config.config_recruitment_strategy.get(recruitment_strategy_id)
     if not recruitment_strategy_data:
         return _("未知策略"), 0.0
+    # 11号则直接返回
+    if recruitment_strategy_id == 11:
+        return _("已停止招募"), 0.0
 
     # 当前设施数据
     now_level = cache.rhodes_island.facility_level[7]
