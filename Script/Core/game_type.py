@@ -1144,6 +1144,8 @@ class Rhodes_Island:
         供需关系字典
         货物类型id: 供需系数值
         """
+        self.today_trade_resource_count: Dict[int, int] = {}
+        """ 资源类型id: 今日买入卖出总量 """
 
         # 制造加工区
         self.assembly_line: Dict[int, List] = {}

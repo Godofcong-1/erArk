@@ -50,6 +50,8 @@ def daily_supply_demand_fluctuation():
         # 跳过货币类（如龙门币）
         if res_id == 1:
             continue
+        # 今日买入卖出数量归零
+        cache.rhodes_island.today_trade_resource_count[res_id] = 0
         # 当前供需系数
         cur = supply_demand_dict.get(res_id, 1)
         # 经济学规律：
@@ -248,8 +250,10 @@ class Resource_Exchange_Line_Panel:
                     tem_quantity_of_resouce -= 50
                     # 增加供需系数，回归越强则增加越少
                     cur_sd = cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id]
-                    # 增量公式：基础0.001，越大越难涨
+                    # 增量公式：基础0.001，越大涨得越多
                     delta_sd = 0.001 * 10 * (1 / cur_sd)
+                    # 今日买入卖出数量越多，涨得越多
+                    delta_sd *= (1 + (cache.rhodes_island.today_trade_resource_count.get(self.now_select_resouce_id, 0) / 1000))
                     cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = round(cur_sd + delta_sd, 4)
                 # 限制最大值
                 cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = min(5.0, cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id])
@@ -265,11 +269,16 @@ class Resource_Exchange_Line_Panel:
                     tem_quantity_of_resouce -= 50
                     # 减少供需系数，回归越强则减少越少
                     cur_sd = cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id]
-                    # 减量公式：基础0.01，越小越难跌
+                    # 减量公式：基础0.01，越大跌的越多
                     delta_sd = 0.001 * 10 * (cur_sd / 1)
+                    # 今日买入卖出数量越多，跌的越少
+                    delta_sd /= (1 + (cache.rhodes_island.today_trade_resource_count.get(self.now_select_resouce_id, 0) / 1000))
                     cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = round(cur_sd - delta_sd, 4)
                 # 限制最小值
                 cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id] = max(0.1, cache.rhodes_island.supply_demand_dict[self.now_select_resouce_id])
+        # 记录今日交易总量
+        cache.rhodes_island.today_trade_resource_count.setdefault(self.now_select_resouce_id, 0)
+        cache.rhodes_island.today_trade_resource_count[self.now_select_resouce_id] += self.quantity_of_resouce
         # 打印交易结果
         info_draw = draw.WaitDraw()
         info_draw.text = _("\n交易成功！\n当前龙门币数量：{0}({1})\n资源{2}数量：{3}/{4}({5})\n").format(
