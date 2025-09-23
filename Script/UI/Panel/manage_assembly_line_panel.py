@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle, constan
 from Script.Design import attr_calculation, basement
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.UI.Panel import achievement_panel, manage_basement_panel
+from Script.UI.Panel import achievement_panel
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -450,16 +450,16 @@ class Manage_Assembly_Line_Panel:
                             info_draw.text = now_text
                             info_draw.draw()
                             line_feed.draw()
-                    line_feed.draw()
+                line_feed.draw()
 
-                line_feed.draw()
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-                back_draw.draw()
-                line_feed.draw()
-                return_list.append(back_draw.return_text)
-                yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list and yrn not in resouce_list:
-                    break
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list and yrn not in resouce_list:
+                break
 
     def change_assembly_line_produce(self, assembly_line_id, formula_cid):
         """更改流水线生产的产品"""
