@@ -2,7 +2,7 @@ from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import attr_calculation, basement
-from Script.UI.Moudle import draw
+from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel, manage_basement_panel
 
@@ -16,6 +16,55 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
+
+
+def calculate_assembly_line_efficiency(line_id:int) -> Tuple[str, float]:
+    """
+    计算某条生产线当前总效率(百分比值), 同时更新缓存结构中 index2
+    输入参数:
+    line_id -- 流水线id
+    输出参数:
+    流水线效率(百分比值, 例如 123.5)
+    """
+    ri = cache.rhodes_island
+    if line_id not in ri.assembly_line:
+        return _("无此生产线"), 0.0
+    # 设施效率(返回例如 1.15)
+    facility_effect_ratio = basement.calc_facility_efficiency(12)
+    facility_effect_str = _("* 设施效率调整{0}%").format(round((facility_effect_ratio)*100,1))
+    base = facility_effect_ratio * 100
+    # 如果不是int，则转为0
+    if not isinstance(ri.assembly_line[line_id][1], (int)):
+        ri.assembly_line[line_id][1] = 0
+    line_main_id = ri.assembly_line[line_id][1]
+    # 收集全部主生产工人，防止副工人重复计入
+    main_ids = {ri.assembly_line[lid][1] for lid in ri.assembly_line if isinstance(ri.assembly_line[lid][1], int)}
+    total = base
+    sub_bonus = 0.0
+    # 主工人加成
+    worker_str = "["
+    if line_main_id in cache.character_data and line_main_id != 0:
+        char_data: game_type.Character = cache.character_data[line_main_id]
+        main_bonus = 10 * attr_calculation.get_ability_adjust(char_data.ability[48])
+        total += main_bonus
+        worker_str = _("主:{0}(制造lv{1}:{2}%)").format(char_data.name, char_data.ability[48], round(main_bonus,1))
+    else:
+        worker_str += _("主:空缺")
+    # 副工人加成
+    for cid in ri.production_worker_ids:
+        if cid == 0 or cid not in cache.character_data:
+            continue
+        if cid in main_ids:
+            continue
+        char_data: game_type.Character = cache.character_data[cid]
+        base_effect = 2 * attr_calculation.get_ability_adjust(char_data.ability.get(48,0))
+        sub_bonus += base_effect
+    total += sub_bonus
+    worker_str += _("，副:{0}%]").format(round(sub_bonus,1))
+    # 写回
+    ri.assembly_line[line_id][2] = round(total,2)
+    detail_str = _("当前效率加成：{0} {1} = {2}%").format(worker_str, facility_effect_str, round(total,1))
+    return detail_str, ri.assembly_line[line_id][2]
 
 
 def settle_assembly_line(newdayflag = False, draw_flag = True):
@@ -38,8 +87,6 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
     for facility_str in cache.rhodes_island.facility_damage_data:
         if '制造加工' in facility_str:
             damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
-    # 计算总调整值
-    adjust = basement.calc_facility_efficiency(12)
 
     # 遍历流水线
     for assembly_line_id in cache.rhodes_island.assembly_line:
@@ -53,10 +100,11 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
                 max_time = 24 + cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
             else:
                 max_time = cache.game_time.hour - cache.rhodes_island.assembly_line[assembly_line_id][4]
-            # 生产效率
-            produce_effect = cache.rhodes_island.assembly_line[assembly_line_id][2] / 100
+            # 生产效率(动态计算)
+            detail_str, produce_effect = calculate_assembly_line_efficiency(assembly_line_id)
+            produce_effect = produce_effect / 100
             # 计算最大生产数
-            produce_num_max = int(max_time * produce_effect * adjust)
+            produce_num_max = int(max_time * produce_effect)
             produce_num = produce_num_max
             # print(f"debug 流水线{assembly_line_id},max_time = {max_time}，produce_effect = {produce_effect}，最大生产数为{produce_num_max}")
 
@@ -126,23 +174,22 @@ class Manage_Assembly_Line_Panel:
 
     def draw(self):
         """绘制对象"""
-
         title_text = _("产品生产")
         title_draw = draw.TitleLineDraw(title_text, self.width)
-        settle_assembly_line()
+
+        settle_assembly_line(draw_flag=False)
 
         while 1:
             return_list = []
             title_draw.draw()
 
             all_info_draw = draw.NormalDraw()
-            now_text = ""
-            now_text += _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
+            now_text = _(" 当前仓库等级：{0}，容量（单资源存放上限）：{1}\n").format(cache.rhodes_island.facility_level[3], cache.rhodes_island.warehouse_capacity)
 
             # 遍历全资源类型
             self.resouce_list = [_("材料"), _("药剂"), _("乳制品"), _("香水"), _("基建")]
             for resouce in self.resouce_list:
-                now_text += f"\n {resouce}："
+                now_text += f"\n {attr_calculation.pad_display_width(resouce, 8)}："
                 # 遍历该类型的资源
                 for material_id in cache.rhodes_island.materials_resouce:
                     material_data  = game_config.config_resouce[material_id]
@@ -179,22 +226,11 @@ class Manage_Assembly_Line_Panel:
                     )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
+                line_feed.draw()
 
-                # 生产效率
-                now_level = cache.rhodes_island.facility_level[12]
-                facility_cid = game_config.config_facility_effect_data[_("制造加工区")][int(now_level)]
-                all_effect = 0
-                facility_effect = game_config.config_facility_effect[facility_cid].effect
-                all_effect += facility_effect
-                now_text = _("\n    当前效率加成：设施(lv{0}:{1}%)").format(now_level, facility_effect)
-                # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    all_effect += character_effect
-                    now_text += _(" + {0}(制造lv{1}:{2}%)").format(character_data.name, character_data.ability[48], character_effect)
-                now_text += f" = {all_effect}%      "
-                all_info_draw.text = now_text
+                # 生产效率展示
+                detail_str, total_eff = calculate_assembly_line_efficiency(assembly_line_id)
+                all_info_draw.text = "    " + detail_str
                 all_info_draw.draw()
 
                 # 生产消耗
@@ -202,32 +238,20 @@ class Manage_Assembly_Line_Panel:
                 formula_text = formula_data.formula
                 # 以&为分割判定是否有多个需求
                 if "&" not in formula_text:
-                    need_list = []
-                    need_list.append(formula_text)
+                    need_list = [formula_text]
                 else:
                     need_list = formula_text.split('&')
                 for need_text in need_list:
                     need_type = int(need_text.split('|')[0])
                     need_value = int(need_text.split('|')[1])
                     now_text += f"  {game_config.config_resouce[need_type].name}:{need_value}/h"
-
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()
 
             line_feed.draw()
-            button_text = _("[001]工人增减")
-            button_draw = draw.LeftButton(
-                _(button_text),
-                _(button_text),
-                self.width,
-                cmd_func=manage_basement_panel.change_npc_work_out,
-                args=self.width
-                )
-            return_list.append(button_draw.return_text)
-            button_draw.draw()
-            line_feed.draw()
-            button_text = _("[002]工位调整")
+            # 管理按钮
+            button_text = _("[001]生产工人管理")
             button_draw = draw.LeftButton(
                 _(button_text),
                 _(button_text),
@@ -247,101 +271,185 @@ class Manage_Assembly_Line_Panel:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
+    def select_npc_position(self):
+        """生产工人管理(任命各线主生产工人 & 管理副工人列表)"""
+        ri = cache.rhodes_island
+        from Script.UI.Panel import manage_basement_panel
+        while 1:
+            # 刷新一下
+            basement.update_work_people()
+            title = draw.TitleLineDraw(_("生产工人管理"), self.width)
+            title.draw()
+            return_list = []
+
+            # 提示信息
+            info = draw.NormalDraw(); info.width = self.width
+            info.text = _("当前生产工人数量：{0}").format(len(ri.production_worker_ids))
+            info.text += "      "
+            info.draw()
+
+            # 生产工人增减按钮
+            button_text = _("[生产工人增减]")
+            btn = draw.CenterButton(_(button_text), _(button_text), len(button_text)*2+2, cmd_func=manage_basement_panel.change_npc_work_out, args=self.width)
+            btn.draw(); return_list.append(btn.return_text)
+            line_feed.draw(); line_feed.draw()
+
+            # 各生产线主生产工人显示与任命按钮
+            for line_id in ri.assembly_line:
+                main_id = ri.assembly_line[line_id][1]
+                name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
+                row = draw.NormalDraw(); row.width = self.width
+                row.text = _("{0}号生产线 主生产工人: {1}  ").format(line_id+1, name)
+                row.draw()
+                def _make(lid):
+                    return lambda : self._appoint_main_worker(lid)
+                appoint_btn = draw.CenterButton(_("[任命]"), _("任命")+str(line_id+1), 12, cmd_func=_make(line_id))
+                appoint_btn.draw(); return_list.append(appoint_btn.return_text)
+                line_feed.draw()
+            line_feed.draw()
+
+            # 显示所有副生产工人
+            main_ids = {ri.assembly_line[i][1] for i in ri.assembly_line}
+            others = [cid for cid in ri.production_worker_ids if cid not in main_ids and cid in cache.character_data]
+            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            other_draw.text = _("副生产工人：") + ("、".join([cache.character_data[c].name for c in others]) if others else _("暂无")) + "\n"
+            other_draw.draw()
+            line_feed.draw(); line_feed.draw()
+
+            # 返回按钮
+            back = draw.CenterButton(_("[返回]"), _("返回"), self.width)
+            back.draw(); return_list.append(back.return_text)
+            line_feed.draw()
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back.return_text:
+                break
+
+    def _appoint_main_worker(self, line_id:int):
+        """任命主生产工人(重复选择撤销)"""
+        ri = cache.rhodes_island
+        from Script.UI.Panel import common_select_NPC
+        now_panel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50,5, window_width, True, False, 0)
+        select_state = {}
+        def _handler(chara_id):
+            if chara_id not in ri.production_worker_ids:
+                return
+            # 选择了当前主生产工人则撤销，否则任命
+            if ri.assembly_line[line_id][1] == chara_id:
+                ri.assembly_line[line_id][1] = 0
+            else:
+                # 如果该工人在其它线已是主生产工人则先撤销
+                for lid in ri.assembly_line:
+                    if lid != line_id and ri.assembly_line[lid][1] == chara_id:
+                        ri.assembly_line[lid][1] = 0
+                ri.assembly_line[line_id][1] = chara_id
+        while 1:
+            info_text = _("请选择一名生产工人担任第{0}号生产线主生产工人:\n").format(line_id+1)
+            final_list = []
+            # 遍历生产工人列表
+            for npc_id in ri.production_worker_ids:
+                if npc_id == 0: continue
+                final_list.append([npc_id, _handler, [ri.assembly_line[line_id][1]]])
+            now_panel.text_list = final_list
+            return_list, other_return_list, select_state = common_select_NPC.common_select_npc_button_list_func(now_panel, _("任命主生产工人"), info_text, select_state)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == _("返回"):
+                break
+
     def select_assembly_line_produce(self, assembly_line_id):
         """选择流水线生产的产品"""
         while 1:
 
-                line = draw.LineDraw("-", window_width)
-                line.draw()
-                info_draw = draw.NormalDraw()
-                info_draw.width = window_width
-                return_list = []
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.width = window_width
+            return_list = []
 
-                formula_now_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
-                formula_now_data = game_config.config_productformula[formula_now_id]
-                product_now_id = formula_now_data.product_id
-                product_now_data = game_config.config_resouce[product_now_id]
-                now_level = cache.rhodes_island.facility_level[12]
+            formula_now_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
+            formula_now_data = game_config.config_productformula[formula_now_id]
+            product_now_id = formula_now_data.product_id
+            product_now_data = game_config.config_resouce[product_now_id]
+            now_level = cache.rhodes_island.facility_level[12]
 
-                info_text = f""
-                # info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
-                info_text += _(" {0}号流水线当前生产的产品为：{1}").format(assembly_line_id+1, product_now_data.name)
+            info_text = f""
+            # info_text = f" ○需要先结算然后才可以变动生产的产品\n\n"
+            info_text += _(" {0}号流水线当前生产的产品为：{1}").format(assembly_line_id+1, product_now_data.name)
 
-                info_text += _("\n\n 当前可以生成的产品有：\n\n")
-                info_draw.text = info_text
-                info_draw.draw()
+            info_text += _("\n\n 当前可以生成的产品有：\n\n")
+            info_draw.text = info_text
+            info_draw.draw()
 
-                resouce_list = [_("药剂"), _("乳制品"), _("香水"), _("基建")]
+            resouce_list = [_("药剂"), _("乳制品"), _("香水"), _("基建")]
 
-                # 遍历全资源类型
-                for resouce in resouce_list:
+            # 遍历全资源类型
+            for resouce in resouce_list:
 
-                    # 判断是否显示该类型的资源
-                    if self.show_resource_type_dict[resouce]:
-                        draw_text = f" ▼[{resouce}]"
-                    else:
-                        draw_text = f" ▶[{resouce}]"
-                    button_draw = draw.LeftButton(
-                    f"{draw_text}",
-                    f"{resouce}",
-                    len(draw_text) * 2,
-                    cmd_func=self.settle_show_resource_type,
-                    args=(resouce)
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                    line_feed.draw()
+                # 判断是否显示该类型的资源
+                if self.show_resource_type_dict[resouce]:
+                    draw_text = f" ▼[{resouce}]"
+                else:
+                    draw_text = f" ▶[{resouce}]"
+                button_draw = draw.LeftButton(
+                f"{draw_text}",
+                f"{resouce}",
+                len(draw_text) * 2,
+                cmd_func=self.settle_show_resource_type,
+                args=(resouce)
+                )
+                button_draw.draw()
+                return_list.append(button_draw.return_text)
+                line_feed.draw()
 
-                    if not self.show_resource_type_dict[resouce]:
-                        continue
+                if not self.show_resource_type_dict[resouce]:
+                    continue
 
-                    # 遍历该类型的资源
-                    for material_id in cache.rhodes_island.materials_resouce:
-                        material_data = game_config.config_resouce[material_id]
-                        formula_cid = 0
-                        if material_data.type == resouce:
-                            # 根据资源id来查找配方id
-                            for cid in game_config.config_productformula.keys():
-                                formula_data = game_config.config_productformula[cid]
-                                if formula_data.product_id == material_id:
-                                    formula_cid = formula_data.cid
-                                    break
-                            # 如果没有配方id则跳过
-                            if formula_cid == 0:
-                                continue
-                            # 判断当前配方是否可以生产，未解锁则跳过
-                            flag_open = True
-                            if formula_data.difficulty > now_level:
-                                flag_open = False
-                            # 可以生产的话则输出
-                            if flag_open:
-                                line_feed.draw()
-                                button_draw = draw.LeftButton(
-                                    f"[{str(formula_cid).rjust(3,'0')}]{material_data.name}：{material_data.info}",
-                                    f"\n{formula_cid}",
-                                    window_width ,
-                                    cmd_func=self.change_assembly_line_produce,
-                                    args=(assembly_line_id ,formula_cid)
-                                )
-                                button_draw.draw()
-                                return_list.append(button_draw.return_text)
+                # 遍历该类型的资源
+                for material_id in cache.rhodes_island.materials_resouce:
+                    material_data = game_config.config_resouce[material_id]
+                    formula_cid = 0
+                    if material_data.type == resouce:
+                        # 根据资源id来查找配方id
+                        for cid in game_config.config_productformula.keys():
+                            formula_data = game_config.config_productformula[cid]
+                            if formula_data.product_id == material_id:
+                                formula_cid = formula_data.cid
+                                break
+                        # 如果没有配方id则跳过
+                        if formula_cid == 0:
+                            continue
+                        # 判断当前配方是否可以生产，未解锁则跳过
+                        flag_open = True
+                        if formula_data.difficulty > now_level:
+                            flag_open = False
+                        # 可以生产的话则输出
+                        if flag_open:
+                            line_feed.draw()
+                            button_draw = draw.LeftButton(
+                                f"[{str(formula_cid).rjust(3,'0')}]{material_data.name}：{material_data.info}",
+                                f"\n{formula_cid}",
+                                window_width ,
+                                cmd_func=self.change_assembly_line_produce,
+                                args=(assembly_line_id ,formula_cid)
+                            )
+                            button_draw.draw()
+                            return_list.append(button_draw.return_text)
 
-                                formula_text = formula_data.formula
-                                now_text = _("\n     生产消耗：")
-                                # 以&为分割判定是否有多个需求
-                                if "&" not in formula_text:
-                                    need_list = []
-                                    need_list.append(formula_text)
-                                else:
-                                    need_list = formula_text.split('&')
-                                for need_text in need_list:
-                                    need_type = int(need_text.split('|')[0])
-                                    need_value = int(need_text.split('|')[1])
-                                    now_text += f"  {game_config.config_resouce[need_type].name}：{need_value}/h"
+                            formula_text = formula_data.formula
+                            now_text = _("\n     生产消耗：")
+                            # 以&为分割判定是否有多个需求
+                            if "&" not in formula_text:
+                                need_list = []
+                                need_list.append(formula_text)
+                            else:
+                                need_list = formula_text.split('&')
+                            for need_text in need_list:
+                                need_type = int(need_text.split('|')[0])
+                                need_value = int(need_text.split('|')[1])
+                                now_text += f"  {game_config.config_resouce[need_type].name}：{need_value}/h"
 
-                                info_draw.text = now_text
-                                info_draw.draw()
-                                line_feed.draw()
+                            info_draw.text = now_text
+                            info_draw.draw()
+                            line_feed.draw()
                     line_feed.draw()
 
                 line_feed.draw()
@@ -352,120 +460,6 @@ class Manage_Assembly_Line_Panel:
                 yrn = flow_handle.askfor_all(return_list)
                 if yrn in return_list and yrn not in resouce_list:
                     break
-
-    def select_npc_position(self):
-        """选择干员的工位"""
-
-        self.now_chara_id = -1
-        old_position = 0
-        self.target_position = 0
-
-        while 1:
-            return_list = []
-            line = draw.LineDraw("-", window_width)
-            line.draw()
-
-            if self.now_chara_id != -1:
-                now_character_data: game_type.Character = cache.character_data[self.now_chara_id]
-                now_select_npc_name = now_character_data.name
-                for assembly_line_id in cache.rhodes_island.assembly_line:
-                    if self.now_chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
-                        old_position = assembly_line_id
-                        break
-            else:
-                now_select_npc_name = _("未选择")
-
-            all_info_draw = draw.NormalDraw()
-            now_text = _("\n○当前的决定： 把 {0} 从 {1} 号流水线调整到 {2} 号流水线").format(now_select_npc_name, old_position + 1, self.target_position + 1)
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-
-            # 遍历全干员
-            now_text = _("\n可选工人有：\n")
-            all_info_draw.text = now_text
-            all_info_draw.draw()
-            flag_not_empty = False
-            # 去掉玩家
-            cache.npc_id_got.discard(0)
-            # 去掉访客
-            id_list = [i for i in cache.npc_id_got if i not in cache.rhodes_island.visitor_info]
-            for chara_id in id_list:
-                character_data: game_type.Character = cache.character_data[chara_id]
-                # 找到职业是生产工人的
-                if character_data.work.work_type == 121:
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    button_text = _(" [{0}(制造lv{1}:{2}%)] ").format(character_data.name, character_data.ability[48], character_effect)
-                    button_draw = draw.CenterButton(
-                    _(button_text),
-                    _(button_text),
-                    int(len(button_text)*1.5),
-                    cmd_func=self.settle_npc_id,
-                    args=chara_id,
-                    )
-                    button_draw.draw()
-                    return_list.append(button_draw.return_text)
-                    flag_not_empty = True
-
-            # 如果没有工作是生产工人的干员则输出提示
-            if not flag_not_empty:
-                now_text = _(" 暂无工作是生产工人的干员")
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-
-            line_feed.draw()
-
-            for assembly_line_id in cache.rhodes_island.assembly_line:
-                now_text = _("\n {0}号流水线：").format(assembly_line_id+1)
-
-                # 生产产品
-                formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
-                formula_data = game_config.config_productformula[formula_id]
-                product_id = formula_data.product_id
-                product_data = game_config.config_resouce[product_id]
-                now_text += _("\n    当前生产：{0}(1/h)      ").format(product_data.name)
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-
-                button_text = _(" [将选择工人调整至该流水线] ")
-                button_draw = draw.CenterButton(
-                _(button_text),
-                "{0}_{1}".format(button_text, assembly_line_id),
-                int(len(button_text)*2),
-                cmd_func=self.settle_assembly_line_id,
-                args=assembly_line_id,
-                )
-                button_draw.draw()
-                return_list.append(button_draw.return_text)
-
-                # 生产效率
-                now_text = _("\n    当前工人：")
-                # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    now_text += _(" + {0}(制造lv{1}:{2}%)").format(character_data.name, character_data.ability[48], character_effect)
-                all_info_draw.text = now_text
-                all_info_draw.draw()
-                line_feed.draw()
-
-            line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
-            if self.now_chara_id != -1:
-                yes_draw.draw()
-                return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
-            back_draw.draw()
-            line_feed.draw()
-            return_list.append(back_draw.return_text)
-            yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text:
-                break
-            # 确定的话就进行id的转移结算
-            elif yrn == yes_draw.return_text:
-                cache.rhodes_island.assembly_line[old_position][1].discard(self.now_chara_id)
-                cache.rhodes_island.assembly_line[self.target_position][1].add(self.now_chara_id)
-                basement.get_base_updata()
-                break
 
     def change_assembly_line_produce(self, assembly_line_id, formula_cid):
         """更改流水线生产的产品"""

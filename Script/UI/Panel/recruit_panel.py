@@ -262,7 +262,7 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
     strategy_str = _(" * 策略调整系数{0}%").format(int(recruitment_strategy_data.adjust * 100))
     # 乘以设施效率
     total_bonus *= facility_effect
-    facility_effect_str = _("* 设施效率调整{0}%").format(round(facility_effect,1))
+    facility_effect_str = _("* 设施效率调整{0}%").format(round(facility_effect * 100,1))
     # 停止招募则为0
     if recruitment_strategy_id == 11:
         total_bonus = 0.0

@@ -61,8 +61,8 @@ def get_base_zero() -> game_type.Rhodes_Island:
     # 访客来访时间初始化
     base_data.last_visitor_time = cache.game_time
 
-    # 初始化流水线
-    base_data.assembly_line[0] = [1,set(),0,0,0]
+    # 初始化流水线(结构: [生产配方id, 主生产工人id, 当前总效率百分比, 待切换配方id, 上次结算小时])
+    base_data.assembly_line[0] = [1,0,0.0,0,0]
 
     # 初始化招募(结构:[进度, 策略id, 主招聘专员id, 线效率])
     base_data.recruit_line[0] = [0,0,0,0]
@@ -148,25 +148,16 @@ def get_base_updata():
                 detail_str, total_bonus = recruit_panel.calculate_recruit_line_efficiency(recruit_line_id)
                 cache.rhodes_island.recruit_line[recruit_line_id][3] = round(total_bonus,1)
         elif facility_name == _("制造加工区"):
-            # 初始化流水线
-            if 0 not in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[0] = [0,set(),0,0,0]
-            if level >= 2 and 1 not in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[1] = [0,set(),0,0,0]
-            if level >= 3 and 2 not in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[2] = [0,set(),0,0,0]
-            if level >= 4 and 3 not in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[3] = [0,set(),0,0,0]
-            if level >= 5 and 4 not in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[4] = [0,set(),0,0,0]
-            # 计算当前总效率
-            for assembly_line_id in cache.rhodes_island.assembly_line:
-                cache.rhodes_island.assembly_line[assembly_line_id][2] = 100 + facility_effect
-                # 遍历输出干员的能力效率加成
-                for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
-                    character_data: game_type.Character = cache.character_data[chara_id]
-                    character_effect = int(10 * attr_calculation.get_ability_adjust(character_data.ability[48]))
-                    cache.rhodes_island.assembly_line[assembly_line_id][2] += character_effect
+            # 初始化流水线(按等级开放数量)
+            def _init_line(idx:int):
+                if idx not in cache.rhodes_island.assembly_line:
+                    cache.rhodes_island.assembly_line[idx] = [0,0,0.0,0,0]
+            _init_line(0)
+            if level >= 2: _init_line(1)
+            if level >= 3: _init_line(2)
+            if level >= 4: _init_line(3)
+            if level >= 5: _init_line(4)
+            # 暂不在此处直接计算效率，延迟到调用 calculate_assembly_line_efficiency
         elif facility_name == _("访客区"):
             # 刷新最大访客数量
             # 遍历全部客房
@@ -351,7 +342,7 @@ def update_work_people():
     for all_cid in game_config.config_work_type:
         cache.rhodes_island.all_work_npc_set[all_cid] = set()
 
-    # 清空各流水线中的角色
+    # 检查各招聘线主招聘专员有效性
     for recruit_line_id in cache.rhodes_island.recruit_line:
         # 如果变量类型不是int，则改为0
         if not isinstance(cache.rhodes_island.recruit_line[recruit_line_id][2], int):
@@ -362,12 +353,18 @@ def update_work_people():
             # 如果已经不是招聘专员，则撤销主招聘专员
             if character_data.work.work_type != 71:
                 cache.rhodes_island.recruit_line[recruit_line_id][2] = 0
+    # 校验各生产线主生产工人有效性
     for assembly_line_id in cache.rhodes_island.assembly_line:
-        for chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1].copy():
-            character_data = cache.character_data[chara_id]
-            # 如果已经不是工人，则从该流水线中移除
+        # 如果变量类型不是int，则改为0
+        if not isinstance(cache.rhodes_island.assembly_line[assembly_line_id][1], int):
+            cache.rhodes_island.assembly_line[assembly_line_id][1] = 0
+        main_id = cache.rhodes_island.assembly_line[assembly_line_id][1]
+        if main_id and main_id in cache.character_data:
+            character_data = cache.character_data[main_id]
+            # 如果已经不是工人，则撤销主生产工人
             if character_data.work.work_type != 121:
-                cache.rhodes_island.assembly_line[assembly_line_id][1].discard(chara_id)
+                cache.rhodes_island.assembly_line[assembly_line_id][1] = 0
+
     cache.rhodes_island.herb_garden_line[0][1].clear()
     cache.rhodes_island.green_house_line[0][1].clear()
 
@@ -380,45 +377,6 @@ def update_work_people():
         if character_data.work.work_type:
             cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
-
-            # 如果是供能调控员，则加入供能调控员列表
-            if character_data.work.work_type == 11:
-                if chara_id not in cache.rhodes_island.power_operator_ids_list:
-                    cache.rhodes_island.power_operator_ids_list.append(chara_id)
-            # 如果不是供能调控员，则从供能调控员列表中移除
-            else:
-                if chara_id in cache.rhodes_island.power_operator_ids_list:
-                    cache.rhodes_island.power_operator_ids_list.remove(chara_id)
-
-            # 如果不是检修工程师，则清空该角色的检修目标
-            if character_data.work.work_type != 21:
-                if chara_id in cache.rhodes_island.maintenance_place:
-                    cache.rhodes_island.maintenance_place.pop(chara_id)
-
-            # 如果不是铁匠，则清空该角色的维修装备
-            if character_data.work.work_type != 22:
-                if chara_id in cache.rhodes_island.maintenance_equipment_chara_id:
-                    cache.rhodes_island.maintenance_equipment_chara_id.pop(chara_id)
-
-            # 招聘专员列表维护
-            if character_data.work.work_type == 71:
-                if chara_id not in cache.rhodes_island.hr_operator_ids_list:
-                    cache.rhodes_island.hr_operator_ids_list.append(chara_id)
-            else:
-                if chara_id in cache.rhodes_island.hr_operator_ids_list:
-                    cache.rhodes_island.hr_operator_ids_list.remove(chara_id)
-
-            # 工人如果没有被分配到流水线，则随机分配
-            if character_data.work.work_type == 121:
-                select_index = -1
-                for assembly_line_id in cache.rhodes_island.assembly_line:
-                    if chara_id in cache.rhodes_island.assembly_line[assembly_line_id][1]:
-                        select_index = assembly_line_id
-                        break
-                if select_index == -1:
-                    line_id_list = list(cache.rhodes_island.assembly_line.keys())
-                    select_index = random.choice(line_id_list)
-                    cache.rhodes_island.assembly_line[select_index][1].add(chara_id)
 
             # 将旧的外交官改为新的邀请专员
             if character_data.work.work_type == 131 and character_data.sp_flag.in_diplomatic_visit == 0:
@@ -436,6 +394,42 @@ def update_work_people():
         else:
             cache.rhodes_island.all_work_npc_set[0].add(chara_id)
         # print(f"debug cache.base_resouce.all_work_npc_set = {cache.base_resouce.all_work_npc_set}")
+
+        # 如果是供能调控员，则加入供能调控员列表
+        if character_data.work.work_type == 11:
+            if chara_id not in cache.rhodes_island.power_operator_ids_list:
+                cache.rhodes_island.power_operator_ids_list.append(chara_id)
+        # 如果不是供能调控员，则从供能调控员列表中移除
+        else:
+            if chara_id in cache.rhodes_island.power_operator_ids_list:
+                cache.rhodes_island.power_operator_ids_list.remove(chara_id)
+
+        # 如果不是检修工程师，则清空该角色的检修目标
+        if character_data.work.work_type != 21:
+            if chara_id in cache.rhodes_island.maintenance_place:
+                cache.rhodes_island.maintenance_place.pop(chara_id)
+
+        # 如果不是铁匠，则清空该角色的维修装备
+        if character_data.work.work_type != 22:
+            if chara_id in cache.rhodes_island.maintenance_equipment_chara_id:
+                cache.rhodes_island.maintenance_equipment_chara_id.pop(chara_id)
+
+        # 招聘专员列表维护
+        if character_data.work.work_type == 71:
+            if chara_id not in cache.rhodes_island.hr_operator_ids_list:
+                cache.rhodes_island.hr_operator_ids_list.append(chara_id)
+        else:
+            if chara_id in cache.rhodes_island.hr_operator_ids_list:
+                cache.rhodes_island.hr_operator_ids_list.remove(chara_id)
+
+        # 如果是工人，则加入工人列表
+        if character_data.work.work_type == 121:
+            if chara_id not in cache.rhodes_island.production_worker_ids:
+                cache.rhodes_island.production_worker_ids.append(chara_id)
+        # 如果不是工人，则从工人列表中移除
+        else:
+            if chara_id in cache.rhodes_island.production_worker_ids:
+                cache.rhodes_island.production_worker_ids.remove(chara_id)
 
 
 def update_facility_people():

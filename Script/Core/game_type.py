@@ -1147,7 +1147,9 @@ class Rhodes_Island:
 
         # 制造加工区
         self.assembly_line: Dict[int, List] = {}
-        """ 流水线情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        """ 流水线id: [0生产配方id(formula_id), 1主生产工人id(0为空缺), 2当前总效率百分比(浮点, 如 123.5), 3待切换配方id(次日生效, 0表示无), 4上次结算小时] """
+        self.production_worker_ids: List[int] = []
+        """ 生产工人id列表 """
 
         # 访客区
         self.visitor_max: int = 0
