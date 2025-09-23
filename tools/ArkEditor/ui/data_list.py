@@ -183,6 +183,9 @@ class DataList(DataListIdEditMixin, QWidget):
         # 绑定Delete键快捷键，按下时触发删除条目
         self.delete_shortcut = QShortcut(QKeySequence(Qt.Key_Delete), self)
         self.delete_shortcut.activated.connect(self.delete_text)
+        # 绑定 Ctrl+Y 为重做
+        self.redo_shortcut = QShortcut(QKeySequence('Ctrl+Y'), self)
+        self.redo_shortcut.activated.connect(self.redo_delete)
 
     def update_font(self, font):
         print(font)
@@ -278,6 +281,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def delete_text(self):
         """删除条目"""
+        # 删除前保存快照
+        undo_snapshot_manager.save_snapshot()
         if cache_control.now_edit_type_flag == 1:
             self.event_delete()
         elif cache_control.now_edit_type_flag == 0:
@@ -560,6 +565,12 @@ class DataList(DataListIdEditMixin, QWidget):
         无参数，无返回值。
         """
         if undo_snapshot_manager.undo():
+            self.update()
+        self.update()
+
+    def redo_delete(self):
+        """快照式重做（Ctrl+Y）。无参数，无返回值。"""
+        if hasattr(undo_snapshot_manager, 'redo') and undo_snapshot_manager.redo():
             self.update()
         self.update()
 
