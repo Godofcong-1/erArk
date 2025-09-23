@@ -29,6 +29,8 @@ class DataList(DataListIdEditMixin, QWidget):
         self.text_id_change_button.clicked.connect(self.update_text_id)
         self.info_button = QPushButton("使用说明书")
         self.info_button.clicked.connect(function.show_talk_introduce)
+        # 撤销/重做计数标签
+        self.undo_redo_label = QLabel("撤销:0 | 重做:0")
         # 新增条目、复制条目、删除条目
         self.new_text_button = QPushButton("新增条目")
         self.new_text_button.clicked.connect(self.buton_add)
@@ -37,7 +39,7 @@ class DataList(DataListIdEditMixin, QWidget):
         self.delete_text_button = QPushButton("删除条目")
         self.delete_text_button.clicked.connect(self.delete_text)
         # 只显示当前指令
-        self.select_now_instruct_check_box = QCheckBox("【筛选当前指令条目】—")
+        self.select_now_instruct_check_box = QCheckBox("【筛选当前指令条目】→")
         self.select_now_instruct_check_box.stateChanged.connect(self.select_now_instruct)
         # 将复选框的指示器放到文本的后面（右侧）
         self.select_now_instruct_check_box.setLayoutDirection(Qt.RightToLeft)
@@ -77,8 +79,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
         # 初始化菜单
         self.menu_bar = QMenuBar(self)
-        self.status_menu: QMenu = QMenu(cache_control.behavior_data[cache_control.now_behavior], self)
-        self.type_menu : QMenu = QMenu(cache_control.now_type, self)
+        self.status_menu = QMenu(cache_control.behavior_data[cache_control.now_behavior], self)
+        self.type_menu = QMenu(cache_control.now_type, self)
         self.menu_bar.addMenu(self.status_menu)
         self.menu_bar.addMenu(self.type_menu)
         self.status_menu.setFont(self.font)
@@ -125,6 +127,7 @@ class DataList(DataListIdEditMixin, QWidget):
         self.top_layout.addWidget(self.text_id_text_edit)
         self.top_layout.addWidget(self.text_id_change_button)
         self.top_layout.addWidget(self.info_button)
+        self.top_layout.addWidget(self.undo_redo_label)
 
         self.second_layout.addWidget(self.text_search_edit)
         self.second_layout.addWidget(label2_text)
@@ -186,6 +189,13 @@ class DataList(DataListIdEditMixin, QWidget):
         # 绑定 Ctrl+Y 为重做
         self.redo_shortcut = QShortcut(QKeySequence('Ctrl+Y'), self)
         self.redo_shortcut.activated.connect(self.redo_delete)
+
+        # 注册监听器，实时更新撤销/重做步数
+        def _update_undo_redo(undo_len, redo_len):
+            self.undo_redo_label.setText(f"撤销:{undo_len} | 重做:{redo_len}")
+        undo_snapshot_manager.add_listener(_update_undo_redo)
+
+    # 保留原手动调用 save_snapshot 策略，避免动态覆写导致类型检查问题
 
     def update_font(self, font):
         print(font)
@@ -328,8 +338,10 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def create_event(self):
         """新增事件"""
-        # 数据变更前保存快照
-        undo_snapshot_manager.save_snapshot()
+        # 数据变更前保存快照（方法内部也会再次调用的可去重，但保证安全）
+        # 注意：外层按钮已保存，这里留作直接调用时的保护
+        if not undo_snapshot_manager.snapshot_stack or undo_snapshot_manager.snapshot_stack[-1]['now_select_id'] != cache_control.now_select_id:
+            undo_snapshot_manager.save_snapshot()
         item = ListItem("空事件")
         item.uid = str(uuid.uuid4())
         event = game_type.Event()
@@ -386,8 +398,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def copy_event(self):
         """复制事件"""
-        # 数据变更前保存快照
-        undo_snapshot_manager.save_snapshot()
+        if not undo_snapshot_manager.snapshot_stack or undo_snapshot_manager.snapshot_stack[-1]['now_select_id'] != cache_control.now_select_id:
+            undo_snapshot_manager.save_snapshot()
         event_index = self.list_widget.currentRow()
         old_item = self.list_widget.item(event_index)
         old_event = cache_control.now_event_data[old_item.uid]
@@ -417,8 +429,8 @@ class DataList(DataListIdEditMixin, QWidget):
 
     def create_talk(self):
         """新增口上"""
-        # 数据变更前保存快照
-        undo_snapshot_manager.save_snapshot()
+        if not undo_snapshot_manager.snapshot_stack or undo_snapshot_manager.snapshot_stack[-1]['now_select_id'] != cache_control.now_select_id:
+            undo_snapshot_manager.save_snapshot()
         item = ListItem("空口上")
         # 计算一个可用的整数 cid，然后以字符串形式存入 item.uid 与 talk.cid
         new_cid = 1
@@ -475,8 +487,8 @@ class DataList(DataListIdEditMixin, QWidget):
         无参数，无返回值。
         新条目插入到符合其cid编号的顺序位置。
         """
-        # 数据变更前保存快照
-        undo_snapshot_manager.save_snapshot()
+        if not undo_snapshot_manager.snapshot_stack or undo_snapshot_manager.snapshot_stack[-1]['now_select_id'] != cache_control.now_select_id:
+            undo_snapshot_manager.save_snapshot()
         talk_index = self.list_widget.currentRow()
         old_item = self.list_widget.item(talk_index)
         old_talk = cache_control.now_talk_data[old_item.uid]

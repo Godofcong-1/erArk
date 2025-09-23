@@ -14,6 +14,8 @@ class UndoSnapshotManager:
         # 撤销栈，每个元素为一个快照字典
         self.snapshot_stack = []  # 存放“修改前”状态
         self.redo_stack = []      # 存放“撤销前(修改后)”状态，用于 Ctrl+Y 重做
+        self.max_depth = 100      # 默认最大深度
+        self._listeners = []      # 状态监听回调列表
 
     def _make_snapshot(self):
         """生成当前全量数据快照（内部使用）。"""
@@ -34,8 +36,12 @@ class UndoSnapshotManager:
         """
         snapshot = self._make_snapshot()
         self.snapshot_stack.append(snapshot)
+        # 超出最大深度，丢弃最早的
+        if len(self.snapshot_stack) > self.max_depth:
+            self.snapshot_stack.pop(0)
         # 新的分支产生，清空 redo 栈
         self.redo_stack.clear()
+        self._notify()
         # print("快照已保存，当前撤销栈大小:", len(self.snapshot_stack))
 
     def undo(self):
@@ -57,6 +63,7 @@ class UndoSnapshotManager:
         cache_control.now_event_data = snapshot['now_event_data']
         cache_control.now_select_id = snapshot['now_select_id']
         cache_control.now_edit_type_flag = snapshot['now_edit_type_flag']
+        self._notify()
         # print("撤销成功")
         return True
 
@@ -77,8 +84,42 @@ class UndoSnapshotManager:
         cache_control.now_event_data = redo_snapshot['now_event_data']
         cache_control.now_select_id = redo_snapshot['now_select_id']
         cache_control.now_edit_type_flag = redo_snapshot['now_edit_type_flag']
+        self._notify()
         # print("重做成功")
         return True
+
+    # ---------------- 新增：监听与包装 ---------------
+    def add_listener(self, callback):
+        """添加一个监听器，在撤销/重做/保存快照后调用。"""
+        if callback not in self._listeners:
+            self._listeners.append(callback)
+
+    def remove_listener(self, callback):
+        if callback in self._listeners:
+            self._listeners.remove(callback)
+
+    def _notify(self):
+        for cb in list(self._listeners):
+            try:
+                cb(len(self.snapshot_stack), len(self.redo_stack))
+            except Exception:
+                pass
+
+    def undoable(self, func=None, *, auto_snapshot=True):
+        """
+        装饰器/包装器：在执行修改逻辑前自动保存快照，并可清理 redo。
+        使用：@undo_snapshot_manager.undoable
+        或：wrapped = undo_snapshot_manager.undoable(fn)
+        """
+        def decorator(inner_func):
+            def wrapper(*args, **kwargs):
+                if auto_snapshot:
+                    self.save_snapshot()
+                return inner_func(*args, **kwargs)
+            return wrapper
+        if func is not None:
+            return decorator(func)
+        return decorator
 
 # 单例
 undo_snapshot_manager = UndoSnapshotManager()
