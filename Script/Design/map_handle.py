@@ -18,7 +18,7 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def get_map_draw_for_map_path(map_path_str: str) -> str:
+def get_map_draw_for_map_path(map_path_str: str) -> game_type.MapDraw:
     """
     从地图路径获取地图绘制数据
     Keyword arguments:
@@ -176,6 +176,7 @@ def get_scene_to_scene_map_list(now_scene_path: list, target_scene_path: list) -
         target_scene_to_common_map = get_map_hierarchy_list_for_scene_path(target_scene_path, common_map)
         common_map_to_target_scene = value_handle.reverse_array_list(target_scene_to_common_map)
         return "", now_scene_to_common_map + common_map_to_target_scene[1:]
+    return "", []
 
 
 def get_common_map_for_scene_path(scene_a_path: list, scene_b_path: list) -> list:
@@ -454,26 +455,6 @@ def judge_scene_is_full(scene_path_str: str) -> bool:
         return True
     return False
 
-def sort_scene_character_id(scene_path_str: str):
-    """
-    对场景上的角色按好感度进行排序
-    Keyword arguments:
-    scene_path -- 场景路径
-    """
-    now_scene_character_intimate_data = {}
-    for character in cache.scene_data[scene_path_str].character_list:
-        now_scene_character_intimate_data[character] = cache.character_data[character].intimate
-    new_scene_character_intimate_data = sorted(
-        now_scene_character_intimate_data.items(),
-        key=lambda x: (x[1], -int(x[0])),
-        reverse=True,
-    )
-    new_scene_character_intimate_data = value_handle.two_bit_array_to_dict(
-        new_scene_character_intimate_data
-    )
-    cache.scene_data[scene_path_str].character_list = set(new_scene_character_intimate_data)
-
-
 def init_scene_edge_path_data():
     """初始化全部地图寻路数据"""
     global scene_path_edge
@@ -579,7 +560,7 @@ def identical_map_move(
     return move_end, move_path, now_target_position, now_need_time
 
 
-def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag = True) -> int :
+def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag = True) -> str :
     """
     判断目标地点是否可以进入
     Keyword arguments:

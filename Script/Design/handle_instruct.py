@@ -2178,7 +2178,7 @@ def handle_stop_sleep_obscenity():
     now_draw.width = width
     now_draw.text = _("\n退出睡眠猥亵模式\n")
     now_draw.draw()
-    default.handle_door_close_reset(0,1,game_type.CharacterStatusChange,datetime.datetime)
+    default.handle_door_close_reset(0,1,game_type.CharacterStatusChange,datetime.datetime(1, 1, 1))
 
 
 @add_instruct(
