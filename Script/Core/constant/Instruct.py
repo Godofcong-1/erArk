@@ -211,10 +211,10 @@ class Instruct:
     """ 基建系统 """
     EQUIPMENT_MAINTAIN = 0
     """ 管理装备维护 """
-    VISITOR_SYSTEM = 0
-    """ 访客系统 """
     INVITE_VISITOR = 0
     """ 邀请访客 """
+    VISITOR_SYSTEM = 0
+    """ 访客系统 """
     NATION_DIPLOMACY = 0
     """ 势力外交 """
     DEAL_WITH_DIPLOMACY = 0

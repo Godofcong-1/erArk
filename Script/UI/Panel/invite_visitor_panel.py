@@ -466,22 +466,29 @@ class Invite_Visitor_Panel:
                 all_info_draw.text = now_text
                 all_info_draw.draw()
                 line_feed.draw()
+                line_feed.draw()
                 chara_id_count = 0
                 for chara_id in target_id_list:
                     chara_id_count += 1
                     character_data: game_type.Character = cache.character_data[chara_id]
                     # 均绘制为可选按钮
                     button_text = f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
+                    button_text = attr_calculation.pad_display_width(button_text, 22)
+                    # 角色颜色
+                    draw_style = "standard"
+                    if character_data.text_color != "":
+                        draw_style = character_data.name
                     button_draw = draw.LeftButton(
                         button_text,
                         button_text,
-                        int(len(button_text)*2),
+                        25,
+                        normal_style=draw_style,
                         cmd_func=self.change_invite_target,
                         args=chara_id
                         )
                     button_draw.draw()
                     return_list.append(button_draw.return_text)
-                    # 每行5个
+                    # 每行6个
                     if chara_id_count % 8 == 0:
                         line_feed.draw()
             else:
