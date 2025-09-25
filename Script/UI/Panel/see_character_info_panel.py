@@ -694,12 +694,12 @@ class CharacterabiText:
             type_set = ability_list[anility_type]
             # 去掉玩家的若干能力#
             if self.character_id == 0:
-                if anility_type in {0, 1, 2, 6}:
+                if anility_type in {2, 101}:
                     continue
             for ability_id in type_set:
                 # 去掉与性别不符的能力#
                 if character_data.sex == 0:
-                    if ability_id in {73, 74, 75}:
+                    if ability_id in {4, 7, 9, 12, 73, 74, 75}:
                         continue
                 elif character_data.sex == 1:
                     if ability_id == 3:
@@ -718,7 +718,7 @@ class CharacterabiText:
                 now_exp = character_data.ability[ability_id]
                 now_draw_value.text = str(now_exp)
                 level_draw = draw.ExpLevelDraw(now_exp)
-                new_draw = draw.LeftMergeDraw(self.width / 16)
+                new_draw = draw.LeftMergeDraw(int(self.width / 16))
                 # 同类能力里在八个前补个换行
                 if ability_id == 48 or ability_id == 101:
                     new_draw_n = draw.NormalDraw()
