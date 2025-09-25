@@ -1181,9 +1181,13 @@ class Rhodes_Island:
 
         # 疗养庭院
         self.herb_garden_line: Dict[int, List] = {}
-        """ 药田生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        """ 药田生产情况 流水线id:[0生产类型id, 1主种植员id(0为空缺), 2总效率百分比(显示用, 如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        self.herb_garden_operator_ids: List[int] = []
+        """ 药田种植员id列表 """
         self.green_house_line: Dict[int, List] = {}
-        """ 温室生产情况 流水线id:[0生产类型id, 1负责该线的干员id集合, 2总效率百分比(如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        """ 温室生产情况 流水线id:[0生产类型id, 1主种植员id(0为空缺), 2总效率百分比(显示用, 如110), 3明日要变成的新生产类型, 4上次收菜的小时] """
+        self.green_house_operator_ids: List[int] = []
+        """ 花草种植员id列表 """
         self.remaining_aromatherapy_sessions_today: int = 0
         """ 今日剩余调香次数 """
 
