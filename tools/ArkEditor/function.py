@@ -39,10 +39,10 @@ def read_CVP(cvp_value_str: str):
     cvp_str_list[2] = cvp_str_list[2].replace("G", "攻略程度")
     cvp_str_list[3] = cvp_str_list[3].replace("G", "大于")
     cvp_str_list[3] = cvp_str_list[3].replace("L", "小于")
-    cvp_str_list[3] = cvp_str_list[3].replace("E", "等于")
     cvp_str_list[3] = cvp_str_list[3].replace("GE", "大于等于")
     cvp_str_list[3] = cvp_str_list[3].replace("LE", "小于等于")
     cvp_str_list[3] = cvp_str_list[3].replace("NE", "不等于")
+    cvp_str_list[3] = cvp_str_list[3].replace("E", "等于")
     # 将cvp_str_list转为str的cvp_str
     cvp_str = ""
     for i in cvp_str_list:
