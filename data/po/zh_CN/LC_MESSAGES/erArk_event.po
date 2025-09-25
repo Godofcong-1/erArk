@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-09-17 15:51+0800\n"
+"POT-Creation-Date: 2025-09-25 14:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -292,6 +292,10 @@ msgstr ""
 msgid "雷蛇 【堕落损伤】 达到了1000，触发特殊状态 【堕落淫身】\n\n无尽的性行为成功击溃了雷蛇身体的防线，全身瞬间比平常敏感了十倍"
 msgstr ""
 
+#: Event:d5f90e6c-fa95-4526-9302-a199eb47261c
+msgid "口上特殊指令说明|1|tips:星熊口上设有专属的喝酒，所以当博士醉酒到一定程度时会晕过去（同理星熊），喝醉到一定程度后会增加酒量上限，目前口上没什么酒精等级需要的地方\n若想解除醉意就用休息（当然需指定交互目标为星熊），睡觉不会清空醉酒，直接醉晕是最快的清空方法和提升方法\n那么就好好享受星熊口上吧βヾ(、、・∇・、、川"
+msgstr ""
+
 #: Event:78a295ca-0e02-4862-8228-17fe11aa327d
 msgid "与对方一起喝酒|20|“博士也来喝酒？要是醉了我会送你回房间的，安心”\n看起来她对自己的酒量很有信心\n今日推荐菜单上有四种酒，要点哪一种酒"
 msgstr ""
@@ -329,7 +333,7 @@ msgid "点酒精度中等的酒|{PlayerName}点了一杯尼格罗尼（30%左右
 msgstr ""
 
 #: Event:cb74d262-e03e-450c-9193-326f8cf1e519
-msgid "点酒精度高的酒|{PlayerName}点了一杯干马天尼\n“博士，再这么喝下去对身体不好，我送你回房间去吧”\n{PlayerName}随意的摆了摆手，唇正要碰上杯壁，酒就被夺走。星熊直接一口饮尽了{PlayerName}的烈酒，她的喉结上下鼓动着\n这一动作一结束，{PlayerName}就感到了失重感，不是酒导致的，而是眼前的酒鬼直接单手像提小猫般把{PlayerName}直接提回了{PlayerName}的房间\n一路上{PlayerName}虽试图反抗，但不知是你的拳头对于这块钢铁太软趴趴，还是这个动作让刻在DNA里的威慑性，最终放弃了抵抗。\n一路上时不时有干员们的目光瞟过，大概是在嘲笑博士发酒疯吧..."
+msgid "点酒精度高的酒|{PlayerName}点了一杯干马天尼\n“博士，再这么喝下去对身体不好，我送你回房间去吧”\n{PlayerName}随意的摆了摆手，唇正要碰上杯壁，酒就被夺走。星熊直接一口饮尽了{PlayerName}的烈酒，她的喉结上下鼓动着\n这一动作一结束，{PlayerName}就感到了失重感，不是酒导致的，而是眼前的酒鬼直接单手像提小菲林般把{PlayerName}直接提回了{PlayerName}的房间\n一路上{PlayerName}虽试图反抗，但不知是你的拳头对于这块钢铁太软趴趴，还是这个动作让刻在DNA里的威慑性，最终放弃了抵抗。\n一路上时不时有干员们的目光瞟过，大概是在嘲笑博士发酒疯吧..."
 msgstr ""
 
 #: Event:86311e83-ed31-40c5-bbb0-da2586bed481
@@ -384,8 +388,8 @@ msgstr ""
 msgid "{PlayerName}稍微休息了一会，醉意稍微减轻了点"
 msgstr ""
 
-#: Event:60bce25c-3f2f-43b1-8326-75fe5b5d5f65
-msgid "回归梦乡，{PlayerName}身上的酒精烈火感随着时间逐渐消散"
+#: Event:a91a845d-1690-4ee9-a1ac-9b63d23b18c4
+msgid "{Name}稍微休息了一会，酒意稍微减轻了点"
 msgstr ""
 
 #: Event:5c56d920-430c-4ef4-8d7a-46f527e597a0
@@ -393,15 +397,59 @@ msgid "“博士想要给我拍照吗？当然可以，那我需要做什么动�
 msgstr ""
 
 #: Event:7de3be2a-512f-4a38-8b9a-2d3176f9554d
-msgid "帅气的动作|{PlayerName}让星熊摆出了平常战斗的架势\n在星熊做出大幅度动作的同时，{PlayerName}进行抓拍\n一张绿色长发随意飘散，面部与平日判若两人，露出尖锐的犬齿，巨大的盾牌被她单手轻易的举起，臂上的肌肉线条紧绷着，连突起的血管都能看到\n“我平常战斗的样子原来是这样的啊，确实像个鬼样呢”\n战场上的她面对敌人简直就是恶鬼，但她在我们这边就是敌人攀不过去的高山"
+msgid "帅气的动作|{PlayerName}让星熊摆出了平常战斗的架势\n在星熊做出大幅度动作的同时，{PlayerName}进行抓拍\n一张绿色长发随意飘散，面部与平日判若两人，露出尖锐的犬齿，巨大的盾牌被她单手轻易的举起，臂上的肌肉线条紧绷着，连突起的血管都能看到\n“我平常战斗的样子原来是这样的啊，确实像个鬼样呢”\n战场上的她面对敌人简直就是恶鬼，但她在我们这边却是敌人攀不过去的高山"
 msgstr ""
 
 #: Event:297aff77-0f9e-4df3-9f88-41108e0df30c
-msgid "可爱的动作|{PlayerName}让星熊摆出了妙龄女孩都会做的动作\n“博士这...这有点为难啊”\n高壮的女性对着镜头摆出了俗气的剪刀手，她试着微笑，但不自然感给这不协调的构图再添一笔\n连刻俄柏都能看得出来照片里面的人很尴尬\n"
+msgid "可爱的动作|{PlayerName}让星熊摆出了妙龄女孩都会做的动作\n“博士这...这有点为难啊”\n高壮的女性对着镜头摆出了俗气的剪刀手，她试着微笑，但不自然感给这不协调的构图再添一笔\n连小刻都能看得出来照片里面的鬼很尴尬\n"
+msgstr ""
+
+#: Event:94565713-aa14-477e-8a99-ea9db4b8ff69
+msgid "“{PlayerName}想要给我拍照吗？当然可以，那我需要做什么动作”\n要让{TargetName}做什么样的动作"
+msgstr ""
+
+#: Event:ec188c08-1a40-416a-b82d-8f7c64f957d4
+msgid "帅气的动作|{PlayerName}让{TargetName}摆出了平常战斗的架势\n在{TargetName}做出大幅度动作的同时，{PlayerName}进行抓拍\n一张绿色长发随意飘散，面部与平日判若两人，露出尖锐的犬齿，巨大的盾牌被她单手轻易的举起，臂上的肌肉线条紧绷着，连突起的血管都能看到\n“我平常战斗的样子原来是这样的啊，其他人总是说我这个时候才像个鬼样呢”\n战场上的她面对敌人简直就是恶鬼，但她在我们这边就是敌人攀不过去的高山"
+msgstr ""
+
+#: Event:04a1c9ca-fad2-45e6-8b50-9de77e6e410f
+msgid "可爱的动作|{PlayerName}让{TargetName}摆出了妙龄女孩都会做的动作\n“{PlayerName}这...这有点为难啊”\n高壮的女性对着镜头摆出了俗气的剪刀手，她试着微笑，但不自然感给这不协调的构图再添一笔\n连小刻都能看得出来照片里面的鬼很尴尬"
 msgstr ""
 
 #: Event:ea7b6689-e30a-4f3a-ad1e-6685fe7e00bb
-msgid "性感的动作|{PlayerName}让星熊摆出能凸显她的身形的动作\n“博士难道要拍我的写真集吗”\n星熊故意朝着正盯着镜头的{PlayerName}凸显自己最显眼的地方\n整个镜头都被胸部笼罩，此时的你心想着对方的胸部触感会是怎么样的\n拍摄后，你故意将这张照片洗出来存在自己的房间里\n"
+msgid "性感的动作|{PlayerName}让{TargetName}摆出能凸显她的身形的动作\n“{PlayerName}难道要拍我的写真集吗”\n{TargetName}故意朝着正盯着镜头的{PlayerName}凸显自己最显眼的地方\n整个镜头都被胸部笼罩，{PlayerName}心想着对方的胸部触感\n拍摄后，你故意将这张照片洗出来存在自己的房间里\n"
+msgstr ""
+
+#: Event:58687e4a-fe04-408f-913b-86b5dde9f9db
+msgid "...\n“{PlayerName}今晚也要去酒会吗”\n...\n“那在那之前是不是应该还有一件事没有做”\n{TargetName}俯下身等待着{PlayerName}的动作，你轻轻覆盖在她的嘴唇上，两人互相缠绵在一起"
+msgstr ""
+
+#: Event:110b756a-bd81-4fb8-b86a-4e749a2b34fa
+msgid "{PlayerName}突然从后面抱住了{TargetName}\n“我猜猜，是{PlayerName}吧”\n...\n“果然啊，那猜对了有什么奖励吗”"
+msgstr ""
+
+#: Event:a0889bb7-dcf5-4db4-a8d4-6a64203c73ad
+msgid "亲吻|{PlayerName}将对方转过身，踮起脚啃咬又吸吮着她的嘴唇\n“{PlayerName}还真是浪漫啊”她摸了摸自己的嘴唇，脸上洋溢着幸福的笑容"
+msgstr ""
+
+#: Event:108c4126-9c89-4fb5-9de3-b56a94de9d5e
+msgid "爱抚|{PlayerName}的手直接从背后探入了她的衣服，抚摸着{TargetName}的肌肤\n“嗯...”\n正当{TargetName}想转过身，{PlayerName}掐了下肉阻止她的动作\n“{PlayerName}怎么了”\n看不见后面的动作，只能靠身体感受这顿骚扰\n“哇，{PlayerName}的奖励还真是特别啊”"
+msgstr ""
+
+#: Event:c1c68f17-5cb0-4a2e-bdfe-1ef807e114b0
+msgid "{PlayerName}想要摸星熊的欧派\n但是...她穿着胸甲\n“博士，怎么了？”感受到仇恨视线的星熊问道"
+msgstr ""
+
+#: Event:99109203-8cc3-454e-8d82-f236c5aca3be
+msgid "即使星熊还穿着胸甲，{PlayerName}还是去摸了她的胸\n冰凉的，很硬，两只手一起上都完全握不住\n“博士你在做什么？”\n...\n“咒怨？咒怨什么要这样做啊...”"
+msgstr ""
+
+#: Event:9d690482-cc81-4487-98fa-0e952dc87150
+msgid "‘星熊你可以把胸甲脱下来吗’\n“博士怎么了吗”虽然产生了疑问，星熊还是把胸甲脱下来了\n刚脱下来，{PlayerName}就揉起来这两块一直近在眼前，却只能在一旁看着的{breast_s}\n“该不会之前说的咒怨，指的就是我的胸甲吧”\n{PlayerName}使劲的掐了一下对方的{breast_s}以视回应\n知晓真相后，整个过程星熊都在笑着{PlayerName}以前对她胸部的举动"
+msgstr ""
+
+#: Event:e3acf1eb-c935-4781-882a-78c7643a5dce
+msgid "{PlayerName}为了找点乐趣向{TargetName}发起了K歌挑战\n“{PlayerName}，老规矩，鬼有鬼的道理”{TargetName}轻车熟路的从柜子拿出两扎烈酒\n但经常练习的{PlayerName}可不会再如此轻易输给这个酒鬼\n几轮过后...\n虽然{PlayerName}只输了一两把，但酒量上却输给星熊一败涂地，烈酒燃烧着{PlayerName}的大脑，两个人的情绪高涨着，后续的歌唱逐渐力不从心\n‘{TargetName}你之前...果然是放水了吧’博士踉踉跄跄的说到\n此时作妖的鬼并没有回应而是满怀爱意的，凑近{PlayerName}低头对着你的耳朵吹了一口妖气，瞬间本应酒精就已经感知模糊的{PlayerName}瘫软四肢，倾倒在沙发上\n虽有软垫降冲，但当{PlayerName}反应疼痛时，星熊已经不由分说贴上了{PlayerName}的唇，一只手扣住{PlayerName}的头，火热的吸吮着对方的空气\n反应过来的{PlayerName}试图想掌握局势，但似乎是酒精影响，舌头的灵活总是慢半拍。嘴唇失去掌控的{PlayerName}，试图两手从衣摆下处探向鬼族女性的两块嫩肉\n被摸到敏感部位的鬼族女性嘴里轻吟了一声，整个人贴上来，单膝支撑在沙发上，空出另外一只手\n捉住不知何时探出头的小帐篷，受酒的影响只是半勃的状态，传达到大脑的感受让{PlayerName}感到有一种新奇体验感\n两人互相用手抚慰着对方，嘴上也刻不容缓\n随着呻吟的加大，两人进入了最后的冲刺\n结果还是因为酒，星熊先是一阵长吟，但{PlayerName}没能像平常一样痛快的射出来，只是马眼流出一簇精液，身心上的高潮，却因为堵塞而带来的不尽兴，让{PlayerName}有点恼火\n“抱歉抱歉，{PlayerName}身上现在全是我最喜欢的味道，我没能控制住自己品尝美食，赔偿今晚就{PlayerName}来随意玩我好吗”对方道歉的时候还轻吻以示抚慰\n...\n\n刚才就这么以半公开的两人善后好房间，互相期待今晚会上演一场怎样的好戏"
 msgstr ""
 
 #: Event:47346c65-33b4-4009-9e5d-b9ce001d2076
