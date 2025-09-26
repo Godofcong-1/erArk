@@ -7,6 +7,7 @@ str,str,int,str,str
 100,body_part_urethra_s_A,0,high_1,温热
 101,body_part_urethra_s_A,0,high_1,湿润
 102,body_part_urethra_s_A,0,high_1,温暖
+103,body_part_urethra_s_A,0,high_1,柔软
 104,body_part_urethra_s_A,0,high_1,湿热
 105,body_part_urethra_s_A,0,high_1,光滑
 106,body_part_urethra_s_A,0,high_1,湿滑
@@ -14,7 +15,9 @@ str,str,int,str,str
 108,body_part_urethra_s_A,0,high_1,紧致
 109,body_part_urethra_s_A,0,high_1,敏感
 110,body_part_urethra_s_A,0,high_1,狭窄
-111,body_part_urethra_s_A,0,high_1,细腻
+111,body_part_urethra_s_A,0,high_1,柔嫩
+112,body_part_urethra_s_A,0,high_1,细腻
+113,body_part_urethra_s_A,0,high_1,紧窄
 
 1001,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,幼小
 1002,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,稚嫩
@@ -26,6 +29,7 @@ str,str,int,str,str
 1008,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,幼童
 1009,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,娇嫩
 1010,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,细小
+1010,body_part_urethra_s_A,0,CVP_A2_T|102_E_1,稚嫩
 
 1032,body_part_urethra_s_A,0,CVP_A2_T|103_E_1,小巧
 1033,body_part_urethra_s_A,0,CVP_A2_T|103_E_1,粉嫩
@@ -39,6 +43,7 @@ str,str,int,str,str
 1043,body_part_urethra_s_A,0,CVP_A2_T|103_E_1,娇嫩
 
 1061,body_part_urethra_s_A,0,CVP_A2_T|104_E_1,青春
+1062,body_part_urethra_s_A,0,CVP_A2_T|104_E_1,青涩
 1063,body_part_urethra_s_A,0,CVP_A2_T|104_E_1,优美
 1064,body_part_urethra_s_A,0,CVP_A2_T|104_E_1,纯洁
 1065,body_part_urethra_s_A,0,CVP_A2_T|104_E_1,清纯
@@ -50,7 +55,10 @@ str,str,int,str,str
 
 1131,body_part_urethra_s_A,0,CVP_A2_T|105_E_1,魅惑
 
+1151,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,成熟
+1152,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,饱满
 1153,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,老练
+1154,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,丰满
 1155,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,纯熟
 1159,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,魅惑
 1161,body_part_urethra_s_A,0,CVP_A2_T|106_E_1,开放
