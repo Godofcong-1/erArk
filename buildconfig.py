@@ -31,13 +31,18 @@ ui_text_data = {}
 character_talk_data = {}
 character_event_data = {}
 talk_common_data = {}
-built = []
+built = set()
 msgData = set()
 class_data = set()
 config_def_str = ""
-config_po, talk_po = "", ""
-common_talk_po = ""
-event_po = ""
+# 使用列表累积 PO 行，减少大量字符串拼接导致的性能损耗
+config_po_lines = []
+talk_po_lines = []
+common_talk_po_lines = []
+event_po_lines = []
+
+# 控制台调试输出开关（大量文件时打印会显著拖慢速度）
+DEBUG_LOG = False
 
 # 是否覆盖原有数据
 BUILD_CONFIG = True
@@ -81,8 +86,10 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
     返回：None
     功能：读取csv并更新全局配置数据
     """
-    # print(f"debug file_path = {file_path}")
-    with open(file_path, encoding="utf-8") as now_file:
+    if DEBUG_LOG:
+        print(f"debug file_path = {file_path}")
+    # newline="" 可提升 csv 解析性能并避免额外换行处理
+    with open(file_path, encoding="utf-8", newline="") as now_file:
         now_read = csv.DictReader(now_file)
         now_docstring_data = {}
         now_type_data = {}
@@ -242,25 +249,18 @@ def build_config_po(message: str, file_path: str, now_index: int, talk: bool = F
     返回：None
     功能：构建配置po文本
     """
-    global built, config_po, talk_po, common_talk_po, event_po
-    if not message in built:
-        if talk:
-            talk_po += f"#: .\{file_path}:{now_index}\n"
-            talk_po += f'msgid "{message}"\n'
-            talk_po += 'msgstr ""\n\n'
-        elif common_talk:
-            common_talk_po += f"#: .\{file_path}:{now_index}\n"
-            common_talk_po += f'msgid "{message}"\n'
-            common_talk_po += 'msgstr ""\n\n'
-        elif event:
-            event_po += f"#: .\{file_path}:{now_index}\n"
-            event_po += f'msgid "{message}"\n'
-            event_po += 'msgstr ""\n\n'
-        else:
-            config_po += f"#: .\{file_path}:{now_index}\n"
-            config_po += f'msgid "{message}"\n'
-            config_po += f'msgstr ""\n\n'
-        built.append(message)
+    global built, config_po_lines, talk_po_lines, common_talk_po_lines, event_po_lines
+    if message not in built:
+        lines = (
+            talk_po_lines if talk else
+            common_talk_po_lines if common_talk else
+            event_po_lines if event else
+            config_po_lines
+        )
+        lines.append(f"#: .\{file_path}:{now_index}\n")
+        lines.append(f'msgid "{message}"\n')
+        lines.append('msgstr ""\n\n')
+        built.add(message)
 
 
 def build_scene_config(data_path):
@@ -270,7 +270,7 @@ def build_scene_config(data_path):
     返回：None
     功能：构建场景配置并提取文本
     """
-    global config_po
+    global config_po_lines
     for i in os.listdir(data_path):
         now_path = os.path.join(data_path, i)
         if os.path.isfile(now_path):
@@ -279,19 +279,19 @@ def build_scene_config(data_path):
                     scene_data = json.loads(now_file.read())
                     scene_name = scene_data["SceneName"]
                     if not scene_name in built:
-                        config_po += f"#: /'{now_path}:2\n"
-                        config_po += f'msgid "{scene_name}"\n'
-                        config_po += 'msgstr ""\n\n'
-                        built.append(scene_name)
+                        config_po_lines.append(f"#: /'{now_path}:2\n")
+                        config_po_lines.append(f'msgid "{scene_name}"\n')
+                        config_po_lines.append('msgstr ""\n\n')
+                        built.add(scene_name)
             elif i == "Map.json":
                 with open(now_path, "r", encoding="utf-8") as now_file:
                     map_data = json.loads(now_file.read())
                     map_name = map_data["MapName"]
                     if not map_name in built:
-                        config_po += f"#: /'{now_path}:2\n"
-                        config_po += f'msgid "{map_name}"\n'
-                        config_po += 'msgstr ""\n\n'
-                        built.append(map_name)
+                        config_po_lines.append(f"#: /'{now_path}:2\n")
+                        config_po_lines.append(f'msgid "{map_name}"\n')
+                        config_po_lines.append('msgstr ""\n\n')
+                        built.add(map_name)
         else:
             build_scene_config(now_path)
 
@@ -304,8 +304,8 @@ def build_character_config(file_path:str,file_name:str):
     返回：None
     功能：读取角色CSV并更新全局角色数据
     """
-    global config_po,built
-    with open(file_path,encoding="utf-8") as now_file:
+    global config_po_lines,built
+    with open(file_path,encoding="utf-8", newline="") as now_file:
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
         now_data = {}
@@ -326,11 +326,11 @@ def build_character_config(file_path:str,file_name:str):
                 now_data[row["key"]] = ast.literal_eval(row["value"])
             else:
                 now_data[row["key"]] = row["value"]
-            if row["get_text"] and row["type"] == 'str' and not row["value"] in built:
-                config_po += f"#: .\{file_path}:{now_index}\n"
-                config_po += "msgid" + " " + '"' + row["value"] + '"' + "\n"
-                config_po += 'msgstr ""\n\n'
-                built.append(row["value"])
+            if row["get_text"] and row["type"] == 'str' and row["value"] not in built:
+                config_po_lines.append(f"#: .\{file_path}:{now_index}\n")
+                config_po_lines.append("msgid" + " " + '"' + row["value"] + '"' + "\n")
+                config_po_lines.append('msgstr ""\n\n')
+                built.add(row["value"])
         character_data[file_id] = now_data
 
 def build_ui_text(file_path:str,file_name:str):
@@ -341,8 +341,8 @@ def build_ui_text(file_path:str,file_name:str):
     返回：None
     功能：读取UI文本CSV并更新全局UI数据
     """
-    global config_po,built
-    with open(file_path,encoding="utf-8") as now_file:
+    global config_po_lines,built
+    with open(file_path,encoding="utf-8", newline="") as now_file:
         now_read = csv.DictReader(now_file)
         file_id = file_name.split(".")[0]
         now_data = {}
@@ -355,14 +355,14 @@ def build_ui_text(file_path:str,file_name:str):
                 continue
             # print(f"debug row = {row}")
             now_data[row["cid"]] = row["context"]
-            if row["context"] not in msgData and not row["context"] in built:
-                config_po += f"#: .\{file_path}:{now_index}\n"
-                config_po += "msgid" + " " + '"' + row["context"] + '"' + "\n"
-                config_po += 'msgstr ""\n\n'
-                built.append(row["context"])
+            if row["context"] not in msgData and row["context"] not in built:
+                config_po_lines.append(f"#: .\{file_path}:{now_index}\n")
+                config_po_lines.append("msgid" + " " + '"' + row["context"] + '"' + "\n")
+                config_po_lines.append('msgstr ""\n\n')
+                built.add(row["context"])
         ui_text_data[file_id] = now_data
 
-def build_po_text(po):
+def build_po_text():
     """
     输入：
         po: 原始po字符串
@@ -393,10 +393,11 @@ def build_po_text(po):
 print("开始加载游戏数据\n")
 
 if BUILD_PO:
-    config_po = build_po_text(config_po)
-    talk_po = build_po_text(talk_po)
-    common_talk_po = build_po_text(common_talk_po)
-    event_po = build_po_text(event_po)
+    header_text = build_po_text()
+    config_po_lines.append(header_text)
+    talk_po_lines.append(header_text)
+    common_talk_po_lines.append(header_text)
+    event_po_lines.append(header_text)
 
 file_list = os.listdir(config_dir)
 index = 0
@@ -616,10 +617,10 @@ if BUILD_EVENT:
                     event_list.append(now_event)
                     now_event_text = now_event["text"]
                     if now_event_text not in msgData and not now_event_text in built:
-                        event_po += f"#: Event:{event_id}\n"
-                        event_po += f'msgid "{now_event_text}"\n'
-                        event_po += 'msgstr ""\n\n'
-                        built.append(now_event_text)
+                        event_po_lines.append(f"#: Event:{event_id}\n")
+                        event_po_lines.append(f'msgid "{now_event_text}"\n')
+                        event_po_lines.append('msgstr ""\n\n')
+                        built.add(now_event_text)
                         msgData.add(now_event_text)
     character_event_data["Event"] = {}
     character_event_data["Event"]["data"] = event_list
@@ -652,16 +653,16 @@ if BUILD_UI_TEXT:
 
 if BUILD_CONFIG:  # 与po输出相关的配置
     with open(po_csv_path, "w", encoding="utf-8") as po_file:
-        po_file.write(config_po)
+        po_file.write(''.join(config_po_lines))
 
 if BUILD_PO:
     if BUILD_TALK:
         with open(po_talk_path, "w", encoding="utf-8") as po_file:
-            po_file.write(talk_po)
+            po_file.write(''.join(talk_po_lines))
         with open(po_event_path, "w", encoding="utf-8") as po_file:
-            po_file.write(event_po)
+            po_file.write(''.join(event_po_lines))
     if BUILD_TALK_COMMON:
         with open(po_common_talk_path, "w", encoding="utf-8") as po_file:
-            po_file.write(common_talk_po)
+            po_file.write(''.join(common_talk_po_lines))
 
 print("加载完毕")
