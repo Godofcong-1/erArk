@@ -47,7 +47,7 @@ def get_rich_text_draw_list(now_text: str, base_style: str = "standard", wait_fl
         now_rich_draw.style = base_style
         rich_text_draw_list.append(now_rich_draw)
         return rich_text_draw_list
-    # 如果now_text的最后不是换行符，则添加一个换行符，确保文本正确结束
+    # 如果 now_text 的最后不是换行符，则添加一个换行符，确保文本正确结束
     if now_text and now_text[-1] != '\n':
         now_text += '\n'
     # 调用已有函数获取各字符对应的富文本样式列表
@@ -56,33 +56,41 @@ def get_rich_text_draw_list(now_text: str, base_style: str = "standard", wait_fl
     new_x_list = remove_rich_cache(now_text)
     # 循环处理文本列表，生成绘制对象并合并相同样式的连续文本
     while len(new_x_list) > 0:
-        # 创建新的文本绘制对象实例
+        # 若下一个字符是换行，则单独作为一条绘制项，避免被并入上一个样式片段
+        if new_x_list[0] == '\n':
+            lf_draw = draw.LineFeedWaitDraw() if wait_flag else draw.NormalDraw()
+            lf_draw.text = '\n'
+            lf_draw.style = now_style_list[0]
+            rich_text_draw_list.append(lf_draw)
+            # 消费换行符
+            now_style_list = now_style_list[1:]
+            new_x_list = new_x_list[1:]
+            continue
+
+        # 常规字符：创建新的文本绘制对象实例
         now_rich_draw = draw.NormalDraw()
         # 为当前绘制对象初始化文本和样式
         now_rich_draw.text = new_x_list[0]
         now_rich_draw.style = now_style_list[0]
-        # 移除已处理的首个字符及对应样式
+        # 消费首个字符
         now_style_list = now_style_list[1:]
         new_x_list = new_x_list[1:]
-        # 合并连续字符样式相同的文本
-        while len(new_x_list) > 0:
-            # 如果下一字符的样式与当前绘制对象样式不同，或文本为单换行符，则跳出合并循环
-            if now_style_list[0] != now_rich_draw.style or now_rich_draw.text == '\n':
-                # 如果当前文本最后为换行符，且需要等待绘制，则将当前绘制对象改为 LineFeedWaitDraw
-                if wait_flag and '\n' in now_rich_draw.text:
-                    now_text = now_rich_draw.text
-                    now_style = now_rich_draw.style
-                    now_rich_draw = draw.LineFeedWaitDraw()
-                    now_rich_draw.text = now_text
-                    now_rich_draw.style = now_style
-                    # print(f"[RICH_DEBUG] 变为换行绘制: {now_rich_draw.text}")
-                break
-            # 合并文本，并移除合并的字符和对应样式
+
+        # 合并连续字符：样式相同且下一个字符不是换行
+        while len(new_x_list) > 0 and now_style_list[0] == now_rich_draw.style and new_x_list[0] != '\n':
             now_rich_draw.text += new_x_list[0]
             now_style_list = now_style_list[1:]
             new_x_list = new_x_list[1:]
-        # 将构造好的绘制对象添加到绘制列表中
-        # print(f"[RICH_DEBUG] now_rich_draw.text = {now_rich_draw.text}, now_rich_draw.style = {now_rich_draw.style}")
+
+        # 如果需要等待绘制，且当前片段中包含换行（理论上不会发生，因为上面已拆分），做一次兜底转换
+        if wait_flag and '\n' in now_rich_draw.text:
+            tmp_text = now_rich_draw.text
+            tmp_style = now_rich_draw.style
+            now_rich_draw = draw.LineFeedWaitDraw()
+            now_rich_draw.text = tmp_text
+            now_rich_draw.style = tmp_style
+
+        # 添加当前片段
         rich_text_draw_list.append(now_rich_draw)
     # 返回构造好的富文本绘制列表
     # print(f"[RICH_DEBUG] rich_text_draw_list = {rich_text_draw_list}")
