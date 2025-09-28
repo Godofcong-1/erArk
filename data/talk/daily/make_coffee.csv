@@ -5,7 +5,6 @@ str,str,int,str,str
 口上配置数据,,,,
 1,make_coffee,0,sys_0,{Name}为{TargetName}冲泡了速溶咖啡
 2,make_coffee,0,sys_0&place_11,{Name}为{TargetName}以及在场的干员们冲泡了速溶咖啡
-3,make_coffee,0,sys_1&sys_4&high_5,{Name}对{TargetName}{PlayerNickName}触发了泡咖啡指令的地文
 
 1001,make_coffee,0,high_1,{Name}拿着咖啡杯向{TargetName}走去，在{TargetName}面前轻轻放下杯子，两人一起坐了下来。
 1002,make_coffee,0,high_1,喝着{Name}泡好的咖啡，俩人对视了一眼，心领神会地笑了起来。{TargetName}满意地点了点头。
