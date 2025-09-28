@@ -22,8 +22,8 @@ str,str,int,str,str
 17,end_follow,143,high_1,“你可以先去忙，但是你要记得来找我。\n你还得认出哪一个是现在的我哪一个是之前的我。”
 18,end_follow,143,high_1,“是的.....我先走了。”
 19,follow,143,high_1,“只有你能让我随心所欲的发挥，这种跟随的邀请\n我自然是会接受的，何况是一位绅士的请求。”
-20,share_blankly,0,high_1,{TargetName}找了个位置呆呆的站着\n即使无人打扰她，一身的修女服光是摆在那和他的姿色\n就无不及旁人注目
-21,chat_failed,0,high_1,“啊...嗯......”
+20,share_blankly,143,high_1,{TargetName}找了个位置呆呆的站着\n即使无人打扰她，一身的修女服光是摆在那和他的姿色\n就无不及旁人注目
+21,chat_failed,143,high_1,“啊...嗯......”
 22,chat_failed,143,CVP_A2_G_E_0,“真烦啊.......”
 23,chat_failed,143,CVP_A2_G_E_0,“我还是劝你先消失一下。（微笑）”
 24,stroke,143,high_1&in_restaurant,“我的脸上有食物沾上去了？\n你帮我擦一下我的脸吧，毕竟我知道我是病人。”
