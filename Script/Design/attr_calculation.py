@@ -234,6 +234,7 @@ def get_dirty_reset(old_dirty_data: game_type.DIRTY) -> game_type.DIRTY:
             dirty_data.cloth_semen[clothing_type] = now_list
 
     dirty_data.a_clean = 0
+    dirty_data.enema_capacity = 0
 
     # 清零阴茎污浊
     for dirty_key in dirty_data.penis_dirty_dict:
@@ -260,6 +261,7 @@ def get_zero_dirty() -> game_type.DIRTY:
         dirty_data.cloth_locker_semen[clothing_type] = now_list
 
     dirty_data.a_clean = 0
+    dirty_data.enema_capacity = 0
 
     # 清零阴茎污浊
     for dirty_key in dirty_data.penis_dirty_dict:
