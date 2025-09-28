@@ -165,7 +165,7 @@ class System_Setting_Panel:
                 if type_name == _("绘制") and cid == 12:
                     if cache.font_size == 0:
                         cache.font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width * 2)
-                    new_button_text = _(f" {cache.font_size} ")
+                    new_button_text = _(f"[ {cache.font_size} ]")
                     new_button_len = max(len(new_button_text) * 2, 30)
                     new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_font_size)
                     new_button_draw.draw()
@@ -205,7 +205,9 @@ class System_Setting_Panel:
             setting_data = game_config.config_difficulty_setting[cid]
         elif type_name == _("绘制"):
             setting_data = game_config.config_draw_setting[cid]
-        info_text = f"\n {setting_data.info}\n"
+        # 将介绍信息中的换行符替换为实际换行
+        info_text = setting_data.info.replace("\\n", " \n")
+        info_text = f"\n {info_text}\n"
         now_draw.text = info_text
         now_draw.width = self.width
         now_draw.draw()
@@ -301,7 +303,7 @@ class System_Setting_Panel:
                 if npc_id in now_set:
                     draw_style = 'deep_gray'
                 # 绘制按钮
-                button_draw = draw.LeftButton(button_text, str(npc_id), self.width/6,normal_style=draw_style, cmd_func=self.change_ban_list_cmd, args=(npc_id))
+                button_draw = draw.LeftButton(button_text, str(npc_id), int(self.width / 6),normal_style=draw_style, cmd_func=self.change_ban_list_cmd, args=(npc_id))
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 # 每行显示6个干员

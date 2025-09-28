@@ -67,11 +67,11 @@ def handle_premise(premise: str, character_id: int) -> int:
         return 0
 
 
-def get_weight_from_premise_dict(talk_premise_dict: dict, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> tuple[int, dict]:
+def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> tuple[int, dict]:
     """
     遍历前提字典，计算总权重
     Keyword arguments:
-    talk_premise_dict -- 当前口上的前提字典
+    talk_premise_set -- 当前口上的前提集合
     character_id -- 角色id
     calculated_premise_dict -- 已计算的前提字典，默认空字典
     weight_all_to_1_flag -- 将所有非high的前提权重转换为1，默认为False

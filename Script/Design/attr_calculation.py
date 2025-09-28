@@ -22,7 +22,7 @@ def get_system_setting_zero() -> game_type.System_Setting:
     # 基础设定
     base_default_dict = {1:0, 2:1, 3:0, 6:1, 7:0, 8:1, 9:1}
     # 绘制设定
-    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1, 10:1, 11:5}
+    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1, 10:1, 11:5, 12:0, 13:3}
     # 难度设定
     difficulty_default_dict = {1:3, 2:3, 3:3, 11:2, 12:0}
     # 赋予默认值

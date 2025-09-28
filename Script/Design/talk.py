@@ -146,19 +146,19 @@ def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag =
         if cache.all_system_setting.draw_setting[2] == 0 and talk_config.adv_id == 0:
             continue
         # 计算前提字典的总权重
-        talk_premise_dict = game_config.config_talk_premise_data[talk_id]
-        now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(talk_premise_dict, character_id, calculated_premise_dict, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
+        talk_premise_set = game_config.config_talk_premise_data[talk_id]
+        now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(talk_premise_set, character_id, calculated_premise_dict, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
         if now_weight:
             # 时停解放时，有时停前提的权重*10
             if handle_premise.handle_self_time_stop_orgasm_relase(character_id) or handle_premise.handle_target_time_stop_orgasm_relase(character_id):
-                if "self_time_stop_orgasm_relase" in talk_premise_dict or "target_time_stop_orgasm_relase" in talk_premise_dict:
+                if "self_time_stop_orgasm_relase" in talk_premise_set or "target_time_stop_orgasm_relase" in talk_premise_set:
                     now_weight *= 10
             # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
                 now_weight *= 10
             # 如果该角色是女儿，且前提中有女儿相关前提，则权重乘以5
             elif handle_premise.handle_self_is_player_daughter(character_id) or handle_premise.handle_target_is_player_daughter(character_id):
-                if "self_is_player_daughter" in talk_premise_dict or "target_is_player_daughter" in talk_premise_dict:
+                if "self_is_player_daughter" in talk_premise_set or "target_is_player_daughter" in talk_premise_set:
                     now_weight *= 5
             now_talk_data.setdefault(now_weight, set())
             now_talk_data[now_weight].add(talk_id)
@@ -181,9 +181,14 @@ def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
         talk_text = game_config.config_talk[now_talk_id].context
         unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
-        # 如果不是特殊口上，且行为id在通用口上列表中，则有一半几率使用纸娃娃地文
-        if not unusual_talk_flag and behavior_id in game_config.config_talk_common_cid_list_by_type and cache.all_system_setting.draw_setting[2] == 1:
-            if random.randint(0, 1) == 0:
+        # 如果不是特殊口上或是权重低于100的特殊口上，且行为id在通用口上列表中，则按照设置的几率使用纸娃娃地文
+        if (
+            (not unusual_talk_flag or talk_weight < 100) and
+            behavior_id in game_config.config_talk_common_cid_list_by_type and
+            cache.all_system_setting.draw_setting[2] == 1
+            ):
+            use_common_talk_rate = cache.all_system_setting.draw_setting[13]
+            if random.randint(1, 100) <= use_common_talk_rate * 10:
                 talk_text = '{' + behavior_id + '}'
                 now_talk_id = ""
     else:
@@ -540,7 +545,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                         talk_common_cid_list = part_dict[part]
                         for talk_common_cid in talk_common_cid_list:
                             # 读取前提配置
-                            premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                            premise_set = game_config.config_talk_common_premise_data[talk_common_cid]
                             # 判断是部位类还是动作类，部位类则跳过无意识判断
                             body_part_flag = True
                             type_id = game_config.config_talk_common_data[talk_common_cid].type_id
@@ -548,7 +553,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                                 body_part_flag = False
                             # 计算权重
                             weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                                premise_dict, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
+                                premise_set, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                             )
                             if weight:
                                 now_talk_data.setdefault(weight, []).append(talk_common_cid)
@@ -571,7 +576,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                 now_talk_data: dict = {}
                 for talk_common_cid in cid_list:
                     # 读取前提配置
-                    premise_dict = game_config.config_talk_common_premise_data[talk_common_cid]
+                    premise_set = game_config.config_talk_common_premise_data[talk_common_cid]
                     # 判断是部位类还是动作类，部位类则跳过无意识判断
                     body_part_flag = True
                     type_id = game_config.config_talk_common_data[talk_common_cid].type_id
@@ -579,7 +584,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                         body_part_flag = False
                     # 计算权重
                     weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(
-                        premise_dict, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
+                        premise_set, pl_character_id, calculated_premise_dict, weight_all_to_1_flag=True, unconscious_pass_flag=body_part_flag
                     )
                     if weight:
                         now_talk_data.setdefault(weight, []).append(talk_common_cid)

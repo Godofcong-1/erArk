@@ -1,10 +1,7 @@
-from hmac import new
 import os
-import sys
 import pickle
 import shutil
 import datetime
-import platform
 from types import FunctionType
 from Script.Core import (
     cache_control,
@@ -46,11 +43,11 @@ def judge_save_file_exist(save_id: str) -> bool:
     """
     save_head_path = os.path.join(get_save_dir_path(save_id), "0")
     if not os.path.exists(save_head_path):
-        return 0
+        return False
     save_path = os.path.join(get_save_dir_path(save_id), "1")
     if not os.path.exists(save_path):
-        return 0
-    return 1
+        return False
+    return True
 
 
 def establish_save(save_id: str):
