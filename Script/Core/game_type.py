@@ -661,6 +661,8 @@ class SPECIAL_FLAG:
         """ 要自慰状态，int [0无,1去洗手间自慰,2去宿舍自慰,3群交自慰]"""
         self.masturebate_before_sleep: int = 0
         """ 睡前自慰状态，int [0无,1要自慰,2已自慰] """
+        self.npc_masturebate_for_player: bool = False
+        """ NPC找玩家去逆推来代替自慰的状态 """
         self.shower: int = 0
         """ 洗澡状态，int [0无,1要更衣,2要洗澡,3要披浴巾,4洗完澡] """
         self.eat_food: int = 0

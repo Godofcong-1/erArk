@@ -1918,13 +1918,29 @@ def character_make_milk(character_id: int):
 @handle_state_machine.add_state_machine(constant.StateMachine.START_MASTUREBATE)
 def character_start_masturebate(character_id: int):
     """
-    进入要自慰状态
+    进入要自慰或要逆推状态
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.Design import attr_calculation
     character_data: game_type.Character = cache.character_data[character_id]
-    # 随机等于1或2
-    character_data.sp_flag.masturebate = random.randint(1, 2)
+    # 获取攻略等级
+    character_fall_level = attr_calculation.get_character_fall_level(character_id)
+    # 根据攻略等级决定是自慰还是逆推
+    if character_fall_level >= 4:
+        activate_rate = 80
+    elif character_fall_level == 3:
+        activate_rate = 50
+    elif character_fall_level == 2:
+        activate_rate = 20
+    else:
+        activate_rate = 0
+    # 是否逆推
+    if random.randint(1, 100) <= activate_rate:
+        character_data.sp_flag.npc_masturebate_for_player = True
+    else:
+        # 随机等于1或2来决定自慰地点
+        character_data.sp_flag.masturebate = random.randint(1, 2)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1

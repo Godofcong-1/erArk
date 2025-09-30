@@ -132,6 +132,11 @@ class Event_option_Panel:
                     if son_flag:
                         son_event_list.append([event_id, self.character_id])
 
+        # 如果子事件列表为空，则直接返回
+        if not len(son_event_list):
+            print("debug 子事件为空，父事件id:", father_event_id)
+            return
+
         while 1:
             py_cmd.clr_cmd()
 

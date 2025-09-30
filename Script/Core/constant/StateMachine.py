@@ -64,7 +64,7 @@ class StateMachine:
     MAKE_MILK = 90
     """ 挤奶 """
     START_MASTUREBATE = 91
-    """ 进入要自慰状态 """
+    """ 进入要自慰或要逆推状态 """
     MASTUREBATE = 92
     """ 自慰 """
     GET_CHARA_NORMAL_CLOTH_AND_DAY_EQIP = 93

@@ -1,4 +1,6 @@
 cid,effect_name,effect_type,effect
+
+
 二段结算,行为结算效果函数
 
 9999,NOTHING,系统量_基础,什么都没有的空结算
@@ -184,6 +186,7 @@ cid,effect_name,effect_type,effect
 456,MASTUREBATE_FLAG_TO_0,特殊flag_H,自身清零要自慰状态
 457,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0,特殊flag_H,自身清零要睡前自慰状态
 458,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2,特殊flag_H,自身变为已睡前自慰状态
+459,MASTUREBATE_TO_PL_FLAG_0,特殊flag_H,自身清零要找玩家逆推来自慰状态
 461,H_FLAG_TO_0,特殊flag_H,自身清零H状态
 462,H_FLAG_TO_1,特殊flag_H,自身变成H状态
 463,T_H_FLAG_TO_0,特殊flag_H,交互对象清零H状态

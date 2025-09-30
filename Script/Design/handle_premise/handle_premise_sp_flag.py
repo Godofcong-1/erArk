@@ -1370,14 +1370,14 @@ def handle_masturebate_flag_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MASTUREBATE_FLAG_G_0)
 def handle_masturebate_flag_g_0(character_id: int) -> int:
     """
-    自身要自慰状态(含全位置)
+    自身要自慰状态(含全位置和逆推)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.sp_flag.masturebate > 0:
+    if character_data.sp_flag.masturebate > 0 or character_data.sp_flag.npc_masturebate_for_player:
         return 400
     else:
         return 0
@@ -1494,6 +1494,31 @@ def handle_not_need_masturebate_before_sleep_or_already_masturebate(character_id
     elif handle_masturebate_bofore_sleep_flag_2(character_id):
         return 1
     return 0
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_TO_PL_FLAG_1)
+def handle_masturebate_to_pl_flag_1(character_id: int) -> int:
+    """
+    自身要找玩家逆推来自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.npc_masturebate_for_player
+
+
+@add_premise(constant_promise.Premise.MASTUREBATE_TO_PL_FLAG_0)
+def handle_masturebate_to_pl_flag_0(character_id: int) -> int:
+    """
+    自身没有要找玩家逆推来自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_masturebate_to_pl_flag_1(character_id)
 
 
 @add_premise(constant_promise.Premise.IS_UNCONSCIOUS_H)

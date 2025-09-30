@@ -1457,6 +1457,10 @@ class Premise:
     """ 特殊flag_自慰 自身已睡前自慰状态 """
     NOT_NEED_MASTUREBATE_BEFORE_SLEEP_OR_ALREADY_MASTUREBATE = "not_need_masturebate_before_sleep_or_already_masturebate"
     """ 特殊flag_自慰 自身不需要睡前自慰或已经睡前自慰 """
+    MASTUREBATE_TO_PL_FLAG_0 = "masturebate_to_pl_flag_0"
+    """ 特殊flag_自慰 自身没有要找玩家逆推来自慰状态 """
+    MASTUREBATE_TO_PL_FLAG_1 = "masturebate_to_pl_flag_1"
+    """ 特殊flag_自慰 自身要找玩家逆推来自慰状态 """  
 
     IS_UNCONSCIOUS_H = "is_unconscious_h"
     """ 特殊flag_无意识 当前为无意识奸模式 """
@@ -3429,4 +3433,5 @@ class Premise:
 
     HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM = "have_instrument_or_in_music_room"
     """ 复合 已持有乐器或在乐器练习室里 """
-
+    DESIRE_POINT_GE_80_OR_MASTUREBATE_TO_PL_FLAG_1 = "masturebate_to_pl_flag_1_or_desire_point_ge_80"
+    """ 复合 自身欲望值≥80或要找玩家逆推来自慰状态 """

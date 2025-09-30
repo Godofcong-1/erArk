@@ -733,7 +733,8 @@ masturebate_bofore_sleep_flag_0,MASTUREBATE_BOFORE_SLEEP_FLAG_0,特殊flag_自�
 masturebate_bofore_sleep_flag_1,MASTUREBATE_BOFORE_SLEEP_FLAG_1,特殊flag_自慰,自身要睡前自慰状态
 masturebate_bofore_sleep_flag_2,MASTUREBATE_BOFORE_SLEEP_FLAG_2,特殊flag_自慰,自身已睡前自慰状态
 not_need_masturebate_before_sleep_or_already_masturebate,NOT_NEED_MASTUREBATE_BEFORE_SLEEP_OR_ALREADY_MASTUREBATE,特殊flag_自慰,自身不需要睡前自慰或已经睡前自慰
-
+masturebate_to_pl_flag_0,MASTUREBATE_TO_PL_FLAG_0,特殊flag_自慰,自身没有要找玩家逆推来自慰状态
+masturebate_to_pl_flag_1,MASTUREBATE_TO_PL_FLAG_1,
 is_unconscious_h,IS_UNCONSCIOUS_H,特殊flag_无意识,当前为无意识奸模式
 not_unconscious_h,NOT_UNCONSCIOUS_H,特殊flag_无意识,当前不是无意识奸模式
 unconscious_flag_0,UNCONSCIOUS_FLAG_0,特殊flag_无意识,自身没有无意识状态
@@ -1738,4 +1739,4 @@ target_not_player_daughter,TARGET_NOT_PLAYER_DAUGHTER,生育,交互对象不是�
 to_do,TO_DO,未分类,未实装
 
 have_instrument_or_in_music_room,HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM,复合,已持有乐器或在乐器练习室里
-
+masturebate_to_pl_flag_1_or_desire_point_ge_80,DESIRE_POINT_GE_80_OR_MASTUREBATE_TO_PL_FLAG_1,复合,自身欲望值≥80或要找玩家逆推来自慰状态

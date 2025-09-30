@@ -1505,3 +1505,18 @@ def handle_have_instrument_or_in_music_room(character_id: int) -> int:
     if handle_in_music_room(character_id):
         return 1
     return 0
+
+@add_premise(constant_promise.Premise.DESIRE_POINT_GE_80_OR_MASTUREBATE_TO_PL_FLAG_1)
+def handle_masturebate_to_pl_flag_1_or_desire_point_ge_80(character_id: int) -> int:
+    """
+    校验角色自身欲望值≥80或要找玩家逆推来自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_desire_point_ge_80(character_id):
+        return 1
+    if handle_masturebate_to_pl_flag_1(character_id):
+        return 1
+    return 0

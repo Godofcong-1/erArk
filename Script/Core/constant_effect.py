@@ -360,6 +360,8 @@ class BehaviorEffect:
     """ 特殊flag_H 自身清零要睡前自慰状态 """
     MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2 = 458
     """ 特殊flag_H 自身变为已睡前自慰状态 """
+    MASTUREBATE_TO_PL_FLAG_0 = 459
+    """ 特殊flag_H 自身清零要找玩家逆推来自慰状态 """
     H_FLAG_TO_0 = 461
     """ 特殊flag_H 自身清零H状态 """
     H_FLAG_TO_1 = 462
