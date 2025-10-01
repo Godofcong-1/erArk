@@ -113,6 +113,9 @@ def update_recruit():
             # 开始获得招募npc的id
             recruitable_npc_id_list = recruit_panel.find_recruitable_npc()
             wait_id_list = []
+            # 保证为int类型
+            if not isinstance(cache.rhodes_island.recruit_line[recruit_line_id][2], int):
+                cache.rhodes_island.recruit_line[recruit_line_id][2] = 0
             # 主招募专员
             line_main_chara_id = cache.rhodes_island.recruit_line[recruit_line_id][2]
             line_main_chara_data = cache.character_data[line_main_chara_id]
