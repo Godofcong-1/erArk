@@ -1410,6 +1410,7 @@ penis_in_t_vagina_or_womb,PENIS_IN_T_VAGINA_OR_WOMB,H_阴茎位置,当前阴茎�
 penis_not_in_t_vagina_or_womb,PENIS_NOT_IN_T_VAGINA_OR_WOMB,H_阴茎位置,当前阴茎位置不为交互对象_V插入中且不为W插入中
 
 dr_position_null,DR_POSITION_NULL,H_体位,博士体位为无
+dr_have_sex_position,DR_HAVE_SEX_POSITION,H_体位,博士有任意体位
 dr_position_normal,DR_POSITION_NORMAL,H_体位,博士体位为正常体位
 dr_position_back,DR_POSITION_BACK,H_体位,博士体位为后背体位
 dr_position_face_ride,DR_POSITION_FACE_RIDE,H_体位,博士体位为对面骑乘体位
@@ -1422,6 +1423,10 @@ dr_position_face_hug,DR_POSITION_FACE_HUG,H_体位,博士体位为对面抱体�
 dr_position_back_hug,DR_POSITION_BACK_HUG,H_体位,博士体位为背面抱体位
 dr_position_face_lie,DR_POSITION_FACE_LIE,H_体位,博士体位为对面卧体位
 dr_position_back_lie,DR_POSITION_BACK_LIE,H_体位,博士体位为背面卧体位
+dr_womb_position_null,DR_WOMB_POSITION_NULL,H_体位,博士子宫性交位置为无
+dr_have_womb_position,DR_HAVE_WOMB_POSITION,H_体位,博士有任意子宫性交位置
+dr_womb_position_insert,DR_WOMB_POSITION_INSERT,H_体位,博士子宫性交位置为子宫口插入
+dr_womb_position_sex,DR_WOMB_POSITION_SEX,H_体位,博士子宫性交位置为子宫奸
 
 shoot_in_t_body,SHOOT_IN_T_BODY,H_射精,在交互对象的身体上射精（即含全部位）
 shoot_in_t_hair,SHOOT_IN_T_HAIR,H_射精,在交互对象的头发射精

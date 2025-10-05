@@ -11097,6 +11097,69 @@ def handle_dr_position_back_lie(
     character_data.h_state.current_sex_position = 12
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_WOMB_NULL)
+def handle_dr_position_womb_null(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士子宫性交位置变成无
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_womb_sex_position = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_WOMB_INSERT)
+def handle_dr_position_womb_insert(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士子宫性交位置变成子宫口插入
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_womb_sex_position = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_WOMB_SEX)
+def handle_dr_position_womb_sex(
+    character_id: int,
+    add_time: int,
+    change_data: game_type.CharacterStatusChange,
+    now_time: datetime.datetime,
+):
+    """
+    博士子宫性交位置变成子宫奸
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_womb_sex_position = 2
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.H_IN_LOVE_HOTEL_TO_FALSE)
 def handle_h_in_love_hotel_to_false(
         character_id: int,

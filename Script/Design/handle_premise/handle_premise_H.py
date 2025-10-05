@@ -494,8 +494,20 @@ def handle_dr_position_null(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == -1
+
+
+@add_premise(constant_promise.Premise.DR_HAVE_SEX_POSITION)
+def handle_dr_have_sex_position(character_id: int) -> int:
+    """
+    博士有任意体位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_dr_position_null(character_id)
 
 
 @add_premise(constant_promise.Premise.DR_POSITION_NORMAL)
@@ -507,7 +519,7 @@ def handle_dr_position_normal(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 1
 
 
@@ -520,7 +532,7 @@ def handle_dr_position_back(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 2
 
 
@@ -533,7 +545,7 @@ def handle_dr_position_face_ride(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 3
 
 
@@ -546,7 +558,7 @@ def handle_dr_position_back_ride(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 4
 
 
@@ -559,7 +571,7 @@ def handle_dr_position_face_seat(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 5
 
 
@@ -572,7 +584,7 @@ def handle_dr_position_back_seat(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 6
 
 
@@ -585,7 +597,7 @@ def handle_dr_position_face_stand(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 7
 
 
@@ -598,7 +610,7 @@ def handle_dr_position_back_stand(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 8
 
 
@@ -611,7 +623,7 @@ def handle_dr_position_face_hug(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 9
 
 
@@ -624,7 +636,7 @@ def handle_dr_position_back_hug(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 10
 
 
@@ -637,7 +649,7 @@ def handle_dr_position_face_lie(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 11
 
 
@@ -650,8 +662,59 @@ def handle_dr_position_back_lie(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data = cache.character_data[character_id]
+    character_data = cache.character_data[0]
     return character_data.h_state.current_sex_position == 12
+
+
+@add_premise(constant_promise.Premise.DR_WOMB_POSITION_NULL)
+def handle_dr_womb_position_null(character_id: int) -> int:
+    """
+    博士子宫性交位置为无
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    return character_data.h_state.current_womb_sex_position == 0
+
+
+@add_premise(constant_promise.Premise.DR_HAVE_WOMB_POSITION)
+def handle_dr_have_womb_position(character_id: int) -> int:
+    """
+    博士有任意子宫性交位置
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_dr_womb_position_null(character_id)
+
+
+@add_premise(constant_promise.Premise.DR_WOMB_POSITION_INSERT)
+def handle_dr_womb_position_insert(character_id: int) -> int:
+    """
+    博士子宫性交位置为子宫口插入
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    return character_data.h_state.current_womb_sex_position == 1
+
+
+@add_premise(constant_promise.Premise.DR_WOMB_POSITION_SEX)
+def handle_dr_womb_position_sex(character_id: int) -> int:
+    """
+    博士子宫性交位置为子宫奸
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[0]
+    return character_data.h_state.current_womb_sex_position == 2
 
 
 @add_premise(constant_promise.Premise.SHOOT_IN_T_BODY)

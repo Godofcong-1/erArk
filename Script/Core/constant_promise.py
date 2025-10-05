@@ -2792,6 +2792,8 @@ class Premise:
 
     DR_POSITION_NULL = "dr_position_null"
     """ H_体位 博士体位为无 """
+    DR_HAVE_SEX_POSITION = "dr_have_sex_position"
+    """ H_体位 博士有任意体位 """
     DR_POSITION_NORMAL = "dr_position_normal"
     """ H_体位 博士体位为正常体位 """
     DR_POSITION_BACK = "dr_position_back"
@@ -2816,6 +2818,14 @@ class Premise:
     """ H_体位 博士体位为对面卧体位 """
     DR_POSITION_BACK_LIE = "dr_position_back_lie"
     """ H_体位 博士体位为背面卧体位 """
+    DR_WOMB_POSITION_NULL = "dr_womb_position_null"
+    """ H_体位 博士子宫性交位置为无 """
+    DR_HAVE_WOMB_POSITION = "dr_have_womb_position"
+    """ H_体位 博士有任意子宫性交位置 """
+    DR_WOMB_POSITION_INSERT = "dr_womb_position_insert"
+    """ H_体位 博士子宫性交位置为子宫口插入 """
+    DR_WOMB_POSITION_SEX = "dr_womb_position_sex"
+    """ H_体位 博士子宫性交位置为子宫奸 """
 
     SHOOT_IN_T_BODY = "shoot_in_t_body"
     """ H_射精 在交互对象的身体上射精（即含全部位） """

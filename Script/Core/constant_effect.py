@@ -647,6 +647,12 @@ class BehaviorEffect:
     """ H_体位 博士体位数据变成对面卧体位 """
     DR_POSITION_BACK_LIE = 862
     """ H_体位 博士体位数据变成背面卧体位 """
+    DR_POSITION_WOMB_NULL = 866
+    """ H_体位 博士子宫性交位置变成无 """
+    DR_POSITION_WOMB_INSERT = 867
+    """ H_体位 博士子宫性交位置变成子宫口插入 """
+    DR_POSITION_WOMB_SEX = 868
+    """ H_体位 博士子宫性交位置变成子宫奸 """
 
     H_IN_LOVE_HOTEL_TO_FALSE = 871
     """ H_地点 取消自己和交互对象正在爱情旅馆中H的状态 """

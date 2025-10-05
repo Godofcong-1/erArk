@@ -54,9 +54,13 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
             for dirty_key in character_data.dirty.penis_dirty_dict:
                 character_data.dirty.penis_dirty_dict[dirty_key] = False
         # 当前有H体位下，如果进行手、口、胸类则清零H体位数据
-        if character_data.h_state.current_sex_position != -1:
+        if handle_premise.handle_dr_have_sex_position(0):
             if handle_premise.handle_last_cmd_handjob_type(0) or handle_premise.handle_last_cmd_blowjob_type(0) or handle_premise.handle_last_cmd_paizuri_type(0):
                 character_data.h_state.current_sex_position = -1
+        # 当前有子宫性交位置下，如果阴茎位置不是阴道或子宫，则清零子宫性交位置数据
+        if handle_premise.handle_dr_have_sex_position(0):
+            if character_data.h_state.insert_position not in [6 ,7]:
+                character_data.h_state.current_womb_sex_position = 0
         # 刚刚射精状态下，用计数的方式来判断是否重置
         if character_data.h_state.just_shoot == 1:
             character_data.h_state.just_shoot = 2
