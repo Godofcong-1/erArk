@@ -25,7 +25,7 @@ def renumber_csv(
     start_value: int,
     start_line: int = 6,
     column_index: int = 0,
-    encoding: str = "utf-8-sig",
+    encoding: str = "utf-8",
     backup: bool = True,
     backup_suffix: str = ".bak",
 ) -> None:
@@ -118,8 +118,8 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument(
         "--encoding",
         type=str,
-        default="utf-8-sig",
-        help="文件编码，默认 utf-8-sig",
+        default="utf-8",
+        help="文件编码，默认 utf-8",
     )
     parser.add_argument(
         "--no-backup",
