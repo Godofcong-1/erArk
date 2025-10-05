@@ -83,7 +83,6 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
     info_text = _("选择人员筛选方式：")
     info_draw = draw.NormalDraw()
     info_draw.text = info_text
-    info_draw.width = window_width
     info_draw.draw()
     
     for select_type_id in range(len(select_type_list)):
@@ -92,7 +91,6 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
             line_feed.draw()
             empty_draw = draw.NormalDraw()
             empty_draw.text = "  " * len(info_text)
-            empty_draw.width = window_width
             empty_draw.draw()
         # 使用局部状态，不再依赖全局变量
         if select_type_id == select_state["type"]:
@@ -102,12 +100,11 @@ def common_select_npc_button_list_func(now_draw_panel: panel.PageHandlePanel, ti
             now_draw = draw.NormalDraw()
             now_draw.text = select_type_text
             now_draw.style = "gold_enrod"
-            now_draw.width = window_width / 3
             now_draw.draw()
         # 未选中的为按钮
         else:
             draw_text = f"  {select_type_list[select_type_id]}    "
-            now_draw_width = min(len(draw_text) * 2, window_width / 2.5)
+            now_draw_width = int(min(len(draw_text) * 2, window_width / 2.5))
             # 将回调函数替换为内部回调 inner_select_type_change
             now_draw = draw.LeftButton(
                 draw_text, select_type_list[select_type_id], now_draw_width, cmd_func=inner_select_type_change, args=(select_type_id,)

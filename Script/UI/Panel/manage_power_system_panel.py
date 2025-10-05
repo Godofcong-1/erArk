@@ -618,8 +618,10 @@ class Manage_Power_System_Panel:
             summary.draw()
             line_feed.draw()
             # 表头
-            head = draw.NormalDraw(); head.width = self.width
-            head.text = _("　区块　　　 | 当前策略　　　　　  | [-]降级   [+]升级\n")
+            head = draw.NormalDraw()
+            block_name = attr_calculation.pad_display_width("　" + _("区块"), 12, "center")
+            now_strategy_text = attr_calculation.pad_display_width(_("当前策略"), 23, "center")
+            head.text = _("{0} | {1} | [-]降级   [+]升级\n").format(block_name, now_strategy_text)
             head.draw()
             # 列表
             for cid, fac_data in game_config.config_facility.items():
@@ -638,9 +640,9 @@ class Manage_Power_System_Panel:
                 now_strategy_text = f"{supply_strategy[st].name}({int(supply_strategy[st].adjust*100)}%)"
                 now_strategy_text = attr_calculation.pad_display_width(now_strategy_text, 10)
                 # 当前耗电
-                zone_use = str(get_zone_power_consumption(cid)).ljust(6)
+                zone_use = str(get_zone_power_consumption(cid)).ljust(10)
                 # 行文本
-                row_draw = draw.NormalDraw(); row_draw.width = self.width
+                row_draw = draw.NormalDraw()
                 row_draw.text = f"{fac_name} | {now_strategy_text} = {zone_use} | "
                 row_draw.draw()
 
@@ -679,7 +681,7 @@ class Manage_Power_System_Panel:
             title = draw.TitleLineDraw(_("调控员管理"), self.width)
             title.draw()
             return_list = []
-            info = draw.NormalDraw(); info.width = self.width
+            info = draw.NormalDraw()
             op_bonus = _get_operator_power_bonus()
             info.text = _("当前调控员数量：{0}  总效率加成：{1:.2%}" ).format(len(ri.power_operator_ids_list), op_bonus)
             info.text += " " * 4
@@ -708,7 +710,7 @@ class Manage_Power_System_Panel:
                 chara_name = attr_calculation.pad_display_width(chara_name, 12)
                 now_type_name = attr_calculation.pad_display_width(type_name[idx], 12)
                 main_text = _("{0}主调控员: {1}").format(now_type_name, chara_name)
-                main_draw = draw.NormalDraw(); main_draw.width = self.width
+                main_draw = draw.NormalDraw()
                 main_draw.text = main_text
                 main_draw.draw()
                 # 任命按钮
@@ -727,7 +729,7 @@ class Manage_Power_System_Panel:
                 other_text += "、".join(names)
             else:
                 other_text += _("暂无")
-            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            other_draw = draw.NormalDraw()
             other_draw.text = other_text
             other_draw.draw()
 
@@ -807,7 +809,7 @@ class Manage_Power_System_Panel:
             title.draw()
 
             # 汇总
-            summary = draw.NormalDraw(); summary.width = self.width
+            summary = draw.NormalDraw()
             summary.text = _("\n  当前理论用电量: {0} / 理论供电量:{1}\n").format(
                 get_theoretical_power_consumption(), get_theoretical_power_generation()
             )
@@ -825,7 +827,7 @@ class Manage_Power_System_Panel:
                 move_flag = True
             summary.draw()
             # 显示文本
-            extra_module = draw.NormalDraw(); extra_module.width = self.width
+            extra_module = draw.NormalDraw()
             extra_module.text = _("  副源石反应炉扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n").format(
                 ri.orundum_reactor_list[1], ri.materials_resouce[51] + fac_lv * 3, fac_lv * 3
             )
@@ -835,14 +837,14 @@ class Manage_Power_System_Panel:
             extra_module.draw()
             line_feed.draw()
             # 提示信息
-            info = draw.NormalDraw(); info.width = self.width
+            info = draw.NormalDraw()
             info.text = _("○ 如果每日发电量+已储存蓄电量不够覆盖当日总用电量，将会影响罗德岛整体运营效率\n")
             info.text += _("○ 每日过剩的电量将优先充入蓄电池，溢出部分将被浪费\n")
             info.text += _("○ 扩展模块可以在生产制造区的流水线上消耗资源进行制造\n")
             info.text += _("○ 清洁能源设施的发电量受环境与天气影响较大，当前未实装地区环境与天气系统，暂为固定值乘以随机量\n")
             info.draw()
             line_feed.draw()
-            head = draw.NormalDraw(); head.width = self.width
+            head = draw.NormalDraw()
             facility_text = attr_calculation.pad_display_width(_("设施"), 12, "center")
             value_text = attr_calculation.pad_display_width(_("数值"), 9, "center")
             info_text = attr_calculation.pad_display_width(_("信息"), 60, "center")
@@ -857,7 +859,7 @@ class Manage_Power_System_Panel:
             eff_value = int(game_config.config_power_generation[cid_eff].value)
             eff_value_str = str(eff_value).rjust(4)
             main_info = attr_calculation.pad_display_width(_("主炉等级等于动力区等级，决定单位燃料的发电效率"), 60)
-            row = draw.NormalDraw(); row.width = self.width
+            row = draw.NormalDraw()
             row.text = _(" 主源石反应炉 | {0}级 | {1}/燃料 | {2} | ").format(main_lv, eff_value_str, main_info)
             row.draw()
             # 主反应炉升级按钮(与动力区等级同步，故取消)
@@ -873,14 +875,14 @@ class Manage_Power_System_Panel:
             aux_fuel = int(game_config.config_power_generation[cid_aux].value)
             aux_fuel_str = str(aux_fuel).rjust(4)
             aux_info = attr_calculation.pad_display_width(_("副炉数量影响每日燃料的燃烧数量，启用台数越多燃料消耗越多"), 60)
-            row = draw.NormalDraw(); row.width = self.width
+            row = draw.NormalDraw()
             row.text = _(" 副源石反应炉 | {0}台 | {1}/台日 | {2} | ").format(aux, aux_fuel_str, aux_info)
             row.draw()
             # 如果等级小于2则不允许调整，固定为3台
             if fac_lv < 2:
                 ri.orundum_reactor_list[1] = 3
                 aux_limit_text = _("（区块等级不足，无法调整副源石反应炉）\n")
-                aux_limit_draw = draw.NormalDraw(); aux_limit_draw.width = self.width
+                aux_limit_draw = draw.NormalDraw()
                 aux_limit_draw.text = aux_limit_text
                 aux_limit_draw.draw()
             # 反应炉增减按钮
@@ -920,7 +922,7 @@ class Manage_Power_System_Panel:
                 if cant_flag:
                     base_val = 0.0
                 base_val_str = str(round(base_val,1)).rjust(4)
-                row = draw.NormalDraw(); row.width = self.width
+                row = draw.NormalDraw()
                 descs_now = attr_calculation.pad_display_width(descs[idx], 60)
                 row.text = _(" {0} | {1}组 | {2}/组日 | {3} | ").format(names[idx], num, base_val_str, descs_now)
                 if idx == 3:
@@ -928,7 +930,7 @@ class Manage_Power_System_Panel:
                 row.draw()
                 # 如果设施不可用则不显示增减按钮
                 if cant_flag:
-                    cant_draw = draw.NormalDraw(); cant_draw.width = self.width
+                    cant_draw = draw.NormalDraw()
                     cant_draw.text = _("（当前设施不可用，无法调整数量）\n")
                     cant_draw.draw()
                     continue
@@ -985,7 +987,7 @@ class Manage_Power_System_Panel:
             # 蓄电池总量限制与生产入口
             total_batt = sum(ri.battery_list)
             # 汇总
-            summary = draw.NormalDraw(); summary.width = self.width
+            summary = draw.NormalDraw()
             summary.text = _("\n  当前理论用电量: {0} / 理论供电量:{1}\n").format(
                 get_theoretical_power_consumption(), get_theoretical_power_generation()
             )
@@ -995,7 +997,7 @@ class Manage_Power_System_Panel:
             )
             summary.draw()
             line_feed.draw()
-            head = draw.NormalDraw(); head.width = self.width
+            head = draw.NormalDraw()
             head.text = _(" 类型 | 数量 | 容量/台 | 自放电/天 |")
             head.text += " " * 7 + _("操作\n")
             head.draw()
@@ -1025,18 +1027,18 @@ class Manage_Power_System_Panel:
                 num = ri.battery_list[idx]
                 num_str = attr_calculation.pad_display_width(str(num), 4, "center")
                 cap_str = str(cap_table[idx]).rjust(4)
-                row = draw.NormalDraw(); row.width = self.width
+                row = draw.NormalDraw()
                 row.text = f"  {names[idx]}  | {num_str} |  {cap_str}   |    {int(rate_table[idx]*1000)/10}%   | "
                 row.draw()
                 # 如果设施等级小于3，则L2不可用
                 if idx == 1 and fac_lv < 3:
-                    limit_draw = draw.NormalDraw(); limit_draw.width = self.width
+                    limit_draw = draw.NormalDraw()
                     limit_draw.text = _("（区块等级不足，无法调整L2蓄电池）\n")
                     limit_draw.draw()
                     continue
                 # 如果设施等级小于4，则L3不可用
                 if idx == 2 and fac_lv < 4:
-                    limit_draw = draw.NormalDraw(); limit_draw.width = self.width
+                    limit_draw = draw.NormalDraw()
                     limit_draw.text = _("（区块等级不足，无法调整L3蓄电池）\n")
                     limit_draw.draw()
                     continue
