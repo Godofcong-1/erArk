@@ -234,15 +234,7 @@ def order_deal(flag: str = "order", print_order: bool = True, donot_return_null_
     
     # 如果需要打印命令，将其添加到绘制元素
     if print_order and response:
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        
-        # 添加命令文本元素
-        cache.current_draw_elements.append({
-            "type": "text",
-            "text": f"\n{response}\n",
-            "style": "normal"
-        })
+        io_init.era_print(f"\n{response}\n")
     
     return response if response is not None else ""
 

@@ -1447,6 +1447,10 @@ class Cache:
         """ 是否为web模式 """
         self.current_draw_elements: List = []
         """ 当前绘制的元素列表 """
+        self.web_draw_history: List = []
+        """ Web模式下的文本历史缓存 """
+        self.web_draw_history_line_total: int = 0
+        """ web文本历史累计行数 """
         self.current_return_list: List = []
         """ 当前返回的元素列表 """
         self.current_input_request: List = []

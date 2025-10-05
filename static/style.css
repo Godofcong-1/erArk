@@ -172,13 +172,14 @@ body {
     background-color: #222;
     border: 1px solid #444;
     color: #fff;
-    padding: 5px 10px;
+    padding: 0.2em 0.5em;
     margin: 0.2em;
     cursor: pointer;
     border-radius: 3px;
     display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
     transition: background-color 0.2s;
     font-size: inherit; /* 新增：确保字体大小与周围文本一致 */
+    line-height: 1.1;
 }
 
 /* 块级按钮样式 - 需要单独一行的按钮 */
@@ -233,6 +234,12 @@ body {
     align-items: center;
     flex-wrap: wrap;
     }
+
+.inline-container .text-inline {
+    display: inline-block;
+    line-height: 1.1;
+    vertical-align: middle;
+}
 
 /* 按钮容器样式（此容器现在被隐藏，按钮直接显示在game-content中） */
 .game-buttons {

@@ -8,11 +8,129 @@ Web模式下的IO操作适配器
 
 import threading
 import json
-from Script.Core import cache_control, game_type
+import copy
+from typing import Dict, Any
+from Script.Core import cache_control
 from Script.Core.web_server import update_game_state
 
 # 全局变量
 cache = cache_control.cache
+
+# Web绘制历史记录设置
+MAX_HISTORY_LENGTH = 500
+HISTORY_ELEMENT_TYPES = {
+    "text",
+    "line",
+    "title",
+    "image",
+    "center_image",
+    "character",
+    "bar",
+    "info_bar",
+    "info_character",
+}
+
+
+def _ensure_current_draw_list() -> None:
+    """
+    确保当前绘制元素列表存在
+
+    参数：无
+
+    返回值类型：无
+    功能描述：初始化当前绘制元素缓存列表
+    """
+    if not hasattr(cache, "current_draw_elements"):
+        cache.current_draw_elements = []
+
+
+def _ensure_history_list() -> None:
+    """
+    确保历史绘制缓存存在
+
+    参数：无
+
+    返回值类型：无
+    功能描述：初始化Web绘制历史缓存列表
+    """
+    if not hasattr(cache, "web_draw_history"):
+        cache.web_draw_history = []
+    if not hasattr(cache, "web_draw_history_line_total"):
+        cache.web_draw_history_line_total = 0
+
+
+def _calculate_element_lines(element: Dict[str, Any]) -> int:
+    """
+    计算绘制元素占用的行数
+
+    参数:
+    element (dict): 绘制元素
+
+    返回值类型：int
+    功能描述：根据元素类型估算行数，用于限制历史长度
+    """
+    elem_type = element.get("type")
+    if elem_type == "text":
+        text = element.get("text", "")
+        if text == "":
+            return 1
+        # 拆分换行符，避免末尾空行导致额外统计
+        lines = text.split("\n")
+        # 如果文本以换行结尾，split会产生一个额外的空字符串，剔除
+        if lines and lines[-1] == "":
+            lines = lines[:-1]
+        return max(len(lines), 1)
+    if elem_type in {"image", "center_image", "character", "bar"}:
+        return 1
+    if elem_type in {"info_bar", "info_character"}:
+        total = 1
+        if element.get("text"):
+            total += _calculate_element_lines({"type": "text", "text": element["text"]})
+        for item in element.get("draw_list", []):
+            total += _calculate_element_lines(item)
+        return max(total, 1)
+    return 1
+
+
+def _record_history_element(element: Dict[str, Any]) -> None:
+    """
+    记录历史绘制元素
+
+    参数:
+    element (dict): 绘制元素
+
+    返回值类型：无
+    功能描述：按类型过滤并维护固定长度的历史缓存
+    """
+    if not isinstance(element, dict):
+        return
+    if element.get("type") not in HISTORY_ELEMENT_TYPES:
+        return
+    _ensure_history_list()
+    lines = _calculate_element_lines(element)
+    history_entry = {"element": copy.deepcopy(element), "line_count": lines}
+    cache.web_draw_history.append(history_entry)
+    cache.web_draw_history_line_total += lines
+    while cache.web_draw_history and cache.web_draw_history_line_total > MAX_HISTORY_LENGTH:
+        removed = cache.web_draw_history.pop(0)
+        cache.web_draw_history_line_total -= removed.get("line_count", 0)
+
+
+def append_current_draw_element(element: Dict[str, Any], record_history: bool = True) -> None:
+    """
+    添加绘制元素并根据需要记录历史
+
+    参数:
+    element (dict): 绘制元素
+    record_history (bool): 是否记录到历史缓存
+
+    返回值类型：无
+    功能描述：统一处理绘制元素的追加和历史维护
+    """
+    _ensure_current_draw_list()
+    cache.current_draw_elements.append(element)
+    if record_history:
+        _record_history_element(element)
 input_event = threading.Event()
 _order_queue = []  # 命令队列
 
@@ -71,11 +189,14 @@ def clear_screen():
     清空当前绘制元素缓存
     """
     # 清空当前绘制元素
-    if not hasattr(cache, "current_draw_elements"):
-        cache.current_draw_elements = []
-    else:
-        cache.current_draw_elements = []
-    
+    _ensure_current_draw_list()
+    cache.current_draw_elements = []
+
+    # 回填历史内容
+    if hasattr(cache, "web_draw_history") and cache.web_draw_history:
+        history_snapshot = [copy.deepcopy(entry["element"]) for entry in cache.web_draw_history]
+        cache.current_draw_elements.extend(history_snapshot)
+
     # 更新Web界面状态
     update_game_state(cache.current_draw_elements, None)
 
@@ -98,9 +219,7 @@ def era_print(string, style="standard"):
     }
     
     # 添加到当前绘制元素列表
-    if not hasattr(cache, "current_draw_elements"):
-        cache.current_draw_elements = []
-    cache.current_draw_elements.append(text_element)
+    append_current_draw_element(text_element, record_history=True)
 
 def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutton"):
     """
@@ -124,9 +243,7 @@ def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutto
     }
     
     # 添加到当前绘制元素列表
-    if not hasattr(cache, "current_draw_elements"):
-        cache.current_draw_elements = []
-    cache.current_draw_elements.append(button_element)
+    append_current_draw_element(button_element, record_history=False)
 
 def set_background(color):
     """

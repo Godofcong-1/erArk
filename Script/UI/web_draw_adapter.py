@@ -10,6 +10,7 @@ from typing import List, Dict, Any, Optional
 from Script.Core import cache_control, web_server
 from Script.UI.Moudle import draw
 from Script.Config import normal_config
+from Script.Core.io_web import append_current_draw_element
 
 # 获取全局缓存
 cache = cache_control.cache
@@ -40,9 +41,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_center_draw(center_draw: draw.CenterDraw):
@@ -65,9 +64,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
 
     @staticmethod
     def adapt_right_draw(right_draw: draw.RightDraw):
@@ -90,10 +87,8 @@ class WebDrawAdapter:
         }
         
         # 检查是否存在当前绘制元素列表，如果不存在则创建
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
         # 将右对齐文本元素添加到绘制列表中
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_button(button: draw.Button):
@@ -124,9 +119,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=False)
         
         # 关键修复：调用py_cmd.pcmd()注册按钮事件处理函数
         from Script.Core import flow_handle
@@ -153,9 +146,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_title_line_draw(title_line: draw.TitleLineDraw):
@@ -177,9 +168,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_wait_draw(wait_draw: draw.WaitDraw):
@@ -201,9 +190,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
 
     @staticmethod
     def adapt_image_draw(image_draw: draw.ImageDraw):
@@ -224,9 +211,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_bar_draw(bar_draw: draw.BarDraw):
@@ -256,9 +241,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_chara_draw(chara_draw: draw.CharaDraw):
@@ -288,9 +271,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_info_bar_draw(info_bar_draw: draw.InfoBarDraw):
@@ -349,9 +330,7 @@ class WebDrawAdapter:
         web_element["draw_list"] = draw_list_elements
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_info_chara_draw(info_chara_draw: draw.InfoCharaDraw):
@@ -402,9 +381,7 @@ class WebDrawAdapter:
         web_element["draw_list"] = draw_list_elements
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
     
     @staticmethod
     def adapt_image_button(image_button: draw.ImageButton):
@@ -426,9 +403,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=False)
         
         # 关键修复：调用py_cmd.pimagecmd()注册图片按钮事件处理函数
         from Script.Core import flow_handle
@@ -454,9 +429,7 @@ class WebDrawAdapter:
         }
         
         # 添加到当前绘制元素列表
-        if not hasattr(cache, "current_draw_elements"):
-            cache.current_draw_elements = []
-        cache.current_draw_elements.append(web_element)
+        append_current_draw_element(web_element, record_history=True)
 
 # 包装原始绘制类的draw方法，使其在Web模式下调用适配器
 
