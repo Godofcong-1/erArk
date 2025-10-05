@@ -329,7 +329,6 @@ class Recruit_Panel:
                 now_text += f"\n"
 
             all_info_draw.text = now_text
-            all_info_draw.width = self.width
             all_info_draw.draw()
 
             for recruit_line_id in cache.rhodes_island.recruit_line:
@@ -492,7 +491,7 @@ class Recruit_Panel:
             title.draw()
             return_list = []
 
-            info = draw.NormalDraw(); info.width = self.width
+            info = draw.NormalDraw()
             info.text = _("当前招聘专员数量：{0}").format(len(ri.hr_operator_ids_list))
             info.text += "      "
             info.draw()
@@ -514,7 +513,7 @@ class Recruit_Panel:
             for line_id in ri.recruit_line:
                 main_id = ri.recruit_line[line_id][2]
                 name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
-                row = draw.NormalDraw(); row.width = self.width
+                row = draw.NormalDraw()
                 row.text = _("{0}号招募线 主招聘专员: {1}  ").format(line_id+1, name)
                 row.draw()
                 def _make(line_idx):
@@ -527,7 +526,7 @@ class Recruit_Panel:
             # 其它副招聘专员
             main_ids = {ri.recruit_line[i][2] for i in ri.recruit_line}
             other_ops = [cid for cid in ri.hr_operator_ids_list if cid not in main_ids]
-            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            other_draw = draw.NormalDraw()
             if other_ops:
                 names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
                 other_draw.text = _("副招聘专员：") + "、".join(names) + "\n"
