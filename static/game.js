@@ -521,6 +521,208 @@ let isLastElementLinebreak = false; // 标记上一个元素是否为换行符
 let isLastTextEndedWithNewline = false;
 
 /**
+ * 等待管理器
+ * 负责处理需要用户确认后继续的绘制元素
+ */
+const WaitManager = {
+    currentWaitId: null,
+    isWaiting: false,
+    pendingElement: null,
+    pendingHint: null,
+    allowKeyboard: true,
+    waitResponsePending: false,
+    clickHandler: null,
+    keyHandler: null,
+    globalClickHandler: null,
+    skipMode: false,
+    skipRequestPending: false,
+
+    /**
+     * 渲染开始前调用，移除旧DOM引用但保留等待状态
+     */
+    prepareForRender() {
+        if (this.pendingElement && this.clickHandler) {
+            this.pendingElement.removeEventListener('click', this.clickHandler);
+        }
+        this.pendingElement = null;
+        this.pendingHint = null;
+    },
+
+    /**
+     * 启动或更新等待状态
+     * @param {string} waitId 唯一等待编号
+     * @param {object} options 配置项
+     */
+    start(waitId, options = {}) {
+        if (!waitId) {
+            waitId = `wait-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        }
+        if (options.awaitInput === false) {
+            console.log('[WaitManager] awaiting skipped, auto-resolving waitId=', waitId);
+            this.resolve(waitId);
+            return;
+        }
+
+        if (this.currentWaitId !== waitId) {
+            this.cleanup();
+            this.currentWaitId = waitId;
+        }
+
+        this.isWaiting = true;
+        this.prepareForRender();
+
+        console.log('[WaitManager] start waitId=', waitId, 'allowKeyboard=', options.allowKeyboard !== false, 'skipMode=', this.skipMode);
+
+        this.pendingElement = options.element || null;
+        this.pendingHint = options.hintElement || null;
+        this.allowKeyboard = options.allowKeyboard !== false;
+
+        const skipActive = this.skipMode;
+
+        if (!skipActive && this.pendingElement) {
+            this.pendingElement.classList.add('waiting-active');
+        }
+        if (!skipActive && this.pendingHint) {
+            this.pendingHint.classList.add('active');
+        }
+
+        const shouldBindElementClick = !skipActive && this.pendingElement && options.bindElementClick !== false;
+        if (shouldBindElementClick) {
+            this.clickHandler = () => this.trigger();
+            this.pendingElement.addEventListener('click', this.clickHandler);
+        }
+
+        if (!this.globalClickHandler) {
+            this.globalClickHandler = (event) => {
+                if (!this.isWaiting || this.waitResponsePending) {
+                    return;
+                }
+                if (event.target && typeof event.target.closest === 'function') {
+                    if (event.target.closest('.game-button')) {
+                        return;
+                    }
+                }
+                const container = document.getElementById('game-container');
+                if (container && !container.contains(event.target)) {
+                    return;
+                }
+                this.trigger();
+            };
+            document.addEventListener('click', this.globalClickHandler);
+        }
+
+        if (!skipActive && !this.keyHandler && this.allowKeyboard) {
+            this.keyHandler = (event) => {
+                if (!this.isWaiting || !this.allowKeyboard) {
+                    return;
+                }
+                const tagName = event.target && event.target.tagName;
+                if (tagName && ['INPUT', 'TEXTAREA'].includes(tagName)) {
+                    return;
+                }
+                if (event.key === 'Enter' || event.key === ' ' || event.key === 'Spacebar') {
+                    event.preventDefault();
+                    this.trigger();
+                }
+            };
+            document.addEventListener('keydown', this.keyHandler);
+        }
+
+        if (skipActive && !this.waitResponsePending) {
+            console.log('[WaitManager] skipMode active, auto-trigger waitId=', waitId);
+            this.trigger();
+        }
+    },
+
+    /**
+     * 标记等待完成
+     * @param {string} waitId 唯一等待编号
+     */
+    resolve(waitId) {
+        if (waitId && this.currentWaitId && this.currentWaitId !== waitId) {
+            return;
+        }
+        console.log('[WaitManager] resolve waitId=', this.currentWaitId);
+        this.cleanup();
+    },
+
+    /**
+     * 触发继续
+     */
+    trigger() {
+        if (this.waitResponsePending) {
+            return;
+        }
+        this.waitResponsePending = true;
+        console.log('[WaitManager] trigger waitId=', this.currentWaitId);
+        if (this.pendingElement) {
+            this.pendingElement.classList.add('waiting-submitted');
+        }
+        sendWaitResponse()
+            .finally(() => {
+                this.waitResponsePending = false;
+            });
+    },
+
+    /**
+     * 清理当前等待状态
+     */
+    cleanup() {
+        if (this.pendingElement && this.clickHandler) {
+            this.pendingElement.removeEventListener('click', this.clickHandler);
+        }
+        if (this.pendingElement) {
+            this.pendingElement.classList.remove('waiting-active', 'waiting-submitted');
+        }
+        if (this.pendingHint) {
+            this.pendingHint.classList.remove('active');
+        }
+        if (this.keyHandler) {
+            document.removeEventListener('keydown', this.keyHandler);
+        }
+
+        this.pendingElement = null;
+        this.pendingHint = null;
+        this.clickHandler = null;
+        this.keyHandler = null;
+        if (this.globalClickHandler) {
+            document.removeEventListener('click', this.globalClickHandler);
+            this.globalClickHandler = null;
+        }
+        this.currentWaitId = null;
+        this.isWaiting = false;
+        this.waitResponsePending = false;
+    },
+
+    /**
+     * 请求跳过所有等待直到主界面
+     */
+    requestSkipUntilMain() {
+        if (this.skipMode && this.isWaiting && !this.waitResponsePending) {
+            this.trigger();
+        }
+        if (this.skipRequestPending) {
+            return;
+        }
+        this.skipMode = true;
+        this.skipRequestPending = true;
+        sendSkipWaitRequest()
+            .then((data) => {
+                if (this.isWaiting && !this.waitResponsePending) {
+                    this.trigger();
+                }
+                return data;
+            })
+            .catch((error) => {
+                console.error('[WaitManager] skip request failed', error);
+            })
+            .finally(() => {
+                this.skipRequestPending = false;
+            });
+    }
+};
+
+/**
  * 高级滚动管理器
  * 负责处理滚动状态、指示器显示和事件监听
  */
@@ -828,7 +1030,7 @@ function getGameState() {
  */
 function shouldCreateNewLine(item) {
     // 如果是特殊类型的元素，总是需要换行
-    if (['title', 'line', 'wait'].includes(item.type)) {
+    if (['title', 'line', 'wait', 'line_wait'].includes(item.type)) {
         return true;
     }
     
@@ -893,7 +1095,19 @@ function renderGameState(state) {
         console.error('无效的游戏状态数据');
         return;
     }
+
+    const skipWaitActive = !!state.skip_wait;
+    if (WaitManager.skipMode !== skipWaitActive) {
+        console.log('[renderGameState] sync skipMode from state:', skipWaitActive);
+    }
+    WaitManager.skipMode = skipWaitActive;
+    if (WaitManager.skipMode && WaitManager.isWaiting && !WaitManager.waitResponsePending) {
+        WaitManager.trigger();
+    }
     
+    // 渲染前重置等待元素绑定
+    WaitManager.prepareForRender();
+
     // 清空内容容器
     gameContent.innerHTML = '';
     
@@ -914,6 +1128,7 @@ function renderGameState(state) {
     gameContent.appendChild(currentLine);
     let currentLineHasText = false;
     let currentLineButtons = [];
+    let encounteredActiveWaitElement = false;
 
     const applyInlineButtonAlignment = (button) => {
         if (!button || !button.classList.contains('inline-button')) {
@@ -940,6 +1155,13 @@ function renderGameState(state) {
     if (state.text_content && state.text_content.length > 0) {
         // 渲染每个元素
         state.text_content.forEach((item, index) => {
+            if (
+                (item.type === 'line_wait' && item.await_input !== false) ||
+                item.type === 'wait'
+            ) {
+                console.log('[renderGameState] detected active wait element index=', index, 'payload=', item);
+                encounteredActiveWaitElement = true;
+            }
             // 检查是否需要创建新行
             if (shouldCreateNewLine(item)) {
                 // 创建新的行容器
@@ -1085,7 +1307,13 @@ function renderGameState(state) {
                     isLastTextEndedWithNewline = false;
                 }
 
-                if (element && item.type === 'text' && item.text && item.text.trim() !== '') {
+                if (
+                    element &&
+                    (
+                        (item.type === 'text' && item.text && item.text.trim() !== '') ||
+                        (item.type === 'line_wait' && item.text && (item.text || '').trim() !== '')
+                    )
+                ) {
                     currentLineHasText = true;
                     currentLineButtons.forEach(btn => {
                         btn.classList.add('inline-button');
@@ -1104,6 +1332,11 @@ function renderGameState(state) {
                 forceNewLine = true;
             }
         });
+    }
+
+    if (WaitManager.isWaiting && !encounteredActiveWaitElement) {
+        console.log('[renderGameState] WaitManager waiting but no active wait element detected; performing cleanup');
+        WaitManager.cleanup();
     }
     
     // 确保滚动到底部在所有内容渲染后执行
@@ -1230,28 +1463,75 @@ function createGameElement(item) {
             lastElementType = 'line';
             isLastElementLinebreak = false;
             break;
+
+        case 'line_wait': {
+            console.log('[createGameElement] rendering line_wait element=', item);
+            element = document.createElement('div');
+            let className = `text ${item.style || ''}`;
+            if ((item.style && item.style.includes('block')) || item.width === 'auto') {
+                className += ' block';
+            } else {
+                className += ' text-inline';
+            }
+            element.className = className.trim();
+            element.style.whiteSpace = 'pre-wrap';
+            element.style.width = item.width ? `${item.width}ch` : 'auto';
+
+            let displayText = item.text || '';
+            if (displayText.includes('<br>')) {
+                displayText = displayText.replace(/<br>/g, '\n');
+            }
+            element.textContent = displayText;
+
+            if (item.font) {
+                element = applyFontStyle(element, item.font);
+            }
+
+            const waitId = item.wait_id || `line_wait_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
+            if (item.await_input === false) {
+                WaitManager.resolve(waitId);
+                console.log('[createGameElement] line_wait resolved immediately waitId=', waitId);
+            } else {
+                WaitManager.start(waitId, {
+                    allowKeyboard: true,
+                    bindElementClick: false
+                });
+                console.log('[createGameElement] line_wait waiting for input waitId=', waitId);
+            }
+
+            lastElementType = 'line_wait';
+            isLastElementLinebreak = false;
+            isLastTextEndedWithNewline = false;
+            break;
+        }
             
         case 'wait':
-            // 创建等待元素
             element = document.createElement('div');
-            element.className = 'wait-text';
-            // 处理可能包含的<br>标签
-            let processedTextWait = item.text;
+            let waitClassName = `text ${item.style || ''}`;
+            if ((item.style && item.style.includes('block')) || item.width === 'auto') {
+                waitClassName += ' block';
+            } else {
+                waitClassName += ' text-inline';
+            }
+            element.className = waitClassName.trim();
+            element.style.whiteSpace = 'pre-wrap';
+            element.style.width = item.width ? `${item.width}ch` : 'auto';
+
+            let processedTextWait = item.text || '';
             if (processedTextWait.includes('<br>')) {
                 processedTextWait = processedTextWait.replace(/<br>/g, '\n');
             }
             element.textContent = processedTextWait;
-            
-            // 添加点击继续的提示
-            const continueHint = document.createElement('div');
-            continueHint.className = 'continue-hint';
-            continueHint.textContent = '点击继续...';
-            element.appendChild(continueHint);
-            
-            // 添加点击事件
-            element.onclick = () => sendWaitResponse();
-            
-            // 更新上一个元素类型
+
+            if (item.font) {
+                element = applyFontStyle(element, item.font);
+            }
+
+            WaitManager.start(item.wait_id || `wait_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, {
+                allowKeyboard: true,
+                bindElementClick: false
+            });
+
             lastElementType = 'wait';
             isLastElementLinebreak = false;
             break;
@@ -1573,20 +1853,48 @@ function handleButtonClick(buttonId) {
  */
 function sendWaitResponse() {
     // 发送等待响应到服务器
-    fetch('/api/wait_response', {
+    console.log('[sendWaitResponse] POST /api/wait_response');
+    return fetch('/api/wait_response', {
         method: 'POST',
     })
-    .then(response => response.json())
+    .then(response => {
+        console.log('[sendWaitResponse] raw response', response);
+        return response.json();
+    })
     .then(data => {
         // 如果不使用WebSocket，且等待响应成功，立即获取新状态
         if (data.success && !socket) {
+            console.log('[sendWaitResponse] success without websocket, fetching state');
             getGameState();
             
             // 使用智能滚动到底部功能
             scrollToBottom();
         }
+        return data;
     })
     .catch(error => console.error('等待响应请求失败:', error));
+}
+
+function sendSkipWaitRequest() {
+    console.log('[sendSkipWaitRequest] POST /api/skip_wait');
+    return fetch('/api/skip_wait', {
+        method: 'POST',
+    })
+    .then(response => {
+        console.log('[sendSkipWaitRequest] raw response', response);
+        return response.json();
+    })
+    .then(data => {
+        if (data.success && !socket) {
+            console.log('[sendSkipWaitRequest] success without websocket, fetching state');
+            getGameState();
+        }
+        return data;
+    })
+    .catch(error => {
+        console.error('跳过等待请求失败:', error);
+        throw error;
+    });
 }
 
 /**
@@ -1856,6 +2164,20 @@ async function initialize() {
     
     // 设置图片加载观察器
     setupImageLoadObserver();
+
+    const gameContainer = document.getElementById('game-container');
+    if (gameContainer) {
+        gameContainer.addEventListener('contextmenu', (event) => {
+            event.preventDefault();
+            WaitManager.requestSkipUntilMain();
+        });
+        gameContainer.addEventListener('mousedown', (event) => {
+            if (event.button === 2) {
+                event.preventDefault();
+                WaitManager.requestSkipUntilMain();
+            }
+        });
+    }
     
     // 优先使用WebSocket连接
     try {

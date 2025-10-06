@@ -116,7 +116,7 @@ class WaitDraw(NormalDraw):
 
 class LineFeedWaitDraw(NormalDraw):
     """
-    每次换行时等待玩家左右键输入或输入回车
+    每次换行时等待玩家键盘或鼠标输入
 
     输入参数：无
     输出参数：无
@@ -125,7 +125,7 @@ class LineFeedWaitDraw(NormalDraw):
 
     def draw(self):
         """
-        每次换行时等待玩家左右键输入或输入回车，超出宽度自动换行
+        每次换行时等待玩家键盘或鼠标输入，超出宽度自动换行
         输入参数：无
         输出参数：无
         功能描述：将 self.text 按 \n 分段，每段超出宽度时自动换行，且每行输出后等待玩家操作。

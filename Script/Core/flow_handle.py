@@ -517,7 +517,7 @@ def askfor_wait():
     if WEB_MODE:
         # 使用Web版的askfor_wait函数
         return flow_handle_web.askfor_wait()
-    
+
     # 原始逻辑
     cache.wframe_mouse.w_frame_up = 0
     while not cache.wframe_mouse.w_frame_up:

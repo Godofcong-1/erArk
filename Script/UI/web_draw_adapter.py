@@ -7,7 +7,9 @@ Web绘制适配器，用于转换原有绘制类到Web界面
 
 import time
 from typing import List, Dict, Any, Optional
-from Script.Core import cache_control, web_server
+from Script.Core import cache_control, web_server, flow_handle, text_handle
+
+line_wait_id_counter = 0
 from Script.UI.Moudle import draw
 from Script.Config import normal_config
 from Script.Core.io_web import append_current_draw_element
@@ -20,6 +22,13 @@ class WebDrawAdapter:
     Web绘制适配器基类
     用于将原有的tkinter绘制适配到Web界面
     """
+
+    @staticmethod
+    def _next_line_wait_id() -> int:
+        """生成逐行等待绘制的唯一编号"""
+        global line_wait_id_counter
+        line_wait_id_counter += 1
+        return line_wait_id_counter
     
     @staticmethod
     def adapt_normal_draw(normal_draw: draw.NormalDraw):
@@ -191,6 +200,112 @@ class WebDrawAdapter:
         
         # 添加到当前绘制元素列表
         append_current_draw_element(web_element, record_history=True)
+
+    @staticmethod
+    def adapt_line_feed_wait_draw(line_wait_draw: draw.LineFeedWaitDraw):
+        """适配逐行等待绘制类"""
+        width = line_wait_draw.width
+        style = line_wait_draw.style
+        raw_text = line_wait_draw.text or ""
+        # print(
+        #     f"[LineFeedWaitDraw] start width={width} style={style} text_len={len(raw_text)} raw_text={raw_text!r}"
+        # )
+
+        text_parts = raw_text.split(r"\n")
+        if len(text_parts) == 1:
+            text_parts = raw_text.splitlines()
+
+        normalized_lines: List[str] = []
+        for part in text_parts:
+            if "\n" in part:
+                sub_parts = part.split("\n")
+                normalized_lines.extend(sub_parts)
+            else:
+                normalized_lines.append(part)
+
+        if not normalized_lines:
+            normalized_lines = [""]
+
+        segment_total = 0
+
+        def _should_skip_wait() -> bool:
+            return bool(
+                getattr(getattr(cache, "wframe_mouse", object()), "w_frame_skip_wait_mouse", False)
+            )
+
+        for line_index, line in enumerate(normalized_lines):
+            remain = line
+            segment_index = 0
+
+            def emit_segment(text_value: str) -> None:
+                nonlocal segment_index, segment_total
+                wait_id = WebDrawAdapter._next_line_wait_id()
+                skip_wait_active = _should_skip_wait()
+                line_element: Dict[str, Any] = {
+                    "type": "line_wait",
+                    "text": text_value,
+                    "font": style,
+                    "width": width,
+                    "wait_id": wait_id,
+                    "await_input": not skip_wait_active,
+                }
+                # print(
+                #     f"[LineFeedWaitDraw] emit segment wait_id={wait_id} line_index={line_index} segment_index={segment_index} await_input={line_element['await_input']} text={text_value!r}"
+                # )
+
+                append_current_draw_element(line_element, record_history=True)
+                web_server.update_game_state(cache.current_draw_elements, None)
+
+                if line_element["await_input"]:
+                    # print(f"[LineFeedWaitDraw] waiting for wait_id={wait_id}")
+                    flow_handle.askfor_wait()
+                    line_element["await_input"] = False
+                    if hasattr(cache, "web_draw_history"):
+                        for history_entry in reversed(cache.web_draw_history):
+                            history_element = history_entry.get("element")
+                            if (
+                                isinstance(history_element, dict)
+                                and history_element.get("type") == "line_wait"
+                                and history_element.get("wait_id") == wait_id
+                            ):
+                                history_element["await_input"] = False
+                                break
+                    web_server.update_game_state(cache.current_draw_elements, None)
+                    # print(f"[LineFeedWaitDraw] wait resolved wait_id={wait_id}")
+                else:
+                    # print(
+                    #     f"[LineFeedWaitDraw] auto-advance wait_id={wait_id} skip_wait={skip_wait_active}"
+                    # )
+                    if skip_wait_active:
+                        time.sleep(0.001)
+
+                segment_index += 1
+                segment_total += 1
+
+            if remain == "":
+                emit_segment("")
+            else:
+                while remain:
+                    current_text = ""
+                    for ch in remain:
+                        if width > 0 and text_handle.get_text_index(current_text + ch) > width:
+                            break
+                        current_text += ch
+                    if not current_text:
+                        current_text = remain[0]
+
+                    remain = remain[len(current_text):]
+                    emit_segment(current_text)
+
+                    if remain:
+                        append_current_draw_element({"type": "text", "text": "\n"}, record_history=True)
+                        web_server.update_game_state(cache.current_draw_elements, None)
+
+            append_current_draw_element({"type": "text", "text": "\n"}, record_history=True)
+            web_server.update_game_state(cache.current_draw_elements, None)
+        # print(
+        #     f"[LineFeedWaitDraw] all segments emitted count={segment_total} skip_wait={_should_skip_wait()}"
+        # )
 
     @staticmethod
     def adapt_image_draw(image_draw: draw.ImageDraw):
@@ -503,6 +618,7 @@ def apply_web_adapters():
     
     # 包装等待绘制类
     draw.WaitDraw.draw = wrap_draw_method(draw.WaitDraw, WebDrawAdapter.adapt_wait_draw)
+    draw.LineFeedWaitDraw.draw = wrap_draw_method(draw.LineFeedWaitDraw, WebDrawAdapter.adapt_line_feed_wait_draw)
     
     # 包装图片绘制类
     draw.ImageDraw.draw = wrap_draw_method(draw.ImageDraw, WebDrawAdapter.adapt_image_draw)

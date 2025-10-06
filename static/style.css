@@ -297,12 +297,35 @@ body {
     background-color: #222;
 }
 
+.wait-text.waiting-active {
+    border-color: #4a90e2;
+    background-color: rgba(30, 60, 100, 0.45);
+}
+
+.wait-text.waiting-submitted {
+    opacity: 0.8;
+}
+
+.wait-text.wait-text-resolved {
+    cursor: default;
+    border-style: solid;
+    opacity: 0.8;
+}
+
 .continue-hint {
     color: #999;
     font-size: 0.8em;
     text-align: right;
     margin-top: 5px;
     font-style: italic;
+}
+
+.continue-hint.active {
+    color: #f2d39a;
+}
+
+.continue-hint.completed {
+    display: none;
 }
 
 /* 特殊文本样式 */

@@ -28,6 +28,7 @@ HISTORY_ELEMENT_TYPES = {
     "bar",
     "info_bar",
     "info_character",
+    "line_wait",
 }
 
 
@@ -129,6 +130,15 @@ def append_current_draw_element(element: Dict[str, Any], record_history: bool = 
     """
     _ensure_current_draw_list()
     cache.current_draw_elements.append(element)
+    elem_type = element.get("type")
+    if elem_type in {"line_wait", "wait"}:
+        wait_id = element.get("wait_id")
+        text_preview = element.get("text", "")
+        if isinstance(text_preview, str) and len(text_preview) > 30:
+            text_preview = text_preview[:27] + "..."
+        # print(
+        #     f"[io_web] appended element type={elem_type} wait_id={wait_id} record_history={record_history} text={text_preview!r}"
+        # )
     if record_history:
         _record_history_element(element)
 input_event = threading.Event()

@@ -19,6 +19,7 @@ import sys
 import time
 import socket
 import psutil
+from typing import List
 
 # 导入Flask相关模块
 from flask import Flask, render_template, jsonify, request, current_app
@@ -79,6 +80,7 @@ game_state = {
     "text_content": [],  # 当前面板的文本内容
     "buttons": [],       # 当前面板的按钮
     "panel_id": None,    # 当前面板ID
+    "skip_wait": False,  # 是否处于跳过等待模式
 }
 
 # 用于存储按钮点击响应
@@ -139,7 +141,7 @@ def button_click():
     """
     global button_click_response
     
-    data = request.json
+    data = request.json or {}
     button_id = data.get('button_id')
     
     # 保存按钮ID为响应
@@ -163,12 +165,34 @@ def wait_response():
     """
     global wait_response_triggered
     
+    # print("[web_server] wait_response received")
     # 标记等待响应已触发
     with state_lock:
         wait_response_triggered = True
     
     logging.info("等待响应已触发")
     
+    return jsonify({"success": True})
+
+
+@app.route('/api/skip_wait', methods=['POST'])
+def skip_wait():
+    """处理跳过等待的请求"""
+    global wait_response_triggered
+
+    print("[web_server] skip_wait received")
+    with state_lock:
+        wframe_mouse = getattr(cache, "wframe_mouse", None)
+        if wframe_mouse is not None:
+            wframe_mouse.w_frame_skip_wait_mouse = 1
+            setattr(wframe_mouse, "mouse_right", 1)
+        setattr(cache, "text_wait", 0)
+        wait_response_triggered = True
+        game_state["skip_wait"] = True
+
+    logging.info("跳过等待已触发")
+    _emit_game_state_update()
+
     return jsonify({"success": True})
 
 @app.route('/api/string_input', methods=['POST'])
@@ -183,7 +207,7 @@ def string_input():
     """
     global input_response
     
-    data = request.json
+    data = request.json or {}
     value = data.get('value')
     
     # 保存用户输入的字符串
@@ -206,13 +230,13 @@ def integer_input():
     """
     global input_response
     
-    data = request.json
+    data = request.json or {}
     value = data.get('value')
     
     # 保存用户输入的整数
     try:
         with state_lock:
-            input_response = int(value)
+            input_response = int(value) if value is not None else 0
     except (ValueError, TypeError):
         with state_lock:
             input_response = 0
@@ -473,7 +497,12 @@ def check_port_usage(port):
         # 获取所有网络连接
         connections = psutil.net_connections()
         for conn in connections:
-            if conn.laddr.port == port and conn.status == psutil.CONN_LISTEN:
+            laddr = getattr(conn, "laddr", None)
+            status = getattr(conn, "status", None)
+            conn_port = getattr(laddr, "port", None)
+            if conn_port is None and isinstance(laddr, tuple) and len(laddr) > 1:
+                conn_port = laddr[1]
+            if conn_port == port and status == psutil.CONN_LISTEN:
                 try:
                     # 获取进程信息
                     process = psutil.Process(conn.pid)
@@ -531,11 +560,33 @@ def update_game_state(elements, panel_id=None):
     """
     global game_state
     
+    highlight = []
+    skip_wait_flag = bool(
+        getattr(getattr(cache, "wframe_mouse", object()), "w_frame_skip_wait_mouse", False)
+    )
+    if elements:
+        for elem in elements:
+            if isinstance(elem, dict) and elem.get("type") in {"line_wait", "wait"}:
+                text_preview = elem.get("text", "") or ""
+                if isinstance(text_preview, str) and len(text_preview) > 20:
+                    text_preview = text_preview[:17] + "..."
+                highlight.append(
+                    {
+                        "type": elem.get("type"),
+                        "wait_id": elem.get("wait_id"),
+                        "text": text_preview,
+                    }
+                )
+    if highlight:
+        print(
+            # f"[web_server] update_game_state panel={panel_id} wait_entries={highlight} total_elements={len(elements) if elements else 0}"
+        )
     # 使用线程锁保护状态更新
     with state_lock:
         # 更新游戏状态数据
         game_state["text_content"] = elements if elements is not None else []
         game_state["panel_id"] = panel_id
+        game_state["skip_wait"] = skip_wait_flag
         
         # 提取按钮元素
         buttons = []
@@ -609,6 +660,7 @@ def get_wait_response():
     with state_lock:
         if wait_response_triggered:
             wait_response_triggered = False
+            print("[web_server] wait_response detected")
             return True
         return False
 
@@ -725,7 +777,11 @@ def start_server():
                             host_name = socket.gethostname()
                             info = socket.getaddrinfo(host_name, None, socket.AF_INET, socket.SOCK_DGRAM)
                             ips = list(set([addr[4][0] for addr in info]))
-                            valid_ips = [ip for ip in ips if ip.startswith("192.168.") or ip.startswith("10.") or ip.startswith("172.")]
+                            valid_ips: List[str] = []
+                            for ip in ips:
+                                ip_str = str(ip)
+                                if ip_str.startswith("192.168.") or ip_str.startswith("10.") or ip_str.startswith("172."):
+                                    valid_ips.append(ip_str)
                             if valid_ips:
                                 return valid_ips
                         except:
