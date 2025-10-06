@@ -912,6 +912,29 @@ function renderGameState(state) {
     let currentLine = document.createElement('div');
     currentLine.className = 'inline-container';
     gameContent.appendChild(currentLine);
+    let currentLineHasText = false;
+    let currentLineButtons = [];
+
+    const applyInlineButtonAlignment = (button) => {
+        if (!button || !button.classList.contains('inline-button')) {
+            return;
+        }
+        const alignMode = button.dataset.buttonAlign || 'center';
+        switch (alignMode) {
+            case 'left':
+                button.style.justifyContent = 'flex-start';
+                button.style.textAlign = 'left';
+                break;
+            case 'right':
+                button.style.justifyContent = 'flex-end';
+                button.style.textAlign = 'right';
+                break;
+            default:
+                button.style.justifyContent = 'center';
+                button.style.textAlign = 'center';
+                break;
+        }
+    };
     
     // 按顺序渲染所有元素（包括文本和按钮）
     if (state.text_content && state.text_content.length > 0) {
@@ -923,6 +946,8 @@ function renderGameState(state) {
                 currentLine = document.createElement('div');
                 currentLine.className = 'inline-container';
                 gameContent.appendChild(currentLine);
+                currentLineHasText = false;
+                currentLineButtons = [];
             }
             
             // 创建适当的DOM元素
@@ -960,7 +985,10 @@ function renderGameState(state) {
                 } else if (item.align === 'right') {
                     // 如果是右对齐按钮，则改为右对齐
                     element.style.textAlign = 'right';
+                } else {
+                    element.style.textAlign = 'center';
                 }
+                element.dataset.buttonAlign = item.align || 'center';
                 
                 // 如果需要块级显示，添加block类
                 if (item.style && item.style.includes('block')) {
@@ -970,6 +998,15 @@ function renderGameState(state) {
                 // 设置字体
                 if (item.font) {
                     element = applyFontStyle(element, item.font);
+                }
+
+                // 记录当前行内的普通按钮；若当前行已有文本，则标记为内联按钮
+                if (element.classList.contains('game-button')) {
+                    currentLineButtons.push(element);
+                    if (currentLineHasText) {
+                        element.classList.add('inline-button');
+                        applyInlineButtonAlignment(element);
+                    }
                 }
 
                 // 更新上一个元素类型为按钮
@@ -1001,6 +1038,8 @@ function renderGameState(state) {
                         currentLine = document.createElement('div');
                         currentLine.className = 'inline-container';
                         gameContent.appendChild(currentLine);
+                        currentLineHasText = false;
+                        currentLineButtons = [];
                     }
                     
                     if (line !== '') {
@@ -1008,6 +1047,11 @@ function renderGameState(state) {
                         const textElement = createGameElement({ ...item, text: line });
                         if (textElement) {
                             currentLine.appendChild(textElement);
+                            currentLineHasText = true;
+                            currentLineButtons.forEach(btn => {
+                                btn.classList.add('inline-button');
+                                applyInlineButtonAlignment(btn);
+                            });
                         }
                     }
                 });
@@ -1039,6 +1083,14 @@ function renderGameState(state) {
                 // 对于其它类型或不含换行的文本，清除“上一条文本以换行结尾”标记
                 if (!(item.type === 'text' && item.text.includes('\n'))) {
                     isLastTextEndedWithNewline = false;
+                }
+
+                if (element && item.type === 'text' && item.text && item.text.trim() !== '') {
+                    currentLineHasText = true;
+                    currentLineButtons.forEach(btn => {
+                        btn.classList.add('inline-button');
+                        applyInlineButtonAlignment(btn);
+                    });
                 }
             }
             

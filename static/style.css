@@ -183,6 +183,17 @@ body {
     line-height: 1.1;
 }
 
+.game-button.inline-button {
+    padding: 0 0.5em;
+    height: 1.1em;
+    line-height: 1.1;
+    margin-top: 0;
+    margin-bottom: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
 /* 块级按钮样式 - 需要单独一行的按钮 */
 .game-button.block {
     display: block;
