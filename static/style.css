@@ -119,13 +119,14 @@ body {
     line-height: 0;
     content: "";
     clear: both;
+    flex-basis: 100%;
 }
 
-/* 用于连续换行符的特殊样式 - 添加额外空间 */
+/* 用于连续换行符或“文本末尾+line_feed”的特殊样式 - 添加额外空间 */
 .text-break.extra-space {
-    margin: 1em 0; /* 连续换行符时增加更大的间距 */
-    line-height: 1.5;
-    height: auto;
+    margin: 0.1em 0; /* 与普通文本相同的上下间距 */
+    height: 1.1em; /* 与正文行高保持一致 */
+    line-height: 1.1;
 }
 
 /* 对于需要内联显示的文本添加新的样式类 */

@@ -517,6 +517,8 @@ const POLL_INTERVAL = 500;
 let lastElementType = null;
 let forceNewLine = false; // 标记是否强制换行
 let isLastElementLinebreak = false; // 标记上一个元素是否为换行符
+// 新增：标记上一条“文本元素”是否以换行符结尾，用于将紧随其后的 line_feed 作为“空白行”渲染
+let isLastTextEndedWithNewline = false;
 
 /**
  * 高级滚动管理器
@@ -858,8 +860,8 @@ function shouldCreateNewLine(item) {
  * @return {string} 换行符的CSS类名
  */
 function determineLineBreakClass() {
-    // 如果上一个元素也是换行符，则使用额外空行样式
-    if (isLastElementLinebreak) {
+    // 如果上一个元素也是换行符，或上一条文本以 \n 结尾，则使用额外空行样式
+    if (isLastElementLinebreak || isLastTextEndedWithNewline) {
         return 'text-break extra-space';
     }
     
@@ -904,6 +906,7 @@ function renderGameState(state) {
     lastElementType = null;
     forceNewLine = false;
     isLastElementLinebreak = false;
+    isLastTextEndedWithNewline = false;
     
     // 创建当前行容器
     let currentLine = document.createElement('div');
@@ -972,11 +975,13 @@ function renderGameState(state) {
                 // 更新上一个元素类型为按钮
                 lastElementType = 'button';
                 isLastElementLinebreak = false;
+                // 按钮后重置“上一条文本以换行结尾”标记
+                isLastTextEndedWithNewline = false;
             } else if (item.type === 'text' && item.text === '\n') {
-                // 处理换行符
-                element = document.createElement('br');
+                // 处理换行符：使用块级占位元素而非 <br>，以便样式（margin/height）生效
+                element = document.createElement('div');
                 
-                // 根据上一个元素是否为换行符来决定样式
+                // 根据上一个元素是否为换行符或上一条文本以换行结尾来决定样式
                 element.className = determineLineBreakClass();
                 
                 // 标记需要在下一个元素前换行
@@ -985,6 +990,8 @@ function renderGameState(state) {
                 // 更新上一个元素类型为换行符
                 lastElementType = 'linebreak';
                 isLastElementLinebreak = true;
+                // 当前这一显式换行已经“消费”了上一条文本的结尾换行标记
+                isLastTextEndedWithNewline = false;
             } else if (item.type === 'text' && item.text.includes('\n') && item.text !== '\n') {
                 // 如果文本包含换行符（但不是纯换行符），需要特殊处理
                 const lines = item.text.split('\n');
@@ -1008,6 +1015,11 @@ function renderGameState(state) {
                 // 如果文本以换行符结尾，标记需要在下一个元素前换行
                 if (item.text.endsWith('\n')) {
                     forceNewLine = true;
+                    // 额外标记：上一条文本以换行符结尾
+                    isLastTextEndedWithNewline = true;
+                } else {
+                    // 否则清除标记
+                    isLastTextEndedWithNewline = false;
                 }
                 
                 // 更新上一个元素类型
@@ -1023,6 +1035,10 @@ function renderGameState(state) {
                 // 除非当前元素是换行符，否则重置isLastElementLinebreak
                 if (!(item.type === 'text' && item.text === '\n')) {
                     isLastElementLinebreak = false;
+                }
+                // 对于其它类型或不含换行的文本，清除“上一条文本以换行结尾”标记
+                if (!(item.type === 'text' && item.text.includes('\n'))) {
+                    isLastTextEndedWithNewline = false;
                 }
             }
             
@@ -1059,14 +1075,17 @@ function createGameElement(item) {
             
             // 特殊处理换行符：如果文本仅为换行符，直接创建一个br元素而不是div
             if (item.text === '\n') {
-                element = document.createElement('br');
+                // 使用块级占位元素而非 <br>
+                element = document.createElement('div');
                 
-                // 根据上一个元素是否为换行符来决定样式
+                // 根据上一个元素是否为换行符或上一条文本以换行结尾来决定样式
                 element.className = determineLineBreakClass();
                 
                 // 更新上一个元素类型为换行符
                 lastElementType = 'linebreak';
                 isLastElementLinebreak = true;
+                // 纯换行不会设置“上一条文本以换行结尾”
+                isLastTextEndedWithNewline = false;
                 
                 return element;
             }
@@ -1124,6 +1143,8 @@ function createGameElement(item) {
             // 更新上一个元素类型为文本
             lastElementType = 'text';
             isLastElementLinebreak = false;
+            // 设置“上一条文本是否以换行结尾”的标记
+            isLastTextEndedWithNewline = !!item.text && item.text.endsWith('\n');
             break;
             
         case 'button':
