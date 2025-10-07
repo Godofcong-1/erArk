@@ -154,9 +154,8 @@ jobs:
           release_name: ${{steps.version.outputs.value}}
           body: |
             游戏本体 - erArk_版本号.zip
-            游戏所需的字体包（用于绘制AA地图） - font.zip
 
-            —————— 一般玩家下载上面两个 ——————
+            —————— 一般玩家下载上面那个 ——————
             —————— 以下为口上作者/魔改开发用 ——————
             
             口上事件编辑器（无需写代码即可写口上和事件） - erArkEditor.zip
@@ -175,17 +174,6 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArk.zip
           asset_name: erArk_${{steps.version.outputs.value}}.zip
-          asset_content_type: application/zip
-
-      - name: Upload Font Asset
-        id: upload-font-asset
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ${{ github.workspace }}/游戏字体包.zip
-          asset_name: font.zip
           asset_content_type: application/zip
 
       - name: Upload ArkEditor Asset

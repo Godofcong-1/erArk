@@ -61,11 +61,143 @@ def get_resource_path(file_name: str) -> str:
     # 将类似 "image/logo.png" 拆分并拼接成正确的绝对路径
     return os.path.join(base_path, *file_name.split('/'))
 
+def load_local_fonts(tk_root: Tk) -> None:
+    """加载 static/fonts 下的字体文件供 Tk 窗口使用"""
+    fonts_dir = get_resource_path("static/fonts")
+    if not os.path.isdir(fonts_dir):
+        return
+
+    alias_overrides = {
+        "等距更纱黑体": ["等距更纱黑体 SC", "Sarasa Mono SC", "SarasaMonoSC"],
+        "等距更纱黑体.ttf": ["等距更纱黑体 SC", "Sarasa Mono SC", "SarasaMonoSC"],
+        "emoji": ["EmojiSupport"],
+        "emoji.ttf": ["EmojiSupport"],
+    }
+
+    existing_fonts = set(map(str, tk_root.tk.call("font", "names")))
+
+    for entry in os.scandir(fonts_dir):
+        if not entry.is_file():
+            continue
+        name_lower = entry.name.lower()
+        if not name_lower.endswith((".ttf", ".otf", ".ttc")):
+            continue
+
+        font_path = entry.path.replace("\\", "/")
+        base_name = os.path.splitext(entry.name)[0]
+
+        alias_candidates = []
+        for candidate in (
+            base_name,
+            base_name.replace("_", " "),
+            base_name.replace("_", ""),
+            entry.name,
+        ):
+            cleaned = candidate.strip()
+            if cleaned and cleaned not in alias_candidates:
+                alias_candidates.append(cleaned)
+
+        for extra in alias_overrides.get(entry.name, []):
+            cleaned = extra.strip()
+            if cleaned and cleaned not in alias_candidates:
+                alias_candidates.append(cleaned)
+        for extra in alias_overrides.get(base_name, []):
+            cleaned = extra.strip()
+            if cleaned and cleaned not in alias_candidates:
+                alias_candidates.append(cleaned)
+
+        primary_alias = None
+        first_success_alias = None
+        source_desc = None
+        failed_aliases = []
+
+        # 首先检查是否已存在同名字体
+        for alias in alias_candidates:
+            if alias in existing_fonts:
+                primary_alias = alias
+                first_success_alias = alias
+                source_desc = "existing"
+                break
+
+        # 优先尝试从本地字体文件创建
+        if primary_alias is None:
+            for alias in alias_candidates:
+                if alias in existing_fonts:
+                    continue
+                try:
+                    tk_root.tk.call("font", "create", alias, "-family", f"@{font_path}")
+                    primary_alias = alias
+                    first_success_alias = alias
+                    source_desc = font_path
+                    existing_fonts.add(alias)
+                    break
+                except Exception:
+                    failed_aliases.append(alias)
+
+        # 若本地字体加载失败，尝试系统字体
+        if primary_alias is None:
+            try:
+                system_families = set(map(str, tk_root.tk.call("font", "families")))
+            except Exception:
+                system_families = set()
+
+            for alias in alias_candidates:
+                if alias in existing_fonts:
+                    primary_alias = alias
+                    first_success_alias = alias
+                    source_desc = "existing"
+                    break
+                if alias not in system_families:
+                    failed_aliases.append(alias)
+                    continue
+                try:
+                    tk_root.tk.call("font", "create", alias, "-family", alias)
+                    primary_alias = alias
+                    first_success_alias = alias
+                    source_desc = "system"
+                    existing_fonts.add(alias)
+                    break
+                except Exception:
+                    failed_aliases.append(alias)
+
+        # 为其余别名创建引用
+        if primary_alias is not None:
+            for alias in alias_candidates:
+                if alias == primary_alias or alias in existing_fonts:
+                    continue
+                try:
+                    tk_root.tk.call("font", "create", alias, "-family", primary_alias)
+                    existing_fonts.add(alias)
+                except Exception:
+                    # 若别名创建失败且存在同名系统字体，再尝试直接使用系统字体
+                    try:
+                        tk_root.tk.call("font", "create", alias, "-family", alias)
+                        existing_fonts.add(alias)
+                    except Exception:
+                        failed_aliases.append(alias)
+
+        # 输出加载结果
+        if primary_alias is not None:
+            if source_desc == font_path:
+                print(f"[load_local_fonts] 成功加载字体 {first_success_alias} <- {font_path}")
+            elif source_desc == "system":
+                print(f"[load_local_fonts] 使用系统字体 {first_success_alias} (未找到本地文件 {font_path})")
+            elif source_desc == "existing":
+                # 字体已存在，无需重复加载
+                pass
+        else:
+            print(
+                f"[load_local_fonts] 无法加载字体文件: {font_path} "
+                f"(别名尝试: {', '.join(alias_candidates)})"
+            )
+
+
 # 显示主框架
 game_name = normal_config.config_normal.game_name
 game_version = normal_config.config_normal.verson
 title_text = game_name + " " + game_version + " -α测"
 root = Tk()
+load_local_fonts(root)
 # normal_config.config_normal.window_width = root.maxsize()[0]
 #读取屏幕长宽
 screen_weight = root.winfo_screenwidth()
