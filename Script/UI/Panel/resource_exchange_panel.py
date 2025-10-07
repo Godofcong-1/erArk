@@ -112,7 +112,6 @@ class Resource_Exchange_Line_Panel:
             warehouse_capacity = cache.rhodes_island.warehouse_capacity
             now_text += _("\n\n  要交易的资源为    ：{0}({1}/{2})    ").format(resouce_data.name, now_resouce_stock, warehouse_capacity)
             all_info_draw.text = now_text
-            all_info_draw.width = self.width
             all_info_draw.draw()
 
             # 检测该商品是否可以购买

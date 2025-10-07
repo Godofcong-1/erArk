@@ -232,7 +232,6 @@ class Agriculture_Production_Panel:
             now_text += "\n"
 
             all_info_draw.text = now_text
-            all_info_draw.width = self.width
             all_info_draw.draw()
 
             for agriculture_line_id in cache.rhodes_island.herb_garden_line:
@@ -337,7 +336,7 @@ class Agriculture_Production_Panel:
             title.draw()
             return_list = []
 
-            info = draw.NormalDraw(); info.width = self.width
+            info = draw.NormalDraw()
             info.text = _("当前药田种植员数量：{0}，温室种植员数量：{1}").format(len(ri.herb_garden_operator_ids), len(ri.green_house_operator_ids))
             info.text += "      "
             info.draw()
@@ -359,7 +358,7 @@ class Agriculture_Production_Panel:
             for line_id in ri.herb_garden_line:
                 main_id = ri.herb_garden_line[line_id][1]
                 name = cache.character_data[main_id].name if main_id != 0 and main_id in cache.character_data else _("(空缺)")
-                row = draw.NormalDraw(); row.width = self.width
+                row = draw.NormalDraw()
                 row.text = _("药田{0}号线 主种植员: {1}  ").format(line_id+1, name)
                 row.draw()
                 def _make(idx):
@@ -372,7 +371,7 @@ class Agriculture_Production_Panel:
             # 药田副种植员
             main_ids = {ri.herb_garden_line[i][1] for i in ri.herb_garden_line}
             other_ops = [cid for cid in ri.herb_garden_operator_ids if cid not in main_ids]
-            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            other_draw = draw.NormalDraw()
             if other_ops:
                 names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
                 other_draw.text = _("药田副种植员：") + "、".join(names) + "\n"
@@ -386,7 +385,7 @@ class Agriculture_Production_Panel:
                 for line_id in ri.green_house_line:
                     main_id = ri.green_house_line[line_id][1]
                     name = cache.character_data[main_id].name if main_id != 0 and main_id in cache.character_data else _("(空缺)")
-                    row = draw.NormalDraw(); row.width = self.width
+                    row = draw.NormalDraw()
                     row.text = _("温室{0}号线 主种植员: {1}  ").format(line_id+1, name)
                     row.draw()
                     def _make2(idx):
@@ -398,7 +397,7 @@ class Agriculture_Production_Panel:
 
                 main_ids = {ri.green_house_line[i][1] for i in ri.green_house_line}
                 other_ops = [cid for cid in ri.green_house_operator_ids if cid not in main_ids]
-                other_draw = draw.NormalDraw(); other_draw.width = self.width
+                other_draw = draw.NormalDraw()
                 if other_ops:
                     names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
                     other_draw.text = _("温室副种植员：") + "、".join(names) + "\n"
@@ -482,7 +481,6 @@ class Agriculture_Production_Panel:
                 line = draw.LineDraw("-", window_width)
                 line.draw()
                 info_draw = draw.NormalDraw()
-                info_draw.width = window_width
                 return_list = []
 
                 # now_level = cache.rhodes_island.facility_level[16]

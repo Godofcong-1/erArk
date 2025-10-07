@@ -197,8 +197,8 @@ class Manage_Assembly_Line_Panel:
                         now_text += f"  {material_data.name}：{cache.rhodes_island.materials_resouce[material_id]}"
 
             all_info_draw.text = now_text
-            all_info_draw.width = self.width
             all_info_draw.draw()
+            line_feed.draw()
             line_feed.draw()
 
             for assembly_line_id in cache.rhodes_island.assembly_line:
@@ -283,7 +283,7 @@ class Manage_Assembly_Line_Panel:
             return_list = []
 
             # 提示信息
-            info = draw.NormalDraw(); info.width = self.width
+            info = draw.NormalDraw()
             info.text = _("当前生产工人数量：{0}").format(len(ri.production_worker_ids))
             info.text += "      "
             info.draw()
@@ -298,7 +298,7 @@ class Manage_Assembly_Line_Panel:
             for line_id in ri.assembly_line:
                 main_id = ri.assembly_line[line_id][1]
                 name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
-                row = draw.NormalDraw(); row.width = self.width
+                row = draw.NormalDraw()
                 row.text = _("{0}号生产线 主生产工人: {1}  ").format(line_id+1, name)
                 row.draw()
                 def _make(lid):
@@ -306,12 +306,13 @@ class Manage_Assembly_Line_Panel:
                 appoint_btn = draw.CenterButton(_("[任命]"), _("任命")+str(line_id+1), 12, cmd_func=_make(line_id))
                 appoint_btn.draw(); return_list.append(appoint_btn.return_text)
                 line_feed.draw()
+                line_feed.draw()
             line_feed.draw()
 
             # 显示所有副生产工人
             main_ids = {ri.assembly_line[i][1] for i in ri.assembly_line}
             others = [cid for cid in ri.production_worker_ids if cid not in main_ids and cid in cache.character_data]
-            other_draw = draw.NormalDraw(); other_draw.width = self.width
+            other_draw = draw.NormalDraw()
             other_draw.text = _("副生产工人：") + ("、".join([cache.character_data[c].name for c in others]) if others else _("暂无")) + "\n"
             other_draw.draw()
             line_feed.draw(); line_feed.draw()
@@ -362,7 +363,6 @@ class Manage_Assembly_Line_Panel:
             line = draw.LineDraw("-", window_width)
             line.draw()
             info_draw = draw.NormalDraw()
-            info_draw.width = window_width
             return_list = []
 
             formula_now_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
