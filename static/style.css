@@ -4,6 +4,13 @@
     font-display: swap;
 }
 
+@font-face {
+    font-family: 'EmojiSupport';
+    src: url('./fonts/emoji.ttf') format('truetype');
+    font-display: swap;
+    unicode-range: U+2600-26FF, U+2700-27BF, U+1F000-1F9FF, U+1FA70-1FAFF, U+FE0F;
+}
+
 /**
  * 游戏主要CSS样式
  * 定义游戏界面的视觉外观
@@ -13,7 +20,7 @@ body {
     /* 基础样式设置 */
     background-color: #000;
     color: #c8c8c8;
-    font-family: 'SarasaMonoSC', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
+    font-family: 'SarasaMonoSC', 'EmojiSupport', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
     margin: 0;
     padding: 0;
     line-height: 1.1; /* 基础行高设置 */
@@ -30,6 +37,10 @@ body {
     min-height: 100vh;
     scroll-behavior: smooth; /* 添加平滑滚动效果 */
     box-sizing: border-box; /* 确保padding不影响总宽度 */
+}
+
+.console-output {
+    font-family: 'EmojiSupport', '等距更纱黑体 SC', SimHei, sans-serif;
 }
 
 /* 通用隐藏类 */
@@ -258,7 +269,7 @@ body {
     flex-wrap: nowrap;
     width: auto;
     white-space: pre;
-    font-family: 'SarasaMonoSC', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
+    font-family: 'SarasaMonoSC', 'EmojiSupport', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
     gap: 0;
     overflow: visible;
     touch-action: manipulation;
