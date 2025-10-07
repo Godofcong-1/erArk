@@ -73,6 +73,7 @@ class Manage_Vehicle_Panel:
 
     def draw(self):
         """绘制对象"""
+        from Script.Design import attr_calculation
 
         title_text = _("载具管理")
         commission_type_list = [_("常规载具"), _("特殊载具")]
@@ -130,10 +131,12 @@ class Manage_Vehicle_Panel:
 
             # 绘制提示信息
             info_text_list = [_("载具名称"), _("外勤中数量/总持有量"), _("载具速度"), _("运载量"), _("特殊效果(未实装)")]
+            # 修正文本宽度
+            text_width = int((self.width - 1) / (len(info_text_list)))
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
-                info_draw.width = int(self.width / len(info_text_list))
+                info_draw.width = text_width
                 info_draw.draw()
             line_feed.draw()
             line = draw.LineDraw("~", self.width)
@@ -159,20 +162,14 @@ class Manage_Vehicle_Panel:
             # 绘制载具信息
             for vehicle_id in all_vehicle_list:
                 vehicle_data = game_config.config_vehicle[vehicle_id]
-                vehicle_name = vehicle_data.name
-                # 计算出字符串中除中文汉字外的字符数量
-                if vehicle_name[0] == " ":
-                    extra_width_count = 3
-                else:
-                    extra_width_count = 0
-                vehicle_speed = str(vehicle_data.speed)
-                vehicle_capacity = str(vehicle_data.capacity)
-                vehicle_special = vehicle_data.special
+                vehicle_name = attr_calculation.pad_display_width(vehicle_data.name, text_width, "center")
+                vehicle_speed = attr_calculation.pad_display_width(str(vehicle_data.speed), text_width, "center")
+                vehicle_capacity = attr_calculation.pad_display_width(str(vehicle_data.capacity), text_width, "center")
+                vehicle_special = attr_calculation.pad_display_width(vehicle_data.special, text_width, "center")
                 vehicle_count = cache.rhodes_island.vehicles[vehicle_id][0]
                 vehicle_count_str = str(cache.rhodes_island.vehicles[vehicle_id][1]) + "/" + str(cache.rhodes_island.vehicles[vehicle_id][0])
-                text_width = int(self.width / (len(info_text_list)))
-                str_text_width = int(text_width / 2)
-                vehicle_text = f"{vehicle_name.center(str_text_width + extra_width_count,'　')}{vehicle_count_str.center(text_width,' ')}{vehicle_speed.center(text_width,' ')}{vehicle_capacity.center(text_width,' ')}{vehicle_special.center(str_text_width,'　')}"
+                vehicle_count_str = attr_calculation.pad_display_width(vehicle_count_str, text_width, "center")
+                vehicle_text = f"{vehicle_name}{vehicle_count_str}{vehicle_speed}{vehicle_capacity}{vehicle_special}"
 
                 # 可以进行的，绘制为按钮
                 vehicle_draw = draw.LeftButton(

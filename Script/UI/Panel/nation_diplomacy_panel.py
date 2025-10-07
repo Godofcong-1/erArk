@@ -204,12 +204,14 @@ class Nation_Diplomacy_Panel:
             # 绘制提示信息
             # info_text_list = [_("势力名称"), _("领导人"), _("势力声望"), _("源石病治愈率(未实装)")]
             info_text_list = [_("势力名称"), _("势力声望"), _("源石病治愈率(未实装)"), _("负责外交官")]
+            # 修正文本宽度
+            text_width = int((self.width - 1) / (len(info_text_list)))
             if self.now_panel == _("其他势力"):
                 info_text_list = [_("势力名称"), _("势力声望")]
             for info_text in info_text_list:
                 info_draw = draw.CenterDraw()
                 info_draw.text = info_text
-                info_draw.width = self.width / len(info_text_list)
+                info_draw.width = text_width
                 info_draw.draw()
             line_feed.draw()
             line = draw.LineDraw("~", self.width)
@@ -245,18 +247,19 @@ class Nation_Diplomacy_Panel:
                 cache.rhodes_island.diplomat_of_country.setdefault(nation_data.country, [0, 0])
 
                 # 势力按钮绘制
-                nation_name = nation_data.name
+                nation_name = attr_calculation.pad_display_width(nation_data.name, text_width, "center")
                 # 声望
                 now_nation_reputation = cache.country.nation_reputation[nation_id]
                 now_nation_reputation = round(now_nation_reputation, 2)
                 tem, now_nation_reputation_level = attr_calculation.get_reputation_level(now_nation_reputation)
                 now_nation_reputation_str = f"{now_nation_reputation}({now_nation_reputation_level})"
+                now_nation_reputation_str = attr_calculation.pad_display_width(now_nation_reputation_str, text_width, "center")
                 # 治愈率
-                if nation_data.country == -1:
+                if nation_data.country == -1 or self.now_panel == _("其他势力"):
                     now_country_treatment_progress = _("无")
                 else:
                     now_country_treatment_progress = round(cache.country.country_infection_rate[nation_data.country], 3)
-                    now_country_treatment_progress = str(now_country_treatment_progress)
+                now_country_treatment_progress = attr_calculation.pad_display_width(str(now_country_treatment_progress), text_width, "center")
                 # 外交官
                 now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[nation_data.country][0]
                 if now_diplomat_chara_id != 0:
@@ -264,12 +267,9 @@ class Nation_Diplomacy_Panel:
                     now_diplomat_name = now_diplomat_chara_data.name
                 else:
                     now_diplomat_name = _("无")
+                now_diplomat_name = attr_calculation.pad_display_width(now_diplomat_name, text_width, "center")
                 # 外交方针
-                text_width = int(self.width / (len(info_text_list)))
-                str_text_width = int(text_width / 2)
-                nation_text = f"{nation_name.center(str_text_width,'　')}{now_nation_reputation_str.center(text_width,' ')}{now_country_treatment_progress.center(text_width,' ')}{now_diplomat_name.center(str_text_width,'　')}"
-                if self.now_panel == _("其他势力"):
-                    nation_text = f"{nation_name.center(str_text_width,'　')}{now_nation_reputation_str.center(text_width,' ')}"
+                nation_text = f"{nation_name}{now_nation_reputation_str}{now_country_treatment_progress}{now_diplomat_name}"
 
                 # 可以进行的，绘制为按钮
                 draw_style = "standard"
