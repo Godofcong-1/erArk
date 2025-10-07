@@ -103,6 +103,11 @@ class SeeMapPanel:
                 fix_draw.draw()
                 for draw_text in now_draw_line.draw_list:
                     # print(f"debug draw_text.text = {draw_text.text}")
+                    # 查询当前绘制是否为最后一个绘制
+                    if draw_text == now_draw_line.draw_list[-1]:
+                        now_draw_web_type = "map-last"
+                    else:
+                        now_draw_web_type = "map"
 
                     # 首先需要是地点按钮
                     if "is_button" in draw_text.__dict__ and draw_text.is_button:
@@ -146,7 +151,7 @@ class SeeMapPanel:
                         now_draw = draw.NormalDraw()
                         now_draw.style = draw_text.style
                         now_draw.text = draw_text.text
-                        now_draw.web_type = "map"
+                        now_draw.web_type = now_draw_web_type
                         # now_draw.width = self.width
                         now_draw.draw()
                 line_feed.draw()

@@ -265,8 +265,6 @@ body {
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
-    --map-indent-ch: 0;
-    padding-left: calc(var(--map-indent-ch, 0) * 1ch);
 }
 
 .inline-container.map-line .map-element {
@@ -296,11 +294,14 @@ body {
 }
 
 .map-group {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-    max-width: 100%;
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.map-group-inner {
+    display: inline-block;
+    text-align: left;
 }
 
 .inline-container .text-inline {

@@ -1093,13 +1093,6 @@ function applyMapLayout(element, container, options = {}) {
 
     if (options.isPadding) {
         element.classList.add('map-padding');
-        const paddingText = element.textContent || '';
-        if (paddingText) {
-            const normalizedText = paddingText.replace(/\u00a0/g, ' ');
-            const indentCount = normalizedText.length;
-            const prevIndent = Number(container.style.getPropertyValue('--map-indent-ch') || '0');
-            container.style.setProperty('--map-indent-ch', String(prevIndent + indentCount));
-        }
         element.textContent = '';
         element.style.display = 'none';
         return;
@@ -1125,6 +1118,7 @@ function normalizeMapBlocks(root) {
 
         const groupLines = currentGroup.slice();
         let wrapper = null;
+        let inner = null;
 
         const firstLine = groupLines[0];
         const parent = firstLine && firstLine.parentElement;
@@ -1132,12 +1126,21 @@ function normalizeMapBlocks(root) {
         if (parent) {
             if (parent.classList.contains('map-group')) {
                 wrapper = parent;
+                inner = wrapper.querySelector('.map-group-inner');
+                if (!inner) {
+                    inner = document.createElement('div');
+                    inner.className = 'map-group-inner';
+                    wrapper.appendChild(inner);
+                }
             } else {
                 wrapper = document.createElement('div');
                 wrapper.className = 'map-group';
+                inner = document.createElement('div');
+                inner.className = 'map-group-inner';
+                wrapper.appendChild(inner);
                 parent.insertBefore(wrapper, firstLine);
-                groupLines.forEach(line => wrapper.appendChild(line));
             }
+            groupLines.forEach(line => inner.appendChild(line));
         }
 
         groupLines.forEach(line => {
@@ -1145,6 +1148,14 @@ function normalizeMapBlocks(root) {
             line.style.marginLeft = '';
             line.style.marginRight = '';
         });
+
+        if (wrapper) {
+            wrapper.style.width = '100%';
+        }
+
+        if (inner) {
+            inner.style.width = '';
+        }
 
         requestAnimationFrame(() => {
             const widths = groupLines.map(line => line.scrollWidth || line.offsetWidth || 0);
@@ -1156,10 +1167,8 @@ function normalizeMapBlocks(root) {
                 line.style.justifyContent = 'flex-start';
             });
 
-            if (wrapper) {
-                wrapper.style.width = `${maxWidth}px`;
-                wrapper.style.marginLeft = 'auto';
-                wrapper.style.marginRight = 'auto';
+            if (inner) {
+                inner.style.width = `${maxWidth}px`;
             }
         });
 
