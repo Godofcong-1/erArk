@@ -3,6 +3,7 @@
 聚焦让智能代理“即插即用”：如何安全修改、构建、调试、扩展。本文件是最小必读速查；深度细节见 `CLAUDE*.md` 与 `.github/prompts/数据处理工作流/`。
 
 ## 1. 总览（执行顺序视角）
+0. 终端调试：使用本地 conda 环境，如 `c:/code/erArk/.conda/python.exe`。
 1. 构建数据：`python buildconfig.py` （解析 `data/csv/`, 生成 `data/*.json` 与 `Script/Config/config_def.py`）
 2. （若本地化改动）`python buildpo.py` → `python buildmo.py`
 3. 启动游戏：`python game.py`（根据 `config.ini` 决定 GUI(Tk) 或 Web）

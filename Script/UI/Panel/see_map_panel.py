@@ -98,6 +98,7 @@ class SeeMapPanel:
                 fix_draw = draw.NormalDraw()
                 fix_draw.text = fix_text
                 fix_draw.width = fix_width
+                fix_draw.web_type = "map-padding"
                 # print("fix_width:",fix_width)
                 fix_draw.draw()
                 for draw_text in now_draw_line.draw_list:
@@ -137,6 +138,7 @@ class SeeMapPanel:
                             now_draw = draw.NormalDraw()
                             now_draw.style = "gold_enrod"
                             now_draw.text = draw_text.text
+                            now_draw.web_type = "map"
                             # now_draw.width = self.width
                             now_draw.draw()
                     # 如果不是地点按钮，则正常绘制文本
@@ -144,6 +146,7 @@ class SeeMapPanel:
                         now_draw = draw.NormalDraw()
                         now_draw.style = draw_text.style
                         now_draw.text = draw_text.text
+                        now_draw.web_type = "map"
                         # now_draw.width = self.width
                         now_draw.draw()
                 line_feed.draw()

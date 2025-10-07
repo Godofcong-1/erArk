@@ -1,3 +1,9 @@
+@font-face {
+    font-family: 'SarasaMonoSC';
+    src: url('./fonts/等距更纱黑体.ttf') format('truetype');
+    font-display: swap;
+}
+
 /**
  * 游戏主要CSS样式
  * 定义游戏界面的视觉外观
@@ -7,7 +13,7 @@ body {
     /* 基础样式设置 */
     background-color: #000;
     color: #c8c8c8;
-    font-family: '等距更纱黑体 SC', SimHei, sans-serif;
+    font-family: 'SarasaMonoSC', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
     margin: 0;
     padding: 0;
     line-height: 1.1; /* 基础行高设置 */
@@ -211,33 +217,31 @@ body {
 
 /* 游戏内容区域中的地图按钮样式 */
 .map-button {
-    background-color: #222;
-    color: #fff;
-    padding: 0; /* 修改：移除内边距 */
-    margin: 0em;
     cursor: pointer;
-    border: none; /* 修改：移除边框 */
-    border-radius: 0px;
-    display: inline-block; /* 修改：改为内联块显示，允许按钮与其他元素显示在同一行 */
-    transition: background-color 0.2s;
-    width: auto; /* 新增：确保宽度根据内容自适应，或者可以尝试 fit-content */
-    font-size: inherit; /* 新增：确保字体大小与周围文本一致 */
-    line-height: inherit; /* 新增：确保行高与周围文本一致 */
-}
-
-/* 块级按钮样式 - 需要单独一行的按钮 */
-.map-button.block {
-    display: block;
-    width: 100%;
+    display: inline;
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    color: inherit;
+    font: inherit;
+    line-height: 1.1;
+    white-space: pre;
+    min-width: 0;
+    transition: color 0.2s ease;
 }
 
 .map-button:hover {
-    background-color: #333;
-    border-color: #666;
+    color: #f2d39a;
 }
 
 .map-button:active {
-    background-color: #444;
+    color: #ffd700;
+}
+
+.map-button:focus-visible {
+    outline: 1px solid #4a90e2;
+    outline-offset: 1px;
 }
 
 /* 内联元素容器 - 用于包裹需要在同一行显示的多个元素 */
@@ -246,6 +250,58 @@ body {
     align-items: center;
     flex-wrap: wrap;
     }
+
+.inline-container.map-line {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    width: auto;
+    white-space: pre;
+    font-family: 'SarasaMonoSC', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
+    gap: 0;
+    overflow: visible;
+    touch-action: manipulation;
+    margin-left: auto;
+    margin-right: auto;
+    box-sizing: border-box;
+    --map-indent-ch: 0;
+    padding-left: calc(var(--map-indent-ch, 0) * 1ch);
+}
+
+.inline-container.map-line .map-element {
+    display: inline-block;
+    white-space: pre;
+    flex: none;
+    font-family: inherit;
+    letter-spacing: 0;
+}
+
+.inline-container.map-line .map-text {
+    line-height: 1.1;
+}
+
+.inline-container.map-line .map-button {
+    margin: 0;
+}
+
+.inline-container.map-line .map-padding {
+    display: none;
+}
+
+.inline-container.map-line .map-fill {
+    display: inline-block;
+    white-space: pre;
+    pointer-events: none;
+}
+
+.map-group {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    max-width: 100%;
+}
 
 .inline-container .text-inline {
     display: inline-block;
@@ -429,15 +485,15 @@ body {
 /* 比例条容器样式 */
 .bar-container {
     display: inline-flex;
-    align-items: center;
+    justify-content: flex-start;
     margin: 2px 0;
 }
-
 /* 比例条元素样式 */
 .bar-item {
     display: inline-block;
     height: 15px; /* 默认高度 */
     vertical-align: middle;
+    margin: 0 auto;
 }
 
 /* 人物图片容器样式 */
@@ -448,7 +504,6 @@ body {
     margin: 10px 0;
     width: 100%;
 }
-
 /* 人物图片元素样式 */
 .character-item {
     max-width: 100%;

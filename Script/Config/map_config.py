@@ -236,8 +236,42 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                     #     print(f"debug 分：new_x_list = {new_x_list}")
                 now_draw_list.draw_list.append(now_rich_draw)
                 now_draw_list.width += len(now_rich_draw.text)
+        _trim_map_line_trailing_spaces(now_draw_list)
         map_draw_data.draw_text.append(now_draw_list)
     return map_draw_data
+
+
+def _trim_map_line_trailing_spaces(map_line: game_type.MapDrawLine) -> None:
+    """移除地图行末尾多余的空格并同步宽度"""
+    if not map_line or not map_line.draw_list:
+        map_line.width = 0
+        return
+
+    # 逆序裁剪尾随空格
+    while map_line.draw_list:
+        last_item = map_line.draw_list[-1]
+        text = getattr(last_item, "text", "")
+        if not text:
+            map_line.draw_list.pop()
+            continue
+
+        trimmed = text.rstrip()
+        if trimmed == text:
+            break
+
+        if trimmed:
+            last_item.text = trimmed
+            break
+        map_line.draw_list.pop()
+
+    # 重新计算行宽
+    width = 0
+    for item in map_line.draw_list:
+        text = getattr(item, "text", "")
+        if not text:
+            continue
+        width += text_handle.get_text_index(text)
+    map_line.width = width
 
 
 def get_sorted_map_path_data(

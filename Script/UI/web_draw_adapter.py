@@ -46,7 +46,8 @@ class WebDrawAdapter:
             "type": "text",
             "text": normal_draw.text,
             "font": normal_draw.style,
-            "width": normal_draw.width
+            "width": normal_draw.width,
+            "web_type": getattr(normal_draw, "web_type", "")
         }
         
         # 添加到当前绘制元素列表
@@ -69,7 +70,8 @@ class WebDrawAdapter:
             "text": center_draw.text,
             "font": center_draw.style,  # 添加居中样式
             "width": center_draw.width,
-            "align": "center"
+            "align": "center",
+            "web_type": getattr(center_draw, "web_type", "")
         }
         
         # 添加到当前绘制元素列表
@@ -92,7 +94,8 @@ class WebDrawAdapter:
             "text": right_draw.text,
             "font": right_draw.style,  # 添加右对齐样式
             "width": right_draw.width,
-            "align": "right"
+            "align": "right",
+            "web_type": getattr(right_draw, "web_type", "")
         }
         
         # 检查是否存在当前绘制元素列表，如果不存在则创建
@@ -151,7 +154,8 @@ class WebDrawAdapter:
             "type": "line",
             "text": line_draw.text,
             "font": line_draw.style,
-            "width": line_draw.width
+            "width": line_draw.width,
+            "web_type": getattr(line_draw, "web_type", "")
         }
         
         # 添加到当前绘制元素列表

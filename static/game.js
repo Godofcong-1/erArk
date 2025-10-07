@@ -1072,6 +1072,112 @@ function determineLineBreakClass() {
 }
 
 /**
+ * 为地图元素应用专用布局
+ * @param {HTMLElement} element - 当前渲染的元素
+ * @param {HTMLElement} container - 元素所在的行容器
+ * @param {Object} options - 附加选项
+ * @param {boolean} options.isText - 是否为文本类型元素
+ */
+function applyMapLayout(element, container, options = {}) {
+    if (!element || !container) {
+        return;
+    }
+
+    container.classList.add('map-line');
+    element.classList.add('map-element');
+
+    if (options.isText) {
+        element.classList.add('map-text');
+        element.style.whiteSpace = 'pre';
+    }
+
+    if (options.isPadding) {
+        element.classList.add('map-padding');
+        const paddingText = element.textContent || '';
+        if (paddingText) {
+            const normalizedText = paddingText.replace(/\u00a0/g, ' ');
+            const indentCount = normalizedText.length;
+            const prevIndent = Number(container.style.getPropertyValue('--map-indent-ch') || '0');
+            container.style.setProperty('--map-indent-ch', String(prevIndent + indentCount));
+        }
+        element.textContent = '';
+        element.style.display = 'none';
+        return;
+    }
+}
+
+/**
+ * 规范化地图块的宽度和居中显示
+ * @param {HTMLElement} root - 游戏内容根元素
+ */
+function normalizeMapBlocks(root) {
+    if (!root) {
+        return;
+    }
+
+    const children = Array.from(root.children || []);
+    let currentGroup = [];
+
+    const flushGroup = () => {
+        if (!currentGroup.length) {
+            return;
+        }
+
+        const groupLines = currentGroup.slice();
+        let wrapper = null;
+
+        const firstLine = groupLines[0];
+        const parent = firstLine && firstLine.parentElement;
+
+        if (parent) {
+            if (parent.classList.contains('map-group')) {
+                wrapper = parent;
+            } else {
+                wrapper = document.createElement('div');
+                wrapper.className = 'map-group';
+                parent.insertBefore(wrapper, firstLine);
+                groupLines.forEach(line => wrapper.appendChild(line));
+            }
+        }
+
+        groupLines.forEach(line => {
+            line.style.width = '';
+            line.style.marginLeft = '';
+            line.style.marginRight = '';
+        });
+
+        requestAnimationFrame(() => {
+            const widths = groupLines.map(line => line.scrollWidth || line.offsetWidth || 0);
+            const maxWidth = Math.max(...widths);
+            groupLines.forEach(line => {
+                line.style.width = `${maxWidth}px`;
+                line.style.marginLeft = '0';
+                line.style.marginRight = '0';
+                line.style.justifyContent = 'flex-start';
+            });
+
+            if (wrapper) {
+                wrapper.style.width = `${maxWidth}px`;
+                wrapper.style.marginLeft = 'auto';
+                wrapper.style.marginRight = 'auto';
+            }
+        });
+
+        currentGroup = [];
+    };
+
+    children.forEach(child => {
+        if (child.classList && child.classList.contains('map-line')) {
+            currentGroup.push(child);
+        } else {
+            flushGroup();
+        }
+    });
+
+    flushGroup();
+}
+
+/**
  * 渲染游戏状态
  * 根据服务器返回的状态数据渲染游戏界面
  * 
@@ -1177,28 +1283,41 @@ function renderGameState(state) {
             
             // 对按钮类型进行特殊处理
             if (item.type === 'button') {
-                // 创建按钮元素
-                element = document.createElement('button');
-                element.className = `game-button ${item.style || 'standard'}`;
+                const isMapButton = item.web_type === 'map';
+                const buttonTag = isMapButton ? 'span' : 'button';
+                element = document.createElement(buttonTag);
+                element.className = isMapButton
+                    ? 'map-button'
+                    : `game-button ${item.style || 'standard'}`;
+
                 // 处理可能包含的<br>标签
-                let processedTextButton = item.text;
+                let processedTextButton = item.text || '';
                 if (processedTextButton.includes('<br>')) {
                     processedTextButton = processedTextButton.replace(/<br>/g, '\n');
                 }
                 element.textContent = processedTextButton;
-                
-                // 设置按钮ID和点击事件
+
+                // 设置按钮ID及交互
                 const buttonId = item.return_text;
                 element.dataset.id = buttonId;
-                element.onclick = () => handleButtonClick(buttonId);
-                
-                // 设置按钮宽度
-                element.style.width = item.width ? `${item.width}ch` : 'auto';
+                element.dataset.buttonAlign = item.align || 'center';
 
-                // 如果是地图类按钮，则特殊处理
-                if (item.web_type === 'map') {
-                    element.className = 'map-button';
-                    element.style.width = 'auto';
+                if (isMapButton) {
+                    element.setAttribute('role', 'button');
+                    element.tabIndex = 0;
+                    element.addEventListener('click', () => handleButtonClick(buttonId));
+                    element.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            event.preventDefault();
+                            handleButtonClick(buttonId);
+                        }
+                    });
+                    applyMapLayout(element, currentLine, { isText: false });
+                } else {
+                    element.onclick = () => handleButtonClick(buttonId);
+
+                    // 设置按钮宽度
+                    element.style.width = item.width ? `${item.width}ch` : 'auto';
                 }
 
                 // 如果是左对齐按钮，则改为左对齐
@@ -1268,6 +1387,12 @@ function renderGameState(state) {
                         // 创建文本元素
                         const textElement = createGameElement({ ...item, text: line });
                         if (textElement) {
+                            if (item.web_type === 'map' || item.web_type === 'map-padding') {
+                                applyMapLayout(textElement, currentLine, {
+                                    isText: true,
+                                    isPadding: item.web_type === 'map-padding'
+                                });
+                            }
                             currentLine.appendChild(textElement);
                             currentLineHasText = true;
                             currentLineButtons.forEach(btn => {
@@ -1294,6 +1419,13 @@ function renderGameState(state) {
             } else {
                 // 创建其他类型的元素（文本、标题等）
                 element = createGameElement(item);
+
+                if (element && (item.web_type === 'map' || item.web_type === 'map-padding')) {
+                    applyMapLayout(element, currentLine, {
+                        isText: true,
+                        isPadding: item.web_type === 'map-padding'
+                    });
+                }
 
                 // 更新上一个元素类型
                 lastElementType = item.type;
@@ -1338,6 +1470,9 @@ function renderGameState(state) {
         console.log('[renderGameState] WaitManager waiting but no active wait element detected; performing cleanup');
         WaitManager.cleanup();
     }
+
+    // 规范化地图渲染宽度
+    normalizeMapBlocks(gameContent);
     
     // 确保滚动到底部在所有内容渲染后执行
     scrollToBottom();

@@ -33,6 +33,8 @@ class NormalDraw:
         """ 当前最大可绘制宽度 """
         self.text = ""
         """ 当前要绘制的文本 """
+        self.web_type: str = ""
+        """ Web绘制类型，用于前端特殊布局处理 """
 
     def __len__(self) -> int:
         """
