@@ -52,7 +52,7 @@ def title_panel():
         now_panel = see_save_info_panel.SeeSaveListPanel(width, 0)
         now_panel.draw()
     elif now_key == now_list[2]:
-        now_panel = system_setting.Language_Panel(width)
+        now_panel = system_setting.Game_Basic_Settings_Panel(width)
         now_panel.draw()
     elif now_key == now_list[3]:
         os._exit(0)

@@ -236,7 +236,8 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                     #     print(f"debug 分：new_x_list = {new_x_list}")
                 now_draw_list.draw_list.append(now_rich_draw)
                 now_draw_list.width += len(now_rich_draw.text)
-        _trim_map_line_trailing_spaces(now_draw_list)
+        # 改为对web地图在绘制中移除行尾空格，不在此处移除
+        # _trim_map_line_trailing_spaces(now_draw_list)
         map_draw_data.draw_text.append(now_draw_list)
     return map_draw_data
 

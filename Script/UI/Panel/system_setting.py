@@ -491,7 +491,3 @@ class Game_Basic_Settings_Panel:
         now_draw.text = info_text
         now_draw.style = 'gold_enrod'
         now_draw.draw()
-
-
-# 保持向后兼容的别名
-Language_Panel = Game_Basic_Settings_Panel
