@@ -508,10 +508,11 @@ t_tired_ge_75,TARGET_TIRED_GE_75,属性_基础,交互对象疲劳条≥75%，部
 t_tired_le_84,TARGET_TIRED_LE_84,属性_基础,交互对象疲劳条≤84%，自由活动的极限
 t_tired_ge_85,TARGET_TIRED_GE_85,属性_基础,交互对象疲劳条≥85%，必须回去睡觉
 t_tired_100,TARGET_TIRED_100,属性_基础,交互对象疲劳条100%，当场爆睡
+urinate_le_12,URINATE_LE_12,属性_基础,尿意条≤12.5%，刚排空过
 urinate_le_49,URINATE_LE_49,属性_基础,尿意条≤49%，可以继续喝咖啡
 urinate_le_79,URINATE_LE_79,属性_基础,尿意条≤79%，不需要排尿
 urinate_ge_80,URINATE_GE_80,属性_基础,尿意条≥80%，需要排尿
-urinate_ge_125,URINATE_GE_125,属性_基础,尿意条≥125%，需要当场排尿
+urinate_ge_125,URINATE_GE_125,属性_基础,尿意条≥150%，需要当场排尿
 t_urinate_le_49,TARGET_URINATE_LE_49,属性_基础,交互对象尿意条≤49%，可以继续喝咖啡
 t_urinate_le_79,TARGET_URINATE_LE_79,属性_基础,交互对象尿意条≤79%，不需要排尿
 t_urinate_ge_80,TARGET_URINATE_GE_80,属性_基础,交互对象尿意条≥80%，需要排尿

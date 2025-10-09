@@ -626,6 +626,24 @@ def handle_t_tired_100(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.URINATE_LE_12)
+def handle_urinate_le_12(character_id: int) -> int:
+    """
+    尿意条≤12.5%，刚排空过
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+
+    value = character_data.urinate_point / 240
+    if value <= 0.125:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.URINATE_LE_49)
 def handle_urinate_le_49(character_id: int) -> int:
     """
@@ -675,7 +693,7 @@ def handle_urinate_ge_80(character_id: int) -> int:
 
     value = character_data.urinate_point / 240
     if value > 0.79:
-        extra_value = character_data.urinate_point -  240 * 0.8
+        extra_value = int(character_data.urinate_point -  240 * 0.8)
         return extra_value * 5
     else:
         return 0
@@ -684,7 +702,8 @@ def handle_urinate_ge_80(character_id: int) -> int:
 @add_premise(constant_promise.Premise.URINATE_GE_125)
 def handle_urinate_ge_125(character_id: int) -> int:
     """
-    尿意条≥125%，需要当场排尿
+    尿意条≥150%，需要当场排尿
+    之前设为125%，但出现失禁的频率过高，所以改为150%
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -693,7 +712,7 @@ def handle_urinate_ge_125(character_id: int) -> int:
     character_data = cache.character_data[character_id]
 
     value = character_data.urinate_point / 240
-    if value >= 1.25:
+    if value >= 1.5:
         return character_data.urinate_point * 5
     else:
         return 0

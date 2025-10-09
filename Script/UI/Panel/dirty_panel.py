@@ -178,14 +178,16 @@ class SeeCharacterBodyPanel:
 
             # 尿液污浊
             if i == 9:
-                if target_character_data.urinate_point <= 30:
+                if handle_premise.handle_urinate_le_12(character_data.target_character_id):
                     text_index = "尿液0"
-                elif target_character_data.urinate_point <= 120:
+                elif handle_premise.handle_urinate_le_49(character_data.target_character_id):
                     text_index = "尿液1"
-                elif target_character_data.urinate_point <= 191:
+                elif handle_premise.handle_urinate_le_79(character_data.target_character_id):
                     text_index = "尿液2"
-                else:
+                elif handle_premise.handle_urinate_ge_125(character_data.target_character_id) == 0:
                     text_index = "尿液3"
+                else:
+                    text_index = "尿液4"
                 # 是否显示完整污浊文本
                 if cache.all_system_setting.draw_setting[10]:
                     now_part_text = game_config.ui_text_data['dirty_full'][text_index]
