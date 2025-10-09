@@ -751,8 +751,9 @@ const ScrollManager = {
         this.indicator = document.getElementById('scroll-indicator');
         
         // 获取容器和按钮元素
-        const gameContainer = document.getElementById('game-container');
-        const scrollButton = document.getElementById('scroll-to-bottom-btn');
+    const gameContainer = document.getElementById('game-container');
+    const scrollButton = document.getElementById('scroll-to-bottom-btn');
+    const skipWaitButton = document.getElementById('skip-wait-btn');
         
         // 监听容器滚动事件
         if (gameContainer) {
@@ -780,6 +781,12 @@ const ScrollManager = {
         if (scrollButton) {
             scrollButton.addEventListener('click', () => {
                 scrollToBottom();
+            });
+        }
+
+        if (skipWaitButton) {
+            skipWaitButton.addEventListener('click', () => {
+                WaitManager.requestSkipUntilMain();
             });
         }
         
