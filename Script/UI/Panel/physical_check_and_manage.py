@@ -304,7 +304,10 @@ class Physical_Check_And_Manage_Panel:
                 if behavior_id in cmd_able_dict and cmd_able_dict[behavior_id] not in self.done_check_behavior_id_set:
                     continue
                 # 部分指令需要未破处则不可用
-                if (behavior_id == "examine_orifice" or behavior_id == "examine_vagina_firmness") and target_character_data.talent[0]:
+                if behavior_id == "examine_sucking_and_swallowing" and target_character_data.talent[4]:
+                    cant_flag = True
+                    behavior_text += _("(未初吻)")
+                elif (behavior_id == "examine_orifice" or behavior_id == "examine_vagina_firmness") and target_character_data.talent[0]:
                     cant_flag = True
                     behavior_text += _("(未破处)")
                 elif behavior_id == "examine_intestine_firmness" and target_character_data.talent[1]:
