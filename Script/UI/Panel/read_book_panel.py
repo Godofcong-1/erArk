@@ -37,9 +37,6 @@ def draw_book_fragment(book_id: int) -> None:
     功能描述:
         从书籍数据库中选取对应书籍的片段，并将片段内容绘制给玩家
     """
-    # 检查书籍ID是否有效
-    if book_id == 0:
-        return
     # 获取书籍数据
     excerpt_list = game_config.config_book_excerpt_list.get(book_id)
     if not excerpt_list:
