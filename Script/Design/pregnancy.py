@@ -502,6 +502,11 @@ def body_part_grow(character_id: int,print_flag = False):
     for new_talent_id in new_talent_id_list:
         character_data.talent[new_talent_id] = 1
 
+    # 如果新旧列表长度不一致则报错
+    if len(old_talent_id_list) != len(new_talent_id_list):
+        error_text = _("\nerror {0}的身体部位成长时新旧素质列表长度不一致，母亲为{1}，旧列表{2}，新列表{3}\n").format(character_data.name, mom_character_data.name, old_talent_id_list, new_talent_id_list)
+        raise ValueError(error_text)
+
     # 根据flag判定是否要绘制输出
     for i in range(len(old_talent_id_list)):
         old_talent_id = old_talent_id_list[i]
