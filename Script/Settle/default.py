@@ -7920,6 +7920,12 @@ def handle_read_add_adjust(
     book_type = book_data.type
     exp_id = game_config.config_book_type[book_type].exp_id
 
+    # 根据书籍难度额外结算习得珠
+    base_chara_state_common_settle(character_id, add_time, 9, extra_adjust = difficulty, change_data = change_data)
+    # 如果有交互对象，则交互对象也加
+    if character_data.target_character_id != character_id:
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 9, extra_adjust = difficulty, change_data_to_target_change = change_data)
+
     # 经验结算
     experience_index_list = []
     experience_index_list.append(92)
