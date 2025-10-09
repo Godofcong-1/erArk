@@ -7915,22 +7915,22 @@ def handle_read_add_adjust(
         return
     book_id = character_data.behavior.book_id
     book_data = game_config.config_book[book_id]
-    difficulty = book_data.difficulty
-    difficulty = max(difficulty, 1)  # 确保难度至少为1
+    book_difficulty = book_data.difficulty
+    book_difficulty_int = max(book_data.difficulty, 1)  # 确保难度至少为1
     book_type = book_data.type
     exp_id = game_config.config_book_type[book_type].exp_id
 
     # 根据书籍难度额外结算习得珠
-    base_chara_state_common_settle(character_id, add_time, 9, extra_adjust = difficulty, change_data = change_data)
+    base_chara_state_common_settle(character_id, add_time, 9, extra_adjust = book_difficulty, change_data = change_data)
     # 如果有交互对象，则交互对象也加
     if character_data.target_character_id != character_id:
-        base_chara_state_common_settle(character_data.target_character_id, add_time, 9, extra_adjust = difficulty, change_data_to_target_change = change_data)
+        base_chara_state_common_settle(character_data.target_character_id, add_time, 9, extra_adjust = book_difficulty_int, change_data_to_target_change = change_data)
 
     # 经验结算
     experience_index_list = []
     experience_index_list.append(92)
     # 书籍的额外经验增长
-    for i in range(difficulty):
+    for i in range(book_difficulty_int):
         if exp_id != 0:
             experience_index_list.append(exp_id)
 
@@ -7946,7 +7946,10 @@ def handle_read_add_adjust(
     info_text = _("\n{0}阅读了{1}，").format(character_data.name, book_data.name)
     if character_data.entertainment.read_book_progress[book_id] < 100:
         base = 5
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[45]) / difficulty
+        adjust = attr_calculation.get_ability_adjust(character_data.ability[45]) / book_difficulty_int
+        # 如果是0难度书籍，则阅读效率提高
+        if book_difficulty == 0:
+            adjust *= 3
         # 计算阅读进度
         read_progress = int(base * adjust * random.uniform(0.5, 1.5))
         read_progress = max(read_progress, 1)
@@ -7959,15 +7962,17 @@ def handle_read_add_adjust(
             character_data.entertainment.read_book_progress[book_id] = 100
             # 如果是技能书籍，则增加对应技能的经验
             if exp_id != 0:
-                if difficulty == 1:
+                if book_difficulty == 1:
+                    add_value = 5
+                elif book_difficulty == 1:
                     add_value = 10
-                elif difficulty == 2:
+                elif book_difficulty == 2:
                     add_value = 20
-                elif difficulty == 3:
+                elif book_difficulty == 3:
                     add_value = 40
                 base_chara_experience_common_settle(character_id, exp_id, add_value, change_data = change_data)
             # 结算习得
-            extra_adjust = difficulty * difficulty
+            extra_adjust = book_difficulty * book_difficulty
             base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[45], extra_adjust = extra_adjust, change_data = change_data)
             # 绘制信息
             info_text += _("，读完了这本书，获得了大量的知识和经验。\n")
