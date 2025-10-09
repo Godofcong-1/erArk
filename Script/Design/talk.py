@@ -459,8 +459,19 @@ def check_not_draw_talk(character_id: int, now_behavior_id: str, unusual_talk_fl
             # print(f"debug {character_data.name}在当前小时内已触发过一次移动文本")
             return True
         else:
-            # 记录当前小时内已触发过一次的移动文本
+            # 重置移动文本触发时间
             character_data.action_info.move_talk_time = cache.game_time
+            return False
+
+    # NPC的等待
+    if character_id != 0 and now_behavior_id == constant.Behavior.WAIT:
+        # 当前行动中已触发过的不触发
+        if character_data.action_info.have_shown_waiting_in_now_instruct:
+            # print(f"debug {character_data.name}在当前行动中已触发过一次等待文本")
+            return True
+        else:
+            # 重置当前行动中已触发过等待文本标记
+            character_data.action_info.have_shown_waiting_in_now_instruct = True
             return False
 
     # NPC的每日招呼

@@ -598,6 +598,8 @@ class ACTION_INFO:
         """ 询问当前地点是否关门的标记，true的话则已询问过，每次玩家移动时重置 """
         self.move_talk_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色触发移动口上的时间，用以避免短时间频繁触发该口上 """
+        self.have_shown_waiting_in_now_instruct: bool = False
+        """ 角色在本次行动中已经显示过等待的文本 """
         self.health_check_today: int = 0
         """ 角色今天体检的时间，0不需要，1上午，2下午，3新干员立刻体检 """
         self.interacting_character_end_info = [-1, datetime.datetime(1, 1, 1)]

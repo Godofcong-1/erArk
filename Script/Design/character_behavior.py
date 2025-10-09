@@ -389,6 +389,13 @@ def judge_before_pl_behavior():
     # 结算上次进行聊天的时间，以重置聊天计数器#
     settle_behavior.change_character_talkcount_for_time(0, pl_character_data.behavior.start_time)
 
+    # 全获得角色刷新等待文本标记
+    for character_id in cache.npc_id_got:
+        if character_id == 0:
+            continue
+        character_data: game_type.Character = cache.character_data[character_id]
+        character_data.action_info.have_shown_waiting_in_now_instruct = False
+
     # 隐奸的被察觉情况结算
     if handle_premise.handle_hidden_sex_mode_ge_1(0):
         from Script.UI.Panel import hidden_sex_panel
