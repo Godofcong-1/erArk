@@ -210,8 +210,8 @@ def store_power_by_human_power(climax_degree: int, character_id: int, draw_flag:
     if climax_degree >= 5:
         cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(4, 0)
         base_per_degree = game_config.config_power_generation[cid].value
-        # 每超过1，则乘以2倍
-        per_degree = base_per_degree * (2 ** (climax_degree - 4))
+        # 每超过1，则乘以4倍
+        per_degree = base_per_degree * (4 ** (climax_degree - 4))
     else:
         cid = game_config.config_power_generation_level_index.get(_("人力"), {}).get(climax_degree, 0)
         if cid and cid in game_config.config_power_generation:
