@@ -754,7 +754,7 @@ class Hypnosis_Sub_Type:
     behavior_id: str
     """ 行为名 """
     type: int
-    """ 所属类型 """
+    """ 所属类型（3体控4心控） """
     introduce: str
     """ 介绍 """
 

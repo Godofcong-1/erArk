@@ -631,8 +631,8 @@ class Field_Commission_Panel:
                     # 跳过等级大于设施等级+1的委托
                     if commision_data.level > cache.rhodes_island.facility_level[14] + 1:
                         continue
-                    # 跳过含有角色出场且还没有招募到该角色的委托
-                    if "c_" in commision_data.demand:
+                    # 跳过含有角色出场且还没有招募到该角色的角色类委托
+                    if "c_" in commision_data.demand and commision_data.type == _("角色"):
                         chara_adv = int(commision_data.demand.split("_")[1])
                         for character_id in cache.npc_id_got:
                             if cache.character_data[character_id].adv == chara_adv:

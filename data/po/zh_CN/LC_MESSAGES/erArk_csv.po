@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-08 10:57+0800\n"
+"POT-Creation-Date: 2025-10-09 15:47+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -16433,11 +16433,19 @@ msgid "给感染者送抑制剂"
 msgstr ""
 
 #: .\data\csv\Commission.csv:6
+msgid "源石"
+msgstr ""
+
+#: .\data\csv\Commission.csv:6
 msgid "当地有一个隐蔽的感染者小聚落，需要将2份感染抑制剂小样送到那里。"
 msgstr ""
 
 #: .\data\csv\Commission.csv:7
 msgid "采集周围的药草"
+msgstr ""
+
+#: .\data\csv\Commission.csv:7
+msgid "资源"
 msgstr ""
 
 #: .\data\csv\Commission.csv:7
@@ -16526,6 +16534,10 @@ msgstr ""
 
 #: .\data\csv\Commission.csv:19
 msgid "越野訓練"
+msgstr ""
+
+#: .\data\csv\Commission.csv:19
+msgid "成长"
 msgstr ""
 
 #: .\data\csv\Commission.csv:19
@@ -17209,6 +17221,10 @@ msgid "新婚信使"
 msgstr ""
 
 #: .\data\csv\Commission.csv:104
+msgid "角色"
+msgstr ""
+
+#: .\data\csv\Commission.csv:104
 msgid "出於某些惡趣味，你決定讓安潔莉娜自己將你們的喜帖遞給她在敘拉古的父母，你還慷慨的給她披了一周的假，希望她玩的開心"
 msgstr ""
 
@@ -17318,6 +17334,10 @@ msgstr ""
 
 #: .\data\csv\Commission.csv:118
 msgid "死魂靈安撫儀式"
+msgstr ""
+
+#: .\data\csv\Commission.csv:118
+msgid "支线"
 msgstr ""
 
 #: .\data\csv\Commission.csv:118
@@ -39225,6 +39245,10 @@ msgid "大量尿液，尿意明显"
 msgstr ""
 
 #: .\data\ui_text\dirty.csv:161
+msgid "满膀胱尿液，随时失禁"
+msgstr ""
+
+#: .\data\ui_text\dirty.csv:162
 msgid "处子血"
 msgstr ""
 
@@ -39837,18 +39861,26 @@ msgid "膀胱刚刚排空，呈现舒适的放松状态，尿道内仅残留着�
 msgstr ""
 
 #: .\data\ui_text\dirty_full.csv:158
-msgid "膀胱内积存少量淡黄色液体，带来轻微的充盈感，下腹部有微妙的轻压感，但并不影响正常活动，偶尔走动时能感受到液体的轻微晃动，但尚不需要寻找排泄场所"
+msgid "膀胱处于正常状态，尿液积累量很少，几乎感觉不到存在，腹部没有任何压力感，一段时间内不需要考虑排泄问题，身体状态舒适自然"
 msgstr ""
 
 #: .\data\ui_text\dirty_full.csv:159
-msgid "膀胱已积累了一定程度的尿液，下腹部出现明显的饱胀感，时刻能感受到内部液体的存在，走动时液体的晃动带来轻微的不适，压力渐增使人不自觉地并拢双腿，排泄的欲望变得越发明显"
+msgid "膀胱内积存少量淡黄色液体，带来轻微的充盈感，下腹部有微妙的轻压感，但并不影响正常活动，偶尔走动时能感受到液体的轻微晃动，但尚不需要寻找排泄场所"
 msgstr ""
 
 #: .\data\ui_text\dirty_full.csv:160
-msgid "膀胱被尿液完全撑满，下腹部隆起并伴随着持续的胀痛感，每走一步都能感受到液体在内部的剧烈晃动，膀胱壁绷紧到极限，尿道口有微微的湿润感，难以控制的排泄欲望使人无法集中注意力"
+msgid "膀胱已积累了一定程度的尿液，下腹部出现明显的饱胀感，时刻能感受到内部液体的存在，走动时液体的晃动带来轻微的不适，压力渐增使人不自觉地并拢双腿，排泄的欲望变得越发明显"
 msgstr ""
 
 #: .\data\ui_text\dirty_full.csv:161
+msgid "膀胱被尿液完全撑满，下腹部隆起并伴随着持续的胀痛感，每走一步都能感受到液体在内部的剧烈晃动，膀胱壁绷紧到极限，尿道口有微微的湿润感，难以控制的排泄欲望使人无法集中注意力"
+msgstr ""
+
+#: .\data\ui_text\dirty_full.csv:162
+msgid "膀胱极度膨胀，尿液几乎要从尿道口溢出，下腹部明显隆起，疼痛感持续不断，尿道口不断有微量液体渗出，随时可能完全失禁，无法站直或行走，必须用双手按压腹部才能勉强控制，无法思考其他任何事情"
+msgstr ""
+
+#: .\data\ui_text\dirty_full.csv:163
 msgid "阴道口红肿微张，无法完全闭合，处女膜残片附着在粉嫩的内壁上，鲜红的处子血混合着透明液体从穴口缓缓流出，形成细小的红色痕迹。阴道内传来持续的疼痛感，每次移动都会加剧这种撕裂般的不适"
 msgstr ""
 

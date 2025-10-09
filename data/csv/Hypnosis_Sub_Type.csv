@@ -1,5 +1,5 @@
 cid,name,behavior_id,type,introduce
-催眠类型id,名称,行为名,所属类型,介绍
+催眠类型id,名称,行为名,所属类型（3体控4心控）,介绍
 int,str,str,int,str
 0,1,0,0,1
 催眠子类型,,,,,
