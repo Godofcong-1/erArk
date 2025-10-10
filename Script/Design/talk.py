@@ -419,6 +419,26 @@ def second_behavior_info_text(character_id: int, second_behavior_id: str):
     elif second_behavior_id == "u_orgasm_to_pee":
         info_text = _("\n{0}因U绝顶而被迫漏尿\n").format(chara_name)
         info_draw.style = "khaki"
+    # 初吻
+    elif second_behavior_id == "first_kiss":
+        info_text = _("\n{0}失去了【初吻】\n").format(chara_name)
+        info_draw.style = "gold_enrod"
+    # v处女
+    elif second_behavior_id == "first_sex":
+        info_text = _("\n{0}失去了【阴道处女】\n").format(chara_name)
+        info_draw.style = "gold_enrod"
+    # a处女
+    elif second_behavior_id == "first_a_sex":
+        info_text = _("\n{0}失去了【肛门处女】\n").format(chara_name)
+        info_draw.style = "gold_enrod"
+    # u处女
+    elif second_behavior_id == "first_u_sex":
+        info_text = _("\n{0}失去了【尿道处女】\n").format(chara_name)
+        info_draw.style = "gold_enrod"
+    # w处女
+    elif second_behavior_id == "first_w_sex":
+        info_text = _("\n{0}失去了【子宫处女】\n").format(chara_name)
+        info_draw.style = "gold_enrod"
 
     # 最后补一个换行
     if info_text != "":

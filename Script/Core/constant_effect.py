@@ -789,6 +789,10 @@ class BehaviorEffect:
     """ 初次 自己变为今天未见过面 """
     FIRST_KISS_TO_PENIS = 1107
     """ 初次 记录阴茎初吻 """
+    FIRST_U_SEX = 1108
+    """ 初次 记录U处女 """
+    FIRST_W_SEX = 1109
+    """ 初次 记录W处女 """
 
     PENETRATING_VISION_ON = 1201
     """ 源石技艺 开启透视（含理智消耗） """
@@ -1122,10 +1126,10 @@ class SecondEffect:
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401
     """ 增加巨量苦痛（A破处修正） """
-    ADD_URINATE = 402
-    """ 增加尿意（持续性利尿剂） """
-    ADD_SLEEP_POINT = 403
-    """ 维持熟睡值（安眠药） """
+    ADD_LARGE_PAIN_FIRST_U_SEX = 402
+    """ 增加巨量苦痛（U破处修正） """
+    ADD_LARGE_PAIN_FIRST_W_SEX = 403
+    """ 增加巨量苦痛（W破处修正） """
     MILKING_MACHINE = 404
     """ 角色的奶量转化为乳汁（搾乳机） """
     URINE_COLLECTOR = 405
@@ -1156,6 +1160,10 @@ class SecondEffect:
     """ 结算因强绝顶而获得的电量 """
     STORE_SUPER_ORGASM_CHARGE = 418
     """ 结算因超强绝顶而获得的电量 """
+    ADD_URINATE = 420
+    """ 增加尿意（持续性利尿剂） """
+    ADD_SLEEP_POINT = 421
+    """ 维持熟睡值（安眠药） """
 
     PENIS_IN_T_RESET = 501
     """ 改变当前阴茎位置为交互对象_双方归零 """

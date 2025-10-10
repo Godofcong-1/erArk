@@ -447,6 +447,12 @@ def update_character_config_data(value):
     """
     update_count = 0
     # 更新角色的各种属性
+    # 经验
+    if len(value.experience) != len(game_config.config_experience):
+        for key in game_config.config_experience:
+            if key not in value.experience:
+                value.experience[key] = 0
+                update_count += 1
     # 素质
     if len(value.talent) != len(game_config.config_talent):
         for key in game_config.config_talent:
@@ -454,12 +460,14 @@ def update_character_config_data(value):
                 value.talent[key] = 0
                 update_count += 1
                 # print(f"debug key = {key}")
-    # 经验
-    if len(value.experience) != len(game_config.config_experience):
-        for key in game_config.config_experience:
-            if key not in value.experience:
-                value.experience[key] = 0
-                update_count += 1
+    # 如果没有u插入经验，则增加u处女素质
+    if value.experience[63] == 0:
+        value.talent[2] = 1
+        update_count += 1
+    # 如果没有w插入经验，则增加w处女素质
+    if value.experience[64] == 0:
+        value.talent[3] = 1
+        update_count += 1
     # 宝珠
     if len(value.juel) != len(game_config.config_juel):
         for key in game_config.config_juel:

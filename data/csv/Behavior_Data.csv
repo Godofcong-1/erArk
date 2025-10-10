@@ -468,6 +468,8 @@ int,str,str,int,str,str
 1090,first_kiss,结算初吻,0,npc,二段结算
 1091,first_sex,结算处女,0,npc,二段结算
 1092,first_a_sex,结算A处女,0,npc,二段结算
+1093,first_u_sex,结算U处女,0,npc,二段结算
+1094,first_w_sex,结算W处女,0,npc,二段结算
 
 1100,nipple_clamp,结算乳头夹,0,npc,二段结算|H装备
 1101,clit_clamp,结算阴蒂夹,0,npc,二段结算|H装备

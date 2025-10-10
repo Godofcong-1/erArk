@@ -1308,6 +1308,95 @@ def handle_first_a_sex(
             target_data.second_behavior["first_a_sex"] = 1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_U_SEX)
+def handle_first_u_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    记录U处女
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 判定是否为道具性交，已废弃
+    # item_flag = False
+    # if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.URINE_COLLECTOR_ON):
+    #     item_flag = True
+
+    # 获取玩家最后一个指令的中文名
+    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    behavior_data = game_config.config_behavior[behavior_id]
+    instruct_name = behavior_data.name
+
+    if character_data.talent[5] == 1:
+        character_data.talent[5] = 0
+        character_data.first_record.first_sex_id = target_data.cid
+        character_data.first_record.first_sex_time = cache.game_time
+        character_data.first_record.first_sex_place = character_data.position
+        character_data.first_record.first_sex_posture = instruct_name
+    if target_data.talent[2] == 1:
+        target_data.talent[2] = 0
+        target_data.first_record.first_u_sex_id = character_id
+        target_data.first_record.first_u_sex_time = cache.game_time
+        target_data.first_record.first_u_sex_place = target_data.position
+        target_data.first_record.first_u_sex_posture = instruct_name
+        if (not character_id) or (not target_data.cid):
+            # 处女的二段结算
+            target_data.second_behavior["first_u_sex"] = 1
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_W_SEX)
+def handle_first_w_sex(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    记录W处女
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    # 获取玩家最后一个指令的中文名
+    behavior_id = cache.pl_pre_behavior_instruce[-1]
+    behavior_data = game_config.config_behavior[behavior_id]
+    instruct_name = behavior_data.name
+
+    if character_data.talent[5] == 1:
+        character_data.talent[5] = 0
+        character_data.first_record.first_sex_id = target_data.cid
+        character_data.first_record.first_sex_time = cache.game_time
+        character_data.first_record.first_sex_place = character_data.position
+        character_data.first_record.first_sex_posture = instruct_name
+    if target_data.talent[3] == 1:
+        target_data.talent[3] = 0
+        target_data.first_record.first_w_sex_id = character_id
+        target_data.first_record.first_w_sex_time = cache.game_time
+        target_data.first_record.first_w_sex_place = target_data.position
+        target_data.first_record.first_w_sex_posture = instruct_name
+        if (not character_id) or (not target_data.cid):
+            # 处女的二段结算
+            target_data.second_behavior["first_w_sex"] = 1
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_0)
 def handle_day_first_meet_0(
         character_id: int,

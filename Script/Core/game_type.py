@@ -548,10 +548,24 @@ class FIRST_RECORD:
         """ A处女姿势 """
         self.first_a_sex_item: int = -1
         """ A处女道具 -1为无，0为手指，1为振动棒 """
+        self.first_u_sex_id: int = -1
+        """ U处女对象 -1为无 """
         self.first_u_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ U处女时间 """
+        self.first_u_sex_place: List[str] = ["0"]  
+        """ U处女地点 """
+        self.first_u_sex_posture: str = ""
+        """ U处女姿势 """
+        self.first_u_sex_item: int = -1
+        """ U处女道具 -1为无，1为采尿器 """
+        self.first_w_sex_id: int = -1
+        """ W处女对象 -1为无 """
         self.first_w_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ W处女时间 """
+        self.first_w_sex_place: List[str] = ["0"]
+        """ W处女地点 """
+        self.first_w_sex_posture: str = ""
+        """ W处女姿势 """
         self.first_m_sex_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ M处女时间 """
 

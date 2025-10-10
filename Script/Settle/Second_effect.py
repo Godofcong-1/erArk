@@ -2746,6 +2746,66 @@ def handle_add_large_pain_first_a_sex(
     base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
 
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_U_SEX)
+def handle_add_large_pain_first_u_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加巨量苦痛（U破处修正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 4000
+    # 润滑修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
+    now_add_lust *= adjust
+    # 欲情修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
+    adjust = adjust/3 if adjust >=2 else adjust/2
+    now_add_lust *= adjust
+    # U扩张修正
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[11])
+    now_add_lust /= adjust * adjust
+    now_add_lust = int(now_add_lust)
+
+    base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
+
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_PAIN_FIRST_W_SEX)
+def handle_add_large_pain_first_w_sex(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加巨量苦痛（W破处修正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    now_add_lust = 3000
+    # 润滑修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[8])
+    now_add_lust *= adjust
+    # 欲情修正
+    adjust = attr_calculation.get_pain_adjust(character_data.status_data[12])
+    adjust = adjust/3 if adjust >=2 else adjust/2
+    now_add_lust *= adjust
+    # W扩张修正
+    adjust = attr_calculation.get_ability_adjust(character_data.ability[12])
+    now_add_lust /= adjust * adjust
+    now_add_lust = int(now_add_lust)
+
+    base_chara_state_common_settle(character_id, now_add_lust, 17, base_value = 0, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
+
+
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_URINATE)
 def handle_add_urinate(
     character_id: int,

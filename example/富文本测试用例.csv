@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,chat,0,high_999,<bold>加粗示例</bold>\n<underline>下划线示例</underline>\n<italic>斜体示例</italic>\n<red>从阿米娅的口上颜色变红色示例</red>\n<italic><bold><underline><gold_enrod>斜体+加粗+下划线+变黄色示例</underline></bold></italic></gold_enrod>\n\n同一行文本中先<bold>加粗</bold>，然后<underline>下划线</underline>，<italic>斜体</italic>，最后<pink>变粉红色</pink>\n
+0,chat,0,high_999,<bold>加粗示例</bold>\n<underline>下划线示例</underline>\n<italic>斜体示例</italic>\n<red>从0号角色的口上颜色变红色示例</red>\n<italic><bold><underline><gold_enrod>斜体+加粗+下划线+变黄色示例</underline></bold></italic></gold_enrod>\n\n同一行文本中先<bold>加粗</bold>，然后<underline>下划线</underline>，<italic>斜体</italic>，最后<pink>变粉红色</pink>\n

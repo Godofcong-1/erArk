@@ -43,6 +43,8 @@ str,str,int,str,str
 1050,first_kiss,0,high_1,{Name}被{PlayerName}夺走了初吻\n第一次和别人接吻，{Name}的心情无法平静，心跳加速，脸颊泛红，终于品味到了初吻的滋味
 1051,first_sex,0,high_1,{Name}被{PlayerName}夺走了纯洁的处女之身\n剧烈的破瓜之痛让{Name}的身体无意识地绷紧，随着处子血的流出，{Name}也逐渐开始适应这种疼痛，以及与疼痛一起涌上来的奇妙快感\n{Name}的人生被烙上了{PlayerName}的印记
 1052,first_a_sex,0,high_1,{Name}被{PlayerName}夺走了后穴的第一次\n虽然这里并不是性器官，但是在疼痛之外，{Name}还是感受到了奇妙的快感，这种不正常的快感让{Name}的身体打开了一扇新的大门
+1053,first_u_sex,0,high_1,{Name}的尿道第一次被{PlayerName}的阴茎插入\n尽管尿道并不是为插入而设计的器官，但{Name}还是在疼痛中感受到了一种奇异的快感，这种不寻常的刺激让{Name}的身体颤抖不已
+1054,first_w_sex,0,high_1,{Name}的子宫第一次被{PlayerName}的阴茎插进去\n{Name}感受到了一种前所未有的深入感，子宫口被异物扩张开的瞬间带来剧烈的疼痛与快感的混合，让{Name}不禁发出了一声尖叫
 1061,unconscious_mark_1,999,high_1,{Name}虽然已经没有相关的记忆，但是身体记住了快乐的感觉。
 1062,unconscious_mark_2,999,high_1,{Name}最近有些苦恼，因为自己正在变得越来越难拒绝{PlayerName}的性骚扰。
 1063,unconscious_mark_3,999,high_1,{Name}的身体渴望着爱抚，贪婪到仿佛这些恋人一样的触感真的出现过一般。
