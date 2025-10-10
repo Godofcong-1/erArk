@@ -134,9 +134,14 @@ def judge_character_move_to_private(character_id: int, move_path: list) -> tuple
         # 超时后取消跟随
         if character_data.chara_setting[0] == 0:
             if character_data.action_info.follow_wait_time >= 30:
-                character_data.sp_flag.is_follow = 0
                 now_draw = draw.NormalDraw()
-                now_draw.text = _("因为等待时间过长，所以{0}不再继续跟随\n").format(character_data.name)
+                # 如果是因为等待
+                if character_data.sp_flag.is_follow > 0:
+                    character_data.sp_flag.is_follow = 0
+                    now_draw.text = _("因为等待时间过长，所以{0}不再继续跟随\n").format(character_data.name)
+                # 如果是因为想逆推
+                elif character_data.sp_flag.npc_masturebate_for_player:
+                    now_draw.text = _("{0}有事找你，已经在门外等候多时了\n").format(character_data.name)
                 now_draw.draw()
             else:
                 wait_flag = True

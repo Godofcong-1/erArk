@@ -1651,7 +1651,7 @@ class Debug_Panel:
                 info_text += f"[020]:晚安问候状态，int [0无,1要问候,2已问候]：{target_data.sp_flag.night_salutation}\n"
                 info_text += f"[021]:大浴场娱乐状态，int [0无,1要更衣,2要娱乐]：{target_data.sp_flag.bathhouse_entertainment}\n"
                 info_text += f"[022]:要挤奶状态：{target_data.sp_flag.milk}\n"
-                info_text += f"[023]:要自慰状态：{target_data.sp_flag.masturebate}\n"
+                info_text += f"[023]:要自慰状态：{target_data.sp_flag.masturebate}，要找玩家逆推来自慰的状态：{target_data.sp_flag.npc_masturebate_for_player}\n"
                 info_text += f"[024]:访客状态，int [0无,1访问中,2访问过]：{target_data.sp_flag.vistor}\n"
                 info_text += f"[025]:香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感,6催眠]：{target_data.sp_flag.aromatherapy}\n"
                 info_text += f"[026]:外勤委托状态，0为未外勤，否则为对应外勤委托编号：{target_data.sp_flag.field_commission}\n"
