@@ -148,6 +148,8 @@ def input_load_save(save_id: str):
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
     # 更新角色预设
     update_count += update_tem_character(loaded_dict)
+    # 修正编号错误的角色数据
+    update_count += fix_wrong_character(loaded_dict)
 
     # 更新绘制模式
     loaded_dict["web_mode"] = cache.web_mode
@@ -333,6 +335,12 @@ def update_tem_character(loaded_dict):
             update_count += 1
             del cache_dict[469]
             continue
+        # 修正阿玛雅的序号错误
+        if now_npc_tem_data.Name == "阿玛雅" and now_npc_tem_data.AdvNpc == 450 and 448 in cache_dict:
+            loaded_dict["npc_tem_data"][i] = cache_dict[448]
+            update_count += 1
+            del cache_dict[448]
+            continue
         if now_npc_tem_data.AdvNpc in cache_dict:
             # print(f"debug 准备更新{now_npc_tem_data.Name}的角色预设 ")
             loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.AdvNpc]
@@ -395,6 +403,38 @@ def update_tem_character(loaded_dict):
                 # print(f"debug 删除了空白预设，序号为{len(loaded_dict['npc_tem_data']) - 1}")
                 loaded_dict["npc_tem_data"].pop()
                 update_count += 1
+
+    return update_count
+
+
+def fix_wrong_character(loaded_dict):
+    """
+    修正编号错误的角色数据
+    Keyword arguments:
+    loaded_dict -- 存档数据
+    """
+
+    update_count = 0
+
+    # 遍历角色属性，修正错误的adv编号
+    for key, value in loaded_dict["character_data"].items():
+        # 阿玛雅
+        if value.name == _("阿玛雅") and value.adv != 448:
+            # 寻找adv为448的角色
+            for key2, value2 in loaded_dict["character_data"].items():
+                if value2.adv == 448:
+                    # 将阿玛雅的角色数据复制过去
+                    loaded_dict["character_data"][key2] = loaded_dict["character_data"][key]
+                    # 将adv改为448
+                    loaded_dict["character_data"][key2].adv = 448
+                    # 将当前角色改为当前模板的角色
+                    now_tem_chara = loaded_dict["npc_tem_data"][value.cid - 1]
+                    # 创建一个新的角色数据
+                    new_character = character_handle.init_character(value.cid, now_tem_chara)
+                    # 重新赋值角色数据
+                    loaded_dict["character_data"][key] = new_character
+                    update_count += 1
+                    break
 
     return update_count
 

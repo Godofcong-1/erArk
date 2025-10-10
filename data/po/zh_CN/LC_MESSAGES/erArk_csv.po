@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-09 16:15+0800\n"
+"POT-Creation-Date: 2025-10-10 14:44+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -32156,23 +32156,23 @@ msgstr ""
 msgid "格劳克斯出生于阿戈尔地区，却早早离开家园四处流浪。机缘巧合下加入罗德岛，现为雷神工业先端武器测评师。\n除了对尖端武器进行研究调整之外，格劳克斯也会在需求对空特化的任务中亲自出击。"
 msgstr ""
 
-#: .\data\character\0326_格劳克斯.csv:26
+#: .\data\character\0326_格劳克斯.csv:27
 msgid "可爱风御寒帽"
 msgstr ""
 
-#: .\data\character\0326_格劳克斯.csv:27
+#: .\data\character\0326_格劳克斯.csv:28
 msgid "加厚式御寒冲锋衣"
 msgstr ""
 
-#: .\data\character\0326_格劳克斯.csv:28
+#: .\data\character\0326_格劳克斯.csv:29
 msgid "超短裙"
 msgstr ""
 
-#: .\data\character\0326_格劳克斯.csv:29
+#: .\data\character\0326_格劳克斯.csv:30
 msgid "透肉过膝袜"
 msgstr ""
 
-#: .\data\character\0326_格劳克斯.csv:30
+#: .\data\character\0326_格劳克斯.csv:31
 msgid "特化改装战地靴"
 msgstr ""
 
@@ -33912,6 +33912,46 @@ msgstr ""
 msgid "移动清洁工作站"
 msgstr ""
 
+#: .\data\character\0448_阿玛雅.csv:4
+msgid "阿玛雅"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:13
+msgid "一本筆記本。裏頭整潔的字跡控訴著人類的劣根性與低效，自裡行間無不展露出筆者對一個人們之間毫無隔閡的大同社會的嚮往"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:14
+msgid "深海教会主教之一，早年幽灵鲨实验的实验员之一和实验记录者，被格兰法洛的教徒称为“先知”，公开身份为翻译家。於愚人號事件中被代號為“屠諭者”的海嗣變體吞食。\n.....出於不明原因，本應消亡的她在本艦上被觀測到並重新開始活動"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:25
+msgid "黑色寬簷禮帽"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:26
+msgid "華麗的伊比利亞式披肩"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:27
+msgid "長版白色襯衫"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:28
+msgid "純白馬甲式內衣"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:29
+msgid "黑色鏤空剪裁裙"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:30
+msgid "貴族手杖"
+msgstr ""
+
+#: .\data\character\0448_阿玛雅.csv:31
+msgid "高跟涼鞋"
+msgstr ""
+
 #: .\data\character\0449_蜜莓.csv:4
 msgid "蜜莓"
 msgstr ""
@@ -33952,44 +33992,40 @@ msgstr ""
 msgid "战术胸挂包组"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:4
-msgid "阿玛雅"
+#: .\data\character\0450_死芒.csv:4
+msgid "死芒"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:13
-msgid "一本筆記本。裏頭整潔的字跡控訴著人類的劣根性與低效，自裡行間無不展露出筆者對一個人們之間毫無隔閡的大同社會的嚮往"
+#: .\data\character\0450_死芒.csv:13
+msgid "一本从未出版过的故事集，没有一个故事有结局。细细看去，每个没完结的故事都指向一个尚在人世的人，你自己也在其中。"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:14
-msgid "深海教会主教之一，早年幽灵鲨实验的实验员之一和实验记录者，被格兰法洛的教徒称为“先知”，公开身份为翻译家。於愚人號事件中被代號為“屠諭者”的海嗣變體吞食。\n.....出於不明原因，本應消亡的她在本艦上被觀測到並重新開始活動"
+#: .\data\character\0450_死芒.csv:14
+msgid "死芒，本名爱布拉娜·都柏林，前“深池”领袖，该组织现已不复存在。在谨慎权衡之后，罗德岛有条件地同意与其建立一定程度的合作关系。\n经医疗部、人事部和博士共同确认，死芒的所有档案移入高权限资料库。"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:25
-msgid "黑色寬簷禮帽"
+#: .\data\character\0450_死芒.csv:31
+msgid "紫色系半透明外套"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:26
-msgid "華麗的伊比利亞式披肩"
+#: .\data\character\0450_死芒.csv:32
+msgid "深紫白色外套式连衣裙"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:27
-msgid "長版白色襯衫"
+#: .\data\character\0450_死芒.csv:33
+msgid "黑色骨骼风指环"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:28
-msgid "純白馬甲式內衣"
+#: .\data\character\0450_死芒.csv:35
+msgid "黑色过膝破洞长袜"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:29
-msgid "黑色鏤空剪裁裙"
+#: .\data\character\0450_死芒.csv:36
+msgid "黑紫色绑带尖头短靴"
 msgstr ""
 
-#: .\data\character\0450_阿玛雅.csv:30
-msgid "貴族手杖"
-msgstr ""
-
-#: .\data\character\0450_阿玛雅.csv:31
-msgid "高跟涼鞋"
+#: .\data\character\0450_死芒.csv:37
+msgid "黑柄尖枪法杖"
 msgstr ""
 
 #: .\data\character\0451_罗宾.csv:4
@@ -34112,47 +34148,47 @@ msgstr ""
 msgid "#e4d5c6"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:43
+#: .\data\character\0469_深靛.csv:44
 msgid "一对黑色半环发箍"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:45
+#: .\data\character\0469_深靛.csv:46
 msgid "连袖黑色披肩"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:46
+#: .\data\character\0469_深靛.csv:47
 msgid "白色低胸领连衣裙"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:47
+#: .\data\character\0469_深靛.csv:48
 msgid "灰蓝色短披风"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:48
+#: .\data\character\0469_深靛.csv:49
 msgid "黑色羽状文胸"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:49
+#: .\data\character\0469_深靛.csv:50
 msgid "黑丝手套"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:50
+#: .\data\character\0469_深靛.csv:51
 msgid "淡白色内裤"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:51
+#: .\data\character\0469_深靛.csv:52
 msgid "黑丝长袜"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:52
+#: .\data\character\0469_深靛.csv:53
 msgid "带有花饰的白底黑色短靴"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:53
+#: .\data\character\0469_深靛.csv:54
 msgid "装有“伊比利亚之眼”发光单元的镰刀状法杖"
 msgstr ""
 
-#: .\data\character\0469_深靛.csv:54
+#: .\data\character\0469_深靛.csv:55
 msgid "悬浮在身后托扶头发的大半环源石装置"
 msgstr ""
 
@@ -35026,30 +35062,6 @@ msgstr ""
 
 #: .\data\character\0722_爱布拉娜.csv:14
 msgid "深池领袖，拉芙希妮的姐姐。父母成为政治斗争牺牲品遇刺身亡后姐妹二人一同被橡林郡的沃里克伯爵收养、教导。不满足于沃里克伯爵建立塔拉政权、自己作为傀儡统治者的野心而亲手烧死了他，引发橡林郡内部的局势倾覆，乘机号召起塔拉人建立了深池，离开了橡林郡。成为领袖的爱布拉纳让妹妹作为影子的领袖，尽管不堪忍受深池残酷行径的妹妹在小丘郡事件中被罗德岛精英干员Outcast救下后便逃离了深池，又联合了塔拉人出身的“铁公爵”威灵顿，登上了许久未曾停靠移动城市的“加斯特里尔”号高速战舰，率领深池的队伍与威灵顿公爵的军队重返橡林郡，在城外的盖尔王古城与妹妹重逢。在伦蒂尼姆郊外独自遇到整合运动，并与塔露拉发生冲突。源石技艺燃起的火焰能够让死去的人重新站起来，成为她的战士。"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:32
-msgid "紫色系半透明外套"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:33
-msgid "深紫白色外套式连衣裙"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:34
-msgid "黑色骨骼风指环"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:36
-msgid "黑色过膝破洞长袜"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:37
-msgid "黑紫色绑带尖头短靴"
-msgstr ""
-
-#: .\data\character\0722_爱布拉娜.csv:38
-msgid "黑柄尖枪法杖"
 msgstr ""
 
 #: .\data\character\0724_塞尔蒙.csv:4
@@ -38946,18 +38958,6 @@ msgstr ""
 
 #: .\data\character\4203_吉星.csv:36
 msgid "彩绘涂装铳"
-msgstr ""
-
-#: .\data\character\450_死芒.csv:4
-msgid "死芒"
-msgstr ""
-
-#: .\data\character\450_死芒.csv:13
-msgid "一本从未出版过的故事集，没有一个故事有结局。细细看去，每个没完结的故事都指向一个尚在人世的人，你自己也在其中。"
-msgstr ""
-
-#: .\data\character\450_死芒.csv:14
-msgid "死芒，本名爱布拉娜·都柏林，前“深池”领袖，该组织现已不复存在。在谨慎权衡之后，罗德岛有条件地同意与其建立一定程度的合作关系。\n经医疗部、人事部和博士共同确认，死芒的所有档案移入高权限资料库。"
 msgstr ""
 
 #: .\data\character\6666_炉芯终曲阿米娅.csv:4
