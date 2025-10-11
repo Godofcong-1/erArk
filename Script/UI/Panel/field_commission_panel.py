@@ -273,7 +273,9 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
             if deduction_or_increase and text_list[0] == "r":
                 cache.rhodes_island.materials_resouce[item_id] -= item_num
             elif deduction_or_increase and text_list[0] == _("声望"):
-                cache.country.nation_reputation[item_id] -= item_num
+                # 将不再扣除声望
+                # cache.country.nation_reputation[item_id] -= item_num
+                pass
     # 奖励
     else:
         # 增加资源
