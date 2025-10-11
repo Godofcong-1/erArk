@@ -42,7 +42,7 @@ class CharacterBodyText:
         """ 面板最大宽度 """
         self.column = column
         """ 每行状态最大个数 """
-        self.draw_list: List[draw.NormalDraw] = []
+        self.draw_list: List = []
         """ 绘制的文本列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
@@ -70,6 +70,7 @@ class CharacterBodyText:
             now_text += _("  初吻情况：")
             if character_data.talent[4]:
                 now_text += _("保有初吻\n")
+                ui_text = game_config.ui_text_data['ability']['口感觉0']
             elif character_data.first_record.first_kiss_id != -1:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
@@ -81,6 +82,13 @@ class CharacterBodyText:
                 if character_data.first_record.first_kiss_body_part == 1:
                     now_text += _("的阴茎")
                 now_text += _("献上了初吻\n")
+                ui_text_lv = (character_data.ability[100] + 1 ) // 2
+                ui_text_lv = max(1, ui_text_lv)
+                ui_text_lv = min(4, ui_text_lv)
+                ui_text_cid = f"口感觉{ui_text_lv}"
+                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            # 口感觉描述
+            now_text += f"  {ui_text}\n"
             if character_data.ability[71] == 0:
                 now_text += _("  普普通通的舌头\n")
             if character_data.dirty.body_semen[2][3] == 0:
@@ -102,6 +110,13 @@ class CharacterBodyText:
                 if character_data.talent[bust_cid]:
                     info_text = game_config.config_talent[bust_cid].info
                     now_text += f"  {info_text}\n"
+            # B感觉描述
+            ui_text_lv = (character_data.ability[1] + 1 ) // 2
+            ui_text_lv = max(0, ui_text_lv)
+            ui_text_lv = min(4, ui_text_lv)
+            ui_text_cid = f"B感觉{ui_text_lv}"
+            ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[3][3] == 0:
                 now_text += _("  未淋上过精液\n")
             else:
@@ -168,7 +183,7 @@ class CharacterBodyText:
                 a_sex_time = character_data.first_record.first_a_sex_time
                 a_sex_posture = character_data.first_record.first_a_sex_posture
 
-                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了A处女\n").format(
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了后庭处女\n").format(
                     character_name=cache.character_data[a_sex_id].name,
                     time=game_time.get_date_until_day(a_sex_time),
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
@@ -188,10 +203,24 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 子宫信息#
             now_text = _("\n 【宫】\n")
-            # W感觉描述
-            ui_text_lv = (character_data.ability[7] + 1 ) // 2
-            ui_text_cid = f"W感觉{ui_text_lv}"
-            ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            if character_data.talent[3]:
+                now_text += _("保有子宫处女\n")
+                ui_text = game_config.ui_text_data['ability']['W感觉0']
+            elif character_data.first_record.first_w_sex_id != -1:
+                w_sex_id = character_data.first_record.first_w_sex_id
+                w_sex_time = character_data.first_record.first_w_sex_time
+                w_sex_posture = character_data.first_record.first_w_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了子宫处女\n").format(
+                    character_name=cache.character_data[w_sex_id].name,
+                    time=game_time.get_date_until_day(w_sex_time),
+                    palce=attr_text.get_scene_path_text(character_data.first_record.first_w_sex_place),
+                    posture=w_sex_posture,
+                )
+                # W感觉描述
+                ui_text_lv = (character_data.ability[7] + 1 ) // 2
+                ui_text_cid = f"W感觉{ui_text_lv}"
+                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             now_text += f"  {ui_text}\n"
             # 精液量描述
             if character_data.dirty.body_semen[7][3] == 0:
@@ -230,6 +259,25 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 尿道信息#
             now_text = _("\n 【尿】\n")
+            if character_data.talent[2]:
+                now_text += _("保有尿道处女\n")
+                ui_text = game_config.ui_text_data['ability']['U感觉0']
+            elif character_data.first_record.first_u_sex_id != -1:
+                u_sex_id = character_data.first_record.first_u_sex_id
+                u_sex_time = character_data.first_record.first_u_sex_time
+                u_sex_posture = character_data.first_record.first_u_sex_posture
+
+                now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了尿道处女\n").format(
+                    character_name=cache.character_data[u_sex_id].name,
+                    time=game_time.get_date_until_day(u_sex_time),
+                    palce=attr_text.get_scene_path_text(character_data.first_record.first_u_sex_place),
+                    posture=u_sex_posture,
+                )
+                # U感觉描述
+                ui_text_lv = (character_data.ability[6] + 1 ) // 2
+                ui_text_cid = f"U感觉{ui_text_lv}"
+                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[9][3] == 0:
                 now_text += _("  未射入过精液\n")
             else:

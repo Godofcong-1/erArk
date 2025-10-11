@@ -506,34 +506,34 @@ def get_cut_down_favorability_for_consume_time(consume_time: int):
         return (consume_time - 999) * 1000 + 90909
 
 
-def change_character_favorability_for_time(character_id: int, now_time: datetime.datetime):
-    """
-    按最后社交时间扣除角色好感度
-    Keyword arguments:
-    character_id -- 角色id
-    now_time -- 当前时间
-    """
-    character_data: game_type.Character = cache.character_data[character_id]
-    for now_character in character_data.favorability:
-        if character_data.favorability[now_character] <= 500:
-            continue
-        character_data.social_contact_last_time.setdefault(now_character, now_time)
-        last_add_time: datetime.datetime = character_data.social_contact_last_time[now_character]
-        now_consume_time = int((now_time - last_add_time).seconds / 60)
-        if now_consume_time < 60:
-            continue
-        now_cut_down = get_cut_down_favorability_for_consume_time(int(now_consume_time / 60))
-        if now_character in character_data.social_contact_last_cut_down_time:
-            last_cut_down_time: datetime.datetime = character_data.social_contact_last_cut_down_time[
-                now_character
-            ]
-            old_consume_time = int((last_cut_down_time - last_add_time).seconds / 60)
-            old_cut_down = get_cut_down_favorability_for_consume_time(int(old_consume_time / 60))
-            now_cut_down -= old_cut_down
-        character_data.favorability[now_character] -= now_cut_down
-        if character_data.favorability[now_character] < 0:
-            character_data.favorability[now_character] = 0
-        # change_character_social_now(now_character, character_id)
+# def change_character_favorability_for_time(character_id: int, now_time: datetime.datetime):
+#     """
+#     按最后社交时间扣除角色好感度
+#     Keyword arguments:
+#     character_id -- 角色id
+#     now_time -- 当前时间
+#     """
+#     character_data: game_type.Character = cache.character_data[character_id]
+#     for now_character in character_data.favorability:
+#         if character_data.favorability[now_character] <= 500:
+#             continue
+#         character_data.social_contact_last_time.setdefault(now_character, now_time)
+#         last_add_time: datetime.datetime = character_data.social_contact_last_time[now_character]
+#         now_consume_time = int((now_time - last_add_time).seconds / 60)
+#         if now_consume_time < 60:
+#             continue
+#         now_cut_down = get_cut_down_favorability_for_consume_time(int(now_consume_time / 60))
+#         if now_character in character_data.social_contact_last_cut_down_time:
+#             last_cut_down_time: datetime.datetime = character_data.social_contact_last_cut_down_time[
+#                 now_character
+#             ]
+#             old_consume_time = int((last_cut_down_time - last_add_time).seconds / 60)
+#             old_cut_down = get_cut_down_favorability_for_consume_time(int(old_consume_time / 60))
+#             now_cut_down -= old_cut_down
+#         character_data.favorability[now_character] -= now_cut_down
+#         if character_data.favorability[now_character] < 0:
+#             character_data.favorability[now_character] = 0
+#         # change_character_social_now(now_character, character_id)
 
 
 def change_character_talkcount_for_time(character_id: int, now_time: datetime.datetime):
@@ -985,7 +985,7 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
                 # 如果超过阈值，则进行额外高潮结算
                 extra_add = int(character_data.h_state.extra_orgasm_feel[orgasm] // now_threshold)
                 now_data = pre_data + extra_add
-                character_data.h_state.extra_orgasm_feel[orgasm] -= extra_add * now_threshold
+                character_data.h_state.extra_orgasm_feel[orgasm] -= int(extra_add * now_threshold)
                 character_data.h_state.extra_orgasm_count += extra_add
                 extra_orgasm_dict[orgasm] = extra_add
             # 计算普通高潮次数
