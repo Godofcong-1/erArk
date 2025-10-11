@@ -24,6 +24,26 @@ window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
 
+def get_ability_lv_ui_text(character_id: int, ability_cid: int) -> str:
+    """
+    获取能力等级对应的UI文本
+    Keyword arguments:
+    character_id -- 角色id
+    ability_cid -- 能力cid
+    Return arguments:
+    ui_text -- 能力等级对应的UI文本
+    """
+    character_data = cache.character_data[character_id]
+    ability_lv = character_data.ability[ability_cid]
+    ui_text_lv = (ability_lv + 1 ) // 2
+    ui_text_lv = max(0, ui_text_lv)
+    ui_text_lv = min(4, ui_text_lv)
+    ui_text_cid = f"{game_config.config_ability[ability_cid].name}{ui_text_lv}"
+    ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+    # 如果文本中有换行符的话，则将其替换为实际的换行
+    ui_text = ui_text.replace('\\n', '\n  ')
+    return ui_text
+
 class CharacterBodyText:
     """
     显示角色肉体面板对象
@@ -70,7 +90,6 @@ class CharacterBodyText:
             now_text += _("  初吻情况：")
             if character_data.talent[4]:
                 now_text += _("保有初吻\n")
-                ui_text = game_config.ui_text_data['ability']['口感觉0']
             elif character_data.first_record.first_kiss_id != -1:
                 kiss_id = character_data.first_record.first_kiss_id
                 kiss_time = character_data.first_record.first_kiss_time
@@ -81,16 +100,12 @@ class CharacterBodyText:
                 )
                 if character_data.first_record.first_kiss_body_part == 1:
                     now_text += _("的阴茎")
-                now_text += _("献上了初吻\n")
-                ui_text_lv = (character_data.ability[100] + 1 ) // 2
-                ui_text_lv = max(1, ui_text_lv)
-                ui_text_lv = min(4, ui_text_lv)
-                ui_text_cid = f"口感觉{ui_text_lv}"
-                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
             # 口感觉描述
+            ui_text = get_ability_lv_ui_text(character_id, 100)
             now_text += f"  {ui_text}\n"
-            if character_data.ability[71] == 0:
-                now_text += _("  普普通通的舌头\n")
+            # 舌技描述
+            ui_text = get_ability_lv_ui_text(character_id, 71)
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[2][3] == 0:
                 now_text += _("  未品尝过精液\n")
             else:
@@ -111,11 +126,10 @@ class CharacterBodyText:
                     info_text = game_config.config_talent[bust_cid].info
                     now_text += f"  {info_text}\n"
             # B感觉描述
-            ui_text_lv = (character_data.ability[1] + 1 ) // 2
-            ui_text_lv = max(0, ui_text_lv)
-            ui_text_lv = min(4, ui_text_lv)
-            ui_text_cid = f"B感觉{ui_text_lv}"
-            ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+            ui_text = get_ability_lv_ui_text(character_id, 1)
+            now_text += f"  {ui_text}\n"
+            # 胸技描述
+            ui_text = get_ability_lv_ui_text(character_id, 73)
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[3][3] == 0:
                 now_text += _("  未淋上过精液\n")
@@ -129,6 +143,9 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 指部信息#
             now_text = _("\n 【指】\n")
+            # 指技描述
+            ui_text = get_ability_lv_ui_text(character_id, 70)
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[5][3] == 0:
                 now_text += _("  未淋上过精液\n")
             else:
@@ -136,6 +153,9 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 足部信息#
             now_text = _("\n 【足】\n")
+            # 足技描述
+            ui_text = get_ability_lv_ui_text(character_id, 72)
+            now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[11][3] == 0:
                 now_text += _("  未淋上过精液\n")
             else:
@@ -147,7 +167,7 @@ class CharacterBodyText:
             ui_text = ""
             if character_data.talent[0]:
                 now_text += _("保有处女\n")
-                ui_text = game_config.ui_text_data['ability']['V感觉0']
+                ui_text = game_config.ui_text_data['ability']['阴道感度0']
             elif character_data.first_record.first_sex_id != -1:
                 sex_id = character_data.first_record.first_sex_id
                 sex_time = character_data.first_record.first_sex_time
@@ -159,12 +179,11 @@ class CharacterBodyText:
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
                     posture=sex_posture,
                 )
-                ui_text_lv = (character_data.ability[4] + 1 ) // 2
-                ui_text_lv = max(1, ui_text_lv)
-                ui_text_lv = min(4, ui_text_lv)
-                ui_text_cid = f"V感觉{ui_text_lv}"
-                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+                ui_text = get_ability_lv_ui_text(character_id, 4)
             # V感觉描述
+            now_text += f"  {ui_text}\n"
+            # 膣技描述
+            ui_text = get_ability_lv_ui_text(character_id, 74)
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[6][3] == 0:
                 now_text += _("  未射入过精液\n")
@@ -173,11 +192,11 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 肛部信息#
             now_text = _("\n 【肛】\n")
-            now_text += "  后庭处女情况："
+            now_text += _("  处女情况：")
             ui_text = ""
             if character_data.talent[1]:
                 now_text += _("保有后庭处女\n")
-                ui_text = game_config.ui_text_data['ability']['A感觉0']
+                ui_text = game_config.ui_text_data['ability']['肛肠感度0']
             elif character_data.first_record.first_a_sex_id != -1:
                 a_sex_id = character_data.first_record.first_a_sex_id
                 a_sex_time = character_data.first_record.first_a_sex_time
@@ -189,13 +208,12 @@ class CharacterBodyText:
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
                     posture=a_sex_posture,
                 )
-                ui_text_lv = (character_data.ability[5] + 1 ) // 2
-                ui_text_lv = max(1, ui_text_lv)
-                ui_text_lv = min(4, ui_text_lv)
-                ui_text_cid = f"A感觉{ui_text_lv}"
-                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
-            # 精液量描述
+                ui_text = get_ability_lv_ui_text(character_id, 5)
             now_text += f"  {ui_text}\n"
+            # 肛技描述
+            ui_text = get_ability_lv_ui_text(character_id, 75)
+            now_text += f"  {ui_text}\n"
+            # 精液量描述
             if character_data.dirty.body_semen[8][3] == 0:
                 now_text += _("  未射入过精液\n")
             else:
@@ -203,9 +221,10 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 子宫信息#
             now_text = _("\n 【宫】\n")
+            now_text += _("  处女情况：")
             if character_data.talent[3]:
                 now_text += _("保有子宫处女\n")
-                ui_text = game_config.ui_text_data['ability']['W感觉0']
+                ui_text = game_config.ui_text_data['ability']['子宫感度0']
             elif character_data.first_record.first_w_sex_id != -1:
                 w_sex_id = character_data.first_record.first_w_sex_id
                 w_sex_time = character_data.first_record.first_w_sex_time
@@ -218,9 +237,7 @@ class CharacterBodyText:
                     posture=w_sex_posture,
                 )
                 # W感觉描述
-                ui_text_lv = (character_data.ability[7] + 1 ) // 2
-                ui_text_cid = f"W感觉{ui_text_lv}"
-                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+                ui_text = get_ability_lv_ui_text(character_id, 7)
             now_text += f"  {ui_text}\n"
             # 精液量描述
             if character_data.dirty.body_semen[7][3] == 0:
@@ -259,9 +276,10 @@ class CharacterBodyText:
             body_text_list.append(now_text)
             # 尿道信息#
             now_text = _("\n 【尿】\n")
+            now_text += _("  处女情况：")
             if character_data.talent[2]:
                 now_text += _("保有尿道处女\n")
-                ui_text = game_config.ui_text_data['ability']['U感觉0']
+                ui_text = game_config.ui_text_data['ability']['尿道感度0']
             elif character_data.first_record.first_u_sex_id != -1:
                 u_sex_id = character_data.first_record.first_u_sex_id
                 u_sex_time = character_data.first_record.first_u_sex_time
@@ -274,9 +292,7 @@ class CharacterBodyText:
                     posture=u_sex_posture,
                 )
                 # U感觉描述
-                ui_text_lv = (character_data.ability[6] + 1 ) // 2
-                ui_text_cid = f"U感觉{ui_text_lv}"
-                ui_text = game_config.ui_text_data['ability'][ui_text_cid]
+                ui_text = get_ability_lv_ui_text(character_id, 6)
             now_text += f"  {ui_text}\n"
             if character_data.dirty.body_semen[9][3] == 0:
                 now_text += _("  未射入过精液\n")
