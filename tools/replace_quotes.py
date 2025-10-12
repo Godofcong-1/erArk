@@ -28,6 +28,26 @@ def replace_english_quotes(text):
             result.append(char)
     return ''.join(result)
 
+def replace_english_single_quotes(text):
+    """
+    替换文本中的英文单引号为中文单引号
+    参数:
+        text (str): 待处理的文本
+    返回:
+        str: 已替换完成的文本
+    """
+    result = []
+    toggle = True  # True用于输出开头引号‘，False用于输出结尾引号’
+    for char in text:
+        if char == "'":
+            if toggle:
+                result.append('‘')
+            else:
+                result.append('’')
+            toggle = not toggle
+        else:
+            result.append(char)
+    return ''.join(result)
 
 def process_csv_file(filepath):
     """
@@ -40,6 +60,7 @@ def process_csv_file(filepath):
     with open(filepath, 'r', encoding='utf-8') as f:
         content = f.read()
     new_content = replace_english_quotes(content)
+    # new_content = replace_english_single_quotes(new_content)
     with open(filepath, 'w', encoding='utf-8') as f:
         f.write(new_content)
 

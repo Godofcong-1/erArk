@@ -91,6 +91,16 @@ def renumber_csv(
         writer = csv.writer(f)
         writer.writerows(rows)
 
+    # 将文件里的部分文本进行替换以修改错误的格式
+    with open(file_path, 'r', encoding=encoding) as f:
+        content = f.read()
+    # 将,"替换为,
+    content = content.replace(',"', ',')
+    content = content.replace('""', '"')
+    content = content.replace('"\n', '\n')
+    with open(file_path, 'w', encoding=encoding) as f:
+        f.write(content)
+
     print(
         f"已完成：文件={file_path}，总行数={total}，从第{start_line}行起共修改={target_count}行，列(0-based)={column_index}。"
     )
