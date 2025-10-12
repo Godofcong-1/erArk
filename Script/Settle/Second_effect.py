@@ -2866,6 +2866,7 @@ def handle_milking_machine(
 
         now_milk = 5 * character_data.behavior.duration
         now_milk = min(character_data.pregnancy.milk, now_milk)
+        now_milk = int(now_milk)
         cache.rhodes_island.milk_in_fridge.setdefault(character_id, 0)
         cache.rhodes_island.milk_in_fridge[character_id] += now_milk
         pl_character_data.pl_collection.milk_total.setdefault(character_id, 0)
