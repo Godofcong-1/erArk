@@ -3291,6 +3291,8 @@ class Premise:
 
     HAVE_WORK = "have_work"
     """ 工作_角色 自己有工作 """
+    WORK_IS_POWER_OPERATOR = "work_is_power_operator"
+    """ 工作_角色 自己的工作为供能调控员 """
     WORK_IS_MAINTENANCE_ENGINEER = "work_is_maintenance_engineer"
     """ 工作_角色 自己的工作为检修工程师 """
     WORK_IS_BLACKSMITH = "work_is_blacksmith"

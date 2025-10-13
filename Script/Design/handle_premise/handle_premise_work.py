@@ -41,6 +41,19 @@ def handle_have_work(character_id: int) -> int:
     return character_data.work.work_type > 0
 
 
+@add_premise(constant_promise.Premise.WORK_IS_POWER_OPERATOR)
+def handle_work_is_power_operator(character_id: int) -> int:
+    """
+    自己的工作为供能调控员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 11
+
+
 @add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
 def handle_work_is_maintenance_engineer(character_id: int) -> int:
     """
