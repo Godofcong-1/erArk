@@ -7498,6 +7498,7 @@ def handle_end_h_add_hpmp_max(
     """
     if not add_time:
         return
+    from Script.Design import handle_ability
     character_data: game_type.Character = cache.character_data[character_id]
     id_list = [character_id]
     if character_data.target_character_id != character_id:
@@ -7539,7 +7540,9 @@ def handle_end_h_add_hpmp_max(
             info_draw.text = info_text
             info_draw.width = width
             info_draw.draw()
-
+        # npc则自动进行一次能力上升结算
+        if chara_id != 0 and cache.all_system_setting.base_setting[1]:
+            handle_ability.gain_ability(character_id)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_END_H_ADD_HPMP_MAX)
 def handle_group_sex_end_h_add_hpmp_max(
@@ -7558,6 +7561,7 @@ def handle_group_sex_end_h_add_hpmp_max(
     """
     if not add_time:
         return
+    from Script.Design import handle_ability
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
@@ -7593,6 +7597,9 @@ def handle_group_sex_end_h_add_hpmp_max(
             info_draw.text = info_text
             info_draw.width = width
             info_draw.draw()
+        # npc则自动进行一次能力上升结算
+        if chara_id != 0 and cache.all_system_setting.base_setting[1]:
+            handle_ability.gain_ability(character_id)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_FAIL_ADD_JUST)
