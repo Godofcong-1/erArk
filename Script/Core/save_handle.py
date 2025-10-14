@@ -388,6 +388,9 @@ def update_tem_character(loaded_dict):
                 value.adv = 469
                 update_count += 1
                 continue
+            # 修正阿玛雅的序号错误
+            if value.name == _("阿玛雅") and value.cid != key:
+                value.cid = key
             loaded_dict["npc_tem_data"].pop(tem_cid)
             loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
             now_draw = draw.LeftDraw()
