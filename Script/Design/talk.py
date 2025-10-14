@@ -750,6 +750,22 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
             break
 
     # 服装，来自于NPC当前穿的衣服，或行动传入的变量
+    self_up_cloth_name = ""
+    if character_id != 0 and len(character_data.cloth.cloth_wear[5]):
+        for Up_cloth_Id in character_data.cloth.cloth_wear[5]:
+            self_up_cloth_name += game_config.config_clothing_tem[Up_cloth_Id].name
+    if self_up_cloth_name == "":
+        self_up_cloth_name = _("没有穿上衣的裸露身体")
+        if character_id == 0:
+            self_up_cloth_name = _("兜帽")
+    self_down_cloth_name = ""
+    if character_id != 0 and len(character_data.cloth.cloth_wear[8]):
+        for Down_cloth_Id in character_data.cloth.cloth_wear[8]:
+            self_down_cloth_name += game_config.config_clothing_tem[Down_cloth_Id].name
+    if self_down_cloth_name == "":
+        self_down_cloth_name = _("没有穿下衣的裸露身体")
+        if character_id == 0:
+            self_down_cloth_name = _("长裤")
     target_up_cloth_name = ""
     if character_id == 0 and len(target_data.cloth.cloth_wear[5]):
         for Up_cloth_Id in target_data.cloth.cloth_wear[5]:
@@ -846,6 +862,8 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         SrcSceneName=src_scene_name,
         SrcOneCharaName=src_random_chara_name,
 
+        SelfUpClothName=self_up_cloth_name,
+        SelfDownClothName=self_down_cloth_name,
         TargetUpClothName=target_up_cloth_name,
         TargetDownClothName=target_down_cloth_name,
         TargetBraName=target_bra_name,

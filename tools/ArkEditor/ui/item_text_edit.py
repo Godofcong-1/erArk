@@ -165,6 +165,8 @@ class ItemTextEdit(QWidget):
 
         # 服装名菜单项
         clothing_items = [
+            {"text": "自己的上衣名字", "slot": lambda: self.insert_text('{SelfUpClothName}')},
+            {"text": "自己的下衣名字", "slot": lambda: self.insert_text('{SelfDownClothName}')},
             {"text": "交互对象的上衣名字", "slot": lambda: self.insert_text('{TargetUpClothName}')},
             {"text": "交互对象的下衣名字", "slot": lambda: self.insert_text('{TargetDownClothName}')},
             {"text": "交互对象的胸衣名字", "slot": lambda: self.insert_text('{TargetBraName}')},
