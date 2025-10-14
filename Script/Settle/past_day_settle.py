@@ -39,6 +39,7 @@ def update_new_day():
     Return arguments:
     无
     """
+    from Script.Design import cooking
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -48,6 +49,11 @@ def update_new_day():
     # 角色刷新
     for character_id in cache.npc_id_got:
         character_data: game_type.Character = cache.character_data[character_id]
+        # 处理持有食物变质与过期，并获取过期食物数量
+        expired_food_num = cooking.handle_food_deterioration(character_id)
+        if expired_food_num > 0 and character_id == 0:
+            now_draw.text = _("你持有的{0}个食物因过期变质而自动丢弃了\n").format(expired_food_num)
+            now_draw.draw()
         if character_id:
             # 刷新娱乐活动
             handle_npc_ai.get_chara_entertainment(character_id)

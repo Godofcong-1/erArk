@@ -600,3 +600,24 @@ def find_character_birthplace_restaurant(character_id: int) -> int:
     elif character_data.relationship.birthplace == 16:
         return 7
     return -1
+
+def handle_food_deterioration(character_id: int):
+    """
+    结算角色持有食物的变质与过期\n
+    Keyword arguments:\n
+    character_id -- 角色id\n
+    Return arguments:
+    int -- 过期食物数量
+    """
+    character_data = cache.character_data[character_id]
+    remove_food_uid_list = []
+    for food_uid in character_data.food_bag:
+        food_data: Food = character_data.food_bag[food_uid]
+        # 食物变质
+        food_data.quality = min(food_data.quality - 1, food_data.quality // 2)
+        # 食物过期
+        if food_data.quality <= 0:
+            remove_food_uid_list.append(food_uid)
+    for food_uid in remove_food_uid_list:
+        character_data.food_bag.pop(food_uid)
+    return len(remove_food_uid_list)
