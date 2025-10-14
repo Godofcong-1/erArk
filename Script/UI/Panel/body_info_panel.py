@@ -278,6 +278,7 @@ class CharacterBodyText:
             # 尿道信息#
             now_text = _("\n 【尿】\n")
             if character_data.talent[2]:
+                now_text += _("  处女情况：")
                 now_text += _("保有尿道处女\n")
                 ui_text = game_config.ui_text_data['ability']['尿道感度0']
             else:
