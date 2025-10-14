@@ -272,7 +272,7 @@ config_talk_premise_data: Dict[str, Set] = {}
 config_talk_common_data: Dict[str, config_def.Talk_Common] = {}
 """ 通用口上配置数据 """
 config_talk_common_cid_list_by_type: Dict[str, List] = {}
-""" 根据类型获取的通用口上cid集合 """
+""" 根据类型获取的通用口上cid列表 """
 config_talk_common_cid_list_by_part: Dict[str, Dict] = {}
 """ 根据分段的部分类型获取的通用口上cid集合 """
 config_talk_common_premise_data: Dict[str, Set] = {}
