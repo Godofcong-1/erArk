@@ -156,6 +156,7 @@ class ItemTextEdit(QWidget):
             {"text": "玩家交互对象手部描述_短词", "slot": lambda: self.insert_text('{hands_s}')},
             {"text": "玩家交互对象阴道描述_长句", "slot": lambda: self.insert_text('{vagina}')},
             {"text": "玩家交互对象阴道描述_短词", "slot": lambda: self.insert_text('{vagina_s}')},
+            {"text": "玩家交互对象子宫描述_长句", "slot": lambda: self.insert_text('{womb}')},
             {"text": "玩家交互对象子宫描述_短词", "slot": lambda: self.insert_text('{womb_s}')},
             {"text": "玩家交互对象后穴描述_短词", "slot": lambda: self.insert_text('{anal_s}')},
             {"text": "玩家交互对象尿道描述_短词", "slot": lambda: self.insert_text('{urethra_s}')},
