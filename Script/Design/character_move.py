@@ -124,6 +124,7 @@ def judge_character_move_to_private(character_id: int, move_path: list) -> tuple
     character_data: game_type.Character = cache.character_data[character_id]
     move_flag = True # true的话就是移动
     wait_flag = False # true的话就是等待
+    draw_flag = False # true的话就是已经输出过提示信息了
     # 移动路径为空，直接返回
     if move_path == []:
         return False, True
@@ -141,8 +142,17 @@ def judge_character_move_to_private(character_id: int, move_path: list) -> tuple
                     now_draw.text = _("因为等待时间过长，所以{0}不再继续跟随\n").format(character_data.name)
                 # 如果是因为想逆推
                 elif character_data.sp_flag.npc_masturebate_for_player:
-                    now_draw.text = _("{0}有事找你，已经在门外等候多时了\n").format(character_data.name)
+                    # 如果门没关的话，就依然进去
+                    now_scene_data = cache.scene_data[target_scene_str]
+                    if now_scene_data.close_flag == 0:
+                        move_flag = True
+                        wait_flag = False
+                        return move_flag, wait_flag
+                    # 否则则门外等待
+                    else:
+                        now_draw.text = _("{0}有事找你，已经在门外等候多时了\n").format(character_data.name)
                 now_draw.draw()
+                draw_flag = True
             else:
                 wait_flag = True
             move_flag = False
@@ -159,12 +169,13 @@ def judge_character_move_to_private(character_id: int, move_path: list) -> tuple
                 now_draw = draw.NormalDraw()
                 now_draw.text = _("{0}等不下去了，决定直接进来\n").format(character_data.name)
                 now_draw.draw()
+                draw_flag = True
         # 一直跟随，无视私密地点
         elif character_data.chara_setting[0] == 3:
             pass
 
         # 等待时输出提示信息
-        if wait_flag:
+        if wait_flag and not draw_flag:
             now_draw = draw.NormalDraw()
             now_draw.text = _("因为不方便进来，所以{0}正在外面等待\n").format(character_data.name)
             now_draw.draw()
