@@ -241,6 +241,12 @@ def store_power_by_human_power(climax_degree: int, character_id: int, draw_flag:
             draw_text.text = _("\n在{0}{1}重绝顶的同时，").format(chara_name, climax_degree - 3)
         draw_text.text += _("性爱发电装置产生了 {0:.1f} 单位电量\n").format(per_degree)
         draw_text.draw()
+    # 结算成就
+    if not cache.achievement.achievement_dict.get(827, False):
+        achievement_data = game_config.config_achievement[827]
+        if per_degree >= achievement_data.value:
+            from Script.UI.Panel import achievement_panel
+            achievement_panel.achievement_flow(achievement_data.type, 827)
     return round(per_degree, 2)
 
 # ---------------------------- 理论计算 ---------------------------- #
@@ -430,6 +436,8 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     返回:
         (shortage_ratio, text) -> 供电缺口百分比 与 文本
     """
+    # 导入成就模块，避免循环导入
+    from Script.UI.Panel import achievement_panel
     _init_power_runtime_fields()
     ri = cache.rhodes_island
     shortage_ratio = 0.0
@@ -467,7 +475,7 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     wind_full = get_theoretical_clean_generation(1) * random.uniform(0.8, 1.2)
     solar_full = get_theoretical_clean_generation(2) * random.uniform(0.8, 1.2)
     clean_power = round(hydro_full + wind_full + solar_full, 2)
-    text += _(" - 清洁能源：水{0} 风{1} 太阳能{2} 台，总产出 {3:.1f} 单位电量\n").format(
+    text += _(" - 清洁能源：水 {0} 风 {1} 太阳能 {2} 台，总产出 {3:.1f} 单位电量\n").format(
         ri.other_power_facility_list[0], ri.other_power_facility_list[1], ri.other_power_facility_list[2], clean_power
     )
 
@@ -500,7 +508,7 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     else:
         # 自放电（按日）——使用模块化函数计算并应用
         discharge_amount, avg_rate = _calculate_battery_self_discharge(ri)
-        text += _(" - 自放电：损失 {0:.1f} 单位电量 (rate {1:.2%})，储能剩余 {2:.1f}\n").format(
+        text += _(" - 自放电：损失 {0:.1f} 单位电量 ({1:.2%})，储能剩余 {2:.1f}\n").format(
             discharge_amount, avg_rate, ri.power_storage
         )
 
@@ -519,6 +527,24 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
         draw_text.width = window_width
         draw_text.text = text
         draw_text.draw()
+
+    # 结算发电量成就
+    if not cache.achievement.achievement_dict.get(821, False):
+        achievement_data = game_config.config_achievement[821]
+        if total_generated >= achievement_data.value:
+            achievement_panel.achievement_flow(achievement_data.type, 821)
+    if not cache.achievement.achievement_dict.get(822, False):
+        achievement_data = game_config.config_achievement[822]
+        if total_generated >= achievement_data.value:
+            achievement_panel.achievement_flow(achievement_data.type, 822)
+    if not cache.achievement.achievement_dict.get(823, False):
+        achievement_data = game_config.config_achievement[823]
+        if total_generated >= achievement_data.value:
+            achievement_panel.achievement_flow(achievement_data.type, 823)
+    if not cache.achievement.achievement_dict.get(826, False):
+        achievement_data = game_config.config_achievement[826]
+        if fuel_use == 0 and total_generated >= total_consumption:
+            achievement_panel.achievement_flow(achievement_data.type, 826)
 
     return shortage_ratio, text
 
