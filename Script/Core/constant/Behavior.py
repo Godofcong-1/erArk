@@ -267,6 +267,8 @@ class Behavior:
     """ 重度猥亵失败 """
     H = "h"
     """ 进入H状态 """
+    H_BY_ACTIVE = "h_by_active"
+    """ 被逆推进入H """
     END_H = "end_h"
     """ 结束H """
     NO_CONSCIOUS_H_END = "no_conscious_h_end"

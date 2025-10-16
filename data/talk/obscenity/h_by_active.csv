@@ -1,0 +1,8 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,h_by_active,0,high_1,{Name}被{TargetName}推倒了。
+1,h_by_active,0,high_1,{TargetName}强行要求{Name}一起H。
+2,h_by_active,0,high_1,{TargetName}一把将{Name}拉到一旁，提出了H的请求。

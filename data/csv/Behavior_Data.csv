@@ -146,7 +146,8 @@ int,str,str,int,str,str
 356,low_obscenity_anus,轻度猥亵失败,10,pl,猥亵
 357,high_obscenity_anus,重度猥亵失败,10,pl,猥亵
 
-361,h,进入H状态,5,both,性爱
+360,h,进入H状态,5,both,性爱
+361,h_by_active,被逆推进入H,5,pl,性爱
 362,end_h,结束H,5,pl,性爱
 363,no_conscious_h_end,结束无意识H,5,pl,性爱
 364,do_h_fail,邀请H失败,10,pl,猥亵
