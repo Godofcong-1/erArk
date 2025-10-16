@@ -1225,6 +1225,8 @@ def character_see_h_and_move_to_dormitory(character_id: int):
         return
 
     character_data: game_type.Character = cache.character_data[character_id]
+    pl_chara_data: game_type.Character = cache.character_data[0]
+    target_chara_data = cache.character_data[pl_chara_data.target_character_id]
 
     # 输出提示信息，并结算
     result_type = 0 # 0为无事发生，1为中断H，2为加入群交
@@ -1250,17 +1252,20 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     if result_type == 1:
         to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
         general_movement_module(character_id, to_target)
-        pl_data: game_type.Character = cache.character_data[0]
-        target_data = cache.character_data[pl_data.target_character_id]
-        target_data.action_info.h_interrupt = 1
+        target_chara_data.action_info.h_interrupt = 1
         # 原地待机10分钟
-        pl_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
-        pl_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+        pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+        pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
         handle_instruct.handle_end_h()
     # 加入群交
     elif result_type == 2:
         character_join_group_sex(character_id)
-
+        # 如果群交没有开启，则开启群交
+        if handle_premise.handle_group_sex_mode_off(0):
+            from Script.Settle.default import handle_group_sex_mode_on
+            handle_group_sex_mode_on(0, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
+        # 玩家的交互对象去掉主动H状态
+        target_chara_data.h_state.npc_active_h = False
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
 def character_singing(character_id: int):

@@ -186,6 +186,10 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             elif cache.rhodes_island.love_hotel_room_lv == 3:
                 judge += 100
                 calculation_text += _("+顶级套房(+100)")
+        # 找博士逆推自慰修正
+        if target_data.sp_flag.npc_masturebate_for_player:
+            judge += 50
+            calculation_text += _("+找博士逆推(+50)")
 
     # 激素系能力修正#
     if character_data.pl_ability.hormone:

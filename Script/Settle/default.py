@@ -5432,6 +5432,7 @@ def handle_self_h_state_reset(
     character_data.dirty.penis_dirty_dict["semen"] = False
     # 清零自慰状态
     character_data.sp_flag.masturebate = 0
+    character_data.sp_flag.npc_masturebate_for_player = False
     # 清零前往群交
     character_data.sp_flag.go_to_join_group_sex = False
     # 清零隐奸模式

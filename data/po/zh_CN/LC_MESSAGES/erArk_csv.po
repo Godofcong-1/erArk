@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-15 18:50+0800\n"
+"POT-Creation-Date: 2024-08-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -39030,6 +39030,94 @@ msgstr ""
 
 #: .\data\character\4203_吉星.csv:36
 msgid "彩绘涂装铳"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:4
+msgid "折桠"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:13
+msgid "一面手工制作的“小铜钟”，表面被打磨光滑，边缘被锉至平整，肖似曾在矿井边、冰面上陪伴她的旧物。现在，她把它送给你。"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:14
+msgid "折桠，常用名别乔克，曾为乌萨斯远北中心矿区工人，现于罗德岛接受治疗，同时根据本人意愿，接受标准强度的战斗训练，作为罗德岛的外勤干员参与感染者救助工作。"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:30
+msgid "机械风护目镜发饰"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:32
+msgid "拼接工装风外套"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:33
+msgid "蓝色牛仔背带短裤"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:34
+msgid "白色短袖缝补衬衫"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:35
+msgid "棕色露指战术手套"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:37
+msgid "白色运动及膝袜"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:38
+msgid "工装风拼接高帮靴"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:39
+msgid "防爆改装塔盾"
+msgstr ""
+
+#: .\data\character\4207_折桠.csv:40
+msgid "煤油矿灯"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:4
+msgid "冬时"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:13
+msgid "一份令人费解的实验数据。冬时尝试向你解释，这份数据或许可以拯救数以万计的人，并将它递给了你。"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:14
+msgid "冬时，本名科谢尼娅·马尔科芙娜·涅留朵娃，原乌萨斯远北中心矿区研究所研究员，现入职罗德岛，继续其在乌萨斯从事的部分研究。"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:27
+msgid "黑色半框眼镜"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:28
+msgid "毛领探险派克大衣"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:29
+msgid "破损不规则长衫"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:30
+msgid "浅蓝色立领衬衫"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:33
+msgid "黑色紧身打底裤"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:34
+msgid "灰绿色工装短靴"
+msgstr ""
+
+#: .\data\character\4208_冬时.csv:35
+msgid "军绿色挎包"
 msgstr ""
 
 #: .\data\character\6666_炉芯终曲阿米娅.csv:4

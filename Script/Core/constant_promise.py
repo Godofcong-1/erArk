@@ -1462,7 +1462,7 @@ class Premise:
     MASTUREBATE_TO_PL_FLAG_0 = "masturebate_to_pl_flag_0"
     """ 特殊flag_自慰 自身没有要找玩家逆推来自慰状态 """
     MASTUREBATE_TO_PL_FLAG_1 = "masturebate_to_pl_flag_1"
-    """ 特殊flag_自慰 自身要找玩家逆推来自慰状态 """  
+    """ 特殊flag_自慰 自身要找玩家逆推来自慰状态 """
 
     IS_UNCONSCIOUS_H = "is_unconscious_h"
     """ 特殊flag_无意识 当前为无意识奸模式 """

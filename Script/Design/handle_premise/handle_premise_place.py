@@ -310,8 +310,9 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 场景角色数大于2时进行检测
-    if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
+    # 场景角色数大于2时进行检测，不再排除自己的跟随和H状态
+    # if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
+    if len(scene_data.character_list) > 2:
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
             # 遍历非自己且非玩家的角色
@@ -336,8 +337,9 @@ def handle_scene_someone_h_but_not_hidden_sex(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    # 场景角色数大于2时进行检测
-    if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
+    # 场景角色数大于2时进行检测，不再排除自己的跟随和H状态
+    # if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
+    if len(scene_data.character_list) > 2:
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
             # 遍历非自己且非玩家的角色
