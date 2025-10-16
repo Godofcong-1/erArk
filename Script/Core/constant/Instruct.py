@@ -279,6 +279,8 @@ class Instruct:
     """ 时间停止流动 """
     TIME_STOP_OFF = 0
     """ 时间重新流动 """
+    TIME_STOP_OFF_IN_H = 0
+    """ 在H中取消时停 """
     CARRY_TARGET = 0
     """ 搬运对方 """
     STOP_CARRY_TARGET = 0

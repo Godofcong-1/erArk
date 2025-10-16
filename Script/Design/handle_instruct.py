@@ -1025,6 +1025,7 @@ def handle_time_stop_on():
     constant.InstructType.ARTS,
     _("时间重新流动"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
+     constant_promise.Premise.NOT_H,
      constant_promise.Premise.TIME_STOP_ON,
      constant_promise.Premise.TIRED_LE_84},
     constant.Behavior.TIME_STOP_OFF,
@@ -1032,6 +1033,22 @@ def handle_time_stop_on():
 )
 def handle_time_stop_off():
     """处理时间重新流动"""
+    chara_handle_instruct_common_settle(constant.Behavior.TIME_STOP_OFF)
+
+
+@add_instruct(
+    constant.Instruct.TIME_STOP_OFF_IN_H,
+    constant.InstructType.ARTS,
+    _("在H中取消时停"),
+    {constant_promise.Premise.PRIMARY_TIME_STOP,
+     constant_promise.Premise.IS_H,
+     constant_promise.Premise.TIME_STOP_ON,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.TIME_STOP_OFF,
+    constant.SexInstructSubType.ARTS,
+)
+def handle_time_stop_off_in_h():
+    """处理在H中取消时停"""
     chara_handle_instruct_common_settle(constant.Behavior.TIME_STOP_OFF)
 
 
