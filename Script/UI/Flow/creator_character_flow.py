@@ -74,7 +74,9 @@ def game_start():
     character_handle.handle_character_setting()
     cooking.init_recipes()
     cooking.init_food_shop_data(new_day_flag=True)
+    talk_setting = cache.all_system_setting.character_text_version
     cache.all_system_setting = attr_calculation.get_system_setting_zero()
+    cache.all_system_setting.character_text_version = talk_setting
     cache.country = attr_calculation.get_country_reset(cache.country)
     basement.get_base_updata()
     character_handle.init_character_entertainment() # 需要设施开放的属性，所以放在设施后面
