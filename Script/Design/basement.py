@@ -554,10 +554,10 @@ def settle_office_work():
     else:
         effectiveness_change -= max_damage_down
     # 结算能源系统
-    # from Script.UI.Panel import manage_power_system_panel
-    # shortage_ratio, text = manage_power_system_panel.settle_power_system(draw_flag=True)
+    from Script.UI.Panel import manage_power_system_panel
+    shortage_ratio, text = manage_power_system_panel.settle_power_system(draw_flag=True)
     # # 如果能源系统出现供电不足，则降低效率
-    # effectiveness_change -= shortage_ratio / 2
+    effectiveness_change -= shortage_ratio / 2
     cache.rhodes_island.effectiveness = 100 + int(effectiveness_change)
     # 效率不会小于50，也不会大于200
     cache.rhodes_island.effectiveness = min(cache.rhodes_island.effectiveness,200)
