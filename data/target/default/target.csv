@@ -76,7 +76,7 @@ ai的目标,,,,
 93,92,group_sex_mode_on|place_0|masturebate_flag_3,12,群交模式开启中，与玩家处于相同地点，自身要自慰状态_群交，则自慰
 94,503,masturebate_to_pl_flag_1|place_1,1,自身要找玩家逆推来自慰状态，如果不在博士所在位置，则移动到博士所在位置
 
-100,100,self_fall|normal_1267|place_0|player_can_be_interact,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家聊天
+100,100,normal_1267|place_0|player_can_be_interact,3,1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家聊天
 101,101,self_fall|normal_1267|place_0|player_can_be_interact,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，则有可能随机和玩家身体接触
 102,102,self_fall|normal_1267|place_0|player_can_be_interact|place_furniture_ge_2,3,自己有陷落素质，1267正常（可能AI跟随、服装异常或意识模糊），和玩家在一个房间里，玩家当前可被交互，当前地点至少有办公级家具，则有可能随机给玩家泡咖啡
 
