@@ -84,11 +84,12 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         self.text = now_event_text
 
         # 口上颜色
-        character_data: game_type.Character = cache.character_data[character_id]
-        target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-        text_color = character_data.text_color
-        tar_text_color = target_character_data.text_color
-        if text_color:
-            self.style = character_data.name
-        elif tar_text_color:
-            self.style = target_character_data.name
+        if event_data.adv_id not in {"","0",0}:
+            character_data: game_type.Character = cache.character_data[character_id]
+            target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            text_color = character_data.text_color
+            tar_text_color = target_character_data.text_color
+            if text_color:
+                self.style = character_data.name
+            elif tar_text_color:
+                self.style = target_character_data.name
