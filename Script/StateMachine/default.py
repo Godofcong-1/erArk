@@ -1242,9 +1242,6 @@ def character_see_h_and_move_to_dormitory(character_id: int):
         character_data.talent[401] = 1
         now_draw.text += _("{0}获得了[持有博士把柄]\n").format(character_data.name)
         now_draw.text += _("{0}红着脸跑走了\n").format(character_data.name)
-        # 如果是群交状态，则不打断
-        if handle_premise.handle_group_sex_mode_on(character_id):
-            result_type = 0
     now_draw.draw()
     line_feed.draw()
 
@@ -1252,11 +1249,13 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     if result_type == 1:
         to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
         general_movement_module(character_id, to_target)
-        target_chara_data.action_info.h_interrupt = 1
-        # 原地待机10分钟
-        pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
-        pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
-        handle_instruct.handle_end_h()
+        # 如果是非群交状态，则中断H
+        if handle_premise.handle_group_sex_mode_off(character_id):
+            target_chara_data.action_info.h_interrupt = 1
+            # 原地待机10分钟
+            pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+            pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
+            handle_instruct.handle_end_h()
     # 加入群交
     elif result_type == 2:
         character_join_group_sex(character_id)
