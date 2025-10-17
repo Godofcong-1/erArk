@@ -32,7 +32,7 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
             now_weight = 1
             event_config = game_config.config_event[event_id]
             # 如果是角色专有事件，则判断角色id是否符合
-            if event_config.adv_id not in {"","0"}:
+            if event_config.adv_id not in {"","0",0}:
                 event_adv_id = int(event_config.adv_id)
                 # print(f"debug event_config.adv_id:{event_config.adv_id}")
                 # 事件由玩家触发，但交互对象不是该id，则跳过
