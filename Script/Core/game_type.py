@@ -1334,7 +1334,7 @@ class Character:
         self.sleep_point: int = 0
         """ 熟睡值 1m=10点，10min=100点(max)"""
         self.desire_point: int = 0
-        """ 欲望值 1m=10点，10min=100点(max)"""
+        """ 欲望值 数值为百分比，100为最大 """
         self.state: int = 0
         """ 角色当前状态 """
         self.last_behavior_id_list: List = [0]
