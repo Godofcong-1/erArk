@@ -33,6 +33,8 @@ class BehaviorEffect:
     """ 系统量_交互 将交互对象设为对自己交互 """
     TARGET_TO_MASTUREBATE = 10007
     """ 系统量_交互 将交互对象设为对当前场景中的首位自慰角色 """
+    TARGET_TO_MOST_DESIRE = 10013
+    """ 系统量_交互 将交互对象设为场景内欲望值最高的角色 """
 
     ADD_SMALL_HIT_POINT = 0
     """ 属性_基础 增加少量体力 """
@@ -557,6 +559,12 @@ class BehaviorEffect:
     """ 系统量_地点 自己移动至前一场景 """
     TARGET_MOVE_TO_PRE_SCENE = 762
     """ 系统量_地点 交互对象移动至前一场景 """
+    SCENE_OTHERS_MOVE_TO_PRE_SCENE = 763
+    """ 系统量_地点 场景内除自己和交互对象以外的其他角色移动至前一场景 """
+    SCENE_ALL_CHARA_MOVE_TO_PRE_SCENE = 764
+    """ 系统量_地点 场景除自己以外的全部角色移动至前一场景 """
+    SCENE_ALL_CHARA_EXCEPT_MASTUREBATE_TO_PL_MOVE_TO_PRE_SCENE = 766
+    """ 系统量_地点 场景内不逆推自己的角色移动至前一场景 """
 
     SCENE_ALL_CHARACTERS_PENIS_IN_RESET = 800
     """ H_阴茎位置 场景内所有角色的当前阴茎位置归零 """

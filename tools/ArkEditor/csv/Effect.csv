@@ -18,6 +18,7 @@ cid,effect_name,effect_type,effect
 10005,PL_TARGET_TO_ME,系统量_交互,将玩家的交互对象设为自己
 10006,TARGET_TO_SELF,系统量_交互,将交互对象设为对自己交互
 10007,TARGET_TO_MASTUREBATE,系统量_交互,将交互对象设为对当前场景中的首位自慰角色
+10013,TARGET_TO_MOST_DESIRE,系统量_交互,将交互对象设为场景内欲望值最高的角色
 
 0,ADD_SMALL_HIT_POINT,属性_基础,增加少量体力
 1,ADD_SMALL_MANA_POINT,属性_基础,增加少量气力
@@ -285,6 +286,9 @@ cid,effect_name,effect_type,effect
 753,DOOR_CLOSE_RESET,系统量_地点,当前场景取消关门状态
 761,MOVE_TO_PRE_SCENE,系统量_地点,自己移动至前一场景
 762,TARGET_MOVE_TO_PRE_SCENE,系统量_地点,交互对象移动至前一场景
+763,SCENE_OTHERS_MOVE_TO_PRE_SCENE,系统量_地点,场景内除自己和交互对象以外的其他角色移动至前一场景
+764,SCENE_ALL_CHARA_MOVE_TO_PRE_SCENE,系统量_地点,场景除自己以外的全部角色移动至前一场景
+766,SCENE_ALL_CHARA_EXCEPT_MASTUREBATE_TO_PL_MOVE_TO_PRE_SCENE,系统量_地点,场景内不逆推自己的角色移动至前一场景
 
 800,SCENE_ALL_CHARACTERS_PENIS_IN_RESET,H_阴茎位置,场景内所有角色的当前阴茎位置归零
 801,PENIS_IN_T_RESET,H_阴茎位置,改变当前阴茎位置为交互对象_双方归零
@@ -404,6 +408,8 @@ cid,effect_name,effect_type,effect
 1105,DAY_FIRST_MEET_0,初次,自己变为今天已见过面
 1106,DAY_FIRST_MEET_1,初次,自己变为今天未见过面
 1107,FIRST_KISS_TO_PENIS,初次,记录阴茎初吻
+1108,FIRST_U_SEX,初次,记录U处女
+1109,FIRST_W_SEX,初次,记录W处女
 
 1201,PENETRATING_VISION_ON,源石技艺,开启透视（含理智消耗）
 1202,PENETRATING_VISION_OFF,源石技艺,关闭透视

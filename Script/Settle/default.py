@@ -3138,6 +3138,45 @@ def handle_target_to_masturebate(
                     break
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_TO_MOST_DESIRE)
+def handle_target_to_masturebate(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将交互对象设为场景内欲望值最高的角色
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    target_chara_id = 0
+    max_desire_value = -1
+    if len(now_scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in now_scene_data.character_list:
+            # 跳过玩家
+            if chara_id == 0:
+                continue
+            other_character_data: game_type.Character = cache.character_data[chara_id]
+            # 检测欲望值
+            if other_character_data.desire_point > max_desire_value:
+                max_desire_value = other_character_data.desire_point
+                target_chara_id = chara_id
+        # 设置交互对象
+        if target_chara_id:
+            character_data.target_character_id = target_chara_id
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NOT_TIRED)
 def handle_not_tired(
         character_id: int,
@@ -5379,7 +5418,7 @@ def handle_move_to_pre_scene(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
-    if len(character_data.action_info.past_move_position_list) and not character_id:
+    if len(character_data.action_info.past_move_position_list):
         character_data.behavior.move_target = character_data.action_info.past_move_position_list[-1]
         # 删除掉前一场景的移动数据
         character_data.action_info.past_move_position_list.pop(-1)
@@ -5406,6 +5445,93 @@ def handle_target_move_to_pre_scene(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     handle_move_to_pre_scene(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_OTHERS_MOVE_TO_PRE_SCENE)
+def handle_scene_others_move_to_pre_scene(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内除自己和交互对象以外的其他角色移动至前一场景
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历场景内所有角色
+    for chara_id in scene_data.character_list.copy():
+        # 跳过自己和交互对象
+        if chara_id == character_id or chara_id == character_data.target_character_id:
+            continue
+        handle_move_to_pre_scene(chara_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARA_MOVE_TO_PRE_SCENE)
+def handle_scene_all_chara_move_to_pre_scene(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景除自己以外的全部角色移动至前一场景
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历场景内所有角色
+    for chara_id in scene_data.character_list.copy():
+        # 跳过自己
+        if chara_id == character_id:
+            continue
+        handle_move_to_pre_scene(chara_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SCENE_ALL_CHARA_EXCEPT_MASTUREBATE_TO_PL_MOVE_TO_PRE_SCENE)
+def handle_scene_all_chara_except_masturebate_to_pl_move_to_pre_scene(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    场景内不逆推自己的角色移动至前一场景
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    # 遍历场景内所有角色
+    for chara_id in scene_data.character_list.copy():
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        # 跳过逆推自己的角色
+        if handle_premise.handle_masturebate_to_pl_flag_1(chara_id):
+            continue
+        handle_move_to_pre_scene(chara_id, add_time, change_data, now_time)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_H_STATE_RESET)

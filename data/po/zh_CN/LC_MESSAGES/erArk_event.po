@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-17 11:40+0800\n"
+"POT-Creation-Date: 2025-10-17 17:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -98,6 +98,22 @@ msgstr ""
 
 #: Event:976252af-5006-49d8-b723-ec3f5c9c197a
 msgid "{Name}把{PlayerName}很生气地赶出来了"
+msgstr ""
+
+#: Event:79bef67e-48ad-4acb-be38-e09d1c4643e3
+msgid "你注意到在场有些干员似乎有些欲求不满，只是碍于在场还有别人在，所以只好偷偷地对你动手动脚，眉来眼去地暗示着什么"
+msgstr ""
+
+#: Event:63a6a114-a2fe-41dd-97d0-d90d5900df3a
+msgid "留下最饥渴的那一个|你把{TargetName}留了下来，把其他人赶了出去"
+msgstr ""
+
+#: Event:0aec0760-b472-4b68-8b2c-c7575adb1b44
+msgid "留下所有欲求不满的|你环视一番，和大家交换了一下眼神，然后留下了躁动不安的几位，把其他人赶了出去"
+msgstr ""
+
+#: Event:a8f7d3d3-82f9-4cd1-97be-49435539bb4a
+msgid "都给我从这里出去！|你把所有人都赶了出去，然后把门直接锁上，这下总算清净了"
 msgstr ""
 
 #: Event:b92fdc62-39d1-4533-8b53-435526828a75

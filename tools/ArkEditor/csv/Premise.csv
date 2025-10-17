@@ -140,6 +140,7 @@ place_someone_fall_le_1,SCENE_SOMEONE_FALL_LE_1,地点_角色,该地点有玩家
 place_all_fall_ge_2,SCENE_ALL_FALL_GE_2,地点_角色,该地点有玩家以外的角色，且所有角色都至少有2级陷落素质
 place_all_not_tired,SCENE_ALL_NOT_TIRED,地点_角色,该地点有玩家以外的角色，且所有角色都未疲劳
 place_all_not_h,SCENE_ALL_NOT_H,地点_角色,该地点有玩家以外的角色，且所有角色都未在H中
+scene_have_multi_masturebate_to_pl_chara,SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA,地点_角色,该地点有多个要逆推玩家来自慰的角色
 
 teacher_teaching_in_classroom,TEACHER_TEACHING_IN_CLASSROOM,地点_工作,当前有教师在教室里讲课
 student_not_study_in_classroom,STUDENT_NOT_STUDY_IN_CLASSROOM,地点_工作,教室里有没在上课的学生
@@ -156,6 +157,7 @@ place_furniture_0,PLACE_FURNITURE_0,地点_属性,当前地点没家具
 in_functional_room,IN_FUNCTIONAL_ROOM,地点_属性,在功能性地点中（本前提已弃用）
 place_door_lockable,PLACE_DOOR_LOCKABLE,地点_属性,当前地点可以正常锁门（非内隔间锁）
 place_door_not_lockable,PLACE_DOOR_NOT_LOCKABLE,地点_属性,当前地点不能锁门（非内隔间锁）
+place_all_door_lockable,PLACE_ALL_DOOR_LOCKABLE,地点_属性,当前地点可以正常锁门（含内隔间锁）
 place_door_open,PLACE_DOOR_OPEN,地点_属性,地点的门是开着的（不含内隔间关门）
 place_door_close,PLACE_DOOR_CLOSE,地点_属性,地点的门是锁着的（不含内隔间关门）
 place_inside_door_close,PLACE_INSIDE_DOOR_CLOSE,地点_属性,地点的内隔间正关门中

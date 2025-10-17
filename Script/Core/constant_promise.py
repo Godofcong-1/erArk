@@ -284,6 +284,8 @@ class Premise:
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都未疲劳 """
     SCENE_ALL_NOT_H = "place_all_not_h"
     """ 地点_角色 该地点有玩家以外的角色，且所有角色都未在H中 """
+    SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA = "scene_have_multi_masturebate_to_pl_chara"
+    """ 地点_角色 该地点有多个要逆推玩家来自慰的角色 """
 
     TEACHER_TEACHING_IN_CLASSROOM = "teacher_teaching_in_classroom"
     """ 地点_工作 当前有教师在教室里讲课 """
@@ -314,6 +316,8 @@ class Premise:
     """ 地点_属性 当前地点可以正常锁门（非内隔间锁） """
     PLACE_DOOR_NOT_LOCKABLE = "place_door_not_lockable"
     """ 地点_属性 当前地点不能锁门（非内隔间锁） """
+    PLACE_ALL_DOOR_LOCKABLE = "place_all_door_lockable"
+    """ 地点_属性 当前地点可以正常锁门（含内隔间锁） """
     PLACE_DOOR_OPEN = "place_door_open"
     """ 地点_属性 地点的门是开着的（不含内隔间关门） """
     PLACE_DOOR_CLOSE = "place_door_close"

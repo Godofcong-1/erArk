@@ -754,6 +754,35 @@ def handle_scene_all_not_h(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA)
+def handle_scene_have_multi_masturebate_to_pl_chara(character_id: int) -> int:
+    """
+    该地点有多个要逆推玩家来自慰的角色
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design.handle_premise import handle_masturebate_to_pl_flag_1
+    character_data: game_type.Character = cache.character_data[character_id]
+    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    count = 0
+    # 场景角色数大于等于2时进行检测
+    if len(scene_data.character_list) >= 2:
+        # 遍历当前角色列表
+        for chara_id in scene_data.character_list:
+            # 遍历非玩家的角色
+            if chara_id == 0:
+                continue
+            # 如果是自慰逆推玩家的角色，计数加一
+            if handle_masturebate_to_pl_flag_1(chara_id):
+                count += 1
+    if count >= 2:
+        return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.TEACHER_TEACHING_IN_CLASSROOM)
 def handle_teacher_teaching_in_classroom(character_id: int) -> int:
     """
@@ -996,6 +1025,22 @@ def handle_place_door_not_lockable(character_id: int) -> int:
     int -- 权重
     """
     return not handle_place_door_lockable(character_id)
+
+
+@add_premise(constant_promise.Premise.PLACE_ALL_DOOR_LOCKABLE)
+def handle_place_all_door_lockable(character_id: int) -> int:
+    """
+    当前地点可以正常锁门（非内隔间锁）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    return now_scene_data.close_type in {1, 2}
 
 
 @add_premise(constant_promise.Premise.PLACE_DOOR_OPEN)
