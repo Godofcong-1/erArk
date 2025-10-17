@@ -3453,3 +3453,5 @@ class Premise:
     """ 复合 已持有乐器或在乐器练习室里 """
     DESIRE_POINT_GE_80_OR_MASTUREBATE_TO_PL_FLAG_1 = "masturebate_to_pl_flag_1_or_desire_point_ge_80"
     """ 复合 自身欲望值≥80或要找玩家逆推来自慰状态 """
+    NOT_IS_ASSISTANT_AND_IN_DR_ROOM = "not_is_assistant_and_in_dr_room"
+    """ 属性_助理 不符合自己是当前的助理干员且正在博士房间里的条件 """

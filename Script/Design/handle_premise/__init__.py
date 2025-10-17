@@ -1520,3 +1520,16 @@ def handle_masturebate_to_pl_flag_1_or_desire_point_ge_80(character_id: int) -> 
     if handle_masturebate_to_pl_flag_1(character_id):
         return 1
     return 0
+
+@add_premise(constant_promise.Premise.NOT_IS_ASSISTANT_AND_IN_DR_ROOM)
+def handle_not_is_assistant_and_in_dr_room(character_id: int) -> int:
+    """
+    不符合自己是当前的助理干员且正在博士房间里的条件
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_is_assistant(character_id) and handle_in_dr_room(character_id):
+        return 0
+    return 1

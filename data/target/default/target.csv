@@ -51,9 +51,10 @@ ai的目标,,,,
 63,43,rest_flag_1|in_restroom,12,要休息状态，且在休息室，则休息
 
 66,80,normal_1267|urinate_ge_80,11,1267正常（可能AI跟随、服装异常或意识模糊），尿意值到80%，则进入要撒尿状态
-67,511,pee_flag_1|not_in_toilet_female,12,要撒尿状态，不在洗手间里，则去洗手间
-68,50,pee_flag_1|in_toilet_female,12,要撒尿状态，且正在洗手间里，则解手
-69,50,urinate_ge_125|not_in_toilet_female,0,尿意值到极限，不在洗手间里，当场直接排尿
+67,511,pee_flag_1|not_in_toilet_female|not_is_assistant_and_in_dr_room,12,要撒尿状态，不在洗手间里，且不符合助理优先在博士房间解手的条件，则去洗手间
+68,50,pee_flag_1|in_toilet_female,12,要撒尿状态，且正在女洗手间里，则解手
+69,50,pee_flag_1|is_assistant|in_dr_room,12,要撒尿状态，自己是助理，在博士房间，则解手
+70,50,urinate_ge_125|not_in_toilet_female,0,尿意值到极限，不在洗手间里，当场直接排尿
 
 71,2,unnormal_2,1,2异常，则原地待机30分钟
 72,43,unnormal_2|mp_0,13,2异常，气力0，则休息

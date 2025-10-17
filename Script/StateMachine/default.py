@@ -194,20 +194,34 @@ def character_move_to_toilet(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
-
-    # 检索当前角色所在的大场景里有没有厕所，没有的话再随机选择其他厕所
+    # 当前大区块
     now_position = character_data.position[0]
+    # 是否已找到目标地点
     find_flag = False
+    # 男性直接选择男厕所
     if character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Male"])
     )
     elif character_data.sex == 1:
-        for place in constant.place_data["Toilet_Female"]:
-            if place.split("\\")[0] == now_position:
-                to_toilet = map_handle.get_map_system_path_for_str(place)
+        # 如果是助理，且开启了同居服务
+        if handle_premise.handle_is_assistant(character_id) and handle_premise.handle_assistant_live_together_on(character_id):
+            # 如果当前在控制中枢
+            if now_position == _("中枢") or now_position == _("控制中枢"):
+                # 优先去博士房间
+                to_toilet = map_handle.get_map_system_path_for_str(
+                    random.choice(constant.place_data["Dr_room"])
+                )
                 find_flag = True
-                break
+        # 其他正常情况
+        if not find_flag:
+            # 遍历所有女厕所，寻找当前大场景内的厕所
+            for place in constant.place_data["Toilet_Female"]:
+                if place.split("\\")[0] == now_position:
+                    to_toilet = map_handle.get_map_system_path_for_str(place)
+                    find_flag = True
+                    break
+        # 如果还是没找到的话就随机选择一个女厕所
         if not find_flag:
             to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Female"])
