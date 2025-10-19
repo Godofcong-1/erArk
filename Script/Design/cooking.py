@@ -611,6 +611,9 @@ def handle_food_deterioration(character_id: int):
     """
     character_data = cache.character_data[character_id]
     remove_food_uid_list = []
+    # NPC只有在持有食物大于1个时才进行变质与过期结算
+    if character_id != 0 and len(character_data.food_bag) <= 1:
+        return 0
     for food_uid in character_data.food_bag:
         food_data: Food = character_data.food_bag[food_uid]
         # 食物变质
