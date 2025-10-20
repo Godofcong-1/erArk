@@ -846,6 +846,9 @@ class Manage_Power_System_Panel:
             summary.text += _("  当前燃料库存: {0} 单位，每日计划消耗 {1:.1f} 单位，约可支持 {2} 天\n").format( 
                 now_have, daily_use, support_days
             )
+            # 如果燃料不够3天，提示警告
+            if support_days < 3:
+                summary.text += _("  ！燃料库存不足3天，建议尽快前往贸易区采购补充！\n")
             # 如果当前罗德岛在行驶中
             move_flag = False
             if ri.move_target_and_time[0] != 0:
