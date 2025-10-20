@@ -1,6 +1,6 @@
 {
   "SceneName":"女士洗手间",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"1",
   "Have_Furniture":"0",
   "Close_Type":"2",

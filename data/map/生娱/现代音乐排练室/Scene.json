@@ -1,6 +1,6 @@
 {
   "SceneName":"现代音乐排练室",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"1",

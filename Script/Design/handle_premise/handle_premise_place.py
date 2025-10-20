@@ -575,7 +575,7 @@ def handle_scene_all_others_unconscious_or_sleep(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_OTHERS_CONSCIOUS)
 def handle_scene_others_conscious(character_id: int) -> int:
     """
-    该地点除了自己和玩家之外还有有意识且没睡觉的角色
+    该地点除了自己、交互对象和玩家之外还有有意识且没睡觉的角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -592,8 +592,8 @@ def handle_scene_others_conscious(character_id: int) -> int:
     if len(scene_data.character_list) >= 2:
         # 遍历当前角色列表
         for chara_id in scene_data.character_list:
-            # 遍历非自己、非玩家的角色
-            if chara_id == character_id or chara_id == 0:
+            # 跳过自己和交互对象、玩家
+            if chara_id == character_id or chara_id == 0 or chara_id == character_data.target_character_id:
                 continue
             if handle_unconscious_flag_0(chara_id) and not handle_action_sleep(chara_id):
                 return 1
@@ -891,6 +891,34 @@ def handle_place_covert(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.PLACE_INDOOR)
+def handle_place_indoor(character_id: int) -> int:
+    """
+    校验角色当前地点为室内
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    return now_scene_data.in_door
+
+
+@add_premise(constant_promise.Premise.PLACE_OUTDOOR)
+def handle_place_outdoor(character_id: int) -> int:
+    """
+    校验角色当前地点为室外
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_place_indoor(character_id)
+
+
 @add_premise(constant_promise.Premise.PLACE_FURNITURE_GE_1)
 def handle_place_furniture_ge_1(character_id: int) -> int:
     """
@@ -1030,7 +1058,7 @@ def handle_place_door_not_lockable(character_id: int) -> int:
 @add_premise(constant_promise.Premise.PLACE_ALL_DOOR_LOCKABLE)
 def handle_place_all_door_lockable(character_id: int) -> int:
     """
-    当前地点可以正常锁门（非内隔间锁）
+    当前地点可以正常锁门（含内隔间锁）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:

@@ -1,6 +1,6 @@
 {
   "SceneName":"小树林",
-  "InOutDoor":"In",
+  "In_Door":"0",
   "Exposed":"1",
   "Have_Furniture":"0",
   "Close_Type":"0",

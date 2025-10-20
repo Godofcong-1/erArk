@@ -1,6 +1,6 @@
 {
   "SceneName":"炎",
-  "InOutDoor":"Out",
+  "In_Door":"0",
   "Exposed":"1",
   "Have_Furniture":"0",
   "Close_Type":"0",

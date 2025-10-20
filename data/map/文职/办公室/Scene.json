@@ -1,6 +1,6 @@
 {
   "SceneName":"人事办公室",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"0",

@@ -1,6 +1,6 @@
 {
   "SceneName":"快捷连锁披萨店",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"1",

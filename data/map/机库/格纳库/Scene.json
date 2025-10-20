@@ -1,6 +1,6 @@
 {
   "SceneName":"格纳库",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"0",
   "Have_Furniture":"0",
   "Close_Type":"2",

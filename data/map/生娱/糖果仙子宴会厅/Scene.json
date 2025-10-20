@@ -1,6 +1,6 @@
 {
   "SceneName":"糖果仙子宴会厅",
-  "InOutDoor":"In",
+  "In_Door":"1",
   "Exposed":"1",
   "Have_Furniture":"2",
   "Close_Type":"1",

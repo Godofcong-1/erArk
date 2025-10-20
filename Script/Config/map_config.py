@@ -62,8 +62,8 @@ def load_dir_now(data_path: str):
                         )
                         load_scene_data = json_handle.load_json(now_path)
                         now_scene_data.scene_name = get_text._(load_scene_data["SceneName"])
-                        now_scene_data.in_door = load_scene_data["InOutDoor"] == "In"
-                        now_scene_data.exposed = int(load_scene_data["Exposed"])
+                        now_scene_data.in_door = load_scene_data["In_Door"] == "1"
+                        now_scene_data.exposed = load_scene_data["Exposed"] == "1"
                         now_scene_data.have_furniture = int(load_scene_data["Have_Furniture"])
                         now_scene_data.close_type = int(load_scene_data["Close_Type"])
                         now_scene_data.room_area = int(load_scene_data["Room_Area"])
