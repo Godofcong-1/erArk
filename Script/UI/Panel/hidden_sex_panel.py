@@ -442,6 +442,11 @@ class Select_Hidden_Sex_Mode_Panel:
                 line_feed.draw()
 
             line_feed.draw()
+            line_feed.draw()
+            # 返回按钮
+            back_draw = draw.CenterButton(_("[返回]"), _( "返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
                 cache.now_panel_id = constant.Panel.IN_SCENE
@@ -449,14 +454,25 @@ class Select_Hidden_Sex_Mode_Panel:
 
     def select_this_mode(self, mode_id):
         """选择隐奸模式"""
+        from Script.Design import instuct_judege, handle_instruct
         character_data: game_type.Character = cache.character_data[0]
-        character_data.sp_flag.hidden_sex_mode = mode_id
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]
-        target_character_data.sp_flag.hidden_sex_mode = mode_id
-        # 在场其他角色数量
-        scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-        scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-        other_chara_count = len(scene_data.character_list) - 2
-        # 成就初始化
-        cache.achievement.hidden_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}
+
+        # 判断是否成功邀请隐奸
+        if instuct_judege.calculation_instuct_judege(0, target_character_id, _("隐奸"))[0]:
+            character_data.sp_flag.hidden_sex_mode = mode_id
+            target_character_data.sp_flag.hidden_sex_mode = mode_id
+            target_character_data.sp_flag.is_follow = 0
+            # 在场其他角色数量
+            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+            other_chara_count = len(scene_data.character_list) - 2
+            # 成就初始化
+            cache.achievement.hidden_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX)
+        else:
+            now_draw = draw.WaitDraw()
+            now_draw.text = _("\n邀请隐奸失败\n")
+            now_draw.draw()
+            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX_FAIL)

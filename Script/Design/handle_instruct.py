@@ -2266,19 +2266,8 @@ def handle_do_h_in_love_hotel():
 def handle_ask_hidden_sex():
     """处理邀请隐奸指令"""
     from Script.UI.Panel.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
-    character_data: game_type.Character = cache.character_data[0]
-    target_data = cache.character_data[character_data.target_character_id]
-    if instuct_judege.calculation_instuct_judege(0, character_data.target_character_id, _("隐奸"))[0]:
-        target_data.sp_flag.is_follow = 0
-        now_panel = Select_Hidden_Sex_Mode_Panel(width)
-        now_panel.draw()
-        chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX)
-    else:
-        now_draw = draw.WaitDraw()
-        now_draw.width = width
-        now_draw.text = _("\n邀请隐奸失败\n")
-        now_draw.draw()
-        chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX_FAIL)
+    now_panel = Select_Hidden_Sex_Mode_Panel(width)
+    now_panel.draw()
 
 
 @add_instruct(
