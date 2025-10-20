@@ -54,6 +54,19 @@ def handle_work_is_power_operator(character_id: int) -> int:
     return character_data.work.work_type == 11
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_POWER_OPERATOR)
+def handle_t_work_is_power_operator(character_id: int) -> int:
+    """
+    交互对象的工作为供能调控员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_power_operator(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_MAINTENANCE_ENGINEER)
 def handle_work_is_maintenance_engineer(character_id: int) -> int:
     """
@@ -65,6 +78,19 @@ def handle_work_is_maintenance_engineer(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 21
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_MAINTENANCE_ENGINEER)
+def handle_t_work_is_maintenance_engineer(character_id: int) -> int:
+    """
+    交互对象的工作为检修工程师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_maintenance_engineer(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_BLACKSMITH)
@@ -80,6 +106,19 @@ def handle_work_is_blacksmith(character_id: int) -> int:
     return character_data.work.work_type == 22
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_BLACKSMITH)
+def handle_t_work_is_blacksmith(character_id: int) -> int:
+    """
+    交互对象的工作为铁匠
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_blacksmith(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_DOCTOR)
 def handle_work_is_doctor(character_id: int) -> int:
     """
@@ -93,6 +132,19 @@ def handle_work_is_doctor(character_id: int) -> int:
     return character_data.work.work_type == 61
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_DOCTOR)
+def handle_t_work_is_doctor(character_id: int) -> int:
+    """
+    交互对象的工作为医生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_doctor(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_HR)
 def handle_work_is_hr(character_id: int) -> int:
     """
@@ -104,6 +156,19 @@ def handle_work_is_hr(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 71
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_HR)
+def handle_t_work_is_hr(character_id: int) -> int:
+    """
+    交互对象的工作为人事
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_hr(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_LIBRARY_MANAGER)
@@ -145,6 +210,19 @@ def handle_work_is_teacher(character_id: int) -> int:
     return character_data.work.work_type == 151
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_TEACHER)
+def handle_t_work_is_teacher(character_id: int) -> int:
+    """
+    交互对象的工作为教师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_teacher(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_STUDENT)
 def handle_work_is_student(character_id: int) -> int:
     """
@@ -158,10 +236,23 @@ def handle_work_is_student(character_id: int) -> int:
     return character_data.work.work_type == 152
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_STUDENT)
+def handle_t_work_is_student(character_id: int) -> int:
+    """
+    交互对象的工作为学生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_student(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_COMBAT_TRAINING)
 def handle_work_is_combat_training(character_id: int) -> int:
     """
-    自己的工作为战斗训练
+    自己的工作为训练学员
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -169,6 +260,19 @@ def handle_work_is_combat_training(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 91
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_COMBAT_TRAINING)
+def handle_t_work_is_combat_training(character_id: int) -> int:
+    """
+    交互对象的工作为训练学员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_combat_training(character_data.target_character_id)   
 
 
 @add_premise(constant_promise.Premise.WORK_IS_FITNESS_TRAINER)
@@ -184,6 +288,19 @@ def handle_work_is_fitness_trainer(character_id: int) -> int:
     return character_data.work.work_type == 92
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_FITNESS_TRAINER)
+def handle_t_work_is_fitness_trainer(character_id: int) -> int:
+    """
+    交互对象的工作为健身锻炼员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_fitness_trainer(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_COOK)
 def handle_work_is_cook(character_id: int) -> int:
     """
@@ -196,6 +313,17 @@ def handle_work_is_cook(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 51
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_COOK)
+def handle_t_work_is_cook(character_id: int) -> int:
+    """
+    交互对象的工作为厨师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_cook(character_data.target_character_id)
 
 @add_premise(constant_promise.Premise.WORK_IS_PRODUCTION_WORKER)
 def handle_work_is_production_worker(character_id: int) -> int:
@@ -209,6 +337,17 @@ def handle_work_is_production_worker(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 121
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_PRODUCTION_WORKER)
+def handle_t_work_is_production_worker(character_id: int) -> int:
+    """
+    交互对象的工作为生产工人
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_production_worker(character_data.target_character_id)
 
 @add_premise(constant_promise.Premise.WORK_IS_MASSAGE_THERAPIST)
 def handle_work_is_massage_therapist(character_id: int) -> int:
@@ -223,6 +362,18 @@ def handle_work_is_massage_therapist(character_id: int) -> int:
     return character_data.work.work_type == 171
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_MASSAGE_THERAPIST)
+def handle_t_work_is_massage_therapist(character_id: int) -> int:
+    """
+    交互对象的工作为按摩师
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_massage_therapist(character_data.target_character_id)
+
 @add_premise(constant_promise.Premise.WORK_IS_DIPLOMAT)
 def handle_work_is_diplomat(character_id: int) -> int:
     """
@@ -234,6 +385,19 @@ def handle_work_is_diplomat(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 131
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_DIPLOMAT)
+def handle_t_work_is_diplomat(character_id: int) -> int:
+    """
+    交互对象的工作为外交官
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_diplomat(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_INVITATION_COMMISSIONER)
@@ -249,6 +413,19 @@ def handle_work_is_invitation_commissioner(character_id: int) -> int:
     return character_data.work.work_type == 132
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_INVITATION_COMMISSIONER)
+def handle_t_work_is_invitation_commissioner(character_id: int) -> int:
+    """
+    交互对象的工作为邀请专员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_invitation_commissioner(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_MEDICINAL_PLANTER)
 def handle_work_is_medicinal_planter(character_id: int) -> int:
     """
@@ -260,6 +437,19 @@ def handle_work_is_medicinal_planter(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 161
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_MEDICINAL_PLANTER)
+def handle_t_work_is_medicinal_planter(character_id: int) -> int:
+    """
+    交互对象的工作为药材种植员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_medicinal_planter(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_FLORAL_PLANTER)
@@ -275,6 +465,19 @@ def handle_work_is_floral_planter(character_id: int) -> int:
     return character_data.work.work_type == 162
 
 
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_FLORAL_PLANTER)
+def handle_t_work_is_floral_planter(character_id: int) -> int:
+    """
+    交互对象的工作为花草种植员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_floral_planter(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.WORK_IS_SEX_TRAINEE)
 def handle_work_is_sex_trainee(character_id: int) -> int:
     """
@@ -286,6 +489,19 @@ def handle_work_is_sex_trainee(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.work.work_type == 193
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_SEX_TRAINEE)
+def handle_t_work_is_sex_trainee(character_id: int) -> int:
+    """
+    交互对象的工作为性爱练习生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_sex_trainee(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_WARDEN)
@@ -325,26 +541,6 @@ def handle_t_work_is_not_warden(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return not handle_work_is_warden(character_data.target_character_id)
-
-
-@add_premise(constant_promise.Premise.T_WORK_IS_WARDEN_OR_T_ASSISTANT)
-def handle_t_work_is_warden_or_t_assistant(character_id: int) -> int:
-    """
-    交互对象的工作为监狱长或交互对象是助理
-    Keyword arguments:
-    character_id -- 角色id
-    Return arguments:
-    int -- 权重
-    """
-    from Script.Design.handle_premise import (
-        handle_is_assistant,
-    )
-    character_data: game_type.Character = cache.character_data[character_id]
-    if handle_work_is_warden(character_data.target_character_id):
-        return 1
-    if handle_is_assistant(character_data.target_character_id):
-        return 1
-    return 0
 
 
 @add_premise(constant_promise.Premise.HAVE_WARDEN)

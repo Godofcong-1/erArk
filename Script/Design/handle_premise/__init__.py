@@ -1533,3 +1533,19 @@ def handle_not_is_assistant_and_in_dr_room(character_id: int) -> int:
     if handle_is_assistant(character_id) and handle_in_dr_room(character_id):
         return 0
     return 1
+
+@add_premise(constant_promise.Premise.T_WORK_IS_WARDEN_OR_T_ASSISTANT)
+def handle_t_work_is_warden_or_t_assistant(character_id: int) -> int:
+    """
+    交互对象的工作为监狱长或交互对象是助理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if handle_work_is_warden(character_data.target_character_id):
+        return 1
+    if handle_is_assistant(character_data.target_character_id):
+        return 1
+    return 0
