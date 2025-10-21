@@ -153,7 +153,8 @@ int,str,str,int,str,str
 365,h_hp_0,H时博士体力为零中断,5,pl,性爱
 366,t_h_hp_0,H时交互对象体力为零中断,5,pl,性爱
 367,h_interrupt,H时被人目击闯入中断,5,pl,性爱
-368,see_h,目睹玩家与其他角色H,10,npc,猥亵
+368,see_h_but_leave,目击H但被支开,5,npc,猥亵
+369,see_h_and_interrupt,目击H并打断,10,npc,猥亵
 
 370,ask_group_sex,邀请群交,5,pl,性爱
 371,group_sex_end,结束群交,5,pl,性爱
@@ -162,13 +163,13 @@ int,str,str,int,str,str
 374,group_sex_npc_hp_0_end,群交时自己体力为零退出,5,npc,性爱
 375,group_sex_to_h,群交时NPC数量不足转为单人H,5,pl,性爱
 376,join_group_sex,自己加入群交,5,npc,性爱
+377,refuse_join_group_sex,拒绝加入群交,5,npc,猥亵
+378,other_sex_be_found_to_group_sex,其他H中被发现转群交,5,pl,性爱
+379,discover_other_sex_and_join,发现其他H并加入转群交,5,npc,性爱
 
 380,ask_hidden_sex,邀请隐奸,5,pl,性爱
 381,ask_hidden_sex_fail,邀请隐奸失败,5,pl,猥亵
-382,hidden_sex_interrupt,隐奸被发现中断,5,pl,性爱
-383,discover_hidden_sex_and_interrupt,发现隐奸并打断,5,npc,性爱
-384,hidden_sex_to_group_sex,隐奸被发现转群交,5,npc,性爱
-385,discover_hidden_sex_and_join,发现隐奸并加入转群交,5,npc,性爱
+382,other_sex_be_found_to_hidden_sex,其他H中被发现转隐奸,5,pl,性爱
 
 401,making_out,身体爱抚,10,both,性爱
 402,kiss_h,接吻,5,both,性爱
