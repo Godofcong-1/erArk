@@ -367,7 +367,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             cache.achievement.sleep_sex_record[2] += 1
         # 正常射精时
         if character_data.h_state.body_item[13][1] == False:
-            # 获取射精文本
+            # 在有目标对象时
             if target_character_id > 0:
                 cache.shoot_position = part_cid
                 # 更新被射精污浊数据
@@ -375,6 +375,9 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
                 # 计算精液流动
                 if part_type in [0, 1]:
                     calculate_semen_flow(target_character_id, part_cid, part_type, semen_count)
+                # 更新怀孕概率
+                from Script.Design import pregnancy
+                pregnancy.get_fertilization_rate(target_character_id)
                 # 只有在交互对象正确的时候才会显示对方的名字和部位
                 if part_type == 0:
                     part_name = game_config.config_body_part[part_cid].name

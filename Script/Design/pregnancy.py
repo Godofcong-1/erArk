@@ -32,6 +32,9 @@ width = normal_config.config_normal.text_width
 def get_fertilization_rate(character_id: int):
     """
     根据当前V精液量计算受精概率
+    返回：
+    now_rate: float 当前受精概率
+    draw_text: str 受精概率变动信息
     """
 
     character_data: game_type.Character = cache.character_data[character_id]
@@ -81,6 +84,7 @@ def get_fertilization_rate(character_id: int):
     # 保留两位小数
     now_rate = round(now_rate,2)
     character_data.pregnancy.fertilization_rate = now_rate
+    return now_rate, draw_text
 
 
 def check_fertilization(character_id: int):
