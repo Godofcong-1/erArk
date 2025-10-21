@@ -464,11 +464,11 @@ def update_character_config_data(value):
                 update_count += 1
                 # print(f"debug key = {key}")
     # 如果没有u插入经验，则增加u处女素质
-    if value.experience[63] == 0:
+    if value.experience[63] == 0 and value.talent[2] == 0:
         value.talent[2] = 1
         update_count += 1
     # 如果没有w插入经验，则增加w处女素质
-    if value.experience[64] == 0:
+    if value.experience[64] == 0 and value.talent[3] == 0:
         value.talent[3] = 1
         update_count += 1
     # 宝珠
@@ -496,10 +496,10 @@ def update_character_config_data(value):
             value.h_state.orgasm_edge_count.setdefault(key, 0)
             value.h_state.extra_orgasm_feel.setdefault(key, 0)
             value.h_state.time_stop_orgasm_count.setdefault(key, 0)
-            update_count += 1
             # 对错误数据的修复
-            if  value.h_state.orgasm_count[key] == 0:
+            if value.h_state.orgasm_count[key] == 0:
                 value.h_state.orgasm_count[key] = [0, 0]
+                update_count += 1
     # 设置
     if len(value.chara_setting) != len(game_config.config_chara_setting):
         for key in game_config.config_chara_setting:
