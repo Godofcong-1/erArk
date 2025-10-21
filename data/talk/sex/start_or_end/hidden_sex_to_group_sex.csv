@@ -1,6 +1,0 @@
-cid,behavior_id,adv_id,premise,context
-口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
-str,str,int,str,str
-0,0,0,0,1
-口上配置数据,,,,
-0,hidden_sex_to_group_sex,0,high_1,{PlayerName}和{Name}的隐奸被{HInterruptCharaName}发现了，于是干脆邀请大家开始群交

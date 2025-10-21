@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,other_sex_be_found_to_group_sex,0,high_1,{Name}和{TargetName}的H被{HInterruptCharaName}发现了，于是干脆邀请{HInterruptCharaName}一起群交
+1,other_sex_be_found_to_group_sex,0,t_hidden_sex_mode_ge_1,{Name}和{TargetName}的隐奸被{HInterruptCharaName}发现了，于是干脆邀请{HInterruptCharaName}一起群交

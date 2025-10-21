@@ -2613,6 +2613,32 @@ def handle_target_get_weeknesss_by_dr(
     now_draw.text = _("\n{0}获得了【被博士持有把柄】\n").format(target_character_data.name)
     now_draw.draw()
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_GET_WEEKNESSS_TO_DR)
+def handle_self_get_weeknesss_to_dr(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己获得[持有博士把柄]
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    character_data.talent[401] = 1
+    now_draw = draw.NormalDraw()
+    now_draw.width = width
+    now_draw.text = _("\n{0}获得了【持有博士把柄】\n").format(character_data.name)
+    now_draw.draw()
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ENTER_WAITING_FOR_PHYSICAL_EXAM)
 def handle_enter_waiting_for_physical_exam(
@@ -2746,6 +2772,29 @@ def handle_set_target_food_from_bag_last(
     character_data.behavior.food_seasoning = now_food.special_seasoning
     character_data.behavior.food_quality = now_food.quality
     character_data.behavior.target_food = now_food
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOVE_TO_OWN_DORMITORY)
+def handle_move_to_own_dormitory(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己前往自己的宿舍
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    from Script.StateMachine.default import general_movement_module
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
+    general_movement_module(character_id, to_target)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
@@ -3021,6 +3070,9 @@ def handle_group_sex_mode_on(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    # 如果已经开启，则不处理
+    if cache.group_sex_mode:
+        return
     cache.group_sex_mode = True
     # 结算成就
     cache.achievement.group_sex_record = {1: [], 2: []}
@@ -5556,6 +5608,8 @@ def handle_self_h_state_reset(
     character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
     # 清零阴茎污浊
     character_data.dirty.penis_dirty_dict["semen"] = False
+    # 清零阴茎位置
+    character_data.h_state.insert_position = -1
     # 清零自慰状态
     character_data.sp_flag.masturebate = 0
     character_data.sp_flag.npc_masturebate_for_player = False
@@ -6520,6 +6574,70 @@ def handle_both_hidden_sex_flag_to_0(
     handle_self_hidden_sex_flag_to_0(character_data.target_character_id, add_time, change_data, now_time)
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_EXHIBITIONISM_SEX_FLAG_TO_0)
+def handle_self_exhibitionism_sex_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自己清零露出H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.exhibitionism_sex_mode = 0
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_EXHIBITIONISM_SEX_FLAG_TO_0)
+def handle_target_exhibitionism_sex_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    交互对象清零露出H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_self_exhibitionism_sex_flag_to_0(character_data.target_character_id, add_time, change_data, now_time)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BOTH_EXHIBITIONISM_SEX_FLAG_TO_0)
+def handle_both_exhibitionism_sex_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    双方清零露出H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    handle_self_exhibitionism_sex_flag_to_0(character_id, add_time, change_data, now_time)
+    handle_self_exhibitionism_sex_flag_to_0(character_data.target_character_id, add_time, change_data, now_time)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_0)
 def handle_unconscious_flag_to_0(
         character_id: int,
@@ -6839,6 +6957,45 @@ def handle_target_angry_with_player_flag_to_0(
     target_character = cache.character_data[character_data.target_character_id]
     target_character.sp_flag.angry_with_player = False
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SEE_PL_H)
+def handle_see_pl_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身进入目击H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.see_pl_h = True
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_SEE_PL_H)
+def handle_cancel_see_pl_h(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身退出目击H状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.see_pl_h = False
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_FLAG_TO_0)
 def handle_masturebate_flag_to_0(

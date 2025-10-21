@@ -98,7 +98,7 @@ def get_hidden_sex_targets(character_id: int) -> List[int]:
 
 def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
     """
-    功能: 返回指定角色所在地点中，不在隐奸中，实行值不足以群交且有意识且未睡眠的其他角色列表
+    功能: 返回指定角色所在地点中，不在隐奸中，有意识且未睡眠的其他角色列表
     参数:
         character_id (int): 角色id
     返回:
@@ -123,9 +123,6 @@ def get_nearby_conscious_unfallen_characters(character_id: int) -> List[int]:
         if handle_premise.handle_unconscious_flag_ge_1(chara_cid):
             continue
         if handle_premise.handle_action_sleep(chara_cid):
-            continue
-        # 跳过足以群交的角色
-        if handle_premise.handle_instruct_judge_group_sex(chara_cid):
             continue
 
         # 符合所有条件，添加到结果列表
@@ -238,56 +235,19 @@ def settle_discovered(character_id: int) -> None:
     hidden_sex_target_id_list = get_hidden_sex_targets(character_id)
     if len(hidden_sex_target_id_list):
         character_data.target_character_id = hidden_sex_target_id_list[0]
-        hidden_sex_target_chara_data = cache.character_data[hidden_sex_target_id_list[0]]
     else:
         print(f"debug : 隐奸被发现时未找到隐奸对象，角色id:{character_id}")
         return
-    # 寻找是否会打断的人
+    # 寻找是否有会发现的人
     interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
-    # 存在则打断
+    # 存在则进入被发现面板
     if len(interrupt_chara_list):
-        for chara_id in interrupt_chara_list:
-            now_chara_data = cache.character_data[chara_id]
-            # 触发打断
-            now_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_HIDDEN_SEX_AND_INTERRUPT
-            now_chara_data.state = constant.CharacterStatus.STATUS_DISCOVER_HIDDEN_SEX_AND_INTERRUPT
-            now_chara_data.behavior.duration = 10
-            now_chara_data.target_character_id = character_id
-            # 手动结算该状态
-            character_behavior.judge_character_status(chara_id)
-            character_data.behavior.h_interrupt_chara_name = now_chara_data.name
-        # 触发被打断
-        character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_INTERRUPT
-        character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_INTERRUPT
-        character_data.behavior.duration = 1
-    # 否则变成群交
-    else:
-        from Script.Design.handle_instruct import chara_handle_instruct_common_settle
-        # 玩家结算
-        # character_data.behavior.behavior_id = constant.Behavior.HIDDEN_SEX_TO_GROUP_SEX
-        # character_data.state = constant.CharacterStatus.STATUS_HIDDEN_SEX_TO_GROUP_SEX
-        position = character_data.position
-        scene_path = map_handle.get_map_system_path_str_for_list(position)
-        scene_data: game_type.Scene = cache.scene_data[scene_path]
-        for chara_id in scene_data.character_list:
-            # 跳过玩家
-            if chara_id == character_id:
-                continue
-            # 隐奸中的角色
-            if handle_premise.handle_hidden_sex_mode_ge_1(chara_id):
-                chara_handle_instruct_common_settle(constant.Behavior.HIDDEN_SEX_TO_GROUP_SEX, character_id=chara_id, target_character_id=0)
-            # 跳过无意识状态和睡觉中的角色
-            elif handle_premise.handle_unconscious_flag_ge_1(chara_id):
-                continue
-            elif handle_premise.handle_action_sleep(chara_id):
-                continue
-            # 其他角色
-            else:
-                chara_handle_instruct_common_settle(constant.Behavior.DISCOVER_HIDDEN_SEX_AND_JOIN, character_id=chara_id, target_character_id=0)
-                hidden_sex_target_chara_data.behavior.h_interrupt_chara_name = cache.character_data[chara_id].name
-            # 手动结算该状态
-            character_behavior.judge_character_status(chara_id)
-
+        from Script.UI.Panel import sex_be_discovered_panel
+        now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(
+            window_width,
+            interrupt_chara_list[0],
+        )
+        now_panel.draw()
 
 class See_Hidden_Sex_InfoPanel:
     """
@@ -307,7 +267,7 @@ class See_Hidden_Sex_InfoPanel:
         """ 面板最大宽度 """
         self.column = column
         """ 每行状态最大个数 """
-        self.draw_list: List[draw.NormalDraw] = []
+        self.draw_list: List = []
         """ 绘制的文本列表 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
@@ -380,10 +340,12 @@ class Select_Hidden_Sex_Mode_Panel:
     width -- 绘制宽度
     """
 
-    def __init__(self, width: int):
+    def __init__(self, width: int, sex_be_discovered_flag: bool = False):
         """初始化绘制对象"""
         self.width: int = width
         """ 绘制的最大宽度 """
+        self.sex_be_discovered_flag: bool = sex_be_discovered_flag
+        """ 是否是从被发现面板跳转过来 """
         self.now_panel = _("选择隐奸模式")
         """ 当前绘制的页面 """
         self.draw_list: List[draw.NormalDraw] = []
@@ -470,9 +432,22 @@ class Select_Hidden_Sex_Mode_Panel:
             other_chara_count = len(scene_data.character_list) - 2
             # 成就初始化
             cache.achievement.hidden_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}
-            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX)
+            # 如果男不隐，则玩家取消H状态
+            if mode_id in {1,2}:
+                character_data.sp_flag.is_h = False
+            # 如果是从被发现面板跳转过来
+            if self.sex_be_discovered_flag:
+                handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_HIDDEN_SEX)
+            # 否则正常结算隐奸
+            else:
+                handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX)
         else:
             now_draw = draw.WaitDraw()
             now_draw.text = _("\n邀请隐奸失败\n")
             now_draw.draw()
-            handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX_FAIL)
+            # 如果是从被发现面板跳转过来
+            if self.sex_be_discovered_flag:
+                character_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
+            # 否则正常结算隐奸失败
+            else:
+                handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.ASK_HIDDEN_SEX_FAIL)

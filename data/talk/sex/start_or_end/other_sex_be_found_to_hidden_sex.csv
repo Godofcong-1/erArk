@@ -1,0 +1,9 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,other_sex_be_found_to_hidden_sex,0,t_hidden_sex_mode_1,{Name}和{TargetName}的H被{HInterruptCharaName}发现了，于是两人紧急调整姿势，借着视线的遮挡，若无其事地继续隐奸起来
+1,other_sex_be_found_to_hidden_sex,0,t_hidden_sex_mode_2,{Name}和{TargetName}的H被{HInterruptCharaName}发现了，于是{TargetName}紧急藏在了附近的暗处，继续和{Name}隐奸
+2,other_sex_be_found_to_hidden_sex,0,t_hidden_sex_mode_3,{Name}和{TargetName}的H被{HInterruptCharaName}发现了，于是{Name}紧急藏在了附近的暗处，继续和{TargetName}隐奸
+3,other_sex_be_found_to_hidden_sex,0,t_hidden_sex_mode_4,{Name}和{TargetName}的H被{HInterruptCharaName}发现了，于是两人紧急藏在了附近的暗处，继续隐奸

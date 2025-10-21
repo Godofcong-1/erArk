@@ -2374,3 +2374,25 @@ def handlefind_t_food_weird_flag_1(character_id: int) -> int:
     else:
         return 0
 
+@add_premise(constant_promise.Premise.NOT_WITNESS_PL_H_WITH_OTHERS)
+def handlefind_not_witness_pl_h_with_others(character_id: int) -> int:
+    """
+    自己没有目击过本次玩家与他人H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handlefind_witness_pl_h_with_others(character_id)
+
+@add_premise(constant_promise.Premise.WITNESS_PL_H_WITH_OTHERS)
+def handlefind_witness_pl_h_with_others(character_id: int) -> int:
+    """
+    自己目击过本次玩家与他人H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.see_pl_h

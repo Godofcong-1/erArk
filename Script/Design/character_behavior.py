@@ -121,9 +121,14 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             # print(f"debug 玩家空闲")
         # 非空闲活动下结算当前状态#
         else:
-            # 结算玩家在移动时同场景里的NPC的跟随情况
+            # 结算玩家在移动时的特殊结算
             if character_data.behavior.behavior_id == constant.Behavior.MOVE:
+                # 同场景里的NPC的跟随
                 handle_npc_ai.judge_same_position_npc_follow()
+                # 全角色重置目击玩玩家H
+                for npc_id in cache.npc_id_got:
+                    npc_data: game_type.Character = cache.character_data[npc_id]
+                    npc_data.sp_flag.see_pl_h = False
             # 在玩家行动前的前置结算
             judge_before_pl_behavior()
             # 结算状态与事件

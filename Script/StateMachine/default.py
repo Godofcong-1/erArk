@@ -1,7 +1,7 @@
 import random
 from types import FunctionType
 from Script.Config import game_config
-from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_instruct, handle_premise, handle_npc_ai, basement
+from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_premise, handle_npc_ai, basement
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
 
@@ -1238,47 +1238,12 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     if handle_premise.handle_place_inside_door_close(character_id):
         return
 
-    character_data: game_type.Character = cache.character_data[character_id]
-    pl_chara_data: game_type.Character = cache.character_data[0]
-    target_chara_data = cache.character_data[pl_chara_data.target_character_id]
+    from Script.Config import normal_config
+    from Script.UI.Panel import sex_be_discovered_panel
 
-    # 输出提示信息，并结算
-    result_type = 0 # 0为无事发生，1为中断H，2为加入群交
-    now_draw = draw.NormalDraw()
-    now_draw.text = _("被{0}看到了情事现场\n").format(character_data.name)
-    if handle_premise.handle_instruct_judge_group_sex(character_id):
-        result_type = 2
-        now_draw.text += _("{0}决定加入其中\n").format(character_data.name)
-    elif character_data.talent[222]:
-        now_draw.text += _("{0}还不懂这是什么意义，被你随口糊弄走了\n").format(character_data.name)
-    else:
-        result_type = 1
-        character_data.talent[401] = 1
-        now_draw.text += _("{0}获得了[持有博士把柄]\n").format(character_data.name)
-        now_draw.text += _("{0}红着脸跑走了\n").format(character_data.name)
-    now_draw.draw()
-    line_feed.draw()
-
-    # 中断H
-    if result_type == 1:
-        to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
-        general_movement_module(character_id, to_target)
-        # 如果是非群交状态，则中断H
-        if handle_premise.handle_group_sex_mode_off(character_id):
-            target_chara_data.action_info.h_interrupt = 1
-            # 原地待机10分钟
-            pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
-            pl_chara_data.state = constant.CharacterStatus.STATUS_H_INTERRUPT
-            handle_instruct.handle_end_h()
-    # 加入群交
-    elif result_type == 2:
-        character_join_group_sex(character_id)
-        # 如果群交没有开启，则开启群交
-        if handle_premise.handle_group_sex_mode_off(0):
-            from Script.Settle.default import handle_group_sex_mode_on
-            handle_group_sex_mode_on(0, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
-        # 玩家的交互对象去掉主动H状态
-        target_chara_data.h_state.npc_active_h = False
+    # 绘制被发现面板
+    now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(normal_config.config_normal.text_width, character_id)
+    now_panel.draw()
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
 def character_singing(character_id: int):

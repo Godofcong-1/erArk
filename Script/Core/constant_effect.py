@@ -306,6 +306,10 @@ class BehaviorEffect:
     """ 特殊flag_基础 自身清零要挤奶状态 """
     TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0 = 341
     """ 特殊flag_基础 交互对象清零对玩家的愤怒状态 """
+    SEE_PL_H = 342
+    """ 特殊flag_基础 自身进入目击H状态 """
+    CANCEL_SEE_PL_H = 343
+    """ 特殊flag_基础 自身退出目击H状态 """
     BATHHOUSE_ENTERTAINMENT_FLAG_TO_0 = 351
     """ 特殊flag_基础 自身清零大浴场娱乐状态 """
     BATHHOUSE_ENTERTAINMENT_FLAG_TO_1 = 352
@@ -380,6 +384,12 @@ class BehaviorEffect:
     """ 特殊flag_H 交互对象清零隐奸状态 """
     BOTH_HIDDEN_SEX_FLAG_TO_0 = 473
     """ 特殊flag_H 双方清零隐奸状态 """
+    SELF_EXHIBITIONISM_SEX_FLAG_TO_0 = 474
+    """ 特殊flag_H 自己清零露出H状态 """
+    TARGET_EXHIBITIONISM_SEX_FLAG_TO_0 = 475
+    """ 特殊flag_H 交互对象清零露出H状态 """
+    BOTH_EXHIBITIONISM_SEX_FLAG_TO_0 = 476
+    """ 特殊flag_H 双方清零露出H状态 """
     UNCONSCIOUS_FLAG_TO_0 = 481
     """ 特殊flag_H 自身清零无意识状态 """
     UNCONSCIOUS_FLAG_TO_1 = 482
@@ -894,6 +904,8 @@ class BehaviorEffect:
 
     TARGET_GET_WEEKNESSS_BY_DR = 1601
     """ 属性_素质 交互对象获得[被博士持有把柄] """
+    SELF_GET_WEEKNESSS_TO_DR = 1602
+    """ 属性_素质 自己获得[持有博士把柄] """
 
     ENTER_WAITING_FOR_PHYSICAL_EXAM = 1651
     """ 属性_体检 自己进入等待体检状态 """
@@ -906,6 +918,8 @@ class BehaviorEffect:
     """ 行动 自己等待至玩家行动结束 """
     SET_TARGET_FOOD_FROM_BAG_LAST = 1711
     """ 行动 将自己行为目标食物指定为背包里的最后一个食物 """
+    MOVE_TO_OWN_DORMITORY = 1721
+    """ 行动 自己前往自己的宿舍 """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """

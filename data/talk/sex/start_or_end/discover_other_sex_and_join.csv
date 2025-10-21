@@ -1,0 +1,7 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,discover_other_sex_and_join,0,high_1,{Name}发现{TargetName}正在H，于是决定加入，一起群交
+1,discover_other_sex_and_join,0,t_hidden_sex_mode_ge_1,{Name}发现了{TargetName}正在隐奸，于是决定加入一起群交

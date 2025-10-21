@@ -1590,6 +1590,10 @@ class Premise:
     """ 特殊flag_其他 交互对象没有发现食物有问题 """
     T_FIND_FOOD_WEIRD_FLAG_1 = "t_find_food_weird_flag_1"
     """ 特殊flag_其他 交互对象发现食物有问题 """
+    NOT_WITNESS_PL_H_WITH_OTHERS = "not_witness_pl_h_with_others"
+    """ 特殊flag_其他 自己没有目击过本次玩家与他人H """
+    WITNESS_PL_H_WITH_OTHERS = "witness_pl_h_with_others"
+    """ 特殊flag_其他 自己目击过本次玩家与他人H """
 
     GOOD_MOOD = "good_mood"
     """ 属性_心情 自己心情愉快 """

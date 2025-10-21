@@ -196,6 +196,9 @@ cid,effect_name,effect_type,effect
 471,SELF_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,自己清零隐奸状态
 472,TARGET_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,交互对象清零隐奸状态
 473,BOTH_HIDDEN_SEX_FLAG_TO_0,特殊flag_H,双方清零隐奸状态
+474,SELF_EXHIBITIONISM_SEX_FLAG_TO_0,特殊flag_H,自己清零露出H状态
+475,TARGET_EXHIBITIONISM_SEX_FLAG_TO_0,特殊flag_H,交互对象清零露出H状态
+476,BOTH_EXHIBITIONISM_SEX_FLAG_TO_0,特殊flag_H,双方清零露出H状态
 481,UNCONSCIOUS_FLAG_TO_0,特殊flag_H,自身清零无意识状态
 482,UNCONSCIOUS_FLAG_TO_1,特殊flag_H,自身变成无意识_睡眠状态
 483,UNCONSCIOUS_FLAG_TO_2,特殊flag_H,自身变成无意识_醉酒状态
@@ -458,6 +461,7 @@ cid,effect_name,effect_type,effect
 
 
 1601,TARGET_GET_WEEKNESSS_BY_DR,属性_素质,交互对象获得[被博士持有把柄]
+1602,SELF_GET_WEEKNESSS_TO_DR,属性_素质,自己获得[持有博士把柄]
 
 1651,ENTER_WAITING_FOR_PHYSICAL_EXAM,属性_体检,自己进入等待体检状态
 1652,EXIT_WAITING_FOR_PHYSICAL_EXAM,属性_体检,自己退出等待体检状态
@@ -465,6 +469,7 @@ cid,effect_name,effect_type,effect
 1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
 1702,WAIT_UNITL_PLAYER_ACTION_END,行动,自己等待至玩家行动结束
 1711,SET_TARGET_FOOD_FROM_BAG_LAST,行动,将自己行为目标食物指定为背包里的最后一个食物
+1721,MOVE_TO_OWN_DORMITORY,行动,自己前往自己的宿舍
 
 1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

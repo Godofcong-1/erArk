@@ -647,6 +647,8 @@ class SPECIAL_FLAG:
         """ 在无意识H模式中，int [0否,1睡眠,2醉酒,3时停,4平然,5空气,6体控,7心控] """
         self.hidden_sex_mode: int = 0
         """ 隐奸H模式，int [0否,1双不隐,2女隐,3男隐,4双隐] """
+        self.exhibitionism_sex_mode: int = 0
+        """ 露出H模式，int [0否,1无人室内露出,2无人室外露出,3人前露出,4无意识人前露出] """
         self.sleep_h_awake: bool = False
         """ 睡奸中醒来 """
         self.wait_flag: bool = False
@@ -711,7 +713,8 @@ class SPECIAL_FLAG:
         """ 外交访问状态，0为未访问，否则为对应出身地编号 """
         self.go_to_join_group_sex: bool = False
         """ 正在前往参与群交 """
-
+        self.see_pl_h: bool = False
+        """ 目击玩家H，在H被发现面板中使用，以免重复触发，玩家移动后重置 """
 
 class CHARA_WORK:
     """角色的工作信息结构体"""
