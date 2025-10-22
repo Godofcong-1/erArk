@@ -153,9 +153,6 @@ int,str,str,int,str,str
 364,do_h_fail,邀请H失败,10,pl,猥亵
 365,h_hp_0,H时博士体力为零中断,5,pl,性爱
 366,t_h_hp_0,H时交互对象体力为零中断,5,pl,性爱
-367,h_interrupt,H时被人目击闯入中断,5,pl,性爱
-368,see_h_but_leave,目击H但被支开,5,npc,猥亵
-369,see_h_and_interrupt,目击H并打断,10,npc,猥亵
 
 370,ask_group_sex,邀请群交,5,pl,性爱
 371,group_sex_end,结束群交,5,pl,性爱
@@ -175,6 +172,12 @@ int,str,str,int,str,str
 386,ask_exhibitionism_sex,邀请露出性爱,5,pl,性爱
 387,ask_exhibitionism_sex_fail,邀请露出性爱失败,5,pl,猥亵
 388,other_sex_be_found_to_exhibitionism_sex,其他H中被发现转露出,5,both,性爱
+
+390,h_interrupt,H时被人目击闯入中断,5,pl,性爱
+391,see_h_and_interrupt,目击H并打断,10,npc,猥亵
+392,see_h_but_deceived,目击H但被骗走,5,npc,猥亵
+393,see_h_and_leave,目击H并离开,5,npc,猥亵
+394,see_h_but_ignore,目击H并无视,5,npc,猥亵
 
 401,making_out,身体爱抚,10,both,性爱|N|手
 402,kiss_h,接吻,5,both,性爱|N|口|破处

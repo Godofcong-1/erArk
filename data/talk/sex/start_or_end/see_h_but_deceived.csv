@@ -1,0 +1,6 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,see_h_but_deceived,0,high_1,{Name}半信半疑地听完了{TargetName}的解释，觉得自己大概是真的误会了，于是离开了{SceneName}，不再打扰{TargetName}的要事。

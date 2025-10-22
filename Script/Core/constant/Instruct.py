@@ -373,6 +373,8 @@ class Instruct:
     """ 无意识奸 """
     ASK_HIDDEN_SEX = 0
     """ 邀请隐奸 """
+    ASK_EXHIBITIONISM_SEX = 0
+    """ 邀请露出 """
     ASK_GROUP_SEX = 0
     """ 邀请群交 """
 

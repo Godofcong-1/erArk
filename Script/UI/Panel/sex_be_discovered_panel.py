@@ -57,6 +57,8 @@ class Sex_Be_Discovered_Panel:
         sex_type_text = _("你正在和{0}单独H").format(self.target_chara_data.name)
         if handle_premise.handle_hidden_sex_mode_ge_1(0):
             sex_type_text = _("你和{0}的隐奸").format(self.target_chara_data.name)
+        elif handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
+            sex_type_text = _("你和{0}的露出").format(self.target_chara_data.name)
         elif handle_premise.handle_is_unconscious_h(0):
             sex_type_text = _("你正在无意识奸{0}").format(self.target_chara_data.name)
         elif handle_premise.handle_t_npc_active_h(0):
@@ -111,9 +113,21 @@ class Sex_Be_Discovered_Panel:
                 return_list.append(hidden_button.return_text)
                 line_feed.draw()
 
-            if False and not handle_premise.handle_group_sex_mode_on(0):
+            # 需要非露出、非群交
+            if not handle_premise.handle_exhibitionism_sex_mode_ge_1(0) and not handle_premise.handle_group_sex_mode_on(0):
                 exhibitionism_button = draw.LeftButton(
                     _("[3]光明正大地展示，转为露出"),
+                    "3",
+                    self.width,
+                    cmd_func=self._continue_exhibitionism_sex,
+                )
+                exhibitionism_button.draw()
+                return_list.append(exhibitionism_button.return_text)
+                line_feed.draw()
+            # 如果是正在露出，则显示为继续露出
+            elif handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
+                exhibitionism_button = draw.LeftButton(
+                    _("[3]无视对方，正常继续"),
                     "3",
                     self.width,
                     cmd_func=self._continue_exhibitionism_sex,
@@ -158,8 +172,8 @@ class Sex_Be_Discovered_Panel:
             pass_flag = True
         # 如果通过
         if pass_flag:
-            self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_BUT_LEAVE
-            self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.SEE_H_BUT_LEAVE].duration
+            self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_BUT_DECEIVED
+            self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
             # 绘制结果
             now_draw = draw.NormalDraw()
             now_draw.text = now_draw_text
@@ -178,11 +192,32 @@ class Sex_Be_Discovered_Panel:
             self._end_current_h()
         else:
             # 结算成就
-            achievement_panel.get_achievement_judge_by_value(914, 1)
+            if self.pl_chara_data.sp_flag.hidden_sex_mode == 1:
+                achievement_panel.get_achievement_judge_by_value(914, 1)
 
     def _continue_exhibitionism_sex(self) -> None:
         """选择转为露出"""
-        pass
+        # 如果当前已经是露出模式
+        if handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
+            # 判断对方的实行值
+            # 如果是也愿意露出的等级，则无视
+            if instuct_judege.calculation_instuct_judege(0, self.character_id, _("露出"))[0]:
+                self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_BUT_IGNORE
+                self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+            # 如果是能接受H的等级，则自己离开
+            elif instuct_judege.calculation_instuct_judege(0, self.character_id, _("H模式"))[0]:
+                self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_AND_LEAVE
+                self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+            # 否则打断当前H
+            else:
+                self._end_current_h()
+        else:
+            from Script.UI.Panel.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
+            select_panel = Select_Exhibitionism_Sex_Mode_Panel(self.width, sex_be_discovered_flag = True)
+            select_panel.draw()
+            # 如果邀请失败，则结束当前H
+            if self.pl_chara_data.behavior.behavior_id == constant.Behavior.H_INTERRUPT:
+                self._end_current_h()
 
     def _invite_find_char_to_join(self) -> None:
         """选择邀请对方加入群交"""
@@ -192,11 +227,11 @@ class Sex_Be_Discovered_Panel:
             # 如果当前在群交中，则直接加入
             if handle_premise.handle_group_sex_mode_on(0):
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.JOIN_GROUP_SEX
-                self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.JOIN_GROUP_SEX].duration
+                self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
             # 不在群交中则转为群交
             else:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN
-                self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN].duration
+                self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_GROUP_SEX)
                 # 结算成就
                 achievement_panel.get_achievement_judge_by_value(905, 1)
@@ -204,7 +239,7 @@ class Sex_Be_Discovered_Panel:
             # 如果当前在群交中，则拒绝加入
             if handle_premise.handle_group_sex_mode_on(0):
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.REFUSE_JOIN_GROUP_SEX
-                self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.REFUSE_JOIN_GROUP_SEX].duration
+                self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
             # 不在群交中则结束当前H
             else:
                 self._end_current_h()
@@ -216,7 +251,7 @@ class Sex_Be_Discovered_Panel:
         self.target_chara_data.action_info.h_interrupt = 1
         # 发现者变为打断行为
         self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_AND_INTERRUPT
-        self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.SEE_H_AND_INTERRUPT].duration
+        self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
         # 手动结算该状态
         character_behavior.judge_character_status(self.character_id)
         # 如果是在群交中，则结束群交

@@ -2195,7 +2195,7 @@ def handle_stop_sleep_obscenity():
     now_draw.width = width
     now_draw.text = _("\n退出睡眠猥亵模式\n")
     now_draw.draw()
-    default.handle_door_close_reset(0,1,game_type.CharacterStatusChange,datetime.datetime(1, 1, 1))
+    default.handle_door_close_reset(0,1,game_type.CharacterStatusChange(),datetime.datetime(1, 1, 1))
 
 
 @add_instruct(
@@ -2267,6 +2267,24 @@ def handle_ask_hidden_sex():
     """处理邀请隐奸指令"""
     from Script.UI.Panel.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
     now_panel = Select_Hidden_Sex_Mode_Panel(width)
+    now_panel.draw()
+
+
+@add_instruct(
+    constant.Instruct.ASK_EXHIBITIONISM_SEX,
+    constant.InstructType.OBSCENITY,
+    _("邀请露出"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.EXHIBITIONISM_SEX_MODE_0,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.ASK_EXHIBITIONISM_SEX,
+)
+def handle_ask_exhibitionism_sex():
+    """处理邀请露出指令"""
+    from Script.UI.Panel.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
+    now_panel = Select_Exhibitionism_Sex_Mode_Panel(width)
     now_panel.draw()
 
 

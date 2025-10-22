@@ -152,9 +152,6 @@ int,str,str
 364,do_h_fail,526 - 753 - 528 - 404 - 631 - 153
 365,h_hp_0,526 - 753 - 528 - 404 - 631
 366,t_h_hp_0,526 - 753 - 528 - 404 - 631
-367,h_interrupt,526 - 753 - 528 - 404 - 631
-368,see_h_but_leave,364 - 1512 - 1523 - 1721
-369,see_h_and_interrupt,23 - 24 - 1511 - 1512 - 1524 - 1602
 
 370,ask_group_sex,406 - 462 - 464 - 608 - 1410 - 10010
 371,group_sex_end,529 - 407 - 636 - 800 - 10011
@@ -174,6 +171,12 @@ int,str,str
 386,ask_exhibitionism_sex,405 - 462 - 464 - 603 - 605 - 1409 - CVE_A1_E|34_G_1 - CVE_A2_E|34_G_1
 387,ask_exhibitionism_sex_fail,526 - 528 - 404 - 631 - 153
 388,other_sex_be_found_to_exhibitionism_sex,472 - 1404 - CVE_A1_E|34_G_1 - CVE_A2_E|3_G_1
+
+390,h_interrupt,526 - 753 - 528 - 404 - 631
+391,see_h_and_interrupt,23 - 24 - 1511 - 1512 - 1524 - 1602
+393,see_h_but_deceived,364 - 1512 - 1523 - 1721
+393,see_h_and_leave,364 - 1512 - 1523 - 1721
+394,see_h_but_ignore,1512 - 1523
 
 401,making_out,21 - 13 - 14 - 22 - 49 - 110 - CVE_A2_E|0_G_1 - CVE_A1_E|41_G_1
 402,kiss_h,21 - 13 - 14 - 22 - 1101 - 49 - 118 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1 - 840

@@ -465,7 +465,7 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
             base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=16, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
-            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=0, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=23, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
         # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
         if handle_premise.handle_scene_others_conscious(character_id):
             # 自己未穿胸衣和内裤、自己异常2正常时羞耻
@@ -484,7 +484,11 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
                 hidden_sex_mode = now_char.sp_flag.hidden_sex_mode
                 extra_add = 4 - hidden_sex_mode
                 base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
-                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=0, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
+                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
+    # 露出中增加羞耻和心理快感
+    if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=23, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity

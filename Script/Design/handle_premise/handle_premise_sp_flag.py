@@ -2309,6 +2309,173 @@ def handle_t_sleep_h_or_hidden_sex(character_id: int) -> int:
     return handle_sleep_h_or_hidden_sex(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_0)
+def handle_exhibitionism_sex_mode_0(character_id: int) -> int:
+    """
+    自己不在露出模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode == 0
+
+
+@add_premise(constant_promise.Premise.PLAYER_NOT_IN_EXHIBITIONISM_SEX_MODE)
+def handle_player_not_in_exhibitionism_sex_mode(character_id: int) -> int:
+    """
+    玩家不在露出模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return handle_exhibitionism_sex_mode_0(0)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE)
+def handle_target_not_in_exhibitionism_sex_mode(character_id: int) -> int:
+    """
+    交互对象不在露出模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_0(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_GE_1)
+def handle_exhibitionism_sex_mode_ge_1(character_id: int) -> int:
+    """
+    自己在某个露出模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode > 0
+
+
+@add_premise(constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1)
+def handle_t_exhibitionism_sex_mode_ge_1(character_id: int) -> int:
+    """
+    交互对象在某个露出模式中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_ge_1(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_1)
+def handle_exhibitionism_sex_mode_1(character_id: int) -> int:
+    """
+    判断角色是否处于无人室内露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无人室内露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode == 1
+
+
+@add_premise(constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_1)
+def handle_t_exhibitionism_sex_mode_1(character_id: int) -> int:
+    """
+    交互对象处于无人室内露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无人室内露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_1(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_2)
+def handle_exhibitionism_sex_mode_2(character_id: int) -> int:
+    """
+    判断角色是否处于无人室外露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无人室外露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode == 2
+
+
+@add_premise(constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_2)
+def handle_t_exhibitionism_sex_mode_2(character_id: int) -> int:
+    """
+    交互对象处于无人室外露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无人室外露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_2(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_3)
+def handle_exhibitionism_sex_mode_3(character_id: int) -> int:
+    """
+    判断角色是否处于人前露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于人前露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode == 3
+
+
+@add_premise(constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_3)
+def handle_t_exhibitionism_sex_mode_3(character_id: int) -> int:
+    """
+    交互对象处于人前露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于人前露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_3(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.EXHIBITIONISM_SEX_MODE_4)
+def handle_exhibitionism_sex_mode_4(character_id: int) -> int:
+    """
+    判断角色是否处于无意识人前露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无意识人前露出模式中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.sp_flag.exhibitionism_sex_mode == 4
+
+
+@add_premise(constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_4)
+def handle_t_exhibitionism_sex_mode_4(character_id: int) -> int:
+    """
+    交互对象处于无意识人前露出模式中
+    参数:
+        character_id (int): 角色id
+    返回:
+        int: 权重，若角色处于无意识人前露出中则返回1，否则返回0
+    """
+    character_data = cache.character_data[character_id]
+    return handle_exhibitionism_sex_mode_4(character_data.target_character_id)
+
 @add_premise(constant_promise.Premise.FIND_FOOD_WEIRD_FLAG_0)
 def handlefind_food_weird_flag_0(character_id: int) -> int:
     """
