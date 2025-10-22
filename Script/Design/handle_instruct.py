@@ -2545,7 +2545,6 @@ def handle_group_sex_end():
     """处理结束群交指令"""
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     special_end_list = constant.special_end_H_list
 
     # 非特殊中断的情况下，正常结束H
@@ -2553,11 +2552,17 @@ def handle_group_sex_end():
         character_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_END
         character_data.state = constant.CharacterStatus.STATUS_GROUP_SEX_END
 
-    # 对方原地待机10分钟
-    target_data.behavior.behavior_id = constant.Behavior.WAIT
-    target_data.behavior.duration = 10
-    target_data.behavior.start_time = character_data.behavior.start_time
-    target_data.state = constant.CharacterStatus.STATUS_WAIT
+    # 场景内所有H中的角色原地待机10分钟
+    now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0,remove_own_character=True)
+    for chara_id in now_scene_character_list:
+        target_data: game_type.Character = cache.character_data[chara_id]
+        # 跳过非H状态的角色
+        if not handle_premise.handle_self_is_h(chara_id):
+            continue
+        target_data.behavior.behavior_id = constant.Behavior.WAIT
+        target_data.behavior.duration = 10
+        target_data.behavior.start_time = character_data.behavior.start_time
+        target_data.state = constant.CharacterStatus.STATUS_WAIT
 
     # H结束时的其他处理完毕
     now_draw = draw.WaitDraw()

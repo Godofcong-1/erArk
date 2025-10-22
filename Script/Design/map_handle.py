@@ -393,6 +393,20 @@ def get_map_door_data(map_path_str: str) -> dict:
     else:
         return {}
 
+def get_chara_now_scene_all_chara_id_list(character_id: int, remove_own_character=False) -> list:
+    """
+    获取角色当前场景下所有角色的id列表
+    Keyword arguments:
+    character_id -- 角色id
+    remove_own_character -- 从id列表中移除自己 (default False)
+    """
+    character_data = cache.character_data[character_id]
+    scene_path_str = get_map_system_path_str_for_list(character_data.position)
+    scene_character_data = cache.scene_data[scene_path_str].character_list
+    now_scene_character_list = list(scene_character_data)
+    if remove_own_character:
+        now_scene_character_list.remove(character_id)
+    return now_scene_character_list
 
 def get_scene_character_name_list(scene_path_str: str, remove_own_character=False) -> list:
     """
