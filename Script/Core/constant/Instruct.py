@@ -383,6 +383,12 @@ class Instruct:
     """ 等待五分钟(H中) """
     END_H = 0
     """ H结束 """
+    UNCONSCIOUS_H_END = 0
+    """ 结束无意识奸 """
+    HIDDEN_SEX_END = 0
+    """ 结束隐奸 """
+    EXHIBITIONISM_SEX_END = 0
+    """ 结束露出 """
     GROUP_SEX_END = 0
     """ 结束群交 """
     UNDRESS = 0

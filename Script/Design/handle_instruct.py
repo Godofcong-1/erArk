@@ -2372,9 +2372,12 @@ def handle_wait_5_min_in_h():
 @add_instruct(
     constant.Instruct.END_H,
     constant.InstructType.SEX,
-    _("H结束"),
+    _("结束H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
+     constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
+     constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
      constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
@@ -2388,24 +2391,15 @@ def handle_end_h():
 
     # 非特殊中断的情况下，正常结束H
     if character_data.behavior.behavior_id not in special_end_list:
-        # 无意识H下
-        if target_data.sp_flag.unconscious_h > 0:
-            character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
-            character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
-            # 结算成就
-            achievement_panel.achievement_flow(_("睡奸"))
-        else:
-            character_data.behavior.behavior_id = constant.Behavior.END_H
-            character_data.state = constant.CharacterStatus.STATUS_END_H
-            # 异常126正常，则进入跟随
-            if (
-                handle_premise.handle_normal_1(character_data.target_character_id) and 
-                handle_premise.handle_normal_2(character_data.target_character_id) and
-                handle_premise.handle_normal_6(character_data.target_character_id)
-                ):
-                target_data.sp_flag.is_follow = 1
-            # 结算成就
-            achievement_panel.achievement_flow(_("隐奸"))
+        character_data.behavior.behavior_id = constant.Behavior.END_H
+        character_data.state = constant.CharacterStatus.STATUS_END_H
+        # 异常126正常，则进入跟随
+        if (
+            handle_premise.handle_normal_1(character_data.target_character_id) and 
+            handle_premise.handle_normal_2(character_data.target_character_id) and
+            handle_premise.handle_normal_6(character_data.target_character_id)
+            ):
+            target_data.sp_flag.is_follow = 1
 
     # 对方原地待机10分钟
     target_data.behavior.behavior_id = constant.Behavior.WAIT
@@ -2421,6 +2415,122 @@ def handle_end_h():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
+@add_instruct(
+    constant.Instruct.UNCONSCIOUS_H_END,
+    constant.InstructType.SEX,
+    _("结束无意识奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG,
+     constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
+     constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.IS_H},
+    constant.Behavior.END_H,
+)
+def handle_unconscious_h_end():
+    """处理结束无意识奸指令"""
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+
+    character_data.behavior.behavior_id = constant.Behavior.NO_CONSCIOUS_H_END
+    character_data.state = constant.CharacterStatus.STATUS_NO_CONSCIOUS_H_END
+    # 结算成就
+    achievement_panel.achievement_flow(_("睡奸"))
+
+    # H结束时的其他处理完毕
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束无意识奸\n")
+    now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.HIDDEN_SEX_END,
+    constant.InstructType.SEX,
+    _("结束隐奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1,
+     constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.IS_H},
+    constant.Behavior.END_H,
+)
+def handle_hidden_sex_end():
+    """处理结束隐奸指令"""
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    character_data.behavior.behavior_id = constant.Behavior.END_H
+    character_data.state = constant.CharacterStatus.STATUS_END_H
+    # 异常126正常，则进入跟随
+    if (
+        handle_premise.handle_normal_1(character_data.target_character_id) and 
+        handle_premise.handle_normal_2(character_data.target_character_id) and
+        handle_premise.handle_normal_6(character_data.target_character_id)
+        ):
+        target_data.sp_flag.is_follow = 1
+    # 结算成就
+    achievement_panel.achievement_flow(_("隐奸"))
+
+    # 对方原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.behavior.duration = 10
+    target_data.behavior.start_time = character_data.behavior.start_time
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # H结束时的其他处理完毕
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束隐奸\n")
+    now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
+
+@add_instruct(
+    constant.Instruct.EXHIBITIONISM_SEX_END,
+    constant.InstructType.SEX,
+    _("结束露出"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
+     constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.IS_H},
+    constant.Behavior.END_H,
+)
+def handle_exhibitionism_sex_end():
+    """处理结束露出指令"""
+    instuct_judege.init_character_behavior_start_time(0, cache.game_time)
+    character_data: game_type.Character = cache.character_data[0]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+
+    character_data.behavior.behavior_id = constant.Behavior.END_H
+    character_data.state = constant.CharacterStatus.STATUS_END_H
+    # 异常126正常，则进入跟随
+    if (
+        handle_premise.handle_normal_1(character_data.target_character_id) and 
+        handle_premise.handle_normal_2(character_data.target_character_id) and
+        handle_premise.handle_normal_6(character_data.target_character_id)
+        ):
+        target_data.sp_flag.is_follow = 1
+
+    # 对方原地待机10分钟
+    target_data.behavior.behavior_id = constant.Behavior.WAIT
+    target_data.behavior.duration = 10
+    target_data.behavior.start_time = character_data.behavior.start_time
+    target_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # H结束时的其他处理完毕
+    now_draw = draw.WaitDraw()
+    now_draw.width = width
+    now_draw.text = _("\n结束露出\n")
+    now_draw.draw()
+    character_data.behavior.duration = 5
+    update.game_update_flow(5)
 
 @add_instruct(
     constant.Instruct.GROUP_SEX_END,
