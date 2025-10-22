@@ -11,6 +11,7 @@ from Script.Core import (
 from Script.Config import game_config, normal_config
 from Script.Design import handle_premise, instuct_judege
 from Script.Settle import default
+from Script.UI.Panel import achievement_panel
 
 panel_info_data = {}
 
@@ -175,6 +176,9 @@ class Sex_Be_Discovered_Panel:
         # 如果邀请失败，则结束当前H
         if self.pl_chara_data.behavior.behavior_id == constant.Behavior.H_INTERRUPT:
             self._end_current_h()
+        else:
+            # 结算成就
+            achievement_panel.get_achievement_judge_by_value(914, 1)
 
     def _continue_exhibitionism_sex(self) -> None:
         """选择转为露出"""
@@ -194,6 +198,8 @@ class Sex_Be_Discovered_Panel:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN
                 self.find_chara_data.behavior.duration = game_config.config_behavior[constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN].duration
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_GROUP_SEX)
+                # 结算成就
+                achievement_panel.get_achievement_judge_by_value(905, 1)
         else:
             # 如果当前在群交中，则拒绝加入
             if handle_premise.handle_group_sex_mode_on(0):

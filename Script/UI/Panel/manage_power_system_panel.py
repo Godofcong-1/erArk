@@ -529,22 +529,11 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
         draw_text.draw()
 
     # 结算发电量成就
-    if not cache.achievement.achievement_dict.get(821, False):
-        achievement_data = game_config.config_achievement[821]
-        if total_generated >= achievement_data.value:
-            achievement_panel.achievement_flow(achievement_data.type, 821)
-    if not cache.achievement.achievement_dict.get(822, False):
-        achievement_data = game_config.config_achievement[822]
-        if total_generated >= achievement_data.value:
-            achievement_panel.achievement_flow(achievement_data.type, 822)
-    if not cache.achievement.achievement_dict.get(823, False):
-        achievement_data = game_config.config_achievement[823]
-        if total_generated >= achievement_data.value:
-            achievement_panel.achievement_flow(achievement_data.type, 823)
-    if not cache.achievement.achievement_dict.get(826, False):
-        achievement_data = game_config.config_achievement[826]
-        if fuel_use == 0 and total_generated >= total_consumption:
-            achievement_panel.achievement_flow(achievement_data.type, 826)
+    achievement_panel.get_achievement_judge_by_value(821, int(total_generated))
+    achievement_panel.get_achievement_judge_by_value(822, int(total_generated))
+    achievement_panel.get_achievement_judge_by_value(823, int(total_generated))
+    if fuel_use == 0 and total_generated >= total_consumption:
+        achievement_panel.get_achievement_judge_by_value(826, 1)
 
     return shortage_ratio, text
 

@@ -16,6 +16,28 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+def get_achievement_judge_by_value(achievement_id: int, judge_value: int) -> bool:
+    """
+    根据成就ID和判断值判断是否达成成就\n
+    输入：\n
+    - achievement_id: int，成就ID\n
+    - judge_value: int，判断值\n
+    返回：\n
+    - bool，是否达成成就
+    """
+    achievement_data = game_config.config_achievement.get(achievement_id)
+    if not achievement_data:
+        return False
+    # 如果已达成则返回False
+    if cache.achievement.achievement_dict.get(achievement_id, False):
+        return False
+    # 判断值是否满足条件
+    if judge_value >= achievement_data.value:
+        # 达成成就，更新缓存
+        achievement_flow(achievement_data.type, achievement_id)
+        return True
+    return False
+
 def achievement_flow(achievement_type: str, achievement_id: int = 0):
     """
     成就系统流程\n
