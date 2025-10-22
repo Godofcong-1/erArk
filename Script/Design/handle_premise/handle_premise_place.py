@@ -195,10 +195,8 @@ def handle_scene_only_two(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    return len(scene_data.character_list) == 2
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    return len(character_list) == 2
 
 
 @add_premise(constant_promise.Premise.SCENE_OVER_TWO)
@@ -210,10 +208,8 @@ def handle_scene_over_two(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    return len(scene_data.character_list) > 2
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    return len(character_list) > 2
 
 
 @add_premise(constant_promise.Premise.SCENE_ONLY_ONE)
@@ -225,10 +221,8 @@ def handle_scene_only_one(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path]
-    return len(scene_data.character_list) == 1
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    return len(character_list) == 1
 
 
 @add_premise(constant_promise.Premise.IN_PLAYER_ZONE)
@@ -255,10 +249,8 @@ def handle_scene_over_one(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    return len(scene_data.character_list) > 1
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    return len(character_list) > 1
 
 
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_CAN_BE_INTERACT)
@@ -307,20 +299,20 @@ def handle_scene_someone_is_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    from Script.Design.handle_premise import handle_self_is_h
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于2时进行检测，不再排除自己的跟随和H状态
     # if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
-    if len(scene_data.character_list) > 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非自己且非玩家的角色
-            if chara_id != character_id and chara_id != 0:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 检测是否在H
-                if other_character_data.sp_flag.is_h:
-                    return 999
+    if len(character_list) <= 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 遍历非自己且非玩家的角色
+        if chara_id == character_id or chara_id == 0:
+            continue
+        # 检测是否在H
+        if handle_self_is_h(chara_id):
+            return 999
     return 0
 
 
@@ -334,20 +326,19 @@ def handle_scene_someone_h_but_not_hidden_sex(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design.handle_premise import handle_hidden_sex_mode_0
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于2时进行检测，不再排除自己的跟随和H状态
     # if len(scene_data.character_list) > 2 and not (character_data.sp_flag.is_follow or character_data.sp_flag.is_h):
-    if len(scene_data.character_list) > 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非自己且非玩家的角色
-            if chara_id != character_id and chara_id != 0:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 检测是否在非隐奸H
-                if other_character_data.sp_flag.is_h and handle_hidden_sex_mode_0(chara_id):
-                    return 999
+    if len(character_list) <= 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 遍历非自己且非玩家的角色
+        if chara_id != character_id and chara_id != 0:
+            other_character_data: game_type.Character = cache.character_data[chara_id]
+            # 检测是否在非隐奸H
+            if other_character_data.sp_flag.is_h and handle_hidden_sex_mode_0(chara_id):
+                return 999
     return 0
 
 
@@ -363,17 +354,17 @@ def handle_scene_someone_no_fall(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_self_not_fall,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_self_not_fall(chara_id):
-                    return 999
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_not_fall(chara_id):
+            return 999
     return 0
 
 
@@ -389,17 +380,17 @@ def handle_scene_someone_hp_1(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_self_tired,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_self_tired(chara_id):
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_tired(chara_id):
+            return 1
     return 0
 
 
@@ -415,17 +406,17 @@ def handle_scene_someone_unconscious(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_unconscious_flag_ge_1,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_unconscious_flag_ge_1(chara_id):
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_unconscious_flag_ge_1(chara_id):
+            return 1
     return 0
 
 
@@ -441,17 +432,17 @@ def handle_scene_someone_not_unconscious(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_unconscious_flag_0,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_unconscious_flag_0(chara_id):
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+            if handle_unconscious_flag_0(chara_id):
+                return 1
     return 0
 
 
@@ -467,18 +458,17 @@ def handle_place_someone_not_in_hidden_and_conscious(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_unconscious_flag_0, handle_hidden_sex_mode_0
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 跳过玩家
-            if chara_id == 0:
-                continue
-            if handle_hidden_sex_mode_0(chara_id) and handle_unconscious_flag_0(chara_id):
-                return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_hidden_sex_mode_0(chara_id) and handle_unconscious_flag_0(chara_id):
+            return 1
     return 0
 
 
@@ -494,17 +484,17 @@ def handle_scene_all_unconscious(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_unconscious_flag_0,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_unconscious_flag_0(chara_id):
-                    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_unconscious_flag_0(chara_id):
+            return 0
         return 1
     return 0
 
@@ -522,22 +512,21 @@ def handle_scene_all_unconscious_or_sleep(character_id: int) -> int:
         handle_action_sleep,
         handle_unconscious_flag_ge_1,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_unconscious_flag_ge_1(chara_id):
-                    continue
-                if handle_action_sleep(chara_id):
-                    continue
-                return 0
-        return 1
-    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_unconscious_flag_ge_1(chara_id):
+            continue
+        if handle_action_sleep(chara_id):
+            continue
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_ALL_OTHERS_UNCONSCIOUS_OR_SLEEP)
@@ -554,22 +543,21 @@ def handle_scene_all_others_unconscious_or_sleep(character_id: int) -> int:
         handle_unconscious_flag_ge_1,
     )
     character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非自己、非交互对象的角色
-            if chara_id == character_id or chara_id == character_data.target_character_id:
-                continue
-            if handle_unconscious_flag_ge_1(chara_id):
-                continue
-            if handle_action_sleep(chara_id):
-                continue
-            return 0
-        return 1
-    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过自己、交互对象、玩家
+        if chara_id == character_id or chara_id == character_data.target_character_id or chara_id == 0:
+            continue
+        if handle_unconscious_flag_ge_1(chara_id):
+            continue
+        if handle_action_sleep(chara_id):
+            continue
+        return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_OTHERS_CONSCIOUS)
@@ -586,17 +574,17 @@ def handle_scene_others_conscious(character_id: int) -> int:
         handle_unconscious_flag_0,
     )
     character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 跳过自己和交互对象、玩家
-            if chara_id == character_id or chara_id == 0 or chara_id == character_data.target_character_id:
-                continue
-            if handle_unconscious_flag_0(chara_id) and not handle_action_sleep(chara_id):
-                return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过自己、交互对象、玩家
+        if chara_id == character_id or chara_id == character_data.target_character_id or chara_id == 0:
+            continue
+        if handle_unconscious_flag_0(chara_id) and not handle_action_sleep(chara_id):
+            return 1
     return 0
 
 
@@ -609,19 +597,19 @@ def handle_scene_someone_is_masturebate(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非自己且非玩家的角色
-            if chara_id != character_id and chara_id != 0:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                # 检测是否在自慰
-                if other_character_data.behavior.behavior_id == constant.Behavior.MASTUREBATE:
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过自己、玩家
+        if chara_id == character_id or chara_id == 0:
+            continue
+        other_character_data: game_type.Character = cache.character_data[chara_id]
+        # 检测是否在自慰
+        if other_character_data.behavior.behavior_id == constant.Behavior.MASTUREBATE:
+            return 1
     return 0
 
 
@@ -634,17 +622,18 @@ def handle_place_have_assistant(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id and chara_id == pl_character_data.assistant_character_id:
-                return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if chara_id == pl_character_data.assistant_character_id:
+            return 1
     return 0
 
 
@@ -661,17 +650,17 @@ def handle_scene_someone_fall_le_1(character_id: int) -> int:
         handle_self_not_fall,
         handle_self_fall_1,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
+            return 1
     return 0
 
 
@@ -688,17 +677,17 @@ def handle_scene_all_fall_ge_2(character_id: int) -> int:
         handle_self_not_fall,
         handle_self_fall_1,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
-                    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
+            return 0
         return 1
     return 0
 
@@ -715,17 +704,17 @@ def handle_scene_all_not_tired(character_id: int) -> int:
     from Script.Design.handle_premise import (
         handle_self_tired,
     )
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if handle_self_tired(chara_id):
-                    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_tired(chara_id):
+            return 0
         return 1
     return 0
 
@@ -739,17 +728,20 @@ def handle_scene_all_not_h(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    from Script.Design.handle_premise import (
+        handle_self_is_h
+    )
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id:
-                if cache.character_data[chara_id].sp_flag.is_h:
-                    return 0
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_self_is_h(chara_id):
+            return 0
         return 1
     return 0
 
@@ -764,20 +756,18 @@ def handle_scene_have_multi_masturebate_to_pl_chara(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design.handle_premise import handle_masturebate_to_pl_flag_1
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-    count = 0
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id == 0:
-                continue
-            # 如果是自慰逆推玩家的角色，计数加一
-            if handle_masturebate_to_pl_flag_1(chara_id):
-                count += 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        # 如果是自慰逆推玩家的角色，计数加一
+        if handle_masturebate_to_pl_flag_1(chara_id):
+            count += 1
     if count >= 2:
         return 1
     return 0
@@ -839,21 +829,22 @@ def handle_scene_someone_not_massage_therapist(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    character_data: game_type.Character = cache.character_data[character_id]
-    scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-    scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+    from Script.Design.handle_premise import (
+        handle_work_is_massage_therapist,
+    )
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     # 场景角色数大于等于2时进行检测
-    if len(scene_data.character_list) >= 2:
-        # 遍历当前角色列表
-        for chara_id in scene_data.character_list:
-            # 遍历非玩家的角色
-            if chara_id != character_id:
-                other_character_data: game_type.Character = cache.character_data[chara_id]
-                if other_character_data.work.work_type != 171:
-                    return 1
+    if len(character_list) < 2:
+        return 0
+    # 遍历当前角色列表
+    for chara_id in character_list:
+        # 跳过玩家
+        if chara_id == 0:
+            continue
+        if handle_work_is_massage_therapist(chara_id):
+            continue
+        return 1
     return 0
-
-
 
 @add_premise(constant_promise.Premise.PLACE_EXPOSED)
 def handle_place_exposed(character_id: int) -> int:
