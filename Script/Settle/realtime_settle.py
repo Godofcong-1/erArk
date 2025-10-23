@@ -495,6 +495,10 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
     if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
         base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
         base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
+    # 女儿与自己H时增加欲情和心理快感
+    if handle_premise.handle_self_is_player_daughter(character_id) and handle_premise.handle_self_is_h(character_id):
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=12, base_value=0, ability_level=now_char_ability[33], extra_adjust=5, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=23, base_value=0, ability_level=now_char_ability[33], extra_adjust=5, tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity

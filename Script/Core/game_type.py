@@ -810,6 +810,8 @@ class ACHIEVEMENT:
         """ 隐奸记录，1为隐奸模式，2为在场其他干员人数，3为射精次数，4为隐奸干员绝顶次数 """
         self.sleep_sex_record: Dict[int, int] = {}
         """ 睡奸记录，1为睡奸模式0正常1装睡，2为射精次数，3为被睡奸干员绝顶次数 """
+        self.h_with_daughter_count: int = 0
+        """ 与女儿乱伦H的次数 """
 
 
 class PLAYER_ABILITY:

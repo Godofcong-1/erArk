@@ -97,6 +97,7 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         _("生育"): [len(pl_character_data.relationship.child_id_list), [701, 702, 703]],
         _("生产"): [cache.achievement.production_count, [801, 802, 803]],
         _("种植"): [cache.achievement.harvest_count, [811, 812, 813]],
+        _("乱伦"): [cache.achievement.h_with_daughter_count, [941, 942]],
         _("公务"): [cache.achievement.handle_official_business_count, [1001, 1002, 1003]],
         _("读书"): [read_book_count, [1011, 1012, 1013]],
         _("烹饪"): [cache.achievement.make_food_count, [1021, 1022, 1023]],
@@ -177,6 +178,8 @@ def settle_chara_relationship():
     # 统计各类关系成就的判断值
     love_flag, obey_flag = 0, 0  # 是否有爱情/隶属线路
     lover_count, slave_count = 0, 0      # 爱侣人数与奴隶人数
+    daught_lover_flag = 0  # 是否与女儿达成爱侣关系
+    daught_slave_flag = 0  # 是否与女儿达成奴隶关系
     for chara_id in cache.character_data:
         # 跳过非角色
         if chara_id == 0:
@@ -193,18 +196,26 @@ def settle_chara_relationship():
         # 计算爱侣人数
         if handle_premise.handle_self_love_4(chara_id):
             lover_count += 1
+            # 如果是女儿
+            if handle_premise.handle_self_is_player_daughter(chara_id):
+                daught_lover_flag = 1
         # 计算奴隶人数
         if handle_premise.handle_self_obey_4(chara_id):
             slave_count += 1
+            # 如果是女儿
+            if handle_premise.handle_self_is_player_daughter(chara_id):
+                daught_slave_flag = 1
     # 构建成就结算列表
     achievement_checks = [
         # (判断值, 成就ID)
         (love_flag, 51),   # 首次爱情线路
         (lover_count, 52),      # 首个爱侣
         (lover_count, 53),      # 爱侣人数100
+        (daught_lover_flag, 56),   # 与女儿的关系达成爱侣
         (obey_flag, 61),   # 首次隶属线路
         (slave_count, 62),      # 首个奴隶
         (slave_count, 63),      # 奴隶人数100
+        (daught_slave_flag, 66),   # 与女儿的关系达成奴隶
     ]
     return_list = []
     # 统一调用settle_achievement进行批量结算
@@ -412,6 +423,8 @@ def settle_chara_group_sex():
     group_sex_character_count = 0
     conscious_count = 0
     unconscious_count = 0
+    # 母女丼成就特殊标志
+    daughter_and_mother_flag = 0
     # 遍历当前角色列表
     for chara_id in scene_data.character_list:
         # 跳过非角色
@@ -427,6 +440,13 @@ def settle_chara_group_sex():
         # 有意识的角色
         else:
             conscious_count += 1
+        # 如果是女儿
+        if handle_premise.handle_self_is_player_daughter(chara_id):
+            # 获取该角色的母亲ID
+            mother_id = cache.character_data[chara_id].relationship.mother_id
+            # 如果母亲也在场且也在H中
+            if mother_id in scene_data.character_list and handle_premise.handle_self_is_h(mother_id):
+                daughter_and_mother_flag = 1
     # 904号成就
     if len(cache.achievement.group_sex_record[1]) >= 10 and len(cache.achievement.group_sex_record[2]) >= 20:
         # 如果满足条件则结算成就904
@@ -437,6 +457,7 @@ def settle_chara_group_sex():
         (conscious_count, 901),  # 与至少2名角色一起群交
         (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
         (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
+        (daughter_and_mother_flag, 905),  # 母女丼群交
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:

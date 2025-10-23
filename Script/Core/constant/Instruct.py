@@ -371,6 +371,8 @@ class Instruct:
     """ 邀请在爱情旅馆H """
     DO_H_IN_BATHROOM = 0
     """ 邀请在浴室H """
+    DO_H_WITH_DAUGHTER = 0
+    """ 邀请乱伦H"""
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
     ASK_HIDDEN_SEX = 0
@@ -385,6 +387,8 @@ class Instruct:
     """ 等待五分钟(H中) """
     END_H = 0
     """ H结束 """
+    END_H_WITH_DAUGHTER = 0
+    """ 结束乱伦H"""
     UNCONSCIOUS_H_END = 0
     """ 结束无意识奸 """
     HIDDEN_SEX_END = 0
