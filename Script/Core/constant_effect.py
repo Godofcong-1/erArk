@@ -486,6 +486,8 @@ class BehaviorEffect:
     """ 指令_专用结算 （赠送礼物用）根据礼物的类型结算交互对象的对应数值 """
     MAINTAIN_EQUIPMENT_ADD_ADJUST = 539
     """ 指令_专用结算 （维护装备用）进行一次装备的维修保养 """
+    RELEASE_FROM_BAG_ADD_ADJUST = 540
+    """ 指令_专用结算 （从袋中放出来）交互对象失去装袋搬走flag，玩家失去搬运人id，对方上线 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

@@ -347,6 +347,8 @@ class Instruct:
     """ 挤奶 """
     BAGGING_AND_MOVING = 0
     """ 装袋搬走 """
+    RELEASE_FROM_BAG = 0
+    """ 从袋中放出来 """
     PUT_INTO_PRISON = 0
     """ 投入监牢 """
     SET_FREE = 0

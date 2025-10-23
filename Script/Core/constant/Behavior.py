@@ -253,6 +253,8 @@ class Behavior:
     """ 投入监牢 """
     SET_FREE = "set_free"
     """ 解除囚禁 """
+    RELEASE_FROM_BAG = "release_from_bag"
+    """ 从袋中放出来 """
     CONFESSION = "confession"
     """ 告白 """
     CONFESSION_FAILED = "confession_failed"

@@ -137,6 +137,7 @@ int,str,str
 341,bagging_and_moving,1515 - 1516 - 513 - 952
 342,put_into_prison,1515 - 1516 - 514 - 153
 343,set_free,1511 - 1512 - 515
+344,release_from_bag,1515 - 1516 - 540
 
 351,confession,11 - 12 - 53 - 54 - 55 - 950
 352,confession_failed,11 - 12 - 62

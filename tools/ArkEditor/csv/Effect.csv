@@ -158,6 +158,8 @@ cid,effect_name,effect_type,effect
 332,PEE_FLAG_TO_1,特殊flag_基础,自身变成要撒尿状态
 336,MILK_FLAG_TO_0,特殊flag_基础,自身清零要挤奶状态
 341,TARGET_ANGRY_WITH_PLAYER_FLAG_TO_0,特殊flag_基础,交互对象清零对玩家的愤怒状态
+342,SEE_PL_H,特殊flag_基础,自身进入目击H状态
+343,CANCEL_SEE_PL_H,特殊flag_基础,自身退出目击H状态
 351,BATHHOUSE_ENTERTAINMENT_FLAG_TO_0,特殊flag_基础,自身清零大浴场娱乐状态
 352,BATHHOUSE_ENTERTAINMENT_FLAG_TO_1,特殊flag_基础,自身变成大浴场娱乐_要更衣状态
 353,BATHHOUSE_ENTERTAINMENT_FLAG_TO_2,特殊flag_基础,自身变成大浴场娱乐_要娱乐状态
@@ -246,6 +248,7 @@ cid,effect_name,effect_type,effect
 537,TARGET_DIRTY_RESET_IN_SHOWER,指令_专用结算,交互对象进行污浊清洗(525)
 538,GIVE_GIFT_ADD_ADJUST,指令_专用结算,（赠送礼物用）根据礼物的类型结算交互对象的对应数值
 539,MAINTAIN_EQUIPMENT_ADD_ADJUST,指令_专用结算,（维护装备用）进行一次装备的维修保养
+540,RELEASE_FROM_BAG_ADD_ADJUST,指令_专用结算,（从袋中放出来）交互对象失去装袋搬走flag，玩家失去搬运人id，对方上线
 
 601,CHANGE_UNDERWERA,属性_服装,换新的内衣（胸衣+内裤）
 602,BRA_SEE,属性_服装,胸罩可视

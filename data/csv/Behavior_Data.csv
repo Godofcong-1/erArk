@@ -138,6 +138,7 @@ int,str,str,int,str,str
 341,bagging_and_moving,装袋搬走,10,pl,猥亵
 342,put_into_prison,投入监牢,10,pl,猥亵
 343,set_free,解除囚禁,10,pl,猥亵
+344,release_from_bag,从袋中放出来,10,pl,猥亵
 
 351,confession,告白,10,both,猥亵
 352,confession_failed,告白失败,10,pl,猥亵

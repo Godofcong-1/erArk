@@ -3829,6 +3829,23 @@ def handle_bagging_and_moving():
 
 
 @add_instruct(
+    constant.Instruct.RELEASE_FROM_BAG,
+    constant.InstructType.OBSCENITY,
+    _("从袋中放出来"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_IN_PRISON,
+     constant_promise.Premise.SCENE_ONLY_ONE,
+     constant_promise.Premise.PL_BAGGING_CHARA,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.RELEASE_FROM_BAG,
+)
+def handle_release_from_bag():
+    """处理从袋中放出来指令"""
+    pl_character_data = cache.character_data[0]
+    pl_character_data.target_character_id = pl_character_data.sp_flag.bagging_chara_id
+    chara_handle_instruct_common_settle(constant.Behavior.RELEASE_FROM_BAG,force_taget_wait = True)
+
+@add_instruct(
     constant.Instruct.PUT_INTO_PRISON,
     constant.InstructType.OBSCENITY,
     _("投入监牢"),

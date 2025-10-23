@@ -8468,6 +8468,32 @@ def handle_bagging_and_moving_add_just(
     target_data.sp_flag.be_bagged = True
     handle_chara_off_line(character_data.target_character_id, add_time, change_data, now_time)
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RELEASE_FROM_BAG_ADD_ADJUST)
+def handle_release_from_bag_add_just(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （从袋中放出来）交互对象失去装袋搬走flag，玩家失去搬运人id，对方上线
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    # 获取角色数据
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    # 玩家数据结算
+    character_data.sp_flag.bagging_chara_id = 0
+    # 对方数据结算
+    target_data.sp_flag.be_bagged = False
+    handle_chara_on_line(character_data.target_character_id, add_time, change_data, now_time)
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PUT_INTO_PRISON_ADD_ADJUST)
 def handle_put_into_prison_add_just(
