@@ -161,17 +161,28 @@ class System_Setting_Panel:
                 now_setting_flag = setting[cid] # 当前设置的值
                 option_len = len(setting_option[cid]) # 选项的长度
 
-                # 如果是绘制设置的第12项，则加一个[修改字体大小]的按钮
-                if type_name == _("绘制") and cid == 12:
-                    if cache.font_size == 0:
-                        cache.font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width * 2)
-                    new_button_text = _(f"[ {cache.font_size} ]")
-                    new_button_len = max(len(new_button_text) * 2, 30)
-                    new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_font_size)
-                    new_button_draw.draw()
-                    return_list.append(new_button_draw.return_text)
-                    line_feed.draw()
-                    continue
+                # 如果是绘制设置
+                if type_name == _("绘制"):
+                    # 第12项，则加一个[修改字体大小]的按钮
+                    if cid == 12:
+                        if cache.font_size == 0:
+                            cache.font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width * 2)
+                        new_button_text = _(f" [{cache.font_size}] ")
+                        new_button_len = max(len(new_button_text) * 2, 30)
+                        new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_font_size)
+                        new_button_draw.draw()
+                        return_list.append(new_button_draw.return_text)
+                        line_feed.draw()
+                        continue
+                    # 第14、15项，输入数字来调整角色口上、特殊H的倍率
+                    elif cid == 14 or cid == 15:
+                        new_button_text = f" [{setting[cid]}] "
+                        new_button_len = max(len(new_button_text) * 2, 30)
+                        new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
+                        new_button_draw.draw()
+                        return_list.append(new_button_draw.return_text)
+                        line_feed.draw()
+                        continue
 
                 # 当前选择的选项的名字
                 button_text = f" [{setting_option[cid][now_setting_flag]}] "
@@ -245,6 +256,20 @@ class System_Setting_Panel:
                     new_num = 0
                 elif new_num > 9:
                     new_num = 9
+                cache.all_system_setting.draw_setting[cid] = new_num
+            elif cid == 14 or cid == 15:
+                line_feed.draw()
+                line_draw = draw.LineDraw("-", self.width)
+                line_draw.draw()
+                line_feed.draw()
+                ask_text = _("请输入1~99的数字\n")
+                ask_panel = panel.AskForOneMessage()
+                ask_panel.set(ask_text, 99)
+                new_num = int(ask_panel.draw())
+                if new_num < 1:
+                    new_num = 1
+                elif new_num > 99:
+                    new_num = 99
                 cache.all_system_setting.draw_setting[cid] = new_num
 
     def change_font_size(self):

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-23 15:16+0800\n"
+"POT-Creation-Date: 2024-08-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -25997,11 +25997,35 @@ msgid "在角色口上中出现纸娃娃地文的百分比"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:31
-msgid "纸娃娃地文是使用纸娃娃功能来拼接文本，从而实现丰富的通用文本的系统。\n在没有角色口上，且当前行为有纸娃娃地文时，将直接使用纸娃娃地文系统来挑选文本并显示。\n在当前行为有角色口上时，将按照此处设置的百分比来决定是否使用纸娃娃地文来显示文本"
+msgid "纸娃娃地文是使用纸娃娃功能来拼接文本，从而实现丰富的通用文本的系统。\n在没有角色口上，且当前行为有纸娃娃地文时，将直接使用纸娃娃地文系统来挑选文本并显示。\n在当前行为有角色口上时，将按照此处设置的百分比来决定是否使用纸娃娃地文来显示文本，默认为30%"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:31
 msgid "0%|10%|20%|30%|40%|50%|60%|70%|80%|90%|100%"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:32
+msgid "角色专属文本（即口上）相较于通用文本的权重倍数"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:32
+msgid "当角色有专属文本时，系统会按照此处设置的权重倍数来提升其相对于通用文本的出现概率，默认为10倍"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:32
+msgid "10"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:33
+msgid "特殊H相较于普通H的文本权重倍数"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:33
+msgid "当进行特殊H（如逆推、露出、隐奸、群交、乱伦、监禁、特殊地点等）时，系统会按照此处设置的权重倍数来提升其相对于普通H的文本出现概率，默认为5倍"
+msgstr ""
+
+#: .\data\csv\System_Setting.csv:33
+msgid "5"
 msgstr ""
 
 #: .\data\csv\Talent.csv:7
