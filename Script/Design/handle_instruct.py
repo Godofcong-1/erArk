@@ -2078,6 +2078,7 @@ def handle_collect():
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
      constant_promise.Premise.TARGET_NOT_PLAYER_DAUGHTER,
+     constant_promise.Premise.T_IMPRISONMENT_0,
      constant_promise.Premise.PLACE_ALL_DOOR_LOCKABLE,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TIRED_LE_74},
@@ -2261,6 +2262,23 @@ def handle_stop_sleep_obscenity():
     now_draw.draw()
     default.handle_door_close_reset(0,1,game_type.CharacterStatusChange(),datetime.datetime(1, 1, 1))
 
+@add_instruct(
+    constant.Instruct.IMPRISONMENT_H,
+    constant.InstructType.OBSCENITY,
+    _("监禁奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+     constant_promise.Premise.T_IMPRISONMENT_1,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.H,
+)
+def handle_imprisonment_h():
+    """处理监禁奸指令"""
+    handle_do_h()
 
 @add_instruct(
     constant.Instruct.UNCONSCIOUS_H,
@@ -2411,12 +2429,13 @@ def handle_wait_5_min_in_h():
 
 
 @add_instruct(
-    constant.Instruct.END_H,
+    constant.Instruct.H_END,
     constant.InstructType.SEX,
     _("结束H"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_NOT_PLAYER_DAUGHTER,
+     constant_promise.Premise.T_IMPRISONMENT_0,
      constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
@@ -2424,7 +2443,7 @@ def handle_wait_5_min_in_h():
      constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
-def handle_end_h():
+def handle_h_end():
     """处理H结束指令"""
     instuct_judege.init_character_behavior_start_time(0, cache.game_time)
     character_data: game_type.Character = cache.character_data[0]
@@ -2458,7 +2477,7 @@ def handle_end_h():
     update.game_update_flow(5)
 
 @add_instruct(
-    constant.Instruct.END_H_WITH_DAUGHTER,
+    constant.Instruct.H_WITH_DAUGHTER_END,
     constant.InstructType.SEX,
     _("结束乱伦H"),
     {constant_promise.Premise.HAVE_TARGET,
@@ -2471,12 +2490,30 @@ def handle_end_h():
      constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
-def handle_end_h_with_daughter():
+def handle_h_with_daughter_end():
     """处理结束乱伦H指令"""
     cache.achievement.h_with_daughter_count += 1
     # 结算成就
     achievement_panel.achievement_flow(_("乱伦"))
-    handle_end_h()
+    handle_h_end()
+
+@add_instruct(
+    constant.Instruct.IMPRISONMENT_H_END,
+    constant.InstructType.SEX,
+    _("结束监禁奸"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.T_IMPRISONMENT_1,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
+     constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
+     constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.IS_H},
+    constant.Behavior.END_H,
+)
+def handle_imprisonment_h_end():
+    """处理结束监禁奸指令"""
+    handle_h_end()
 
 @add_instruct(
     constant.Instruct.UNCONSCIOUS_H_END,

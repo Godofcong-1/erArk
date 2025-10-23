@@ -104,7 +104,7 @@ def judge_character_tired_sleep(character_id : int):
                     pl_character_data.behavior.behavior_id = constant.Behavior.T_H_HP_0
                     pl_character_data.state = constant.CharacterStatus.STATUS_T_H_HP_0
                     # 调用结束H的指令
-                    handle_instruct.handle_end_h()
+                    handle_instruct.handle_h_end()
 
     # 玩家计算
     else:
@@ -131,7 +131,7 @@ def judge_character_tired_sleep(character_id : int):
                 character_data.behavior.behavior_id = constant.Behavior.H_HP_0
                 character_data.state = constant.CharacterStatus.STATUS_H_HP_0
                 # 调用结束H的指令
-                handle_instruct.handle_end_h()
+                handle_instruct.handle_h_end()
 
 
 def judge_assistant_character(character_id: int) -> int:

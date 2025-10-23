@@ -266,4 +266,4 @@ class Sex_Be_Discovered_Panel:
             # 玩家变为被打断行为
             self.pl_chara_data.behavior.behavior_id = constant.Behavior.H_INTERRUPT
             # 调用结束H处理
-            handle_instruct.handle_end_h()
+            handle_instruct.handle_h_end()
