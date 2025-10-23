@@ -62,7 +62,7 @@ def update_sleep():
                 if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
                     assistant_character_data.sp_flag.night_salutation = 0
                 # 如果助理的跟随服务已开启，且没有在跟随，则让助理跟随
-                if assistant_character_data.sp_flag.is_follow != 1 and handle_premise.handle_not_follow_1(assistant_id):
+                if assistant_character_data.sp_flag.is_follow != 1 and handle_premise.handle_assistant_follow_1(assistant_id):
                     assistant_character_data.sp_flag.is_follow = 1
                 # 助理成就
                 achievement_panel.achievement_flow(_("助理"))
