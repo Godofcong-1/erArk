@@ -114,6 +114,7 @@ class Select_Exhibitionism_Sex_Mode_Panel:
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
             other_chara_count = len(scene_data.character_list) - 2
             # 成就初始化
+            cache.achievement.exhibitionism_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}
             # 如果是从被发现面板跳转过来
             if self.sex_be_discovered_flag:
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_EXHIBITIONISM_SEX)

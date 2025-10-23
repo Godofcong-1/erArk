@@ -1088,6 +1088,11 @@ def orgasm_settle(
                 # 成就统计
                 cache.achievement.hidden_sex_record.setdefault(4, 0)
                 cache.achievement.hidden_sex_record[4] += 1
+            # 露出状态下
+            elif handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+                # 成就统计
+                cache.achievement.exhibitionism_sex_record.setdefault(4, 0)
+                cache.achievement.exhibitionism_sex_record[4] += 1
             # 睡奸状态下
             if handle_premise.handle_unconscious_flag_1(character_id):
                 # 成就统计

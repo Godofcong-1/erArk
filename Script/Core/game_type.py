@@ -808,6 +808,8 @@ class ACHIEVEMENT:
         """ 群交记录，1为对群交中被射精的干员的id列表，2为群交中绝顶的干员id列表 """
         self.hidden_sex_record: Dict[int, int] = {}
         """ 隐奸记录，1为隐奸模式，2为在场其他干员人数，3为射精次数，4为隐奸干员绝顶次数 """
+        self.exhibitionism_sex_record: Dict[int, int] = {}
+        """ 露出记录，1为露出模式，2为在场其他干员人数，3为射精次数，4为露出干员绝顶次数 """
         self.sleep_sex_record: Dict[int, int] = {}
         """ 睡奸记录，1为睡奸模式0正常1装睡，2为射精次数，3为被睡奸干员绝顶次数 """
         self.h_with_daughter_count: int = 0

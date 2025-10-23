@@ -2580,6 +2580,8 @@ def handle_exhibitionism_sex_end():
         handle_premise.handle_normal_6(character_data.target_character_id)
         ):
         target_data.sp_flag.is_follow = 1
+    # 结算成就
+    achievement_panel.achievement_flow(_("露出"))
 
     # 对方原地待机10分钟
     target_data.behavior.behavior_id = constant.Behavior.WAIT

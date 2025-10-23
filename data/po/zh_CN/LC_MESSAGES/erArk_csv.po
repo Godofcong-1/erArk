@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-10-23 16:17+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -1185,314 +1185,346 @@ msgid "在对方中间醒来又继续装睡的情况下，完成一次睡奸，�
 msgstr ""
 
 #: .\data\csv\Achievement.csv:114
+msgid "展示自我"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:114
+msgid "首次进行露出H，期间至少射精1次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:115
+msgid "光天化日"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:115
+msgid "在别人的面前与干员进行露出H，期间至少射精1次，露出的干员至少绝顶1次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:116
+msgid "众目睽睽"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:116
+msgid "在至少10名干员的面前进行露出H，期间至少射精3次，露出的干员至少绝顶3次"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:117
+msgid "看清楚了吗"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:117
+msgid "在H被目击后成功转为露出H模式"
+msgstr ""
+
+#: .\data\csv\Achievement.csv:118
 msgid "初尝禁果"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:118
 msgid "乱伦"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:114
+#: .\data\csv\Achievement.csv:118
 msgid "首次与女儿进行一次乱伦H"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:119
 msgid "血脉相连"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:115
+#: .\data\csv\Achievement.csv:119
 msgid "与女儿进行100次乱伦H"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:120
 msgid "签字盖章"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:120
 msgid "公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:116
+#: .\data\csv\Achievement.csv:120
 msgid "首次处理公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:117
+#: .\data\csv\Achievement.csv:121
 msgid "公文如山"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:117
+#: .\data\csv\Achievement.csv:121
 msgid "累计处理100次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:118
+#: .\data\csv\Achievement.csv:122
 msgid "日理万机"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:118
+#: .\data\csv\Achievement.csv:122
 msgid "累计处理1000次公务"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:119
+#: .\data\csv\Achievement.csv:123
 msgid "书香初现"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:119
+#: .\data\csv\Achievement.csv:123
 msgid "读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:119
+#: .\data\csv\Achievement.csv:123
 msgid "首次读书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:120
+#: .\data\csv\Achievement.csv:124
 msgid "合上书页"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:120
+#: .\data\csv\Achievement.csv:124
 msgid "读完1本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:121
+#: .\data\csv\Achievement.csv:125
 msgid "博览群书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:121
+#: .\data\csv\Achievement.csv:125
 msgid "累计读完100本书"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:122
+#: .\data\csv\Achievement.csv:126
 msgid "初试锅铲"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:122
+#: .\data\csv\Achievement.csv:126
 msgid "烹饪"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:122
+#: .\data\csv\Achievement.csv:126
 msgid "首次制作食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:123
+#: .\data\csv\Achievement.csv:127
 msgid "千锅百味"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:123
+#: .\data\csv\Achievement.csv:127
 msgid "累计制作100次食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:124
+#: .\data\csv\Achievement.csv:128
 msgid "泰拉饭"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:124
+#: .\data\csv\Achievement.csv:128
 msgid "累计制作1000份食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:125
+#: .\data\csv\Achievement.csv:129
 msgid "礼尚往来"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:125
+#: .\data\csv\Achievement.csv:129
 msgid "礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:125
+#: .\data\csv\Achievement.csv:129
 msgid "首次赠送礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:126
+#: .\data\csv\Achievement.csv:130
 msgid "圣诞老人"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:126
+#: .\data\csv\Achievement.csv:130
 msgid "累计赠送100次礼物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:127
+#: .\data\csv\Achievement.csv:131
 msgid "身高体重"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:127
+#: .\data\csv\Achievement.csv:131
 msgid "身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:127
+#: .\data\csv\Achievement.csv:131
 msgid "首次进行身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:128
+#: .\data\csv\Achievement.csv:132
 msgid "内外体格"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:128
+#: .\data\csv\Achievement.csv:132
 msgid "累计进行了100次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:129
+#: .\data\csv\Achievement.csv:133
 msgid "影像拍片"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:129
+#: .\data\csv\Achievement.csv:133
 msgid "累计进行了1000次身体检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:130
+#: .\data\csv\Achievement.csv:134
 msgid "落红未干"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:130
+#: .\data\csv\Achievement.csv:134
 msgid "在干员的破处当天进行处女膜检查"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:131
+#: .\data\csv\Achievement.csv:135
 msgid "出具报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:131
+#: .\data\csv\Achievement.csv:135
 msgid "体检报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:131
+#: .\data\csv\Achievement.csv:135
 msgid "首次对干员出具身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:132
+#: .\data\csv\Achievement.csv:136
 msgid "档案汇总"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:132
+#: .\data\csv\Achievement.csv:136
 msgid "累计对100个干员出具了身体检查报告"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:133
+#: .\data\csv\Achievement.csv:137
 msgid "精调"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:133
+#: .\data\csv\Achievement.csv:137
 msgid "调香"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:133
+#: .\data\csv\Achievement.csv:137
 msgid "首次对干员进行香薰疗愈"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:134
+#: .\data\csv\Achievement.csv:138
 msgid "爱琴之吻"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:134
+#: .\data\csv\Achievement.csv:138
 msgid "累计香薰疗愈100次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:135
+#: .\data\csv\Achievement.csv:139
 msgid "大意食精粥"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:135
+#: .\data\csv\Achievement.csv:139
 msgid "进食"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:135
+#: .\data\csv\Achievement.csv:139
 msgid "让干员吃下了加入精液的食物"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:136
+#: .\data\csv\Achievement.csv:140
 msgid "跨国航行"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:136
+#: .\data\csv\Achievement.csv:140
 msgid "导航"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:136
+#: .\data\csv\Achievement.csv:140
 msgid "罗德岛首次移动到了一个新的国家"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:137
+#: .\data\csv\Achievement.csv:141
 msgid "大地巡旅"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:137
+#: .\data\csv\Achievement.csv:141
 msgid "罗德岛开遍了泰拉的所有国家"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:138
+#: .\data\csv\Achievement.csv:142
 msgid "第一滴精"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:138
+#: .\data\csv\Achievement.csv:142
 msgid "射精"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:138
+#: .\data\csv\Achievement.csv:142
 msgid "首次射精"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:139
+#: .\data\csv\Achievement.csv:143
 msgid "精液水泵"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:139
+#: .\data\csv\Achievement.csv:143
 msgid "在一次H中射精至少20次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:140
+#: .\data\csv\Achievement.csv:144
 msgid "百战雄根"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:140
+#: .\data\csv\Achievement.csv:144
 msgid "累积射精次数超过1000次"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:141
+#: .\data\csv\Achievement.csv:145
 msgid "白浊喷泉"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:141
+#: .\data\csv\Achievement.csv:145
 msgid "在H中，单名干员的阴道、子宫、肛门、尿道部位的合计被射精量超过500ml"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:142
+#: .\data\csv\Achievement.csv:146
 msgid "白浊嫁衣"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:142
+#: .\data\csv\Achievement.csv:146
 msgid "在H中，单名干员的所有服装部位的合计被射精量超过500ml"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:143
+#: .\data\csv\Achievement.csv:147
 msgid "精液膨腹"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:143
+#: .\data\csv\Achievement.csv:147
 msgid "在干员体内射精量多到使其腹部隆起"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:144
+#: .\data\csv\Achievement.csv:148
 msgid "双管齐下"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:144
+#: .\data\csv\Achievement.csv:148
 msgid "绝顶"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:144
+#: .\data\csv\Achievement.csv:148
 msgid "让干员同时两个部位绝顶"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:145
+#: .\data\csv\Achievement.csv:149
 msgid "六神无主"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:145
+#: .\data\csv\Achievement.csv:149
 msgid "让干员同时六个部位绝顶"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:146
+#: .\data\csv\Achievement.csv:150
 msgid "十面埋伏"
 msgstr ""
 
-#: .\data\csv\Achievement.csv:146
+#: .\data\csv\Achievement.csv:150
 msgid "让干员同时十个部位绝顶"
 msgstr ""
 

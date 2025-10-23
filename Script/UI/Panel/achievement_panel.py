@@ -67,6 +67,8 @@ def achievement_flow(achievement_type: str, achievement_id: int = 0):
         func = settle_chara_group_sex
     elif achievement_type == _("隐奸"):
         func = settle_chara_hidden_sex
+    elif achievement_type == _("露出"):
+        func = settle_chara_exhibitionism_sex
     elif achievement_type == _("睡奸"):
         func = settle_chara_sleep_sex
     elif achievement_type == _("射精"):
@@ -458,6 +460,44 @@ def settle_chara_group_sex():
         (conscious_count, 902),  # 同时与至少50名有意识的角色一起群交
         (unconscious_count, 903),  # 同时与至少50名无意识的角色一起群交
         (daughter_and_mother_flag, 905),  # 母女丼群交
+    ]
+    # 统一调用settle_achievement进行批量结算
+    for judge_value, achievement_id in achievement_checks:
+        return_list.extend(settle_achievement(judge_value, achievement_id))
+    return return_list
+
+def settle_chara_exhibitionism_sex():
+    """
+    结算露出类的成就\n
+    返回：\n
+    - return_list: 成就列表，包含已达成的成就ID
+    """
+    return_list = []
+    # 如果没有在露出中则返回
+    if handle_premise.handle_player_not_in_exhibitionism_sex_mode(0):
+        return return_list
+    # 露出模式
+    mode_id = cache.achievement.exhibitionism_sex_record[1]
+    # 在场其他角色人数
+    other_chara_count = cache.achievement.exhibitionism_sex_record[2]
+    # 射精次数
+    ejaculation_count = cache.achievement.exhibitionism_sex_record[3]
+    # 绝顶次数
+    climax_count = cache.achievement.exhibitionism_sex_record[4]
+    # 成就932的特殊标志
+    flag_932 = 0
+    if mode_id in [3, 4] and other_chara_count >= 1 and ejaculation_count >= 1 and climax_count >= 1:
+        flag_932 = 1
+    # 成就933的特殊标志
+    flag_933 = 0
+    if other_chara_count >= 10 and ejaculation_count >= 3 and climax_count >= 3:
+        flag_933 = 1
+    # 构建成就结算列表
+    achievement_checks = [
+        # (判断值, 成就ID)
+        (ejaculation_count, 931),  # 期间至少射精1次
+        (flag_932, 932),  # 在别人的面前与干员进行露出H，期间至少射精1次，露出的干员至少绝顶1次
+        (flag_933, 933),  # 在至少10名干员的面前进行露出H，期间至少射精3次，露出的干员至少绝顶3次
     ]
     # 统一调用settle_achievement进行批量结算
     for judge_value, achievement_id in achievement_checks:

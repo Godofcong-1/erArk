@@ -218,6 +218,9 @@ class Sex_Be_Discovered_Panel:
             # 如果邀请失败，则结束当前H
             if self.pl_chara_data.behavior.behavior_id == constant.Behavior.H_INTERRUPT:
                 self._end_current_h()
+            else:
+                # 结算成就
+                achievement_panel.get_achievement_judge_by_value(934, 1)
 
     def _invite_find_char_to_join(self) -> None:
         """选择邀请对方加入群交"""

@@ -360,6 +360,11 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
             # 成就统计
             cache.achievement.hidden_sex_record.setdefault(3, 0)
             cache.achievement.hidden_sex_record[3] += 1
+        # 露出状态下
+        elif handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
+            # 成就统计
+            cache.achievement.exhibitionism_sex_record.setdefault(3, 0)
+            cache.achievement.exhibitionism_sex_record[3] += 1
         # 睡奸状态下
         elif handle_premise.handle_t_unconscious_flag_1(0):
             # 成就统计
