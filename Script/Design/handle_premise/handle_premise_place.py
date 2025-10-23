@@ -760,6 +760,7 @@ def handle_scene_have_multi_masturebate_to_pl_chara(character_id: int) -> int:
     # 场景角色数大于等于2时进行检测
     if len(character_list) < 2:
         return 0
+    count = 0
     # 遍历当前角色列表
     for chara_id in character_list:
         # 跳过玩家
