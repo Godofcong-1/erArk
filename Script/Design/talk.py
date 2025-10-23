@@ -149,21 +149,73 @@ def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag =
         talk_premise_set = game_config.config_talk_premise_data[talk_id]
         now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(talk_premise_set, character_id, calculated_premise_dict, weight_all_to_1_flag = True, unconscious_pass_flag = unconscious_pass_flag)
         if now_weight:
-            # 时停解放时，有时停前提的权重*10
-            if handle_premise.handle_self_time_stop_orgasm_relase(character_id) or handle_premise.handle_target_time_stop_orgasm_relase(character_id):
-                if "self_time_stop_orgasm_relase" in talk_premise_set or "target_time_stop_orgasm_relase" in talk_premise_set:
-                    now_weight *= 10
             # 如果该句文本是角色口上，则权重乘以十
             if talk_config.adv_id != 0:
                 now_weight *= 10
-            # 如果该角色是女儿，且前提中有女儿相关前提，则权重乘以5
-            elif handle_premise.handle_self_is_player_daughter(character_id) or handle_premise.handle_target_is_player_daughter(character_id):
-                if "self_is_player_daughter" in talk_premise_set or "target_is_player_daughter" in talk_premise_set:
-                    now_weight *= 5
+            # 计算特殊前提权重加成
+            new_weight = handle_special_talk_weight(character_id, talk_premise_set)
+            now_weight *= new_weight
+            # 加入到正式口上数据中
             now_talk_data.setdefault(now_weight, set())
             now_talk_data[now_weight].add(talk_id)
     return now_talk_data
 
+def handle_special_talk_weight(character_id: int, talk_premise_set: set) -> int:
+    """
+    处理特殊前提的权重加成
+    Keyword arguments:
+    character_id -- 角色id
+    talk_premise_set -- 口上前提集合
+    Return arguments:
+    new_weight -- 额外权重加成倍率
+    """
+    new_weight = 1
+    judge_premise_and_weight_list = []
+    from Script.Core import constant_promise
+    # 时停解放
+    if handle_premise.handle_self_time_stop_orgasm_relase(character_id) or handle_premise.handle_target_time_stop_orgasm_relase(character_id):
+        time_stop_orgasm_relase_premise = [constant_promise.Premise.SELF_TIME_STOP_ORGASM_RELAESE, constant_promise.Premise.TARGET_TIME_STOP_ORGASM_RELAESE]
+        judge_premise_and_weight_list.append((time_stop_orgasm_relase_premise, 10))
+    # 女儿
+    if handle_premise.handle_self_is_player_daughter(character_id) or handle_premise.handle_target_is_player_daughter(character_id):
+        daughter_premise = [constant_promise.Premise.SELF_IS_PLAYER_DAUGHTER, constant_promise.Premise.SELF_NOT_PLAYER_DAUGHTER]
+        judge_premise_and_weight_list.append((daughter_premise, 5))
+    # 在爱情旅馆H
+    if handle_premise.handle_h_in_love_hotel(character_id):
+        h_in_love_hotel_premise = [constant_promise.Premise.H_IN_LOVE_HOTEL]
+        judge_premise_and_weight_list.append((h_in_love_hotel_premise, 3))
+    # 在浴室中H
+    if handle_premise.handle_h_in_bathroom(character_id):
+        h_in_bathroom_premise = [constant_promise.Premise.H_IN_BATHROOM]
+        judge_premise_and_weight_list.append((h_in_bathroom_premise, 3))
+    # 逆推
+    if handle_premise.handle_npc_active_h(character_id) or handle_premise.handle_t_npc_active_h(character_id):
+        reverse_premise = [constant_promise.Premise.NPC_ACTIVE_H, constant_promise.Premise.T_NPC_ACTIVE_H]
+        judge_premise_and_weight_list.append((reverse_premise, 5))
+    # 隐奸
+    if handle_premise.handle_hidden_sex_mode_ge_1(character_id) or handle_premise.handle_t_hidden_sex_mode_ge_1(character_id):
+        hidden_sex_premise = [constant_promise.Premise.HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.HIDDEN_SEX_MODE_1, constant_promise.Premise.HIDDEN_SEX_MODE_2, constant_promise.Premise.HIDDEN_SEX_MODE_3, constant_promise.Premise.HIDDEN_SEX_MODE_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.HIDDEN_SEX_MODE_2_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2_OR_4]
+        judge_premise_and_weight_list.append((hidden_sex_premise, 5))
+    # 露出
+    if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+        exhibitionism_sex_premise = [constant_promise.Premise.EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_4, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_4]
+        judge_premise_and_weight_list.append((exhibitionism_sex_premise, 5))
+    # 群交
+    if handle_premise.handle_group_sex_mode_on(character_id):
+        group_sex_premise = [constant_promise.Premise.GROUP_SEX_MODE_ON]
+        judge_premise_and_weight_list.append((group_sex_premise, 5))
+    # 监禁
+    if handle_premise.handle_imprisonment_1(character_id) or handle_premise.handle_t_imprisonment_1(character_id):
+        imprisonment_premise = [constant_promise.Premise.IMPRISONMENT_1, constant_promise.Premise.T_IMPRISONMENT_1]
+        judge_premise_and_weight_list.append((imprisonment_premise, 3))
+    # 遍历所有需要判断的前提和对应权重
+    for premise_list, weight in judge_premise_and_weight_list:
+        for premise in premise_list:
+            # 如果口上前提中包含该前提，则进行权重加成
+            if premise in talk_premise_set:
+                new_weight *= weight
+                break
+    return new_weight
 
 def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly"):
     """
