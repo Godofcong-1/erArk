@@ -2077,7 +2077,7 @@ def handle_collect():
      constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
-     constant_promise.Premise.PLACE_DOOR_LOCKABLE,
+     constant_promise.Premise.PLACE_ALL_DOOR_LOCKABLE,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.TIRED_LE_74},
     constant.Behavior.H,
@@ -2107,6 +2107,51 @@ def handle_do_h():
         now_draw.draw()
         chara_handle_instruct_common_settle(constant.Behavior.DO_H_FAIL)
 
+
+@add_instruct(
+    constant.Instruct.DO_H_IN_LOVE_HOTEL,
+    constant.InstructType.OBSCENITY,
+    _("邀请在爱情旅馆H"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+     constant_promise.Premise.IN_LOVE_HOTEL,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.H,
+)
+def handle_do_h_in_love_hotel():
+    """处理邀请在爱情旅馆H指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.h_in_love_hotel = True
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.h_state.h_in_love_hotel = True
+    handle_do_h()
+
+@add_instruct(
+    constant.Instruct.DO_H_IN_BATHROOM,
+    constant.InstructType.OBSCENITY,
+    _("邀请在浴室H"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
+     constant_promise.Premise.IN_BATHROOM,
+     constant_promise.Premise.SCENE_ONLY_TWO,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.H,
+)
+def handle_do_h_in_bathroom():
+    """处理邀请在浴室H指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.h_in_bathroom = True
+    target_data = cache.character_data[character_data.target_character_id]
+    target_data.h_state.h_in_bathroom = True
+    handle_do_h()
 
 @add_instruct(
     constant.Instruct.PREPARE_TRAINING,
@@ -2227,29 +2272,6 @@ def handle_unconscious_h():
     if handle_premise.handle_unconscious_flag_1(character_data.target_character_id):
         cache.achievement.sleep_sex_record = {1: 0, 2: 0, 3: 0}
     chara_handle_instruct_common_settle(constant.Behavior.H)
-
-
-@add_instruct(
-    constant.Instruct.DO_H_IN_LOVE_HOTEL,
-    constant.InstructType.OBSCENITY,
-    _("邀请在爱情旅馆H"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.NOT_H,
-     constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
-     constant_promise.Premise.IN_LOVE_HOTEL,
-     constant_promise.Premise.SCENE_ONLY_TWO,
-     constant_promise.Premise.LIVE_IN_LOVE_HOTEL,
-     constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
-     constant_promise.Premise.TIRED_LE_74}
-)
-def handle_do_h_in_love_hotel():
-    """处理邀请在爱情旅馆H指令"""
-    character_data: game_type.Character = cache.character_data[0]
-    character_data.h_state.h_in_love_hotel = True
-    target_data = cache.character_data[character_data.target_character_id]
-    target_data.h_state.h_in_love_hotel = True
-    handle_do_h()
 
 
 @add_instruct(

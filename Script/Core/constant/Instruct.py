@@ -369,6 +369,8 @@ class Instruct:
     """ 邀请H """
     DO_H_IN_LOVE_HOTEL = 0
     """ 邀请在爱情旅馆H """
+    DO_H_IN_BATHROOM = 0
+    """ 邀请在浴室H """
     UNCONSCIOUS_H = 0
     """ 无意识奸 """
     ASK_HIDDEN_SEX = 0
