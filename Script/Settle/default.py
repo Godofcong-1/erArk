@@ -5617,6 +5617,8 @@ def handle_self_h_state_reset(
     character_data.sp_flag.go_to_join_group_sex = False
     # 清零隐奸模式
     character_data.sp_flag.hidden_sex_mode = 0
+    # 清零露出模式
+    character_data.sp_flag.exhibitionism_sex_mode = 0
     # 记录高潮进度
     for state_id in game_config.config_character_state:
         if game_config.config_character_state[state_id].type == 0:

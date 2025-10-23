@@ -142,6 +142,9 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         # 结束隐奸状态
         if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
             character_data.sp_flag.hidden_sex_mode = 0
+        # 结束露出状态
+        if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+            character_data.sp_flag.exhibitionism_sex_mode = 0
 
     return 1
 
