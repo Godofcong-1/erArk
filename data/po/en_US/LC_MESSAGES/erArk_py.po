@@ -10965,3 +10965,1007 @@ msgid ""
 "字体大小已修改为{0}，重启游戏后生效\n"
 "\n"
 msgstr ""
+
+msgid "阿玛雅"
+msgstr ""
+
+msgid "今日罗德岛收入为："
+msgstr ""
+
+msgid "医疗部收入{0}，"
+msgstr ""
+
+msgid "总收入为{0}，已全部转化为龙门币\n"
+msgstr ""
+
+msgid "龙门币"
+msgstr ""
+
+msgid "{0}有事找你，已经在门外等候多时了\n"
+msgstr ""
+
+msgid "种植与养护作物"
+msgstr ""
+
+msgid "在H中取消时停"
+msgstr ""
+
+msgid "查看蚀刻章"
+msgstr ""
+
+msgid "邀请在浴室H"
+msgstr ""
+
+msgid "邀请露出"
+msgstr ""
+
+msgid "结束H"
+msgstr ""
+
+msgid "结束无意识奸"
+msgstr ""
+
+msgid "睡奸"
+msgstr ""
+
+msgid ""
+"\n"
+"结束无意识奸\n"
+msgstr ""
+
+msgid "结束隐奸"
+msgstr ""
+
+msgid ""
+"\n"
+"结束隐奸\n"
+msgstr ""
+
+msgid "结束露出"
+msgstr ""
+
+msgid ""
+"\n"
+"结束露出\n"
+msgstr ""
+
+msgid "调控设施供能"
+msgstr ""
+
+msgid "管理能源系统"
+msgstr ""
+
+msgid "关系"
+msgstr ""
+
+msgid "+找博士逆推(+50)"
+msgstr ""
+
+msgid "生育"
+msgstr ""
+
+msgid ""
+"\n"
+"error {0}的身体部位成长时新旧素质列表长度不一致，母亲为{1}，旧列表{2}，新列表{3}\n"
+msgstr ""
+
+msgid "射精欲"
+msgstr ""
+
+msgid "快感"
+msgstr ""
+
+msgid ""
+"\n"
+"  <hp_point>"
+msgstr ""
+
+msgid "催眠度"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}失去了【初吻】\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}失去了【阴道处女】\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}失去了【肛门处女】\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}失去了【尿道处女】\n"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}失去了【子宫处女】\n"
+msgstr ""
+
+msgid "兜帽"
+msgstr ""
+
+msgid "长裤"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}获得了【持有博士把柄】\n"
+msgstr ""
+
+msgid "公务"
+msgstr ""
+
+msgid "礼物"
+msgstr ""
+
+msgid "囚犯"
+msgstr ""
+
+msgid "锻炼"
+msgstr ""
+
+msgid "你持有的{0}个食物因过期变质而自动丢弃了\n"
+msgstr ""
+
+msgid "助理"
+msgstr ""
+
+msgid "周目"
+msgstr ""
+
+msgid " -【接入协议】-"
+msgstr ""
+
+msgid "收藏服装"
+msgstr ""
+
+msgid "载具"
+msgstr ""
+
+msgid "购买道具"
+msgstr ""
+
+msgid "外勤"
+msgstr ""
+
+msgid "维修"
+msgstr ""
+
+msgid "保养"
+msgstr ""
+
+msgid "生产"
+msgstr ""
+
+msgid "种植"
+msgstr ""
+
+msgid "烹饪"
+msgstr ""
+
+msgid "身体检查"
+msgstr ""
+
+msgid "体检报告"
+msgstr ""
+
+msgid "调香"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"   ○ 获得蚀刻章：{name} ○\n"
+msgstr ""
+
+msgid ""
+"      （{description}）\n"
+"\n"
+"\n"
+msgstr ""
+
+msgid "蚀刻章"
+msgstr ""
+
+msgid "○高难蚀刻章需要前置才能解锁，隐藏蚀刻章在达成前不显示解锁条件\n"
+msgstr ""
+
+msgid "蚀刻章一览："
+msgstr ""
+
+msgid "[刷新蚀刻章]"
+msgstr ""
+
+msgid "刷新蚀刻章列表"
+msgstr ""
+
+msgid "* 设施效率调整{0}%"
+msgstr ""
+
+msgid "主:{0}(农业lv{1}:{2}%)"
+msgstr ""
+
+msgid "主:空缺"
+msgstr ""
+
+msgid "，副:{0}%]"
+msgstr ""
+
+msgid "当前效率加成：{0} {1} = {2}%"
+msgstr ""
+
+msgid ""
+"\n"
+"    当前生产：{0}"
+msgstr ""
+
+msgid "[001]种植员管理"
+msgstr ""
+
+msgid "种植员管理"
+msgstr ""
+
+msgid "当前药田种植员数量：{0}，温室种植员数量：{1}"
+msgstr ""
+
+msgid "[种植员增减]"
+msgstr ""
+
+msgid "(空缺)"
+msgstr ""
+
+msgid "药田{0}号线 主种植员: {1}  "
+msgstr ""
+
+msgid "[任命]"
+msgstr ""
+
+msgid "任命"
+msgstr ""
+
+msgid "药田主种植员"
+msgstr ""
+
+msgid "药田副种植员："
+msgstr ""
+
+msgid "药田副种植员：暂无\n"
+msgstr ""
+
+msgid "温室{0}号线 主种植员: {1}  "
+msgstr ""
+
+msgid "任命温室主种植员"
+msgstr ""
+
+msgid "温室副种植员："
+msgstr ""
+
+msgid "温室副种植员：暂无\n"
+msgstr ""
+
+msgid "药田"
+msgstr ""
+
+msgid "温室"
+msgstr ""
+
+msgid "请选择一名种植员担任{0}{1}号线主种植员:\n"
+msgstr ""
+
+msgid "任命主种植员"
+msgstr ""
+
+msgid "(囚)"
+msgstr ""
+
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了后庭处女\n"
+msgstr ""
+
+msgid "保有子宫处女\n"
+msgstr ""
+
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了子宫处女\n"
+msgstr ""
+
+msgid "保有尿道处女\n"
+msgstr ""
+
+msgid "于{time}在{palce}，被{character_name}博士以{posture}夺走了尿道处女\n"
+msgstr ""
+
+msgid "  当前理论用电量: {0} / 理论供电量:{1}"
+msgstr ""
+
+msgid "快速使用最小理智剂"
+msgstr ""
+
+msgid "快速使用精力剂"
+msgstr ""
+
+msgid "   如需对模型进行破甲/破限/越狱，同样也是将相关内容添加到上述系统提示词文件中\n"
+msgstr ""
+
+msgid "选择露出H模式"
+msgstr ""
+
+msgid "[1]无人室内露出：在场景内没有其他人，且没有锁门的室内进行露出H"
+msgstr ""
+
+msgid "[2]无人室外露出：在场景内没有其他人的户外进行露出H"
+msgstr ""
+
+msgid "[3]人前露出：在场景内有其他人的情况下，直接进行露出H"
+msgstr ""
+
+msgid "[4]无意识人前露出：在场景内有其他人，且其他人都在无意识的情况下进行露出H"
+msgstr ""
+
+msgid ""
+"\n"
+"请选择要进行的露出H模式：\n"
+"\n"
+msgstr ""
+
+msgid "露出"
+msgstr ""
+
+msgid ""
+"\n"
+"邀请露出失败\n"
+msgstr ""
+
+msgid "未招募"
+msgstr ""
+
+msgid "已招募"
+msgstr ""
+
+msgid "委托等级"
+msgstr ""
+
+msgid "委托类型"
+msgstr ""
+
+msgid "委托名称"
+msgstr ""
+
+msgid "派遣人数与耗时天数"
+msgstr ""
+
+msgid "需求类型"
+msgstr ""
+
+msgid "奖励类型"
+msgstr ""
+
+msgid "角色"
+msgstr ""
+
+msgid ""
+"\n"
+"该商店已经没有没有可购买的食物了，请明天再来\n"
+msgstr ""
+
+msgid ""
+"\n"
+"  {0}已经拥有了你的阴茎倒模，不能重复赠送\n"
+msgstr ""
+
+msgid "（+{0:.1f}%）"
+msgstr ""
+
+msgid "（{0:.1f}%）"
+msgstr ""
+
+msgid "食物名字: {0}\n"
+msgstr ""
+
+msgid "菜谱难度: {0}\n"
+msgstr ""
+
+msgid "预计耗时: {0} 分钟{1}\n"
+msgstr ""
+
+msgid "当前调味: {0}\n"
+msgstr ""
+
+msgid "是否确认制作该食物？"
+msgstr ""
+
+msgid "无此生产线"
+msgstr ""
+
+msgid "主:{0}(制造lv{1}:{2}%)"
+msgstr ""
+
+msgid "基建"
+msgstr ""
+
+msgid "[001]生产工人管理"
+msgstr ""
+
+msgid "生产工人管理"
+msgstr ""
+
+msgid "当前生产工人数量：{0}"
+msgstr ""
+
+msgid "[生产工人增减]"
+msgstr ""
+
+msgid "{0}号生产线 主生产工人: {1}  "
+msgstr ""
+
+msgid "副生产工人："
+msgstr ""
+
+msgid "请选择一名生产工人担任第{0}号生产线主生产工人:\n"
+msgstr ""
+
+msgid "任命主生产工人"
+msgstr ""
+
+msgid "[能源系统]"
+msgstr ""
+
+msgid "能源系统"
+msgstr ""
+
+msgid "人力"
+msgstr ""
+
+msgid ""
+"\n"
+"在{0}射精的同时，"
+msgstr ""
+
+msgid ""
+"\n"
+"在{0}绝顶的同时，"
+msgstr ""
+
+msgid ""
+"\n"
+"在{0}{1}重绝顶的同时，"
+msgstr ""
+
+msgid "性爱发电装置产生了 {0:.1f} 单位电量\n"
+msgstr ""
+
+msgid "主反应炉"
+msgstr ""
+
+msgid "副反应炉"
+msgstr ""
+
+msgid "水力"
+msgstr ""
+
+msgid "风力"
+msgstr ""
+
+msgid "光伏"
+msgstr ""
+
+msgid ""
+"\n"
+"能源结算\n"
+msgstr ""
+
+msgid " - 火力发电：燃料不足（计划 {0:.1f}，实际 {1:.1f}），按比例产出 {2:.1f} 单位电量\n"
+msgstr ""
+
+msgid " - 火力发电：消耗燃料 {0:.1f} 单位，产出 {1:.1f} 单位电量\n"
+msgstr ""
+
+msgid " - 清洁能源：水 {0} 风 {1} 太阳能 {2} 台，总产出 {3:.1f} 单位电量\n"
+msgstr ""
+
+msgid " - 汇总：总发电 {0:.1f} 单位电量，总耗电 {1:.1f} 单位电量\n"
+msgstr ""
+
+msgid " - 亏电：缺口 {0:.1f} 单位电量，已从蓄电池补充 {1:.1f} 单位电量，剩余储能 {2:.1f}/{3}\n"
+msgstr ""
+
+msgid " - 警告：仍缺 {0:.1f} 单位电量，占需求 {1:.1%}\n"
+msgstr ""
+
+msgid " - 已完全由蓄电池弥补当日缺口\n"
+msgstr ""
+
+msgid " - 自放电：损失 {0:.1f} 单位电量 ({1:.2%})，储能剩余 {2:.1f}\n"
+msgstr ""
+
+msgid " - 结余：过剩 {0:.1f} 单位电量，充入 {1:.1f} 单位电量，当前储能 {2:.1f}/{3}，溢出 {4:.1f} 单位电量\n"
+msgstr ""
+
+msgid "动力系统管理"
+msgstr ""
+
+msgid "--概览--"
+msgstr ""
+
+msgid "  储能: {0:.1f}/{1:.1f}"
+msgstr ""
+
+msgid "  调控员人数: {0}"
+msgstr ""
+
+msgid "  源石反应炉(每天) 主:{0} 副:{1} 理论产出:{2:.1f}"
+msgstr ""
+
+msgid "  清洁能源(每天) 水力:{0}({3:.1f}) 风能:{1}({4:.1f}) 光伏:{2}({5:.1f})"
+msgstr ""
+
+msgid "  蓄电池(L1/L2/L3): {0}/{1}/{2}"
+msgstr ""
+
+msgid "[001]供电策略调整"
+msgstr ""
+
+msgid "供电策略调整"
+msgstr ""
+
+msgid "[002]调控员管理"
+msgstr ""
+
+msgid "调控员管理"
+msgstr ""
+
+msgid "[003]发电设施管理"
+msgstr ""
+
+msgid "发电设施管理"
+msgstr ""
+
+msgid "[004]蓄电池管理"
+msgstr ""
+
+msgid "蓄电池管理"
+msgstr ""
+
+msgid "供电策略"
+msgstr ""
+
+msgid ""
+"\n"
+"  当前理论用电量: {0} / 理论供电量:{1}\n"
+msgstr ""
+
+msgid "区块"
+msgstr ""
+
+msgid "当前策略"
+msgstr ""
+
+msgid "{0} | {1} | [-]降级   [+]升级\n"
+msgstr ""
+
+msgid "[-]"
+msgstr ""
+
+msgid "降低"
+msgstr ""
+
+msgid "[+]"
+msgstr ""
+
+msgid "提升"
+msgstr ""
+
+msgid "当前调控员数量：{0}  总效率加成：{1:.2%}"
+msgstr ""
+
+msgid "[调控员增减]"
+msgstr ""
+
+msgid "源石反应炉"
+msgstr ""
+
+msgid "水力发电"
+msgstr ""
+
+msgid "风力发电"
+msgstr ""
+
+msgid "光伏发电"
+msgstr ""
+
+msgid "{0}主调控员: {1}"
+msgstr ""
+
+msgid "辅助调控员: "
+msgstr ""
+
+msgid "(未知)"
+msgstr ""
+
+msgid "风能"
+msgstr ""
+
+msgid "请选择一名调控员担任{0}主调控员:\n"
+msgstr ""
+
+msgid "任命主调控员"
+msgstr ""
+
+msgid "  当前燃料库存: {0} 单位，每日计划消耗 {1:.1f} 单位，约可支持 {2} 天\n"
+msgstr ""
+
+msgid "！燃料库存不足3天，建议尽快前往贸易区采购补充！\n"
+msgstr ""
+
+msgid "！当前罗德岛处于行驶中，水力与风力发电设施无法工作！\n"
+msgstr ""
+
+msgid "  副源石反应炉扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n"
+msgstr ""
+
+msgid "  清洁能源通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n"
+msgstr ""
+
+msgid "○ 如果每日发电量+已储存蓄电量不够覆盖当日总用电量，将会影响罗德岛整体运营效率\n"
+msgstr ""
+
+msgid "○ 每日过剩的电量将优先充入蓄电池，溢出部分将被浪费\n"
+msgstr ""
+
+msgid "○ 扩展模块可以在生产制造区的流水线上消耗资源进行制造\n"
+msgstr ""
+
+msgid "○ 清洁能源设施的发电量受环境与天气影响较大，当前未实装地区环境与天气系统，暂为固定值乘以随机量\n"
+msgstr ""
+
+msgid "设施"
+msgstr ""
+
+msgid "数值"
+msgstr ""
+
+msgid "信息"
+msgstr ""
+
+msgid "操作"
+msgstr ""
+
+msgid " {0} | 当前 | {1} | {2} | {3}\n"
+msgstr ""
+
+msgid "主炉等级等于动力区等级，决定单位燃料的发电效率"
+msgstr ""
+
+msgid " 主源石反应炉 | {0}级 | {1}/燃料 | {2} | "
+msgstr ""
+
+msgid "副炉数量影响每日燃料的燃烧数量，启用台数越多燃料消耗越多"
+msgstr ""
+
+msgid " 副源石反应炉 | {0}台 | {1}/台日 | {2} | "
+msgstr ""
+
+msgid "（区块等级不足，无法调整副源石反应炉）\n"
+msgstr ""
+
+msgid "增加副源石反应炉"
+msgstr ""
+
+msgid "减少副源石反应炉"
+msgstr ""
+
+msgid "水力发电轮组"
+msgstr ""
+
+msgid "风力发电机组"
+msgstr ""
+
+msgid "光伏发电板组"
+msgstr ""
+
+msgid "人力性爱发电"
+msgstr ""
+
+msgid "发电量受水流速影响，仅在停靠时可用，行驶中无法使用"
+msgstr ""
+
+msgid "发电量受风速影响，仅在停靠时可用，行驶中无法使用"
+msgstr ""
+
+msgid "发电量受日照影响，停靠或行驶中均可使用"
+msgstr ""
+
+msgid "在人力发电室中绝顶/射精即可发电，发电量受绝顶/射精程度影响"
+msgstr ""
+
+msgid " {0} | {1}组 | {2}/组日 | {3} | "
+msgstr ""
+
+msgid " {0} | 人力 |  按次计算 | {1} | "
+msgstr ""
+
+msgid "（当前设施不可用，无法调整数量）\n"
+msgstr ""
+
+msgid "增加"
+msgstr ""
+
+msgid "减少"
+msgstr ""
+
+msgid "三种清洁能源设施总数已达上限({0})，可通过生产清洁能源模块扩展上限"
+msgstr ""
+
+msgid "  当前储能: {0:.1f}/{1:.1f}\n"
+msgstr ""
+
+msgid "  蓄电池通用扩展模块 ：已用 {0} / 总 {1} （含区块等级提供的{2}）\n"
+msgstr ""
+
+msgid " 类型 | 数量 | 容量/台 | 自放电/天 |"
+msgstr ""
+
+msgid "操作\n"
+msgstr ""
+
+msgid "电池容量"
+msgstr ""
+
+msgid "自放电率"
+msgstr ""
+
+msgid "L1"
+msgstr ""
+
+msgid "L2"
+msgstr ""
+
+msgid "L3"
+msgstr ""
+
+msgid "（区块等级不足，无法调整L2蓄电池）\n"
+msgstr ""
+
+msgid "（区块等级不足，无法调整L3蓄电池）\n"
+msgstr ""
+
+msgid "蓄电池总数已达上限({0})，可通过生产蓄电池扩展上限"
+msgstr ""
+
+msgid "干员"
+msgstr ""
+
+msgid "(未初吻)"
+msgstr ""
+
+msgid " 需要已送给对方自己的阴茎倒模"
+msgstr ""
+
+msgid "(有{0}个版本)"
+msgstr ""
+
+msgid "版本：{0}  "
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+"   ※ 当前招募策略无可招募npc，招募失败，已自动停止招募，请调整招募策略 ※\n"
+"\n"
+msgstr ""
+
+msgid "无此招募线"
+msgstr ""
+
+msgid "未知策略"
+msgstr ""
+
+msgid "已停止招募"
+msgstr ""
+
+msgid "空缺"
+msgstr ""
+
+msgid "主:{0}(话术lv{1}:{2}%)"
+msgstr ""
+
+msgid " * 策略调整系数{0}%"
+msgstr ""
+
+msgid "，已停止招募"
+msgstr ""
+
+msgid "当前效率加成：{0} {1} {2} = {2}%"
+msgstr ""
+
+msgid "  当前设施等级为：{0}，可同时有{1}条招募线\n"
+msgstr ""
+
+msgid "  当前国家剩余可招募干员数量（不含委托特殊招募）：{0}\n"
+msgstr ""
+
+msgid "[001]招聘专员管理"
+msgstr ""
+
+msgid ""
+"\n"
+"\n"
+" 当前可以选择的策略有（系数越高越简单）：\n"
+msgstr ""
+
+msgid "(调整系数{0})"
+msgstr ""
+
+msgid "（{0}）"
+msgstr ""
+
+msgid "招聘专员管理"
+msgstr ""
+
+msgid "当前招聘专员数量：{0}"
+msgstr ""
+
+msgid "[招聘专员增减]"
+msgstr ""
+
+msgid "{0}号招募线 主招聘专员: {1}  "
+msgstr ""
+
+msgid "副招聘专员："
+msgstr ""
+
+msgid "副招聘专员：暂无\n"
+msgstr ""
+
+msgid "请选择一名招聘专员担任第{0}号招募线主招聘专员:\n"
+msgstr ""
+
+msgid "任命主招聘专员"
+msgstr ""
+
+msgid " {0}龙门币/1单位 {1} "
+msgstr ""
+
+msgid ""
+"\n"
+"交易成功！\n"
+"当前龙门币数量：{0}({1})\n"
+"资源{2}数量：{3}/{4}({5})\n"
+msgstr ""
+
+msgid "   买入:{0}龙门币/1单位 {1}"
+msgstr ""
+
+msgid "   卖出:{0}龙门币/1单位 {1}\n"
+msgstr ""
+
+msgid ""
+"\n"
+"居住房间：{0}"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}没有理智药剂可以使用\n"
+"\n"
+msgstr ""
+
+msgid " (新!)"
+msgstr ""
+
+msgid "H中被发现"
+msgstr ""
+
+msgid "你正在和{0}单独H"
+msgstr ""
+
+msgid "你和{0}的隐奸"
+msgstr ""
+
+msgid "你和{0}的露出"
+msgstr ""
+
+msgid "你正在无意识奸{0}"
+msgstr ""
+
+msgid "{0}正在逆推你"
+msgstr ""
+
+msgid "你正在和{0}等多人群交"
+msgstr ""
+
+msgid ""
+"\n"
+"{0}发现了{1}，要怎么做？\n"
+msgstr ""
+
+msgid "[1]用花言巧语支开对方"
+msgstr ""
+
+msgid "[2]迅速地隐藏起来，转为隐奸"
+msgstr ""
+
+msgid "[3]光明正大地展示，转为露出"
+msgstr ""
+
+msgid "[3]无视对方，正常继续"
+msgstr ""
+
+msgid "[4]邀请对方加入群交"
+msgstr ""
+
+msgid "[5]尴尬地结束H"
+msgstr ""
+
+msgid "目击H后被话术支开"
+msgstr ""
+
+msgid "[ {cache.font_size} ]"
+msgstr ""
+
+msgid "游戏基础设置"
+msgstr ""
+
+msgid "━━━━━ 绘制模式设置 ━━━━━\n"
+msgstr ""
+
+msgid "Web绘制模式"
+msgstr ""
+
+msgid "Tk绘制模式"
+msgstr ""
+
+msgid ""
+"当前绘制模式：{0}\n"
+"\n"
+msgstr ""
+
+msgid "○Tk绘制模式：使用本地窗口显示游戏，响应速度快，稳定可靠，适合大部分玩家\n"
+msgstr ""
+
+msgid ""
+"○Web绘制模式：使用浏览器显示游戏，界面更美观，支持多设备访问，适合尝鲜体验\n"
+"\n"
+msgstr ""
+
+msgid "[切换到Tk绘制模式]"
+msgstr ""
+
+msgid "[切换到Web绘制模式]"
+msgstr ""
+
+msgid "━━━━━ 语言设置 ━━━━━\n"
+msgstr ""
+
+msgid "简体中文"
+msgstr ""
+
+msgid "English"
+msgstr ""
+
+msgid "한국어"
+msgstr ""
+
+msgid "○各语言的存档不共通，如果需要切换语言，请重新建档\n"
+msgstr ""
+
+msgid "当前语言：{0}\n"
+msgstr ""
+
+msgid "未知语言"
+msgstr ""
+
+msgid "可选语言：\n"
+msgstr ""
+
+msgid "绘制模式已修改为{0}，重启游戏后生效"
+msgstr ""
+
+msgid "语言已修改为{0}，重启游戏后生效"
+msgstr ""

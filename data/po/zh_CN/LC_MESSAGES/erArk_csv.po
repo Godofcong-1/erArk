@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2025-10-23 14:40+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -25705,7 +25705,7 @@ msgid "会依次遍历全能力，符合升级条件则进行升级。对自己�
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:7
-msgid "是否在博士入睡结算时自动升级干员的能力"
+msgid "是否在H结束、博士入睡结算时自动升级干员的能力"
 msgstr ""
 
 #: .\data\csv\System_Setting.csv:7
