@@ -7831,7 +7831,7 @@ def handle_end_h_add_hpmp_max(
             info_draw.width = width
             info_draw.draw()
         # npc则自动进行一次能力上升结算
-        if chara_id != 0 and cache.all_system_setting.base_setting[1]:
+        if chara_id != 0 and cache.all_system_setting.base_setting[2]:
             handle_ability.gain_ability(character_id)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GROUP_SEX_END_H_ADD_HPMP_MAX)
@@ -7892,7 +7892,7 @@ def handle_group_sex_end_h_add_hpmp_max(
             info_draw.width = width
             info_draw.draw()
         # npc则自动进行一次能力上升结算
-        if chara_id != 0 and cache.all_system_setting.base_setting[1]:
+        if chara_id != 0 and cache.all_system_setting.base_setting[2]:
             handle_ability.gain_ability(character_id)
 
 
