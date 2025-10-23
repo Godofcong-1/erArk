@@ -458,14 +458,19 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
         None
     """
     from Script.Settle.common_default import base_chara_state_common_settle
+    from Script.Design import map_handle
     now_char = cache.character_data[character_id]
     now_char_ability = now_char.ability
+    # 场景内减去自己和玩家之外的角色数量
+    others_count = len(map_handle.get_chara_now_scene_all_chara_id_list(character_id)) - 2
+    # 限制最大加成
+    other_chara_count_adjust = min(others_count * 0.1, 2)
     # 和周围其他人相关的结算
     if handle_premise.handle_scene_over_two(character_id):
         # 群交中增加羞耻和心理快感
         if handle_premise.handle_group_sex_mode_on(character_id) and handle_premise.handle_self_is_h(character_id):
-            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=16, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
-            base_chara_state_common_settle(character_id, add_time=int(true_add_time/2), state_id=23, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
         # 需要周围有除了自己和玩家以外的有意识且没睡觉的其他人
         if handle_premise.handle_scene_others_conscious(character_id):
             # 自己未穿胸衣和内裤、自己异常2正常时羞耻
@@ -483,24 +488,28 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
             if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
                 hidden_sex_mode = now_char.sp_flag.hidden_sex_mode
                 extra_add = 4 - hidden_sex_mode
-                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
-                base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
+                extra_add += others_count * 0.1
+                base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
+                base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=extra_add, tenths_add=False)
     # 露出中增加羞耻和心理快感
     if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
-        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=16, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
-        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=23, base_value=0, ability_level=now_char_ability[34], tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=16, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=23, base_value=0, ability_level=now_char_ability[34], extra_adjust=other_chara_count_adjust, tenths_add=False)
     # 灌肠苦痛增加
     if handle_premise.handle_enema(character_id):
         extra = now_char.dirty.enema_capacity
-        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=17, base_value=0, ability_level=now_char_ability[15], extra_adjust=extra, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=17, base_value=0, ability_level=now_char_ability[15], extra_adjust=extra, tenths_add=False)
     # 捆绑时欲情、羞耻、苦痛
     if handle_premise.handle_self_now_bondage(character_id):
         bond_id = now_char.h_state.bondage
         data = game_config.config_bondage[bond_id]
         adjust = data.level * 0.5
         for sid in (12,16,17):
-            base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=sid, base_value=0, ability_level=now_char_ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
+            base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=sid, base_value=0, ability_level=now_char_ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
     # 被监禁状态下持续增长屈服和恐怖
     if handle_premise.handle_imprisonment_1(character_id):
-        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=15, base_value=0, ability_level=now_char_ability[14], extra_adjust=3, tenths_add=False)
-        base_chara_state_common_settle(character_id, add_time=true_add_time, state_id=18, base_value=0, ability_level=now_char_ability[17], extra_adjust=3, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=15, base_value=0, ability_level=now_char_ability[14], extra_adjust=3, tenths_add=False)
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 5, state_id=18, base_value=0, ability_level=now_char_ability[17], extra_adjust=3, tenths_add=False)
+    # 浴室中增加润滑
+    if handle_premise.handle_h_in_bathroom(character_id):
+        base_chara_state_common_settle(character_id, add_time=true_add_time * 10, state_id=8, base_value=0, tenths_add=False)
