@@ -555,13 +555,18 @@ class Debug_Panel:
                     #     continue
                     target_data: game_type.Character = cache.character_data[NPC_id]
                     button_text = f"[{str(target_data.adv).rjust(4,'0')}]：{target_data.name}"
+                    draw_style = "standard"
+                    # 如果有口上颜色的话，则显示颜色
+                    if target_data.text_color != "":
+                        draw_style = target_data.name
 
                     button_draw = draw.LeftButton(
                         button_text,
                         f"\n{NPC_id}",
-                        self.width/6 ,
+                        int(self.width/6),
                         cmd_func=self.change_target_character,
-                        args=NPC_id
+                        args=NPC_id,
+                        normal_style=draw_style,
                     )
                     now_draw.draw_list.append(button_draw)
                     now_draw.width += len(button_draw.text)
