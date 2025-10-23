@@ -1273,7 +1273,7 @@ class Ai_Setting:
     """AI设置"""
 
     def __init__(self):
-        self.ai_chat_setting: Dict[int, int] = {}
+        self.ai_chat_setting: Dict[int, Any] = {}
         """ ai聊天设定，见Ai_Chat_Setting.csv """
         self.ai_chat_api_key: Dict[str, str] = {}
         """ ai聊天api key """

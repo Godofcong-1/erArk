@@ -88,6 +88,7 @@ class Chat_Ai_Setting_Panel:
             info_text = _(" \n ○点击[选项标题]显示[选项介绍]，点击[选项本身]即可[改变该选项]\n")
             info_text += _("   开启本功能后，受网络连接速度和模型的文本生成速度影响，在生成文本时会有明显的延迟\n")
             info_text += _('   系统提示词文件路径为 data/ui_text/text_ai_system_promote.csv ，可以根据自己的需要进行调整，调整后需重启游戏\n')
+            info_text += _('   如需对模型进行破甲/破限/越狱，同样也是将相关内容添加到上述系统提示词文件中\n')
             info_text += _('   包含调用、输送数据在内的完整代码，见游戏源码文件路径 Script/UI/Panel/chat_ai_setting.py ，可以根据自己的需要进行调整，调整后需自行打包\n')
             now_draw.text = info_text
             now_draw.width = self.width
@@ -524,12 +525,12 @@ class Chat_Ai_Setting_Panel:
                 info_draw.draw()
 
             # 确定按钮
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), self.width / 2)
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(self.width / 2))
             yes_draw.draw()
             return_list.append(yes_draw.return_text)
 
             # 返回按钮
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             line_feed.draw()
