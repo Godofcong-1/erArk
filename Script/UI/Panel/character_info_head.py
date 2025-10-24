@@ -221,7 +221,7 @@ class CharacterInfoHead:
         time_stop_draw = draw.LeftDraw()
         time_stop_draw.style = "light_sky_blue"
         if handle_premise.handle_unconscious_flag_3(character_id):
-            time_stop_text = _(" <时停>")
+            time_stop_text = _(" <停>")
         time_stop_draw.text = time_stop_text
 
         # 隐奸
@@ -233,6 +233,14 @@ class CharacterInfoHead:
         elif character_id != 0 and (handle_premise.handle_hidden_sex_mode_2(character_id) or handle_premise.handle_hidden_sex_mode_4(character_id)):
             hidden_text = _(" <隐>")
         hidden_draw.text = hidden_text
+
+        # 露出
+        exhibitionism_text = ""
+        exhibitionism_draw = draw.LeftDraw()
+        exhibitionism_draw.style = "hot_pink"
+        if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+            exhibitionism_text = _(" <露>")
+        exhibitionism_draw.text = exhibitionism_text
 
         if character_id:
             message = (
@@ -254,7 +262,7 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + orgasm_edge_text + time_stop_text + hidden_text + imprisonment_text)
+        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + hunger_text + active_h_text + orgasm_edge_text + time_stop_text + hidden_text + exhibitionism_text + imprisonment_text)
         max_width = max(base_width, text_width)
         message_draw.width = int(max_width)
         message_draw.text = message
@@ -314,7 +322,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, time_stop_draw, hidden_draw, hp_draw, None_draw, mp_draw),
+            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, time_stop_draw, hidden_draw, exhibitionism_draw, hp_draw, None_draw, mp_draw),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (None_draw, None_draw, sanity_point_draw,)
