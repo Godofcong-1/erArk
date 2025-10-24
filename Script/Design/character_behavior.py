@@ -405,3 +405,7 @@ def judge_before_pl_behavior():
     if handle_premise.handle_hidden_sex_mode_ge_1(0):
         from Script.UI.Panel import hidden_sex_panel
         hidden_sex_panel.handle_hidden_sex_flow()
+    # 露出的模式更新
+    if handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
+        from Script.UI.Panel import exhibitionism_sex_panel
+        exhibitionism_sex_panel.update_exhibiionism_sex_mode()

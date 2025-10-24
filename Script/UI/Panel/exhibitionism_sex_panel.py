@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import normal_config
-from Script.Design import handle_premise
+from Script.Design import handle_premise, map_handle
 
 panel_info_data = {}
 
@@ -24,6 +24,39 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+def update_exhibiionism_sex_mode():
+    """更新露出H模式"""
+    character_data: game_type.Character = cache.character_data[0]
+    # 如果不在露出模式则直接返回
+    if character_data.sp_flag.exhibitionism_sex_mode == 0:
+        return
+    # 如果当前周围有人
+    if handle_premise.handle_scene_over_two(0):
+        # 如果当前周围有人清醒
+        if handle_premise.handle_scene_others_conscious(0):
+            new_mode = 3
+        # 否则
+        else:
+            new_mode = 4
+    # 如果当前周围无人
+    else:
+        # 如果在室外
+        if handle_premise.handle_place_outdoor(0):
+            new_mode = 2
+        # 否则在室内
+        else:
+            new_mode = 1
+    # 更新模式
+    character_data.sp_flag.exhibitionism_sex_mode = new_mode
+    # 获取场景内露出对象
+    now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0,remove_own_character=True)
+    for chara_id in now_scene_character_list:
+        target_character_data: game_type.Character = cache.character_data[chara_id]
+        if target_character_data.sp_flag.exhibitionism_sex_mode != 0:
+            target_character_data.sp_flag.exhibitionism_sex_mode = new_mode
+            break
+
 
 class Select_Exhibitionism_Sex_Mode_Panel:
     """
@@ -99,7 +132,7 @@ class Select_Exhibitionism_Sex_Mode_Panel:
 
     def select_this_mode(self, mode_id: int) -> None:
         """选择露出H模式"""
-        from Script.Design import instuct_judege, handle_instruct, map_handle
+        from Script.Design import instuct_judege, handle_instruct
         character_data: game_type.Character = cache.character_data[0]
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]
@@ -109,10 +142,8 @@ class Select_Exhibitionism_Sex_Mode_Panel:
             character_data.sp_flag.exhibitionism_sex_mode = mode_id
             target_character_data.sp_flag.exhibitionism_sex_mode = mode_id
             target_character_data.sp_flag.is_follow = 0
-            # 在场其他角色数量
-            scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
-            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
-            other_chara_count = len(scene_data.character_list) - 2
+            now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0)
+            other_chara_count = len(now_scene_character_list) - 2
             # 成就初始化
             cache.achievement.exhibitionism_sex_record = {1: mode_id, 2: other_chara_count, 3: 0, 4: 0}
             # 如果是从被发现面板跳转过来
