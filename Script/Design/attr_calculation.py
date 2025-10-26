@@ -764,31 +764,31 @@ def get_semen_now_level(value: int, part_cid: int, part_type: int) -> int:
     # 如果是身体部位
     if part_type == 0:
         if part_cid == 20:
-            voluem_data_list = [300, 1000, 3000, 6000, 9000, 12000]
+            max_volume = 12000
         else:
-            voluem_data_list = game_config.config_body_part_volume[part_cid]
-        for i in range(len(voluem_data_list)):
-            if value <= voluem_data_list[i]:
-                now_level = i + 1
-                break
-            # 如果超过最大值，则返回最大值
-            if i == len(voluem_data_list) - 1:
-                now_level = i + 1
-                # 如果最大值是2，则返回3
-                if now_level == 2:
-                    now_level = 3
+            max_volume = game_config.config_body_part[part_cid].max_volume
     else:
-        voluem_data_list = game_config.config_clothing_type_volume[part_cid]
-        for i in range(len(voluem_data_list)):
-            if value <= voluem_data_list[i]:
-                now_level = i + 1
-                break
-            # 如果超过最大值，则返回最大值
-            if i == len(voluem_data_list) - 1:
-                now_level = i + 1
-                # 如果最大值是2，则返回3
-                if now_level == 2:
-                    now_level = 3
+        max_volume = game_config.config_clothing_type[part_cid].max_volume
+    # 如果超过最大值，则返回最大等级
+    if value >= max_volume:
+        now_level = 10
+    else:
+        # 第123级分别为最大值的1%、5%、10%，第4级为20%，之后每增加15%增加1级
+        now_level = 0
+        if value >= max_volume * 0.2:
+            now_level += 4
+            extra_volume = value - max_volume * 0.2
+            extra_level = int(extra_volume / (max_volume * 0.15))
+            now_level += extra_level
+        elif value >= max_volume * 0.1:
+            now_level += 3
+        elif value >= max_volume * 0.05:
+            now_level += 2
+        elif value >= max_volume * 0.01:
+            now_level += 1
+    # 等级上下限1~10级
+    now_level = max(now_level, 1)
+    now_level = min(now_level, 10)
     # print(f"debug value = {value},now_level = {now_level}")
     return now_level
 
@@ -807,7 +807,8 @@ def get_tired_level(value: int) -> int:
         return 1
     elif 0.84 < value / 160 < 1:
         return 2
-    elif value / 160 >= 1:
+    # elif value / 160 >= 1:
+    else:
         return 3
 
 

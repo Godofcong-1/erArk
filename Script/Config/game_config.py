@@ -897,10 +897,6 @@ def load_clothing_type():
         now_type = config_def.ClothingType()
         now_type.__dict__ = tem_data
         config_clothing_type[now_type.cid] = now_type
-        # 容积表
-        volume_list = now_type.volume_table.split("-")
-        volume_list = [int(volume) for volume in volume_list]
-        config_clothing_type_volume[now_type.cid] = volume_list
         # 流通表
         def update_config_flow(flow_str, config_dict, cid):
             if flow_str == "无":
@@ -964,10 +960,6 @@ def load_body_part():
         now_type = config_def.BodyPart()
         now_type.__dict__ = tem_data
         config_body_part[now_type.cid] = now_type
-        # 容积表
-        volume_list = now_type.volume_table.split("-")
-        volume_list = [int(volume) for volume in volume_list]
-        config_body_part_volume[now_type.cid] = volume_list
         # 流通表
         def update_config_flow(flow_str, config_dict, cid):
             if flow_str == "无":

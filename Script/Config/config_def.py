@@ -210,8 +210,8 @@ class BodyPart:
     """ 配表id """
     name: str
     """ 部位名字 """
-    volume_table: str
-    """ 容积表 """
+    max_volume: int
+    """ 最大容积 """
     normal_flow_table: str
     """ 正常流通表 """
     full_flow_table: str
@@ -403,8 +403,8 @@ class ClothingType:
     """ 配表id """
     name: str
     """ 部位名字 """
-    volume_table: str
-    """ 容积表 """
+    max_volume: int
+    """ 最大容积 """
     normal_flow_table: str
     """ 正常流通表 """
     full_flow_table: str

@@ -8,7 +8,7 @@ import argparse
 from pathlib import Path
 
 
-def replace_commas(line: str) -> str:
+def replace_commas(line: str, count: int = 5) -> str:
     """返回将第 5 次及以后的英文逗号替换后的行。
 
     参数:
@@ -24,7 +24,7 @@ def replace_commas(line: str) -> str:
     for char in line:
         if char == ",":
             comma_count += 1
-            if comma_count >= 5:
+            if comma_count >= count:
                 result.append("，")
                 continue
         result.append(char)
@@ -35,6 +35,7 @@ def replace_commas(line: str) -> str:
 def main() -> None:
     parser = argparse.ArgumentParser(description="替换 CSV 文件中的逗号（从第五个开始替换为中文逗号）")
     parser.add_argument("path", type=Path, help="要更新的 CSV 文件路径")
+    parser.add_argument("count", type=int, nargs="?", default=5, help="从第几个逗号开始替换为中文逗号，默认为 5")
     args = parser.parse_args()
 
     file_path = args.path
@@ -43,7 +44,7 @@ def main() -> None:
 
     # 读取文件、逐行处理并写回
     lines = file_path.read_text(encoding="utf-8").splitlines(keepends=True)
-    processed_lines = [replace_commas(line) for line in lines]
+    processed_lines = [replace_commas(line, args.count) for line in lines]
     file_path.write_text("".join(processed_lines), encoding="utf-8")
 
 

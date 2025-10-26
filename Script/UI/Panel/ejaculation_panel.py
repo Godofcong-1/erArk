@@ -285,21 +285,21 @@ def calculate_semen_flow(character_id: int, part_cid: int, part_type: int, semen
         # 判断部位类型，0为身体部位，1为服装部位
         if part_type == 0:
             # 判断是否满溢
-            voluem_data_list = game_config.config_body_part_volume[part_cid]
+            max_volume = game_config.config_body_part[part_cid].max_volume
             # 满溢时使用满溢流动表，且仅计算额外溢出来的部分
-            if character_data.dirty.body_semen[part_cid][1] > voluem_data_list[-1]:
+            if character_data.dirty.body_semen[part_cid][1] > max_volume:
                 flow_list = game_config.config_body_part_full_flow[part_cid]
-                semen_count = character_data.dirty.body_semen[part_cid][1] - voluem_data_list[-1]
+                semen_count = character_data.dirty.body_semen[part_cid][1] - max_volume
             # 未满溢时使用正常流动表
             else:
                 flow_list = game_config.config_body_part_normal_flow[part_cid]
         elif part_type == 1:
             # 判断是否满溢
-            voluem_data_list = game_config.config_clothing_type_volume[part_cid]
+            max_volume = game_config.config_clothing_type[part_cid].max_volume
             # 满溢时使用满溢流动表，且仅计算额外溢出来的部分
-            if character_data.dirty.cloth_semen[part_cid][1] > voluem_data_list[-1]:
+            if character_data.dirty.cloth_semen[part_cid][1] > max_volume:
                 flow_list = game_config.config_cloth_part_full_flow[part_cid]
-                semen_count = character_data.dirty.cloth_semen[part_cid][1] - voluem_data_list[-1]
+                semen_count = character_data.dirty.cloth_semen[part_cid][1] - max_volume
             # 未满溢时使用正常流动表
             else:
                 flow_list = game_config.config_cloth_part_normal_flow[part_cid]
