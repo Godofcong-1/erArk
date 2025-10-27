@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-27 23:27+0800\n"
+"POT-Creation-Date: 2024-08-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -29952,32 +29952,48 @@ msgstr ""
 msgid "艾雅法拉，火山学家，天灾信使。于高等源石技艺、高能量法术释放等领域展现出了卓越的天赋。现于罗德岛接受治疗，同时为罗德岛提供天灾研究、环境观察与评估、危险地形航行保障等相关服务。"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:32
-msgid "黑色蕾丝颈饰"
+#: .\data\character\0180_艾雅法拉.csv:15
+msgid "#ffadc4"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:33
-msgid "白色斗篷外套"
+#: .\data\character\0180_艾雅法拉.csv:42
+msgid "助听器"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:34
-msgid "灰粉色连衣裙"
+#: .\data\character\0180_艾雅法拉.csv:43
+msgid "呼吸器"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:35
-msgid "黑色蕾丝手套"
+#: .\data\character\0180_艾雅法拉.csv:44
+msgid "拾音降噪耳机"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:37
+#: .\data\character\0180_艾雅法拉.csv:45
+msgid "白色单边长袖兜帽斗篷"
+msgstr ""
+
+#: .\data\character\0180_艾雅法拉.csv:46
+msgid "灰粉色无袖蓬蓬连衣裙"
+msgstr ""
+
+#: .\data\character\0180_艾雅法拉.csv:47
+msgid "黑色绷带"
+msgstr ""
+
+#: .\data\character\0180_艾雅法拉.csv:49
 msgid "黑色过膝长袜"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:38
-msgid "红黑系带长靴"
+#: .\data\character\0180_艾雅法拉.csv:50
+msgid "红黑系带羊蹄靴"
 msgstr ""
 
-#: .\data\character\0180_艾雅法拉.csv:39
+#: .\data\character\0180_艾雅法拉.csv:51
 msgid "黑色长柄法杖"
+msgstr ""
+
+#: .\data\character\0180_艾雅法拉.csv:52
+msgid "护目镜"
 msgstr ""
 
 #: .\data\character\0181_调香师.csv:4
@@ -30074,6 +30090,10 @@ msgstr ""
 
 #: .\data\character\0185_慕斯.csv:32
 msgid "黑色哥特洋装"
+msgstr ""
+
+#: .\data\character\0185_慕斯.csv:33
+msgid "黑色蕾丝手套"
 msgstr ""
 
 #: .\data\character\0185_慕斯.csv:36
