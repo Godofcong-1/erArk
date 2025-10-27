@@ -488,6 +488,8 @@ class BODY_H_STATE:
         """ 避孕套信息输出标记 """
         self.condom_count: List = [0, 0]
         """ 已使用的避孕套计数，[0总个数，1总精液量] """
+        self.used_semen_energy_agent: bool = False
+        """ 已使用精液精力剂，使下次射精量增加 """
         self.npc_active_h: bool = False
         """ NPC主动H """
         self.h_in_love_hotel: bool = False

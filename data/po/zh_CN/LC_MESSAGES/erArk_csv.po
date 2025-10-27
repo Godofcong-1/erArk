@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-27 10:58+0800\n"
+"POT-Creation-Date: 2025-10-27 11:22+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -21681,7 +21681,7 @@ msgid "精力剂"
 msgstr ""
 
 #: .\data\csv\Item.csv:10
-msgid "使用后回复20ml精液量。"
+msgid "使用后回复20%最大上限的精液量，且下一次射精的射精量翻倍。"
 msgstr ""
 
 #: .\data\csv\Item.csv:11

@@ -24,7 +24,7 @@ def use_drug(item_id: int):
     pl_character_data = cache.character_data[0]
     # 根据道具id获取道具效果
     item_data = game_config.config_item[item_id]
-    sanity_point_add = item_data.effect
+    effect_add = item_data.effect
     item_tag = item_data.tag
     # 如果是对NPC使用的药剂，提示玩家通过赠送礼物系统使用
     if item_tag == "npc_use":
@@ -38,12 +38,13 @@ def use_drug(item_id: int):
     # 药剂效果
     # 理智恢复剂
     if item_id <= 3:
-        pl_character_data.sanity_point = min(pl_character_data.sanity_point + sanity_point_add, pl_character_data.sanity_point_max)
-        now_draw_text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
+        pl_character_data.sanity_point = min(pl_character_data.sanity_point + effect_add, pl_character_data.sanity_point_max)
+        now_draw_text = _("\n{0}使用了{1}，理智值增加{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, effect_add, pl_character_data.sanity_point, pl_character_data.sanity_point_max)
     # 精力恢复剂
     elif item_id == 11:
-        pl_character_data.semen_point = min(pl_character_data.semen_point + sanity_point_add, pl_character_data.semen_point_max)
-        now_draw_text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, sanity_point_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
+        semen_add = int(pl_character_data.semen_point_max * (effect_add / 100))
+        pl_character_data.semen_point = min(pl_character_data.semen_point + semen_add, pl_character_data.semen_point_max)
+        now_draw_text = _("\n{0}使用了{1}，精液量增加了{2}，现在为{3}/{4}\n\n").format(pl_character_data.name, item_data.name, effect_add, pl_character_data.semen_point, pl_character_data.semen_point_max)
     # 阴茎增大
     elif item_id == 16:
         pl_character_data.pl_ability.jj_size += 1

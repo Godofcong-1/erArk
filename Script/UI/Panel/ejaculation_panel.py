@@ -144,6 +144,11 @@ def common_ejaculation():
             # 根据榨精能力等级调整射精量
             semen_count *= squeeze_adjust
 
+        # 如果使用了精液精力剂，则本次射精量翻倍
+        if character_data.h_state.used_semen_energy_agent:
+            semen_count *= 2
+            character_data.h_state.used_semen_energy_agent = False
+
         # 射精量不高于剩余精液值
         semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
         # 组合射精文本
