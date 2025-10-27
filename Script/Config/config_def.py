@@ -7,6 +7,8 @@ class Ability:
     """ 类型(0:感度,1:扩张,2:刻印,3:基础,4:技能,5:性技) """
     name: str
     """ 名字 """
+    sex_need: int
+    """ 性别需求(-1都可0男1女) """
 
 
 class AbilityType:

@@ -697,19 +697,18 @@ class CharacterabiText:
                 if anility_type in {2, 6}:
                     continue
             for ability_id in type_set:
+                ability_data = game_config.config_ability[ability_id]
                 # 去掉与性别不符的能力#
-                if character_data.sex == 0:
-                    if ability_id in {2, 4, 7, 9, 12, 73, 74, 75, 101}:
-                        continue
-                elif character_data.sex == 1:
-                    if ability_id == 3:
-                        continue
+                if character_data.sex == 0 and ability_data.sex_need == 1:
+                    continue
+                elif character_data.sex == 1 and ability_data.sex_need == 0:
+                    continue
                 # 去掉时奸刻印
                 if ability_id == 16:
                     continue
                 now_draw = draw.NormalDraw()
                 now_draw_value = draw.NormalDraw()
-                now_draw.text = game_config.config_ability[ability_id].name
+                now_draw.text = ability_data.name
                 # 这个_1是为了补空格让格式对齐#
                 now_draw_2 = draw.NormalDraw()
                 now_draw_2.text = "　"

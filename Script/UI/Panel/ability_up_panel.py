@@ -153,19 +153,16 @@ class Characterabi_show_Text:
                         button_draw.draw()
             else:
                 for ability_id in type_set:
-                    # 去掉与性别不符的感度与扩张
-                    if self.character_data.sex == 0:
-                        if ability_id in {2, 4, 7, 9, 12, 73, 74, 101}:
-                            continue
-                    elif self.character_data.sex == 1:
-                        if ability_id == 3:
-                            continue
+                    ability_data = game_config.config_ability[ability_id]
+                    # 去掉与性别不符的能力id
+                    if self.character_data.sex == 0 and ability_data.sex_need == 1:
+                        continue
+                    elif self.character_data.sex == 1 and ability_data.sex_need == 0:
+                        continue
                     # 这个_1是为了补空格让格式对齐#
                     now_exp = 0
                     now_exp = self.character_data.ability[ability_id]
-                    button_text = " "
-                    button_text += game_config.config_ability[ability_id].name
-                    button_text += " "
+                    button_text = f" {ability_data.name} "
                     # 根据不同的类型补不同数量的空格#
                     if anility_type != 2 and anility_type != 4 and anility_type != 6:
                         button_text += "  "

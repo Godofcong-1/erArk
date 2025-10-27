@@ -576,7 +576,7 @@ def get_status_level(value: int) -> int:
     return now_data.level
 
 
-def get_ability_adjust(value: int) -> int:
+def get_ability_adjust(value: int) -> float:
     """
     按能力数值评定修正比例
     Keyword arguments:

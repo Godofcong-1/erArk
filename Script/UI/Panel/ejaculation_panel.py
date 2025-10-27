@@ -129,19 +129,25 @@ def common_ejaculation():
         # 基础射精值，小中多射精区分
         if character_data.second_behavior["p_orgasm_strong"] == 1:
             semen_count = int(50 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
-            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
-            semen_text = _("超大量射精，射出了") + str(semen_count) + _("ml精液")
+            semen_text = _("超大量射精，射出了")
         elif character_data.second_behavior["p_orgasm_normal"] == 1:
             semen_count = int(20 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
-            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
-            semen_text = _("大量射精，射出了") + str(semen_count) + _("ml精液")
+            semen_text = _("大量射精，射出了")
         else:
             semen_count = int(10 * random_weight)
-            semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
-            semen_text = _("射精，射出了") + str(semen_count) + _("ml精液")
+            semen_text = _("射精，射出了")
+
+        # 如果有交互对象，则根据交互对象的榨精能力等级来调整射精量
+        if character_data.target_character_id > 0:
+            target_data: game_type.Character = cache.character_data[character_data.target_character_id]
+            squeeze_adjust = attr_calculation.get_ability_adjust(target_data.ability[77])
+            # 根据榨精能力等级调整射精量
+            semen_count *= squeeze_adjust
 
         # 射精量不高于剩余精液值
-        semen_count = min(semen_count, character_data.semen_point + character_data.tem_extra_semen_point)
+        semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
+        # 组合射精文本
+        semen_text += str(semen_count) + _("ml精液")
 
         character_data.h_state.orgasm_level[3] += 1 # 更新射精次数
         character_data.h_state.just_shoot = 1 # 更新刚射精状态
