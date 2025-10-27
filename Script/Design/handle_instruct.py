@@ -3097,7 +3097,6 @@ def handle_onsen_bath():
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.IN_AROMATHERAPY_ROOM,
-        constant_promise.Premise.HAVE_TARGET,
     }
 )
 def handle_aromatherapy():

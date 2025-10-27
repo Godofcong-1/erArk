@@ -60,7 +60,7 @@ def show_endure_ejaculation_panel():
 
         # 询问是否要忍住
         now_draw = draw.NormalDraw()
-        now_draw_text = _("要射精了，是否要忍住射精（当前已忍住{0}次，忍耐几率 {1}）\n").format(now_count, endure_text)
+        now_draw_text = _("要射精了，是否要忍住射精，忍耐次数越多则射精量越多（当前已忍住{0}次，忍耐几率 {1}）\n").format(now_count, endure_text)
         now_draw.text = now_draw_text
         now_draw.width = window_width
         now_draw.draw()
@@ -122,6 +122,9 @@ def common_ejaculation():
     # 乘以一个随机数补正
     random_weight = random.uniform(0.8, 1.2)
 
+    # 额外调整的文本提示
+    extra_text = ""
+
     # 如果已经没有精液了，则不射精
     if handle_premise.handle_pl_semen_le_2(0):
         return _("只流出了些许前列腺液，已经射不出精液了"),0
@@ -143,16 +146,24 @@ def common_ejaculation():
             squeeze_adjust = attr_calculation.get_ability_adjust(target_data.ability[77])
             # 根据榨精能力等级调整射精量
             semen_count *= squeeze_adjust
+            if squeeze_adjust > 1:
+                extra_text += _("（{0}榨精+）").format(target_data.name)
 
         # 如果使用了精液精力剂，则本次射精量翻倍
         if character_data.h_state.used_semen_energy_agent:
             semen_count *= 2
             character_data.h_state.used_semen_energy_agent = False
+            extra_text += _("（精力剂+）")
+
+        # 如果施加了香薰疗愈-射精状态，则射精量翻倍
+        if handle_premise.handle_aromatherapy_flag_7(0):
+            semen_count *= 2
+            extra_text += ("（{0}+）").format(game_config.config_aromatherapy_recipes[7].name)
 
         # 射精量不高于剩余精液值
         semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
         # 组合射精文本
-        semen_text += str(semen_count) + _("ml精液")
+        semen_text += str(semen_count) + _("ml精液") + extra_text
 
         character_data.h_state.orgasm_level[3] += 1 # 更新射精次数
         character_data.h_state.just_shoot = 1 # 更新刚射精状态

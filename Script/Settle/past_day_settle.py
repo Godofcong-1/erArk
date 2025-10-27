@@ -55,6 +55,8 @@ def update_new_day():
             if expired_food_num > 0 and character_id == 0:
                 now_draw.text = _("你持有的{0}个食物因过期变质而自动丢弃了\n").format(expired_food_num)
                 now_draw.draw()
+        # 清零香薰疗愈的flag
+        character_data.sp_flag.aromatherapy = 0
         if character_id:
             # 刷新娱乐活动
             handle_npc_ai.get_chara_entertainment(character_id)
@@ -65,8 +67,6 @@ def update_new_day():
                 character_data.sp_flag.morning_salutation = 0
             if character_data.sp_flag.night_salutation == 2 or character_data.assistant_services[6] == 0:
                 character_data.sp_flag.night_salutation = 0
-            # 清零香薰疗愈的flag
-            character_data.sp_flag.aromatherapy = 0
             # 清零食物不对劲的flag
             character_data.sp_flag.find_food_weird = False
             # 根据欲望等级增加欲望值

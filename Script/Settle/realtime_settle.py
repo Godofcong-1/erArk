@@ -288,9 +288,11 @@ def settle_tired(character_id: int, true_add_time: int) -> None:
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     tired_change = int(true_add_time / 6)
-    # 基础行动结算1疲劳值
-    if true_add_time == 5:
-        tired_change = 1
+    # 当前在香薰疗愈-疲劳状态下，疲劳值增加减半
+    if handle_premise.handle_aromatherapy_flag_8(character_id):
+        tired_change = int(tired_change * 0.8)
+    # 最少为1
+    tired_change = max(tired_change, 1)
     # 不睡觉时、且不是时停中，结算疲劳值
     if now_character_data.behavior.behavior_id not in {constant.Behavior.SLEEP} and handle_premise.handle_time_stop_off(character_id):
         new_tired = min(now_character_data.tired_point + tired_change, 160)

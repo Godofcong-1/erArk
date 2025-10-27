@@ -99,6 +99,8 @@ class Aromatherapy_Recipes:
     """ 配方(序号为资源序号) """
     difficulty: int
     """ 难易度 """
+    sex_need: int
+    """ 性别需求(-1通用0男1女) """
     info: str
     """ 配方介绍 """
 
@@ -1526,7 +1528,6 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
-
 class Talk_Common:
     """ 组件配置数据 """
 

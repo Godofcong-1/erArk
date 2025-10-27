@@ -143,6 +143,10 @@ class CharacterStatus:
     """ 香薰疗愈_好感 """
     STATUS_AROMATHERAPY_6 = 196
     """ 香薰疗愈_催眠 """
+    STATUS_AROMATHERAPY_7 = 197
+    """ 香薰疗愈_射精 """
+    STATUS_AROMATHERAPY_8 = 198
+    """ 香薰疗愈_疲劳 """
     STATUS_OFFICIAL_WORK = 201
     """ 处理公务 """
     STATUS_ASSISTANT_ADJUSTMENTS = 204

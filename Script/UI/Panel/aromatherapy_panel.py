@@ -145,6 +145,7 @@ class Aromatherapy_Panel:
     def select_recipe(self):
         """选择配方"""
         pl_character_data = cache.character_data[0]
+        target_character_data = cache.character_data[pl_character_data.target_character_id]
         while 1:
             line = draw.LineDraw("-", window_width)
             line.draw()
@@ -163,10 +164,17 @@ class Aromatherapy_Panel:
                 recipes_text = f"[{str(recipes_id).rjust(3,'0')}]{recipes_data.name}"
                 # 判断当前配方是否可以生产，未解锁则跳过
                 flag_open = True
-                # 指技等级判定
+                # 农业等级判定
                 need_lv = recipes_data.difficulty * 2
                 if pl_character_data.ability[47] < need_lv:
                     recipes_text += _("(需要[农业技能]等级>={0})").format(need_lv)
+                    flag_open = False
+                # 性别判定
+                if target_character_data.sex == 0 and recipes_data.sex_need == 1:
+                    recipes_text += _("(仅限女性调香对象)")
+                    flag_open = False
+                elif target_character_data.sex == 1 and recipes_data.sex_need == 0:
+                    recipes_text += _("(仅限男性调香对象)")
                     flag_open = False
                 recipes_text += f"：{recipes_data.info}"
 
@@ -261,6 +269,8 @@ class Aromatherapy_Panel:
                 4: (constant.Behavior.AROMATHERAPY_4, constant.CharacterStatus.STATUS_AROMATHERAPY_4),
                 5: (constant.Behavior.AROMATHERAPY_5, constant.CharacterStatus.STATUS_AROMATHERAPY_5),
                 6: (constant.Behavior.AROMATHERAPY_6, constant.CharacterStatus.STATUS_AROMATHERAPY_6),
+                7: (constant.Behavior.AROMATHERAPY_7, constant.CharacterStatus.STATUS_AROMATHERAPY_7),
+                8: (constant.Behavior.AROMATHERAPY_8, constant.CharacterStatus.STATUS_AROMATHERAPY_8),
             }
             if self.now_choice_recipe_id in aromatherapy_dict:
                 pl_character_data.behavior.behavior_id, pl_character_data.state = aromatherapy_dict[self.now_choice_recipe_id]

@@ -77,6 +77,8 @@ int,str,str,int,str,str
 194,aromatherapy_4,对目标香薰疗愈_快感,60,pl,娱乐
 195,aromatherapy_5,对目标香薰疗愈_好感,60,pl,娱乐
 196,aromatherapy_6,对目标香薰疗愈_催眠,60,pl,娱乐
+197,aromatherapy_7,对目标香薰疗愈_射精,60,pl,娱乐
+198,aromatherapy_8,对目标香薰疗愈_疲劳,60,pl,娱乐
 
 201,official_work,处理公务,60,both,工作
 202,battle_command,指挥作战,5,pl,工作

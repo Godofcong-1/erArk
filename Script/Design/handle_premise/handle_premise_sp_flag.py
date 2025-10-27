@@ -1240,6 +1240,38 @@ def handle_aromatherapy_flag_6(character_id: int) -> int:
         return 0
 
 
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_7)
+def handle_aromatherapy_flag_7(character_id: int) -> int:
+    """
+    自身香薰疗愈-射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 7:
+        return 1
+    else:
+        return 0
+
+
+@add_premise(constant_promise.Premise.AROMATHERAPY_FLAG_8)
+def handle_aromatherapy_flag_8(character_id: int) -> int:
+    """
+    自身香薰疗愈-疲劳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.sp_flag.aromatherapy == 8:
+        return 1
+    else:
+        return 0
+
+
 @add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_0)
 def handle_t_aromatherapy_flag_0(character_id: int) -> int:
     """
@@ -1348,6 +1380,38 @@ def handle_t_aromatherapy_flag_6(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
     if handle_aromatherapy_flag_6(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_7)
+def handle_t_aromatherapy_flag_7(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-射精
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_7(target_chara_id):
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.T_AROMATHERAPY_FLAG_8)
+def handle_t_aromatherapy_flag_8(character_id: int) -> int:
+    """
+    交互对象香薰疗愈-疲劳
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    if handle_aromatherapy_flag_8(target_chara_id):
         return 1
     return 0
 
