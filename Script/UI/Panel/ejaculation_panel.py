@@ -160,6 +160,11 @@ def common_ejaculation():
             semen_count *= 2
             extra_text += ("（{0}+）").format(game_config.config_aromatherapy_recipes[7].name)
 
+        # 如果当前是浓厚精液的话，则射精量翻倍
+        if handle_premise.handle_self_semen_thick_1(0):
+            semen_count *= 2
+            extra_text += _("（浓厚精液+）")
+
         # 射精量不高于剩余精液值
         semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
         # 组合射精文本

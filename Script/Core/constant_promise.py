@@ -2215,6 +2215,8 @@ class Premise:
     """ 素质_妊娠 交互对象泌乳==1 """
     T_BABY_1 = "t_baby_1"
     """ 素质_妊娠 交互对象婴儿==1 """
+    SELF_SEMEN_THICK_1 = "semen_thick_1"
+    """ 素质_妊娠 自己浓厚精液==1 """
 
     SELF_IS_CHILD = "child_1"
     """ 属性_素质 自己是幼女 """

@@ -2835,3 +2835,15 @@ def handle_t_baby_1(character_id: int) -> int:
     if target_data.talent[101] == 1:
         return 1
     return 0
+
+@add_premise(constant_promise.Premise.SELF_SEMEN_THICK_1)
+def handle_self_semen_thick_1(character_id: int) -> int:
+    """
+    校验自己浓厚精液==1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.talent[33]

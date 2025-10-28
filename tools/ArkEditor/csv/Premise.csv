@@ -1118,6 +1118,7 @@ lactation_1,LACTATION_1,素质_妊娠,自己泌乳==1
 t_lactation_0,T_LACTATION_0,素质_妊娠,交互对象泌乳==0
 t_lactation_1,T_LACTATION_1,素质_妊娠,交互对象泌乳==1
 t_baby_1,T_BABY_1,素质_妊娠,交互对象婴儿==1
+semen_thick_1,SELF_SEMEN_THICK_1,素质_妊娠,自己浓厚精液==1
 
 child_1,SELF_IS_CHILD,属性_素质,自己是幼女
 self_child_or_loli_1,SELF_CHILD_OR_LOLI_1,属性_素质,自己幼女或萝莉==1
