@@ -211,6 +211,8 @@ class SeeFoodListByFoodNameDraw:
         # """ 做饭效果绘制 """
         self.food_name: str = ""
         """ 食物名字 """
+        self.add_coffee: bool = False
+        """ 是否为加料咖啡 """
         # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
         # draw_effect_text = ""
 
@@ -229,6 +231,8 @@ class SeeFoodListByFoodNameDraw:
             food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
             self.food_name = food_recipe.name
             self.make_food_time = food_recipe.time
+            if food_recipe.type == 8:
+                self.add_coffee = True
             # draw_effect_text += "制作用时" + self.make_food_time + "分钟\n"
 
         # print("index_text :",index_text)
@@ -331,6 +335,10 @@ class SeeFoodListByFoodNameDraw:
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
         character_data.behavior.duration = new_make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD
+        # 如果是加料咖啡，则标记为正在制作加料咖啡
+        if self.add_coffee:
+            character_data.behavior.behavior_id = constant.Behavior.MAKE_COFFEE_ADD
+            character_data.state = constant.CharacterStatus.STATUS_MAKE_COFFEE_ADD
         update.game_update_flow(new_make_food_time)
         # 结算成就
         achievement_panel.achievement_flow(_("烹饪"))
