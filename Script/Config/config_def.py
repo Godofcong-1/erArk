@@ -1235,6 +1235,17 @@ class Seasoning:
     """ 调味名字 """
 
 
+class Semen_Shoot_Amount:
+    """ 射出精液量 """
+
+    cid: int
+    """ 精液量id """
+    behavior_id: str
+    """ 行动指令名 """
+    base_semen_amount: int
+    """ 基础射精量，单位ml """
+
+
 class SexTem:
     """ 性别对应描述和性别器官模板 """
 

@@ -131,13 +131,13 @@ def common_ejaculation():
     else:
         # 基础射精值，小中多射精区分
         if character_data.second_behavior["p_orgasm_strong"] == 1:
-            semen_count = int(50 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
+            semen_count = int(game_config.config_semen_shoot_amount[2].base_semen_amount * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
             semen_text = _("超大量射精，射出了")
         elif character_data.second_behavior["p_orgasm_normal"] == 1:
-            semen_count = int(20 * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
+            semen_count = int(game_config.config_semen_shoot_amount[1].base_semen_amount * random_weight) * (character_data.h_state.endure_not_shot_count + 1)
             semen_text = _("大量射精，射出了")
         else:
-            semen_count = int(10 * random_weight)
+            semen_count = int(game_config.config_semen_shoot_amount[0].base_semen_amount * random_weight)
             semen_text = _("射精，射出了")
 
         # 如果有交互对象，则根据交互对象的榨精能力等级来调整射精量
@@ -150,7 +150,7 @@ def common_ejaculation():
                 extra_text += _("（{0}榨精+）").format(target_data.name)
 
         # 如果使用了精液精力剂，则本次射精量翻倍
-        if character_data.h_state.used_semen_energy_agent:
+        if handle_premise.handle_self_semen_energy_agent(0):
             semen_count *= 2
             character_data.h_state.used_semen_energy_agent = False
             extra_text += _("（精力剂+）")

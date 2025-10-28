@@ -431,6 +431,8 @@ config_power_storage: Dict[int, config_def.Power_Storage] = {}
 """ 蓄电数据: cid -> 数据对象 """
 config_power_storage_level_index: Dict[str, Dict[int, int]] = {}
 """ 蓄电数据索引: 蓄电类别 -> (等级 -> cid) """
+config_semen_shoot_amount: Dict[int, config_def.Semen_Shoot_Amount] = {}
+""" 精液射出量数据 """
 
 
 def load_data_json():
@@ -1934,16 +1936,14 @@ def load_power_storage():
             config_power_storage_level_index[now_tem.category] = {}
         config_power_storage_level_index[now_tem.category][now_tem.level] = now_tem.cid
 
-    """
-    draw_text_list = []
-    for son_type in config_prts_data[0]:
-        Q_data = config_prts_data[0][son_type][0]
-        draw_text_list.append(Q_data.text)
-    for son_type in config_prts_data[0]:
-        A_data = config_prts_data[0][son_type][1]
-        draw_text_list.append(A_data.text)
-    print(draw_text_list)
-    """
+def load_semen_shoot_amount():
+    """载入射精量数据"""
+    now_data = config_data["Semen_Shoot_Amount"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Semen_Shoot_Amount()
+        now_tem.__dict__ = tem_data
+        config_semen_shoot_amount[now_tem.cid] = now_tem
 
 
 def init():
@@ -2059,3 +2059,4 @@ def init():
     load_supply_strategy()
     load_power_generation()
     load_power_storage()
+    load_semen_shoot_amount()

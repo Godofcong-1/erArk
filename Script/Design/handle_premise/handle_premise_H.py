@@ -2728,6 +2728,57 @@ def handle_target_not_birth_control_pills_after(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.SELF_SEMEN_ENERGY_AGENT)
+def handle_self_semen_energy_agent(character_id: int) -> int:
+    """
+    自己已服用精力剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return character_data.h_state.used_semen_energy_agent
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_SEMEN_ENERGY_AGENT)
+def handle_self_not_semen_energy_agent(character_id: int) -> int:
+    """
+    自己没有服用精力剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_semen_energy_agent(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_SEMEN_ENERGY_AGENT)
+def handle_target_semen_energy_agent(character_id: int) -> int:
+    """
+    交互对象已服用精力剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_semen_energy_agent(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_SEMEN_ENERGY_AGENT)
+def handle_target_not_semen_energy_agent(character_id: int) -> int:
+    """
+    交互对象没有服用精力剂
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return not handle_self_semen_energy_agent(character_data.target_character_id)
+
+
 @add_premise(constant_promise.Premise.NOW_CONDOM)
 def handle_now_condom(character_id: int) -> int:
     """

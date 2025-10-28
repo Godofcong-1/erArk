@@ -1,0 +1,8 @@
+cid,behavior_id,base_semen_amount
+精液量id,行动指令名,基础射精量，单位ml
+int,str,int
+0,0,0
+射出精液量,,
+0,p_orgasm_small,10
+1,p_orgasm_normal,20
+2,p_orgasm_strong,50
