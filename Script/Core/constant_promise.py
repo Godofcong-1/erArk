@@ -2928,6 +2928,8 @@ class Premise:
     """ H_射精 玩家当前精液量小于100ml """
     PL_SEMEN_GE_100 = "pl_semen_ge_100"
     """ H_射精 玩家当前精液量大于等于100ml """
+    PL_SEMEN_TMP_GE_MAX = "pl_semen_tmp_ge_max"
+    """ H_射精 玩家当前临时精液量大于等于最大精液量 """
     PL_JUST_SHOOT = "pl_just_shoot"
     """ H_射精 玩家前指令射精了 """
     PL_NOT_JUST_SHOOT = "pl_not_just_shoot"

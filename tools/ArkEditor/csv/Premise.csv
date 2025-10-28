@@ -1480,6 +1480,7 @@ pl_semen_le_50,PL_SEMEN_LE_50,H_射精,玩家当前精液量小于等于50ml
 pl_semen_ge_50,PL_SEMEN_GE_50,H_射精,玩家当前精液量大于等于50ml
 pl_semen_l_100,PL_SEMEN_L_100,H_射精,玩家当前精液量小于100ml
 pl_semen_ge_100,PL_SEMEN_GE_100,H_射精,玩家当前精液量大于等于100ml
+pl_semen_tmp_ge_max,PL_SEMEN_TMP_GE_MAX,H_射精,玩家当前临时精液量大于等于最大精液量
 pl_just_shoot,PL_JUST_SHOOT,H_射精,玩家前指令射精了
 pl_not_just_shoot,PL_NOT_JUST_SHOOT,H_射精,玩家前指令未射精
 pl_eja_point_low,PL_EJA_POINT_LOW,H_射精,玩家当前射精欲低

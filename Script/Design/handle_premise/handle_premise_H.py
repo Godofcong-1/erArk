@@ -1315,6 +1315,20 @@ def handle_pl_semen_ge_100(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.PL_SEMEN_TMP_GE_MAX)
+def handle_pl_semen_tmp_ge_max(character_id: int) -> int:
+    """
+    玩家当前临时精液量大于等于最大精液量
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.tem_extra_semen_point >= pl_character_data.semen_point_max:
+        return 1
+    return 0
+
 @add_premise(constant_promise.Premise.PL_JUST_SHOOT)
 def handle_pl_just_shoot(character_id: int) -> int:
     """
