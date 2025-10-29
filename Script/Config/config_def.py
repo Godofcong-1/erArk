@@ -1329,6 +1329,8 @@ class System_Setting:
     """ 选项介绍 """
     option: str
     """ 各个选项 """
+    default_value: int
+    """ 默认值 """
 
 
 class Talent:

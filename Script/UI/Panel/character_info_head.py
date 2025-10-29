@@ -119,7 +119,7 @@ class CharacterInfoHead:
         urinate_draw.style = "khaki"
         urinate_text = _(" <尿>") if handle_premise.handle_urinate_ge_80(character_id) else ""
         # 玩家尿意提示根据设置决定是否显示
-        if character_id == 0 and cache.all_system_setting.draw_setting[216] == 0:
+        if character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 0:
             urinate_text = ""
         urinate_draw.text = urinate_text
 
@@ -132,7 +132,7 @@ class CharacterInfoHead:
             start_time = character_data.behavior.start_time.hour
             hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
         # 玩家饥饿提示根据设置决定是否显示，且与饭点时间无关
-        elif character_id == 0 and cache.all_system_setting.draw_setting[216] == 1:
+        elif character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 1:
             hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
         hunger_draw.text = hunger_text
 

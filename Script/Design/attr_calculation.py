@@ -19,28 +19,16 @@ def get_system_setting_zero() -> game_type.System_Setting:
     重置系统设置
     """
     empty_system_setting = game_type.System_Setting()
-    # 基础设定
-    base_default_dict = {1:0, 2:1, 3:0, 6:1, 7:0, 8:1, 9:1, 10:1, 11:2}
-    # 绘制设定
-    draw_default_dict = {1:2, 2:1, 3:2, 4:1, 5:1, 6:1, 7:1, 8:1, 9:1, 10:1, 11:5, 12:0, 13:3, 14:10, 15:5, 16:1}
-    # 难度设定
-    difficulty_default_dict = {1:3, 2:3, 3:3, 11:2, 12:0}
     # 赋予默认值
     for system_setting in game_config.config_system_setting:
-        if system_setting in base_default_dict:
-            empty_system_setting.base_setting[system_setting] = base_default_dict[system_setting]
-        else:
-            empty_system_setting.base_setting[system_setting] = 0
+        system_setting_data = game_config.config_system_setting[system_setting]
+        empty_system_setting.base_setting[system_setting] = system_setting_data.default_value
     for system_setting in game_config.config_draw_setting:
-        if system_setting in draw_default_dict:
-            empty_system_setting.draw_setting[system_setting] = draw_default_dict[system_setting]
-        else:
-            empty_system_setting.draw_setting[system_setting] = 0
+        drawing_setting_data = game_config.config_draw_setting[system_setting]
+        empty_system_setting.draw_setting[system_setting] = drawing_setting_data.default_value
     for system_setting in game_config.config_difficulty_setting:
-        if system_setting in difficulty_default_dict:
-            empty_system_setting.difficulty_setting[system_setting] = difficulty_default_dict[system_setting]
-        else:
-            empty_system_setting.difficulty_setting[system_setting] = 0
+        difficulty_setting_data = game_config.config_difficulty_setting[system_setting]
+        empty_system_setting.difficulty_setting[system_setting] = difficulty_setting_data.default_value
     for i in range(len(cache.npc_tem_data)):
         chara_adv_id = cache.npc_tem_data[i].AdvNpc
         empty_system_setting.character_text_version[chara_adv_id] = 1
