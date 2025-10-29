@@ -464,12 +464,20 @@ def update_character_config_data(value):
                 update_count += 1
                 # print(f"debug key = {key}")
     # 如果没有u插入经验，则增加u处女素质
-    if value.experience[63] == 0 and value.talent[2] == 0:
+    if value.experience[63] == 0 and value.talent[2] == 0 and value.cid != 0:
         value.talent[2] = 1
         update_count += 1
+    # 去掉玩家的u处女素质
+    if value.cid == 0 and value.talent[2] == 1:
+        value.talent[2] = 0
+        update_count += 1
     # 如果没有w插入经验，则增加w处女素质
-    if value.experience[64] == 0 and value.talent[3] == 0:
+    if value.experience[64] == 0 and value.talent[3] == 0 and value.cid != 0:
         value.talent[3] = 1
+        update_count += 1
+    # 去掉玩家的w处女素质
+    if value.cid == 0 and value.talent[3] == 1:
+        value.talent[3] = 0
         update_count += 1
     # 宝珠
     if len(value.juel) != len(game_config.config_juel):
