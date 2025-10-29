@@ -52,36 +52,44 @@ def show_endure_ejaculation_panel():
 
     return_flag = judge_endure_ejaculation(now_rate)
 
-    while 1:
-        line = draw.LineDraw("-", window_width)
-        line.draw()
-        line_feed.draw()
-        return_list = []
+    # 如果系统设置中选择了手动选择是否忍耐
+    if cache.all_system_setting.base_setting.get(11, 2) == 2:
+        while 1:
+            line = draw.LineDraw("-", window_width)
+            line.draw()
+            line_feed.draw()
+            return_list = []
 
-        # 询问是否要忍住
-        now_draw = draw.NormalDraw()
-        now_draw_text = _("要射精了，是否要忍住射精，忍耐次数越多则射精量越多（当前已忍住{0}次，忍耐几率 {1}）\n").format(now_count, endure_text)
-        now_draw.text = now_draw_text
-        now_draw.width = window_width
-        now_draw.draw()
-        line_feed.draw()
+            # 询问是否要忍住
+            now_draw = draw.NormalDraw()
+            now_draw_text = _("要射精了，是否要忍住射精，忍耐次数越多则射精量越多（当前已忍住{0}次，忍耐几率 {1}）\n").format(now_count, endure_text)
+            now_draw.text = now_draw_text
+            now_draw.width = window_width
+            now_draw.draw()
+            line_feed.draw()
 
-        # 选择是否忍住
-        yes_draw = draw.CenterButton(_("[忍住]"), _("忍住"), int(window_width / 3))
-        yes_draw.draw()
-        return_list.append(yes_draw.return_text)
-        no_draw = draw.CenterButton(_("[射出]"), _("射出"), int(window_width / 3))
-        no_draw.draw()
-        return_list.append(no_draw.return_text)
+            # 选择是否忍住
+            yes_draw = draw.CenterButton(_("[忍住]"), _("忍住"), int(window_width / 3))
+            yes_draw.draw()
+            return_list.append(yes_draw.return_text)
+            no_draw = draw.CenterButton(_("[射出]"), _("射出"), int(window_width / 3))
+            no_draw.draw()
+            return_list.append(no_draw.return_text)
 
-        line_feed.draw()
+            line_feed.draw()
 
-        yrn = flow_handle.askfor_all(return_list)
-        if yrn in return_list:
-            # 如果是射出，则返回False
-            if yrn == _("射出"):
-                return_flag = False
-            break
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                # 如果是射出，则返回False
+                if yrn == _("射出"):
+                    return_flag = False
+                break
+    # 如果系统设置中选择了一定忍耐
+    elif cache.all_system_setting.base_setting.get(11, 2) == 1:
+        pass
+    # 如果系统设置中选择了不忍耐直接射出
+    else:
+        return_flag = False
 
     # 忍住的结算
     if return_flag:
