@@ -78,6 +78,9 @@ def renumber_csv(
     target_count = 0
     for idx in range(start_idx, total):
         row = rows[idx]
+        # 跳过空白行（所有单元格为空或仅含空白），不改变编号
+        if not any((cell and cell.strip()) for cell in row):
+            continue
         # 确保行长度足够
         if column_index >= len(row):
             # 若异常短行，扩展到需要的列数
