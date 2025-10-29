@@ -1443,6 +1443,7 @@ def handle_make_coffee():
      constant_promise.Premise.PLACE_FURNITURE_GE_2,
      constant_promise.Premise.SCENE_ONLY_ONE,
      constant_promise.Premise.TIRED_LE_84,
+     constant_promise.Premise.PL_SEMEN_G_2,
      constant_promise.Premise.HP_G_1}
 )
 def handle_make_coffee_add():
