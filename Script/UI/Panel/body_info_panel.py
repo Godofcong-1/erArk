@@ -95,11 +95,12 @@ class CharacterBodyText:
                 kiss_time = character_data.first_record.first_kiss_time
                 now_text += _("于{kiss_time}在{kiss_palce}，向{character_name}博士").format(
                     character_name=cache.character_data[kiss_id].name,
-                    kiss_time=str(kiss_time.month) + "月" + str(kiss_time.day) + "日",
+                    kiss_time=game_time.get_date_until_day(kiss_time)[3:],
                     kiss_palce=attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
                 )
                 if character_data.first_record.first_kiss_body_part == 1:
                     now_text += _("的阴茎")
+                now_text += _("献上了初吻\n")
             # 口感觉描述
             ui_text = get_ability_lv_ui_text(character_id, 100)
             now_text += f"  {ui_text}\n"
@@ -175,7 +176,7 @@ class CharacterBodyText:
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了处女\n").format(
                     character_name=cache.character_data[sex_id].name,
-                    time=game_time.get_date_until_day(sex_time),
+                    time=game_time.get_date_until_day(sex_time)[3:],
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_sex_place),
                     posture=sex_posture,
                 )
@@ -204,7 +205,7 @@ class CharacterBodyText:
 
                 now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了后庭处女\n").format(
                     character_name=cache.character_data[a_sex_id].name,
-                    time=game_time.get_date_until_day(a_sex_time),
+                    time=game_time.get_date_until_day(a_sex_time)[3:],
                     palce=attr_text.get_scene_path_text(character_data.first_record.first_a_sex_place),
                     posture=a_sex_posture,
                 )
@@ -233,7 +234,7 @@ class CharacterBodyText:
                     now_text += _("  处女情况：")
                     now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了子宫处女\n").format(
                         character_name=cache.character_data[w_sex_id].name,
-                        time=game_time.get_date_until_day(w_sex_time),
+                        time=game_time.get_date_until_day(w_sex_time)[3:],
                         palce=attr_text.get_scene_path_text(character_data.first_record.first_w_sex_place),
                         posture=w_sex_posture,
                     )
@@ -289,7 +290,7 @@ class CharacterBodyText:
                     now_text += _("  处女情况：")
                     now_text += _("于{time}在{palce}，被{character_name}博士以{posture}夺走了尿道处女\n").format(
                         character_name=cache.character_data[u_sex_id].name,
-                        time=game_time.get_date_until_day(u_sex_time),
+                        time=game_time.get_date_until_day(u_sex_time)[3:],
                         palce=attr_text.get_scene_path_text(character_data.first_record.first_u_sex_place),
                         posture=u_sex_posture,
                     )
