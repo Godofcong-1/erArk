@@ -70,12 +70,14 @@ def check_return_book(character_id):
 def check_random_borrow_book(character_id):
     """
     检查角色是否有借书，有的话跳过，没有的话随机借一本书
+    returns:
+        int: 0表示未借书，1表示借了书
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 已借书则跳过
     if len(character_data.entertainment.borrow_book_id_set):
-        return 0
+        return 1
     # 未借书则随机借书
     else:
         # 遍历获得所有没借的书id
