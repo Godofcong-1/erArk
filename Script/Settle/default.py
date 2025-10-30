@@ -5785,6 +5785,10 @@ def handle_chara_off_line(
     handle_assistant_reset(character_id, add_time, change_data, now_time) # 助理数据归零
     handle_dirty_reset(character_id, add_time, change_data, now_time) # 污浊情况归零
     character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state) # H状态数据归零
+    # 归零快感状态
+    for state_id in game_config.config_character_state:
+        if game_config.config_character_state[state_id].type == 0:
+            character_data.status_data[state_id] = 0
     # 清零跟随数据
     character_data.sp_flag.is_follow = 0
     # 从当前干员列表中移除
