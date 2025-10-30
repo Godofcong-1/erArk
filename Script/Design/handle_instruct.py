@@ -6,7 +6,7 @@ from typing import Set, List
 from types import FunctionType
 from threading import Thread
 from Script.Core import constant, constant_promise, cache_control, game_type, get_text, flow_handle
-from Script.Design import update, attr_calculation, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
+from Script.Design import handle_ability, update, map_handle, character_behavior, instuct_judege, handle_npc_ai_in_h, handle_premise
 from Script.UI.Panel import achievement_panel, normal_panel
 from Script.Config import normal_config, game_config
 from Script.UI.Moudle import draw
@@ -1603,8 +1603,8 @@ def handle_apologize():
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 根据口才获取调整值#
     character_data.ability.setdefault(25, 0)
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
-    value = 10 + adjust * 10
+    adjust = handle_ability.get_ability_adjust(character_data.ability[40])
+    value = int(10 + adjust * 10)
     # 减愤怒值
     target_data.angry_point -= value
     # 判定是否不生气了
@@ -1635,8 +1635,8 @@ def handle_listen_complaint():
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 根据口才获取调整值#
     character_data.ability.setdefault(25, 0)
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
-    value = 10 + adjust * 10
+    adjust = handle_ability.get_ability_adjust(character_data.ability[40])
+    value = int(10 + adjust * 10)
     # 减愤怒值
     target_data.angry_point -= value
     chara_handle_instruct_common_settle(constant.Behavior.LISTEN_COMPLAINT, force_taget_wait = True)

@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, basement
+from Script.Design import handle_ability, basement
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel
@@ -56,7 +56,7 @@ def calculate_agriculture_line_efficiency(line_id: int, agriculture_type: int) -
     # 主
     if isinstance(main_id, int) and main_id in cache.character_data and main_id != 0:
         c = cache.character_data[main_id]
-        base_effect = 10 * attr_calculation.get_ability_adjust(c.ability.get(47, 0))
+        base_effect = 10 * handle_ability.get_ability_adjust(c.ability.get(47, 0))
         total_bonus += base_effect
         parts_str += _("主:{0}(农业lv{1}:{2}%)").format(c.name, c.ability.get(47, 0), round(base_effect, 1))
     else:
@@ -72,7 +72,7 @@ def calculate_agriculture_line_efficiency(line_id: int, agriculture_type: int) -
             # 已在其他生产线担任主种植员，不计入副
             continue
         c = cache.character_data[cid]
-        base = 10 * attr_calculation.get_ability_adjust(c.ability.get(47, 0))
+        base = 10 * handle_ability.get_ability_adjust(c.ability.get(47, 0))
         sub_bonus += base / 5
     total_bonus += sub_bonus
     parts_str += _("，副:{0}%]").format(round(sub_bonus, 1))

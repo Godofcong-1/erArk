@@ -35,6 +35,17 @@ class AbilityUp:
     """ 升级需求2 """
 
 
+class Ability_Lv_Adjust:
+    """ 能力等级的调整值 """
+
+    cid: int
+    """ 列表id """
+    ability_lv: int
+    """ 能力等级 """
+    adjust_value: float
+    """ 能力调整值 """
+
+
 class Achievement:
     """ 成就数据表 """
 

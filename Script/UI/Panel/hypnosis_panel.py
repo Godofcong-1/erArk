@@ -3,7 +3,7 @@ from typing import List
 from types import FunctionType
 import random
 from Script.Core import cache_control, game_type, get_text, flow_handle
-from Script.Design import handle_premise, handle_talent, map_handle, attr_calculation
+from Script.Design import handle_premise, handle_talent, map_handle, handle_ability
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 
@@ -73,7 +73,7 @@ def hypnosis_degree_calculation(target_character_id: int) -> float:
         hypnosis_degree_adjust += 5
 
     # 根据无觉刻印的等级，计算催眠增长系数
-    hypnosis_degree_adjust *= attr_calculation.get_ability_adjust(target_character_data.ability[19])
+    hypnosis_degree_adjust *= handle_ability.get_ability_adjust(target_character_data.ability[19])
 
     # 乘以0.5~1.5的随机系数
     hypnosis_degree_adjust *= random.uniform(0.5, 1.5)

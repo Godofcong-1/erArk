@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import attr_calculation, handle_premise, map_handle
+from Script.Design import attr_calculation, handle_premise, map_handle, handle_ability
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -150,7 +150,7 @@ def common_ejaculation():
         # 如果有交互对象，则根据交互对象的榨精能力等级来调整射精量
         if character_data.target_character_id > 0:
             target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-            squeeze_adjust = attr_calculation.get_ability_adjust(target_data.ability[77])
+            squeeze_adjust = handle_ability.get_ability_adjust(target_data.ability[77])
             # 根据榨精能力等级调整射精量
             semen_count *= squeeze_adjust
             if squeeze_adjust > 1:

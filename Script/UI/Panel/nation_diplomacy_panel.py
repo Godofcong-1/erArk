@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
-from Script.Design import  attr_calculation
+from Script.Design import attr_calculation, handle_ability
 import random
 
 cache: game_type.Cache = cache_control.cache
@@ -69,7 +69,7 @@ def judge_diplomatic_policy():
             common_default.base_chara_experience_common_settle(diplomat_chara_id, 82)
 
         # 能力修正
-        ability_adjust = attr_calculation.get_ability_adjust(diplomat_chara_data.ability[40])
+        ability_adjust = handle_ability.get_ability_adjust(diplomat_chara_data.ability[40])
         # 随机6+能力等级的随机数
         random_just = random.uniform(-6 + diplomat_chara_data.ability[40], 6 + diplomat_chara_data.ability[40]) / 10
 
@@ -174,13 +174,13 @@ class Nation_Diplomacy_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{commission_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(commission_type_list)
+                    now_draw.width = int(self.width / len(commission_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{commission_type}]",
                         f"\n{commission_type}",
-                        self.width / len(commission_type_list),
+                        int(self.width / len(commission_type_list)),
                         cmd_func=self.change_panel,
                         args=(commission_type,),
                     )
@@ -372,7 +372,7 @@ class Nation_Diplomacy_Panel:
                     now_diplomat_adv = now_diplomat_chara_data.adv
                     now_diplomat_ability_lv = now_diplomat_chara_data.ability[40]
                     ability_name = game_config.config_ability[40].name
-                    now_diplomat_ability_effect = 5 * attr_calculation.get_ability_adjust(now_diplomat_ability_lv)
+                    now_diplomat_ability_effect = 5 * handle_ability.get_ability_adjust(now_diplomat_ability_lv)
                     now_diplomat_text = f"\n  [{str(now_diplomat_adv).rjust(4,'0')}]{now_diplomat_name}  {ability_name}lv{now_diplomat_ability_lv}：{now_diplomat_ability_effect}%"
                 else:
                     now_diplomat_text = _("  无")
@@ -403,7 +403,7 @@ class Nation_Diplomacy_Panel:
                 adjust_NPC_button_draw = draw.CenterButton(
                     _("【调整负责外交官】"),
                     _("\n【调整负责外交官】"),
-                    self.width / 3,
+                    int(self.width / 3),
                     cmd_func=self.adjust_NPC,
                     args=(nation_id,),
                 )
@@ -415,7 +415,7 @@ class Nation_Diplomacy_Panel:
                     adjust_diplomatic_policy_button_draw = draw.CenterButton(
                         _("【调整外交方针】"),
                         _("\n【调整外交方针】"),
-                        self.width / 3,
+                        int(self.width / 3),
                         cmd_func=self.adjust_diplomatic_policy,
                         args=(nation_id,),
                     )
@@ -424,7 +424,7 @@ class Nation_Diplomacy_Panel:
 
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), self.width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(self.width / 2))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -473,7 +473,7 @@ class Nation_Diplomacy_Panel:
                 button_draw = draw.LeftButton(
                     draw_text,
                     f"\n{character_id}",
-                    self.width / 6 ,
+                    int(self.width / 6),
                     normal_style = draw_style,
                     cmd_func = self.sure_NPC,
                     args = (character_id, country_id),

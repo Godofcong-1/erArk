@@ -15,6 +15,7 @@ from Script.Design import (
     handle_npc_ai_in_h,
     handle_premise,
     clothing,
+    handle_ability,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -3476,7 +3477,7 @@ def handle_target_add_small_p_feel(
     now_lust = target_data.status_data[3]
     now_lust_multiple = 30
     now_add_lust = add_time + now_lust_multiple
-    adjust = attr_calculation.get_ability_adjust(target_data.ability[3])
+    adjust = handle_ability.get_ability_adjust(target_data.ability[3])
     now_add_lust *= adjust
     target_data.eja_point += now_add_lust
     # change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
@@ -3782,7 +3783,7 @@ def handle_target_enema(
 
     # 根据A扩张和当前灌肠液量来判定苦痛程度
     ability_lv = target_data.ability[10]
-    ability_adjust = attr_calculation.get_ability_adjust(ability_lv)
+    ability_adjust = handle_ability.get_ability_adjust(ability_lv)
     enema_capacity = target_data.dirty.enema_capacity
     enema_capacity_adjust = 2 ** (enema_capacity + 1)
     extra_adjust = enema_capacity_adjust / ability_adjust
@@ -7128,7 +7129,7 @@ def handle_talk_add_adjust(
             return
         # 获取调整值#
         character_data.ability.setdefault(40, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+        adjust = handle_ability.get_ability_adjust(character_data.ability[40])
         # 好感度变化#
         base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 好意变化#
@@ -7168,7 +7169,7 @@ def handle_coffee_add_adjust(
             return
         # 获取调整值#
         character_data.ability.setdefault(43, 0)
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[43])
+        adjust = handle_ability.get_ability_adjust(character_data.ability[43])
         # 好感度变化#
         base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
@@ -7205,7 +7206,7 @@ def handle_target_coffee_add_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(43, 0)
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[43])
+        adjust = handle_ability.get_ability_adjust(target_data.ability[43])
         # 好感度变化#
         base_chara_favorability_and_trust_common_settle(character_id, add_time, True, 0, adjust, change_data)
         # 信赖变化#
@@ -7241,10 +7242,10 @@ def handle_official_work_add_adjust(
         return
     now_draw_text = ""
     # 获取调整值#
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
+    adjust = handle_ability.get_ability_adjust(character_data.ability[45])
     # 如果有交互对象，且对方不在无意识状态下，则算上对方的学识加成
     if character_data.target_character_id != character_id and handle_premise.handle_unconscious_flag_0(character_data.target_character_id):
-        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[45])
+        adjust_target = handle_ability.get_ability_adjust(target_data.ability[45])
         adjust += adjust_target
         now_draw_text += _("在{0}的帮助下，").format(target_data.name)
     # 设施加成
@@ -7295,10 +7296,10 @@ def handle_cure_patient_add_just(
     if target_data.dead:
         return
     # 获取调整值#
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[46])
+    adjust = handle_ability.get_ability_adjust(character_data.ability[46])
     # 如果有交互对象，则算上对方的医疗加成
     if character_data.target_character_id != character_id:
-        adjust_target = attr_calculation.get_ability_adjust(target_data.ability[46])
+        adjust_target = handle_ability.get_ability_adjust(target_data.ability[46])
         adjust = (adjust + adjust_target) / 1.5
     # 获得加成 #
     now_add_lust = add_time * adjust * 50
@@ -7344,7 +7345,7 @@ def handle_recruit_add_just(
         return
 
     # 获取能力调整值
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    adjust = handle_ability.get_ability_adjust(character_data.ability[40])
 
     # 确定使用哪个招募栏位
     select_index = -1
@@ -7431,7 +7432,7 @@ def handle_invite_visitor_add_adjust(
         return
 
     # 获取调整值#
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+    adjust = handle_ability.get_ability_adjust(character_data.ability[40])
     # 设施效率
     adjust *= basement.calc_facility_efficiency(13)
     # 获得加成 #
@@ -8201,7 +8202,7 @@ def handle_give_gift_add_adjust(
     # 好感礼物
     if gift_data.type == 3:
         # 话术修正
-        talk_adjust = attr_calculation.get_ability_adjust(character_data.ability[40])
+        talk_adjust = handle_ability.get_ability_adjust(character_data.ability[40])
         # 更新最后赠送时间
         target_data.action_info.last_gift_time = cache.game_time
         # 好感礼物小
@@ -8211,14 +8212,14 @@ def handle_give_gift_add_adjust(
         # 好感礼物中
         elif gift_data.item_id == 173:
             # 补正到至少4级话术
-            talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(4))
+            talk_adjust = max(talk_adjust, handle_ability.get_ability_adjust(4))
             base_chara_favorability_and_trust_common_settle(character_id, 30, True, 0, talk_adjust * 2, change_data)
             base_chara_favorability_and_trust_common_settle(character_id, 10, False, 0, talk_adjust * 2, change_data)
             base_chara_state_common_settle(character_data.target_character_id, 30, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
         # 好感礼物大
         elif gift_data.item_id == 174:
             # 补正到至少6级话术
-            talk_adjust = max(talk_adjust, attr_calculation.get_ability_adjust(6))
+            talk_adjust = max(talk_adjust, handle_ability.get_ability_adjust(6))
             base_chara_favorability_and_trust_common_settle(character_id, 60, True, 0, talk_adjust * 3, change_data)
             base_chara_favorability_and_trust_common_settle(character_id, 30, False, 0, talk_adjust * 3, change_data)
             base_chara_state_common_settle(character_data.target_character_id, 120, 11, ability_level = target_data.ability[32], change_data_to_target_change = change_data)
@@ -8336,7 +8337,7 @@ def handle_read_add_adjust(
     info_text = _("\n{0}阅读了{1}，").format(character_data.name, book_data.name)
     if character_data.entertainment.read_book_progress[book_id] < 100:
         base = 5
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[45]) / book_difficulty_int
+        adjust = handle_ability.get_ability_adjust(character_data.ability[45]) / book_difficulty_int
         # 如果是0难度书籍，则阅读效率提高
         if book_difficulty == 0:
             adjust *= 3
@@ -8403,7 +8404,7 @@ def handle_teach_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 获取调整值#
-    adjust = attr_calculation.get_ability_adjust(character_data.ability[45])
+    adjust = handle_ability.get_ability_adjust(character_data.ability[45])
     # 获得加成 #
     now_add_lust = adjust * add_time * random.uniform(0.5, 1.5)
 
@@ -8765,7 +8766,7 @@ def handle_sing_add_adjust(
         good_flag = True
         if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
+        adjust = handle_ability.get_ability_adjust(character_data.ability[44])
 
         # print(f"debug 唱歌，adjust = {adjust}，add_favorability = {add_favorability}")
 
@@ -8866,7 +8867,7 @@ def handle_play_instrument_add_adjust(
         good_flag = True
         if character_data.ability[44] <= 2 and character_id == 0:
             good_flag = False
-        adjust = attr_calculation.get_ability_adjust(character_data.ability[44])
+        adjust = handle_ability.get_ability_adjust(character_data.ability[44])
 
         # print(f"debug 乐器，角色 = {character_data.name}，目标= {target_data.name}，good_flag = {good_flag}，add_favorability = {add_favorability}")
 
@@ -9056,8 +9057,8 @@ def handle_tech_add_p_adjust(
             return
         # 获取调整值#
         character_data.ability.setdefault(19, 0)
-        abi_adjust = attr_calculation.get_ability_adjust(character_data.ability[30])
-        feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[3])
+        abi_adjust = handle_ability.get_ability_adjust(character_data.ability[30])
+        feel_adjust = handle_ability.get_ability_adjust(character_data.ability[3])
         adjust = math.sqrt(abi_adjust * feel_adjust)
         # P快变化#
         target_data.status_data.setdefault(3, 0)
@@ -9309,7 +9310,7 @@ def handle_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[30])
+        adjust = handle_ability.get_ability_adjust(target_data.ability[30])
         # P快变化#
         character_data.status_data.setdefault(3, 0)
         now_lust = character_data.status_data[3]
@@ -9386,7 +9387,7 @@ def handle_target_v_adjust_add_pain(
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
         jj_size = character_data.pl_ability.jj_size
@@ -9431,7 +9432,7 @@ def handle_target_a_adjust_add_pain(
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为阴茎等级默认为1，所以再加1
         jj_size = character_data.pl_ability.jj_size
@@ -9476,7 +9477,7 @@ def handle_target_u_adjust_add_pain(
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为尿道非常小，所以相对于V和A，初始+1-4 = -3
         jj_size = character_data.pl_ability.jj_size
@@ -9521,7 +9522,7 @@ def handle_target_w_adjust_add_pain(
         pain_adjust = attr_calculation.get_pain_adjust(target_data.status_data[8])
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) - 1
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) - 1
 
         # 扩长等级相对于阴茎等级的调整，因为子宫较小，所以相对于V和A，初始+1-2=-1
         jj_size = character_data.pl_ability.jj_size
@@ -9564,10 +9565,10 @@ def handle_target_v_adjust_add_by_sex(
 
         # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
-        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        size_adjust = handle_ability.get_ability_adjust(jj_size) / 2
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) / 2
         # 最终调整值
         extra_adjust = size_adjust + waist_adjust
 
@@ -9606,10 +9607,10 @@ def handle_target_a_adjust_add_by_sex(
 
         # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
-        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        size_adjust = handle_ability.get_ability_adjust(jj_size) / 2
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) / 2
         # 最终调整值
         extra_adjust = size_adjust + waist_adjust
 
@@ -9648,10 +9649,10 @@ def handle_target_u_adjust_add_by_sex(
 
         # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
-        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        size_adjust = handle_ability.get_ability_adjust(jj_size) / 2
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) / 2
         # 最终调整值
         extra_adjust = size_adjust + waist_adjust
 
@@ -9690,10 +9691,10 @@ def handle_target_w_adjust_add_by_sex(
 
         # 阴茎大小的调整
         jj_size = character_data.pl_ability.jj_size
-        size_adjust = attr_calculation.get_ability_adjust(jj_size) / 2
+        size_adjust = handle_ability.get_ability_adjust(jj_size) / 2
         # 腰技的调整
         waist_tech = character_data.ability[76]
-        waist_adjust = attr_calculation.get_ability_adjust(waist_tech) / 2
+        waist_adjust = handle_ability.get_ability_adjust(waist_tech) / 2
         # 最终调整值
         extra_adjust = size_adjust + waist_adjust
 
@@ -9732,10 +9733,10 @@ def handle_target_pain_to_h_adjust(
 
         # 技巧大小的调整
         tech_lv = character_data.ability[30]
-        tech_adjust = attr_calculation.get_ability_adjust(tech_lv)
+        tech_adjust = handle_ability.get_ability_adjust(tech_lv)
         # 受虐的调整
         masochism_lv = target_data.ability[36]
-        masochism_adjust = attr_calculation.get_ability_adjust(masochism_lv)
+        masochism_adjust = handle_ability.get_ability_adjust(masochism_lv)
         # 最终调整值
         extra_adjust = tech_adjust + masochism_adjust
 
@@ -9775,8 +9776,8 @@ def handle_finger_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[70])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[70])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -9819,8 +9820,8 @@ def handle_tongue_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[71])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[71])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -9863,8 +9864,8 @@ def handle_feet_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[72])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[72])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -9907,8 +9908,8 @@ def handle_breast_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[73])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[73])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -9951,8 +9952,8 @@ def handle_vagina_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[74])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[74])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -9995,8 +9996,8 @@ def handle_anus_tech_add_pl_p_adjust(
             return
         # 获取调整值#
         target_data.ability.setdefault(19, 0)
-        adjust_1 = attr_calculation.get_ability_adjust(target_data.ability[30])
-        adjust_2 = attr_calculation.get_ability_adjust(target_data.ability[75])
+        adjust_1 = handle_ability.get_ability_adjust(target_data.ability[30])
+        adjust_2 = handle_ability.get_ability_adjust(target_data.ability[75])
         adjust = adjust_1 / 2 + adjust_2
         # P快变化#
         character_data.status_data.setdefault(3, 0)
@@ -10076,7 +10077,7 @@ def handle_high_obscenity_failed_adjust(
         now_lust = target_data.status_data[20]
         now_lust_multiple = 10000
         now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
+        adjust = handle_ability.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         now_add_lust += now_lust / 2
         now_add_lust = int(now_add_lust)
@@ -10133,7 +10134,7 @@ def handle_do_h_failed_adjust(
         now_lust = target_data.status_data[20]
         now_lust_multiple = 20000
         now_add_lust = add_time + now_lust_multiple
-        adjust = attr_calculation.get_ability_adjust(target_data.ability[18])
+        adjust = handle_ability.get_ability_adjust(target_data.ability[18])
         now_add_lust *= adjust
         now_add_lust += now_lust / 2
         now_add_lust = int(now_add_lust)

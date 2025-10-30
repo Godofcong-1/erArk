@@ -3,7 +3,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, handle_premise, basement
+from Script.Design import handle_ability, handle_premise, basement
 import random
 
 from Script.UI.Panel import achievement_panel
@@ -217,7 +217,7 @@ def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     # 获取铁匠角色数据和维修能力
     smith_chara_data = cache.character_data[smith_chara_id]
     ability_lv = smith_chara_data.ability[48]
-    maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 2
+    maintain_value = handle_ability.get_ability_adjust(ability_lv) / 2
     # 根据随机数变成0.8~1.2倍
     maintain_value *= random.uniform(0.8, 1.2)
     # 设施加成
@@ -278,7 +278,7 @@ def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     # 获取铁匠角色数据和维修能力
     smith_chara_data = cache.character_data[smith_chara_id]
     ability_lv = smith_chara_data.ability[48]
-    maintain_value = attr_calculation.get_ability_adjust(ability_lv) / 4
+    maintain_value = handle_ability.get_ability_adjust(ability_lv) / 4
     # 根据随机数变成0.8~1.2倍
     maintain_value *= random.uniform(0.8, 1.2)
     # 设施加成

@@ -564,40 +564,6 @@ def get_status_level(value: int) -> int:
     return now_data.level
 
 
-def get_ability_adjust(value: int) -> float:
-    """
-    按能力数值评定修正比例
-    Keyword arguments:
-    value -- 能力数值
-    Return arguments:
-    just -- 调整比例
-    """
-    level = value
-    if level == 0:
-        just = 1.0
-    elif level == 1:
-        just = 1.1
-    elif level == 2:
-        just = 1.25
-    elif level == 3:
-        just = 1.4
-    elif level == 4:
-        just = 1.6
-    elif level == 5:
-        just = 1.8
-    elif level == 6:
-        just = 2.1
-    elif level == 7:
-        just = 2.4
-    elif level == 8:
-        just = 2.8
-    elif level == 9:
-        just = 3.2
-    elif level == 10:
-        just = 4.0
-    return just
-
-
 def get_mark_debuff_adjust(value: int) -> int:
     """
     按刻印等级负面修正比例参数

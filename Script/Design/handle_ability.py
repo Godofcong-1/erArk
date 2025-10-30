@@ -239,3 +239,15 @@ def extra_ability_check(ability_id : int, character_id : int, draw_flag : bool =
         now_draw.text = info_text
         now_draw.draw()
     return judge
+
+def get_ability_adjust(value: int) -> float:
+    """
+    按能力数值评定修正比例
+    Keyword arguments:
+    value -- 能力数值
+    Return arguments:
+    just -- 调整比例
+    """
+    just = game_config.config_ability_lv_adjust[value].adjust_value
+    return just
+

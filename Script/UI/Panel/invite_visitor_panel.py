@@ -1,7 +1,7 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, map_handle, game_time, character_handle, instuct_judege, character_handle
+from Script.Design import attr_calculation, map_handle, game_time, character_handle, instuct_judege, character_handle, handle_ability
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import manage_basement_panel, recruit_panel
@@ -325,7 +325,7 @@ class Invite_Visitor_Panel:
                     # 找到职业是外交官的
                     if character_data.work.work_type == 131:
                         character_data: game_type.Character = cache.character_data[chara_id]
-                        character_effect = 5 * attr_calculation.get_ability_adjust(character_data.ability[40])
+                        character_effect = 5 * handle_ability.get_ability_adjust(character_data.ability[40])
                         now_text += f" {character_data.name}"
                         # 邀请效率
                         now_text += _("(话术lv{0}:+{1}%)").format(character_data.ability[40], round(character_effect, 1))

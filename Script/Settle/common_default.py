@@ -6,6 +6,7 @@ from Script.Design import (
     attr_calculation,
     handle_npc_ai,
     handle_premise,
+    handle_ability,
 )
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -288,11 +289,11 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 心理
     elif state_id == 23:
         feel_ability_id = 102
-    feel_adjust = attr_calculation.get_ability_adjust(character_data.ability[feel_ability_id])
+    feel_adjust = handle_ability.get_ability_adjust(character_data.ability[feel_ability_id])
     final_adjust += feel_adjust
     # 技巧
     if ability_level >= 0:
-        tech_adjust = attr_calculation.get_ability_adjust(ability_level)
+        tech_adjust = handle_ability.get_ability_adjust(ability_level)
         final_adjust = math.sqrt(feel_adjust * tech_adjust)
     # 调香
     if character_data.sp_flag.aromatherapy == 4:
@@ -311,7 +312,7 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
         final_adjust += 0.2
     # 无觉刻印会增加无意识状态下的部位快感系数
     if handle_premise.handle_unconscious_flag_ge_1(character_id):
-        final_adjust += (attr_calculation.get_ability_adjust(character_data.ability[19]) - 1) * 2
+        final_adjust += (handle_ability.get_ability_adjust(character_data.ability[19]) - 1) * 2
     # 信物调整值
     now_token = pl_character_data.pl_collection.eqip_token[1]
     if len(now_token):
@@ -357,7 +358,7 @@ def chara_base_state_adjust(character_id: int, state_id: int, ability_level: int
     if state_id in [13, 15, 17, 18, 20]: # 与刻印相关的角色状态id
         feel_adjust = attr_calculation.get_mark_debuff_adjust(ability_level)
     else:
-        feel_adjust = attr_calculation.get_ability_adjust(ability_level)
+        feel_adjust = handle_ability.get_ability_adjust(ability_level)
     final_adjust += feel_adjust
     # 素质修正
     if state_id in [9, 14]: # 习得、先导

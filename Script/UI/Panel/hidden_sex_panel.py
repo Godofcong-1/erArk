@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, attr_calculation, map_handle, character_behavior
+from Script.Design import handle_premise, handle_ability, map_handle, character_behavior
 from Script.UI.Panel import dirty_panel
 
 import random
@@ -179,7 +179,7 @@ def settle_hidden_value_by_action(character_id = 0, add_flag = None, now_duratio
                 now_intensity = max(2, now_intensity)
     # 隐蔽能力
     now_ability_lv = character_data.ability[90]
-    abi_adjust = attr_calculation.get_ability_adjust(now_ability_lv)
+    abi_adjust = handle_ability.get_ability_adjust(now_ability_lv)
     # 在场人数
     scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
     scene_data: game_type.Scene = cache.scene_data[scene_path_str]

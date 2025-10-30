@@ -5,7 +5,7 @@ from types import FunctionType
 # 依赖模块，与生产线面板保持一致的导入方式
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation
+from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw, panel
 
 cache: game_type.Cache = cache_control.cache
@@ -75,10 +75,10 @@ def _get_operator_power_bonus(type: int = -1) -> float:
         try:
             # 获取角色数据
             character = cache.character_data[chara_id]
-            ability_value = attr_calculation.get_ability_adjust(character.ability[48]) - 1
+            ability_value = handle_ability.get_ability_adjust(character.ability[48]) - 1
         except Exception:
             # 兜底，视为0级能力
-            ability_value = attr_calculation.get_ability_adjust(0) - 1
+            ability_value = handle_ability.get_ability_adjust(0) - 1
         ability_value /= 2
         # 如果该角色不是主调控员，则效率减少
         if chara_id not in ri.main_power_facility_operator_ids:

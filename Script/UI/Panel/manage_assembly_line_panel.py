@@ -1,7 +1,7 @@
 from typing import Tuple, Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, basement
+from Script.Design import attr_calculation, basement, handle_ability
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel
@@ -45,7 +45,7 @@ def calculate_assembly_line_efficiency(line_id:int) -> Tuple[str, float]:
     worker_str = "["
     if line_main_id in cache.character_data and line_main_id != 0:
         char_data: game_type.Character = cache.character_data[line_main_id]
-        main_bonus = 10 * attr_calculation.get_ability_adjust(char_data.ability[48])
+        main_bonus = 10 * handle_ability.get_ability_adjust(char_data.ability[48])
         total += main_bonus
         worker_str = _("主:{0}(制造lv{1}:{2}%)").format(char_data.name, char_data.ability[48], round(main_bonus,1))
     else:
@@ -57,7 +57,7 @@ def calculate_assembly_line_efficiency(line_id:int) -> Tuple[str, float]:
         if cid in main_ids:
             continue
         char_data: game_type.Character = cache.character_data[cid]
-        base_effect = 2 * attr_calculation.get_ability_adjust(char_data.ability.get(48,0))
+        base_effect = 2 * handle_ability.get_ability_adjust(char_data.ability.get(48,0))
         sub_bonus += base_effect
     total += sub_bonus
     worker_str += _("，副:{0}%]").format(round(sub_bonus,1))

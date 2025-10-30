@@ -1,7 +1,7 @@
 from typing import List, Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
-from Script.Design import attr_calculation, basement, handle_premise, handle_talent
+from Script.Design import attr_calculation, basement, handle_premise, handle_talent, handle_ability
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -245,7 +245,7 @@ def calculate_recruit_line_efficiency(line_id: int) -> Tuple[str, float]:
         if chara_id == 0:
             continue
         character_data: game_type.Character = cache.character_data[chara_id]
-        base_effect = 2 * attr_calculation.get_ability_adjust(character_data.ability.get(40,0))
+        base_effect = 2 * handle_ability.get_ability_adjust(character_data.ability.get(40,0))
         if chara_id == line_main_id:
             total_bonus += base_effect
             hr_parts_str += _("主:{0}(话术lv{1}:{2}%)").format(main_name, character_data.ability.get(40,0), round(base_effect,1))
