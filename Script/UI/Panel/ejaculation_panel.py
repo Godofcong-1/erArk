@@ -28,6 +28,7 @@ def show_endure_ejaculation_panel():
     character_data: game_type.Character = cache.character_data[0]
     now_lv = character_data.ability[30]
     now_count = character_data.h_state.endure_not_shot_count
+    line = draw.LineDraw("-", window_width)
 
     # 判断忍耐几率
     if now_count <= now_lv:
@@ -55,7 +56,6 @@ def show_endure_ejaculation_panel():
     # 如果系统设置中选择了手动选择是否忍耐
     if cache.all_system_setting.base_setting.get(11, 2) == 2:
         while 1:
-            line = draw.LineDraw("-", window_width)
             line.draw()
             line_feed.draw()
             return_list = []
@@ -100,8 +100,7 @@ def show_endure_ejaculation_panel():
         now_draw.text = endure_text
         now_draw.width = window_width
         now_draw.draw()
-
-    line.draw()
+        line.draw()
 
     return return_flag
 
