@@ -650,9 +650,9 @@ def check_second_effect(
             orgasm_list.append(second_behavior_id)
         if "mark" in second_behavior_id:
             mark_list.append(second_behavior_id)
-    for cid in game_config.config_body_item:
-        body_item_data = game_config.config_body_item[cid]
-        item_list.append(body_item_data.behavior_id)
+    # for cid in game_config.config_body_item:
+    #     body_item_data = game_config.config_body_item[cid]
+    #     item_list.append(body_item_data.behavior_id)
 
     # 玩家检测自己
     if character_id == 0:
@@ -713,6 +713,10 @@ def second_behavior_effect(
     ):
         talk.must_show_talk_check(character_id)
         must_settle_check(character_id)
+        return
+
+    # 如果没有任何二段行为，则直接返回
+    if not any(character_data.second_behavior.values()):
         return
 
     # 遍历二段行为id，进行结算
