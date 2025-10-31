@@ -11,7 +11,7 @@ from Script.Core import (
     flow_handle,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import attr_calculation, settle_behavior, handle_premise, handle_ability
+from Script.Design import attr_calculation, handle_premise, handle_ability, second_behavior
 
 panel_info_data = {}
 
@@ -201,7 +201,7 @@ class Characterabi_show_Text:
         mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_mark_level]
         mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
         need_state_all_value = mark_up_data.need_state_all_value
-        now_state_all_value, state_text = settle_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
+        now_state_all_value, state_text = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
         # 文本信息
         info_text = _("○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n\n")
         info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
@@ -378,9 +378,9 @@ class Characterabi_show_Text:
         self.character_data.ability[ability_id] += 1
         # 赋予二段行为
         second_behavior_id = mark_up_data.second_behavior
-        self.character_data.second_behavior[second_behavior_id] = 1
+        second_behavior.character_get_second_behavior(self.character_id, second_behavior_id)
         # 结算二段行为
-        settle_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
+        second_behavior.second_behavior_effect(self.character_id, game_type.CharacterStatusChange(), [second_behavior_id])
 
     def mark_down(self, ability_id: int):
         """降级刻印"""
@@ -426,7 +426,7 @@ class Characterabi_show_Text:
                         mark_up_data_id = game_config.config_mark_up_data_by_ability[ability_id][now_level]
                         mark_up_data = game_config.config_mark_up_data[mark_up_data_id]
                         need_state_all_value = mark_up_data.need_state_all_value
-                        now_state_all_value, _ = settle_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
+                        now_state_all_value, _ = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
                         # 如果状态值足够，无需宝珠即可升级
                         if now_state_all_value >= need_state_all_value:
                             can_up = True

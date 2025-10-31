@@ -351,6 +351,7 @@ def settle_unconscious_semen_and_cloth(character_id: int) -> None:
     功能描述:
         当角色在恢复意识时触发的二段行为。
     """
+    from Script.Design import second_behavior
     # 从缓存中获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     # 对数据进行去重
@@ -359,18 +360,18 @@ def settle_unconscious_semen_and_cloth(character_id: int) -> None:
     # 触发角色的部位精液二段行为
     for body_part in character_data.dirty.body_semen_in_unconscious:
         second_behavior_id = "in_unconscious_cum_on_body_" + str(body_part)
-        character_data.second_behavior[second_behavior_id] = 1
+        second_behavior.character_get_second_behavior(character_id, second_behavior_id)
     for cloth_part in character_data.dirty.cloth_semen_in_unconscious:
         # 如果自己身上没穿着该部位的衣服，则跳过
         if len(character_data.cloth.cloth_wear[cloth_part]) == 0:
             continue
         second_behavior_id = "in_unconscious_cum_on_cloth_" + str(cloth_part)
-        character_data.second_behavior[second_behavior_id] = 1
+        second_behavior.character_get_second_behavior(character_id, second_behavior_id)
     # 触发角色的服装失窃行为
     if character_data.cloth.stolen_panties_in_unconscious:
-        character_data.second_behavior["in_unconscious_stolen_panty"] = 1
+        second_behavior.character_get_second_behavior(character_id, "in_unconscious_stolen_panty")
     if character_data.cloth.stolen_socks_in_unconscious:
-        character_data.second_behavior["in_unconscious_stolen_socks"] = 1
+        second_behavior.character_get_second_behavior(character_id, "in_unconscious_stolen_socks")
     # 数据清零
     character_data.dirty.body_semen_in_unconscious = []
     character_data.dirty.cloth_semen_in_unconscious = []

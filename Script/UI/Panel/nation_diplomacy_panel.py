@@ -504,7 +504,7 @@ class Nation_Diplomacy_Panel:
         country_id -- 势力编号
         """
 
-        from Script.Design import talk, handle_premise
+        from Script.Design import talk, handle_premise, second_behavior
         from Script.Settle import default
 
         # 解除任命旧的外交官
@@ -519,9 +519,9 @@ class Nation_Diplomacy_Panel:
                 default.handle_chara_on_line(old_diplomat_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
-                old_diplomat_chara_data.second_behavior["relieved_of_diplomat_local"] = 1
+                second_behavior.character_get_second_behavior(old_diplomat_id, "relieved_of_diplomat_local")
             else:
-                old_diplomat_chara_data.second_behavior["relieved_of_diplomat_out"] = 1
+                second_behavior.character_get_second_behavior(old_diplomat_id, "relieved_of_diplomat_out")
             talk.must_show_talk_check(old_diplomat_id)
 
         # 任命新的外交官
@@ -533,12 +533,12 @@ class Nation_Diplomacy_Panel:
             new_diplomat_chara_data.sp_flag.in_diplomatic_visit = country_id
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
-                new_diplomat_chara_data.second_behavior["appoinnted_as_diplomat_local"] = 1
+                second_behavior.character_get_second_behavior(character_id, "appoinnted_as_diplomat_local")
                 talk.must_show_talk_check(character_id)
                 # 输出本地提示
                 info_text = _("\n{0}被任命为{1}的外交官，因为该地为当前罗德岛所在地，所以会在岛上办公，当罗德岛离开该国家后会进入离舰外派状态。\n").format(new_diplomat_chara_data.name, game_config.config_birthplace[country_id].name)
             else:
-                new_diplomat_chara_data.second_behavior["appoinnted_as_diplomat_out"] = 1
+                second_behavior.character_get_second_behavior(character_id, "appoinnted_as_diplomat_out")
                 talk.must_show_talk_check(character_id)
                 default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
                 # 输出外派提示

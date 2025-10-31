@@ -1366,6 +1366,10 @@ class Character:
         """ 角色当前行为状态数据 """
         self.second_behavior: Dict[str, int] = {}
         """ 角色当前二段行为状态数据 """
+        self.must_settle_second_behavior_id_list: List[str] = []
+        """ 角色必须结算的二段行为id列表 """
+        self.must_show_second_behavior_id_list: List[str] = []
+        """ 角色必须显示的二段行为id列表 """
         self.event: Chara_Event = Chara_Event()
         """ 角色当前事件状态数据 """
         # self.gold: int = 0

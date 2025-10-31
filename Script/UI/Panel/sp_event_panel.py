@@ -48,6 +48,7 @@ class Born_Panel:
 
     def draw(self):
         """绘制对象"""
+        from Script.Design import second_behavior
 
         pl_character_data: game_type.Character = cache.character_data[0]
         mom_character_data: game_type.Character = cache.character_data[self.mother_character_id]
@@ -79,7 +80,7 @@ class Born_Panel:
                 line.draw()
                 return_list = []
 
-                mom_character_data.second_behavior["born"] = 1
+                second_behavior.character_get_second_behavior(self.mother_character_id, "born")
                 talk.must_show_talk_check(self.mother_character_id)
                 info_draw = draw.WaitDraw()
                 info_draw.width = self.width
@@ -114,7 +115,7 @@ class Born_Panel:
                 line_feed.draw()
                 break
 
-            mom_character_data.second_behavior["postpartum"] = 1
+            second_behavior.character_get_second_behavior(self.mother_character_id, "postpartum")
             talk.must_show_talk_check(self.mother_character_id)
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n{0}的生产结束了，但她仍需要在住院部休息几天\n").format(mom_character_data.name)

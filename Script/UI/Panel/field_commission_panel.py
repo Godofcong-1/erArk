@@ -351,6 +351,7 @@ def judge_field_commission_finish():
 
     from Script.Settle import default
     from Script.UI.Panel import manage_vehicle_panel, equipmen_panel, achievement_panel
+    from Script.Design import second_behavior
 
     now_ongoing_field_commissions = cache.rhodes_island.ongoing_field_commissions.copy()
     draw_text = ""
@@ -371,7 +372,7 @@ def judge_field_commission_finish():
             # 结算队长
             if len(send_npc_list):
                 leader_id = send_npc_list[0]
-                cache.character_data[leader_id].second_behavior["end_field_commission_as_leader"] = 1
+                second_behavior.character_get_second_behavior(leader_id, "end_field_commission_as_leader")
                 talk.must_show_talk_check(leader_id)
             # 遍历派遣人员
             for character_id in send_npc_list:
@@ -1004,6 +1005,7 @@ class CommissionDraw:
         Keyword arguments:
         commision_id -- 委托编号
         """
+        from Script.Design import second_behavior
 
         commision_data = game_config.config_commission[commision_id]
         commision_people = commision_data.people
@@ -1012,12 +1014,11 @@ class CommissionDraw:
 
         # 结算队长
         if self.lead_chara_id:
-            lead_character_data = cache.character_data[self.lead_chara_id]
             # 将队长的id调为列表的第一位
             self.send_npc_list.remove(self.lead_chara_id)
             self.send_npc_list.insert(0, self.lead_chara_id)
             # 二段行为
-            lead_character_data.second_behavior["start_field_commission_as_leader"] = 1
+            second_behavior.character_get_second_behavior(self.lead_chara_id, "start_field_commission_as_leader")
             talk.must_show_talk_check(self.lead_chara_id)
 
         # 初步预估时间

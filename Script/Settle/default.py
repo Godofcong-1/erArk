@@ -16,6 +16,7 @@ from Script.Design import (
     handle_premise,
     clothing,
     handle_ability,
+    second_behavior,
 )
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
@@ -1125,7 +1126,7 @@ def handle_first_kiss(
             # now_draw.width = window_width
             # now_draw.draw()
             # 初吻的二段结算
-            target_data.second_behavior["first_kiss"] = 1
+            second_behavior.character_get_second_behavior(target_data.cid, "first_kiss")
 
 
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
@@ -1206,7 +1207,7 @@ def handle_first_sex(
         target_data.first_record.first_sex_time = cache.game_time
         target_data.first_record.first_sex_place = target_data.position
         target_data.first_record.first_sex_posture = instruct_name
-        target_data.second_behavior["first_sex"] = 1
+        second_behavior.character_get_second_behavior(target_data.cid, "first_sex")
         # 失去性无知
         if target_data.talent[222] == 1:
             target_data.talent[222] = 0
@@ -1305,8 +1306,8 @@ def handle_first_a_sex(
             # )
             # now_draw.width = window_width
             # now_draw.draw()
-            # 处女的二段结算
-            target_data.second_behavior["first_a_sex"] = 1
+            # a处女的二段结算
+            second_behavior.character_get_second_behavior(target_data.cid, "first_a_sex")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_U_SEX)
@@ -1353,7 +1354,7 @@ def handle_first_u_sex(
         target_data.first_record.first_u_sex_posture = instruct_name
         if (not character_id) or (not target_data.cid):
             # 处女的二段结算
-            target_data.second_behavior["first_u_sex"] = 1
+            second_behavior.character_get_second_behavior(target_data.cid, "first_u_sex")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_W_SEX)
@@ -1395,7 +1396,7 @@ def handle_first_w_sex(
         target_data.first_record.first_w_sex_posture = instruct_name
         if (not character_id) or (not target_data.cid):
             # 处女的二段结算
-            target_data.second_behavior["first_w_sex"] = 1
+            second_behavior.character_get_second_behavior(target_data.cid, "first_w_sex")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DAY_FIRST_MEET_0)
@@ -1475,7 +1476,7 @@ def handle_first_kiss_to_penis(
         target_data.first_record.first_kiss_body_part = 1
         if (not character_id) or (not target_data.cid):
             # 初吻的二段结算
-            target_data.second_behavior["first_kiss"] = 1
+            second_behavior.character_get_second_behavior(character_id, "first_kiss")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
@@ -5630,7 +5631,7 @@ def handle_self_h_state_reset(
         if behavior_value != 0:
             behavior_data = game_config.config_behavior[second_behavior_id]
             if "H装备" in behavior_data.tag or "侍奉" in behavior_data.tag:
-                character_data.second_behavior[second_behavior_id] = 0
+                second_behavior.character_get_second_behavior(character_id, second_behavior_id, reset=True)
     # 囚犯干员回到自己监牢
     if handle_premise.handle_imprisonment_1(character_id) and handle_premise.handle_not_in_dormitory(character_id):
         dormitory_list = map_handle.get_map_system_path_for_str(character_data.dormitory)
@@ -7719,6 +7720,7 @@ def handle_orgasm_edge_release(
     """
     if not add_time:
         return
+    from Script.Design import second_behavior
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     # 如果没有交互对象
@@ -7732,7 +7734,7 @@ def handle_orgasm_edge_release(
     # 变为寸止解放状态
     target_data.h_state.orgasm_edge = 2
     # 将寸止计数转化为绝顶
-    settle_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
+    second_behavior.orgasm_settle(character_data.target_character_id, target_change, un_count_orgasm_dict = target_data.h_state.orgasm_edge_count)
     # 清零寸止计数
     for state_id in game_config.config_character_state:
         if game_config.config_character_state[state_id].type == 0:
@@ -7756,6 +7758,7 @@ def handle_time_stop_orgasm_release(
     """
     if not add_time:
         return
+    from Script.Design import second_behavior
     for chara_id in cache.npc_id_got:
         if chara_id == 0:
             continue
@@ -7763,7 +7766,7 @@ def handle_time_stop_orgasm_release(
         # 变为时停解放状态
         character_data.h_state.time_stop_release = True
         # 将时停绝顶计数转化为绝顶
-        settle_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
+        second_behavior.orgasm_settle(chara_id, change_data, un_count_orgasm_dict = character_data.h_state.time_stop_orgasm_count)
         # 清零时停绝顶计数
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:
@@ -7789,7 +7792,7 @@ def handle_end_h_add_hpmp_max(
     """
     if not add_time:
         return
-    from Script.Design import handle_ability
+    from Script.Design import handle_ability, second_behavior
     character_data: game_type.Character = cache.character_data[character_id]
     id_list = [character_id]
     if character_data.target_character_id != character_id:
@@ -7799,8 +7802,8 @@ def handle_end_h_add_hpmp_max(
         info_text = now_character_data.name
         # 如果有精液寸止，则射出
         if now_character_data.h_state.endure_not_shot_count > 0:
-            settle_behavior.orgasm_judge(chara_id, change_data, skip_undure = True)
-            settle_behavior.second_behavior_effect(chara_id, change_data)
+            second_behavior.orgasm_judge(chara_id, change_data, skip_undure = True)
+            second_behavior.second_behavior_effect(chara_id, change_data)
         # 统计绝顶次数
         orgasm_count = 0
         for state_id in game_config.config_character_state:

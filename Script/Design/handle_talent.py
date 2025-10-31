@@ -24,6 +24,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
     character_id -- 角色id\n
     now_gain_type -- 素质获得类型(0随时自动，1手动，2指令绑定，3睡觉自动)\n
     """
+    from Script.Design import second_behavior
     character_data: game_type.Character = cache.character_data[character_id]
     gain_talent_flag = False
     # 遍历全素质获得
@@ -60,7 +61,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
             # 触发对应的二段行为结算
             if gain_talent_data.second_behavior_id:
                 second_behavior_id = gain_talent_data.second_behavior_id
-                character_data.second_behavior[second_behavior_id] = 1
+                second_behavior.character_get_second_behavior(character_id, second_behavior_id)
 
             # 判断是否需要进行替代旧素质
             if gain_talent_data.replace_talent_id:
@@ -188,6 +189,7 @@ def npc_gain_hypnosis_talent(character_id: int):
     """
     干员获得被催眠素质\n
     """
+    from Script.Design import second_behavior
     pl_character_data = cache.character_data[0]
     character_data = cache.character_data[character_id]
     if character_data.hypnosis.hypnosis_degree < 1:
@@ -206,7 +208,7 @@ def npc_gain_hypnosis_talent(character_id: int):
             character_data.talent[now_data.hypnosis_talent_id] = 1
             talent_name = game_config.config_talent[now_data.hypnosis_talent_id].name
             # 触发对应的二段行为结算
-            character_data.second_behavior[now_data.second_behavior_id] = 1
+            second_behavior.character_get_second_behavior(character_id, now_data.second_behavior_id)
             # 替换旧素质
             # if now_data.hypnosis_talent_id > 71:
             #     old_talent_id = now_data.hypnosis_talent_id - 1

@@ -556,13 +556,13 @@ class New_Round_Handle:
         """
         开始新的周目
         """
-        from Script.Design import talk
+        from Script.Design import talk, second_behavior
         from Script.UI.Panel import achievement_panel
 
         # 输出送别干员的送别口上
         if self.farewell_npc_id:
             now_character_data = cache.character_data[self.farewell_npc_id]
-            now_character_data.second_behavior["new_round_farewell"] = 1
+            second_behavior.character_get_second_behavior(self.farewell_npc_id, "new_round_farewell")
             line_draw = draw.LineDraw("-", self.width)
             line_draw.draw()
             line_feed_draw.draw()

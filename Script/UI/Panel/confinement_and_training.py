@@ -182,7 +182,7 @@ def chara_become_prisoner(character_id: int):
     Keyword arguments:\n
     character_id -- 角色id\n
     """
-    from Script.Design import clothing
+    from Script.Design import clothing, second_behavior
     character_data = cache.character_data[character_id]
 
     # flag结算
@@ -203,22 +203,22 @@ def chara_become_prisoner(character_id: int):
     target_fall = attr_calculation.get_character_fall_level(character_id, minus_flag=True)
     if character_data.ability[14] <= 0:
         character_data.ability[14] = 1
-        character_data.second_behavior["yield_mark_1"] = 1
+        second_behavior.character_get_second_behavior(character_id, "yield_mark_1")
     if character_data.ability[14] <= 1:
         character_data.ability[14] = 2
-        character_data.second_behavior["yield_mark_2"] = 1
+        second_behavior.character_get_second_behavior(character_id, "yield_mark_2")
     if character_data.ability[17] <= 0 and target_fall >= -2:
         character_data.ability[17] = 1
-        character_data.second_behavior["terror_mark_1"] = 1
+        second_behavior.character_get_second_behavior(character_id, "terror_mark_1")
     if character_data.ability[18] <= 0 and target_fall >= -2:
         character_data.ability[18] = 1
-        character_data.second_behavior["hate_mark_1"] = 1
+        second_behavior.character_get_second_behavior(character_id, "hate_mark_1")
     if character_data.ability[18] <= 1 and target_fall >= -1:
         character_data.ability[18] = 2
-        character_data.second_behavior["hate_mark_2"] = 1
+        second_behavior.character_get_second_behavior(character_id, "hate_mark_2")
     if character_data.ability[18] <= 2 and target_fall >= 0:
         character_data.ability[18] = 3
-        character_data.second_behavior["hate_mark_3"] = 1
+        second_behavior.character_get_second_behavior(character_id, "hate_mark_3")
 
 def get_unused_prison_dormitory() -> str:
     """

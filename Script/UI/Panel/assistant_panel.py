@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import handle_premise, attr_calculation, map_handle
+from Script.Design import handle_premise, attr_calculation, map_handle, second_behavior
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 
@@ -132,8 +132,8 @@ def assistant_replace(new_assistant_id: int):
         new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         new_assistant_data.sp_flag.is_follow = 1
         new_assistant_data.assistant_services[2] = 1
-        new_assistant_data.second_behavior["not_as_assistant"] = 0
-        new_assistant_data.second_behavior["chosen_as_assistant"] = 1
+        second_behavior.character_get_second_behavior(new_assistant_id, "not_as_assistant", reset=True)
+        second_behavior.character_get_second_behavior(new_assistant_id, "chosen_as_assistant")
         info_text += _("\n{0}成为助理干员了，并默认开启智能跟随模式\n").format(new_assistant_data.name)
         # 同步换助理的选项
         if old_assistant_flag:
@@ -141,8 +141,8 @@ def assistant_replace(new_assistant_id: int):
                 new_assistant_data.assistant_services[10] = 1
     # 取消旧助理的结算
     if old_assistant_flag:
-        old_assistant_data.second_behavior["chosen_as_assistant"] = 0
-        old_assistant_data.second_behavior["not_as_assistant"] = 1
+        second_behavior.character_get_second_behavior(new_assistant_id, "chosen_as_assistant", reset=True)
+        second_behavior.character_get_second_behavior(old_assistant_data.adv, "not_as_assistant")
         info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
     info_draw.text = info_text
     info_draw.width = window_width
@@ -324,24 +324,25 @@ class Assistant_Panel:
                 # 清除同类所有二段结算标记
                 for i in range(service_option_len):
                     key = f"{prefix}{i}"
-                    target_data.second_behavior[key] = 0
+                    second_behavior.character_get_second_behavior(character_data.assistant_character_id, key, reset=True)
                 # 设置当前选项对应的二段结算
                 current_index = target_data.assistant_services[service_cid]
                 key_now = f"{prefix}{current_index}"
-                target_data.second_behavior[key_now] = 1
+                second_behavior.character_get_second_behavior(character_data.assistant_character_id, key_now)
             # 处理二值开关行为
             elif service_cid in binary_prefixes:
                 prefix = binary_prefixes[service_cid]
                 # 清除“on”和“off”旧状态
                 key_on = f"{prefix}on"
                 key_off = f"{prefix}off"
-                target_data.second_behavior[key_on] = 0
-                target_data.second_behavior[key_off] = 0
+                second_behavior.character_get_second_behavior(character_data.assistant_character_id, key_on, reset=True)
+                second_behavior.character_get_second_behavior(character_data.assistant_character_id, key_off, reset=True)
                 # 根据当前服务开关状态赋值
                 if target_data.assistant_services[service_cid]:
-                    target_data.second_behavior[key_on] = 1
+                    second_behavior.character_get_second_behavior(character_data.assistant_character_id, key_on)
                 else:
-                    target_data.second_behavior[key_off] = 1
+                    second_behavior.character_get_second_behavior(character_data.assistant_character_id, key_off)
+
 
             # 同居服务的宿舍改变
             # 此处不可以用翻译地点
@@ -378,10 +379,10 @@ class Assistant_Panel:
             line_feed.draw()
 
             # 更改小时与分钟的按钮
-            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得晚于9时"), window_width / 6, cmd_func=self.change_hour, args=(True,))
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得晚于9时"), int(window_width / 6), cmd_func=self.change_hour, args=(True,))
             hour_button.draw()
             return_list.append(hour_button.return_text)
-            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(True,))
+            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), int(window_width / 6), cmd_func=self.change_minute, args=(True,))
             minute_button.draw()
             return_list.append(minute_button.return_text)
             line_feed.draw()
@@ -420,10 +421,10 @@ class Assistant_Panel:
             line_feed.draw()
 
             # 更改小时与分钟的按钮
-            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得早于18时"), window_width / 6, cmd_func=self.change_hour, args=(False,))
+            hour_button = draw.CenterButton(_("[更改小时 (24小时制) ]"), _("更改小时，不得早于18时"), int(window_width / 6), cmd_func=self.change_hour, args=(False,))
             hour_button.draw()
             return_list.append(hour_button.return_text)
-            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), window_width / 6, cmd_func=self.change_minute, args=(False,))
+            minute_button = draw.CenterButton(_("[更改分钟]"), _("更改分钟"), int(window_width / 6), cmd_func=self.change_minute, args=(False,))
             minute_button.draw()
             return_list.append(minute_button.return_text)
             line_feed.draw()

@@ -343,16 +343,10 @@ def must_show_talk_check(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    second_behavior = character_data.second_behavior
-    eff_map = game_config.config_behavior_effect_data
-    # 获取所有必须显示的二段行为id
-    must_ids = game_config.config_behavior_must_show_cid_list
-    if not must_ids:
-        return
     # 遍历所有必须显示的二段行为
-    for behavior_id in must_ids:
+    for behavior_id in character_data.must_show_second_behavior_id_list:
         # 跳过值为0的行为
-        if behavior_id in second_behavior and second_behavior[behavior_id] == 0:
+        if behavior_id in character_data.second_behavior and character_data.second_behavior[behavior_id] == 0:
             continue
         # 进行绘制
         now_talk_data = handle_talk_sub(character_id, behavior_id, True)
@@ -360,10 +354,11 @@ def must_show_talk_check(character_id: int):
         handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
         # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
         change_data = game_type.CharacterStatusChange()
-        for effect_id in eff_map[behavior_id]:
+        for effect_id in game_config.config_behavior_effect_data[behavior_id]:
             constant.settle_second_behavior_effect_data[effect_id](character_id, change_data)
         # 触发后该行为值归零
         character_data.second_behavior[behavior_id] = 0
+    character_data.must_show_second_behavior_id_list = []
 
 
 def second_behavior_info_text(character_id: int, second_behavior_id: str):

@@ -815,6 +815,7 @@ def base_chara_climix_common_settle(
     change_data -- 结算信息记录对象
     change_data_to_target_change -- 结算信息记录对象
     """
+    from Script.Design import second_behavior
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
         return
@@ -850,7 +851,7 @@ def base_chara_climix_common_settle(
             elif pre_data % 3 == 2:
                 degree = 2
             second_behavior_id = f"{part_dict[part_id]}_orgasm_{degree_dict[degree]}"
-        character_data.second_behavior[second_behavior_id] = 1
+        second_behavior.character_get_second_behavior(character_id, second_behavior_id)
         character_data.h_state.orgasm_level[part_id] += 1
 
     # 触发射精面板

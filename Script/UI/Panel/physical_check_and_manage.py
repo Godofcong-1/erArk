@@ -607,7 +607,7 @@ class Physical_Check_And_Manage_Panel:
 
     def settle_target_physical_manage(self, manage_cid: int, target_character_id: int):
         """结算目标角色的身体管理"""
-        from Script.Design import basement
+        from Script.Design import basement, second_behavior
 
         body_manage_data = game_config.config_body_manage_requirement[manage_cid]
         body_manage_second_behavior_id = body_manage_data.second_behavior_id
@@ -618,7 +618,7 @@ class Physical_Check_And_Manage_Panel:
         # 如果没有进行该身体管理，则进行
         if target_character_data.body_manage[manage_cid] == 0:
             # 结算二段行为
-            target_character_data.second_behavior[body_manage_second_behavior_id] = 1
+            second_behavior.character_get_second_behavior(target_character_id, body_manage_second_behavior_id)
             # 结算身体管理
             target_character_data.body_manage[manage_cid] = 1
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 1, force_taget_wait = True)
