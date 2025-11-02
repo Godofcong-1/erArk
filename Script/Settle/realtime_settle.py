@@ -359,6 +359,8 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
     else:
         add_sleep = random.randint(int(true_add_time * -0.3), int(true_add_time * 0.6))
     now_char.sleep_point = min(now_char.sleep_point + add_sleep, 100)
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
     # 回复体力和气力
     final_adjust = 1
     if now_char.talent[351]:

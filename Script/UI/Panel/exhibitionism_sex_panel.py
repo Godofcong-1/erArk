@@ -142,6 +142,7 @@ class Select_Exhibitionism_Sex_Mode_Panel:
             character_data.sp_flag.exhibitionism_sex_mode = mode_id
             target_character_data.sp_flag.exhibitionism_sex_mode = mode_id
             target_character_data.sp_flag.is_follow = 0
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 3)
             now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0)
             other_chara_count = len(now_scene_character_list) - 2
             # 成就初始化

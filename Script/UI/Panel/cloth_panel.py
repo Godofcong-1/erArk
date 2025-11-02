@@ -32,6 +32,7 @@ def cloth_off_after_settle(character_id: int):
         for j in character_data.cloth.cloth_off[i]:
             if j in character_data.cloth.cloth_wear[i]:
                 character_data.cloth.cloth_off[i].remove(j)
+    handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
 class SeeCharacterClothPanel:
     """
@@ -605,5 +606,6 @@ class SwitchClothButton(draw.LeftButton):
             if self.cloth_id in target_character_data.cloth.cloth_off[self.clothing_type]:
                 target_character_data.cloth.cloth_off[self.clothing_type].remove(self.cloth_id)
                 target_character_data.cloth.cloth_wear[self.clothing_type].append(self.cloth_id)
+        handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 4)
         # 刷新面板
         self.panel._refresh_panel()

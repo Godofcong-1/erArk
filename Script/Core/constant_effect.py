@@ -399,9 +399,9 @@ class BehaviorEffect:
     UNCONSCIOUS_FLAG_TO_3 = 484
     """ 特殊flag_H 自身变成无意识_时停状态 """
     UNCONSCIOUS_FLAG_TO_4 = 485
-    """ 特殊flag_H 自身变成无意识_空气状态 """
-    UNCONSCIOUS_FLAG_TO_5 = 486
     """ 特殊flag_H 自身变成无意识_平然状态 """
+    UNCONSCIOUS_FLAG_TO_5 = 486
+    """ 特殊flag_H 自身变成无意识_空气状态 """
     UNCONSCIOUS_FLAG_TO_6 = 487
     """ 特殊flag_H 自身变成无意识_心控状态 """
     UNCONSCIOUS_FLAG_TO_7 = 488

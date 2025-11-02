@@ -9,6 +9,7 @@ from Script.Core import (
 )
 from Script.Design import (
     attr_calculation,
+    handle_premise,
     map_handle,
     attr_text,
     character,
@@ -190,6 +191,8 @@ def born_new_character(mother_id,child_name):
     mom_character_data.relationship.child_id_list.append(now_id)
     # cache.npc_id_got.add(now_id)
     init_character(now_id, cache.npc_tem_data[-1])
+    # 婴儿的特殊状态flag结算
+    handle_premise.settle_chara_unnormal_flag(now_id, 7)
 
 # random_npc_max = normal_config.config_normal.random_npc_max
 # random_teacher_proportion = normal_config.config_normal.proportion_teacher

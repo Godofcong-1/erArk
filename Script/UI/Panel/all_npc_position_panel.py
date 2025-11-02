@@ -193,6 +193,7 @@ class All_Npc_Position_Panel:
             if npc_id != 0:
                 character_data = cache.character_data[npc_id]
                 character_data.sp_flag.is_follow = 1
+                handle_premise.settle_chara_unnormal_flag(npc_id, 3)
 
     def move_type_change(self, new_type: int):
         """移动类型切换"""
@@ -321,6 +322,7 @@ class MoveSonPanel:
                 now_draw.text = character_data.name + _("收到了博士的信息，开始智能跟随\n")
             # now_draw.width = 1
             now_draw.draw()
+            handle_premise.settle_chara_unnormal_flag(character_id, 3)
         # 博士前往干员位置的情况
         else:
             pre_position = cache.character_data[0].position

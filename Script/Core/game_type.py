@@ -1,6 +1,6 @@
 import uuid
 from uuid import UUID
-from typing import List, Dict, Set, Tuple, Any
+from typing import List, Dict, Set, Tuple, Any, Optional
 import datetime
 
 
@@ -639,10 +639,112 @@ class AUTHOR_FLAG:
         """ 角色的bool类型flag字典 """
 
 
+class UnnormalFlagMask:
+    """角色异常状态位掩码，使用位运算快速判定是否存在异常。"""
+
+    __slots__ = ("_mask", "_known_bits")
+
+    MAX_INDEX = 7
+    ALL_BITS = (1 << MAX_INDEX) - 1
+
+    def __init__(self, initial: Any = None):
+        self._mask: int = 0
+        self._known_bits: int = 0
+        if isinstance(initial, dict):
+            for index, value in initial.items():
+                self.update(int(index), bool(value))
+        elif isinstance(initial, int):
+            self.set_mask(initial)
+
+    def _bit(self, index: int) -> int:
+        if index < 1 or index > self.MAX_INDEX:
+            raise ValueError(f"unnormal flag index out of range: {index}")
+        return 1 << (index - 1)
+
+    def update(self, index: int, active: bool) -> None:
+        bit = self._bit(index)
+        self._known_bits |= bit
+        if active:
+            self._mask |= bit
+        else:
+            self._mask &= ~bit
+
+    def set(self, index: int) -> None:
+        self.update(index, True)
+
+    def clear(self, index: int) -> None:
+        self.update(index, False)
+
+    def reset(self) -> None:
+        self._mask = 0
+        self._known_bits = 0
+
+    def is_known(self, index: int) -> bool:
+        return bool(self._known_bits & self._bit(index))
+
+    def mark_unknown(self, index: int) -> None:
+        self._known_bits &= ~self._bit(index)
+
+    def check(self, index: int) -> bool:
+        return bool(self._mask & self._bit(index))
+
+    def __getitem__(self, index: int) -> bool:
+        return self.check(index)
+
+    def __setitem__(self, index: int, value: bool) -> None:
+        self.update(index, value)
+
+    def any(self, mask: int) -> bool:
+        return bool(self._mask & mask)
+
+    def all(self, mask: int) -> bool:
+        return (self._mask & mask) == (mask & self.ALL_BITS)
+
+    def set_mask(self, mask: int, known_bits: Optional[int] = None) -> None:
+        self._mask = mask & self.ALL_BITS
+        if known_bits is None:
+            self._known_bits = self.ALL_BITS
+        else:
+            self._known_bits = known_bits & self.ALL_BITS
+
+    @property
+    def mask(self) -> int:
+        return self._mask
+
+    @property
+    def known_bits(self) -> int:
+        return self._known_bits
+
+    def to_dict(self) -> Dict[int, bool]:
+        return {index: self.check(index) for index in range(1, self.MAX_INDEX + 1)}
+
+    def copy(self) -> "UnnormalFlagMask":
+        new_mask = UnnormalFlagMask()
+        new_mask.set_mask(self._mask, self._known_bits)
+        return new_mask
+
+    def __int__(self) -> int:
+        return self._mask
+
+    def __repr__(self) -> str:
+        return f"UnnormalFlagMask(mask={self._mask:#04x}, known={self._known_bits:#04x})"
+
+
 class SPECIAL_FLAG:
     """特殊的flag"""
 
     def __init__(self):
+        self.unnormal_flag: UnnormalFlagMask = UnnormalFlagMask()
+        """
+        角色异常状态标记位掩码；对应位为1表示该类异常存在
+        1. 基础生理需求：休息、睡觉、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰
+        2. AI行动基本停止：临盆、产后、监禁
+        3. 高优先级AI：助理、跟随、体检
+        4. 服装异常：大致全裸、全裸
+        5. 意识模糊，或弱交互：睡眠（半梦半醒），醉酒，平然
+        6. 完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+        7. 角色离线：装袋搬走、外勤、婴儿、他国外交访问、逃跑中
+        """
         self.is_h: bool = False
         """ 在H模式中 """
         self.unconscious_h: int = 0

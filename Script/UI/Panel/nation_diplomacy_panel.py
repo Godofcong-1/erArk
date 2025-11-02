@@ -513,6 +513,8 @@ class Nation_Diplomacy_Panel:
             old_diplomat_chara_data = cache.character_data[old_diplomat_id]
             # 取消外交官的工作类型和负责区域数据
             old_diplomat_chara_data.work.work_type = 0
+            old_diplomat_chara_data.sp_flag.in_diplomatic_visit = 0
+            handle_premise.settle_chara_unnormal_flag(character_id, 7)
             cache.rhodes_island.diplomat_of_country[country_id][0] = 0
             # 如果是离线状态，则上线
             if not handle_premise.handle_normal_7(old_diplomat_id):
@@ -531,6 +533,7 @@ class Nation_Diplomacy_Panel:
             new_diplomat_chara_data.work.work_type = 131
             cache.rhodes_island.diplomat_of_country[country_id][0] = character_id
             new_diplomat_chara_data.sp_flag.in_diplomatic_visit = country_id
+            handle_premise.settle_chara_unnormal_flag(character_id, 7)
             # 根据是本地还是外派，赋予对应的二段行为结算
             if cache.rhodes_island.current_location[0] == country_id:
                 second_behavior.character_get_second_behavior(character_id, "appoinnted_as_diplomat_local")

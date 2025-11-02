@@ -2849,6 +2849,7 @@ def handle_add_sleep_point(
     if handle_premise.handle_self_sleep_pills(character_id):
         character_data.sleep_point = 100
         character_data.tired_point = max(10, character_data.tired_point)
+        handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.MILKING_MACHINE)

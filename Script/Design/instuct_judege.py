@@ -338,6 +338,8 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
                 else:
                     calculation_text += _("+催眠(+0,理智不足,催眠解除)")
                     target_data.sp_flag.unconscious_h = 0
+                    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+                    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
     # debug模式修正
     if cache.debug_mode == True:

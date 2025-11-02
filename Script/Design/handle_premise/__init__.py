@@ -1,4 +1,6 @@
+from functools import wraps
 from types import FunctionType
+from typing import Callable, Optional
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import attr_calculation, character, instuct_judege
 from Script.Config import game_config
@@ -29,6 +31,81 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
+UNNORMAL_FLAG_BITS = {index: 1 << (index - 1) for index in range(1, 8)}
+""" 异常状态位对应的bit值映射 """
+
+_UNNORMAL_FLAG_HANDLERS: dict[int, Callable[[int], int]] = {}
+
+
+def _ensure_unnormal_flag_storage(character_data: game_type.Character) -> game_type.UnnormalFlagMask:
+    """确保角色异常状态使用位掩码存储，兼容旧存档的dict结构。"""
+    unnormal_flag = character_data.sp_flag.unnormal_flag
+    if isinstance(unnormal_flag, dict):
+        character_data.sp_flag.unnormal_flag = game_type.UnnormalFlagMask(unnormal_flag)
+    elif not isinstance(unnormal_flag, game_type.UnnormalFlagMask):
+        character_data.sp_flag.unnormal_flag = game_type.UnnormalFlagMask()
+    return character_data.sp_flag.unnormal_flag
+
+
+def _get_unnormal_flag_handlers() -> dict[int, Callable[[int], int]]:
+    """延迟构建各异常判定函数映射。"""
+    if not _UNNORMAL_FLAG_HANDLERS:
+        _UNNORMAL_FLAG_HANDLERS.update({
+            1: handle_normal_1,
+            2: handle_normal_2,
+            3: handle_normal_3,
+            4: handle_normal_4,
+            5: handle_normal_5,
+            6: handle_normal_6,
+            7: handle_normal_7,
+        })
+    return _UNNORMAL_FLAG_HANDLERS
+
+
+def _calculate_unnormal_flag_mask(character_id: int) -> int:
+    """计算角色全部异常状态的位掩码。"""
+    mask = 0
+    for index, handler in _get_unnormal_flag_handlers().items():
+        if not handler(character_id):
+            mask |= UNNORMAL_FLAG_BITS[index]
+    return mask
+
+
+def refresh_unnormal_flag(character_id: int) -> int:
+    """重新结算并返回角色的异常位掩码。"""
+    character_data = cache.character_data[character_id]
+    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
+    unnormal_flag.reset()
+    new_mask = _calculate_unnormal_flag_mask(character_id)
+    unnormal_flag.set_mask(new_mask)
+    return new_mask
+
+
+def get_unnormal_flag_mask(character_id: int, refresh: bool = False) -> int:
+    """获取角色的异常位掩码，可选择是否同时刷新。"""
+    if refresh:
+        return refresh_unnormal_flag(character_id)
+    character_data = cache.character_data[character_id]
+    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
+    return unnormal_flag.mask
+
+
+def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False, refresh: bool = False) -> bool:
+    """按位判定指定异常是否存在。"""
+    current_mask = get_unnormal_flag_mask(character_id, refresh=refresh)
+    if require_all:
+        return (current_mask & mask) == mask
+    return bool(current_mask & mask)
+
+
+def _quick_check_normal_by_mask(character_id: int, index: int) -> Optional[int]:
+    """若异常位掩码已知，则快速给出normal判定结果。"""
+    character_data = cache.character_data[character_id]
+    unnormal_flag = character_data.sp_flag.unnormal_flag
+    if isinstance(unnormal_flag, game_type.UnnormalFlagMask) and unnormal_flag.is_known(index):
+        return 0 if unnormal_flag[index] else 1
+    return None
+
 def add_premise(premise: str) -> FunctionType:
     """
     添加前提
@@ -43,7 +120,7 @@ def add_premise(premise: str) -> FunctionType:
         def return_wrapper(*args, **kwargs):
             return func(*args, **kwargs)
 
-        constant.handle_premise_data[premise] = return_wrapper
+        constant.handle_premise_data[premise] = return_wrapper  # type: ignore[assignment]
         return return_wrapper
 
     return decoraror
@@ -390,6 +467,26 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
 
     return 0
 
+def settle_chara_unnormal_flag(character_id: int, unnormal_flag_index: Optional[int]) -> None:
+    """
+    结算角色异常状态标记并同步位掩码，索引为None或0时重新结算全部异常。
+    Keyword arguments:
+    character_id -- 角色id
+    unnormal_flag_index -- 异常状态标记索引
+    Return arguments:
+    None
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
+    if not unnormal_flag_index:
+        unnormal_flag.set_mask(_calculate_unnormal_flag_mask(character_id))
+        return
+    handler = _get_unnormal_flag_handlers().get(unnormal_flag_index)
+    if handler is None:
+        return
+    unnormal_flag.mark_unknown(unnormal_flag_index)
+    is_normal = bool(handler(character_id))
+    unnormal_flag.update(unnormal_flag_index, not is_normal)
 
 
 @add_premise(constant_promise.Premise.HIGH_1)
@@ -797,6 +894,9 @@ def handle_normal_1(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 1)
+    if quick_result is not None:
+        return quick_result
     if(
         handle_rest_flag_1(character_id)
         or handle_sleep_flag_1(character_id)
@@ -821,6 +921,9 @@ def handle_normal_2(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 2)
+    if quick_result is not None:
+        return quick_result
     if(
         handle_parturient_1(character_id)
         or handle_postpartum_1(character_id)
@@ -841,8 +944,11 @@ def handle_normal_3(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 3)
+    if quick_result is not None:
+        return quick_result
     if(
-         handle_is_assistant(character_id)
+        handle_is_assistant(character_id)
         or handle_is_follow(character_id)
         or handle_self_in_health_check_action_chain(character_id)
     ):
@@ -861,6 +967,9 @@ def handle_normal_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 4)
+    if quick_result is not None:
+        return quick_result
     if(
         handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
@@ -880,6 +989,9 @@ def handle_normal_5(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 5)
+    if quick_result is not None:
+        return quick_result
     if(
         (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_4(character_id)
@@ -899,6 +1011,9 @@ def handle_normal_6(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 6)
+    if quick_result is not None:
+        return quick_result
     if(
          (handle_sleep_level_ge_1(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_5(character_id)
@@ -919,6 +1034,9 @@ def handle_normal_7(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
+    quick_result = _quick_check_normal_by_mask(character_id, 7)
+    if quick_result is not None:
+        return quick_result
     if(
         handle_be_bagged_1(character_id)
         or handle_field_commission_1(character_id)
@@ -1245,18 +1363,7 @@ def handle_unnormal(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and
-        handle_normal_7(character_id)
-        ):
-        return 0
-    else:
-        return 1
+    return 1 if refresh_unnormal_flag(character_id) else 0
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_2)

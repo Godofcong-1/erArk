@@ -100,6 +100,7 @@ def character_wait_30_min(character_id: int):
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.sp_flag.is_follow = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DORMITORY)
@@ -1693,6 +1694,7 @@ def character_start_shower(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1800,6 +1802,7 @@ def character_help_buy_food(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_buy_food = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1821,6 +1824,7 @@ def character_help_make_food(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_make_food = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1878,6 +1882,7 @@ def character_start_milk(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.milk = True
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1924,6 +1929,7 @@ def character_start_masturebate(character_id: int):
     else:
         # 随机等于1或2来决定自慰地点
         character_data.sp_flag.masturebate = random.randint(1, 2)
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -1967,6 +1973,7 @@ def character_reset_shower_status_and_get_normal_cloth(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.sp_flag.sleep_h_awake = False
     clothing.get_npc_cloth(character_id)
 
@@ -2025,6 +2032,7 @@ def character_wait_for_health_check(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 加入等待序列
     cache.rhodes_island.waiting_for_exam_operator_ids.add(character_id)
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
     # 重置今日体检时间
     character_data.action_info.health_check_today = 0
     character_data.target_character_id = character_id
@@ -2133,6 +2141,7 @@ def character_start_eat_food(character_id: int):
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
     character_data.sp_flag.eat_food = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     # 随机三分之一的几率去食堂，其他几率去美食街
     if random.randint(1, 3) == 1:
         character_data.action_info.eat_food_restaurant = -1
@@ -2256,6 +2265,7 @@ def character_buy_rand_food_at_foodshop(character_id: int):
     # AI正常吃饭
     elif character_data.sp_flag.eat_food == 1:
         character_data.sp_flag.eat_food = 2
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.EAT_BAG_RAND_FOOD)
@@ -2305,6 +2315,7 @@ def character_start_sleep(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.sleep = True
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2320,6 +2331,7 @@ def character_start_rest(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.rest = True
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2335,6 +2347,7 @@ def character_start_pee(character_id: int):
     """
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.pee = True
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
@@ -2575,6 +2588,7 @@ def character_assistant_work_cook(character_id: int):
     # 特殊flag进行对应更改
     if character_data.sp_flag.help_make_food == 1:
         character_data.sp_flag.help_make_food = 2
+        handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MORNING_SALUTATION_1)

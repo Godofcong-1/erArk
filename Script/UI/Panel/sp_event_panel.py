@@ -121,6 +121,7 @@ class Born_Panel:
             draw_text += _("\n{0}的生产结束了，但她仍需要在住院部休息几天\n").format(mom_character_data.name)
             mom_character_data.talent[22] = 0
             mom_character_data.talent[23] = 1
+            handle_premise.settle_chara_unnormal_flag(character_id, 2)
             draw_text += _("\n{0}从[临盆]转变为[产后]\n").format(mom_character_data.name)
             mom_character_data.talent[26] = 0
             draw_text += _("\n{0}失去了[孕肚]\n").format(mom_character_data.name)

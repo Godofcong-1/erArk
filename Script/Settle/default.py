@@ -1238,6 +1238,7 @@ def handle_first_sex(
             character_data.pl_collection.first_panties[
                 character_data.target_character_id] = _("一滴{0}的处子血").format(target_data.name)
             now_draw.draw()
+        handle_premise.settle_chara_unnormal_flag(character_id, 4)
 
         # 道具破处
         if item_flag:
@@ -1619,6 +1620,8 @@ def handle_hypnosis_one(
         if target_character_data.sp_flag.unconscious_h == 5:
             character_data.pl_ability.air_hypnosis_position = ""
         target_character_data.sp_flag.unconscious_h = 0
+        handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+        handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
         now_draw = draw.NormalDraw()
         now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
         now_draw.draw()
@@ -1695,6 +1698,8 @@ def handle_hypnosis_all(
             if target_character_data.sp_flag.unconscious_h == 5:
                 character_data.pl_ability.air_hypnosis_position = ""
             target_character_data.sp_flag.unconscious_h = 0
+            handle_premise.settle_chara_unnormal_flag(target_id, 5)
+            handle_premise.settle_chara_unnormal_flag(target_id, 6)
             now_draw = draw.NormalDraw()
             now_draw.text = _("\n{0}的理智耗尽，催眠结束\n\n").format(character_data.name)
             now_draw.draw()
@@ -1721,16 +1726,20 @@ def handle_hypnosis_cancel(
     target_character_data = cache.character_data[character_data.target_character_id]
     if character_data.dead:
         return
-    if target_character_data.sp_flag.unconscious_h >= 4:
-        target_character_data.sp_flag.unconscious_h = 0
     # 空气催眠则重置催眠地点和解开门锁
     if target_character_data.sp_flag.unconscious_h == 5:
         character_data.pl_ability.air_hypnosis_position = ""
+    # 清零催眠H状态
+    if target_character_data.sp_flag.unconscious_h >= 4:
+        target_character_data.sp_flag.unconscious_h = 0
     # 去掉大部分的心体催眠状态
     target_character_data.hypnosis.increase_body_sensitivity = False
     target_character_data.hypnosis.blockhead = False
     target_character_data.hypnosis.active_h = False
     target_character_data.hypnosis.roleplay = []
+    # 结算异常flag
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
     # 结算二段行为
     handle_npc_ai_in_h.settle_unconscious_semen_and_cloth(character_id)
 
@@ -2055,6 +2064,7 @@ def handle_time_stop_on(
     for chara_id in cache.npc_id_got:
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 3
+        handle_premise.settle_chara_unnormal_flag(chara_id, 6)
         # 重置时停中的角色的时停高潮计数
         for state_id in game_config.config_character_state:
             if game_config.config_character_state[state_id].type == 0:
@@ -2080,6 +2090,7 @@ def handle_time_stop_off(
     for chara_id in cache.npc_id_got:
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 0
+        handle_premise.settle_chara_unnormal_flag(chara_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_BE_CARRIED_IN_TIME_STOP)
@@ -2661,6 +2672,7 @@ def handle_enter_waiting_for_physical_exam(
         return
     if character_id not in cache.rhodes_island.waiting_for_exam_operator_ids:
         cache.rhodes_island.waiting_for_exam_operator_ids.add(character_id)
+        handle_premise.settle_chara_unnormal_flag(character_id, 3)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EXIT_WAITING_FOR_PHYSICAL_EXAM)
@@ -2682,6 +2694,7 @@ def handle_exit_waiting_for_physical_exam(
         return
     if character_id in cache.rhodes_island.waiting_for_exam_operator_ids:
         cache.rhodes_island.waiting_for_exam_operator_ids.remove(character_id)
+        handle_premise.settle_chara_unnormal_flag(character_id, 3)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WAIT_UNITL_TRAGET_ACTION_END)
@@ -4683,6 +4696,7 @@ def handle_target_add_tired_tosleep(
     target_data.sleep_point = 100
     target_data.h_state.body_item[9][1] = True
     target_data.h_state.body_item[9][2] = now_time + datetime.timedelta(hours=8)
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_ADD_PREGNANCY_CHANCE)
@@ -5615,6 +5629,7 @@ def handle_self_h_state_reset(
     # 清零自慰状态
     character_data.sp_flag.masturebate = 0
     character_data.sp_flag.npc_masturebate_for_player = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
     # 清零前往群交
     character_data.sp_flag.go_to_join_group_sex = False
     # 清零隐奸模式
@@ -5792,6 +5807,7 @@ def handle_chara_off_line(
             character_data.status_data[state_id] = 0
     # 清零跟随数据
     character_data.sp_flag.is_follow = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
     # 从当前干员列表中移除
     if character_id in cache.npc_id_got:
         cache.npc_id_got.remove(character_id)
@@ -5827,10 +5843,12 @@ def handle_chara_on_line(
     character_data.tired_point = 0
     character_data.sleep_point = 0
     character_data.urinate_point = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
     # 清零各特殊状态flag
     if character_data.sp_flag.imprisonment:
         character_data.sp_flag = game_type.SPECIAL_FLAG()
         character_data.sp_flag.imprisonment = True
+        handle_premise.settle_chara_unnormal_flag(character_id, 2)
     else:
         character_data.sp_flag = game_type.SPECIAL_FLAG()
     # 赋予默认行动数据
@@ -5868,6 +5886,7 @@ def handle_t_be_bagged(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.be_bagged = True
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 7)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.T_BE_IMPRISONMENT)
@@ -5890,6 +5909,7 @@ def handle_t_be_imprisonment(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = True
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 2)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_1)
@@ -5911,6 +5931,7 @@ def handle_shower_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PLACE_ALL_CHARA_ADD_1_BEEN_Hypnosis_EXPERIENCE)
@@ -5963,6 +5984,7 @@ def handle_shower_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_2)
@@ -5984,6 +6006,7 @@ def handle_shower_flag_to_2(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 2
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_3)
@@ -6005,6 +6028,7 @@ def handle_shower_flag_to_3(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 3
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SHOWER_FLAG_TO_4)
@@ -6026,6 +6050,7 @@ def handle_shower_flag_to_4(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.shower = 4
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_0)
@@ -6047,6 +6072,7 @@ def handle_eat_food_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.eat_food = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_1)
@@ -6068,6 +6094,7 @@ def handle_eat_food_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.eat_food = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.EAT_FOOD_FLAG_TO_2)
@@ -6089,7 +6116,7 @@ def handle_eat_food_flag_to_2(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.eat_food = 2
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_FLAG_TO_0)
 def handle_sleep_flag_to_0(
@@ -6110,6 +6137,7 @@ def handle_sleep_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.sleep = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SLEEP_FLAG_TO_1)
@@ -6131,7 +6159,7 @@ def handle_sleep_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.sleep = True
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_0)
 def handle_rest_flag_to_0(
@@ -6152,6 +6180,7 @@ def handle_rest_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.rest = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.REST_FLAG_TO_1)
@@ -6173,7 +6202,7 @@ def handle_rest_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.rest = True
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_0)
 def handle_pee_flag_to_0(
@@ -6194,6 +6223,7 @@ def handle_pee_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.pee = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PEE_FLAG_TO_1)
@@ -6215,7 +6245,7 @@ def handle_pee_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.pee = True
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SWIM_FLAG_TO_1)
 def handle_swim_flag_to_1(
@@ -6322,6 +6352,7 @@ def handle_self_intelligent_follow_on(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.is_follow = 1
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_INTELLIGENT_FOLLOW_ON)
@@ -6364,6 +6395,7 @@ def handle_self_intelligent_follow_off(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.is_follow = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_INTELLIGENT_FOLLOW_OFF)
@@ -6665,6 +6697,8 @@ def handle_unconscious_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_1)
@@ -6686,7 +6720,8 @@ def handle_unconscious_flag_to_1(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 1
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_2)
 def handle_unconscious_flag_to_2(
@@ -6707,6 +6742,7 @@ def handle_unconscious_flag_to_2(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 2
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_3)
@@ -6728,31 +6764,11 @@ def handle_unconscious_flag_to_3(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 3
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_4)
 def handle_unconscious_flag_to_4(
-        character_id: int,
-        add_time: int,
-        change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime,
-):
-    """
-    自身变成无意识_空气状态
-    Keyword arguments:
-    character_id -- 角色id
-    add_time -- 结算时间
-    change_data -- 状态变更信息记录对象
-    now_time -- 结算的时间
-    """
-    if not add_time:
-        return
-    character_data: game_type.Character = cache.character_data[character_id]
-    character_data.sp_flag.unconscious_h = 4
-
-
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_5)
-def handle_unconscious_flag_to_5(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
@@ -6769,7 +6785,30 @@ def handle_unconscious_flag_to_5(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.unconscious_h = 4
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_5)
+def handle_unconscious_flag_to_5(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    自身变成无意识_空气状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 5
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_6)
@@ -6791,6 +6830,7 @@ def handle_unconscious_flag_to_6(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 6
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.UNCONSCIOUS_FLAG_TO_7)
@@ -6812,6 +6852,7 @@ def handle_unconscious_flag_to_7(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.unconscious_h = 7
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_BUY_FOOD_FLAG_TO_0)
@@ -6833,6 +6874,7 @@ def handle_help_buy_food_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_buy_food = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.BATHHOUSE_ENTERTAINMENT_FLAG_TO_0)
@@ -6916,6 +6958,7 @@ def handle_milk_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.milk = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HYPNOSIS_FLAG_TO_0)
@@ -6937,6 +6980,8 @@ def handle_hypnosis_flag_to_0(
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.sp_flag.unconscious_h in [4, 5, 6, 7]:
         character_data.sp_flag.unconscious_h = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
     character_data.hypnosis.increase_body_sensitivity = False
     character_data.hypnosis.blockhead = False
     character_data.hypnosis.active_h = False
@@ -7023,6 +7068,7 @@ def handle_masturebate_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.masturebate = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0)
@@ -7083,6 +7129,7 @@ def handle_masturebate_to_pl_flag_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.npc_masturebate_for_player = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)
@@ -7104,6 +7151,7 @@ def handle_help_make_food_flag_to_0(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.help_make_food = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TALK_ADD_ADJUST)
@@ -8474,6 +8522,7 @@ def handle_bagging_and_moving_add_just(
     character_data.sp_flag.bagging_chara_id = character_data.target_character_id
     # 对方数据结算
     target_data.sp_flag.be_bagged = True
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 7)
     handle_chara_off_line(character_data.target_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RELEASE_FROM_BAG_ADD_ADJUST)
@@ -8500,6 +8549,7 @@ def handle_release_from_bag_add_just(
     character_data.sp_flag.bagging_chara_id = 0
     # 对方数据结算
     target_data.sp_flag.be_bagged = False
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 7)
     handle_chara_on_line(character_data.target_character_id, add_time, change_data, now_time)
 
 
@@ -8560,6 +8610,7 @@ def handle_set_free_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = False
+    handle_premise.settle_chara_unnormal_flag(character_id, 2)
     # 回到旧宿舍
     if target_data.pre_dormitory != "":
         target_data.dormitory = target_data.pre_dormitory
@@ -10303,7 +10354,7 @@ def handle_sleep_point_zero(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sleep_point = 0
-
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_SLEEP_POINT_ZERO)
 def handle_target_sleep_point_zero(
@@ -10325,7 +10376,7 @@ def handle_target_sleep_point_zero(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sleep_point = 0
-
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ADD_SMALL_URINATE_POINT)
 def handle_add_small_urinate_point(

@@ -226,6 +226,7 @@ def check_near_born(character_id: int):
             # 赋予对应素质和二段行动
             character_data.talent[21] = 0
             character_data.talent[22] = 1
+            handle_premise.settle_chara_unnormal_flag(character_id, 2)
             second_behavior.character_get_second_behavior(character_id, "parturient")
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
@@ -275,6 +276,7 @@ def check_rearing(character_id: int):
         if past_day >= 2:
             character_data.talent[23] = 0
             character_data.talent[24] = 1
+            handle_premise.settle_chara_unnormal_flag(character_id, 2)
             second_behavior.character_get_second_behavior(character_id, "rearing")
             talk.must_show_talk_check(character_id)
             draw_text = "\n※※※※※※※※※\n"
@@ -310,6 +312,8 @@ def check_rearing_complete(character_id: int):
             talk.must_show_talk_check(character_id)
             child_character_data.talent[101] = 0
             child_character_data.talent[102] = 1
+            # 结算婴儿到幼女的特殊状态flag
+            handle_premise.settle_chara_unnormal_flag(child_id, 7)
             child_character_data.work.work_type = 152
             draw_text = "\n※※※※※※※※※\n"
             draw_text += _("\n在{0}的悉心照料下，{1}顺利长大了\n").format(character_data.name, child_character_data.name)

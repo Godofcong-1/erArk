@@ -104,6 +104,7 @@ def assistant_replace(new_assistant_id: int):
         # 去掉旧助理的跟随状态
         old_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         old_assistant_data.sp_flag.is_follow = 0
+        handle_premise.settle_chara_unnormal_flag(character_data.assistant_character_id, 3)
         # 去掉旧助理的同居状态
         if character_data.assistant_character_id != 0 and old_assistant_data.dormitory == map_handle.get_map_system_path_str_for_list(["中枢", "博士房间"]):
             old_assistant_data.dormitory = old_assistant_data.pre_dormitory
@@ -129,8 +130,10 @@ def assistant_replace(new_assistant_id: int):
     # 正常情况下，设置新助理
     else:
         character_data.assistant_character_id = new_assistant_id
+        handle_premise.settle_chara_unnormal_flag(new_assistant_id, 3)
         new_assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
         new_assistant_data.sp_flag.is_follow = 1
+        handle_premise.settle_chara_unnormal_flag(character_data.assistant_character_id, 3)
         new_assistant_data.assistant_services[2] = 1
         second_behavior.character_get_second_behavior(new_assistant_id, "not_as_assistant", reset=True)
         second_behavior.character_get_second_behavior(new_assistant_id, "chosen_as_assistant")
@@ -142,7 +145,8 @@ def assistant_replace(new_assistant_id: int):
     # 取消旧助理的结算
     if old_assistant_flag:
         second_behavior.character_get_second_behavior(new_assistant_id, "chosen_as_assistant", reset=True)
-        second_behavior.character_get_second_behavior(old_assistant_data.adv, "not_as_assistant")
+        second_behavior.character_get_second_behavior(old_assistant_data.cid, "not_as_assistant")
+        handle_premise.settle_chara_unnormal_flag(old_assistant_data.cid, 3)
         info_text += _("\n\n{0}不再是助理干员了，已清零助理服务相关的设置\n\n").format(old_assistant_data.name)
     info_draw.text = info_text
     info_draw.width = window_width
@@ -169,7 +173,7 @@ class Assistant_Panel:
 
         while 1:
             character_data: game_type.Character = cache.character_data[0]
-            target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+            assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
             title_draw.draw()
             py_cmd.clr_cmd()
@@ -184,7 +188,7 @@ class Assistant_Panel:
             if character_data.assistant_character_id == 0:
                 button_text += _("    当前无助理")
             else:
-                assistant_name = target_data.name
+                assistant_name = assistant_data.name
                 button_text += _("    当前助理：{0}").format(assistant_name)
 
             button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.chose_button, args=(0,1))
@@ -195,8 +199,9 @@ class Assistant_Panel:
             if character_data.assistant_character_id != 0:
 
                 # 如果数值超限则归零
-                if target_data.sp_flag.is_follow > 4:
-                    target_data.sp_flag.is_follow = 0
+                if assistant_data.sp_flag.is_follow > 4:
+                    assistant_data.sp_flag.is_follow = 0
+                    handle_premise.settle_chara_unnormal_flag(character_data.assistant_character_id, 3)
 
                 # 开始遍历全部助理服务
                 for cid in game_config.config_assistant_services:
@@ -207,8 +212,8 @@ class Assistant_Panel:
                     service_data = game_config.config_assistant_services[cid]
                     service_option_data = game_config.config_assistant_services_option[cid]
                     service_option_text_all = service_option_data[0]
-                    target_data.assistant_services.setdefault(cid, 0)
-                    service_option_text_now = service_option_text_all[target_data.assistant_services[cid]]
+                    assistant_data.assistant_services.setdefault(cid, 0)
+                    service_option_text_now = service_option_text_all[assistant_data.assistant_services[cid]]
                     service_option_len = len(service_option_text_all)
 
                     # 绘制输出文本
@@ -220,14 +225,14 @@ class Assistant_Panel:
                     line_feed.draw()
 
                     # 早安服务的时间变更按钮
-                    if cid == 5 and target_data.assistant_services[cid]:
+                    if cid == 5 and assistant_data.assistant_services[cid]:
                         button_text = _("  [更改早安服务预定时间]——当前预定时间：{0}:{1}").format(str(character_data.action_info.plan_to_wake_time[0]).rjust(2,'0'), str(character_data.action_info.plan_to_wake_time[1]).rjust(2,'0'))
                         button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_morning_salutation_time)
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                         line_feed.draw()
                     # 晚安服务的时间变更按钮
-                    if cid == 6 and target_data.assistant_services[cid]:
+                    if cid == 6 and assistant_data.assistant_services[cid]:
                         button_text = _("  [更改晚安服务预定时间]——当前预定时间：{0}:{1}").format(str(character_data.action_info.plan_to_sleep_time[0]).rjust(2,'0'), str(character_data.action_info.plan_to_sleep_time[1]).rjust(2,'0'))
                         button_draw = draw.LeftButton(button_text, button_text, self.width, cmd_func=self.select_night_salutation_time)
                         button_draw.draw()
@@ -248,45 +253,46 @@ class Assistant_Panel:
     def chose_button(self, service_cid:int, service_option_len:int):
         """玩家点击了选项"""
         character_data: game_type.Character = cache.character_data[0]
-        target_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
+        assistant_data: game_type.Character = cache.character_data[character_data.assistant_character_id]
 
         # 选择助理
         if service_cid == 0:
             chose_assistant()
         # 跟随服务
         elif service_cid == 2:
-            target_data.assistant_services.setdefault(service_cid, 0)
-            target_data.assistant_services[service_cid] = not target_data.assistant_services[service_cid]
-            if target_data.sp_flag.is_follow == 1 or target_data.sp_flag.is_follow > 4:
-                target_data.sp_flag.is_follow = 0
+            assistant_data.assistant_services.setdefault(service_cid, 0)
+            assistant_data.assistant_services[service_cid] = not assistant_data.assistant_services[service_cid]
+            if assistant_data.sp_flag.is_follow == 1 or assistant_data.sp_flag.is_follow > 4:
+                assistant_data.sp_flag.is_follow = 0
             else:
-                target_data.sp_flag.is_follow += 1
+                assistant_data.sp_flag.is_follow += 1
+            handle_premise.settle_chara_unnormal_flag(character_data.assistant_character_id, 3)
         # 其他服务
         else:
-            target_data.assistant_services.setdefault(service_cid, 0)
-            if target_data.assistant_services[service_cid] == service_option_len - 1:
-                target_data.assistant_services[service_cid] = 0
+            assistant_data.assistant_services.setdefault(service_cid, 0)
+            if assistant_data.assistant_services[service_cid] == service_option_len - 1:
+                assistant_data.assistant_services[service_cid] = 0
             else:
                 # 判断是否符合解锁条件
                 service_option_data = game_config.config_assistant_services_option[service_cid]
                 service_option_text_all = service_option_data[0]
-                service_option_text_next = service_option_text_all[target_data.assistant_services[service_cid]+1]
+                service_option_text_next = service_option_text_all[assistant_data.assistant_services[service_cid]+1]
                 service_require_text_all = service_option_data[1]
-                service_require_text_next = service_require_text_all[target_data.assistant_services[service_cid]+1]
+                service_require_text_next = service_require_text_all[assistant_data.assistant_services[service_cid]+1]
                 judge, reason = attr_calculation.judge_require([service_require_text_next], character_data.assistant_character_id, hypnosis_replace_trust_flag = True)
 
                 if judge:
-                    target_data.assistant_services[service_cid] += 1
+                    assistant_data.assistant_services[service_cid] += 1
                 # debug模式下不判断解锁条件
                 elif cache.debug_mode:
-                    target_data.assistant_services[service_cid] += 1
+                    assistant_data.assistant_services[service_cid] += 1
                 # 不符合解锁条件时输出提示信息并归零
                 else:
                     info_draw = draw.WaitDraw()
                     info_text = _("\n  ○更改失败，[{0}]{1}\n").format(service_option_text_next, reason)
                     info_draw.text = info_text
                     info_draw.draw()
-                    target_data.assistant_services[service_cid] = 0
+                    assistant_data.assistant_services[service_cid] = 0
                     return
 
             # 结算附带的属性变化

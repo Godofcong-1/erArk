@@ -145,6 +145,8 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         # 结束露出状态
         if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
             character_data.sp_flag.exhibitionism_sex_mode = 0
+        handle_premise.settle_chara_unnormal_flag(character_id, 5)
+        handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
     return 1
 
@@ -236,6 +238,8 @@ def recover_from_unconscious_h(character_id: int, info_text: str = ""):
         if handle_premise.handle_action_sleep(character_data.target_character_id):
             target_data.h_state.pretend_sleep = True
             target_data.sp_flag.unconscious_h = 1
+            handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+            handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
             # 成就刷新
             cache.achievement.sleep_sex_record[1] = 1
     # 否则
@@ -279,6 +283,8 @@ def handle_npc_instruct_condition(character_id: int, continue_h: bool, tem_targe
     # 停止对方的无意识状态与H状态
     target_data.sp_flag.unconscious_h = 0
     target_data.sp_flag.is_h = False
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 6)
 
     # 如果交互对象处于监禁状态，则直接满足条件
     if handle_premise.handle_t_imprisonment_1(character_id):
@@ -335,6 +341,7 @@ def judge_weak_up_in_sleep_h(character_id: int):
         # 清空疲劳和睡眠程度
         target_data.tired_point = 0
         target_data.sleep_point = 0
+        handle_premise.settle_chara_unnormal_flag(now_character_data.target_character_id, 5)
         # 提示信息
         info_text = _("\n因为{0}的动作，{1}从梦中惊醒过来\n").format(now_character_data.name, target_data.name)
         # 结算醒来
@@ -573,6 +580,7 @@ def npc_ai_in_group_sex(character_id: int):
     # 如果设定NPC为仅自慰，则进入要自慰后返回
     if handle_premise.handle_npc_ai_type_1_in_group_sex(character_id):
         character_data.sp_flag.masturebate = 3
+        handle_premise.settle_chara_unnormal_flag(character_id, 1)
         character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         # print(f"debug {character_data.name}进入了要自慰状态")
@@ -607,6 +615,7 @@ def npc_ai_in_group_sex(character_id: int):
     # 否则，自己进入要自慰状态
     else:
         character_data.sp_flag.masturebate = 3
+        handle_premise.settle_chara_unnormal_flag(character_id, 1)
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
         # print(f"debug {character_data.name}进入了要自慰状态")
@@ -692,7 +701,7 @@ def npc_ai_in_group_sex_type_3():
     for character_id in new_chara_id_list:
         character_data = cache.character_data[character_id]
         character_data.sp_flag.masturebate = 3
+        handle_premise.settle_chara_unnormal_flag(character_id, 1)
         character_data.state = constant.CharacterStatus.STATUS_ARDER
         character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
         # print(f"debug {character_data.name}进入了要自慰状态")
-

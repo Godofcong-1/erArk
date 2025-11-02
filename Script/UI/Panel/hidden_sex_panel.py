@@ -426,6 +426,7 @@ class Select_Hidden_Sex_Mode_Panel:
             character_data.sp_flag.hidden_sex_mode = mode_id
             target_character_data.sp_flag.hidden_sex_mode = mode_id
             target_character_data.sp_flag.is_follow = 0
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 3)
             # 在场其他角色数量
             scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
             scene_data: game_type.Scene = cache.scene_data[scene_path_str]
