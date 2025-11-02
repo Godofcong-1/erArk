@@ -63,8 +63,27 @@ def get_resource_path(file_name: str) -> str:
 
 def load_local_fonts(tk_root: Tk) -> None:
     """加载 static/fonts 下的字体文件供 Tk 窗口使用"""
-    fonts_dir = get_resource_path("static/fonts")
-    if not os.path.isdir(fonts_dir):
+    fonts_dir = None
+    fonts_dir_candidates = []
+
+    # 如果是在打包环境下运行，字体文件可能在可执行文件同级目录的 static/fonts 下
+    if hasattr(sys, "_MEIPASS") or getattr(sys, "frozen", False):
+        base_dir = os.path.dirname(sys.executable)
+        fonts_dir_candidates.append(os.path.join(base_dir, "static", "fonts"))
+        fonts_dir_candidates.append(os.path.join(base_dir, "fonts"))
+    # 开发环境下，字体文件在项目的 static/fonts 目录
+    else:
+        project_root = os.path.abspath(
+            os.path.join(os.path.dirname(__file__), os.pardir, os.pardir)
+        )
+        fonts_dir_candidates.append(os.path.join(project_root, "static", "fonts"))
+
+    for candidate in fonts_dir_candidates:
+        if os.path.isdir(candidate):
+            fonts_dir = candidate
+            break
+
+    if fonts_dir is None:
         return
 
     alias_overrides = {
