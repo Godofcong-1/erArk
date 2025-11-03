@@ -656,13 +656,9 @@ class UnnormalFlagMask:
         elif isinstance(initial, int):
             self.set_mask(initial)
 
-    def _bit(self, index: int) -> int:
-        if index < 1 or index > self.MAX_INDEX:
-            raise ValueError(f"unnormal flag index out of range: {index}")
-        return 1 << (index - 1)
-
+    # 直接位移计算，降低时间复杂度
     def update(self, index: int, active: bool) -> None:
-        bit = self._bit(index)
+        bit = 1 << (index - 1)
         self._known_bits |= bit
         if active:
             self._mask |= bit
@@ -680,13 +676,13 @@ class UnnormalFlagMask:
         self._known_bits = 0
 
     def is_known(self, index: int) -> bool:
-        return bool(self._known_bits & self._bit(index))
+        return bool(self._known_bits & (1 << (index - 1)))
 
     def mark_unknown(self, index: int) -> None:
-        self._known_bits &= ~self._bit(index)
+        self._known_bits &= ~(1 << (index - 1))
 
     def check(self, index: int) -> bool:
-        return bool(self._mask & self._bit(index))
+        return bool(self._mask & (1 << (index - 1)))
 
     def __getitem__(self, index: int) -> bool:
         return self.check(index)
