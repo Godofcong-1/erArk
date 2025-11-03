@@ -479,8 +479,11 @@ def npc_active_h():
     all_stastus_list = []
     now_premise_data = {}
     for behavior_id in game_config.config_behavior:
-        # 获得各状态的tag
         behavior_data = game_config.config_behavior[behavior_id]
+        # 跳过只能玩家使用的状态
+        if behavior_data.trigger == "pl":
+            continue
+        # 获得各状态的tag
         behavior_tag_list = behavior_data.tag.split("|")
         # 跳过其中非性爱类，道具类、药物类、SM类、非逆推类
         if(
@@ -492,7 +495,7 @@ def npc_active_h():
         ):
             continue
         # 如果NPC为处，则跳过破处类
-        if part_id == 0 and target_character_data.talent[4] and _("破处") in behavior_tag_list:
+        if part_id == 21 and target_character_data.talent[4] and _("破处") in behavior_tag_list:
             continue
         if part_id == 4 and target_character_data.talent[0] and _("破处") in behavior_tag_list:
             continue
