@@ -1,6 +1,6 @@
 from functools import wraps
 from types import FunctionType
-from typing import Callable, Optional
+from typing import Callable, Iterable, Optional
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import attr_calculation, character, instuct_judege
 from Script.Config import game_config
@@ -105,6 +105,47 @@ def _quick_check_normal_by_mask(character_id: int, index: int) -> Optional[int]:
     if isinstance(unnormal_flag, game_type.UnnormalFlagMask) and unnormal_flag.is_known(index):
         return 0 if unnormal_flag[index] else 1
     return None
+
+
+def _combine_unnormal_mask(indexes: Iterable[int]) -> int:
+    """根据索引集合构造异常位掩码。"""
+    mask = 0
+    for index in indexes:
+        mask |= UNNORMAL_FLAG_BITS[index]
+    return mask
+
+
+def _ensure_known_unnormal_bits(character_id: int, indexes: Iterable[int]) -> game_type.UnnormalFlagMask:
+    """确保指定异常位的判定结果已在掩码中记录。"""
+    index_tuple = tuple(indexes)
+    character_data = cache.character_data[character_id]
+    unnormal_flag = _ensure_unnormal_flag_storage(character_data)
+    unknown_indexes = [index for index in index_tuple if not unnormal_flag.is_known(index)]
+    if not unknown_indexes:
+        return unnormal_flag
+    handlers = _get_unnormal_flag_handlers()
+    for index in unknown_indexes:
+        handler = handlers.get(index)
+        if handler is None:
+            continue
+        result = handler(character_id)
+        if not unnormal_flag.is_known(index):
+            unnormal_flag.update(index, not bool(result))
+    return unnormal_flag
+
+
+def _check_normal_combo(character_id: int, indexes: Iterable[int]) -> int:
+    """判定指定多异常组合是否均为正常状态。"""
+    index_tuple = tuple(indexes)
+    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
+    return 1 if not unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
+
+
+def _check_unnormal_combo(character_id: int, indexes: Iterable[int]) -> int:
+    """判定指定多异常组合是否存在任意异常。"""
+    index_tuple = tuple(indexes)
+    unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
+    return 1 if unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
 
 def add_premise(premise: str) -> FunctionType:
     """
@@ -771,9 +812,7 @@ def handle_no_target_or_target_can_cooperate(character_id: int) -> int:
         handle_target_hp_ne_1(character_id) and
         handle_t_tired_le_84(character_id) and
         handle_t_action_not_sleep(character_id) and
-        handle_normal_2(character_data.target_character_id) and
-        handle_normal_6(character_data.target_character_id) and
-        handle_normal_7(character_data.target_character_id)
+        _check_normal_combo(character_data.target_character_id, (2, 6, 7))
         ):
         return 1
     return 0
@@ -804,18 +843,7 @@ def handle_normal_all(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (1, 2, 3, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_1_2_4)
@@ -830,14 +858,7 @@ def handle_normal_1_2_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_4(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (1, 2, 4))
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_3_4)
@@ -852,14 +873,7 @@ def handle_normal_2_3_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 3, 4))
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_5_6)
@@ -874,14 +888,7 @@ def handle_normal_2_5_6(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 5, 6))
 
 
 @add_premise(constant_promise.Premise.NORMAL_1)
@@ -906,9 +913,11 @@ def handle_normal_1(character_id: int) -> int:
         or handle_milk_flag_1(character_id)
         or handle_masturebate_flag_g_0(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(1, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_2)
@@ -929,9 +938,11 @@ def handle_normal_2(character_id: int) -> int:
         or handle_postpartum_1(character_id)
         or handle_imprisonment_1(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(2, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_3)
@@ -952,9 +963,11 @@ def handle_normal_3(character_id: int) -> int:
         or handle_is_follow(character_id)
         or handle_self_in_health_check_action_chain(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(3, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_4)
@@ -974,9 +987,11 @@ def handle_normal_4(character_id: int) -> int:
         handle_cloth_off(character_id)
         or handle_cloth_most_off(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(4, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_5)
@@ -996,9 +1011,11 @@ def handle_normal_5(character_id: int) -> int:
         (handle_sleep_level_0(character_id) and (handle_action_sleep(character_id) or handle_unconscious_flag_1(character_id)))
         or handle_unconscious_flag_4(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(5, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_6)
@@ -1019,9 +1036,11 @@ def handle_normal_6(character_id: int) -> int:
         or handle_unconscious_flag_5(character_id)
         or (handle_time_stop_on(character_id) or handle_unconscious_flag_3(character_id))
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(6, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_7)
@@ -1044,9 +1063,11 @@ def handle_normal_7(character_id: int) -> int:
         or handle_in_diplomatic_visit_1_and_other_country(character_id)
         or handle_escaping_1(character_id)
     ):
-        return 0
+        result = 0
     else:
-        return 1
+        result = 1
+    _ensure_unnormal_flag_storage(cache.character_data[character_id]).update(7, not bool(result))
+    return result
 
 
 @add_premise(constant_promise.Premise.NORMAL_2_4)
@@ -1060,13 +1081,7 @@ def handle_normal_2_4(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_4(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 4))
 
 
 @add_premise(constant_promise.Premise.NORMAL_267)
@@ -1081,14 +1096,7 @@ def handle_normal_267(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_2467)
@@ -1104,15 +1112,7 @@ def handle_normal_2467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 4, 6, 7))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_2467)
@@ -1130,15 +1130,7 @@ def handle_t_normal_2467(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_2(target_chara_id) and 
-        handle_normal_4(target_chara_id) and 
-        handle_normal_6(target_chara_id) and 
-        handle_normal_7(target_chara_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(target_chara_id, (2, 4, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_23467)
@@ -1155,16 +1147,7 @@ def handle_normal_23467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 3, 4, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_24567)
@@ -1181,16 +1164,7 @@ def handle_normal_24567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (2, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_24567)
@@ -1209,16 +1183,7 @@ def handle_t_normal_24567(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_2(target_chara_id) and 
-        handle_normal_4(target_chara_id) and 
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id) and 
-        handle_normal_7(target_chara_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(target_chara_id, (2, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_124567)
@@ -1236,17 +1201,7 @@ def handle_normal_124567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (1, 2, 4, 5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_1267)
@@ -1262,15 +1217,7 @@ def handle_normal_1267(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (1, 2, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_123467)
@@ -1288,17 +1235,7 @@ def handle_normal_123467(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_1(character_id) and 
-        handle_normal_2(character_id) and 
-        handle_normal_3(character_id) and 
-        handle_normal_4(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_id, (1, 2, 3, 4, 6, 7))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_1)
@@ -1312,10 +1249,7 @@ def handle_t_normal_1(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if handle_normal_2(character_data.target_character_id):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_data.target_character_id, (1,))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_2)
@@ -1329,10 +1263,7 @@ def handle_t_normal_2(character_id: int) -> int:
     int -- 权重
     """
     character_data = cache.character_data[character_id]
-    if handle_normal_2(character_data.target_character_id):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(character_data.target_character_id, (2,))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_6)
@@ -1347,10 +1278,7 @@ def handle_t_normal_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if handle_normal_6(target_chara_id):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(target_chara_id, (6,))
 
 
 @add_premise(constant_promise.Premise.UNNORMAL)
@@ -1376,12 +1304,7 @@ def handle_unnormal_2(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id)
-        ):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(character_id, (2,))
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_27)
@@ -1395,13 +1318,7 @@ def handle_unnormal_27(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_2(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(character_id, (2, 7))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_5_6)
@@ -1417,13 +1334,7 @@ def handle_t_normal_5_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id)
-        ):
-        return 1
-    else:
-        return 0
+    return _check_normal_combo(target_chara_id, (5, 6))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7)
@@ -1456,13 +1367,7 @@ def handle_t_unnormal_5_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id)
-        ):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(target_chara_id, (5, 6))
 
 
 @add_premise(constant_promise.Premise.T_UNNORMAL_6)
@@ -1477,10 +1382,7 @@ def handle_t_unnormal_6(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if handle_normal_6(target_chara_id):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(target_chara_id, (6,))
 
 
 @add_premise(constant_promise.Premise.UNNORMAL_567)
@@ -1495,14 +1397,7 @@ def handle_unnormal_567(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if (
-        handle_normal_5(character_id) and 
-        handle_normal_6(character_id) and 
-        handle_normal_7(character_id)
-        ):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(character_id, (5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.T_NORMAL_256_OR_UNCONSCIOUS_FLAG)
@@ -1520,11 +1415,7 @@ def handle_t_normal_256_or_unconscious_flag(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_2(target_chara_id) and 
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id)
-        ):
+    if _check_normal_combo(target_chara_id, (2, 5, 6)):
         return 1
     if target_data.sp_flag.unconscious_h != 0:
         return 1
@@ -1545,10 +1436,7 @@ def handle_t_normal_56_or_unconscious_flag(character_id: int) -> int:
     character_data = cache.character_data[character_id]
     target_data = cache.character_data[character_data.target_character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id)
-        ):
+    if _check_normal_combo(target_chara_id, (5, 6)):
         return 1
     if target_data.sp_flag.unconscious_h != 0:
         return 1
@@ -1569,14 +1457,7 @@ def handle_t_unnormal_567(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     target_chara_id = character_data.target_character_id
-    if (
-        handle_normal_5(target_chara_id) and 
-        handle_normal_6(target_chara_id) and 
-        handle_normal_7(target_chara_id)
-        ):
-        return 0
-    else:
-        return 1
+    return _check_unnormal_combo(target_chara_id, (5, 6, 7))
 
 
 @add_premise(constant_promise.Premise.NORMAL_ALL_EXCEPT_SPECIAL_HYPNOSIS)
