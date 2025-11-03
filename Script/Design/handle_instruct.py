@@ -1775,7 +1775,7 @@ def handle_test_instruct():
 
 @add_instruct(
     constant.Instruct.LISTEN_INFLATION,
-    constant.InstructType.DAILY,
+    constant.InstructType.PLAY,
     _("听肚子里的动静"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
@@ -1792,7 +1792,7 @@ def handle_listen_inflation():
 
 @add_instruct(
     constant.Instruct.PLAY_WITH_CHILD,
-    constant.InstructType.DAILY,
+    constant.InstructType.PLAY,
     _("一起玩耍"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
