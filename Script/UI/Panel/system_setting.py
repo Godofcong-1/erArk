@@ -178,7 +178,7 @@ class System_Setting_Panel:
                     elif cid == 14 or cid == 15:
                         new_button_text = f" [{setting[cid]}] "
                         new_button_len = max(len(new_button_text) * 2, 30)
-                        new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
+                        new_button_draw = draw.LeftButton(new_button_text, type_name + str(cid) + new_button_text, new_button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
                         new_button_draw.draw()
                         return_list.append(new_button_draw.return_text)
                         line_feed.draw()
@@ -187,7 +187,7 @@ class System_Setting_Panel:
                 # 当前选择的选项的名字
                 button_text = f" [{setting_option[cid][now_setting_flag]}] "
                 button_len = max(len(button_text) * 2, 20)
-                button_draw = draw.LeftButton(button_text, str(cid) + button_text, button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
+                button_draw = draw.LeftButton(button_text, type_name + str(cid) + button_text, button_len, cmd_func=self.change_setting_value, args=(type_name, cid, option_len))
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 line_feed.draw()
