@@ -1,6 +1,10 @@
 from wcwidth import wcswidth
 from Script.Config import game_config, normal_config
+import functools
+import re
 
+# 预编译样式标签的正则，按需构建一次
+_STYLE_PATTERN = None
 
 def align(text: str, just="left", only_fix=False, columns=1, text_width=None) -> str:
     """
@@ -39,38 +43,53 @@ def align(text: str, just="left", only_fix=False, columns=1, text_width=None) ->
             return " " * int(width_i - count_i) + text + " " * int(width_i - count_i)
     return ""
 
+def _build_style_pattern():
+    global _STYLE_PATTERN
+    # 样式名来自 config_font_data 的 key，形如 <name> 与 </name>
+    style_names = list(game_config.config_font_data.keys())
+    if not style_names:
+        _STYLE_PATTERN = None
+        return
+    # 对样式名做转义，避免正则特殊字符
+    escaped = [re.escape(n) for n in style_names]
+    # 形如 </?(name1|name2|...)>
+    _STYLE_PATTERN = re.compile(r"</?(?:%s)>" % "|".join(escaped))
 
+@functools.lru_cache(maxsize=256)
+def _char_width(ch: str) -> int:
+    """单字符显示宽度的小缓存；wcswidth(ch)<=0 时按 1 处理"""
+    w = wcswidth(ch)
+    return 1 if (w is None or w < 0) else w
+
+@functools.lru_cache(maxsize=8192)
 def get_text_index(text: str) -> int:
     """
-    计算文本最终显示的真实长度
-    输入参数：
-    text -- 要进行长度计算的文本
-    输出参数：
-    int -- 文本的显示宽度
-    功能描述：计算文本在终端中的实际显示宽度，处理样式标签和特殊字符
+    计算文本最终显示的真实长度（带样式标签的文本）
+    - 若包含样式标签，先移除；再用 wcswidth 一次性计算
+    - wcswidth 返回负值时回退为逐字符求和
+    - 启用 LRU 缓存（8192 项）以复用常见 UI 文本与模板
     """
-    text_index = 0
-    style_width = 0
-    style_name_list = list(game_config.config_font_data.keys())
-    # 移除样式标签
-    for i in range(0, len(style_name_list)):
-        style_text_head = "<" + style_name_list[i] + ">"
-        style_text_tail = "</" + style_name_list[i] + ">"
-        if style_text_head in text:
-            text = text.replace(style_text_head, "")
-            text = text.replace(style_text_tail, "")
-    # 逐字符计算显示宽度
-    for i in range(len(text)):
-        # 获取单个字符的显示宽度，如果wcswidth返回None则使用默认宽度
-        char_width = wcswidth(text[i])
-        if char_width is None:
-            # 对于控制字符或无效字符，使用默认宽度1
-            char_width = 1
-        text_index += char_width
-    now_width = text_index + style_width
-    if now_width < 0:
-        now_width = 0
-    return now_width
+    # fast path：无样式符号，直接整串 wcswidth
+    cleaned = text
+    if "<" in text:
+        # 按需构建样式正则（仅首次）
+        if _STYLE_PATTERN is None:
+            _build_style_pattern()
+        if _STYLE_PATTERN is not None:
+            cleaned = _STYLE_PATTERN.sub("", text)
+        else:
+            # 无样式配置时退化为原文本
+            cleaned = text
+
+    total = wcswidth(cleaned)
+    if total is not None and total >= 0:
+        return total
+
+    # 回退：逐字符求宽
+    s = 0
+    for ch in cleaned:
+        s += _char_width(ch)
+    return s
 
 
 def full_to_half_text(ustring: str) -> str:
