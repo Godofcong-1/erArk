@@ -231,7 +231,13 @@ def era_print(string, style="standard"):
     # 添加到当前绘制元素列表
     append_current_draw_element(text_element, record_history=True)
 
-def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutton"):
+def io_print_cmd(
+    cmd_str,
+    cmd_number,
+    normal_style="standard",
+    on_style="onbutton",
+    tooltip: str = "",
+):
     """
     打印一个命令按钮
     
@@ -240,6 +246,7 @@ def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutto
     cmd_number (int): 命令编号
     normal_style (str): 正常显示样式
     on_style (str): 鼠标悬停样式
+    tooltip (str): 悬停提示文本
     
     返回值类型：无
     将按钮元素添加到当前绘制元素列表
@@ -249,7 +256,8 @@ def io_print_cmd(cmd_str, cmd_number, normal_style="standard", on_style="onbutto
         "type": "button",
         "text": cmd_str,
         "return_text": str(cmd_number),
-        "style": normal_style
+        "style": normal_style,
+        "tooltip": tooltip or "",
     }
     
     # 添加到当前绘制元素列表

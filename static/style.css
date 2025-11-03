@@ -807,6 +807,41 @@ body {
     }
 }
 
+/* 工具提示气泡样式：定义悬浮提示的基础外观 */
+.tooltip-layer {
+    position: fixed;
+    z-index: 2000;
+    pointer-events: none;
+    max-width: 320px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-size: 0.875rem;
+    line-height: 1.3;
+    background: rgba(17, 24, 39, 0.92);
+    color: #f9fafb;
+    box-shadow: 0 10px 30px rgba(15, 23, 42, 0.4);
+    opacity: 0;
+    visibility: hidden;
+    transform: translate3d(0, 10px, 0);
+    transition: opacity 120ms ease-out, transform 120ms ease-out, visibility 120ms ease-out;
+    white-space: normal;
+    word-break: break-word;
+    letter-spacing: 0.02em;
+}
+
+.tooltip-layer.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+}
+
+.tooltip-layer.visible {
+    /* 显示状态下逐渐淡入，同时取消向下偏移 */
+    opacity: 1;
+    visibility: visible;
+    transform: translate3d(0, 0, 0);
+}
+
 /* 移动设备特定样式 */
 @media screen and (max-width: 1024px) and (orientation: portrait) {
     /* 在移动设备竖屏模式下显示横屏提示 */

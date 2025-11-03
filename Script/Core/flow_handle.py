@@ -229,6 +229,7 @@ def print_cmd(
     kw={},
     normal_style="standard",
     on_style="onbutton",
+    tooltip: str = "",
 ):
     """
     输出命令数字
@@ -248,11 +249,11 @@ def print_cmd(
     # 检查是否在Web模式下
     if WEB_MODE:
         # 使用Web版的print_cmd函数
-        return flow_handle_web.print_cmd(cmd_str, cmd_number, cmd_func, arg, kw, normal_style, on_style)
+        return flow_handle_web.print_cmd(cmd_str, cmd_number, cmd_func, arg, kw, normal_style, on_style, tooltip)
     
     # 原始逻辑
     bind_cmd(cmd_number, cmd_func, arg, kw)
-    io_init.io_print_cmd(cmd_str, cmd_number, normal_style, on_style)
+    io_init.io_print_cmd(cmd_str, cmd_number, normal_style, on_style, tooltip)
     return cmd_str
 
 
@@ -262,6 +263,7 @@ def print_image_cmd(
     cmd_func=null_func,
     arg=(),
     kw={},
+    tooltip: str = "",
 ):
     """
     绘制图片按钮
@@ -279,11 +281,11 @@ def print_image_cmd(
     # 检查是否在Web模式下
     if WEB_MODE and hasattr(flow_handle_web, 'print_image_cmd'):
         # 使用Web版的print_image_cmd函数
-        return flow_handle_web.print_image_cmd(cmd_str, cmd_number, cmd_func, arg, kw)
+        return flow_handle_web.print_image_cmd(cmd_str, cmd_number, cmd_func, arg, kw, tooltip)
     
     # 原始逻辑
     bind_cmd(cmd_number, cmd_func, arg, kw)
-    io_init.io_print_image_cmd(cmd_str, cmd_number)
+    io_init.io_print_image_cmd(cmd_str, cmd_number, tooltip)
     return cmd_str
 
 

@@ -432,17 +432,19 @@ class Button:
     on_mouse_style -- 鼠标悬停时样式
     cmd_func -- 按钮响应事件函数
     args -- 传给事件响应函数的参数列表
+    tooltip -- 鼠标悬停提示文本
     """
 
     def __init__(
-            self,
-            text: str,
-            return_text: str,
-            normal_style="standard",
-            on_mouse_style="onbutton",
-            cmd_func=None,
-            args=(),
-            web_type="",
+        self,
+        text: str,
+        return_text: str,
+        normal_style="standard",
+        on_mouse_style="onbutton",
+        cmd_func=None,
+        args=(),
+        web_type="",
+        tooltip: str = "",
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -461,6 +463,8 @@ class Button:
         """ 传给事件响应函数的参数列表 """
         self.web_type: str = web_type
         """ Web绘制类型 """
+        self.tooltip = tooltip
+        """ 鼠标悬停提示文本，用于展示附加说明 """
 
     def __len__(self) -> int:
         """
@@ -497,6 +501,8 @@ class Button:
                 self.return_text,
                 normal_style=self.normal_style,
                 on_style=self.on_mouse_style,
+                # 将提示文本传入指令绘制流程，便于界面层展示悬浮说明
+                tooltip=self.tooltip,
             )
         else:
             py_cmd.pcmd(
@@ -506,6 +512,8 @@ class Button:
                 on_style=self.on_mouse_style,
                 cmd_func=self.cmd_func,
                 arg=self.args,
+                # 透传提示文本，保证按钮在不同渲染端都有说明信息
+                tooltip=self.tooltip,
             )
 
 
@@ -518,15 +526,17 @@ class ImageButton:
     width -- 按钮的文本宽度(自己定义，对齐函数以其为参照)
     cmd_func -- 按钮响应事件函数
     args -- 传给事件响应函数的参数列表
+    tooltip -- 鼠标悬停提示文本
     """
 
     def __init__(
-            self,
-            text: str,
-            return_text: str,
-            width: int,
-            cmd_func=None,
-            args=(),
+        self,
+        text: str,
+        return_text: str,
+        width: int,
+        cmd_func=None,
+        args=(),
+        tooltip: str = "",
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -539,6 +549,8 @@ class ImageButton:
         """ 按钮响应事件函数 """
         self.args = args
         """ 传给事件响应函数的参数列表 """
+        self.tooltip = tooltip
+    """ 鼠标悬停提示文本，配合界面端展示额外信息 """
 
     def __len__(self) -> int:
         """
@@ -550,7 +562,14 @@ class ImageButton:
 
     def draw(self):
         """绘制按钮"""
-        py_cmd.pimagecmd(self.text, self.return_text, self.cmd_func, self.args)
+        py_cmd.pimagecmd(
+            self.text,
+            self.return_text,
+            self.cmd_func,
+            self.args,
+            # 追加提示文本，便于图像按钮在悬停时显示说明
+            tooltip=self.tooltip,
+        )
 
 
 class CenterButton:
@@ -565,19 +584,21 @@ class CenterButton:
     on_mouse_style -- 鼠标悬停时样式
     cmd_func -- 按钮响应事件函数
     args -- 传给事件响应函数的参数列表
+    tooltip -- 鼠标悬停提示文本
     """
 
     def __init__(
-            self,
-            text: str,
-            return_text: str,
-            width: int,
-            fix_text=" ",
-            normal_style="standard",
-            on_mouse_style="onbutton",
-            cmd_func = None,
-            args=(),
-            web_type="",
+        self,
+        text: str,
+        return_text: str,
+        width: int,
+        fix_text=" ",
+        normal_style="standard",
+        on_mouse_style="onbutton",
+        cmd_func = None,
+        args=(),
+        web_type="",
+        tooltip: str = "",
     ):
         """初始化绘制对象"""
         self.text: str = text
@@ -598,6 +619,8 @@ class CenterButton:
         """ 传给事件响应函数的参数列表 """
         self.web_type: str = web_type
         """ Web绘制类型 """
+        self.tooltip = tooltip
+    """ 鼠标悬停提示文本，向玩家解释按钮含义 """
 
     def __len__(self) -> int:
         """
@@ -639,6 +662,8 @@ class CenterButton:
             on_style=self.on_mouse_style,
             cmd_func=self.cmd_func,
             arg=self.args,
+            # 透传提示文本，保证该按钮在不同输出端一致显示说明
+            tooltip=self.tooltip,
         )
 
 
@@ -678,6 +703,8 @@ class LeftButton(CenterButton):
             on_style=self.on_mouse_style,
             cmd_func=self.cmd_func,
             arg=self.args,
+            # 左对齐按钮同样需要提示信息，完善用户交互体验
+            tooltip=self.tooltip,
         )
 
 

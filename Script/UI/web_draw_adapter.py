@@ -123,6 +123,8 @@ class WebDrawAdapter:
         # 否则默认为'center'
         else:
             align = 'center'
+        # 记录按钮的提示文本，Web 端通过该字段决定是否渲染工具提示
+        tooltip_text = getattr(button, "tooltip", "") or ""
         # 创建Web按钮元素
         web_element = {
             "type": "button",
@@ -131,7 +133,8 @@ class WebDrawAdapter:
             "font": button.normal_style,
             "width": button.width,
             "web_type": button.web_type, # 特殊的绘制类型
-            "align": align  # 对齐属性
+            "align": align,  # 对齐属性
+            "tooltip": tooltip_text,
         }
         
         # 添加到当前绘制元素列表
@@ -522,7 +525,9 @@ class WebDrawAdapter:
             "type": "image_button",
             "image_name": image_button.text,
             "return_text": image_button.return_text,
-            "width": image_button.width
+            "width": image_button.width,
+            "tooltip": getattr(image_button, "tooltip", "") or "",
+            # 记录图片按钮的提示文本，Web 端通过该字段决定是否渲染工具提示
         }
         
         # 添加到当前绘制元素列表

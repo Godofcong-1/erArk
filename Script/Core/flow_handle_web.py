@@ -256,8 +256,16 @@ def bind_cmd(cmd_number: str, cmd_func: callable, arg: tuple = (), kw: dict = {}
     # 在Web版本中，我们保存命令函数及其参数
     cmd_map[cmd_number] = (cmd_func, arg, kw)
 
-def print_cmd(cmd_str: str, cmd_number: str, cmd_func=None, arg: tuple = (), 
-             kw: dict = {}, normal_style: str = "standard", on_style: str = "onbutton") -> str:
+def print_cmd(
+    cmd_str: str,
+    cmd_number: str,
+    cmd_func=None,
+    arg: tuple = (),
+    kw: dict = {},
+    normal_style: str = "standard",
+    on_style: str = "onbutton",
+    tooltip: str = "",
+) -> str:
     """
     输出命令按钮
     
@@ -269,6 +277,7 @@ def print_cmd(cmd_str: str, cmd_number: str, cmd_func=None, arg: tuple = (),
     kw (dict): 传给命令函数的字典参数
     normal_style (str): 正常状态下命令显示样式
     on_style (str): 鼠标在其上的时候命令显示样式
+    tooltip (str): 鼠标悬停提示文本
     
     返回值类型：str
     返回命令文本
@@ -285,7 +294,9 @@ def print_cmd(cmd_str: str, cmd_number: str, cmd_func=None, arg: tuple = (),
         "type": "button",
         "text": cmd_str,
         "return_text": str(cmd_number),
-        "style": normal_style
+        "style": normal_style,
+        "tooltip": tooltip or "",
+        # 保留提示文本，前端据此渲染工具提示
     }
     
     # 添加到当前绘制元素列表

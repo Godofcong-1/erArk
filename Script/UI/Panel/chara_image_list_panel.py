@@ -136,7 +136,7 @@ class CharacterImageButton:
         character_data: game_type.Character = cache.character_data[self.character_id]
         # print(f"debug {character_data.name} = {character_data.relationship.father_id}")
         image_name = character_image.find_character_image_name(self.character_id)
-        now_draw = draw.ImageButton(image_name, character_data.name + "头像", self.width, self.change_target)
+        now_draw = draw.ImageButton(image_name, character_data.name + "头像", self.width, self.change_target, tooltip=character_data.name)
         now_draw.draw()
         self.return_text = character_data.name + "头像"
 

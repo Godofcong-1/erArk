@@ -23,6 +23,7 @@ def pcmd(
     kw={},
     normal_style="standard",
     on_style="onbutton",
+    tooltip: str = "",
 ):
     """
     打印一条指令
@@ -39,7 +40,16 @@ def pcmd(
     global last_char
     if len(cmd_str) > 0:
         last_char = cmd_str[-1:]
-    flow_handle.print_cmd(cmd_str, cmd_id, cmd_func, arg, kw, normal_style, on_style)
+    flow_handle.print_cmd(
+        cmd_str,
+        cmd_id,
+        cmd_func,
+        arg,
+        kw,
+        normal_style,
+        on_style,
+        tooltip,
+    )
 
 
 def pimagecmd(
@@ -48,6 +58,7 @@ def pimagecmd(
     cmd_func=flow_handle.null_func,
     arg=(),
     kw={},
+    tooltip: str = "",
 ):
     """
     打印图片按钮
@@ -62,7 +73,7 @@ def pimagecmd(
     global last_char
     if len(cmd_str) > 0:
         last_char = cmd_str[-1:]
-    flow_handle.print_image_cmd(cmd_str, cmd_id, cmd_func, arg, kw)
+    flow_handle.print_image_cmd(cmd_str, cmd_id, cmd_func, arg, kw, tooltip)
 
 
 unused_cmd_num = 500

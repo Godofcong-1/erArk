@@ -192,6 +192,7 @@ def cmd_json(
     cmd_num: int,
     normal_style: tuple or str,
     on_style: tuple or str,
+    tooltip: str = "",
 ):
     """
     定义一个命令json
@@ -217,6 +218,7 @@ def cmd_json(
         re["on_style"] = on_style
     if isinstance(on_style, str):
         re["on_style"] = (on_style,)
+    re["tooltip"] = tooltip or ""
     return re
 
 
@@ -409,7 +411,13 @@ def clear_order():
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
-def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_style="onbutton"):
+def io_print_cmd(
+    cmd_str: str,
+    cmd_number: int,
+    normal_style="standard",
+    on_style="onbutton",
+    tooltip: str = "",
+):
     """
     打印一条指令
     
@@ -425,15 +433,17 @@ def io_print_cmd(cmd_str: str, cmd_number: int, normal_style="standard", on_styl
     # 检查是否在Web模式下
     if WEB_MODE and web_io is not None:
         # 使用Web版IO的io_print_cmd函数
-        web_io.io_print_cmd(cmd_str, cmd_number, normal_style, on_style)
+        web_io.io_print_cmd(cmd_str, cmd_number, normal_style, on_style, tooltip)
     else:
         # 原始逻辑
         json_str = new_json()
-        json_str["content"].append(cmd_json(cmd_str, cmd_number, normal_style, on_style))
+        json_str["content"].append(
+            cmd_json(cmd_str, cmd_number, normal_style, on_style, tooltip)
+        )
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
-def io_print_image_cmd(cmd_str: str, cmd_number: int):
+def io_print_image_cmd(cmd_str: str, cmd_number: int, tooltip: str = ""):
     """
     打印图片指令
     
@@ -451,6 +461,8 @@ def io_print_image_cmd(cmd_str: str, cmd_number: int):
         data["type"] = "image_cmd"
         data["text"] = cmd_str
         data["num"] = cmd_number
+        if tooltip:
+            data["tooltip"] = tooltip
         json_str["content"].append(data)
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
