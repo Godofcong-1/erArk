@@ -47,7 +47,9 @@ def update_new_day():
     now_draw.draw()
 
     # 角色刷新
-    for character_id in cache.npc_id_got:
+    all_chara_id_set = cache.npc_id_got.copy()
+    all_chara_id_set.add(0)  # 包含玩家
+    for character_id in all_chara_id_set:
         character_data: game_type.Character = cache.character_data[character_id]
         # 处理持有食物变质与过期，并获取过期食物数量
         if cache.all_system_setting.base_setting.get(10, 1):
