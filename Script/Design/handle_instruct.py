@@ -1041,7 +1041,7 @@ def handle_time_stop_off():
     constant.InstructType.ARTS,
     _("在H中取消时停"),
     {constant_promise.Premise.PRIMARY_TIME_STOP,
-     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.IS_H,
      constant_promise.Premise.TIME_STOP_ON,
      constant_promise.Premise.TIRED_LE_84},
     constant.Behavior.TIME_STOP_OFF,
@@ -2428,14 +2428,23 @@ def handle_ask_group_sex():
     constant.Instruct.WAIT_5_MIN_IN_H,
     constant.InstructType.SEX,
     _("等待五分钟"),
-    {constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.TARGET_SLEEP_H_OR_HIDDEN_SEX,},
+    {constant_promise.Premise.IS_H},
     constant.Behavior.WAIT,
 )
 def handle_wait_5_min_in_h():
     """处理等待五分钟指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 5)
-
+    # 如果场景里已经没有除自己以外的在H中的角色，则转为结束H
+    now_scene_character_list = map_handle.get_chara_now_scene_all_chara_id_list(0, remove_own_character=True)
+    h_in_scene_flag = False
+    for now_chara_id in now_scene_character_list:
+        if handle_premise.handle_self_is_h(now_chara_id):
+            h_in_scene_flag = True
+            break
+    if not h_in_scene_flag:
+        handle_h_end()
+    # 否则正常等待五分钟
+    else:
+        chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration = 5)
 
 @add_instruct(
     constant.Instruct.H_END,
@@ -2449,7 +2458,7 @@ def handle_wait_5_min_in_h():
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_h_end():
@@ -2497,7 +2506,7 @@ def handle_h_end():
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_h_with_daughter_end():
@@ -2518,7 +2527,7 @@ def handle_h_with_daughter_end():
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_imprisonment_h_end():
@@ -2535,7 +2544,7 @@ def handle_imprisonment_h_end():
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_unconscious_h_end():
@@ -2565,7 +2574,7 @@ def handle_unconscious_h_end():
      constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1,
      constant_promise.Premise.TARGET_NOT_IN_EXHIBITIONISM_SEX_MODE,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_hidden_sex_end():
@@ -2610,7 +2619,7 @@ def handle_hidden_sex_end():
      constant_promise.Premise.TARGET_NOT_IN_HIDDEN_SEX_MODE,
      constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1,
      constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.END_H,
 )
 def handle_exhibitionism_sex_end():
@@ -2652,7 +2661,7 @@ def handle_exhibitionism_sex_end():
     _("结束群交"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.GROUP_SEX_MODE_ON,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.IS_H},
     constant.Behavior.GROUP_SEX_END,
 )
 def handle_group_sex_end():
