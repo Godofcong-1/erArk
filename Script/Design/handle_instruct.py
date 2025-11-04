@@ -2220,7 +2220,7 @@ def handle_switch_to_h_interface():
      constant_promise.Premise.NOT_H,
      constant_promise.Premise.NOT_SHOW_NON_H_IN_HIDDEN_SEX,
      constant_promise.Premise.T_ACTION_SLEEP,
-     constant_promise.Premise.T_NOT_UNCONSCIOUS_FLAG_1,
+     constant_promise.Premise.T_UNCONSCIOUS_FLAG_0,
      constant_promise.Premise.TIRED_LE_74}
 )
 def handle_sleep_obscenity():
