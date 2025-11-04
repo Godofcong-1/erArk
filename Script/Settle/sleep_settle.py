@@ -54,6 +54,7 @@ def update_sleep():
         if character_id == 0:
             sanity_point_grow() # 玩家理智成长
             character_data.eja_point = 0 # 清零射精槽
+            character_data.action_info.day_first_shoot_semen = True # 重置今日射精标记
             assistant_id = character_data.assistant_character_id
             # 对玩家助理结算
             if assistant_id > 0:

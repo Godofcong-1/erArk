@@ -156,6 +156,12 @@ def common_ejaculation():
             if squeeze_adjust > 1:
                 extra_text += _("（{0}榨精+）").format(target_data.name)
 
+        # 每日首次射精量翻倍
+        if character_data.action_info.day_first_shoot_semen:
+            semen_count *= 2
+            character_data.action_info.day_first_shoot_semen = False
+            extra_text += _("（醒来第一发+）")
+
         # 如果使用了精液精力剂，则本次射精量翻倍
         if handle_premise.handle_self_semen_energy_agent(0):
             semen_count *= 2

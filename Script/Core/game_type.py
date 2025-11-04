@@ -624,6 +624,8 @@ class ACTION_INFO:
         """ 角色的过去移动位置记录，list类型，最大长度为10 """
         self.last_gift_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色上次被赠送好感礼物的时间 """
+        self.day_first_shoot_semen: bool = True
+        """ 角色睡醒后第一发精液，True为未射精，False为已射精 """
 
 
 class AUTHOR_FLAG:
