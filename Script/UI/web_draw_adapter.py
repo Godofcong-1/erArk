@@ -51,7 +51,8 @@ class WebDrawAdapter:
             "text": normal_draw.text,
             "font": normal_draw.style,
             "width": normal_draw.width,
-            "web_type": getattr(normal_draw, "web_type", "")
+            "web_type": getattr(normal_draw, "web_type", ""),
+            "tooltip": getattr(normal_draw, "tooltip", "") or "",
         }
         
         # 添加到当前绘制元素列表
@@ -75,7 +76,8 @@ class WebDrawAdapter:
             "font": center_draw.style,  # 添加居中样式
             "width": center_draw.width,
             "align": "center",
-            "web_type": getattr(center_draw, "web_type", "")
+            "web_type": getattr(center_draw, "web_type", ""),
+            "tooltip": getattr(center_draw, "tooltip", "") or "",
         }
         
         # 添加到当前绘制元素列表
@@ -99,7 +101,8 @@ class WebDrawAdapter:
             "font": right_draw.style,  # 添加右对齐样式
             "width": right_draw.width,
             "align": "right",
-            "web_type": getattr(right_draw, "web_type", "")
+            "web_type": getattr(right_draw, "web_type", ""),
+            "tooltip": getattr(right_draw, "tooltip", "") or "",
         }
         
         # 检查是否存在当前绘制元素列表，如果不存在则创建
@@ -206,7 +209,8 @@ class WebDrawAdapter:
             "type": "wait",
             "text": wait_draw.text,
             "font": wait_draw.style,
-            "width": wait_draw.width
+            "width": wait_draw.width,
+            "tooltip": getattr(wait_draw, "tooltip", "") or "",
         }
         
         # 添加到当前绘制元素列表
@@ -259,6 +263,7 @@ class WebDrawAdapter:
                     "width": width,
                     "wait_id": wait_id,
                     "await_input": not skip_wait_active,
+                    "tooltip": getattr(line_wait_draw, "tooltip", "") or "",
                 }
                 # print(
                 #     f"[LineFeedWaitDraw] emit segment wait_id={wait_id} line_index={line_index} segment_index={segment_index} await_input={line_element['await_input']} text={text_value!r}"
@@ -430,7 +435,8 @@ class WebDrawAdapter:
                     "type": "text",
                     "text": item.text,
                     "font": item.style,
-                    "width": item.width
+                    "width": item.width,
+                    "tooltip": getattr(item, "tooltip", "") or "",
                 })
             elif isinstance(item, draw.BarDraw):
                 bar_items = []
@@ -488,7 +494,8 @@ class WebDrawAdapter:
                     "type": "text",
                     "text": item.text,
                     "font": item.style,
-                    "width": item.width
+                    "width": item.width,
+                    "tooltip": getattr(item, "tooltip", "") or "",
                 })
             elif isinstance(item, draw.BarDraw):
                 bar_items = []

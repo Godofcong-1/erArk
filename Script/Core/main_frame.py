@@ -403,7 +403,7 @@ def read_queue():
         for c in json_data["content"]:
             if c["type"] == "text":
                 c["style"][0] = c["style"][0].replace(" ","")
-                now_print(c["text"], style=tuple(c["style"]))
+                now_print(c["text"], style=tuple(c["style"]), tooltip=c.get("tooltip", ""))
             if c["type"] == "cmd":
                 c["normal_style"][0] = c["normal_style"][0].replace(" ", "")
                 c["on_style"][0] = c["on_style"][0].replace(" ", "")
@@ -481,14 +481,46 @@ def bind_queue(q):
 sys_print = print
 
 
-def now_print(string, style=("standard",)):
+def now_print(string, style=("standard",), tooltip: str = ""):
     """
     输出文本
     Keyword arguments:
     string -- 字符串
     style -- 样式序列
+    tooltip -- 悬浮提示文本，用于在 Tk 端展示说明
     """
-    textbox.insert(END, string, style)
+    tooltip_text = tooltip or ""
+    start_index = None
+    if tooltip_text and string:
+        # 记录插入前的位置，便于为新增文本打标签
+        start_index = textbox.index("end-1c")
+    textbox.insert("end", string, style)
+    if tooltip_text and string and start_index is not None:
+        end_index = textbox.index("end-1c")
+        if textbox.compare(start_index, "<", end_index):
+            tag_name = f"text_tooltip_{uuid.uuid4().hex}"
+            textbox.tag_add(tag_name, start_index, end_index)
+
+            def enter_func(event=None):
+                """鼠标进入文本范围时展示提示。"""
+                coords = (event.x_root, event.y_root) if event is not None else None
+                _schedule_tooltip(tooltip_text, coords)
+
+            def leave_func(event=None):
+                """鼠标离开文本范围时隐藏提示。"""
+                _hide_tooltip()
+
+            def motion_func(event=None):
+                """鼠标移动时更新提示位置。"""
+                if event is not None:
+                    _update_tooltip_coords((event.x_root, event.y_root))
+
+            textbox.tag_bind(tag_name, "<Enter>", enter_func)
+            textbox.tag_bind(tag_name, "<Leave>", leave_func)
+            textbox.tag_bind(tag_name, "<Motion>", motion_func)
+    if not string and tooltip_text:
+        # 空字符串不创建标签，直接取消已安排的提示
+        _hide_tooltip()
     see_end()
 
 

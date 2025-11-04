@@ -1782,6 +1782,10 @@ function createGameElement(item) {
             if (item.font) {
                 element = applyFontStyle(element, item.font);
             }
+
+            if (item.tooltip) {
+                TooltipManager.attach(element, item.tooltip);
+            }
             
             // 更新上一个元素类型为文本
             lastElementType = 'text';
@@ -1845,6 +1849,10 @@ function createGameElement(item) {
                 element = applyFontStyle(element, item.font);
             }
 
+            if (item.tooltip) {
+                TooltipManager.attach(element, item.tooltip);
+            }
+
             const waitId = item.wait_id || `line_wait_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`;
             if (item.await_input === false) {
                 WaitManager.resolve(waitId);
@@ -1883,6 +1891,10 @@ function createGameElement(item) {
 
             if (item.font) {
                 element = applyFontStyle(element, item.font);
+            }
+
+            if (item.tooltip) {
+                TooltipManager.attach(element, item.tooltip);
             }
 
             WaitManager.start(item.wait_id || `wait_${Date.now()}_${Math.random().toString(36).slice(2, 8)}`, {

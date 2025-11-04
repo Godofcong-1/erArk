@@ -35,6 +35,8 @@ class NormalDraw:
         """ 当前要绘制的文本 """
         self.web_type: str = ""
         """ Web绘制类型，用于前端特殊布局处理 """
+        self.tooltip: str = ""
+        """ 悬浮提示文本，供 Tk / Web 端展示额外说明 """
 
     def __len__(self) -> int:
         """
@@ -55,7 +57,7 @@ class NormalDraw:
         功能描述：将 self.text 按照 self.width 自动分行输出，保证所有内容完整显示。
         """
         if self.width <= 0 or not self.text:
-            io_init.era_print(self.text, self.style)
+            io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             return
         text = self.text
         while text:
@@ -67,7 +69,7 @@ class NormalDraw:
             if not now_text:
                 # 防止死循环，强制输出一个字符
                 now_text = text[0]
-            io_init.era_print(now_text, self.style)
+            io_init.era_print(now_text, self.style, tooltip=self.tooltip)
             text = text[len(now_text):]
 
 
@@ -76,7 +78,7 @@ class FullDraw(NormalDraw):
 
     def draw(self):
         """绘制文本"""
-        io_init.era_print(self.text, self.style)
+        io_init.era_print(self.text, self.style, tooltip=self.tooltip)
 
 
 class WaitDraw(NormalDraw):
@@ -91,7 +93,7 @@ class WaitDraw(NormalDraw):
         """
         # 如果没有设置宽度或文本为空，直接输出
         if self.width <= 0 or not self.text:
-            io_init.era_print(self.text, self.style)
+            io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             if int(len(self.text)):
                 flow_handle.askfor_wait()
             return
@@ -109,7 +111,7 @@ class WaitDraw(NormalDraw):
                 # 防止死循环，强制输出一个字符
                 now_text = text[0]
             # 输出当前行
-            io_init.era_print(now_text, self.style)
+            io_init.era_print(now_text, self.style, tooltip=self.tooltip)
             # 剩余文本继续处理
             text = text[len(now_text):]
         # 输出后等待玩家操作
@@ -161,7 +163,7 @@ class LineFeedWaitDraw(NormalDraw):
                 if not now_text:
                     # 防止死循环，强制输出一个字符
                     now_text = remain[0]
-                io_init.era_print(now_text, self.style)
+                io_init.era_print(now_text, self.style, tooltip=self.tooltip)
                 remain = remain[len(now_text):]
                 # 如果还有剩余内容，先输出一个换行符
                 if remain:
@@ -873,7 +875,7 @@ class CenterDraw(NormalDraw):
         功能描述：将 self.text 按照 self.width 自动分行居中输出，保证所有内容完整显示。
         """
         if self.width <= 0 or not self.text:
-            io_init.era_print(self.text, self.style)
+            io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             return
         text = self.text
         while text:
@@ -887,7 +889,7 @@ class CenterDraw(NormalDraw):
                 now_text = text[0]
             # 居中对齐
             now_text = text_handle.align(now_text, "center", False, 1, self.width)
-            io_init.era_print(now_text, self.style)
+            io_init.era_print(now_text, self.style, tooltip=self.tooltip)
             text = text[len(now_text):]
 
 
@@ -1017,7 +1019,7 @@ class RightDraw(NormalDraw):
         功能描述：将 self.text 按照 self.width 自动分行右对齐输出，保证所有内容完整显示。
         """
         if self.width <= 0 or not self.text:
-            io_init.era_print(self.text, self.style)
+            io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             return
         text = self.text
         while text:
@@ -1031,7 +1033,7 @@ class RightDraw(NormalDraw):
                 now_text = text[0]
             # 右对齐
             now_text = text_handle.align(now_text, "right", False, 1, self.width)
-            io_init.era_print(now_text, self.style)
+            io_init.era_print(now_text, self.style, tooltip=self.tooltip)
             text = text[len(now_text):]
             
 
@@ -1047,7 +1049,7 @@ class LeftDraw(NormalDraw):
         """
         # 如果没有设置宽度或文本为空，直接输出
         if self.width <= 0 or not self.text:
-            io_init.era_print(self.text, self.style)
+            io_init.era_print(self.text, self.style, tooltip=self.tooltip)
             return
         text = self.text
         # 循环处理剩余文本
@@ -1072,7 +1074,7 @@ class LeftDraw(NormalDraw):
                 # 如果没有剩余文本，则进行左对齐填充
                 now_text = text_handle.align(now_text, "left", False, 1, self.width)
             # 输出当前行
-            io_init.era_print(now_text, self.style)
+            io_init.era_print(now_text, self.style, tooltip=self.tooltip)
             # 截取剩余文本，使用未对齐前的长度，防止丢失字符
             text = text[raw_len:]
 

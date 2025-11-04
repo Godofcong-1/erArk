@@ -166,7 +166,7 @@ def new_json():
     return flow_json
 
 
-def text_json(string: str, style: tuple or str):
+def text_json(string: str, style: tuple or str, tooltip: str = ""):
     """
     定义一个文本json
     
@@ -184,6 +184,7 @@ def text_json(string: str, style: tuple or str):
         re["style"] = style
     if isinstance(style, str):
         re["style"] = (style,)
+    re["tooltip"] = tooltip or ""
     return re
 
 
@@ -264,7 +265,7 @@ def style_json(
 # 输出格式化
 
 
-def era_print(string: str, style="standard"):
+def era_print(string: str, style="standard", tooltip: str = ""):
     """
     输出命令
     
@@ -278,11 +279,11 @@ def era_print(string: str, style="standard"):
     # 检查是否在Web模式下
     if WEB_MODE and web_io is not None:
         # 使用Web版IO的era_print函数
-        web_io.era_print(string, style)
+        web_io.era_print(string, style, tooltip=tooltip)
     else:
         # 原始逻辑
         json_str = new_json()
-        json_str["content"].append(text_json(string, style))
+        json_str["content"].append(text_json(string, style, tooltip))
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
 

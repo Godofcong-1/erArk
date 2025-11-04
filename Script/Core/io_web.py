@@ -210,7 +210,7 @@ def clear_screen():
     # 更新Web界面状态
     update_game_state(cache.current_draw_elements, None)
 
-def era_print(string, style="standard"):
+def era_print(string, style="standard", tooltip: str = ""):
     """
     输出文本
     
@@ -225,7 +225,8 @@ def era_print(string, style="standard"):
     text_element = {
         "type": "text",
         "text": string,
-        "style": style
+        "style": style,
+        "tooltip": tooltip or "",
     }
     
     # 添加到当前绘制元素列表
