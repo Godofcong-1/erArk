@@ -36,6 +36,8 @@ class DrawEventTextPanel(draw.LineFeedWaitDraw):
         """ 当前绘制的文本 """
         self.style: str = "standard"
         """ 绘制文本的样式 """
+        self.tooltip: str = ""
+        """ 绘制文本的悬停提示 """
         player_data: game_type.Character = cache.character_data[0]
         if cache.is_collection:
             if character_id and character_id not in player_data.collection_character:
