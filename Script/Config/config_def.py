@@ -348,6 +348,8 @@ class CharacterState:
     """ 状态名字 """
     type: int
     """ 状态类型 """
+    info: str
+    """ 状态说明 """
 
 
 class CharacterStateType:

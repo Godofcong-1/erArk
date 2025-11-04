@@ -316,8 +316,10 @@ class InfoBarDraw:
         """ 当前数值 """
         self.chara_state: bool = False
         """ 是否为人物状态 """
+        self.tooltip: str = ""
+        """ 悬浮提示文本，供 Tk / Web 端展示额外说明 """
 
-    def set(self, bar_id: str, max_value: int, value: int, text: str):
+    def set(self, bar_id: str, max_value: int, value: int, text: str, tooltip: str = ""):
         """
         设置比例条数据
         Keyword arguments:
@@ -329,10 +331,12 @@ class InfoBarDraw:
         self.text = text
         self.max_value = max_value
         self.value = value
+        self.tooltip = tooltip
         now_max_width = int(self.width * self.scale)
         info_draw = NormalDraw()
         info_draw.width = int(now_max_width / 3)
         info_draw.text = f"{text}["
+        info_draw.tooltip = tooltip
         # 角色状态时则单独处理
         if self.chara_state:
             status_text = text.split("lv")[0]

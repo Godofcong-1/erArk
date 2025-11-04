@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-04 15:21+0800\n"
+"POT-Creation-Date: 2024-08-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -20,192 +20,384 @@ msgstr ""
 msgid "皮肤感度"
 msgstr ""
 
+#: .\data\csv\Ability.csv:6
+msgid "决定身体皮肤表面对触摸、抚摸等接触的敏感程度。数值越高，轻微的肌肤接触就能带来更强烈的快感反应。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:7
 msgid "胸部感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:7
+msgid "决定胸部区域对刺激的敏感程度。数值越高，对胸部的爱抚、揉捏、吸吮等行为会产生更强烈的快感。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:8
 msgid "阴蒂感度"
 msgstr ""
 
+#: .\data\csv\Ability.csv:8
+msgid "决定阴蒂对刺激的敏感程度。数值越高，对阴蒂的触摸、摩擦、舔舐等刺激会带来更强烈的快感，更容易达到高潮。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:9
 msgid "阴茎感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:9
+msgid "决定阴茎对刺激的敏感程度。数值越高，在性行为中会感受到更强烈的快感，但也更容易过早射精。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:10
 msgid "阴道感度"
 msgstr ""
 
+#: .\data\csv\Ability.csv:10
+msgid "决定阴道内壁对插入和摩擦的敏感程度。数值越高，性交时会感受到更强烈的快感，更容易达到阴道高潮。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:11
 msgid "肛肠感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:11
+msgid "决定肛门和直肠对刺激的敏感程度。数值越高，肛交及相关行为会带来更强烈的快感。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:12
 msgid "尿道感度"
 msgstr ""
 
+#: .\data\csv\Ability.csv:12
+msgid "决定尿道对异物插入的敏感程度。数值越高，尿道相关的特殊性行为会带来更强烈的刺激感。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:13
 msgid "子宫感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:13
+msgid "决定子宫口和子宫内部对深度插入的敏感程度。数值越高，子宫相关的特殊性行为会产生更强烈的快感。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:15
 msgid "阴道扩张"
 msgstr ""
 
+#: .\data\csv\Ability.csv:15
+msgid "表示阴道的松弛和容纳程度。数值越高，能够容纳更大的对象，但紧致感会降低，过度扩张会影响快感强度。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:16
 msgid "肛肠扩张"
+msgstr ""
+
+#: .\data\csv\Ability.csv:16
+msgid "表示肛门的松弛和容纳程度。数值越高，肛交时痛苦感减少，能够容纳更大的对象。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:17
 msgid "尿道扩张"
 msgstr ""
 
+#: .\data\csv\Ability.csv:17
+msgid "表示尿道的扩张程度。数值越高，能够插入更粗的物体，从棉签到手指甚至阴茎。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:18
 msgid "子宫扩张"
+msgstr ""
+
+#: .\data\csv\Ability.csv:18
+msgid "表示子宫口的扩张程度。数值越高，子宫口越容易被突破，能够进行更深度的插入。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:20
 msgid "快乐刻印"
 msgstr ""
 
+#: .\data\csv\Ability.csv:20
+msgid "表示身体对快乐和性快感的依赖程度。数值越高，越容易从性行为中获得快感，但也更容易产生性欲和渴望被满足。在干员体验到足够强烈的性快感时会获得和升级该刻印。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:21
 msgid "屈服刻印"
+msgstr ""
+
+#: .\data\csv\Ability.csv:21
+msgid "表示精神上的屈服和服从程度。数值越高，越容易接受命令和调教，抵抗意志越弱。在干员做了足够卑微或耻辱的事时会获得和升级该刻印。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:22
 msgid "苦痛刻印"
 msgstr ""
 
+#: .\data\csv\Ability.csv:22
+msgid "表示身体对痛苦刺激的适应和转化程度。数值越高，代表体会过更高程度的痛苦，痛苦也越容易转化为快感，形成受虐体质。在干员受到了足够多的物理疼痛时会获得和升级该刻印。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:23
 msgid "时姦刻印"
+msgstr ""
+
+#: .\data\csv\Ability.csv:23
+msgid "表示在时停状态下被侵犯的记忆积累。数值越高，身体会对时停状态产生特殊反应，即使意识不清也会本能地配合。在干员在时停状态下被H行为侵犯时会获得和升级该刻印。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:24
 msgid "恐怖刻印"
 msgstr ""
 
+#: .\data\csv\Ability.csv:24
+msgid "表示精神上对恐惧的敏感程度和创伤累积。数值越高，越容易感到恐惧，可能影响正常行为。在干员遭受了足够大的精神打击时会获得和升级该刻印"
+msgstr ""
+
 #: .\data\csv\Ability.csv:25
 msgid "反发刻印"
+msgstr ""
+
+#: .\data\csv\Ability.csv:25
+msgid "表示精神上对博士的反感与厌恶。数值越高，越讨厌甚至仇恨博士，可能影响干员的行动。在干员对博士产生了足够大的愤怒、怀疑和仇恨时会获得和升级该刻印。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:26
 msgid "无觉刻印"
 msgstr ""
 
+#: .\data\csv\Ability.csv:26
+msgid "表示在无意识状态下被侵犯的记忆积累。数值越高，身体会对时停状态产生特殊反应，即使意识不清也会本能地配合。干员在意识薄弱或无意识中体验到足够强烈的性快感时会获得和升级该刻印。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:28
 msgid "技巧"
+msgstr ""
+
+#: .\data\csv\Ability.csv:28
+msgid "代表性行为的技术水平和经验。数值越高，能够更好地取悦对方，使用更多样化的技巧。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:29
 msgid "顺从"
 msgstr ""
 
+#: .\data\csv\Ability.csv:29
+msgid "代表服从性和听话程度。数值越高，越容易接受命令，抵抗意识越弱，更愿意配合各种要求。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:30
 msgid "亲密"
+msgstr ""
+
+#: .\data\csv\Ability.csv:30
+msgid "代表与对方的情感亲密程度和信赖关系。数值越高，越愿意与对方进行亲密接触，抵触感越低。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:31
 msgid "欲望"
 msgstr ""
 
+#: .\data\csv\Ability.csv:31
+msgid "代表性欲的强度和对性的渴望程度。数值越高，越容易产生性冲动，主动寻求性行为的频率增加。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:32
 msgid "露出"
+msgstr ""
+
+#: .\data\csv\Ability.csv:32
+msgid "代表对在他人面前裸露身体的接受程度。数值越高，在公共场所或他人面前暴露身体时的羞耻感越低，甚至可能感到兴奋。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:33
 msgid "施虐"
 msgstr ""
 
+#: .\data\csv\Ability.csv:33
+msgid "代表施加痛苦和支配他人的倾向。数值越高，越享受支配、虐待对方的过程，更倾向于采取主动攻击性的行为。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:34
 msgid "受虐"
+msgstr ""
+
+#: .\data\csv\Ability.csv:34
+msgid "代表承受痛苦和被支配的接受程度。数值越高，越能从痛苦和屈辱中获得快感，更愿意处于被动服从的地位。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:36
 msgid "话术技能"
 msgstr ""
 
+#: .\data\csv\Ability.csv:36
+msgid "代表语言表达、说服、谈判的能力。数值越高，在交流中更有说服力，容易说服他人或进行有效的言语调教。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:37
 msgid "指挥技能"
+msgstr ""
+
+#: .\data\csv\Ability.csv:37
+msgid "代表领导、指挥、组织的能力。数值越高，在团队行动中能更有效地协调他人，提高群体行动的效率。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:38
 msgid "战斗技能"
 msgstr ""
 
+#: .\data\csv\Ability.csv:38
+msgid "代表战斗、格斗、武器使用的能力。数值越高，在战斗中更具优势，能够更好地保护自己或制服他人。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:39
 msgid "料理技能"
+msgstr ""
+
+#: .\data\csv\Ability.csv:39
+msgid "代表烹饪、食物制作的能力。数值越高，能够制作更美味的料理，提升他人的好感度和满意度。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:40
 msgid "音乐技能"
 msgstr ""
 
+#: .\data\csv\Ability.csv:40
+msgid "代表音乐演奏、歌唱的能力。数值越高，能够演奏更动听的音乐，用音乐影响他人情绪。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:41
 msgid "学识技能"
+msgstr ""
+
+#: .\data\csv\Ability.csv:41
+msgid "代表知识储备、学习能力和智力水平。数值越高，能够更快学习新知识，解决复杂问题。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:42
 msgid "医术技能"
 msgstr ""
 
+#: .\data\csv\Ability.csv:42
+msgid "代表医疗、治疗、药物知识的能力。数值越高，能够更有效地治疗伤病，调配药物。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:43
 msgid "农业技能"
+msgstr ""
+
+#: .\data\csv\Ability.csv:43
+msgid "代表农作、种植、养殖的能力。数值越高，能够更高效地进行农业生产，获得更好的收成。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:44
 msgid "制造技能"
 msgstr ""
 
+#: .\data\csv\Ability.csv:44
+msgid "代表手工制作、工具制造、机械维修的能力。数值越高，能够制作更精密的物品和道具。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:45
 msgid "绘画技能"
+msgstr ""
+
+#: .\data\csv\Ability.csv:45
+msgid "代表绘画、素描、艺术创作的能力。数值越高，能够创作更精美的艺术作品。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:47
 msgid "指技"
 msgstr ""
 
+#: .\data\csv\Ability.csv:47
+msgid "代表使用手指进行性爱抚的技巧。数值越高，手指爱抚能带给对方更强烈的快感，能够更精准地刺激敏感部位。影响指交、爱抚等手部性技的效果。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:48
 msgid "舌技"
+msgstr ""
+
+#: .\data\csv\Ability.csv:48
+msgid "代表使用舌头进行性爱抚的技巧。数值越高，舌头的舔舐、吸吮能带给对方更强烈的快感。影响口交、舔阴等口部性技的效果。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:49
 msgid "足技"
 msgstr ""
 
+#: .\data\csv\Ability.csv:49
+msgid "代表使用脚部进行性爱抚的技巧。数值越高，足交等行为能带给对方更强烈的快感，脚部动作更加灵活和熟练。影响足交等特殊性技的效果。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:50
 msgid "胸技"
+msgstr ""
+
+#: .\data\csv\Ability.csv:50
+msgid "代表使用乳房进行性爱抚的技巧。数值越高，乳交时能更好地包裹和刺激对方，带来更强烈的快感。影响乳交等使用胸部的性技效果。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:51
 msgid "膣技"
 msgstr ""
 
+#: .\data\csv\Ability.csv:51
+msgid "代表使用阴道进行性交时的技巧。数值越高，能够更好地收缩和蠕动阴道，主动为对方带来快感。影响阴道性交中女性主动性交的效果。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:52
 msgid "肛技"
+msgstr ""
+
+#: .\data\csv\Ability.csv:52
+msgid "代表使用肛门进行性交时的技巧。数值越高，能够更好地控制肛门括约肌，在肛交中主动取悦对方。影响肛交中女性主动配合的效果。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:53
 msgid "腰技"
 msgstr ""
 
+#: .\data\csv\Ability.csv:53
+msgid "代表腰部和下半身动作的技巧。数值越高，抽插的节奏、力度、角度控制更加出色，能够更精准地刺激对方。影响男性在性交中的表现。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:54
 msgid "榨精"
+msgstr ""
+
+#: .\data\csv\Ability.csv:54
+msgid "代表榨取精液的综合技巧。数值越高，能够更快速、更彻底地让对方射精，甚至进行连续榨精。影响博士在射精时的射精量。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:56
 msgid "隐蔽"
 msgstr ""
 
+#: .\data\csv\Ability.csv:56
+msgid "代表在性行为中保持低调和不被发现的能力。数值越高，能够在公共场所或有他人在场的情况下更隐秘地进行性行为而不被察觉。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:58
 msgid "口喉感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:58
+msgid "决定口腔和喉咙对插入的敏感程度。数值越高，深喉等口交行为会带来更强烈的刺激感，但初期可能伴随呕吐反射。"
 msgstr ""
 
 #: .\data\csv\Ability.csv:59
 msgid "兽部感度"
 msgstr ""
 
+#: .\data\csv\Ability.csv:59
+msgid "决定兽耳、尾巴等兽人特征部位的敏感程度。数值越高，这些部位被触摸时会产生更强烈的快感。"
+msgstr ""
+
 #: .\data\csv\Ability.csv:60
 msgid "心理感度"
+msgstr ""
+
+#: .\data\csv\Ability.csv:60
+msgid "决定精神和心理层面对性刺激的敏感程度。数值越高，言语调教、隐奸和露出、乱伦等心理刺激会带来更强烈的反应。"
 msgstr ""
 
 #: .\data\csv\AbilityType.csv:6
@@ -14564,84 +14756,180 @@ msgstr ""
 msgid "皮肤"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:6
+msgid "性器官以外的皮肤上的性快感累积值"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:7
+msgid "胸部及乳头区域的性快感累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:8
 msgid "阴蒂"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:8
+msgid "阴蒂及其周边区域的性快感累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:9
 msgid "阴茎"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:9
+msgid "阴茎及龟头的性快感累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:10
 msgid "阴道"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:10
+msgid "阴道内壁及G点区域的性快感累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:11
 msgid "肛肠"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:11
+msgid "肛门及直肠区域的性快感累积值"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:12
+msgid "尿道口、尿道、膀胱的性快感累积值"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:13
+msgid "子宫颈及子宫内壁的性快感累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:14
 msgid "润滑"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:14
+msgid "阴道、肛肠等部位的润滑状态"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:15
 msgid "习得"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:15
+msgid "通过学习、训练、经验累积获得的知识总量"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:16
 msgid "恭顺"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:16
+msgid "服从与顺从玩家命令的累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:17
 msgid "好意"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:17
+msgid "与玩家进行亲密互动的累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:18
 msgid "欲情"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:18
+msgid "性欲的高涨与性冲动的累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:19
 msgid "快乐"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:19
+msgid "身心愉悦与幸福感的累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:20
 msgid "先导"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:20
+msgid "在互动中掌握主导权与控制权的累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:21
 msgid "屈服"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:21
+msgid "精神层面的屈服与丧失意志的累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:22
 msgid "羞耻"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:22
+msgid "羞耻感与打破社会道德束缚的情绪累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:23
 msgid "苦痛"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:23
+msgid "肉体痛苦的累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:24
 msgid "恐怖"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:24
+msgid "恐惧、惊吓与不安的情绪累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:25
 msgid "抑郁"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:25
+msgid "抑郁、绝望与消极的情绪累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:26
 msgid "反感"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:26
+msgid "对玩家的厌恶、反感与敌意的情绪累积值"
 msgstr ""
 
 #: .\data\csv\CharacterState.csv:27
 msgid "口喉"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:27
+msgid "口腔、舌头、喉咙的性快感累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:28
 msgid "兽部"
 msgstr ""
 
+#: .\data\csv\CharacterState.csv:28
+msgid "兽耳、尾巴、翅膀等兽化部位的性快感累积值"
+msgstr ""
+
 #: .\data\csv\CharacterState.csv:29
 msgid "心理"
+msgstr ""
+
+#: .\data\csv\CharacterState.csv:29
+msgid "纯心理层面的性快感累积值"
 msgstr ""
 
 #: .\data\csv\CharacterStateType.csv:6

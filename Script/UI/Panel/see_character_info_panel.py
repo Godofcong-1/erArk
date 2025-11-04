@@ -381,7 +381,7 @@ class SeeCharacterStatusPanel:
         
         # 绘制状态条
         bar_draw = draw.InfoBarDraw()
-        bar_draw.width = self.width / self.column
+        bar_draw.width = int(self.width / self.column)
         bar_draw.scale = 0.8
         bar_draw.chara_state = True
         bar_draw.set(
@@ -389,6 +389,7 @@ class SeeCharacterStatusPanel:
             next_level_value,
             status_value,
             now_text,
+            game_config.config_character_state[status_id].info,
         )
         self.draw_list.append(bar_draw)
         return True
