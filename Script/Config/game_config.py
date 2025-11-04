@@ -187,7 +187,7 @@ config_city_of_country: Dict[int, Set] = {}
 """ 大地点所属的城市配置 """
 config_talent_type: Dict[int, config_def.Talent] = {}
 """ 素质种类配置 """
-config_talent_type_data: Dict[int, Set] = {}
+config_talent_type_data: Dict[int, List] = {}
 """
 类型对应素质列表配置数据
 类型 0:性素质,1:身体素质,2:精神素质,3:技术素质,4:其他素质
@@ -727,8 +727,8 @@ def load_talent_type_data():
         now_tem = config_def.Talent()
         now_tem.__dict__ = tem_data
         config_talent[now_tem.cid] = now_tem
-        config_talent_type_data.setdefault(now_tem.Talent_type, set())
-        config_talent_type_data[now_tem.Talent_type].add(now_tem.cid)
+        config_talent_type_data.setdefault(now_tem.Talent_type, [])
+        config_talent_type_data[now_tem.Talent_type].append(now_tem.cid)
 
 
 def load_bar_data():

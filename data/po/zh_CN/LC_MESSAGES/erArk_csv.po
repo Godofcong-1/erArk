@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-10-30 19:06+0800\n"
+"POT-Creation-Date: 2025-11-04 15:21+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -26121,7 +26121,7 @@ msgid "阴道处女"
 msgstr ""
 
 #: .\data\csv\Talent.csv:7
-msgid "处女膜还在，未进行过阴道性交"
+msgid "处女膜还在，未进行过阴道性交，这是身体纯洁的象征，失去后无法恢复"
 msgstr ""
 
 #: .\data\csv\Talent.csv:8
@@ -26129,7 +26129,7 @@ msgid "肛门处女"
 msgstr ""
 
 #: .\data\csv\Talent.csv:8
-msgid "没有被插入过的肛门"
+msgid "肛门没有被阴茎插入过，保持着后庭的纯洁状态"
 msgstr ""
 
 #: .\data\csv\Talent.csv:9
@@ -26137,7 +26137,7 @@ msgid "尿道处女"
 msgstr ""
 
 #: .\data\csv\Talent.csv:9
-msgid "没有被插入过的尿道"
+msgid "尿道没有被阴茎插入过，未曾体验过阴茎进入尿道的特殊感觉"
 msgstr ""
 
 #: .\data\csv\Talent.csv:10
@@ -26145,7 +26145,7 @@ msgid "子宫处女"
 msgstr ""
 
 #: .\data\csv\Talent.csv:10
-msgid "没有被插入过的子宫"
+msgid "子宫没有被阴茎插入过，未曾体验过深度性交带来的宫口刺激"
 msgstr ""
 
 #: .\data\csv\Talent.csv:11
@@ -26153,7 +26153,7 @@ msgid "无接吻经验"
 msgstr ""
 
 #: .\data\csv\Talent.csv:11
-msgid "还没有接吻过"
+msgid "还没有接吻过，连最基础的亲密接触都未曾体验"
 msgstr ""
 
 #: .\data\csv\Talent.csv:12
@@ -26161,7 +26161,7 @@ msgid "童贞"
 msgstr ""
 
 #: .\data\csv\Talent.csv:12
-msgid "还没有进行过任何形式的性行为"
+msgid "阴茎没有插入过阴道或肛门等部位，仍保持着身体上的纯洁"
 msgstr ""
 
 #: .\data\csv\Talent.csv:13
@@ -26169,7 +26169,7 @@ msgid "未初潮"
 msgstr ""
 
 #: .\data\csv\Talent.csv:13
-msgid "还没有迎来初潮，因此就算被射入精液无法受精或怀孕"
+msgid "身体尚未迎来初潮，子宫还未发育成熟，即使被射入精液也无法受精或怀孕，仍保持着纯真的生理状态，到达一定年龄或条件后会自动失去"
 msgstr ""
 
 #: .\data\csv\Talent.csv:14
@@ -26177,7 +26177,7 @@ msgid "未成年"
 msgstr ""
 
 #: .\data\csv\Talent.csv:14
-msgid "还没有成年"
+msgid "身心尚未完全发育成熟，处于成长阶段，需要细心呵护和引导，某些行为可能会造成更大的心理影响"
 msgstr ""
 
 #: .\data\csv\Talent.csv:16
@@ -26185,7 +26185,7 @@ msgid "亲吻合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:16
-msgid "同意亲吻"
+msgid "已经做好了心理准备，愿意接受亲吻这种亲密的身体接触，不会产生抗拒心理"
 msgstr ""
 
 #: .\data\csv\Talent.csv:17
@@ -26193,7 +26193,7 @@ msgid "本番合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:17
-msgid "同意避孕套下的本番行为"
+msgid "同意在戴有避孕套下的阴道性交行为，这是对性行为的初步接受，但仍保持理性的避孕意识"
 msgstr ""
 
 #: .\data\csv\Talent.csv:18
@@ -26201,7 +26201,7 @@ msgid "避孕中出合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:18
-msgid "同意在安全期或已经服用避孕药的情况下内射"
+msgid "同意在安全期或已经服用避孕药的情况下，直接进行阴道内射"
 msgstr ""
 
 #: .\data\csv\Talent.csv:19
@@ -26209,7 +26209,7 @@ msgid "妊娠合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:19
-msgid "同意在任何时候内射"
+msgid "同意在任何时候内射，即使有怀孕风险也无所谓，已经做好了为博士生育的心理准备"
 msgstr ""
 
 #: .\data\csv\Talent.csv:20
@@ -26217,7 +26217,7 @@ msgid "肛门性交合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:20
-msgid "同意肛交性行为"
+msgid "同意肛交性行为，表明愿意尝试更加特殊的性爱方式，对博士的服从度较高"
 msgstr ""
 
 #: .\data\csv\Talent.csv:21
@@ -26225,7 +26225,7 @@ msgid "尿道性交合意"
 msgstr ""
 
 #: .\data\csv\Talent.csv:21
-msgid "同意尿道交性行为"
+msgid "同意尿道交性行为，这是极为特殊且需要高度信任的性行为方式"
 msgstr ""
 
 #: .\data\csv\Talent.csv:23
@@ -26233,7 +26233,7 @@ msgid "受精"
 msgstr ""
 
 #: .\data\csv\Talent.csv:23
-msgid "体内的卵子已经被博士的精子受精，但肚子还没有隆起"
+msgid "体内的卵子已经被博士的精子受精，但肚子还没有隆起，此时尚处于怀孕的早期阶段，需要特别关注"
 msgstr ""
 
 #: .\data\csv\Talent.csv:24
@@ -26241,7 +26241,7 @@ msgid "妊娠"
 msgstr ""
 
 #: .\data\csv\Talent.csv:24
-msgid "体内孕育着博士的孩子，可以看到肚子的隆起"
+msgid "体内孕育着博士的孩子，可以看到肚子的隆起，行动会受到一定影响，某些工作和H行为会受限"
 msgstr ""
 
 #: .\data\csv\Talent.csv:25
@@ -26249,7 +26249,7 @@ msgid "临盆"
 msgstr ""
 
 #: .\data\csv\Talent.csv:25
-msgid "已经临近分娩，正在医疗区待产中"
+msgid "已经临近分娩，正在医疗区待产中，无法进行任何工作和H行为，需要等待分娩完成"
 msgstr ""
 
 #: .\data\csv\Talent.csv:26
@@ -26257,7 +26257,7 @@ msgid "产后"
 msgstr ""
 
 #: .\data\csv\Talent.csv:26
-msgid "刚刚生完孩子，正在医疗区休养中"
+msgid "刚刚生完孩子，正在医疗区休养中，身体虚弱需要恢复，无法进行任何工作和H行为"
 msgstr ""
 
 #: .\data\csv\Talent.csv:27
@@ -26265,7 +26265,7 @@ msgid "育儿"
 msgstr ""
 
 #: .\data\csv\Talent.csv:27
-msgid "正在照顾自己刚刚出生的孩子"
+msgid "正在照顾自己刚刚出生的孩子，会占用大量时间和精力，影响日常的工作安排"
 msgstr ""
 
 #: .\data\csv\Talent.csv:28
@@ -26273,7 +26273,7 @@ msgid "孕肚"
 msgstr ""
 
 #: .\data\csv\Talent.csv:28
-msgid "处于怀孕中后期，腹部隆起"
+msgid "处于怀孕中后期，腹部明显隆起，行动不便但仍可进行部分活动，外观会有显著变化"
 msgstr ""
 
 #: .\data\csv\Talent.csv:29
@@ -26281,7 +26281,7 @@ msgid "泌乳"
 msgstr ""
 
 #: .\data\csv\Talent.csv:29
-msgid "乳房正在分泌乳汁"
+msgid "乳房正在分泌乳汁，通常在怀孕后期或产后出现，可以进行特殊的哺乳play，乳房会变得更加敏感"
 msgstr ""
 
 #: .\data\csv\Talent.csv:31
@@ -26404,20 +26404,40 @@ msgstr ""
 msgid "精液中毒"
 msgstr ""
 
+#: .\data\csv\Talent.csv:48
+msgid "对精液产生了强烈的依赖性，身体和心理都渴望不断地被注入精液，会主动寻求相关行为，欲望值上升速度加快"
+msgstr ""
+
 #: .\data\csv\Talent.csv:49
 msgid "自慰中毒"
+msgstr ""
+
+#: .\data\csv\Talent.csv:49
+msgid "对自慰产生了强烈的依赖性，身体和心理都渴望不断地进行自慰，会频繁进行自慰行为，影响日常生活"
 msgstr ""
 
 #: .\data\csv\Talent.csv:50
 msgid "膣射中毒"
 msgstr ""
 
+#: .\data\csv\Talent.csv:50
+msgid "对阴道内射产生了强烈的依赖性，身体和心理都渴望不断地被阴道内射，会主动要求无套内射，怀孕风险大幅提升"
+msgstr ""
+
 #: .\data\csv\Talent.csv:51
 msgid "肛射中毒"
 msgstr ""
 
+#: .\data\csv\Talent.csv:51
+msgid "对肛门内射产生了强烈的依赖性，身体和心理都渴望不断地被肛门内射，后庭开发已经达到极致状态"
+msgstr ""
+
 #: .\data\csv\Talent.csv:52
 msgid "饮精中毒"
+msgstr ""
+
+#: .\data\csv\Talent.csv:52
+msgid "对饮精产生了强烈的依赖性，身体和心理都渴望不断地饮用精液，会将精液视为美味佳肴主动索求"
 msgstr ""
 
 #: .\data\csv\Talent.csv:54
@@ -26425,19 +26445,31 @@ msgid "周期性发情"
 msgstr ""
 
 #: .\data\csv\Talent.csv:54
-msgid "隔一段时间会发情"
+msgid "隔一段时间会发情，这是由基因决定的生理特性，可以遗传给后代，发情期间欲望值大幅上升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:55
 msgid "发情期中"
 msgstr ""
 
+#: .\data\csv\Talent.csv:55
+msgid "正处于发情期，性欲高涨理性下降，更容易接受各种H行为，快感获得量增加，发情期结束后自动消失"
+msgstr ""
+
 #: .\data\csv\Talent.csv:56
 msgid "不易湿"
 msgstr ""
 
+#: .\data\csv\Talent.csv:56
+msgid "阴道不容易湿润，这是体质问题，需要更长的前戏时间或使用润滑剂，影响H行为的舒适度"
+msgstr ""
+
 #: .\data\csv\Talent.csv:57
 msgid "容易湿"
+msgstr ""
+
+#: .\data\csv\Talent.csv:57
+msgid "阴道很容易湿润，稍微刺激就会分泌爱液，H行为更加顺畅"
 msgstr ""
 
 #: .\data\csv\Talent.csv:59
@@ -26468,72 +26500,144 @@ msgstr ""
 msgid "皮肤钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:63
+msgid "皮肤感觉迟钝，不容易感受到触觉刺激的快感，爱抚类行为效果减弱，需要更强烈的刺激才能获得快感"
+msgstr ""
+
 #: .\data\csv\Talent.csv:64
 msgid "皮肤敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:64
+msgid "皮肤感觉敏锐，容易感受到触觉刺激的快感，轻微的爱抚就能带来强烈反应，快感获得量增加"
 msgstr ""
 
 #: .\data\csv\Talent.csv:65
 msgid "乳房钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:65
+msgid "乳房感觉迟钝，不容易感受到触觉刺激的快感，乳房爱抚类行为效果减弱，难以通过胸部获得高潮"
+msgstr ""
+
 #: .\data\csv\Talent.csv:66
 msgid "乳房敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:66
+msgid "乳房感觉敏锐，容易感受到触觉刺激的快感，乳房是重要的性感带，有可能仅通过胸部刺激达到高潮"
 msgstr ""
 
 #: .\data\csv\Talent.csv:67
 msgid "阴蒂钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:67
+msgid "阴蒂感觉迟钝，不容易感受到触觉刺激的快感，阴蒂爱抚类行为效果减弱，需要持久强烈的刺激"
+msgstr ""
+
 #: .\data\csv\Talent.csv:68
 msgid "阴蒂敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:68
+msgid "阴蒂感觉敏锐，容易感受到触觉刺激的快感，轻微刺激就能带来强烈反应，容易快速达到高潮"
 msgstr ""
 
 #: .\data\csv\Talent.csv:69
 msgid "阴茎钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:69
+msgid "阴茎感觉迟钝，不容易感受到触觉刺激的快感，射精所需时间更长，持久力较强但快感较弱"
+msgstr ""
+
 #: .\data\csv\Talent.csv:70
 msgid "阴茎敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:70
+msgid "阴茎感觉敏锐，容易感受到触觉刺激的快感，容易早泄但快感强烈，需要训练来提升持久力"
 msgstr ""
 
 #: .\data\csv\Talent.csv:71
 msgid "阴道钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:71
+msgid "阴道感觉迟钝，不容易感受到触觉刺激的快感，阴道性交的快感获得量减少，难以通过阴道达到高潮"
+msgstr ""
+
 #: .\data\csv\Talent.csv:72
 msgid "阴道敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:72
+msgid "阴道感觉敏锐，容易感受到触觉刺激的快感，阴道性交的快感获得量大幅增加，容易连续高潮"
 msgstr ""
 
 #: .\data\csv\Talent.csv:73
 msgid "肛门钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:73
+msgid "肛门感觉迟钝，不容易感受到触觉刺激的快感，肛交的快感获得量减少，后庭开发难度较高"
+msgstr ""
+
 #: .\data\csv\Talent.csv:74
 msgid "肛门敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:74
+msgid "肛门感觉敏锐，容易感受到触觉刺激的快感，肛交的快感获得量增加，后庭已经被充分开发"
 msgstr ""
 
 #: .\data\csv\Talent.csv:75
 msgid "尿道钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:75
+msgid "尿道感觉迟钝，不容易感受到触觉刺激的快感，尿道play效果减弱，这是非常特殊的体质"
+msgstr ""
+
 #: .\data\csv\Talent.csv:76
 msgid "尿道敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:76
+msgid "尿道感觉敏锐，容易感受到触觉刺激的快感，尿道play效果显著，这是极为罕见的敏感体质"
 msgstr ""
 
 #: .\data\csv\Talent.csv:77
 msgid "子宫钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:77
+msgid "子宫感觉迟钝，不容易感受到触觉刺激的快感，宫口刺激的效果减弱，难以体验到深度性交的极致快感"
+msgstr ""
+
 #: .\data\csv\Talent.csv:78
 msgid "子宫敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:78
+msgid "子宫感觉敏锐，容易感受到触觉刺激的快感，宫口刺激能带来难以想象的强烈快感，容易达到子宫高潮"
 msgstr ""
 
 #: .\data\csv\Talent.csv:79
 msgid "兽部钝感"
 msgstr ""
 
+#: .\data\csv\Talent.csv:79
+msgid "兽部（尾巴、耳朵等兽类特征部位）感觉迟钝，不容易感受到触觉刺激的快感，特殊部位的爱抚效果减弱"
+msgstr ""
+
 #: .\data\csv\Talent.csv:80
 msgid "兽部敏感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:80
+msgid "兽部（尾巴、耳朵等兽类特征部位）感觉敏锐，容易感受到触觉刺激的快感，特殊部位成为重要性感带"
 msgstr ""
 
 #: .\data\csv\Talent.csv:82
@@ -26593,7 +26697,7 @@ msgid "长生者"
 msgstr ""
 
 #: .\data\csv\Talent.csv:89
-msgid "可与以上几个叠加"
+msgid "拥有超越常人的长寿体质，身体机能保持在极佳状态，几乎不受年龄影响。皮肤光滑细腻，肌肉紧致有力，反应敏捷。即使经历了漫长岁月，依然保持着年轻的外貌和充沛的精力。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:91
@@ -26609,7 +26713,7 @@ msgid "兽尾"
 msgstr ""
 
 #: .\data\csv\Talent.csv:93
-msgid "从尾椎骨延伸出的柔软尾巴，覆盖着与兽耳相同特性的毛发。尾巴能自主活动，反映主人的情绪变化。长度和形态各异，从短小蓬松到修长灵活，都能展现出独特的魅力与性感。"
+msgid "从尾椎骨延伸出的柔软尾巴，覆盖着与兽耳相同特性的毛发。尾巴能自主活动，反映主人的情绪变化。长度和形态各异，从短小蓬松到修长灵活，都能展现出独特的魅力。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:94
@@ -26617,7 +26721,7 @@ msgid "光环"
 msgstr ""
 
 #: .\data\csv\Talent.csv:94
-msgid "头顶上方漂浮着的圆形光芒，散发出柔和而神圣的光辉。光环不受物理约束，可随主人移动而保持稳定悬浮。根据情绪变化，光环的亮度和颜色可能会有微妙变化。"
+msgid "头顶上方漂浮着的各种形状的光芒，散发出柔和而神圣的光辉。光环不受常规的物理约束，可随主人移动而保持稳定悬浮，但仍可以被博士触碰到。根据情绪变化，光环的亮度和颜色可能会有微妙变化。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:95
@@ -26625,7 +26729,7 @@ msgid "翅膀"
 msgstr ""
 
 #: .\data\csv\Talent.csv:95
-msgid "背部生长出的翼状结构，覆盖着细腻的羽毛或薄如蝉翼的膜。翅膀可以自由展开收拢，充分展开时能达到身高的一到两倍宽度。羽翼轻盈而富有弹性，有着极高的审美价值。"
+msgid "背部生长出的翼状结构，覆盖着细腻的羽毛或薄如蝉翼的膜。翅膀可以自由展开收拢，充分展开时能达到身高的一到两倍宽度。羽翼轻盈而富有弹性，触感柔软，给人以飞翔的感觉。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:96
@@ -26641,7 +26745,7 @@ msgid "小车"
 msgstr ""
 
 #: .\data\csv\Talent.csv:97
-msgid "带着小车。"
+msgid "带着小车在行动，车体紧凑灵活，适合在狭小空间中穿行。车轮设计先进，能够平稳地应对各种地形，能够满足特定的生活和工作需求。"
 msgstr ""
 
 #: .\data\csv\Talent.csv:99
@@ -26744,56 +26848,112 @@ msgstr ""
 msgid "源石病感染者"
 msgstr ""
 
+#: .\data\csv\Talent.csv:112
+msgid "被源石病感染，体内存在源石结晶，会影响身体机能和寿命，需要定期接受治疗"
+msgstr ""
+
 #: .\data\csv\Talent.csv:113
 msgid "嗜睡"
+msgstr ""
+
+#: .\data\csv\Talent.csv:113
+msgid "容易困倦，精力不足，日常活动中容易疲劳，体力与气力恢复速度降低"
 msgstr ""
 
 #: .\data\csv\Talent.csv:114
 msgid "高温体质"
 msgstr ""
 
+#: .\data\csv\Talent.csv:114
+msgid "体表温度较高，会烫伤接触物，在亲密接触时需要注意防护，对寒冷环境有较强抗性"
+msgstr ""
+
 #: .\data\csv\Talent.csv:115
 msgid "低温体质"
+msgstr ""
+
+#: .\data\csv\Talent.csv:115
+msgid "体表温度较低，容易被冻伤，在温暖环境中会感到不适，对炎热环境有较强抗性"
 msgstr ""
 
 #: .\data\csv\Talent.csv:116
 msgid "带电体质"
 msgstr ""
 
+#: .\data\csv\Talent.csv:116
+msgid "体表带有静电，容易产生电击，日常接触会有触电感，对电子设备有一定影响"
+msgstr ""
+
 #: .\data\csv\Talent.csv:117
 msgid "带毒体质"
+msgstr ""
+
+#: .\data\csv\Talent.csv:117
+msgid "体表带有毒素，接触会中毒，需要特殊防护措施进行亲密接触，对某些生物免疫"
 msgstr ""
 
 #: .\data\csv\Talent.csv:118
 msgid "视力障碍"
 msgstr ""
 
+#: .\data\csv\Talent.csv:118
+msgid "视力有缺陷，会影响视觉相关活动，可能需要辅助设备，某些指令有减值"
+msgstr ""
+
 #: .\data\csv\Talent.csv:119
 msgid "听力障碍"
+msgstr ""
+
+#: .\data\csv\Talent.csv:119
+msgid "听力有缺陷，会影响听觉相关活动，交流时需要特别注意，某些社交指令有减值"
 msgstr ""
 
 #: .\data\csv\Talent.csv:120
 msgid "失忆"
 msgstr ""
 
+#: .\data\csv\Talent.csv:120
+msgid "存在记忆缺失现象，对过去的事情记忆模糊，可能影响人际关系和情感发展"
+msgstr ""
+
 #: .\data\csv\Talent.csv:121
 msgid "人格障碍"
+msgstr ""
+
+#: .\data\csv\Talent.csv:121
+msgid "人格存在异常，行为模式与常人不同，情感反应可能难以预测，某些社交互动会受影响"
 msgstr ""
 
 #: .\data\csv\Talent.csv:122
 msgid "行动不便"
 msgstr ""
 
+#: .\data\csv\Talent.csv:122
+msgid "身体行动受到限制，不便活动，移动速度降低，某些体力型指令无法执行或有大幅减值"
+msgstr ""
+
 #: .\data\csv\Talent.csv:123
 msgid "低存在感"
+msgstr ""
+
+#: .\data\csv\Talent.csv:123
+msgid "自身存在感较低，容易被忽视，在人群中难以被注意到，在隐奸等需要隐蔽的场景中有加值"
 msgstr ""
 
 #: .\data\csv\Talent.csv:124
 msgid "体表源石结晶"
 msgstr ""
 
+#: .\data\csv\Talent.csv:124
+msgid "体表长有源石结晶，是源石病的表现之一，病情较为严重，外观明显异常"
+msgstr ""
+
 #: .\data\csv\Talent.csv:125
 msgid "义肢"
+msgstr ""
+
+#: .\data\csv\Talent.csv:125
+msgid "身体部位被义肢替代，具有机械性能，可能拥有超越常人的力量或功能，但需要维护"
 msgstr ""
 
 #: .\data\csv\Talent.csv:126
@@ -26801,11 +26961,15 @@ msgid "毒抗性"
 msgstr ""
 
 #: .\data\csv\Talent.csv:126
-msgid "下药无效"
+msgid "对毒素有天然抗性，下药无效，某些控制类道具无法使用"
 msgstr ""
 
 #: .\data\csv\Talent.csv:127
 msgid "大胃王"
+msgstr ""
+
+#: .\data\csv\Talent.csv:127
+msgid "能够大量进食而不感到饱胀，食量是常人数倍，而且更容易变饿"
 msgstr ""
 
 #: .\data\csv\Talent.csv:128
@@ -26813,7 +26977,7 @@ msgid "昼伏夜出"
 msgstr ""
 
 #: .\data\csv\Talent.csv:128
-msgid "作息规律相反"
+msgid "作息规律与常人相反，白天困倦夜晚清醒，夜间活动有加值，白天活动有减值"
 msgstr ""
 
 #: .\data\csv\Talent.csv:129
@@ -26821,7 +26985,7 @@ msgid "猫舌"
 msgstr ""
 
 #: .\data\csv\Talent.csv:129
-msgid "口系减值"
+msgid "无法耐受高温食物和饮品，口系H指令有减值，某些料理互动受限"
 msgstr ""
 
 #: .\data\csv\Talent.csv:130
@@ -26829,7 +26993,7 @@ msgid "水分身"
 msgstr ""
 
 #: .\data\csv\Talent.csv:130
-msgid "可以召唤分身"
+msgid "可以召唤分身，能够同时出现在多个地点，某些特殊互动可以触发分身效果"
 msgstr ""
 
 #: .\data\csv\Talent.csv:131
@@ -26837,7 +27001,7 @@ msgid "生育模组"
 msgstr ""
 
 #: .\data\csv\Talent.csv:131
-msgid "仿照人体结构制成的生育模组，使无机体一样可以进行妊娠与生育"
+msgid "仿照人体结构制成的生育模组，使无机体一样可以进行妊娠与生育，是后天安装的特殊装置"
 msgstr ""
 
 #: .\data\csv\Talent.csv:133
@@ -26845,7 +27009,7 @@ msgid "思慕"
 msgstr ""
 
 #: .\data\csv\Talent.csv:133
-msgid "爱情系第一阶段"
+msgid "爱情系第一阶段，对博士产生好感，开始注意博士的一举一动，愿意主动接近"
 msgstr ""
 
 #: .\data\csv\Talent.csv:134
@@ -26853,7 +27017,7 @@ msgid "恋慕"
 msgstr ""
 
 #: .\data\csv\Talent.csv:134
-msgid "爱情系第二阶段"
+msgid "爱情系第二阶段，明确意识到对博士的好感，会为博士着想，产生独占欲"
 msgstr ""
 
 #: .\data\csv\Talent.csv:135
@@ -26861,7 +27025,7 @@ msgid "恋人"
 msgstr ""
 
 #: .\data\csv\Talent.csv:135
-msgid "爱情系第三阶段"
+msgid "爱情系第三阶段，与博士确立恋爱关系，情感深厚，愿意为对方付出一切"
 msgstr ""
 
 #: .\data\csv\Talent.csv:136
@@ -26869,11 +27033,11 @@ msgid "爱侣"
 msgstr ""
 
 #: .\data\csv\Talent.csv:136
-msgid "爱情系第四阶段"
+msgid "爱情系第四阶段，情感达到最深层次，心灵完全相通，生死与共的伴侣关系"
 msgstr ""
 
 #: .\data\csv\Talent.csv:137
-msgid "指令[告白]成功后获得"
+msgid "指令[告白]成功后获得，爱情的象征物，代表双方的承诺与誓言"
 msgstr ""
 
 #: .\data\csv\Talent.csv:139
@@ -26881,7 +27045,7 @@ msgid "屈从"
 msgstr ""
 
 #: .\data\csv\Talent.csv:139
-msgid "隶属系第一阶段"
+msgid "隶属系第一阶段，在博士的压力下开始妥协，被动接受博士的要求"
 msgstr ""
 
 #: .\data\csv\Talent.csv:140
@@ -26889,7 +27053,7 @@ msgid "驯服"
 msgstr ""
 
 #: .\data\csv\Talent.csv:140
-msgid "隶属系第二阶段"
+msgid "隶属系第二阶段，逐渐习惯服从博士，开始主动迎合博士的意愿"
 msgstr ""
 
 #: .\data\csv\Talent.csv:141
@@ -26897,7 +27061,7 @@ msgid "宠物"
 msgstr ""
 
 #: .\data\csv\Talent.csv:141
-msgid "隶属系第三阶段"
+msgid "隶属系第三阶段，完全接受自己的从属地位，以取悦博士为乐"
 msgstr ""
 
 #: .\data\csv\Talent.csv:142
@@ -26905,11 +27069,11 @@ msgid "奴隶"
 msgstr ""
 
 #: .\data\csv\Talent.csv:142
-msgid "隶属系第四阶段"
+msgid "隶属系第四阶段，自我意识被完全支配，无条件服从博士的一切命令"
 msgstr ""
 
 #: .\data\csv\Talent.csv:143
-msgid "指令[戴上项圈]成功后获得"
+msgid "指令[戴上项圈]成功后获得，隶属关系的象征物，代表所有权与支配权"
 msgstr ""
 
 #: .\data\csv\Talent.csv:145
@@ -26917,7 +27081,7 @@ msgid "性好奇"
 msgstr ""
 
 #: .\data\csv\Talent.csv:145
-msgid "H指令加值"
+msgid "对性行为充满好奇心，H指令接受度提升，更容易同意尝试新事物"
 msgstr ""
 
 #: .\data\csv\Talent.csv:146
@@ -26925,7 +27089,7 @@ msgid "性冷漠"
 msgstr ""
 
 #: .\data\csv\Talent.csv:146
-msgid "H指令减值"
+msgid "对性行为缺乏兴趣，H指令接受度降低，很难被唤起性欲"
 msgstr ""
 
 #: .\data\csv\Talent.csv:147
@@ -26933,7 +27097,7 @@ msgid "性无知"
 msgstr ""
 
 #: .\data\csv\Talent.csv:147
-msgid "H指令加值，部分H指令不需判定直接通过"
+msgid "对性知识一无所知，H指令接受度提升（不知道拒绝），部分H指令不需判定直接通过"
 msgstr ""
 
 #: .\data\csv\Talent.csv:148
@@ -26941,15 +27105,15 @@ msgid "感情缺乏"
 msgstr ""
 
 #: .\data\csv\Talent.csv:148
-msgid "包括正负面在内的全体状态上升难"
+msgid "情感反应迟钝，包括正负面在内的全体情感状态上升困难，难以与人建立深厚关系"
 msgstr ""
 
 #: .\data\csv\Talent.csv:149
-msgid "难以与越过的底线"
+msgid "难以越过的底线"
 msgstr ""
 
 #: .\data\csv\Talent.csv:149
-msgid "全abl上升难，实行值降低"
+msgid "道德观念强烈，全体能力上升困难，实行值大幅降低，很难接受越界行为"
 msgstr ""
 
 #: .\data\csv\Talent.csv:150
@@ -26957,7 +27121,7 @@ msgid "献身"
 msgstr ""
 
 #: .\data\csv\Talent.csv:150
-msgid "abl_受虐上升易，恭顺、屈服上升易"
+msgid "愿意为他人奉献自己，受虐能力上升容易，恭顺、屈服情绪上升容易"
 msgstr ""
 
 #: .\data\csv\Talent.csv:151
@@ -26965,7 +27129,7 @@ msgid "倒错"
 msgstr ""
 
 #: .\data\csv\Talent.csv:151
-msgid "苦痛系、SM系实行值上升、效果上升"
+msgid "性癖异常，苦痛系、SM系指令实行值上升、快感效果上升，从痛苦中获得快乐"
 msgstr ""
 
 #: .\data\csv\Talent.csv:152
@@ -26973,7 +27137,7 @@ msgid "讨厌男性"
 msgstr ""
 
 #: .\data\csv\Talent.csv:152
-msgid "男性博士全实行值降低"
+msgid "对男性有厌恶感，若博士是男性则全部指令实行值大幅降低"
 msgstr ""
 
 #: .\data\csv\Talent.csv:153
@@ -26981,7 +27145,7 @@ msgid "讨厌女性"
 msgstr ""
 
 #: .\data\csv\Talent.csv:153
-msgid "女性博士全实行值降低"
+msgid "对女性有厌恶感，若博士是女性则全部指令实行值大幅降低"
 msgstr ""
 
 #: .\data\csv\Talent.csv:154
@@ -26989,7 +27153,7 @@ msgid "施虐狂"
 msgstr ""
 
 #: .\data\csv\Talent.csv:154
-msgid "先导上升易，施虐效果上升"
+msgid "以施加痛苦为乐，先导能力上升容易，施虐类指令效果提升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:155
@@ -26997,7 +27161,7 @@ msgid "受虐狂"
 msgstr ""
 
 #: .\data\csv\Talent.csv:155
-msgid "苦痛上升易，受虐效果上升"
+msgid "以承受痛苦为乐，苦痛能力上升容易，受虐类指令快感效果提升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:157
@@ -27005,7 +27169,7 @@ msgid "勤劳"
 msgstr ""
 
 #: .\data\csv\Talent.csv:157
-msgid "习得、先导上升易"
+msgid "做事认真负责，学习能力（习得）、主动性（先导）上升容易，工作类活动效果提升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:158
@@ -27013,7 +27177,7 @@ msgid "懒散"
 msgstr ""
 
 #: .\data\csv\Talent.csv:158
-msgid "习得、先导上升难"
+msgid "做事拖拉懈怠，学习能力（习得）、主动性（先导）上升困难，工作类活动效果降低"
 msgstr ""
 
 #: .\data\csv\Talent.csv:159
@@ -27021,7 +27185,7 @@ msgid "脆弱"
 msgstr ""
 
 #: .\data\csv\Talent.csv:159
-msgid "恭顺、屈服上升易"
+msgid "心理承受能力弱，恭顺、屈服情绪上升容易，更容易被压迫和控制"
 msgstr ""
 
 #: .\data\csv\Talent.csv:160
@@ -27029,7 +27193,7 @@ msgid "坚强"
 msgstr ""
 
 #: .\data\csv\Talent.csv:160
-msgid "恭顺、屈服上升难"
+msgid "心理承受能力强，恭顺、屈服情绪上升困难，很难被压迫和控制"
 msgstr ""
 
 #: .\data\csv\Talent.csv:161
@@ -27037,7 +27201,7 @@ msgid "热情"
 msgstr ""
 
 #: .\data\csv\Talent.csv:161
-msgid "好意、快乐上升易"
+msgid "性格开朗外向，好意、快乐情绪上升容易，更容易与人建立良好关系"
 msgstr ""
 
 #: .\data\csv\Talent.csv:162
@@ -27045,11 +27209,11 @@ msgid "孤僻"
 msgstr ""
 
 #: .\data\csv\Talent.csv:162
-msgid "好意、快乐上升难"
+msgid "性格内向封闭，好意、快乐情绪上升困难，难以与人建立亲密关系"
 msgstr ""
 
 #: .\data\csv\Talent.csv:163
-msgid "欲情、羞耻上升易"
+msgid "羞耻心强烈，欲情、羞耻感上升容易，H场景反应更加激烈"
 msgstr ""
 
 #: .\data\csv\Talent.csv:164
@@ -27057,7 +27221,7 @@ msgid "开放"
 msgstr ""
 
 #: .\data\csv\Talent.csv:164
-msgid "欲情、羞耻上升难"
+msgid "思想观念开放，欲情、羞耻感上升困难，对H行为接受度较高"
 msgstr ""
 
 #: .\data\csv\Talent.csv:167
@@ -27157,7 +27321,7 @@ msgid "回复慢"
 msgstr ""
 
 #: .\data\csv\Talent.csv:183
-msgid "进行体力气力恢复时有减值"
+msgid "身体代谢缓慢，进行体力气力恢复时有减值，需要更长时间休息"
 msgstr ""
 
 #: .\data\csv\Talent.csv:184
@@ -27165,31 +27329,55 @@ msgid "回复快"
 msgstr ""
 
 #: .\data\csv\Talent.csv:184
-msgid "进行体力气力恢复时有加值"
+msgid "身体代谢旺盛，进行体力气力恢复时有加值，能够快速恢复状态"
 msgstr ""
 
 #: .\data\csv\Talent.csv:185
 msgid "酒量差"
 msgstr ""
 
+#: .\data\csv\Talent.csv:185
+msgid "酒精耐受度低，容易喝醉，饮酒类活动很快进入醉酒状态"
+msgstr ""
+
 #: .\data\csv\Talent.csv:186
 msgid "酒量好"
+msgstr ""
+
+#: .\data\csv\Talent.csv:186
+msgid "酒精耐受度高，不容易喝醉，饮酒类活动需要更多酒量才会醉"
 msgstr ""
 
 #: .\data\csv\Talent.csv:187
 msgid "千杯不醉"
 msgstr ""
 
+#: .\data\csv\Talent.csv:187
+msgid "酒精完全无效，永远不会喝醉，可以无限制地参与饮酒活动"
+msgstr ""
+
 #: .\data\csv\Talent.csv:188
 msgid "灵活手指"
+msgstr ""
+
+#: .\data\csv\Talent.csv:188
+msgid "手部技巧出众，在手交、爱抚等手系指令中有加值，技巧效果提升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:189
 msgid "灵活舌头"
 msgstr ""
 
+#: .\data\csv\Talent.csv:189
+msgid "舌头技巧出众，在口交、舔舐等口喉系指令中有加值，技巧效果提升"
+msgstr ""
+
 #: .\data\csv\Talent.csv:190
 msgid "教官"
+msgstr ""
+
+#: .\data\csv\Talent.csv:190
+msgid "擅长教导他人，习得和先导的获取效率提升"
 msgstr ""
 
 #: .\data\csv\Talent.csv:191
@@ -27197,7 +27385,7 @@ msgid "厨艺"
 msgstr ""
 
 #: .\data\csv\Talent.csv:191
-msgid "料理加值"
+msgid "烹饪技术精湛，料理类活动效果大幅加值，制作的食物品质更高"
 msgstr ""
 
 #: .\data\csv\Talent.csv:193
@@ -27205,7 +27393,7 @@ msgid "持有博士把柄"
 msgstr ""
 
 #: .\data\csv\Talent.csv:193
-msgid "实行值减少"
+msgid "掌握了博士的秘密或弱点，可以以此要挟，所有指令实行值减少"
 msgstr ""
 
 #: .\data\csv\Talent.csv:194
@@ -27213,15 +27401,15 @@ msgid "被博士持有把柄"
 msgstr ""
 
 #: .\data\csv\Talent.csv:194
-msgid "实行值增加"
+msgid "博士掌握了自己的秘密或弱点，被博士要挟，所有指令实行值增加"
 msgstr ""
 
 #: .\data\csv\Talent.csv:196
-msgid "把自己的信物交给了博士"
+msgid "把自己珍贵的信物交给了博士，代表信任与承诺，是重要情感的象征"
 msgstr ""
 
 #: .\data\csv\Talent.csv:198
-msgid "是博士的女儿"
+msgid "是博士的女儿，有血缘关系，可以进行乱伦H"
 msgstr ""
 
 #: .\data\csv\TalentType.csv:6
@@ -28196,39 +28384,43 @@ msgstr ""
 msgid "煌，罗德岛精英干员，在机动作战、歼灭战与突袭作战中体现出了专业的战斗技巧与战术素养。现由阿米娅带领，作为攻坚战的战术核心之一发挥作用。"
 msgstr ""
 
-#: .\data\character\0017_煌.csv:35
-msgid "红色发箍"
+#: .\data\character\0017_煌.csv:15
+msgid "#ed1941"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:36
-msgid "短版罗德岛制服外套（白）"
+msgid "红色发箍"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:37
-msgid "白色交叉肩带小背心"
+msgid "短版罗德岛制服外套（白）"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:38
-msgid "黑色超短包臀裙"
+msgid "白色交叉肩带小背心"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:39
-msgid "白色过膝袜（右）"
+msgid "黑色超短包臀裙"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:40
-msgid "高跟短靴"
+msgid "白色过膝袜（右）"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:41
-msgid "黑色战术露指手套"
+msgid "高跟短靴"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:42
-msgid "链锯"
+msgid "黑色战术露指手套"
 msgstr ""
 
 #: .\data\character\0017_煌.csv:43
+msgid "链锯"
+msgstr ""
+
+#: .\data\character\0017_煌.csv:44
 msgid "战术道具腰包"
 msgstr ""
 

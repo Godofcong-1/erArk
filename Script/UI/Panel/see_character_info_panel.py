@@ -122,7 +122,7 @@ class See_Character_Base_Attributes_Panel:
         """初始化绘制对象"""
         head_draw = character_info_head.CharacterInfoHead(character_id, width)
         image_draw = CharacterImage(character_id, width)
-        Talent_draw = CharacterTalentText(character_id, width, 8, False)
+        Talent_draw = CharacterTalentText(character_id, width, 16, False)
         Daily_draw = CharacterDailyText(character_id, width, 8, False)
         if character_id == 0:
             self.draw_list: List = [
@@ -917,45 +917,64 @@ class CharacterTalentText:
         conut = 0
         for talent_type in talent_list:
             type_data = game_config.config_talent_type[talent_type]
-            type_line = draw.LittleTitleLineDraw(type_data.name, width, ":")
             # print("type_data.name :",type_data.name)
             type_set = talent_list[talent_type]
-            talent_text_list = []
             if conut == 0:
-                message_profession = _(" 职业    ：[{profession_text}]").format(
+                message_profession = _(" 职业    ：[{profession_text}]\n").format(
                     profession_text=profession_text,
                 )
-                talent_text_list.append(message_profession)
-                message_race = _("\n 种族    ：[{race_text}]").format(
+                now_normal_draw = draw.NormalDraw()
+                now_normal_draw.text = message_profession
+                self.draw_list.append(now_normal_draw)
+                message_race = _(" 种族    ：[{race_text}]\n").format(
                     race_text=race_text,
                 )
-                talent_text_list.append(message_race)
-                message_nation = _("\n 势力    ：[{nation_text}]").format(
+                now_normal_draw = draw.NormalDraw()
+                now_normal_draw.text = message_race
+                self.draw_list.append(now_normal_draw)
+                message_nation = _(" 势力    ：[{nation_text}]\n").format(
                     nation_text=nation_text,
                 )
-                talent_text_list.append(message_nation)
-                message_birthplace = _("\n 出身地  ：[{birthplace_text}]").format(
+                now_normal_draw = draw.NormalDraw()
+                now_normal_draw.text = message_nation
+                self.draw_list.append(now_normal_draw)
+                message_birthplace = _(" 出身地  ：[{birthplace_text}]\n").format(
                     birthplace_text=birthplace_text,
                 )
-                talent_text_list.append(message_birthplace)
+                now_normal_draw = draw.NormalDraw()
+                now_normal_draw.text = message_birthplace
+                self.draw_list.append(now_normal_draw)
                 conut = 1
             race_type = type_data.name
             if talent_type == 0:
-                message_race = f"\n {race_type}  ："
+                message_race = f" {race_type}  ："
             else:
-                message_race = f"\n {race_type}："
+                message_race = f" {race_type}："
+            now_normal_draw = draw.NormalDraw()
+            now_normal_draw.text = message_race
+            self.draw_list.append(now_normal_draw)
+            talent_count = 0
             for talent_id in type_set:
-                talent_text = game_config.config_talent[talent_id].name
                 if character_data.talent[talent_id]:
-                    now_text = f"[{talent_text}]"
-                    message_race += now_text
-            talent_text_list.append(message_race)
-            if self.center_status:
-                now_draw = panel.CenterDrawTextListPanel()
-            else:
-                now_draw = panel.LeftDrawTextListPanel()
-            now_draw.set(talent_text_list, self.width, self.column)
-            self.draw_list.extend(now_draw.draw_list)
+                    talent_text = game_config.config_talent[talent_id].name
+                    talent_info = game_config.config_talent[talent_id].info
+                    now_text = f"[{talent_text}] "
+                    now_normal_draw = draw.NormalDraw()
+                    now_normal_draw.text = now_text
+                    now_normal_draw.tooltip = talent_info
+                    self.draw_list.append(now_normal_draw)
+                    talent_count += 1
+                    # 每行达到最大数量后换行
+                    if talent_count % self.column == 0:
+                        self.draw_list.append(line_feed)
+                        empty_draw = draw.NormalDraw()
+                        empty_draw.text = "           "
+                        self.draw_list.append(empty_draw)
+            # 结束后换行
+            self.draw_list.append(line_feed)
+        # 如果绘制列表最后一个是换行，则去掉
+        if self.draw_list[-1] == line_feed:
+            self.draw_list.pop()
 
     def draw(self):
         """绘制面板"""
