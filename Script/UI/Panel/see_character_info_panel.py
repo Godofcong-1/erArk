@@ -706,43 +706,33 @@ class CharacterabiText:
                 # 去掉时奸刻印
                 if ability_id == 16:
                     continue
-                now_draw = draw.NormalDraw()
-                now_draw_value = draw.NormalDraw()
-                now_draw.text = ability_data.name
-                # 这个_1是为了补空格让格式对齐#
-                now_draw_2 = draw.NormalDraw()
-                now_draw_2.text = "　"
-                now_draw_2.width = 2
-                now_draw_1 = draw.NormalDraw()
-                now_draw_1.text = " "
-                now_draw_1.width = 1
                 now_exp = character_data.ability[ability_id]
-                now_draw_value.text = str(now_exp)
-                level_draw = draw.ExpLevelDraw(now_exp)
+                now_draw = draw.NormalDraw()
+                now_draw.text = "  " + attr_calculation.pad_display_width(ability_data.name, 10)
+                now_draw.tooltip = ability_data.info
                 new_draw = draw.LeftMergeDraw(int(self.width / 16))
                 # 同类能力里在八个前补个换行
                 if ability_id == 48 or ability_id == 101:
                     new_draw_n = draw.NormalDraw()
                     new_draw_n.text = "\n"
-                    new_draw_n.width = 1
                     new_draw.draw_list.append(new_draw_n)
-                new_draw.draw_list.append(now_draw_2)
                 new_draw.draw_list.append(now_draw)
-                new_draw.draw_list.append(now_draw_2)
-                # 根据不同的类型补不同数量的空格#
-                if anility_type == 3 or anility_type == 5:
-                    new_draw.draw_list.append(now_draw_2)
-                    new_draw.draw_list.append(now_draw_2)
+                level_draw = draw.ExpLevelDraw(now_exp)
                 new_draw.draw_list.append(level_draw)
                 # 8级的能力则只空一个单字符空格
+                now_draw_1 = draw.NormalDraw()
+                now_draw_1.text = " "
+                now_draw_1.width = 1
+                now_draw_2 = draw.NormalDraw()
+                now_draw_2.text = "  "
+                now_draw_2.width = 2
                 if now_exp == 8:
                     new_draw.draw_list.append(now_draw_1)
                 else:
                     new_draw.draw_list.append(now_draw_2)
+                now_draw_value = draw.NormalDraw()
+                now_draw_value.text = str(now_exp)
                 new_draw.draw_list.append(now_draw_value)
-                if anility_type == 3 or anility_type == 5:
-                    new_draw.draw_list.append(now_draw_2)
-                    new_draw.draw_list.append(now_draw_2)
                 self.draw_list.append(new_draw)
             # 只有不是最后一个类型就补个换行#
             if anility_type != 6:

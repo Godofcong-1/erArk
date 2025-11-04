@@ -119,6 +119,7 @@ class Characterabi_show_Text:
                             int(self.width / 10),
                             cmd_func=self.mark_up_show,
                             args=(ability_id),
+                            tooltip=game_config.config_ability[ability_id].info,
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -137,6 +138,7 @@ class Characterabi_show_Text:
                             int(self.width / 10),
                             cmd_func=self.mark_down_show,
                             args=(ability_id),
+                            tooltip=game_config.config_ability[ability_id].info,
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -148,6 +150,7 @@ class Characterabi_show_Text:
                             int(self.width / 10),
                             normal_style='deep_gray',
                             cmd_func=self.mark_can_up_show,
+                            tooltip=game_config.config_ability[ability_id].info,
                         )
                         self.return_list.append(button_draw.return_text)
                         button_draw.draw()
@@ -180,7 +183,9 @@ class Characterabi_show_Text:
                         _(button_text),
                         _(game_config.config_ability[ability_id].name),
                         int(self.width / 10),
-                        cmd_func=now_abi_up_panel.draw)
+                        cmd_func=now_abi_up_panel.draw,
+                        tooltip=game_config.config_ability[ability_id].info,
+                        )
                     self.return_list.append(button_draw.return_text)
                     button_draw.draw()
                     # py_cmd.clr_cmd()
@@ -204,7 +209,8 @@ class Characterabi_show_Text:
         now_state_all_value, state_text = second_behavior.get_now_state_all_value_and_text_from_mark_up_data(mark_up_data_id, self.character_id)
         # 文本信息
         info_text = _("○部分刻印除了其原本的升级获取方式之外，还可以通过消耗大量宝珠来直接升级\n\n")
-        info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += _("当前刻印及等级为：{0} - {1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += "  " + game_config.config_ability[ability_id].info + "\n\n"
         info_text += _("升级需要的总值为：{0}\n").format(need_state_all_value)
         info_text += _("当前角色状态可以提供的总值为：")
         # 如果为空，则输出无
@@ -273,7 +279,8 @@ class Characterabi_show_Text:
         facility_effect = game_config.config_facility_effect[facility_cid].effect
         # 文本信息
         info_text = _("○非正面刻印除了通过源石技艺降级之外，还可以通过消耗大量宝珠来直接降级\n\n")
-        info_text += _("当前刻印及等级为：{0}{1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += _("当前刻印及等级为：{0} - {1}\n").format(game_config.config_ability[ability_id].name, now_mark_level)
+        info_text += "  " + game_config.config_ability[ability_id].info + "\n\n"
         info_text += _("降级需要的总值为：{0}\n").format(need_juel_all_value)
         # 被关押区等级影响
         if handle_premise.handle_imprisonment_1(self.character_id):
@@ -547,6 +554,12 @@ class Characterabi_cmd_Text:
             line = draw.LineDraw(".", self.width)
             line.draw()
             line_feed.draw()
+
+            info_text = _("○当前能力及等级为：{0} - {1}\n").format(game_config.config_ability[self.ability_id].name, self.ability_level)
+            info_text += "  " + game_config.config_ability[self.ability_id].info + "\n\n"
+            info_draw = draw.NormalDraw()
+            info_draw.text = info_text
+            info_draw.draw()
 
             # 遍历升级需求，并输出信息
             judge, jule_dict_1 = self.draw_need_list(need_list)

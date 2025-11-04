@@ -9,6 +9,8 @@ class Ability:
     """ 名字 """
     sex_need: int
     """ 性别需求(-1都可0男1女) """
+    info: str
+    """ 能力介绍 """
 
 
 class AbilityType:
