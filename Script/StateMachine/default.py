@@ -1962,6 +1962,8 @@ def character_get_chara_normal_cloth_and_day_equip(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.GET_UP
     character_data.behavior.duration = 3
     character_data.state = constant.CharacterStatus.STATUS_GET_UP
+    handle_premise.settle_chara_unnormal_flag(character_id, 5)
+    handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.RESET_SHOWER_STATUS_AND_GET_NORMAL_CLOTH)

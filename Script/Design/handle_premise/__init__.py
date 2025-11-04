@@ -100,6 +100,9 @@ def has_unnormal_flag(character_id: int, mask: int, *, require_all: bool = False
 
 def _quick_check_normal_by_mask(character_id: int, index: int) -> Optional[int]:
     """若异常位掩码已知，则快速给出normal判定结果。"""
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
     character_data = cache.character_data[character_id]
     unnormal_flag = character_data.sp_flag.unnormal_flag
     if isinstance(unnormal_flag, game_type.UnnormalFlagMask) and unnormal_flag.is_known(index):
@@ -136,6 +139,9 @@ def _ensure_known_unnormal_bits(character_id: int, indexes: Iterable[int]) -> ga
 
 def _check_normal_combo(character_id: int, indexes: Iterable[int]) -> int:
     """判定指定多异常组合是否均为正常状态。"""
+    # 玩家直接反馈正常
+    if character_id == 0:
+        return 1
     index_tuple = tuple(indexes)
     unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
     return 1 if not unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
@@ -143,6 +149,9 @@ def _check_normal_combo(character_id: int, indexes: Iterable[int]) -> int:
 
 def _check_unnormal_combo(character_id: int, indexes: Iterable[int]) -> int:
     """判定指定多异常组合是否存在任意异常。"""
+    # 玩家直接反馈无异常
+    if character_id == 0:
+        return 0
     index_tuple = tuple(indexes)
     unnormal_flag = _ensure_known_unnormal_bits(character_id, index_tuple)
     return 1 if unnormal_flag.any(_combine_unnormal_mask(index_tuple)) else 0
