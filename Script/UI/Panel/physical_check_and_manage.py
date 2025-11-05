@@ -227,12 +227,12 @@ class Physical_Check_And_Manage_Panel:
             cache.rhodes_island.today_physical_examination_chara_id_dict[target_character_id] = self.done_check_behavior_id_set
             # 加入周期内已体检角色名单
             cache.rhodes_island.examined_operator_ids.add(target_character_id)
-            # 从等待体检名单中移除
-            if target_character_id in cache.rhodes_island.waiting_for_exam_operator_ids:
-                handle_premise.settle_chara_unnormal_flag(target_character_id, 3)
             # 清零今日体检时间
             target_character_data.action_info.health_check_today = 0
-            cache.rhodes_island.waiting_for_exam_operator_ids.remove(target_character_id)
+            # 从等待体检名单中移除
+            if target_character_id in cache.rhodes_island.waiting_for_exam_operator_ids:
+                cache.rhodes_island.waiting_for_exam_operator_ids.remove(target_character_id)
+            handle_premise.settle_chara_unnormal_flag(target_character_id, 3)
 
     def check_target_physical(self, target_character_id: int):
         """查看目标角色的身体情况"""
@@ -660,7 +660,7 @@ class Physical_Check_And_Manage_Panel:
         info_text = _("请选择要取消身体管理的干员，将取消其全部管理：\n")
         # 使用通用角色选择按钮列表函数
         from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         select_state = {}
         while 1:
             final_list = []
@@ -1047,7 +1047,7 @@ class Physical_Check_And_Manage_Panel:
     def adjust_target_list(self):
         """调整体检对象名单"""
         from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         select_state = {}
         while 1:
             npc_id_got_list = sorted(cache.npc_id_got)
