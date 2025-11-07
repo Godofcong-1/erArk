@@ -1275,6 +1275,12 @@ class Rhodes_Island:
         """
         self.today_trade_resource_count: Dict[int, int] = {}
         """ 资源类型id: 今日买入卖出总量 """
+        self.trade_operator_ids_list: List[int] = []
+        """ 资源交易员id列表 """
+        self.resource_type_main_trader: Dict[str, int] = {}
+        """ 各资源类型的主交易员 type_str:角色id """
+        self.resource_type_auto_trade_setting: Dict[int, Dict[str, Any]] = {}
+        """ 自动交易设置 资源id:设置字典 """
 
         # 制造加工区
         self.assembly_line: Dict[int, List] = {}

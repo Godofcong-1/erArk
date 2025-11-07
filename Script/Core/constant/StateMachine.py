@@ -140,6 +140,8 @@ class StateMachine:
     """ 工作：对囚犯进行日常训练 """
     WORK_MANAGE_FACILITY_POWER = 321
     """ 工作：调控设施供能 """
+    WORK_INVESTIGATE_RESOURCE_MARKET = 322
+    """ 工作：研判资源市场 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -251,6 +253,8 @@ class StateMachine:
     """ 移动到黄澄澄游戏室 """
     MOVE_TO_DR_OFFICE = 571
     """ 移动至博士办公室 """
+    MOVE_TO_RESOURCE_EXCHANGE = 581
+    """ 移动至资源交易所 """
     MOVE_TO_AVANT_GARDE_ARCADE = 584
     """ 移动至前卫街机厅 """
     MOVE_TO_WALYRIA_CAKE_SHOP = 585

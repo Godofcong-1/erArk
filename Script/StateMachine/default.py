@@ -496,6 +496,19 @@ def character_move_to_bar(character_id: int):
     general_movement_module(character_id, to_target)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_RESOURCE_EXCHANGE)
+def character_move_to_resource_exchange(character_id: int):
+    """
+    移动至资源交易所
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_target = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Resource_Exchange"])
+    )
+    general_movement_module(character_id, to_target)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_AVANT_GARDE_ARCADE)
 def character_move_to_avant_garde_arcade(character_id: int):
     """
@@ -2998,3 +3011,15 @@ def character_manage_facility_power(character_id: int):
     character_data.behavior.duration = 30
     character_data.state = constant.CharacterStatus.STATUS_MANAGE_FACILITY_POWER
 
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_INVESTIGATE_RESOURCE_MARKET)
+def character_investigate_resource_market(character_id: int):
+    """
+    工作：研判资源市场
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.INVESTIGATE_RESOURCE_MARKET
+    character_data.behavior.duration = 60

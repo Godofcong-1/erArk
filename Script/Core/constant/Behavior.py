@@ -169,6 +169,8 @@ class Behavior:
     """ 训练囚犯 """
     MANAGE_FACILITY_POWER = "manage_facility_power"
     """ 调控设施供能 """
+    INVESTIGATE_RESOURCE_MARKET = "investigate_resource_market"
+    """ 研判资源市场 """
     MORNING_SALUTATION_1 = "morning_salutation_1"
     """ 早安问候：叫起床 """
     MORNING_SALUTATION_2 = "morning_salutation_2"

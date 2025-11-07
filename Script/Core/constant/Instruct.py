@@ -235,8 +235,10 @@ class Instruct:
     """ 身体检查与管理 """
     MANAGE_CONFINEMENT_AND_TRAINING = 0
     """ 管理监禁调教 """
-    RESOURCE_EXCHANGE = 0
-    """ 资源交易 """
+    INVESTIGATE_RESOURCE_MARKET = 0
+    """ 研判资源市场 """
+    MANAGE_RESOURCE_EXCHANGE = 0
+    """ 管理资源交易 """
     NAVIGATION = 0
     """ 导航 """
     MANAGE_BASEMENT = 0

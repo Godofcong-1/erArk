@@ -640,17 +640,32 @@ def handle_manage_vonfinement_and_training():
 
 
 @add_instruct(
-    constant.Instruct.RESOURCE_EXCHANGE,
+    constant.Instruct.INVESTIGATE_RESOURCE_MARKET,
     constant.InstructType.WORK,
-    _("资源交易"),
+    _("研判资源市场"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.IN_RESOURCE_EXCHANGE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.TIRED_LE_74},
+    constant.Behavior.INVESTIGATE_RESOURCE_MARKET,
+)
+def handle_investigate_resource_market():
+    """处理研判资源市场指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.INVESTIGATE_RESOURCE_MARKET)
+
+
+@add_instruct(
+    constant.Instruct.MANAGE_RESOURCE_EXCHANGE,
+    constant.InstructType.WORK,
+    _("管理资源交易"),
     {
         constant_promise.Premise.NOT_H,
         constant_promise.Premise.TIRED_LE_84,
         constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_RESOURCE_EXCHANGE,
     })
-def handle_resource_exchange():
-    """处理资源交易指令"""
+def handle_manage_resource_exchange():
+    """处理管理资源交易指令"""
     from Script.UI.Panel import resource_exchange_panel
     now_draw = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
     now_draw.draw()
