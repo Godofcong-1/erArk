@@ -272,7 +272,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         if now_talk_id and now_talk_id in game_config.config_talk:
             now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
             unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
-        # 如果口上文本是大括号的地文文本，则获取行为id
+        # 如果口上文本是大括号的纸娃娃地文文本，则获取行为id
         elif talk_text.startswith("{") and talk_text.endswith("}"):
             now_behavior_id = talk_text[1:-1]
         # 玩家读书时额外绘制当前书籍的内容节选
@@ -324,6 +324,10 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
                 now_draw.text = now_talk_text
         # 进行原文本的绘制，现已被富文本绘制替代
         # now_draw.draw()
+        # 先绘制一个空白的换行
+        line_feed_draw = draw.NormalDraw()
+        line_feed_draw.text = "\n"
+        line_feed_draw.draw()
         # 进行富文本的绘制
         rich_text_draw_list = rich_text.get_rich_text_draw_list(now_talk_text, base_style=final_color, wait_flag=True)
         for rich_text_draw in rich_text_draw_list:
