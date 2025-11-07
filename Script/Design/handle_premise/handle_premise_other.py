@@ -1627,13 +1627,13 @@ def handle_self_in_health_check_list(character_id: int) -> int:
     int -- 权重
     """
     from Script.Design.handle_premise import (
-        handle_normal_2, handle_normal_7
+        handle_unnormal_27
     )
     # 如果设置了不重复体检，且自己已体检过，则直接返回0
     if handle_health_check_done_not_need_check_again(character_id) and handle_self_health_checked(character_id):
         return 0
     # 跳过27异常
-    if handle_normal_2(character_id) or handle_normal_7(character_id):
+    if handle_unnormal_27(character_id):
         return 0
     character_data: game_type.Character = cache.character_data[character_id]
     # 源石病患者
