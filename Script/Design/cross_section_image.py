@@ -51,7 +51,7 @@ def draw_cross_section_image():
     else:
         img_name = "标准状态"
     # 判断阴茎位置
-    if handle_premise.handle_penis_in_t_vagina(0):
+    if handle_premise.handle_penis_in_t_vagina_or_womb(0):
         img_name += "_插入"
     cross_section_draw = draw.ImageDraw(img_name)
     cross_section_draw.draw()
