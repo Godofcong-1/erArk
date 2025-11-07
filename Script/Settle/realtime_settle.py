@@ -231,6 +231,9 @@ def semen_absorb(character_id: int, true_add_time: int, body_part: int):
     """
     now_character_data: game_type.Character = cache.character_data[character_id]
     now_body_semen = now_character_data.dirty.body_semen[body_part][1]
+    # 如果当前部位没有精液则返回
+    if now_body_semen <= 0:
+        return
     # 计算吸收的精液量，公式为每5分钟吸收1毫升或当前精液量的1%中较大的那个
     absorb_ml = max(true_add_time // 5, now_body_semen * 0.01)
     # 不得高于当前精液量
@@ -239,6 +242,8 @@ def semen_absorb(character_id: int, true_add_time: int, body_part: int):
     now_character_data.dirty.body_semen[body_part][1] -= absorb_ml
     # 更新吸收精液量
     now_character_data.dirty.absorbed_total_semen += absorb_ml
+    # 根据吸收的精液量来减少饥饿度
+    now_character_data.hunger_point = max(now_character_data.hunger_point - absorb_ml, 0)
     # 如果现存量小于3ml，则清零
     if now_character_data.dirty.body_semen[body_part][1] < 3:
         now_character_data.dirty.body_semen[body_part][1] = 0
