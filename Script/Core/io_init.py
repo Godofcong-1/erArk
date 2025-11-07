@@ -2,8 +2,6 @@
 import threading
 import queue
 import json
-import sys
-import importlib
 from Script.Core import main_frame
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control

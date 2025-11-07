@@ -3,8 +3,6 @@ import time
 import os
 import psutil
 import signal
-import importlib
-import sys
 from types import FunctionType
 from Script.Core import (
     text_handle,
