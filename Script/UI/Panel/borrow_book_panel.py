@@ -278,13 +278,13 @@ class Borrow_Book_Panel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{book_fater_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(book_father_type_list)
+                    now_draw.width = int(self.width / len(book_father_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{book_fater_type}]",
                         f"\n{book_fater_type}",
-                        self.width / len(book_father_type_list),
+                        int(self.width / len(book_father_type_list)),
                         cmd_func=self.change_panel,
                         args=(book_fater_type,),
                     )
@@ -325,18 +325,32 @@ class Borrow_Book_Panel:
                         book_data = game_config.config_book[book_cid]
                         book_count += 1
                         book_text = f"  [{str(book_count).rjust(3,'0')}]({book_type_data.son_type_name}){book_data.name}"
+                        # 书籍难度说明
+                        if book_data.difficulty == 1:
+                            book_text += _("(简单)")
+                        elif book_data.difficulty == 2:
+                            book_text += _("(普通)")
+                        elif book_data.difficulty == 3:
+                            book_text += _("(困难)")
+                        else:
+                            book_text += _("(未知)")
+                        # 书籍阅读进度说明
+                        if book_cid in cache.character_data[0].entertainment.read_book_progress:
+                            book_progress = cache.character_data[0].entertainment.read_book_progress[book_cid]
+                            book_text += _("(已阅读{0}%)").format(book_progress)
+                        # 是否可借阅说明
                         button_flag = True
                         if cache.rhodes_island.book_borrow_dict[book_cid] == -1:
-                            book_text += _("  (可借阅)")
+                            book_text += _("(可借阅)")
                             book_style = "standard"
                             book_can_borrow_count += 1
                         elif cache.rhodes_island.book_borrow_dict[book_cid] == 0:
-                            book_text += _("  (已被博士借走)")
+                            book_text += _("(已被博士借走)")
                             book_style = "gold_enrod"
                         else:
                             borrow_npc_id = cache.rhodes_island.book_borrow_dict[book_cid]
                             borrow_npc_name = cache.character_data[borrow_npc_id].name
-                            book_text += _("  (已被{0}借走)").format(borrow_npc_name)
+                            book_text += _("(已被{0}借走)").format(borrow_npc_name)
                             book_style = "nullcmd"
                             button_flag = False
 
@@ -451,7 +465,7 @@ class Borrow_Book_Panel:
 
             if button_draw_flag:
                 borrow_button = draw.CenterButton(
-                    borrow_buttin_text, borrow_buttin_text, window_width / 2, cmd_func=self.borrow, args=(book_cid,)
+                    borrow_buttin_text, borrow_buttin_text, int(window_width / 2), cmd_func=self.borrow, args=(book_cid,)
                 )
                 borrow_button.draw()
                 return_list.append(borrow_button.return_text)
@@ -462,7 +476,7 @@ class Borrow_Book_Panel:
                 line_feed.draw()
                 line_feed.draw()
 
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
