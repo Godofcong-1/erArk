@@ -3,7 +3,7 @@ import re
 from types import FunctionType
 
 from Script.Core import cache_control, game_type, value_handle, get_text, constant, rich_text
-from Script.Design import map_handle, handle_premise
+from Script.Design import map_handle, handle_premise, talk_image
 from Script.UI.Moudle import draw
 from Script.Config import normal_config, game_config
 
@@ -285,10 +285,13 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
             return
         # 特殊符号检测
         tem_text, special_code = special_code_judge(talk_text)
+        # 检测并绘制图片
+        talk_text = talk_image.draw_image_in_talk(talk_text)
         now_draw = draw.LineFeedWaitDraw()
         # 跳过每次的等待
         if special_code[0]:
             now_draw = draw.NormalDraw()
+        # 获取最终输出文本
         now_talk_text = code_text_to_draw_text(talk_text, character_id)
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
