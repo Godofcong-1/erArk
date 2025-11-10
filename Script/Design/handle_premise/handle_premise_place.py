@@ -423,7 +423,7 @@ def handle_scene_someone_unconscious(character_id: int) -> int:
 @add_premise(constant_promise.Premise.SCENE_SOMEONE_NOT_UNCONSCIOUS)
 def handle_scene_someone_not_unconscious(character_id: int) -> int:
     """
-    该地点有非无意识状态的角色
+    该地点有玩家以外的非无意识状态的角色
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -441,8 +441,8 @@ def handle_scene_someone_not_unconscious(character_id: int) -> int:
         # 跳过玩家
         if chara_id == 0:
             continue
-            if handle_unconscious_flag_0(chara_id):
-                return 1
+        if handle_unconscious_flag_0(chara_id):
+            return 1
     return 0
 
 
