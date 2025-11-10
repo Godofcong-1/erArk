@@ -1238,7 +1238,7 @@ def handle_first_sex(
             character_data.pl_collection.first_panties[
                 character_data.target_character_id] = _("一滴{0}的处子血").format(target_data.name)
             now_draw.draw()
-        handle_premise.settle_chara_unnormal_flag(character_id, 4)
+        handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 4)
 
         # 道具破处
         if item_flag:
@@ -8610,7 +8610,7 @@ def handle_set_free_add_just(
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     target_data.sp_flag.imprisonment = False
-    handle_premise.settle_chara_unnormal_flag(character_id, 2)
+    handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 2)
     # 回到旧宿舍
     if target_data.pre_dormitory != "":
         target_data.dormitory = target_data.pre_dormitory
