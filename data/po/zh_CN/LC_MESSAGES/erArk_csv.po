@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 11:12+0800\n"
+"POT-Creation-Date: 2025-11-11 17:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -22400,6 +22400,62 @@ msgstr ""
 msgid "心理快感珠"
 msgstr ""
 
+#: .\data\csv\MedicalComplication.csv:6
+msgid "无并发症"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:6
+msgid "基础病例，无额外需求"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:7
+msgid "肺部感染"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:7
+msgid "呼吸系统感染加重症状"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:8
+msgid "血液凝固异常"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:8
+msgid "需额外使用抗凝药物"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:9
+msgid "免疫紊乱"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:9
+msgid "患者对药剂反应波动大"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:10
+msgid "神经痛"
+msgstr ""
+
+#: .\data\csv\MedicalComplication.csv:10
+msgid "需要镇痛和护理支持"
+msgstr ""
+
+#: .\data\csv\MedicalSeverity.csv:6
+msgid "轻症"
+msgstr ""
+
+#: .\data\csv\MedicalSeverity.csv:7
+msgid "中度"
+msgstr ""
+
+#: .\data\csv\MedicalSeverity.csv:8
+msgid "重症"
+msgstr ""
+
+#: .\data\csv\MedicalSeverity.csv:9
+msgid "危重"
+msgstr ""
+
 #: .\data\csv\Moon.csv:6
 msgid "晦"
 msgstr ""
@@ -22902,10 +22958,6 @@ msgstr ""
 
 #: .\data\csv\Nation.csv:57
 msgid "由活动于荒地的一群流民组成的暴力组织，他们自喻为“荒地的征服者”，远离一切文明，依靠狩猎野兽、开垦土地，互相照应着生存在荒原之上，利用自制的武器战胜敌人。“锈锤”因犯有袭击贵族的队伍等罪行而恶名远扬，被形容为一群残暴野蛮，以杀戮为乐的荒地暴徒。"
-msgstr ""
-
-#: .\data\csv\Organ.csv:7
-msgid "胸"
 msgstr ""
 
 #: .\data\csv\Organ.csv:11
@@ -28413,146 +28465,158 @@ msgid "接待并诊治病人，获得龙门币"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:14
+msgid "住院医生"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:14
+msgid "病房"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:14
+msgid "驻守病房照护重症病人，提升住院恢复效率"
+msgstr ""
+
+#: .\data\csv\WorkType.csv:15
 msgid "招募专员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:14
+#: .\data\csv\WorkType.csv:15
 msgid "人事办公室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:14
+#: .\data\csv\WorkType.csv:15
 msgid "招募干员，消耗龙门币，增加招募条"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:15
+#: .\data\csv\WorkType.csv:16
 msgid "训练学员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:15
+#: .\data\csv\WorkType.csv:16
 msgid "去训练场训练，会根据职业自动到近战的木桩房或远程的射击房进行训练"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:16
+#: .\data\csv\WorkType.csv:17
 msgid "健身锻炼员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:16
+#: .\data\csv\WorkType.csv:17
 msgid "去健身区锻炼，增加体力和气力上限"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:17
+#: .\data\csv\WorkType.csv:18
 msgid "图书馆管理员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:17
+#: .\data\csv\WorkType.csv:18
 msgid "进行图书馆的管理操作"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:18
+#: .\data\csv\WorkType.csv:19
 msgid "资源交易员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:18
+#: .\data\csv\WorkType.csv:19
 msgid "管理资源交易所，研判资源市场，降低交易成本，按照博士的指示自动进行资源买卖交易"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "生产工人"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "生产车间"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:19
+#: .\data\csv\WorkType.csv:20
 msgid "在车间内使用原材料制造出对应的产品"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "外交官"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:20
+#: .\data\csv\WorkType.csv:21
 msgid "处理与各国之间的关系，承接大小委托，协调当地的外勤工作(需要在[外交势力]系统中任命)"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "邀请专员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:21
+#: .\data\csv\WorkType.csv:22
 msgid "邀请各界人士来罗德岛访问，拓宽罗德岛的人脉"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "教室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:22
+#: .\data\csv\WorkType.csv:23
 msgid "给学生上课"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:23
+#: .\data\csv\WorkType.csv:24
 msgid "学生"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:23
+#: .\data\csv\WorkType.csv:24
 msgid "听老师讲课"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "药材种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "药田"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:24
+#: .\data\csv\WorkType.csv:25
 msgid "在药田里种植药材等农作物"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:25
+#: .\data\csv\WorkType.csv:26
 msgid "花草种植员"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:25
+#: .\data\csv\WorkType.csv:26
 msgid "在温室里种植花草等香料"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:26
+#: .\data\csv\WorkType.csv:27
 msgid "按摩师"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:26
+#: .\data\csv\WorkType.csv:27
 msgid "浴场休息区"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:26
+#: .\data\csv\WorkType.csv:27
 msgid "为干员提供搓澡、按摩、捏脚、刮痧、拔罐等服务"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:27
+#: .\data\csv\WorkType.csv:28
 msgid "监狱长"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:27
+#: .\data\csv\WorkType.csv:28
 msgid "监狱长办公室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:27
+#: .\data\csv\WorkType.csv:28
 msgid "管理和训练关押区的囚犯干员(需要3级陷落且有囚犯)(只能有一位，不能兼任助理)"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:28
+#: .\data\csv\WorkType.csv:29
 msgid "性爱练习生"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:28
+#: .\data\csv\WorkType.csv:29
 msgid "调教室"
 msgstr ""
 
-#: .\data\csv\WorkType.csv:28
+#: .\data\csv\WorkType.csv:29
 msgid "利用道具练习自己的性爱技巧(需要体检-身体管理-性爱练习)"
 msgstr ""
 

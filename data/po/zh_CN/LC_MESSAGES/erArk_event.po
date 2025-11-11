@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-10 11:12+0800\n"
+"POT-Creation-Date: 2025-11-11 17:37+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -974,6 +974,110 @@ msgstr ""
 
 #: Event:95f88a3a-d45f-47de-86df-38063bc14880
 msgid "“既然是主人的安排，那人家就会好好待在这的。”被再次送进监牢的{TargetName}的眼神中流露出一丝寂寞。\n“要多来调教人家...哈~”{TargetName}不甘寂寞，直接在{PlayerName}面前开始抚摸自己的身体，发出一阵阵淫靡的呻吟声。"
+msgstr ""
+
+#: Event:f14160ac-35ea-4dc4-9a82-cd1b0cc53e94
+msgid "举起{TargetName}的萝莉手臂，露出光滑的腋下\n要怎么做呢？"
+msgstr ""
+
+#: Event:ecb4599c-551c-43c5-8631-82d9ef36f07c
+msgid "舔|举起{TargetName}的手臂开始舔舐什么味道都没有的光滑腋下\n\n“呼呼呼 好痒啊”"
+msgstr ""
+
+#: Event:7139c87e-eef8-4292-b4e1-7fad3432d5d8
+msgid "闻|举起{TargetName}的手臂开始闻什么味道都没有的光滑腋下\n\n“呼呼呼 好痒啊”"
+msgstr ""
+
+#: Event:8ef6ddfd-2485-4956-9495-a3bbac456211
+msgid "禁止洗澡|0|罗德岛的大家每天都在洗澡，{PlayerName}盯着{TargetName}，脑子里想出这样的事"
+msgstr ""
+
+#: Event:12ecf3cc-7c7f-498e-895b-319aa0ea7c81
+msgid "禁止{TargetName}去浴室|对{TargetName}下达了禁止去浴室的单人任务。\n除非解除，或{TargetName}完全不信任{PlayerName}。否则{TargetName}不会再去浴室了"
+msgstr ""
+
+#: Event:bd4e3c53-17cb-41ac-85df-270dd10bb938
+msgid "允许{TargetName}去浴室|对{TargetName}说已经可以去浴室了"
+msgstr ""
+
+#: Event:1cebeaa1-71f8-458f-9ef2-a20c444e420a
+msgid "开始射爆|0|{PlayerName}对着身前的少女当成配菜开始快速套弄\n（身体爱抚改为精液浴）"
+msgstr ""
+
+#: Event:6515d620-c2eb-4638-b4dd-37ac2d29fbdf
+msgid "不射了|0|停下了射精"
+msgstr ""
+
+#: Event:7c35801e-7daa-494e-adf9-f05bfd124190
+msgid "对着坐在浴缸中的{TargetName}的{hair_s}当作最棒的配菜开始猛撸爆射\n瞄准{hair}一发发的浇汁上去"
+msgstr ""
+
+#: Event:5288ecb5-6e0f-4287-90fd-3bbdbd4e98d9
+msgid "对着坐在浴缸中的{TargetName}的{face_s}当作最棒的配菜开始猛撸爆射\n瞄准{face}一发发的浇汁上去"
+msgstr ""
+
+#: Event:2caa18ed-ff09-430a-ac5a-b4853a2f2dee
+msgid "对着坐在浴缸中的{TargetName}的{breast_s}当作最棒的配菜开始猛撸爆射\n瞄准{breast}一发发的浇汁上去"
+msgstr ""
+
+#: Event:cdb02375-6aeb-4b7b-875f-d8d83584a38c
+msgid "对着坐在浴缸中的{TargetName}的{armpit_s}当作最棒的配菜开始猛撸爆射\n瞄准{armpit}一发发的浇汁上去"
+msgstr ""
+
+#: Event:369eb459-fa77-4b2c-bebf-55a6f1987b42
+msgid "对着坐在浴缸中的{TargetName}的{hands_s}当作最棒的配菜开始猛撸爆射\n瞄准{hands}一发发的浇汁上去"
+msgstr ""
+
+#: Event:46d3330e-05f4-48ea-aa05-c88e4349e6cd
+msgid "对着坐在浴缸中的{TargetName}的{legs_s}当作最棒的配菜开始猛撸爆射\n瞄准{legs_s}一发发的浇汁上去"
+msgstr ""
+
+#: Event:f11913d8-65c5-4bba-b797-e579771f87c4
+msgid "对着坐在浴缸中的{TargetName}的{feet_s}当作最棒的配菜开始猛撸爆射\n瞄准{feet_s}一发发的浇汁上去"
+msgstr ""
+
+#: Event:f3110951-41dd-47d8-9e29-c68c91e2ff2c
+msgid "对着坐在浴缸中的{TargetName}的{TargetUpClothName}当作最棒的配菜开始猛撸爆射\n瞄准{TargetUpClothName}一发发的浇汁上去"
+msgstr ""
+
+#: Event:ac4334d9-21ec-46fa-a11f-4f3eadd04403
+msgid "对着坐在浴缸中的{TargetName}的{TargetSkiName}当作最棒的配菜开始猛撸爆射\n瞄准{TargetSkiName}一发发的浇汁上去"
+msgstr ""
+
+#: Event:ed2626c5-4e9f-4bb0-8c7e-4fedb535e82c
+msgid "对着坐在浴缸中的{TargetName}的{TargetBraName}当作最棒的配菜开始猛撸爆射\n瞄准{TargetBraName}一发发的浇汁上去"
+msgstr ""
+
+#: Event:5afcf5c8-c936-4d2f-85e2-e0c5f0059e1d
+msgid "对着坐在浴缸中的{TargetName}的{TargetPanName}当作最棒的配菜开始猛撸爆射\n瞄准{TargetPanName}一发发的浇汁上去"
+msgstr ""
+
+#: Event:4fa06dd6-e935-4247-806f-b895d3bb846c
+msgid "对着坐在浴缸中的{TargetName}的{TargetSocName}当作最棒的配菜开始猛撸爆射\n瞄准{TargetSocName}一发发的浇汁上去"
+msgstr ""
+
+#: Event:e79f689e-4f8f-432d-ad6f-485f10a781a5
+msgid "对着坐在浴缸中的{TargetName}的中筒运动鞋当作最棒的配菜开始猛撸爆射\n瞄准黑色中筒运动鞋一发发的浇汁上去"
+msgstr ""
+
+#: Event:e7b20a1e-8d89-4a68-ab9f-0ff2a2270780
+msgid "{TargetName}不再信任{PlayerName}\n获得了素质【讨厌男性】【感情缺乏】【尿道顿感】"
+msgstr ""
+
+#: Event:6921321b-da9a-41c7-8537-256a72411c9d
+msgid "{TargetName}嘴里已经满是精液了，这样下去可能会有危险。即使如此还是还要继续吗？"
+msgstr ""
+
+#: Event:b6b06f0a-157b-439f-9c66-deb297b2f2c0
+msgid "继续|{TargetName}口里的精液已经溢出到整张脸上都被染白\n头发下面到处都是一滩滩白浊\n鼻子不停的呛出白色的鼻涕泡\n（已经…无法呼吸了…噗噗唔呕，被这样对待…好过分啊…）\n{TargetName}的眼泪都被糊在双眼上的精液堵的无法流淌了\n已经被精液彻底玷污的{TargetName}依旧被{PlayerName}抓着头不知疲倦的强行使用着{mouth_s}\n"
+msgstr ""
+
+#: Event:6d835ed0-979a-4723-a250-342aa2c91f7f
+msgid "按着头塞到晕过去|{PlayerName}的龟头深深塞在铃兰纤细的喉咙深处，抓着铃兰的头就这样塞着\n狐狸耳朵惊恐地竖直起来，纤细的手拼命捶打着{PlayerName}的大腿，试图让{PlayerName}放开\n过多的精液混合着从嘴角不断溢出，在地上汇成一片\n可{PlayerName}依旧没一点松手的意思\n{PlayerName}的身体开始痉挛，原本有力的拍打渐渐变得虚弱，耳朵无力地垂下，\n“呜…哈…”\n发出微弱的呜咽声，腹部因为吞咽了太多液体而微微鼓起。意识开始变得模糊\n在{PlayerName}毫不留情的压制下，{TargetName}的眼睛向上翻去，\n小小的身子软软地倒了下去。昏过去的少女嘴角还挂着白浊的液体，胸口微弱起伏着\n{PlayerName}松开手后，{TargetName}像脱线木偶一样无力地瘫在那里，完全失去了意识\n无论怎么拍脸都没反应，看来是叫不起了。抱起先放到{PlayerName}房间去吧"
+msgstr ""
+
+#: Event:b2d3a83d-c613-46aa-b522-a1b6c4921c3f
+msgid "停手|啵的一声脆响将塞紧{TargetName}喉咙的肉棒一下整根拔出后，{TargetName}的小口失去堵塞物像闸门被打开一样\n积聚过多的大量精液一下子被吐出来，不断地呛咳着将大量的精液呕出\n“咳、咳咳！”\n每一次咳嗽都会带出一大股粘稠的精液，胸前完全浸湿\n“呜呕…”\n{TargetName}喉咙里发出呕吐声，闭不上的小嘴不断涌出新的白浊\n原本鼓胀的小腹逐渐瘪下去，取而代之的是地上那一滩还在扩大面积，散发着浓郁雄性腥臭气息的黏液\n漂亮的毛茸茸的大尾巴都无力地摊在地上，沾染了污秽的液体\n{TargetName}精致的五官因为呕吐而扭曲，就连平时梳理整齐的金发也变得凌乱不堪\n少女的喉咙深处还在不断传出咕噜咕噜的精液在里面冒泡的声音\n“好…好难受…”\n真是惨状，就先放过{TargetName}吧"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
