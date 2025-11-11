@@ -340,8 +340,8 @@ class Chat_Ai_Setting_Panel:
                 line_draw = draw.LineDraw("-", self.width)
                 line_draw.draw()
                 line_feed.draw()
-                ask_text = _("请输入您要使用的代理ip（不含引号、逗号或空格）：\n")
-                ask_text += _("  示例：http://my.test.proxy.example.com\n")
+                ask_text = _("请输入您要使用的代理服务器配置（不含引号、逗号或空格）：\n")
+                ask_text += _("  示例：\nhttp://username:password@proxy_ip:proxy_port\nhttps://proxy_ip:proxy_port\n")
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
                 new_ip = ask_panel.draw()
@@ -350,7 +350,7 @@ class Chat_Ai_Setting_Panel:
                     new_ip = new_ip[:-1]
                 cache.ai_setting.now_ai_chat_proxy[0] = new_ip
                 line_feed.draw()
-                ask_text = _("请输入您要使用的代理端口，不使用端口则随便输入数字后回车即可：\n")
+                ask_text = _("请输入您要使用的本地绑定的 IP 地址，不使用本地ip则随便输入数字后回车即可：\n")
                 ask_text += _("  示例：0.0.0.0\n")
                 ask_panel = panel.AskForOneMessage()
                 ask_panel.set(ask_text, 999)
