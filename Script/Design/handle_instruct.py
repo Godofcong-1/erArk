@@ -534,7 +534,7 @@ def handle_read_book():
         constant_promise.Premise.TIRED_LE_84,
         constant_promise.Premise.HP_G_1,
         constant_promise.Premise.IN_LIBRARY_OR_LIBRARY_OFFICE,
-        constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER,
+        constant_promise.Premise.TARGET_WORK_IS_LIBRARY_MANAGER,
         constant_promise.Premise.T_NORMAL_24567,
     })
 def handle_manage_library():

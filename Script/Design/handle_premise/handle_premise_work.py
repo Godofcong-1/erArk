@@ -22,7 +22,7 @@ def add_premise(premise: str) -> FunctionType:
         def return_wrapper(*args, **kwargs):
             return func(*args, **kwargs)
 
-        constant.handle_premise_data[premise] = return_wrapper
+        constant.handle_premise_data[premise] = return_wrapper  # type: ignore[assignment]
         return return_wrapper
 
     return decoraror
@@ -184,7 +184,7 @@ def handle_work_is_library_manager(character_id: int) -> int:
     return character_data.work.work_type == 101
 
 
-@add_premise(constant_promise.Premise.T_WORK_IS_LIBRARY_MANAGER)
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_LIBRARY_MANAGER)
 def handle_t_work_is_library_manager(character_id: int) -> int:
     """
     交互对象的工作为图书馆管理员
@@ -195,6 +195,32 @@ def handle_t_work_is_library_manager(character_id: int) -> int:
     """
     character_data: game_type.Character = cache.character_data[character_id]
     return handle_work_is_library_manager(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.WORK_IS_RESOURCE_TRADER)
+def handle_work_is_resource_trader(character_id: int) -> int:
+    """
+    自己的工作为资源交易员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 111
+
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_RESOURCE_TRADER)
+def handle_t_work_is_resource_trader(character_id: int) -> int:
+    """
+    交互对象的工作为资源交易员
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_resource_trader(character_data.target_character_id)
 
 
 @add_premise(constant_promise.Premise.WORK_IS_TEACHER)
@@ -565,6 +591,21 @@ def handle_patient_wait(character_id: int) -> int:
     int -- 权重
     """
     if cache.rhodes_island.patient_now > 0:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.MEDICAL_WARD_WAIT)
+def handle_medical_ward_wait(character_id: int) -> int:
+    """
+    有住院患者需要照护
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    hospitalized = getattr(cache.rhodes_island, "medical_hospitalized", {})
+    if hospitalized:
         return 1
     return 0
 
