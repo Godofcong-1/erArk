@@ -223,7 +223,7 @@ class CVEMenu(QDialog):
             self.cve_text.setText("好感度的-1级和1~8级分别为：负数，100，500，1000，2500，5000，10000，50000，100000，此处使用的为好感的具体数值，不是等级")
         elif index == 2:
             self.cve_b2.setVisible(False)
-            self.cve_text.setText("信赖度的-1级和18级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%，此处使用的为信赖度的具体数值，不是等级")
+            self.cve_text.setText("信赖度的-1级和18级分别为：负数，25%，50%，75%，100%，150%，200%，250%，300%\n此处使用的为信赖度的具体数值，不是等级，只填数字，不加百分号")
         elif index == 3:
             self.cve_b2.clear()
             for ability_id, ability_name in cache_control.ability_data.items():

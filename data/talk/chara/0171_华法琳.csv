@@ -36,7 +36,7 @@ str,str,int,str,str
 31,stroke,171,sys_0&high_10&love_ge_2,双手在{TargetName}的腰间游走。\n“啊咧？忍不住了吗，{PlayerName}。”
 32,stroke,171,sys_0&high_10&love_ge_3,手刚伸出来就被{TargetName}抓住手腕，她的另一只手则顺势伏上{PlayerName}的胸膛。\n“怎么？只准你手脚不干净吗？”
 33,stroke,171,sys_0&love_4&high_10,熟练地抚摸着{TargetName}的身体，她对此并没有多大反应，只是闭上眼睛享受着爱意。\n“嗯哼——”
-34,stroke,171,sys_0&high_10&CVP_A2_X_GE_50%&not_fall,尝试与{TargetName}多一些身体接触。\n“怎么了吗，{PlayerName}？”
+34,stroke,171,sys_0&high_10&CVP_A2_X_GE_50&not_fall,尝试与{TargetName}多一些身体接触。\n“怎么了吗，{PlayerName}？”
 35,chat_failed,171,high_999,聊天逐渐陷入尴尬，两人只能默默地对视。\n“盯——”“盯——”\n“噗嗤——，哈哈哈。”\n最终是{TargetName}没绷住笑出声来。
 36,apologize,171,sys_0&high_10&love_0_or_le_1,“唉——”{TargetName}叹息一声，“下不为例哦，{PlayerName}。”
 37,apologize,171,sys_0&high_10&love_2,“嘛——虽然当时确实是你做过火了，但我也没少整活，可以理解，不过下次记得提前知会我一声。”
