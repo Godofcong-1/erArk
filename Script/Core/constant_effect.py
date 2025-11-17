@@ -1,5 +1,3 @@
-from psutil import POWER_TIME_UNKNOWN
-
 
 class BehaviorEffect:
     """行为结算效果函数"""
