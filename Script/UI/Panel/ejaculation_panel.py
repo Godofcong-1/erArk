@@ -471,6 +471,7 @@ def ejaculation_flow(part_cid: int, part_type: int, target_character_id: int = 0
         line_feed.draw()
 
     # 结算成就
+    achievement_panel.get_achievement_judge_by_value(1201, 1)
     achievement_panel.achievement_flow(_("射精"))
 
 class Ejaculation_Panel:
