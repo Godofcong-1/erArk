@@ -958,6 +958,82 @@ class Mark_Up:
     """ 升级需求的宝珠类型 """
 
 
+class MedicalComplication:
+    """ 并发症模板定义 """
+
+    cid: int
+    """ 条目id """
+    name: str
+    """ 并发症名称 """
+    weight: float
+    """ 抽取权重 """
+    normal_medicine_bonus: float
+    """ 普通药额外需求 """
+    description: str
+    """ 说明 """
+
+
+class MedicalHospitalLevel:
+    """ 医疗区等级定义 """
+
+    cid: int
+    """ 条目id """
+    facility_level: int
+    """ 医疗区等级 """
+    daily_patient_base: int
+    """ 每日刷新基础病人数量 """
+    bed_limit: int
+    """ 基础床位上限 """
+    ratio_min: float
+    """ 收费系数刷新下限 """
+    ratio_max: float
+    """ 收费系数刷新上限 """
+
+
+class MedicalPriceConfig:
+    """ 收费系数调整定义 """
+
+    cid: int
+    """ 条目id """
+    price_ratio: float
+    """ 收费系数 """
+    refresh_multiplier: float
+    """ 病人刷新修正 """
+    income_multiplier: float
+    """ 收入加成修正 """
+
+
+class MedicalSeverity:
+    """ 病情严重程度定义 """
+
+    cid: int
+    """ 条目id """
+    name: str
+    """ 病情名称 """
+    weight: float
+    """ 抽取权重 """
+    base_hours: float
+    """ 基础诊疗工时 """
+    diagnose_income: int
+    """ 基础诊疗收入 """
+    normal_medicine_min: float
+    """ 普通药需求下限 """
+    normal_medicine_max: float
+    """ 普通药需求上限 """
+    special_medicine_template: str
+    """ 特效药组合 """
+    medicine_income_ratio: float
+    """ 药费收益系数 """
+    require_hospitalization: int
+    """ 是否需要住院 """
+    hospital_success_income_ratio: float
+    """ 住院成功收入系数 """
+    hospital_base_income: int
+    """ 住院基础收入 """
+    discharge_bonus: int
+    """ 出院奖励 """
+
+
 class Moon:
     """ 月相配置(明日更满为正反之为负) """
 

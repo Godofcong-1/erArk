@@ -128,6 +128,14 @@ config_instruct_type: Dict[int, config_def.InstructType] = {}
 """ 指令类型配置 """
 config_instruct_sex_type: Dict[int, config_def.Instruct_Sex_Type] = {}
 """ 性爱指令类型配置 """
+config_medical_severity: Dict[int, config_def.MedicalSeverity] = {}
+""" 医疗系统病情等级配置 """
+config_medical_complication: Dict[int, config_def.MedicalComplication] = {}
+""" 医疗系统并发症配置 """
+config_medical_hospital_level: Dict[int, config_def.MedicalHospitalLevel] = {}
+""" 医疗部等级→刷新/床位配置 """
+config_medical_price_config: Dict[float, config_def.MedicalPriceConfig] = {}
+""" 医疗收费系数配置，键为收费系数 """
 config_item: Dict[int, config_def.Item] = {}
 """ 道具配置数据 """
 config_item_tag_data: Dict[str, Set] = {}
@@ -1072,6 +1080,54 @@ def load_instruct_sex_type():
         config_instruct_sex_type[now_tem.cid] = now_tem
 
 
+def load_medical_severity():
+    """载入医疗系统病情等级配置"""
+    if "MedicalSeverity" not in config_data:
+        return
+    now_data = config_data["MedicalSeverity"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.MedicalSeverity()
+        now_type.__dict__ = tem_data
+        config_medical_severity[now_type.cid] = now_type
+
+
+def load_medical_complication():
+    """载入医疗系统并发症配置"""
+    if "MedicalComplication" not in config_data:
+        return
+    now_data = config_data["MedicalComplication"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.MedicalComplication()
+        now_type.__dict__ = tem_data
+        config_medical_complication[now_type.cid] = now_type
+
+
+def load_medical_hospital_level():
+    """载入医疗部等级配置"""
+    if "MedicalHospitalLevel" not in config_data:
+        return
+    now_data = config_data["MedicalHospitalLevel"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.MedicalHospitalLevel()
+        now_type.__dict__ = tem_data
+        config_medical_hospital_level[now_type.facility_level] = now_type
+
+
+def load_medical_price_config():
+    """载入医疗收费系数配置"""
+    if "MedicalPriceConfig" not in config_data:
+        return
+    now_data = config_data["MedicalPriceConfig"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.MedicalPriceConfig()
+        now_type.__dict__ = tem_data
+        config_medical_price_config[now_type.price_ratio] = now_type
+
+
 def load_item():
     """载入道具配置数据"""
     now_data = config_data["Item"]
@@ -1246,8 +1302,8 @@ def load_talk():
 
         config_talk_data_by_chara_adv.setdefault(now_tem.behavior_id, {})
         config_talk_data_by_chara_adv[now_tem.behavior_id].setdefault(int(now_tem.adv_id), {})
-        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].setdefault(now_tem.version, [])
-        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)][now_tem.version].append(now_tem.cid)
+        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)].setdefault(now_tem.version, [])  # type: ignore[attr-defined]
+        config_talk_data_by_chara_adv[now_tem.behavior_id][int(now_tem.adv_id)][now_tem.version].append(now_tem.cid)  # type: ignore[attr-defined]
 
         config_talk_premise_data.setdefault(now_tem.cid, set())
         # print(f"debug now_tem.context = {now_tem.context}")
@@ -1993,6 +2049,10 @@ def init():
     load_font_data()
     load_instruct_type()
     load_instruct_sex_type()
+    load_medical_severity()
+    load_medical_complication()
+    load_medical_hospital_level()
+    load_medical_price_config()
     load_instruct_judge_data()
     load_item()
     load_juel()
