@@ -1,0 +1,10 @@
+cid,facility_level,daily_patient_base,bed_limit,ratio_min,ratio_max
+条目id,医疗区等级,每日刷新基础病人数量,基础床位上限,收费系数刷新下限,收费系数刷新上限
+int,int,int,int,float,float
+0,0,0,0,0,0
+医疗区等级定义
+1,1,6,4,0.6,1.4
+2,2,8,6,0.7,1.5
+3,3,10,9,0.75,1.6
+4,4,13,12,0.8,1.7
+5,5,16,15,0.85,1.8
