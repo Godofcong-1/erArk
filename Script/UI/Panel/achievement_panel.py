@@ -584,7 +584,7 @@ def settle_semen_shoot():
     if 3 not in pl_character_data.h_state.orgasm_count:
         pl_character_data.h_state.orgasm_count[3] = [0, 0]
     now_semen_shoot_count = pl_character_data.h_state.orgasm_count[3][0]
-    all_semen_shoot_count = pl_character_data.h_state.orgasm_count[3][1]
+    all_semen_shoot_count = pl_character_data.experience[21]
     # 对方身上精液量
     inner_all_semen = 0
     cloth_all_semen = 0
@@ -595,7 +595,7 @@ def settle_semen_shoot():
     # 构建成就结算列表
     achievement_checks = [
         # (判断值, 成就ID)
-        (now_semen_shoot_count, 1201),  # 首次射精
+        (all_semen_shoot_count, 1201),  # 首次射精
         (now_semen_shoot_count, 1202),  # 在一次H中射精至少20次
         (all_semen_shoot_count, 1203),  # 累积射精次数超过1000次
         (inner_all_semen, 1204),  # 在一次H中，在单名干员的阴道、子宫、肛门、尿道里的总射精量超过500ml

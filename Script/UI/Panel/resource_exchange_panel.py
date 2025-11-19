@@ -762,6 +762,7 @@ class Resource_Exchange_Line_Panel:
 
             # 按钮列表
             stock_buttons = [(" [-1000] ", -1000), (" [-100] ", -100), (" [-10] ", -10), (" [-1] ", -1), (" [+1] ", 1), (" [+10] ", 10), (" [+100] ", 100), (" [+1000] ", 1000)]
+            price_buttons = [(" [-20%] ", -20), (" [-5%] ", -5), (" [-1%] ", -1), (" [+1%] ", 1), (" [+5%] ", 5), (" [+20%] ", 20)]
 
             # 自动买入开关
             buy_on_button_text = _("[自动买入：{0}]").format(_("开启") if settings["buy_on"] else _("关闭"))
@@ -808,7 +809,6 @@ class Resource_Exchange_Line_Panel:
                 price_buy_draw.text = ("{0}：").format(attr_calculation.pad_display_width(_("自动买入触发价格"), 20, align="center"))
                 price_buy_draw.text += ("{0}%").format(settings["buy_price_percent"])
                 price_buy_draw.draw()
-                price_buttons = [(" [-20%] ", -20), (" [-5%] ", -5), (" [-1%] ", -1), (" [+1%] ", 1), (" [+5%] ", 5), (" [+20%] ", 20)]
                 for label, delta in price_buttons:
                     button = draw.CenterButton(
                         _(label),
