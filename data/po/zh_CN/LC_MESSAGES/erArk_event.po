@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-11 17:37+0800\n"
+"POT-Creation-Date: 2025-11-21 14:16+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -974,6 +974,10 @@ msgstr ""
 
 #: Event:95f88a3a-d45f-47de-86df-38063bc14880
 msgid "“既然是主人的安排，那人家就会好好待在这的。”被再次送进监牢的{TargetName}的眼神中流露出一丝寂寞。\n“要多来调教人家...哈~”{TargetName}不甘寂寞，直接在{PlayerName}面前开始抚摸自己的身体，发出一阵阵淫靡的呻吟声。"
+msgstr ""
+
+#: Event:4becaa5d-1cf2-4b2f-852a-f3ed3513c8e4
+msgid "空事件"
 msgstr ""
 
 #: Event:f14160ac-35ea-4dc4-9a82-cd1b0cc53e94
