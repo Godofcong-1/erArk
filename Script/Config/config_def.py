@@ -958,19 +958,189 @@ class Mark_Up:
     """ 升级需求的宝珠类型 """
 
 
-class MedicalComplication:
-    """ 并发症模板定义 """
+class MedicalBodySystem:
+    """ 医疗生理系统部位定义 """
 
-    cid: int
-    """ 条目id """
+    system_id: int
+    """ 生理系统ID """
+    system_name: str
+    """ 系统名称 """
+    part_id: int
+    """ 部位ID """
+    part_name: str
+    """ 部位名称 """
+    part_type: int
+    """ 部位类型(0体表/1体内) """
+    gender_limit: int
+    """ 性别限制(0女/1男/2通用) """
+    organ_priority: int
+    """ 并发症抽取优先级 """
+    notes: str
+    """ 补充说明 """
+
+
+class MedicalComplication:
+    """ 医疗并发症详表 """
+
+    complication_id: int
+    """ 并发症ID """
+    system_id: int
+    """ 系统ID """
+    part_id: int
+    """ 部位ID """
+    severity_level: int
+    """ 严重等级(0轻/1中/2重) """
     name: str
-    """ 并发症名称 """
+    """ 名称 """
     weight: float
     """ 抽取权重 """
     normal_medicine_bonus: float
-    """ 普通药额外需求 """
-    description: str
-    """ 说明 """
+    """ 普通药增量 """
+    appearance_indicator: str
+    """ 外观表征 """
+    patient_statement_clear: str
+    """ 清晰自述 """
+    patient_statement_vague: str
+    """ 模糊自述 """
+    exam_method: str
+    """ 检查方法 """
+    exam_result_positive: str
+    """ 阳性结果描述 """
+    exam_result_negative: str
+    """ 阴性结果描述 """
+    recheck_hint_mild: str
+    """ 轻症更换检查提示 """
+    recheck_hint_moderate: str
+    """ 中症更换检查提示 """
+    recheck_hint_severe: str
+    """ 重症更换检查提示 """
+    treatment_plan: str
+    """ 治疗方案 """
+    requires_surgery: int
+    """ 是否需要手术 """
+
+
+class MedicalComplication_6:
+    """ 医疗并发症详表 """
+
+    complication_id: int
+    """ 并发症ID """
+    system_id: int
+    """ 系统ID """
+    part_id: int
+    """ 部位ID """
+    severity_level: int
+    """ 严重等级(0轻/1中/2重) """
+    name: str
+    """ 名称 """
+    weight: float
+    """ 抽取权重 """
+    normal_medicine_bonus: float
+    """ 普通药增量 """
+    appearance_indicator: str
+    """ 外观表征 """
+    patient_statement_clear: str
+    """ 清晰自述 """
+    patient_statement_vague: str
+    """ 模糊自述 """
+    exam_method: str
+    """ 检查方法 """
+    exam_result_positive: str
+    """ 阳性结果描述 """
+    exam_result_negative: str
+    """ 阴性结果描述 """
+    recheck_hint_mild: str
+    """ 轻症更换检查提示 """
+    recheck_hint_moderate: str
+    """ 中症更换检查提示 """
+    recheck_hint_severe: str
+    """ 重症更换检查提示 """
+    treatment_plan: str
+    """ 治疗方案 """
+    requires_surgery: int
+    """ 是否需要手术 """
+
+
+class MedicalComplication_7:
+    """ 医疗并发症详表 """
+
+    complication_id: int
+    """ 并发症ID """
+    system_id: int
+    """ 系统ID """
+    part_id: int
+    """ 部位ID """
+    severity_level: int
+    """ 严重等级(0轻/1中/2重) """
+    name: str
+    """ 名称 """
+    weight: float
+    """ 抽取权重 """
+    normal_medicine_bonus: float
+    """ 普通药增量 """
+    appearance_indicator: str
+    """ 外观表征 """
+    patient_statement_clear: str
+    """ 清晰自述 """
+    patient_statement_vague: str
+    """ 模糊自述 """
+    exam_method: str
+    """ 检查方法 """
+    exam_result_positive: str
+    """ 阳性结果描述 """
+    exam_result_negative: str
+    """ 阴性结果描述 """
+    recheck_hint_mild: str
+    """ 轻症更换检查提示 """
+    recheck_hint_moderate: str
+    """ 中症更换检查提示 """
+    recheck_hint_severe: str
+    """ 重症更换检查提示 """
+    treatment_plan: str
+    """ 治疗方案 """
+    requires_surgery: int
+    """ 是否需要手术 """
+
+
+class MedicalComplication_例子:
+    """ 医疗并发症详表 """
+
+    complication_id: int
+    """ 并发症ID """
+    system_id: int
+    """ 系统ID """
+    part_id: int
+    """ 部位ID """
+    severity_level: int
+    """ 严重等级(0轻/1中/2重) """
+    name: str
+    """ 名称 """
+    weight: float
+    """ 抽取权重 """
+    normal_medicine_bonus: float
+    """ 普通药增量 """
+    appearance_indicator: str
+    """ 外观表征 """
+    patient_statement_clear: str
+    """ 清晰自述 """
+    patient_statement_vague: str
+    """ 模糊自述 """
+    exam_method: str
+    """ 检查方法 """
+    exam_result_positive: str
+    """ 阳性结果描述 """
+    exam_result_negative: str
+    """ 阴性结果描述 """
+    recheck_hint_mild: str
+    """ 轻症更换检查提示 """
+    recheck_hint_moderate: str
+    """ 中症更换检查提示 """
+    recheck_hint_severe: str
+    """ 重症更换检查提示 """
+    treatment_plan: str
+    """ 治疗方案 """
+    requires_surgery: int
+    """ 是否需要手术 """
 
 
 class MedicalHospitalLevel:
