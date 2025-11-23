@@ -982,7 +982,7 @@ class MedicalBodySystem:
 class MedicalComplication:
     """ 医疗并发症详表 """
 
-    complication_id: int
+    cid: int
     """ 并发症ID """
     system_id: int
     """ 系统ID """
@@ -1202,6 +1202,12 @@ class MedicalSeverity:
     """ 住院基础收入 """
     discharge_bonus: int
     """ 出院奖励 """
+    minor_complication_count: int
+    """ 轻度并发症数量 """
+    moderate_complication_count: int
+    """ 中度并发症数量 """
+    severe_complication_count: int
+    """ 重度并发症数量 """
 
 
 class Moon:
