@@ -142,6 +142,10 @@ class StateMachine:
     """ 工作：调控设施供能 """
     WORK_INVESTIGATE_RESOURCE_MARKET = 322
     """ 工作：研判资源市场 """
+    WORK_PERFORM_SURGERY = 323
+    """ 工作：进行手术治疗 """
+    WORK_WARD_ROUND = 324
+    """ 工作：病房查房 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """

@@ -610,6 +610,27 @@ def handle_medical_ward_wait(character_id: int) -> int:
     return 0
 
 
+@add_premise(constant_promise.Premise.MEDICAL_SURGERY_WAIT)
+def handle_medical_surgery_wait(character_id: int) -> int:
+    """
+    有住院患者等待手术
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.System.medical import medical_constant
+    hospitalized = getattr(cache.rhodes_island, "medical_hospitalized", {})
+    if not hospitalized:
+        return 0
+    for patient in hospitalized.values():
+        if getattr(patient, "state", None) != medical_constant.MedicalPatientState.HOSPITALIZED:
+            continue
+        if getattr(patient, "need_surgery", False) and not getattr(patient, "surgery_blocked", False):
+            return 1
+    return 0
+
+
 @add_premise(constant_promise.Premise.NEW_NPC_WAIT)
 def handle_new_npc_wait(character_id: int) -> int:
     """

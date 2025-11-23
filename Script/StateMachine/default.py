@@ -2386,6 +2386,32 @@ def character_work_cure_patient(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_CURE_PATIENT
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_WARD_ROUND)
+def character_work_ward_round(character_id: int):
+    """角色工作：病房查房"""
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.WARD_ROUND
+    adjust = max(basement.calc_facility_efficiency(6), 0.1)
+    new_time = max(int(45 / adjust), 10)
+    character_data.behavior.duration = new_time
+    character_data.state = constant.CharacterStatus.STATUS_WARD_ROUND
+
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_PERFORM_SURGERY)
+def character_work_perform_surgery(character_id: int):
+    """角色工作：执行手术治疗"""
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.target_character_id = character_id
+    character_data.behavior.behavior_id = constant.Behavior.PERFORM_SURGERY
+    adjust = max(basement.calc_facility_efficiency(6), 0.1)
+    new_time = max(int(60 / adjust), 15)
+    character_data.behavior.duration = new_time
+    character_data.state = constant.CharacterStatus.STATUS_PERFORM_SURGERY
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_RECRUIT)
 def character_work_recruit(character_id: int):
     """

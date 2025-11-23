@@ -826,6 +826,8 @@ class CHARA_WORK:
         """ 角色工作的类型 """
         self.recruit_index: int = -1
         """ 角色当前正在工作的招募位 """
+        self.medical_patient_id: int = 0
+        """ 当前正在处理的门诊病人ID，用于医疗经营系统 """
 
 
 class CHARA_ENTERTAINMENT:
@@ -1206,18 +1208,49 @@ class Rhodes_Island:
         """
 
         # 医疗部
+        from Script.System.medical import medical_constant
         self.patient_now: int = 0
-        """ 当前患者人数 """
+        """ 当前患者人数（旧系统兼容字段） """
         self.patient_cured: int = 0
-        """ 当前已治疗患者人数 """
+        """ 当前已治疗患者人数（旧系统兼容字段） """
         self.patient_max: int = 0
-        """ 患者人数上限 """
-        self.cure_income: int = 0
-        """ 今日总治疗收入 """
+        """ 患者人数上限（旧系统兼容字段） """
+        self.medical_patients_today: Dict[int, medical_constant.MedicalPatient] = {}
+        """ 当日待诊病人数据，patient_id:病人结构 """
+        self.medical_hospitalized: Dict[int, medical_constant.MedicalPatient] = {}
+        """ 住院病人数据，patient_id:病人结构 """
+        self.medical_price_ratio: float = 0.0
+        """ 当前收费系数，0 表示尚未初始化 """
+        self.medical_bed_limit: int = 0
+        """ 医疗区床位上限（含加成） """
+        self.medical_inventory_accumulator: Dict[int, float] = {}
+        """ 药物扣除累计器，资源id:累计小数 """
+        self.medical_surgery_records: List[Dict[str, Any]] = []
+        """ 今日手术记录列表 """
+        self.medical_income_today: int = 0
+        """ 今日医疗板块龙门币收入 """
+        self.medical_income_total: int = 0
+        """ 累计医疗板块龙门币收入 """
+        self.medical_clinic_doctor_ids: List[int] = []
+        """ 当前分配为门诊医生的干员id列表 """
+        self.medical_clinic_doctor_power: float = 0.0
+        """ 门诊医生医疗能力总和 """
+        self.medical_hospital_doctor_ids: List[int] = []
+        """ 当前分配为住院医生的干员id列表 """
+        self.medical_hospital_doctor_power: float = 0.0
+        """ 住院医生医疗能力总和 """
+        self.medical_clinic_doctor_target: int = 0
+        """ 门诊医生目标数量（用于自动排班） """
+        self.medical_hospital_doctor_target: int = 0
+        """ 住院医生目标数量（用于自动排班） """
+        self.medical_patient_priority_mode: str = medical_constant.MedicalPatientPriority.NORMAL.value
+        """ 医疗部病人接诊优先策略 """
+        self.medical_player_current_patient_id: int = 0
+        """ 玩家诊疗面板当前占用的病人ID，0 表示无会话 """
+        self.medical_doctor_specializations: Dict[str, Dict[str, List[int]]] = {}
+        """ 医生分科配置，按岗位分类记录各系统的医生id列表 """
         self.patient_cured_all: int = 0
-        """ 已治疗的患者总人数 """
-        self.cure_income_all: int = 0
-        """ 至今为止的治疗总收入 """
+        """ 已治疗的患者总人数（旧系统兼容字段） """
         self.urine_in_fridge: Dict[int, int] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
         self.physical_examination_setting: Dict[int, int] = {}

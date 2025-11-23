@@ -1,5 +1,6 @@
 import random
 from types import FunctionType
+from typing import Dict, Optional
 from Script.Core import (
     cache_control,
     game_type,
@@ -24,6 +25,7 @@ def get_base_zero() -> game_type.Rhodes_Island:
     """
     基地情况结构体，设为空
     """
+    from Script.System.medical import medical_service
 
     base_data = game_type.Rhodes_Island()
 
@@ -91,6 +93,9 @@ def get_base_zero() -> game_type.Rhodes_Island:
     # 初始化公务工作
     base_data.office_work += 200
     base_data.effectiveness = 100
+
+    # 初始化医疗系统运行期缓存
+    medical_service.init_medical_department_data(base_data, reset_runtime=True)
 
     return base_data
 
@@ -336,12 +341,20 @@ def update_work_people():
     """
     刷新各干员的职位和当前正在工作的干员
     """
+    from Script.System.medical import medical_constant, medical_service
 
     # 初始化各职位的干员集合
     cache.rhodes_island.work_people_now = 0
     cache.rhodes_island.trade_operator_ids_list = []
     for all_cid in game_config.config_work_type:
         cache.rhodes_island.all_work_npc_set[all_cid] = set()
+
+    clinic_doctors = []
+    hospital_doctors = []
+    clinic_power_total = 0.0
+    hospital_power_total = 0.0
+    clinic_work_id = medical_constant.MedicalDoctorProfession.CLINICIAN.value
+    hospital_work_id = medical_constant.MedicalDoctorProfession.HOSPITALIST.value
 
     # 检查各资源类型主交易员有效性
     for res_type in list(cache.rhodes_island.resource_type_main_trader.keys()):
@@ -402,24 +415,25 @@ def update_work_people():
     cache.npc_id_got.discard(0)
     for chara_id in cache.npc_id_got:
         character_data = cache.character_data[chara_id]
+        work_type = character_data.work.work_type
 
         # 如果干员有职位，将干员加入对应职位集合
-        if character_data.work.work_type:
-            cache.rhodes_island.all_work_npc_set[character_data.work.work_type].add(chara_id)
+        if work_type:
+            cache.rhodes_island.all_work_npc_set[work_type].add(chara_id)
             cache.rhodes_island.work_people_now += 1
 
             # 将旧的外交官改为新的邀请专员
-            if character_data.work.work_type == 131 and character_data.sp_flag.in_diplomatic_visit == 0:
+            if work_type == 131 and character_data.sp_flag.in_diplomatic_visit == 0:
                 character_data.work.work_type = 132
 
             # 维护药材/花草种植员列表
-            if character_data.work.work_type == 161:
+            if work_type == 161:
                 if chara_id not in cache.rhodes_island.herb_garden_operator_ids:
                     cache.rhodes_island.herb_garden_operator_ids.append(chara_id)
             else:
                 if chara_id in cache.rhodes_island.herb_garden_operator_ids:
                     cache.rhodes_island.herb_garden_operator_ids.remove(chara_id)
-            if character_data.work.work_type == 162:
+            if work_type == 162:
                 if chara_id not in cache.rhodes_island.green_house_operator_ids:
                     cache.rhodes_island.green_house_operator_ids.append(chara_id)
             else:
@@ -430,8 +444,15 @@ def update_work_people():
             cache.rhodes_island.all_work_npc_set[0].add(chara_id)
         # print(f"debug cache.base_resouce.all_work_npc_set = {cache.base_resouce.all_work_npc_set}")
 
+        if work_type == clinic_work_id:
+            clinic_doctors.append(chara_id)
+            clinic_power_total += float(character_data.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
+        elif work_type == hospital_work_id:
+            hospital_doctors.append(chara_id)
+            hospital_power_total += float(character_data.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
+
         # 如果是供能调控员，则加入供能调控员列表
-        if character_data.work.work_type == 11:
+        if work_type == 11:
             if chara_id not in cache.rhodes_island.power_operator_ids_list:
                 cache.rhodes_island.power_operator_ids_list.append(chara_id)
         # 如果不是供能调控员，则从供能调控员列表中移除
@@ -440,17 +461,17 @@ def update_work_people():
                 cache.rhodes_island.power_operator_ids_list.remove(chara_id)
 
         # 如果不是检修工程师，则清空该角色的检修目标
-        if character_data.work.work_type != 21:
+        if work_type != 21:
             if chara_id in cache.rhodes_island.maintenance_place:
                 cache.rhodes_island.maintenance_place.pop(chara_id)
 
         # 如果不是铁匠，则清空该角色的维修装备
-        if character_data.work.work_type != 22:
+        if work_type != 22:
             if chara_id in cache.rhodes_island.maintenance_equipment_chara_id:
                 cache.rhodes_island.maintenance_equipment_chara_id.pop(chara_id)
 
         # 招聘专员列表维护
-        if character_data.work.work_type == 71:
+        if work_type == 71:
             if chara_id not in cache.rhodes_island.hr_operator_ids_list:
                 cache.rhodes_island.hr_operator_ids_list.append(chara_id)
         else:
@@ -458,7 +479,7 @@ def update_work_people():
                 cache.rhodes_island.hr_operator_ids_list.remove(chara_id)
 
         # 贸易管理干员列表维护
-        if character_data.work.work_type == 111:
+        if work_type == 111:
             if chara_id not in cache.rhodes_island.trade_operator_ids_list:
                 cache.rhodes_island.trade_operator_ids_list.append(chara_id)
         else:
@@ -466,13 +487,23 @@ def update_work_people():
                 cache.rhodes_island.trade_operator_ids_list.remove(chara_id)
 
         # 如果是工人，则加入工人列表
-        if character_data.work.work_type == 121:
+        if work_type == 121:
             if chara_id not in cache.rhodes_island.production_worker_ids:
                 cache.rhodes_island.production_worker_ids.append(chara_id)
         # 如果不是工人，则从工人列表中移除
         else:
             if chara_id in cache.rhodes_island.production_worker_ids:
                 cache.rhodes_island.production_worker_ids.remove(chara_id)
+
+    clinic_doctors.sort()
+    hospital_doctors.sort()
+    medical_service.update_doctor_assignments(
+        clinic_doctors=clinic_doctors,
+        hospital_doctors=hospital_doctors,
+        clinic_power=clinic_power_total,
+        hospital_power=hospital_power_total,
+        target_base=cache.rhodes_island,
+    )
 
 
 def update_facility_people():
@@ -487,6 +518,74 @@ def update_facility_people():
         # 图书馆读者统计
         if handle_premise.handle_in_library(id):
             cache.rhodes_island.reader_now += 1
+
+
+def assign_character_work(character_id: int, work_id: int, *, update: bool = True) -> bool:
+    """为指定干员设置新的工作类型，必要时同步相关缓存"""
+
+    if character_id not in cache.character_data:
+        return False
+
+    target_data = cache.character_data[character_id]
+    current_work = target_data.work.work_type
+
+    if current_work == work_id:
+        return True
+
+    if current_work == 193 and work_id != 193:
+        for i in target_data.body_manage:
+            if i in range(30, 40) and target_data.body_manage[i]:
+                target_data.body_manage[i] = 0
+
+    if current_work == 191 and work_id != 191 and cache.rhodes_island.current_warden_id == character_id:
+        cache.rhodes_island.current_warden_id = 0
+        if getattr(target_data, "pre_dormitory", None):
+            target_data.dormitory = target_data.pre_dormitory
+
+    if work_id == 191:
+        if handle_premise.handle_have_warden(0):
+            old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
+            old_warden.work.work_type = 0
+            if getattr(old_warden, "pre_dormitory", None):
+                old_warden.dormitory = old_warden.pre_dormitory
+        cache.rhodes_island.current_warden_id = character_id
+        target_data.pre_dormitory = target_data.dormitory
+        target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
+
+    target_data.work.work_type = work_id
+
+    if update:
+        update_work_people()
+        update_facility_people()
+    return True
+
+
+def dispatch_medical_doctors(
+    clinic_target: Optional[int] = None,
+    hospital_target: Optional[int] = None,
+    *,
+    update: bool = True,
+) -> Dict[str, int]:
+    """调用医疗系统的自动分配逻辑，并在需要时刷新基地统计"""
+    from Script.System.medical import medical_service
+
+    # 先刷新一次配置，确保目标人数与候选列表基于最新数据
+    update_work_people()
+
+    def _assign_without_refresh(character_id: int, work_type: int) -> bool:
+        return assign_character_work(character_id, work_type, update=False)
+
+    refresh_callbacks = [update_work_people]
+    if update:
+        refresh_callbacks.append(update_facility_people)
+
+    return medical_service.dispatch_medical_doctors(
+        clinic_target=clinic_target,
+        hospital_target=hospital_target,
+        target_base=cache.rhodes_island,
+        assign_work_func=_assign_without_refresh,
+        refresh_callbacks=refresh_callbacks,
+    )
 
 
 def settle_milk():
@@ -630,22 +729,23 @@ def settle_income():
     from Script.UI.Panel import achievement_panel
 
     # 计算医疗部收入
-    today_cure_income = int(cache.rhodes_island.cure_income)
+    today_medical_income = int(cache.rhodes_island.medical_income_today)
     # 计算总收入
-    today_all_income = today_cure_income
+    today_all_income = today_medical_income
     # 转化为龙门币
     cache.rhodes_island.materials_resouce[1] += today_all_income
 
     # 刷新新病人数量，已治愈病人数量和治疗收入归零
     cache.rhodes_island.patient_now = random.randint(int(cache.rhodes_island.patient_max / 2), cache.rhodes_island.patient_max)
     cache.rhodes_island.patient_cured = 0
-    cache.rhodes_island.cure_income = 0
+    cache.rhodes_island.medical_income_total += today_medical_income
+    cache.rhodes_island.medical_income_today = 0
     cache.rhodes_island.all_income = 0
 
     # 输出提示信息
     now_draw_text = "\n"
     now_draw_text += _("今日罗德岛收入为：")
-    now_draw_text += _("医疗部收入{0}，").format(today_cure_income)
+    now_draw_text += _("医疗部收入{0}，").format(today_medical_income)
     now_draw_text += _("总收入为{0}，已全部转化为龙门币\n").format(today_all_income)
     now_draw = draw.WaitDraw()
     now_draw.width = window_width

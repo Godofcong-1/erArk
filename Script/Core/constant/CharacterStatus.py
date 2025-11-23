@@ -183,6 +183,10 @@ class CharacterStatus:
     """ 训练囚犯 """
     STATUS_MANAGE_FACILITY_POWER = 223
     """ 调控设施供能 """
+    STATUS_PERFORM_SURGERY = 225
+    """ 进行手术治疗 """
+    STATUS_WARD_ROUND = 226
+    """ 病房查房 """
     STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     STATUS_MORNING_SALUTATION_2 = 252

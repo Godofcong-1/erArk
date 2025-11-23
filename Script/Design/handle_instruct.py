@@ -3308,6 +3308,10 @@ def handle_exercise():
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
+    if handle_premise.handle_debug_mode_on(0):
+        from Script.System.medical import medical_player_diagnose_panel
+        if medical_player_diagnose_panel.start_player_diagnose_flow():
+            return
     chara_handle_instruct_common_settle(constant.Behavior.CURE_PATIENT, force_taget_wait = True)
 
 

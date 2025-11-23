@@ -55,6 +55,7 @@ class Manage_Basement_Panel:
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
             _("文职部"):[_("[招募系统]")],
+            _("医疗部"):[_("[医疗经营系统]")],
             _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
             _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
             _("疗养庭院"):[_("[农业系统]")],
@@ -291,6 +292,7 @@ class Manage_Basement_Panel:
         """
 
         from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training, equipmen_panel, manage_power_system_panel
+        from Script.System.medical import medical_department_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
@@ -336,6 +338,16 @@ class Manage_Basement_Panel:
                 return
             else:
                 now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
+        elif _("医疗经营系统") in son_panel:
+            # 显示未实装提示
+            if handle_premise.handle_debug_mode_off(0):
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n○医疗经营系统尚未实装，敬请期待后续更新\n")
+                info_draw.style = "gold_enrod"
+                info_draw.width = self.width
+                info_draw.draw()
+                return
+            now_panel = medical_department_panel.Medical_Department_Panel(self.width)
         now_panel.draw()
 
     def show_department(self, department: str):
@@ -395,8 +407,8 @@ class Manage_Basement_Panel:
             elif department == _("医疗部"):
                 patient_cured,patient_now = str(cache.rhodes_island.patient_cured),str(cache.rhodes_island.patient_now)
                 now_text += _("\n  今日已治疗患者数/排队中患者数：{0}/{1}").format(patient_cured, patient_now)
-                cure_income = str(cache.rhodes_island.cure_income)
-                now_text += _("\n  截至目前为止，今日医疗部门龙门币总收入为：{0}\n").format(cure_income)
+                medical_income = str(cache.rhodes_island.medical_income_today)
+                now_text += _("\n  截至目前为止，今日医疗部门龙门币总收入为：{0}\n").format(medical_income)
 
             elif department == _("文职部"):
                 if len(cache.rhodes_island.recruited_id):

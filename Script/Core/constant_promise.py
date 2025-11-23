@@ -3443,6 +3443,8 @@ class Premise:
     """ 工作_经营 有患者正等待就诊 """
     MEDICAL_WARD_WAIT = "medical_ward_wait"
     """ 工作_经营 有住院患者需要照护 """
+    MEDICAL_SURGERY_WAIT = "medical_surgery_wait"
+    """ 工作_经营 有住院患者等待手术 """
     NEW_NPC_WAIT = "new_npc_wait"
     """ 工作_经营 有已招募待确认的干员 """
     HAVE_OFFICE_WORK_NEED_TO_DO = "have_office_work_need_to_do"

@@ -130,6 +130,7 @@ def input_load_save(save_id: str):
     save_id -- 存档id
     """
     from Script.Design import basement, cooking
+    from Script.System.medical import medical_service
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
     new_cache.rhodes_island = basement.get_base_zero()
@@ -251,6 +252,9 @@ def input_load_save(save_id: str):
 
     # 更新游戏地图
     update_count += update_map(loaded_dict)
+
+    # 更新医疗系统存档结构
+    medical_service.update_medical_save_data_structure(loaded_dict)
 
     # 最后输出
     now_draw = draw.NormalDraw()

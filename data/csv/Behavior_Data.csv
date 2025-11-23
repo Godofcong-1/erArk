@@ -93,6 +93,7 @@ int,str,str,int,str,str
 223,manage_facility_power,调控设施供能,30,both,工作
 224,investigate_resource_market,研判资源市场,60,both,工作
 225,perform_surgery,进行手术治疗,60,both,工作
+226,ward_round,病房查房,45,both,工作
 
 251,morning_salutation_1,早安问候：叫起床,5,npc,工作
 252,morning_salutation_2,早安问候：早安吻,5,npc,工作

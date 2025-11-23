@@ -189,6 +189,8 @@ class Instruct:
     """ 战斗训练 """
     CURE_PATIENT = 0
     """ 诊疗病人 """
+    MANAGE_DEDICAL_DEPARTMENT = 0
+    """ 管理医疗 """
     RECRUIT = 0
     """ 招募干员 """
     CONFIM_RECRUIT = 0

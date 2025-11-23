@@ -91,7 +91,8 @@ int,str,str
 222,train_prisoner,1511 - 1514 - 81 - 82 - 86 - 535
 223,manage_facility_power,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1
 224,investigate_resource_market,13 - 14 - 21 - 22 - 71 - CVE_A1_E|80_G_1
-225,perform_surgery,1515 - 1516 - 70 - CVE_A1_E|88_G_1
+225,perform_surgery,1515 - 1516 - 70 - CVE_A1_E|88_G_1 - 541
+226,ward_round,21 - 13 - 14 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 542
 
 251,morning_salutation_1,11 - 12 - 21 - 22
 252,morning_salutation_2,11 - 12 - 21 - 22 - 118 - 71 - CVE_A2_E|0_G_1 - CVE_A2_E|40_G_1 - CVE_A1_E|40_G_1 - CVE_A2_E|153_G_1 - CVE_A1_E|153_G_1

@@ -22,6 +22,7 @@ from Script.Core import cache_control, constant, constant_effect, game_type, get
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
+from Script.System.medical import medical_constant, medical_service
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,
@@ -7341,33 +7342,235 @@ def handle_cure_patient_add_just(
     """
     if not add_time:
         return
-    character_data: game_type.Character = cache.character_data[character_id]
-    target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-    if character_data.dead:
+    doctor_data: game_type.Character = cache.character_data[character_id]
+    if doctor_data.dead:
         return
-    if target_data.dead:
+
+    rhodes_island = cache.rhodes_island
+    before_income = rhodes_island.medical_income_today
+
+    patient_id = getattr(getattr(doctor_data, "work", None), "medical_patient_id", 0)
+    patient_obj = None
+    if patient_id:
+        patient_obj = rhodes_island.medical_patients_today.get(patient_id)
+        if patient_obj is None:
+            patient_obj = rhodes_island.medical_hospitalized.get(patient_id)
+
+    if patient_obj is None:
+        patient_obj = medical_service.acquire_patient_for_doctor(doctor_data)
+
+    if patient_obj is None:
+        if hasattr(doctor_data, "work"):
+            doctor_data.work.medical_patient_id = 0
         return
-    # 获取调整值#
-    adjust = handle_ability.get_ability_adjust(character_data.ability[46])
-    # 如果有交互对象，则算上对方的医疗加成
-    if character_data.target_character_id != character_id:
-        adjust_target = handle_ability.get_ability_adjust(target_data.ability[46])
-        adjust = (adjust + adjust_target) / 1.5
-    # 获得加成 #
-    now_add_lust = add_time * adjust * 50
-    now_add_lust = int(now_add_lust * random.uniform(0.5, 1.5))
 
-    cache.rhodes_island.cure_income += now_add_lust
-    cache.rhodes_island.patient_now -= 1
-    cache.rhodes_island.patient_cured += 1
+    medical_service.advance_diagnose(patient_obj.patient_id, doctor_data)
+    income_delta = rhodes_island.medical_income_today - before_income
+    waiting_count = rhodes_island.patient_now
 
-    # 如果是玩家在诊疗或玩家与诊疗者在同一位置的话，显示诊疗情况
-    if character_data.position == cache.character_data[0].position:
+    if doctor_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        now_draw.text = _("\n在{0}的努力下，医治了一名病人，支付了{1}龙门币的医疗费。（今日剩余病人数：{2}人）\n").format(character_data.name, now_add_lust, cache.rhodes_island.patient_now)
+        severity_name = patient_obj.metadata.get("severity_name") or _("未知病情")
+        if patient_obj.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
+            now_draw.text = _(
+                "\n在{doctor}的努力下，为一名{severity}患者完成诊断，获得{income}龙门币。（当前待诊患者：{waiting}人）\n"
+            ).format(
+                doctor=doctor_data.name,
+                severity=severity_name,
+                income=income_delta,
+                waiting=waiting_count,
+            )
+        else:
+            now_draw.text = _(
+                "\n{doctor}为一名{severity}患者推进诊疗进度。当前尚有{waiting}人等待就诊。\n"
+            ).format(
+                doctor=doctor_data.name,
+                severity=severity_name,
+                waiting=waiting_count,
+            )
         now_draw.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WARD_ROUND_PROCESS)
+def handle_ward_round_process(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """病房查房：推进住院病人治疗进度并输出提示"""
+
+    if not add_time:
+        return
+
+    doctor_data: game_type.Character = cache.character_data[character_id]
+    if doctor_data.dead:
+        return
+
+    medical_service.prepare_doctor_medical_behavior(
+        doctor_data,
+        getattr(doctor_data.behavior, "behavior_id", None),
+    )
+
+    outcome = medical_service.conduct_ward_round(doctor_data)
+
+    # 仅在玩家或与玩家同场景时输出提示
+    show_message = character_id == 0 or doctor_data.position == cache.character_data[0].position
+    if not show_message:
+        return
+
+    result_flag = outcome.get("result")
+    patient = outcome.get("patient")
+    income_delta = int(outcome.get("income_delta", 0) or 0)
+
+    severity_before_name = _("未知病情")
+    severity_after_name = _("未知病情")
+
+    severity_before = outcome.get("severity_before")
+    if isinstance(severity_before, int) and severity_before >= 0:
+        config_before = game_config.config_medical_severity.get(severity_before)
+        if config_before:
+            severity_before_name = config_before.name
+
+    severity_after = outcome.get("severity_after")
+    if isinstance(severity_after, int) and severity_after >= 0:
+        config_after = game_config.config_medical_severity.get(severity_after)
+        if config_after:
+            severity_after_name = config_after.name
+    elif outcome.get("discharged"):
+        severity_after_name = _("痊愈")
+
+    draw_text = draw.NormalDraw()
+    draw_text.width = width
+
+    if result_flag in {"no_candidate", "no_doctor"}:
+        draw_text.text = _(
+            "\n{doctor}巡视病房，但当前没有需要处理的住院患者。\n"
+        ).format(doctor=doctor_data.name)
+    elif result_flag == "missing_config":
+        draw_text.text = _(
+            "\n{doctor}处理住院病人时遇到异常配置，已将该患者提前出院。\n"
+        ).format(doctor=doctor_data.name)
+    elif outcome.get("discharged"):
+        draw_text.text = _(
+            "\n在{doctor}的查房下，一名{severity}患者顺利出院，今日医疗收入增加{income}龙门币。\n"
+        ).format(
+            doctor=doctor_data.name,
+            severity=severity_before_name,
+            income=income_delta,
+        )
+    elif outcome.get("success"):
+        draw_text.text = _(
+            "\n{doctor}为一名{before}患者完成住院治疗，病情下降至{after}，当日医疗收入变动{income}龙门币。\n"
+        ).format(
+            doctor=doctor_data.name,
+            before=severity_before_name,
+            after=severity_after_name,
+            income=income_delta,
+        )
+    else:
+        draw_text.text = _(
+            "\n{doctor}尝试为一名{severity}患者用药，但药物库存不足，需等待补给。\n"
+        ).format(
+            doctor=doctor_data.name,
+            severity=severity_before_name,
+        )
+
+    draw_text.draw()
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PERFORM_SURGERY)
+def handle_perform_surgery(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """执行手术治疗并根据结果输出提示"""
+
+    if not add_time:
+        return
+
+    doctor_data: game_type.Character = cache.character_data[character_id]
+    if doctor_data.dead:
+        return
+
+    medical_service.prepare_doctor_medical_behavior(
+        doctor_data,
+        getattr(doctor_data.behavior, "behavior_id", None),
+    )
+
+    outcome = medical_service.perform_surgery_for_doctor(doctor_data)
+
+    show_message = character_id == 0 or doctor_data.position == cache.character_data[0].position
+    if not show_message:
+        return
+
+    patient = outcome.get("patient")
+    result_flag = outcome.get("result")
+    income_delta = int(outcome.get("income_delta", 0) or 0)
+
+    severity_before_name = _("未知病情")
+    severity_after_name = _("未知病情")
+
+    severity_before = outcome.get("severity_before")
+    if isinstance(severity_before, int) and severity_before >= 0:
+        config_before = game_config.config_medical_severity.get(severity_before)
+        if config_before:
+            severity_before_name = config_before.name
+
+    if patient is not None:
+        severity_after = outcome.get("severity_after")
+        if isinstance(severity_after, int) and severity_after >= 0:
+            config_after = game_config.config_medical_severity.get(severity_after)
+            if config_after:
+                severity_after_name = config_after.name
+        if outcome.get("discharged"):
+            severity_after_name = _("痊愈")
+        severity_after_name = patient.metadata.get("severity_name", severity_after_name)
+
+    draw_text = draw.NormalDraw()
+    draw_text.width = width
+
+    if patient is None:
+        draw_text.text = _(
+            "\n{doctor}暂未找到需要手术的病人，手术准备流程结束。\n"
+        ).format(doctor=doctor_data.name)
+    elif result_flag == "success":
+        draw_text.text = _(
+            "\n{doctor}成功为一名{before}患者完成手术，病情下降至{after}，手术收益增加{income}龙门币。\n"
+        ).format(
+            doctor=doctor_data.name,
+            before=severity_before_name,
+            after=severity_after_name,
+            income=income_delta,
+        )
+    elif result_flag == "ability_insufficient":
+        draw_text.text = _(
+            "\n{doctor}尝试执行手术，但医疗能力不足，手术被迫中止。\n"
+        ).format(doctor=doctor_data.name)
+    elif result_flag == "resource_shortage":
+        blocked_resource = patient.metadata.get("surgery_blocked_resource")
+        if blocked_resource:
+            resource_config = game_config.config_resouce.get(blocked_resource)
+            resource_name = resource_config.name if resource_config else _("药品")
+        else:
+            resource_name = _("药品")
+        draw_text.text = _(
+            "\n{doctor}准备为{severity}患者手术，但{resource}库存不足，只能暂缓。\n"
+        ).format(
+            doctor=doctor_data.name,
+            severity=severity_before_name,
+            resource=resource_name,
+        )
+    else:
+        draw_text.text = _(
+            "\n{doctor}的手术未能顺利完成，请稍后再尝试。\n"
+        ).format(doctor=doctor_data.name)
+
+    draw_text.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)

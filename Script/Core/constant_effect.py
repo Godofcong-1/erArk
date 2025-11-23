@@ -486,6 +486,10 @@ class BehaviorEffect:
     """ 指令_专用结算 （维护装备用）进行一次装备的维修保养 """
     RELEASE_FROM_BAG_ADD_ADJUST = 540
     """ 指令_专用结算 （从袋中放出来）交互对象失去装袋搬走flag，玩家失去搬运人id，对方上线 """
+    PERFORM_SURGERY = 541
+    """ 指令_专用结算 为住院病人执行手术治疗并结算收益 """
+    WARD_ROUND_PROCESS = 542
+    """ 指令_专用结算 病房查房，尝试推进住院病人的每日治疗 """
 
     CHANGE_UNDERWERA = 601
     """ 属性_服装 换新的内衣（胸衣+内裤） """

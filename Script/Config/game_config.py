@@ -1,5 +1,5 @@
 import os
-from typing import Dict, List, Set
+from typing import Dict, List, Set, Tuple
 from Script.Config import config_def
 from Script.Core import json_handle, get_text, game_type
 
@@ -136,6 +136,20 @@ config_medical_hospital_level: Dict[int, config_def.MedicalHospitalLevel] = {}
 """ 医疗部等级→刷新/床位配置 """
 config_medical_price_config: Dict[float, config_def.MedicalPriceConfig] = {}
 """ 医疗收费系数配置，键为收费系数 """
+config_medical_body_system: Dict[int, config_def.MedicalBodySystem] = {}
+""" 医疗生理系统的部位配置，键为部位ID """
+config_medical_body_system_by_system: Dict[int, Dict[int, config_def.MedicalBodySystem]] = {}
+""" 医疗生理系统→部位的索引 """
+config_medical_complication_detail: Dict[int, Dict[int, Dict[int, List[config_def.MedicalComplication]]]] = {}
+""" 并发症详情索引，system_id→part_id→severity_level """
+medical_severity_weight_table: List[Tuple[int, float]] = []
+""" 病情等级抽取用权重表 (severity_id, weight) """
+medical_severity_special_medicine: Dict[int, Dict[int, float]] = {}
+""" 病情等级需要的特效药模板，键为病情等级 """
+medical_price_ratio_candidates: List[float] = []
+""" 可用收费系数列表（升序） """
+MEDICAL_COMPLICATION_SEVERITY_QUOTA = {0: 3, 1: 2, 2: 1}
+""" 各部位轻/中/重并发症数量配额 """
 config_item: Dict[int, config_def.Item] = {}
 """ 道具配置数据 """
 config_item_tag_data: Dict[str, Set] = {}
@@ -475,6 +489,24 @@ def translate_data(data: dict):
             if data["gettext"][key]:
                 # print("now_data :",now_data)
                 now_data[key] = get_text._(now_data[key])
+
+
+def _parse_special_medicine_template(template_str: str) -> Dict[int, float]:
+    """解析病情等级配置中的特效药模板字符串"""
+    result: Dict[int, float] = {}
+    if not template_str:
+        return result
+    for chunk in template_str.split("|"):
+        now_chunk = chunk.strip()
+        if not now_chunk:
+            continue
+        part_list = now_chunk.split(":")
+        if len(part_list) != 2:
+            raise ValueError(f"MedicalSeverity 特效药模板格式错误: {now_chunk}")
+        resource_id = int(part_list[0])
+        amount = float(part_list[1])
+        result[resource_id] = amount
+    return result
 
 
 def translate_ui_text():
@@ -1080,16 +1112,47 @@ def load_instruct_sex_type():
         config_instruct_sex_type[now_tem.cid] = now_tem
 
 
+def load_medical_body_system():
+    """载入医疗生理系统部位配置"""
+    config_medical_body_system.clear()
+    config_medical_body_system_by_system.clear()
+    if "MedicalBodySystem" not in config_data:
+        return
+    now_data = config_data["MedicalBodySystem"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_type = config_def.MedicalBodySystem()
+        now_type.__dict__ = tem_data
+        if now_type.gender_limit not in (0, 1, 2):
+            raise ValueError(
+                f"MedicalBodySystem 部位性别限制仅允许 0/1/2, system={now_type.system_id}, part={now_type.part_id}"
+            )
+        if now_type.part_type not in (0, 1):
+            raise ValueError(
+                f"MedicalBodySystem 部位类型仅允许 0/1, system={now_type.system_id}, part={now_type.part_id}"
+            )
+        if now_type.part_id in config_medical_body_system:
+            raise ValueError(f"MedicalBodySystem 中的部位ID重复: {now_type.part_id}")
+        config_medical_body_system[now_type.part_id] = now_type
+        config_medical_body_system_by_system.setdefault(now_type.system_id, {})[now_type.part_id] = now_type
+
+
 def load_medical_severity():
     """载入医疗系统病情等级配置"""
     if "MedicalSeverity" not in config_data:
         return
     now_data = config_data["MedicalSeverity"]
     translate_data(now_data)
+    config_medical_severity.clear()
+    medical_severity_weight_table.clear()
+    medical_severity_special_medicine.clear()
     for tem_data in now_data["data"]:
         now_type = config_def.MedicalSeverity()
         now_type.__dict__ = tem_data
         config_medical_severity[now_type.cid] = now_type
+        medical_severity_weight_table.append((now_type.cid, float(now_type.weight)))
+        template_raw = getattr(now_type, "special_medicine_template", "") or ""
+        medical_severity_special_medicine[now_type.cid] = _parse_special_medicine_template(template_raw)
 
 
 def load_medical_complication():
@@ -1098,10 +1161,32 @@ def load_medical_complication():
         return
     now_data = config_data["MedicalComplication"]
     translate_data(now_data)
+    config_medical_complication.clear()
+    config_medical_complication_detail.clear()
     for tem_data in now_data["data"]:
         now_type = config_def.MedicalComplication()
         now_type.__dict__ = tem_data
+        if now_type.severity_level not in MEDICAL_COMPLICATION_SEVERITY_QUOTA:
+            raise ValueError(f"非法的并发症严重等级: {now_type.severity_level}")
+        if now_type.system_id not in config_medical_body_system_by_system:
+            raise ValueError(f"并发症引用了不存在的系统: {now_type.system_id}")
+        if now_type.part_id not in config_medical_body_system_by_system[now_type.system_id]:
+            raise ValueError(f"并发症引用了不存在的部位: {now_type.system_id}-{now_type.part_id}")
+        if now_type.severity_level == 2 and now_type.requires_surgery != 1:
+            raise ValueError(f"重症并发症 requires_surgery 必须为 1, cid={now_type.cid}")
         config_medical_complication[now_type.cid] = now_type
+        detail_bucket = config_medical_complication_detail.setdefault(now_type.system_id, {}).setdefault(
+            now_type.part_id, {}
+        ).setdefault(now_type.severity_level, [])
+        detail_bucket.append(now_type)
+    for system_id, part_map in config_medical_complication_detail.items():
+        for part_id, severity_map in part_map.items():
+            for severity_level, require_count in MEDICAL_COMPLICATION_SEVERITY_QUOTA.items():
+                now_count = len(severity_map.get(severity_level, []))
+                if now_count != require_count:
+                    raise ValueError(
+                        f"部位 {system_id}-{part_id} 的严重等级 {severity_level} 数量应为 {require_count}，当前为 {now_count}"
+                    )
 
 
 def load_medical_hospital_level():
@@ -1110,6 +1195,7 @@ def load_medical_hospital_level():
         return
     now_data = config_data["MedicalHospitalLevel"]
     translate_data(now_data)
+    config_medical_hospital_level.clear()
     for tem_data in now_data["data"]:
         now_type = config_def.MedicalHospitalLevel()
         now_type.__dict__ = tem_data
@@ -1122,10 +1208,14 @@ def load_medical_price_config():
         return
     now_data = config_data["MedicalPriceConfig"]
     translate_data(now_data)
+    config_medical_price_config.clear()
+    medical_price_ratio_candidates.clear()
     for tem_data in now_data["data"]:
         now_type = config_def.MedicalPriceConfig()
         now_type.__dict__ = tem_data
         config_medical_price_config[now_type.price_ratio] = now_type
+        medical_price_ratio_candidates.append(float(now_type.price_ratio))
+    medical_price_ratio_candidates.sort()
 
 
 def load_item():
@@ -2049,6 +2139,7 @@ def init():
     load_font_data()
     load_instruct_type()
     load_instruct_sex_type()
+    load_medical_body_system()
     load_medical_severity()
     load_medical_complication()
     load_medical_hospital_level()
