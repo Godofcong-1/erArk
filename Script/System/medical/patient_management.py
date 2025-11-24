@@ -38,11 +38,11 @@ def create_patient_stub(severity_level: int, **extra_fields: Any) -> medical_con
     return patient
 
 
-def pick_severity_level() -> Optional[int]:
+def pick_severity_level(facility_level: Optional[int] = None) -> Optional[int]:
     """按权重抽取一个病情等级 ID
 
     参数:
-        无
+        facility_level (Optional[int]): 当前医疗区等级，用于限制可出现的病情档位。
 
     返回:
         Optional[int]: 抽取到的病情等级，若无配置则返回 None。"""
@@ -50,18 +50,33 @@ def pick_severity_level() -> Optional[int]:
     # 若权重表缺失，直接返回 None
     if not game_config.medical_severity_weight_table:
         return None
+
+    # 根据医疗区等级过滤可用档位
+    def _is_unlocked(severity_id: int) -> bool:
+        if facility_level is None:
+            return True
+        if severity_id == 3:
+            return facility_level >= 4
+        if severity_id == 2:
+            return facility_level >= 2
+        return True
+
+    filtered_entries = [entry for entry in game_config.medical_severity_weight_table if _is_unlocked(entry[0])]
+    if not filtered_entries:
+        return None
+
     # 计算总权重并进行权重随机
-    total_weight = sum(weight for _, weight in game_config.medical_severity_weight_table)
+    total_weight = sum(weight for _, weight in filtered_entries)
     if total_weight <= 0:
-        return game_config.medical_severity_weight_table[0][0]
+        return filtered_entries[0][0]
     roll = random.uniform(0, total_weight)
     cursor = 0.0
-    for severity_id, weight in game_config.medical_severity_weight_table:
+    for severity_id, weight in filtered_entries:
         cursor += weight
         if roll <= cursor:
             return severity_id
     # 兜底返回最后一项的病情等级
-    return game_config.medical_severity_weight_table[-1][0]
+    return filtered_entries[-1][0]
 
 
 def generate_patient(
@@ -316,6 +331,9 @@ def _pick_part_id(system_id: int, used_part_ids: Iterable[int]) -> Optional[int]
     for part_id, part in part_map.items():
         if part_id in used_set:
             continue
+        gender_limit = int(getattr(part, "gender_limit", 2))
+        if gender_limit == 0:
+            continue
         weight = max(1, part.organ_priority)
         candidates[part_id] = int(weight)
     if not candidates:
@@ -350,7 +368,7 @@ def _pick_complication(
 
 
 def _pick_patient_race_id() -> int:
-    """从已有种族中（排除博士）随机挑选患者种族
+    """从已有种族中（排除特殊种族）随机挑选患者种族
 
     参数:
         无
@@ -358,8 +376,8 @@ def _pick_patient_race_id() -> int:
     返回:
         int: 选中的种族 ID，若无可选项返回 0。"""
 
-    # 筛选掉博士自身的种族 ID，然后随机挑选
-    race_ids = [race_id for race_id in game_config.config_race.keys() if race_id != 0]
+    # 跳过不可选中的种族，不可选中id列表为[0,1,2,3,35,36,40,41,42,43,44]，然后随机挑选
+    race_ids = [race_id for race_id in game_config.config_race.keys() if race_id not in {0, 1, 2, 3, 35, 40, 41, 42, 43, 44}]
     if not race_ids:
         return 0
     return random.choice(race_ids)

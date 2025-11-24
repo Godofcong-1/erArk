@@ -803,29 +803,26 @@ def build_player_check_catalog(
     if patient is None:
         return {}
 
-    trace_info = patient.metadata.get("complication_trace", [])
-    relevant_system_ids = {int(entry.get("system_id", 0)) for entry in trace_info if entry.get("system_id") is not None}
-    relevant_part_ids_by_system: Dict[int, Set[int]] = {}
-    for entry in trace_info:
-        system_id = int(entry.get("system_id", 0))
-        part_id = int(entry.get("part_id", 0))
-        relevant_part_ids_by_system.setdefault(system_id, set()).add(part_id)
-
+    # 构建可选并发症目录
     catalog: Dict[int, Dict[str, object]] = {}
-    for system_id in relevant_system_ids:
-        part_map = game_config.config_medical_body_system_by_system.get(system_id, {})
-        if not part_map:
+    # 遍历所有系统
+    for system_id, part_map in sorted(game_config.config_medical_body_system_by_system.items()):
+        if not isinstance(part_map, dict) or not part_map:
             continue
 
-        system_name = next((item.system_name for item in part_map.values()), f"System {system_id}")
+        # 获取系统名称
+        first_entry = next(iter(part_map.values()), None)
+        system_name = getattr(first_entry, "system_name", f"System {system_id}") if first_entry else f"System {system_id}"
+
+        # 遍历系统内所有部位
         part_catalog: Dict[int, Dict[str, object]] = {}
-        for part_id in sorted(relevant_part_ids_by_system.get(system_id, set())):
-            part_info = part_map.get(part_id)
+        for part_id, part_info in sorted(part_map.items()):
             if part_info is None:
                 continue
-            complication_map = (
-                game_config.config_medical_complication_detail.get(system_id, {}).get(part_id, {})
-            )
+            # 调试打印部位信息
+            # print(f"Building catalog for System {system_id}，部位名称: {getattr(part_info, 'part_name', part_id)}，部位性别限制: {getattr(part_info, 'gender_limit')}")
+            # 获取部位对应的并发症列表
+            complication_map = game_config.config_medical_complication_detail.get(system_id, {}).get(part_id, {})
             options: List[Dict[str, object]] = []
             for severity_level in sorted(complication_map.keys()):
                 for comp in complication_map[severity_level]:
@@ -841,14 +838,15 @@ def build_player_check_catalog(
                     )
             if not options:
                 continue
-            part_catalog[part_id] = {
-                "part_name": part_info.part_name,
-                "part_type": part_info.part_type,
+            part_catalog[int(part_id)] = {
+                "part_name": getattr(part_info, "part_name", str(part_id)),
+                "part_type": getattr(part_info, "part_type", 0),
+                "gender_limit": int(getattr(part_info, "gender_limit", 2)),
                 "options": options,
             }
 
         if part_catalog:
-            catalog[system_id] = {
+            catalog[int(system_id)] = {
                 "system_name": system_name,
                 "parts": part_catalog,
             }
@@ -1446,7 +1444,7 @@ def refresh_medical_patients(
     patient_table = get_patient_table(target_base=rhodes_island, hospitalized=False)
 
     for _ in range(refresh_count):
-        severity_level = patient_management.pick_severity_level()
+        severity_level = patient_management.pick_severity_level(level_value)
         if severity_level is None:
             break
         patient = patient_management.generate_patient(severity_level, rhodes_island)

@@ -10,7 +10,7 @@ from types import FunctionType
 
 from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
-from Script.Design import handle_ability
+from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw
 from Script.System.medical import medical_constant, medical_service
 
@@ -25,15 +25,7 @@ line_feed.text = "\n"
 line_feed.width = 1
 
 
-def _translate_priority(mode: medical_constant.MedicalPatientPriority) -> str:
-    """将病人接诊优先策略转换为用户可读文本"""
 
-    mapping = {
-        medical_constant.MedicalPatientPriority.FOCUS_CRITICAL: _("优先重症"),
-        medical_constant.MedicalPatientPriority.NORMAL: _("正常排序"),
-        medical_constant.MedicalPatientPriority.FOCUS_MILD: _("优先轻症"),
-    }
-    return mapping.get(mode, "-")
 
 
 def _get_state_display_name(state: medical_constant.MedicalPatientState) -> str:
@@ -171,7 +163,7 @@ class OverviewSubPanel(_BaseSubPanel):
         overview_draw.width = self.width
         overview_draw.text = _(
             "收费系数：{0:.2f} 倍 | 接诊优先策略：{1}\n"
-        ).format(price_ratio, _translate_priority(priority_mode))
+        ).format(price_ratio, medical_constant.translate_priority(priority_mode))
         overview_draw.text += _(
             "门诊医生：{0} 人（医疗能力总和 {1:.2f}） | 住院医生：{2} 人（医疗能力总和 {3:.2f}）\n"
         ).format(
@@ -260,7 +252,7 @@ class DoctorManagementSubPanel(_BaseSubPanel):
 
         from Script.UI.Panel import manage_basement_panel
 
-        adjust_button = draw.LeftButton(
+        adjust_button = draw.CenterButton(
             _("[医生增减]"),
             _("医生增减"),
             max(len(_("[医生增减]")) * 2, 16),
@@ -270,23 +262,14 @@ class DoctorManagementSubPanel(_BaseSubPanel):
         adjust_button.draw()
         return_list.append(adjust_button.return_text)
         line_feed.draw()
-
-        self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_CLINIC, return_list)
-        line_feed.draw()
-        self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_HOSPITAL, return_list)
         line_feed.draw()
 
         priority_mode = medical_service.get_patient_priority_mode()
         priority_title = draw.NormalDraw()
-        priority_title.text = _("当前接诊优先策略：{0}\n").format(_translate_priority(priority_mode))
+        priority_title.text = _("当前接诊优先策略：{0}\n").format(medical_constant.translate_priority(priority_mode))
         priority_title.width = self.width
         priority_title.draw()
-        priority_options = [
-            (medical_constant.MedicalPatientPriority.FOCUS_CRITICAL, _("优先重症")),
-            (medical_constant.MedicalPatientPriority.NORMAL, _("正常排序")),
-            (medical_constant.MedicalPatientPriority.FOCUS_MILD, _("优先轻症")),
-        ]
-        for mode, label in priority_options:
+        for mode, label in medical_constant.PRIORITY_OPTIONS:
             if mode == priority_mode:
                 now_draw = draw.CenterDraw()
                 now_draw.text = f"[{label}]"
@@ -304,6 +287,12 @@ class DoctorManagementSubPanel(_BaseSubPanel):
                 button.draw()
                 return_list.append(button.return_text)
         line_feed.draw()
+        line_feed.draw()
+
+        self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_CLINIC, return_list)
+        line_feed.draw()
+        self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_HOSPITAL, return_list)
+        line_feed.draw()
 
         if self.feedback_text:
             feedback_draw = draw.NormalDraw()
@@ -320,7 +309,7 @@ class DoctorManagementSubPanel(_BaseSubPanel):
         role_name = medical_constant.ROLE_DISPLAY_NAME.get(role_key, role_key)
         header_draw = draw.NormalDraw()
         header_draw.width = self.width
-        header_draw.text = _("{0}分科情况：\n").format(role_name)
+        header_draw.text = _("{0}科室情况：\n").format(role_name)
         header_draw.draw()
 
         for category in overview:
@@ -333,28 +322,32 @@ class DoctorManagementSubPanel(_BaseSubPanel):
                 )
                 for detail in doctor_details
             ]
-            line_draw = draw.NormalDraw()
-            line_draw.width = self.width
+            category_draw = draw.NormalDraw()
+            category_draw.width = self.width
             category_name = category.get("category_name", category.get("category_key", "-"))
-            line_draw.text = _("  {0}（{1} 人，平均倍率 x{2:.2f}）：{3}\n").format(
-                category_name,
+            category_draw.text = _("  {0}（{1} 人，平均倍率 x{2:.2f}）").format(
+                attr_calculation.pad_display_width(category_name, 16),
                 category.get("doctor_count", 0),
                 category.get("average_bonus_multiplier", 1.0),
-                "、".join(doctor_texts) if doctor_texts else _("空缺"),
             )
-            line_draw.draw()
+            category_draw.draw()
 
-            action_label = f"{category_name}分配"
-            button_text = f"[{action_label}]"
-            assign_button = draw.LeftButton(
+            action_label = _("分配到{0}").format(category_name)
+            button_text = _("[分配]")
+            assign_button = draw.CenterButton(
                 button_text,
                 role_key + action_label,
-                max(len(button_text) * 2, 18),
+                max(len(button_text) * 2, 10),
                 cmd_func=self._prompt_assign,
                 args=(role_key, category.get("category_key", medical_constant.SPECIALIZATION_GENERAL_KEY)),
             )
             assign_button.draw()
             return_list.append(assign_button.return_text)
+
+            # 绘制医生名字列表
+            category_draw.text = _("：{0}").format("、".join(doctor_texts) if doctor_texts else _("空缺"),)
+            category_draw.draw()
+
             line_feed.draw()
 
     def _prompt_assign(self, role_key: str, category_key: str) -> None:
@@ -423,9 +416,8 @@ class DoctorManagementSubPanel(_BaseSubPanel):
 
     def _set_priority_mode(self, mode: medical_constant.MedicalPatientPriority) -> None:
         """切换病人接诊优先策略并提示结果"""
-
         resolved = medical_service.set_patient_priority_mode(mode)
-        mode_text = _translate_priority(resolved)
+        mode_text = medical_constant.translate_priority(resolved)
         self.feedback_text = _("已切换接诊策略为：{0}").format(mode_text)
 
     def _estimate_remaining_hours(self) -> float:

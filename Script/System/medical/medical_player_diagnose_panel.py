@@ -7,7 +7,7 @@ from types import FunctionType
 
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text, flow_handle
-from Script.Design import basement, instuct_judege, update
+from Script.Design import attr_calculation, basement, instuct_judege, update
 from Script.System.medical import medical_constant, medical_service
 from Script.UI.Moudle import draw
 
@@ -20,9 +20,26 @@ window_width: int = normal_config.config_normal.text_width
 line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
+# 预定义换行对象，避免多处重复创建临时实例
 
 _MEDICAL_FACILITY_ID = 6
 """医疗部设施 ID，与医疗系统保持一致"""
+# 该常量与设施效率计算共享，可避免硬编码散落在不同函数中
+
+
+def _ensure_float(value: object, default: float = 0.0) -> float:
+    """将混合类型值转换为 float，避免 UI 计算时类型不确定。"""
+
+    # 针对原生数值类型直接转换以保持精度
+    if isinstance(value, (int, float)):
+        return float(value)
+    # 字符串需要尝试解析，否则退回默认值避免抛异常
+    if isinstance(value, str):
+        try:
+            return float(value.strip())
+        except ValueError:
+            return default
+    return default
 
 
 def start_player_diagnose_flow() -> bool:
@@ -38,6 +55,7 @@ def start_player_diagnose_flow() -> bool:
         bool: 当函数返回 True 时，表示面板已经完整接管并消耗原本的行为结算。
     """
 
+    # 构造专用面板并立即进入绘制循环，返回值用于告知外层是否继续原指令
     panel = MedicalPlayerDiagnosePanel(window_width)
     return panel.draw()
 
@@ -70,25 +88,30 @@ class MedicalPlayerDiagnosePanel:
         self._abort_requested: bool = False
         self._checks_executed: int = 0
         self.menu_expanded: bool = False
-        self.expanded_systems: Set[int] = set()
-        self.expanded_parts: Dict[int, Set[int]] = {}
+        self.expanded_system_id: Optional[int] = None
+        self.expanded_part_id: Optional[int] = None
 
+        # 若玩家处于可控状态，则尝试开启医疗会话并缓存病患信息
         if self.player is not None:
             self.patient = medical_service.start_player_diagnose_session(self.player)
+        # 会话成功后预构建检查目录供后续折叠菜单使用
         if self.patient is not None:
             self.session_active = True
             self.check_catalog: Dict[int, Dict[str, object]] = medical_service.build_player_check_catalog(self.patient)
         else:
             self.check_catalog = {}
 
+        # 记录博士医疗能力等级，后续用于计算提示粒度与检查次数
         self.player_med_level = 0
         if self.player is not None:
             self.player_med_level = int(self.player.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
 
+        # 根据病人实际并发症数量确定目标信息，用于评估诊疗完成度
         self.target_complication_count = 0
         if self.patient is not None and getattr(self.patient, "complications", None):
             self.target_complication_count = len(self.patient.complications)
 
+        # 并行检查数量与总检查次数使用能力与目标数量共同约束
         self.max_parallel = max(1, self.target_complication_count or 1)
         self.max_checks = max(1, self.player_med_level * 2)
 
@@ -111,6 +134,7 @@ class MedicalPlayerDiagnosePanel:
             tip_draw.draw()
             return True
 
+        # 持续渲染界面直至流程被明确关闭
         while not self._should_close:
             title_draw = draw.TitleLineDraw(_("医疗诊疗"), self.width)
             title_draw.draw()
@@ -122,13 +146,22 @@ class MedicalPlayerDiagnosePanel:
             if self.patient is not None:
                 used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
 
+            # 顶部帮助文本为玩家提供操作指引与提示系统说明
+            hint_draw = draw.NormalDraw()
+            hint_draw.width = self.width
+            hint_draw.text = _("○展开检查菜单以从系统 → 部位 → 并发症逐级挑选检查项目，项目格式为：病症等级|怀疑病症名|检查方式。\n")
+            hint_draw.text += _("○开启治疗提示后，会根据博士的医疗能力等级来高亮显示正确的患病系统、部位、症状等，能力越高显示越具体。\n")
+            hint_draw.draw()
+
+            # 依次输出提示、病历、检查状态及检查目录
+            self._draw_hint_section(return_list)
             self._draw_patient_overview()
-            self._draw_hint_section()
             self._draw_check_status(pending_checks, confirmed_complications, used_checks)
             self._draw_check_menu(return_list, pending_checks, confirmed_complications, used_checks)
             self._draw_treatment_methods(confirmed_complications, used_checks)
             self._draw_feedback()
 
+            # 底部交互按钮决定下一步行为
             self._draw_operation_buttons(return_list, pending_checks, confirmed_complications, used_checks)
             if not return_list:
                 # 至少提供一个默认返回项避免阻塞
@@ -136,6 +169,7 @@ class MedicalPlayerDiagnosePanel:
                 default_back.draw()
                 return_list.append(default_back.return_text)
 
+            # 主循环等待玩家选择具体操作，绑定指令字符串控制逻辑
             choice = flow_handle.askfor_all(return_list)
             if choice == "back":
                 self._handle_abort()
@@ -170,7 +204,7 @@ class MedicalPlayerDiagnosePanel:
             race_name = race_config.name
 
         info_draw.text = _(
-            "患者编号：{pid} | 病情：{severity}\n年龄：{age} 岁 | 种族：{race}\n"
+            "患者编号：{pid} | 病情：{severity} | 年龄：{age} 岁 | 种族：{race}\n"
         ).format(
             pid=self.patient.patient_id,
             severity=severity_name,
@@ -180,25 +214,19 @@ class MedicalPlayerDiagnosePanel:
 
         complaint_lines: List[str] = []
         trace_list = self.patient.metadata.get("complication_trace", [])
-        for entry in trace_list:
+        for index, entry in enumerate(trace_list, start=1):
             comp_config = game_config.config_medical_complication.get(entry.get("cid", entry.get("complication_id", 0)))
             if comp_config is None:
                 continue
-            system_id = int(entry.get("system_id", 0) or 0)
-            part_id = int(entry.get("part_id", 0) or 0)
-            system_map = game_config.config_medical_body_system_by_system.get(system_id, {})
-            part_info = system_map.get(part_id)
-            system_name = part_info.system_name if part_info else _("未知系统")
-            part_name = part_info.part_name if part_info else _("未知部位")
             statement = comp_config.patient_statement_clear
             if self.patient.personality_type == medical_constant.MedicalPatientPersonality.IRRATIONAL:
                 statement = comp_config.patient_statement_vague
+            appearance_text = comp_config.appearance_indicator or _("无可见异常")
+            # 每条症状记录包含外观观察与病人自述，构成病例文本
             complaint_lines.append(
-                _("· {name} ({system}/{part})\n  外观：{appearance}\n  病人自述：{statement}").format(
-                    name=comp_config.name,
-                    system=system_name,
-                    part=part_name,
-                    appearance=comp_config.appearance_indicator,
+                _("· 症状记录 {index}\n  外观观察：{appearance}\n  病人自述：{statement}").format(
+                    index=index,
+                    appearance=appearance_text,
                     statement=statement,
                 )
             )
@@ -208,11 +236,11 @@ class MedicalPlayerDiagnosePanel:
         info_draw.draw()
         line_feed.draw()
 
-    def _draw_hint_section(self) -> None:
-        """绘制诊疗提示状态及具体提示文本。
+    def _draw_hint_section(self, return_list: List[str]) -> None:
+        """绘制诊疗提示状态及提示按钮。
 
         参数:
-            无。
+            return_list (List[str]): 当前循环的按钮返回值注册表。
 
         返回:
             None: 状态展示性函数。
@@ -220,18 +248,24 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
         hint_enabled = bool(self.patient.metadata.get("player_hint_enabled", False))
-        status_draw = draw.NormalDraw()
-        status_draw.width = self.width
-        status_draw.text = _("治病提示：{status}\n").format(status=_("开启") if hint_enabled else _("关闭"))
-        status_draw.draw()
+        status_label = _("○治病提示：{status}").format(status=_("开启") if hint_enabled else _("关闭"))
+        advice_draw = draw.NormalDraw()
+        advice_draw.width = self.width
+        advice_draw.text = status_label
+        advice_draw.draw()
 
-        if hint_enabled:
-            hint_text = self._build_hint_text()
-            if hint_text:
-                hint_draw = draw.NormalDraw()
-                hint_draw.width = self.width
-                hint_draw.text = hint_text + "\n"
-                hint_draw.draw()
+        toggle_text = _("[切换提示]")
+        hint_button = draw.CenterButton(
+            toggle_text,
+            "toggle_hint",
+            len(toggle_text) * 2 + 4,
+            cmd_func=self._toggle_hint,
+        )
+        hint_button.draw()
+        # 记录按钮返回值以便主循环识别
+        return_list.append(hint_button.return_text)
+
+        line_feed.draw()
         line_feed.draw()
 
     def _draw_check_status(
@@ -255,11 +289,17 @@ class MedicalPlayerDiagnosePanel:
 
         status_draw = draw.NormalDraw()
         status_draw.width = self.width
-        status_draw.text = _("检查次数：{used}/{limit}（单次可并行 {parallel} 项）\n").format(
+        status_draw.text = _("患者愿意进行的检查次数：{used}/{limit}").format(
             used=used_checks,
             limit=self.max_checks,
-            parallel=self.max_parallel,
         )
+        # 如果没有到上限，则显示本次已选项数
+        if used_checks < self.max_checks:
+            status_draw.text += _("（本次已选 {selected}/{max_parallel} 项）").format(
+                selected=len(pending),
+                max_parallel=self.max_parallel,
+            )
+        status_draw.text += "\n"
         if pending:
             pend_lines = []
             catalog = self.check_catalog
@@ -275,41 +315,25 @@ class MedicalPlayerDiagnosePanel:
                     part_info = {}
                 comp_config = game_config.config_medical_complication.get(option["cid"])
                 name = comp_config.name if comp_config else str(option["cid"])
+                exam_method = comp_config.exam_method if comp_config and hasattr(comp_config, "exam_method") else "-"
+                system_name = system_info.get("system_name", "-")
+                part_name = part_info.get("part_name", "-")
+                severity_text = self._translate_severity(option["severity_level"])
+                # 组装成“系统-部位-严重程度”的复合展示字符串
                 pend_lines.append(
-                    _("· {name} ({system}/{part}/{severity})").format(
+                    _("◆ 怀疑 {name}（{system} - {part} - {severity}），进行检查：{exam_method}").format(
                         name=name,
-                        system=system_info.get("system_name", "-"),
-                        part=part_info.get("part_name", "-"),
-                        severity=self._translate_severity(option["severity_level"]),
+                        system=system_name,
+                        part=part_name,
+                        severity=severity_text,
+                        exam_method=exam_method,
                     )
                 )
             status_draw.text += _("待执行检查：\n") + "\n".join(pend_lines) + "\n"
-        else:
-            status_draw.text += _("待执行检查：暂无选项\n")
+        # else:
+        #     status_draw.text += _("待执行检查：暂无选项\n")
 
-        if confirmed:
-            confirmed_lines = []
-            for cid in confirmed:
-                config = game_config.config_medical_complication.get(cid)
-                if config is None:
-                    continue
-                confirmed_lines.append(f"· {config.name}")
-            if confirmed_lines:
-                status_draw.text += _("已确诊并发症：\n") + "\n".join(confirmed_lines) + "\n"
         status_draw.draw()
-
-        if self.last_check_results:
-            result_draw = draw.NormalDraw()
-            result_draw.width = self.width
-            lines = []
-            for result in self.last_check_results[-5:]:
-                name = result.get("name", str(result.get("cid", "")))
-                outcome = str(result.get("result", ""))
-                message = result.get("message", "")
-                lines.append(_("· [{outcome}] {name} —— {message}").format(outcome=self._translate_outcome(outcome), name=name, message=message))
-            result_draw.text = _("最近一次检查结果：\n") + "\n".join(lines) + "\n"
-            result_draw.draw()
-        line_feed.draw()
 
     def _draw_check_menu(
         self,
@@ -332,10 +356,12 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
 
+        highlight_systems, highlight_parts, highlight_options = self._resolve_hint_highlight_targets()
+
         if not self._should_show_check_menu(confirmed, used_checks):
             self.menu_expanded = False
-            self.expanded_systems.clear()
-            self.expanded_parts.clear()
+            self.expanded_system_id = None
+            self.expanded_part_id = None
             if pending:
                 tip_draw = draw.NormalDraw()
                 tip_draw.width = self.width
@@ -344,7 +370,7 @@ class MedicalPlayerDiagnosePanel:
                 line_feed.draw()
             return
 
-        toggle_label = _("[展开检查菜单]") if not self.menu_expanded else _("[收起检查菜单]")
+        toggle_label = _(" [展开检查菜单]") if not self.menu_expanded else _(" [收起检查菜单]")
         toggle_button = draw.LeftButton(
             toggle_label,
             "toggle_check_menu",
@@ -353,32 +379,29 @@ class MedicalPlayerDiagnosePanel:
         )
         toggle_button.draw()
         return_list.append(toggle_button.return_text)
+        line_feed.draw()
 
+        # 未展开时直接返回
         if not self.menu_expanded:
-            hint_draw = draw.NormalDraw()
-            hint_draw.width = self.width
-            if pending:
-                hint_draw.text = _("当前已选择 {0} 项检查，若需调整请展开菜单。\n").format(len(pending))
-            else:
-                hint_draw.text = _("展开检查菜单以从系统 → 部位 → 并发症逐级挑选检查项目。\n")
-            hint_draw.draw()
             line_feed.draw()
             return
 
-        self._ensure_expansion_defaults()
-
+        # 展开系统列表
         for system_id in sorted(self.check_catalog.keys()):
             raw_info = self.check_catalog.get(system_id)
             if not isinstance(raw_info, dict):
                 continue
             system_name = str(raw_info.get("system_name", system_id))
-            system_expanded = system_id in self.expanded_systems
-            system_prefix = "[-]" if system_expanded else "[+]"
+            system_expanded = system_id == self.expanded_system_id
+            system_prefix = "   [-]" if system_expanded else "   [+]"
             system_label = f"{system_prefix} {system_name}"
+            system_style = "gold_enrod" if system_id in highlight_systems else "standard"
+            # 系统按钮支持展开/折叠，并附带提示高亮颜色
             system_button = draw.LeftButton(
                 system_label,
                 f"sys_toggle_{system_id}",
                 max(len(system_label) * 2 + 4, 26),
+                normal_style=system_style,
                 cmd_func=self._toggle_system_expand,
                 args=(system_id,),
             )
@@ -389,6 +412,7 @@ class MedicalPlayerDiagnosePanel:
             if not system_expanded:
                 continue
 
+            # 展开部位列表
             part_map = raw_info.get("parts")
             if not isinstance(part_map, dict):
                 continue
@@ -397,14 +421,20 @@ class MedicalPlayerDiagnosePanel:
                 part_info = part_map.get(part_id)
                 if not isinstance(part_info, dict):
                     continue
+                gender_limit = int(part_info.get("gender_limit", 2))
+                if gender_limit == 0:
+                    continue
                 part_name = str(part_info.get("part_name", part_id))
-                part_expanded = part_id in self.expanded_parts.get(system_id, set())
-                part_prefix = "    [-]" if part_expanded else "    [+]"
+                part_expanded = system_expanded and part_id == self.expanded_part_id
+                part_prefix = "     [-]" if part_expanded else "     [+]"
                 part_label = f"{part_prefix} {part_name}"
+                part_style = "gold_enrod" if (system_id, part_id) in highlight_parts else "standard"
+                # 部位按钮与系统用同一机制控制展开状态
                 part_button = draw.LeftButton(
                     part_label,
                     f"part_toggle_{system_id}_{part_id}",
                     max(len(part_label) * 2 + 4, 30),
+                    normal_style=part_style,
                     cmd_func=self._toggle_part_expand,
                     args=(system_id, part_id),
                 )
@@ -415,34 +445,34 @@ class MedicalPlayerDiagnosePanel:
                 if not part_expanded:
                     continue
 
+                # 展开并发症选项列表
                 options = part_info.get("options", [])
                 for option in options:
                     if not isinstance(option, dict):
                         continue
-                        # 针对并发症选项绘制勾选按钮，支持在列表中直接开关。
+                    # 针对并发症选项绘制勾选按钮，支持在列表中直接开关。
                     cid = int(option.get("cid", 0) or 0)
                     severity_text = self._translate_severity(int(option.get("severity_level", 0) or 0))
                     name = str(option.get("name", cid))
+                    name = attr_calculation.pad_display_width(name, 38)
                     exam_method = option.get("exam_method", "-")
                     selected = any(item["cid"] == cid for item in pending)
-                    checkbox = "[✔]" if selected else "[ ]"
+                    checkbox = "[✔]" if selected else "[  ]"
                     option_label = f"        {checkbox} {severity_text} | {name} | {exam_method}"
+                    option_style = "gold_enrod" if cid in highlight_options else "standard"
+                    # 选项按钮被点击后调用 _toggle_pending_option 处理选/取消逻辑
                     option_button = draw.LeftButton(
                         option_label,
                         f"toggle_option_{system_id}_{part_id}_{cid}",
-                        min(self.width, max(len(option_label) * 2 // 3, 44)),
+                        self.width,
+                        normal_style=option_style,
                         cmd_func=self._toggle_pending_option,
                         args=(system_id, part_id, cid),
                     )
                     option_button.draw()
                     return_list.append(option_button.return_text)
-                line_feed.draw()
+                    line_feed.draw()
 
-        if pending:
-            summary_draw = draw.NormalDraw()
-            summary_draw.width = self.width
-            summary_draw.text = _("已选择 {0} 项检查，执行时会按照列出的顺序一次性完成。\n").format(len(pending))
-            summary_draw.draw()
         line_feed.draw()
 
     def _should_show_check_menu(self, confirmed: List[int], used_checks: int) -> bool:
@@ -458,10 +488,12 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return False
         if used_checks >= self.max_checks:
+            # 检查次数耗尽后强制关闭检查菜单
             return False
         target = self.target_complication_count
         if target <= 0 and getattr(self.patient, "complications", None):
             target = len(self.patient.complications)
+        # 仅在尚有未确诊并发症时继续显示目录
         return target > 0 and len(confirmed) < target
 
     def _toggle_check_menu(self) -> None:
@@ -475,8 +507,9 @@ class MedicalPlayerDiagnosePanel:
         """
         self.menu_expanded = not self.menu_expanded
         if not self.menu_expanded:
-            self.expanded_systems.clear()
-            self.expanded_parts.clear()
+            # 折叠时同步清空展开状态，避免下次展开时状态错乱
+            self.expanded_system_id = None
+            self.expanded_part_id = None
 
     def _toggle_system_expand(self, system_id: int) -> None:
         """切换指定系统的展开状态。
@@ -487,12 +520,13 @@ class MedicalPlayerDiagnosePanel:
         返回:
             None。
         """
-        if system_id in self.expanded_systems:
-            self.expanded_systems.remove(system_id)
-            self.expanded_parts.pop(system_id, None)
+        if self.expanded_system_id == system_id:
+            # 重复点击同一系统时折叠，并同时重置部位展开状态
+            self.expanded_system_id = None
+            self.expanded_part_id = None
         else:
-            self.expanded_systems.add(system_id)
-            self.expanded_parts.setdefault(system_id, set())
+            self.expanded_system_id = system_id
+            self.expanded_part_id = None
 
     def _toggle_part_expand(self, system_id: int, part_id: int) -> None:
         """切换指定部位的展开状态。
@@ -504,11 +538,15 @@ class MedicalPlayerDiagnosePanel:
         返回:
             None。
         """
-        part_set = self.expanded_parts.setdefault(system_id, set())
-        if part_id in part_set:
-            part_set.remove(part_id)
+        if self.expanded_system_id != system_id:
+            # 若切换了系统，需要同时更新系统和部位的展开记录
+            self.expanded_system_id = system_id
+            self.expanded_part_id = part_id
+            return
+        if self.expanded_part_id == part_id:
+            self.expanded_part_id = None
         else:
-            part_set.add(part_id)
+            self.expanded_part_id = part_id
 
     def _toggle_pending_option(self, system_id: int, part_id: int, complication_id: int) -> None:
         """在折叠菜单中勾选或取消待检查项。
@@ -546,6 +584,7 @@ class MedicalPlayerDiagnosePanel:
             self.feedback_text = _("该并发症已确诊，无需重复检查。")
             return
 
+        # 所有约束满足后将勾选项写回 metadata，保持会话状态一致
         pending.append(
             {
                 "cid": complication_id,
@@ -556,37 +595,6 @@ class MedicalPlayerDiagnosePanel:
         )
         self.patient.metadata["player_pending_checks"] = pending
         self.feedback_text = _("已选择检查项目：{0}").format(option_name)
-
-    def _ensure_expansion_defaults(self) -> None:
-        """在首次展开菜单时提供默认展开项，减少空白界面。
-
-        参数:
-            无。
-
-        返回:
-            None。
-        """
-        if not self.menu_expanded or not self.check_catalog:
-            return
-        if not self.expanded_systems:
-            first_system = next(iter(sorted(self.check_catalog.keys())), None)
-            if first_system is not None:
-                self.expanded_systems.add(int(first_system))
-        for system_id in list(self.expanded_systems):
-            info = self.check_catalog.get(system_id)
-            if not isinstance(info, dict):
-                self.expanded_systems.discard(system_id)
-                self.expanded_parts.pop(system_id, None)
-                continue
-            part_map = info.get("parts")
-            if not isinstance(part_map, dict) or not part_map:
-                self.expanded_parts.pop(system_id, None)
-                continue
-            part_set = self.expanded_parts.setdefault(system_id, set())
-            if not part_set:
-                first_part = next(iter(sorted(part_map.keys())), None)
-                if first_part is not None:
-                    part_set.add(int(first_part))
 
     def _draw_treatment_methods(self, confirmed: List[int], used_checks: int) -> None:
         """绘制治疗摘要或建议，用于引导下一步行为。
@@ -601,6 +609,21 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
 
+        # 显示最近的检查结果
+        if self.last_check_results:
+            lines: List[str] = []
+            result_draw = draw.NormalDraw()
+            result_draw.width = self.width
+            for result in self.last_check_results:
+                name = result.get("name", str(result.get("cid", "")))
+                outcome = self._translate_outcome(str(result.get("result", "")))
+                outcome = attr_calculation.pad_display_width(outcome, 6, align="center")
+                message = result.get("message", "")
+                lines.append(_("·({outcome}) 怀疑 {name}，检查结果：{message}").format(outcome=outcome, name=name, message=message))
+            result_draw.text = _("检查报告一览：\n") + "\n".join(lines) + "\n"
+            result_draw.draw()
+            line_feed.draw()
+
         should_show = bool(confirmed) or used_checks >= self.max_checks
         if not should_show:
             return
@@ -609,6 +632,22 @@ class MedicalPlayerDiagnosePanel:
         summary_draw.width = self.width
         lines: List[str] = []
 
+        actual_complications: Set[int] = set()
+        if getattr(self.patient, "complications", None):
+            actual_complications = {int(cid) for cid in self.patient.complications if cid}
+        confirmed_set: Set[int] = {int(cid) for cid in confirmed}
+        missing_complications: Set[int] = set()
+        if actual_complications:
+            missing_complications = actual_complications - confirmed_set
+
+        adjust_ratio = 1.0
+        total_complication_count = len(actual_complications)
+        if total_complication_count > 0 and missing_complications:
+            adjust_ratio = (
+                len(confirmed_set) + 0.5 * len(missing_complications)
+            ) / total_complication_count
+
+        # 显示确诊或建议
         if confirmed:
             lines.append(_("已确诊的并发症与治疗方案："))
             for cid in confirmed:
@@ -617,7 +656,7 @@ class MedicalPlayerDiagnosePanel:
                     continue
                 severity_text = self._translate_severity(int(getattr(config, "severity_level", 0) or 0))
                 plan_text = getattr(config, "treatment_plan", "") or _("暂无详细治疗方案。")
-                lines.append(_("· {severity} {name}").format(severity=severity_text, name=config.name))
+                lines.append(_("·({severity}){name}").format(severity=severity_text, name=config.name))
                 lines.append(_("  治疗方案：{plan}").format(plan=plan_text))
         else:
             lines.append(_("检查次数已达上限，以下为可能的异常线索："))
@@ -629,12 +668,15 @@ class MedicalPlayerDiagnosePanel:
 
         preview = medical_service.estimate_patient_treatment_summary(self.patient)
         if preview.get("success"):
-            diagnose_income = preview.get("diagnose_income", 0)
-            medicine_income = preview.get("predicted_medicine_income", 0)
+            # 成功获取预估信息，结合确诊进度动态调整收益与耗材数量
+            diagnose_income = int(round(_ensure_float(preview.get("diagnose_income", 0), 0.0)))
+            base_medicine_income = _ensure_float(preview.get("predicted_medicine_income", 0), 0.0)
+            display_medicine_income_value = base_medicine_income * adjust_ratio if adjust_ratio != 1.0 else base_medicine_income
+            display_medicine_income = int(round(display_medicine_income_value))
             lines.append(
                 _("预计诊疗收益：{diagnose} 龙门币 | 预估药费收益：{medicine} 龙门币").format(
                     diagnose=diagnose_income,
-                    medicine=medicine_income,
+                    medicine=display_medicine_income,
                 )
             )
             resources_raw = preview.get("resources")
@@ -646,12 +688,26 @@ class MedicalPlayerDiagnosePanel:
             if resources:
                 lines.append(_("药品需求："))
                 for item in resources:
+                    base_amount = float(item.get("amount", 0.0) or 0.0)
+                    display_amount = base_amount * adjust_ratio if adjust_ratio != 1.0 else base_amount
                     lines.append(
                         _("  · {name} × {amount:.1f}").format(
                             name=item.get("name", "-"),
-                            amount=float(item.get("amount", 0.0) or 0.0),
+                            amount=display_amount,
                         )
                     )
+                if missing_complications:
+                    lines.append(
+                        _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
+                            count=len(missing_complications)
+                        )
+                    )
+            elif missing_complications:
+                lines.append(
+                    _("未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
+                        count=len(missing_complications)
+                    )
+                )
 
         summary_draw.text = "\n".join(lines) + "\n"
         summary_draw.draw()
@@ -671,9 +727,11 @@ class MedicalPlayerDiagnosePanel:
         records = self.patient.metadata.get("player_check_records", [])
         suggestions: List[str] = []
         seen: Set[Tuple[int, int]] = set()
+        # 逆序遍历记录，以便优先展示最新的再检建议
         for record in reversed(records):
             if not isinstance(record, dict) or record.get("result") != "recheck":
                 continue
+            # 使用系统 ID + 部位 ID 作为合并键，避免重复提示同一位置
             system_id = int(record.get("system_id", 0) or 0)
             part_id = int(record.get("part_id", 0) or 0)
             key = (system_id, part_id)
@@ -694,13 +752,11 @@ class MedicalPlayerDiagnosePanel:
 
             hint_severity = int(record.get("hint_severity", -1)) if record.get("hint_severity") is not None else -1
             severity_text = self._translate_severity(hint_severity) if hint_severity >= 0 else _("未知等级")
-            exam_method = record.get("exam_method") or record.get("name") or "-"
             suggestions.append(
-                _("· {system}/{part} 可能存在{severity}异常，建议改用其他检查（当前方法：{method}）。").format(
+                _("· {system}/{part} 可能存在{severity}异常，建议改用其他检查。").format(
                     system=system_name,
                     part=part_name,
                     severity=severity_text,
-                    method=exam_method,
                 )
             )
         return suggestions
@@ -733,6 +789,7 @@ class MedicalPlayerDiagnosePanel:
                 return option
         comp_config = game_config.config_medical_complication.get(complication_id)
         if comp_config is not None:
+            # 当菜单缺失目标项目时，退回配置表提供最小展示信息
             return {
                 "cid": complication_id,
                 "name": comp_config.name,
@@ -751,11 +808,12 @@ class MedicalPlayerDiagnosePanel:
         """
         if not self.feedback_text:
             return
-        feedback_draw = draw.NormalDraw()
-        feedback_draw.width = self.width
-        feedback_draw.text = f"{self.feedback_text}\n"
-        feedback_draw.draw()
-        line_feed.draw()
+        # 暂时注释掉反馈栏绘制，避免界面过长影响操作体验
+        # feedback_draw = draw.NormalDraw()
+        # feedback_draw.width = self.width
+        # feedback_draw.text = f"{self.feedback_text}\n"
+        # feedback_draw.draw()
+        # line_feed.draw()
 
     # --- 操作按钮 ---------------------------------------------------------
 
@@ -780,68 +838,50 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
 
-        hint_button = draw.LeftButton(
-            _("[切换提示]"),
-            "toggle_hint",
-            16,
-            cmd_func=self._toggle_hint,
-        )
-        hint_button.draw()
-        return_list.append(hint_button.return_text)
-
         if pending:
-            clear_button = draw.LeftButton(
-                _("[清空待检查]"),
+            clear_button = draw.CenterButton(
+                _("[清空已选待检项]"),
                 "clear_option",
-                18,
+                self.width // 4,
                 cmd_func=self._clear_pending,
             )
             clear_button.draw()
+            # 记录按钮返回值确保事件循环能够捕获指令
             return_list.append(clear_button.return_text)
 
         allow_execute = pending and used_checks < self.max_checks
         if allow_execute:
-            execute_button = draw.LeftButton(
+            execute_button = draw.CenterButton(
                 _("[执行所选检查]"),
                 "run_checks",
-                20,
+                self.width // 4,
                 cmd_func=self._execute_checks,
             )
             execute_button.draw()
             return_list.append(execute_button.return_text)
-        else:
-            disabled = draw.CenterDraw()
-            disabled.width = 22
-            if not pending:
-                disabled.text = _("[请选择检查项目]")
-            else:
-                disabled.text = _("[检查次数耗尽]")
-            disabled.draw()
 
         allow_treat = bool(confirmed) or used_checks >= self.max_checks
         if allow_treat:
-            treat_button = draw.LeftButton(
+            treat_button = draw.CenterButton(
                 _("[开药并治疗]"),
                 "commit_treat",
-                18,
+                self.width // 4,
                 cmd_func=self._commit_treatment,
             )
             treat_button.draw()
+            # 当至少确诊一项或已耗尽检查次数时允许开药流程
             return_list.append(treat_button.return_text)
-        else:
-            disabled = draw.CenterDraw()
-            disabled.width = 18
-            disabled.text = _("[待诊断完成]")
-            disabled.draw()
 
-        abort_button = draw.LeftButton(
-            _("[提前结束诊疗并返回]"),
-            "abort_session",
-            28,
-            cmd_func=self._handle_abort,
-        )
-        abort_button.draw()
-        return_list.append(abort_button.return_text)
+        if used_checks == 0:
+            abort_button = draw.CenterButton(
+                _("[提前结束诊疗并返回]"),
+                "abort_session",
+                self.width // 4,
+                cmd_func=self._handle_abort,
+            )
+            abort_button.draw()
+            # 仅在尚未消耗检查次数时允许无损退出
+            return_list.append(abort_button.return_text)
 
     # --- 事件处理 ---------------------------------------------------------
 
@@ -857,6 +897,7 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
         new_status = not bool(self.patient.metadata.get("player_hint_enabled", False))
+        # 直接写回 metadata，确保下次进入面板时保持选择
         self.patient.metadata["player_hint_enabled"] = new_status
         self.feedback_text = _("治病提示已{0}。\n").format(_("开启") if new_status else _("关闭"))
 
@@ -872,6 +913,7 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
         self.patient.metadata["player_pending_checks"] = []
+        # 清空列表同时输出反馈，避免玩家误以为操作失败
         self.feedback_text = _("已清空待执行的检查项目。")
 
     def _execute_checks(self) -> None:
@@ -898,11 +940,15 @@ class MedicalPlayerDiagnosePanel:
         if isinstance(raw_results, list):
             for entry in raw_results:
                 if isinstance(entry, dict):
+                    # 将返回结果统一成字典列表，过滤掉异常结构
                     normalized.append(entry)
         self.last_check_results = normalized
         self._checks_executed += 1
         summary = self._summarize_check_results(self.last_check_results)
         self.feedback_text = summary
+        # 如果检查列表为展开状态，则调用一次折叠以刷新界面
+        if self.menu_expanded:
+            self._toggle_check_menu()
 
     def _commit_treatment(self) -> None:
         """确认治疗结果，计算收益并结束会话。
@@ -920,6 +966,7 @@ class MedicalPlayerDiagnosePanel:
             patient=self.patient,
             apply_medicine=True,
         )
+        # commit 会直接完成诊断流程，并在返回值中给出收益及状态标识
         if not outcome.get("success"):
             self.feedback_text = _("治疗操作失败：{0}").format(outcome.get("reason", "unknown"))
             return
@@ -943,6 +990,7 @@ class MedicalPlayerDiagnosePanel:
             self._should_close = True
             self._abort_requested = True
             return
+        # 通知医疗服务层撤销会话状态，防止残留数据影响后续诊疗
         medical_service.abort_player_diagnose_session(self.player, patient=self.patient)
         self.feedback_text = _("已结束本次诊疗流程。")
         self._abort_requested = True
@@ -960,11 +1008,13 @@ class MedicalPlayerDiagnosePanel:
             None。
         """
         if self._treatment_committed and self.player is not None:
+            # 正常完成治疗后按较长时长结算
             duration = self._resolve_duration_minutes(30)
             self._apply_time_cost(duration)
         elif self._abort_requested and self.player is not None:
             duration = 0
             if self._checks_executed > 0:
+                # 即便中途退出，只要执行过检查仍需扣除少量时间
                 duration = self._resolve_duration_minutes(10)
             if duration > 0:
                 self._apply_time_cost(duration)
@@ -987,6 +1037,7 @@ class MedicalPlayerDiagnosePanel:
         update.game_update_flow(minutes)
         self.player.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
         self.player.behavior.duration = 1
+        # 将行为状态同步回短暂的发呆动作，避免等待行为残留
         self.player.behavior.start_time = cache.game_time
 
     # --- 工具方法 ---------------------------------------------------------
@@ -1007,6 +1058,7 @@ class MedicalPlayerDiagnosePanel:
         for item in data:
             if not isinstance(item, dict):
                 continue
+            # 将可能携带的字符串或 None 统一转成 int，确保后续计算稳定
             pending.append(
                 {
                     "cid": int(item.get("cid", 0) or 0),
@@ -1028,6 +1080,7 @@ class MedicalPlayerDiagnosePanel:
         """
         if self.patient is None:
             return []
+        # 数据可能以字符串存储，因此统一转为 int
         return list(int(cid) for cid in self.patient.metadata.get("player_confirmed_complications", []))
 
     def _resolve_duration_minutes(self, base_minutes: int) -> int:
@@ -1040,59 +1093,63 @@ class MedicalPlayerDiagnosePanel:
             int: 实际需要消耗的分钟数。
         """
         efficiency = max(basement.calc_facility_efficiency(_MEDICAL_FACILITY_ID), 0.1)
+        # 将设施效率映射为耗时缩放，限定最低效率避免除零
         duration = max(int(round(base_minutes / efficiency)), 5)
         return duration
 
-    def _build_hint_text(self) -> str:
-        """根据档案线索与玩家医疗等级生成提示文本。
+    def _resolve_hint_highlight_targets(self) -> Tuple[Set[int], Set[Tuple[int, int]], Set[int]]:
+        """根据玩家医疗等级确定需要高亮的系统、部位与并发症。"""
 
-        参数:
-            无。
-
-        返回:
-            str: 已格式化的提示字符串，若无法提供则为空串。
-        """
         if self.patient is None:
-            return ""
+            return set(), set(), set()
+        if not bool(self.patient.metadata.get("player_hint_enabled", False)):
+            return set(), set(), set()
+
         med_level = self.player_med_level
         if med_level <= 0:
-            return ""
+            return set(), set(), set()
+
         trace_list = self.patient.metadata.get("complication_trace", [])
         if not trace_list:
-            return ""
+            return set(), set(), set()
 
-        system_names: List[str] = []
-        part_names: List[str] = []
-        exam_hint: Dict[int, List[str]] = {0: [], 1: [], 2: []}
+        system_targets: Set[int] = set()
+        part_targets: Set[Tuple[int, int]] = set()
+        complication_by_severity: Dict[int, Set[int]] = {}
+
         for entry in trace_list:
-            comp_config = game_config.config_medical_complication.get(entry.get("cid", entry.get("complication_id", 0)))
             system_id = int(entry.get("system_id", 0) or 0)
             part_id = int(entry.get("part_id", 0) or 0)
-            system_map = game_config.config_medical_body_system_by_system.get(system_id, {})
-            part_info = system_map.get(part_id)
-            if part_info is not None:
-                if part_info.system_name not in system_names:
-                    system_names.append(part_info.system_name)
-                if part_info.part_name not in part_names:
-                    part_names.append(part_info.part_name)
-            if comp_config is not None:
-                exam_method = comp_config.exam_method
-                severity = comp_config.severity_level
-                if exam_method and exam_method not in exam_hint[severity]:
-                    exam_hint[severity].append(exam_method)
+            comp_id = int(entry.get("cid", entry.get("complication_id", 0)) or 0)
+            severity = entry.get("severity_level")
+            if severity is None and comp_id:
+                comp_config = game_config.config_medical_complication.get(comp_id)
+                severity = getattr(comp_config, "severity_level", 0) if comp_config else 0
+            severity_level = int(severity or 0)
 
-        lines: List[str] = []
-        if med_level >= 1 and system_names:
-            lines.append(_("涉及系统：{0}").format("、".join(system_names)))
-        if med_level >= 2 and part_names:
-            lines.append(_("疑似部位：{0}").format("、".join(part_names)))
-        if med_level >= 3 and exam_hint[0]:
-            lines.append(_("轻症推荐检查：{0}").format("、".join(exam_hint[0])))
-        if med_level >= 5 and exam_hint[1]:
-            lines.append(_("中症推荐检查：{0}").format("、".join(exam_hint[1])))
-        if med_level >= 7 and exam_hint[2]:
-            lines.append(_("重症推荐检查：{0}").format("、".join(exam_hint[2])))
-        return "\n".join(lines)
+            # 依据追踪记录累计系统、部位以及严重程度索引
+            if system_id:
+                system_targets.add(system_id)
+            if system_id and part_id:
+                part_targets.add((system_id, part_id))
+            if comp_id:
+                complication_by_severity.setdefault(severity_level, set()).add(comp_id)
+
+        highlight_systems = system_targets if med_level >= 1 else set()
+        highlight_parts = part_targets if med_level >= 2 else set()
+
+        highlight_complications: Set[int] = set()
+        # 医疗等级越高，可直接定位到更严重的具体并发症
+        if med_level >= 3:
+            highlight_complications |= complication_by_severity.get(0, set())
+        if med_level >= 5:
+            highlight_complications |= complication_by_severity.get(1, set())
+        if med_level >= 7:
+            for severity_level, comp_ids in complication_by_severity.items():
+                if severity_level >= 2:
+                    highlight_complications |= comp_ids
+
+        return highlight_systems, highlight_parts, highlight_complications
 
     @staticmethod
     def _translate_severity(severity_level: int) -> str:
@@ -1109,6 +1166,7 @@ class MedicalPlayerDiagnosePanel:
             1: _("中症"),
             2: _("重症"),
         }
+        # 默认回退到 "-" 防止未知等级让 UI 出现异常字符
         return mapping.get(int(severity_level), "-")
 
     @staticmethod
@@ -1126,6 +1184,7 @@ class MedicalPlayerDiagnosePanel:
             "negative": _("阴性"),
             "recheck": _("需再检"),
         }
+        # 未知结果保持原样返回，方便调试阶段定位新类型
         return mapping.get(result, result)
 
     @staticmethod
@@ -1145,5 +1204,6 @@ class MedicalPlayerDiagnosePanel:
             name = item.get("name", str(item.get("cid", "")))
             outcome = MedicalPlayerDiagnosePanel._translate_outcome(str(item.get("result", "")))
             message = item.get("message", "")
+            # 每条记录按照“结果 + 名称 + 说明”格式输出
             lines.append(_("· [{outcome}] {name} —— {message}").format(outcome=outcome, name=name, message=message))
         return "\n".join(lines)

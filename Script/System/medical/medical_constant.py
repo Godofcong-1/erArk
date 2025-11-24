@@ -49,9 +49,9 @@ class MedicalPatientState(str, Enum):
 
 STATE_DISPLAY_NAME: Dict[MedicalPatientState, str] = {
     MedicalPatientState.REFRESHED: _("待诊"),
-    MedicalPatientState.IN_TREATMENT: _("NPC诊疗中"),
-    MedicalPatientState.IN_TREATMENT_PLAYER: _("玩家诊疗中"),
-    MedicalPatientState.WAITING_MEDICATION: _("等待用药"),
+    MedicalPatientState.IN_TREATMENT: _("干员诊疗中"),
+    MedicalPatientState.IN_TREATMENT_PLAYER: _("博士诊疗中"),
+    MedicalPatientState.WAITING_MEDICATION: _("等待用药治疗"),
     MedicalPatientState.HOSPITALIZED: _("住院中"),
     MedicalPatientState.DISCHARGED: _("已出院"),
 }
@@ -141,6 +141,22 @@ class MedicalPatient:
         for resource_id in ALL_MEDICINE_RESOURCE_IDS:
             self.need_resources.setdefault(resource_id, 0.0)
 
+# 统一定义病人接诊优先策略的文本转换和选项列表
+def translate_priority(mode: MedicalPatientPriority) -> str:
+    """将病人接诊优先策略转换为用户可读文本"""
+    mapping = {
+        MedicalPatientPriority.FOCUS_CRITICAL: _("优先重症"),
+        MedicalPatientPriority.NORMAL: _("正常排序"),
+        MedicalPatientPriority.FOCUS_MILD: _("优先轻症"),
+    }
+    return mapping.get(mode, "-")
+
+PRIORITY_OPTIONS = [
+    (MedicalPatientPriority.FOCUS_CRITICAL, _("优先重症")),
+    (MedicalPatientPriority.NORMAL, _("正常排序")),
+    (MedicalPatientPriority.FOCUS_MILD, _("优先轻症")),
+]
+
 __all__ = [
     "MedicalPatientState",
     "MedicalPatientPersonality",
@@ -154,4 +170,6 @@ __all__ = [
     "SPECIALIZATION_BONUS_PER_LEVEL",
     "ALL_MEDICINE_RESOURCE_IDS",
     "MedicalPatient",
+    "translate_priority",
+    "PRIORITY_OPTIONS",
 ]
