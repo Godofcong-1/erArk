@@ -306,6 +306,7 @@ def update_base_resouce_newday():
     无
     """
     from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
+    from Script.System.medical import medical_service
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -322,8 +323,8 @@ def update_base_resouce_newday():
     agriculture_production_panel.settle_agriculture_line()
     # 结算访客抵达和离开
     invite_visitor_panel.settle_visitor_arrivals_and_departures()
-    # 结算收入
-    settle_income()
+    # 结算医疗经营，并输出日报
+    medical_service.settle_medical_department()
     # 结算资源的供需涨跌与自动交易
     resource_exchange_panel.daily_supply_demand_fluctuation()
     # 刷新香薰疗愈次数
@@ -726,34 +727,9 @@ def settle_income():
     """
     结算收入
     """
-    from Script.UI.Panel import achievement_panel
+    from Script.System.medical import medical_service
 
-    # 计算医疗部收入
-    today_medical_income = int(cache.rhodes_island.medical_income_today)
-    # 计算总收入
-    today_all_income = today_medical_income
-    # 转化为龙门币
-    cache.rhodes_island.materials_resouce[1] += today_all_income
-
-    # 刷新新病人数量，已治愈病人数量和治疗收入归零
-    cache.rhodes_island.patient_now = random.randint(int(cache.rhodes_island.patient_max / 2), cache.rhodes_island.patient_max)
-    cache.rhodes_island.patient_cured = 0
-    cache.rhodes_island.medical_income_total += today_medical_income
-    cache.rhodes_island.medical_income_today = 0
-    cache.rhodes_island.all_income = 0
-
-    # 输出提示信息
-    now_draw_text = "\n"
-    now_draw_text += _("今日罗德岛收入为：")
-    now_draw_text += _("医疗部收入{0}，").format(today_medical_income)
-    now_draw_text += _("总收入为{0}，已全部转化为龙门币\n").format(today_all_income)
-    now_draw = draw.WaitDraw()
-    now_draw.width = window_width
-    now_draw.text = now_draw_text
-    now_draw.draw()
-
-    # 结算龙门币成就
-    achievement_panel.achievement_flow(_("龙门币"))
+    medical_service.settle_medical_department()
 
 def settle_pink_certificate():
     """
@@ -793,8 +769,8 @@ def draw_todo():
     # 供电是否不足
     power_generation = manage_power_system_panel.get_theoretical_power_generation()
     power_consumption = manage_power_system_panel.get_theoretical_power_consumption()
-    # if power_generation < power_consumption:
-    #     draw_text += _("  当前供电不足，可能影响基地正常运转\n")
+    if power_generation < power_consumption:
+        draw_text += _("  当前供电不足，可能影响基地正常运转\n")
 
     # 是否有已招募待确认的干员
     if len(cache.rhodes_island.recruited_id):

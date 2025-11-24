@@ -59,6 +59,7 @@ def first_bonus_and_setting_updata():
     cache.rhodes_island.materials_resouce[1] = 20000
     cache.rhodes_island.materials_resouce[11] = 20
     cache.rhodes_island.materials_resouce[15] = 300
+    cache.rhodes_island.materials_resouce[21] = 10
     # 体检设置
     cache.rhodes_island.physical_examination_setting = attr_calculation.get_physical_exam_setting_zero()
 

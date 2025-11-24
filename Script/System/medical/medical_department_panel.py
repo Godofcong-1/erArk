@@ -12,7 +12,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw
-from Script.System.medical import medical_constant, medical_service
+from Script.System.medical import medical_constant, medical_service, log_system
 
 cache: game_type.Cache = cache_control.cache
 """ 全局缓存对象 """
@@ -694,4 +694,58 @@ class FinanceReportSubPanel(_BaseSubPanel):
             need_draw.text += _("  {0}({1})：{2:.2f}\n").format(name, resource_id, amount)
         need_draw.draw()
 
+        line_feed.draw()
+        log_button = draw.LeftButton(
+            _("[401]查看最近经营日志"),
+            _("查看最近经营日志"),
+            self.width,
+            cmd_func=self._show_recent_reports,
+        )
+        log_button.draw()
+        line_feed.draw()
+        return_list.append(log_button.return_text)
+
         return return_list
+
+    def _show_recent_reports(self) -> None:
+        """弹出最近几日的医疗经营日志"""
+
+        reports = log_system.get_recent_medical_reports(limit=3)
+        wait_draw = draw.WaitDraw()
+        wait_draw.width = self.width
+
+        if not reports:
+            wait_draw.text = _("\n暂无医疗经营日志记录。\n")
+            wait_draw.draw()
+            return
+
+        sections: List[str] = []
+        for entry in reports:
+            stats: Dict[str, int] = dict(entry.get("stats", {}) or {})
+            lines: List[str] = []
+            lines.append(_("记录时间：{0}").format(entry.get("time_str", "-")))
+            lines.append(_("收入：{0} 龙门币").format(int(entry.get("income", 0) or 0)))
+            if stats:
+                lines.append(
+                    _("诊疗完成：{0} 人 / 入院 {1} / 出院 {2} / 药耗 {3}").format(
+                        int(stats.get("total_treated_patients", 0) or 0),
+                        int(stats.get("hospitalized_today", 0) or 0),
+                        int(stats.get("discharged_today", 0) or 0),
+                        int(stats.get("medicine_consumed", 0) or 0),
+                    )
+                )
+                if stats.get("surgeries_performed") or stats.get("hospital_treated_pending"):
+                    lines.append(
+                        _("手术/待条件：{0}/{1}").format(
+                            int(stats.get("surgeries_performed", 0) or 0),
+                            int(stats.get("hospital_treated_pending", 0) or 0),
+                        )
+                    )
+
+            text_body = str(entry.get("text", "")).strip()
+            if text_body:
+                lines.append(text_body)
+            sections.append("\n".join(lines))
+
+        wait_draw.text = "\n--------------------\n".join(sections) + "\n"
+        wait_draw.draw()

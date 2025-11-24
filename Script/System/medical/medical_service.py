@@ -9,10 +9,11 @@ from __future__ import annotations
 import math
 from typing import Any, Callable, Dict, Iterable, List, Optional, Set, Tuple, Union
 
-from Script.Config import config_def, game_config
+from Script.Config import config_def, game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import handle_ability, handle_premise
-from Script.System.medical import hospital_flow, medical_constant, patient_management
+from Script.UI.Moudle import draw
+from Script.System.medical import hospital_flow, medical_constant, patient_management, log_system
 
 _MEDICAL_FACILITY_ID = 6
 """医疗部在 facility_level 字典中的设施 ID（来源于 Facility.csv）"""
@@ -47,6 +48,19 @@ _SPECIALIZATION_ROLES: Tuple[str, str] = (
     medical_constant.SPECIALIZATION_ROLE_HOSPITAL,
 )
 """受支持的医生岗位分科键顺序"""
+
+
+def _bump_daily_counter(
+    rhodes_island: Optional[game_type.Rhodes_Island],
+    key: str,
+    value: int,
+) -> None:
+    """在医疗日度统计表中累加指定键值"""
+
+    if rhodes_island is None or value == 0:
+        return
+    stats = rhodes_island.__dict__.setdefault("medical_daily_counters", {})
+    stats[key] = int(stats.get(key, 0) or 0) + int(value)
 
 
 def _get_specialization_categories() -> List[Dict[str, Any]]:
@@ -1378,6 +1392,8 @@ def init_medical_department_data(
         }
         rhodes_island.medical_income_today = 0
         rhodes_island.medical_income_total = 0
+        rhodes_island.medical_daily_counters = {}
+        rhodes_island.medical_recent_reports = []
         rhodes_island.medical_clinic_doctor_ids = []
         rhodes_island.medical_clinic_doctor_power = 0.0
         rhodes_island.medical_hospital_doctor_ids = []
@@ -1663,6 +1679,17 @@ def try_consume_medicine(
         patient.metadata["medicine_recorded"] = {}
         patient.metadata["medicine_progress"] = {}
 
+    consumed_total_units = sum(int(value) for value in consumed_units.values())
+    if not is_hospitalized and consumed_total_units:
+        _bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total_units)
+
+    if not is_hospitalized:
+        if overall_success:
+            _bump_daily_counter(rhodes_island, "total_treated_patients", 1)
+            _bump_daily_counter(rhodes_island, "outpatient_cured", 1)
+        else:
+            _bump_daily_counter(rhodes_island, "outpatient_pending", 1)
+
     patient.metadata["last_consumed_units"] = consumed_units
 
     _sync_legacy_patient_counters(rhodes_island)
@@ -1721,6 +1748,140 @@ def process_hospitalized_patients(
 
     hospital_flow.process_hospitalized_patients(rhodes_island, _consume)
     _sync_legacy_patient_counters(rhodes_island)
+
+
+def settle_medical_department(
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+    draw_flag: bool = True,
+) -> Dict[str, Any]:
+    """执行每日医疗经营结算并输出日志"""
+
+    rhodes_island = _get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return {"success": False, "reason": "no_base"}
+
+    _ensure_runtime_dict(rhodes_island)
+
+    process_hospitalized_patients(target_base=rhodes_island)
+
+    stats_source = dict(getattr(rhodes_island, "medical_daily_counters", {}) or {})
+    stats: Dict[str, int] = {str(key): int(value) for key, value in stats_source.items()}
+
+    for required_key in (
+        "total_treated_patients",
+        "hospitalized_today",
+        "discharged_today",
+        "medicine_consumed",
+        "outpatient_cured",
+        "outpatient_pending",
+        "hospital_treated_success",
+        "hospital_treated_pending",
+        "surgeries_performed",
+    ):
+        stats.setdefault(required_key, 0)
+
+    income_today = int(rhodes_island.medical_income_today or 0)
+    price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
+
+    waiting_states = {
+        medical_constant.MedicalPatientState.REFRESHED,
+        medical_constant.MedicalPatientState.IN_TREATMENT,
+        medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER,
+    }
+    patients = list(rhodes_island.medical_patients_today.values())
+    hospitalized_patients = list(rhodes_island.medical_hospitalized.values())
+
+    waiting_count = sum(1 for patient in patients if patient.state in waiting_states)
+    waiting_medication = sum(
+        1 for patient in patients if patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION
+    )
+    hospitalized_count = len(hospitalized_patients)
+    need_surgery_count = sum(1 for patient in hospitalized_patients if patient.need_surgery)
+    blocked_surgery_count = sum(1 for patient in hospitalized_patients if patient.need_surgery and patient.surgery_blocked)
+
+    outpatient_cured = stats.get("outpatient_cured", 0)
+    hospital_success = stats.get("hospital_treated_success", 0)
+    medicine_consumed = stats.get("medicine_consumed", 0)
+    hospitalized_today = stats.get("hospitalized_today", 0)
+    discharged_today = stats.get("discharged_today", 0)
+    surgeries_performed = stats.get("surgeries_performed", 0)
+    outpatient_pending = stats.get("outpatient_pending", 0)
+    hospital_pending = stats.get("hospital_treated_pending", 0)
+    total_treated = stats.get("total_treated_patients", outpatient_cured + hospital_success)
+
+    body_lines: List[str] = []
+    body_lines.append(_("今日收入：{0} 龙门币").format(income_today))
+    body_lines.append(_("收费系数：{0:.0f}%").format(price_ratio * 100))
+    body_lines.append(
+        _("诊疗完成：{0} 人（门诊 {1} / 住院 {2}）").format(total_treated, outpatient_cured, hospital_success)
+    )
+    if outpatient_pending or hospital_pending:
+        body_lines.append(
+            _("待发药：门诊 {0} 人 / 住院 {1} 人").format(outpatient_pending, hospital_pending)
+        )
+    body_lines.append(_("药品消耗：{0} 单位").format(medicine_consumed))
+    body_lines.append(_("今日入院：{0} 人 / 出院：{1} 人").format(hospitalized_today, discharged_today))
+    if surgeries_performed or blocked_surgery_count:
+        body_lines.append(
+            _("手术执行：成功 {0} 例 / 待条件 {1} 例").format(surgeries_performed, blocked_surgery_count)
+        )
+    body_lines.append(
+        _("队列概况：待诊 {0} 人 / 待发药 {1} 人 / 住院 {2} 人 / 待手术 {3} 人").format(
+            waiting_count,
+            waiting_medication,
+            hospitalized_count,
+            need_surgery_count,
+        )
+    )
+
+    report_text = _("\n医疗部经营结算\n") + "".join(f" - {line}\n" for line in body_lines)
+
+    if draw_flag:
+        wait_draw = draw.WaitDraw()
+        wait_draw.width = normal_config.config_normal.text_width
+        wait_draw.text = report_text
+        wait_draw.draw()
+
+    queue_snapshot = {
+        "waiting": waiting_count,
+        "waiting_medication": waiting_medication,
+        "hospitalized": hospitalized_count,
+        "need_surgery": need_surgery_count,
+        "surgery_blocked": blocked_surgery_count,
+    }
+
+    log_header = _("医疗部经营结算")
+    log_entry = log_system.append_medical_report(
+        {
+            "lines": [log_header] + body_lines,
+            "income": income_today,
+            "price_ratio": price_ratio,
+            "stats": stats.copy(),
+            "queue": queue_snapshot,
+        },
+        target_base=rhodes_island,
+    )
+
+    from Script.UI.Panel import achievement_panel
+
+    achievement_panel.achievement_flow(_("龙门币"))
+
+    rhodes_island.medical_income_today = 0
+    rhodes_island.all_income = 0
+    rhodes_island.medical_daily_counters = {}
+
+    refresh_medical_patients(target_base=rhodes_island)
+    _sync_legacy_patient_counters(rhodes_island)
+
+    return {
+        "success": True,
+        "income": income_today,
+        "stats": stats,
+        "queue": queue_snapshot,
+        "report": log_entry,
+        "text": report_text,
+    }
 
 
 def attempt_surgery(
@@ -1963,6 +2124,12 @@ def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
 
     rhodes_island.medical_income_today = int(getattr(rhodes_island, "medical_income_today", 0) or 0)
     rhodes_island.medical_income_total = int(getattr(rhodes_island, "medical_income_total", 0) or 0)
+    rhodes_island.medical_daily_counters = dict(
+        getattr(rhodes_island, "medical_daily_counters", {}) or {}
+    )
+    rhodes_island.medical_recent_reports = list(
+        getattr(rhodes_island, "medical_recent_reports", []) or []
+    )
     rhodes_island.medical_clinic_doctor_ids = list(
         getattr(rhodes_island, "medical_clinic_doctor_ids", []) or []
     )
