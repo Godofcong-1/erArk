@@ -1103,31 +1103,15 @@ def handle_first_kiss(
         character_data.first_record.first_kiss_id = target_data.cid
         character_data.first_record.first_kiss_time = cache.game_time
         character_data.first_record.first_kiss_place = character_data.position
-        # if (not character_id) or (not target_data.cid):
-        # now_draw = draw.NormalDraw()
-        # now_draw.text = _("{character_name}博士于{kiss_time}在{kiss_palce}失去了初吻\n").format(
-        #     character_name=character_data.name,
-        #     kiss_time = str(character_data.first_record.first_kiss_time.month) + "月" + str (character_data.first_record.first_kiss_time.day) + "日",
-        #     kiss_palce = attr_text.get_scene_path_text(character_data.first_record.first_kiss_place),
-        # )
-        # now_draw.width = window_width
-        # now_draw.draw()
+        # 初吻的二段结算
+        second_behavior.character_get_second_behavior(character_id, "first_kiss")
     if target_data.talent[4] == 1:
         target_data.talent[4] = 0
         target_data.first_record.first_kiss_id = character_id
         target_data.first_record.first_kiss_time = cache.game_time
         target_data.first_record.first_kiss_place = target_data.position
-        if (not character_id) or (not target_data.cid):
-            # now_draw = draw.NormalDraw()
-            # now_draw.text = _("{character_name}于{kiss_time}在{kiss_palce}失去了初吻\n").format(
-            #     character_name=target_data.name,
-            #     kiss_time = str(target_data.first_record.first_kiss_time.month) + "月" + str (target_data.first_record.first_kiss_time.day) + "日",
-            #     kiss_palce = attr_text.get_scene_path_text(target_data.first_record.first_kiss_place),
-            # )
-            # now_draw.width = window_width
-            # now_draw.draw()
-            # 初吻的二段结算
-            second_behavior.character_get_second_behavior(target_data.cid, "first_kiss")
+        # 初吻的二段结算
+        second_behavior.character_get_second_behavior(target_data.cid, "first_kiss")
 
 
 # @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FIRST_HAND_IN_HAND)
