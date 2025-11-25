@@ -519,6 +519,10 @@ def askfor_wait():
         return flow_handle_web.askfor_wait()
 
     # 原始逻辑
+    # 基准模式下直接跳过等待，避免自动化流程阻塞
+    if getattr(cache, "benchmark_mode", False):
+        return
+
     cache.wframe_mouse.w_frame_up = 0
     while not cache.wframe_mouse.w_frame_up:
         re = askfor_str(donot_return_null_str=False)

@@ -393,8 +393,9 @@ def acquire_patient_for_doctor(
     if not available:
         return None
 
-    sorted_candidates = _sort_patients_for_triage(available, rhodes_island)
-    patient = sorted_candidates[0]
+    patient = _select_triage_candidate(available, rhodes_island)
+    if patient is None:
+        return None
     patient.metadata["assigned_doctor_id"] = doctor_character.cid
     doctor_character.work.medical_patient_id = patient.patient_id
     return patient
@@ -448,14 +449,14 @@ def _acquire_hospital_patient_for_doctor(
             work_data.medical_patient_id = 0
         return None
 
-    candidates.sort(
-        key=lambda target: (
+    def _hospital_priority(target: medical_constant.MedicalPatient) -> Tuple[int, int, int]:
+        return (
             -int(getattr(target, "severity_level", 0) or 0),
             -int(getattr(target, "stay_days", 0) or 0),
             target.patient_id,
         )
-    )
-    patient = candidates[0]
+
+    patient = min(candidates, key=_hospital_priority)
     patient.metadata["assigned_hospital_doctor_id"] = doctor_character.cid
     if work_data is not None:
         work_data.medical_patient_id = patient.patient_id
@@ -483,31 +484,30 @@ def _resolve_triage_mode(
     return mode
 
 
-def _sort_patients_for_triage(
+def _select_triage_candidate(
     candidates: List[medical_constant.MedicalPatient],
     rhodes_island: Optional[game_type.Rhodes_Island],
-) -> List[medical_constant.MedicalPatient]:
-    """依据当前优先策略对候选病人进行排序"""
+) -> Optional[medical_constant.MedicalPatient]:
+    """依据当前优先策略挑选最匹配的病人，避免在大列表上全量排序"""
+
+    if not candidates:
+        return None
 
     mode = _resolve_triage_mode(rhodes_island)
     if mode == medical_constant.MedicalPatientPriority.FOCUS_MILD:
-        return sorted(
-            candidates,
-            key=lambda target: (
-                int(getattr(target, "severity_level", 0) or 0),
-                float(getattr(target, "diagnose_progress", 0.0) or 0.0),
-                target.patient_id,
-            ),
-        )
-    # 默认与优先重症策略一致：严重度降序、已诊疗进度降序、ID 升序
-    return sorted(
-        candidates,
-        key=lambda target: (
-            -int(getattr(target, "severity_level", 0) or 0),
-            -float(getattr(target, "diagnose_progress", 0.0) or 0.0),
+        key_func = lambda target: (
+            int(getattr(target, "severity_level", 0) or 0),
+            float(getattr(target, "diagnose_progress", 0.0) or 0.0),
             target.patient_id,
-        ),
+        )
+        return min(candidates, key=key_func)
+
+    key_func = lambda target: (
+        -int(getattr(target, "severity_level", 0) or 0),
+        -float(getattr(target, "diagnose_progress", 0.0) or 0.0),
+        target.patient_id,
     )
+    return min(candidates, key=key_func)
 
 
 def _clear_player_session_metadata(patient: medical_constant.MedicalPatient) -> None:
@@ -552,8 +552,7 @@ def _acquire_patient_for_player(
     if not candidates:
         return None
 
-    sorted_candidates = _sort_patients_for_triage(candidates, rhodes_island)
-    return sorted_candidates[0]
+    return _select_triage_candidate(candidates, rhodes_island)
 
 
 def start_player_diagnose_session(
