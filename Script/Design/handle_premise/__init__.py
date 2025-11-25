@@ -185,13 +185,13 @@ def handle_premise(premise: str, character_id: int) -> int:
     Return arguments:
     int -- 前提权重加成
     """
-    if premise in constant.handle_premise_data:
-        return constant.handle_premise_data[premise](character_id)
-    elif "CVP" in premise:
+    handler = constant.handle_premise_data.get(premise)
+    if handler is not None:
+        return handler(character_id)
+    if "CVP" in premise:
         premise_all_value_list = premise.split("_")[1:]
         return handle_comprehensive_value_premise(character_id, premise_all_value_list)
-    else:
-        return 0
+    return 0
 
 
 def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calculated_premise_dict: dict, weight_all_to_1_flag: bool = False, unconscious_pass_flag: bool = False) -> tuple[int, dict]:
@@ -217,6 +217,7 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
         # 如果有已计算的前提，则直接使用
         now_premise_data = calculated_premise_dict
     fixed_weight = 0 # 固定权重
+    premise_handlers = constant.handle_premise_data
 
     # 无意识模式判定
     if unconscious_pass_flag == False and handle_unconscious_flag_ge_1(target_character_id):
@@ -250,14 +251,15 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
             high_flag = False
         # 已录入前提的判定
         if premise in now_premise_data:
-            if not now_premise_data[premise]:
+            cached_weight = now_premise_data[premise]
+            if not cached_weight:
                 now_weight = 0
                 break
             else:
                 if weight_all_to_1_flag and not high_flag:
                     now_weight += 1
                 else:
-                    now_weight += now_premise_data[premise]
+                    now_weight += cached_weight
         else:
             # 综合数值前提判定
             if "CVP" in premise:
@@ -273,8 +275,9 @@ def get_weight_from_premise_dict(talk_premise_dict: set, character_id: int, calc
             # 其他正常口上判定
             else:
                 # 正常前提
-                if premise in constant.handle_premise_data:
-                    now_add_weight = constant.handle_premise_data[premise](character_id)
+                handler = premise_handlers.get(premise)
+                if handler is not None:
+                    now_add_weight = handler(character_id)
                     now_premise_data[premise] = now_add_weight
                 # 不存在的前提
                 else:

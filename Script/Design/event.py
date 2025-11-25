@@ -1,5 +1,5 @@
 import random
-from Script.Core import cache_control, game_type, value_handle
+from Script.Core import cache_control, game_type
 from Script.UI.Panel import draw_event_text_panel
 from Script.Config import game_config
 
@@ -22,7 +22,8 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
     target_character_id = character_data.target_character_id
     target_character_data = cache.character_data[target_character_id]
     behavior_id = character_data.behavior.behavior_id
-    now_event_data = {}
+    weighted_event_ids: list[str] = []
+    weighted_values: list[int] = []
     # 已计算过的前提字典
     calculated_premise_dict = {}
     if (
@@ -67,12 +68,11 @@ def handle_event(character_id: int, event_before_instrust_flag = False) -> (draw
                 premise_dict = event_config.premise
                 now_weight, calculated_premise_dict = handle_premise.get_weight_from_premise_dict(premise_dict, character_id, calculated_premise_dict, unconscious_pass_flag = True)
             if now_weight:
-                now_event_data.setdefault(now_weight, set())
-                now_event_data[now_weight].add(event_id)
+                weighted_event_ids.append(event_id)
+                weighted_values.append(now_weight)
     now_event_id = ""
-    if now_event_data:
-        event_weight = value_handle.get_rand_value_for_value_region(list(now_event_data.keys()))
-        now_event_id = random.choice(list(now_event_data[event_weight]))
+    if weighted_event_ids:
+        now_event_id = random.choices(weighted_event_ids, weights=weighted_values, k=1)[0]
         event_config = game_config.config_event[now_event_id]
         # 如果是事件前置指令后置类型，则判断是否存在跳过口上的结算
         if event_config.type == 2 and '10012' in event_config.effect:

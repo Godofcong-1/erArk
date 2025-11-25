@@ -462,9 +462,9 @@ def search_target(
             target_data[target_weight_data[target]].add(target)
             continue
         if target not in game_config.config_target_premise_data:
+            target_weight_data[target] = 1
             target_data.setdefault(1, set())
             target_data[1].add(target)
-            target_weight_data[target] = 1
             continue
         target_premise_list = game_config.config_target_premise_data[target]
         now_weight = 0
@@ -524,11 +524,6 @@ def search_target(
     if len(target_data):
         value_weight = value_handle.get_rand_value_for_value_region(list(target_data.keys()))
         final_target = random.choice(list(target_data[value_weight]))
-        # if character_id == 1:
-        #     print(f"debug target_data = {target_data} , final_target = {final_target} , value_weight = {value_weight}")
-        #     if final_target == "531":
-        #         print(f"debug value_weight = {value_weight}")
-        #     print(f"debug value_weight = {value_weight}")
         return final_target, value_weight, 1, premise_data
     return "", 0, 0, premise_data
 
