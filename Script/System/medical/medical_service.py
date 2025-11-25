@@ -13,7 +13,7 @@ from Script.Config import config_def, game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import handle_ability, handle_premise
 from Script.UI.Moudle import draw
-from Script.System.medical import hospital_flow, medical_constant, patient_management, log_system
+from Script.System.Medical import hospital_flow, medical_constant, patient_management, log_system
 
 _MEDICAL_FACILITY_ID = 6
 """医疗部在 facility_level 字典中的设施 ID（来源于 Facility.csv）"""
@@ -33,7 +33,6 @@ _PLAYER_METADATA_KEYS: Tuple[str, ...] = (
     "player_used_checks",
     "player_confirmed_complications",
     "player_check_records",
-    "player_hint_enabled",
     "player_pending_checks",
 )
 """玩家诊疗流程使用的临时元数据键集合"""
@@ -584,7 +583,6 @@ def start_player_diagnose_session(
         patient.metadata["player_used_checks"] = 0
         patient.metadata["player_confirmed_complications"] = []
         patient.metadata["player_check_records"] = []
-        patient.metadata["player_hint_enabled"] = False
         patient.metadata["player_pending_checks"] = []
 
     patient.metadata["assigned_doctor_id"] = doctor_character.cid if doctor_character is not None else 0
@@ -875,16 +873,20 @@ def estimate_patient_treatment_summary(
 ) -> Dict[str, object]:
     """估算玩家当前病人的诊疗收益与药品需求摘要"""
 
+    # 验证病人有效性
     if patient is None:
         return {"success": False, "reason": "no_patient"}
 
+    # 获取当前基地与病情配置
     rhodes_island = _get_rhodes_island(target_base)
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
         return {"success": False, "reason": "no_severity_config"}
 
-    price_ratio = get_medical_price_ratio(target_base=rhodes_island)
-    income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio)
+    # 计算诊疗收益
+    price_ratio = get_medical_price_ratio(target_base=rhodes_island) # 价格系数
+    income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio) # 收益倍率
+    # 诊断收益
     diagnose_income = int(
         round(float(severity_config.diagnose_income or 0) * price_ratio * income_multiplier)
     )
@@ -2045,7 +2047,7 @@ def predict_medical_patient_refresh(
 
 def _calculate_patient_refresh_count(
     rhodes_island: game_type.Rhodes_Island,
-    level_config: config_def.MedicalHospitalLevel,
+    level_config: config_def.Medical_Hospital_Level,
 ) -> int:
     """依据医院等级与收费系数计算今日应刷新病人数"""
 
@@ -2069,7 +2071,7 @@ def _get_medical_facility_level(rhodes_island: game_type.Rhodes_Island) -> int:
     return int(rhodes_island.facility_level.get(_MEDICAL_FACILITY_ID, 0) or 0)
 
 
-def _pick_hospital_level_config(level: int) -> Optional[config_def.MedicalHospitalLevel]:
+def _pick_hospital_level_config(level: int) -> Optional[config_def.Medical_Hospital_Level]:
     """根据设施等级选取对应的医院等级配置"""
 
     if not game_config.config_medical_hospital_level:
@@ -2162,13 +2164,7 @@ def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
 
 
 def _resolve_default_price_ratio() -> float:
-    """返回收费系数的默认值，配置缺失时退回 1.0"""
-
-    if getattr(game_config, "medical_price_ratio_candidates", None):
-        return float(game_config.medical_price_ratio_candidates[0])
-    if game_config.config_medical_price_config:
-        first_ratio = next(iter(game_config.config_medical_price_config.keys()))
-        return float(first_ratio)
+    """返回收费系数的默认值，默认 1.0"""
     return 1.0
 
 

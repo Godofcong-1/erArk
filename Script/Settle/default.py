@@ -22,7 +22,7 @@ from Script.Core import cache_control, constant, constant_effect, game_type, get
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
-from Script.System.medical import medical_constant, medical_service
+from Script.System.Medical import medical_constant, medical_service
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,

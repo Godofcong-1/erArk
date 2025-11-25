@@ -11,7 +11,7 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from Script.Config import config_def, game_config
 from Script.Core import value_handle
-from Script.System.medical import medical_constant
+from Script.System.Medical import medical_constant
 
 _PATIENT_ID_COUNTER = count(1)
 """病人 ID 自增生成器，确保刷新出的病人具有唯一编号"""
@@ -150,7 +150,7 @@ def resolve_price_refresh_multiplier(price_ratio: float) -> float:
     config = _pick_price_config(price_ratio)
     if config is None:
         return 1.0
-    return float(config.refresh_multiplier) if config.refresh_multiplier else 1.0
+    return config[0]
 
 
 def resolve_price_income_multiplier(price_ratio: float) -> float:
@@ -166,7 +166,7 @@ def resolve_price_income_multiplier(price_ratio: float) -> float:
     config = _pick_price_config(price_ratio)
     if config is None:
         return 1.0
-    return float(getattr(config, "income_multiplier", 1.0) or 1.0)
+    return config[1]
 
 
 def clamp(value: float, min_value: Optional[float], max_value: Optional[float]) -> float:
@@ -191,15 +191,15 @@ def clamp(value: float, min_value: Optional[float], max_value: Optional[float]) 
 
 
 def _build_complications_for_patient(
-    severity_config: config_def.MedicalSeverity,
-) -> Tuple[List[config_def.MedicalComplication], float]:
+    severity_config: config_def.Medical_Severity,
+) -> Tuple[List[config_def.Medical_Complication], float]:
     """基于病情等级配置生成并发症组合
 
     参数:
-        severity_config (config_def.MedicalSeverity): 当前病情等级对应的配置。
+        severity_config (config_def.Medical_Severity): 当前病情等级对应的配置。
 
     返回:
-        Tuple[List[config_def.MedicalComplication], float]: 并发症列表与额外普通药需求。"""
+        Tuple[List[config_def.Medical_Complication], float]: 并发症列表与额外普通药需求。"""
 
     # 根据配置构建目标并发症等级计划
     plan: List[int] = []
@@ -209,7 +209,7 @@ def _build_complications_for_patient(
     if not plan:
         return [], 0.0
 
-    complications: List[config_def.MedicalComplication] = []
+    complications: List[config_def.Medical_Complication] = []
     bonus_total = 0.0
     # 遍历分配结果，逐项匹配具体并发症
     for system_id, severity_list in _assign_complication_systems(plan, severity_config):
@@ -229,13 +229,13 @@ def _build_complications_for_patient(
 
 def _assign_complication_systems(
     plan: List[int],
-    severity_config: config_def.MedicalSeverity,
+    severity_config: config_def.Medical_Severity,
 ) -> List[Tuple[int, List[int]]]:
     """将计划中的各等级并发症分配到生理系统
 
     参数:
         plan (List[int]): 并发症严重度计划列表。
-        severity_config (config_def.MedicalSeverity): 对应病情等级的配置。
+        severity_config (config_def.Medical_Severity): 对应病情等级的配置。
 
     返回:
         List[Tuple[int, List[int]]]: 系统 ID 与其包含的并发症严重度列表。
@@ -346,7 +346,7 @@ def _pick_complication(
     system_id: int,
     part_id: int,
     severity_level: int,
-) -> Optional[config_def.MedicalComplication]:
+) -> Optional[config_def.Medical_Complication]:
     """在指定系统/部位/等级下随机挑选一条并发症
 
     参数:
@@ -355,7 +355,7 @@ def _pick_complication(
         severity_level (int): 并发症严重度。
 
     返回:
-        Optional[config_def.MedicalComplication]: 匹配到的并发症对象，无结果时返回 None。"""
+        Optional[config_def.Medical_Complication]: 匹配到的并发症对象，无结果时返回 None。"""
 
     # 从配置中定位候选并发症列表
     part_map = game_config.config_medical_complication_detail.get(system_id, {}).get(part_id, {})
@@ -382,25 +382,35 @@ def _pick_patient_race_id() -> int:
         return 0
     return random.choice(race_ids)
 
-
-def _pick_price_config(price_ratio: float) -> Optional[config_def.MedicalPriceConfig]:
-    """匹配最接近的收费配置条目
+def _pick_price_config(price_ratio: float) -> List[float]:
+    """根据收费系数计算刷新倍率与收入倍率
 
     参数:
         price_ratio (float): 当前收费系数。
 
     返回:
-        Optional[config_def.MedicalPriceConfig]: 匹配到的收费配置，若表为空返回 None。"""
+        List[float]: [刷新倍率, 收入倍率]，默认均为 1.0。"""
 
-    # 配置缺失时直接返回 None
-    if not game_config.config_medical_price_config:
-        return None
-    # 命中精确倍率时直接返回
-    if price_ratio in game_config.config_medical_price_config:
-        return game_config.config_medical_price_config[price_ratio]
-    # 否则寻找与目标最接近的倍率
-    closest_ratio = min(
-        game_config.config_medical_price_config.keys(),
-        key=lambda candidate: abs(candidate - price_ratio),
-    )
-    return game_config.config_medical_price_config.get(closest_ratio)
+    # 以 1.0 为基准，计算与 1.0 的距离
+    delta = price_ratio - 1.0
+
+    # 刷新倍率：每相差 0.05，刷新修正乘以 1.08 或 0.92
+    steps = int(abs(delta) / 0.05)
+    refresh_multiplier = 1.0
+    if delta > 0:
+        for _ in range(steps):
+            refresh_multiplier *= 0.92
+    elif delta < 0:
+        for _ in range(steps):
+            refresh_multiplier *= 1.08
+
+    # 收入倍率：每相差 0.05，收入修正乘以 1.05 或 0.95
+    income_multiplier = 1.0
+    if delta > 0:
+        for _ in range(steps):
+            income_multiplier *= 1.05
+    elif delta < 0:
+        for _ in range(steps):
+            income_multiplier *= 0.95
+
+    return [refresh_multiplier, income_multiplier]

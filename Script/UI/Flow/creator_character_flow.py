@@ -68,7 +68,7 @@ def game_start():
     cache = cache_control.cache
     from Script.Design import cooking
     from Script.UI.Panel import achievement_panel
-    from Script.System.medical import medical_service
+    from Script.System.Medical import medical_service
 
     character_handle.init_character_dormitory()
     character_handle.init_character_position()

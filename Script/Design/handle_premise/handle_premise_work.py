@@ -619,7 +619,7 @@ def handle_medical_surgery_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    from Script.System.medical import medical_constant
+    from Script.System.Medical import medical_constant
     hospitalized = getattr(cache.rhodes_island, "medical_hospitalized", {})
     if not hospitalized:
         return 0

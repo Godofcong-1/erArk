@@ -958,7 +958,7 @@ class Mark_Up:
     """ 升级需求的宝珠类型 """
 
 
-class MedicalBodySystem:
+class Medical_Body_System:
     """ 医疗生理系统部位定义 """
 
     system_id: int
@@ -979,7 +979,7 @@ class MedicalBodySystem:
     """ 补充说明 """
 
 
-class MedicalComplication:
+class Medical_Complication:
     """ 医疗并发症详表 """
 
     cid: int
@@ -1020,7 +1020,7 @@ class MedicalComplication:
     """ 是否需要手术 """
 
 
-class MedicalHospitalLevel:
+class Medical_Hospital_Level:
     """ 医疗区等级定义 """
 
     cid: int
@@ -1037,20 +1037,7 @@ class MedicalHospitalLevel:
     """ 收费系数刷新上限 """
 
 
-class MedicalPriceConfig:
-    """ 收费系数调整定义 """
-
-    cid: int
-    """ 条目id """
-    price_ratio: float
-    """ 收费系数 """
-    refresh_multiplier: float
-    """ 病人刷新修正 """
-    income_multiplier: float
-    """ 收入加成修正 """
-
-
-class MedicalSeverity:
+class Medical_Severity:
     """ 病情严重程度定义 """
 
     cid: int

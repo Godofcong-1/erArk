@@ -8,7 +8,7 @@ from types import FunctionType
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text, flow_handle
 from Script.Design import attr_calculation, basement, instuct_judege, update
-from Script.System.medical import medical_constant, medical_service
+from Script.System.Medical import medical_constant, medical_service
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -87,6 +87,7 @@ class MedicalPlayerDiagnosePanel:
         self._treatment_committed: bool = False
         self._abort_requested: bool = False
         self._checks_executed: int = 0
+        self._awaiting_treatment_confirmation: bool = False
         self.menu_expanded: bool = False
         self.expanded_system_id: Optional[int] = None
         self.expanded_part_id: Optional[int] = None
@@ -159,6 +160,8 @@ class MedicalPlayerDiagnosePanel:
             self._draw_check_status(pending_checks, confirmed_complications, used_checks)
             self._draw_check_menu(return_list, pending_checks, confirmed_complications, used_checks)
             self._draw_treatment_methods(confirmed_complications, used_checks)
+
+            # 绘制反馈栏
             self._draw_feedback()
 
             # 底部交互按钮决定下一步行为
@@ -247,7 +250,8 @@ class MedicalPlayerDiagnosePanel:
         """
         if self.patient is None:
             return
-        hint_enabled = bool(self.patient.metadata.get("player_hint_enabled", False))
+        base_setting = getattr(cache.all_system_setting, "base_setting", {})
+        hint_enabled = bool(int(base_setting.get(12, 0) or 0))
         status_label = _("○治病提示：{status}").format(status=_("开启") if hint_enabled else _("关闭"))
         advice_draw = draw.NormalDraw()
         advice_draw.width = self.width
@@ -399,7 +403,7 @@ class MedicalPlayerDiagnosePanel:
             # 系统按钮支持展开/折叠，并附带提示高亮颜色
             system_button = draw.LeftButton(
                 system_label,
-                f"sys_toggle_{system_id}",
+                system_name,
                 max(len(system_label) * 2 + 4, 26),
                 normal_style=system_style,
                 cmd_func=self._toggle_system_expand,
@@ -432,7 +436,7 @@ class MedicalPlayerDiagnosePanel:
                 # 部位按钮与系统用同一机制控制展开状态
                 part_button = draw.LeftButton(
                     part_label,
-                    f"part_toggle_{system_id}_{part_id}",
+                    part_name,
                     max(len(part_label) * 2 + 4, 30),
                     normal_style=part_style,
                     cmd_func=self._toggle_part_expand,
@@ -463,7 +467,7 @@ class MedicalPlayerDiagnosePanel:
                     # 选项按钮被点击后调用 _toggle_pending_option 处理选/取消逻辑
                     option_button = draw.LeftButton(
                         option_label,
-                        f"toggle_option_{system_id}_{part_id}_{cid}",
+                        name,
                         self.width,
                         normal_style=option_style,
                         cmd_func=self._toggle_pending_option,
@@ -564,24 +568,23 @@ class MedicalPlayerDiagnosePanel:
 
         pending = self._get_pending_checks()
         option_info = self._resolve_option_info(system_id, part_id, complication_id)
-        option_name = option_info.get("name") or str(complication_id)
 
         for index, item in enumerate(pending):
+            # 已勾选则取消
             if item["cid"] == complication_id:
                 pending.pop(index)
                 self.patient.metadata["player_pending_checks"] = pending
-                self.feedback_text = _("已移除待检查项目：{0}").format(option_name)
                 return
 
         used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
+        # 检查次数已耗尽
         if used_checks >= self.max_checks:
-            self.feedback_text = _("检查次数已耗尽，无法继续添加。")
             return
+        # 并行检查数量已达上限
         if len(pending) >= self.max_parallel:
-            self.feedback_text = _("当前已达到可并行检查的数量上限。")
             return
+        # 该并发症已确诊
         if complication_id in self._get_confirmed_complications():
-            self.feedback_text = _("该并发症已确诊，无需重复检查。")
             return
 
         # 所有约束满足后将勾选项写回 metadata，保持会话状态一致
@@ -594,7 +597,6 @@ class MedicalPlayerDiagnosePanel:
             }
         )
         self.patient.metadata["player_pending_checks"] = pending
-        self.feedback_text = _("已选择检查项目：{0}").format(option_name)
 
     def _draw_treatment_methods(self, confirmed: List[int], used_checks: int) -> None:
         """绘制治疗摘要或建议，用于引导下一步行为。
@@ -611,17 +613,37 @@ class MedicalPlayerDiagnosePanel:
 
         # 显示最近的检查结果
         if self.last_check_results:
-            lines: List[str] = []
-            result_draw = draw.NormalDraw()
-            result_draw.width = self.width
+            header_draw = draw.NormalDraw()
+            header_draw.width = self.width
+            header_draw.text = _("检查报告一览：\n")
+            header_draw.draw()
+
+            style_map = {
+                "positive": "warning",
+                "negative": "green",
+                "recheck": "pale_cerulean",
+            }
             for result in self.last_check_results:
                 name = result.get("name", str(result.get("cid", "")))
-                outcome = self._translate_outcome(str(result.get("result", "")))
-                outcome = attr_calculation.pad_display_width(outcome, 6, align="center")
+                result_key = str(result.get("result", "") or "")
+                outcome_text = self._translate_outcome(result_key)
+                outcome_text = attr_calculation.pad_display_width(outcome_text, 6, align="center")
                 message = result.get("message", "")
-                lines.append(_("·({outcome}) 怀疑 {name}，检查结果：{message}").format(outcome=outcome, name=name, message=message))
-            result_draw.text = _("检查报告一览：\n") + "\n".join(lines) + "\n"
-            result_draw.draw()
+
+                prefix_draw = draw.NormalDraw()
+                prefix_draw.text = "·("
+                prefix_draw.draw()
+
+                outcome_draw = draw.NormalDraw()
+                outcome_draw.text = outcome_text
+                outcome_draw.style = style_map.get(result_key, "standard")
+                outcome_draw.draw()
+
+                suffix_draw = draw.NormalDraw()
+                suffix_draw.width = self.width
+                suffix_draw.text = _(") 怀疑 {name}，检查结果：{message}\n").format(name=name, message=message)
+                suffix_draw.draw()
+
             line_feed.draw()
 
         should_show = bool(confirmed) or used_checks >= self.max_checks
@@ -632,14 +654,16 @@ class MedicalPlayerDiagnosePanel:
         summary_draw.width = self.width
         lines: List[str] = []
 
-        actual_complications: Set[int] = set()
+        # 计算未确诊并发症数量及调整比例
+        actual_complications: Set[int] = set() # 真实并发症 ID 集合
         if getattr(self.patient, "complications", None):
             actual_complications = {int(cid) for cid in self.patient.complications if cid}
-        confirmed_set: Set[int] = {int(cid) for cid in confirmed}
-        missing_complications: Set[int] = set()
+        confirmed_set: Set[int] = {int(cid) for cid in confirmed} # 已确诊并发症 ID 集合
+        missing_complications: Set[int] = set() # 未确诊并发症 ID 集合
         if actual_complications:
             missing_complications = actual_complications - confirmed_set
 
+        # 根据确诊进度调整预估收益与药品需求
         adjust_ratio = 1.0
         total_complication_count = len(actual_complications)
         if total_complication_count > 0 and missing_complications:
@@ -808,12 +832,12 @@ class MedicalPlayerDiagnosePanel:
         """
         if not self.feedback_text:
             return
-        # 暂时注释掉反馈栏绘制，避免界面过长影响操作体验
-        # feedback_draw = draw.NormalDraw()
-        # feedback_draw.width = self.width
-        # feedback_draw.text = f"{self.feedback_text}\n"
-        # feedback_draw.draw()
-        # line_feed.draw()
+        line_feed.draw()
+        feedback_draw = draw.WaitDraw()
+        feedback_draw.text = self.feedback_text + "\n"
+        feedback_draw.style = "gold_enrod"
+        feedback_draw.draw()
+        line_feed.draw()
 
     # --- 操作按钮 ---------------------------------------------------------
 
@@ -838,10 +862,43 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
 
+        if self._awaiting_treatment_confirmation:
+            confirm_text = _("[确认就这样治疗]")
+            confirm_button = draw.CenterButton(
+                confirm_text,
+                confirm_text,
+                self.width // 4,
+                cmd_func=self._confirm_treatment_after_prompt,
+            )
+            confirm_button.draw()
+            return_list.append(confirm_button.return_text)
+
+            cancel_text = _("[返回继续检查]")
+            cancel_button = draw.CenterButton(
+                cancel_text,
+                cancel_text,
+                self.width // 4,
+                cmd_func=self._cancel_treatment_confirmation,
+            )
+            cancel_button.draw()
+            return_list.append(cancel_button.return_text)
+            return
+
+        allow_execute = pending and used_checks < self.max_checks
+        if allow_execute:
+            execute_button = draw.CenterButton(
+                _("[执行所选检查]"),
+                _("执行所选检查"),
+                self.width // 4,
+                cmd_func=self._execute_checks,
+            )
+            execute_button.draw()
+            return_list.append(execute_button.return_text)
+
         if pending:
             clear_button = draw.CenterButton(
                 _("[清空已选待检项]"),
-                "clear_option",
+                _("清空已选待检项"),
                 self.width // 4,
                 cmd_func=self._clear_pending,
             )
@@ -849,22 +906,11 @@ class MedicalPlayerDiagnosePanel:
             # 记录按钮返回值确保事件循环能够捕获指令
             return_list.append(clear_button.return_text)
 
-        allow_execute = pending and used_checks < self.max_checks
-        if allow_execute:
-            execute_button = draw.CenterButton(
-                _("[执行所选检查]"),
-                "run_checks",
-                self.width // 4,
-                cmd_func=self._execute_checks,
-            )
-            execute_button.draw()
-            return_list.append(execute_button.return_text)
-
         allow_treat = bool(confirmed) or used_checks >= self.max_checks
         if allow_treat:
             treat_button = draw.CenterButton(
-                _("[开药并治疗]"),
-                "commit_treat",
+                _("[开药并结束治疗]"),
+                _("开药并结束治疗"),
                 self.width // 4,
                 cmd_func=self._commit_treatment,
             )
@@ -875,7 +921,7 @@ class MedicalPlayerDiagnosePanel:
         if used_checks == 0:
             abort_button = draw.CenterButton(
                 _("[提前结束诊疗并返回]"),
-                "abort_session",
+                _("提前结束诊疗并返回"),
                 self.width // 4,
                 cmd_func=self._handle_abort,
             )
@@ -885,36 +931,89 @@ class MedicalPlayerDiagnosePanel:
 
     # --- 事件处理 ---------------------------------------------------------
 
-    def _toggle_hint(self) -> None:
-        """切换当前病人的提示开关状态。
+    def _commit_treatment(self) -> None:
+        """确认治疗结果，计算收益并结束会话。"""
 
-        参数:
-            无。
-
-        返回:
-            None。
-        """
-        if self.patient is None:
+        if self.patient is None or self.player is None:
             return
-        new_status = not bool(self.patient.metadata.get("player_hint_enabled", False))
-        # 直接写回 metadata，确保下次进入面板时保持选择
-        self.patient.metadata["player_hint_enabled"] = new_status
-        self.feedback_text = _("治病提示已{0}。\n").format(_("开启") if new_status else _("关闭"))
+
+        actual_complications: Set[int] = set()
+        if getattr(self.patient, "complications", None):
+            actual_complications = {int(cid) for cid in self.patient.complications if cid}
+        confirmed_set: Set[int] = {int(cid) for cid in self._get_confirmed_complications()}
+
+        if not actual_complications and self.target_complication_count:
+            missing_count = max(self.target_complication_count - len(confirmed_set), 0)
+        else:
+            missing_count = len(actual_complications - confirmed_set)
+
+        used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
+        remaining_checks = max(self.max_checks - used_checks, 0)
+
+        if (
+            not self._awaiting_treatment_confirmation
+            and missing_count > 0
+            and remaining_checks > 0
+        ):
+            self._awaiting_treatment_confirmation = True
+            self.feedback_text = _(
+                "仍有 {count} 项疑似并发症尚未确诊，确认要直接结束治疗吗？"
+            ).format(count=missing_count)
+            return
+
+        self._awaiting_treatment_confirmation = False
+        self._execute_treatment_commit()
+
+    def _confirm_treatment_after_prompt(self) -> None:
+        """确认在存在未确诊项时仍然继续治疗。"""
+
+        if self.patient is None or self.player is None:
+            return
+        self._awaiting_treatment_confirmation = False
+        self._execute_treatment_commit()
+
+    def _cancel_treatment_confirmation(self) -> None:
+        """取消强制治疗提示并返回继续检查。"""
+
+        self._awaiting_treatment_confirmation = False
+        self.feedback_text = _("已返回诊疗流程，可以继续安排检查。")
+
+    def _execute_treatment_commit(self) -> None:
+        """执行治疗结算并记录结果。"""
+
+        if self.patient is None or self.player is None:
+            return
+
+        outcome = medical_service.commit_player_diagnose_session(
+            self.player,
+            patient=self.patient,
+            apply_medicine=True,
+        )
+        if not outcome.get("success"):
+            self.feedback_text = _("治疗操作失败：{0}").format(outcome.get("reason", "unknown"))
+            return
+        self.treatment_result = outcome
+        self.feedback_text = _(
+            "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
+        ).format(diag=outcome.get("diagnose_income", 0), med=outcome.get("medicine_income", 0))
+        self._draw_feedback()
+        self._treatment_committed = True
+        self._should_close = True
+
+    def _toggle_hint(self) -> None:
+        """切换全局治病提示开关，并记录反馈。"""
+
+        base_setting = getattr(cache.all_system_setting, "base_setting", {})
+        current_value = int(base_setting.get(12, 0) or 0)
+        new_value = 0 if current_value else 1
+        base_setting[12] = new_value
 
     def _clear_pending(self) -> None:
-        """清空所有待执行检查项。
+        """清空所有待执行检查项。"""
 
-        参数:
-            无。
-
-        返回:
-            None。
-        """
         if self.patient is None:
             return
         self.patient.metadata["player_pending_checks"] = []
-        # 清空列表同时输出反馈，避免玩家误以为操作失败
-        self.feedback_text = _("已清空待执行的检查项目。")
 
     def _execute_checks(self) -> None:
         """调用医疗服务执行所选检查，并记录结果。
@@ -928,10 +1027,11 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return
         pending = self._get_pending_checks()
+        # 没有选项时直接返回
         if not pending:
-            self.feedback_text = _("请先选择需要执行的检查项目。")
             return
         result = medical_service.execute_player_diagnose_checks(pending, patient=self.patient)
+        # 检查执行失败时记录原因并返回
         if not result.get("success"):
             self.feedback_text = _("执行检查失败：{0}").format(result.get("reason", "unknown"))
             return
@@ -942,40 +1042,14 @@ class MedicalPlayerDiagnosePanel:
                 if isinstance(entry, dict):
                     # 将返回结果统一成字典列表，过滤掉异常结构
                     normalized.append(entry)
-        self.last_check_results = normalized
+        self.last_check_results.extend(normalized)
         self._checks_executed += 1
-        summary = self._summarize_check_results(self.last_check_results)
-        self.feedback_text = summary
+        # 因为增加了颜色显示，暂时注释掉文本汇总功能
+        # summary = self._summarize_check_results(self.last_check_results)
+        # self.feedback_text = summary
         # 如果检查列表为展开状态，则调用一次折叠以刷新界面
         if self.menu_expanded:
             self._toggle_check_menu()
-
-    def _commit_treatment(self) -> None:
-        """确认治疗结果，计算收益并结束会话。
-
-        参数:
-            无。
-
-        返回:
-            None。
-        """
-        if self.patient is None or self.player is None:
-            return
-        outcome = medical_service.commit_player_diagnose_session(
-            self.player,
-            patient=self.patient,
-            apply_medicine=True,
-        )
-        # commit 会直接完成诊断流程，并在返回值中给出收益及状态标识
-        if not outcome.get("success"):
-            self.feedback_text = _("治疗操作失败：{0}").format(outcome.get("reason", "unknown"))
-            return
-        self.treatment_result = outcome
-        self.feedback_text = _(
-            "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
-        ).format(diag=outcome.get("diagnose_income", 0), med=outcome.get("medicine_income", 0))
-        self._treatment_committed = True
-        self._should_close = True
 
     def _handle_abort(self) -> None:
         """提前终止诊疗流程，并回滚会话状态。
@@ -990,9 +1064,11 @@ class MedicalPlayerDiagnosePanel:
             self._should_close = True
             self._abort_requested = True
             return
+        self._awaiting_treatment_confirmation = False
         # 通知医疗服务层撤销会话状态，防止残留数据影响后续诊疗
         medical_service.abort_player_diagnose_session(self.player, patient=self.patient)
         self.feedback_text = _("已结束本次诊疗流程。")
+        self._draw_feedback()
         self._abort_requested = True
         self._should_close = True
 
@@ -1102,7 +1178,8 @@ class MedicalPlayerDiagnosePanel:
 
         if self.patient is None:
             return set(), set(), set()
-        if not bool(self.patient.metadata.get("player_hint_enabled", False)):
+        base_setting = getattr(cache.all_system_setting, "base_setting", {})
+        if int(base_setting.get(12, 0) or 0) != 1:
             return set(), set(), set()
 
         med_level = self.player_med_level

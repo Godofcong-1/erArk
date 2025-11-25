@@ -1208,7 +1208,7 @@ class Rhodes_Island:
         """
 
         # 医疗部
-        from Script.System.medical import medical_constant
+        from Script.System.Medical import medical_constant
         self.patient_now: int = 0
         """ 当前患者人数（旧系统兼容字段） """
         self.patient_cured: int = 0

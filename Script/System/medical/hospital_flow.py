@@ -11,8 +11,7 @@ from typing import Callable, Dict, Optional
 from Script.Config import config_def, game_config
 from Script.Core import cache_control, game_type
 from Script.Design import handle_ability
-from Script.System.medical import medical_constant
-from Script.System.medical import patient_management
+from Script.System.Medical import medical_constant, patient_management
 
 _MEDICINE_RESOURCE_IDS = medical_constant.ALL_MEDICINE_RESOURCE_IDS
 """医疗系统允许使用的全部药品资源 ID 列表"""
@@ -35,14 +34,14 @@ _FLOAT_EPSILON = 1e-6
 def try_hospitalize(
     rhodes_island: game_type.Rhodes_Island,
     patient: medical_constant.MedicalPatient,
-    severity_config: config_def.MedicalSeverity,
+    severity_config: config_def.Medical_Severity,
 ) -> bool:
     """尝试将病人转入住院队列，成功返回 True
 
     参数:
         rhodes_island (game_type.Rhodes_Island): 目标基地缓存对象。
         patient (medical_constant.MedicalPatient): 需要入院的病人。
-        severity_config (config_def.MedicalSeverity): 病人当前等级对应的配置。
+        severity_config (config_def.Medical_Severity): 病人当前等级对应的配置。
     返回:
         bool: 成功入院返回 True，否则返回 False。"""
 
@@ -298,11 +297,11 @@ def attempt_surgery(
     return True
 
 
-def _build_hospital_prescription(severity_config: config_def.MedicalSeverity) -> Dict[int, float]:
+def _build_hospital_prescription(severity_config: config_def.Medical_Severity) -> Dict[int, float]:
     """依据病情等级生成住院用药模板
 
     参数:
-        severity_config (config_def.MedicalSeverity): 病情等级配置。
+        severity_config (config_def.Medical_Severity): 病情等级配置。
     返回:
         Dict[int, float]: 药品 ID 到需求量的映射。"""
 
@@ -320,7 +319,7 @@ def _build_hospital_prescription(severity_config: config_def.MedicalSeverity) ->
 
 def _prepare_patient_hospital_needs(
     patient: medical_constant.MedicalPatient,
-    severity_config: config_def.MedicalSeverity,
+    severity_config: config_def.Medical_Severity,
     *,
     reset_progress: bool,
 ) -> None:
@@ -328,7 +327,7 @@ def _prepare_patient_hospital_needs(
 
     参数:
         patient (medical_constant.MedicalPatient): 需要更新的病人对象。
-        severity_config (config_def.MedicalSeverity): 对应病情配置。
+        severity_config (config_def.Medical_Severity): 对应病情配置。
         reset_progress (bool): 是否重置累积用药进度。
     返回:
         None: 函数直接修改病人对象。"""
@@ -346,11 +345,11 @@ def _prepare_patient_hospital_needs(
         patient.metadata["medicine_progress"] = {}
 
 
-def _resolve_surgery_requirements(severity_config: config_def.MedicalSeverity) -> Dict[int, float]:
+def _resolve_surgery_requirements(severity_config: config_def.Medical_Severity) -> Dict[int, float]:
     """根据病情等级生成手术所需药物配方
 
     参数:
-        severity_config (config_def.MedicalSeverity): 病情等级配置。
+        severity_config (config_def.Medical_Severity): 病情等级配置。
     返回:
         Dict[int, float]: 手术所需药品需求表。"""
 

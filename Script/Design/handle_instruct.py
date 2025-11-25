@@ -3309,11 +3309,25 @@ def handle_exercise():
 def handle_cure_patient():
     """处理诊疗病人指令"""
     if handle_premise.handle_debug_mode_on(0):
-        from Script.System.medical import medical_player_diagnose_panel
+        from Script.System.Medical import medical_player_diagnose_panel
         if medical_player_diagnose_panel.start_player_diagnose_flow():
             return
     chara_handle_instruct_common_settle(constant.Behavior.CURE_PATIENT, force_taget_wait = True)
 
+@add_instruct(
+    constant.Instruct.MANAGE_DEDICAL_DEPARTMENT,
+    constant.InstructType.WORK,
+    _("管理医疗系统"),
+    {constant_promise.Premise.NOT_H,
+     constant_promise.Premise.DEBUG_MODE_ON,
+     constant_promise.Premise.IN_MEDICAL_ZONE,
+     constant_promise.Premise.TIRED_LE_74},
+)
+def handle_manage_dedical_department():
+    """处理管理医疗系统指令"""
+    from Script.System.Medical import medical_department_panel
+    now_draw_panel = medical_department_panel.Medical_Department_Panel(width)
+    now_draw_panel.draw()
 
 @add_instruct(
     constant.Instruct.RECRUIT,
@@ -3384,7 +3398,6 @@ def handle_manage_facility_power():
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_POWER_DISPATCH,
      constant_promise.Premise.TIRED_LE_74},
-    constant.Behavior.MANAGE_FACILITY_POWER,
 )
 def handle_manage_power_system():
     """处理管理能源系统指令"""
