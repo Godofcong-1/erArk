@@ -325,6 +325,17 @@ def character_move_to_inpatient_department(character_id: int):
     )
     general_movement_module(character_id, to_inpatient_department)
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_SURGERY_ROOM)
+def character_move_to_surgery_room(character_id: int):
+    """
+    移动至手术室
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_surgery_room = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Surgery_Room"])
+    )
+    general_movement_module(character_id, to_surgery_room)
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
 def character_move_to_hr_office(character_id: int):

@@ -325,6 +325,8 @@ class StateMachine:
     """ 移动至体检科 """
     MOVE_TO_INPATIENT_DEPARTMENT = 663
     """ 移动至住院部 """
+    MOVE_TO_SURGERY_ROOM = 664
+    """ 移动至手术室 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """
