@@ -98,6 +98,25 @@ STATE_DISPLAY_NAME: Dict[MedicalPatientState, str] = {
 }
 """病人状态中文名称映射表"""
 
+WAITING_QUEUE_STATES: Tuple[MedicalPatientState, ...] = (
+    MedicalPatientState.REFRESHED,
+    MedicalPatientState.IN_TREATMENT,
+    MedicalPatientState.IN_TREATMENT_PLAYER,
+)
+"""门诊排队人数统计所使用的待诊状态元组"""
+
+ASSIGNABLE_PATIENT_STATE_SET = frozenset(
+    {
+        MedicalPatientState.REFRESHED,
+        MedicalPatientState.IN_TREATMENT,
+    }
+)
+"""门诊医生可以接诊的病人状态集合，过滤掉玩家占用等特殊状态"""
+
+WAITING_QUEUE_STATE_SET = frozenset(WAITING_QUEUE_STATES)
+"""待诊状态的只读集合，便于在热点路径中进行常数时间判断"""
+
+
 def get_state_display_name(state: MedicalPatientState) -> str:
     """根据状态枚举返回对应的中文名称"""
 
@@ -230,4 +249,6 @@ __all__ = [
     "translate_priority",
     "get_state_display_name",
     "PRIORITY_OPTIONS",
+    "WAITING_QUEUE_STATES",
+    "WAITING_QUEUE_STATE_SET",
 ]

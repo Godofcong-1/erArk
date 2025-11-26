@@ -126,22 +126,19 @@ class OverviewSubPanel(_BaseSubPanel):
         return_list: List[str] = []
         ri = cache.rhodes_island
 
-        patients_today = list(ri.medical_patients_today.values())
-        hospitalized = list(ri.medical_hospitalized.values())
+        outpatient_table = medical_service.get_patient_table(target_base=ri, hospitalized=False)
+        hospital_table = medical_service.get_patient_table(target_base=ri, hospitalized=True)
+        patients_today = list(outpatient_table.values())
+        hospitalized = list(hospital_table.values())
         bed_limit = int(ri.medical_bed_limit)
-        bed_occupied = len(hospitalized)
+        bed_occupied = len(hospital_table)
         price_ratio = medical_service.get_medical_price_ratio()
         priority_mode = medical_service.get_patient_priority_mode()
 
         pending_queue = sum(
             1
             for patient in patients_today
-            if patient.state
-            in {
-                medical_constant.MedicalPatientState.REFRESHED,
-                medical_constant.MedicalPatientState.IN_TREATMENT,
-                medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER,
-            }
+            if patient.state in medical_constant.WAITING_QUEUE_STATE_SET
         )
         waiting_medication = sum(
             1 for patient in patients_today if patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION
@@ -221,7 +218,8 @@ class DoctorManagementSubPanel(_BaseSubPanel):
         clinic_ids = medical_service.list_role_doctors(medical_constant.SPECIALIZATION_ROLE_CLINIC)
         hospital_ids = medical_service.list_role_doctors(medical_constant.SPECIALIZATION_ROLE_HOSPITAL)
         bed_limit = int(ri.medical_bed_limit)
-        bed_occupied = len(ri.medical_hospitalized)
+        hospital_table = medical_service.get_patient_table(target_base=ri, hospitalized=True)
+        bed_occupied = len(hospital_table)
 
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
@@ -411,13 +409,14 @@ class DoctorManagementSubPanel(_BaseSubPanel):
     def _estimate_remaining_hours(self) -> float:
         """估算当前门诊病人需要的剩余工时"""
 
+        outpatient_table = medical_service.get_patient_table(
+            target_base=cache.rhodes_island,
+            hospitalized=False,
+        )
+
         total_remaining = 0.0
-        for patient in cache.rhodes_island.medical_patients_today.values():
-            if patient.state not in {
-                medical_constant.MedicalPatientState.REFRESHED,
-                medical_constant.MedicalPatientState.IN_TREATMENT,
-                medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER,
-            }:
+        for patient in outpatient_table.values():
+            if patient.state not in medical_constant.WAITING_QUEUE_STATE_SET:
                 continue
             severity_config = game_config.config_medical_severity.get(patient.severity_level)
             if severity_config is None:
@@ -531,9 +530,12 @@ class MedicalDetailSubPanel(_BaseSubPanel):
         state_counter: Dict[medical_constant.MedicalPatientState, int] = {
             state: 0 for state in medical_constant.MedicalPatientState
         }
-        for patient in ri.medical_patients_today.values():
+        outpatient_table = medical_service.get_patient_table(target_base=ri, hospitalized=False)
+        hospital_table = medical_service.get_patient_table(target_base=ri, hospitalized=True)
+
+        for patient in outpatient_table.values():
             state_counter[patient.state] += 1
-        for patient in ri.medical_hospitalized.values():
+        for patient in hospital_table.values():
             state_counter[patient.state] += 1
 
         info_draw = draw.NormalDraw()
@@ -550,12 +552,8 @@ class MedicalDetailSubPanel(_BaseSubPanel):
         preview_draw.text = _("在诊病人示例：\n")
         pending_patients = [
             patient
-            for patient in ri.medical_patients_today.values()
-            if patient.state in {
-                medical_constant.MedicalPatientState.REFRESHED,
-                medical_constant.MedicalPatientState.IN_TREATMENT,
-                medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER,
-            }
+            for patient in outpatient_table.values()
+            if patient.state in medical_constant.WAITING_QUEUE_STATE_SET
         ]
         pending_patients.sort(key=lambda p: (-p.severity_level, p.patient_id))
         for patient in pending_patients[:6]:
@@ -594,9 +592,10 @@ class SurgeryManagementSubPanel(_BaseSubPanel):
         return_list: List[str] = []
         ri = cache.rhodes_island
 
+        hospital_table = medical_service.get_patient_table(target_base=ri, hospitalized=True)
         waiting_patients = [
             patient
-            for patient in ri.medical_hospitalized.values()
+            for patient in hospital_table.values()
             if patient.need_surgery
         ]
         waiting_patients.sort(key=lambda p: (-p.severity_level, p.patient_id))
@@ -670,7 +669,9 @@ class FinanceReportSubPanel(_BaseSubPanel):
         need_draw.width = self.width
         need_draw.text = _("待诊/住院病人尚需药品：\n")
         aggregated: Dict[int, float] = {}
-        for group in (ri.medical_patients_today.values(), ri.medical_hospitalized.values()):
+        outpatient_table = medical_service.get_patient_table(target_base=ri, hospitalized=False)
+        hospital_table = medical_service.get_patient_table(target_base=ri, hospitalized=True)
+        for group in (outpatient_table.values(), hospital_table.values()):
             for patient in group:
                 if patient.state == medical_constant.MedicalPatientState.REFRESHED:
                     continue

@@ -685,6 +685,7 @@ class MedicalPlayerDiagnosePanel:
             else:
                 lines.append(_("  暂无明确线索，请考虑切换提示或交由其他医生继续诊疗。"))
 
+        lines.append("\n")
         preview = medical_service.estimate_patient_treatment_summary(self.patient)
         if preview.get("success"):
             # 成功获取预估信息，结合确诊进度动态调整收益与耗材数量

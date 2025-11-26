@@ -1,0 +1,1288 @@
+# -*- coding: UTF-8 -*-
+"""门诊病人生成与倍率处理模块
+
+负责门诊病人的生成、并发症组合以及价格倍率的工具函数，
+供医疗系统其他模块复用。
+"""
+from __future__ import annotations
+
+import math
+import random
+from typing import Any, Dict, Iterable, List, Optional, Set, Tuple
+from types import FunctionType
+
+from Script.Config import config_def, game_config
+from Script.Core import cache_control, game_type, get_text, value_handle
+from Script.Design import handle_ability
+from Script.System.Medical import medical_constant, medical_core
+
+_: FunctionType = get_text._
+""" 翻译函数 """
+
+
+def create_patient_stub(severity_level: int, **extra_fields: Any) -> medical_constant.MedicalPatient:
+    """创建尚未填充具体症状的病人结构。
+
+    参数:
+        severity_level (int): 生成病人的初始病情等级。
+        **extra_fields (Any): 额外写入 `MedicalPatient` 构造器的字段。
+    返回:
+        medical_constant.MedicalPatient: 结构完整且已初始化药品键的病人对象。
+    """
+
+    # 构造病人基础数据结构并分配唯一 ID。
+    patient = medical_constant.MedicalPatient(
+        patient_id=next(medical_constant.PATIENT_ID_COUNTER),
+        severity_level=severity_level,
+        **extra_fields,
+    )
+    # 确保资源字段齐备，避免后续访问缺键。
+    patient.ensure_resource_keys()
+    return patient
+
+
+def pick_severity_level(facility_level: Optional[int] = None) -> Optional[int]:
+    """按权重抽取一个病情等级 ID。
+
+    参数:
+        facility_level (Optional[int]): 医疗设施等级，若提供则按解锁条件筛选病情档位。
+    返回:
+        Optional[int]: 抽取到的病情等级编号，若无可用档位返回 None。
+    """
+
+    # 配置表缺失时无法抽选病情等级。
+    if not game_config.medical_severity_weight_table:
+        return None
+
+    def _is_unlocked(severity_id: int) -> bool:
+        if facility_level is None:
+            return True
+        if severity_id == 3:
+            return facility_level >= 4
+        if severity_id == 2:
+            return facility_level >= 2
+        return True
+
+    # 根据设施等级过滤可用病情档位。
+    filtered_entries = [entry for entry in game_config.medical_severity_weight_table if _is_unlocked(entry[0])]
+    if not filtered_entries:
+        return None
+
+    # 按权重随机抽样产生病情等级。
+    total_weight = sum(weight for _, weight in filtered_entries)
+    if total_weight <= 0:
+        return filtered_entries[0][0]
+    roll = random.uniform(0, total_weight)
+    cursor = 0.0
+    for severity_id, weight in filtered_entries:
+        cursor += weight
+        if roll <= cursor:
+            return severity_id
+    return filtered_entries[-1][0]
+
+
+def generate_patient(
+    severity_level: int,
+    rhodes_island,
+) -> Optional[medical_constant.MedicalPatient]:
+    """生成单个门诊病人实体。
+
+    参数:
+        severity_level (int): 目标病情等级。
+        rhodes_island: 当前基地对象，用于读取收费系数等字段。
+    返回:
+        Optional[medical_constant.MedicalPatient]: 成功生成的病人对象，配置缺失时返回 None。
+    """
+
+    # 读取目标病情配置，缺失时返回 None。
+    severity_config = game_config.config_medical_severity.get(severity_level)
+    if severity_config is None:
+        return None
+
+    # 构建基础病人信息并随机生成个体特征。
+    patient = create_patient_stub(severity_level=severity_level)
+    patient.personality_type = random.choice(list(medical_constant.MedicalPatientPersonality))
+    patient.race_id = _pick_patient_race_id()
+    patient.age = random.randint(10, 60)
+
+    # 依据病情配置生成并发症，并记录追踪信息。
+    complications, medicine_bonus = _build_complications_for_patient(severity_config)
+    patient.complications = [comp.cid for comp in complications]
+    if complications:
+        patient.metadata["complication_trace"] = [
+            {
+                "cid": comp.cid,
+                "system_id": comp.system_id,
+                "part_id": comp.part_id,
+                "severity_level": comp.severity_level,
+            }
+            for comp in complications
+        ]
+    patient.need_surgery = any(comp.requires_surgery == 1 for comp in complications)
+
+    # 计算普通药需求量，并叠加并发症额外需求。
+    normal_resource_id = medical_constant.MedicalMedicineResource.NORMAL.value
+    base_normal_need = random.uniform(
+        float(severity_config.normal_medicine_min),
+        float(max(severity_config.normal_medicine_max, severity_config.normal_medicine_min)),
+    )
+    patient.need_resources[normal_resource_id] = max(base_normal_need + medicine_bonus, 0.0)
+
+    # 叠加特殊药品模板中的固定需求。
+    special_template = game_config.medical_severity_special_medicine.get(severity_level, {})
+    for resource_id, amount in special_template.items():
+        patient.need_resources[resource_id] = patient.need_resources.get(resource_id, 0.0) + float(amount)
+
+    # 记录病情标签与当前收费系数，便于后续展示。
+    patient.metadata.setdefault("severity_name", severity_config.name)
+    patient.metadata.setdefault("price_ratio", rhodes_island.medical_price_ratio)
+    return patient
+
+
+def resolve_price_refresh_multiplier(price_ratio: float) -> float:
+    """兼容旧导入路径，转调 core 函数。
+
+    参数:
+        price_ratio (float): 当前收费系数。
+    返回:
+        float: 对应的刷新倍率。
+    """
+
+    return medical_core.resolve_price_refresh_multiplier(price_ratio)
+
+
+def resolve_price_income_multiplier(price_ratio: float) -> float:
+    """兼容旧导入路径，转调 core 函数。
+
+    参数:
+        price_ratio (float): 当前收费系数。
+    返回:
+        float: 对应的收入倍率。
+    """
+
+    return medical_core.resolve_price_income_multiplier(price_ratio)
+
+
+def clamp(value: float, min_value: Optional[float], max_value: Optional[float]) -> float:
+    """兼容旧导入路径，转调 core 函数。
+
+    参数:
+        value (float): 待裁切的目标值。
+        min_value (Optional[float]): 下界，None 表示不限制。
+        max_value (Optional[float]): 上界，None 表示不限制。
+    返回:
+        float: 裁切后的结果。
+    """
+
+    return medical_core.clamp(value, min_value, max_value)
+
+
+def _build_complications_for_patient(
+    severity_config: config_def.Medical_Severity,
+) -> Tuple[List[config_def.Medical_Complication], float]:
+    """基于病情等级配置生成并发症组合。
+
+    参数:
+        severity_config (config_def.Medical_Severity): 目标病情等级的配置。
+    返回:
+        Tuple[List[config_def.Medical_Complication], float]:
+            并发症列表以及普通药需求的额外加成总量。
+    """
+
+    # 构建计划列表，0/1/2 分别代表轻/中/重并发症。
+    plan: List[int] = []
+    plan.extend([0] * int(severity_config.minor_complication_count))
+    plan.extend([1] * int(severity_config.moderate_complication_count))
+    plan.extend([2] * int(severity_config.severe_complication_count))
+    if not plan:
+        return [], 0.0
+
+    # 逐条生成并发症，同时累加普通药额外需求。
+    complications: List[config_def.Medical_Complication] = []
+    bonus_total = 0.0
+    for system_id, severity_list in _assign_complication_systems(plan, severity_config):
+        used_part_ids: set[int] = set()
+        for severity_level in severity_list:
+            part_id = _pick_part_id(system_id, used_part_ids)
+            if part_id is None:
+                continue
+            used_part_ids.add(part_id)
+            complication = _pick_complication(system_id, part_id, severity_level)
+            if complication is None:
+                continue
+            complications.append(complication)
+            bonus_total += float(complication.normal_medicine_bonus)
+    return complications, bonus_total
+
+
+def _assign_complication_systems(
+    plan: List[int],
+    severity_config: config_def.Medical_Severity,
+) -> List[Tuple[int, List[int]]]:
+    """将计划中的各等级并发症分配到生理系统。
+
+    参数:
+        plan (List[int]): 包含轻/中/重等级标记的并发症计划。
+        severity_config (config_def.Medical_Severity): 当前病情配置，用于危重逻辑判断。
+    返回:
+        List[Tuple[int, List[int]]]: 每项为系统 ID 与对应并发症等级列表。
+    """
+
+    # 没有计划数据时直接返回空列表。
+    if not plan:
+        return []
+
+    # 危重情况需要将并发症拆分到两个系统中处理。
+    assignments: List[Tuple[int, List[int]]] = []
+    hazard_case = int(severity_config.severe_complication_count) >= 2 and int(
+        severity_config.moderate_complication_count
+    ) >= 1
+    if hazard_case:
+        system_a = _pick_system_id()
+        if system_a is None:
+            return []
+        severity_for_a: List[int] = []
+        severity_for_b: List[int] = []
+        severe_assigned = 0
+        moderate_assigned = 0
+        for severity_level in plan:
+            # 尝试将至少一条中症和重症绑定到系统 A。
+            if severity_level == 1 and moderate_assigned < 1:
+                severity_for_a.append(severity_level)
+                moderate_assigned += 1
+            elif severity_level == 2 and severe_assigned < 1:
+                severity_for_a.append(severity_level)
+                severe_assigned += 1
+            elif severity_level == 2:
+                severity_for_b.append(severity_level)
+            else:
+                severity_for_a.append(severity_level)
+        if severity_for_b:
+            system_b = _pick_system_id(exclude_ids={system_a}) or system_a
+            assignments.append((system_a, severity_for_a))
+            assignments.append((system_b, severity_for_b))
+        else:
+            assignments.append((system_a, severity_for_a))
+        return assignments
+
+    # 普通情况直接全部绑定到单一系统。
+    system_id = _pick_system_id()
+    if system_id is None:
+        return []
+    assignments.append((system_id, plan))
+    return assignments
+
+
+def _pick_system_id(exclude_ids: Optional[Iterable[int]] = None) -> Optional[int]:
+    """按 organ_priority 权重抽取一个系统 ID，可排除给定集合。
+
+    参数:
+        exclude_ids (Optional[Iterable[int]]): 不参与抽取的系统编号集合。
+    返回:
+        Optional[int]: 抽取到的系统 ID，失败时返回 None。
+    """
+
+    # 将需排除的系统整理成集合并构建候选权重表。
+    exclude_set = set(exclude_ids or [])
+    candidates: Dict[int, int] = {}
+    for system_id, part_map in game_config.config_medical_body_system_by_system.items():
+        if system_id in exclude_set or not part_map:
+            continue
+        weight = sum(max(1, part.organ_priority) for part in part_map.values())
+        if weight <= 0:
+            weight = len(part_map)
+        candidates[system_id] = int(max(weight, 1))
+    if not candidates:
+        return None
+    return value_handle.get_random_for_weight(candidates)
+
+
+def _pick_part_id(system_id: int, used_part_ids: Iterable[int]) -> Optional[int]:
+    """在指定系统中抽取一个未被使用的部位 ID。
+
+    参数:
+        system_id (int): 目标生理系统编号。
+        used_part_ids (Iterable[int]): 已使用的部位集合。
+    返回:
+        Optional[int]: 可用的部位 ID，若无则返回 None。
+    """
+
+    # 读取系统下的全部部位配置。
+    part_map = game_config.config_medical_body_system_by_system.get(system_id)
+    if not part_map:
+        return None
+    used_set = set(used_part_ids)
+    candidates: Dict[int, int] = {}
+    for part_id, part in part_map.items():
+        if part_id in used_set:
+            continue
+        gender_limit = int(getattr(part, "gender_limit", 2))
+        if gender_limit == 0:
+            continue
+        # 以器官优先级作为抽取权重。
+        weight = max(1, part.organ_priority)
+        candidates[part_id] = int(weight)
+    if not candidates:
+        return None
+    return value_handle.get_random_for_weight(candidates)
+
+
+def _pick_complication(
+    system_id: int,
+    part_id: int,
+    severity_level: int,
+) -> Optional[config_def.Medical_Complication]:
+    """在指定系统/部位/等级下随机挑选一条并发症。
+
+    参数:
+        system_id (int): 生理系统编号。
+        part_id (int): 部位编号。
+        severity_level (int): 并发症等级。
+    返回:
+        Optional[config_def.Medical_Complication]: 抽取到的并发症配置。
+    """
+
+    # 从配置中取出指定系统与部位下的并发症列表。
+    part_map = game_config.config_medical_complication_detail.get(system_id, {}).get(part_id, {})
+    candidates = part_map.get(severity_level, [])
+    if not candidates:
+        return None
+    # 按权重随机挑选一条并发症配置。
+    weights = [max(float(comp.weight), 0.01) for comp in candidates]
+    return random.choices(candidates, weights=weights, k=1)[0]
+
+
+def _pick_patient_race_id() -> int:
+    """从已有种族中（排除特殊种族）随机挑选患者种族。
+
+    返回:
+        int: 选中的种族 ID，找不到候选时回退 0。
+    """
+
+    # 过滤掉特殊种族，保留常规种族编号。
+    race_ids = [
+        race_id
+        for race_id in game_config.config_race.keys()
+        if race_id not in {0, 1, 2, 3, 35, 40, 41, 42, 43, 44}
+    ]
+    if not race_ids:
+        return 0
+    return random.choice(race_ids)
+
+
+def _resolve_patient_system_keys(patient: medical_constant.MedicalPatient) -> Set[str]:
+    """提取病人可能关联的系统键。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 目标病人对象。
+    返回:
+        Set[str]: 记录病人关联生理系统的字符串集合。
+    """
+
+    system_keys: Set[str] = set()
+    if patient is None:
+        return system_keys
+
+    trace = patient.metadata.get("complication_trace", []) or []
+    for entry in trace:
+        system_id = entry.get("system_id") if isinstance(entry, dict) else None
+        if system_id is not None:
+            system_keys.add(str(system_id))
+
+    if not system_keys and getattr(patient, "complications", None):
+        for comp_id in patient.complications:
+            comp = game_config.config_medical_complication.get(comp_id)
+            if comp is not None:
+                system_keys.add(str(comp.system_id))
+
+    if system_keys:
+        patient.metadata["system_keys"] = sorted(system_keys)
+    else:
+        patient.metadata.setdefault("system_keys", [])
+    return system_keys
+
+
+def _resolve_triage_mode(
+    rhodes_island: Optional[game_type.Rhodes_Island],
+) -> medical_constant.MedicalPatientPriority:
+    """解析基地当前的病人接诊优先策略。
+
+    参数:
+        rhodes_island (Optional[game_type.Rhodes_Island]): 目标基地对象。
+    返回:
+        medical_constant.MedicalPatientPriority: 当前接诊优先策略枚举。
+    """
+
+    # 缺少基地上下文时使用默认策略。
+    if rhodes_island is None:
+        return medical_constant.MedicalPatientPriority.NORMAL
+    raw_mode = getattr(
+        rhodes_island,
+        "medical_patient_priority_mode",
+        medical_constant.MedicalPatientPriority.NORMAL.value,
+    )
+    try:
+        # 尝试将缓存值解析成合法枚举。
+        mode = medical_constant.MedicalPatientPriority(str(raw_mode))
+    except ValueError:
+        # 解析失败时写入默认值并返回普通模式。
+        rhodes_island.medical_patient_priority_mode = medical_constant.MedicalPatientPriority.NORMAL.value
+        return medical_constant.MedicalPatientPriority.NORMAL
+    # 将解析结果写回缓存以保持数据一致。
+    rhodes_island.medical_patient_priority_mode = mode.value
+    return mode
+
+
+def _select_triage_candidate(
+    candidates: List[medical_constant.MedicalPatient],
+    rhodes_island: Optional[game_type.Rhodes_Island],
+) -> Optional[medical_constant.MedicalPatient]:
+    """在候选病人中挑选最优对象。
+
+    参数:
+        candidates (List[medical_constant.MedicalPatient]): 病人候选列表。
+        rhodes_island (Optional[game_type.Rhodes_Island]): 目标基地对象，用于读取优先策略。
+    返回:
+        Optional[medical_constant.MedicalPatient]: 挑选出的病人，若无候选返回 None。
+    """
+
+    # 没有候选病人时直接返回。
+    if not candidates:
+        return None
+
+    # 根据当前优先策略决定排序规则。
+    mode = _resolve_triage_mode(rhodes_island)
+    if mode == medical_constant.MedicalPatientPriority.FOCUS_MILD:
+        key_func = lambda target: (
+            int(getattr(target, "severity_level", 0) or 0),
+            float(getattr(target, "diagnose_progress", 0.0) or 0.0),
+            target.patient_id,
+        )
+        return min(candidates, key=key_func)
+
+    key_func = lambda target: (
+        -int(getattr(target, "severity_level", 0) or 0),
+        -float(getattr(target, "diagnose_progress", 0.0) or 0.0),
+        target.patient_id,
+    )
+    return min(candidates, key=key_func)
+
+
+def _clear_player_session_metadata(patient: medical_constant.MedicalPatient) -> None:
+    """清理玩家诊疗流程写入的临时元数据。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 目标病人对象。
+    返回:
+        None: 直接从 metadata 中移除玩家相关键。
+    """
+
+    # 安全检查，防止 None 对象导致异常。
+    if patient is None:
+        return
+    # 删除所有玩家会话相关的临时键。
+    for key in medical_constant.PLAYER_METADATA_KEYS:
+        patient.metadata.pop(key, None)
+
+
+def _acquire_patient_for_player(
+    doctor_character: Optional[game_type.Character],
+    rhodes_island: Optional[game_type.Rhodes_Island],
+) -> Optional[medical_constant.MedicalPatient]:
+    """根据当前优先策略为玩家诊疗会话选定病人。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 玩家当前操控的医生。
+        rhodes_island (Optional[game_type.Rhodes_Island]): 目标基地对象。
+    返回:
+        Optional[medical_constant.MedicalPatient]: 分配到的病人对象，若无则返回 None。
+    """
+
+    # 没有基地上下文时无法为玩家选择病人。
+    if rhodes_island is None:
+        return None
+
+    # 若玩家已有锁定病人则优先返回该对象。
+    current_id = int(getattr(rhodes_island, "medical_player_current_patient_id", 0) or 0)
+    if current_id:
+        patient = rhodes_island.medical_patients_today.get(current_id)
+        if patient is not None:
+            return patient
+
+    # 过滤出符合状态与医生绑定条件的候选病人。
+    candidates: List[medical_constant.MedicalPatient] = []
+    for patient in rhodes_island.medical_patients_today.values():
+        if patient.state not in medical_constant.WAITING_QUEUE_STATE_SET:
+            continue
+        assigned_doctor = int(patient.metadata.get("assigned_doctor_id", 0) or 0)
+        if doctor_character is not None and assigned_doctor not in {0, doctor_character.cid}:
+            continue
+        candidates.append(patient)
+
+    # 没有候选者时返回 None。
+    if not candidates:
+        return None
+
+    return _select_triage_candidate(candidates, rhodes_island)
+
+
+def start_player_diagnose_session(
+    doctor_character: Optional[game_type.Character] = None,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> Optional[medical_constant.MedicalPatient]:
+    """初始化玩家诊疗会话。"""
+
+    # 确定会话关联的基地对象。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return None
+
+    # 玩家医生为空时默认使用主角（ID 0）。
+    if doctor_character is None:
+        doctor_character = getattr(cache_control.cache, "character_data", {}).get(0)
+
+    if doctor_character is None:
+        return None
+
+    # 按当前优先策略分配待诊病人。
+    patient = _acquire_patient_for_player(doctor_character, rhodes_island)
+    if patient is None:
+        return None
+
+    # 初始化玩家会话所需的元数据。
+    if not patient.metadata.get("player_session_active"):
+        patient.metadata["player_previous_state"] = patient.state.value
+        patient.metadata["player_session_active"] = True
+        patient.metadata["player_used_checks"] = 0
+        patient.metadata["player_confirmed_complications"] = []
+        patient.metadata["player_check_records"] = []
+        patient.metadata["player_pending_checks"] = []
+
+    # 绑定医生与病人，记录当前处理对象。
+    patient.metadata["assigned_doctor_id"] = doctor_character.cid if doctor_character is not None else 0
+    set_patient_state(patient, medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER)
+    rhodes_island.medical_player_current_patient_id = patient.patient_id
+
+    if doctor_character is not None and hasattr(doctor_character, "work"):
+        doctor_character.work.medical_patient_id = patient.patient_id
+
+    return patient
+
+
+def abort_player_diagnose_session(
+    doctor_character: Optional[game_type.Character] = None,
+    *,
+    patient: Optional[medical_constant.MedicalPatient] = None,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> None:
+    """终止玩家诊疗会话并恢复病人原始状态。"""
+
+    # 获取基地对象，若缺失则直接退出。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return
+
+    # 若未显式指定病人，则回退到当前锁定的对象。
+    if patient is None:
+        current_id = int(getattr(rhodes_island, "medical_player_current_patient_id", 0) or 0)
+        if current_id:
+            patient = rhodes_island.medical_patients_today.get(current_id)
+
+    if patient is None:
+        return
+
+    # 恢复病人的原始状态并解除医生绑定。
+    previous_state = patient.metadata.get("player_previous_state")
+    restored_state = medical_constant.MedicalPatientState.REFRESHED
+    if previous_state:
+        try:
+            restored_state = medical_constant.MedicalPatientState(previous_state)
+        except ValueError:
+            restored_state = medical_constant.MedicalPatientState.REFRESHED
+    set_patient_state(patient, restored_state)
+    patient.metadata.pop("assigned_doctor_id", None)
+
+    # 清理会话数据并重置当前病人 ID。
+    _clear_player_session_metadata(patient)
+    rhodes_island.medical_player_current_patient_id = 0
+
+    # 若未提供医生对象则默认选取主角。
+    if doctor_character is None:
+        doctor_character = getattr(cache_control.cache, "character_data", {}).get(0)
+    if doctor_character is not None and hasattr(doctor_character, "work"):
+        doctor_character.work.medical_patient_id = 0
+
+
+def commit_player_diagnose_session(
+    doctor_character: Optional[game_type.Character] = None,
+    *,
+    patient: Optional[medical_constant.MedicalPatient] = None,
+    apply_medicine: bool = True,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> Dict[str, object]:
+    """完成玩家诊疗流程并返回结算摘要。"""
+
+    # 校验基地上下文。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return {"success": False, "reason": "no_base"}
+
+    # 缺省使用主角作为执行医生。
+    if doctor_character is None:
+        doctor_character = getattr(cache_control.cache, "character_data", {}).get(0)
+
+    if doctor_character is None:
+        return {"success": False, "reason": "no_doctor"}
+
+    # 若未指定病人则读取会话关联的当前病人。
+    if patient is None:
+        current_id = int(getattr(rhodes_island, "medical_player_current_patient_id", 0) or 0)
+        if current_id:
+            patient = rhodes_island.medical_patients_today.get(current_id)
+
+    if patient is None:
+        return {"success": False, "reason": "no_patient"}
+
+    # 读取病情配置并强制将诊疗进度推到完成前夕。
+    severity_config = game_config.config_medical_severity.get(patient.severity_level)
+    if severity_config is None:
+        return {"success": False, "reason": "no_severity_config"}
+
+    base_hours = max(float(severity_config.base_hours or 0.0), 0.1)
+    patient.diagnose_progress = max(float(patient.diagnose_progress or 0.0), base_hours - 0.1)
+    patient.metadata["assigned_doctor_id"] = doctor_character.cid if doctor_character is not None else 0
+
+    # 调用常规诊疗推进，并记录诊疗收入变化。
+    income_before = float(rhodes_island.medical_income_today or 0.0)
+    advance_diagnose(patient.patient_id, doctor_character, target_base=rhodes_island)
+    income_mid = float(rhodes_island.medical_income_today or 0.0)
+    diagnose_income = int(round(income_mid - income_before))
+
+    medicine_income = 0
+    medicine_success = False
+    if apply_medicine and patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
+        # 根据需要结算用药收入与成功标记。
+        from Script.System.Medical import medical_service
+
+        income_before_medicine = float(rhodes_island.medical_income_today or 0.0)
+        medicine_success = medical_service.try_consume_medicine(patient, target_base=rhodes_island)
+        income_after_medicine = float(rhodes_island.medical_income_today or 0.0)
+        medicine_income = int(round(income_after_medicine - income_before_medicine))
+
+    # 清理临时数据并解除医生绑定。
+    _clear_player_session_metadata(patient)
+    rhodes_island.medical_player_current_patient_id = 0
+
+    if doctor_character is not None and hasattr(doctor_character, "work"):
+        doctor_character.work.medical_patient_id = 0
+
+    return {
+        "success": True,
+        "patient_id": patient.patient_id,
+        "diagnose_income": diagnose_income,
+        "medicine_income": medicine_income,
+        "medicine_success": medicine_success,
+        "state": patient.state.value,
+    }
+
+
+def execute_player_diagnose_checks(
+    selections: List[Dict[str, int]],
+    *,
+    patient: Optional[medical_constant.MedicalPatient] = None,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> Dict[str, object]:
+    """执行玩家选择的检查条目并记录结果。"""
+
+    # 验证基地上下文。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return {"success": False, "reason": "no_base"}
+
+    # 若未指定病人则沿用当前会话对象。
+    if patient is None:
+        current_id = int(getattr(rhodes_island, "medical_player_current_patient_id", 0) or 0)
+        if current_id:
+            patient = rhodes_island.medical_patients_today.get(current_id)
+
+    if patient is None:
+        return {"success": False, "reason": "no_patient"}
+
+    if not selections:
+        return {"success": False, "reason": "empty_selection"}
+
+    # 更新检查次数并准备记录集合。
+    # 累计玩家使用的检查次数。
+    used_checks = int(patient.metadata.get("player_used_checks", 0) or 0) + 1
+    patient.metadata["player_used_checks"] = used_checks
+
+    # 记录已确诊与实际存在的并发症集合，供比对使用。
+    confirmed_set: Set[int] = set(int(cid) for cid in patient.metadata.get("player_confirmed_complications", []))
+    actual_complications: Set[int] = {int(cid) for cid in getattr(patient, "complications", [])}
+
+    # 将追踪信息转换成便于检索的列表结构。
+    trace_info: List[Dict[str, int]] = [
+        {
+            "system_id": int(entry.get("system_id", 0)),
+            "part_id": int(entry.get("part_id", 0)),
+            "severity_level": int(entry.get("severity_level", 0)),
+            "cid": int(entry.get("cid", entry.get("complication_id", 0))),
+        }
+        for entry in patient.metadata.get("complication_trace", [])
+    ]
+
+    # 预处理每个部位的最高严重程度，用于回诊提示。
+    highest_severity_by_part: Dict[int, int] = {}
+    for entry in trace_info:
+        part_id = entry["part_id"]
+        severity_level = entry["severity_level"]
+        highest_severity_by_part[part_id] = max(highest_severity_by_part.get(part_id, -1), severity_level)
+
+    records: List[Dict[str, object]] = []
+    for option in selections:
+        comp_id = int(option.get("cid", 0) or 0)
+        system_id = int(option.get("system_id", 0) or 0)
+        part_id = int(option.get("part_id", 0) or 0)
+        severity_level = int(option.get("severity_level", 0) or 0)
+        config_entry = game_config.config_medical_complication.get(comp_id)
+
+        result_type = "unknown"
+        message = ""
+        hint_severity = None
+
+        # 根据并发症是否命中决定结果类型。
+        if comp_id and comp_id in actual_complications:
+            result_type = "positive"
+            confirmed_set.add(comp_id)
+            message = getattr(config_entry, "exam_result_positive", "") if config_entry else ""
+            if not message:
+                message = _("检查结果提示确诊，请准备治疗方案。")
+        else:
+            # 如果同部位存在更严重的并发症，则提示复检。
+            actual_highest = highest_severity_by_part.get(part_id, -1)
+            if actual_highest >= 0:
+                result_type = "recheck"
+                hint_severity = actual_highest
+                if config_entry:
+                    if actual_highest <= 0:
+                        message = config_entry.recheck_hint_mild
+                    elif actual_highest == 1:
+                        message = config_entry.recheck_hint_moderate
+                    else:
+                        message = config_entry.recheck_hint_severe
+                if not message:
+                    message = _("该部位存在其他异常，需更换检查方法。")
+            else:
+                # 未命中任何异常则返回阴性结果。
+                result_type = "negative"
+                if config_entry:
+                    message = config_entry.exam_result_negative
+                if not message:
+                    message = _("未发现该部位存在明显异常。")
+
+        record = {
+            "cid": comp_id,
+            "system_id": system_id,
+            "part_id": part_id,
+            "severity_level": severity_level,
+            "result": result_type,
+            "message": message,
+            "hint_severity": hint_severity,
+            "check_index": used_checks,
+            "name": getattr(config_entry, "name", ""),
+            "exam_method": getattr(config_entry, "exam_method", ""),
+        }
+        records.append(record)
+
+    # 将本次检查结果写入记录，并保留最近 30 条。
+    previous_records: List[Dict[str, object]] = list(patient.metadata.get("player_check_records", []))
+    previous_records.extend(records)
+    patient.metadata["player_check_records"] = previous_records[-30:]
+    patient.metadata["player_confirmed_complications"] = sorted(confirmed_set)
+    patient.metadata["player_pending_checks"] = []
+
+    return {
+        "success": True,
+        "results": records,
+        "used_checks": used_checks,
+    }
+
+
+def build_player_check_catalog(
+    patient: Optional[medical_constant.MedicalPatient],
+) -> Dict[int, Dict[str, object]]:
+    """构建玩家诊疗用的系统/部位/并发症选择树。"""
+
+    # 未指定病人时返回空目录。
+    if patient is None:
+        return {}
+
+    # 按系统遍历配置，构建嵌套的选择结构。
+    catalog: Dict[int, Dict[str, object]] = {}
+    for system_id, part_map in sorted(game_config.config_medical_body_system_by_system.items()):
+        if not isinstance(part_map, dict) or not part_map:
+            continue
+
+        first_entry = next(iter(part_map.values()), None)
+        system_name = getattr(first_entry, "system_name", f"System {system_id}") if first_entry else f"System {system_id}"
+
+        part_catalog: Dict[int, Dict[str, object]] = {}
+        for part_id, part_info in sorted(part_map.items()):
+            if part_info is None:
+                continue
+            complication_map = game_config.config_medical_complication_detail.get(system_id, {}).get(part_id, {})
+            options: List[Dict[str, object]] = []
+            for severity_level in sorted(complication_map.keys()):
+                for comp in complication_map[severity_level]:
+                    # 将并发症配置映射为玩家可选择的条目。
+                    options.append(
+                        {
+                            "cid": comp.cid,
+                            "name": comp.name,
+                            "severity_level": comp.severity_level,
+                            "exam_method": comp.exam_method,
+                            "system_id": system_id,
+                            "part_id": part_id,
+                        }
+                    )
+            if not options:
+                continue
+            part_catalog[int(part_id)] = {
+                "part_name": getattr(part_info, "part_name", str(part_id)),
+                "part_type": getattr(part_info, "part_type", 0),
+                "gender_limit": int(getattr(part_info, "gender_limit", 2)),
+                "options": options,
+            }
+
+        if part_catalog:
+            # 仅当系统下存在可用部位时收录。
+            catalog[int(system_id)] = {
+                "system_name": system_name,
+                "parts": part_catalog,
+            }
+
+    return catalog
+
+
+def estimate_patient_treatment_summary(
+    patient: Optional[medical_constant.MedicalPatient],
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> Dict[str, object]:
+    """估算诊疗收益与资源需求摘要。
+
+    参数:
+        patient (Optional[medical_constant.MedicalPatient]): 待评估的病人对象。
+        target_base (Optional[game_type.Rhodes_Island]): 指定罗德岛基座，用于读取倍率与库存。
+    返回:
+        Dict[str, object]: 汇总后的收益、倍率与资源需求数据。
+    """
+
+    # 缺少病人对象时直接返回失败结果。
+    if patient is None:
+        return {"success": False, "reason": "no_patient"}
+
+    # 解析罗德岛对象并获取病情配置。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    severity_config = game_config.config_medical_severity.get(patient.severity_level)
+    if severity_config is None:
+        return {"success": False, "reason": "no_severity_config"}
+
+    # 读取收费倍率与收入加成后计算诊疗收入。
+    price_ratio = get_medical_price_ratio(target_base=rhodes_island)
+    income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
+    diagnose_income = int(
+        round(float(severity_config.diagnose_income or 0) * price_ratio * income_multiplier)
+    )
+
+    medicine_income_ratio = float(severity_config.medicine_income_ratio or 0.0)
+    predicted_medicine_income = 0.0
+    resource_summary: List[Dict[str, object]] = []
+    # 遍历病人所需的药物资源，计算潜在收益并构造摘要。
+    for resource_id, amount in patient.need_resources.items():
+        need_value = float(amount or 0.0)
+        if need_value <= 0:
+            continue
+        resource_config = game_config.config_resouce.get(resource_id)
+        unit_price = float(getattr(resource_config, "price", 0.0) or 0.0)
+        predicted_medicine_income += unit_price * need_value * medicine_income_ratio * price_ratio * income_multiplier
+        resource_summary.append(
+            {
+                "resource_id": resource_id,
+                "name": getattr(resource_config, "name", str(resource_id)),
+                "amount": need_value,
+            }
+        )
+
+    return {
+        "success": True,
+        "price_ratio": price_ratio,
+        "income_multiplier": income_multiplier,
+        "diagnose_income": diagnose_income,
+        "predicted_medicine_income": int(round(predicted_medicine_income)),
+        "resources": resource_summary,
+    }
+
+
+def advance_diagnose(
+    patient_id: int,
+    doctor_character: game_type.Character,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> None:
+    """推进病人的诊疗进度并在完成时发放诊疗收入。
+
+    参数:
+        patient_id (int): 门诊病人的唯一编号。
+        doctor_character (game_type.Character): 执行诊疗的医生角色。
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所在的基地实例。
+    返回:
+        None
+    """
+
+    # 没有医生对象时无法推进诊疗。
+    if doctor_character is None:
+        return
+
+    # 定位罗德岛实例，缺失时直接退出。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return
+
+    # 查找病人信息，并确认是否仍属于门诊流程。
+    patient, hospitalized = medical_core._locate_patient(patient_id, rhodes_island)
+    if patient is None or hospitalized:
+        return
+
+    # 将医生与当前病人绑定，便于后续查询。
+    if hasattr(doctor_character, "work"):
+        doctor_character.work.medical_patient_id = patient.patient_id
+
+    # 检查病人状态是否仍需要诊疗，若已进入后续流程则解除绑定。
+    if patient.state in (
+        medical_constant.MedicalPatientState.WAITING_MEDICATION,
+        medical_constant.MedicalPatientState.HOSPITALIZED,
+        medical_constant.MedicalPatientState.DISCHARGED,
+    ):
+        if patient.metadata.get("assigned_doctor_id") == doctor_character.cid:
+            patient.metadata.pop("assigned_doctor_id", None)
+        if hasattr(doctor_character, "work"):
+            doctor_character.work.medical_patient_id = 0
+        medical_core._sync_legacy_patient_counters(rhodes_island)
+        return
+
+    # 读取病情配置，若缺失则终止诊疗并清理状态。
+    severity_config = game_config.config_medical_severity.get(patient.severity_level)
+    if severity_config is None:
+        if hasattr(doctor_character, "work"):
+            doctor_character.work.medical_patient_id = 0
+        patient.metadata.pop("assigned_doctor_id", None)
+        medical_core._sync_legacy_patient_counters(rhodes_island)
+        return
+
+    # 根据配置计算所需诊疗时长，并在异常时直接转入发药阶段。
+    base_hours = float(severity_config.base_hours)
+    if base_hours <= 0:
+        set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
+        if patient.metadata.get("assigned_doctor_id") == doctor_character.cid:
+            patient.metadata.pop("assigned_doctor_id", None)
+        if hasattr(doctor_character, "work"):
+            doctor_character.work.medical_patient_id = 0
+        if getattr(severity_config, "require_hospitalization", 0) == 1:
+            from Script.System.Medical import medical_service
+
+            medical_service.try_hospitalize(patient.patient_id, target_base=rhodes_island)
+        medical_core._sync_legacy_patient_counters(rhodes_island)
+        return
+
+    # 依据医生能力计算单次推进的进度值。
+    ability_level = doctor_character.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0)
+    ability_adjust = float(handle_ability.get_ability_adjust(ability_level))
+    progress_increment = max(ability_adjust, 0.25)
+
+    # 写入病人元数据并累加诊疗进度。
+    patient.metadata["assigned_doctor_id"] = doctor_character.cid
+    set_patient_state(patient, medical_constant.MedicalPatientState.IN_TREATMENT)
+    patient.diagnose_progress = min(patient.diagnose_progress + progress_increment, base_hours)
+    patient.metadata["last_diagnose_doctor_id"] = doctor_character.cid
+    patient.metadata["diagnose_attempts"] = int(patient.metadata.get("diagnose_attempts", 0)) + 1
+
+    # 诊疗尚未完成时仅同步计数并等待下一次推进。
+    if patient.diagnose_progress < base_hours:
+        medical_core._sync_legacy_patient_counters(rhodes_island)
+        return
+
+    # 进度达到要求后切换状态并结算诊疗收入。
+    patient.diagnose_progress = base_hours
+    set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
+
+    price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
+    income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
+    raw_income = float(severity_config.diagnose_income) * price_ratio * income_multiplier
+    income_value = int(round(raw_income))
+
+    # 将诊疗收入加到账面，并同步病人数统计。
+    if income_value > 0:
+        rhodes_island.medical_income_today += income_value
+        rhodes_island.medical_income_total += income_value
+        rhodes_island.all_income += income_value
+        rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + income_value
+
+    patient.metadata["diagnose_completed"] = True
+    patient.metadata["diagnose_completed_doctor_id"] = doctor_character.cid
+    patient.metadata.pop("assigned_doctor_id", None)
+    if not patient.metadata.get("legacy_cured_flag"):
+        rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
+        rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
+        patient.metadata["legacy_cured_flag"] = True
+
+    if getattr(severity_config, "require_hospitalization", 0) == 1:
+        from Script.System.Medical import medical_service
+
+        medical_service.try_hospitalize(patient.patient_id, target_base=rhodes_island)
+
+    # 清理医生绑定，等待下一位病人。
+    if hasattr(doctor_character, "work"):
+        doctor_character.work.medical_patient_id = 0
+
+    medical_core._sync_legacy_patient_counters(rhodes_island)
+
+
+def set_patient_state(
+    patient: medical_constant.MedicalPatient,
+    state: medical_constant.MedicalPatientState,
+) -> None:
+    """更新病人的流程状态，并写入标签方便调试。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 需要更新状态的病人。
+        state (medical_constant.MedicalPatientState): 新的流程状态枚举值。
+    返回:
+        None
+    """
+
+    # 保护性判断，避免空对象写入。
+    if patient is None:
+        return
+    patient.state = state
+    patient.metadata["state"] = state.value
+
+
+def get_patient_table(
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+    hospitalized: bool,
+) -> Dict[int, medical_constant.MedicalPatient]:
+    """获取指定状态下的病人表引用。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地实例。
+        hospitalized (bool): 是否读取住院病人表，False 返回门诊病人表。
+    返回:
+        Dict[int, medical_constant.MedicalPatient]: 病人 ID 到病人对象的映射。
+    """
+
+    # 根据 base 标记返回对应的病人表。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return {}
+    return rhodes_island.medical_hospitalized if hospitalized else rhodes_island.medical_patients_today
+
+
+def get_medical_price_ratio(
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> float:
+    """读取当前医疗部收费系数，若未初始化则返回默认值。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所在基地。
+    返回:
+        float: 当前收费系数。
+    """
+
+    # 解析收费系数，必要时写入默认值。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return medical_core._resolve_default_price_ratio()
+    ratio = float(rhodes_island.medical_price_ratio or 0)
+    if ratio <= 0:
+        ratio = medical_core._resolve_default_price_ratio()
+        rhodes_island.medical_price_ratio = ratio
+    return ratio
+
+
+def set_medical_price_ratio(
+    price_ratio: float,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> None:
+    """更新医疗部收费系数，并重新评估床位上限。
+
+    参数:
+        price_ratio (float): 新的收费倍率。
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所属基地。
+    返回:
+        None
+    """
+
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return
+
+    # 更新收费系数后重新计算床位上限。
+    rhodes_island.medical_price_ratio = max(float(price_ratio), 0.1)
+    rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(rhodes_island)
+
+
+def get_patient_priority_mode(
+    *, target_base: Optional[game_type.Rhodes_Island] = None
+) -> medical_constant.MedicalPatientPriority:
+    """读取当前病人接诊优先策略，若缺失则回退为默认值。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所属基地。
+    返回:
+        medical_constant.MedicalPatientPriority: 当前生效的接诊优先级枚举。
+    """
+
+    # 读取优先策略，若缺失则保持默认值。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    return _resolve_triage_mode(rhodes_island)
+
+
+def set_patient_priority_mode(
+    priority_mode: str | medical_constant.MedicalPatientPriority,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> medical_constant.MedicalPatientPriority:
+    """更新病人接诊优先策略并返回实际生效的枚举值。
+
+    参数:
+        priority_mode (str | medical_constant.MedicalPatientPriority): 用户输入的优先策略。
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所属基地。
+    返回:
+        medical_constant.MedicalPatientPriority: 生效后的接诊优先策略。
+    """
+
+    default_mode = medical_constant.MedicalPatientPriority.NORMAL
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return default_mode
+
+    if isinstance(priority_mode, medical_constant.MedicalPatientPriority):
+        resolved = priority_mode
+    else:
+        try:
+            resolved = medical_constant.MedicalPatientPriority(str(priority_mode))
+        except ValueError:
+            resolved = default_mode
+
+    rhodes_island.medical_patient_priority_mode = resolved.value
+    return resolved
+
+
+def predict_medical_patient_refresh(
+    price_ratio: Optional[float] = None,
+    level: Optional[int] = None,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> Dict[str, float]:
+    """预测在指定收费系数下的病人刷新数量与倍率。
+
+    参数:
+        price_ratio (Optional[float]): 自定义收费倍率，默认读取基地当前值。
+        level (Optional[int]): 医疗部等级，默认读取基地配置。
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所属基地。
+    返回:
+        Dict[str, float]: 包含倍率、基数与预测刷新数量的摘要。
+    """
+
+    # 解析 base 对象，缺失时返回默认预测。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        resolved_ratio = float(price_ratio if price_ratio is not None else 1.0)
+        return {
+            "price_ratio": resolved_ratio,
+            "base_count": 0.0,
+            "penalty": 1.0,
+            "refresh_multiplier": 1.0,
+            "income_multiplier": medical_core.resolve_price_income_multiplier(resolved_ratio),
+            "predicted_count": 0.0,
+        }
+
+    # 决定使用的收费系数与医疗部等级。
+    resolved_ratio = float(price_ratio if price_ratio is not None else get_medical_price_ratio(target_base=rhodes_island))
+    resolved_level = int(level if level is not None else medical_core._get_medical_facility_level(rhodes_island))
+    level_config = medical_core._pick_hospital_level_config(resolved_level)
+
+    # 计算基础数量与倍率，求得最终预测值。
+    base_count = float(getattr(level_config, "daily_patient_base", 0) or 0)
+    safe_ratio = max(resolved_ratio, 0.01)
+    penalty = 1.0 / safe_ratio
+    if level_config:
+        penalty = medical_core.clamp(penalty, level_config.ratio_min, level_config.ratio_max)
+
+    refresh_multiplier = medical_core.resolve_price_refresh_multiplier(resolved_ratio)
+    predicted_value = base_count * penalty * refresh_multiplier
+    predicted_count = max(int(math.floor(predicted_value)), 0)
+    income_multiplier = medical_core.resolve_price_income_multiplier(resolved_ratio)
+
+    return {
+        "price_ratio": resolved_ratio,
+        "base_count": base_count,
+        "penalty": penalty,
+        "refresh_multiplier": refresh_multiplier,
+        "income_multiplier": income_multiplier,
+        "predicted_count": float(predicted_count),
+    }
+
+
+def refresh_medical_patients(
+    level: Optional[int] = None,
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> List[medical_constant.MedicalPatient]:
+    """根据医疗部等级刷新当日病人列表。
+
+    参数:
+        level (Optional[int]): 指定使用的医疗部等级，缺省时读取基地等级。
+        target_base (Optional[game_type.Rhodes_Island]): 指定医疗部所属基地。
+    返回:
+        List[medical_constant.MedicalPatient]: 新生成的病人列表。
+    """
+
+    # 若无法获取基地对象则直接返回空结果。
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None:
+        return []
+
+    # 判定使用的医疗部等级并获取对应配置。
+    level_value = level if level is not None else medical_core._get_medical_facility_level(rhodes_island)
+    level_config = medical_core._pick_hospital_level_config(level_value)
+    if level_config is None:
+        return []
+
+    # 依据配置与收费系数计算需要刷新的病人数量。
+    refresh_count = medical_core._calculate_patient_refresh_count(rhodes_island, level_config)
+    if refresh_count <= 0:
+        return []
+
+    # 循环生成病人并登记到门诊病人表。
+    new_patients: List[medical_constant.MedicalPatient] = []
+    patient_table = get_patient_table(target_base=rhodes_island, hospitalized=False)
+
+    for _ in range(refresh_count):
+        severity_level = pick_severity_level(level_value)
+        if severity_level is None:
+            break
+        patient = generate_patient(severity_level, rhodes_island)
+        if patient is None:
+            continue
+        patient_table[patient.patient_id] = patient
+        new_patients.append(patient)
+
+    # 最后同步旧统计字段，保持 UI 数据一致。
+    medical_core._sync_legacy_patient_counters(rhodes_island)
+    return new_patients
