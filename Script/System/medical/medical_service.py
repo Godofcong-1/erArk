@@ -15,38 +15,7 @@ from Script.Design import handle_ability, handle_premise
 from Script.UI.Moudle import draw
 from Script.System.Medical import hospital_flow, medical_constant, patient_management, log_system
 
-_MEDICAL_FACILITY_ID = 6
-"""医疗部在 facility_level 字典中的设施 ID（来源于 Facility.csv）"""
-
-_MEDICINE_RESOURCE_IDS: Tuple[int, ...] = medical_constant.ALL_MEDICINE_RESOURCE_IDS
-"""医疗系统允许使用的全部药品资源 ID 列表"""
-
-_FLOAT_EPSILON = 1e-6
-"""浮点比较使用的安全阈值"""
-
-_HOSPITAL_DOCTOR_BED_BONUS = 2
-"""每名住院医生额外提供的床位数量"""
-
-_PLAYER_METADATA_KEYS: Tuple[str, ...] = (
-    "player_previous_state",
-    "player_session_active",
-    "player_used_checks",
-    "player_confirmed_complications",
-    "player_check_records",
-    "player_pending_checks",
-)
-"""玩家诊疗流程使用的临时元数据键集合"""
-
 _: Callable[[str], str] = get_text._
-
-_GENERAL_SPECIALIZATION_KEY: str = medical_constant.SPECIALIZATION_GENERAL_KEY
-"""医疗分科中的全科键值"""
-
-_SPECIALIZATION_ROLES: Tuple[str, str] = (
-    medical_constant.SPECIALIZATION_ROLE_CLINIC,
-    medical_constant.SPECIALIZATION_ROLE_HOSPITAL,
-)
-"""受支持的医生岗位分科键顺序"""
 
 
 def _bump_daily_counter(
@@ -54,19 +23,41 @@ def _bump_daily_counter(
     key: str,
     value: int,
 ) -> None:
-    """在医疗日度统计表中累加指定键值"""
+    """更新医疗日度统计表中的计数。
+
+    功能:
+        在基地对象的 ``medical_daily_counters`` 字段中对指定键进行加总，
+        便于后续生成日报或统计面板。
+
+    参数:
+        rhodes_island (Optional[game_type.Rhodes_Island]): 指向当前罗德岛基地的引用，可能为 None。
+        key (str): 需要累计的指标名称，例如 ``"medicine"``。
+        value (int): 本次需要增加的数值，可以为负值表示回退。
+
+    返回:
+        None: 函数仅产生副作用，不返回实际数据。
+    """
 
     if rhodes_island is None or value == 0:
         return
+    # medical_daily_counters 以松散字典形式保存每日统计的数据段
     stats = rhodes_island.__dict__.setdefault("medical_daily_counters", {})
     stats[key] = int(stats.get(key, 0) or 0) + int(value)
 
 
 def _get_specialization_categories() -> List[Dict[str, Any]]:
-    """返回按 system_id 排序的分科配置列表"""
+    """构建分科配置列表。
+
+    功能:
+        根据配置表 ``config_medical_body_system_by_system`` 提取系统列表，
+        并附加默认的全科条目，便于后续 UI 与逻辑共用。
+
+    返回:
+        List[Dict[str, Any]]: 每个字典包含 ``key``、``name`` 与 ``system_id``。
+    """
 
     categories: List[Dict[str, Any]] = [
-        {"key": _GENERAL_SPECIALIZATION_KEY, "name": _("全科"), "system_id": None}
+        {"key": medical_constant.SPECIALIZATION_GENERAL_KEY, "name": _("全科"), "system_id": None}
     ]
     body_system_map = getattr(game_config, "config_medical_body_system_by_system", {}) or {}
     for system_id, part_map in sorted(body_system_map.items(), key=lambda item: item[0]):
@@ -77,13 +68,31 @@ def _get_specialization_categories() -> List[Dict[str, Any]]:
 
 
 def get_specialization_categories() -> List[Dict[str, Any]]:
-    """对外暴露的分科列表副本，供 UI 调用"""
+    """获取分科配置的对外副本。
+
+    功能:
+        向 UI 或其他系统返回分科配置的浅拷贝，避免调用者直接修改内部缓存。
+
+    返回:
+        List[Dict[str, Any]]: 与 :func:`_get_specialization_categories` 相同结构的副本。
+    """
 
     return [dict(item) for item in _get_specialization_categories()]
 
 
 def _get_role_doctor_ids(rhodes_island: Optional[game_type.Rhodes_Island], role_key: str) -> List[int]:
-    """根据岗位键获取对应医生 ID 列表副本"""
+    """查询岗位医生列表。
+
+    功能:
+        根据岗位键（门诊或住院）返回对应的医生 ID 副本，防止外部对原数据做原地修改。
+
+    参数:
+        rhodes_island (Optional[game_type.Rhodes_Island]): 当前基地引用，可能为 None。
+        role_key (str): 岗位标识，见 ``medical_constant.SPECIALIZATION_ROLE_*``。
+
+    返回:
+        List[int]: 对应岗位的医生 ID 列表，若无数据返回空列表。
+    """
 
     if rhodes_island is None:
         return []
@@ -95,7 +104,18 @@ def _get_role_doctor_ids(rhodes_island: Optional[game_type.Rhodes_Island], role_
 
 
 def _ensure_specialization_structure(rhodes_island: game_type.Rhodes_Island) -> None:
-    """确保医生分科结构存在且成员与岗位医生保持一致"""
+    """同步医生分科结构，保持岗位数据一致。
+
+    功能:
+        保障 ``medical_doctor_specializations`` 的数据结构完整，并强制校准
+        每个岗位与分科的医生列表，使其与岗位成员保持一致。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前罗德岛基地对象。
+
+    返回:
+        None: 操作直接修改传入对象的属性。
+    """
 
     if rhodes_island is None:
         return
@@ -107,7 +127,8 @@ def _ensure_specialization_structure(rhodes_island: game_type.Rhodes_Island) -> 
         raw_spec = {}
 
     normalized: Dict[str, Dict[str, List[int]]] = {}
-    for role_key in _SPECIALIZATION_ROLES:
+    for role_key in medical_constant.SPECIALIZATION_ROLES:
+        # 收集当前岗位所有医生，作为最终分科的基准集合
         doctor_ids = set(int(value) for value in _get_role_doctor_ids(rhodes_island, role_key))
         role_bucket = raw_spec.get(role_key)
         assigned_tracker: Dict[int, str] = {}
@@ -117,14 +138,16 @@ def _ensure_specialization_structure(rhodes_island: game_type.Rhodes_Island) -> 
                     continue
                 for doctor_id in doctor_list or []:
                     if doctor_id in doctor_ids and doctor_id not in assigned_tracker:
+                        # 记录医生当前的分科归属，后续用于还原
                         assigned_tracker[int(doctor_id)] = category_key
 
         cleaned: Dict[str, List[int]] = {key: [] for key in category_keys}
         for doctor_id in doctor_ids:
-            category_key = assigned_tracker.get(doctor_id, _GENERAL_SPECIALIZATION_KEY)
+            category_key = assigned_tracker.get(doctor_id, medical_constant.SPECIALIZATION_GENERAL_KEY)
             cleaned.setdefault(category_key, []).append(int(doctor_id))
 
         for category_key in cleaned:
+            # 某分科中可能出现重复条目，这里统一去重并排序
             cleaned[category_key] = sorted({int(value) for value in cleaned[category_key]})
 
         normalized[role_key] = cleaned
@@ -137,14 +160,26 @@ def _resolve_doctor_specialization(
     role_key: str,
     doctor_id: int,
 ) -> str:
-    """查询医生当前所属的分科键，未匹配时返回全科"""
+    """解析指定医生的分科归属。
+
+    功能:
+        先确保分科结构有效，再返回医生当前所属的分科键；若未登记，则视为全科。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+        role_key (str): 岗位标识。
+        doctor_id (int): 医生的角色 ID。
+
+    返回:
+        str: 医生归属的分科键，缺省为 ``SPECIALIZATION_GENERAL_KEY``。
+    """
 
     _ensure_specialization_structure(rhodes_island)
     role_bucket = getattr(rhodes_island, "medical_doctor_specializations", {}).get(role_key, {})
     for category_key, doctor_list in role_bucket.items():
         if doctor_id in doctor_list:
             return category_key
-    return _GENERAL_SPECIALIZATION_KEY
+    return medical_constant.SPECIALIZATION_GENERAL_KEY
 
 
 def assign_doctor_specialization(
@@ -154,10 +189,23 @@ def assign_doctor_specialization(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, Any]:
-    """调整医生分科归属，返回执行结果摘要"""
+    """调整医生分科归属。
+
+    功能:
+        将指定医生移动到目标分科，并返回调整结果，供 UI 更新或日志记录。
+
+    参数:
+        role_key (str): 岗位标识。
+        doctor_id (int): 目标医生 ID。
+        category_key (str): 希望归属的分科键。
+        target_base (Optional[game_type.Rhodes_Island]): 指定操作的基地对象。
+
+    返回:
+        Dict[str, Any]: 包含 ``success``、``category_name`` 等信息的结果字典。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
-    if rhodes_island is None or role_key not in _SPECIALIZATION_ROLES:
+    if rhodes_island is None or role_key not in medical_constant.SPECIALIZATION_ROLES:
         return {"success": False, "reason": "invalid_role"}
 
     doctor_ids = _get_role_doctor_ids(rhodes_island, role_key)
@@ -166,7 +214,7 @@ def assign_doctor_specialization(
 
     categories = _get_specialization_categories()
     category_keys = [item["key"] for item in categories]
-    resolved_category = category_key if category_key in category_keys else _GENERAL_SPECIALIZATION_KEY
+    resolved_category = category_key if category_key in category_keys else medical_constant.SPECIALIZATION_GENERAL_KEY
 
     _ensure_specialization_structure(rhodes_island)
     role_bucket = rhodes_island.medical_doctor_specializations.setdefault(role_key, {})
@@ -195,7 +243,18 @@ def list_role_doctors(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> List[int]:
-    """返回指定岗位当前所有医生 ID 列表"""
+    """列举岗位医生。
+
+    功能:
+        返回指定岗位当前登记的所有医生 ID，用于统计或 UI 展示。
+
+    参数:
+        role_key (str): 岗位标识。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地；为 None 时使用全局缓存。
+
+    返回:
+        List[int]: 岗位对应的医生 ID 列表。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     return _get_role_doctor_ids(rhodes_island, role_key)
@@ -206,10 +265,21 @@ def get_doctor_specialization_overview(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> List[Dict[str, Any]]:
-    """汇总指定岗位的分科配置，用于 UI 面板展示"""
+    """生成岗位分科概览。
+
+    功能:
+        汇总各分科下的医生信息、能力与加成数据，主要供 UI 面板展示。
+
+    参数:
+        role_key (str): 岗位标识。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地。
+
+    返回:
+        List[Dict[str, Any]]: 由 ``category_key``、``doctor_details`` 等字段组成的统计列表。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
-    if rhodes_island is None or role_key not in _SPECIALIZATION_ROLES:
+    if rhodes_island is None or role_key not in medical_constant.SPECIALIZATION_ROLES:
         return []
 
     _ensure_specialization_structure(rhodes_island)
@@ -263,7 +333,18 @@ def get_doctor_specialization_overview(
 
 
 def _resolve_patient_system_keys(patient: medical_constant.MedicalPatient) -> Set[str]:
-    """提取病人涉及的系统键集合，并同步写入 metadata"""
+    """提取病人可能关联的系统键。
+
+    功能:
+        从病人的并发症追踪信息与并发症列表中推断涉及的系统编号，
+        并写回 ``metadata``，为分科加成与筛选提供依据。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 目标病人实例。
+
+    返回:
+        Set[str]: 去重后的系统键集合。
+    """
 
     system_keys: Set[str] = set()
     if patient is None:
@@ -294,13 +375,26 @@ def _resolve_specialization_bonus(
     doctor_character: Optional[game_type.Character],
     patient: Optional[medical_constant.MedicalPatient],
 ) -> Tuple[str, bool, float]:
-    """计算医生匹配分科后是否命中病人系统以及额外倍率"""
+    """计算医生在特定分科下的加成系数。
+
+    功能:
+        根据医生当前分科与病人涉及的系统是否匹配，返回命中状态与倍率。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+        role_key (str): 岗位标识。
+        doctor_character (Optional[game_type.Character]): 执行诊疗的医生。
+        patient (Optional[medical_constant.MedicalPatient]): 待诊的病人。
+
+    返回:
+        Tuple[str, bool, float]: (分科键, 是否命中系统, 能力对应加成倍率)。
+    """
 
     if rhodes_island is None or doctor_character is None or patient is None:
-        return (_GENERAL_SPECIALIZATION_KEY, True, 1.0)
+        return (medical_constant.SPECIALIZATION_GENERAL_KEY, True, 1.0)
 
     specialization_key = _resolve_doctor_specialization(rhodes_island, role_key, doctor_character.cid)
-    if specialization_key == _GENERAL_SPECIALIZATION_KEY:
+    if specialization_key == medical_constant.SPECIALIZATION_GENERAL_KEY:
         return (specialization_key, True, 1.0)
 
     system_keys = _resolve_patient_system_keys(patient)
@@ -317,7 +411,11 @@ def acquire_patient_for_doctor(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Optional[medical_constant.MedicalPatient]:
-    """为执行诊疗的医生分配一名待诊病人
+    """为执行诊疗的医生分配待诊病人。
+
+    功能:
+        结合医生分科、基地优先策略与病人状态，挑选最适合的候选并
+        更新绑定关系。
 
     参数:
         doctor_character (Optional[game_type.Character]): 负责诊疗的干员对象。
@@ -343,9 +441,9 @@ def acquire_patient_for_doctor(
         medical_constant.SPECIALIZATION_ROLE_CLINIC,
         doctor_character.cid,
     )
-    requires_match = specialization_key != _GENERAL_SPECIALIZATION_KEY
+    requires_match = specialization_key != medical_constant.SPECIALIZATION_GENERAL_KEY
 
-    # 优先复用已记录的病人 ID
+    # 优先复用既有分配，避免频繁切换病人导致流程中断
     assigned_id = getattr(getattr(doctor_character, "work", None), "medical_patient_id", 0)
     if assigned_id:
         patient = patient_table.get(assigned_id)
@@ -407,7 +505,19 @@ def _acquire_hospital_patient_for_doctor(
     *,
     require_surgery: bool = False,
 ) -> Optional[medical_constant.MedicalPatient]:
-    """为住院医生挑选病房病人，可选仅匹配待手术患者"""
+    """为住院医生挑选合适的住院病人。
+
+    功能:
+        依据病人状态、是否需要手术以及当前分配状况，返回最优的住院病人。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 住院科负责的医生。
+        rhodes_island (Optional[game_type.Rhodes_Island]): 当前基地引用。
+        require_surgery (bool): 为 True 时仅考虑待手术且未被阻塞的病人。
+
+    返回:
+        Optional[medical_constant.MedicalPatient]: 选中的病人，若无符合条件者则返回 None。
+    """
 
     if doctor_character is None or rhodes_island is None:
         return None
@@ -450,6 +560,7 @@ def _acquire_hospital_patient_for_doctor(
         return None
 
     def _hospital_priority(target: medical_constant.MedicalPatient) -> Tuple[int, int, int]:
+        # 住院优先级：病情 -> 已住院天数 -> ID，均取反实现最大堆效果
         return (
             -int(getattr(target, "severity_level", 0) or 0),
             -int(getattr(target, "stay_days", 0) or 0),
@@ -466,7 +577,17 @@ def _acquire_hospital_patient_for_doctor(
 def _resolve_triage_mode(
     rhodes_island: Optional[game_type.Rhodes_Island],
 ) -> medical_constant.MedicalPatientPriority:
-    """解析基地当前的病人接诊优先策略"""
+    """解析基地当前的病人接诊优先策略。
+
+    功能:
+        读取并校验基地上配置的接诊优先级，确保其始终落在枚举范围内。
+
+    参数:
+        rhodes_island (Optional[game_type.Rhodes_Island]): 基地引用。
+
+    返回:
+        medical_constant.MedicalPatientPriority: 修正后的优先级枚举值。
+    """
 
     if rhodes_island is None:
         return medical_constant.MedicalPatientPriority.NORMAL
@@ -488,7 +609,18 @@ def _select_triage_candidate(
     candidates: List[medical_constant.MedicalPatient],
     rhodes_island: Optional[game_type.Rhodes_Island],
 ) -> Optional[medical_constant.MedicalPatient]:
-    """依据当前优先策略挑选最匹配的病人，避免在大列表上全量排序"""
+    """在候选病人中挑选最优对象。
+
+    功能:
+        按基地配置的接诊策略筛选候选病人，使用 ``min`` 与自定义排序键避免全量排序。
+
+    参数:
+        candidates (List[medical_constant.MedicalPatient]): 候选病人列表。
+        rhodes_island (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Optional[medical_constant.MedicalPatient]: 成功时返回匹配度最高的病人，否则返回 None。
+    """
 
     if not candidates:
         return None
@@ -511,11 +643,22 @@ def _select_triage_candidate(
 
 
 def _clear_player_session_metadata(patient: medical_constant.MedicalPatient) -> None:
-    """清理玩家诊疗流程写入的临时元数据"""
+    """清理玩家诊疗流程写入的临时元数据。
+
+    功能:
+        将诊疗过程中写入 ``MedicalPatient.metadata`` 的会话数据全部清空，
+        确保下次诊疗以干净状态开始。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 需要清理的病人对象。
+
+    返回:
+        None: 仅执行清理操作。
+    """
 
     if patient is None:
         return
-    for key in _PLAYER_METADATA_KEYS:
+    for key in medical_constant.PLAYER_METADATA_KEYS:
         patient.metadata.pop(key, None)
 
 
@@ -523,7 +666,18 @@ def _acquire_patient_for_player(
     doctor_character: Optional[game_type.Character],
     rhodes_island: Optional[game_type.Rhodes_Island],
 ) -> Optional[medical_constant.MedicalPatient]:
-    """根据当前优先策略为玩家诊疗会话选定病人"""
+    """根据当前优先策略为玩家诊疗会话选定病人。
+
+    功能:
+        与自动诊疗类似，但额外确保不与其他医生分配冲突，同时支持复用玩家现有会话。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 由玩家操控的医生角色。
+        rhodes_island (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Optional[medical_constant.MedicalPatient]: 可供玩家诊疗的病人，若无则返回 None。
+    """
 
     if rhodes_island is None:
         return None
@@ -560,7 +714,18 @@ def start_player_diagnose_session(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Optional[medical_constant.MedicalPatient]:
-    """初始化玩家诊疗会话并返回被选中的病人"""
+    """初始化玩家诊疗会话。
+
+    功能:
+        建立玩家与病人的诊疗会话，初始化会话元数据并返回目标病人。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 玩家操控的医生角色，缺省时读取玩家本体。
+        target_base (Optional[game_type.Rhodes_Island]): 指定操作的基地对象。
+
+    返回:
+        Optional[medical_constant.MedicalPatient]: 进入会话的病人实例，无可用病人时返回 None。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -600,7 +765,19 @@ def abort_player_diagnose_session(
     patient: Optional[medical_constant.MedicalPatient] = None,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """终止玩家诊疗会话并恢复病人原始状态"""
+    """终止玩家诊疗会话并恢复病人原始状态。
+
+    功能:
+        便于玩家在中途退出诊疗流程时回滚病人状态、解绑医生并清理会话数据。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 玩家操控的医生，用于重置绑定。
+        patient (Optional[medical_constant.MedicalPatient]): 可选指定的病人；为空时使用当前会话。
+        target_base (Optional[game_type.Rhodes_Island]): 基地引用。
+
+    返回:
+        None: 仅执行回滚与清理。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -638,7 +815,20 @@ def commit_player_diagnose_session(
     apply_medicine: bool = True,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, object]:
-    """完成玩家诊疗流程并返回结算摘要"""
+    """完成玩家诊疗流程并返回结算摘要。
+
+    功能:
+        推进诊疗进度、尝试扣药并汇总收入信息，最终输出用于 UI 展示的结果。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 执行结算的医生。
+        patient (Optional[medical_constant.MedicalPatient]): 参与会话的病人。
+        apply_medicine (bool): 是否尝试扣除药物并结算收益。
+        target_base (Optional[game_type.Rhodes_Island]): 基地引用。
+
+    返回:
+        Dict[str, object]: 包含收入、病人状态与药物结果的字典。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -701,7 +891,19 @@ def execute_player_diagnose_checks(
     patient: Optional[medical_constant.MedicalPatient] = None,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, object]:
-    """执行玩家选择的检查条目并记录结果"""
+    """执行玩家选择的检查条目并记录结果。
+
+    功能:
+        将玩家在诊疗界面勾选的检查项目批量执行，依据病人实际并发症生成提示信息。
+
+    参数:
+        selections (List[Dict[str, int]]): UI 返回的检查选项列表，需包含并发症标识及部位信息。
+        patient (Optional[medical_constant.MedicalPatient]): 当前会话的病人。
+        target_base (Optional[game_type.Rhodes_Island]): 基地引用。
+
+    返回:
+        Dict[str, object]: ``results`` 字段包含逐项检查结果，``used_checks`` 表示次数。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -809,7 +1011,17 @@ def execute_player_diagnose_checks(
 def build_player_check_catalog(
     patient: Optional[medical_constant.MedicalPatient],
 ) -> Dict[int, Dict[str, object]]:
-    """构建玩家诊疗用的系统/部位/并发症选择树"""
+    """构建玩家诊疗用的系统/部位/并发症选择树。
+
+    功能:
+        根据全局配置生成系统与部位树状结构，并标记病人既往记录便于 UI 展示。
+
+    参数:
+        patient (Optional[medical_constant.MedicalPatient]): 当前处理的病人。
+
+    返回:
+        Dict[int, Dict[str, object]]: 以系统 ID 为键的嵌套字典，包含部位与并发症列表。
+    """
 
     if patient is None:
         return {}
@@ -870,7 +1082,18 @@ def estimate_patient_treatment_summary(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, object]:
-    """估算玩家当前病人的诊疗收益与药品需求摘要"""
+    """估算诊疗收益与资源需求摘要。
+
+    功能:
+        基于病情等级、价格倍率与所需资源，快速计算诊断收益与预期药品收入。
+
+    参数:
+        patient (Optional[medical_constant.MedicalPatient]): 待估算的病人对象。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地引用。
+
+    返回:
+        Dict[str, object]: 包含 ``diagnose_income``、``predicted_medicine_income`` 等键的结果字典。
+    """
 
     # 验证病人有效性
     if patient is None:
@@ -883,9 +1106,9 @@ def estimate_patient_treatment_summary(
         return {"success": False, "reason": "no_severity_config"}
 
     # 计算诊疗收益
-    price_ratio = get_medical_price_ratio(target_base=rhodes_island) # 价格系数
-    income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio) # 收益倍率
-    # 诊断收益
+    price_ratio = get_medical_price_ratio(target_base=rhodes_island)  # 价格系数
+    income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio)  # 收益倍率
+    # 诊断收益基于配置表基础值乘以价格系数与综合倍率
     diagnose_income = int(
         round(float(severity_config.diagnose_income or 0) * price_ratio * income_multiplier)
     )
@@ -924,7 +1147,19 @@ def prepare_doctor_medical_behavior(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Optional[medical_constant.MedicalPatient]:
-    """在行为开始时为医生预分配对应病人，便于结算阶段继续处理"""
+    """在行为开始时预分配病人。
+
+    功能:
+        根据行为类型提前锁定目标病人，使行为流程在不同阶段保持一致。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 执行行为的医生。
+        behavior_id (Optional[str]): 行为标识。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Optional[medical_constant.MedicalPatient]: 被预分配的病人，没有匹配时返回 None。
+    """
 
     if doctor_character is None or not behavior_id:
         return None
@@ -947,7 +1182,18 @@ def conduct_ward_round(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, object]:
-    """执行住院查房流程，返回处理结果摘要"""
+    """执行住院查房流程，返回处理结果摘要。
+
+    功能:
+        将医生查房、药品消耗与住院流程推进组合在一起，并对结果做统一封装。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 查房医生。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Dict[str, object]: ``handled`` 标识是否成功处理，``patient`` 返回参与的病人对象。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if doctor_character is None or rhodes_island is None:
@@ -972,6 +1218,7 @@ def conduct_ward_round(
     outcome["patient"] = patient
 
     if patient.state != medical_constant.MedicalPatientState.HOSPITALIZED:
+        # 若已完成治疗或出院，解除医生绑定避免重复操作
         patient.metadata.pop("assigned_hospital_doctor_id", None)
         work_data = getattr(doctor_character, "work", None)
         if work_data is not None:
@@ -986,7 +1233,18 @@ def perform_surgery_for_doctor(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, object]:
-    """尝试为住院患者安排手术，返回执行结果"""
+    """尝试为住院患者安排手术。
+
+    功能:
+        获取待手术病人并调用住院流程模块完成具体结算，同时处理医生绑定。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 手术医生。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Dict[str, object]: 包含 ``handled``、``patient`` 等字段的结果摘要。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if doctor_character is None or rhodes_island is None:
@@ -1025,7 +1283,17 @@ def perform_surgery_for_doctor(
 
 
 def _sync_legacy_patient_counters(rhodes_island: game_type.Rhodes_Island) -> None:
-    """同步旧版医疗统计字段，兼容尚未迁移的 UI 逻辑"""
+    """同步旧版医疗统计字段，兼容尚未迁移的 UI 逻辑。
+
+    功能:
+        将新版病人状态统计转换为旧字段 ``patient_now``，避免旧版界面出现空值。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        None: 直接修改基地属性，不返回数据。
+    """
 
     if rhodes_island is None:
         return
@@ -1050,7 +1318,21 @@ def update_doctor_assignments(
     hospital_power: Optional[float] = None,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """刷新医疗部医生相关缓存并重新计算床位上限"""
+    """刷新医疗部医生缓存并更新床位上限。
+
+    功能:
+        同时更新门诊、住院医生列表及人力强度，随后重算医疗床位上限与分科结构。
+
+    参数:
+        clinic_doctors (Optional[List[int]]): 门诊医生 ID 列表，为 None 时沿用旧值。
+        hospital_doctors (Optional[List[int]]): 住院医生 ID 列表，为 None 时沿用旧值。
+        clinic_power (Optional[float]): 门诊医生合力数值，缺省时自动计算。
+        hospital_power (Optional[float]): 住院医生合力数值，缺省时自动计算。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地对象。
+
+    返回:
+        None: 通过副作用更新基地缓存。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1248,15 +1530,18 @@ def adjust_doctor_targets_by_delta(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, int]:
-    """根据增量调整医疗部医生目标人数并触发自动排班
+    """根据增量调整医疗部医生目标人数并触发自动排班。
+
+    功能:
+        在当前目标基础上加减指定数量，再调用 :func:`dispatch_medical_doctors` 获取最新排班结果。
 
     参数:
-        clinic_delta (int): 需要增减的门诊医生数量，可为负数。
-        hospital_delta (int): 需要增减的住院医生数量，可为负数。
-        target_base (Optional[game_type.Rhodes_Island]): 指定基地对象，缺省时使用全局缓存。
+        clinic_delta (int): 门诊医生目标增量，可为负数。
+        hospital_delta (int): 住院医生目标增量，可为负数。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地对象。
 
     返回:
-        Dict[str, int]: 同 `dispatch_medical_doctors` 的排班汇总，用于 UI 展示。
+        Dict[str, int]: 排班结果摘要。
     """
 
     rhodes_island = _get_rhodes_island(target_base)
@@ -1287,14 +1572,34 @@ def adjust_doctor_targets_by_delta(
 def redo_medical_doctor_dispatch(
     *, target_base: Optional[game_type.Rhodes_Island] = None
 ) -> Dict[str, int]:
-    """在保持当前目标数量的前提下重新执行一次自动排班"""
+    """在保持当前目标数量的前提下重新执行自动排班。
+
+    功能:
+        以当前目标人数为基准重新计算门诊与住院医生分配，不改变配置。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地。
+
+    返回:
+        Dict[str, int]: 由 :func:`dispatch_medical_doctors` 返回的排班结果。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     return dispatch_medical_doctors(target_base=rhodes_island)
 
 
 def summarize_dispatch_result(result: Optional[Dict[str, int]]) -> str:
-    """将排班结果转化为可读文本，便于面板直接展示"""
+    """将排班结果转化为可读文本，便于面板直接展示。
+
+    功能:
+        将排班统计字典格式化为多行字符串，供面板或日志直接使用。
+
+    参数:
+        result (Optional[Dict[str, int]]): 排班摘要字典。
+
+    返回:
+        str: 格式化后的文本描述，末尾包含换行符。
+    """
 
     if not result:
         return "未取得排班结果。\n"
@@ -1375,21 +1680,35 @@ def init_medical_department_data(
     reset_runtime: bool = True,
     migrate_legacy: bool = False,
 ) -> None:
-    """初始化医疗系统相关的运行期数据结构"""
+    """初始化医疗系统相关的运行期数据结构。
+
+    功能:
+        用于新游戏或读取旧档后设置默认值，可选择是否迁移旧字段与重置运行时状态。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地。
+        reset_runtime (bool): 是否重置运行期缓存数据。
+        migrate_legacy (bool): 是否执行旧版本数据迁移。
+
+    返回:
+        None。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
         return
 
     if migrate_legacy:
+        # --- 旧数据迁移阶段：统一旧存档中的收入字段 ---
         _migrate_legacy_income(rhodes_island)
 
     if reset_runtime:
+        # --- 重置阶段：清空运行期状态，确保进入全新的一天 ---
         rhodes_island.medical_patients_today = {}
         rhodes_island.medical_hospitalized = {}
         rhodes_island.medical_surgery_records = []
         rhodes_island.medical_inventory_accumulator = {
-            resource_id: 0.0 for resource_id in _MEDICINE_RESOURCE_IDS
+            resource_id: 0.0 for resource_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS
         }
         rhodes_island.medical_income_today = 0
         rhodes_island.medical_income_total = 0
@@ -1405,6 +1724,7 @@ def init_medical_department_data(
         rhodes_island.medical_player_current_patient_id = 0
         rhodes_island.medical_doctor_specializations = {}
     else:
+        # --- 校准阶段：对旧档的运行期表结构做类型校正 ---
         _ensure_runtime_dict(rhodes_island)
         rhodes_island.medical_player_current_patient_id = int(
             getattr(rhodes_island, "medical_player_current_patient_id", 0) or 0
@@ -1415,6 +1735,7 @@ def init_medical_department_data(
     if not rhodes_island.medical_price_ratio or rhodes_island.medical_price_ratio <= 0:
         rhodes_island.medical_price_ratio = _resolve_default_price_ratio()
 
+    # --- 缓存阶段：根据医生情况更新床位与队列统计 ---
     rhodes_island.medical_bed_limit = _calculate_medical_bed_limit(rhodes_island)
     _sync_legacy_patient_counters(rhodes_island)
 
@@ -1428,7 +1749,17 @@ def init_medical_department_data(
 
 
 def update_medical_save_data_structure(cache_snapshot: Dict[str, Any]) -> None:
-    """在读取旧存档时修复医疗系统相关字段"""
+    """在读取旧存档时修复医疗系统相关字段。
+
+    功能:
+        校验存档中的基地对象并执行初始化流程，确保数据结构符合新版要求。
+
+    参数:
+        cache_snapshot (Dict[str, Any]): 存档数据快照。
+
+    返回:
+        None: 内部调用 :func:`init_medical_department_data` 完成迁移。
+    """
 
     rhodes_island = cache_snapshot.get("rhodes_island")
     if not isinstance(rhodes_island, game_type.Rhodes_Island):
@@ -1442,7 +1773,15 @@ def refresh_medical_patients(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> List[medical_constant.MedicalPatient]:
-    """根据医疗部等级刷新当日病人列表"""
+    """根据医疗部等级刷新当日病人列表。
+
+    参数:
+        level (Optional[int]): 指定的医疗部等级，缺省时自动检测。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地。
+
+    返回:
+        List[medical_constant.MedicalPatient]: 新增的病人对象列表。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1460,6 +1799,7 @@ def refresh_medical_patients(
     new_patients: List[medical_constant.MedicalPatient] = []
     patient_table = get_patient_table(target_base=rhodes_island, hospitalized=False)
 
+    # --- 生成阶段：根据刷新次数批量创建病人并写入当日列表 ---
     for _ in range(refresh_count):
         severity_level = patient_management.pick_severity_level(level_value)
         if severity_level is None:
@@ -1480,7 +1820,16 @@ def advance_diagnose(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """推进病人的诊疗进度并在完成时发放诊疗收入"""
+    """推进病人的诊疗进度并在完成时发放诊疗收入。
+
+    参数:
+        patient_id (int): 目标病人 ID。
+        doctor_character (game_type.Character): 执行诊疗的医生。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        None: 完成后通过副作用修改病人状态与基地收入。
+    """
 
     if doctor_character is None:
         return
@@ -1518,6 +1867,7 @@ def advance_diagnose(
 
     base_hours = float(severity_config.base_hours)
     if base_hours <= 0:
+        # 无需治疗的病人直接进入待发药阶段
         set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
         if patient.metadata.get("assigned_doctor_id") == doctor_character.cid:
             patient.metadata.pop("assigned_doctor_id", None)
@@ -1526,6 +1876,7 @@ def advance_diagnose(
         _sync_legacy_patient_counters(rhodes_island)
         return
 
+    # --- 诊疗推进阶段：按医生能力计算治疗进度 ---
     ability_level = doctor_character.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0)
     ability_adjust = float(handle_ability.get_ability_adjust(ability_level))
     progress_increment = max(ability_adjust, 0.25)
@@ -1543,6 +1894,7 @@ def advance_diagnose(
     patient.diagnose_progress = base_hours
     set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
 
+    # --- 收入结算阶段：根据价格系数累计诊疗收入 ---
     price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
     income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio)
     raw_income = float(severity_config.diagnose_income) * price_ratio * income_multiplier
@@ -1558,6 +1910,7 @@ def advance_diagnose(
     patient.metadata["diagnose_completed_doctor_id"] = doctor_character.cid
     patient.metadata.pop("assigned_doctor_id", None)
     if not patient.metadata.get("legacy_cured_flag"):
+        # 旧版统计兼容，确保累计治愈数量同步
         rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
         rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
         patient.metadata["legacy_cured_flag"] = True
@@ -1574,7 +1927,16 @@ def try_consume_medicine(
     is_hospitalized: bool = False,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> bool:
-    """尝试为病人扣除药物并结算药费"""
+    """尝试为病人扣除药物并结算药费。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 需要治疗的病人对象。
+        is_hospitalized (bool): 是否处于住院流程。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        bool: ``True`` 表示已满足所需药物并结算成功，``False`` 表示库存不足。
+    """
 
     if patient is None:
         return False
@@ -1596,12 +1958,13 @@ def try_consume_medicine(
     resource_success: Dict[int, bool] = {}
     consumed_units: Dict[int, int] = {}
 
-    for resource_id in _MEDICINE_RESOURCE_IDS:
+    # --- 资源处理阶段：针对每种药品资源独立计算需求、库存与扣除情况 ---
+    for resource_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS:
         need_total = float(patient.need_resources.get(resource_id, 0.0) or 0.0)
         accumulator_value = float(accumulator.get(resource_id, 0.0) or 0.0)
         recorded = float(recorded_map.get(resource_id, 0.0) or 0.0)
 
-        if need_total <= _FLOAT_EPSILON:
+        if need_total <= medical_constant.FLOAT_EPSILON:
             recorded_map[resource_id] = 0.0
             progress_map[resource_id] = 0.0
             consumed_units[resource_id] = 0
@@ -1615,11 +1978,11 @@ def try_consume_medicine(
             recorded = need_total
 
         to_record = need_total - recorded
-        if to_record > _FLOAT_EPSILON:
+        if to_record > medical_constant.FLOAT_EPSILON:
             accumulator_value += to_record
             recorded += to_record
 
-        required_units = int(math.floor(accumulator_value + _FLOAT_EPSILON))
+        required_units = int(math.floor(accumulator_value + medical_constant.FLOAT_EPSILON))
         stock = int(inventory.get(resource_id, 0) or 0)
 
         if required_units > 0 and stock < required_units:
@@ -1641,8 +2004,11 @@ def try_consume_medicine(
         resource_success[resource_id] = True
         patient.need_resources[resource_id] = 0.0
 
-    overall_success = all(resource_success.get(res_id, True) for res_id in _MEDICINE_RESOURCE_IDS)
+    overall_success = all(
+        resource_success.get(res_id, True) for res_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS
+    )
 
+    # --- 收益阶段：根据已扣除的药品数量计算收入并写入历史 ---
     price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
     income_multiplier = patient_management.resolve_price_income_multiplier(price_ratio)
     medicine_ratio = float(
@@ -1702,7 +2068,18 @@ def try_hospitalize(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> bool:
-    """尝试将病人转入住院列表"""
+    """尝试将病人转入住院列表。
+
+    功能:
+        检查床位、强制条件等限制，满足时将病人移入住院列表并记录原因。
+
+    参数:
+        patient_id (int): 待转入的病人 ID。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        bool: ``True`` 表示住院流程发起成功。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1738,7 +2115,17 @@ def process_hospitalized_patients(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """每日结算住院病人：扣药并判定出院"""
+    """每日结算住院病人：扣药并判定出院。
+
+    功能:
+        遍历住院病人执行药品结算、判定出院，并刷新统计缓存。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        None: 通过副作用完成住院病人的日常结算。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None or not rhodes_island.medical_hospitalized:
@@ -1756,7 +2143,18 @@ def settle_medical_department(
     target_base: Optional[game_type.Rhodes_Island] = None,
     draw_flag: bool = True,
 ) -> Dict[str, Any]:
-    """执行每日医疗经营结算并输出日志"""
+    """执行每日医疗经营结算并输出日志。
+
+    功能:
+        汇总医疗部当日数据、更新日志、刷新病人队列，并根据需要输出界面文本。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地对象。
+        draw_flag (bool): 是否在界面上渲染结算文本。
+
+    返回:
+        Dict[str, Any]: 包含 ``income``、``stats``、``queue`` 等信息的结算摘要。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1766,6 +2164,7 @@ def settle_medical_department(
 
     process_hospitalized_patients(target_base=rhodes_island)
 
+    # --- 统计阶段：补全每日统计字典，避免缺失键导致报表数据不完整 ---
     stats_source = dict(getattr(rhodes_island, "medical_daily_counters", {}) or {})
     stats: Dict[str, int] = {str(key): int(value) for key, value in stats_source.items()}
 
@@ -1785,6 +2184,7 @@ def settle_medical_department(
     income_today = int(rhodes_island.medical_income_today or 0)
     price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
 
+    # --- 队列快照阶段：分析不同队列的数量，为日志与报表提供概览 ---
     waiting_states = {
         medical_constant.MedicalPatientState.REFRESHED,
         medical_constant.MedicalPatientState.IN_TREATMENT,
@@ -1811,6 +2211,7 @@ def settle_medical_department(
     hospital_pending = stats.get("hospital_treated_pending", 0)
     total_treated = stats.get("total_treated_patients", outpatient_cured + hospital_success)
 
+    # --- 报表文本阶段：逐行构建面板展示用的字符串信息 ---
     body_lines: List[str] = []
     body_lines.append(_("今日收入：{0} 龙门币").format(income_today))
     body_lines.append(_("收费系数：{0:.0f}%").format(price_ratio * 100))
@@ -1839,11 +2240,13 @@ def settle_medical_department(
     report_text = _("\n医疗部经营结算\n") + "".join(f" - {line}\n" for line in body_lines)
 
     if draw_flag:
+        # --- UI 输出阶段：将结算信息写入滚动文本，供玩家查看 ---
         wait_draw = draw.WaitDraw()
         wait_draw.width = normal_config.config_normal.text_width
         wait_draw.text = report_text
         wait_draw.draw()
 
+    # --- 记录阶段：打包关键指标并写入日志系统，实现历史回放 ---
     queue_snapshot = {
         "waiting": waiting_count,
         "waiting_medication": waiting_medication,
@@ -1868,6 +2271,7 @@ def settle_medical_department(
 
     achievement_panel.achievement_flow(_("龙门币"))
 
+    # --- 清理阶段：重置当日计数并刷新新一天的患者 ---
     rhodes_island.medical_income_today = 0
     rhodes_island.all_income = 0
     rhodes_island.medical_daily_counters = {}
@@ -1891,7 +2295,19 @@ def attempt_surgery(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> bool:
-    """尝试为住院病人执行手术"""
+    """尝试为住院病人执行手术。
+
+    功能:
+        对指定病人调用住院流程模块进行手术判定，满足条件时推进手术结算。
+
+    参数:
+        patient_id (int): 住院病人 ID。
+        doctor_character (game_type.Character): 执刀医生。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        bool: ``True`` 表示手术流程启动成功。
+    """
 
     if doctor_character is None:
         return False
@@ -1918,7 +2334,18 @@ def get_patient_table(
     target_base: Optional[game_type.Rhodes_Island] = None,
     hospitalized: bool,
 ) -> Dict[int, medical_constant.MedicalPatient]:
-    """获取指定状态下的病人表引用"""
+    """获取指定状态下的病人表引用。
+
+    功能:
+        根据 `hospitalized` 标志返回门诊或住院病人字典，便于外部模块统一访问。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+        hospitalized (bool): ``True`` 返回住院列表，``False`` 返回门诊列表。
+
+    返回:
+        Dict[int, medical_constant.MedicalPatient]: 对应状态的病人字典。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1927,7 +2354,18 @@ def get_patient_table(
 
 
 def set_patient_state(patient: medical_constant.MedicalPatient, state: medical_constant.MedicalPatientState) -> None:
-    """更新病人的流程状态，并写入标签方便调试"""
+    """更新病人的流程状态，并写入标签方便调试。
+
+    功能:
+        设置病人状态枚举并将其数值写入元数据，便于存档或调试。
+
+    参数:
+        patient (medical_constant.MedicalPatient): 目标病人对象。
+        state (medical_constant.MedicalPatientState): 目标状态枚举值。
+
+    返回:
+        None。
+    """
 
     if patient is None:
         return
@@ -1939,7 +2377,17 @@ def get_medical_price_ratio(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> float:
-    """读取当前医疗部收费系数，若未初始化则返回默认值"""
+    """读取当前医疗部收费系数，若未初始化则返回默认值。
+
+    功能:
+        对基地收费系数做兜底校验，确保调用处始终获得正数。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        float: 收费系数。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1956,7 +2404,18 @@ def set_medical_price_ratio(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """更新医疗部收费系数，并重新评估床位上限"""
+    """更新医疗部收费系数，并重新评估床位上限。
+
+    功能:
+        写入新的收费系数并立即重算床位上限，避免出现超限或负值。
+
+    参数:
+        price_ratio (float): 新的收费系数。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        None。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -1969,7 +2428,17 @@ def set_medical_price_ratio(
 def get_patient_priority_mode(
     *, target_base: Optional[game_type.Rhodes_Island] = None
 ) -> medical_constant.MedicalPatientPriority:
-    """读取当前病人接诊优先策略，若缺失则回退为默认值"""
+    """读取当前病人接诊优先策略，若缺失则回退为默认值。
+
+    功能:
+        统一调用 `_resolve_triage_mode`，确保外部始终拿到有效枚举值。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        medical_constant.MedicalPatientPriority: 生效的优先策略枚举。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     return _resolve_triage_mode(rhodes_island)
@@ -1980,7 +2449,18 @@ def set_patient_priority_mode(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> medical_constant.MedicalPatientPriority:
-    """更新病人接诊优先策略并返回实际生效的枚举值"""
+    """更新病人接诊优先策略并返回实际生效的枚举值。
+
+    功能:
+        将传入值解析为枚举后写入基地对象，并返回实际生效的结果。
+
+    参数:
+        priority_mode (Union[str, medical_constant.MedicalPatientPriority]): 目标优先策略。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        medical_constant.MedicalPatientPriority: 确认后的枚举值。
+    """
 
     default_mode = medical_constant.MedicalPatientPriority.NORMAL
     rhodes_island = _get_rhodes_island(target_base)
@@ -2005,7 +2485,19 @@ def predict_medical_patient_refresh(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Dict[str, float]:
-    """预测在指定收费系数下的病人刷新数量与倍率"""
+    """预测在指定收费系数下的病人刷新数量与倍率。
+
+    功能:
+        在不改变真实数据的情况下预估价格调整带来的刷新数量变化与收益倍率。
+
+    参数:
+        price_ratio (Optional[float]): 自定义收费系数，缺省时读取基地设置。
+        level (Optional[int]): 指定医疗等级，缺省时根据基地设施判定。
+        target_base (Optional[game_type.Rhodes_Island]): 当前基地引用。
+
+    返回:
+        Dict[str, float]: 包含 ``predicted_count``、``income_multiplier`` 等指标的预测结果。
+    """
 
     rhodes_island = _get_rhodes_island(target_base)
     if rhodes_island is None:
@@ -2048,7 +2540,18 @@ def _calculate_patient_refresh_count(
     rhodes_island: game_type.Rhodes_Island,
     level_config: config_def.Medical_Hospital_Level,
 ) -> int:
-    """依据医院等级与收费系数计算今日应刷新病人数"""
+    """依据医院等级与收费系数计算今日应刷新病人数。
+
+    功能:
+        应用等级配置、价格惩罚与刷新倍率，返回整数化后的刷新数量。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+        level_config (config_def.Medical_Hospital_Level): 对应等级的配置条目。
+
+    返回:
+        int: 今日应刷新病人的数量。
+    """
 
     base_count = max(int(level_config.daily_patient_base), 0)
     if base_count <= 0:
@@ -2065,13 +2568,33 @@ def _calculate_patient_refresh_count(
 
 
 def _get_medical_facility_level(rhodes_island: game_type.Rhodes_Island) -> int:
-    """读取医疗部设施等级，缺省返回 0"""
+    """读取医疗部设施等级，缺省返回 0。
 
-    return int(rhodes_island.facility_level.get(_MEDICAL_FACILITY_ID, 0) or 0)
+    功能:
+        从 ``facility_level`` 字典中拿到医疗部等级，对缺失值提供兜底。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        int: 医疗部等级。
+    """
+
+    return int(rhodes_island.facility_level.get(medical_constant.MEDICAL_FACILITY_ID, 0) or 0)
 
 
 def _pick_hospital_level_config(level: int) -> Optional[config_def.Medical_Hospital_Level]:
-    """根据设施等级选取对应的医院等级配置"""
+    """根据设施等级选取对应的医院等级配置。
+
+    功能:
+        根据传入等级查找最合适的医院配置，支持向下兼容与最小值兜底。
+
+    参数:
+        level (int): 医疗部等级。
+
+    返回:
+        Optional[config_def.Medical_Hospital_Level]: 匹配的配置对象，若不存在则从相邻等级回退。
+    """
 
     if not game_config.config_medical_hospital_level:
         return None
@@ -2085,18 +2608,41 @@ def _pick_hospital_level_config(level: int) -> Optional[config_def.Medical_Hospi
 
 
 def _calculate_medical_bed_limit(rhodes_island: game_type.Rhodes_Island) -> int:
-    """计算当前医疗部床位上限（基础值 + 兜底当前在院人数）"""
+    """计算当前医疗部床位上限（基础值 + 兜底当前在院人数）。
+
+    功能:
+        结合等级上限与医生提供的加成，返回包含兜底的最终床位数。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        int: 床位上限。
+    """
 
     level_config = _pick_hospital_level_config(_get_medical_facility_level(rhodes_island))
     base_limit = int(level_config.bed_limit) if level_config else 0
-    hospital_bonus = len(getattr(rhodes_island, "medical_hospital_doctor_ids", []) or []) * _HOSPITAL_DOCTOR_BED_BONUS
+    hospital_bonus = (
+        len(getattr(rhodes_island, "medical_hospital_doctor_ids", []) or [])
+        * medical_constant.HOSPITAL_DOCTOR_BED_BONUS
+    )
     total_limit = base_limit + hospital_bonus
     current_occupancy = len(rhodes_island.medical_hospitalized)
     return max(total_limit, current_occupancy)
 
 
 def _calculate_doctor_power(doctor_ids: Optional[List[int]]) -> float:
-    """计算医生列表的医疗能力总和，用于缓存字段刷新"""
+    """计算医生列表的医疗能力总和，用于缓存字段刷新。
+
+    功能:
+        遍历医生列表累加医疗能力，为排班与床位计算提供依据。
+
+    参数:
+        doctor_ids (Optional[List[int]]): 医生 ID 列表。
+
+    返回:
+        float: 医疗能力值总和。
+    """
 
     if not doctor_ids:
         return 0.0
@@ -2112,14 +2658,24 @@ def _calculate_doctor_power(doctor_ids: Optional[List[int]]) -> float:
 
 
 def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
-    """确保医疗运行期字段存在且类型正确"""
+    """确保医疗运行期字段存在且类型正确。
+
+    功能:
+        对所有运行期字段执行类型校正与默认值填充，兼容旧存档。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        None。
+    """
 
     rhodes_island.medical_patients_today = dict(getattr(rhodes_island, "medical_patients_today", {}) or {})
     rhodes_island.medical_hospitalized = dict(getattr(rhodes_island, "medical_hospitalized", {}) or {})
     rhodes_island.medical_surgery_records = list(getattr(rhodes_island, "medical_surgery_records", []) or [])
 
     accumulator = dict(getattr(rhodes_island, "medical_inventory_accumulator", {}) or {})
-    for resource_id in _MEDICINE_RESOURCE_IDS:
+    for resource_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS:
         accumulator.setdefault(resource_id, 0.0)
     rhodes_island.medical_inventory_accumulator = accumulator
 
@@ -2163,7 +2719,14 @@ def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
 
 
 def _resolve_default_price_ratio() -> float:
-    """返回收费系数的默认值，默认 1.0"""
+    """返回收费系数的默认值，默认 1.0。
+
+    功能:
+        提供收费系数的统一兜底，避免出现零值。
+
+    返回:
+        float: 默认收费系数。
+    """
     return 1.0
 
 
@@ -2171,7 +2734,18 @@ def _locate_patient(
     patient_id: int,
     rhodes_island: game_type.Rhodes_Island,
 ) -> Tuple[Optional[medical_constant.MedicalPatient], bool]:
-    """在门诊和住院列表中查找病人，返回病人对象与是否住院标记"""
+    """在门诊和住院列表中查找病人，返回病人对象与是否住院标记。
+
+    功能:
+        同时在门诊与住院表中查找，返回第一匹配结果及其归属。
+
+    参数:
+        patient_id (int): 目标病人 ID。
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        Tuple[Optional[medical_constant.MedicalPatient], bool]: (病人对象, 是否住院)。
+    """
 
     patient = rhodes_island.medical_patients_today.get(patient_id)
     if patient is not None:
@@ -2187,7 +2761,17 @@ def _locate_patient(
 def _get_rhodes_island(
     target_base: Optional[game_type.Rhodes_Island],
 ) -> Optional[game_type.Rhodes_Island]:
-    """返回调用环境可用的罗德岛基地对象"""
+    """返回调用环境可用的罗德岛基地对象。
+
+    功能:
+        优先使用调用方提供的基地，没有时回退到缓存对象。
+
+    参数:
+        target_base (Optional[game_type.Rhodes_Island]): 显式传入的基地引用。
+
+    返回:
+        Optional[game_type.Rhodes_Island]: 生效的基地对象。
+    """
 
     if target_base is not None:
         return target_base
@@ -2196,7 +2780,17 @@ def _get_rhodes_island(
 
 
 def _migrate_legacy_income(rhodes_island: game_type.Rhodes_Island) -> None:
-    """兼容旧版存档中医疗收入字段"""
+    """兼容旧版存档中医疗收入字段。
+
+    功能:
+        将旧字段 ``medical_income`` 合并到新结构，避免数据丢失。
+
+    参数:
+        rhodes_island (game_type.Rhodes_Island): 当前基地对象。
+
+    返回:
+        None。
+    """
 
     legacy_total = getattr(rhodes_island, "medical_income_total", 0)
     legacy_today = getattr(rhodes_island, "medical_income_today", 0)

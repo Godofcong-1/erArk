@@ -8,9 +8,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Optional
 
 from Script.Core import cache_control, game_type
-
-_MAX_RECENT_REPORTS = 7
-"""医疗经营系统保存的最大日报数量"""
+from Script.System.Medical import medical_constant
 
 
 def _resolve_base(target_base: Optional[game_type.Rhodes_Island]) -> Optional[game_type.Rhodes_Island]:
@@ -60,8 +58,8 @@ def append_medical_report(
 
     storage = _ensure_storage(rhodes_island)
     storage.append(entry)
-    if len(storage) > _MAX_RECENT_REPORTS:
-        del storage[0 : len(storage) - _MAX_RECENT_REPORTS]
+    if len(storage) > medical_constant.MAX_RECENT_REPORTS:
+        del storage[0 : len(storage) - medical_constant.MAX_RECENT_REPORTS]
 
     return entry
 

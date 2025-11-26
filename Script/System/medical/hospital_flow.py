@@ -13,23 +13,6 @@ from Script.Core import cache_control, game_type
 from Script.Design import handle_ability
 from Script.System.Medical import medical_constant, patient_management
 
-_MEDICINE_RESOURCE_IDS = medical_constant.ALL_MEDICINE_RESOURCE_IDS
-"""医疗系统允许使用的全部药品资源 ID 列表"""
-
-_SURGERY_ABILITY_REQUIREMENT: Dict[int, int] = {
-    2: 4,
-    3: 6,
-}
-"""不同严重等级进行手术所需的最低医疗能力等级"""
-
-_SURGERY_RESOURCE_MULTIPLIER = 1.6
-"""手术用药相较日常处方的倍率"""
-
-_MAX_SURGERY_RECORDS = 50
-"""手术记录列表长度上限，避免无上限增长"""
-
-_FLOAT_EPSILON = 1e-6
-
 
 def try_hospitalize(
     rhodes_island: game_type.Rhodes_Island,
@@ -188,7 +171,7 @@ def attempt_surgery(
         return False
 
     # 检查医生医疗能力是否达到手术要求
-    ability_requirement = _SURGERY_ABILITY_REQUIREMENT.get(patient.severity_level, 4)
+    ability_requirement = medical_constant.SURGERY_ABILITY_REQUIREMENT.get(patient.severity_level, 4)
     doctor_ability_level = doctor.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0)
     if doctor_ability_level < ability_requirement:
         patient.surgery_blocked = True
@@ -207,7 +190,7 @@ def attempt_surgery(
     inventory = rhodes_island.materials_resouce
     resource_usage: Dict[int, int] = {}
     for resource_id, amount in resource_plan.items():
-        units = int(math.ceil(max(amount, 0.0) - _FLOAT_EPSILON))
+        units = int(math.ceil(max(amount, 0.0) - medical_constant.FLOAT_EPSILON))
         if units <= 0:
             continue
         stock = int(inventory.get(resource_id, 0) or 0)
@@ -336,7 +319,7 @@ def _prepare_patient_hospital_needs(
     prescription = _build_hospital_prescription(severity_config)
     # 确保病人药品键完整后写入当日需求
     patient.ensure_resource_keys()
-    for resource_id in _MEDICINE_RESOURCE_IDS:
+    for resource_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS:
         patient.need_resources[resource_id] = float(prescription.get(resource_id, 0.0))
     # 写入处方信息并按需清空进度
     patient.metadata["hospital_prescription"] = prescription
@@ -357,7 +340,7 @@ def _resolve_surgery_requirements(severity_config: config_def.Medical_Severity) 
     base = _build_hospital_prescription(severity_config)
     result: Dict[int, float] = {}
     for resource_id, amount in base.items():
-        result[resource_id] = max(amount * _SURGERY_RESOURCE_MULTIPLIER, 0.0)
+        result[resource_id] = max(amount * medical_constant.SURGERY_RESOURCE_MULTIPLIER, 0.0)
     # 若处方为空则至少保留普通药需求
     if not result:
         result[medical_constant.MedicalMedicineResource.NORMAL.value] = max(
@@ -422,8 +405,8 @@ def _record_surgery_attempt(
         record.update(extra)
     # 存入手术记录列表并裁剪长度
     rhodes_island.medical_surgery_records.append(record)
-    if len(rhodes_island.medical_surgery_records) > _MAX_SURGERY_RECORDS:
-        del rhodes_island.medical_surgery_records[0:-_MAX_SURGERY_RECORDS]
+    if len(rhodes_island.medical_surgery_records) > medical_constant.MAX_SURGERY_RECORDS:
+        del rhodes_island.medical_surgery_records[0:-medical_constant.MAX_SURGERY_RECORDS]
 
 
 def _apply_income_to_rhodes(rhodes_island: game_type.Rhodes_Island, income_value: int) -> None:

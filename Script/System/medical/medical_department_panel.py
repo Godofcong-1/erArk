@@ -24,18 +24,6 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-
-
-
-
-def _get_state_display_name(state: medical_constant.MedicalPatientState) -> str:
-    """根据状态枚举返回对应的中文名称"""
-
-    if isinstance(state, medical_constant.MedicalPatientState):
-        return medical_constant.STATE_DISPLAY_NAME.get(state, state.value)
-    return medical_constant.STATE_DISPLAY_NAME.get(state, str(state))
-
-
 class Medical_Department_Panel:
     """医疗部总面板，负责导航至各子页面"""
 
@@ -197,7 +185,7 @@ class OverviewSubPanel(_BaseSubPanel):
         state_draw.width = self.width
         state_draw.text = _("病人状态统计：\n")
         for state in medical_constant.MedicalPatientState:
-            state_draw.text += f"  {_get_state_display_name(state)}：{state_counter.get(state, 0)} 人\n"
+            state_draw.text += f"  {medical_constant.get_state_display_name(state)}：{state_counter.get(state, 0)} 人\n"
         state_draw.draw()
 
         line_feed.draw()
@@ -552,7 +540,7 @@ class MedicalDetailSubPanel(_BaseSubPanel):
         info_draw.width = self.width
         info_draw.text = _("病人状态概览：\n")
         for state, count in state_counter.items():
-            info_draw.text += f"  {_get_state_display_name(state)}：{count} 人\n"
+            info_draw.text += f"  {medical_constant.get_state_display_name(state)}：{count} 人\n"
         info_draw.draw()
         line_feed.draw()
 
@@ -577,7 +565,7 @@ class MedicalDetailSubPanel(_BaseSubPanel):
             ).format(
                 patient.patient_id,
                 severity_name,
-                _get_state_display_name(patient.state),
+                medical_constant.get_state_display_name(patient.state),
                 len(patient.complications),
             )
         if not pending_patients:

@@ -6,12 +6,16 @@ from Script.Core import get_text
 
 from dataclasses import dataclass, field
 from enum import Enum
+from itertools import count
 from typing import Tuple, Dict, List, Any
 _: FunctionType = get_text._
 """ 翻译函数 """
 
 MEDICAL_ABILITY_ID: int = 46
 """医疗能力 ID（Ability.csv），决定诊疗/手术效率"""
+
+MEDICAL_FACILITY_ID = 6
+"""医疗部设施 ID，与医疗系统保持一致"""
 
 SPECIALIZATION_GENERAL_KEY: str = "general"
 """医生分科中的全科标识，表示不限制系统"""
@@ -30,6 +34,43 @@ ROLE_DISPLAY_NAME: Dict[str, str] = {
 
 SPECIALIZATION_BONUS_PER_LEVEL: float = 0.04
 """医生对应系统时每级医疗能力提供的额外倍率"""
+
+FLOAT_EPSILON: float = 1e-6
+"""浮点数比较的通用安全阈值"""
+
+SURGERY_ABILITY_REQUIREMENT: Dict[int, int] = {2: 4, 3: 6}
+"""不同病情等级执行手术所需的最低医疗能力等级映射"""
+
+SURGERY_RESOURCE_MULTIPLIER: float = 1.6
+"""手术阶段药物需求相对于常规处方的倍率"""
+
+MAX_SURGERY_RECORDS: int = 50
+"""医疗系统中手术记录的保留上限"""
+
+MAX_RECENT_REPORTS: int = 7
+"""医疗经营日报保留条目上限"""
+
+HOSPITAL_DOCTOR_BED_BONUS: int = 2
+"""每名住院医生提供的额外床位数量"""
+
+PLAYER_METADATA_KEYS: Tuple[str, ...] = (
+    "player_previous_state",
+    "player_session_active",
+    "player_used_checks",
+    "player_confirmed_complications",
+    "player_check_records",
+    "player_pending_checks",
+)
+"""玩家诊疗流程使用的运行期元数据键集合"""
+
+SPECIALIZATION_ROLES: Tuple[str, str] = (
+    SPECIALIZATION_ROLE_CLINIC,
+    SPECIALIZATION_ROLE_HOSPITAL,
+)
+"""医疗系统支持的医生岗位键顺序"""
+
+PATIENT_ID_COUNTER = count(1)
+"""病人 ID 自增生成器"""
 
 class MedicalPatientState(str, Enum):
     """病人在整个医疗流程中可能出现的状态枚举"""
@@ -57,6 +98,12 @@ STATE_DISPLAY_NAME: Dict[MedicalPatientState, str] = {
 }
 """病人状态中文名称映射表"""
 
+def get_state_display_name(state: MedicalPatientState) -> str:
+    """根据状态枚举返回对应的中文名称"""
+
+    if isinstance(state, MedicalPatientState):
+        return STATE_DISPLAY_NAME.get(state, state.value)
+    return STATE_DISPLAY_NAME.get(state, str(state))
 
 class MedicalPatientPersonality(str, Enum):
     """刷新病人时使用的性格标识，影响自述文本与事件"""
@@ -164,12 +211,23 @@ __all__ = [
     "MedicalPatientPriority",
     "MedicalMedicineResource",
     "MEDICAL_ABILITY_ID",
+    "MEDICAL_FACILITY_ID",
     "SPECIALIZATION_GENERAL_KEY",
     "SPECIALIZATION_ROLE_CLINIC",
     "SPECIALIZATION_ROLE_HOSPITAL",
     "SPECIALIZATION_BONUS_PER_LEVEL",
+    "FLOAT_EPSILON",
+    "SURGERY_ABILITY_REQUIREMENT",
+    "SURGERY_RESOURCE_MULTIPLIER",
+    "MAX_SURGERY_RECORDS",
+    "MAX_RECENT_REPORTS",
+    "HOSPITAL_DOCTOR_BED_BONUS",
+    "PLAYER_METADATA_KEYS",
+    "SPECIALIZATION_ROLES",
+    "PATIENT_ID_COUNTER",
     "ALL_MEDICINE_RESOURCE_IDS",
     "MedicalPatient",
     "translate_priority",
+    "get_state_display_name",
     "PRIORITY_OPTIONS",
 ]

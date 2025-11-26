@@ -22,11 +22,6 @@ line_feed.text = "\n"
 line_feed.width = 1
 # 预定义换行对象，避免多处重复创建临时实例
 
-_MEDICAL_FACILITY_ID = 6
-"""医疗部设施 ID，与医疗系统保持一致"""
-# 该常量与设施效率计算共享，可避免硬编码散落在不同函数中
-
-
 def _ensure_float(value: object, default: float = 0.0) -> float:
     """将混合类型值转换为 float，避免 UI 计算时类型不确定。"""
 
@@ -1168,7 +1163,7 @@ class MedicalPlayerDiagnosePanel:
         返回:
             int: 实际需要消耗的分钟数。
         """
-        efficiency = max(basement.calc_facility_efficiency(_MEDICAL_FACILITY_ID), 0.1)
+        efficiency = max(basement.calc_facility_efficiency(medical_constant.MEDICAL_FACILITY_ID), 0.1)
         # 将设施效率映射为耗时缩放，限定最低效率避免除零
         duration = max(int(round(base_minutes / efficiency)), 5)
         return duration

@@ -6,15 +6,11 @@
 from __future__ import annotations
 
 import random
-from itertools import count
 from typing import Any, Dict, Iterable, List, Optional, Tuple
 
 from Script.Config import config_def, game_config
 from Script.Core import value_handle
 from Script.System.Medical import medical_constant
-
-_PATIENT_ID_COUNTER = count(1)
-"""病人 ID 自增生成器，确保刷新出的病人具有唯一编号"""
 
 
 def create_patient_stub(severity_level: int, **extra_fields: Any) -> medical_constant.MedicalPatient:
@@ -29,7 +25,7 @@ def create_patient_stub(severity_level: int, **extra_fields: Any) -> medical_con
 
     # 通过自增计数器生成唯一病人 ID
     patient = medical_constant.MedicalPatient(
-        patient_id=next(_PATIENT_ID_COUNTER),
+        patient_id=next(medical_constant.PATIENT_ID_COUNTER),
         severity_level=severity_level,
         **extra_fields,
     )
