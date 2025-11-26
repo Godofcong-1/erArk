@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-25 18:55+0800\n"
+"POT-Creation-Date: 2025-11-26 19:07+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -41505,7 +41505,7 @@ msgid "病房"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:14
-msgid "驻守病房并照料住院病人"
+msgid "驻守病房并照料住院病人，对需要手术的病人进行手术治疗"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:15

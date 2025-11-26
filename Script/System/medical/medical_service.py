@@ -34,7 +34,6 @@ get_doctor_specialization_overview = clinic_doctor_service.get_doctor_specializa
 acquire_patient_for_doctor = clinic_doctor_service.acquire_patient_for_doctor
 prepare_doctor_medical_behavior = clinic_doctor_service.prepare_doctor_medical_behavior
 update_doctor_assignments = clinic_doctor_service.update_doctor_assignments
-dispatch_medical_doctors = clinic_doctor_service.dispatch_medical_doctors
 
 conduct_ward_round = hospital_doctor_service.conduct_ward_round
 perform_surgery_for_doctor = hospital_doctor_service.perform_surgery_for_doctor
@@ -109,8 +108,6 @@ def init_medical_department_data(
         rhodes_island.medical_clinic_doctor_power = 0.0
         rhodes_island.medical_hospital_doctor_ids = []
         rhodes_island.medical_hospital_doctor_power = 0.0
-        rhodes_island.medical_clinic_doctor_target = 0
-        rhodes_island.medical_hospital_doctor_target = 0
         rhodes_island.medical_patient_priority_mode = medical_constant.MedicalPatientPriority.NORMAL.value
         rhodes_island.medical_player_current_patient_id = 0
         rhodes_island.medical_doctor_specializations = {}

@@ -285,12 +285,6 @@ def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
     rhodes_island.medical_hospital_doctor_power = float(
         getattr(rhodes_island, "medical_hospital_doctor_power", 0.0) or 0.0
     )
-    rhodes_island.medical_clinic_doctor_target = int(
-        getattr(rhodes_island, "medical_clinic_doctor_target", 0) or 0
-    )
-    rhodes_island.medical_hospital_doctor_target = int(
-        getattr(rhodes_island, "medical_hospital_doctor_target", 0) or 0
-    )
     # 处理接诊优先策略，保证值转换为合法枚举。
     priority_value = getattr(
         rhodes_island,

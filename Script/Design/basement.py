@@ -559,36 +559,6 @@ def assign_character_work(character_id: int, work_id: int, *, update: bool = Tru
         update_work_people()
         update_facility_people()
     return True
-
-
-def dispatch_medical_doctors(
-    clinic_target: Optional[int] = None,
-    hospital_target: Optional[int] = None,
-    *,
-    update: bool = True,
-) -> Dict[str, int]:
-    """调用医疗系统的自动分配逻辑，并在需要时刷新基地统计"""
-    from Script.System.Medical import medical_service
-
-    # 先刷新一次配置，确保目标人数与候选列表基于最新数据
-    update_work_people()
-
-    def _assign_without_refresh(character_id: int, work_type: int) -> bool:
-        return assign_character_work(character_id, work_type, update=False)
-
-    refresh_callbacks = [update_work_people]
-    if update:
-        refresh_callbacks.append(update_facility_people)
-
-    return medical_service.dispatch_medical_doctors(
-        clinic_target=clinic_target,
-        hospital_target=hospital_target,
-        target_base=cache.rhodes_island,
-        assign_work_func=_assign_without_refresh,
-        refresh_callbacks=refresh_callbacks,
-    )
-
-
 def settle_milk():
     """
     结算母乳转化

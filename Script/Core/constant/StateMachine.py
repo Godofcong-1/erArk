@@ -142,10 +142,12 @@ class StateMachine:
     """ 工作：调控设施供能 """
     WORK_INVESTIGATE_RESOURCE_MARKET = 322
     """ 工作：研判资源市场 """
-    WORK_PERFORM_SURGERY = 323
-    """ 工作：进行手术治疗 """
-    WORK_WARD_ROUND = 324
+    WORK_WARD_ROUND = 323
     """ 工作：病房查房 """
+    WORK_START_SURGERY = 324
+    """ 工作：进入要手术状态，并指定一个对象病人 """
+    WORK_PERFORM_SURGERY = 325
+    """ 工作：进行手术治疗 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -321,6 +323,8 @@ class StateMachine:
     """ 随机移动到门诊室（含急诊室）（优先去当前没有人的） """
     MOVE_TO_PHYSICAL_EXAMINATION = 662
     """ 移动至体检科 """
+    MOVE_TO_INPATIENT_DEPARTMENT = 663
+    """ 移动至住院部 """
 
     HELP_BUY_FOOD_1 = 701
     """ 进入要买饭状态 """

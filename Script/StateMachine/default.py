@@ -313,6 +313,19 @@ def character_move_to_physical_examination(character_id: int):
     general_movement_module(character_id, to_physical_examination)
 
 
+@handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_INPATIENT_DEPARTMENT)
+def character_move_to_inpatient_department(character_id: int):
+    """
+    移动至住院部
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    to_inpatient_department = map_handle.get_map_system_path_for_str(
+        random.choice(constant.place_data["Inpatient_Department"])
+    )
+    general_movement_module(character_id, to_inpatient_department)
+
+
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_HR_OFFICE)
 def character_move_to_hr_office(character_id: int):
     """
@@ -2397,6 +2410,15 @@ def character_work_ward_round(character_id: int):
     new_time = max(int(45 / adjust), 10)
     character_data.behavior.duration = new_time
     character_data.state = constant.CharacterStatus.STATUS_WARD_ROUND
+
+@handle_state_machine.add_state_machine(constant.StateMachine.WORK_START_SURGERY)
+def character_work_start_surgery(character_id: int):
+    """
+    工作：进入要手术状态，并指定一个对象病人
+    Keyword arguments:
+    character_id -- 角色id
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PERFORM_SURGERY)

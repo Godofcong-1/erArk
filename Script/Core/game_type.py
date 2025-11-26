@@ -828,6 +828,8 @@ class CHARA_WORK:
         """ 角色当前正在工作的招募位 """
         self.medical_patient_id: int = 0
         """ 当前正在处理的门诊病人ID，用于医疗经营系统 """
+        self.surgery_patient_id: int = 0
+        """ 当前正在手术的病人ID，用于医疗经营系统 """
 
 
 class CHARA_ENTERTAINMENT:
@@ -1243,10 +1245,6 @@ class Rhodes_Island:
         """ 当前分配为住院医生的干员id列表 """
         self.medical_hospital_doctor_power: float = 0.0
         """ 住院医生医疗能力总和 """
-        self.medical_clinic_doctor_target: int = 0
-        """ 门诊医生目标数量（用于自动排班） """
-        self.medical_hospital_doctor_target: int = 0
-        """ 住院医生目标数量（用于自动排班） """
         self.medical_patient_priority_mode: str = medical_constant.MedicalPatientPriority.NORMAL.value
         """ 医疗部病人接诊优先策略 """
         self.medical_player_current_patient_id: int = 0

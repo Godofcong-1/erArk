@@ -122,7 +122,7 @@ def handle_t_work_is_blacksmith(character_id: int) -> int:
 @add_premise(constant_promise.Premise.WORK_IS_DOCTOR)
 def handle_work_is_doctor(character_id: int) -> int:
     """
-    自己的工作为医生
+    自己的工作为坐诊医生
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -135,7 +135,7 @@ def handle_work_is_doctor(character_id: int) -> int:
 @add_premise(constant_promise.Premise.TARGET_WORK_IS_DOCTOR)
 def handle_t_work_is_doctor(character_id: int) -> int:
     """
-    交互对象的工作为医生
+    交互对象的工作为坐诊医生
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -144,6 +144,29 @@ def handle_t_work_is_doctor(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     return handle_work_is_doctor(character_data.target_character_id)
 
+@add_premise(constant_promise.Premise.WORK_IS_HOSPITAL_DOCTOR)
+def handle_work_is_hospital_doctor(character_id: int) -> int:
+    """
+    自己的工作为住院医生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.work_type == 62
+
+@add_premise(constant_promise.Premise.TARGET_WORK_IS_HOSPITAL_DOCTOR)
+def handle_t_work_is_hospital_doctor(character_id: int) -> int:
+    """
+    交互对象的工作为住院医生
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_work_is_hospital_doctor(character_data.target_character_id)
 
 @add_premise(constant_promise.Premise.WORK_IS_HR)
 def handle_work_is_hr(character_id: int) -> int:
@@ -580,6 +603,29 @@ def handle_have_warden(character_id: int) -> int:
     """
     return cache.rhodes_island.current_warden_id
 
+
+@add_premise(constant_promise.Premise.HAVE_NO_PATIENT_NEED_SURGERY)
+def handle_have_no_patient_need_surgery(character_id: int) -> int:
+    """
+    自身没有需要进行手术的患者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.surgery_patient_id == 0
+
+@add_premise(constant_promise.Premise.HAVE_PATIENT_NEED_SURGERY)
+def handle_have_patient_need_surgery(character_id: int) -> int:
+    """
+    自身有需要进行手术的患者
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_have_no_patient_need_surgery(character_id)
 
 @add_premise(constant_promise.Premise.PATIENT_WAIT)
 def handle_patient_wait(character_id: int) -> int:

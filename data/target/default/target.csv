@@ -97,6 +97,10 @@ ai的目标,,,,
 334,517,normal_all|work_is_maintenance_engineer|work_time|work_maintenance_flag_1|not_in_maintenance_place,21,正常状态下，工作为检修工程师，在工作时间，要检修状态下，当前不在自己对应的检修地点，则去检修地点
 335,308,normal_all_except_special_hypnosis|work_is_maintenance_engineer|work_time|work_maintenance_flag_1|in_maintenance_place,22,正常状态下或被空气或体控催眠中，工作为检修工程师，在工作时间，要检修状态下，当前在自己对应的检修地点，则检修，完毕后重置检修状态
 
+341,324,normal_all|work_is_hospital_doctor|work_time|medical_surgery_wait|have_no_patient_need_surgery,21,正常状态下，工作为住院医生，在工作时间，当前有待手术的病人，自己没有要进行手术的病人，则进入要手术状态
+342,622,normal_all|work_is_hospital_doctor|work_time|medical_surgery_wait|have_patient_need_surgery|not_in_surgery_room,21,正常状态下，工作为住院医生，在工作时间，当前有待手术的病人，自己有要进行手术的病人，且当前不在手术室，则去手术室
+343,325,normal_all_except_special_hypnosis|work_is_hospital_doctor|work_time|medical_surgery_wait|have_patient_need_surgery|in_surgery_room,22,正常状态下或被空气或体控催眠中，工作为住院医生，在工作时间，当前有待手术的病人，自己有要进行手术的病人，且当前在手术室，则为病人做手术，手术完毕后重置要手术状态
+
 461,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,31,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
 462,612,swim_flag_1|all_entertainment_time|not_in_training_locker_room,31,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室
 463,83,swim_flag_1|all_entertainment_time|in_training_locker_room,31,要换泳衣状态下，当前在训练场的更衣室，则换泳衣，并进入要游泳状态
