@@ -3462,6 +3462,8 @@ class Premise:
     """ 工作_经营 有住院患者需要照护 """
     MEDICAL_SURGERY_WAIT = "medical_surgery_wait"
     """ 工作_经营 有住院患者等待手术 """
+    HAVE_PATIENT_NEED_SURGERY_AND_CAN_DO = "have_patient_need_surgery_and_can_do"
+    """ 工作_经营 有住院患者等待手术且满足进行的条件 """
     NEW_NPC_WAIT = "new_npc_wait"
     """ 工作_经营 有已招募待确认的干员 """
     HAVE_OFFICE_WORK_NEED_TO_DO = "have_office_work_need_to_do"

@@ -109,7 +109,7 @@ def generate_patient(
     complications, medicine_bonus = _build_complications_for_patient(severity_config)
     patient.complications = [comp.cid for comp in complications]
     if complications:
-        patient.metadata["complication_trace"] = [
+        patient.complication_trace = [
             {
                 "cid": comp.cid,
                 "system_id": comp.system_id,
@@ -134,8 +134,9 @@ def generate_patient(
         patient.need_resources[resource_id] = patient.need_resources.get(resource_id, 0.0) + float(amount)
 
     # 记录病情标签与当前收费系数，便于后续展示。
-    patient.metadata.setdefault("severity_name", severity_config.name)
-    patient.metadata.setdefault("price_ratio", rhodes_island.medical_price_ratio)
+    if not patient.severity_name:
+        patient.severity_name = severity_config.name
+    patient.price_ratio = float(getattr(rhodes_island, "medical_price_ratio", 1.0) or 1.0)
     return patient
 
 
@@ -383,7 +384,7 @@ def _resolve_patient_system_keys(patient: medical_constant.MedicalPatient) -> Se
     if patient is None:
         return system_keys
 
-    trace = patient.metadata.get("complication_trace", []) or []
+    trace = patient.complication_trace or []
     for entry in trace:
         system_id = entry.get("system_id") if isinstance(entry, dict) else None
         if system_id is not None:
@@ -396,9 +397,9 @@ def _resolve_patient_system_keys(patient: medical_constant.MedicalPatient) -> Se
                 system_keys.add(str(comp.system_id))
 
     if system_keys:
-        patient.metadata["system_keys"] = sorted(system_keys)
+        patient.system_keys = sorted(system_keys)
     else:
-        patient.metadata.setdefault("system_keys", [])
+        patient.system_keys = []
     return system_keys
 
 
@@ -468,21 +469,26 @@ def _select_triage_candidate(
     return min(candidates, key=key_func)
 
 
-def _clear_player_session_metadata(patient: medical_constant.MedicalPatient) -> None:
-    """清理玩家诊疗流程写入的临时元数据。
+def _clear_player_session_state(patient: medical_constant.MedicalPatient) -> None:
+    """清理玩家诊疗流程写入的临时状态字段。
 
     参数:
         patient (medical_constant.MedicalPatient): 目标病人对象。
     返回:
-        None: 直接从 metadata 中移除玩家相关键。
+        None: 重置患者对象上的玩家相关临时数据。
     """
 
     # 安全检查，防止 None 对象导致异常。
     if patient is None:
         return
-    # 删除所有玩家会话相关的临时键。
-    for key in medical_constant.PLAYER_METADATA_KEYS:
-        patient.metadata.pop(key, None)
+
+    # 重置玩家会话相关的显式字段。
+    patient.player_session_active = False
+    patient.player_previous_state = ""
+    patient.player_used_checks = 0
+    patient.player_confirmed_complications.clear()
+    patient.player_check_records.clear()
+    patient.player_pending_checks.clear()
 
 
 def _acquire_patient_for_player(
@@ -514,7 +520,7 @@ def _acquire_patient_for_player(
     for patient in rhodes_island.medical_patients_today.values():
         if patient.state not in medical_constant.WAITING_QUEUE_STATE_SET:
             continue
-        assigned_doctor = int(patient.metadata.get("assigned_doctor_id", 0) or 0)
+        assigned_doctor = int(getattr(patient, "assigned_doctor_id", 0) or 0)
         if doctor_character is not None and assigned_doctor not in {0, doctor_character.cid}:
             continue
         candidates.append(patient)
@@ -551,16 +557,16 @@ def start_player_diagnose_session(
         return None
 
     # 初始化玩家会话所需的元数据。
-    if not patient.metadata.get("player_session_active"):
-        patient.metadata["player_previous_state"] = patient.state.value
-        patient.metadata["player_session_active"] = True
-        patient.metadata["player_used_checks"] = 0
-        patient.metadata["player_confirmed_complications"] = []
-        patient.metadata["player_check_records"] = []
-        patient.metadata["player_pending_checks"] = []
+    if not patient.player_session_active:
+        patient.player_previous_state = patient.state.value
+        patient.player_session_active = True
+        patient.player_used_checks = 0
+        patient.player_confirmed_complications = []
+        patient.player_check_records = []
+        patient.player_pending_checks = []
 
     # 绑定医生与病人，记录当前处理对象。
-    patient.metadata["assigned_doctor_id"] = doctor_character.cid if doctor_character is not None else 0
+    patient.assigned_doctor_id = doctor_character.cid if doctor_character is not None else 0
     set_patient_state(patient, medical_constant.MedicalPatientState.IN_TREATMENT_PLAYER)
     rhodes_island.medical_player_current_patient_id = patient.patient_id
 
@@ -593,7 +599,7 @@ def abort_player_diagnose_session(
         return
 
     # 恢复病人的原始状态并解除医生绑定。
-    previous_state = patient.metadata.get("player_previous_state")
+    previous_state = getattr(patient, "player_previous_state", "")
     restored_state = medical_constant.MedicalPatientState.REFRESHED
     if previous_state:
         try:
@@ -601,10 +607,10 @@ def abort_player_diagnose_session(
         except ValueError:
             restored_state = medical_constant.MedicalPatientState.REFRESHED
     set_patient_state(patient, restored_state)
-    patient.metadata.pop("assigned_doctor_id", None)
+    patient.assigned_doctor_id = 0
 
     # 清理会话数据并重置当前病人 ID。
-    _clear_player_session_metadata(patient)
+    _clear_player_session_state(patient)
     rhodes_island.medical_player_current_patient_id = 0
 
     # 若未提供医生对象则默认选取主角。
@@ -651,7 +657,7 @@ def commit_player_diagnose_session(
 
     base_hours = max(float(severity_config.base_hours or 0.0), 0.1)
     patient.diagnose_progress = max(float(patient.diagnose_progress or 0.0), base_hours - 0.1)
-    patient.metadata["assigned_doctor_id"] = doctor_character.cid if doctor_character is not None else 0
+    patient.assigned_doctor_id = doctor_character.cid if doctor_character is not None else 0
 
     # 调用常规诊疗推进，并记录诊疗收入变化。
     income_before = float(rhodes_island.medical_income_today or 0.0)
@@ -671,7 +677,7 @@ def commit_player_diagnose_session(
         medicine_income = int(round(income_after_medicine - income_before_medicine))
 
     # 清理临时数据并解除医生绑定。
-    _clear_player_session_metadata(patient)
+    _clear_player_session_state(patient)
     rhodes_island.medical_player_current_patient_id = 0
 
     if doctor_character is not None and hasattr(doctor_character, "work"):
@@ -714,11 +720,11 @@ def execute_player_diagnose_checks(
 
     # 更新检查次数并准备记录集合。
     # 累计玩家使用的检查次数。
-    used_checks = int(patient.metadata.get("player_used_checks", 0) or 0) + 1
-    patient.metadata["player_used_checks"] = used_checks
+    used_checks = int(getattr(patient, "player_used_checks", 0) or 0) + 1
+    patient.player_used_checks = used_checks
 
     # 记录已确诊与实际存在的并发症集合，供比对使用。
-    confirmed_set: Set[int] = set(int(cid) for cid in patient.metadata.get("player_confirmed_complications", []))
+    confirmed_set: Set[int] = set(int(cid) for cid in getattr(patient, "player_confirmed_complications", []))
     actual_complications: Set[int] = {int(cid) for cid in getattr(patient, "complications", [])}
 
     # 将追踪信息转换成便于检索的列表结构。
@@ -729,7 +735,7 @@ def execute_player_diagnose_checks(
             "severity_level": int(entry.get("severity_level", 0)),
             "cid": int(entry.get("cid", entry.get("complication_id", 0))),
         }
-        for entry in patient.metadata.get("complication_trace", [])
+        for entry in getattr(patient, "complication_trace", [])
     ]
 
     # 预处理每个部位的最高严重程度，用于回诊提示。
@@ -796,11 +802,11 @@ def execute_player_diagnose_checks(
         records.append(record)
 
     # 将本次检查结果写入记录，并保留最近 30 条。
-    previous_records: List[Dict[str, object]] = list(patient.metadata.get("player_check_records", []))
+    previous_records: List[Dict[str, object]] = list(getattr(patient, "player_check_records", []))
     previous_records.extend(records)
-    patient.metadata["player_check_records"] = previous_records[-30:]
-    patient.metadata["player_confirmed_complications"] = sorted(confirmed_set)
-    patient.metadata["player_pending_checks"] = []
+    patient.player_check_records = previous_records[-30:]
+    patient.player_confirmed_complications = sorted(confirmed_set)
+    patient.player_pending_checks = []
 
     return {
         "success": True,
@@ -965,8 +971,8 @@ def advance_diagnose(
         medical_constant.MedicalPatientState.HOSPITALIZED,
         medical_constant.MedicalPatientState.DISCHARGED,
     ):
-        if patient.metadata.get("assigned_doctor_id") == doctor_character.cid:
-            patient.metadata.pop("assigned_doctor_id", None)
+        if getattr(patient, "assigned_doctor_id", 0) == doctor_character.cid:
+            patient.assigned_doctor_id = 0
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
         medical_core._sync_legacy_patient_counters(rhodes_island)
@@ -977,7 +983,7 @@ def advance_diagnose(
     if severity_config is None:
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
-        patient.metadata.pop("assigned_doctor_id", None)
+        patient.assigned_doctor_id = 0
         medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
@@ -985,8 +991,8 @@ def advance_diagnose(
     base_hours = float(severity_config.base_hours)
     if base_hours <= 0:
         set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
-        if patient.metadata.get("assigned_doctor_id") == doctor_character.cid:
-            patient.metadata.pop("assigned_doctor_id", None)
+        if getattr(patient, "assigned_doctor_id", 0) == doctor_character.cid:
+            patient.assigned_doctor_id = 0
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
         if getattr(severity_config, "require_hospitalization", 0) == 1:
@@ -1002,11 +1008,9 @@ def advance_diagnose(
     progress_increment = max(ability_adjust, 0.25)
 
     # 写入病人元数据并累加诊疗进度。
-    patient.metadata["assigned_doctor_id"] = doctor_character.cid
+    patient.assigned_doctor_id = doctor_character.cid
     set_patient_state(patient, medical_constant.MedicalPatientState.IN_TREATMENT)
     patient.diagnose_progress = min(patient.diagnose_progress + progress_increment, base_hours)
-    patient.metadata["last_diagnose_doctor_id"] = doctor_character.cid
-    patient.metadata["diagnose_attempts"] = int(patient.metadata.get("diagnose_attempts", 0)) + 1
 
     # 诊疗尚未完成时仅同步计数并等待下一次推进。
     if patient.diagnose_progress < base_hours:
@@ -1029,13 +1033,9 @@ def advance_diagnose(
         rhodes_island.all_income += income_value
         rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + income_value
 
-    patient.metadata["diagnose_completed"] = True
-    patient.metadata["diagnose_completed_doctor_id"] = doctor_character.cid
-    patient.metadata.pop("assigned_doctor_id", None)
-    if not patient.metadata.get("legacy_cured_flag"):
-        rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
-        rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
-        patient.metadata["legacy_cured_flag"] = True
+    patient.assigned_doctor_id = 0
+    rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
+    rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
 
     if getattr(severity_config, "require_hospitalization", 0) == 1:
         from Script.System.Medical import medical_service
@@ -1066,7 +1066,7 @@ def set_patient_state(
     if patient is None:
         return
     patient.state = state
-    patient.metadata["state"] = state.value
+    patient.state_label = state.value
 
 
 def get_patient_table(

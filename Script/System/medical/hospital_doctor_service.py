@@ -7,12 +7,39 @@
 from __future__ import annotations
 
 import math
-from typing import Dict, Optional, Tuple
+from dataclasses import dataclass, field
+from typing import Any, Dict, Optional, Tuple
 
 from Script.Config import game_config
 from Script.Core import cache_control, game_type
 from Script.Design import handle_ability
 from Script.System.Medical import medical_constant, medical_core, medical_service
+
+
+@dataclass
+class SurgeryPrecheckResult:
+    """手术前置条件检查结果结构体。"""
+
+    can_execute: bool
+    """是否满足执行条件"""
+
+    reason: str = "unknown"
+    """无法执行时的原因标签"""
+
+    resource_usage: Dict[int, int] = field(default_factory=dict)
+    """本次手术预计消耗的药品资源，key 为资源 ID，value 为整数单位"""
+
+    severity_config: Optional[Any] = None
+    """当前病情等级的配置对象，用于后续计算"""
+
+    doctor_level: int = 0
+    """执刀医生的医疗能力等级"""
+
+    ability_requirement: int = 0
+    """手术要求的最低医疗能力等级"""
+
+    details: Dict[str, Any] = field(default_factory=dict)
+    """补充信息字典，例如缺药明细"""
 
 
 def _acquire_hospital_patient_for_doctor(
@@ -53,7 +80,7 @@ def _acquire_hospital_patient_for_doctor(
             and patient.state == medical_constant.MedicalPatientState.HOSPITALIZED
             and (not require_surgery or (patient.need_surgery and not patient.surgery_blocked))
         ):
-            patient.metadata["assigned_hospital_doctor_id"] = doctor_character.cid
+            patient.assigned_hospital_doctor_id = doctor_character.cid
             return patient
         if work_data is not None:
             work_data.medical_patient_id = 0
@@ -65,7 +92,7 @@ def _acquire_hospital_patient_for_doctor(
             continue
         if require_surgery and (not patient.need_surgery or patient.surgery_blocked):
             continue
-        assigned = int(patient.metadata.get("assigned_hospital_doctor_id", 0) or 0)
+        assigned = int(getattr(patient, "assigned_hospital_doctor_id", 0) or 0)
         if assigned and assigned != doctor_character.cid:
             continue
         candidates.append(patient)
@@ -85,10 +112,68 @@ def _acquire_hospital_patient_for_doctor(
 
     # 选择优先级最高的病人并记录绑定关系。
     patient = min(candidates, key=_hospital_priority)
-    patient.metadata["assigned_hospital_doctor_id"] = doctor_character.cid
+    patient.assigned_hospital_doctor_id = doctor_character.cid
     if work_data is not None:
         work_data.medical_patient_id = patient.patient_id
     return patient
+
+
+def evaluate_surgery_preconditions(
+    patient: Optional[medical_constant.MedicalPatient],
+    doctor_character: Optional[game_type.Character],
+    rhodes_island: Optional[game_type.Rhodes_Island],
+) -> SurgeryPrecheckResult:
+    """判断指定医生是否可以为病人执行手术并给出资源需求。"""
+
+    if patient is None or doctor_character is None or rhodes_island is None:
+        return SurgeryPrecheckResult(False, "no_context")
+
+    if not patient.need_surgery or patient.surgery_blocked:
+        return SurgeryPrecheckResult(False, "not_required")
+
+    severity_config = game_config.config_medical_severity.get(patient.severity_level)
+    if severity_config is None:
+        return SurgeryPrecheckResult(False, "missing_config")
+
+    ability_requirement = medical_constant.SURGERY_ABILITY_REQUIREMENT.get(patient.severity_level, 4)
+    doctor_level = int(doctor_character.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0))
+    if doctor_level < ability_requirement:
+        return SurgeryPrecheckResult(
+            False,
+            "ability_insufficient",
+            severity_config=severity_config,
+            doctor_level=doctor_level,
+            ability_requirement=ability_requirement,
+        )
+
+    resource_plan = medical_service.resolve_surgery_requirements(severity_config)
+    inventory = getattr(rhodes_island, "materials_resouce", {}) or {}
+    resource_usage: Dict[int, int] = {}
+
+    for resource_id, amount in resource_plan.items():
+        units = int(math.ceil(max(float(amount), 0.0) - medical_constant.FLOAT_EPSILON))
+        if units <= 0:
+            continue
+        stock = int(inventory.get(resource_id, 0) or 0)
+        if stock < units:
+            return SurgeryPrecheckResult(
+                False,
+                "resource_shortage",
+                severity_config=severity_config,
+                doctor_level=doctor_level,
+                ability_requirement=ability_requirement,
+                details={"resource_id": resource_id, "need": units, "stock": stock},
+            )
+        resource_usage[resource_id] = units
+
+    return SurgeryPrecheckResult(
+        True,
+        "ok",
+        resource_usage=resource_usage,
+        severity_config=severity_config,
+        doctor_level=doctor_level,
+        ability_requirement=ability_requirement,
+    )
 
 
 def conduct_ward_round(
@@ -136,7 +221,7 @@ def conduct_ward_round(
 
     # 病人离开住院状态时解除医生绑定。
     if patient.state != medical_constant.MedicalPatientState.HOSPITALIZED:
-        patient.metadata.pop("assigned_hospital_doctor_id", None)
+        patient.assigned_hospital_doctor_id = 0
         work_data = getattr(doctor_character, "work", None)
         if work_data is not None:
             work_data.medical_patient_id = 0
@@ -182,7 +267,7 @@ def perform_surgery_for_doctor(
         "patient": patient,
         "success": success,
         "discharged": patient.state == medical_constant.MedicalPatientState.DISCHARGED,
-        "result": "success" if success else patient.metadata.get("last_surgery_result", "failed"),
+        "result": patient.last_surgery_result or ("success" if success else "failed"),
         "income_delta": income_after - income_before,
         "severity_before": severity_before,
         "severity_after": int(getattr(patient, "severity_level", severity_before) or severity_before),
@@ -190,7 +275,7 @@ def perform_surgery_for_doctor(
 
     # 手术完成或失效时解除医生绑定。
     if success or patient.surgery_blocked or not patient.need_surgery:
-        patient.metadata.pop("assigned_hospital_doctor_id", None)
+        patient.assigned_hospital_doctor_id = 0
         work_data = getattr(doctor_character, "work", None)
         if work_data is not None:
             work_data.medical_patient_id = 0
@@ -247,9 +332,30 @@ def _attempt_surgery_on_patient(
 ) -> bool:
     """执行住院病人的手术操作。"""
 
+    reserved_package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
+
+    resources_prepared = bool(reserved_package)
+    resource_usage: Dict[int, int] = {}
+    package_resources = reserved_package.get("resources", {}) if isinstance(reserved_package.get("resources", {}), dict) else {}
+    for resource_id, amount in package_resources.items():
+        try:
+            resource_usage[int(resource_id)] = int(amount)
+        except (TypeError, ValueError):
+            continue
+    consumed_total = int(reserved_package.get("consumed_total", 0) or 0)
+    reserved_doctor_id = int(reserved_package.get("doctor_id", 0) or 0)
+
+    if reserved_doctor_id and reserved_doctor_id != doctor.cid:
+        patient.last_surgery_result = "reserved_mismatch"
+        return False
+
     # 读取病情配置，缺失时视为手术失败。
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
+        if resources_prepared:
+            _refund_surgery_resources(rhodes_island, reserved_package)
+            patient.surgery_reserved_package = {}
+        patient.last_surgery_result = "missing_config"
         return False
 
     # 检查医生能力是否满足当前病情的最低要求。
@@ -257,7 +363,10 @@ def _attempt_surgery_on_patient(
     doctor_ability_level = doctor.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0)
     if doctor_ability_level < ability_requirement:
         patient.surgery_blocked = True
-        patient.metadata["last_surgery_result"] = "ability_insufficient"
+        patient.last_surgery_result = "ability_insufficient"
+        if resources_prepared:
+            _refund_surgery_resources(rhodes_island, reserved_package)
+            patient.surgery_reserved_package = {}
         _record_surgery_attempt(
             rhodes_island,
             patient,
@@ -267,37 +376,39 @@ def _attempt_surgery_on_patient(
         )
         return False
 
-    # 解析手术所需资源并检查库存是否充足。
-    resource_plan = medical_service.resolve_surgery_requirements(severity_config)
-    inventory = getattr(rhodes_island, "materials_resouce", {})
-    resource_usage: Dict[int, int] = {}
-    for resource_id, amount in resource_plan.items():
-        units = int(math.ceil(max(amount, 0.0) - medical_constant.FLOAT_EPSILON))
-        if units <= 0:
-            continue
-        stock = int(inventory.get(resource_id, 0) or 0)
-        if stock < units:
-            patient.surgery_blocked = True
-            patient.metadata["last_surgery_result"] = "resource_shortage"
-            patient.metadata["surgery_blocked_resource"] = resource_id
-            _record_surgery_attempt(
-                rhodes_island,
-                patient,
-                doctor,
-                status="resource_shortage",
-                extra={"resource_id": resource_id, "need": units, "stock": stock},
-            )
-            return False
-        resource_usage[resource_id] = units
+    # 解析手术所需资源并检查库存是否充足（若尚未预扣）。
+    if not resources_prepared:
+        resource_plan = medical_service.resolve_surgery_requirements(severity_config)
+        inventory = getattr(rhodes_island, "materials_resouce", {})
+        resource_usage.clear()
+        for resource_id, amount in resource_plan.items():
+            units = int(math.ceil(max(amount, 0.0) - medical_constant.FLOAT_EPSILON))
+            if units <= 0:
+                continue
+            stock = int(inventory.get(resource_id, 0) or 0)
+            if stock < units:
+                patient.surgery_blocked = True
+                patient.last_surgery_result = "resource_shortage"
+                patient.surgery_blocked_resource = resource_id
+                _record_surgery_attempt(
+                    rhodes_island,
+                    patient,
+                    doctor,
+                    status="resource_shortage",
+                    extra={"resource_id": resource_id, "need": units, "stock": stock},
+                )
+                return False
+            resource_usage[resource_id] = units
 
-    # 扣除库存并记录消耗总量。
-    consumed_total = 0
-    for resource_id, units in resource_usage.items():
-        inventory[resource_id] = int(inventory.get(resource_id, 0) or 0) - units
-        consumed_total += units
+        consumed_total = 0
+        for resource_id, units in resource_usage.items():
+            inventory[resource_id] = int(inventory.get(resource_id, 0) or 0) - units
+            consumed_total += units
 
-    if consumed_total:
-        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
+        if consumed_total:
+            medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
+    else:
+        patient.surgery_blocked_resource = None
 
     # 计算手术收入，考虑收费倍率与医生加成。
     price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
@@ -312,10 +423,10 @@ def _attempt_surgery_on_patient(
     new_severity = patient.severity_level - 1
 
     # 记录手术结果并标记消耗情况。
-    patient.metadata["last_surgery_result"] = "success"
-    patient.metadata["last_surgery_doctor_id"] = doctor.cid
-    patient.metadata["surgery_consumed_units"] = resource_usage
+    patient.last_surgery_result = "success"
     patient.surgery_blocked = False
+    patient.surgery_blocked_resource = None
+    patient.surgery_reserved_package = {}
 
     if income_value > 0:
         medical_core._apply_income_to_rhodes(rhodes_island, income_value)
@@ -340,10 +451,10 @@ def _attempt_surgery_on_patient(
     patient.severity_level = new_severity
     next_config = game_config.config_medical_severity.get(new_severity)
     if next_config is not None:
-        patient.metadata["severity_name"] = next_config.name
+        patient.severity_name = next_config.name
         medical_service.refresh_patient_hospital_needs(patient, next_config, reset_progress=True)
     else:
-        patient.metadata.pop("severity_name", None)
+        patient.severity_name = ""
 
     # 低于阈值时不再需要手术。
     patient.need_surgery = new_severity >= 2
@@ -359,6 +470,32 @@ def _attempt_surgery_on_patient(
     )
 
     return True
+
+
+def _refund_surgery_resources(
+    rhodes_island: game_type.Rhodes_Island,
+    reserved_package: Dict[str, Any],
+) -> None:
+    """将已预扣的手术资源退回仓库并修正统计。"""
+
+    resources = reserved_package.get("resources") if isinstance(reserved_package, dict) else None
+    if not resources:
+        return
+
+    inventory = getattr(rhodes_island, "materials_resouce", None)
+    if not isinstance(inventory, dict):
+        return
+
+    consumed_total = 0
+    for resource_id, units in resources.items():
+        if units is None:
+            continue
+        int_units = int(units)
+        inventory[resource_id] = int(inventory.get(resource_id, 0) or 0) + int_units
+        consumed_total += int_units
+
+    if consumed_total:
+        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", -consumed_total)
 
 
 def _record_surgery_attempt(

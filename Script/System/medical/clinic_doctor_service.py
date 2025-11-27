@@ -158,7 +158,7 @@ def _bind_doctor_to_patient(
         return
 
     # 写入病人侧的绑定信息并同步医生的运行期字段。
-    patient.metadata["assigned_doctor_id"] = doctor_character.cid
+    patient.assigned_doctor_id = doctor_character.cid
     work_data = getattr(doctor_character, "work", None)
     if work_data is not None:
         work_data.medical_patient_id = patient.patient_id
@@ -179,9 +179,9 @@ def _clear_doctor_patient_binding(
 
     # 清理病人侧的绑定标记，仅当确实指向该医生时才删除。
     if patient is not None:
-        assigned = int(patient.metadata.get("assigned_doctor_id", 0) or 0)
+        assigned = int(getattr(patient, "assigned_doctor_id", 0) or 0)
         if doctor_character is None or assigned == getattr(doctor_character, "cid", -1):
-            patient.metadata.pop("assigned_doctor_id", None)
+            patient.assigned_doctor_id = 0
 
     # 将医生的运行期病人引用重置为 0，避免重复引用。
     if doctor_character is not None:
@@ -212,7 +212,7 @@ def _patient_matches_specialization(
         return True
 
     # 读取或解析病人关联的系统标签，便于后续复用。
-    system_keys = set(patient.metadata.get("system_keys", []))
+    system_keys = set(getattr(patient, "system_keys", []) or [])
     if not system_keys:
         system_keys = clinic_patient_management._resolve_patient_system_keys(patient)
     return specialization_key in system_keys
@@ -238,7 +238,7 @@ def _is_patient_assignable(
         return False
 
     # 已绑定其他医生的病人不能被抢占。
-    assigned_doctor = int(patient.metadata.get("assigned_doctor_id", 0) or 0)
+    assigned_doctor = int(getattr(patient, "assigned_doctor_id", 0) or 0)
     if assigned_doctor and assigned_doctor != doctor_id:
         return False
 

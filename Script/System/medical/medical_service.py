@@ -38,6 +38,7 @@ update_doctor_assignments = clinic_doctor_service.update_doctor_assignments
 conduct_ward_round = hospital_doctor_service.conduct_ward_round
 perform_surgery_for_doctor = hospital_doctor_service.perform_surgery_for_doctor
 attempt_surgery = hospital_doctor_service.attempt_surgery  # 暂未使用
+evaluate_surgery_preconditions = hospital_doctor_service.evaluate_surgery_preconditions
 
 # --- 病人相关函数重导出 ---
 start_player_diagnose_session = clinic_patient_management.start_player_diagnose_session

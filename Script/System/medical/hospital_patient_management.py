@@ -50,12 +50,10 @@ def try_hospitalize(
     # 检查床位是否已满。
     bed_limit = int(rhodes_island.medical_bed_limit or 0)
     if bed_limit > 0 and len(rhodes_island.medical_hospitalized) >= bed_limit:
-        patient.metadata["hospitalize_failed_reason"] = "no_bed"
         return False
 
     # 病情不要求住院时记录原因并返回。
     if severity_config.require_hospitalization != 1:
-        patient.metadata["hospitalize_failed_reason"] = "not_required"
         return False
 
     # 从门诊列表移除并加入住院表，同时重置相关字段。
@@ -67,8 +65,7 @@ def try_hospitalize(
     hospital_table[patient.patient_id] = patient
     medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.HOSPITALIZED)
     patient.stay_days = 0
-    patient.metadata["hospitalized_flag"] = True
-    patient.metadata["severity_name"] = severity_config.name
+    patient.severity_name = severity_config.name
     patient.surgery_blocked = False
 
     refresh_patient_hospital_needs(patient, severity_config, reset_progress=True)
@@ -157,14 +154,11 @@ def process_single_hospitalized_patient(
     patient.stay_days += 1
     refresh_patient_hospital_needs(patient, severity_config, reset_progress=False)
 
-    if doctor is not None:
-        patient.metadata["last_hospital_doctor_id"] = doctor.cid
-
     # 执行扣药回调并统计收入变化。
     income_before = int(rhodes_island.medical_income_today)
     success = consume_medicine(patient)
 
-    consumed_units = patient.metadata.get("last_consumed_units", {})
+    consumed_units = getattr(patient, "last_consumed_units", {})
     consumed_total = sum(int(value) for value in consumed_units.values()) if consumed_units else 0
     if consumed_total:
         medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
@@ -182,7 +176,6 @@ def process_single_hospitalized_patient(
 
     if success:
         medical_core._bump_daily_counter(rhodes_island, "hospital_treated_success", 1)
-        patient.metadata["last_hospital_result"] = "success"
         new_severity = severity_before - 1
         if new_severity < 0:
             discharge_bonus = int(round(float(severity_config.discharge_bonus) * price_ratio * income_multiplier))
@@ -196,14 +189,13 @@ def process_single_hospitalized_patient(
                 discharge_patient(rhodes_island, patient, bonus_income=discharge_bonus)
                 result.update({"discharged": True, "result": "discharged", "severity_after": -1})
             else:
-                patient.metadata["severity_name"] = next_config.name
+                patient.severity_name = next_config.name
                 if new_severity < 2:
                     patient.need_surgery = False
                     patient.surgery_blocked = False
                 refresh_patient_hospital_needs(patient, next_config, reset_progress=True)
                 result.update({"result": "severity_decreased", "severity_after": new_severity})
     else:
-        patient.metadata["last_hospital_result"] = "pending"
         medical_core._bump_daily_counter(rhodes_island, "hospital_treated_pending", 1)
         base_income = int(round(float(severity_config.hospital_base_income) * price_ratio * income_multiplier))
         if base_income > 0:
@@ -248,9 +240,16 @@ def try_consume_medicine(
     # 准备运行期缓存，包括药品累加器与进度记录。
     accumulator = rhodes_island.medical_inventory_accumulator
     inventory = rhodes_island.materials_resouce
-    recorded_map = patient.metadata.setdefault("medicine_recorded", {})
-    progress_map = patient.metadata.setdefault("medicine_progress", {})
-    consumed_history = patient.metadata.setdefault("medicine_consumed_units", {})
+    if not isinstance(patient.medicine_recorded, dict):
+        patient.medicine_recorded = {}
+    if not isinstance(patient.medicine_progress, dict):
+        patient.medicine_progress = {}
+    if not isinstance(patient.medicine_consumed_units, dict):
+        patient.medicine_consumed_units = {}
+
+    recorded_map = patient.medicine_recorded
+    progress_map = patient.medicine_progress
+    consumed_history = patient.medicine_consumed_units
 
     resource_success: dict[int, bool] = {}
     consumed_units: dict[int, int] = {}
@@ -342,8 +341,8 @@ def try_consume_medicine(
         inventory[1] = int(inventory.get(1, 0) or 0) + total_income
 
     if overall_success:
-        patient.metadata["medicine_recorded"] = {}
-        patient.metadata["medicine_progress"] = {}
+        patient.medicine_recorded = {}
+        patient.medicine_progress = {}
 
     consumed_total_units = sum(int(value) for value in consumed_units.values())
     if not is_hospitalized and consumed_total_units:
@@ -356,7 +355,7 @@ def try_consume_medicine(
         else:
             medical_core._bump_daily_counter(rhodes_island, "outpatient_pending", 1)
 
-    patient.metadata["last_consumed_units"] = consumed_units
+    patient.last_consumed_units = consumed_units
 
     medical_core._sync_legacy_patient_counters(rhodes_island)
     return overall_success
@@ -383,10 +382,9 @@ def refresh_patient_hospital_needs(
     patient.ensure_resource_keys()
     for resource_id in medical_constant.ALL_MEDICINE_RESOURCE_IDS:
         patient.need_resources[resource_id] = float(prescription.get(resource_id, 0.0))
-    patient.metadata["hospital_prescription"] = prescription
     if reset_progress:
-        patient.metadata["medicine_recorded"] = {}
-        patient.metadata["medicine_progress"] = {}
+        patient.medicine_recorded = {}
+        patient.medicine_progress = {}
 
 
 def _build_hospital_prescription(severity_config: config_def.Medical_Severity) -> Dict[int, float]:
@@ -451,6 +449,5 @@ def discharge_patient(
     hospital_table = medical_service.get_patient_table(target_base=rhodes_island, hospitalized=True)
     hospital_table.pop(patient.patient_id, None)
     medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.DISCHARGED)
-    patient.metadata["discharged_flag"] = True
     medical_core._bump_daily_counter(rhodes_island, "discharged_today", 1)
     medical_core._apply_income_to_rhodes(rhodes_island, bonus_income)

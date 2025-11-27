@@ -7,7 +7,7 @@ from Script.Core import get_text
 from dataclasses import dataclass, field
 from enum import Enum
 from itertools import count
-from typing import Tuple, Dict, List, Any
+from typing import Tuple, Dict, List, Any, Optional
 _: FunctionType = get_text._
 """ 翻译函数 """
 
@@ -52,16 +52,6 @@ MAX_RECENT_REPORTS: int = 7
 
 HOSPITAL_DOCTOR_BED_BONUS: int = 2
 """每名住院医生提供的额外床位数量"""
-
-PLAYER_METADATA_KEYS: Tuple[str, ...] = (
-    "player_previous_state",
-    "player_session_active",
-    "player_used_checks",
-    "player_confirmed_complications",
-    "player_check_records",
-    "player_pending_checks",
-)
-"""玩家诊疗流程使用的运行期元数据键集合"""
 
 SPECIALIZATION_ROLES: Tuple[str, str] = (
     SPECIALIZATION_ROLE_CLINIC,
@@ -198,14 +188,53 @@ class MedicalPatient:
     """病人种族 ID（排除博士）"""
     age: int = 18
     """病人年龄"""
-    metadata: Dict[str, Any] = field(default_factory=dict)
-    """扩展信息字典，存储检查记录、提示等"""
+    assigned_doctor_id: int = 0
+    """当前绑定的门诊医生编号（0 表示未绑定）"""
+    assigned_hospital_doctor_id: int = 0
+    """当前绑定的住院医生编号（0 表示未绑定）"""
+    severity_name: str = ""
+    """病情等级对应的名称标签，用于 UI 展示"""
+    price_ratio: float = 1.0
+    """刷新/接诊时记录的收费系数快照"""
+    complication_trace: List[Dict[str, Any]] = field(default_factory=list)
+    """并发症追踪记录，包含系统/部位等辅助信息"""
+    system_keys: List[str] = field(default_factory=list)
+    """病人关联的生理系统标签集合（字符串形式）"""
+    player_session_active: bool = False
+    """标记玩家诊疗会话是否处于激活状态"""
+    player_previous_state: str = ""
+    """玩家介入前病人的原始状态字符串"""
+    player_used_checks: int = 0
+    """本次玩家诊疗流程已使用的检查次数"""
+    player_confirmed_complications: List[int] = field(default_factory=list)
+    """玩家诊疗流程中已确诊的并发症 ID 列表"""
+    player_check_records: List[Dict[str, Any]] = field(default_factory=list)
+    """玩家诊疗流程中产生的检查记录摘要列表"""
+    player_pending_checks: List[Dict[str, Any]] = field(default_factory=list)
+    """玩家诊疗流程中等待执行的检查计划列表"""
+    last_surgery_result: str = ""
+    """最近一次手术流程的结果标识"""
+    surgery_reserved_package: Dict[str, Any] = field(default_factory=dict)
+    """手术预扣的药物资源包与附加信息"""
+    surgery_blocked_resource: Optional[int] = None
+    """导致手术阻塞的药物资源 ID，None 表示不存在阻塞"""
+    state_label: str = ""
+    """调试用途的最新状态字符串"""
+    medicine_recorded: Dict[int, float] = field(default_factory=dict)
+    """累计登记但尚未扣除的药品需求量"""
+    medicine_progress: Dict[int, float] = field(default_factory=dict)
+    """住院每日用药进度缓存"""
+    medicine_consumed_units: Dict[int, int] = field(default_factory=dict)
+    """历史累计消耗的药物单位数"""
+    last_consumed_units: Dict[int, int] = field(default_factory=dict)
+    """最近一次用药操作实际消耗的资源记录"""
 
     def ensure_resource_keys(self) -> None:
         """补齐药物需求键，避免读取和累计过程中出现缺省键"""
 
         for resource_id in ALL_MEDICINE_RESOURCE_IDS:
             self.need_resources.setdefault(resource_id, 0.0)
+
 
 # 统一定义病人接诊优先策略的文本转换和选项列表
 def translate_priority(mode: MedicalPatientPriority) -> str:
@@ -241,7 +270,6 @@ __all__ = [
     "MAX_SURGERY_RECORDS",
     "MAX_RECENT_REPORTS",
     "HOSPITAL_DOCTOR_BED_BONUS",
-    "PLAYER_METADATA_KEYS",
     "SPECIALIZATION_ROLES",
     "PATIENT_ID_COUNTER",
     "ALL_MEDICINE_RESOURCE_IDS",

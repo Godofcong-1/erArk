@@ -22,7 +22,7 @@ from Script.Core import cache_control, constant, constant_effect, game_type, get
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
 from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
-from Script.System.Medical import medical_constant, medical_service
+from Script.System.Medical import medical_constant, medical_service, medical_core
 
 from Script.Settle.common_default import (
     base_chara_hp_mp_common_settle,
@@ -7356,7 +7356,7 @@ def handle_cure_patient_add_just(
     if doctor_data.position == cache.character_data[0].position:
         now_draw = draw.NormalDraw()
         now_draw.width = width
-        severity_name = patient_obj.metadata.get("severity_name") or _("未知病情")
+        severity_name = patient_obj.severity_name or _("未知病情")
         if patient_obj.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
             now_draw.text = _(
                 "\n在{doctor}的努力下，为一名{severity}患者完成诊断，获得{income}龙门币。（当前待诊患者：{waiting}人）\n"
@@ -7485,40 +7485,83 @@ def handle_perform_surgery(
         doctor_data,
         getattr(doctor_data.behavior, "behavior_id", None),
     )
+    rhodes_island = getattr(cache_control.cache, "rhodes_island", None)
+    patient_id = int(getattr(doctor_data.work, "surgery_patient_id", 0) or 0)
 
-    outcome = medical_service.perform_surgery_for_doctor(doctor_data)
+    patient = None
+    severity_before = None
+
+    if rhodes_island is not None and patient_id:
+        patient = medical_core._locate_patient(patient_id, rhodes_island)[0]
+        if patient is not None:
+            severity_before = int(getattr(patient, "severity_level", 0) or 0)
+
+    income_before = int(getattr(rhodes_island, "medical_income_today", 0) or 0) if rhodes_island else 0
+
+    success = False
+    if patient_id and patient is not None and rhodes_island is not None:
+        success = medical_service.attempt_surgery(patient_id, doctor_data, target_base=rhodes_island)
+    else:
+        # 若无有效病人则清理绑定，避免重复尝试
+        doctor_data.work.surgery_patient_id = 0
+        doctor_data.work.medical_patient_id = 0
+
+    income_after = int(getattr(rhodes_island, "medical_income_today", income_before) or income_before)
+    income_delta = income_after - income_before
+
+    if patient is None and patient_id and rhodes_island is not None:
+        patient = medical_core._locate_patient(patient_id, rhodes_island)[0]
+
+    severity_after = None
+    discharge_flag = False
+    result_flag = "no_candidate"
+
+    if patient is not None:
+        severity_after = int(getattr(patient, "severity_level", 0) or 0)
+        discharge_flag = patient.state == medical_constant.MedicalPatientState.DISCHARGED
+        result_flag = patient.last_surgery_result or ("success" if success else "failed")
+    else:
+        result_flag = "no_candidate"
+
+    if rhodes_island is not None and patient is not None:
+        if success or getattr(patient, "surgery_blocked", False) or not getattr(patient, "need_surgery", True):
+            patient.assigned_hospital_doctor_id = 0
+            patient.surgery_reserved_package = {}
+
+    if success or result_flag in {"ability_insufficient", "resource_shortage", "reserved_mismatch", "no_candidate"}:
+        doctor_data.work.surgery_patient_id = 0
+        doctor_data.work.medical_patient_id = 0
+
+    if rhodes_island is not None:
+        medical_core._sync_legacy_patient_counters(rhodes_island)
 
     show_message = character_id == 0 or doctor_data.position == cache.character_data[0].position
     if not show_message:
         return
 
-    patient = outcome.get("patient")
-    result_flag = outcome.get("result")
-    income_delta = int(outcome.get("income_delta", 0) or 0)
-
     severity_before_name = _("未知病情")
     severity_after_name = _("未知病情")
 
-    severity_before = outcome.get("severity_before")
     if isinstance(severity_before, int) and severity_before >= 0:
         config_before = game_config.config_medical_severity.get(severity_before)
         if config_before:
             severity_before_name = config_before.name
 
+    if isinstance(severity_after, int) and severity_after >= 0:
+        config_after = game_config.config_medical_severity.get(severity_after)
+        if config_after:
+            severity_after_name = config_after.name
+
+    if discharge_flag:
+        severity_after_name = _("痊愈")
+
     if patient is not None:
-        severity_after = outcome.get("severity_after")
-        if isinstance(severity_after, int) and severity_after >= 0:
-            config_after = game_config.config_medical_severity.get(severity_after)
-            if config_after:
-                severity_after_name = config_after.name
-        if outcome.get("discharged"):
-            severity_after_name = _("痊愈")
-        severity_after_name = patient.metadata.get("severity_name", severity_after_name)
+        severity_after_name = patient.severity_name or severity_after_name
 
     draw_text = draw.NormalDraw()
     draw_text.width = width
 
-    if patient is None:
+    if patient is None or patient_id == 0:
         draw_text.text = _(
             "\n{doctor}暂未找到需要手术的病人，手术准备流程结束。\n"
         ).format(doctor=doctor_data.name)
@@ -7536,7 +7579,7 @@ def handle_perform_surgery(
             "\n{doctor}尝试执行手术，但医疗能力不足，手术被迫中止。\n"
         ).format(doctor=doctor_data.name)
     elif result_flag == "resource_shortage":
-        blocked_resource = patient.metadata.get("surgery_blocked_resource")
+        blocked_resource = patient.surgery_blocked_resource if patient else None
         if blocked_resource:
             resource_config = game_config.config_resouce.get(blocked_resource)
             resource_name = resource_config.name if resource_config else _("药品")
@@ -7549,6 +7592,10 @@ def handle_perform_surgery(
             severity=severity_before_name,
             resource=resource_name,
         )
+    elif result_flag == "reserved_mismatch":
+        draw_text.text = _(
+            "\n{doctor}的手术安排已由其他医生接手，本次尝试自动取消。\n"
+        ).format(doctor=doctor_data.name)
     else:
         draw_text.text = _(
             "\n{doctor}的手术未能顺利完成，请稍后再尝试。\n"

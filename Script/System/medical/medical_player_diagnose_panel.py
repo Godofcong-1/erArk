@@ -140,7 +140,7 @@ class MedicalPlayerDiagnosePanel:
             confirmed_complications = self._get_confirmed_complications()
             used_checks = 0
             if self.patient is not None:
-                used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
+                used_checks = int(getattr(self.patient, "player_used_checks", 0) or 0)
 
             # 顶部帮助文本为玩家提供操作指引与提示系统说明
             hint_draw = draw.NormalDraw()
@@ -191,7 +191,7 @@ class MedicalPlayerDiagnosePanel:
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
 
-        severity_name = self.patient.metadata.get("severity_name")
+        severity_name = getattr(self.patient, "severity_name", "")
         if not severity_name:
             config = game_config.config_medical_severity.get(self.patient.severity_level)
             severity_name = config.name if config else _("未知病情")
@@ -211,7 +211,7 @@ class MedicalPlayerDiagnosePanel:
         )
 
         complaint_lines: List[str] = []
-        trace_list = self.patient.metadata.get("complication_trace", [])
+        trace_list = getattr(self.patient, "complication_trace", [])
         for index, entry in enumerate(trace_list, start=1):
             comp_config = game_config.config_medical_complication.get(entry.get("cid", entry.get("complication_id", 0)))
             if comp_config is None:
@@ -568,10 +568,10 @@ class MedicalPlayerDiagnosePanel:
             # 已勾选则取消
             if item["cid"] == complication_id:
                 pending.pop(index)
-                self.patient.metadata["player_pending_checks"] = pending
+                self.patient.player_pending_checks = pending
                 return
 
-        used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
+        used_checks = int(getattr(self.patient, "player_used_checks", 0) or 0)
         # 检查次数已耗尽
         if used_checks >= self.max_checks:
             return
@@ -582,7 +582,7 @@ class MedicalPlayerDiagnosePanel:
         if complication_id in self._get_confirmed_complications():
             return
 
-        # 所有约束满足后将勾选项写回 metadata，保持会话状态一致
+        # 所有约束满足后将勾选项写回患者结构，保持会话状态一致
         pending.append(
             {
                 "cid": complication_id,
@@ -591,7 +591,7 @@ class MedicalPlayerDiagnosePanel:
                 "severity_level": int(option_info.get("severity_level", 0)),
             }
         )
-        self.patient.metadata["player_pending_checks"] = pending
+        self.patient.player_pending_checks = pending
 
     def _draw_treatment_methods(self, confirmed: List[int], used_checks: int) -> None:
         """绘制治疗摘要或建议，用于引导下一步行为。
@@ -744,7 +744,7 @@ class MedicalPlayerDiagnosePanel:
         """
         if self.patient is None:
             return []
-        records = self.patient.metadata.get("player_check_records", [])
+        records = getattr(self.patient, "player_check_records", [])
         suggestions: List[str] = []
         seen: Set[Tuple[int, int]] = set()
         # 逆序遍历记录，以便优先展示最新的再检建议
@@ -943,7 +943,7 @@ class MedicalPlayerDiagnosePanel:
         else:
             missing_count = len(actual_complications - confirmed_set)
 
-        used_checks = int(self.patient.metadata.get("player_used_checks", 0) or 0)
+        used_checks = int(getattr(self.patient, "player_used_checks", 0) or 0)
         remaining_checks = max(self.max_checks - used_checks, 0)
 
         if (
@@ -1009,7 +1009,7 @@ class MedicalPlayerDiagnosePanel:
 
         if self.patient is None:
             return
-        self.patient.metadata["player_pending_checks"] = []
+        self.patient.player_pending_checks = []
 
     def _execute_checks(self) -> None:
         """调用医疗服务执行所选检查，并记录结果。
@@ -1115,7 +1115,7 @@ class MedicalPlayerDiagnosePanel:
     # --- 工具方法 ---------------------------------------------------------
 
     def _get_pending_checks(self) -> List[Dict[str, int]]:
-        """读取并清洗 metadata 中的待执行检查列表。
+        """读取并清洗患者结构中的待执行检查列表。
 
         参数:
             无。
@@ -1125,7 +1125,7 @@ class MedicalPlayerDiagnosePanel:
         """
         if self.patient is None:
             return []
-        data = self.patient.metadata.get("player_pending_checks", [])
+        data = getattr(self.patient, "player_pending_checks", [])
         pending: List[Dict[str, int]] = []
         for item in data:
             if not isinstance(item, dict):
@@ -1153,7 +1153,7 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None:
             return []
         # 数据可能以字符串存储，因此统一转为 int
-        return list(int(cid) for cid in self.patient.metadata.get("player_confirmed_complications", []))
+        return list(int(cid) for cid in getattr(self.patient, "player_confirmed_complications", []))
 
     def _resolve_duration_minutes(self, base_minutes: int) -> int:
         """根据设施效率换算行为持续时间。
@@ -1182,7 +1182,7 @@ class MedicalPlayerDiagnosePanel:
         if med_level <= 0:
             return set(), set(), set()
 
-        trace_list = self.patient.metadata.get("complication_trace", [])
+        trace_list = getattr(self.patient, "complication_trace", [])
         if not trace_list:
             return set(), set(), set()
 

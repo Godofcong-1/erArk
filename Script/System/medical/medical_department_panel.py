@@ -557,7 +557,7 @@ class MedicalDetailSubPanel(_BaseSubPanel):
         ]
         pending_patients.sort(key=lambda p: (-p.severity_level, p.patient_id))
         for patient in pending_patients[:6]:
-            severity_name = patient.metadata.get("severity_name", str(patient.severity_level))
+            severity_name = patient.severity_name or str(patient.severity_level)
             preview_draw.text += _(
                 "  病例#{0} 等级：{1} | 状态：{2} | 并发症数：{3}\n"
             ).format(
@@ -604,8 +604,8 @@ class SurgeryManagementSubPanel(_BaseSubPanel):
         info_draw.width = self.width
         info_draw.text = _("待手术病人：{0} 人\n").format(len(waiting_patients))
         for patient in waiting_patients[:8]:
-            severity_name = patient.metadata.get("severity_name", str(patient.severity_level))
-            block_reason = patient.metadata.get("last_surgery_result", "-")
+            severity_name = patient.severity_name or str(patient.severity_level)
+            block_reason = patient.last_surgery_result or "-"
             info_draw.text += _(
                 "  病例#{0} 等级：{1} | 阻塞：{2} | 需手术：{3}\n"
             ).format(

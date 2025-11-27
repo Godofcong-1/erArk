@@ -676,6 +676,59 @@ def handle_medical_surgery_wait(character_id: int) -> int:
             return 1
     return 0
 
+@add_premise(constant_promise.Premise.HAVE_PATIENT_NEED_SURGERY_AND_CAN_DO)
+def handle_have_patient_need_surgery_and_can_do(character_id: int) -> int:
+    """
+    有住院患者等待手术且满足进行的条件
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    # 先判断有没有患者等待手术
+    if not handle_medical_surgery_wait(character_id):
+        return 0
+
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return 0
+
+    rhodes_island = getattr(cache_control.cache, "rhodes_island", None)
+    if rhodes_island is None:
+        return 0
+
+    from Script.System.Medical import hospital_doctor_service, medical_constant
+
+    # 获取住院患者列表
+    hospitalized = getattr(rhodes_island, "medical_hospitalized", {}) or {}
+    if not hospitalized:
+        return 0
+
+    # 遍历患者列表，检查是否有满足条件的患者
+    available_count = 0
+    for patient in hospitalized.values():
+        if getattr(patient, "state", None) != medical_constant.MedicalPatientState.HOSPITALIZED:
+            continue
+        if not getattr(patient, "need_surgery", False):
+            continue
+        if getattr(patient, "surgery_blocked", False):
+            continue
+        # 检查是否指定了医生
+        assigned_doctor = int(getattr(patient, "assigned_hospital_doctor_id", 0) or 0)
+        if assigned_doctor and assigned_doctor != character_id:
+            continue
+        # 检查是否预定了手术套餐
+        reserved_package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
+        reserved_doctor = int(reserved_package.get("doctor_id", 0) or 0)
+        if reserved_doctor and reserved_doctor != character_id:
+            continue
+
+        precheck = hospital_doctor_service.evaluate_surgery_preconditions(patient, character_data, rhodes_island)
+        if not precheck.can_execute:
+            continue
+        available_count += 1
+
+    return available_count
 
 @add_premise(constant_promise.Premise.NEW_NPC_WAIT)
 def handle_new_npc_wait(character_id: int) -> int:
