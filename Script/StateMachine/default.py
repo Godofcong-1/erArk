@@ -2431,126 +2431,37 @@ def character_work_start_surgery(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Medical import hospital_doctor_service, medical_constant
+
     character_data: game_type.Character = cache.character_data[character_id]
-    rhodes_island = getattr(cache_control.cache, "rhodes_island", None)
 
-    def _try_reserve_resources(resource_usage: Dict[int, int]) -> Tuple[bool, Optional[int], int]:
-        """尝试预扣指定药品资源，返回结果与缺失的资源。"""
+    # 获取所有可进行手术的患者列表
+    available_patients_list = hospital_doctor_service.get_surgery_candidate_patient_ids(
+        doctor_character=character_data,
+        target_base=cache.rhodes_island,
+    )
 
-        if not resource_usage:
-            return True, None, 0
-
-        inventory = getattr(rhodes_island, "materials_resouce", {}) if rhodes_island else {}
-        if not isinstance(inventory, dict):
-            return False, None, 0
-
-        pending_update: Dict[int, int] = {}
-        for resource_id, units in resource_usage.items():
-            stock = int(inventory.get(resource_id, 0) or 0)
-            if stock < units:
-                return False, resource_id, 0
-            pending_update[resource_id] = stock - units
-
-        consumed = 0
-        for resource_id, new_value in pending_update.items():
-            consumed += int(resource_usage.get(resource_id, 0))
-            inventory[resource_id] = new_value
-
-        if consumed:
-            medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed)
-
-        return True, None, consumed
-
-    selected_patient: Optional[medical_constant.MedicalPatient] = None
-    resource_usage: Dict[int, int] = {}
-    reserved_package: Dict[str, object] = {}
-    consumed_total_value = 0
-
-    if rhodes_island:
-        hospitalized = getattr(rhodes_island, "medical_hospitalized", {}) or {}
-        if hospitalized:
-            current_patient_id = int(getattr(character_data.work, "surgery_patient_id", 0) or 0)
-            if current_patient_id:
-                patient = hospitalized.get(current_patient_id)
-                if (
-                    patient
-                    and getattr(patient, "state", None) == medical_constant.MedicalPatientState.HOSPITALIZED
-                    and getattr(patient, "need_surgery", False)
-                ):
-                    package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
-                    reserved_doctor = int(package.get("doctor_id", 0) or 0)
-                    if package and reserved_doctor == character_id:
-                        selected_patient = patient
-                        reserved_package = dict(package)
-                        resource_usage = {
-                            int(res_id): int(amount)
-                            for res_id, amount in (package.get("resources", {}) or {}).items()
-                        }
-                        consumed_total_value = int(package.get("consumed_total", 0) or 0)
-
-            if selected_patient is None:
-                candidates: List[Tuple[medical_constant.MedicalPatient, Any]] = []
-                for patient in hospitalized.values():
-                    if getattr(patient, "state", None) != medical_constant.MedicalPatientState.HOSPITALIZED:
-                        continue
-                    if not getattr(patient, "need_surgery", False):
-                        continue
-                    if getattr(patient, "surgery_blocked", False):
-                        continue
-                    assigned_doctor = int(getattr(patient, "assigned_hospital_doctor_id", 0) or 0)
-                    if assigned_doctor and assigned_doctor != character_id:
-                        continue
-                    package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
-                    reserved_doctor = int(package.get("doctor_id", 0) or 0)
-                    if reserved_doctor and reserved_doctor != character_id:
-                        continue
-
-                    precheck = medical_service.evaluate_surgery_preconditions(patient, character_data, rhodes_island)
-                    if not precheck.can_execute:
-                        continue
-                    candidates.append((patient, precheck))
-
-                random.shuffle(candidates)
-                for patient, precheck in candidates:
-                    success, blocked_resource, consumed_total = _try_reserve_resources(precheck.resource_usage)
-                    if success:
-                        selected_patient = patient
-                        resource_usage = dict(precheck.resource_usage)
-                        consumed_total_value = consumed_total
-                        reserved_package = {
-                            "doctor_id": character_id,
-                            "resources": dict(precheck.resource_usage),
-                            "consumed_total": consumed_total_value,
-                        }
-                        break
-
-                    patient.surgery_blocked = True
-                    patient.last_surgery_result = "resource_shortage"
-                    if blocked_resource is not None:
-                        patient.surgery_blocked_resource = blocked_resource
-                    patient.surgery_reserved_package = {}
-
-    if selected_patient is not None:
-        reserved_package.setdefault("doctor_id", character_id)
-        reserved_package.setdefault("resources", dict(resource_usage))
-        reserved_package.setdefault("consumed_total", consumed_total_value)
-
-        selected_patient.assigned_hospital_doctor_id = character_id
-        selected_patient.surgery_reserved_package = dict(reserved_package)
-        selected_patient.last_surgery_result = "scheduled"
-        selected_patient.surgery_blocked_resource = None
-        selected_patient.surgery_blocked = False
-
-        character_data.work.surgery_patient_id = selected_patient.patient_id
-        character_data.work.medical_patient_id = selected_patient.patient_id
-    else:
-        character_data.work.surgery_patient_id = 0
-        character_data.work.medical_patient_id = 0
-
+    # 赋予角色行为数据
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1
     character_data.state = constant.CharacterStatus.STATUS_WAIT
+
+    # 如果没有可手术的患者，则直接进入等待状态并返回
+    if len(available_patients_list) == 0:
+        return
+
+    # 随机选择一个患者
+    selected_patient: medical_constant.MedicalPatient = random.choice(available_patients_list)
+
+    # 赋予患者本次手术的数据
+    selected_patient.assigned_hospital_doctor_id = character_id
+    selected_patient.last_surgery_result = "scheduled"
+    selected_patient.surgery_blocked_resource = None
+    selected_patient.surgery_blocked = False
+
+    # 将患者id赋予到角色数据
+    character_data.work.surgery_patient_id = selected_patient.patient_id
 
 @handle_state_machine.add_state_machine(constant.StateMachine.WORK_PERFORM_SURGERY)
 def character_work_perform_surgery(character_id: int):

@@ -693,42 +693,14 @@ def handle_have_patient_need_surgery_and_can_do(character_id: int) -> int:
     if character_data.dead:
         return 0
 
-    rhodes_island = getattr(cache_control.cache, "rhodes_island", None)
-    if rhodes_island is None:
-        return 0
+    from Script.System.Medical import hospital_doctor_service
 
-    from Script.System.Medical import hospital_doctor_service, medical_constant
-
-    # 获取住院患者列表
-    hospitalized = getattr(rhodes_island, "medical_hospitalized", {}) or {}
-    if not hospitalized:
-        return 0
-
-    # 遍历患者列表，检查是否有满足条件的患者
-    available_count = 0
-    for patient in hospitalized.values():
-        if getattr(patient, "state", None) != medical_constant.MedicalPatientState.HOSPITALIZED:
-            continue
-        if not getattr(patient, "need_surgery", False):
-            continue
-        if getattr(patient, "surgery_blocked", False):
-            continue
-        # 检查是否指定了医生
-        assigned_doctor = int(getattr(patient, "assigned_hospital_doctor_id", 0) or 0)
-        if assigned_doctor and assigned_doctor != character_id:
-            continue
-        # 检查是否预定了手术套餐
-        reserved_package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
-        reserved_doctor = int(reserved_package.get("doctor_id", 0) or 0)
-        if reserved_doctor and reserved_doctor != character_id:
-            continue
-
-        precheck = hospital_doctor_service.evaluate_surgery_preconditions(patient, character_data, rhodes_island)
-        if not precheck.can_execute:
-            continue
-        available_count += 1
-
-    return available_count
+    # 获取所有可进行手术的患者列表
+    available_patients_list = hospital_doctor_service.get_surgery_candidate_patient_ids(
+        doctor_character=character_data,
+        target_base=cache.rhodes_island,
+    )
+    return len(available_patients_list)
 
 @add_premise(constant_promise.Premise.NEW_NPC_WAIT)
 def handle_new_npc_wait(character_id: int) -> int:

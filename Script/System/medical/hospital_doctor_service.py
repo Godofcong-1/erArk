@@ -8,7 +8,7 @@ from __future__ import annotations
 
 import math
 from dataclasses import dataclass, field
-from typing import Any, Dict, Optional, Tuple
+from typing import Any, Dict, Optional, Tuple, List
 
 from Script.Config import game_config
 from Script.Core import cache_control, game_type
@@ -125,18 +125,23 @@ def evaluate_surgery_preconditions(
 ) -> SurgeryPrecheckResult:
     """判断指定医生是否可以为病人执行手术并给出资源需求。"""
 
+    # 基地、医生或病人不存在时直接返回失败
     if patient is None or doctor_character is None or rhodes_island is None:
         return SurgeryPrecheckResult(False, "no_context")
 
+    # 不需要手术或手术被阻塞时无法执行
     if not patient.need_surgery or patient.surgery_blocked:
         return SurgeryPrecheckResult(False, "not_required")
 
+    # 读取病情配置，缺失时无法执行
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
         return SurgeryPrecheckResult(False, "missing_config")
 
+    # 检查医生能力是否满足当前病情的最低要求
     ability_requirement = medical_constant.SURGERY_ABILITY_REQUIREMENT.get(patient.severity_level, 4)
     doctor_level = int(doctor_character.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0))
+    # 能力不足时返回失败
     if doctor_level < ability_requirement:
         return SurgeryPrecheckResult(
             False,
@@ -146,6 +151,7 @@ def evaluate_surgery_preconditions(
             ability_requirement=ability_requirement,
         )
 
+    # 解析手术所需资源并检查库存是否充足
     resource_plan = medical_service.resolve_surgery_requirements(severity_config)
     inventory = getattr(rhodes_island, "materials_resouce", {}) or {}
     resource_usage: Dict[int, int] = {}
@@ -155,6 +161,7 @@ def evaluate_surgery_preconditions(
         if units <= 0:
             continue
         stock = int(inventory.get(resource_id, 0) or 0)
+        # 库存不足时返回失败
         if stock < units:
             return SurgeryPrecheckResult(
                 False,
@@ -175,6 +182,53 @@ def evaluate_surgery_preconditions(
         ability_requirement=ability_requirement,
     )
 
+def get_surgery_candidate_patient_ids(
+    doctor_character: game_type.Character,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> List[medical_constant.MedicalPatient]:
+    """
+    返回指定医生角色所有可以进行手术的住院病人ID列表。
+
+    参数:
+        doctor_character: game_type.Character: 指定医生角色对象。
+        target_base (Optional[game_type.Rhodes_Island]): 指定基地实例，默认读取全局缓存。
+    返回:
+        List[medical_constant.MedicalPatient]: 符合条件的住院病人列表。
+    """
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    if rhodes_island is None or not hasattr(rhodes_island, "medical_hospitalized"):
+        return []
+
+    # 获取住院患者列表
+    hospitalized = getattr(rhodes_island, "medical_hospitalized", {}) or {}
+    if not hospitalized:
+        return []
+
+    # 遍历患者列表，检查是否有满足条件的患者
+    result = []
+    for patient in hospitalized.values():
+        if getattr(patient, "state", None) != medical_constant.MedicalPatientState.HOSPITALIZED:
+            continue
+        if not getattr(patient, "need_surgery", False):
+            continue
+        if getattr(patient, "surgery_blocked", False):
+            continue
+        # 检查是否指定了医生
+        assigned_doctor = int(getattr(patient, "assigned_hospital_doctor_id", 0) or 0)
+        if assigned_doctor and assigned_doctor != doctor_character:
+            continue
+        # # 检查是否预定了手术套餐
+        # reserved_package = dict(getattr(patient, "surgery_reserved_package", {}) or {})
+        # reserved_doctor = int(reserved_package.get("doctor_id", 0) or 0)
+        # if reserved_doctor and reserved_doctor != character_id:
+        #     continue
+
+        # 进行完整的手术前置条件检查
+        precheck = evaluate_surgery_preconditions(patient, doctor_character, rhodes_island)
+        if not precheck.can_execute:
+            continue
+        result.append(patient)
+    return result
 
 def conduct_ward_round(
     doctor_character: Optional[game_type.Character],
