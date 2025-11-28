@@ -214,8 +214,6 @@ class MedicalPatient:
     """玩家诊疗流程中等待执行的检查计划列表"""
     last_surgery_result: str = ""
     """最近一次手术流程的结果标识"""
-    surgery_reserved_package: Dict[str, Any] = field(default_factory=dict)
-    """手术预扣的药物资源包与附加信息"""
     surgery_blocked_resource: Optional[int] = None
     """导致手术阻塞的药物资源 ID，None 表示不存在阻塞"""
     state_label: str = ""

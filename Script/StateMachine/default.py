@@ -2431,12 +2431,12 @@ def character_work_start_surgery(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Medical import hospital_doctor_service, medical_constant
+    from Script.System.Medical import medical_service, medical_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
 
     # 获取所有可进行手术的患者列表
-    available_patients_list = hospital_doctor_service.get_surgery_candidate_patient_ids(
+    available_patients_list = medical_service.get_surgery_candidate_patient_ids(
         doctor_character=character_data,
         target_base=cache.rhodes_island,
     )
@@ -2453,6 +2453,14 @@ def character_work_start_surgery(character_id: int):
 
     # 随机选择一个患者
     selected_patient: medical_constant.MedicalPatient = random.choice(available_patients_list)
+
+    # 执行手术资源扣除，失败则回退并结束流程。
+    resources_ready = medical_service.consume_surgery_resources(
+        selected_patient,
+        cache.rhodes_island,
+    )
+    if not resources_ready:
+        return
 
     # 赋予患者本次手术的数据
     selected_patient.assigned_hospital_doctor_id = character_id
