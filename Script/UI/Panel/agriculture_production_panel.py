@@ -33,6 +33,9 @@ def calculate_agriculture_line_efficiency(line_id: int, agriculture_type: int) -
     ri = cache.rhodes_island
     # 设施效率（疗养庭院 facility 16）
     facility_effect = basement.calc_facility_efficiency(16)
+    if agriculture_type == 0:
+        # 药田设施效率加成
+        facility_effect += basement.calc_facility_efficiency(401)
     facility_effect_str = _("* 设施效率调整{0}%").format(round(facility_effect * 100, 1))
 
     # 获取主种植员与候选列表

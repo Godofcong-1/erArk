@@ -133,23 +133,23 @@ def get_base_updata():
 
         # 初始化仓库容量
         if facility_name == _("仓储区"):
-            cache.rhodes_island.warehouse_capacity = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.warehouse_capacity = facility_effect
         # 初始化干员人数上限
         elif facility_name == _("宿舍区"):
-            cache.rhodes_island.people_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.people_max = facility_effect
         # 初始化生活娱乐区设施数量上限
         elif facility_name == _("生活娱乐区"):
-            cache.rhodes_island.life_zone_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.life_zone_max = facility_effect
         # 初始化患者人数上限，并刷新当天患者人数
         elif facility_name == _("医疗部"):
-            cache.rhodes_island.patient_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.patient_max = facility_effect
             cache.rhodes_island.patient_now = random.randint(int(cache.rhodes_island.patient_max / 2),cache.rhodes_island.patient_max)
         # 初始化科研区设施数量上限
         elif facility_name == _("科研部"):
-            cache.rhodes_island.research_zone_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.research_zone_max = facility_effect
         # 初始化战斗时干员数量上限
         elif facility_name == _("指挥室"):
-            cache.rhodes_island.soldier_max = game_config.config_facility_effect[facility_cid].effect
+            cache.rhodes_island.soldier_max = facility_effect
         # 初始化招募条
         elif facility_name == _("文职部"):
             # 初始化招募线，结构:[进度, 策略id, 主招聘专员id, 线效率%]
@@ -191,14 +191,10 @@ def get_base_updata():
                 room_count += 1
             cache.rhodes_island.visitor_max = room_count
         elif facility_name == _("疗养庭院"):
-            # 药田与温室生产线初始化（效率的详细计算延迟到调用方）
-            if 0 not in cache.rhodes_island.herb_garden_line:
-                cache.rhodes_island.herb_garden_line[0] = [0,0,0,0,0]
+            # 温室生产线初始化
             if 0 not in cache.rhodes_island.green_house_line:
                 cache.rhodes_island.green_house_line[0] = [0,0,0,0,0]
             # 计算各线当前效率
-            for agriculture_line_id in cache.rhodes_island.herb_garden_line:
-                detail_str, produce_effect = agriculture_production_panel.calculate_agriculture_line_efficiency(agriculture_line_id,agriculture_type=0)
                 cache.rhodes_island.herb_garden_line[agriculture_line_id][2] = produce_effect
             for agriculture_line_id in cache.rhodes_island.green_house_line:
                 detail_str, produce_effect = agriculture_production_panel.calculate_agriculture_line_efficiency(agriculture_line_id,agriculture_type=1)
@@ -211,6 +207,20 @@ def get_base_updata():
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 2
             elif level <= 3:
                 cache.rhodes_island.remaining_aromatherapy_sessions_today = 1
+        elif facility_name == _("药田"):
+            # 药田生产线初始化
+            if 0 not in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[0] = [0,0,0,0]
+            if level >= 3 and 1 not in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[1] = [0,0,0,0]
+            if level >= 4 and 2 not in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[2] = [0,0,0,0]
+            if level >= 5 and 3 not in cache.rhodes_island.herb_garden_line:
+                cache.rhodes_island.herb_garden_line[3] = [0,0,0,0]
+            # 计算各线当前效率
+            for agriculture_line_id in cache.rhodes_island.herb_garden_line:
+                detail_str, produce_effect = agriculture_production_panel.calculate_agriculture_line_efficiency(agriculture_line_id,agriculture_type=0)
+                cache.rhodes_island.herb_garden_line[agriculture_line_id][2] = produce_effect
 
 def calc_facility_efficiency(facility_cid: int = -1) -> float:
     """
@@ -277,6 +287,8 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢8"]))
     elif facility_cid == 22:
         room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"]))
+    elif facility_cid == 401:
+        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["疗养庭院", "药田"]))
     # 设施损坏调整
     for room_full_str in room_full_str_list:
         if room_full_str in cache.rhodes_island.facility_damage_data:
@@ -289,8 +301,8 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
         adjust -= (1 - now_power_strategy_adjust) / 4
     # 其他直接乘以供电策略
     else:
-        # 厨房、健身区、博士办公室
-        if facility_cid in [5, 7, 9, 13, 22]:
+        # 厨房、健身区、博士办公室、药田
+        if facility_cid in [5, 7, 9, 13, 22, 401]:
             adjust += facility_effect / 100
         adjust *= now_power_strategy_adjust
     # 效率不会小于20%

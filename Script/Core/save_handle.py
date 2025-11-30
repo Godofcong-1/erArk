@@ -225,6 +225,13 @@ def input_load_save(save_id: str):
         if all_cid not in loaded_dict["rhodes_island"].materials_resouce:
             loaded_dict["rhodes_island"].materials_resouce[all_cid] = 0
             update_count += 1
+    # 更新罗德岛的设施等级
+    for all_cid in game_config.config_facility:
+        # 没有记录的设施改为初始等级0
+        if all_cid not in loaded_dict["rhodes_island"].facility_level:
+            loaded_dict["rhodes_island"].facility_level[all_cid] = 1
+            update_count += 1
+    # 更新罗德岛的设施开启状态
     for all_cid in game_config.config_facility_open:
         # 没有记录的设施改为初始关闭
         if all_cid not in loaded_dict["rhodes_island"].facility_open:
