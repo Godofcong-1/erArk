@@ -32,9 +32,14 @@ def _bump_daily_counter(
     # 无可用基地或增量为零时不做处理。
     if rhodes_island is None or value == 0:
         return
-    # 使用字典缓存计数，同步写回罗德岛对象。
-    stats = rhodes_island.__dict__.setdefault("medical_daily_counters", {})
-    stats[key] = int(stats.get(key, 0) or 0) + int(value)
+
+    # 获取显性统计结构，若缺失则自动初始化。
+    counters = _obtain_daily_counters(rhodes_island)
+    if counters is None:
+        return
+
+    # 在目标字段累加增量并写回基对象，保持运行期数据一致。
+    counters.bump(key, value)
 
 
 def _apply_income_to_rhodes(
@@ -80,6 +85,31 @@ def _get_rhodes_island(
     # 否则从缓存中获取默认的罗德岛实例。
     cache_obj = getattr(cache_control, "cache", None)
     return getattr(cache_obj, "rhodes_island", None)
+
+
+def _obtain_daily_counters(
+    rhodes_island: Optional[game_type.Rhodes_Island],
+) -> Optional[medical_constant.MedicalDailyCounters]:
+    """返回罗德岛对象上的医疗当日统计结构。
+
+    参数:
+        rhodes_island (Optional[game_type.Rhodes_Island]): 当前需要读写的基地实例。
+    返回:
+        Optional[medical_constant.MedicalDailyCounters]:
+            规范化后的统计对象，若基地不存在则返回 None。
+    """
+
+    # 缺少基地对象时无法提供统计结构。
+    if rhodes_island is None:
+        return None
+
+    # 读取现有统计字段并在必要时转化为结构体实例。
+    raw_value = getattr(rhodes_island, "medical_daily_counters", None)
+    counters = medical_constant.MedicalDailyCounters.from_mapping(raw_value)
+
+    # 将规范化结果回写至基地对象，确保后续访问保持一致。
+    rhodes_island.medical_daily_counters = counters
+    return counters
 
 
 def _locate_patient(
@@ -267,8 +297,8 @@ def _ensure_runtime_dict(rhodes_island: game_type.Rhodes_Island) -> None:
     # 转换收入、计数器与日志等字段的类型。
     rhodes_island.medical_income_today = int(getattr(rhodes_island, "medical_income_today", 0) or 0)
     rhodes_island.medical_income_total = int(getattr(rhodes_island, "medical_income_total", 0) or 0)
-    rhodes_island.medical_daily_counters = dict(
-        getattr(rhodes_island, "medical_daily_counters", {}) or {}
+    rhodes_island.medical_daily_counters = medical_constant.MedicalDailyCounters.from_mapping(
+        getattr(rhodes_island, "medical_daily_counters", None)
     )
     rhodes_island.medical_recent_reports = list(
         getattr(rhodes_island, "medical_recent_reports", []) or []

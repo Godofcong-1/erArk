@@ -3,4 +3,4 @@ cid,behavior_id,adv_id,premise,context
 str,str,int,str,str
 0,0,0,0,1
 口上配置数据,,,,
-0,cure_patient,0,high_1,{Name}给病人做了诊断并开了药
+0,ward_round,0,high_1,{Name}给住院的病人进行了一次查房

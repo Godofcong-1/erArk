@@ -7327,6 +7327,10 @@ def handle_cure_patient_add_just(
     if not add_time:
         return
 
+    # 跳过玩家自己
+    if character_id == 0:
+        return
+
     doctor_data: game_type.Character = cache.character_data[character_id]
     if doctor_data.dead:
         return
@@ -7334,21 +7338,27 @@ def handle_cure_patient_add_just(
     rhodes_island = cache.rhodes_island
     before_income = rhodes_island.medical_income_today
 
+    # 如果已有病人则选取该病人
     patient_id = getattr(getattr(doctor_data, "work", None), "medical_patient_id", 0)
     patient_obj = None
+    # 先从今日病人中寻找
     if patient_id:
         patient_obj = rhodes_island.medical_patients_today.get(patient_id)
+        # 再从住院病人中寻找
         if patient_obj is None:
             patient_obj = rhodes_island.medical_hospitalized.get(patient_id)
 
+    # 否则获取一个新的病人
     if patient_obj is None:
         patient_obj = medical_service.acquire_patient_for_doctor(doctor_data)
 
+    # 没有病人则直接返回
     if patient_obj is None:
         if hasattr(doctor_data, "work"):
             doctor_data.work.medical_patient_id = 0
         return
 
+    # 进行诊断
     medical_service.advance_diagnose(patient_obj.patient_id, doctor_data)
     income_delta = rhodes_island.medical_income_today - before_income
     waiting_count = rhodes_island.patient_now

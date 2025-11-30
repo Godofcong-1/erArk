@@ -7,7 +7,7 @@ from types import FunctionType
 
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text, flow_handle
-from Script.Design import attr_calculation, basement, instuct_judege, update
+from Script.Design import attr_calculation, basement
 from Script.System.Medical import medical_constant, medical_service
 from Script.UI.Moudle import draw
 
@@ -101,6 +101,11 @@ class MedicalPlayerDiagnosePanel:
         self.player_med_level = 0
         if self.player is not None:
             self.player_med_level = int(self.player.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
+            # 如果玩家有交互对象，则加上交互对象的医疗能力加成
+            if self.player.target_character_id != 0 and self.player.target_character_id in cache.character_data:
+                target_char = cache.character_data[self.player.target_character_id]
+                self.player_med_level += int(target_char.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) / 2 or 0)
+                self.player_med_level = max(8, self.player_med_level)
 
         # 根据病人实际并发症数量确定目标信息，用于评估诊疗完成度
         self.target_complication_count = 0
@@ -146,7 +151,7 @@ class MedicalPlayerDiagnosePanel:
             hint_draw = draw.NormalDraw()
             hint_draw.width = self.width
             hint_draw.text = _("○展开检查菜单以从系统 → 部位 → 并发症逐级挑选检查项目，项目格式为：病症等级|怀疑病症名|检查方式。\n")
-            hint_draw.text += _("○开启治疗提示后，会根据博士的医疗能力等级来高亮显示正确的患病系统、部位、症状等，能力越高显示越具体。\n")
+            hint_draw.text += _("○开启治疗提示后，会根据博士的医疗能力等级（+交互干员的一半）来高亮显示正确的患病系统、部位、症状等，能力越高显示越具体。\n")
             hint_draw.draw()
 
             # 依次输出提示、病历、检查状态及检查目录
@@ -933,11 +938,13 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None or self.player is None:
             return
 
+        # 计算未确诊并发症数量
         actual_complications: Set[int] = set()
         if getattr(self.patient, "complications", None):
             actual_complications = {int(cid) for cid in self.patient.complications if cid}
         confirmed_set: Set[int] = {int(cid) for cid in self._get_confirmed_complications()}
 
+        # 计算缺失并发症数量
         if not actual_complications and self.target_complication_count:
             missing_count = max(self.target_complication_count - len(confirmed_set), 0)
         else:
@@ -946,6 +953,7 @@ class MedicalPlayerDiagnosePanel:
         used_checks = int(getattr(self.patient, "player_used_checks", 0) or 0)
         remaining_checks = max(self.max_checks - used_checks, 0)
 
+        # 如果存在未确诊项且仍有检查次数，提示用户确认是否继续治疗
         if (
             not self._awaiting_treatment_confirmation
             and missing_count > 0
@@ -957,6 +965,7 @@ class MedicalPlayerDiagnosePanel:
             ).format(count=missing_count)
             return
 
+        # 用户已确认继续治疗，执行结算
         self._awaiting_treatment_confirmation = False
         self._execute_treatment_commit()
 
@@ -980,14 +989,17 @@ class MedicalPlayerDiagnosePanel:
         if self.patient is None or self.player is None:
             return
 
+        # 调用医疗服务层提交诊疗结果
         outcome = medical_service.commit_player_diagnose_session(
             self.player,
             patient=self.patient,
             apply_medicine=True,
         )
+        # 结算失败时记录原因并返回
         if not outcome.get("success"):
             self.feedback_text = _("治疗操作失败：{0}").format(outcome.get("reason", "unknown"))
             return
+        # 记录治疗结果并提示收益
         self.treatment_result = outcome
         self.feedback_text = _(
             "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
@@ -1079,38 +1091,17 @@ class MedicalPlayerDiagnosePanel:
         返回:
             None。
         """
-        if self._treatment_committed and self.player is not None:
-            # 正常完成治疗后按较长时长结算
-            duration = self._resolve_duration_minutes(30)
-            self._apply_time_cost(duration)
-        elif self._abort_requested and self.player is not None:
-            duration = 0
-            if self._checks_executed > 0:
-                # 即便中途退出，只要执行过检查仍需扣除少量时间
-                duration = self._resolve_duration_minutes(10)
-            if duration > 0:
-                self._apply_time_cost(duration)
-
-    def _apply_time_cost(self, minutes: int) -> None:
-        """将指定分钟数应用到玩家的行为时间线上。
-
-        参数:
-            minutes (int): 需要消耗的时间长度，单位为分钟。
-
-        返回:
-            None。
-        """
-        if minutes <= 0 or self.player is None:
-            return
-        instuct_judege.init_character_behavior_start_time(0, cache.game_time)
-        self.player.behavior.behavior_id = constant.Behavior.WAIT
-        self.player.behavior.duration = minutes
-        self.player.behavior.start_time = cache.game_time
-        update.game_update_flow(minutes)
-        self.player.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
-        self.player.behavior.duration = 1
-        # 将行为状态同步回短暂的发呆动作，避免等待行为残留
-        self.player.behavior.start_time = cache.game_time
+        # 基础耗时5分钟
+        duration = 5
+        # 按检查次数累计耗时，每次检查+10分钟
+        if self._checks_executed > 0 and self.player is not None:
+            duration = self._checks_executed * 10
+        from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+        # 如果中途退出，则进行等待结算
+        if self._abort_requested:
+            chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration=duration, force_taget_wait=True)
+        # 正常情况下直接结算
+            chara_handle_instruct_common_settle(constant.Behavior.CURE_PATIENT, duration=duration, force_taget_wait=False)
 
     # --- 工具方法 ---------------------------------------------------------
 

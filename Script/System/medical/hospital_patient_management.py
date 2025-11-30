@@ -163,8 +163,6 @@ def process_single_hospitalized_patient(
     if consumed_total:
         medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
 
-    medical_core._bump_daily_counter(rhodes_island, "total_treated_patients", 1)
-
     result.update(
         {
             "handled": True,
@@ -174,8 +172,12 @@ def process_single_hospitalized_patient(
         }
     )
 
+    # 记录诊疗完成次数，便于与后续用药完成分开统计。
+    medical_core._bump_daily_counter(rhodes_island, "diagnose_completed_hospital", 1)
+
     if success:
-        medical_core._bump_daily_counter(rhodes_island, "hospital_treated_success", 1)
+        # 仅在用药成功时统计完成治疗的住院病人。
+        medical_core._bump_daily_counter(rhodes_island, "medicine_completed_hospital", 1)
         new_severity = severity_before - 1
         if new_severity < 0:
             discharge_bonus = int(round(float(severity_config.discharge_bonus) * price_ratio * income_multiplier))
@@ -196,7 +198,7 @@ def process_single_hospitalized_patient(
                 refresh_patient_hospital_needs(patient, next_config, reset_progress=True)
                 result.update({"result": "severity_decreased", "severity_after": new_severity})
     else:
-        medical_core._bump_daily_counter(rhodes_island, "hospital_treated_pending", 1)
+        medical_core._bump_daily_counter(rhodes_island, "hospital_waiting_medicine", 1)
         base_income = int(round(float(severity_config.hospital_base_income) * price_ratio * income_multiplier))
         if base_income > 0:
             medical_core._apply_income_to_rhodes(rhodes_island, base_income)
@@ -350,10 +352,9 @@ def try_consume_medicine(
 
     if not is_hospitalized:
         if overall_success:
-            medical_core._bump_daily_counter(rhodes_island, "total_treated_patients", 1)
-            medical_core._bump_daily_counter(rhodes_island, "outpatient_cured", 1)
+            medical_core._bump_daily_counter(rhodes_island, "medicine_completed_outpatient", 1)
         else:
-            medical_core._bump_daily_counter(rhodes_island, "outpatient_pending", 1)
+            medical_core._bump_daily_counter(rhodes_island, "outpatient_waiting_medicine", 1)
 
     patient.last_consumed_units = consumed_units
 

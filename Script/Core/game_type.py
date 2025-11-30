@@ -1233,7 +1233,7 @@ class Rhodes_Island:
         """ 今日医疗板块龙门币收入 """
         self.medical_income_total: int = 0
         """ 累计医疗板块龙门币收入 """
-        self.medical_daily_counters: Dict[str, int] = {}
+        self.medical_daily_counters = medical_constant.MedicalDailyCounters()
         """ 医疗系统当日统计数据 """
         self.medical_recent_reports: List[Dict[str, Any]] = []
         """ 医疗系统近期经营日志 """

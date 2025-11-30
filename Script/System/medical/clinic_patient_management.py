@@ -947,38 +947,40 @@ def advance_diagnose(
         None
     """
 
-    # 没有医生对象时无法推进诊疗。
+    # 没有医生对象时无法推进诊疗
     if doctor_character is None:
         return
 
-    # 定位罗德岛实例，缺失时直接退出。
+    # 定位罗德岛实例，缺失时直接退出
     rhodes_island = medical_core._get_rhodes_island(target_base)
     if rhodes_island is None:
         return
 
-    # 查找病人信息，并确认是否仍属于门诊流程。
+    # 查找病人信息，并确认是否仍属于门诊流程
     patient, hospitalized = medical_core._locate_patient(patient_id, rhodes_island)
     if patient is None or hospitalized:
         return
 
-    # 将医生与当前病人绑定，便于后续查询。
+    # 将医生与当前病人绑定，便于后续查询
     if hasattr(doctor_character, "work"):
         doctor_character.work.medical_patient_id = patient.patient_id
 
-    # 检查病人状态是否仍需要诊疗，若已进入后续流程则解除绑定。
+    # 检查病人状态是否仍需要诊疗，若已进入后续流程则解除绑定
     if patient.state in (
         medical_constant.MedicalPatientState.WAITING_MEDICATION,
         medical_constant.MedicalPatientState.HOSPITALIZED,
         medical_constant.MedicalPatientState.DISCHARGED,
     ):
+        # 病人已不在诊疗队列中，解除医生绑定后直接返回
         if getattr(patient, "assigned_doctor_id", 0) == doctor_character.cid:
             patient.assigned_doctor_id = 0
+        # 解除医生与病人绑定
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
         medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
-    # 读取病情配置，若缺失则终止诊疗并清理状态。
+    # 读取病情配置，若缺失则终止诊疗并清理状态
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
         if hasattr(doctor_character, "work"):
@@ -987,10 +989,12 @@ def advance_diagnose(
         medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
-    # 根据配置计算所需诊疗时长，并在异常时直接转入发药阶段。
+    # 根据配置计算所需诊疗时长，并在异常时直接转入发药阶段
     base_hours = float(severity_config.base_hours)
     if base_hours <= 0:
         set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
+        # 即时完成诊疗时同样记录诊疗阶段统计。
+        medical_core._bump_daily_counter(rhodes_island, "diagnose_completed_outpatient", 1)
         if getattr(patient, "assigned_doctor_id", 0) == doctor_character.cid:
             patient.assigned_doctor_id = 0
         if hasattr(doctor_character, "work"):
@@ -1002,44 +1006,49 @@ def advance_diagnose(
         medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
-    # 依据医生能力计算单次推进的进度值。
+    # 依据医生能力计算单次推进的进度值
     ability_level = doctor_character.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0)
     ability_adjust = float(handle_ability.get_ability_adjust(ability_level))
     progress_increment = max(ability_adjust, 0.25)
 
-    # 写入病人元数据并累加诊疗进度。
+    # 写入病人元数据并累加诊疗进度
     patient.assigned_doctor_id = doctor_character.cid
     set_patient_state(patient, medical_constant.MedicalPatientState.IN_TREATMENT)
     patient.diagnose_progress = min(patient.diagnose_progress + progress_increment, base_hours)
 
-    # 诊疗尚未完成时仅同步计数并等待下一次推进。
+    # 诊疗尚未完成时仅同步计数并等待下一次推进
     if patient.diagnose_progress < base_hours:
         medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
-    # 进度达到要求后切换状态并结算诊疗收入。
+    # 进度达到要求后切换状态并结算诊疗收入
     patient.diagnose_progress = base_hours
     set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
+
+    # 记录诊疗完成统计，区分门诊总量与细分来源
+    medical_core._bump_daily_counter(rhodes_island, "diagnose_completed_outpatient", 1)
 
     price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
     income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
     raw_income = float(severity_config.diagnose_income) * price_ratio * income_multiplier
     income_value = int(round(raw_income))
 
-    # 将诊疗收入加到账面，并同步病人数统计。
+    # 将诊疗收入加到账面，并同步病人数统计
     if income_value > 0:
         rhodes_island.medical_income_today += income_value
         rhodes_island.medical_income_total += income_value
         rhodes_island.all_income += income_value
         rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + income_value
 
+    # 解除医生与病人绑定
     patient.assigned_doctor_id = 0
+    # 计算治愈统计数据
     rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
     rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
 
+    # 根据病情配置决定是否需要住院治疗
     if getattr(severity_config, "require_hospitalization", 0) == 1:
         from Script.System.Medical import medical_service
-
         medical_service.try_hospitalize(patient.patient_id, target_base=rhodes_island)
 
     # 清理医生绑定，等待下一位病人。

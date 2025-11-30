@@ -530,7 +530,7 @@ def update_doctor_assignments(
     hospital_power: Optional[float] = None,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> None:
-    """同步医生名单与能力值，并自动刷新床位上限。
+    """同步医生名单与能力值，床位刷新需另行调用。
 
     参数:
         clinic_doctors (Optional[List[int]]): 门诊医生 ID 列表，None 表示沿用现值。
@@ -572,8 +572,7 @@ def update_doctor_assignments(
             getattr(rhodes_island, "medical_hospital_doctor_power", 0.0) or 0.0
         )
 
-    # 重新计算床位上限，并保持分科结构的有效性。
-    rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(rhodes_island)
+    # 仅保持分科结构有效性，床位上限在外部统一刷新。
     _ensure_specialization_structure(rhodes_island)
 
 

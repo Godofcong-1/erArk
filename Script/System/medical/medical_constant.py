@@ -7,7 +7,7 @@ from Script.Core import get_text
 from dataclasses import dataclass, field
 from enum import Enum
 from itertools import count
-from typing import Tuple, Dict, List, Any, Optional
+from typing import Tuple, Dict, List, Any, Optional, ClassVar, Mapping, Iterable
 _: FunctionType = get_text._
 """ 翻译函数 """
 
@@ -234,6 +234,142 @@ class MedicalPatient:
             self.need_resources.setdefault(resource_id, 0.0)
 
 
+@dataclass
+class MedicalDailyCounters:
+    """医疗系统当日统计结构体，统一维护所有计数项。
+
+    该结构替代历史上使用的临时字典字段，提供显性的属性与辅助方法，
+    便于在运行期与日志渲染阶段保持字段名称一致性。
+    """
+
+    diagnose_completed_outpatient: int = 0
+    """今日完成诊疗的门诊病人数"""
+    diagnose_completed_hospital: int = 0
+    """今日完成诊疗的住院病人数"""
+    medicine_completed_outpatient: int = 0
+    """今日成功发药的门诊病人数"""
+    medicine_completed_hospital: int = 0
+    """今日成功发药的住院病人数"""
+    outpatient_waiting_medicine: int = 0
+    """今日仍在等待发药的门诊病人数"""
+    hospital_waiting_medicine: int = 0
+    """今日仍在等待发药的住院病人数"""
+    hospitalized_today: int = 0
+    """今日新增入院的病人数"""
+    discharged_today: int = 0
+    """今日完成出院的病人数"""
+    medicine_consumed: int = 0
+    """今日消耗的药品总单位数"""
+    surgeries_performed: int = 0
+    """今日成功执行的手术次数"""
+
+    DISPLAY_NAME_MAPPING: ClassVar[Dict[str, str]] = {
+        "diagnose_completed_outpatient": _("门诊诊疗完成"),
+        "diagnose_completed_hospital": _("住院诊疗完成"),
+        "medicine_completed_outpatient": _("门诊发药完成"),
+        "medicine_completed_hospital": _("住院发药完成"),
+        "outpatient_waiting_medicine": _("门诊待发药"),
+        "hospital_waiting_medicine": _("住院待发药"),
+        "hospitalized_today": _("今日入院"),
+        "discharged_today": _("今日出院"),
+        "medicine_consumed": _("药品消耗单位"),
+        "surgeries_performed": _("手术完成次数"),
+    }
+    """字段展现用的中文名称映射，供 UI 友好展示使用。"""
+
+    @classmethod
+    def from_mapping(cls, source: Optional[object]) -> "MedicalDailyCounters":
+        """根据传入对象生成规范化的统计数据实例。
+
+        参数:
+            source (Optional[object]): 允许为 dict、同类对象或 None。
+        返回:
+            MedicalDailyCounters: 规范化后的统计实例，缺省数据置零。
+        """
+
+        # --- 若源对象已是目标类型则直接返回，避免重复拷贝 ---
+        if isinstance(source, cls):
+            return source
+
+        # --- 构造默认实例，并在给定映射时逐项转写字段 ---
+        counters = cls()
+        if isinstance(source, Mapping):
+            for key, value in source.items():
+                counters.set_value(str(key), int(value or 0))
+        return counters
+
+    def set_value(self, key: str, value: int) -> None:
+        """将指定字段设置为给定数值。
+
+        参数:
+            key (str): 目标字段名称。
+            value (int): 需要写入的整型数值。
+        返回:
+            None
+        """
+
+        # --- 找不到对应属性时直接忽略，防止非法键破坏数据结构 ---
+        if key not in self.__dataclass_fields__:
+            return
+
+        # --- 写入整型后的安全值，保证负值同样被允许记录 ---
+        setattr(self, key, int(value))
+
+    def bump(self, key: str, delta: int) -> None:
+        """在指定字段上累加增量。
+
+        参数:
+            key (str): 目标字段名称。
+            delta (int): 需要累加的增量值，可为正负数。
+        返回:
+            None
+        """
+
+        # --- 零增量无需写入，直接返回避免多余操作 ---
+        if delta == 0:
+            return
+
+        # --- 解析字段名称并确认其存在 ---
+        if key not in self.__dataclass_fields__:
+            return
+
+        # --- 执行累加并覆盖原值，统一保持整型 ---
+        current_value = int(getattr(self, key, 0))
+        setattr(self, key, current_value + int(delta))
+
+    def reset(self) -> None:
+        """将全部统计字段重置为零。
+
+        返回:
+            None
+        """
+
+        # --- 遍历所有 dataclass 字段并逐项清零 ---
+        for field_name in self.__dataclass_fields__:
+            setattr(self, field_name, 0)
+
+    def as_dict(self) -> Dict[str, int]:
+        """以字典形式返回统计数据。
+
+        返回:
+            Dict[str, int]: 统计字段到整型值的映射。
+        """
+
+        # --- 将所有显性字段转写为纯整数字典 ---
+        return {field: int(getattr(self, field, 0)) for field in self.__dataclass_fields__}
+
+    def items(self) -> Iterable[Tuple[str, int]]:
+        """返回可迭代的字段键值对，用于 UI 展示。
+
+        返回:
+            Iterable[Tuple[str, int]]: 以 (字段名, 数值) 形式输出的可迭代对象。
+        """
+
+        # --- 直接遍历字典形式的数据，以保持输出顺序稳定 ---
+        for key, value in self.as_dict().items():
+            yield key, value
+
+
 # 统一定义病人接诊优先策略的文本转换和选项列表
 def translate_priority(mode: MedicalPatientPriority) -> str:
     """将病人接诊优先策略转换为用户可读文本"""
@@ -277,4 +413,5 @@ __all__ = [
     "PRIORITY_OPTIONS",
     "WAITING_QUEUE_STATES",
     "WAITING_QUEUE_STATE_SET",
+    "MedicalDailyCounters",
 ]

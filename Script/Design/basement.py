@@ -559,6 +559,7 @@ def assign_character_work(character_id: int, work_id: int, *, update: bool = Tru
         update_work_people()
         update_facility_people()
     return True
+
 def settle_milk():
     """
     结算母乳转化

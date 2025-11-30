@@ -11,8 +11,7 @@ from types import FunctionType
 
 from Script.Config import normal_config
 from Script.Core import game_type, get_text
-from Script.UI.Moudle import draw
-from Script.UI.Panel import achievement_panel
+
 from Script.System.Medical import (
     clinic_doctor_service,
     clinic_patient_management,
@@ -66,6 +65,10 @@ resolve_surgery_requirements = hospital_patient_management.resolve_surgery_requi
 discharge_patient = hospital_patient_management.discharge_patient
 refresh_patient_hospital_needs = hospital_patient_management.refresh_patient_hospital_needs
 
+# --- 医疗日志相关函数重导出 ---
+append_medical_report = log_system.append_medical_report
+get_recent_medical_reports = log_system.get_recent_medical_reports
+render_medical_reports = log_system.render_medical_reports
 
 def init_medical_department_data(
     target_base: Optional[game_type.Rhodes_Island] = None,
@@ -104,7 +107,7 @@ def init_medical_department_data(
         # 重置收入、计数器与医生配置。
         rhodes_island.medical_income_today = 0
         rhodes_island.medical_income_total = 0
-        rhodes_island.medical_daily_counters = {}
+        rhodes_island.medical_daily_counters = medical_constant.MedicalDailyCounters()
         rhodes_island.medical_recent_reports = []
         rhodes_island.medical_clinic_doctor_ids = []
         rhodes_island.medical_clinic_doctor_power = 0.0
@@ -181,22 +184,9 @@ def settle_medical_department(
     # 先处理住院病人的日常消耗，避免统计落后一步。
     process_hospitalized_patients(target_base=rhodes_island)
 
-    # 复制一份日度统计字典，确保后续操作不会影响原始记录。
-    # 拉取日常计数器并复制成新的字典，避免影响原始对象。
-    stats_source = dict(getattr(rhodes_island, "medical_daily_counters", {}) or {})
-    stats: Dict[str, int] = {str(key): int(value) for key, value in stats_source.items()}
-    for required_key in (
-        "total_treated_patients",
-        "hospitalized_today",
-        "discharged_today",
-        "medicine_consumed",
-        "outpatient_cured",
-        "outpatient_pending",
-        "hospital_treated_success",
-        "hospital_treated_pending",
-        "surgeries_performed",
-    ):
-        stats.setdefault(required_key, 0)
+    # 拉取显性日常计数器，确保结算阶段使用统一字段。
+    counters = medical_core._obtain_daily_counters(rhodes_island)
+    stats: Dict[str, int] = counters.as_dict() if counters else {}
 
     # 拉取实收收入与收费系数，供结算描述使用。
     income_today = int(rhodes_island.medical_income_today or 0)
@@ -217,26 +207,40 @@ def settle_medical_department(
         1 for patient in hospitalized_patients if patient.need_surgery and patient.surgery_blocked
     )
 
-    outpatient_cured = stats.get("outpatient_cured", 0)
-    hospital_success = stats.get("hospital_treated_success", 0)
+    diagnose_outpatient = stats.get("diagnose_completed_outpatient", 0)
+    diagnose_hospital = stats.get("diagnose_completed_hospital", 0)
+    diagnose_total = diagnose_outpatient + diagnose_hospital
+    medicine_outpatient = stats.get("medicine_completed_outpatient", 0)
+    medicine_hospital = stats.get("medicine_completed_hospital", 0)
+    medicine_total = medicine_outpatient + medicine_hospital
     medicine_consumed = stats.get("medicine_consumed", 0)
     hospitalized_today = stats.get("hospitalized_today", 0)
     discharged_today = stats.get("discharged_today", 0)
     surgeries_performed = stats.get("surgeries_performed", 0)
-    outpatient_pending = stats.get("outpatient_pending", 0)
-    hospital_pending = stats.get("hospital_treated_pending", 0)
-    total_treated = stats.get("total_treated_patients", outpatient_cured + hospital_success)
+    outpatient_waiting_medicine = stats.get("outpatient_waiting_medicine", 0)
+    hospital_waiting_medicine = stats.get("hospital_waiting_medicine", 0)
 
     # 拼装结算文本，按行描述核心指标。
     body_lines: List[str] = []
     body_lines.append(_("今日收入：{0} 龙门币").format(income_today))
     body_lines.append(_("收费系数：{0:.0f}%").format(price_ratio * 100))
     body_lines.append(
-        _("诊疗完成：{0} 人（门诊 {1} / 住院 {2}）").format(total_treated, outpatient_cured, hospital_success)
+        _("诊疗完成：{0} 人（门诊 {1} / 住院 {2}）").format(
+            diagnose_total,
+            diagnose_outpatient,
+            diagnose_hospital,
+        )
     )
-    if outpatient_pending or hospital_pending:
+    body_lines.append(
+        _("用药完成：{0} 人（门诊 {1} / 住院 {2}）").format(
+            medicine_total,
+            medicine_outpatient,
+            medicine_hospital,
+        )
+    )
+    if outpatient_waiting_medicine or hospital_waiting_medicine:
         body_lines.append(
-            _("待发药：门诊 {0} 人 / 住院 {1} 人").format(outpatient_pending, hospital_pending)
+            _("待发药：门诊 {0} 人 / 住院 {1} 人").format(outpatient_waiting_medicine, hospital_waiting_medicine)
         )
     body_lines.append(_("药品消耗：{0} 单位").format(medicine_consumed))
     body_lines.append(_("今日入院：{0} 人 / 出院：{1} 人").format(hospitalized_today, discharged_today))
@@ -252,16 +256,6 @@ def settle_medical_department(
             need_surgery_count,
         )
     )
-
-    # 生成最终输出文本，包含标题和条目列表。
-    report_text = _("\n医疗部经营结算\n") + "".join(f" - {line}\n" for line in body_lines)
-
-    if draw_flag:
-        # 在 UI 中即时展示结算结果。
-        wait_draw = draw.WaitDraw()
-        wait_draw.width = normal_config.config_normal.text_width
-        wait_draw.text = report_text
-        wait_draw.draw()
 
     # 记录队列快照，供日志与外部查询使用。
     queue_snapshot = {
@@ -284,15 +278,24 @@ def settle_medical_department(
         target_base=rhodes_island,
     )
 
+    # 使用统一的日志渲染函数生成文本，并按需绘制在界面上。
+    report_text = log_system.render_medical_reports(
+        [log_entry],
+        width=normal_config.config_normal.text_width,
+        draw_flag=draw_flag,
+    )
+
     # 触发成就面板刷新龙门币成就进度。
+    from Script.UI.Panel import achievement_panel
     achievement_panel.achievement_flow(_("龙门币"))
 
     # 结算结束后重置当日收入与计数器，等待下一轮业务累计。
     rhodes_island.medical_income_today = 0
     rhodes_island.all_income = 0
-    rhodes_island.medical_daily_counters = {}
+    rhodes_island.medical_daily_counters = medical_constant.MedicalDailyCounters()
 
     refresh_medical_patients(target_base=rhodes_island)
+    rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(rhodes_island)
     medical_core._sync_legacy_patient_counters(rhodes_island)
 
     return {
