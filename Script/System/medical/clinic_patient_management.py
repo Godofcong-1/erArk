@@ -451,8 +451,18 @@ def _select_triage_candidate(
     if not candidates:
         return None
 
-    # 根据当前优先策略决定排序规则。
+    # --- 根据当前优先策略决定筛选规则，并优先处理默认分诊逻辑 ---
     mode = _resolve_triage_mode(rhodes_island)
+
+    # --- 默认策略：若存在危重病人则立即返回，否则按照刷新顺序先来后到 ---
+    if mode == medical_constant.MedicalPatientPriority.NORMAL:
+        for target in candidates:
+            severity_level = int(getattr(target, "severity_level", 0) or 0)
+            if severity_level == medical_constant.CRITICAL_SEVERITY_LEVEL:
+                return target
+        return candidates[0]
+
+    # --- 轻症优先策略：继续按严重度升序、诊疗进度与编号排序 ---
     if mode == medical_constant.MedicalPatientPriority.FOCUS_MILD:
         key_func = lambda target: (
             int(getattr(target, "severity_level", 0) or 0),
@@ -461,6 +471,7 @@ def _select_triage_candidate(
         )
         return min(candidates, key=key_func)
 
+    # --- 其他策略（默认兼容重症优先）继续采用严重度降序的旧排序逻辑 ---
     key_func = lambda target: (
         -int(getattr(target, "severity_level", 0) or 0),
         -float(getattr(target, "diagnose_progress", 0.0) or 0.0),
@@ -537,7 +548,15 @@ def start_player_diagnose_session(
     *,
     target_base: Optional[game_type.Rhodes_Island] = None,
 ) -> Optional[medical_constant.MedicalPatient]:
-    """初始化玩家诊疗会话。"""
+    """
+    初始化玩家诊疗会话。
+
+    参数:
+        doctor_character (Optional[game_type.Character]): 玩家当前操控的医生角色。
+        target_base (Optional[game_type.Rhodes_Island]): 目标基地对象。
+    返回:
+        Optional[medical_constant.MedicalPatient]: 分配到的病人对象，若无则返回 None。
+    """
 
     # 确定会话关联的基地对象。
     rhodes_island = medical_core._get_rhodes_island(target_base)

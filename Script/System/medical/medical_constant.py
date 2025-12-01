@@ -53,6 +53,9 @@ MAX_RECENT_REPORTS: int = 7
 HOSPITAL_DOCTOR_BED_BONUS: int = 2
 """每名住院医生提供的额外床位数量"""
 
+CRITICAL_SEVERITY_LEVEL: int = 3
+"""危重病人在 Medical_Severity.csv 中的严重度等级编号"""
+
 SPECIALIZATION_ROLES: Tuple[str, str] = (
     SPECIALIZATION_ROLE_CLINIC,
     SPECIALIZATION_ROLE_HOSPITAL,
@@ -136,7 +139,7 @@ class MedicalPatientPriority(str, Enum):
     """医疗部病人接诊优先策略枚举"""
 
     NORMAL = "normal"
-    """默认策略，按病情等级常规排序"""
+    """默认策略，优先危重病人，其余维持刷新队列的先来后到顺序"""
     FOCUS_CRITICAL = "focus_critical"
     """优先处理重症/危重患者"""
     FOCUS_MILD = "focus_mild"
@@ -404,6 +407,7 @@ __all__ = [
     "MAX_SURGERY_RECORDS",
     "MAX_RECENT_REPORTS",
     "HOSPITAL_DOCTOR_BED_BONUS",
+    "CRITICAL_SEVERITY_LEVEL",
     "SPECIALIZATION_ROLES",
     "PATIENT_ID_COUNTER",
     "ALL_MEDICINE_RESOURCE_IDS",
