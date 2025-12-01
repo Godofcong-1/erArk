@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-11-26 19:07+0800\n"
+"POT-Creation-Date: 2025-12-01 14:51+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -19756,6 +19756,14 @@ msgstr ""
 msgid "遍布岛内各处的休息室，升级可以提升在这里休息时的恢复效率"
 msgstr ""
 
+#: .\data\csv\Facility.csv:32
+msgid "药田"
+msgstr ""
+
+#: .\data\csv\Facility.csv:32
+msgid "种植药用植物的地方，升级可以增加药田的线数量上限"
+msgstr ""
+
 #: .\data\csv\Facility_effect.csv:7
 msgid "设施最高等级为二级"
 msgstr ""
@@ -20182,6 +20190,26 @@ msgstr ""
 
 #: .\data\csv\Facility_effect.csv:155
 msgid "休息效率加成提升30%"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:157
+msgid "药田生产线数量上限为1条"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:158
+msgid "药田生产线的效率提升10%"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:159
+msgid "药田生产线数量上限提升至2条，效率提升20%"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:160
+msgid "药田生产线数量上限提升至3条，效率提升30%"
+msgstr ""
+
+#: .\data\csv\Facility_effect.csv:161
+msgid "药田生产线数量上限提升至4条，效率提升50%"
 msgstr ""
 
 #: .\data\csv\Facility_open.csv:8
@@ -41598,10 +41626,6 @@ msgstr ""
 
 #: .\data\csv\WorkType.csv:25
 msgid "药材种植员"
-msgstr ""
-
-#: .\data\csv\WorkType.csv:25
-msgid "药田"
 msgstr ""
 
 #: .\data\csv\WorkType.csv:25
