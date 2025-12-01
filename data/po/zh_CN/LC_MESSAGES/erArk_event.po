@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-01 14:51+0800\n"
+"POT-Creation-Date: 2025-12-01 14:55+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -1289,11 +1289,11 @@ msgid "举起{TargetName}的萝莉手臂，露出光滑的腋下\n要怎么做�
 msgstr ""
 
 #: Event:ecb4599c-551c-43c5-8631-82d9ef36f07c
-msgid "舔|举起{TargetName}的手臂开始舔舐什么味道都没有的光滑腋下\n\n“呼呼呼 好痒啊”"
+msgid "舔|举起{TargetName}的手臂开始舔舐什么味道都没有的光滑腋下\n\n⌈呼呼呼 好痒啊⌋"
 msgstr ""
 
 #: Event:7139c87e-eef8-4292-b4e1-7fad3432d5d8
-msgid "闻|举起{TargetName}的手臂开始闻什么味道都没有的光滑腋下\n\n“呼呼呼 好痒啊”"
+msgid "闻|举起{TargetName}的手臂开始闻什么味道都没有的光滑腋下\n\n⌈呼呼呼 好痒啊⌋"
 msgstr ""
 
 #: Event:8ef6ddfd-2485-4956-9495-a3bbac456211
@@ -1381,11 +1381,11 @@ msgid "继续|{TargetName}口里的精液已经溢出到整张脸上都被染白
 msgstr ""
 
 #: Event:6d835ed0-979a-4723-a250-342aa2c91f7f
-msgid "按着头塞到晕过去|{PlayerName}的龟头深深塞在铃兰纤细的喉咙深处，抓着铃兰的头就这样塞着\n狐狸耳朵惊恐地竖直起来，纤细的手拼命捶打着{PlayerName}的大腿，试图让{PlayerName}放开\n过多的精液混合着从嘴角不断溢出，在地上汇成一片\n可{PlayerName}依旧没一点松手的意思\n{PlayerName}的身体开始痉挛，原本有力的拍打渐渐变得虚弱，耳朵无力地垂下，\n“呜…哈…”\n发出微弱的呜咽声，腹部因为吞咽了太多液体而微微鼓起。意识开始变得模糊\n在{PlayerName}毫不留情的压制下，{TargetName}的眼睛向上翻去，\n小小的身子软软地倒了下去。昏过去的少女嘴角还挂着白浊的液体，胸口微弱起伏着\n{PlayerName}松开手后，{TargetName}像脱线木偶一样无力地瘫在那里，完全失去了意识\n无论怎么拍脸都没反应，看来是叫不起了。抱起先放到{PlayerName}房间去吧"
+msgid "按着头塞到晕过去|{PlayerName}的龟头深深塞在铃兰纤细的喉咙深处，抓着铃兰的头就这样塞着\n狐狸耳朵惊恐地竖直起来，纤细的手拼命捶打着{PlayerName}的大腿，试图让{PlayerName}放开\n过多的精液混合着从嘴角不断溢出，在地上汇成一片\n可{PlayerName}依旧没一点松手的意思\n{PlayerName}的身体开始痉挛，原本有力的拍打渐渐变得虚弱，耳朵无力地垂下，\n⌈呜…哈…⌋\n发出微弱的呜咽声，腹部因为吞咽了太多液体而微微鼓起。意识开始变得模糊\n在{PlayerName}毫不留情的压制下，{TargetName}的眼睛向上翻去，\n小小的身子软软地倒了下去。昏过去的少女嘴角还挂着白浊的液体，胸口微弱起伏着\n{PlayerName}松开手后，{TargetName}像脱线木偶一样无力地瘫在那里，完全失去了意识\n无论怎么拍脸都没反应，看来是叫不起了。抱起先放到{PlayerName}房间去吧"
 msgstr ""
 
 #: Event:b2d3a83d-c613-46aa-b522-a1b6c4921c3f
-msgid "停手|啵的一声脆响将塞紧{TargetName}喉咙的肉棒一下整根拔出后，{TargetName}的小口失去堵塞物像闸门被打开一样\n积聚过多的大量精液一下子被吐出来，不断地呛咳着将大量的精液呕出\n“咳、咳咳！”\n每一次咳嗽都会带出一大股粘稠的精液，胸前完全浸湿\n“呜呕…”\n{TargetName}喉咙里发出呕吐声，闭不上的小嘴不断涌出新的白浊\n原本鼓胀的小腹逐渐瘪下去，取而代之的是地上那一滩还在扩大面积，散发着浓郁雄性腥臭气息的黏液\n漂亮的毛茸茸的大尾巴都无力地摊在地上，沾染了污秽的液体\n{TargetName}精致的五官因为呕吐而扭曲，就连平时梳理整齐的金发也变得凌乱不堪\n少女的喉咙深处还在不断传出咕噜咕噜的精液在里面冒泡的声音\n“好…好难受…”\n真是惨状，就先放过{TargetName}吧"
+msgid "停手|啵的一声脆响将塞紧{TargetName}喉咙的肉棒一下整根拔出后，{TargetName}的小口失去堵塞物像闸门被打开一样\n积聚过多的大量精液一下子被吐出来，不断地呛咳着将大量的精液呕出\n⌈咳、咳咳！⌋\n每一次咳嗽都会带出一大股粘稠的精液，胸前完全浸湿\n⌈呜呕…⌋\n{TargetName}喉咙里发出呕吐声，闭不上的小嘴不断涌出新的白浊\n原本鼓胀的小腹逐渐瘪下去，取而代之的是地上那一滩还在扩大面积，散发着浓郁雄性腥臭气息的黏液\n漂亮的毛茸茸的大尾巴都无力地摊在地上，沾染了污秽的液体\n{TargetName}精致的五官因为呕吐而扭曲，就连平时梳理整齐的金发也变得凌乱不堪\n少女的喉咙深处还在不断传出咕噜咕噜的精液在里面冒泡的声音\n⌈好…好难受…⌋\n真是惨状，就先放过{TargetName}吧"
 msgstr ""
 
 #: Event:ca2ea55d-1c4c-4c06-8d32-832b9c6b4f58
