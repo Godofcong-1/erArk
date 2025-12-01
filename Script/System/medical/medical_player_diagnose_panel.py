@@ -73,48 +73,126 @@ class MedicalPlayerDiagnosePanel:
         """
         self.width = width
         self.player: Optional[game_type.Character] = cache.character_data.get(0)
-        self.patient: Optional[medical_constant.MedicalPatient] = None
-        self.session_active: bool = False
-        self.feedback_text: str = ""
-        self.last_check_results: List[Dict[str, object]] = []
-        self.treatment_result: Optional[Dict[str, object]] = None
-        self._should_close: bool = False
-        self._treatment_committed: bool = False
-        self._abort_requested: bool = False
         self._checks_executed: int = 0
-        self._awaiting_treatment_confirmation: bool = False
-        self.menu_expanded: bool = False
-        self.expanded_system_id: Optional[int] = None
-        self.expanded_part_id: Optional[int] = None
+
+        # 统一重置面板运行期标记，确保每次创建或切换病人时都能获得干净状态
+        self._reset_runtime_flags()
+
+        # 预先记录博士的医疗能力等级，用于提示判定与检查次数上限
+        self.player_med_level = self._calculate_player_med_level()
+        self.max_checks = max(1, self.player_med_level * 2)
 
         # 若玩家处于可控状态，则尝试开启医疗会话并缓存病患信息
+        initial_patient: Optional[medical_constant.MedicalPatient] = None
         if self.player is not None:
-            self.patient = medical_service.start_player_diagnose_session(self.player)
-        # 会话成功后预构建检查目录供后续折叠菜单使用
-        if self.patient is not None:
-            self.session_active = True
-            self.check_catalog: Dict[int, Dict[str, object]] = medical_service.build_player_check_catalog(self.patient)
+            initial_patient = medical_service.start_player_diagnose_session(self.player)
+
+        if initial_patient is not None:
+            self._prepare_new_patient_session(initial_patient)
         else:
-            self.check_catalog = {}
+            # 未成功分配病人时保持面板闲置状态，便于界面直接提示
+            self.patient = None
+            self.session_active = False
 
-        # 记录博士医疗能力等级，后续用于计算提示粒度与检查次数
-        self.player_med_level = 0
-        if self.player is not None:
-            self.player_med_level = int(self.player.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
-            # 如果玩家有交互对象，则加上交互对象的医疗能力加成
-            if self.player.target_character_id != 0 and self.player.target_character_id in cache.character_data:
-                target_char = cache.character_data[self.player.target_character_id]
-                self.player_med_level += int(target_char.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) / 2 or 0)
-                self.player_med_level = max(8, self.player_med_level)
+    def _reset_runtime_flags(self) -> None:
+        """重置会话运行标记，确保面板以干净状态展开。
 
-        # 根据病人实际并发症数量确定目标信息，用于评估诊疗完成度
+        功能:
+            清理与单次诊疗会话相关的临时数据，避免上一位病人的残留状态影响新病人。
+
+        参数:
+            无。
+
+        返回:
+            None。
+        """
+
+        # 清除界面文本与检查结果缓存，便于新会话重新绘制
+        self.session_active = False
+        self.patient = None
+        self.feedback_text = ""
+        self.last_check_results = []
+        self.treatment_result = None
+        self._should_close = False
+        self._treatment_committed = False
+        self._abort_requested = False
+        self._awaiting_treatment_confirmation = False
+        self.menu_expanded = False
+        self.expanded_system_id = None
+        self.expanded_part_id = None
+        self._pending_continue_after_treatment = False
+        # 重置检查目录与目标计数，后续会根据具体病人重新填充
+        self.check_catalog = {}
         self.target_complication_count = 0
-        if self.patient is not None and getattr(self.patient, "complications", None):
-            self.target_complication_count = len(self.patient.complications)
+        self.max_parallel = 1
+        self.max_checks = 1
 
-        # 并行检查数量与总检查次数使用能力与目标数量共同约束
-        self.max_parallel = max(1, self.target_complication_count or 1)
+    def _calculate_player_med_level(self) -> int:
+        """计算玩家当前可用于提示与检查限制的医疗能力等级。
+
+        功能:
+            综合博士本人的医疗能力与当前交互干员的辅助加成，返回提示系统所需的等级值。
+
+        参数:
+            无。
+
+        返回:
+            int: 经过辅助加成与最小值限制后的有效医疗能力等级。
+        """
+
+        if self.player is None:
+            return 0
+
+        # 读取博士的基础医疗能力
+        level = int(self.player.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) or 0)
+
+        # 如果存在交互对象，则追加一半能力值并应用最低阈值
+        if self.player.target_character_id != 0 and self.player.target_character_id in cache.character_data:
+            target_char = cache.character_data[self.player.target_character_id]
+            level += int(target_char.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) / 2 or 0)
+            level = max(8, level)
+
+        return max(0, level)
+
+    def _prepare_new_patient_session(
+        self,
+        patient: medical_constant.MedicalPatient,
+        *,
+        initial_feedback: str = "",
+    ) -> None:
+        """按照指定病人刷新面板上下文。
+
+        功能:
+            在完成一次诊疗结算后或面板首次打开时，清理旧状态并加载新病人的检查目录、提示限制等。
+
+        参数:
+            patient (medical_constant.MedicalPatient): 即将进入玩家诊疗流程的病人对象。
+            initial_feedback (str): 需要在面板底部展示的提示文本，默认为空串。
+
+        返回:
+            None。
+        """
+
+        # 每次切换病人前先清空界面与状态缓存
+        self._reset_runtime_flags()
+
+        self.patient = patient
+        self.session_active = True
+
+        # 重新计算医疗能力等级并刷新检查次数上限
+        self.player_med_level = self._calculate_player_med_level()
         self.max_checks = max(1, self.player_med_level * 2)
+
+        # 根据病人实际并发症数量设定并行检查上限
+        complications = getattr(patient, "complications", []) or []
+        self.target_complication_count = len(complications)
+        self.max_parallel = max(1, self.target_complication_count or 1)
+
+        # 构建本次会话的检查目录
+        self.check_catalog = medical_service.build_player_check_catalog(patient)
+
+        if initial_feedback:
+            self.feedback_text = initial_feedback
 
     def draw(self) -> bool:
         """循环绘制诊疗面板，并根据用户操作决定会话去向。
@@ -907,18 +985,30 @@ class MedicalPlayerDiagnosePanel:
             # 记录按钮返回值确保事件循环能够捕获指令
             return_list.append(clear_button.return_text)
 
+        # 当至少确诊一项或已耗尽检查次数时允许开药流程
         allow_treat = bool(confirmed) or used_checks >= self.max_checks
         if allow_treat:
             treat_button = draw.CenterButton(
-                _("[开药并结束治疗]"),
-                _("开药并结束治疗"),
+                _("[开药并结束诊疗]"),
+                _("开药并结束诊疗"),
                 self.width // 4,
-                cmd_func=self._commit_treatment,
+                cmd_func=self._handle_treatment_request,
+                args=(False,),
             )
             treat_button.draw()
-            # 当至少确诊一项或已耗尽检查次数时允许开药流程
             return_list.append(treat_button.return_text)
 
+            continue_button = draw.CenterButton(
+                _("[开药并接诊下一位]"),
+                _("开药并接诊下一位"),
+                self.width // 4,
+                cmd_func=self._handle_treatment_request,
+                args=(True,),
+            )
+            continue_button.draw()
+            return_list.append(continue_button.return_text)
+
+        # 仅在尚未消耗检查次数时允许无损退出
         if used_checks == 0:
             abort_button = draw.CenterButton(
                 _("[提前结束诊疗并返回]"),
@@ -927,24 +1017,37 @@ class MedicalPlayerDiagnosePanel:
                 cmd_func=self._handle_abort,
             )
             abort_button.draw()
-            # 仅在尚未消耗检查次数时允许无损退出
             return_list.append(abort_button.return_text)
 
     # --- 事件处理 ---------------------------------------------------------
 
-    def _commit_treatment(self) -> None:
-        """确认治疗结果，计算收益并结束会话。"""
+    def _handle_treatment_request(self, continue_after: bool) -> None:
+        """根据需求执行治疗结算或请求确认。
+
+        功能:
+            统一处理“结束诊疗”与“结束并继续接诊”两种按钮行为，先评估是否需要二次确认，
+            随后根据玩家选择继续或终止会话。
+
+        参数:
+            continue_after (bool): 为 True 时在结算完成后尝试接诊下一位病人。
+
+        返回:
+            None。
+        """
 
         if self.patient is None or self.player is None:
+            self._pending_continue_after_treatment = False
             return
 
-        # 计算未确诊并发症数量
+        self._pending_continue_after_treatment = continue_after
+
+        # 计算当前病人的实际并发症集合，用于判断是否存在未确诊条目
         actual_complications: Set[int] = set()
         if getattr(self.patient, "complications", None):
             actual_complications = {int(cid) for cid in self.patient.complications if cid}
+
         confirmed_set: Set[int] = {int(cid) for cid in self._get_confirmed_complications()}
 
-        # 计算缺失并发症数量
         if not actual_complications and self.target_complication_count:
             missing_count = max(self.target_complication_count - len(confirmed_set), 0)
         else:
@@ -953,40 +1056,63 @@ class MedicalPlayerDiagnosePanel:
         used_checks = int(getattr(self.patient, "player_used_checks", 0) or 0)
         remaining_checks = max(self.max_checks - used_checks, 0)
 
-        # 如果存在未确诊项且仍有检查次数，提示用户确认是否继续治疗
         if (
             not self._awaiting_treatment_confirmation
             and missing_count > 0
             and remaining_checks > 0
         ):
+            # 需要二次确认时直接提示玩家并等待下一步指令
             self._awaiting_treatment_confirmation = True
             self.feedback_text = _(
                 "仍有 {count} 项疑似并发症尚未确诊，确认要直接结束治疗吗？"
             ).format(count=missing_count)
             return
 
-        # 用户已确认继续治疗，执行结算
+        # 已确认或无需确认时执行结算
         self._awaiting_treatment_confirmation = False
-        self._execute_treatment_commit()
+        self._execute_treatment_commit(continue_after=continue_after)
 
     def _confirm_treatment_after_prompt(self) -> None:
-        """确认在存在未确诊项时仍然继续治疗。"""
+        """确认在存在未确诊项时仍然继续治疗。
+
+        参数:
+            无。
+
+        返回:
+            None。
+        """
 
         if self.patient is None or self.player is None:
             return
         self._awaiting_treatment_confirmation = False
-        self._execute_treatment_commit()
+        self._execute_treatment_commit(continue_after=self._pending_continue_after_treatment)
 
     def _cancel_treatment_confirmation(self) -> None:
-        """取消强制治疗提示并返回继续检查。"""
+        """取消强制治疗提示并返回继续检查。
+
+        参数:
+            无。
+
+        返回:
+            None。
+        """
 
         self._awaiting_treatment_confirmation = False
+        self._pending_continue_after_treatment = False
         self.feedback_text = _("已返回诊疗流程，可以继续安排检查。")
 
-    def _execute_treatment_commit(self) -> None:
-        """执行治疗结算并记录结果。"""
+    def _execute_treatment_commit(self, *, continue_after: bool) -> None:
+        """执行治疗结算并根据后续动作刷新界面。
+
+        参数:
+            continue_after (bool): 为 True 时在完成结算后继续接诊；否则直接结束面板。
+
+        返回:
+            None。
+        """
 
         if self.patient is None or self.player is None:
+            self._pending_continue_after_treatment = False
             return
 
         # 调用医疗服务层提交诊疗结果
@@ -998,18 +1124,38 @@ class MedicalPlayerDiagnosePanel:
         # 结算失败时记录原因并返回
         if not outcome.get("success"):
             self.feedback_text = _("治疗操作失败：{0}").format(outcome.get("reason", "unknown"))
+            self._pending_continue_after_treatment = False
             return
+
         # 记录治疗结果并提示收益
         self.treatment_result = outcome
-        self.feedback_text = _(
+        self._treatment_committed = True
+
+        base_message = _(
             "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
         ).format(diag=outcome.get("diagnose_income", 0), med=outcome.get("medicine_income", 0))
-        self._draw_feedback()
-        self._treatment_committed = True
+
+        next_patient: Optional[medical_constant.MedicalPatient] = None
+        if continue_after and self.player is not None:
+            next_patient = medical_service.start_player_diagnose_session(self.player)
+
+        self._pending_continue_after_treatment = False
+
+        if continue_after and next_patient is not None:
+            continuation_message = base_message + _(" 已为你安排下一位病人，请继续诊疗。")
+            self._prepare_new_patient_session(next_patient, initial_feedback=continuation_message)
+            return
+
+        if continue_after and next_patient is None:
+            self.feedback_text = base_message + _(" 当前暂无其他病人需要诊疗，流程已结束。")
+        else:
+            self.feedback_text = base_message
+
         self._should_close = True
+        self._draw_feedback()
 
     def _toggle_hint(self) -> None:
-        """切换全局治病提示开关，并记录反馈。"""
+        """切换治病提示状态并持久化到全局设置。"""
 
         base_setting = getattr(cache.all_system_setting, "base_setting", {})
         current_value = int(base_setting.get(12, 0) or 0)
