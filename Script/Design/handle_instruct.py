@@ -2295,7 +2295,7 @@ def handle_stop_sleep_obscenity():
      constant_promise.Premise.T_IMPRISONMENT_1,
      constant_promise.Premise.SCENE_ONLY_TWO,
      constant_promise.Premise.T_NORMAL_5_6,
-     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE_OR_IMPRISONMENT_1,
      constant_promise.Premise.TIRED_LE_74},
     constant.Behavior.H,
 )
