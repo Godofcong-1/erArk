@@ -7,7 +7,7 @@ from Script.Core import get_text
 from dataclasses import dataclass, field
 from enum import Enum
 from itertools import count
-from typing import Tuple, Dict, List, Any, Optional, ClassVar, Mapping, Iterable
+from typing import Tuple, Dict, List, Any, Optional, ClassVar, Mapping, Iterable, cast
 _: FunctionType = get_text._
 """ 翻译函数 """
 
@@ -76,6 +76,8 @@ class MedicalPatientState(str, Enum):
     """玩家手动诊治中"""
     WAITING_MEDICATION = "waiting_medication"
     """诊疗完成等待发药"""
+    MEDICINE_GRANTED = "medicine_granted"
+    """门诊病人已成功拿药治疗"""
     HOSPITALIZED = "hospitalized"
     """已入院治疗"""
     DISCHARGED = "discharged"
@@ -86,6 +88,7 @@ STATE_DISPLAY_NAME: Dict[MedicalPatientState, str] = {
     MedicalPatientState.IN_TREATMENT: _("干员诊疗中"),
     MedicalPatientState.IN_TREATMENT_PLAYER: _("博士诊疗中"),
     MedicalPatientState.WAITING_MEDICATION: _("等待用药治疗"),
+    MedicalPatientState.MEDICINE_GRANTED: _("已拿药治疗"),
     MedicalPatientState.HOSPITALIZED: _("住院中"),
     MedicalPatientState.DISCHARGED: _("已出院"),
 }
@@ -161,6 +164,38 @@ class MedicalMedicineResource(Enum):
 
 ALL_MEDICINE_RESOURCE_IDS: Tuple[int, ...] = tuple(resource.value for resource in MedicalMedicineResource)
 """医疗系统使用的全部药物资源 ID 元组，用于遍历统一扣药"""
+
+
+def build_medicine_consumption_template() -> Dict[int, float]:
+    """构建药品消耗统计的默认模板字典。
+
+    返回:
+        Dict[int, float]: 药剂资源 ID 到初始消耗量（默认 0.0）之间的映射。
+    """
+
+    # --- 尝试从配置表中收集所有标记为“药剂”的资源 ID ---
+    resolved_ids = set()
+    try:
+        from Script.Config import game_config  # 延迟导入以避免初始化期间的循环依赖
+
+        resource_table = getattr(game_config, "config_resouce", {})
+        if isinstance(resource_table, dict):
+            for resource_id, resource_config in resource_table.items():
+                if getattr(resource_config, "type", "") == "药剂":
+                    try:
+                        resolved_ids.add(int(resource_id))
+                    except (TypeError, ValueError):
+                        continue
+    except Exception:
+        # --- 配置尚未加载或导入失败时退回默认药剂列表 ---
+        pass
+
+    # --- 若配置未提供结果，则使用内置药剂枚举作为兜底 ---
+    if not resolved_ids:
+        resolved_ids.update(int(resource_id) for resource_id in ALL_MEDICINE_RESOURCE_IDS)
+
+    # --- 返回按资源 ID 升序排列的零值字典副本 ---
+    return {resource_id: 0.0 for resource_id in sorted(resolved_ids)}
 
 
 @dataclass
@@ -261,8 +296,8 @@ class MedicalDailyCounters:
     """今日新增入院的病人数"""
     discharged_today: int = 0
     """今日完成出院的病人数"""
-    medicine_consumed: int = 0
-    """今日消耗的药品总单位数"""
+    medicine_consumed: Dict[int, float] = field(default_factory=build_medicine_consumption_template)
+    """今日药品消耗统计，键为药剂资源 ID，值为对应的消耗单位数（支持小数）"""
     surgeries_performed: int = 0
     """今日成功执行的手术次数"""
 
@@ -275,7 +310,7 @@ class MedicalDailyCounters:
         "hospital_waiting_medicine": _("住院待发药"),
         "hospitalized_today": _("今日入院"),
         "discharged_today": _("今日出院"),
-        "medicine_consumed": _("药品消耗单位"),
+        "medicine_consumed": _("药品消耗明细"),
         "surgeries_performed": _("手术完成次数"),
     }
     """字段展现用的中文名称映射，供 UI 友好展示使用。"""
@@ -298,15 +333,15 @@ class MedicalDailyCounters:
         counters = cls()
         if isinstance(source, Mapping):
             for key, value in source.items():
-                counters.set_value(str(key), int(value or 0))
+                counters.set_value(str(key), value)
         return counters
 
-    def set_value(self, key: str, value: int) -> None:
+    def set_value(self, key: str, value: object) -> None:
         """将指定字段设置为给定数值。
 
         参数:
             key (str): 目标字段名称。
-            value (int): 需要写入的整型数值。
+            value (object): 需要写入的值，支持整型或药品消耗映射。
         返回:
             None
         """
@@ -315,30 +350,41 @@ class MedicalDailyCounters:
         if key not in self.__dataclass_fields__:
             return
 
-        # --- 写入整型后的安全值，保证负值同样被允许记录 ---
-        setattr(self, key, int(value))
+        # --- 针对药品消耗统计执行专门的映射转换逻辑 ---
+        if key == "medicine_consumed":
+            setattr(self, key, self._coerce_consumption_mapping(value))
+            return
 
-    def bump(self, key: str, delta: int) -> None:
+        # --- 写入整型后的安全值，保证负值同样被允许记录 ---
+        setattr(self, key, self._coerce_int(value))
+
+    def bump(self, key: str, delta: object) -> None:
         """在指定字段上累加增量。
 
         参数:
             key (str): 目标字段名称。
-            delta (int): 需要累加的增量值，可为正负数。
+            delta (object): 需要累加的增量值，药品消耗字段支持映射输入。
         返回:
             None
         """
-
-        # --- 零增量无需写入，直接返回避免多余操作 ---
-        if delta == 0:
-            return
 
         # --- 解析字段名称并确认其存在 ---
         if key not in self.__dataclass_fields__:
             return
 
+        # --- 药品消耗字段改为累加映射，允许批量更新多个资源 ---
+        if key == "medicine_consumed":
+            self.bump_medicine_consumption(delta)
+            return
+
+        # --- 将增量转换为整型并在为零时提前返回 ---
+        safe_delta = self._coerce_int(delta)
+        if safe_delta == 0:
+            return
+
         # --- 执行累加并覆盖原值，统一保持整型 ---
-        current_value = int(getattr(self, key, 0))
-        setattr(self, key, current_value + int(delta))
+        current_value = self._coerce_int(getattr(self, key, 0))
+        setattr(self, key, current_value + safe_delta)
 
     def reset(self) -> None:
         """将全部统计字段重置为零。
@@ -349,28 +395,178 @@ class MedicalDailyCounters:
 
         # --- 遍历所有 dataclass 字段并逐项清零 ---
         for field_name in self.__dataclass_fields__:
-            setattr(self, field_name, 0)
+            if field_name == "medicine_consumed":
+                setattr(self, field_name, build_medicine_consumption_template())
+            else:
+                setattr(self, field_name, 0)
 
-    def as_dict(self) -> Dict[str, int]:
+    def as_dict(self) -> Dict[str, Any]:
         """以字典形式返回统计数据。
 
         返回:
-            Dict[str, int]: 统计字段到整型值的映射。
+            Dict[str, Any]: 统计字段到整型或映射值的对应表。
         """
 
-        # --- 将所有显性字段转写为纯整数字典 ---
-        return {field: int(getattr(self, field, 0)) for field in self.__dataclass_fields__}
+        # --- 将所有显性字段转写为纯整数字典，遇到异常值时安全回退为零 ---
+        result: Dict[str, Any] = {}
+        for field_name in self.__dataclass_fields__:
+            raw_value = getattr(self, field_name, 0)
+            if field_name == "medicine_consumed":
+                result[field_name] = self._coerce_consumption_mapping(raw_value)
+            else:
+                result[field_name] = self._coerce_int(raw_value)
+        return result
 
-    def items(self) -> Iterable[Tuple[str, int]]:
+    def items(self) -> Iterable[Tuple[str, Any]]:
         """返回可迭代的字段键值对，用于 UI 展示。
 
         返回:
-            Iterable[Tuple[str, int]]: 以 (字段名, 数值) 形式输出的可迭代对象。
+            Iterable[Tuple[str, Any]]: 以 (字段名, 数值/映射) 形式输出的可迭代对象。
         """
 
         # --- 直接遍历字典形式的数据，以保持输出顺序稳定 ---
         for key, value in self.as_dict().items():
             yield key, value
+
+    def bump_medicine_consumption(self, delta: object) -> None:
+        """累加药品消耗统计，支持一次写入多种资源的增量。
+
+        参数:
+            delta (object): 允许为映射、序列或单个数字的增量描述。
+        返回:
+            None
+        """
+
+        # --- 将外部输入转换为标准化的资源消耗映射 ---
+        mapping = self._coerce_consumption_mapping(delta)
+        if not mapping:
+            return
+
+        # --- 检查是否全部为零增量，若是则无需进一步处理 ---
+        if all(self._coerce_int(amount) == 0 for amount in mapping.values()):
+            return
+
+        # --- 确保当前统计字段具备合法的字典结构 ---
+        if not isinstance(self.medicine_consumed, dict):
+            self.medicine_consumed = build_medicine_consumption_template()
+
+        # --- 累加每个资源 ID 的消耗值，并保留未知资源键 ---
+        updated: Dict[int, float] = dict(self.medicine_consumed)
+        for resource_id, amount in mapping.items():
+            safe_id = self._coerce_resource_id(resource_id)
+            if safe_id is None:
+                continue
+            current_total = float(updated.get(safe_id, 0.0) or 0.0)
+            updated[safe_id] = current_total + self._coerce_float(amount)
+
+        # --- 写回最新的药品消耗统计结果 ---
+        self.medicine_consumed = updated
+
+    @classmethod
+    def _coerce_consumption_mapping(cls, value: object) -> Dict[int, float]:
+        """将任意输入统一转换为药品消耗映射结构。
+
+        参数:
+            value (object): 可能为 dict、列表或数值的输入对象。
+        返回:
+            Dict[int, float]: 资源 ID 对应消耗量的字典，默认为全零。
+        """
+
+        # --- 以模板字典作为基础，确保所有药剂资源键齐备 ---
+        result = build_medicine_consumption_template()
+
+        # --- 映射类型：逐项写入并补全未知资源键 ---
+        if isinstance(value, Mapping):
+            for resource_id, amount in value.items():
+                safe_id = cls._coerce_resource_id(resource_id)
+                if safe_id is None:
+                    continue
+                result[safe_id] = cls._coerce_float(amount)
+            return result
+
+        # --- 序列类型：接受形如 (resource_id, amount) 的条目集合 ---
+        if isinstance(value, (list, tuple)):
+            for item in value:
+                if not isinstance(item, (list, tuple)) or len(item) < 2:
+                    continue
+                safe_id = cls._coerce_resource_id(item[0])
+                if safe_id is None:
+                    continue
+                result[safe_id] = cls._coerce_float(item[1])
+            return result
+
+        # --- 其他情况视为旧版整型数据，统一归入首个药剂资源 ---
+        legacy_total = cls._coerce_float(value)
+        if abs(legacy_total) > FLOAT_EPSILON:
+            target_id = next(iter(result), MedicalMedicineResource.NORMAL.value)
+            result[target_id] = legacy_total
+        return result
+
+    @staticmethod
+    def _coerce_resource_id(resource_id: object) -> Optional[int]:
+        """尝试将任意对象转换为合法的资源 ID。"""
+
+        try:
+            return int(cast(Any, resource_id))
+        except (TypeError, ValueError):
+            return None
+
+    @staticmethod
+    def _coerce_int(value: object) -> int:
+        """将任意类型的输入安全转换为整型。
+
+        参数:
+            value (object): 待转换的数据对象。
+        返回:
+            int: 成功转换后的整型结果，无法解析时回退为 0。
+        """
+
+        # --- 直接处理布尔、整型、浮点等数值类型 ---
+        if isinstance(value, bool):
+            return int(value)
+        if isinstance(value, (int, float)):
+            return int(value)
+
+        # --- 对于可转换为整数的字符串执行显式转换 ---
+        if isinstance(value, str):
+            value = value.strip()
+            if not value:
+                return 0
+            try:
+                return int(float(value))
+            except ValueError:
+                return 0
+
+        # --- 其他无法转换的类型统一回退为零，保证调用方稳定 ---
+        try:
+            return int(value)  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            return 0
+
+    @staticmethod
+    def _coerce_float(value: object) -> float:
+        """将任意类型的输入安全转换为浮点数。
+
+        参数:
+            value (object): 待转换的数据对象。
+        返回:
+            float: 成功转换后的浮点数结果，无法解析时回退为 0.0。
+        """
+
+        if isinstance(value, (int, float)):
+            return float(value)
+        if isinstance(value, str):
+            stripped = value.strip()
+            if not stripped:
+                return 0.0
+            try:
+                return float(stripped)
+            except ValueError:
+                return 0.0
+        try:
+            return float(value)  # type: ignore[arg-type]
+        except (TypeError, ValueError):
+            return 0.0
 
 
 # 统一定义病人接诊优先策略的文本转换和选项列表

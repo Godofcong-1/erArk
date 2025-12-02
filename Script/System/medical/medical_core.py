@@ -17,20 +17,20 @@ from Script.System.Medical import medical_constant
 def _bump_daily_counter(
     rhodes_island: Optional[game_type.Rhodes_Island],
     key: str,
-    value: int,
+    value: object,
 ) -> None:
     """更新医疗日度统计表中的计数。
 
     参数:
         rhodes_island (Optional[game_type.Rhodes_Island]): 目标基地缓存对象，None 时直接返回。
         key (str): 统计字段名称，例如 "hospitalized_today"。
-        value (int): 本次需要累加的数值，可为正负数。
+        value (object): 本次需要累加的数值或药品消耗映射。
     返回:
         None: 直接在基地对象的计数字典上写入变更。
     """
 
-    # 无可用基地或增量为零时不做处理。
-    if rhodes_island is None or value == 0:
+    # 无可用基地或统计对象时不做处理。
+    if rhodes_island is None:
         return
 
     # 获取显性统计结构，若缺失则自动初始化。

@@ -158,10 +158,11 @@ def process_single_hospitalized_patient(
     income_before = int(rhodes_island.medical_income_today)
     success = consume_medicine(patient)
 
-    consumed_units = getattr(patient, "last_consumed_units", {})
+    # --- 汇总病人本次用药的各类药剂消耗量，用于统计与日志展示 ---
+    consumed_units = dict(getattr(patient, "last_consumed_units", {}) or {})
     consumed_total = sum(int(value) for value in consumed_units.values()) if consumed_units else 0
     if consumed_total:
-        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
+        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_units)
 
     result.update(
         {
@@ -346,14 +347,18 @@ def try_consume_medicine(
         patient.medicine_recorded = {}
         patient.medicine_progress = {}
 
+    # --- 将门诊病人的药剂消耗以明细形式写入当日统计 ---
     consumed_total_units = sum(int(value) for value in consumed_units.values())
     if not is_hospitalized and consumed_total_units:
-        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total_units)
+        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_units)
 
     if not is_hospitalized:
+        # --- 根据扣药结果刷新门诊病人的状态并更新对应统计 ---
         if overall_success:
+            medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.MEDICINE_GRANTED)
             medical_core._bump_daily_counter(rhodes_island, "medicine_completed_outpatient", 1)
         else:
+            medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
             medical_core._bump_daily_counter(rhodes_island, "outpatient_waiting_medicine", 1)
 
     patient.last_consumed_units = consumed_units

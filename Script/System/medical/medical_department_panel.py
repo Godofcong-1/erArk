@@ -663,6 +663,22 @@ class FinanceReportSubPanel(_BaseSubPanel):
                 if value is None:
                     continue
                 display_name = medical_constant.MedicalDailyCounters.DISPLAY_NAME_MAPPING.get(key, key)
+                if key == "medicine_consumed":
+                    consumption_map = medical_constant.MedicalDailyCounters._coerce_consumption_mapping(value)
+                    total_units = sum(float(amount or 0.0) for amount in consumption_map.values())
+                    info_draw.text += _("  {0}：总计 {1:.2f} 单位\n").format(display_name, total_units)
+                    has_detail = False
+                    for resource_id in sorted(consumption_map.keys()):
+                        units = float(consumption_map.get(resource_id, 0.0) or 0.0)
+                        if abs(units) <= medical_constant.FLOAT_EPSILON:
+                            continue
+                        resource_config = game_config.config_resouce.get(resource_id)
+                        resource_name = getattr(resource_config, "name", str(resource_id)) if resource_config else str(resource_id)
+                        info_draw.text += _("    {0}({1})：{2:.2f} 单位\n").format(resource_name, resource_id, units)
+                        has_detail = True
+                    if not has_detail:
+                        info_draw.text += _("    暂无药品消耗记录\n")
+                    continue
                 info_draw.text += _("  {0}：{1}\n").format(display_name, value)
         else:
             info_draw.text += _("今日尚无额外统计数据\n")

@@ -245,7 +245,8 @@ def consume_surgery_resources(
 
     # 写入统计计数并清除阻塞标记，方便后续正常执行手术。
     if consumed_total:
-        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_total)
+        # --- 将手术阶段的药剂明细纳入当日统计，支持后续日志明细展示 ---
+        medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", resource_usage)
 
     patient.surgery_blocked = False
     patient.surgery_blocked_resource = None

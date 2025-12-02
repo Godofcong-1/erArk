@@ -2,7 +2,7 @@
 """玩家诊疗专用交互面板"""
 from __future__ import annotations
 
-from typing import Any, Dict, List, Optional, Set, Tuple
+from typing import Any, Dict, List, Optional, Set, Tuple, Mapping
 from types import FunctionType
 
 from Script.Config import game_config, normal_config
@@ -153,6 +153,16 @@ class MedicalPlayerDiagnosePanel:
             level = max(8, level)
 
         return max(0, level)
+
+    @staticmethod
+    def _format_quantity(value: float) -> str:
+        """将数量格式化为可读文本，整数不保留小数。"""
+
+        safe_value = max(0.0, float(value or 0.0))
+        rounded = round(safe_value)
+        if abs(safe_value - rounded) <= medical_constant.FLOAT_EPSILON:
+            return str(int(rounded))
+        return f"{safe_value:.1f}"
 
     def _prepare_new_patient_session(
         self,
@@ -676,6 +686,76 @@ class MedicalPlayerDiagnosePanel:
         )
         self.patient.player_pending_checks = pending
 
+    def _resolve_inventory_snapshot(self) -> Dict[int, float]:
+        """获取当前医疗仓库的药品库存快照。
+
+        返回:
+            Dict[int, float]: 资源 ID 到库存数量的映射副本。
+        """
+
+        rhodes_island = getattr(cache, "rhodes_island", None)
+        if rhodes_island is None:
+            return {}
+        inventory = getattr(rhodes_island, "materials_resouce", None)
+        if not isinstance(inventory, dict):
+            return {}
+
+        snapshot: Dict[int, float] = {}
+        for resource_id, value in inventory.items():
+            try:
+                snapshot[int(resource_id)] = float(value or 0.0)
+            except (TypeError, ValueError):
+                continue
+        return snapshot
+
+    def _calculate_shortage(
+        self,
+        resource_id: int,
+        required_amount: float,
+        inventory_snapshot: Mapping[int, float],
+    ) -> float:
+        """计算在当前库存下特定资源的缺口数量。"""
+
+        if required_amount <= medical_constant.FLOAT_EPSILON:
+            return 0.0
+        available_amount = float(inventory_snapshot.get(resource_id, 0.0) or 0.0)
+        shortage = required_amount - available_amount
+        if shortage <= medical_constant.FLOAT_EPSILON:
+            return 0.0
+        return shortage
+
+    def _collect_patient_medicine_shortages(self, inventory_snapshot: Mapping[int, float]) -> List[str]:
+        """针对当前病人整理药品缺口描述列表。"""
+
+        if self.patient is None:
+            return []
+
+        requirement_map = getattr(self.patient, "need_resources", {}) or {}
+        shortage_lines: List[str] = []
+        for resource_key, amount in requirement_map.items():
+            try:
+                resource_id = int(resource_key)
+            except (TypeError, ValueError):
+                continue
+            required_amount = float(amount or 0.0)
+            if required_amount <= medical_constant.FLOAT_EPSILON:
+                continue
+            shortage_amount = self._calculate_shortage(resource_id, required_amount, inventory_snapshot)
+            if shortage_amount <= medical_constant.FLOAT_EPSILON:
+                continue
+            resource_config = game_config.config_resouce.get(resource_id)
+            resource_name = getattr(resource_config, "name", str(resource_id)) if resource_config else str(resource_id)
+            shortage_text = self._format_quantity(shortage_amount)
+            stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
+            shortage_lines.append(
+                _("· {name} 缺口 {amount} 单位，当前库存 {stock} 单位。").format(
+                    name=resource_name,
+                    amount=shortage_text,
+                    stock=stock_text,
+                )
+            )
+        return shortage_lines
+
     def _draw_treatment_methods(self, confirmed: List[int], used_checks: int) -> None:
         """绘制治疗摘要或建议，用于引导下一步行为。
 
@@ -790,15 +870,34 @@ class MedicalPlayerDiagnosePanel:
                         resources.append(entry)
             if resources:
                 lines.append(_("药品需求："))
+                inventory_snapshot = self._resolve_inventory_snapshot()
                 for item in resources:
                     base_amount = float(item.get("amount", 0.0) or 0.0)
                     display_amount = base_amount * adjust_ratio if adjust_ratio != 1.0 else base_amount
-                    lines.append(
-                        _("  · {name} × {amount:.1f}").format(
-                            name=item.get("name", "-"),
-                            amount=display_amount,
+                    try:
+                        resource_id = int(item.get("resource_id", 0) or 0)
+                    except (TypeError, ValueError):
+                        resource_id = 0
+                    formatted_amount = self._format_quantity(display_amount)
+                    shortage_amount = self._calculate_shortage(resource_id, display_amount, inventory_snapshot)
+                    if shortage_amount > medical_constant.FLOAT_EPSILON:
+                        shortage_text = self._format_quantity(shortage_amount)
+                        stock_text = self._format_quantity(float(inventory_snapshot.get(resource_id, 0.0) or 0.0))
+                        lines.append(
+                            _("  · {name} × {amount}（缺口 {shortage} 单位，库存 {stock} 单位）").format(
+                                name=item.get("name", "-"),
+                                amount=formatted_amount,
+                                shortage=shortage_text,
+                                stock=stock_text,
+                            )
                         )
-                    )
+                    else:
+                        lines.append(
+                            _("  · {name} × {amount}").format(
+                                name=item.get("name", "-"),
+                                amount=formatted_amount,
+                            )
+                        )
                 if missing_complications:
                     lines.append(
                         _("  * 未确诊 {count} 项并发症，相关药品需求按 50% 计入。").format(
@@ -1134,6 +1233,15 @@ class MedicalPlayerDiagnosePanel:
         base_message = _(
             "已完成诊疗，诊断收益 {diag} 龙门币，药费收益 {med} 龙门币。"
         ).format(diag=outcome.get("diagnose_income", 0), med=outcome.get("medicine_income", 0))
+
+        if not outcome.get("medicine_success"):
+            inventory_snapshot = self._resolve_inventory_snapshot()
+            shortage_lines = self._collect_patient_medicine_shortages(inventory_snapshot)
+            if shortage_lines:
+                shortage_notice = "\n" + _("当前仍缺少以下药品：") + "\n" + "\n".join(shortage_lines)
+            else:
+                shortage_notice = "\n" + _("药品库存不足，请补充后再试。")
+            base_message += shortage_notice
 
         next_patient: Optional[medical_constant.MedicalPatient] = None
         if continue_after and self.player is not None:

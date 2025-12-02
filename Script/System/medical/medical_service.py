@@ -6,6 +6,7 @@
 """
 from __future__ import annotations
 
+import math
 from typing import Any, Dict, List, Optional
 from types import FunctionType
 
@@ -197,83 +198,70 @@ def settle_medical_department(
     patients = list(rhodes_island.medical_patients_today.values())
     hospitalized_patients = list(rhodes_island.medical_hospitalized.values())
 
-    waiting_count = sum(1 for patient in patients if patient.state in waiting_states)
-    waiting_medication = sum(
-        1 for patient in patients if patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION
-    )
+    waiting_count = 0
+    waiting_medication = 0
+    medicine_granted_count = 0
+    for patient in patients:
+        state = patient.state
+        if state in waiting_states:
+            waiting_count += 1
+        if state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
+            waiting_medication += 1
+        elif state == medical_constant.MedicalPatientState.MEDICINE_GRANTED:
+            medicine_granted_count += 1
+
     hospitalized_count = len(hospitalized_patients)
-    need_surgery_count = sum(1 for patient in hospitalized_patients if patient.need_surgery)
-    blocked_surgery_count = sum(
-        1 for patient in hospitalized_patients if patient.need_surgery and patient.surgery_blocked
-    )
-
-    diagnose_outpatient = stats.get("diagnose_completed_outpatient", 0)
-    diagnose_hospital = stats.get("diagnose_completed_hospital", 0)
-    diagnose_total = diagnose_outpatient + diagnose_hospital
-    medicine_outpatient = stats.get("medicine_completed_outpatient", 0)
-    medicine_hospital = stats.get("medicine_completed_hospital", 0)
-    medicine_total = medicine_outpatient + medicine_hospital
-    medicine_consumed = stats.get("medicine_consumed", 0)
-    hospitalized_today = stats.get("hospitalized_today", 0)
-    discharged_today = stats.get("discharged_today", 0)
-    surgeries_performed = stats.get("surgeries_performed", 0)
-    outpatient_waiting_medicine = stats.get("outpatient_waiting_medicine", 0)
-    hospital_waiting_medicine = stats.get("hospital_waiting_medicine", 0)
-
-    # 拼装结算文本，按行描述核心指标。
-    body_lines: List[str] = []
-    body_lines.append(_("今日收入：{0} 龙门币").format(income_today))
-    body_lines.append(_("收费系数：{0:.0f}%").format(price_ratio * 100))
-    body_lines.append(
-        _("诊疗完成：{0} 人（门诊 {1} / 住院 {2}）").format(
-            diagnose_total,
-            diagnose_outpatient,
-            diagnose_hospital,
-        )
-    )
-    body_lines.append(
-        _("用药完成：{0} 人（门诊 {1} / 住院 {2}）").format(
-            medicine_total,
-            medicine_outpatient,
-            medicine_hospital,
-        )
-    )
-    if outpatient_waiting_medicine or hospital_waiting_medicine:
-        body_lines.append(
-            _("待发药：门诊 {0} 人 / 住院 {1} 人").format(outpatient_waiting_medicine, hospital_waiting_medicine)
-        )
-    body_lines.append(_("药品消耗：{0} 单位").format(medicine_consumed))
-    body_lines.append(_("今日入院：{0} 人 / 出院：{1} 人").format(hospitalized_today, discharged_today))
-    if surgeries_performed or blocked_surgery_count:
-        body_lines.append(
-            _("手术执行：成功 {0} 例 / 待条件 {1} 例").format(surgeries_performed, blocked_surgery_count)
-        )
-    body_lines.append(
-        _("队列概况：待诊 {0} 人 / 待发药 {1} 人 / 住院 {2} 人 / 待手术 {3} 人").format(
-            waiting_count,
-            waiting_medication,
-            hospitalized_count,
-            need_surgery_count,
-        )
-    )
+    need_surgery_count = 0
+    blocked_surgery_count = 0
+    for patient in hospitalized_patients:
+        if patient.need_surgery:
+            need_surgery_count += 1
+            if patient.surgery_blocked:
+                blocked_surgery_count += 1
 
     # 记录队列快照，供日志与外部查询使用。
     queue_snapshot = {
         "waiting": waiting_count,
         "waiting_medication": waiting_medication,
+        "medicine_granted": medicine_granted_count,
         "hospitalized": hospitalized_count,
         "need_surgery": need_surgery_count,
         "surgery_blocked": blocked_surgery_count,
     }
 
+    # --- 计算药品库存快照，便于日志输出消耗、缺口与库存 ---
+    inventory_snapshot: Dict[int, Dict[str, float]] = {}
+    inventory_map = {}
+    if isinstance(getattr(rhodes_island, "materials_resouce", None), dict):
+        inventory_map = dict(rhodes_island.materials_resouce)
+    accumulator_map = dict(getattr(rhodes_island, "medical_inventory_accumulator", {}) or {})
+    consumption_map = medical_constant.MedicalDailyCounters._coerce_consumption_mapping(
+        stats.get("medicine_consumed", {})
+    )
+    resource_ids = set(medical_constant.ALL_MEDICINE_RESOURCE_IDS)
+    resource_ids.update(consumption_map.keys())
+    resource_ids.update(accumulator_map.keys())
+    for resource_id in sorted(resource_ids):
+        consumed_units = float(consumption_map.get(resource_id, 0.0) or 0.0)
+        stock_units = float(inventory_map.get(resource_id, 0) or 0)
+        pending_total = float(accumulator_map.get(resource_id, 0.0) or 0.0)
+        required_units = int(math.floor(pending_total + medical_constant.FLOAT_EPSILON))
+        shortage_units = max(0.0, float(required_units) - stock_units)
+        inventory_snapshot[resource_id] = {
+            "consumed": consumed_units,
+            "shortage": shortage_units,
+            "remain": float(stock_units),
+        }
+
     # 将结算结果写入医疗经营日志，供 UI 与历史记录查看。
     log_entry = log_system.append_medical_report(
         {
-            "lines": [_("医疗部经营结算")] + body_lines,
+            "title": _("○医疗部结算"),
             "income": income_today,
             "price_ratio": price_ratio,
             "stats": stats.copy(),
             "queue": queue_snapshot,
+            "inventory_detail": inventory_snapshot,
         },
         target_base=rhodes_island,
     )
@@ -283,6 +271,7 @@ def settle_medical_department(
         [log_entry],
         width=normal_config.config_normal.text_width,
         draw_flag=draw_flag,
+        day_past_flag=True,
     )
 
     # 触发成就面板刷新龙门币成就进度。

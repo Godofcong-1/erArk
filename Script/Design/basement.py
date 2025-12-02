@@ -705,15 +705,6 @@ def settle_office_work():
     now_draw.text = now_draw_text
     now_draw.draw()
 
-
-def settle_income():
-    """
-    结算收入
-    """
-    from Script.System.Medical import medical_service
-
-    medical_service.settle_medical_department()
-
 def settle_pink_certificate():
     """
     结算粉红凭证
