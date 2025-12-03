@@ -329,14 +329,14 @@ def update_base_resouce_newday():
     settle_semen()
     # 结算母乳转化
     settle_milk()
-    # 结算流水线
-    manage_assembly_line_panel.settle_assembly_line(newdayflag=True)
-    # 结算农业生产
-    agriculture_production_panel.settle_agriculture_line()
-    # 结算访客抵达和离开
-    invite_visitor_panel.settle_visitor_arrivals_and_departures()
     # 结算医疗经营，并输出日报
     medical_service.settle_medical_department()
+    # 结算农业生产
+    agriculture_production_panel.settle_agriculture_line()
+    # 结算流水线
+    manage_assembly_line_panel.settle_assembly_line(newdayflag=True)
+    # 结算访客抵达和离开
+    invite_visitor_panel.settle_visitor_arrivals_and_departures()
     # 结算资源的供需涨跌与自动交易
     resource_exchange_panel.daily_supply_demand_fluctuation()
     # 刷新香薰疗愈次数

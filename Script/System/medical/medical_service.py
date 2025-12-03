@@ -26,7 +26,7 @@ from Script.System.Medical import (
 _: FunctionType = get_text._
 """ 翻译函数 """
 
-# --- 医生相关函数重导出 ---
+# 医生相关函数重导出
 assign_doctor_specialization = clinic_doctor_service.assign_doctor_specialization
 list_role_doctors = clinic_doctor_service.list_role_doctors
 get_specialization_categories = clinic_doctor_service.get_specialization_categories
@@ -41,7 +41,7 @@ attempt_surgery = hospital_doctor_service.attempt_surgery
 consume_surgery_resources = hospital_doctor_service.consume_surgery_resources
 evaluate_surgery_preconditions = hospital_doctor_service.evaluate_surgery_preconditions
 
-# --- 病人相关函数重导出 ---
+# 病人相关函数重导出
 start_player_diagnose_session = clinic_patient_management.start_player_diagnose_session
 abort_player_diagnose_session = clinic_patient_management.abort_player_diagnose_session
 commit_player_diagnose_session = clinic_patient_management.commit_player_diagnose_session
@@ -66,7 +66,7 @@ resolve_surgery_requirements = hospital_patient_management.resolve_surgery_requi
 discharge_patient = hospital_patient_management.discharge_patient
 refresh_patient_hospital_needs = hospital_patient_management.refresh_patient_hospital_needs
 
-# --- 医疗日志相关函数重导出 ---
+# 医疗日志相关函数重导出
 append_medical_report = log_system.append_medical_report
 get_recent_medical_reports = log_system.get_recent_medical_reports
 render_medical_reports = log_system.render_medical_reports
@@ -229,7 +229,7 @@ def settle_medical_department(
         "surgery_blocked": blocked_surgery_count,
     }
 
-    # --- 计算药品库存快照，便于日志输出消耗、缺口与库存 ---
+    # 计算药品库存快照，便于日志输出消耗、缺口与库存
     inventory_snapshot: Dict[int, Dict[str, float]] = {}
     inventory_map = {}
     if isinstance(getattr(rhodes_island, "materials_resouce", None), dict):
@@ -241,16 +241,22 @@ def settle_medical_department(
     resource_ids = set(medical_constant.ALL_MEDICINE_RESOURCE_IDS)
     resource_ids.update(consumption_map.keys())
     resource_ids.update(accumulator_map.keys())
+    # 按资源ID排序输出，确保日志顺序稳定
     for resource_id in sorted(resource_ids):
+        # 今日消耗的药品数量
         consumed_units = float(consumption_map.get(resource_id, 0.0) or 0.0)
+        # 当前库存剩余药品数量
         stock_units = float(inventory_map.get(resource_id, 0) or 0)
+        # 今日累计待消耗药品总量
         pending_total = float(accumulator_map.get(resource_id, 0.0) or 0.0)
+        # 实际需要消耗的药品数量（取整）
         required_units = int(math.floor(pending_total + medical_constant.FLOAT_EPSILON))
+        # 药品缺口数量（需消耗但库存不足部分）
         shortage_units = max(0.0, float(required_units) - stock_units)
         inventory_snapshot[resource_id] = {
-            "consumed": consumed_units,
-            "shortage": shortage_units,
-            "remain": float(stock_units),
+            "consumed": consumed_units,  # 今日消耗
+            "shortage": shortage_units,  # 缺口
+            "remain": float(stock_units),  # 剩余库存
         }
 
     # 将结算结果写入医疗经营日志，供 UI 与历史记录查看。

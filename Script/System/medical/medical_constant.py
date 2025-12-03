@@ -274,11 +274,7 @@ class MedicalPatient:
 
 @dataclass
 class MedicalDailyCounters:
-    """医疗系统当日统计结构体，统一维护所有计数项。
-
-    该结构替代历史上使用的临时字典字段，提供显性的属性与辅助方法，
-    便于在运行期与日志渲染阶段保持字段名称一致性。
-    """
+    """医疗系统当日统计结构体，统一维护所有计数项"""
 
     diagnose_completed_outpatient: int = 0
     """今日完成诊疗的门诊病人数"""

@@ -42,7 +42,7 @@ def _normalize_stage_counters(raw_stats: Dict[str, Any]) -> Dict[str, Any]:
         Dict[str, Any]: 采用最新字段名称的统计字典。
     """
 
-    # --- 使用结构体解析并返回规范化后的字段集合 ---
+    # 使用结构体解析并返回规范化后的字段集合
     counters = medical_constant.MedicalDailyCounters.from_mapping(raw_stats)
     return counters.as_dict()
 
@@ -56,7 +56,7 @@ def _normalize_consumption_map(value: object) -> Dict[int, float]:
         Dict[int, float]: 转换后的资源 ID 到消耗量映射。
     """
 
-    # --- 使用核心结构体的规范化逻辑获取完整的药品映射 ---
+    # 使用核心结构体的规范化逻辑获取完整的药品映射
     coerced = medical_constant.MedicalDailyCounters._coerce_consumption_mapping(value)
     normalized: Dict[int, float] = {}
     for resource_id, amount in coerced.items():
@@ -81,7 +81,7 @@ def _format_medicine_consumption_details(
         List[str]: 格式化后的文本行列表。
     """
 
-    # --- 解析补充细节映射，便于后续统一读取字段 ---
+    # 解析补充细节映射，便于后续统一读取字段
     detail_map: Dict[int, Dict[str, float]] = {}
     if isinstance(inventory_detail, Mapping):
         for res_id, info in inventory_detail.items():
@@ -93,14 +93,14 @@ def _format_medicine_consumption_details(
                 continue
             consumed = medical_constant.MedicalDailyCounters._coerce_float(info.get("consumed", 0))
             shortage = medical_constant.MedicalDailyCounters._coerce_float(info.get("shortage", 0))
-            remain = medical_constant.MedicalDailyCounters._coerce_float(info.get("remain", 0))
+            remain = medical_constant.MedicalDailyCounters._coerce_int(info.get("remain", 0))
             detail_map[safe_id] = {
                 "consumed": consumed,
                 "shortage": shortage,
                 "remain": remain,
             }
 
-    # --- 合并全部资源 ID，包含消耗列表与补充明细 ---
+    # 合并全部资源 ID，包含消耗列表与补充明细
     resource_ids: set[int] = set()
     for key in consumption_map.keys():
         try:
@@ -119,9 +119,9 @@ def _format_medicine_consumption_details(
             remain_units = detail_entry.get("remain", 0)
         else:
             shortage_units = 0.0
-            remain_units = 0.0
+            remain_units = 0
 
-        # --- 过滤掉完全无数据的资源，减少无意义输出 ---
+        # 过滤掉完全无数据的资源，减少无意义输出
         if (
             abs(consumed_units) <= medical_constant.FLOAT_EPSILON
             and abs(shortage_units) <= medical_constant.FLOAT_EPSILON
@@ -134,7 +134,8 @@ def _format_medicine_consumption_details(
         line = _("   {name}：消耗 {consumed:.2f} 单位").format(name=resource_name, consumed=consumed_units)
         if shortage_units > 0:
             line += _("，缺口 {shortage:.2f} 单位").format(shortage=shortage_units)
-        line += _("，库存 {remain:.2f} 单位").format(remain=remain_units)
+        # 不再输出剩余库存，避免日志冗长
+        # line += _("，剩余库存 {remain} 单位").format(remain=remain_units)
         detail_lines.append(line)
 
     return detail_lines
@@ -150,30 +151,47 @@ def _format_medical_report_entry(entry: Dict[str, Any], day_past_flag: bool = Fa
         str: 经过格式化后的多行文本。
     """
 
-    # --- 复制统计数据并执行字段归一化，保证数据完整 ---
+    # 复制统计数据并执行字段归一化，保证数据完整
     stats = dict(entry.get("stats", {}) or {})
     stage_stats = _normalize_stage_counters(stats)
     stats.update(stage_stats)
 
-    # --- 解析队列快照与关键统计指标 ---
+    # 解析队列快照与关键统计指标
     queue = dict(entry.get("queue", {}) or {})
     price_ratio = float(entry.get("price_ratio", 1.0) or 1.0)
     income = int(entry.get("income", 0) or 0)
     surgeries_performed = int(stats.get("surgeries_performed", 0) or 0)
     blocked = int(queue.get("surgery_blocked", 0) or 0)
     medicine_consumption_map = _normalize_consumption_map(stage_stats.get("medicine_consumed", {}))
-    medicine_consumed_total = sum(float(amount) for amount in medicine_consumption_map.values())
+
+    # 合并日常消耗与药品累计器中的剩余需求，确保展示的消耗量覆盖全部待扣资源
+    accumulator_map: Dict[int, float] = {}
+    rhodes_island = medical_core._get_rhodes_island(None)
+    if rhodes_island is not None:
+        accumulator_source = getattr(rhodes_island, "medical_inventory_accumulator", None)
+        if isinstance(accumulator_source, Mapping):
+            for resource_id, pending_units in accumulator_source.items():
+                try:
+                    normalized_id = int(resource_id)
+                    accumulator_map[normalized_id] = float(pending_units or 0.0)
+                except (TypeError, ValueError):
+                    continue
+
+    combined_consumption_map: Dict[int, float] = dict(medicine_consumption_map)
+    for resource_id, pending_units in accumulator_map.items():
+        combined_consumption_map[resource_id] = float(combined_consumption_map.get(resource_id, 0.0) + pending_units)
+    medicine_consumed_total = sum(float(amount) for amount in combined_consumption_map.values())
     hospitalized_today = int(stats.get("hospitalized_today", 0) or 0)
     discharged_today = int(stats.get("discharged_today", 0) or 0)
 
-    # --- 读取队列状态 ---
+    # 读取队列状态
     waiting_queue = int(queue.get("waiting", 0) or 0)
     waiting_medication = int(queue.get("waiting_medication", 0) or 0)
     hospitalized = int(queue.get("hospitalized", 0) or 0)
     need_surgery = int(queue.get("need_surgery", 0) or 0)
     medicine_granted = int(queue.get("medicine_granted", 0) or 0)
 
-    # --- 拆分诊疗与用药阶段的数据 ---
+    # 拆分诊疗与用药阶段的数据
     diagnose_outpatient = stage_stats.get("diagnose_completed_outpatient", 0)
     diagnose_hospital = stage_stats.get("diagnose_completed_hospital", 0)
     diagnose_total = diagnose_outpatient + diagnose_hospital
@@ -183,7 +201,7 @@ def _format_medical_report_entry(entry: Dict[str, Any], day_past_flag: bool = Fa
     pending_outpatient = stage_stats.get("outpatient_waiting_medicine", 0)
     pending_hospital = stage_stats.get("hospital_waiting_medicine", 0)
 
-    # --- 组装文本段落，保持与结算界面一致的语句风格 ---
+    # 组装文本段落，保持与结算界面一致的语句风格
     title = str(entry.get("title", "")).strip()
     lines: List[str] = []
     if title:
@@ -208,9 +226,36 @@ def _format_medical_report_entry(entry: Dict[str, Any], day_past_flag: bool = Fa
     )
     if pending_outpatient or pending_hospital:
         lines.append(_(" - 待发药：门诊 {0} 人 / 住院 {1} 人").format(pending_outpatient, pending_hospital))
-    lines.append(_(" - 药品库存：今日消耗 {0:.2f} 单位").format(medicine_consumed_total))
-    inventory_detail = entry.get("inventory_detail") or entry.get("inventory")
-    medicine_detail_lines = _format_medicine_consumption_details(medicine_consumption_map, inventory_detail)
+    lines.append(_(" - 药品消耗：今日总消耗 {0:.2f} 单位").format(medicine_consumed_total))
+    inventory_detail_raw = entry.get("inventory_detail") or entry.get("inventory")
+    adjusted_inventory_detail: Optional[Dict[int, Dict[str, float]]] = None
+    if isinstance(inventory_detail_raw, Mapping):
+        adjusted_inventory_detail = {}
+        for resource_id, detail in inventory_detail_raw.items():
+            try:
+                normalized_id = int(resource_id)
+            except (TypeError, ValueError):
+                continue
+            detail_map = dict(detail) if isinstance(detail, Mapping) else {}
+            if accumulator_map:
+                extra_units = accumulator_map.get(normalized_id, 0.0)
+                if extra_units:
+                    consumed_units = medical_constant.MedicalDailyCounters._coerce_float(detail_map.get("consumed", 0.0))
+                    detail_map["consumed"] = consumed_units + extra_units
+            adjusted_inventory_detail[normalized_id] = detail_map
+        if accumulator_map:
+            for resource_id, pending_units in accumulator_map.items():
+                adjusted_inventory_detail.setdefault(
+                    resource_id,
+                    {
+                        "consumed": pending_units,
+                        "shortage": 0.0,
+                        "remain": 0,
+                    },
+                )
+    else:
+        adjusted_inventory_detail = None
+    medicine_detail_lines = _format_medicine_consumption_details(combined_consumption_map, adjusted_inventory_detail)
     if medicine_detail_lines:
         lines.extend(medicine_detail_lines)
     lines.append(_(" - 今日入院：{0} 人 / 出院：{1} 人").format(hospitalized_today, discharged_today))
@@ -226,7 +271,7 @@ def _format_medical_report_entry(entry: Dict[str, Any], day_past_flag: bool = Fa
         )
     )
 
-    # --- 附加自定义文本，保持日志信息完整 ---
+    # 附加自定义文本，保持日志信息完整
     extra_text = str(entry.get("text", "")).strip()
     if extra_text:
         lines.append(extra_text)
@@ -254,7 +299,7 @@ def render_medical_reports(
         str: 最终渲染的文本内容。
     """
 
-    # --- 若无日志则输出提示信息，避免空白弹窗 ---
+    # 若无日志则输出提示信息，避免空白弹窗
     if not reports:
         fallback = empty_message or _("\n暂无医疗经营日志记录。\n")
         text = fallback if fallback.endswith("\n") else fallback + "\n"
@@ -265,8 +310,8 @@ def render_medical_reports(
             wait_draw.draw()
         return text
 
-    # --- 逐条格式化日志并使用分隔线拼接，保持展示一致 ---
-    sections = [_format_medical_report_entry(entry, day_past_flag = day_past_flag) for entry in reports]
+    # 逐条格式化日志并使用分隔线拼接，保持展示一致
+    sections = [_format_medical_report_entry(entry, day_past_flag=day_past_flag) for entry in reports]
     text = "\n" + "\n--------------------\n".join(sections) + "\n"
 
     if draw_flag:
@@ -292,12 +337,12 @@ def append_medical_report(
         Dict[str, Any]: 归一化后的日志条目，附带时间字符串。
     """
 
-    # --- 解析日志写入目标的基地对象 ---
+    # 解析日志写入目标的基地对象
     rhodes_island = medical_core._get_rhodes_island(target_base)
     if rhodes_island is None:
         return {"success": False, "reason": "no_base"}
 
-    # --- 复制一份日志字典并补全时间戳/文本字段 ---
+    # 复制一份日志字典并补全时间戳/文本字段
     from Script.Design import game_time
     entry: Dict[str, Any] = dict(report or {})
     entry.setdefault("time", cache_control.cache.game_time)
@@ -314,7 +359,7 @@ def append_medical_report(
     else:
         entry.setdefault("text", str(entry.get("text", "")))
 
-    # --- 获取日志存储容器，在容量超限时截断旧记录 ---
+    # 获取日志存储容器，在容量超限时截断旧记录
     storage = _ensure_storage(rhodes_island)
     storage.append(entry)
     if len(storage) > medical_constant.MAX_RECENT_REPORTS:
@@ -337,17 +382,17 @@ def get_recent_medical_reports(
         List[Dict[str, Any]]: 倒序排列的日志列表，最新记录在最前。
     """
 
-    # --- 若找不到基地对象，则返回空列表 ---
+    # 若找不到基地对象，则返回空列表
     rhodes_island = medical_core._get_rhodes_island(target_base)
     if rhodes_island is None:
         return []
 
-    # --- 复制日志列表，避免修改原始数据 ---
+    # 复制日志列表，避免修改原始数据
     storage = list(getattr(rhodes_island, "medical_recent_reports", []) or [])
     if not storage:
         return []
 
-    # --- 根据 limit 截取最新若干条目，并倒序返回 ---
+    # 根据 limit 截取最新若干条目，并倒序返回
     if limit > 0:
         storage = storage[-limit:]
     storage.reverse()
