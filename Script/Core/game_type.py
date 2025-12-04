@@ -1210,16 +1210,15 @@ class Rhodes_Island:
         """
 
         # 医疗部
-        from Script.System.Medical import medical_constant
         self.patient_now: int = 0
         """ 当前患者人数（旧系统兼容字段） """
         self.patient_cured: int = 0
         """ 当前已治疗患者人数（旧系统兼容字段） """
         self.patient_max: int = 0
         """ 患者人数上限（旧系统兼容字段） """
-        self.medical_patients_today: Dict[int, medical_constant.MedicalPatient] = {}
+        self.medical_patients_today: Dict[int, Any] = {}
         """ 当日待诊病人数据，patient_id:病人结构 """
-        self.medical_hospitalized: Dict[int, medical_constant.MedicalPatient] = {}
+        self.medical_hospitalized: Dict[int, Any] = {}
         """ 住院病人数据，patient_id:病人结构 """
         self.medical_price_ratio: float = 0.0
         """ 当前收费系数，0 表示尚未初始化 """
@@ -1233,8 +1232,8 @@ class Rhodes_Island:
         """ 今日医疗板块龙门币收入 """
         self.medical_income_total: int = 0
         """ 累计医疗板块龙门币收入 """
-        self.medical_daily_counters = medical_constant.MedicalDailyCounters()
-        """ 医疗系统当日统计数据 """
+        self.medical_daily_counters: Any = None
+        """ 医疗系统当日统计数据容器，由初始化流程写入 """
         self.medical_recent_reports: List[Dict[str, Any]] = []
         """ 医疗系统近期经营日志 """
         self.medical_clinic_doctor_ids: List[int] = []
@@ -1245,8 +1244,8 @@ class Rhodes_Island:
         """ 当前分配为住院医生的干员id列表 """
         self.medical_hospital_doctor_power: float = 0.0
         """ 住院医生医疗能力总和 """
-        self.medical_patient_priority_mode: str = medical_constant.MedicalPatientPriority.NORMAL.value
-        """ 医疗部病人接诊优先策略 """
+        self.medical_patient_priority_mode: str = ""
+        """ 医疗部病人接诊优先策略标记，由初始化流程写入 """
         self.medical_player_current_patient_id: int = 0
         """ 玩家诊疗面板当前占用的病人ID，0 表示无会话 """
         self.medical_doctor_specializations: Dict[str, Dict[str, List[int]]] = {}
