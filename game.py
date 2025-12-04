@@ -44,6 +44,7 @@ if __name__ == "__main__":
     from Script.Design import start_flow, character_handle, game_time
     import Script.Settle
     import Script.StateMachine
+    import Script.System.Medical
     from Script.Core import flow_handle, game_init, io_init
     import Script.UI.Flow
 
