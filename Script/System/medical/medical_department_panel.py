@@ -223,11 +223,11 @@ class DoctorManagementSubPanel(_BaseSubPanel):
 
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
-        info_draw.text = _("门诊医生：{0} 人 | 医疗能力总和 {1:.2f}\n").format(
-            len(clinic_ids), float(ri.medical_clinic_doctor_power or 0.0)
+        info_draw.text = _("门诊医生：{0} 人 | 医疗能力总和 {1}\n").format(
+            len(clinic_ids), int(ri.medical_clinic_doctor_power or 0)
         )
-        info_draw.text += _("住院医生：{0} 人 | 医疗能力总和 {1:.2f}\n").format(
-            len(hospital_ids), float(ri.medical_hospital_doctor_power or 0.0)
+        info_draw.text += _("住院医生：{0} 人 | 医疗能力总和 {1}\n").format(
+            len(hospital_ids), int(ri.medical_hospital_doctor_power or 0)
         )
         info_draw.text += _("床位上限 {0} 张，当前占用 {1} 张\n").format(bed_limit, bed_occupied)
         estimated_hours = self._estimate_remaining_hours()
@@ -275,10 +275,17 @@ class DoctorManagementSubPanel(_BaseSubPanel):
         line_feed.draw()
         line_feed.draw()
 
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("○全科医生看诊与治疗所有病人，但效率较低，专科医生仅看诊与治疗对应分科病人，效率更高。\n")
+        info_draw.draw()
+        line_feed.draw()
         self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_CLINIC, return_list)
         line_feed.draw()
-        self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_HOSPITAL, return_list)
-        line_feed.draw()
+        # 仅在医疗区的等级大于等于3级时再显示住院医生分科
+        if ri.facility_level.get(medical_constant.MEDICAL_FACILITY_ID, 0) >= 3:
+            self._draw_specialization_section(medical_constant.SPECIALIZATION_ROLE_HOSPITAL, return_list)
+            line_feed.draw()
 
         if self.feedback_text:
             feedback_draw = draw.NormalDraw()
@@ -404,7 +411,7 @@ class DoctorManagementSubPanel(_BaseSubPanel):
         """切换病人接诊优先策略并提示结果"""
         resolved = medical_service.set_patient_priority_mode(mode)
         mode_text = medical_constant.translate_priority(resolved)
-        self.feedback_text = _("已切换接诊策略为：{0}").format(mode_text)
+        # self.feedback_text = _("已切换接诊策略为：{0}").format(mode_text)
 
     def _estimate_remaining_hours(self) -> float:
         """估算当前门诊病人需要的剩余工时"""

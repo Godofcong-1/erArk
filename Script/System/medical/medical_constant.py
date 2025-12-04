@@ -569,9 +569,9 @@ class MedicalDailyCounters:
 def translate_priority(mode: MedicalPatientPriority) -> str:
     """将病人接诊优先策略转换为用户可读文本"""
     mapping = {
-        MedicalPatientPriority.FOCUS_CRITICAL: _("优先重症"),
-        MedicalPatientPriority.NORMAL: _("正常排序"),
-        MedicalPatientPriority.FOCUS_MILD: _("优先轻症"),
+        MedicalPatientPriority.FOCUS_CRITICAL: _("优先重症，将以病症从重到轻的顺序接诊病人"),
+        MedicalPatientPriority.NORMAL: _("正常排序，优先接诊病情为危重级别的病人，其余维持先来后到顺序"),
+        MedicalPatientPriority.FOCUS_MILD: _("优先轻症，将以病症从轻到重的顺序接诊病人"),
     }
     return mapping.get(mode, "-")
 
