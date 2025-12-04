@@ -481,7 +481,7 @@ def acquire_patient_for_doctor(
         return None
 
     # --- 按既定分诊策略选出最终病人并写回绑定 ---
-    patient = clinic_patient_management._select_triage_candidate(candidates, rhodes_island)
+    patient = clinic_patient_management.select_triage_candidate(candidates, rhodes_island)
     if patient is None:
         return None
     _bind_doctor_to_patient(patient, doctor_character)

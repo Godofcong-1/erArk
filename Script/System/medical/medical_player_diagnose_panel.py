@@ -8,7 +8,7 @@ from types import FunctionType
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text, flow_handle
 from Script.Design import attr_calculation, basement
-from Script.System.Medical import medical_constant, medical_service
+from Script.System.Medical import medical_constant, medical_player_diagnose_function
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -85,7 +85,7 @@ class MedicalPlayerDiagnosePanel:
         # 若玩家处于可控状态，则尝试开启医疗会话并缓存病患信息
         initial_patient: Optional[medical_constant.MedicalPatient] = None
         if self.player is not None:
-            initial_patient = medical_service.start_player_diagnose_session(self.player)
+            initial_patient = medical_player_diagnose_function.start_player_diagnose_session(self.player)
 
         if initial_patient is not None:
             self._prepare_new_patient_session(initial_patient)
@@ -199,7 +199,7 @@ class MedicalPlayerDiagnosePanel:
         self.max_parallel = max(1, self.target_complication_count or 1)
 
         # 构建本次会话的检查目录
-        self.check_catalog = medical_service.build_player_check_catalog(patient)
+        self.check_catalog = medical_player_diagnose_function.build_player_check_catalog(patient)
 
         if initial_feedback:
             self.feedback_text = initial_feedback
@@ -849,7 +849,8 @@ class MedicalPlayerDiagnosePanel:
                 lines.append(_("  暂无明确线索，请考虑切换提示或交由其他医生继续诊疗。"))
 
         lines.append("\n")
-        preview = medical_service.estimate_patient_treatment_summary(self.patient)
+
+        preview = medical_player_diagnose_function.estimate_patient_treatment_summary(self.patient)
         if preview.get("success"):
             # 成功获取预估信息，结合确诊进度动态调整收益与耗材数量
             diagnose_income = int(round(_ensure_float(preview.get("diagnose_income", 0), 0.0)))
@@ -1215,10 +1216,9 @@ class MedicalPlayerDiagnosePanel:
             return
 
         # 调用医疗服务层提交诊疗结果
-        outcome = medical_service.commit_player_diagnose_session(
+        outcome = medical_player_diagnose_function.commit_player_diagnose_session(
             self.player,
             patient=self.patient,
-            apply_medicine=True,
         )
         # 结算失败时记录原因并返回
         if not outcome.get("success"):
@@ -1245,7 +1245,7 @@ class MedicalPlayerDiagnosePanel:
 
         next_patient: Optional[medical_constant.MedicalPatient] = None
         if continue_after and self.player is not None:
-            next_patient = medical_service.start_player_diagnose_session(self.player)
+            next_patient = medical_player_diagnose_function.start_player_diagnose_session(self.player)
 
         self._pending_continue_after_treatment = False
 
@@ -1292,7 +1292,7 @@ class MedicalPlayerDiagnosePanel:
         # 没有选项时直接返回
         if not pending:
             return
-        result = medical_service.execute_player_diagnose_checks(pending, patient=self.patient)
+        result = medical_player_diagnose_function.execute_player_diagnose_checks(pending, patient=self.patient)
         # 检查执行失败时记录原因并返回
         if not result.get("success"):
             self.feedback_text = _("执行检查失败：{0}").format(result.get("reason", "unknown"))
@@ -1328,7 +1328,7 @@ class MedicalPlayerDiagnosePanel:
             return
         self._awaiting_treatment_confirmation = False
         # 通知医疗服务层撤销会话状态，防止残留数据影响后续诊疗
-        medical_service.abort_player_diagnose_session(self.player, patient=self.patient)
+        medical_player_diagnose_function.abort_player_diagnose_session(self.player, patient=self.patient)
         self.feedback_text = _("已结束本次诊疗流程。")
         self._draw_feedback()
         self._abort_requested = True
