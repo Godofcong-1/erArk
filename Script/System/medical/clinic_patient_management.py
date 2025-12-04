@@ -58,9 +58,9 @@ def pick_severity_level(facility_level: Optional[int] = None) -> Optional[int]:
         if facility_level is None:
             return True
         if severity_id == 3:
-            return facility_level >= 4
+            return facility_level >= 5
         if severity_id == 2:
-            return facility_level >= 2
+            return facility_level >= 3
         return True
 
     # 根据设施等级过滤可用病情档位。

@@ -150,12 +150,12 @@ class OverviewSubPanel(_BaseSubPanel):
             "收费系数：{0:.2f} 倍 | 接诊优先策略：{1}\n"
         ).format(price_ratio, medical_constant.translate_priority(priority_mode))
         overview_draw.text += _(
-            "门诊医生：{0} 人（医疗能力总和 {1:.2f}） | 住院医生：{2} 人（医疗能力总和 {3:.2f}）\n"
+            "门诊医生：{0} 人（医疗能力总和 {1}） | 住院医生：{2} 人（医疗能力总和 {3}）\n"
         ).format(
             len(ri.medical_clinic_doctor_ids),
-            float(ri.medical_clinic_doctor_power or 0.0),
+            int(ri.medical_clinic_doctor_power or 0),
             len(ri.medical_hospital_doctor_ids),
-            float(ri.medical_hospital_doctor_power or 0.0),
+            int(ri.medical_hospital_doctor_power or 0),
         )
         overview_draw.text += _(
             "门诊排队 {0} 人 | 等待用药 {1} 人 | 住院 {2}/{3} 张床位 | 今日收入 {4} 龙门币\n"
@@ -474,7 +474,7 @@ class PriceSettingSubPanel(_BaseSubPanel):
             (10, _("+10%")),
         ]
         for delta, label in adjust_options:
-            button = draw.LeftButton(
+            button = draw.CenterButton(
                 f"[{label}]",
                 label,
                 max(len(label) * 2 + 4, 10),
@@ -483,9 +483,8 @@ class PriceSettingSubPanel(_BaseSubPanel):
             )
             button.draw()
             return_list.append(button.return_text)
-        line_feed.draw()
 
-        reset_button = draw.LeftButton(
+        reset_button = draw.CenterButton(
             _("[重置为100%]"),
             _("重置收费"),
             max(len(_("[重置为100%]")) * 2, 18),
@@ -662,7 +661,7 @@ class FinanceReportSubPanel(_BaseSubPanel):
             for key, value in counter_dict.items():
                 if value is None:
                     continue
-                display_name = medical_constant.MedicalDailyCounters.DISPLAY_NAME_MAPPING.get(key, key)
+                display_name = medical_constant.DISPLAY_NAME_MAPPING.get(key, key)
                 if key == "medicine_consumed":
                     consumption_map = medical_constant.MedicalDailyCounters._coerce_consumption_mapping(value)
                     total_units = sum(float(amount or 0.0) for amount in consumption_map.values())

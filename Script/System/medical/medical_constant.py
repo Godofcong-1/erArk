@@ -272,6 +272,20 @@ class MedicalPatient:
             self.need_resources.setdefault(resource_id, 0.0)
 
 
+DISPLAY_NAME_MAPPING: Dict[str, str] = {
+    "diagnose_completed_outpatient": _("门诊诊疗完成"),
+    "diagnose_completed_hospital": _("住院诊疗完成"),
+    "medicine_completed_outpatient": _("门诊发药完成"),
+    "medicine_completed_hospital": _("住院发药完成"),
+    "outpatient_waiting_medicine": _("门诊待发药"),
+    "hospital_waiting_medicine": _("住院待发药"),
+    "hospitalized_today": _("今日入院"),
+    "discharged_today": _("今日出院"),
+    "surgeries_performed": _("今日手术完成数"),
+    "medicine_consumed": _("药品消耗明细"),
+}
+"""字段展现用的中文名称映射，供 UI 友好展示使用。"""
+
 @dataclass
 class MedicalDailyCounters:
     """医疗系统当日统计结构体，统一维护所有计数项"""
@@ -292,24 +306,10 @@ class MedicalDailyCounters:
     """今日新增入院的病人数"""
     discharged_today: int = 0
     """今日完成出院的病人数"""
-    medicine_consumed: Dict[int, float] = field(default_factory=build_medicine_consumption_template)
-    """今日药品消耗统计，键为药剂资源 ID，值为对应的消耗单位数（支持小数）"""
     surgeries_performed: int = 0
     """今日成功执行的手术次数"""
-
-    DISPLAY_NAME_MAPPING: ClassVar[Dict[str, str]] = {
-        "diagnose_completed_outpatient": _("门诊诊疗完成"),
-        "diagnose_completed_hospital": _("住院诊疗完成"),
-        "medicine_completed_outpatient": _("门诊发药完成"),
-        "medicine_completed_hospital": _("住院发药完成"),
-        "outpatient_waiting_medicine": _("门诊待发药"),
-        "hospital_waiting_medicine": _("住院待发药"),
-        "hospitalized_today": _("今日入院"),
-        "discharged_today": _("今日出院"),
-        "medicine_consumed": _("药品消耗明细"),
-        "surgeries_performed": _("手术完成次数"),
-    }
-    """字段展现用的中文名称映射，供 UI 友好展示使用。"""
+    medicine_consumed: Dict[int, float] = field(default_factory=build_medicine_consumption_template)
+    """今日药品消耗统计，键为药剂资源 ID，值为对应的消耗单位数（支持小数）"""
 
     @classmethod
     def from_mapping(cls, source: Optional[object]) -> "MedicalDailyCounters":
