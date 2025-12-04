@@ -1248,6 +1248,8 @@ class Rhodes_Island:
         """ 医疗部病人接诊优先策略标记，由初始化流程写入 """
         self.medical_player_current_patient_id: int = 0
         """ 玩家诊疗面板当前占用的病人ID，0 表示无会话 """
+        self.player_examined_patient_ids: List[int] = []
+        """ 玩家本次诊疗过的病人id列表 """
         self.medical_doctor_specializations: Dict[str, Dict[str, List[int]]] = {}
         """ 医生分科配置，按岗位分类记录各系统的医生id列表 """
         self.patient_cured_all: int = 0

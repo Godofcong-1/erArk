@@ -220,6 +220,9 @@ def commit_player_diagnose_session(
     medical_service.advance_diagnose(patient.patient_id, doctor_character, target_base=rhodes_island)
     income_after = float(rhodes_island.medical_income_today or 0.0)
 
+    # 记录病人id
+    rhodes_island.player_examined_patient_ids.append(patient.patient_id)
+
     # 根据最近一次用药记录还原药费收益，用于界面提示
     medicine_success = patient.state == medical_constant.MedicalPatientState.MEDICINE_GRANTED
 
@@ -230,8 +233,7 @@ def commit_player_diagnose_session(
     income_delta = int(round(income_after - income_before))
     medicine_income = max(0, income_delta - diagnose_income)
 
-    # 清理临时数据并解除医生绑定。
-    _clear_player_session_state(patient)
+    # 解除医生绑定
     rhodes_island.medical_player_current_patient_id = 0
 
     return {

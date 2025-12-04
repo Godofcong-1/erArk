@@ -7327,19 +7327,37 @@ def handle_cure_patient_add_just(
     if not add_time:
         return
 
-    # 跳过玩家自己
-    if character_id == 0:
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
         return
-
-    doctor_data: game_type.Character = cache.character_data[character_id]
-    if doctor_data.dead:
-        return
-
     rhodes_island = cache.rhodes_island
+
+    # 玩家自己根据诊疗病人列表单独处理
+    if character_id == 0:
+        # 遍历所有本次被诊疗的病人
+        for patient_id in rhodes_island.player_examined_patient_ids:
+            # 获取该病人的数据
+            patient_obj = rhodes_island.medical_patients_today.get(patient_id)
+            if patient_obj is None:
+                patient_obj = rhodes_island.medical_hospitalized.get(patient_id)
+            if patient_obj is None:
+                continue
+            # 病人的病情等级
+            severity_level = patient_obj.severity_level
+            # 根据病情等级获取额外习得
+            base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[30], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
+            # 病人的检查次数
+            exam_count = patient_obj.player_used_checks
+            # 根据检查次数计算医疗经验
+            base_chara_experience_common_settle(character_id, 88, base_value = exam_count, change_data = change_data)
+        # 清空本次被诊疗的病人列表
+        rhodes_island.player_examined_patient_ids.clear()
+        return
+
     before_income = rhodes_island.medical_income_today
 
     # 如果已有病人则选取该病人
-    patient_id = getattr(getattr(doctor_data, "work", None), "medical_patient_id", 0)
+    patient_id = getattr(getattr(character_data, "work", None), "medical_patient_id", 0)
     patient_obj = None
     # 先从今日病人中寻找
     if patient_id:
@@ -7350,21 +7368,28 @@ def handle_cure_patient_add_just(
 
     # 否则获取一个新的病人
     if patient_obj is None:
-        patient_obj = medical_service.acquire_patient_for_doctor(doctor_data)
+        patient_obj = medical_service.acquire_patient_for_doctor(character_data)
 
     # 没有病人则直接返回
     if patient_obj is None:
-        if hasattr(doctor_data, "work"):
-            doctor_data.work.medical_patient_id = 0
+        if hasattr(character_data, "work"):
+            character_data.work.medical_patient_id = 0
         return
 
+    # 病情等级
+    severity_level = patient_obj.severity_level
+
     # 进行诊断
-    medical_service.advance_diagnose(patient_obj.patient_id, doctor_data)
+    medical_service.advance_diagnose(patient_obj.patient_id, character_data)
     income_delta = rhodes_island.medical_income_today - before_income
     waiting_count = rhodes_island.patient_now
 
+    # 根据病情等级获取额外习得和医疗经验
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[30], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
+    base_chara_experience_common_settle(character_id, 88, base_value = severity_level, change_data = change_data)
+
     # 仅在玩家场景输出
-    if doctor_data.position != cache.character_data[0].position:
+    if character_data.position != cache.character_data[0].position:
         return
 
     now_draw = draw.NormalDraw()
@@ -7374,7 +7399,7 @@ def handle_cure_patient_add_just(
         now_draw.text = _(
             "\n在{doctor}的努力下，为一名{severity}患者完成诊断，获得{income}龙门币。（当前待诊患者：{waiting}人）\n"
         ).format(
-            doctor=doctor_data.name,
+            doctor=character_data.name,
             severity=severity_name,
             income=income_delta,
             waiting=waiting_count,
@@ -7383,7 +7408,7 @@ def handle_cure_patient_add_just(
         now_draw.text = _(
             "\n{doctor}为一名{severity}患者推进诊疗进度。当前尚有{waiting}人等待就诊。\n"
         ).format(
-            doctor=doctor_data.name,
+            doctor=character_data.name,
             severity=severity_name,
             waiting=waiting_count,
         )
