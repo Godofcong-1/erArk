@@ -451,10 +451,10 @@ def _select_triage_candidate(
     if not candidates:
         return None
 
-    # --- 根据当前优先策略决定筛选规则，并优先处理默认分诊逻辑 ---
+    # 根据当前优先策略决定筛选规则，并优先处理默认分诊逻辑
     mode = _resolve_triage_mode(rhodes_island)
 
-    # --- 默认策略：若存在危重病人则立即返回，否则按照刷新顺序先来后到 ---
+    # 默认策略：若存在危重病人则立即返回，否则按照刷新顺序先来后到
     if mode == medical_constant.MedicalPatientPriority.NORMAL:
         for target in candidates:
             severity_level = int(getattr(target, "severity_level", 0) or 0)
@@ -462,7 +462,7 @@ def _select_triage_candidate(
                 return target
         return candidates[0]
 
-    # --- 轻症优先策略：继续按严重度升序、诊疗进度与编号排序 ---
+    # 轻症优先策略：继续按严重度升序、诊疗进度与编号排序
     if mode == medical_constant.MedicalPatientPriority.FOCUS_MILD:
         key_func = lambda target: (
             int(getattr(target, "severity_level", 0) or 0),
@@ -471,7 +471,7 @@ def _select_triage_candidate(
         )
         return min(candidates, key=key_func)
 
-    # --- 其他策略（默认兼容重症优先）继续采用严重度降序的旧排序逻辑 ---
+    # 其他策略（默认兼容重症优先）继续采用严重度降序的旧排序逻辑
     key_func = lambda target: (
         -int(getattr(target, "severity_level", 0) or 0),
         -float(getattr(target, "diagnose_progress", 0.0) or 0.0),
@@ -683,16 +683,14 @@ def commit_player_diagnose_session(
     advance_diagnose(patient.patient_id, doctor_character, target_base=rhodes_island)
     income_after = float(rhodes_island.medical_income_today or 0.0)
 
-    # --- 诊疗阶段的收益固定依赖病情配置，需与倍率一致计算 ---
+    # 计算诊疗收益
+    diagnose_income = estimate_patient_diagnose_income(patient, target_base=rhodes_island)
+
+    # 计算价格系数与收入倍率
     price_ratio = get_medical_price_ratio(target_base=rhodes_island)
     income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
-    diagnose_income = int(
-        round(float(severity_config.diagnose_income or 0) * price_ratio * income_multiplier)
-    )
-    if diagnose_income < 0:
-        diagnose_income = 0
 
-    # --- 根据最近一次用药记录还原药费收益，用于界面提示 ---
+    # 根据最近一次用药记录还原药费收益，用于界面提示
     medicine_income = 0
     medicine_success = patient.state == medical_constant.MedicalPatientState.MEDICINE_GRANTED
     if medicine_success:
@@ -703,13 +701,13 @@ def commit_player_diagnose_session(
                 continue
             resource_config = game_config.config_resouce.get(resource_id)
             unit_price = float(getattr(resource_config, "price", 0) or 0.0)
-            resource_income = unit_price * used_units * medicine_ratio * price_ratio * income_multiplier
+            resource_income = unit_price * used_units * medicine_ratio * income_multiplier
             income_value = int(round(resource_income))
             if income_value <= 0:
                 continue
             medicine_income += income_value
 
-    # --- 校准总收益差值，避免浮动误差 ---
+    # 校准总收益差值，避免浮动误差
     income_delta = int(round(income_after - income_before))
     combined_income = diagnose_income + medicine_income
     if combined_income != income_delta:
@@ -910,6 +908,36 @@ def build_player_check_catalog(
     return catalog
 
 
+def estimate_patient_diagnose_income(
+    patient: Optional[medical_constant.MedicalPatient],
+    *,
+    target_base: Optional[game_type.Rhodes_Island] = None,
+) -> int:
+    """
+    估算指定病人的诊疗阶段收益（不含药费）。
+
+    参数:
+        patient (Optional[medical_constant.MedicalPatient]): 目标病人对象。
+        target_base (Optional[game_type.Rhodes_Island]): 指定罗德岛基座，用于倍率读取。
+    返回:
+        int: 诊疗阶段的预期收入，若缺失返回 0。
+    """
+    # 缺少病人对象时直接返回失败结果
+    if patient is None:
+        return 0
+    # 解析罗德岛对象并获取病情配置
+    rhodes_island = medical_core._get_rhodes_island(target_base)
+    severity_config = game_config.config_medical_severity.get(patient.severity_level)
+    if severity_config is None:
+        return 0
+    # 读取收费倍率与收入加成后计算诊疗收入，收入会加上玩家检查的次数乘以病情等级
+    price_ratio = get_medical_price_ratio(target_base=rhodes_island)
+    income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
+    diagnose_income = severity_config.diagnose_income + patient.player_used_checks * 1000 * patient.severity_level
+    diagnose_income = int(round(float(diagnose_income or 0) * income_multiplier))
+    # 确保返回非负值
+    return max(diagnose_income, 0)
+
 def estimate_patient_treatment_summary(
     patient: Optional[medical_constant.MedicalPatient],
     *,
@@ -924,34 +952,33 @@ def estimate_patient_treatment_summary(
         Dict[str, object]: 汇总后的收益、倍率与资源需求数据。
     """
 
-    # 缺少病人对象时直接返回失败结果。
+    # 缺少病人对象时直接返回失败结果
     if patient is None:
         return {"success": False, "reason": "no_patient"}
 
-    # 解析罗德岛对象并获取病情配置。
+    # 解析罗德岛对象并获取病情配置
     rhodes_island = medical_core._get_rhodes_island(target_base)
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
         return {"success": False, "reason": "no_severity_config"}
 
-    # 读取收费倍率与收入加成后计算诊疗收入。
+    # 计算诊疗收益
+    diagnose_income = estimate_patient_diagnose_income(patient, target_base=rhodes_island)
+
+    # 计算潜在药费收益与资源需求摘要
     price_ratio = get_medical_price_ratio(target_base=rhodes_island)
     income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
-    diagnose_income = int(
-        round(float(severity_config.diagnose_income or 0) * price_ratio * income_multiplier)
-    )
-
     medicine_income_ratio = float(severity_config.medicine_income_ratio or 0.0)
     predicted_medicine_income = 0.0
     resource_summary: List[Dict[str, object]] = []
-    # 遍历病人所需的药物资源，计算潜在收益并构造摘要。
+    # 遍历病人所需的药物资源，计算潜在收益并构造摘要
     for resource_id, amount in patient.need_resources.items():
         need_value = float(amount or 0.0)
         if need_value <= 0:
             continue
         resource_config = game_config.config_resouce.get(resource_id)
         unit_price = float(getattr(resource_config, "price", 0.0) or 0.0)
-        predicted_medicine_income += unit_price * need_value * medicine_income_ratio * price_ratio * income_multiplier
+        predicted_medicine_income += unit_price * need_value * medicine_income_ratio * income_multiplier
         resource_summary.append(
             {
                 "resource_id": resource_id,
@@ -1044,7 +1071,7 @@ def advance_diagnose(
         hospitalized_success = False
         if getattr(severity_config, "require_hospitalization", 0) == 1:
             hospitalized_success = medical_service.try_hospitalize(patient.patient_id, target_base=rhodes_island)
-        # --- 仍在门诊流程时同步执行用药结算，确保日度统计一致 ---
+        # 仍在门诊流程时同步执行用药结算，确保日度统计一致
         if not hospitalized_success and patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
             medical_service.try_consume_medicine(patient, target_base=rhodes_island)
         medical_core._sync_legacy_patient_counters(rhodes_island)
@@ -1072,17 +1099,15 @@ def advance_diagnose(
     # 记录诊疗完成统计，区分门诊总量与细分来源
     medical_core._bump_daily_counter(rhodes_island, "diagnose_completed_outpatient", 1)
 
-    price_ratio = float(rhodes_island.medical_price_ratio or 1.0)
-    income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
-    raw_income = float(severity_config.diagnose_income) * price_ratio * income_multiplier
-    income_value = int(round(raw_income))
+    # 计算诊疗收益
+    diagnose_income = estimate_patient_diagnose_income(patient, target_base=rhodes_island)
 
     # 将诊疗收入加到账面，并同步病人数统计
-    if income_value > 0:
-        rhodes_island.medical_income_today += income_value
-        rhodes_island.medical_income_total += income_value
-        rhodes_island.all_income += income_value
-        rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + income_value
+    if diagnose_income > 0:
+        rhodes_island.medical_income_today += diagnose_income
+        rhodes_island.medical_income_total += diagnose_income
+        rhodes_island.all_income += diagnose_income
+        rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + diagnose_income
     # 解除医生与病人绑定
     patient.assigned_doctor_id = 0
     # 计算治愈统计数据
@@ -1096,7 +1121,7 @@ def advance_diagnose(
     if getattr(severity_config, "require_hospitalization", 0) == 1:
         hospitalized_success = medical_service.try_hospitalize(patient.patient_id, target_base=rhodes_island)
 
-    # --- 若仍停留在门诊流程，则立即尝试结算药物扣除 ---
+    # 若仍停留在门诊流程，则立即尝试结算药物扣除
     if not hospitalized_success and patient.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
         medical_service.try_consume_medicine(patient, target_base=rhodes_island)
 

@@ -1250,7 +1250,7 @@ class MedicalPlayerDiagnosePanel:
         self._pending_continue_after_treatment = False
 
         if continue_after and next_patient is not None:
-            continuation_message = base_message + _(" 已为你安排下一位病人，请继续诊疗。")
+            continuation_message = base_message + _(" 已为博士安排下一位病人，请继续诊疗。")
             self._prepare_new_patient_session(next_patient, initial_feedback=continuation_message)
             return
 
