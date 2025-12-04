@@ -28,7 +28,7 @@ jobs:
 
       - name: Run PyInstaller
         run: |
-          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading --hidden-import=Script.System --hidden-import=Script.System.Medical --additional-hooks-dir=. --icon=image/logo.png
+          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading --hidden-import=Script.System --hidden-import=Script.System.Medical --icon=image/logo.png
 
       - name: Build Game Config
         run: |

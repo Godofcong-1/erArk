@@ -1,6 +1,6 @@
 """Medical subsystem package - 医疗系统子模块"""
 # 显式导入所有子模块以便 PyInstaller 打包（使用相对导入）
-from . import (
+from Script.System.Medical import (
     medical_constant,
     medical_core,
     log_system,
