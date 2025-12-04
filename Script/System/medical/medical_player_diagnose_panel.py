@@ -1355,6 +1355,7 @@ class MedicalPlayerDiagnosePanel:
         if self._abort_requested:
             chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration=duration, force_taget_wait=True)
         # 正常情况下直接结算
+        else:
             chara_handle_instruct_common_settle(constant.Behavior.CURE_PATIENT, duration=duration, force_taget_wait=False)
 
     # --- 工具方法 ---------------------------------------------------------
