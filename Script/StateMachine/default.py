@@ -1,11 +1,9 @@
 import random
 from types import FunctionType
-from typing import Any, Dict, List, Optional, Tuple
 from Script.Config import game_config
 from Script.Design import handle_state_machine, character_move, map_handle, clothing, handle_premise, handle_npc_ai, basement
 from Script.Core import get_text, cache_control, game_type, constant
 from Script.UI.Moudle import draw
-from Script.System.Medical import medical_constant, medical_service, medical_core
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
