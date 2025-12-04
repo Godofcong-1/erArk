@@ -1,3 +1,3 @@
 """System package - 系统模块包"""
-# 显式导入所有子模块以便 PyInstaller 打包
-from Script.System import Medical
+# 此文件使 Script.System 成为一个有效的 Python 包
+# 子模块 Medical 由 game.py 中的 import Script.System.Medical 显式导入
