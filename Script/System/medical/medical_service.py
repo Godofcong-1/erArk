@@ -280,6 +280,43 @@ def settle_medical_department(
     from Script.UI.Panel import achievement_panel
     achievement_panel.achievement_flow(_("龙门币"))
 
+    # --- 清理已完成流程的病人记录，避免缓存持续膨胀 ---
+    cleared_outpatient_ids: List[int] = []
+    cleared_hospitalized_ids: List[int] = []
+
+    # 门诊表中过滤已拿药治疗或已出院的病人，同时移除异常的空引用。
+    outpatient_table = rhodes_island.medical_patients_today
+    for patient_id, patient in list(outpatient_table.items()):
+        should_remove = False
+        if patient is None:
+            should_remove = True
+        else:
+            state = getattr(patient, "state", None)
+            if state in (
+                medical_constant.MedicalPatientState.MEDICINE_GRANTED,
+                medical_constant.MedicalPatientState.DISCHARGED,
+            ):
+                should_remove = True
+        if should_remove:
+            outpatient_table.pop(patient_id, None)
+            cleared_outpatient_ids.append(patient_id)
+
+    # 住院表一般不会保留已出院病人，但仍补充一次兜底清理逻辑。
+    hospital_table = rhodes_island.medical_hospitalized
+    for patient_id, patient in list(hospital_table.items()):
+        should_remove = False
+        if patient is None:
+            should_remove = True
+        elif getattr(patient, "state", None) == medical_constant.MedicalPatientState.DISCHARGED:
+            should_remove = True
+        if should_remove:
+            hospital_table.pop(patient_id, None)
+            cleared_hospitalized_ids.append(patient_id)
+
+    # 若执行了清理操作则同步一次旧版计数器，确保统计保持一致。
+    if cleared_outpatient_ids or cleared_hospitalized_ids:
+        medical_core._sync_legacy_patient_counters(rhodes_island)
+
     # 结算结束后重置当日收入与计数器，等待下一轮业务累计。
     rhodes_island.medical_income_today = 0
     rhodes_island.all_income = 0
