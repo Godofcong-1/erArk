@@ -7345,7 +7345,7 @@ def handle_cure_patient_add_just(
             # 病人的病情等级
             severity_level = patient_obj.severity_level
             # 根据病情等级获取额外习得
-            base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[30], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
+            base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[46], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
             # 病人的检查次数
             exam_count = patient_obj.player_used_checks
             # 根据检查次数计算医疗经验
@@ -7385,7 +7385,7 @@ def handle_cure_patient_add_just(
     waiting_count = rhodes_island.patient_now
 
     # 根据病情等级获取额外习得和医疗经验
-    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[30], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[46], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
     base_chara_experience_common_settle(character_id, 88, base_value = severity_level, change_data = change_data)
 
     # 仅在玩家场景输出
@@ -7524,6 +7524,9 @@ def handle_perform_surgery(
 
     # 执行手术
     medical_service.attempt_surgery(patient_id, doctor_data, target_base=cache.rhodes_island)
+
+    # 获取大量习得
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = doctor_data.ability[46], extra_adjust = 3, change_data = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)
