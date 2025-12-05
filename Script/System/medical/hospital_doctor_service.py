@@ -13,7 +13,7 @@ from typing import Any, Dict, Optional, Tuple, List
 from Script.Config import game_config
 from Script.Core import cache_control, game_type
 from Script.Design import handle_ability
-from Script.System.Medical import medical_constant, medical_core, medical_service
+from Script.System.Medical import medical_constant, medical_core
 
 
 @dataclass
@@ -124,6 +124,7 @@ def evaluate_surgery_preconditions(
     rhodes_island: Optional[game_type.Rhodes_Island],
 ) -> SurgeryPrecheckResult:
     """判断指定医生是否可以为病人执行手术并给出资源需求。"""
+    from Script.System.Medical import medical_service
 
     # 基地、医生或病人不存在时直接返回失败
     if patient is None or doctor_character is None or rhodes_island is None:
@@ -195,6 +196,7 @@ def consume_surgery_resources(
     返回:
         bool: 药品资源扣除是否完成，True 表示已成功扣除。
     """
+    from Script.System.Medical import medical_service
 
     # 校验上下文是否完整，缺失任意一方时无法扣除药品。
     if patient is None or rhodes_island is None:
@@ -308,6 +310,7 @@ def conduct_ward_round(
     返回:
         Dict[str, object]: 查房结果，包含是否处理成功及对应病人信息。
     """
+    from Script.System.Medical import medical_service
 
     # 获取执行查房的基地。
     rhodes_island = medical_core._get_rhodes_island(target_base)
@@ -396,6 +399,7 @@ def _attempt_surgery_on_patient(
     返回:
         bool: 手术是否完成结算。
     """
+    from Script.System.Medical import medical_service
 
     # 校验手术使用的病情配置，缺失时无法继续结算。
     severity_config = game_config.config_medical_severity.get(patient.severity_level)

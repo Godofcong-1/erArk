@@ -11,7 +11,7 @@ from typing import Callable, Dict, Optional
 
 from Script.Config import config_def, game_config
 from Script.Core import game_type
-from Script.System.Medical import medical_service, medical_constant, medical_core
+from Script.System.Medical import medical_constant, medical_core
 
 
 def try_hospitalize(
@@ -27,6 +27,7 @@ def try_hospitalize(
     返回:
         bool: 是否成功将病人移动至住院列表。
     """
+    from Script.System.Medical import medical_service
 
     # 定位当前处理的基地对象。
     rhodes_island = medical_core._get_rhodes_island(target_base)
@@ -227,6 +228,7 @@ def try_consume_medicine(
     返回:
         bool: 药物是否全部满足需求。
     """
+    from Script.System.Medical import medical_service
 
     # 无病人或基地对象时，无法扣药。
     if patient is None:
@@ -450,6 +452,7 @@ def discharge_patient(
     返回:
         None
     """
+    from Script.System.Medical import medical_service
 
     # 将病人从住院表移除并标记出院状态。
     hospital_table = medical_service.get_patient_table(target_base=rhodes_island, hospitalized=True)
