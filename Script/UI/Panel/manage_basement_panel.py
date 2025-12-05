@@ -339,14 +339,6 @@ class Manage_Basement_Panel:
             else:
                 now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
         elif _("医疗经营系统") in son_panel:
-            # 显示未实装提示
-            if handle_premise.handle_debug_mode_off(0):
-                info_draw = draw.WaitDraw()
-                info_draw.text = _("\n○医疗经营系统尚未实装，敬请期待后续更新\n")
-                info_draw.style = "gold_enrod"
-                info_draw.width = self.width
-                info_draw.draw()
-                return
             now_panel = medical_department_panel.Medical_Department_Panel(self.width)
         now_panel.draw()
 
