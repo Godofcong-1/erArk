@@ -2,7 +2,7 @@ from typing import Dict, List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import basement, attr_calculation, handle_premise, game_time
-from Script.UI.Moudle import draw, panel
+from Script.UI.Moudle import draw
 from Script.UI.Panel import  see_character_info_panel
 from Script.Config import game_config, normal_config
 
