@@ -146,7 +146,9 @@ def settle_agriculture_line(draw_flag = True):
                     now_draw.text = now_text
                     now_draw.draw()
 
-        # 重置收菜时间
+        # 如果没有第4号元素，补齐为0
+        while len(cache.rhodes_island.herb_garden_line[agriculture_line_id]) < 5:
+            cache.rhodes_island.herb_garden_line[agriculture_line_id].append(0)
         cache.rhodes_island.herb_garden_line[agriculture_line_id][4] = cache.game_time.hour
 
     # 遍历温室

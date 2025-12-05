@@ -210,13 +210,13 @@ def get_base_updata():
         elif facility_name == _("药田"):
             # 药田生产线初始化
             if 0 not in cache.rhodes_island.herb_garden_line:
-                cache.rhodes_island.herb_garden_line[0] = [0,0,0,0]
+                cache.rhodes_island.herb_garden_line[0] = [0,0,0,0,0]
             if level >= 3 and 1 not in cache.rhodes_island.herb_garden_line:
-                cache.rhodes_island.herb_garden_line[1] = [0,0,0,0]
+                cache.rhodes_island.herb_garden_line[1] = [0,0,0,0,0]
             if level >= 4 and 2 not in cache.rhodes_island.herb_garden_line:
-                cache.rhodes_island.herb_garden_line[2] = [0,0,0,0]
+                cache.rhodes_island.herb_garden_line[2] = [0,0,0,0,0]
             if level >= 5 and 3 not in cache.rhodes_island.herb_garden_line:
-                cache.rhodes_island.herb_garden_line[3] = [0,0,0,0]
+                cache.rhodes_island.herb_garden_line[3] = [0,0,0,0,0]
             # 计算各线当前效率
             for agriculture_line_id in cache.rhodes_island.herb_garden_line:
                 detail_str, produce_effect = agriculture_production_panel.calculate_agriculture_line_efficiency(agriculture_line_id,agriculture_type=0)
