@@ -3316,7 +3316,7 @@ def handle_cure_patient():
     constant.InstructType.WORK,
     _("管理医疗系统"),
     {constant_promise.Premise.NOT_H,
-     constant_promise.Premise.IN_MEDICAL_ZONE,
+     constant_promise.Premise.IN_MEDICAL_OFFICE,
      constant_promise.Premise.TIRED_LE_74},
 )
 def handle_manage_dedical_department():

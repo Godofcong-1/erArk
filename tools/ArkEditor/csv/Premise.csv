@@ -254,6 +254,8 @@ in_surgery_room,IN_SURGERY_ROOM,地点_定位,在手术室中
 not_in_surgery_room,NOT_IN_SURGERY_ROOM,地点_定位,不在手术室中
 in_inpatient_department,IN_INPATIENT_DEPARTMENT,地点_定位,在住院部中
 not_in_inpatient_department,NOT_IN_INPATIENT_DEPARTMENT,地点_定位,不在住院部中
+in_medical_office,IN_MEDICAL_OFFICE,地点_定位,在医疗部办公室中
+not_in_medical_office,NOT_IN_MEDICAL_OFFICE,地点_定位,不在医疗部办公室中
 in_hr_office,IN_HR_OFFICE,地点_定位,在人事部办公室中
 not_in_hr_office,NOT_IN_HR_OFFICE,地点_定位,不在人事部办公室中
 in_hr_meeting_room,IN_HR_MEETING_ROOM,地点_定位,在人事部会议室中

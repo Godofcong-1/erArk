@@ -2325,8 +2325,7 @@ def handle_in_library_zone(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    if "图书馆" in now_scene_str:
+    if now_position[0] == "书":
         return 1
     return 0
 
@@ -2650,8 +2649,7 @@ def handle_in_medical_zone(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     now_position = character_data.position
-    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
-    if "医疗部" in now_scene_str:
+    if now_position[0] == "医疗":
         return 1
     return 0
 
@@ -2769,6 +2767,34 @@ def handle_not_in_inpatient_department(character_id: int) -> int:
     int -- 权重
     """
     return not handle_in_inpatient_department(character_id)
+
+@add_premise(constant_promise.Premise.IN_MEDICAL_OFFICE)
+def handle_in_medical_office(character_id: int) -> int:
+    """
+    校验角色是否在医疗部办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
+    now_scene_data = cache.scene_data[now_scene_str]
+    if "Medical_Office" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_MEDICAL_OFFICE)
+def handle_not_in_medical_office(character_id: int) -> int:
+    """
+    校验角色是否不在医疗部办公室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_in_medical_office(character_id)
 
 @add_premise(constant_promise.Premise.IN_HR_OFFICE)
 def handle_in_hr_office(character_id: int) -> int:
