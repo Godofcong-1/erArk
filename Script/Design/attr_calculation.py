@@ -43,6 +43,15 @@ def get_physical_exam_setting_zero() -> dict:
         physical_check_setting_list[physical_check_setting] = 0
     return physical_check_setting_list
 
+def get_confinement_training_setting_zero() -> dict:
+    """
+    重置监禁调教设置
+    """
+    confinement_training_setting_list = {}
+    for confinement_training_setting in game_config.config_confinement_training_setting:
+        confinement_training_setting_list[confinement_training_setting] = 0
+    return confinement_training_setting_list
+
 def get_ability_zero(ability_dict) -> dict:
     """
     检查初始能力，将为空的项补为0

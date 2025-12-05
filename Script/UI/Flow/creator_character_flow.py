@@ -62,6 +62,8 @@ def first_bonus_and_setting_updata():
     cache.rhodes_island.materials_resouce[21] = 10
     # 体检设置
     cache.rhodes_island.physical_examination_setting = attr_calculation.get_physical_exam_setting_zero()
+    # 调教设置
+    cache.rhodes_island.confinement_training_setting = attr_calculation.get_confinement_training_setting_zero()
 
 def game_start():
     """初始化游戏数据"""
