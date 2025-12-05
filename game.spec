@@ -10,25 +10,11 @@ project_root = os.path.dirname(os.path.abspath(SPECPATH))
 if project_root not in sys.path:
     sys.path.insert(0, project_root)
 
-# 显式列出 Script.System.Medical 的所有模块
-# 不使用 collect_submodules 因为它会在分析时尝试导入模块，触发未初始化的配置错误
+# hiddenimports - 仅包含第三方库的隐藏依赖
+# Script.System.Medical 子模块已在 game.py 中显式导入，PyInstaller 会自动分析
 hiddenimports = [
     'engineio.async_drivers.threading',
-    'Script.System',
-    'Script.System.Medical',
-    'Script.System.Medical.medical_constant',
-    'Script.System.Medical.medical_core',
-    'Script.System.Medical.log_system',
-    'Script.System.Medical.medical_service',
-    'Script.System.Medical.clinic_patient_management',
-    'Script.System.Medical.clinic_doctor_service',
-    'Script.System.Medical.hospital_patient_management',
-    'Script.System.Medical.hospital_doctor_service',
-    'Script.System.Medical.medical_department_panel',
-    'Script.System.Medical.medical_player_diagnose_function',
-    'Script.System.Medical.medical_player_diagnose_panel',
 ]
-
 
 a = Analysis(
     ['game.py'],

@@ -44,7 +44,19 @@ if __name__ == "__main__":
     from Script.Design import start_flow, character_handle, game_time
     import Script.Settle
     import Script.StateMachine
+    # 显式导入 Medical 子模块以确保 PyInstaller 打包
     import Script.System.Medical
+    import Script.System.Medical.medical_constant
+    import Script.System.Medical.medical_core
+    import Script.System.Medical.log_system
+    import Script.System.Medical.medical_service
+    import Script.System.Medical.clinic_patient_management
+    import Script.System.Medical.clinic_doctor_service
+    import Script.System.Medical.hospital_patient_management
+    import Script.System.Medical.hospital_doctor_service
+    import Script.System.Medical.medical_department_panel
+    import Script.System.Medical.medical_player_diagnose_function
+    import Script.System.Medical.medical_player_diagnose_panel
     from Script.Core import flow_handle, game_init, io_init
     import Script.UI.Flow
 
