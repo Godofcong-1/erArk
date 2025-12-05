@@ -21,6 +21,7 @@ int,str,str,str,int,int,int,int
 22,ask_masturbation_before_sleep,0,0,50,2,100,0
 23,ask_not_masturbation,0,0,50,2,100,0
 24,ask_not_lock_door_before_sleeping,0,0,100,4,200,0
+25,ask_not_active_h_for_player,0,0,50,2,100,0
 31,ask_sucking_and_swallowing_exercises,examine_sucking_and_swallowing,exercise_sucking_and_swallowing,50,2,100,0
 32,ask_armpit_clamping_exercises,examine_armpit_clamping,exercise_armpit_flexibility,50,2,100,0
 33,ask_breast_clamping_exercises,examine_breast_clamping,exercise_breast_clamping,50,2,100,0

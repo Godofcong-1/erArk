@@ -596,11 +596,14 @@ class Physical_Check_And_Manage_Panel:
                 judge_result = False
 
         # 冲突检查
-        if manage_cid == 22 and handle_premise.handle_ask_not_masturbation(target_character_id):
+        if manage_cid in {22, 25} and handle_premise.handle_ask_not_masturbation(target_character_id):
             require_text += _(" 需要未选择[禁止自慰]")
             judge_result = False
         if manage_cid == 23 and handle_premise.handle_ask_masturbation_before_sleep(target_character_id):
             require_text += _(" 需要未选择[每天晚上睡前都要自慰]")
+            judge_result = False
+        if manage_cid == 23 and handle_premise.handle_ask_not_active_h_for_player(target_character_id):
+            require_text += _(" 需要未选择[禁止逆推]")
             judge_result = False
         if manage_cid in range(31, 40) and handle_premise.handle_ask_ge_3_exercises(target_character_id):
             require_text += _(" 最多只能选择3项练习项目")

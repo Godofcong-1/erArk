@@ -676,6 +676,7 @@ int,str,str,int,str,str
 1472,ask_masturbation_before_sleep,被要求每天晚上睡前都要自慰,0,npc,二段结算|管理
 1473,ask_not_masturbation,被要求禁止自慰,0,npc,二段结算|管理
 1474,ask_not_lock_door_before_sleeping,被要求晚上睡觉不锁门,0,npc,二段结算|管理
+1475,ask_not_active_h_for_player,被要求禁止逆推,0,npc,二段结算|管理
 1481,ask_sucking_and_swallowing_exercises,被要求进行吮吸与吞咽力练习,0,npc,二段结算|管理
 1482,ask_armpit_clamping_exercises,被要求进行腋下夹持力练习,0,npc,二段结算|管理
 1483,ask_breast_clamping_exercises,被要求进行胸部夹持力练习,0,npc,二段结算|管理

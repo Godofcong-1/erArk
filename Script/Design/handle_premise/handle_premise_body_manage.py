@@ -259,6 +259,28 @@ def handle_ask_not_lock_door_bedore_sleeping(character_id: int) -> int:
     character_data: game_type.Character = cache.character_data[character_id]
     return character_data.body_manage[24]
 
+@add_premise(constant_promise.Premise.ASK_NOT_ACTIVE_H_FOR_PLAYER)
+def handle_ask_not_active_h_for_player(character_id: int) -> int:
+    """
+    自己被要求禁止逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.body_manage[25]
+
+@add_premise(constant_promise.Premise.NOT_ASK_NOT_ACTIVE_H_FOR_PLAYER)
+def handle_not_ask_not_active_h_for_player(character_id: int) -> int:
+    """
+    自己没有被要求禁止逆推
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_ask_not_active_h_for_player(character_id)
 
 @add_premise(constant_promise.Premise.ASK_NONE_EXERCISES)
 def handle_ask_none_exercises(character_id: int) -> int:

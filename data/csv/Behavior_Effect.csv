@@ -671,6 +671,7 @@ int,str,str
 1472,ask_masturbation_before_sleep,998
 1473,ask_not_masturbation,998
 1474,ask_not_lock_door_before_sleeping,998
+1475,ask_not_active_h_for_player,998
 1481,ask_sucking_and_swallowing_exercises,998
 1482,ask_armpit_clamping_exercises,998
 1483,ask_breast_clamping_exercises,998

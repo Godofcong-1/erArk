@@ -1960,8 +1960,8 @@ def character_start_masturebate(character_id: int):
         activate_rate = 20
     else:
         activate_rate = 0
-    # 是否逆推
-    if random.randint(1, 100) <= activate_rate:
+    # 是否逆推，需要没有被禁止且随机成功
+    if handle_premise.handle_not_ask_not_active_h_for_player(character_id) and random.randint(1, 100) <= activate_rate:
         character_data.sp_flag.npc_masturebate_for_player = True
     else:
         # 随机等于1或2来决定自慰地点
