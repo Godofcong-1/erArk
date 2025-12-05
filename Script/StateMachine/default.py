@@ -2429,7 +2429,7 @@ def character_work_start_surgery(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.System.Medical import medical_service, medical_constant
+    from Script.System.Medical_System import medical_service, medical_constant
 
     character_data: game_type.Character = cache.character_data[character_id]
 

@@ -3308,7 +3308,7 @@ def handle_exercise():
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
-    from Script.System.Medical import medical_player_diagnose_panel
+    from Script.System.Medical_System import medical_player_diagnose_panel
     medical_player_diagnose_panel.start_player_diagnose_flow()
 
 @add_instruct(
@@ -3321,7 +3321,7 @@ def handle_cure_patient():
 )
 def handle_manage_dedical_department():
     """处理管理医疗系统指令"""
-    from Script.System.Medical import medical_department_panel
+    from Script.System.Medical_System import medical_department_panel
     now_draw_panel = medical_department_panel.Medical_Department_Panel(width)
     now_draw_panel.draw()
 

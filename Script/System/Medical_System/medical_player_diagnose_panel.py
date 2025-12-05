@@ -8,7 +8,7 @@ from types import FunctionType
 from Script.Config import game_config, normal_config
 from Script.Core import cache_control, constant, game_type, get_text, flow_handle
 from Script.Design import attr_calculation, basement
-from Script.System.Medical import medical_constant, medical_player_diagnose_function
+from Script.System.Medical_System import medical_constant, medical_player_diagnose_function
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache

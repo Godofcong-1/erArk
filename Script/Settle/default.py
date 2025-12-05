@@ -7325,7 +7325,7 @@ def handle_cure_patient_add_just(
     """
     if not add_time:
         return
-    from Script.System.Medical import medical_constant, medical_service
+    from Script.System.Medical_System import medical_constant, medical_service
 
     character_data: game_type.Character = cache.character_data[character_id]
     if character_data.dead:
@@ -7423,7 +7423,7 @@ def handle_ward_round_process(
         now_time: datetime.datetime,
 ):
     """病房查房：推进住院病人治疗进度并输出提示"""
-    from Script.System.Medical import medical_service
+    from Script.System.Medical_System import medical_service
 
     if not add_time:
         return
@@ -7512,7 +7512,7 @@ def handle_perform_surgery(
         now_time: datetime.datetime,
 ):
     """执行手术治疗并根据结果输出提示"""
-    from Script.System.Medical import medical_service
+    from Script.System.Medical_System import medical_service
 
     if not add_time:
         return

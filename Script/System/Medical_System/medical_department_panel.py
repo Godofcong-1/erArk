@@ -12,7 +12,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw
-from Script.System.Medical import medical_constant, medical_service
+from Script.System.Medical_System import medical_constant, medical_service
 
 cache: game_type.Cache = cache_control.cache
 """ 全局缓存对象 """

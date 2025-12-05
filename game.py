@@ -44,9 +44,9 @@ if __name__ == "__main__":
     from Script.Design import start_flow, character_handle, game_time
     import Script.Settle
     import Script.StateMachine
+    import Script.System.Medical_System
     from Script.Core import flow_handle, game_init, io_init
     import Script.UI.Flow
-    import Script.System.Medical
 
     # 载入角色人物卡数据
     character_handle.init_character_tem()

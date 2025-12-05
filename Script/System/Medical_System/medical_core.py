@@ -11,7 +11,7 @@ from typing import Dict, List, Optional, Tuple
 
 from Script.Config import config_def, game_config
 from Script.Core import cache_control, game_type
-from Script.System.Medical import medical_constant
+from Script.System.Medical_System import medical_constant
 
 
 def _bump_daily_counter(

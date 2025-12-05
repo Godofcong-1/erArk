@@ -13,7 +13,7 @@ from types import FunctionType
 from Script.Config import normal_config
 from Script.Core import game_type, get_text
 
-from Script.System.Medical import (
+from Script.System.Medical_System import (
     clinic_doctor_service,
     clinic_patient_management,
     hospital_doctor_service,

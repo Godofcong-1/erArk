@@ -292,7 +292,7 @@ class Manage_Basement_Panel:
         """
 
         from Script.UI.Panel import building_panel, manage_assembly_line_panel, manage_library, resource_exchange_panel, recruit_panel, nation_diplomacy_panel, invite_visitor_panel, agriculture_production_panel, field_commission_panel, manage_vehicle_panel, confinement_and_training, equipmen_panel, manage_power_system_panel
-        from Script.System.Medical import medical_department_panel
+        from Script.System.Medical_System import medical_department_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)

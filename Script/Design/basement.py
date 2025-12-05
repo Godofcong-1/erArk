@@ -25,7 +25,7 @@ def get_base_zero() -> game_type.Rhodes_Island:
     """
     基地情况结构体，设为空
     """
-    from Script.System.Medical import medical_service
+    from Script.System.Medical_System import medical_service
 
     base_data = game_type.Rhodes_Island()
 
@@ -318,7 +318,7 @@ def update_base_resouce_newday():
     无
     """
     from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
-    from Script.System.Medical import medical_service
+    from Script.System.Medical_System import medical_service
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width
@@ -354,7 +354,7 @@ def update_work_people():
     """
     刷新各干员的职位和当前正在工作的干员
     """
-    from Script.System.Medical import medical_constant, medical_service
+    from Script.System.Medical_System import medical_constant, medical_service
 
     # 初始化各职位的干员集合
     cache.rhodes_island.work_people_now = 0

@@ -14,7 +14,7 @@ from types import FunctionType
 from Script.Config import config_def, game_config
 from Script.Core import cache_control, game_type, get_text, value_handle
 from Script.Design import handle_ability
-from Script.System.Medical import medical_constant, medical_core
+from Script.System.Medical_System import medical_constant, medical_core
 
 _: FunctionType = get_text._
 """ 翻译函数 """
@@ -565,7 +565,7 @@ def finalize_patient_after_diagnose(
     返回:
         Dict[str, object]: 包含结算结果、收入、住院与药物处理信息。
     """
-    from Script.System.Medical import medical_service
+    from Script.System.Medical_System import medical_service
 
     # 校验对象
     if patient is None:

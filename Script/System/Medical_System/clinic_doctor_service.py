@@ -12,12 +12,12 @@ from types import FunctionType
 from Script.Config import game_config
 from Script.Core import cache_control, constant, game_type, get_text
 from Script.Design import handle_ability, handle_premise
-from Script.System.Medical import (
+from Script.System.Medical_System import (
     hospital_doctor_service,
     medical_constant,
     medical_core,
 )
-from Script.System.Medical import clinic_patient_management
+from Script.System.Medical_System import clinic_patient_management
 
 _: FunctionType = get_text._
 """ 翻译函数 """

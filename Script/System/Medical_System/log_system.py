@@ -11,7 +11,7 @@ from types import FunctionType
 from Script.Core import cache_control, game_type, get_text
 from Script.Config import game_config
 from Script.UI.Moudle import draw
-from Script.System.Medical import medical_constant, medical_core
+from Script.System.Medical_System import medical_constant, medical_core
 
 _: FunctionType = get_text._
 """ 翻译函数 """

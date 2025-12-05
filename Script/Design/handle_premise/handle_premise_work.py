@@ -665,7 +665,7 @@ def handle_medical_surgery_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    from Script.System.Medical import medical_constant
+    from Script.System.Medical_System import medical_constant
     hospitalized = getattr(cache.rhodes_island, "medical_hospitalized", {})
     if not hospitalized:
         return 0
@@ -693,7 +693,7 @@ def handle_have_patient_need_surgery_and_can_do(character_id: int) -> int:
     if character_data.dead:
         return 0
 
-    from Script.System.Medical import hospital_doctor_service
+    from Script.System.Medical_System import hospital_doctor_service
 
     # 获取所有可进行手术的患者列表
     available_patients_list = hospital_doctor_service.get_surgery_candidate_patient_ids(
