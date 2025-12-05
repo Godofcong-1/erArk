@@ -338,9 +338,13 @@ class MedicalPlayerDiagnosePanel:
         """
         if self.patient is None:
             return
-        base_setting = getattr(cache.all_system_setting, "base_setting", {})
-        hint_enabled = bool(int(base_setting.get(12, 0) or 0))
-        status_label = _("○治病提示：{status}").format(status=_("开启") if hint_enabled else _("关闭"))
+        # 拉取系统设置中的提示等级，并根据玩家能力进行合法性校验
+        hint_value, _allowed_indices, option_list = self._fetch_hint_setting_context(enforce_bounds=True)
+        if option_list and 0 <= hint_value < len(option_list):
+            status_text = option_list[hint_value]
+        else:
+            status_text = _("未配置")
+        status_label = _("○治病提示：{status}").format(status=status_text)
         advice_draw = draw.NormalDraw()
         advice_draw.width = self.width
         advice_draw.text = status_label
@@ -1265,10 +1269,37 @@ class MedicalPlayerDiagnosePanel:
     def _toggle_hint(self) -> None:
         """切换治病提示状态并持久化到全局设置。"""
 
+        # 拉取当前提示设置上下文，确保配置已按能力限制校正
+        current_value, allowed_indices, option_list = self._fetch_hint_setting_context(enforce_bounds=True)
+
+        # 当未配置提示选项时直接反馈并退出
+        if not option_list:
+            self.feedback_text = _("当前版本未配置诊疗提示选项，无法切换。")
+            return
+
+        # 当博士能力不足以解锁更高等级时提醒玩家
+        if len(allowed_indices) <= 1:
+            self.feedback_text = _("博士当前的医疗能力等级不足以启用额外的诊疗提示。")
+            return
+
+        # 根据能力范围内的索引循环切换提示等级
+        try:
+            position = allowed_indices.index(current_value)
+        except ValueError:
+            position = 0
+        next_value = allowed_indices[(position + 1) % len(allowed_indices)]
+
+        # 写回系统设置并输出提示语，便于玩家确认当前等级
         base_setting = getattr(cache.all_system_setting, "base_setting", {})
-        current_value = int(base_setting.get(12, 0) or 0)
-        new_value = 0 if current_value else 1
-        base_setting[12] = new_value
+        if not isinstance(base_setting, dict):
+            base_setting = {}
+            setattr(cache.all_system_setting, "base_setting", base_setting)
+        base_setting[12] = next_value
+
+        # if 0 <= next_value < len(option_list):
+        #     self.feedback_text = _("治病提示已调整为：{0}").format(option_list[next_value])
+        # else:
+        #     self.feedback_text = _("治病提示设置已更新。")
 
     def _clear_pending(self) -> None:
         """清空所有待执行检查项。"""
@@ -1415,19 +1446,96 @@ class MedicalPlayerDiagnosePanel:
         duration = max(int(round(base_minutes / efficiency)), 5)
         return duration
 
+    def _resolve_hint_allowed_indices(self, total_options: int) -> List[int]:
+        """根据玩家医疗等级推导可使用的提示等级索引集合。
+
+        功能:
+            结合博士当前的医疗能力等级与配置中可选的提示项数量，生成一个按升序排列的合法索引列表，
+            用于限制玩家切换提示时的可选范围。
+
+        参数:
+            total_options (int): 系统设置中“诊疗病人提示”条目的可选项数量。
+
+        返回:
+            List[int]: 在当前能力等级下允许选择的提示索引集合，至少包含关闭选项 0。
+        """
+
+        # 当选项列表为空时直接返回关闭选项，避免后续出现空集合
+        if total_options <= 0:
+            return [0]
+
+        # 默认始终允许关闭选项（索引 0），其他选项需满足能力阈值
+        allowed_indices: Set[int] = {0}
+        unlock_thresholds: Tuple[Tuple[int, int], ...] = (
+            (1, 1),
+            (2, 2),
+            (3, 3),
+            (5, 4),
+            (7, 5),
+        )
+
+        # 逐条比对能力阈值，只有在医疗能力达标且选项存在时才加入可选集合
+        for required_level, option_index in unlock_thresholds:
+            if option_index >= total_options:
+                continue
+            if self.player_med_level >= required_level:
+                allowed_indices.add(option_index)
+
+        return sorted(allowed_indices)
+
+    def _fetch_hint_setting_context(self, *, enforce_bounds: bool) -> Tuple[int, List[int], List[str]]:
+        """拉取提示设置上下文并按需应用能力限制。
+
+        功能:
+            读取系统设置中的提示等级，刷新博士当下的医疗能力等级，并依据能力阈值返回合法的提示索引集合。
+            当 enforce_bounds 为 True 时，会在能力不足时自动回退到可用的最高等级。
+
+        参数:
+            enforce_bounds (bool): 是否在能力不足时立即修正系统设置中的提示等级。
+
+        返回:
+            Tuple[int, List[int], List[str]]: (当前提示索引, 合法索引列表, 系统设置选项文本列表)。
+        """
+
+        # 读取配置中的提示选项列表，未配置时以空列表返回
+        option_list = game_config.config_system_setting_option.get(12, [])
+        total_options = len(option_list)
+
+        # 重新计算博士的医疗能力等级，处理过程中能力变动带来的影响
+        self.player_med_level = self._calculate_player_med_level()
+
+        # 根据医疗能力计算允许选择的提示索引集合
+        allowed_indices = self._resolve_hint_allowed_indices(total_options)
+        if not allowed_indices:
+            allowed_indices = [0]
+
+        # 取得系统设置字典，若不存在则初始化为空字典
+        base_setting = getattr(cache.all_system_setting, "base_setting", {})
+        if not isinstance(base_setting, dict):
+            base_setting = {}
+            setattr(cache.all_system_setting, "base_setting", base_setting)
+
+        current_value = int(base_setting.get(12, 0) or 0)
+
+        # 在 enforce_bounds 为 True 时确保当前设置落在允许范围内
+        if enforce_bounds and current_value not in allowed_indices:
+            current_value = allowed_indices[-1]
+            base_setting[12] = current_value
+
+        return current_value, allowed_indices, option_list
+
     def _resolve_hint_highlight_targets(self) -> Tuple[Set[int], Set[Tuple[int, int]], Set[int]]:
         """根据玩家医疗等级确定需要高亮的系统、部位与并发症。"""
 
         if self.patient is None:
             return set(), set(), set()
-        base_setting = getattr(cache.all_system_setting, "base_setting", {})
-        if int(base_setting.get(12, 0) or 0) != 1:
+
+        # 读取当前提示等级，若已关闭提示则无需计算高亮范围
+        hint_value, _allowed_indices, _option_list = self._fetch_hint_setting_context(enforce_bounds=True)
+        if hint_value <= 0:
             return set(), set(), set()
 
-        med_level = self.player_med_level
-        if med_level <= 0:
-            return set(), set(), set()
-
+        # 汇总病人追踪记录，提取系统、部位与并发症严重程度索引
         trace_list = getattr(self.patient, "complication_trace", [])
         if not trace_list:
             return set(), set(), set()
@@ -1454,16 +1562,17 @@ class MedicalPlayerDiagnosePanel:
             if comp_id:
                 complication_by_severity.setdefault(severity_level, set()).add(comp_id)
 
-        highlight_systems = system_targets if med_level >= 1 else set()
-        highlight_parts = part_targets if med_level >= 2 else set()
+        # 按当前提示等级确定实际需要高亮的系统与部位
+        highlight_systems = system_targets if hint_value >= 1 else set()
+        highlight_parts = part_targets if hint_value >= 2 else set()
 
+        # 根据提示等级递增叠加不同严重度的并发症高亮范围
         highlight_complications: Set[int] = set()
-        # 医疗等级越高，可直接定位到更严重的具体并发症
-        if med_level >= 3:
+        if hint_value >= 3:
             highlight_complications |= complication_by_severity.get(0, set())
-        if med_level >= 5:
+        if hint_value >= 4:
             highlight_complications |= complication_by_severity.get(1, set())
-        if med_level >= 7:
+        if hint_value >= 5:
             for severity_level, comp_ids in complication_by_severity.items():
                 if severity_level >= 2:
                     highlight_complications |= comp_ids

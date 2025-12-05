@@ -228,6 +228,19 @@ class System_Setting_Panel:
     def change_setting_value(self, type_name: str, cid: int, option_len: int):
         """修改选项设置"""
         if type_name == _("基础"):
+            # 如果是第12项，则显示需要在诊疗病人面板中修改
+            if cid == 12:
+                line_feed.draw()
+                line_draw = draw.LineDraw("-", self.width)
+                line_draw.draw()
+                line_feed.draw()
+                now_draw = draw.WaitDraw()
+                info_text = _("\n\n该选项需要在诊疗病人面板中修改，无法在此处修改\n\n")
+                now_draw.text = info_text
+                now_draw.style = 'gold_enrod'
+                now_draw.width = self.width
+                now_draw.draw()
+                return
             setting = cache.all_system_setting.base_setting
         elif type_name == _("难度"):
             setting = cache.all_system_setting.difficulty_setting
