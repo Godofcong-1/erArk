@@ -28,7 +28,7 @@ jobs:
 
       - name: Run PyInstaller
         run: |
-          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading --icon=image/logo.png
+          pyinstaller game.spec
 
       - name: Build Game Config
         run: |
