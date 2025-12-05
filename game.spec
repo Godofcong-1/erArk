@@ -1,4 +1,14 @@
 # -*- mode: python ; coding: utf-8 -*-
+import os
+import sys
+
+# SPECPATH 是 PyInstaller 提供的内置变量，指向 spec 文件所在目录
+# 获取项目根目录
+project_root = os.path.dirname(os.path.abspath(SPECPATH))
+
+# 将项目根目录添加到 sys.path，确保模块可被分析
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
 
 # 显式列出 Script.System.Medical 的所有模块
 # 不使用 collect_submodules 因为它会在分析时尝试导入模块，触发未初始化的配置错误
@@ -22,7 +32,7 @@ hiddenimports = [
 
 a = Analysis(
     ['game.py'],
-    pathex=[],
+    pathex=[project_root],
     binaries=[],
     datas=[],
     hiddenimports=hiddenimports,
