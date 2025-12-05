@@ -28,7 +28,8 @@ jobs:
 
       - name: Run PyInstaller
         run: |
-          pyinstaller game.spec
+          $env:PYTHONPATH="${{ github.workspace }}"
+          pyinstaller -F game.py --hidden-import=engineio.async_drivers.threading --icon=image/logo.png
 
       - name: Build Game Config
         run: |
