@@ -138,29 +138,6 @@ def _locate_patient(
 
     return None, False
 
-
-def _sync_legacy_patient_counters(rhodes_island: game_type.Rhodes_Island) -> None:
-    """同步旧版医疗统计字段，兼容尚未迁移的 UI 逻辑。
-
-    参数:
-        rhodes_island (game_type.Rhodes_Island): 目标基地对象。
-    返回:
-        None: 直接写入 `patient_now` 字段用于旧 UI 显示。
-    """
-
-    # 缺少基地对象时无需同步旧字段。
-    if rhodes_island is None:
-        return
-    # 统计待诊病人的数量并写回旧字段。
-    waiting_states = medical_constant.WAITING_QUEUE_STATE_SET
-    waiting_count = sum(
-        1
-        for patient in rhodes_island.medical_patients_today.values()
-        if patient.state in waiting_states
-    )
-    rhodes_island.patient_now = waiting_count
-
-
 def _get_medical_facility_level(rhodes_island: game_type.Rhodes_Island) -> int:
     """读取医疗部设施等级，缺省返回 0。
 
@@ -171,7 +148,6 @@ def _get_medical_facility_level(rhodes_island: game_type.Rhodes_Island) -> int:
     """
 
     return int(rhodes_island.facility_level.get(medical_constant.MEDICAL_FACILITY_ID, 0) or 0)
-
 
 def _pick_hospital_level_config(level: int) -> Optional[config_def.Medical_Hospital_Level]:
     """根据设施等级选取对应的医院等级配置。

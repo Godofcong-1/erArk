@@ -3301,13 +3301,19 @@ def handle_exercise():
     _("诊疗病人"),
     {constant_promise.Premise.NOT_H,
      constant_promise.Premise.IN_CLINIC,
-     constant_promise.Premise.PATIENT_WAIT,
      constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TIRED_LE_74},
     constant.Behavior.CURE_PATIENT,
 )
 def handle_cure_patient():
     """处理诊疗病人指令"""
+    # 如果当前没有病人，输出提示并返回
+    if not handle_premise.handle_patient_wait(0):
+        now_draw = draw.WaitDraw()
+        now_draw.width = width
+        now_draw.text = _("\n当前没有需要诊疗的病人\n")
+        now_draw.draw()
+        return
     from Script.System.Medical_System import medical_player_diagnose_panel
     medical_player_diagnose_panel.start_player_diagnose_flow()
 

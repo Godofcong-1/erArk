@@ -71,7 +71,6 @@ def try_hospitalize(
 
     refresh_patient_hospital_needs(patient, severity_config, reset_progress=True)
     medical_core._bump_daily_counter(rhodes_island, "hospitalized_today", 1)
-    medical_core._sync_legacy_patient_counters(rhodes_island)
     return True
 
 
@@ -102,7 +101,6 @@ def process_hospitalized_patients(
         if patient is None:
             continue
         process_single_hospitalized_patient(rhodes_island, patient, _consume)
-    medical_core._sync_legacy_patient_counters(rhodes_island)
 
 
 def process_single_hospitalized_patient(
@@ -365,7 +363,6 @@ def try_consume_medicine(
 
     patient.last_consumed_units = consumed_units
 
-    medical_core._sync_legacy_patient_counters(rhodes_island)
     return overall_success
 
 

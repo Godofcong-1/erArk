@@ -55,7 +55,7 @@ class Manage_Basement_Panel:
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
             _("文职部"):[_("[招募系统]")],
-            _("医疗部"):[_("[医疗经营系统]")],
+            _("医疗部"):[_("[医疗经营系统]"), _("[诊疗病人系统]")],
             _("访客区"):[_("[势力外交系统]"), _("[邀请访客系统]")],
             _("机库"):[_("[外勤委托系统]"), _("[载具管理系统]")],
             _("疗养庭院"):[_("[农业系统]")],
@@ -216,10 +216,7 @@ class Manage_Basement_Panel:
                         work_data = game_config.config_work_type[all_cid]
                         if work_data.department == department:
                             all_info_draw.text += f"  {work_data.name} — {len(cache.rhodes_island.all_work_npc_set[all_cid])}"
-                    if department == _("医疗部"):
-                        patient_now = cache.rhodes_island.patient_now
-                        all_info_draw.text += _("  病人 — {0}").format(patient_now)
-                    elif department == _("机库"):
+                    if department == _("机库"):
                         field_people_now = 0
                         for cid in cache.rhodes_island.ongoing_field_commissions:
                             field_people_now += len(cache.rhodes_island.ongoing_field_commissions[cid][0])
@@ -340,6 +337,14 @@ class Manage_Basement_Panel:
                 now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(self.width)
         elif _("医疗经营系统") in son_panel:
             now_panel = medical_department_panel.Medical_Department_Panel(self.width)
+        elif _("诊疗病人系统") in son_panel:
+            # 输出提示
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n○需要在医疗部-急诊室/门诊室中诊疗病人，无法在管理台直接诊疗病人\n")
+            info_draw.style = "gold_enrod"
+            info_draw.width = self.width
+            info_draw.draw()
+            return
         now_panel.draw()
 
     def show_department(self, department: str):
@@ -397,10 +402,8 @@ class Manage_Basement_Panel:
                 now_text += npc_and_place_text
 
             elif department == _("医疗部"):
-                patient_cured,patient_now = str(cache.rhodes_island.patient_cured),str(cache.rhodes_island.patient_now)
-                now_text += _("\n  今日已治疗患者数/排队中患者数：{0}/{1}").format(patient_cured, patient_now)
-                medical_income = str(cache.rhodes_island.medical_income_today)
-                now_text += _("\n  截至目前为止，今日医疗部门龙门币总收入为：{0}\n").format(medical_income)
+                # TODO 调用医疗部管理系统里的今日日志在这里显示
+                pass
 
             elif department == _("文职部"):
                 if len(cache.rhodes_island.recruited_id):

@@ -7382,7 +7382,6 @@ def handle_cure_patient_add_just(
     # 进行诊断
     medical_service.advance_diagnose(patient_obj.patient_id, character_data)
     income_delta = rhodes_island.medical_income_today - before_income
-    waiting_count = rhodes_island.patient_now
 
     # 根据病情等级获取额外习得和医疗经验
     base_chara_state_common_settle(character_id, add_time, 9, ability_level = character_data.ability[46], extra_adjust = (severity_level + 1) / 2,  change_data = change_data)
@@ -7397,20 +7396,18 @@ def handle_cure_patient_add_just(
     severity_name = patient_obj.severity_name or _("未知病情")
     if patient_obj.state == medical_constant.MedicalPatientState.WAITING_MEDICATION:
         now_draw.text = _(
-            "\n在{doctor}的努力下，为一名{severity}患者完成诊断，获得{income}龙门币。（当前待诊患者：{waiting}人）\n"
+            "\n在{doctor}的努力下，为一名{severity}患者完成诊断，获得{income}龙门币。\n"
         ).format(
             doctor=character_data.name,
             severity=severity_name,
             income=income_delta,
-            waiting=waiting_count,
         )
     else:
         now_draw.text = _(
-            "\n{doctor}为一名{severity}患者推进诊疗进度。当前尚有{waiting}人等待就诊。\n"
+            "\n{doctor}为一名{severity}患者推进诊疗进度。\n"
         ).format(
             doctor=character_data.name,
             severity=severity_name,
-            waiting=waiting_count,
         )
     now_draw.draw()
 

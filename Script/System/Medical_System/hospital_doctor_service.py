@@ -348,7 +348,6 @@ def conduct_ward_round(
         if work_data is not None:
             work_data.medical_patient_id = 0
 
-    medical_core._sync_legacy_patient_counters(rhodes_island)
     return outcome
 
 def attempt_surgery(

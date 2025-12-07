@@ -1210,12 +1210,6 @@ class Rhodes_Island:
         """
 
         # 医疗部
-        self.patient_now: int = 0
-        """ 当前患者人数（旧系统兼容字段） """
-        self.patient_cured: int = 0
-        """ 当前已治疗患者人数（旧系统兼容字段） """
-        self.patient_max: int = 0
-        """ 患者人数上限（旧系统兼容字段） """
         self.medical_patients_today: Dict[int, Any] = {}
         """ 当日待诊病人数据，patient_id:病人结构 """
         self.medical_hospitalized: Dict[int, Any] = {}
@@ -1252,8 +1246,6 @@ class Rhodes_Island:
         """ 玩家本次诊疗过的病人id列表 """
         self.medical_doctor_specializations: Dict[str, Dict[str, List[int]]] = {}
         """ 医生分科配置，按岗位分类记录各系统的医生id列表 """
-        self.patient_cured_all: int = 0
-        """ 已治疗的患者总人数（旧系统兼容字段） """
         self.urine_in_fridge: Dict[int, int] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
         self.physical_examination_setting: Dict[int, int] = {}
@@ -1268,6 +1260,15 @@ class Rhodes_Island:
         """ 手动选择的体检对象干员id集合 """
         self.manually_selected_exam_week_day_list: List[int] = []
         """ 手动选择的每周的体检日列表 """
+
+        self.patient_now: int = 0
+        """ 当前患者人数（旧系统字段，已废弃） """
+        self.patient_cured: int = 0
+        """ 当前已治疗患者人数（旧系统字段，已废弃） """
+        self.patient_max: int = 0
+        """ 患者人数上限（旧系统字段，已废弃） """
+        self.patient_cured_all: int = 0
+        """ 已治疗的患者总人数（旧系统字段，已废弃） """
 
         # 文职区
         self.recruit_line: Dict[int, List] = {}
@@ -1395,7 +1396,7 @@ class Country:
     def __init__(self):
         self.nation_reputation: Dict[int, float] = {}
         """ 势力声望 """
-        self.country_infection_rate: Dict[int, int] = {}
+        self.country_infection_rate: Dict[int, float] = {}
         """ 国家矿石病感染率 """
 
 

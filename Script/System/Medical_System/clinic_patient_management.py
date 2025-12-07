@@ -516,7 +516,6 @@ def advance_diagnose(
         # 解除医生与病人绑定
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
-        medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
     # 读取病情配置，若缺失则终止诊疗并清理状态
@@ -525,7 +524,6 @@ def advance_diagnose(
         if hasattr(doctor_character, "work"):
             doctor_character.work.medical_patient_id = 0
         patient.assigned_doctor_id = 0
-        medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
     # 根据配置计算所需诊疗时长，并在异常时直接转入结算阶段
@@ -545,7 +543,6 @@ def advance_diagnose(
 
     # 诊疗尚未完成时仅同步计数并等待下一次推进
     if patient.diagnose_progress < base_hours:
-        medical_core._sync_legacy_patient_counters(rhodes_island)
         return
 
     # 调用诊疗完成后的结算逻辑
@@ -600,10 +597,6 @@ def finalize_patient_after_diagnose(
         rhodes_island.all_income += diagnose_income
         rhodes_island.materials_resouce[1] = rhodes_island.materials_resouce.get(1, 0) + diagnose_income
 
-    # 统计治愈人数
-    rhodes_island.patient_cured = int(getattr(rhodes_island, "patient_cured", 0) or 0) + 1
-    rhodes_island.patient_cured_all = int(getattr(rhodes_island, "patient_cured_all", 0) or 0) + 1
-
     # 判断是否需要住院
     hospitalized_success = False
     if getattr(severity_config, "require_hospitalization", 0) == 1:
@@ -622,9 +615,6 @@ def finalize_patient_after_diagnose(
         set_patient_state(patient, medical_constant.MedicalPatientState.MEDICINE_GRANTED)
     else:
         set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
-
-    # 同步统计字段
-    medical_core._sync_legacy_patient_counters(rhodes_island)
 
     return {
         "success": True,
@@ -871,5 +861,4 @@ def refresh_medical_patients(
         new_patients.append(patient)
 
     # 最后同步旧统计字段，保持 UI 数据一致。
-    medical_core._sync_legacy_patient_counters(rhodes_island)
     return new_patients

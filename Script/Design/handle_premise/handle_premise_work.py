@@ -636,10 +636,17 @@ def handle_patient_wait(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if cache.rhodes_island.patient_now > 0:
+    from Script.System.Medical_System import medical_constant
+    waiting_states = medical_constant.WAITING_QUEUE_STATE_SET
+    # 计算等待就诊的患者数量
+    waiting_count = sum(
+        1
+        for patient in cache.rhodes_island.medical_patients_today.values()
+        if patient.state in waiting_states
+    )
+    if waiting_count > 0:
         return 1
     return 0
-
 
 @add_premise(constant_promise.Premise.MEDICAL_WARD_WAIT)
 def handle_medical_ward_wait(character_id: int) -> int:

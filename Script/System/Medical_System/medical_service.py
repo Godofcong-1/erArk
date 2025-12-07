@@ -129,7 +129,6 @@ def init_medical_department_data(
 
     # 依据当前配置重新计算床位上限并同步旧计数器。
     rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(rhodes_island)
-    medical_core._sync_legacy_patient_counters(rhodes_island)
 
     # 若没有留存的病人数据则刷新今日病人列表。
     patient_table = getattr(rhodes_island, "medical_patients_today", {})
@@ -313,10 +312,6 @@ def settle_medical_department(
             hospital_table.pop(patient_id, None)
             cleared_hospitalized_ids.append(patient_id)
 
-    # 若执行了清理操作则同步一次旧版计数器，确保统计保持一致。
-    if cleared_outpatient_ids or cleared_hospitalized_ids:
-        medical_core._sync_legacy_patient_counters(rhodes_island)
-
     # 结算结束后重置当日收入与计数器，等待下一轮业务累计。
     rhodes_island.medical_income_today = 0
     rhodes_island.all_income = 0
@@ -324,7 +319,6 @@ def settle_medical_department(
 
     refresh_medical_patients(target_base=rhodes_island)
     rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(rhodes_island)
-    medical_core._sync_legacy_patient_counters(rhodes_island)
 
     return {
         "success": True,
