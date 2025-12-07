@@ -22,6 +22,9 @@ line_feed.text = "\n"
 line_feed.width = 1
 # 预定义换行对象，避免多处重复创建临时实例
 
+TALK_ABILITY_ID: int = 40
+""" 话术能力 ID，用于计算检查次数上限 """
+
 def _ensure_float(value: object, default: float = 0.0) -> float:
     """将混合类型值转换为 float，避免 UI 计算时类型不确定。"""
 
@@ -78,9 +81,10 @@ class MedicalPlayerDiagnosePanel:
         # 统一重置面板运行期标记，确保每次创建或切换病人时都能获得干净状态
         self._reset_runtime_flags()
 
-        # 预先记录博士的医疗能力等级，用于提示判定与检查次数上限
-        self.player_med_level = self._calculate_player_med_level()
-        self.max_checks = max(1, self.player_med_level * 2)
+        # 预先记录博士的医疗能力等级供提示判定使用
+        self._calculate_player_med_level()
+        # 同步根据博士的话术能力生成检查次数上限
+        self._refresh_check_limit()
 
         # 若玩家处于可控状态，则尝试开启医疗会话并缓存病患信息
         initial_patient: Optional[medical_constant.MedicalPatient] = None
@@ -121,6 +125,10 @@ class MedicalPlayerDiagnosePanel:
         self.expanded_system_id = None
         self.expanded_part_id = None
         self._pending_continue_after_treatment = False
+        # 重置能力快照，避免沿用上一位病人的等级数据
+        self.player_med_level = 0
+        self.player_talk_level = 0
+
         # 重置检查目录与目标计数，后续会根据具体病人重新填充
         self.check_catalog = {}
         self.target_complication_count = 0
@@ -128,10 +136,10 @@ class MedicalPlayerDiagnosePanel:
         self.max_checks = 1
 
     def _calculate_player_med_level(self) -> int:
-        """计算玩家当前可用于提示与检查限制的医疗能力等级。
+        """计算玩家当前用于诊疗提示系统的医疗能力等级。
 
         功能:
-            综合博士本人的医疗能力与当前交互干员的辅助加成，返回提示系统所需的等级值。
+            综合博士本人的医疗能力与当前交互干员的辅助加成，返回诊疗提示系统所需的等级值。
 
         参数:
             无。
@@ -150,9 +158,51 @@ class MedicalPlayerDiagnosePanel:
         if self.player.target_character_id != 0 and self.player.target_character_id in cache.character_data:
             target_char = cache.character_data[self.player.target_character_id]
             level += int(target_char.ability.get(medical_constant.MEDICAL_ABILITY_ID, 0) / 2 or 0)
-            level = max(8, level)
+            level = min(8, level)
+        level = max(0, level)
+        
+        self.player_med_level = level
 
+        return level
+
+    def _calculate_player_talk_level(self) -> int:
+        """计算博士当前的话术能力等级，用于限定检查次数。
+
+        功能:
+            从博士角色的能力字典中读取话术能力值，并在缺失时返回 0，确保 UI 计算稳定。
+
+        参数:
+            无。
+
+        返回:
+            int: 博士当前的话术能力等级，最小值为 0。
+        """
+
+        if self.player is None:
+            return 0
+
+        # 直接读取博士的话术能力等级，缺省值视为 0
+        level = int(self.player.ability.get(TALK_ABILITY_ID, 0) or 0)
         return max(0, level)
+
+    def _refresh_check_limit(self) -> None:
+        """刷新玩家诊疗检查次数的上限快照。
+
+        功能:
+            重新采样博士话术能力等级，并据此更新当前会话允许的最大检查次数，保证能力变动后立即生效。
+
+        参数:
+            无。
+
+        返回:
+            None。
+        """
+
+        # 拉取博士的话术等级并缓存，避免重复访问能力字典
+        self.player_talk_level = self._calculate_player_talk_level()
+
+        # 按照“每级话术提供两次检查”规则刷新上限，至少保留 1 次
+        self.max_checks = max(1, self.player_talk_level * 2)
 
     @staticmethod
     def _format_quantity(value: float) -> str:
@@ -189,9 +239,10 @@ class MedicalPlayerDiagnosePanel:
         self.patient = patient
         self.session_active = True
 
-        # 重新计算医疗能力等级并刷新检查次数上限
-        self.player_med_level = self._calculate_player_med_level()
-        self.max_checks = max(1, self.player_med_level * 2)
+        # 重新计算医疗能力等级供提示系统使用
+        self._calculate_player_med_level()
+        # 根据最新的话术能力刷新检查次数上限
+        self._refresh_check_limit()
 
         # 根据病人实际并发症数量设定并行检查上限
         complications = getattr(patient, "complications", []) or []
@@ -225,6 +276,8 @@ class MedicalPlayerDiagnosePanel:
 
         # 持续渲染界面直至流程被明确关闭
         while not self._should_close:
+            # 每轮绘制前刷新一次检查上限，确保话术能力变化即时生效
+            self._refresh_check_limit()
             title_draw = draw.TitleLineDraw(_("医疗诊疗"), self.width)
             title_draw.draw()
             return_list: List[str] = []
@@ -239,6 +292,7 @@ class MedicalPlayerDiagnosePanel:
             hint_draw = draw.NormalDraw()
             hint_draw.width = self.width
             hint_draw.text = _("○展开检查菜单以从系统 → 部位 → 并发症逐级挑选检查项目，项目格式为：病症等级|怀疑病症名|检查方式。\n")
+            hint_draw.text += _("○患者愿意进行的检查次数与博士的话术能力等级有关，等级越高可尝试次数就越高。\n")
             hint_draw.text += _("○开启治疗提示后，会根据博士的医疗能力等级（+交互干员的一半）来高亮显示正确的患病系统、部位、症状等，能力越高显示越具体。\n")
             hint_draw.draw()
 
@@ -256,13 +310,13 @@ class MedicalPlayerDiagnosePanel:
             self._draw_operation_buttons(return_list, pending_checks, confirmed_complications, used_checks)
             if not return_list:
                 # 至少提供一个默认返回项避免阻塞
-                default_back = draw.CenterButton(_("[返回]"), "back", self.width, cmd_func=self._handle_abort)
+                default_back = draw.CenterButton(_("[返回]"), _("返回"), self.width, cmd_func=self._handle_abort)
                 default_back.draw()
                 return_list.append(default_back.return_text)
 
             # 主循环等待玩家选择具体操作，绑定指令字符串控制逻辑
             choice = flow_handle.askfor_all(return_list)
-            if choice == "back":
+            if choice == _("返回"):
                 self._handle_abort()
 
         self._finalize_session()
@@ -353,7 +407,7 @@ class MedicalPlayerDiagnosePanel:
         toggle_text = _("[切换提示]")
         hint_button = draw.CenterButton(
             toggle_text,
-            "toggle_hint",
+            _("切换提示"),
             len(toggle_text) * 2 + 4,
             cmd_func=self._toggle_hint,
         )
@@ -469,7 +523,7 @@ class MedicalPlayerDiagnosePanel:
         toggle_label = _(" [展开检查菜单]") if not self.menu_expanded else _(" [收起检查菜单]")
         toggle_button = draw.LeftButton(
             toggle_label,
-            "toggle_check_menu",
+            _("切换检查菜单"),
             max(len(toggle_label) * 2 + 4, 22),
             cmd_func=self._toggle_check_menu,
         )
@@ -1502,7 +1556,7 @@ class MedicalPlayerDiagnosePanel:
         total_options = len(option_list)
 
         # 重新计算博士的医疗能力等级，处理过程中能力变动带来的影响
-        self.player_med_level = self._calculate_player_med_level()
+        self._calculate_player_med_level()
 
         # 根据医疗能力计算允许选择的提示索引集合
         allowed_indices = self._resolve_hint_allowed_indices(total_options)
