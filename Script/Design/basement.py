@@ -690,7 +690,7 @@ def settle_office_work():
     cache.rhodes_island.office_work = min(cache.rhodes_island.office_work,all_work)
     cache.rhodes_island.office_work = max(cache.rhodes_island.office_work,0)
     # 输出提示信息
-    now_draw_text = _("\n今日剩余待处理公务量为{0:.f1}，").format(now_work)
+    now_draw_text = _("\n今日剩余待处理公务量为{0:.1f}，").format(now_work)
     if max_damage_down < 5:
         now_draw_text += _("且各区块设施运行基本正常，")
     else:
