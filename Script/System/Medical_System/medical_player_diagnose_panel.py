@@ -253,6 +253,8 @@ class MedicalPlayerDiagnosePanel:
 
         if initial_feedback:
             self.feedback_text = initial_feedback
+        else:
+            self.feedback_text = ""
 
     def draw(self) -> bool:
         """循环绘制诊疗面板，并根据用户操作决定会话去向。
@@ -1306,11 +1308,15 @@ class MedicalPlayerDiagnosePanel:
 
         self._pending_continue_after_treatment = False
 
+        # 如果需要继续接诊且有下一位病人，则打印反馈并准备新会话
         if continue_after and next_patient is not None:
-            continuation_message = base_message + _(" 已为博士安排下一位病人，请继续诊疗。")
-            self._prepare_new_patient_session(next_patient, initial_feedback=continuation_message)
+            # 先打印反馈信息，再准备新病人会话
+            self.feedback_text = base_message + _("已为博士安排下一位病人，请继续诊疗。")
+            self._draw_feedback()
+            self._prepare_new_patient_session(next_patient)
             return
 
+        # 如果需要继续接诊但没有下一位病人，则提示流程结束
         if continue_after and next_patient is None:
             self.feedback_text = base_message + _(" 当前暂无其他病人需要诊疗，流程已结束。")
         else:
