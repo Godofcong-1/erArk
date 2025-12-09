@@ -120,18 +120,19 @@ def generate_patient(
         ]
     patient.need_surgery = any(comp.requires_surgery == 1 for comp in complications)
 
-    # 计算普通药需求量，并叠加并发症额外需求。
+    # 计算普通药需求量，并叠加并发症额外需求
     normal_resource_id = medical_constant.MedicalMedicineResource.NORMAL.value
     base_normal_need = random.uniform(
         float(severity_config.normal_medicine_min),
         float(max(severity_config.normal_medicine_max, severity_config.normal_medicine_min)),
     )
-    patient.need_resources[normal_resource_id] = max(base_normal_need + medicine_bonus, 0.0)
+    # 最终结果为基础值乘以并发症系数
+    patient.need_resources[normal_resource_id] = max(base_normal_need * (1 + medicine_bonus), 0.0)
 
-    # 叠加特殊药品模板中的固定需求。
+    # 叠加特殊药品模板中的固定需求
     special_template = game_config.medical_severity_special_medicine.get(severity_level, {})
     for resource_id, amount in special_template.items():
-        patient.need_resources[resource_id] = patient.need_resources.get(resource_id, 0.0) + float(amount)
+        patient.need_resources[resource_id] = patient.need_resources.get(resource_id, 0.0) + float(amount) * (1 + medicine_bonus)
 
     # 记录病情标签与当前收费系数，便于后续展示。
     if not patient.severity_name:
