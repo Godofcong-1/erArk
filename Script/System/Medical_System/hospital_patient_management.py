@@ -276,6 +276,9 @@ def try_consume_medicine(
         if recorded > need_total:
             recorded = need_total
 
+        previous_accumulator = accumulator_value
+        previous_recorded = recorded
+
         to_record = need_total - recorded
         if to_record > medical_constant.FLOAT_EPSILON:
             accumulator_value += to_record
@@ -284,6 +287,19 @@ def try_consume_medicine(
         # 计算应扣除的整数单位。
         required_units = int(math.floor(accumulator_value + medical_constant.FLOAT_EPSILON))
         stock = int(inventory.get(resource_id, 0) or 0)
+
+        # 如果从零开始累计且库存不足 1 单位，则视为扣除失败。
+        starting_fresh = (
+            previous_accumulator <= medical_constant.FLOAT_EPSILON
+            and previous_recorded <= medical_constant.FLOAT_EPSILON
+            and to_record > medical_constant.FLOAT_EPSILON
+        )
+        if starting_fresh and stock < 1:
+            accumulator[resource_id] = previous_accumulator
+            recorded_map[resource_id] = previous_recorded
+            consumed_units[resource_id] = 0
+            resource_success[resource_id] = False
+            continue
 
         if required_units > 0 and stock < required_units:
             accumulator[resource_id] = accumulator_value
