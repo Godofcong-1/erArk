@@ -451,8 +451,11 @@ def estimate_patient_treatment_summary(
     diagnose_income = medical_service.estimate_patient_diagnose_income(patient, target_base=rhodes_island)
 
     # 计算潜在药费收益与资源需求摘要
+    # 收费系数
     price_ratio = medical_service.get_medical_price_ratio(target_base=rhodes_island)
+    # 收入倍率
     income_multiplier = medical_core.resolve_price_income_multiplier(price_ratio)
+    # 当前病情的的药费收益系数
     medicine_income_ratio = float(severity_config.medicine_income_ratio or 0.0)
     predicted_medicine_income = 0.0
     resource_summary: List[Dict[str, object]] = []

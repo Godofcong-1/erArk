@@ -206,13 +206,12 @@ class MedicalPlayerDiagnosePanel:
 
     @staticmethod
     def _format_quantity(value: float) -> str:
-        """将数量格式化为可读文本，整数不保留小数。"""
+        """将数量格式化为可读文本，始终保留2位小数。"""
+        # 如果是0则直接返回0避免负数或异常
+        if value is None or value <= 0.0:
+            return "0.00"
 
-        safe_value = max(0.0, float(value or 0.0))
-        rounded = round(safe_value)
-        if abs(safe_value - rounded) <= medical_constant.FLOAT_EPSILON:
-            return str(int(rounded))
-        return f"{safe_value:.1f}"
+        return f"{value:.2f}"
 
     def _prepare_new_patient_session(
         self,

@@ -1,5 +1,5 @@
 cid,name,weight,base_hours,diagnose_income,normal_medicine_min,normal_medicine_max,special_medicine_template,medicine_income_ratio,require_hospitalization,hospital_success_income_ratio,hospital_base_income,discharge_bonus,minor_complication_count,moderate_complication_count,severe_complication_count
-条目id,病情名称,抽取权重,基础诊疗工时,基础诊疗收入,普通药需求下限,普通药需求上限,特效药组合,药费收益系数,是否需要住院,住院成功收入系数,住院基础收入,出院奖励,轻度并发症数量,中度并发症数量,重度并发症数量
+条目id,病情名称,抽取权重,基础诊疗工时,基础诊疗收入,普通药需求下限,普通药需求上限,特效药组合,当前病情的的药费收益系数,是否需要住院,住院成功收入系数,住院基础收入,出院奖励,轻度并发症数量,中度并发症数量,重度并发症数量
 int,str,float,float,int,float,float,str,float,int,float,int,int,int,int,int
 0,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 病情严重程度定义,,,,,,,,,,,,,,,
