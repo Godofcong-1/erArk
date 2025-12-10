@@ -129,6 +129,9 @@ class MedicalPlayerDiagnosePanel:
         self.player_med_level = 0
         self.player_talk_level = 0
 
+        # 已执行检查的并发症 ID 列表，用于控制菜单灰显不可选状态
+        self.executed_complication_ids: List[int] = []
+
         # 重置检查目录与目标计数，后续会根据具体病人重新填充
         self.check_catalog = {}
         self.target_complication_count = 0
@@ -508,6 +511,8 @@ class MedicalPlayerDiagnosePanel:
             return
 
         highlight_systems, highlight_parts, highlight_options = self._resolve_hint_highlight_targets()
+        # 已执行过的并发症检查集合，用于在菜单中灰显禁用
+        executed_complication_set: Set[int] = set(self.executed_complication_ids)
 
         if not self._should_show_check_menu(confirmed, used_checks):
             self.menu_expanded = False
@@ -611,17 +616,27 @@ class MedicalPlayerDiagnosePanel:
                     checkbox = "[✔]" if selected else "[  ]"
                     option_label = f"        {checkbox} {severity_text} | {name} | {exam_method}"
                     option_style = "gold_enrod" if cid in highlight_options else "standard"
-                    # 选项按钮被点击后调用 _toggle_pending_option 处理选/取消逻辑
-                    option_button = draw.LeftButton(
-                        option_label,
-                        name,
-                        self.width,
-                        normal_style=option_style,
-                        cmd_func=self._toggle_pending_option,
-                        args=(system_id, part_id, cid),
-                    )
-                    option_button.draw()
-                    return_list.append(option_button.return_text)
+                    # 已执行过的检查以灰色静态文本展示，避免重复点击
+                    option_already_executed = cid in executed_complication_set
+                    if option_already_executed:
+                        option_label = _("（已检查）") + option_label
+                        disabled_option = draw.NormalDraw()
+                        disabled_option.text = option_label
+                        disabled_option.width = self.width
+                        disabled_option.style = "deep_gray"
+                        disabled_option.draw()
+                    else:
+                        # 选项按钮被点击后调用 _toggle_pending_option 处理选/取消逻辑
+                        option_button = draw.LeftButton(
+                            option_label,
+                            name,
+                            self.width,
+                            normal_style=option_style,
+                            cmd_func=self._toggle_pending_option,
+                            args=(system_id, part_id, cid),
+                        )
+                        option_button.draw()
+                        return_list.append(option_button.return_text)
                     line_feed.draw()
 
         line_feed.draw()
@@ -1394,6 +1409,13 @@ class MedicalPlayerDiagnosePanel:
                 if isinstance(entry, dict):
                     # 将返回结果统一成字典列表，过滤掉异常结构
                     normalized.append(entry)
+        # 记录已执行的检查项目，供界面灰显控制，避免重复执行同一并发症
+        executed_set = set(self.executed_complication_ids)
+        for option in pending:
+            cid = int(option.get("cid", 0) or 0)
+            if cid and cid not in executed_set:
+                self.executed_complication_ids.append(cid)
+                executed_set.add(cid)
         self.last_check_results.extend(normalized)
         self._checks_executed += 1
         # 因为增加了颜色显示，暂时注释掉文本汇总功能
