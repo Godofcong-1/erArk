@@ -368,15 +368,6 @@ def try_consume_medicine(
     if not is_hospitalized and consumed_total_units:
         medical_core._bump_daily_counter(rhodes_island, "medicine_consumed", consumed_units)
 
-    if not is_hospitalized:
-        # --- 根据扣药结果刷新门诊病人的状态并更新对应统计 ---
-        if overall_success:
-            medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.MEDICINE_GRANTED)
-            medical_core._bump_daily_counter(rhodes_island, "medicine_completed_outpatient", 1)
-        else:
-            medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
-            medical_core._bump_daily_counter(rhodes_island, "outpatient_waiting_medicine", 1)
-
     patient.last_consumed_units = consumed_units
 
     return overall_success
@@ -471,5 +462,7 @@ def discharge_patient(
     hospital_table = medical_service.get_patient_table(target_base=rhodes_island, hospitalized=True)
     hospital_table.pop(patient.patient_id, None)
     medical_service.set_patient_state(patient, medical_constant.MedicalPatientState.DISCHARGED)
+    # 记录出院奖励与治疗加权量。
+    rhodes_island.medical_weekly_weighted_treatment += patient.severity_level
     medical_core._bump_daily_counter(rhodes_island, "discharged_today", 1)
     medical_core._apply_income_to_rhodes(rhodes_island, bonus_income)

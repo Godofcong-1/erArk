@@ -1226,6 +1226,8 @@ class Rhodes_Island:
         """ 今日医疗板块龙门币收入 """
         self.medical_income_total: int = 0
         """ 累计医疗板块龙门币收入 """
+        self.medical_weekly_weighted_treatment: int = 0
+        """ 本周医疗区治疗加权量 """
         self.medical_daily_counters: Any = None
         """ 医疗系统当日统计数据容器，由初始化流程写入 """
         self.medical_recent_reports: List[Dict[str, Any]] = []
@@ -1246,8 +1248,10 @@ class Rhodes_Island:
         """ 玩家本次诊疗过的病人id列表 """
         self.medical_doctor_specializations: Dict[str, Dict[str, List[int]]] = {}
         """ 医生分科配置，按岗位分类记录各系统的医生id列表 """
+
         self.urine_in_fridge: Dict[int, int] = {}
         """ 冷库里每个干员的当日圣水量，干员id:圣水ml存量 """
+
         self.physical_examination_setting: Dict[int, int] = {}
         """ 体检设置 设置id:设置值 """
         self.today_physical_examination_chara_id_dict: Dict[int, set] = {}
@@ -1398,6 +1402,8 @@ class Country:
         """ 势力声望 """
         self.country_infection_rate: Dict[int, float] = {}
         """ 国家矿石病感染率 """
+        self.country_infection_patient_ratio: Dict[int, float] = {}
+        """ 国家矿石病人数量影响系数 """
 
 
 class System_Setting:

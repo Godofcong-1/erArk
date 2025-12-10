@@ -127,12 +127,54 @@ def judge_diplomatic_policy():
     # 绘制总结算信息
     info_text = "\n"
     info_text += _("本周全势力声望变化：{0}\n").format(all_reputation)
-    info_text += _("本周全势力源石病感染率变化：{0}%\n").format(all_infection_rate)
+    # info_text += _("本周全势力源石病感染率变化：{0}%\n").format(all_infection_rate)
     info_draw = draw.WaitDraw()
     info_draw.text = info_text
     info_draw.width = window_width
     info_draw.draw()
 
+def settle_all_country_infection_rate(draw_flag: bool = False):
+    """
+    结算全国度的源石病感染率变化
+    """
+    total_change = 0.0
+    # 每周治疗加权量
+    weekly_weighted_treatment = cache.rhodes_island.medical_weekly_weighted_treatment
+    for country_id in game_config.config_birthplace:
+        # 跳过不出现的大地图中的国家
+        if game_config.config_birthplace[country_id].inmap == 0:
+            continue
+        # 跳过拉特兰
+        if country_id == 7:
+            cache.country.country_infection_patient_ratio[country_id] = 0.1
+            continue
+        # 旧比例
+        old_rate = cache.country.country_infection_rate[country_id]
+        # 基础上升次数与当前感染率有关，感染率越高，上升越快
+        base_times = (old_rate // 10) + 1
+        # 基础上升率与每周治疗加权量有关，治疗量越高，上升越慢，可以为负数
+        base_rate = 0.5 - weekly_weighted_treatment * 0.001
+        # 基础上升为次数乘以倍率
+        change = base_times * base_rate
+        # 进行调整
+        cache.country.country_infection_rate[country_id] += change
+        # 限制在0~99.99之间
+        cache.country.country_infection_rate[country_id] = min(max(round(cache.country.country_infection_rate[country_id], 3), 0), 99.99)
+        total_change += change
+        # 计算矿石病感染率对于病人数量的影响
+        cache.country.country_infection_patient_ratio[country_id] = cache.country.country_infection_rate[country_id] / 30
+        # 限制在0.1~3.0之间
+        cache.country.country_infection_patient_ratio[country_id] = min(max(cache.country.country_infection_patient_ratio[country_id], 0.1), 3.0)
+
+    # 重置每周治疗加权量
+    cache.rhodes_island.medical_weekly_weighted_treatment = 0
+    # 输出结算信息
+    if draw_flag:
+        info_text = _("本周全国度源石病感染率总变化：{0}%\n").format(round(total_change, 3))
+        info_draw = draw.WaitDraw()
+        info_draw.text = info_text
+        info_draw.width = window_width
+        info_draw.draw()
 
 class Nation_Diplomacy_Panel:
     """

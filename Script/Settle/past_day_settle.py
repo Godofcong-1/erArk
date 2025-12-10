@@ -15,7 +15,6 @@ from Script.Design import (
     basement,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
 from Script.Config import normal_config
 
 game_path = game_path_config.game_path
@@ -30,7 +29,6 @@ line_feed = draw.NormalDraw()
 line_feed.text = "\n"
 line_feed.width = 1
 
-
 def update_new_day():
     """
     新一天的刷新\n
@@ -40,6 +38,7 @@ def update_new_day():
     无
     """
     from Script.Design import cooking
+    from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
 
     now_draw = draw.NormalDraw()
     now_draw.width = window_width
@@ -83,6 +82,7 @@ def update_new_day():
     # 每周一次
     if cache.game_time.weekday() == 6:
         nation_diplomacy_panel.judge_diplomatic_policy() # 结算外交政策
+        nation_diplomacy_panel.settle_all_country_infection_rate() # 结算全国度的源石病感染率变化
     # 每周一的助理轮换
     if cache.game_time.weekday() == 0 and handle_premise.handle_pl_assistant_change_every_week_on(0):
         assistant_panel.select_random_assistant()

@@ -614,8 +614,12 @@ def finalize_patient_after_diagnose(
         set_patient_state(patient, medical_constant.MedicalPatientState.HOSPITALIZED)
     elif medicine_success:
         set_patient_state(patient, medical_constant.MedicalPatientState.MEDICINE_GRANTED)
+        medical_core._bump_daily_counter(rhodes_island, "medicine_completed_outpatient", 1)
+        # 依据病情等级累加加权治疗量
+        rhodes_island.medical_weekly_weighted_treatment += patient.severity_level
     else:
         set_patient_state(patient, medical_constant.MedicalPatientState.WAITING_MEDICATION)
+        medical_core._bump_daily_counter(rhodes_island, "outpatient_waiting_medicine", 1)
 
     return {
         "success": True,
