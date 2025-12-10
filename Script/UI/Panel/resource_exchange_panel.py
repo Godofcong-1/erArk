@@ -246,7 +246,10 @@ def auto_trade_resources() -> None:
 
     if summary_lines:
         info_draw = draw.WaitDraw()
-        info_draw.text = _("\n自动贸易执行结果：\n") + "\n".join(summary_lines) + "\n"
+        info_draw_text = "\n"
+        info_draw_text += _("○贸易部结算：\n")
+        info_draw_text += "\n".join(summary_lines) + "\n"
+        info_draw.text = info_draw_text
         info_draw.draw()
 
 def get_resouce_price(resouce_id: int, buy_or_sell_flag: bool, self_check: bool = True) -> Tuple[int, float]:

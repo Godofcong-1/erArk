@@ -442,7 +442,7 @@ def settle_power_system(draw_flag: bool = True) -> Tuple[float, str]:
     ri = cache.rhodes_island
     shortage_ratio = 0.0
 
-    text = _("\n能源结算\n")
+    text = _("\n○动力区结算\n")
 
     # ------------ 火力发电（使用理论值 + 实际燃料占比折算）------------ #
     fire_detail = get_theoretical_fire_generation(detail=True)

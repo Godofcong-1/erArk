@@ -518,7 +518,6 @@ def update_work_people():
         target_base=cache.rhodes_island,
     )
 
-
 def update_facility_people():
     """
     更新当前基地各设施使用人数
@@ -531,46 +530,6 @@ def update_facility_people():
         # 图书馆读者统计
         if handle_premise.handle_in_library(id):
             cache.rhodes_island.reader_now += 1
-
-
-def assign_character_work(character_id: int, work_id: int, *, update: bool = True) -> bool:
-    """为指定干员设置新的工作类型，必要时同步相关缓存"""
-
-    if character_id not in cache.character_data:
-        return False
-
-    target_data = cache.character_data[character_id]
-    current_work = target_data.work.work_type
-
-    if current_work == work_id:
-        return True
-
-    if current_work == 193 and work_id != 193:
-        for i in target_data.body_manage:
-            if i in range(30, 40) and target_data.body_manage[i]:
-                target_data.body_manage[i] = 0
-
-    if current_work == 191 and work_id != 191 and cache.rhodes_island.current_warden_id == character_id:
-        cache.rhodes_island.current_warden_id = 0
-        if getattr(target_data, "pre_dormitory", None):
-            target_data.dormitory = target_data.pre_dormitory
-
-    if work_id == 191:
-        if handle_premise.handle_have_warden(0):
-            old_warden = cache.character_data[cache.rhodes_island.current_warden_id]
-            old_warden.work.work_type = 0
-            if getattr(old_warden, "pre_dormitory", None):
-                old_warden.dormitory = old_warden.pre_dormitory
-        cache.rhodes_island.current_warden_id = character_id
-        target_data.pre_dormitory = target_data.dormitory
-        target_data.dormitory = map_handle.get_map_system_path_str_for_list(["关押", "休息室"])
-
-    target_data.work.work_type = work_id
-
-    if update:
-        update_work_people()
-        update_facility_people()
-    return True
 
 def settle_milk():
     """

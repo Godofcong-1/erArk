@@ -80,7 +80,11 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
 
     # 生产是否有问题
     un_normal = False
-    return_text = ""
+    return_text = "\n"
+
+    # 新一天的时候输出提示
+    if newdayflag and draw_flag:
+        return_text += _("○制造加工部结算：\n")
 
     # 计算设施损坏
     damage_down = 0

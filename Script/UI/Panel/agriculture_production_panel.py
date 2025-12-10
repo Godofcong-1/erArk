@@ -100,7 +100,9 @@ def settle_agriculture_line(draw_flag = True):
     # print("debug 开始结算农业生产")
     # 生产是否有问题
     un_normal = False
-    return_text = ""
+    return_text = "\n"
+    if draw_flag:
+        return_text += _("○疗养庭院结算：\n")
     # 计算设施损坏
     damage_down = 0
     for facility_str in cache.rhodes_island.facility_damage_data:
