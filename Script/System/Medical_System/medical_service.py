@@ -287,15 +287,26 @@ def settle_medical_department(
     outpatient_table = rhodes_island.medical_patients_today
     for patient_id, patient in list(outpatient_table.items()):
         should_remove = False
+        # 病人状态
+        state = getattr(patient, "state", None)
+        # 病人等待天数+1
+        if hasattr(patient, "clinic_waiting_days"):
+            patient.clinic_waiting_days += 1
+        # 若病人记录异常为空则直接剔除。
         if patient is None:
             should_remove = True
-        else:
-            state = getattr(patient, "state", None)
-            if state in (
-                medical_constant.MedicalPatientState.MEDICINE_GRANTED,
-                medical_constant.MedicalPatientState.DISCHARGED,
-            ):
-                should_remove = True
+        # 已拿药治疗或已出院的病人予以剔除。
+        elif state in (
+            medical_constant.MedicalPatientState.MEDICINE_GRANTED,
+            medical_constant.MedicalPatientState.DISCHARGED,
+        ):
+            should_remove = True
+        # 等待天数超过病情程度+3天的病人予以剔除，视为自行离开。
+        elif getattr(patient, "clinic_waiting_days", 0) > (
+            (getattr(patient, "severity_level", 0) or 0) + 3
+        ):
+            should_remove = True
+        # 符合移除条件时从门诊表中剔除该病人记录。
         if should_remove:
             outpatient_table.pop(patient_id, None)
             cleared_outpatient_ids.append(patient_id)

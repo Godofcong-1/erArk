@@ -214,6 +214,8 @@ class MedicalPatient:
     """药物需求累计值，key=资源 ID，value=需求数量"""
     state: MedicalPatientState = MedicalPatientState.REFRESHED
     """病人当前状态"""
+    clinic_waiting_days: int = 0
+    """已门诊等待天数"""
     stay_days: int = 0
     """已住院天数"""
     need_surgery: bool = False
