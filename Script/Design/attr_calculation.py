@@ -488,6 +488,10 @@ def get_country_reset(country: game_type.Country) -> game_type.Country:
     for country_cid in game_config.config_birthplace:
         if country_cid not in country_data.country_infection_rate:
             country_data.country_infection_rate[country_cid] = game_config.config_birthplace[country_cid].infect_rate
+            # 计算矿石病感染率对于病人数量的影响
+            cache.country.country_infection_patient_ratio[country_cid] = cache.country.country_infection_rate[country_cid] / 30
+            # 限制在0.1~3.0之间
+            cache.country.country_infection_patient_ratio[country_cid] = min(max(cache.country.country_infection_patient_ratio[country_cid], 0.1), 3.0)
 
     return country_data
 
