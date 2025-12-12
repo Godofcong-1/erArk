@@ -401,8 +401,8 @@ def judge_before_pl_behavior():
         character_data: game_type.Character = cache.character_data[character_id]
         character_data.action_info.have_shown_waiting_in_now_instruct = False
 
-    # 隐奸的被察觉情况结算
-    if handle_premise.handle_hidden_sex_mode_ge_1(0):
+    # 隐奸的被察觉情况结算，需要玩家的行为不是结束H
+    if handle_premise.handle_hidden_sex_mode_ge_1(0) and pl_character_data.behavior.behavior_id != constant.Behavior.END_H:
         from Script.UI.Panel import hidden_sex_panel
         hidden_sex_panel.handle_hidden_sex_flow()
     # 露出的模式更新
