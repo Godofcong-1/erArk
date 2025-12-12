@@ -224,13 +224,14 @@ class Sex_Be_Discovered_Panel:
 
     def _invite_find_char_to_join(self) -> None:
         """选择邀请对方加入群交"""
-        from Script.Design import handle_instruct
+        from Script.Design import handle_instruct, character_behavior
         # 判断是否满足加入群交条件
         if handle_premise.handle_instruct_judge_group_sex(self.character_id):
             # 如果当前在群交中，则直接加入
             if handle_premise.handle_group_sex_mode_on(0):
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.JOIN_GROUP_SEX
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+                character_behavior.judge_character_status(self.character_id)
             # 不在群交中则转为群交
             else:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN
@@ -243,6 +244,7 @@ class Sex_Be_Discovered_Panel:
             if handle_premise.handle_group_sex_mode_on(0):
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.REFUSE_JOIN_GROUP_SEX
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+                character_behavior.judge_character_status(self.character_id)
             # 不在群交中则结束当前H
             else:
                 self._end_current_h()
