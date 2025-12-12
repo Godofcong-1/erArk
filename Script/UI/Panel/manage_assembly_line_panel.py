@@ -294,7 +294,13 @@ class Manage_Assembly_Line_Panel:
 
             # 生产工人增减按钮
             button_text = _("[生产工人增减]")
-            btn = draw.CenterButton(_(button_text), _(button_text), len(button_text)*2+2, cmd_func=manage_basement_panel.change_npc_work_out, args=self.width)
+            btn = draw.CenterButton(
+                _(button_text),
+                _(button_text),
+                len(button_text)*2+2,
+                cmd_func=manage_basement_panel.change_npc_work_out,
+                args=(self.width, [121])
+                )
             btn.draw(); return_list.append(btn.return_text)
             line_feed.draw(); line_feed.draw()
 

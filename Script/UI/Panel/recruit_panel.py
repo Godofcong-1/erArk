@@ -503,7 +503,7 @@ class Recruit_Panel:
                 _(button_text),
                 len(button_text) * 2 + 2,
                 cmd_func=manage_basement_panel.change_npc_work_out,
-                args=self.width
+                args=(self.width, [132])
             )
             return_list.append(button_draw.return_text)
             button_draw.draw()

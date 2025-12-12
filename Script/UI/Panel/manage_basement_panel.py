@@ -18,11 +18,11 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def change_npc_work_out(width):
+def change_npc_work_out(width, target_work_type_id = []):
     """
     调整干员的工作岗位
     """
-    now_panel = Change_Npc_Work_Panel(width)
+    now_panel = Change_Npc_Work_Panel(width, target_work_type_id)
     now_panel.draw()
 
 
@@ -543,7 +543,7 @@ class Change_Npc_Work_Panel:
     button_id -- 数字按钮id
     """
 
-    def __init__(self, width: int):
+    def __init__(self, width: int, target_work_type_id: List = []):
         """初始化绘制对象"""
         self.width: int = width
         """ 最大宽度 """
@@ -551,6 +551,11 @@ class Change_Npc_Work_Panel:
         """ 工作类型id和是否展开的状态 """
         self.work_type_state[0] = True
         """ 默认展开第一个工作类型 """
+        self.target_work_type_id_list: List = target_work_type_id
+        """ 目标工作类型id的列表 """
+        # 如果目标工作类型id有效，则展开该工作类型
+        for work_type_id in self.target_work_type_id_list:
+            self.work_type_state[work_type_id] = True
 
     def draw(self):
         """绘制对象"""
@@ -610,10 +615,15 @@ class Change_Npc_Work_Panel:
                 symbol = "▼" if self.work_type_state[work_type_id] else "▶"
                 # 为了美观，在这里不显示工作类型的id
                 # button_text = f"{symbol}[{str(work_type_id).rjust(3,'0')}]{work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
+                # 如果该工作类型是目标工作类型，则高亮
+                if work_type_id in self.target_work_type_id_list:
+                    draw_style = "gold_enrod"
+                else:
+                    draw_style = "standard"
                 button_text = f"{symbol} {work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
                 draw_width = int(self.width / 7)
                 type_button_draw = draw.LeftButton(
-                    button_text, work_type_name, draw_width,
+                    button_text, str(work_type_id), draw_width, normal_style=draw_style,
                     cmd_func=self.toggle_work_type, args=(work_type_id,)
                 )
                 type_button_draw.draw()
@@ -713,6 +723,11 @@ class Change_Npc_Work_Panel:
                 work_ability_id = work_data.ability_id
                 work_ability_name = game_config.config_ability[work_ability_id].name[:2]
                 chara_ability_lv = cache.character_data[character_id].ability[work_ability_id]
+                # 如果当前工作为目标工作，则高亮显示
+                if work_cid in self.target_work_type_id_list:
+                    draw_style = "gold_enrod"
+                else:
+                    draw_style = "standard"
 
                 # 判断是否开放，未开放则跳过
                 flag_open = True
@@ -765,13 +780,11 @@ class Change_Npc_Work_Panel:
                         button_draw = draw.LeftButton(
                             work_text,
                             f"\n{work_cid}",
-                            window_width ,
+                            window_width,
+                            normal_style=draw_style,
                             cmd_func=self.select_new_work,
                             args=(work_cid, character_id)
                         )
-                        # 特殊工作则高亮显示
-                        if work_tag == 2:
-                            button_draw.normal_style = "gold_enrod"
                         button_draw.draw()
                         return_list.append(button_draw.return_text)
                     # 特殊工作显示为灰色，无法选择

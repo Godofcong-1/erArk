@@ -371,7 +371,7 @@ class Equipment_Maintain_Panel:
             # 变更铁匠人数按钮
             button_text2 = _("[002]变更铁匠人数")
             button_draw2 = draw.LeftButton(
-                button_text2, button_text2, len(button_text2) * 3, cmd_func=manage_basement_panel.change_npc_work_out, args=self.width
+                button_text2, button_text2, len(button_text2) * 3, cmd_func=manage_basement_panel.change_npc_work_out, args=(self.width, [22])
             )
             button_draw2.draw()
             return_list.append(button_draw2.return_text)

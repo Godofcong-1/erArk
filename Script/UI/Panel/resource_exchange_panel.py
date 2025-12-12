@@ -613,7 +613,7 @@ class Resource_Exchange_Line_Panel:
                 adjust_button_text,
                 len(adjust_button_text) * 2,
                 cmd_func=manage_basement_panel.change_npc_work_out,
-                args=self.width,
+                args=(self.width, [111]),
             )
             return_list.append(adjust_button.return_text)
             adjust_button.draw()

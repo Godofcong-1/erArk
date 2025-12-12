@@ -243,7 +243,7 @@ class DoctorManagementSubPanel(_BaseSubPanel):
             _("医生增减"),
             max(len(_("[医生增减]")) * 2, 16),
             cmd_func=manage_basement_panel.change_npc_work_out,
-            args=self.width,
+            args=(self.width, [medical_constant.MedicalDoctorProfession.CLINICIAN, medical_constant.MedicalDoctorProfession.HOSPITALIST]),
         )
         adjust_button.draw()
         return_list.append(adjust_button.return_text)
