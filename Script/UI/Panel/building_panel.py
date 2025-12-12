@@ -39,7 +39,7 @@ class Building_Panel:
         basement.get_base_updata()
 
         title_text = _("基建系统")
-        building_type_list = [_("区块总览"), _("特殊房间")]
+        building_type_list = [_("区块总览"), _("单独设施")]
 
         title_draw = draw.TitleLineDraw(title_text, self.width)
         while 1:
@@ -98,9 +98,9 @@ class Building_Panel:
             # 遍历全设施
             for all_cid in game_config.config_facility:
                 facility_data = game_config.config_facility[all_cid]
-                # 总览显示大区块，其他则显示在特殊房间中
+                # 总览显示大区块，其他则显示在单独设施中
                 if( (self.now_panel == _("区块总览") and facility_data.type == -1)
-                    or (self.now_panel == _("特殊房间") and facility_data.type != -1)):
+                    or (self.now_panel == _("单独设施") and facility_data.type != -1)):
 
                     # 获取该区块的一系列信息
                     facility_name = facility_data.name
