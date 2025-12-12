@@ -1057,7 +1057,7 @@ class Medical_Severity:
     special_medicine_template: str
     """ 特效药组合 """
     medicine_income_ratio: float
-    """ 药费收益系数 """
+    """ 当前病情的的药费收益系数 """
     require_hospitalization: int
     """ 是否需要住院 """
     hospital_success_income_ratio: float
