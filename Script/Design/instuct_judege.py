@@ -204,10 +204,10 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
     # 访客不判定的部分
     if judge_data_type != "V":
 
-        # 当前场景有人修正
+        # 当前场景有人修正，需要该对象角色有意识
         scene_path_str = map_handle.get_map_system_path_str_for_list(character_data.position)
         scene_data = cache.scene_data[scene_path_str]
-        if len(scene_data.character_list) > 2:
+        if len(scene_data.character_list) > 2 and handle_premise.handle_t_normal_5_6(character_id):
             other_chara_count = len(scene_data.character_list) - 2
             if instruct_name in {_("群交"), _("隐奸")}:
                 judge_other_people = 60 + 60 * other_chara_count
