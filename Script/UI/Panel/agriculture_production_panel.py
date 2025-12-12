@@ -365,8 +365,10 @@ class Agriculture_Production_Panel:
             for line_id in ri.herb_garden_line:
                 main_id = ri.herb_garden_line[line_id][1]
                 name = cache.character_data[main_id].name if main_id != 0 and main_id in cache.character_data else _("(空缺)")
+                abi_lv = cache.character_data[main_id].ability.get(47,0)
+                abi_lv_text = _("(农业lv{0})").format(abi_lv) if main_id != 0 else ""
                 row = draw.NormalDraw()
-                row.text = _("药田{0}号线 主种植员: {1}  ").format(line_id+1, name)
+                row.text = _("药田{0}号线 主种植员: {1}{2}").format(line_id+1, name, abi_lv_text)
                 row.draw()
                 def _make(idx):
                     return lambda : self._appoint_main_agri(idx, 0)
@@ -380,8 +382,12 @@ class Agriculture_Production_Panel:
             other_ops = [cid for cid in ri.herb_garden_operator_ids if cid not in main_ids]
             other_draw = draw.NormalDraw()
             if other_ops:
-                names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
-                other_draw.text = _("药田副种植员：") + "、".join(names) + "\n"
+                other_names = []
+                for c in other_ops:
+                    chara = cache.character_data[c]
+                    abi_lv = chara.ability.get(47, 0)
+                    other_names.append(_("{chara_name}(农业lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
+                other_draw.text = _("药田副种植员：") + "、".join(other_names) + "\n"
             else:
                 other_draw.text = _("药田副种植员：暂无\n")
             other_draw.draw()
@@ -392,8 +398,10 @@ class Agriculture_Production_Panel:
                 for line_id in ri.green_house_line:
                     main_id = ri.green_house_line[line_id][1]
                     name = cache.character_data[main_id].name if main_id != 0 and main_id in cache.character_data else _("(空缺)")
+                    abi_lv = cache.character_data[main_id].ability.get(47,0)
+                    abi_lv_text = _("(农业lv{0})").format(abi_lv) if main_id != 0 else ""
                     row = draw.NormalDraw()
-                    row.text = _("温室{0}号线 主种植员: {1}  ").format(line_id+1, name)
+                    row.text = _("温室{0}号线 主种植员: {1}{2}").format(line_id+1, name, abi_lv_text)
                     row.draw()
                     def _make2(idx):
                         return lambda : self._appoint_main_agri(idx, 1)
@@ -406,8 +414,12 @@ class Agriculture_Production_Panel:
                 other_ops = [cid for cid in ri.green_house_operator_ids if cid not in main_ids]
                 other_draw = draw.NormalDraw()
                 if other_ops:
-                    names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
-                    other_draw.text = _("温室副种植员：") + "、".join(names) + "\n"
+                    other_names = []
+                    for c in other_ops:
+                        chara = cache.character_data[c]
+                        abi_lv = chara.ability.get(47, 0)
+                        other_names.append(_("{chara_name}(农业lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
+                    other_draw.text = _("温室副种植员：") + "、".join(other_names) + "\n"
                 else:
                     other_draw.text = _("温室副种植员：暂无\n")
                 other_draw.draw()

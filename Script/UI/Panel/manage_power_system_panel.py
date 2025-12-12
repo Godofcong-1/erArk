@@ -721,10 +721,13 @@ class Manage_Power_System_Panel:
             for idx, cid in enumerate(main_ops):
                 name = self._get_chara_name(cid)
                 # 显示文本
+                now_type_name = attr_calculation.pad_display_width(type_name[idx], 12)
                 chara_name = name if name else _("(空缺)")
                 chara_name = attr_calculation.pad_display_width(chara_name, 12)
-                now_type_name = attr_calculation.pad_display_width(type_name[idx], 12)
-                main_text = _("{0}主调控员: {1}").format(now_type_name, chara_name)
+                main_chara_data = cache.character_data[cid]
+                abi_lv = main_chara_data.ability.get(48,0)
+                abi_lv_text = _("(制造lv{0})").format(abi_lv) if cid != 0 else ""
+                main_text = _("{0}主调控员: {1}{2}").format(now_type_name, chara_name, abi_lv_text)
                 main_draw = draw.NormalDraw()
                 main_draw.text = main_text
                 main_draw.draw()
@@ -740,7 +743,14 @@ class Manage_Power_System_Panel:
             other_ops = [cid for cid in ri.power_operator_ids_list if cid not in main_ops]
             other_text = _("辅助调控员: ")
             if other_ops:
-                names = [self._get_chara_name(cid) or _("(未知)") for cid in other_ops]
+                names = []
+                for cid in other_ops:
+                    name = self._get_chara_name(cid) or _("(未知)")
+                    chara_data = cache.character_data.get(cid)
+                    if chara_data:
+                        abi_lv = chara_data.ability.get(48, 0)
+                        name += _("(制造lv{0})").format(abi_lv)
+                    names.append(name)
                 other_text += "、".join(names)
             else:
                 other_text += _("暂无")

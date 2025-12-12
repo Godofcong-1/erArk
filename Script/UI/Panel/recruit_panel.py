@@ -512,9 +512,12 @@ class Recruit_Panel:
             # 显示各线主招聘专员
             for line_id in ri.recruit_line:
                 main_id = ri.recruit_line[line_id][2]
-                name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
+                main_chara_data = cache.character_data[main_id]
+                name = main_chara_data.name if main_id != 0 else _("(空缺)")
+                abi_lv = main_chara_data.ability.get(40,0)
+                abi_lv_text = _("(话术lv{0})").format(abi_lv) if main_id != 0 else ""
                 row = draw.NormalDraw()
-                row.text = _("{0}号招募线 主招聘专员: {1}  ").format(line_id+1, name)
+                row.text = _("{0}号招募线 主招聘专员: {1}{2}").format(line_id+1, name, abi_lv_text)
                 row.draw()
                 def _make(line_idx):
                     return lambda : self._appoint_main_hr(line_idx)
@@ -528,8 +531,12 @@ class Recruit_Panel:
             other_ops = [cid for cid in ri.hr_operator_ids_list if cid not in main_ids]
             other_draw = draw.NormalDraw()
             if other_ops:
-                names = [cache.character_data[cid].name for cid in other_ops if cid in cache.character_data]
-                other_draw.text = _("副招聘专员：") + "、".join(names) + "\n"
+                other_names = []
+                for c in other_ops:
+                    chara = cache.character_data[c]
+                    abi_lv = chara.ability.get(40, 0)
+                    other_names.append(_("{chara_name}(话术lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
+                other_draw.text = _("副招聘专员：") + "、".join(other_names) + "\n"
             else:
                 other_draw.text = _("副招聘专员：暂无\n")
             other_draw.draw()

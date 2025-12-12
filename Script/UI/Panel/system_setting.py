@@ -167,7 +167,7 @@ class System_Setting_Panel:
                     if cid == 12:
                         if cache.font_size == 0:
                             cache.font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width * 2)
-                        new_button_text = _(f" [{cache.font_size}] ")
+                        new_button_text = _(" [{0}] ").format(cache.font_size)
                         new_button_len = max(len(new_button_text) * 2, 30)
                         new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_font_size)
                         new_button_draw.draw()

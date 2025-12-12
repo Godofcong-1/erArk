@@ -625,15 +625,15 @@ class Resource_Exchange_Line_Panel:
                 # 跳过无效或货币类资源
                 if res_type in {_("无"), _("货币")}:
                     continue
+                res_type_name = attr_calculation.pad_display_width(res_type, 8, align="center")
                 main_id = cache.rhodes_island.resource_type_main_trader.get(res_type, 0)
                 if main_id:
                     main_ids.add(main_id)
                 main_name = cache.character_data[main_id].name if main_id > 0 else _("空缺")
-                main_level = cache.character_data[main_id].ability.get(40, 0) if main_id > 0 else 0
+                abi_lv = cache.character_data[main_id].ability.get(40,0)
+                abi_lv_text = _("(话术lv{0})").format(abi_lv) if main_id != 0 else ""
                 row = draw.NormalDraw()
-                row.text = _("{0} 主交易员：{1}").format(attr_calculation.pad_display_width(res_type, 8, align="center"), main_name)
-                if main_id and main_level:
-                    row.text += _("(话术lv{0})").format(main_level)
+                row.text = _("{0} 主交易员：{1}").format(res_type_name, main_name, abi_lv_text)
                 row.draw()
 
                 assign_button = draw.CenterButton(
@@ -658,11 +658,15 @@ class Resource_Exchange_Line_Panel:
                 line_feed.draw()
 
             line_feed.draw()
-            sub_ids = [cid for cid in cache.rhodes_island.trade_operator_ids_list if cid not in main_ids and cid in cache.character_data]
+            other_ops = [cid for cid in cache.rhodes_island.trade_operator_ids_list if cid not in main_ids and cid in cache.character_data]
             sub_draw = draw.NormalDraw()
-            if sub_ids:
-                sub_names = "、".join(cache.character_data[cid].name for cid in sub_ids)
-                sub_draw.text = _("副交易员：") + sub_names + "\n"
+            if other_ops:
+                other_names = []
+                for c in other_ops:
+                    chara = cache.character_data[c]
+                    abi_lv = chara.ability.get(40, 0)
+                    other_names.append(_("{chara_name}(话术lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
+                sub_draw.text = _("副交易员：") + other_names + "\n"
             else:
                 sub_draw.text = _("副交易员：暂无\n")
             sub_draw.draw()

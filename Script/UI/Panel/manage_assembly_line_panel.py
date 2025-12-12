@@ -307,9 +307,12 @@ class Manage_Assembly_Line_Panel:
             # 各生产线主生产工人显示与任命按钮
             for line_id in ri.assembly_line:
                 main_id = ri.assembly_line[line_id][1]
-                name = cache.character_data[main_id].name if main_id != 0 else _("(空缺)")
+                main_chara_data = cache.character_data[main_id]
+                name = main_chara_data.name if main_id != 0 else _("(空缺)")
+                abi_lv = main_chara_data.ability.get(48,0)
+                abi_lv_text = _("(制造lv{0})").format(abi_lv) if main_id != 0 else ""
                 row = draw.NormalDraw()
-                row.text = _("{0}号生产线 主生产工人: {1}  ").format(line_id+1, name)
+                row.text = _("{0}号生产线 主生产工人: {1}{2}").format(line_id+1, name, abi_lv_text)
                 row.draw()
                 def _make(lid):
                     return lambda : self._appoint_main_worker(lid)
@@ -321,9 +324,17 @@ class Manage_Assembly_Line_Panel:
 
             # 显示所有副生产工人
             main_ids = {ri.assembly_line[i][1] for i in ri.assembly_line}
-            others = [cid for cid in ri.production_worker_ids if cid not in main_ids and cid in cache.character_data]
+            other_ops = [cid for cid in ri.production_worker_ids if cid not in main_ids and cid in cache.character_data]
             other_draw = draw.NormalDraw()
-            other_draw.text = _("副生产工人：") + ("、".join([cache.character_data[c].name for c in others]) if others else _("暂无")) + "\n"
+            if other_ops:
+                other_names = []
+                for c in other_ops:
+                    chara = cache.character_data[c]
+                    abi_lv = chara.ability.get(48, 0)
+                    other_names.append(_("{chara_name}(制造lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
+                other_draw.text = _("副生产工人：") + "、".join(other_names) + "\n"
+            else:
+                other_draw.text = _("副生产工人：暂无\n")
             other_draw.draw()
             line_feed.draw(); line_feed.draw()
 
