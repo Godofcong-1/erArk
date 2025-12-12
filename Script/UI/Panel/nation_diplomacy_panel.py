@@ -133,13 +133,18 @@ def judge_diplomatic_policy():
     info_draw.width = window_width
     info_draw.draw()
 
-def settle_all_country_infection_rate(draw_flag: bool = False):
+def settle_all_country_infection_rate():
     """
     结算全国度的源石病感染率变化
     """
-    total_change = 0.0
     # 每周治疗加权量
     weekly_weighted_treatment = cache.rhodes_island.medical_weekly_weighted_treatment
+    # 本周所有国家感染率总和
+    this_week_all_country_infection_rate = 0.0
+    # 当前所在国家
+    now_country = cache.rhodes_island.current_location[0]
+    now_country_change = 0.0
+    count = 0
     for country_id in game_config.config_birthplace:
         # 跳过不出现的大地图中的国家
         if game_config.config_birthplace[country_id].inmap == 0:
@@ -148,6 +153,7 @@ def settle_all_country_infection_rate(draw_flag: bool = False):
         if country_id == 7:
             cache.country.country_infection_patient_ratio[country_id] = 0.1
             continue
+        count += 1
         # 旧比例
         old_rate = cache.country.country_infection_rate[country_id]
         # 基础上升次数与当前感染率有关，感染率越高，上升越快
@@ -156,11 +162,14 @@ def settle_all_country_infection_rate(draw_flag: bool = False):
         base_rate = 0.5 - weekly_weighted_treatment * 0.001
         # 基础上升为次数乘以倍率
         change = base_times * base_rate
+        # 如果当前国家，则进行记录
+        if country_id == now_country:
+            now_country_change = change
         # 进行调整
         cache.country.country_infection_rate[country_id] += change
         # 限制在0~99.99之间
         cache.country.country_infection_rate[country_id] = min(max(round(cache.country.country_infection_rate[country_id], 3), 0), 99.99)
-        total_change += change
+        this_week_all_country_infection_rate += cache.country.country_infection_rate[country_id]
         # 计算矿石病感染率对于病人数量的影响
         cache.country.country_infection_patient_ratio[country_id] = cache.country.country_infection_rate[country_id] / 30
         # 限制在0.1~3.0之间
@@ -168,13 +177,30 @@ def settle_all_country_infection_rate(draw_flag: bool = False):
 
     # 重置每周治疗加权量
     cache.rhodes_island.medical_weekly_weighted_treatment = 0
+    # 如果存在上周感染率总和，则进行对比输出变化
+    if cache.country.last_week_all_country_infection_rate != -1.0:
+        total_change = this_week_all_country_infection_rate - cache.country.last_week_all_country_infection_rate
+        total_change_rate = total_change / count
+    else:
+        total_change_rate = 0.0
+    # 更新本周所有国家感染率总和
+    cache.country.last_week_all_country_infection_rate = this_week_all_country_infection_rate
     # 输出结算信息
-    if draw_flag:
-        info_text = _("本周全国度源石病感染率总变化：{0}%\n").format(round(total_change, 3))
-        info_draw = draw.WaitDraw()
-        info_draw.text = info_text
-        info_draw.width = window_width
-        info_draw.draw()
+    info_text = "\n"
+    info_text += _("○源石病感染率统计报告：")
+    info_text += _("本周各国源石病感染率平均总变化：")
+    if total_change_rate != 0.0:
+        info_text += ("{0}%\n").format(round(total_change_rate, 2))
+    else:
+        info_text += _("暂无数据\n")
+    info_text += _("当前罗德岛所在国家为{0}，本周感染率变化：{1}%\n").format(
+        game_config.config_birthplace[now_country].name,
+        round(now_country_change, 2),
+    )
+    info_draw = draw.WaitDraw()
+    info_draw.text = info_text
+    info_draw.width = window_width
+    info_draw.draw()
 
 class Nation_Diplomacy_Panel:
     """

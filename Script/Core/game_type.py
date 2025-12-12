@@ -1404,6 +1404,8 @@ class Country:
         """ 国家矿石病感染率 """
         self.country_infection_patient_ratio: Dict[int, float] = {}
         """ 国家矿石病人数量影响系数 """
+        self.last_week_all_country_infection_rate: float = -1.0
+        """ 上周所有国家矿石病感染率总和 """
 
 
 class System_Setting:
