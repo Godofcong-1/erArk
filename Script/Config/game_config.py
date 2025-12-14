@@ -482,6 +482,8 @@ def translate_data(data: dict):
         return
     for now_data in data["data"]:
         for key in now_data:
+            if key == "null":
+                print(f"debug 遇到无效key: {key}，now_data :", now_data)
             if data["gettext"][key]:
                 # print("now_data :",now_data)
                 now_data[key] = get_text._(now_data[key])
