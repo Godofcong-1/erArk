@@ -184,7 +184,7 @@ class Sex_Be_Discovered_Panel:
 
     def _switch_to_hidden_sex(self) -> None:
         """选择转为隐奸"""
-        from Script.UI.Panel.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
+        from Script.System.Sex_System.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
         select_panel = Select_Hidden_Sex_Mode_Panel(self.width, sex_be_discovered_flag = True)
         select_panel.draw()
         # 如果邀请失败，则结束当前H
@@ -212,7 +212,7 @@ class Sex_Be_Discovered_Panel:
             else:
                 self._end_current_h()
         else:
-            from Script.UI.Panel.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
+            from Script.System.Sex_System.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
             select_panel = Select_Exhibitionism_Sex_Mode_Panel(self.width, sex_be_discovered_flag = True)
             select_panel.draw()
             # 如果邀请失败，则结束当前H

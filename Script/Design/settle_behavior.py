@@ -23,7 +23,7 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
     now_time -- 结算时间
     event_flag -- 事件结算变量，0只事件不指令，1只指令不事件，2均结算
     """
-    from Script.UI.Panel import group_sex_panel
+    from Script.System.Sex_System import group_sex_panel
 
     now_character_data: game_type.Character = cache.character_data[character_id]
     player_character_data: game_type.Character = cache.character_data[0]

@@ -116,7 +116,7 @@ def chara_handle_instruct_common_settle(
     game_update_flag -- 是否强制更新游戏流程，默认=False\n
     force_taget_wait -- 是否强制目标等待，默认=False\n
     """
-    from Script.UI.Panel import group_sex_panel
+    from Script.System.Sex_System import group_sex_panel
     # print(f"debug 角色处理指令通用结算函数 state_id:{state_id} character_id:{character_id} behevior_id:{behevior_id} duration:{duration}")
     instuct_judege.init_character_behavior_start_time(character_id, cache.game_time)
     character_data: game_type.Character = cache.character_data[character_id]
@@ -2348,7 +2348,7 @@ def handle_unconscious_h():
 )
 def handle_ask_hidden_sex():
     """处理邀请隐奸指令"""
-    from Script.UI.Panel.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
+    from Script.System.Sex_System.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
     now_panel = Select_Hidden_Sex_Mode_Panel(width)
     now_panel.draw()
 
@@ -2366,7 +2366,7 @@ def handle_ask_hidden_sex():
 )
 def handle_ask_exhibitionism_sex():
     """处理邀请露出指令"""
-    from Script.UI.Panel.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
+    from Script.System.Sex_System.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
     now_panel = Select_Exhibitionism_Sex_Mode_Panel(width)
     now_panel.draw()
 
@@ -5144,8 +5144,8 @@ def handle_urine_collector_off():
 )
 def handle_bondage():
     """处理绳艺指令"""
-    from Script.UI.Panel import normal_panel
-    now_panel = normal_panel.Bondage_Panel(width=width)
+    from Script.System.Sex_System import bondage_panel
+    now_panel = bondage_panel.Bondage_Panel(width=width)
     now_panel.draw()
 
 
@@ -6255,7 +6255,7 @@ def handle_run_all_group_sex_temple():
     })
 def handle_edit_group_sex_temple():
     """处理编辑群交行动指令"""
-    from Script.UI.Panel import group_sex_panel
+    from Script.System.Sex_System import group_sex_panel
     now_panel = group_sex_panel.Edit_Group_Sex_Temple_Panel(width)
     now_panel.draw()
 

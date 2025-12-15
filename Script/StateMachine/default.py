@@ -1277,7 +1277,7 @@ def character_see_h_and_move_to_dormitory(character_id: int):
         return
 
     from Script.Config import normal_config
-    from Script.UI.Panel import sex_be_discovered_panel
+    from Script.System.Sex_System import sex_be_discovered_panel
 
     # 绘制被发现面板
     now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(normal_config.config_normal.text_width, character_id)

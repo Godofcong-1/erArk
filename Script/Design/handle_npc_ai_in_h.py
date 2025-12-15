@@ -558,7 +558,7 @@ def npc_ai_in_group_sex(character_id: int):
     Keyword arguments:\n
     character_id -- 角色id\n
     """
-    from Script.UI.Panel import group_sex_panel
+    from Script.System.Sex_System import group_sex_panel
 
     # 玩家则返回
     if character_id == 0:
@@ -629,7 +629,7 @@ def npc_ai_in_group_sex_type_3():
     Keyword arguments:\n
     character_id -- 角色id\n
     """
-    from Script.UI.Panel import group_sex_panel
+    from Script.System.Sex_System import group_sex_panel
 
     pl_character_data: game_type.Character = cache.character_data[0]
     A_template_data = pl_character_data.h_state.group_sex_body_template_dict["A"]

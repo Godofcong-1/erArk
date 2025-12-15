@@ -400,7 +400,7 @@ class Edit_Group_Sex_Temple_Panel:
                 body_part_name = f"  {now_name}"
                 body_part_name_draw = draw.NormalDraw()
                 body_part_name_draw.text = body_part_name
-                body_part_name_draw.width = self.width / 4
+                body_part_name_draw.width = int(self.width / 4)
                 body_part_name_draw.draw()
                 # 交互对象按钮绘制
                 target_chara_id = now_template_data[0][body_part][0]
@@ -409,7 +409,7 @@ class Edit_Group_Sex_Temple_Panel:
                 else:
                     target_chara_name = cache.character_data[target_chara_id].name
                 target_chara_button = draw.CenterButton(
-                    f"▶{target_chara_name}", body_part_name + target_chara_name, self.width / 4, cmd_func=self.show_target_chara_list, args=("A", body_part)
+                    f"▶{target_chara_name}", body_part_name + target_chara_name, int(self.width / 4), cmd_func=self.show_target_chara_list, args=("A", body_part)
                 )
                 target_chara_button.draw()
                 return_list.append(target_chara_button.return_text)
@@ -420,7 +420,7 @@ class Edit_Group_Sex_Temple_Panel:
                 else:
                     state_name = game_config.config_behavior[state_id].name
                 state_name_button = draw.CenterButton(
-                    f"▶{state_name}", body_part_name + state_name, self.width / 5, cmd_func=self.show_status_list, args=("A", body_part)
+                    f"▶{state_name}", body_part_name + state_name, int(self.width / 5), cmd_func=self.show_status_list, args=("A", body_part)
                 )
                 state_name_button.draw()
                 return_list.append(state_name_button.return_text)
@@ -432,7 +432,7 @@ class Edit_Group_Sex_Temple_Panel:
                     body_part_name = f"  {now_name}"
                     body_part_name_draw = draw.NormalDraw()
                     body_part_name_draw.text = body_part_name
-                    body_part_name_draw.width = self.width / 2
+                    body_part_name_draw.width = int(self.width / 2)
                     body_part_name_draw.draw()
                     # 交互对象按钮绘制
                     target_chara_id_list = now_template_data[1][0]
@@ -444,7 +444,7 @@ class Edit_Group_Sex_Temple_Panel:
                             target_chara_name_text += cache.character_data[target_chara_id].name
                             target_chara_name_text += " "
                     target_chara_button = draw.CenterButton(
-                        f"▶{target_chara_name_text}", body_part_name + target_chara_name_text, self.width / 4, cmd_func=self.show_target_chara_list, args=("A", _("侍奉"))
+                        f"▶{target_chara_name_text}", body_part_name + target_chara_name_text, int(self.width / 4), cmd_func=self.show_target_chara_list, args=("A", _("侍奉"))
                     )
                     target_chara_button.draw()
                     return_list.append(target_chara_button.return_text)
@@ -455,7 +455,7 @@ class Edit_Group_Sex_Temple_Panel:
                     else:
                         state_name = game_config.config_behavior[state_id].name
                     state_name_button = draw.CenterButton(
-                        f"▶{state_name}", body_part_name + state_name, self.width / 5, cmd_func=self.show_status_list, args=("A", _("侍奉"))
+                        f"▶{state_name}", body_part_name + state_name, int(self.width / 5), cmd_func=self.show_status_list, args=("A", _("侍奉"))
                     )
                     state_name_button.draw()
                     return_list.append(state_name_button.return_text)
@@ -583,10 +583,10 @@ class Edit_Group_Sex_Temple_Panel:
             for chara_id in all_character_list:
                 character_data = cache.character_data[chara_id]
                 button_text = f"[{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
-                name_draw = draw.LeftButton(button_text, character_data.name, self.width / 5, cmd_func=self.set_target_chara, args=(temple_id, body_part, chara_id))
+                name_draw = draw.LeftButton(button_text, character_data.name, int(self.width / 5), cmd_func=self.set_target_chara, args=(temple_id, body_part, chara_id))
                 # 如果已经选中，则改变绘制颜色
                 if chara_id in selected_chara_id_list:
-                    name_draw = draw.LeftButton(button_text, character_data.name, self.width / 5, normal_style='gold_enrod', cmd_func=self.set_target_chara, args=(temple_id, body_part, chara_id))
+                    name_draw = draw.LeftButton(button_text, character_data.name, int(self.width / 5), normal_style='gold_enrod', cmd_func=self.set_target_chara, args=(temple_id, body_part, chara_id))
                 name_draw.draw()
                 return_list.append(name_draw.return_text)
                 # 每五个换行一次
@@ -628,7 +628,7 @@ class Edit_Group_Sex_Temple_Panel:
             for status_id in new_status_id_list:
                 status_data = game_config.config_behavior[status_id]
                 button_text = f"[{str(status_id).rjust(4,'0')}]{status_data.name}"
-                name_draw = draw.LeftButton(button_text, status_data.name, self.width / 5, cmd_func=self.set_status, args=(temple_id, body_part, status_id))
+                name_draw = draw.LeftButton(button_text, status_data.name, int(self.width / 5), cmd_func=self.set_status, args=(temple_id, body_part, status_id))
                 name_draw.draw()
                 return_list.append(name_draw.return_text)
                 # 每五个换行一次
@@ -663,7 +663,7 @@ class Edit_Group_Sex_Temple_Panel:
         """绘制可邀请的NPC列表"""
         from Script.Design import instuct_judege
         from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         # 当前地点的角色列表
         scene_path_str = map_handle.get_map_system_path_str_for_list(self.pl_character_data.position)
         scene_data: game_type.Scene = cache.scene_data[scene_path_str]

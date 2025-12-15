@@ -1,6 +1,6 @@
 from types import FunctionType
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, hidden_sex_panel, see_character_info_panel, dirty_panel, cloth_panel, group_sex_panel, see_instruct_panel, chara_image_list_panel, character_info_head
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, see_instruct_panel, chara_image_list_panel, character_info_head
 from Script.Core import (
     get_text,
     cache_control,
@@ -314,6 +314,7 @@ class InScenePanel:
 
             # ↓以下为群交栏的内容↓#
             if cache.group_sex_mode:
+                from Script.System.Sex_System import group_sex_panel
                 character_group_sex_draw = group_sex_panel.SeeGroupSexInfoPanel(
                     pl_character_data.cid, self.width, 9, 0, 0
                 )
@@ -321,6 +322,7 @@ class InScenePanel:
 
             # ↓以下为隐奸栏的内容↓#
             if handle_premise.handle_hidden_sex_mode_ge_1(0):
+                from Script.System.Sex_System import hidden_sex_panel
                 character_hidden_sex_draw = hidden_sex_panel.See_Hidden_Sex_InfoPanel(
                     pl_character_data.cid, self.width, 9, 0, 0
                 )

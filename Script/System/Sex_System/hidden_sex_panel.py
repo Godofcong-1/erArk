@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, handle_ability, map_handle, character_behavior
+from Script.Design import handle_premise, handle_ability, map_handle
 from Script.UI.Panel import dirty_panel
 
 import random
@@ -242,7 +242,7 @@ def settle_discovered(character_id: int) -> None:
     interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
     # 存在则进入被发现面板
     if len(interrupt_chara_list):
-        from Script.UI.Panel import sex_be_discovered_panel
+        from Script.System.Sex_System import sex_be_discovered_panel
         now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(
             window_width,
             interrupt_chara_list[0],
