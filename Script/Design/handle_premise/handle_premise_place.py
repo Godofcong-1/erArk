@@ -1872,6 +1872,34 @@ def handle_not_in_fairy_banquet(character_id: int) -> int:
     return 1
 
 
+@add_premise(constant_promise.Premise.IN_COMMERCE_ZONE)
+def handle_in_commerce_zone(character_id: int) -> int:
+    """
+    校验角色是否在贸易区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    if now_position[0] == "贸易":
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_COMMERCE_ZONE)
+def handle_not_in_commerce_zone(character_id: int) -> int:
+    """
+    校验角色是否不在贸易区中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_commerce_zone(character_id):
+        return 0
+    return 1
+
 @add_premise(constant_promise.Premise.IN_BROADCAST_CENTER)
 def handle_in_broadcast_center(character_id: int) -> int:
     """
