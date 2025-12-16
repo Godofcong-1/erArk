@@ -150,9 +150,14 @@ def judge_character_move_to_private(character_id: int, move_path: list) -> tuple
                         move_flag = True
                         wait_flag = False
                         return move_flag, wait_flag
+                    # 如果超过了一个小时，则不再逆推
+                    elif character_data.action_info.follow_wait_time >= 60:
+                        character_data.sp_flag.npc_masturebate_for_player = False
+                        handle_premise.settle_chara_unnormal_flag(character_id, 1)
+                        now_draw.text = _("因为等待时间过长，所以{0}放弃了有些私密的打算\n").format(character_data.name)
                     # 否则则门外等待
                     else:
-                        now_draw.text = _("{0}有事找你，已经在门外等候多时了\n").format(character_data.name)
+                        now_draw.text = _("{0}有些私密的事想要找你，已经在门外等候多时了\n").format(character_data.name)
                 now_draw.draw()
                 draw_flag = True
             else:
