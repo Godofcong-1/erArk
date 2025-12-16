@@ -643,7 +643,15 @@ def extra_exp_settle(
 
     # 自己在H中且群交已开启，则群交经验+1
     if handle_premise.handle_self_is_h(character_id) and handle_premise.handle_group_sex_mode_on(character_id):
-        base_chara_experience_common_settle(0, 56, change_data=change_data)
+        base_chara_experience_common_settle(character_id, 56, change_data=change_data)
+
+    # 自己正在露出中，则露出经验+1
+    if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+        base_chara_experience_common_settle(character_id, 34, change_data=change_data)
+
+    # 自己正在逆推中，则逆推经验+1
+    if handle_premise.handle_npc_active_h(character_id):
+        base_chara_experience_common_settle(character_id, 36, change_data=change_data)
 
     # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1
     if character_id == 0 and handle_premise.handle_hidden_sex_mode_ge_1(character_id):
@@ -661,8 +669,8 @@ def extra_exp_settle(
             add_flag = False
         # 增加隐奸经验
         if add_flag:
-            base_chara_experience_common_settle(0, 35, change_data=change_data)
-            base_chara_experience_common_settle(0, 35, target_flag=True, change_data=change_data)
+            base_chara_experience_common_settle(character_id, 35, change_data=change_data)
+            base_chara_experience_common_settle(character_id, 35, target_flag=True, change_data=change_data)
 
 
 def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: list, change_data: game_type.CharacterStatusChange = game_type.CharacterStatusChange()) -> int:
