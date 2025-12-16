@@ -653,6 +653,10 @@ def extra_exp_settle(
     if handle_premise.handle_npc_active_h(character_id):
         base_chara_experience_common_settle(character_id, 36, change_data=change_data)
 
+    # 交互对象正在逆推自己，则自己的被逆推经验+1
+    if handle_premise.handle_t_npc_active_h(character_id):
+        base_chara_experience_common_settle(character_id, 37, change_data=change_data)
+
     # 玩家隐奸中，猥亵或性爱指令，且非等待，则隐奸经验+1
     if character_id == 0 and handle_premise.handle_hidden_sex_mode_ge_1(character_id):
         # 获取当前行为
