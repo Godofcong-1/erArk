@@ -460,6 +460,8 @@ class BODY_H_STATE:
         """ 衣服上的射精位置，int，-1为未射精，其他同衣服部位 """
         self.current_sex_position: int = -1
         """ 当前性交体位，仅博士有的数据，int，-1为无体位，1正常2后背3对面骑乘4背面骑乘5对面座6背面座7对面立8背面立9对面抱10背面抱11对面卧12背面卧 """
+        self.pre_sex_position: int = -1
+        """ 刚才性交体位，仅博士有的数据，在姿势切换时记录，int，-1为无体位，1正常2后背3对面骑乘4背面骑乘5对面座6背面座7对面立8背面立9对面抱10背面抱11对面卧12背面卧 """
         self.current_womb_sex_position: int = 0
         """ 当前子宫性交位置，仅博士有的数据，int，0为未插入，1为子宫口插入，2为子宫奸"""
         self.orgasm_level: Dict[int, int] = {}

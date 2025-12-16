@@ -256,40 +256,40 @@ int,str,str,int,str,str
 501,normal_sex,正常位,10,both,性爱|插入|V|破处
 502,back_sex,背后位,10,both,性爱|插入|V|破处|非逆推
 503,riding_sex,对面骑乘位,10,both,性爱|插入|V|破处
-504,face_seat_sex,对面座位,10,both,性爱|插入|V|破处
-505,back_seat_sex,背面座位,10,both,性爱|插入|V|破处|非逆推
-506,face_stand_sex,对面立位,10,both,性爱|插入|V|破处
-507,back_stand_sex,背面立位,10,both,性爱|插入|V|破处|非逆推
-508,back_riding_sex,背面骑乘位,10,both,性爱|插入|V|破处
+504,back_riding_sex,背面骑乘位,10,both,性爱|插入|V|破处
+505,face_seat_sex,对面座位,10,both,性爱|插入|V|破处
+506,back_seat_sex,背面座位,10,both,性爱|插入|V|破处
+507,face_stand_sex,对面立位,10,both,性爱|插入|V|破处|非逆推
+508,back_stand_sex,背面立位,10,both,性爱|插入|V|破处|非逆推
+509,face_hug_sex,对面抱位,10,both,性爱|插入|V|破处|非逆推
+510,back_hug_sex,背面抱位,10,both,性爱|插入|V|破处|非逆推
+511,face_lay_sex,对面卧位,10,both,性爱|插入|V|破处
+512,back_lay_sex,背面卧位,10,both,性爱|插入|V|破处
 
-511,stimulate_g_point,刺激G点,10,both,性爱|插入|V|破处
-512,womb_os_caress,玩弄子宫口,10,both,性爱|插入|W|破处
-513,womb_insertion,插入子宫口,10,both,性爱|插入|W|破处
-514,womb_sex,子宫姦,10,both,性爱|插入|W|破处
-515,external_womb_massage,体外子宫按摩,5,both,性爱|W|手
+515,stimulate_g_point,刺激G点,10,both,性爱|插入|V|破处
+516,womb_os_caress,玩弄子宫口,10,both,性爱|插入|W|破处
+517,womb_insertion,插入子宫口,10,both,性爱|插入|W|破处
+518,womb_sex,子宫姦,10,both,性爱|插入|W|破处
+519,external_womb_massage,体外子宫按摩,5,both,性爱|W|手
 
 521,normal_anal_sex,正常位肛交,10,both,性爱|插入|A|破处
 522,back_anal_sex,后背位肛交,10,both,性爱|插入|A|破处|非逆推
 523,riding_anal_sex,对面骑乘位肛交,10,both,性爱|插入|A|破处
-524,face_seat_anal_sex,对面座位肛交,10,both,性爱|插入|A|破处
-525,back_seat_anal_sex,背面座位肛交,10,both,性爱|插入|A|破处|非逆推
-526,face_stand_anal_sex,对面立位肛交,10,both,性爱|插入|A|破处
-527,back_stand_anal_sex,背面立位肛交,10,both,性爱|插入|A|破处|非逆推
-528,back_riding_anal_sex,背面骑乘位肛交,10,both,性爱|插入|A|破处
-530,stimulate_sigmoid_colon,玩弄s状结肠,10,both,性爱|插入|A|破处
-531,stimulate_vagina,隔着刺激阴道,10,both,性爱|插入|V|A|破处
+524,back_riding_anal_sex,背面骑乘位肛交,10,both,性爱|插入|A|破处
+525,face_seat_anal_sex,对面座位肛交,10,both,性爱|插入|A|破处
+526,back_seat_anal_sex,背面座位肛交,10,both,性爱|插入|A|破处
+527,face_stand_anal_sex,对面立位肛交,10,both,性爱|插入|A|破处|非逆推
+528,back_stand_anal_sex,背面立位肛交,10,both,性爱|插入|A|破处|非逆推
+529,face_hug_anal_sex,对面抱位肛交,10,both,性爱|插入|A|破处|非逆推
+530,back_hug_anal_sex,背面抱位肛交,10,both,性爱|插入|A|破处|非逆推
+531,face_lay_anal_sex,对面卧位肛交,10,both,性爱|插入|A|破处
+532,back_lay_anal_sex,背面卧位肛交,10,both,性爱|插入|A|破处
 
-541,urethral_finger_insertion,尿道指姦,10,both,性爱|U|手
+535,stimulate_sigmoid_colon,玩弄s状结肠,10,both,性爱|插入|A|破处
+536,stimulate_vagina,隔着刺激阴道,10,both,性爱|插入|A|破处
+
+540,urethral_finger_insertion,尿道指姦,10,both,性爱|U|手
 542,urethral_sex,尿道姦,10,both,性爱|插入|U|破处
-
-551,face_hug_sex,对面抱位,10,both,性爱|插入|V|破处
-552,back_hug_sex,背面抱位,10,both,性爱|插入|V|破处|非逆推
-553,face_lay_sex,对面卧位,10,both,性爱|插入|V|破处
-554,back_lay_sex,背面卧位,10,both,性爱|插入|V|破处|非逆推
-561,face_hug_anal_sex,对面抱位肛交,10,both,性爱|插入|A|破处
-562,back_hug_anal_sex,背面抱位肛交,10,both,性爱|插入|A|破处|非逆推
-563,face_lay_anal_sex,对面卧位肛交,10,both,性爱|插入|A|破处
-564,back_lay_anal_sex,背面卧位肛交,10,both,性爱|插入|A|破处|非逆推
 
 601,milking_machine_on,装上搾乳机,3,both,性爱|B|道具
 602,urine_collector_on,装上采尿器,3,both,性爱|U|道具
@@ -337,6 +337,7 @@ int,str,str,int,str,str
 
 751,orgasm_edge_on,绝顶寸止,1,pl,性爱
 752,orgasm_edge_off,绝顶解放,1,pl,性爱
+756,pull_out_penis,拔出阴茎,1,pl,性爱
 
 771,spanking,打屁股,3,both,性爱|SM|手
 

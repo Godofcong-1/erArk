@@ -11489,6 +11489,26 @@ def handle_cancel_penis_in_face_or_mouse(
         target_data.h_state.insert_position = -1
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_NULL)
+def handle_dr_position_null(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    博士体位数据变成无
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[0]
+    character_data.h_state.current_sex_position = -1
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DR_POSITION_NORMAL)
 def handle_dr_position_normal(
         character_id: int,

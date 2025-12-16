@@ -1401,6 +1401,22 @@ class Sex_Position:
     """ 性交姿势名 """
     type: str
     """ 性交姿势类型 """
+    face_dir: int
+    """ 面的朝向 """
+    furniture_req: int
+    """ 家具需求(0无1桌椅3床) """
+    skill_req: int
+    """ 技巧需求 """
+    stamina_cost: int
+    """ 体力消耗（123小中大） """
+    vaginal_sex_behavior_id: str
+    """ 阴道性交行为名 """
+    womb_sex_behavior_id: str
+    """ 子宫性交行为名 """
+    anal_sex_behavior_id: str
+    """ 肛门性交行为名 """
+    urethral_sex_behavior_id: str
+    """ 尿道性交行为名 """
     info: str
     """ 性交姿势介绍 """
 
@@ -1672,6 +1688,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 class Talk_Common:
     """ 组件配置数据 """
 

@@ -645,6 +645,8 @@ class BehaviorEffect:
     CANCEL_PENIS_IN_FACE_OR_MOUSE = 840
     """ H_阴茎位置 取消为阴茎位置交互对象_阴茎蹭脸中和口交中 """
 
+    DR_POSITION_NULL = 850
+    """ H_体位 博士体位数据变成无 """
     DR_POSITION_NORMAL = 851
     """ H_体位 博士体位数据变成正常体位 """
     DR_POSITION_BACK = 852

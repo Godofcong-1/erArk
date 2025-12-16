@@ -427,6 +427,8 @@ class Instruct:
     """ 编辑群交行动 """
     SWITCH_TO_NON_H_INTERFACE = 0
     """ 切换到非H """
+    PULL_OUT_PENIS = 0
+    """ 拔出阴茎 """
     MAKING_OUT = 0
     """ 身体爱抚 """
     KISS_H = 0
@@ -621,6 +623,10 @@ class Instruct:
     """ 鞭子 """
     NEEDLE = 0
     """ 针 """
+    VAGINAL_SEX = 0
+    """ 阴道性交 """
+    CHANGE_VAGINAL_SEX_POSITION = 0
+    """ 换阴道性交体位 """
     NORMAL_SEX = 0
     """ 正常位 """
     BACK_SEX = 0
@@ -653,6 +659,10 @@ class Instruct:
     """ 插入子宫口 """
     WOMB_SEX = 0
     """ 子宫姦 """
+    ANAL_SEX = 0
+    """ 肛门性交 """
+    CHANGE_ANAL_SEX_POSITION = 0
+    """ 换肛门性交体位 """
     NORMAL_ANAL_SEX = 0
     """ 正常位肛交 """
     BACK_ANAL_SEX = 0
@@ -683,6 +693,8 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
+    URETHRAL_SEX = 0
+    """ 尿道性交 """
     URETHRAL_FINGER_INSERTION = 0
     """ 尿道指姦 """
     URETHRAL_SEX = 0

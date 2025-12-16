@@ -453,6 +453,8 @@ config_semen_shoot_amount: Dict[int, config_def.Semen_Shoot_Amount] = {}
 """ 精液射出量数据 """
 config_ability_lv_adjust: Dict[int, config_def.Ability_Lv_Adjust] = {}
 """ 能力等级调整数据 """
+config_sex_position_data: Dict[int, config_def.Sex_Position] = {}
+""" 性交姿势数据 """
 
 
 def load_data_json():
@@ -2084,6 +2086,15 @@ def load_abiity_lv_adjust():
         now_tem.__dict__ = tem_data
         config_ability_lv_adjust[now_tem.cid] = now_tem
 
+def load_sex_position():
+    """载入性交姿势数据"""
+    now_data = config_data["Sex_Position"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.Sex_Position()
+        now_tem.__dict__ = tem_data
+        config_sex_position_data[now_tem.cid] = now_tem
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -2203,3 +2214,4 @@ def init():
     load_power_storage()
     load_semen_shoot_amount()
     load_abiity_lv_adjust()
+    load_sex_position()

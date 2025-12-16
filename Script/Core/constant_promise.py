@@ -2820,6 +2820,8 @@ class Premise:
     H_NOT_IN_BATHROOM = "h_not_in_bathroom"
     """ H_地点 不在浴室中H """
 
+    PENIS_IN_T_ANYPART = "penis_in_t_anypart"
+    """ H_阴茎位置 当前阴茎位置为交互对象_任意存在位置 """
     PENIS_IN_T_HAIR = "penis_in_t_hair"
     """ H_阴茎位置 当前阴茎位置为交互对象_发交中 """
     PENIS_IN_T_FACE = "penis_in_t_face"
@@ -3599,3 +3601,5 @@ class Premise:
     """ 复合 不符合自己是当前的助理干员且正在博士房间里的条件 """
     T_WORK_IS_WARDEN_OR_T_ASSISTANT = "t_work_is_warden_or_t_assistant"
     """ 复合 交互对象的工作为监狱长或交互对象是助理 """
+    DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART = "dr_have_sex_position_or_penis_in_t_anypart"
+    """ 复合 博士有任意体位或当前阴茎位置为交互对象_任意存在位置 """

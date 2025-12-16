@@ -5466,16 +5466,60 @@ def handle_birth_control_pills_after():
     """处理事后避孕药指令"""
     chara_handle_instruct_common_settle(constant.Behavior.BIRTH_CONTROL_PILLS_AFTER)
 
+@add_instruct(
+    constant.Instruct.VAGINAL_SEX,
+    constant.InstructType.SEX,
+    _("阴道性交"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_POSITION_NULL,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
+    constant.Behavior.NORMAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_vaginal_sex():
+    """处理阴道性交指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width)
+    now_panel.draw()
+
+@add_instruct(
+    constant.Instruct.CHANGE_VAGINAL_SEX_POSITION,
+    constant.InstructType.SEX,
+    _("换阴道性交体位"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_HAVE_SEX_POSITION,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
+    constant.Behavior.NORMAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_change_vaginal_sex_position():
+    """处理换阴道性交体位指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, change_position=True)
+    now_panel.draw()
 
 @add_instruct(
     constant.Instruct.NORMAL_SEX,
     constant.InstructType.SEX,
     _("正常位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_3,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_GE_1,
+        constant_promise.Premise.DR_POSITION_NORMAL,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
     constant.Behavior.NORMAL_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -5487,10 +5531,15 @@ def handle_normal_sex():
     constant.Instruct.BACK_SEX,
     constant.InstructType.SEX,
     _("背后位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_GE_1,
+        constant_promise.Premise.DR_POSITION_BACK,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
     constant.Behavior.BACK_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -5502,12 +5551,16 @@ def handle_back_sex():
     constant.Instruct.RIDING_SEX,
     constant.InstructType.SEX,
     _("对面骑乘位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TARGET_NOT_BONDAGE,
-     constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_3,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_NOT_BONDAGE,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_FACE_RIDE,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
     constant.Behavior.RIDING_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -5519,12 +5572,16 @@ def handle_riding_sex():
     constant.Instruct.BACK_RIDING_SEX,
     constant.InstructType.SEX,
     _("背面骑乘位"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TARGET_NOT_BONDAGE,
-     constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_3,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.TARGET_NOT_BONDAGE,
+        constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_BACK_RIDE,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+        constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION
+        },
     constant.Behavior.BACK_RIDING_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -5540,7 +5597,9 @@ def handle_back_riding_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
-        constant_promise.Premise.PLACE_FURNITURE_GE_2,
+        constant_promise.Premise.PLACE_FURNITURE_GE_1,
+        constant_promise.Premise.DR_POSITION_FACE_SEAT,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.FACE_SEAT_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5557,7 +5616,9 @@ def handle_face_seat_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
-        constant_promise.Premise.PLACE_FURNITURE_GE_2,
+        constant_promise.Premise.PLACE_FURNITURE_GE_1,
+        constant_promise.Premise.DR_POSITION_BACK_SEAT,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.BACK_SEAT_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5574,6 +5635,8 @@ def handle_back_seat_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_POSITION_FACE_STAND,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.FACE_STAND_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5590,6 +5653,8 @@ def handle_face_stand_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_POSITION_BACK_STAND,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.BACK_STAND_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5606,6 +5671,8 @@ def handle_back_stand_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_POSITION_FACE_HUG,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.FACE_HUG_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5622,6 +5689,8 @@ def handle_face_hug_sex():
         constant_promise.Premise.HAVE_TARGET,
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
+        constant_promise.Premise.DR_POSITION_BACK_HUG,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.BACK_HUG_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5639,6 +5708,8 @@ def handle_back_hug_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_FACE_LIE,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.FACE_LAY_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5656,6 +5727,8 @@ def handle_face_lay_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_BACK_LIE,
+        constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
     constant.Behavior.BACK_LAY_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5732,7 +5805,44 @@ def handle_womb_insertion():
 )
 def handle_womb_sex():
     """处理子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.WOMB_SEX, judge = _("性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.WOMB_SEX, judge = _("U性交"))
+
+@add_instruct(
+    constant.Instruct.ANAL_SEX,
+    constant.InstructType.SEX,
+    _("肛门性交"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_POSITION_NULL,
+     constant_promise.Premise.TARGET_A_EMPTY},
+    constant.Behavior.NORMAL_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_anal_sex():
+    """处理肛门性交指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=3)
+    now_panel.draw()
+
+@add_instruct(
+    constant.Instruct.CHANGE_ANAL_SEX_POSITION,
+    constant.InstructType.SEX,
+    _("换肛门性交体位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_HAVE_SEX_POSITION,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
+     constant_promise.Premise.TARGET_A_EMPTY},
+    constant.Behavior.NORMAL_ANAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_change_anal_sex_position():
+    """处理换肛门性交体位指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=3, change_position=True)
+    now_panel.draw()
 
 @add_instruct(
     constant.Instruct.NORMAL_ANAL_SEX,
@@ -5741,7 +5851,9 @@ def handle_womb_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_3,
+     constant_promise.Premise.PLACE_FURNITURE_GE_1,
+     constant_promise.Premise.DR_POSITION_NORMAL,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.NORMAL_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5758,6 +5870,9 @@ def handle_normal_anal_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.PLACE_FURNITURE_GE_1,
+     constant_promise.Premise.DR_POSITION_BACK,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.BACK_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5775,6 +5890,8 @@ def handle_back_anal_sex():
      constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
+     constant_promise.Premise.DR_POSITION_FACE_RIDE,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.RIDING_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5792,6 +5909,8 @@ def handle_riding_anal_sex():
      constant_promise.Premise.TARGET_NOT_BONDAGE,
      constant_promise.Premise.TARGET_IS_H,
      constant_promise.Premise.PLACE_FURNITURE_3,
+     constant_promise.Premise.DR_POSITION_BACK_RIDE,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.BACK_RIDING_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5808,7 +5927,9 @@ def handle_back_riding_anal_sex():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
      constant_promise.Premise.TARGET_A_EMPTY,
-     constant_promise.Premise.PLACE_FURNITURE_GE_2},
+     constant_promise.Premise.DR_POSITION_FACE_SEAT,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
+     constant_promise.Premise.PLACE_FURNITURE_GE_1},
     constant.Behavior.FACE_SEAT_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
 )
@@ -5823,7 +5944,9 @@ def handle_face_seat_anal_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PLACE_FURNITURE_GE_2,
+     constant_promise.Premise.PLACE_FURNITURE_GE_1,
+     constant_promise.Premise.DR_POSITION_BACK_SEAT,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.BACK_SEAT_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5839,6 +5962,8 @@ def handle_back_seat_anal_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_POSITION_FACE_STAND,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.FACE_STAND_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5854,6 +5979,8 @@ def handle_face_stand_anal_sex():
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_POSITION_BACK_STAND,
+     constant_promise.Premise.PENIS_IN_T_ANAL,
      constant_promise.Premise.TARGET_A_EMPTY},
     constant.Behavior.BACK_STAND_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5872,6 +5999,8 @@ def handle_back_stand_anal_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.TARGET_A_EMPTY,
+        constant_promise.Premise.PENIS_IN_T_ANAL,
+        constant_promise.Premise.DR_POSITION_FACE_HUG,
     },
     constant.Behavior.FACE_HUG_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5889,6 +6018,7 @@ def handle_face_hug_anal_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.TARGET_A_EMPTY,
+        constant_promise.Premise.DR_POSITION_BACK_HUG,
     },
     constant.Behavior.BACK_HUG_ANAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -5906,6 +6036,7 @@ def handle_back_hug_anal_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_FACE_LIE,
         constant_promise.Premise.TARGET_A_EMPTY,
     },
     constant.Behavior.FACE_LAY_ANAL_SEX,
@@ -5924,6 +6055,7 @@ def handle_face_lay_anal_sex():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TARGET_IS_H,
         constant_promise.Premise.PLACE_FURNITURE_3,
+        constant_promise.Premise.DR_POSITION_BACK_LIE,
         constant_promise.Premise.TARGET_A_EMPTY,
     },
     constant.Behavior.BACK_LAY_ANAL_SEX,
@@ -6221,7 +6353,9 @@ def handle_orgasm_edge_off():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TIME_STOP_OFF,
         constant_promise.Premise.ALL_GROUP_SEX_TEMPLE_RUN_OFF,
-    })
+    },
+    constant.Behavior.WAIT,
+    )
 def handle_run_group_sex_temple():
     """处理进行一次当前群交指令"""
     chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration=10)
@@ -6237,7 +6371,9 @@ def handle_run_group_sex_temple():
         constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
         constant_promise.Premise.TIME_STOP_OFF,
         constant_promise.Premise.ALL_GROUP_SEX_TEMPLE_RUN_ON,
-    })
+    },
+    constant.Behavior.WAIT,
+    )
 def handle_run_all_group_sex_temple():
     """处理进行一次轮流群交指令"""
     chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration=10)
@@ -6274,3 +6410,18 @@ def handle_edit_group_sex_temple():
 def handle_switch_to_non_h_interface():
     """处理切换到非H指令"""
     cache.show_non_h_in_hidden_sex = True
+
+@add_instruct(
+    constant.Instruct.PULL_OUT_PENIS,
+    constant.InstructType.SEX,
+    _("拔出阴茎"),
+    {
+        constant_promise.Premise.HAVE_TARGET,
+        constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+        constant_promise.Premise.DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART,
+    },
+    constant.Behavior.PULL_OUT_PENIS,
+    )
+def handle_pull_out_penis():
+    """处理拔出阴茎指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.PULL_OUT_PENIS)

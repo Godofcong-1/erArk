@@ -1549,3 +1549,18 @@ def handle_t_work_is_warden_or_t_assistant(character_id: int) -> int:
     if handle_is_assistant(character_data.target_character_id):
         return 1
     return 0
+
+@add_premise(constant_promise.Premise.DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART)
+def handle_dr_have_sex_position_or_penis_in_t_anypart(character_id: int) -> int:
+    """
+    博士有任意体位或当前阴茎位置为交互对象_任意存在位置
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_dr_have_sex_position(character_id):
+        return 1
+    if handle_penis_in_t_anypart(character_id):
+        return 1
+    return 0
