@@ -296,8 +296,8 @@ class Physical_Check_And_Manage_Panel:
                 # 跳过非检查类的行为
                 if "检查" not in behavior_data.tag:
                     continue
-                behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
                 count += 1
+                behavior_text = f"[{str(count).rjust(2,'0')}]：{behavior_data.name}"
                 cant_flag = False
                 # 已经检查过的不可用
                 if behavior_id in self.done_check_behavior_id_set:
@@ -341,7 +341,7 @@ class Physical_Check_And_Manage_Panel:
                 else:
                     status_draw = draw.LeftButton(
                         _(behavior_text),
-                        _(str(count)),
+                        str(count),
                         window_width,
                         cmd_func=self.settle_target_physical_status,
                         args=(behavior_id),
@@ -448,7 +448,7 @@ class Physical_Check_And_Manage_Panel:
                         manage_text += _("(进行中)")
                     manage_draw = draw.LeftButton(
                         _(manage_text),
-                        _(str(count)),
+                        str(count),
                         window_width,
                         cmd_func=self.settle_target_physical_manage,
                         args=(manage_cid, target_character_id),
