@@ -1953,11 +1953,11 @@ def character_start_masturebate(character_id: int):
     character_fall_level = attr_calculation.get_character_fall_level(character_id)
     # 根据攻略等级决定是自慰还是逆推
     if character_fall_level >= 4:
-        activate_rate = 80
-    elif character_fall_level == 3:
         activate_rate = 50
-    elif character_fall_level == 2:
+    elif character_fall_level == 3:
         activate_rate = 20
+    elif character_fall_level == 2:
+        activate_rate = 5
     else:
         activate_rate = 0
     # 是否逆推，需要没有被禁止且随机成功
