@@ -559,6 +559,13 @@ class Physical_Check_And_Manage_Panel:
             require_text += _("自慰经验{0}/{1}").format(now_value_1, require_value_1)
             if now_value_1 >= require_value_1:
                 judge_result = True
+        elif body_manage_second_behavior_id == 'ask_not_active_h_for_player':
+            # 逆推经验
+            now_value_1 = target_character_data.experience[36]
+            require_value_1 = body_manage_data.need_value_1
+            require_text += _("逆推经验{0}/{1}").format(now_value_1, require_value_1)
+            if now_value_1 >= require_value_1:
+                judge_result = True
         elif body_manage_second_behavior_id == 'ask_not_lock_door_before_sleeping':
             # 被睡奸经验
             now_value_1 = target_character_data.experience[121]
