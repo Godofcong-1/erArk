@@ -35,7 +35,7 @@ class Sex_Position_Panel:
         self.width = width
         """ 绘制宽度 """
         self.sex_type = sex_type
-        """ 性交类型，默认1为阴道性交，2为子宫性交，3为肛门性交，4为尿道性交 """
+        """ 性交类型，默认1为阴道性交，2为子宫口性交，3为子宫性交，4为肛门性交，5为尿道性交 """
         self.change_position = change_position
         """ 是否为切换体位 """
 
@@ -155,15 +155,19 @@ class Sex_Position_Panel:
         if self.sex_type == 1:
             behavior_id = sex_position_data.vaginal_sex_behavior_id
             handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("性交"), force_taget_wait=True)
+        # 子宫口性交的情况
+        elif self.sex_type == 2:
+            behavior_id = sex_position_data.cervix_sex_behavior_id
+            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("U性交"), force_taget_wait=True)
         # 子宫性交的情况
         elif self.sex_type == 3:
             behavior_id = sex_position_data.womb_sex_behavior_id
             handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("U性交"), force_taget_wait=True)
         # 肛门性交的情况
-        elif self.sex_type == 3:
+        elif self.sex_type == 4:
             behavior_id = sex_position_data.anal_sex_behavior_id
             handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("A性交"), force_taget_wait=True)
         # 尿道性交的情况
-        elif self.sex_type == 4:
+        elif self.sex_type == 5:
             behavior_id = sex_position_data.urethral_sex_behavior_id
             handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("U性交"), force_taget_wait=True)

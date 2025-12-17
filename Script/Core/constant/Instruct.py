@@ -657,8 +657,57 @@ class Instruct:
     """ 玩弄子宫口 """
     WOMB_INSERTION = 0
     """ 插入子宫口 """
+    NORMAL_CERVIX_SEX = 0
+    """ 正常位子宫口姦 """
+    BACK_CERVIX_SEX = 0
+    """ 后背位子宫口姦 """
+    RIDING_CERVIX_SEX = 0
+    """ 对面骑乘位子宫口姦 """
+    BACK_RIDING_CERVIX_SEX = 0
+    """ 背面骑乘位子宫口姦 """
+    FACE_SEAT_CERVIX_SEX = 0
+    """ 对面座位子宫口姦 """
+    BACK_SEAT_CERVIX_SEX = 0
+    """ 背面座位子宫口姦 """
+    FACE_STAND_CERVIX_SEX = 0
+    """ 对面立位子宫口姦 """
+    BACK_STAND_CERVIX_SEX = 0
+    """ 背面立位子宫口姦 """
+    FACE_HUG_CERVIX_SEX = 0
+    """ 对面抱位子宫口姦 """
+    BACK_HUG_CERVIX_SEX = 0
+    """ 背面抱位子宫口姦 """
+    FACE_LAY_CERVIX_SEX = 0
+    """ 对面卧位子宫口姦 """
+    BACK_LAY_CERVIX_SEX = 0
+    """ 背面卧位子宫口姦 """
+
     WOMB_SEX = 0
     """ 子宫姦 """
+    NORMAL_WOMB_SEX = 0
+    """ 正常位子宫姦 """
+    BACK_WOMB_SEX = 0
+    """ 后背位子宫姦 """
+    RIDING_WOMB_SEX = 0
+    """ 对面骑乘位子宫姦 """
+    BACK_RIDING_WOMB_SEX = 0
+    """ 背面骑乘位子宫姦 """
+    FACE_SEAT_WOMB_SEX = 0
+    """ 对面座位子宫姦 """
+    BACK_SEAT_WOMB_SEX = 0
+    """ 背面座位子宫姦 """
+    FACE_STAND_WOMB_SEX = 0
+    """ 对面立位子宫姦 """
+    BACK_STAND_WOMB_SEX = 0
+    """ 背面立位子宫姦 """
+    FACE_HUG_WOMB_SEX = 0
+    """ 对面抱位子宫姦 """
+    BACK_HUG_WOMB_SEX = 0
+    """ 背面抱位子宫姦 """
+    FACE_LAY_WOMB_SEX = 0
+    """ 对面卧位子宫姦 """
+    BACK_LAY_WOMB_SEX = 0
+    """ 背面卧位子宫姦 """
     ANAL_SEX = 0
     """ 肛门性交 """
     CHANGE_ANAL_SEX_POSITION = 0
@@ -699,6 +748,30 @@ class Instruct:
     """ 尿道指姦 """
     URETHRAL_SEX = 0
     """ 尿道姦 """
+    NORMAL_URETHRAL_SEX = 0
+    """ 正常位尿道姦 """
+    BACK_URETHRAL_SEX = 0
+    """ 后背位尿道姦 """
+    RIDING_URETHRAL_SEX = 0
+    """ 对面骑乘位尿道姦 """
+    BACK_RIDING_URETHRAL_SEX = 0
+    """ 背面骑乘位尿道姦 """
+    FACE_SEAT_URETHRAL_SEX = 0
+    """ 对面座位尿道姦 """
+    BACK_SEAT_URETHRAL_SEX = 0
+    """ 背面座位尿道姦 """
+    FACE_STAND_URETHRAL_SEX = 0
+    """ 对面立位尿道姦 """
+    BACK_STAND_URETHRAL_SEX = 0
+    """ 背面立位尿道姦 """
+    FACE_HUG_URETHRAL_SEX = 0
+    """ 对面抱位尿道姦 """
+    BACK_HUG_URETHRAL_SEX = 0
+    """ 背面抱位尿道姦 """
+    FACE_LAY_URETHRAL_SEX = 0
+    """ 对面卧位尿道姦 """
+    BACK_LAY_URETHRAL_SEX = 0
+    """ 背面卧位尿道姦 """
     SHAME_PLAY = 0
     """ 羞耻play """
     TAKE_SHOWER_H = 0

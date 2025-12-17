@@ -9746,6 +9746,10 @@ def handle_target_w_adjust_add_pain(
         final_level = dilate_level - jj_size - 1
         size_adjust = attr_calculation.get_pain_adjust(final_level, level_flag = True)
 
+        # 如果是子宫奸，则进一步调整
+        if character_data.h_state.current_womb_sex_position == 2:
+            size_adjust *= 3
+
         # 最终调整值
         final_adjust = max(pain_adjust - waist_adjust, 0) * size_adjust
 

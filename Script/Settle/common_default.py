@@ -301,12 +301,22 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     # 催眠-敏感
     if character_data.hypnosis.increase_body_sensitivity:
         final_adjust += 2
-    # 怀孕状态下加V和W快感
-    if state_id in [4, 7] and handle_premise.handle_inflation_1(character_id):
-        final_adjust += 1
-    # 灌肠下会增加V和W快感
-    if state_id in [4, 7] and handle_premise.handle_enema(character_id):
-        final_adjust += character_data.dirty.enema_capacity * 0.2
+    # V和W快感加成
+    if state_id in [4, 7]:
+        # 怀孕状态下加V和W快感
+        if handle_premise.handle_inflation_1(character_id):
+            final_adjust += 1
+        # 灌肠下会增加V和W快感
+        if handle_premise.handle_enema(character_id):
+            final_adjust += character_data.dirty.enema_capacity * 0.2
+    # VAUW的姿势快感加成
+    if state_id in [4, 5, 6, 7] and handle_premise.handle_dr_have_sex_position(character_id):
+        now_position = character_data.h_state.current_sex_position
+        position_feel_adjust = game_config.config_sex_position_data[now_position].pleasure_coefficient
+        final_adjust += position_feel_adjust
+    # 子宫奸会大幅增加W快感
+    if state_id == 7 and pl_character_data.h_state.current_womb_sex_position == 2:
+        final_adjust += 2
     # 眼罩增加全部快感
     if handle_premise.handle_self_now_patch(character_id):
         final_adjust += 0.2

@@ -1409,8 +1409,12 @@ class Sex_Position:
     """ 技巧需求 """
     stamina_cost: int
     """ 体力消耗（123小中大） """
+    pleasure_coefficient: float
+    """ 快感系数加成 """
     vaginal_sex_behavior_id: str
     """ 阴道性交行为名 """
+    cervix_sex_behavior_id: str
+    """ 子宫口性交行为名 """
     womb_sex_behavior_id: str
     """ 子宫性交行为名 """
     anal_sex_behavior_id: str
