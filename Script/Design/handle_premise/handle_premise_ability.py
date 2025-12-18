@@ -1042,6 +1042,89 @@ def handle_technique_ge_5(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.FINGER_TECHNIQUE_GE_3)
+def handle_finger_technique_ge_3(character_id: int) -> int:
+    """
+    校验角色是否自身指技技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[70] >= 3:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.FINGER_TECHNIQUE_GE_5)
+def handle_finger_technique_ge_5(character_id: int) -> int:
+    """
+    校验角色是否自身指技技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[70] >= 5:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.WAIST_TECHNIQUE_GE_3)
+def handle_waist_technique_ge_3(character_id: int) -> int:
+    """
+    校验角色是否自身腰技技能>=3
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[76] >= 3:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.WAIST_TECHNIQUE_GE_4)
+def handle_waist_technique_ge_4(character_id: int) -> int:
+    """
+    校验角色是否自身腰技技能>=4
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[76] >= 4:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.WAIST_TECHNIQUE_GE_5)
+def handle_waist_technique_ge_5(character_id: int) -> int:
+    """
+    校验角色是否自身腰技技能>=5
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[76] >= 5:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.WAIST_TECHNIQUE_GE_7)
+def handle_waist_technique_ge_7(character_id: int) -> int:
+    """
+    校验角色是否自身腰技技能>=7
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    if character_data.ability[76] >= 7:
+        return 1
+    return 0
 
 @add_premise(constant_promise.Premise.TARGET_TECHNIQUE_GE_3)
 def handle_t_technique_ge_3(character_id: int) -> int:
