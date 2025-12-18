@@ -260,6 +260,11 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         judge -= 350
         calculation_text += _("+Ａ处女(-350)")
 
+    # W处女修正
+    if instruct_name == _("W性交") and target_data.talent[3] and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
+        judge -= 400
+        calculation_text += _("+Ｗ处女(-400)")
+
     # U处女修正
     if instruct_name == _("U性交") and target_data.talent[2] and handle_premise.handle_self_sexual_ignorance_0(target_character_id):
         judge -= 400
@@ -271,7 +276,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         calculation_text += _("+初吻(-125)")
 
     # 性交的避孕相关修正
-    if instruct_name == _("性交"):
+    if instruct_name == _("性交") or _("W性交"):
         # 妊娠合意、避孕套、避孕中出合意+事前避孕药、性无知，以上可直接通过
         if (
             target_data.talent[14] or
@@ -363,15 +368,19 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if instruct_name == _("口交") and target_data.talent[4]:
             ask_text += _("\n\n 是否要用阴茎夺走{0}的初吻？").format(target_data.name)
         elif instruct_name == _("性交") and target_data.talent[0]:
-            ask_text += _("\n\n 是否要夺走{0}的处女？").format(target_data.name)
+            ask_text += _("\n\n 是否要夺走{0}的阴道处女？").format(target_data.name)
         elif instruct_name == _("A性交") and target_data.talent[1]:
-            ask_text += _("\n\n 是否要夺走{0}的A处女？").format(target_data.name)
+            ask_text += _("\n\n 是否要夺走{0}的肛门处女？").format(target_data.name)
+        elif instruct_name == _("U性交") and target_data.talent[2]:
+            ask_text += _("\n\n 是否要夺走{0}的尿道处女？").format(target_data.name)
+        elif instruct_name == _("W性交") and target_data.talent[3]:
+            ask_text += _("\n\n 是否要夺走{0}的子宫处女？").format(target_data.name)
         # 询问戴套，True为已戴套
         if character_data.h_state.body_item[13][1]:
             condom_flag = True
         else:
             condom_flag = False
-        if instruct_name == _("性交"):
+        if instruct_name == _("性交") or instruct_name == _("W性交"):
             # 避孕套、已显示过该信息，以上可直接通过
             if (
                 character_data.h_state.body_item[13][1] or
@@ -416,10 +425,10 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
                 line_feed.draw()
                 line_feed.draw()
-                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), window_width / 2)
+                yes_draw = draw.CenterButton(_("[确定]"), _("确定"), int(window_width / 2))
                 yes_draw.draw()
                 return_list.append(yes_draw.return_text)
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width / 2)
+                back_draw = draw.CenterButton(_("[返回]"), _("返回"), int(window_width / 2))
                 back_draw.draw()
                 line_feed.draw()
                 return_list.append(back_draw.return_text)
@@ -458,7 +467,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             # 避孕中出合意需要在非处女、不带套、安全期时，通过判定才可获得
             if (
                 handle_premise.handle_no_virgin(target_character_id) and
-                instruct_name == _("性交") and
+                (instruct_name == _("性交") or instruct_name == _("W性交")) and
                 target_data.talent[13] == 0 and
                 condom_flag == False and
                 handle_premise.handle_reproduction_period_0(target_character_id)
@@ -468,7 +477,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
             # 妊娠合意需要在非处女、不带套、非安全期时，通过判定才可获得
             if (
                 handle_premise.handle_no_virgin(target_character_id) and
-                instruct_name == _("性交") and
+                (instruct_name == _("性交") or instruct_name == _("W性交")) and
                 target_data.talent[14] == 0 and
                 condom_flag == False and
                 (handle_premise.handle_reproduction_period_2(target_character_id) or handle_premise.handle_reproduction_period_3(target_character_id))

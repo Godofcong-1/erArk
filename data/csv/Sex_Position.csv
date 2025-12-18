@@ -3,7 +3,7 @@ cid,name,type,face_dir,furniture_req,skill_req,stamina_cost,pleasure_coefficient
 int,str,str,int,int,int,int,float,str,str,str,str,str,str
 0,1,1,0,0,0,0,0,0,0,0,0,0,1
 性交姿势列表,,,,,,,,,,,,,
--1,无,0,0,1,0,0,0.0,,, ,,,,未在性交中。
+-1,无,0,0,1,0,0,0.0,,,,,,未在性交中。
 1,正常位,基础,0,1,0,2,0.0,normal_sex,normal_cervix_sex,normal_womb_sex,normal_anal_sex,normal_urethral_sex,女方仰卧在床上或平面上，双腿分开或抬起，男方压在女方身上插入，可采取跪姿、蹲姿、俯卧、撑姿或站立的姿势。
 2,背后位,基础,1,1,0,2,0.1,back_sex,back_cervix_sex,back_womb_sex,back_anal_sex,back_urethral_sex,女方采取四肢着地或趴卧姿势，臀部抬高，男方在女方身后，双手扶住女方肩部、腰胯或臀腿，从后方进入。
 3,对面骑乘位,骑乘,0,3,0,2,0.1,riding_sex,riding_cervix_sex,riding_womb_sex,riding_anal_sex,riding_urethral_sex,女方跨坐在仰卧的男方身上，面对男方，双膝及床，放在男方身体两侧。
