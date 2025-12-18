@@ -156,6 +156,10 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             for k in now_type_data:
                 now_type = now_type_data[k]
                 # print(f"debug row = {row}")
+                # 如果row[k]是nonetype，则打印
+                if row[k] is None:
+                    print(f"Error: 文件 {file_path} 的 {now_index} 出现缺失行[{row}]")
+                    continue
                 if not len(row[k]):
                     del row[k]
                     continue
@@ -460,7 +464,7 @@ if BUILD_TALK:
     processed_bytes = 0
     # 记录上次打印进度的时间
     last_print_time = time.time()
-    print(f"[进度] 开始处理角色口上，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
+    print(f"[进度] 开始处理角色口上与通用地文，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
     for i in talk_file_list:
         # 跳过 ai 文件夹
         if i == "ai":
@@ -540,7 +544,7 @@ if BUILD_TALK_COMMON:
     processed_files = 0
     processed_bytes = 0
     last_print_time = time.time()
-    print(f"[进度] 开始处理通用口上，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
+    print(f"[进度] 开始处理纸娃娃地文，总共有 {total_files} 个文件需要处理，总大小 {total_bytes/1024/1024:.2f} MB")
     for i in talk_common_file_list:
         now_path = os.path.join(talk_common_dir, i)
         # 如果是目录，则递归遍历其子目录
