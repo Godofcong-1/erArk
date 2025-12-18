@@ -268,8 +268,8 @@ int,str,str,int,str,str
 
 515,stimulate_g_point,刺激G点,10,both,性爱|插入|V|破处
 516,womb_os_caress,玩弄子宫口,10,both,性爱|插入|W|破处
-517,womb_insertion,插入子宫口,10,both,性爱|插入|W|破处
-518,womb_sex,子宫姦,10,both,性爱|插入|W|破处
+517,womb_insertion,插入子宫口_已弃用,10,both,性爱|插入|W|破处
+518,womb_sex,子宫姦_已弃用,10,both,性爱|插入|W|破处
 519,external_womb_massage,体外子宫按摩,5,both,性爱|W|手
 
 521,normal_anal_sex,正常位肛交,10,both,性爱|插入|A|破处
@@ -328,7 +328,7 @@ int,str,str,int,str,str
 582,back_lay_urethral_sex,背面卧位尿道姦,10,both,性爱|插入|U|破处
 
 586,urethral_finger_insertion,尿道指姦,10,both,性爱|U|手
-587,urethral_sex,尿道姦,10,both,性爱|插入|U|破处
+588,urethral_sex,尿道姦_已弃用,10,both,性爱|插入|U|破处
 
 601,milking_machine_on,装上搾乳机,3,both,性爱|B|道具
 602,urine_collector_on,装上采尿器,3,both,性爱|U|道具
