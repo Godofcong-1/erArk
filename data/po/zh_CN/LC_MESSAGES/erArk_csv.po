@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-18 14:19+0800\n"
+"POT-Creation-Date: 2025-12-18 15:29+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -3157,11 +3157,11 @@ msgid "玩弄子宫口"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:271
-msgid "插入子宫口"
+msgid "插入子宫口_已弃用"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:272
-msgid "子宫姦"
+msgid "子宫姦_已弃用"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:273
@@ -3373,7 +3373,7 @@ msgid "尿道指姦"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:331
-msgid "尿道姦"
+msgid "尿道姦_已弃用"
 msgstr ""
 
 #: .\data\csv\Behavior_Data.csv:333
@@ -4898,6 +4898,18 @@ msgstr ""
 
 #: .\data\csv\Behavior_Introduce.csv:229
 msgid "巨型肛门震动棒"
+msgstr ""
+
+#: .\data\csv\Behavior_Introduce.csv:250
+msgid "插入子宫口"
+msgstr ""
+
+#: .\data\csv\Behavior_Introduce.csv:251
+msgid "子宫姦"
+msgstr ""
+
+#: .\data\csv\Behavior_Introduce.csv:264
+msgid "尿道姦"
 msgstr ""
 
 #: .\data\csv\Birthplace.csv:7
