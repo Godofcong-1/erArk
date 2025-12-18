@@ -439,8 +439,6 @@ class Instruct:
     """ 玩弄乳头 """
     BREAST_SUCKING = 0
     """ 舔吸乳头 """
-    EXTERNAL_WOMB_MASSAGE = 0
-    """ 体外子宫按摩 """
     CLIT_CARESS = 0
     """ 阴蒂爱抚 """
     OPEN_LABIA = 0
@@ -455,6 +453,10 @@ class Instruct:
     """ 手指插入(V) """
     ANAL_CARESS = 0
     """ 手指插入(A) """
+    EXTERNAL_WOMB_MASSAGE = 0
+    """ 体外子宫按摩 """
+    URETHRAL_FINGER_INSERTION = 0
+    """ 尿道指姦 """
     MAKE_MASTUREBATE = 0
     """ 命令对方自慰 """
     MAKE_LICK_ANAL = 0
@@ -746,10 +748,6 @@ class Instruct:
     """ 隔着刺激阴道 """
     DOUBLE_PENETRATION = 0
     """ 二穴插入 """
-    URETHRAL_SEX = 0
-    """ 尿道性交 """
-    URETHRAL_FINGER_INSERTION = 0
-    """ 尿道指姦 """
     URETHRAL_SEX = 0
     """ 尿道姦 """
     CHANGE_URETHRAL_SEX_POSITION = 0

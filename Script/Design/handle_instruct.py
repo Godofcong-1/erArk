@@ -3945,6 +3945,7 @@ def handle_set_free():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.MAKING_OUT,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_making_out():
     """处理身体爱抚指令"""
@@ -3961,6 +3962,7 @@ def handle_making_out():
      constant_promise.Premise.PENIS_NOT_IN_T_MOUSE,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.KISS_H,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_kiss_h():
     """处理接吻指令"""
@@ -3975,6 +3977,7 @@ def handle_kiss_h():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.BREAST_CARESS,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_breast_caress():
     """处理胸爱抚指令"""
@@ -3989,6 +3992,7 @@ def handle_breast_caress():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.TWIDDLE_NIPPLES,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_twiddle_nipples():
     """处理玩弄乳头指令"""
@@ -4003,6 +4007,7 @@ def handle_twiddle_nipples():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.BREAST_SUCKING,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_breast_sucking():
     """处理舔吸乳头指令"""
@@ -4017,6 +4022,7 @@ def handle_breast_sucking():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.EXTERNAL_WOMB_MASSAGE,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_external_womb_massage():
     """处理体外子宫按摩指令"""
@@ -4031,6 +4037,7 @@ def handle_external_womb_massage():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.CLIT_CARESS,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_cilt_caress():
     """处理阴蒂爱抚指令"""
@@ -4045,6 +4052,7 @@ def handle_cilt_caress():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.OPEN_LABIA,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_open_labia():
     """处理掰开阴唇观察指令"""
@@ -4059,6 +4067,7 @@ def handle_open_labia():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.OPEN_ANUS,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_open_anus():
     """处理掰开肛门观察指令"""
@@ -4073,6 +4082,7 @@ def handle_open_anus():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.CUNNILINGUS,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_cunnilingus():
     """处理舔阴指令"""
@@ -4087,6 +4097,7 @@ def handle_cunnilingus():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.LICK_ANAL,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_lict_anal():
     """处理舔肛指令"""
@@ -4101,6 +4112,7 @@ def handle_lict_anal():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.FINGER_INSERTION,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_finger_insertion():
     """处理手指插入(V)指令"""
@@ -4115,11 +4127,31 @@ def handle_finger_insertion():
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.ANAL_CARESS,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_anal_caress():
     """处理手指插入(A)指令"""
     chara_handle_instruct_common_settle(constant.Behavior.ANAL_CARESS)
 
+
+@add_instruct(
+    constant.Instruct.URETHRAL_FINGER_INSERTION,
+    constant.InstructType.SEX,
+    _("尿道指姦"),
+    {
+    constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+    constant_promise.Premise.TARGET_IS_H,
+    constant_promise.Premise.FINGER_TECHNIQUE_GE_5,
+    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
+    constant_promise.Premise.T_U_DILATE_GE_2,
+    },
+    constant.Behavior.URETHRAL_FINGER_INSERTION,
+    constant.SexInstructSubType.FOREPLAY,
+)
+def handle_urethral_finger_insertion():
+    """处理尿道指姦指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.URETHRAL_FINGER_INSERTION, judge = _("U开发"))
 
 @add_instruct(
     constant.Instruct.MAKE_MASTUREBATE,
@@ -4131,6 +4163,7 @@ def handle_anal_caress():
      constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.MAKE_MASTUREBATE,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_make_masturebate():
     """处理命令对方自慰指令"""
@@ -4148,58 +4181,29 @@ def handle_make_masturebate():
      constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
      constant_promise.Premise.TARGET_IS_H},
     constant.Behavior.MAKE_LICK_ANAL,
+    constant.SexInstructSubType.FOREPLAY,
 )
 def handle_make_lick_anal():
     """处理命令对方舔自己肛门指令"""
     chara_handle_instruct_common_settle(constant.Behavior.MAKE_LICK_ANAL)
 
-
 @add_instruct(
-    constant.Instruct.CHANGE_TOP_AND_BOTTOM,
+    constant.Instruct.ASK_PEE,
     constant.InstructType.SEX,
-    _("交给对方"),
+    _("命令对方小便"),
     {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NORMAL_5_6,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.GROUP_SEX_MODE_OFF,
-     constant_promise.Premise.TARGET_NOT_BONDAGE,
-     constant_promise.Premise.TARGET_IS_H},
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.TARGET_URINATE_GE_80,
+     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
+     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
+    },
+    constant.Behavior.ASK_PEE,
+    constant.SexInstructSubType.FOREPLAY,
 )
-def handle_change_top_and_bottom():
-    """处理交给对方指令"""
-    character_data: game_type.Character = cache.character_data[0]
-    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_character_data.h_state.npc_active_h = True
-    handle_npc_ai_in_h.npc_active_h()
-
-
-@add_instruct(
-    constant.Instruct.KEEP_ENJOY,
-    constant.InstructType.SEX,
-    _("继续享受"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_ACTIVE_H,
-     constant_promise.Premise.TARGET_IS_H},
-)
-def handle_keep_enjoy():
-    """处理继续享受指令"""
-    handle_npc_ai_in_h.npc_active_h()
-
-
-@add_instruct(
-    constant.Instruct.TRY_PL_ACTIVE_H,
-    constant.InstructType.SEX,
-    _("尝试掌握主动权"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_ACTIVE_H,
-     constant_promise.Premise.TARGET_IS_H},
-)
-def handle_try_pl_active_h():
-    """处理尝试掌握主动权指令"""
-    character_data: game_type.Character = cache.character_data[0]
-    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
-    target_character_data.h_state.npc_active_h = False
-
+def handle_ask_pee():
+    """处理命令对方小便指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.ASK_PEE, judge = _("严重骚扰"))
 
 @add_instruct(
     constant.Instruct.SEDECU,
@@ -4781,6 +4785,24 @@ def handle_nipple_clamp_off():
     """处理取下乳头夹指令"""
     chara_handle_instruct_common_settle(constant.Behavior.NIPPLE_CLAMP_OFF)
 
+@add_instruct(
+    constant.Instruct.URETHRAL_SWAB,
+    constant.InstructType.SEX,
+    _("尿道棉棒"),
+    {
+    constant_promise.Premise.HAVE_TARGET,
+    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+    constant_promise.Premise.TARGET_IS_H,
+    constant_promise.Premise.HAVE_COTTON_STICK,
+    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
+    constant_promise.Premise.FINGER_TECHNIQUE_GE_3,
+    },
+    constant.Behavior.URETHRAL_SWAB,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_urethral_swab():
+    """处理尿道棉棒指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.URETHRAL_SWAB, judge = _("U开发"))
 
 @add_instruct(
     constant.Instruct.NIPPLES_LOVE_EGG,
@@ -6681,44 +6703,6 @@ def handle_double_penetration():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
-
-@add_instruct(
-    constant.Instruct.URETHRAL_SWAB,
-    constant.InstructType.SEX,
-    _("尿道棉棒"),
-    {
-    constant_promise.Premise.HAVE_TARGET,
-    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-    constant_promise.Premise.TARGET_IS_H,
-    constant_promise.Premise.HAVE_COTTON_STICK,
-    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-    constant_promise.Premise.FINGER_TECHNIQUE_GE_3,
-    },
-    constant.Behavior.URETHRAL_SWAB,
-    constant.SexInstructSubType.ITEM,
-)
-def handle_urethral_swab():
-    """处理尿道棉棒指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.URETHRAL_SWAB, judge = _("U开发"))
-
-@add_instruct(
-    constant.Instruct.URETHRAL_FINGER_INSERTION,
-    constant.InstructType.SEX,
-    _("尿道指姦"),
-    {
-    constant_promise.Premise.HAVE_TARGET,
-    constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-    constant_promise.Premise.TARGET_IS_H,
-    constant_promise.Premise.FINGER_TECHNIQUE_GE_5,
-    constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-    constant_promise.Premise.T_U_DILATE_GE_2,
-    },
-    constant.Behavior.URETHRAL_FINGER_INSERTION,
-)
-def handle_urethral_finger_insertion():
-    """处理尿道指姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.URETHRAL_FINGER_INSERTION, judge = _("U开发"))
-
 @add_instruct(
     constant.Instruct.URETHRAL_SEX,
     constant.InstructType.SEX,
@@ -7025,24 +7009,6 @@ def handle_back_lay_urethral_sex():
     chara_handle_instruct_common_settle(constant.Behavior.BACK_LAY_URETHRAL_SEX, judge=_("U性交"))
 
 @add_instruct(
-    constant.Instruct.ASK_PEE,
-    constant.InstructType.SEX,
-    _("命令对方小便"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
-     constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.TARGET_URINATE_GE_80,
-     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-     constant_promise.Premise.T_NORMAL_5_6_OR_UNCONSCIOUS_FLAG_4_7,
-    },
-    constant.Behavior.ASK_PEE,
-)
-def handle_ask_pee():
-    """处理命令对方小便指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.ASK_PEE, judge = _("严重骚扰"))
-
-
-@add_instruct(
     constant.Instruct.BEAT_BREAST,
     constant.InstructType.SEX,
     _("打胸部_未实装"),
@@ -7143,6 +7109,52 @@ def handle_give_blowjob():
     character_data.behavior.duration = 5
     update.game_update_flow(5)
 
+
+@add_instruct(
+    constant.Instruct.CHANGE_TOP_AND_BOTTOM,
+    constant.InstructType.SEX,
+    _("交给对方"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NORMAL_5_6,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.GROUP_SEX_MODE_OFF,
+     constant_promise.Premise.TARGET_NOT_BONDAGE,
+     constant_promise.Premise.TARGET_IS_H},
+)
+def handle_change_top_and_bottom():
+    """处理交给对方指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.h_state.npc_active_h = True
+    handle_npc_ai_in_h.npc_active_h()
+
+
+@add_instruct(
+    constant.Instruct.KEEP_ENJOY,
+    constant.InstructType.SEX,
+    _("继续享受"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_ACTIVE_H,
+     constant_promise.Premise.TARGET_IS_H},
+)
+def handle_keep_enjoy():
+    """处理继续享受指令"""
+    handle_npc_ai_in_h.npc_active_h()
+
+
+@add_instruct(
+    constant.Instruct.TRY_PL_ACTIVE_H,
+    constant.InstructType.SEX,
+    _("尝试掌握主动权"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_ACTIVE_H,
+     constant_promise.Premise.TARGET_IS_H},
+)
+def handle_try_pl_active_h():
+    """处理尝试掌握主动权指令"""
+    character_data: game_type.Character = cache.character_data[0]
+    target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
+    target_character_data.h_state.npc_active_h = False
 
 @add_instruct(
     constant.Instruct.UNDRESS,

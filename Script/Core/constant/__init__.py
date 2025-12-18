@@ -110,17 +110,19 @@ class SexInstructSubType:
 
     BASE = 0
     """ 基础 """
-    WAIT_UPON = 1
+    FOREPLAY = 1
+    """ 前戏 """
+    WAIT_UPON = 2
     """ 侍奉 """
-    DRUG = 2
+    DRUG = 3
     """ 药物 """
-    ITEM = 3
+    ITEM = 4
     """ 道具 """
-    INSERT = 4
+    INSERT = 5
     """ 插入 """
-    SM = 5
+    SM = 6
     """ SM """
-    ARTS = 6
+    ARTS = 7
     """ 技艺 """
 
 
