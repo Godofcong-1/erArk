@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-12-17 19:15+0800\n"
+"POT-Creation-Date: 2025-12-18 13:58+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -22080,16 +22080,16 @@ msgstr ""
 msgid "被催眠的干员会在精神上完全服从，无条件地接受所有被灌输的指令并坚定不移地执行，效果会永远持续到博士主动解除为止。"
 msgstr ""
 
-#: .\data\csv\InstructJudge.csv:6
-msgid "H模式"
-msgstr ""
-
-#: .\data\csv\InstructJudge.csv:8
+#: .\data\csv\InstructJudge.csv:7
 msgid "约会"
 msgstr ""
 
-#: .\data\csv\InstructJudge.csv:11
-msgid "A性交"
+#: .\data\csv\InstructJudge.csv:9
+msgid "访客留下"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:10
+msgid "H模式"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:12
@@ -22100,32 +22100,36 @@ msgstr ""
 msgid "严重骚扰"
 msgstr ""
 
-#: .\data\csv\InstructJudge.csv:15
-msgid "U性交"
+#: .\data\csv\InstructJudge.csv:14
+msgid "目击H后被话术支开"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:16
-msgid "访客留下"
+msgid "A性交"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:17
+msgid "W性交"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:18
 msgid "U开发"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:19
-msgid "道具"
-msgstr ""
-
-#: .\data\csv\InstructJudge.csv:20
-msgid "药物"
+msgid "U性交"
 msgstr ""
 
 #: .\data\csv\InstructJudge.csv:21
-msgid "SM"
+msgid "道具"
 msgstr ""
 
-#: .\data\csv\InstructJudge.csv:24
-msgid "目击H后被话术支开"
+#: .\data\csv\InstructJudge.csv:22
+msgid "药物"
+msgstr ""
+
+#: .\data\csv\InstructJudge.csv:23
+msgid "SM"
 msgstr ""
 
 #: .\data\csv\InstructType.csv:6
@@ -36641,7 +36645,7 @@ msgid "如何解锁子宫和尿道的更多指令？"
 msgstr ""
 
 #: .\data\csv\Prts.csv:54
-msgid "子宫和尿道的指令对博士的技巧能力等级和干员的部位扩张能力等级有需求，需要达到一定程度后才会解锁，具体如下：\n\n【玩弄子宫口】：博士技巧≥3\n【插入子宫口】：博士技巧≥3，干员子宫扩张≥3\n【子宫奸】：博士技巧≥5，干员子宫扩张≥5\n\n【尿道棉棒】：博士技巧≥5，需要持有无菌棉签\n【尿道指姦】：博士技巧≥5，干员尿道扩张≥2\n【尿道奸】：博士技巧≥5，干员尿道扩张≥5"
+msgid "子宫和尿道的指令对博士的腰技能力等级和干员的部位扩张能力等级有需求，需要达到一定程度后才会解锁，具体如下：\n\n【玩弄子宫口】：博士腰技≥4\n【插入子宫口】：博士腰技≥5，干员子宫扩张≥3\n【子宫奸】：博士腰技≥7，干员子宫扩张≥5\n\n【尿道棉棒】：博士指技≥3，需要持有无菌棉签\n【尿道指姦】：博士指技≥5，干员尿道扩张≥2\n【尿道奸】：博士腰技≥5，干员尿道扩张≥5"
 msgstr ""
 
 #: .\data\csv\Prts.csv:56
@@ -39182,6 +39186,10 @@ msgstr ""
 
 #: .\data\csv\SexTem.csv:7
 msgid "女"
+msgstr ""
+
+#: .\data\csv\Sex_Position.csv:6
+msgid "未在性交中。"
 msgstr ""
 
 #: .\data\csv\Sex_Position.csv:7

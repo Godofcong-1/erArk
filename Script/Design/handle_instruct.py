@@ -5746,7 +5746,7 @@ def handle_back_lay_sex():
      constant_promise.Premise.TARGET_IS_H,
      constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-     constant_promise.Premise.TECHNIQUE_GE_3},
+     constant_promise.Premise.WAIST_TECHNIQUE_GE_3},
     constant.Behavior.STIMULATE_G_POINT,
     constant.SexInstructSubType.INSERT,
 )
@@ -5763,7 +5763,7 @@ def handle_stimulate_g_point():
      constant_promise.Premise.TARGET_IS_H,
      constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-     constant_promise.Premise.TECHNIQUE_GE_3},
+     constant_promise.Premise.WAIST_TECHNIQUE_GE_4},
     constant.Behavior.WOMB_OS_CARESS,
     constant.SexInstructSubType.INSERT,
 )
@@ -5771,24 +5771,42 @@ def handle_womb_os_caress():
     """处理玩弄子宫口指令"""
     chara_handle_instruct_common_settle(constant.Behavior.WOMB_OS_CARESS, judge = _("性交"))
 
+# @add_instruct(
+#     constant.Instruct.WOMB_INSERTION,
+#     constant.InstructType.SEX,
+#     _("插入子宫口_旧指令已废弃"),
+#     {constant_promise.Premise.HAVE_TARGET,
+#      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+#      constant_promise.Premise.TARGET_IS_H,
+#      constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
+#      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
+#      constant_promise.Premise.T_W_DILATE_GE_3,
+#      constant_promise.Premise.TECHNIQUE_GE_3},
+#     constant.Behavior.WOMB_INSERTION,
+#     constant.SexInstructSubType.INSERT,
+# )
+# def handle_womb_insertion():
+#     """处理插入子宫口指令"""
+#     chara_handle_instruct_common_settle(constant.Behavior.WOMB_INSERTION, judge = _("W性交"))
+
 @add_instruct(
-    constant.Instruct.WOMB_INSERTION,
+    constant.Instruct.CHANGE_CERVIX_SEX_POSITION,
     constant.InstructType.SEX,
-    _("插入子宫口"),
+    _("换子宫姦口体位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
-     constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-     constant_promise.Premise.T_W_DILATE_GE_3,
-     constant_promise.Premise.TECHNIQUE_GE_3},
-    constant.Behavior.WOMB_INSERTION,
+     constant_promise.Premise.DR_HAVE_SEX_POSITION,
+     constant_promise.Premise.PENIS_IN_T_WOMB,
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.Behavior.NORMAL_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
-def handle_womb_insertion():
-    """处理插入子宫口指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.WOMB_INSERTION, judge = _("性交"))
-
+def handle_change_cervix_sex_position():
+    """处理换子宫姦口体位指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=2, change_position=True)
+    now_panel.draw()
 
 @add_instruct(
     constant.Instruct.NORMAL_CERVIX_SEX,
@@ -5802,16 +5820,15 @@ def handle_womb_insertion():
         constant_promise.Premise.DR_POSITION_NORMAL,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.NORMAL_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_normal_cervix_sex():
     """处理正常位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.NORMAL_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.NORMAL_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_CERVIX_SEX,
@@ -5825,16 +5842,15 @@ def handle_normal_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_cervix_sex():
     """处理后背位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.RIDING_CERVIX_SEX,
@@ -5849,16 +5865,15 @@ def handle_back_cervix_sex():
         constant_promise.Premise.DR_POSITION_FACE_RIDE,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.RIDING_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_riding_cervix_sex():
     """处理对面骑乘位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.RIDING_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.RIDING_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_RIDING_CERVIX_SEX,
@@ -5873,16 +5888,15 @@ def handle_riding_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK_RIDE,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_RIDING_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_riding_cervix_sex():
     """处理背面骑乘位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_RIDING_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_RIDING_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_CERVIX_SEX,
@@ -5896,16 +5910,15 @@ def handle_back_riding_cervix_sex():
         constant_promise.Premise.DR_POSITION_FACE_SEAT,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.FACE_SEAT_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_seat_cervix_sex():
     """处理对面座位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_SEAT_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_SEAT_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_SEAT_CERVIX_SEX,
@@ -5919,16 +5932,15 @@ def handle_face_seat_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK_SEAT,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_SEAT_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_seat_cervix_sex():
     """处理背面座位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_SEAT_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_SEAT_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_STAND_CERVIX_SEX,
@@ -5941,16 +5953,15 @@ def handle_back_seat_cervix_sex():
         constant_promise.Premise.DR_POSITION_FACE_STAND,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.FACE_STAND_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_stand_cervix_sex():
     """处理对面立位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_STAND_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_STAND_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_STAND_CERVIX_SEX,
@@ -5963,16 +5974,15 @@ def handle_face_stand_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK_STAND,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_STAND_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_stand_cervix_sex():
     """处理背面立位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_STAND_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_STAND_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_HUG_CERVIX_SEX,
@@ -5985,16 +5995,15 @@ def handle_back_stand_cervix_sex():
         constant_promise.Premise.DR_POSITION_FACE_HUG,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.FACE_HUG_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_hug_cervix_sex():
     """处理对面抱位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_HUG_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_HUG_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_HUG_CERVIX_SEX,
@@ -6007,16 +6016,15 @@ def handle_face_hug_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK_HUG,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_HUG_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_hug_cervix_sex():
     """处理背面抱位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_HUG_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_HUG_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_LAY_CERVIX_SEX,
@@ -6030,16 +6038,15 @@ def handle_back_hug_cervix_sex():
         constant_promise.Premise.DR_POSITION_FACE_LIE,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.FACE_LAY_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_lay_cervix_sex():
     """处理对面卧位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_LAY_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_LAY_CERVIX_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_LAY_CERVIX_SEX,
@@ -6053,35 +6060,53 @@ def handle_face_lay_cervix_sex():
         constant_promise.Premise.DR_POSITION_BACK_LIE,
         constant_promise.Premise.PENIS_IN_T_VAGINA_OR_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_3,
-        constant_promise.Premise.TECHNIQUE_GE_3,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.DEBUG_MODE_ON,
     },
     constant.Behavior.BACK_LAY_CERVIX_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_lay_cervix_sex():
     """处理背面卧位子宫口姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_LAY_CERVIX_SEX, judge=_("A性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_LAY_CERVIX_SEX, judge=_("W性交"))
 
+
+# @add_instruct(
+#     constant.Instruct.WOMB_SEX,
+#     constant.InstructType.SEX,
+#     _("子宫姦_旧指令已废弃"),
+#     {constant_promise.Premise.HAVE_TARGET,
+#      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+#      constant_promise.Premise.TARGET_IS_H,
+#      constant_promise.Premise.PENIS_IN_T_WOMB,
+#      constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
+#      constant_promise.Premise.T_W_DILATE_GE_5,
+#      constant_promise.Premise.TECHNIQUE_GE_5},
+#     constant.Behavior.WOMB_SEX,
+#     constant.SexInstructSubType.INSERT,
+# )
+# def handle_womb_sex():
+#     """处理子宫姦指令"""
+#     chara_handle_instruct_common_settle(constant.Behavior.WOMB_SEX, judge = _("W性交"))
 
 @add_instruct(
-    constant.Instruct.WOMB_SEX,
+    constant.Instruct.CHANGE_WOMB_SEX_POSITION,
     constant.InstructType.SEX,
-    _("子宫姦"),
+    _("换子宫姦体位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_HAVE_SEX_POSITION,
      constant_promise.Premise.PENIS_IN_T_WOMB,
-     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-     constant_promise.Premise.T_W_DILATE_GE_5,
-     constant_promise.Premise.TECHNIQUE_GE_5},
-    constant.Behavior.WOMB_SEX,
+     constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION},
+    constant.Behavior.NORMAL_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
-def handle_womb_sex():
-    """处理子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.WOMB_SEX, judge = _("U性交"))
+def handle_change_womb_sex_position():
+    """处理换子宫姦体位指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=3, change_position=True)
+    now_panel.draw()
 
 @add_instruct(
     constant.Instruct.NORMAL_WOMB_SEX,
@@ -6096,15 +6121,14 @@ def handle_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.NORMAL_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_normal_womb_sex():
     """处理正常位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.NORMAL_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.NORMAL_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_WOMB_SEX,
@@ -6119,15 +6143,14 @@ def handle_normal_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_womb_sex():
     """处理后背位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.RIDING_WOMB_SEX,
@@ -6143,15 +6166,14 @@ def handle_back_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.RIDING_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_riding_womb_sex():
     """处理对面骑乘位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.RIDING_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.RIDING_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_RIDING_WOMB_SEX,
@@ -6167,15 +6189,14 @@ def handle_riding_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_RIDING_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_riding_womb_sex():
     """处理背面骑乘位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_RIDING_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_RIDING_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_SEAT_WOMB_SEX,
@@ -6190,15 +6211,14 @@ def handle_back_riding_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.FACE_SEAT_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_seat_womb_sex():
     """处理对面座位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_SEAT_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_SEAT_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_SEAT_WOMB_SEX,
@@ -6213,15 +6233,14 @@ def handle_face_seat_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_SEAT_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_seat_womb_sex():
     """处理背面座位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_SEAT_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_SEAT_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_STAND_WOMB_SEX,
@@ -6235,15 +6254,14 @@ def handle_back_seat_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.FACE_STAND_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_stand_womb_sex():
     """处理对面立位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_STAND_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_STAND_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_STAND_WOMB_SEX,
@@ -6257,15 +6275,14 @@ def handle_face_stand_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_STAND_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_stand_womb_sex():
     """处理背面立位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_STAND_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_STAND_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_HUG_WOMB_SEX,
@@ -6279,15 +6296,14 @@ def handle_back_stand_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.FACE_HUG_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_hug_womb_sex():
     """处理对面抱位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_HUG_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_HUG_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_HUG_WOMB_SEX,
@@ -6301,15 +6317,14 @@ def handle_face_hug_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_HUG_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_hug_womb_sex():
     """处理背面抱位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_HUG_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_HUG_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.FACE_LAY_WOMB_SEX,
@@ -6324,15 +6339,14 @@ def handle_back_hug_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.FACE_LAY_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_face_lay_womb_sex():
     """处理对面卧位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.FACE_LAY_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.FACE_LAY_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.BACK_LAY_WOMB_SEX,
@@ -6347,15 +6361,14 @@ def handle_face_lay_womb_sex():
         constant_promise.Premise.PENIS_IN_T_WOMB,
         constant_promise.Premise.T_W_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_VIBRATOR_INSERTION,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_7,
     },
     constant.Behavior.BACK_LAY_WOMB_SEX,
     constant.SexInstructSubType.INSERT,
 )
 def handle_back_lay_womb_sex():
     """处理背面卧位子宫姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.BACK_LAY_WOMB_SEX, judge=_("U性交"))
+    chara_handle_instruct_common_settle(constant.Behavior.BACK_LAY_WOMB_SEX, judge=_("W性交"))
 
 @add_instruct(
     constant.Instruct.ANAL_SEX,
@@ -6372,13 +6385,13 @@ def handle_back_lay_womb_sex():
 def handle_anal_sex():
     """处理肛门性交指令"""
     from Script.System.Sex_System import sex_position_panel
-    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=3)
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=4)
     now_panel.draw()
 
 @add_instruct(
     constant.Instruct.CHANGE_ANAL_SEX_POSITION,
     constant.InstructType.SEX,
-    _("换肛门性交体位"),
+    _("换肛交体位"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
      constant_promise.Premise.TARGET_IS_H,
@@ -6389,9 +6402,9 @@ def handle_anal_sex():
     constant.SexInstructSubType.INSERT,
 )
 def handle_change_anal_sex_position():
-    """处理换肛门性交体位指令"""
+    """处理换肛交体位指令"""
     from Script.System.Sex_System import sex_position_panel
-    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=3, change_position=True)
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=4, change_position=True)
     now_panel.draw()
 
 @add_instruct(
@@ -6679,7 +6692,7 @@ def handle_double_penetration():
     constant_promise.Premise.TARGET_IS_H,
     constant_promise.Premise.HAVE_COTTON_STICK,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-    constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.FINGER_TECHNIQUE_GE_3,
     },
     constant.Behavior.URETHRAL_SWAB,
     constant.SexInstructSubType.ITEM,
@@ -6696,7 +6709,7 @@ def handle_urethral_swab():
     constant_promise.Premise.HAVE_TARGET,
     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
     constant_promise.Premise.TARGET_IS_H,
-    constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.FINGER_TECHNIQUE_GE_5,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
     constant_promise.Premise.T_U_DILATE_GE_2,
     },
@@ -6714,8 +6727,9 @@ def handle_urethral_finger_insertion():
     constant_promise.Premise.HAVE_TARGET,
     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
     constant_promise.Premise.TARGET_IS_H,
+    constant_promise.Premise.DR_POSITION_NULL,
     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-    constant_promise.Premise.TECHNIQUE_GE_5,
+    constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     constant_promise.Premise.T_U_DILATE_GE_5,
     },
     constant.Behavior.URETHRAL_SEX,
@@ -6723,7 +6737,29 @@ def handle_urethral_finger_insertion():
 )
 def handle_urethral_sex():
     """处理尿道姦指令"""
-    chara_handle_instruct_common_settle(constant.Behavior.URETHRAL_SEX, judge = _("U性交"))
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=5)
+    now_panel.draw()
+
+
+@add_instruct(
+    constant.Instruct.CHANGE_URETHRAL_SEX_POSITION,
+    constant.InstructType.SEX,
+    _("换尿道姦体位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.T_NPC_NOT_ACTIVE_H,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.DR_HAVE_SEX_POSITION,
+     constant_promise.Premise.PENIS_IN_T_URETHRAL,
+     constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR},
+    constant.Behavior.NORMAL_URETHRAL_SEX,
+    constant.SexInstructSubType.INSERT,
+)
+def handle_change_urethral_sex_position():
+    """处理换尿道姦体位指令"""
+    from Script.System.Sex_System import sex_position_panel
+    now_panel = sex_position_panel.Sex_Position_Panel(width=width, sex_type=5, change_position=True)
+    now_panel.draw()
 
 
 @add_instruct(
@@ -6739,8 +6775,7 @@ def handle_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.NORMAL_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6762,8 +6797,7 @@ def handle_normal_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6786,8 +6820,7 @@ def handle_back_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.RIDING_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6810,8 +6843,7 @@ def handle_riding_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_RIDING_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6833,8 +6865,7 @@ def handle_back_riding_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.FACE_SEAT_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6856,8 +6887,7 @@ def handle_face_seat_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_SEAT_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6878,8 +6908,7 @@ def handle_back_seat_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.FACE_STAND_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6900,8 +6929,7 @@ def handle_face_stand_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_STAND_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6922,8 +6950,7 @@ def handle_back_stand_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.FACE_HUG_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6944,8 +6971,7 @@ def handle_face_hug_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_HUG_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6967,8 +6993,7 @@ def handle_back_hug_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.FACE_LAY_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,
@@ -6990,8 +7015,7 @@ def handle_face_lay_urethral_sex():
         constant_promise.Premise.PENIS_IN_T_URETHRAL,
         constant_promise.Premise.T_U_DILATE_GE_5,
         constant_promise.Premise.TARGET_NOT_URINE_COLLECTOR,
-        constant_promise.Premise.TECHNIQUE_GE_5,
-        constant_promise.Premise.DEBUG_MODE_ON,
+        constant_promise.Premise.WAIST_TECHNIQUE_GE_5,
     },
     constant.Behavior.BACK_LAY_URETHRAL_SEX,
     constant.SexInstructSubType.INSERT,

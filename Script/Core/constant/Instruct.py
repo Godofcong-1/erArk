@@ -656,7 +656,9 @@ class Instruct:
     WOMB_OS_CARESS = 0
     """ 玩弄子宫口 """
     WOMB_INSERTION = 0
-    """ 插入子宫口 """
+    """ 插入子宫口_旧指令已废弃 """
+    CHANGE_CERVIX_SEX_POSITION = 0
+    """ 换子宫口姦体位 """
     NORMAL_CERVIX_SEX = 0
     """ 正常位子宫口姦 """
     BACK_CERVIX_SEX = 0
@@ -683,7 +685,9 @@ class Instruct:
     """ 背面卧位子宫口姦 """
 
     WOMB_SEX = 0
-    """ 子宫姦 """
+    """ 子宫姦_旧指令已废弃 """
+    CHANGE_WOMB_SEX_POSITION = 0
+    """ 换子宫姦体位 """
     NORMAL_WOMB_SEX = 0
     """ 正常位子宫姦 """
     BACK_WOMB_SEX = 0
@@ -711,7 +715,7 @@ class Instruct:
     ANAL_SEX = 0
     """ 肛门性交 """
     CHANGE_ANAL_SEX_POSITION = 0
-    """ 换肛门性交体位 """
+    """ 换肛交体位 """
     NORMAL_ANAL_SEX = 0
     """ 正常位肛交 """
     BACK_ANAL_SEX = 0
@@ -748,6 +752,8 @@ class Instruct:
     """ 尿道指姦 """
     URETHRAL_SEX = 0
     """ 尿道姦 """
+    CHANGE_URETHRAL_SEX_POSITION = 0
+    """ 换尿道姦体位 """
     NORMAL_URETHRAL_SEX = 0
     """ 正常位尿道姦 """
     BACK_URETHRAL_SEX = 0

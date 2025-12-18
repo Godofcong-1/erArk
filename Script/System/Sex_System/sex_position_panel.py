@@ -158,11 +158,11 @@ class Sex_Position_Panel:
         # 子宫口性交的情况
         elif self.sex_type == 2:
             behavior_id = sex_position_data.cervix_sex_behavior_id
-            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("U性交"), force_taget_wait=True)
+            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("W性交"), force_taget_wait=True)
         # 子宫性交的情况
         elif self.sex_type == 3:
             behavior_id = sex_position_data.womb_sex_behavior_id
-            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("U性交"), force_taget_wait=True)
+            handle_instruct.chara_handle_instruct_common_settle(behavior_id, judge = _("W性交"), force_taget_wait=True)
         # 肛门性交的情况
         elif self.sex_type == 4:
             behavior_id = sex_position_data.anal_sex_behavior_id
