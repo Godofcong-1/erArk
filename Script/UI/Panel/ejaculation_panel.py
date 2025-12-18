@@ -275,6 +275,8 @@ def update_semen_dirty(character_id: int, part_cid: int, part_type: int, semen_c
         # 重置部位插入
         if semen_count > 0:
             pl_character_data.h_state.insert_position = -1
+            pl_character_data.h_state.pre_sex_position = pl_character_data.h_state.current_sex_position
+            pl_character_data.h_state.current_sex_position = -1
             character_data.h_state.insert_position = -1
     # A部位射精时如果已经持有灌肠肛塞道具，且设置已开启，则结算精液灌肠
     if (
