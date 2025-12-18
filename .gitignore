@@ -48,5 +48,9 @@ save
 image/断面图/原图
 downloaded_images
 
+# 编辑器配置文件
+tools/ArkEditor/快速插入前提.csv
+tools/ArkEditor/editor_config.ini
+
 # 错误log
 error.log

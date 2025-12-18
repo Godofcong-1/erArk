@@ -827,7 +827,19 @@ def handle_last_cmd_w_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
     sex = {
-        str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_SEX)
+        str(constant.Instruct.WOMB_INSERTION), str(constant.Instruct.WOMB_SEX),
+        str(constant.Instruct.NORMAL_CERVIX_SEX), str(constant.Instruct.BACK_CERVIX_SEX),
+        str(constant.Instruct.RIDING_CERVIX_SEX), str(constant.Instruct.BACK_RIDING_CERVIX_SEX),
+        str(constant.Instruct.FACE_SEAT_CERVIX_SEX), str(constant.Instruct.BACK_SEAT_CERVIX_SEX),
+        str(constant.Instruct.FACE_STAND_CERVIX_SEX), str(constant.Instruct.BACK_STAND_CERVIX_SEX),
+        str(constant.Instruct.FACE_HUG_CERVIX_SEX), str(constant.Instruct.BACK_HUG_CERVIX_SEX),
+        str(constant.Instruct.FACE_LAY_CERVIX_SEX), str(constant.Instruct.BACK_LAY_CERVIX_SEX),
+        str(constant.Instruct.NORMAL_WOMB_SEX), str(constant.Instruct.BACK_WOMB_SEX),
+        str(constant.Instruct.RIDING_WOMB_SEX), str(constant.Instruct.BACK_RIDING_WOMB_SEX),
+        str(constant.Instruct.FACE_SEAT_WOMB_SEX), str(constant.Instruct.BACK_SEAT_WOMB_SEX),
+        str(constant.Instruct.FACE_STAND_WOMB_SEX), str(constant.Instruct.BACK_STAND_WOMB_SEX),
+        str(constant.Instruct.FACE_HUG_WOMB_SEX), str(constant.Instruct.BACK_HUG_WOMB_SEX),
+        str(constant.Instruct.FACE_LAY_WOMB_SEX), str(constant.Instruct.BACK_LAY_WOMB_SEX),
     }
     for i in range(len_input):
         last_cmd = cache.input_cache[len_input - 1 - i]
@@ -894,7 +906,13 @@ def handle_last_cmd_u_sex(character_id: int) -> int:
     """
     len_input = len(cache.input_cache)
     sex = {
-        str(constant.Instruct.URETHRAL_SEX)
+        str(constant.Instruct.URETHRAL_SEX),
+        str(constant.Instruct.NORMAL_URETHRAL_SEX), str(constant.Instruct.BACK_URETHRAL_SEX),
+        str(constant.Instruct.RIDING_URETHRAL_SEX), str(constant.Instruct.BACK_RIDING_URETHRAL_SEX),
+        str(constant.Instruct.FACE_SEAT_URETHRAL_SEX), str(constant.Instruct.BACK_SEAT_URETHRAL_SEX),
+        str(constant.Instruct.FACE_STAND_URETHRAL_SEX), str(constant.Instruct.BACK_STAND_URETHRAL_SEX),
+        str(constant.Instruct.FACE_HUG_URETHRAL_SEX), str(constant.Instruct.BACK_HUG_URETHRAL_SEX),
+        str(constant.Instruct.FACE_LAY_URETHRAL_SEX), str(constant.Instruct.BACK_LAY_URETHRAL_SEX),
     }
 
     for i in range(len_input):
