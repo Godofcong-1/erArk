@@ -694,8 +694,8 @@ def handle_dr_pre_position_null(character_id: int) -> int:
     return character_data.h_state.pre_sex_position == -1
 
 
-@add_premise(constant_promise.Premise.DR_HAVE_SEX_POSITION)
-def handle_dr_have_sex_position(character_id: int) -> int:
+@add_premise(constant_promise.Premise.DR_HAVE_PRE_SEX_POSITION)
+def handle_dr_have_pre_sex_position(character_id: int) -> int:
     """
     博士有任意前体位
     Keyword arguments:
