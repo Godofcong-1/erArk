@@ -666,7 +666,7 @@ class Resource_Exchange_Line_Panel:
                     chara = cache.character_data[c]
                     abi_lv = chara.ability.get(40, 0)
                     other_names.append(_("{chara_name}(话术lv{abi_lv})").format(chara_name=chara.name, abi_lv=abi_lv))
-                sub_draw.text = _("副交易员：") + other_names + "\n"
+                sub_draw.text = _("副交易员：") + "、".join(other_names) + "\n"
             else:
                 sub_draw.text = _("副交易员：暂无\n")
             sub_draw.draw()
