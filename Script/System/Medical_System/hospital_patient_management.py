@@ -39,10 +39,6 @@ def try_hospitalize(
     if patient is None or already_hospitalized:
         return False
 
-    # 仅允许待发药状态的病人转入住院。
-    if patient.state != medical_constant.MedicalPatientState.WAITING_MEDICATION:
-        return False
-
     # 缺少病情配置无法判断是否需要住院。
     severity_config = game_config.config_medical_severity.get(patient.severity_level)
     if severity_config is None:
