@@ -223,12 +223,14 @@ def _calculate_medical_bed_limit(rhodes_island: game_type.Rhodes_Island) -> int:
     # 根据设施等级查找当前医院等级配置。
     level_config = _pick_hospital_level_config(_get_medical_facility_level(rhodes_island))
     base_limit = int(level_config.bed_limit) if level_config else 0
+    # 每使用一个模块则提供2个额外床位。
+    module_count = int(rhodes_island.used_hospital_bed_modules or 0) * 3
     # 医生数量提供额外床位加成。
     hospital_bonus = (
         len(getattr(rhodes_island, "medical_hospital_doctor_ids", []) or [])
         * medical_constant.HOSPITAL_DOCTOR_BED_BONUS
     )
-    total_limit = base_limit + hospital_bonus
+    total_limit = base_limit + module_count + hospital_bonus
     # 确保床位不低于现有住院人数。
     current_occupancy = len(rhodes_island.medical_hospitalized)
     return max(total_limit, current_occupancy)

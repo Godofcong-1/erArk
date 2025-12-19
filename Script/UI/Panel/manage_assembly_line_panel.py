@@ -92,6 +92,9 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
         if '制造加工' in facility_str:
             damage_down = cache.rhodes_island.facility_damage_data[facility_str] * 2
 
+    # 结算基建模块的当场生效
+    hospital_bed_modules = 0
+
     # 遍历流水线
     for assembly_line_id in cache.rhodes_island.assembly_line:
         now_formula_id = cache.rhodes_island.assembly_line[assembly_line_id][0]
@@ -128,6 +131,9 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
                 # 结算实际生产的产品
                 cache.rhodes_island.materials_resouce[product_id] += produce_num
                 cache.achievement.production_count += produce_num
+                # 如果是住院病房扩展模块，则增加到记录中
+                if product_id == 54:
+                    hospital_bed_modules += produce_num
 
                 now_text = _("\n 流水线{0}:").format(assembly_line_id)
                 now_text += _("上次结算是{0}时，到现在已过{1}小时，").format(cache.rhodes_island.assembly_line[assembly_line_id][4], max_time)
@@ -155,6 +161,21 @@ def settle_assembly_line(newdayflag = False, draw_flag = True):
         cache.rhodes_island.assembly_line[assembly_line_id][4] = cache.game_time.hour
     # 结算成就
     achievement_panel.achievement_flow(_("生产"))
+    # 结算住院病房扩展模块
+    if hospital_bed_modules > 0:
+        from Script.System.Medical_System import medical_core
+        # 结算模块数量
+        cache.rhodes_island.used_hospital_bed_modules += hospital_bed_modules
+        # 重新计算床位上限
+        cache.rhodes_island.medical_bed_limit = medical_core._calculate_medical_bed_limit(cache.rhodes_island)
+        # 绘制信息
+        hospital_bed_modules_text = _("○由于生产了{0}个住院病房扩展模块，罗德岛住院部床位数量提升了{1}个！\n").format(hospital_bed_modules, hospital_bed_modules * 3)
+        return_text += hospital_bed_modules_text
+        if draw_flag:
+            now_draw = draw.WaitDraw()
+            now_draw.width = window_width
+            now_draw.text = hospital_bed_modules_text
+            now_draw.draw()
 
     return un_normal, return_text
 

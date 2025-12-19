@@ -1220,6 +1220,8 @@ class Rhodes_Island:
         """ 当前收费系数，0 表示尚未初始化 """
         self.medical_bed_limit: int = 0
         """ 医疗区床位上限（含加成） """
+        self.used_hospital_bed_modules: int = 0
+        """ 已使用的住院病房基建模块数量 """
         self.medical_inventory_accumulator: Dict[int, float] = {}
         """ 药物扣除累计器，资源id:累计小数 """
         self.medical_surgery_records: List[Dict[str, Any]] = []
