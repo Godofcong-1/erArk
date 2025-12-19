@@ -8543,7 +8543,7 @@ def handle_read_add_adjust(
         base_chara_experience_common_settle(character_id, experience_index, 1, change_data = change_data)
         # 如果有交互对象，则交互对象也加
         if character_data.target_character_id != character_id:
-            base_chara_experience_common_settle(character_data.target_character_id, experience_index, 1, target_flag = True,change_data = change_data)
+            base_chara_experience_common_settle(character_id, experience_index, 1, target_flag = True, change_data = change_data)
 
     # 结算书籍的阅读进度
     character_data.entertainment.read_book_progress.setdefault(book_id, 0)
