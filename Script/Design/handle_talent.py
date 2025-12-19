@@ -84,6 +84,7 @@ def gain_talent(character_id: int, now_gain_type: int, traget_talent_id = 0):
         npc_b_talent_change_for_lactation_flag(character_id)
     if now_gain_type == 3:
         npc_lost_no_menarche_talent(character_id)
+        settle_favorite_sex_position(character_id)
 
 def have_age_talent(character_id: int):
     """
@@ -331,3 +332,37 @@ def body_part_talent_update(character_id, talent_ids, increase, body_part):
     change_text = _("变大了") if increase else _("变小了")
     return_text = _("{0}的{1}{2}，现在是【{3}】\n".format(now_character_data.name, body_part, change_text, game_config.config_talent[new_talent_id].name))
     return return_text
+
+def settle_favorite_sex_position(character_id: int) -> int:
+    """
+    结算角色最喜欢的体位素质
+    输入: character_id(int) 角色id
+    输出: favorite_position_id(int) 最喜欢的体位id
+    功能: 自动结算该角色最喜欢的体位行为
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    favorite_position_id = -1
+    # 遍历250~261号素质，检查是否有已存在的喜好
+    for pos_id in range(250, 262):
+        # 如果已经有喜好则直接返回
+        if character_data.talent[pos_id]:
+            favorite_position_id = pos_id - 249
+            return favorite_position_id
+    # 遍历141到152号经验，检查最高的经验是否超过了100
+    max_exp = 0
+    for pos_id in range(141, 153):
+        exp = character_data.experience[pos_id]
+        if exp > max_exp and exp >= 100:
+            max_exp = exp
+            favorite_position_id = pos_id - 140
+    # 如果有喜好则设置该喜好素质
+    if favorite_position_id != -1:
+        talent_id = favorite_position_id + 249
+        character_data.talent[talent_id] = 1
+        # 绘制获得素质提示
+        now_draw_succed = draw.WaitDraw()
+        sex_position_name = game_config.config_sex_position_data[favorite_position_id].name
+        talent_name = game_config.config_talent[talent_id].name
+        now_draw_succed.text = _("\n○{0}因为经常使用{1}体位，获得了【{2}】\n").format(character_data.name, sex_position_name, talent_name)
+        now_draw_succed.draw()
+    return favorite_position_id

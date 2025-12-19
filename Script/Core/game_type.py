@@ -1606,7 +1606,7 @@ class Character:
         self.work: CHARA_WORK = CHARA_WORK()
         """ 角色的工作情况 """
         self.entertainment: CHARA_ENTERTAINMENT = CHARA_ENTERTAINMENT()
-        """ 角色的娱乐情况 """
+        """ 角色的娱乐与兴趣情况 """
         self.pregnancy: PREGNANCY = PREGNANCY()
         """ 角色的怀孕情况 """
         self.relationship: RELATIONSHIP = RELATIONSHIP()

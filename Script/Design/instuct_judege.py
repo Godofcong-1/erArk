@@ -230,7 +230,7 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
 
         # 今天H被打断了修正
         if judge_data_type == "S":
-            judge_h_interrupt = character_data.action_info.h_interrupt * 50
+            judge_h_interrupt = target_data.action_info.h_interrupt * 50
             judge -= judge_h_interrupt
             if judge_h_interrupt:
                 calculation_text += _("+今天H被打断过(-") + str(judge_h_interrupt) + ")"
@@ -249,6 +249,15 @@ def calculation_instuct_judege(character_id: int, target_character_id: int, inst
         if handle_premise.handle_unconscious_flag_3(target_character_id):
             judge += 9999
             calculation_text += _("+时停(+9999)")
+
+    # 姿势修正
+    if instruct_name in {_("性交"), _("A性交"), _("U性交"), _("W性交")} and handle_premise.handle_dr_have_sex_position(character_id):
+        now_position = character_data.h_state.current_sex_position
+        # 如果当前姿势是自己喜欢的体位，则增加额外快感
+        favorite_position_id = handle_talent.settle_favorite_sex_position(target_character_id)
+        if now_position == favorite_position_id:
+            judge += 30
+            calculation_text += _("+喜欢的体位(+30)")
 
     # 处女修正
     if instruct_name == _("性交") and handle_premise.handle_have_virgin(target_character_id) and handle_premise.handle_self_sexual_ignorance_0(target_character_id):

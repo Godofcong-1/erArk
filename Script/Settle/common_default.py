@@ -276,6 +276,8 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]
 
+    from Script.Design import handle_talent
+
     # 系数加成
     final_adjust = 0
     # 部位感觉
@@ -313,6 +315,10 @@ def chara_feel_state_adjust(character_id: int, state_id: int, ability_level: int
     if state_id in [4, 5, 6, 7] and handle_premise.handle_dr_have_sex_position(character_id):
         now_position = character_data.h_state.current_sex_position
         position_feel_adjust = game_config.config_sex_position_data[now_position].pleasure_coefficient
+        # 如果当前姿势是自己喜欢的体位，则增加额外快感
+        favorite_position_id = handle_talent.settle_favorite_sex_position(character_id)
+        if now_position == favorite_position_id:
+            position_feel_adjust += 0.5
         final_adjust += position_feel_adjust
     # 子宫奸会大幅增加W快感
     if state_id == 7 and pl_character_data.h_state.current_womb_sex_position == 2:
