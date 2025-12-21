@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 """
-射精量提升Mod
+无限射精Mod
 功能：
 1. 移除精液耗尽判断，即使精液耗尽也能射精
 2. 新增乘以十的函数，使射精量变为原来的十倍
@@ -146,8 +146,6 @@ def modded_common_ejaculation():
     semen_count = multiply_by_ten(semen_count)
     extra_text += _("（Mod强化+）")
     
-    # ===== 以下为原版逻辑，保持不变 =====
-    
     # 如果有交互对象，则根据交互对象的榨精能力等级来调整射精量
     if character_data.target_character_id > 0:
         target_data = cache.character_data[character_data.target_character_id]
@@ -184,8 +182,14 @@ def modded_common_ejaculation():
         semen_count *= 2
         extra_text += _("（浓厚精液+）")
     
-    # 射精量不高于剩余精液值
-    semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
+    # ===== 修改点4：移除了射精量不高于剩余精液值的判断 =====
+    # 原代码：
+    # semen_count = min(int(semen_count), character_data.semen_point + character_data.tem_extra_semen_point)
+    # 现在不再进行该判断，直接进入后续
+    semen_count = int(semen_count)
+
+    # ===== 以下为原版逻辑，保持不变 =====
+
     # 组合射精文本
     semen_text += str(semen_count) + _("ml精液") + extra_text
     

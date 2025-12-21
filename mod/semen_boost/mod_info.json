@@ -1,9 +1,9 @@
 {
     "mod_id": "semen_boost",
-    "name": "射精量提升",
+    "name": "无限射精",
     "version": "1.0.0",
     "author": "匿名",
-    "description": "大幅提升射精量的Mod。\n\n功能说明：\n1. 移除精液耗尽时的射精限制\n2. 通过修改基础射精量的csv数据文件'Semen_Shoot_Amount.csv'，使射精量数值翻倍\n3. 最终射精量再乘以10倍\n\n总体效果：射精量约为原来的20倍\n\n实现方式：\n- 替换ejaculation_panel模块中的common_ejaculation函数，移除射精限制\n- 通过新的multiply_by_ten函数，将最终射精量乘以10\n- 修改数据文件以提升基础射精量",
+    "description": "修改射精相关结算的Mod，作为示范Mod使用。\n\n功能说明：\n1. 移除精液耗尽时的射精限制\n2. 通过修改基础射精量的csv数据文件'Semen_Shoot_Amount.csv'，使射精量数值翻倍\n3. 最终射精量再乘以10倍\n\n总体效果：无视精液量地射精，精液量变为原来的20倍\n\n实现方式：\n- 替换ejaculation_panel模块中的common_ejaculation函数，移除射精限制\n- 通过新的multiply_by_ten函数，将最终射精量乘以10\n- 修改数据文件以提升基础射精量",
     "game_version": "2025.12.21",
     "dependencies": [],
     "incompatible": [],

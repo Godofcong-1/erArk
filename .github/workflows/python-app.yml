@@ -54,6 +54,7 @@ jobs:
           Copy-Item example dist/ -Recurse
           Copy-Item static dist/ -Recurse
           Copy-Item templates dist/ -Recurse
+          Copy-Item mod dist/ -Recurse
           Rename-Item dist erArk
 
       - name: Pack Game Files
