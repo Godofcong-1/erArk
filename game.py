@@ -29,6 +29,14 @@ if __name__ == "__main__":
 
     # 载入游戏配置
     game_config.init()
+    # 初始化Mod系统
+    from Script.Core.mod_manager import init_mod_system
+    print("正在加载Mod...")
+    mod_load_success = init_mod_system()
+    if mod_load_success: 
+        print("Mod加载完成")
+    else:
+        print("部分Mod加载失败，请检查mod文件夹")
     # 读取Web模式标志
     now_web_mode = normal_config.config_normal.web_draw
     cache_control.cache.web_mode = now_web_mode
