@@ -52,5 +52,8 @@ downloaded_images
 tools/ArkEditor/快速插入前提.csv
 tools/ArkEditor/editor_config.ini
 
+# 模组
+mod/mod_config.json
+
 # 错误log
 error.log
