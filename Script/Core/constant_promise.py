@@ -2909,7 +2909,7 @@ class Premise:
     """ H_体位 博士体位为背面卧体位 """
     DR_PRE_POSITION_NULL = "dr_pre_position_null"
     """ H_体位 博士前体位为无 """
-    DR_HAVE_PRE_SEX_POSITION = "dr_have_sex_position"
+    DR_HAVE_PRE_SEX_POSITION = "dr_have_pre_sex_position"
     """ H_体位 博士有任意前体位 """
     DR_PRE_POSITION_NORMAL = "dr_pre_position_normal"
     """ H_体位 博士前体位为正常体位 """
