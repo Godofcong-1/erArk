@@ -597,34 +597,7 @@ class Instruct:
     """ 装上采尿器 """
     URINE_COLLECTOR_OFF = 0
     """ 取下采尿器 """
-    BEAT_BREAST = 0
-    """ 打胸部 """
-    SPANKING = 0
-    """ 打屁股 """
-    BONDAGE = 0
-    """ 绳艺 """
-    PATCH_ON = 0
-    """ 戴上眼罩 """
-    PATCH_OFF = 0
-    """ 摘下眼罩 """
-    GAG_ON = 0
-    """ 戴上口球 """
-    GAG_OFF = 0
-    """ 摘下口球 """
-    CLYSTER = 0
-    """ 灌肠 """
-    CONTINUE_CLYSTER = 0
-    """ 继续灌肠 """
-    ANAL_PLUG = 0
-    """ 肛塞_已废弃 """
-    CLYSTER_END = 0
-    """ 拔出肛塞 """
-    SAFE_CANDLES = 0
-    """ 滴蜡 """
-    WHIP = 0
-    """ 鞭子 """
-    NEEDLE = 0
-    """ 针 """
+
     VAGINAL_SEX = 0
     """ 阴道性交 """
     CHANGE_VAGINAL_SEX_POSITION = 0
@@ -776,6 +749,36 @@ class Instruct:
     """ 对面卧位尿道姦 """
     BACK_LAY_URETHRAL_SEX = 0
     """ 背面卧位尿道姦 """
+
+    BEAT_BREAST = 0
+    """ 打胸部 """
+    SPANKING = 0
+    """ 打屁股 """
+    BONDAGE = 0
+    """ 绳艺 """
+    PATCH_ON = 0
+    """ 戴上眼罩 """
+    PATCH_OFF = 0
+    """ 摘下眼罩 """
+    GAG_ON = 0
+    """ 戴上口球 """
+    GAG_OFF = 0
+    """ 摘下口球 """
+    CLYSTER = 0
+    """ 灌肠 """
+    CONTINUE_CLYSTER = 0
+    """ 继续灌肠 """
+    ANAL_PLUG = 0
+    """ 肛塞_已废弃 """
+    CLYSTER_END = 0
+    """ 拔出肛塞 """
+    SAFE_CANDLES = 0
+    """ 滴蜡 """
+    WHIP = 0
+    """ 鞭子 """
+    NEEDLE = 0
+    """ 针 """
+
     SHAME_PLAY = 0
     """ 羞耻play """
     TAKE_SHOWER_H = 0
