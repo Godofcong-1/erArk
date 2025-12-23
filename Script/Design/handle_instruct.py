@@ -1900,7 +1900,7 @@ def handle_see_fridge():
 )
 def handle_field_commission():
     """处理外勤委托指令"""
-    from Script.UI.Panel import field_commission_panel
+    from Script.System.Field_Commission_System import field_commission_panel
     now_draw = field_commission_panel.Field_Commission_Panel(width)
     now_draw.draw()
 

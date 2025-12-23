@@ -142,7 +142,7 @@ def escape_success(character_id: int):
     character_id -- 角色id\n
     """
     from Script.Settle import default
-    from Script.UI.Panel import field_commission_panel
+    from Script.System.Field_Commission_System import field_commission_panel
     character_data = cache.character_data[character_id]
     # 逃脱成功提示
     escape_text = _("\n囚犯{0}逃脱成功，请尽快派遣外勤干员进行追捕！\n").format(character_data.name)

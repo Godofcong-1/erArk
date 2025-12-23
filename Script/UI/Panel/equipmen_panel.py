@@ -146,14 +146,14 @@ def settle_equipment_damage_in_commission(commision_id: int) -> str:
     return equipment_damage_text
 
 
-def smith_maintain_equipment_once(smith_chara_id: int, draw_flag: bool = True) -> str:
+def smith_maintain_equipment_once(smith_chara_id: int, draw_flag: bool = True) -> bool:
     """
     铁匠角色进行一次装备的维修保养\n
     输入：\n
     smith_chara_id: int 铁匠角色id\n
     draw_flag: bool 是否绘制结果\n
     输出：\n
-    str 操作结果描述
+    bool 操作结果描述
     """
     # 是否优先维修
     repair_equipment_first = cache.rhodes_island.equipment_maintain_setting.get(3, 0) == 0
@@ -206,13 +206,15 @@ def smith_maintain_equipment_once(smith_chara_id: int, draw_flag: bool = True) -
     return repair_flag or maintain_flag
 
 
-def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
+def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> tuple[bool, str]:
     """
     铁匠角色进行一次装备的维修
     输入：
     smith_chara_id: int 铁匠角色id
     target_chara_id: int 目标角色id，如果为0则自动选择
-    输出：str 操作结果描述
+    输出：
+    bool 是否进行了保养
+    str 操作结果描述
     """
     # 获取铁匠角色数据和维修能力
     smith_chara_data = cache.character_data[smith_chara_id]
@@ -267,13 +269,15 @@ def repair_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
     return repair_flag, repair_text
 
 
-def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> str:
+def maintain_equipment(smith_chara_id: int, target_chara_id : int = 0) -> tuple[bool, str]:
     """
     铁匠角色进行一次装备的保养
     输入：
     smith_chara_id: int 铁匠角色id
     target_chara_id: int 目标角色id，如果为0则自动选择
-    输出：str 操作结果描述
+    输出：
+    bool 是否进行了保养
+    str 操作结果描述
     """
     # 获取铁匠角色数据和维修能力
     smith_chara_data = cache.character_data[smith_chara_id]
@@ -490,7 +494,7 @@ class Equipment_Maintain_Panel:
     def adjust_target_list(self):
         """调整装备维护名单"""
         from Script.UI.Panel import common_select_NPC
-        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, 1, 0, 0)
+        now_draw_panel : panel.PageHandlePanel = panel.PageHandlePanel([], common_select_NPC.CommonSelectNPCButtonList, 50, 5, window_width, True, False, 0)
         select_state = {}
         while 1:
             npc_id_got_list = sorted(cache.npc_id_got)

@@ -19,7 +19,6 @@ from Script.Design import (
     handle_talent,
 )
 from Script.UI.Moudle import draw
-from Script.UI.Panel import field_commission_panel
 from Script.Config import game_config, normal_config
 from Script.Settle import sleep_settle, past_day_settle, realtime_settle
 
@@ -41,6 +40,7 @@ def init_character_behavior():
     角色行为树总控制
     """
     from Script.UI.Panel import achievement_panel
+    from Script.System.Field_Commission_System import field_commission_function
     cache.over_behavior_character = set()
     new_day_flag = True
     while 1:
@@ -54,7 +54,7 @@ def init_character_behavior():
             cache.achievement.time_stop_duration += pl_duration
             game_time.sub_time_now(minute = pl_duration * -1)
             break
-        field_commission_panel.update_field_commission() # 刷新委托任务
+        field_commission_function.update_field_commission() # 刷新委托任务
         id_list = cache.npc_id_got.copy()
         id_list.discard(0)
         # 后结算其他NPC部分
