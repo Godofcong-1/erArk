@@ -390,6 +390,17 @@ int,str,str,int,str,str
 808,wear_to_locker_and_get_shower_cloth,脱衣换浴帽和浴巾,10,npc,日常|AI行动
 809,clean_wear_and_locker_to_wear,脱衣并穿回衣柜衣服,10,npc,日常|AI行动
 
+840,remote_turn_off_sex_toy,遥控关闭情趣道具,1,pl,猥亵|玩具
+841,remote_turn_on_sex_toy,遥控开启情趣玩具,1,pl,猥亵|玩具
+842,remote_set_sex_toy_weak,将情趣玩具调到弱档,1,pl,猥亵|玩具
+843,remote_set_sex_toy_weak_to_medium,将情趣玩具从弱档调到中档,1,pl,猥亵|玩具
+844,remote_set_sex_toy_strong_to_medium,将情趣玩具从强档调到中档,1,pl,猥亵|玩具
+845,remote_set_sex_toy_strong,将情趣玩具调到强档,1,pl,猥亵|玩具
+846,remote_all_turn_off_sex_toy,遥控关闭全员情趣道具,1,pl,猥亵|玩具
+847,remote_all_set_sex_toy_weak,将全员情趣玩具调到弱档,1,pl,猥亵|玩具
+848,remote_all_set_sex_toy_medium,将全员情趣玩具调到中档,1,pl,猥亵|玩具
+849,remote_all_set_sex_toy_strong,将全员情趣玩具调到强档,1,pl,猥亵|玩具
+
 850,examine_hair,检查头发,5,pl,猥亵|检查
 851,examine_hair_smoothness,测试头发柔顺度,10,pl,猥亵|检查|测试
 852,examine_oral,检查口腔内部,5,pl,猥亵|检查

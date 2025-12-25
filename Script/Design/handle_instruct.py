@@ -3859,6 +3859,73 @@ def handle_milk():
     """处理挤奶指令"""
     chara_handle_instruct_common_settle(constant.Behavior.MILK, judge = _("严重骚扰"))
 
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_ON,
+    constant.InstructType.OBSCENITY,
+    _("遥控启动玩具"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_OFF,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_TURN_ON_SEX_TOY,
+)
+def handle_remote_toy_on():
+    """处理遥控启动玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_TURN_ON_SEX_TOY, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_OFF,
+    constant.InstructType.OBSCENITY,
+    _("遥控关闭玩具"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_TURN_OFF_SEX_TOY,
+)
+def handle_remote_toy_off():
+    """处理遥控关闭玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_TURN_OFF_SEX_TOY)
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_LEVEL_UP,
+    constant.InstructType.OBSCENITY,
+    _("调高玩具档位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_STRONG,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_SET_SEX_TOY_STRONG,
+)
+def handle_remote_toy_level_up():
+    """处理调高玩具档位指令"""
+    if handle_premise.handle_target_now_sex_toy_weak(0):
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK_TO_MEDIUM, judge = _("严重骚扰"))
+    else:
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_STRONG, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_LEVEL_DOWN,
+    constant.InstructType.OBSCENITY,
+    _("降低玩具档位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_WEAK,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_SET_SEX_TOY_WEAK,
+)
+def handle_remote_toy_level_down():
+    """处理降低玩具档位指令"""
+    if handle_premise.handle_target_now_sex_toy_strong(0):
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_STRONG_TO_MEDIUM, judge = _("严重骚扰"))
+    else:
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK, judge = _("严重骚扰"))
 
 @add_instruct(
     constant.Instruct.BAGGING_AND_MOVING,

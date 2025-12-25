@@ -799,6 +799,31 @@ class BehaviorEffect:
     TAKE_CONDOM_OFF = 1012
     """ 道具_使用效果 自己去掉戴上避孕套状态 """
 
+    SELF_REMOTE_TOY_OFF = 1051
+    """ 道具_遥控玩具 关闭自己身上的情趣玩具 """
+    SELF_REMOTE_TOY_SET_WEAK = 1052
+    """ 道具_遥控玩具 将自己身上的情趣玩具调到弱档 """
+    SELF_REMOTE_TOY_SET_MEDIUM = 1053
+    """ 道具_遥控玩具 将自己身上的情趣玩具调到中档 """
+    SELF_REMOTE_TOY_SET_STRONG = 1054
+    """ 道具_遥控玩具 将自己身上的情趣玩具调到强档 """
+    TARGET_REMOTE_TOY_OFF = 1055
+    """ 道具_遥控玩具 关闭交互对象身上的情趣玩具 """
+    TARGET_REMOTE_TOY_SET_WEAK = 1056
+    """ 道具_遥控玩具 将交互对象身上的情趣玩具调到弱档 """
+    TARGET_REMOTE_TOY_SET_MEDIUM = 1057
+    """ 道具_遥控玩具 将交互对象身上的情趣玩具调到中档 """
+    TARGET_REMOTE_TOY_SET_STRONG = 1058
+    """ 道具_遥控玩具 将交互对象身上的情趣玩具调到强档 """
+    ALL_REMOTE_TOY_OFF = 1059
+    """ 道具_遥控玩具 关闭在场所有人身上的情趣玩具 """
+    ALL_REMOTE_TOY_SET_WEAK = 1060
+    """ 道具_遥控玩具 将在场所有人身上的情趣玩具调到弱档 """
+    ALL_REMOTE_TOY_SET_MEDIUM = 1061
+    """ 道具_遥控玩具 将在场所有人身上的情趣玩具调到中档 """
+    ALL_REMOTE_TOY_SET_STRONG = 1062
+    """ 道具_遥控玩具 将在场所有人身上的情趣玩具调到强档 """
+
     FIRST_KISS = 1101
     """ 初次 记录初吻 """
     FIRST_HAND_IN_HAND = 1102

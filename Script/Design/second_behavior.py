@@ -92,7 +92,7 @@ def check_second_effect(
         # 阴茎位置结算
         insert_position_effect(character_id, change_data)
         # 道具结算
-        item_effect(character_id, pl_to_npc)
+        item_effect(character_id)
         # 进行结算
         second_behavior_effect(character_id, change_data)
         # 高潮结算
@@ -881,26 +881,26 @@ def mark_effect(character_id: int, change_data: game_type.CharacterStatusChange)
     now_draw.text = now_draw_text
     now_draw.draw()
 
-def item_effect(character_id: int, pl_to_npc: bool = False):
+def item_effect(character_id: int):
     """
     处理第二结算中的道具结算
     Keyword arguments:
     character_id -- 角色id
-    pl_to_npc -- 玩家对NPC的行为结算
     """
 
     # print()
     # print(f"进入道具结算")
     character_data: game_type.Character = cache.character_data[character_id]
-    pl_character_data: game_type.Character = cache.character_data[0]
 
+    # NPC对自己进行道具结算
     if character_id != 0:
 
-        # 玩家在H中正在对该NPC进行交互时，仅计算一遍，避免二次结算
-        if pl_to_npc:
-            pass
-        elif pl_character_data.target_character_id == character_id and character_data.sp_flag.is_h:
-            return
+        # 疑似没有用了，所以注释掉
+        # # 玩家在H中正在对该NPC进行交互时，仅计算一遍，避免二次结算
+        # if pl_to_npc:
+        #     pass
+        # elif pl_character_data.target_character_id == character_id and character_data.sp_flag.is_h:
+        #     return
 
         for i in range(len(character_data.h_state.body_item)):
             if character_data.h_state.body_item[i][1]:
@@ -908,6 +908,15 @@ def item_effect(character_id: int, pl_to_npc: bool = False):
                 if i == 11 and character_data.second_behavior["day_hello"] != 0:
                     continue
                 body_item_data = game_config.config_body_item[i]
+                # 如果是猥亵型装备且当前不在H中，则判断该道具是否在开启中
+                if body_item_data.type == 2 and not handle_premise.handle_self_is_h(character_id):
+                    # 如果没有开启，则跳过
+                    if handle_premise.handle_self_now_sex_toy_off(character_id):
+                        continue
+                    # 如果与玩家不在同一场景，则将该道具置为关闭状态然后跳过
+                    if not handle_premise.handle_in_player_scene(character_id):
+                        character_data.sp_flag.sex_toy_level = 0
+                        continue
                 second_behavior_id = body_item_data.behavior_id
                 character_get_second_behavior(character_id, second_behavior_id)
 

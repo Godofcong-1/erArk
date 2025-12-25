@@ -387,6 +387,17 @@ int,str,str
 808,wear_to_locker_and_get_shower_cloth,353 - 642 - 633
 809,clean_wear_and_locker_to_wear,632 - 643
 
+840,remote_turn_off_sex_toy,1055
+841,remote_turn_on_sex_toy,1056
+842,remote_set_sex_toy_weak,1056
+843,remote_set_sex_toy_weak_to_medium,1057
+844,remote_set_sex_toy_strong_to_medium,1057
+845,remote_set_sex_toy_strong,1058
+846,remote_all_turn_off_sex_toy,1059
+847,remote_all_set_sex_toy_weak,1060
+848,remote_all_set_sex_toy_medium,1061
+849,remote_all_set_sex_toy_strong,1062
+
 850,examine_hair,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - 81 - CVE_A1_E|88_G_1
 851,examine_hair_smoothness,21 - 11 - 12 - 57 - 58 - 110 - CVE_A2_E|0_G_1 - CVE_A2_E|45_G_1 - 70
 852,examine_oral,21 - 11 - 12 - 57 - 58 - 118 - CVE_A2_E|153_G_1 - 81 - CVE_A1_E|88_G_1

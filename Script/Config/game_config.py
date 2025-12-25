@@ -153,8 +153,6 @@ config_item_tag_data: Dict[str, Set] = {}
 道具标签配置数据
 标签:道具id集合
 """
-config_h_item_index: Dict[int, int] = {}
-""" h道具id对应的道具实际cid """
 config_moon: Dict[int, config_def.Moon] = {}
 """ 月相配置 """
 config_moon_data: Dict[int, Set] = {}
@@ -1212,9 +1210,6 @@ def load_item():
         config_item[now_tem.cid] = now_tem
         config_item_tag_data.setdefault(now_tem.tag, set())
         config_item_tag_data[now_tem.tag].add(now_tem.cid)
-        # h道具的话，添加到h道具列表中
-        if now_tem.h_item_id != -1:
-            config_h_item_index[now_tem.h_item_id] = now_tem.cid
 
 
 def load_moon():

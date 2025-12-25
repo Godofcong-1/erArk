@@ -3119,6 +3119,246 @@ def handle_target_not_bondage(character_id: int) -> int:
     return not handle_target_now_bondage(character_id)
 
 
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_OFF)
+def handle_self_now_sex_toy_off(character_id: int) -> int:
+    """
+    自己身上情趣玩具是关闭的
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.sex_toy_level == 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_ON)
+def handle_self_now_sex_toy_on(character_id: int) -> int:
+    """
+    自己身上情趣玩具是开启的（含任意档位）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.sex_toy_level > 0
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_WEAK)
+def handle_self_now_sex_toy_weak(character_id: int) -> int:
+    """
+    自己身上情趣玩具是弱档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.sex_toy_level == 1
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_NOT_WEAK)
+def handle_self_now_sex_toy_not_weak(character_id: int) -> int:
+    """
+    自己身上情趣玩具不是弱档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_sex_toy_weak(character_id)
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_MIDDLE)
+def handle_self_now_sex_toy_middle(character_id: int) -> int:
+    """
+    自己身上情趣玩具是中档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.sex_toy_level == 2
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_STRONG)
+def handle_self_now_sex_toy_strong(character_id: int) -> int:
+    """
+    自己身上情趣玩具是强档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.sp_flag.sex_toy_level == 3
+
+@add_premise(constant_promise.Premise.SELF_NOW_SEX_TOY_NOT_STRONG)
+def handle_self_now_sex_toy_not_strong(character_id: int) -> int:
+    """
+    自己身上情趣玩具不是强档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_now_sex_toy_strong(character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_OFF)
+def handle_target_now_sex_toy_off(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具是关闭的
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_now_sex_toy_off(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_ON)
+def handle_target_now_sex_toy_on(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具是开启的（含任意档位）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_now_sex_toy_on(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_WEAK)
+def handle_target_now_sex_toy_weak(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具是弱档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_now_sex_toy_weak(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_WEAK)
+def handle_target_now_sex_toy_not_weak(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具不是弱档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_self_now_sex_toy_weak(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_MIDDLE)
+def handle_target_now_sex_toy_middle(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具是中档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_now_sex_toy_middle(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_STRONG)
+def handle_target_now_sex_toy_strong(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具是强档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_now_sex_toy_strong(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_STRONG)
+def handle_target_now_sex_toy_not_strong(character_id: int) -> int:
+    """
+    交互对象身上情趣玩具不是强档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_self_now_sex_toy_strong(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.SELF_NO_SEX_TOY)
+def handle_self_no_sex_toy(character_id: int) -> int:
+    """
+    自己身上没有情趣玩具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    for body_item_id in game_config.config_body_item:
+        body_item_data = game_config.config_body_item[body_item_id]
+        # 仅检查情趣佩戴玩具，跳过其他道具
+        if body_item_data.type != 2:
+            continue
+        if character_data.h_state.body_item[body_item_id][1]:
+            return 0
+    return 1
+
+@add_premise(constant_promise.Premise.SELF_HAVE_SEX_TOY)
+def handle_self_have_sex_toy(character_id: int) -> int:
+    """
+    自己身上有至少一个情趣玩具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_no_sex_toy(character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NO_SEX_TOY)
+def handle_target_no_sex_toy(character_id: int) -> int:
+    """
+    交互对象身上没有情趣玩具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return handle_self_no_sex_toy(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_SEX_TOY)
+def handle_target_have_sex_toy(character_id: int) -> int:
+    """
+    交互对象身上有至少一个情趣玩具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return not handle_self_no_sex_toy(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY)
+def handle_scene_have_over_two_chara_have_sex_toy(character_id: int) -> int:
+    """
+    场景内有至少两个角色身上有情趣玩具
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    count = 0
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid):
+            count += 1
+        if count >= 2:
+            return 1
+    return 0
+
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)
 def handle_have_milking_machine(character_id: int) -> int:
     """

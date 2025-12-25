@@ -409,6 +409,19 @@ cid,effect_name,effect_type,effect
 1011,WEAR_CONDOM,道具_使用效果,自己获得戴上避孕套状态
 1012,TAKE_CONDOM_OFF,道具_使用效果,自己去掉戴上避孕套状态
 
+1051,SELF_REMOTE_TOY_OFF,道具_遥控玩具,关闭自己身上的情趣玩具
+1052,SELF_REMOTE_TOY_SET_WEAK,道具_遥控玩具,将自己身上的情趣玩具调到弱档
+1053,SELF_REMOTE_TOY_SET_MEDIUM,道具_遥控玩具,将自己身上的情趣玩具调到中档
+1054,SELF_REMOTE_TOY_SET_STRONG,道具_遥控玩具,将自己身上的情趣玩具调到强档
+1055,TARGET_REMOTE_TOY_OFF,道具_遥控玩具,关闭交互对象身上的情趣玩具
+1056,TARGET_REMOTE_TOY_SET_WEAK,道具_遥控玩具,将交互对象身上的情趣玩具调到弱档
+1057,TARGET_REMOTE_TOY_SET_MEDIUM,道具_遥控玩具,将交互对象身上的情趣玩具调到中档
+1058,TARGET_REMOTE_TOY_SET_STRONG,道具_遥控玩具,将交互对象身上的情趣玩具调到强档
+1059,ALL_REMOTE_TOY_OFF,道具_遥控玩具,关闭在场所有人身上的情趣玩具
+1060,ALL_REMOTE_TOY_SET_WEAK,道具_遥控玩具,将在场所有人身上的情趣玩具调到弱档
+1061,ALL_REMOTE_TOY_SET_MEDIUM,道具_遥控玩具,将在场所有人身上的情趣玩具调到中档
+1062,ALL_REMOTE_TOY_SET_STRONG,道具_遥控玩具,将在场所有人身上的情趣玩具调到强档
+
 1101,FIRST_KISS,初次,记录初吻
 1102,FIRST_HAND_IN_HAND,初次,记录初次牵手
 1103,FIRST_SEX,初次,记录处女

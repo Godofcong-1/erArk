@@ -238,16 +238,18 @@ class BodyPart:
 
 
 class Body_Item:
-    """ 身体道具 """
+    """ H用装备型道具 """
 
     cid: int
     """ 身体道具id """
     name: str
-    """ 身体道具名 """
+    """ 道具名 """
+    item_id: int
+    """ 道具实际id """
     type: int
-    """ 道具类型 """
+    """ 道具类型（0药剂，1仅H装备，2猥亵兼H装备） """
     behavior_id: str
-    """ 二段结算id """
+    """ 行为结算id """
 
 
 class Body_Manage_Requirement:
@@ -883,17 +885,6 @@ class Item:
     """ h道具的id """
     info: str
     """ 描述 """
-
-
-class Item_h_equip:
-    """ H用装备型道具 """
-
-    cid: int
-    """ 道具id """
-    name: str
-    """ 道具名 """
-    item_id: int
-    """ 道具id """
 
 
 class JJ:

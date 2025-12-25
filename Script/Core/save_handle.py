@@ -547,13 +547,13 @@ def update_character_config_data(value):
                 value.assistant_services[key] = 0
                 update_count += 1
     # 身体道具
-    if len(value.h_state.body_item) != len(game_config.config_h_item_index):
+    if len(value.h_state.body_item) != len(game_config.config_body_item):
         # 如果body_item是列表而不是字典，则初始化为空字典
         if isinstance(value.h_state.body_item, list):
             value.h_state.body_item = {}
-        for key in game_config.config_h_item_index:
+        for key in game_config.config_body_item:
             if key not in value.h_state.body_item:
-                item_id = game_config.config_h_item_index[key]
+                item_id = game_config.config_body_item[key].item_id
                 item_name = game_config.config_item[item_id].name
                 value.h_state.body_item[key] = [item_name,False,None]
                 update_count += 1

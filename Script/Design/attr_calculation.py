@@ -273,12 +273,13 @@ def get_h_state_reset(old_h_state_data: game_type.BODY_H_STATE) -> game_type.BOD
     h_state_data = game_type.BODY_H_STATE()
 
     # 身体道具
-    for i in game_config.config_h_item_index:
-        item_id = game_config.config_h_item_index[i]
+    for i in game_config.config_body_item:
+        item_data = game_config.config_body_item[i]
+        item_id = item_data.item_id
         item_name = game_config.config_item[item_id].name
         h_state_data.body_item[i] = [item_name,False,None]
         # 保留药物数据
-        if i in {8,9,10,11,12} and i in old_h_state_data.body_item:
+        if item_data.type == 0 and i in old_h_state_data.body_item:
             h_state_data.body_item[i] = old_h_state_data.body_item[i]
 
     # 部位绝顶

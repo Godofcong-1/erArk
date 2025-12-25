@@ -349,6 +349,22 @@ class Instruct:
     """ 手指插入（A） """
     MILK = 0
     """ 挤奶 """
+    REMOTE_TOY_ON = 0
+    """ 遥控启动玩具 """
+    REMOTE_TOY_OFF = 0
+    """ 遥控关闭玩具 """
+    REMOTE_TOY_LEVEL_UP = 0
+    """ 调高玩具档位 """
+    REMOTE_TOY_LEVEL_DOWN = 0
+    """ 降低玩具档位 """
+    REMOTE_TOY_ALL_ON = 0
+    """ 遥控启动全员玩具 """
+    REMOTE_TOY_ALL_OFF = 0
+    """ 遥控关闭全员玩具 """
+    REMOTE_TOY_ALL_LEVEL_UP = 0
+    """ 调高全员玩具档位 """
+    REMOTE_TOY_ALL_LEVEL_DOWN = 0
+    """ 降低全员玩具档位 """
     BAGGING_AND_MOVING = 0
     """ 装袋搬走 """
     RELEASE_FROM_BAG = 0
