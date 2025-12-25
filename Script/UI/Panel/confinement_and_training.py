@@ -142,7 +142,7 @@ def escape_success(character_id: int):
     character_id -- 角色id\n
     """
     from Script.Settle import default
-    from Script.System.Field_Commission_System import field_commission_panel
+    from Script.System.Field_Commission_System import field_commission_function
     character_data = cache.character_data[character_id]
     # 逃脱成功提示
     escape_text = _("\n囚犯{0}逃脱成功，请尽快派遣外勤干员进行追捕！\n").format(character_data.name)
@@ -158,7 +158,7 @@ def escape_success(character_id: int):
     cache.rhodes_island.current_prisoners.pop(character_id)
     # 囚犯离线
     default.handle_chara_off_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
-    field_commission_panel.create_capture_fugitive_commission(character_id)
+    field_commission_function.create_capture_fugitive_commission(character_id)
 
 def escape_fail(character_id: int):
     """
