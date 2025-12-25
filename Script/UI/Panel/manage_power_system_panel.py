@@ -190,7 +190,7 @@ def _calculate_battery_self_discharge(ri_obj: game_type.Rhodes_Island) -> Tuple[
     except Exception:
         avg_rate = 0.0
 
-    ri_obj.power_storage = max(0.0, remaining_storage)
+    ri_obj.power_storage = max(0.0, ri_obj.power_storage - discharge_total)
     return round(discharge_total, 2), round(avg_rate, 4)
 
 def store_power_by_human_power(climax_degree: int, character_id: int, draw_flag: bool = True) -> float:
