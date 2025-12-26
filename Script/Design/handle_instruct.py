@@ -283,7 +283,7 @@ def handle_move():
 
 
 @add_instruct(
-    constant.Instruct.SEE_ATTR, constant.InstructType.SYSTEM, _("查看属性"), {}
+    constant.Instruct.SEE_ATTR, constant.InstructType.SYSTEM, _("查看属性"), set()
 )
 def handle_see_attr():
     """查看属性"""
@@ -331,7 +331,7 @@ def handle_buy_h_item():
 
 @add_instruct(
     constant.Instruct.ITEM, constant.InstructType.SYSTEM, _("道具"),
-    {}
+    set()
 )
 def handle_item():
     """处理道具指令"""
@@ -5219,6 +5219,77 @@ def handle_urine_collector_off():
     """处理取下采尿器指令"""
     chara_handle_instruct_common_settle(constant.Behavior.URINE_COLLECTOR_OFF)
 
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_ON_IN_H,
+    constant.InstructType.SEX,
+    _("遥控启动玩具"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_OFF,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_TURN_ON_SEX_TOY,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_toy_on_in_h():
+    """处理遥控启动玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_TURN_ON_SEX_TOY)
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_OFF_IN_H,
+    constant.InstructType.SEX,
+    _("遥控关闭玩具"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_TURN_OFF_SEX_TOY,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_toy_off_in_h():
+    """处理遥控关闭玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_TURN_OFF_SEX_TOY)
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_LEVEL_UP_IN_H,
+    constant.InstructType.SEX,
+    _("调高玩具档位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_STRONG,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_SET_SEX_TOY_STRONG,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_toy_level_up_in_h():
+    """处理调高玩具档位指令"""
+    if handle_premise.handle_target_now_sex_toy_weak(0):
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK_TO_MEDIUM)
+    else:
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_STRONG)
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_LEVEL_DOWN_IN_H,
+    constant.InstructType.OBSCENITY,
+    _("降低玩具档位"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.TARGET_HAVE_SEX_TOY,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_ON,
+     constant_promise.Premise.TARGET_NOW_SEX_TOY_NOT_WEAK,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_SET_SEX_TOY_WEAK,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_toy_level_down_in_h():
+    """处理降低玩具档位指令"""
+    if handle_premise.handle_target_now_sex_toy_strong(0):
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_STRONG_TO_MEDIUM)
+    else:
+        chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK)
 
 @add_instruct(
     constant.Instruct.BONDAGE,

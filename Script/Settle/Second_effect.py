@@ -2224,6 +2224,144 @@ def handle_add_large_h_feel(
     change_data.status_data.setdefault(23, 0)
     change_data.status_data[23] += now_add_lust
 
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_B_FEEL_REMOTE_TOY)
+def handle_add_b_feel_remote_toy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加Ｂ快（情趣玩具强度补正）
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+
+    character_data: game_type.Character = cache.character_data[character_id]
+
+    # 补正根据档位变化
+    toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
+    # 如果补正为0，则直接返回
+    if toy_adjust <= 0:
+        return
+
+    now_lust = character_data.status_data[1]
+    now_add_lust = 20
+    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[1])
+    final_adjust = abi_adjust * toy_adjust
+    now_add_lust *= final_adjust
+    # now_add_lust += now_lust / 20
+    now_add_lust = int(now_add_lust)
+
+    character_data.status_data[1] += now_add_lust
+    character_data.status_data[1] = min(99999, character_data.status_data[1])
+    change_data.status_data.setdefault(1, 0)
+    change_data.status_data[1] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_C_FEEL_REMOTE_TOY)
+def handle_add_c_feel_remote_toy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加Ｃ快（情趣玩具强度补正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
+    if toy_adjust <= 0:
+        return
+    now_lust = character_data.status_data[2]
+    now_add_lust = 20
+    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[2])
+    final_adjust = abi_adjust * toy_adjust
+    now_add_lust *= final_adjust
+    now_add_lust = int(now_add_lust)
+    character_data.status_data[2] += now_add_lust
+    character_data.status_data[2] = min(99999, character_data.status_data[2])
+    change_data.status_data.setdefault(2, 0)
+    change_data.status_data[2] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_V_FEEL_REMOTE_TOY)
+def handle_add_v_feel_remote_toy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加Ｖ快（情趣玩具强度补正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
+    if toy_adjust <= 0:
+        return
+    now_lust = character_data.status_data[4]
+    now_add_lust = 20
+    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[4])
+    final_adjust = abi_adjust * toy_adjust
+    now_add_lust *= final_adjust
+    now_add_lust = int(now_add_lust)
+    character_data.status_data[4] += now_add_lust
+    character_data.status_data[4] = min(99999, character_data.status_data[4])
+    change_data.status_data.setdefault(4, 0)
+    change_data.status_data[4] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_A_FEEL_REMOTE_TOY)
+def handle_add_a_feel_remote_toy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加Ａ快（情趣玩具强度补正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
+    if toy_adjust <= 0:
+        return
+    now_lust = character_data.status_data[5]
+    now_add_lust = 20
+    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[5])
+    final_adjust = abi_adjust * toy_adjust
+    now_add_lust *= final_adjust
+    now_add_lust = int(now_add_lust)
+    character_data.status_data[5] += now_add_lust
+    character_data.status_data[5] = min(99999, character_data.status_data[5])
+    change_data.status_data.setdefault(5, 0)
+    change_data.status_data[5] += now_add_lust
+
+@settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_U_FEEL_REMOTE_TOY)
+def handle_add_u_feel_remote_toy(
+    character_id: int,
+    change_data: game_type.CharacterStatusChange,
+):
+    """
+    增加Ｕ快（情趣玩具强度补正）
+    Keyword arguments:
+    character_id -- 角色id
+    change_data -- 状态变更信息记录对象
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    toy_adjust = character_data.sp_flag.sex_toy_level * 0.5
+    if toy_adjust <= 0:
+        return
+    now_lust = character_data.status_data[6]
+    now_add_lust = 20
+    abi_adjust = handle_ability.get_ability_adjust(character_data.ability[6])
+    final_adjust = abi_adjust * toy_adjust
+    now_add_lust *= final_adjust
+    now_add_lust = int(now_add_lust)
+    character_data.status_data[6] += now_add_lust
+    character_data.status_data[6] = min(99999, character_data.status_data[6])
+    change_data.status_data.setdefault(6, 0)
+    change_data.status_data[6] += now_add_lust
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_LUBRICATION_PLUS)
 def handle_add_large_lubrication_plus(
@@ -2244,6 +2382,7 @@ def handle_add_large_lubrication_plus(
     now_add_lust = 1000
     adjust = handle_ability.get_ability_adjust(character_data.ability[33])
     now_add_lust *= adjust
+    now_add_lust = int(now_add_lust)
 
     character_data.status_data[8] += now_add_lust
     character_data.status_data[8] = min(99999, character_data.status_data[8])

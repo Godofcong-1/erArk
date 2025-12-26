@@ -237,14 +237,14 @@ int,str,str
 473,urethral_swab,13 - 14 - 21 - 39 - 57 - 58 - 60 - 62 - 116 - 522 - CVE_A2_E|6_G_1 - CVE_A2_E|67_G_1 - 954
 474,electric_message_stick,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
 481,nipples_love_egg,21 - 13 - 14 - 22 - 49 - 55 - 62 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1
-482,nipple_clamp_on,21 - 13 - 14 - 22 - 42 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 915
+482,nipple_clamp_on,21 - 13 - 14 - 22 - 42 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 915 - 1063
 483,nipple_clamp_off,916
 484,clit_love_egg,21 - 13 - 14 - 22 - 49 - 55 - 62 - 112 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1
-485,clit_clamp_on,21 - 13 - 14 - 22 - 43 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1 - 917
+485,clit_clamp_on,21 - 13 - 14 - 22 - 43 - 49 - 54 - 55 - 59 - 62 - CVE_A2_E|2_G_1 - CVE_A2_E|51_G_1 - 917 - 1063
 486,clit_clamp_off,918
-491,vibrator_insertion,21 - 13 - 14 - 22 - 1103 - 45 - 49 - 54 - 59 - 62 - CVE_A2_E|4_G_1 - CVE_A2_E|51_G_1 - 911
+491,vibrator_insertion,21 - 13 - 14 - 22 - 1103 - 45 - 49 - 54 - 59 - 62 - CVE_A2_E|4_G_1 - CVE_A2_E|51_G_1 - 911 - 1063
 492,vibrator_insertion_off,912
-493,vibrator_insertion_anal,21 - 13 - 14 - 22 - 1104 - 46 - 49 - 54 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 913
+493,vibrator_insertion_anal,21 - 13 - 14 - 22 - 1104 - 46 - 49 - 54 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 913 - 1063
 494,vibrator_insertion_anal_off,914
 495,anal_beads,21 - 13 - 14 - 22 - 46 - 57 - 58 - 59 - 62 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 919
 496,anal_beads_off,920
@@ -327,8 +327,8 @@ int,str,str
 586,urethral_finger_insertion,15 - 16 - 21 - 39 - 57 - 58 - 60 - 62 - 116 - 523 - CVE_A2_E|6_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|67_G_1
 587,urethral_sex,15 - 16 - 21 - 22 - 1108 - 39 - 57 - 58 - 60 - 62 - 133 - 120 - 124 - CVE_A2_E|6_G_1 - CVE_A2_E|32_G_1 - CVE_A2_E|63_G_1 - CVE_A2_E|67_G_1 - 811 - 851
 
-601,milking_machine_on,13 - 14 - 21 - 22 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 921
-602,urine_collector_on,13 - 14 - 21 - 22 - 58 - 116 - CVE_A2_E|7_G_1 - CVE_A2_E|51_G_1 - 923
+601,milking_machine_on,13 - 14 - 21 - 22 - 58 - 111 - CVE_A2_E|1_G_1 - CVE_A2_E|51_G_1 - 921 - 1063
+602,urine_collector_on,13 - 14 - 21 - 22 - 58 - 116 - CVE_A2_E|7_G_1 - CVE_A2_E|51_G_1 - 923 - 1063
 603,bind,15 - 16 - 21 - 59 - 81 - 86 - CVE_A1_E|70_G_1 - CVE_A2_E|52_G_1
 604,patch_on,13 - 14 - 21 - 22 - 60 - CVE_A2_E|51_G_1 - 925
 605,whip,13 - 14 - 21 - 23 - 52 - 57 - 59 - 59 - 60 - 62 - 81 - 135 - CVE_A2_E|32_G_1 - CVE_A2_E|51_G_1 - CVE_A1_E|33_G_1
@@ -534,12 +534,12 @@ int,str,str
 1093,first_u_sex,402 - 998
 1094,first_w_sex,403 - 998
 
-1100,nipple_clamp,231 - 232 - 238 - 270 - 611
-1101,clit_clamp,231 - 232 - 239 - 270 - 612
-1102,second_vibrator_insertion,231 - 232 - 241 - 614
-1103,second_vibrator_insertion_anal,231 - 232 - 242 - 615
-1104,milking_machine,231 - 232 - 238 - 404 - 611
-1105,urine_collector,231 - 232 - 243 - 405 - 616
+1100,nipple_clamp,231 - 232 - 319 - 270 - 611
+1101,clit_clamp,231 - 232 - 320 - 270 - 612
+1102,second_vibrator_insertion,231 - 232 - 321 - 614
+1103,second_vibrator_insertion_anal,231 - 232 - 322 - 615
+1104,milking_machine,231 - 232 - 319 - 404 - 611
+1105,urine_collector,231 - 232 - 323 - 405 - 616
 1106,patch,271
 1107,second_anal_beads,231 - 232 - 242 - 615
 1108,gag,999

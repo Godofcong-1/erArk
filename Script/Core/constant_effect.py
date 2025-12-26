@@ -823,6 +823,8 @@ class BehaviorEffect:
     """ 道具_遥控玩具 将在场所有人身上的情趣玩具调到中档 """
     ALL_REMOTE_TOY_SET_STRONG = 1062
     """ 道具_遥控玩具 将在场所有人身上的情趣玩具调到强档 """
+    TARGET_REMOTE_TOY_USE_OR_SET_WEAK = 1063
+    """ 道具_遥控玩具 如果交互对象已有强度设定则继续使用，否则开启到弱档 """
 
     FIRST_KISS = 1101
     """ 初次 记录初吻 """
@@ -1175,6 +1177,16 @@ class SecondEffect:
     """ 增加大量Ｆ快（F感补正） """
     ADD_LARGE_H_FEEL = 318
     """ 增加大量Ｈ快（H感补正） """
+    ADD_B_FEEL_REMOTE_TOY = 319
+    """ 增加Ｂ快（情趣玩具强度补正） """
+    ADD_C_FEEL_REMOTE_TOY = 320
+    """ 增加Ｃ快（情趣玩具强度补正） """
+    ADD_V_FEEL_REMOTE_TOY = 321
+    """ 增加Ｖ快（情趣玩具强度补正） """
+    ADD_A_FEEL_REMOTE_TOY = 322
+    """ 增加Ａ快（情趣玩具强度补正） """
+    ADD_U_FEEL_REMOTE_TOY = 323
+    """ 增加Ｕ快（情趣玩具强度补正） """
     ADD_LARGE_PAIN_FIRST_SEX = 400
     """ 增加巨量苦痛（破处修正） """
     ADD_LARGE_PAIN_FIRST_A_SEX = 401

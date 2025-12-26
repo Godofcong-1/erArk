@@ -297,11 +297,26 @@ class SeeCharacterBodyPanel:
 
         # H道具文本
         now_text = ""
+        # 情趣玩具档位文本
+        sex_toy_level = target_character_data.sp_flag.sex_toy_level
+        if sex_toy_level == 0:
+            sex_toy_lv_text = _("(关)")
+        elif sex_toy_level == 1:
+            sex_toy_lv_text = _("(弱)")
+        elif sex_toy_level == 2:
+            sex_toy_lv_text = _("(中)")
+        else:
+            sex_toy_lv_text = _("(强)")
+        # 身体道具数据
         body_item_dict = target_character_data.h_state.body_item
         for i in range(len(body_item_dict)):
             # print("status_type :",status_type)
             if body_item_dict[i][1]:
+                body_item_data = game_config.config_body_item[i]
                 status_text = body_item_dict[i][0]
+                # 如果是猥亵型装备且当前不在H中，则显示档位文本
+                if body_item_data.type == 2:
+                    status_text += sex_toy_lv_text
                 now_text += f" <{status_text}>"
         if now_text != "":
             all_part_text_list.append(now_text)
