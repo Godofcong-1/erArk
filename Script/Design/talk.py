@@ -22,6 +22,8 @@ def handle_talk(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
     behavior_id = character_data.behavior.behavior_id
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     # 和玩家不在同一位置的NPC不显示文本
     if character_id != 0 and character_data.position != cache.character_data[0].position:
         # print(f"debug {character_data.name}和玩家不在同一位置，不显示文本")
@@ -41,7 +43,7 @@ def handle_talk(character_id: int):
         # print(f"debug 智能跟随模式下，博士离开时，跟随的角色{target_data.name}不显示送别文本")
         return
     # 第一段行为结算的口上
-    now_talk_data = handle_talk_sub(character_id, behavior_id)
+    now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict)
     talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
     handle_talk_draw(character_id, talk_text, now_talk_id)
 
@@ -51,7 +53,7 @@ def handle_talk(character_id: int):
         for chara_id in cache.scene_data[scene_path_str].character_list:
             # 要求对象是NPC，且没有跟随玩家
             if chara_id > 0 and handle_premise.handle_not_follow(chara_id):
-                now_talk_data = handle_talk_sub(chara_id, behavior_id)
+                now_talk_data, calculated_premise_dict = handle_talk_sub(chara_id, behavior_id, calculated_premise_dict)
                 talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
                 handle_talk_draw(chara_id, talk_text, now_talk_id)
 
@@ -64,6 +66,8 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     behavior_id -- 行为id，默认为0\n
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     # 检测是否是收藏模式#
     if cache.is_collection and character_id:
         player_data: game_type.Character = cache.character_data[0]
@@ -74,11 +78,11 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     if behavior_id == "share_blankly":
         for second_behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data != 0:
-                now_talk_data = handle_talk_sub(character_id, second_behavior_id)
+                now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, second_behavior_id, calculated_premise_dict)
                 talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
                 handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id)
     else:
-        now_talk_data = handle_talk_sub(character_id, behavior_id)
+        now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict)
         talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
         handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
 
@@ -92,12 +96,14 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
     #             handle_talk_draw(target_character_id, now_talk_data, second_behavior_id)
 
 
-def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag = False):
+def handle_talk_sub(character_id: int, behavior_id: str, calculated_premise_dict: dict = {}, unconscious_pass_flag = False):
     """
     处理行为结算对话的内置循环部分
     Keyword arguments:
     character_id -- 角色id
     behavior_id -- 行为id
+    calculated_premise_dict -- 已计算过的前提字典
+    unconscious_pass_flag -- 是否无视昏迷状态，默认为False
     """
     character_data: game_type.Character = cache.character_data[character_id]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
@@ -132,8 +138,6 @@ def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag =
             tem_talk_list += game_config.config_talk_data_by_chara_adv[behavior_id][target_data.adv][target_version]
     # 正式口上数据
     now_talk_data = {}
-    # 已计算过的前提字典
-    calculated_premise_dict = {}
     # 遍历口上列表
     for talk_id in tem_talk_list:
         talk_config = game_config.config_talk[talk_id]
@@ -158,7 +162,7 @@ def handle_talk_sub(character_id: int, behavior_id: str, unconscious_pass_flag =
             # 加入到正式口上数据中
             now_talk_data.setdefault(now_weight, set())
             now_talk_data[now_weight].add(talk_id)
-    return now_talk_data
+    return now_talk_data, calculated_premise_dict
 
 def handle_special_talk_weight(character_id: int, talk_premise_set: set) -> int:
     """
@@ -350,13 +354,15 @@ def must_show_talk_check(character_id: int):
     character_id -- 角色id
     """
     character_data: game_type.Character = cache.character_data[character_id]
+    # 已计算过的前提字典
+    calculated_premise_dict = {}
     # 遍历所有必须显示的二段行为
     for behavior_id in character_data.must_show_second_behavior_id_list:
         # 跳过值为0的行为
         if behavior_id in character_data.second_behavior and character_data.second_behavior[behavior_id] == 0:
             continue
         # 进行绘制
-        now_talk_data = handle_talk_sub(character_id, behavior_id, True)
+        now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict, True)
         talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
         handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
         # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
