@@ -174,45 +174,45 @@ def handle_special_talk_weight(character_id: int, talk_premise_set: set) -> int:
     from Script.Core import constant_promise
     # 时停解放
     if handle_premise.handle_self_time_stop_orgasm_relase(character_id) or handle_premise.handle_target_time_stop_orgasm_relase(character_id):
-        time_stop_orgasm_relase_premise = [constant_promise.Premise.SELF_TIME_STOP_ORGASM_RELAESE, constant_promise.Premise.TARGET_TIME_STOP_ORGASM_RELAESE]
+        time_stop_orgasm_relase_premise = {constant_promise.Premise.SELF_TIME_STOP_ORGASM_RELAESE, constant_promise.Premise.TARGET_TIME_STOP_ORGASM_RELAESE}
         judge_premise_and_weight_list.append(time_stop_orgasm_relase_premise)
     # 女儿
     if handle_premise.handle_self_is_player_daughter(character_id) or handle_premise.handle_target_is_player_daughter(character_id):
-        daughter_premise = [constant_promise.Premise.SELF_IS_PLAYER_DAUGHTER, constant_promise.Premise.SELF_NOT_PLAYER_DAUGHTER]
+        daughter_premise = {constant_promise.Premise.SELF_IS_PLAYER_DAUGHTER, constant_promise.Premise.SELF_NOT_PLAYER_DAUGHTER}
         judge_premise_and_weight_list.append(daughter_premise)
     # 在爱情旅馆H
     if handle_premise.handle_h_in_love_hotel(character_id):
-        h_in_love_hotel_premise = [constant_promise.Premise.H_IN_LOVE_HOTEL]
+        h_in_love_hotel_premise = {constant_promise.Premise.H_IN_LOVE_HOTEL}
         judge_premise_and_weight_list.append(h_in_love_hotel_premise)
     # 在浴室中H
     if handle_premise.handle_h_in_bathroom(character_id):
-        h_in_bathroom_premise = [constant_promise.Premise.H_IN_BATHROOM]
+        h_in_bathroom_premise = {constant_promise.Premise.H_IN_BATHROOM}
         judge_premise_and_weight_list.append(h_in_bathroom_premise)
     # 逆推
     if handle_premise.handle_npc_active_h(character_id) or handle_premise.handle_t_npc_active_h(character_id):
-        reverse_premise = [constant_promise.Premise.NPC_ACTIVE_H, constant_promise.Premise.T_NPC_ACTIVE_H]
+        reverse_premise = {constant_promise.Premise.NPC_ACTIVE_H, constant_promise.Premise.T_NPC_ACTIVE_H}
         judge_premise_and_weight_list.append(reverse_premise)
     # 隐奸
     if handle_premise.handle_hidden_sex_mode_ge_1(character_id) or handle_premise.handle_t_hidden_sex_mode_ge_1(character_id):
-        hidden_sex_premise = [constant_promise.Premise.HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.HIDDEN_SEX_MODE_1, constant_promise.Premise.HIDDEN_SEX_MODE_2, constant_promise.Premise.HIDDEN_SEX_MODE_3, constant_promise.Premise.HIDDEN_SEX_MODE_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.HIDDEN_SEX_MODE_2_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2_OR_4]
+        hidden_sex_premise = {constant_promise.Premise.HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.HIDDEN_SEX_MODE_1, constant_promise.Premise.HIDDEN_SEX_MODE_2, constant_promise.Premise.HIDDEN_SEX_MODE_3, constant_promise.Premise.HIDDEN_SEX_MODE_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.HIDDEN_SEX_MODE_2_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_GE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_2, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_3_OR_4, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_1_OR_3, constant_promise.Premise.TARGET_HIDDEN_SEX_MODE_2_OR_4}
         judge_premise_and_weight_list.append(hidden_sex_premise)
     # 露出
     if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
-        exhibitionism_sex_premise = [constant_promise.Premise.EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_4, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_4]
+        exhibitionism_sex_premise = {constant_promise.Premise.EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.EXHIBITIONISM_SEX_MODE_4, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_GE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_1, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_2, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_3, constant_promise.Premise.TARGET_EXHIBITIONISM_SEX_MODE_4}
         judge_premise_and_weight_list.append(exhibitionism_sex_premise)
     # 群交
     if handle_premise.handle_group_sex_mode_on(character_id):
-        group_sex_premise = [constant_promise.Premise.GROUP_SEX_MODE_ON]
+        group_sex_premise = {constant_promise.Premise.GROUP_SEX_MODE_ON}
         judge_premise_and_weight_list.append(group_sex_premise)
     # 监禁
     if handle_premise.handle_imprisonment_1(character_id) or handle_premise.handle_t_imprisonment_1(character_id):
-        imprisonment_premise = [constant_promise.Premise.IMPRISONMENT_1, constant_promise.Premise.T_IMPRISONMENT_1]
+        imprisonment_premise = {constant_promise.Premise.IMPRISONMENT_1, constant_promise.Premise.T_IMPRISONMENT_1}
         judge_premise_and_weight_list.append(imprisonment_premise)
     # 遍历所有需要判断的前提和对应权重
-    for premise_list in judge_premise_and_weight_list:
-        for premise in premise_list:
-            # 如果口上前提中包含该前提，则进行权重加成
-            if premise in talk_premise_set:
+    for judge_premise_set in judge_premise_and_weight_list:
+        for premise in talk_premise_set:
+            # 如果口上前提中存在该前提，则进行权重加成
+            if premise in judge_premise_set:
                 new_weight *= cache.all_system_setting.draw_setting.get(15, 5)
                 break
     return new_weight
