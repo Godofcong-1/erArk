@@ -314,11 +314,11 @@ def orgasm_judge(character_id: int, change_data: game_type.CharacterStatusChange
         normal_orgasm_dict = {}  # 高潮结算字典
         extra_orgasm_dict = {}  # 额外高潮结算字典
         un_count_orgasm_dict = {}  # 不计数高潮结算字典
-        orgasm_part_list = []  # 高潮部位列表
         for state_id in game_config.config_character_state:
-            if game_config.config_character_state[state_id].type == 0:
-                orgasm_part_list.append(state_id)
-        for orgasm in orgasm_part_list:
+            # 跳过非快感属性
+            if game_config.config_character_state[state_id].type != 0:
+                continue
+            orgasm = state_id
             # 跳过射精槽
             if orgasm == 3:
                 continue
