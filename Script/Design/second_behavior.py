@@ -625,29 +625,24 @@ def get_now_state_all_value_and_text_from_mark_up_data(mark_up_id: int, characte
     # 本地化常用对象，减少每次循环访问全局模块属性的成本
     character_data: game_type.Character = cache.character_data[character_id]
     character_status_data = character_data.status_data
-    mark_up_data = game_config.config_mark_up_data[mark_up_id]
-    mark_up_data_need_state_list = []
-    mark_up_data_need_state_list.append(mark_up_data.need_state_1)
-    mark_up_data_need_state_list.append(mark_up_data.need_state_2)
-    mark_up_data_need_state_list.append(mark_up_data.need_state_3)
-    mark_up_data_need_state_list.append(mark_up_data.need_state_4)
+    mark_up_data_need_state_list = game_config.config_mark_up_data_need_state_list[mark_up_id]
     mark_up_data_all_value = 0
     mark_up_data_text = ""
     for need_state in mark_up_data_need_state_list:
         # 跳过空值
         if need_state == '0':
             continue
-        # 如果存在|符号，说明有权重调整
-        if '|' in need_state:
-            state_id = int(need_state.split('|')[0])
-            adjust = float(need_state.split('|')[1])
+        # 如果长度为2，说明有权重调整
+        if len(need_state) == 2:
+            state_id = need_state[0]
+            adjust = need_state[1]
             # 计算当前状态值
             now_state_value = int(character_status_data[state_id] * adjust)
             mark_up_data_all_value += now_state_value
             mark_up_data_text += f" {game_config.config_character_state[state_id].name}*{adjust} = {now_state_value} "
         else:
-            state_id = int(need_state)
-            now_state_value = int(character_status_data[state_id])
+            state_id = need_state[0]
+            now_state_value = character_status_data[state_id]
             mark_up_data_all_value += now_state_value
             mark_up_data_text += f" {game_config.config_character_state[state_id].name} = {now_state_value} "
     return mark_up_data_all_value, mark_up_data_text

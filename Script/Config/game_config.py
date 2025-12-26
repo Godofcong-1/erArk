@@ -236,6 +236,8 @@ config_mark_up_data: Dict[int, config_def.Mark_Up] = {}
 """ 刻印升级数据 """
 config_mark_up_data_by_ability: Dict[int, Dict] = {}
 """ 根据刻印能力id和能力等级来获取的刻印升级数据id """
+config_mark_up_data_need_state_list: Dict[int, List] = {}
+""" 刻印升级所需状态列表 """
 config_mark_down_data: Dict[int, config_def.Mark_Down] = {}
 """ 刻印降级数据 """
 config_mark_down_data_by_ability: Dict[int, Dict] = {}
@@ -602,6 +604,32 @@ def load_mark_up_data():
         config_mark_up_data[now_tem.cid] = now_tem
         config_mark_up_data_by_ability.setdefault(now_tem.ability_id, {})
         config_mark_up_data_by_ability[now_tem.ability_id][now_tem.now_level] = now_tem.cid
+        config_mark_up_data_need_state_list.setdefault(now_tem.cid, [])
+        # 如果存在|符号，说明有权重调整
+        if '|' in now_tem.need_state_1:
+            state_id = int(now_tem.need_state_1.split('|')[0])
+            adjust = float(now_tem.need_state_1.split('|')[1])
+            config_mark_up_data_need_state_list[now_tem.cid].append([state_id, adjust])
+        else:
+            config_mark_up_data_need_state_list[now_tem.cid].append([int(now_tem.need_state_1)])
+        if '|' in now_tem.need_state_2:
+            state_id = int(now_tem.need_state_2.split('|')[0])
+            adjust = float(now_tem.need_state_2.split('|')[1])
+            config_mark_up_data_need_state_list[now_tem.cid].append([state_id, adjust])
+        else:
+            config_mark_up_data_need_state_list[now_tem.cid].append([int(now_tem.need_state_2)])
+        if '|' in now_tem.need_state_3:
+            state_id = int(now_tem.need_state_3.split('|')[0])
+            adjust = float(now_tem.need_state_3.split('|')[1])
+            config_mark_up_data_need_state_list[now_tem.cid].append([state_id, adjust])
+        else:
+            config_mark_up_data_need_state_list[now_tem.cid].append([int(now_tem.need_state_3)])
+        if '|' in now_tem.need_state_4:
+            state_id = int(now_tem.need_state_4.split('|')[0])
+            adjust = float(now_tem.need_state_4.split('|')[1])
+            config_mark_up_data_need_state_list[now_tem.cid].append([state_id, adjust])
+        else:
+            config_mark_up_data_need_state_list[now_tem.cid].append([int(now_tem.need_state_4)])
 
 def load_mark_down_data():
     """载入刻印升级数据"""
