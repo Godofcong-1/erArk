@@ -20,10 +20,10 @@ def collect_and_cut_rows(source_dir: Path, target_file: Path) -> None:
                 if len(row) > 4 and row[4]:
                     col = row[4]
                     if col.startswith('\"'):
-                        print("Found leading quote in:", col)
+                        print("Found leading quote")
                         col = col[1:]
                     if col.endswith('\"'):
-                        print("Found trailing quote in:", col)
+                        print("Found trailing quote")
                         col = col[:-1]
                     row[4] = col
                 target_writer.writerow(row)
