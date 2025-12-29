@@ -357,14 +357,14 @@ class Instruct:
     """ 调高玩具档位 """
     REMOTE_TOY_LEVEL_DOWN = 0
     """ 降低玩具档位 """
-    REMOTE_TOY_ALL_ON = 0
-    """ 遥控启动全员玩具 """
     REMOTE_TOY_ALL_OFF = 0
     """ 遥控关闭全员玩具 """
-    REMOTE_TOY_ALL_LEVEL_UP = 0
-    """ 调高全员玩具档位 """
-    REMOTE_TOY_ALL_LEVEL_DOWN = 0
-    """ 降低全员玩具档位 """
+    REMOTE_ALL_SET_SEX_TOY_WEAK = 0
+    """ 全员玩具调到弱档 """
+    REMOTE_ALL_SET_SEX_TOY_MEDIUM = 0
+    """ 全员玩具调到中档 """
+    REMOTE_ALL_SET_SEX_TOY_STRONG = 0
+    """ 全员玩具调到强档 """
     BAGGING_AND_MOVING = 0
     """ 装袋搬走 """
     RELEASE_FROM_BAG = 0
@@ -621,14 +621,14 @@ class Instruct:
     """ 调高玩具档位 """
     REMOTE_TOY_LEVEL_DOWN_IN_H = 0
     """ 降低玩具档位 """
-    REMOTE_TOY_ALL_ON_IN_H = 0
-    """ 遥控启动全员玩具 """
     REMOTE_TOY_ALL_OFF_IN_H = 0
     """ 遥控关闭全员玩具 """
-    REMOTE_TOY_ALL_LEVEL_UP_IN_H = 0
-    """ 调高全员玩具档位 """
-    REMOTE_TOY_ALL_LEVEL_DOWN_IN_H = 0
-    """ 降低全员玩具档位 """
+    REMOTE_ALL_SET_SEX_TOY_WEAK_IN_H = 0
+    """ 全员玩具调到弱档 """
+    REMOTE_ALL_SET_SEX_TOY_MEDIUM_IN_H = 0
+    """ 全员玩具调到中档 """
+    REMOTE_ALL_SET_SEX_TOY_STRONG_IN_H = 0
+    """ 全员玩具调到强档 """
 
     VAGINAL_SEX = 0
     """ 阴道性交 """

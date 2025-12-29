@@ -421,6 +421,7 @@ cid,effect_name,effect_type,effect
 1060,ALL_REMOTE_TOY_SET_WEAK,道具_遥控玩具,将在场所有人身上的情趣玩具调到弱档
 1061,ALL_REMOTE_TOY_SET_MEDIUM,道具_遥控玩具,将在场所有人身上的情趣玩具调到中档
 1062,ALL_REMOTE_TOY_SET_STRONG,道具_遥控玩具,将在场所有人身上的情趣玩具调到强档
+1063,TARGET_REMOTE_TOY_USE_OR_SET_WEAK,道具_遥控玩具,如果交互对象已有强度设定则继续使用，否则开启到弱档
 
 1101,FIRST_KISS,初次,记录初吻
 1102,FIRST_HAND_IN_HAND,初次,记录初次牵手

@@ -3359,6 +3359,86 @@ def handle_scene_have_over_two_chara_have_sex_toy(character_id: int) -> int:
             return 1
     return 0
 
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_OFF)
+def handle_scene_have_over_one_chara_sex_toy_off(character_id: int) -> int:
+    """
+    场景内至少有一个角色身上的情趣玩具是关机的
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid) and handle_self_now_sex_toy_off(chara_cid):
+            return 1
+    return 0
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_ON)
+def handle_scene_have_over_one_chara_sex_toy_on(character_id: int) -> int:
+    """
+    场景内至少有一个角色身上的情趣玩具是开启的
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid) and handle_self_now_sex_toy_on(chara_cid):
+            return 1
+    return 0
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_NOT_WEAK)
+def handle_scene_have_over_one_chara_sex_toy_not_weak(character_id: int) -> int:
+    """
+    场景内至少有一个角色身上的情趣玩具不是弱档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid) and not handle_self_now_sex_toy_weak(chara_cid):
+            return 1
+    return 0
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_STRONG)
+def handle_scene_have_over_one_chara_sex_toy_weak_or_strong(character_id: int) -> int:
+    """
+    场景内至少有一个角色身上的情趣玩具是弱或强档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid) and (handle_self_now_sex_toy_weak(chara_cid) or handle_self_now_sex_toy_strong(chara_cid)):
+            return 1
+    return 0
+
+@add_premise(constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_MIDDLE)
+def handle_scene_have_over_one_chara_sex_toy_weak_or_middle(character_id: int) -> int:
+    """
+    场景内至少有一个角色身上的情趣玩具是弱或中档位
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from Script.Design import map_handle
+    character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
+    for chara_cid in character_list:
+        if handle_self_have_sex_toy(chara_cid) and (handle_self_now_sex_toy_weak(chara_cid) or handle_self_now_sex_toy_middle(chara_cid)):
+            return 1
+    return 0
+
 @add_premise(constant_promise.Premise.HAVE_MILKING_MACHINE)
 def handle_have_milking_machine(character_id: int) -> int:
     """

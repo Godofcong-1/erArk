@@ -1631,6 +1631,9 @@ def handle_target_remote_toy_set_weak(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 如果对方没有情趣玩具则跳过
+    if handle_premise.handle_self_no_sex_toy(character_data.target_character_id):
+        return
     handle_self_remote_toy_set_weak(character_data.target_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_REMOTE_TOY_SET_MEDIUM)
@@ -1651,6 +1654,9 @@ def handle_target_remote_toy_set_medium(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 如果对方没有情趣玩具则跳过
+    if handle_premise.handle_self_no_sex_toy(character_data.target_character_id):
+        return
     handle_self_remote_toy_set_medium(character_data.target_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_REMOTE_TOY_SET_STRONG)
@@ -1671,6 +1677,9 @@ def handle_target_remote_toy_set_strong(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 如果对方没有情趣玩具则跳过
+    if handle_premise.handle_self_no_sex_toy(character_data.target_character_id):
+        return
     handle_self_remote_toy_set_strong(character_data.target_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_REMOTE_TOY_OFF)
@@ -1695,6 +1704,9 @@ def handle_all_remote_toy_off(
         # 跳过玩家
         if now_character_id == 0:
             continue
+        # 跳过没有情趣玩具的人
+        if handle_premise.handle_self_no_sex_toy(now_character_id):
+            continue
         handle_self_remote_toy_off(now_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_REMOTE_TOY_SET_WEAK)
@@ -1717,6 +1729,8 @@ def handle_all_remote_toy_set_weak(
     character_list = map_handle.get_chara_now_scene_all_chara_id_list(character_id)
     for now_character_id in character_list:
         if now_character_id == 0:
+            continue
+        if handle_premise.handle_self_no_sex_toy(now_character_id):
             continue
         handle_self_remote_toy_set_weak(now_character_id, add_time, change_data, now_time)
 
@@ -1741,6 +1755,8 @@ def handle_all_remote_toy_set_medium(
     for now_character_id in character_list:
         if now_character_id == 0:
             continue
+        if handle_premise.handle_self_no_sex_toy(now_character_id):
+            continue
         handle_self_remote_toy_set_medium(now_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_REMOTE_TOY_SET_STRONG)
@@ -1764,6 +1780,8 @@ def handle_all_remote_toy_set_strong(
     for now_character_id in character_list:
         if now_character_id == 0:
             continue
+        if handle_premise.handle_self_no_sex_toy(now_character_id):
+            continue
         handle_self_remote_toy_set_strong(now_character_id, add_time, change_data, now_time)
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_REMOTE_TOY_USE_OR_SET_WEAK)
@@ -1784,6 +1802,9 @@ def handle_target_remote_toy_use_or_set_weak(
     if not add_time:
         return
     character_data: game_type.Character = cache.character_data[character_id]
+    # 如果对方没有情趣玩具则跳过
+    if handle_premise.handle_self_no_sex_toy(character_data.target_character_id):
+        return
     # 交互对象已有强度设定则继续使用
     if handle_premise.handle_self_now_sex_toy_on(character_data.target_character_id):
         return

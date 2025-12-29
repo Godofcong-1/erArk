@@ -3928,6 +3928,66 @@ def handle_remote_toy_level_down():
         chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK, judge = _("严重骚扰"))
 
 @add_instruct(
+    constant.Instruct.REMOTE_TOY_ALL_OFF,
+    constant.InstructType.OBSCENITY,
+    _("遥控关闭全员玩具"),
+    {
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_ON,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY,
+)
+def handle_remote_toy_all_off():
+    """处理遥控关闭全员玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_WEAK,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到弱档"),
+    {
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_NOT_WEAK,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_WEAK,
+)
+def handle_remote_all_set_sex_toy_weak():
+    """处理全员玩具调到弱档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_WEAK, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_MEDIUM,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到中档"),
+    {
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_STRONG,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_MEDIUM,
+)
+def handle_remote_all_set_sex_toy_medium():
+    """处理全员玩具调到中档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_MEDIUM, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_STRONG,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到强档"),
+    {
+     constant_promise.Premise.NOT_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_MIDDLE,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_STRONG,
+)
+def handle_remote_all_set_sex_toy_strong():
+    """处理全员玩具调到强档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_STRONG, judge = _("严重骚扰"))
+
+@add_instruct(
     constant.Instruct.BAGGING_AND_MOVING,
     constant.InstructType.OBSCENITY,
     _("装袋搬走"),
@@ -5290,6 +5350,70 @@ def handle_remote_toy_level_down_in_h():
         chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_STRONG_TO_MEDIUM)
     else:
         chara_handle_instruct_common_settle(constant.Behavior.REMOTE_SET_SEX_TOY_WEAK)
+
+@add_instruct(
+    constant.Instruct.REMOTE_TOY_ALL_OFF_IN_H,
+    constant.InstructType.OBSCENITY,
+    _("遥控关闭全员玩具"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_ON,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_toy_all_off_in_h():
+    """处理遥控关闭全员玩具指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_TURN_OFF_SEX_TOY, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_WEAK_IN_H,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到弱档"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_NOT_WEAK,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_WEAK,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_all_set_sex_toy_weak_in_h():
+    """处理全员玩具调到弱档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_WEAK, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_MEDIUM_IN_H,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到中档"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_STRONG,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_MEDIUM,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_all_set_sex_toy_medium_in_h():
+    """处理全员玩具调到中档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_MEDIUM, judge = _("严重骚扰"))
+
+@add_instruct(
+    constant.Instruct.REMOTE_ALL_SET_SEX_TOY_STRONG_IN_H,
+    constant.InstructType.OBSCENITY,
+    _("全员玩具调到强档"),
+    {constant_promise.Premise.HAVE_TARGET,
+     constant_promise.Premise.TARGET_IS_H,
+     constant_promise.Premise.SCENE_HAVE_OVER_TWO_CHARA_HAVE_SEX_TOY,
+     constant_promise.Premise.SCENE_HAVE_OVER_ONE_CHARA_SEX_TOY_WEAK_OR_MIDDLE,
+     constant_promise.Premise.TIRED_LE_84},
+    constant.Behavior.REMOTE_ALL_SET_SEX_TOY_STRONG,
+    constant.SexInstructSubType.ITEM,
+)
+def handle_remote_all_set_sex_toy_strong_in_h():
+    """处理全员玩具调到强档指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.REMOTE_ALL_SET_SEX_TOY_STRONG, judge = _("严重骚扰"))
 
 @add_instruct(
     constant.Instruct.BONDAGE,
