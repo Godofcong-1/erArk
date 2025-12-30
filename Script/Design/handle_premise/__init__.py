@@ -319,9 +319,9 @@ def handle_comprehensive_value_premise(character_id: int, premise_all_value_list
         final_character_id = character_id
         final_character_data = character_data
     elif premise_all_value_list[0] == "A2":
-        # 如果没有交互对象，则返回0
-        if character_data.target_character_id == character_id:
-            return 0
+        # （已废弃）如果没有交互对象，则返回0
+        # if character_data.target_character_id == character_id:
+        #     return 0
         final_character_id = character_data.target_character_id
         final_character_data = cache.character_data[character_data.target_character_id]
     elif premise_all_value_list[0][:2] == "A3":
