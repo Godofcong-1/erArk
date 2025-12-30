@@ -1550,7 +1550,7 @@ def handle_followed():
     _("结束同行"),
     {constant_promise.Premise.HAVE_TARGET,
      constant_promise.Premise.NOT_H,
-     constant_promise.Premise.T_NORMAL_2467,
+     constant_promise.Premise.NO_TARGET_OR_TARGET_CAN_COOPERATE,
      constant_promise.Premise.TARGET_IS_FOLLOW},
     constant.Behavior.END_FOLLOW,
 )

@@ -1111,6 +1111,23 @@ def handle_normal_267(character_id: int) -> int:
     return _check_normal_combo(character_id, (2, 6, 7))
 
 
+@add_premise(constant_promise.Premise.T_NORMAL_267)
+def handle_t_normal_267(character_id: int) -> int:
+    """
+    交互对象267正常（可能基础异常、高优先级AI、服装异常或意识模糊）
+    \n2:AI行动基本停止：临盆、产后、监禁
+    \n6:完全意识不清醒，或无交互：睡眠（浅睡或熟睡或完全深眠），时停，空气
+    \n7:角色离线：装袋搬走、外勤、婴儿、他国外交访问、逃跑中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    target_chara_id = character_data.target_character_id
+    return _check_normal_combo(target_chara_id, (2, 6, 7))
+
+
 @add_premise(constant_promise.Premise.NORMAL_2467)
 def handle_normal_2467(character_id: int) -> int:
     """
