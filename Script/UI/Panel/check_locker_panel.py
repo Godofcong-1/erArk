@@ -208,7 +208,7 @@ class FindDraw:
             button0_draw.draw()
             return_list.append(button0_draw.return_text)
 
-            if len(self.now_locker[9]):
+            if len(self.now_locker[9]) > 0:
                 button1_text = _("[002]偷走内裤")
                 button1_draw = draw.LeftButton(
                     _(button1_text),
@@ -221,7 +221,7 @@ class FindDraw:
                 button1_draw.draw()
                 return_list.append(button1_draw.return_text)
 
-            if len(self.now_locker[10]):
+            if len(self.now_locker[10]) > 0:
                 button2_text = _("[003]偷走袜子")
                 button2_draw = draw.LeftButton(
                     _(button2_text),
@@ -280,6 +280,9 @@ class FindDraw:
 
     def get_pan(self):
         """偷内裤"""
+        # 如果没有内裤则直接返回
+        if not len(self.now_locker[9]):
+            return
 
         pan_id = self.now_locker[9][-1]
         pan_name = game_config.config_clothing_tem[pan_id].name
@@ -293,6 +296,9 @@ class FindDraw:
 
     def get_socks(self):
         """偷袜子"""
+        # 如果没有袜子则直接返回
+        if not len(self.now_locker[10]):
+            return
 
         socks_id = self.now_locker[10][-1]
         socks_name = game_config.config_clothing_tem[socks_id].name
