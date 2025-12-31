@@ -91,6 +91,32 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
     if handle_premise.handle_self_time_stop_orgasm_relase(character_id):
         character_data.h_state.time_stop_release = False
 
+    # 如果不在同一位置
+    if handle_premise.handle_not_in_player_scene(character_id):
+        # 结束H状态
+        if handle_premise.handle_self_is_h(character_id):
+            character_data.sp_flag.is_h = False
+            character_data.sp_flag.unconscious_h = 0
+            character_data.behavior.behavior_id = constant.Behavior.END_H
+            character_data.state = constant.CharacterStatus.STATUS_END_H
+            character_data.behavior.start_time = pl_start_time
+            character_data.behavior.duration = 1
+            character_data.target_character_id = character_id
+        # 结束睡眠猥亵状态
+        if handle_premise.handle_unconscious_flag_1(character_id):
+            character_data.sp_flag.unconscious_h = 0
+        # 结束空气催眠
+        if handle_premise.handle_unconscious_flag_5(character_id) and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
+            character_data.sp_flag.unconscious_h = 0
+        # 结束隐奸状态
+        if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
+            character_data.sp_flag.hidden_sex_mode = 0
+        # 结束露出状态
+        if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+            character_data.sp_flag.exhibitionism_sex_mode = 0
+        handle_premise.settle_chara_unnormal_flag(character_id, 5)
+        handle_premise.settle_chara_unnormal_flag(character_id, 6)
+
     # H状态或木头人时，行动锁死为等待不动
     if character_data.sp_flag.is_h or character_data.hypnosis.blockhead:
         # 睡奸时例外
@@ -120,33 +146,8 @@ def judge_character_h_obscenity_unconscious(character_id: int, pl_start_time: da
         # 防止行为的时间为0
         if character_data.behavior.duration == 0:
             past_time = int((cache.game_time.timestamp() - pl_start_time.timestamp()) / 60)
+            past_time = max(1, past_time)
             character_data.behavior.duration = past_time
-
-    # 如果不在同一位置
-    if handle_premise.handle_not_in_player_scene(character_id):
-        # 结束H状态
-        if handle_premise.handle_self_is_h(character_id):
-            character_data.sp_flag.is_h = False
-            character_data.sp_flag.unconscious_h = 0
-            character_data.behavior.behavior_id = constant.Behavior.END_H
-            character_data.state = constant.CharacterStatus.STATUS_END_H
-            character_data.behavior.start_time = pl_start_time
-            character_data.behavior.duration = 1
-            character_data.target_character_id = character_id
-        # 结束睡眠猥亵状态
-        if handle_premise.handle_unconscious_flag_1(character_id):
-            character_data.sp_flag.unconscious_h = 0
-        # 结束空气催眠
-        if handle_premise.handle_unconscious_flag_5(character_id) and character_data.position != pl_character_data.pl_ability.air_hypnosis_position:
-            character_data.sp_flag.unconscious_h = 0
-        # 结束隐奸状态
-        if handle_premise.handle_hidden_sex_mode_ge_1(character_id):
-            character_data.sp_flag.hidden_sex_mode = 0
-        # 结束露出状态
-        if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
-            character_data.sp_flag.exhibitionism_sex_mode = 0
-        handle_premise.settle_chara_unnormal_flag(character_id, 5)
-        handle_premise.settle_chara_unnormal_flag(character_id, 6)
 
     return 1
 
