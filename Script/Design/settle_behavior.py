@@ -410,12 +410,14 @@ def handle_instruct_data(
                 constant.settle_behavior_effect_data[1751](character_id, add_time, change_data, now_time)
     # 进行二段结算
     second_behavior.check_second_effect(character_id, change_data)
+    # 进行额外经验结算
+    extra_exp_settle(character_id, change_data)
     # 如果是玩家对NPC的行为，则额外进行对方的二段结算
     if character_id == 0 and now_character_data.target_character_id != 0:
         target_change: game_type.TargetChange = change_data.target_change[now_character_data.target_character_id]
         second_behavior.check_second_effect(now_character_data.target_character_id, target_change, pl_to_npc = True)
-    # 进行额外经验结算
-    extra_exp_settle(character_id, change_data)
+        # 进行额外经验结算
+        extra_exp_settle(now_character_data.target_character_id, target_change)
     return change_data
 
 
