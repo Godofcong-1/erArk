@@ -658,7 +658,9 @@ def _show_tooltip():
         window.wm_attributes("-topmost", True)
     except Exception:
         pass
-    wrap_length = max(textbox.winfo_width() // 2, 240)
+    # 计算合适的换行长度，避免提示过宽，从取最大值改为取最小值
+    # wrap_length = max(textbox.winfo_width() // 2, 240)
+    wrap_length = min(textbox.winfo_width() // 2, 600)
     # 使用全局 now_font_size 作为提示文字字号，保持与游戏文本一致
     tooltip_font = font.Font(family=normal_config.config_normal.font, size=now_font_size)
     label = ttk.Label(
