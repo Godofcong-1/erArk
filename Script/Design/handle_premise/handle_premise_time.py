@@ -707,7 +707,7 @@ def handle_chara_behavior_end_time_lateer_than_game_time(character_id: int) -> i
     start_time = character_data.behavior.start_time
     end_time = game_time.get_sub_date(minute=character_data.behavior.duration, old_date=start_time)
     now_time = cache.game_time
-    if game_time.judge_date_big_or_small(end_time, now_time):
+    if game_time.judge_date_big_or_small(end_time, now_time) == 1:
         return 1
     return 0
 
