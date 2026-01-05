@@ -1,4 +1,4 @@
-from typing import List
+import datetime
 from types import FunctionType
 from Script.UI.Moudle import draw
 from Script.UI.Panel import diary_panel
@@ -13,8 +13,6 @@ from Script.Config import normal_config
 from Script.Design import update, map_handle, instuct_judege, game_time, handle_premise
 import math
 
-panel_info_data = {}
-
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 _: FunctionType = get_text._
@@ -26,6 +24,22 @@ line_feed.text = "\n"
 line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+def judge_time_to_pl_awake(start_time: datetime.datetime) -> int:
+    """计算睡到玩家起床的时间"""
+    pl_character_data: game_type.Character = cache.character_data[0]
+    plan_to_wake_time = pl_character_data.action_info.plan_to_wake_time
+    wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
+    # 12点后则为明天，否则为今天
+    if start_time.hour > 12:
+        judge_wake_up_time = game_time.get_sub_date(day = 1, old_date = start_time)
+    else:
+        judge_wake_up_time = start_time
+    # 替换时间和分钟
+    judge_wake_up_time = judge_wake_up_time.replace(hour = wake_time_hour, minute = wake_time_minute)
+    # 计算时间差
+    min_to_moring_service_min = int((judge_wake_up_time - start_time).seconds / 60)
+    return min_to_moring_service_min
 
 class Sleep_Panel:
     """
@@ -82,7 +96,7 @@ class Sleep_Panel:
             # 如果开启了，则默认睡到早安服务时间
             if handle_premise.handle_assistant_morning_salutation_on(self.pl_character_data.assistant_character_id):
                 morning_service_flag = True
-                self.judge_time_to_morning_service()
+                self.get_time_to_morning_service()
                 self.sleep_to_morning_service()
 
         title_text = _("睡眠")
@@ -159,10 +173,10 @@ class Sleep_Panel:
 
             line_feed.draw()
             line_feed.draw()
-            yes_draw = draw.CenterButton(_("[确定]"), _("确定\n\n"), window_width/2)
+            yes_draw = draw.CenterButton(_("[确定]"), _("确定\n\n"), window_width // 2)
             yes_draw.draw()
             return_list.append(yes_draw.return_text)
-            back_draw = draw.CenterButton(_("[返回]"), _("返回\n"), window_width/2)
+            back_draw = draw.CenterButton(_("[返回]"), _("返回\n"), window_width // 2)
             back_draw.draw()
             return_list.append(back_draw.return_text)
             line_feed.draw()
@@ -217,23 +231,15 @@ class Sleep_Panel:
         self.sleep_time_hour = sleep_time
         self.sleep_time_min = sleep_time * 60
 
-    def judge_time_to_morning_service(self):
+    def get_time_to_morning_service(self):
         """计算睡到早安服务的时间"""
-        start_time = self.pl_character_data.behavior.start_time
-        plan_to_wake_time = self.pl_character_data.action_info.plan_to_wake_time
-        wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
-        # 12点后则为明天，否则为今天
-        if start_time.hour > 12:
-            judge_wake_up_time = game_time.get_sub_date(day = 1, old_date = start_time)
-        else:
-            judge_wake_up_time = start_time
-        # 替换时间和分钟
-        judge_wake_up_time = judge_wake_up_time.replace(hour = wake_time_hour, minute = wake_time_minute)
         # 计算时间差
-        self.min_to_moring_service_min = int((judge_wake_up_time - start_time).seconds / 60)
+        self.min_to_moring_service_min = judge_time_to_pl_awake(self.pl_character_data.behavior.start_time)
         self.min_to_moring_service_hour = int(self.min_to_moring_service_min / 60)
         self.min_to_moring_service_hour = max(self.min_to_moring_service_hour, 1)
         # 获得早安服务时间的文本
+        plan_to_wake_time = self.pl_character_data.action_info.plan_to_wake_time
+        wake_time_hour, wake_time_minute = plan_to_wake_time[0], plan_to_wake_time[1]
         self.morning_service_time_text = _("{0}:{1}").format(str(wake_time_hour).rjust(2,'0'), str(wake_time_minute).rjust(2,'0'))
 
     def sleep_to_morning_service(self):
@@ -252,29 +258,20 @@ class Sleep_Panel:
 
     def assistant_sleep_settle(self):
         """助理的睡眠结算"""
-        from Script.Design import character_behavior
         # 如果没有助理则直接返回
         if self.pl_character_data.assistant_character_id == 0:
             return
-        assistant_character_data = cache.character_data[self.pl_character_data.assistant_character_id]
         # 如果助理已经睡觉了，或异常状态6，则直接返回
         if handle_premise.handle_action_sleep(self.pl_character_data.assistant_character_id) or not handle_premise.handle_normal_6(self.pl_character_data.assistant_character_id):
             return
-        # 如果开启了晚安问候、且还没有进行，则进行晚安问候
+        # 如果开启了晚安问候、且还没有进行，则进入要晚安问候状态
         if handle_premise.handle_assistant_night_salutation_on(self.pl_character_data.assistant_character_id) and handle_premise.handle_night_salutation_flag_0(self.pl_character_data.assistant_character_id):
             instuct_judege.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
-            night_salutation_state_machine_id = 708 + assistant_character_data.assistant_services[6]
-            constant.handle_state_machine_data[night_salutation_state_machine_id](self.pl_character_data.assistant_character_id)
-            character_behavior.judge_character_status(self.pl_character_data.assistant_character_id)
-        # 同居服务开启中，则直接睡觉
-        if handle_premise.handle_assistant_live_together_on(self.pl_character_data.assistant_character_id):
+            constant.handle_state_machine_data[708](self.pl_character_data.assistant_character_id)
+        # 同居服务开启中，未开启晚安问候或已进行晚安问候，则进入要睡觉状态
+        elif (
+            handle_premise.handle_assistant_live_together_on(self.pl_character_data.assistant_character_id) and 
+            (handle_premise.handle_assistant_night_salutation_0(self.pl_character_data.assistant_character_id) or handle_premise.handle_night_salutation_flag_2(self.pl_character_data.assistant_character_id))
+            ):
             instuct_judege.init_character_behavior_start_time(self.pl_character_data.assistant_character_id, cache.game_time)
-            constant.handle_state_machine_data[44](self.pl_character_data.assistant_character_id)
-            # 如果开启了早安服务，则睡到早安服务时间前十分钟醒来
-            if handle_premise.handle_assistant_morning_salutation_on(self.pl_character_data.assistant_character_id):
-                assistant_character_data.behavior.duration = self.min_to_moring_service_min - 10
-            # 否则睡到和玩家同时醒来
-            else:
-                assistant_character_data.behavior.duration = self.sleep_time_min
-            character_behavior.judge_character_status(self.pl_character_data.assistant_character_id)
-
+            constant.handle_state_machine_data[78](self.pl_character_data.assistant_character_id)

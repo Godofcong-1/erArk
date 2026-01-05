@@ -133,6 +133,17 @@ def character_sleep(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_SLEEP
     character_data.sp_flag.tired = False
 
+    # 如果是助理并开启了同居服务
+    if handle_premise.handle_is_assistant(character_id) and handle_premise.handle_assistant_live_together_on(character_id):
+        pl_character_data: game_type.Character = cache.character_data[0]
+        min_to_wake_time = int((pl_character_data.action_info.wake_time - character_data.behavior.start_time).seconds / 60)
+        # 如果开启了早安服务，则睡到早安服务时间前十分钟醒来
+        if handle_premise.handle_assistant_morning_salutation_on(character_id):
+            character_data.behavior.duration = min_to_wake_time - 10
+        # 否则睡到和玩家同时醒来
+        else:
+            character_data.behavior.duration = min_to_wake_time
+
 
 # @handle_state_machine.add_state_machine(constant.StateMachine.FOLLOW)
 # def character_follow(character_id: int):
