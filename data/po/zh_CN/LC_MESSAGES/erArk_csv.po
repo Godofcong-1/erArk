@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-01-06 11:34+0800\n"
+"POT-Creation-Date: 2026-01-06 16:38+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -46256,24 +46256,8 @@ msgstr ""
 msgid "苏苏洛"
 msgstr ""
 
-#: .\data\character\0298_苏苏洛.csv:13
-msgid "一本纸质柔和的日记本。无论过去还是未来的记忆，只要得以记录，就永远不会再消失了吧？"
-msgstr ""
-
 #: .\data\character\0298_苏苏洛.csv:14
 msgid "苏苏洛，正式入职前为叙拉古帕勒莫市立医科学院毕业生。具备基础医疗方面的充足学识。现于罗德岛担任医疗干员，是总部后勤医疗体系内的坚实力量。"
-msgstr ""
-
-#: .\data\character\0298_苏苏洛.csv:15
-msgid "#C6ADA3"
-msgstr ""
-
-#: .\data\character\0298_苏苏洛.csv:46
-msgid "黑色运动内衣"
-msgstr ""
-
-#: .\data\character\0298_苏苏洛.csv:47
-msgid "白色礼服手套"
 msgstr ""
 
 #: .\data\character\0299_宁辞秋.csv:4
@@ -53666,6 +53650,98 @@ msgstr ""
 
 #: .\data\character\4211_雪猎.csv:37
 msgid "谢拉格特制捕兽弩"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:13
+msgid "一支树枝造型的骨笔，可以辅助完成一些精密作业。娜斯提说不必因为它叫“骨笔”就有所顾虑，折断了她随时帮你换新的。"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:14
+msgid "娜斯提·鲁诺瑞伊，莱茵生命工程科主任，哥伦比亚工程科学领域的专家，在应用语言学方面也有一定造诣。经塞雷娅介绍，现与罗德岛签订长期合作条款，作为工程部特聘顾问，为罗德岛多个项目提供支持。"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:29
+msgid "黑色羽状发饰"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:30
+msgid "白色标签耳坠"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:31
+msgid "棕色防风西装"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:32
+msgid "白绿拼接中长款防风外套"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:33
+msgid "白色贴身衬衫"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:36
+msgid "棕色修身西装长裤"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:37
+msgid "黑色系带皮靴"
+msgstr ""
+
+#: .\data\character\4212_娜斯提.csv:38
+msgid "女妖骨笔"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:4
+msgid "响石"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:13
+msgid "一枚“天空氧气瓶”的瓶盖。初见时，这是你聘用她的定金，现在，这是你加入她的旅行社的证章。"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:14
+msgid "费尔南·伯恩，哥伦比亚人，经营着一家以“哪儿都能去”闻名的独立旅行社。除了已故的荣誉社员马丁·伯恩，费尔南便是该社的唯一成员。\n接受治疗的同时，费尔南也与罗德岛达成了合作，以“响石”为代号，在各类外勤任务中行使向导职责。"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:29
+msgid "深蓝色飞行员风帽"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:30
+msgid "黄色涂鸦领带"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:31
+msgid "米白色露脐工装短袖"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:33
+msgid "黑红色不对称战术手套"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:34
+msgid "黄色苏格兰格纹百褶裙"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:35
+msgid "黑色紧身安全裤"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:36
+msgid "白棕色针织堆堆袜"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:37
+msgid "黑橙拼色运动靴"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:38
+msgid "改装喇叭大盾"
+msgstr ""
+
+#: .\data\character\4214_响石.csv:39
+msgid "导游扩音器"
 msgstr ""
 
 #: .\data\character\6666_炉芯终曲阿米娅.csv:4
