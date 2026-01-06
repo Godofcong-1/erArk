@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-08-11 08:00+0800\n"
+"POT-Creation-Date: 2026-01-06 11:34+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -46256,8 +46256,24 @@ msgstr ""
 msgid "苏苏洛"
 msgstr ""
 
+#: .\data\character\0298_苏苏洛.csv:13
+msgid "一本纸质柔和的日记本。无论过去还是未来的记忆，只要得以记录，就永远不会再消失了吧？"
+msgstr ""
+
 #: .\data\character\0298_苏苏洛.csv:14
 msgid "苏苏洛，正式入职前为叙拉古帕勒莫市立医科学院毕业生。具备基础医疗方面的充足学识。现于罗德岛担任医疗干员，是总部后勤医疗体系内的坚实力量。"
+msgstr ""
+
+#: .\data\character\0298_苏苏洛.csv:15
+msgid "#C6ADA3"
+msgstr ""
+
+#: .\data\character\0298_苏苏洛.csv:46
+msgid "黑色运动内衣"
+msgstr ""
+
+#: .\data\character\0298_苏苏洛.csv:47
+msgid "白色礼服手套"
 msgstr ""
 
 #: .\data\character\0299_宁辞秋.csv:4
