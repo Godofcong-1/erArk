@@ -562,6 +562,10 @@ class BehaviorEffect:
     """ 系统量_时间 角色记录并刷新淋浴时间 """
     RECORD_WAKE_TIME = 703
     """ 系统量_时间 角色记录并刷新起床时间 """
+    RECORD_CONSCIOUS_H_TIME = 704
+    """ 系统量_时间 角色记录并刷新有意识H时间 """
+    RECORD_UNCONSCIOUS_H_TIME = 705
+    """ 系统量_时间 角色记录并刷新无意识H时间 """
 
     MOVE_TO_TARGET_SCENE = 751
     """ 系统量_地点 移动至目标场景 """

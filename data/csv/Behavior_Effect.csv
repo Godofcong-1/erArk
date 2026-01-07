@@ -152,7 +152,7 @@ int,str,str
 357,high_obscenity_anus,13 - 14 - 62 - 152 - 801 - 850 - 866
 
 360,h,405 - 462 - 464 - 603 - 605 - 752 - 1409
-361,h_by_active,405 - 462 - 464 - 603 - 605 - 752 - 1409
+361,h_by_active,405 - 462 - 464 - 603 - 605 - 704 - 752 - 1409
 362,end_h,526 - 753 - 528 - 404 - 631
 363,no_conscious_h_end,526 - 753 - 528 - 404 - 631
 364,do_h_fail,526 - 753 - 528 - 404 - 631 - 153
@@ -170,11 +170,11 @@ int,str,str
 378,other_sex_be_found_to_group_sex,405 - 462 - 464 - 473 - 476 - 603 - 605 - 753 - 1404 - 1409 - 10010
 379,discover_other_sex_and_join,CVE_A1_E|56_G_1 - 462 - 602 - 604 - 1408 - 1418 - 10010
 
-380,ask_hidden_sex,405 - 464 - 603 - 605 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
+380,ask_hidden_sex,405 - 464 - 603 - 605 - 704 - 1409 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 381,ask_hidden_sex_fail,526 - 528 - 404 - 631 - 153
 382,other_sex_be_found_to_hidden_sex,476 - 1404 - CVE_A1_E|35_G_1 - CVE_A2_E|35_G_1
 
-386,ask_exhibitionism_sex,405 - 462 - 464 - 603 - 605 - 1409 - CVE_A1_E|34_G_1 - CVE_A2_E|34_G_1
+386,ask_exhibitionism_sex,405 - 462 - 464 - 603 - 605 - 704 - 1409 - CVE_A1_E|34_G_1 - CVE_A2_E|34_G_1
 387,ask_exhibitionism_sex_fail,526 - 528 - 404 - 631 - 153
 388,other_sex_be_found_to_exhibitionism_sex,472 - 1404 - CVE_A1_E|34_G_1 - CVE_A2_E|3_G_1
 

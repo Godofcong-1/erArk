@@ -2116,6 +2116,7 @@ def handle_do_h():
             cache.scene_data[now_scene_str].close_flag = cache.scene_data[now_scene_str].close_type
             now_draw_text += _("已自动关门\n")
         target_data.sp_flag.is_follow = 0
+        target_data.action_info.last_conscious_h_time = cache.game_time
         handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 3)
         now_draw_text += _("进入H模式\n\n")
         now_draw.text = now_draw_text
@@ -2324,6 +2325,7 @@ def handle_unconscious_h():
         if door_return == -1:
             return
     target_data.sp_flag.is_follow = 0
+    target_data.action_info.last_unconscious_h_time = cache.game_time
     handle_premise.settle_chara_unnormal_flag(character_data.target_character_id, 3)
     now_draw = draw.WaitDraw()
     now_draw.width = width

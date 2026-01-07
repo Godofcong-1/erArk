@@ -287,6 +287,8 @@ cid,effect_name,effect_type,effect
 701,RECORD_TRAINING_TIME,系统量_时间,角色记录并刷新训练时间
 702,RECORD_SHOWER_TIME,系统量_时间,角色记录并刷新淋浴时间
 703,RECORD_WAKE_TIME,系统量_时间,角色记录并刷新起床时间
+704,RECORD_CONSCIOUS_H_TIME,系统量_时间,角色记录并刷新有意识H时间
+705,RECORD_UNCONSCIOUS_H_TIME,系统量_时间,角色记录并刷新无意识H时间
 
 751,MOVE_TO_TARGET_SCENE,系统量_地点,移动至目标场景
 752,DOOR_CLOSE,系统量_地点,当前场景进入关门状态

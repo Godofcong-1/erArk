@@ -317,6 +317,162 @@ def handle_self_need_health_check_now(character_id: int) -> int:
     return character_data.action_info.health_check_today == 3
 
 
+@add_premise(constant_promise.Premise.SELF_HAVE_CONSCIOUS_H_TODAY)
+def handle_self_have_conscious_h_today(character_id: int) -> int:
+    """
+    自己今天经历过有意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    last_conscious_h_time = character_data.action_info.last_conscious_h_time
+    if last_conscious_h_time.day == now_time.day and last_conscious_h_time.month == now_time.month and last_conscious_h_time.year == now_time.year:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HAVE_CONSCIOUS_H_TODAY)
+def handle_self_not_have_conscious_h_today(character_id: int) -> int:
+    """
+    自己今天没有经历过有意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_have_conscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_UNCONSCIOUS_H_TODAY)
+def handle_self_have_unconscious_h_today(character_id: int) -> int:
+    """
+    自己今天经历过无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_time = character_data.behavior.start_time
+    last_unconscious_h_time = character_data.action_info.last_unconscious_h_time
+    if last_unconscious_h_time.day == now_time.day and last_unconscious_h_time.month == now_time.month and last_unconscious_h_time.year == now_time.year:
+        return 1
+    return 0
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HAVE_UNCONSCIOUS_H_TODAY)
+def handle_self_not_have_unconscious_h_today(character_id: int) -> int:
+    """
+    自己今天没有经历过无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_have_unconscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_HAVE_CONSCIOUS_OR_UNCONSCIOUS_H_TODAY)
+def handle_self_have_conscious_or_unconscious_h_today(character_id: int) -> int:
+    """
+    自己今天经历过有意识H或无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return handle_self_have_conscious_h_today(character_id) or handle_self_have_unconscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.SELF_NOT_HAVE_CONSCIOUS_OR_UNCONSCIOUS_H_TODAY)
+def handle_self_not_have_conscious_or_unconscious_h_today(character_id: int) -> int:
+    """
+    自己今天没有经历过有意识H或无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_self_have_conscious_or_unconscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_CONSCIOUS_H_TODAY)
+def handle_target_have_conscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天经历过有意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_have_conscious_h_today(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HAVE_CONSCIOUS_H_TODAY)
+def handle_target_not_have_conscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天没有经历过有意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_have_conscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_UNCONSCIOUS_H_TODAY)
+def handle_target_have_unconscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天经历过无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_have_unconscious_h_today(character_data.target_character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HAVE_UNCONSCIOUS_H_TODAY)
+def handle_target_not_have_unconscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天没有经历过无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_have_unconscious_h_today(character_id)
+
+
+@add_premise(constant_promise.Premise.TARGET_HAVE_CONSCIOUS_OR_UNCONSCIOUS_H_TODAY)
+def handle_target_have_conscious_or_unconscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天经历过有意识H或无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    return handle_self_have_conscious_or_unconscious_h_today(character_data.target_character_id)
+
+@add_premise(constant_promise.Premise.TARGET_NOT_HAVE_CONSCIOUS_OR_UNCONSCIOUS_H_TODAY)
+def handle_target_not_have_conscious_or_unconscious_h_today(character_id: int) -> int:
+    """
+    交互对象今天没有经历过有意识H或无意识H
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return not handle_target_have_conscious_or_unconscious_h_today(character_id)
+
+
 @add_premise(constant_promise.Premise.IS_MAN)
 def handle_is_man(character_id: int) -> int:
     """
