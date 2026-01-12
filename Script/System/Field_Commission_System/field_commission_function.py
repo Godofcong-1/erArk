@@ -175,12 +175,12 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         # 1的话需要出场
         if item_num == 1:
             item_name += _("出勤")
-            if item_id in send_npc_list:
+            if chara_id in send_npc_list:
                 now_have_item_num = 1
         # 否则禁止出场
         else:
             item_name += _("禁止出勤")
-            if item_id in send_npc_list:
+            if chara_id in send_npc_list:
                 now_have_item_num = -1
                 satify_flag = False
     # 特产
