@@ -621,7 +621,14 @@ class Change_Npc_Work_Panel:
                     draw_style = "gold_enrod"
                 else:
                     draw_style = "standard"
-                button_text = f"{symbol} {work_type_name}({len(self.work_type_npc_dict[work_type_id])}人)"
+                button_text = f"{symbol} {work_type_name}"
+                # 工作的能力需求
+                ability_type = work_type_data.ability_id
+                if ability_type != 0:
+                    ability_name = game_config.config_ability[ability_type].name[:2]
+                    button_text += f"({ability_name})"
+                # 工作的干员数量
+                button_text += _("({0}人)").format(len(self.work_type_npc_dict[work_type_id]))
                 draw_width = int(self.width / 7)
                 type_button_draw = draw.LeftButton(
                     button_text, str(work_type_id), draw_width, normal_style=draw_style,
@@ -640,6 +647,10 @@ class Change_Npc_Work_Panel:
                         name = character_data.name
                         adv_id = str(character_data.adv).rjust(4, '0')
                         button_text = f"[{adv_id}]{name}"
+                        # 干员的该工作能力等级
+                        if ability_type != 0:
+                            chara_ability_lv = character_data.ability[ability_type]
+                            button_text += f"(lv{chara_ability_lv})"
                         name_draw = draw.LeftButton(
                             button_text, name, draw_width, cmd_func=self.button_0, args=(npc_id,)
                         )
