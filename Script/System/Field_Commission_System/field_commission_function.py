@@ -168,8 +168,8 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
     elif text_list[0] == "c":
         item_name = _("指定干员")
         item_type = _("指定干员")
-        item_id = character.get_character_id_from_adv(item_id)
-        need_chara_name = cache.character_data[item_id].name
+        chara_id = character.get_character_id_from_adv(item_id)
+        need_chara_name = cache.character_data[chara_id].name
         item_name = f"[{item_id}]{need_chara_name}"
         now_have_item_num = 0
         # 1的话需要出场
