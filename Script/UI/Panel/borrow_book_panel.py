@@ -25,11 +25,22 @@ def settle_library_book():
 
     for book_type_cid in game_config.config_book_type:
         game_config.config_book_type_data.setdefault(book_type_cid, [])
+        level = cache.rhodes_island.facility_level[10]
+        now_choose_list = []
+        # 遍历书籍
+        for book_id in game_config.config_book_type_data[book_type_cid]:
+            # 如果书籍难度大于等于3，且图书馆等级小于4，则跳过
+            book_difficulty = game_config.config_book[book_id].difficulty
+            if book_difficulty >= 3 and level < 4:
+                continue
+            # 如果书籍难度大于等于2，且图书馆等级小于3，则跳过
+            if book_difficulty >= 2 and level < 2:
+                continue
+            # 符合条件则加入可选列表
+            now_choose_list.append(book_id)
         # 如果该类型的书籍超过3本，则随机选择其中的三本
-        if len(game_config.config_book_type_data[book_type_cid]) > 3:
-            now_choose_list = random.sample(game_config.config_book_type_data[book_type_cid], 3)
-        else:
-            now_choose_list = game_config.config_book_type_data[book_type_cid]
+        if len(now_choose_list) > 3:
+            now_choose_list = random.sample(now_choose_list, 3)
         cache.rhodes_island.now_show_book_cid_of_type[book_type_cid] = now_choose_list
 
     # 获取玩家的借书情况
