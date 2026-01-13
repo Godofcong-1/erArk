@@ -1506,7 +1506,7 @@ class Premise:
     MASTUREBATE_FLAG_0 = "masturebate_flag_0"
     """ 特殊flag_自慰 自身没有要自慰状态 """
     MASTUREBATE_FLAG_G_0 = "masturebate_flag_g_0"
-    """ 特殊flag_自慰 自身要自慰状态(含全位置) """
+    """ 特殊flag_自慰 自身要自慰状态(含全位置和逆推，不含群交自慰) """
     MASTUREBATE_FLAG_1 = "masturebate_flag_1"
     """ 特殊flag_自慰 自身要自慰状态_洗手间 """
     MASTUREBATE_FLAG_2 = "masturebate_flag_2"

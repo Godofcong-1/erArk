@@ -1434,14 +1434,14 @@ def handle_masturebate_flag_0(character_id: int) -> int:
 @add_premise(constant_promise.Premise.MASTUREBATE_FLAG_G_0)
 def handle_masturebate_flag_g_0(character_id: int) -> int:
     """
-    自身要自慰状态(含全位置和逆推)
+    自身要自慰状态(含全位置和逆推，不含群交自慰)
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
     int -- 权重
     """
     character_data: game_type.Character = cache.character_data[character_id]
-    if character_data.sp_flag.masturebate > 0 or character_data.sp_flag.npc_masturebate_for_player:
+    if character_data.sp_flag.masturebate in {1, 2} or character_data.sp_flag.npc_masturebate_for_player:
         return 400
     else:
         return 0

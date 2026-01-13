@@ -5560,7 +5560,8 @@ def handle_masturebate_flag_to_0(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime, ):
+        now_time: datetime.datetime,
+        ):
     """
     自身清零要自慰状态
     Keyword arguments:
@@ -5581,7 +5582,8 @@ def handle_masturebate_before_flag_to_0(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime, ):
+        now_time: datetime.datetime,
+        ):
     """
     自身清零要睡前自慰状态
     Keyword arguments:
@@ -5601,7 +5603,8 @@ def handle_masturebate_before_flag_to_2(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime, ):
+        now_time: datetime.datetime,
+        ):
     """
     自身变为已睡前自慰状态
     Keyword arguments:
@@ -5621,7 +5624,8 @@ def handle_masturebate_to_pl_flag_0(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
-        now_time: datetime.datetime, ):
+        now_time: datetime.datetime,
+        ):
     """
     自身清零要找玩家逆推来自慰状态
     Keyword arguments:
@@ -5635,6 +5639,30 @@ def handle_masturebate_to_pl_flag_0(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.npc_masturebate_for_player = False
     handle_premise.settle_chara_unnormal_flag(character_id, 1)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ALL_CHARA_MASTUREBATE_IN_GROUP_SEX_FLAG_0)
+def handle_all_chara_masturebate_in_group_sex_flag_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+        ):
+    """
+    全角色清零群交中自慰状态
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    for chara_id in cache.npc_id_got:
+        character_data: game_type.Character = cache.character_data[chara_id]
+        if handle_premise.handle_masturebate_flag_3(chara_id):
+            character_data.sp_flag.masturebate = 0
+            handle_premise.settle_chara_unnormal_flag(chara_id, 1)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.HELP_MAKE_FOOD_FLAG_TO_0)

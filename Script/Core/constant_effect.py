@@ -366,6 +366,8 @@ class BehaviorEffect:
     """ 特殊flag_H 自身变为已睡前自慰状态 """
     MASTUREBATE_TO_PL_FLAG_0 = 459
     """ 特殊flag_H 自身清零要找玩家逆推来自慰状态 """
+    ALL_CHARA_MASTUREBATE_IN_GROUP_SEX_FLAG_0 = 460
+    """ 特殊flag_H 全角色清零群交中自慰状态 """
     H_FLAG_TO_0 = 461
     """ 特殊flag_H 自身清零H状态 """
     H_FLAG_TO_1 = 462
