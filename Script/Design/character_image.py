@@ -81,7 +81,15 @@ def find_character_image_name(character_id: int) -> str:
                 if candidate_alt in era_image.image_data:
                     return candidate_alt
 
-    # 若无匹配则使用原始立绘名
+    # 若无匹配则使用原始立绘名，但需要检查半身图格式兼容
+    # 这是为了兼容新的文件名格式：{角色名}_半身.png
+    if base_name in era_image.image_data:
+        return base_name
+    # 如果原始立绘名不存在，尝试查找半身图格式
+    half_body_name = f"{base_name}_半身"
+    if half_body_name in era_image.image_data:
+        return half_body_name
+    # 都不存在则返回原始名（可能会导致图片显示失败）
     return base_name
 
 def child_judge(character_id: int) -> str:
