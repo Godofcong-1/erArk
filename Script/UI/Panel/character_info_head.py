@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Tuple
 from types import FunctionType
 from Script.UI.Moudle import draw
 from Script.Core import (
@@ -24,6 +24,251 @@ line_feed.width = 1
 window_width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
+def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], List[str]]:
+    """
+    获取角色的所有状态标识
+    
+    Keyword arguments:
+    character_id -- 角色id
+    
+    Return arguments:
+    Tuple[List[draw.LeftDraw], List[str]] -- (状态标识的绘制对象列表, 状态文本列表)
+    """
+    from Script.Design import handle_premise
+    
+    character_data: game_type.Character = cache.character_data[character_id]
+    status_list = []
+    status_text_list = []
+    
+    # 智能跟随状态
+    follow_draw = draw.LeftDraw()
+    follow_draw.style = "spring_green"
+    follow_text = ""
+    if handle_premise.handle_is_follow_1(character_id):
+        follow_text = _(" <跟>")
+        follow_draw.tooltip = _("处于智能跟随状态，会自动跟随玩家行动")
+    follow_draw.text = follow_text
+    status_list.append(follow_draw)
+    status_text_list.append(follow_text)
+    
+    # 非普通时输出当前心情
+    angry_draw = draw.LeftDraw()
+    angry_text = ""
+    if character_id != 0:
+        angry_text = attr_calculation.get_angry_text(character_data.angry_point)
+        angry_text = "" if angry_text == _("普通") else " " + angry_text
+    if angry_text == _(" 愉快"):
+        angry_draw.style = "coral"
+        angry_draw.tooltip = _("当前心情愉快，部分行为实行值提升")
+    else:
+        angry_draw.style = "red"
+        angry_draw.tooltip = _("当前心情不佳，部分行为实行值下降")
+    angry_draw.text = angry_text
+    status_list.append(angry_draw)
+    status_text_list.append(angry_text)
+    
+    # 饥饿时进行提示
+    hunger_draw = draw.LeftDraw()
+    hunger_draw.style = "beige"
+    hunger_text = ""
+    if character_id != 0:
+        hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
+        start_time = character_data.behavior.start_time.hour
+        hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
+        hunger_draw.tooltip = _("肚子饿了，想要吃点东西")
+    # 玩家饥饿提示根据设置决定是否显示，且与饭点时间无关
+    elif character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 1:
+        hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
+        hunger_draw.tooltip = _("肚子饿了，想要吃点东西")
+    hunger_draw.text = hunger_text
+    status_list.append(hunger_draw)
+    status_text_list.append(hunger_text)
+    
+    # 有尿意时进行提示
+    urinate_draw = draw.LeftDraw()
+    urinate_draw.style = "khaki"
+    urinate_text = ""
+    if handle_premise.handle_urinate_ge_80(character_id):
+        urinate_text = _(" <尿>")
+        urinate_draw.tooltip = _("有较强的尿意，想要去洗手间解决")
+    # 玩家尿意提示根据设置决定是否显示
+    if character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 0:
+        urinate_text = ""
+    urinate_draw.text = urinate_text
+    status_list.append(urinate_draw)
+    status_text_list.append(urinate_text)
+    
+    # 非0疲劳时输出当前疲劳状态
+    sleep_draw = draw.LeftDraw()
+    sleep_draw.style = "little_dark_slate_blue"
+    sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
+    sleep_text = " <" + constant.tired_text_list[sleep_lv] + ">"
+    # 0疲劳的清醒则不输出
+    if sleep_text == _(" <清醒>"):
+        sleep_text = ""
+    if character_id > 0:
+        # 睡眠中则输出睡眠程度
+        if handle_premise.handle_action_sleep(character_id) or handle_premise.handle_unconscious_flag_1(character_id):
+            tem, sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
+            sleep_text = f" <{sleep_name}>"
+        # 如果在装睡则输出装睡
+        if handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(character_id):
+            sleep_text = _(" <装睡>")
+            sleep_draw.tooltip = _("已经醒来，但决定装睡来默认你的行为")
+    sleep_draw.text = sleep_text
+    status_list.append(sleep_draw)
+    status_text_list.append(sleep_text)
+    
+    # hp1的完全疲劳状态
+    tired_draw = draw.LeftDraw()
+    tired_draw.style = "little_dark_slate_blue"
+    tired_text = ""
+    if handle_premise.handle_self_tired(character_id):
+        tired_text = _(" <累>")
+        tired_draw.tooltip = _("疲劳度过高，需要回宿舍睡觉")
+    tired_draw.text = tired_text
+    status_list.append(tired_draw)
+    status_text_list.append(tired_text)
+    
+    # 催眠状态时进行显示
+    hypnosis_draw = draw.LeftDraw()
+    hypnosis_text = ""
+    if (
+        cache.all_system_setting.draw_setting[4] and 
+        (handle_premise.handle_unconscious_hypnosis_flag(character_id) or
+        (character_data.hypnosis.hypnosis_degree > 0 and cache.all_system_setting.draw_setting[4] == 2))
+    ):
+        hypnosis_text = _(" <催眠")
+        # 根据催眠程度来区分颜色
+        hypnosis_draw.style = hypnosis_panel.get_hypnosis_degree_color(character_data.hypnosis.hypnosis_degree)
+        # 是否显示具体数值
+        if cache.all_system_setting.draw_setting[4] == 2:
+            # 显示到小数点后一位
+            hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
+        # 是否显示催眠类型
+        if handle_premise.handle_unconscious_hypnosis_flag(character_id):
+            hypnosis_cid = character_data.sp_flag.unconscious_h - 3
+            hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
+            hypnosis_text += _(":{0}").format(hypnosis_name)
+            hypnosis_draw.tooltip = game_config.config_hypnosis_type[hypnosis_cid].introduce
+        if handle_premise.handle_hypnosis_increase_body_sensitivity(character_id):
+            hypnosis_text += _("(敏感)")
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[1].introduce
+        if handle_premise.handle_hypnosis_force_ovulation(character_id):
+            hypnosis_text += _("(排卵)")
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[3].introduce
+        if handle_premise.handle_hypnosis_blockhead(character_id):
+            hypnosis_text += _("(木头人)")
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[4].introduce
+        if handle_premise.handle_hypnosis_active_h(character_id):
+            hypnosis_text += _("(逆推)")
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[5].introduce
+        if handle_premise.handle_hypnosis_roleplay(character_id):
+            hypnosis_text += _("(扮演")
+            for role_play_cid in character_data.hypnosis.roleplay:
+                role_play_name = game_config.config_roleplay[role_play_cid].name
+                hypnosis_text += f"-{role_play_name}"
+            hypnosis_text += ")"
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[12].introduce
+        if handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
+            hypnosis_text += _("(痛→快感)")
+            hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[11].introduce
+        hypnosis_text += ">"
+    hypnosis_draw.text = hypnosis_text
+    status_list.append(hypnosis_draw)
+    status_text_list.append(hypnosis_text)
+    
+    # 携袋状态进行提示
+    bag_text = ""
+    bag_draw = draw.LeftDraw()
+    if character_data.sp_flag.bagging_chara_id:
+        bag_text = _(" <携袋:{0}>").format(cache.character_data[character_data.sp_flag.bagging_chara_id].name)
+        bag_draw.tooltip = _("将失去意识的干员装进了袋子中，用于在关押区监禁到牢房里")
+    bag_draw.text = bag_text
+    status_list.append(bag_draw)
+    status_text_list.append(bag_text)
+    
+    # 访客
+    visitor_text = ""
+    visitor_draw = draw.LeftDraw()
+    if character_data.sp_flag.vistor == 1:
+        visitor_text = _(" <访>")
+        visitor_draw.tooltip = _("作为访客来罗德岛参观，不会参与工作和常规活动，在访问期结束后会离开罗德岛或留下成为干员")
+    visitor_draw.text = visitor_text
+    status_list.append(visitor_draw)
+    status_text_list.append(visitor_text)
+    
+    # 逆推H
+    active_h_text = ""
+    active_h_draw = draw.LeftDraw()
+    active_h_draw.style = "light_pink"
+    if handle_premise.handle_npc_active_h(character_id):
+        active_h_text = _(" <逆>")
+        active_h_draw.tooltip = _("对博士主动进行性行为")
+    active_h_draw.text = active_h_text
+    status_list.append(active_h_draw)
+    status_text_list.append(active_h_text)
+    
+    # 绝顶寸止
+    orgasm_edge_text = ""
+    orgasm_edge_draw = draw.LeftDraw()
+    orgasm_edge_draw.style = "rose_pink"
+    if handle_premise.handle_self_orgasm_edge(character_id):
+        orgasm_edge_text = _(" <寸止>")
+        orgasm_edge_draw.tooltip = _("被进行了绝顶寸止，会无法绝顶高潮")
+    orgasm_edge_draw.text = orgasm_edge_text
+    status_list.append(orgasm_edge_draw)
+    status_text_list.append(orgasm_edge_text)
+    
+    # 监禁状态
+    imprisonment_text = ""
+    imprisonment_draw = draw.LeftDraw()
+    imprisonment_draw.style = "crimson"
+    if handle_premise.handle_imprisonment_1(character_id):
+        imprisonment_text = _(" <监>")
+        imprisonment_draw.tooltip = _("被监禁，无法自由行动")
+    imprisonment_draw.text = imprisonment_text
+    status_list.append(imprisonment_draw)
+    status_text_list.append(imprisonment_text)
+    
+    # 时停
+    time_stop_text = ""
+    time_stop_draw = draw.LeftDraw()
+    time_stop_draw.style = "light_sky_blue"
+    if handle_premise.handle_unconscious_flag_3(character_id):
+        time_stop_text = _(" <停>")
+        time_stop_draw.tooltip = _("处于时间停止状态，无法行动")
+    time_stop_draw.text = time_stop_text
+    status_list.append(time_stop_draw)
+    status_text_list.append(time_stop_text)
+    
+    # 隐奸
+    hidden_text = ""
+    hidden_draw = draw.LeftDraw()
+    hidden_draw.style = "deep_gray"
+    if character_id == 0 and (handle_premise.handle_hidden_sex_mode_3(character_id) or handle_premise.handle_hidden_sex_mode_4(character_id)):
+        hidden_text = _(" <隐>")
+        hidden_draw.tooltip = _("正在偷偷进行性行为，享受避免被他人发现的刺激感")
+    elif character_id != 0 and (handle_premise.handle_hidden_sex_mode_2(character_id) or handle_premise.handle_hidden_sex_mode_4(character_id)):
+        hidden_text = _(" <隐>")
+        hidden_draw.tooltip = _("正在偷偷进行性行为，享受避免被他人发现的刺激感")
+    hidden_draw.text = hidden_text
+    status_list.append(hidden_draw)
+    status_text_list.append(hidden_text)
+    
+    # 露出
+    exhibitionism_text = ""
+    exhibitionism_draw = draw.LeftDraw()
+    exhibitionism_draw.style = "hot_pink"
+    if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
+        exhibitionism_text = _(" <露>")
+        exhibitionism_draw.tooltip = _("正在进行露出行为，享受被他人看到的刺激感")
+    exhibitionism_draw.text = exhibitionism_text
+    status_list.append(exhibitionism_draw)
+    status_text_list.append(exhibitionism_text)
+    
+    return status_list, status_text_list
+
 class CharacterInfoHead:
     """
     角色信息面板头部面板
@@ -43,7 +288,6 @@ class CharacterInfoHead:
         self.draw_title: bool = True
         """ 是否绘制面板标题 """
 
-        from Script.Design import handle_premise
         from Script.UI.Panel.see_item_info_panel import use_drug, auto_use_sanity_drug
 
         character_data: game_type.Character = cache.character_data[character_id]
@@ -65,87 +309,6 @@ class CharacterInfoHead:
             elif cache.all_system_setting.draw_setting[3] == 2:
                 favorability_and_trust_text = _("好感度:{0}({1})，信赖度:{2}({3})").format(favorability_text, favorability_lv_letter, trust_text, trust_lv_letter)
 
-        # 非0疲劳时输出当前疲劳状态
-        sleep_draw = draw.LeftDraw()
-        sleep_draw.style = "little_dark_slate_blue"
-        sleep_lv = attr_calculation.get_tired_level(character_data.tired_point)
-        sleep_text = " <" + constant.tired_text_list[sleep_lv] + ">"
-
-        # if character_id != 0:
-        #     print("debug character_id = ",character_id,"    character_data.tired_point = ",character_data.tired_point,"   sleep_text = ",sleep_text)
-        # 0疲劳的清醒则不输出
-        if sleep_text == _(" <清醒>" ):
-            sleep_text = ""
-        if character_id > 0:
-            # 睡眠中则输出睡眠程度
-            if handle_premise.handle_action_sleep(character_id) or handle_premise.handle_unconscious_flag_1(character_id):
-                tem, sleep_name = attr_calculation.get_sleep_level(character_data.sleep_point)
-                sleep_text = f" <{sleep_name}>"
-            # 如果在装睡则输出装睡
-            if handle_premise.handle_self_sleep_h_awake_but_pretend_sleep(character_id):
-                sleep_text = _(" <装睡>")
-                sleep_draw.tooltip = _("已经醒来，但决定装睡来默认你的行为")
-        sleep_draw.text = sleep_text
-
-        # hp1的完全疲劳状态
-        tired_draw = draw.LeftDraw()
-        tired_draw.style = "little_dark_slate_blue"
-        tired_text = ""
-        if handle_premise.handle_self_tired(character_id):
-            tired_text = _(" <累>")
-            tired_draw.tooltip = _("疲劳度过高，需要回宿舍睡觉")
-        tired_draw.text = tired_text
-
-        # 非普通时输出当前心情
-        angry_draw = draw.LeftDraw()
-        angry_text = ""
-        if character_id != 0:
-            angry_text = attr_calculation.get_angry_text(character_data.angry_point)
-            angry_text = "" if angry_text == _("普通") else " " + angry_text
-        if angry_text == _(" 愉快"):
-            angry_draw.style = "coral"
-            angry_draw.tooltip = _("当前心情愉快，部分行为实行值提升")
-        else:
-            angry_draw.style = "red"
-            angry_draw.tooltip = _("当前心情不佳，部分行为实行值下降")
-        angry_draw.text = angry_text
-
-        # 智能跟随状态
-        follow_draw = draw.LeftDraw()
-        follow_draw.style = "spring_green"
-        follow_text = ""
-        if handle_premise.handle_is_follow_1(character_id):
-            follow_text = _(" <跟>")
-            follow_draw.tooltip = _("处于智能跟随状态，会自动跟随玩家行动")
-        follow_draw.text = follow_text
-
-        # 有尿意时进行提示
-        urinate_draw = draw.LeftDraw()
-        urinate_draw.style = "khaki"
-        urinate_text = ""
-        if handle_premise.handle_urinate_ge_80(character_id):
-            urinate_text = _(" <尿>")
-            urinate_draw.tooltip = _("有较强的尿意，想要去洗手间解决")
-        # 玩家尿意提示根据设置决定是否显示
-        if character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 0:
-            urinate_text = ""
-        urinate_draw.text = urinate_text
-
-        # 饥饿时进行提示
-        hunger_draw = draw.LeftDraw()
-        hunger_draw.style = "beige"
-        hunger_text = ""
-        if character_id != 0:
-            hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
-            start_time = character_data.behavior.start_time.hour
-            hunger_text = hunger_text if start_time in {6, 7, 8, 11, 12, 13, 16, 17, 18} else ""
-            hunger_draw.tooltip = _("肚子饿了，想要吃点东西")
-        # 玩家饥饿提示根据设置决定是否显示，且与饭点时间无关
-        elif character_id == 0 and cache.all_system_setting.draw_setting.get(17, 1) == 1:
-            hunger_text = _(" <饿>") if handle_premise.handle_hunger_ge_80(character_id) else ""
-            hunger_draw.tooltip = _("肚子饿了，想要吃点东西")
-        hunger_draw.text = hunger_text
-
         # 射精欲不为零时进行提示
         eja_text = ""
         if character_id == 0 and character_data.eja_point > 0:
@@ -158,125 +321,8 @@ class CharacterInfoHead:
             else:
                 eja_text = _(" <射精欲:极>")
 
-        # 催眠状态时进行显示
-        # 首先需要判断是否开启了催眠显示，其次要么已经是某个催眠状态下，要么催眠度大于0而且开启了显示催眠度
-        hypnosis_draw = draw.LeftDraw()
-        hypnosis_text = ""
-        if (
-            cache.all_system_setting.draw_setting[4] and 
-            (handle_premise.handle_unconscious_hypnosis_flag(character_id) or
-            (character_data.hypnosis.hypnosis_degree > 0 and cache.all_system_setting.draw_setting[4] == 2))
-        ):
-            hypnosis_text = _(" <催眠")
-            # 根据催眠程度来区分颜色
-            hypnosis_draw.style = hypnosis_panel.get_hypnosis_degree_color(character_data.hypnosis.hypnosis_degree)
-            # 是否显示具体数值
-            if cache.all_system_setting.draw_setting[4] == 2:
-                # 显示到小数点后一位
-                hypnosis_text += f"({round(character_data.hypnosis.hypnosis_degree, 1)}%)"
-            # 是否显示催眠类型
-            if handle_premise.handle_unconscious_hypnosis_flag(character_id):
-                hypnosis_cid = character_data.sp_flag.unconscious_h - 3
-                hypnosis_name = game_config.config_hypnosis_type[hypnosis_cid].name
-                hypnosis_text += _(":{0}").format(hypnosis_name)
-                hypnosis_draw.tooltip = game_config.config_hypnosis_type[hypnosis_cid].introduce
-            if handle_premise.handle_hypnosis_increase_body_sensitivity(character_id):
-                hypnosis_text += _("(敏感)")
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[1].introduce
-            if handle_premise.handle_hypnosis_force_ovulation(character_id):
-                hypnosis_text += _("(排卵)")
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[3].introduce
-            if handle_premise.handle_hypnosis_blockhead(character_id):
-                hypnosis_text += _("(木头人)")
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[4].introduce
-            if handle_premise.handle_hypnosis_active_h(character_id):
-                hypnosis_text += _("(逆推)")
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[5].introduce
-            if handle_premise.handle_hypnosis_roleplay(character_id):
-                hypnosis_text += _("(扮演")
-                for role_play_cid in character_data.hypnosis.roleplay:
-                    role_play_name = game_config.config_roleplay[role_play_cid].name
-                    hypnosis_text += f"-{role_play_name}"
-                hypnosis_text += ")"
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[12].introduce
-            if handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
-                hypnosis_text += _("(痛→快感)")
-                hypnosis_draw.tooltip = game_config.config_hypnosis_sub_type[11].introduce
-            hypnosis_text += ">"
-        hypnosis_draw.text = hypnosis_text
-
-        # 携袋状态进行提示
-        bag_text = ""
-        bag_draw = draw.LeftDraw()
-        if character_data.sp_flag.bagging_chara_id:
-            bag_text = _(" <携袋:{0}>").format(cache.character_data[character_data.sp_flag.bagging_chara_id].name)
-            bag_draw.tooltip = _("将失去意识的干员装进了袋子中，用于在关押区监禁到牢房里")
-        bag_draw.text = bag_text
-
-        # 监禁状态
-        imprisonment_text = ""
-        imprisonment_draw = draw.LeftDraw()
-        imprisonment_draw.style = "crimson"
-        if handle_premise.handle_imprisonment_1(character_id):
-            imprisonment_text = _(" <监>")
-            imprisonment_draw.tooltip = _("被监禁，无法自由行动")
-        imprisonment_draw.text = imprisonment_text
-
-        # 访客
-        visitor_text = ""
-        visitor_draw = draw.LeftDraw()
-        if character_data.sp_flag.vistor == 1:
-            visitor_text = _(" <访>")
-            visitor_draw.tooltip = _("作为访客来罗德岛参观，不会参与工作和常规活动，在访问期结束后会离开罗德岛或留下成为干员")
-        visitor_draw.text = visitor_text
-
-        # 逆推H
-        active_h_text = ""
-        active_h_draw = draw.LeftDraw()
-        active_h_draw.style = "light_pink"
-        if handle_premise.handle_npc_active_h(character_id):
-            active_h_text = _(" <逆>")
-            active_h_draw.tooltip = _("对博士主动进行性行为")
-        active_h_draw.text = active_h_text
-
-        # 绝顶寸止
-        orgasm_edge_text = ""
-        orgasm_edge_draw = draw.LeftDraw()
-        orgasm_edge_draw.style = "rose_pink"
-        if handle_premise.handle_self_orgasm_edge(character_id):
-            orgasm_edge_text = _(" <寸止>")
-            orgasm_edge_draw.tooltip = _("被进行了绝顶寸止，会无法绝顶高潮")
-        orgasm_edge_draw.text = orgasm_edge_text
-
-        # 时停
-        time_stop_text = ""
-        time_stop_draw = draw.LeftDraw()
-        time_stop_draw.style = "light_sky_blue"
-        if handle_premise.handle_unconscious_flag_3(character_id):
-            time_stop_text = _(" <停>")
-            time_stop_draw.tooltip = _("处于时间停止状态，无法行动")
-        time_stop_draw.text = time_stop_text
-
-        # 隐奸
-        hidden_text = ""
-        hidden_draw = draw.LeftDraw()
-        hidden_draw.style = "deep_gray"
-        if character_id == 0 and (handle_premise.handle_hidden_sex_mode_3(character_id) or handle_premise.handle_hidden_sex_mode_4(character_id)):
-            hidden_text = _(" <隐>")
-            hidden_draw.tooltip = _("正在偷偷进行性行为，享受避免被他人发现的刺激感")
-        elif character_id != 0 and (handle_premise.handle_hidden_sex_mode_2(character_id) or handle_premise.handle_hidden_sex_mode_4(character_id)):
-            hidden_text = _(" <隐>")
-            hidden_draw.tooltip = _("正在偷偷进行性行为，享受避免被他人发现的刺激感")
-        hidden_draw.text = hidden_text
-
-        # 露出
-        exhibitionism_text = ""
-        exhibitionism_draw = draw.LeftDraw()
-        exhibitionism_draw.style = "hot_pink"
-        if handle_premise.handle_exhibitionism_sex_mode_ge_1(character_id):
-            exhibitionism_text = _(" <露>")
-            exhibitionism_draw.tooltip = _("正在进行露出行为，享受被他人看到的刺激感")
-        exhibitionism_draw.text = exhibitionism_text
+        # 获取所有角色状态
+        status_list, status_text_list = get_character_status_list(character_id)
 
         if character_id:
             message = (
@@ -296,7 +342,8 @@ class CharacterInfoHead:
         message_draw = draw.CenterDraw()
         # 根据其他状态的长度来调整文本的长度，同时也保证了一个最小长度
         text_width = text_handle.get_text_index(message)
-        base_width = width / 3.5 - text_handle.get_text_index(follow_text + angry_text + sleep_text + tired_text + urinate_text + hypnosis_text + bag_text + hunger_text + active_h_text + orgasm_edge_text + time_stop_text + hidden_text + exhibitionism_text + imprisonment_text + visitor_text)
+        all_status_text = "".join(status_text_list)
+        base_width = width / 3.5 - text_handle.get_text_index(all_status_text)
         max_width = max(base_width, text_width)
         message_draw.width = int(max_width)
         message_draw.text = message
@@ -362,7 +409,7 @@ class CharacterInfoHead:
         None_draw.width = 1
         None_draw.text = (" ")
         self.draw_list: List = [
-            (message_draw, follow_draw, angry_draw, hunger_draw, urinate_draw, sleep_draw, tired_draw, hypnosis_draw, bag_draw, visitor_draw, active_h_draw, orgasm_edge_draw, imprisonment_draw, time_stop_draw, hidden_draw, exhibitionism_draw, hp_draw, None_draw, mp_draw),
+            tuple([message_draw] + status_list + [hp_draw, None_draw, mp_draw]),
         ]
         if character_id == 0:
             self.draw_list[0] = self.draw_list[0] + (None_draw, None_draw, sanity_point_draw,)
