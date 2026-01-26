@@ -296,7 +296,7 @@ class CVEMenu(QDialog):
             # self.cve_d的值改为Dr_Office，宽度改为200
             self.cve_d.setPlainText("Dr_Office")
             self.cve_d.setFixedWidth(200)
-            self.cve_text.setText("用来实现角色在场景中的移动，通过输入一个Scenetag而移动到一个地点\n\n依靠地点的[Scenetag]属性来指定目标地点，在游戏根目录下的[data\map]文件夹中有全地点的数据\n如[data\map\中枢\博士办公室\Scene.json]可以查询到[博士办公室]的 SceneTag = Dr_Office\n每个地点的SceneTag都至少有一个，可以有多个\n如果输入的SceneTag不只有一个，而是有多个对应地点，则随机选取一个为目标进行移动\n如果SceneTag没有对应地点，则不进行移动\n如[龙门食坊]有以下SceneTag：Lungmen_Eatery|Restaurant|Food_Shop\nLungmen_Eatery：仅龙门食坊有的单独tag\nRestaurant：包括龙门食坊在内的，贸易街的所有餐馆都有该tag\nFood_Shop：包括贸易街餐馆、小贩、食堂取餐区在内的所有可以买食物的地方都有该tag\n\n移动方式有[寻路]和[瞬移]两种，推荐使用[寻路]，仅在特殊情况下再使用[瞬移]\n[寻路]：游戏中角色正常移动方式，角色会获取从当前地点到目标地点的完整路径，随着时间的前进，每步移动到下一个地点\n        每次移动时判定时间流逝的影响、路上遇到的其他角色、每个地点的情况等结算，直到抵达最终目标地点而停止\n        中途可能因打招呼、疲劳休息等结算而短暂搁置到处理完毕后再继续移动，或因门锁、未开放等结算而提前终止移动\n        玩家的移动会自带时间前进，NPC的移动不带时间前进\n[瞬移]：无视所有情况，跳过一切判定，不进行任何其他结算，直接从当前位置瞬间移动到指定位置")
+            self.cve_text.setText("用来实现角色在场景中的移动，通过输入一个Scenetag而移动到一个地点\n\n依靠地点的[Scenetag]属性来指定目标地点，在游戏根目录下的[data/map]文件夹中有全地点的数据\n如[data/map/中枢/博士办公室/Scene.json]可以查询到[博士办公室]的 SceneTag = Dr_Office\n每个地点的SceneTag都至少有一个，可以有多个\n如果输入的SceneTag不只有一个，而是有多个对应地点，则随机选取一个为目标进行移动\n如果SceneTag没有对应地点，则不进行移动\n如[龙门食坊]有以下SceneTag：Lungmen_Eatery|Restaurant|Food_Shop\nLungmen_Eatery：仅龙门食坊有的单独tag\nRestaurant：包括龙门食坊在内的，贸易街的所有餐馆都有该tag\nFood_Shop：包括贸易街餐馆、小贩、食堂取餐区在内的所有可以买食物的地方都有该tag\n\n移动方式有[寻路]和[瞬移]两种，推荐使用[寻路]，仅在特殊情况下再使用[瞬移]\n[寻路]：游戏中角色正常移动方式，角色会获取从当前地点到目标地点的完整路径，随着时间的前进，每步移动到下一个地点\n        每次移动时判定时间流逝的影响、路上遇到的其他角色、每个地点的情况等结算，直到抵达最终目标地点而停止\n        中途可能因打招呼、疲劳休息等结算而短暂搁置到处理完毕后再继续移动，或因门锁、未开放等结算而提前终止移动\n        玩家的移动会自带时间前进，NPC的移动不带时间前进\n[瞬移]：无视所有情况，跳过一切判定，不进行任何其他结算，直接从当前位置瞬间移动到指定位置")
 
         self.cve_b = self.cve_b2
 

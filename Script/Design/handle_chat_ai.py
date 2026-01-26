@@ -4,7 +4,8 @@ from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import handle_premise, attr_calculation, game_time, attr_text
 import openai
-import google.generativeai as genai
+from google import genai
+from google.genai import types as genai_types
 import os
 import httpx
 import re
@@ -610,17 +611,23 @@ def text_ai(character_id: int, behavior_id: str, original_text: str, translator:
             ai_gererate_text = ""
     # 调用Gemini
     elif now_key_type == "GEMINI_API_KEY":
-        # 创建client
-        genai.configure(api_key=API_KEY)
+        # 创建client（新版SDK使用Client对象）
         # gemini的传输协议改为rest
         if cache.ai_setting.ai_chat_setting[12] == 1:
-            genai.configure(api_key=API_KEY, transport='rest')
-        client = genai.GenerativeModel(model, system_instruction = system_promote)
+            client = genai.Client(api_key=API_KEY, http_options={'api_version': 'v1alpha'})
+        else:
+            client = genai.Client(api_key=API_KEY)
         try:
             # 发送请求
             # 流式输出
             if cache.ai_setting.ai_chat_setting[14] == 1:
-                completion = client.generate_content(user_prompt, stream=True)
+                completion = client.models.generate_content_stream(
+                    model=model,
+                    contents=user_prompt,
+                    config=genai_types.GenerateContentConfig(
+                        system_instruction=system_promote
+                    )
+                )
                 # 调用流式处理函数获取返回的文本
                 ai_gererate_text = process_stream_response(
                     stream=completion,         # 流式返回数据的迭代器，类型为object
@@ -629,7 +636,13 @@ def text_ai(character_id: int, behavior_id: str, original_text: str, translator:
                 )
             # 非流式输出
             else:
-                completion = client.generate_content(user_prompt)
+                completion = client.models.generate_content(
+                    model=model,
+                    contents=user_prompt,
+                    config=genai_types.GenerateContentConfig(
+                        system_instruction=system_promote
+                    )
+                )
                 # 获取返回的文本
                 ai_gererate_text = completion.text
         except Exception as e:
