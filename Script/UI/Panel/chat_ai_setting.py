@@ -4,7 +4,7 @@ from Script.Core import cache_control, game_type, get_text, flow_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import openai
-import google.generativeai as genai
+from google import genai
 import concurrent.futures
 import os
 import csv
@@ -624,11 +624,11 @@ class Chat_Ai_Setting_Panel:
                 else:
                     client = client.with_options(http_client=openai.DefaultHttpxClient(proxies=cache.ai_setting.now_ai_chat_proxy[0], transport=httpx.HTTPTransport(local_address=cache.ai_setting.now_ai_chat_proxy[1])))
         elif now_key_type == "GEMINI_API_KEY":
-            genai.configure(api_key=API_KEY)
             # gemini的传输协议改为rest
             if cache.ai_setting.ai_chat_setting[12] == 1:
-                genai.configure(api_key=API_KEY, transport='rest')
-            client = genai.GenerativeModel(model)
+                client = genai.Client(api_key=API_KEY, http_options={'api_version': 'v1alpha'})
+            else:
+                client = genai.Client(api_key=API_KEY)
 
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
@@ -677,6 +677,9 @@ class Chat_Ai_Setting_Panel:
                 ]
             )
         elif key_type == "GEMINI_API_KEY":
-            return client.generate_content("这是一条测试消息，如果收到请指直接回复1即可，不需要思考，不需要回复其他内容")
+            return client.models.generate_content(
+                model=cache.ai_setting.ai_chat_setting[5],
+                contents="这是一条测试消息，如果收到请指直接回复1即可，不需要思考，不需要回复其他内容"
+            )
         else:
             raise ValueError(_("不支持的API密钥类型：{0}").format(key_type))
