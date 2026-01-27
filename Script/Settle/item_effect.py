@@ -1244,6 +1244,7 @@ def handle_target_enema(
     now_time -- 结算的时间
     """
     from Script.Settle.common_default import base_chara_state_common_settle
+    from Script.Design import handle_ability
 
     if not add_time:
         return
