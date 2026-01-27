@@ -2676,9 +2676,10 @@ def handle_exhibitionism_sex_end():
     constant.Instruct.GROUP_SEX_END,
     constant.InstructType.SEX,
     _("结束群交"),
-    {constant_promise.Premise.HAVE_TARGET,
-     constant_promise.Premise.GROUP_SEX_MODE_ON,
-     constant_promise.Premise.IS_H},
+    {
+        constant_promise.Premise.GROUP_SEX_MODE_ON,
+        constant_promise.Premise.IS_H
+        },
     constant.Behavior.GROUP_SEX_END,
 )
 def handle_group_sex_end():
