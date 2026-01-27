@@ -271,7 +271,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         else:
             # 扣除资源
             if deduction_or_increase and text_list[0] == "r":
-                cache.rhodes_island.materials_resouce[item_id] -= item_num
+                cache.rhodes_island.materials_resouce[item_id] -= int(item_num)
             elif deduction_or_increase and text_list[0] == _("声望"):
                 # 将不再扣除声望
                 # cache.country.nation_reputation[item_id] -= item_num
@@ -282,15 +282,15 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         if deduction_or_increase:
             # 资源
             if text_list[0] == "r":
-                cache.rhodes_island.materials_resouce[item_id] += item_num
+                cache.rhodes_island.materials_resouce[item_id] += int(item_num)
             # 经验
             elif text_list[0] == "e":
                 for character_id in send_npc_list:
-                    cache.character_data[character_id].experience[item_id] += item_num
+                    cache.character_data[character_id].experience[item_id] += int(item_num)
             # 宝珠
             elif text_list[0] == "j":
                 for character_id in send_npc_list:
-                    cache.character_data[character_id].juel[item_id] += item_num
+                    cache.character_data[character_id].juel[item_id] += int(item_num)
             # 素质
             elif text_list[0] == "t":
                 for character_id in send_npc_list:
@@ -300,14 +300,15 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                         cache.character_data[character_id].talent[item_id] = 0
             # 角色
             elif text_list[0] == "c":
+                chara_id = character.get_character_id_from_adv(item_id)
                 # 如果未获得该干员，则获得
-                if item_id not in cache.npc_id_got and handle_premise.handle_normal_7(item_id):
-                    cache.rhodes_island.recruited_id.add(item_id)
-                item_name = cache.character_data[item_id].name
+                if chara_id not in cache.npc_id_got and handle_premise.handle_normal_7(chara_id):
+                    cache.rhodes_island.recruited_id.add(chara_id)
+                item_name = cache.character_data[chara_id].name
                 item_num = _("成为干员")
             # 特产
             elif text_list[0] == _("特产"):
-                cache.rhodes_island.materials_resouce[item_id] += item_num
+                cache.rhodes_island.materials_resouce[item_id] += int(item_num)
             # 委托部分，-1不可完成，0可以进行，1已完成
             elif text_list[0] == "m":
                 if item_num == -1:
@@ -326,7 +327,7 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
                 cache.country.nation_reputation[item_id] += item_num
             # 好感
             elif text_list[0] == _("好感"):
-                cache.character_data[item_id].favorability[0] += item_num
+                cache.character_data[item_id].favorability[0] += int(item_num)
             # 信赖
             elif text_list[0] == _("信赖"):
                 cache.character_data[item_id].trust += item_num
