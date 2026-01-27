@@ -170,6 +170,7 @@ cid,effect_name,effect_type,effect
 364,SELF_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,自身退出智能跟随状态
 365,TARGET_INTELLIGENT_FOLLOW_OFF,特殊flag_基础,交互对象退出智能跟随状态
 366,SELF_INTELLIGENT_FOLLOW_ON_IF_ASSISTANT,特殊flag_基础,如果自己是助理且打开了跟随服务，则自己进入智能跟随状态
+367,SELF_STOP_MOVE,特殊flag_基础,自己停止移动
 371,MAINTENANCE_FLAG_TO_0,特殊flag_基础,自身清零要检修状态
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
@@ -189,6 +190,7 @@ cid,effect_name,effect_type,effect
 457,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_0,特殊flag_H,自身清零要睡前自慰状态
 458,MASTUREBATE_BEFORE_SLEEP_FLAG_TO_2,特殊flag_H,自身变为已睡前自慰状态
 459,MASTUREBATE_TO_PL_FLAG_0,特殊flag_H,自身清零要找玩家逆推来自慰状态
+460,ALL_CHARA_MASTUREBATE_IN_GROUP_SEX_FLAG_0,特殊flag_H,全角色清零群交中自慰状态
 461,H_FLAG_TO_0,特殊flag_H,自身清零H状态
 462,H_FLAG_TO_1,特殊flag_H,自身变成H状态
 463,T_H_FLAG_TO_0,特殊flag_H,交互对象清零H状态

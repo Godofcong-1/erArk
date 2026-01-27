@@ -261,7 +261,7 @@ def build_config_po(message: str, file_path: str, now_index: int, talk: bool = F
             event_po_lines if event else
             config_po_lines
         )
-        lines.append(f"#: .\{file_path}:{now_index}\n")
+        lines.append(f"#: ./{file_path}:{now_index}\n")
         lines.append(f'msgid "{message}"\n')
         lines.append('msgstr ""\n\n')
         built.add(message)
@@ -331,7 +331,7 @@ def build_character_config(file_path:str,file_name:str):
             else:
                 now_data[row["key"]] = row["value"]
             if row["get_text"] and row["type"] == 'str' and row["value"] not in built:
-                config_po_lines.append(f"#: .\{file_path}:{now_index}\n")
+                config_po_lines.append(f"#: ./{file_path}:{now_index}\n")
                 config_po_lines.append("msgid" + " " + '"' + row["value"] + '"' + "\n")
                 config_po_lines.append('msgstr ""\n\n')
                 built.add(row["value"])
@@ -360,7 +360,7 @@ def build_ui_text(file_path:str,file_name:str):
             # print(f"debug row = {row}")
             now_data[row["cid"]] = row["context"]
             if row["context"] not in msgData and row["context"] not in built:
-                config_po_lines.append(f"#: .\{file_path}:{now_index}\n")
+                config_po_lines.append(f"#: ./{file_path}:{now_index}\n")
                 config_po_lines.append("msgid" + " " + '"' + row["context"] + '"' + "\n")
                 config_po_lines.append('msgstr ""\n\n')
                 built.add(row["context"])
