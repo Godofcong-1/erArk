@@ -880,3 +880,1572 @@ body {
         display: none;
     }
 }
+
+/* ========== 新UI容器样式（IN_SCENE面板） ========== */
+.new-ui-container {
+    width: 100%;
+    min-height: 600px;
+    background-color: #0a0a0a;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.new-ui-layout {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 8px;
+}
+
+/* 顶部信息区 */
+.new-ui-top-info {
+    display: flex;
+    gap: 16px;
+    padding: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    border-bottom: 1px solid #333;
+    overflow: visible;  /* 允许子元素溢出，避免对话框被截断 */
+    position: relative;
+    z-index: 20;  /* 确保对话框在主场景上方 */
+}
+
+/* 玩家信息面板 */
+.new-ui-player-info {
+    flex: 0 0 auto;
+    width: 200px;  /* 固定宽度，缩小一半 */
+    min-width: 180px;
+    padding: 12px 8px 8px 8px;  /* 增加顶部内边距，让玩家姓名和边缘有空隙 */
+    background-color: rgba(30, 30, 40, 0.8);
+    border-radius: 4px;
+    position: relative;  /* 为浮动文本提供定位上下文 */
+}
+
+.player-name-line {
+    margin-bottom: 12px;  /* 增加下边距，让姓名和体力行之间有更多空隙 */
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px;
+}
+
+.player-name {
+    font-size: 1.2em;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.player-nickname {
+    color: #888;
+    margin-left: 8px;
+}
+
+/* 玩家特殊状态标记行 - 单独一行显示 */
+.player-special-states-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px 0;
+    margin-top: 4px;
+    border-top: 1px solid #333;
+}
+
+.player-special-states-row .special-state {
+    font-size: 0.85em;
+}
+
+.player-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 状态条样式 */
+.status-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.9em;
+    position: relative;  /* 为浮动文本提供定位上下文 */
+}
+
+.status-bar .bar-label {
+    width: 40px;
+    min-width: 32px;
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+/* 状态栏标签容器（包含标签和快捷按钮） */
+.bar-label-container {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    min-width: 40px;
+}
+
+/* 快速使用药剂按钮 */
+.bar-quick-use-btn {
+    padding: 0;
+    width: 14px;
+    height: 14px;
+    background-color: rgba(100, 100, 120, 0.5);
+    border: 1px solid #666;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 10px;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bar-quick-use-btn:hover {
+    background-color: rgba(120, 120, 140, 0.8);
+    border-color: #888;
+    transform: scale(1.1);
+}
+
+.bar-quick-use-btn:active {
+    transform: scale(0.95);
+}
+
+/* 理智药快捷按钮样式 */
+.bar-quick-use-sanity {
+    border-color: #7070C0;
+}
+
+.bar-quick-use-sanity:hover {
+    background-color: rgba(112, 112, 192, 0.8);
+    border-color: #8080D0;
+}
+
+/* 精力剂快捷按钮样式 */
+.bar-quick-use-semen {
+    border-color: #fffacd;
+}
+
+.bar-quick-use-semen:hover {
+    background-color: rgba(255, 250, 205, 0.3);
+    border-color: #ffffe0;
+}
+
+/* 玩家信息区的状态条：使用图片背景 */
+.new-ui-player-info .status-bar .bar-track {
+    flex: 1;
+    height: 14px;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.new-ui-player-info .status-bar .bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    transition: width 0.3s ease;
+}
+
+/* HP槽图片 */
+.new-ui-player-info .status-bar-hp .bar-track {
+    background-image: url('/image/状态条/hpbar_null.png');
+}
+
+.new-ui-player-info .status-bar-hp .bar-fill {
+    background-image: url('/image/状态条/hpbar_true.png');
+    background-color: transparent;
+}
+
+/* MP槽图片 */
+.new-ui-player-info .status-bar-mp .bar-track {
+    background-image: url('/image/状态条/mpbar_null.png');
+}
+
+.new-ui-player-info .status-bar-mp .bar-fill {
+    background-image: url('/image/状态条/mpbar_true.png');
+    background-color: transparent;
+}
+
+/* 理智槽图片 */
+.new-ui-player-info .status-bar-sanity .bar-track {
+    background-image: url('/image/状态条/statbar_null.png');
+}
+
+.new-ui-player-info .status-bar-sanity .bar-fill {
+    background-image: url('/image/状态条/statbar_true.png');
+    background-color: transparent;
+}
+
+/* 精液槽图片 */
+.new-ui-player-info .status-bar-semen .bar-track {
+    background-image: url('/image/状态条/spbar_null.png');
+}
+
+.new-ui-player-info .status-bar-semen .bar-fill {
+    background-image: url('/image/状态条/spbar_true.png');
+    background-color: transparent;
+}
+
+.status-bar .bar-value {
+    width: 60px;
+    min-width: 70px;
+    text-align: right;
+    color: #ccc;
+    font-size: 0.85em;
+}
+
+/* 交互对象附加信息面板 - 外层容器保持flex布局中的位置 */
+.new-ui-target-extra-info {
+    flex: 1;
+    padding: 0; /* 移除padding，由内部容器处理 */
+    background-color: transparent; /* 背景由内部容器处理 */
+    border-radius: 4px;
+    max-height: 124px; /* 在flex布局中占据的固定高度，与玩家信息区高度匹配 */
+    overflow: visible; /* 允许内容向下溢出 */
+    line-height: 1.6;
+    position: relative; /* 为内部绝对定位提供定位上下文 */
+    z-index: 10;
+}
+
+.extra-info-placeholder {
+    color: #666;
+    text-align: center;
+    padding: 16px;
+    background-color: rgba(30, 30, 40, 0.8);
+    border-radius: 4px;
+}
+
+/* 内部容器 - 实际承载内容和样式 */
+.extra-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background-color: rgba(30, 30, 40, 0.8);
+    border-radius: 4px;
+    max-height: 108px; /* 150px - 8px*2 padding */
+    overflow: hidden; /* 不显示滚动条 */
+    position: relative; /* 初始相对定位 */
+    transition: box-shadow 0.3s ease;
+}
+
+/* 悬停时内部容器扩展 - 使用绝对定位脱离文档流 */
+.new-ui-target-extra-info:hover .extra-info-container {
+    position: absolute; /* 脱离文档流，不影响布局 */
+    top: 0;
+    left: 0;
+    right: 0;
+    max-height: 800px; /* 足够大以显示所有内容 */
+    overflow-y: auto; /* 内容太多时显示滚动条 */
+    z-index: 100; /* 覆盖其他内容 */
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8); /* 阴影突出浮动效果 */
+}
+
+/* 顶部按钮栏 */
+.extra-info-button-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 4px;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.extra-info-tab-btn {
+    padding: 2px 8px;
+    background-color: #333;
+    color: #aaa;
+    border: 1px solid #555;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.2s;
+}
+
+.extra-info-tab-btn:hover {
+    background-color: #444;
+    color: #fff;
+}
+
+.extra-info-tab-btn.active {
+    background-color: #555;
+    color: #ffd700;
+    border-color: #ffd700;
+}
+
+.extra-info-toggle-btn {
+    padding: 2px 8px;
+    background-color: #2a2a3a;
+    color: #8af;
+    border: 1px solid #448;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+}
+
+.extra-info-toggle-btn:hover {
+    background-color: #3a3a4a;
+}
+
+/* 内容区域 */
+.extra-info-content {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.extra-info-section {
+    padding: 4px 0;
+    line-height: 1.5;
+}
+
+.section-title {
+    color: #ffd700;
+    font-weight: bold;
+    font-size: 0.9em;
+    margin-bottom: 2px;
+}
+
+.section-empty {
+    color: #666;
+    font-size: 0.85em;
+}
+
+/* 服装栏 */
+.clothing-section .clothing-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 8px;
+}
+
+.clothing-group {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-right: 8px;
+}
+
+.clothing-type-label {
+    color: #aaa;
+    font-size: 0.9em;
+}
+
+.clothing-name {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+.clothing-vacuum {
+    color: #f88;
+    font-size: 0.9em;
+}
+
+.clothing-button {
+    background-color: #3a3a4a;
+    color: #8cf;
+    border: 1px solid #558;
+    border-radius: 3px;
+    padding: 1px 4px;
+    cursor: pointer;
+    font-size: 0.85em;
+    transition: all 0.15s;
+}
+
+.clothing-button:hover {
+    background-color: #4a4a5a;
+    border-color: #88f;
+}
+
+.clothing-off-btn {
+    color: #888;
+    border-color: #444;
+}
+
+.clothing-dirty {
+    font-size: 0.85em;
+}
+
+.clothing-off {
+    margin-top: 4px;
+    padding-top: 4px;
+    border-top: 1px dashed #444;
+}
+
+.clothing-off-label {
+    color: #888;
+    font-size: 0.9em;
+}
+
+.clothing-off-name {
+    color: #888;
+}
+
+.clothing-naked {
+    color: #f88;
+    font-size: 0.9em;
+}
+
+/* 身体栏 */
+.body-section .body-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px 6px;
+}
+
+/* 身体部位分组 - 使用inline显示，让名称和内容在同一行 */
+.body-part-group {
+    display: inline;
+    margin-right: 8px;
+}
+
+.body-part-label {
+    color: #aaa;
+    font-weight: normal;
+    font-size: 0.9em;
+}
+
+.body-text, .body-extra {
+    font-size: 0.9em;
+    margin-left: 2px;
+}
+
+.body-h-item {
+    color: #f8a;
+    font-size: 0.9em;
+}
+
+/* 群交栏 */
+.group-sex-section .group-sex-content {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+/* 隐奸栏 */
+.hidden-sex-section .hidden-sex-content {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 12px;
+}
+
+.hidden-level {
+    color: #aaf;
+    font-size: 0.9em;
+}
+
+.hidden-insert {
+    color: #ccc;
+    font-size: 0.9em;
+}
+
+/* 颜色类 */
+.semen-color {
+    color: #fff8dc;
+}
+
+.lavender-color {
+    color: #e6e6fa;
+}
+
+.blood-color {
+    color: #ff6b6b;
+}
+
+/* 头像面板 */
+.new-ui-avatar-panel {
+    display: flex;
+    gap: 8px;
+    padding: 8px;
+    padding-bottom: 60px;  /* 为对话框预留空间 */
+    background-color: rgba(30, 30, 40, 0.8);
+    border-radius: 4px;
+    overflow: visible;  /* 允许对话框溢出 */
+    position: relative;
+}
+
+.avatar-item {
+    width: 48px;
+    min-height: 48px;
+    background-color: #333;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px;
+    cursor: pointer;
+    transition: background-color 0.2s;  /* 只过渡背景色，避免transform导致闪烁 */
+    position: relative;
+}
+
+/* 使用nth-child递增z-index，让右侧对话框在上层显示 */
+.avatar-item:nth-child(1) { z-index: 5; }
+.avatar-item:nth-child(2) { z-index: 6; }
+.avatar-item:nth-child(3) { z-index: 7; }
+.avatar-item:nth-child(4) { z-index: 8; }
+.avatar-item:nth-child(5) { z-index: 9; }
+
+.avatar-item:hover {
+    background-color: #444;
+    /* 移除transform: scale，防止闪烁 */
+}
+
+.avatar-name {
+    font-size: 0.7em;
+    text-align: center;
+    color: #ccc;
+    overflow: visible;  /* 改为visible，允许换行 */
+    white-space: normal;  /* 允许正常换行 */
+    word-wrap: break-word;  /* 长单词可断行 */
+    word-break: break-all;  /* CJK字符可随意断行 */
+    margin-bottom: 4px;
+    width: 100%;  /* 确保使用全部宽度 */
+    line-height: 1.1;  /* 适当的行高 */
+}
+
+/* 头像下方的小对话框 - 漫画风格向下悬浮 */
+.avatar-mini-dialog {
+    position: absolute;
+    top: calc(100% - 10px);  /* 向上偏移10px，避免被主场景截断 */
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 0.7em;  /* 与角色姓名字体大小一致 */
+    color: #ffcc80;
+    background-color: rgba(40, 35, 25, 0.95);
+    border: 1px solid #aa8844;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: 4px;
+    min-width: 80px;
+    max-width: 110px;  /* 限制宽度避免与相邻对话框重叠 */
+    min-height: 2.8em;  /* 至少容纳两行文本 */
+    max-height: 4.5em;  /* 最多显示约两行半文本 */
+    text-align: center;
+    white-space: normal;  /* 允许文本换行 */
+    word-wrap: break-word;  /* 长词自动换行 */
+    overflow: hidden;  /* 隐藏超出部分 */
+    line-height: 1.3;  /* 行高设置，确保文本清晰 */
+    /* z-index继承自父元素avatar-item的nth-child设置 */
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+    cursor: help;
+    pointer-events: auto;  /* 确保可以触发鼠标事件和工具提示 */
+}
+
+/* 漫画风格的三角形指示器 */
+.avatar-mini-dialog::before {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 6px solid transparent;
+    border-bottom-color: #aa8844;
+}
+
+.avatar-mini-dialog::after {
+    content: '';
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-bottom-color: rgba(40, 35, 25, 0.95);
+}
+
+/* 主画面区 */
+.new-ui-main-scene {
+    flex: 1;
+    display: flex;
+    position: relative;
+    min-height: 400px;
+    background-color: #111;
+    border-radius: 4px;
+}
+
+/* 交互类型面板（左侧） - 大类选项卡 + 小类按钮 */
+.new-ui-interaction-panel {
+    width: 140px;
+    padding: 0;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    overflow-y: auto;
+    border-radius: 4px;
+    border: 1px solid #333;
+}
+
+/* 大类选项卡容器 */
+.interaction-major-tabs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    background-color: #1a1a2a;
+    border-bottom: 1px solid #444;
+}
+
+/* 大类选项卡 */
+.interaction-major-tab {
+    padding: 10px 12px;
+    background-color: #1a1a2a;
+    color: #888;
+    border: none;
+    border-left: 3px solid transparent;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.95em;
+    text-align: left;
+}
+
+.interaction-major-tab:hover {
+    background-color: #252540;
+    color: #aaa;
+}
+
+.interaction-major-tab.active {
+    background-color: #2a2a4a;
+    color: #ffd700;
+    border-left-color: #ffd700;
+    font-weight: bold;
+}
+
+/* 小类按钮容器 */
+.interaction-minor-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    flex: 1;
+    overflow-y: auto;
+}
+
+/* 小类按钮 */
+.interaction-minor-btn {
+    padding: 10px 12px;
+    background-color: #2a2a3a;
+    color: #ccc;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9em;
+    text-align: center;
+}
+
+.interaction-minor-btn:hover {
+    background-color: #3a3a5a;
+    border-color: #666;
+    color: #fff;
+}
+
+.interaction-minor-btn.active {
+    background-color: #4a4a7a;
+    border-color: #8888ff;
+    color: #fff;
+    box-shadow: 0 0 8px rgba(136, 136, 255, 0.4);
+}
+
+/* 旧版交互类型按钮（向后兼容） */
+.interaction-type-btn {
+    padding: 8px 12px;
+    background-color: #2a2a3a;
+    color: #ccc;
+    border: 1px solid #444;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-size: 0.9em;
+}
+
+.interaction-type-btn:hover {
+    background-color: #3a3a4a;
+    border-color: #666;
+}
+
+.interaction-type-btn.active {
+    background-color: #4a4a6a;
+    border-color: #8888ff;
+    color: #fff;
+}
+
+/* 角色立绘显示区 */
+.new-ui-character-display {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+/* 角色立绘容器 */
+.character-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.character-image {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+.character-placeholder {
+    color: #666;
+    font-size: 1.2em;
+    padding: 20px;
+    background-color: rgba(30, 30, 40, 0.5);
+    border-radius: 8px;
+}
+
+/* 身体部位交互层 */
+.body-parts-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+
+/* 身体部位按钮 */
+.body-part-button {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    cursor: pointer;
+    pointer-events: auto;
+    opacity: 0;
+    background-color: rgba(136, 136, 255, 0.3);
+    border: 2px solid transparent;
+    transition: all 0.2s ease;
+    min-width: 30px;
+    min-height: 30px;
+    /* 确保按钮始终是正圆形 */
+    aspect-ratio: 1 / 1;
+    /* 高度跟随宽度 */
+    height: auto !important;
+}
+
+.body-part-button:hover {
+    opacity: 1;
+    background-color: rgba(136, 136, 255, 0.5);
+    border-color: rgba(136, 136, 255, 0.8);
+    box-shadow: 0 0 10px rgba(136, 136, 255, 0.6);
+}
+
+/* 全部位显示模式：始终显示所有部位按钮 */
+.body-part-button.always-visible {
+    opacity: 0.5;
+    animation: body-part-pulse 2s ease-in-out infinite;
+}
+
+.body-part-button.always-visible:hover {
+    opacity: 1;
+    background-color: rgba(136, 136, 255, 0.6);
+    border-color: rgba(136, 136, 255, 0.9);
+    box-shadow: 0 0 15px rgba(136, 136, 255, 0.8);
+}
+
+/* 可交互的身体部位（高亮显示） */
+.body-part-button.available {
+    opacity: 0.6;
+    background-color: rgba(100, 255, 100, 0.4);
+    border-color: rgba(100, 255, 100, 0.6);
+    animation: body-part-pulse 1.5s ease-in-out infinite;
+}
+
+.body-part-button.available:hover {
+    opacity: 1;
+    background-color: rgba(100, 255, 100, 0.6);
+    border-color: rgba(100, 255, 100, 0.9);
+    box-shadow: 0 0 15px rgba(100, 255, 100, 0.7);
+}
+
+/* 不可交互的身体部位（暗淡显示） */
+.body-part-button.unavailable {
+    opacity: 0;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+/* 身体部位脉冲动画 */
+@keyframes body-part-pulse {
+    0%, 100% {
+        opacity: 0.4;
+        transform: translate(-50%, -50%) scale(1);
+    }
+    50% {
+        opacity: 0.7;
+        transform: translate(-50%, -50%) scale(1.1);
+    }
+}
+
+/* 身体部位提示文本 */
+.body-part-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 4px 8px;
+    background-color: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    font-size: 12px;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s;
+    margin-bottom: 5px;
+}
+
+.body-part-button:hover .body-part-tooltip {
+    opacity: 1;
+}
+
+/* 交互对象信息面板（右侧） */
+.new-ui-target-info {
+    width: 240px;
+    padding: 12px;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-radius: 4px;
+    max-height: 100%;
+    overflow-y: auto;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+.target-name {
+    font-size: 1.3em;
+    color: #ffd700;
+    font-weight: bold;
+    text-align: center;
+    padding-bottom: 6px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 4px;
+}
+
+/* 好感度/信赖度行 */
+.target-relation-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 4px 0;
+    font-size: 1em;
+    color: #ccc;
+    border-bottom: 1px solid #333;
+}
+
+.target-favorability {
+    color: #ff9999;
+}
+
+.target-trust {
+    color: #99ccff;
+}
+
+/* 状态条容器 */
+.target-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 0;
+}
+
+/* 带背景图片的状态条 */
+.target-bars .status-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    height: 18px;
+}
+
+.target-bars .bar-label {
+    font-size: 0.9em;
+    min-width: 32px;
+    color: #ccc;
+}
+
+.target-bars .bar-track {
+    flex: 1;
+    height: 14px;
+    background-image: url('/image/状态条/hpbar_null.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    position: relative;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.target-bars .bar-fill {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    transition: width 0.3s ease;
+}
+
+.target-bars .status-bar-hp .bar-track {
+    background-image: url('/image/状态条/hpbar_null.png');
+}
+
+.target-bars .status-bar-hp .bar-fill {
+    background-image: url('/image/状态条/hpbar_true.png');
+    background-color: transparent;
+}
+
+.target-bars .status-bar-mp .bar-track {
+    background-image: url('/image/状态条/mpbar_null.png');
+}
+
+.target-bars .status-bar-mp .bar-fill {
+    background-image: url('/image/状态条/mpbar_true.png');
+    background-color: transparent;
+}
+
+.target-bars .bar-value {
+    font-size: 0.85em;
+    min-width: 70px;
+    text-align: right;
+    color: #ccc;
+}
+
+/* 特殊状态标记行 */
+.target-special-states {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px 0;
+    border-top: 1px solid #333;
+    border-bottom: 1px solid #333;
+    line-height: 1.5;
+}
+
+.special-state {
+    font-size: 1em;
+    padding: 1px 2px;
+}
+
+/* 状态区块 */
+.target-state-section {
+    margin-top: 4px;
+}
+
+/* ========== 数值变化浮动文本 ========== */
+/* ========== 内联浮动文本样式 ========== */
+.inline-floating-text {
+    position: absolute;
+    font-size: 0.9em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    padding: 0 4px;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 100;
+    animation: inlineFloatUp 0.4s ease-out forwards;
+}
+
+/* 状态栏内联显示（位置不变，在右侧） */
+.inline-floating-text.position-inline {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* 体力：显示在体力和气力的中间位置 */
+.inline-floating-text.position-hp-middle {
+    right: 0;
+    top: 100%;
+    transform: translateY(0);
+}
+
+/* 气力、好感、信赖等：下移一行显示 */
+.inline-floating-text.position-below {
+    right: 0;
+    top: 100%;
+    transform: translateY(2px);
+}
+
+.inline-floating-text.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes inlineFloatUp {
+    from {
+        opacity: 0;
+        transform: translateY(calc(var(--float-start-offset, 0px) + 8px));
+    }
+    to {
+        opacity: 1;
+        transform: translateY(var(--float-end-offset, 0px));
+    }
+}
+
+/* ========== 底部浮动文本容器 ========== */
+.bottom-floating-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 4px 0;
+    justify-content: flex-start;
+    pointer-events: none;
+}
+
+.bottom-floating-text {
+    font-size: 0.9em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    padding: 2px 6px;
+    white-space: nowrap;
+    animation: bottomFloatUp 0.4s ease-out forwards;
+}
+
+.bottom-floating-container.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes bottomFloatUp {
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ========== 旧版浮动文本样式（保留兼容） ========== */
+.value-changes-container {
+    position: absolute;
+    top: 50%;
+    right: -10px;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    pointer-events: none;
+    z-index: 100;
+}
+
+.floating-value-change {
+    font-size: 1em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    padding: 2px 8px;
+    white-space: nowrap;
+    animation: floatUp 0.5s ease-out forwards;
+    opacity: 1;
+    transform: translateY(var(--float-offset, 0px));
+}
+
+.floating-value-change.positive {
+    color: #4cff4c;
+}
+
+.floating-value-change.negative {
+    color: #ff4c4c;
+}
+
+/* 浮动上升动画 */
+@keyframes floatUp {
+    from {
+        opacity: 0;
+        transform: translateY(calc(var(--float-offset, 0px) + 10px));
+    }
+    to {
+        opacity: 1;
+        transform: translateY(var(--float-offset, 0px));
+    }
+}
+
+/* 淡出动画 */
+.value-changes-container.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+.state-section-title {
+    color: #888;
+    font-size: 1em;
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+/* 状态网格 - 每行2个 */
+.state-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+}
+
+/* 单个状态项 - 改为单行布局 */
+.state-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 4px;
+    background-color: rgba(40, 40, 50, 0.6);
+    border-radius: 3px;
+}
+
+/* 状态项第一行：标签和数值 */
+.state-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.state-label {
+    font-size: 0.9em;
+    color: #aaa;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.state-value {
+    font-size: 0.85em;
+    color: #ccc;
+    text-align: right;
+    white-space: nowrap;
+}
+
+/* 状态进度条 - 使用图片背景 */
+.state-bar-track {
+    height: 10px;
+    background-image: url('/image/状态条/statbar_null.png');
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.state-bar-fill {
+    height: 100%;
+    background-image: url('/image/状态条/statbar_true.png');
+    background-size: auto 100%;
+    background-repeat: repeat-x;
+    background-color: transparent;
+    border-radius: 2px;
+    transition: width 0.3s ease;
+}
+
+/* 顶部面板选项卡栏 - 网页选项卡样式 */
+.new-ui-panel-tabs {
+    display: flex;
+    gap: 0;
+    padding: 0;
+    background-color: rgba(20, 20, 30, 0.95);
+    border-bottom: 2px solid #4a4a5a;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+}
+
+/* 选项卡项 - 网页选项卡样式 */
+.panel-tab-btn {
+    padding: 10px 20px;
+    background-color: transparent;
+    color: #aaa;
+    border: none;
+    border-bottom: 2px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
+    font-weight: normal;
+    position: relative;
+    margin-bottom: -2px;
+}
+
+/* 选项卡悬停效果 */
+.panel-tab-btn:hover:not(.disabled):not(.active) {
+    background-color: rgba(60, 60, 80, 0.5);
+    color: #ddd;
+    border-bottom-color: #666;
+}
+
+/* 激活状态的选项卡 */
+.panel-tab-btn.active {
+    background-color: rgba(40, 40, 60, 0.8);
+    color: #ffd700;
+    border-bottom: 2px solid #ffd700;
+    font-weight: bold;
+}
+
+/* 禁用状态的选项卡 */
+.panel-tab-btn.disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    color: #666;
+}
+
+/* 主面板选项卡特殊样式 */
+.panel-tab-btn.main-tab {
+    color: #88ccff;
+}
+
+.panel-tab-btn.main-tab.active {
+    color: #ffd700;
+}
+
+/* ========== 臀部子菜单样式 ========== */
+.hip-sub-menu {
+    background-color: rgba(30, 30, 40, 0.95);
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 100px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.hip-sub-menu-title {
+    color: #ffd700;
+    font-size: 0.9em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.hip-sub-menu-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    background-color: rgba(80, 80, 100, 0.6);
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 0.85em;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.hip-sub-menu-btn:hover {
+    background-color: rgba(100, 100, 140, 0.8);
+    border-color: #88ccff;
+    color: #fff;
+}
+
+.hip-sub-menu-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.hip-sub-menu-close:hover {
+    color: #ff6666;
+}
+
+/* ========== 指令选择菜单样式 ========== */
+.instruct-menu {
+    background-color: rgba(30, 30, 40, 0.95);
+    border: 2px solid #ffd700;
+    border-radius: 12px;
+    padding: 15px;
+    min-width: 200px;
+    max-width: 300px;
+    z-index: 1001;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.6);
+}
+
+.instruct-menu-title {
+    color: #ffd700;
+    font-size: 1.1em;
+    font-weight: bold;
+    padding-bottom: 12px;
+    border-bottom: 1px solid #ffd700;
+    margin-bottom: 12px;
+    text-align: center;
+}
+
+.instruct-menu-btn {
+    display: block;
+    width: 100%;
+    padding: 10px 15px;
+    margin-bottom: 6px;
+    background-color: rgba(60, 60, 80, 0.7);
+    border: 1px solid #666;
+    border-radius: 6px;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 0.95em;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.instruct-menu-btn:hover {
+    background-color: rgba(80, 80, 120, 0.9);
+    border-color: #88ccff;
+    color: #fff;
+    transform: scale(1.02);
+}
+
+.instruct-menu-btn:last-child {
+    margin-bottom: 0;
+}
+
+/* ========== 无部位指令浮现按钮样式 ========== */
+.interaction-floating-buttons {
+    display: none;  /* 默认隐藏，有内容时通过JS显示 */
+    flex-direction: column;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 8px;
+    /* 使用视口高度限制，因为父容器可能没有固定高度 */
+    max-height: min(calc(100vh - 200px), 700px);  /* 限制高度，超出换列 */
+    height: fit-content;
+    align-content: flex-start;
+    background-color: rgba(30, 30, 45, 0.85);
+    border-radius: 8px;
+    overflow: visible;  /* 允许内容溢出换列 */
+    /* 绝对定位，不影响角色立绘大小 */
+    position: absolute;
+    left: 148px;  /* 交互面板宽度(140px) + 间距(8px) */
+    top: 8px;
+    z-index: 10;
+}
+
+/* 浮现按钮 */
+.floating-instruct-btn {
+    padding: 10px 14px;
+    background-color: #3a3a5a;
+    color: #ddd;
+    border: 1px solid #6666aa;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    font-size: 0.9em;
+    text-align: center;
+    white-space: nowrap;
+    min-width: 80px;
+    max-width: 120px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(100, 100, 180, 0.3);
+}
+
+.floating-instruct-btn:hover {
+    background-color: #4a4a7a;
+    border-color: #8888ff;
+    color: #fff;
+    transform: translateX(2px);
+    box-shadow: 0 4px 12px rgba(136, 136, 255, 0.4);
+}
+
+.floating-instruct-btn:active {
+    background-color: #5a5a9a;
+    transform: translateX(0);
+    box-shadow: 0 2px 6px rgba(136, 136, 255, 0.3);
+}
+
+/* ========== 对话框区域样式 ========== */
+/* 对话框容器 - 位于画面最下方 */
+.new-ui-dialog-box {
+    position: relative;
+    width: 100%;
+    min-height: 120px;
+    padding: 15px 20px;
+    background: linear-gradient(180deg, rgba(20, 20, 40, 0.85) 0%, rgba(30, 30, 50, 0.95) 100%);
+    border-top: 2px solid #4a4a6a;
+    box-sizing: border-box;
+    display: none;  /* 默认隐藏，有内容时显示 */
+    flex-direction: column;
+    gap: 8px;
+    cursor: pointer;  /* 点击推进 */
+    transition: all 0.3s ease;
+}
+
+/* 对话框可见状态 */
+.new-ui-dialog-box.visible {
+    display: flex;
+}
+
+/* 说话者名称区域 */
+.dialog-speaker-container {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.dialog-speaker-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #ffd700;
+    padding: 4px 12px;
+    background-color: rgba(100, 80, 40, 0.6);
+    border: 1px solid #aa8844;
+    border-radius: 4px;
+    display: inline-block;
+}
+
+/* 对话文本区域 */
+.dialog-text-container {
+    flex: 1;
+    padding: 8px 0;
+    line-height: 1.6;
+    font-size: 1.05em;
+    color: #e8e8e8;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
+
+/* 不同颜色风格的对话文本 */
+.dialog-text-container.style-standard {
+    color: #e8e8e8;
+}
+
+.dialog-text-container.style-gold {
+    color: #ffd700;
+}
+
+/* 角色专属颜色通过JavaScript动态设置 */
+
+/* 对话框底部提示 */
+.dialog-hint {
+    text-align: right;
+    font-size: 0.85em;
+    color: #888;
+    font-style: italic;
+    padding-top: 4px;
+}
+
+/* 点击推进动画 */
+.dialog-hint-icon {
+    display: inline-block;
+    animation: dialog-blink 1s ease-in-out infinite;
+}
+
+@keyframes dialog-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* 对话框悬停效果 */
+.new-ui-dialog-box:hover {
+    background: linear-gradient(180deg, rgba(25, 25, 50, 0.9) 0%, rgba(40, 40, 60, 0.98) 100%);
+}
+
+/* 快速跳过模式下的对话框样式 */
+.new-ui-dialog-box.skipping {
+    opacity: 0.7;
+    transition: opacity 0.1s ease;
+}
+
+.new-ui-dialog-box.skipping .dialog-hint {
+    display: none;
+}
+
+/* 隐藏状态下的对话框 */
+.new-ui-dialog-box.hidden {
+    display: none;
+}
+
+/* ========== 特殊状态颜色样式 ========== */
+/* 对应 character_info_head.py 中的 draw.style 值 */
+
+.special-state.style-standard {
+    color: #c8c8c8;
+}
+
+.special-state.style-spring_green {
+    color: #00ff7f;
+}
+
+.special-state.style-coral {
+    color: #ff7f50;
+}
+
+.special-state.style-red {
+    color: #ff4444;
+}
+
+.special-state.style-beige {
+    color: #f5f5dc;
+}
+
+.special-state.style-khaki {
+    color: #f0e68c;
+}
+
+.special-state.style-little_dark_slate_blue {
+    color: #7b68ee;
+}
+
+.special-state.style-light_pink {
+    color: #ffb6c1;
+}
+
+.special-state.style-rose_pink {
+    color: #ff66b2;
+}
+
+.special-state.style-crimson {
+    color: #dc143c;
+}
+
+.special-state.style-light_sky_blue {
+    color: #87cefa;
+}
+
+.special-state.style-deep_gray {
+    color: #666666;
+}
+
+.special-state.style-hot_pink {
+    color: #ff69b4;
+}
+
+/* 催眠程度颜色 */
+.special-state.style-hypnosis_low {
+    color: #90ee90;
+}
+
+.special-state.style-hypnosis_mid {
+    color: #ffff00;
+}
+
+.special-state.style-hypnosis_high {
+    color: #ffa500;
+}
+
+.special-state.style-hypnosis_max {
+    color: #ff4500;
+}

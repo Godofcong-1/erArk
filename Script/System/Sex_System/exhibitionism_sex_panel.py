@@ -1,5 +1,6 @@
 from typing import List
 from types import FunctionType
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Moudle import draw
 from Script.Core import (
     cache_control,
@@ -132,7 +133,7 @@ class Select_Exhibitionism_Sex_Mode_Panel:
 
     def select_this_mode(self, mode_id: int) -> None:
         """选择露出H模式"""
-        from Script.Design import instuct_judege, handle_instruct
+        from Script.Design import instuct_judege
         character_data: game_type.Character = cache.character_data[0]
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]

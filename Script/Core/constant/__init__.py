@@ -7,14 +7,37 @@ from Script.Core.constant.Behavior import Behavior
 from Script.Core.constant.StateMachine import StateMachine
 from Script.Core.constant.SecondBehavior import SecondBehavior
 from Script.Core.constant.SecondBehavior_Int import SecondBehavior_Int
-from Script.Core.constant.Instruct import Instruct
+from Script.System.Instruct_System.Instruct import Instruct
 from Script.Core.constant.Behavior_Int import Behavior_Int
+from Script.System.Instruct_System.instruct_category import (
+    InstructCategory,
+    BodyPart,
+    BODY_PART_NAMES,
+    HIP_SUB_PARTS,
+    COCO_KEYPOINT_MAPPING,
+    COMPUTED_BODY_PARTS,
+    CLICKABLE_BODY_PARTS,
+)
+from Script.System.Instruct_System.interaction_types import (
+    InteractionMajorType,
+    InteractionMinorType,
+    MAJOR_TYPE_NAMES,
+    MAJOR_TYPE_ORDER,
+    MINOR_TYPE_NAMES,
+    MAJOR_TO_MINOR_TYPES,
+    MINOR_TO_MAJOR_TYPE,
+    get_major_type,
+    get_minor_types,
+    get_minor_type_name,
+    get_major_type_name,
+)
 
 _: FunctionType = get_text._
 """ 翻译api """
 
 class Panel:
     """面板id"""
+
 
     TITLE = 0
     """ 标题面板 """
@@ -84,6 +107,12 @@ class Panel:
     # """ 文本生成AI设置面板 """
     PHYSICAL_CHECK_AND_MANAGE = 35
     """ 身体检查与管理面板 """
+    SAVE = 36
+    """ 读写存档面板 """
+    CHANGE_HYPNOSIS_MODE = 37
+    """ 切换催眠模式面板 """
+    SEE_ACHIEVEMENT = 38
+    """ 查看蚀刻章面板 """
 
 
 class InstructType:
@@ -126,28 +155,52 @@ class SexInstructSubType:
     """ 技艺 """
 
 
-
-i = 0
-for k in Instruct.__dict__:
-    if isinstance(Instruct.__dict__[k], int):
-        setattr(Instruct, k, i)
-        i += 1
+# 注意：Instruct类中的值现在是字符串（小写指令名），不再需要自动赋值
+# 旧代码（已移除）：
+# i = 0
+# for k in Instruct.__dict__:
+#     if isinstance(Instruct.__dict__[k], int):
+#         setattr(Instruct, k, i)
+#         i += 1
 
 
 handle_premise_data: Dict[str, FunctionType] = {}
 """ 前提处理数据 """
-handle_instruct_data: Dict[int, FunctionType] = {}
-""" 指令处理数据 """
-handle_instruct_name_data: Dict[int, str] = {}
+handle_instruct_data: Dict[str, FunctionType] = {}
+""" 指令处理数据（键为指令id字符串） """
+instruct_id_to_cid: Dict[str, int] = {}
+""" 指令字符串ID到数字ID的映射，用于显示和键盘输入 """
+cid_to_instruct_id: Dict[int, str] = {}
+""" 数字ID到指令字符串ID的映射，用于键盘输入处理 """
+handle_instruct_name_data: Dict[str, str] = {}
 """ 指令对应文本 """
 instruct_type_data: Dict[int, Set] = {}
 """ 指令类型拥有的指令集合 """
-instruct_sub_type_data: Dict[int, int] = {}
+instruct_sub_type_data: Dict[str, int] = {}
 """ 指令的子类型数据，指令id:子类id """
-behavior_id_to_instruct_id: Dict[str, int] = {}
+behavior_id_to_instruct_id: Dict[str, str] = {}
 """ 从状态id获取指令id，状态id:指令id """
-instruct_premise_data: Dict[int, Set] = {}
+instruct_premise_data: Dict[str, Set] = {}
 """ 指令显示的所需前提集合 """
+
+# ========== Web模式指令分类数据 ==========
+instruct_category_data: Dict[str, int] = {}
+"""
+指令的大类数据，指令id:大类id
+- InstructCategory.SYSTEM_PANEL: 系统面板类
+- InstructCategory.CHARACTER: 角色交互类
+- InstructCategory.CHARACTER_PANEL: 角色交互面板类
+"""
+instruct_panel_id_data: Dict[str, int] = {}
+""" 系统面板类指令对应的面板ID，指令id:Panel中的面板id """
+instruct_body_parts_data: Dict[str, List[str]] = {}
+""" 指令关联的身体部位数据，指令id:部位列表（当列表长度为1时自动判断为单部位交互）"""
+instruct_major_type_data: Dict[str, str] = {}
+""" 指令的大类型数据（Web模式新分类），指令id:大类型字符串标识符（如'mouth'/'hand'等）"""
+instruct_minor_type_data: Dict[str, str] = {}
+""" 指令的小类型数据（Web模式新分类），指令id:小类型字符串标识符（如'mouth_talk'/'hand_touch'等）"""
+# =========================================
+
 handle_state_machine_data: Dict[int, FunctionType] = {}
 """ 角色状态机函数 """
 family_region_list: Dict[int, str] = {}

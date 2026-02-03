@@ -1161,6 +1161,8 @@ function applyFontStyle(element, fontName) {
 function initWebSocket() {
     // 创建WebSocket连接
     socket = io();
+    // 同时设置到 window 上，确保全局可访问
+    window.socket = socket;
     
     // 连接成功事件
     socket.on('connect', () => {
@@ -1191,6 +1193,77 @@ function initWebSocket() {
         console.log('收到游戏状态更新:', data);
         // 渲染新的游戏状态
         renderGameState(data);
+    });
+    
+    // 接收大类型选择结果事件
+    socket.on('major_type_selected', (data) => {
+        console.log('收到大类型选择结果:', data);
+        if (data.success) {
+            // 更新交互面板的小类按钮
+            updateMinorTypeButtons(data.minor_types, data.remembered_minor_type);
+        } else {
+            console.error('选择大类型失败:', data.error);
+        }
+    });
+    
+    // 接收小类型选择结果事件
+    socket.on('minor_type_selected', (data) => {
+        console.log('收到小类型选择结果:', data);
+        if (data.success) {
+            // 更新可交互的身体部位
+            updateAvailableBodyParts(data.instructs);
+        } else {
+            console.error('选择小类型失败:', data.error);
+        }
+    });
+    
+    // 接收臀部子菜单事件
+    socket.on('hip_sub_menu', (data) => {
+        console.log('收到臀部子菜单:', data);
+        showHipSubMenu(data.sub_parts);
+    });
+    
+    // 接收身体部位点击结果事件
+    socket.on('body_part_clicked', (data) => {
+        console.log('收到身体部位点击结果:', data);
+        handleBodyPartClickResult(data);
+    });
+    
+    // 接收对话推进结果事件
+    socket.on('dialog_advanced', (data) => {
+        console.log('收到对话推进结果:', data);
+        if (data.success && data.dialog) {
+            updateDialogBox(data.dialog);
+        }
+    });
+    
+    // 接收对话跳过结果事件
+    socket.on('dialogs_skipped', (data) => {
+        console.log('收到对话跳过结果:', data);
+        if (data.success && data.dialog) {
+            updateDialogBox(data.dialog);
+        }
+    });
+    
+    // 接收对话框状态更新事件（由talk.py触发）
+    socket.on('dialog_state_update', (data) => {
+        console.log('收到对话框状态更新:', data);
+        if (data.success && data.dialog) {
+            updateDialogBox(data.dialog);
+        }
+    });
+    
+    // 接收切换交互对象结果事件
+    socket.on('target_switched', (data) => {
+        console.log('收到切换交互对象结果:', data);
+        if (data.success) {
+            console.log(`成功切换到角色: ${data.character_name} (ID: ${data.character_id})`);
+            // 请求完整状态刷新 - 通过发送一个空的按钮点击来触发状态更新
+            // 后端在下一次主循环会检测到 web_need_full_refresh 标志并发送完整状态
+            // 这里我们只需要等待后端推送新状态
+        } else {
+            console.error('切换交互对象失败:', data.error);
+        }
     });
 }
 
@@ -1697,6 +1770,11 @@ function renderGameState(state) {
     // 规范化地图渲染宽度
     normalizeMapBlocks(gameContent);
     
+    // 更新对话框状态（如果状态数据中包含对话框信息）
+    if (state.dialog) {
+        updateDialogBox(state.dialog);
+    }
+    
     // 确保滚动到底部在所有内容渲染后执行
     scrollToBottom();
 }
@@ -2163,6 +2241,22 @@ function createGameElement(item) {
             lastElementType = 'center_image';
             isLastElementLinebreak = false;
             break;
+        
+        case 'new_ui_container':
+            // 创建新UI容器（用于IN_SCENE面板的新UI风格）
+            element = document.createElement('div');
+            element.className = 'new-ui-container';
+            element.dataset.panelType = item.panel_type || 'default';
+            
+            // 渲染新UI内容
+            if (item.game_state) {
+                renderNewUIContent(element, item.game_state);
+            }
+            
+            // 更新上一个元素类型
+            lastElementType = 'new_ui_container';
+            isLastElementLinebreak = false;
+            break;
             
         default:
             console.warn('未知的元素类型:', item.type);
@@ -2170,6 +2264,2576 @@ function createGameElement(item) {
     }
     
     return element;
+}
+
+/**
+ * 渲染新UI内容（用于IN_SCENE面板的新UI风格）
+ * @param {HTMLElement} container - 新UI容器元素
+ * @param {Object} gameState - 游戏状态数据
+ */
+function renderNewUIContent(container, gameState) {
+    // 清空容器
+    container.innerHTML = '';
+    
+    // 创建新UI布局
+    const layout = document.createElement('div');
+    layout.className = 'new-ui-layout';
+    
+    // ========== 顶部信息区 ==========
+    const topInfoArea = document.createElement('div');
+    topInfoArea.className = 'new-ui-top-info';
+    
+    // 玩家信息区
+    if (gameState.player_info) {
+        const playerInfo = createPlayerInfoPanel(gameState.player_info);
+        topInfoArea.appendChild(playerInfo);
+    }
+    
+    // 交互对象附加信息区
+    if (gameState.target_extra_info) {
+        const targetExtraInfo = createTargetExtraInfoPanel(gameState.target_extra_info);
+        topInfoArea.appendChild(targetExtraInfo);
+    }
+    
+    // 场景角色头像区（包括小对话框）
+    if (gameState.scene_characters && gameState.scene_characters.length > 0) {
+        // 获取小对话框数据（如果存在）
+        const minorDialogs = gameState.dialog && gameState.dialog.minor_dialogs ? gameState.dialog.minor_dialogs : [];
+        const avatarArea = createAvatarPanel(gameState.scene_characters, minorDialogs);
+        topInfoArea.appendChild(avatarArea);
+    }
+    
+    layout.appendChild(topInfoArea);
+    
+    // ========== 主画面区 ==========
+    const mainScene = document.createElement('div');
+    mainScene.className = 'new-ui-main-scene';
+    
+    // 场景背景
+    if (gameState.scene && gameState.scene.background_image) {
+        mainScene.style.backgroundImage = `url('${gameState.scene.background_image}')`;
+        mainScene.style.backgroundSize = 'cover';
+        mainScene.style.backgroundPosition = 'center';
+    }
+    
+    // 交互类型栏（左侧）
+    if (gameState.interaction_types) {
+        // 支持新版嵌套结构（对象）和旧版数组格式
+        const hasData = Array.isArray(gameState.interaction_types) 
+            ? gameState.interaction_types.length > 0 
+            : (gameState.interaction_types.major_types && gameState.interaction_types.major_types.length > 0);
+        
+        if (hasData) {
+            const interactionPanel = createInteractionTypePanel(gameState.interaction_types);
+            mainScene.appendChild(interactionPanel);
+        }
+    }
+    
+    // 无部位指令浮现按钮容器（交互面板右侧，角色立绘左侧）
+    const floatingButtonsContainer = document.createElement('div');
+    floatingButtonsContainer.className = 'interaction-floating-buttons';
+    floatingButtonsContainer.id = 'floating-instruct-buttons';
+    mainScene.appendChild(floatingButtonsContainer);
+    
+    // 角色立绘区（中央）
+    if (gameState.target_info && gameState.target_info.image_data) {
+        const showAllBodyParts = gameState.extra_info ? gameState.extra_info.show_all_body_parts : false;
+        const characterDisplay = createCharacterDisplay(gameState.target_info, showAllBodyParts);
+        mainScene.appendChild(characterDisplay);
+    }
+    
+    // 交互对象信息区（右侧）
+    if (gameState.target_info) {
+        const targetInfoPanel = createTargetInfoPanel(gameState.target_info);
+        mainScene.appendChild(targetInfoPanel);
+    }
+    
+    // 添加主场景空白区域点击事件（清空交互选择）
+    mainScene.addEventListener('click', handleMainSceneClick);
+    
+    layout.appendChild(mainScene);
+    
+    // ========== 对话框区域（底部） ==========
+    // 始终创建对话框元素，但根据状态决定是否可见
+    const dialogData = gameState.dialog || { visible: false, speaker: '', text: '', text_color: 'standard' };
+    const dialogBox = createDialogBox(dialogData);
+    layout.appendChild(dialogBox);
+    
+    container.appendChild(layout);
+    
+    // ========== 顶部面板选项卡（添加到container顶部） ==========
+    if (gameState.panel_tabs && gameState.panel_tabs.length > 0) {
+        const panelTabs = createPanelTabsBar(gameState.panel_tabs);
+        // 插入到container的最前面
+        container.insertBefore(panelTabs, container.firstChild);
+    }
+}
+
+/**
+ * 创建玩家信息面板
+ */
+function createPlayerInfoPanel(playerInfo) {
+    const panel = document.createElement('div');
+    panel.className = 'new-ui-player-info';
+    
+    // 第一行：玩家名字 + 昵称
+    const nameLine = document.createElement('div');
+    nameLine.className = 'player-name-line';
+    nameLine.innerHTML = `<span class="player-name">${playerInfo.name || ''}</span>`;
+    if (playerInfo.nickname) {
+        nameLine.innerHTML += `<span class="player-nickname">${playerInfo.nickname}</span>`;
+    }
+    panel.appendChild(nameLine);
+    
+    // 第二行：状态条（使用图片）
+    const bars = document.createElement('div');
+    bars.className = 'player-bars';
+    
+    // HP条（使用图片）
+    bars.appendChild(createImageStatusBar('体力', playerInfo.hp, playerInfo.hp_max, 'hp'));
+    // MP条（使用图片）
+    bars.appendChild(createImageStatusBar('气力', playerInfo.mp, playerInfo.mp_max, 'mp'));
+    // 理智条（使用图片，带加号按钮）
+    if (playerInfo.sanity !== undefined) {
+        bars.appendChild(createImageStatusBarWithButton('理智', playerInfo.sanity, playerInfo.sanity_max, 'sanity', playerInfo.has_sanity_drug));
+    }
+    // 精液条（使用图片，带加号按钮）
+    if (playerInfo.semen !== undefined) {
+        bars.appendChild(createImageStatusBarWithButton('精液', playerInfo.semen, playerInfo.semen_max, 'semen', playerInfo.has_semen_drug));
+    }
+    
+    panel.appendChild(bars);
+    
+    // 第三行：特殊状态标记（移至精液槽下面）
+    if (playerInfo.special_states && playerInfo.special_states.length > 0) {
+        const statesRow = document.createElement('div');
+        statesRow.className = 'player-special-states-row';
+        
+        playerInfo.special_states.forEach(state => {
+            if (state.text) {
+                const stateSpan = document.createElement('span');
+                stateSpan.className = `special-state style-${state.style || 'standard'}`;
+                stateSpan.textContent = state.text;
+                if (state.tooltip) {
+                    stateSpan.title = state.tooltip;
+                }
+                statesRow.appendChild(stateSpan);
+            }
+        });
+        
+        panel.appendChild(statesRow);
+    }
+    
+    return panel;
+}
+
+/**
+ * 创建状态条（旧版本，暂时保留用于兼容）
+ */
+function createStatusBar(label, value, maxValue, type) {
+    const bar = document.createElement('div');
+    bar.className = `status-bar status-bar-${type}`;
+    
+    const percentage = maxValue > 0 ? (value / maxValue * 100) : 0;
+    
+    bar.innerHTML = `
+        <span class="bar-label">${label}</span>
+        <div class="bar-track">
+            <div class="bar-fill" style="width: ${percentage}%"></div>
+        </div>
+        <span class="bar-value">${value}/${maxValue}</span>
+    `;
+    
+    return bar;
+}
+
+/**
+ * 创建使用图片的状态条
+ * 参考右侧角色信息区的实现
+ */
+function createImageStatusBar(label, value, maxValue, type) {
+    const bar = document.createElement('div');
+    bar.className = `status-bar status-bar-${type}`;
+    
+    // 添加字段标识，用于浮动文本定位
+    const fieldMap = {
+        'hp': 'hit_point',
+        'mp': 'mana_point',
+        'sanity': 'sanity_point',
+        'semen': 'semen_point'
+    };
+    if (fieldMap[type]) {
+        bar.dataset.field = fieldMap[type];
+    }
+    
+    const percentage = maxValue > 0 ? (value / maxValue * 100) : 0;
+    
+    // 创建标签
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'bar-label';
+    labelSpan.textContent = label;
+    
+    // 创建条形容器（使用图片背景）
+    const track = document.createElement('div');
+    track.className = 'bar-track';
+    
+    // 创建填充部分（使用图片背景）
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    fill.style.width = `${percentage}%`;
+    
+    track.appendChild(fill);
+    
+    // 创建数值显示
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'bar-value';
+    valueSpan.textContent = `${value}/${maxValue}`;
+    
+    bar.appendChild(labelSpan);
+    bar.appendChild(track);
+    bar.appendChild(valueSpan);
+    
+    return bar;
+}
+
+/**
+ * 创建带快捷按钮的状态条（用于理智和精液）
+ * @param {string} label - 标签文本
+ * @param {number} value - 当前值
+ * @param {number} maxValue - 最大值
+ * @param {string} type - 类型（sanity 或 semen）
+ * @param {boolean} hasDrug - 是否有对应的药剂
+ * @returns {HTMLElement}
+ */
+function createImageStatusBarWithButton(label, value, maxValue, type, hasDrug) {
+    const bar = document.createElement('div');
+    bar.className = `status-bar status-bar-${type}`;
+    
+    // 添加字段标识，用于浮动文本定位
+    const fieldMap = {
+        'hp': 'hit_point',
+        'mp': 'mana_point',
+        'sanity': 'sanity_point',
+        'semen': 'semen_point'
+    };
+    if (fieldMap[type]) {
+        bar.dataset.field = fieldMap[type];
+    }
+    
+    const percentage = maxValue > 0 ? (value / maxValue * 100) : 0;
+    
+    // 创建标签容器（包含标签和按钮）
+    const labelContainer = document.createElement('span');
+    labelContainer.className = 'bar-label-container';
+    
+    const labelSpan = document.createElement('span');
+    labelSpan.className = 'bar-label';
+    labelSpan.textContent = label;
+    labelContainer.appendChild(labelSpan);
+    
+    // 如果有药剂，添加加号按钮
+    if (hasDrug) {
+        const plusBtn = document.createElement('button');
+        plusBtn.className = `bar-quick-use-btn bar-quick-use-${type}`;
+        plusBtn.textContent = '✚';
+        plusBtn.title = type === 'sanity' ? '快速使用理智药' : '快速使用精力剂';
+        plusBtn.onclick = (e) => {
+            e.stopPropagation();
+            handleQuickUseDrug(type);
+        };
+        labelContainer.appendChild(plusBtn);
+    }
+    
+    // 创建条形容器
+    const track = document.createElement('div');
+    track.className = 'bar-track';
+    
+    // 创建填充部分
+    const fill = document.createElement('div');
+    fill.className = 'bar-fill';
+    fill.style.width = `${percentage}%`;
+    
+    track.appendChild(fill);
+    
+    // 创建数值显示
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'bar-value';
+    valueSpan.textContent = `${value}/${maxValue}`;
+    
+    bar.appendChild(labelContainer);
+    bar.appendChild(track);
+    bar.appendChild(valueSpan);
+    
+    return bar;
+}
+
+/**
+ * 处理快速使用药剂
+ * @param {string} type - 药剂类型（sanity 或 semen）
+ */
+/**
+ * 处理快速使用药剂
+ * @param {string} type - 药剂类型（sanity 或 semen）
+ */
+function handleQuickUseDrug(type) {
+    console.log(`[快速使用药剂] 类型: ${type}`);
+    
+    fetch('/api/quick_use_drug', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ drug_type: type })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            console.log(`[快速使用药剂] 成功: ${data.message}`);
+            // 如果后端返回了更新后的玩家信息，更新UI
+            if (data.player_info) {
+                updatePlayerInfoUI(data.player_info);
+            }
+        } else {
+            console.error(`[快速使用药剂] 失败: ${data.message}`);
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('[快速使用药剂] 错误:', error);
+    });
+}
+
+/**
+ * 更新玩家信息区UI
+ * @param {Object} playerInfo - 更新后的玩家信息
+ */
+function updatePlayerInfoUI(playerInfo) {
+    console.log('[更新玩家信息UI]', playerInfo);
+    
+    // 查找玩家信息面板
+    const playerInfoPanel = document.querySelector('.new-ui-player-info');
+    if (!playerInfoPanel) {
+        console.error('[更新玩家信息UI] 未找到玩家信息面板');
+        return;
+    }
+    
+    // 计算数值变化
+    const valueChanges = calculatePlayerValueChanges(playerInfoPanel, playerInfo);
+    
+    // 重新创建玩家信息面板
+    const newPanel = createPlayerInfoPanel(playerInfo);
+    
+    // 替换旧面板
+    playerInfoPanel.parentNode.replaceChild(newPanel, playerInfoPanel);
+    
+    // 显示浮动文本
+    if (valueChanges.length > 0) {
+        setTimeout(() => {
+            createFloatingValueChanges(newPanel, valueChanges);
+        }, 50);
+    }
+    
+    console.log('[更新玩家信息UI] 更新完成');
+}
+
+/**
+ * 计算玩家数值变化
+ * @param {HTMLElement} oldPanel - 旧的玩家信息面板
+ * @param {Object} newPlayerInfo - 新的玩家信息
+ * @returns {Array} 数值变化数组
+ */
+function calculatePlayerValueChanges(oldPanel, newPlayerInfo) {
+    const changes = [];
+    
+    // 定义需要检测的字段
+    const fields = [
+        { key: 'hp', field: 'hit_point', name: '体力', color: 'hp_point' },
+        { key: 'mp', field: 'mana_point', name: '气力', color: 'mp_point' },
+        { key: 'sanity', field: 'sanity_point', name: '理智', color: 'sanity' },
+        { key: 'semen', field: 'semen_point', name: '精液', color: 'semen' }
+    ];
+    
+    fields.forEach(fieldDef => {
+        const oldBar = oldPanel.querySelector(`[data-field="${fieldDef.field}"]`);
+        if (!oldBar) return;
+        
+        // 从状态条的数值显示中提取当前值
+        const valueSpan = oldBar.querySelector('.bar-value');
+        if (!valueSpan) return;
+        
+        const valueText = valueSpan.textContent; // 格式: "50/100"
+        const oldValue = parseInt(valueText.split('/')[0]);
+        const newValue = newPlayerInfo[fieldDef.key];
+        
+        if (!isNaN(oldValue) && newValue !== undefined) {
+            const diff = newValue - oldValue;
+            if (diff !== 0) {
+                changes.push({
+                    field: fieldDef.field,
+                    field_name: fieldDef.name,
+                    value: diff,
+                    color: fieldDef.color
+                });
+            }
+        }
+    });
+    
+    return changes;
+}
+
+/**
+ * 创建对话框区域
+ * 用于显示角色的台词描述文本
+ * @param {Object} dialogData - 对话框数据
+ * @returns {HTMLElement} - 对话框元素
+ */
+function createDialogBox(dialogData) {
+    const dialogBox = document.createElement('div');
+    dialogBox.className = 'new-ui-dialog-box';
+    dialogBox.id = 'game-dialog-box';
+    
+    // 如果对话框可见，添加visible类
+    if (dialogData.visible) {
+        dialogBox.classList.add('visible');
+    }
+    
+    // 说话者名称区域
+    const speakerContainer = document.createElement('div');
+    speakerContainer.className = 'dialog-speaker-container';
+    
+    const speakerName = document.createElement('span');
+    speakerName.className = 'dialog-speaker-name';
+    speakerName.textContent = dialogData.speaker || '';
+    speakerContainer.appendChild(speakerName);
+    
+    dialogBox.appendChild(speakerContainer);
+    
+    // 对话文本区域
+    const textContainer = document.createElement('div');
+    textContainer.className = 'dialog-text-container';
+    textContainer.id = 'dialog-text';
+    
+    // 设置文本颜色样式
+    const textColor = dialogData.text_color || 'standard';
+    textContainer.classList.add(`style-${textColor}`);
+    
+    // 设置对话文本 - 使用innerText正确处理换行符
+    let displayText = dialogData.text || '';
+    displayText = displayText.replace(/\\n/g, '\n');
+    textContainer.innerText = displayText;
+    
+    dialogBox.appendChild(textContainer);
+    
+    // 底部提示（仅在等待输入时显示）
+    if (dialogData.wait_input) {
+        const hintContainer = document.createElement('div');
+        hintContainer.className = 'dialog-hint';
+        hintContainer.innerHTML = `<span class="dialog-hint-icon">▼</span> 点击任意位置继续`;
+        if (dialogData.has_more) {
+            hintContainer.innerHTML += ' (还有更多...)';
+        }
+        dialogBox.appendChild(hintContainer);
+    }
+    
+    // 添加点击事件处理（推进对话）
+    dialogBox.addEventListener('click', handleDialogClick);
+    
+    return dialogBox;
+}
+
+/**
+ * 处理对话框点击事件
+ * 点击后推进对话
+ */
+function handleDialogClick(event) {
+    event.stopPropagation();  // 阻止事件冒泡
+    
+    console.log('[Dialog] 点击对话框，推进对话');
+    
+    // 发送对话推进请求到后端
+    advanceDialog();
+}
+
+/**
+ * 发送对话推进请求到后端
+ */
+function advanceDialog() {
+    if (window.socket && window.socket.connected) {
+        window.socket.emit('advance_dialog', {});
+    } else {
+        console.warn('Socket未连接，无法推进对话');
+    }
+}
+
+/**
+ * 跳过所有对话
+ */
+function skipAllDialogs() {
+    if (window.socket && window.socket.connected) {
+        window.socket.emit('skip_all_dialogs', {});
+    }
+}
+
+/**
+ * 更新对话框状态
+ * @param {Object} dialogData - 新的对话框数据
+ */
+function updateDialogBox(dialogData) {
+    const dialogBox = document.getElementById('game-dialog-box');
+    if (!dialogBox) {
+        console.warn('未找到对话框元素');
+        return;
+    }
+    
+    // 更新可见状态
+    if (dialogData.visible) {
+        dialogBox.classList.add('visible');
+        dialogBox.classList.remove('hidden');
+    } else {
+        dialogBox.classList.remove('visible');
+        dialogBox.classList.add('hidden');
+        return;  // 隐藏时不需要更新其他内容
+    }
+    
+    // 更新说话者名称
+    const speakerName = dialogBox.querySelector('.dialog-speaker-name');
+    if (speakerName) {
+        speakerName.textContent = dialogData.speaker || '';
+    }
+    
+    // 更新对话文本
+    const textContainer = dialogBox.querySelector('.dialog-text-container');
+    if (textContainer) {
+        // 清除旧的样式类
+        textContainer.className = 'dialog-text-container';
+        // 添加新的颜色样式
+        const textColor = dialogData.text_color || 'standard';
+        textContainer.classList.add(`style-${textColor}`);
+        // 更新文本 - 使用innerText正确处理换行符
+        // 如果后端发送的是转义的\\n，需要转换为实际换行
+        let displayText = dialogData.text || '';
+        displayText = displayText.replace(/\\n/g, '\n');
+        textContainer.innerText = displayText;
+    }
+    
+    // 更新提示信息
+    let hintContainer = dialogBox.querySelector('.dialog-hint');
+    if (dialogData.wait_input) {
+        if (!hintContainer) {
+            hintContainer = document.createElement('div');
+            hintContainer.className = 'dialog-hint';
+            dialogBox.appendChild(hintContainer);
+        }
+        hintContainer.innerHTML = `<span class="dialog-hint-icon">▼</span> 点击任意位置继续`;
+        if (dialogData.has_more) {
+            hintContainer.innerHTML += ' (还有更多...)';
+        }
+    } else if (hintContainer) {
+        hintContainer.remove();
+    }
+    
+    // 更新其他角色的小对话框
+    if (dialogData.minor_dialogs && dialogData.minor_dialogs.length > 0) {
+        updateMinorDialogs(dialogData.minor_dialogs);
+    }
+}
+
+/**
+ * 初始化对话框键盘快捷键
+ * Ctrl/右键快速跳过对话
+ */
+function initDialogKeyboardShortcuts() {
+    // 跟踪Ctrl键和右键的按下状态
+    let ctrlPressed = false;
+    let rightMousePressed = false;
+    let skipInterval = null;
+    
+    // 开始快速跳过
+    function startSkipping() {
+        if (skipInterval) return;  // 已经在跳过中
+        
+        const dialogBox = document.getElementById('game-dialog-box');
+        if (!dialogBox || !dialogBox.classList.contains('visible')) return;
+        
+        // 添加跳过模式样式
+        dialogBox.classList.add('skipping');
+        
+        // 每100ms推进一次对话
+        skipInterval = setInterval(() => {
+            advanceDialog();
+        }, 100);
+    }
+    
+    // 停止快速跳过
+    function stopSkipping() {
+        if (skipInterval) {
+            clearInterval(skipInterval);
+            skipInterval = null;
+        }
+        
+        const dialogBox = document.getElementById('game-dialog-box');
+        if (dialogBox) {
+            dialogBox.classList.remove('skipping');
+        }
+    }
+    
+    // 监听键盘事件
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Control' && !ctrlPressed) {
+            ctrlPressed = true;
+            startSkipping();
+        }
+        // 空格键或回车键推进对话
+        if ((event.key === ' ' || event.key === 'Enter') && !event.repeat) {
+            const dialogBox = document.getElementById('game-dialog-box');
+            if (dialogBox && dialogBox.classList.contains('visible')) {
+                event.preventDefault();
+                advanceDialog();
+            }
+        }
+    });
+    
+    document.addEventListener('keyup', (event) => {
+        if (event.key === 'Control') {
+            ctrlPressed = false;
+            if (!rightMousePressed) {
+                stopSkipping();
+            }
+        }
+    });
+    
+    // 监听右键事件（用于对话框区域）
+    document.addEventListener('mousedown', (event) => {
+        if (event.button === 2) {  // 右键
+            rightMousePressed = true;
+            const dialogBox = document.getElementById('game-dialog-box');
+            if (dialogBox && dialogBox.classList.contains('visible')) {
+                event.preventDefault();
+                startSkipping();
+            }
+        }
+    });
+    
+    document.addEventListener('mouseup', (event) => {
+        if (event.button === 2) {  // 右键
+            rightMousePressed = false;
+            if (!ctrlPressed) {
+                stopSkipping();
+            }
+        }
+    });
+}
+
+/**
+ * 创建交互对象附加信息面板
+ * 包含服装栏、身体栏、群交栏、隐奸栏
+ * @param {Object} extraInfo - 附加信息数据
+ */
+function createTargetExtraInfoPanel(extraInfo) {
+    const panel = document.createElement('div');
+    panel.className = 'new-ui-target-extra-info';
+    panel.id = 'target-extra-info-panel';
+    
+    // 如果没有数据，显示占位符
+    if (!extraInfo || (!extraInfo.clothing?.visible && !extraInfo.body?.visible && 
+        !extraInfo.group_sex?.visible && !extraInfo.hidden_sex?.visible)) {
+        panel.innerHTML = '<div class="extra-info-placeholder">[交互对象附加信息]</div>';
+        return panel;
+    }
+    
+    const container = document.createElement('div');
+    container.className = 'extra-info-container';
+    
+    // 顶部按钮栏
+    const buttonBar = document.createElement('div');
+    buttonBar.className = 'extra-info-button-bar';
+    
+    // 创建左侧栏位按钮容器
+    const leftButtons = document.createElement('div');
+    leftButtons.style.display = 'flex';
+    leftButtons.style.gap = '4px';
+    leftButtons.style.flexWrap = 'wrap';
+    
+    // 创建各栏位按钮
+    const sections = [
+        { key: 'clothing', name: '服装', visible: extraInfo.clothing?.visible },
+        { key: 'body', name: '身体', visible: extraInfo.body?.visible },
+        { key: 'group_sex', name: '群交', visible: extraInfo.group_sex?.visible },
+        { key: 'hidden_sex', name: '隐奸', visible: extraInfo.hidden_sex?.visible }
+    ];
+    
+    sections.forEach(section => {
+        if (section.visible) {
+            const btn = document.createElement('button');
+            btn.className = 'extra-info-tab-btn';
+            btn.dataset.section = section.key;
+            btn.textContent = section.name;
+            if (extraInfo[section.key]?.expanded) {
+                btn.classList.add('active');
+            }
+            btn.onclick = () => toggleExtraInfoSection(section.key);
+            leftButtons.appendChild(btn);
+        }
+    });
+    
+    buttonBar.appendChild(leftButtons);
+    
+    // 创建右侧切换按钮容器
+    const rightButtons = document.createElement('div');
+    rightButtons.style.display = 'flex';
+    rightButtons.style.gap = '4px';
+    rightButtons.style.flexWrap = 'wrap';
+    
+    // 全部位显示切换按钮
+    const bodyPartsToggle = document.createElement('button');
+    bodyPartsToggle.className = 'extra-info-toggle-btn';
+    bodyPartsToggle.id = 'toggle-all-body-parts';
+    bodyPartsToggle.textContent = extraInfo.show_all_body_parts ? '收起全部位显示' : '展开全部位显示';
+    bodyPartsToggle.onclick = () => toggleAllBodyParts();
+    rightButtons.appendChild(bodyPartsToggle);
+    
+    // 详细污浊切换按钮
+    const dirtyToggle = document.createElement('button');
+    dirtyToggle.className = 'extra-info-toggle-btn';
+    dirtyToggle.id = 'toggle-detailed-dirty';
+    dirtyToggle.textContent = extraInfo.show_detailed_dirty ? '收起详细污浊' : '展开详细污浊';
+    dirtyToggle.onclick = () => toggleDetailedDirty();
+    rightButtons.appendChild(dirtyToggle);
+    
+    buttonBar.appendChild(rightButtons);
+    
+    container.appendChild(buttonBar);
+    
+    // 内容区域
+    const contentArea = document.createElement('div');
+    contentArea.className = 'extra-info-content';
+    
+    // 服装栏
+    if (extraInfo.clothing?.visible && extraInfo.clothing?.expanded) {
+        const clothingSection = createClothingSection(extraInfo.clothing.data, extraInfo.is_h_mode);
+        contentArea.appendChild(clothingSection);
+    }
+    
+    // 身体栏
+    if (extraInfo.body?.visible && extraInfo.body?.expanded) {
+        const bodySection = createBodySection(extraInfo.body.data);
+        contentArea.appendChild(bodySection);
+    }
+    
+    // 群交栏
+    if (extraInfo.group_sex?.visible && extraInfo.group_sex?.expanded) {
+        const groupSexSection = createGroupSexSection(extraInfo.group_sex.data);
+        contentArea.appendChild(groupSexSection);
+    }
+    
+    // 隐奸栏
+    if (extraInfo.hidden_sex?.visible && extraInfo.hidden_sex?.expanded) {
+        const hiddenSexSection = createHiddenSexSection(extraInfo.hidden_sex.data);
+        contentArea.appendChild(hiddenSexSection);
+    }
+    
+    container.appendChild(contentArea);
+    panel.appendChild(container);
+    return panel;
+}
+
+/**
+ * 创建服装栏内容
+ */
+function createClothingSection(clothingData, isHMode) {
+    const section = document.createElement('div');
+    section.className = 'extra-info-section clothing-section';
+    section.dataset.section = 'clothing';
+    
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = '服装：';
+    section.appendChild(title);
+    
+    if (!clothingData || !clothingData.items) {
+        const empty = document.createElement('div');
+        empty.className = 'section-empty';
+        empty.textContent = '无数据';
+        section.appendChild(empty);
+        return section;
+    }
+    
+    // 全裸检测
+    if (clothingData.naked) {
+        const nakedText = document.createElement('div');
+        nakedText.className = 'clothing-naked';
+        nakedText.textContent = '全裸';
+        section.appendChild(nakedText);
+        return section;
+    }
+    
+    // 按衣服类型分组显示
+    const typeGroups = {};
+    clothingData.items.forEach(item => {
+        const typeName = item.type_name;
+        if (!typeGroups[typeName]) {
+            typeGroups[typeName] = [];
+        }
+        typeGroups[typeName].push(item);
+    });
+    
+    const itemsContainer = document.createElement('div');
+    itemsContainer.className = 'clothing-items';
+    
+    Object.keys(typeGroups).forEach(typeName => {
+        const group = typeGroups[typeName];
+        const groupDiv = document.createElement('span');
+        groupDiv.className = 'clothing-group';
+        
+        const typeLabel = document.createElement('span');
+        typeLabel.className = 'clothing-type-label';
+        typeLabel.textContent = `[${typeName}]:`;
+        groupDiv.appendChild(typeLabel);
+        
+        group.forEach(item => {
+            if (item.is_vacuum) {
+                const vacuumSpan = document.createElement('span');
+                vacuumSpan.className = 'clothing-vacuum';
+                vacuumSpan.textContent = ' 真空';
+                groupDiv.appendChild(vacuumSpan);
+            } else if (isHMode && item.id !== -1) {
+                // H模式下显示为可点击按钮
+                const clothBtn = document.createElement('button');
+                clothBtn.className = 'clothing-button';
+                clothBtn.textContent = ` ${item.name}`;
+                clothBtn.dataset.clothId = item.id;
+                clothBtn.dataset.clothType = item.type;
+                clothBtn.dataset.isWorn = item.is_worn;
+                clothBtn.onclick = () => toggleCloth(item.id, item.type, item.is_worn);
+                groupDiv.appendChild(clothBtn);
+            } else {
+                const clothSpan = document.createElement('span');
+                clothSpan.className = 'clothing-name';
+                clothSpan.textContent = ` ${item.name}`;
+                groupDiv.appendChild(clothSpan);
+            }
+            
+            // 精液污浊显示
+            if (item.dirty_text) {
+                const dirtySpan = document.createElement('span');
+                dirtySpan.className = 'clothing-dirty semen-color';
+                dirtySpan.textContent = `(${item.dirty_text})`;
+                groupDiv.appendChild(dirtySpan);
+            }
+        });
+        
+        itemsContainer.appendChild(groupDiv);
+    });
+    
+    section.appendChild(itemsContainer);
+    
+    // 脱下的衣服
+    if (clothingData.off_items && clothingData.off_items.length > 0) {
+        const offDiv = document.createElement('div');
+        offDiv.className = 'clothing-off';
+        
+        const offLabel = document.createElement('span');
+        offLabel.className = 'clothing-off-label';
+        offLabel.textContent = '[已脱下]:';
+        offDiv.appendChild(offLabel);
+        
+        clothingData.off_items.forEach(item => {
+            if (isHMode) {
+                const clothBtn = document.createElement('button');
+                clothBtn.className = 'clothing-button clothing-off-btn';
+                clothBtn.textContent = ` ${item.name}`;
+                clothBtn.dataset.clothId = item.id;
+                clothBtn.dataset.clothType = item.type;
+                clothBtn.dataset.isWorn = 'false';
+                clothBtn.onclick = () => toggleCloth(item.id, item.type, false);
+                offDiv.appendChild(clothBtn);
+            } else {
+                const clothSpan = document.createElement('span');
+                clothSpan.className = 'clothing-name clothing-off-name';
+                clothSpan.textContent = ` ${item.name}`;
+                offDiv.appendChild(clothSpan);
+            }
+        });
+        
+        section.appendChild(offDiv);
+    }
+    
+    return section;
+}
+
+/**
+ * 创建身体栏内容
+ */
+function createBodySection(bodyData) {
+    const section = document.createElement('div');
+    section.className = 'extra-info-section body-section';
+    section.dataset.section = 'body';
+    
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = '身体：';
+    section.appendChild(title);
+    
+    if (!bodyData || (!bodyData.parts?.length && !bodyData.extra_info?.length)) {
+        const empty = document.createElement('div');
+        empty.className = 'section-empty';
+        empty.textContent = '无数据';
+        section.appendChild(empty);
+        return section;
+    }
+    
+    const content = document.createElement('div');
+    content.className = 'body-content';
+    
+    // 部位信息
+    if (bodyData.parts && bodyData.parts.length > 0) {
+        bodyData.parts.forEach(part => {
+            // 为每个部位创建一个分组
+            const partGroup = document.createElement('span');
+            partGroup.className = 'body-part-group';
+            
+            // 添加部位名称标签
+            if (part.name) {
+                const partLabel = document.createElement('span');
+                partLabel.className = 'body-part-label';
+                partLabel.textContent = `[${part.name}]:`;
+                partGroup.appendChild(partLabel);
+            }
+            
+            // 添加该部位的所有文本信息
+            part.texts.forEach(textInfo => {
+                const textSpan = document.createElement('span');
+                textSpan.className = `body-text body-${textInfo.type}`;
+                if (textInfo.type === 'semen') {
+                    textSpan.classList.add('semen-color');
+                } else if (textInfo.type === 'love_juice') {
+                    textSpan.classList.add('lavender-color');
+                } else if (textInfo.type === 'virgin_blood') {
+                    textSpan.classList.add('blood-color');
+                }
+                textSpan.textContent = ` ${textInfo.text}`;
+                partGroup.appendChild(textSpan);
+            });
+            
+            content.appendChild(partGroup);
+        });
+    }
+    
+    // 额外信息
+    if (bodyData.extra_info && bodyData.extra_info.length > 0) {
+        bodyData.extra_info.forEach(info => {
+            if (info.type === 'h_items' && info.items) {
+                info.items.forEach(itemText => {
+                    const itemSpan = document.createElement('span');
+                    itemSpan.className = 'body-h-item';
+                    itemSpan.textContent = ` <${itemText}>`;
+                    content.appendChild(itemSpan);
+                });
+            } else if (info.text) {
+                const infoSpan = document.createElement('span');
+                infoSpan.className = `body-extra body-${info.type}`;
+                if (info.type === 'semen' || info.type === 'abdomen_semen') {
+                    infoSpan.classList.add('semen-color');
+                }
+                infoSpan.textContent = ` ${info.text}`;
+                content.appendChild(infoSpan);
+            }
+        });
+    }
+    
+    section.appendChild(content);
+    return section;
+}
+
+/**
+ * 创建群交栏内容
+ */
+function createGroupSexSection(groupSexData) {
+    const section = document.createElement('div');
+    section.className = 'extra-info-section group-sex-section';
+    section.dataset.section = 'group_sex';
+    
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = '：群交：';
+    section.appendChild(title);
+    
+    if (!groupSexData || !groupSexData.active) {
+        const empty = document.createElement('div');
+        empty.className = 'section-empty';
+        empty.textContent = '无数据';
+        section.appendChild(empty);
+        return section;
+    }
+    
+    const content = document.createElement('div');
+    content.className = 'group-sex-content';
+    
+    let textParts = [];
+    if (groupSexData.player_name) {
+        textParts.push(groupSexData.player_name);
+    }
+    
+    if (groupSexData.body_parts && groupSexData.body_parts.length > 0) {
+        groupSexData.body_parts.forEach(part => {
+            if (part.part === 'wait_upon') {
+                // 侍奉
+                const names = part.target_names?.join('、') || '';
+                const together = part.target_names?.length > 1 ? '一起' : '';
+                textParts.push(`阴茎正在被${names}${together}${part.action_name}`);
+            } else {
+                textParts.push(`${part.part_name}-${part.action_name}-${part.target_name}`);
+            }
+        });
+    }
+    
+    content.textContent = textParts.join(' ');
+    section.appendChild(content);
+    return section;
+}
+
+/**
+ * 创建隐奸栏内容
+ */
+function createHiddenSexSection(hiddenSexData) {
+    const section = document.createElement('div');
+    section.className = 'extra-info-section hidden-sex-section';
+    section.dataset.section = 'hidden_sex';
+    
+    const title = document.createElement('div');
+    title.className = 'section-title';
+    title.textContent = '：隐奸：';
+    section.appendChild(title);
+    
+    if (!hiddenSexData || !hiddenSexData.active) {
+        const empty = document.createElement('div');
+        empty.className = 'section-empty';
+        empty.textContent = '无数据';
+        section.appendChild(empty);
+        return section;
+    }
+    
+    const content = document.createElement('div');
+    content.className = 'hidden-sex-content';
+    
+    // 隐蔽程度
+    const hiddenText = document.createElement('span');
+    hiddenText.className = 'hidden-level';
+    hiddenText.textContent = `隐蔽程度：${hiddenSexData.hidden_text || '未知'}`;
+    content.appendChild(hiddenText);
+    
+    // 阴茎位置
+    if (hiddenSexData.insert_text) {
+        const insertText = document.createElement('span');
+        insertText.className = 'hidden-insert';
+        insertText.textContent = ` ${hiddenSexData.insert_text}`;
+        content.appendChild(insertText);
+    }
+    
+    section.appendChild(content);
+    return section;
+}
+
+/**
+ * 切换附加信息栏位的展开/收起状态
+ * 立即更新前端UI，同时发送请求到后端保存状态
+ */
+function toggleExtraInfoSection(sectionKey) {
+    // 立即更新前端UI
+    const btn = document.querySelector(`.extra-info-tab-btn[data-section="${sectionKey}"]`);
+    const section = document.querySelector(`.extra-info-section[data-section="${sectionKey}"]`);
+    
+    if (btn) {
+        const isExpanded = btn.classList.contains('active');
+        if (isExpanded) {
+            // 收起：移除active样式，隐藏内容
+            btn.classList.remove('active');
+            if (section) {
+                section.style.display = 'none';
+            }
+        } else {
+            // 展开：添加active样式，显示内容
+            btn.classList.add('active');
+            if (section) {
+                section.style.display = 'block';
+            }
+        }
+    }
+    
+    // 同时发送请求到后端保存状态（不等待响应刷新）
+    fetch('/api/toggle_extra_info_section', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ section: sectionKey })
+    }).catch(err => console.error('保存栏位状态失败:', err));
+}
+
+/**
+ * 切换详细污浊显示
+ * 立即更新前端UI，同时发送请求到后端保存状态
+ */
+function toggleDetailedDirty() {
+    // 立即更新按钮文本
+    const toggleBtn = document.getElementById('toggle-detailed-dirty');
+    if (!toggleBtn) return;
+    
+    const isDetailed = toggleBtn.textContent.includes('收起');
+    toggleBtn.textContent = isDetailed ? '展开详细污浊' : '收起详细污浊';
+    
+    // 发送请求到后端保存状态并获取更新后的数据
+    fetch('/api/toggle_detailed_dirty', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success && data.extra_info) {
+            // 立即重新渲染附加信息区域
+            const extraInfoPanel = document.querySelector('.new-ui-target-extra-info');
+            if (extraInfoPanel && extraInfoPanel.parentNode) {
+                const newPanel = createTargetExtraInfoPanel(data.extra_info);
+                extraInfoPanel.parentNode.replaceChild(newPanel, extraInfoPanel);
+            }
+        }
+    }).catch(err => console.error('切换详细污浊失败:', err));
+}
+
+/**
+ * 切换全部位显示
+ * 立即更新前端UI，同时发送请求到后端保存状态，并控制身体部位按钮的显示
+ */
+function toggleAllBodyParts() {
+    // 立即更新按钮文本
+    const toggleBtn = document.getElementById('toggle-all-body-parts');
+    if (!toggleBtn) return;
+    
+    const isExpanded = toggleBtn.textContent.includes('收起');
+    toggleBtn.textContent = isExpanded ? '展开全部位显示' : '收起全部位显示';
+    
+    // 立即更新身体部位按钮的显示状态
+    const bodyPartButtons = document.querySelectorAll('.body-part-button');
+    if (isExpanded) {
+        // 收起：移除always-visible类，恢复默认的悬停显示
+        bodyPartButtons.forEach(btn => btn.classList.remove('always-visible'));
+    } else {
+        // 展开：添加always-visible类，始终显示所有部位
+        bodyPartButtons.forEach(btn => btn.classList.add('always-visible'));
+    }
+    
+    // 发送请求到后端保存状态并获取更新后的数据
+    fetch('/api/toggle_all_body_parts', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' }
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success && data.extra_info) {
+            // 重新渲染附加信息区域（更新按钮状态）
+            const extraInfoPanel = document.querySelector('.new-ui-target-extra-info');
+            if (extraInfoPanel && extraInfoPanel.parentNode) {
+                const newPanel = createTargetExtraInfoPanel(data.extra_info);
+                extraInfoPanel.parentNode.replaceChild(newPanel, extraInfoPanel);
+                
+                // 重新应用身体部位按钮的显示状态
+                const updatedBodyPartButtons = document.querySelectorAll('.body-part-button');
+                if (data.extra_info.show_all_body_parts) {
+                    updatedBodyPartButtons.forEach(btn => btn.classList.add('always-visible'));
+                } else {
+                    updatedBodyPartButtons.forEach(btn => btn.classList.remove('always-visible'));
+                }
+            }
+        }
+    }).catch(err => console.error('切换全部位显示失败:', err));
+}
+
+/**
+ * 切换衣服穿脱状态
+ */
+function toggleCloth(clothId, clothType, isWorn) {
+    fetch('/api/toggle_cloth', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ 
+            cloth_id: clothId, 
+            cloth_type: clothType, 
+            is_worn: isWorn 
+        })
+    }).then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            refreshGameState();
+        }
+    }).catch(err => console.error('切换衣服状态失败:', err));
+}
+
+/**
+ * 刷新游戏状态
+ */
+function refreshGameState() {
+    // 如果使用socket.io，发送刷新请求
+    if (typeof socket !== 'undefined' && socket.connected) {
+        socket.emit('refresh_state');
+    }
+}
+
+/**
+ * 创建头像面板
+ */
+function createAvatarPanel(characters, minorDialogs = []) {
+    const panel = document.createElement('div');
+    panel.className = 'new-ui-avatar-panel';
+    
+    characters.slice(0, 5).forEach(char => {
+        const avatarItem = document.createElement('div');
+        avatarItem.className = 'avatar-item';
+        avatarItem.dataset.characterId = char.id;
+        
+        // 头像名称
+        const avatarName = document.createElement('span');
+        avatarName.className = 'avatar-name';
+        avatarName.textContent = char.name || '';
+        avatarItem.appendChild(avatarName);
+        
+        // 检查是否有该角色的小对话框
+        const minorDialog = minorDialogs.find(d => d.character_id === char.id);
+        if (minorDialog) {
+            const miniDialog = document.createElement('div');
+            miniDialog.className = 'avatar-mini-dialog';
+            miniDialog.textContent = minorDialog.text;
+            miniDialog.title = minorDialog.full_text || minorDialog.text; // 鼠标悬停显示完整文本
+            avatarItem.appendChild(miniDialog);
+        }
+        
+        avatarItem.onclick = () => switchTarget(char.id);
+        panel.appendChild(avatarItem);
+    });
+    
+    return panel;
+}
+
+/**
+ * 更新头像下方的小对话框
+ * @param {Array} minorDialogs - 小对话框数据列表
+ */
+function updateMinorDialogs(minorDialogs) {
+    if (!minorDialogs || minorDialogs.length === 0) return;
+    
+    const avatarPanel = document.querySelector('.new-ui-avatar-panel');
+    if (!avatarPanel) return;
+    
+    // 遍历每个小对话框数据
+    minorDialogs.forEach(dialog => {
+        const avatarItem = avatarPanel.querySelector(`[data-character-id="${dialog.character_id}"]`);
+        if (avatarItem) {
+            // 移除旧的小对话框
+            const oldDialog = avatarItem.querySelector('.avatar-mini-dialog');
+            if (oldDialog) oldDialog.remove();
+            
+            // 创建新的小对话框
+            const miniDialog = document.createElement('div');
+            miniDialog.className = 'avatar-mini-dialog';
+            miniDialog.textContent = dialog.text;
+            miniDialog.title = dialog.full_text || dialog.text;
+            avatarItem.appendChild(miniDialog);
+        }
+    });
+}
+
+/**
+ * 创建交互类型面板（大类选项卡 + 小类按钮列表）
+ * 
+ * 数据结构：
+ * - types.major_types: 大类列表，每个包含 {id, name, selected, minor_types}
+ * - types.minor_types: 当前大类下的小类列表
+ * - types.current_major_type: 当前选中的大类ID
+ * - types.current_minor_type: 当前选中的小类ID
+ */
+function createInteractionTypePanel(types) {
+    const panel = document.createElement('div');
+    panel.className = 'new-ui-interaction-panel';
+    
+    // 处理旧版数据格式（数组格式）的兼容
+    if (Array.isArray(types)) {
+        // 旧版格式，保持向后兼容
+        types.forEach(type => {
+            const btn = document.createElement('button');
+            btn.className = 'interaction-type-btn';
+            btn.textContent = type.name || type.id;
+            btn.dataset.typeId = type.id;
+            btn.onclick = () => selectInteractionType(type.id);
+            panel.appendChild(btn);
+        });
+        return panel;
+    }
+    
+    // 新版数据格式（大类/小类嵌套结构）
+    const majorTypes = types.major_types || [];
+    const currentMajorType = types.current_major_type;
+    const currentMinorType = types.current_minor_type;
+    
+    console.log('=== createInteractionTypePanel DEBUG ===');
+    console.log('types:', JSON.stringify(types, null, 2));
+    console.log('majorTypes:', majorTypes);
+    console.log('currentMajorType:', currentMajorType, 'type:', typeof currentMajorType);
+    
+    // 创建大类选项卡容器
+    const majorTabsContainer = document.createElement('div');
+    majorTabsContainer.className = 'interaction-major-tabs';
+    
+    // 创建小类按钮容器
+    const minorButtonsContainer = document.createElement('div');
+    minorButtonsContainer.className = 'interaction-minor-buttons';
+    
+    // 渲染大类选项卡（从上到下排列）
+    majorTypes.forEach(majorType => {
+        const tab = document.createElement('button');
+        tab.className = 'interaction-major-tab';
+        // 使用严格相等比较，处理类型转换
+        const isActive = majorType.selected === true || Number(majorType.id) === Number(currentMajorType);
+        if (isActive) {
+            tab.classList.add('active');
+        }
+        tab.textContent = majorType.name;
+        tab.dataset.majorTypeId = majorType.id;
+        
+        tab.onclick = () => {
+            // 检测是否重复点击当前激活的大类按钮
+            const wasActive = tab.classList.contains('active');
+            
+            if (wasActive) {
+                // 重复点击，清空选择
+                console.log('重复点击大类按钮，清空选择');
+                clearInteractionSelection();
+            } else {
+                // 首次点击或切换到其他大类，选中当前选项卡
+                document.querySelectorAll('.interaction-major-tab').forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // 通过WebSocket选择大类
+                selectMajorType(majorType.id);
+            }
+        };
+        
+        majorTabsContainer.appendChild(tab);
+    });
+    
+    // 渲染当前大类下的小类按钮
+    // 注意：需要使用严格相等比较，并处理类型转换
+    const currentMajor = majorTypes.find(m => {
+        // 将两边都转为数字进行比较
+        const mId = Number(m.id);
+        const targetId = Number(currentMajorType);
+        return m.selected === true || mId === targetId;
+    });
+    
+    console.log('createInteractionTypePanel - currentMajorType:', currentMajorType, 'currentMajor:', currentMajor);
+    
+    const minorTypes = currentMajor ? currentMajor.minor_types : (types.minor_types || []);
+    
+    console.log('createInteractionTypePanel - minorTypes:', minorTypes);
+    
+    minorTypes.forEach(minorType => {
+        const btn = document.createElement('button');
+        btn.className = 'interaction-minor-btn';
+        if (minorType.selected || minorType.id === currentMinorType) {
+            btn.classList.add('active');
+        }
+        btn.textContent = minorType.name;
+        btn.dataset.minorTypeId = minorType.id;
+        
+        btn.onclick = () => {
+            // 检测是否重复点击当前激活的小类按钮
+            const wasActive = btn.classList.contains('active');
+            
+            if (wasActive) {
+                // 重复点击，清空选择
+                console.log('重复点击小类按钮，清空选择');
+                clearInteractionSelection();
+            } else {
+                // 首次点击或切换到其他小类，选中当前按钮
+                document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 通过WebSocket选择小类
+                selectMinorType(minorType.id);
+            }
+        };
+        
+        minorButtonsContainer.appendChild(btn);
+    });
+    
+    // 组装面板：大类选项卡 + 小类按钮（浮现按钮移到mainScene外部）
+    panel.appendChild(majorTabsContainer);
+    panel.appendChild(minorButtonsContainer);
+    
+    return panel;
+}
+
+/**
+ * 选择大类型
+ * @param {number} majorTypeId - 大类型ID
+ */
+function selectMajorType(majorTypeId) {
+    console.log('[DEBUG] selectMajorType called, majorTypeId:', majorTypeId);
+    console.log('[DEBUG] window.socket:', window.socket, 'connected:', window.socket?.connected);
+    if (window.socket && window.socket.connected) {
+        console.log('[DEBUG] Emitting select_major_type event');
+        window.socket.emit('select_major_type', { major_type_id: majorTypeId });
+    } else {
+        console.warn('[DEBUG] Socket not connected, cannot emit select_major_type');
+    }
+}
+
+/**
+ * 选择小类型
+ * @param {number} minorTypeId - 小类型ID
+ */
+function selectMinorType(minorTypeId) {
+    console.log('[DEBUG] selectMinorType called, minorTypeId:', minorTypeId);
+    if (window.socket && window.socket.connected) {
+        window.socket.emit('select_minor_type', { minor_type_id: minorTypeId });
+    }
+}
+
+/**
+ * 更新小类按钮列表
+ * 当用户选择大类时，更新小类按钮区域
+ * @param {Array} minorTypes - 小类型列表
+ * @param {number} rememberedMinorType - 记忆的小类型ID
+ */
+function updateMinorTypeButtons(minorTypes, rememberedMinorType) {
+    const container = document.querySelector('.interaction-minor-buttons');
+    if (!container) {
+        console.warn('未找到小类按钮容器');
+        return;
+    }
+    
+    // 清空当前按钮
+    container.innerHTML = '';
+    
+    // 清空浮现按钮（切换大类时需要重置）
+    renderFloatingInstructButtons([]);
+    
+    // 清空身体部位高亮
+    const bodyPartButtons = document.querySelectorAll('.body-part-button');
+    bodyPartButtons.forEach(button => {
+        button.classList.remove('available');
+        button.classList.add('unavailable');
+    });
+    
+    // 创建新的小类按钮
+    minorTypes.forEach(minorType => {
+        const btn = document.createElement('button');
+        btn.className = 'interaction-minor-btn';
+        
+        // 如果是记忆的小类型，添加选中状态
+        if (minorType.id === rememberedMinorType || minorType.selected) {
+            btn.classList.add('active');
+        }
+        
+        btn.textContent = minorType.name;
+        btn.dataset.minorTypeId = minorType.id;
+        
+        btn.onclick = () => {
+            // 检测是否重复点击当前激活的小类按钮
+            const wasActive = btn.classList.contains('active');
+            
+            if (wasActive) {
+                // 重复点击，清空选择
+                console.log('重复点击小类按钮，清空选择');
+                clearInteractionSelection();
+            } else {
+                // 首次点击或切换到其他小类，选中当前按钮
+                document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                // 通过WebSocket选择小类
+                selectMinorType(minorType.id);
+            }
+        };
+        
+        container.appendChild(btn);
+    });
+    
+    // 如果有记忆的小类型，自动触发选择
+    if (rememberedMinorType !== null && rememberedMinorType !== undefined) {
+        selectMinorType(rememberedMinorType);
+    }
+    
+    // 切换大类后触发重叠检测（延迟执行确保DOM更新完成）
+    setTimeout(() => checkAndAdjustCharacterImage(), 150);
+}
+
+/**
+ * 更新可交互的身体部位
+ * 当用户选择小类时，高亮显示该小类下可交互的部位
+ * 同时渲染无部位指令的浮现按钮
+ * @param {Array} instructs - 指令列表，每个指令包含body_parts
+ */
+function updateAvailableBodyParts(instructs) {
+    // 收集所有可交互的部位（英文部位名）
+    const availableParts = new Set();
+    // 收集无部位的指令（body_parts为空数组）
+    const noBodyPartInstructs = [];
+    
+    instructs.forEach(instruct => {
+        if (instruct.body_parts && Array.isArray(instruct.body_parts) && instruct.body_parts.length > 0) {
+            // 有部位的指令，添加到可交互部位集合
+            instruct.body_parts.forEach(part => availableParts.add(part));
+        } else {
+            // 无部位的指令，添加到浮现按钮列表
+            noBodyPartInstructs.push(instruct);
+        }
+    });
+    
+    console.log('可交互部位(英文):', Array.from(availableParts));
+    console.log('无部位指令:', noBodyPartInstructs);
+    
+    // 获取所有身体部位按钮
+    const bodyPartButtons = document.querySelectorAll('.body-part-button');
+    
+    bodyPartButtons.forEach(button => {
+        // 使用 basePart（英文部位名）来匹配，因为指令的 body_parts 使用英文
+        const basePart = button.dataset.basePart;
+        const partName = button.dataset.partName;  // 中文显示名
+        
+        // 检查 basePart 是否在可交互部位中
+        // 注意：basePart 可能是 "hand_left"，需要检查基础名 "hand" 是否匹配
+        let isAvailable = availableParts.has(basePart);
+        
+        // 如果直接匹配失败，尝试匹配基础部位名（去除 _left/_right 后缀）
+        if (!isAvailable && basePart) {
+            const basePartName = basePart.replace(/_left$|_right$/, '');
+            isAvailable = availableParts.has(basePartName);
+        }
+        
+        if (isAvailable) {
+            // 该部位可交互，添加高亮样式
+            button.classList.add('available');
+            button.classList.remove('unavailable');
+        } else {
+            // 该部位不可交互，添加禁用样式
+            button.classList.remove('available');
+            button.classList.add('unavailable');
+        }
+    });
+    
+    // 渲染无部位指令的浮现按钮
+    renderFloatingInstructButtons(noBodyPartInstructs);
+    
+    // 保存当前可用的指令列表供后续点击使用
+    window.currentAvailableInstructs = instructs;
+    
+    // 注意：重叠检测已在 renderFloatingInstructButtons 内部调用，无需重复
+}
+
+/**
+ * 渲染无部位指令的浮现按钮
+ * 这些按钮显示在交互类型栏的右侧，不关联任何身体部位
+ * @param {Array} instructs - 无部位指令列表，每个元素包含 {id, name}
+ */
+function renderFloatingInstructButtons(instructs) {
+    const container = document.getElementById('floating-instruct-buttons');
+    if (!container) {
+        console.warn('未找到浮现按钮容器');
+        return;
+    }
+    
+    // 清空当前按钮
+    container.innerHTML = '';
+    
+    if (!instructs || instructs.length === 0) {
+        // 没有无部位指令，隐藏容器
+        container.style.display = 'none';
+        return;
+    }
+    
+    // 显示容器
+    container.style.display = 'flex';
+    
+    // 计算列数（每列最多显示的按钮数量）
+    const maxButtonsPerColumn = 6;
+    
+    // 创建浮现按钮
+    instructs.forEach((instruct, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'floating-instruct-btn';
+        btn.textContent = instruct.name;
+        btn.dataset.instructId = instruct.id;
+        btn.title = instruct.name;
+        
+        // 计算该按钮在第几列（用于布局）
+        const columnIndex = Math.floor(index / maxButtonsPerColumn);
+        btn.style.setProperty('--column-index', columnIndex);
+        
+        // 点击事件 - 触发指令执行
+        btn.onclick = () => {
+            console.log('点击浮现按钮，执行指令:', instruct.id);
+            executeInstruct(instruct.id);
+        };
+        
+        container.appendChild(btn);
+    });
+    
+    // 检测浮现按钮与角色立绘是否重叠，如有重叠则调整立绘
+    setTimeout(() => checkAndAdjustCharacterImage(), 100);
+}
+
+/**
+ * 检测浮现按钮容器与角色立绘是否重叠，如有重叠则调整立绘位置或大小
+ * 注意：变换应用到character-container上，确保图片和部位按钮层同步变化
+ * 策略：优先右移，只有当右移会与右侧状态栏冲突时才缩小
+ */
+function checkAndAdjustCharacterImage() {
+    const floatingButtons = document.getElementById('floating-instruct-buttons');
+    const characterContainer = document.querySelector('.character-container');
+    const characterDisplay = document.querySelector('.new-ui-character-display');
+    const targetInfo = document.querySelector('.new-ui-target-info');
+    
+    if (!floatingButtons || !characterContainer || !characterDisplay) {
+        return;
+    }
+    
+    // 如果浮现按钮隐藏，恢复角色容器原始状态
+    if (floatingButtons.style.display === 'none' || !floatingButtons.offsetParent) {
+        resetCharacterContainerTransform();
+        return;
+    }
+    
+    const floatingRect = floatingButtons.getBoundingClientRect();
+    const displayRect = characterDisplay.getBoundingClientRect();
+    const containerRect = characterContainer.getBoundingClientRect();
+    
+    // 获取右侧状态栏位置（如果存在）
+    const targetInfoRect = targetInfo ? targetInfo.getBoundingClientRect() : null;
+    const rightBoundary = targetInfoRect ? targetInfoRect.left - 10 : displayRect.right - 10; // 留10px间距
+    
+    // 检测是否重叠：浮现按钮的右边界是否超过角色容器的左边界
+    const isOverlapping = (
+        floatingRect.right > containerRect.left &&
+        floatingRect.left < containerRect.right &&
+        floatingRect.bottom > containerRect.top &&
+        floatingRect.top < containerRect.bottom
+    );
+    
+    if (isOverlapping) {
+        // 计算需要右移的距离（避开浮现按钮）
+        const overlapWidth = floatingRect.right - containerRect.left + 15; // 额外留15px间距
+        
+        // 计算右移后角色容器的右边界位置
+        const newRightPosition = containerRect.right + overlapWidth;
+        
+        // 检查右移后是否会与右侧状态栏冲突
+        if (newRightPosition <= rightBoundary) {
+            // 仅右移，不缩小
+            characterContainer.style.transform = `translateX(${overlapWidth}px)`;
+            characterContainer.style.transformOrigin = 'center center';
+        } else {
+            // 右移会冲突，需要在右移的基础上缩小
+            // 计算可用空间
+            const availableWidth = rightBoundary - floatingRect.right - 20; // 留20px间距
+            const currentWidth = containerRect.width;
+            
+            // 计算缩放比例
+            const scaleRatio = Math.max(0.5, Math.min(1, availableWidth / currentWidth));
+            
+            // 计算右移距离（缩小后需要调整）
+            const translateX = overlapWidth - (currentWidth * (1 - scaleRatio) / 2);
+            
+            characterContainer.style.transform = `translateX(${translateX}px) scale(${scaleRatio})`;
+            characterContainer.style.transformOrigin = 'center center';
+        }
+    } else {
+        // 无重叠，恢复原始状态
+        resetCharacterContainerTransform();
+    }
+}
+
+/**
+ * 重置角色容器的变换状态
+ */
+function resetCharacterContainerTransform() {
+    const characterContainer = document.querySelector('.character-container');
+    if (characterContainer) {
+        characterContainer.style.transform = '';
+        characterContainer.style.transformOrigin = '';
+    }
+}
+
+/**
+ * 清空交互类型选择
+ * 清空当前选择的大类和小类，并恢复角色立绘
+ */
+function clearInteractionSelection() {
+    console.log('[DEBUG] clearInteractionSelection called');
+    
+    // 清空大类选择的高亮
+    document.querySelectorAll('.interaction-major-tab').forEach(t => t.classList.remove('active'));
+    
+    // 清空小类选择
+    document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
+    
+    // 重置身体部位按钮状态：移除所有高亮和禁用样式，回到初始的全部位可互动状态
+    const bodyPartButtons = document.querySelectorAll('.body-part-button');
+    bodyPartButtons.forEach(button => {
+        button.classList.remove('available');
+        button.classList.remove('unavailable');
+    });
+    
+    // 隐藏浮现按钮
+    const floatingButtons = document.getElementById('floating-instruct-buttons');
+    if (floatingButtons) {
+        floatingButtons.style.display = 'none';
+        floatingButtons.innerHTML = '';
+    }
+    
+    // 恢复角色容器变换
+    resetCharacterContainerTransform();
+    
+    // 通知后端清空选择
+    if (window.socket && window.socket.connected) {
+        window.socket.emit('clear_interaction_selection', {});
+    }
+}
+
+/**
+ * 处理主场景点击事件
+ * 点击空白区域时清空交互选择
+ * @param {Event} e - 点击事件
+ */
+function handleMainSceneClick(e) {
+    // 检查是否点击的是空白区域
+    // 排除交互面板、浮现按钮、状态栏、部位按钮等元素的点击
+    // 注意：点击角色图像的非按钮区域也应该触发清空
+    const clickedElement = e.target;
+    
+    // 如果点击的是以下元素或其子元素，不处理
+    const excludeSelectors = [
+        '.new-ui-interaction-panel',
+        '.interaction-floating-buttons',
+        '.new-ui-target-info',
+        '.body-part-button',
+        '.instruct-menu',
+        '.hip-sub-menu',
+        'button'
+    ];
+    
+    for (const selector of excludeSelectors) {
+        if (clickedElement.closest(selector)) {
+            return; // 点击的不是空白区域
+        }
+    }
+    
+    // 点击的是空白区域（包括角色图像的非按钮区域），清空交互选择
+    console.log('[DEBUG] Main scene blank area clicked, clearing interaction selection');
+    clearInteractionSelection();
+}
+
+/**
+ * 执行指令
+ * @param {string} instructId - 指令ID
+ */
+function executeInstruct(instructId) {
+    console.log('[DEBUG] executeInstruct called, instructId:', instructId);
+    if (window.socket && window.socket.connected) {
+        window.socket.emit('execute_instruct', { instruct_id: instructId });
+    } else {
+        console.warn('[DEBUG] Socket not connected, cannot execute instruct');
+    }
+}
+
+/**
+ * 创建角色立绘显示区
+ * @param {Object} targetInfo - 角色信息
+ * @param {boolean} showAllBodyParts - 是否始终显示所有身体部位按钮
+ */
+function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
+    const display = document.createElement('div');
+    display.className = 'new-ui-character-display';
+    
+    // 获取立绘图片路径（优先使用全身图，否则使用半身图）
+    const imageData = targetInfo.image_data;
+    const imagePath = imageData ? (imageData.full_body_image || imageData.half_body_image) : null;
+    
+    if (imagePath) {
+        // 创建角色立绘容器
+        const characterContainer = document.createElement('div');
+        characterContainer.className = 'character-container';
+        
+        // 创建立绘图片
+        const img = document.createElement('img');
+        // 确保路径以/开头
+        img.src = imagePath.startsWith('/') ? imagePath : '/' + imagePath;
+        img.alt = targetInfo.name || 'Character';
+        img.className = 'character-image';
+        
+        // 添加加载错误处理
+        img.onerror = function() {
+            console.error('加载角色立绘失败:', imagePath);
+            display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
+        };
+        
+        characterContainer.appendChild(img);
+        
+        // 添加身体部位按钮层
+        if (imageData.body_parts && imageData.body_parts.body_parts) {
+            const bodyPartsLayer = createBodyPartsLayer(imageData.body_parts, targetInfo.name, showAllBodyParts);
+            characterContainer.appendChild(bodyPartsLayer);
+        }
+        
+        display.appendChild(characterContainer);
+    } else {
+        display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
+    }
+    
+    return display;
+}
+
+/**
+ * 创建身体部位交互按钮层
+ * @param {Object} bodyPartsData - 身体部位数据
+ * @param {string} characterName - 角色名称
+ * @param {boolean} showAllBodyParts - 是否始终显示所有身体部位按钮
+ */
+function createBodyPartsLayer(bodyPartsData, characterName, showAllBodyParts = false) {
+    const layer = document.createElement('div');
+    layer.className = 'body-parts-layer';
+    
+    const parts = bodyPartsData.body_parts || {};
+    const imageSize = bodyPartsData.image_size || { width: 1024, height: 1024 };
+    
+    for (const [partName, partData] of Object.entries(parts)) {
+        if (!partData || !partData.center) continue;
+        
+        const button = document.createElement('div');
+        button.className = 'body-part-button';
+        
+        // 如果全部位显示开启，添加 always-visible 类
+        if (showAllBodyParts) {
+            button.classList.add('always-visible');
+        }
+        
+        button.dataset.partName = partName;  // 中文显示名
+        // base_part 是英文部位名，用于与指令的 body_parts 匹配
+        button.dataset.basePart = partData.base_part || partData.part_id || partName;
+        
+        // 计算按钮位置（百分比）
+        const centerX = (partData.center.x / imageSize.width) * 100;
+        const centerY = (partData.center.y / imageSize.height) * 100;
+        
+        button.style.left = `${centerX}%`;
+        button.style.top = `${centerY}%`;
+        
+        // 设置按钮大小（基于radius或默认值）
+        const radius = partData.radius || 30;
+        const size = (radius * 2 / imageSize.width) * 100;
+        button.style.width = `${Math.max(size, 5)}%`;
+        button.style.height = `${Math.max(size, 5)}%`;
+        
+        // 添加提示文本
+        button.title = partName;
+        
+        // 点击事件
+        button.onclick = function(e) {
+            e.stopPropagation();
+            // 保存点击的按钮引用，用于定位菜单
+            window.lastClickedBodyPartButton = button;
+            handleBodyPartClick(partName);
+        };
+        
+        // 悬停效果 - 显示部位名称或指令名（如果只有一个指令）
+        const tooltip = document.createElement('span');
+        tooltip.className = 'body-part-tooltip';
+        tooltip.textContent = partName;  // 默认显示部位名
+        button.appendChild(tooltip);
+        
+        // 保存tooltip引用用于后续更新
+        button._tooltip = tooltip;
+        
+        layer.appendChild(button);
+    }
+    
+    return layer;
+}
+
+/**
+ * 处理身体部位点击
+ * @param {string} partName - 部位名称
+ */
+function handleBodyPartClick(partName) {
+    console.log('点击身体部位:', partName);
+    // 先关闭已有的指令菜单
+    const existingMenu = document.querySelector('.instruct-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    if (socket && socket.connected) {
+        socket.emit('click_body_part', { part_name: partName });
+    }
+}
+
+/**
+ * 显示臀部子菜单
+ * @param {Array} subParts - 子部位列表
+ */
+function showHipSubMenu(subParts) {
+    // 移除已有的子菜单
+    const existingMenu = document.querySelector('.hip-sub-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    // 找到臀部按钮的位置
+    const hipButton = document.querySelector('.body-part-button[data-part-name="臀部"]');
+    if (!hipButton) {
+        console.warn('未找到臀部按钮');
+        return;
+    }
+    
+    // 创建子菜单
+    const menu = document.createElement('div');
+    menu.className = 'hip-sub-menu';
+    
+    // 添加标题
+    const title = document.createElement('div');
+    title.className = 'hip-sub-menu-title';
+    title.textContent = '选择部位';
+    menu.appendChild(title);
+    
+    // 添加子部位按钮
+    subParts.forEach(subPart => {
+        const btn = document.createElement('button');
+        btn.className = 'hip-sub-menu-btn';
+        btn.textContent = subPart.part_name_cn;
+        btn.dataset.partId = subPart.part_id;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            // 点击子部位时发送事件
+            if (socket && socket.connected) {
+                socket.emit('click_body_part', { part_name: subPart.part_id });
+            }
+            menu.remove();
+        };
+        menu.appendChild(btn);
+    });
+    
+    // 添加关闭按钮
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'hip-sub-menu-close';
+    closeBtn.textContent = '×';
+    closeBtn.onclick = (e) => {
+        e.stopPropagation();
+        menu.remove();
+    };
+    menu.appendChild(closeBtn);
+    
+    // 定位菜单（在臀部按钮旁边）
+    const hipRect = hipButton.getBoundingClientRect();
+    const container = document.querySelector('.character-container') || document.body;
+    const containerRect = container.getBoundingClientRect();
+    
+    menu.style.position = 'absolute';
+    menu.style.left = `${hipRect.right - containerRect.left + 10}px`;
+    menu.style.top = `${hipRect.top - containerRect.top}px`;
+    
+    // 添加到容器
+    container.appendChild(menu);
+    
+    // 点击其他地方关闭菜单
+    document.addEventListener('click', function closeMenu(e) {
+        if (!menu.contains(e.target)) {
+            menu.remove();
+            document.removeEventListener('click', closeMenu);
+        }
+    });
+}
+
+/**
+ * 处理身体部位点击结果
+ * @param {Object} data - 点击结果数据
+ */
+function handleBodyPartClickResult(data) {
+    console.log('身体部位点击结果:', data);
+    
+    // 更新该部位的tooltip显示
+    if (window.lastClickedBodyPartButton && window.lastClickedBodyPartButton._tooltip) {
+        const tooltip = window.lastClickedBodyPartButton._tooltip;
+        if (data.single_instruct && data.available_instructs.length === 1) {
+            // 只有一个指令时，显示指令名
+            tooltip.textContent = data.available_instructs[0].name;
+        } else {
+            // 多个指令或无指令时，显示部位名
+            tooltip.textContent = data.part_name_cn || data.part_name;
+        }
+    }
+    
+    if (data.single_instruct && data.available_instructs.length === 1) {
+        // 只有一个可执行指令，自动执行
+        const instruct = data.available_instructs[0];
+        if (socket && socket.connected) {
+            socket.emit('execute_instruct', { instruct_id: instruct.id });
+        }
+    } else if (data.available_instructs.length > 0) {
+        // 多个可执行指令，显示选择菜单
+        showInstructMenu(data.available_instructs, data.part_name_cn);
+    } else {
+        console.log('该部位没有可执行的指令');
+    }
+}
+
+/**
+ * 显示指令选择菜单
+ * 在点击的身体部位位置显示菜单
+ * @param {Array} instructs - 指令列表
+ * @param {string} partName - 部位名称
+ */
+function showInstructMenu(instructs, partName) {
+    // 移除已有的菜单
+    const existingMenu = document.querySelector('.instruct-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    // 创建菜单
+    const menu = document.createElement('div');
+    menu.className = 'instruct-menu';
+    
+    // 添加标题
+    const title = document.createElement('div');
+    title.className = 'instruct-menu-title';
+    title.textContent = partName || '选择指令';
+    menu.appendChild(title);
+    
+    // 添加指令按钮
+    instructs.forEach(instruct => {
+        const btn = document.createElement('button');
+        btn.className = 'instruct-menu-btn';
+        btn.textContent = instruct.name;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            if (socket && socket.connected) {
+                socket.emit('execute_instruct', { instruct_id: instruct.id });
+            }
+            menu.remove();
+        };
+        menu.appendChild(btn);
+    });
+    
+    // 定位菜单：优先在点击的部位位置显示
+    menu.style.position = 'fixed';
+    
+    const clickedButton = window.lastClickedBodyPartButton;
+    if (clickedButton) {
+        const rect = clickedButton.getBoundingClientRect();
+        // 在部位按钮右侧显示菜单
+        let left = rect.right + 10;
+        let top = rect.top;
+        
+        // 确保菜单不超出屏幕右侧
+        if (left + 200 > window.innerWidth) {
+            left = rect.left - 210;  // 改为在左侧显示
+        }
+        // 确保菜单不超出屏幕底部
+        if (top + 200 > window.innerHeight) {
+            top = window.innerHeight - 220;
+        }
+        // 确保菜单不超出屏幕顶部
+        if (top < 10) {
+            top = 10;
+        }
+        
+        menu.style.left = `${left}px`;
+        menu.style.top = `${top}px`;
+    } else {
+        // 回退到居中显示
+        menu.style.top = '50%';
+        menu.style.left = '50%';
+        menu.style.transform = 'translate(-50%, -50%)';
+    }
+    
+    document.body.appendChild(menu);
+    
+    // 点击其他地方关闭菜单（但不包括点击其他身体部位的情况，那个会在handleBodyPartClick中处理）
+    setTimeout(() => {
+        document.addEventListener('click', function closeMenu(e) {
+            // 如果点击的是身体部位按钮，不在这里关闭（handleBodyPartClick会处理）
+            if (e.target.closest('.body-part-button')) {
+                return;
+            }
+            if (!menu.contains(e.target)) {
+                menu.remove();
+                document.removeEventListener('click', closeMenu);
+            }
+        });
+    }, 0);
+}
+
+/**
+ * 创建交互对象信息面板
+ * 包含：名字、好感/信赖、体力/气力、特殊状态、快感状态、其他状态
+ * @param {Object} targetInfo - 交互对象信息
+ * @returns {HTMLElement} - 信息面板元素
+ */
+function createTargetInfoPanel(targetInfo) {
+    const panel = document.createElement('div');
+    panel.className = 'new-ui-target-info';
+    
+    // ========== 第一行：名字 ==========
+    const nameRow = document.createElement('div');
+    nameRow.className = 'target-name';
+    nameRow.textContent = targetInfo.name || '';
+    panel.appendChild(nameRow);
+    
+    // ========== 第二行：好感度 + 信赖度 ==========
+    if (targetInfo.favorability || targetInfo.trust) {
+        const relationRow = document.createElement('div');
+        relationRow.className = 'target-relation-row';
+        
+        if (targetInfo.favorability && targetInfo.favorability.level) {
+            const favSpan = document.createElement('span');
+            favSpan.className = 'target-favorability';
+            favSpan.dataset.field = 'favorability';  // 添加字段标识
+            favSpan.textContent = `好感:${Math.floor(targetInfo.favorability.value)}(${targetInfo.favorability.level})`;
+            favSpan.title = '好感度';
+            relationRow.appendChild(favSpan);
+        }
+        
+        if (targetInfo.trust && targetInfo.trust.level) {
+            const trustSpan = document.createElement('span');
+            trustSpan.className = 'target-trust';
+            trustSpan.dataset.field = 'trust';  // 添加字段标识
+            trustSpan.textContent = `信赖:${targetInfo.trust.value.toFixed(1)}%(${targetInfo.trust.level})`;
+            trustSpan.title = '信赖度';
+            relationRow.appendChild(trustSpan);
+        }
+        
+        panel.appendChild(relationRow);
+    }
+    
+    // ========== 第三行：体力槽 + 气力槽 ==========
+    const barsContainer = document.createElement('div');
+    barsContainer.className = 'target-bars';
+    
+    if (targetInfo.hp !== undefined) {
+        const hpBar = createStatusBar('体力', targetInfo.hp, targetInfo.hp_max, 'hp');
+        hpBar.dataset.field = 'hit_point';  // 添加字段标识
+        barsContainer.appendChild(hpBar);
+    }
+    if (targetInfo.mp !== undefined) {
+        const mpBar = createStatusBar('气力', targetInfo.mp, targetInfo.mp_max, 'mp');
+        mpBar.dataset.field = 'mana_point';  // 添加字段标识
+        barsContainer.appendChild(mpBar);
+    }
+    panel.appendChild(barsContainer);
+    
+    // ========== 第四行：特殊状态标记 ==========
+    if (targetInfo.special_states && targetInfo.special_states.length > 0) {
+        const specialRow = document.createElement('div');
+        specialRow.className = 'target-special-states';
+        
+        targetInfo.special_states.forEach(state => {
+            const stateSpan = document.createElement('span');
+            stateSpan.className = `special-state style-${state.style || 'standard'}`;
+            stateSpan.textContent = state.text;
+            if (state.tooltip) {
+                stateSpan.title = state.tooltip;
+            }
+            specialRow.appendChild(stateSpan);
+        });
+        
+        panel.appendChild(specialRow);
+    }
+    
+    // ========== 快感状态块 ==========
+    if (targetInfo.pleasure_states && targetInfo.pleasure_states.length > 0) {
+        const pleasureSection = document.createElement('div');
+        pleasureSection.className = 'target-state-section';
+        
+        const pleasureTitle = document.createElement('div');
+        pleasureTitle.className = 'state-section-title';
+        pleasureTitle.textContent = '─快感状态─';
+        pleasureSection.appendChild(pleasureTitle);
+        
+        const pleasureGrid = document.createElement('div');
+        pleasureGrid.className = 'state-grid';
+        
+        targetInfo.pleasure_states.forEach(state => {
+            pleasureGrid.appendChild(createStateItem(state));
+        });
+        
+        pleasureSection.appendChild(pleasureGrid);
+        panel.appendChild(pleasureSection);
+    }
+    
+    // ========== 其他状态块 ==========
+    if (targetInfo.other_states && targetInfo.other_states.length > 0) {
+        const otherSection = document.createElement('div');
+        otherSection.className = 'target-state-section';
+        
+        const otherTitle = document.createElement('div');
+        otherTitle.className = 'state-section-title';
+        otherTitle.textContent = '─其他状态─';
+        otherSection.appendChild(otherTitle);
+        
+        const otherGrid = document.createElement('div');
+        otherGrid.className = 'state-grid';
+        
+        targetInfo.other_states.forEach(state => {
+            otherGrid.appendChild(createStateItem(state));
+        });
+        
+        otherSection.appendChild(otherGrid);
+        panel.appendChild(otherSection);
+    }
+    
+    // ========== 数值变化浮动文本 ==========
+    if (targetInfo.value_changes && targetInfo.value_changes.length > 0) {
+        // 延迟创建浮动文本，确保DOM已渲染
+        setTimeout(() => {
+            createFloatingValueChanges(panel, targetInfo.value_changes);
+        }, 50);
+    }
+    
+    return panel;
+}
+
+/**
+ * 富文本颜色名称到CSS颜色值的映射
+ * 基于 data/csv/FontConfig.csv 中的定义
+ */
+const RICH_TEXT_COLORS = {
+    'hp_point': '#e15a5a',
+    'mp_point': '#70C070',
+    'sanity': '#7070C0',
+    'semen': '#fffacd',
+    'light_pink': '#ffb6c1',
+    'summer_green': '#96bbab',
+    'medium_spring_green': '#00ff7f',
+    'persian_pink': '#f77fbe',
+    'rose_pink': '#ff66cc',
+    'deep_pink': '#ff1493',
+    'crimson': '#dc143c',
+    'slate_blue': '#6a5acd',
+    'pale_cerulean': '#9bc4e2',
+    'little_dark_slate_blue': '#5550aa',
+    'light_sky_blue': '#87cefa',
+    'lavender_pink': '#fbaed2',
+    'standard': '#c8c8c8'
+};
+
+/**
+ * 创建数值变化浮动文本
+ * 在每个数值对应的UI元素位置显示浮动文本
+ * @param {HTMLElement} panel - 目标信息面板容器
+ * @param {Array} valueChanges - 数值变化数组
+ */
+function createFloatingValueChanges(panel, valueChanges) {
+    if (!panel || !valueChanges || valueChanges.length === 0) return;
+    
+    // 根据字段类型分组变化，同时保留颜色信息
+    const fieldGroups = {};
+    valueChanges.forEach(change => {
+        const field = change.field;
+        if (!fieldGroups[field]) {
+            fieldGroups[field] = {
+                changes: [],
+                color: change.color || 'standard',
+                field_name: change.field_name || field
+            };
+        }
+        fieldGroups[field].changes.push(change);
+    });
+    
+    // 未匹配到位置的变化，收集到这里最后统一显示
+    const unmatchedChanges = [];
+    
+    // 为每个字段创建浮动文本
+    for (const field in fieldGroups) {
+        const group = fieldGroups[field];
+        const changes = group.changes;
+        const totalValue = changes.reduce((sum, c) => sum + c.value, 0);
+        if (totalValue === 0) continue;
+        
+        const displayName = group.field_name;
+        const colorName = group.color;
+        
+        // 查找对应的UI元素，并确定位置类型
+        let targetElement = null;
+        let positionType = 'inline'; // 默认内联显示
+        
+        // 根据字段类型查找对应元素
+        if (field === 'hit_point') {
+            // 体力：显示在体力和气力的中间位置
+            targetElement = panel.querySelector('[data-field="hit_point"]');
+            positionType = 'hp_middle';
+        } else if (field === 'mana_point') {
+            // 气力：下移一行显示
+            targetElement = panel.querySelector('[data-field="mana_point"]');
+            positionType = 'below';
+        } else if (field === 'favorability') {
+            // 好感：下移一行显示
+            targetElement = panel.querySelector('[data-field="favorability"]');
+            positionType = 'below';
+        } else if (field === 'trust') {
+            // 信赖：下移一行显示
+            targetElement = panel.querySelector('[data-field="trust"]');
+            positionType = 'below';
+        } else if (field === 'hypnosis_degree') {
+            // 催眠度：下移一行显示
+            targetElement = panel.querySelector('[data-field="hypnosis_degree"]');
+            if (!targetElement) {
+                unmatchedChanges.push({ displayName, totalValue, colorName });
+                continue;
+            }
+            positionType = 'below';
+        } else if (field === 'eja_point' || field === 'sanity_point') {
+            // 射精欲、理智：下移一行显示
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+            continue;
+        } else if (field.startsWith('status_')) {
+            // 状态：在对应状态项位置显示（位置不变）
+            const stateId = field.replace('status_', '');
+            targetElement = panel.querySelector(`[data-state-id="${stateId}"]`);
+            positionType = 'inline';
+        } else if (field.startsWith('experience_')) {
+            // 经验值：放到底部
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+            continue;
+        } else {
+            // 其他未知字段也放到未匹配列表
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+            continue;
+        }
+        
+        // 如果找到目标元素，在该元素位置显示浮动文本
+        if (targetElement) {
+            createInlineFloatingText(targetElement, displayName, totalValue, colorName, positionType, panel);
+        } else {
+            // 未找到元素，放到未匹配列表
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+        }
+    }
+    
+    // 处理未匹配的变化，在面板底部显示
+    if (unmatchedChanges.length > 0) {
+        createBottomFloatingTexts(panel, unmatchedChanges);
+    }
+}
+
+/**
+ * 在目标元素旁边创建浮动文本
+ * @param {HTMLElement} targetElement - 目标UI元素
+ * @param {string} displayName - 显示名称
+ * @param {number} totalValue - 数值变化总量
+ * @param {string} colorName - 颜色名称
+ * @param {string} positionType - 位置类型：'inline'(内联), 'below'(下方), 'hp_middle'(体力气力中间)
+ * @param {HTMLElement} panel - 面板容器（用于hp_middle定位）
+ */
+function createInlineFloatingText(targetElement, displayName, totalValue, colorName, positionType, panel) {
+    // 确保目标元素有相对定位
+    const originalPosition = targetElement.style.position;
+    if (!originalPosition || originalPosition === 'static') {
+        targetElement.style.position = 'relative';
+    }
+    
+    // 创建浮动文本元素
+    const floatText = document.createElement('span');
+    floatText.className = 'inline-floating-text';
+    
+    // 设置颜色
+    const color = RICH_TEXT_COLORS[colorName] || RICH_TEXT_COLORS['standard'];
+    floatText.style.color = color;
+    
+    // 设置文本内容（带符号）
+    const sign = totalValue > 0 ? '+' : '';
+    floatText.textContent = `${sign}${totalValue}`;
+    
+    // 根据位置类型设置不同的定位
+    if (positionType === 'hp_middle') {
+        // 体力：显示在体力和气力的中间位置
+        floatText.classList.add('position-hp-middle');
+    } else if (positionType === 'below') {
+        // 下移一行显示
+        floatText.classList.add('position-below');
+    } else {
+        // 默认内联显示（状态栏）
+        floatText.classList.add('position-inline');
+    }
+    
+    targetElement.appendChild(floatText);
+    
+    // 15秒后移除浮动文本
+    setTimeout(() => {
+        floatText.classList.add('fade-out');
+        setTimeout(() => {
+            if (floatText.parentNode) {
+                floatText.parentNode.removeChild(floatText);
+            }
+        }, 500);
+    }, 15000);
+}
+
+/**
+ * 在面板底部创建未匹配变化的浮动文本
+ * @param {HTMLElement} panel - 面板容器
+ * @param {Array} changes - 未匹配的变化数组
+ */
+function createBottomFloatingTexts(panel, changes) {
+    // 创建底部浮动文本容器
+    const container = document.createElement('div');
+    container.className = 'bottom-floating-container';
+    
+    changes.forEach((change, index) => {
+        const floatText = document.createElement('span');
+        floatText.className = 'bottom-floating-text';
+        
+        // 设置颜色
+        const color = RICH_TEXT_COLORS[change.colorName] || RICH_TEXT_COLORS['standard'];
+        floatText.style.color = color;
+        
+        const sign = change.totalValue > 0 ? '+' : '';
+        floatText.textContent = `${change.displayName} ${sign}${change.totalValue}`;
+        
+        container.appendChild(floatText);
+    });
+    
+    panel.appendChild(container);
+    
+    // 15秒后移除
+    setTimeout(() => {
+        container.classList.add('fade-out');
+        setTimeout(() => {
+            if (container.parentNode) {
+                container.parentNode.removeChild(container);
+            }
+        }, 500);
+    }, 15000);
+}
+
+/**
+ * 创建单个状态项
+ * @param {Object} state - 状态数据，包含 id, name, value, max_value, level, tooltip
+ * @returns {HTMLElement} - 状态项元素
+ */
+function createStateItem(state) {
+    const item = document.createElement('div');
+    item.className = 'state-item';
+    // 添加状态ID属性，用于匹配浮动文本
+    if (state.id !== undefined) {
+        item.dataset.stateId = state.id;
+    }
+    if (state.tooltip) {
+        item.title = state.tooltip;
+    }
+    
+    // 第一行：状态名、等级和数值在同一行
+    const header = document.createElement('div');
+    header.className = 'state-item-header';
+    
+    // 状态名和等级（左侧）
+    const label = document.createElement('span');
+    label.className = 'state-label';
+    label.textContent = `${state.name}Lv${state.level}`;
+    header.appendChild(label);
+    
+    // 数值显示（右侧）
+    const valueSpan = document.createElement('span');
+    valueSpan.className = 'state-value';
+    valueSpan.textContent = `${state.value}`;
+    header.appendChild(valueSpan);
+    
+    item.appendChild(header);
+    
+    // 第二行：状态进度条
+    const barTrack = document.createElement('div');
+    barTrack.className = 'state-bar-track';
+    
+    const barFill = document.createElement('div');
+    barFill.className = 'state-bar-fill';
+    const percentage = state.max_value > 0 ? (state.value / state.max_value * 100) : 0;
+    barFill.style.width = `${Math.min(percentage, 100)}%`;
+    
+    barTrack.appendChild(barFill);
+    item.appendChild(barTrack);
+    
+    return item;
+}
+
+/**
+ * 创建面板选项卡栏
+ * 以网页选项卡样式展示，支持激活状态高亮
+ * 
+ * @param {Array} tabs - 选项卡数据数组，每个元素包含：
+ *   - id: 选项卡ID
+ *   - name: 显示名称
+ *   - type: 类型（"main" 为主面板，"panel" 为其他面板）
+ *   - available: 是否可用
+ *   - active: 是否为当前激活的选项卡
+ * @returns {HTMLElement} 选项卡栏元素
+ */
+function createPanelTabsBar(tabs) {
+    const bar = document.createElement('div');
+    bar.className = 'new-ui-panel-tabs';
+    
+    tabs.forEach(tab => {
+        const btn = document.createElement('button');
+        btn.className = 'panel-tab-btn';
+        
+        // 添加主面板特殊样式
+        if (tab.type === 'main') {
+            btn.classList.add('main-tab');
+        }
+        
+        // 添加激活状态
+        if (tab.active) {
+            btn.classList.add('active');
+        }
+        
+        // 添加禁用状态
+        if (!tab.available) {
+            btn.classList.add('disabled');
+            btn.disabled = true;
+        }
+        
+        btn.textContent = tab.name || tab.id;
+        btn.dataset.tabId = tab.id;
+        
+        // 主面板选项卡点击不执行操作（已经在主面板）
+        // 其他选项卡点击执行对应的面板切换指令
+        if (tab.type !== 'main' || !tab.active) {
+            btn.onclick = () => clickPanelTab(tab.id);
+        }
+        
+        bar.appendChild(btn);
+    });
+    
+    return bar;
+}
+
+/**
+ * 切换交互对象
+ */
+function switchTarget(characterId) {
+    if (socket && socket.connected) {
+        socket.emit('switch_target', { character_id: characterId });
+    }
+}
+
+/**
+ * 选择交互类型
+ */
+function selectInteractionType(typeId) {
+    if (socket && socket.connected) {
+        socket.emit('select_interaction_type', { type_id: typeId });
+    }
+}
+
+/**
+ * 点击面板选项卡
+ * 使用普通按钮点击API来确保与后端轮询机制兼容
+ */
+function clickPanelTab(tabId) {
+    // 使用普通的按钮点击API，tabId就是指令ID
+    handleButtonClick(tabId);
 }
 
 /**
@@ -2552,6 +5216,9 @@ async function initialize() {
             }
         });
     }
+    
+    // 添加对话框键盘快捷键支持
+    initDialogKeyboardShortcuts();
     
     // 优先使用WebSocket连接
     try {

@@ -373,7 +373,7 @@ class Chose_Hypnosis_Type_Panel:
 
     def son_instruct(self, behavbior_cid):
         """进行子选项"""
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
         line_draw = draw.LineDraw("-", self.width)
         line_draw.draw()
 

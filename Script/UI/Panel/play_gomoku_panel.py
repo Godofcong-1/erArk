@@ -982,28 +982,28 @@ class GomokuPanel:
 
         while 1:
             return_list = []
-            low_button = draw.CenterButton(_("[低难度，计算速度快]"), _("低难度"), self.width / 3, cmd_func=self.set_ai_difficulty, args=(2,))
+            low_button = draw.CenterButton(_("[低难度，计算速度快]"), _("低难度"), self.width // 3, cmd_func=self.set_ai_difficulty, args=(2,))
             low_button.draw()
             return_list.append(low_button.return_text)
 
             if target_ability_lv >= 4 or cache.debug_mode:
-                medium_button = draw.CenterButton(_("[中难度，计算速度中等]"), _("中难度"), self.width / 3, cmd_func=self.set_ai_difficulty, args=(4,))
+                medium_button = draw.CenterButton(_("[中难度，计算速度中等]"), _("中难度"), self.width // 3, cmd_func=self.set_ai_difficulty, args=(4,))
                 medium_button.draw()
                 return_list.append(medium_button.return_text)
             else:
                 info_draw = draw.CenterDraw()
                 info_draw.text = _("[中难度 - 需要{0}的{1}达到4级]".format(self.target_character_data.name, game_config.config_ability[45].name))
-                info_draw.width = self.width / 3
+                info_draw.width = self.width // 3
                 info_draw.draw()
 
             if target_ability_lv >= 6 or cache.debug_mode:
-                high_button = draw.CenterButton(_("[高难度，计算速度慢]"), _("高难度"), self.width / 3, cmd_func=self.set_ai_difficulty, args=(6,))
+                high_button = draw.CenterButton(_("[高难度，计算速度慢]"), _("高难度"), self.width // 3, cmd_func=self.set_ai_difficulty, args=(6,))
                 high_button.draw()
                 return_list.append(high_button.return_text)
             else:
                 info_draw = draw.CenterDraw()
                 info_draw.text = _("[高难度 - 需要{0}的{1}达到6级]".format(self.target_character_data.name, game_config.config_ability[45].name))
-                info_draw.width = self.width / 3
+                info_draw.width = self.width // 3
                 info_draw.draw()
 
             line_feed.draw()
@@ -1076,7 +1076,7 @@ class GomokuPanel:
             # 绘制确定按钮
             line_feed.draw()
             if not self.game_over and self.selected_row != -1 and self.selected_col != -1:
-                confirm_button = draw.CenterButton(_("[确定]"), _("确定"), self.width / 2, cmd_func=self.place_piece)
+                confirm_button = draw.CenterButton(_("[确定]"), _("确定"), self.width // 2, cmd_func=self.place_piece)
                 confirm_button.draw()
                 return_list.append(confirm_button.return_text)
 
@@ -1093,11 +1093,11 @@ class GomokuPanel:
                 win_draw.text = _("{0} 获胜!\n\n\n").format(winner_name)
                 win_draw.width = self.width
                 win_draw.draw()
-                restart_button = draw.CenterButton(_("[再来一局]"), _("再来一局"), self.width / 2, cmd_func=self.reset_board)
+                restart_button = draw.CenterButton(_("[再来一局]"), _("再来一局"), self.width // 2, cmd_func=self.reset_board)
                 restart_button.draw()
                 return_list.append(restart_button.return_text)
 
-            back_draw = draw.CenterButton(_("[结束游戏]"), _("结束游戏"), self.width / 2)
+            back_draw = draw.CenterButton(_("[结束游戏]"), _("结束游戏"), self.width // 2)
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
@@ -1108,7 +1108,7 @@ class GomokuPanel:
     def end_settle(self, winner: int):
         """游戏结束结算"""
 
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
 
         # 写入游戏类型与难度
         hard_level = self.DEPTH // 2
@@ -1126,11 +1126,11 @@ class GomokuPanel:
         line_feed.draw()
         while 1:
             return_list = []
-            first_button = draw.CenterButton(_("[玩家先手]"), _("玩家先手"), self.width / 2, cmd_func=self.set_first_player, args=('player',))
+            first_button = draw.CenterButton(_("[玩家先手]"), _("玩家先手"), self.width // 2, cmd_func=self.set_first_player, args=('player',))
             first_button.draw()
             return_list.append(first_button.return_text)
 
-            second_button = draw.CenterButton(_("[AI先手]"), _("AI先手"), self.width / 2, cmd_func=self.set_first_player, args=('ai',))
+            second_button = draw.CenterButton(_("[AI先手]"), _("AI先手"), self.width // 2, cmd_func=self.set_first_player, args=('ai',))
             second_button.draw()
             return_list.append(second_button.return_text)
 

@@ -33,12 +33,14 @@ class SeeSaveListPanel:
     write_save -- 是否存储存档
     """
 
-    def __init__(self, width: int, write_save: bool):
+    def __init__(self, width: int, write_save: bool = True):
         """初始化绘制对象"""
         self.width: int = width
         """ 最大绘制宽度 """
         self.return_list: List[str] = []
         """ 当前面板监听的按钮列表 """
+        self.back_to_main: bool = write_save
+        """ 是否返回主菜单 """
         now_list = [(i, write_save) for i in range(normal_config.config_normal.max_save)]
         self.handle_panel = panel.PageHandlePanel(
             now_list, SaveInfoDraw, normal_config.config_normal.save_page, 1, width, True, True, 0, "-"
@@ -78,6 +80,8 @@ class SeeSaveListPanel:
             py_cmd.clr_cmd()
             if yrn == back_draw.return_text:
                 break
+        if self.back_to_main:
+            cache.now_panel_id = constant.Panel.IN_SCENE
 
 
 class SaveInfoDraw:

@@ -41,7 +41,7 @@ def judge_character_tired_sleep(character_id : int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.Design import handle_instruct
+    from Script.System.Instruct_System import handle_instruct
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_sp_flag = character_data.sp_flag

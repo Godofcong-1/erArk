@@ -136,7 +136,7 @@ class Bondage_Panel:
 
     def select_bondage(self, bondage_id):
         """赋予选择的捆绑"""
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
         character_data: game_type.Character = cache.character_data[0]
         target_character_id = character_data.target_character_id
         target_character_data: game_type.Character = cache.character_data[target_character_id]

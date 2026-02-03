@@ -455,6 +455,11 @@ config_ability_lv_adjust: Dict[int, config_def.Ability_Lv_Adjust] = {}
 """ 能力等级调整数据 """
 config_sex_position_data: Dict[int, config_def.Sex_Position] = {}
 """ 性交姿势数据 """
+config_instruct: Dict[int, config_def.InstructConfig] = {}
+""" 指令完整配置数据 cid -> 配置对象 """
+config_instruct_by_id: Dict[str, int] = {}
+""" 指令完整配置数据（按指令ID索引）instruct_id(str) -> 指令cid(int) """
+
 
 
 def load_data_json():
@@ -2118,6 +2123,20 @@ def load_sex_position():
         now_tem.__dict__ = tem_data
         config_sex_position_data[now_tem.cid] = now_tem
 
+
+def load_instruct_config():
+    """载入指令完整配置数据"""
+    if "InstructConfig" not in config_data:
+        return
+    now_data = config_data["InstructConfig"]
+    translate_data(now_data)
+    for tem_data in now_data["data"]:
+        now_tem = config_def.InstructConfig()
+        now_tem.__dict__ = tem_data
+        config_instruct[now_tem.cid] = now_tem
+        config_instruct_by_id[now_tem.instruct_id] = now_tem.cid
+
+
 def init():
     """初始化游戏配置数据"""
     load_data_json()
@@ -2238,3 +2257,5 @@ def init():
     load_semen_shoot_amount()
     load_abiity_lv_adjust()
     load_sex_position()
+    load_instruct_config()
+    print("游戏配置数据初始化完成")

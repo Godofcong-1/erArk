@@ -348,7 +348,7 @@ def get_all_can_use_behavior_id_for_sex_assistant(select_part: str = "", not_sel
     Return arguments:
     List[str] -- 可用的行为id列表
     """
-    from Script.UI.Panel import see_instruct_panel
+    from Script.System.Instruct_System import see_instruct_panel
     # 获取所有可用的状态id
     behavior_id_list = []
     behavior_id_list.extend(game_config.config_behavior_id_list_of_group_sex_body_part[_("口")])

@@ -83,6 +83,22 @@ game_state = {
     "skip_wait": False,  # 是否处于跳过等待模式
 }
 
+# 结算管理器实例（延迟初始化）
+_settlement_manager = None
+
+def get_settlement_manager():
+    """
+    获取结算管理器实例（单例模式）
+    
+    返回值类型：SettlementManager
+    功能描述：返回全局结算管理器实例，如果不存在则创建
+    """
+    global _settlement_manager
+    if _settlement_manager is None:
+        from Script.UI.Panel.web_components.settlement_manager import SettlementManager
+        _settlement_manager = SettlementManager()
+    return _settlement_manager
+
 # 用于存储按钮点击响应
 button_click_response = None
 wait_response_triggered = False
@@ -104,7 +120,7 @@ def index():
     参数：无
     
     返回值类型：str
-    功能描述：返回主页HTML内容
+    功能描述：返回游戏主页面，所有面板都在同一个页面中动态渲染
     """
     try:
         return render_template('index.html')
@@ -113,7 +129,6 @@ def index():
         error_msg = f"渲染主页时出错: {str(e)}\n{traceback.format_exc()}"
         print(error_msg)
         logging.error(error_msg)
-        # 返回错误信息以便调试
         return f"<pre>{error_msg}</pre>", 500
 
 @app.route('/api/get_state')
@@ -244,6 +259,222 @@ def integer_input():
     logging.info(f"整数输入: {input_response}")
     
     return jsonify({"success": True})
+
+@app.route('/api/toggle_extra_info_section', methods=['POST'])
+def toggle_extra_info_section():
+    """
+    切换交互对象附加信息栏位的展开/收起状态
+    
+    参数：section - 栏位名称 (clothing, body, group_sex, hidden_sex)
+    
+    返回值类型：JSON
+    功能描述：切换指定栏位的显示状态
+    """
+    from Script.Core import cache_control
+    cache = cache_control.cache
+    
+    data = request.json or {}
+    section = data.get('section')
+    
+    # 栏位索引映射
+    section_index_map = {
+        'clothing': 1,  # cache.scene_panel_show[1]
+        'body': 2,      # cache.scene_panel_show[2]
+    }
+    
+    if section in section_index_map:
+        index = section_index_map[section]
+        if hasattr(cache, 'scene_panel_show') and index < len(cache.scene_panel_show):
+            cache.scene_panel_show[index] = not cache.scene_panel_show[index]
+            logging.info(f"切换栏位 {section} 状态为: {cache.scene_panel_show[index]}")
+            return jsonify({"success": True})
+    
+    # 群交和隐奸栏位由系统状态控制，不需要手动切换
+    return jsonify({"success": True})
+
+@app.route('/api/toggle_detailed_dirty', methods=['POST'])
+def toggle_detailed_dirty():
+    """
+    切换详细污浊显示状态
+    
+    参数：无
+    
+    返回值类型：JSON
+    功能描述：切换是否显示详细污浊文本，并返回更新后的附加信息数据
+    """
+    from Script.Core import cache_control
+    from Script.UI.Panel.web_components.status_panel import StatusPanel
+    cache = cache_control.cache
+    
+    if hasattr(cache, 'all_system_setting') and hasattr(cache.all_system_setting, 'draw_setting'):
+        cache.all_system_setting.draw_setting[10] = not cache.all_system_setting.draw_setting[10]
+        logging.info(f"切换详细污浊显示为: {cache.all_system_setting.draw_setting[10]}")
+        
+        # 获取更新后的附加信息数据
+        status_panel = StatusPanel()
+        character_id = cache.character_data[0].target_character_id if hasattr(cache.character_data[0], 'target_character_id') else 0
+        extra_info = status_panel.get_target_extra_info(character_id)
+        
+        return jsonify({
+            "success": True,
+            "extra_info": extra_info
+        })
+    
+    return jsonify({"success": False, "error": "无法访问系统设置"})
+
+@app.route('/api/toggle_all_body_parts', methods=['POST'])
+def toggle_all_body_parts():
+    """
+    切换全部位显示状态
+    
+    参数：无
+    
+    返回值类型：JSON
+    功能描述：切换是否始终显示所有身体部位按钮（不需要鼠标悬停），并返回更新后的附加信息数据
+    """
+    from Script.Core import cache_control
+    from Script.UI.Panel.web_components.status_panel import StatusPanel
+    cache = cache_control.cache
+    
+    if hasattr(cache, 'all_system_setting') and hasattr(cache.all_system_setting, 'draw_setting'):
+        # 使用draw_setting[18]存储全部位显示状态
+        current_value = cache.all_system_setting.draw_setting.get(18, 0)
+        cache.all_system_setting.draw_setting[18] = 0 if current_value else 1
+        logging.info(f"切换全部位显示为: {cache.all_system_setting.draw_setting[18]}")
+        
+        # 获取更新后的附加信息数据
+        status_panel = StatusPanel()
+        character_id = cache.character_data[0].target_character_id if hasattr(cache.character_data[0], 'target_character_id') else 0
+        extra_info = status_panel.get_target_extra_info(character_id)
+        
+        return jsonify({
+            "success": True,
+            "extra_info": extra_info
+        })
+    
+    return jsonify({"success": False, "error": "无法访问系统设置"})
+
+@app.route('/api/quick_use_drug', methods=['POST'])
+def quick_use_drug():
+    """
+    快速使用药剂（理智药或精力剂）
+    
+    参数：drug_type - 药剂类型 ('sanity' 或 'semen')
+    
+    返回值类型：JSON
+    功能描述：快速使用玩家拥有的理智药或精力剂
+    """
+    from Script.Core import cache_control
+    from Script.UI.Panel.see_item_info_panel import use_drug, auto_use_sanity_drug
+    cache = cache_control.cache
+    
+    data = request.json or {}
+    drug_type = data.get('drug_type')
+    
+    if drug_type not in ['sanity', 'semen']:
+        return jsonify({"success": False, "message": "无效的药剂类型"})
+    
+    try:
+        pl_data = cache.character_data.get(0)
+        if not pl_data:
+            return jsonify({"success": False, "message": "玩家数据不存在"})
+        
+        if drug_type == 'sanity':
+            # 使用理智药
+            has_drug = False
+            for item_id in [0, 1, 2, 3]:
+                if pl_data.item.get(item_id, 0) > 0:
+                    has_drug = True
+                    break
+            
+            if not has_drug:
+                return jsonify({"success": False, "message": "没有理智药剂"})
+            
+            # 调用自动使用理智药函数
+            auto_use_sanity_drug()
+            message = "已使用理智药"
+            
+        elif drug_type == 'semen':
+            # 使用精力剂（ID=11）
+            if pl_data.item.get(11, 0) <= 0:
+                return jsonify({"success": False, "message": "没有精力剂"})
+            
+            # 调用使用精力剂函数
+            use_drug(11)
+            message = "已使用精力剂"
+        
+        # 获取更新后的玩家信息
+        from Script.UI.Panel.web_components.status_panel import StatusPanel
+        status_panel = StatusPanel()
+        updated_player_info = status_panel.get_player_info()
+        
+        logging.info(f"快速使用药剂成功: {drug_type}")
+        return jsonify({
+            "success": True, 
+            "message": message,
+            "player_info": updated_player_info
+        })
+    
+    except Exception as e:
+        logging.error(f"使用药剂失败: {str(e)}")
+        return jsonify({"success": False, "message": f"使用失败: {str(e)}"})
+
+@app.route('/api/toggle_cloth', methods=['POST'])
+def toggle_cloth():
+    """
+    切换衣服穿脱状态
+    
+    参数：cloth_id - 衣服ID, cloth_type - 衣服类型, is_worn - 当前是否穿着
+    
+    返回值类型：JSON
+    功能描述：切换指定衣服的穿脱状态
+    """
+    from Script.Core import cache_control
+    from Script.Design import handle_premise
+    cache = cache_control.cache
+    
+    data = request.json or {}
+    cloth_id = data.get('cloth_id')
+    cloth_type = data.get('cloth_type')
+    is_worn = data.get('is_worn')
+    
+    if cloth_id is None or cloth_type is None:
+        return jsonify({"success": False, "error": "缺少参数"})
+    
+    try:
+        cloth_id = int(cloth_id)
+        cloth_type = int(cloth_type)
+        
+        pl_data = cache.character_data.get(0)
+        if not pl_data:
+            return jsonify({"success": False, "error": "玩家数据不存在"})
+        
+        target_id = pl_data.target_character_id
+        target_data = cache.character_data.get(target_id)
+        if not target_data:
+            return jsonify({"success": False, "error": "目标角色数据不存在"})
+        
+        # 切换穿脱状态
+        if is_worn:
+            # 当前穿着，需要脱下
+            if cloth_id in target_data.cloth.cloth_wear[cloth_type]:
+                target_data.cloth.cloth_wear[cloth_type].remove(cloth_id)
+                target_data.cloth.cloth_off[cloth_type].append(cloth_id)
+        else:
+            # 当前脱下，需要穿上
+            if cloth_id in target_data.cloth.cloth_off[cloth_type]:
+                target_data.cloth.cloth_off[cloth_type].remove(cloth_id)
+                target_data.cloth.cloth_wear[cloth_type].append(cloth_id)
+        
+        # 更新异常标记
+        handle_premise.settle_chara_unnormal_flag(target_id, 4)
+        
+        logging.info(f"切换衣服 {cloth_id} 类型 {cloth_type} 穿脱状态")
+        return jsonify({"success": True})
+    
+    except Exception as e:
+        logging.error(f"切换衣服状态失败: {e}")
+        return jsonify({"success": False, "error": str(e)})
 
 @app.route('/api/get_image_paths')
 def get_image_paths():
@@ -396,12 +627,13 @@ def handle_connect():
     功能描述：处理WebSocket客户端连接事件
     """
     logging.info("客户端已连接")
-    # 连接后立即发送当前状态
+    # 连接后立即发送当前完整游戏状态
     try:
-        with state_lock:
-            socketio.emit('game_state_update', game_state)
+        send_full_game_state()
     except Exception as e:
         logging.error(f"发送初始游戏状态失败: {str(e)}")
+        import traceback
+        traceback.print_exc()
 
 @socketio.on('disconnect')
 def handle_disconnect():
@@ -414,6 +646,906 @@ def handle_disconnect():
     功能描述：处理WebSocket客户端断开连接事件
     """
     logging.info("客户端已断开连接")
+
+@socketio.on('refresh_state')
+def handle_refresh_state(data=None):
+    """
+    处理刷新游戏状态请求事件
+    
+    参数：
+    data (dict): 可选的请求参数
+    
+    返回值类型：无
+    功能描述：刷新并发送完整的游戏状态到客户端
+    """
+    logging.info("收到刷新状态请求")
+    try:
+        send_full_game_state()
+    except Exception as e:
+        logging.error(f"刷新游戏状态失败: {str(e)}")
+        import traceback
+        traceback.print_exc()
+
+@socketio.on('request_game_state')
+def handle_request_game_state(data=None):
+    """
+    处理游戏状态请求事件（Web新UI）
+    
+    参数：
+    data (dict): 可选的请求参数
+    
+    返回值类型：无
+    功能描述：发送完整的游戏状态到客户端
+    """
+    logging.info("收到游戏状态请求")
+    try:
+        send_full_game_state()
+    except Exception as e:
+        logging.error(f"处理游戏状态请求失败: {str(e)}")
+        import traceback
+        traceback.print_exc()
+
+# ========== Web模式专用的新SocketIO事件处理器 ==========
+
+@socketio.on('select_interaction_type')
+def handle_select_interaction_type(data):
+    """
+    处理交互类型选择事件（Web新UI）
+    
+    参数：
+    data (dict): 包含 type_id 的字典
+    
+    返回值类型：无
+    功能描述：接收前端的交互类型选择，更新游戏状态并返回可用的部位列表和指令列表
+    """
+    from Script.System.Instruct_System import instruct_meta
+    from Script.System.Instruct_System.instruct_category import BODY_PART_NAMES
+    
+    type_id = data.get('type_id')
+    logging.info(f"选择交互类型: {type_id}")
+    
+    # 获取该交互类型下的所有指令
+    instructs = instruct_meta.get_instructs_by_interaction_type_from_constant(type_id)
+    
+    # 获取该交互类型涉及的所有身体部位
+    body_parts = instruct_meta.get_body_parts_for_interaction_type_from_constant(type_id)
+    
+    # 构建返回数据
+    instruct_list = []
+    for instruct_id in instructs:
+        info = instruct_meta.get_web_instruct_info(instruct_id)
+        if info:
+            instruct_list.append({
+                'id': instruct_id,
+                'name': info['name'],
+                'body_parts': info['body_parts'],
+                'single_part': info['is_single_part'],
+            })
+    
+    # 构建部位数据（包含中文名）
+    body_parts_data = []
+    for part in body_parts:
+        body_parts_data.append({
+            'id': part,
+            'name': BODY_PART_NAMES.get(part, part),
+        })
+    
+    # 更新缓存中的当前交互类型
+    cache.current_interaction_type = type_id
+    
+    socketio.emit('interaction_type_selected', {
+        'type_id': type_id,
+        'available_body_parts': body_parts_data,
+        'available_instructs': instruct_list,
+    })
+
+@socketio.on('click_body_part')
+def handle_click_body_part(data):
+    """
+    处理身体部位点击事件（Web新UI）
+    
+    参数：
+    data (dict): 包含 part_name 的字典
+    
+    返回值类型：无
+    功能描述：接收前端的部位点击，返回该部位可执行的指令列表
+              如果点击的是臀部，则展开子部位菜单
+    """
+    from Script.System.Instruct_System import instruct_meta
+    from Script.System.Instruct_System.instruct_category import (
+        BODY_PART_NAMES, 
+        BodyPart, 
+        HIP_SUB_PARTS
+    )
+    from Script.Design import web_interaction_manager
+    
+    part_name = data.get('part_name')
+    logging.info(f"点击身体部位: {part_name}")
+    
+    # 检查是否是臀部点击 - 展开子菜单
+    if part_name == BodyPart.HIP or part_name == "臀部":
+        # 返回臀部子部位列表供前端展示
+        sub_parts = []
+        for sub_part in HIP_SUB_PARTS:
+            sub_parts.append({
+                'part_id': sub_part,
+                'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
+            })
+        
+        socketio.emit('hip_sub_menu', {
+            'part_name': part_name,
+            'part_name_cn': BODY_PART_NAMES.get(BodyPart.HIP, "臀部"),
+            'sub_parts': sub_parts,
+        })
+        return
+    
+    # 获取当前选中的交互小类
+    current_minor_type = web_interaction_manager.get_current_minor_type()
+    
+    # 将中文部位名转换为英文（用于与指令的body_parts匹配）
+    # 反向查找：从中文名查找英文id
+    part_name_en = part_name  # 默认使用原始值
+    for en_name, cn_name in BODY_PART_NAMES.items():
+        if cn_name == part_name or en_name == part_name:
+            part_name_en = en_name
+            break
+    # 处理左右部位的情况（如"左手部"“右耳部"等）
+    if part_name_en == part_name:  # 没有找到直接匹配
+        # 尝试去除"左"/"右"前缀后再匹配
+        cleaned_name = part_name.replace('左', '').replace('右', '')
+        for en_name, cn_name in BODY_PART_NAMES.items():
+            if cn_name == cleaned_name:
+                part_name_en = en_name
+                break
+    
+    logging.info(f"部位名转换: {part_name} -> {part_name_en}, 当前小类: {current_minor_type}")
+    
+    # 获取该部位可执行的指令列表
+    if current_minor_type is not None:
+        # 如果选择了小类，使用web_interaction_manager过滤
+        instructs = web_interaction_manager.get_instructs_by_body_part(
+            part_name_en, 
+            minor_type=current_minor_type,
+            check_premise=False
+        )
+    else:
+        # 未选择小类，返回该部位的所有指令
+        instructs = instruct_meta.get_instructs_by_body_part_from_constant(part_name_en)
+    
+    # 构建返回数据
+    instruct_list = []
+    for instruct_id in instructs:
+        info = instruct_meta.get_web_instruct_info(instruct_id)
+        if info:
+            instruct_list.append({
+                'id': instruct_id,
+                'name': info['name'],
+            })
+    
+    # 获取部位中文名
+    part_name_cn = BODY_PART_NAMES.get(part_name, part_name)
+    
+    socketio.emit('body_part_clicked', {
+        'part_name': part_name,
+        'part_name_cn': part_name_cn,
+        'available_instructs': instruct_list,
+        'single_instruct': len(instruct_list) == 1,
+    })
+
+# 刷新信号常量，与 in_scene_panel_web.py 中的 WEB_REFRESH_SIGNAL 保持一致
+WEB_REFRESH_SIGNAL = "__WEB_REFRESH__"
+
+@socketio.on('execute_instruct')
+def handle_execute_instruct(data):
+    """
+    处理指令执行事件（Web新UI）
+    
+    参数：
+    data (dict): 包含 instruct_id 的字典
+    
+    返回值类型：无
+    功能描述：接收前端的指令执行请求，执行指令并触发结算流程，
+              完成后设置刷新信号以通知主面板循环刷新数据
+    """
+    global button_click_response
+    
+    from Script.System.Instruct_System import handle_instruct as instruct_handler
+    from Script.Core import constant
+    
+    instruct_id = data.get('instruct_id')
+    logging.info(f"执行指令: {instruct_id}")
+    
+    try:
+        # 检查指令是否存在
+        if instruct_id not in constant.handle_instruct_data:
+            socketio.emit('instruct_executed', {
+                'instruct_id': instruct_id,
+                'success': False,
+                'error': '指令不存在'
+            })
+            return
+        
+        # 执行指令
+        instruct_handler.handle_instruct(instruct_id)
+        
+        # 设置刷新信号，通知主面板循环刷新数据
+        # 这会唤醒 askfor_all 并让主循环进入下一次迭代，重新收集并发送最新数据
+        with state_lock:
+            button_click_response = WEB_REFRESH_SIGNAL
+        
+        socketio.emit('instruct_executed', {
+            'instruct_id': instruct_id,
+            'success': True
+        })
+        
+    except Exception as e:
+        logging.error(f"执行指令失败: {e}")
+        socketio.emit('instruct_executed', {
+            'instruct_id': instruct_id,
+            'success': False,
+            'error': str(e)
+        })
+
+@socketio.on('switch_target')
+def handle_switch_target(data):
+    """
+    处理切换交互对象事件（Web新UI）
+    
+    参数：
+    data (dict): 包含 character_id 的字典
+    
+    返回值类型：无
+    功能描述：接收前端的切换交互对象请求，更新玩家的交互对象，并触发UI刷新
+    """
+    character_id = data.get('character_id')
+    logging.info(f"切换交互对象: {character_id}")
+    
+    try:
+        # 获取玩家角色数据
+        pl_character_data = cache.character_data[0]
+        
+        # 检查目标角色是否存在
+        if character_id not in cache.character_data:
+            socketio.emit('target_switched', {
+                'character_id': character_id,
+                'success': False,
+                'error': '角色不存在'
+            })
+            return
+        
+        # 更新交互对象
+        pl_character_data.target_character_id = character_id
+        
+        # 获取目标角色信息用于返回
+        target_data = cache.character_data[character_id]
+        
+        # 发送切换成功事件
+        socketio.emit('target_switched', {
+            'character_id': character_id,
+            'character_name': target_data.name,
+            'success': True
+        })
+        
+        # 标记需要刷新状态（让前端知道需要重新渲染）
+        # 设置一个标志让 InScenePanelWeb 知道需要发送完整状态
+        cache.web_need_full_refresh = True
+        
+    except Exception as e:
+        logging.error(f"切换交互对象失败: {e}")
+        socketio.emit('target_switched', {
+            'character_id': character_id,
+            'success': False,
+            'error': str(e)
+        })
+
+@socketio.on('click_panel_tab')
+def handle_click_panel_tab(data):
+    """
+    处理面板选项卡点击事件（Web新UI）
+    
+    参数：
+    data (dict): 包含 tab_id (即 instruct_id) 的字典
+    
+    返回值类型：无
+    功能描述：接收前端的面板选项卡点击，执行对应的面板类指令
+    """
+    from Script.System.Instruct_System import handle_instruct as instruct_handler
+    from Script.Core import constant
+    
+    tab_id = data.get('tab_id')
+    logging.info(f"点击面板选项卡: {tab_id}")
+    
+    try:
+        # tab_id 就是指令ID
+        instruct_id = tab_id
+        
+        # 检查指令是否存在
+        if instruct_id not in constant.handle_instruct_data:
+            socketio.emit('panel_tab_clicked', {
+                'tab_id': tab_id,
+                'success': False,
+                'error': '指令不存在'
+            })
+            return
+        
+        # 执行面板类指令
+        instruct_handler.handle_instruct(instruct_id)
+        
+        socketio.emit('panel_tab_clicked', {
+            'tab_id': tab_id,
+            'success': True
+        })
+        
+    except Exception as e:
+        logging.error(f"执行面板指令失败: {e}")
+        socketio.emit('panel_tab_clicked', {
+            'tab_id': tab_id,
+            'success': False,
+            'error': str(e)
+        })
+
+@socketio.on('get_interaction_types')
+def handle_get_interaction_types(data):
+    """
+    获取可用的交互类型列表（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回所有可用的交互类型列表供前端显示
+    """
+    from Script.System.Instruct_System import instruct_meta
+    
+    logging.info("获取交互类型列表")
+    
+    try:
+        # 获取所有可用的交互类型
+        interaction_types = instruct_meta.get_available_interaction_types_from_constant()
+        
+        socketio.emit('interaction_types_list', {
+            'types': interaction_types,
+            'success': True
+        })
+        
+    except Exception as e:
+        logging.error(f"获取交互类型列表失败: {e}")
+        socketio.emit('interaction_types_list', {
+            'types': [],
+            'success': False,
+            'error': str(e)
+        })
+
+@socketio.on('get_panel_instructs')
+def handle_get_panel_instructs(data):
+    """
+    获取面板类指令列表（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回所有面板类指令供顶部选项卡栏显示
+    """
+    from Script.System.Instruct_System import instruct_meta
+    from Script.Core import constant
+    
+    logging.info("获取面板类指令列表")
+    
+    try:
+        # 获取所有面板类指令
+        panel_instructs = instruct_meta.get_panel_instructs_from_constant()
+        
+        # 构建返回数据
+        instruct_list = []
+        for instruct_id in panel_instructs:
+            name = constant.handle_instruct_name_data.get(instruct_id, f"指令{instruct_id}")
+            instruct_list.append({
+                'id': instruct_id,
+                'name': name,
+            })
+        
+        socketio.emit('panel_instructs_list', {
+            'instructs': instruct_list,
+            'success': True
+        })
+        
+    except Exception as e:
+        logging.error(f"获取面板类指令列表失败: {e}")
+        socketio.emit('panel_instructs_list', {
+            'instructs': [],
+            'success': False,
+            'error': str(e)
+        })
+
+# ========== Web模式新交互类型系统API（大类/小类） ==========
+
+@socketio.on('get_major_types')
+def handle_get_major_types(data):
+    """
+    获取可用的交互大类型列表（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回所有可用的大类型列表（嘴/手/阴茎/道具/其他）
+    """
+    from Script.Design import web_interaction_manager
+    
+    logging.info("获取交互大类型列表")
+    
+    try:
+        major_types = web_interaction_manager.get_available_major_types()
+        
+        socketio.emit('major_types_list', {
+            'types': major_types,
+            'current_major_type': cache.web_current_major_type,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"获取大类型列表失败: {e}")
+        socketio.emit('major_types_list', {
+            'types': [],
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('select_major_type')
+def handle_select_major_type(data):
+    """
+    选择交互大类型（Web新UI）
+    
+    参数：
+    data (dict): 包含 major_type_id 的字典
+    
+    返回值类型：无
+    功能描述：选择大类型，返回该大类下的小类型列表，并恢复之前记忆的小类选择
+    """
+    from Script.Design import web_interaction_manager
+    from Script.Core import constant
+    
+    major_type_id = data.get('major_type_id')
+    # major_type_id 现在是字符串类型（如 'mouth', 'hand', 'arts', 'stop' 等）
+    logging.info(f"选择交互大类型: {major_type_id}")
+    
+    try:
+        # 选择大类型，返回记忆的小类型
+        remembered_minor = web_interaction_manager.select_major_type(major_type_id)
+        
+        # 获取该大类下的小类型列表
+        minor_types = web_interaction_manager.get_available_minor_types(major_type_id)
+        
+        logging.info(f"大类型 {major_type_id} 对应的小类型列表: {minor_types}")
+        
+        socketio.emit('major_type_selected', {
+            'major_type_id': major_type_id,
+            'major_type_name': constant.get_major_type_name(major_type_id),
+            'minor_types': minor_types,
+            'remembered_minor_type': remembered_minor,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"选择大类型失败: {e}")
+        socketio.emit('major_type_selected', {
+            'major_type_id': major_type_id,
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('select_minor_type')
+def handle_select_minor_type(data):
+    """
+    选择交互小类型（Web新UI）
+    
+    参数：
+    data (dict): 包含 minor_type_id 的字典
+    
+    返回值类型：无
+    功能描述：选择小类型，返回该小类型下可用的指令列表
+    """
+    from Script.Design import web_interaction_manager
+    from Script.Core import constant
+    
+    minor_type_id = data.get('minor_type_id')
+    # minor_type_id 现在是字符串类型（如 'mouth_talk', 'hand_touch', 'arts_hypnosis' 等）
+    logging.info(f"选择交互小类型: {minor_type_id}")
+    
+    try:
+        # 选择小类型
+        web_interaction_manager.select_minor_type(minor_type_id)
+        
+        # 获取该小类型下可用的指令列表
+        instructs = web_interaction_manager.get_instructs_by_minor_type(minor_type_id)
+        
+        # 构建指令信息列表
+        instruct_list = []
+        for instruct_id in instructs:
+            name = constant.handle_instruct_name_data.get(instruct_id, f"指令{instruct_id}")
+            body_parts = constant.instruct_body_parts_data.get(instruct_id, [])
+            instruct_list.append({
+                'id': instruct_id,
+                'name': name,
+                'body_parts': body_parts,
+            })
+        
+        socketio.emit('minor_type_selected', {
+            'minor_type_id': minor_type_id,
+            'minor_type_name': constant.get_minor_type_name(minor_type_id),
+            'instructs': instruct_list,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"选择小类型失败: {e}")
+        socketio.emit('minor_type_selected', {
+            'minor_type_id': minor_type_id,
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('clear_interaction_selection')
+def handle_clear_interaction_selection(data):
+    """
+    清空交互类型选择（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：清空当前选择的大类和小类
+    """
+    from Script.Design import web_interaction_manager
+    
+    logging.info("清空交互类型选择")
+    
+    try:
+        # 清空选择
+        web_interaction_manager.clear_selection()
+        
+        socketio.emit('interaction_selection_cleared', {
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"清空交互选择失败: {e}")
+        socketio.emit('interaction_selection_cleared', {
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('get_drug_list')
+def handle_get_drug_list(data):
+    """
+    获取药物列表（Web新UI - 道具大类专用）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回可用的药物列表
+    """
+    from Script.Design import web_interaction_manager
+    
+    logging.info("获取药物列表")
+    
+    try:
+        drug_list = web_interaction_manager.get_drug_list()
+        
+        socketio.emit('drug_list', {
+            'drugs': drug_list,
+            'selected_drug_id': cache.web_selected_drug_id,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"获取药物列表失败: {e}")
+        socketio.emit('drug_list', {
+            'drugs': [],
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('get_item_list')
+def handle_get_item_list(data):
+    """
+    获取道具列表（Web新UI - 道具大类专用）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回可用的道具列表
+    """
+    from Script.Design import web_interaction_manager
+    
+    logging.info("获取道具列表")
+    
+    try:
+        item_list = web_interaction_manager.get_item_list()
+        
+        socketio.emit('item_list', {
+            'items': item_list,
+            'selected_item_id': cache.web_selected_item_id,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"获取道具列表失败: {e}")
+        socketio.emit('item_list', {
+            'items': [],
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('select_drug')
+def handle_select_drug(data):
+    """
+    选择药物（Web新UI - 道具大类专用）
+    
+    参数：
+    data (dict): 包含 drug_id 的字典
+    
+    返回值类型：无
+    功能描述：选择要使用的药物
+    """
+    from Script.Design import web_interaction_manager
+    
+    drug_id = data.get('drug_id')
+    logging.info(f"选择药物: {drug_id}")
+    
+    try:
+        web_interaction_manager.select_drug(drug_id)
+        
+        socketio.emit('drug_selected', {
+            'drug_id': drug_id,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"选择药物失败: {e}")
+        socketio.emit('drug_selected', {
+            'drug_id': drug_id,
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('select_item')
+def handle_select_item(data):
+    """
+    选择道具（Web新UI - 道具大类专用）
+    
+    参数：
+    data (dict): 包含 item_id 的字典
+    
+    返回值类型：无
+    功能描述：选择要使用的道具
+    """
+    from Script.Design import web_interaction_manager
+    
+    item_id = data.get('item_id')
+    logging.info(f"选择道具: {item_id}")
+    
+    try:
+        web_interaction_manager.select_item(item_id)
+        
+        socketio.emit('item_selected', {
+            'item_id': item_id,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"选择道具失败: {e}")
+        socketio.emit('item_selected', {
+            'item_id': item_id,
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('get_interaction_state')
+def handle_get_interaction_state(data):
+    """
+    获取当前交互状态（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回当前的交互状态，包括大类/小类选择、药物/道具选择等
+    """
+    from Script.Design import web_interaction_manager
+    
+    logging.info("获取交互状态")
+    
+    try:
+        state = web_interaction_manager.get_interaction_state()
+        
+        socketio.emit('interaction_state', {
+            'state': state,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"获取交互状态失败: {e}")
+        socketio.emit('interaction_state', {
+            'state': {},
+            'success': False,
+            'error': str(e)
+        })
+
+# ========== 结束：Web模式新交互类型系统API ==========
+
+@socketio.on('advance_dialog')
+def handle_advance_dialog(data):
+    """
+    处理对话推进事件（Web新UI）
+    
+    参数：
+    data (dict): 可包含 skip 参数表示是否跳过当前角色对话
+    
+    返回值类型：无
+    功能描述：推进对话文本显示，返回当前对话状态
+    """
+    skip = data.get('skip', False)
+    logging.info(f"推进对话, 跳过={skip}")
+    
+    try:
+        # 使用新的dialog_box模块处理对话
+        from Script.UI.Panel.web_components.dialog_box import (
+            advance_dialog, skip_all_dialogs, get_dialog_state
+        )
+        
+        if skip:
+            skip_all_dialogs()
+            has_more = False
+        else:
+            has_more = advance_dialog()
+        
+        # 获取当前对话状态
+        dialog_state = get_dialog_state()
+        
+        socketio.emit('dialog_advanced', {
+            'success': True,
+            'has_more': has_more,
+            'dialog': dialog_state
+        })
+    except Exception as e:
+        logging.error(f"推进对话时出错: {str(e)}")
+        socketio.emit('dialog_advanced', {
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('skip_all_dialogs')
+def handle_skip_all_dialogs(data):
+    """
+    跳过所有剩余对话（Web新UI）
+    
+    参数：
+    data (dict): 请求参数（可选）
+    
+    返回值类型：无
+    功能描述：清空对话队列并隐藏对话框
+    """
+    logging.info("跳过所有对话")
+    
+    try:
+        from Script.UI.Panel.web_components.dialog_box import (
+            skip_all_dialogs, get_dialog_state
+        )
+        
+        skip_all_dialogs()
+        dialog_state = get_dialog_state()
+        
+        socketio.emit('dialogs_skipped', {
+            'success': True,
+            'dialog': dialog_state
+        })
+    except Exception as e:
+        logging.error(f"跳过对话时出错: {str(e)}")
+        socketio.emit('dialogs_skipped', {
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('get_settlement_state')
+def handle_get_settlement_state(data):
+    """
+    获取当前结算状态（Web新UI）
+    
+    参数：
+    data (dict): 请求参数（可选）
+    
+    返回值类型：无
+    功能描述：返回当前结算阶段的完整状态信息
+    """
+    try:
+        manager = get_settlement_manager()
+        state = manager.get_state()
+        
+        socketio.emit('settlement_state', {
+            'success': True,
+            'settlement_state': state
+        })
+    except Exception as e:
+        logging.error(f"获取结算状态时出错: {str(e)}")
+        socketio.emit('settlement_state', {
+            'success': False,
+            'error': str(e)
+        })
+
+
+@socketio.on('get_character_dialog')
+def handle_get_character_dialog(data):
+    """
+    获取指定角色的完整对话（Web新UI）
+    
+    参数：
+    data (dict): 包含 character_id 参数
+    
+    返回值类型：无
+    功能描述：当点击场景中其他角色头像时，返回该角色的完整对话文本
+    """
+    character_id = data.get('character_id')
+    
+    if character_id is None:
+        socketio.emit('character_dialog', {
+            'success': False,
+            'error': '缺少 character_id 参数'
+        })
+        return
+    
+    try:
+        manager = get_settlement_manager()
+        full_text = manager.get_full_dialog(character_id)
+        
+        # 获取角色名称
+        char_name = ""
+        if character_id in cache.character_data:
+            char_name = cache.character_data[character_id].name
+        
+        socketio.emit('character_dialog', {
+            'success': True,
+            'character_id': character_id,
+            'character_name': char_name,
+            'dialog_text': full_text,
+            'has_dialog': full_text is not None
+        })
+    except Exception as e:
+        logging.error(f"获取角色对话时出错: {str(e)}")
+        socketio.emit('character_dialog', {
+            'success': False,
+            'error': str(e)
+        })
+
+
+def push_game_state(state_data: dict, diff_only: bool = True):
+    """
+    推送游戏状态到前端（Web新UI专用）
+    
+    参数：
+    state_data (dict): 游戏状态数据
+    diff_only (bool): 是否仅推送差异数据，默认True
+    
+    返回值类型：无
+    功能描述：向所有连接的Web客户端推送游戏状态更新
+    """
+    try:
+        with state_lock:
+            if diff_only:
+                # 推送差异数据
+                socketio.emit('game_state_diff', state_data)
+            else:
+                # 推送完整状态
+                socketio.emit('game_state_full', state_data)
+        logging.debug(f"推送游戏状态: diff_only={diff_only}, 数据大小={len(str(state_data))}")
+    except Exception as e:
+        logging.error(f"推送游戏状态失败: {str(e)}")
+
+# ========== 原有代码继续 ==========
 
 @app.errorhandler(Exception)
 def handle_exception(e):
@@ -609,6 +1741,99 @@ def update_game_state(elements, panel_id=None):
     # 日志记录，辅助调试
     logging.debug(f"游戏状态已更新: {len(elements) if elements else 0} 个元素")
 
+def send_full_game_state():
+    """
+    发送完整的游戏状态到前端（包含新UI所需的所有数据）
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：构建并发送包含玩家信息、交互对象、场景角色、面板选项卡等完整数据的游戏状态
+    """
+    try:
+        # 导入必要的模块
+        from Script.Design import web_interaction_manager
+        from Script.System.Instruct_System import instruct_meta
+        
+        # 构建完整游戏状态
+        full_state = {}
+        
+        # 基础状态（旧API兼容）
+        with state_lock:
+            full_state["text_content"] = game_state.get("text_content", [])
+            full_state["buttons"] = game_state.get("buttons", [])
+            full_state["panel_id"] = game_state.get("panel_id")
+            full_state["skip_wait"] = game_state.get("skip_wait", False)
+        
+        # 玩家信息
+        if hasattr(cache, 'character_data') and 0 in cache.character_data:
+            player_data = cache.character_data[0]
+            full_state["player_info"] = {
+                "name": player_data.name,
+                "nickname": getattr(player_data, 'nick_name', ''),
+                "hp": getattr(player_data, 'hit_point', 0),
+                "hp_max": getattr(player_data, 'hit_point_max', 100),
+                "mp": getattr(player_data, 'mana_point', 0),
+                "mp_max": getattr(player_data, 'mana_point_max', 100),
+                "sanity": getattr(player_data, 'sanity_point', 0),
+                "sanity_max": getattr(player_data, 'sanity_point_max', 100),
+            }
+        
+        # 交互对象信息 - 使用 StatusPanel 获取完整信息
+        from Script.UI.Panel.web_components.status_panel import StatusPanel
+        status_panel = StatusPanel()
+        target_id = -1
+        if hasattr(cache, 'character_data') and 0 in cache.character_data:
+            player_data_for_target = cache.character_data[0]
+            target_id = getattr(player_data_for_target, 'target_character_id', -1)
+        
+        if target_id >= 0 and target_id in cache.character_data:
+            full_state["target_info"] = status_panel.get_target_info(target_id)
+        
+        # 场景信息
+        if hasattr(cache, 'now_panel_id'):
+            full_state["current_panel_id"] = cache.now_panel_id
+        
+        # 可用交互大类
+        full_state["interaction_major_types"] = web_interaction_manager.get_available_major_types()
+        
+        # 当前选中的大类和小类
+        current_major = web_interaction_manager.get_current_major_type()
+        current_minor = web_interaction_manager.get_current_minor_type()
+        full_state["current_major_type"] = current_major
+        full_state["current_minor_type"] = current_minor
+        
+        # 如果有选中的大类，获取其小类列表
+        if current_major is not None:
+            full_state["interaction_minor_types"] = web_interaction_manager.get_available_minor_types(current_major)
+        
+        # 面板选项卡（系统面板类指令）
+        panel_instructs = instruct_meta.get_system_panel_instructs()
+        full_state["panel_tabs"] = [
+            {
+                "instruct_id": iid,
+                "name": constant.handle_instruct_name_data.get(iid, ""),
+                "active": cache.now_panel_id == constant.instruct_panel_id_data.get(iid)
+            }
+            for iid in panel_instructs
+            if iid in constant.instruct_panel_id_data
+        ]
+        
+        # 对话框状态
+        from Script.UI.Panel.web_components.dialog_box import get_dialog_state
+        full_state["dialog"] = get_dialog_state()
+        
+        logging.debug(f"发送完整游戏状态: {len(full_state)} 个字段")
+        socketio.emit('game_state_update', full_state)
+        
+    except Exception as e:
+        logging.error(f"构建完整游戏状态失败: {str(e)}")
+        import traceback
+        traceback.print_exc()
+        # 至少发送基础状态
+        with state_lock:
+            socketio.emit('game_state_update', game_state)
+
 def _emit_game_state_update():
     """
     发送游戏状态更新到前端
@@ -621,6 +1846,13 @@ def _emit_game_state_update():
     # 创建一个本地副本，避免长时间持有锁
     with state_lock:
         local_state = game_state.copy()
+    
+    # 添加对话框状态
+    try:
+        from Script.UI.Panel.web_components.dialog_box import get_dialog_state
+        local_state["dialog"] = get_dialog_state()
+    except Exception as e:
+        logging.warning(f"获取对话框状态失败: {e}")
     
     try:
         # 在一个单独的线程中发送，避免阻塞主线程

@@ -1,6 +1,7 @@
 from types import FunctionType
+from Script.System.Instruct_System import see_instruct_panel
 from Script.UI.Moudle import draw, panel
-from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, see_instruct_panel, chara_image_list_panel, character_info_head
+from Script.UI.Panel import game_info_panel, see_character_info_panel, dirty_panel, cloth_panel, chara_image_list_panel, character_info_head
 from Script.Core import (
     get_text,
     cache_control,

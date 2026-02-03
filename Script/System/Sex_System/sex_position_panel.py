@@ -142,7 +142,7 @@ class Sex_Position_Panel:
 
     def select_sex_position(self, sex_position_id):
         """结算选择的性交体位"""
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
         sex_position_data = game_config.config_sex_position_data[sex_position_id]
         character_data: game_type.Character = cache.character_data[0]
         if self.change_position:

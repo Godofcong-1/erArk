@@ -49,7 +49,7 @@ def title_panel():
     if now_key == now_list[0]:
         cache.now_panel_id = constant.Panel.CREATOR_CHARACTER
     elif now_key == now_list[1]:
-        now_panel = see_save_info_panel.SeeSaveListPanel(width, 0)
+        now_panel = see_save_info_panel.SeeSaveListPanel(width, False)
         now_panel.draw()
     elif now_key == now_list[2]:
         now_panel = system_setting.Game_Basic_Settings_Panel(width)

@@ -184,7 +184,7 @@ class Gift_Panel:
 
     def select_gift(self, gift_id):
         """礼物的确认选择"""
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
         character_data: game_type.Character = cache.character_data[0]
         gift_data = game_config.config_gift_items[gift_id]
 

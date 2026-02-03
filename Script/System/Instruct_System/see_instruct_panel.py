@@ -1,5 +1,6 @@
 from typing import List
 from types import FunctionType
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Moudle import draw, panel
 from Script.Core import (
     get_text,
@@ -10,7 +11,7 @@ from Script.Core import (
     constant,
     py_cmd,
 )
-from Script.Design import handle_instruct, handle_premise, talk
+from Script.Design import handle_premise, talk
 from Script.Config import game_config
 import time
 
@@ -210,7 +211,8 @@ class SeeInstructPanel:
                         filter_judge, now_premise_data = judge_single_instruct_filter(instruct, now_premise_data, now_type)
                     if filter_judge:
                         now_instruct_list.append(instruct)
-        now_instruct_list.sort()
+        # 按照数字 cid 排序，而不是字符串 instruct_id
+        now_instruct_list.sort(key=lambda x: constant.instruct_id_to_cid.get(x, 999))
         instruct_group = value_handle.list_of_groups(now_instruct_list, SINGLE_LINE_INSTRUCT_NUM)
         now_draw_list = []
         system_draw_list = []
@@ -218,11 +220,13 @@ class SeeInstructPanel:
         for instruct_list in instruct_group:
             for instruct_id in instruct_list:
                 instruct_name = constant.handle_instruct_name_data[instruct_id]
-                id_text = text_handle.id_index(instruct_id)
+                # 使用数字 cid 显示
+                cid = constant.instruct_id_to_cid.get(instruct_id, 0)
+                id_text = text_handle.id_index(cid)
                 now_text = f"{id_text}{instruct_name}"
                 now_draw = draw.LeftButton(
                     now_text,
-                    str(instruct_id),
+                    str(cid),  # 返回值使用数字 cid
                     int(self.width / SINGLE_LINE_INSTRUCT_NUM),
                     cmd_func=self.handle_instruct,
                     args=(instruct_id,),
@@ -308,13 +312,24 @@ class SeeInstructPanel:
             if now_type == constant.InstructType.ARTS:
                 cache.instruct_sex_type_filter[constant.SexInstructSubType.ARTS] = cache.instruct_type_filter[now_type]
 
-    def handle_instruct(self, instruct_id: int):
+    def handle_instruct(self, instruct_id_or_cid):
         """
         处理玩家操作指令
         Keyword arguments:
-        instruct_id -- 指令id
+        instruct_id_or_cid -- 指令id（字符串）或数字cid（字符串形式）
         """
         py_cmd.clr_cmd()
+        
+        # 如果输入的是数字 cid，转换为 instruct_id
+        if isinstance(instruct_id_or_cid, str) and instruct_id_or_cid.isdigit():
+            cid = int(instruct_id_or_cid)
+            instruct_id = constant.cid_to_instruct_id.get(cid)
+            if instruct_id is None:
+                # 如果找不到对应的 instruct_id，可能是旧的直接使用字符串ID的情况
+                instruct_id = instruct_id_or_cid
+        else:
+            instruct_id = instruct_id_or_cid
+        
         # 指令名称绘制
         instruct_name = constant.handle_instruct_name_data[instruct_id]
         now_draw_1 = draw.NormalDraw()

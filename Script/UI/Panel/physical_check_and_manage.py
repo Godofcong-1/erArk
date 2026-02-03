@@ -1,7 +1,8 @@
 from typing import List
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
-from Script.Design import handle_premise, handle_instruct, attr_calculation, game_time, attr_text
+from Script.Design import handle_premise, attr_calculation, game_time, attr_text
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 import random

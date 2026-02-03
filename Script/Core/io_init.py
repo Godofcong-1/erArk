@@ -327,6 +327,26 @@ def clear_screen():
         put_queue(json.dumps(json_str, ensure_ascii=False))
 
 
+def clear_screen_and_history():
+    """
+    清屏并清空历史记录（仅Web模式有效）
+    
+    参数：无
+    
+    返回值类型：无
+    功能描述：彻底清空显示界面和历史记录，用于进入主界面等需要完全清空屏幕的场景
+    """
+    # 检查是否在Web模式下
+    if WEB_MODE and web_io is not None:
+        # 使用Web版IO的clear_screen_and_history函数
+        web_io.clear_screen_and_history()
+    else:
+        # 非Web模式下与clear_screen相同
+        json_str = new_json()
+        json_str["clear_cmd"] = "true"
+        put_queue(json.dumps(json_str, ensure_ascii=False))
+
+
 def frame_style_def(
     style_name: str,
     foreground: str,

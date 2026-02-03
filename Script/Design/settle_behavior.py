@@ -3,8 +3,9 @@ import random
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, game_type, get_text, text_handle, rich_text
-from Script.Design import attr_text, attr_calculation, handle_premise, handle_instruct, talk, game_time, second_behavior
+from Script.Design import attr_text, attr_calculation, handle_premise, talk, game_time, second_behavior
 from Script.Config import game_config, normal_config
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Panel import hypnosis_panel
 
 cache: game_type.Cache = cache_control.cache
@@ -360,6 +361,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         # line.draw()
         # wait_draw = draw.WaitDraw()
         # wait_draw.draw()
+        
+        # 收集Web模式的数值变化数据
+        collect_web_value_changes(change_data, character_id)
+        
         return now_panel
 
 
@@ -854,4 +859,171 @@ def handle_comprehensive_value_effect(character_id: int, effect_all_value_list: 
         return 1
 
     return 0
+
+
+def collect_web_value_changes(change_data, character_id: int):
+    """
+    收集结算过程中的数值变化，用于Web模式的浮动文本显示
+    Keyword arguments:
+    change_data -- 状态变更信息记录对象（CharacterStatusChange 或 TargetChange）
+    character_id -- 角色id（0为玩家，其他为NPC）
+    """
+    import time
+    if not hasattr(cache, 'web_mode') or not cache.web_mode:
+        return
+    
+    # 确保列表存在，追加而非清空，由前端读取后清空对应角色的数据
+    if not hasattr(cache, 'web_value_changes') or cache.web_value_changes is None:
+        cache.web_value_changes = []
+    
+    timestamp = time.time()
+    
+    # 收集玩家自身的数值变化
+    if change_data.hit_point and round(change_data.hit_point, 2) != 0:
+        cache.web_value_changes.append({
+            'character_id': character_id,
+            'field': 'hit_point',
+            'field_name': _("体力"),
+            'value': int(change_data.hit_point),
+            'color': 'hp_point',
+            'timestamp': timestamp
+        })
+    if change_data.mana_point and round(change_data.mana_point, 2) != 0:
+        cache.web_value_changes.append({
+            'character_id': character_id,
+            'field': 'mana_point',
+            'field_name': _("气力"),
+            'value': int(change_data.mana_point),
+            'color': 'mp_point',
+            'timestamp': timestamp
+        })
+    if change_data.eja_point and round(change_data.eja_point, 2) != 0:
+        cache.web_value_changes.append({
+            'character_id': character_id,
+            'field': 'eja_point',
+            'field_name': _("射精欲"),
+            'value': int(change_data.eja_point),
+            'color': 'semen',
+            'timestamp': timestamp
+        })
+    if change_data.sanity_point and round(change_data.sanity_point, 2) != 0:
+        cache.web_value_changes.append({
+            'character_id': character_id,
+            'field': 'sanity_point',
+            'field_name': _("理智"),
+            'value': int(change_data.sanity_point),
+            'color': 'sanity',
+            'timestamp': timestamp
+        })
+    
+    # 收集状态变化
+    for status_id, status_value in change_data.status_data.items():
+        if status_value != 0:
+            state_name = game_config.config_character_state[status_id].name
+            # 快感类状态
+            if game_config.config_character_state[status_id].type == 0:
+                state_name += _("快感")
+            # 获取状态对应的颜色
+            state_color = rich_text.get_chara_state_rich_color(status_id)
+            cache.web_value_changes.append({
+                'character_id': character_id,
+                'field': f'status_{status_id}',
+                'field_name': state_name,
+                'value': int(status_value),
+                'color': state_color,
+                'timestamp': timestamp
+            })
+    
+    # 收集经验变化
+    for exp_id, exp_value in change_data.experience.items():
+        if exp_value != 0:
+            exp_name = game_config.config_experience[exp_id].name
+            cache.web_value_changes.append({
+                'character_id': character_id,
+                'field': f'experience_{exp_id}',
+                'field_name': exp_name,
+                'value': int(exp_value),
+                'color': 'medium_spring_green',
+                'timestamp': timestamp
+            })
+    
+    # 收集交互对象的数值变化
+    for target_character_id, target_change in change_data.target_change.items():
+        if target_change.hit_point and round(target_change.hit_point, 2) != 0:
+            cache.web_value_changes.append({
+                'character_id': target_character_id,
+                'field': 'hit_point',
+                'field_name': _("体力"),
+                'value': int(target_change.hit_point),
+                'color': 'hp_point',
+                'timestamp': timestamp
+            })
+        if target_change.mana_point and round(target_change.mana_point, 2) != 0:
+            cache.web_value_changes.append({
+                'character_id': target_character_id,
+                'field': 'mana_point',
+                'field_name': _("气力"),
+                'value': int(target_change.mana_point),
+                'color': 'mp_point',
+                'timestamp': timestamp
+            })
+        if target_change.favorability:
+            cache.web_value_changes.append({
+                'character_id': target_character_id,
+                'field': 'favorability',
+                'field_name': _("好感"),
+                'value': int(target_change.favorability),
+                'color': 'light_pink',
+                'timestamp': timestamp
+            })
+        if target_change.trust:
+            cache.web_value_changes.append({
+                'character_id': target_character_id,
+                'field': 'trust',
+                'field_name': _("信赖"),
+                'value': float(format(target_change.trust, '.2f')),
+                'color': 'summer_green',
+                'timestamp': timestamp
+            })
+        if target_change.hypnosis_degree:
+            # 获取催眠度对应的颜色
+            target_data = cache.character_data[target_character_id]
+            hypnosis_color = hypnosis_panel.get_hypnosis_degree_color(target_data.hypnosis.hypnosis_degree)
+            cache.web_value_changes.append({
+                'character_id': target_character_id,
+                'field': 'hypnosis_degree',
+                'field_name': _("催眠度"),
+                'value': float(format(target_change.hypnosis_degree, '.1f')),
+                'color': hypnosis_color,
+                'timestamp': timestamp
+            })
+        # 收集交互对象的状态变化
+        for status_id, status_value in target_change.status_data.items():
+            if status_value != 0:
+                state_name = game_config.config_character_state[status_id].name
+                if game_config.config_character_state[status_id].type == 0:
+                    state_name += _("快感")
+                # 获取状态对应的颜色
+                state_color = rich_text.get_chara_state_rich_color(status_id)
+                cache.web_value_changes.append({
+                    'character_id': target_character_id,
+                    'field': f'status_{status_id}',
+                    'field_name': state_name,
+                    'value': int(status_value),
+                    'color': state_color,
+                    'timestamp': timestamp
+                })
+        # 收集交互对象的经验变化
+        for exp_id, exp_value in target_change.experience.items():
+            if exp_value != 0:
+                exp_name = game_config.config_experience[exp_id].name
+                cache.web_value_changes.append({
+                    'character_id': target_character_id,
+                    'field': f'experience_{exp_id}',
+                    'field_name': exp_name,
+                    'value': int(exp_value),
+                    'color': 'medium_spring_green',
+                    'timestamp': timestamp
+                })
+
 

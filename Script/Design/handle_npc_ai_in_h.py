@@ -463,7 +463,7 @@ def npc_active_h():
     Return arguments:
     bool -- 0为失败，1为正常逆推
     """
-    from Script.UI.Panel import see_instruct_panel
+    from Script.System.Instruct_System import see_instruct_panel
 
     pl_character_data: game_type.Character = cache.character_data[0]
     target_character_id = pl_character_data.target_character_id

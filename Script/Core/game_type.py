@@ -1645,6 +1645,42 @@ class Cache:
         """ 当前返回的元素列表 """
         self.current_input_request: List = []
         """ 当前输入请求列表 """
+        # ========== Web新UI模式专用字段 ==========
+        self.current_interaction_type: Optional[str] = None
+        """ Web模式当前选中的交互类型（字符串标识符） """
+        self.web_game_state: dict = {}
+        """ Web模式游戏状态数据（用于增量更新） """
+        self.web_current_major_type: Optional[str] = None
+        """ Web模式当前选中的大类型（'mouth'/'hand'/'penis'/'tool'/'arts'/'stop'/'other'） """
+        self.web_current_minor_type: Optional[str] = None
+        """ Web模式当前选中的小类型（字符串标识符如'mouth_talk'/'hand_touch'等） """
+        self.web_major_type_memory: Dict[str, Optional[str]] = {}
+        """ Web模式大类切换记忆：记录每个大类最近选择的小类id，键为大类字符串id，值为小类字符串id """
+        self.web_selected_drug_id: Optional[int] = None
+        """ Web模式当前选中的药物id """
+        self.web_selected_item_id: Optional[int] = None
+        """ Web模式当前选中的道具id """
+        # ========== Web对话框相关字段 ==========
+        self.web_dialog_visible: bool = False
+        """ Web对话框是否可见 """
+        self.web_dialog_speaker: str = ""
+        """ Web对话框当前说话者名称 """
+        self.web_dialog_text: str = ""
+        """ Web对话框当前显示的文本 """
+        self.web_dialog_text_color: str = "standard"
+        """ Web对话框文本颜色样式 """
+        self.web_dialog_queue: List[dict] = []
+        """ Web对话框待显示的文本队列 """
+        self.web_dialog_wait_input: bool = False
+        """ Web对话框是否等待用户输入（点击推进） """
+        self.web_minor_dialog_queue: List[dict] = []
+        """ Web小对话框队列（其他角色的台词） """
+        self.web_need_full_refresh: bool = False
+        """ Web模式是否需要完整刷新（切换交互对象后设置为True） """
+        self.web_value_changes: List[dict] = []
+        """ Web模式数值变化列表，每个元素包含 character_id, field, value, timestamp """
+        # ==========================================
+        # ==========================================
         self.character_data: Dict[int, Character] = {}
         """ 角色对象数据缓存组 """
         self.npc_tem_data: List[NpcTem] = []

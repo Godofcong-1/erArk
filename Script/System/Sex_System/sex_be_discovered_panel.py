@@ -1,5 +1,6 @@
 from typing import List
 from types import FunctionType
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Moudle import draw
 from Script.Core import (
     cache_control,
@@ -224,7 +225,7 @@ class Sex_Be_Discovered_Panel:
 
     def _invite_find_char_to_join(self) -> None:
         """选择邀请对方加入群交"""
-        from Script.Design import handle_instruct, character_behavior
+        from Script.Design import character_behavior
         # 判断是否满足加入群交条件
         if handle_premise.handle_instruct_judge_group_sex(self.character_id):
             # 如果当前在群交中，则直接加入
@@ -251,7 +252,7 @@ class Sex_Be_Discovered_Panel:
 
     def _end_current_h(self) -> None:
         """选择结束当前H"""
-        from Script.Design import handle_instruct, character_behavior
+        from Script.Design import character_behavior
         # 交互对象进入被打断状态
         self.target_chara_data.action_info.h_interrupt = 1
         # 发现者变为打断行为

@@ -176,7 +176,7 @@ def get_status_id_list_from_group_sex_body_part(body_part: str):
     Return arguments:\n
     [] -- 状态id列表
     """
-    from Script.UI.Panel import see_instruct_panel
+    from Script.System.Instruct_System import see_instruct_panel
 
     new_status_id_list = []
     # 获取状态id列表

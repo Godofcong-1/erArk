@@ -829,6 +829,35 @@ class Hypnosis_Type:
     """ 介绍 """
 
 
+class InstructConfig:
+    """ 指令配置表 """
+
+    cid: int
+    """ 指令配置id """
+    instruct_id: str
+    """ 指令id """
+    name: str
+    """ 显示名称 """
+    instruct_type: str
+    """ 指令类型 """
+    instruct_sub_type: str
+    """ 指令子类型 """
+    premise_set: str
+    """ 前提条件集 """
+    behavior_id: str
+    """ 行为id """
+    web_category: int
+    """ Web三类分类 """
+    panel_id: str
+    """ 面板id """
+    web_major_type: str
+    """ Web大类型 """
+    web_minor_type: str
+    """ Web小类型 """
+    body_parts: str
+    """ 关联身体部位 """
+
+
 class InstructJudge:
     """ 每个指令的实行值判定数据 """
 

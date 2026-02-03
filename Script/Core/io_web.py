@@ -210,6 +210,25 @@ def clear_screen():
     # 更新Web界面状态
     update_game_state(cache.current_draw_elements, None)
 
+def clear_screen_and_history():
+    """
+    清空屏幕和历史记录
+    
+    返回值类型：无
+    彻底清空当前绘制元素和历史记录缓存，用于进入主界面等需要完全清空的场景
+    """
+    # 清空当前绘制元素
+    _ensure_current_draw_list()
+    cache.current_draw_elements = []
+    
+    # 清空历史记录
+    _ensure_history_list()
+    cache.web_draw_history = []
+    cache.web_draw_history_line_total = 0
+    
+    # 更新Web界面状态（发送空内容）
+    update_game_state(cache.current_draw_elements, None)
+
 def era_print(string, style="standard", tooltip: str = ""):
     """
     输出文本

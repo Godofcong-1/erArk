@@ -10,7 +10,6 @@ from Script.Design import (
     attr_calculation,
     game_time,
     cooking,
-    handle_instruct,
     character_behavior,
     handle_npc_ai_in_h,
     handle_premise,
@@ -21,6 +20,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant, constant_effect, game_type, get_text
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import draw
+from Script.System.Instruct_System import handle_instruct
 from Script.UI.Panel import hypnosis_panel, event_option_panel, ejaculation_panel, achievement_panel
 
 from Script.Settle.common_default import (

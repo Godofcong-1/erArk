@@ -336,8 +336,13 @@ def load_premise_profiler(args):
 # ------------------------- Tick 驱动 -------------------------
 def run_ticks(ticks: int, minutes_per_tick: int):
     from Script.Design import update
+    if ticks <= 0:
+        return
+    progress_interval = 1 if ticks <= 20 else max(1, ticks // 10)
     for i in range(ticks):
-        print(f"[run_profile] Tick {i+1}/{ticks} (+{minutes_per_tick}min)")
+        tick_index = i + 1
+        if ticks <= 20 or tick_index == 1 or tick_index == ticks or tick_index % progress_interval == 0:
+            log(f"Tick {tick_index}/{ticks} (+{minutes_per_tick}min)")
         update.game_update_flow(minutes_per_tick)
 
 

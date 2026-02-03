@@ -1462,7 +1462,7 @@ class MedicalPlayerDiagnosePanel:
         # 按检查次数累计耗时，每次检查+10分钟
         if self._checks_executed > 0 and self.player is not None:
             duration = self._checks_executed * 10
-        from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+        from Script.System.Instruct_System.handle_instruct import chara_handle_instruct_common_settle
         # 如果中途退出，则进行等待结算
         if self._abort_requested:
             chara_handle_instruct_common_settle(constant.Behavior.WAIT, duration=duration, force_taget_wait=True)

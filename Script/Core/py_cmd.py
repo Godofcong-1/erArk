@@ -110,4 +110,7 @@ def focus_cmd():
     """
     使光标聚焦在命令输出框上
     """
+    # Web模式下不执行tkinter的焦点操作，避免线程错误
+    if normal_config.config_normal.web_draw:
+        return
     main_frame.inputbox.focus_force()

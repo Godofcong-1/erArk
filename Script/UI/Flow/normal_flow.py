@@ -1,4 +1,4 @@
-from Script.Core import constant
+from Script.Core import constant, cache_control, game_type
 from Script.Design import handle_panel
 from Script.UI.Panel import (
     all_npc_position_panel,
@@ -7,6 +7,7 @@ from Script.UI.Panel import (
     normal_panel,
     h_item_shop_panel,
     in_scene_panel,
+    in_scene_panel_web,
     assistant_panel,
     building_panel,
     collection_panel,
@@ -30,10 +31,15 @@ from Script.UI.Panel import (
     invite_visitor_panel,
     system_setting,
     chat_ai_setting,
-    physical_check_and_manage
+    physical_check_and_manage,
+    see_save_info_panel,
+    hypnosis_panel,
+    achievement_panel
 )
 from Script.Config import normal_config
 
+cache: game_type.Cache = cache_control.cache
+""" 游戏缓存数据 """
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
 
@@ -41,7 +47,11 @@ width = normal_config.config_normal.text_width
 @handle_panel.add_panel(constant.Panel.IN_SCENE)
 def in_scene_flow():
     """场景互动面板"""
-    now_panel = in_scene_panel.InScenePanel(width)
+    # Web模式下使用新的Web专用面板
+    if cache.web_mode:
+        now_panel = in_scene_panel_web.InScenePanelWeb(width)
+    else:
+        now_panel = in_scene_panel.InScenePanel(width)
     now_panel.draw()
 
 
@@ -234,4 +244,22 @@ def nation_diplomacy_flow():
 def physical_check_and_manage_flow():
     """身体检查与管理面板"""
     now_panel = physical_check_and_manage.Physical_Check_And_Manage_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.SAVE)
+def save_flow():
+    """读写存档面板"""
+    now_panel = see_save_info_panel.SeeSaveListPanel(width, True)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.CHANGE_HYPNOSIS_MODE)
+def change_hypnosis_mode_flow():
+    """切换催眠模式面板"""
+    now_panel = hypnosis_panel.Chose_Hypnosis_Type_Panel(width, instruct_flag=True)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.SEE_ACHIEVEMENT)
+def see_achievement_flow():
+    """查看蚀刻章面板"""
+    now_panel = achievement_panel.Achievement_Panel(width)
     now_panel.draw()

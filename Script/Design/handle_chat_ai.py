@@ -902,7 +902,7 @@ def settle_direct_instruct(ai_result: dict) -> None:
     返回:
         None
     """
-    from Script.Design.handle_instruct import chara_handle_instruct_common_settle
+    from Script.System.Instruct_System.handle_instruct import chara_handle_instruct_common_settle
     tem_behavior_id = constant.Behavior.AI_CHAT_INSTRUCT
     # 指令持续时间
     new_duration = ai_result["time"]

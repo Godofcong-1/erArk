@@ -424,7 +424,7 @@ def settle_player_ability(character_id: int, true_add_time: int) -> None:
         character_data.sanity_point = 0
         character_data.pl_ability.visual = False
         target = cache.character_data[character_data.target_character_id]
-        from Script.Design import handle_instruct
+        from Script.System.Instruct_System import handle_instruct
         if target.sp_flag.unconscious_h >= 4:
             handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.HYPNOSIS_CANCEL)
         if handle_premise.handle_time_stop_on(character_id):
