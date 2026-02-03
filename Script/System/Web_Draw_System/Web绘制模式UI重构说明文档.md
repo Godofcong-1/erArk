@@ -163,7 +163,7 @@
     - 前端接收后调用 `updatePlayerInfoUI()` 函数局部更新玩家信息区
     - 计算数值变化并显示浮动文本（见下方"数值变化浮动文本"）
     - 无需刷新整个页面，只更新玩家信息区，用户体验更流畅
-- **数值变化浮动文本**（2026-01-28新增）
+- **数值变化浮动文本**（2026-01-28新增，2026-02-03更新）
   - 参考右侧交互对象信息区的浮动文本显示逻辑
   - 在体力、气力、理智、精液数值变化时显示浮动文本
   - 浮动文本颜色：
@@ -171,13 +171,27 @@
     - 气力：绿色 (#70C070)
     - 理智：蓝色 (#7070C0)
     - 精液：黄色 (#fffacd)
+    - 经验：春绿色 (#00ff7f)
   - 浮动文本显示格式：`+数值` 或 `-数值`
-  - 浮动文本位置：显示在对应状态条的右侧
+  - 浮动文本位置：
+    - 体力/气力/理智/精液：显示在对应状态条位置
+    - 经验值等其他变化：在特殊状态下方新开一行显示
   - 浮动文本持续时间：15秒后自动淡出消失
+  - 数据来源（2026-02-03更新）：
+    - 后端 `get_player_info()` 返回 `value_changes` 字段
+    - 数据由 `settle_behavior.py` 的 `collect_web_value_changes()` 收集
+    - 前端使用 `createPlayerFloatingValueChanges()` 处理
   - 实现方式：
-    - 通过 `calculatePlayerValueChanges()` 函数对比旧值和新值
-    - 使用 `createFloatingValueChanges()` 函数创建浮动文本元素
-    - 复用右侧角色信息区的浮动文本样式和动画
+    - 后端：`status_panel.py` 的 `get_player_info()` 调用 `_get_value_changes(0)` 获取玩家数值变化
+    - 前端：`createPlayerInfoPanel()` 调用 `createPlayerFloatingValueChanges()` 显示浮动文本
+    - 复用 `createInlineFloatingText()` 在状态条位置显示变化
+    - 使用 `createPlayerBottomFloatingTexts()` 在底部显示其他变化
+- **Web模式结算信息显示**（2026-02-03新增）
+  - Web模式下不再直接打印角色数值结算信息
+  - 修改 `character_behavior.py`，在Web模式下跳过 `settle_panel.draw()` 调用
+  - 玩家结算信息：通过左上角玩家信息区的浮动文本显示
+  - 交互对象结算信息：通过右侧交互对象信息栏的浮动文本显示
+  - TK模式保持原有行为，正常绘制结算面板
 - **布局优化**（2026-01-27更新）
   - 玩家姓名单独一行，与边缘保持适当距离（12px顶部内边距）
   - 姓名和体力行之间有更好的间距（12px下边距）
@@ -189,6 +203,7 @@
   - 填充部分使用 `background-repeat: repeat-x` 实现平铺
   - 特殊状态标记与右侧角色信息区使用相同的渲染逻辑
   - `.new-ui-player-info` 和 `.status-bar` 添加 `position: relative` 为浮动文本提供定位上下文
+  - 玩家浮动文本容器样式：`.player-floating-container` 和 `.player-floating-text`
 
 #### 2.2.3 交互对象附加信息区（中上）
 - **位置**：选项卡栏下方中央

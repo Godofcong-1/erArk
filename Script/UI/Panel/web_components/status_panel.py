@@ -57,7 +57,8 @@ class StatusPanel:
             "semen_max": self._get_semen_max_value(pl_data),
             "special_states": self._get_special_states(0),
             "has_sanity_drug": has_sanity_drug,
-            "has_semen_drug": has_semen_drug
+            "has_semen_drug": has_semen_drug,
+            "value_changes": self._get_value_changes(0)  # 玩家ID为0
         }
 
     def _get_empty_player_info(self) -> dict:
@@ -75,7 +76,8 @@ class StatusPanel:
             "semen_max": 100,
             "special_states": [],
             "has_sanity_drug": False,
-            "has_semen_drug": False
+            "has_semen_drug": False,
+            "value_changes": []
         }
 
     def get_target_info(self, character_id: int) -> dict:

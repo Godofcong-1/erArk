@@ -241,15 +241,21 @@ def judge_character_status(character_id: int) -> int:
 
     # 绘制数值变化
     if first_settle_panel != None and len(first_settle_panel.draw_list):
-        first_settle_panel.draw()
-        if second_settle_panel != None:
-            second_settle_panel.draw()
-        #进行一次暂停以便玩家看输出信息
-        if character_id == 0:
-            wait_draw = draw.WaitDraw()
-            wait_draw.text = "\n"
-            wait_draw.width = window_width
-            wait_draw.draw()
+        # Web模式：不绘制结算面板，数值变化已通过collect_web_value_changes收集
+        # 由前端以浮动文本形式在玩家信息栏和交互对象信息栏显示
+        if cache.web_mode:
+            pass
+        else:
+            # TK模式：正常绘制结算信息
+            first_settle_panel.draw()
+            if second_settle_panel != None:
+                second_settle_panel.draw()
+            #进行一次暂停以便玩家看输出信息
+            if character_id == 0:
+                wait_draw = draw.WaitDraw()
+                wait_draw.text = "\n"
+                wait_draw.width = window_width
+                wait_draw.draw()
 
     return 1
 

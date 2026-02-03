@@ -2424,6 +2424,14 @@ function createPlayerInfoPanel(playerInfo) {
         panel.appendChild(statesRow);
     }
     
+    // ========== 从后端传来的数值变化浮动文本 ==========
+    if (playerInfo.value_changes && playerInfo.value_changes.length > 0) {
+        // 延迟创建浮动文本，确保DOM已渲染
+        setTimeout(() => {
+            createPlayerFloatingValueChanges(panel, playerInfo.value_changes);
+        }, 50);
+    }
+    
     return panel;
 }
 
@@ -4685,6 +4693,118 @@ function createBottomFloatingTexts(panel, changes) {
     changes.forEach((change, index) => {
         const floatText = document.createElement('span');
         floatText.className = 'bottom-floating-text';
+        
+        // 设置颜色
+        const color = RICH_TEXT_COLORS[change.colorName] || RICH_TEXT_COLORS['standard'];
+        floatText.style.color = color;
+        
+        const sign = change.totalValue > 0 ? '+' : '';
+        floatText.textContent = `${change.displayName} ${sign}${change.totalValue}`;
+        
+        container.appendChild(floatText);
+    });
+    
+    panel.appendChild(container);
+    
+    // 15秒后移除
+    setTimeout(() => {
+        container.classList.add('fade-out');
+        setTimeout(() => {
+            if (container.parentNode) {
+                container.parentNode.removeChild(container);
+            }
+        }, 500);
+    }, 15000);
+}
+
+/**
+ * 创建玩家信息栏的数值变化浮动文本
+ * 体力、气力、理智、精液在对应数值槽位置显示
+ * 其他变化在特殊状态下方新开一行显示
+ * @param {HTMLElement} panel - 玩家信息面板容器
+ * @param {Array} valueChanges - 数值变化数组
+ */
+function createPlayerFloatingValueChanges(panel, valueChanges) {
+    if (!panel || !valueChanges || valueChanges.length === 0) return;
+    
+    // 根据字段类型分组变化
+    const fieldGroups = {};
+    valueChanges.forEach(change => {
+        const field = change.field;
+        if (!fieldGroups[field]) {
+            fieldGroups[field] = {
+                changes: [],
+                color: change.color || 'standard',
+                field_name: change.field_name || field
+            };
+        }
+        fieldGroups[field].changes.push(change);
+    });
+    
+    // 未匹配到数值槽位置的变化，收集到这里最后统一显示
+    const unmatchedChanges = [];
+    
+    // 定义玩家数值槽字段映射
+    const playerBarFields = ['hit_point', 'mana_point', 'sanity_point', 'semen_point'];
+    
+    // 为每个字段创建浮动文本
+    for (const field in fieldGroups) {
+        const group = fieldGroups[field];
+        const changes = group.changes;
+        const totalValue = changes.reduce((sum, c) => sum + c.value, 0);
+        if (totalValue === 0) continue;
+        
+        const displayName = group.field_name;
+        const colorName = group.color;
+        
+        // 检查是否是玩家的数值槽字段
+        if (playerBarFields.includes(field)) {
+            // 查找对应的UI元素
+            const targetElement = panel.querySelector(`[data-field="${field}"]`);
+            
+            if (targetElement) {
+                // 体力、气力、理智、精液在对应数值槽位置显示
+                let positionType = 'below'; // 默认下方显示
+                if (field === 'hit_point') {
+                    positionType = 'hp_middle'; // 体力显示在特殊位置
+                }
+                createInlineFloatingText(targetElement, displayName, totalValue, colorName, positionType, panel);
+            } else {
+                // 未找到元素，放到未匹配列表
+                unmatchedChanges.push({ displayName, totalValue, colorName });
+            }
+        } else if (field === 'eja_point') {
+            // 射精欲单独处理，在其他变化行显示
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+        } else if (field.startsWith('experience_')) {
+            // 经验值在其他变化行显示
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+        } else {
+            // 其他所有变化也放到未匹配列表（将在特殊状态下方显示）
+            unmatchedChanges.push({ displayName, totalValue, colorName });
+        }
+    }
+    
+    // 处理未匹配的变化，在特殊状态下方新开一行显示
+    if (unmatchedChanges.length > 0) {
+        createPlayerBottomFloatingTexts(panel, unmatchedChanges);
+    }
+}
+
+/**
+ * 在玩家信息面板底部创建未匹配变化的浮动文本
+ * 位于特殊状态下方
+ * @param {HTMLElement} panel - 玩家信息面板容器
+ * @param {Array} changes - 未匹配的变化数组
+ */
+function createPlayerBottomFloatingTexts(panel, changes) {
+    // 创建底部浮动文本容器
+    const container = document.createElement('div');
+    container.className = 'player-floating-container';
+    
+    changes.forEach((change, index) => {
+        const floatText = document.createElement('span');
+        floatText.className = 'player-floating-text';
         
         // 设置颜色
         const color = RICH_TEXT_COLORS[change.colorName] || RICH_TEXT_COLORS['standard'];

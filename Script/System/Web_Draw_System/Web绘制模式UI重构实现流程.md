@@ -396,16 +396,50 @@
 - [x] CSS样式：`.bar-quick-use-btn`, `.bar-quick-use-sanity`, `.bar-quick-use-semen`
 - [x] **立刻刷新功能**（2026-01-28更新）：后端返回更新后的玩家信息，前端局部更新UI
 
-#### 3.2.6 数值变化浮动文本显示（2026-01-28新增）
+#### 3.2.6 数值变化浮动文本显示（2026-01-28新增，2026-02-03更新）
 - [x] 为状态条添加 `data-field` 属性，用于浮动文本定位
 - [x] 实现 `calculatePlayerValueChanges()` 函数计算数值变化
 - [x] 修改 `updatePlayerInfoUI()` 函数，更新UI时显示浮动文本
 - [x] 复用 `createFloatingValueChanges()` 函数（与右侧角色信息区相同）
 - [x] 为 `.new-ui-player-info` 和 `.status-bar` 添加 `position: relative` 样式
+- [x] **从后端传递结算数据到玩家信息区**（2026-02-03新增）
+  - [x] 修改 `status_panel.py` 的 `get_player_info()` 方法，添加 `value_changes` 字段
+  - [x] 添加 `createPlayerFloatingValueChanges()` 前端函数处理玩家数值变化
+  - [x] 添加 `createPlayerBottomFloatingTexts()` 显示经验值等其他变化
+  - [x] 添加 `.player-floating-container` 和 `.player-floating-text` CSS样式
 
 #### 3.2.7 CSS样式优化（2026-01-27更新）
 - [x] 玩家信息区顶部内边距增加至12px，让玩家姓名和边缘有适当空隙
 - [x] 玩家姓名行下边距增加至12px，让姓名和体力行之间有更好的间距
+
+#### 3.2.8 Web模式结算信息显示优化（2026-02-03新增）
+- [x] 修改 `character_behavior.py`，在Web模式下跳过 `settle_panel.draw()` 调用
+- [x] Web模式下不直接打印结算文本，改为通过浮动文本显示
+- [x] 玩家数值变化通过 `get_player_info()` 的 `value_changes` 字段传递到前端
+- [x] 交互对象数值变化通过 `get_target_info()` 的 `value_changes` 字段传递到前端
+- [x] 浮动文本显示位置：
+  - 玩家：体力、气力、理智、精液在对应数值槽位置，其他在特殊状态下方
+  - 交互对象：在右侧交互对象信息栏的对应位置
+- [x] TK模式保持原有行为不变
+
+**实施记录（2026年2月3日更新）**：
+- **结算信息显示机制重构**：
+  - 问题：Web模式下结算信息会直接打印在主界面上方，影响体验
+  - 解决方案：
+    1. 修改 `character_behavior.py`，添加 `cache.web_mode` 判断
+    2. Web模式下跳过 `settle_panel.draw()` 和相关的 `WaitDraw`
+    3. 数值变化仍通过 `settle_behavior.py` 的 `collect_web_value_changes()` 收集
+    4. 通过前端浮动文本在对应位置显示
+  - 修改文件：
+    - `Script/Design/character_behavior.py` - 添加Web模式判断，跳过结算面板绘制
+    - `Script/UI/Panel/web_components/status_panel.py` - `get_player_info()` 添加 `value_changes`
+    - `static/game.js` - 添加 `createPlayerFloatingValueChanges()` 和 `createPlayerBottomFloatingTexts()`
+    - `static/style.css` - 添加 `.player-floating-container` 和 `.player-floating-text` 样式
+- **玩家信息栏浮动文本**：
+  - `createPlayerFloatingValueChanges(panel, valueChanges)` 处理玩家的结算信息
+  - 体力、气力、理智、精液：在对应状态条位置显示（复用 `createInlineFloatingText()`）
+  - 经验值、射精欲等其他变化：在特殊状态下方显示（`createPlayerBottomFloatingTexts()`）
+  - 浮动文本15秒后自动淡出消失
 
 **实施记录（2026年1月28日更新）**：
 - 玩家信息区现在使用与右侧角色信息区相同的图片绘制方式

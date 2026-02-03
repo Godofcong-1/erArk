@@ -1918,6 +1918,30 @@ body {
     animation: fadeOut 0.5s ease-out forwards;
 }
 
+/* ========== 玩家信息栏浮动文本容器 ========== */
+.player-floating-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 4px 0;
+    justify-content: flex-start;
+    pointer-events: none;
+    margin-top: 4px;
+}
+
+.player-floating-text {
+    font-size: 0.8em;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+    padding: 2px 4px;
+    white-space: nowrap;
+    animation: bottomFloatUp 0.4s ease-out forwards;
+}
+
+.player-floating-container.fade-out {
+    animation: fadeOut 0.5s ease-out forwards;
+}
+
 @keyframes bottomFloatUp {
     from {
         opacity: 0;
