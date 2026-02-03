@@ -113,6 +113,42 @@ class Panel:
     """ 切换催眠模式面板 """
     SEE_ACHIEVEMENT = 38
     """ 查看蚀刻章面板 """
+    SEE_ATTR = 39
+    """ 查看属性面板 """
+    ABL_UP = 40
+    """ 提升能力面板 """
+    OWNER_ABL_UP = 41
+    """ 提升自身能力面板 """
+    TAKE_CARE_BABY = 42
+    """ 照顾婴儿面板 """
+    ORDER_HOTEL_ROOM = 43
+    """ 预定房间面板 """
+    GIVE_GIFT = 44
+    """ 赠送礼物面板 """
+    FIELD_COMMISSION = 45
+    """ 外勤委托面板 """
+    CURE_PATIENT = 46
+    """ 诊疗病人面板 """
+    MANAGE_DEDICAL_DEPARTMENT = 47
+    """ 管理医疗系统面板 """
+    MANAGE_POWER_SYSTEM = 48
+    """ 管理能源系统面板 """
+    EQUIPMENT_MAINTAIN = 49
+    """ 设备维护面板 """
+    TALK_QUICK_TEST = 50
+    """ 快速测试口上面板 """
+    MANAGE_ASSEMBLY_LINE = 51
+    """ 管理流水线面板 """
+    MANAGE_AGRICULTURE = 52
+    """ 管理农业生产面板 """
+    MANAGE_VEHICLE = 53
+    """ 管理载具面板 """
+    MANAGE_CONFINEMENT_AND_TRAINING = 54
+    """ 管理监禁调教面板 """
+    MANAGE_RESOURCE_EXCHANGE = 55
+    """ 管理资源交易面板 """
+    READ_BOOK = 56
+    """ 读书面板 """
 
 
 class InstructType:

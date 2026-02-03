@@ -34,7 +34,19 @@ from Script.UI.Panel import (
     physical_check_and_manage,
     see_save_info_panel,
     hypnosis_panel,
-    achievement_panel
+    achievement_panel,
+    see_character_info_panel,
+    ability_up_panel,
+    gift_panel,
+    manage_power_system_panel,
+    equipmen_panel,
+    manage_assembly_line_panel,
+    agriculture_production_panel,
+    manage_vehicle_panel,
+    confinement_and_training,
+    resource_exchange_panel,
+    navigation_panel,
+    read_book_panel,
 )
 from Script.Config import normal_config
 
@@ -262,4 +274,126 @@ def change_hypnosis_mode_flow():
 def see_achievement_flow():
     """查看蚀刻章面板"""
     now_panel = achievement_panel.Achievement_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.SEE_ATTR)
+def see_attr_flow():
+    """查看属性面板"""
+    now_panel = see_character_info_panel.SeeCharacterInfoInScenePanel(
+        cache.character_data[0].target_character_id, width
+    )
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.ABL_UP)
+def ability_up_flow():
+    """能力提升面板"""
+    now_panel = ability_up_panel.Character_abi_up_main_Handle(
+        cache.character_data[0].target_character_id, width
+    )
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.OWNER_ABL_UP)
+def owner_ability_up_flow():
+    """干员能力提升面板"""
+    now_panel = ability_up_panel.Character_abi_up_main_Handle(
+        0, width
+    )
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.TAKE_CARE_BABY)
+def take_care_baby_flow():
+    """照顾婴儿面板"""
+    now_panel = normal_panel.Take_Care_Baby_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.ORDER_HOTEL_ROOM)
+def order_hotel_room_flow():
+    """预订酒店房间面板"""
+    now_panel = normal_panel.Order_Hotel_Room_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.GIVE_GIFT)
+def give_gift_flow():
+    """赠送礼物面板"""
+    now_panel = gift_panel.Gift_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.FIELD_COMMISSION)
+def field_commission_flow():
+    """外勤委托面板"""
+    from Script.System.Field_Commission_System import field_commission_panel
+    now_panel = field_commission_panel.Field_Commission_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.CURE_PATIENT)
+def cure_patient_flow():
+    """治疗病人面板"""
+    from Script.System.Medical_System import medical_player_diagnose_panel
+    medical_player_diagnose_panel.start_player_diagnose_flow()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_DEDICAL_DEPARTMENT)
+def manage_medical_department_flow():
+    """管理医疗系统面板面板"""
+    from Script.System.Medical_System import medical_department_panel
+    now_panel = medical_department_panel.Medical_Department_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_POWER_SYSTEM)
+def manage_power_system_flow():
+    """管理动力系统面板"""
+    now_panel = manage_power_system_panel.Manage_Power_System_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.EQUIPMENT_MAINTAIN)
+def equipment_maintain_flow():
+    """设备维护面板"""
+    now_panel = equipmen_panel.Equipment_Maintain_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.TALK_QUICK_TEST)
+def talk_quick_test_flow():
+    """快速测试口上面板"""
+    now_panel = debug_panel.TALK_QUICK_TEST(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_ASSEMBLY_LINE)
+def manage_assembly_line_flow():
+    """管理流水线面板"""
+    now_panel = manage_assembly_line_panel.Manage_Assembly_Line_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_AGRICULTURE)
+def manage_agriculture_flow():
+    """管理农业生产面板"""
+    now_panel = agriculture_production_panel.Agriculture_Production_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_VEHICLE)
+def manage_vehicle_flow():
+    """管理载具面板"""
+    now_panel = manage_vehicle_panel.Manage_Vehicle_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_CONFINEMENT_AND_TRAINING)
+def manage_confinement_and_training_flow():
+    """管理监禁调教面板"""
+    now_panel = confinement_and_training.Confinement_And_Training_Manage_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MANAGE_RESOURCE_EXCHANGE)
+def manage_resource_exchange_flow():
+    """管理资源交易面板"""
+    now_panel = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.NAVIGATION)
+def navigation_flow():
+    """导航面板"""
+    now_panel = navigation_panel.Navigation_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.READ_BOOK)
+def read_book_flow():
+    """阅读书籍面板"""
+    now_panel = read_book_panel.Read_Book_Panel(width)
     now_panel.draw()

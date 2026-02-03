@@ -449,12 +449,7 @@ def handle_move():
 @add_instruct(constant.Instruct.SEE_ATTR)
 def handle_see_attr():
     """查看属性"""
-    from Script.UI.Panel import see_character_info_panel
-    see_character_info_panel.line_feed.draw()
-    now_draw = see_character_info_panel.SeeCharacterInfoInScenePanel(
-        cache.character_data[0].target_character_id, width
-    )
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.SEE_ATTR
 
 
 @add_instruct(constant.Instruct.CHAT)
@@ -491,23 +486,13 @@ def handle_save():
 @add_instruct(constant.Instruct.ABL_UP)
 def handle_abl_up():
     """处理属性上升"""
-    from Script.UI.Panel import see_character_info_panel, ability_up_panel
-    see_character_info_panel.line_feed.draw()
-    now_draw = ability_up_panel.Character_abi_up_main_Handle(
-        cache.character_data[0].target_character_id, width
-    )
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.ABL_UP
 
 
 @add_instruct(constant.Instruct.OWNER_ABL_UP)
 def handle_owner_abl_up():
     """处理自身属性上升"""
-    from Script.UI.Panel import see_character_info_panel, ability_up_panel
-    see_character_info_panel.line_feed.draw()
-    now_draw = ability_up_panel.Character_abi_up_main_Handle(
-        0, width
-    )
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.OWNER_ABL_UP
 
 
 @add_instruct(constant.Instruct.DEBUG_MODE_ON)
@@ -537,9 +522,7 @@ def handle_system_setting():
 @add_instruct(constant.Instruct.TALK_QUICK_TEST)
 def handle_talk_quick_test():
     """快速测试口上"""
-    from Script.UI.Panel import debug_panel
-    now_draw = debug_panel.TALK_QUICK_TEST(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.TALK_QUICK_TEST
 
 
 @add_instruct(constant.Instruct.CHAT_WITH_AI)
@@ -587,9 +570,7 @@ def handle_borrow_book():
 @add_instruct(constant.Instruct.READ_BOOK)
 def handle_read_book():
     """处理读书指令"""
-    from Script.UI.Panel import read_book_panel
-    now_draw = read_book_panel.Read_Book_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.READ_BOOK
 
 
 @add_instruct(constant.Instruct.MANAGE_LIBRARY)
@@ -601,9 +582,7 @@ def handle_manage_library():
 @add_instruct(constant.Instruct.MANAGE_ASSEMBLY_LINE)
 def handle_manage_assembly_line():
     """处理管理流水线指令"""
-    from Script.UI.Panel import manage_assembly_line_panel
-    now_draw = manage_assembly_line_panel.Manage_Assembly_Line_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_ASSEMBLY_LINE
 
 
 @add_instruct(constant.Instruct.PLANT_MANAGE_CROP)
@@ -615,17 +594,13 @@ def handle_plant_manage_crop():
 @add_instruct(constant.Instruct.MANAGE_AGRICULTURE)
 def handle_manage_agriculture():
     """处理管理农业生产指令"""
-    from Script.UI.Panel import agriculture_production_panel
-    now_draw = agriculture_production_panel.Agriculture_Production_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_AGRICULTURE
 
 
 @add_instruct(constant.Instruct.MANAGE_VEHICLE)
 def handle_manage_vehicle():
     """处理管理载具指令"""
-    from Script.UI.Panel import manage_vehicle_panel
-    now_draw = manage_vehicle_panel.Manage_Vehicle_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_VEHICLE
 
 
 @add_instruct(constant.Instruct.PHYSICAL_CHECK_AND_MANAGE)
@@ -637,9 +612,7 @@ def handle_physical_check_and_manage():
 @add_instruct(constant.Instruct.MANAGE_CONFINEMENT_AND_TRAINING)
 def handle_manage_vonfinement_and_training():
     """处理管理监禁调教指令"""
-    from Script.UI.Panel import confinement_and_training
-    now_draw = confinement_and_training.Confinement_And_Training_Manage_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_CONFINEMENT_AND_TRAINING
 
 
 @add_instruct(constant.Instruct.INVESTIGATE_RESOURCE_MARKET)
@@ -651,17 +624,13 @@ def handle_investigate_resource_market():
 @add_instruct(constant.Instruct.MANAGE_RESOURCE_EXCHANGE)
 def handle_manage_resource_exchange():
     """处理管理资源交易指令"""
-    from Script.UI.Panel import resource_exchange_panel
-    now_draw = resource_exchange_panel.Resource_Exchange_Line_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_RESOURCE_EXCHANGE
 
 
 @add_instruct(constant.Instruct.NAVIGATION)
 def handle_navigation():
     """处理导航指令"""
-    from Script.UI.Panel import navigation_panel
-    now_draw = navigation_panel.Navigation_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.NAVIGATION
 
 
 @add_instruct(constant.Instruct.MANAGE_BASEMENT)
@@ -1013,9 +982,7 @@ def handle_listen_complaint():
 @add_instruct(constant.Instruct.GIVE_GIFT)
 def handle_give_gift():
     """处理赠送礼物指令"""
-    from Script.UI.Panel import gift_panel
-    now_draw = gift_panel.Gift_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.GIVE_GIFT
 
 
 @add_instruct(constant.Instruct.ORIGINIUM_ARTS)
@@ -1088,15 +1055,13 @@ def handle_play_with_child():
 @add_instruct(constant.Instruct.TAKE_CARE_BABY)
 def handle_take_care_baby():
     """处理照顾婴儿指令"""
-    now_draw = normal_panel.Take_Care_Baby_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.TAKE_CARE_BABY
 
 
 @add_instruct(constant.Instruct.ORDER_HOTEL_ROOM)
 def handle_order_hotel_room():
     """处理预定房间指令"""
-    now_draw = normal_panel.Order_Hotel_Room_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.ORDER_HOTEL_ROOM
 
 
 @add_instruct(constant.Instruct.SEE_COLLECTION)
@@ -1120,9 +1085,7 @@ def handle_see_fridge():
 @add_instruct(constant.Instruct.FIELD_COMMISSION)
 def handle_field_commission():
     """处理外勤委托指令"""
-    from Script.System.Field_Commission_System import field_commission_panel
-    now_draw = field_commission_panel.Field_Commission_Panel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.FIELD_COMMISSION
 
 
 @add_instruct(constant.Instruct.CHECK_LOCKER)
@@ -1855,9 +1818,7 @@ def handle_building():
 @add_instruct(constant.Instruct.EQUIPMENT_MAINTAIN)
 def handle_equipment_maintain():
     """处理管理装备维护指令"""
-    from Script.UI.Panel import equipmen_panel
-    now_draw_panel = equipmen_panel.Equipment_Maintain_Panel(width)
-    now_draw_panel.draw()
+    cache.now_panel_id = constant.Panel.EQUIPMENT_MAINTAIN
 
 
 @add_instruct(constant.Instruct.RECRUITMENT)
@@ -1912,15 +1873,12 @@ def handle_cure_patient():
         now_draw.text = _("\n当前没有需要诊疗的病人\n")
         now_draw.draw()
         return
-    from Script.System.Medical_System import medical_player_diagnose_panel
-    medical_player_diagnose_panel.start_player_diagnose_flow()
+    cache.now_panel_id = constant.Panel.CURE_PATIENT
 
 @add_instruct(constant.Instruct.MANAGE_DEDICAL_DEPARTMENT)
 def handle_manage_dedical_department():
     """处理管理医疗系统指令"""
-    from Script.System.Medical_System import medical_department_panel
-    now_draw_panel = medical_department_panel.Medical_Department_Panel(width)
-    now_draw_panel.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_DEDICAL_DEPARTMENT
 
 @add_instruct(constant.Instruct.RECRUIT)
 def handle_recruit():
@@ -1951,9 +1909,7 @@ def handle_manage_facility_power():
 @add_instruct(constant.Instruct.MANAGE_POWER_SYSTEM)
 def handle_manage_power_system():
     """处理管理能源系统指令"""
-    from Script.UI.Panel import manage_power_system_panel
-    now_draw_panel = manage_power_system_panel.Manage_Power_System_Panel(width)
-    now_draw_panel.draw()
+    cache.now_panel_id = constant.Panel.MANAGE_POWER_SYSTEM
 
 
 @add_instruct(constant.Instruct.REPAIR_EQUIPMENT)
