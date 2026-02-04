@@ -47,6 +47,9 @@ from Script.UI.Panel import (
     resource_exchange_panel,
     navigation_panel,
     read_book_panel,
+    sleep_panel,
+    diary_panel,
+    play_gomoku_panel,
 )
 from Script.Config import normal_config
 
@@ -396,4 +399,56 @@ def navigation_flow():
 def read_book_flow():
     """阅读书籍面板"""
     now_panel = read_book_panel.Read_Book_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.SLEEP)
+def sleep_flow():
+    """睡觉面板"""
+    now_panel = sleep_panel.Sleep_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.DIRAY)
+def diary_flow():
+    """日记面板"""
+    now_panel = diary_panel.Diary_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.PLAY_GOMOKU)
+def play_gomoku_flow():
+    """五子棋面板"""
+    now_panel = play_gomoku_panel.GomokuPanel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.MAKE_COFFEE_ADD)
+def make_coffee_add_flow():
+    """泡咖啡（加料）面板"""
+    now_panel = make_food_panel.Make_food_Panel(width, make_food_type = 1)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.ASK_HIDDEN_SEX)
+def ask_hidden_sex_flow():
+    """邀请隐奸面板"""
+    from Script.System.Sex_System.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
+    now_panel = Select_Hidden_Sex_Mode_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.ASK_EXHIBITIONISM_SEX)
+def ask_exhibitionism_sex_flow():
+    """邀请露出面板"""
+    from Script.System.Sex_System.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
+    now_panel = Select_Exhibitionism_Sex_Mode_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.BONDAGE)
+def bondage_flow():
+    """捆绑面板"""
+    from Script.System.Sex_System.bondage_panel import Bondage_Panel
+    now_panel = Bondage_Panel(width)
+    now_panel.draw()
+
+@handle_panel.add_panel(constant.Panel.EDIT_GROUP_SEX_TEMPLE)
+def edit_group_sex_temple_flow():
+    """编辑群交场景面板"""
+    from Script.System.Sex_System import group_sex_panel
+    now_panel = group_sex_panel.Edit_Group_Sex_Temple_Panel(width)
     now_panel.draw()

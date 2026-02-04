@@ -814,18 +814,12 @@ def handle_target_stop_in_time_stop():
 @add_instruct(constant.Instruct.DIRAY)
 def handle_diary():
     """处理日记指令"""
-    from Script.UI.Panel import diary_panel
-    now_draw = diary_panel.Diary_Panel(width)
-    now_draw.draw()
-
+    cache.now_panel_id = constant.Panel.DIRAY
 
 @add_instruct(constant.Instruct.SLEEP)
 def handle_sleep():
     """处理睡觉指令"""
-    from Script.UI.Panel import sleep_panel
-    now_draw = sleep_panel.Sleep_Panel(width)
-    now_draw.draw()
-
+    cache.now_panel_id = constant.Panel.SLEEP
 
 @add_instruct(constant.Instruct.TAKE_SHOWER)
 def handle_take_shower():
@@ -872,9 +866,7 @@ def handle_make_coffee():
 @add_instruct(constant.Instruct.MAKE_COFFEE_ADD)
 def handle_make_coffee_add():
     """处理泡咖啡（加料）指令"""
-    from Script.UI.Panel import make_food_panel
-    now_draw = make_food_panel.Make_food_Panel(width,make_food_type=1)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.MAKE_COFFEE_ADD
 
 
 @add_instruct(constant.Instruct.ASK_MAKE_COFFEE)
@@ -1338,17 +1330,13 @@ def handle_unconscious_h():
 @add_instruct(constant.Instruct.ASK_HIDDEN_SEX)
 def handle_ask_hidden_sex():
     """处理邀请隐奸指令"""
-    from Script.System.Sex_System.hidden_sex_panel import Select_Hidden_Sex_Mode_Panel
-    now_panel = Select_Hidden_Sex_Mode_Panel(width)
-    now_panel.draw()
+    cache.now_panel_id = constant.Panel.ASK_HIDDEN_SEX
 
 
 @add_instruct(constant.Instruct.ASK_EXHIBITIONISM_SEX)
 def handle_ask_exhibitionism_sex():
     """处理邀请露出指令"""
-    from Script.System.Sex_System.exhibitionism_sex_panel import Select_Exhibitionism_Sex_Mode_Panel
-    now_panel = Select_Exhibitionism_Sex_Mode_Panel(width)
-    now_panel.draw()
+    cache.now_panel_id = constant.Panel.ASK_EXHIBITIONISM_SEX
 
 
 @add_instruct(constant.Instruct.ASK_GROUP_SEX)
@@ -1668,9 +1656,7 @@ def handle_play_water():
 @add_instruct(constant.Instruct.PLAY_GOMOKU)
 def handle_play_gomoku():
     """处理下五子棋指令"""
-    from Script.UI.Panel import play_gomoku_panel
-    now_draw = play_gomoku_panel.GomokuPanel(width)
-    now_draw.draw()
+    cache.now_panel_id = constant.Panel.PLAY_GOMOKU
 
 
 @add_instruct(constant.Instruct.PLAY_CHESS)
@@ -2627,10 +2613,7 @@ def handle_remote_all_set_sex_toy_strong_in_h():
 @add_instruct(constant.Instruct.BONDAGE)
 def handle_bondage():
     """处理绳艺指令"""
-    from Script.System.Sex_System import bondage_panel
-    now_panel = bondage_panel.Bondage_Panel(width=width)
-    now_panel.draw()
-
+    cache.now_panel_id = constant.Panel.BONDAGE
 
 @add_instruct(constant.Instruct.PATCH_ON)
 def handle_patch_on():
@@ -3242,10 +3225,7 @@ def handle_run_all_group_sex_temple():
 @add_instruct(constant.Instruct.EDIT_GROUP_SEX_TEMPLE)
 def handle_edit_group_sex_temple():
     """处理编辑群交行动指令"""
-    from Script.System.Sex_System import group_sex_panel
-    now_panel = group_sex_panel.Edit_Group_Sex_Temple_Panel(width)
-    now_panel.draw()
-
+    cache.now_panel_id = constant.Panel.EDIT_GROUP_SEX_TEMPLE
 
 @add_instruct(constant.Instruct.SWITCH_TO_NON_H_INTERFACE)
 def handle_switch_to_non_h_interface():

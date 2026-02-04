@@ -149,6 +149,22 @@ class Panel:
     """ 管理资源交易面板 """
     READ_BOOK = 56
     """ 读书面板 """
+    SLEEP = 57
+    """ 睡觉面板 """
+    DIRAY = 58
+    """ 日记面板 """
+    PLAY_GOMOKU = 59
+    """ 五子棋面板 """
+    MAKE_COFFEE_ADD = 60
+    """ 泡咖啡（加料）面板 """
+    ASK_HIDDEN_SEX = 61
+    """ 邀请隐奸面板 """
+    ASK_EXHIBITIONISM_SEX = 62
+    """ 邀请露出面板 """
+    BONDAGE = 63
+    """ 绳艺面板 """
+    EDIT_GROUP_SEX_TEMPLE = 64
+    """ 编辑群交行动面板 """
 
 
 class InstructType:
