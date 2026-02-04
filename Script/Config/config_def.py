@@ -847,7 +847,7 @@ class InstructConfig:
     behavior_id: str
     """ 行为id """
     web_category: int
-    """ Web三类分类 """
+    """ Web三类分类(0系统面板，1角色交互，2角色交互面板) """
     panel_id: str
     """ 面板id """
     web_major_type: str
@@ -1712,6 +1712,7 @@ class Talk:
     """ 前提id """
     context: str
     """ 口上内容 """
+
 class Talk_Common:
     """ 组件配置数据 """
 

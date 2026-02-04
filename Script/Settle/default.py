@@ -1315,9 +1315,8 @@ def handle_first_kiss_to_penis(
         target_data.first_record.first_kiss_time = cache.game_time
         target_data.first_record.first_kiss_place = target_data.position
         target_data.first_record.first_kiss_body_part = 1
-        if (not character_id) or (not target_data.cid):
-            # 初吻的二段结算
-            second_behavior.character_get_second_behavior(character_id, "first_kiss")
+        # 阴茎初吻的二段结算
+        second_behavior.character_get_second_behavior(target_data.cid, "first_kiss_but_penis")
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PENETRATING_VISION_ON)
