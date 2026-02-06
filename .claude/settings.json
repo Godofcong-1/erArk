@@ -1,6 +1,6 @@
 {
     "ANTHROPIC_BASE_URL" : "https://api.deepseek.com/anthropic",
-    "ANTHROPIC_AUTH_TOKEN" : "${DEEPSEEK_API_KEY}",
+    "ANTHROPIC_AUTH_TOKEN" : "sk-464eaae7708e4c9199f71f886d099cdd",
     "API_TIMEOUT_MS" : 600000,
     "ANTHROPIC_MODEL" : "deepseek-chat",
     "ANTHROPIC_SMALL_FAST_MODEL" : "deepseek-chat",
