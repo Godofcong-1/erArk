@@ -4127,6 +4127,12 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
             display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
         };
         
+        // 图片加载成功后计算并设置高度
+        img.onload = function() {
+            // 计算并应用角色立绘高度
+            applyCharacterImageHeight(display, img);
+        };
+        
         characterContainer.appendChild(img);
         
         // 添加身体部位按钮层
@@ -4142,6 +4148,74 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
     
     return display;
 }
+
+/**
+ * 计算并应用角色立绘高度
+ * 规则：
+ * 1. 首先检查当前窗口大小导致的角色立绘可用高度上限
+ * 2. 如果可用高度 > 1024，则将图片高度设为 1024px
+ * 3. 如果可用高度 <= 1024，则将图片高度设为可用高度
+ * 4. 图片居中显示
+ * @param {HTMLElement} display - 角色立绘显示区容器
+ * @param {HTMLImageElement} img - 立绘图片元素
+ */
+function applyCharacterImageHeight(display, img) {
+    // 最大高度限制
+    const MAX_HEIGHT = 1024;
+    
+    // 获取显示区域的可用高度（减去一些边距）
+    const displayRect = display.getBoundingClientRect();
+    const availableHeight = displayRect.height - 20; // 留10px上下边距
+    
+    // 计算应使用的高度：min(MAX_HEIGHT, 可用高度)
+    const targetHeight = Math.min(MAX_HEIGHT, availableHeight);
+    
+    // 设置图片高度
+    if (targetHeight > 0) {
+        img.style.height = `${targetHeight}px`;
+        img.style.width = 'auto'; // 宽度自动，保持比例
+        
+        // 保存目标高度到display元素，供重叠检测时使用
+        display.dataset.targetHeight = targetHeight;
+        display.dataset.maxHeight = MAX_HEIGHT;
+        
+        console.log(`[角色立绘] 可用高度: ${availableHeight}px, 目标高度: ${targetHeight}px`);
+    }
+    
+    // 触发一次重叠检测
+    setTimeout(() => checkAndAdjustCharacterImage(), 100);
+}
+
+/**
+ * 窗口大小改变时重新计算角色立绘高度
+ */
+function updateCharacterImageHeightOnResize() {
+    const display = document.querySelector('.new-ui-character-display');
+    const img = display ? display.querySelector('.character-image') : null;
+    
+    if (display && img && img.complete && img.naturalHeight > 0) {
+        applyCharacterImageHeight(display, img);
+    }
+}
+
+// 监听窗口大小改变，重新计算角色立绘高度
+window.addEventListener('resize', debounce(updateCharacterImageHeightOnResize, 200));
+
+/**
+ * 辅助函数：防抖
+ */
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 
 /**
  * 创建身体部位交互按钮层

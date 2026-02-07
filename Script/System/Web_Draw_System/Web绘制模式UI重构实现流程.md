@@ -2543,17 +2543,65 @@
   - `part_id`: 英文部位ID（如"face"）供后端逻辑使用
   - `is_hip_sub_part`: 是否为臀部子部位
 
-### 11.2 修改的文件清单
+### 11.2 角色立绘高度统一缩放功能（2026-02-07新增）
+
+#### 11.2.1 功能描述
+- **目标**：解决角色立绘因原图大小不一致而产生不同缩放情况的问题
+- **规则**：
+  1. 检查当前窗口大小导致的角色立绘可用高度上限
+  2. 如果可用高度 > 1024像素，将图片高度固定为 1024像素
+  3. 如果可用高度 ≤ 1024像素，将图片高度设为可用高度
+  4. 图片保持原比例，居中显示
+  5. 身体部位按钮的点击位置随图片一起缩放
+
+#### 11.2.2 实现细节
+- **CSS修改（`static/style.css`）**：
+  - `.new-ui-character-display`：添加 `overflow: visible` 便于高度计算
+  - `.character-container`：改为 `display: inline-flex`，尺寸由内部图片决定；添加 `transition` 实现平滑变换
+  - `.character-image`：移除 `max-height`，由JS动态设置 `height` 属性
+  - `.body-parts-layer`：添加 `transform-origin: center center`
+
+- **JS修改（`static/game.js`）**：
+  - `createCharacterDisplay()`：在图片 `onload` 事件中调用 `applyCharacterImageHeight()`
+  - 新增 `applyCharacterImageHeight(display, img)` 函数：
+    - 获取显示区域可用高度（减去边距）
+    - 计算目标高度：`min(1024, 可用高度)`
+    - 设置 `img.style.height` 和 `img.style.width = 'auto'`
+    - 保存目标高度到 `display.dataset` 供后续使用
+    - 触发重叠检测
+  - 新增 `updateCharacterImageHeightOnResize()` 函数：窗口大小改变时重新计算高度
+  - 新增 `debounce()` 辅助函数：防抖处理
+  - 添加窗口 `resize` 事件监听
+
+#### 11.2.3 身体部位按钮同步缩放
+- **原理**：身体部位按钮使用百分比定位（相对于 `body-parts-layer`）
+- **机制**：
+  1. `body-parts-layer` 大小为 100% x 100%，与 `character-container` 一致
+  2. `character-container` 的大小由 `character-image` 决定
+  3. 当图片高度设置后，容器和按钮层都会自动调整
+  4. 百分比定位的按钮会自动映射到正确位置
+
+#### 11.2.4 与浮现按钮重叠调整的兼容
+- **两阶段调整**：
+  1. **高度缩放**（基础）：通过 `img.style.height` 实现，统一到1024px或可用高度
+  2. **重叠调整**（附加）：通过 `transform` 实现右移和/或缩小
+- **顺序**：先应用高度缩放，再检测重叠、应用变换
+- **效果叠加**：两者独立，`transform` 在固定高度基础上进行
+
+### 11.3 修改的文件清单
 
 | 文件 | 修改内容 |
 |------|----------|
 | `Script/Core/web_server.py` | 添加 major_type_id 和 minor_type_id 的 int() 类型转换 |
 | `Script/UI/Panel/web_components/interaction_handler.py` | 在 select_major_type 和 select_minor_type 方法中添加类型转换 |
 | `Script/UI/Panel/web_components/character_renderer.py` | 重写 _convert_body_data() 使用 BodyPartButton 类 |
+| `static/style.css` | 更新角色立绘相关样式支持高度缩放（2026-02-07）|
+| `static/game.js` | 新增 applyCharacterImageHeight()、updateCharacterImageHeightOnResize()、debounce() 函数（2026-02-07）|
 
-### 11.3 测试结果
+### 11.4 测试结果
 - [x] 游戏正常启动无报错
 - [ ] 交互大类切换后小类正确更新（待用户测试确认）
 - [ ] 角色立绘部位按钮显示游戏部位名称（待用户测试确认）
+- [ ] 角色立绘高度统一缩放（2026-02-07新增，待用户测试确认）
 
 ---
