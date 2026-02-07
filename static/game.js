@@ -2367,6 +2367,13 @@ function renderNewUIContent(container, gameState) {
         // 插入到container的最前面
         container.insertBefore(panelTabs, container.firstChild);
     }
+    
+    // ========== 顶部场景信息栏（添加到面板选项卡上面） ==========
+    if (gameState.scene_info_bar) {
+        const sceneInfoBar = createSceneInfoBar(gameState.scene_info_bar);
+        // 插入到container的最前面（在面板选项卡之前）
+        container.insertBefore(sceneInfoBar, container.firstChild);
+    }
 }
 
 /**
@@ -4876,6 +4883,34 @@ function createStateItem(state) {
     item.appendChild(barTrack);
     
     return item;
+}
+
+/**
+ * 创建场景信息栏
+ * 显示在面板选项卡上方，包含当前场景名（左侧）和游戏时间（右侧）
+ * 
+ * @param {Object} sceneInfoBar - 场景信息栏数据
+ *   - scene_name: 场景名称
+ *   - game_time: 游戏时间文本
+ * @returns {HTMLElement} 场景信息栏元素
+ */
+function createSceneInfoBar(sceneInfoBar) {
+    const bar = document.createElement('div');
+    bar.className = 'new-ui-scene-info-bar';
+    
+    // 左侧：场景名
+    const sceneNameSpan = document.createElement('span');
+    sceneNameSpan.className = 'scene-info-name';
+    sceneNameSpan.textContent = sceneInfoBar.scene_name || '';
+    bar.appendChild(sceneNameSpan);
+    
+    // 右侧：游戏时间
+    const gameTimeSpan = document.createElement('span');
+    gameTimeSpan.className = 'scene-info-time';
+    gameTimeSpan.textContent = sceneInfoBar.game_time || '';
+    bar.appendChild(gameTimeSpan);
+    
+    return bar;
 }
 
 /**

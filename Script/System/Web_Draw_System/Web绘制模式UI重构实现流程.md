@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年1月28日
+**最后更新**：2026年2月7日
 
 ---
 
@@ -352,6 +352,39 @@
   - 点击主面板选项卡时，将 `cache.now_panel_id` 重置为 `constant.Panel.IN_SCENE`
   - 在 `draw()` 方法循环开始时检查：如果 `cache.now_panel_id == IN_SCENE` 但选项卡非主面板，自动重置选项卡状态
   - 从 `web_components/__init__.py` 导出 `MAIN_PANEL_TAB_ID` 常量
+
+### 3.1.5 场景信息栏（2026-02-07 新增）
+
+**功能说明**：在面板选项卡上方增加一行场景信息栏，显示当前场景名（左侧）和游戏时间（右侧）
+
+#### 后端实现
+- [x] 在 `Script/UI/Panel/in_scene_panel_web.py` 中添加 `_get_scene_info_bar()` 方法
+- [x] 返回数据包含：`scene_name`（场景名）和 `game_time`（游戏时间文本）
+- [x] 场景名获取参考 `in_scene_panel.py` 中的 `now_position_text` 实现
+- [x] 游戏时间获取参考 `game_info_panel.py` 中的 `GameTimeInfoPanel` 实现
+- [x] 在 `_collect_game_state()` 中添加 `scene_info_bar` 字段
+
+#### 前端实现
+- [x] 在 `static/game.js` 中添加 `createSceneInfoBar()` 函数
+- [x] 修改 `renderNewUIContent()` 函数，在面板选项卡之前插入场景信息栏
+- [x] 使用 `container.insertBefore()` 将场景信息栏插入到容器最前面
+
+#### CSS样式
+- [x] 在 `static/style.css` 中添加 `.new-ui-scene-info-bar` 样式
+- [x] 使用flex布局，`justify-content: space-between` 实现左右分布
+- [x] `.scene-info-name`：场景名样式（左侧，浅蓝色）
+- [x] `.scene-info-time`：游戏时间样式（右侧，灰色）
+
+#### 样式优化（2026-02-07）
+- [x] 增加上内边距从 6px 到 12px，让文本上方有更多空间
+- [x] 增加下内边距从 6px 到 16px，让信息栏与选项卡之间有空隙且为背景色
+- [x] 添加 `line-height: 1.5` 提升文本可读性
+- [x] 使用 `padding` 而非 `margin` 确保空隙区域为背景色而非黑色
+
+**样式说明**：
+- 上内边距 12px：让文本上方区域不是黑色而是背景底色
+- 下内边距 16px：让下方与选项卡有空隙，且空隙为背景色（rgba(15, 15, 25, 0.95)）
+- 行高 1.5：让文本有更好的呼吸空间
 
 ### 3.2 玩家信息区
 

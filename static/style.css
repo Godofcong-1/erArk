@@ -2096,6 +2096,33 @@ body {
     transition: width 0.3s ease;
 }
 
+/* ========== 顶部场景信息栏 ========== */
+/* 显示在面板选项卡上方，包含场景名（左）和游戏时间（右） */
+.new-ui-scene-info-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px 16px 16px;  /* 上内边距12px，下内边距16px，让下方空隙更大且为背景色 */
+    background-color: rgba(15, 15, 25, 0.95);
+    border-bottom: 1px solid #333;
+    font-size: 0.9em;
+    width: 100%;
+    box-sizing: border-box;
+    line-height: 1.5;  /* 增加行高，让文本有更多呼吸空间 */
+}
+
+/* 场景名（左侧） */
+.scene-info-name {
+    color: #88ccff;
+    font-weight: normal;
+}
+
+/* 游戏时间（右侧） */
+.scene-info-time {
+    color: #aaa;
+    font-weight: normal;
+}
+
 /* 顶部面板选项卡栏 - 网页选项卡样式 */
 .new-ui-panel-tabs {
     display: flex;

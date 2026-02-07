@@ -16,7 +16,7 @@ from Script.Core import (
     flow_handle,
     constant,
 )
-from Script.Design import attr_text, map_handle
+from Script.Design import attr_text, map_handle, game_time, handle_premise
 from Script.Config import game_config
 from Script.UI.Panel.web_components import (
     SceneRenderer,
@@ -200,6 +200,9 @@ class InScenePanelWeb:
         
         # 构建游戏状态
         state = {
+            # 场景信息栏（场景名+游戏时间）
+            "scene_info_bar": self._get_scene_info_bar(),
+            
             # 场景信息
             "scene": self.scene_renderer.get_scene_background(),
             
@@ -230,6 +233,49 @@ class InScenePanelWeb:
         }
         
         return state
+
+    def _get_scene_info_bar(self) -> Dict:
+        """
+        获取场景信息栏数据（顶部信息栏，显示场景名和游戏时间）
+        
+        Returns:
+        Dict -- 场景信息栏数据，包含 scene_name 和 game_time
+        """
+        # 获取玩家数据
+        pl_character_data: game_type.Character = cache.character_data[0]
+        
+        # 获取当前位置/场景名
+        position_text = attr_text.get_scene_path_text(pl_character_data.position)
+        if handle_premise.handle_place_door_close(0):
+            position_text += _("(锁)")
+        scene_name = _("当前位置:") + position_text
+        
+        # 获取游戏时间信息
+        year_text = game_time.get_year_text()
+        month_text = game_time.get_month_text()
+        day_time_text = game_time.get_day_and_time_text()
+        week_day_text = game_time.get_week_day_text()
+        
+        # 获取时段信息
+        sun_time = game_time.get_sun_time(cache.game_time)
+        sun_time_config = game_config.config_sun_time[sun_time]
+        sun_time_text = sun_time_config.name
+        
+        # 判断是否是饭点
+        if handle_premise.handle_eat_time(0):
+            sun_time_text += _("(饭点)")
+        
+        # 判断是工作日还是休息日
+        is_work_day = game_time.judge_work_today(0)
+        work_rest_text = _("工作日") if is_work_day else _("休息")
+        
+        # 组合时间文本
+        time_text = f"{year_text} {month_text} {day_time_text} {week_day_text} {sun_time_text} {work_rest_text}"
+        
+        return {
+            "scene_name": scene_name,
+            "game_time": time_text,
+        }
 
     def _get_target_info(self, target_id: int) -> Dict:
         """
