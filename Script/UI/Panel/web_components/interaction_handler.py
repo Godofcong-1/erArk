@@ -13,6 +13,7 @@ from Script.Core import cache_control, game_type, constant
 from Script.Config import game_config
 from Script.Design import web_interaction_manager
 from Script.System.Instruct_System import interaction_types
+from Script.System.Instruct_System.instruct_category import HIP_SUB_PARTS, BodyPart
 
 cache: game_type.Cache = cache_control.cache
 
@@ -113,7 +114,7 @@ class InteractionHandler:
         Returns:
         List[str] -- 可用部位名称列表
         """
-        # TODO: 从指令元数据中获取该小类型涉及的所有部位
+        # 从指令元数据中获取该小类型涉及的所有部位
         # 需要遍历所有指令，找出minor_type == minor_type_id的指令，收集它们的body_parts
         
         body_parts = set()
@@ -121,6 +122,14 @@ class InteractionHandler:
             if stored_minor_type == minor_type_id:
                 parts = constant.instruct_body_parts_data.get(instruct_id, [])
                 body_parts.update(parts)
+        
+        # 检查是否包含臀部子部位（小穴、子宫、后穴、尿道、尾巴、胯部等）
+        # 如果包含则将臀部也添加到可用部位列表中，使臀部显示高亮
+        hip_sub_part_names = set(HIP_SUB_PARTS)  # 使用 HIP_SUB_PARTS 定义的子部位
+        # 同时检查胯部(crotch)，因为它也属于臀部区域
+        hip_sub_part_names.add(BodyPart.CROTCH)
+        if body_parts & hip_sub_part_names:
+            body_parts.add(BodyPart.HIP)
         
         return list(body_parts)
 

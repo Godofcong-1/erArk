@@ -2284,6 +2284,32 @@ body {
     text-align: center;
 }
 
+.instruct-menu-container {
+    max-height: 400px;  /* 约8个按钮的高度 (8 * 46px) */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 5px;  /* 为滚动条留出空间 */
+}
+
+/* 滚动条样式 */
+.instruct-menu-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.instruct-menu-container::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+}
+
+.instruct-menu-container::-webkit-scrollbar-thumb {
+    background: rgba(255, 215, 0, 0.5);
+    border-radius: 4px;
+}
+
+.instruct-menu-container::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 215, 0, 0.7);
+}
+
 .instruct-menu-btn {
     display: block;
     width: 100%;

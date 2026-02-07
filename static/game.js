@@ -3811,6 +3811,9 @@ function updateAvailableBodyParts(instructs) {
     // 检查是否有交互对象
     const hasTarget = window.hasTargetCharacter !== undefined ? window.hasTargetCharacter : true;
     
+    // 臀部子部位列表（与后端 HIP_SUB_PARTS 保持一致）
+    const HIP_SUB_PARTS = ['vagina', 'womb', 'anus', 'urethra', 'tail', 'crotch'];
+    
     // 收集所有可交互的部位（英文部位名）
     const availableParts = new Set();
     // 收集无部位的指令（body_parts为空数组）或当没有交互对象时收集所有指令
@@ -3830,6 +3833,12 @@ function updateAvailableBodyParts(instructs) {
             noBodyPartInstructs.push(instruct);
         }
     });
+    
+    // 检查是否包含臀部子部位，如果有则将臀部也设为可用
+    const hasHipSubPart = HIP_SUB_PARTS.some(subPart => availableParts.has(subPart));
+    if (hasHipSubPart) {
+        availableParts.add('hip');
+    }
     
     console.log('可交互部位(英文):', Array.from(availableParts));
     console.log('无部位指令:', noBodyPartInstructs);
@@ -4350,7 +4359,11 @@ function showInstructMenu(instructs, partName) {
     title.textContent = partName || '选择指令';
     menu.appendChild(title);
     
-    // 添加指令按钮
+    // 创建滚动容器
+    const container = document.createElement('div');
+    container.className = 'instruct-menu-container';
+    
+    // 添加指令按钮到滚动容器
     instructs.forEach(instruct => {
         const btn = document.createElement('button');
         btn.className = 'instruct-menu-btn';
@@ -4362,8 +4375,11 @@ function showInstructMenu(instructs, partName) {
             }
             menu.remove();
         };
-        menu.appendChild(btn);
+        container.appendChild(btn);
     });
+    
+    // 将滚动容器添加到菜单
+    menu.appendChild(container);
     
     // 定位菜单：优先在点击的部位位置显示
     menu.style.position = 'fixed';
@@ -4375,13 +4391,16 @@ function showInstructMenu(instructs, partName) {
         let left = rect.right + 10;
         let top = rect.top;
         
+        // 计算菜单实际高度（标题 + 容器）
+        const estimatedHeight = Math.min(instructs.length * 46 + 80, 480);  // 标题约80px，每个按钮约46px
+        
         // 确保菜单不超出屏幕右侧
         if (left + 200 > window.innerWidth) {
             left = rect.left - 210;  // 改为在左侧显示
         }
         // 确保菜单不超出屏幕底部
-        if (top + 200 > window.innerHeight) {
-            top = window.innerHeight - 220;
+        if (top + estimatedHeight > window.innerHeight) {
+            top = window.innerHeight - estimatedHeight - 10;
         }
         // 确保菜单不超出屏幕顶部
         if (top < 10) {

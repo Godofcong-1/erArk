@@ -787,7 +787,9 @@ def handle_click_body_part(data):
     
     返回值类型：无
     功能描述：接收前端的部位点击，返回该部位可执行的指令列表
-              如果点击的是臀部，则展开子部位菜单
+              如果点击的是臀部：
+              - 已选择小类时：显示该小类下所有臀部子部位的可用指令
+              - 未选择小类时：展开子部位菜单
     """
     from Script.System.Instruct_System import instruct_meta
     from Script.System.Instruct_System.instruct_category import (
@@ -800,25 +802,56 @@ def handle_click_body_part(data):
     part_name = data.get('part_name')
     logging.info(f"点击身体部位: {part_name}")
     
-    # 检查是否是臀部点击 - 展开子菜单
-    if part_name == BodyPart.HIP or part_name == "臀部":
-        # 返回臀部子部位列表供前端展示
-        sub_parts = []
-        for sub_part in HIP_SUB_PARTS:
-            sub_parts.append({
-                'part_id': sub_part,
-                'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
-            })
-        
-        socketio.emit('hip_sub_menu', {
-            'part_name': part_name,
-            'part_name_cn': BODY_PART_NAMES.get(BodyPart.HIP, "臀部"),
-            'sub_parts': sub_parts,
-        })
-        return
-    
     # 获取当前选中的交互小类
     current_minor_type = web_interaction_manager.get_current_minor_type()
+    
+    # 检查是否是臀部点击
+    if part_name == BodyPart.HIP or part_name == "臀部":
+        if current_minor_type is not None:
+            # 已选择小类时，收集该小类下所有臀部子部位的可用指令
+            all_instructs = []
+            hip_sub_parts = list(HIP_SUB_PARTS) + [BodyPart.CROTCH]  # 包含胯部
+            
+            for sub_part in hip_sub_parts:
+                instructs = web_interaction_manager.get_instructs_by_body_part(
+                    sub_part, 
+                    minor_type=current_minor_type,
+                    check_premise=False
+                )
+                for instruct_id in instructs:
+                    if instruct_id not in [i['id'] for i in all_instructs]:
+                        info = instruct_meta.get_web_instruct_info(instruct_id)
+                        if info:
+                            all_instructs.append({
+                                'id': instruct_id,
+                                'name': info['name'],
+                            })
+            
+            # 获取部位中文名
+            part_name_cn = BODY_PART_NAMES.get(BodyPart.HIP, "臀部")
+            
+            socketio.emit('body_part_clicked', {
+                'part_name': part_name,
+                'part_name_cn': part_name_cn,
+                'available_instructs': all_instructs,
+                'single_instruct': len(all_instructs) == 1,
+            })
+            return
+        else:
+            # 未选择小类时，展开子部位菜单
+            sub_parts = []
+            for sub_part in HIP_SUB_PARTS:
+                sub_parts.append({
+                    'part_id': sub_part,
+                    'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
+                })
+            
+            socketio.emit('hip_sub_menu', {
+                'part_name': part_name,
+                'part_name_cn': BODY_PART_NAMES.get(BodyPart.HIP, "臀部"),
+                'sub_parts': sub_parts,
+            })
+            return
     
     # 将中文部位名转换为英文（用于与指令的body_parts匹配）
     # 反向查找：从中文名查找英文id

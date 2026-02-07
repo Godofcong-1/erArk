@@ -512,45 +512,79 @@ def handle_click_body_part(data):
     
     参数:
     data (dict): 包含 part_name 的字典
+    
+    功能描述：接收前端的部位点击，返回该部位可执行的指令列表
+              如果点击的是臀部：
+              - 已选择小类时：显示该小类下所有臀部子部位的可用指令
+              - 未选择小类时：展开子部位菜单
     """
-    from Script.Design import instruct_meta
-    from Script.Core.constant.instruct_category import BODY_PART_NAMES
+    from Script.System.Instruct_System import instruct_meta
+    from Script.System.Instruct_System.instruct_category import (
+        BODY_PART_NAMES, 
+        BodyPart, 
+        HIP_SUB_PARTS
+    )
+    from Script.Design import web_interaction_manager
     
     part_name = data.get('part_name')
     logging.info(f"点击身体部位: {part_name}")
     
-    current_type = getattr(cache, 'current_interaction_type', None)
+    # 获取当前选中的交互小类
+    current_minor_type = web_interaction_manager.get_current_minor_type()
     
-    # 获取该部位可执行的指令
-    if current_type is not None:
-        # 有选中交互类型时，只返回该类型下的指令
-        all_instructs = instruct_meta.get_instructs_by_interaction_type_from_constant(current_type)
-        instructs = []
-        for instruct_id in all_instructs:
-            info = instruct_meta.get_web_instruct_info(instruct_id)
-            if info and part_name in info.get('body_parts', []):
-                instructs.append(instruct_id)
-    else:
-        # 没有选中时，返回所有关联该部位的指令
-        instructs = instruct_meta.get_instructs_by_body_part_from_constant(part_name)
-    
-    instruct_list = []
-    for instruct_id in instructs:
-        info = instruct_meta.get_web_instruct_info(instruct_id)
-        if info:
-            instruct_list.append({
-                'id': instruct_id,
-                'name': info['name'],
+    # 检查是否是臀部点击
+    if part_name == BodyPart.HIP or part_name == "臀部":
+        if current_minor_type is not None:
+            # 已选择小类时，收集该小类下所有臀部子部位的可用指令
+            all_instructs = []
+            hip_sub_parts = list(HIP_SUB_PARTS) + [BodyPart.CROTCH]  # 包含胯部
+            
+            for sub_part in hip_sub_parts:
+                instructs = web_interaction_manager.get_instructs_by_body_part(
+                    sub_part, 
+                    minor_type=current_minor_type,
+                    check_premise=False
+                )
+                for instruct_id in instructs:
+                    if instruct_id not in [i['id'] for i in all_instructs]:
+                        info = instruct_meta.get_web_instruct_info(instruct_id)
+                        if info:
+                            all_instructs.append({
+                                'id': instruct_id,
+                                'name': info['name'],
+                            })
+            
+            socketio.emit('body_part_clicked', {
+                'part_name': part_name,
+                'part_name_cn': BODY_PART_NAMES.get(BodyPart.HIP, "臀部"),
+                'available_instructs': all_instructs,
+                'single_instruct': len(all_instructs) == 1,
             })
+            return
+        else:
+            # 未选择小类时，展开子部位菜单
+            sub_parts = []
+            for sub_part in HIP_SUB_PARTS:
+                sub_parts.append({
+                    'part_id': sub_part,
+                    'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
+                })
+            
+            socketio.emit('hip_sub_menu', {
+                'part_name': part_name,
+                'part_name_cn': BODY_PART_NAMES.get(BodyPart.HIP, "臀部"),
+                'sub_parts': sub_parts,
+            })
+            return
     
-    part_name_cn = BODY_PART_NAMES.get(part_name, part_name)
-    
-    socketio.emit('body_part_clicked', {
-        'part_name': part_name,
-        'part_name_cn': part_name_cn,
-        'available_instructs': instruct_list,
-        'single_instruct': len(instruct_list) == 1,  # 单指令自动执行
-    })
+    # 其他部位处理逻辑...
+```
+
+**臀部子部位高亮映射（2026-02-07 新增）**：
+- 臀部（hip）是一个特殊的可点击部位，包含子部位：小穴(vagina)、子宫(womb)、后穴(anus)、尿道(urethra)、尾巴(tail)、胯部(crotch)
+- 当选择的交互小类有任何臀部子部位的指令时，臀部按钮也会高亮显示
+- 后端：`interaction_handler.py` 的 `_get_available_body_parts_by_minor_type()` 自动添加 `hip` 到可用部位
+- 前端：`game.js` 的 `updateAvailableBodyParts()` 检测子部位并高亮臀部
 ```
 
 ### 5.4 指令执行事件
@@ -1061,6 +1095,13 @@ function renderFloatingInstructButtons(instructs) {
    - 菜单默认显示在按钮右侧，超出边界时自动调整
    - 点击菜单外任意位置关闭菜单
    - 点击其他部位按钮会先关闭当前菜单再处理新部位
+   - **滚动条支持（2026-02-07新增）**：
+     - 指令按钮放入独立的滚动容器（`.instruct-menu-container`）
+     - 滚动容器最大高度：400px（约8个指令按钮）
+     - 指令数量 > 8个时自动显示滚动条
+     - 滚动条样式：8px宽，金色半透明滑块
+     - 支持鼠标滚轮和拖动滑块两种滚动方式
+     - 菜单高度根据指令数量动态计算，避免超出屏幕边界
 
 5. **重叠检测与调整**：
    - `checkAndAdjustCharacterImage()` 检测浮现指令列与角色显示区是否重叠
