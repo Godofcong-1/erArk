@@ -967,7 +967,14 @@ def handle_switch_target(data):
     
     返回值类型：无
     功能描述：接收前端的切换交互对象请求，更新玩家的交互对象，并触发UI刷新
+    
+    当被点击的角色有待显示的行为指令文本时：
+    1. 将该角色的行为文本移动到主对话框队列进行显示
+    2. 刷新该角色的数值变化时间戳，确保能正确显示浮动文本
     """
+    import time
+    from Script.UI.Panel.web_components.dialog_box import add_dialog_text
+    
     character_id = data.get('character_id')
     logging.info(f"切换交互对象: {character_id}")
     
@@ -989,6 +996,38 @@ def handle_switch_target(data):
         
         # 获取目标角色信息用于返回
         target_data = cache.character_data[character_id]
+        
+        # ========== 处理待显示的行为指令文本 ==========
+        # 检查该角色是否有待显示的 minor_dialog
+        if hasattr(cache, 'web_minor_dialog_queue') and cache.web_minor_dialog_queue:
+            # 查找该角色的 minor_dialog
+            minor_dialog_to_show = None
+            remaining_dialogs = []
+            for dialog in cache.web_minor_dialog_queue:
+                if dialog.get('character_id') == character_id:
+                    minor_dialog_to_show = dialog
+                else:
+                    remaining_dialogs.append(dialog)
+            
+            # 如果找到该角色的待显示文本，将其移动到主对话框显示
+            if minor_dialog_to_show:
+                # 将完整文本添加到主对话框队列
+                speaker_name = minor_dialog_to_show.get('speaker', target_data.name)
+                full_text = minor_dialog_to_show.get('full_text', minor_dialog_to_show.get('text', ''))
+                text_color = minor_dialog_to_show.get('text_color', 'standard')
+                add_dialog_text(speaker_name, full_text, text_color, wait_input=True, target_character_id=character_id)
+                
+                # 从 minor_dialog 队列中移除该角色的条目
+                cache.web_minor_dialog_queue = remaining_dialogs
+                logging.info(f"将角色 {target_data.name} 的行为文本移动到主对话框显示")
+        
+        # ========== 刷新该角色的数值变化时间戳 ==========
+        # 确保该角色的 value_changes 不会因为2秒超时被过滤掉
+        if hasattr(cache, 'web_value_changes') and cache.web_value_changes:
+            current_time = time.time()
+            for change in cache.web_value_changes:
+                if change.get('character_id') == character_id:
+                    change['timestamp'] = current_time
         
         # 发送切换成功事件
         socketio.emit('target_switched', {

@@ -1072,10 +1072,19 @@
 - [x] 更新玩家的交互对象（`pl_character_data.target_character_id`）
 - [x] 返回新的交互对象信息（角色名等）
 - [x] 设置刷新信号唤醒主循环（2026-02-07新增）
+- [x] 处理待显示行为文本的移动（2026-02-07新增）
+- [x] 刷新角色数值变化时间戳（2026-02-07新增）
 
 **实施记录（2026-02-07更新）**：
 - 检查目标角色是否存在
 - 更新 `target_character_id`
+- **处理待显示的行为指令文本**：
+  - 检查 `cache.web_minor_dialog_queue` 中是否有该角色的小对话框
+  - 如果有，将完整文本移动到主对话框队列进行显示
+  - 从 `minor_dialog` 队列中移除该角色的条目
+- **刷新数值变化时间戳**：
+  - 遍历 `cache.web_value_changes` 中该角色的数据
+  - 刷新时间戳为当前时间，确保不会被2秒超时过滤
 - 设置 `cache.web_need_full_refresh = True` 标记需要完整刷新
 - 设置 `button_click_response = WEB_REFRESH_SIGNAL` 触发主循环刷新
 - 返回 `target_switched` 事件通知前端切换结果
@@ -1537,8 +1546,10 @@
 - [x] 实现切换后主界面立绘同步更新
 - [x] 实现切换后身体部位按钮同步更新
 - [x] 实现切换后右上角头像列表同步更新
+- [x] 实现点击角色时显示行为文本（2026-02-07新增）
+- [x] 实现点击角色时显示数值变化（2026-02-07新增）
 
-**实施记录（2026年1月19日新增）**：
+**实施记录（2026年1月19日新增、2026-02-07更新）**：
 - **后端处理**：
   - `web_server.py` 中 `handle_switch_target()` 更新 `target_character_id`
   - 设置 `cache.web_need_full_refresh = True` 标志
@@ -1554,6 +1565,15 @@
   - `_get_target_character_info()` 返回新交互对象信息
   - `_get_scene_characters()` 自动排除新交互对象
   - `character_renderer` 返回新对象的图像和部位数据
+- **行为文本显示（2026-02-07新增）**：
+  - 在 `handle_switch_target()` 中检查 `cache.web_minor_dialog_queue`
+  - 查找被点击角色的待显示小对话框
+  - 将完整文本移动到主对话框队列进行显示
+  - 从 `minor_dialog` 队列中移除该角色的条目
+- **数值变化显示（2026-02-07新增）**：
+  - 在 `handle_switch_target()` 中遍历 `cache.web_value_changes`
+  - 刷新该角色所有数值变化的时间戳为当前时间
+  - 确保数值变化不会被2秒超时过滤，能正确显示在右侧信息栏
 
 ---
 
