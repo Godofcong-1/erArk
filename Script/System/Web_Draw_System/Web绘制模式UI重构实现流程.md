@@ -445,6 +445,31 @@
 - [x] 玩家信息区顶部内边距增加至12px，让玩家姓名和边缘有适当空隙
 - [x] 玩家姓名行下边距增加至12px，让姓名和体力行之间有更好的间距
 
+#### 3.2.9 玩家名字按钮功能（2026-02-07新增）
+- [x] 将玩家名字从span改为button元素
+- [x] 点击后执行`target_to_self`指令（与自己交互）
+- [x] 通过WebSocket发送`execute_instruct`事件
+- [x] 指令执行后自动触发`WEB_REFRESH_SIGNAL`刷新主界面
+- [x] 按钮样式：黄色边框(#ffd700)、灰色底色(#3a3a4a)、保持原有字体大小和颜色
+- [x] 添加`.player-name-btn` CSS样式
+
+**实施记录（2026年2月7日）**：
+- **问题背景**：玩家需要便捷的方式触发"与自己交互"指令
+- **解决方案**：将玩家名字改为可点击按钮
+- **前端实现**：
+  - 修改 `createPlayerInfoPanel()` 函数，将玩家名字从 `<span>` 改为 `<button>`
+  - 点击事件发送 `execute_instruct` WebSocket消息，`instruct_id` 为 `target_to_self`
+  - 按钮添加 `title` 属性，显示"点击与自己交互"提示
+- **后端处理**：
+  - 复用现有的 `handle_execute_instruct()` 处理函数
+  - 指令执行后自动设置 `WEB_REFRESH_SIGNAL` 刷新信号
+- **CSS样式**：
+  - `.player-name-btn` 类名
+  - 黄色边框 `border: 1px solid #ffd700`
+  - 灰色底色 `background-color: #3a3a4a`
+  - 文字保持黄色 `color: #ffd700`，字体大小 `font-size: 1.2em`
+  - 悬停时的箱阴影效果 `box-shadow: 0 0 5px rgba(255, 215, 0, 0.3)`
+
 #### 3.2.8 Web模式结算信息显示优化（2026-02-03新增，2026-02-07更新）
 - [x] 修改 `character_behavior.py`，在Web模式下跳过 `settle_panel.draw()` 调用
 - [x] Web模式下不直接打印结算文本，改为通过浮动文本显示
@@ -997,10 +1022,41 @@
 - [x] 接收 `{character_id}` 参数
 - [x] 更新玩家的交互对象（`pl_character_data.target_character_id`）
 - [x] 返回新的交互对象信息（角色名等）
+- [x] 设置刷新信号唤醒主循环（2026-02-07新增）
 
-**实施记录**：
+**实施记录（2026-02-07更新）**：
 - 检查目标角色是否存在
 - 更新 `target_character_id`
+- 设置 `cache.web_need_full_refresh = True` 标记需要完整刷新
+- 设置 `button_click_response = WEB_REFRESH_SIGNAL` 触发主循环刷新
+- 返回 `target_switched` 事件通知前端切换结果
+
+#### 5.2.4.1 无交互对象时的显示逻辑（2026-02-07新增）
+
+**交互对象判断逻辑**：
+- 当 `target_character_id == 0`（等于玩家自己的cid）时，表示玩家没有交互对象
+- 当 `target_character_id > 0` 时，表示有交互对象
+- 当 `target_character_id < 0` 时，表示无效
+
+**无交互对象时隐藏的内容**：
+- 正中间的交互对象角色立绘图片和相关交互
+- 最右边的交互对象角色信息
+- 上方中间的交互对象其他信息（服装/身体/群交/隐奸栏）
+
+**始终显示的内容**：
+- 上方右边的场景内其他角色头像区（显示场景内除玩家外的所有角色）
+
+**后端实现**：
+- [x] `in_scene_panel_web.py` 的 `_get_target_info()` 在 `target_id <= 0` 时返回空字典
+- [x] `status_panel.py` 的 `get_target_info()` 在 `character_id <= 0` 时返回空字典
+- [x] `status_panel.py` 的 `get_target_extra_info()` 在 `character_id <= 0` 时返回空字典
+- [x] `character_renderer.py` 的 `get_character_image_data()` 在 `character_id <= 0` 时返回空字典
+- [x] `_get_scene_characters()` 在没有交互对象时只排除玩家，不排除 target_id
+
+**前端实现**：
+- [x] `game.js` 的 `renderNewUIContent()` 检查 `target_info` 是否为空对象
+- [x] 当 `target_info` 为空对象时，不创建角色立绘区和交互对象信息区
+- [x] 当 `target_extra_info` 为空对象时，不创建交互对象附加信息区
 
 #### 5.2.5 新增API端点（补充）
 - [x] 添加 `get_interaction_types` WebSocket事件处理器 - 获取可用交互类型列表
@@ -1022,7 +1078,7 @@
 - [x] 实现 `switchTarget(characterId)`
 - [x] 实现 `clickPanelTab(tabId)`
 
-#### 5.3.3 无部位指令浮现按钮（2026-01-18新增，2026-01-18更新）
+#### 5.3.3 无部位指令浮现按钮（2026-01-18新增，2026-01-19更新）
 - [x] 修改 `updateAvailableBodyParts()` 函数区分有部位和无部位指令
 - [x] 创建 `renderFloatingInstructButtons()` 函数渲染浮现按钮
 - [x] ~~在 `createInteractionTypePanel()` 中添加浮现按钮容器~~ → 改为在 `renderNewUIContent()` 中添加到 `mainScene`
@@ -1031,6 +1087,7 @@
 - [x] 切换大类时清空浮现按钮和身体部位高亮
 - [x] 浮现按钮容器位置修正：从交互面板内部移到 `mainScene` 右侧（2026-01-18）
 - [x] 浮现按钮换列布局修正：使用 `max-height: min(calc(100vh - 200px), 500px)` 基于视口高度限制（2026-01-18）
+- [x] **无交互对象时的特殊处理**：当玩家没有交互对象（交互对象是自己）时，所有指令（包括身体部位指令）都作为浮现按钮显示（2026-01-19）
 
 **实施记录（2026-01-18）**：
 - **问题背景**：对于不涉及身体部位的指令（如"聊天"），原有设计没有显示入口
@@ -1049,6 +1106,20 @@
   - 遵循交互类型筛选：只显示当前选中小类下的无部位指令
   - 点击直接执行指令，无需二次确认
   - 切换大类时自动清空，等待选择小类后重新渲染
+
+**无交互对象时的特殊处理（2026-01-19新增）**：
+- **问题背景**：当玩家没有交互对象时（`hasTargetCharacter === false`），角色立绘不显示，导致身体部位指令无法访问
+- **解决方案**：
+  - 在 `renderNewUIContent()` 中存储 `hasTargetCharacter` 到 `window.hasTargetCharacter`，供其他函数访问
+  - 修改 `updateAvailableBodyParts()` 函数：
+    - 检测 `window.hasTargetCharacter` 标志
+    - **有交互对象时**：身体部位指令加入 `availableParts`（原有行为），用于高亮身体部位按钮
+    - **无交互对象时**：所有指令（包括身体部位指令）都加入 `noBodyPartInstructs`，统一作为浮现按钮显示
+  - 这保证了在没有交互对象时，所有指令仍然可以通过浮现按钮访问
+- **实施细节**：
+  - 在 `updateAvailableBodyParts()` 中添加 `const hasTarget = window.hasTargetCharacter !== undefined ? window.hasTargetCharacter : true;`
+  - 对于有 `body_parts` 的指令，根据 `hasTarget` 决定是加入 `availableParts` 还是 `noBodyPartInstructs`
+  - 无 `body_parts` 的指令始终加入 `noBodyPartInstructs`
 
 #### 5.3.4 身体部位按钮匹配机制（2026-01-18新增）
 - [x] 身体部位按钮添加 `data-base-part` 属性（英文部位名）

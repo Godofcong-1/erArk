@@ -968,6 +968,12 @@ def handle_switch_target(data):
         # 设置一个标志让 InScenePanelWeb 知道需要发送完整状态
         cache.web_need_full_refresh = True
         
+        # 设置刷新信号，通知主面板循环刷新数据
+        # 这会唤醒 askfor_all 并让主循环进入下一次迭代，重新收集并发送最新数据
+        global button_click_response
+        with state_lock:
+            button_click_response = WEB_REFRESH_SIGNAL
+        
     except Exception as e:
         logging.error(f"切换交互对象失败: {e}")
         socketio.emit('target_switched', {

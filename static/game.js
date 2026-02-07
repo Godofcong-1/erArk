@@ -2290,7 +2290,8 @@ function renderNewUIContent(container, gameState) {
     }
     
     // 交互对象附加信息区
-    if (gameState.target_extra_info) {
+    // 只有存在交互对象（target_extra_info 不是空对象）时才创建
+    if (gameState.target_extra_info && Object.keys(gameState.target_extra_info).length > 0) {
         const targetExtraInfo = createTargetExtraInfoPanel(gameState.target_extra_info);
         topInfoArea.appendChild(targetExtraInfo);
     }
@@ -2336,14 +2337,19 @@ function renderNewUIContent(container, gameState) {
     mainScene.appendChild(floatingButtonsContainer);
     
     // 角色立绘区（中央）
-    if (gameState.target_info && gameState.target_info.image_data) {
+    // 检查是否有交互对象（target_info 不是空对象且有 image_data）
+    const hasTargetCharacter = gameState.target_info && Object.keys(gameState.target_info).length > 0;
+    // 存储到全局变量，供其他函数使用
+    window.hasTargetCharacter = hasTargetCharacter;
+    if (hasTargetCharacter && gameState.target_info.image_data && Object.keys(gameState.target_info.image_data).length > 0) {
         const showAllBodyParts = gameState.extra_info ? gameState.extra_info.show_all_body_parts : false;
         const characterDisplay = createCharacterDisplay(gameState.target_info, showAllBodyParts);
         mainScene.appendChild(characterDisplay);
     }
     
     // 交互对象信息区（右侧）
-    if (gameState.target_info) {
+    // 只有存在交互对象（target_info 不是空对象）时才创建
+    if (hasTargetCharacter) {
         const targetInfoPanel = createTargetInfoPanel(gameState.target_info);
         mainScene.appendChild(targetInfoPanel);
     }
@@ -2383,12 +2389,30 @@ function createPlayerInfoPanel(playerInfo) {
     const panel = document.createElement('div');
     panel.className = 'new-ui-player-info';
     
-    // 第一行：玩家名字 + 昵称
+    // 第一行：玩家名字按钮 + 昵称
     const nameLine = document.createElement('div');
     nameLine.className = 'player-name-line';
-    nameLine.innerHTML = `<span class="player-name">${playerInfo.name || ''}</span>`;
+    
+    // 玩家名字作为可点击按钮，点击后执行"与自己交互"指令
+    const nameBtn = document.createElement('button');
+    nameBtn.className = 'player-name-btn';
+    nameBtn.textContent = playerInfo.name || '';
+    nameBtn.title = '点击与自己交互';
+    nameBtn.onclick = () => {
+        console.log('[DEBUG] Player name button clicked, executing target_to_self');
+        if (window.socket && window.socket.connected) {
+            window.socket.emit('execute_instruct', { instruct_id: 'target_to_self' });
+        } else {
+            console.warn('[DEBUG] Socket not connected, cannot execute target_to_self');
+        }
+    };
+    nameLine.appendChild(nameBtn);
+    
     if (playerInfo.nickname) {
-        nameLine.innerHTML += `<span class="player-nickname">${playerInfo.nickname}</span>`;
+        const nicknameSpan = document.createElement('span');
+        nicknameSpan.className = 'player-nickname';
+        nicknameSpan.textContent = playerInfo.nickname;
+        nameLine.appendChild(nicknameSpan);
     }
     panel.appendChild(nameLine);
     
@@ -3784,15 +3808,23 @@ function updateMinorTypeButtons(minorTypes, rememberedMinorType) {
  * @param {Array} instructs - 指令列表，每个指令包含body_parts
  */
 function updateAvailableBodyParts(instructs) {
+    // 检查是否有交互对象
+    const hasTarget = window.hasTargetCharacter !== undefined ? window.hasTargetCharacter : true;
+    
     // 收集所有可交互的部位（英文部位名）
     const availableParts = new Set();
-    // 收集无部位的指令（body_parts为空数组）
+    // 收集无部位的指令（body_parts为空数组）或当没有交互对象时收集所有指令
     const noBodyPartInstructs = [];
     
     instructs.forEach(instruct => {
         if (instruct.body_parts && Array.isArray(instruct.body_parts) && instruct.body_parts.length > 0) {
-            // 有部位的指令，添加到可交互部位集合
-            instruct.body_parts.forEach(part => availableParts.add(part));
+            if (hasTarget) {
+                // 有交互对象：有部位的指令，添加到可交互部位集合
+                instruct.body_parts.forEach(part => availableParts.add(part));
+            } else {
+                // 没有交互对象：有部位的指令也添加到浮现按钮列表
+                noBodyPartInstructs.push(instruct);
+            }
         } else {
             // 无部位的指令，添加到浮现按钮列表
             noBodyPartInstructs.push(instruct);

@@ -40,7 +40,17 @@ class CharacterRenderer:
         
         Returns:
         dict -- 包含角色图像各图层路径和部位位置数据的字典
+               如果没有交互对象（character_id <= 0），返回空字典
+        
+        说明：
+        当 character_id == 0 时，表示玩家没有交互对象（交互对象是自己）
+        当 character_id > 0 时，表示有交互对象
+        当 character_id < 0 时，表示无效
         """
+        # 当没有交互对象时，返回空字典
+        if character_id <= 0:
+            return {}
+        
         # 尝试使用缓存
         if character_id in self._image_path_cache:
             return self._image_path_cache[character_id]

@@ -285,9 +285,15 @@ class InScenePanelWeb:
         target_id -- 交互对象ID
         
         Returns:
-        Dict -- 交互对象信息
+        Dict -- 交互对象信息，如果没有交互对象则返回空字典
+        
+        说明：
+        当 target_id == 0 时，表示玩家没有交互对象（交互对象是自己）
+        当 target_id > 0 时，表示有交互对象
+        当 target_id < 0 时，表示无效（返回空字典）
         """
-        if target_id < 0:
+        # 当交互对象是玩家自己（id=0）或无效值时，返回空字典
+        if target_id <= 0:
             return {}
         
         # 基础信息
@@ -307,10 +313,16 @@ class InScenePanelWeb:
         
         Returns:
         List[Dict] -- 角色头像信息列表
+        
+        说明：
+        始终排除玩家(id=0)
+        当存在交互对象（target_id > 0）时，也排除交互对象
+        当没有交互对象（target_id == 0，即交互对象是自己）时，只排除玩家
         """
-        # 排除玩家(0)和当前交互对象
+        # 排除玩家(0)
         exclude_ids = [0]
-        if self._current_target_id >= 0:
+        # 当存在交互对象（不是玩家自己）时，也排除交互对象
+        if self._current_target_id > 0:
             exclude_ids.append(self._current_target_id)
         
         return self.character_renderer.get_scene_characters_avatars(exclude_ids)

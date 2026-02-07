@@ -88,8 +88,17 @@ class StatusPanel:
         character_id -- 角色ID
         
         Returns:
-        dict -- 交互对象信息数据
+        dict -- 交互对象信息数据，如果没有交互对象则返回空字典
+        
+        说明：
+        当 character_id == 0 时，表示玩家没有交互对象（交互对象是自己）
+        当 character_id > 0 时，表示有交互对象
+        当 character_id < 0 时，表示无效
         """
+        # 当没有交互对象时（交互对象是自己或无效值），返回空字典
+        if character_id <= 0:
+            return {}
+        
         char_data: game_type.Character = cache.character_data.get(character_id)
         if not char_data:
             return self._get_empty_target_info()
@@ -360,8 +369,18 @@ class StatusPanel:
         
         Returns:
         dict -- 附加信息数据，包含各栏位的可见性和展开状态
+               如果没有交互对象（character_id <= 0），返回空字典
+        
+        说明：
+        当 character_id == 0 时，表示玩家没有交互对象（交互对象是自己）
+        当 character_id > 0 时，表示有交互对象
+        当 character_id < 0 时，表示无效
         """
         from Script.Design import handle_premise
+        
+        # 当没有交互对象时，返回空字典
+        if character_id <= 0:
+            return {}
         
         # 获取各栏位的展开状态（用于控制内容是否显示）
         clothing_expanded = cache.scene_panel_show[1] if hasattr(cache, 'scene_panel_show') else True
