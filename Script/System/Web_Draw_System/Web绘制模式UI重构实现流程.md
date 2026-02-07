@@ -412,7 +412,7 @@
 - [x] 玩家信息区顶部内边距增加至12px，让玩家姓名和边缘有适当空隙
 - [x] 玩家姓名行下边距增加至12px，让姓名和体力行之间有更好的间距
 
-#### 3.2.8 Web模式结算信息显示优化（2026-02-03新增）
+#### 3.2.8 Web模式结算信息显示优化（2026-02-03新增，2026-02-07更新）
 - [x] 修改 `character_behavior.py`，在Web模式下跳过 `settle_panel.draw()` 调用
 - [x] Web模式下不直接打印结算文本，改为通过浮动文本显示
 - [x] 玩家数值变化通过 `get_player_info()` 的 `value_changes` 字段传递到前端
@@ -421,6 +421,33 @@
   - 玩家：体力、气力、理智、精液在对应数值槽位置，其他在特殊状态下方
   - 交互对象：在右侧交互对象信息栏的对应位置
 - [x] TK模式保持原有行为不变
+- [x] **玩家状态变化过滤**（2026-02-07新增）
+  - 修改 `settle_behavior.py` 的 `collect_web_value_changes()` 函数
+  - 玩家（character_id == 0）不再收集常规状态变化（部位快感、好意、快乐等）
+  - 仅保留体力、气力、理智、精液、经验的变化显示
+  - 交互对象仍然显示所有状态变化
+
+**实施记录（2026年2月7日更新）**：
+- **浮动文本位置优化**（2026年2月7日新增）：
+  - 修改 `game.js` 的 `createInlineFloatingText()` 函数，添加 `end-inline` 位置类型
+  - 状态条类数值变化（体力、气力、理智、精液、好感、信赖、催眠度）改为在数值后面显示
+  - 格式示例：`100/200 +20`（当前值/上限值 空格+变化量）
+  - 修改 `createPlayerFloatingValueChanges()` 和 `createFloatingValueChanges()`：
+    - 玩家：体力、气力、理智、精液使用 `end-inline` 位置
+    - 交互对象：体力、气力、好感、信赖、催眠度使用 `end-inline` 位置
+  - CSS添加 `.position-end-inline` 样式和 `endInlineFadeIn` 动画
+  - 浮动文本显示为静态内联元素，不使用绝对定位
+  - 浮动文本前添加空格分隔，保持可读性
+- **玩家状态变化过滤**：
+  - 修改 `settle_behavior.py` 的 `collect_web_value_changes()` 函数
+  - 添加 `if character_id != 0:` 条件判断
+  - 玩家不再收集 `status_data`（状态变化，包括快感状态和其他状态如好意、快乐等）
+  - 目的：玩家信息区不需要显示部位快感、好意、快乐等常规状态变化，只显示关键数值变化
+- **快速使用药剂浮动文本优化**：
+  - 修改 `web_server.py` 的 `/api/quick_use_drug` API
+  - 在使用药剂前记录旧值，使用后计算变化并添加到 `cache.web_value_changes`
+  - 前端 `updatePlayerInfoUI()` 使用后端返回的 `value_changes` 显示浮动文本
+  - 不再由前端自己计算数值变化，统一由后端管理
 
 **实施记录（2026年2月3日更新）**：
 - **结算信息显示机制重构**：
@@ -451,18 +478,23 @@
   - 精液槽加号按钮：快速使用精力剂
   - 按钮样式为小型圆角按钮，带悬停效果
   - **按钮点击后立刻生效并刷新界面**
-    - 后端 `/api/quick_use_drug` 返回更新后的完整玩家信息
-    - 前端 `updatePlayerInfoUI()` 函数计算数值变化并局部更新UI
+    - 后端 `/api/quick_use_drug` 返回更新后的完整玩家信息（包含 `value_changes`）
+    - 前端 `updatePlayerInfoUI()` 函数使用后端返回的 `value_changes` 显示浮动文本
     - 无需刷新整个页面，只更新玩家信息区
-- **数值变化浮动文本显示**（2026-01-28新增）
+- **数值变化浮动文本显示**（2026-01-28新增，2026-02-07更新）
   - 参考右侧交互对象信息区的浮动文本实现逻辑
   - 在体力、气力、理智、精液数值变化时显示浮动文本
   - 浮动文本显示颜色：体力(红)、气力(绿)、理智(蓝)、精液(黄)
   - 浮动文本自动在15秒后淡出消失
+  - **实现方式改进**（2026-02-07更新）：
+    - 后端 `/api/quick_use_drug` 直接将数值变化记录到 `cache.web_value_changes`
+    - 通过 `get_player_info()` 的 `value_changes` 字段传递到前端
+    - 前端 `updatePlayerInfoUI()` 直接使用后端返回的数据，不再自己计算变化量
+    - `calculatePlayerValueChanges()` 函数已废弃（保留但不再使用）
   - 实现细节：
     - `createImageStatusBar` 和 `createImageStatusBarWithButton` 添加 `data-field` 属性
-    - `calculatePlayerValueChanges` 通过对比旧值和新值计算变化量
-    - `updatePlayerInfoUI` 在更新UI后调用 `createFloatingValueChanges` 显示浮动文本
+    - `updatePlayerInfoUI` 使用 `playerInfo.value_changes` 数据
+    - `createPlayerFloatingValueChanges` 显示浮动文本
     - CSS添加 `position: relative` 为浮动文本提供定位上下文
 - **CSS间距优化**
   - `.new-ui-player-info` 顶部内边距从8px增加至12px
@@ -1228,9 +1260,11 @@
   - 只返回最近2秒内的变化数据，避免显示过时信息
   - 清理超过5秒的旧数据，防止缓存膨胀
   - 获取后移除对应角色的数据，避免重复显示
-- **浮动文本位置调整（2026年1月21日）**：
-  - 体力变化：显示在体力条和气力条的中间位置（`position-hp-middle` 类）
-  - 气力/好感/信赖等：下移一行显示，避免遮挡当前数值（`position-below` 类）
+- **浮动文本位置调整（2026年1月21日，2026年2月7日更新）**：
+  - **状态条类数值变化**（2026年2月7日更新）：
+    - 体力、气力、理智、精液、好感、信赖、催眠度：显示在数值后面（`position-end-inline` 类）
+    - 格式示例：`100/200 +20`（当前值/上限值 +变化量）
+    - 不再下移一行或显示在特殊位置，直接作为内联文本显示
   - 状态栏数值变化：位置不变，在对应状态项右侧显示（`position-inline` 类）
   - 经验值/其他变化：在面板底部统一显示（`bottom-floating-container`）
 - **浮动文本颜色系统（2026年1月21日）**：
@@ -1263,8 +1297,9 @@
 - **CSS样式**：
   - `.inline-floating-text`：基础浮动文本样式
   - `.position-inline`：状态栏内联显示（右侧居中）
-  - `.position-hp-middle`：体力变化位置（bottom: 0）
-  - `.position-below`：下移一行位置（top: 100%）
+  - `.position-end-inline`：数值后面显示（用于状态条类，2026年2月7日新增）
+  - `.position-hp-middle`：体力变化位置（已废弃，2026年2月7日）
+  - `.position-below`：下移一行位置（已废弃，2026年2月7日）
   - `.bottom-floating-container`：底部容器，flex布局横向排列
   - `.bottom-floating-text`：底部浮动文本，显示名称+数值
 

@@ -917,22 +917,24 @@ def collect_web_value_changes(change_data, character_id: int):
         })
     
     # 收集状态变化
-    for status_id, status_value in change_data.status_data.items():
-        if status_value != 0:
-            state_name = game_config.config_character_state[status_id].name
-            # 快感类状态
-            if game_config.config_character_state[status_id].type == 0:
-                state_name += _("快感")
-            # 获取状态对应的颜色
-            state_color = rich_text.get_chara_state_rich_color(status_id)
-            cache.web_value_changes.append({
-                'character_id': character_id,
-                'field': f'status_{status_id}',
-                'field_name': state_name,
-                'value': int(status_value),
-                'color': state_color,
-                'timestamp': timestamp
-            })
+    # 玩家（character_id == 0）不收集状态变化，因为玩家信息区不需要显示部位快感、好意、快乐等变化
+    if character_id != 0:
+        for status_id, status_value in change_data.status_data.items():
+            if status_value != 0:
+                state_name = game_config.config_character_state[status_id].name
+                # 快感类状态
+                if game_config.config_character_state[status_id].type == 0:
+                    state_name += _("快感")
+                # 获取状态对应的颜色
+                state_color = rich_text.get_chara_state_rich_color(status_id)
+                cache.web_value_changes.append({
+                    'character_id': character_id,
+                    'field': f'status_{status_id}',
+                    'field_name': state_name,
+                    'value': int(status_value),
+                    'color': state_color,
+                    'timestamp': timestamp
+                })
     
     # 收集经验变化
     for exp_id, exp_value in change_data.experience.items():

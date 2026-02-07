@@ -363,7 +363,9 @@ def quick_use_drug():
     
     返回值类型：JSON
     功能描述：快速使用玩家拥有的理智药或精力剂
+    数值变化通过 cache.web_value_changes 传递给前端显示浮动文本
     """
+    import time
     from Script.Core import cache_control
     from Script.UI.Panel.see_item_info_panel import use_drug, auto_use_sanity_drug
     cache = cache_control.cache
@@ -378,6 +380,10 @@ def quick_use_drug():
         pl_data = cache.character_data.get(0)
         if not pl_data:
             return jsonify({"success": False, "message": "玩家数据不存在"})
+        
+        # 记录使用前的数值
+        old_sanity = pl_data.sanity_point
+        old_semen = pl_data.semen_point
         
         if drug_type == 'sanity':
             # 使用理智药
@@ -403,7 +409,38 @@ def quick_use_drug():
             use_drug(11)
             message = "已使用精力剂"
         
-        # 获取更新后的玩家信息
+        # 计算数值变化并添加到 web_value_changes
+        timestamp = time.time()
+        
+        # 确保 web_value_changes 列表存在
+        if not hasattr(cache, 'web_value_changes') or cache.web_value_changes is None:
+            cache.web_value_changes = []
+        
+        # 记录理智变化
+        sanity_change = pl_data.sanity_point - old_sanity
+        if sanity_change != 0:
+            cache.web_value_changes.append({
+                'character_id': 0,
+                'field': 'sanity_point',
+                'field_name': '理智',
+                'value': int(sanity_change),
+                'color': 'sanity',
+                'timestamp': timestamp
+            })
+        
+        # 记录精液变化
+        semen_change = pl_data.semen_point - old_semen
+        if semen_change != 0:
+            cache.web_value_changes.append({
+                'character_id': 0,
+                'field': 'semen_point',
+                'field_name': '精液',
+                'value': int(semen_change),
+                'color': 'semen',
+                'timestamp': timestamp
+            })
+        
+        # 获取更新后的玩家信息（包含 value_changes）
         from Script.UI.Panel.web_components.status_panel import StatusPanel
         status_panel = StatusPanel()
         updated_player_info = status_panel.get_player_info()
@@ -418,6 +455,7 @@ def quick_use_drug():
     except Exception as e:
         logging.error(f"使用药剂失败: {str(e)}")
         return jsonify({"success": False, "message": f"使用失败: {str(e)}"})
+
 
 @app.route('/api/toggle_cloth', methods=['POST'])
 def toggle_cloth():

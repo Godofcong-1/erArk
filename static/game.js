@@ -2613,7 +2613,7 @@ function handleQuickUseDrug(type) {
 
 /**
  * 更新玩家信息区UI
- * @param {Object} playerInfo - 更新后的玩家信息
+ * @param {Object} playerInfo - 更新后的玩家信息（包含 value_changes）
  */
 function updatePlayerInfoUI(playerInfo) {
     console.log('[更新玩家信息UI]', playerInfo);
@@ -2625,8 +2625,8 @@ function updatePlayerInfoUI(playerInfo) {
         return;
     }
     
-    // 计算数值变化
-    const valueChanges = calculatePlayerValueChanges(playerInfoPanel, playerInfo);
+    // 使用后端返回的 value_changes 数据
+    const valueChanges = playerInfo.value_changes || [];
     
     // 重新创建玩家信息面板
     const newPanel = createPlayerInfoPanel(playerInfo);
@@ -2634,10 +2634,10 @@ function updatePlayerInfoUI(playerInfo) {
     // 替换旧面板
     playerInfoPanel.parentNode.replaceChild(newPanel, playerInfoPanel);
     
-    // 显示浮动文本
+    // 显示浮动文本（使用玩家专用的浮动文本函数）
     if (valueChanges.length > 0) {
         setTimeout(() => {
-            createFloatingValueChanges(newPanel, valueChanges);
+            createPlayerFloatingValueChanges(newPanel, valueChanges);
         }, 50);
     }
     
@@ -4570,29 +4570,29 @@ function createFloatingValueChanges(panel, valueChanges) {
         
         // 根据字段类型查找对应元素
         if (field === 'hit_point') {
-            // 体力：显示在体力和气力的中间位置
+            // 体力：显示在数值后面
             targetElement = panel.querySelector('[data-field="hit_point"]');
-            positionType = 'hp_middle';
+            positionType = 'end-inline';
         } else if (field === 'mana_point') {
-            // 气力：下移一行显示
+            // 气力：显示在数值后面
             targetElement = panel.querySelector('[data-field="mana_point"]');
-            positionType = 'below';
+            positionType = 'end-inline';
         } else if (field === 'favorability') {
-            // 好感：下移一行显示
+            // 好感：显示在数值后面
             targetElement = panel.querySelector('[data-field="favorability"]');
-            positionType = 'below';
+            positionType = 'end-inline';
         } else if (field === 'trust') {
-            // 信赖：下移一行显示
+            // 信赖：显示在数值后面
             targetElement = panel.querySelector('[data-field="trust"]');
-            positionType = 'below';
+            positionType = 'end-inline';
         } else if (field === 'hypnosis_degree') {
-            // 催眠度：下移一行显示
+            // 催眠度：显示在数值后面
             targetElement = panel.querySelector('[data-field="hypnosis_degree"]');
             if (!targetElement) {
                 unmatchedChanges.push({ displayName, totalValue, colorName });
                 continue;
             }
-            positionType = 'below';
+            positionType = 'end-inline';
         } else if (field === 'eja_point' || field === 'sanity_point') {
             // 射精欲、理智：下移一行显示
             unmatchedChanges.push({ displayName, totalValue, colorName });
@@ -4633,7 +4633,7 @@ function createFloatingValueChanges(panel, valueChanges) {
  * @param {string} displayName - 显示名称
  * @param {number} totalValue - 数值变化总量
  * @param {string} colorName - 颜色名称
- * @param {string} positionType - 位置类型：'inline'(内联), 'below'(下方), 'hp_middle'(体力气力中间)
+ * @param {string} positionType - 位置类型：'inline'(内联), 'below'(下方), 'hp_middle'(体力气力中间), 'end-inline'(数值后面)
  * @param {HTMLElement} panel - 面板容器（用于hp_middle定位）
  */
 function createInlineFloatingText(targetElement, displayName, totalValue, colorName, positionType, panel) {
@@ -4651,12 +4651,15 @@ function createInlineFloatingText(targetElement, displayName, totalValue, colorN
     const color = RICH_TEXT_COLORS[colorName] || RICH_TEXT_COLORS['standard'];
     floatText.style.color = color;
     
-    // 设置文本内容（带符号）
+    // 设置文本内容（带符号和空格）
     const sign = totalValue > 0 ? '+' : '';
-    floatText.textContent = `${sign}${totalValue}`;
+    floatText.textContent = ` ${sign}${totalValue}`;
     
     // 根据位置类型设置不同的定位
-    if (positionType === 'hp_middle') {
+    if (positionType === 'end-inline') {
+        // 显示在数值后面（用于状态条）
+        floatText.classList.add('position-end-inline');
+    } else if (positionType === 'hp_middle') {
         // 体力：显示在体力和气力的中间位置
         floatText.classList.add('position-hp-middle');
     } else if (positionType === 'below') {
@@ -4763,11 +4766,8 @@ function createPlayerFloatingValueChanges(panel, valueChanges) {
             const targetElement = panel.querySelector(`[data-field="${field}"]`);
             
             if (targetElement) {
-                // 体力、气力、理智、精液在对应数值槽位置显示
-                let positionType = 'below'; // 默认下方显示
-                if (field === 'hit_point') {
-                    positionType = 'hp_middle'; // 体力显示在特殊位置
-                }
+                // 体力、气力、理智、精液在数值后面显示
+                let positionType = 'end-inline';
                 createInlineFloatingText(targetElement, displayName, totalValue, colorName, positionType, panel);
             } else {
                 // 未找到元素，放到未匹配列表

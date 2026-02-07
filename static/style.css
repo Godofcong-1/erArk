@@ -1866,6 +1866,16 @@ body {
     transform: translateY(-50%);
 }
 
+/* 数值后面显示（用于状态条类，如体力、气力、理智、精液、好感、信赖等） */
+.inline-floating-text.position-end-inline {
+    position: static;
+    display: inline;
+    margin-left: 0;
+    padding-left: 0;
+    transform: none;
+    animation: endInlineFadeIn 0.4s ease-out forwards;
+}
+
 /* 体力：显示在体力和气力的中间位置 */
 .inline-floating-text.position-hp-middle {
     right: 0;
@@ -1892,6 +1902,15 @@ body {
     to {
         opacity: 1;
         transform: translateY(var(--float-end-offset, 0px));
+    }
+}
+
+@keyframes endInlineFadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
     }
 }
 
