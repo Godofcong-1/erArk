@@ -12,6 +12,7 @@ Web模式专用UI组件包
 - tab_menu: 选项卡菜单组件
 - body_part_button: 身体部位按钮组件
 - settlement_manager: 结算阶段管理组件
+- image_processor: 图片处理组件（透明区域裁切和缓存）
 """
 
 from Script.UI.Panel.web_components.scene_renderer import SceneRenderer
@@ -30,3 +31,10 @@ from Script.UI.Panel.web_components.status_panel import StatusPanel
 from Script.UI.Panel.web_components.tab_menu import TabMenu, MAIN_PANEL_TAB_ID
 from Script.UI.Panel.web_components.body_part_button import BodyPartButton
 from Script.UI.Panel.web_components.settlement_manager import SettlementManager, SettlementPhase
+from Script.UI.Panel.web_components.image_processor import (
+    ImageProcessor,
+    image_processor,
+    get_cropped_image,
+    clear_image_cache,
+    is_image_processor_available,
+)

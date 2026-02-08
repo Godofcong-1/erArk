@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月7日
+**最后更新**：2026年2月8日
 
 ---
 
@@ -974,6 +974,83 @@
 - [x] 实现图层加载和绘制
 - [x] 实现角色居中显示
 - [x] 保存渲染变换信息供部位按钮使用
+
+#### 4.2.3 角色立绘透明区域裁切（2026-02-08新增）✅
+
+**功能描述**：自动裁切角色立绘图片四周的透明区域，优化显示效果
+
+##### 后端实现
+- [x] 创建 `Script/UI/Panel/web_components/image_processor.py` 图片处理模块
+- [x] 实现 `ImageProcessor` 类（单例模式）
+- [x] 实现LRU缓存机制（最大10张图片）
+  - [x] 使用 `OrderedDict` 维护访问顺序
+  - [x] 缓存命中时更新访问顺序（移到末尾）
+  - [x] 缓存已满时删除最旧的图片
+- [x] 实现 `get_cropped_image()` 方法
+  - [x] 使用PIL的 `getbbox()` 检测非透明区域边界
+  - [x] 裁切图片并转换为PNG字节数据
+  - [x] 返回裁切后图片和元数据（原始尺寸、裁切后尺寸、偏移量）
+- [x] 实现 `clear_cache()` 方法（用于存档时清理）
+- [x] 在 `__init__.py` 中导出新模块
+
+##### API路由
+- [x] 在 `web_server.py` 中添加 `/api/cropped_image/<path:filename>` 路由
+- [x] 从响应头返回裁切元数据：
+  - `X-Original-Width`、`X-Original-Height`
+  - `X-Cropped-Width`、`X-Cropped-Height`
+  - `X-Offset-X`、`X-Offset-Y`
+- [x] 如果PIL不可用，自动回退到原始图片
+
+##### 存档清理
+- [x] 修改 `save_handle.py` 的 `establish_save_linux()` 函数
+- [x] 在保存存档前调用 `clear_image_cache()` 清理图片缓存
+
+##### 前端实现
+- [x] 修改 `game.js` 的 `createCharacterDisplay()` 函数
+  - [x] 使用 `fetch()` 加载裁切图片API
+  - [x] 从响应头解析裁切元数据
+  - [x] 将元数据保存到容器元素的 `dataset.cropMetadata`
+  - [x] 图片加载完成后调用 `adjustBodyPartsLayerForCrop()`（使用 requestAnimationFrame 确保渲染尺寸已确定）
+  - [x] 如果裁切API失败，回退到原始图片
+- [x] 修改 `createBodyPartsLayer()` 函数（2026-02-08更新）
+  - [x] 保存原图坐标（像素值）到按钮的 `data-orig-x`、`data-orig-y` 属性
+  - [x] 保存原始大小百分比到按钮的 `data-orig-size-percent` 属性
+  - [x] 保存数据图片尺寸到layer的 `data-data-image-width`、`data-data-image-height` 属性（用于坐标系转换）
+- [x] 修改 `adjustBodyPartsLayerForCrop()` 函数（2026-02-08更新）
+  - [x] 获取图片实际渲染尺寸（`img.offsetWidth`、`img.offsetHeight`）
+  - [x] 获取图片相对于容器的偏移量（使用 `getBoundingClientRect()`）
+  - [x] 设置 layer 尺寸和位置为像素值，精确覆盖图片（2026-02-08修复）
+  - [x] 支持数据坐标系与实际原图坐标系不一致的情况
+  - [x] 第一步：将数据坐标转换为实际原图坐标（乘以缩放比例）
+  - [x] 第二步：将实际原图坐标转换为裁切后图片坐标（百分比）
+  - [x] 按比例调整按钮大小（使用 dataImageWidth/croppedWidth 因子）
+  - [x] 确保部位按钮位置与裁切后图片准确对齐，支持图片居中
+- [x] 修改 `updateCharacterImageHeightOnResize()` 函数（2026-02-08更新）
+  - [x] 窗口大小变化时重新应用角色立绘高度
+  - [x] 重新调用 `adjustBodyPartsLayerForCrop()` 更新 layer 尺寸和按钮位置
+
+##### CSS样式
+- [x] 修改 `.character-container` 改用 `display: inline-flex; flex-direction: column`（2026-02-08更新）
+  - [x] 使用 inline-flex 实现紧密包裹同时保持居中
+  - [x] 确保容器紧密包裹图片，避免 layer 对齐问题
+- [x] 简化 `.body-parts-layer` 样式（2026-02-08更新）
+  - [x] 移除 `transform-origin: left top`（不再需要）
+  - [x] 尺寸由 JS 动态设置为像素值
+
+##### 前端图片缓存（2026-02-08新增）
+- [x] 添加 `croppedImageCache` 全局 Map 对象
+  - [x] 以裁切图片 API URL 为键
+  - [x] 值包含 `blobUrl` 和 `metadata`
+- [x] 修改 `createCharacterDisplay()` 函数
+  - [x] 请求前检查缓存，命中则直接使用
+  - [x] 缓存未命中时发起 fetch 并存入缓存
+- [x] 添加 `clearCroppedImageCache()` 函数
+  - [x] 释放所有 blob URL 避免内存泄漏
+  - [x] 在切换交互对象时调用
+- [x] 修改 `target_switched` 事件处理
+  - [x] 切换交互对象时调用 `clearCroppedImageCache()`
+- [x] 注释掉后端缓存命中日志
+  - [x] `image_processor.py` 中的 `[图片处理器] 缓存命中` 日志
 
 ### 4.3 身体部位按钮系统
 

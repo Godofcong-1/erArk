@@ -1258,6 +1258,8 @@ function initWebSocket() {
         console.log('收到切换交互对象结果:', data);
         if (data.success) {
             console.log(`成功切换到角色: ${data.character_name} (ID: ${data.character_id})`);
+            // 清理前端图片缓存，因为切换了交互对象
+            clearCroppedImageCache();
             // 请求完整状态刷新 - 通过发送一个空的按钮点击来触发状态更新
             // 后端在下一次主循环会检测到 web_need_full_refresh 标志并发送完整状态
             // 这里我们只需要等待后端推送新状态
@@ -1265,6 +1267,21 @@ function initWebSocket() {
             console.error('切换交互对象失败:', data.error);
         }
     });
+}
+
+/**
+ * 清理前端裁切图片缓存
+ * 在切换交互对象或需要刷新时调用
+ */
+function clearCroppedImageCache() {
+    // 释放所有 blob URL 以避免内存泄漏
+    for (const [url, data] of croppedImageCache) {
+        if (data.blobUrl) {
+            URL.revokeObjectURL(data.blobUrl);
+        }
+    }
+    croppedImageCache.clear();
+    console.log('[图片缓存] 前端裁切图片缓存已清理');
 }
 
 /**
@@ -4096,6 +4113,9 @@ function executeInstruct(instructId) {
     }
 }
 
+// 前端图片缓存，避免重复请求相同的裁切图片
+const croppedImageCache = new Map();
+
 /**
  * 创建角色立绘显示区
  * @param {Object} targetInfo - 角色信息
@@ -4116,10 +4136,12 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
         
         // 创建立绘图片
         const img = document.createElement('img');
-        // 确保路径以/开头
-        img.src = imagePath.startsWith('/') ? imagePath : '/' + imagePath;
         img.alt = targetInfo.name || 'Character';
         img.className = 'character-image';
+        
+        // 构建裁切图片API路径
+        const normalizedPath = imagePath.replace(/^\/?(image\/)?/, '');
+        const croppedImageUrl = `/api/cropped_image/${normalizedPath}`;
         
         // 添加加载错误处理
         img.onerror = function() {
@@ -4127,11 +4149,83 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
             display.innerHTML = `<div class="character-placeholder">[${targetInfo.name || '无交互对象'}]</div>`;
         };
         
-        // 图片加载成功后计算并设置高度
-        img.onload = function() {
-            // 计算并应用角色立绘高度
-            applyCharacterImageHeight(display, img);
-        };
+        // 检查前端缓存，避免重复请求
+        const cachedData = croppedImageCache.get(croppedImageUrl);
+        if (cachedData) {
+            // 使用缓存的 blob URL 和元数据
+            img.src = cachedData.blobUrl;
+            characterContainer.dataset.cropMetadata = JSON.stringify(cachedData.metadata);
+            
+            // 图片加载成功后计算并设置高度
+            img.onload = function() {
+                applyCharacterImageHeight(display, img);
+                
+                const cropMetadata = cachedData.metadata;
+                if (cropMetadata.originalWidth > 0 && cropMetadata.croppedWidth > 0) {
+                    requestAnimationFrame(() => {
+                        adjustBodyPartsLayerForCrop(characterContainer, cropMetadata);
+                    });
+                }
+            };
+        } else {
+            // 使用fetch加载裁切图片以获取元数据
+            fetch(croppedImageUrl)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+                    
+                    // 从响应头获取裁切元数据
+                    const cropMetadata = {
+                        originalWidth: parseInt(response.headers.get('X-Original-Width')) || 0,
+                        originalHeight: parseInt(response.headers.get('X-Original-Height')) || 0,
+                        croppedWidth: parseInt(response.headers.get('X-Cropped-Width')) || 0,
+                        croppedHeight: parseInt(response.headers.get('X-Cropped-Height')) || 0,
+                        offsetX: parseInt(response.headers.get('X-Offset-X')) || 0,
+                        offsetY: parseInt(response.headers.get('X-Offset-Y')) || 0
+                    };
+                    
+                    console.log('[角色立绘] 裁切元数据:', cropMetadata);
+                    
+                    // 保存裁切元数据到容器
+                    characterContainer.dataset.cropMetadata = JSON.stringify(cropMetadata);
+                    
+                    return response.blob().then(blob => ({ blob, cropMetadata }));
+                })
+                .then(({ blob, cropMetadata }) => {
+                    // 创建blob URL并设置图片源
+                    const blobUrl = URL.createObjectURL(blob);
+                    img.src = blobUrl;
+                    
+                    // 缓存到前端
+                    croppedImageCache.set(croppedImageUrl, {
+                        blobUrl: blobUrl,
+                        metadata: cropMetadata
+                    });
+                    
+                    // 图片加载成功后计算并设置高度
+                    img.onload = function() {
+                        // 计算并应用角色立绘高度
+                        applyCharacterImageHeight(display, img);
+                        
+                        // 获取裁切元数据并调整身体部位按钮层
+                        if (cropMetadata.originalWidth > 0 && cropMetadata.croppedWidth > 0) {
+                            // 延迟一帧，确保图片渲染尺寸已确定
+                            requestAnimationFrame(() => {
+                                adjustBodyPartsLayerForCrop(characterContainer, cropMetadata);
+                            });
+                        }
+                    };
+                })
+                .catch(error => {
+                    console.warn('使用裁切图片API失败，回退到原始图片:', error);
+                    // 回退到原始图片
+                    img.src = imagePath.startsWith('/') ? imagePath : '/' + imagePath;
+                    img.onload = function() {
+                        applyCharacterImageHeight(display, img);
+                    };
+                });
+        }
         
         characterContainer.appendChild(img);
         
@@ -4147,6 +4241,103 @@ function createCharacterDisplay(targetInfo, showAllBodyParts = false) {
     }
     
     return display;
+}
+
+/**
+ * 根据裁切元数据调整身体部位按钮层的位置
+ * 
+ * 裁切后，原本在原图上的身体部位位置需要重新计算：
+ * - 将每个按钮的原图坐标转换为裁切后图片坐标
+ * - 原始坐标系 (0, 0) 到 (originalWidth, originalHeight)
+ * - 裁切后坐标系 (offsetX, offsetY) 到 (offsetX + croppedWidth, offsetY + croppedHeight)
+ * 
+ * 转换公式：
+ * - 新X% = ((原X - offsetX) / croppedWidth) * 100
+ * - 新Y% = ((原Y - offsetY) / croppedHeight) * 100
+ * - 新大小% = 原大小% * (croppedWidth / originalWidth)
+ * 
+ * @param {HTMLElement} characterContainer - 角色容器元素
+ * @param {Object} cropMetadata - 裁切元数据
+ */
+function adjustBodyPartsLayerForCrop(characterContainer, cropMetadata) {
+    const bodyPartsLayer = characterContainer.querySelector('.body-parts-layer');
+    if (!bodyPartsLayer) return;
+    
+    const { originalWidth, originalHeight, croppedWidth, croppedHeight, offsetX, offsetY } = cropMetadata;
+    
+    if (originalWidth === 0 || originalHeight === 0 || croppedWidth === 0 || croppedHeight === 0) {
+        console.warn('[身体部位] 裁切元数据无效，跳过调整');
+        return;
+    }
+    
+    // 获取图片元素及其实际渲染尺寸
+    const img = characterContainer.querySelector('.character-image');
+    if (!img) {
+        console.warn('[身体部位] 未找到图片元素');
+        return;
+    }
+    
+    // 获取图片的实际渲染尺寸（显示在屏幕上的像素尺寸）
+    const renderedWidth = img.offsetWidth;
+    const renderedHeight = img.offsetHeight;
+    
+    // 获取图片相对于容器的偏移量（如果图片在容器内有居中等布局）
+    const imgRect = img.getBoundingClientRect();
+    const containerRect = characterContainer.getBoundingClientRect();
+    const offsetLeft = imgRect.left - containerRect.left;
+    const offsetTop = imgRect.top - containerRect.top;
+    
+    console.log(`[身体部位] 图片渲染尺寸: ${renderedWidth}x${renderedHeight}px, 偏移: (${offsetLeft}, ${offsetTop})`);
+    
+    // 设置 layer 的尺寸与图片完全一致（使用像素值而非百分比）
+    // 位置也要根据图片在容器内的实际位置来设置
+    bodyPartsLayer.style.width = `${renderedWidth}px`;
+    bodyPartsLayer.style.height = `${renderedHeight}px`;
+    bodyPartsLayer.style.left = `${offsetLeft}px`;
+    bodyPartsLayer.style.top = `${offsetTop}px`;
+    
+    // 获取数据中指定的图片尺寸（身体部位坐标的参考尺寸）
+    const dataImageWidth = parseFloat(bodyPartsLayer.dataset.dataImageWidth) || originalWidth;
+    const dataImageHeight = parseFloat(bodyPartsLayer.dataset.dataImageHeight) || originalHeight;
+    
+    // 计算数据坐标系到实际原图坐标系的缩放比例
+    const scaleToActual = {
+        x: originalWidth / dataImageWidth,
+        y: originalHeight / dataImageHeight
+    };
+    
+    console.log(`[身体部位] 坐标系转换: 数据尺寸 ${dataImageWidth}x${dataImageHeight} -> 实际原图 ${originalWidth}x${originalHeight}, 缩放比例: ${scaleToActual.x.toFixed(3)}x${scaleToActual.y.toFixed(3)}`);
+    
+    // 遍历所有按钮，调整位置和大小
+    const buttons = bodyPartsLayer.querySelectorAll('.body-part-button');
+    buttons.forEach(button => {
+        // 获取保存的数据坐标（相对于数据图片尺寸的像素坐标）
+        const dataX = parseFloat(button.dataset.origX) || 0;
+        const dataY = parseFloat(button.dataset.origY) || 0;
+        const origSizePercent = parseFloat(button.dataset.origSizePercent) || 5;
+        
+        // 第一步：将数据坐标转换为实际原图坐标
+        const actualX = dataX * scaleToActual.x;
+        const actualY = dataY * scaleToActual.y;
+        
+        // 第二步：将实际原图坐标转换为裁切后图片坐标（百分比）
+        const newX = ((actualX - offsetX) / croppedWidth) * 100;
+        const newY = ((actualY - offsetY) / croppedHeight) * 100;
+        
+        // 调整按钮大小：origSizePercent 是相对于 dataImageWidth 的百分比
+        // 需要转换为相对于裁切后图片宽度的百分比
+        // 公式：newSize = origSizePercent * (dataImageWidth / croppedWidth)
+        const newSize = origSizePercent * (dataImageWidth / croppedWidth);
+        
+        // 应用新的位置
+        button.style.left = `${newX}%`;
+        button.style.top = `${newY}%`;
+        button.style.width = `${Math.max(newSize, 3)}%`;
+        
+        // console.log(`[身体部位] ${button.dataset.partName}: (${origX.toFixed(0)}, ${origY.toFixed(0)}) -> (${newX.toFixed(1)}%, ${newY.toFixed(1)}%), size: ${origSizePercent.toFixed(1)}% -> ${newSize.toFixed(1)}%`);
+    });
+    
+    console.log(`[身体部位] 调整完成, 共 ${buttons.length} 个按钮, 裁切区域: (${offsetX}, ${offsetY}) ${croppedWidth}x${croppedHeight}`);
 }
 
 /**
@@ -4195,6 +4386,18 @@ function updateCharacterImageHeightOnResize() {
     
     if (display && img && img.complete && img.naturalHeight > 0) {
         applyCharacterImageHeight(display, img);
+        
+        // 重新调整身体部位按钮层
+        const characterContainer = display.querySelector('.character-container');
+        if (characterContainer && characterContainer.dataset.cropMetadata) {
+            const cropMetadata = JSON.parse(characterContainer.dataset.cropMetadata);
+            if (cropMetadata.originalWidth > 0 && cropMetadata.croppedWidth > 0) {
+                // 延迟一帧，确保图片尺寸已更新
+                requestAnimationFrame(() => {
+                    adjustBodyPartsLayerForCrop(characterContainer, cropMetadata);
+                });
+            }
+        }
     }
 }
 
@@ -4230,6 +4433,11 @@ function createBodyPartsLayer(bodyPartsData, characterName, showAllBodyParts = f
     const parts = bodyPartsData.body_parts || {};
     const imageSize = bodyPartsData.image_size || { width: 1024, height: 1024 };
     
+    // 保存数据中的图片尺寸到 layer，供裁切调整时使用
+    // 这是身体部位坐标的参考尺寸，可能与实际图片尺寸不同
+    layer.dataset.dataImageWidth = imageSize.width;
+    layer.dataset.dataImageHeight = imageSize.height;
+    
     for (const [partName, partData] of Object.entries(parts)) {
         if (!partData || !partData.center) continue;
         
@@ -4245,18 +4453,25 @@ function createBodyPartsLayer(bodyPartsData, characterName, showAllBodyParts = f
         // base_part 是英文部位名，用于与指令的 body_parts 匹配
         button.dataset.basePart = partData.base_part || partData.part_id || partName;
         
-        // 计算按钮位置（百分比）
+        // 保存原图坐标（像素值），用于裁切调整时重新计算位置
+        button.dataset.origX = partData.center.x;
+        button.dataset.origY = partData.center.y;
+        
+        // 计算按钮位置（相对于原图的百分比）
         const centerX = (partData.center.x / imageSize.width) * 100;
         const centerY = (partData.center.y / imageSize.height) * 100;
         
         button.style.left = `${centerX}%`;
         button.style.top = `${centerY}%`;
         
-        // 设置按钮大小（基于radius或默认值）
+        // 设置按钮大小（基于radius或默认值，相对于原图宽度的百分比）
         const radius = partData.radius || 30;
         const size = (radius * 2 / imageSize.width) * 100;
+        
+        // 保存原始大小百分比，用于裁切调整时重新计算
+        button.dataset.origSizePercent = size;
+        
         button.style.width = `${Math.max(size, 5)}%`;
-        button.style.height = `${Math.max(size, 5)}%`;
         
         // 添加提示文本
         button.title = partName;

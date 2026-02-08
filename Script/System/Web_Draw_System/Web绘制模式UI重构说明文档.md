@@ -11,7 +11,7 @@
 8. [素材处理流程](#8-素材处理流程)
 9. [文件结构规划](#9-文件结构规划)
 
-**最后更新**:2026年2月7日
+**最后更新**:2026年2月8日
 
 **重要架构更新(2026-01-17)**:
 - 已废弃双模板系统(`index.html` + `game_main.html`切换)
@@ -760,6 +760,120 @@
 - `character_renderer.py` 中实现了图片查找逻辑，优先全身图、回退到半身图
 - `tools/build_character_folders.py` 用于构建文件夹结构
 - `tools/rename_and_organize_images.py` 用于重命名现有图片
+
+### 5.6 角色立绘透明区域裁切（2026-02-08新增）
+
+为了优化角色立绘的显示效果，在Web模式下会自动裁切掉图片四周的透明区域，只保留有实际像素内容的部分。
+
+#### 5.6.1 功能说明
+- **自动裁切**：加载角色立绘时，自动检测并裁切掉四周的透明像素区域
+- **缓存机制**：裁切后的图片存储在内存缓存中，不保存为文件
+- **缓存大小**：最多缓存10张图片，采用LRU（最近最少使用）策略
+- **部位按钮同步**：身体部位按钮的位置会根据裁切元数据自动调整，确保位置准确
+
+#### 5.6.2 API说明
+- **裁切图片API**：`/api/cropped_image/<path:filename>`
+- **响应头元数据**：
+  - `X-Original-Width`：原始图片宽度
+  - `X-Original-Height`：原始图片高度
+  - `X-Cropped-Width`：裁切后图片宽度
+  - `X-Cropped-Height`：裁切后图片高度
+  - `X-Offset-X`：裁切区域相对于原图左上角的X偏移
+  - `X-Offset-Y`：裁切区域相对于原图左上角的Y偏移
+
+#### 5.6.3 缓存管理
+- **LRU策略**：当缓存已满（10张）且需要新增图片时，自动删除最久未使用的图片
+- **访问更新**：每次访问已缓存的图片时，该图片被标记为最近使用
+- **存档清理**：保存游戏存档时自动清空图片缓存，避免缓存数据被序列化
+
+#### 5.6.4 实现文件
+- **后端图片处理**：`Script/UI/Panel/web_components/image_processor.py`
+- **后端API路由**：`Script/Core/web_server.py` 中的 `serve_cropped_image()` 函数
+- **存档清理逻辑**：`Script/Core/save_handle.py` 中的 `establish_save_linux()` 函数
+- **前端图片加载**：`static/game.js` 中的 `createCharacterDisplay()` 函数
+- **前端部位调整**：`static/game.js` 中的 `adjustBodyPartsLayerForCrop()` 函数
+
+#### 5.6.5 身体部位按钮位置调整算法（2026-02-08更新）
+裁切会改变图片的显示区域，身体部位按钮需要相应调整以保持正确对齐。
+
+**设计思路**：
+- body-parts-layer 的尺寸使用像素值，精确匹配图片的实际渲染尺寸
+- 直接更新每个按钮的位置和大小（百分比相对于 layer）
+- 按钮位置从"相对于原图的百分比"转换为"相对于裁切后图片的百分比"
+- 支持数据坐标系与实际图片坐标系不一致的情况
+- 窗口大小变化时自动重新调整
+
+**CSS 要求**：
+- `.character-container` 使用 `display: inline-flex; flex-direction: column`，紧密包裹图片同时保持居中
+- `.character-image` 使用 `display: block`
+- `.body-parts-layer` 使用 `position: absolute`，尺寸由 JS 动态设置为像素值
+
+**数据存储**：
+创建按钮时，将以下原图信息保存到按钮的 data 属性中：
+- `data-orig-x`：原图中的X坐标（像素）
+- `data-orig-y`：原图中的Y坐标（像素）
+- `data-orig-size-percent`：原图中的按钮大小（百分比）
+
+创建 body-parts-layer 时，保存数据尺寸到 layer 的 data 属性：
+- `data-data-image-width`：数据中定义的图片宽度
+- `data-data-image-height`：数据中定义的图片高度
+
+**转换公式**：
+
+1. **Layer 尺寸与位置设置**：
+   - 获取图片实际渲染尺寸：`img.offsetWidth` 和 `img.offsetHeight`
+   - 获取图片相对于容器的偏移量：`imgRect.left - containerRect.left` 和 `imgRect.top - containerRect.top`
+   - 设置 layer 尺寸为像素值（精确匹配图片尺寸）
+   - 设置 layer 位置为像素值（精确对应图片在容器内的位置）
+   - 这确保无论图片如何在容器内布局（居中等），layer 都能精确覆盖
+
+2. **坐标系缩放**（处理数据尺寸与实际原图尺寸不一致）：
+   - 缩放比例X = `originalWidth / dataImageWidth`
+   - 缩放比例Y = `originalHeight / dataImageHeight`
+   - 实际X = `数据X * 缩放比例X`
+   - 实际Y = `数据Y * 缩放比例Y`
+
+3. **位置转换**（从实际原图坐标转换为裁切后图片坐标）：
+   - 新X位置 = `((实际X - offsetX) / croppedWidth) * 100%`
+   - 新Y位置 = `((实际Y - offsetY) / croppedHeight) * 100%`
+
+4. **大小转换**：
+   - 新大小 = `原大小百分比 * (dataImageWidth / croppedWidth)`
+   - 这确保按钮相对于裁切后图片的视觉大小正确
+
+**调用时机**：
+- 图片首次加载完成后（使用 `requestAnimationFrame` 确保渲染尺寸已确定）
+- 窗口大小变化时（通过 resize 事件触发重新调整）
+
+**实现函数**：
+- `createBodyPartsLayer()` - 创建按钮时保存原图坐标数据和数据尺寸
+- `adjustBodyPartsLayerForCrop()` - 设置 layer 像素尺寸，进行坐标系转换，遍历按钮并更新位置和大小
+- `updateCharacterImageHeightOnResize()` - 窗口大小变化时重新应用图片高度和身体部位调整
+
+#### 5.6.6 依赖要求
+- 需要安装 `Pillow` 库（PIL）用于图片处理
+- 如果 Pillow 未安装，自动回退到原始图片（不裁切）
+
+#### 5.6.7 前端图片缓存（2026-02-08新增）
+
+**问题背景**：
+由于前端 `renderNewUIContent()` 采用完全重渲染策略，每次状态更新都会重新创建角色立绘显示区，导致频繁的图片请求。即使后端有 LRU 缓存，前端的重复 fetch 请求仍会产生网络开销和日志刷屏。
+
+**解决方案**：
+在前端实现 `croppedImageCache` Map 对象，缓存已加载的裁切图片 blob URL 和元数据。
+
+**缓存机制**：
+- 以裁切图片 API URL 为键
+- 值包含 `blobUrl`（blob URL）和 `metadata`（裁切元数据）
+- 相同 URL 的请求直接使用缓存，不发起 fetch
+
+**缓存清理**：
+- 切换交互对象时调用 `clearCroppedImageCache()` 清理缓存
+- 清理时释放所有 blob URL（`URL.revokeObjectURL`）避免内存泄漏
+
+**实现函数**：
+- `croppedImageCache` - 全局 Map 对象存储缓存数据
+- `clearCroppedImageCache()` - 清理缓存并释放 blob URL
 
 ---
 

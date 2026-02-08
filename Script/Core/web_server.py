@@ -614,6 +614,82 @@ def serve_image(filename):
     # 使用send_from_directory提供文件，自动处理中文路径编码问题
     return send_from_directory(image_dir, filename)
 
+@app.route('/api/cropped_image/<path:filename>')
+def serve_cropped_image(filename):
+    """
+    提供裁切透明区域后的游戏图片文件
+    
+    参数：
+    filename (str): 图片文件的相对路径
+    
+    返回值类型：Response对象
+    功能描述：
+    1. 从游戏根目录下的image文件夹中读取图片
+    2. 自动裁切掉图片四周的透明区域
+    3. 将裁切后的图片通过缓存机制提供给前端
+    4. 同时在响应头中返回裁切元数据
+    
+    响应头包含：
+    - X-Original-Width: 原始图片宽度
+    - X-Original-Height: 原始图片高度
+    - X-Cropped-Width: 裁切后图片宽度
+    - X-Cropped-Height: 裁切后图片高度
+    - X-Offset-X: 裁切区域X偏移
+    - X-Offset-Y: 裁切区域Y偏移
+    """
+    from flask import send_file, abort, make_response
+    from Script.UI.Panel.web_components.image_processor import get_cropped_image, is_image_processor_available
+    import io
+    
+    # 检查图片处理功能是否可用
+    if not is_image_processor_available():
+        # 如果PIL不可用，回退到原始图片服务
+        return serve_image(filename)
+    
+    # 根据环境确定基础目录和图片文件夹路径
+    if hasattr(sys, '_MEIPASS'):
+        base_dir = os.path.dirname(sys.executable)
+        image_dir = os.path.join(base_dir, 'image')
+    else:
+        base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
+        image_dir = os.path.join(base_dir, 'image')
+    
+    # 构建完整的图片路径
+    full_path = os.path.join(image_dir, filename)
+    
+    # 检查文件是否存在
+    if not os.path.exists(full_path):
+        abort(404)
+    
+    # 获取裁切后的图片
+    result = get_cropped_image(full_path)
+    
+    if result is None:
+        # 如果裁切失败，回退到原始图片服务
+        return serve_image(filename)
+    
+    image_bytes, metadata = result
+    
+    # 创建响应
+    response = make_response(send_file(
+        io.BytesIO(image_bytes),
+        mimetype='image/png',
+        download_name=os.path.basename(filename)
+    ))
+    
+    # 添加元数据到响应头
+    response.headers['X-Original-Width'] = str(metadata['original_width'])
+    response.headers['X-Original-Height'] = str(metadata['original_height'])
+    response.headers['X-Cropped-Width'] = str(metadata['cropped_width'])
+    response.headers['X-Cropped-Height'] = str(metadata['cropped_height'])
+    response.headers['X-Offset-X'] = str(metadata['offset_x'])
+    response.headers['X-Offset-Y'] = str(metadata['offset_y'])
+    
+    # 允许跨域访问这些自定义头
+    response.headers['Access-Control-Expose-Headers'] = 'X-Original-Width, X-Original-Height, X-Cropped-Width, X-Cropped-Height, X-Offset-X, X-Offset-Y'
+    
+    return response
+
 @app.route('/api/get_font_config')
 def get_font_config():
     """
