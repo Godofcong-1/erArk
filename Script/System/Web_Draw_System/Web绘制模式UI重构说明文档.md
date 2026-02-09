@@ -1201,9 +1201,54 @@ def add_instruct(
 - 将分析结果存储为JSON文件，放入每个角色的文件夹中
 - **特殊要求**：由于角色图像均为日本动漫风格，需要查找该特定领域的更优识别方案以提升准确率
 
-**实施说明**：
-- 当前 `generate_body_parts_json.py` 使用基于图像比例的简化估计方法
-- 后续可考虑使用MMPose等深度学习模型提升准确度
+**实施说明与迭代记录**：
+- ~~当前 `generate_body_parts_json.py` 使用基于图像比例的简化估计方法~~ （已弃用）
+- ~~`tools/body_analysis.py` 使用 rtmlib 库进行深度学习姿态估计（单模型 Wholebody balanced）~~ （已由集成方案替代）
+- **当前使用**：`tools/body_analysis_ensemble.py`（7模型集成方案，详见下方"最终部署"）
+- rtmlib 的检测器使用 HumanArt+COCO 数据集训练，已支持动漫/卡通角色检测
+
+**模型对比测试（2026-02-10）**：
+- 对比工具：`tools/body_analysis_compare.py`（三模型初步对比）
+- 测试数据集：`image/立绘/模型测试用/`（15个角色）
+- 对比结果输出：`image/立绘/模型测试用/对比结果/`（包含每个角色的三模型对比图和分数对比图）
+- 初步对比结论：模型B和模型C各有优劣，需进一步扩展测试
+
+**多模型全面对比测试（2026-02-10 更新）**：
+- 对比工具：`tools/body_analysis_multi_compare.py`（7模型 + 集成方案）
+- 测试数据集：`image/立绘/模型测试用/`（13个角色）
+- 对比结果输出：`image/立绘/模型测试用/多模型对比结果/`（包含每个角色的全模型对比图、TOP3+集成对比图、分数对比表、统计报告JSON）
+- 测试了以下7个模型方案 + 集成（Ensemble）方案：
+
+| 模型 | 检测器 | 姿态估计器 | 平均归一化分 | 关键点胜出 |
+|------|--------|-----------|------------|-----------|
+| A: Wholebody balanced（当前） | YOLOX-m (HumanArt) | RTMW-dw-x-l@256x192 (133→17) | 0.6685 | 0/221 |
+| B: Body performance | YOLOX-x (HumanArt) | RTMPose-x@384x288 (原生17kp) | 0.6736 | 1/221 |
+| C: Wholebody performance | YOLOX-m (HumanArt) | RTMW-dw-x-l@384x288 (133→17, sigmoid归一化) | **0.9727** | 63/221 |
+| D: YOLO11x-pose | 内置单阶段 (COCO) | YOLO11x-pose (原生17kp) | 0.8418 | 13/221 |
+| E: BodyWithFeet performance | YOLOX-x (HumanArt) | RTMPose-x-halpe26@384x288 (26→17) | 0.6773 | 1/221 |
+| F: RTMO-l | 内置单阶段 (640x640) | RTMO-l (原生17kp) | 0.7631 | 91/221 |
+| G: Custom_max | YOLOX-x (HumanArt) | RTMW-dw-x-l@384x288 (133→17, sigmoid归一化) | **0.9739** | 52/221 |
+| **ENSEMBLE（集成）** | — | 每个关键点取置信度最高的模型结果 | **0.9839** | — |
+
+- **集成来源分布**：F(RTMO-l) 41.2% / C(WB_perf) 28.5% / G(Custom_max) 23.5% / D(YOLO11x) 5.9% / B 0.5% / E 0.5%
+- **关键发现**：
+  - G（最强检测器YOLOX-x + 最强姿态RTMW@384x288）综合最优，单模型平均0.9739
+  - C与G仅检测器不同（YOLOX-m vs YOLOX-x），G凭借更大检测器略胜
+  - F(RTMO-l) 在肩/肘/髋/膝/踝等躯干部位表现突出，贡献了集成中41.2%的关键点
+  - D(YOLO11x) 基于COCO训练，部分动漫角色无法检测（如史尔特尔、歌蕾蒂娅）
+  - 集成方案比最佳单模型G再提升约1%，达到0.9839
+  - C/G模型的RTMW输出为logit值，需通过sigmoid函数归一化后才可与其他模型公平比较
+- **建议**：生产环境可选用 **G（Custom_max）** 作为单模型方案，或使用 **C+F+G 三模型集成** 方案获取最高精度（牺牲3倍推理时间）
+
+**最终部署（2026-02-10 已完成）** ✅：
+- 生产工具：`tools/body_analysis_ensemble.py`（7模型集成批量处理脚本）
+- 采用方案：7模型全集成（A~G），对每个关键点取所有模型中归一化置信度最高的结果
+- GPU加速：安装 `onnxruntime-gpu` + CUDA 12 运行时库，RTX 4080 下单角色处理 **0.26s**（CPU 约5s，提升 ~19x）
+- 处理范围：`image/立绘/干员/` + `image/立绘/特殊NPC/`，共 **388个角色全部成功处理**
+- 输出格式：每个角色文件夹中生成 `{角色名}_body.json`（v2.0格式，model="ensemble"）
+- 总耗时：模型初始化 5.1s + 处理 100.1s = **共1.8分钟**（GPU模式）
+- 依赖安装：`pip install onnxruntime-gpu nvidia-cublas-cu12 nvidia-cudnn-cu12 nvidia-cufft-cu12 nvidia-cusparse-cu12 nvidia-cusolver-cu12 nvidia-curand-cu12 nvidia-cuda-runtime-cu12 nvidia-cuda-nvrtc-cu12`
+- 旧的 `tools/body_analysis.py`（单模型 Wholebody balanced）保留但不再使用
 
 ### 8.2 tk模式兼容性处理
 - 重命名后的半身图文件名格式为 `{角色名}_半身.png`
@@ -1212,11 +1257,11 @@ def add_instruct(
 
 ### 8.3 最终文件结构
 ```
-image/立绘/干员/差分/{角色名}/
+image/立绘/干员/{角色名}/
 ├── {角色名}_全身.png      # 全身立绘（web模式使用）
 ├── {角色名}_半身.png      # 半身图（tk模式使用，原有图片重命名）
 ├── {角色名}_头部.png      # 头部图（头像显示使用）
-├── body_parts.json        # 身体部位位置数据
+├── {角色名}_body.json     # 身体部位位置数据（v2.0格式，ensemble模型输出）
 └── ...                    # 其他差分图层（待扩展）
 ```
 
@@ -1275,7 +1320,10 @@ tools/
 ├── download_prts_character_image.py  # 已有：下载角色图片
 ├── build_character_folders.py        # 新建：构建角色文件夹结构 ✅
 ├── rename_and_organize_images.py     # 新建：重命名和整理图片 ✅
-└── generate_body_parts_json.py       # 新建：生成部位位置JSON ✅
+├── body_analysis.py                  # 单模型姿态估计（旧，已由 ensemble 替代）✅
+├── body_analysis_compare.py          # 三模型对比工具 ✅
+├── body_analysis_multi_compare.py    # 7模型+集成对比工具 ✅
+└── body_analysis_ensemble.py         # 生产用：7模型集成批量处理（当前使用）✅
 ```
 
 ### 9.4 素材目录结构
@@ -1293,7 +1341,7 @@ image/
             │   ├── {角色A}_全身.png
             │   ├── {角色A}_半身.png
             │   ├── {角色A}_头部.png
-            │   └── body_parts.json
+            │   └── {角色A}_body.json
             ├── {角色B}/
             │   └── ...
             └── ...

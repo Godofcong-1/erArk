@@ -46,7 +46,11 @@
 #### 1.1.3 创建工具脚本
 - [x] 在 `tools/` 下创建 `build_character_folders.py` - 构建角色文件夹结构
 - [x] 在 `tools/` 下创建 `rename_and_organize_images.py` - 重命名和整理图片
-- [x] 在 `tools/` 下创建 `generate_body_parts_json.py` - 生成部位位置JSON
+- [x] 在 `tools/` 下创建 `generate_body_parts_json.py` - 生成部位位置JSON（已弃用）
+- [x] 在 `tools/` 下创建 `body_analysis.py` - 深度学习姿态估计（已由 ensemble 替代）
+- [x] 在 `tools/` 下创建 `body_analysis_compare.py` - 三模型对比工具
+- [x] 在 `tools/` 下创建 `body_analysis_multi_compare.py` - 7模型+集成对比工具
+- [x] 在 `tools/` 下创建 `body_analysis_ensemble.py` - 生产用7模型集成批量处理（当前使用）
 
 ---
 
@@ -1682,7 +1686,7 @@
 
 ### 7.3 部位位置生成脚本
 
-#### 7.3.1 generate_body_parts_json.py
+#### 7.3.1 generate_body_parts_json.py（已由 body_analysis.py 替代）
 - [x] 研究适合动漫角色的姿态识别方案（使用简化的估计方法）
 - [x] 实现图像加载和预处理（使用PIL）
 - [x] 实现身体部位估计（基于图像比例）
@@ -1690,10 +1694,91 @@
 - [x] 实现遍历所有角色文件夹批量处理
 - [x] 添加日志输出和错误处理
 
-**备注**：当前使用基于图像比例的简化估计方法，准确度有限。后续可考虑：
-- 使用MMPose等深度学习模型
-- 使用专门针对动漫角色的检测方案
-- 手动标注工具
+#### 7.3.2 body_analysis.py（旧生产工具，已由 body_analysis_ensemble.py 替代）
+- [x] 使用 rtmlib 库进行深度学习姿态估计
+- [x] 使用 HumanArt 训练的 YOLOX 检测器（支持动漫角色检测）
+- [x] 输出 COCO 17关键点格式的归一化坐标 JSON
+- [x] 支持 GPU(CUDA) / CPU 自动回退
+- [x] 版本化输出（v2.0格式，增量更新不重复处理）
+- **状态**：保留但不再使用，已由 `body_analysis_ensemble.py`（7模型集成）替代
+
+#### 7.3.3 body_analysis_compare.py（三模型对比工具，2026-02-10新增）
+- [x] 对比三个候选模型在动漫角色上的识别效果
+- [x] 生成逐关键点分数对比表和可视化标注对比图
+- [x] 在 `image/立绘/模型测试用/对比结果/` 输出三模型横向对比图
+- [x] 人工审查结果：模型B和C各有优劣，需扩展测试
+
+**候选模型说明**：
+| 模型 | 检测器 | 姿态估计器 | 备注 |
+|------|--------|-----------|------|
+| A: Wholebody balanced（当前） | YOLOX-m (HumanArt) | RTMW-dw-x-l@256x192 | 133关键点截取前17 |
+| B: Body performance | YOLOX-x (HumanArt, AP 61.3) | RTMPose-x@384x288 (AP 78.8) | 最大检测器+专用身体17kp模型 |
+| C: Wholebody performance | YOLOX-m (HumanArt) | RTMW-dw-x-l@384x288 | 高分辨率姿态，分数为logit值(>1.0) |
+
+#### 7.3.4 body_analysis_multi_compare.py（7模型+集成全面对比工具，2026-02-10新增）
+- [x] 扩展至7个候选模型 + 集成（Ensemble）方案
+- [x] 新增模型：YOLO11x-pose (D)、BodyWithFeet (E)、RTMO-l (F)、Custom YOLOX-x+RTMW (G)
+- [x] 实现 sigmoid 归一化处理 RTMW 模型 (C/G) 的 logit 输出值
+- [x] 实现集成方案：对每个关键点取所有模型中归一化置信度最高者
+- [x] 生成多种可视化输出：全模型对比图、TOP3+集成对比图、分数表、单模型标注图
+- [x] 在 `image/立绘/模型测试用/多模型对比结果/` 输出完整对比结果和 comparison_report.json
+- [x] 13个角色完整测试完成
+
+**7模型 + 集成对比结果**：
+
+| 模型 | 检测器 | 姿态估计器 | 平均归一化分 | 关键点胜出 |
+|------|--------|-----------|------------|-----------|
+| A: WB_bal（当前） | YOLOX-m | RTMW@256x192 | 0.6685 | 0/221 |
+| B: Body_perf | YOLOX-x | RTMPose-x@384x288 | 0.6736 | 1/221 |
+| C: WB_perf | YOLOX-m | RTMW@384x288 (sigmoid) | **0.9727** | 63/221 |
+| D: YOLO11x | 内置 (COCO) | YOLO11x-pose | 0.8418 | 13/221 |
+| E: BWF_perf | YOLOX-x | halpe26@384x288 | 0.6773 | 1/221 |
+| F: RTMO-l | 内置 (640×640) | RTMO-l | 0.7631 | 91/221 |
+| G: Custom_max | YOLOX-x | RTMW@384x288 (sigmoid) | **0.9739** | 52/221 |
+| **ENSEMBLE** | — | 逐关键点最高置信度 | **0.9839** | — |
+
+**集成来源分布**：F 41.2% / C 28.5% / G 23.5% / D 5.9% / B 0.5% / E 0.5%
+
+**关键发现**：
+- G（YOLOX-x + RTMW@384x288）为最佳单模型（0.9739），C仅次之（0.9727）
+- F(RTMO-l) 在躯干关键点表现突出，贡献集成中最多关键点（41.2%）
+- D(YOLO11x) 基于COCO训练，部分动漫角色无法检测
+- 集成方案达0.9839，比最佳单模型再提升约1%
+- C/G 的RTMW输出为logit值，需sigmoid归一化后才可公平比较
+
+**建议**：生产环境选用G作为单模型方案，或C+F+G三模型集成获取最高精度
+
+#### 7.3.5 body_analysis_ensemble.py（生产集成批量处理工具，2026-02-10新增）✅
+- [x] 基于7模型集成方案对所有角色进行批量处理
+- [x] 对每个关键点取所有模型中归一化置信度最高者的结果
+- [x] 输出 `{角色名}_body.json`（v2.0格式，model="ensemble"，包含 source_model/source_distribution 字段）
+- [x] GPU加速支持：自动注册 NVIDIA CUDA 12 DLL 路径，rtmlib/YOLO11 均使用 CUDA device
+- [x] 自动检测模型A是否需要sigmoid归一化（首张图片测试）
+- [x] 处理范围：`image/立绘/干员/` + `image/立绘/特殊NPC/`
+- [x] **已完成运行**：388个角色全部成功，0失败，总耗时 1.8min（GPU模式）
+
+**GPU加速环境配置**：
+- 硬件：NVIDIA RTX 4080 (16GB)，驱动 591.74，CUDA 13.1
+- 安装：`pip install onnxruntime-gpu nvidia-cublas-cu12 nvidia-cudnn-cu12 nvidia-cufft-cu12 nvidia-cusparse-cu12 nvidia-cusolver-cu12 nvidia-curand-cu12 nvidia-cuda-runtime-cu12 nvidia-cuda-nvrtc-cu12`
+- Windows特殊处理：脚本启动时通过 `os.add_dll_directory()` 注册 pip 安装的 nvidia 包中的 DLL 路径
+- 性能对比：CPU ~5s/角色 → GPU **0.26s/角色**（~19x 加速）
+
+**输出JSON格式示例**：
+```json
+{
+  "version": "2.0",
+  "model": "ensemble",
+  "ensemble_models": ["A", "B", "C", "D", "E", "F", "G"],
+  "character": "角色名",
+  "ensemble_avg_score": 0.9964,
+  "per_model_avg": {"A": 0.73, "B": 0.70, "C": 0.98, ...},
+  "source_distribution": {"C": 5, "F": 12},
+  "landmarks": [
+    {"id": 0, "name": "nose", "x": 0.44, "y": 0.27, "score": 0.999, "source_model": "C"},
+    ...
+  ]
+}
+```
 
 ### 7.4 tk模式兼容性修改 ✅
 
@@ -2164,7 +2249,11 @@
 | `static/js/websocket_handler.js` | WebSocket处理 | ✅ |
 | `tools/build_character_folders.py` | 构建角色文件夹 | ✅ |
 | `tools/rename_and_organize_images.py` | 重命名整理图片 | ✅ |
-| `tools/generate_body_parts_json.py` | 生成部位JSON | ✅ |
+| `tools/generate_body_parts_json.py` | 生成部位JSON（旧，已弃用） | ✅ |
+| `tools/body_analysis.py` | 单模型姿态估计（旧，已由ensemble替代） | ✅ |
+| `tools/body_analysis_compare.py` | 三模型对比工具 | ✅ |
+| `tools/body_analysis_multi_compare.py` | 7模型+集成对比工具 | ✅ |
+| `tools/body_analysis_ensemble.py` | 生产集成批量处理（当前使用） | ✅ |
 | `tests/test_web_ui_components.py` | 单元测试 | ✅ |
 
 ### 需修改文件
