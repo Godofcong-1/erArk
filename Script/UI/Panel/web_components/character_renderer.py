@@ -21,8 +21,9 @@ class CharacterRenderer:
     负责获取角色立绘路径和身体部位位置数据
     """
 
-    # 立绘目录
-    PORTRAIT_DIR = "image/立绘/干员/差分"
+    # 立绘目录（按优先级顺序）
+    PORTRAIT_DIR = "image/立绘/干员/"
+    SPECIAL_NPC_DIR = "image/立绘/特殊NPC/"
     # 默认立绘目录（对于没有差分的角色）
     DEFAULT_PORTRAIT_DIR = "image/立绘/干员"
 
@@ -55,7 +56,7 @@ class CharacterRenderer:
         if character_id in self._image_path_cache:
             return self._image_path_cache[character_id]
         
-        character_data: game_type.Character = cache.character_data.get(character_id)
+        character_data: game_type.Character = cache.character_data[character_id]
         if not character_data:
             return self._get_empty_image_data()
         
@@ -106,8 +107,13 @@ class CharacterRenderer:
         Returns:
         str -- 全身立绘路径
         """
-        # 优先查找差分目录下的全身图
+        # 优先查找干员目录下的全身图
         full_body_path = f"{self.PORTRAIT_DIR}/{character_name}/{character_name}_全身.png"
+        if os.path.exists(full_body_path):
+            return full_body_path
+        
+        # 查找特殊NPC目录下的全身图
+        full_body_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/{character_name}_全身.png"
         if os.path.exists(full_body_path):
             return full_body_path
         
@@ -124,13 +130,25 @@ class CharacterRenderer:
         Returns:
         str -- 半身立绘路径
         """
-        # 优先查找差分目录下的半身图
+        # 优先查找干员目录下的半身图
         half_body_path = f"{self.PORTRAIT_DIR}/{character_name}/{character_name}_半身.png"
         if os.path.exists(half_body_path):
             return half_body_path
         
-        # 查找差分目录下不含下划线的原始图片
+        # 查找干员目录下不含下划线的原始图片
         char_dir = f"{self.PORTRAIT_DIR}/{character_name}"
+        if os.path.exists(char_dir):
+            for filename in os.listdir(char_dir):
+                if filename.endswith('.png') and '_' not in filename:
+                    return f"{char_dir}/{filename}"
+        
+        # 查找特殊NPC目录下的半身图
+        half_body_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/{character_name}_半身.png"
+        if os.path.exists(half_body_path):
+            return half_body_path
+        
+        # 查找特殊NPC目录下不含下划线的原始图片
+        char_dir = f"{self.SPECIAL_NPC_DIR}/{character_name}"
         if os.path.exists(char_dir):
             for filename in os.listdir(char_dir):
                 if filename.endswith('.png') and '_' not in filename:
@@ -153,9 +171,16 @@ class CharacterRenderer:
         Returns:
         str -- 头部图片路径
         """
+        # 优先查找干员目录
         head_path = f"{self.PORTRAIT_DIR}/{character_name}/{character_name}_头部.png"
         if os.path.exists(head_path):
             return head_path
+        
+        # 查找特殊NPC目录
+        head_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/{character_name}_头部.png"
+        if os.path.exists(head_path):
+            return head_path
+        
         return ""
 
     def _load_body_parts_data(self, character_name: str) -> dict:
@@ -168,11 +193,19 @@ class CharacterRenderer:
         Returns:
         dict -- 身体部位位置数据
         """
-        # 尝试加载 {角色名}_body.json 文件（COCO-WholeBody格式）
+        # 优先尝试加载干员目录下的 {角色名}_body.json 文件（COCO-WholeBody格式）
         json_path = f"{self.PORTRAIT_DIR}/{character_name}/{character_name}_body.json"
         if not os.path.exists(json_path):
-            # 尝试旧格式 body_parts.json
+            # 尝试干员目录旧格式 body_parts.json
             json_path = f"{self.PORTRAIT_DIR}/{character_name}/body_parts.json"
+        
+        if not os.path.exists(json_path):
+            # 尝试特殊NPC目录下的 {角色名}_body.json
+            json_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/{character_name}_body.json"
+        
+        if not os.path.exists(json_path):
+            # 尝试特殊NPC目录旧格式 body_parts.json
+            json_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/body_parts.json"
         
         if os.path.exists(json_path):
             try:
@@ -280,7 +313,7 @@ class CharacterRenderer:
         
         return result
 
-    def get_scene_characters_avatars(self, exclude_ids: List[int] = None) -> List[dict]:
+    def get_scene_characters_avatars(self, exclude_ids: List[int] = []) -> List[dict]:
         """
         获取场景内所有角色的头像信息（除指定排除的角色外）
         
@@ -298,7 +331,7 @@ class CharacterRenderer:
             pl_character_data: game_type.Character = cache.character_data[0]
             from Script.Design import map_handle
             scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
-            scene_data: game_type.Scene = cache.scene_data.get(scene_path_str)
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
             
             if scene_data:
                 for char_id in scene_data.character_list:
