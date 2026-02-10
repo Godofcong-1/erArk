@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月8日
+**最后更新**：2026年2月10日
 
 ---
 
@@ -979,7 +979,52 @@
 - [x] 实现角色居中显示
 - [x] 保存渲染变换信息供部位按钮使用
 
-#### 4.2.3 角色立绘透明区域裁切（2026-02-08新增）✅
+### 4.2.3 角色立绘高度统一缩放功能（2026-02-07新增）
+
+##### 功能描述
+- **目标**：解决角色立绘因原图大小不一致而产生不同缩放情况的问题
+- **规则**：
+  1. 检查当前窗口大小导致的角色立绘可用高度上限
+  2. 如果可用高度 > 1024像素，将图片高度固定为 1024像素
+  3. 如果可用高度 ≤ 1024像素，将图片高度设为可用高度
+  4. 图片保持原比例，居中显示
+  5. 身体部位按钮的点击位置随图片一起缩放
+
+##### 实现细节
+- **CSS修改（`static/style.css`）**：
+  - `.new-ui-character-display`：添加 `overflow: visible` 便于高度计算
+  - `.character-container`：改为 `display: inline-flex`，尺寸由内部图片决定；添加 `transition` 实现平滑变换
+  - `.character-image`：移除 `max-height`，由JS动态设置 `height` 属性
+  - `.body-parts-layer`：添加 `transform-origin: center center`
+
+- **JS修改（`static/game.js`）**：
+  - `createCharacterDisplay()`：在图片 `onload` 事件中调用 `applyCharacterImageHeight()`
+  - 新增 `applyCharacterImageHeight(display, img)` 函数：
+    - 获取显示区域可用高度（减去边距）
+    - 计算目标高度：`min(1024, 可用高度)`
+    - 设置 `img.style.height` 和 `img.style.width = 'auto'`
+    - 保存目标高度到 `display.dataset` 供后续使用
+    - 触发重叠检测
+  - 新增 `updateCharacterImageHeightOnResize()` 函数：窗口大小改变时重新计算高度
+  - 新增 `debounce()` 辅助函数：防抖处理
+  - 添加窗口 `resize` 事件监听
+
+##### 身体部位按钮同步缩放
+- **原理**：身体部位按钮使用百分比定位（相对于 `body-parts-layer`）
+- **机制**：
+  1. `body-parts-layer` 大小为 100% x 100%，与 `character-container` 一致
+  2. `character-container` 的大小由 `character-image` 决定
+  3. 当图片高度设置后，容器和按钮层都会自动调整
+  4. 百分比定位的按钮会自动映射到正确位置
+
+##### 与浮现按钮重叠调整的兼容
+- **两阶段调整**：
+  1. **高度缩放**（基础）：通过 `img.style.height` 实现，统一到1024px或可用高度
+  2. **重叠调整**（附加）：通过 `transform` 实现右移和/或缩小
+- **顺序**：先应用高度缩放，再检测重叠、应用变换
+- **效果叠加**：两者独立，`transform` 在固定高度基础上进行
+
+#### 4.2.4 角色立绘透明区域裁切（2026-02-08新增）✅
 
 **功能描述**：自动裁切角色立绘图片四周的透明区域，优化显示效果
 
@@ -2158,6 +2203,103 @@
 - [x] 更新 `Web模式指令面板绘制.md` 添加选项卡系统章节
 - [x] 标记测试项完成
 
+### 9.5 选项卡问题诊断与修复（2026-01-17）
+
+#### 9.5.1 选项卡位置问题
+**问题**：选项卡显示在底部，而非设计文档中的顶部位置
+
+**修复**：
+- 修改 `static/game.js` 第2258-2268行
+- 使用 `container.insertBefore(panelTabs, container.firstChild)` 将选项卡插入到容器最前面
+- 修改 `static/style.css` 第1174-1185行，更新为顶部样式
+
+#### 9.5.2 选项卡指令ID映射问题
+**问题**：`tab_menu.py` 中使用字符串ID如 "move"、"save"，但未与 `Instruct.py` 中的常量一致
+
+**修复**：
+- 修改 `Script/UI/Panel/web_components/tab_menu.py` 第23-56行
+- 使用 `Instruct.Instruct.MOVE`、`Instruct.Instruct.SAVE` 等常量
+- 确保指令ID与 `constant.handle_instruct_data` 中的键一致
+
+#### 9.5.3 选项卡点击处理问题
+**问题**：选项卡使用WebSocket事件，但后端 `askfor_all` 轮询的是 `/api/button_click` 响应
+
+**修复**：
+- 修改 `static/game.js` 第2543-2550行的 `clickPanelTab()` 函数
+- 改为调用 `handleButtonClick(tabId)` 使用统一的按钮点击API
+- 修改 `in_scene_panel_web.py` 第66-118行
+  - 添加 `_bind_panel_tabs_and_get_ask_list()` 方法
+  - 将选项卡指令绑定到 `cmd_map`
+  - 通过 `flow_handle.askfor_all()` 等待用户选择
+
+#### 9.5.4 状态推送问题
+**问题**：`_push_state_to_frontend` 直接调用 `update_game_state`，导致元素未添加到 `cache.current_draw_elements`，`askfor_all` 发送空状态
+
+**修复**：
+- 修改 `in_scene_panel_web.py` 第236-255行的 `_push_state_to_frontend()` 方法
+- 改为将元素添加到 `cache.current_draw_elements`
+- 由 `askfor_all` 统一发送状态到前端
+
+### 9.5.5 测试结果
+- [x] 选项卡正确显示在画面顶部
+- [x] 点击选项卡能够切换面板（移动、存档、设置、属性、收藏、成就等）
+- [x] 角色立绘和身体部位按钮正常显示
+- [x] 主面板UI完整渲染
+
+### 9.5.6 文档更新
+- [x] 更新 `Web绘制模式UI重构实现流程.md` 添加实施记录
+- [x] 更新 `Web绘制模式UI重构说明文档.md` 补充实现细节
+- [x] 更新 `Web模式指令面板绘制.md` 添加选项卡系统章节
+- [x] 标记测试项完成
+
+
+### 9.6 交互面板bug诊断与修复（2026-01-18）
+
+#### 9.6.1 大类切换后小类未更新问题
+**问题**：切换交互大类时，小类按钮列表没有正确更新（如选择"手"后仍显示"嘴"的小类：对话/亲吻/舔吸）
+
+**根因分析**：
+1. ~~WebSocket传递的 `major_type_id` 可能是字符串类型，而后端字典键是整数类型，导致查找失败~~ **（已于之前修复）**
+2. **新发现根因**：前端 `socket` 变量使用 `let` 声明为模块级变量，但 `selectMajorType()` 函数检查的是 `window.socket`。由于 `let` 声明的变量不会自动成为 `window` 的属性，导致 `window.socket` 为 `undefined`，WebSocket事件无法发送。
+
+**修复**：
+- ~~修改 `Script/Core/web_server.py` 第807-823行~~ **（已废弃 - 现在使用字符串类型）**
+  - ~~在 `handle_select_major_type()` 中添加 `major_type_id = int(major_type_id)` 类型转换~~
+  - **2026-01-19更新**：交互类型现在使用字符串标识符（如 `'mouth'`, `'hand'`, `'arts'` 等），已移除 int 转换
+- ~~修改 `Script/Core/web_server.py` 第848-864行~~ **（已废弃 - 现在使用字符串类型）**
+  - ~~在 `handle_select_minor_type()` 中添加 `minor_type_id = int(minor_type_id)` 类型转换~~
+  - **2026-01-19更新**：交互类型现在使用字符串标识符（如 `'mouth_talk'`, `'hand_touch'`, `'arts_hypnosis'` 等），已移除 int 转换
+- ~~修改 `Script/UI/Panel/web_components/interaction_handler.py` 第75-88行~~ **（已废弃 - 现在使用字符串类型）**
+  - ~~在 `select_major_type()` 方法中添加类型转换~~
+- ~~修改 `Script/UI/Panel/web_components/interaction_handler.py` 第105-118行~~ **（已废弃 - 现在使用字符串类型）**
+  - ~~在 `select_minor_type()` 方法中添加类型转换~~
+- **新增修复（2026-01-18）**：修改 `static/game.js` 第1163-1167行
+  - 在 `initWebSocket()` 中添加 `window.socket = socket`，确保socket全局可访问
+  ```javascript
+  function initWebSocket() {
+      socket = io();
+      // 同时设置到 window 上，确保全局可访问
+      window.socket = socket;
+      // ...
+  }
+  ```
+- **新增调试日志**：在 `selectMajorType()` 和 `selectMinorType()` 函数中添加调试日志
+
+#### 9.6.2 部位按钮使用COCO名称问题
+**问题**：角色立绘上的部位按钮显示COCO关键点原始名称（如"鼻子"、"左眼"、"左手腕"）而非游戏部位名称（如"脸部"、"手部"）
+
+**根因**：`character_renderer.py` 的 `_convert_body_data()` 方法使用简单的COCO名称映射，未使用 `BodyPartButton` 类的转换逻辑
+
+**修复**：
+- 重写 `Script/UI/Panel/web_components/character_renderer.py` 第181-268行的 `_convert_body_data()` 方法
+- 导入并使用 `BodyPartButton` 类和 `CLICKABLE_BODY_PARTS` 常量
+- 将COCO landmarks转换为关键点列表，调用 `body_part_button.load_coco_keypoints()`
+- 使用 `body_part_button.get_buttons_data()` 获取正确的游戏部位数据
+- 返回的数据包含：
+  - `display_name`: 中文显示名称（如"脸部"）
+  - `part_id`: 英文部位ID（如"face"）供后端逻辑使用
+  - `is_hip_sub_part`: 是否为臀部子部位
+
 ---
 
 ## 阶段十：优化与完善
@@ -2353,421 +2495,6 @@
 }
 ```
 
-
-## 阶段九：问题修复和调试 ✅
-
-**阶段状态**：进行中
-**开始日期**：2026年1月17日
-
-### 9.1 主界面无法绘制问题修复 ✅
-
-#### 9.1.1 问题现象
-- [x] Web 模式启动正常，可以进入开始界面和创建人物界面
-- [x] 进入主界面后画面空白，无任何绘制
-- [x] 浏览器控制台出现 404 错误
-- [x] 后端日志显示 "404 Not Found: The requested URL was not found on the server"
-
-#### 9.1.2 问题分析
-- [x] 检查发现服务器 `/` 路由渲染的是旧的 `index.html`
-- [x] 新的 Web UI 应该使用 `game_main.html`，包含完整的游戏界面结构
-- [x] `game_main.html` 需要加载 4 个 JS 文件：websocket_handler.js、ui_components.js、game_renderer.js、interaction_manager.js
-- [x] WebSocket 前端发送 `request_game_state` 事件，但服务器端没有对应的处理器
-- [x] `connect` 事件处理器发送的是旧的简化版 `game_state`，不包含新 UI 所需的完整数据
-
-#### 9.1.3 修复措施
-- [x] **修改主路由**：将 `web_server.py` 中的 `/` 路由从渲染 `index.html` 改为 `game_main.html`
-- [x] **添加事件处理器**：新增 `@socketio.on('request_game_state')` 处理器
-- [x] **实现完整状态构建**：新增 `send_full_game_state()` 函数，构建包含以下内容的完整游戏状态：
-  - 玩家信息（姓名、昵称、HP、MP、理智等）
-  - 交互对象信息（姓名、HP等）
-  - 当前面板ID
-  - 可用交互大类列表
-  - 当前选中的大类和小类
-  - 当前大类下的小类列表
-  - 面板选项卡列表（系统面板类指令）
-- [x] **更新连接处理**：修改 `handle_connect()` 函数，连接时调用 `send_full_game_state()`
-
-#### 9.1.4 相关文件修改
-- [x] `Script/Core/web_server.py`:
-  - 第 115-134 行：将 `render_template('index.html')` 改为 `render_template('game_main.html')`
-  - 第 404-454 行：重写 `handle_connect()` 和添加 `handle_request_game_state()`
-  - 第 1377-1457 行：新增 `send_full_game_state()` 函数
-
-#### 9.1.5 验证步骤
-- [ ] 重新启动游戏（`python game.py`，确保 `config.ini` 中 `web_draw = 1`）
-- [ ] 打开浏览器访问 http://localhost:5001
-- [ ] 检查是否正确加载 `game_main.html`
-- [ ] 查看浏览器控制台是否有 404 错误
-- [ ] 检查网络面板中 WebSocket 消息是否包含完整游戏状态
-- [ ] 验证主界面是否正确显示面板选项卡、交互类型栏等UI元素
-
-**修复日期**：2026年1月17日
-**修复人员**：AI Assistant
-
-### 9.2 游戏启动流程面板切换问题修复 ✅
-
-#### 9.2.1 问题现象
-- [x] 打开浏览器后，直接显示 `game_main.html`（场景互动面板的专用UI）
-- [x] 跳过了游戏的正常启动流程（标题画面、角色创建等）
-- [x] 用户期望：先进入标题画面 → 选择"初次唤醒" → 角色创建 → 场景互动
-
-#### 9.2.2 问题分析
-- [x] **根本原因**：`game_main.html` 是为 `IN_SCENE` 面板（场景互动）设计的专用UI，不适用于其他面板
-- [x] `index.html` 才是通用的Web界面，使用动态元素绘制系统，可以显示所有面板（标题、角色创建等）
-- [x] 游戏启动时 `cache.now_panel_id` 初始化为 `0`（即 `Panel.TITLE`），但Web服务器的 `/` 路由总是返回 `game_main.html`
-- [x] 需要根据当前面板动态选择模板：
-  - 非 `IN_SCENE` 面板 → 使用 `index.html`（通用UI）
-  - `IN_SCENE` 面板 → 使用 `game_main.html`（新UI）
-
-#### 9.2.3 解决方案
-**方案说明**：实现动态模板路由 + 前端面板切换检测
-
-1. **后端：动态模板选择**
-   - [x] 修改 `web_server.py` 的 `/` 路由逻辑
-   - [x] 根据 `cache.now_panel_id` 判断：
-     - 如果 `now_panel_id == constant.Panel.IN_SCENE`（值为2），返回 `game_main.html`
-     - 否则返回 `index.html`
-
-2. **前端：面板切换自动刷新**
-   - [x] 修改 `static/game.js` 的 `initWebSocket()` 函数
-   - [x] 监听 `game_state_update` 事件中的 `panel_id` 字段
-   - [x] 检测面板切换：当从非 `IN_SCENE` 切换到 `IN_SCENE`，或反向切换时，自动刷新页面
-   - [x] 这样可以加载对应的UI模板（`index.html` 或 `game_main.html`）
-
-#### 9.2.4 相关文件修改
-- [x] `Script/Core/web_server.py`（第 115-137 行）：
-  ```python
-  @app.route('/')
-  def index():
-      """根据当前面板动态选择模板"""
-      from Script.Core import constant
-      if hasattr(cache, 'now_panel_id') and cache.now_panel_id == constant.Panel.IN_SCENE:
-          return render_template('game_main.html')  # 场景互动面板使用新UI
-      else:
-          return render_template('index.html')  # 其他面板使用通用UI
-  ```
-
-- [x] `static/game.js`（第 1159-1206 行）：
-  ```javascript
-  // 在 initWebSocket() 中添加面板切换检测
-  let lastPanelId = null;
-  socket.on('game_state_update', (data) => {
-      const currentPanelId = data.panel_id;
-      const IN_SCENE_PANEL = 2;
-      
-      // 检测是否需要刷新页面
-      if (lastPanelId !== null && currentPanelId !== lastPanelId) {
-          const needsRefresh = (lastPanelId === IN_SCENE_PANEL && currentPanelId !== IN_SCENE_PANEL) ||
-                             (lastPanelId !== IN_SCENE_PANEL && currentPanelId === IN_SCENE_PANEL);
-          if (needsRefresh) {
-              window.location.reload();  // 刷新以加载对应模板
-              return;
-          }
-      }
-      lastPanelId = currentPanelId;
-      renderGameState(data);
-  });
-  ```
-
-#### 9.2.5 验证步骤
-- [x] 重新启动游戏（`python game.py`）
-- [x] 打开浏览器访问 http://localhost:5001
-- [x] **验证点1**：应该看到标题画面（使用 `index.html` 通用UI）
-- [ ] **验证点2**：选择"初次唤醒"，进入角色创建界面
-- [ ] **验证点3**：完成角色创建后，自动切换到 `IN_SCENE` 面板
-- [ ] **验证点4**：页面应自动刷新并显示 `game_main.html` 的新UI（面板选项卡、交互类型栏等）
-- [ ] **验证点5**：从 `IN_SCENE` 面板点击系统面板按钮（如"查看地图"），页面应刷新回 `index.html` 通用UI
-
-#### 9.2.6 架构说明
-- **两套UI并存**：
-  - `index.html`：通用UI，基于动态元素绘制，适用于所有传统面板
-  - `game_main.html`：新UI，为场景互动面板专门设计，提供更丰富的交互体验
-- **无缝切换**：通过动态模板路由和前端自动刷新，实现两套UI之间的无缝切换
-- **向后兼容**：保留了原有的通用UI，不影响其他面板的正常使用
-
-**修复日期**：2026年1月17日
-**修复人员**：AI Assistant
-
-
 ---
-
-### 9.3 页面刷新机制回滚与单页面新UI实现 ✅
-
-#### 9.3.1 问题现象
-- [x] 页面刷新机制导致404错误
-- [x] 用户反馈：主面板需要在当前页面绘制，不需要单独网页
-- [x] 用户需求：使用新版UI绘制主界面
-
-#### 9.3.2 问题分析
-- [x] **问题根源**：9.2中实现的动态模板路由 + 页面刷新方案存在缺陷
-  - 页面刷新时URL变化导致404
-  - 两套模板切换体验不佳
-  - 不符合单页应用(SPA)的设计理念
-- [x] **新架构需求**：
-  - 所有面板统一使用 `index.html`
-  - 主面板的新UI作为特殊元素类型在同一页面内渲染
-  - 使用标准WebSocket事件流，不需要页面刷新
-
-#### 9.3.3 解决方案
-**方案说明**：单页面应用 + 新UI容器元素
-
-1. **回滚页面刷新机制**
-   - [x] 修改 `web_server.py` 的 `/` 路由，始终返回 `index.html`
-   - [x] 移除 `game.js` 中的面板切换自动刷新逻辑
-   - [x] `game_main.html` 保留但不作为路由目标，仅作为参考
-
-2. **修正InScenePanelWeb事件通道**
-   - [x] 修改 `in_scene_panel_web.py` 的 `_push_state_to_frontend()` 方法
-   - [x] 使用 `web_server.update_game_state()` 替代 `push_game_state()`
-   - [x] 确保发送正确的 `game_state_update` 事件(game.js监听的事件)
-   - [x] 添加 `_convert_state_to_elements()` 方法将状态转换为元素列表
-
-3. **实现new_ui_container元素类型**
-   - [x] 在 `game.js` 的 `createGameElement()` 中添加 `new_ui_container` case
-   - [x] 创建 `renderNewUIContent()` 函数渲染新UI布局
-   - [x] 实现各新UI组件的渲染函数：
-     - `createPlayerInfoPanel()` - 玩家信息面板
-     - `createStatusBar()` - 状态条组件
-     - `createTargetExtraInfoPanel()` - 交互对象附加信息
-     - `createAvatarPanel()` - 角色头像面板
-     - `createInteractionTypePanel()` - 交互类型按钮
-     - `createCharacterDisplay()` - 角色立绘显示
-     - `createTargetInfoPanel()` - 交互对象信息
-     - `createPanelTabsBar()` - 面板选项卡
-   - [x] 实现事件处理函数：
-     - `switchTarget()`, `selectInteractionType()`, `clickPanelTab()`
-
-4. **添加新UI CSS样式**
-   - [x] 在 `style.css` 末尾添加完整的新UI样式(~200行)
-   - [x] 包含所有新UI组件的样式定义
-
-#### 9.3.4 相关文件修改
-- [x] `Script/Core/web_server.py`(第115-127行)：
-  ```python
-  @app.route('/')
-  def index():
-      """Web模式主页面"""
-      # 所有面板统一使用index.html
-      return render_template('index.html')
-  ```
-
-- [x] `static/game.js`：
-  - 第1160-1195行：移除 `lastPanelId` 跟踪和自动刷新逻辑
-  - 第2165-2180行：添加 `new_ui_container` 元素类型处理
-  - 第2190-2420行：添加约200行新UI渲染函数
-
-- [x] `Script/UI/Panel/in_scene_panel_web.py`(第208-240行)：
-  ```python
-  def _push_state_to_frontend(self, state: Dict):
-      # 使用正确的事件通道
-      elements = self._convert_state_to_elements(state)
-      web_server.update_game_state(elements, panel_id=constant.Panel.IN_SCENE)
-  
-  def _convert_state_to_elements(self, state: Dict) -> List[Dict]:
-      # 将状态包装为new_ui_container元素
-      elements = [{
-          "type": "new_ui_container",
-          "panel_type": "in_scene",
-          "game_state": state
-      }]
-      return elements
-  ```
-
-- [x] `static/style.css`(第882行后)：
-  - 添加约200行新UI样式
-  - 包含 `.new-ui-container`, `.new-ui-layout` 等所有新UI类
-
-#### 9.3.5 架构改进说明
-**新架构优势**：
-1. **单页应用**：所有面板共用一个HTML，通过元素动态更新
-2. **无缝切换**：面板切换不需要页面刷新，体验更流畅
-3. **统一事件流**：所有面板使用相同的WebSocket事件机制
-4. **易于扩展**：新增面板只需添加元素类型，无需创建新模板
-
-**元素类型体系**：
-- 通用元素：`text`, `button`, `line`, `image` 等 → 适用于所有传统面板
-- 特殊元素：`new_ui_container` → 适用于主面板新UI
-- 前端根据元素类型自动选择对应的渲染逻辑
-
-**废弃内容**：
-- ~~动态模板路由(9.2方案)~~ → 已回滚
-- ~~页面自动刷新机制~~ → 已移除
-- `game_main.html` → 保留作为参考，但不再用于路由
-
-#### 9.3.6 验证步骤
-- [x] 重新启动游戏
-- [x] 确认可以正常进入主面板
-- [x] 确认主面板使用新UI渲染(在同一页面内)
-- [x] 测试面板切换是否流畅(无刷新)
-- [ ] 测试新UI交互功能是否正常
-
-**修复日期**：2026年1月17日  
-**修复人员**：AI Assistant  
-**架构变更**：从双模板系统改为单页面应用 + 元素类型扩展
-
----
-
-## 阶段十：选项卡系统完善（2026-01-17）
-
-### 10.1 问题诊断与修复
-
-#### 10.1.1 选项卡位置问题
-**问题**：选项卡显示在底部，而非设计文档中的顶部位置
-
-**修复**：
-- 修改 `static/game.js` 第2258-2268行
-- 使用 `container.insertBefore(panelTabs, container.firstChild)` 将选项卡插入到容器最前面
-- 修改 `static/style.css` 第1174-1185行，更新为顶部样式
-
-#### 10.1.2 选项卡指令ID映射问题
-**问题**：`tab_menu.py` 中使用字符串ID如 "move"、"save"，但未与 `Instruct.py` 中的常量一致
-
-**修复**：
-- 修改 `Script/UI/Panel/web_components/tab_menu.py` 第23-56行
-- 使用 `Instruct.Instruct.MOVE`、`Instruct.Instruct.SAVE` 等常量
-- 确保指令ID与 `constant.handle_instruct_data` 中的键一致
-
-#### 10.1.3 选项卡点击处理问题
-**问题**：选项卡使用WebSocket事件，但后端 `askfor_all` 轮询的是 `/api/button_click` 响应
-
-**修复**：
-- 修改 `static/game.js` 第2543-2550行的 `clickPanelTab()` 函数
-- 改为调用 `handleButtonClick(tabId)` 使用统一的按钮点击API
-- 修改 `in_scene_panel_web.py` 第66-118行
-  - 添加 `_bind_panel_tabs_and_get_ask_list()` 方法
-  - 将选项卡指令绑定到 `cmd_map`
-  - 通过 `flow_handle.askfor_all()` 等待用户选择
-
-#### 10.1.4 状态推送问题
-**问题**：`_push_state_to_frontend` 直接调用 `update_game_state`，导致元素未添加到 `cache.current_draw_elements`，`askfor_all` 发送空状态
-
-**修复**：
-- 修改 `in_scene_panel_web.py` 第236-255行的 `_push_state_to_frontend()` 方法
-- 改为将元素添加到 `cache.current_draw_elements`
-- 由 `askfor_all` 统一发送状态到前端
-
-### 10.2 测试结果
-- [x] 选项卡正确显示在画面顶部
-- [x] 点击选项卡能够切换面板（移动、存档、设置、属性、收藏、成就等）
-- [x] 角色立绘和身体部位按钮正常显示
-- [x] 主面板UI完整渲染
-
-### 10.3 文档更新
-- [x] 更新 `Web绘制模式UI重构实现流程.md` 添加实施记录
-- [x] 更新 `Web绘制模式UI重构说明文档.md` 补充实现细节
-- [x] 更新 `Web模式指令面板绘制.md` 添加选项卡系统章节
-- [x] 标记测试项完成
-
----
-
-## 阶段十一：交互面板bug修复（2026-01-18）
-
-### 11.1 问题诊断与修复
-
-#### 11.1.1 大类切换后小类未更新问题
-**问题**：切换交互大类时，小类按钮列表没有正确更新（如选择"手"后仍显示"嘴"的小类：对话/亲吻/舔吸）
-
-**根因分析**：
-1. ~~WebSocket传递的 `major_type_id` 可能是字符串类型，而后端字典键是整数类型，导致查找失败~~ **（已于之前修复）**
-2. **新发现根因**：前端 `socket` 变量使用 `let` 声明为模块级变量，但 `selectMajorType()` 函数检查的是 `window.socket`。由于 `let` 声明的变量不会自动成为 `window` 的属性，导致 `window.socket` 为 `undefined`，WebSocket事件无法发送。
-
-**修复**：
-- ~~修改 `Script/Core/web_server.py` 第807-823行~~ **（已废弃 - 现在使用字符串类型）**
-  - ~~在 `handle_select_major_type()` 中添加 `major_type_id = int(major_type_id)` 类型转换~~
-  - **2026-01-19更新**：交互类型现在使用字符串标识符（如 `'mouth'`, `'hand'`, `'arts'` 等），已移除 int 转换
-- ~~修改 `Script/Core/web_server.py` 第848-864行~~ **（已废弃 - 现在使用字符串类型）**
-  - ~~在 `handle_select_minor_type()` 中添加 `minor_type_id = int(minor_type_id)` 类型转换~~
-  - **2026-01-19更新**：交互类型现在使用字符串标识符（如 `'mouth_talk'`, `'hand_touch'`, `'arts_hypnosis'` 等），已移除 int 转换
-- ~~修改 `Script/UI/Panel/web_components/interaction_handler.py` 第75-88行~~ **（已废弃 - 现在使用字符串类型）**
-  - ~~在 `select_major_type()` 方法中添加类型转换~~
-- ~~修改 `Script/UI/Panel/web_components/interaction_handler.py` 第105-118行~~ **（已废弃 - 现在使用字符串类型）**
-  - ~~在 `select_minor_type()` 方法中添加类型转换~~
-- **新增修复（2026-01-18）**：修改 `static/game.js` 第1163-1167行
-  - 在 `initWebSocket()` 中添加 `window.socket = socket`，确保socket全局可访问
-  ```javascript
-  function initWebSocket() {
-      socket = io();
-      // 同时设置到 window 上，确保全局可访问
-      window.socket = socket;
-      // ...
-  }
-  ```
-- **新增调试日志**：在 `selectMajorType()` 和 `selectMinorType()` 函数中添加调试日志
-
-#### 11.1.2 部位按钮使用COCO名称问题
-**问题**：角色立绘上的部位按钮显示COCO关键点原始名称（如"鼻子"、"左眼"、"左手腕"）而非游戏部位名称（如"脸部"、"手部"）
-
-**根因**：`character_renderer.py` 的 `_convert_body_data()` 方法使用简单的COCO名称映射，未使用 `BodyPartButton` 类的转换逻辑
-
-**修复**：
-- 重写 `Script/UI/Panel/web_components/character_renderer.py` 第181-268行的 `_convert_body_data()` 方法
-- 导入并使用 `BodyPartButton` 类和 `CLICKABLE_BODY_PARTS` 常量
-- 将COCO landmarks转换为关键点列表，调用 `body_part_button.load_coco_keypoints()`
-- 使用 `body_part_button.get_buttons_data()` 获取正确的游戏部位数据
-- 返回的数据包含：
-  - `display_name`: 中文显示名称（如"脸部"）
-  - `part_id`: 英文部位ID（如"face"）供后端逻辑使用
-  - `is_hip_sub_part`: 是否为臀部子部位
-
-### 11.2 角色立绘高度统一缩放功能（2026-02-07新增）
-
-#### 11.2.1 功能描述
-- **目标**：解决角色立绘因原图大小不一致而产生不同缩放情况的问题
-- **规则**：
-  1. 检查当前窗口大小导致的角色立绘可用高度上限
-  2. 如果可用高度 > 1024像素，将图片高度固定为 1024像素
-  3. 如果可用高度 ≤ 1024像素，将图片高度设为可用高度
-  4. 图片保持原比例，居中显示
-  5. 身体部位按钮的点击位置随图片一起缩放
-
-#### 11.2.2 实现细节
-- **CSS修改（`static/style.css`）**：
-  - `.new-ui-character-display`：添加 `overflow: visible` 便于高度计算
-  - `.character-container`：改为 `display: inline-flex`，尺寸由内部图片决定；添加 `transition` 实现平滑变换
-  - `.character-image`：移除 `max-height`，由JS动态设置 `height` 属性
-  - `.body-parts-layer`：添加 `transform-origin: center center`
-
-- **JS修改（`static/game.js`）**：
-  - `createCharacterDisplay()`：在图片 `onload` 事件中调用 `applyCharacterImageHeight()`
-  - 新增 `applyCharacterImageHeight(display, img)` 函数：
-    - 获取显示区域可用高度（减去边距）
-    - 计算目标高度：`min(1024, 可用高度)`
-    - 设置 `img.style.height` 和 `img.style.width = 'auto'`
-    - 保存目标高度到 `display.dataset` 供后续使用
-    - 触发重叠检测
-  - 新增 `updateCharacterImageHeightOnResize()` 函数：窗口大小改变时重新计算高度
-  - 新增 `debounce()` 辅助函数：防抖处理
-  - 添加窗口 `resize` 事件监听
-
-#### 11.2.3 身体部位按钮同步缩放
-- **原理**：身体部位按钮使用百分比定位（相对于 `body-parts-layer`）
-- **机制**：
-  1. `body-parts-layer` 大小为 100% x 100%，与 `character-container` 一致
-  2. `character-container` 的大小由 `character-image` 决定
-  3. 当图片高度设置后，容器和按钮层都会自动调整
-  4. 百分比定位的按钮会自动映射到正确位置
-
-#### 11.2.4 与浮现按钮重叠调整的兼容
-- **两阶段调整**：
-  1. **高度缩放**（基础）：通过 `img.style.height` 实现，统一到1024px或可用高度
-  2. **重叠调整**（附加）：通过 `transform` 实现右移和/或缩小
-- **顺序**：先应用高度缩放，再检测重叠、应用变换
-- **效果叠加**：两者独立，`transform` 在固定高度基础上进行
-
-### 11.3 修改的文件清单
-
-| 文件 | 修改内容 |
-|------|----------|
-| `Script/Core/web_server.py` | 添加 major_type_id 和 minor_type_id 的 int() 类型转换 |
-| `Script/UI/Panel/web_components/interaction_handler.py` | 在 select_major_type 和 select_minor_type 方法中添加类型转换 |
-| `Script/UI/Panel/web_components/character_renderer.py` | 重写 _convert_body_data() 使用 BodyPartButton 类 |
-| `static/style.css` | 更新角色立绘相关样式支持高度缩放（2026-02-07）|
-| `static/game.js` | 新增 applyCharacterImageHeight()、updateCharacterImageHeightOnResize()、debounce() 函数（2026-02-07）|
-
-### 11.4 测试结果
-- [x] 游戏正常启动无报错
-- [ ] 交互大类切换后小类正确更新（待用户测试确认）
-- [ ] 角色立绘部位按钮显示游戏部位名称（待用户测试确认）
-- [ ] 角色立绘高度统一缩放（2026-02-07新增，待用户测试确认）
 
 ---
