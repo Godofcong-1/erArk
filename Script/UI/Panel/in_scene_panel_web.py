@@ -18,7 +18,7 @@ from Script.Core import (
 )
 from Script.Design import attr_text, map_handle, game_time, handle_premise
 from Script.Config import game_config
-from Script.UI.Panel.web_components import (
+from Script.System.Web_Draw_System import (
     SceneRenderer,
     CharacterRenderer,
     InteractionHandler,

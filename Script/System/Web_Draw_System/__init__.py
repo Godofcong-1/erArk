@@ -15,10 +15,10 @@ Web模式专用UI组件包
 - image_processor: 图片处理组件（透明区域裁切和缓存）
 """
 
-from Script.UI.Panel.web_components.scene_renderer import SceneRenderer
-from Script.UI.Panel.web_components.character_renderer import CharacterRenderer
-from Script.UI.Panel.web_components.interaction_handler import InteractionHandler
-from Script.UI.Panel.web_components.dialog_box import (
+from Script.System.Web_Draw_System.scene_renderer import SceneRenderer
+from Script.System.Web_Draw_System.character_renderer import CharacterRenderer
+from Script.System.Web_Draw_System.interaction_handler import InteractionHandler
+from Script.System.Web_Draw_System.dialog_box import (
     DialogBox,
     add_dialog_text,
     advance_dialog,
@@ -27,11 +27,11 @@ from Script.UI.Panel.web_components.dialog_box import (
     get_dialog_state,
     skip_all_dialogs,
 )
-from Script.UI.Panel.web_components.status_panel import StatusPanel
-from Script.UI.Panel.web_components.tab_menu import TabMenu, MAIN_PANEL_TAB_ID
-from Script.UI.Panel.web_components.body_part_button import BodyPartButton
-from Script.UI.Panel.web_components.settlement_manager import SettlementManager, SettlementPhase
-from Script.UI.Panel.web_components.image_processor import (
+from Script.System.Web_Draw_System.status_panel import StatusPanel
+from Script.System.Web_Draw_System.tab_menu import TabMenu, MAIN_PANEL_TAB_ID
+from Script.System.Web_Draw_System.body_part_button import BodyPartButton
+from Script.System.Web_Draw_System.settlement_manager import SettlementManager, SettlementPhase
+from Script.System.Web_Draw_System.image_processor import (
     ImageProcessor,
     image_processor,
     get_cropped_image,

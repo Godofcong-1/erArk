@@ -333,7 +333,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         # ========== Web模式对话框绘制 ==========
         # 在Web模式下，将口上文本发送到对话框区域显示，而不是直接打印到主界面
         if hasattr(cache, 'web_mode') and cache.web_mode:
-            from Script.UI.Panel.web_components.dialog_box import add_dialog_text
+            from Script.System.Web_Draw_System.dialog_box import add_dialog_text
             # 获取说话者名称
             speaker_name = character_data.name
             # 不需要等待的情况（如跳过模式）

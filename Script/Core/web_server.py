@@ -95,7 +95,7 @@ def get_settlement_manager():
     """
     global _settlement_manager
     if _settlement_manager is None:
-        from Script.UI.Panel.web_components.settlement_manager import SettlementManager
+        from Script.System.Web_Draw_System.settlement_manager import SettlementManager
         _settlement_manager = SettlementManager()
     return _settlement_manager
 
@@ -303,7 +303,7 @@ def toggle_detailed_dirty():
     功能描述：切换是否显示详细污浊文本，并返回更新后的附加信息数据
     """
     from Script.Core import cache_control
-    from Script.UI.Panel.web_components.status_panel import StatusPanel
+    from Script.System.Web_Draw_System.status_panel import StatusPanel
     cache = cache_control.cache
     
     if hasattr(cache, 'all_system_setting') and hasattr(cache.all_system_setting, 'draw_setting'):
@@ -333,7 +333,7 @@ def toggle_all_body_parts():
     功能描述：切换是否始终显示所有身体部位按钮（不需要鼠标悬停），并返回更新后的附加信息数据
     """
     from Script.Core import cache_control
-    from Script.UI.Panel.web_components.status_panel import StatusPanel
+    from Script.System.Web_Draw_System.status_panel import StatusPanel
     cache = cache_control.cache
     
     if hasattr(cache, 'all_system_setting') and hasattr(cache.all_system_setting, 'draw_setting'):
@@ -441,7 +441,7 @@ def quick_use_drug():
             })
         
         # 获取更新后的玩家信息（包含 value_changes）
-        from Script.UI.Panel.web_components.status_panel import StatusPanel
+        from Script.System.Web_Draw_System.status_panel import StatusPanel
         status_panel = StatusPanel()
         updated_player_info = status_panel.get_player_info()
         
@@ -638,7 +638,7 @@ def serve_cropped_image(filename):
     - X-Offset-Y: 裁切区域Y偏移
     """
     from flask import send_file, abort, make_response
-    from Script.UI.Panel.web_components.image_processor import get_cropped_image, is_image_processor_available
+    from Script.System.Web_Draw_System.image_processor import get_cropped_image, is_image_processor_available
     import io
     
     # 检查图片处理功能是否可用
@@ -1049,7 +1049,7 @@ def handle_switch_target(data):
     2. 刷新该角色的数值变化时间戳，确保能正确显示浮动文本
     """
     import time
-    from Script.UI.Panel.web_components.dialog_box import add_dialog_text
+    from Script.System.Web_Draw_System.dialog_box import add_dialog_text
     
     character_id = data.get('character_id')
     logging.info(f"切换交互对象: {character_id}")
@@ -1584,7 +1584,7 @@ def handle_advance_dialog(data):
     
     try:
         # 使用新的dialog_box模块处理对话
-        from Script.UI.Panel.web_components.dialog_box import (
+        from Script.System.Web_Draw_System.dialog_box import (
             advance_dialog, skip_all_dialogs, get_dialog_state
         )
         
@@ -1624,7 +1624,7 @@ def handle_skip_all_dialogs(data):
     logging.info("跳过所有对话")
     
     try:
-        from Script.UI.Panel.web_components.dialog_box import (
+        from Script.System.Web_Draw_System.dialog_box import (
             skip_all_dialogs, get_dialog_state
         )
         
@@ -1972,7 +1972,7 @@ def send_full_game_state():
             }
         
         # 交互对象信息 - 使用 StatusPanel 获取完整信息
-        from Script.UI.Panel.web_components.status_panel import StatusPanel
+        from Script.System.Web_Draw_System.status_panel import StatusPanel
         status_panel = StatusPanel()
         target_id = -1
         if hasattr(cache, 'character_data') and 0 in cache.character_data:
@@ -2012,7 +2012,7 @@ def send_full_game_state():
         ]
         
         # 对话框状态
-        from Script.UI.Panel.web_components.dialog_box import get_dialog_state
+        from Script.System.Web_Draw_System.dialog_box import get_dialog_state
         full_state["dialog"] = get_dialog_state()
         
         logging.debug(f"发送完整游戏状态: {len(full_state)} 个字段")
@@ -2041,7 +2041,7 @@ def _emit_game_state_update():
     
     # 添加对话框状态
     try:
-        from Script.UI.Panel.web_components.dialog_box import get_dialog_state
+        from Script.System.Web_Draw_System.dialog_box import get_dialog_state
         local_state["dialog"] = get_dialog_state()
     except Exception as e:
         logging.warning(f"获取对话框状态失败: {e}")

@@ -67,12 +67,14 @@ def establish_save_linux(save_id: str):
     Keyword argumentsL
     save_id -- 当前存档id
     """
-    # 清理Web模式图片缓存（避免缓存数据被序列化到存档中）
-    try:
-        from Script.UI.Panel.web_components.image_processor import clear_image_cache
-        clear_image_cache()
-    except ImportError:
-        pass  # 如果模块不存在（如非Web模式），忽略
+    # 如果是web模式
+    if cache.web_mode:
+        # 清理Web模式图片缓存（避免缓存数据被序列化到存档中）
+        try:
+            from Script.System.Web_Draw_System.image_processor import clear_image_cache
+            clear_image_cache()
+        except ImportError:
+            pass  # 如果模块不存在，忽略
     
     save_verson = {
         "game_verson": normal_config.config_normal.verson,

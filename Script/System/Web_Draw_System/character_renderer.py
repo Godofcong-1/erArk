@@ -9,7 +9,7 @@ import json
 from typing import Dict, List, Optional, Tuple
 from Script.Core import cache_control, game_type
 from Script.Config import game_config
-from Script.UI.Panel.web_components.body_part_button import BodyPartButton
+from Script.System.Web_Draw_System.body_part_button import BodyPartButton
 from Script.System.Instruct_System.instruct_category import CLICKABLE_BODY_PARTS
 
 cache: game_type.Cache = cache_control.cache

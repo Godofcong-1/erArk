@@ -9,9 +9,11 @@ from Script.Core import cache_control, game_type, get_text
 from Script.Design import attr_text, handle_premise, attr_calculation
 from Script.Config import game_config
 from Script.UI.Panel import character_info_head
+from types import FunctionType
 
 cache: game_type.Cache = cache_control.cache
-_: callable = get_text._
+_: FunctionType = get_text._
+""" 翻译api """
 
 
 class StatusPanel:
