@@ -70,15 +70,6 @@ class InteractionMinorType:
     """ 嘴-舔吸：舔、吸等口部动作 """
     
     # ========== 手类（HAND='hand'）小类 ==========
-    HAND_TOUCH = "hand_touch"
-    """ 手-抚摸：摸头、抚摸身体等 """
-    
-    HAND_SLAP = "hand_slap"
-    """ 手-拍打：打屁股、掌掴等 """
-    
-    HAND_DRESS = "hand_dress"
-    """ 手-穿脱：穿脱衣物 """
-    
     HAND_DAILY = "hand_daily"
     """ 手-日常：日常类的手部交互 """
     
@@ -87,6 +78,18 @@ class InteractionMinorType:
     
     HAND_WORK = "hand_work"
     """ 手-工作：工作类的手部交互 """
+    
+    HAND_SCENE = "hand_scene"
+    """ 手-场景：场景类的手部交互 """
+    
+    HAND_TOUCH = "hand_touch"
+    """ 手-抚摸：摸头、抚摸身体等 """
+    
+    HAND_SLAP = "hand_slap"
+    """ 手-拍打：打屁股、掌掴等 """
+    
+    HAND_DRESS = "hand_dress"
+    """ 手-穿脱：穿脱衣物 """
     
     # ========== 性爱类（SEX='sex'）小类 ==========
     SEX_START_END = "sex_start_end"
@@ -103,6 +106,9 @@ class InteractionMinorType:
     """ 阴茎-插入：各种体位的性交 """
     
     # ========== 道具类（TOOL='tool'）小类 ==========
+    TOOL_BASE = "tool_base"
+    """ 道具-药物：基础 """
+    
     TOOL_DRUG = "tool_drug"
     """ 道具-药物：使用药物 """
     
@@ -110,6 +116,9 @@ class InteractionMinorType:
     """ 道具-道具：使用道具 """
     
     # ========== 技艺类（ARTS='arts'）小类 ==========
+    ARTS_BASE = "arts_base"
+    """ 技艺-基础 """
+    
     ARTS_HORMONE = "arts_hormone"
     """ 技艺-信息素：使用信息素技艺 """
     
@@ -156,12 +165,13 @@ MINOR_TYPE_NAMES = {
     InteractionMinorType.MOUTH_KISS: "亲吻",
     InteractionMinorType.MOUTH_LICK: "舔吸",
     # 手类
-    InteractionMinorType.HAND_TOUCH: "抚摸",
-    InteractionMinorType.HAND_SLAP: "拍打",
-    InteractionMinorType.HAND_DRESS: "穿脱",
     InteractionMinorType.HAND_DAILY: "日常",
     InteractionMinorType.HAND_PLAY: "娱乐",
     InteractionMinorType.HAND_WORK: "工作",
+    InteractionMinorType.HAND_SCENE: "场景",
+    InteractionMinorType.HAND_TOUCH: "抚摸",
+    InteractionMinorType.HAND_SLAP: "拍打",
+    InteractionMinorType.HAND_DRESS: "穿脱",
     # 性爱类
     InteractionMinorType.SEX_START_END: "开始与结束",
     InteractionMinorType.SEX_BASE: "基础",
@@ -169,9 +179,11 @@ MINOR_TYPE_NAMES = {
     InteractionMinorType.PENIS_RUB: "摩擦",
     InteractionMinorType.PENIS_INSERT: "插入",
     # 道具类
+    InteractionMinorType.TOOL_BASE: "基础",
     InteractionMinorType.TOOL_DRUG: "药物",
     InteractionMinorType.TOOL_ITEM: "道具",
     # 技艺类
+    InteractionMinorType.ARTS_BASE: "基础",
     InteractionMinorType.ARTS_HORMONE: "信息素",
     InteractionMinorType.ARTS_XRAY: "透视",
     InteractionMinorType.ARTS_HYPNOSIS: "催眠",
@@ -188,12 +200,13 @@ MAJOR_TO_MINOR_TYPES = {
         InteractionMinorType.MOUTH_LICK,
     ],
     InteractionMajorType.HAND: [
-        InteractionMinorType.HAND_TOUCH,
-        InteractionMinorType.HAND_SLAP,
-        InteractionMinorType.HAND_DRESS,
         InteractionMinorType.HAND_DAILY,
         InteractionMinorType.HAND_PLAY,
         InteractionMinorType.HAND_WORK,
+        InteractionMinorType.HAND_SCENE,
+        InteractionMinorType.HAND_TOUCH,
+        InteractionMinorType.HAND_SLAP,
+        InteractionMinorType.HAND_DRESS,
     ],
     InteractionMajorType.SEX: [
         InteractionMinorType.SEX_START_END,
@@ -204,10 +217,12 @@ MAJOR_TO_MINOR_TYPES = {
         InteractionMinorType.PENIS_INSERT,
     ],
     InteractionMajorType.TOOL: [
+        InteractionMinorType.TOOL_BASE,
         InteractionMinorType.TOOL_DRUG,
         InteractionMinorType.TOOL_ITEM,
     ],
     InteractionMajorType.ARTS: [
+        InteractionMinorType.ARTS_BASE,
         InteractionMinorType.ARTS_HORMONE,
         InteractionMinorType.ARTS_XRAY,
         InteractionMinorType.ARTS_HYPNOSIS,
