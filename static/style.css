@@ -1487,67 +1487,195 @@ body {
     border-radius: 4px;
 }
 
-/* 交互类型面板（左侧） - 大类选项卡 + 小类按钮 */
+/* 交互类型面板（左侧） */
 .new-ui-interaction-panel {
-    width: 140px;
+    /* Auto width to fit cards */
+    width: auto;
+    /* Reset old styles */
     padding: 0;
-    background-color: rgba(0, 0, 0, 0.85);
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    overflow-y: auto;
-    border-radius: 4px;
-    border: 1px solid #333;
-}
-
-/* 大类选项卡容器 */
-.interaction-major-tabs {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    background-color: #1a1a2a;
-    border-bottom: 1px solid #444;
-}
-
-/* 大类选项卡 */
-.interaction-major-tab {
-    padding: 10px 12px;
-    background-color: #1a1a2a;
-    color: #888;
+    background-color: transparent;
     border: none;
-    border-left: 3px solid transparent;
+    overflow: visible;
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 30px;
+    z-index: 50;
+    perspective: 1000px;
+    pointer-events: none; /* Layout container passes clicks */
+}
+
+.interaction-type-list {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transform-style: preserve-3d;
+    min-width: 140px; /* 强制宽度，防止右侧点击失效 */
+    padding-right: 20px; /* 预留右侧空间 */
+}
+
+/* 交互卡片通用样式 */
+.interaction-card {
+    width: 120px;
+    height: 70px; /* 增加高度 (原50px -> 70px, 约增加1/3) */
+    background: rgba(30, 30, 40, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--text-secondary, #b8b8b8);
+    color: var(--text-primary, #e8e8e8);
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.95em;
-    text-align: left;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    display: flex;
+    flex-direction: row; /* 改为横向布局 (图标在左) */
+    align-items: center;
+    justify-content: flex-start; /* 左对齐 */
+    padding: 0 10px;
+    gap: 8px;
+    
+    /* 3D向中心倾斜效果 - 减小角度以修复点击区域问题 */
+    /* 增加 translateZ(20px) 确保整体都在Z=0平面之前，防止旋转导致右侧深入屏幕后方无法点击 */
+    transform: rotateY(10deg) translateZ(20px); 
+    transform-origin: left center; /* 明确旋转轴在左侧，避免右侧向后偏移过多 */
+    pointer-events: auto; /* 显式开启点击，对抗父级的 none */
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    
+    /* 切角效果 */
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
 }
 
-.interaction-major-tab:hover {
-    background-color: #252540;
-    color: #aaa;
+.interaction-card:hover {
+    /* 保持前移，防止Z轴跳变 */
+    transform: rotateY(0deg) scale(1.05) translateX(10px) translateZ(30px);
+    background: rgba(40, 40, 50, 0.95);
+    border-left-color: var(--accent-color, #e94560);
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.6);
+    z-index: 10;
 }
 
-.interaction-major-tab.active {
-    background-color: #2a2a4a;
-    color: #ffd700;
-    border-left-color: #ffd700;
+.interaction-card.active {
+    background: rgba(233, 69, 96, 0.9);
+    border-left-color: #fff;
+    transform: rotateY(0deg) translateX(15px) translateZ(20px);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+}
+
+.interaction-card.active.hidden-card {
+    display: flex !important;
+}
+
+.interaction-card.hidden-card {
+    display: none;
+}
+
+.interaction-card .icon {
+    font-size: 24px; /* 缩小图标 */
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.interaction-card .label-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* 文字左对齐 */
+    width: auto;
+    overflow: hidden; /* 防止文字溢出 */
+}
+
+.interaction-card .name-cn {
+    font-size: 14px; /* 缩小文字 */
     font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+    line-height: 1.1;
+    white-space: nowrap;
 }
 
-/* 小类按钮容器 */
-.interaction-minor-buttons {
+.interaction-card .name-en {
+    font-size: 8px; /* 缩小英文 */
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+    font-family: 'Bahnschrift', sans-serif;
+    line-height: 1;
+    margin-top: 1px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* 旧样式清理 */
+.interaction-card .name, 
+.interaction-card .desc {
+    display: none;
+}
+
+/* 小类样式 */
+.interaction-minor-list {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 15px;
     display: flex;
     flex-direction: column;
     gap: 4px;
-    padding: 8px;
-    flex: 1;
-    overflow-y: auto;
 }
 
-/* 小类按钮 */
-.interaction-minor-btn {
-    padding: 10px 12px;
-    background-color: #2a2a3a;
+.interaction-card.minor-card {
+    width: 100px;
+    height: 36px; /* 小类高度大幅减小 */
+    font-size: 12px;
+    background: rgba(50, 50, 60, 0.9);
+    border-left-width: 2px;
+    padding: 0 8px;
+    /* 小类倾斜角度稍小，同样前移防止穿透 */
+    transform: rotateY(5deg) translateZ(20px);
+    justify-content: center; /* 小类一般居中或者左对齐? 保持左对齐统一 */
+    justify-content: flex-start; 
+}
+
+.interaction-card.minor-card .name-cn {
+    font-size: 12px;
+}
+.interaction-card.minor-card .name-en {
+    font-size: 8px;
+    transform: scale(0.85);
+    transform-origin: left center;
+}
+
+/* Ensure minor card flattens when active, overriding the rotated minor-card state */
+.interaction-card.minor-card.active {
+    transform: rotateY(0deg) translateX(10px) translateZ(20px);
+    background: rgba(80, 80, 100, 0.95);
+    border-left-color: #fff;
+}
+
+/* 浮现按钮（无部位指令）专用样式 */
+.interaction-card.floating-instruct {
+    background: rgba(4, 28, 44, 0.9); /* 深蓝色背景 */
+    border-left-color: #00d2ff;       /* 青色亮边 */
+    border-left-width: 3px;
+    height: 32px;                     /* 更紧凑 */
+    width: 90px;                      /* 比小类稍窄，显出层级 */
+    margin-left: 20px;                /* 更深的缩进 */
+    transform: rotateY(0deg) translateZ(20px); /* 浮现按钮不旋转，保持Z深度一致 */
+    clip-path: none;                  /* 移除切角，保持方正或自定义 */
+    border-radius: 2px;
+}
+
+.interaction-card.floating-instruct:hover {
+    background: #007acc;
+    transform: translateX(5px) translateZ(30px);
+}
+
+.interaction-card.floating-instruct .name-cn {
+    font-size: 12px;
+    font-weight: normal;
+}
+
     color: #ccc;
     border: 1px solid #444;
     border-radius: 4px;

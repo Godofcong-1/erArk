@@ -296,48 +296,124 @@ body {
 /* 交互类型栏 */
 #interaction-type-panel {
     position: absolute;
-    left: 20px;
+    left: 40px;
     top: 50%;
     transform: translateY(-50%);
-    width: 80px;
+    width: auto;
     z-index: 50;
+    perspective: 1000px;
 }
 
 .interaction-type-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
+    transform-style: preserve-3d;
 }
 
-.interaction-type-btn {
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;
-    background: rgba(0, 0, 0, 0.7);
-    border: 2px solid var(--border-color);
+/* 交互卡片通用样式 */
+.interaction-card {
+    width: 220px;
+    height: 80px;
+    background: rgba(30, 30, 40, 0.85);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--text-secondary);
     color: var(--text-primary);
-    font-size: 12px;
     cursor: pointer;
-    transition: all 0.2s ease;
+    position: relative;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 15px;
+    
+    /* 3D向中心倾斜效果 */
+    transform: rotateY(15deg) translateZ(0); 
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
+    backdrop-filter: blur(5px);
+    
+    /* 切角效果 */
+    clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
+}
+
+.interaction-card:hover {
+    transform: rotateY(0deg) scale(1.05) translateX(20px);
+    background: rgba(40, 40, 50, 0.95);
+    border-left-color: var(--accent-color);
+    box-shadow: 10px 10px 20px rgba(0,0,0,0.6);
+    z-index: 10;
+}
+
+.interaction-card.active {
+    background: rgba(233, 69, 96, 0.9);
+    border-left-color: #fff;
+    transform: rotateY(0deg) translateX(30px);
+    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+}
+
+.interaction-card .icon {
+    font-size: 32px;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+.interaction-card .label-group {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 5px;
 }
 
-.interaction-type-btn:hover {
-    background: rgba(233, 69, 96, 0.7);
-    border-color: var(--accent-color);
+.interaction-card .name {
+    font-size: 18px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
 }
 
-.interaction-type-btn.active {
+.interaction-card .desc {
+    font-size: 10px;
+    color: rgba(255,255,255,0.6);
+    text-transform: uppercase;
+}
+
+/* 小类样式 */
+.interaction-minor-list {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.interaction-card.minor-card {
+    width: 160px;
+    height: 45px;
+    font-size: 14px;
+    background: rgba(50, 50, 60, 0.9);
+    border-left-width: 2px;
+    padding: 0 15px;
+    /* 小类倾斜角度稍小 */
+    transform: rotateY(10deg) translateZ(0);
+}
+
+.interaction-card.minor-card:hover {
+    transform: rotateY(0deg) scale(1.05) translateX(10px);
+}
+
+.interaction-card.minor-card.active {
     background: var(--accent-color);
-    border-color: var(--accent-hover);
+    transform: rotateY(0deg) translateX(15px);
 }
 
-.interaction-type-btn .icon {
-    font-size: 24px;
+.interaction-card.minor-card .dot {
+    font-size: 12px;
+    color: var(--accent-color);
+}
+.interaction-card.minor-card.active .dot {
+    color: #fff;
+}
+.interaction-card.minor-card .name {
+    font-size: 14px;
 }
 
 /* 角色立绘区 */

@@ -324,7 +324,8 @@ const UIComponents = {
      */
     InteractionTypePanel: {
         container: null,
-        currentType: null,
+        majorTypes: [],
+        currentMajor: null,
         
         init: function() {
             this.container = document.getElementById('interaction-type-panel');
@@ -333,22 +334,83 @@ const UIComponents = {
         update: function(types) {
             if (!this.container) return;
             
-            const list = this.container.querySelector('.interaction-type-list');
-            if (!list) return;
+            // 保留已加载的小类数据
+            const oldMajorTypes = this.majorTypes || [];
+            this.majorTypes = types.map(t => {
+                const old = oldMajorTypes.find(oldT => oldT.id === t.id);
+                return {
+                    ...t,
+                    minorTypes: old ? old.minorTypes : []
+                };
+            });
             
+            this.render();
+        },
+        
+        updateMinorTypes: function(majorId, minorTypes) {
+            const major = this.majorTypes.find(t => t.id === majorId);
+            if (major) {
+                major.minorTypes = minorTypes;
+            }
+            this.currentMajor = majorId;
+            this.render();
+        },
+        
+        setActiveMinorType: function(minorId) {
+             const allMinorBtns = this.container.querySelectorAll('.minor-card');
+             allMinorBtns.forEach(btn => {
+                 btn.classList.toggle('active', btn.dataset.id === minorId);
+             });
+        },
+
+        render: function() {
+            let list = this.container.querySelector('.interaction-type-list');
+            if (!list) {
+                list = document.createElement('div');
+                list.className = 'interaction-type-list';
+                this.container.innerHTML = '';
+                this.container.appendChild(list);
+            }
             list.innerHTML = '';
-            types.forEach(type => {
-                const btn = document.createElement('button');
-                btn.className = 'interaction-type-btn';
-                if (type.id === this.currentType) {
-                    btn.classList.add('active');
-                }
-                btn.innerHTML = `
-                    <span class="icon">${this.getIcon(type.id)}</span>
-                    <span class="name">${type.name}</span>
+            
+            this.majorTypes.forEach(major => {
+                const majorCard = document.createElement('div');
+                majorCard.className = 'interaction-card major-card';
+                if (major.id === this.currentMajor) majorCard.classList.add('active');
+                
+                majorCard.innerHTML = `
+                   <span class="icon">${this.getIcon(major.id)}</span>
+                   <div class="label-group">
+                       <span class="name">${major.name}</span>
+                       <span class="desc">INTERACTION</span>
+                   </div>
                 `;
-                btn.addEventListener('click', () => this.handleClick(type.id));
-                list.appendChild(btn);
+                majorCard.addEventListener('click', () => {
+                     WebSocketHandler.selectMajorType(major.id);
+                });
+                
+                list.appendChild(majorCard);
+                
+                if (major.id === this.currentMajor && major.minorTypes && major.minorTypes.length > 0) {
+                    const minorList = document.createElement('div');
+                    minorList.className = 'interaction-minor-list';
+                    
+                    major.minorTypes.forEach(minor => {
+                        const minorCard = document.createElement('div');
+                        minorCard.className = 'interaction-card minor-card';
+                        minorCard.dataset.id = minor.id;
+                        minorCard.innerHTML = `
+                            <span class="dot">⬢</span>
+                            <span class="name">${minor.name}</span>
+                        `;
+                        minorCard.addEventListener('click', (e) => {
+                             e.stopPropagation();
+                             WebSocketHandler.selectMinorType(minor.id);
+                        });
+                        minorList.appendChild(minorCard);
+                    });
+                    list.appendChild(minorList);
+                }
             });
         },
         
@@ -358,28 +420,26 @@ const UIComponents = {
                 'touch': '✋',
                 'kiss': '💋',
                 'dress': '👔',
-                'h': '💕'
+                'h': '💕',
+                'mouth': '👄',
+                'hand': '✋',
+                'sex': '❤',
+                'penis': '🍆',
+                'tool': '💊',
+                'arts': '✨',
+                'other': '⚙'
             };
             return icons[typeId] || '●';
         },
         
         handleClick: function(typeId) {
-            this.currentType = typeId;
-            
-            // 更新按钮状态
-            const buttons = this.container.querySelectorAll('.interaction-type-btn');
-            buttons.forEach((btn, idx) => {
-                btn.classList.toggle('active', btn.querySelector('.name').textContent === 
-                    this.container.querySelectorAll('.interaction-type-btn')[idx].querySelector('.name').textContent);
-            });
-            
-            WebSocketHandler.selectInteractionType(typeId);
+             // Backward compatibility or unused
+             WebSocketHandler.selectInteractionType(typeId);
         },
         
         clearSelection: function() {
-            this.currentType = null;
-            const buttons = this.container.querySelectorAll('.interaction-type-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
+            this.currentMajor = null;
+            this.render();
         }
     },
     

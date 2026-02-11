@@ -1127,7 +1127,19 @@ function renderFloatingInstructButtons(instructs) {
    → 前端更新界面显示
 ```
 
-### 12.2 面板类指令流程
+### 12.2 常见问题：浮现按钮显示位置
+
+**更新（2026-02-11）**：
+- 浮现按钮（无部位指令）不再显示在屏幕右侧的独立容器中。
+- 现在它们以**交互卡片**的形式，直接显示在左侧交互面板中，位于当前选中的小类卡片下方。
+- 当选择小类进入聚焦模式后，无关的大类会被隐藏，浮现指令作为扩展操作直接列出，视觉上更加统一。
+
+**前端实现变更**：
+- `renderFloatingInstructButtons` 函数不再向 `#floating-instruct-buttons` 插入内容。
+- 而是查找 `.interaction-minor-list` 并将指令生成为 `.interaction-card.minor-card.floating-instruct` 元素插入。
+- 同时触发大类隐藏逻辑（Focus Mode）。
+
+### 12.3 面板类指令流程
 
 ```
 1. 用户点击系统面板按钮

@@ -1200,7 +1200,7 @@ function initWebSocket() {
         console.log('收到大类型选择结果:', data);
         if (data.success) {
             // 更新交互面板的小类按钮
-            updateMinorTypeButtons(data.minor_types, data.remembered_minor_type);
+            updateMinorTypeButtons(data.minor_types, data.remembered_minor_type, data.major_type_id);
         } else {
             console.error('选择大类型失败:', data.error);
         }
@@ -3606,6 +3606,21 @@ function createInteractionTypePanel(types) {
     const panel = document.createElement('div');
     panel.className = 'new-ui-interaction-panel';
     
+    // Helper for icons
+    const getIcon = (typeId) => {
+        const icons = {
+            'talk': '💬', 'mouth': '👄',
+            'touch': '✋', 'hand': '✋',
+            'sex': '❤',
+            'penis': '🍆',
+            'tool': '💊',
+            'arts': '✨',
+            'other': '⚙'
+        };
+        // Normalize typeId to string just in case
+        return icons[String(typeId)] || '●';
+    };
+    
     // 处理旧版数据格式（数组格式）的兼容
     if (Array.isArray(types)) {
         // 旧版格式，保持向后兼容
@@ -3625,100 +3640,99 @@ function createInteractionTypePanel(types) {
     const currentMajorType = types.current_major_type;
     const currentMinorType = types.current_minor_type;
     
-    console.log('=== createInteractionTypePanel DEBUG ===');
-    console.log('types:', JSON.stringify(types, null, 2));
-    console.log('majorTypes:', majorTypes);
-    console.log('currentMajorType:', currentMajorType, 'type:', typeof currentMajorType);
+    // 创建列表容器（用于3D透视）
+    const list = document.createElement('div');
+    list.className = 'interaction-type-list';
+    panel.appendChild(list);
     
-    // 创建大类选项卡容器
-    const majorTabsContainer = document.createElement('div');
-    majorTabsContainer.className = 'interaction-major-tabs';
-    
-    // 创建小类按钮容器
-    const minorButtonsContainer = document.createElement('div');
-    minorButtonsContainer.className = 'interaction-minor-buttons';
-    
-    // 渲染大类选项卡（从上到下排列）
-    majorTypes.forEach(majorType => {
-        const tab = document.createElement('button');
-        tab.className = 'interaction-major-tab';
-        // 使用严格相等比较，处理类型转换
-        const isActive = majorType.selected === true || Number(majorType.id) === Number(currentMajorType);
-        if (isActive) {
-            tab.classList.add('active');
-        }
-        tab.textContent = majorType.name;
-        tab.dataset.majorTypeId = majorType.id;
-        
-        tab.onclick = () => {
-            // 检测是否重复点击当前激活的大类按钮
-            const wasActive = tab.classList.contains('active');
-            
-            if (wasActive) {
-                // 重复点击，清空选择
-                console.log('重复点击大类按钮，清空选择');
-                clearInteractionSelection();
-            } else {
-                // 首次点击或切换到其他大类，选中当前选项卡
-                document.querySelectorAll('.interaction-major-tab').forEach(t => t.classList.remove('active'));
-                tab.classList.add('active');
-                
-                // 通过WebSocket选择大类
-                selectMajorType(majorType.id);
-            }
-        };
-        
-        majorTabsContainer.appendChild(tab);
-    });
-    
-    // 渲染当前大类下的小类按钮
-    // 注意：需要使用严格相等比较，并处理类型转换
+    // 查找当前激活的大类
     const currentMajor = majorTypes.find(m => {
-        // 将两边都转为数字进行比较
         const mId = Number(m.id);
         const targetId = Number(currentMajorType);
-        return m.selected === true || mId === targetId;
+        // 兼容字符串和数字比较
+        return m.selected === true || mId === targetId || String(m.id) === String(currentMajorType);
     });
     
-    console.log('createInteractionTypePanel - currentMajorType:', currentMajorType, 'currentMajor:', currentMajor);
-    
-    const minorTypes = currentMajor ? currentMajor.minor_types : (types.minor_types || []);
-    
-    console.log('createInteractionTypePanel - minorTypes:', minorTypes);
-    
-    minorTypes.forEach(minorType => {
-        const btn = document.createElement('button');
-        btn.className = 'interaction-minor-btn';
-        if (minorType.selected || minorType.id === currentMinorType) {
-            btn.classList.add('active');
-        }
-        btn.textContent = minorType.name;
-        btn.dataset.minorTypeId = minorType.id;
+    majorTypes.forEach(majorType => {
+        // 1. 创建大类卡片
+        const majorCard = document.createElement('div');
+        majorCard.className = 'interaction-card major-card';
+        majorCard.dataset.id = majorType.id; // Store ID for lookup
         
-        btn.onclick = () => {
-            // 检测是否重复点击当前激活的小类按钮
-            const wasActive = btn.classList.contains('active');
-            
-            if (wasActive) {
-                // 重复点击，清空选择
-                console.log('重复点击小类按钮，清空选择');
+        // 兼容类型比较
+        const isMajorActive = (currentMajor && String(currentMajor.id) === String(majorType.id));
+        if (isMajorActive) {
+            majorCard.classList.add('active');
+        }
+        
+        majorCard.innerHTML = `
+            <span class="icon">${getIcon(majorType.id)}</span>
+            <div class="label-group">
+                <span class="name-cn">${majorType.name}</span>
+                <span class="name-en">${String(majorType.id).toUpperCase()}</span>
+            </div>
+        `;
+        
+        majorCard.onclick = () => {
+             // 显式检查 active 类，不依赖 isMajorActive 变量（闭包可能过期）
+             if (majorCard.classList.contains('active')) {
+                console.log('重复点击大类按钮，清空选择');
                 clearInteractionSelection();
-            } else {
-                // 首次点击或切换到其他小类，选中当前按钮
-                document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // 通过WebSocket选择小类
-                selectMinorType(minorType.id);
-            }
+             } else {
+                selectMajorType(majorType.id);
+             }
         };
         
-        minorButtonsContainer.appendChild(btn);
+        list.appendChild(majorCard);
+        
+        // 2. 如果是大类激活状态，且有小类数据，渲染小类列表（手风琴效果）
+        if (isMajorActive) {
+            // 优先使用currentMajor中的minor_types，若无则使用types.minor_types (兼容旧逻辑)
+            const minorTypes = currentMajor.minor_types || (types.minor_types || []);
+            
+            if (minorTypes.length > 0) {
+                 const minorContainer = document.createElement('div');
+                 minorContainer.className = 'interaction-minor-list';
+                 
+                 minorTypes.forEach(minorType => {
+                      const minorCard = document.createElement('div');
+                      minorCard.className = 'interaction-card minor-card';
+                      
+                      // 检查是否激活
+                      const isMinorActive = minorType.selected || String(minorType.id) === String(currentMinorType);
+                      if (isMinorActive) {
+                          minorCard.classList.add('active');
+                      }
+                      
+                      // 使用新版HTML结构（防止刷新后名字消失）
+                      minorCard.innerHTML = `
+                        <span class="name-cn">${minorType.name}</span>
+                        <span class="name-en">${String(minorType.id).replace(/_/g, ' ').toUpperCase()}</span>
+                      `;
+                      
+                      minorCard.onclick = (e) => {
+                          e.stopPropagation();
+                          const wasActive = minorCard.classList.contains('active');
+                          
+                          if (wasActive) {
+                             // 支持反选逻辑
+                             console.log('重复点击小类按钮，执行反选');
+                             minorCard.classList.remove('active');
+                             updateAvailableBodyParts([]);
+                          } else {
+                              // 清除同级激活状态
+                              minorContainer.querySelectorAll('.minor-card').forEach(c => c.classList.remove('active'));
+                              minorCard.classList.add('active');
+                              selectMinorType(minorType.id);
+                          }
+                      };
+                      minorContainer.appendChild(minorCard);
+                 });
+                 
+                 list.appendChild(minorContainer);
+            }
+        }
     });
-    
-    // 组装面板：大类选项卡 + 小类按钮（浮现按钮移到mainScene外部）
-    panel.appendChild(majorTabsContainer);
-    panel.appendChild(minorButtonsContainer);
     
     return panel;
 }
@@ -3754,16 +3768,33 @@ function selectMinorType(minorTypeId) {
  * 当用户选择大类时，更新小类按钮区域
  * @param {Array} minorTypes - 小类型列表
  * @param {number} rememberedMinorType - 记忆的小类型ID
+ * @param {number|string} majorTypeId - 当前选中的大类型ID
  */
-function updateMinorTypeButtons(minorTypes, rememberedMinorType) {
-    const container = document.querySelector('.interaction-minor-buttons');
-    if (!container) {
-        console.warn('未找到小类按钮容器');
-        return;
+function updateMinorTypeButtons(minorTypes, rememberedMinorType, majorTypeId) {
+    // 1. Find the list container
+    const list = document.querySelector('.interaction-type-list');
+    if (!list) {
+        // Fallback or retry? If list is missing, we might be in wrong view, but standard logic applies
+        console.warn('未找到交互类型列表容器 .interaction-type-list');
+        return; 
     }
-    
-    // 清空当前按钮
-    container.innerHTML = '';
+
+    // 2. Remove any existing minor lists (collapse all)
+    const existingMinors = list.querySelectorAll('.interaction-minor-list');
+    existingMinors.forEach(el => el.remove());
+
+    // 3. Deactivate all major cards
+    const allMajorCards = list.querySelectorAll('.interaction-card.major-card');
+    let activeCard = null;
+    const targetIdStr = String(majorTypeId);
+
+    allMajorCards.forEach(card => {
+        card.classList.remove('active');
+        if (String(card.dataset.id) === targetIdStr) {
+            card.classList.add('active');
+            activeCard = card;
+        }
+    });
     
     // 清空浮现按钮（切换大类时需要重置）
     renderFloatingInstructButtons([]);
@@ -3774,40 +3805,59 @@ function updateMinorTypeButtons(minorTypes, rememberedMinorType) {
         button.classList.remove('available');
         button.classList.add('unavailable');
     });
-    
-    // 创建新的小类按钮
-    minorTypes.forEach(minorType => {
-        const btn = document.createElement('button');
-        btn.className = 'interaction-minor-btn';
-        
-        // 如果是记忆的小类型，添加选中状态
-        if (minorType.id === rememberedMinorType || minorType.selected) {
-            btn.classList.add('active');
-        }
-        
-        btn.textContent = minorType.name;
-        btn.dataset.minorTypeId = minorType.id;
-        
-        btn.onclick = () => {
-            // 检测是否重复点击当前激活的小类按钮
-            const wasActive = btn.classList.contains('active');
-            
-            if (wasActive) {
-                // 重复点击，清空选择
-                console.log('重复点击小类按钮，清空选择');
-                clearInteractionSelection();
-            } else {
-                // 首次点击或切换到其他小类，选中当前按钮
-                document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                // 通过WebSocket选择小类
-                selectMinorType(minorType.id);
-            }
-        };
-        
-        container.appendChild(btn);
-    });
+
+    if (!activeCard) {
+        console.warn('未找到对应的大类卡片ID:', majorTypeId);
+        // If we can't find the card, we can't insert the list.
+        // However, we should still handle rememberedMinorType logic if possible?
+        // No, because UI is broken.
+        return;
+    }
+
+    // 4. Create new minor list if data exists
+    if (minorTypes && minorTypes.length > 0) {
+         const minorContainer = document.createElement('div');
+         minorContainer.className = 'interaction-minor-list';
+         
+         minorTypes.forEach(minorType => {
+              const minorCard = document.createElement('div');
+              minorCard.className = 'interaction-card minor-card';
+              
+              const isSelected = (minorType.id === rememberedMinorType || minorType.selected);
+              if (isSelected) {
+                  minorCard.classList.add('active');
+              }
+              
+              minorCard.innerHTML = `
+                <span class="name-cn">${minorType.name}</span>
+                <span class="name-en">${String(minorType.id).replace(/_/g, ' ').toUpperCase()}</span>
+              `;
+              
+              minorCard.onclick = (e) => {
+                  e.stopPropagation();
+                  const wasActive = minorCard.classList.contains('active');
+                  
+                  if (wasActive) {
+                      // 重复点击，清空选择 (Requirement 4: Cancel selection)
+                      console.log('重复点击小类按钮，执行反选');
+                      minorCard.classList.remove('active');
+                      // Clear body parts and floating buttons
+                      updateAvailableBodyParts([]);
+                      // TODO: If server tracks state, we might need to tell it to clear.
+                      // For now, client side visual clear is efficient.
+                  } else {
+                      // 选中当前按钮
+                      minorContainer.querySelectorAll('.minor-card').forEach(c => c.classList.remove('active'));
+                      minorCard.classList.add('active');
+                      selectMinorType(minorType.id);
+                  }
+              };
+              minorContainer.appendChild(minorCard);
+         });
+         
+         // Insert AFTER the active major card
+         activeCard.after(minorContainer);
+    }
     
     // 如果有记忆的小类型，自动触发选择
     if (rememberedMinorType !== null && rememberedMinorType !== undefined) {
@@ -3900,54 +3950,68 @@ function updateAvailableBodyParts(instructs) {
 
 /**
  * 渲染无部位指令的浮现按钮
- * 这些按钮显示在交互类型栏的右侧，不关联任何身体部位
- * @param {Array} instructs - 无部位指令列表，每个元素包含 {id, name}
+ * 改为显示在交互列表的小类下方
+ * 并进入"聚焦模式"（隐藏其他大类）
+ * @param {Array} instructs - 无部位指令列表
  */
 function renderFloatingInstructButtons(instructs) {
-    const container = document.getElementById('floating-instruct-buttons');
-    if (!container) {
-        console.warn('未找到浮现按钮容器');
+    // 0. Hide old container just in case
+    const oldContainer = document.getElementById('floating-instruct-buttons');
+    if (oldContainer) oldContainer.style.display = 'none';
+
+    // 1. Focus Mode: Hide other Majors
+    const list = document.querySelector('.interaction-type-list');
+    if (list) {
+         const activeMajor = list.querySelector('.interaction-card.major-card.active');
+         if (activeMajor) {
+             list.querySelectorAll('.interaction-card.major-card').forEach(c => {
+                 if (c !== activeMajor) c.classList.add('hidden-card');
+             });
+         }
+    }
+
+    // 2. Render Floating Buttons in Minor List
+    const minorList = document.querySelector('.interaction-minor-list');
+    
+    // Clear existing floating instructs
+    if (minorList) {
+        minorList.querySelectorAll('.floating-instruct').forEach(e => e.remove());
+    }
+
+    const activeMinor = minorList ? minorList.querySelector('.active') : null;
+
+    if (!instructs || instructs.length === 0 || !activeMinor) {
+        // Just trigger standard layout adjustment if needed
+        setTimeout(() => checkAndAdjustCharacterImage(), 50);
         return;
     }
-    
-    // 清空当前按钮
-    container.innerHTML = '';
-    
-    if (!instructs || instructs.length === 0) {
-        // 没有无部位指令，隐藏容器
-        container.style.display = 'none';
-        return;
-    }
-    
-    // 显示容器
-    container.style.display = 'flex';
-    
-    // 计算列数（每列最多显示的按钮数量）
-    const maxButtonsPerColumn = 6;
-    
-    // 创建浮现按钮
-    instructs.forEach((instruct, index) => {
-        const btn = document.createElement('button');
-        btn.className = 'floating-instruct-btn';
-        btn.textContent = instruct.name;
-        btn.dataset.instructId = instruct.id;
-        btn.title = instruct.name;
-        
-        // 计算该按钮在第几列（用于布局）
-        const columnIndex = Math.floor(index / maxButtonsPerColumn);
-        btn.style.setProperty('--column-index', columnIndex);
-        
-        // 点击事件 - 触发指令执行
-        btn.onclick = () => {
-            console.log('点击浮现按钮，执行指令:', instruct.id);
-            executeInstruct(instruct.id);
-        };
-        
-        container.appendChild(btn);
+
+    // Insert new buttons
+    let referenceNode = activeMinor;
+    instructs.forEach(instruct => {
+         const card = document.createElement('div');
+         card.className = 'interaction-card minor-card floating-instruct';
+         // Requirement 3: No English name for floating buttons
+         card.innerHTML = `
+            <span class="name-cn">${instruct.name}</span>
+         `;
+         card.onclick = (e) => {
+             e.stopPropagation();
+             // Highlight this action card briefly?
+             // Execute
+             executeInstruct(instruct.id);
+         };
+         
+         if (referenceNode.nextSibling) {
+             minorList.insertBefore(card, referenceNode.nextSibling);
+         } else {
+             minorList.appendChild(card);
+         }
+         referenceNode = card; // Insert next one after this one
     });
     
-    // 检测浮现按钮与角色立绘是否重叠，如有重叠则调整立绘
-    setTimeout(() => checkAndAdjustCharacterImage(), 100);
+    // Adjust layout
+    setTimeout(() => checkAndAdjustCharacterImage(), 50);
 }
 
 /**
@@ -4038,20 +4102,30 @@ function resetCharacterContainerTransform() {
 function clearInteractionSelection() {
     console.log('[DEBUG] clearInteractionSelection called');
     
-    // 清空大类选择的高亮
+    // 1. Reset Major Cards (New UI)
+    const majorCards = document.querySelectorAll('.interaction-card.major-card');
+    majorCards.forEach(card => {
+        card.classList.remove('active');
+        card.classList.remove('hidden-card'); // Unhide cards (exit focus mode)
+        card.style.display = ''; 
+    });
+
+    // 2. Remove Minor Lists (Collapse back to initial state)
+    const minorLists = document.querySelectorAll('.interaction-minor-list');
+    minorLists.forEach(list => list.remove());
+
+    // 3. Legacy Cleanup
     document.querySelectorAll('.interaction-major-tab').forEach(t => t.classList.remove('active'));
-    
-    // 清空小类选择
     document.querySelectorAll('.interaction-minor-btn').forEach(b => b.classList.remove('active'));
     
-    // 重置身体部位按钮状态：移除所有高亮和禁用样式，回到初始的全部位可互动状态
+    // 4. Reset Body Parts
     const bodyPartButtons = document.querySelectorAll('.body-part-button');
     bodyPartButtons.forEach(button => {
         button.classList.remove('available');
         button.classList.remove('unavailable');
     });
     
-    // 隐藏浮现按钮
+    // 5. Clear Floating Buttons (Old Container)
     const floatingButtons = document.getElementById('floating-instruct-buttons');
     if (floatingButtons) {
         floatingButtons.style.display = 'none';

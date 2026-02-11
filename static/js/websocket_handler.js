@@ -76,8 +76,29 @@ const WebSocketHandler = {
         this.socket.on('instruct_result', (data) => {
             this.handleInstructResult(data);
         });
+
+        // 监听大类选择结果
+        this.socket.on('major_type_selected', (data) => {
+            if (data.success) {
+                UIComponents.InteractionTypePanel.updateMinorTypes(data.major_type_id, data.minor_types);
+                // 如果有记忆的小类，可以自动选择（可选）
+            }
+        });
+
+        // 监听小类选择结果
+        this.socket.on('minor_type_selected', (data) => {
+            if (data.success) {
+                UIComponents.InteractionTypePanel.setActiveMinorType(data.minor_type_id);
+                // 更新可用指令/部位等，通常由后端再推送 game_state_update 或 body_part_clicked 流程处理
+                // 但根据文档，这里会返回 instructs
+                if (data.instructs) {
+                     GameRenderer.updateAvailableBodyParts(data.instructs);
+                     GameRenderer.renderFloatingInstructButtons(data.instructs);
+                }
+            }
+        });
     },
-    
+
     /**
      * 请求当前游戏状态
      */
@@ -184,13 +205,29 @@ const WebSocketHandler = {
     },
     
     /**
-     * 选择交互类型
+     * 选择交互类型（旧版，已废弃）
      * @param {string} typeId - 交互类型ID
      */
     selectInteractionType: function(typeId) {
         this.emit('select_interaction_type', { type_id: typeId });
     },
-    
+
+    /**
+     * 选择交互大类
+     * @param {string} majorTypeId - 大类ID
+     */
+    selectMajorType: function(majorTypeId) {
+        this.emit('select_major_type', { major_type_id: majorTypeId });
+    },
+
+    /**
+     * 选择交互小类
+     * @param {string} minorTypeId - 小类ID
+     */
+    selectMinorType: function(minorTypeId) {
+        this.emit('select_minor_type', { minor_type_id: minorTypeId });
+    },
+
     /**
      * 点击身体部位
      * @param {string} partName - 部位名称
