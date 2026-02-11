@@ -75,7 +75,7 @@ if __name__ == "__main__":
         import Script.Core.io_web as io
         
         # 导入Web绘制适配器并应用到所有绘制类
-        from Script.UI import web_draw_adapter
+        from Script.System.Web_Draw_System import web_draw_adapter
         
         # 应用Web绘制适配器到所有绘制类
         web_draw_adapter.apply_web_adapters()
