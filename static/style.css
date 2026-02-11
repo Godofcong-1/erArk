@@ -2403,6 +2403,66 @@ body {
     color: #ff6666;
 }
 
+/* ========== 头部子菜单样式 ========== */
+.head-sub-menu {
+    background-color: rgba(30, 30, 40, 0.95);
+    border: 1px solid #555;
+    border-radius: 8px;
+    padding: 10px;
+    min-width: 100px;
+    z-index: 1000;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.head-sub-menu-title {
+    color: #ffd700;
+    font-size: 0.9em;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #444;
+    margin-bottom: 8px;
+    text-align: center;
+}
+
+.head-sub-menu-btn {
+    display: block;
+    width: 100%;
+    padding: 8px 12px;
+    margin-bottom: 4px;
+    background-color: rgba(80, 80, 100, 0.6);
+    border: 1px solid #555;
+    border-radius: 4px;
+    color: #ddd;
+    cursor: pointer;
+    font-size: 0.85em;
+    text-align: left;
+    transition: all 0.2s;
+}
+
+.head-sub-menu-btn:hover {
+    background-color: rgba(100, 100, 140, 0.8);
+    border-color: #88ccff;
+    color: #fff;
+}
+
+.head-sub-menu-close {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    background: transparent;
+    border: none;
+    color: #888;
+    font-size: 16px;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.head-sub-menu-close:hover {
+    color: #ff6666;
+}
+
 /* ========== 指令选择菜单样式 ========== */
 .instruct-menu {
     background-color: rgba(30, 30, 40, 0.95);

@@ -62,6 +62,11 @@ class CharacterRenderer:
         
         character_name = character_data.name
         
+        # 检测角色是否有兽耳和兽角特征（用于头部子部位显示判断）
+        # talent[111] = 兽耳, talent[112] = 兽角
+        has_beast_ears = character_data.talent.get(111, 0) == 1 if hasattr(character_data, 'talent') else False
+        has_horn = character_data.talent.get(112, 0) == 1 if hasattr(character_data, 'talent') else False
+        
         # 构建图像数据
         image_data = {
             "character_id": character_id,
@@ -72,6 +77,8 @@ class CharacterRenderer:
             "body_parts": self._load_body_parts_data(character_name),
             "clothing_layers": [],  # 服装图层（待扩展）
             "effect_layers": [],    # 特效图层（待扩展）
+            "has_beast_ears": has_beast_ears,  # 角色是否有兽耳（用于头部子部位显示）
+            "has_horn": has_horn,              # 角色是否有兽角（用于头部子部位显示）
         }
         
         # 缓存结果
@@ -95,6 +102,8 @@ class CharacterRenderer:
             "body_parts": {},
             "clothing_layers": [],
             "effect_layers": [],
+            "has_beast_ears": False,
+            "has_horn": False,
         }
 
     def _find_full_body_image(self, character_name: str) -> str:

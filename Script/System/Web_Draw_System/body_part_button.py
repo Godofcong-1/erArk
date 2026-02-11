@@ -6,7 +6,8 @@
 基于 COCO-WholeBody 17个关键点和 BodyPart.csv 定义的部位进行映射：
 - COCO关键点用于定位身体部位的像素位置
 - BodyPart.csv 定义了可交互的部位列表
-- 臀部点击时展开5个子部位：小穴、子宫、后穴、尿道、尾巴
+- 臀部点击时展开子部位：小穴、子宫、后穴、尿道、尾巴
+- 头部点击时展开子部位：头发、兽角（需要角色有兽角）、兽耳（需要角色有兽耳）
 """
 
 from typing import Dict, List, Optional, Tuple
@@ -14,6 +15,7 @@ from Script.System.Instruct_System.instruct_category import (
     BodyPart,
     BODY_PART_NAMES,
     HIP_SUB_PARTS,
+    HEAD_SUB_PARTS,
     COCO_KEYPOINT_MAPPING,
     COMPUTED_BODY_PARTS,
     CLICKABLE_BODY_PARTS,
@@ -29,6 +31,7 @@ class BodyPartButton:
     1. 基于COCO-WholeBody 17个关键点计算部位位置
     2. 合并左右对称的部位（如左右手、左右腿）
     3. 臀部点击展开子部位菜单
+    4. 头部点击展开子部位菜单（头发、兽角、兽耳）
     """
 
     def __init__(self):
@@ -43,6 +46,12 @@ class BodyPartButton:
         self._hovered_part: Optional[str] = None
         # 臀部是否展开
         self._hip_expanded: bool = False
+        # 头部是否展开
+        self._head_expanded: bool = False
+        # 角色是否有兽耳
+        self._has_beast_ears: bool = False
+        # 角色是否有兽角
+        self._has_horn: bool = False
         # 图像尺寸
         self._image_size: Tuple[int, int] = (0, 0)
 
@@ -95,9 +104,11 @@ class BodyPartButton:
                     "base_part": part_name,  # 记录基础部位名，用于交互逻辑
                 }
         
-        # 2. 处理单一部位（脸部需要特殊计算）
+        # 2. 处理单一部位（脸部、头部、口腔基于不同的关键点计算）
         # 脸部：基于鼻子位置，半径为到最近耳朵的距离
         nose = self._coco_keypoints[0]  # 鼻子
+        left_eye = self._coco_keypoints[1]  # 左眼
+        right_eye = self._coco_keypoints[2]  # 右眼
         left_ear = self._coco_keypoints[3]  # 左耳
         right_ear = self._coco_keypoints[4]  # 右耳
         
@@ -120,24 +131,44 @@ class BodyPartButton:
                 "radius": face_radius,
             }
             
-            # 头部：中心与脸部一致，半径为脸部的1.5倍
-            self._body_parts_data[BodyPart.HEAD] = {
-                "center": list(nose),
-                "radius": int(face_radius * 1.5),
-            }
-            
             # 口腔：基于鼻子向下偏移
             mouth_offset = 0.03 * height
             self._body_parts_data[BodyPart.MOUTH] = {
                 "center": [nose[0], nose[1] + mouth_offset],
                 "radius": self._get_default_radius(BodyPart.MOUTH, width, height),
             }
-            
-            # 头发：基于鼻子向上偏移
-            hair_offset = 0.20 * height
-            self._body_parts_data[BodyPart.HAIR] = {
-                "center": [nose[0], nose[1] - hair_offset],
-                "radius": self._get_default_radius(BodyPart.HAIR, width, height),
+        
+        # 头部：使用双眼中间偏上一点的位置
+        # 检查双眼是否有效
+        left_eye_valid = left_eye[0] != 0 or left_eye[1] != 0
+        right_eye_valid = right_eye[0] != 0 or right_eye[1] != 0
+        
+        if left_eye_valid and right_eye_valid:
+            # 双眼中间
+            eyes_center_x = (left_eye[0] + right_eye[0]) / 2
+            eyes_center_y = (left_eye[1] + right_eye[1]) / 2
+            # 向上偏移一点（图像高度的3%）
+            head_center_y = eyes_center_y - 0.03 * height
+            head_center = [eyes_center_x, head_center_y]
+            head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
+        elif left_eye_valid:
+            head_center = [left_eye[0], left_eye[1] - 0.03 * height]
+            head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
+        elif right_eye_valid:
+            head_center = [right_eye[0], right_eye[1] - 0.03 * height]
+            head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
+        elif nose[0] != 0 or nose[1] != 0:
+            # 回退到鼻子位置
+            head_center = [nose[0], nose[1] - 0.15 * height]
+            head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
+        else:
+            head_center = None
+            head_radius = 0
+        
+        if head_center:
+            self._body_parts_data[BodyPart.HEAD] = {
+                "center": head_center,
+                "radius": head_radius,
             }
         
         # 3. 处理需要计算中心的部位（使用 COMPUTED_BODY_PARTS 但排除已处理的）
@@ -404,6 +435,72 @@ class BodyPartButton:
         """
         return part_name in HIP_SUB_PARTS
 
+    def expand_head(self, has_horn: bool = False, has_beast_ears: bool = False):
+        """
+        展开头部子部位
+        当点击头部时调用，将满足条件的子部位添加到可见列表
+        
+        Keyword arguments:
+        has_horn -- 角色是否有兽角
+        has_beast_ears -- 角色是否有兽耳
+        """
+        self._head_expanded = True
+        self._has_horn = has_horn
+        self._has_beast_ears = has_beast_ears
+        
+        for sub_part in HEAD_SUB_PARTS:
+            if sub_part in self._body_parts_data and sub_part not in self._visible_parts:
+                # 头发始终显示
+                if sub_part == BodyPart.HAIR:
+                    self._visible_parts.append(sub_part)
+                # 兽角需要角色有兽角特征
+                elif sub_part == BodyPart.HORN and has_horn:
+                    self._visible_parts.append(sub_part)
+                # 兽耳需要角色有兽耳特征
+                elif sub_part == BodyPart.BEAST_EARS and has_beast_ears:
+                    self._visible_parts.append(sub_part)
+
+    def collapse_head(self):
+        """
+        收起头部子部位
+        """
+        self._head_expanded = False
+        for sub_part in HEAD_SUB_PARTS:
+            if sub_part in self._visible_parts:
+                self._visible_parts.remove(sub_part)
+
+    def is_head_expanded(self) -> bool:
+        """
+        检查头部是否展开
+        
+        Returns:
+        bool -- 是否展开
+        """
+        return self._head_expanded
+
+    def is_head_sub_part(self, part_name: str) -> bool:
+        """
+        检查是否是头部子部位
+        
+        Keyword arguments:
+        part_name -- 部位名称
+        
+        Returns:
+        bool -- 是否是头部子部位
+        """
+        return part_name in HEAD_SUB_PARTS
+
+    def set_has_beast_features(self, has_horn: bool, has_beast_ears: bool):
+        """
+        设置角色是否有兽类特征
+        
+        Keyword arguments:
+        has_horn -- 是否有兽角
+        has_beast_ears -- 是否有兽耳
+        """
+        self._has_horn = has_horn
+        self._has_beast_ears = has_beast_ears
+
     def get_buttons_data(self) -> List[dict]:
         """
         获取所有可见部位按钮的渲染数据
@@ -424,6 +521,7 @@ class BodyPartButton:
                     "center": position.get("center", [0, 0]),
                     "radius": position.get("radius", 30),
                     "is_hip_sub_part": position.get("is_hip_sub_part", False),
+                    "is_head_sub_part": position.get("is_head_sub_part", False),
                     "base_part": base_part,  # 基础部位名，用于指令匹配
                 })
         
@@ -490,9 +588,9 @@ class BodyPartButton:
         
         Returns:
         dict -- 处理结果，包含：
-                - action: "expand_hip" | "select" | "none"
+                - action: "expand_hip" | "expand_head" | "collapse_hip" | "collapse_head" | "select"
                 - part_name: 实际选择的部位
-                - sub_parts: 臀部展开时的子部位列表
+                - sub_parts: 展开时的子部位列表
         """
         if part_name == BodyPart.HIP:
             if not self._hip_expanded:
@@ -515,10 +613,45 @@ class BodyPartButton:
                     "action": "collapse_hip",
                     "part_name": part_name
                 }
+        elif part_name == BodyPart.HEAD:
+            if not self._head_expanded:
+                self.expand_head(self._has_horn, self._has_beast_ears)
+                # 获取应显示的子部位
+                visible_sub_parts = []
+                for sp in HEAD_SUB_PARTS:
+                    if sp == BodyPart.HAIR:
+                        # 头发始终显示
+                        visible_sub_parts.append(sp)
+                    elif sp == BodyPart.HORN and self._has_horn:
+                        # 兽角需要角色有兽角特征
+                        visible_sub_parts.append(sp)
+                    elif sp == BodyPart.BEAST_EARS and self._has_beast_ears:
+                        # 兽耳需要角色有兽耳特征
+                        visible_sub_parts.append(sp)
+                return {
+                    "action": "expand_head",
+                    "part_name": part_name,
+                    "sub_parts": [
+                        {
+                            "part_name": sp,
+                            "display_name": self.get_part_display_name(sp)
+                        }
+                        for sp in visible_sub_parts
+                        if sp in self._body_parts_data
+                    ]
+                }
+            else:
+                self.collapse_head()
+                return {
+                    "action": "collapse_head",
+                    "part_name": part_name
+                }
         else:
-            # 如果点击了其他部位，收起臀部
+            # 如果点击了其他部位，收起臀部和头部
             if self._hip_expanded and not self.is_hip_sub_part(part_name):
                 self.collapse_hip()
+            if self._head_expanded and not self.is_head_sub_part(part_name):
+                self.collapse_head()
             
             return {
                 "action": "select",
@@ -533,6 +666,9 @@ class BodyPartButton:
         self._visible_parts = []
         self._hovered_part = None
         self._hip_expanded = False
+        self._head_expanded = False
+        self._has_horn = False
+        self._has_beast_ears = False
         self._image_size = (0, 0)
 
     def get_state(self) -> dict:
@@ -546,5 +682,8 @@ class BodyPartButton:
             "image_size": {"width": self._image_size[0], "height": self._image_size[1]},
             "buttons": self.get_buttons_data(),
             "hovered_part": self._hovered_part,
-            "hip_expanded": self._hip_expanded
+            "hip_expanded": self._hip_expanded,
+            "head_expanded": self._head_expanded,
+            "has_horn": self._has_horn,
+            "has_beast_ears": self._has_beast_ears
         }

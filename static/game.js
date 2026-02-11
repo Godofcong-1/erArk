@@ -1223,6 +1223,12 @@ function initWebSocket() {
         showHipSubMenu(data.sub_parts);
     });
     
+    // 接收头部子菜单事件
+    socket.on('head_sub_menu', (data) => {
+        console.log('收到头部子菜单:', data);
+        showHeadSubMenu(data.sub_parts, data.has_beast_ears, data.has_horn);
+    });
+    
     // 接收身体部位点击结果事件
     socket.on('body_part_clicked', (data) => {
         console.log('收到身体部位点击结果:', data);
@@ -4653,6 +4659,84 @@ function showHipSubMenu(subParts) {
     menu.style.position = 'absolute';
     menu.style.left = `${hipRect.right - containerRect.left + 10}px`;
     menu.style.top = `${hipRect.top - containerRect.top}px`;
+    
+    // 添加到容器
+    container.appendChild(menu);
+    
+    // 点击其他地方关闭菜单
+    document.addEventListener('click', function closeMenu(e) {
+        if (!menu.contains(e.target)) {
+            menu.remove();
+            document.removeEventListener('click', closeMenu);
+        }
+    });
+}
+
+/**
+ * 显示头部子菜单
+ * @param {Array} subParts - 子部位列表
+ * @param {boolean} hasBeastEars - 角色是否有兽耳
+ * @param {boolean} hasHorn - 角色是否有兽角
+ */
+function showHeadSubMenu(subParts, hasBeastEars, hasHorn) {
+    // 移除已有的子菜单
+    const existingMenu = document.querySelector('.head-sub-menu');
+    if (existingMenu) {
+        existingMenu.remove();
+    }
+    
+    // 找到头部按钮的位置
+    const headButton = document.querySelector('.body-part-button[data-part-name="头部"]');
+    if (!headButton) {
+        console.warn('未找到头部按钮');
+        return;
+    }
+    
+    // 创建子菜单
+    const menu = document.createElement('div');
+    menu.className = 'head-sub-menu';
+    
+    // 添加标题
+    const title = document.createElement('div');
+    title.className = 'head-sub-menu-title';
+    title.textContent = '选择部位';
+    menu.appendChild(title);
+    
+    // 添加子部位按钮
+    subParts.forEach(subPart => {
+        const btn = document.createElement('button');
+        btn.className = 'head-sub-menu-btn';
+        btn.textContent = subPart.part_name_cn;
+        btn.dataset.partId = subPart.part_id;
+        btn.onclick = (e) => {
+            e.stopPropagation();
+            // 点击子部位时发送事件
+            if (socket && socket.connected) {
+                socket.emit('click_body_part', { part_name: subPart.part_id });
+            }
+            menu.remove();
+        };
+        menu.appendChild(btn);
+    });
+    
+    // 添加关闭按钮
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'head-sub-menu-close';
+    closeBtn.textContent = '×';
+    closeBtn.onclick = (e) => {
+        e.stopPropagation();
+        menu.remove();
+    };
+    menu.appendChild(closeBtn);
+    
+    // 定位菜单（在头部按钮旁边）
+    const headRect = headButton.getBoundingClientRect();
+    const container = document.querySelector('.character-container') || document.body;
+    const containerRect = container.getBoundingClientRect();
+    
+    menu.style.position = 'absolute';
+    menu.style.left = `${headRect.right - containerRect.left + 10}px`;
+    menu.style.top = `${headRect.top - containerRect.top}px`;
     
     // 添加到容器
     container.appendChild(menu);

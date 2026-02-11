@@ -2403,6 +2403,62 @@
 - 添加了新建文件清单和修改文件清单
 - 记录了测试结果和注意事项
 
+### 10.4 头部子菜单系统重构 (2026-02-12)
+
+#### 10.4.1 需求说明
+- [x] 头部部位位置改为使用双眼中间偏上一点的位置
+- [x] 头发、兽角、兽耳部位合并到头部子菜单（类似臀部子菜单模式）
+- [x] 兽耳、兽角部位需要满足交互对象有对应特征时才显示
+
+#### 10.4.2 后端修改
+- [x] **instruct_category.py**: 添加 `HEAD_SUB_PARTS` 常量定义头部子部位列表
+- [x] **instruct_category.py**: 修改 `COMPUTED_BODY_PARTS` 中头部位置计算使用关键点[1,2]（双眼中间）并添加 (0, -0.03) 偏移
+- [x] **instruct_category.py**: 从 `CLICKABLE_BODY_PARTS` 中移除 `BEAST_EARS` 和 `HORN`
+- [x] **body_part_button.py**: 添加头部展开/折叠状态管理（`_head_expanded`, `_has_horn`, `_has_beast_ears`）
+- [x] **body_part_button.py**: 实现 `expand_head()`、`collapse_head()`、`is_head_sub_part()`、`set_has_beast_features()` 方法
+- [x] **character_renderer.py**: 添加兽耳/兽角检测逻辑（talent[111]=兽耳, talent[112]=兽角）
+- [x] **web_server.py**: 添加头部点击处理，发送 `head_sub_menu` 事件
+
+#### 10.4.3 前端修改
+- [x] **game.js**: 添加 `head_sub_menu` Socket监听器
+- [x] **game.js**: 实现 `showHeadSubMenu()` 函数显示头部子菜单弹窗
+- [x] **style.css**: 添加 `.head-sub-menu` 及相关样式类
+
+#### 10.4.4 技术实现要点
+- 头部子菜单机制参照臀部子菜单（`HIP_SUB_PARTS`）的实现模式
+- 兽耳/兽角的显示条件由 talent 字典中的对应标记决定：
+  - `talent[111] == 1` 表示有兽耳
+  - `talent[112] == 1` 表示有兽角
+- 子菜单中始终显示"头发"选项，兽耳/兽角按实际拥有情况动态显示
+
+**实施记录**：
+- 修改了6个文件实现头部子菜单系统
+- 复用臀部子菜单的CSS样式结构，保持UI一致性
+
+### 10.5 修复头部按钮半径过大问题 (2026-02-12)
+
+#### 10.5.1 问题描述
+- 头部部位按钮的半径太大，与其他部位形成遮盖
+- 实际显示的半径与 `_get_default_radius` 方法中设定的值（0.06比例）不一致
+
+#### 10.5.2 问题原因
+- 在 `body_part_button.py` 的 `_calculate_body_parts()` 方法中，当双眼都有效时，头部半径被乘以了1.5倍：
+  ```python
+  # 修改前：
+  head_radius = int(self._get_default_radius(BodyPart.HEAD, width, height) * 1.5)
+  ```
+- 这导致头部按钮比 `_get_default_radius` 中定义的标准值（0.06比例）大50%
+
+#### 10.5.3 修复方案
+- [x] 移除 `body_part_button.py` 第153行的 `* 1.5` 放大系数
+- [x] 头部按钮现在使用 `_get_default_radius` 返回的标准半径值（0.06比例）
+
+#### 10.5.4 修改文件
+- [x] `Script/System/Web_Draw_System/body_part_button.py`: 移除头部半径的1.5倍放大
+
+**实施记录**：
+- 修复后，头部按钮使用与其他部位（如胸部）相同的半径比例，不再造成遮盖问题
+
 ---
 
 ## 附录A：关键文件清单
@@ -2447,7 +2503,11 @@
 | `Script/Core/constant/__init__.py` | 添加指令分类数据字典 | ✅ |
 | `Script/Design/character_image.py` | 适配半身图文件名格式 | ✅ |
 | `Script/UI/Flow/normal_flow.py` | 添加模式切换逻辑 | ✅ |
-| `static/game.js` | 添加面板切换自动刷新逻辑 | ✅ |
+| `static/game.js` | 添加面板切换自动刷新逻辑；添加头部子菜单支持 | ✅ |
+| `Script/System/Instruct_System/instruct_category.py` | 添加 HEAD_SUB_PARTS 常量；修改头部位置计算 | ✅ |
+| `Script/UI/Panel/web_components/body_part_button.py` | 添加头部展开/折叠功能 | ✅ |
+| `Script/UI/Panel/web_components/character_renderer.py` | 添加兽耳/兽角检测 | ✅ |
+| `static/style.css` | 添加头部子菜单样式 | ✅ |
 
 ---
 

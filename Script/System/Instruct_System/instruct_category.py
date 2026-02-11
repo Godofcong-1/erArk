@@ -204,6 +204,14 @@ HIP_SUB_PARTS = [
 ]
 
 
+# 头部展开的子部位列表（头发默认显示，兽角和兽耳需要角色有对应特征才显示）
+HEAD_SUB_PARTS = [
+    BodyPart.HAIR,       # 头发（始终显示）
+    BodyPart.HORN,       # 兽角（需要角色有兽角特征）
+    BodyPart.BEAST_EARS, # 兽耳（需要角色有兽耳特征）
+]
+
+
 # COCO-WholeBody 17个关键点到部位的映射
 # 格式: {关键点索引: (对应部位, 位置类型)}
 # 位置类型: "direct"=直接使用, "above"=正上方, "below"=正下方, "center"=需要与其他点计算中心
@@ -232,12 +240,12 @@ COCO_KEYPOINT_MAPPING = {
 # 格式: {部位: [(关键点1, 关键点2, ...), 位置偏移]}
 COMPUTED_BODY_PARTS = {
     BodyPart.HEAD: {
-        "keypoints": [0],  # 基于鼻子
-        "offset": (0, -0.15),  # 向上偏移图像高度的15%
+        "keypoints": [1, 2],  # 基于左眼(1)和右眼(2)中间
+        "offset": (0, -0.03),  # 向上偏移图像高度的3%（双眼中间偏上一点）
     },
     BodyPart.HAIR: {
-        "keypoints": [0],  # 基于鼻子
-        "offset": (0, -0.20),  # 向上偏移图像高度的20%
+        "keypoints": [1, 2],  # 基于左眼(1)和右眼(2)中间
+        "offset": (0, -0.12),  # 向上偏移图像高度的12%（头发位置）
     },
     BodyPart.MOUTH: {
         "keypoints": [0],  # 基于鼻子
@@ -264,12 +272,11 @@ COMPUTED_BODY_PARTS = {
 
 # 主要可点击部位列表（按身体从上到下排序）
 # 这些是在角色立绘上直接显示为按钮的部位
+# 注意：头发、兽角、兽耳已合并为头部的子部位（类似臀部的子部位机制）
 CLICKABLE_BODY_PARTS = [
-    BodyPart.HEAD,      # 头部（包含头发）
+    BodyPart.HEAD,      # 头部（点击展开子部位：头发、兽角、兽耳）
     BodyPart.FACE,      # 脸部
     BodyPart.MOUTH,     # 口腔
-    BodyPart.BEAST_EARS, # 兽耳
-    BodyPart.HORN,      # 兽角
     BodyPart.CHEST,     # 胸部
     BodyPart.ARMPIT,    # 腋部
     BodyPart.HAND,      # 手部
