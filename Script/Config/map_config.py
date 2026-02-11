@@ -67,6 +67,9 @@ def load_dir_now(data_path: str):
                         now_scene_data.have_furniture = int(load_scene_data["Have_Furniture"])
                         now_scene_data.close_type = int(load_scene_data["Close_Type"])
                         now_scene_data.room_area = int(load_scene_data["Room_Area"])
+                        # 如果场景的图片路径不为空，则加载场景图片
+                        if load_scene_data["Scene_Img"]:
+                            now_scene_data.scene_img = load_scene_data["Scene_Img"]
                         now_scene_data.close_flag = 0
                         scene_tag_list = load_scene_data["SceneTag"]
                         if "|" not in scene_tag_list:

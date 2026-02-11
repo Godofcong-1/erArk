@@ -18,7 +18,7 @@ class SceneRenderer:
     """
 
     # 默认背景图
-    DEFAULT_BACKGROUND = "博士办公室"
+    DEFAULT_BACKGROUND = "宿舍_白天"
     # 背景图片目录
     BACKGROUND_DIR = "image/场景"
 
@@ -27,18 +27,18 @@ class SceneRenderer:
         self._cached_scene_name = None
         self._cached_background_path = None
 
-    def get_scene_background(self, scene_name: str = None) -> dict:
+    def get_scene_background(self, scene_name: str = "") -> dict:
         """
         获取场景背景信息
         
         Keyword arguments:
-        scene_name -- 场景名称，为None时自动获取当前场景
+        scene_name -- 场景名称，为空时自动获取当前场景
         
         Returns:
         dict -- 包含场景名称和背景图片路径的字典
         """
         # 如果没有指定场景名，获取当前场景
-        if scene_name is None:
+        if scene_name == "":
             scene_name = self._get_current_scene_name()
         
         # 尝试使用缓存
@@ -70,9 +70,9 @@ class SceneRenderer:
         try:
             pl_character_data: game_type.Character = cache.character_data[0]
             scene_path_str = map_handle.get_map_system_path_str_for_list(pl_character_data.position)
-            scene_data: game_type.Scene = cache.scene_data.get(scene_path_str)
-            if scene_data:
-                return scene_data.scene_name
+            scene_data: game_type.Scene = cache.scene_data[scene_path_str]
+            if scene_data.scene_img:
+                return scene_data.scene_img
         except (KeyError, AttributeError):
             pass
         return self.DEFAULT_BACKGROUND

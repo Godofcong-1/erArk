@@ -1120,6 +1120,8 @@ class Scene:
         """ 场景标签 """
         self.character_list: set = set()
         """ 场景内角色列表 """
+        self.scene_img: str = ""
+        """ 场景图片 """
 
 
 class Rhodes_Island:
