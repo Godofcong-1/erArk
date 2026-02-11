@@ -892,7 +892,7 @@ def handle_click_body_part(data):
                 instructs = web_interaction_manager.get_instructs_by_body_part(
                     sub_part, 
                     minor_type=current_minor_type,
-                    check_premise=False
+                    check_premise=True
                 )
                 for instruct_id in instructs:
                     if instruct_id not in [i['id'] for i in all_instructs]:
@@ -951,13 +951,16 @@ def handle_click_body_part(data):
     if current_minor_type is not None:
         # 如果选择了小类，使用web_interaction_manager过滤
         instructs = web_interaction_manager.get_instructs_by_body_part(
-            part_name_en, 
+            part_name_en,
             minor_type=current_minor_type,
-            check_premise=False
+            check_premise=True
         )
     else:
         # 未选择小类，返回该部位的所有指令
-        instructs = instruct_meta.get_instructs_by_body_part_from_constant(part_name_en)
+        instructs = web_interaction_manager.get_instructs_by_body_part(
+            part_name_en,
+            check_premise=True
+        )
     
     # 构建返回数据
     instruct_list = []
