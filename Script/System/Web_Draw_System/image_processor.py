@@ -164,8 +164,8 @@ class ImageProcessor:
                     "offset_y": offset[1],
                 }
                 
-                print(f"[图片处理器] 裁切完成: {os.path.basename(image_path)}, "
-                      f"原始: {original_size}, 裁切后: {cropped_size}, 偏移: {offset}")
+                # print(f"[图片处理器] 裁切完成: {os.path.basename(image_path)}, "
+                #       f"原始: {original_size}, 裁切后: {cropped_size}, 偏移: {offset}")
                 
                 return image_bytes, metadata
                 
@@ -210,11 +210,11 @@ class ImageProcessor:
         # 如果缓存已满，删除最旧的项目（OrderedDict的第一个元素）
         while len(self._cache) >= self.MAX_CACHE_SIZE:
             oldest_key, _ = self._cache.popitem(last=False)
-            print(f"[图片处理器] 缓存已满，移除最旧: {os.path.basename(oldest_key)}")
+            # print(f"[图片处理器] 缓存已满，移除最旧: {os.path.basename(oldest_key)}")
         
         # 添加新项目到缓存末尾
         self._cache[path] = (image_bytes, original_size, cropped_size, offset)
-        print(f"[图片处理器] 已缓存: {os.path.basename(path)}, 当前缓存数: {len(self._cache)}/{self.MAX_CACHE_SIZE}")
+        # print(f"[图片处理器] 已缓存: {os.path.basename(path)}, 当前缓存数: {len(self._cache)}/{self.MAX_CACHE_SIZE}")
     
     def clear_cache(self):
         """
