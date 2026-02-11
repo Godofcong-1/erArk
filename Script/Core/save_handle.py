@@ -727,6 +727,10 @@ def update_map(loaded_dict):
             loaded_dict["scene_data"][key].scene_tag = value.scene_tag
             update_count += 1
             change_map_flag = True
+        if not hasattr(loaded_dict["scene_data"][key], 'scene_img') or value.scene_img != loaded_dict["scene_data"][key].scene_img:
+            loaded_dict["scene_data"][key].scene_img = value.scene_img
+            update_count += 1
+            change_map_flag = True
         if not hasattr(loaded_dict["scene_data"][key], 'room_area') or value.room_area != loaded_dict["scene_data"][key].room_area:
             loaded_dict["scene_data"][key].room_area = value.room_area
             update_count += 1
