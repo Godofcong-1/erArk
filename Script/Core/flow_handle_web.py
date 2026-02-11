@@ -13,6 +13,9 @@ from typing import List, Optional
 cache = cache_control.cache
 cmd_map = constant.cmd_map  # 命令映射字典
 
+# 刷新信号常量，与 in_scene_panel_web.py 和 web_server.py 保持一致
+WEB_REFRESH_SIGNAL = "__WEB_REFRESH__"
+
 # 初始化尾处理命令函数变量
 tail_deal_cmd_func = None  # 保存尾处理命令函数，全局变量
 
@@ -41,8 +44,10 @@ def askfor_all(return_list: List[str]) -> str:
         if response is not None:
             # 检查响应是否在返回列表中
             if response in return_list:
-                # 首先输出该响应
-                io_init.era_print(response + "\n")
+                # 刷新信号不打印到界面上，直接处理
+                if response != WEB_REFRESH_SIGNAL:
+                    # 非刷新信号才输出该响应
+                    io_init.era_print(response + "\n")
                 # 然后判断值是否有效，有效则执行该命令
                 if _cmd_valid(response):
                     _cmd_deal(response)

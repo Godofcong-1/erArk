@@ -2253,10 +2253,10 @@ body {
 }
 
 /* ========== 顶部场景信息栏 ========== */
-/* 显示在面板选项卡上方，包含场景名（左）和游戏时间（右） */
+/* 显示在面板选项卡上方，包含场景名（左）和游戏时间（中） */
 .new-ui-scene-info-bar {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding: 12px 16px 16px 16px;  /* 上内边距12px，下内边距16px，让下方空隙更大且为背景色 */
     background-color: rgba(15, 15, 25, 0.95);
@@ -2265,15 +2265,18 @@ body {
     width: 100%;
     box-sizing: border-box;
     line-height: 1.5;  /* 增加行高，让文本有更多呼吸空间 */
+    position: relative;  /* 用于场景名的绝对定位 */
 }
 
-/* 场景名（左侧） */
+/* 场景名（左侧，绝对定位） */
 .scene-info-name {
     color: #88ccff;
     font-weight: normal;
+    position: absolute;
+    left: 16px;
 }
 
-/* 游戏时间（右侧） */
+/* 游戏时间（居中） */
 .scene-info-time {
     color: #aaa;
     font-weight: normal;

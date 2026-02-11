@@ -359,7 +359,7 @@
 
 ### 3.1.5 场景信息栏（2026-02-07 新增）
 
-**功能说明**：在面板选项卡上方增加一行场景信息栏，显示当前场景名（左侧）和游戏时间（右侧）
+**功能说明**：在面板选项卡上方增加一行场景信息栏，显示当前场景名（左侧）和游戏时间（居中）
 
 #### 后端实现
 - [x] 在 `Script/UI/Panel/in_scene_panel_web.py` 中添加 `_get_scene_info_bar()` 方法
@@ -375,15 +375,21 @@
 
 #### CSS样式
 - [x] 在 `static/style.css` 中添加 `.new-ui-scene-info-bar` 样式
-- [x] 使用flex布局，`justify-content: space-between` 实现左右分布
-- [x] `.scene-info-name`：场景名样式（左侧，浅蓝色）
-- [x] `.scene-info-time`：游戏时间样式（右侧，灰色）
+- [x] 使用flex布局，场景名绝对定位在左侧，时间flex居中
+- [x] `.scene-info-name`：场景名样式（左侧绝对定位，浅蓝色）
+- [x] `.scene-info-time`：游戏时间样式（居中，灰色）
 
 #### 样式优化（2026-02-07）
 - [x] 增加上内边距从 6px 到 12px，让文本上方有更多空间
 - [x] 增加下内边距从 6px 到 16px，让信息栏与选项卡之间有空隙且为背景色
 - [x] 添加 `line-height: 1.5` 提升文本可读性
 - [x] 使用 `padding` 而非 `margin` 确保空隙区域为背景色而非黑色
+
+#### 样式更新（2026-02-12）
+- [x] 将游戏时间从右对齐改为居中对齐
+- [x] 使用 `position: relative` 和 `position: absolute` 实现场景名固定左侧，时间居中的布局
+- [x] `.scene-info-name` 添加 `position: absolute; left: 16px;` 固定在左侧
+- [x] `.new-ui-scene-info-bar` 使用 `justify-content: center;` 使时间居中
 
 **样式说明**：
 - 上内边距 12px：让文本上方区域不是黑色而是背景底色
@@ -1183,11 +1189,16 @@
 - [x] 添加 `click_body_part` WebSocket事件处理器
 - [x] 接收 `{part_name}` 参数
 - [x] 返回该部位可执行的指令列表（已与阶段二指令分类系统集成）
-- [x] 返回 `single_instruct` 字段指示是否只有一个指令
+- [x] 返回 `single_instruct` 字段指示是否只有一个指令（后端仍返回，但前端不再使用此字段自动执行）
 
 **实施记录**：
 - 支持根据当前交互类型过滤指令
 - 返回部位中文名供前端显示
+
+**行为更新（2026-02-12）**：
+- 前端不再根据 `single_instruct` 字段自动执行唯一的指令
+- 无论有多少个可执行指令，都显示指令选择菜单，需要用户点击才能执行
+- 这样可以避免误操作，让用户有更好的控制感
 
 #### 5.2.3 执行指令API
 - [x] 添加 `execute_instruct` WebSocket事件处理器
@@ -1203,6 +1214,10 @@
   - 定义 `WEB_REFRESH_SIGNAL = "__WEB_REFRESH__"` 常量
   - 执行完指令后设置 `button_click_response = WEB_REFRESH_SIGNAL`
   - 这会唤醒 `askfor_all()` 并让主面板循环刷新数据
+- **2026-02-12更新**：刷新信号不再打印到界面
+  - 修改 `flow_handle_web.py` 的 `askfor_all()` 函数
+  - 添加判断：当 `response == WEB_REFRESH_SIGNAL` 时跳过 `io_init.era_print()` 调用
+  - 避免界面显示 `__WEB_REFRESH__` 这类内部信号字符串
 
 #### 5.2.4 切换交互对象API
 - [x] 添加 `switch_target` WebSocket事件处理器

@@ -4676,23 +4676,13 @@ function handleBodyPartClickResult(data) {
     // 更新该部位的tooltip显示
     if (window.lastClickedBodyPartButton && window.lastClickedBodyPartButton._tooltip) {
         const tooltip = window.lastClickedBodyPartButton._tooltip;
-        if (data.single_instruct && data.available_instructs.length === 1) {
-            // 只有一个指令时，显示指令名
-            tooltip.textContent = data.available_instructs[0].name;
-        } else {
-            // 多个指令或无指令时，显示部位名
-            tooltip.textContent = data.part_name_cn || data.part_name;
-        }
+        // 无论单个还是多个指令，都显示部位名
+        tooltip.textContent = data.part_name_cn || data.part_name;
     }
     
-    if (data.single_instruct && data.available_instructs.length === 1) {
-        // 只有一个可执行指令，自动执行
-        const instruct = data.available_instructs[0];
-        if (socket && socket.connected) {
-            socket.emit('execute_instruct', { instruct_id: instruct.id });
-        }
-    } else if (data.available_instructs.length > 0) {
-        // 多个可执行指令，显示选择菜单
+    // 无论单个还是多个指令，都显示选择菜单
+    // 不再自动执行单指令，需要用户点击确认才执行
+    if (data.available_instructs.length > 0) {
         showInstructMenu(data.available_instructs, data.part_name_cn);
     } else {
         console.log('该部位没有可执行的指令');
@@ -5301,7 +5291,7 @@ function createStateItem(state) {
 
 /**
  * 创建场景信息栏
- * 显示在面板选项卡上方，包含当前场景名（左侧）和游戏时间（右侧）
+ * 显示在面板选项卡上方，包含当前场景名（左侧）和游戏时间（居中）
  * 
  * @param {Object} sceneInfoBar - 场景信息栏数据
  *   - scene_name: 场景名称
@@ -5318,7 +5308,7 @@ function createSceneInfoBar(sceneInfoBar) {
     sceneNameSpan.textContent = sceneInfoBar.scene_name || '';
     bar.appendChild(sceneNameSpan);
     
-    // 右侧：游戏时间
+    // 居中：游戏时间
     const gameTimeSpan = document.createElement('span');
     gameTimeSpan.className = 'scene-info-time';
     gameTimeSpan.textContent = sceneInfoBar.game_time || '';
