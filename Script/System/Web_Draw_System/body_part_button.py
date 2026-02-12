@@ -7,7 +7,8 @@
 - COCO关键点用于定位身体部位的像素位置
 - BodyPart.csv 定义了可交互的部位列表
 - 臀部点击时展开子部位：小穴、子宫、后穴、尿道、尾巴
-- 头部点击时展开子部位：头发、兽角（需要角色有兽角）、兽耳（需要角色有兽耳）
+- 头部点击时展开子部位：头发、兽角（需要角色有兽角）
+- 兽耳作为独立部位，分左右显示，需满足交互对象有兽耳的条件才显示
 """
 
 from typing import Dict, List, Optional, Tuple
@@ -19,6 +20,7 @@ from Script.System.Instruct_System.instruct_category import (
     COCO_KEYPOINT_MAPPING,
     COMPUTED_BODY_PARTS,
     CLICKABLE_BODY_PARTS,
+    CONDITIONAL_BODY_PARTS,
 )
 
 
@@ -29,9 +31,10 @@ class BodyPartButton:
     
     支持功能：
     1. 基于COCO-WholeBody 17个关键点计算部位位置
-    2. 合并左右对称的部位（如左右手、左右腿）
+    2. 分开显示成对部位（如左右手、左右腿、左右兽耳）
     3. 臀部点击展开子部位菜单
-    4. 头部点击展开子部位菜单（头发、兽角、兽耳）
+    4. 头部点击展开子部位菜单（头发、兽角）
+    5. 条件部位显示：兽耳作为独立部位，需满足交互对象有兽耳才显示
     """
 
     def __init__(self):
@@ -294,19 +297,28 @@ class BodyPartButton:
             )
             self._body_parts_data = body_parts_json.get("body_parts", {})
 
-    def set_visible_parts(self, parts: List[str]):
+    def set_visible_parts(self, parts: List[str], has_beast_ears: bool = False):
         """
         设置可见的部位
         会自动将成对部位展开为左右两个
+        条件部位（如兽耳）只有满足条件时才会显示
         
         Keyword arguments:
         parts -- 要显示的部位名称列表（基础部位名，如 "hand" 而非 "hand_left"）
+        has_beast_ears -- 交互对象是否有兽耳，用于判断是否显示兽耳部位
         """
+        # 记录兽耳状态
+        self._has_beast_ears = has_beast_ears
+        
         # 成对部位列表
         paired_part_names = [BodyPart.HAND, BodyPart.LEG, BodyPart.FOOT, BodyPart.ARMPIT, BodyPart.BEAST_EARS]
         
         expanded_parts = []
         for part in parts:
+            # 检查条件部位
+            if part == BodyPart.BEAST_EARS and not has_beast_ears:
+                continue  # 交互对象没有兽耳，跳过
+            
             if part in paired_part_names:
                 # 成对部位展开为左右两个
                 left_key = f"{part}_left"
@@ -331,14 +343,49 @@ class BodyPartButton:
         """
         return self._visible_parts
 
-    def set_default_visible_parts(self):
+    def set_default_visible_parts(self, has_beast_ears: bool = False):
         """
         设置默认的可见部位列表（主要可点击部位）
+        条件部位（如兽耳）只有满足条件时才会显示
+        
+        Keyword arguments:
+        has_beast_ears -- 交互对象是否有兽耳，用于判断是否显示兽耳部位
         """
-        self._visible_parts = [
-            part for part in CLICKABLE_BODY_PARTS
-            if part in self._body_parts_data
-        ]
+        # 记录兽耳状态
+        self._has_beast_ears = has_beast_ears
+        
+        # 成对部位列表
+        paired_part_names = [BodyPart.HAND, BodyPart.LEG, BodyPart.FOOT, BodyPart.ARMPIT, BodyPart.BEAST_EARS]
+        
+        expanded_parts = []
+        for part in CLICKABLE_BODY_PARTS:
+            # 检查部位数据是否存在
+            if part not in self._body_parts_data:
+                # 对于成对部位，检查左右是否存在
+                if part in paired_part_names:
+                    left_key = f"{part}_left"
+                    right_key = f"{part}_right"
+                    if left_key not in self._body_parts_data and right_key not in self._body_parts_data:
+                        continue
+                else:
+                    continue
+            
+            # 检查条件部位
+            if part == BodyPart.BEAST_EARS and not has_beast_ears:
+                continue  # 交互对象没有兽耳，跳过
+            
+            # 成对部位展开为左右两个
+            if part in paired_part_names:
+                left_key = f"{part}_left"
+                right_key = f"{part}_right"
+                if left_key in self._body_parts_data:
+                    expanded_parts.append(left_key)
+                if right_key in self._body_parts_data:
+                    expanded_parts.append(right_key)
+            else:
+                expanded_parts.append(part)
+        
+        self._visible_parts = expanded_parts
 
     def get_part_position(self, part_name: str) -> Optional[dict]:
         """
@@ -428,9 +475,11 @@ class BodyPartButton:
         展开头部子部位
         当点击头部时调用，将满足条件的子部位添加到可见列表
         
+        注意：兽耳已作为独立部位，不再在头部子部位中处理
+        
         Keyword arguments:
         has_horn -- 角色是否有兽角
-        has_beast_ears -- 角色是否有兽耳
+        has_beast_ears -- 角色是否有兽耳（保留参数用于兽耳状态记录，但不在此处理）
         """
         self._head_expanded = True
         self._has_horn = has_horn
@@ -443,9 +492,6 @@ class BodyPartButton:
                     self._visible_parts.append(sub_part)
                 # 兽角需要角色有兽角特征
                 elif sub_part == BodyPart.HORN and has_horn:
-                    self._visible_parts.append(sub_part)
-                # 兽耳需要角色有兽耳特征
-                elif sub_part == BodyPart.BEAST_EARS and has_beast_ears:
                     self._visible_parts.append(sub_part)
 
     def collapse_head(self):
@@ -604,7 +650,7 @@ class BodyPartButton:
         elif part_name == BodyPart.HEAD:
             if not self._head_expanded:
                 self.expand_head(self._has_horn, self._has_beast_ears)
-                # 获取应显示的子部位
+                # 获取应显示的子部位（注意：兽耳已作为独立部位，不再在头部子菜单中显示）
                 visible_sub_parts = []
                 for sp in HEAD_SUB_PARTS:
                     if sp == BodyPart.HAIR:
@@ -612,9 +658,6 @@ class BodyPartButton:
                         visible_sub_parts.append(sp)
                     elif sp == BodyPart.HORN and self._has_horn:
                         # 兽角需要角色有兽角特征
-                        visible_sub_parts.append(sp)
-                    elif sp == BodyPart.BEAST_EARS and self._has_beast_ears:
-                        # 兽耳需要角色有兽耳特征
                         visible_sub_parts.append(sp)
                 return {
                     "action": "expand_head",

@@ -62,8 +62,9 @@ class CharacterRenderer:
         
         character_name = character_data.name
         
-        # 检测角色是否有兽耳和兽角特征（用于头部子部位显示判断）
+        # 检测角色是否有兽耳和兽角特征（用于部位显示判断）
         # talent[111] = 兽耳, talent[112] = 兽角
+        # 兽耳作为独立部位显示，需满足交互对象有兽耳的前提才会显示
         has_beast_ears = character_data.talent.get(111, 0) == 1 if hasattr(character_data, 'talent') else False
         has_horn = character_data.talent.get(112, 0) == 1 if hasattr(character_data, 'talent') else False
         
@@ -74,10 +75,10 @@ class CharacterRenderer:
             "full_body_image": self._find_full_body_image(character_name),
             "half_body_image": self._find_half_body_image(character_name),
             "head_image": self._find_head_image(character_name),
-            "body_parts": self._load_body_parts_data(character_name),
+            "body_parts": self._load_body_parts_data(character_name, has_beast_ears),
             "clothing_layers": [],  # 服装图层（待扩展）
             "effect_layers": [],    # 特效图层（待扩展）
-            "has_beast_ears": has_beast_ears,  # 角色是否有兽耳（用于头部子部位显示）
+            "has_beast_ears": has_beast_ears,  # 角色是否有兽耳（用于兽耳部位显示）
             "has_horn": has_horn,              # 角色是否有兽角（用于头部子部位显示）
         }
         
@@ -192,12 +193,13 @@ class CharacterRenderer:
         
         return ""
 
-    def _load_body_parts_data(self, character_name: str) -> dict:
+    def _load_body_parts_data(self, character_name: str, has_beast_ears: bool = False) -> dict:
         """
-        加载角色身体部位位置数据
+        加载角色的身体部位位置数据
         
         Keyword arguments:
         character_name -- 角色名称
+        has_beast_ears -- 角色是否有兽耳（用于条件部位显示）
         
         Returns:
         dict -- 身体部位位置数据
@@ -220,7 +222,7 @@ class CharacterRenderer:
             try:
                 with open(json_path, 'r', encoding='utf-8') as f:
                     raw_data = json.load(f)
-                    return self._convert_body_data(raw_data)
+                    return self._convert_body_data(raw_data, has_beast_ears)
             except (json.JSONDecodeError, IOError):
                 pass
         
@@ -230,13 +232,14 @@ class CharacterRenderer:
             "body_parts": {}
         }
     
-    def _convert_body_data(self, raw_data: dict) -> dict:
+    def _convert_body_data(self, raw_data: dict, has_beast_ears: bool = False) -> dict:
         """
         转换身体部位数据为前端需要的格式
         使用 BodyPartButton 类处理 COCO 关键点到游戏部位的映射
         
         Keyword arguments:
         raw_data -- 原始JSON数据
+        has_beast_ears -- 角色是否有兽耳（用于条件部位显示）
         
         Returns:
         dict -- 转换后的身体部位数据，使用游戏的 BodyPart 系统
@@ -289,8 +292,11 @@ class CharacterRenderer:
             # 加载关键点并计算部位位置
             body_part_button.load_coco_keypoints(keypoints, (image_width, image_height))
             
-            # 初始化可见部位（使用 CLICKABLE_BODY_PARTS）
-            body_part_button.set_visible_parts(CLICKABLE_BODY_PARTS)
+            # 设置兽耳状态（用于头部子菜单和待功能扩展）
+            body_part_button.set_has_beast_features(False, has_beast_ears)
+            
+            # 初始化可见部位（使用 CLICKABLE_BODY_PARTS，传入兽耳条件）
+            body_part_button.set_visible_parts(CLICKABLE_BODY_PARTS, has_beast_ears)
             
             # 获取部位按钮数据
             buttons_data = body_part_button.get_buttons_data()

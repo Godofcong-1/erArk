@@ -862,26 +862,31 @@ HIP_SUB_PARTS = [
 ]
 
 # 头部展开的子部位
+# 注意：兽耳已独立为单独的可点击部位（2026-02-13）
 HEAD_SUB_PARTS = [
     BodyPart.HAIR,       # 头发
-    BodyPart.HORN,       # 兽角
-    BodyPart.BEAST_EARS, # 兽耳
+    BodyPart.HORN,       # 兽角（需要角色有兽角特征）
 ]
 
 # 主要可点击部位列表（从上到下）
+# 注意：兽耳作为条件部位，需要交互对象有兽耳（talent[111]=1）才显示
 CLICKABLE_BODY_PARTS = [
-    BodyPart.HEAD,
+    BodyPart.HEAD,        # 点击展开子部位（头发、兽角）
+    BodyPart.BEAST_EARS,  # 兽耳（条件部位，分左右显示）
     BodyPart.FACE,
     BodyPart.MOUTH,
-    BodyPart.BEAST_EARS,
-    BodyPart.HORN,
     BodyPart.CHEST,
     BodyPart.ARMPIT,
     BodyPart.HAND,
     BodyPart.BELLY,
-    BodyPart.HIP,      # 点击展开子部位
+    BodyPart.HIP,         # 点击展开子部位
     BodyPart.LEG,
     BodyPart.FOOT,
+]
+
+# 条件显示的部位列表（需满足特定条件才显示）
+CONDITIONAL_BODY_PARTS = [
+    BodyPart.BEAST_EARS,  # 兽耳：需要交互对象有兽耳特征 (talent[111]=1)
 ]
 ```
 
@@ -890,9 +895,10 @@ CLICKABLE_BODY_PARTS = [
 在交互对象信息区底部的"可选部位打印区"中，需要将指令系统的部位映射到角色立绘中实际存在的部位：
 
 **映射规则**：
-1. **头部子部位**（头发/兽角/兽耳）→ 映射到"头部"
-2. **臀部子部位**（小穴/子宫/后穴/尿道/尾巴/胯部）→ 映射到"臀部"
-3. **其他部位**：直接与角色立绘中的 `base_part` 匹配
+1. **头部子部位**（头发/兽角）→ 映射到"头部"
+2. **兽耳**（2026-02-13更新）→ 作为独立部位显示，不再映射到头部，需要交互对象有兽耳特征才显示
+3. **臀部子部位**（小穴/子宫/后穴/尿道/尾巴/胯部）→ 映射到"臀部"
+4. **其他部位**：直接与角色立绘中的 `base_part` 匹配
 
 **实现位置**：`status_panel.py` 的 `_get_available_body_parts_for_display()` 方法
 

@@ -204,11 +204,11 @@ HIP_SUB_PARTS = [
 ]
 
 
-# 头部展开的子部位列表（头发默认显示，兽角和兽耳需要角色有对应特征才显示）
+# 头部展开的子部位列表（头发默认显示，兽角需要角色有对应特征才显示）
+# 注意：兽耳已独立为单独的可点击部位，不再作为头部子部位
 HEAD_SUB_PARTS = [
     BodyPart.HAIR,       # 头发（始终显示）
     BodyPart.HORN,       # 兽角（需要角色有兽角特征）
-    BodyPart.BEAST_EARS, # 兽耳（需要角色有兽耳特征）
 ]
 
 
@@ -272,16 +272,24 @@ COMPUTED_BODY_PARTS = {
 
 # 主要可点击部位列表（按身体从上到下排序）
 # 这些是在角色立绘上直接显示为按钮的部位
-# 注意：头发、兽角、兽耳已合并为头部的子部位（类似臀部的子部位机制）
+# 注意：头发、兽角已合并为头部的子部位（类似臀部的子部位机制）
+# 兽耳作为独立部位，分左右显示，需满足交互对象有兽耳的前提才会显示
 CLICKABLE_BODY_PARTS = [
-    BodyPart.HEAD,      # 头部（点击展开子部位：头发、兽角、兽耳）
-    BodyPart.FACE,      # 脸部
-    BodyPart.MOUTH,     # 口腔
-    BodyPart.CHEST,     # 胸部
-    BodyPart.ARMPIT,    # 腋部
-    BodyPart.HAND,      # 手部
-    BodyPart.BELLY,     # 腹部
-    BodyPart.HIP,       # 臀部（点击展开子部位）
-    BodyPart.LEG,       # 腿部
-    BodyPart.FOOT,      # 脚部
+    BodyPart.HEAD,        # 头部（点击展开子部位：头发、兽角）
+    BodyPart.BEAST_EARS,  # 兽耳（条件显示：交互对象有兽耳时，分左右耳显示）
+    BodyPart.FACE,        # 脸部
+    BodyPart.MOUTH,       # 口腔
+    BodyPart.CHEST,       # 胸部
+    BodyPart.ARMPIT,      # 腋部
+    BodyPart.HAND,        # 手部
+    BodyPart.BELLY,       # 腹部
+    BodyPart.HIP,         # 臀部（点击展开子部位）
+    BodyPart.LEG,         # 腿部
+    BodyPart.FOOT,        # 脚部
+]
+
+# 条件显示的部位列表（需根据角色特征判断是否显示）
+# 格式: {部位: 判断函数名称}
+CONDITIONAL_BODY_PARTS = [
+    BodyPart.BEAST_EARS,  # 兽耳：需要交互对象有兽耳特征 (talent[111]=1)
 ]

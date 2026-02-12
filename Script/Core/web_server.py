@@ -957,8 +957,7 @@ def handle_click_body_part(data):
                 # 跳过角色没有的特征对应的部位
                 if sub_part == BodyPart.HORN and not has_horn:
                     continue
-                if sub_part == BodyPart.BEAST_EARS and not has_beast_ears:
-                    continue
+                # 注意：兽耳已从 HEAD_SUB_PARTS 中移除，作为独立部位处理
                 
                 instructs = web_interaction_manager.get_instructs_by_body_part(
                     sub_part, 
@@ -986,21 +985,17 @@ def handle_click_body_part(data):
             return
         else:
             # 未选择小类时，展开子部位菜单
+            # 注意：兽耳已从 HEAD_SUB_PARTS 中移除，作为独立部位处理
             sub_parts = []
             for sub_part in HEAD_SUB_PARTS:
                 # 头发始终显示
-                # 兽角和兽耳需要角色有对应特征
+                # 兽角需要角色有对应特征
                 if sub_part == BodyPart.HAIR:
                     sub_parts.append({
                         'part_id': sub_part,
                         'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
                     })
                 elif sub_part == BodyPart.HORN and has_horn:
-                    sub_parts.append({
-                        'part_id': sub_part,
-                        'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
-                    })
-                elif sub_part == BodyPart.BEAST_EARS and has_beast_ears:
                     sub_parts.append({
                         'part_id': sub_part,
                         'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)

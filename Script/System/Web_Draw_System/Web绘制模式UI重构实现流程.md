@@ -2661,6 +2661,60 @@ children.forEach(child => {
 - 罗德岛地图（纯文本，行首空格不一致）：正常对齐显示
 - 所有map-line元素被正确分组，统一设置 `min-width` 实现对齐
 
+### 10.7 兽耳部位从头部子菜单独立 (2026-02-13)
+
+#### 10.7.1 需求说明
+- 兽耳从头部子部位中独立出来，作为单独的可点击部位处理
+- 兽耳使用身体部位里的 `BEAST_EARS`，分左耳和右耳显示
+- 需满足交互对象有兽耳的前提（talent[111]=1）才会显示和可用
+- 同时对无交互类型下的全身体部位、选择交互类型后的该交互类型下的身体部位两种情况生效
+
+#### 10.7.2 设计变更
+- **之前**：兽耳作为头部子部位，点击头部后展开子菜单才能选择
+- **现在**：兽耳作为独立的条件部位，在角色立绘上直接显示为左耳和右耳按钮
+
+#### 10.7.3 后端修改
+- [x] **instruct_category.py**: 从 `HEAD_SUB_PARTS` 中移除 `BEAST_EARS`
+- [x] **instruct_category.py**: 在 `CLICKABLE_BODY_PARTS` 中添加 `BEAST_EARS`（位于头部之后、脸部之前）
+- [x] **instruct_category.py**: 添加 `CONDITIONAL_BODY_PARTS` 列表，定义需要条件判断才显示的部位
+- [x] **body_part_button.py**: 修改 `set_visible_parts()` 方法，添加 `has_beast_ears` 参数
+- [x] **body_part_button.py**: 修改 `set_default_visible_parts()` 方法，添加 `has_beast_ears` 参数
+- [x] **body_part_button.py**: 修改 `expand_head()` 方法，移除 BEAST_EARS 的处理
+- [x] **body_part_button.py**: 修改 `handle_click()` 方法中头部展开时的子部位列表
+- [x] **character_renderer.py**: 修改 `_load_body_parts_data()` 方法，添加 `has_beast_ears` 参数
+- [x] **character_renderer.py**: 修改 `_convert_body_data()` 方法，添加 `has_beast_ears` 参数
+- [x] **character_renderer.py**: 在设置可见部位时传入 `has_beast_ears` 参数
+
+#### 10.7.4 技术实现要点
+
+**条件部位机制**：
+- `CONDITIONAL_BODY_PARTS` 列表定义了需要条件判断的部位
+- `set_visible_parts()` 和 `set_default_visible_parts()` 接受 `has_beast_ears` 参数
+- 当 `has_beast_ears=False` 时，兽耳部位会被跳过
+- 兽耳作为成对部位，会被展开为 `beast_ears_left` 和 `beast_ears_right`
+
+**判断逻辑**：
+- 在 `character_renderer.py` 中，通过 `character_data.talent.get(111, 0) == 1` 判断角色是否有兽耳
+- `has_beast_ears` 参数从 `get_character_image_data()` 传递到 `_load_body_parts_data()` 再到 `_convert_body_data()`
+- 最终传递给 `body_part_button.set_visible_parts()` 用于过滤
+
+**显示效果**：
+- 交互对象有兽耳时：在角色立绘上显示"左兽耳"和"右兽耳"按钮
+- 交互对象无兽耳时：不显示兽耳按钮
+- 点击头部时：子菜单只显示"头发"和"兽角"（如果有兽角）
+
+#### 10.7.5 修改文件清单
+| 文件路径 | 修改内容 | 状态 |
+|---------|---------|------|
+| `Script/System/Instruct_System/instruct_category.py` | 移除 `HEAD_SUB_PARTS` 中的 `BEAST_EARS`，添加到 `CLICKABLE_BODY_PARTS`，添加 `CONDITIONAL_BODY_PARTS` | ✅ |
+| `Script/System/Web_Draw_System/body_part_button.py` | 修改 `set_visible_parts()`、`set_default_visible_parts()`、`expand_head()`、`handle_click()` 方法 | ✅ |
+| `Script/System/Web_Draw_System/character_renderer.py` | 修改 `_load_body_parts_data()`、`_convert_body_data()` 方法传递 `has_beast_ears` 参数 | ✅ |
+| `Script/Core/web_server.py` | 移除头部子部位处理中的 `BEAST_EARS` 相关条件判断 | ✅ |
+
+**实施记录**：
+- 修复了3个Python文件
+- 兽耳部位现在作为条件独立部位显示，不再需要点击头部才能选择
+
 ---
 
 ## 附录A：关键文件清单
@@ -2713,6 +2767,9 @@ children.forEach(child => {
 | `Script/UI/Panel/web_components/body_part_button.py` | 添加头部展开/折叠功能 | ✅ |
 | `Script/UI/Panel/web_components/character_renderer.py` | 添加兽耳/兽角检测 | ✅ |
 | `static/style.css` | 添加头部子菜单样式；添加地图行字体和对齐优化 | ✅ |
+| `Script/System/Web_Draw_System/body_part_button.py` | 条件部位支持（兽耳独立显示） | ✅ |
+| `Script/System/Web_Draw_System/character_renderer.py` | 兽耳条件参数传递 | ✅ |
+| `Script/Core/web_server.py` | 移除头部子菜单中的兽耳处理 | ✅ |
 
 ---
 
