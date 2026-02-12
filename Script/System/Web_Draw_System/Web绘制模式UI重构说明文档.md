@@ -9,9 +9,10 @@
 6. [演出与结算系统](#6-演出与结算系统)
 7. [指令分类系统](#7-指令分类系统)
 8. [素材处理流程](#8-素材处理流程)
-9. [文件结构规划](#9-文件结构规划)
+9. [地图渲染系统](#9-地图渲染系统)
+10. [文件结构规划](#10-文件结构规划)
 
-**最后更新**: 2026年2月10日
+**最后更新**: 2026年2月12日
 
 **重要架构说明**:
 - 采用单页面应用架构：所有面板统一使用 `index.html`
@@ -459,9 +460,73 @@ image/立绘/干员/{角色名}/
 
 ---
 
-## 9. 文件结构规划
+## 9. 地图渲染系统
 
-### 9.1 后端代码文件
+### 9.1 地图显示概述
+地图使用AA字符画（ASCII Art）形式渲染，需要在Web模式下保持与Tk模式一致的对齐效果。
+
+### 9.2 地图数据结构
+- **数据来源**：`data/map/` 目录下的场景JSON文件
+- **解析模块**：`Script/Config/map_config.py` 的 `get_print_map_data()` 函数
+- **数据结构**：`MapDraw` 类，包含多行 `MapDrawLine`，每行包含多个绘制对象
+
+### 9.3 Web模式特殊处理
+
+#### 9.3.1 后端预处理
+1. **行尾空格移除**：在解析时调用 `_trim_map_line_trailing_spaces()` 移除行尾空格
+2. **行首空格规范化**：调用 `_normalize_map_leading_spaces()` 统一行首空格
+3. **最大宽度计算**：使用 `text_handle.get_text_index()` 统一计算显示宽度，存储在 `MapDraw.max_width`
+4. **居中偏移计算**：`see_map_panel.py` 使用 `max_width` 计算统一的居中偏移
+
+#### 9.3.2 前端渲染
+1. **元素分类**：地图行使用 `map-line` CSS类标识
+2. **分组处理**：`normalizeMapBlocks()` 函数将连续的 `map-line` 元素分组
+3. **宽度同步**：计算组内所有行的最大像素宽度，为每行设置 `min-width` 统一宽度
+4. **居中显示**：使用 `map-group` 和 `map-group-inner` 容器实现整体居中
+
+#### 9.3.3 分组逻辑
+- 地图行之间可能存在换行元素（`text-break`、空div等）
+- 分组时忽略这些换行元素，确保连续的地图行被正确分组
+- 只有遇到有实际内容的非地图元素时才中断当前组
+
+### 9.4 CSS样式要点
+```css
+.map-line {
+    display: block;
+    width: max-content;
+    white-space: pre;
+    font-family: 'SarasaMonoSC', monospace;
+    margin: auto;
+    font-kerning: none;           /* 禁用字距调整 */
+    font-variant-ligatures: none; /* 禁用连字 */
+    text-align: left;             /* 文本内容左对齐 */
+}
+
+.map-group {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.map-group-inner {
+    display: inline-block;
+    text-align: left;
+}
+```
+
+### 9.5 常见问题与解决
+
+| 问题 | 原因 | 解决方案 |
+|------|------|----------|
+| 各行起点不对齐 | 行首空格数量不同 | `_normalize_map_leading_spaces()` 规范化 |
+| Emoji宽度异常 | Python与浏览器字符宽度计算差异 | 前端JS统一设置 `min-width` |
+| 行间断开分组 | 换行元素中断分组 | 分组时忽略换行/空元素 |
+
+---
+
+## 10. 文件结构规划
+
+### 10.1 后端代码文件
 ```
 Script/UI/Panel/
 ├── in_scene_panel.py           # tk模式主面板
@@ -485,7 +550,7 @@ Script/System/Instruct_System/
 └── interaction_types.py        # 交互类型定义
 ```
 
-### 9.2 前端文件
+### 10.2 前端文件
 ```
 templates/
 └── index.html                  # 统一页面模板
@@ -500,7 +565,7 @@ static/
     └── websocket_handler.js    # WebSocket处理
 ```
 
-### 9.3 素材处理工具
+### 10.3 素材处理工具
 ```
 tools/
 ├── build_character_folders.py        # 构建角色文件夹结构
@@ -509,7 +574,7 @@ tools/
 └── body_analysis_multi_compare.py    # 7模型+集成对比工具
 ```
 
-### 9.4 素材目录结构
+### 10.4 素材目录结构
 ```
 image/
 ├── 场景/                       # 场景背景图

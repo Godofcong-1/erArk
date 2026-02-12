@@ -1405,6 +1405,7 @@ function applyMapLayout(element, container, options = {}) {
 
 /**
  * 规范化地图块的宽度和居中显示
+ * 将所有连续的map-line元素分组，计算组内最大宽度，统一设置min-width使各行对齐
  * @param {HTMLElement} root - 游戏内容根元素
  */
 function normalizeMapBlocks(root) {
@@ -1447,8 +1448,10 @@ function normalizeMapBlocks(root) {
             groupLines.forEach(line => inner.appendChild(line));
         }
 
+        // 清除之前的样式
         groupLines.forEach(line => {
             line.style.width = '';
+            line.style.minWidth = '';
             line.style.marginLeft = '';
             line.style.marginRight = '';
         });
@@ -1461,18 +1464,23 @@ function normalizeMapBlocks(root) {
             inner.style.width = '';
         }
 
+        // 使用requestAnimationFrame计算并同步所有行的宽度
         requestAnimationFrame(() => {
+            // 获取所有行的实际渲染宽度
             const widths = groupLines.map(line => line.scrollWidth || line.offsetWidth || 0);
             const maxWidth = Math.max(...widths);
-            groupLines.forEach(line => {
-                line.style.width = `${maxWidth}px`;
-                line.style.marginLeft = '0';
-                line.style.marginRight = '0';
-                line.style.justifyContent = 'flex-start';
-            });
+            
+            if (maxWidth > 0) {
+                // 为每行设置min-width使其达到最大宽度，保持各行起点一致
+                groupLines.forEach(line => {
+                    line.style.minWidth = `${maxWidth}px`;
+                    line.style.marginLeft = '0';
+                    line.style.marginRight = '0';
+                });
 
-            if (inner) {
-                inner.style.width = `${maxWidth}px`;
+                if (inner) {
+                    inner.style.width = `${maxWidth}px`;
+                }
             }
         });
 
@@ -1483,7 +1491,20 @@ function normalizeMapBlocks(root) {
         if (child.classList && child.classList.contains('map-line')) {
             currentGroup.push(child);
         } else {
-            flushGroup();
+            // 检查是否是换行/空元素（text-break、空div等）
+            // 如果是，不要中断当前组
+            const isBreakElement = child.classList && (
+                child.classList.contains('text-break') ||
+                child.classList.contains('line-break')
+            );
+            const isEmptyDiv = child.tagName === 'DIV' && 
+                !child.textContent.trim() && 
+                !child.querySelector('.map-line');
+            
+            // 只有遇到有实际内容的非地图元素时才中断组
+            if (!isBreakElement && !isEmptyDiv) {
+                flushGroup();
+            }
         }
     });
 

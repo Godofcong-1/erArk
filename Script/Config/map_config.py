@@ -186,7 +186,7 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                                 now_style_list = now_style_list[1:]  # 移除已处理的样式
                             new_x_list = new_x_list[1:]  # 移除已处理的字符
                         now_draw_list.draw_list.append(now_rich_draw)  # 将now_rich_draw添加到绘制列表中
-                        now_draw_list.width += len(now_rich_draw.text)  # 更新绘制列表的宽度
+                        now_draw_list.width += text_handle.get_text_index(now_rich_draw.text)  # 更新绘制列表的宽度
                     new_x_list = ""  # 清空new_x_list
             elif set_map_button and map_x_list[i : i + 12] != "</mapbutton>":
                 now_cmd += map_x_list[i]
@@ -238,10 +238,16 @@ def get_print_map_data(map_draw: str) -> game_type.MapDraw:
                     #     print(f"debug 分：now_style_list = {now_style_list}")
                     #     print(f"debug 分：new_x_list = {new_x_list}")
                 now_draw_list.draw_list.append(now_rich_draw)
-                now_draw_list.width += len(now_rich_draw.text)
-        # 改为对web地图在绘制中移除行尾空格，不在此处移除
-        # _trim_map_line_trailing_spaces(now_draw_list)
+                now_draw_list.width += text_handle.get_text_index(now_rich_draw.text)
+        # 移除行尾空格并重新计算宽度
+        _trim_map_line_trailing_spaces(now_draw_list)
         map_draw_data.draw_text.append(now_draw_list)
+    # 规范化行首空格：找出最小行首空格数，然后每行都减去这个值
+    _normalize_map_leading_spaces(map_draw_data)
+    # 计算所有行的最大宽度，用于居中显示
+    for line in map_draw_data.draw_text:
+        if line.width > map_draw_data.max_width:
+            map_draw_data.max_width = line.width
     return map_draw_data
 
 
@@ -276,6 +282,95 @@ def _trim_map_line_trailing_spaces(map_line: game_type.MapDrawLine) -> None:
             continue
         width += text_handle.get_text_index(text)
     map_line.width = width
+
+
+def _normalize_map_leading_spaces(map_draw_data: game_type.MapDraw) -> None:
+    """
+    规范化地图行首空格：找出所有非空行中最小的行首空格数，然后每行都减去这个值
+    这样可以保持行与行之间的相对对齐关系，同时消除不必要的公共前缀空格
+    """
+    if not map_draw_data or not map_draw_data.draw_text:
+        return
+    
+    # 计算每行的行首空格数
+    leading_spaces_list = []
+    for line in map_draw_data.draw_text:
+        if not line.draw_list:
+            # 空行，跳过
+            continue
+        first_item = line.draw_list[0]
+        text = getattr(first_item, "text", "")
+        if not text:
+            leading_spaces_list.append(0)
+            continue
+        # 计算行首空格数
+        stripped = text.lstrip(" ")
+        leading_spaces = len(text) - len(stripped)
+        leading_spaces_list.append(leading_spaces)
+    
+    if not leading_spaces_list:
+        return
+    
+    # 找出最小的行首空格数
+    min_leading = min(leading_spaces_list)
+    
+    if min_leading <= 0:
+        # 没有公共前缀空格需要移除
+        return
+    
+    # 每行都减去最小行首空格数
+    for line in map_draw_data.draw_text:
+        if not line.draw_list:
+            continue
+        first_item = line.draw_list[0]
+        text = getattr(first_item, "text", "")
+        if not text:
+            continue
+        # 移除行首的min_leading个空格
+        if len(text) >= min_leading and text[:min_leading] == " " * min_leading:
+            first_item.text = text[min_leading:]
+            # 如果移除后为空，则删除这个绘制对象
+            if not first_item.text and not getattr(first_item, "is_button", False):
+                line.draw_list.pop(0)
+        
+        # 重新计算行宽
+        width = 0
+        for item in line.draw_list:
+            item_text = getattr(item, "text", "")
+            if item_text:
+                width += text_handle.get_text_index(item_text)
+        line.width = width
+
+
+def _pad_map_lines_to_max_width(map_draw_data: game_type.MapDraw) -> None:
+    """
+    为每行添加填充空格使其达到max_width
+    这样可以确保Web端各行渲染宽度一致，解决对齐问题
+    """
+    if not map_draw_data or not map_draw_data.draw_text:
+        return
+    
+    max_width = map_draw_data.max_width
+    if max_width <= 0:
+        return
+    
+    for line in map_draw_data.draw_text:
+        if line.width >= max_width:
+            continue
+        
+        # 计算需要添加的空格数
+        padding_needed = max_width - line.width
+        if padding_needed <= 0:
+            continue
+        
+        # 创建填充空格的绘制对象
+        padding_draw = game_type.MapDrawText()
+        padding_draw.text = " " * padding_needed
+        padding_draw.style = "standard"
+        
+        # 添加到行末
+        line.draw_list.append(padding_draw)
+        line.width = max_width
 
 
 def get_sorted_map_path_data(

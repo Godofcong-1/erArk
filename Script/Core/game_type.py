@@ -1062,6 +1062,8 @@ class MapDraw:
     def __init__(self):
         self.draw_text: List[MapDrawLine] = []
         """ 绘制行对象列表 """
+        self.max_width: int = 0
+        """ 所有行中的最大显示宽度，用于居中计算 """
 
 
 class MapDrawLine:

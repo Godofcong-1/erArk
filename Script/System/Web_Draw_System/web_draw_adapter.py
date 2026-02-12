@@ -41,9 +41,9 @@ class WebDrawAdapter:
         返回值类型: 无
         功能描述: 将普通文本绘制适配到Web界面
         """
-        # 如果当前绘制为地图最后一行，则去掉文本里最后的若干个可能存在的空格，并修改web_type为"map"
+        # 如果当前绘制为地图最后一行，修改web_type为"map"
+        # 注：行尾空格已在解析时处理，此处不再移除，以保留填充空格用于对齐
         if getattr(normal_draw, "web_type", "") == "map-last":
-            normal_draw.text = normal_draw.text.rstrip(" ")
             normal_draw.web_type = "map"
         # 创建Web文本元素
         web_element = {

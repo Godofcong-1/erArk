@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月10日
+**最后更新**：2026年2月12日
 
 ---
 
@@ -2459,6 +2459,149 @@
 **实施记录**：
 - 修复后，头部按钮使用与其他部位（如胸部）相同的半径比例，不再造成遮盖问题
 
+### 10.6 地图AA字符画Web模式显示修复 (2026-02-12)
+
+#### 10.6.1 问题描述
+- 地图在Web模式下排版显示错乱
+- 地图源文件依赖行尾空格对齐，但Web模式下空格处理不一致
+- 各行宽度计算不统一，导致居中显示不正确
+- 罗德岛地图各行行首空格数不一致（0-12不等），导致内容起点不统一
+
+#### 10.6.2 问题原因
+1. **宽度计算不一致**：`map_config.get_print_map_data()` 混用 `len()` 和 `text_handle.get_text_index()` 计算宽度
+2. **每行单独居中**：`see_map_panel.py` 使用每行宽度计算居中偏移，导致各行起点不一致
+3. **行尾空格处理时机不当**：行尾空格在Web渲染时才移除，但宽度计算时仍包含空格
+4. **行首空格不一致**：不同行的行首空格数不同，导致各行内容起点不对齐（例如罗德岛地图第1-3行有3个行首空格，第4-22行有2个，第24行有0个）
+
+#### 10.6.3 修复方案
+- [x] **game_type.py**: 为 `MapDraw` 类添加 `max_width` 字段，记录所有行的最大显示宽度
+- [x] **map_config.py**: 统一使用 `text_handle.get_text_index()` 计算宽度
+- [x] **map_config.py**: 在解析时调用 `_trim_map_line_trailing_spaces()` 移除行尾空格
+- [x] **map_config.py**: 添加 `_normalize_map_leading_spaces()` 函数规范化行首空格
+  - 找出所有非空行中最小的行首空格数
+  - 每行都减去这个最小值，保持行与行之间的相对对齐关系
+- [x] **map_config.py**: 解析完成后计算并存储 `max_width`
+- [x] **see_map_panel.py**: 使用 `map_draw.max_width` 计算统一的居中偏移，使所有行从同一起点开始
+- [x] **navigation_panel.py**: 同步更新使用最大行宽计算居中
+
+#### 10.6.4 修改文件
+| 文件路径 | 修改内容 | 状态 |
+|---------|---------|------|
+| `Script/Core/game_type.py` | 添加 `MapDraw.max_width` 字段 | ✅ |
+| `Script/Config/map_config.py` | 统一宽度计算，移除行尾空格，规范化行首空格，计算最大行宽 | ✅ |
+| `Script/UI/Panel/see_map_panel.py` | 使用最大行宽计算统一居中偏移 | ✅ |
+| `Script/UI/Panel/navigation_panel.py` | 同步更新使用最大行宽 | ✅ |
+
+#### 10.6.5 技术细节
+**行首空格规范化算法**：
+1. 遍历所有非空行，计算每行第一个绘制对象的行首空格数
+2. 取所有行首空格数的最小值（min_leading）
+3. 每行都从第一个绘制对象的文本中移除 min_leading 个空格
+4. 如果移除后绘制对象为空（非按钮），则删除该绘制对象
+5. 重新计算每行的宽度
+
+**为什么控制中枢正常而罗德岛异常**：
+- 控制中枢地图所有行的行首空格数都是0，不存在不一致问题
+- 罗德岛地图的行首空格数从0到12不等，导致各行实际内容的起点位置不同
+
+#### 10.6.6 效果说明
+- **地图源文件**：不再需要手动补齐行尾空格，也不需要保证所有行有相同的行首空格
+- **Web模式**：地图整体居中显示，所有行内容从同一起点左对齐
+- **Tk模式**：保持兼容，显示效果不变
+- **需要重建**：修改地图源文件后需执行 `buildconfig.py` 重新生成数据
+
+**实施记录**：
+- 修复了4个Python文件
+- 同步更新了 `.github/prompts/数据处理工作流/Web绘制模式.md` 中的地图渲染说明
+
+#### 10.6.7 追加修复：行尾填充与字体渲染优化 (2026-02-12)
+
+**问题**：罗德岛地图在Web模式下仍有列错位，原因是：
+1. 各行的显示宽度不一致（4到142不等），导致Web端渲染时各行实际像素宽度不同
+2. 浏览器字体渲染可能导致某些字符宽度与Python端`wcswidth`计算不一致
+
+**解决方案**：
+
+1. **map_config.py**: 添加 `_pad_map_lines_to_max_width()` 函数
+   - 在计算 `max_width` 后，为每行添加填充空格使其达到 `max_width`
+   - 确保每行在Python端都有相同的"显示宽度单位"
+
+2. **web_draw_adapter.py**: 移除 `map-last` 元素的 `rstrip(" ")` 逻辑
+   - 原逻辑会移除行尾空格，抵消填充效果
+   - 现在保留填充空格用于对齐
+
+3. **style.css**: 添加CSS属性改善字符宽度一致性
+   - `font-kerning: none` - 禁用字距调整
+   - `font-variant-ligatures: none` - 禁用连字
+   - `text-rendering: geometricPrecision` - 精确渲染
+
+**修改文件**：
+| 文件路径 | 修改内容 |
+|---------|---------|
+| `Script/Config/map_config.py` | 添加 `_pad_map_lines_to_max_width()` 函数 |
+| `Script/System/Web_Draw_System/web_draw_adapter.py` | 移除行尾空格移除逻辑 |
+| `static/style.css` | 添加字体渲染优化CSS |
+
+#### 10.6.8 最终修复：JavaScript端宽度同步 (2026-02-12)
+
+**问题**：由于Python端填充空格方案会导致emoji字符（如控制中枢地图）宽度计算不一致，需要改为前端处理。
+
+**根本原因分析**：
+1. 地图行之间存在换行元素（`text-break`、空div等），导致JS端 `flushGroup()` 将每行单独作为一组处理
+2. 每组只有1行时，`min-width` 设置无法产生对齐效果
+3. 各行的CSS `margin: auto` 居中导致不同宽度的行有不同的起点
+
+**解决方案**：
+
+1. **game.js - normalizeMapBlocks()**:
+   - 修改分组逻辑，忽略换行元素（`text-break`、`line-break`、空div）
+   - 只有遇到有实际内容的非地图元素时才中断当前组
+   - 这样确保连续的地图行被作为一组处理
+
+2. **style.css - .map-line**:
+   - 简化 `font-family`，移除可能影响字符宽度的回退字体
+   - 添加 `text-align: left` 确保文本内容左对齐
+   - 移除 `font-variant-east-asian: full-width`（可能导致字符宽度不一致）
+
+3. **map_config.py**:
+   - 保留 `_pad_map_lines_to_max_width()` 函数定义但不调用
+   - 后端不再进行行尾填充，由前端JS处理宽度同步
+
+**JavaScript分组逻辑**：
+```javascript
+children.forEach(child => {
+    if (child.classList && child.classList.contains('map-line')) {
+        currentGroup.push(child);
+    } else {
+        // 检查是否是换行/空元素
+        const isBreakElement = child.classList && (
+            child.classList.contains('text-break') ||
+            child.classList.contains('line-break')
+        );
+        const isEmptyDiv = child.tagName === 'DIV' && 
+            !child.textContent.trim() && 
+            !child.querySelector('.map-line');
+        
+        // 只有遇到有实际内容的非地图元素时才中断组
+        if (!isBreakElement && !isEmptyDiv) {
+            flushGroup();
+        }
+    }
+});
+```
+
+**修改文件**：
+| 文件路径 | 修改内容 |
+|---------|---------|
+| `static/game.js` | 修改 `normalizeMapBlocks()` 分组逻辑，忽略换行元素 |
+| `static/style.css` | 简化字体配置，添加 `text-align: left` |
+| `Script/Config/map_config.py` | 移除 `_pad_map_lines_to_max_width()` 调用 |
+
+**效果**：
+- 控制中枢地图（包含emoji）：正常对齐显示
+- 罗德岛地图（纯文本，行首空格不一致）：正常对齐显示
+- 所有map-line元素被正确分组，统一设置 `min-width` 实现对齐
+
 ---
 
 ## 附录A：关键文件清单
@@ -2498,16 +2641,19 @@
 | 文件路径 | 修改内容 | 状态 |
 |---------|---------|------|
 | `Script/System/Instruct_System/handle_instruct.py` | 添加指令分类系统 | ✅ |
+| `Script/Core/game_type.py` | 添加Web模式缓存字段；添加 `MapDraw.max_width` 字段 | ✅ |
+| `Script/Config/map_config.py` | 地图宽度计算统一化，移除行尾空格，规范化行首空格，计算最大行宽 | ✅ |
+| `Script/UI/Panel/see_map_panel.py` | 使用最大行宽计算统一居中偏移 | ✅ |
+| `Script/UI/Panel/navigation_panel.py` | 使用最大行宽计算统一居中偏移 | ✅ |
 | `Script/Core/web_server.py` | 扩展API和数据结构；修复主路由和WebSocket事件；实现动态模板路由 | ✅ |
-| `Script/Core/game_type.py` | 添加Web模式缓存字段 | ✅ |
 | `Script/Core/constant/__init__.py` | 添加指令分类数据字典 | ✅ |
 | `Script/Design/character_image.py` | 适配半身图文件名格式 | ✅ |
 | `Script/UI/Flow/normal_flow.py` | 添加模式切换逻辑 | ✅ |
-| `static/game.js` | 添加面板切换自动刷新逻辑；添加头部子菜单支持 | ✅ |
+| `static/game.js` | 添加面板切换自动刷新逻辑；添加头部子菜单支持；添加 `normalizeMapBlocks()` 地图行宽度同步 | ✅ |
 | `Script/System/Instruct_System/instruct_category.py` | 添加 HEAD_SUB_PARTS 常量；修改头部位置计算 | ✅ |
 | `Script/UI/Panel/web_components/body_part_button.py` | 添加头部展开/折叠功能 | ✅ |
 | `Script/UI/Panel/web_components/character_renderer.py` | 添加兽耳/兽角检测 | ✅ |
-| `static/style.css` | 添加头部子菜单样式 | ✅ |
+| `static/style.css` | 添加头部子菜单样式；添加地图行字体和对齐优化 | ✅ |
 
 ---
 

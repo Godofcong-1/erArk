@@ -92,8 +92,10 @@ class SeeMapPanel:
             # print(f"debug self.now_map = {self.now_map}, map_path_str = {map_path_str}，map_name = {map_name}, character_data.position = {character_data.position}, character_scene_id = {character_scene_name}")
             return_list = []
             index = 0
+            # 使用地图最大行宽来计算统一的居中偏移，使所有行左对齐
+            map_max_width = now_draw_list.max_width
+            fix_width = int((self.width - map_max_width) / 2)
             for now_draw_line in now_draw_list.draw_text:
-                fix_width = int((self.width - now_draw_line.width) / 2)
                 fix_text = " " * fix_width
                 fix_draw = draw.NormalDraw()
                 fix_draw.text = fix_text

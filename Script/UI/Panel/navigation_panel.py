@@ -203,8 +203,10 @@ class Navigation_Panel(Base_function_class):
             near_scene_path_name_list = list(near_scene_path.keys())
             return_list = []
             index = 0
+            # 使用地图最大行宽来计算统一的居中偏移，使所有行左对齐
+            map_max_width = now_draw_list.max_width
+            fix_width = int((self.width - map_max_width) / 2)
             for now_draw_line in now_draw_list.draw_text:
-                fix_width = int((self.width - now_draw_line.width) / 2)
                 fix_text = " " * fix_width
                 fix_draw = draw.NormalDraw()
                 fix_draw.text = fix_text

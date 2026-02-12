@@ -8,7 +8,8 @@
     font-family: 'EmojiSupport';
     src: url('./fonts/emoji.ttf') format('truetype');
     font-display: swap;
-    unicode-range: U+2600-26FF, U+2700-27BF, U+1F000-1F9FF, U+1FA70-1FAFF, U+FE0F;
+    /* 限制emoji字体只用于真正的emoji，避免影响Box Drawing字符 */
+    unicode-range: U+1F000-1F9FF, U+1FA70-1FAFF;
 }
 
 /**
@@ -263,27 +264,32 @@ body {
     }
 
 .inline-container.map-line {
-    display: flex;
-    justify-content: flex-start;
-    align-items: flex-start;
-    flex-wrap: nowrap;
-    width: auto;
+    display: block;
+    width: max-content;
     white-space: pre;
-    font-family: 'SarasaMonoSC', 'EmojiSupport', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
-    gap: 0;
+    font-family: 'SarasaMonoSC', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'Consolas', monospace;
     overflow: visible;
     touch-action: manipulation;
     margin-left: auto;
     margin-right: auto;
     box-sizing: border-box;
+    /* 改善字符宽度一致性 */
+    font-kerning: none;
+    font-variant-ligatures: none;
+    text-rendering: geometricPrecision;
+    line-height: 1.2;
+    /* 确保文本左对齐 */
+    text-align: left;
 }
 
 .inline-container.map-line .map-element {
-    display: inline-block;
+    display: inline;
     white-space: pre;
-    flex: none;
     font-family: inherit;
     letter-spacing: 0;
+    /* 改善字符宽度一致性 */
+    font-kerning: none;
+    font-variant-ligatures: none;
 }
 
 .inline-container.map-line .map-text {
