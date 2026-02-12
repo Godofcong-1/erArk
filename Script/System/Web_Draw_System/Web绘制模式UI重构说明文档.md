@@ -454,6 +454,7 @@ Web模式下会自动裁切角色立绘四周的透明区域，优化显示效�
 - **生产工具**：`tools/body_analysis_ensemble.py`（7模型集成批量处理）
 - **输出格式**：`{角色名}_body.json`（v2.0格式，model="ensemble"）
 - **GPU加速**：支持CUDA加速，RTX 4080下单角色处理约0.26秒
+- **手动修正工具**：`tools/body_part_editor.py`（GUI界面，支持拖动修改错误的关键点位置）
 
 ### 8.3 tk模式兼容性
 - 重命名后的半身图文件名格式为 `{角色名}_半身.png`
@@ -582,7 +583,8 @@ tools/
 ├── build_character_folders.py        # 构建角色文件夹结构
 ├── rename_and_organize_images.py     # 重命名和整理图片
 ├── body_analysis_ensemble.py         # 7模型集成批量处理（生产使用）
-└── body_analysis_multi_compare.py    # 7模型+集成对比工具
+├── body_analysis_multi_compare.py    # 7模型+集成对比工具
+└── body_part_editor.py               # 身体部位数据手动编辑工具（GUI）
 ```
 
 ### 10.4 素材目录结构
