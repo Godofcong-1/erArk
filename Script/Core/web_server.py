@@ -330,7 +330,7 @@ def toggle_all_body_parts():
     参数：无
     
     返回值类型：JSON
-    功能描述：切换是否始终显示所有身体部位按钮（不需要鼠标悬停），并返回更新后的附加信息数据
+    功能描述：切换是否始终显示所有身体部位按钮（不需要鼠标悬停），并返回更新后的附加信息数据和交互对象信息
     """
     from Script.Core import cache_control
     from Script.System.Web_Draw_System.status_panel import StatusPanel
@@ -347,9 +347,13 @@ def toggle_all_body_parts():
         character_id = cache.character_data[0].target_character_id if hasattr(cache.character_data[0], 'target_character_id') else 0
         extra_info = status_panel.get_target_extra_info(character_id)
         
+        # 获取更新后的交互对象信息（包含可选部位列表）
+        target_info = status_panel.get_target_info(character_id)
+        
         return jsonify({
             "success": True,
-            "extra_info": extra_info
+            "extra_info": extra_info,
+            "target_info": target_info
         })
     
     return jsonify({"success": False, "error": "无法访问系统设置"})
@@ -1421,10 +1425,11 @@ def handle_select_minor_type(data):
     data (dict): 包含 minor_type_id 的字典
     
     返回值类型：无
-    功能描述：选择小类型，返回该小类型下可用的指令列表
+    功能描述：选择小类型，返回该小类型下可用的指令列表，同时返回更新后的target_info以刷新右侧面板
     """
     from Script.Design import web_interaction_manager
     from Script.Core import constant
+    from Script.System.Web_Draw_System.status_panel import StatusPanel
     
     minor_type_id = data.get('minor_type_id')
     # minor_type_id 现在是字符串类型（如 'mouth_talk', 'hand_touch', 'arts_hypnosis' 等）
@@ -1448,10 +1453,16 @@ def handle_select_minor_type(data):
                 'body_parts': body_parts,
             })
         
+        # 获取更新后的交互对象信息（包含可选部位列表）
+        status_panel = StatusPanel()
+        character_id = cache.character_data[0].target_character_id if hasattr(cache.character_data[0], 'target_character_id') else 0
+        target_info = status_panel.get_target_info(character_id)
+        
         socketio.emit('minor_type_selected', {
             'minor_type_id': minor_type_id,
             'minor_type_name': constant.get_minor_type_name(minor_type_id),
             'instructs': instruct_list,
+            'target_info': target_info,
             'success': True
         })
     except Exception as e:
@@ -1472,9 +1483,10 @@ def handle_clear_interaction_selection(data):
     data (dict): 空字典
     
     返回值类型：无
-    功能描述：清空当前选择的大类和小类
+    功能描述：清空当前选择的大类和小类，同时返回更新后的target_info以刷新右侧面板
     """
     from Script.Design import web_interaction_manager
+    from Script.System.Web_Draw_System.status_panel import StatusPanel
     
     logging.info("清空交互类型选择")
     
@@ -1482,8 +1494,14 @@ def handle_clear_interaction_selection(data):
         # 清空选择
         web_interaction_manager.clear_selection()
         
+        # 获取更新后的交互对象信息（包含可选部位列表）
+        status_panel = StatusPanel()
+        character_id = cache.character_data[0].target_character_id if hasattr(cache.character_data[0], 'target_character_id') else 0
+        target_info = status_panel.get_target_info(character_id)
+        
         socketio.emit('interaction_selection_cleared', {
-            'success': True
+            'success': True,
+            'target_info': target_info
         })
     except Exception as e:
         logging.error(f"清空交互选择失败: {e}")

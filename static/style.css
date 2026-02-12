@@ -2770,3 +2770,38 @@ body {
 .special-state.style-hypnosis_max {
     color: #ff4500;
 }
+
+/* ========== 可选部位打印区 ========== */
+.target-body-parts-section {
+    margin-top: 8px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(100, 100, 100, 0.4);
+}
+
+/* 部位显示网格 - 每行2个 */
+.body-parts-display-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+}
+
+/* 单个部位显示项 */
+.body-part-display-item {
+    padding: 6px 8px;
+    background-color: rgba(100, 150, 255, 0.15);
+    border: 1px solid rgba(100, 150, 255, 0.4);
+    border-radius: 4px;
+    color: #a8c8ff;
+    font-size: 0.9em;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.body-part-display-item:hover {
+    background-color: rgba(100, 150, 255, 0.3);
+    border-color: rgba(100, 150, 255, 0.7);
+    color: #c8e0ff;
+    box-shadow: 0 0 6px rgba(100, 150, 255, 0.4);
+}

@@ -452,9 +452,11 @@ def handle_select_minor_type(data):
     1. 更新当前选中的小类
     2. 更新大类记忆
     3. 获取该小类下可用的指令列表（含部位信息）
+    4. 获取更新后的target_info（用于刷新右侧面板的可选部位列表）
     """
     from Script.Design import web_interaction_manager
     from Script.Core import constant
+    from Script.System.Web_Draw_System.status_panel import StatusPanel
     
     minor_type_id = data.get('minor_type_id')  # 字符串类型
     
@@ -475,10 +477,16 @@ def handle_select_minor_type(data):
             'body_parts': body_parts,
         })
     
+    # 获取更新后的交互对象信息（包含可选部位列表）
+    status_panel = StatusPanel()
+    character_id = cache.character_data[0].target_character_id
+    target_info = status_panel.get_target_info(character_id)
+    
     socketio.emit('minor_type_selected', {
         'minor_type_id': minor_type_id,
         'minor_type_name': constant.get_minor_type_name(minor_type_id),
         'instructs': instruct_list,
+        'target_info': target_info,  # 用于刷新右侧面板
         'success': True
     })
 ```
@@ -498,6 +506,27 @@ socket.on('minor_type_selected', (data) => {
     if (data.success) {
         // 更新可交互的身体部位（高亮显示）
         updateAvailableBodyParts(data.instructs);
+        
+        // 同时更新右侧的交互对象信息面板（包含可选部位列表）
+        if (data.target_info) {
+            const targetInfoPanel = document.querySelector('.new-ui-target-info');
+            if (targetInfoPanel && targetInfoPanel.parentNode) {
+                const newTargetPanel = createTargetInfoPanel(data.target_info);
+                targetInfoPanel.parentNode.replaceChild(newTargetPanel, targetInfoPanel);
+            }
+        }
+    }
+});
+
+// 接收清空交互选择结果事件
+socket.on('interaction_selection_cleared', (data) => {
+    if (data.success && data.target_info) {
+        // 更新右侧的交互对象信息面板（包含可选部位列表）
+        const targetInfoPanel = document.querySelector('.new-ui-target-info');
+        if (targetInfoPanel && targetInfoPanel.parentNode) {
+            const newTargetPanel = createTargetInfoPanel(data.target_info);
+            targetInfoPanel.parentNode.replaceChild(newTargetPanel, targetInfoPanel);
+        }
     }
 });
 ```
@@ -832,6 +861,13 @@ HIP_SUB_PARTS = [
     BodyPart.TAIL,     # 尾巴
 ]
 
+# 头部展开的子部位
+HEAD_SUB_PARTS = [
+    BodyPart.HAIR,       # 头发
+    BodyPart.HORN,       # 兽角
+    BodyPart.BEAST_EARS, # 兽耳
+]
+
 # 主要可点击部位列表（从上到下）
 CLICKABLE_BODY_PARTS = [
     BodyPart.HEAD,
@@ -848,6 +884,23 @@ CLICKABLE_BODY_PARTS = [
     BodyPart.FOOT,
 ]
 ```
+
+### 7.5 可选部位打印区的部位映射规则（2026-02-12 新增）
+
+在交互对象信息区底部的"可选部位打印区"中，需要将指令系统的部位映射到角色立绘中实际存在的部位：
+
+**映射规则**：
+1. **头部子部位**（头发/兽角/兽耳）→ 映射到"头部"
+2. **臀部子部位**（小穴/子宫/后穴/尿道/尾巴/胯部）→ 映射到"臀部"
+3. **其他部位**：直接与角色立绘中的 `base_part` 匹配
+
+**实现位置**：`status_panel.py` 的 `_get_available_body_parts_for_display()` 方法
+
+**逻辑说明**：
+- 选择交互小类后，获取该小类对应的指令系统部位列表
+- 将部位映射为角色立绘中实际存在的部位（使用 `HEAD_SUB_PARTS` 和 `HIP_SUB_PARTS` 判断）
+- 与角色立绘中的部位取交集
+- 返回最终的可选部位列表（使用角色立绘的中文显示名）
 
 ---
 

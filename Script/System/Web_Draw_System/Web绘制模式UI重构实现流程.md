@@ -826,6 +826,35 @@
   - 修改 `Script/Core/web_server.py` 的 `send_full_game_state()` 使用 `StatusPanel` 获取完整 target_info
   - 每次主循环迭代时 `in_scene_panel_web.py` 会重新收集状态，确保指令结算后数据同步
 
+#### 3.5.4 可选部位打印区（2026-02-12 新增）
+- [x] 在交互对象信息区最下方添加可选部位打印区
+- [x] 仅在"全部位显示"开启时显示
+- [x] 后端实现：
+  - 在 `status_panel.py` 的 `get_target_info()` 方法中添加 `show_all_body_parts` 和 `available_body_parts` 字段
+  - 添加 `_get_available_body_parts_for_display()` 方法获取可选部位列表
+  - 未选择交互小类时：返回角色身上的所有可交互部位（从body.json中获取）
+  - 选择了交互小类后：返回角色立绘中存在的部位与该小类对应部位的交集
+- [x] 前端实现：
+  - 修改 `static/game.js` 的 `createTargetInfoPanel()` 函数
+  - 添加可选部位打印区（`.target-body-parts-section`）
+  - 使用2列网格布局显示部位（`.body-parts-display-grid`）
+  - 点击部位项可触发 `handleBodyPartClick()` 事件
+- [x] CSS样式：
+  - `.target-body-parts-section`：可选部位区块样式（顶部边框分隔）
+  - `.body-parts-display-grid`：2列网格布局
+  - `.body-part-display-item`：部位项样式（淡蓝色背景、可点击）
+- [x] 切换交互类型时同步刷新（2026-02-12 新增）：
+  - 修改 `web_server.py` 的 `handle_select_minor_type()` 函数，返回数据中新增 `target_info` 字段
+  - 修改 `web_server.py` 的 `handle_clear_interaction_selection()` 函数，返回数据中新增 `target_info` 字段
+  - 修改 `static/game.js` 的 `minor_type_selected` 事件处理器，接收 `target_info` 后刷新右侧面板
+  - 添加 `interaction_selection_cleared` 事件监听器，清空选择后刷新右侧面板
+- [x] 部位映射逻辑（2026-02-12 新增）：
+  - 指令系统定义的部位（如兽耳、兽角、头发、小穴、尾巴等）需要映射到角色立绘中实际存在的部位
+  - 头部子部位（头发/兽角/兽耳）→ 映射到"头部"
+  - 臀部子部位（小穴/子宫/后穴/尿道/尾巴/胯部）→ 映射到"臀部"
+  - 其他部位直接匹配角色立绘中的部位
+  - 最终返回的部位列表是映射后的部位与角色立绘部位的交集
+
 ### 3.6 交互类型栏（左侧）
 
 #### 3.6.1 HTML结构

@@ -1212,6 +1212,15 @@ function initWebSocket() {
         if (data.success) {
             // 更新可交互的身体部位
             updateAvailableBodyParts(data.instructs);
+            
+            // 同时更新右侧的交互对象信息面板（包含可选部位列表）
+            if (data.target_info) {
+                const targetInfoPanel = document.querySelector('.new-ui-target-info');
+                if (targetInfoPanel && targetInfoPanel.parentNode) {
+                    const newTargetPanel = createTargetInfoPanel(data.target_info);
+                    targetInfoPanel.parentNode.replaceChild(newTargetPanel, targetInfoPanel);
+                }
+            }
         } else {
             console.error('选择小类型失败:', data.error);
         }
@@ -1271,6 +1280,23 @@ function initWebSocket() {
             // 这里我们只需要等待后端推送新状态
         } else {
             console.error('切换交互对象失败:', data.error);
+        }
+    });
+    
+    // 接收清空交互选择结果事件
+    socket.on('interaction_selection_cleared', (data) => {
+        console.log('收到清空交互选择结果:', data);
+        if (data.success) {
+            // 更新右侧的交互对象信息面板（包含可选部位列表）
+            if (data.target_info) {
+                const targetInfoPanel = document.querySelector('.new-ui-target-info');
+                if (targetInfoPanel && targetInfoPanel.parentNode) {
+                    const newTargetPanel = createTargetInfoPanel(data.target_info);
+                    targetInfoPanel.parentNode.replaceChild(newTargetPanel, targetInfoPanel);
+                }
+            }
+        } else {
+            console.error('清空交互选择失败:', data.error);
         }
     });
 }
@@ -3524,6 +3550,15 @@ function toggleAllBodyParts() {
                 }
             }
         }
+        
+        // 同时更新右侧的交互对象信息面板（包含可选部位列表）
+        if (data.success && data.target_info) {
+            const targetInfoPanel = document.querySelector('.new-ui-target-info');
+            if (targetInfoPanel && targetInfoPanel.parentNode) {
+                const newTargetPanel = createTargetInfoPanel(data.target_info);
+                targetInfoPanel.parentNode.replaceChild(newTargetPanel, targetInfoPanel);
+            }
+        }
     }).catch(err => console.error('切换全部位显示失败:', err));
 }
 
@@ -5007,6 +5042,38 @@ function createTargetInfoPanel(targetInfo) {
         
         otherSection.appendChild(otherGrid);
         panel.appendChild(otherSection);
+    }
+    
+    // ========== 可选部位打印区 ==========
+    // 仅在开启全部位显示且有可选部位时显示
+    if (targetInfo.show_all_body_parts && targetInfo.available_body_parts && targetInfo.available_body_parts.length > 0) {
+        const bodyPartsSection = document.createElement('div');
+        bodyPartsSection.className = 'target-body-parts-section';
+        
+        const bodyPartsTitle = document.createElement('div');
+        bodyPartsTitle.className = 'state-section-title';
+        bodyPartsTitle.textContent = '─可选部位─';
+        bodyPartsSection.appendChild(bodyPartsTitle);
+        
+        // 使用grid布局，每行显示两个部位
+        const bodyPartsGrid = document.createElement('div');
+        bodyPartsGrid.className = 'body-parts-display-grid';
+        
+        targetInfo.available_body_parts.forEach(part => {
+            const partItem = document.createElement('div');
+            partItem.className = 'body-part-display-item';
+            partItem.dataset.partId = part.id;
+            partItem.textContent = part.name;
+            partItem.title = `点击选择${part.name}`;
+            
+            // 点击部位时触发部位点击事件
+            partItem.onclick = () => handleBodyPartClick(part.name);
+            
+            bodyPartsGrid.appendChild(partItem);
+        });
+        
+        bodyPartsSection.appendChild(bodyPartsGrid);
+        panel.appendChild(bodyPartsSection);
     }
     
     // ========== 数值变化浮动文本 ==========

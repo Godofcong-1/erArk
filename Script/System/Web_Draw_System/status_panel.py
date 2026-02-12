@@ -105,6 +105,14 @@ class StatusPanel:
         if not char_data:
             return self._get_empty_target_info()
         
+        # 获取是否开启全部位显示
+        show_all_body_parts = cache.all_system_setting.draw_setting.get(18, 0) if hasattr(cache, 'all_system_setting') else False
+        
+        # 获取可选部位列表（仅在开启全部位显示时）
+        available_body_parts = []
+        if show_all_body_parts:
+            available_body_parts = self._get_available_body_parts_for_display(character_id)
+        
         return {
             "id": character_id,
             "name": char_data.name,
@@ -117,7 +125,9 @@ class StatusPanel:
             "special_states": self._get_special_states(character_id),
             "pleasure_states": self._get_pleasure_states(character_id),
             "other_states": self._get_other_states(character_id),
-            "value_changes": self._get_value_changes(character_id)
+            "value_changes": self._get_value_changes(character_id),
+            "show_all_body_parts": show_all_body_parts,
+            "available_body_parts": available_body_parts
         }
 
     def _get_empty_target_info(self) -> dict:
@@ -134,8 +144,100 @@ class StatusPanel:
             "special_states": [],
             "pleasure_states": [],
             "other_states": [],
-            "value_changes": []
+            "value_changes": [],
+            "show_all_body_parts": False,
+            "available_body_parts": []
         }
+
+    def _get_available_body_parts_for_display(self, character_id: int) -> List[dict]:
+        """
+        获取用于显示的可选部位列表
+        
+        根据当前交互状态返回可选部位：
+        - 未选择交互小类时：返回角色身上的所有可交互部位
+        - 选择了交互小类后：返回角色立绘中存在的部位与该小类对应部位的交集
+        
+        Keyword arguments:
+        character_id -- 角色ID
+        
+        Returns:
+        List[dict] -- 可选部位列表，每个元素包含 id（英文名）和 name（中文名）
+        """
+        from Script.Design import web_interaction_manager
+        from Script.System.Web_Draw_System.interaction_handler import InteractionHandler
+        from Script.System.Instruct_System.instruct_category import (
+            BODY_PART_NAMES, HEAD_SUB_PARTS, HIP_SUB_PARTS, BodyPart
+        )
+        
+        # 首先获取角色立绘中实际存在的部位
+        char_data: game_type.Character = cache.character_data.get(character_id)
+        portrait_parts = {}  # {中文显示名: {id, name, base_part}}
+        
+        if char_data:
+            from Script.System.Web_Draw_System.character_renderer import CharacterRenderer
+            renderer = CharacterRenderer()
+            image_data = renderer.get_character_image_data(character_id)
+            if image_data and 'body_parts' in image_data:
+                body_parts = image_data['body_parts']
+                if isinstance(body_parts, dict) and 'body_parts' in body_parts:
+                    body_parts = body_parts['body_parts']
+                for part_key, part_info in body_parts.items():
+                    # part_key 是中文显示名
+                    base_part = part_info.get('base_part', part_info.get('part_id', part_key)) if isinstance(part_info, dict) else part_key
+                    portrait_parts[part_key] = {
+                        "id": base_part,
+                        "name": part_key,
+                        "base_part": base_part
+                    }
+        
+        # 获取当前交互小类
+        current_minor_type = web_interaction_manager.get_current_minor_type()
+        
+        available_parts = []
+        
+        if current_minor_type is not None:
+            # 选择了交互小类，获取该小类对应的指令系统部位
+            handler = InteractionHandler()
+            instruct_part_ids = handler._get_available_body_parts_by_minor_type(current_minor_type)
+            
+            # 建立指令系统部位到立绘部位的映射
+            # 头部子部位（头发、兽角、兽耳）映射到头部
+            # 臀部子部位（小穴、子宫、后穴、尿道、尾巴）映射到臀部
+            head_sub_part_names = set(HEAD_SUB_PARTS)
+            hip_sub_part_names = set(HIP_SUB_PARTS)
+            hip_sub_part_names.add(BodyPart.CROTCH)  # 胯部也属于臀部区域
+            
+            # 收集需要在立绘中显示的部位（使用set避免重复）
+            mapped_parts = set()
+            
+            for part_id in instruct_part_ids:
+                if part_id in head_sub_part_names:
+                    # 头部子部位映射到头部
+                    mapped_parts.add(BodyPart.HEAD)
+                elif part_id in hip_sub_part_names:
+                    # 臀部子部位映射到臀部
+                    mapped_parts.add(BodyPart.HIP)
+                else:
+                    mapped_parts.add(part_id)
+            
+            # 与角色立绘中的部位取交集
+            # portrait_parts 的 base_part 是英文部位名
+            for display_name, part_info in portrait_parts.items():
+                base_part = part_info.get('base_part', part_info.get('id', ''))
+                if base_part in mapped_parts:
+                    available_parts.append({
+                        "id": base_part,
+                        "name": display_name
+                    })
+        else:
+            # 未选择交互小类，返回角色身上的所有可交互部位
+            for display_name, part_info in portrait_parts.items():
+                available_parts.append({
+                    "id": part_info.get('id', display_name),
+                    "name": display_name
+                })
+        
+        return available_parts
 
     def _get_semen_value(self, char_data: game_type.Character) -> int:
         """获取精液值"""
