@@ -113,26 +113,14 @@ class BodyPartButton:
         right_ear = self._coco_keypoints[4]  # 右耳
         
         if nose[0] != 0 or nose[1] != 0:
-            # 计算到左右耳的距离，取较近的
-            face_radius = self._get_default_radius(BodyPart.FACE, width, height)
-            
-            if (left_ear[0] != 0 or left_ear[1] != 0) and (right_ear[0] != 0 or right_ear[1] != 0):
-                # 两只耳朵都有效，取较近的距离
-                dist_left = ((nose[0] - left_ear[0]) ** 2 + (nose[1] - left_ear[1]) ** 2) ** 0.5
-                dist_right = ((nose[0] - right_ear[0]) ** 2 + (nose[1] - right_ear[1]) ** 2) ** 0.5
-                face_radius = int(min(dist_left, dist_right))
-            elif left_ear[0] != 0 or left_ear[1] != 0:
-                face_radius = int(((nose[0] - left_ear[0]) ** 2 + (nose[1] - left_ear[1]) ** 2) ** 0.5)
-            elif right_ear[0] != 0 or right_ear[1] != 0:
-                face_radius = int(((nose[0] - right_ear[0]) ** 2 + (nose[1] - right_ear[1]) ** 2) ** 0.5)
-            
+            # 
             self._body_parts_data[BodyPart.FACE] = {
                 "center": list(nose),
-                "radius": face_radius,
+                "radius": self._get_default_radius(BodyPart.FACE, width, height),
             }
             
             # 口腔：基于鼻子向下偏移
-            mouth_offset = 0.03 * height
+            mouth_offset = 0.025 * height
             self._body_parts_data[BodyPart.MOUTH] = {
                 "center": [nose[0], nose[1] + mouth_offset],
                 "radius": self._get_default_radius(BodyPart.MOUTH, width, height),
@@ -147,15 +135,15 @@ class BodyPartButton:
             # 双眼中间
             eyes_center_x = (left_eye[0] + right_eye[0]) / 2
             eyes_center_y = (left_eye[1] + right_eye[1]) / 2
-            # 向上偏移一点（图像高度的3%）
-            head_center_y = eyes_center_y - 0.03 * height
+            # 向上偏移一点（图像高度的4%）
+            head_center_y = eyes_center_y - 0.04 * height
             head_center = [eyes_center_x, head_center_y]
             head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
         elif left_eye_valid:
-            head_center = [left_eye[0], left_eye[1] - 0.03 * height]
+            head_center = [left_eye[0], left_eye[1] - 0.04 * height]
             head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
         elif right_eye_valid:
-            head_center = [right_eye[0], right_eye[1] - 0.03 * height]
+            head_center = [right_eye[0], right_eye[1] - 0.04 * height]
             head_radius = self._get_default_radius(BodyPart.HEAD, width, height)
         elif nose[0] != 0 or nose[1] != 0:
             # 回退到鼻子位置
@@ -240,7 +228,7 @@ class BodyPartButton:
         radius_map = {
             BodyPart.HEAD: 0.06,
             BodyPart.HAIR: 0.05,
-            BodyPart.FACE: 0.05,
+            BodyPart.FACE: 0.04,
             BodyPart.MOUTH: 0.025,
             BodyPart.BEAST_EARS: 0.03,
             BodyPart.HORN: 0.025,
@@ -250,7 +238,7 @@ class BodyPartButton:
             BodyPart.BELLY: 0.05,
             BodyPart.HIP: 0.06,
             BodyPart.CROTCH: 0.04,
-            BodyPart.LEG: 0.04,
+            BodyPart.LEG: 0.06,
             BodyPart.FOOT: 0.03,
         }
         
