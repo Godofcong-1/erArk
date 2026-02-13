@@ -2741,21 +2741,11 @@ function updatePlayerInfoUI(playerInfo) {
         return;
     }
     
-    // 使用后端返回的 value_changes 数据
-    const valueChanges = playerInfo.value_changes || [];
-    
-    // 重新创建玩家信息面板
+    // 重新创建玩家信息面板（createPlayerInfoPanel 内部已经处理了 value_changes 的浮动文本）
     const newPanel = createPlayerInfoPanel(playerInfo);
     
     // 替换旧面板
     playerInfoPanel.parentNode.replaceChild(newPanel, playerInfoPanel);
-    
-    // 显示浮动文本（使用玩家专用的浮动文本函数）
-    if (valueChanges.length > 0) {
-        setTimeout(() => {
-            createPlayerFloatingValueChanges(newPanel, valueChanges);
-        }, 50);
-    }
     
     console.log('[更新玩家信息UI] 更新完成');
 }
