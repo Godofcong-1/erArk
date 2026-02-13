@@ -404,6 +404,7 @@ Web模式下会自动裁切角色立绘四周的透明区域，优化显示效�
 #### 5.6.1 问题背景
 - 角色立绘使用 flex 布局居中显示
 - 整个布局链（`.game-container` → `.new-ui-layout` → `.new-ui-main-scene`）没有固定高度
+- `.new-ui-main-scene` 设置了 `min-height: 800px` 以确保交互按钮能够完全显示（7个卡片×70px + 6个间距×15px = 580px）
 - 图片的 `naturalHeight` 会通过 flex 布局向上传递，影响父容器的高度计算
 - 裁切后的图片 `naturalHeight` 可能小于 1024px（如 994px），导致高度限制失效
 

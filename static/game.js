@@ -1215,6 +1215,24 @@ function initWebSocket() {
     socket.on('minor_type_selected', (data) => {
         console.log('收到小类型选择结果:', data);
         if (data.success) {
+            // 检查返回的小类ID是否与当前前端激活的小类匹配
+            // 这可以防止竞态条件：用户快速切换小类时，旧的响应覆盖新的选择
+            const minorList = document.querySelector('.interaction-minor-list');
+            const activeMinor = minorList ? minorList.querySelector('.minor-card.active:not(.floating-instruct)') : null;
+            const currentActiveMinorId = activeMinor ? activeMinor.dataset.id : null;
+            
+            if (currentActiveMinorId && data.minor_type_id !== currentActiveMinorId) {
+                console.log('[DEBUG] 忽略过期的 minor_type_selected 响应，返回ID:', data.minor_type_id, '当前激活ID:', currentActiveMinorId);
+                return;
+            }
+            
+            // 根据 target_info 更新 window.hasTargetCharacter 状态
+            // 这确保在切换交互对象后，无部位指令能正确显示为浮现按钮
+            if (data.target_info !== undefined) {
+                window.hasTargetCharacter = data.target_info && Object.keys(data.target_info).length > 0;
+                console.log('[DEBUG] minor_type_selected 更新 hasTargetCharacter:', window.hasTargetCharacter);
+            }
+            
             // 更新可交互的身体部位
             updateAvailableBodyParts(data.instructs);
             
@@ -3979,6 +3997,7 @@ function createInteractionTypePanel(types) {
                  minorTypes.forEach(minorType => {
                       const minorCard = document.createElement('div');
                       minorCard.className = 'interaction-card minor-card';
+                      minorCard.dataset.id = minorType.id; // 存储小类ID用于响应匹配
                       
                       // 检查是否激活
                       const isMinorActive = minorType.selected || String(minorType.id) === String(currentMinorType);
@@ -4116,6 +4135,7 @@ function updateMinorTypeButtons(minorTypes, rememberedMinorType, majorTypeId) {
          minorTypes.forEach(minorType => {
               const minorCard = document.createElement('div');
               minorCard.className = 'interaction-card minor-card';
+              minorCard.dataset.id = minorType.id; // 存储小类ID用于响应匹配
               
               const isSelected = (minorType.id === rememberedMinorType || minorType.selected);
               if (isSelected) {

@@ -712,6 +712,21 @@
     - 确保默认状态下信息区与同行其他区域高度一致
     - 内容超过800px时显示滚动条
 
+**问题修复记录（2026年2月14日）**：
+- **修复1：服装穿脱后不立刻生效** ✅
+  - 问题描述：交互对象附加信息面板中的服装栏在H模式下点击服装穿脱后，需要等下一次指令结算才会更新
+  - 问题原因：`send_full_game_state()` 函数中只包含了 `target_info`，缺少 `target_extra_info` 字段，导致刷新状态时服装信息没有被更新
+  - 解决方案：在 `Script/Core/web_server.py` 的 `send_full_game_state()` 函数中添加 `target_extra_info` 字段的获取和发送
+  - 修改文件：
+    - `Script/Core/web_server.py` - 在 `send_full_game_state()` 中添加 `full_state["target_extra_info"] = status_panel.get_target_extra_info(target_id)`
+
+- **修复2：药剂快速使用按钮显示两个浮动文本** ✅
+  - 问题描述：玩家信息区的状态条中的药剂快速使用按钮在使用后会显示两个同样的数值变动浮动文本提示信息
+  - 问题原因：`updatePlayerInfoUI()` 函数调用 `createPlayerInfoPanel()` 创建面板时，`createPlayerInfoPanel()` 内部已经处理了 `value_changes` 的浮动文本创建，但 `updatePlayerInfoUI()` 又额外调用了一次 `createPlayerFloatingValueChanges()`，导致浮动文本被创建了两次
+  - 解决方案：移除 `updatePlayerInfoUI()` 中多余的 `createPlayerFloatingValueChanges()` 调用，因为 `createPlayerInfoPanel()` 已经处理了
+  - 修改文件：
+    - `static/game.js` - 移除 `updatePlayerInfoUI()` 函数中重复的浮动文本创建代码
+
 **新功能实现记录（2026年2月7日）**：
 - **臀部子部位高亮映射功能** ✅
   - 功能描述：当选择的交互小类有臀部子部位（小穴、子宫、后穴、尿道、尾巴、胯部）的指令时，臀部按钮也显示高亮，点击臀部显示该小类下所有子部位的可用指令
@@ -2482,6 +2497,54 @@ c:/code/erArk/.conda/python.exe tools/body_part_editor.py
   - `display_name`: 中文显示名称（如"脸部"）
   - `part_id`: 英文部位ID（如"face"）供后端逻辑使用
   - `is_hip_sub_part`: 是否为臀部子部位
+
+#### 9.6.3 无交互对象时主场景高度不足问题（2026-02-14）
+**问题**：在没有交互对象的情况下，`.new-ui-main-scene` 的高度过小（`min-height: 400px`），导致场景背景图片和左侧的交互按钮无法完全显示出来。
+
+**根因分析**：
+1. 交互按钮总高度：7个卡片×70px + 6个间距×15px = 580px
+2. `.new-ui-main-scene` 的 `min-height` 只有 400px
+3. 当没有交互对象时，主场景内部没有内容撑起高度（角色立绘等使用绝对定位）
+4. `flex: 1` 无法生效，因为父元素的高度由内容决定
+
+**修复**：
+- 修改 `static/style.css` 第1655行
+  - 将 `.new-ui-main-scene` 的 `min-height` 从 `400px` 增加到 `600px`
+  - 添加注释说明高度计算依据
+
+#### 9.6.4 切换交互对象后无部位按钮未同步刷新问题（2026-02-14）
+**问题**：从有交互对象切换到没有交互对象后，切换左侧的交互小类时，显示出来的无部位按钮仍然是切换前小类的按钮，没有正确同步刷新，需要手动刷新前端才能正常显示。
+
+**根因分析**：
+1. `window.hasTargetCharacter` 变量只在 `renderNewUIContent()` 完整UI渲染时更新
+2. 当用户切换小类时，前端发送 `select_minor_type` 事件，后端返回 `minor_type_selected` 事件
+3. `minor_type_selected` 事件处理器调用 `updateAvailableBodyParts(data.instructs)` 时使用的 `window.hasTargetCharacter` 仍是旧值
+4. 因此当没有交互对象时，`hasTarget` 变量为 `true`（旧值），导致有部位的指令被添加到身体部位高亮集合而非浮现按钮列表
+
+**修复**：
+- 修改 `static/game.js` 第1215-1240行 `minor_type_selected` 事件处理器
+  - 在调用 `updateAvailableBodyParts` 之前，根据返回的 `target_info` 更新 `window.hasTargetCharacter`
+  - 判断逻辑：`window.hasTargetCharacter = data.target_info && Object.keys(data.target_info).length > 0`
+  - 当没有交互对象时，后端 `get_target_info(0)` 返回空字典 `{}`，因此 `hasTargetCharacter` 为 `false`
+
+#### 9.6.5 切换小类时浮现按钮显示旧小类指令的竞态条件问题（2026-02-14）
+**问题**：从有交互对象切换到没有交互对象后（如执行移动指令），再切换交互小类或大类时，显示的无部位按钮仍然是之前小类的按钮，而非当前选中小类的按钮。
+
+**根因分析**：
+1. 指令执行后，UI重新渲染，`createInteractionTypePanel` 函数末尾会延迟100ms调用 `selectMinorType(currentMinorType)` 来恢复之前的交互状态
+2. 如果用户在这100ms内（或WebSocket响应返回之前）点击了其他小类，会产生竞态条件
+3. 两个 `select_minor_type` 请求（旧的延迟调用 + 新的用户点击）同时发送到后端
+4. WebSocket响应的返回顺序不确定：如果旧的响应后返回，会覆盖新的选择
+5. 前端的 `minor_type_selected` 事件处理器无法区分响应对应哪个请求，导致显示错误的指令列表
+
+**修复**：
+- 修改 `static/game.js` 第1215-1250行 `minor_type_selected` 事件处理器
+  - 在处理响应前，获取当前前端激活的小类ID（通过 `.minor-card.active:not(.floating-instruct)` 选择器）
+  - 比较返回的 `minor_type_id` 与当前激活小类ID
+  - 如果不匹配，说明是过期的响应，直接忽略
+- 修改 `static/game.js` 中 `createInteractionTypePanel` 和 `updateMinorTypeButtons` 函数
+  - 在创建小类按钮时添加 `dataset.id` 属性，存储小类ID
+  - 这使得事件处理器能够获取当前激活小类的ID进行匹配验证
 
 ---
 
