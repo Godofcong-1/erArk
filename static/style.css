@@ -19,7 +19,14 @@
 
 body {
     /* 基础样式设置 */
-    background-color: #000;
+    background-color: #0a0a0a;
+    background-image: repeating-linear-gradient(
+        45deg,
+        #0a0a0a 0px,
+        #0a0a0a 4px,
+        #111 4px,
+        #111 8px
+    );
     color: #c8c8c8;
     font-family: 'SarasaMonoSC', 'EmojiSupport', '等距更纱黑体 SC', 'Sarasa Mono SC', 'Menlo', 'PingFang HK', monospace;
     margin: 0;
@@ -52,7 +59,7 @@ body {
 /* 游戏头部区域 */
 .game-header {
     padding: 10px 20px;
-    background-color: #111;
+    background-color: transparent;
     border-bottom: 1px solid #333;
     transition: transform 0.3s ease; /* 添加缩放动画 */
     transform-origin: top center; /* 确保缩放从顶部中心开始 */
@@ -105,7 +112,7 @@ body {
 /* 游戏底部区域 */
 .game-footer {
     padding: 10px;
-    background-color: #111;
+    background-color: transparent;
     border-top: 1px solid #333;
     text-align: center;
     font-size: 0.8em;
@@ -892,6 +899,13 @@ body {
     width: 100%;
     min-height: 600px;
     background-color: #0a0a0a;
+    background-image: repeating-linear-gradient(
+        45deg,
+        rgba(26, 26, 46, 1) 0px,
+        rgba(26, 26, 46, 1) 20px,
+        rgba(22, 33, 62, 0.8) 20px,
+        rgba(22, 33, 62, 0.8) 40px
+    );
     border-radius: 4px;
     overflow: hidden;
 }
@@ -1055,14 +1069,14 @@ body {
     border-color: #ffffe0;
 }
 
-/* 玩家信息区的状态条：使用图片背景 */
+/* 玩家信息区的状态条：使用CSS绘制（明日方舟风格） */
 .new-ui-player-info .status-bar .bar-track {
     flex: 1;
-    height: 14px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    height: 10px;
+    background-color: rgba(40, 40, 40, 0.8);
+    transform: skewX(-20deg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
-    border-radius: 2px;
     overflow: hidden;
 }
 
@@ -1071,49 +1085,35 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    background-size: auto 100%;
-    background-repeat: repeat-x;
     transition: width 0.3s ease;
 }
 
-/* HP槽图片 */
-.new-ui-player-info .status-bar-hp .bar-track {
-    background-image: url('/image/状态条/hpbar_null.png');
-}
-
+/* HP槽颜色 */
+.new-ui-player-info .status-bar-hp .bar-track { background-image: none; }
 .new-ui-player-info .status-bar-hp .bar-fill {
-    background-image: url('/image/状态条/hpbar_true.png');
-    background-color: transparent;
+    background-color: #e15a5a;
+    background-image: none;
 }
 
-/* MP槽图片 */
-.new-ui-player-info .status-bar-mp .bar-track {
-    background-image: url('/image/状态条/mpbar_null.png');
-}
-
+/* MP槽颜色 */
+.new-ui-player-info .status-bar-mp .bar-track { background-image: none; }
 .new-ui-player-info .status-bar-mp .bar-fill {
-    background-image: url('/image/状态条/mpbar_true.png');
-    background-color: transparent;
+    background-color: #70C070;
+    background-image: none;
 }
 
-/* 理智槽图片 */
-.new-ui-player-info .status-bar-sanity .bar-track {
-    background-image: url('/image/状态条/statbar_null.png');
-}
-
+/* 理智槽颜色 */
+.new-ui-player-info .status-bar-sanity .bar-track { background-image: none; }
 .new-ui-player-info .status-bar-sanity .bar-fill {
-    background-image: url('/image/状态条/statbar_true.png');
-    background-color: transparent;
+    background-color: #7070C0;
+    background-image: none;
 }
 
-/* 精液槽图片 */
-.new-ui-player-info .status-bar-semen .bar-track {
-    background-image: url('/image/状态条/spbar_null.png');
-}
-
+/* 精液槽颜色 */
+.new-ui-player-info .status-bar-semen .bar-track { background-image: none; }
 .new-ui-player-info .status-bar-semen .bar-fill {
-    background-image: url('/image/状态条/spbar_true.png');
-    background-color: transparent;
+    background-color: #fffacd;
+    background-image: none;
 }
 
 .status-bar .bar-value {
@@ -2176,12 +2176,11 @@ body {
 
 .target-bars .bar-track {
     flex: 1;
-    height: 14px;
-    background-image: url('/image/状态条/hpbar_null.png');
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
+    height: 10px;
+    background-color: rgba(40, 40, 40, 0.8);
+    transform: skewX(-20deg);
+    border: 1px solid rgba(255, 255, 255, 0.15);
     position: relative;
-    border-radius: 2px;
     overflow: hidden;
 }
 
@@ -2190,27 +2189,19 @@ body {
     top: 0;
     left: 0;
     height: 100%;
-    background-size: auto 100%;
-    background-repeat: repeat-x;
     transition: width 0.3s ease;
 }
 
-.target-bars .status-bar-hp .bar-track {
-    background-image: url('/image/状态条/hpbar_null.png');
-}
-
+.target-bars .status-bar-hp .bar-track { background-image: none; }
 .target-bars .status-bar-hp .bar-fill {
-    background-image: url('/image/状态条/hpbar_true.png');
-    background-color: transparent;
+    background-color: #e15a5a;
+    background-image: none;
 }
 
-.target-bars .status-bar-mp .bar-track {
-    background-image: url('/image/状态条/mpbar_null.png');
-}
-
+.target-bars .status-bar-mp .bar-track { background-image: none; }
 .target-bars .status-bar-mp .bar-fill {
-    background-image: url('/image/状态条/mpbar_true.png');
-    background-color: transparent;
+    background-color: #70C070;
+    background-image: none;
 }
 
 .target-bars .bar-value {
