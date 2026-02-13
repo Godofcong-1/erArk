@@ -4026,6 +4026,18 @@ function createInteractionTypePanel(types) {
         }
     });
     
+    // ========== 恢复交互状态：如果有已选中的小类，触发指令获取和聚焦模式 ==========
+    // 这是为了解决主界面刷新后，交互状态显示不完整的问题
+    // （例如：选择了大类和小类后，进行指令结算，主界面刷新，此时显示已选中大类和小类，
+    //  但没有显示无部位指令，也没有收起其他大类进入聚焦模式）
+    if (currentMajor && currentMinorType) {
+        // 延迟执行，确保DOM已完全渲染
+        setTimeout(() => {
+            console.log('[DEBUG] 恢复交互状态：自动触发 selectMinorType，currentMinorType:', currentMinorType);
+            selectMinorType(currentMinorType);
+        }, 100);
+    }
+    
     return panel;
 }
 
