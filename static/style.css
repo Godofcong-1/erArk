@@ -1153,7 +1153,7 @@ body {
     padding: 8px;
     background-color: rgba(30, 30, 40, 0.8);
     border-radius: 4px;
-    max-height: 108px; /* 150px - 8px*2 padding */
+    max-height: 126px; /* 150px - 8px*2 padding */
     overflow: hidden; /* 不显示滚动条 */
     position: relative; /* 初始相对定位 */
     transition: box-shadow 0.3s ease;
@@ -1653,7 +1653,7 @@ body {
     flex: 1;
     display: flex;
     position: relative;
-    min-height: 400px;
+    min-height: 800px;
     background-color: #111;
     border-radius: 4px;
 }
