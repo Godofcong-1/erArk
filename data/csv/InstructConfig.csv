@@ -6,7 +6,7 @@ int,str,str,str,str,str,str,int,str,str,str,str
 1,move,移动,SYSTEM,0,NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX|TIME_STOP_JUDGE_FOR_MOVE,,2,SEE_MAP,hand,hand_scene,
 2,see_attr,查看属性,SYSTEM,0,,,0,SEE_ATTR,other,other_misc,
 3,item,道具,SYSTEM,0,,,2,ITEM,tool,tool_base,
-4,originium_arts,源石技艺,SYSTEM,0,TIRED_LE_84|NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX,,2,ORIGINIUM_ARTS,arts,atrs_base,
+4,originium_arts,源石技艺,SYSTEM,0,TIRED_LE_84|NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX,,2,ORIGINIUM_ARTS,arts,arts_base,
 5,target_to_self,对自己交互,SYSTEM,0,HAVE_TARGET|NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX,,1,,other,other_misc,
 6,door_lock_inner,锁上门内侧锁,SYSTEM,0,NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX|PLACE_DOOR_OPEN|PLACE_DOOR_LOCKABLE,,1,,hand,hand_scene,
 7,door_unlock_inner,解开门内侧锁,SYSTEM,0,NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX|PLACE_DOOR_CLOSE|PLACE_DOOR_LOCKABLE,,1,,hand,hand_scene,

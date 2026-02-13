@@ -2547,6 +2547,21 @@ c:/code/erArk/.conda/python.exe tools/body_part_editor.py
   - 在创建小类按钮时添加 `dataset.id` 属性，存储小类ID
   - 这使得事件处理器能够获取当前激活小类的ID进行匹配验证
 
+#### 9.6.6 无部位指令排序问题修复（2026-02-14）
+**问题**：在Web UI中显示无部位指令时，指令的排序顺序是根据 `handle_instruct.py` 中 `@add_instruct` 装饰器的执行顺序（即Python模块加载顺序），而不是按照 `Instruct.py` 中定义的逻辑顺序排序。
+
+**根因分析**：
+1. `constant.instruct_minor_type_data` 字典的填充顺序由 `@add_instruct` 装饰器执行顺序决定
+2. `web_interaction_manager.get_instructs_by_minor_type()` 函数遍历该字典返回结果，未进行排序
+3. Python字典保持插入顺序，因此返回的指令列表顺序与装饰器执行顺序相同
+
+**修复**：
+- 修改 `Script/Design/web_interaction_manager.py`
+  - 导入 `Instruct` 类：`from Script.System.Instruct_System.Instruct import Instruct`
+  - 生成排序映射 `_INSTRUCT_ORDER_MAP`：遍历 `Instruct.__dict__` 获取定义顺序（使用 `__dict__` 而非 `dir()` 以保持正确顺序，因为 `dir()` 返回字母序）
+  - 添加辅助函数 `_get_instruct_sort_key(instruct_id)` 获取排序键值
+  - 在 `get_instructs_by_minor_type()` 和 `get_instructs_by_body_part()` 函数返回前使用 `result.sort(key=_get_instruct_sort_key)` 排序
+
 ---
 
 ## 阶段十：优化与完善

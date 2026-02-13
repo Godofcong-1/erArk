@@ -464,6 +464,7 @@ def handle_select_minor_type(data):
     web_interaction_manager.select_minor_type(minor_type_id)
     
     # 获取该小类型下可用的指令列表
+    # 返回的指令列表按照 Instruct.py 中的定义顺序排序（2026-02-14更新）
     instructs = web_interaction_manager.get_instructs_by_minor_type(minor_type_id)
     
     # 构建指令信息列表（包含部位信息用于前端高亮）

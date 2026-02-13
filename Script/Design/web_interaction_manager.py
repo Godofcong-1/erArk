@@ -7,11 +7,38 @@ Web模式交互类型管理器
 - 大类和小类不再使用数字，改为小写英语字符串标识符
 - 如嘴类从 0 改为 'mouth'，手类从 1 改为 'hand'
 - 小类同理，如嘴对话从 0 改为 'mouth_talk'
+
+【排序说明】2026-02-14
+- 指令列表按照 Instruct.py 中定义的顺序排序，而非 handle_instruct.py 的装饰器执行顺序
 """
 
 from typing import Dict, List, Optional, Set, Union
 from Script.Core import constant, cache_control, game_type
 from Script.Config import game_config
+from Script.System.Instruct_System.Instruct import Instruct
+
+
+# 生成指令ID到顺序的映射（基于 Instruct.py 中的定义顺序）
+# 使用 __dict__ 而非 dir() 以保持正确的定义顺序
+_INSTRUCT_ORDER_MAP: Dict[str, int] = {}
+_order_index = 0
+for attr_name, attr_value in Instruct.__dict__.items():
+    if not attr_name.startswith('_') and isinstance(attr_value, str):
+        _INSTRUCT_ORDER_MAP[attr_value] = _order_index
+        _order_index += 1
+
+
+def _get_instruct_sort_key(instruct_id: str) -> int:
+    """
+    获取指令的排序键值，基于 Instruct.py 中的定义顺序
+    
+    Keyword arguments:
+    instruct_id -- 指令id字符串
+    
+    Returns:
+    int -- 排序键值，越小越靠前；未找到的指令返回最大值
+    """
+    return _INSTRUCT_ORDER_MAP.get(instruct_id, 999999)
 
 cache: game_type.Cache = cache_control.cache
 
@@ -122,7 +149,7 @@ def get_instructs_by_minor_type(minor_type: Optional[str] = None, check_premise:
     check_premise -- 是否检查前提条件
     
     Returns:
-    List[str] -- 指令id列表
+    List[str] -- 指令id列表，按照 Instruct.py 中的定义顺序排序
     """
     if minor_type is None:
         minor_type = cache.web_current_minor_type
@@ -142,6 +169,9 @@ def get_instructs_by_minor_type(minor_type: Optional[str] = None, check_premise:
                     result.append(instruct_id)
             else:
                 result.append(instruct_id)
+    
+    # 按照 Instruct.py 中的定义顺序排序
+    result.sort(key=_get_instruct_sort_key)
     return result
 
 
@@ -155,7 +185,7 @@ def get_instructs_by_body_part(body_part: str, minor_type: Optional[int] = None,
     check_premise -- 是否检查前提条件
     
     Returns:
-    List[str] -- 指令id列表
+    List[str] -- 指令id列表，按照 Instruct.py 中的定义顺序排序
     """
     result = []
     premise_cache = {}  # 前提缓存，避免重复判断
@@ -175,6 +205,8 @@ def get_instructs_by_body_part(body_part: str, minor_type: Optional[int] = None,
             else:
                 result.append(instruct_id)
     
+    # 按照 Instruct.py 中的定义顺序排序
+    result.sort(key=_get_instruct_sort_key)
     return result
 
 
