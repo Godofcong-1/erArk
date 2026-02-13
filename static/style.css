@@ -1495,6 +1495,11 @@ body {
 
 /* 交互类型面板（左侧） */
 .new-ui-interaction-panel {
+    /* 使用绝对定位，不影响其他元素的布局 */
+    position: absolute;
+    left: 30px;
+    top: 50%;
+    transform: translateY(-50%);
     /* Auto width to fit cards */
     width: auto;
     /* Reset old styles */
@@ -1506,7 +1511,6 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    margin-left: 30px;
     z-index: 50;
     perspective: 1000px;
     pointer-events: none; /* Layout container passes clicks */
@@ -1578,10 +1582,32 @@ body {
 }
 
 .interaction-card .icon {
-    font-size: 24px; /* 缩小图标 */
+    position: absolute;
+    left: 5px; /* 向左移动5像素 */
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 0; /* 图标在文本下层 */
+    font-size: 50px;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
     line-height: 1;
     flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.6; /* 降低透明度，作为背景装饰 */
+}
+
+/* 交互大类图片图标样式（2026-02-13新增） */
+.interaction-card .icon .interaction-icon-img {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* 默认图标样式（无图片时的圆点） */
+.interaction-card .icon .interaction-icon-default {
+    font-size: 50px;
 }
 
 .interaction-card .label-group {
@@ -1590,28 +1616,43 @@ body {
     align-items: flex-start; /* 文字左对齐 */
     width: auto;
     overflow: hidden; /* 防止文字溢出 */
+    position: relative;
+    z-index: 1; /* 文本在图标上层 */
+    margin-left: 50px; /* 向右移动，留出更多空间 */
 }
 
 .interaction-card .name-cn {
-    font-size: 14px; /* 缩小文字 */
+    font-size: 18px; /* 放大文字（原14px） */
     font-weight: bold;
-    text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+    /* 文本描边效果 - 使用多重阴影模拟 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8),
+        0 2px 4px rgba(0,0,0,0.5);
     letter-spacing: 1px;
     line-height: 1.1;
     white-space: nowrap;
 }
 
 .interaction-card .name-en {
-    font-size: 8px; /* 缩小英文 */
-    color: rgba(255,255,255,0.6);
+    font-size: 10px; /* 放大英文（原8px） */
+    color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     font-family: 'Bahnschrift', sans-serif;
     line-height: 1;
-    margin-top: 1px;
+    margin-top: 2px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
+    /* 英文也添加描边效果 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8);
 }
 
 /* 旧样式清理 */
@@ -1644,12 +1685,23 @@ body {
 }
 
 .interaction-card.minor-card .name-cn {
-    font-size: 12px;
+    font-size: 16px; /* 比大类小2号（大类18px） */
+    /* 小类也添加描边效果 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8),
+        0 2px 4px rgba(0,0,0,0.5);
 }
 .interaction-card.minor-card .name-en {
-    font-size: 8px;
-    transform: scale(0.85);
-    transform-origin: left center;
+    font-size: 8px; /* 比大类小2号（大类10px） */
+    /* 英文也添加描边效果 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8);
 }
 
 /* Ensure minor card flattens when active, overriding the rotated minor-card state */
@@ -1665,7 +1717,7 @@ body {
     border-left-color: #00d2ff;       /* 青色亮边 */
     border-left-width: 3px;
     height: 32px;                     /* 更紧凑 */
-    width: 90px;                      /* 比小类稍窄，显出层级 */
+    width: 113px;                     /* 增加四分之一（原90px * 1.25）*/
     margin-left: 20px;                /* 更深的缩进 */
     transform: rotateY(0deg) translateZ(20px); /* 浮现按钮不旋转，保持Z深度一致 */
     clip-path: none;                  /* 移除切角，保持方正或自定义 */
@@ -1678,8 +1730,25 @@ body {
 }
 
 .interaction-card.floating-instruct .name-cn {
-    font-size: 12px;
+    font-size: 14px; /* 比小类小2号（小类16px） */
     font-weight: normal;
+    /* 无部位指令也添加描边效果 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8),
+        0 2px 4px rgba(0,0,0,0.5);
+}
+
+.interaction-card.floating-instruct .name-en {
+    font-size: 6px; /* 比小类小2号（小类8px） */
+    /* 英文也添加描边效果 */
+    text-shadow: 
+        -1px -1px 0 rgba(0,0,0,0.8),
+        1px -1px 0 rgba(0,0,0,0.8),
+        -1px 1px 0 rgba(0,0,0,0.8),
+        1px 1px 0 rgba(0,0,0,0.8);
 }
 
     color: #ccc;

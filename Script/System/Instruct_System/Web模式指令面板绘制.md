@@ -1219,6 +1219,66 @@ function renderFloatingInstructButtons(instructs) {
    → 返回主交互界面
 ```
 
+### 12.4 交互大类图标系统（2026-02-13新增）
+
+**概述**：交互大类按钮现在支持显示图片图标，图标位于按钮文本左侧，提供更直观的视觉标识。
+
+**图标文件位置**：`static/assets/ui/`
+
+**图标映射关系**：
+| 交互大类ID | 中文名称 | 图标文件 |
+|------------|----------|----------|
+| `mouth` | 嘴部 | 嘴部.png |
+| `hand` | 手部 | 手部.png |
+| `sex` | 性爱 | 性爱.png |
+| `penis` | 阴茎 | 阴茎.png |
+| `tool` | 道具 | 道具.png |
+| `arts` | 源石技艺 | 源石技艺.png |
+| `other` | 设置 | 设置.png |
+
+**前端实现**（`static/game.js`）：
+```javascript
+// createInteractionTypePanel() 中的图标生成函数
+const getIconHtml = (typeId) => {
+    const iconFiles = {
+        'mouth': '嘴部.png',
+        'hand': '手部.png',
+        'sex': '性爱.png',
+        'penis': '阴茎.png',
+        'tool': '道具.png',
+        'arts': '源石技艺.png',
+        'other': '设置.png'
+    };
+    
+    const iconFile = iconFiles[String(typeId)];
+    if (iconFile) {
+        return `<img src="/static/assets/ui/${encodeURIComponent(iconFile)}" alt="${typeId}" class="interaction-icon-img">`;
+    }
+    return '<span class="interaction-icon-default">●</span>';
+};
+```
+
+**CSS样式**（`static/css/game_main.css`）：
+```css
+/* 图片图标样式 */
+.interaction-card .icon .interaction-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* 默认图标样式（无图片时的圆点） */
+.interaction-card .icon .interaction-icon-default {
+    font-size: 32px;
+}
+```
+
+**扩展说明**：
+- 添加新的交互大类时，需要在 `static/assets/ui/` 目录添加对应的 PNG 图标
+- 图标文件名使用中文名称，在代码中通过 `encodeURIComponent()` 处理 URL 编码
+- 图标尺寸建议为正方形，实际显示时会缩放至 32x32 像素
+
 ---
 
 ## 13. 扩展指南

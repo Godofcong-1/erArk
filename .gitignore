@@ -18,8 +18,6 @@ data/ui_text.json
 # 临时文件
 tem
 备份
-image/立绘/模型测试用/
-image/全场景/
 
 # 性能测试
 profiling_output
@@ -47,9 +45,13 @@ data/ScenePath
 # 存档
 save
 
-# 原图
+# 图片
 image/断面图/原图
 downloaded_images
+image/美术风格参考图/
+image/立绘/模型测试用/
+image/全场景/
+image/图标素材/
 
 # 编辑器配置文件
 tools/ArkEditor/快速插入前提.csv

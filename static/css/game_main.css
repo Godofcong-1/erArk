@@ -355,6 +355,22 @@ body {
 .interaction-card .icon {
     font-size: 32px;
     filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 交互大类图片图标样式（2026-02-13新增） */
+.interaction-card .icon .interaction-icon-img {
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+}
+
+/* 默认图标样式（无图片时的圆点） */
+.interaction-card .icon .interaction-icon-default {
+    font-size: 32px;
 }
 
 .interaction-card .label-group {

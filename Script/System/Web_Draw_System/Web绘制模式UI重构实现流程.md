@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月12日
+**最后更新**：2026年2月13日
 
 ---
 
@@ -914,6 +914,30 @@
 - [x] 优化浮现按钮样式：去掉英文标识，使用深蓝色背景和青色边框区分
 - [x] 修复刷新后小类名称丢失问题：统一前后端HTML生成结构
 - [x] 实现小类按钮反选逻辑：点击已选中的小类取消选中并清空部位高亮
+
+#### 3.6.6 交互大类图标支持（2026-02-13）
+- [x] 在 `static/assets/ui/` 目录添加7个交互大类图标文件：
+  - `嘴部.png` → mouth
+  - `手部.png` → hand
+  - `性爱.png` → sex
+  - `阴茎.png` → penis
+  - `道具.png` → tool
+  - `源石技艺.png` → arts
+  - `设置.png` → other
+- [x] 修改 `static/game.js` 中的 `createInteractionTypePanel()` 函数：
+  - 将 `getIcon()` 函数改为 `getIconHtml()` 函数
+  - 从返回 emoji 字符改为返回 `<img>` 标签 HTML
+  - 图标路径：`/static/assets/ui/${encodeURIComponent(iconFile)}`
+- [x] 在 `static/css/game_main.css` 中添加图标样式：
+  - `.interaction-icon-img`：图片图标样式（32x32px，居中显示）
+  - `.interaction-icon-default`：默认圆点图标样式（无图片时使用）
+  - 更新 `.interaction-card .icon` 为 flex 布局以支持图片居中
+
+**实施说明（2026-02-13）**：
+- 图标位置保持与原 emoji 图标一致（文本左侧）
+- 图标尺寸缩放至 32x32px，不影响原有按钮大小和排版
+- 使用 `encodeURIComponent` 处理中文文件名的 URL 编码
+- 保留默认圆点图标作为兜底显示
 
 ### 3.7 对话框区域
 

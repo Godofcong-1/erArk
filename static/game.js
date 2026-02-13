@@ -3668,19 +3668,26 @@ function createInteractionTypePanel(types) {
     const panel = document.createElement('div');
     panel.className = 'new-ui-interaction-panel';
     
-    // Helper for icons
-    const getIcon = (typeId) => {
-        const icons = {
-            'talk': '💬', 'mouth': '👄',
-            'touch': '✋', 'hand': '✋',
-            'sex': '❤',
-            'penis': '🍆',
-            'tool': '💊',
-            'arts': '✨',
-            'other': '⚙'
+    // Helper for icons - 使用图片图标（2026-02-13更新）
+    const getIconHtml = (typeId) => {
+        // 交互大类ID到图标文件名的映射
+        const iconFiles = {
+            'mouth': '嘴部.png',
+            'hand': '手部.png',
+            'sex': '性爱.png',
+            'penis': '阴茎.png',
+            'tool': '道具.png',
+            'arts': '源石技艺.png',
+            'other': '设置.png'
         };
-        // Normalize typeId to string just in case
-        return icons[String(typeId)] || '●';
+        
+        const iconFile = iconFiles[String(typeId)];
+        if (iconFile) {
+            // 返回图片HTML，图片路径为 /static/assets/ui/
+            return `<img src="/static/assets/ui/${encodeURIComponent(iconFile)}" alt="${typeId}" class="interaction-icon-img">`;
+        }
+        // 如果没有对应图标文件，返回默认圆点
+        return '<span class="interaction-icon-default">●</span>';
     };
     
     // 处理旧版数据格式（数组格式）的兼容
@@ -3728,7 +3735,7 @@ function createInteractionTypePanel(types) {
         }
         
         majorCard.innerHTML = `
-            <span class="icon">${getIcon(majorType.id)}</span>
+            <span class="icon">${getIconHtml(majorType.id)}</span>
             <div class="label-group">
                 <span class="name-cn">${majorType.name}</span>
                 <span class="name-en">${String(majorType.id).toUpperCase()}</span>
