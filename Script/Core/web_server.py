@@ -511,8 +511,13 @@ def toggle_cloth():
         # 更新异常标记
         handle_premise.settle_chara_unnormal_flag(target_id, 4)
         
+        # 获取更新后的附加信息
+        from Script.System.Web_Draw_System.status_panel import StatusPanel
+        status_panel = StatusPanel()
+        extra_info = status_panel.get_target_extra_info(target_id)
+        
         logging.info(f"切换衣服 {cloth_id} 类型 {cloth_type} 穿脱状态")
-        return jsonify({"success": True})
+        return jsonify({"success": True, "extra_info": extra_info})
     
     except Exception as e:
         logging.error(f"切换衣服状态失败: {e}")
@@ -2118,6 +2123,7 @@ def send_full_game_state():
         
         if target_id >= 0 and target_id in cache.character_data:
             full_state["target_info"] = status_panel.get_target_info(target_id)
+            full_state["target_extra_info"] = status_panel.get_target_extra_info(target_id)
         
         # 场景信息
         if hasattr(cache, 'now_panel_id'):

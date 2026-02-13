@@ -3599,8 +3599,13 @@ function toggleCloth(clothId, clothType, isWorn) {
         })
     }).then(response => response.json())
     .then(data => {
-        if (data.success) {
-            refreshGameState();
+        if (data.success && data.extra_info) {
+            // 立即重新渲染附加信息区域
+            const extraInfoPanel = document.querySelector('.new-ui-target-extra-info');
+            if (extraInfoPanel && extraInfoPanel.parentNode) {
+                const newPanel = createTargetExtraInfoPanel(data.extra_info);
+                extraInfoPanel.parentNode.replaceChild(newPanel, extraInfoPanel);
+            }
         }
     }).catch(err => console.error('切换衣服状态失败:', err));
 }

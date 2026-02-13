@@ -715,10 +715,11 @@
 **问题修复记录（2026年2月14日）**：
 - **修复1：服装穿脱后不立刻生效** ✅
   - 问题描述：交互对象附加信息面板中的服装栏在H模式下点击服装穿脱后，需要等下一次指令结算才会更新
-  - 问题原因：`send_full_game_state()` 函数中只包含了 `target_info`，缺少 `target_extra_info` 字段，导致刷新状态时服装信息没有被更新
-  - 解决方案：在 `Script/Core/web_server.py` 的 `send_full_game_state()` 函数中添加 `target_extra_info` 字段的获取和发送
+  - 问题原因：原来的实现是调用 `refreshGameState()` 通过 socket 刷新状态，但这会触发完整重渲染，而 `text_content` 中可能没有 `new_ui_container` 元素，导致新UI不会被重新渲染
+  - 解决方案：修改 `/api/toggle_cloth` API 返回更新后的 `extra_info` 数据，前端收到响应后直接调用 `createTargetExtraInfoPanel()` 局部更新附加信息面板，类似 `toggleDetailedDirty()` 的做法
   - 修改文件：
-    - `Script/Core/web_server.py` - 在 `send_full_game_state()` 中添加 `full_state["target_extra_info"] = status_panel.get_target_extra_info(target_id)`
+    - `Script/Core/web_server.py` - 在 `toggle_cloth()` 中获取并返回 `extra_info` 数据
+    - `static/game.js` - 修改 `toggleCloth()` 函数，收到响应后直接局部更新附加信息面板
 
 - **修复2：药剂快速使用按钮显示两个浮动文本** ✅
   - 问题描述：玩家信息区的状态条中的药剂快速使用按钮在使用后会显示两个同样的数值变动浮动文本提示信息
