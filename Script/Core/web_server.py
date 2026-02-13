@@ -1664,6 +1664,42 @@ def handle_get_interaction_state(data):
             'error': str(e)
         })
 
+
+@socketio.on('get_all_scene_characters')
+def handle_get_all_scene_characters(data):
+    """
+    获取场景内所有角色信息（Web新UI）
+    
+    参数：
+    data (dict): 空字典
+    
+    返回值类型：无
+    功能描述：返回当前场景内所有角色的头像信息列表（包括玩家和交互对象）
+    用于"显示场景内全部角色"面板
+    """
+    from Script.System.Web_Draw_System import character_renderer
+    
+    logging.info("获取场景内所有角色")
+    
+    try:
+        # 创建渲染器实例
+        renderer = character_renderer.CharacterRenderer()
+        
+        # 获取所有场景角色（不排除任何角色）
+        all_characters = renderer.get_scene_characters_avatars(exclude_ids=[0])
+        
+        socketio.emit('all_scene_characters', {
+            'characters': all_characters,
+            'success': True
+        })
+    except Exception as e:
+        logging.error(f"获取场景角色失败: {e}")
+        socketio.emit('all_scene_characters', {
+            'characters': [],
+            'success': False,
+            'error': str(e)
+        })
+
 # ========== 结束：Web模式新交互类型系统API ==========
 
 @socketio.on('advance_dialog')

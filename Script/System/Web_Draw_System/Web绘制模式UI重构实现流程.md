@@ -779,6 +779,57 @@
 - [x] 实现头像点击切换交互对象
 - [x] 实现翻页逻辑
 
+#### 3.4.4 分页功能（2026-02-13 新增）
+- [x] 在 `static/game.js` 中添加全局分页状态变量：
+  - `sceneCharactersCurrentPage` - 当前页码（从0开始）
+  - `sceneCharactersData` - 当前场景的角色数据
+  - `sceneCharactersMinorDialogs` - 当前场景的小对话框数据
+- [x] 修改 `createAvatarPanel()` 函数实现分页逻辑：
+  - 将角色数据保存到全局变量
+  - 计算总页数（每页5人）
+  - 根据当前页码显示对应的角色
+  - 当角色总数 > 5 时显示分页按钮行
+- [x] 添加分页按钮：
+  - **上一页按钮**：调用 `sceneCharactersPrevPage()` 函数
+  - **下一页按钮**：调用 `sceneCharactersNextPage()` 函数
+  - **显示全部按钮**：调用 `showAllSceneCharacters()` 函数
+- [x] 实现分页切换函数：
+  - `sceneCharactersPrevPage()` - 循环翻页，第一页的上一页是最后一页
+  - `sceneCharactersNextPage()` - 循环翻页，最后一页的下一页是第一页
+  - `showAllSceneCharacters()` - 向后端请求全部场景角色并显示弹出面板
+  - `refreshAvatarPanel()` - 刷新头像面板，替换DOM元素
+- [x] CSS样式更新（`static/style.css`）：
+  - 修改 `.new-ui-avatar-panel` 为纵向布局
+  - 添加 `.avatar-items-container` 头像项容器样式
+  - 添加 `.avatar-pagination-row` 分页按钮行样式（绝对定位，固定在面板底部，避免被小对话框遮挡）
+  - 添加 `.avatar-page-btn` 分页按钮样式（含悬停和点击效果）
+  - 更新 `.avatar-item:nth-child` 选择器匹配新的DOM结构
+
+#### 3.4.5 全部角色面板（2026-02-13 新增）
+- [x] 后端实现：
+  - 在 `Script/Core/web_server.py` 添加 `get_all_scene_characters` WebSocket事件处理器
+  - 使用 `character_renderer.get_scene_characters_avatars(exclude_ids=[])` 获取全部角色（不排除任何角色）
+  - 返回 `all_scene_characters` 事件包含角色列表
+- [x] 前端实现：
+  - 修改 `showAllSceneCharacters()` 函数，向后端发送 `get_all_scene_characters` 请求
+  - 添加 `socket.on('all_scene_characters')` 事件监听器
+  - 实现 `createAllCharactersPanel(characters)` 函数创建弹出面板
+  - 实现 `closeAllCharactersPanel()` 函数关闭面板
+- [x] 面板结构：
+  - **遮罩层**（`.all-characters-overlay`）：点击遮罩可关闭面板
+  - **标题栏**（`.all-characters-header`）：显示"场景内全部角色 (N人)"标题和关闭按钮
+  - **角色网格容器**（`.all-characters-grid-container`）：带滚动条，最大高度6行
+  - **角色网格**（`.all-characters-grid`）：每行10个角色的网格布局
+  - **角色项**（`.all-characters-item`）：点击可切换交互对象并关闭面板
+- [x] CSS样式（`static/style.css`）：
+  - `.all-characters-overlay`：固定定位全屏遮罩，半透明黑色背景
+  - `.all-characters-panel`：面板容器，深色背景，圆角边框
+  - `.all-characters-header`：标题栏样式，含关闭按钮
+  - `.all-characters-grid-container`：网格容器，`max-height: calc(6 * 70px)` 限制6行高度
+  - `.all-characters-grid`：`grid-template-columns: repeat(10, 1fr)` 每行10个
+  - `.all-characters-item`：角色项样式，与头像区一致
+  - 滚动条样式：统一深色风格
+
 ### 3.5 交互对象信息区（右侧）
 
 #### 3.5.1 HTML结构

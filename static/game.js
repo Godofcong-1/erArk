@@ -721,6 +721,11 @@ let isLastElementLinebreak = false; // 标记上一个元素是否为换行符
 // 新增：标记上一条“文本元素”是否以换行符结尾，用于将紧随其后的 line_feed 作为“空白行”渲染
 let isLastTextEndedWithNewline = false;
 
+// 场景角色头像区分页管理
+let sceneCharactersCurrentPage = 0;  // 当前页码（从0开始）
+let sceneCharactersData = [];        // 当前场景的角色数据
+let sceneCharactersMinorDialogs = []; // 当前场景的小对话框数据
+
 /**
  * 等待管理器
  * 负责处理需要用户确认后继续的绘制元素
@@ -1297,6 +1302,16 @@ function initWebSocket() {
             }
         } else {
             console.error('清空交互选择失败:', data.error);
+        }
+    });
+    
+    // 接收场景内全部角色数据
+    socket.on('all_scene_characters', (data) => {
+        console.log('收到场景内全部角色:', data);
+        if (data.success && data.characters) {
+            createAllCharactersPanel(data.characters);
+        } else {
+            console.error('获取场景角色失败:', data.error);
         }
     });
 }
@@ -3594,12 +3609,39 @@ function refreshGameState() {
 
 /**
  * 创建头像面板
+ * 支持分页功能：当场景角色超过5人时显示分页按钮
  */
 function createAvatarPanel(characters, minorDialogs = []) {
+    // 保存数据到全局变量
+    sceneCharactersData = characters || [];
+    sceneCharactersMinorDialogs = minorDialogs || [];
+    
     const panel = document.createElement('div');
     panel.className = 'new-ui-avatar-panel';
     
-    characters.slice(0, 5).forEach(char => {
+    // 计算分页
+    const pageSize = 5;
+    const totalCharacters = sceneCharactersData.length;
+    const totalPages = Math.ceil(totalCharacters / pageSize);
+    
+    // 确保当前页码有效
+    if (sceneCharactersCurrentPage >= totalPages) {
+        sceneCharactersCurrentPage = 0;
+    }
+    if (sceneCharactersCurrentPage < 0) {
+        sceneCharactersCurrentPage = totalPages > 0 ? totalPages - 1 : 0;
+    }
+    
+    // 获取当前页的角色
+    const startIndex = sceneCharactersCurrentPage * pageSize;
+    const endIndex = Math.min(startIndex + pageSize, totalCharacters);
+    const currentPageCharacters = sceneCharactersData.slice(startIndex, endIndex);
+    
+    // 创建头像容器
+    const avatarsContainer = document.createElement('div');
+    avatarsContainer.className = 'avatar-items-container';
+    
+    currentPageCharacters.forEach(char => {
         const avatarItem = document.createElement('div');
         avatarItem.className = 'avatar-item';
         avatarItem.dataset.characterId = char.id;
@@ -3611,7 +3653,7 @@ function createAvatarPanel(characters, minorDialogs = []) {
         avatarItem.appendChild(avatarName);
         
         // 检查是否有该角色的小对话框
-        const minorDialog = minorDialogs.find(d => d.character_id === char.id);
+        const minorDialog = sceneCharactersMinorDialogs.find(d => d.character_id === char.id);
         if (minorDialog) {
             const miniDialog = document.createElement('div');
             miniDialog.className = 'avatar-mini-dialog';
@@ -3621,10 +3663,191 @@ function createAvatarPanel(characters, minorDialogs = []) {
         }
         
         avatarItem.onclick = () => switchTarget(char.id);
-        panel.appendChild(avatarItem);
+        avatarsContainer.appendChild(avatarItem);
     });
     
+    panel.appendChild(avatarsContainer);
+    
+    // 当角色总数大于5时显示分页按钮
+    if (totalCharacters > pageSize) {
+        const paginationRow = document.createElement('div');
+        paginationRow.className = 'avatar-pagination-row';
+        
+        // 上一页按钮
+        const prevBtn = document.createElement('button');
+        prevBtn.className = 'avatar-page-btn';
+        prevBtn.textContent = '上一页';
+        prevBtn.onclick = (e) => {
+            e.stopPropagation();
+            sceneCharactersPrevPage();
+        };
+        paginationRow.appendChild(prevBtn);
+        
+        // 下一页按钮
+        const nextBtn = document.createElement('button');
+        nextBtn.className = 'avatar-page-btn';
+        nextBtn.textContent = '下一页';
+        nextBtn.onclick = (e) => {
+            e.stopPropagation();
+            sceneCharactersNextPage();
+        };
+        paginationRow.appendChild(nextBtn);
+        
+        // 显示全部按钮
+        const showAllBtn = document.createElement('button');
+        showAllBtn.className = 'avatar-page-btn avatar-show-all-btn';
+        showAllBtn.textContent = '显示全部';
+        showAllBtn.onclick = (e) => {
+            e.stopPropagation();
+            showAllSceneCharacters();
+        };
+        paginationRow.appendChild(showAllBtn);
+        
+        panel.appendChild(paginationRow);
+    }
+    
     return panel;
+}
+
+/**
+ * 场景角色头像区翻到上一页
+ */
+function sceneCharactersPrevPage() {
+    const pageSize = 5;
+    const totalPages = Math.ceil(sceneCharactersData.length / pageSize);
+    if (totalPages <= 1) return;
+    
+    // 循环翻页：第一页的上一页是最后一页
+    sceneCharactersCurrentPage--;
+    if (sceneCharactersCurrentPage < 0) {
+        sceneCharactersCurrentPage = totalPages - 1;
+    }
+    
+    refreshAvatarPanel();
+}
+
+/**
+ * 场景角色头像区翻到下一页
+ */
+function sceneCharactersNextPage() {
+    const pageSize = 5;
+    const totalPages = Math.ceil(sceneCharactersData.length / pageSize);
+    if (totalPages <= 1) return;
+    
+    // 循环翻页：最后一页的下一页是第一页
+    sceneCharactersCurrentPage++;
+    if (sceneCharactersCurrentPage >= totalPages) {
+        sceneCharactersCurrentPage = 0;
+    }
+    
+    refreshAvatarPanel();
+}
+
+/**
+ * 显示场景内全部角色面板
+ */
+function showAllSceneCharacters() {
+    // 向后端请求所有场景角色
+    if (socket && socket.connected) {
+        socket.emit('get_all_scene_characters', {});
+    }
+}
+
+/**
+ * 创建并显示全部角色面板（弹出层）
+ * @param {Array} characters - 角色数据列表
+ */
+function createAllCharactersPanel(characters) {
+    // 如果已存在面板，先移除
+    const existingPanel = document.querySelector('.all-characters-overlay');
+    if (existingPanel) {
+        existingPanel.remove();
+    }
+    
+    // 创建遮罩层
+    const overlay = document.createElement('div');
+    overlay.className = 'all-characters-overlay';
+    overlay.onclick = (e) => {
+        if (e.target === overlay) {
+            closeAllCharactersPanel();
+        }
+    };
+    
+    // 创建面板容器
+    const panel = document.createElement('div');
+    panel.className = 'all-characters-panel';
+    
+    // 创建标题栏
+    const header = document.createElement('div');
+    header.className = 'all-characters-header';
+    
+    const title = document.createElement('span');
+    title.className = 'all-characters-title';
+    title.textContent = `场景内全部角色 (${characters.length}人)`;
+    header.appendChild(title);
+    
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'all-characters-close-btn';
+    closeBtn.textContent = '×';
+    closeBtn.onclick = closeAllCharactersPanel;
+    header.appendChild(closeBtn);
+    
+    panel.appendChild(header);
+    
+    // 创建角色网格容器
+    const gridContainer = document.createElement('div');
+    gridContainer.className = 'all-characters-grid-container';
+    
+    const grid = document.createElement('div');
+    grid.className = 'all-characters-grid';
+    
+    // 渲染所有角色
+    characters.forEach(char => {
+        const avatarItem = document.createElement('div');
+        avatarItem.className = 'all-characters-item';
+        avatarItem.dataset.characterId = char.id;
+        
+        // 头像名称
+        const avatarName = document.createElement('span');
+        avatarName.className = 'all-characters-name';
+        avatarName.textContent = char.name || '';
+        avatarItem.appendChild(avatarName);
+        
+        // 点击切换交互对象并关闭面板
+        avatarItem.onclick = () => {
+            switchTarget(char.id);
+            closeAllCharactersPanel();
+        };
+        
+        grid.appendChild(avatarItem);
+    });
+    
+    gridContainer.appendChild(grid);
+    panel.appendChild(gridContainer);
+    
+    overlay.appendChild(panel);
+    document.body.appendChild(overlay);
+}
+
+/**
+ * 关闭全部角色面板
+ */
+function closeAllCharactersPanel() {
+    const overlay = document.querySelector('.all-characters-overlay');
+    if (overlay) {
+        overlay.remove();
+    }
+}
+
+/**
+ * 刷新头像面板（分页后重新渲染）
+ */
+function refreshAvatarPanel() {
+    const oldPanel = document.querySelector('.new-ui-avatar-panel');
+    if (!oldPanel) return;
+    
+    const newPanel = createAvatarPanel(sceneCharactersData, sceneCharactersMinorDialogs);
+    oldPanel.replaceWith(newPanel);
 }
 
 /**
