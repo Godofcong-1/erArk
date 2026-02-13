@@ -4725,6 +4725,10 @@ function adjustBodyPartsLayerForCrop(characterContainer, cropMetadata) {
  * 2. 如果可用高度 > 1024，则将图片高度设为 1024px
  * 3. 如果可用高度 <= 1024，则将图片高度设为可用高度
  * 4. 图片居中显示
+ * 
+ * 重要：测量可用高度时需要先将图片高度设为最小值，否则图片的 naturalHeight
+ * 会通过 flex 布局影响 main-scene 的高度计算。
+ * 
  * @param {HTMLElement} display - 角色立绘显示区容器
  * @param {HTMLImageElement} img - 立绘图片元素
  */
@@ -4732,9 +4736,24 @@ function applyCharacterImageHeight(display, img) {
     // 最大高度限制
     const MAX_HEIGHT = 1024;
     
-    // 获取显示区域的可用高度（减去一些边距）
-    const displayRect = display.getBoundingClientRect();
-    const availableHeight = displayRect.height - 20; // 留10px上下边距
+    // 获取主场景区域
+    const mainScene = display.closest('.new-ui-main-scene');
+    if (!mainScene) {
+        console.warn('[角色立绘] 未找到 main-scene 容器');
+        return;
+    }
+    
+    // 临时将图片高度设为1px，避免图片 naturalHeight 影响布局计算
+    const originalHeight = img.style.height;
+    img.style.height = '1px';
+    
+    // 强制浏览器重新计算布局
+    // 通过读取 offsetHeight 触发同步布局
+    void mainScene.offsetHeight;
+    
+    // 现在获取 main-scene 的高度（不受图片内容影响）
+    const mainSceneRect = mainScene.getBoundingClientRect();
+    const availableHeight = mainSceneRect.height - 20; // 留10px上下边距
     
     // 计算应使用的高度：min(MAX_HEIGHT, 可用高度)
     const targetHeight = Math.min(MAX_HEIGHT, availableHeight);
@@ -4748,7 +4767,11 @@ function applyCharacterImageHeight(display, img) {
         display.dataset.targetHeight = targetHeight;
         display.dataset.maxHeight = MAX_HEIGHT;
         
-        console.log(`[角色立绘] 可用高度: ${availableHeight}px, 目标高度: ${targetHeight}px`);
+        console.log(`[角色立绘] main-scene高度: ${mainSceneRect.height}px, 可用高度: ${availableHeight}px, 目标高度: ${targetHeight}px`);
+    } else {
+        // 如果计算失败，恢复原始高度
+        img.style.height = originalHeight;
+        console.warn('[角色立绘] 可用高度计算失败，保持原始高度');
     }
     
     // 触发一次重叠检测

@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月13日
+**最后更新**：2026年2月14日
 
 ---
 
@@ -1127,10 +1127,13 @@
 - **JS修改（`static/game.js`）**：
   - `createCharacterDisplay()`：在图片 `onload` 事件中调用 `applyCharacterImageHeight()`
   - 新增 `applyCharacterImageHeight(display, img)` 函数：
-    - 获取显示区域可用高度（减去边距）
-    - 计算目标高度：`min(1024, 可用高度)`
+    - **关键修复（2026-02-14）**：测量前临时将图片高度设为 `1px`，避免图片 `naturalHeight` 通过 flex 布局影响 main-scene 高度
+    - 使用 `void mainScene.offsetHeight` 强制触发同步布局计算
+    - 获取主场景区域（`.new-ui-main-scene`）高度作为可用高度参考
+    - 计算目标高度：`min(1024, 可用高度 - 20)`（预留边距）
     - 设置 `img.style.height` 和 `img.style.width = 'auto'`
     - 保存目标高度到 `display.dataset` 供后续使用
+    - 添加计算失败时的恢复逻辑
     - 触发重叠检测
   - 新增 `updateCharacterImageHeightOnResize()` 函数：窗口大小改变时重新计算高度
   - 新增 `debounce()` 辅助函数：防抖处理
@@ -1201,6 +1204,12 @@
   - [x] 第二步：将实际原图坐标转换为裁切后图片坐标（百分比）
   - [x] 按比例调整按钮大小（使用 dataImageWidth/croppedWidth 因子）
   - [x] 确保部位按钮位置与裁切后图片准确对齐，支持图片居中
+- [x] 修改 `applyCharacterImageHeight()` 函数（2026-02-14更新）
+  - [x] **修复问题**：裁切后图片的 naturalHeight 通过 flex 布局影响 main-scene 高度计算
+  - [x] **解决方案**：测量前临时将图片高度设为 1px，强制浏览器重新计算布局
+  - [x] 使用 `void mainScene.offsetHeight` 触发同步布局计算
+  - [x] 测量完成后再设置实际的目标高度
+  - [x] 添加计算失败时的恢复逻辑
 - [x] 修改 `updateCharacterImageHeightOnResize()` 函数（2026-02-08更新）
   - [x] 窗口大小变化时重新应用角色立绘高度
   - [x] 重新调用 `adjustBodyPartsLayerForCrop()` 更新 layer 尺寸和按钮位置
