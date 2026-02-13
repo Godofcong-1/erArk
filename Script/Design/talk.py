@@ -348,11 +348,15 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
             if character_id == 0 or character_id == target_character_id:
                 # 主对话框：显示当前交互对象或玩家的台词
                 # 获取当前角色的交互对象ID
-                current_target_id = character_data.target_character_id if character_data.target_character_id else -1
+                # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
+                current_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
                 add_dialog_text(speaker_name, now_talk_text, final_color, wait_input, target_character_id=current_target_id)
             else:
                 # 其他角色：显示在头像下方的小对话框
-                add_dialog_text(speaker_name, now_talk_text, final_color, wait_input=False, is_minor=True, character_id=character_id)
+                # 获取该角色当时的交互对象ID，用于切换到该角色时正确显示
+                # 注意：target_character_id 为 0 时表示交互对象是玩家，需要保留，不能用 if x 判断
+                other_char_target_id = character_data.target_character_id if character_data.target_character_id != character_data.cid else -1
+                add_dialog_text(speaker_name, now_talk_text, final_color, wait_input=False, is_minor=True, character_id=character_id, target_character_id=other_char_target_id)
             return
         # ==========================================
         

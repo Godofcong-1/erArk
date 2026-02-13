@@ -1822,11 +1822,19 @@
   - `_get_target_character_info()` 返回新交互对象信息
   - `_get_scene_characters()` 自动排除新交互对象
   - `character_renderer` 返回新对象的图像和部位数据
-- **行为文本显示（2026-02-07新增）**：
+- **行为文本显示（2026-02-07新增，2026-02-13更新）**：
   - 在 `handle_switch_target()` 中检查 `cache.web_minor_dialog_queue`
   - 查找被点击角色的待显示小对话框
   - 将完整文本移动到主对话框队列进行显示
   - 从 `minor_dialog` 队列中移除该角色的条目
+  - **交互对象名字修正（2026-02-13更新）**：
+    - 问题1：切换角色时显示的交互对象名字可能错误，因为角色指令已结算完毕，交互对象可能已变更
+    - 解决1：在 `talk.py` 记录 minor dialog 时同时保存该角色当时的 `target_character_id`
+    - `dialog_box.py` 在 `minor_entry` 中增加 `target_character_id` 字段
+    - `handle_switch_target()` 使用保存的 `target_character_id` 而非被切换到的角色ID
+    - 问题2：当交互对象是玩家（cid=0）时，因 `if target_character_id` 判断 0 为 False 导致不显示
+    - 解决2：将判断条件从 `if x` 改为 `if x is not None`，正确处理玩家作为交互对象的情况
+    - 效果：对话框正确显示 `角色名 → 交互对象名`（包括玩家），避免延迟/错误
 - **数值变化显示（2026-02-07新增）**：
   - 在 `handle_switch_target()` 中遍历 `cache.web_value_changes`
   - 刷新该角色所有数值变化的时间戳为当前时间

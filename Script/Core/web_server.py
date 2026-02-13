@@ -1175,7 +1175,10 @@ def handle_switch_target(data):
                 speaker_name = minor_dialog_to_show.get('speaker', target_data.name)
                 full_text = minor_dialog_to_show.get('full_text', minor_dialog_to_show.get('text', ''))
                 text_color = minor_dialog_to_show.get('text_color', 'standard')
-                add_dialog_text(speaker_name, full_text, text_color, wait_input=True, target_character_id=character_id)
+                # 使用记录时保存的交互对象ID，而不是被切换到的角色ID
+                # 避免因为角色指令结算完毕后交互对象变更导致显示错误的交互对象名字
+                saved_target_id = minor_dialog_to_show.get('target_character_id', -1)
+                add_dialog_text(speaker_name, full_text, text_color, wait_input=True, target_character_id=saved_target_id)
                 
                 # 从 minor_dialog 队列中移除该角色的条目
                 cache.web_minor_dialog_queue = remaining_dialogs

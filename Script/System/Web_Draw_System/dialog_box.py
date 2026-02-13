@@ -128,6 +128,7 @@ def add_dialog_text(speaker_name: str, text: str, text_color: str = "standard", 
             "text": truncated_text,
             "full_text": text,  # 保存完整文本，点击时使用
             "text_color": text_color,
+            "target_character_id": target_character_id,  # 保存该角色当时的交互对象ID
         }
         cache.web_minor_dialog_queue.append(minor_entry)
     else:
