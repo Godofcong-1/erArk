@@ -93,7 +93,11 @@ class SeeMapPanel:
             return_list = []
             index = 0
             # 使用地图最大行宽来计算统一的居中偏移，使所有行左对齐
-            map_max_width = now_draw_list.max_width
+            # 兼容旧存档：如果 max_width 属性不存在，则动态计算
+            if hasattr(now_draw_list, 'max_width'):
+                map_max_width = now_draw_list.max_width
+            else:
+                map_max_width = max((line.width for line in now_draw_list.draw_text), default=0)
             fix_width = int((self.width - map_max_width) / 2)
             for now_draw_line in now_draw_list.draw_text:
                 fix_text = " " * fix_width
