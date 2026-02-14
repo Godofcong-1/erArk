@@ -13,7 +13,7 @@ from Script.Core import cache_control, game_type, constant
 from Script.Config import game_config
 from Script.Design import web_interaction_manager
 from Script.System.Instruct_System import interaction_types
-from Script.System.Instruct_System.instruct_category import HIP_SUB_PARTS, BodyPart
+from Script.System.Instruct_System.instruct_category import HIP_SUB_PARTS, HEAD_SUB_PARTS, BodyPart
 
 cache: game_type.Cache = cache_control.cache
 
@@ -130,6 +130,12 @@ class InteractionHandler:
         hip_sub_part_names.add(BodyPart.CROTCH)
         if body_parts & hip_sub_part_names:
             body_parts.add(BodyPart.HIP)
+        
+        # 检查是否包含头部子部位（头发、兽角等）
+        # 如果包含则将头部也添加到可用部位列表中，使头部显示高亮
+        head_sub_part_names = set(HEAD_SUB_PARTS)  # 使用 HEAD_SUB_PARTS 定义的子部位
+        if body_parts & head_sub_part_names:
+            body_parts.add(BodyPart.HEAD)
         
         return list(body_parts)
 

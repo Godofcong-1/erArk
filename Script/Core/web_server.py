@@ -964,13 +964,15 @@ def handle_click_body_part(data):
     from Script.Design import web_interaction_manager
     
     part_name = data.get('part_name')
-    logging.info(f"点击身体部位: {part_name}")
+    from_sub_menu = data.get('from_sub_menu', False)  # 是否来自子菜单点击
+    logging.info(f"点击身体部位: {part_name}, 来自子菜单: {from_sub_menu}")
     
     # 获取当前选中的交互小类
     current_minor_type = web_interaction_manager.get_current_minor_type()
     
     # 检查是否是臀部点击
-    if part_name == BodyPart.HIP or part_name == "臀部":
+    # 如果是从子菜单点击的臀部本身，则直接获取臀部指令而不再展开子菜单
+    if (part_name == BodyPart.HIP or part_name == "臀部") and not from_sub_menu:
         if current_minor_type is not None:
             # 已选择小类时，收集该小类下所有臀部子部位的可用指令
             all_instructs = []
@@ -1018,7 +1020,8 @@ def handle_click_body_part(data):
             return
     
     # 检查是否是头部点击
-    if part_name == BodyPart.HEAD or part_name == "头部":
+    # 如果是从子菜单点击的头部本身，则直接获取头部指令而不再展开子菜单
+    if (part_name == BodyPart.HEAD or part_name == "头部") and not from_sub_menu:
         # 获取交互对象是否有兽耳/兽角特征
         pl_character_data = cache.character_data[0]
         target_id = pl_character_data.target_character_id
@@ -1070,9 +1073,14 @@ def handle_click_body_part(data):
             # 注意：兽耳已从 HEAD_SUB_PARTS 中移除，作为独立部位处理
             sub_parts = []
             for sub_part in HEAD_SUB_PARTS:
-                # 头发始终显示
+                # 头部本身和头发始终显示
                 # 兽角需要角色有对应特征
-                if sub_part == BodyPart.HAIR:
+                if sub_part == BodyPart.HEAD:
+                    sub_parts.append({
+                        'part_id': sub_part,
+                        'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)
+                    })
+                elif sub_part == BodyPart.HAIR:
                     sub_parts.append({
                         'part_id': sub_part,
                         'part_name_cn': BODY_PART_NAMES.get(sub_part, sub_part)

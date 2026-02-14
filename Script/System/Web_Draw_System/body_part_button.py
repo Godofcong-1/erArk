@@ -252,6 +252,8 @@ class BodyPartButton:
         """
         计算臀部子部位的位置（环绕臀部中心排列）
         
+        注意：HIP 本身不参与扇形排列计算，因为它的位置已经在主函数中正确计算了
+        
         Keyword arguments:
         hip_center -- 臀部中心位置 [x, y]
         width -- 图像宽度
@@ -259,7 +261,8 @@ class BodyPartButton:
         """
         import math
         
-        sub_parts = HIP_SUB_PARTS
+        # 过滤掉 HIP 本身，只计算真正的子部位
+        sub_parts = [part for part in HIP_SUB_PARTS if part != BodyPart.HIP]
         num_parts = len(sub_parts)
         base_radius = min(width, height) * 0.08  # 子部位环绕的半径
         part_radius = min(width, height) * 0.025  # 子部位的点击半径

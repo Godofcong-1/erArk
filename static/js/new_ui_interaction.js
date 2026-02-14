@@ -602,6 +602,8 @@ function updateAvailableBodyParts(instructs) {
     
     // 臀部子部位列表（与后端 HIP_SUB_PARTS 保持一致）
     const HIP_SUB_PARTS = ['vagina', 'womb', 'anus', 'urethra', 'tail', 'crotch'];
+    // 头部子部位列表（与后端 HEAD_SUB_PARTS 保持一致）
+    const HEAD_SUB_PARTS = ['hair', 'horn'];
     
     // 收集所有可交互的部位（英文部位名）
     const availableParts = new Set();
@@ -627,6 +629,12 @@ function updateAvailableBodyParts(instructs) {
     const hasHipSubPart = HIP_SUB_PARTS.some(subPart => availableParts.has(subPart));
     if (hasHipSubPart) {
         availableParts.add('hip');
+    }
+    
+    // 检查是否包含头部子部位，如果有则将头部也设为可用
+    const hasHeadSubPart = HEAD_SUB_PARTS.some(subPart => availableParts.has(subPart));
+    if (hasHeadSubPart) {
+        availableParts.add('head');
     }
     
     console.log('可交互部位(英文):', Array.from(availableParts));

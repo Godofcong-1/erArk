@@ -3068,7 +3068,7 @@ children.forEach(child => {
 **显示效果**：
 - 交互对象有兽耳时：在角色立绘上显示"左兽耳"和"右兽耳"按钮
 - 交互对象无兽耳时：不显示兽耳按钮
-- 点击头部时：子菜单只显示"头发"和"兽角"（如果有兽角）
+- 点击头部时：子菜单显示"头部"、"头发"和"兽角"（兽角需要角色有对应特征）
 
 #### 10.7.5 修改文件清单
 | 文件路径 | 修改内容 | 状态 |
@@ -3081,6 +3081,95 @@ children.forEach(child => {
 **实施记录**：
 - 修复了3个Python文件
 - 兽耳部位现在作为条件独立部位显示，不再需要点击头部才能选择
+
+### 10.8 修复头部子部位高亮映射缺失 (2026-02-14)
+
+#### 10.8.1 问题描述
+- 头部部位有时无法出现高亮
+- 当指令的 `body_parts` 只包含头部子部位（如 `hair` 或 `horn`）时，头部按钮不会高亮
+- 臀部部位正常工作，因为已经实现了臀部子部位映射
+
+#### 10.8.2 问题原因
+- 后端 `interaction_handler.py` 的 `_get_available_body_parts_by_minor_type()` 函数只实现了臀部子部位映射（`HIP_SUB_PARTS`），但缺少头部子部位映射（`HEAD_SUB_PARTS`）
+- 前端 `new_ui_interaction.js` 的 `updateAvailableBodyParts()` 函数同样只处理了臀部子部位映射，缺少头部子部位映射
+
+#### 10.8.3 修复方案
+- [x] **后端修复**：`interaction_handler.py`
+  - 导入 `HEAD_SUB_PARTS` 常量
+  - 在 `_get_available_body_parts_by_minor_type()` 中添加头部子部位检测逻辑
+  - 如果收集到的部位包含头部子部位，自动将 `head` 添加到可用部位列表
+- [x] **前端修复**：`new_ui_interaction.js`
+  - 添加 `HEAD_SUB_PARTS` 常量（`['hair', 'horn']`）与后端保持一致
+  - 在 `updateAvailableBodyParts()` 中添加头部子部位检测逻辑
+  - 如果可交互部位包含头部子部位，自动将 `head` 添加到 `availableParts` 集合
+
+#### 10.8.4 修改文件清单
+| 文件路径 | 修改内容 | 状态 |
+|---------|---------|------|
+| `Script/System/Web_Draw_System/interaction_handler.py` | 导入 `HEAD_SUB_PARTS`，添加头部子部位映射逻辑 | ✅ |
+| `static/js/new_ui_interaction.js` | 添加 `HEAD_SUB_PARTS` 常量和头部子部位高亮映射逻辑 | ✅ |
+
+**实施记录**：
+- 修复后，当指令的 `body_parts` 包含 `hair` 或 `horn` 时，头部按钮会正确高亮
+- 实现方式与臀部子部位映射完全一致，保持代码一致性
+
+### 10.9 修复复合部位本身在子菜单中不显示的问题 (2026-02-14)
+
+#### 10.9.1 问题描述
+1. **头部子菜单问题**：在 `HEAD_SUB_PARTS` 中添加了 `HEAD` 本身后，没有选择交互类型时直接点击头部，子菜单只显示"头发"，不显示"头部"本身
+2. **臀部位置偏移问题**：在 `HIP_SUB_PARTS` 中添加了 `HIP` 本身后，臀部按钮的显示位置出现错误偏移
+
+#### 10.9.2 问题原因
+1. **头部子菜单**：`web_server.py` 的 `handle_click_body_part()` 中生成头部子部位菜单时，代码只检查了 `HAIR` 和 `HORN`，没有处理 `HEAD` 本身的显示
+2. **臀部位置偏移**：`body_part_button.py` 的 `_calculate_hip_sub_parts()` 遍历 `HIP_SUB_PARTS` 计算扇形位置时，会把 `HIP` 也当作子部位来计算，覆盖了在主函数中正确计算的臀部中心位置
+
+#### 10.9.3 修复方案
+- [x] **头部子菜单修复**：`web_server.py`
+  - 在生成头部子部位菜单的循环中，添加对 `HEAD` 本身的处理
+  - `HEAD` 和 `HAIR` 始终显示，`HORN` 需要角色有兽角特征才显示
+- [x] **臀部位置修复**：`body_part_button.py`
+  - 在 `_calculate_hip_sub_parts()` 中过滤掉 `HIP` 本身
+  - 只计算真正的子部位（vagina、womb、anus 等）的扇形位置
+  - `HIP` 的位置保持在主函数中计算的正确位置
+
+#### 10.9.4 修改文件清单
+| 文件路径 | 修改内容 | 状态 |
+|---------|---------|------|
+| `Script/Core/web_server.py` | 在头部子菜单生成中添加对 `HEAD` 本身的处理 | ✅ |
+| `Script/System/Web_Draw_System/body_part_button.py` | 在 `_calculate_hip_sub_parts()` 中排除 `HIP` 本身 | ✅ |
+
+**实施记录**：
+- 修复后，点击头部展开子菜单时会显示"头部"、"头发"和"兽角"（如果有）
+- 臀部按钮位置恢复正常，不再被扇形排列计算覆盖
+
+### 10.10 修复子菜单点击复合部位本身不显示指令的问题 (2026-02-14)
+
+#### 10.10.1 问题描述
+- 在子菜单中点击"头部"或"臀部"选项后，没有弹出对应部位的指令菜单
+- 问题出现在没有选择交互小类的情况下
+
+#### 10.10.2 问题原因
+- 当从子菜单点击"头部"或"臀部"时，前端发送 `click_body_part` 事件
+- 后端检测到 `part_name == 'head'` 或 `'hip'`，且 `current_minor_type` 为 `None`
+- 后端再次展开子菜单，形成无限循环，而不是显示指令列表
+
+#### 10.10.3 修复方案
+- [x] **前端修复**：`new_ui_character.js`
+  - 在 `showHipSubMenu()` 和 `showHeadSubMenu()` 函数中
+  - 发送 `click_body_part` 事件时添加 `from_sub_menu: true` 标志
+- [x] **后端修复**：`web_server.py`
+  - 在 `handle_click_body_part()` 中接收 `from_sub_menu` 参数
+  - 当 `from_sub_menu` 为 `true` 时，即使点击的是复合部位，也直接获取指令列表而不展开子菜单
+
+#### 10.10.4 修改文件清单
+| 文件路径 | 修改内容 | 状态 |
+|---------|---------|------|
+| `static/js/new_ui_character.js` | 在子菜单按钮点击事件中添加 `from_sub_menu: true` 标志 | ✅ |
+| `Script/Core/web_server.py` | 检测 `from_sub_menu` 标志，跳过复合部位的子菜单展开逻辑 | ✅ |
+
+**实施记录**：
+- 修复后，从子菜单点击"头部"或"臀部"选项会正确显示该部位的指令列表
+- 复合部位的展开逻辑只在直接点击角色立绘上的按钮时触发
 
 ---
 

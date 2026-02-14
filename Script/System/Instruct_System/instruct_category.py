@@ -136,7 +136,7 @@ class BodyPart:
     
     # ========== 复合/虚拟部位 ==========
     HEAD = "head"
-    """ 头部 - 包含头发、脸部的综合区域，基于鼻子(0)正上方 """
+    """ 头部 - 包含头发、兽角的综合区域，基于鼻子(0)正上方 """
     
     HIP = "hip"
     """ 臀部 - 复合部位，点击时展开：小穴、子宫、后穴、尿道、尾巴 """
@@ -196,6 +196,7 @@ BODY_PART_NAMES = {
 
 # 臀部展开的子部位列表
 HIP_SUB_PARTS = [
+    BodyPart.HIP,
     BodyPart.VAGINA,
     BodyPart.WOMB,
     BodyPart.ANUS,
@@ -207,7 +208,8 @@ HIP_SUB_PARTS = [
 # 头部展开的子部位列表（头发默认显示，兽角需要角色有对应特征才显示）
 # 注意：兽耳已独立为单独的可点击部位，不再作为头部子部位
 HEAD_SUB_PARTS = [
-    BodyPart.HAIR,       # 头发（始终显示）
+    BodyPart.HEAD,       # 头部
+    BodyPart.HAIR,       # 头发
     BodyPart.HORN,       # 兽角（需要角色有兽角特征）
 ]
 

@@ -457,9 +457,9 @@ function showHipSubMenu(subParts) {
         btn.dataset.partId = subPart.part_id;
         btn.onclick = (e) => {
             e.stopPropagation();
-            // 点击子部位时发送事件
+            // 点击子部位时发送事件，添加 from_sub_menu 标志
             if (socket && socket.connected) {
-                socket.emit('click_body_part', { part_name: subPart.part_id });
+                socket.emit('click_body_part', { part_name: subPart.part_id, from_sub_menu: true });
             }
             menu.remove();
         };
@@ -535,9 +535,9 @@ function showHeadSubMenu(subParts, hasBeastEars, hasHorn) {
         btn.dataset.partId = subPart.part_id;
         btn.onclick = (e) => {
             e.stopPropagation();
-            // 点击子部位时发送事件
+            // 点击子部位时发送事件，添加 from_sub_menu 标志
             if (socket && socket.connected) {
-                socket.emit('click_body_part', { part_name: subPart.part_id });
+                socket.emit('click_body_part', { part_name: subPart.part_id, from_sub_menu: true });
             }
             menu.remove();
         };
