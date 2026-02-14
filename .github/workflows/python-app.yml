@@ -81,6 +81,8 @@ jobs:
           Remove-Item erArk_Lite/image/场景 -Recurse -Force -ErrorAction SilentlyContinue
           Remove-Item erArk_Lite/image/断面图 -Recurse -Force -ErrorAction SilentlyContinue
           Remove-Item erArk_Lite/image/立绘 -Recurse -Force -ErrorAction SilentlyContinue
+          # 先创建场景文件夹
+          New-Item -ItemType Directory -Force erArk_Lite/image/场景
           # 保留场景的基础图片
           Copy-Item erArk/image/场景/宿舍_白天.png erArk_Lite/image/场景/ -Force
           # 打包轻量版
