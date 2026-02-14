@@ -9,6 +9,7 @@ from Script.Core import (
     game_type,
     py_cmd,
     flow_handle,
+    constant,
 )
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_premise, handle_ability, second_behavior
@@ -253,6 +254,7 @@ class Characterabi_show_Text:
             py_cmd.clr_cmd()
             line_feed.draw()
             if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def mark_down_show(self, ability_id: int):

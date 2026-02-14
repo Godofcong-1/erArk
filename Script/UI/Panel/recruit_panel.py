@@ -478,6 +478,7 @@ class Recruit_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def select_npc_position(self):

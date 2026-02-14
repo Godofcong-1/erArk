@@ -258,6 +258,7 @@ class BuyItemByItemNameDraw:
                 line_feed.draw()
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def buy_many(self):

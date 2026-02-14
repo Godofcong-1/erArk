@@ -338,6 +338,7 @@ class SeeFoodListByFoodNameDraw:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             cache.rhodes_island.dining_hall_data.setdefault(self.cid, {})
 

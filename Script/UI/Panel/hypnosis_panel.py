@@ -1,8 +1,7 @@
-import re
 from typing import List
 from types import FunctionType
 import random
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Design import handle_premise, handle_talent, map_handle, handle_ability
 from Script.UI.Moudle import draw
 from Script.Config import game_config, normal_config
@@ -272,6 +271,7 @@ class Chose_Hypnosis_Type_Panel:
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
             if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def change_hypnosis_type(self, hypnosis_type_cid):
