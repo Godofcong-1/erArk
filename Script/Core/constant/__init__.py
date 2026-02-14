@@ -102,8 +102,8 @@ class Panel:
     """ 香薰疗愈面板 """
     NATION_DIPLOMACY = 31
     """ 势力外交面板 """
-    # CHAT_AI_SETTING = 32
-    # """ 文本生成AI设置面板 """
+    CHAT_WITH_AI = 32
+    """ 文本生成AI """
     PHYSICAL_CHECK_AND_MANAGE = 35
     """ 身体检查与管理面板 """
     SAVE = 36

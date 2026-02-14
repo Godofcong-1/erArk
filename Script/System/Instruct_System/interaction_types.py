@@ -29,25 +29,25 @@ class InteractionMajorType:
     按照使用的器官/工具分类
     所有值均为小写英语字符串标识符
     """
-    
+
     MOUTH = "mouth"
     """ 嘴类：使用口腔进行的交互 """
-    
+
     HAND = "hand"
     """ 手类：使用手进行的交互 """
-    
+
     SEX = "sex"
     """ 性爱类：与性爱直接相关的交互（开始/结束、基础动作等） """
-    
+
     PENIS = "penis"
     """ 阴茎类：使用阴茎进行的交互 """
-    
+
     TOOL = "tool"
     """ 道具类：使用道具/药物进行的交互 """
-    
+
     ARTS = "arts"
     """ 技艺类：使用源石技艺进行的交互 """
-    
+
     OTHER = "other"
     """ 其他：不属于上述类别的交互 """
 
@@ -58,80 +58,89 @@ class InteractionMinorType:
     每个大类下的子分类
     所有值均为小写英语字符串标识符
     """
-    
+
     # ========== 嘴类（MOUTH='mouth'）小类 ==========
     MOUTH_TALK = "mouth_talk"
     """ 嘴-对话：说话、聊天等语言交流 """
-    
+
     MOUTH_KISS = "mouth_kiss"
     """ 嘴-亲吻：亲吻、接吻等 """
-    
+
     MOUTH_LICK = "mouth_lick"
     """ 嘴-舔吸：舔、吸等口部动作 """
-    
+
     # ========== 手类（HAND='hand'）小类 ==========
     HAND_DAILY = "hand_daily"
     """ 手-日常：日常类的手部交互 """
-    
+
     HAND_PLAY = "hand_play"
     """ 手-娱乐：娱乐类的手部交互 """
-    
+
     HAND_WORK = "hand_work"
     """ 手-工作：工作类的手部交互 """
-    
+
     HAND_SCENE = "hand_scene"
     """ 手-场景：场景类的手部交互 """
-    
+
     HAND_TOUCH = "hand_touch"
     """ 手-抚摸：摸头、抚摸身体等 """
-    
+
     HAND_SLAP = "hand_slap"
     """ 手-拍打：打屁股、掌掴等 """
-    
+
     HAND_DRESS = "hand_dress"
     """ 手-穿脱：穿脱衣物 """
-    
+
     # ========== 性爱类（SEX='sex'）小类 ==========
     SEX_START_END = "sex_start_end"
     """ 性爱-开始与结束：邀请H、结束H等开始和结束性行为的交互 """
-    
+
     SEX_BASE = "sex_base"
     """ 性爱-基础：与性爱直接相关的基础交互 """
-    
+
     # ========== 阴茎类（PENIS='penis'）小类 ==========
     PENIS_RUB = "penis_rub"
     """ 阴茎-摩擦：素股、乳交等 """
-    
+
     PENIS_INSERT = "penis_insert"
     """ 阴茎-插入：各种体位的性交 """
-    
+
     # ========== 道具类（TOOL='tool'）小类 ==========
     TOOL_BASE = "tool_base"
     """ 道具-药物：基础 """
-    
+
     TOOL_DRUG = "tool_drug"
     """ 道具-药物：使用药物 """
-    
+
     TOOL_ITEM = "tool_item"
     """ 道具-道具：使用道具 """
-    
+
     # ========== 技艺类（ARTS='arts'）小类 ==========
     ARTS_BASE = "arts_base"
     """ 技艺-基础 """
-    
+
     ARTS_HORMONE = "arts_hormone"
     """ 技艺-信息素：使用信息素技艺 """
-    
+
     ARTS_XRAY = "arts_xray"
     """ 技艺-透视：使用透视技艺 """
-    
+
     ARTS_HYPNOSIS = "arts_hypnosis"
     """ 技艺-催眠：使用催眠技艺 """
-    
+
     ARTS_TIME_STOP = "arts_time_stop"
     """ 技艺-时停：使用时间停止技艺 """
-    
+
     # ========== 其他类（OTHER='other'）小类 ==========
+    OTHER_ATTRIBUTE = "other_attribute"
+    """ 其他-属性：与属性查看或调整相关的交互 """
+
+    OTHER_SAVE = "other_save"
+    """ 其他-存档：与存档相关的交互 """
+
+    OTHER_SETTING = "other_setting"
+    """ 其他-设置：与系统设置相关的交互 """
+
     OTHER_MISC = "other_misc"
     """ 其他-杂项：不属于上述类别的交互 """
 
@@ -189,6 +198,9 @@ MINOR_TYPE_NAMES = {
     InteractionMinorType.ARTS_HYPNOSIS: "催眠",
     InteractionMinorType.ARTS_TIME_STOP: "时停",
     # 其他类
+    InteractionMinorType.OTHER_ATTRIBUTE: "属性",
+    InteractionMinorType.OTHER_SAVE: "存档",
+    InteractionMinorType.OTHER_SETTING: "设置",
     InteractionMinorType.OTHER_MISC: "杂项",
 }
 
@@ -229,6 +241,9 @@ MAJOR_TO_MINOR_TYPES = {
         InteractionMinorType.ARTS_TIME_STOP,
     ],
     InteractionMajorType.OTHER: [
+        InteractionMinorType.OTHER_ATTRIBUTE,
+        InteractionMinorType.OTHER_SAVE,
+        InteractionMinorType.OTHER_SETTING,
         InteractionMinorType.OTHER_MISC,
     ],
 }
@@ -258,4 +273,3 @@ def get_minor_type_name(minor_type: str) -> str:
 def get_major_type_name(major_type: str) -> str:
     """获取大类的中文名称"""
     return MAJOR_TYPE_NAMES.get(major_type, "未知")
-

@@ -249,11 +249,11 @@ def nation_diplomacy_flow():
     now_panel = nation_diplomacy_panel.Nation_Diplomacy_Panel(width)
     now_panel.draw()
 
-# @handle_panel.add_panel(constant.Panel.CHAT_AI_SETTING)
-# def chat_ai_setting_flow():
-#     """文本生成AI设置面板"""
-#     now_panel = chat_ai_setting.Chat_Ai_Setting_Panel(width)
-#     now_panel.draw()
+@handle_panel.add_panel(constant.Panel.CHAT_WITH_AI)
+def chat_ai_setting_flow():
+    """文本生成AI面板"""
+    from Script.Design import handle_chat_ai
+    handle_chat_ai.direct_chat_with_ai()
 
 @handle_panel.add_panel(constant.Panel.PHYSICAL_CHECK_AND_MANAGE)
 def physical_check_and_manage_flow():

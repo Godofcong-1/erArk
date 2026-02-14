@@ -464,73 +464,60 @@ def handle_chat():
     target_data.action_info.talk_count += 1
     # print("聊天计数器+1，现在为 ：",target_data.action_info.talk_count)
 
-
 @add_instruct(constant.Instruct.BUY_H_ITEM)
 def handle_buy_h_item():
     """处理购买成人用品指令"""
     cache.now_panel_id = constant.Panel.H_ITEM_SHOP
-
 
 @add_instruct(constant.Instruct.ITEM)
 def handle_item():
     """处理道具指令"""
     cache.now_panel_id = constant.Panel.ITEM
 
-
 @add_instruct(constant.Instruct.SAVE)
 def handle_save():
     """处理读写存档指令"""
     cache.now_panel_id = constant.Panel.SAVE
-
 
 @add_instruct(constant.Instruct.ABL_UP)
 def handle_abl_up():
     """处理属性上升"""
     cache.now_panel_id = constant.Panel.ABL_UP
 
-
 @add_instruct(constant.Instruct.OWNER_ABL_UP)
 def handle_owner_abl_up():
     """处理自身属性上升"""
     cache.now_panel_id = constant.Panel.OWNER_ABL_UP
-
 
 @add_instruct(constant.Instruct.DEBUG_MODE_ON)
 def debug_mode():
     """处理开启DEBUG模式指令"""
     cache.debug_mode = True
 
-
 @add_instruct(constant.Instruct.DEBUG_MODE_OFF)
 def debug_mode_off():
     """处理关闭DEBUG模式指令"""
     cache.debug_mode = False
-
 
 @add_instruct(constant.Instruct.DEBUG_ADJUST)
 def debug_adjust():
     """处理debug数值调整指令"""
     cache.now_panel_id = constant.Panel.DEBUG_ADJUST
 
-
 @add_instruct(constant.Instruct.SYSTEM_SETTING)
 def handle_system_setting():
     """系统设置"""
     cache.now_panel_id = constant.Panel.SYSTEM_SETTING
-
 
 @add_instruct(constant.Instruct.TALK_QUICK_TEST)
 def handle_talk_quick_test():
     """快速测试口上"""
     cache.now_panel_id = constant.Panel.TALK_QUICK_TEST
 
-
 @add_instruct(constant.Instruct.CHAT_WITH_AI)
 def handle_chat_with_ai():
     """与文本生成AI对话"""
-    from Script.Design import handle_chat_ai
-    handle_chat_ai.direct_chat_with_ai()
-
+    cache.now_panel_id = constant.Panel.CHAT_WITH_AI
 
 @add_instruct(constant.Instruct.TEACH)
 def handle_teach():
