@@ -74,11 +74,14 @@ body {
 
 /* 游戏主容器 */
 .game-container {
+    display: flex; /* 定义为 flex 容器 */
+    flex-direction: column; /* 内容垂直排列 */
     background-color: #000;
     padding: 15px;
     border: 1px solid #333;
-    flex-grow: 1;
-    min-height: 600px;
+    /* Removed flex-grow and min-height to fit content */
+    /* flex-grow: 1; */
+    /* min-height: 600px; */
     max-height: 80vh; /* 添加最大高度限制，确保在大屏幕上也能正常滚动 */
     white-space: pre-wrap;
     line-height: 0.2em;
@@ -897,7 +900,7 @@ body {
 /* ========== 新UI容器样式（IN_SCENE面板） ========== */
 .new-ui-container {
     width: 100%;
-    min-height: 600px;
+    /* min-height: 400px; Removed to fix height issue */
     background-color: #0a0a0a;
     background-image: repeating-linear-gradient(
         45deg,
@@ -1653,7 +1656,7 @@ body {
     flex: 1;
     display: flex;
     position: relative;
-    min-height: 800px;
+    /* min-height: 400px; Removed to fix height issue */
     background-color: #111;
     border-radius: 4px;
 }

@@ -2993,6 +2993,10 @@ children.forEach(child => {
   - 添加边框和半透明背景增强科技感
   - 为不同类型的状态条（HP/MP/理智/精液）设置专属颜色
 
+#### 11.1.3 容器布局调整
+- [x] 去掉 `game-container` 内 `game-content` 上下方的多余空白区域（移除 `flex-grow` 和 `min-height`）
+- [x] 移除新UI组件 `.new-ui-container` 和 `.new-ui-main-scene` 的强制 `min-height`，彻底消除大屏幕下的底部空白
+
 ---
 
 ## 附录A：关键文件清单
