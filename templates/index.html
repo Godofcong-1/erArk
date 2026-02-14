@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>erArk</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
     <!-- 添加Socket.IO客户端库 -->
     <script src="https://cdn.socket.io/4.5.4/socket.io.min.js"></script>
 </head>
@@ -44,6 +44,14 @@
             <button id="skip-wait-btn" class="scroll-button" title="跳过所有等待，直接返回主界面">跳过输入等待</button>
         </div>
     </div>
+    <!-- JavaScript 模块 (按依赖顺序加载) -->
+    <script src="/static/js/device_utils.js"></script>
+    <script src="/static/js/tooltip_manager.js"></script>
+    <script src="/static/js/ui_managers.js"></script>
+    <script src="/static/js/new_ui_components.js"></script>
+    <script src="/static/js/new_ui_interaction.js"></script>
+    <script src="/static/js/new_ui_character.js"></script>
+    <!-- 核心游戏脚本 (依赖上述模块) -->
     <script src="/static/game.js"></script>
 </body>
 </html>

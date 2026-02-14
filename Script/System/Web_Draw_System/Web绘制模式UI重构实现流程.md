@@ -2340,7 +2340,8 @@ c:/code/erArk/.conda/python.exe tools/body_part_editor.py
 **废弃内容**：
 - ~~动态模板路由(9.2方案)~~ → 已回滚
 - ~~页面自动刷新机制~~ → 已移除
-- `game_main.html` → 保留作为参考，但不再用于路由
+- ~~`game_main.html`~~ → 已删除（见9.7节）
+- ~~`game_main.css`~~ → 已删除（见9.7节）
 
 #### 9.3.6 验证步骤
 - [x] 重新启动游戏
@@ -2561,6 +2562,83 @@ c:/code/erArk/.conda/python.exe tools/body_part_editor.py
   - 生成排序映射 `_INSTRUCT_ORDER_MAP`：遍历 `Instruct.__dict__` 获取定义顺序（使用 `__dict__` 而非 `dir()` 以保持正确顺序，因为 `dir()` 返回字母序）
   - 添加辅助函数 `_get_instruct_sort_key(instruct_id)` 获取排序键值
   - 在 `get_instructs_by_minor_type()` 和 `get_instructs_by_body_part()` 函数返回前使用 `result.sort(key=_get_instruct_sort_key)` 排序
+
+### 9.7 静态资源目录整理 ✅（2026-02-14）
+
+#### 9.7.1 问题背景
+- `templates/game_main.html` 和 `static/css/game_main.css` 在9.3节中被废弃
+- 文档标记"保留作为参考"，但实际上已无任何代码引用
+- `static/style.css` 位于 `static/` 根目录，未与其他CSS文件一起放在 `css/` 子目录中
+
+#### 9.7.2 整理操作
+- [x] 删除 `templates/game_main.html`（已确认不存在，可能之前已删除）
+- [x] 删除 `static/css/game_main.css`（已确认不存在，可能之前已删除）
+- [x] 移动 `static/style.css` → `static/css/style.css`
+- [x] 更新 `templates/index.html` 中的引用路径：
+  - 旧：`href="/static/style.css"`
+  - 新：`href="/static/css/style.css"`
+
+#### 9.7.3 整理后的 static 目录结构
+```
+static/
+├── assets/          # 静态资源（图片等）
+├── css/             # 所有CSS样式文件
+│   └── style.css    # 主样式文件（从根目录移入）
+├── fonts/           # 字体文件
+├── js/              # JavaScript模块
+│   ├── game_renderer.js
+│   ├── interaction_manager.js
+│   ├── ui_components.js
+│   └── websocket_handler.js
+├── transcrypt/      # Transcrypt编译输出
+└── game.js          # 主JavaScript文件
+```
+
+#### 9.7.4 废弃文件清单
+以下文件已从项目中移除：
+- ~~`templates/game_main.html`~~ - 废弃的专用UI模板
+- ~~`static/css/game_main.css`~~ - 废弃的专用UI样式
+
+**整理日期**：2026年2月14日
+
+---
+
+### 9.8 JavaScript 模块化拆分 ✅（2026-02-14）
+
+#### 9.8.1 问题背景
+`static/game.js` 文件过大（6258行，约200KB），包含所有前端逻辑，不利于维护和理解。
+
+#### 9.8.2 模块化方案
+将 game.js 按功能域拆分为独立模块，放置于 `static/js/` 目录：
+
+| 模块文件 | 行数 | 功能描述 |
+|---------|------|---------|
+| `device_utils.js` | 377 | 设备检测（DeviceDetector）、自动缩放（AutoScaleManager） |
+| `tooltip_manager.js` | 201 | 工具提示管理（TooltipManager） |
+| `ui_managers.js` | 460 | UI管理器（LandscapeManager、WaitManager、ScrollManager） |
+| `new_ui_components.js` | 1255 | 新UI组件（renderNewUIContent、玩家信息、对话框、附加信息面板） |
+| `new_ui_interaction.js` | 895 | 交互面板（头像面板、交互类型面板、分类选择） |
+| `new_ui_character.js` | 1241 | 角色显示（立绘渲染、身体部位交互层、目标状态面板） |
+| `game.js` (核心) | 1847 | 核心功能（WebSocket、renderGameState、createGameElement、初始化） |
+
+**总计**：6276 行（略高于原始，因添加模块注释头部）
+
+#### 9.8.3 加载顺序
+在 `templates/index.html` 中按依赖顺序加载：
+```html
+<script src="/static/js/device_utils.js"></script>
+<script src="/static/js/tooltip_manager.js"></script>
+<script src="/static/js/ui_managers.js"></script>
+<script src="/static/js/new_ui_components.js"></script>
+<script src="/static/js/new_ui_interaction.js"></script>
+<script src="/static/js/new_ui_character.js"></script>
+<script src="/static/game.js"></script>
+```
+
+#### 9.8.4 拆分工具
+创建 `tools/split_game_js.py` 脚本用于后续类似拆分操作。
+
+**完成日期**：2026年2月14日
 
 ---
 
