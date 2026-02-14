@@ -929,9 +929,11 @@ body {
     flex-direction: column;
     /* 使用视口高度减去页面其他元素的高度（页头约60px + 页脚及输入区约150px + padding等约40px）*/
     height: calc(100vh - 250px);
-    /* 备用最小高度作为保底，需要容纳顶部信息区+主场景区+对话框区 */
+    /* 备用最小高度作为保底，需要容纳顶部信息区+主场景区（对话框为绝对定位不占用空间） */
     min-height: 820px;
     gap: 8px;
+    /* 作为对话框绝对定位的参考容器 */
+    position: relative;
 }
 
 /* 顶部信息区 */
@@ -3027,9 +3029,14 @@ body {
 }
 
 /* ========== 对话框区域样式 ========== */
-/* 对话框容器 - 位于画面最下方 */
+/* 对话框容器 - 使用绝对定位覆盖在主场景区域底部，不影响角色立绘 */
 .new-ui-dialog-box {
-    position: relative;
+    /* 绝对定位，固定在布局容器底部 */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 100; /* 确保在角色立绘和其他元素上方 */
     width: 100%;
     min-height: 120px;
     padding: 15px 20px;

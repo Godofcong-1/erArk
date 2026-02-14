@@ -1226,6 +1226,13 @@
   - `.new-ui-main-scene`：
     - 设置 `min-height: 620px;` 作为备用最小高度（确保左侧交互类型按钮完整显示）
     - 添加 `overflow: visible;` 确保绝对定位子元素不被截断
+- **修复对话框挤压立绘问题**（2026-02-15新增）：对话框使用相对定位（`position: relative`）时会参与flex布局，显示时会挤压角色立绘区域。解决方案：
+  - `.new-ui-layout`：添加 `position: relative;` 作为对话框的定位上下文
+  - `.new-ui-dialog-box`：
+    - 改为 `position: absolute;` 不参与flex布局
+    - 添加 `left: 0; right: 0; bottom: 0;` 定位到底部全宽
+    - 添加 `z-index: 100;` 确保覆盖在其他内容之上
+  - `.new-ui-container`：将 `min-height` 从 820px 调整为 720px（对话框不再占用flex空间）
 
 #### 4.2.4 角色立绘透明区域裁切（2026-02-08新增）✅
 
