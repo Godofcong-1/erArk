@@ -247,6 +247,130 @@ class ImageProcessor:
         bool -- PIL是否可用
         """
         return PIL_AVAILABLE
+    
+    def crop_head_from_fullbody(self, image_path: str, nose_x: float, nose_y: float) -> Optional[Tuple[bytes, dict]]:
+        """
+        从全身图中截取头像
+        
+        截取逻辑：
+        - 头像为正方形
+        - 正方形下边中点对应角色身体部位的鼻子向下偏移图像高度的4%
+        - 正方形上边中点对应角色身体部位的鼻子向上偏移图像高度的6%
+        - 正方形边长 = 图像高度的10%（4% + 6%）
+        - 正方形中心 X 坐标 = 鼻子 X 坐标
+        
+        Keyword arguments:
+        image_path -- 全身图的完整路径
+        nose_x -- 鼻子位置的 X 坐标（归一化值 0.0~1.0）
+        nose_y -- 鼻子位置的 Y 坐标（归一化值 0.0~1.0）
+        
+        Returns:
+        Tuple[bytes, dict] | None -- (截取后的头像字节数据, 元数据字典) 或 None（如果处理失败）
+        元数据字典包含：
+            - original_width: 原始图片宽度
+            - original_height: 原始图片高度
+            - avatar_size: 头像尺寸（正方形边长）
+            - crop_box: 截取区域 (left, top, right, bottom)
+        """
+        if not PIL_AVAILABLE:
+            return None
+        
+        # 规范化路径
+        normalized_path = os.path.normpath(image_path)
+        
+        # 创建缓存 key（包含鼻子位置信息，避免同一图片不同位置的冲突）
+        cache_key = f"{normalized_path}_head_{nose_x:.4f}_{nose_y:.4f}"
+        
+        # 检查缓存
+        if cache_key in self._cache:
+            self._cache.move_to_end(cache_key)
+            cached_data = self._cache[cache_key]
+            image_bytes, original_size, cropped_size, offset = cached_data
+            metadata = {
+                "original_width": original_size[0],
+                "original_height": original_size[1],
+                "avatar_size": cropped_size[0],  # 正方形，宽高相同
+                "crop_box": (offset[0], offset[1], offset[0] + cropped_size[0], offset[1] + cropped_size[1]),
+            }
+            return image_bytes, metadata
+        
+        # 缓存未命中，进行截取处理
+        try:
+            if not os.path.exists(normalized_path):
+                print(f"[图片处理器] 全身图文件不存在: {normalized_path}")
+                return None
+            
+            with Image.open(normalized_path) as img:
+                original_width, original_height = img.size
+                
+                # 确保图片有alpha通道
+                if img.mode != 'RGBA':
+                    img = img.convert('RGBA')
+                
+                # 将归一化坐标转换为像素坐标
+                nose_x_px = nose_x * original_width
+                nose_y_px = nose_y * original_height
+                
+                # 计算截取区域
+                # 正方形边长 = 图像高度的10%
+                avatar_size = int(original_height * 0.10)
+                
+                # 上边中点 = 鼻子Y - 图像高度的6%
+                top = int(nose_y_px - original_height * 0.06)
+                # 下边中点 = 鼻子Y + 图像高度的4%
+                bottom = top + avatar_size
+                
+                # 左右边界（以鼻子X为中心）
+                left = int(nose_x_px - avatar_size / 2)
+                right = left + avatar_size
+                
+                # 边界检查，确保不超出图片范围
+                if left < 0:
+                    left = 0
+                    right = avatar_size
+                if right > original_width:
+                    right = original_width
+                    left = original_width - avatar_size
+                if top < 0:
+                    top = 0
+                    bottom = avatar_size
+                if bottom > original_height:
+                    bottom = original_height
+                    top = original_height - avatar_size
+                
+                # 再次确保边界有效
+                left = max(0, left)
+                top = max(0, top)
+                right = min(original_width, right)
+                bottom = min(original_height, bottom)
+                
+                # 截取头像区域
+                cropped_img = img.crop((left, top, right, bottom))
+                cropped_size = cropped_img.size
+                
+                # 将截取后的图片转换为PNG字节数据
+                buffer = io.BytesIO()
+                cropped_img.save(buffer, format='PNG', optimize=True)
+                image_bytes = buffer.getvalue()
+                
+                # 添加到缓存
+                self._add_to_cache(cache_key, image_bytes, 
+                                   (original_width, original_height), 
+                                   cropped_size, (left, top))
+                
+                # 构建元数据
+                metadata = {
+                    "original_width": original_width,
+                    "original_height": original_height,
+                    "avatar_size": cropped_size[0],
+                    "crop_box": (left, top, right, bottom),
+                }
+                
+                return image_bytes, metadata
+                
+        except Exception as e:
+            print(f"[图片处理器] 截取头像失败: {normalized_path}, 错误: {e}")
+            return None
 
 
 # 全局单例实例
@@ -281,3 +405,18 @@ def is_image_processor_available() -> bool:
     bool -- 是否可用
     """
     return image_processor.is_available()
+
+
+def crop_head_from_fullbody(image_path: str, nose_x: float, nose_y: float) -> Optional[Tuple[bytes, dict]]:
+    """
+    便捷函数：从全身图中截取头像
+    
+    Keyword arguments:
+    image_path -- 全身图的完整路径
+    nose_x -- 鼻子位置的 X 坐标（归一化值 0.0~1.0）
+    nose_y -- 鼻子位置的 Y 坐标（归一化值 0.0~1.0）
+    
+    Returns:
+    Tuple[bytes, dict] | None -- (截取后的头像字节数据, 元数据) 或 None
+    """
+    return image_processor.crop_head_from_fullbody(image_path, nose_x, nose_y)

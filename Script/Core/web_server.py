@@ -705,6 +705,77 @@ def serve_cropped_image(filename):
     
     return response
 
+@app.route('/api/avatar_image/<character_name>')
+def serve_avatar_image(character_name):
+    """
+    提供角色头像图片
+    
+    参数：
+    character_name (str): 角色名称
+    
+    返回值类型：Response对象
+    功能描述：
+    1. 优先查找现成的头部图片文件
+    2. 如果没有现成文件，从全身图中根据鼻子位置截取头像
+    3. 截取逻辑：正方形，下边中点=鼻子向下4%，上边中点=鼻子向上6%
+    
+    响应头包含：
+    - X-Avatar-Source: 头像来源（file/cropped）
+    - X-Avatar-Size: 头像尺寸
+    """
+    from flask import send_file, abort, make_response
+    from Script.System.Web_Draw_System.image_processor import crop_head_from_fullbody, is_image_processor_available
+    from Script.System.Web_Draw_System import character_renderer
+    import io
+    
+    # 获取角色头像信息
+    renderer = character_renderer.CharacterRenderer()
+    avatar_info = renderer.get_avatar_info(character_name)
+    
+    # 如果有现成的头像文件，直接返回
+    if avatar_info.get("has_avatar_file"):
+        avatar_path = avatar_info.get("avatar_path", "")
+        if avatar_path and os.path.exists(avatar_path):
+            response = make_response(send_file(avatar_path, mimetype='image/png'))
+            response.headers['X-Avatar-Source'] = 'file'
+            return response
+    
+    # 没有现成头像，尝试从全身图截取
+    if not avatar_info.get("need_crop"):
+        abort(404)
+    
+    full_body_path = avatar_info.get("full_body_path", "")
+    if not full_body_path or not os.path.exists(full_body_path):
+        abort(404)
+    
+    # 检查图片处理功能是否可用
+    if not is_image_processor_available():
+        abort(500)
+    
+    # 从全身图截取头像
+    nose_x = avatar_info.get("nose_x", 0.5)
+    nose_y = avatar_info.get("nose_y", 0.25)
+    
+    result = crop_head_from_fullbody(full_body_path, nose_x, nose_y)
+    
+    if result is None:
+        abort(500)
+    
+    image_bytes, metadata = result
+    
+    # 创建响应
+    response = make_response(send_file(
+        io.BytesIO(image_bytes),
+        mimetype='image/png',
+        download_name=f'{character_name}_avatar.png'
+    ))
+    
+    # 添加元数据到响应头
+    response.headers['X-Avatar-Source'] = 'cropped'
+    response.headers['X-Avatar-Size'] = str(metadata.get('avatar_size', 0))
+    
+    return response
+
 @app.route('/api/get_font_config')
 def get_font_config():
     """

@@ -846,6 +846,33 @@
   - `.all-characters-item`：角色项样式，与头像区一致
   - 滚动条样式：统一深色风格
 
+#### 3.4.6 头像图片显示（2026-02-14 新增）
+- [x] 后端实现：
+  - 在 `Script/System/Web_Draw_System/image_processor.py` 添加 `crop_head_from_fullbody()` 方法
+  - 截取逻辑：正方形，下边中点=鼻子向下偏移图像高度4%，上边中点=鼻子向上偏移图像高度6%
+  - 正方形边长 = 图像高度的10%，中心X坐标 = 鼻子X坐标
+  - 支持LRU缓存，缓存key包含图片路径和鼻子位置信息
+  - 在 `Script/System/Web_Draw_System/character_renderer.py` 添加：
+    - `_get_nose_position()` - 从角色的body.json中获取鼻子位置（归一化坐标）
+    - `get_avatar_info()` - 获取角色头像信息（优先使用现成文件，否则返回截取信息）
+  - 修改 `get_scene_characters_avatars()` 返回包含 `avatar_info` 字段的完整头像信息
+  - 在 `Script/Core/web_server.py` 添加 `/api/avatar_image/<character_name>` API端点：
+    - 优先返回现成的头像文件（`{角色名}_头部.png`）
+    - 如果没有现成文件，从全身图中截取头像并返回
+    - 响应头包含 `X-Avatar-Source`（file/cropped）和 `X-Avatar-Size`
+- [x] 前端实现：
+  - 修改 `static/js/new_ui_interaction.js` 中的 `createAvatarPanel()` 函数：
+    - 在每个 `.avatar-item` 中添加 `<img class="avatar-image">` 元素
+    - 图片src使用 `/api/avatar_image/{角色名}` API端点
+    - 图片加载失败时隐藏图片元素
+  - 修改 `createAllCharactersPanel()` 函数同样添加头像图片支持
+- [x] CSS样式（`static/css/style.css`）：
+  - `.avatar-image`：头像图片样式，40x40px圆形显示，带边框
+  - `.avatar-item` 尺寸调整为 56x72px 以容纳头像图片
+  - `.all-characters-image`：全部角色面板头像图片样式，48x48px圆形显示
+  - `.all-characters-item` 尺寸调整为 64x80px
+  - 悬停时边框颜色变化效果
+
 ### 3.5 交互对象信息区（右侧）
 
 #### 3.5.1 HTML结构

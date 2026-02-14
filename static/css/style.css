@@ -1419,15 +1419,15 @@ body {
 }
 
 .avatar-item {
-    width: 48px;
-    min-height: 48px;
+    width: 56px;
+    min-height: 62px;
     background-color: #333;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 4px;
+    padding: 3px;
     cursor: pointer;
     transition: background-color 0.2s;  /* 只过渡背景色，避免transform导致闪烁 */
     position: relative;
@@ -1443,6 +1443,22 @@ body {
 .avatar-item:hover {
     background-color: #444;
     /* 移除transform: scale，防止闪烁 */
+}
+
+/* 头像图片样式 */
+.avatar-image {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 2px;
+    border: 2px solid #555;
+    background-color: #222;
+}
+
+.avatar-item:hover .avatar-image {
+    border-color: #888;
 }
 
 /* 头像区分页按钮行 */
@@ -1556,14 +1572,14 @@ body {
 
 /* 单个角色项 */
 .all-characters-item {
-    width: 56px;
-    min-height: 48px;
+    width: 64px;
+    min-height: 80px;
     background-color: #333;
     border-radius: 8px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
@@ -1571,6 +1587,22 @@ body {
 
 .all-characters-item:hover {
     background-color: #555;
+}
+
+/* 全部角色面板头像图片样式 */
+.all-characters-image {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: center;
+    margin-bottom: 2px;
+    border: 2px solid #555;
+    background-color: #222;
+}
+
+.all-characters-item:hover .all-characters-image {
+    border-color: #888;
 }
 
 /* 角色名称 */

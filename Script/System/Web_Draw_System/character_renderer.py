@@ -192,6 +192,80 @@ class CharacterRenderer:
             return head_path
         
         return ""
+    
+    def _get_nose_position(self, character_name: str) -> tuple:
+        """
+        获取角色的鼻子位置（归一化坐标）
+        
+        Keyword arguments:
+        character_name -- 角色名称
+        
+        Returns:
+        tuple -- (nose_x, nose_y) 归一化坐标，如果找不到则返回 (0.5, 0.25) 作为默认值
+        """
+        # 尝试加载 body.json 文件
+        json_path = f"{self.PORTRAIT_DIR}/{character_name}/{character_name}_body.json"
+        if not os.path.exists(json_path):
+            json_path = f"{self.SPECIAL_NPC_DIR}/{character_name}/{character_name}_body.json"
+        
+        if os.path.exists(json_path):
+            try:
+                with open(json_path, 'r', encoding='utf-8') as f:
+                    raw_data = json.load(f)
+                    landmarks = raw_data.get("landmarks", [])
+                    for lm in landmarks:
+                        if lm.get("name") == "nose":
+                            return (lm.get("x", 0.5), lm.get("y", 0.25))
+            except (json.JSONDecodeError, IOError):
+                pass
+        
+        # 默认位置：假设鼻子大约在图像中心偏左、上方1/4处
+        return (0.5, 0.25)
+    
+    def get_avatar_info(self, character_name: str) -> dict:
+        """
+        获取角色头像信息
+        
+        优先使用现成的头像文件，如果没有则返回截取信息
+        
+        Keyword arguments:
+        character_name -- 角色名称
+        
+        Returns:
+        dict -- 头像信息字典，包含：
+            - has_avatar_file: 是否有现成头像文件
+            - avatar_path: 头像文件路径（如果有）
+            - full_body_path: 全身图路径（用于截取）
+            - nose_x: 鼻子X坐标（归一化）
+            - nose_y: 鼻子Y坐标（归一化）
+            - need_crop: 是否需要从全身图截取
+        """
+        result = {
+            "has_avatar_file": False,
+            "avatar_path": "",
+            "full_body_path": "",
+            "nose_x": 0.5,
+            "nose_y": 0.25,
+            "need_crop": False
+        }
+        
+        # 先检查是否有现成的头像文件
+        head_path = self._find_head_image(character_name)
+        if head_path:
+            result["has_avatar_file"] = True
+            result["avatar_path"] = head_path
+            return result
+        
+        # 没有现成头像，尝试获取全身图和鼻子位置
+        full_body_path = self._find_full_body_image(character_name)
+        if full_body_path and os.path.exists(full_body_path):
+            nose_x, nose_y = self._get_nose_position(character_name)
+            result["full_body_path"] = full_body_path
+            result["nose_x"] = nose_x
+            result["nose_y"] = nose_y
+            result["need_crop"] = True
+        
+        return result
 
     def _load_body_parts_data(self, character_name: str, has_beast_ears: bool = False) -> dict:
         """
@@ -336,7 +410,17 @@ class CharacterRenderer:
         exclude_ids -- 要排除的角色ID列表
         
         Returns:
-        List[dict] -- 角色头像信息列表
+        List[dict] -- 角色头像信息列表，每个元素包含：
+            - id: 角色ID
+            - name: 角色名称
+            - avatar: 头像文件路径（如果有现成文件）
+            - has_dialog: 是否有待显示的对话
+            - avatar_info: 头像详细信息（用于动态截取）
+                - has_avatar_file: 是否有现成头像文件
+                - avatar_path: 头像文件路径
+                - full_body_path: 全身图路径
+                - nose_x, nose_y: 鼻子位置（归一化坐标）
+                - need_crop: 是否需要截取
         """
         if exclude_ids is None:
             exclude_ids = []
@@ -354,11 +438,14 @@ class CharacterRenderer:
                         continue
                     char_data = cache.character_data.get(char_id)
                     if char_data:
+                        # 获取头像信息
+                        avatar_info = self.get_avatar_info(char_data.name)
                         avatars.append({
                             "id": char_id,
                             "name": char_data.name,
-                            "avatar": self._find_head_image(char_data.name),
-                            "has_dialog": False  # 结算时更新
+                            "avatar": avatar_info.get("avatar_path", ""),
+                            "has_dialog": False,  # 结算时更新
+                            "avatar_info": avatar_info
                         })
         except (KeyError, AttributeError):
             pass

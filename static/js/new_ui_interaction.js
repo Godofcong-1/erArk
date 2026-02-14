@@ -38,6 +38,18 @@ function createAvatarPanel(characters, minorDialogs = []) {
         avatarItem.className = 'avatar-item';
         avatarItem.dataset.characterId = char.id;
         
+        // 头像图片
+        const avatarImg = document.createElement('img');
+        avatarImg.className = 'avatar-image';
+        avatarImg.alt = char.name || '';
+        // 使用API端点获取头像图片
+        avatarImg.src = `/api/avatar_image/${encodeURIComponent(char.name)}`;
+        // 图片加载失败时隐藏图片元素
+        avatarImg.onerror = function() {
+            this.style.display = 'none';
+        };
+        avatarItem.appendChild(avatarImg);
+        
         // 头像名称
         const avatarName = document.createElement('span');
         avatarName.className = 'avatar-name';
@@ -198,6 +210,18 @@ function createAllCharactersPanel(characters) {
         const avatarItem = document.createElement('div');
         avatarItem.className = 'all-characters-item';
         avatarItem.dataset.characterId = char.id;
+        
+        // 头像图片
+        const avatarImg = document.createElement('img');
+        avatarImg.className = 'all-characters-image';
+        avatarImg.alt = char.name || '';
+        // 使用API端点获取头像图片
+        avatarImg.src = `/api/avatar_image/${encodeURIComponent(char.name)}`;
+        // 图片加载失败时隐藏图片元素
+        avatarImg.onerror = function() {
+            this.style.display = 'none';
+        };
+        avatarItem.appendChild(avatarImg);
         
         // 头像名称
         const avatarName = document.createElement('span');
