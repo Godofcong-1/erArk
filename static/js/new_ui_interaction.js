@@ -671,9 +671,10 @@ function renderFloatingInstructButtons(instructs) {
     // 2. Render Floating Buttons in Minor List
     const minorList = document.querySelector('.interaction-minor-list');
     
-    // Clear existing floating instructs
+    // Clear existing floating instructs (both individual cards and container)
     if (minorList) {
         minorList.querySelectorAll('.floating-instruct').forEach(e => e.remove());
+        minorList.querySelectorAll('.floating-instruct-container').forEach(e => e.remove());
     }
 
     const activeMinor = minorList ? minorList.querySelector('.active') : null;
@@ -684,8 +685,12 @@ function renderFloatingInstructButtons(instructs) {
         return;
     }
 
-    // Insert new buttons
-    let referenceNode = activeMinor;
+    // Create container for floating buttons
+    const container = document.createElement('div');
+    container.className = 'floating-instruct-container';
+    
+    // 如果指令数量超过10个，这里不需要特殊处理，CSS会将最大高度限制为约10个的高度 并显示滚动条
+
     instructs.forEach(instruct => {
          const card = document.createElement('div');
          card.className = 'interaction-card minor-card floating-instruct';
@@ -699,14 +704,15 @@ function renderFloatingInstructButtons(instructs) {
              // Execute
              executeInstruct(instruct.id);
          };
-         
-         if (referenceNode.nextSibling) {
-             minorList.insertBefore(card, referenceNode.nextSibling);
-         } else {
-             minorList.appendChild(card);
-         }
-         referenceNode = card; // Insert next one after this one
+         container.appendChild(card);
     });
+    
+    // Insert container after activeMinor
+    if (activeMinor.nextSibling) {
+        minorList.insertBefore(container, activeMinor.nextSibling);
+    } else {
+        minorList.appendChild(container);
+    }
     
     // Adjust layout
     setTimeout(() => checkAndAdjustCharacterImage(), 50);

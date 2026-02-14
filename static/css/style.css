@@ -1879,6 +1879,40 @@ body {
     border-left-color: #fff;
 }
 
+
+/* 浮现按钮容器（无部位指令列表） */
+.floating-instruct-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    margin-left: 20px;       /* 缩进由容器统一处理 */
+    margin-top: 4px;         /* 与上方小类卡片保持间距 */
+    max-height: 370px;       /* 限制高度，约展示10个指令 (32*10 + 4*9 + padding ~ 360) */
+    overflow-y: auto;        /* 启用垂直滚动 */
+    overflow-x: hidden;      /* 隐藏横向滚动 */
+    padding: 2px;            /* 微小内边距，减少边缘裁剪风险 */
+    padding-right: 5px;      /* 右侧留出滚动条空间 */
+    width: 130px;            /* 确保足够宽度容纳卡片(113px)+滚动条 */
+    
+    /* 自定义滚动条样式 (Webkit) */
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.3) transparent;
+}
+
+.floating-instruct-container::-webkit-scrollbar {
+    width: 5px;
+}
+.floating-instruct-container::-webkit-scrollbar-track {
+    background: transparent; 
+}
+.floating-instruct-container::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.3);
+    border-radius: 2px;
+}
+.floating-instruct-container::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
 /* 浮现按钮（无部位指令）专用样式 */
 .interaction-card.floating-instruct {
     background: rgba(4, 28, 44, 0.9); /* 深蓝色背景 */
@@ -1886,10 +1920,11 @@ body {
     border-left-width: 3px;
     height: 32px;                     /* 更紧凑 */
     width: 113px;                     /* 增加四分之一（原90px * 1.25）*/
-    margin-left: 20px;                /* 更深的缩进 */
+    margin-left: 0;                   /* 移除单独缩进，由容器接管 */
     transform: rotateY(0deg) translateZ(20px); /* 浮现按钮不旋转，保持Z深度一致 */
     clip-path: none;                  /* 移除切角，保持方正或自定义 */
     border-radius: 2px;
+    flex-shrink: 0;                   /* 防止在容器内被压缩 */
 }
 
 .interaction-card.floating-instruct:hover {

@@ -2997,6 +2997,9 @@ children.forEach(child => {
 - [x] 去掉 `game-container` 内 `game-content` 上下方的多余空白区域（移除 `flex-grow` 和 `min-height`）
 - [x] 移除新UI组件 `.new-ui-container` 和 `.new-ui-main-scene` 的强制 `min-height`，彻底消除大屏幕下的底部空白
 
+#### 11.1.4 交互面板优化
+- [x] 无部位指令列表优化：当数量超过10个时，使用滚动容器显示，限制高度并添加Arknights风格滚动条（2026-02-14）
+
 ---
 
 ## 附录A：关键文件清单
