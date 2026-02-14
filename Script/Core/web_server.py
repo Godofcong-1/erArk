@@ -607,7 +607,7 @@ def serve_image(filename):
     返回值类型：Response对象
     功能描述：从游戏根目录下的image文件夹中提供图片文件
     """
-    from flask import send_from_directory
+    from flask import send_from_directory, abort
     import os
     
     # 根据环境确定基础目录和图片文件夹路径
@@ -619,6 +619,12 @@ def serve_image(filename):
         # 开发环境：使用项目根目录
         base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../'))
         image_dir = os.path.join(base_dir, 'image')
+    
+    # 检查文件是否存在
+    full_path = os.path.join(image_dir, filename)
+    if not os.path.exists(full_path):
+        # 文件不存在，返回204 No Content，避免404错误频繁输出
+        abort(204)
     
     # 使用send_from_directory提供文件，自动处理中文路径编码问题
     return send_from_directory(image_dir, filename)
@@ -1881,6 +1887,23 @@ def push_game_state(state_data: dict, diff_only: bool = True):
 
 # ========== 原有代码继续 ==========
 
+@app.errorhandler(404)
+def handle_not_found(e):
+    """
+    404错误处理器 - 静默处理
+    
+    参数：
+    e (Exception): 捕获的404异常
+    
+    返回值类型：tuple
+    功能描述：处理404 Not Found错误，避免频繁输出日志
+    """
+    # 404错误静默处理，不输出详细日志
+    # 仅在调试模式下记录请求的URL
+    if app.debug:
+        logging.debug(f"404 请求: {request.path}")
+    return jsonify({'error': 'Not Found'}), 404
+
 @app.errorhandler(Exception)
 def handle_exception(e):
     """
@@ -1893,6 +1916,12 @@ def handle_exception(e):
     功能描述：处理所有未捕获的异常并返回错误信息
     """
     import traceback
+    from werkzeug.exceptions import NotFound
+    
+    # 忽略 NotFound (404) 错误，由专门的处理器处理
+    if isinstance(e, NotFound):
+        return handle_not_found(e)
+    
     error_msg = f"服务器内部错误: {str(e)}\n{traceback.format_exc()}"
     print(error_msg)
     logging.error(error_msg)

@@ -1,12 +1,12 @@
 @font-face {
     font-family: 'SarasaMonoSC';
-    src: url('./fonts/等距更纱黑体.ttf') format('truetype');
+    src: url('/static/fonts/等距更纱黑体.ttf') format('truetype');
     font-display: swap;
 }
 
 @font-face {
     font-family: 'EmojiSupport';
-    src: url('./fonts/emoji.ttf') format('truetype');
+    src: url('/static/fonts/emoji.ttf') format('truetype');
     font-display: swap;
     /* 限制emoji字体只用于真正的emoji，避免影响Box Drawing字符 */
     unicode-range: U+1F000-1F9FF, U+1FA70-1FAFF;

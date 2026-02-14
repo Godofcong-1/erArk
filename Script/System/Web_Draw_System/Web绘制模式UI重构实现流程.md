@@ -2642,6 +2642,55 @@ static/
 
 ---
 
+### 9.9 静态资源 404 错误修复 ✅（2026-02-14）
+
+#### 9.9.1 问题现象
+- 游戏可以正常打开和运行，但控制台持续出现以下报错：
+```
+服务器内部错误: 404 Not Found: The requested URL was not found on the server.
+werkzeug.exceptions.NotFound: 404 Not Found
+```
+- 错误栈显示问题来自 Flask 的 `send_static_file()` 函数
+
+#### 9.9.2 问题分析
+1. **CSS字体路径错误**：`static/css/style.css` 中使用相对路径引用字体文件：
+   ```css
+   src: url('./fonts/等距更纱黑体.ttf') format('truetype');
+   ```
+   由于CSS文件位于 `/static/css/` 目录，相对路径会解析为 `/static/css/fonts/`，
+   而实际字体文件位于 `/static/fonts/`
+   
+2. **图片路由缺少错误处理**：`/image/<path:filename>` 路由在文件不存在时直接抛出异常，
+   导致大量404错误日志
+
+#### 9.9.3 修复措施
+1. **修复CSS字体路径**（`static/css/style.css`）：
+   - 将相对路径改为绝对路径：
+   ```css
+   src: url('/static/fonts/等距更纱黑体.ttf') format('truetype');
+   src: url('/static/fonts/emoji.ttf') format('truetype');
+   ```
+
+2. **添加图片路由错误处理**（`Script/Core/web_server.py`）：
+   - 为 `/image/<path:filename>` 路由添加文件存在性检查
+   - 文件不存在时返回 204 No Content，避免输出大量日志
+
+3. **添加404专用错误处理器**（`Script/Core/web_server.py`）：
+   - 新增 `@app.errorhandler(404)` 处理器
+   - 静默处理404错误，仅在调试模式下记录日志
+   - 避免全局异常处理器输出大量错误栈信息
+
+#### 9.9.4 相关文件修改
+- `static/css/style.css`：修复字体路径（第3行、第9行）
+- `Script/Core/web_server.py`：
+  - 第599-630行：为 `serve_image()` 添加文件存在性检查
+  - 第1889-1906行：新增 `handle_not_found()` 404错误处理器
+  - 第1908-1925行：更新 `handle_exception()` 排除404错误
+
+**修复日期**：2026年2月14日
+
+---
+
 ## 阶段十：优化与完善
 
 ### 10.1 性能优化
