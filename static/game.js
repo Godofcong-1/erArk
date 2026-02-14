@@ -1429,11 +1429,30 @@ function selectInteractionType(typeId) {
 
 /**
  * 点击面板选项卡
- * 使用普通按钮点击API来确保与后端轮询机制兼容
+ * 使用WebSocket事件来确保选项卡在任何面板都能正常触发
+ * 
+ * 注意：选项卡指令需要特殊处理，因为从非主面板点击时，
+ * 当前面板的askfor_all的return_list不包含选项卡ID。
+ * 因此我们使用WebSocket的execute_instruct事件，
+ * 它会直接执行指令并设置刷新信号。
  */
 function clickPanelTab(tabId) {
-    // 使用普通的按钮点击API，tabId就是指令ID
-    handleButtonClick(tabId);
+    console.log('[clickPanelTab] 点击面板选项卡，tabId:', tabId);
+    
+    // 主面板选项卡使用普通按钮点击API（因为它只是保持在主面板）
+    if (tabId === '__main_panel__') {
+        handleButtonClick(tabId);
+        return;
+    }
+    
+    // 其他面板选项卡使用WebSocket事件，确保在任何面板都能触发
+    if (socket && socket.connected) {
+        socket.emit('execute_instruct', { instruct_id: tabId });
+    } else {
+        // 如果WebSocket不可用，回退到HTTP API
+        console.warn('[clickPanelTab] WebSocket不可用，回退到HTTP API');
+        handleButtonClick(tabId);
+    }
 }
 
 /**

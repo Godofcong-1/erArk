@@ -19,6 +19,15 @@ WEB_REFRESH_SIGNAL = "__WEB_REFRESH__"
 # 初始化尾处理命令函数变量
 tail_deal_cmd_func = None  # 保存尾处理命令函数，全局变量
 
+# 面板切换标记，用于通知当前面板应该退出循环
+PANEL_CHANGE_SIGNAL = "__PANEL_CHANGE__"
+
+
+class PanelChangeException(Exception):
+    """面板切换异常，用于中断当前面板的循环并返回主循环"""
+    pass
+
+
 def askfor_all(return_list: List[str]) -> str:
     """
     等待用户选择一个选项
@@ -29,8 +38,15 @@ def askfor_all(return_list: List[str]) -> str:
     返回值类型：str
     返回用户选择的选项
     
+    特殊处理：
+    - __WEB_REFRESH__ 信号会被特殊处理，用于处理面板切换
+    - 当收到刷新信号时，检查面板ID是否改变，如果改变则抛出 PanelChangeException
+    
     在Web UI中，这变成等待用户通过API发送选择
     """
+    # 记录进入时的面板ID，用于检测面板切换
+    initial_panel_id = getattr(cache, 'now_panel_id', None)
+    
     # 更新Web界面状态
     update_game_state(cache.current_draw_elements, None)
     # 将当前的返回列表保存到缓存中
@@ -39,15 +55,35 @@ def askfor_all(return_list: List[str]) -> str:
     # Web版本中，轮询等待用户响应
     response = None
     while response is None:
+        # 检查面板ID是否改变（由其他途径触发的面板切换）
+        current_panel_id = getattr(cache, 'now_panel_id', None)
+        if current_panel_id != initial_panel_id:
+            # print(f"[askfor_all] 检测到面板切换：{initial_panel_id} -> {current_panel_id}")
+            raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
+        
         # 检查是否有按钮点击响应
         response = get_button_response()
         if response is not None:
+            # 特殊处理：刷新信号
+            if response == WEB_REFRESH_SIGNAL:
+                # 检查面板ID是否改变
+                current_panel_id = getattr(cache, 'now_panel_id', None)
+                if current_panel_id != initial_panel_id:
+                    # print(f"[askfor_all] 刷新信号触发，检测到面板切换：{initial_panel_id} -> {current_panel_id}")
+                    raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
+                # 如果面板ID没有改变，但刷新信号在return_list中，正常处理
+                if response in return_list:
+                    if _cmd_valid(response):
+                        _cmd_deal(response)
+                    return response
+                # 如果刷新信号不在return_list中，继续等待
+                response = None
+                continue
+            
             # 检查响应是否在返回列表中
             if response in return_list:
-                # 刷新信号不打印到界面上，直接处理
-                if response != WEB_REFRESH_SIGNAL:
-                    # 非刷新信号才输出该响应
-                    io_init.era_print(response + "\n")
+                # 非刷新信号则输出该响应
+                io_init.era_print(response + "\n")
                 # 然后判断值是否有效，有效则执行该命令
                 if _cmd_valid(response):
                     _cmd_deal(response)
@@ -66,6 +102,12 @@ def askfor_all(return_list: List[str]) -> str:
             elif response == "":
                 continue
             else:
+                # 响应不在列表中，检查是否是面板切换导致的
+                current_panel_id = getattr(cache, 'now_panel_id', None)
+                if current_panel_id != initial_panel_id:
+                    print(f"[askfor_all] 收到无效响应但面板已切换：{initial_panel_id} -> {current_panel_id}")
+                    raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
+                # 确实是无效响应
                 io_init.era_print(response + "\n")
                 io_init.era_print("您输入的选项无效，请重试\n")
                 response = None  # 重置响应，继续等待

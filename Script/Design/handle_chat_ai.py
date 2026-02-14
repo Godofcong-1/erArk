@@ -1,5 +1,5 @@
 from types import FunctionType
-from Script.Core import cache_control, game_type, get_text, constant
+from Script.Core import cache_control, game_type, get_text, constant, flow_handle
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.Design import handle_premise, attr_calculation, game_time, attr_text
@@ -853,45 +853,60 @@ def direct_chat_with_ai() -> str:
     Return arguments:
     reply_text -- AI回复文本
     """
-    if not handle_premise.handle_ai_chat_on(0):
-        info_text = _("\nAI对话功能未开启，请前往【系统设置】中的【文本生成AI设置】中开启。\n")
-        info_draw = draw.WaitDraw()
-        info_draw.style = "gold_enrod"
-        info_draw.text = info_text
-        info_draw.draw()
-        return
-    # 提示信息
-    ask_text = _("\n请描述你想要进行的动作：\n")
+    title_draw = draw.TitleLineDraw("与AI进行直接对话", window_width)
+    while 1:
+        title_draw.draw()
+        line_feed.draw()
+        return_list = []
+        if not handle_premise.handle_ai_chat_on(0):
+            info_text = _("\nAI对话功能未开启，请前往【系统设置】中的【文本生成AI设置】中开启。\n")
+            info_draw = draw.WaitDraw()
+            info_draw.style = "gold_enrod"
+            info_draw.text = info_text
+            info_draw.draw()
+            reply_text = ""
+        else:
+            # 提示信息
+            ask_text = _("\n请描述你想要进行的动作：\n")
 
-    # 获取玩家输入
-    ask_panel = panel.AskForOneMessage()
-    ask_panel.set(ask_text, 999)
-    user_input = ask_panel.draw()
-    line_feed.draw()
-    
-    # 如果输入为空，则退出
-    if not user_input:
-        return ""
-        
-    # 获取当前玩家角色ID和目标角色ID
-    character_id = 0  # 假设0是玩家角色
-    behavior_id = "ai_chat_instruct"   # 默认行为ID，可以根据实际情况调整
-    
-    # 调用判断函数，启用直接对话模式
-    reply_text = judge_use_text_ai(character_id, behavior_id, user_input, direct_mode=True)
-    
-    # 非流式传输下再绘制回复
-    if cache.ai_setting.ai_chat_setting[14] != 1:
-        # 处理换行符
-        reply_text = reply_text.replace("\\n", "\n")
-        # 替换掉text:
-        reply_text = reply_text.replace("text:", "")
-        # 绘制AI回复
-        reply_draw = draw.NormalDraw()
-        reply_draw.text = _("\nAI回复：\n") + reply_text + _("\n")
-        reply_draw.width = window_width
-        reply_draw.draw()
-
+            # 获取玩家输入
+            ask_panel = panel.AskForOneMessage()
+            ask_panel.set(ask_text, 999)
+            user_input = ask_panel.draw()
+            line_feed.draw()
+            
+            # 如果输入为空，则退出
+            if not user_input:
+                return ""
+                
+            # 获取当前玩家角色ID和目标角色ID
+            character_id = 0  # 假设0是玩家角色
+            behavior_id = "ai_chat_instruct"   # 默认行为ID，可以根据实际情况调整
+            
+            # 调用判断函数，启用直接对话模式
+            reply_text = judge_use_text_ai(character_id, behavior_id, user_input, direct_mode=True)
+            
+            # 非流式传输下再绘制回复
+            if cache.ai_setting.ai_chat_setting[14] != 1:
+                # 处理换行符
+                reply_text = reply_text.replace("\\n", "\n")
+                # 替换掉text:
+                reply_text = reply_text.replace("text:", "")
+                # 绘制AI回复
+                reply_draw = draw.NormalDraw()
+                reply_draw.text = _("\nAI回复：\n") + reply_text + _("\n")
+                reply_draw.width = window_width
+                reply_draw.draw()
+        line_feed.draw()
+        line_feed.draw()
+        back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+        back_draw.draw()
+        line_feed.draw()
+        return_list.append(back_draw.return_text)
+        yrn = flow_handle.askfor_all(return_list)
+        if yrn == back_draw.return_text:
+            cache.now_panel_id = constant.Panel.IN_SCENE
+            break
     return reply_text
 
 def settle_direct_instruct(ai_result: dict) -> None:

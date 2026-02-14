@@ -142,55 +142,69 @@ def get_panel_tabs(self) -> List[dict]:
 
 ```javascript
 function clickPanelTab(tabId) {
-    // 主面板选项卡激活时不响应点击
-    // 其他选项卡使用普通的按钮点击API，tabId就是指令ID
-    handleButtonClick(tabId);
+    console.log('[clickPanelTab] 点击面板选项卡，tabId:', tabId);
+    
+    // 主面板选项卡使用普通按钮点击API（因为它只是保持在主面板）
+    if (tabId === '__main_panel__') {
+        handleButtonClick(tabId);
+        return;
+    }
+    
+    // 其他面板选项卡使用WebSocket事件，确保在任何面板都能触发
+    if (socket && socket.connected) {
+        socket.emit('execute_instruct', { instruct_id: tabId });
+    } else {
+        // 如果WebSocket不可用，回退到HTTP API
+        handleButtonClick(tabId);
+    }
 }
 ```
 
-选项卡点击使用与普通按钮相同的 `/api/button_click` API，而非WebSocket事件。
+**重要说明（2026-02-15 更新）**：
+- 选项卡点击现在使用 WebSocket 的 `execute_instruct` 事件，而非 HTTP API `/api/button_click`
+- 这是因为从非主面板（如 PRTS 面板）点击选项卡时，当前面板的 `askfor_all` 的 `return_list` 不包含选项卡 ID
+- 使用 WebSocket 事件可以直接执行指令并设置刷新信号，绕过 `return_list` 的限制
 
-**后端绑定** (`Script/UI/Panel/in_scene_panel_web.py`)：
+**后端处理** (`Script/Core/web_server.py`)：
+
+当 `execute_instruct` 事件被触发时：
+1. 直接调用 `instruct_handler.handle_instruct(instruct_id)` 执行指令
+2. 指令执行后设置 `button_click_response = WEB_REFRESH_SIGNAL`
+3. 这会唤醒当前面板的 `askfor_all`，触发面板切换检测
+
+**面板切换异常机制** (`Script/Core/flow_handle_web.py`)：
 
 ```python
-def _bind_panel_tabs_and_get_ask_list(self) -> List[str]:
-    """
-    绑定面板选项卡指令并返回可选列表
-    
-    Returns:
-    List[str] -- 可选择的指令ID列表
-    """
-    from Script.System.Instruct_System import handle_instruct as instruct_handler
-    
-    ask_list = []
-    tabs = self.tab_menu.get_panel_tabs()
-    
-    for tab in tabs:
-        if tab.get("available", True):
-            instruct_id = tab["id"]
-            ask_list.append(instruct_id)
-            # 绑定指令处理函数到 cmd_map
-            flow_handle.bind_cmd(
-                instruct_id,
-                instruct_handler.handle_instruct,
-                (instruct_id,)
-            )
-    
-    return ask_list
+class PanelChangeException(Exception):
+    """面板切换异常，用于中断当前面板的循环并返回主循环"""
+    pass
 ```
 
-面板选项卡指令被绑定到 `constant.cmd_map`，通过 `flow_handle.askfor_all(ask_list)` 等待用户选择。
+- `askfor_all` 会记录进入时的面板 ID
+- 在轮询过程中检测到 `cache.now_panel_id` 改变时，抛出 `PanelChangeException`
+- 该异常会被 `start_flow.start_frame()` 捕获，使主循环继续执行新面板
 
 ### 3.4 选项卡与面板切换流程
 
-1. 用户点击选项卡按钮（如"移动"）
-2. 前端发送 `/api/button_click` 请求，参数为指令ID（如 "move"）
-3. 后端 `flow_handle_web.askfor_all()` 接收响应
-4. 检查指令ID是否在 `cmd_map` 中且有效
-5. 执行绑定的指令处理函数 `handle_instruct("move")`
-6. 指令执行 `cache.now_panel_id = constant.Panel.SEE_MAP`
-7. `InScenePanelWeb.draw()` 的 while 循环检测到面板ID改变，退出循环
-8. 游戏流程切换到对应的面板绘制
+**从主面板点击选项卡**：
+1. 用户点击选项卡按钮（如 "PRTS"）
+2. 前端发送 WebSocket 事件 `execute_instruct`，参数为指令ID
+3. 后端 `handle_execute_instruct()` 执行指令
+4. 指令内部设置 `cache.now_panel_id = constant.Panel.PRTS`
+5. 设置 `button_click_response = WEB_REFRESH_SIGNAL`
+6. `InScenePanelWeb.draw()` 的 `askfor_all` 收到刷新信号，检测到面板ID改变，抛出 `PanelChangeException`
+7. `start_frame()` 捕获异常，继续主循环
+8. 游戏流程切换到 PRTS 面板绘制
+
+**从其他面板点击选项卡**：
+1. 用户在 PRTS 面板中点击选项卡（如 "debug数值调整"）
+2. 前端发送 WebSocket 事件 `execute_instruct`
+3. 后端执行指令，设置 `cache.now_panel_id = constant.Panel.DEBUG_ADJUST`
+4. 设置 `button_click_response = WEB_REFRESH_SIGNAL`
+5. PRTS 面板的 `askfor_all` 收到刷新信号（不在 return_list 中）
+6. `askfor_all` 检测到面板ID已改变，抛出 `PanelChangeException`
+7. 异常冒泡到 `start_frame()`，被捕获后继续主循环
+8. 游戏流程切换到 DEBUG_ADJUST 面板绘制
 
 ---
 

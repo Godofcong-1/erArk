@@ -346,11 +346,16 @@
   - 修改 `static/game.js` 中 `createPanelTabsBar()` 函数
   - 支持 `active` 状态和 `main-tab` 样式类
   - 主面板激活时不响应点击事件
-- **点击处理机制（2026-01-18 更新）**：
-  - 修改 `static/game.js` 中 `clickPanelTab()` 使用 `/api/button_click` API（而非WebSocket）
-  - 修改 `in_scene_panel_web.py` 中 `draw()` 方法，添加 `_bind_panel_tabs_and_get_ask_list()` 函数
-  - 面板选项卡指令现在正确绑定到 `cmd_map`，通过 `flow_handle.askfor_all()` 等待用户选择
-  - **主面板选项卡特殊处理**：绑定 `_handle_return_to_main_panel()` 函数，而非指令处理函数
+- **点击处理机制（2026-02-15 重大更新）**：
+  - 修改 `static/game.js` 中 `clickPanelTab()` 使用 WebSocket `execute_instruct` 事件（而非HTTP API）
+  - **原因**：从非主面板点击选项卡时，当前面板的 `askfor_all` 的 `return_list` 不包含选项卡ID
+  - 使用 WebSocket 事件可以直接执行指令，绕过 `return_list` 限制
+  - 主面板选项卡（`__main_panel__`）仍使用 `/api/button_click` API
+- **面板切换异常机制（2026-02-15 新增）**：
+  - 在 `Script/Core/flow_handle_web.py` 中添加 `PanelChangeException` 异常类
+  - `askfor_all` 记录进入时的面板ID，检测到 `cache.now_panel_id` 改变时抛出异常
+  - 在 `Script/Design/start_flow.py` 中捕获 `PanelChangeException`，使主循环继续执行新面板
+  - 这解决了从任意面板点击选项卡都能正确切换的问题
 - **返回主面板逻辑（2026-01-18 新增）**：
   - 在 `in_scene_panel_web.py` 中添加 `_handle_return_to_main_panel()` 方法
   - 点击主面板选项卡时，将 `cache.now_panel_id` 重置为 `constant.Panel.IN_SCENE`
