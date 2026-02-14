@@ -2262,9 +2262,9 @@ body {
 /* 身体部位提示文本框 */
 .body-part-tooltip {
     position: absolute;
-    bottom: 200%; /* 距离稍微远一点 */
+    bottom: 150%; /* 距离稍微近一点 */
     left: 50%;
-    transform: translateX(-50%) translateY(10px); /* 初始略微下沉 */
+    transform: translateX(-50%) translateY(5px);
     
     background: rgba(20, 22, 26, 0.95); /* 深色背景，略微增加不透明度 */
     color: #fff;
@@ -2283,6 +2283,8 @@ body {
     white-space: nowrap;
     opacity: 0;
     pointer-events: none;
+    user-select: none; /* 禁止文本选择 */
+    -webkit-user-select: none;
     transition: all 0.25s cubic-bezier(0.19, 1, 0.22, 1);
     
     /* 阴影和发光 */
@@ -2296,8 +2298,10 @@ body {
     content: '';
     position: absolute;
     bottom: -6px;
-    left: 12px;
+    left: 42%;
+    transform: translateX(-42%) rotate(45deg);
     width: 10px;
+
     height: 10px;
     background: inherit;
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
