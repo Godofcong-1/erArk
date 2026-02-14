@@ -900,7 +900,11 @@ body {
 /* ========== 新UI容器样式（IN_SCENE面板） ========== */
 .new-ui-container {
     width: 100%;
-    /* min-height: 400px; Removed to fix height issue */
+    /* 使用flex布局让内部元素自然撑开高度 */
+    display: flex;
+    flex-direction: column;
+    /* 备用最小高度作为保底，与new-ui-layout保持一致 */
+    min-height: 820px;
     background-color: #0a0a0a;
     background-image: repeating-linear-gradient(
         45deg,
@@ -910,13 +914,23 @@ body {
         rgba(22, 33, 62, 0.8) 40px
     );
     border-radius: 4px;
-    overflow: hidden;
+    /* 允许内容溢出显示，避免截断 */
+    overflow: visible;
+}
+
+/* 当game-container包含新UI时，移除高度限制 */
+.game-container:has(.new-ui-container) {
+    max-height: none;
+    overflow: visible;
 }
 
 .new-ui-layout {
     display: flex;
     flex-direction: column;
-    height: 100%;
+    /* 使用视口高度减去页面其他元素的高度（页头约60px + 页脚及输入区约150px + padding等约40px）*/
+    height: calc(100vh - 250px);
+    /* 备用最小高度作为保底，需要容纳顶部信息区+主场景区+对话框区 */
+    min-height: 820px;
     gap: 8px;
 }
 
@@ -1656,9 +1670,11 @@ body {
     flex: 1;
     display: flex;
     position: relative;
-    /* min-height: 400px; Removed to fix height issue */
+    min-height: 620px; /* 备用最小高度作为保底，确保左侧交互类型按钮完整显示 */
     background-color: #111;
     border-radius: 4px;
+    /* 确保绝对定位的子元素不被截断 */
+    overflow: visible;
 }
 
 /* 交互类型面板（左侧） */
@@ -1954,6 +1970,7 @@ body {
         1px 1px 0 rgba(0,0,0,0.8);
 }
 
+.interaction-minor-btn {
     color: #ccc;
     border: 1px solid #444;
     border-radius: 4px;
@@ -2261,6 +2278,11 @@ body {
 
 /* 交互对象信息面板（右侧） */
 .new-ui-target-info {
+    /* 使用绝对定位，不影响角色立绘的居中 */
+    position: absolute;
+    right: 12px;
+    top: 12px;
+    bottom: 12px;
     width: 240px;
     padding: 12px;
     background-color: rgba(0, 0, 0, 0.8);
@@ -2268,10 +2290,10 @@ body {
     flex-direction: column;
     gap: 6px;
     border-radius: 4px;
-    max-height: 100%;
     overflow-y: auto;
     font-size: 14px;
     line-height: 1.4;
+    z-index: 40; /* 确保在角色立绘上方 */
 }
 
 .target-name {

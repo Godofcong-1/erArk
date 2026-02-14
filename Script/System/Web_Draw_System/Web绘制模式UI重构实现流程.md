@@ -1168,7 +1168,37 @@
   1. **高度缩放**（基础）：通过 `img.style.height` 实现，统一到1024px或可用高度
   2. **重叠调整**（附加）：通过 `transform` 实现右移和/或缩小
 - **顺序**：先应用高度缩放，再检测重叠、应用变换
-- **效果叠加**：两者独立，`transform` 在固定高度基础上进行
+
+### 4.2.4 角色立绘绝对居中修复（2026-02-14新增）
+
+##### 问题描述
+- **现象**：角色立绘在主画面区显示时偏左
+- **原因**：右侧交互对象信息面板（`.new-ui-target-info`）使用常规流布局（`width: 240px`），占据了主画面区的一部分空间。角色立绘区（`.new-ui-character-display`）使用 `flex: 1` 占据剩余空间，导致立绘是在 **减去右侧面板后的剩余空间** 内居中，而非在 **整个主画面区** 的正中心。
+
+##### 解决方案
+- **修改方式**：将右侧交互对象信息面板从常规流布局改为绝对定位
+- **CSS修改（`static/css/style.css`）**：
+  - `.new-ui-target-info`：
+    - 添加 `position: absolute;`
+    - 添加 `right: 12px; top: 12px; bottom: 12px;` 定位到右侧
+    - 添加 `z-index: 40;` 确保在角色立绘上方
+    - 移除 `max-height: 100%;`
+  - 这样角色立绘区可以占据整个主画面区的空间，实现真正的居中
+
+##### 额外修复
+- **修复CSS语法错误**：`.interaction-minor-btn` 选择器缺失，导致部分CSS属性悬空。已补充完整选择器。
+- **修复高度收缩和截断问题**：将右侧面板改为绝对定位后，出现两个问题：1）主场景区域高度收缩；2）内容被截断。解决方案：
+  - `.game-container:has(.new-ui-container)`：当包含新UI时，添加 `max-height: none; overflow: visible;` 移除高度限制
+  - `.new-ui-container`：
+    - 改为 `display: flex; flex-direction: column;` 让内部元素自然撑开
+    - 将 `overflow: hidden` 改为 `overflow: visible` 避免截断
+    - 设置 `min-height: 820px;` 作为保底（与new-ui-layout保持一致）
+  - `.new-ui-layout`：
+    - 使用 `height: calc(100vh - 250px);` 让布局基于视口高度动态调整
+    - 设置 `min-height: 820px;` 作为保底（需容纳顶部信息区+主场景区+对话框区）
+  - `.new-ui-main-scene`：
+    - 设置 `min-height: 620px;` 作为备用最小高度（确保左侧交互类型按钮完整显示）
+    - 添加 `overflow: visible;` 确保绝对定位子元素不被截断
 
 #### 4.2.4 角色立绘透明区域裁切（2026-02-08新增）✅
 
