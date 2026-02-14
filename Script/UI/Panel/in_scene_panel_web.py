@@ -396,19 +396,6 @@ class InScenePanelWeb:
         
         return elements
 
-    def handle_body_part_click(self, part_name: str) -> Dict:
-        """
-        处理身体部位点击
-        
-        Keyword arguments:
-        part_name -- 部位名称
-        
-        Returns:
-        Dict -- 响应数据（包含可执行的指令列表）
-        """
-        result = self.interaction_handler.click_body_part(part_name)
-        return result
-
     def handle_target_switch(self, character_id: int):
         """
         处理交互对象切换

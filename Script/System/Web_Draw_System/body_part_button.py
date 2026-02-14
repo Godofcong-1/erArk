@@ -17,10 +17,8 @@ from Script.System.Instruct_System.instruct_category import (
     BODY_PART_NAMES,
     HIP_SUB_PARTS,
     HEAD_SUB_PARTS,
-    COCO_KEYPOINT_MAPPING,
     COMPUTED_BODY_PARTS,
     CLICKABLE_BODY_PARTS,
-    CONDITIONAL_BODY_PARTS,
 )
 
 
@@ -230,11 +228,9 @@ class BodyPartButton:
         # 根据部位设置不同的半径
         radius_map = {
             BodyPart.HEAD: 0.06,
-            BodyPart.HAIR: 0.05,
             BodyPart.FACE: 0.04,
             BodyPart.MOUTH: 0.025,
             BodyPart.BEAST_EARS: 0.03,
-            BodyPart.HORN: 0.025,
             BodyPart.CHEST: 0.06,
             BodyPart.ARMPIT: 0.03,
             BodyPart.HAND: 0.035,

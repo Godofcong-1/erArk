@@ -139,86 +139,11 @@ class InteractionHandler:
         
         return list(body_parts)
 
-    def click_body_part(self, part_name: str) -> dict:
-        """
-        点击身体部位
-        
-        Keyword arguments:
-        part_name -- 部位名称
-        
-        Returns:
-        dict -- 该部位可执行的指令列表，如果只有一个则包含auto_execute标志
-        """
-        self._selected_body_part = part_name
-        
-        # 获取该部位在当前交互类型下可执行的指令
-        instructs = self._get_instructs_for_body_part(
-            self._current_interaction_type, 
-            part_name
-        )
-        
-        return {
-            "body_part": part_name,
-            "instructs": instructs,
-            "auto_execute": len(instructs) == 1
-        }
-
     def clear_selection(self):
         """清除当前选择状态"""
         self._current_interaction_type = None
         self._available_body_parts = []
         self._selected_body_part = None
-
-    def _get_available_body_parts(self, interaction_type: str) -> List[str]:
-        """
-        获取指定交互类型可用的身体部位
-        
-        Keyword arguments:
-        interaction_type -- 交互类型ID
-        
-        Returns:
-        List[str] -- 可用部位名称列表
-        """
-        # TODO: 从指令元数据中获取该交互类型涉及的所有部位
-        # 这需要在handle_instruct.py中完成指令分类后才能实现
-        
-        # 临时返回默认部位列表
-        default_parts = {
-            "talk": [],  # 说话不涉及特定部位
-            "touch": ["head", "L_hand", "R_hand", "chest", "waist", "L_leg", "R_leg"],
-            "kiss": ["mouth", "forehead", "cheek", "neck"],
-            "dress": [],  # 穿脱不涉及特定部位
-        }
-        return default_parts.get(interaction_type, [])
-
-    def _get_instructs_by_interaction_type(self, interaction_type: str) -> List[dict]:
-        """
-        获取指定交互类型的所有指令
-        
-        Keyword arguments:
-        interaction_type -- 交互类型ID
-        
-        Returns:
-        List[dict] -- 指令信息列表
-        """
-        # TODO: 从指令元数据中获取该交互类型的所有指令
-        # 这需要在handle_instruct.py中完成指令分类后才能实现
-        return []
-
-    def _get_instructs_for_body_part(self, interaction_type: str, part_name: str) -> List[dict]:
-        """
-        获取指定交互类型和部位可执行的指令
-        
-        Keyword arguments:
-        interaction_type -- 交互类型ID
-        part_name -- 部位名称
-        
-        Returns:
-        List[dict] -- 指令信息列表
-        """
-        # TODO: 从指令元数据中获取该交互类型和部位对应的指令
-        # 这需要在handle_instruct.py中完成指令分类后才能实现
-        return []
 
     def get_interaction_types(self) -> Dict:
         """

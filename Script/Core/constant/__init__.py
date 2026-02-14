@@ -14,7 +14,6 @@ from Script.System.Instruct_System.instruct_category import (
     BodyPart,
     BODY_PART_NAMES,
     HIP_SUB_PARTS,
-    COCO_KEYPOINT_MAPPING,
     COMPUTED_BODY_PARTS,
     CLICKABLE_BODY_PARTS,
 )

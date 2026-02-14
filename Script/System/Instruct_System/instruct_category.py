@@ -78,7 +78,7 @@ class BodyPart:
     
     # ========== 基于 BodyPart.csv 的可交互部位 ==========
     HAIR = "hair"
-    """ 头发 (csv id:0) - 位置：头顶，基于鼻子(0)正上方 """
+    """ 头发 (csv id:0) - 位置：头部区域，点击头部展开 """
     
     FACE = "face"
     """ 脸部 (csv id:1) - 位置：基于鼻子(0)、左眼(1)、右眼(2) """
@@ -117,7 +117,7 @@ class BodyPart:
     """ 尾巴 (csv id:12) - 位置：臀部区域，点击臀部展开 """
     
     HORN = "horn"
-    """ 兽角 (csv id:13) - 位置：双耳(3,4)的正上方 """
+    """ 兽角 (csv id:13) - 位置：头部区域，点击头部展开 """
     
     BEAST_EARS = "beast_ears"
     """ 兽耳 (csv id:14) - 位置：基于左耳(3)和右耳(4) """
@@ -213,41 +213,12 @@ HEAD_SUB_PARTS = [
     BodyPart.HORN,       # 兽角（需要角色有兽角特征）
 ]
 
-
-# COCO-WholeBody 17个关键点到部位的映射
-# 格式: {关键点索引: (对应部位, 位置类型)}
-# 位置类型: "direct"=直接使用, "above"=正上方, "below"=正下方, "center"=需要与其他点计算中心
-COCO_KEYPOINT_MAPPING = {
-    0: (BodyPart.FACE, "direct"),      # 鼻子 -> 脸部（直接），头部在其上方
-    1: (BodyPart.FACE, "direct"),      # 左眼 -> 脸部
-    2: (BodyPart.FACE, "direct"),      # 右眼 -> 脸部
-    3: (BodyPart.BEAST_EARS, "direct"), # 左耳 -> 兽耳，兽角在其上方
-    4: (BodyPart.BEAST_EARS, "direct"), # 右耳 -> 兽耳，兽角在其上方
-    5: (BodyPart.ARMPIT, "direct"),    # 左肩 -> 腋部
-    6: (BodyPart.ARMPIT, "direct"),    # 右肩 -> 腋部
-    7: None,                            # 左肘 -> 不使用
-    8: None,                            # 右肘 -> 不使用
-    9: (BodyPart.HAND, "direct"),      # 左手腕 -> 手部
-    10: (BodyPart.HAND, "direct"),     # 右手腕 -> 手部
-    11: (BodyPart.HIP, "direct"),      # 左胯 -> 臀部
-    12: (BodyPart.HIP, "direct"),      # 右胯 -> 臀部
-    13: (BodyPart.LEG, "direct"),      # 左膝 -> 腿部
-    14: (BodyPart.LEG, "direct"),      # 右膝 -> 腿部
-    15: (BodyPart.FOOT, "direct"),     # 左脚踝 -> 脚部
-    16: (BodyPart.FOOT, "direct"),     # 右脚踝 -> 脚部
-}
-
-
 # 需要通过多个关键点计算中心位置的部位
 # 格式: {部位: [(关键点1, 关键点2, ...), 位置偏移]}
 COMPUTED_BODY_PARTS = {
     BodyPart.HEAD: {
         "keypoints": [1, 2],  # 基于左眼(1)和右眼(2)中间
         "offset": (0, -0.03),  # 向上偏移图像高度的3%（双眼中间偏上一点）
-    },
-    BodyPart.HAIR: {
-        "keypoints": [1, 2],  # 基于左眼(1)和右眼(2)中间
-        "offset": (0, -0.12),  # 向上偏移图像高度的12%（头发位置）
     },
     BodyPart.MOUTH: {
         "keypoints": [0],  # 基于鼻子
@@ -277,8 +248,8 @@ COMPUTED_BODY_PARTS = {
 # 注意：头发、兽角已合并为头部的子部位（类似臀部的子部位机制）
 # 兽耳作为独立部位，分左右显示，需满足交互对象有兽耳的前提才会显示
 CLICKABLE_BODY_PARTS = [
-    BodyPart.HEAD,        # 头部（点击展开子部位：头发、兽角）
     BodyPart.BEAST_EARS,  # 兽耳（条件显示：交互对象有兽耳时，分左右耳显示）
+    BodyPart.HEAD,        # 头部（点击展开子部位：头发、兽角）
     BodyPart.FACE,        # 脸部
     BodyPart.MOUTH,       # 口腔
     BodyPart.CHEST,       # 胸部
@@ -288,10 +259,4 @@ CLICKABLE_BODY_PARTS = [
     BodyPart.HIP,         # 臀部（点击展开子部位）
     BodyPart.LEG,         # 腿部
     BodyPart.FOOT,        # 脚部
-]
-
-# 条件显示的部位列表（需根据角色特征判断是否显示）
-# 格式: {部位: 判断函数名称}
-CONDITIONAL_BODY_PARTS = [
-    BodyPart.BEAST_EARS,  # 兽耳：需要交互对象有兽耳特征 (talent[111]=1)
 ]
