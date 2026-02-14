@@ -68,6 +68,7 @@
 
 ## 11. 进一步阅读索引
 - 深度行为/结算：`CLAUDE*.md` 行为循环章节
+- CI/CD 打包结构：`CLAUDE.md` CI/CD Release Structure 章节
 - 系统拆解：`.github/prompts/数据处理工作流/`
 - 图像/资源下载：`tools/MCP/`
 

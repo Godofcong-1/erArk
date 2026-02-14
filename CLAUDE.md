@@ -97,6 +97,23 @@ The game supports a web-based interface:
 3. Run `python game.py` to test changes
 4. For localization changes, run `python buildpo.py` and `python buildmo.py`
 
+## CI/CD Release Structure
+
+The GitHub Actions workflow (`.github/workflows/python-app.yml`) produces 4 release packages:
+
+| Package | Description | Contents |
+| ------- | ----------- | -------- |
+| `erArk_{version}.zip` | Complete game package | Full game with all resources |
+| `erArk_Lite_{version}.zip` | Lightweight game package | Game without large image assets (portraits, scenes, etc.) |
+| `erArk_Images_{version}.zip` | Image resource package | All image folders except `image/状态条` |
+| `erArkEditor.zip` | Talk/Event editor | Standalone editor tool |
+
+**Image folder distribution:**
+- **Included in Images package only**: `image/场景`, `image/断面图`, `image/立绘`
+- **Included in both Full & Lite**: `image/状态条`, `image/logo.png` and other root files
+
+**Note:** Lite version + Images package = Full version
+
 ## Important Notes
 
 - The game is in alpha stage with some features not yet implemented

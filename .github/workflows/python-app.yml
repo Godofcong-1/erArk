@@ -57,9 +57,34 @@ jobs:
           Copy-Item mod dist/ -Recurse
           Rename-Item dist erArk
 
-      - name: Pack Game Files
+      - name: Pack Game Files (Full Version)
         run: |
           Compress-Archive -Path erArk\* -DestinationPath erArk.zip
+
+      - name: Pack Images Only
+        run: |
+          # 创建图片资源包目录
+          New-Item -ItemType Directory -Force erArk_Images
+          New-Item -ItemType Directory -Force erArk_Images/image
+          # 复制除状态条以外的所有图片文件夹
+          Copy-Item erArk/image/场景 erArk_Images/image/ -Recurse
+          Copy-Item erArk/image/断面图 erArk_Images/image/ -Recurse
+          Copy-Item erArk/image/立绘 erArk_Images/image/ -Recurse
+          # 打包图片资源
+          Compress-Archive -Path erArk_Images\* -DestinationPath erArk_Images.zip
+
+      - name: Pack Game Files (Lite Version)
+        run: |
+          # 创建轻量版目录
+          Copy-Item erArk erArk_Lite -Recurse
+          # 删除轻量版中的大图片文件夹（保留状态条和根目录图片）
+          Remove-Item erArk_Lite/image/场景 -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item erArk_Lite/image/断面图 -Recurse -Force -ErrorAction SilentlyContinue
+          Remove-Item erArk_Lite/image/立绘 -Recurse -Force -ErrorAction SilentlyContinue
+          # 保留场景的基础图片
+          Copy-Item erArk/image/场景/宿舍_白天.png erArk_Lite/image/场景/ -Force
+          # 打包轻量版
+          Compress-Archive -Path erArk_Lite\* -DestinationPath erArk_Lite.zip
 
       - name: Run PyInstaller_ArkEditor
         run: |
@@ -155,9 +180,12 @@ jobs:
           tag_name: ${{steps.version.outputs.value}}
           release_name: ${{steps.version.outputs.value}}
           body: |
-            游戏本体 - erArk_版本号.zip
+            游戏本体（完整版） - erArk_版本号.zip
+            游戏本体（轻量版，不含角色立绘与场景图的图片资源） - erArk_Lite_版本号.zip
+            图片资源包（角色立绘、场景图等，路径为游戏根目录下的image文件夹） - erArk_Images_版本号.zip
 
-            —————— 一般玩家下载上面那个 ——————
+            —————— 轻量版+图片资源包 = 完整版 ——————
+            —————— 一般玩家下载完整版即可 ——————
             —————— 以下为口上作者/魔改开发用 ——————
             
             口上事件编辑器（无需写代码即可写口上和事件） - erArkEditor.zip
@@ -187,5 +215,27 @@ jobs:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
           asset_path: ${{ github.workspace }}/erArkEditor.zip
           asset_name: erArkEditor.zip
+          asset_content_type: application/zip
+
+      - name: Upload Lite Version Asset
+        id: upload-lite-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/erArk_Lite.zip
+          asset_name: erArk_Lite_${{steps.version.outputs.value}}.zip
+          asset_content_type: application/zip
+
+      - name: Upload Images Asset
+        id: upload-images-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ github.workspace }}/erArk_Images.zip
+          asset_name: erArk_Images_${{steps.version.outputs.value}}.zip
           asset_content_type: application/zip
   

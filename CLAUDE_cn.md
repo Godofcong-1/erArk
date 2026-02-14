@@ -97,6 +97,23 @@ pip install -r requirements.txt
 3. 运行 `python game.py` 测试更改
 4. 对于本地化更改，运行 `python buildpo.py` 和 `python buildmo.py`
 
+## CI/CD 发布结构
+
+GitHub Actions 工作流（`.github/workflows/python-app.yml`）会生成 4 个发布包：
+
+| 包名 | 说明 | 包含内容 |
+| --- | --- | ------- |
+| `erArk_{版本号}.zip` | 完整游戏包 | 包含所有资源的完整游戏 |
+| `erArk_Lite_{版本号}.zip` | 轻量游戏包 | 不包含立绘、场景等大图片资源的游戏 |
+| `erArk_Images_{版本号}.zip` | 图片资源包 | 除 `image/状态条` 外的所有图片文件夹 |
+| `erArkEditor.zip` | 口上事件编辑器 | 独立的编辑器工具 |
+
+**图片文件夹分布：**
+- **仅在图片资源包中**：`image/场景`、`image/断面图`、`image/立绘`、
+- **完整版和轻量版都包含**：`image/状态条`、`image/logo.png` 及其他根目录文件
+
+**注：** 轻量版 + 图片资源包 = 完整版
+
 ## 重要说明
 
 - 游戏处于 alpha 测试阶段，部分功能尚未实装
