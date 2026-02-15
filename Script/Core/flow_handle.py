@@ -21,27 +21,44 @@ cache: game_type.Cache = cache_control.cache
 _: FunctionType = get_text._
 """ 翻译api """
 
-# 判断是否使用Web模式
-WEB_MODE = cache.web_mode
-""" 是否使用Web模式，由game.py中设置 """
+# Web模式相关的延迟导入状态
+_web_module_loaded = False
+""" 是否已加载Web模式模块 """
+flow_handle_web = None
+""" Web版flow_handle模块的引用（延迟导入） """
 
-# 尝试导入Web版flow_handle
-if WEB_MODE:
-    try:
-        # 导入Web版flow_handle模块
-        from Script.Core import flow_handle_web
-        # 导入Web服务器模块中的函数
-        from Script.Core.web_server import get_button_response, get_wait_response, get_input_response
-        # 设置Web模式标志
-        WEB_MODE = True
-    except ImportError:
-        # 导入失败时，保持使用原始flow_handle
-        WEB_MODE = False
 
-# 如果在Web模式下，使用下面的函数来处理输入输出
-if WEB_MODE:
-    # 使用Web版本的函数，这些内容会在Web模式下覆盖原函数的实现
-    print("已启用Web模式，使用Web版本的流程控制函数")
+def _is_web_mode():
+    """
+    动态检查是否在Web模式下运行
+    
+    参数：无
+    返回值类型：bool
+    功能描述：检查cache.web_mode的当前值，并在首次检测到Web模式时加载相关模块
+    
+    注意：此函数必须使用动态检查而非模块级变量，因为：
+    1. 模组加载可能在cache.web_mode设置之前导入此模块
+    2. 模组加载过程中会导入ejaculation_panel等模块，间接导入flow_handle
+    3. 如果使用静态变量，会导致WEB_MODE被错误地设置为False
+    """
+    global _web_module_loaded, flow_handle_web
+    
+    # 动态获取当前的web_mode设置
+    web_mode = getattr(cache, 'web_mode', False)
+    
+    if web_mode and not _web_module_loaded:
+        try:
+            # 导入Web版flow_handle模块
+            from Script.Core import flow_handle_web as _flow_handle_web
+            flow_handle_web = _flow_handle_web
+            # 设置加载标志
+            _web_module_loaded = True
+            print("已启用Web模式，使用Web版本的流程控制函数")
+        except ImportError as e:
+            print(f"警告：无法导入Web版flow_handle模块: {e}")
+            return False
+    
+    return web_mode and _web_module_loaded
 
 
 def null_func():
@@ -72,7 +89,7 @@ def set_default_flow(func, arg=(), kw={}):
     功能描述：设置默认的流程函数，供后续调用
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         return flow_handle_web.set_default_flow(func, arg, kw) if hasattr(flow_handle_web, 'set_default_flow') else None
     
     # 原始逻辑
@@ -98,7 +115,7 @@ def call_default_flow():
     功能描述：调用之前设置的默认流程函数
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         return flow_handle_web.call_default_flow() if hasattr(flow_handle_web, 'call_default_flow') else None
     
     # 原始逻辑
@@ -114,7 +131,7 @@ def clear_default_flow():
     功能描述：清除当前默认流程函数
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         return flow_handle_web.clear_default_flow() if hasattr(flow_handle_web, 'clear_default_flow') else None
     
     # 原始逻辑
@@ -153,7 +170,7 @@ def set_tail_deal_cmd_func(func):
     功能描述：设置用于处理结尾命令的函数
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 将func保存到Web版flow_handle中
         if hasattr(flow_handle_web, 'set_tail_deal_cmd_func'):
             flow_handle_web.set_tail_deal_cmd_func(func)
@@ -175,7 +192,7 @@ def deco_set_tail_deal_cmd_func(func):
     功能描述：作为装饰器使用，设置结尾命令处理函数
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 调用Web版的装饰器函数
         if hasattr(flow_handle_web, 'deco_set_tail_deal_cmd_func'):
             return flow_handle_web.deco_set_tail_deal_cmd_func(func)
@@ -199,7 +216,7 @@ def bind_cmd(cmd_number, cmd_func, arg=(), kw={}):
     功能描述：将命令ID与对应的处理函数绑定
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 调用Web版的绑定函数
         return flow_handle_web.bind_cmd(cmd_number, cmd_func, arg, kw)
     
@@ -245,7 +262,7 @@ def print_cmd(
     功能描述：创建一个可点击的命令按钮
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的print_cmd函数
         return flow_handle_web.print_cmd(cmd_str, cmd_number, cmd_func, arg, kw, normal_style, on_style, tooltip)
     
@@ -277,7 +294,7 @@ def print_image_cmd(
     功能描述：创建一个图片按钮
     """
     # 检查是否在Web模式下
-    if WEB_MODE and hasattr(flow_handle_web, 'print_image_cmd'):
+    if _is_web_mode() and hasattr(flow_handle_web, 'print_image_cmd'):
         # 使用Web版的print_image_cmd函数
         return flow_handle_web.print_image_cmd(cmd_str, cmd_number, cmd_func, arg, kw, tooltip)
     
@@ -298,7 +315,7 @@ def cmd_clear(*number):
     功能描述：清除指定或所有的命令绑定
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的cmd_clear函数
         return flow_handle_web.cmd_clear(*number)
     
@@ -324,7 +341,7 @@ def _cmd_deal(order_number):
     功能描述：执行与命令ID绑定的函数
     """
     # 检查是否在Web模式下
-    if WEB_MODE and hasattr(flow_handle_web, '_cmd_deal'):
+    if _is_web_mode() and hasattr(flow_handle_web, '_cmd_deal'):
         # 使用Web版的_cmd_deal函数
         return flow_handle_web._cmd_deal(order_number)
     
@@ -343,7 +360,7 @@ def _cmd_valid(order_number):
     功能描述：判断命令ID是否有效
     """
     # 检查是否在Web模式下
-    if WEB_MODE and hasattr(flow_handle_web, '_cmd_valid'):
+    if _is_web_mode() and hasattr(flow_handle_web, '_cmd_valid'):
         # 使用Web版的_cmd_valid函数
         return flow_handle_web._cmd_valid(order_number)
     
@@ -371,7 +388,7 @@ def order_deal(flag="order", print_order=True, donot_return_null_str=True):
     功能描述：处理用户输入的命令
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的order_deal函数
         return flow_handle_web.order_deal(flag, print_order, donot_return_null_str)
     
@@ -414,7 +431,7 @@ def askfor_str(donot_return_null_str=True, print_order=False):
     功能描述：获取用户输入的字符串
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的askfor_str函数
         message = "请输入文本："  # 在Web模式下需要提供提示信息
         return flow_handle_web.askfor_str(message, "")
@@ -443,7 +460,7 @@ def askfor_all(input_list: list, print_order=False):
     功能描述：获取用户在指定列表中选择的输入
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的askfor_all函数
         return flow_handle_web.askfor_all(input_list)
     
@@ -485,7 +502,7 @@ def askfor_int(list, print_order=False):
     功能描述：获取用户在指定整数列表中的选择
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的askfor_int函数
         message = "请输入数字："  # 在Web模式下需要提供提示信息
         return flow_handle_web.askfor_int(message, 0)
@@ -514,7 +531,7 @@ def askfor_wait():
     功能描述：等待用户任意输入后继续
     """
     # 检查是否在Web模式下
-    if WEB_MODE:
+    if _is_web_mode():
         # 使用Web版的askfor_wait函数
         return flow_handle_web.askfor_wait()
 

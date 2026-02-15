@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月14日
+**最后更新**：2026年2月15日
 
 ---
 
@@ -2758,6 +2758,28 @@ werkzeug.exceptions.NotFound: 404 Not Found
 
 **修复日期**：2026年2月14日
 
+### 9.10 开启模组后Web UI无法正常游戏（2026-02-15）
+
+#### 9.10.1 问题描述：
+在Web模式下，当启用任意模组后，前端无法正常进行游戏交互，按钮点击无响应。
+
+#### 9.10.2 根本原因：
+`Script/Core/flow_handle.py` 在模块顶层使用 `WEB_MODE = cache.web_mode` 读取Web模式标志。但是模组加载（`init_mod_system()`）发生在 `cache.web_mode` 设置之前。当模组需要替换函数时（如 `ejaculation_panel.common_ejaculation`），会间接导入 `flow_handle` 模块，导致 `WEB_MODE` 被错误地设置为 `False`。
+
+#### 9.10.3 导入链分析：
+1. `game.py` 第34行：`init_mod_system()` 被调用
+2. 模组加载过程中需要导入 `Script.UI.Panel.ejaculation_panel`
+3. `ejaculation_panel` 在顶层导入 `flow_handle`
+4. `flow_handle` 在顶层读取 `cache.web_mode`（此时为默认值 `False`）
+5. `game.py` 第43行：`cache.web_mode = True` 才被设置（为时已晚）
+
+#### 9.10.4 解决方案：
+修改 `Script/Core/flow_handle.py`，使用延迟初始化模式：
+1. 移除模块顶层的 `WEB_MODE = cache.web_mode` 静态赋值
+2. 创建 `_is_web_mode()` 辅助函数，动态检查 `cache.web_mode`
+3. 在首次检测到Web模式时延迟导入 `flow_handle_web` 模块
+4. 所有需要检查Web模式的地方改为调用 `_is_web_mode()`
+
 ---
 
 ## 阶段十：优化与完善
@@ -3365,7 +3387,5 @@ children.forEach(child => {
   }
 }
 ```
-
----
 
 ---
