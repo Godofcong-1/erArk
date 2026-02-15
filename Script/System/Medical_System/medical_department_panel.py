@@ -8,7 +8,7 @@ from __future__ import annotations
 from typing import Any, Dict, List, Tuple, cast
 from types import FunctionType
 
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw
@@ -98,6 +98,7 @@ class Medical_Department_Panel:
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_button.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def switch_panel(self, panel_name: str) -> None:

@@ -1457,6 +1457,8 @@ class MedicalPlayerDiagnosePanel:
         返回:
             None。
         """
+        # 确保面板状态已切回场景，避免结算时界面异常
+        cache.now_panel_id = constant.Panel.IN_SCENE
         # 基础耗时5分钟
         duration = 5
         # 按检查次数累计耗时，每次检查+10分钟

@@ -3,7 +3,7 @@ from typing import Dict, List, Tuple, Union, overload, Literal, TypedDict
 from types import FunctionType
 
 # 依赖模块，与生产线面板保持一致的导入方式
-from Script.Core import cache_control, game_type, get_text, flow_handle
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant
 from Script.Config import game_config, normal_config
 from Script.Design import attr_calculation, handle_ability
 from Script.UI.Moudle import draw, panel
@@ -612,6 +612,7 @@ class Manage_Power_System_Panel:
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     # ---------- 供电策略子界面 ---------- #
