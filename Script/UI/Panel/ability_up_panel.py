@@ -254,7 +254,6 @@ class Characterabi_show_Text:
             py_cmd.clr_cmd()
             line_feed.draw()
             if yrn in return_list:
-                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def mark_down_show(self, ability_id: int):
@@ -707,6 +706,7 @@ class Character_abi_up_main_Handle:
             py_cmd.clr_cmd()
             line_feed.draw()
             if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn in now_character_panel.draw_data:
                 now_panel_id = yrn
