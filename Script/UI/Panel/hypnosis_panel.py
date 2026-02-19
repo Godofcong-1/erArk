@@ -649,8 +649,10 @@ class Chose_Roleplay_Type_Panel:
             if yrn == yes_draw.return_text:
                 # 结算角色扮演选择
                 self.settle_roleplay_selection()
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
             elif yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
     def toggle_type_expand(self, t):
