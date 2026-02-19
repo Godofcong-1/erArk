@@ -240,6 +240,8 @@ class NormalConfig:
     """ 字体大小 """
     order_font_size: int
     """ 输入框字体大小 """
+    tk_dpi: int
+    """ Tkinter DPI缩放值，默认100为100%缩放，125为125%缩放，150为150%缩放，0为自动 """
 
 
 # class Clothing:

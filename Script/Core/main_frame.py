@@ -5,6 +5,21 @@ import uuid
 import psutil
 import signal
 import sys
+
+# Windows高DPI支持：必须在创建任何窗口之前设置DPI感知
+# 这解决了打包后游戏窗口在高分屏上模糊的问题
+if sys.platform == "win32":
+    try:
+        import ctypes
+        # 尝试使用 Windows 8.1+ 的 Per-Monitor DPI 感知
+        try:
+            ctypes.windll.shcore.SetProcessDpiAwareness(2)  # PROCESS_PER_MONITOR_DPI_AWARE
+        except AttributeError:
+            # Windows 8.1 之前的系统使用 SetProcessDPIAware
+            ctypes.windll.user32.SetProcessDPIAware()
+    except Exception:
+        pass
+
 from tkinter import (
     ttk,
     Tk,
@@ -231,9 +246,18 @@ if normal_config.config_normal.window_hight + 30 > screen_height:
 now_font_size = int(normal_config.config_normal.window_width / normal_config.config_normal.text_width) * 2
 normal_config.config_normal.font_size = now_font_size
 normal_config.config_normal.order_font_size = now_font_size - 2
-#读取dpi
-dpi = root.winfo_fpixels("1i")
-root.tk.call("tk", "scaling", 1.0)
+# 设置DPI缩放
+# tk_dpi配置说明：100=100%缩放(1.0)，125=125%缩放(1.25)，150=150%缩放(1.5)，0=自动(1.0)
+config_dpi = getattr(normal_config.config_normal, 'tk_dpi', 0)
+if config_dpi > 0:
+    # 使用配置文件指定的DPI值，以100为基准计算scaling
+    scaling_factor = config_dpi / 100.0
+else:
+    # 自动模式：从系统读取实际DPI并计算
+    system_dpi = root.winfo_fpixels("1i")
+    # 96是Windows标准DPI，以此为基准计算scaling
+    scaling_factor = system_dpi / 96.0
+root.tk.call("tk", "scaling", scaling_factor)
 root.title(title_text)
 width = normal_config.config_normal.window_width
 #根窗口左上角x坐标-当前窗口左上角x坐标

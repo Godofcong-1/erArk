@@ -174,6 +174,16 @@ class System_Setting_Panel:
                         return_list.append(new_button_draw.return_text)
                         line_feed.draw()
                         continue
+                    # 第18项，则加一个[修改DPI大小]的按钮
+                    elif cid == 18:
+                        current_dpi = getattr(normal_config.config_normal, 'tk_dpi', 150)
+                        new_button_text = _(" [{0}] ").format(current_dpi)
+                        new_button_len = max(len(new_button_text) * 2, 30)
+                        new_button_draw = draw.LeftButton(new_button_text, str(cid) + new_button_text, new_button_len, cmd_func=self.change_dpi_size)
+                        new_button_draw.draw()
+                        return_list.append(new_button_draw.return_text)
+                        line_feed.draw()
+                        continue
                     # 第14、15项，输入数字来调整角色口上、特殊H的倍率
                     elif cid == 14 or cid == 15:
                         new_button_text = f" [{setting[cid]}] "
@@ -315,6 +325,37 @@ class System_Setting_Panel:
         # 输出提示信息
         now_draw = draw.WaitDraw()
         info_text = _("\n\n字体大小已修改为{0}，重启游戏后生效\n\n").format(new_size)
+        now_draw.text = info_text
+        now_draw.style = 'gold_enrod'
+        now_draw.draw()
+
+    def change_dpi_size(self):
+        """修改DPI缩放大小"""
+        line_feed.draw()
+        line_draw = draw.LineDraw("-", self.width)
+        line_draw.draw()
+        line_feed.draw()
+        ask_text = _("请输入新的DPI缩放值（50~300），默认为150。数值越大界面越大，数值越小界面越小。\n该设置仅影响TK绘制模式，不影响Web绘制模式，Web绘制模式下的dpi缩放见页面最下方\n常用值：100=100%缩放，125=125%缩放，150=150%缩放，200=200%缩放\n")
+        ask_panel = panel.AskForOneMessage()
+        ask_panel.set(ask_text, 99)
+        new_dpi = int(ask_panel.draw())
+        if new_dpi < 50:
+            new_dpi = 50
+        elif new_dpi > 300:
+            new_dpi = 300
+        normal_config.config_normal.tk_dpi = new_dpi
+        # 修改根目录下的config.ini文件中的DPI设置
+        config_ini_path = "config.ini"
+        if os.path.exists(config_ini_path):
+            ini_config = configparser.ConfigParser()
+            ini_config.read(config_ini_path, encoding="utf8")
+            ini_config["game"]["tk_dpi"] = str(new_dpi)
+            with open(config_ini_path, "w", encoding="utf8") as config_file:
+                ini_config.write(config_file)
+
+        # 输出提示信息
+        now_draw = draw.WaitDraw()
+        info_text = _("\n\nDPI缩放已修改为{0}，重启游戏后生效\n\n").format(new_dpi)
         now_draw.text = info_text
         now_draw.style = 'gold_enrod'
         now_draw.draw()
