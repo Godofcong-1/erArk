@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月15日
+**最后更新**：2026年2月19日
 
 ---
 
@@ -1042,6 +1042,41 @@
 - 图标尺寸缩放至 32x32px，不影响原有按钮大小和排版
 - 使用 `encodeURIComponent` 处理中文文件名的 URL 编码
 - 保留默认圆点图标作为兜底显示
+
+#### 3.6.7 DPI缩放支持修复（2026-02-19）
+- [x] 将左侧交互类型面板（`.new-ui-interaction-panel`）的所有固定px单位改为rem单位
+  - `.new-ui-main-scene`：`min-height: 620px` → `38.75rem`
+  - `.new-ui-interaction-panel`：`left: 30px` → `1.875rem`
+  - `.interaction-type-list`：`gap: 15px` → `0.9375rem`，`min-width: 140px` → `8.75rem`
+  - `.interaction-card`：`width: 120px` → `7.5rem`，`height: 70px` → `4.375rem`
+  - `.interaction-card .icon`：`font-size: 50px` → `3.125rem`
+  - `.interaction-card .icon .interaction-icon-img`：`width/height: 50px` → `3.125rem`
+  - `.interaction-card .label-group`：`margin-left: 50px` → `3.125rem`
+  - `.interaction-card .name-cn`：`font-size: 18px` → `1.125rem`
+  - `.interaction-card .name-en`：`font-size: 10px` → `0.625rem`
+  - `.interaction-card.minor-card`：`width: 100px` → `6.25rem`，`height: 36px` → `2.25rem`
+  - `.floating-instruct-container`：`max-height: 370px` → `23.125rem`，`width: 130px` → `8.125rem`
+  - `.interaction-card.floating-instruct`：`height: 32px` → `2rem`，`width: 113px` → `7.0625rem`
+  - 以及所有hover/active状态的变换值和阴影值
+- [x] 将右侧交互对象信息面板（`.new-ui-target-info`）的所有固定px单位改为rem单位
+  - `.new-ui-target-info`：`right/top/bottom: 12px` → `0.75rem`，`width: 240px` → `15rem`，`font-size: 14px` → `0.875rem`
+  - `.target-name`：`padding-bottom: 6px` → `0.375rem`
+  - `.target-relation-row`：`padding: 4px` → `0.25rem`
+  - `.target-bars`：`gap: 4px` → `0.25rem`
+  - `.target-bars .status-bar`：`height: 18px` → `1.125rem`，`gap: 6px` → `0.375rem`
+  - `.target-bars .bar-label`：`min-width: 32px` → `2rem`
+  - `.target-bars .bar-track`：`height: 10px` → `0.625rem`
+  - `.target-bars .bar-value`：`min-width: 70px` → `4.375rem`
+  - `.target-special-states`：`gap: 2px` → `0.125rem`
+
+**原因**：
+- AutoScaleManager通过修改根字体大小（`document.documentElement.style.fontSize`）实现DPI缩放
+- 使用固定px单位的元素不会响应根字体大小的变化
+- 将px单位换为rem单位后，当用户调整DPI缩放比例时，这些元素会自动跟随缩放
+
+**换算规则**：
+- 基准字体大小：`16px = 1rem`
+- 示例：`30px = 30/16 = 1.875rem`
 
 ### 3.7 对话框区域
 

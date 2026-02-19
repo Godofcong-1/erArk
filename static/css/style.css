@@ -1704,9 +1704,9 @@ body {
     flex: 1;
     display: flex;
     position: relative;
-    min-height: 620px; /* 备用最小高度作为保底，确保左侧交互类型按钮完整显示 */
+    min-height: 38.75rem; /* 备用最小高度作为保底，确保左侧交互类型按钮完整显示 (原620px) */
     background-color: #111;
-    border-radius: 4px;
+    border-radius: 0.25rem;
     /* 确保绝对定位的子元素不被截断 */
     overflow: visible;
 }
@@ -1715,7 +1715,7 @@ body {
 .new-ui-interaction-panel {
     /* 使用绝对定位，不影响其他元素的布局 */
     position: absolute;
-    left: 30px;
+    left: 1.875rem; /* 原30px */
     top: 50%;
     transform: translateY(-50%);
     /* Auto width to fit cards */
@@ -1738,19 +1738,19 @@ body {
     pointer-events: auto;
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 0.9375rem; /* 原15px */
     transform-style: preserve-3d;
-    min-width: 140px; /* 强制宽度，防止右侧点击失效 */
-    padding-right: 20px; /* 预留右侧空间 */
+    min-width: 8.75rem; /* 强制宽度，防止右侧点击失效 (原140px) */
+    padding-right: 1.25rem; /* 预留右侧空间 (原20px) */
 }
 
 /* 交互卡片通用样式 */
 .interaction-card {
-    width: 120px;
-    height: 70px; /* 增加高度 (原50px -> 70px, 约增加1/3) */
+    width: 7.5rem; /* 原120px */
+    height: 4.375rem; /* 增加高度 (原50px -> 70px, 约增加1/3) */
     background: rgba(30, 30, 40, 0.85);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-left: 4px solid var(--text-secondary, #b8b8b8);
+    border-left: 0.25rem solid var(--text-secondary, #b8b8b8); /* 原4px */
     color: var(--text-primary, #e8e8e8);
     cursor: pointer;
     position: relative;
@@ -1760,16 +1760,16 @@ body {
     flex-direction: row; /* 改为横向布局 (图标在左) */
     align-items: center;
     justify-content: flex-start; /* 左对齐 */
-    padding: 0 10px;
-    gap: 8px;
+    padding: 0 0.625rem; /* 原10px */
+    gap: 0.5rem; /* 原8px */
     
     /* 3D向中心倾斜效果 - 减小角度以修复点击区域问题 */
     /* 增加 translateZ(20px) 确保整体都在Z=0平面之前，防止旋转导致右侧深入屏幕后方无法点击 */
-    transform: rotateY(10deg) translateZ(20px); 
+    transform: rotateY(10deg) translateZ(1.25rem);  /* 原20px */
     transform-origin: left center; /* 明确旋转轴在左侧，避免右侧向后偏移过多 */
     pointer-events: auto; /* 显式开启点击，对抗父级的 none */
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.5);
-    backdrop-filter: blur(5px);
+    box-shadow: 0.3125rem 0.3125rem 0.9375rem rgba(0,0,0,0.5); /* 原5px 5px 15px */
+    backdrop-filter: blur(0.3125rem); /* 原5px */
     
     /* 切角效果 */
     clip-path: polygon(0 0, 100% 0, 95% 100%, 0% 100%);
@@ -1777,18 +1777,18 @@ body {
 
 .interaction-card:hover {
     /* 保持前移，防止Z轴跳变 */
-    transform: rotateY(0deg) scale(1.05) translateX(10px) translateZ(30px);
+    transform: rotateY(0deg) scale(1.05) translateX(0.625rem) translateZ(1.875rem); /* 原10px, 30px */
     background: rgba(40, 40, 50, 0.95);
     border-left-color: var(--accent-color, #e94560);
-    box-shadow: 10px 10px 20px rgba(0,0,0,0.6);
+    box-shadow: 0.625rem 0.625rem 1.25rem rgba(0,0,0,0.6); /* 原10px 10px 20px */
     z-index: 10;
 }
 
 .interaction-card.active {
     background: rgba(233, 69, 96, 0.9);
     border-left-color: #fff;
-    transform: rotateY(0deg) translateX(15px) translateZ(20px);
-    box-shadow: 0 0 20px rgba(233, 69, 96, 0.4);
+    transform: rotateY(0deg) translateX(0.9375rem) translateZ(1.25rem); /* 原15px, 20px */
+    box-shadow: 0 0 1.25rem rgba(233, 69, 96, 0.4); /* 原20px */
 }
 
 .interaction-card.active.hidden-card {
@@ -1801,12 +1801,12 @@ body {
 
 .interaction-card .icon {
     position: absolute;
-    left: 5px; /* 向左移动5像素 */
+    left: 0.3125rem; /* 向左移动5像素 (原5px) */
     top: 50%;
     transform: translateY(-50%);
     z-index: 0; /* 图标在文本下层 */
-    font-size: 50px;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    font-size: 3.125rem; /* 原50px */
+    filter: drop-shadow(0 0.125rem 0.25rem rgba(0,0,0,0.5));
     line-height: 1;
     flex-shrink: 0;
     display: flex;
@@ -1817,15 +1817,15 @@ body {
 
 /* 交互大类图片图标样式（2026-02-13新增） */
 .interaction-card .icon .interaction-icon-img {
-    width: 50px;
-    height: 50px;
+    width: 3.125rem; /* 原50px */
+    height: 3.125rem; /* 原50px */
     object-fit: contain;
-    filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    filter: drop-shadow(0 0.125rem 0.25rem rgba(0,0,0,0.5));
 }
 
 /* 默认图标样式（无图片时的圆点） */
 .interaction-card .icon .interaction-icon-default {
-    font-size: 50px;
+    font-size: 3.125rem; /* 原50px */
 }
 
 .interaction-card .label-group {
@@ -1836,11 +1836,11 @@ body {
     overflow: hidden; /* 防止文字溢出 */
     position: relative;
     z-index: 1; /* 文本在图标上层 */
-    margin-left: 50px; /* 向右移动，留出更多空间 */
+    margin-left: 3.125rem; /* 向右移动，留出更多空间 (原50px) */
 }
 
 .interaction-card .name-cn {
-    font-size: 18px; /* 放大文字（原14px） */
+    font-size: 1.125rem; /* 放大文字（原14px） (原18px) */
     font-weight: bold;
     /* 文本描边效果 - 使用多重阴影模拟 */
     text-shadow: 
@@ -1855,12 +1855,12 @@ body {
 }
 
 .interaction-card .name-en {
-    font-size: 10px; /* 放大英文（原8px） */
+    font-size: 0.625rem; /* 放大英文（原8px） (原10px) */
     color: rgba(255,255,255,0.7);
     text-transform: uppercase;
     font-family: 'Bahnschrift', sans-serif;
     line-height: 1;
-    margin-top: 2px;
+    margin-top: 0.125rem; /* 原2px */
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1881,29 +1881,29 @@ body {
 
 /* 小类样式 */
 .interaction-minor-list {
-    margin-top: 2px;
-    margin-bottom: 2px;
-    margin-left: 15px;
+    margin-top: 0.125rem; /* 原2px */
+    margin-bottom: 0.125rem; /* 原2px */
+    margin-left: 0.9375rem; /* 原15px */
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 0.25rem; /* 原4px */
 }
 
 .interaction-card.minor-card {
-    width: 100px;
-    height: 36px; /* 小类高度大幅减小 */
-    font-size: 12px;
+    width: 6.25rem; /* 原100px */
+    height: 2.25rem; /* 小类高度大幅减小 (原36px) */
+    font-size: 0.75rem; /* 原12px */
     background: rgba(50, 50, 60, 0.9);
-    border-left-width: 2px;
-    padding: 0 8px;
+    border-left-width: 0.125rem; /* 原2px */
+    padding: 0 0.5rem; /* 原8px */
     /* 小类倾斜角度稍小，同样前移防止穿透 */
-    transform: rotateY(5deg) translateZ(20px);
+    transform: rotateY(5deg) translateZ(1.25rem); /* 原20px */
     justify-content: center; /* 小类一般居中或者左对齐? 保持左对齐统一 */
     justify-content: flex-start; 
 }
 
 .interaction-card.minor-card .name-cn {
-    font-size: 16px; /* 比大类小2号（大类18px） */
+    font-size: 1rem; /* 比大类小2号（大类18px） (原16px) */
     /* 小类也添加描边效果 */
     text-shadow: 
         -1px -1px 0 rgba(0,0,0,0.8),
@@ -1913,7 +1913,7 @@ body {
         0 2px 4px rgba(0,0,0,0.5);
 }
 .interaction-card.minor-card .name-en {
-    font-size: 8px; /* 比大类小2号（大类10px） */
+    font-size: 0.5rem; /* 比大类小2号（大类10px） (原8px) */
     /* 英文也添加描边效果 */
     text-shadow: 
         -1px -1px 0 rgba(0,0,0,0.8),
@@ -1924,7 +1924,7 @@ body {
 
 /* Ensure minor card flattens when active, overriding the rotated minor-card state */
 .interaction-card.minor-card.active {
-    transform: rotateY(0deg) translateX(10px) translateZ(20px);
+    transform: rotateY(0deg) translateX(0.625rem) translateZ(1.25rem); /* 原10px, 20px */
     background: rgba(80, 80, 100, 0.95);
     border-left-color: #fff;
 }
@@ -1934,15 +1934,15 @@ body {
 .floating-instruct-container {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    margin-left: 20px;       /* 缩进由容器统一处理 */
-    margin-top: 4px;         /* 与上方小类卡片保持间距 */
-    max-height: 370px;       /* 限制高度，约展示10个指令 (32*10 + 4*9 + padding ~ 360) */
+    gap: 0.25rem;            /* 原4px */
+    margin-left: 1.25rem;    /* 缩进由容器统一处理 (原20px) */
+    margin-top: 0.25rem;     /* 与上方小类卡片保持间距 (原4px) */
+    max-height: 23.125rem;   /* 限制高度，约展示10个指令 (原370px) */
     overflow-y: auto;        /* 启用垂直滚动 */
     overflow-x: hidden;      /* 隐藏横向滚动 */
-    padding: 2px;            /* 微小内边距，减少边缘裁剪风险 */
-    padding-right: 5px;      /* 右侧留出滚动条空间 */
-    width: 130px;            /* 确保足够宽度容纳卡片(113px)+滚动条 */
+    padding: 0.125rem;       /* 微小内边距，减少边缘裁剪风险 (原2px) */
+    padding-right: 0.3125rem;/* 右侧留出滚动条空间 (原5px) */
+    width: 8.125rem;         /* 确保足够宽度容纳卡片(113px)+滚动条 (原130px) */
     
     /* 自定义滚动条样式 (Webkit) */
     scrollbar-width: thin;
@@ -1950,14 +1950,14 @@ body {
 }
 
 .floating-instruct-container::-webkit-scrollbar {
-    width: 5px;
+    width: 0.3125rem; /* 原5px */
 }
 .floating-instruct-container::-webkit-scrollbar-track {
     background: transparent; 
 }
 .floating-instruct-container::-webkit-scrollbar-thumb {
     background-color: rgba(255, 255, 255, 0.3);
-    border-radius: 2px;
+    border-radius: 0.125rem; /* 原2px */
 }
 .floating-instruct-container::-webkit-scrollbar-thumb:hover {
     background-color: rgba(255, 255, 255, 0.5);
@@ -1967,23 +1967,23 @@ body {
 .interaction-card.floating-instruct {
     background: rgba(4, 28, 44, 0.9); /* 深蓝色背景 */
     border-left-color: #00d2ff;       /* 青色亮边 */
-    border-left-width: 3px;
-    height: 32px;                     /* 更紧凑 */
-    width: 113px;                     /* 增加四分之一（原90px * 1.25）*/
+    border-left-width: 0.1875rem;     /* 原3px */
+    height: 2rem;                     /* 更紧凑 (原32px) */
+    width: 7.0625rem;                 /* 增加四分之一（原90px * 1.25）(原113px) */
     margin-left: 0;                   /* 移除单独缩进，由容器接管 */
-    transform: rotateY(0deg) translateZ(20px); /* 浮现按钮不旋转，保持Z深度一致 */
+    transform: rotateY(0deg) translateZ(1.25rem); /* 浮现按钮不旋转，保持Z深度一致 (原20px) */
     clip-path: none;                  /* 移除切角，保持方正或自定义 */
-    border-radius: 2px;
+    border-radius: 0.125rem;          /* 原2px */
     flex-shrink: 0;                   /* 防止在容器内被压缩 */
 }
 
 .interaction-card.floating-instruct:hover {
     background: #007acc;
-    transform: translateX(5px) translateZ(30px);
+    transform: translateX(0.3125rem) translateZ(1.875rem); /* 原5px, 30px */
 }
 
 .interaction-card.floating-instruct .name-cn {
-    font-size: 14px; /* 比小类小2号（小类16px） */
+    font-size: 0.875rem; /* 比小类小2号（小类16px） (原14px) */
     font-weight: normal;
     /* 无部位指令也添加描边效果 */
     text-shadow: 
@@ -1995,7 +1995,7 @@ body {
 }
 
 .interaction-card.floating-instruct .name-en {
-    font-size: 6px; /* 比小类小2号（小类8px） */
+    font-size: 0.375rem; /* 比小类小2号（小类8px） (原6px) */
     /* 英文也添加描边效果 */
     text-shadow: 
         -1px -1px 0 rgba(0,0,0,0.8),
@@ -2007,7 +2007,7 @@ body {
 .interaction-minor-btn {
     color: #ccc;
     border: 1px solid #444;
-    border-radius: 4px;
+    border-radius: 0.25rem; /* 原4px */
     cursor: pointer;
     transition: all 0.2s;
     font-size: 0.9em;
@@ -2024,7 +2024,7 @@ body {
     background-color: #4a4a7a;
     border-color: #8888ff;
     color: #fff;
-    box-shadow: 0 0 8px rgba(136, 136, 255, 0.4);
+    box-shadow: 0 0 0.5rem rgba(136, 136, 255, 0.4); /* 原8px */
 }
 
 /* 旧版交互类型按钮（向后兼容） */
@@ -2318,18 +2318,18 @@ body {
 .new-ui-target-info {
     /* 使用绝对定位，不影响角色立绘的居中 */
     position: absolute;
-    right: 12px;
-    top: 12px;
-    bottom: 12px;
-    width: 240px;
-    padding: 12px;
+    right: 0.75rem; /* 原12px */
+    top: 0.75rem; /* 原12px */
+    bottom: 0.75rem; /* 原12px */
+    width: 15rem; /* 原240px */
+    padding: 0.75rem; /* 原12px */
     background-color: rgba(0, 0, 0, 0.8);
     display: flex;
     flex-direction: column;
-    gap: 6px;
-    border-radius: 4px;
+    gap: 0.375rem; /* 原6px */
+    border-radius: 0.25rem; /* 原4px */
     overflow-y: auto;
-    font-size: 14px;
+    font-size: 0.875rem; /* 原14px */
     line-height: 1.4;
     z-index: 40; /* 确保在角色立绘上方 */
 }
@@ -2339,16 +2339,16 @@ body {
     color: #ffd700;
     font-weight: bold;
     text-align: center;
-    padding-bottom: 6px;
+    padding-bottom: 0.375rem; /* 原6px */
     border-bottom: 1px solid #444;
-    margin-bottom: 4px;
+    margin-bottom: 0.25rem; /* 原4px */
 }
 
 /* 好感度/信赖度行 */
 .target-relation-row {
     display: flex;
     justify-content: space-between;
-    padding: 4px 0;
+    padding: 0.25rem 0; /* 原4px */
     font-size: 1em;
     color: #ccc;
     border-bottom: 1px solid #333;
@@ -2366,27 +2366,27 @@ body {
 .target-bars {
     display: flex;
     flex-direction: column;
-    gap: 4px;
-    padding: 4px 0;
+    gap: 0.25rem; /* 原4px */
+    padding: 0.25rem 0; /* 原4px */
 }
 
 /* 带背景图片的状态条 */
 .target-bars .status-bar {
     display: flex;
     align-items: center;
-    gap: 6px;
-    height: 18px;
+    gap: 0.375rem; /* 原6px */
+    height: 1.125rem; /* 原18px */
 }
 
 .target-bars .bar-label {
     font-size: 0.9em;
-    min-width: 32px;
+    min-width: 2rem; /* 原32px */
     color: #ccc;
 }
 
 .target-bars .bar-track {
     flex: 1;
-    height: 10px;
+    height: 0.625rem; /* 原10px */
     background-color: rgba(40, 40, 40, 0.8);
     transform: skewX(-20deg);
     border: 1px solid rgba(255, 255, 255, 0.15);
@@ -2416,7 +2416,7 @@ body {
 
 .target-bars .bar-value {
     font-size: 0.85em;
-    min-width: 70px;
+    min-width: 4.375rem; /* 原70px */
     text-align: right;
     color: #ccc;
 }
@@ -2425,8 +2425,8 @@ body {
 .target-special-states {
     display: flex;
     flex-wrap: wrap;
-    gap: 2px;
-    padding: 4px 0;
+    gap: 0.125rem; /* 原2px */
+    padding: 0.25rem 0; /* 原4px */
     border-top: 1px solid #333;
     border-bottom: 1px solid #333;
     line-height: 1.5;
@@ -2434,12 +2434,12 @@ body {
 
 .special-state {
     font-size: 1em;
-    padding: 1px 2px;
+    padding: 0.0625rem 0.125rem; /* 原1px 2px */
 }
 
 /* 状态区块 */
 .target-state-section {
-    margin-top: 4px;
+    margin-top: 0.25rem; /* 原4px */
 }
 
 /* ========== 数值变化浮动文本 ========== */
