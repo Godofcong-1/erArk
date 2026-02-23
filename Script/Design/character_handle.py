@@ -58,10 +58,10 @@ def init_character(character_id: int, character_tem: game_type.NpcTem, collect_r
         cache.npc_id_got.add(character_id)
     cache.npc_name_data.add(now_character.name) # 加入到已有干员姓名中
     now_character.sex = character_tem.Sex
-    now_character.profession= character_tem.Profession
-    now_character.race= character_tem.Race
-    now_character.relationship.nation= character_tem.Nation
-    now_character.relationship.birthplace= character_tem.Birthplace
+    now_character.profession = character_tem.Profession
+    now_character.race = character_tem.Race
+    now_character.relationship.nation = character_tem.Nation
+    now_character.relationship.birthplace = character_tem.Birthplace
     # 如果有母亲的话则加上亲子关系
     if character_tem.Mother_id:
         now_character.relationship.father_id = 0

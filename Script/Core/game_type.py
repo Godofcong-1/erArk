@@ -1292,7 +1292,7 @@ class Rhodes_Island:
 
         # 文职区
         self.recruit_line: Dict[int, List] = {}
-        """ 招募线数据: 招募线id:[0招募进度%, 1招募策略id, 2该线主招聘专员id(0为空缺), 3招募效率百分比(如20.5%)] (2025.09重构) """
+        """ 招募线数据: 招募线id:[0招募进度%, 1招募策略id, 2该线主招聘专员id(0为空缺), 3招募效率百分比(如20.5%)] """
         self.hr_operator_ids_list: List[int] = []
         """ 招募专员id列表 """
         self.recruited_id: Set = set()
