@@ -356,19 +356,47 @@ const ScrollManager = {
         const scrollButton = document.getElementById('scroll-to-bottom-btn');
         const skipWaitButton = document.getElementById('skip-wait-btn');
         
-        // 监听容器滚动事件
+        // 辅助函数：检查是否处于新UI模式
+        const isNewUIMode = () => {
+            return gameContainer && gameContainer.querySelector('.new-ui-container') !== null;
+        };
+        
+        // 辅助函数：计算是否在底部
+        const calculateIsAtBottom = () => {
+            if (isNewUIMode()) {
+                // 新UI模式：检查页面滚动位置
+                const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+                const scrollHeight = document.documentElement.scrollHeight;
+                const clientHeight = window.innerHeight;
+                return (scrollHeight - scrollTop - clientHeight) < 20;
+            } else {
+                // 传统模式：检查game-container滚动位置
+                return gameContainer && (gameContainer.scrollHeight - gameContainer.scrollTop - gameContainer.clientHeight) < 20;
+            }
+        };
+        
+        // 监听容器滚动事件（传统模式）
         if (gameContainer) {
             gameContainer.addEventListener('scroll', () => {
-                // 计算是否在底部(允许20px的误差)
-                this.isAtBottom = (gameContainer.scrollHeight - gameContainer.scrollTop - gameContainer.clientHeight) < 20;
-                
-                // 根据滚动位置更新指示器显示状态
-                this.updateIndicatorVisibility();
+                if (!isNewUIMode()) {
+                    // 仅在传统模式下处理game-container的滚动
+                    this.isAtBottom = calculateIsAtBottom();
+                    this.updateIndicatorVisibility();
+                }
             });
             
             // 监听容器内容变化，使用防抖处理
             this.setupScrollObserver(gameContainer);
         }
+        
+        // 监听窗口滚动事件（新UI模式）
+        window.addEventListener('scroll', () => {
+            if (isNewUIMode()) {
+                // 仅在新UI模式下处理窗口滚动
+                this.isAtBottom = calculateIsAtBottom();
+                this.updateIndicatorVisibility();
+            }
+        });
         
         // 为指示器添加点击事件
         if (this.indicator) {

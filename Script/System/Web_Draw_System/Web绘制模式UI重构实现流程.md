@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月19日
+**最后更新**：2026年2月25日
 
 ---
 
@@ -732,6 +732,22 @@
   - 解决方案：移除 `updatePlayerInfoUI()` 中多余的 `createPlayerFloatingValueChanges()` 调用，因为 `createPlayerInfoPanel()` 已经处理了
   - 修改文件：
     - `static/game.js` - 移除 `updatePlayerInfoUI()` 函数中重复的浮动文本创建代码
+
+**问题修复记录（2026年2月25日）**：
+- **修复1：主界面中按钮点击不自动滚动到底部** ✅
+  - 问题描述：在进入主界面之前，点击按钮时会自动滚动到页面底部，但进入主界面后，点击按钮时不再自动滚动
+  - 问题原因：
+    - 当没有新UI时，`game-container` 有 `max-height: 80vh` 和 `overflow-y: auto`，是可滚动的容器
+    - 当进入主界面（新UI）后，CSS规则 `.game-container:has(.new-ui-container)` 将 `max-height` 设为 `none`，`overflow` 设为 `visible`，使得 `game-container` 不再是滚动容器
+    - `scrollToBottom()` 仍然尝试设置 `game-container.scrollTop`，但它此时不可滚动，实际需要滚动的是整个页面（`window`）
+  - 解决方案：
+    - 修改 `scrollToBottom()` 函数，检测是否处于新UI模式（通过检查 `game-container` 是否包含 `.new-ui-container` 元素）
+    - 新UI模式下：使用 `window.scrollTo()` 滚动整个页面
+    - 传统模式下：继续使用 `gameContainer.scrollTop` 滚动容器
+    - 同时修改 `ScrollManager.init()` 中的滚动状态检测逻辑，新增窗口滚动事件监听
+  - 修改文件：
+    - `static/game.js` - 修改 `scrollToBottom()` 函数，支持双模式滚动
+    - `static/js/ui_managers.js` - 修改 `ScrollManager.init()` 函数，添加窗口滚动监听和模式检测辅助函数
 
 **新功能实现记录（2026年2月7日）**：
 - **臀部子部位高亮映射功能** ✅

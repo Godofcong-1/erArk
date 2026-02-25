@@ -1605,11 +1605,33 @@ function scrollToBottom(attempts = 0, maxAttempts = 5) {
         return;
     }
     
-    // 记录滚动前的位置
-    const scrollBefore = gameContainer.scrollTop;
+    // 检查是否处于新UI模式（game-container包含new-ui-container）
+    // 新UI模式下，game-container的overflow设为visible，需要滚动整个页面
+    const hasNewUI = gameContainer.querySelector('.new-ui-container') !== null;
+    
+    // 根据模式选择滚动目标
+    let scrollTarget, scrollBefore, scrollHeight, clientHeight;
+    
+    if (hasNewUI) {
+        // 新UI模式：滚动整个页面
+        scrollTarget = document.documentElement;
+        scrollBefore = window.pageYOffset || document.documentElement.scrollTop;
+        scrollHeight = document.documentElement.scrollHeight;
+        clientHeight = window.innerHeight;
+    } else {
+        // 传统模式：滚动game-container
+        scrollTarget = gameContainer;
+        scrollBefore = gameContainer.scrollTop;
+        scrollHeight = gameContainer.scrollHeight;
+        clientHeight = gameContainer.clientHeight;
+    }
     
     // 执行滚动
-    gameContainer.scrollTop = gameContainer.scrollHeight;
+    if (hasNewUI) {
+        window.scrollTo({ top: scrollHeight, behavior: 'auto' });
+    } else {
+        gameContainer.scrollTop = scrollHeight;
+    }
     
     // 隐藏指示器
     ScrollManager.hideIndicator();
@@ -1618,21 +1640,31 @@ function scrollToBottom(attempts = 0, maxAttempts = 5) {
     const timestamp = new Date().toISOString().substr(11, 8);
     
     // 输出调试信息
-    console.log(`[${timestamp}] 尝试滚动 #${attempts+1}: 高度=${gameContainer.scrollHeight}, 滚动位置=${gameContainer.scrollTop}`);
+    const currentScrollTop = hasNewUI ? (window.pageYOffset || document.documentElement.scrollTop) : gameContainer.scrollTop;
+    console.log(`[${timestamp}] 尝试滚动 #${attempts+1}: 模式=${hasNewUI ? '新UI' : '传统'}, 高度=${scrollHeight}, 滚动位置=${currentScrollTop}`);
     
     // 使用短暂延时再次检查，确保最终滚动到位
     setTimeout(() => {
+        // 获取当前滚动位置
+        const currentTop = hasNewUI ? (window.pageYOffset || document.documentElement.scrollTop) : gameContainer.scrollTop;
+        const currentHeight = hasNewUI ? document.documentElement.scrollHeight : gameContainer.scrollHeight;
+        const currentClient = hasNewUI ? window.innerHeight : gameContainer.clientHeight;
+        
         // 检查滚动是否已经到底（或接近底部）
-        const isAtBottom = (gameContainer.scrollHeight - gameContainer.scrollTop - gameContainer.clientHeight) < 20;
+        const isAtBottom = (currentHeight - currentTop - currentClient) < 20;
         ScrollManager.isAtBottom = isAtBottom;
         
         // 如果未滚动到底部，且滚动位置有变化，则再次尝试
-        if (!isAtBottom && (gameContainer.scrollTop > scrollBefore || attempts === 0)) {
+        if (!isAtBottom && (currentTop > scrollBefore || attempts === 0)) {
             scrollToBottom(attempts + 1, maxAttempts);
         } else {
             // 最后一次强制滚动，确保到底
-            gameContainer.scrollTop = gameContainer.scrollHeight;
-            console.log(`[${timestamp}] 滚动完成: 最终位置=${gameContainer.scrollTop}`);
+            if (hasNewUI) {
+                window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'auto' });
+            } else {
+                gameContainer.scrollTop = gameContainer.scrollHeight;
+            }
+            console.log(`[${timestamp}] 滚动完成: 最终位置=${hasNewUI ? (window.pageYOffset || document.documentElement.scrollTop) : gameContainer.scrollTop}`);
             
             // 完成滚动
             ScrollManager.isScrolling = false;
