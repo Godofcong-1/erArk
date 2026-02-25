@@ -3,7 +3,7 @@ cid,instruct_id,name,instruct_type,instruct_sub_type,premise_set,behavior_id,web
 int,str,str,str,str,str,str,int,str,str,str,str
 0,0,0,1,0,0,0,0,0,0,0,0
 指令配置表,,,,,,,,,,,
-1,move,移动,SYSTEM,0,NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX|TIME_STOP_JUDGE_FOR_MOVE,,2,SEE_MAP,hand,hand_scene,
+1,move,移动,SYSTEM,0,NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX|TIME_STOP_JUDGE_FOR_MOVE,,0,SEE_MAP,hand,hand_scene,
 2,see_attr,查看属性,SYSTEM,0,,,2,SEE_ATTR,other,other_attribute,
 3,item,道具,SYSTEM,0,,,2,ITEM,tool,tool_base,
 4,originium_arts,源石技艺,SYSTEM,0,TIRED_LE_84|NOT_H|NOT_SHOW_NON_H_IN_HIDDEN_SEX,,2,ORIGINIUM_ARTS,arts,arts_base,
@@ -77,7 +77,7 @@ int,str,str,str,str,str,str,int,str,str,str,str
 2019,visitor_system,访客系统,WORK,0,NOT_H|IN_DIPLOMATIC_OFFICE|VISITOR_ZONE_GE_2,,2,VISITOR,hand,hand_work,
 2020,nation_diplomacy,势力与外交,WORK,0,NOT_H|IN_DIPLOMATIC_OFFICE|VISITOR_ZONE_GE_2,,2,NATION_DIPLOMACY,hand,hand_work,
 2021,deal_with_diplomacy,处理外交事宜,WORK,0,,,1,,hand,hand_work,
-2022,prts,普瑞赛斯,WORK,0,NOT_H|IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG,,0,PRTS,hand,hand_scene,
+2022,prts,普瑞赛斯,WORK,0,NOT_H|IN_DR_OFF_OR_SERVER_ROOM_OR_DEBUG,,2,PRTS,hand,hand_scene,
 2023,manage_library,管理图书馆,WORK,0,NOT_H|TIRED_LE_84|HP_G_1|IN_LIBRARY_OR_LIBRARY_OFFICE|TARGET_WORK_IS_LIBRARY_MANAGER|T_NORMAL_24567,,2,MANAGE_LIBRARY,hand,hand_work,
 2024,manage_assembly_line,管理流水线,WORK,0,NOT_H|TIRED_LE_84|HP_G_1|IN_PRODUCTION_WORKSHOP,,2,MANAGE_ASSEMBLY_LINE,hand,hand_work,
 2025,plant_manage_crop,种植与养护作物,WORK,0,NOT_H|IN_HERB_GARDEN_OR_GREENHOUSE|NO_TARGET_OR_TARGET_CAN_COOPERATE|TIRED_LE_74,PLANT_MANAGE_CROP,1,,hand,hand_work,
