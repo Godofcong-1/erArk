@@ -66,6 +66,9 @@ def find_recruitable_npc() -> List[int]:
 
     for i in range(len(cache.npc_tem_data)):
         chara_id = i + 1
+        # 跳过玩家
+        if chara_id == 0:
+            continue
         # 跳过已有的
         if chara_id in cache.npc_id_got:
             continue
@@ -324,6 +327,10 @@ class Recruit_Panel:
             else:
                 now_text += _("  当前已招募待确认的干员有：")
                 for chara_id in cache.rhodes_island.recruited_id:
+                    # 如果角色id不存在或为0，则pop并跳过
+                    if chara_id == 0 or chara_id not in cache.character_data:
+                        cache.rhodes_island.recruited_id.remove(chara_id)
+                        continue
                     character_data: game_type.Character = cache.character_data[chara_id]
                     now_text += f" [{str(character_data.adv).rjust(4,'0')}]{character_data.name}"
                 now_text += f"\n"
