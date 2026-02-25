@@ -39888,6 +39888,14 @@ msgstr ""
 msgid "当博士的饥饿值和尿意值积累到对应程度时，在主界面中显示<饿>、<尿>，默认为是"
 msgstr ""
 
+#: ./data\csv\System_Setting.csv:37
+msgid "TK模式下DPI缩放大小"
+msgstr ""
+
+#: ./data\csv\System_Setting.csv:37
+msgid "在TK绘制模式下，用于调整游戏窗口的DPI缩放比例，默认为150。数值越大界面越大，数值越小界面越小。如果显示模糊或排版异常，可尝试调整此值"
+msgstr ""
+
 #: ./data\csv\Talent.csv:7
 msgid "阴道处女"
 msgstr ""
