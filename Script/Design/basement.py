@@ -287,7 +287,7 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
        room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["关押", "牢8"]))
     elif facility_cid == 22:
         room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["中枢", "博士办公室"]))
-    elif facility_cid == 401:
+    elif facility_cid == 41:
         room_full_str_list.append(map_handle.get_map_system_path_str_for_list(["疗养庭院", "药田"]))
     # 设施损坏调整
     for room_full_str in room_full_str_list:
