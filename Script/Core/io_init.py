@@ -9,29 +9,65 @@ from Script.Core import cache_control
 # 获取全局缓存
 cache = cache_control.cache
 
-# 判断是否使用Web模式
-WEB_MODE = cache.web_mode
-""" 是否使用Web模式，由game.py中设置 """
-
-# 尝试导入Web版IO模块
+# Web模式相关的延迟导入状态
+_web_module_loaded = False
+""" 是否已加载Web IO模块 """
 web_io = None
-if WEB_MODE:
-    try:
-        # 导入Web版IO模块
-        from Script.Core import io_web
-        # 导入Web服务器模块
-        from Script.Core.web_server import update_game_state
-        # Web IO模块加载成功
-        web_io = io_web
-        print("Web IO loaded successfully.")
-    except ImportError:
-        # 导入失败时，保持使用原始IO
-        web_io = None
+""" Web版IO模块的引用（延迟导入） """
+
+
+def _is_web_mode():
+    """
+    动态检查是否在Web模式下运行
+    
+    参数：无
+    返回值类型：bool
+    功能描述：检查cache.web_mode的当前值，并在首次检测到Web模式时加载相关模块
+    
+    注意：此函数必须使用动态检查而非模块级变量，因为：
+    1. 模组加载可能在cache.web_mode设置之前导入此模块
+    2. 模组加载过程中会导入panel.py等模块，间接导入io_init
+    3. 如果使用静态变量，会导致WEB_MODE被错误地设置为False
+    """
+    global _web_module_loaded, web_io
+    
+    # 动态获取当前的web_mode设置
+    web_mode = getattr(cache, 'web_mode', False)
+    
+    if web_mode and not _web_module_loaded:
+        try:
+            # 导入Web版IO模块
+            from Script.Core import io_web
+            web_io = io_web
+            # 设置加载标志
+            _web_module_loaded = True
+            print("Web IO loaded successfully.")
+        except ImportError as e:
+            print(f"警告：无法导入Web版IO模块: {e}")
+            return False
+    
+    return web_mode and _web_module_loaded
 
 input_evnet = threading.Event()
 _send_queue = queue.Queue()
 _order_queue = queue.Queue()
 order_swap = None
+
+# tkinter模式下的绑定（延迟到首次使用时判断）
+_main_frame_bound = False
+""" 是否已绑定main_frame """
+
+
+def _ensure_main_frame_bound():
+    """
+    确保tkinter模式下main_frame已绑定
+    只在非Web模式下执行绑定
+    """
+    global _main_frame_bound
+    if not _main_frame_bound and not _is_web_mode():
+        main_frame.bind_return(_input_evnet_set)
+        main_frame.bind_queue(_send_queue)
+        _main_frame_bound = True
 
 
 def _input_evnet_set(order):
@@ -45,7 +81,7 @@ def _input_evnet_set(order):
     功能描述：将命令推送到队列中
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的推送命令函数
         web_io._input_event_set(order)
     else:
@@ -63,18 +99,13 @@ def get_order():
     功能描述：从命令队列中获取一个命令
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的获取命令函数
         return web_io.get_order()
     else:
         # 原始逻辑
+        _ensure_main_frame_bound()
         return _order_queue.get()
-
-
-# tkinter模式下的绑定
-if not WEB_MODE:
-    main_frame.bind_return(_input_evnet_set)
-    main_frame.bind_queue(_send_queue)
 
 
 def _get_input_event():
@@ -101,11 +132,12 @@ def run(open_func: object):
     功能描述：启动游戏主流程
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的运行函数
         return web_io.run(open_func)
     else:
         # 原始逻辑
+        _ensure_main_frame_bound()
         global _flowthread
         _flowthread = threading.Thread(target=open_func, name="flowthread")
         _flowthread.start()
@@ -123,7 +155,7 @@ def put_queue(message: str):
     功能描述：将消息推送到输出队列中
     """
     # Web模式下不使用队列
-    if not WEB_MODE:
+    if not _is_web_mode():
         _send_queue.put_nowait(message)
 
 
@@ -138,7 +170,7 @@ def put_order(message: str):
     功能描述：将命令推送到命令队列中
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的put_order函数
         web_io.put_order(message)
     else:
@@ -275,7 +307,7 @@ def era_print(string: str, style="standard", tooltip: str = ""):
     功能描述：输出格式化文本到界面
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的era_print函数
         web_io.era_print(string, style, tooltip=tooltip)
     else:
@@ -296,7 +328,7 @@ def image_print(image_name: str):
     功能描述：输出图片到界面
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None and hasattr(web_io, 'image_print'):
+    if _is_web_mode() and hasattr(web_io, 'image_print'):
         # 使用Web版IO的image_print函数
         web_io.image_print(image_name)
     else:
@@ -317,7 +349,7 @@ def clear_screen():
     功能描述：清空显示界面
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的clear_screen函数
         web_io.clear_screen()
     else:
@@ -337,7 +369,7 @@ def clear_screen_and_history():
     功能描述：彻底清空显示界面和历史记录，用于进入主界面等需要完全清空屏幕的场景
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的clear_screen_and_history函数
         web_io.clear_screen_and_history()
     else:
@@ -374,7 +406,7 @@ def frame_style_def(
     功能描述：定义一个样式并推送到前端
     """
     # Web模式下暂不处理样式定义
-    if not WEB_MODE:
+    if not _is_web_mode():
         json_str = new_json()
         json_str["set_style"] = style_json(
             style_name,
@@ -400,7 +432,7 @@ def set_background(color: str):
     功能描述：设置界面的背景颜色
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None and hasattr(web_io, 'set_background'):
+    if _is_web_mode() and hasattr(web_io, 'set_background'):
         # 使用Web版IO的set_background函数
         web_io.set_background(color)
     else:
@@ -420,7 +452,7 @@ def clear_order():
     功能描述：清除界面上的所有命令按钮
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的clear_order函数
         web_io.clear_order()
     else:
@@ -450,7 +482,7 @@ def io_print_cmd(
     功能描述：在界面上显示一个可点击的命令按钮
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的io_print_cmd函数
         web_io.io_print_cmd(cmd_str, cmd_number, normal_style, on_style, tooltip)
     else:
@@ -474,7 +506,7 @@ def io_print_image_cmd(cmd_str: str, cmd_number: int, tooltip: str = ""):
     功能描述：在界面上显示一个图片按钮
     """
     # Web模式下暂不支持图片命令
-    if not WEB_MODE:
+    if not _is_web_mode():
         json_str = new_json()
         data = {}
         data["type"] = "image_cmd"
@@ -497,7 +529,7 @@ def io_clear_cmd(*cmd_numbers: int):
     功能描述：清除指定的命令按钮，或者所有命令按钮
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None and hasattr(web_io, 'io_clear_cmd'):
+    if _is_web_mode() and hasattr(web_io, 'io_clear_cmd'):
         # 使用Web版IO的io_clear_cmd函数
         web_io.io_clear_cmd(*cmd_numbers)
     else:
@@ -532,7 +564,7 @@ def init_style():
     功能描述：初始化所有游戏中使用的样式
     """
     # 检查是否在Web模式下
-    if WEB_MODE and web_io is not None:
+    if _is_web_mode():
         # 使用Web版IO的init_style函数
         if hasattr(web_io, 'init_style'):
             web_io.init_style()
