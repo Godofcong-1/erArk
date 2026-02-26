@@ -522,14 +522,20 @@ class Nation_Diplomacy_Panel:
             info_draw_2.width = self.width
             info_draw_2.draw()
             npc_draw_count = 0
-            for character_id in cache.npc_id_got:
+            chara_list = cache.npc_id_got
+            # 将当前派遣的外交官加入到角色列表里
+            now_diplomat_chara_id = cache.rhodes_island.diplomat_of_country[country_id][0]
+            if now_diplomat_chara_id != 0:
+                chara_list.add(now_diplomat_chara_id)
+            # 遍历角色列表，绘制符合条件的角色为按钮
+            for character_id in chara_list:
                 character_data: game_type.Character = cache.character_data[character_id]
                 # 跳过出身地或势力不是当前势力的干员
                 if character_data.relationship.birthplace != country_id and character_data.relationship.nation != nation_id:
                     continue
                 draw_style = "standard"
                 # 如果已经选择，则绘制为金色
-                if character_id == cache.rhodes_island.diplomat_of_country[country_id][0]:
+                if character_id == now_diplomat_chara_id:
                     draw_style = "gold_enrod"
                 character_data: game_type.Character = cache.character_data[character_id]
                 character_name = character_data.name
