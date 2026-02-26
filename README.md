@@ -16,7 +16,6 @@ R18游戏，艹干员，纯爱向，无牛无G。\
 非开发者的普通玩家
 ----
 右边Releases有编译好的exe，点击即玩\
-为了更好的显示效果（主要是AA地图），建议安装Releases里推荐的字体\
 编辑器erArkEditor也附在Releases里了，不需要写代码可以直接使用编辑器创作口上、事件、角色属性、委托等
 
 联系方式
@@ -37,25 +36,26 @@ BUG反馈
 
 著作权信息
 ----
-项目本身基于Python独立进行开发，遵循 [cc by nc sa](http://creativecommons.org/licenses/by-nc-sa/2.0/) 协议 \
-禁止任何人将其用作商业用途，详细版权声明见游戏内 \
+本项目本身基于Python独立进行开发，遵循 [cc by nc sa](http://creativecommons.org/licenses/by-nc-sa/2.0/) 协议 \
+本项目的早期代码有部分来自于 [dieloli](https://github.com/pokemonchw/dieloli) \
+禁止任何人将其用作商业用途，详细版权声明见游戏内
 
 配置要求
 ----
 GPU: \
-文字游戏，没有显卡需求，但因为AA地图的关系，所以仅保证在1080P及以上显示器上获得最佳效果（暂时） \
+文字游戏，没有显卡需求，但因为AA地图的关系，所以仅保证在1080P及以上显示器上获得最佳效果 \
 CPU: \
 同上 \
 Memory: \
 峰值需占用1GB左右内存，请确保运行游戏前电脑至少有2GB的空闲内存空间 \
 系统: \
-仅限win \
+TK绘制模式仅限Windows，Web绘制模式不限设备 \
 配置调整: \
 可通过 [config.ini](config.ini) 文件进行调整，出现兼容问题请提交反馈
 
 依赖
 ----
-python3.9
+python3.12
 
 建议通过::
 
@@ -71,7 +71,6 @@ Repo说明
 字体
 ----
 本游戏界面设计依赖 Sarasa Mono SC 字体，字体文件已附在Releases中 \
-若系统未安装此字体将会 fallback 到系统默认字体，不能保证能否达到设计效果 \
 顺便贴一下字体的git链接[Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
 如果不喜欢，可通过修改 config.ini 中的 font 项自行更改字体，同样不能保证能否达到设计效果
 

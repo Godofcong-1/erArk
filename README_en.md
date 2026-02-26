@@ -16,7 +16,6 @@ All system code documentation: [README.md](.github/prompts/数据处理工作流
 Normal Non-developer Players
 ----
 The [Releases](https://github.com/Godofcong-1/erArk/releases) section at the right has the coded exe, can be played immediately on click\
-For better visual effect (mainly for AA map) , it’s recommended to download the suggested font in Releases\
 The editor for dialogues/events, erArkEditor, was also in Releases, allowing production of dialogues and events without the need of coding
 
 Contact Method
@@ -39,7 +38,7 @@ Look at [update.log](update.log)
 Copyright Info
 ----
 The project was developed independently with Python, following the [cc by nc sa](http://creativecommons.org/licenses/by-nc-sa/2.0/) agreement \
-No one is permitted to use this for business purposes, with the detailed copyright statement in game \
+No one is permitted to use this for business purposes, with the detailed copyright statement in game
 
 Configuration Requirement
 ----
@@ -56,7 +55,7 @@ Configure via the config.ini file, submit the feedback if there’s any compatib
 
 Relied on
 ----
-python3.9
+python3.12
 
 Recommend to download through:
 
@@ -70,7 +69,6 @@ Code style was automatically completed with black, line width as 200
 Font
 ----
 The game interface heavily relied on Sarasa Mono SC font, attached at Releases \
-The system will fallback to default font if the font above is absent, which might not reach the target design effect \
 Git link of the font [Sarasa Mono SC](https://github.com/be5invis/Sarasa-Gothic) \
 Can change the font via config.ini-> font, lso might not reach the target design effect \
 
