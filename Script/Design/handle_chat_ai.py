@@ -611,10 +611,12 @@ def text_ai(character_id: int, behavior_id: str, original_text: str, translator:
             ai_gererate_text = ""
     # 调用Gemini
     elif now_key_type == "GEMINI_API_KEY":
-        # 创建client（新版SDK使用Client对象）
-        # gemini的传输协议改为rest
-        if cache.ai_setting.ai_chat_setting[12] == 1:
-            client = genai.Client(api_key=API_KEY, http_options={'api_version': 'v1alpha'})
+        # 构建http_options参数
+        api_version_val = 'v1alpha' if cache.ai_setting.ai_chat_setting[12] == 1 else None
+        base_url_val = cache.ai_setting.now_ai_chat_base_url if cache.ai_setting.ai_chat_setting[10] == 1 else None
+        # 创建client
+        if api_version_val or base_url_val:
+            client = genai.Client(api_key=API_KEY, http_options=genai.types.HttpOptions(api_version=api_version_val, base_url=base_url_val))
         else:
             client = genai.Client(api_key=API_KEY)
         try:
