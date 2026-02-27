@@ -301,8 +301,8 @@ def calc_facility_efficiency(facility_cid: int = -1) -> float:
         adjust -= (1 - now_power_strategy_adjust) / 4
     # 其他直接乘以供电策略
     else:
-        # 厨房、健身区、访客区、疗养庭院、博士办公室、药田
-        if facility_cid in [5, 7, 9, 13, 16, 22, 41]:
+        # 厨房、健身区、制造加工区、访客区、疗养庭院、博士办公室、药田
+        if facility_cid in [5, 7, 9, 12, 13, 16, 22, 41]:
             adjust += facility_effect / 100
         adjust *= now_power_strategy_adjust
     # 效率不会小于20%
