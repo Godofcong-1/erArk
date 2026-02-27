@@ -7120,6 +7120,14 @@ def handle_read_add_adjust(
     if character_data.entertainment.read_book_progress[book_id] < 100:
         base = 5
         adjust = handle_ability.get_ability_adjust(character_data.ability[45]) / book_difficulty_int
+        # 如果当前位置是在图书馆，则根据图书馆等级提高阅读效率
+        if handle_premise.handle_in_library(character_id):
+            facility_data = game_config.config_facility[10]
+            facility_name = facility_data.name
+            library_level = cache.rhodes_island.facility_level[10]
+            facility_effect_cid = game_config.config_facility_effect_data[facility_name][int(library_level)]
+            facility_effect = game_config.config_facility_effect[facility_effect_cid].effect
+            adjust *= (100 + facility_effect) / 100
         # 如果是0难度书籍，则阅读效率提高
         if book_difficulty == 0:
             adjust *= 3
