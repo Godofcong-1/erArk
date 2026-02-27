@@ -1660,7 +1660,7 @@ def handle_target_hypnosis_force_climax(
     change_data.sanity_point -= 50
     character_data.pl_ability.today_sanity_point_cost += 50
 
-    base_chara_climix_common_settle(character_data.target_character_id, 4, change_data = change_data)
+    base_chara_climix_common_settle(character_data.target_character_id, 4, change_data_to_target_change = change_data)
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.TARGET_HYPNOSIS_FORCE_OVULATION_ON)
