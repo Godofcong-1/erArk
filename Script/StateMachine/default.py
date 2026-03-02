@@ -274,7 +274,14 @@ def character_move_to_foodshop(character_id: int):
         to_foodshop = map_handle.get_map_system_path_for_str(
             random.choice(constant.place_data[place_tag])
         )
-    general_movement_module(character_id, to_foodshop)
+    move_success = general_movement_module(character_id, to_foodshop)
+    # 如果没有去食堂且移动失败了，则将移动目标重定向为食堂
+    if character_data.action_info.eat_food_restaurant != -1 and move_success == False:
+        character_data.action_info.eat_food_restaurant = -1
+        to_foodshop = map_handle.get_map_system_path_for_str(
+            random.choice(constant.place_data["Take_Food_Area"])
+        )
+        move_success = general_movement_module(character_id, to_foodshop)
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_DINING_HALL)

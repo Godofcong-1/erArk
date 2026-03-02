@@ -614,7 +614,7 @@ class ACTION_INFO:
         """ 上次增加射精值的时间 """
         self.check_out_time: datetime.datetime = datetime.datetime(1, 1, 1)
         """ 角色退房时间 """
-        self.eat_food_restaurant: int = 0
+        self.eat_food_restaurant: int = -1
         """ 要去吃饭的餐厅，见Restaurant.csv """
         self.ask_group_sex_refuse_chara_id_list = []
         """ 拒绝群P的角色id列表 """
