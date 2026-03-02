@@ -634,6 +634,8 @@ class ACTION_INFO:
         """ 角色上次被赠送好感礼物的时间 """
         self.day_first_shoot_semen: bool = True
         """ 角色睡醒后第一发精液，True为未射精，False为已射精 """
+        self.find_another_toilet: List = []
+        """ 角色是否需要找一个非当前区块的厕所，需要的话则记录在这里 """
 
 
 class AUTHOR_FLAG:

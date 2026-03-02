@@ -210,8 +210,12 @@ def character_move_to_toilet(character_id: int):
     now_position = character_data.position[0]
     # 是否已找到目标地点
     find_flag = False
+    # 是否已选择另一个厕所
+    if character_data.action_info.find_another_toilet != []:
+        to_toilet = character_data.action_info.find_another_toilet
+        find_flag = True
     # 男性直接选择男厕所
-    if character_data.sex == 0:
+    elif character_data.sex == 0:
         to_toilet = map_handle.get_map_system_path_for_str(
         random.choice(constant.place_data["Toilet_Male"])
     )
@@ -239,7 +243,12 @@ def character_move_to_toilet(character_id: int):
         random.choice(constant.place_data["Toilet_Female"])
     )
     # print(f"debug constant.place_data[\"Toilet_Female\"] = ",constant.place_data["Toilet_Female"])
-    general_movement_module(character_id, to_toilet)
+    move_success = general_movement_module(character_id, to_toilet)
+    # 如果就近的厕所因某些原因无法进入，则随机找一个另外的厕所
+    if find_flag and not move_success:
+        to_toilet = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Toilet_Female"]))
+        move_success = general_movement_module(character_id, to_toilet)
+        character_data.action_info.find_another_toilet = to_toilet
 
 
 @handle_state_machine.add_state_machine(constant.StateMachine.MOVE_TO_KITCHEN)
