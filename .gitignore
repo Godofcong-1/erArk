@@ -33,6 +33,7 @@ ai_chat_api_key.txt
 ai_chat_api_key.csv
 data/talk/ai
 .github/prompts/AI文本生成工作流/生成目标文件/
+.claude
 
 # 地图数据
 data/MapData
