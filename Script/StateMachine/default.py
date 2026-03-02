@@ -2098,9 +2098,9 @@ def character_wait_for_health_check(character_id: int):
     character_data: game_type.Character = cache.character_data[character_id]
     # 加入等待序列
     cache.rhodes_island.waiting_for_exam_operator_ids.add(character_id)
-    handle_premise.settle_chara_unnormal_flag(character_id, 3)
     # 重置今日体检时间
     character_data.action_info.health_check_today = 0
+    handle_premise.settle_chara_unnormal_flag(character_id, 3)
     character_data.target_character_id = character_id
     character_data.behavior.behavior_id = constant.Behavior.SHARE_BLANKLY
     character_data.behavior.duration = 1

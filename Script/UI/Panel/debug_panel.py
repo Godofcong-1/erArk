@@ -1624,7 +1624,7 @@ class Debug_Panel:
 
             # 特殊flag数据
             elif key_index == 20:
-                info_text = f"1~7异常状态：，正常为1"
+                info_text = f"1~7异常状态：正常为1"
                 info_text += f"    \n1:基础生理需求：睡觉、休息、解手、吃饭、沐浴（不含已洗澡）、挤奶、自慰：{handle_premise.handle_normal_1(self.target_character_id)}"
                 info_text += f"    \n2:AI行动基本停止：临盆、产后、监禁：{handle_premise.handle_normal_2(self.target_character_id)}"
                 info_text += f"    \n3:高优先级AI：助理、跟随、体检：{handle_premise.handle_normal_3(self.target_character_id)}"
@@ -1661,6 +1661,8 @@ class Debug_Panel:
                 info_text += f"[025]:香薰疗愈状态，int [0无,1回复,2习得,3反感,4快感,5好感,6催眠]：{target_data.sp_flag.aromatherapy}\n"
                 info_text += f"[026]:外勤委托状态，0为未外勤，否则为对应外勤委托编号：{target_data.sp_flag.field_commission}\n"
                 info_text += f"[027]:要找玩家逆推来自慰的状态：{target_data.sp_flag.npc_masturebate_for_player}\n"
+                info_text += f"[028]:正在等待体检状态（仅查看，无法修改）：{self.target_character_id in cache.rhodes_island.waiting_for_exam_operator_ids}\n"
+                info_text += f"[029]:今天体检时间，[0不需要，1上午，2下午，3新干员立刻体检]：{target_data.action_info.health_check_today}\n"
                 info_draw.text = info_text
                 info_draw.draw()
                 line_feed.draw()
@@ -1732,6 +1734,8 @@ class Debug_Panel:
                         target_data.sp_flag.field_commission = value_index[1]
                     elif value_index[0] == 27:
                         target_data.sp_flag.npc_masturebate_for_player = value_index[1]
+                    elif value_index[0] == 29:
+                        target_data.action_info.health_check_today = value_index[1]
 
                     # 接着刷新一遍显示新内容
                     change_draw_flag = False
