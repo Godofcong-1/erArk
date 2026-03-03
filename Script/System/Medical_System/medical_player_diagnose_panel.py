@@ -274,8 +274,9 @@ class MedicalPlayerDiagnosePanel:
             title_draw.draw()
             tip_draw = draw.NormalDraw()
             tip_draw.width = self.width
-            tip_draw.text = _("当前医疗部暂无可供玩家亲自诊疗的病人。") + "\n"
+            tip_draw.text = _("当前医疗部暂无可供博士亲自诊疗的病人。") + "\n"
             tip_draw.draw()
+            cache.now_panel_id = constant.Panel.IN_SCENE
             return True
 
         # 持续渲染界面直至流程被明确关闭
