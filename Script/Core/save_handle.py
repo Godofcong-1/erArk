@@ -221,6 +221,43 @@ def migrate_old_save_data(loaded_dict) -> int:
                 for old_id, value in old_npc_socks.items():
                     new_id = old_to_new_id.get(old_id, old_id)
                     pl_data.pl_collection.npc_socks[new_id] = value
+            
+            # npc_panties_tem (Dict[int, list]) - 临时获得的角色内裤
+            if hasattr(pl_data.pl_collection, 'npc_panties_tem'):
+                old_panties_tem = pl_data.pl_collection.npc_panties_tem.copy()
+                pl_data.pl_collection.npc_panties_tem = {}
+                for old_id, value in old_panties_tem.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.npc_panties_tem[new_id] = value
+            
+            # npc_socks_tem (Dict[int, list]) - 临时获得的角色袜子
+            if hasattr(pl_data.pl_collection, 'npc_socks_tem'):
+                old_socks_tem = pl_data.pl_collection.npc_socks_tem.copy()
+                pl_data.pl_collection.npc_socks_tem = {}
+                for old_id, value in old_socks_tem.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.npc_socks_tem[new_id] = value
+            
+            # eqip_token[1] - 已装备信物的干员id列表
+            if hasattr(pl_data.pl_collection, 'eqip_token') and len(pl_data.pl_collection.eqip_token) > 1:
+                old_equip_list = pl_data.pl_collection.eqip_token[1]
+                pl_data.pl_collection.eqip_token[1] = [old_to_new_id.get(oid, oid) for oid in old_equip_list]
+            
+            # milk_total (Dict[int, int])
+            if hasattr(pl_data.pl_collection, 'milk_total'):
+                old_milk = pl_data.pl_collection.milk_total.copy()
+                pl_data.pl_collection.milk_total = {}
+                for old_id, value in old_milk.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.milk_total[new_id] = value
+            
+            # urine_total (Dict[int, int])
+            if hasattr(pl_data.pl_collection, 'urine_total'):
+                old_urine = pl_data.pl_collection.urine_total.copy()
+                pl_data.pl_collection.urine_total = {}
+                for old_id, value in old_urine.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.urine_total[new_id] = value
     
     # 5.2 每个角色的favorability字典（角色id:好感度）
     for char_id, character in new_character_data.items():
@@ -245,43 +282,102 @@ def migrate_old_save_data(loaded_dict) -> int:
     
     # 5.4b 每个角色的其他角色ID引用
     for char_id, character in new_character_data.items():
-        # ask_group_sex_refuse_chara_id_list
-        if hasattr(character, 'ask_group_sex_refuse_chara_id_list'):
-            character.ask_group_sex_refuse_chara_id_list = [
-                old_to_new_id.get(oid, oid) for oid in character.ask_group_sex_refuse_chara_id_list
+        # ask_group_sex_refuse_chara_id_list (位于action_info中)
+        if hasattr(character, 'action_info') and hasattr(character.action_info, 'ask_group_sex_refuse_chara_id_list'):
+            character.action_info.ask_group_sex_refuse_chara_id_list = [
+                old_to_new_id.get(oid, oid) for oid in character.action_info.ask_group_sex_refuse_chara_id_list
             ]
         
-        # state_active.bagging_chara_id
-        if hasattr(character, 'state_active') and hasattr(character.state_active, 'bagging_chara_id'):
-            if character.state_active.bagging_chara_id != 0:
-                character.state_active.bagging_chara_id = old_to_new_id.get(
-                    character.state_active.bagging_chara_id, 
-                    character.state_active.bagging_chara_id
+        # sp_flag.bagging_chara_id (注意：是sp_flag不是state_active)
+        if hasattr(character, 'sp_flag') and hasattr(character.sp_flag, 'bagging_chara_id'):
+            if character.sp_flag.bagging_chara_id != 0:
+                character.sp_flag.bagging_chara_id = old_to_new_id.get(
+                    character.sp_flag.bagging_chara_id, 
+                    character.sp_flag.bagging_chara_id
                 )
         
-        # sp_flag.carry_chara_id_in_time_stop
-        if hasattr(character, 'sp_flag') and hasattr(character.sp_flag, 'carry_chara_id_in_time_stop'):
-            if character.sp_flag.carry_chara_id_in_time_stop != 0:
-                character.sp_flag.carry_chara_id_in_time_stop = old_to_new_id.get(
-                    character.sp_flag.carry_chara_id_in_time_stop,
-                    character.sp_flag.carry_chara_id_in_time_stop
+        # pl_ability.carry_chara_id_in_time_stop (注意：是pl_ability不是sp_flag)
+        if hasattr(character, 'pl_ability') and hasattr(character.pl_ability, 'carry_chara_id_in_time_stop'):
+            if character.pl_ability.carry_chara_id_in_time_stop != 0:
+                character.pl_ability.carry_chara_id_in_time_stop = old_to_new_id.get(
+                    character.pl_ability.carry_chara_id_in_time_stop,
+                    character.pl_ability.carry_chara_id_in_time_stop
                 )
         
-        # sp_flag.free_in_time_stop_chara_id
-        if hasattr(character, 'sp_flag') and hasattr(character.sp_flag, 'free_in_time_stop_chara_id'):
-            if character.sp_flag.free_in_time_stop_chara_id != 0:
-                character.sp_flag.free_in_time_stop_chara_id = old_to_new_id.get(
-                    character.sp_flag.free_in_time_stop_chara_id,
-                    character.sp_flag.free_in_time_stop_chara_id
+        # pl_ability.free_in_time_stop_chara_id (注意：是pl_ability不是sp_flag)
+        if hasattr(character, 'pl_ability') and hasattr(character.pl_ability, 'free_in_time_stop_chara_id'):
+            if character.pl_ability.free_in_time_stop_chara_id != 0:
+                character.pl_ability.free_in_time_stop_chara_id = old_to_new_id.get(
+                    character.pl_ability.free_in_time_stop_chara_id,
+                    character.pl_ability.free_in_time_stop_chara_id
                 )
         
-        # interacting_character_end_info[0]
-        if hasattr(character, 'interacting_character_end_info'):
-            if character.interacting_character_end_info[0] != -1:
-                character.interacting_character_end_info[0] = old_to_new_id.get(
-                    character.interacting_character_end_info[0],
-                    character.interacting_character_end_info[0]
+        # action_info.interacting_character_end_info[0] (注意：是action_info中的)
+        if hasattr(character, 'action_info') and hasattr(character.action_info, 'interacting_character_end_info'):
+            if character.action_info.interacting_character_end_info[0] != -1:
+                character.action_info.interacting_character_end_info[0] = old_to_new_id.get(
+                    character.action_info.interacting_character_end_info[0],
+                    character.action_info.interacting_character_end_info[0]
                 )
+        
+        # action_info.social_contact_last_time (Dict[int, datetime])
+        if hasattr(character, 'action_info') and hasattr(character.action_info, 'social_contact_last_time'):
+            old_social = character.action_info.social_contact_last_time.copy()
+            character.action_info.social_contact_last_time = {}
+            for old_id, value in old_social.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                character.action_info.social_contact_last_time[new_id] = value
+        
+        # action_info.social_contact_last_cut_down_time (Dict[int, datetime])
+        if hasattr(character, 'action_info') and hasattr(character.action_info, 'social_contact_last_cut_down_time'):
+            old_cutdown = character.action_info.social_contact_last_cut_down_time.copy()
+            character.action_info.social_contact_last_cut_down_time = {}
+            for old_id, value in old_cutdown.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                character.action_info.social_contact_last_cut_down_time[new_id] = value
+        
+        # first_record中的角色ID字段
+        if hasattr(character, 'first_record'):
+            fr = character.first_record
+            # first_hand_in_hand
+            if hasattr(fr, 'first_hand_in_hand') and fr.first_hand_in_hand > 0:
+                fr.first_hand_in_hand = old_to_new_id.get(fr.first_hand_in_hand, fr.first_hand_in_hand)
+            # first_kiss_id
+            if hasattr(fr, 'first_kiss_id') and fr.first_kiss_id > 0:
+                fr.first_kiss_id = old_to_new_id.get(fr.first_kiss_id, fr.first_kiss_id)
+            # first_sex_id
+            if hasattr(fr, 'first_sex_id') and fr.first_sex_id > 0:
+                fr.first_sex_id = old_to_new_id.get(fr.first_sex_id, fr.first_sex_id)
+            # first_a_sex_id
+            if hasattr(fr, 'first_a_sex_id') and fr.first_a_sex_id > 0:
+                fr.first_a_sex_id = old_to_new_id.get(fr.first_a_sex_id, fr.first_a_sex_id)
+            # first_u_sex_id
+            if hasattr(fr, 'first_u_sex_id') and fr.first_u_sex_id > 0:
+                fr.first_u_sex_id = old_to_new_id.get(fr.first_u_sex_id, fr.first_u_sex_id)
+            # first_w_sex_id
+            if hasattr(fr, 'first_w_sex_id') and fr.first_w_sex_id > 0:
+                fr.first_w_sex_id = old_to_new_id.get(fr.first_w_sex_id, fr.first_w_sex_id)
+        
+        # collection_character (Set) - 收藏的角色列表
+        if hasattr(character, 'collection_character') and character.collection_character:
+            old_collection = character.collection_character.copy()
+            character.collection_character = {old_to_new_id.get(oid, oid) for oid in old_collection}
+        
+        # h_state.group_sex_body_template_dict 中的角色ID
+        if hasattr(character, 'h_state') and hasattr(character.h_state, 'group_sex_body_template_dict'):
+            template_dict = character.h_state.group_sex_body_template_dict
+            for template_key in ["A", "B"]:
+                if template_key in template_dict:
+                    # 处理对单部位字典
+                    if len(template_dict[template_key]) > 0 and isinstance(template_dict[template_key][0], dict):
+                        for part_key, part_value in template_dict[template_key][0].items():
+                            if isinstance(part_value, list) and len(part_value) > 0 and part_value[0] != -1:
+                                part_value[0] = old_to_new_id.get(part_value[0], part_value[0])
+                    # 处理阴茎侍奉列表
+                    if len(template_dict[template_key]) > 1 and isinstance(template_dict[template_key][1], list):
+                        serve_data = template_dict[template_key][1]
+                        if len(serve_data) > 0 and isinstance(serve_data[0], list):
+                            serve_data[0] = [old_to_new_id.get(oid, oid) if oid != -1 else oid for oid in serve_data[0]]
 
     # 5.5 rhodes_island中的角色引用
     if "rhodes_island" in loaded_dict:
@@ -460,6 +556,18 @@ def migrate_old_save_data(loaded_dict) -> int:
             for pos_key, system_dict in ri.medical_doctor_specializations.items():
                 for sys_key, id_list in system_dict.items():
                     system_dict[sys_key] = [old_to_new_id.get(oid, oid) for oid in id_list]
+        
+        # recruit_line (Dict[int, List]) - 招募线id:[0进度, 1策略id, 2主招聘专员id, 3效率]
+        if hasattr(ri, 'recruit_line'):
+            for line_id, line_data in ri.recruit_line.items():
+                if len(line_data) > 2 and line_data[2] != 0:
+                    line_data[2] = old_to_new_id.get(line_data[2], line_data[2])
+        
+        # all_work_npc_set (Dict[int, set]) - 工作id:干员id集合
+        if hasattr(ri, 'all_work_npc_set'):
+            for work_id, npc_set in ri.all_work_npc_set.items():
+                if npc_set:
+                    ri.all_work_npc_set[work_id] = {old_to_new_id.get(oid, oid) for oid in npc_set}
     
     # 5.6 关系数据中的角色引用
     for char_id, character in new_character_data.items():
@@ -474,6 +582,9 @@ def migrate_old_save_data(loaded_dict) -> int:
             # child_id_list
             if hasattr(rel, 'child_id_list'):
                 rel.child_id_list = [old_to_new_id.get(cid, cid) for cid in rel.child_id_list]
+            # firend_id_list
+            if hasattr(rel, 'firend_id_list'):
+                rel.firend_id_list = [old_to_new_id.get(fid, fid) for fid in rel.firend_id_list]
     
     # 5.7 场景数据中的角色列表
     if "scene_data" in loaded_dict:
@@ -496,6 +607,21 @@ def migrate_old_save_data(loaded_dict) -> int:
             loaded_dict["old_character_id"], 
             loaded_dict["old_character_id"]
         )
+    
+    # 5.9 achievement中的角色ID引用
+    if "achievement" in loaded_dict:
+        ach = loaded_dict["achievement"]
+        
+        # body_report_chara_count_list (List[int]) - 出具过身体检查报告的干员id列表
+        if hasattr(ach, 'body_report_chara_count_list'):
+            ach.body_report_chara_count_list = [old_to_new_id.get(oid, oid) for oid in ach.body_report_chara_count_list]
+        
+        # group_sex_record (Dict[int, list]) - 群交记录
+        if hasattr(ach, 'group_sex_record') and ach.group_sex_record:
+            # 键为记录类型，值为角色id列表
+            for record_key, record_list in ach.group_sex_record.items():
+                if isinstance(record_list, list):
+                    ach.group_sex_record[record_key] = [old_to_new_id.get(oid, oid) for oid in record_list]
     
     return update_count
 

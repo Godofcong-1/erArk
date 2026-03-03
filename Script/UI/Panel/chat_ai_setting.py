@@ -385,7 +385,7 @@ class Chat_Ai_Setting_Panel:
             info_text = _(" \n ○发送的数据越多，AI可以利用的信息就越多，理论效果会越好\n")
             info_text += _("  但同时消耗的tokens和响应时间也越多，也可能因为信息太多而抓不住重点或超出上下文长度\n")
             info_text += _("  每项的数据量有小、中、大三级区分\n")
-            info_text += _("  发送数据的文件路径为：data\csv\Ai_Chat_Send_Data.csv，可根据需要自行修改提示词\n")
+            info_text += _("  发送数据的文件路径为：data\\csv\\Ai_Chat_Send_Data.csv，可根据需要自行修改提示词\n")
             info_draw.text = info_text
             info_draw.width = self.width
             info_draw.draw()

@@ -1237,15 +1237,26 @@ npc_tem_data\[i\]
 | `cid` | int | 主ID，需要改为等于adv |
 | `target_character_id` | int | 目标角色ID |
 | `assistant_character_id` | int | 助理角色ID |
-| `ask_group_sex_refuse_chara_id_list` | List[int] | 拒绝群P的角色ID列表 |
-| `state_active.bagging_chara_id` | int | 正在装袋的角色ID |
-| `sp_flag.carry_chara_id_in_time_stop` | int | 时停搬运角色ID |
-| `sp_flag.free_in_time_stop_chara_id` | int | 时停自由活动角色ID |
-| `interacting_character_end_info[0]` | int | 交互对方角色ID |
+| `action_info.ask_group_sex_refuse_chara_id_list` | List[int] | 拒绝群P的角色ID列表 |
+| `sp_flag.bagging_chara_id` | int | 正在装袋的角色ID |
+| `pl_ability.carry_chara_id_in_time_stop` | int | 时停搬运角色ID |
+| `pl_ability.free_in_time_stop_chara_id` | int | 时停自由活动角色ID |
+| `action_info.interacting_character_end_info[0]` | int | 交互对方角色ID |
+| `action_info.social_contact_last_time` | Dict[int, datetime] | 指定角色最后与自己社交的时间 |
+| `action_info.social_contact_last_cut_down_time` | Dict[int, datetime] | 指定角色上次扣除好感时间 |
 | `favorability` | Dict[int, int] | 好感度字典 |
 | `relationship.father_id` | int | 父亲ID |
 | `relationship.mother_id` | int | 母亲ID |
 | `relationship.child_id_list` | List[int] | 子女ID列表 |
+| `relationship.firend_id_list` | List[int] | 朋友ID列表 |
+| `first_record.first_hand_in_hand` | int | 初次牵手对象 |
+| `first_record.first_kiss_id` | int | 初吻对象 |
+| `first_record.first_sex_id` | int | 处女对象 |
+| `first_record.first_a_sex_id` | int | A处女对象 |
+| `first_record.first_u_sex_id` | int | U处女对象 |
+| `first_record.first_w_sex_id` | int | W处女对象 |
+| `collection_character` | Set[int] | 收藏的角色列表 |
+| `h_state.group_sex_body_template_dict` | Dict | 群交模板中的角色ID |
 
 ### A.2 Rhodes_Island 类字段
 | 字段路径 | 类型 | 说明 |
@@ -1281,6 +1292,8 @@ npc_tem_data\[i\]
 | `waiting_for_exam_operator_ids` | Set[int] | 等待体检干员ID集合 |
 | `manually_selected_exam_operator_ids` | Set[int] | 手动选择体检干员ID |
 | `medical_doctor_specializations` | Dict | 医生分科ID列表 |
+| `recruit_line[x][2]` | int | 招募线主招聘专员ID |
+| `all_work_npc_set` | Dict[int, Set[int]] | 工作id:干员id集合 |
 
 ### A.3 Cache 类字段
 | 字段路径 | 类型 | 说明 |
@@ -1299,3 +1312,14 @@ npc_tem_data\[i\]
 | `pl_collection.first_panties` | Dict[int, ...] | 初次内裤-角色ID |
 | `pl_collection.npc_panties` | Dict[int, ...] | NPC内裤-角色ID |
 | `pl_collection.npc_socks` | Dict[int, ...] | NPC袜子-角色ID |
+| `pl_collection.npc_panties_tem` | Dict[int, list] | 临时获得的角色内裤 |
+| `pl_collection.npc_socks_tem` | Dict[int, list] | 临时获得的角色袜子 |
+| `pl_collection.eqip_token[1]` | List[int] | 已装备信物的干员id列表 |
+| `pl_collection.milk_total` | Dict[int, int] | 各角色总乳汁量 |
+| `pl_collection.urine_total` | Dict[int, int] | 各角色总圣水量 |
+
+### A.5 ACHIEVEMENT 类字段
+| 数据位置 | 类型 | 说明 |
+|---------|------|------|
+| `body_report_chara_count_list` | List[int] | 出具过身体检查报告的干员id列表 |
+| `group_sex_record` | Dict[int, List[int]] | 群交记录中的角色id列表 |
