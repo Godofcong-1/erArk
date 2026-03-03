@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(while read line)",
+      "Bash(do echo \"$line\")",
+      "Bash(done)"
+    ]
+  }
+}
