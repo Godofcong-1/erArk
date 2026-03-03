@@ -30,11 +30,9 @@ def init_character_list():
     """
     初始生成所有npc数据
     """
-    id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
-    npc_data_iter = iter(cache.npc_tem_data)
-    for now_id, now_npc_data in zip(id_list, npc_data_iter):
-        # print("now_id=",now_id,". now_npc_data:",now_npc_data)
-        init_character(now_id, now_npc_data)
+    for adv_id, now_npc_data in cache.npc_tem_data.items():
+        # print("adv_id=",adv_id,". now_npc_data:",now_npc_data)
+        init_character(adv_id, now_npc_data)
 
 
 def init_character(character_id: int, character_tem: game_type.NpcTem, collect_reset: bool = True) -> game_type.Character:
@@ -152,9 +150,11 @@ def create_empty_character_tem():
     return now_tem
 
 
-def born_new_character(mother_id,child_name):
+def born_new_character(mother_id, child_name) -> int:
     """
     生成新的小孩模板数据
+    Returns:
+        int: 新角色的id（等于adv）
     """
     #init_random_npc_data()
     #npc_data = cache.random_npc_list
@@ -184,15 +184,16 @@ def born_new_character(mother_id,child_name):
     now_tem.Talent[121] = 1
     now_tem.Hp = random.randint(1000,2000)
     now_tem.Mp = random.randint(1000,2000)
-    cache.npc_tem_data.append(now_tem)
-    now_id  = len(cache.npc_tem_data)
+    now_id = now_tem.AdvNpc  # 使用adv作为id
+    cache.npc_tem_data[now_id] = now_tem
     # 给父母加上该孩子的社会关系
     cache.character_data[0].relationship.child_id_list.append(now_id)
     mom_character_data.relationship.child_id_list.append(now_id)
     # cache.npc_id_got.add(now_id)
-    init_character(now_id, cache.npc_tem_data[-1])
+    init_character(now_id, cache.npc_tem_data[now_id])
     # 婴儿的特殊状态flag结算
     handle_premise.settle_chara_unnormal_flag(now_id, 7)
+    return now_id
 
 # random_npc_max = normal_config.config_normal.random_npc_max
 # random_teacher_proportion = normal_config.config_normal.proportion_teacher

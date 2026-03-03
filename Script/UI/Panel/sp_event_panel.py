@@ -105,9 +105,9 @@ class Born_Panel:
                 from Script.Design import character
                 new_name = character.input_name_func(_(" 你决定给女儿取名为——"))
 
-                # 创建该角色
-                character_handle.born_new_character(self.mother_character_id,new_name)
-                child_character_data: game_type.Character = cache.character_data[len(cache.npc_tem_data)]
+                # 创建该角色，born_new_character 返回新角色的id
+                new_child_id = character_handle.born_new_character(self.mother_character_id, new_name)
+                child_character_data: game_type.Character = cache.character_data[new_child_id]
                 child_character_data.pregnancy.born_time = cache.game_time
 
                 info_draw.text = _("\n孩子的名字叫做{0}，她是{1}的第{2}个孩子，也是{3}的第{4}个孩子，请慢慢养育她长大成人吧\n").format(child_character_data.name, pl_character_data.name, len(pl_character_data.relationship.child_id_list), mom_character_data.name, len(mom_character_data.relationship.child_id_list))

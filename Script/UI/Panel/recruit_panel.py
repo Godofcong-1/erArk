@@ -64,8 +64,8 @@ def find_recruitable_npc() -> List[int]:
 
     recruitable_npc_id_list = []
 
-    for i in range(len(cache.npc_tem_data)):
-        chara_id = i + 1
+    for adv_id, tem_data in cache.npc_tem_data.items():
+        chara_id = adv_id
         # 跳过玩家
         if chara_id == 0:
             continue
@@ -73,7 +73,7 @@ def find_recruitable_npc() -> List[int]:
         if chara_id in cache.npc_id_got:
             continue
         # 跳过女儿
-        if cache.npc_tem_data[i].Mother_id != 0 or cache.npc_tem_data[i].AdvNpc > 9000:
+        if tem_data.Mother_id != 0 or tem_data.AdvNpc > 9000:
             continue
         # 跳过不存在的
         if chara_id not in cache.character_data:

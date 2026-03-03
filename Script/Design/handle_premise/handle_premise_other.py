@@ -855,8 +855,8 @@ def handle_flag_baby_exist(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    for i in range(len(cache.npc_tem_data)):
-        chara_id = i + 1
+    for adv_id in cache.npc_tem_data.keys():
+        chara_id = adv_id
         if chara_id in cache.character_data:
             if cache.character_data[chara_id].talent[101]:
                 return 1

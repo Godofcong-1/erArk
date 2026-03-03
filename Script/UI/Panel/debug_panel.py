@@ -546,7 +546,7 @@ class Debug_Panel:
                 now_draw.draw_list.append(line_feed)
                 now_draw.width += line_feed.width
 
-                id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+                id_list = list(cache.npc_tem_data.keys())
                 id_list.append(0)
                 npc_count = 0
 
@@ -739,8 +739,10 @@ class Debug_Panel:
                         name = cache.character_data[chara_id].name
                         info_text += f"{chara_id}:{name} "
                     info_text += f"\n\n全干员id列表：\n"
-                    for i in range(len(cache.npc_tem_data)):
-                        chara_id = i + 1
+                    for adv_id in cache.npc_tem_data.keys():
+                        chara_id = adv_id
+                        if chara_id not in cache.character_data:
+                            continue
                         name = cache.character_data[chara_id].name
                         info_text += f"{chara_id}:{name} "
                     info_draw.text = info_text

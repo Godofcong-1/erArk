@@ -133,8 +133,10 @@ class Take_Care_Baby_Panel:
             info_draw.draw()
 
             # 遍历婴儿名字并输出按钮
-            for i in range(len(cache.npc_tem_data)):
-                chara_id = i + 1
+            for adv_id in cache.npc_tem_data.keys():
+                chara_id = adv_id
+                if chara_id not in cache.character_data:
+                    continue
                 if cache.character_data[chara_id].talent[101]:
                     name = cache.character_data[chara_id].name
                     adv_id = cache.character_data[chara_id].adv

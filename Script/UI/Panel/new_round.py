@@ -709,9 +709,7 @@ class New_Round_Handle:
         old_npc_data = copy.deepcopy(cache.character_data)
         cache.npc_id_got = set()
 
-        id_list = iter([i + 1 for i in range(len(cache.npc_tem_data))])
-        npc_data_iter = iter(cache.npc_tem_data)
-        for now_id, now_npc_data in zip(id_list, npc_data_iter):
+        for now_id, now_npc_data in cache.npc_tem_data.items():
 
             # 仅继承陷落干员
             if now_id not in self.all_fall_chara_list:

@@ -1180,7 +1180,7 @@ npc_tem_data\[i\]
 
 *文档版本: 1.3*
 *创建日期: 2026-02-27*
-*最后更新: 2026-02-27*
+*最后更新: 2026-03-03*
 *适用于: erArk 角色ID系统重构*
 
 ---
@@ -1191,20 +1191,20 @@ npc_tem_data\[i\]
 
 | 文件 | 状态 | 完成日期 | 备注 |
 |-----|------|---------|-----|
-| Script/Core/game_type.py | ✅ 已完成 | 2026-02-27 | `npc_tem_data` 类型改为 `Dict[int, NpcTem]` |
-| Script/Config/character_config.py | ✅ 已完成 | 2026-02-27 | `character_tem_list` 改为 `character_tem_dict`，存储方式改为Dict |
-| Script/Design/character_handle.py | ✅ 已完成 | 2026-02-27 | `init_character_list()`, `init_character_tem()`, `born_new_character()` 已修改，`born_new_character()` 现在返回新角色ID |
-| Script/Core/save_handle.py | ✅ 已完成 | 2026-02-27 | 添加 `migrate_npc_tem_data_to_dict()`, `migrate_character_id_to_adv()`, `fix_missing_character_template()` 迁移/修复函数，修改 `update_tem_character()` 和 `update_new_character()` |
-| Script/Design/clothing.py | ✅ 已完成 | 2026-02-27 | 模板访问改为 `.get()` 方式，添加空值检查 |
-| Script/Design/character.py | ✅ 已完成 | 2026-02-27 | `get_character_id_from_adv()` 简化为直接判断 |
-| Script/UI/Flow/creator_character_flow.py | ✅ 已完成 | 2026-02-27 | ID列表改为 `list(cache.npc_tem_data.keys())` |
-| Script/UI/Panel/recruit_panel.py | ✅ 已完成 | 2026-02-27 | 遍历改为 `.items()` 方式 |
-| Script/UI/Panel/normal_panel.py | ✅ 已完成 | 2026-02-27 | 遍历改为 `.keys()` 方式 |
-| Script/UI/Panel/debug_panel.py | ✅ 已完成 | 2026-02-27 | ID列表和遍历改为Dict方式 |
-| Script/UI/Panel/new_round.py | ✅ 已完成 | 2026-02-27 | 多周目继承逻辑修改为Dict方式 |
-| Script/UI/Panel/sp_event_panel.py | ✅ 已完成 | 2026-02-27 | 使用 `born_new_character()` 返回值获取新角色ID |
-| Script/Design/handle_premise/handle_premise_other.py | ✅ 已完成 | 2026-02-27 | 婴儿存在检查改为 `.keys()` 遍历 |
-| Script/Design/attr_calculation.py | ✅ 已完成 | 2026-02-27 | 所有遍历改为Dict方式 |
+| Script/Core/game_type.py | ✅已完成 | 2026-03-03 | npc_tem_data类型从List改为Dict |
+| Script/Config/character_config.py | ✅已完成 | 2026-03-03 | character_tem_list从List改为Dict，使用AdvNpc作为键 |
+| Script/Design/character_handle.py | ✅已完成 | 2026-03-03 | init_character_list使用Dict迭代，born_new_character返回新角色ID |
+| Script/Core/save_handle.py | ✅已完成 | 2026-03-03 | 添加migrate_old_save_data迁移函数，修改update_tem_character/fix_wrong_character/update_new_character |
+| Script/Design/clothing.py | ✅已完成 | 2026-03-03 | 模板访问改为Dict.get()方式 |
+| Script/Design/character.py | ✅已完成 | 2026-03-03 | 简化get_character_id_from_adv函数 |
+| Script/UI/Flow/creator_character_flow.py | ✅已完成 | 2026-03-03 | 所有id_list生成改为list(cache.npc_tem_data.keys()) |
+| Script/UI/Panel/recruit_panel.py | ✅已完成 | 2026-03-03 | 遍历改为Dict.items()模式 |
+| Script/UI/Panel/normal_panel.py | ✅已完成 | 2026-03-03 | 遍历改为Dict.keys()模式 |
+| Script/UI/Panel/debug_panel.py | ✅已完成 | 2026-03-03 | 遍历改为Dict迭代模式 |
+| Script/UI/Panel/new_round.py | ✅已完成 | 2026-03-03 | 多周目继承使用Dict.items()迭代 |
+| Script/UI/Panel/sp_event_panel.py | ✅已完成 | 2026-03-03 | 女儿出生使用born_new_character返回值 |
+| Script/Design/handle_premise/handle_premise_other.py | ✅已完成 | 2026-03-03 | 遍历改为Dict.keys()模式 |
+| Script/Design/attr_calculation.py | ✅已完成 | 2026-03-03 | 遍历改为Dict.items()和Dict.keys()模式 |
 
 ### 11.2 待测试项
 
@@ -1214,6 +1214,20 @@ npc_tem_data\[i\]
 - [ ] 女儿出生功能
 - [ ] 多周目继承功能
 - [ ] 缺失模板角色修复（模拟角色模板被删除或adv变更的场景）
+
+### 11.3 重构过程中发现的遗漏项（已补全）
+
+**2026-03-03 修复：Rhodes_Island类字段类型标注错误**
+
+测试旧存档迁移时发现以下类型标注错误导致迁移函数报错，已进行修正：
+
+| 字段 | 文档原标注 | 实际类型 (game_type.py) | 修复状态 |
+|-----|-----------|------------------------|--------|
+| `recruited_id` | int | **Set[int]** | ✅已修复 |
+| `main_power_facility_operator_ids` | Dict[int, Set[int]] | **List[int]** | ✅已修复 |
+| `maintenance_place` | Dict[str, int] | **Dict[int, str]** (键是角色id，值是地点) | ✅已修复 |
+| `equipment_maintain_operator_ids` | Dict[str, Set[int]] | **List[int]** | ✅已修复 |
+| `milk_in_fridge` | Dict[int, List] | **Dict[int, int]** | ✅已修复 |
 
 ## 附录A：完整需要迁移的角色ID字段清单
 
@@ -1237,11 +1251,11 @@ npc_tem_data\[i\]
 | 字段路径 | 类型 | 说明 |
 |---------|------|------|
 | `hr_operator_ids_list` | List[int] | 人事干员ID列表 |
-| `recruited_id` | int | 已招募ID |
+| `recruited_id` | Set[int] | 已招募待确认的干员id集合 |
 | `power_operator_ids_list` | List[int] | 发电干员ID列表 |
-| `main_power_facility_operator_ids` | Dict[int, Set[int]] | 发电设施干员ID |
-| `maintenance_place` | Dict[str, int] | 维修位置干员ID |
-| `equipment_maintain_operator_ids` | Dict[str, Set[int]] | 装备维护干员ID |
+| `main_power_facility_operator_ids` | List[int] | 主力供能设施的调控员id列表，索引0~3分别为火水风光发电 |
+| `maintenance_place` | Dict[int, str] | 当前每个角色的待检修地点，角色id:地点 |
+| `equipment_maintain_operator_ids` | List[int] | 手动选择的装备维护对象干员id列表 |
 | `maintenance_equipment_chara_id` | Dict[int, int] | 维护装备角色ID映射 |
 | `milk_in_fridge` | Dict[int, int] | 冰箱母乳-干员ID |
 | `medical_clinic_doctor_ids` | List[int] | 诊所医生ID列表 |

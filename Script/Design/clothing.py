@@ -28,7 +28,9 @@ def get_npc_cloth(character_id: int):
     if character_id:
         character_data = cache.character_data[character_id]
         character_data.cloth.cloth_wear = attr_calculation.get_cloth_wear_zero()
-        tem_character = cache.npc_tem_data[character_id - 1]
+        tem_character = cache.npc_tem_data.get(character_id, None)
+        if tem_character is None:
+            return  # 模板不存在时安全返回
 
         # 如果装备严重损坏，则换为通用衣服
         if handle_premise.handle_self_equipment_damaged_ge_3(character_id):
@@ -62,7 +64,9 @@ def get_cloth_from_dormitory_locker(character_id: int):
         elif handle_premise.handle_self_parturient_or_postpartum(character_id):
             get_patient_cloth(character_id)
             return
-        tem_character = cache.npc_tem_data[character_id - 1]
+        tem_character = cache.npc_tem_data.get(character_id, None)
+        if tem_character is None:
+            return  # 模板不存在时安全返回
         tem_cloth_list = tem_character.Cloth.copy()
         # 检查宿舍衣柜中是否有衣服
         wear_locker_flag = False

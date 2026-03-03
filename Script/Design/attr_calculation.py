@@ -29,8 +29,8 @@ def get_system_setting_zero() -> game_type.System_Setting:
     for system_setting in game_config.config_difficulty_setting:
         difficulty_setting_data = game_config.config_difficulty_setting[system_setting]
         empty_system_setting.difficulty_setting[system_setting] = difficulty_setting_data.default_value
-    for i in range(len(cache.npc_tem_data)):
-        chara_adv_id = cache.npc_tem_data[i].AdvNpc
+    for adv_id, tem_data in cache.npc_tem_data.items():
+        chara_adv_id = tem_data.AdvNpc
         empty_system_setting.character_text_version[chara_adv_id] = 1
     return empty_system_setting
 
@@ -429,8 +429,8 @@ def get_collection_zero() -> game_type.PLAYER_COLLECTION:
     for cid in game_config.config_collection_bonus_data:
         collection_data.collection_bonus[cid] = False
 
-    for i in range(len(cache.npc_tem_data)):
-        npc_id = i + 1
+    for adv_id in cache.npc_tem_data.keys():
+        npc_id = adv_id
         collection_data.token_list[npc_id] = False
         collection_data.first_panties[npc_id] = ""
         collection_data.npc_panties[npc_id] = []

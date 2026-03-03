@@ -132,6 +132,374 @@ def load_save(save_id: str) -> dict:
         return pickle.load(f)
 
 
+def migrate_old_save_data(loaded_dict) -> int:
+    """
+    将旧版存档的角色ID从顺序排列迁移到基于adv的格式
+    
+    迁移内容：
+    1. npc_tem_data: List -> Dict (键为AdvNpc)
+    2. character_data: 键从顺序id改为adv
+    3. npc_id_got: 集合中的id改为adv
+    4. 所有引用character_id的数据结构
+    
+    Returns:
+        int: 迁移的数据条目数
+    """
+    update_count = 0
+    
+    # 1. 转换npc_tem_data
+    if isinstance(loaded_dict["npc_tem_data"], list):
+        old_tem_list = loaded_dict["npc_tem_data"]
+        new_tem_dict = {}
+        for tem in old_tem_list:
+            new_tem_dict[tem.AdvNpc] = tem
+        loaded_dict["npc_tem_data"] = new_tem_dict
+        update_count += len(old_tem_list)
+    
+    # 2. 建立旧id到新id的映射
+    old_to_new_id = {0: 0}  # 玩家id保持为0
+    old_character_data = loaded_dict["character_data"]
+    
+    for old_cid, character in old_character_data.items():
+        if old_cid != 0:
+            old_to_new_id[old_cid] = character.adv
+    
+    # 3. 转换character_data
+    new_character_data = {}
+    for old_cid, character in old_character_data.items():
+        if old_cid == 0:
+            new_character_data[0] = character
+            character.cid = 0
+        else:
+            new_cid = character.adv
+            character.cid = new_cid
+            new_character_data[new_cid] = character
+        update_count += 1
+    loaded_dict["character_data"] = new_character_data
+    
+    # 4. 转换npc_id_got
+    old_npc_id_got = loaded_dict.get("npc_id_got", set())
+    new_npc_id_got = set()
+    for old_id in old_npc_id_got:
+        if old_id in old_to_new_id:
+            new_npc_id_got.add(old_to_new_id[old_id])
+    loaded_dict["npc_id_got"] = new_npc_id_got
+    
+    # 5. 转换其他引用角色ID的数据结构
+    # 5.1 玩家收藏品
+    if 0 in new_character_data:
+        pl_data = new_character_data[0]
+        if hasattr(pl_data, 'pl_collection'):
+            # token_list
+            if hasattr(pl_data.pl_collection, 'token_list'):
+                old_token = pl_data.pl_collection.token_list.copy()
+                pl_data.pl_collection.token_list = {}
+                for old_id, value in old_token.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.token_list[new_id] = value
+            
+            # first_panties
+            if hasattr(pl_data.pl_collection, 'first_panties'):
+                old_panties = pl_data.pl_collection.first_panties.copy()
+                pl_data.pl_collection.first_panties = {}
+                for old_id, value in old_panties.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.first_panties[new_id] = value
+            
+            # npc_panties
+            if hasattr(pl_data.pl_collection, 'npc_panties'):
+                old_npc_panties = pl_data.pl_collection.npc_panties.copy()
+                pl_data.pl_collection.npc_panties = {}
+                for old_id, value in old_npc_panties.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.npc_panties[new_id] = value
+            
+            # npc_socks
+            if hasattr(pl_data.pl_collection, 'npc_socks'):
+                old_npc_socks = pl_data.pl_collection.npc_socks.copy()
+                pl_data.pl_collection.npc_socks = {}
+                for old_id, value in old_npc_socks.items():
+                    new_id = old_to_new_id.get(old_id, old_id)
+                    pl_data.pl_collection.npc_socks[new_id] = value
+    
+    # 5.2 每个角色的favorability字典（角色id:好感度）
+    for char_id, character in new_character_data.items():
+        if hasattr(character, 'favorability'):
+            old_fav = character.favorability.copy()
+            character.favorability = {}
+            for old_id, value in old_fav.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                character.favorability[new_id] = value
+    
+    # 5.3 每个角色的target_character_id
+    for char_id, character in new_character_data.items():
+        if hasattr(character, 'target_character_id'):
+            old_target = character.target_character_id
+            character.target_character_id = old_to_new_id.get(old_target, old_target)
+    
+    # 5.4 每个角色的assistant_character_id
+    for char_id, character in new_character_data.items():
+        if hasattr(character, 'assistant_character_id'):
+            old_assistant = character.assistant_character_id
+            character.assistant_character_id = old_to_new_id.get(old_assistant, old_assistant)
+    
+    # 5.4b 每个角色的其他角色ID引用
+    for char_id, character in new_character_data.items():
+        # ask_group_sex_refuse_chara_id_list
+        if hasattr(character, 'ask_group_sex_refuse_chara_id_list'):
+            character.ask_group_sex_refuse_chara_id_list = [
+                old_to_new_id.get(oid, oid) for oid in character.ask_group_sex_refuse_chara_id_list
+            ]
+        
+        # state_active.bagging_chara_id
+        if hasattr(character, 'state_active') and hasattr(character.state_active, 'bagging_chara_id'):
+            if character.state_active.bagging_chara_id != 0:
+                character.state_active.bagging_chara_id = old_to_new_id.get(
+                    character.state_active.bagging_chara_id, 
+                    character.state_active.bagging_chara_id
+                )
+        
+        # sp_flag.carry_chara_id_in_time_stop
+        if hasattr(character, 'sp_flag') and hasattr(character.sp_flag, 'carry_chara_id_in_time_stop'):
+            if character.sp_flag.carry_chara_id_in_time_stop != 0:
+                character.sp_flag.carry_chara_id_in_time_stop = old_to_new_id.get(
+                    character.sp_flag.carry_chara_id_in_time_stop,
+                    character.sp_flag.carry_chara_id_in_time_stop
+                )
+        
+        # sp_flag.free_in_time_stop_chara_id
+        if hasattr(character, 'sp_flag') and hasattr(character.sp_flag, 'free_in_time_stop_chara_id'):
+            if character.sp_flag.free_in_time_stop_chara_id != 0:
+                character.sp_flag.free_in_time_stop_chara_id = old_to_new_id.get(
+                    character.sp_flag.free_in_time_stop_chara_id,
+                    character.sp_flag.free_in_time_stop_chara_id
+                )
+        
+        # interacting_character_end_info[0]
+        if hasattr(character, 'interacting_character_end_info'):
+            if character.interacting_character_end_info[0] != -1:
+                character.interacting_character_end_info[0] = old_to_new_id.get(
+                    character.interacting_character_end_info[0],
+                    character.interacting_character_end_info[0]
+                )
+
+    # 5.5 rhodes_island中的角色引用
+    if "rhodes_island" in loaded_dict:
+        ri = loaded_dict["rhodes_island"]
+        
+        # hr_operator_ids_list
+        if hasattr(ri, 'hr_operator_ids_list'):
+            ri.hr_operator_ids_list = [old_to_new_id.get(oid, oid) for oid in ri.hr_operator_ids_list]
+        
+        # recruited_id (Set[int])
+        if hasattr(ri, 'recruited_id') and ri.recruited_id:
+            ri.recruited_id = {old_to_new_id.get(oid, oid) for oid in ri.recruited_id}
+        
+        # power_operator_ids_list
+        if hasattr(ri, 'power_operator_ids_list'):
+            ri.power_operator_ids_list = [old_to_new_id.get(oid, oid) for oid in ri.power_operator_ids_list]
+        
+        # main_power_facility_operator_ids (List[int] - 主力供能设施的调控员id列表)
+        if hasattr(ri, 'main_power_facility_operator_ids'):
+            ri.main_power_facility_operator_ids = [old_to_new_id.get(oid, oid) for oid in ri.main_power_facility_operator_ids]
+        
+        # maintenance_place (Dict[int, str] - 角色id:地点)
+        if hasattr(ri, 'maintenance_place'):
+            old_maint = ri.maintenance_place.copy()
+            ri.maintenance_place = {}
+            for old_id, place in old_maint.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.maintenance_place[new_id] = place
+        
+        # equipment_maintain_operator_ids (List[int] - 手动选择的装备维护对象干员id列表)
+        if hasattr(ri, 'equipment_maintain_operator_ids'):
+            ri.equipment_maintain_operator_ids = [old_to_new_id.get(oid, oid) for oid in ri.equipment_maintain_operator_ids]
+        
+        # milk_in_fridge (Dict[int, int] - 干员id:母乳ml存量)
+        if hasattr(ri, 'milk_in_fridge'):
+            old_milk = ri.milk_in_fridge.copy()
+            ri.milk_in_fridge = {}
+            for old_id, value in old_milk.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.milk_in_fridge[new_id] = value
+        
+        # medical_clinic_doctor_ids
+        if hasattr(ri, 'medical_clinic_doctor_ids'):
+            ri.medical_clinic_doctor_ids = [old_to_new_id.get(oid, oid) for oid in ri.medical_clinic_doctor_ids]
+        
+        # medical_hospital_doctor_ids
+        if hasattr(ri, 'medical_hospital_doctor_ids'):
+            ri.medical_hospital_doctor_ids = [old_to_new_id.get(oid, oid) for oid in ri.medical_hospital_doctor_ids]
+        
+        # book_borrow_dict (Dict[int, int])
+        if hasattr(ri, 'book_borrow_dict'):
+            old_borrow = ri.book_borrow_dict.copy()
+            ri.book_borrow_dict = {}
+            for book_id, old_id in old_borrow.items():
+                if old_id != -1:
+                    ri.book_borrow_dict[book_id] = old_to_new_id.get(old_id, old_id)
+                else:
+                    ri.book_borrow_dict[book_id] = old_id
+        
+        # trade_operator_ids_list
+        if hasattr(ri, 'trade_operator_ids_list'):
+            ri.trade_operator_ids_list = [old_to_new_id.get(oid, oid) for oid in ri.trade_operator_ids_list]
+        
+        # resource_type_main_trader (Dict[str, int])
+        if hasattr(ri, 'resource_type_main_trader'):
+            old_traders = ri.resource_type_main_trader.copy()
+            ri.resource_type_main_trader = {}
+            for key, old_id in old_traders.items():
+                ri.resource_type_main_trader[key] = old_to_new_id.get(old_id, old_id)
+        
+        # assembly_line (Dict[int, List])
+        if hasattr(ri, 'assembly_line'):
+            for line_id, line_data in ri.assembly_line.items():
+                if len(line_data) > 1 and line_data[1] != 0:
+                    line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
+        
+        # production_worker_ids
+        if hasattr(ri, 'production_worker_ids'):
+            ri.production_worker_ids = [old_to_new_id.get(oid, oid) for oid in ri.production_worker_ids]
+        
+        # visitor_info (Dict[int, datetime])
+        if hasattr(ri, 'visitor_info'):
+            old_visitors = ri.visitor_info.copy()
+            ri.visitor_info = {}
+            for old_id, value in old_visitors.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.visitor_info[new_id] = value
+        
+        # invite_visitor
+        if hasattr(ri, 'invite_visitor') and ri.invite_visitor:
+            ri.invite_visitor[0] = old_to_new_id.get(ri.invite_visitor[0], ri.invite_visitor[0])
+        
+        # diplomat_of_country (Dict[int, List])
+        if hasattr(ri, 'diplomat_of_country'):
+            for country_id, data in ri.diplomat_of_country.items():
+                if len(data) > 0 and data[0] != 0:
+                    data[0] = old_to_new_id.get(data[0], data[0])
+        
+        # ongoing_field_commissions (Dict[int, List])
+        if hasattr(ri, 'ongoing_field_commissions'):
+            for commission_id, data in ri.ongoing_field_commissions.items():
+                if len(data) > 0 and isinstance(data[0], list):
+                    data[0] = [old_to_new_id.get(oid, oid) for oid in data[0]]
+        
+        # herb_garden_line (Dict[int, List])
+        if hasattr(ri, 'herb_garden_line'):
+            for line_id, line_data in ri.herb_garden_line.items():
+                if len(line_data) > 1 and line_data[1] != 0:
+                    line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
+        
+        # herb_garden_operator_ids
+        if hasattr(ri, 'herb_garden_operator_ids'):
+            ri.herb_garden_operator_ids = [old_to_new_id.get(oid, oid) for oid in ri.herb_garden_operator_ids]
+        
+        # green_house_line (Dict[int, List])
+        if hasattr(ri, 'green_house_line'):
+            for line_id, line_data in ri.green_house_line.items():
+                if len(line_data) > 1 and line_data[1] != 0:
+                    line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
+        
+        # green_house_operator_ids
+        if hasattr(ri, 'green_house_operator_ids'):
+            ri.green_house_operator_ids = [old_to_new_id.get(oid, oid) for oid in ri.green_house_operator_ids]
+        
+        # current_warden_id
+        if hasattr(ri, 'current_warden_id') and ri.current_warden_id != 0:
+            ri.current_warden_id = old_to_new_id.get(ri.current_warden_id, ri.current_warden_id)
+        
+        # current_prisoners (Dict[int, List])
+        if hasattr(ri, 'current_prisoners'):
+            old_prisoners = ri.current_prisoners.copy()
+            ri.current_prisoners = {}
+            for old_id, value in old_prisoners.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.current_prisoners[new_id] = value
+        
+        # maintenance_equipment_chara_id (Dict[int, int])
+        if hasattr(ri, 'maintenance_equipment_chara_id'):
+            old_maint_eq = ri.maintenance_equipment_chara_id.copy()
+            ri.maintenance_equipment_chara_id = {}
+            for old_id, old_target in old_maint_eq.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                new_target = old_to_new_id.get(old_target, old_target)
+                ri.maintenance_equipment_chara_id[new_id] = new_target
+        
+        # urine_in_fridge (Dict[int, int])
+        if hasattr(ri, 'urine_in_fridge'):
+            old_urine = ri.urine_in_fridge.copy()
+            ri.urine_in_fridge = {}
+            for old_id, value in old_urine.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.urine_in_fridge[new_id] = value
+        
+        # today_physical_examination_chara_id_dict (Dict[int, set])
+        if hasattr(ri, 'today_physical_examination_chara_id_dict'):
+            old_exam = ri.today_physical_examination_chara_id_dict.copy()
+            ri.today_physical_examination_chara_id_dict = {}
+            for old_id, value in old_exam.items():
+                new_id = old_to_new_id.get(old_id, old_id)
+                ri.today_physical_examination_chara_id_dict[new_id] = value
+        
+        # examined_operator_ids (Set[int])
+        if hasattr(ri, 'examined_operator_ids'):
+            ri.examined_operator_ids = {old_to_new_id.get(oid, oid) for oid in ri.examined_operator_ids}
+        
+        # waiting_for_exam_operator_ids (Set[int])
+        if hasattr(ri, 'waiting_for_exam_operator_ids'):
+            ri.waiting_for_exam_operator_ids = {old_to_new_id.get(oid, oid) for oid in ri.waiting_for_exam_operator_ids}
+        
+        # manually_selected_exam_operator_ids (Set[int])
+        if hasattr(ri, 'manually_selected_exam_operator_ids'):
+            ri.manually_selected_exam_operator_ids = {old_to_new_id.get(oid, oid) for oid in ri.manually_selected_exam_operator_ids}
+        
+        # medical_doctor_specializations (Dict[str, Dict[str, List[int]]])
+        if hasattr(ri, 'medical_doctor_specializations'):
+            for pos_key, system_dict in ri.medical_doctor_specializations.items():
+                for sys_key, id_list in system_dict.items():
+                    system_dict[sys_key] = [old_to_new_id.get(oid, oid) for oid in id_list]
+    
+    # 5.6 关系数据中的角色引用
+    for char_id, character in new_character_data.items():
+        if hasattr(character, 'relationship'):
+            rel = character.relationship
+            # father_id
+            if hasattr(rel, 'father_id') and rel.father_id > 0:
+                rel.father_id = old_to_new_id.get(rel.father_id, rel.father_id)
+            # mother_id
+            if hasattr(rel, 'mother_id') and rel.mother_id > 0:
+                rel.mother_id = old_to_new_id.get(rel.mother_id, rel.mother_id)
+            # child_id_list
+            if hasattr(rel, 'child_id_list'):
+                rel.child_id_list = [old_to_new_id.get(cid, cid) for cid in rel.child_id_list]
+    
+    # 5.7 场景数据中的角色列表
+    if "scene_data" in loaded_dict:
+        for scene_name, scene in loaded_dict["scene_data"].items():
+            if hasattr(scene, 'character_list'):
+                old_list = scene.character_list.copy()
+                scene.character_list = set()
+                for old_id in old_list:
+                    scene.character_list.add(old_to_new_id.get(old_id, old_id))
+    
+    # 5.8 cache级别的角色ID引用
+    # forbidden_npc_id
+    if "forbidden_npc_id" in loaded_dict:
+        old_forbidden = loaded_dict["forbidden_npc_id"].copy()
+        loaded_dict["forbidden_npc_id"] = {old_to_new_id.get(oid, oid) for oid in old_forbidden}
+    
+    # old_character_id
+    if "old_character_id" in loaded_dict and loaded_dict["old_character_id"] != 0:
+        loaded_dict["old_character_id"] = old_to_new_id.get(
+            loaded_dict["old_character_id"], 
+            loaded_dict["old_character_id"]
+        )
+    
+    return update_count
+
+
 def input_load_save(save_id: str):
     """
     载入存档存档id对应数据，覆盖当前游戏内存
@@ -153,6 +521,21 @@ def input_load_save(save_id: str):
     now_draw = draw.LeftDraw()
     now_draw.text = draw_text
     now_draw.draw()
+
+    # 检测是否为旧版存档（npc_tem_data是List而不是Dict）
+    if isinstance(loaded_dict.get("npc_tem_data"), list):
+        draw_text = _("\n检测到旧版存档，开始迁移角色ID系统...\n")
+        now_draw = draw.LeftDraw()
+        now_draw.text = draw_text
+        now_draw.draw()
+        
+        migrate_count = migrate_old_save_data(loaded_dict)
+        
+        draw_text = _("\n角色ID迁移完成，共处理{0}条数据\n").format(migrate_count)
+        now_draw = draw.LeftDraw()
+        now_draw.text = draw_text
+        now_draw.draw()
+        update_count += migrate_count
 
     # 递归地更新 loaded_dict
     update_count += update_dict_with_default(loaded_dict, new_cache.__dict__)
@@ -176,8 +559,22 @@ def input_load_save(save_id: str):
         # print(f"debug name = {value.name}")
         # 角色素质、经验、宝珠、能力、设置的更新
         update_count += update_character_config_data(new_character_data)
-        # 当前角色模板数据
-        tem_character = loaded_dict["npc_tem_data"][new_character_data.cid - 1]
+        # 当前角色模板数据（使用Dict方式访问，兼容新旧存档）
+        tem_character = loaded_dict["npc_tem_data"].get(new_character_data.cid, None)
+        if tem_character is None:
+            # 如果找不到，尝试用adv
+            tem_character = loaded_dict["npc_tem_data"].get(new_character_data.adv, None)
+        if tem_character is None:
+            # 处理找不到模板的情况（玩家跳过，NPC创建空白模板）
+            if new_character_data.cid != 0:
+                tem_character = character_handle.create_empty_character_tem()
+                tem_character.Name = new_character_data.name
+                tem_character.AdvNpc = new_character_data.adv
+                loaded_dict["npc_tem_data"][new_character_data.cid] = tem_character
+            else:
+                # 玩家没有模板，跳过模板相关更新
+                loaded_dict["character_data"][key] = new_character_data
+                continue
         # 更新角色服装
         cloth_update_count += update_chara_cloth(new_character_data, tem_character)
         # 更新角色口上颜色
@@ -344,88 +741,68 @@ def update_tem_character(loaded_dict):
 
     update_count = 0
 
-    # 将cache.npc_tem_data转换为字典，以便快速查找
-    cache_dict = {npc.AdvNpc: npc for npc in cache.npc_tem_data}
+    # cache.npc_tem_data 现在是Dict，直接使用
+    cache_dict = dict(cache.npc_tem_data)
 
     # 更新loaded_dict["npc_tem_data"]，用新的角色预设属性代替旧的属性
-    for i, now_npc_tem_data in enumerate(loaded_dict["npc_tem_data"]):
+    for adv_id, now_npc_tem_data in list(loaded_dict["npc_tem_data"].items()):
         # 修正深靛的序号错误
         if now_npc_tem_data.AdvNpc == 496 and 469 in cache_dict:
-            loaded_dict["npc_tem_data"][i] = cache_dict[469]
+            loaded_dict["npc_tem_data"][469] = cache_dict[469]
+            if adv_id != 469:
+                del loaded_dict["npc_tem_data"][adv_id]
             update_count += 1
             del cache_dict[469]
             continue
         # 修正阿玛雅的序号错误
         if now_npc_tem_data.Name == "阿玛雅" and now_npc_tem_data.AdvNpc == 450 and 448 in cache_dict:
-            loaded_dict["npc_tem_data"][i] = cache_dict[448]
+            loaded_dict["npc_tem_data"][448] = cache_dict[448]
+            if adv_id != 448:
+                del loaded_dict["npc_tem_data"][adv_id]
             update_count += 1
             del cache_dict[448]
             continue
         if now_npc_tem_data.AdvNpc in cache_dict:
-            # print(f"debug 准备更新{now_npc_tem_data.Name}的角色预设 ")
-            loaded_dict["npc_tem_data"][i] = cache_dict[now_npc_tem_data.AdvNpc]
-            # name = loaded_dict["npc_tem_data"][i].Name
-            # print(f"debug 更新{name}的角色预设成功 ")
+            # 更新模板
+            loaded_dict["npc_tem_data"][adv_id] = cache_dict[now_npc_tem_data.AdvNpc]
             # 从cache_dict中移除已经使用的元素
             del cache_dict[now_npc_tem_data.AdvNpc]
 
-    # 将剩余的元素添加到loaded_dict["npc_tem_data"]的末尾
-    # print(f"debug cache_dict = {cache_dict}")
-    loaded_dict["npc_tem_data"].extend(cache_dict.values())
+    # 将剩余的元素添加到loaded_dict["npc_tem_data"]
+    for adv_id, tem_data in cache_dict.items():
+        loaded_dict["npc_tem_data"][adv_id] = tem_data
     update_count += len(cache_dict)
 
     # 更新新增角色
     update_count += update_new_character(loaded_dict)
-    # 修正loaded_dict["npc_tem_data"]的元素的序号，如果与实际的序号不一致，将其修正
+
+    # 修正角色数据中缺失模板的情况
     for key, value in loaded_dict["character_data"].items():
-        i = -10
         # 跳过玩家
         if value.cid == 0:
             continue
-        while 1:
-            tem_cid = value.cid - 1 + i
-            # 如果超出了角色预设的数量，则赋予空白模板，然后跳出循环
-            if tem_cid >= len(loaded_dict["npc_tem_data"]):
-                tem_npc_data = character_handle.create_empty_character_tem()
-                tem_npc_data.Name = value.name
-                tem_npc_data.AdvNpc = value.adv
-                tem_npc_data.Mother_id = value.relationship.mother_id
-                loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
-                i = 0
-                break
-            tem_character = loaded_dict["npc_tem_data"][tem_cid]
-            # 循环的终止条件为找到干员编号相同的角色
-            if value.adv == tem_character.AdvNpc:
-                break
-            i += 1
-            # print(f"debug i = {i}")
-        # 如果i不为0，说明序号不一致，需要修正
-        if i != 0:
-            # print(f"debug name = {value.name}, chara_cid = {value.cid}, new_tem_cid = {value.cid - 1}, old_tem_cid = {tem_cid}")
-            tem_npc_data = loaded_dict["npc_tem_data"][tem_cid]
+        # 检查角色的adv是否有对应的模板
+        if value.adv not in loaded_dict["npc_tem_data"]:
             # 修正深靛的序号错误
             if value.name == _("深靛") and value.adv != 469:
                 value.adv = 469
+                value.cid = 469
                 update_count += 1
                 continue
             # 修正阿玛雅的序号错误
-            if value.name == _("阿玛雅") and value.cid != key:
-                value.cid = key
-            loaded_dict["npc_tem_data"].pop(tem_cid)
-            loaded_dict["npc_tem_data"].insert(value.cid - 1, tem_npc_data)
-            now_draw = draw.LeftDraw()
-            draw_text = _("存档跨版本更新: 角色 {0} 的序号不一致，已修正\n").format(value.name)
-            now_draw.text = draw_text
-            # now_draw.draw()
-
-    # 如果预设数量大于角色属性，则从尾部开始检查是否有空白预设，如果有则删除到与角色属性数量相同为止
-    if len(loaded_dict["npc_tem_data"]) > len(loaded_dict["character_data"]):
-        for i in range(len(loaded_dict["npc_tem_data"]) - len(loaded_dict["character_data"]) + 1):
-            cid = len(loaded_dict["npc_tem_data"]) - i - 1
-            if loaded_dict["npc_tem_data"][-1].Name == "":
-                # print(f"debug 删除了空白预设，序号为{len(loaded_dict['npc_tem_data']) - 1}")
-                loaded_dict["npc_tem_data"].pop()
+            if value.name == _("阿玛雅") and value.adv != 448:
+                value.adv = 448
+                value.cid = 448
                 update_count += 1
+                continue
+            # 其他情况，创建空白模板
+            tem_npc_data = character_handle.create_empty_character_tem()
+            tem_npc_data.Name = value.name
+            tem_npc_data.AdvNpc = value.adv
+            if hasattr(value, 'relationship') and hasattr(value.relationship, 'mother_id'):
+                tem_npc_data.Mother_id = value.relationship.mother_id
+            loaded_dict["npc_tem_data"][value.adv] = tem_npc_data
+            update_count += 1
 
     return update_count
 
@@ -451,11 +828,14 @@ def fix_wrong_character(loaded_dict):
                     # 将adv改为448
                     loaded_dict["character_data"][key2].adv = 448
                     # 将当前角色改为当前模板的角色
-                    now_tem_chara = loaded_dict["npc_tem_data"][value.cid - 1]
-                    # 创建一个新的角色数据
-                    new_character = character_handle.init_character(value.cid, now_tem_chara)
-                    # 重新赋值角色数据
-                    loaded_dict["character_data"][key] = new_character
+                    now_tem_chara = loaded_dict["npc_tem_data"].get(value.cid, None)
+                    if now_tem_chara is None:
+                        now_tem_chara = loaded_dict["npc_tem_data"].get(value.adv, None)
+                    if now_tem_chara is not None:
+                        # 创建一个新的角色数据
+                        new_character = character_handle.init_character(value.cid, now_tem_chara)
+                        # 重新赋值角色数据
+                        loaded_dict["character_data"][key] = new_character
                     update_count += 1
                     break
 
@@ -688,17 +1068,15 @@ def update_new_character(loaded_dict):
     """
     update_count = 0
     # 遍历角色预设，如果该角色在预设中但不在角色属性中，将其添加到需要增加的角色属性中
-    add_new_character_list = [now_npc_data for now_npc_data in loaded_dict["npc_tem_data"] 
+    add_new_character_list = [now_npc_data for now_npc_data in loaded_dict["npc_tem_data"].values() 
                               if not any(char_data.adv == now_npc_data.AdvNpc for char_data in loaded_dict["character_data"].values())]
 
-    # 新增该角色
-    len_old_character = len(loaded_dict["character_data"])
-    for i, now_npc_data in enumerate(add_new_character_list):
+    # 新增该角色，使用adv作为cid
+    for now_npc_data in add_new_character_list:
         # 跳过深靛
         if now_npc_data.Name == _("深靛"):
-            len_old_character -= 1
             continue
-        new_character_cid = len_old_character + i
+        new_character_cid = now_npc_data.AdvNpc  # 使用adv作为cid
         # print(f"debug new_character_cid = {new_character_cid}")
         new_character = character_handle.init_character(new_character_cid, now_npc_data)
         loaded_dict["character_data"][new_character_cid] = new_character

@@ -1,5 +1,5 @@
 import os, glob
-from typing import List
+from typing import List, Dict
 from types import FunctionType
 from Script.Core import json_handle,game_type,get_text
 from Script.Config import game_config, config_def
@@ -8,8 +8,8 @@ character_config_file = os.path.join("data","Character.json")
 """ 角色模板配置文件路径 """
 character_config_data = {}
 """ 原始角色模板数据 """
-character_tem_list:List[game_type.NpcTem] = []
-""" 角色模板数据列表 """
+character_tem_list: Dict[int, game_type.NpcTem] = {}
+""" 角色模板数据字典，键为AdvNpc """
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -81,7 +81,7 @@ def init_character_tem_data():
             # 仅需要值，不需要键，除以1024是为了将文件大小转换为kb，进1保留到个位
             now_tem.Talk_Size = int((sum(talk_sizes.values()) / 1024) + 1)
             # print(f"debug name = {find_name}, talk_sizes = {talk_sizes}, now_tem.Talk_Size = {now_tem.Talk_Size}")
-        character_tem_list.append(now_tem)
+        character_tem_list[now_tem.AdvNpc] = now_tem
 
 def find_files_and_get_size(directory, character):
     # 构造文件路径

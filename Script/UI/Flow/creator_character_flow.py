@@ -401,7 +401,7 @@ class Character_FirstNPC:
         """ 是否显示口上干员选择面板 """
         self.show_special_chara_handle_panel = False
         """ 是否显示特殊干员选择面板 """
-        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.id_list = list(cache.npc_tem_data.keys())
         """ 当前显示的NPC列表 """
         self.talk_character_list = []
         """ 口上干员列表 """
@@ -732,16 +732,15 @@ class Character_FirstNPC:
 
     def select_all(self):
         """一键全选"""
-        for i in range(len(cache.npc_tem_data)):
-            npc_id = i + 1
-            if npc_id not in cache.npc_id_got:
-                cache.npc_id_got.add(npc_id)
+        for adv_id in cache.npc_tem_data.keys():
+            if adv_id not in cache.npc_id_got:
+                cache.npc_id_got.add(adv_id)
 
     def random_select(self):
         """随机选择"""
         self.reset_select()
         # 获取当前未选择的NPC
-        not_got_npc = [i+1 for i in range(len(cache.npc_tem_data)) if i+1 not in cache.npc_id_got]
+        not_got_npc = [adv_id for adv_id in cache.npc_tem_data.keys() if adv_id not in cache.npc_id_got]
         # 随机选择三个，然后加到列表中
         random_npc = random.sample(not_got_npc, 3)
         for npc_id in random_npc:
@@ -752,7 +751,7 @@ class Character_FirstNPC:
         self.age_filter_flag = 0
         self.chest_filter_flag = 0
         self.race_filter_flag = 0
-        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.id_list = list(cache.npc_tem_data.keys())
         self.prepare_filter()
         self.show_normal_handle_panel = False
         self.show_talk_chara_handle_panel = True
@@ -773,7 +772,7 @@ class Character_FirstNPC:
             self.talk_character_list = []
         # 退出筛选模式
         else:
-            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            self.id_list = list(cache.npc_tem_data.keys())
         self.name_filter_flag = not self.name_filter_flag
         self.show_normal_handle_panel = True
 
@@ -781,7 +780,7 @@ class Character_FirstNPC:
         """胸围筛选"""
         self.chest_filter_flag = (self.chest_filter_flag + 1) % 6
         if self.chest_filter_flag == 0:
-            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            self.id_list = list(cache.npc_tem_data.keys())
         elif self.chest_filter_flag == 1:
             self.id_list = self.chest_filter_id_dict[_("绝壁")]
         elif self.chest_filter_flag == 2:
@@ -800,7 +799,7 @@ class Character_FirstNPC:
         """外表年龄筛选"""
         self.age_filter_flag = (self.age_filter_flag + 1) % 7
         if self.age_filter_flag == 0:
-            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            self.id_list = list(cache.npc_tem_data.keys())
         elif self.age_filter_flag == 1:
             self.id_list = self.age_filter_id_dict[_("幼女")]
         elif self.age_filter_flag == 2:
@@ -821,7 +820,7 @@ class Character_FirstNPC:
         """种族筛选"""
         self.race_filter_flag = (self.race_filter_flag + 1) % len(game_config.config_race)
         if self.race_filter_flag == 0:
-            self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+            self.id_list = list(cache.npc_tem_data.keys())
         else:
             now_cid = self.race_filter_flag
             race_name = game_config.config_race[now_cid].name
@@ -840,7 +839,7 @@ class Character_FirstNPC:
         self.age_filter_flag = 0
         self.chest_filter_flag = 0
         self.race_filter_flag = 0
-        self.id_list = [i + 1 for i in range(len(cache.npc_tem_data))]
+        self.id_list = list(cache.npc_tem_data.keys())
         self.talk_character_list = []
         # 去掉特殊干员
         self.special_chara_list = []

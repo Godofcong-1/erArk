@@ -1691,8 +1691,8 @@ class Cache:
         # ==========================================
         self.character_data: Dict[int, Character] = {}
         """ 角色对象数据缓存组 """
-        self.npc_tem_data: List[NpcTem] = []
-        """ npc模板列表 """
+        self.npc_tem_data: Dict[int, NpcTem] = {}
+        """ npc模板字典，键为AdvNpc """
         self.npc_id_got: Set = set()
         """ 已拥有的干员id集合 """
         self.forbidden_npc_id: Set = set()

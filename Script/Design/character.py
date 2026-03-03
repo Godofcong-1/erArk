@@ -224,12 +224,12 @@ def judge_character_time_over_24(character_id: int) -> bool:
 def get_character_id_from_adv(adv_id: int) -> int:
     """
     通过剧情id获取角色id
+    重构后character_id等于adv_id，直接判断是否存在即可
     Keyword arguments:
     adv_id -- 剧情id
     Return arguments:
     int -- 角色id
     """
-    for character_id in cache.character_data:
-        if cache.character_data[character_id].adv == adv_id:
-            return character_id
+    if adv_id in cache.character_data:
+        return adv_id
     return 0
