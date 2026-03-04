@@ -11,7 +11,7 @@
 from typing import Dict, List, Set, Optional
 from Script.Core import cache_control, game_type, constant
 from Script.Config import game_config
-from Script.Design import web_interaction_manager
+from Script.Design import web_interaction_manager, handle_premise
 from Script.System.Instruct_System import interaction_types
 from Script.System.Instruct_System.instruct_category import HIP_SUB_PARTS, HEAD_SUB_PARTS, BodyPart
 
@@ -144,6 +144,8 @@ class InteractionHandler:
         self._current_interaction_type = None
         self._available_body_parts = []
         self._selected_body_part = None
+        # 同时清除web_interaction_manager中的选择状态
+        web_interaction_manager.clear_selection()
 
     def get_interaction_types(self) -> Dict:
         """
@@ -155,6 +157,10 @@ class InteractionHandler:
         - current_major_type: 当前选中的大类型ID
         - current_minor_type: 当前选中的小类型ID
         
+        注意：
+        - 进入主面板时不会默认选择任何交互类型
+        - 阴茎大类仅在H模式下显示
+        
         Returns:
         Dict -- 交互类型数据
         """
@@ -162,16 +168,19 @@ class InteractionHandler:
         current_major = web_interaction_manager.get_current_major_type()
         current_minor = web_interaction_manager.get_current_minor_type()
         
-        # 如果没有选中的大类，默认选择第一个（嘴）
-        if current_major is None:
-            current_major = interaction_types.MAJOR_TYPE_ORDER[0]
-            web_interaction_manager.select_major_type(current_major)
-            current_major = web_interaction_manager.get_current_major_type()
-            current_minor = web_interaction_manager.get_current_minor_type()
+        # 注意：进入主面板时不再默认选择任何交互类型
+        # 用户需要手动点击选择大类和小类
+        
+        # 检查是否在H模式中（用于决定是否显示阴茎大类）
+        is_h_mode = handle_premise.handle_is_h(0)
         
         # 构建大类列表
         major_types = []
         for major_id in interaction_types.MAJOR_TYPE_ORDER:
+            # 阴茎大类仅在H模式下显示
+            if major_id == interaction_types.InteractionMajorType.PENIS and not is_h_mode:
+                continue
+            
             major_name = interaction_types.MAJOR_TYPE_NAMES.get(major_id, f"类型{major_id}")
             is_selected = (current_major == major_id)
             
@@ -200,6 +209,6 @@ class InteractionHandler:
             "minor_types": current_minor_types,
             "current_major_type": current_major,
             "current_minor_type": current_minor,
-            "current_major_type_name": interaction_types.MAJOR_TYPE_NAMES.get(current_major, ""),
+            "current_major_type_name": interaction_types.MAJOR_TYPE_NAMES.get(current_major, "") if current_major else "",
             "current_minor_type_name": interaction_types.MINOR_TYPE_NAMES.get(current_minor, "") if current_minor is not None else "",
         }

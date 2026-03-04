@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年2月25日
+**最后更新**：2026年3月4日
 
 ---
 
@@ -1093,6 +1093,30 @@
 **换算规则**：
 - 基准字体大小：`16px = 1rem`
 - 示例：`30px = 30/16 = 1.875rem`
+
+#### 3.6.8 交互类型面板初始化和显示优化（2026-03-04）
+- [x] 修改进入主面板时的默认交互类型选择行为
+  - **问题描述**：从其他界面进入主界面时，会默认将左侧的主交互类型选中为嘴部的交互
+  - **解决方案**：移除 `interaction_handler.py` 中 `get_interaction_types()` 方法的默认选择逻辑
+  - **新行为**：进入主界面时不选择任何主交互类型，需要用户手动点击选择
+  - **修改文件**：`Script/System/Web_Draw_System/interaction_handler.py`
+- [x] 修改阴茎大类的显示条件
+  - **问题描述**：阴茎大类始终显示，但该类指令仅在H模式下有效
+  - **解决方案**：在 `get_interaction_types()` 方法中，根据 `handle_premise.handle_is_h(0)` 判断是否在H模式
+  - **新行为**：阴茎(penis)大类仅在H模式中显示，非H模式下不显示该选项
+  - **修改文件**：`Script/System/Web_Draw_System/interaction_handler.py`
+- [x] 修改进入主面板时清除交互选择状态
+  - **解决方案**：在 `in_scene_panel_web.py` 的 `draw()` 方法开始时调用 `clear_selection()`
+  - **新行为**：从其他界面返回主界面时，交互类型选择会被重置
+  - **修改文件**：`Script/UI/Panel/in_scene_panel_web.py`
+- [x] 修改 `clear_selection()` 方法以同步清除缓存状态
+  - **解决方案**：在 `interaction_handler.py` 的 `clear_selection()` 方法中同时调用 `web_interaction_manager.clear_selection()`
+  - **修改文件**：`Script/System/Web_Draw_System/interaction_handler.py`
+
+**实施说明（2026-03-04）**：
+- 修改后的交互类型面板在进入主界面时不会自动展开任何大类
+- 阴茎大类仅在H模式下显示，这与该类指令的前提条件保持一致
+- 从任何子面板返回主界面时，交互选择状态都会被清除
 
 ### 3.7 对话框区域
 

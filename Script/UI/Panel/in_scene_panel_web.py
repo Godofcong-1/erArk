@@ -85,6 +85,10 @@ class InScenePanelWeb:
         if is_in_sub_panel_mode():
             exit_sub_panel_mode()
         
+        # 进入主界面时，清除交互类型选择状态
+        # 这样可以确保从其他界面返回主界面时，不会保留之前的交互类型选择
+        self.interaction_handler.clear_selection()
+        
         # 在进入主界面循环前，彻底清空屏幕和历史记录
         # 这样可以避免显示之前的杂乱信息，保持主界面整洁
         io_init.clear_screen_and_history()
