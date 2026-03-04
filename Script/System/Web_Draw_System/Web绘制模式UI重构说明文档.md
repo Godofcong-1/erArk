@@ -138,6 +138,39 @@
   2. **系统面板类选项卡**：动态获取所有满足前提条件的系统面板类指令
 - **自适应规则**：选项卡数量较少时保持固定宽度；数量超过一排时自动换行显示
 
+#### 2.2.1.1 子面板模式
+
+当用户从主面板点击其他面板选项卡时，会进入**子面板模式**。在此模式下：
+
+- **保留元素**：场景信息栏和面板选项卡栏保持可见
+- **临时选项卡**：在选项卡栏末尾添加一个高亮显示的临时选项卡，显示当前子面板的名称
+- **禁用状态**：其他所有选项卡变为灰色禁用状态，不可点击
+- **内容区域**：子面板内容只能在选项卡下方的区域渲染，不得超出到选项卡上方或其他区域
+
+**进入子面板模式触发条件**：
+- `askfor_all()` 检测到 `cache.now_panel_id` 改变时，在抛出 `PanelChangeException` 之前自动设置子面板模式
+
+**退出子面板模式触发条件**：
+- 返回主面板时（重新进入 `in_scene_panel_web.py` 的 `draw()` 方法）
+
+**数据传输**：
+- 子面板模式状态通过 `cache.web_sub_panel_mode` 等字段存储
+- `update_game_state()` 检测子面板模式并附加 `sub_panel_data`（包含场景信息栏和选项卡数据）
+- 前端在 `renderGameState()` 中检测 `state.sub_panel_mode` 并渲染固定头部
+
+**布局约束**：
+- 前端为 `gameContent` 添加 `.sub-panel-mode` CSS 类
+- `.sub-panel-header` 固定在顶部，不随内容滚动
+- `.sub-panel-content` 占据剩余空间，内部可滚动
+
+**相关代码路径**：
+- 缓存字段：`Script/Core/game_type.py` 中的 `web_sub_panel_mode`, `web_sub_panel_id`, `web_sub_panel_name`
+- 辅助函数：`Script/System/Web_Draw_System/tab_menu.py` 中的 `enter_sub_panel_mode()`, `exit_sub_panel_mode()`, `is_in_sub_panel_mode()`
+- 模式设置：`Script/Core/flow_handle_web.py` 中的 `_handle_sub_panel_mode_on_panel_change()`
+- 服务器处理：`Script/Core/web_server.py` 中的 `_get_sub_panel_mode_data()`
+- 前端渲染：`static/game.js` 中的 `renderGameState()`
+- 样式定义：`static/css/style.css` 中的 `.sub-panel-mode`, `.sub-panel-header`, `.sub-panel-content`
+
 #### 2.2.2 玩家信息区（左上）
 - **位置**：选项卡栏下方左侧
 - **内容**：玩家角色的信息

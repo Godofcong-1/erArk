@@ -71,9 +71,19 @@ class InScenePanelWeb:
         """
         绘制对象
         在Web模式下，此方法收集数据并通过WebSocket推送到前端
+        
+        子面板模式说明：
+        当用户点击选项卡切换到其他面板时，会设置子面板模式，
+        此时前端会保留场景信息栏和选项卡，只在内容区域渲染子面板内容。
+        当从子面板返回时，会清除子面板模式。
         """
         from Script.Core import io_init
         from Script.System.Instruct_System import handle_instruct as instruct_handler
+        from Script.System.Web_Draw_System import exit_sub_panel_mode, is_in_sub_panel_mode
+        
+        # 如果从子面板返回，清除子面板模式
+        if is_in_sub_panel_mode():
+            exit_sub_panel_mode()
         
         # 在进入主界面循环前，彻底清空屏幕和历史记录
         # 这样可以避免显示之前的杂乱信息，保持主界面整洁
@@ -81,6 +91,8 @@ class InScenePanelWeb:
         
         while True:
             if cache.now_panel_id != constant.Panel.IN_SCENE:
+                # 检测到面板切换，设置子面板模式
+                self._enter_sub_panel_mode()
                 break
             
             # 每次主循环迭代时，确保选项卡状态与当前面板一致
@@ -119,6 +131,44 @@ class InScenePanelWeb:
             
             # 等待前端输入（通过按钮点击）
             flow_handle.askfor_all(ask_list)
+
+    def _enter_sub_panel_mode(self):
+        """
+        进入子面板模式
+        
+        获取当前面板的ID和名称，设置子面板模式状态，
+        并清除当前绘制元素以避免主面板内容残留
+        """
+        from Script.System.Web_Draw_System import enter_sub_panel_mode
+        
+        # 清除当前绘制元素，避免主面板内容（如 new_ui_container）残留
+        # 子面板会自己渲染内容，不需要保留主面板的元素
+        if hasattr(cache, 'current_draw_elements'):
+            cache.current_draw_elements = []
+        # 同时清除历史记录，避免 clear_screen() 回填主面板内容
+        if hasattr(cache, 'web_draw_history'):
+            cache.web_draw_history = []
+            cache.web_draw_history_line_total = 0
+        
+        # 获取当前面板ID（指令ID）
+        panel_id = None
+        panel_name = ""
+        
+        # 尝试从选项卡中找到对应的指令ID和名称
+        # 遍历所有系统面板类指令，查找匹配当前 now_panel_id 的指令
+        for instruct_id, stored_panel_id in constant.instruct_panel_id_data.items():
+            if stored_panel_id == cache.now_panel_id:
+                panel_id = instruct_id
+                panel_name = constant.handle_instruct_name_data.get(instruct_id, instruct_id)
+                break
+        
+        # 如果没找到，使用面板ID作为标识
+        if panel_id is None:
+            panel_id = f"panel_{cache.now_panel_id}"
+            panel_name = f"面板{cache.now_panel_id}"
+        
+        # 设置子面板模式
+        enter_sub_panel_mode(panel_id, panel_name)
     
     def _bind_panel_tabs_and_get_ask_list(self) -> List[str]:
         """

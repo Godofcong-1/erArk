@@ -1687,6 +1687,12 @@ class Cache:
         """ Web模式是否需要完整刷新（切换交互对象后设置为True） """
         self.web_value_changes: List[dict] = []
         """ Web模式数值变化列表，每个元素包含 character_id, field, value, timestamp """
+        self.web_sub_panel_mode: bool = False
+        """ Web模式子面板模式标记：True表示当前正在主界面内显示非主面板 """
+        self.web_sub_panel_id: Optional[str] = None
+        """ Web模式子面板ID：当前显示的子面板指令ID """
+        self.web_sub_panel_name: str = ""
+        """ Web模式子面板名称：当前显示的子面板名称（用于临时选项卡） """
         # ==========================================
         # ==========================================
         self.character_data: Dict[int, Character] = {}

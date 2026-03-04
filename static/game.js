@@ -582,6 +582,45 @@ function renderGameState(state) {
     // 隐藏独立的按钮容器
     gameButtons.classList.add('hidden');
     
+    // ========== 子面板模式处理 ==========
+    // 如果处于子面板模式，先渲染场景信息栏和选项卡
+    if (state.sub_panel_mode && state.sub_panel_data) {
+        console.log('[renderGameState] 子面板模式激活，渲染固定头部');
+        
+        // 添加子面板模式样式类
+        gameContent.classList.add('sub-panel-mode');
+        
+        // 创建子面板模式的固定头部容器
+        const subPanelHeader = document.createElement('div');
+        subPanelHeader.className = 'sub-panel-header';
+        
+        // 渲染场景信息栏
+        if (state.sub_panel_data.scene_info_bar) {
+            const sceneInfoBar = createSceneInfoBar(state.sub_panel_data.scene_info_bar);
+            subPanelHeader.appendChild(sceneInfoBar);
+        }
+        
+        // 渲染面板选项卡（带禁用状态和临时选项卡）
+        if (state.sub_panel_data.panel_tabs && state.sub_panel_data.panel_tabs.length > 0) {
+            const panelTabs = createPanelTabsBar(state.sub_panel_data.panel_tabs);
+            subPanelHeader.appendChild(panelTabs);
+        }
+        
+        gameContent.appendChild(subPanelHeader);
+        
+        // 创建子面板内容容器
+        const subPanelContent = document.createElement('div');
+        subPanelContent.className = 'sub-panel-content';
+        gameContent.appendChild(subPanelContent);
+        
+        // 后续内容将渲染到子面板内容容器中
+        // 更新 gameContent 引用为子面板内容容器
+        // 注意：需要确保后续代码使用这个新的容器
+    } else {
+        // 非子面板模式，移除样式类
+        gameContent.classList.remove('sub-panel-mode');
+    }
+
     // 重置状态变量
     lastElementType = null;
     forceNewLine = false;
@@ -589,9 +628,13 @@ function renderGameState(state) {
     isLastTextEndedWithNewline = false;
     
     // 创建当前行容器
+    // 如果是子面板模式，将内容添加到子面板内容容器中
+    const contentContainer = state.sub_panel_mode && state.sub_panel_data 
+        ? gameContent.querySelector('.sub-panel-content') 
+        : gameContent;
     let currentLine = document.createElement('div');
     currentLine.className = 'inline-container';
-    gameContent.appendChild(currentLine);
+    contentContainer.appendChild(currentLine);
     let currentLineHasText = false;
     let currentLineButtons = [];
     let encounteredActiveWaitElement = false;
@@ -633,7 +676,7 @@ function renderGameState(state) {
                 // 创建新的行容器
                 currentLine = document.createElement('div');
                 currentLine.className = 'inline-container';
-                gameContent.appendChild(currentLine);
+                contentContainer.appendChild(currentLine);
                 currentLineHasText = false;
                 currentLineButtons = [];
             }
@@ -742,7 +785,7 @@ function renderGameState(state) {
                         // 对于非第一行，创建新的行容器
                         currentLine = document.createElement('div');
                         currentLine.className = 'inline-container';
-                        gameContent.appendChild(currentLine);
+                        contentContainer.appendChild(currentLine);
                         currentLineHasText = false;
                         currentLineButtons = [];
                     }
@@ -1365,9 +1408,10 @@ function createSceneInfoBar(sceneInfoBar) {
  * @param {Array} tabs - 选项卡数据数组，每个元素包含：
  *   - id: 选项卡ID
  *   - name: 显示名称
- *   - type: 类型（"main" 为主面板，"panel" 为其他面板）
+ *   - type: 类型（"main" 为主面板，"panel" 为其他面板，"temp" 为临时选项卡）
  *   - available: 是否可用
  *   - active: 是否为当前激活的选项卡
+ *   - temp: 是否为临时选项卡（子面板模式下当前活动的面板）
  * @returns {HTMLElement} 选项卡栏元素
  */
 function createPanelTabsBar(tabs) {
@@ -1381,6 +1425,11 @@ function createPanelTabsBar(tabs) {
         // 添加主面板特殊样式
         if (tab.type === 'main') {
             btn.classList.add('main-tab');
+        }
+        
+        // 添加临时选项卡样式（子面板模式下当前活动的面板）
+        if (tab.type === 'temp') {
+            btn.classList.add('temp-tab');
         }
         
         // 添加激活状态
@@ -1397,9 +1446,10 @@ function createPanelTabsBar(tabs) {
         btn.textContent = tab.name || tab.id;
         btn.dataset.tabId = tab.id;
         
-        // 主面板选项卡点击不执行操作（已经在主面板）
-        // 其他选项卡点击执行对应的面板切换指令
-        if (tab.type !== 'main' || !tab.active) {
+        // 禁用的选项卡不响应点击
+        // 当前激活的选项卡也不响应点击（已经在这个面板了）
+        // 只有可用且非激活的选项卡才响应点击
+        if (tab.available && !tab.active) {
             btn.onclick = () => clickPanelTab(tab.id);
         }
         

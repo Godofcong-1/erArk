@@ -2835,6 +2835,144 @@ werkzeug.exceptions.NotFound: 404 Not Found
 
 ## 阶段十：优化与完善
 
+### 9.11 子面板模式实现 ✅（2026-02-20）
+
+#### 9.11.1 需求描述
+原有面板切换行为：当从主面板（IN_SCENE）进入其他面板时，子面板内容会在主界面下方的新位置打印显示，导致场景信息栏和选项卡消失。
+
+新的面板切换行为：
+1. 进入子面板后，场景信息栏和选项卡保持可见
+2. 在选项卡末尾添加一个临时选项卡，显示当前子面板的名称，高亮显示
+3. 子面板的原有布局和内容不变，只是渲染位置调整到固定头部下方
+4. 其他选项卡变为灰色禁用状态，不可点击
+5. 返回主面板时恢复正常显示，移除临时选项卡
+
+#### 9.11.2 实现方案
+
+**后端修改：**
+
+1. **添加缓存字段**（`Script/Core/game_type.py`）：
+   ```python
+   web_sub_panel_mode: bool = False  # Web模式下是否处于子面板模式
+   web_sub_panel_id: Optional[str] = None  # 当前子面板的指令ID
+   web_sub_panel_name: str = ""  # 当前子面板的名称
+   ```
+
+2. **添加辅助函数**（`Script/System/Web_Draw_System/tab_menu.py`）：
+   - `enter_sub_panel_mode(panel_id, panel_name)`: 进入子面板模式
+   - `exit_sub_panel_mode()`: 退出子面板模式
+   - `is_in_sub_panel_mode()`: 检查是否处于子面板模式
+   - 修改 `get_panel_tabs()` 方法支持子面板模式下的禁用状态和临时选项卡
+
+3. **修改流程控制**（`Script/Core/flow_handle_web.py`）：
+   - 添加 `_handle_sub_panel_mode_on_panel_change()` 函数处理面板切换时的子面板模式设置
+   - 添加 `_get_sub_panel_info()` 函数根据面板ID获取指令ID和名称
+   - 在 `askfor_all()` 抛出 `PanelChangeException` 之前调用上述函数设置子面板模式
+
+4. **修改服务器**（`Script/Core/web_server.py`）：
+   - 添加 `_get_sub_panel_mode_data()` 函数获取场景信息栏和选项卡数据
+   - 修改 `update_game_state()` 检测子面板模式并附加 `sub_panel_data`
+
+**前端修改：**
+
+5. **修改渲染逻辑**（`static/game.js`）：
+   - 在 `renderGameState()` 中检测 `state.sub_panel_mode`
+   - 如果是子面板模式，为 `gameContent` 添加 `.sub-panel-mode` CSS类
+   - 先渲染固定头部（场景信息栏 + 选项卡）
+   - 后续内容渲染到子面板内容容器中
+
+6. **修改选项卡渲染**（`static/game.js`）：
+   - 在 `createPanelTabsBar()` 中添加对 `temp` 字段的支持
+   - 禁用的选项卡不响应点击事件
+
+7. **添加样式**（`static/css/style.css`）：
+   - `.game-content.sub-panel-mode`: flex布局容器，约束内容在选项卡下方
+   - `.sub-panel-header`: 固定头部容器（不收缩，sticky定位）
+   - `.sub-panel-content`: 子面板内容容器（占据剩余空间，可滚动）
+   - `.panel-tab-btn.temp-tab`: 临时选项卡样式（脉冲动画高亮）
+
+#### 9.11.3 数据流
+
+```
+askfor_all() 检测到面板切换 → _handle_sub_panel_mode_on_panel_change() → 抛出 PanelChangeException
+    ↓
+子面板 draw() → clear_screen() → update_game_state()
+    ↓
+web_server 检测 web_sub_panel_mode → 附加 sub_panel_data
+    ↓
+前端 renderGameState() → 添加 sub-panel-mode 类 → 渲染固定头部 + 子面板内容
+    ↓
+子面板结束 → 回到主面板 → exit_sub_panel_mode() → 正常渲染
+```
+
+#### 9.11.4 选项卡数据格式（子面板模式）
+
+```python
+{
+    "id": "__main_panel__",
+    "name": "主面板",
+    "type": "main",
+    "available": False,  # 禁用
+    "active": False,
+    "temp": False
+},
+{
+    "id": "instruct_501",
+    "name": "移动",
+    "type": "panel",
+    "available": False,  # 禁用
+    "active": False,
+    "temp": False
+},
+{
+    "id": "temp_panel_xxx",
+    "name": "当前面板名称",
+    "type": "temp",
+    "available": True,
+    "active": True,
+    "temp": True  # 临时选项卡标记
+}
+```
+
+#### 9.11.5 相关文件
+
+- `Script/Core/game_type.py` - 缓存字段定义
+- `Script/Core/flow_handle_web.py` - 面板切换时的子面板模式处理
+- `Script/System/Web_Draw_System/tab_menu.py` - 选项卡和子面板模式辅助函数
+- `Script/System/Web_Draw_System/__init__.py` - 导出新函数
+- `Script/UI/Panel/in_scene_panel_web.py` - 主面板进入/退出子面板模式处理
+- `Script/Core/web_server.py` - 服务器端子面板模式数据处理
+- `static/game.js` - 前端渲染逻辑（添加 sub-panel-mode CSS类）
+- `static/css/style.css` - 子面板模式样式（flex布局约束内容区域）
+
+**完成日期**：2026年2月20日
+**修复日期**：2026年3月4日（修复子面板模式触发时机和内容区域约束问题）
+
+#### 9.11.6 BUG修复记录（2026年3月4日）
+
+**问题1：子面板模式未正确触发**
+
+- **现象**：点击选项卡切换面板后，主面板内容仍然显示在子面板内容上方
+- **原因**：原实现方案是在 `in_scene_panel_web.py` 的 `_enter_sub_panel_mode()` 中设置子面板模式，但 `askfor_all()` 检测到面板切换后直接抛出 `PanelChangeException`，导致该方法从未被调用
+- **解决方案**：将子面板模式设置逻辑移至 `flow_handle_web.py` 的 `askfor_all()` 函数中，在抛出异常之前调用 `_handle_sub_panel_mode_on_panel_change()`
+
+**问题2：子面板内容显示越界**
+
+- **现象**：子面板内容显示在选项卡上方的空白区域，而不是只在选项卡下方
+- **原因**：`.game-content` 容器没有使用flex布局约束子元素位置，`.sub-panel-content` 的 `overflow` 设置无效
+- **解决方案**：
+  1. 为 `gameContent` 添加 `.sub-panel-mode` CSS类
+  2. 设置该类使用 `display: flex; flex-direction: column;` 布局
+  3. 设置 `.sub-panel-content` 的 `min-height: 0;` 使 `overflow-y: auto;` 生效
+  4. 添加 `overflow: hidden;` 防止内容溢出
+
+**修改文件列表**：
+- `Script/Core/flow_handle_web.py` - 新增 `_handle_sub_panel_mode_on_panel_change()` 和 `_get_sub_panel_info()` 函数
+- `static/game.js` - 子面板模式时为 `gameContent` 添加/移除 `.sub-panel-mode` 类
+- `static/css/style.css` - 完善 `.game-content.sub-panel-mode`、`.sub-panel-header`、`.sub-panel-content` 样式
+
+---
+
 ### 10.1 性能优化
 
 #### 10.1.1 后端优化

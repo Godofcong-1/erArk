@@ -28,7 +28,13 @@ from Script.System.Web_Draw_System.dialog_box import (
     skip_all_dialogs,
 )
 from Script.System.Web_Draw_System.status_panel import StatusPanel
-from Script.System.Web_Draw_System.tab_menu import TabMenu, MAIN_PANEL_TAB_ID
+from Script.System.Web_Draw_System.tab_menu import (
+    TabMenu,
+    MAIN_PANEL_TAB_ID,
+    enter_sub_panel_mode,
+    exit_sub_panel_mode,
+    is_in_sub_panel_mode,
+)
 from Script.System.Web_Draw_System.body_part_button import BodyPartButton
 from Script.System.Web_Draw_System.settlement_manager import SettlementManager, SettlementPhase
 from Script.System.Web_Draw_System.image_processor import (

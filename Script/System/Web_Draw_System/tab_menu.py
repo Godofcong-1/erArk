@@ -6,15 +6,17 @@
 选项卡类型说明：
 1. 主面板选项卡（active）：当前正在显示的主面板
 2. 系统面板类选项卡：所有满足前提条件的系统面板类指令
+3. 临时选项卡：非主面板显示时，自动添加的当前面板选项卡
 
 选项卡样式采用网页选项卡形式，当前选项卡高亮显示
 
 注意：
 - 系统面板类指令通过 web_category (InstructCategory.SYSTEM_PANEL) 判断，而非指令类型
 - 只有满足所有前提条件的指令才会显示，不满足则不出现（而非禁用）
+- 子面板模式下，其他选项卡会变灰且不可点击
 """
 
-from typing import List, Dict, Set, Any, Union
+from typing import List, Dict, Set, Any, Union, Optional
 from Script.Core import cache_control, game_type, constant
 from Script.Design import handle_premise
 
@@ -92,6 +94,7 @@ class TabMenu:
     选项卡包含：
     - 主面板作为当前激活的选项卡
     - 所有满足条件的系统面板类指令作为可切换的选项卡
+    - 子面板模式下，当前面板作为临时选项卡显示（如果不在已有选项卡中）
     """
 
     def __init__(self):
@@ -104,41 +107,74 @@ class TabMenu:
         获取所有面板类选项卡
         
         选项卡来源：
-        1. 主面板（始终存在，默认激活）
+        1. 主面板（始终存在）
         2. 所有满足前提条件的系统面板类指令
+        3. 子面板模式下，当前面板作为临时选项卡（如果不在已有选项卡中）
+        
+        子面板模式行为：
+        - 其他选项卡变灰（disabled: True）且不可点击
+        - 当前面板（临时或已有）亮起但也不可点击
         
         Returns:
         List[dict] -- 选项卡信息列表，每个元素包含：
             - id: 选项卡ID（主面板为 __main_panel__，其他为指令ID）
             - name: 选项卡显示名称
-            - type: 选项卡类型（"main" 或 "panel"）
-            - available: 是否可用
+            - type: 选项卡类型（"main", "panel", "temp"）
+            - available: 是否可用（子面板模式下其他选项卡为False）
             - active: 是否为当前激活的选项卡
+            - disabled: 是否禁用（变灰）
         """
         tabs = []
         
-        # 1. 添加主面板选项卡（始终存在，默认激活）
+        # 检查是否处于子面板模式
+        sub_panel_mode = getattr(cache, 'web_sub_panel_mode', False)
+        sub_panel_id = getattr(cache, 'web_sub_panel_id', None)
+        sub_panel_name = getattr(cache, 'web_sub_panel_name', '')
+        
+        # 1. 添加主面板选项卡（始终存在）
         main_tab = {
             "id": MAIN_PANEL_TAB_ID,
             "name": MAIN_PANEL_TAB_NAME,
             "type": "main",
-            "available": True,
-            "active": self._active_tab == MAIN_PANEL_TAB_ID,
+            "available": not sub_panel_mode,  # 子面板模式下不可用
+            "active": self._active_tab == MAIN_PANEL_TAB_ID and not sub_panel_mode,
+            "disabled": sub_panel_mode,  # 子面板模式下变灰
         }
         tabs.append(main_tab)
         
         # 2. 获取所有满足条件的系统面板类指令
         panel_instructs = self._get_available_system_panel_instructs()
         
+        # 记录是否已经找到当前子面板在已有选项卡中
+        found_sub_panel_in_tabs = False
+        
         for instruct_info in panel_instructs:
+            is_current_sub_panel = sub_panel_mode and instruct_info["id"] == sub_panel_id
+            if is_current_sub_panel:
+                found_sub_panel_in_tabs = True
+            
             tab = {
                 "id": instruct_info["id"],
                 "name": instruct_info["name"],
                 "type": "panel",
-                "available": instruct_info["available"],
-                "active": self._active_tab == instruct_info["id"],
+                # 子面板模式下：当前面板可用但不可点击（在前端处理），其他面板不可用
+                "available": not sub_panel_mode or is_current_sub_panel,
+                "active": is_current_sub_panel or (self._active_tab == instruct_info["id"] and not sub_panel_mode),
+                "disabled": sub_panel_mode and not is_current_sub_panel,  # 子面板模式下非当前面板变灰
             }
             tabs.append(tab)
+        
+        # 3. 如果处于子面板模式且当前面板不在已有选项卡中，添加临时选项卡
+        if sub_panel_mode and not found_sub_panel_in_tabs and sub_panel_id:
+            temp_tab = {
+                "id": sub_panel_id,
+                "name": sub_panel_name or sub_panel_id,
+                "type": "temp",  # 临时选项卡
+                "available": True,  # 可用但不可点击（在前端处理）
+                "active": True,  # 当前激活
+                "disabled": False,  # 不变灰（是当前面板）
+            }
+            tabs.append(temp_tab)
         
         return tabs
 
@@ -223,4 +259,41 @@ class TabMenu:
             "tabs": self.get_panel_tabs(),
             "active_tab": self._active_tab,
             "is_main_panel": self.is_main_panel_active(),
+            "sub_panel_mode": getattr(cache, 'web_sub_panel_mode', False),
         }
+
+
+def enter_sub_panel_mode(panel_id: str, panel_name: str = ""):
+    """
+    进入子面板模式
+    
+    在主界面内显示非主面板时调用，设置子面板模式的相关状态。
+    
+    Keyword arguments:
+    panel_id -- 子面板的指令ID
+    panel_name -- 子面板的名称（用于临时选项卡显示，默认使用panel_id）
+    """
+    cache.web_sub_panel_mode = True
+    cache.web_sub_panel_id = panel_id
+    cache.web_sub_panel_name = panel_name or panel_id
+
+
+def exit_sub_panel_mode():
+    """
+    退出子面板模式
+    
+    从子面板返回主面板时调用，清除子面板模式的相关状态。
+    """
+    cache.web_sub_panel_mode = False
+    cache.web_sub_panel_id = None
+    cache.web_sub_panel_name = ""
+
+
+def is_in_sub_panel_mode() -> bool:
+    """
+    检查是否处于子面板模式
+    
+    Returns:
+    bool -- 是否处于子面板模式
+    """
+    return getattr(cache, 'web_sub_panel_mode', False)

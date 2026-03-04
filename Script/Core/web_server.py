@@ -2130,7 +2130,11 @@ def update_game_state(elements, panel_id=None):
     panel_id (str): 当前面板ID，默认为None
     
     返回值类型：无
-    功能描述：更新游戏状态数据并通过WebSocket推送到前端
+    功能描述：更新游戏状态数据并通过WebSocket推送到前端。
+    
+    子面板模式说明：
+    当 cache.web_sub_panel_mode 为 True 时，表示当前正在主界面内显示子面板。
+    此时会额外添加场景信息栏、选项卡等数据，让前端能够保留这些元素。
     """
     global game_state
     
@@ -2176,12 +2180,80 @@ def update_game_state(elements, panel_id=None):
         
         # 更新按钮列表
         game_state["buttons"] = buttons
+        
+        # 子面板模式处理
+        sub_panel_mode = getattr(cache, 'web_sub_panel_mode', False)
+        game_state["sub_panel_mode"] = sub_panel_mode
+        
+        if sub_panel_mode:
+            # 获取子面板模式所需的数据
+            sub_panel_data = _get_sub_panel_mode_data()
+            game_state["sub_panel_data"] = sub_panel_data
     
     # 使用函数来发送更新
     _emit_game_state_update()
     
     # 日志记录，辅助调试
-    logging.debug(f"游戏状态已更新: {len(elements) if elements else 0} 个元素")
+    logging.debug(f"游戏状态已更新: {len(elements) if elements else 0} 个元素, 子面板模式: {sub_panel_mode}")
+
+
+def _get_sub_panel_mode_data():
+    """
+    获取子面板模式所需的数据
+    
+    返回值类型：dict
+    功能描述：返回子面板模式下需要保留显示的场景信息栏和选项卡数据
+    """
+    from Script.System.Web_Draw_System import TabMenu
+    from Script.Design import attr_text, game_time, handle_premise
+    from Script.Config import game_config
+    
+    data = {}
+    
+    # 获取场景信息栏数据
+    if hasattr(cache, 'character_data') and 0 in cache.character_data:
+        pl_character_data = cache.character_data[0]
+        
+        # 获取当前位置/场景名
+        from Script.Core import get_text
+        _ = get_text._
+        position_text = attr_text.get_scene_path_text(pl_character_data.position)
+        if handle_premise.handle_place_door_close(0):
+            position_text += _("(锁)")
+        scene_name = _("当前位置:") + position_text
+        
+        # 获取游戏时间信息
+        year_text = game_time.get_year_text()
+        month_text = game_time.get_month_text()
+        day_time_text = game_time.get_day_and_time_text()
+        week_day_text = game_time.get_week_day_text()
+        
+        # 获取时段信息
+        sun_time = game_time.get_sun_time(cache.game_time)
+        sun_time_config = game_config.config_sun_time[sun_time]
+        sun_time_text = sun_time_config.name
+        
+        # 判断是否是饭点
+        if handle_premise.handle_eat_time(0):
+            sun_time_text += _("(饭点)")
+        
+        # 判断是工作日还是休息日
+        is_work_day = game_time.judge_work_today(0)
+        work_rest_text = _("工作日") if is_work_day else _("休息")
+        
+        # 组合时间文本
+        time_text = f"{year_text} {month_text} {day_time_text} {week_day_text} {sun_time_text} {work_rest_text}"
+        
+        data["scene_info_bar"] = {
+            "scene_name": scene_name,
+            "game_time": time_text,
+        }
+    
+    # 获取选项卡数据（带禁用状态）
+    tab_menu = TabMenu()
+    data["panel_tabs"] = tab_menu.get_panel_tabs()
+    
+    return data
 
 def send_full_game_state():
     """

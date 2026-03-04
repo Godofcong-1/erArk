@@ -28,6 +28,58 @@ class PanelChangeException(Exception):
     pass
 
 
+def _handle_sub_panel_mode_on_panel_change(initial_panel_id, current_panel_id):
+    """
+    处理面板切换时的子面板模式
+    
+    当从主面板（IN_SCENE）切换到其他面板时，进入子面板模式。
+    当从其他面板切换回主面板时，退出子面板模式。
+    
+    Keyword arguments:
+    initial_panel_id -- 切换前的面板ID
+    current_panel_id -- 切换后的面板ID
+    """
+    from Script.System.Web_Draw_System import enter_sub_panel_mode, exit_sub_panel_mode
+    
+    # 检查是否是从主面板切换到其他面板
+    if initial_panel_id == constant.Panel.IN_SCENE and current_panel_id != constant.Panel.IN_SCENE:
+        # 进入子面板模式
+        # 清除当前绘制元素，避免主面板内容残留
+        if hasattr(cache, 'current_draw_elements'):
+            cache.current_draw_elements = []
+        if hasattr(cache, 'web_draw_history'):
+            cache.web_draw_history = []
+            cache.web_draw_history_line_total = 0
+        
+        # 获取子面板的ID和名称
+        panel_id, panel_name = _get_sub_panel_info(current_panel_id)
+        enter_sub_panel_mode(panel_id, panel_name)
+    
+    # 检查是否是从其他面板切换回主面板
+    elif initial_panel_id != constant.Panel.IN_SCENE and current_panel_id == constant.Panel.IN_SCENE:
+        exit_sub_panel_mode()
+
+
+def _get_sub_panel_info(panel_id):
+    """
+    根据面板ID获取子面板的指令ID和名称
+    
+    Keyword arguments:
+    panel_id -- 面板ID（constant.Panel 枚举值）
+    
+    Returns:
+    tuple -- (指令ID, 指令名称)
+    """
+    # 遍历所有指令，查找对应的面板ID
+    for instruct_id, stored_panel_id in constant.instruct_panel_id_data.items():
+        if stored_panel_id == panel_id:
+            panel_name = constant.handle_instruct_name_data.get(instruct_id, instruct_id)
+            return instruct_id, panel_name
+    
+    # 如果没找到，使用面板ID作为标识
+    return f"panel_{panel_id}", f"面板{panel_id}"
+
+
 def askfor_all(return_list: List[str]) -> str:
     """
     等待用户选择一个选项
@@ -41,9 +93,12 @@ def askfor_all(return_list: List[str]) -> str:
     特殊处理：
     - __WEB_REFRESH__ 信号会被特殊处理，用于处理面板切换
     - 当收到刷新信号时，检查面板ID是否改变，如果改变则抛出 PanelChangeException
+    - 从主面板切换到其他面板时，自动进入子面板模式
     
     在Web UI中，这变成等待用户通过API发送选择
     """
+    from Script.Core import constant
+    
     # 记录进入时的面板ID，用于检测面板切换
     initial_panel_id = getattr(cache, 'now_panel_id', None)
     
@@ -59,6 +114,8 @@ def askfor_all(return_list: List[str]) -> str:
         current_panel_id = getattr(cache, 'now_panel_id', None)
         if current_panel_id != initial_panel_id:
             # print(f"[askfor_all] 检测到面板切换：{initial_panel_id} -> {current_panel_id}")
+            # 从主面板切换到其他面板时，进入子面板模式
+            _handle_sub_panel_mode_on_panel_change(initial_panel_id, current_panel_id)
             raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
         
         # 检查是否有按钮点击响应
@@ -70,6 +127,8 @@ def askfor_all(return_list: List[str]) -> str:
                 current_panel_id = getattr(cache, 'now_panel_id', None)
                 if current_panel_id != initial_panel_id:
                     # print(f"[askfor_all] 刷新信号触发，检测到面板切换：{initial_panel_id} -> {current_panel_id}")
+                    # 从主面板切换到其他面板时，进入子面板模式
+                    _handle_sub_panel_mode_on_panel_change(initial_panel_id, current_panel_id)
                     raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
                 # 如果面板ID没有改变，但刷新信号在return_list中，正常处理
                 if response in return_list:
@@ -106,6 +165,8 @@ def askfor_all(return_list: List[str]) -> str:
                 current_panel_id = getattr(cache, 'now_panel_id', None)
                 if current_panel_id != initial_panel_id:
                     print(f"[askfor_all] 收到无效响应但面板已切换：{initial_panel_id} -> {current_panel_id}")
+                    # 从主面板切换到其他面板时，进入子面板模式
+                    _handle_sub_panel_mode_on_panel_change(initial_panel_id, current_panel_id)
                     raise PanelChangeException(f"面板从 {initial_panel_id} 切换到 {current_panel_id}")
                 # 确实是无效响应
                 io_init.era_print(response + "\n")

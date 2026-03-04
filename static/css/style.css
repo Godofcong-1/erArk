@@ -3245,3 +3245,60 @@ body {
     color: #c8e0ff;
     box-shadow: 0 0 6px rgba(100, 150, 255, 0.4);
 }
+
+/* ========== 子面板模式样式 ========== */
+/* 子面板模式：当从主面板进入其他面板时，保留场景信息栏和选项卡 */
+
+/* 子面板模式下的游戏内容容器：使用flex布局，约束内容在选项卡下方 */
+.game-content.sub-panel-mode {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    max-height: calc(80vh - 40px); /* 减去padding和边框，与.game-container配合 */
+    min-height: 0; /* 允许flex子元素收缩 */
+    overflow: hidden; /* 防止内容溢出 */
+}
+
+/* 子面板头部容器：包含场景信息栏和选项卡，固定在顶部 */
+.sub-panel-header {
+    flex-shrink: 0; /* 不收缩 */
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background-color: #1a1a24;
+    border-bottom: 1px solid #3a3a4a;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+/* 子面板内容容器：占据剩余空间，内部滚动 */
+.sub-panel-content {
+    flex: 1;
+    min-height: 0; /* 关键：允许flex子元素收缩，使overflow生效 */
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 10px;
+}
+
+/* 临时选项卡样式（当前活动的子面板） */
+.panel-tab-btn.temp-tab {
+    background-color: rgba(100, 150, 255, 0.2);
+    border-color: rgba(100, 150, 255, 0.6);
+    animation: pulse-glow 2s ease-in-out infinite;
+}
+
+.panel-tab-btn.temp-tab.active {
+    background-color: rgba(100, 150, 255, 0.35);
+    border-color: rgba(100, 150, 255, 0.9);
+    color: #ffd700;
+    box-shadow: 0 0 10px rgba(100, 150, 255, 0.5);
+}
+
+@keyframes pulse-glow {
+    0%, 100% {
+        box-shadow: 0 0 5px rgba(100, 150, 255, 0.3);
+    }
+    50% {
+        box-shadow: 0 0 15px rgba(100, 150, 255, 0.6);
+    }
+}
