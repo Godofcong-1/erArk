@@ -1118,6 +1118,90 @@
 - 阴茎大类仅在H模式下显示，这与该类指令的前提条件保持一致
 - 从任何子面板返回主界面时，交互选择状态都会被清除
 
+#### 3.6.9 交互类型面板悬浮预览模式（2026-03-04）
+- [x] 实现大类按钮的鼠标悬浮事件处理
+  - **功能描述**：鼠标悬浮到大类按钮上时，临时展开该大类的小类列表（纯前端预览，不通知后端）
+  - **修改文件**：`static/js/new_ui_interaction.js`
+- [x] 添加悬浮模式全局状态管理
+  - **新增变量**：
+    - `majorTypeClickSelected` - 记录是否有通过点击选中的大类
+    - `currentHoveredMajorType` - 当前悬浮展开的大类ID
+  - **新增函数**：
+    - `setMajorTypeClickSelected(selected)` - 设置点击选中状态
+    - `isMajorTypeClickSelected()` - 检查是否已点击选中
+    - `resetHoverModeState()` - 重置悬浮模式状态
+- [x] 实现悬浮展开辅助函数
+  - **新增函数**：`expandMajorTypePreview(list, majorType, allMajorTypes)`
+  - **功能**：在前端临时展开大类的小类列表，隐藏其他大类，不通知后端
+- [x] 实现悬浮收起辅助函数
+  - **新增函数**：`collapseHoverPreview(list)`
+  - **功能**：收起悬浮预览，恢复初始状态（显示所有大类，不展开小类）
+- [x] 修改点击事件处理逻辑
+  - **变更**：点击大类或小类时，设置 `majorTypeClickSelected = true`，切换为点击选中模式
+  - **变更**：只有在 `majorTypeClickSelected == true` 且点击已激活的大类时，才执行清空选择
+- [x] 修改 `clearInteractionSelection()` 函数
+  - **变更**：调用 `setMajorTypeClickSelected(false)` 重置点击选中状态
+  - **变更**：清除 `hover-active` CSS类
+- [x] 实现面板级别的悬浮状态保持机制（2026-03-04更新）
+  - **问题描述**：展开大类时布局变化导致按钮位置改变，鼠标仍在原位置会导致循环进入/退出
+  - **解决方案**：
+    1. 移除单个大类按钮的 `mouseleave` 事件中的收起逻辑
+    2. 移除小类列表的 `mouseleave` 事件
+    3. 在整个面板（panel）上添加 `mouseleave` 事件，统一处理收起
+    4. 大类按钮的 `mouseenter` 事件中，如果已有悬浮状态且是同一大类，不重复处理
+  - **新行为**：一旦进入悬浮预览状态，保持当前展开的大类，直到鼠标完全离开整个交互类型面板区域才收起
+- [x] 修复隐藏大类时面板大小变化导致的循环问题（2026-03-04更新）
+  - **问题描述**：`hidden-card` 类使用 `display: none` 隐藏元素，导致面板实际大小缩小，鼠标原本的位置可能已在面板外，触发 `mouseleave`
+  - **解决方案**：将 `hidden-card` 类从 `display: none` 改为 `visibility: hidden` + `opacity: 0` + `pointer-events: none`
+  - **修改文件**：`static/css/style.css`
+  - **效果**：隐藏的大类卡片仍然占据空间但不可见且不响应鼠标事件，面板大小保持不变
+- [x] 修复隐藏大类时卡片位置变化的问题（2026-03-04更新）
+  - **问题描述**：即使使用 `visibility: hidden` 保持元素占位，但 flexbox 布局仍可能导致可见卡片位置发生变化（居中或上下移动）
+  - **解决方案**：将大类卡片和小类列表改为绝对定位，位置固定不受其他卡片隐藏影响，同时保持整组卡片在容器中垂直居中
+  - **修改文件**：`static/js/new_ui_interaction.js`, `static/css/style.css`
+  - **具体实现**：
+    1. JS 修改：
+       - 在 `forEach` 循环中添加索引参数 `(majorType, index)`
+       - 给每个大类卡片设置 `dataset.index = index`
+       - 计算整组卡片的总高度：`totalHeight = count × 5.3125rem - 0.9375rem`
+       - 计算居中偏移：`centerOffset = (容器高度 47.8125rem - 总高度) / 2`
+       - 计算并设置每个大类卡片的位置：`style.top = centerOffset + index × 5.3125rem`
+       - 计算并设置小类列表的 `style.top`（在对应大类卡片下方，继承居中偏移）
+       - 在 `expandMajorTypePreview()` 中从目标卡片的 `style.top` 读取已计算好的位置（包含居中偏移）
+    2. CSS 修改：
+       - `.interaction-type-list` 改为 `position: relative`，移除 flex 布局，添加固定最小高度
+       - `.major-card` 添加 `position: absolute; left: 0;`，top 由 JS 设置
+       - `.interaction-minor-list` 改为 `position: absolute; left: 0.9375rem;`（保持左侧缩进），top 由 JS 设置
+  - **效果**：大类卡片在容器中垂直居中排列，位置固定，隐藏其他卡片时激活卡片不会移动位置
+- [x] 修复点击选中大类后小类列表位置错误的问题（2026-03-04更新）
+  - **问题描述**：在 `selectMajorType()` 函数中创建小类列表时，没有设置 `style.top`，导致小类列表默认定位到 `top: 0`（上对齐）
+  - **解决方案**：在 `selectMajorType()` 函数中创建小类列表后，从激活卡片的 `style.top` 读取位置，计算并设置小类列表的 `style.top`
+  - **修改文件**：`static/js/new_ui_interaction.js`
+  - **具体实现**：
+    - 从激活卡片读取位置：`activeCardTop = parseFloat(activeCard.style.top) || 0`
+    - 计算小类列表位置：`minorTopPosition = activeCardTop + CARD_HEIGHT + CARD_GAP`
+    - 设置位置：`minorContainer.style.top = minorTopPosition + 'rem'`
+  - **效果**：点击选中大类后，小类列表正确显示在对应大类卡片下方，位置与初始渲染时一致
+
+**实施说明（2026-03-04更新）**：
+- **悬浮模式行为**：
+  1. 鼠标移到大类按钮上 → 如果没有已点击选中的大类，则临时展开该大类（隐藏其他大类）
+  2. 在面板内移动鼠标到其他大类 → 直接切换到新大类的预览，无需先收起
+  3. 鼠标移出整个交互类型面板区域 → 如果没有已点击选中的大类，则恢复初始状态
+  4. 悬浮时点击大类或小类 → 转变为点击选中模式，保持展开状态
+- **点击模式行为**：
+  1. 点击大类/小类 → 通知后端，记忆状态，进入聚焦模式
+  2. 悬浮事件不再生效，保持当前选中状态
+  3. 点击空白区域 → 清空选择，恢复悬浮模式可用
+- **状态标记CSS类**：
+  - `hover-active` - 悬浮激活的大类卡片
+  - `hover-preview` - 悬浮产生的小类列表容器
+  - `hidden-card` - 悬浮预览时隐藏的其他大类卡片（使用 visibility 隐藏，保持占位）
+- **防循环机制**：
+  - 收起逻辑统一由面板的 `mouseleave` 处理，不在单个按钮/小类列表上处理
+  - 隐藏元素使用 `visibility: hidden` 而非 `display: none`，保持面板大小不变
+  - 避免了布局变化导致的 mouseenter/mouseleave 循环触发问题
+
 ### 3.7 对话框区域
 
 #### 3.7.1 HTML结构

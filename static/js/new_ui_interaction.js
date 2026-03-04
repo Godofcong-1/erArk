@@ -3,6 +3,40 @@
  * 包含头像面板、交互类型面板等组件
  */
 
+// ==================== 交互类型面板悬浮模式全局状态 ====================
+// 用于追踪大类按钮是否通过点击选中（区分悬浮临时展开和点击确认选中）
+let majorTypeClickSelected = false;
+// 当前悬浮展开的大类ID（用于悬浮模式）
+let currentHoveredMajorType = null;
+
+/**
+ * 重置悬浮模式状态
+ * 在点击选中时调用，清除悬浮相关的临时状态
+ */
+function resetHoverModeState() {
+    currentHoveredMajorType = null;
+}
+
+/**
+ * 设置点击选中状态
+ * @param {boolean} selected - 是否已点击选中
+ */
+function setMajorTypeClickSelected(selected) {
+    majorTypeClickSelected = selected;
+    if (selected) {
+        resetHoverModeState();
+    }
+}
+
+/**
+ * 检查是否已点击选中某个大类
+ * @returns {boolean} - 是否已点击选中
+ */
+function isMajorTypeClickSelected() {
+    return majorTypeClickSelected;
+}
+// ==================== 悬浮模式状态结束 ====================
+
 function createAvatarPanel(characters, minorDialogs = []) {
     // 保存数据到全局变量
     sceneCharactersData = characters || [];
@@ -361,16 +395,34 @@ function createInteractionTypePanel(types) {
         return m.selected === true || mId === targetId || String(m.id) === String(currentMajorType);
     });
     
-    majorTypes.forEach(majorType => {
+    // 计算大类卡片的垂直居中偏移
+    // 容器最小高度 47.8125rem，卡片总高度 = count * 5.3125 - 0.9375
+    const CARD_HEIGHT = 4.375; // rem
+    const CARD_GAP = 0.9375; // rem
+    const CARD_TOTAL_HEIGHT = CARD_HEIGHT + CARD_GAP; // 5.3125 rem
+    const CONTAINER_HEIGHT = 47.8125; // rem
+    const majorCount = majorTypes.length;
+    const totalCardsHeight = majorCount * CARD_TOTAL_HEIGHT - CARD_GAP; // 最后一个不需要间距
+    const centerOffset = (CONTAINER_HEIGHT - totalCardsHeight) / 2;
+    
+    majorTypes.forEach((majorType, index) => {
         // 1. 创建大类卡片
         const majorCard = document.createElement('div');
         majorCard.className = 'interaction-card major-card';
         majorCard.dataset.id = majorType.id; // Store ID for lookup
+        majorCard.dataset.index = index; // Store index for positioning
+        
+        // 设置固定位置（绝对定位），应用居中偏移
+        // 卡片高度 4.375rem + 间距 0.9375rem = 5.3125rem
+        const topPosition = centerOffset + index * CARD_TOTAL_HEIGHT;
+        majorCard.style.top = `${topPosition}rem`;
         
         // 兼容类型比较
         const isMajorActive = (currentMajor && String(currentMajor.id) === String(majorType.id));
         if (isMajorActive) {
             majorCard.classList.add('active');
+            // 如果有后端已选中的大类，标记为点击选中状态
+            setMajorTypeClickSelected(true);
         }
         
         majorCard.innerHTML = `
@@ -381,12 +433,34 @@ function createInteractionTypePanel(types) {
             </div>
         `;
         
+        // ========== 鼠标悬浮事件处理（悬浮预览模式） ==========
+        // 只在 mouseenter 时展开对应大类，不在单个按钮的 mouseleave 处理收起
+        // 收起逻辑统一由面板的 mouseleave 事件处理，避免布局变化导致的循环触发
+        majorCard.addEventListener('mouseenter', () => {
+            // 如果已经有点击选中的大类，则悬浮不生效
+            if (isMajorTypeClickSelected()) {
+                return;
+            }
+            // 如果当前已经是该大类的悬浮状态，不重复处理
+            if (currentHoveredMajorType === majorType.id) {
+                return;
+            }
+            // 记录当前悬浮的大类
+            currentHoveredMajorType = majorType.id;
+            // 在前端展开该大类的小类（纯前端预览，不通知后端）
+            expandMajorTypePreview(list, majorType, majorTypes);
+        });
+        // 注意：不在单个大类按钮的 mouseleave 中处理收起，避免布局变化导致的循环
+        // ========== 悬浮事件处理结束 ==========
+        
         majorCard.onclick = () => {
              // 显式检查 active 类，不依赖 isMajorActive 变量（闭包可能过期）
-             if (majorCard.classList.contains('active')) {
+             if (majorCard.classList.contains('active') && isMajorTypeClickSelected()) {
                 console.log('重复点击大类按钮，清空选择');
                 clearInteractionSelection();
              } else {
+                // 标记为点击选中状态
+                setMajorTypeClickSelected(true);
                 selectMajorType(majorType.id);
              }
         };
@@ -401,6 +475,11 @@ function createInteractionTypePanel(types) {
             if (minorTypes.length > 0) {
                  const minorContainer = document.createElement('div');
                  minorContainer.className = 'interaction-minor-list';
+                 
+                 // 设置小类列表的位置（在对应大类卡片下方）
+                 // top = 大类卡片的top + 大类卡片高度 + 间距
+                 const minorTopPosition = topPosition + CARD_HEIGHT + CARD_GAP;
+                 minorContainer.style.top = `${minorTopPosition}rem`;
                  
                  minorTypes.forEach(minorType => {
                       const minorCard = document.createElement('div');
@@ -455,8 +534,140 @@ function createInteractionTypePanel(types) {
         }, 100);
     }
     
+    // ========== 面板级别的 mouseleave 事件（统一处理悬浮预览收起） ==========
+    // 当鼠标完全离开整个交互类型面板时，才收起悬浮预览
+    // 这样可以避免布局变化导致的循环进入/退出问题
+    panel.addEventListener('mouseleave', (e) => {
+        // 如果已经有点击选中的大类，则悬浮不生效
+        if (isMajorTypeClickSelected()) {
+            return;
+        }
+        // 如果没有悬浮状态，不需要处理
+        if (currentHoveredMajorType === null) {
+            return;
+        }
+        // 清除悬浮状态
+        currentHoveredMajorType = null;
+        // 收起悬浮预览
+        collapseHoverPreview(list);
+    });
+    // ========== 面板级别事件处理结束 ==========
+    
     return panel;
 }
+
+// ==================== 悬浮预览模式辅助函数 ====================
+
+/**
+ * 在前端展开大类的小类预览（纯前端操作，不通知后端）
+ * 用于悬浮模式下的临时展开效果
+ * @param {HTMLElement} list - 交互类型列表容器
+ * @param {Object} majorType - 要展开的大类数据
+ * @param {Array} allMajorTypes - 所有大类数据列表
+ */
+function expandMajorTypePreview(list, majorType, allMajorTypes) {
+    if (!list || !majorType) return;
+    
+    // 1. 移除所有已存在的小类列表
+    const existingMinors = list.querySelectorAll('.interaction-minor-list');
+    existingMinors.forEach(el => el.remove());
+    
+    // 2. 更新大类卡片的active状态和hidden状态
+    const allMajorCards = list.querySelectorAll('.interaction-card.major-card');
+    let targetCard = null;
+    
+    allMajorCards.forEach(card => {
+        if (String(card.dataset.id) === String(majorType.id)) {
+            card.classList.add('active');
+            card.classList.add('hover-active');  // 添加悬浮激活标记
+            card.classList.remove('hidden-card');
+            targetCard = card;
+        } else {
+            card.classList.remove('active');
+            card.classList.remove('hover-active');
+            card.classList.add('hidden-card');  // 隐藏其他大类
+        }
+    });
+    
+    // 3. 如果有小类数据，渲染小类列表
+    const minorTypes = majorType.minor_types || [];
+    if (minorTypes.length > 0 && targetCard) {
+        const minorContainer = document.createElement('div');
+        minorContainer.className = 'interaction-minor-list hover-preview';  // 添加悬浮预览标记
+        // 注意：不在小类列表的 mouseleave 中处理收起，统一由面板的 mouseleave 处理
+        
+        // 计算小类列表的位置（在目标大类卡片下方）
+        // 从目标卡片的 style.top 读取已计算好的位置（包含居中偏移）
+        const targetTopPosition = parseFloat(targetCard.style.top) || 0;
+        // 小类列表位置 = 大类卡片top + 卡片高度 + 间距
+        const CARD_HEIGHT = 4.375; // rem
+        const CARD_GAP = 0.9375; // rem
+        const minorTopPosition = targetTopPosition + CARD_HEIGHT + CARD_GAP;
+        minorContainer.style.top = `${minorTopPosition}rem`;
+        
+        minorTypes.forEach(minorType => {
+            const minorCard = document.createElement('div');
+            minorCard.className = 'interaction-card minor-card';
+            minorCard.dataset.id = minorType.id;
+            
+            minorCard.innerHTML = `
+                <span class="name-cn">${minorType.name}</span>
+                <span class="name-en">${String(minorType.id).replace(/_/g, ' ').toUpperCase()}</span>
+            `;
+            
+            // 点击小类时，转变为点击选中模式
+            minorCard.onclick = (e) => {
+                e.stopPropagation();
+                // 标记为点击选中状态
+                setMajorTypeClickSelected(true);
+                // 先选择大类，再选择小类
+                selectMajorType(majorType.id);
+                // 短暂延迟后选择小类，确保大类选择完成
+                setTimeout(() => {
+                    selectMinorType(minorType.id);
+                }, 50);
+            };
+            
+            minorContainer.appendChild(minorCard);
+        });
+        
+        // 将小类列表添加到列表容器中（不再使用 after，因为是绝对定位）
+        list.appendChild(minorContainer);
+    }
+}
+
+/**
+ * 收起悬浮预览，恢复初始状态
+ * 用于鼠标离开大类区域时的恢复
+ * @param {HTMLElement} list - 交互类型列表容器
+ */
+function collapseHoverPreview(list) {
+    if (!list) return;
+    
+    // 1. 移除悬浮预览的小类列表
+    const hoverMinors = list.querySelectorAll('.interaction-minor-list.hover-preview');
+    hoverMinors.forEach(el => el.remove());
+    
+    // 2. 恢复所有大类卡片的显示状态
+    const allMajorCards = list.querySelectorAll('.interaction-card.major-card');
+    allMajorCards.forEach(card => {
+        card.classList.remove('active');
+        card.classList.remove('hover-active');
+        card.classList.remove('hidden-card');
+    });
+    
+    // 3. 清空浮现按钮
+    renderFloatingInstructButtons([]);
+    
+    // 4. 清空身体部位高亮
+    const bodyPartButtons = document.querySelectorAll('.body-part-button');
+    bodyPartButtons.forEach(button => {
+        button.classList.remove('available');
+        button.classList.add('unavailable');
+    });
+}
+
+// ==================== 悬浮预览模式辅助函数结束 ====================
 
 /**
  * 选择大类型
@@ -539,6 +750,14 @@ function updateMinorTypeButtons(minorTypes, rememberedMinorType, majorTypeId) {
     if (minorTypes && minorTypes.length > 0) {
          const minorContainer = document.createElement('div');
          minorContainer.className = 'interaction-minor-list';
+         
+         // 设置小类列表的位置（在激活的大类卡片下方）
+         // 从激活卡片的 style.top 读取已计算好的位置（包含居中偏移）
+         const activeCardTop = parseFloat(activeCard.style.top) || 0;
+         const CARD_HEIGHT = 4.375; // rem
+         const CARD_GAP = 0.9375; // rem
+         const minorTopPosition = activeCardTop + CARD_HEIGHT + CARD_GAP;
+         minorContainer.style.top = `${minorTopPosition}rem`;
          
          minorTypes.forEach(minorType => {
               const minorCard = document.createElement('div');
@@ -838,10 +1057,14 @@ function resetCharacterContainerTransform() {
 function clearInteractionSelection() {
     console.log('[DEBUG] clearInteractionSelection called');
     
+    // 重置点击选中状态（允许悬浮模式再次生效）
+    setMajorTypeClickSelected(false);
+    
     // 1. Reset Major Cards (New UI)
     const majorCards = document.querySelectorAll('.interaction-card.major-card');
     majorCards.forEach(card => {
         card.classList.remove('active');
+        card.classList.remove('hover-active');  // 清除悬浮激活标记
         card.classList.remove('hidden-card'); // Unhide cards (exit focus mode)
         card.style.display = ''; 
     });

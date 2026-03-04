@@ -1736,12 +1736,12 @@ body {
 
 .interaction-type-list {
     pointer-events: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 0.9375rem; /* 原15px */
+    position: relative; /* 为绝对定位的子元素提供定位上下文 */
     transform-style: preserve-3d;
     min-width: 8.75rem; /* 强制宽度，防止右侧点击失效 (原140px) */
     padding-right: 1.25rem; /* 预留右侧空间 (原20px) */
+    /* 预留足够高度容纳所有大类卡片（9个大类）*/
+    min-height: 47.8125rem; /* 9 * (4.375 + 0.9375) = 9 * 5.3125 = 47.8125rem */
 }
 
 /* 交互卡片通用样式 */
@@ -1792,11 +1792,25 @@ body {
 }
 
 .interaction-card.active.hidden-card {
-    display: flex !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
 }
 
+/* 大类卡片绝对定位，确保位置固定不受其他卡片隐藏影响 */
+.interaction-card.major-card {
+    position: absolute;
+    left: 0;
+    /* top 值通过 data-index 属性在 JS 中计算并设置 */
+    /* 计算公式：top = index * (卡片高度 4.375rem + 间距 0.9375rem) = index * 5.3125rem */
+}
+
+/* 悬浮预览模式下隐藏其他大类卡片 */
+/* 使用 visibility + opacity 而非 display:none，保持元素占位，避免面板大小变化导致的循环触发 */
 .interaction-card.hidden-card {
-    display: none;
+    visibility: hidden;
+    opacity: 0;
+    pointer-events: none;
 }
 
 .interaction-card .icon {
@@ -1881,9 +1895,9 @@ body {
 
 /* 小类样式 */
 .interaction-minor-list {
-    margin-top: 0.125rem; /* 原2px */
-    margin-bottom: 0.125rem; /* 原2px */
-    margin-left: 0.9375rem; /* 原15px */
+    position: absolute; /* 绝对定位，确保位置固定 */
+    left: 0.9375rem; /* 原 margin-left，现在用 left 实现左侧缩进 (原15px) */
+    /* top 值通过 JS 动态设置 */
     display: flex;
     flex-direction: column;
     gap: 0.25rem; /* 原4px */
