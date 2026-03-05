@@ -3445,6 +3445,37 @@ web_server 检测 web_sub_panel_mode → 附加 sub_panel_data
 - **修改文件**：
   - `static/game.js` - 修改 `scrollToBottom()` 函数，添加子面板模式支持
 
+#### 9.11.8 功能更新记录（2026年3月5日）
+
+**修复问题：子面板模式下行宽过大导致排版错乱**
+
+- **问题描述**：游戏配置中 `text_width = 190`，渲染元素时设置 `width: 190ch`，但子面板宽度小于190ch，导致文本溢出和排版错乱
+- **解决方案**：
+  - 为 `.sub-panel-content` 内的元素添加 `max-width: 100%` 限制
+  - 使用 `box-sizing: border-box` 确保padding不会导致额外溢出
+  - 按钮元素添加 `white-space: normal` 和 `word-wrap: break-word` 允许文本换行
+- **新增CSS规则**：
+  ```css
+  /* 子面板内容区域内的元素宽度限制 */
+  .sub-panel-content .text,
+  .sub-panel-content .text-inline,
+  .sub-panel-content .inline-container {
+      max-width: 100% !important;
+      box-sizing: border-box;
+  }
+  
+  /* 子面板内容区域内的按钮宽度限制 */
+  .sub-panel-content .button,
+  .sub-panel-content .inline-button {
+      max-width: 100% !important;
+      box-sizing: border-box;
+      white-space: normal;
+      word-wrap: break-word;
+  }
+  ```
+- **修改文件**：
+  - `static/css/style.css` - 在 `.sub-panel-content` 样式块后添加宽度限制规则
+
 ---
 
 ### 10.1 性能优化

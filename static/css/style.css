@@ -3294,6 +3294,23 @@ body {
     padding: 10px;
 }
 
+/* 子面板内容区域内的元素宽度限制，解决行宽过大导致排版错乱问题 */
+.sub-panel-content .text,
+.sub-panel-content .text-inline,
+.sub-panel-content .inline-container {
+    max-width: 100% !important;
+    box-sizing: border-box;
+}
+
+/* 子面板内容区域内的按钮宽度限制 */
+.sub-panel-content .button,
+.sub-panel-content .inline-button {
+    max-width: 100% !important;
+    box-sizing: border-box;
+    white-space: normal; /* 允许按钮文本换行 */
+    word-wrap: break-word;
+}
+
 /* 临时选项卡样式（当前活动的子面板） */
 .panel-tab-btn.temp-tab {
     background-color: rgba(100, 150, 255, 0.2);
