@@ -3432,6 +3432,19 @@ web_server 检测 web_sub_panel_mode → 附加 sub_panel_data
 - `static/game.js` - 子面板模式时为 `gameContent` 添加/移除 `.sub-panel-mode` 类
 - `static/css/style.css` - 完善 `.game-content.sub-panel-mode`、`.sub-panel-header`、`.sub-panel-content` 样式
 
+#### 9.11.7 功能更新记录（2026年3月5日）
+
+**新增功能：子面板模式下按钮点击后自动滚动到底部**
+
+- **功能描述**：在子面板模式下，每次点击按钮后，`.sub-panel-content` 内容区域自动滚动到底部，确保用户始终能看到最新内容
+- **实现方式**：
+  - 修改 `scrollToBottom()` 函数，添加子面板模式检测逻辑
+  - 检查 `game-container` 中是否存在 `.sub-panel-content` 元素
+  - 如果存在子面板内容容器，滚动该容器而非整个页面或 `game-container`
+  - 支持三种滚动模式：子面板模式、新UI模式、传统模式
+- **修改文件**：
+  - `static/game.js` - 修改 `scrollToBottom()` 函数，添加子面板模式支持
+
 ---
 
 ### 10.1 性能优化

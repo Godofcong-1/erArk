@@ -163,6 +163,7 @@
 - 前端为 `gameContent` 添加 `.sub-panel-mode` CSS 类
 - `.sub-panel-header` 固定在顶部，不随内容滚动
 - `.sub-panel-content` 占据剩余空间，内部可滚动
+- **自动滚动**（2026-03-05新增）：每次点击按钮后，`.sub-panel-content` 自动滚动到底部，通过 `scrollToBottom()` 函数实现子面板模式检测
 
 **相关代码路径**：
 - 缓存字段：`Script/Core/game_type.py` 中的 `web_sub_panel_mode`, `web_sub_panel_id`, `web_sub_panel_name`
