@@ -365,6 +365,10 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
         # 收集Web模式的数值变化数据
         collect_web_value_changes(change_data, character_id)
         
+        # Web模式下捕获结算文本用于文本回溯
+        if cache.web_mode and now_text.strip():
+            cache.web_settlement_texts.append(now_text)
+        
         return now_panel
 
 

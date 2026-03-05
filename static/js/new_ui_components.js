@@ -3,6 +3,343 @@
  * 包含玩家信息面板、对话框、附加信息面板等组件
  */
 
+/**
+ * 富文本颜色名称到CSS颜色值的映射
+ * 用于解析结算文本中的富文本标签
+ * 基于 data/csv/FontConfig.csv 中的定义
+ */
+const TEXT_HISTORY_COLORS = {
+    'hp_point': '#e15a5a',
+    'mp_point': '#70C070',
+    'sanity': '#7070C0',
+    'semen': '#fffacd',
+    'light_pink': '#ffb6c1',
+    'summer_green': '#96bbab',
+    'medium_spring_green': '#00ff7f',
+    'persian_pink': '#f77fbe',
+    'rose_pink': '#ff66cc',
+    'deep_pink': '#ff1493',
+    'crimson': '#dc143c',
+    'slate_blue': '#6a5acd',
+    'pale_cerulean': '#9bc4e2',
+    'little_dark_slate_blue': '#5550aa',
+    'light_sky_blue': '#87cefa',
+    'lavender_pink': '#fbaed2',
+    'standard': '#c8c8c8'
+};
+
+/**
+ * 解析结算文本中的富文本标签
+ * 将 <mp_point>气力　-15</mp_point> 转换为带颜色的HTML
+ * 
+ * @param {string} text - 原始文本，可能包含富文本标签
+ * @returns {string} 解析后的HTML字符串
+ */
+function parseSettlementRichText(text) {
+    if (!text) return '';
+    
+    // 正则匹配 <tagname>content</tagname> 格式的标签
+    // 同时处理角色名标签，如 <铃兰>铃兰</铃兰>
+    const tagPattern = /<([^>\/]+)>([^<]*)<\/\1>/g;
+    
+    // 存储所有匹配的位置和替换内容
+    const replacements = [];
+    let match;
+    
+    while ((match = tagPattern.exec(text)) !== null) {
+        const tagName = match[1];
+        const content = match[2];
+        const color = TEXT_HISTORY_COLORS[tagName];
+        
+        let replacement;
+        if (color) {
+            // 有对应颜色定义，应用颜色样式
+            replacement = `<span style="color: ${color}">${escapeHtml(content)}</span>`;
+        } else {
+            // 没有颜色定义（如角色名标签），保留原文本但转义
+            replacement = escapeHtml(content);
+        }
+        
+        replacements.push({
+            start: match.index,
+            end: match.index + match[0].length,
+            replacement: replacement
+        });
+    }
+    
+    // 如果没有匹配到任何标签，直接转义并处理换行符后返回
+    if (replacements.length === 0) {
+        let result = escapeHtml(text);
+        // 处理字面量 \n（反斜杠+字母n）
+        result = result.replace(/\\n/g, '<br>');
+        return result;
+    }
+    
+    // 构建结果字符串，保留换行符
+    let result = '';
+    let lastEnd = 0;
+    
+    for (const rep of replacements) {
+        // 添加标签之前的文本（转义）
+        if (rep.start > lastEnd) {
+            result += escapeHtml(text.substring(lastEnd, rep.start));
+        }
+        // 添加替换后的内容
+        result += rep.replacement;
+        lastEnd = rep.end;
+    }
+    
+    // 添加最后一个标签之后的文本
+    if (lastEnd < text.length) {
+        result += escapeHtml(text.substring(lastEnd));
+    }
+    
+    // 将换行符转换为 <br> 标签
+    // 处理字面量 \n（反斜杠+字母n，两个字符）和实际换行符
+    // 注意：/\\\\n/ 在正则中匹配字面量的反斜杠+n
+    result = result.replace(/\\n/g, '<br>');
+    
+    return result;
+}
+
+/**
+ * HTML转义函数
+ * @param {string} text - 需要转义的文本
+ * @returns {string} 转义后的文本
+ */
+function escapeHtml(text) {
+    if (!text) return '';
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * 创建文本回溯面板
+ * 显示历史文本缓存中的所有文本，保留原有格式和样式
+ * 
+ * @returns {HTMLElement} 文本回溯面板元素
+ */
+function createTextHistoryPanel() {
+    const panel = document.createElement('div');
+    panel.className = 'text-history-panel';
+    
+    // ========== 头部区域 ==========
+    const header = document.createElement('div');
+    header.className = 'text-history-header';
+    
+    const title = document.createElement('h2');
+    title.className = 'text-history-title';
+    title.textContent = '文本回溯';
+    header.appendChild(title);
+    
+    // 缓存条数信息
+    const countInfo = document.createElement('span');
+    countInfo.className = 'text-history-count';
+    countInfo.textContent = `共 ${textHistoryCache.length} 条记录`;
+    header.appendChild(countInfo);
+    
+    // 关闭按钮
+    const closeBtn = document.createElement('button');
+    closeBtn.className = 'text-history-close-btn';
+    closeBtn.textContent = '✕';
+    closeBtn.title = '关闭文本回溯';
+    closeBtn.onclick = () => exitTextHistoryMode();
+    header.appendChild(closeBtn);
+    
+    panel.appendChild(header);
+    
+    // ========== 内容区域 ==========
+    const content = document.createElement('div');
+    content.className = 'text-history-content';
+    
+    if (textHistoryCache.length === 0) {
+        // 无历史记录时显示提示
+        const emptyTip = document.createElement('div');
+        emptyTip.className = 'text-history-empty';
+        emptyTip.textContent = '暂无历史文本记录';
+        content.appendChild(emptyTip);
+    } else {
+        // 渲染所有历史文本（按时间顺序，最新的在底部）
+        let currentLine = document.createElement('div');
+        currentLine.className = 'text-history-line';
+        content.appendChild(currentLine);
+        
+        textHistoryCache.forEach((item, index) => {
+            const element = createTextHistoryElement(item);
+            if (element) {
+                // 如果是换行符类型，创建新行
+                if (item.type === 'line_feed' || (item.text && item.text === '\n')) {
+                    currentLine = document.createElement('div');
+                    currentLine.className = 'text-history-line';
+                    content.appendChild(currentLine);
+                } else {
+                    currentLine.appendChild(element);
+                    // 每条文本后添加换行符，避免不同条目挤在同一行
+                    const lineBreak = document.createElement('br');
+                    currentLine.appendChild(lineBreak);
+                }
+            }
+        });
+    }
+    
+    panel.appendChild(content);
+    
+    // 滚动到底部（显示最新的文本）
+    setTimeout(() => {
+        content.scrollTop = content.scrollHeight;
+    }, 0);
+    
+    return panel;
+}
+
+/**
+ * 创建单个历史文本元素
+ * 保留原有的字体样式和格式
+ * 
+ * @param {Object} item - 文本元素数据
+ * @returns {HTMLElement|null} 文本元素或null
+ */
+function createTextHistoryElement(item) {
+    if (!item || !item.type) return null;
+    
+    let element = null;
+    
+    switch (item.type) {
+        case 'text':
+            // 纯换行符跳过（由外层处理）
+            if (item.text === '\n') {
+                return null;
+            }
+            
+            element = document.createElement('span');
+            element.className = 'text-history-item text-history-text';
+            element.style.whiteSpace = 'pre-wrap';
+            element.textContent = item.text || '';
+            
+            // 应用字体样式(仅文字颜色，不使用背景色)
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                // 移除背景色，避免与面板背景不匹配
+                element.style.backgroundColor = 'transparent';
+            }
+            
+            // 应用对齐方式
+            if (item.align === 'center') {
+                element.style.textAlign = 'center';
+                element.style.display = 'block';
+            } else if (item.align === 'right') {
+                element.style.textAlign = 'right';
+                element.style.display = 'block';
+            }
+            break;
+            
+        case 'title':
+            element = document.createElement('h3');
+            element.className = 'text-history-item text-history-title-text';
+            element.textContent = item.text || '';
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = 'transparent';
+            }
+            break;
+            
+        case 'center_text':
+            element = document.createElement('div');
+            element.className = 'text-history-item text-history-center';
+            element.textContent = item.text || '';
+            element.style.textAlign = 'center';
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = 'transparent';
+            }
+            break;
+            
+        case 'right_text':
+            element = document.createElement('div');
+            element.className = 'text-history-item text-history-right';
+            element.textContent = item.text || '';
+            element.style.textAlign = 'right';
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = 'transparent';
+            }
+            break;
+            
+        case 'line_wait':
+            element = document.createElement('span');
+            element.className = 'text-history-item text-history-text';
+            element.style.whiteSpace = 'pre-wrap';
+            element.textContent = item.text || '';
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = 'transparent';
+            }
+            break;
+            
+        case 'line_feed':
+            // 换行由外层处理，这里返回null
+            return null;
+            
+        case 'dialog':
+            // 对话框文本，显示为带有特殊样式的块级元素
+            element = document.createElement('div');
+            element.className = 'text-history-item text-history-dialog';
+            element.style.whiteSpace = 'pre-wrap';
+            element.textContent = item.text || '';
+            // 对话框不应用字体背景色，保持对话框自身样式
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = '';
+            }
+            break;
+            
+        case 'value_change':
+            // 数值变化文本，显示为紧凑的行内元素
+            element = document.createElement('span');
+            element.className = 'text-history-item text-history-value-change';
+            element.textContent = item.text || '';
+            // 数值变化保持自身样式，不应用字体背景色
+            if (item.font && typeof applyFontStyle === 'function') {
+                element = applyFontStyle(element, item.font);
+                element.style.backgroundColor = '';
+            }
+            break;
+            
+        case 'settlement':
+            // 结算文本，显示为带有特殊样式的块级元素
+            // 需要解析富文本标签（如 <mp_point>气力 -15</mp_point>）
+            element = document.createElement('div');
+            element.className = 'text-history-item text-history-settlement';
+            element.style.whiteSpace = 'pre-wrap';
+            // 使用富文本解析函数处理标签
+            element.innerHTML = parseSettlementRichText(item.text || '');
+            // 注意：由于使用innerHTML，不再应用applyFontStyle（会覆盖内容）
+            break;
+            
+        case 'description':
+            // 行为描述文本，显示为带有特殊样式的块级元素（包括口上文本、移动描述等）
+            // 与结算文本相同，也需要解析富文本标签
+            element = document.createElement('div');
+            element.className = 'text-history-item text-history-description';
+            element.style.whiteSpace = 'pre-wrap';
+            // 使用富文本解析函数处理标签
+            element.innerHTML = parseSettlementRichText(item.text || '');
+            // 注意：由于使用innerHTML，不再应用applyFontStyle
+            break;
+            
+        default:
+            return null;
+    }
+    
+    // 添加工具提示
+    if (element && item.tooltip && typeof TooltipManager !== 'undefined') {
+        TooltipManager.attach(element, item.tooltip);
+    }
+    
+    return element;
+}
+
 function renderNewUIContent(container, gameState) {
     // 清空容器
     container.innerHTML = '';

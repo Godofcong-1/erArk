@@ -129,6 +129,15 @@ def append_current_draw_element(element: Dict[str, Any], record_history: bool = 
     功能描述：统一处理绘制元素的追加和历史维护
     """
     _ensure_current_draw_list()
+    # 如果是文本类的元素
+    if isinstance(element, dict) and element.get("type") in {"text", "line", "title"}:
+        string = element.get("text", "")
+        # 在行为循环期间记录文本到结算文本列表（用于文本回溯）
+        if hasattr(cache, 'web_text_recording_flag') and cache.web_text_recording_flag:
+            text_content = string.strip() if isinstance(string, str) else ""
+            # 排除空白和纯换行符
+            if text_content and text_content != "\n":
+                cache.web_settlement_texts.append(string)
     cache.current_draw_elements.append(element)
     elem_type = element.get("type")
     if elem_type in {"line_wait", "wait"}:

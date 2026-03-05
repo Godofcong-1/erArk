@@ -330,9 +330,12 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
                 now_draw.width = normal_config.config_normal.text_width
                 now_draw.text = now_talk_text
         
-        # ========== Web模式对话框绘制 ==========
-        # 在Web模式下，将口上文本发送到对话框区域显示，而不是直接打印到主界面
+        # ========== Web模式处理 ==========
+        # 在Web模式下，将口上文本发送到对话框区域显示，同时记录到文本回溯缓存
         if hasattr(cache, 'web_mode') and cache.web_mode:
+            # 将描述文本添加到Web结算文本缓存，用于文本回溯功能
+            if now_talk_text:
+                cache.web_settlement_texts.append(now_talk_text)
             from Script.System.Web_Draw_System.dialog_box import add_dialog_text
             # 获取说话者名称
             speaker_name = character_data.name

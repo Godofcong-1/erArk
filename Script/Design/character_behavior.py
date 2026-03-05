@@ -41,6 +41,9 @@ def init_character_behavior():
     """
     from Script.UI.Panel import achievement_panel
     from Script.System.Field_Commission_System import field_commission_function
+    # 开始记录文本（用于Web模式文本回溯）
+    if hasattr(cache, 'web_mode') and cache.web_mode:
+        cache.web_text_recording_flag = True
     cache.over_behavior_character = set()
     new_day_flag = True
     while 1:
@@ -82,6 +85,9 @@ def init_character_behavior():
     # 结算成就
     achievement_panel.achievement_flow(_("时停"))
     achievement_panel.achievement_flow(_("群交"))
+    # 结束记录文本（用于Web模式文本回溯）
+    if hasattr(cache, 'web_mode') and cache.web_mode:
+        cache.web_text_recording_flag = False
 
 
 def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_time: datetime.datetime):

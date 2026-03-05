@@ -2369,6 +2369,19 @@ def _emit_game_state_update():
     except Exception as e:
         logging.warning(f"获取对话框状态失败: {e}")
     
+    # 添加结算文本（用于文本回溯）
+    try:
+        if hasattr(cache, 'web_settlement_texts') and cache.web_settlement_texts:
+            local_state["settlement_texts"] = cache.web_settlement_texts.copy()
+            # 清空已发送的结算文本
+            cache.web_settlement_texts.clear()
+        else:
+            local_state["settlement_texts"] = []
+    except Exception as e:
+        logging.warning(f"获取结算文本失败: {e}")
+        local_state["settlement_texts"] = []
+
+    
     try:
         # 在一个单独的线程中发送，避免阻塞主线程
         socketio.emit('game_state_update', local_state)

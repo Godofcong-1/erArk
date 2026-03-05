@@ -12,7 +12,7 @@
 9. [地图渲染系统](#9-地图渲染系统)
 10. [文件结构规划](#10-文件结构规划)
 
-**最后更新**: 2026年3月4日
+**最后更新**: 2026年3月5日
 
 **重要架构说明**:
 - 采用单页面应用架构：所有面板统一使用 `index.html`
@@ -131,11 +131,12 @@
 
 #### 2.2.1 面板选项卡栏（顶部）
 - **位置**：场景信息栏下方，横向占满整个屏幕宽度
-- **内容**：主面板选项卡 + 所有满足条件的系统面板类指令选项卡
+- **内容**：主面板选项卡 + 所有满足条件的系统面板类指令选项卡 + 文本回溯选项卡
 - **样式**：网页选项卡样式（底部边框高亮表示激活状态）
 - **选项卡组成**：
   1. **主面板选项卡**：始终存在，默认激活，id 为 `__main_panel__`
   2. **系统面板类选项卡**：动态获取所有满足前提条件的系统面板类指令
+  3. **文本回溯选项卡**：位于选项卡栏最右侧，id 为 `__text_history__`，用于查看历史文本
 - **自适应规则**：选项卡数量较少时保持固定宽度；数量超过一排时自动换行显示
 
 #### 2.2.1.1 子面板模式
@@ -170,6 +171,77 @@
 - 服务器处理：`Script/Core/web_server.py` 中的 `_get_sub_panel_mode_data()`
 - 前端渲染：`static/game.js` 中的 `renderGameState()`
 - 样式定义：`static/css/style.css` 中的 `.sub-panel-mode`, `.sub-panel-header`, `.sub-panel-content`
+
+#### 2.2.1.2 文本回溯功能（2026-03-05新增）
+
+文本回溯是一个**纯前端功能**，允许玩家查看游戏过程中显示过的历史文本记录。
+
+- **功能说明**：
+  - 点击"文本回溯"选项卡后，主界面被文本回溯面板覆盖
+  - 显示最近200条文本记录，保留原有的字体样式和颜色
+  - 文本按时间顺序排列，最新的文本在底部
+  - 每条文本后自动添加换行符，避免不同条目挤在同一行
+  - 点击关闭按钮或其他选项卡可退出文本回溯模式
+
+- **缓存机制**：
+  - 前端维护一个最大长度为200的文本历史缓存数组 `textHistoryCache`
+  - 前端维护一个内容去重集合 `textHistoryContentSet`，用于基于内容的去重
+  - **缓存来源**（重要）：
+    - **行为循环期间的所有文本**：由后端 `io_web.append_current_draw_element()` 函数在行为循环期间自动收集
+      - 通过 `cache.web_text_recording_flag` 标志控制记录时机
+      - 在 `character_behavior.init_character_behavior()` 开头设置为 True，结束时设置为 False
+    - 行为描述文本和对话框文本：由后端 `talk.py` 的 `handle_talk_draw()` 函数统一收集
+    - 结算文本：由后端 `settle_behavior.py` 的 `handle_settle_behavior()` 收集
+    - 前端通过 `state.settlement_texts` 一次性接收所有文本
+  - 缓存支持的类型：
+    - 基础文本类型：`text`、`line_feed`、`title`、`center_text`、`right_text`、`line_wait`
+    - 结算文本：`settlement` - 行动结算时的完整输出文本（包括行为描述和数值变化）
+    - 行为描述文本：`description` - 保留类型用于兼容，与 `settlement` 使用相同的富文本解析
+  - **去重机制**：
+    - 使用 Set 集合存储已添加内容的 `type:text` 组合
+    - 基于内容去重，而非时间去重，彻底防止重复
+    - 当缓存移除旧条目时，同步从去重集合中移除，允许历史文本重现
+  - 超过上限时自动移除最旧的条目
+  - 缓存仅存在于内存中，页面刷新后清空
+
+- **样式处理**（2026-03-05更新）：
+  - **禁用背景色**：所有文本历史元素不显示字体配置中的背景色，避免与面板背景不匹配
+    - `applyFontStyle()` 调用后显式设置 `backgroundColor = 'transparent'`
+    - CSS使用 `background-color: transparent !important` 强制覆盖
+  - **行高设置**：使用 `line-height: 1.8` 确保多行文本完整显示
+
+- **结算文本富文本解析**：
+  - 结算文本和行为描述文本均包含富文本标签，如 `<mp_point>气力　-15</mp_point>`
+  - 前端使用 `parseSettlementRichText()` 函数解析这些标签
+  - `settlement` 和 `description` 类型都使用此函数进行解析
+  - 解析规则：根据标签名查找 `TEXT_HISTORY_COLORS` 颜色映射表
+  - 支持的颜色标签：`hp_point`(红)、`mp_point`(绿)、`sanity`(蓝)、`light_pink`(粉)、`medium_spring_green`(翠绿)、`rose_pink`(玫红)、`pale_cerulean`(淡蓝) 等
+  - 未定义颜色的标签（如角色名 `<铃兰>铃兰</铃兰>`）将去除标签保留文本内容
+  - **换行符处理**：无论文本是否包含富文本标签，都会处理字面量 `\n`（反斜杠+字母n），统一转换为 `<br>` 标签
+
+- **辅助函数**：
+  - `addToTextHistory(item)` - 添加文本元素到历史缓存，支持内容去重
+  - `addValueChangesToTextHistory(valueChanges, source)` - 添加数值变化文本到历史缓存（保留用于兼容）
+
+- **界面结构**：
+  - 头部区域：标题 + 记录条数 + 关闭按钮
+  - 内容区域：可滚动的历史文本列表，自动滚动到底部
+  - **面板高度**（2026-03-05更新）：与主界面高度一致，使用 `height: 80vh; max-height: 80vh`，超出内容通过滚动条查看
+
+- **界面切换机制**：
+  - 进入模式：隐藏游戏内容的所有子元素（保留DOM节点和事件监听器），添加文本历史面板
+  - 退出模式：移除文本历史面板，恢复被隐藏子元素的显示状态
+  - 采用显示/隐藏方式而非innerHTML保存/恢复，确保事件监听器不丢失
+
+- **显示限制**：
+  - 仅在主面板模式下显示，子面板模式下不显示文本回溯选项卡
+
+- **相关代码路径**：
+  - 缓存变量：`static/game.js` 中的 `textHistoryCache`、`isTextHistoryMode`
+  - 缓存函数：`static/game.js` 中的 `addToTextHistory()`、`addDialogToTextHistory()`、`addValueChangesToTextHistory()`
+  - 状态管理：`static/game.js` 中的 `enterTextHistoryMode()`、`exitTextHistoryMode()`
+  - 界面渲染：`static/js/new_ui_components.js` 中的 `createTextHistoryPanel()`、`createTextHistoryElement()`
+  - 样式定义：`static/css/style.css` 中的 `.text-history-*` 类（含 `.text-history-dialog`、`.text-history-value-change`）
 
 #### 2.2.2 玩家信息区（左上）
 - **位置**：选项卡栏下方左侧

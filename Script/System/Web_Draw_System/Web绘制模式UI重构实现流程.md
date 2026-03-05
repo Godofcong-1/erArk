@@ -10,7 +10,7 @@
 - `[x]` 已完成
 - `[!]` 遇到问题需调整
 
-**最后更新**：2026年3月4日
+**最后更新**：2026年3月5日
 
 ---
 
@@ -2097,6 +2097,359 @@
   - 在 `handle_switch_target()` 中遍历 `cache.web_value_changes`
   - 刷新该角色所有数值变化的时间戳为当前时间
   - 确保数值变化不会被2秒超时过滤，能正确显示在右侧信息栏
+
+### 6.3 文本回溯功能
+
+**阶段状态**：已完成
+**完成日期**：2026年3月5日
+
+#### 6.3.1 功能说明
+文本回溯是一个前端功能，允许玩家查看游戏过程中显示过的历史文本记录。
+
+#### 6.3.2 实现步骤
+
+##### 1. 前端文本历史缓存实现
+- [x] 在 `static/game.js` 中创建文本历史缓存变量 `textHistoryCache`
+- [x] 添加常量 `TEXT_HISTORY_MAX_LENGTH = 200`
+- [x] 实现 `addToTextHistory(item)` - 添加元素到历史缓存
+- [x] 实现 `getTextHistory()` - 获取历史缓存
+- [x] 实现 `clearTextHistory()` - 清空历史缓存
+- [x] 实现 `addDialogToTextHistory(dialogData)` - 添加对话框文本到历史缓存
+- [x] 实现 `addValueChangesToTextHistory(valueChanges, source)` - 添加数值变化文本到历史缓存
+
+**缓存范围**：所有文本类型元素（不含按钮）
+- 基础文本类型：`text`、`line_feed`、`title`、`center_text`、`right_text`、`line_wait`
+- 对话框文本：`dialog` - 行动指令的描述文本，显示在对话框区域
+- 数值变化文本：`value_change` - 行动的结算文本，显示在信息区的数值变化
+
+##### 2. 在渲染流程中添加缓存调用
+- [x] 修改 `renderGameState()` 函数
+- [x] 在处理 `text_content` 数组时，调用 `addToTextHistory(item)` 添加到缓存
+- [x] 在处理 `new_ui_container` 时，提取 `player_info.value_changes` 和 `target_info.value_changes` 并缓存
+- [x] 在所有 `updateDialogBox()` 调用后，调用 `addDialogToTextHistory()` 缓存对话框文本
+
+##### 3. 选项卡集成
+- [x] 修改 `createPanelTabsBar()` 函数
+- [x] 在后端选项卡之后添加"文本回溯"选项卡（ID: `__text_history__`）
+- [x] 仅在非子面板模式下显示
+
+##### 4. 界面切换状态管理
+- [x] 添加全局变量 `isTextHistoryMode` 和 `savedGameContent`
+- [x] 实现 `enterTextHistoryMode()` - 进入文本回溯模式
+- [x] 实现 `exitTextHistoryMode()` - 退出文本回溯模式
+- [x] 实现 `updateTextHistoryTabState(active)` - 更新选项卡激活状态
+
+##### 5. 选项卡点击处理
+- [x] 修改 `clickPanelTab()` 函数
+- [x] 文本回溯选项卡点击时调用 `enterTextHistoryMode()` 而非发送后端请求
+- [x] 点击其他选项卡时自动退出文本回溯模式
+
+##### 6. 文本回溯界面渲染
+- [x] 在 `static/js/new_ui_components.js` 中添加 `createTextHistoryPanel()` 函数
+- [x] 实现 `createTextHistoryElement(item)` 函数创建单个历史文本元素
+- [x] 界面结构：标题栏 + 记录条数 + 关闭按钮 + 可滚动内容区域
+- [x] 保留原有的字体样式、颜色等格式信息（使用 `applyFontStyle()`）
+- [x] 支持 `dialog` 类型元素的渲染（对话框文本）
+- [x] 支持 `value_change` 类型元素的渲染（数值变化文本）
+
+##### 7. CSS样式
+- [x] 在 `static/css/style.css` 中添加 `.text-history-tab` 选项卡样式
+- [x] 添加 `.text-history-panel` 面板主容器样式
+- [x] 添加 `.text-history-header` 头部样式
+- [x] 添加 `.text-history-content` 内容区域样式
+- [x] 添加 `.text-history-line`、`.text-history-item` 等文本项样式
+- [x] 添加 `.text-history-dialog` 对话框文本样式
+- [x] 添加 `.text-history-value-change` 数值变化文本样式
+
+##### 8. 文档更新
+- [x] 更新 `Web绘制模式UI重构说明文档.md` 中的面板选项卡栏章节
+- [x] 添加"2.2.1.2 文本回溯功能"子章节
+- [x] 更新本实现流程文档
+
+#### 6.3.3 相关文件
+- `static/game.js` - 缓存变量、状态管理、选项卡修改
+- `static/js/new_ui_components.js` - `createTextHistoryPanel()` 函数
+- `static/css/style.css` - `.text-history-*` 样式类
+
+#### 6.3.4 Bug修复记录
+
+##### 修复文本回溯按钮点击无效问题
+- **问题描述**：点击"文本回溯"选项卡后没有切换到回溯界面，界面无任何变化
+- **根本原因**：`enterTextHistoryMode()` 和 `exitTextHistoryMode()` 函数中使用了错误的元素ID
+  - 错误：`document.getElementById('gameContent')` （驼峰式）
+  - 正确：`document.getElementById('game-content')` （连字符式）
+- **修复方案**：将两个函数中的 `'gameContent'` 修正为 `'game-content'`，并添加元素存在性检查
+- **修改文件**：`static/game.js`
+
+##### 修复退出文本回溯后主界面按钮无法点击问题
+- **问题描述**：从文本回溯退出回主界面后，主界面的按钮全都变得无法点击
+- **根本原因**：使用 `innerHTML` 保存和恢复游戏内容会丢失所有事件监听器
+  - 原方案：`savedGameContent = gameContent.innerHTML` 保存，`gameContent.innerHTML = savedGameContent` 恢复
+  - 问题：`innerHTML` 只保存HTML字符串，事件监听器绑定在DOM节点上，恢复时创建的是新节点，原有事件丢失
+- **修复方案**：改用显示/隐藏方式替代innerHTML保存恢复
+  - 进入模式时：遍历 `gameContent` 子元素，设置 `display: none` 并标记 `data-hidden-by-text-history="true"`
+  - 退出模式时：移除文本历史面板，恢复被标记元素的显示状态
+  - 这样原有DOM节点及其事件监听器得以保留
+- **修改文件**：`static/game.js` 中的 `enterTextHistoryMode()` 和 `exitTextHistoryMode()` 函数
+- **代码变更**：
+  - 移除 `savedGameContent` 变量的使用
+  - `enterTextHistoryMode()`: 隐藏子元素而非清空innerHTML
+  - `exitTextHistoryMode()`: 恢复子元素显示而非设置innerHTML
+
+##### 修复文本回溯内条目挤在同一行问题
+- **问题描述**：文本回溯面板中，不同条的文本挤在同一行里，难以阅读
+- **根本原因**：`.text-history-line` CSS类使用了 `display: flex`，在flexbox布局中 `<br>` 换行元素不起作用
+- **修复方案**：
+  1. 在 `createTextHistoryPanel()` 的 forEach 循环中，每条文本元素后面添加 `<br>` 换行符
+  2. 将 `.text-history-line` 的 `display` 从 `flex` 改为 `block`，使 `<br>` 正常生效
+- **修改文件**：
+  - `static/js/new_ui_components.js` 中的 `createTextHistoryPanel()` 函数
+  - `static/css/style.css` 中的 `.text-history-line` 样式
+
+##### 扩展文本回溯缓存范围
+- **问题描述**：文本回溯内捕捉的文本有缺失，需要记录除了按钮以外的所有文本
+  - 缺失的文本包括：行动指令的描述文本（对话框区域）、行动的结算文本（数值变化）
+- **新增功能**：
+  1. 新增对话框文本缓存（`dialog` 类型）
+     - 当对话框显示文本时，将文本添加到历史缓存
+     - 格式为【说话者】文本内容
+     - 在 `updateDialogBox()` 调用后自动缓存
+  2. 新增数值变化文本缓存（`value_change` 类型）
+     - 捕捉 `player_info.value_changes` 和 `target_info.value_changes` 中的数值变化
+     - 格式为：字段名 +/-数值，多个变化用逗号分隔
+     - 在处理 `new_ui_container` 元素时自动提取并缓存
+- **新增辅助函数**：
+  - `addDialogToTextHistory(dialogData)` - 添加对话框文本到历史缓存
+  - `addValueChangesToTextHistory(valueChanges, source)` - 添加数值变化文本到历史缓存
+- **新增渲染支持**：
+  - `createTextHistoryElement()` 函数新增 `dialog` 和 `value_change` 类型的处理
+  - CSS新增 `.text-history-dialog` 和 `.text-history-value-change` 样式
+- **修改文件**：
+  - `static/game.js`
+    - 扩展 `addToTextHistory()` 支持的类型列表
+    - 新增 `addDialogToTextHistory()` 函数
+    - 新增 `addValueChangesToTextHistory()` 函数
+    - 在所有 `updateDialogBox()` 调用后添加对话框缓存
+    - 在处理 `new_ui_container` 时提取并缓存 value_changes
+  - `static/js/new_ui_components.js`
+    - `createTextHistoryElement()` 新增 `dialog` 和 `value_change` 类型处理
+  - `static/css/style.css`
+    - 新增 `.text-history-dialog` 样式（带左侧蓝色边框的块级元素）
+    - 新增 `.text-history-value-change` 样式（带浅黄色背景的紧凑行内元素）
+
+##### 修复文本回溯重复与结算文本缺失问题
+- **问题描述**：
+  1. 文本回溯内捕捉的文本出现重复，同一条文本被多次缓存
+  2. 结算文本缺失，`handle_settle_behavior()` 中的结算输出未被捕获
+- **原因分析**：
+  1. 重复原因：`addDialogToTextHistory()` 在4个地方被调用（dialog_advanced、dialogs_skipped、dialog_state_update事件 + renderGameState）
+  2. 缺失原因：Web模式下 `settle_behavior.py` 的结算面板不绘制（character_behavior.py:249-250）
+- **解决方案**：
+  1. **去重机制**：在 `addToTextHistory()` 中添加去重检查
+     - 检查最近5条记录中是否存在相同的 type + text + 时间间隔<500ms
+     - 若存在则跳过添加
+  2. **结算文本捕获**：
+     - 在 `handle_settle_behavior()` 返回前，将结算文本存入 `cache.web_settlement_texts`
+     - 在 `_emit_game_state_update()` 中将结算文本包含在状态更新中
+     - 前端 `renderGameState()` 处理 `state.settlement_texts` 并添加到历史缓存
+- **新增类型**：
+  - `settlement` - 结算文本类型，显示为带左侧蓝色边框的块级元素
+- **修改文件**：
+  - `static/game.js`
+    - `addToTextHistory()` 添加去重逻辑和 `settlement` 类型支持
+    - `renderGameState()` 添加 `state.settlement_texts` 处理
+  - `Script/Design/settle_behavior.py`
+    - `handle_settle_behavior()` 添加结算文本捕获到 `cache.web_settlement_texts`
+  - `Script/Core/game_type.py`
+    - `Cache` 类新增 `web_settlement_texts: List[str]` 字段
+  - `Script/Core/web_server.py`
+    - `_emit_game_state_update()` 添加 `settlement_texts` 字段
+  - `static/js/new_ui_components.js`
+    - `createTextHistoryElement()` 新增 `settlement` 类型处理
+  - `static/css/style.css`
+    - 新增 `.text-history-settlement` 样式（带左侧蓝绿色边框的块级元素）
+
+##### 从根本上修复文本回溯重复问题 + 结算文本富文本解析
+- **问题描述**：
+  1. 文本回溯重复问题依然存在，之前的去重机制不足以解决
+  2. 结算文本的富文本标签（如 `<mp_point>气力　-15</mp_point>`）没有被正确解析，显示为原始标签文本
+- **根本原因分析**：
+  1. **重复的根本原因**：之前在 `renderGameState()` 中对每个 `text_content` 元素都调用 `addToTextHistory(item)`
+     - `text_content` 是当前界面的渲染元素，每次状态更新都会重新发送
+     - 这导致同一个界面内容被多次添加到历史缓存
+  2. **对话框重复**：`renderGameState()` 末尾的 `addDialogToTextHistory(state.dialog)` 与 socket 事件中的调用重复
+  3. **富文本未解析**：`createTextHistoryElement()` 对 `settlement` 类型使用 `textContent` 直接赋值，不会解析HTML标签
+- **根本解决方案**：
+  1. **移除 text_content 的历史添加**：从 `renderGameState()` 中移除 `addToTextHistory(item)` 调用
+     - 历史文本应该从特定来源添加，而不是从渲染元素获取
+     - 对话框：socket 事件
+     - 结算文本：`state.settlement_texts`
+     - 数值变化：`new_ui_container` 中的 `value_changes`
+  2. **移除对话框重复添加**：从 `renderGameState()` 末尾移除 `addDialogToTextHistory(state.dialog)`
+  3. **添加富文本解析**：
+     - 新增 `parseSettlementRichText()` 函数解析结算文本中的富文本标签
+     - 新增 `TEXT_HISTORY_COLORS` 颜色映射表
+     - 新增 `escapeHtml()` 函数用于HTML转义
+     - `createTextHistoryElement()` 对 `settlement` 类型使用 `innerHTML = parseSettlementRichText(item.text)`
+- **修改文件**：
+  - `static/game.js`
+    - `renderGameState()` 移除 `addToTextHistory(item)` 调用（第891行附近）
+    - `renderGameState()` 移除 `addDialogToTextHistory(state.dialog)` 调用（第1121行附近）
+    - 保留对 `settlement_texts` 和 `value_changes` 的处理
+  - `static/js/new_ui_components.js`
+    - 新增 `TEXT_HISTORY_COLORS` 颜色映射表
+    - 新增 `parseSettlementRichText()` 富文本解析函数
+    - 新增 `escapeHtml()` HTML转义函数
+    - `createTextHistoryElement()` 对 `settlement` 类型使用富文本解析
+
+##### 修复文本回溯样式与布局问题
+- **问题描述**：
+  1. 行动的结算文本出现了重复，带格式的结算文本和不带格式的value_change文本都被绘制
+  2. 文本历史中的文字带有背景底色，与面板背景不匹配
+  3. 结算文本的行高过小，无法完整显示文本内容
+  4. 文本回溯面板的高度与主界面不一致
+- **原因分析**：
+  1. **结算文本重复**：`renderGameState()` 中同时处理了 `settlement_texts` 和 `new_ui_container.value_changes`，导致相同的数值变化信息被添加两次
+  2. **背景底色问题**：`applyFontStyle()` 函数会应用字体配置中的 `background` 属性到文本元素
+  3. **行高问题**：CSS中 `.text-history-item` 和 `.text-history-settlement` 的 `line-height` 设置为1.5，对于多行结算文本显示不够
+  4. **面板高度问题**：`.text-history-panel` 使用 `height: 100%` 和 `min-height: 500px`，没有与主界面 `.game-container` 的 `max-height: 80vh` 保持一致
+- **解决方案**：
+  1. **移除value_change重复缓存**：从 `renderGameState()` 中移除对 `new_ui_container.value_changes` 的 `addValueChangesToTextHistory()` 调用
+     - `settlement_texts` 已经包含了格式化的结算信息，无需再从 `value_changes` 提取
+  2. **禁用文本背景色**：
+     - 在 `createTextHistoryElement()` 中，所有调用 `applyFontStyle()` 后都显式设置 `element.style.backgroundColor = 'transparent'`
+     - 在CSS中为 `.text-history-item` 添加 `background-color: transparent !important`
+  3. **增加行高**：
+     - 将 `.text-history-item` 的 `line-height` 从 1.5 改为 1.8
+     - 将 `.text-history-settlement` 的 `line-height` 从 1.5 改为 1.8
+  4. **统一面板高度**：
+     - 将 `.text-history-panel` 的高度设置改为 `height: 80vh` 和 `max-height: 80vh`
+     - 移除 `min-height: 500px` 设置
+- **修改文件**：
+  - `static/game.js`
+    - 移除对 `new_ui_container.value_changes` 的 `addValueChangesToTextHistory()` 调用
+    - 更新注释说明历史记录来源
+  - `static/js/new_ui_components.js`
+    - `createTextHistoryElement()` 中所有文本类型在应用字体样式后移除背景色
+  - `static/css/style.css`
+    - `.text-history-item` 添加 `background-color: transparent !important` 和 `line-height: 1.8`
+    - `.text-history-settlement` 改为 `line-height: 1.8`
+    - `.text-history-panel` 改为 `height: 80vh; max-height: 80vh`，移除 `min-height`
+
+##### 新增行为描述文本缓存功能
+- **问题描述**：指令行动的描述文本（如角色移动文本"凯尔希打算前往门诊室"、委托完成文本等）没有在文本回溯中显示
+- **原因分析**：
+  1. 这些文本通过 `draw.NormalDraw().draw()` → `io_web.era_print()` 绘制到主界面
+  2. 之前移除了从 `text_content` 添加到历史缓存的代码（为避免重复），导致这些描述文本也不再被缓存
+  3. 这些文本不属于对话框文本也不属于结算文本，没有被现有的缓存机制覆盖
+- **解决方案**：创建独立的行为描述文本缓存机制
+  1. **后端缓存**：在 `game_type.Cache` 中新增 `web_description_texts: List[str]` 字段
+  2. **收集逻辑**：在 `io_web.era_print()` 中将非空文本添加到 `web_description_texts` 缓存
+  3. **发送机制**：在 `web_server._emit_game_state_update()` 中发送 `description_texts` 字段
+  4. **前端处理**：在 `game.js` 的 `renderGameState()` 中处理 `state.description_texts`，添加到 `textHistoryCache`
+  5. **渲染支持**：在 `createTextHistoryElement()` 中新增 `description` 类型处理
+  6. **样式定义**：新增 `.text-history-description` CSS 样式
+- **新增类型**：
+  - `description` - 行为描述文本类型，显示为带左侧灰色边框的块级元素
+- **修改文件**：
+  - `Script/Core/game_type.py`
+    - `Cache` 类新增 `web_description_texts: List[str]` 字段
+  - `Script/Core/io_web.py`
+    - `era_print()` 添加描述文本收集逻辑
+  - `Script/Core/web_server.py`
+    - `_emit_game_state_update()` 添加 `description_texts` 字段
+  - `static/game.js`
+    - `renderGameState()` 添加 `state.description_texts` 处理
+  - `static/js/new_ui_components.js`
+    - `createTextHistoryElement()` 新增 `description` 类型处理
+  - `static/css/style.css`
+    - 新增 `.text-history-description` 样式（带左侧灰色边框的块级元素）
+
+##### 修复行为描述文本仍未显示的问题
+- **问题描述**：移动描述文本（如"凯尔希打算前往门诊室"）仍然没有在文本回溯中显示
+- **原因分析**：
+  1. 之前的方案通过后端 `io_web.era_print()` 收集描述文本到 `cache.web_description_texts`
+  2. 但存在时序问题：描述文本在 `era_print()` 中收集后，状态更新 `_emit_game_state_update()` 可能在此之前或之后触发
+  3. 状态更新时会复制并清空缓存，导致收集的文本可能在下一次状态更新才被发送，或者已被清空丢失
+  4. 特别是这些描述文本实际上已经在 `text_content` 中了，本可以直接从中提取
+- **解决方案**：改用前端直接从 `text_content` 提取描述文本
+  1. **去重机制重构**：
+     - 新增 `textHistoryContentSet` (Set) 用于基于内容的去重
+     - 使用 `type:text` 组合作为唯一标识
+     - 去除时间限制（500ms），完全基于内容去重
+     - 当缓存移除旧条目时，同步从去重集合删除对应的 key
+  2. **从 text_content 提取描述文本**：
+     - 在 `renderGameState()` 的 `text_content.forEach()` 循环中
+     - 对于 `text` 类型的非空文本，添加到历史缓存（类型为 `description`）
+     - 去重机制保证即使每次状态更新重复发送，也不会重复添加
+  3. **保留后端收集逻辑**（兼容）：
+     - `io_web.era_print()` 中的 `web_description_texts` 收集逻辑保留
+     - 作为备选机制，前端的内容去重会自动处理重复
+- **修改文件**：
+  - `static/game.js`
+    - 新增 `textHistoryContentSet` 变量
+    - `addToTextHistory()` 改用基于内容的去重逻辑
+    - `renderGameState()` 中添加从 `text_content` 提取 `text` 类型元素的逻辑
+    - 缓存移除时同步更新去重集合
+
+##### 重构文本回溯收集机制
+- **问题描述**：之前的方案从 `text_content` 或 `io_web.era_print()` 收集描述文本，会导致收集到不需要的文本，且对话框文本被重复记录
+- **解决方案**：统一在 `talk.py` 的 `handle_talk_draw()` 函数中收集文本
+  1. **后端收集逻辑**：
+     - 在 `handle_talk_draw()` 中捕获最终输出的 `now_talk_text`
+     - 存入 `cache.web_settlement_texts`，与数值变化结算文本使用同一个变量
+     - 该文本已包含对话框内容，无需单独记录对话框
+  2. **移除冗余逻辑**：
+     - 移除 `io_web.era_print()` 中的 `web_description_texts` 收集代码
+     - 移除 `game_type.Cache` 中的 `web_description_texts` 字段
+     - 移除前端从 `text_content` 提取文本的逻辑
+     - 移除前端 `addDialogToTextHistory()` 函数及其调用
+     - 移除前端对 `description_texts` 的处理
+  3. **富文本支持**：
+     - `description` 类型与 `settlement` 类型一样使用 `parseSettlementRichText()` 解析
+     - 保持原有的字体颜色和行高设置
+- **修改文件**：
+  - `Script/Design/talk.py`
+    - `handle_talk_draw()` 中添加 `now_talk_text` 捕获到 `cache.web_settlement_texts`
+  - `Script/Core/io_web.py`
+    - 移除 `era_print()` 中的 `web_description_texts` 收集代码
+  - `Script/Core/game_type.py`
+    - 移除 `web_description_texts` 字段
+    - 更新 `web_settlement_texts` 字段注释
+  - `static/game.js`
+    - 移除 `addDialogToTextHistory()` 函数
+    - 移除从 `text_content` 提取文本的逻辑
+    - 移除 `description_texts` 处理代码
+    - 更新 socket 事件回调，不再调用 `addDialogToTextHistory`
+  - `static/js/new_ui_components.js`
+    - `description` 类型改用 `parseSettlementRichText()` 解析，与 `settlement` 一致
+
+##### 修复文本回溯中换行符显示问题
+- **问题描述**：文本回溯中的描述文本，换行符 `\n` 没有被正确渲染为换行，而是直接显示为字面量字符串
+- **原因分析**：`parseSettlementRichText()` 函数在没有匹配到富文本标签时会直接 `return escapeHtml(text)`，跳过了后续的换行符替换逻辑
+- **解决方案**：确保无论是否有富文本标签，换行符都能被正确处理
+  - 在无标签分支中也添加换行符替换逻辑
+  - 使用 `/\\n/g` 正则匹配字面量的反斜杠+字母n
+- **修改文件**：
+  - `static/js/new_ui_components.js`
+    - `parseSettlementRichText()` 在无标签分支中添加 `result.replace(/\\n/g, '<br>')` 处理
+
+##### 新增行为循环期间文本记录功能
+- **功能描述**：在角色行为循环期间，自动记录所有通过 `era_print()` 输出的文本，用于文本回溯显示
+- **实现方案**：
+  1. **添加标志字段**：在 `game_type.Cache` 中新增 `web_text_recording_flag` 布尔字段
+  2. **设置标志时机**：
+     - 在 `character_behavior.init_character_behavior()` 函数开头设置 `web_text_recording_flag = True`
+     - 在该函数结束时设置 `web_text_recording_flag = False`
+  3. **记录逻辑**：在 `io_web.append_current_draw_element()` 中检查标志，若为 True 则将非空文本添加到 `cache.web_settlement_texts`
+- **修改文件**：
+  - `Script/Core/game_type.py`
+    - `Cache` 类新增 `web_text_recording_flag: bool` 字段，默认为 False
+  - `Script/Core/io_web.py`
+    - `append_current_draw_element()` 函数添加条件记录逻辑：检查 `web_text_recording_flag`，记录非空文本到 `web_settlement_texts`
+  - `Script/Design/character_behavior.py`
+    - `init_character_behavior()` 函数开头设置 `cache.web_text_recording_flag = True`
+    - `init_character_behavior()` 函数结尾设置 `cache.web_text_recording_flag = False`
 
 ---
 
