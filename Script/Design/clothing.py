@@ -344,7 +344,7 @@ def pl_get_chara_pan(character_id: int):
             if handle_premise.handle_unconscious_flag_ge_1(character_id):
                 character_data.cloth.stolen_panties_in_unconscious = True
             # 绘制信息
-            now_draw = draw.WaitDraw()
+            now_draw = draw.NormalDraw()
             now_draw.width = window_width
             now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(character_data.name, TPanName)
             now_draw.draw()
@@ -377,7 +377,7 @@ def pl_get_chara_socks(character_id: int):
             if handle_premise.handle_unconscious_flag_ge_1(character_id):
                 character_data.cloth.stolen_socks_in_unconscious = True
             # 绘制信息
-            now_draw = draw.WaitDraw()
+            now_draw = draw.NormalDraw()
             now_draw.width = window_width
             now_draw.text = _("\n获得了{0}的{1}，可在藏品馆里纳入收藏\n").format(character_data.name, TSocName)
             now_draw.draw()

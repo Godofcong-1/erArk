@@ -217,7 +217,11 @@ def handle_get_t_pan(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     clothing.pl_get_chara_pan(character_data.target_character_id)
-
+    # 绘制一个空白的等待信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n"
+    now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_T_SOCKS)
 def handle_get_t_sock(
@@ -238,7 +242,11 @@ def handle_get_t_sock(
         return
     character_data: game_type.Character = cache.character_data[character_id]
     clothing.pl_get_chara_socks(character_data.target_character_id)
-
+    # 绘制一个空白的等待信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n"
+    now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SCENE_T_PAN)
 def handle_get_scene_t_pan(
@@ -265,7 +273,11 @@ def handle_get_scene_t_pan(
         # 遍历非玩家的角色
         if chara_id > 0:
             clothing.pl_get_chara_pan(chara_id)
-
+    # 绘制一个空白的等待信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n"
+    now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.GET_SCENE_T_SOCKS)
 def handle_get_scene_t_socks(
@@ -292,7 +304,11 @@ def handle_get_scene_t_socks(
         # 遍历非玩家的角色
         if chara_id > 0:
             clothing.pl_get_chara_socks(chara_id)
-
+    # 绘制一个空白的等待信息
+    now_draw = draw.WaitDraw()
+    now_draw.width = window_width
+    now_draw.text = "\n"
+    now_draw.draw()
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.SELF_CLOTH_BACK)
 def handle_self_cloth_back(
