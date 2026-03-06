@@ -1900,7 +1900,9 @@ def handle_time_stop_on(
     now_time -- 结算的时间
     """
     cache.time_stop_mode = True
-    for chara_id in cache.npc_id_got:
+    target_chara_set = cache.npc_id_got.copy()
+    target_chara_set.add(0)
+    for chara_id in target_chara_set:
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 3
         handle_premise.settle_chara_unnormal_flag(chara_id, 6)
@@ -1926,7 +1928,9 @@ def handle_time_stop_off(
     now_time -- 结算的时间
     """
     cache.time_stop_mode = False
-    for chara_id in cache.npc_id_got:
+    target_chara_set = cache.npc_id_got.copy()
+    target_chara_set.add(0)
+    for chara_id in target_chara_set:
         chara_data = cache.character_data[chara_id]
         chara_data.sp_flag.unconscious_h = 0
         handle_premise.settle_chara_unnormal_flag(chara_id, 6)
