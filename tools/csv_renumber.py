@@ -113,7 +113,13 @@ def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
         description="从指定行开始将 CSV 指定列重编号（写回原文件，默认生成 .bak 备份）",
     )
-    parser.add_argument("csv", type=str, help="CSV 文件路径")
+    parser.add_argument(
+        "--csv",
+        type=str,
+        default=".github\\prompts\\AI文本生成工作流\\生成完待处理数据.csv",
+        help="CSV 文件路径"
+        )
+
     parser.add_argument("start", type=int, help="起始编号（起始行写入该值，后续行逐行+1）")
 
     parser.add_argument(
