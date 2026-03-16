@@ -132,7 +132,7 @@ class Make_food_Panel:
             now_draw.draw()
             food_name_list = list(
                 cooking.get_cook_from_makefood_data_by_food_type(self.now_panel).items()
-            )
+            )[::-1]
             # 将调味增加进去
             food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
             
@@ -161,7 +161,7 @@ class Make_food_Panel:
 
         food_name_list = list(
             cooking.get_cook_from_makefood_data_by_food_type(self.now_panel).items()
-        )
+        )[::-1]
         # 将调味增加进去
         food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
 
