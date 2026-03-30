@@ -23,6 +23,66 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
+def normalize_single_character_id(raw_value, default: int = 0) -> int:
+    """
+    将旧存档中的单角色id字段归一化为int
+    Keyword arguments:
+    raw_value -- 原始字段值，可能是int/list/set等旧格式
+    default -- 无法识别时使用的默认值
+    Return arguments:
+    int -- 归一化后的角色id
+    """
+    if isinstance(raw_value, int):
+        return raw_value
+
+    if isinstance(raw_value, (list, tuple, set)):
+        for item in raw_value:
+            normalized_id = normalize_single_character_id(item, default)
+            if normalized_id != default:
+                return normalized_id
+        return default
+
+    if isinstance(raw_value, dict):
+        for item in raw_value.values():
+            normalized_id = normalize_single_character_id(item, default)
+            if normalized_id != default:
+                return normalized_id
+        for item in raw_value.keys():
+            normalized_id = normalize_single_character_id(item, default)
+            if normalized_id != default:
+                return normalized_id
+        return default
+
+    try:
+        return int(raw_value)
+    except (TypeError, ValueError):
+        return default
+
+
+def normalize_line_chara_id_data(line_data, chara_index: int, min_length: int) -> list:
+    """
+    将旧存档中的产线/招募线数据归一化为标准列表结构
+    Keyword arguments:
+    line_data -- 原始线体数据
+    chara_index -- 主角色id所在下标
+    min_length -- 最低需要补齐的长度
+    Return arguments:
+    list -- 归一化后的线体数据
+    """
+    if isinstance(line_data, tuple):
+        line_data = list(line_data)
+    elif not isinstance(line_data, list):
+        line_data = [0] * min_length
+    else:
+        line_data = line_data.copy()
+
+    while len(line_data) < min_length:
+        line_data.append(0)
+
+    line_data[chara_index] = normalize_single_character_id(line_data[chara_index], 0)
+    return line_data
+
+
 def get_save_dir_path(save_id: str) -> str:
     """
     按存档id获取存档所在系统路径
@@ -451,7 +511,9 @@ def migrate_old_save_data(loaded_dict) -> int:
         # assembly_line (Dict[int, List])
         if hasattr(ri, 'assembly_line'):
             for line_id, line_data in ri.assembly_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.assembly_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
         
         # production_worker_ids
@@ -468,11 +530,14 @@ def migrate_old_save_data(loaded_dict) -> int:
         
         # invite_visitor
         if hasattr(ri, 'invite_visitor') and ri.invite_visitor:
+            ri.invite_visitor[0] = normalize_single_character_id(ri.invite_visitor[0], 0)
             ri.invite_visitor[0] = old_to_new_id.get(ri.invite_visitor[0], ri.invite_visitor[0])
         
         # diplomat_of_country (Dict[int, List])
         if hasattr(ri, 'diplomat_of_country'):
             for country_id, data in ri.diplomat_of_country.items():
+                if len(data) > 0:
+                    data[0] = normalize_single_character_id(data[0], 0)
                 if len(data) > 0 and data[0] != 0:
                     data[0] = old_to_new_id.get(data[0], data[0])
         
@@ -485,7 +550,9 @@ def migrate_old_save_data(loaded_dict) -> int:
         # herb_garden_line (Dict[int, List])
         if hasattr(ri, 'herb_garden_line'):
             for line_id, line_data in ri.herb_garden_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.herb_garden_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
         
         # herb_garden_operator_ids
@@ -495,7 +562,9 @@ def migrate_old_save_data(loaded_dict) -> int:
         # green_house_line (Dict[int, List])
         if hasattr(ri, 'green_house_line'):
             for line_id, line_data in ri.green_house_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.green_house_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id.get(line_data[1], line_data[1])
         
         # green_house_operator_ids
@@ -504,6 +573,7 @@ def migrate_old_save_data(loaded_dict) -> int:
         
         # current_warden_id
         if hasattr(ri, 'current_warden_id') and ri.current_warden_id != 0:
+            ri.current_warden_id = normalize_single_character_id(ri.current_warden_id, 0)
             ri.current_warden_id = old_to_new_id.get(ri.current_warden_id, ri.current_warden_id)
         
         # current_prisoners (Dict[int, List])
@@ -560,7 +630,9 @@ def migrate_old_save_data(loaded_dict) -> int:
         # recruit_line (Dict[int, List]) - 招募线id:[0进度, 1策略id, 2主招聘专员id, 3效率]
         if hasattr(ri, 'recruit_line'):
             for line_id, line_data in ri.recruit_line.items():
-                if len(line_data) > 2 and line_data[2] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 2, 4)
+                ri.recruit_line[line_id] = line_data
+                if line_data[2] != 0:
                     line_data[2] = old_to_new_id.get(line_data[2], line_data[2])
         
         # all_work_npc_set (Dict[int, set]) - 工作id:干员id集合
@@ -1115,7 +1187,9 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         # assembly_line
         if hasattr(ri, 'assembly_line') and ri.assembly_line:
             for line_id, line_data in ri.assembly_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.assembly_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id_map.get(line_data[1], line_data[1])
         
         # production_worker_ids
@@ -1131,11 +1205,14 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         
         # invite_visitor
         if hasattr(ri, 'invite_visitor') and ri.invite_visitor:
+            ri.invite_visitor[0] = normalize_single_character_id(ri.invite_visitor[0], 0)
             ri.invite_visitor[0] = old_to_new_id_map.get(ri.invite_visitor[0], ri.invite_visitor[0])
         
         # diplomat_of_country
         if hasattr(ri, 'diplomat_of_country') and ri.diplomat_of_country:
             for country_id, data in ri.diplomat_of_country.items():
+                if len(data) > 0:
+                    data[0] = normalize_single_character_id(data[0], 0)
                 if len(data) > 0 and data[0] != 0:
                     data[0] = old_to_new_id_map.get(data[0], data[0])
         
@@ -1148,7 +1225,9 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         # herb_garden_line
         if hasattr(ri, 'herb_garden_line') and ri.herb_garden_line:
             for line_id, line_data in ri.herb_garden_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.herb_garden_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id_map.get(line_data[1], line_data[1])
         
         # herb_garden_operator_ids
@@ -1158,7 +1237,9 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         # green_house_line
         if hasattr(ri, 'green_house_line') and ri.green_house_line:
             for line_id, line_data in ri.green_house_line.items():
-                if len(line_data) > 1 and line_data[1] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 1, 5)
+                ri.green_house_line[line_id] = line_data
+                if line_data[1] != 0:
                     line_data[1] = old_to_new_id_map.get(line_data[1], line_data[1])
         
         # green_house_operator_ids
@@ -1167,6 +1248,7 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         
         # current_warden_id
         if hasattr(ri, 'current_warden_id') and ri.current_warden_id != 0:
+            ri.current_warden_id = normalize_single_character_id(ri.current_warden_id, 0)
             ri.current_warden_id = old_to_new_id_map.get(ri.current_warden_id, ri.current_warden_id)
         
         # current_prisoners
@@ -1229,7 +1311,9 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         # recruit_line
         if hasattr(ri, 'recruit_line') and ri.recruit_line:
             for line_id, line_data in ri.recruit_line.items():
-                if len(line_data) > 2 and line_data[2] != 0:
+                line_data = normalize_line_chara_id_data(line_data, 2, 4)
+                ri.recruit_line[line_id] = line_data
+                if line_data[2] != 0:
                     line_data[2] = old_to_new_id_map.get(line_data[2], line_data[2])
         
         # all_work_npc_set
