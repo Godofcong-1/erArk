@@ -497,38 +497,48 @@ def body_part_grow(character_id: int,print_flag = False):
     if mom_character_data.race == 2:
         return now_text
 
-    old_talent_id_list, new_talent_id_list = [], []
-    # 获得本人的臀部大小和母亲的臀部大小
-    for i in {126,127,128,129,130,131,132}:
-        if character_data.talent[i]:
-            old_talent_id_list.append(i)
-        if mom_character_data.talent[i]:
-            new_talent_id_list.append(i)
-
-    # 把旧的素质换成新的
-    for old_talent_id in old_talent_id_list:
-        character_data.talent[old_talent_id] = 0
-    for new_talent_id in new_talent_id_list:
-        character_data.talent[new_talent_id] = 1
-
-    # 如果新旧列表长度不一致则报错
-    if len(old_talent_id_list) != len(new_talent_id_list):
-        error_text = _("\nerror {0}的身体部位成长时新旧素质列表长度不一致，母亲为{1}，旧列表{2}，新列表{3}\n").format(character_data.name, mom_character_data.name, old_talent_id_list, new_talent_id_list)
-        raise ValueError(error_text)
+    # 新旧臀部id
+    butt_id_list = [126,127,128]
+    # 新旧腿部id
+    leg_id_list = [129,130]
+    # 新旧足部id
+    foot_id_list = [131,132]
+    # 新旧部位id集合
+    old_talent_id_list = [butt_id_list, leg_id_list, foot_id_list]
+    # 进行循环
+    for i in range(len(old_talent_id_list)):
+        now_talent_id_list = old_talent_id_list[i]
+        old_talent_id = 0
+        new_talent_id = 0
+        for i in now_talent_id_list:
+            if character_data.talent[i]:
+                old_talent_id = i
+            if mom_character_data.talent[i]:
+                new_talent_id = i
+        # 如果自己id不是0，则去掉旧的素质
+        if old_talent_id != 0:
+            character_data.talent[old_talent_id] = 0
+        # 如果母亲不是0，则继承母亲的素质
+        if new_talent_id != 0:
+            character_data.talent[new_talent_id] = 1
+        # 否则如果母亲是0，则自己和母亲都随机等于当前列表中的一个
+        elif old_talent_id != 0:
+            random_talent_id = random.choice(now_talent_id_list)
+            new_talent_id = random_talent_id
+            old_talent_id = random_talent_id
+            character_data.talent[random_talent_id] = 1
+            mom_character_data.talent[random_talent_id] = 1
+        if new_talent_id != old_talent_id:
+            old_name = game_config.config_talent[old_talent_id].name
+            new_name = game_config.config_talent[new_talent_id].name
+            now_text += _("\n{0}的[{1}]成长为了[{2}]\n").format(character_data.name, old_name, new_name)
 
     # 根据flag判定是否要绘制输出
-    for i in range(len(old_talent_id_list)):
-        old_talent_id = old_talent_id_list[i]
-        new_talent_id = new_talent_id_list[i]
-        old_name = game_config.config_talent[old_talent_id].name
-        new_name = game_config.config_talent[new_talent_id].name
+    if print_flag:
         now_draw = draw.WaitDraw()
         now_draw.width = window_width
-        if new_talent_id != old_talent_id:
-            now_text += _("\n{0}的[{1}]成长为了[{2}]\n").format(character_data.name, old_name, new_name)
-        if print_flag:
-            now_draw.text = now_text
-            now_draw.draw()
+        now_draw.text = now_text
+        now_draw.draw()
 
     # 返回成长情况的文本
     return now_text
