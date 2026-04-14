@@ -449,6 +449,9 @@ def migrate_old_save_data(loaded_dict) -> int:
         
         # recruited_id (Set[int])
         if hasattr(ri, 'recruited_id') and ri.recruited_id:
+            # 如果ri.recruited_id是int类型的话，则先转为set
+            if isinstance(ri.recruited_id, int):
+                ri.recruited_id = {ri.recruited_id}
             ri.recruited_id = {old_to_new_id.get(oid, oid) for oid in ri.recruited_id}
         
         # power_operator_ids_list
@@ -784,7 +787,11 @@ def migrate_character_replacement(loaded_dict: dict, old_to_new_id_map: dict) ->
         new_character.sleep_point = old_character.sleep_point
         new_character.desire_point = old_character.desire_point
         new_character.state = old_character.state
-        new_character.last_behavior_id_list = old_character.last_behavior_id_list.copy() if old_character.last_behavior_id_list else [0]
+        if hasattr(old_character, 'last_behavior_id_list'):
+            new_character.last_behavior_id_list = old_character.last_behavior_id_list.copy() if old_character.last_behavior_id_list else [0]
+        # 如果旧的角色数据没有last_behavior_id_list，则初始化创建一个
+        else:
+            new_character.last_behavior_id_list = [0]
         
         # 字典/集合属性
         new_character.status_data = old_character.status_data.copy() if old_character.status_data else {}
