@@ -68,6 +68,9 @@ class CharacterBodyText:
         """ 当前面板监听的按钮列表 """
         self.center_status: bool = center_status
         """ 居中绘制状态文本 """
+
+        from Script.Design import handle_talent
+
         character_data = cache.character_data[character_id]
         pl_character_data = cache.character_data[0]
         type_data = _("肉体情况")
@@ -308,9 +311,18 @@ class CharacterBodyText:
                     now_text += _("  总共收集了{0}ml圣水\n").format(urine_total)
             body_text_list.append(now_text)
             # 其他信息
-            now_text = _("\n 【其他】")
+            now_text = _("\n 【其他】\n")
             if character_data.dirty.absorbed_total_semen > 0:
                 now_text += _("  肠胃一共吸收了{0}ml精液\n").format(character_data.dirty.absorbed_total_semen)
+            # 喜欢的姿势
+            favorite_position_id = handle_talent.settle_favorite_sex_position(character_id)
+            if favorite_position_id != -1:
+                sex_position_data = game_config.config_sex_position_data[favorite_position_id]
+                now_text += _("  喜欢的姿势是：{0}，").format(sex_position_data.name)
+                # 获取该姿势的经验
+                experience_id = 140 + favorite_position_id
+                experience_count = character_data.experience[experience_id]
+                now_text += _("该姿势的性交经验为：{0} 次\n").format(experience_count)
             now_text += "\n"
             body_text_list.append(now_text)
         if self.center_status:

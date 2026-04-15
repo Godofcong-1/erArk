@@ -1211,6 +1211,9 @@ class Debug_Panel:
                 draw_text_list = []
                 info_text = f"\n"
                 for cid in target_data.experience:
+                    # 如果不存在该id，则跳过
+                    if cid not in game_config.config_experience:
+                        continue
                     name = game_config.config_experience[cid].name
                     info_text += f"{cid}:{name}={target_data.experience[cid]} "
                 draw_text_list.append(f"[000]:经验列表：\n{info_text}")
