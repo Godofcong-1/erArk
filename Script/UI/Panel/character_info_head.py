@@ -267,6 +267,26 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     status_list.append(exhibitionism_draw)
     status_text_list.append(exhibitionism_text)
     
+    # 破处
+    first_sex_text = ""
+    first_sex_draw = draw.LeftDraw()
+    first_sex_draw.style = "crimson"
+    if handle_premise.handle_first_sex_in_today(character_id):
+        first_sex_text += _(" <V破处>")
+        first_sex_draw.tooltip += _("今天失去了阴道处女，还残留着隐痛和扩张感")
+    if handle_premise.handle_first_a_sex_in_today(character_id):
+        first_sex_text += _(" <A破处>")
+        first_sex_draw.tooltip += _("今天失去了肛门处女，还残留着隐痛和扩张感")
+    if handle_premise.handle_first_u_sex_in_today(character_id):
+        first_sex_text += _(" <U破处>")
+        first_sex_draw.tooltip += _("今天失去了尿道处女，还残留着隐痛和扩张感")
+    if handle_premise.handle_first_w_sex_in_today(character_id):
+        first_sex_text += _(" <W破处>")
+        first_sex_draw.tooltip += _("今天失去了子宫处女，还残留着隐痛和扩张感")
+    first_sex_draw.text = first_sex_text
+    status_list.append(first_sex_draw)
+    status_text_list.append(first_sex_text)
+
     return status_list, status_text_list
 
 class CharacterInfoHead:
