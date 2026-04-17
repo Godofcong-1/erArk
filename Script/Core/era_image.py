@@ -1,7 +1,7 @@
 import os
 from PIL.ImageTk import PhotoImage
 from PIL import Image
-from Script.Core import main_frame, game_type, cache_control
+from Script.Core import game_type, cache_control
 import threading
 from concurrent.futures import ThreadPoolExecutor, as_completed
 
@@ -26,7 +26,15 @@ def _get_font_scaling():
     """
     global _font_scaling
     if _font_scaling is None:
-        _font_scaling = main_frame.normal_font.measure("A") / 11
+        # Web模式或无Tk环境下，main_frame.normal_font 可能不存在，退化为 1.0
+        try:
+            from Script.Core import main_frame
+            if main_frame is not None and getattr(main_frame, "normal_font", None) is not None:
+                _font_scaling = main_frame.normal_font.measure("A") / 11
+            else:
+                _font_scaling = 1.0
+        except Exception:
+            _font_scaling = 1.0
     return _font_scaling
 
 def _load_single_image(args):
