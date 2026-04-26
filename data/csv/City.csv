@@ -2,7 +2,7 @@ cid,name,country_id
 城市id,城市名,所属国家id
 int,str,int
 0,1,0
-势力列表,,
+城市列表,,
 
 
 201,多索雷斯,2
