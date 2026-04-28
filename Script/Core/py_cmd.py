@@ -1,6 +1,5 @@
 from Script.Core import (
     flow_handle,
-    main_frame,
     cache_control,
     game_type,
 )
@@ -113,4 +112,9 @@ def focus_cmd():
     # Web模式下不执行tkinter的焦点操作，避免线程错误
     if normal_config.config_normal.web_draw:
         return
-    main_frame.inputbox.focus_force()
+    try:
+        # 仅在需要时导入，避免Web/无显示环境在模块导入阶段触发Tk初始化
+        from Script.Core import main_frame
+        main_frame.inputbox.focus_force()
+    except Exception:
+        return

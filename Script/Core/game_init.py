@@ -2,7 +2,7 @@
 import os
 import traceback
 from types import FunctionType
-from Script.Core import flow_handle, io_init, key_listion_event, cache_control, game_type, constant, py_cmd, get_text, save_handle
+from Script.Core import flow_handle, io_init, cache_control, game_type, constant, py_cmd, get_text, save_handle
 from Script.Config import game_config, normal_config
 from Script.UI.Moudle import panel
 from Script.Design import game_time
@@ -31,7 +31,9 @@ def init(main_flow: object):
     io_init.clear_order()
     flow_handle.cmd_clear()
     # 载入按键监听
-    key_listion_event.on_wframe_listion()
+    if not normal_config.config_normal.web_draw:
+        from Script.Core import key_listion_event
+        key_listion_event.on_wframe_listion()
     # 设置背景颜色
     io_init.set_background(normal_config.config_normal.background)
     # 初始化字体
