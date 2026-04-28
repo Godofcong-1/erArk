@@ -1696,6 +1696,10 @@ class Cache:
         """ Web模式结算选项描述文本，在绘制结算按钮前设置，用于在结算选项弹窗中显示说明文本 """
         self.pending_event_text: Optional[dict] = None
         """ 待显示的事件文本，由 draw_event_text_panel 保存，供 event_option_panel 使用 """
+        self.web_instruct_executing: bool = False
+        """ Web模式指令执行中标记：True表示SocketIO处理线程正在同步执行指令（含其内部嵌套的askfor_all），主循环线程的askfor_all在此期间不应消费button_click_response，避免与嵌套面板争抢用户输入 """
+        self.web_instruct_executing_thread_id: Optional[int] = None
+        """ Web模式正在同步执行指令的SocketIO线程ID：用于在get_button_response中识别仅允许该线程消费按钮响应 """
         self.web_sub_panel_mode: bool = False
         """ Web模式子面板模式标记：True表示当前正在主界面内显示非主面板 """
         self.web_sub_panel_id: Optional[str] = None

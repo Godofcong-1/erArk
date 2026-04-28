@@ -1182,6 +1182,10 @@ def handle_execute_instruct(data):
     instruct_id = data.get('instruct_id')
     logging.info(f"执行指令: {instruct_id}")
     
+    # 设置指令执行中标记，避免主循环的 askfor_all 与本线程内嵌套面板的 askfor_all 争抢 button_click_response
+    import threading
+    cache.web_instruct_executing = True
+    cache.web_instruct_executing_thread_id = threading.get_ident()
     try:
         # 检查指令是否存在
         if instruct_id not in constant.handle_instruct_data:
@@ -1206,12 +1210,17 @@ def handle_execute_instruct(data):
         })
         
     except Exception as e:
-        logging.error(f"执行指令失败: {e}")
+        import traceback
+        logging.error(f"执行指令失败: {e}\n{traceback.format_exc()}")
         socketio.emit('instruct_executed', {
             'instruct_id': instruct_id,
             'success': False,
             'error': str(e)
         })
+    finally:
+        # 无论成功与否都清除执行中标记
+        cache.web_instruct_executing = False
+        cache.web_instruct_executing_thread_id = None
 
 @socketio.on('switch_target')
 def handle_switch_target(data):
@@ -1330,6 +1339,10 @@ def handle_click_panel_tab(data):
     tab_id = data.get('tab_id')
     logging.info(f"点击面板选项卡: {tab_id}")
     
+    # 设置指令执行中标记，避免主循环 askfor_all 与本线程嵌套面板争抢按钮响应
+    import threading
+    cache.web_instruct_executing = True
+    cache.web_instruct_executing_thread_id = threading.get_ident()
     try:
         # tab_id 就是指令ID
         instruct_id = tab_id
@@ -1352,12 +1365,16 @@ def handle_click_panel_tab(data):
         })
         
     except Exception as e:
-        logging.error(f"执行面板指令失败: {e}")
+        import traceback
+        logging.error(f"执行面板指令失败: {e}\n{traceback.format_exc()}")
         socketio.emit('panel_tab_clicked', {
             'tab_id': tab_id,
             'success': False,
             'error': str(e)
         })
+    finally:
+        cache.web_instruct_executing = False
+        cache.web_instruct_executing_thread_id = None
 
 @socketio.on('get_interaction_types')
 def handle_get_interaction_types(data):
@@ -2530,8 +2547,19 @@ def get_button_response():
     
     返回值类型：str或None
     功能描述：返回用户点击的按钮ID，获取后清空
+    
+    线程安全说明：当 cache.web_instruct_executing 为 True 时（即 SocketIO 处理线程
+    正在同步执行指令并可能在内部嵌套调用 askfor_all），仅允许该 SocketIO 线程消费按钮响应；
+    其他线程（如主游戏循环线程）调用本函数时一律返回 None，避免与嵌套面板争抢用户输入。
     """
     global button_click_response
+    
+    # 如果当前有指令正在执行，且调用方不是该执行线程，则不消费响应
+    if getattr(cache, 'web_instruct_executing', False):
+        import threading
+        executing_thread_id = getattr(cache, 'web_instruct_executing_thread_id', None)
+        if executing_thread_id is not None and threading.get_ident() != executing_thread_id:
+            return None
     
     with state_lock:
         response = button_click_response
