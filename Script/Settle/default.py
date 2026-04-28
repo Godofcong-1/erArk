@@ -1112,7 +1112,7 @@ def handle_first_a_sex(
 
     # 判定是否为道具性交
     item_flag = False
-    if cache.input_cache[len(cache.input_cache) - 1] == str(constant.Instruct.VIBRATOR_INSERTION_ANAL):
+    if cache.input_cache and cache.input_cache[-1] == str(constant.Instruct.VIBRATOR_INSERTION_ANAL):
         item_flag = True
 
     # 获取玩家最后一个指令的中文名

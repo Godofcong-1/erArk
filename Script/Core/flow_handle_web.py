@@ -261,6 +261,13 @@ def askfor_all(return_list: List[str]) -> str:
                 _clear_sub_panel_before_return()
                 # 非刷新信号则输出该响应
                 io_init.era_print(response + "\n")
+                # 同步记录到 input_cache，与Tk模式 main_frame.send_input 行为一致
+                # 部分结算逻辑（如 handle_first_a_sex）会读取 input_cache[-1] 判定上一步指令
+                if response:
+                    if len(cache.input_cache) >= 21:
+                        del cache.input_cache[0]
+                    cache.input_cache.append(response)
+                    cache.input_position = 0
                 # 然后判断值是否有效，有效则执行该命令
                 if _cmd_valid(response):
                     _cmd_deal(response)
