@@ -3044,6 +3044,8 @@ class Premise:
     """ H_射精 玩家当前射精欲低或中 """
     PL_EJA_POINT_HIGH_OR_EXTREME = "pl_eja_point_high_or_extreme"
     """ H_射精 玩家当前射精欲高或极 """
+    PL_ENDURE_ORGASM_COUNT_GE_1 = "pl_endure_orgasm_count_ge_1"
+    """ H_射精 玩家忍耐的射精次数大于等于1 """
 
     T_TURN_ORGASM_0 = "t_turn_orgasm_0"
     """ H_绝顶 交互对象本次H中还没有绝顶 """

@@ -687,6 +687,8 @@ class Behavior:
     """ 绝顶解放 """
     PULL_OUT_PENIS = "pull_out_penis"
     """ 拔出阴茎 """
+    STOP_ENDURE = "stop_endure"
+    """ 停止忍耐 """
     SPANKING = "spanking"
     """ 打屁股 """
     CLOTH_OFF = "cloth_off"

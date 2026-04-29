@@ -380,6 +380,8 @@ int,str,str,int,str,str
 
 751,orgasm_edge_on,绝顶寸止,1,pl,性爱_基础
 752,orgasm_edge_off,绝顶解放,1,pl,性爱_基础
+756,pull_out_penis,拔出阴茎,1,pl,性爱
+757,stop_endure,停止忍耐,1,pl,性爱
 
 771,spanking,打屁股,3,both,性爱_SM
 

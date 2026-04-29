@@ -965,6 +965,8 @@ class BehaviorEffect:
     """ 行动 将自己行为目标食物指定为背包里的最后一个食物 """
     MOVE_TO_OWN_DORMITORY = 1721
     """ 行动 自己前往自己的宿舍 """
+    STOP_ENDURANCE_SHOOT = 1722
+    """ 行动 射出忍耐的射精次数 """
 
     FACILITY_DAMAGE_CHECK = 1751
     """ 设施 几率判定自己所在地点是否造成损坏 """

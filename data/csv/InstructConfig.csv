@@ -220,12 +220,8 @@ int,str,str,str,str,str,str,int,str,str,str,str
 6016,run_all_group_sex_temple,进行一次轮流群交,SEX,0,HAVE_TARGET|TARGET_IS_H|GROUP_SEX_MODE_ON|T_NPC_NOT_ACTIVE_H|TIME_STOP_OFF|ALL_GROUP_SEX_TEMPLE_RUN_ON,WAIT,1,,sex,sex_base,
 6017,edit_group_sex_temple,编辑群交行动,SEX,0,HAVE_TARGET|TARGET_IS_H|GROUP_SEX_MODE_ON|T_NPC_NOT_ACTIVE_H|TIME_STOP_OFF,,2,EDIT_GROUP_SEX_TEMPLE,sex,sex_base,
 6018,switch_to_non_h_interface,切换到非H,SEX,0,HAVE_TARGET|TARGET_IS_H|TO_DO|HIDDEN_SEX_MODE_1|NOT_SHOW_NON_H_IN_HIDDEN_SEX,,1,,sex,sex_base,
-6019,pull_out_penis,拔出阴茎,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART,PULL_OUT_PENIS,1,,penis,penis_insert,
-6020,sedecu,诱惑对方_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,SEDECU,1,,sex,sex_base,
-6021,shame_play,羞耻play_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
-6022,take_shower_h,淋浴_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
-6023,bubble_bath,泡泡浴_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
-6024,give_blowjob,给对方口交_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,mouth,mouth_lick,mouth
+6019,pull_out_penis,拔出阴茎,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|DR_HAVE_SEX_POSITION_OR_PENIS_IN_T_ANYPART,PULL_OUT_PENIS,1,,penis,penis_base,
+6020,stop_endure,停止忍耐,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|PL_ENDURE_ORGASM_COUNT_GE_1,STOP_ENDURE,1,,penis,penis_base,
 6101,birth_control_pills,避孕药,SEX,DRUG,,,1,,tool,tool_drug,mouth
 6102,philter,媚药,SEX,DRUG,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|HAVE_PHILTER,PHILTER,1,,tool,tool_drug,mouth
 6103,enemas,灌肠液_已废弃,SEX,DRUG,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|HAVE_ENEMAS|TO_DO,,1,,tool,tool_drug,
@@ -401,3 +397,8 @@ int,str,str,str,str,str,str,int,str,str,str,str
 6630,socks_job,袜子交,SEX,WAIT_UPON,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TARGET_WEAR_SOCKS,SOCKS_JOB,1,,penis,penis_rub,leg
 6631,shoes_job,鞋子交,SEX,WAIT_UPON,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TARGET_WEAR_SHOES,SHOES_JOB,1,,penis,penis_rub,foot
 6632,weapons_job,武器交,SEX,WAIT_UPON,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TARGET_TAKE_WEAPON,WEAPONS_JOB,1,,penis,penis_rub,hand
+6901,sedecu,诱惑对方_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,SEDECU,1,,sex,sex_base,
+6902,shame_play,羞耻play_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
+6903,take_shower_h,淋浴_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
+6904,bubble_bath,泡泡浴_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,sex,sex_base,
+6905,give_blowjob,给对方口交_未实装,SEX,0,HAVE_TARGET|T_NPC_NOT_ACTIVE_H|TARGET_IS_H|TO_DO,,1,,mouth,mouth_lick,mouth

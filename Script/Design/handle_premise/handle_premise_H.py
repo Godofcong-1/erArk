@@ -1667,6 +1667,20 @@ def handle_pl_eja_point_high_or_extreme(character_id: int) -> int:
         return 1
     return 0
 
+@add_premise(constant_promise.Premise.PL_ENDURE_ORGASM_COUNT_GE_1)
+def handle_pl_endure_orgasm_count_ge_1(character_id: int) -> int:
+    """
+    玩家忍耐的射精次数大于等于1
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    pl_character_data = cache.character_data[0]
+    count = pl_character_data.h_state.endure_not_shot_count
+    if count >= 1:
+        return 1
+    return 0
 
 @add_premise(constant_promise.Premise.SELF_ORGASM_EDGE)
 def handle_self_orgasm_edge(character_id: int) -> int:

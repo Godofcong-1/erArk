@@ -2659,6 +2659,26 @@ def handle_move_to_own_dormitory(
     to_target = map_handle.get_map_system_path_for_str(character_data.dormitory)
     general_movement_module(character_id, to_target)
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.STOP_ENDURANCE_SHOOT)
+def handle_stop_endurance_shoot(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    射出忍耐的射精次数
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    second_behavior.orgasm_judge(character_id, change_data, skip_undure = True)
+    second_behavior.second_behavior_effect(character_id, change_data)
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.FACILITY_DAMAGE_CHECK)
 def handle_facility_damage_check(
@@ -6595,7 +6615,7 @@ def handle_end_h_add_hpmp_max(
     """
     if not add_time:
         return
-    from Script.Design import handle_ability, second_behavior
+    from Script.Design import handle_ability
     character_data: game_type.Character = cache.character_data[character_id]
     id_list = [character_id]
     if character_data.target_character_id != character_id:
@@ -6603,10 +6623,9 @@ def handle_end_h_add_hpmp_max(
     for chara_id in id_list:
         now_character_data: game_type.Character = cache.character_data[chara_id]
         info_text = now_character_data.name
-        # 如果有精液寸止，则射出
-        if now_character_data.h_state.endure_not_shot_count > 0:
-            second_behavior.orgasm_judge(chara_id, change_data, skip_undure = True)
-            second_behavior.second_behavior_effect(chara_id, change_data)
+        # 如果玩家有忍耐的射精次数，则射出
+        if chara_id == 0 and handle_premise.handle_pl_endure_orgasm_count_ge_1(chara_id):
+            handle_stop_endurance_shoot(chara_id, add_time, change_data, now_time)
         # 统计绝顶次数
         orgasm_count = 0
         for state_id in game_config.config_character_state:

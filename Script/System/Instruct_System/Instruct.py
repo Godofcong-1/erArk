@@ -442,6 +442,8 @@ class Instruct:
     """ 切换到非H """
     PULL_OUT_PENIS = "pull_out_penis"
     """ 拔出阴茎 """
+    STOP_ENDURE = "stop_endure"
+    """ 停止忍耐 """
     MAKING_OUT = "making_out"
     """ 身体爱抚 """
     KISS_H = "kiss_h"

@@ -3223,3 +3223,8 @@ def handle_switch_to_non_h_interface():
 def handle_pull_out_penis():
     """处理拔出阴茎指令"""
     chara_handle_instruct_common_settle(constant.Behavior.PULL_OUT_PENIS)
+
+@add_instruct(constant.Instruct.STOP_ENDURE)
+def handle_stop_endure():
+    """处理停止忍耐指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.STOP_ENDURE)

@@ -495,6 +495,7 @@ cid,effect_name,effect_type,effect
 1702,WAIT_UNITL_PLAYER_ACTION_END,行动,自己等待至玩家行动结束
 1711,SET_TARGET_FOOD_FROM_BAG_LAST,行动,将自己行为目标食物指定为背包里的最后一个食物
 1721,MOVE_TO_OWN_DORMITORY,行动,自己前往自己的宿舍
+1722,STOP_ENDURANCE_SHOOT,行动,射出忍耐的射精次数
 
 1751,FACILITY_DAMAGE_CHECK,设施,几率判定自己所在地点是否造成损坏
 

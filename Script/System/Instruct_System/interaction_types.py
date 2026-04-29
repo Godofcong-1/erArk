@@ -99,6 +99,9 @@ class InteractionMinorType:
     """ 性爱-基础：与性爱直接相关的基础交互 """
 
     # ========== 阴茎类（PENIS='penis'）小类 ==========
+    PENIS_BASE = "penis_base"
+    """ 阴茎-基础：与阴茎直接相关的基础交互 """
+
     PENIS_RUB = "penis_rub"
     """ 阴茎-摩擦：素股、乳交等 """
 
@@ -185,6 +188,7 @@ MINOR_TYPE_NAMES = {
     InteractionMinorType.SEX_START_END: "开始与结束",
     InteractionMinorType.SEX_BASE: "基础",
     # 阴茎类
+    InteractionMinorType.PENIS_BASE: "基础",
     InteractionMinorType.PENIS_RUB: "摩擦",
     InteractionMinorType.PENIS_INSERT: "插入",
     # 道具类
@@ -225,6 +229,7 @@ MAJOR_TO_MINOR_TYPES = {
         InteractionMinorType.SEX_BASE,
     ],
     InteractionMajorType.PENIS: [
+        InteractionMinorType.PENIS_BASE,
         InteractionMinorType.PENIS_RUB,
         InteractionMinorType.PENIS_INSERT,
     ],
