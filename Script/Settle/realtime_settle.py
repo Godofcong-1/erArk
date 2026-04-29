@@ -525,7 +525,7 @@ def settle_conscious_continuous(character_id: int, true_add_time: int) -> None:
             base_chara_state_common_settle(character_id, add_time=true_add_time * 3, state_id=sid, base_value=0, ability_level=now_char_ability[33 if sid==12 else 34 if sid==16 else 15], extra_adjust=adjust, tenths_add=False)
     # 破处下增加苦痛
     first_sex_adjust = 0
-    if handle_premise.handle_first_sex_in_today(character_id):
+    if character_id != 0 and handle_premise.handle_first_sex_in_today(character_id):
         first_sex_adjust += 3
     if handle_premise.handle_first_a_sex_in_today(character_id):
         first_sex_adjust += 3

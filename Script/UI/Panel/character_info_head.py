@@ -272,8 +272,12 @@ def get_character_status_list(character_id: int) -> Tuple[List[draw.LeftDraw], L
     first_sex_draw = draw.LeftDraw()
     first_sex_draw.style = "crimson"
     if handle_premise.handle_first_sex_in_today(character_id):
-        first_sex_text += _(" <V破处>")
-        first_sex_draw.tooltip += _("今天失去了阴道处女，还残留着隐痛和扩张感")
+        if character_id == 0:
+            first_sex_text += _(" <P破处>")
+            first_sex_draw.tooltip += _("今天失去了童贞")
+        else:
+            first_sex_text += _(" <V破处>")
+            first_sex_draw.tooltip += _("今天失去了阴道处女，还残留着隐痛和扩张感")
     if handle_premise.handle_first_a_sex_in_today(character_id):
         first_sex_text += _(" <A破处>")
         first_sex_draw.tooltip += _("今天失去了肛门处女，还残留着隐痛和扩张感")
