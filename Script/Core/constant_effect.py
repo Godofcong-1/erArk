@@ -334,6 +334,8 @@ class BehaviorEffect:
     """ 特殊flag_基础 自己停止移动 """
     MAINTENANCE_FLAG_TO_0 = 371
     """ 特殊flag_基础 自身清零要检修状态 """
+    MORNING_SALUTATION_FLAG_TO_0 = 372
+    """ 特殊flag_基础 将自身早安问候设为未问候 """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """

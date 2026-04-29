@@ -59,6 +59,9 @@ def update_sleep():
             # 对玩家助理结算
             if assistant_id > 0:
                 assistant_character_data: game_type.Character = cache.character_data[assistant_id]
+                # 如果助理的早安问候已开启，则清零助理早安问候
+                if handle_premise.handle_assistant_morning_salutation_on(assistant_id):
+                    assistant_character_data.sp_flag.morning_salutation = 0
                 # 如果此时助理在睡眠中，则清零助理晚安问候
                 if handle_premise.handle_assistant_night_salutation_on(assistant_id) and handle_premise.handle_action_sleep(assistant_id):
                     assistant_character_data.sp_flag.night_salutation = 0

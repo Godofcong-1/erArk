@@ -390,7 +390,7 @@ class CharaSetting:
 
 
 class City:
-    """ 势力列表 """
+    """ 城市列表 """
 
     cid: int
     """ 城市id """

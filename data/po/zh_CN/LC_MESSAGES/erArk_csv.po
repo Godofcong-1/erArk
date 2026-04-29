@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-03-27 18:08+0800\n"
+"POT-Creation-Date: 2024-08-11 08:00+0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LANGUAGE-TEAM-EMAIL@ADDRESS>\n"
@@ -42176,7 +42176,7 @@ msgstr ""
 msgid "#96dfe4"
 msgstr ""
 
-#: ./data\character\0001_阿米娅.csv:40
+#: ./data\character\0001_阿米娅.csv:44
 msgid "抑制戒指 必带"
 msgstr ""
 
@@ -42300,27 +42300,27 @@ msgstr ""
 msgid "米莎"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:27
+#: ./data\character\0012_米莎.csv:28
 msgid "棕色围巾"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:28
+#: ./data\character\0012_米莎.csv:29
 msgid "带白色条纹的黑色披肩"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:29
+#: ./data\character\0012_米莎.csv:30
 msgid "黑色运动服"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:30
+#: ./data\character\0012_米莎.csv:31
 msgid "黑色运动短裤"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:31
+#: ./data\character\0012_米莎.csv:32
 msgid "黑色短袜（右）"
 msgstr ""
 
-#: ./data\character\0012_米莎.csv:32
+#: ./data\character\0012_米莎.csv:33
 msgid "黑色短靴"
 msgstr ""
 
@@ -42336,39 +42336,39 @@ msgstr ""
 msgid "煌，罗德岛精英干员，在机动作战、歼灭战与突袭作战中体现出了专业的战斗技巧与战术素养。现由阿米娅带领，作为攻坚战的战术核心之一发挥作用。"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:35
+#: ./data\character\0017_煌.csv:39
 msgid "红色发箍"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:36
+#: ./data\character\0017_煌.csv:40
 msgid "短版罗德岛制服外套（白）"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:37
+#: ./data\character\0017_煌.csv:41
 msgid "白色交叉肩带小背心"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:38
+#: ./data\character\0017_煌.csv:42
 msgid "黑色超短包臀裙"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:39
+#: ./data\character\0017_煌.csv:43
 msgid "白色过膝袜（右）"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:40
+#: ./data\character\0017_煌.csv:44
 msgid "高跟短靴"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:41
+#: ./data\character\0017_煌.csv:45
 msgid "黑色战术露指手套"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:42
+#: ./data\character\0017_煌.csv:46
 msgid "链锯"
 msgstr ""
 
-#: ./data\character\0017_煌.csv:43
+#: ./data\character\0017_煌.csv:47
 msgid "战术道具腰包"
 msgstr ""
 
@@ -42384,31 +42384,31 @@ msgstr ""
 msgid "九，原隶属龙门近卫局，离开近卫局后担任陈的线人，后加入整合运动。切城事件结束后成为整合运动残党的领袖。"
 msgstr ""
 
-#: ./data\character\0043_九.csv:32
+#: ./data\character\0043_九.csv:34
 msgid "白色兜帽披风（战损）"
 msgstr ""
 
-#: ./data\character\0043_九.csv:33
+#: ./data\character\0043_九.csv:35
 msgid "白色短袖上衣"
 msgstr ""
 
-#: ./data\character\0043_九.csv:34
+#: ./data\character\0043_九.csv:36
 msgid "黑色手套"
 msgstr ""
 
-#: ./data\character\0043_九.csv:35
+#: ./data\character\0043_九.csv:37
 msgid "白色长裙（战损）"
 msgstr ""
 
-#: ./data\character\0043_九.csv:37
+#: ./data\character\0043_九.csv:39
 msgid "运动鞋"
 msgstr ""
 
-#: ./data\character\0043_九.csv:38
+#: ./data\character\0043_九.csv:40
 msgid "脚环"
 msgstr ""
 
-#: ./data\character\0043_九.csv:39
+#: ./data\character\0043_九.csv:41
 msgid "白色袖套"
 msgstr ""
 
@@ -42440,23 +42440,23 @@ msgstr ""
 msgid "沃伦姆德居民，管理着当地的民兵团，在政府议事厅工作，跟随着亚叶及铃兰在感染者居住区调查，后在暴乱中受伤并被感染者打晕，被灰喉小队救出。为了恢复沃伦姆德的平静而奔波。"
 msgstr ""
 
-#: ./data\character\0069_塔佳娜.csv:32
+#: ./data\character\0069_塔佳娜.csv:34
 msgid "黑色皮质斗篷"
 msgstr ""
 
-#: ./data\character\0069_塔佳娜.csv:33
+#: ./data\character\0069_塔佳娜.csv:35
 msgid "黑色V领内衣"
 msgstr ""
 
-#: ./data\character\0069_塔佳娜.csv:34
+#: ./data\character\0069_塔佳娜.csv:36
 msgid "浅灰色短裙"
 msgstr ""
 
-#: ./data\character\0069_塔佳娜.csv:35
+#: ./data\character\0069_塔佳娜.csv:37
 msgid "渐变色短袜"
 msgstr ""
 
-#: ./data\character\0069_塔佳娜.csv:36
+#: ./data\character\0069_塔佳娜.csv:38
 msgid "黑色长筒靴"
 msgstr ""
 
@@ -42472,39 +42472,39 @@ msgstr ""
 msgid "部族“依娜姆商会”的头领，真实身份是信使，因没有信可送，所以经常从附近城市进货做生意，久而久之被其他部落的人称为“爱做生意的依娜姆”。负责教授特米米在内的部分阿达克利斯人萨尔贡语，并帮特米米和森蚺从城市中购买所需的书籍。“捡到”可颂后带回部族，随后遇见嘉维尔一行人，送信给迪伦后前往森蚺部族看热闹，被嘉维尔直接任命为大酋长。"
 msgstr ""
 
-#: ./data\character\0075_依娜姆.csv:29
+#: ./data\character\0075_依娜姆.csv:31
 msgid "破烂披风"
 msgstr ""
 
-#: ./data\character\0075_依娜姆.csv:30
+#: ./data\character\0075_依娜姆.csv:32
 msgid "破烂热裤"
 msgstr ""
 
-#: ./data\character\0075_依娜姆.csv:31
+#: ./data\character\0075_依娜姆.csv:33
 msgid "绷带"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:28
+#: ./data\character\0078_塔露拉.csv:33
 msgid "黑红双色披风"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:29
+#: ./data\character\0078_塔露拉.csv:34
 msgid "黑白双色带镶边的领袖制服"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:30
+#: ./data\character\0078_塔露拉.csv:35
 msgid "黑色短筒裙"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:32
+#: ./data\character\0078_塔露拉.csv:37
 msgid "黑色精致短靴"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:33
+#: ./data\character\0078_塔露拉.csv:38
 msgid "黑色系带护膝"
 msgstr ""
 
-#: ./data\character\0078_塔露拉.csv:34
+#: ./data\character\0078_塔露拉.csv:39
 msgid "腰带"
 msgstr ""
 
@@ -42512,23 +42512,23 @@ msgstr ""
 msgid "阿丽娜"
 msgstr ""
 
-#: ./data\character\0079_阿丽娜.csv:28
+#: ./data\character\0079_阿丽娜.csv:30
 msgid "黑色丝巾"
 msgstr ""
 
-#: ./data\character\0079_阿丽娜.csv:29
+#: ./data\character\0079_阿丽娜.csv:31
 msgid "深灰色长衫"
 msgstr ""
 
-#: ./data\character\0079_阿丽娜.csv:30
+#: ./data\character\0079_阿丽娜.csv:32
 msgid "黑白双色民族风格连衣长裙"
 msgstr ""
 
-#: ./data\character\0079_阿丽娜.csv:33
+#: ./data\character\0079_阿丽娜.csv:35
 msgid "黑色皮靴"
 msgstr ""
 
-#: ./data\character\0079_阿丽娜.csv:34
+#: ./data\character\0079_阿丽娜.csv:36
 msgid "戒指角饰"
 msgstr ""
 
@@ -42540,23 +42540,23 @@ msgstr ""
 msgid "自称“语言学家”，是源石的创造者之一，曾经与博士亲密无间。\n一般被认定为与博士一起创造了凯尔希（Ama-10）。"
 msgstr ""
 
-#: ./data\character\0083_普瑞赛斯.csv:31
+#: ./data\character\0083_普瑞赛斯.csv:32
 msgid "白色外套"
 msgstr ""
 
-#: ./data\character\0083_普瑞赛斯.csv:32
+#: ./data\character\0083_普瑞赛斯.csv:33
 msgid "白色毛衣"
 msgstr ""
 
-#: ./data\character\0083_普瑞赛斯.csv:33
+#: ./data\character\0083_普瑞赛斯.csv:34
 msgid "黑色短裙"
 msgstr ""
 
-#: ./data\character\0083_普瑞赛斯.csv:35
+#: ./data\character\0083_普瑞赛斯.csv:36
 msgid "白色低跟鞋"
 msgstr ""
 
-#: ./data\character\0083_普瑞赛斯.csv:36
+#: ./data\character\0083_普瑞赛斯.csv:37
 msgid "黑色发圈"
 msgstr ""
 
@@ -42664,19 +42664,19 @@ msgstr ""
 msgid "能天使，拉特兰公民，适用拉特兰一至十三项公民权益。企鹅物流公司成员。从事秘密联络，武装押运等非公开活动，推测身份：信使。于合约期内任企鹅物流驻罗德岛联络人员，同时为罗德岛多项行动提供协助。"
 msgstr ""
 
-#: ./data\character\0103_能天使.csv:29
+#: ./data\character\0103_能天使.csv:32
 msgid "黑白双色带兜帽休闲服"
 msgstr ""
 
-#: ./data\character\0103_能天使.csv:30
+#: ./data\character\0103_能天使.csv:33
 msgid "白色衬衣"
 msgstr ""
 
-#: ./data\character\0103_能天使.csv:32
+#: ./data\character\0103_能天使.csv:35
 msgid "黑色连身裤袜"
 msgstr ""
 
-#: ./data\character\0103_能天使.csv:35
+#: ./data\character\0103_能天使.csv:38
 msgid "深棕色露指手套"
 msgstr ""
 
@@ -42692,19 +42692,19 @@ msgstr ""
 msgid "芙兰卡，黑钢国际生化防护相应人员安全保障专员，在行动护卫、战术突击、战术协同方面拥有丰富经验与强悍战力。现于罗德岛接受矿石病治疗，并作为黑钢行动干员为罗德岛提供专业安保服务。"
 msgstr ""
 
-#: ./data\character\0106_芙兰卡.csv:31
+#: ./data\character\0106_芙兰卡.csv:32
 msgid "灰色制服短连衣裙"
 msgstr ""
 
-#: ./data\character\0106_芙兰卡.csv:32
+#: ./data\character\0106_芙兰卡.csv:33
 msgid "黑色丝织手套"
 msgstr ""
 
-#: ./data\character\0106_芙兰卡.csv:35
+#: ./data\character\0106_芙兰卡.csv:36
 msgid "银色高跟鞋"
 msgstr ""
 
-#: ./data\character\0106_芙兰卡.csv:36
+#: ./data\character\0106_芙兰卡.csv:37
 msgid "战术背包"
 msgstr ""
 
@@ -42752,35 +42752,35 @@ msgstr ""
 msgid "赫默，莱茵生命有限公司源石有关项目研究员，曾主管数项未知应用研究，同期亦主持数个矿石病临床试验项目。现于罗德岛为多项行动提供战场医疗救护服务。"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:29
+#: ./data\character\0108_赫默.csv:32
 msgid "黑色圆半框眼镜"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:30
+#: ./data\character\0108_赫默.csv:33
 msgid "白色兽羽披风"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:31
+#: ./data\character\0108_赫默.csv:34
 msgid "白色长袖毛衣"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:32
+#: ./data\character\0108_赫默.csv:35
 msgid "深棕色休闲短裤"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:33
+#: ./data\character\0108_赫默.csv:36
 msgid "黑色过膝袜（右）"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:34
+#: ./data\character\0108_赫默.csv:37
 msgid "黑色短袜（左）"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:35
+#: ./data\character\0108_赫默.csv:38
 msgid "白色低帮运动鞋"
 msgstr ""
 
-#: ./data\character\0108_赫默.csv:36
+#: ./data\character\0108_赫默.csv:39
 msgid "系带绑腿"
 msgstr ""
 
@@ -42824,27 +42824,27 @@ msgstr ""
 msgid "深海色，出身不明，履历缺失。在源石技艺、法术支援、战术协同等方面展现出不俗战力。现于罗德岛担任特种行动小组干员。"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:27
+#: ./data\character\0110_深海色.csv:29
 msgid "黑色条纹贝雷帽"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:28
+#: ./data\character\0110_深海色.csv:30
 msgid "红色方框眼镜"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:29
+#: ./data\character\0110_深海色.csv:31
 msgid "红黑格子围巾"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:30
+#: ./data\character\0110_深海色.csv:32
 msgid "白色加绒外套"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:31
+#: ./data\character\0110_深海色.csv:33
 msgid "黑色短连衣褶裙"
 msgstr ""
 
-#: ./data\character\0110_深海色.csv:35
+#: ./data\character\0110_深海色.csv:37
 msgid "黑色挎包"
 msgstr ""
 
@@ -42860,23 +42860,23 @@ msgstr ""
 msgid "维娜，代号推进之王，维多利亚公民，大部分履历缺失。存在数项未被证实的指控记录。在歼灭战、攻坚战、对抗硬目标等任务中表现出色。于多个测试中皆获得优异成绩，遂获准加入罗德岛。现作为先锋人员，于罗德岛某作战小队担任队长。"
 msgstr ""
 
-#: ./data\character\0112_推进之王.csv:29
+#: ./data\character\0112_推进之王.csv:30
 msgid "带刺颈环"
 msgstr ""
 
-#: ./data\character\0112_推进之王.csv:30
+#: ./data\character\0112_推进之王.csv:31
 msgid "黑色皮衣"
 msgstr ""
 
-#: ./data\character\0112_推进之王.csv:31
+#: ./data\character\0112_推进之王.csv:32
 msgid "白色圆领衫"
 msgstr ""
 
-#: ./data\character\0112_推进之王.csv:32
+#: ./data\character\0112_推进之王.csv:33
 msgid "红色休闲短裤"
 msgstr ""
 
-#: ./data\character\0112_推进之王.csv:33
+#: ./data\character\0112_推进之王.csv:34
 msgid "硬质皮鞋"
 msgstr ""
 
@@ -42920,31 +42920,31 @@ msgstr ""
 msgid "凛冬，切尔诺伯格事变前于切城某中学就读，在校期间已表现出对战斗与突击行为的热情。在多项测试中表现出乌萨斯人与生俱来的强健力量和坚实体质。现作为先锋干员担任作战小队队长。"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:29
+#: ./data\character\0115_凛冬.csv:30
 msgid "系带腰包"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:30
+#: ./data\character\0115_凛冬.csv:31
 msgid "白色乌萨斯中学制服"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:31
+#: ./data\character\0115_凛冬.csv:32
 msgid "棕色加绒长外套"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:33
+#: ./data\character\0115_凛冬.csv:34
 msgid "黑色颈环"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:34
+#: ./data\character\0115_凛冬.csv:35
 msgid "深红色连身裤袜"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:35
+#: ./data\character\0115_凛冬.csv:36
 msgid "黑色作战靴"
 msgstr ""
 
-#: ./data\character\0115_凛冬.csv:36
+#: ./data\character\0115_凛冬.csv:37
 msgid "黑色绑腿小包"
 msgstr ""
 
@@ -43004,23 +43004,23 @@ msgstr ""
 msgid "曾是龙门总督魏彦吾之妻——文月夫人的贴身护卫，在近卫局与罗德岛建立合作关系后，被派往罗德岛成为博士的护卫。使用大型手里剑作为武器，擅长隐秘行动和情报收集，于阴影之中保护着博士的人身安全。"
 msgstr ""
 
-#: ./data\character\0118_白雪.csv:29
+#: ./data\character\0118_白雪.csv:28
 msgid "黑色口罩"
 msgstr ""
 
-#: ./data\character\0118_白雪.csv:30
+#: ./data\character\0118_白雪.csv:29
 msgid "黑色带兜帽无袖卫衣"
 msgstr ""
 
-#: ./data\character\0118_白雪.csv:31
+#: ./data\character\0118_白雪.csv:30
 msgid "黑色休闲长裤"
 msgstr ""
 
-#: ./data\character\0118_白雪.csv:34
+#: ./data\character\0118_白雪.csv:33
 msgid "黑色露趾运动鞋"
 msgstr ""
 
-#: ./data\character\0118_白雪.csv:35
+#: ./data\character\0118_白雪.csv:34
 msgid "作战包"
 msgstr ""
 
@@ -43036,27 +43036,27 @@ msgstr ""
 msgid "生于维多利亚的伦蒂尼姆，干员炎熔的孪生姐姐。因为感染了矿石病来到了罗德岛。在接受救治的过程中，萌生了希望自己也能帮助大家的想法。天生就擅长照顾他人的性格和努力帮助芙蓉顺利地成为了罗德岛的医师。"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:30
+#: ./data\character\0120_芙蓉.csv:31
 msgid "蓝色罗德岛制服衬衫"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:31
+#: ./data\character\0120_芙蓉.csv:32
 msgid "黑色罗德岛制服外套"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:32
+#: ./data\character\0120_芙蓉.csv:33
 msgid "蓝色医疗手套"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:33
+#: ./data\character\0120_芙蓉.csv:34
 msgid "深蓝色短百褶裙"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:34
+#: ./data\character\0120_芙蓉.csv:35
 msgid "粉色短袜"
 msgstr ""
 
-#: ./data\character\0120_芙蓉.csv:36
+#: ./data\character\0120_芙蓉.csv:37
 msgid "挎包"
 msgstr ""
 
@@ -43096,23 +43096,23 @@ msgstr ""
 msgid "行动预备组A1前卫队员。与芬以及克洛丝一起来到罗德岛。虽然有不成熟的一面，但也逐渐展现出了专业和不认输的一面以及极强的天赋，慢慢成为了被更多人认可的可靠干员。"
 msgstr ""
 
-#: ./data\character\0122_米格鲁.csv:31
+#: ./data\character\0122_米格鲁.csv:32
 msgid "黑色罗德岛带帽制服外套"
 msgstr ""
 
-#: ./data\character\0122_米格鲁.csv:32
+#: ./data\character\0122_米格鲁.csv:33
 msgid "桔色毛衣"
 msgstr ""
 
-#: ./data\character\0122_米格鲁.csv:33
+#: ./data\character\0122_米格鲁.csv:34
 msgid "白色手套"
 msgstr ""
 
-#: ./data\character\0122_米格鲁.csv:34
+#: ./data\character\0122_米格鲁.csv:35
 msgid "黑色长裙"
 msgstr ""
 
-#: ./data\character\0122_米格鲁.csv:37
+#: ./data\character\0122_米格鲁.csv:38
 msgid "红色圆半框眼镜"
 msgstr ""
 
@@ -43140,15 +43140,15 @@ msgstr ""
 msgid "来自雷姆必拓的克洛丝跟芬和米格鲁一样，之前受训于哥伦比亚霍尔姆加德警备队。性格冷静客观，脸上永远挂着笑容，性子慢，圆滑而温和，但是偶尔也会露出毒舌腹黑的一面。"
 msgstr ""
 
-#: ./data\character\0124_克洛丝.csv:30
+#: ./data\character\0124_克洛丝.csv:29
 msgid "森绿色T恤"
 msgstr ""
 
-#: ./data\character\0124_克洛丝.csv:35
+#: ./data\character\0124_克洛丝.csv:34
 msgid "大腿绑带（右）"
 msgstr ""
 
-#: ./data\character\0124_克洛丝.csv:36
+#: ./data\character\0124_克洛丝.csv:35
 msgid "创可贴（左）"
 msgstr ""
 
@@ -43164,23 +43164,23 @@ msgstr ""
 msgid "前卡西米尔守林人，拥有高超的弓箭技巧，并且在追踪和野外生存方面拥有丰富经验。现于罗德岛接受治疗的同时，作为狙击干员活跃在第一线。"
 msgstr ""
 
-#: ./data\character\0126_流星.csv:30
+#: ./data\character\0126_流星.csv:32
 msgid "黑色破旧披肩"
 msgstr ""
 
-#: ./data\character\0126_流星.csv:31
+#: ./data\character\0126_流星.csv:33
 msgid "卡其色短衫"
 msgstr ""
 
-#: ./data\character\0126_流星.csv:32
+#: ./data\character\0126_流星.csv:34
 msgid "黑色露指手套"
 msgstr ""
 
-#: ./data\character\0126_流星.csv:33
+#: ./data\character\0126_流星.csv:35
 msgid "有些破旧的铁灰色牛仔长裤"
 msgstr ""
 
-#: ./data\character\0126_流星.csv:35
+#: ./data\character\0126_流星.csv:37
 msgid "黑色加固长靴"
 msgstr ""
 
@@ -43196,15 +43196,15 @@ msgstr ""
 msgid "艾丝黛尔，中度感染者，因矿石病引发的显性突变而受到一定关注，后为寻求庇护联络罗德岛制药，在接受数项治疗方案后转至罗德岛进行治疗。经本人意愿，接受若干心理辅导并通过多项测试后，获准正式加入罗德岛。现作为近卫人员于罗德岛小队任职。"
 msgstr ""
 
-#: ./data\character\0127_艾丝黛尔.csv:30
+#: ./data\character\0127_艾丝黛尔.csv:29
 msgid "白色时髦短外套"
 msgstr ""
 
-#: ./data\character\0127_艾丝黛尔.csv:31
+#: ./data\character\0127_艾丝黛尔.csv:30
 msgid "黑绿双色手套"
 msgstr ""
 
-#: ./data\character\0127_艾丝黛尔.csv:32
+#: ./data\character\0127_艾丝黛尔.csv:31
 msgid "白色紧身运动长裤"
 msgstr ""
 
@@ -43280,35 +43280,35 @@ msgstr ""
 msgid "自称维多利亚皇家侦探；自称曾破获多起案件，略有薄名；自称深受上司赏识，受派遣前往罗德岛。不论自称如何，梅小姐现作为狙击干员为罗德岛提供服务。"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:27
+#: ./data\character\0133_梅.csv:28
 msgid "红色方半框眼镜"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:28
+#: ./data\character\0133_梅.csv:29
 msgid "白色长袖衬衫"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:29
+#: ./data\character\0133_梅.csv:30
 msgid "深色无袖毛衣"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:30
+#: ./data\character\0133_梅.csv:31
 msgid "桔色休闲外套"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:31
+#: ./data\character\0133_梅.csv:32
 msgid "蓝色休闲短裤"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:32
+#: ./data\character\0133_梅.csv:33
 msgid "桔色及膝袜"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:33
+#: ./data\character\0133_梅.csv:34
 msgid "大腿包（右）"
 msgstr ""
 
-#: ./data\character\0133_梅.csv:34
+#: ./data\character\0133_梅.csv:35
 msgid "棕色绑带运动鞋"
 msgstr ""
 
@@ -43424,27 +43424,27 @@ msgstr ""
 msgid "前乌萨斯地下搏击手，所属组织分裂后加入罗德岛。现作为近卫干员，在最前线发挥她出色的破坏力"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:30
+#: ./data\character\0137_猎蜂.csv:29
 msgid "黑色花纹带兜帽长袖外套"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:31
+#: ./data\character\0137_猎蜂.csv:30
 msgid "黄黑条纹长袖衬衣"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:33
+#: ./data\character\0137_猎蜂.csv:32
 msgid "棕色短裤"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:34
+#: ./data\character\0137_猎蜂.csv:33
 msgid "黄色过膝袜（右）"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:35
+#: ./data\character\0137_猎蜂.csv:34
 msgid "加固护膝（左）"
 msgstr ""
 
-#: ./data\character\0137_猎蜂.csv:36
+#: ./data\character\0137_猎蜂.csv:35
 msgid "红色绑带短靴"
 msgstr ""
 
@@ -43488,11 +43488,11 @@ msgstr ""
 msgid "拉普兰德，身份不明，履历缺失。于战术攻坚与肃清作战中展现出十足的歼灭能力。现作为近卫干员，为罗德岛提供特别行动服务。"
 msgstr ""
 
-#: ./data\character\0140_拉普兰德.csv:31
+#: ./data\character\0140_拉普兰德.csv:32
 msgid "黑色硬质立领外套"
 msgstr ""
 
-#: ./data\character\0140_拉普兰德.csv:33
+#: ./data\character\0140_拉普兰德.csv:34
 msgid "黑色加固短靴"
 msgstr ""
 
@@ -43584,19 +43584,19 @@ msgstr ""
 msgid "红，身份不明，履历缺失，由凯尔希医生接收、监护并担保。于机动作战，特种作战与隐秘作战中表现出极高天赋，成绩斐然。现于凯尔希医生的指导下，作为特种干员为罗德岛提供服务。"
 msgstr ""
 
-#: ./data\character\0144_红.csv:29
+#: ./data\character\0144_红.csv:28
 msgid "红色带兜帽加绒保暖风衣"
 msgstr ""
 
-#: ./data\character\0144_红.csv:30
+#: ./data\character\0144_红.csv:29
 msgid "灰色大码休闲服"
 msgstr ""
 
-#: ./data\character\0144_红.csv:32
+#: ./data\character\0144_红.csv:31
 msgid "黑色紧身牛仔裤"
 msgstr ""
 
-#: ./data\character\0144_红.csv:34
+#: ./data\character\0144_红.csv:33
 msgid "黑色系带短靴"
 msgstr ""
 
@@ -43616,15 +43616,15 @@ msgstr ""
 msgid "闪灵，萨卡兹医师，前萨卡兹医疗组织“赦罪师”成员，感染者援助团体“使徒”的一员。于源石技艺、战场急救、医学理论、临床医学等领域拥有渊博知识。现作为医疗干员为罗德岛医疗部门提供源石技艺理论，并为多项行动提供战场医疗救护服务。"
 msgstr ""
 
-#: ./data\character\0147_闪灵.csv:30
+#: ./data\character\0147_闪灵.csv:31
 msgid "黑色带兜帽披风"
 msgstr ""
 
-#: ./data\character\0147_闪灵.csv:31
+#: ./data\character\0147_闪灵.csv:32
 msgid "黑白双色纽扣长连衣裙"
 msgstr ""
 
-#: ./data\character\0147_闪灵.csv:33
+#: ./data\character\0147_闪灵.csv:34
 msgid "黑色高跟长靴"
 msgstr ""
 
@@ -43640,15 +43640,15 @@ msgstr ""
 msgid "临光，前卡西米尔耀骑士，感染者援助团体“使徒”的一员。在掩护己方队员、机动作战、歼灭战与开阔地带作战中体现出极高的战斗技巧和个人军事素养。现于罗德岛作为重装干员行动，并于现场提供战术指挥支援。"
 msgstr ""
 
-#: ./data\character\0148_临光.csv:31
+#: ./data\character\0148_临光.csv:34
 msgid "黑色加固长袖衬衫"
 msgstr ""
 
-#: ./data\character\0148_临光.csv:32
+#: ./data\character\0148_临光.csv:35
 msgid "黑色长连衣裙"
 msgstr ""
 
-#: ./data\character\0148_临光.csv:33
+#: ./data\character\0148_临光.csv:36
 msgid "黑色硬质加固手套"
 msgstr ""
 
@@ -43664,11 +43664,11 @@ msgstr ""
 msgid "遭受感染而被群落驱逐，独自一人求生的地下佣兵。擅长处理各种见不得光的事物，因此被同行称作“清道夫”。后经中间人介绍，放弃不稳定的佣兵事业成为罗德岛的干员。"
 msgstr ""
 
-#: ./data\character\0149_清道夫.csv:30
+#: ./data\character\0149_清道夫.csv:29
 msgid "露肩短连衣裙"
 msgstr ""
 
-#: ./data\character\0149_清道夫.csv:31
+#: ./data\character\0149_清道夫.csv:30
 msgid "黄色作战手套"
 msgstr ""
 
@@ -43684,23 +43684,23 @@ msgstr ""
 msgid "蛇屠箱，身份不明，履历缺失。在强对抗战斗中展现出了不凡的防守强度。现作为重装干员，为罗德岛的多项行动提供服务。"
 msgstr ""
 
-#: ./data\character\0150_蛇屠箱.csv:28
+#: ./data\character\0150_蛇屠箱.csv:27
 msgid "黑色贝雷帽"
 msgstr ""
 
-#: ./data\character\0150_蛇屠箱.csv:30
+#: ./data\character\0150_蛇屠箱.csv:29
 msgid "绿色棒球服"
 msgstr ""
 
-#: ./data\character\0150_蛇屠箱.csv:31
+#: ./data\character\0150_蛇屠箱.csv:30
 msgid "黑色运动短背心"
 msgstr ""
 
-#: ./data\character\0150_蛇屠箱.csv:32
+#: ./data\character\0150_蛇屠箱.csv:31
 msgid "桔色短袜"
 msgstr ""
 
-#: ./data\character\0150_蛇屠箱.csv:33
+#: ./data\character\0150_蛇屠箱.csv:32
 msgid "黑色平底休闲鞋"
 msgstr ""
 
@@ -43712,11 +43712,11 @@ msgstr ""
 msgid "杜林族出身的少女，根据本人强烈要求，记录此前履历为：大将军。外表与性格有孩子气的成分，但在战场上表现出颇强的感染力和相当的指挥水准，能够在提振其他干员士气的同时，为他们提供一定的治疗，十分可靠。"
 msgstr ""
 
-#: ./data\character\0151_桃金娘.csv:29
+#: ./data\character\0151_桃金娘.csv:30
 msgid "连颈胸带"
 msgstr ""
 
-#: ./data\character\0151_桃金娘.csv:34
+#: ./data\character\0151_桃金娘.csv:35
 msgid "“金苹果”"
 msgstr ""
 
@@ -43732,27 +43732,27 @@ msgstr ""
 msgid "格拉斯哥帮成员摩根，被推进之王戏称为帮派的大脑。在罗德岛协助推进之王处理所有与格拉斯哥帮相关的事务，现兼职为罗德岛处理维多利亚办事处的相关事务。"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:29
+#: ./data\character\0154_摩根.csv:31
 msgid "白色颈环"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:30
+#: ./data\character\0154_摩根.csv:32
 msgid "浅灰绿风衣"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:31
+#: ./data\character\0154_摩根.csv:33
 msgid "网眼背心"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:32
+#: ./data\character\0154_摩根.csv:34
 msgid "墨绿色长袖上衣"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:33
+#: ./data\character\0154_摩根.csv:35
 msgid "白色超短裤"
 msgstr ""
 
-#: ./data\character\0154_摩根.csv:34
+#: ./data\character\0154_摩根.csv:36
 msgid "高跟长靴"
 msgstr ""
 
@@ -43800,27 +43800,27 @@ msgstr ""
 msgid "达格达，原伦蒂尼姆塔楼骑士，现格拉斯哥帮成员。随推进之王一同加入罗德岛，作为推进之王小队一员，活跃在各项攻坚任务中。"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:30
+#: ./data\character\0157_达格达.csv:32
 msgid "黑色皮夹克"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:31
+#: ./data\character\0157_达格达.csv:33
 msgid "黑色T恤"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:32
+#: ./data\character\0157_达格达.csv:34
 msgid "黑色短裤"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:34
+#: ./data\character\0157_达格达.csv:36
 msgid "黑色系带长靴（右）"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:35
+#: ./data\character\0157_达格达.csv:37
 msgid "黑色加固短靴（左）"
 msgstr ""
 
-#: ./data\character\0157_达格达.csv:36
+#: ./data\character\0157_达格达.csv:38
 msgid "黑色加固手套"
 msgstr ""
 
@@ -43876,23 +43876,23 @@ msgstr ""
 msgid "夜魔，维多利亚公民，登记姓名为瑞贝尔·帕斯贝莱蒂·葛罗莉亚，于罗德岛正式任职前为高校学生，进修课程：进阶医疗法术与心理学干预。在医疗法术和破坏性法术领域均展现出较强的控制力。现于罗德岛某调理机构中担任职员。备注：该干员适用于特殊监护管理办法，协议已由监护者莱娜签字确认，现已生效。"
 msgstr ""
 
-#: ./data\character\0164_夜魔.csv:30
+#: ./data\character\0164_夜魔.csv:32
 msgid "黑色发带蝴蝶结"
 msgstr ""
 
-#: ./data\character\0164_夜魔.csv:31
+#: ./data\character\0164_夜魔.csv:33
 msgid "黄色毛领夹克"
 msgstr ""
 
-#: ./data\character\0164_夜魔.csv:32
+#: ./data\character\0164_夜魔.csv:34
 msgid "黑色水手服"
 msgstr ""
 
-#: ./data\character\0164_夜魔.csv:33
+#: ./data\character\0164_夜魔.csv:35
 msgid "黄色护腕手套"
 msgstr ""
 
-#: ./data\character\0164_夜魔.csv:37
+#: ./data\character\0164_夜魔.csv:39
 msgid "灰色魔法权杖"
 msgstr ""
 
@@ -43908,27 +43908,27 @@ msgstr ""
 msgid "天火，隶属民间源石技艺研究会“狐尾”的核心团体“王者之杖”。拥有地质学与源石地质学双学位，维多利亚高等职业术师，在源石技艺及理论研究方面皆有杰出造诣。现任王者之杖驻罗德岛首席术师，与罗德岛签署合作协议，并为罗德岛的源石理论研究，歼灭战作战等多项任务提供协助。"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:30
+#: ./data\character\0166_天火.csv:32
 msgid "红色宽袖外套"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:31
+#: ./data\character\0166_天火.csv:33
 msgid "黑色V领夹克"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:32
+#: ./data\character\0166_天火.csv:34
 msgid "白衬衫"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:33
+#: ./data\character\0166_天火.csv:35
 msgid "黑色高腰百褶裙"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:34
+#: ./data\character\0166_天火.csv:36
 msgid "黑色透肉连裤袜"
 msgstr ""
 
-#: ./data\character\0166_天火.csv:35
+#: ./data\character\0166_天火.csv:37
 msgid "高跟皮鞋"
 msgstr ""
 
@@ -43944,27 +43944,27 @@ msgstr ""
 msgid "前切爾諾柏格研究所之研究員，在石棺事件後叛逃了所屬勢力。主導了對烏薩斯所屬的萬尼亞大公的刺殺，最後遭皇帝的內衛追緝，消失於薩米的雪原之中。\n.....她的故事本因就此終結，但出於未知原因，莉莉婭小姐暫且逃離了烏薩斯了追捕，現加入了羅德島"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:33
+#: ./data\character\0168_莉莉娅.csv:35
 msgid "淡青色領巾"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:34
+#: ./data\character\0168_莉莉娅.csv:36
 msgid "研究所外衣"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:35
+#: ./data\character\0168_莉莉娅.csv:37
 msgid "白色長袖襯衫"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:36
+#: ./data\character\0168_莉莉娅.csv:38
 msgid "陳舊的婚戒"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:37
+#: ./data\character\0168_莉莉娅.csv:39
 msgid "研究所连衣裙"
 msgstr ""
 
-#: ./data\character\0168_莉莉娅.csv:38
+#: ./data\character\0168_莉莉娅.csv:40
 msgid "厚黑色连裤袜"
 msgstr ""
 
@@ -44000,39 +44000,39 @@ msgstr ""
 msgid "崖心，谢拉格出身，现罗德岛干员。攀岩与登山方面的专家，能熟练使用各种攀爬工具。现于罗德岛接受矿石病治疗。"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:30
+#: ./data\character\0173_崖心.csv:34
 msgid "黑白格子鸭舌帽"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:31
+#: ./data\character\0173_崖心.csv:35
 msgid "黑色抹胸"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:32
+#: ./data\character\0173_崖心.csv:36
 msgid "白色无袖背心外套"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:33
+#: ./data\character\0173_崖心.csv:37
 msgid "黑色热裤"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:34
+#: ./data\character\0173_崖心.csv:38
 msgid "黑色加厚过膝袜（右）"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:35
+#: ./data\character\0173_崖心.csv:39
 msgid "白色短袜（左）"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:36
+#: ./data\character\0173_崖心.csv:40
 msgid "保暖登山靴"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:37
+#: ./data\character\0173_崖心.csv:41
 msgid "登山镐及勾爪"
 msgstr ""
 
-#: ./data\character\0173_崖心.csv:38
+#: ./data\character\0173_崖心.csv:42
 msgid "登山绳"
 msgstr ""
 
@@ -44048,35 +44048,35 @@ msgstr ""
 msgid "初雪，谢拉格出身，喀兰圣女，全谢拉格的宗教领袖。运用神赐的圣铃，呼唤风雪的力量。现通过保密途径来到罗德岛，具体担任事务与驻留时间不便公开。"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:32
+#: ./data\character\0174_初雪.csv:36
 msgid "喀兰圣女的头饰"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:33
+#: ./data\character\0174_初雪.csv:37
 msgid "民族风连身高衩长裙"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:34
+#: ./data\character\0174_初雪.csv:38
 msgid "喀兰贸易披风"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:36
+#: ./data\character\0174_初雪.csv:40
 msgid "白色围脖"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:37
+#: ./data\character\0174_初雪.csv:41
 msgid "珠子项链"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:38
+#: ./data\character\0174_初雪.csv:42
 msgid "灰色加厚过膝袜"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:39
+#: ./data\character\0174_初雪.csv:43
 msgid "黑色中筒保暖靴"
 msgstr ""
 
-#: ./data\character\0174_初雪.csv:40
+#: ./data\character\0174_初雪.csv:44
 msgid "神赐的圣铃"
 msgstr ""
 
@@ -44228,23 +44228,23 @@ msgstr ""
 msgid "地灵，地质学家。在环境评估、战场分析、地形利用等多方面工作中为罗德岛填补了相应的空缺。目前任职于罗德岛辅助干员小组，并为罗德岛提供地质勘探、天灾预警等天灾信使的相关服务。"
 msgstr ""
 
-#: ./data\character\0183_地灵.csv:32
+#: ./data\character\0183_地灵.csv:36
 msgid "黑色工作外套"
 msgstr ""
 
-#: ./data\character\0183_地灵.csv:33
+#: ./data\character\0183_地灵.csv:37
 msgid "灰色短袖衬衣"
 msgstr ""
 
-#: ./data\character\0183_地灵.csv:34
+#: ./data\character\0183_地灵.csv:38
 msgid "红色束带手套"
 msgstr ""
 
-#: ./data\character\0183_地灵.csv:35
+#: ./data\character\0183_地灵.csv:39
 msgid "黑色工作长裙"
 msgstr ""
 
-#: ./data\character\0183_地灵.csv:39
+#: ./data\character\0183_地灵.csv:43
 msgid "黑色法杖"
 msgstr ""
 
@@ -44260,23 +44260,23 @@ msgstr ""
 msgid "慕斯，曾于维多利亚王国伦蒂尼姆市瓦莱丽蛋糕店担任实习甜点师。在职期间感染矿石病，由双亲送入罗德岛进行治疗。经本人意愿，接受若干心理辅导并通过多项测试后，获准正式加入罗德岛。现于罗德岛担任常规后勤人员，并提供战场辅助工作。"
 msgstr ""
 
-#: ./data\character\0185_慕斯.csv:31
+#: ./data\character\0185_慕斯.csv:33
 msgid "深蓝色小礼帽"
 msgstr ""
 
-#: ./data\character\0185_慕斯.csv:32
+#: ./data\character\0185_慕斯.csv:34
 msgid "黑色哥特洋装"
 msgstr ""
 
-#: ./data\character\0185_慕斯.csv:33
+#: ./data\character\0185_慕斯.csv:35
 msgid "黑色蕾丝手套"
 msgstr ""
 
-#: ./data\character\0185_慕斯.csv:36
+#: ./data\character\0185_慕斯.csv:38
 msgid "黑色束带长靴"
 msgstr ""
 
-#: ./data\character\0185_慕斯.csv:37
+#: ./data\character\0185_慕斯.csv:39
 msgid "爪子"
 msgstr ""
 
@@ -44292,27 +44292,27 @@ msgstr ""
 msgid "前自由佣兵，感染矿石病后被迫背井离乡，几经辗转最终加入罗德岛。身体素质、破坏力、战斗技巧，无一不是水准以上，但出于本人意愿，现作为医疗干员活跃于战场之上。"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:30
+#: ./data\character\0187_嘉维尔.csv:32
 msgid "黑色战术夹克"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:31
+#: ./data\character\0187_嘉维尔.csv:33
 msgid "绿色运动抓绒衣"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:32
+#: ./data\character\0187_嘉维尔.csv:34
 msgid "黑色分体短裙"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:33
+#: ./data\character\0187_嘉维尔.csv:35
 msgid "黑色大腿束带"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:34
+#: ./data\character\0187_嘉维尔.csv:36
 msgid "黑绿色战斗靴"
 msgstr ""
 
-#: ./data\character\0187_嘉维尔.csv:35
+#: ./data\character\0187_嘉维尔.csv:37
 msgid "绿色战斧"
 msgstr ""
 
@@ -44328,43 +44328,43 @@ msgstr ""
 msgid "红云，出身地不明，入职前于叙拉古荒野地区进行活动，推测身份：猎人。在狩猎，狙击，散兵战术等单兵作战中展现出不凡身手。现于罗德岛狙击小组任职，提供射击援护方面的保障。"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:31
+#: ./data\character\0190_红云.csv:32
 msgid "黑色部落风围巾"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:33
+#: ./data\character\0190_红云.csv:34
 msgid "狩猎者连帽披风"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:34
+#: ./data\character\0190_红云.csv:35
 msgid "黑色半指战术手套"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:35
+#: ./data\character\0190_红云.csv:36
 msgid "银色金属臂甲"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:36
+#: ./data\character\0190_红云.csv:37
 msgid "白色绷带护腕"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:37
+#: ./data\character\0190_红云.csv:38
 msgid "黑色运动热裤"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:38
+#: ./data\character\0190_红云.csv:39
 msgid "白色绷带护腿"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:40
+#: ./data\character\0190_红云.csv:41
 msgid "黑色露趾凉鞋"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:41
+#: ./data\character\0190_红云.csv:42
 msgid "传统木制长弓"
 msgstr ""
 
-#: ./data\character\0190_红云.csv:42
+#: ./data\character\0190_红云.csv:43
 msgid "兽牙项链吊坠"
 msgstr ""
 
@@ -44380,31 +44380,31 @@ msgstr ""
 msgid "出身自拉特兰的黎博利人，前拉特兰戍卫队成员。阴差阳错间离开了拉特兰来到罗德岛。现于罗德岛担任安保人员，提供基地安保、巡查与重要物资看护等相关服务。"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:27
+#: ./data\character\0192_翎羽.csv:26
 msgid "黑色羽饰贝雷帽"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:28
+#: ./data\character\0192_翎羽.csv:27
 msgid "黑色高领围巾"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:29
+#: ./data\character\0192_翎羽.csv:28
 msgid "黑白斗篷外套"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:30
+#: ./data\character\0192_翎羽.csv:29
 msgid "银灰色紧身上衣"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:31
+#: ./data\character\0192_翎羽.csv:30
 msgid "黑色战术护臂"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:34
+#: ./data\character\0192_翎羽.csv:33
 msgid "黑金装饰长靴"
 msgstr ""
 
-#: ./data\character\0192_翎羽.csv:35
+#: ./data\character\0192_翎羽.csv:34
 msgid "黑色战术长矛"
 msgstr ""
 
@@ -44464,23 +44464,23 @@ msgstr ""
 msgid "烈夏，本名罗莎琳·塔季扬诺夫娜·拉里娜，切尔诺伯格事变前于切城某中学就读，在校期间与干员凛冬皆为学生中的领军人物。现作为外勤小组的成员，多负责中长线的外勤任务。\n"
 msgstr ""
 
-#: ./data\character\0194_烈夏.csv:29
+#: ./data\character\0194_烈夏.csv:33
 msgid "露脐水手服"
 msgstr ""
 
-#: ./data\character\0194_烈夏.csv:30
+#: ./data\character\0194_烈夏.csv:34
 msgid "长柄异形斧"
 msgstr ""
 
-#: ./data\character\0194_烈夏.csv:31
+#: ./data\character\0194_烈夏.csv:35
 msgid "过臀长短裙"
 msgstr ""
 
-#: ./data\character\0194_烈夏.csv:32
+#: ./data\character\0194_烈夏.csv:36
 msgid "棕红色过膝袜"
 msgstr ""
 
-#: ./data\character\0194_烈夏.csv:33
+#: ./data\character\0194_烈夏.csv:37
 msgid "长筒登山靴"
 msgstr ""
 
@@ -44496,23 +44496,23 @@ msgstr ""
 msgid "真理，切尔诺伯格事变前于切城某中学就读，在校期间多次向源石技艺相关杂志撰稿。知识领域：名家著作、推理文学、社会学期刊。于多项测试中展现出优异的控制类源石技艺，获准作为实习辅助干员加入战斗，并为罗德岛提供信息与资料整理等相关服务。"
 msgstr ""
 
-#: ./data\character\0195_真理.csv:29
+#: ./data\character\0195_真理.csv:30
 msgid "粉色连帽卡通上衣"
 msgstr ""
 
-#: ./data\character\0195_真理.csv:30
+#: ./data\character\0195_真理.csv:31
 msgid "棕色带帽披肩"
 msgstr ""
 
-#: ./data\character\0195_真理.csv:31
+#: ./data\character\0195_真理.csv:32
 msgid "深蓝色学生短裙"
 msgstr ""
 
-#: ./data\character\0195_真理.csv:32
+#: ./data\character\0195_真理.csv:33
 msgid "白色学生袜"
 msgstr ""
 
-#: ./data\character\0195_真理.csv:33
+#: ./data\character\0195_真理.csv:34
 msgid "棕色学生皮鞋"
 msgstr ""
 
@@ -44528,31 +44528,31 @@ msgstr ""
 msgid "古米，曾取得全乌萨斯童子军活动大赛青少年组亚军，切尔诺伯格事变前于切城某中学就读。技术领域：乌萨斯式烹调。于多项测试中表现出乌萨斯人与生俱来的强健力量和坚实体质，获准作为实习重装干员加入战斗，并为罗德岛提供后勤保障与战地烹饪等相关服务。"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:29
+#: ./data\character\0196_古米.csv:31
 msgid "红色双圆头饰"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:30
+#: ./data\character\0196_古米.csv:32
 msgid "棕色军事夹克"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:31
+#: ./data\character\0196_古米.csv:33
 msgid "白色校服衬衣"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:33
+#: ./data\character\0196_古米.csv:35
 msgid "橙色连裤袜"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:34
+#: ./data\character\0196_古米.csv:36
 msgid "棕色制式短靴"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:35
+#: ./data\character\0196_古米.csv:37
 msgid "金属防爆盾"
 msgstr ""
 
-#: ./data\character\0196_古米.csv:36
+#: ./data\character\0196_古米.csv:38
 msgid "黑色煎锅"
 msgstr ""
 
@@ -44568,39 +44568,39 @@ msgstr ""
 msgid "早露，切尔诺伯格事变前于切城某中学就读，并担任学生会长。事变后加入罗德岛，隶属后勤部门，工作期间风评极佳。现经本人申请，作为狙击干员转入前线。"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:30
+#: ./data\character\0197_早露.csv:34
 msgid "深蓝金徽学生帽"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:31
+#: ./data\character\0197_早露.csv:35
 msgid "鲜红绸缎大蝴蝶结"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:32
+#: ./data\character\0197_早露.csv:36
 msgid "白底蓝边水手衬衫"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:33
+#: ./data\character\0197_早露.csv:37
 msgid "深蓝毛边军装大衣"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:34
+#: ./data\character\0197_早露.csv:38
 msgid "纯白高腰百褶短裙"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:36
+#: ./data\character\0197_早露.csv:40
 msgid "纯黑不透明连裤袜"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:37
+#: ./data\character\0197_早露.csv:41
 msgid "灰白毛球系带军靴"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:38
+#: ./data\character\0197_早露.csv:42
 msgid "乌萨斯重型狙击弩炮"
 msgstr ""
 
-#: ./data\character\0197_早露.csv:39
+#: ./data\character\0197_早露.csv:43
 msgid "学生会肩章"
 msgstr ""
 
@@ -44692,31 +44692,31 @@ msgstr ""
 msgid "塞雷娅，前莱茵生命防卫科主任。于生命科学、微生物学、源石技艺等领域皆有建树，同时于歼灭战、要员保全、异常事态处理等任务中表现出强大实力。目前与罗德岛在科研等多个领域皆有合作，同时，正与罗德岛针对深入合作计划进行磋商。"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:29
+#: ./data\character\0202_塞雷娅.csv:32
 msgid "白灰色实验大衣"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:30
+#: ./data\character\0202_塞雷娅.csv:33
 msgid "黑色束身马甲"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:31
+#: ./data\character\0202_塞雷娅.csv:34
 msgid "黑色机械臂甲"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:32
+#: ./data\character\0202_塞雷娅.csv:35
 msgid "黑色开叉半裙"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:33
+#: ./data\character\0202_塞雷娅.csv:36
 msgid "黑色机械战靴"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:34
+#: ./data\character\0202_塞雷娅.csv:37
 msgid "钢铁菱形盾"
 msgstr ""
 
-#: ./data\character\0202_塞雷娅.csv:35
+#: ./data\character\0202_塞雷娅.csv:38
 msgid "钢化注射器"
 msgstr ""
 
@@ -44756,15 +44756,15 @@ msgstr ""
 msgid "玫兰莎，行动预备组A4组长，维多利亚公民，正式任职前为普通感染者，无职业。于多项测试中获得优异成绩，遂获准加入罗德岛。"
 msgstr ""
 
-#: ./data\character\0208_玫兰莎.csv:30
+#: ./data\character\0208_玫兰莎.csv:31
 msgid "黑色无袖塑身上衣"
 msgstr ""
 
-#: ./data\character\0208_玫兰莎.csv:33
+#: ./data\character\0208_玫兰莎.csv:34
 msgid "黑色过膝丝袜"
 msgstr ""
 
-#: ./data\character\0208_玫兰莎.csv:34
+#: ./data\character\0208_玫兰莎.csv:35
 msgid "黑色平底短靴"
 msgstr ""
 
@@ -44780,31 +44780,31 @@ msgstr ""
 msgid "卡缇，行动预备组A4组员，莱塔尼亚公民，正式任职前为雪橇巡逻队队员。于多项测试中获得优异成绩，遂获准加入罗德岛。"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:29
+#: ./data\character\0209_卡缇.csv:30
 msgid "蓝色雪地护目镜"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:30
+#: ./data\character\0209_卡缇.csv:31
 msgid "黑色领带"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:31
+#: ./data\character\0209_卡缇.csv:32
 msgid "白色连帽外套"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:32
+#: ./data\character\0209_卡缇.csv:33
 msgid "黑色运动基础衣"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:34
+#: ./data\character\0209_卡缇.csv:35
 msgid "黑色连裤紧身裤"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:35
+#: ./data\character\0209_卡缇.csv:36
 msgid "红白色运动鞋"
 msgstr ""
 
-#: ./data\character\0209_卡缇.csv:36
+#: ./data\character\0209_卡缇.csv:37
 msgid "黑色防爆盾牌"
 msgstr ""
 
@@ -44820,35 +44820,35 @@ msgstr ""
 msgid "莫尼克，前無冑盟青金大位。於1097年騎士特錦賽\n後藉由偽造死亡現場脫離無冑盟。現化名為唐娜·泰勒，因不明原因停留於我艦"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:30
+#: ./data\character\0210_莫妮克.csv:31
 msgid "藍色半側套頭斗篷"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:32
+#: ./data\character\0210_莫妮克.csv:33
 msgid "側開黑色無冑盟制服"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:33
+#: ./data\character\0210_莫妮克.csv:34
 msgid "弓術護指手套"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:35
+#: ./data\character\0210_莫妮克.csv:36
 msgid "黑色皮裤"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:36
+#: ./data\character\0210_莫妮克.csv:37
 msgid "紫色蕾絲內裤"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:37
+#: ./data\character\0210_莫妮克.csv:38
 msgid "亮黑色長筒靴"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:38
+#: ./data\character\0210_莫妮克.csv:39
 msgid "箭袋"
 msgstr ""
 
-#: ./data\character\0210_莫妮克.csv:39
+#: ./data\character\0210_莫妮克.csv:40
 msgid "現代維多利亞式直弓"
 msgstr ""
 
@@ -44904,35 +44904,35 @@ msgstr ""
 msgid "前哥伦比亚某城园艺师，经赫默引荐加入罗德岛。身手矫健，思维敏捷，常活跃于各类隐秘任务中。"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:29
+#: ./data\character\0214_卡夫卡.csv:32
 msgid "绿色羽毛兵帽"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:30
+#: ./data\character\0214_卡夫卡.csv:33
 msgid "绿色蕾丝边领巾"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:31
+#: ./data\character\0214_卡夫卡.csv:34
 msgid "黑色羽毛披风"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:32
+#: ./data\character\0214_卡夫卡.csv:35
 msgid "棕色格子马甲"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:33
+#: ./data\character\0214_卡夫卡.csv:36
 msgid "灰色皮质手套"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:34
+#: ./data\character\0214_卡夫卡.csv:37
 msgid "黑色超短裤"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:35
+#: ./data\character\0214_卡夫卡.csv:38
 msgid "绿黑色长筒靴"
 msgstr ""
 
-#: ./data\character\0214_卡夫卡.csv:36
+#: ./data\character\0214_卡夫卡.csv:39
 msgid "绿色弩带"
 msgstr ""
 
@@ -44948,23 +44948,23 @@ msgstr ""
 msgid "狮蝎，履历大部分缺失，已知其入职前曾从事指定对象清除工作，推测身份：杀手。在潜伏、侵扰、突袭敌军阵线等行动中均表现出过硬的战斗技巧。现作为特种干员，为罗德岛提供特别行动服务。"
 msgstr ""
 
-#: ./data\character\0215_狮蝎.csv:30
+#: ./data\character\0215_狮蝎.csv:29
 msgid "黑色发卡"
 msgstr ""
 
-#: ./data\character\0215_狮蝎.csv:31
+#: ./data\character\0215_狮蝎.csv:30
 msgid "黑色皮革马甲"
 msgstr ""
 
-#: ./data\character\0215_狮蝎.csv:32
+#: ./data\character\0215_狮蝎.csv:31
 msgid "粉色毛绒披肩"
 msgstr ""
 
-#: ./data\character\0215_狮蝎.csv:35
+#: ./data\character\0215_狮蝎.csv:34
 msgid "黑色长筒皮靴"
 msgstr ""
 
-#: ./data\character\0215_狮蝎.csv:36
+#: ./data\character\0215_狮蝎.csv:35
 msgid "白色绑带护腿"
 msgstr ""
 
@@ -44980,19 +44980,19 @@ msgstr ""
 msgid "伊比利亚出身，干员白炽的保镖，与白炽一同接受罗德岛的雇佣。拥有良好的狙击素养，接受专业培训后，作为狙击干员活跃在各类任务中。"
 msgstr ""
 
-#: ./data\character\0218_安哲拉.csv:28
+#: ./data\character\0218_安哲拉.csv:27
 msgid "黑色毛领夹克"
 msgstr ""
 
-#: ./data\character\0218_安哲拉.csv:29
+#: ./data\character\0218_安哲拉.csv:28
 msgid "黑色内衬背心"
 msgstr ""
 
-#: ./data\character\0218_安哲拉.csv:30
+#: ./data\character\0218_安哲拉.csv:29
 msgid "黑色皮质手套"
 msgstr ""
 
-#: ./data\character\0218_安哲拉.csv:31
+#: ./data\character\0218_安哲拉.csv:30
 msgid "黑色战术长裤"
 msgstr ""
 
@@ -45008,27 +45008,27 @@ msgstr ""
 msgid "前“守林人”组织成员，现自由佣兵，此外履历不详。现作为狙击干员为罗德岛服务，使用手中的弩炮发挥出卓越的范围杀伤力。"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:30
+#: ./data\character\0219_陨星.csv:31
 msgid "黑色装甲胸衣"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:31
+#: ./data\character\0219_陨星.csv:32
 msgid "黄色内衬上衣"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:33
+#: ./data\character\0219_陨星.csv:34
 msgid "黑色超短裙"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:35
+#: ./data\character\0219_陨星.csv:36
 msgid "黑色战术短靴"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:36
+#: ./data\character\0219_陨星.csv:37
 msgid "重型弩炮"
 msgstr ""
 
-#: ./data\character\0219_陨星.csv:37
+#: ./data\character\0219_陨星.csv:38
 msgid "黑色腰带配件"
 msgstr ""
 
@@ -45176,35 +45176,35 @@ msgstr ""
 msgid "黑钢的正式干员，作为双方交流项目的一环驻扎学习。"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:30
+#: ./data\character\0235_杰西卡.csv:32
 msgid "黑钢制服外套"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:31
+#: ./data\character\0235_杰西卡.csv:33
 msgid "灰色内衬上衣"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:32
+#: ./data\character\0235_杰西卡.csv:34
 msgid "黑色皮质短裙"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:33
+#: ./data\character\0235_杰西卡.csv:35
 msgid "黑色护膝"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:34
+#: ./data\character\0235_杰西卡.csv:36
 msgid "黑色长筒袜"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:35
+#: ./data\character\0235_杰西卡.csv:37
 msgid "黑色战术长靴"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:36
+#: ./data\character\0235_杰西卡.csv:38
 msgid "战术装备腰带"
 msgstr ""
 
-#: ./data\character\0235_杰西卡.csv:37
+#: ./data\character\0235_杰西卡.csv:39
 msgid "黄色胸牌"
 msgstr ""
 
@@ -45252,23 +45252,23 @@ msgstr ""
 msgid "卡西米尔四阶骑士，因故在罗德岛逗留。擅长隐秘行动和暗杀，自愿成为博士的近卫之一。"
 msgstr ""
 
-#: ./data\character\0237_砾.csv:29
+#: ./data\character\0237_砾.csv:31
 msgid "黑色皮质夹克"
 msgstr ""
 
-#: ./data\character\0237_砾.csv:30
+#: ./data\character\0237_砾.csv:32
 msgid "白色紧身带护胸背心"
 msgstr ""
 
-#: ./data\character\0237_砾.csv:32
+#: ./data\character\0237_砾.csv:34
 msgid "棕色过膝破洞长袜"
 msgstr ""
 
-#: ./data\character\0237_砾.csv:34
+#: ./data\character\0237_砾.csv:36
 msgid "双刃短剑"
 msgstr ""
 
-#: ./data\character\0237_砾.csv:35
+#: ./data\character\0237_砾.csv:37
 msgid "腿部装备袋"
 msgstr ""
 
@@ -45284,27 +45284,27 @@ msgstr ""
 msgid "黑钢的受训生，作为双方交流项目的一环驻扎学习。利用种族带来的抗打击能力，出色地履行着先锋干员的职责。"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:29
+#: ./data\character\0240_香草.csv:31
 msgid "工牌绳带"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:30
+#: ./data\character\0240_香草.csv:32
 msgid "绿色军装外套"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:31
+#: ./data\character\0240_香草.csv:33
 msgid "黑色内搭上衣"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:32
+#: ./data\character\0240_香草.csv:34
 msgid "黑色紧身短裙"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:34
+#: ./data\character\0240_香草.csv:36
 msgid "黑色军用短靴"
 msgstr ""
 
-#: ./data\character\0240_香草.csv:35
+#: ./data\character\0240_香草.csv:37
 msgid "瓦伊凡战斧"
 msgstr ""
 
@@ -45320,31 +45320,31 @@ msgstr ""
 msgid "原炎国著名武打电影明星，因矿石病而不得不放弃了电影拍摄。其后来到了罗德岛，一度丢失了人生目标的食铁兽找到了新的目标。"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:30
+#: ./data\character\0241_食铁兽.csv:31
 msgid "熊猫耳朵发饰"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:31
+#: ./data\character\0241_食铁兽.csv:32
 msgid "蓝黑刺绣夹克"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:32
+#: ./data\character\0241_食铁兽.csv:33
 msgid "黑色露胸背心"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:33
+#: ./data\character\0241_食铁兽.csv:34
 msgid "黑色机械拳套"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:34
+#: ./data\character\0241_食铁兽.csv:35
 msgid "黑色紧身短裤"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:36
+#: ./data\character\0241_食铁兽.csv:37
 msgid "黑白运动高帮鞋"
 msgstr ""
 
-#: ./data\character\0241_食铁兽.csv:37
+#: ./data\character\0241_食铁兽.csv:38
 msgid "粉色腰带装饰"
 msgstr ""
 
@@ -45356,7 +45356,7 @@ msgstr ""
 msgid "梅尔，哥伦比亚出身，莱茵生命研究室所属成员，线控机械装置“咪波”的创造者。能力出众，科研能力极强，经营着个人工作室“鲁特拉”。现与罗德岛合作，在建筑、设计、开发方面提供援助。"
 msgstr ""
 
-#: ./data\character\0242_梅尔.csv:36
+#: ./data\character\0242_梅尔.csv:37
 msgid "机械水獭咪波"
 msgstr ""
 
@@ -45372,23 +45372,23 @@ msgstr ""
 msgid "槐琥，龙门在校大学生，龙门-罗德岛秘密商业交流协议中第一批次录用人员之一。由龙门某事务所推荐，在各项测试中得到了与身份不符的成绩，且具备一定的实战经验。多项调查正在跟进中。"
 msgstr ""
 
-#: ./data\character\0243_槐琥.csv:29
+#: ./data\character\0243_槐琥.csv:32
 msgid "红色高领围脖"
 msgstr ""
 
-#: ./data\character\0243_槐琥.csv:30
+#: ./data\character\0243_槐琥.csv:33
 msgid "橙黑炎国长袍"
 msgstr ""
 
-#: ./data\character\0243_槐琥.csv:31
+#: ./data\character\0243_槐琥.csv:34
 msgid "黑橙条纹袖套"
 msgstr ""
 
-#: ./data\character\0243_槐琥.csv:33
+#: ./data\character\0243_槐琥.csv:36
 msgid "黑色布制凉鞋"
 msgstr ""
 
-#: ./data\character\0243_槐琥.csv:34
+#: ./data\character\0243_槐琥.csv:37
 msgid "橙色飘带装饰"
 msgstr ""
 
@@ -45488,31 +45488,31 @@ msgstr ""
 msgid "干员柏喙，雷神工业装备设计师之女，遭遇工厂工人暴动而不幸感染矿石病。现作为医疗救助对象加入罗德岛，依照本人的意愿，允许调入作战部门，她的剑术如同她纺线一般优雅而有韵律。"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:29
+#: ./data\character\0252_柏喙.csv:31
 msgid "蓝花白色头饰"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:30
+#: ./data\character\0252_柏喙.csv:32
 msgid "蓝色领结"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:31
+#: ./data\character\0252_柏喙.csv:33
 msgid "白色荷叶边外套"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:32
+#: ./data\character\0252_柏喙.csv:34
 msgid "深蓝色束腰背心"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:33
+#: ./data\character\0252_柏喙.csv:35
 msgid "银色护手"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:34
+#: ./data\character\0252_柏喙.csv:36
 msgid "蓝白层叠短裙"
 msgstr ""
 
-#: ./data\character\0252_柏喙.csv:36
+#: ./data\character\0252_柏喙.csv:38
 msgid "黑色系带长靴"
 msgstr ""
 
@@ -45520,23 +45520,23 @@ msgstr ""
 msgid "菈塔托丝"
 msgstr ""
 
-#: ./data\character\0253_菈塔托丝.csv:27
+#: ./data\character\0253_菈塔托丝.csv:30
 msgid "黑色大型耳机"
 msgstr ""
 
-#: ./data\character\0253_菈塔托丝.csv:28
+#: ./data\character\0253_菈塔托丝.csv:31
 msgid "白色珠链项链"
 msgstr ""
 
-#: ./data\character\0253_菈塔托丝.csv:29
+#: ./data\character\0253_菈塔托丝.csv:32
 msgid "黑色毛领风衣"
 msgstr ""
 
-#: ./data\character\0253_菈塔托丝.csv:30
+#: ./data\character\0253_菈塔托丝.csv:33
 msgid "橙色民族连衣裙"
 msgstr ""
 
-#: ./data\character\0253_菈塔托丝.csv:33
+#: ./data\character\0253_菈塔托丝.csv:36
 msgid "黑色高跟短靴"
 msgstr ""
 
@@ -45552,39 +45552,39 @@ msgstr ""
 msgid "在叙拉古地区作为怪谈与传说被广为人知的少女，在调查时，被发现其根源在于少女无法控制自己的源石技艺，后作为感染者被罗德岛收容。批准其在接受治疗的同时作为干员参与部分轻度任务，以帮助她学会控制自身。"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:33
+#: ./data\character\0254_巫恋.csv:35
 msgid "墨黑色小礼帽"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:34
+#: ./data\character\0254_巫恋.csv:36
 msgid "白色发箍麻花辫半扎发"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:35
+#: ./data\character\0254_巫恋.csv:37
 msgid "哥特式半袖垂膝露背式黑色连衣裙"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:36
+#: ./data\character\0254_巫恋.csv:38
 msgid "“妈妈”赠送的西洋式薄绸"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:37
+#: ./data\character\0254_巫恋.csv:39
 msgid "女童式花纹黑色薄丝安全裤"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:38
+#: ./data\character\0254_巫恋.csv:40
 msgid "白色渐变透肉及腰连裤袜"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:39
+#: ./data\character\0254_巫恋.csv:41
 msgid "黑色蕾丝边绑腿绸带"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:40
+#: ./data\character\0254_巫恋.csv:42
 msgid "黑色带蝴蝶结安全女童鞋"
 msgstr ""
 
-#: ./data\character\0254_巫恋.csv:41
+#: ./data\character\0254_巫恋.csv:43
 msgid "诅咒娃娃“小莫提”"
 msgstr ""
 
@@ -45592,35 +45592,35 @@ msgstr ""
 msgid "莫希"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:26
+#: ./data\character\0255_莫希.csv:27
 msgid "黑色猫耳发卡"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:27
+#: ./data\character\0255_莫希.csv:28
 msgid "黑色羽翼斗篷"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:28
+#: ./data\character\0255_莫希.csv:29
 msgid "黑色皮质上衣"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:29
+#: ./data\character\0255_莫希.csv:30
 msgid "金属护臂手套"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:30
+#: ./data\character\0255_莫希.csv:31
 msgid "白色百褶短裙"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:31
+#: ./data\character\0255_莫希.csv:32
 msgid "灰色连裤袜"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:33
+#: ./data\character\0255_莫希.csv:34
 msgid "黑色弩弓"
 msgstr ""
 
-#: ./data\character\0255_莫希.csv:34
+#: ./data\character\0255_莫希.csv:35
 msgid "粉色晶石饰品"
 msgstr ""
 
@@ -45636,31 +45636,31 @@ msgstr ""
 msgid "波登可是以普通流程应聘进入罗德岛的干员，在调香师主管的庭院里负责照看温室与花卉培植。可以作为作战干员调动，运用对植物的理解医疗队友或扰乱敌人。"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:29
+#: ./data\character\0258_波登可.csv:31
 msgid "黄色丝巾领结"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:30
+#: ./data\character\0258_波登可.csv:32
 msgid "棕色皮革腰带"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:31
+#: ./data\character\0258_波登可.csv:33
 msgid "白色制服衬衫"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:32
+#: ./data\character\0258_波登可.csv:34
 msgid "墨绿色斗篷外套"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:34
+#: ./data\character\0258_波登可.csv:36
 msgid "白色中筒袜"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:36
+#: ./data\character\0258_波登可.csv:38
 msgid "法杖香炉"
 msgstr ""
 
-#: ./data\character\0258_波登可.csv:37
+#: ./data\character\0258_波登可.csv:39
 msgid "园艺工具包"
 msgstr ""
 
@@ -45676,27 +45676,27 @@ msgstr ""
 msgid "坚雷，前哥伦比亚正规军中士，因不明原因退伍。通过正规录用渠道加入罗德岛，担任教官与重装干员职务。擅长使用特殊构造的盾牌进行防护，并寻机以电刃攻击敌人。"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:29
+#: ./data\character\0260_坚雷.csv:30
 msgid "黑色军事外套"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:30
+#: ./data\character\0260_坚雷.csv:31
 msgid "白色抹胸内衣"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:31
+#: ./data\character\0260_坚雷.csv:32
 msgid "紫色紧身胸甲"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:32
+#: ./data\character\0260_坚雷.csv:33
 msgid "黑色战术手套"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:33
+#: ./data\character\0260_坚雷.csv:34
 msgid "灰色战术长裤"
 msgstr ""
 
-#: ./data\character\0260_坚雷.csv:36
+#: ./data\character\0260_坚雷.csv:37
 msgid "黑色电能盾"
 msgstr ""
 
@@ -45712,27 +45712,27 @@ msgstr ""
 msgid "苇草，身份不明，履历缺失。作为矿石病患者，苇草由医疗干员自维多利亚小丘郡的战后废墟中营救并收留。在非矿石病损伤康复后，于测试中表现出高超的战斗技巧与强大的源石技艺。现留舰查看中。"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:31
+#: ./data\character\0261_苇草.csv:32
 msgid "白色骑士外套"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:32
+#: ./data\character\0261_苇草.csv:33
 msgid "黑色露腹衬衣"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:33
+#: ./data\character\0261_苇草.csv:34
 msgid "白色装甲护臂"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:36
+#: ./data\character\0261_苇草.csv:37
 msgid "黑色骑士长靴"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:37
+#: ./data\character\0261_苇草.csv:38
 msgid "烈焰双剑"
 msgstr ""
 
-#: ./data\character\0261_苇草.csv:38
+#: ./data\character\0261_苇草.csv:39
 msgid "红色围巾飘带"
 msgstr ""
 
@@ -45740,19 +45740,19 @@ msgstr ""
 msgid "休露丝"
 msgstr ""
 
-#: ./data\character\0262_休露丝.csv:27
+#: ./data\character\0262_休露丝.csv:28
 msgid "橙色宽松外套"
 msgstr ""
 
-#: ./data\character\0262_休露丝.csv:28
+#: ./data\character\0262_休露丝.csv:29
 msgid "黑色露肩上衣"
 msgstr ""
 
-#: ./data\character\0262_休露丝.csv:29
+#: ./data\character\0262_休露丝.csv:30
 msgid "黑色长袖手套"
 msgstr ""
 
-#: ./data\character\0262_休露丝.csv:30
+#: ./data\character\0262_休露丝.csv:31
 msgid "黑色毛边短裙"
 msgstr ""
 
@@ -45828,27 +45828,27 @@ msgstr ""
 msgid "鞭刃佐菲娅，前卡西米尔竞技骑士，亲缘关系上是干员临光及瑕光的姑母，曾打入特锦赛十六强，过去是左撇子，后因故伤残，转而使用右手。虽然战斗力不如巅峰时期，但眼光独到，在训练他人上拥有不俗的能力，现加入杜宾为首的教官阵容，日常以训练干员为主，必要时才会参加各项任务。"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:30
+#: ./data\character\0265_鞭刃.csv:32
 msgid "黑色丝带领结"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:31
+#: ./data\character\0265_鞭刃.csv:33
 msgid "米白色骑士外套"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:32
+#: ./data\character\0265_鞭刃.csv:34
 msgid "棕色紧身皮甲"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:33
+#: ./data\character\0265_鞭刃.csv:35
 msgid "黑色超短皮裙"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:34
+#: ./data\character\0265_鞭刃.csv:36
 msgid "黑色透肉过膝袜"
 msgstr ""
 
-#: ./data\character\0265_鞭刃.csv:36
+#: ./data\character\0265_鞭刃.csv:38
 msgid "骑士训练鞭"
 msgstr ""
 
@@ -45876,35 +45876,35 @@ msgstr ""
 msgid "本名格蕾丝·亚利桑那，维多利亚某旁系贵族独女，于医疗技艺进修时期接触罗德岛，并主动求职于罗德岛，在药理学与临床理论方面表现优异，现为罗德岛提供战场医疗救护服务。"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:30
+#: ./data\character\0275_微风.csv:32
 msgid "黑色领结项链"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:31
+#: ./data\character\0275_微风.csv:33
 msgid "黑色医疗外套"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:32
+#: ./data\character\0275_微风.csv:34
 msgid "灰色束腰马甲"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:34
+#: ./data\character\0275_微风.csv:36
 msgid "黑灰双层短裙"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:35
+#: ./data\character\0275_微风.csv:37
 msgid "黑色条纹长袜"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:36
+#: ./data\character\0275_微风.csv:38
 msgid "黑棕运动鞋"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:37
+#: ./data\character\0275_微风.csv:39
 msgid "医疗法杖"
 msgstr ""
 
-#: ./data\character\0275_微风.csv:38
+#: ./data\character\0275_微风.csv:40
 msgid "灰色医疗挎包"
 msgstr ""
 
@@ -45964,27 +45964,27 @@ msgstr ""
 msgid "前哥伦比亚某时尚杂志编辑，感染矿石病后进入罗德岛接受治疗。出于本人的意愿，在通过干员测试后，成为罗德岛的一员，被分配到预备行动组A6担任小队队长。负责整支小队的统筹，在战斗时，使用法术为队员提供支援。"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:29
+#: ./data\character\0278_梓兰.csv:31
 msgid "蓝色宽檐礼帽"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:30
+#: ./data\character\0278_梓兰.csv:32
 msgid "蓝色丝巾领结"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:31
+#: ./data\character\0278_梓兰.csv:33
 msgid "白色正装衬衫"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:32
+#: ./data\character\0278_梓兰.csv:34
 msgid "黑色束腰马甲"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:33
+#: ./data\character\0278_梓兰.csv:35
 msgid "黑色开叉长裙"
 msgstr ""
 
-#: ./data\character\0278_梓兰.csv:36
+#: ./data\character\0278_梓兰.csv:38
 msgid "白色长披肩"
 msgstr ""
 
@@ -46000,23 +46000,23 @@ msgstr ""
 msgid "作为患者被罗德岛接收，因能力出众，在征求本人意见后，接受并通过测试，成为罗德岛的一员，被分配到预备行动组A6。拥有出色的破坏力，是小队的攻坚手。"
 msgstr ""
 
-#: ./data\character\0281_泡普卡.csv:31
+#: ./data\character\0281_泡普卡.csv:30
 msgid "黑色印花帽"
 msgstr ""
 
-#: ./data\character\0281_泡普卡.csv:32
+#: ./data\character\0281_泡普卡.csv:31
 msgid "右眼眼罩"
 msgstr ""
 
-#: ./data\character\0281_泡普卡.csv:33
+#: ./data\character\0281_泡普卡.csv:32
 msgid "黑红色连帽外套"
 msgstr ""
 
-#: ./data\character\0281_泡普卡.csv:35
+#: ./data\character\0281_泡普卡.csv:34
 msgid "白色兔耳过膝袜"
 msgstr ""
 
-#: ./data\character\0281_泡普卡.csv:37
+#: ./data\character\0281_泡普卡.csv:36
 msgid "电锯"
 msgstr ""
 
@@ -46032,31 +46032,31 @@ msgstr ""
 msgid "作为患者被罗德岛接收，因能力出众，在征求本人意见后，接受并通过测试，成为罗德岛的一员，被分配到预备行动组A6。"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:31
+#: ./data\character\0282_空爆.csv:30
 msgid "红色缎带耳饰"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:32
+#: ./data\character\0282_空爆.csv:31
 msgid "黑色颈圈项圈"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:33
+#: ./data\character\0282_空爆.csv:32
 msgid "黑色字母背心"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:34
+#: ./data\character\0282_空爆.csv:33
 msgid "军绿色风衣外套"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:35
+#: ./data\character\0282_空爆.csv:34
 msgid "白色战术手套"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:39
+#: ./data\character\0282_空爆.csv:38
 msgid "轻型榴弹发射器"
 msgstr ""
 
-#: ./data\character\0282_空爆.csv:40
+#: ./data\character\0282_空爆.csv:39
 msgid "弹药防爆盾"
 msgstr ""
 
@@ -46104,39 +46104,39 @@ msgstr ""
 msgid "东国出身的流浪武者，机缘巧合之下加入罗德岛。不善谋略，但凭借勇猛的气势与手中那把巨大的薙刀，在战场上如入无人之境。"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:28
+#: ./data\character\0289_缠丸.csv:30
 msgid "黑色眼罩"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:29
+#: ./data\character\0289_缠丸.csv:31
 msgid "红色和风围巾"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:30
+#: ./data\character\0289_缠丸.csv:32
 msgid "黑色露肩短衣"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:31
+#: ./data\character\0289_缠丸.csv:33
 msgid "灰白和风战袍"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:32
+#: ./data\character\0289_缠丸.csv:34
 msgid "黑色护手甲"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:33
+#: ./data\character\0289_缠丸.csv:35
 msgid "黑灰分层战裙"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:35
+#: ./data\character\0289_缠丸.csv:37
 msgid "黑色战斗长靴"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:36
+#: ./data\character\0289_缠丸.csv:38
 msgid "东国薙刀"
 msgstr ""
 
-#: ./data\character\0289_缠丸.csv:37
+#: ./data\character\0289_缠丸.csv:39
 msgid "腰间绳结装饰"
 msgstr ""
 
@@ -46260,39 +46260,39 @@ msgstr ""
 msgid "郑清钺的养女，拥有魄力和胆识，带领一群年轻人行走江湖。其父在十年前行裕镖局押运酒盏被劫的事件中丧生。意图迎合时代发展，将没落的行裕镖局改为物流公司，但遭到郑清钺反对，因而与其渐生嫌隙。原本意图破坏抢盏之事，后发现事情的严重性而停手。岁相酒盏事件后和郑清钺商量，带领年轻人们前去玉门。在孟铁衣帮助下建立行裕物流，参与了天灾情报的运输。\n"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:29
+#: ./data\character\0296_杜遥夜.csv:32
 msgid "金色小巧耳环"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:30
+#: ./data\character\0296_杜遥夜.csv:33
 msgid "白色无袖旗袍上衣"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:31
+#: ./data\character\0296_杜遥夜.csv:34
 msgid "橙色毛绒披风"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:32
+#: ./data\character\0296_杜遥夜.csv:35
 msgid "白色皮革护腕"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:33
+#: ./data\character\0296_杜遥夜.csv:36
 msgid "黑色开衩短裙"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:34
+#: ./data\character\0296_杜遥夜.csv:37
 msgid "白色过膝长袜"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:35
+#: ./data\character\0296_杜遥夜.csv:38
 msgid "黑色皮革腿环"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:36
+#: ./data\character\0296_杜遥夜.csv:39
 msgid "黑色系带长筒靴"
 msgstr ""
 
-#: ./data\character\0296_杜遥夜.csv:37
+#: ./data\character\0296_杜遥夜.csv:40
 msgid "金色流苏腰饰"
 msgstr ""
 
@@ -46308,31 +46308,31 @@ msgstr ""
 msgid "和弦，前维多利亚军方情报人员，现深池势力高级军官，以威灵顿公爵的外交使臣身份驻留罗德岛，协助罗德岛在维多利亚境内的部分事务。"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:29
+#: ./data\character\0297_和弦.csv:31
 msgid "透明雨衣外套"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:30
+#: ./data\character\0297_和弦.csv:32
 msgid "灰色紧身背心"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:31
+#: ./data\character\0297_和弦.csv:33
 msgid "棕色皮革手套"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:33
+#: ./data\character\0297_和弦.csv:35
 msgid "白色长筒袜"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:34
+#: ./data\character\0297_和弦.csv:36
 msgid "黑棕折叠长靴"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:35
+#: ./data\character\0297_和弦.csv:37
 msgid "银色左轮手枪"
 msgstr ""
 
-#: ./data\character\0297_和弦.csv:36
+#: ./data\character\0297_和弦.csv:38
 msgid "金色装饰腰带"
 msgstr ""
 
@@ -46372,39 +46372,39 @@ msgstr ""
 msgid "炎国礼部左侍郎，官阶从二品。出身南方水乡，家中同辈排行第七，其祖父官至一品，出任尚书。曾卷入走私贪污案，但成功抓出贼人并因此而入仕。为监管在尚蜀的令，出任钦差之责带领青雷伯白定山等数位天师坐镇尚蜀，在此期间也与尚蜀知府梁洵关系日益亲密，因关心梁洵而派夜半偷走梁洵手中的酒盏。酒盏一事后接太傅指令前往玉门，随后又调任到大荒城与工部尚书万勤城共事，协调十二楼五城的建造。\n"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:29
+#: ./data\character\0299_宁辞秋.csv:31
 msgid "金色流苏耳坠"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:30
+#: ./data\character\0299_宁辞秋.csv:32
 msgid "炎国赤黑官袍"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:31
+#: ./data\character\0299_宁辞秋.csv:33
 msgid "黑色立领内衫"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:32
+#: ./data\character\0299_宁辞秋.csv:34
 msgid "玄黑云纹外披"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:33
+#: ./data\character\0299_宁辞秋.csv:35
 msgid "黑色皮革手套"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:34
+#: ./data\character\0299_宁辞秋.csv:36
 msgid "米色束脚长裤"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:35
+#: ./data\character\0299_宁辞秋.csv:37
 msgid "黑色硬底官靴"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:36
+#: ./data\character\0299_宁辞秋.csv:38
 msgid "棕色竹骨折扇"
 msgstr ""
 
-#: ./data\character\0299_宁辞秋.csv:37
+#: ./data\character\0299_宁辞秋.csv:39
 msgid "金色腰部挂饰"
 msgstr ""
 
@@ -46420,27 +46420,27 @@ msgstr ""
 msgid "菲亚梅塔，拉特兰公证所高级特派员，职务名经本人强烈要求，不予记录。现依据罗德岛与拉特兰教廷的合作协议，从罗德岛获得补给，并提供相关服务。天启惩罚者？每个月还会更新？让我把这些玩意输进终端归档不如直接杀了我。——人事部干员"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:27
+#: ./data\character\0300_菲亚梅塔.csv:29
 msgid "黑色羽翼外套"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:28
+#: ./data\character\0300_菲亚梅塔.csv:30
 msgid "米色吊带背心"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:29
+#: ./data\character\0300_菲亚梅塔.csv:31
 msgid "黑色镂空手套"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:31
+#: ./data\character\0300_菲亚梅塔.csv:33
 msgid "黑色透明长袜"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:33
+#: ./data\character\0300_菲亚梅塔.csv:35
 msgid "重型机枪炮"
 msgstr ""
 
-#: ./data\character\0300_菲亚梅塔.csv:34
+#: ./data\character\0300_菲亚梅塔.csv:36
 msgid "金属弹药箱"
 msgstr ""
 
@@ -46456,27 +46456,27 @@ msgstr ""
 msgid "刻刀，长期活动于哥伦比亚控制力末梢地区的雇佣兵，本人为治疗矿石病而前来求医，在数次行动中表现出了优秀的近距离作战能力。现于罗德岛某近卫小队任职，并多次参与要员护送等工作。"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:30
+#: ./data\character\0301_刻刀.csv:31
 msgid "黑色机车夹克"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:31
+#: ./data\character\0301_刻刀.csv:32
 msgid "红色无袖背心"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:33
+#: ./data\character\0301_刻刀.csv:34
 msgid "黑色连体丝袜"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:34
+#: ./data\character\0301_刻刀.csv:35
 msgid "黑红色战斗靴"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:35
+#: ./data\character\0301_刻刀.csv:36
 msgid "双刃长刀"
 msgstr ""
 
-#: ./data\character\0301_刻刀.csv:36
+#: ./data\character\0301_刻刀.csv:37
 msgid "机械护腵"
 msgstr ""
 
@@ -46552,39 +46552,39 @@ msgstr ""
 msgid "惊蛰，炎国大理寺所属官员，与罗德岛签署搜查协议后暂居于罗德岛。身具久经训练的战斗技巧与独特的源石技艺，在歼灭战、阵地战中表现优异，但因其身份特殊、动机暧昧，建议在交流中采用被动不合作态度。"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:30
+#: ./data\character\0306_惊蛰.csv:32
 msgid "工作证"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:31
+#: ./data\character\0306_惊蛰.csv:33
 msgid "皮质钉刺项圈"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:32
+#: ./data\character\0306_惊蛰.csv:34
 msgid "白色落肩单排扣喇叭袖垂带轻羽绒服"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:33
+#: ./data\character\0306_惊蛰.csv:35
 msgid "拼接款高腰式侧开口修身无袖高领单层布其纱哑光连衣裙"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:34
+#: ./data\character\0306_惊蛰.csv:36
 msgid "哑光黑裤袜"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:35
+#: ./data\character\0306_惊蛰.csv:37
 msgid "黑色棉质护膝"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:36
+#: ./data\character\0306_惊蛰.csv:38
 msgid "黑色绑带超高跟鞋"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:37
+#: ./data\character\0306_惊蛰.csv:39
 msgid "长柄蓄能原石法杖"
 msgstr ""
 
-#: ./data\character\0306_惊蛰.csv:38
+#: ./data\character\0306_惊蛰.csv:40
 msgid "浮游单元"
 msgstr ""
 
@@ -46636,35 +46636,35 @@ msgstr ""
 msgid "萨卡兹雇佣兵泥岩，随军加入整合运动后，由于意见不合而带领小队成员远离了乌萨斯。完全没有参与整合运动在切尔诺伯格及龙门的行动。为了寻找落脚点，泥岩带队前往莱塔尼亚，在当地吸纳了大量莱塔尼亚的感染者后，泥岩被众人推崇为领袖，开始以“泥岩小队”的名号被人所知。尽管泥岩多次试图避免与其他势力发生冲突，但她们依旧一次又一次地被卷入纷争，为了避免更多无意义的牺牲，泥岩选择逃往卡兹戴尔。在卡兹戴尔境内与精英干员Logos接触，随后者前往罗德岛。"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:33
+#: ./data\character\0311_泥岩.csv:35
 msgid "白色重装防护头盔"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:34
+#: ./data\character\0311_泥岩.csv:36
 msgid "灰白防护作战上衣"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:35
+#: ./data\character\0311_泥岩.csv:37
 msgid "黑色战术背心"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:36
+#: ./data\character\0311_泥岩.csv:38
 msgid "黑色全指防护手套"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:37
+#: ./data\character\0311_泥岩.csv:39
 msgid "灰白防护作战下裤"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:38
+#: ./data\character\0311_泥岩.csv:40
 msgid "白色医疗十字裙甲"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:39
+#: ./data\character\0311_泥岩.csv:41
 msgid "深灰重型作战靴"
 msgstr ""
 
-#: ./data\character\0311_泥岩.csv:40
+#: ./data\character\0311_泥岩.csv:42
 msgid "赤脊岩石巨锤"
 msgstr ""
 
@@ -46680,23 +46680,23 @@ msgstr ""
 msgid "格劳克斯出生于阿戈尔地区，却早早离开家园四处流浪。机缘巧合下加入罗德岛，现为雷神工业先端武器测评师。\n除了对尖端武器进行研究调整之外，格劳克斯也会在需求对空特化的任务中亲自出击。"
 msgstr ""
 
-#: ./data\character\0326_格劳克斯.csv:29
+#: ./data\character\0326_格劳克斯.csv:32
 msgid "可爱风御寒帽"
 msgstr ""
 
-#: ./data\character\0326_格劳克斯.csv:30
+#: ./data\character\0326_格劳克斯.csv:33
 msgid "加厚式御寒冲锋衣"
 msgstr ""
 
-#: ./data\character\0326_格劳克斯.csv:31
+#: ./data\character\0326_格劳克斯.csv:34
 msgid "超短裙"
 msgstr ""
 
-#: ./data\character\0326_格劳克斯.csv:32
+#: ./data\character\0326_格劳克斯.csv:35
 msgid "透肉过膝袜"
 msgstr ""
 
-#: ./data\character\0326_格劳克斯.csv:33
+#: ./data\character\0326_格劳克斯.csv:36
 msgid "特化改装战地靴"
 msgstr ""
 
@@ -46768,31 +46768,31 @@ msgstr ""
 msgid "来自兰登修道院的修士席德佳，代号，空弦。出于某些商业合作目的暂留罗德岛，并积极提出各项合作条款，敦促双方展开友好商业来往。同时在各项行动中均展现出极优秀的作战技巧，经本人要求，现作为罗德岛狙击干员活跃于各项任务中。"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:27
+#: ./data\character\0332_空弦.csv:29
 msgid "黑色修女服外套"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:28
+#: ./data\character\0332_空弦.csv:30
 msgid "红色三角胸衣"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:29
+#: ./data\character\0332_空弦.csv:31
 msgid "黑色半指手套"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:30
+#: ./data\character\0332_空弦.csv:32
 msgid "黑白格纹短裙"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:31
+#: ./data\character\0332_空弦.csv:33
 msgid "白色透明长袜"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:32
+#: ./data\character\0332_空弦.csv:34
 msgid "黑色束带短靴"
 msgstr ""
 
-#: ./data\character\0332_空弦.csv:33
+#: ./data\character\0332_空弦.csv:35
 msgid "巨型弩弓机关"
 msgstr ""
 
@@ -46808,19 +46808,19 @@ msgstr ""
 msgid "经验丰富的米诺斯佣兵，擅长保护目标与押运货物。已与罗德岛签订长期雇佣合同，经过内部训练后拥有参加各项任务的经验与实力。"
 msgstr ""
 
-#: ./data\character\0333_铸铁.csv:31
+#: ./data\character\0333_铸铁.csv:34
 msgid "天蓝色衬衫"
 msgstr ""
 
-#: ./data\character\0333_铸铁.csv:33
+#: ./data\character\0333_铸铁.csv:36
 msgid "低丹书黑色丝袜"
 msgstr ""
 
-#: ./data\character\0333_铸铁.csv:34
+#: ./data\character\0333_铸铁.csv:37
 msgid "黑色高通皮靴"
 msgstr ""
 
-#: ./data\character\0333_铸铁.csv:35
+#: ./data\character\0333_铸铁.csv:38
 msgid "黑色金属大剑"
 msgstr ""
 
@@ -46848,27 +46848,27 @@ msgstr ""
 msgid "从东国前来龙门游学的普通学生，被卷入感染者事件后患上了矿石病，后听从医师的建议来到罗德岛，经过评审成为了干员。\n对矿石病看得很开，仍旧如同患病前那样生活，但在执行任务的时候，会显现出一种令人畏惧的态度。\n（在宽松的外衣之下其实隐藏着非常傲人的身材）"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:30
+#: ./data\character\0337_宴.csv:33
 msgid "白色科技感高领夹克"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:31
+#: ./data\character\0337_宴.csv:34
 msgid "深灰色紧身打底衫"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:32
+#: ./data\character\0337_宴.csv:35
 msgid "深灰色运动短裙"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:34
+#: ./data\character\0337_宴.csv:37
 msgid "灰白蓝运动鞋"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:35
+#: ./data\character\0337_宴.csv:38
 msgid "蓝纹太刀·狮子王"
 msgstr ""
 
-#: ./data\character\0337_宴.csv:36
+#: ./data\character\0337_宴.csv:39
 msgid "灰色多功能背包"
 msgstr ""
 
@@ -46936,19 +46936,19 @@ msgstr ""
 msgid "因故自我流放的萨米部族萨满，在矿石病病情延缓后将罗德岛当作自己的部族，从此获得了新生。\n擅长操控风雪，能在低温环境和能见度极低的暴风中来去自如，被不了解萨米的敌人畏惧地称作“女巫”。"
 msgstr ""
 
-#: ./data\character\0341_寒檀.csv:30
+#: ./data\character\0341_寒檀.csv:33
 msgid "高筒御寒帽"
 msgstr ""
 
-#: ./data\character\0341_寒檀.csv:31
+#: ./data\character\0341_寒檀.csv:34
 msgid "覆臂式御寒长手套"
 msgstr ""
 
-#: ./data\character\0341_寒檀.csv:32
+#: ./data\character\0341_寒檀.csv:35
 msgid "低叉抗寒连衣裙"
 msgstr ""
 
-#: ./data\character\0341_寒檀.csv:33
+#: ./data\character\0341_寒檀.csv:36
 msgid "极地保暖用长筒靴"
 msgstr ""
 
@@ -47036,39 +47036,39 @@ msgstr ""
 msgid "凯尔希医师的年轻学生，罗德岛优秀的医疗干员，在进行了半年的准备训练后，正式开始参与战地医疗任务。与普通医疗干员不同，亚叶会主动寻找攻击敌人的机会，她随身携带的，经过配置的药剂也表明了，在战场上，她并不是一位普通的医疗干员。她是真正的战地医师。"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:29
+#: ./data\character\0345_亚叶.csv:31
 msgid "黑色猫耳贝雷帽"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:30
+#: ./data\character\0345_亚叶.csv:32
 msgid "黑色束带项圈"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:31
+#: ./data\character\0345_亚叶.csv:33
 msgid "白色医疗风衣"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:32
+#: ./data\character\0345_亚叶.csv:34
 msgid "黑色紧身衬衣"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:33
+#: ./data\character\0345_亚叶.csv:35
 msgid "青蓝色医用手套"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:34
+#: ./data\character\0345_亚叶.csv:36
 msgid "黑色皮质短裤"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:35
+#: ./data\character\0345_亚叶.csv:37
 msgid "黑色连裤丝袜"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:36
+#: ./data\character\0345_亚叶.csv:38
 msgid "黑色医疗短靴"
 msgstr ""
 
-#: ./data\character\0345_亚叶.csv:37
+#: ./data\character\0345_亚叶.csv:39
 msgid "医疗器械箱"
 msgstr ""
 
@@ -47084,27 +47084,27 @@ msgstr ""
 msgid "前哥伦比亚辅警，因故感染矿石病后，来到罗德岛接受治疗。经其父同意，加入罗德岛成为干员，在近身格斗方面展现出较强天赋，活跃于各类任务中。"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:31
+#: ./data\character\0347_杰克.csv:30
 msgid "黄色发夹"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:32
+#: ./data\character\0347_杰克.csv:31
 msgid "棕色皮革领带"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:33
+#: ./data\character\0347_杰克.csv:32
 msgid "黑色金边外套"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:35
+#: ./data\character\0347_杰克.csv:34
 msgid "灰色格纹短裙"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:36
+#: ./data\character\0347_杰克.csv:35
 msgid "单左腿黑色短袜"
 msgstr ""
 
-#: ./data\character\0347_杰克.csv:38
+#: ./data\character\0347_杰克.csv:37
 msgid "黑色运动短靴"
 msgstr ""
 
@@ -47192,27 +47192,27 @@ msgstr ""
 msgid "塞茜莉亚"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:26
+#: ./data\character\0352_塞茜莉亚.csv:27
 msgid "白色花朵发饰"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:27
+#: ./data\character\0352_塞茜莉亚.csv:28
 msgid "黑色蝴蝶结领带"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:28
+#: ./data\character\0352_塞茜莉亚.csv:29
 msgid "白色修女内衣"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:29
+#: ./data\character\0352_塞茜莉亚.csv:30
 msgid "褐色流苏斗篷"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:30
+#: ./data\character\0352_塞茜莉亚.csv:31
 msgid "黑色百褶连衣裙"
 msgstr ""
 
-#: ./data\character\0352_塞茜莉亚.csv:32
+#: ./data\character\0352_塞茜莉亚.csv:33
 msgid "黑色绑带凉鞋"
 msgstr ""
 
@@ -47220,31 +47220,31 @@ msgstr ""
 msgid "帕蒂亚"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:26
+#: ./data\character\0357_帕蒂亚.csv:27
 msgid "金色链条装饰"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:27
+#: ./data\character\0357_帕蒂亚.csv:28
 msgid "灰色褶皱衬衫"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:29
+#: ./data\character\0357_帕蒂亚.csv:30
 msgid "灰蓝渐变斗篷"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:30
+#: ./data\character\0357_帕蒂亚.csv:31
 msgid "黑色包臀短裙"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:33
+#: ./data\character\0357_帕蒂亚.csv:34
 msgid "双枪十字架"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:34
+#: ./data\character\0357_帕蒂亚.csv:35
 msgid "蓝色肩章徽章"
 msgstr ""
 
-#: ./data\character\0357_帕蒂亚.csv:35
+#: ./data\character\0357_帕蒂亚.csv:36
 msgid "腿部枪套"
 msgstr ""
 
@@ -47272,11 +47272,11 @@ msgstr ""
 msgid "拉特兰教皇厅枢机。万国峰会期间随同教宗控制了奥伦。"
 msgstr ""
 
-#: ./data\character\0361_薇尔丽芙.csv:29
+#: ./data\character\0361_薇尔丽芙.csv:32
 msgid "黑色连衣裙"
 msgstr ""
 
-#: ./data\character\0361_薇尔丽芙.csv:33
+#: ./data\character\0361_薇尔丽芙.csv:36
 msgid "黑色羊毛袜"
 msgstr ""
 
@@ -47324,39 +47324,39 @@ msgstr ""
 msgid "维多利亚西尔军事学院肄业生，虽非正式服役的职业军人，但接受过系统训练，在各个方面都出类拔萃，尤以攻城战术与相关武器制造为最。现已加入罗德岛，担任狙击干员与初级工匠，主要负责远距离摧毁敌方工事与炮火压制。"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:31
+#: ./data\character\0363_熔泉.csv:32
 msgid "橙色骷髅领巾"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:33
+#: ./data\character\0363_熔泉.csv:34
 msgid "灰色军装夹克"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:34
+#: ./data\character\0363_熔泉.csv:35
 msgid "黑色斗篷披风"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:36
+#: ./data\character\0363_熔泉.csv:37
 msgid "灰色超短裤"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:37
+#: ./data\character\0363_熔泉.csv:38
 msgid "黑色单边长袜"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:38
+#: ./data\character\0363_熔泉.csv:39
 msgid "灰色护膝短袜"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:39
+#: ./data\character\0363_熔泉.csv:40
 msgid "红色战斗长靴"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:40
+#: ./data\character\0363_熔泉.csv:41
 msgid "红色攻城炮架"
 msgstr ""
 
-#: ./data\character\0363_熔泉.csv:41
+#: ./data\character\0363_熔泉.csv:42
 msgid "工程设备背包"
 msgstr ""
 
@@ -47416,47 +47416,47 @@ msgstr ""
 msgid "哥伦比亚街头少女，出生于普通的工人家庭。父母都是卡车司机，常常夜不归宿，这也把酸糖早早推向了街头。从课余时间的滑板练习到本地滑板大赛蝉联冠军，酸糖成为了在本市内小有名气的街头人物，也招来了无数嫉恨。在一场蓄意的斗殴中，酸糖被源石粉尘感染，随后来到罗德岛求医。"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:28
+#: ./data\character\0366_酸糖.csv:30
 msgid "黑色鸭舌帽"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:29
+#: ./data\character\0366_酸糖.csv:31
 msgid "白色耳机"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:30
+#: ./data\character\0366_酸糖.csv:32
 msgid "身份吊牌项链"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:31
+#: ./data\character\0366_酸糖.csv:33
 msgid "橙色露脐背心"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:32
+#: ./data\character\0366_酸糖.csv:34
 msgid "棕色飞行员夹克"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:33
+#: ./data\character\0366_酸糖.csv:35
 msgid "米色护指手套"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:35
+#: ./data\character\0366_酸糖.csv:37
 msgid "灰色护膝长袜"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:36
+#: ./data\character\0366_酸糖.csv:38
 msgid "蓝色滑板鞋"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:37
+#: ./data\character\0366_酸糖.csv:39
 msgid "弩箭发射器"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:38
+#: ./data\character\0366_酸糖.csv:40
 msgid "棕色滑板"
 msgstr ""
 
-#: ./data\character\0366_酸糖.csv:39
+#: ./data\character\0366_酸糖.csv:41
 msgid "多重皮带装饰"
 msgstr ""
 
@@ -47512,31 +47512,31 @@ msgstr ""
 msgid "特种干员贝娜，试图将爱丽丝带回维多利亚无果后便滞留在岛至今。使用独特的操控人偶技术，在战场上中能发挥特殊的价值。考虑到年龄与本人意愿，一般不派遣至前线。"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:30
+#: ./data\character\0369_贝娜.csv:31
 msgid "黑色连帽外套"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:31
+#: ./data\character\0369_贝娜.csv:32
 msgid "灰色束腰上衣"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:32
+#: ./data\character\0369_贝娜.csv:33
 msgid "白色毛边短裙"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:33
+#: ./data\character\0369_贝娜.csv:34
 msgid "黑色绑带长袜"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:34
+#: ./data\character\0369_贝娜.csv:35
 msgid "紫黑运动鞋"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:35
+#: ./data\character\0369_贝娜.csv:36
 msgid "巨型剪刀"
 msgstr ""
 
-#: ./data\character\0369_贝娜.csv:36
+#: ./data\character\0369_贝娜.csv:37
 msgid "人偶伙伴"
 msgstr ""
 
@@ -47572,35 +47572,35 @@ msgstr ""
 msgid "雷姆必拓较有名气的探险家。由干员麦哲伦引荐来到罗德岛接受治疗，并在协商后签订协议成为干员。经过专业培训后，利用自己亲手改造的大盾在前线在其他干员提供保护。"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:30
+#: ./data\character\0378_石棉.csv:31
 msgid "深绿探险帽"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:31
+#: ./data\character\0378_石棉.csv:32
 msgid "黄色探险马甲"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:32
+#: ./data\character\0378_石棉.csv:33
 msgid "灰色工作手套"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:33
+#: ./data\character\0378_石棉.csv:34
 msgid "白色探险短裤"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:34
+#: ./data\character\0378_石棉.csv:35
 msgid "灰色护腿"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:35
+#: ./data\character\0378_石棉.csv:36
 msgid "棕色登山靴"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:36
+#: ./data\character\0378_石棉.csv:37
 msgid "机械改造盾牌"
 msgstr ""
 
-#: ./data\character\0378_石棉.csv:37
+#: ./data\character\0378_石棉.csv:38
 msgid "探险装备包"
 msgstr ""
 
@@ -47616,23 +47616,23 @@ msgstr ""
 msgid "萨尔贡某塞拉托部族勇士的末女，涉世未深，完全不了解待人接物的准则。被父亲以“接受训练”为名送至罗德岛，实为前来治疗矿石病。以一面等身巨盾为武器，但只会拿着它横冲直撞，急需罗德岛教官对其进行教导以防在实战中出现差错。"
 msgstr ""
 
-#: ./data\character\0381_泡泡.csv:31
+#: ./data\character\0381_泡泡.csv:30
 msgid "青绿色背心上衣"
 msgstr ""
 
-#: ./data\character\0381_泡泡.csv:32
+#: ./data\character\0381_泡泡.csv:31
 msgid "深蓝色短裤"
 msgstr ""
 
-#: ./data\character\0381_泡泡.csv:33
+#: ./data\character\0381_泡泡.csv:32
 msgid "青色护膝短袜"
 msgstr ""
 
-#: ./data\character\0381_泡泡.csv:34
+#: ./data\character\0381_泡泡.csv:33
 msgid "灰黑运动鞋"
 msgstr ""
 
-#: ./data\character\0381_泡泡.csv:35
+#: ./data\character\0381_泡泡.csv:34
 msgid "黑色巨型盾牌"
 msgstr ""
 
@@ -47648,35 +47648,35 @@ msgstr ""
 msgid "干员雪雉，出身龙门，曾在哥伦比亚各个高新技术开发区有着丰富的科研工作经历。后回到龙门，建设家乡，在此期间与罗德岛签订合约。"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:27
+#: ./data\character\0383_雪雉.csv:28
 msgid "橙色领结"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:28
+#: ./data\character\0383_雪雉.csv:29
 msgid "白色实验室外套"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:29
+#: ./data\character\0383_雪雉.csv:30
 msgid "棕色背心马甲"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:30
+#: ./data\character\0383_雪雉.csv:31
 msgid "橙色工作手套"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:31
+#: ./data\character\0383_雪雉.csv:32
 msgid "深蓝色短裙"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:33
+#: ./data\character\0383_雪雉.csv:34
 msgid "灰色系带短靴"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:34
+#: ./data\character\0383_雪雉.csv:35
 msgid "多功能钓竿装置"
 msgstr ""
 
-#: ./data\character\0383_雪雉.csv:35
+#: ./data\character\0383_雪雉.csv:36
 msgid "工具腰包"
 msgstr ""
 
@@ -47728,27 +47728,27 @@ msgstr ""
 msgid "薄绿，维多利亚高等学府所属术师，专攻地质学领域并参与多项实地研究项目，于实地考察途中不幸感染矿石病，经干员天火介绍与罗德岛接洽。现于罗德岛接受治疗，同时为罗德岛提供源石理论研究及环境地质评测等相关服务。"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:31
+#: ./data\character\0388_薄绿.csv:30
 msgid "青绿色领结"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:32
+#: ./data\character\0388_薄绿.csv:31
 msgid "黑色学者外套"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:34
+#: ./data\character\0388_薄绿.csv:33
 msgid "灰色百褶短裙"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:36
+#: ./data\character\0388_薄绿.csv:35
 msgid "青色运动鞋"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:37
+#: ./data\character\0388_薄绿.csv:36
 msgid "地质法杖"
 msgstr ""
 
-#: ./data\character\0388_薄绿.csv:38
+#: ./data\character\0388_薄绿.csv:37
 msgid "黄色地质工具箱"
 msgstr ""
 
@@ -47808,35 +47808,35 @@ msgstr ""
 msgid "哈蒂娅，萨尔贡裔哥伦比亚人，沙漠传奇战士部族剑角的后代。为学习战斗技巧于萨尔贡主动加入罗德岛，现作为罗德岛驻萨尔贡办事处干员，接受战斗训练的同时参与各类外勤任务。"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:30
+#: ./data\character\0394_哈蒂娅.csv:31
 msgid "橙色入耳式耳机"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:31
+#: ./data\character\0394_哈蒂娅.csv:32
 msgid "黑色金属扣颈环"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:32
+#: ./data\character\0394_哈蒂娅.csv:33
 msgid "拼色工装风夹克"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:33
+#: ./data\character\0394_哈蒂娅.csv:34
 msgid "黑色无袖紧身连衣裙"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:34
+#: ./data\character\0394_哈蒂娅.csv:35
 msgid "黑色战术半指手套"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:36
+#: ./data\character\0394_哈蒂娅.csv:37
 msgid "黑白条纹过膝吊带袜"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:37
+#: ./data\character\0394_哈蒂娅.csv:38
 msgid "白色厚底运动鞋"
 msgstr ""
 
-#: ./data\character\0394_哈蒂娅.csv:38
+#: ./data\character\0394_哈蒂娅.csv:39
 msgid "可变形剑杖"
 msgstr ""
 
@@ -47852,19 +47852,19 @@ msgstr ""
 msgid "伦蒂尼姆市民自救军中央区负责人，坎伯兰公爵的女儿"
 msgstr ""
 
-#: ./data\character\0397_阿勒黛.csv:32
+#: ./data\character\0397_阿勒黛.csv:34
 msgid "红色衬衫"
 msgstr ""
 
-#: ./data\character\0397_阿勒黛.csv:33
+#: ./data\character\0397_阿勒黛.csv:35
 msgid "黑色束腰背心"
 msgstr ""
 
-#: ./data\character\0397_阿勒黛.csv:34
+#: ./data\character\0397_阿勒黛.csv:36
 msgid "白色紧身长裤"
 msgstr ""
 
-#: ./data\character\0397_阿勒黛.csv:35
+#: ./data\character\0397_阿勒黛.csv:37
 msgid "黑色皮革长靴"
 msgstr ""
 
@@ -47888,19 +47888,19 @@ msgstr ""
 msgid "长生者，独角兽，“护国公”，维多利亚众多故事中的仙子，为满足选中者的心愿与缝补维多利亚行动。为实现的普通人想要活着的愿望，以裁缝的女儿的身份担任伦蒂尼姆市民自救军指挥官，深受自救军成员们信任爱戴。在战争结束时出现在维娜·维多利亚面前，但被拒绝了，最后抛弃这个身份重新隐于幕后。"
 msgstr ""
 
-#: ./data\character\0401_克洛维希娅.csv:30
+#: ./data\character\0401_克洛维希娅.csv:32
 msgid "黑链头饰"
 msgstr ""
 
-#: ./data\character\0401_克洛维希娅.csv:31
+#: ./data\character\0401_克洛维希娅.csv:33
 msgid "白色无袖连衣裙"
 msgstr ""
 
-#: ./data\character\0401_克洛维希娅.csv:32
+#: ./data\character\0401_克洛维希娅.csv:34
 msgid "褐色皮质臂甲"
 msgstr ""
 
-#: ./data\character\0401_克洛维希娅.csv:34
+#: ./data\character\0401_克洛维希娅.csv:36
 msgid "墨绿色长筒靴"
 msgstr ""
 
@@ -47916,31 +47916,31 @@ msgstr ""
 msgid "前贸易公司员工，负责后勤技术研发及运输路线规划。因为一场货运途中的沙暴事故，不幸感染矿石病。经原公司介绍，来到罗德岛医疗部门供职，同时进行必要的矿石病治疗。"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:31
+#: ./data\character\0402_图耶.csv:32
 msgid "黄色沙漠斗篷"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:32
+#: ./data\character\0402_图耶.csv:33
 msgid "棕色紧身上衣"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:33
+#: ./data\character\0402_图耶.csv:34
 msgid "棕色紧身长裤"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:34
+#: ./data\character\0402_图耶.csv:35
 msgid "棕色长袜"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:35
+#: ./data\character\0402_图耶.csv:36
 msgid "黄棕运动鞋"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:36
+#: ./data\character\0402_图耶.csv:37
 msgid "医疗注射枪"
 msgstr ""
 
-#: ./data\character\0402_图耶.csv:37
+#: ./data\character\0402_图耶.csv:38
 msgid "灰色装备背包"
 msgstr ""
 
@@ -47988,15 +47988,15 @@ msgstr ""
 msgid "特米米，萨尔贡阿卡胡拉地区的阿达克利斯人，嘉维尔的同伴与支持者，曾试图以激进手段阻止嘉维尔返回罗德岛，未果，随后便同其一起来到罗德岛。承担术师干员职责，但经常会忘记，鉴于在战场上表现尚佳，暂不考虑改变她的干员定位。"
 msgstr ""
 
-#: ./data\character\0411_特米米.csv:28
+#: ./data\character\0411_特米米.csv:30
 msgid "黑色露腹短衣"
 msgstr ""
 
-#: ./data\character\0411_特米米.csv:29
+#: ./data\character\0411_特米米.csv:31
 msgid "黑色紧身长裤"
 msgstr ""
 
-#: ./data\character\0411_特米米.csv:33
+#: ./data\character\0411_特米米.csv:35
 msgid "黑色羽毛装饰"
 msgstr ""
 
@@ -48052,35 +48052,35 @@ msgstr ""
 msgid "嘉维尔的故乡——阿卡胡拉中某部族的族长，经过干员测试后加入罗德岛，同时接受治疗。拥有不输于嘉维尔的身体素质，目前和她的伙伴“暴躁铁皮”共同活跃在战场上。"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:30
+#: ./data\character\0416_森蚺.csv:31
 msgid "黄色护目镜"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:31
+#: ./data\character\0416_森蚺.csv:32
 msgid "金色耳环"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:32
+#: ./data\character\0416_森蚺.csv:33
 msgid "黑色颈环项圈"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:33
+#: ./data\character\0416_森蚺.csv:34
 msgid "黄色比基尼上衣"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:34
+#: ./data\character\0416_森蚺.csv:35
 msgid "黑色工作手套"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:36
+#: ./data\character\0416_森蚺.csv:37
 msgid "黑色护腿带"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:37
+#: ./data\character\0416_森蚺.csv:38
 msgid "棕色绑带凉鞋"
 msgstr ""
 
-#: ./data\character\0416_森蚺.csv:38
+#: ./data\character\0416_森蚺.csv:39
 msgid "机械动力装甲"
 msgstr ""
 
@@ -48092,39 +48092,39 @@ msgstr ""
 msgid "卡西米尔的感染者骑士，同时也是自发组建的感染者骑士团“红松”的实际领袖。于卡西米尔合作期间与罗德岛接触，并主动寻求罗德岛的治疗。"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:31
+#: ./data\character\0420_焰尾.csv:33
 msgid "银色骑士头盔"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:32
+#: ./data\character\0420_焰尾.csv:34
 msgid "红蓝格纹围巾"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:33
+#: ./data\character\0420_焰尾.csv:35
 msgid "黑色紧身内衣"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:34
+#: ./data\character\0420_焰尾.csv:36
 msgid "银色骑士铠甲"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:35
+#: ./data\character\0420_焰尾.csv:37
 msgid "银色铁手套"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:37
+#: ./data\character\0420_焰尾.csv:39
 msgid "皮革绑带护腿"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:38
+#: ./data\character\0420_焰尾.csv:40
 msgid "银色骑士长靴"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:39
+#: ./data\character\0420_焰尾.csv:41
 msgid "骑士长剑"
 msgstr ""
 
-#: ./data\character\0420_焰尾.csv:40
+#: ./data\character\0420_焰尾.csv:42
 msgid "红松骑士团徽章"
 msgstr ""
 
@@ -48148,31 +48148,31 @@ msgstr ""
 msgid "极光，出身谢拉格，中学毕业后，接受希瓦艾什家的资助赴哥伦比亚学习，主攻雪地极端环境下的防御工程学。因不幸感染矿石病而中断学业，来到罗德岛寻求治疗，经考核后，同时作为工程干员与行动队成员活跃在舰内舰外的各项任务中。"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:30
+#: ./data\character\0422_极光.csv:34
 msgid "银灰色露肩胸甲"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:31
+#: ./data\character\0422_极光.csv:35
 msgid "黑色工程手套"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:32
+#: ./data\character\0422_极光.csv:36
 msgid "深蓝色工装短裤"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:34
+#: ./data\character\0422_极光.csv:38
 msgid "灰色防护长靴"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:35
+#: ./data\character\0422_极光.csv:39
 msgid "工程钻机护盾"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:36
+#: ./data\character\0422_极光.csv:40
 msgid "黑色工具背包"
 msgstr ""
 
-#: ./data\character\0422_极光.csv:37
+#: ./data\character\0422_极光.csv:41
 msgid "多功能腰带"
 msgstr ""
 
@@ -48188,43 +48188,43 @@ msgstr ""
 msgid "玛莉娅·临光，来自卡西米尔的年轻骑士，干员临光的妹妹，曾有骑士竞技经验，在各项测试中均展露出优秀的作战素质。应本人期望，与干员临光共同作为重装干员行动。"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:29
+#: ./data\character\0423_瑕光.csv:31
 msgid "金色骑士领饰"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:30
+#: ./data\character\0423_瑕光.csv:32
 msgid "白色骑士内衬"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:31
+#: ./data\character\0423_瑕光.csv:33
 msgid "银色全身铠甲"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:32
+#: ./data\character\0423_瑕光.csv:34
 msgid "黑色毛领斗篷"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:33
+#: ./data\character\0423_瑕光.csv:35
 msgid "银色铁手甲"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:34
+#: ./data\character\0423_瑕光.csv:36
 msgid "银色铠甲战裙"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:35
+#: ./data\character\0423_瑕光.csv:37
 msgid "银色护腿甲"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:36
+#: ./data\character\0423_瑕光.csv:38
 msgid "银色骑士战靴"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:37
+#: ./data\character\0423_瑕光.csv:39
 msgid "骑士盾剑"
 msgstr ""
 
-#: ./data\character\0423_瑕光.csv:38
+#: ./data\character\0423_瑕光.csv:40
 msgid "临光家族徽章"
 msgstr ""
 
@@ -48364,39 +48364,39 @@ msgstr ""
 msgid "哥伦比亚建筑工人松果，被卷入曼斯菲尔德事件后，随山来到罗德岛求职，因其先前的工作经验，现于工程部担任部分干员的助手。"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:27
+#: ./data\character\0440_松果.csv:29
 msgid "灰色工程帽"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:28
+#: ./data\character\0440_松果.csv:30
 msgid "橙色安全围巾"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:29
+#: ./data\character\0440_松果.csv:31
 msgid "黑色紧身背心"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:30
+#: ./data\character\0440_松果.csv:32
 msgid "深色工装外套"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:31
+#: ./data\character\0440_松果.csv:33
 msgid "棕色工作手套"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:32
+#: ./data\character\0440_松果.csv:34
 msgid "黑色工装热裤"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:34
+#: ./data\character\0440_松果.csv:36
 msgid "棕色工程靴"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:35
+#: ./data\character\0440_松果.csv:37
 msgid "工业钉枪"
 msgstr ""
 
-#: ./data\character\0440_松果.csv:37
+#: ./data\character\0440_松果.csv:39
 msgid "便携工具箱"
 msgstr ""
 
@@ -48408,31 +48408,31 @@ msgstr ""
 msgid "被上一任曼斯菲尔德狱医收养并在监狱长大，后担任曼斯菲尔德监狱的狱医兼入殓师，在越狱事件之前从未走出过监狱。为人有些古怪，因此被部分囚犯害怕。在越狱过程中为越狱的几人提供了情报交换场所，并在越狱后随卡夫卡，罗宾等人一同加入了罗德岛。"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:29
+#: ./data\character\0441_睡莲.csv:30
 msgid "银色十字架项链"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:31
+#: ./data\character\0441_睡莲.csv:32
 msgid "金边黑色长袍"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:32
+#: ./data\character\0441_睡莲.csv:33
 msgid "黑色羽毛手环"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:33
+#: ./data\character\0441_睡莲.csv:34
 msgid "黑色哥特长裙"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:34
+#: ./data\character\0441_睡莲.csv:35
 msgid "黑白条纹袜"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:35
+#: ./data\character\0441_睡莲.csv:36
 msgid "黑色绑带短靴"
 msgstr ""
 
-#: ./data\character\0441_睡莲.csv:37
+#: ./data\character\0441_睡莲.csv:38
 msgid "吊瓶输液架"
 msgstr ""
 
@@ -48532,31 +48532,31 @@ msgstr ""
 msgid "雷姆必拓出身的草药医生，兼修心理学。罗德岛医疗部成员。在利用丰富的草药学知识对抗生理疾病的同时，也在努力维护各位干员的心理健康。"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:31
+#: ./data\character\0449_蜜莓.csv:32
 msgid "灰黑毛绒兜帽"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:32
+#: ./data\character\0449_蜜莓.csv:33
 msgid "毛边短款斗篷"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:33
+#: ./data\character\0449_蜜莓.csv:34
 msgid "白色拉链连衣裙"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:36
+#: ./data\character\0449_蜜莓.csv:37
 msgid "黑色腿环带"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:37
+#: ./data\character\0449_蜜莓.csv:38
 msgid "黑色绑带皮鞋"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:38
+#: ./data\character\0449_蜜莓.csv:39
 msgid "草药学医疗法杖"
 msgstr ""
 
-#: ./data\character\0449_蜜莓.csv:39
+#: ./data\character\0449_蜜莓.csv:40
 msgid "战术胸挂包组"
 msgstr ""
 
@@ -48572,27 +48572,27 @@ msgstr ""
 msgid "死芒，本名爱布拉娜·都柏林，前“深池”领袖，该组织现已不复存在。在谨慎权衡之后，罗德岛有条件地同意与其建立一定程度的合作关系。\n经医疗部、人事部和博士共同确认，死芒的所有档案移入高权限资料库。"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:33
+#: ./data\character\0450_死芒.csv:36
 msgid "紫色系半透明外套"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:34
+#: ./data\character\0450_死芒.csv:37
 msgid "深紫白色外套式连衣裙"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:35
+#: ./data\character\0450_死芒.csv:38
 msgid "黑色骨骼风指环"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:37
+#: ./data\character\0450_死芒.csv:40
 msgid "黑色过膝破洞长袜"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:38
+#: ./data\character\0450_死芒.csv:41
 msgid "黑紫色绑带尖头短靴"
 msgstr ""
 
-#: ./data\character\0450_死芒.csv:39
+#: ./data\character\0450_死芒.csv:42
 msgid "黑柄尖枪法杖"
 msgstr ""
 
@@ -48608,31 +48608,31 @@ msgstr ""
 msgid "前哥伦比亚保镖，经干员赫默引荐，通过测试加入罗德岛。擅长配合自制陷阱进行远程杀伤，现作为特种干员活跃于各类任务中。"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:29
+#: ./data\character\0451_罗宾.csv:30
 msgid "黑色细领结饰"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:30
+#: ./data\character\0451_罗宾.csv:31
 msgid "白点纹长袖衬衫"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:31
+#: ./data\character\0451_罗宾.csv:32
 msgid "黑色战术胸挂带"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:33
+#: ./data\character\0451_罗宾.csv:34
 msgid "卡其色工装短裤"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:34
+#: ./data\character\0451_罗宾.csv:35
 msgid "橄榄绿过膝长筒袜"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:36
+#: ./data\character\0451_罗宾.csv:37
 msgid "肩挂式陷阱发射器"
 msgstr ""
 
-#: ./data\character\0451_罗宾.csv:37
+#: ./data\character\0451_罗宾.csv:38
 msgid "手提式工具箱"
 msgstr ""
 
@@ -48644,7 +48644,7 @@ msgstr ""
 msgid "专业磐蟹饲养员豆苗，出生于哥伦比亚农场主家庭，向各大公司及平台投递创业企划书未果，最终经介绍前往罗德岛就职。现已通过专项测试，作为正式干员为罗德岛提供后勤与特殊侦查作战服务。"
 msgstr ""
 
-#: ./data\character\0452_豆苗.csv:39
+#: ./data\character\0452_豆苗.csv:42
 msgid "磐蟹饲养箱"
 msgstr ""
 
@@ -48660,43 +48660,43 @@ msgstr ""
 msgid "夏娜·穆伊曼，雷姆必拓夏娜工程小队负责人，精通钻探、掘进、浇筑等工程技术，在某废弃移动作业平台的翻新项目中与工程部有所接触，现作为非常驻工程顾问参与罗德岛相关任务，代号“洋灰”。"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:31
+#: ./data\character\0464_洋灰.csv:33
 msgid "工程探照灯安全头盔"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:32
+#: ./data\character\0464_洋灰.csv:34
 msgid "黑色运动颈环"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:33
+#: ./data\character\0464_洋灰.csv:35
 msgid "橙黄工装连帽夹克"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:34
+#: ./data\character\0464_洋灰.csv:36
 msgid "黑色运动内搭上衣"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:35
+#: ./data\character\0464_洋灰.csv:37
 msgid "透明PVC工业风短裙"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:36
+#: ./data\character\0464_洋灰.csv:38
 msgid "黑色运动安全短裤"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:37
+#: ./data\character\0464_洋灰.csv:39
 msgid "黄色重型防滑工程靴"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:38
+#: ./data\character\0464_洋灰.csv:40
 msgid "大型手持钻探机"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:39
+#: ./data\character\0464_洋灰.csv:41
 msgid "便携式防御盾构"
 msgstr ""
 
-#: ./data\character\0464_洋灰.csv:40
+#: ./data\character\0464_洋灰.csv:42
 msgid "红色伸缩工具挂绳"
 msgstr ""
 
@@ -48904,23 +48904,23 @@ msgstr ""
 msgid "夜半，赏金猎人，擅长驯兽。曾因某项委托进入大炎境内，并在尚蜀城与罗德岛干员克洛丝相识，后经当地官员介绍，与罗德岛达成合作，活跃在大炎周边的各项委派任务中。"
 msgstr ""
 
-#: ./data\character\0476_夜半.csv:31
+#: ./data\character\0476_夜半.csv:34
 msgid "黑色露腹上衣"
 msgstr ""
 
-#: ./data\character\0476_夜半.csv:35
+#: ./data\character\0476_夜半.csv:38
 msgid "黑色高筒靴"
 msgstr ""
 
-#: ./data\character\0476_夜半.csv:36
+#: ./data\character\0476_夜半.csv:39
 msgid "弩弓武器"
 msgstr ""
 
-#: ./data\character\0476_夜半.csv:37
+#: ./data\character\0476_夜半.csv:40
 msgid "灰色腰带"
 msgstr ""
 
-#: ./data\character\0476_夜半.csv:38
+#: ./data\character\0476_夜半.csv:41
 msgid "金属装备箱"
 msgstr ""
 
@@ -48936,27 +48936,27 @@ msgstr ""
 msgid "来自东国的学生绮良，因患矿石病而选择离开家乡。在向老同学递出求助信后不久，收到干员宴的回信，据信中的指点前往罗德岛寻求治疗。对电子设备颇有了解，现于范围通讯及设备检修方面为罗德岛提供帮助。"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:29
+#: ./data\character\0478_绮良.csv:33
 msgid "黑白发髻球饰"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:30
+#: ./data\character\0478_绮良.csv:34
 msgid "科技图案围巾"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:31
+#: ./data\character\0478_绮良.csv:35
 msgid "渐变云纹大衣"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:32
+#: ./data\character\0478_绮良.csv:36
 msgid "黑色印花T恤"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:34
+#: ./data\character\0478_绮良.csv:38
 msgid "灰色运动短靴"
 msgstr ""
 
-#: ./data\character\0478_绮良.csv:35
+#: ./data\character\0478_绮良.csv:39
 msgid "锁链飞镖"
 msgstr ""
 
@@ -48980,31 +48980,31 @@ msgstr ""
 msgid "罗比菈塔，来自哥伦比亚的知名化妆师。在本人的强烈要求下，参加了工程部门的考核，表现出在自动化机械领域的专业素养，经可露希尔同意，成为罗德岛驻舰干员。"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:29
+#: ./data\character\0484_罗比菈塔.csv:30
 msgid "白色科技护目镜"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:30
+#: ./data\character\0484_罗比菈塔.csv:31
 msgid "白色宽松工装外套"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:31
+#: ./data\character\0484_罗比菈塔.csv:32
 msgid "黑色吊带打底衫"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:32
+#: ./data\character\0484_罗比菈塔.csv:33
 msgid "深棕色工装及膝裙"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:33
+#: ./data\character\0484_罗比菈塔.csv:34
 msgid "黑色中筒袜"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:35
+#: ./data\character\0484_罗比菈塔.csv:36
 msgid "化妆刷与化妆盒"
 msgstr ""
 
-#: ./data\character\0484_罗比菈塔.csv:36
+#: ./data\character\0484_罗比菈塔.csv:37
 msgid "透明手提袋"
 msgstr ""
 
@@ -49020,27 +49020,27 @@ msgstr ""
 msgid "帕拉斯，曾在米诺斯担任祭司职务。在离开雅赛努斯城邦去往阿克罗蒂村任职期间，带领当地民众进行了对萨尔贡周边部落长年侵扰的反抗，并在当地推行旅游及文化产业的发展。后因矿石病病况恶化，来到罗德岛进行秘密治疗。"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:32
+#: ./data\character\0485_帕拉斯.csv:36
 msgid "玫瑰头饰"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:33
+#: ./data\character\0485_帕拉斯.csv:37
 msgid "白色高领内衬"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:34
+#: ./data\character\0485_帕拉斯.csv:38
 msgid "米诺斯祭司外袍"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:35
+#: ./data\character\0485_帕拉斯.csv:39
 msgid "蓝色长袖衬肩"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:38
+#: ./data\character\0485_帕拉斯.csv:42
 msgid "黑白坡跟凉鞋"
 msgstr ""
 
-#: ./data\character\0485_帕拉斯.csv:39
+#: ./data\character\0485_帕拉斯.csv:43
 msgid "链式尖刺权杖"
 msgstr ""
 
@@ -49092,31 +49092,31 @@ msgstr ""
 msgid "统治莱塔尼亚的双子女皇之一，洁白的裙摆，“永恒恩典”，“白色的绵羊”。\n\n莱塔尼亚最坚硬的盾。"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:50
+#: ./data\character\0487_莉泽洛特.csv:51
 msgid "头冠"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:51
+#: ./data\character\0487_莉泽洛特.csv:52
 msgid "宝石项链套组"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:52
+#: ./data\character\0487_莉泽洛特.csv:53
 msgid "高叉礼服"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:53
+#: ./data\character\0487_莉泽洛特.csv:54
 msgid "礼服手套"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:54
+#: ./data\character\0487_莉泽洛特.csv:55
 msgid "白仿羽褶边长裙"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:55
+#: ./data\character\0487_莉泽洛特.csv:56
 msgid "高跟鞋"
 msgstr ""
 
-#: ./data\character\0487_莉泽洛特.csv:56
+#: ./data\character\0487_莉泽洛特.csv:57
 msgid "红丝绸披风"
 msgstr ""
 
@@ -49132,19 +49132,19 @@ msgstr ""
 msgid "青枳，主修土木工程专业，曾在哥伦比亚、汐斯塔等地从事建筑建造、修缮与拆迁工作。现由锡兰医生推荐，在罗德岛接受矿石病治疗，同时与工程部签署合作协议，兼职协助罗德岛改建、整修舰内空间。\n（嗯，土木老姐）"
 msgstr ""
 
-#: ./data\character\0488_青枳.csv:29
+#: ./data\character\0488_青枳.csv:31
 msgid "黑色帆船帽"
 msgstr ""
 
-#: ./data\character\0488_青枳.csv:30
+#: ./data\character\0488_青枳.csv:32
 msgid "深色束胸上衣"
 msgstr ""
 
-#: ./data\character\0488_青枳.csv:31
+#: ./data\character\0488_青枳.csv:33
 msgid "深棕色热裤"
 msgstr ""
 
-#: ./data\character\0488_青枳.csv:33
+#: ./data\character\0488_青枳.csv:35
 msgid "长筒运动靴"
 msgstr ""
 
@@ -49160,27 +49160,27 @@ msgstr ""
 msgid "夏栎，罗德岛驻维多利亚情报人员之一，掌握着维多利亚高多汀人传统的源石技艺，在加入罗德岛之前长期巡游于维多利亚南部荒地，以医治荒地聚落的同胞为己任。"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:29
+#: ./data\character\0492_夏栎.csv:34
 msgid "黑色有线耳机"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:30
+#: ./data\character\0492_夏栎.csv:35
 msgid "黑色皮革颈圈"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:31
+#: ./data\character\0492_夏栎.csv:36
 msgid "异域风毛绒大衣"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:32
+#: ./data\character\0492_夏栎.csv:37
 msgid "姜黄色抹胸上衣"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:34
+#: ./data\character\0492_夏栎.csv:39
 msgid "深灰色工装灯笼裤"
 msgstr ""
 
-#: ./data\character\0492_夏栎.csv:36
+#: ./data\character\0492_夏栎.csv:41
 msgid "部落风金属法杖"
 msgstr ""
 
@@ -49196,43 +49196,43 @@ msgstr ""
 msgid "火哨，雷姆必拓某小型安保公司负责人，代表公司与罗德岛签订合作协议，同时以干员身份为罗德岛提供服务。"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:27
+#: ./data\character\0493_火哨.csv:29
 msgid "白色条纹发卡"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:28
+#: ./data\character\0493_火哨.csv:30
 msgid "银色标牌吊坠"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:29
+#: ./data\character\0493_火哨.csv:31
 msgid "深青工装夹克"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:30
+#: ./data\character\0493_火哨.csv:32
 msgid "黑色运动抹胸"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:31
+#: ./data\character\0493_火哨.csv:33
 msgid "黑色工装短裤"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:32
+#: ./data\character\0493_火哨.csv:34
 msgid "左腿黑色皮革长袜"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:33
+#: ./data\character\0493_火哨.csv:35
 msgid "右腿黑色战术护膝"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:34
+#: ./data\character\0493_火哨.csv:36
 msgid "白黄撞色运动鞋"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:35
+#: ./data\character\0493_火哨.csv:37
 msgid "便携式榴弹炮"
 msgstr ""
 
-#: ./data\character\0493_火哨.csv:36
+#: ./data\character\0493_火哨.csv:38
 msgid "HAWK战术手提箱"
 msgstr ""
 
@@ -49248,35 +49248,35 @@ msgstr ""
 msgid "玛格达尔·肖，布伦特伍德镇上血魔大君仪式的幸存者，小镇近乎大半被夷为废墟，她所珍爱的家传温室也被彻底摧毁。\n受伦蒂尼姆市民自救军成员洛洛与费斯特的邀请，玛格达尔加入自救军，以后勤人员的身份提供帮助，后加入罗德岛。伦蒂尼姆事件结束之后，玛格达尔主动申请回到维多利亚重建家乡，并担任当地罗德岛办事处的联络员。"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:29
+#: ./data\character\0494_刺玫.csv:32
 msgid "黑色尖刺头冠"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:30
+#: ./data\character\0494_刺玫.csv:33
 msgid "白色玫瑰头花"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:31
+#: ./data\character\0494_刺玫.csv:34
 msgid "黑黄边制服夹克"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:32
+#: ./data\character\0494_刺玫.csv:35
 msgid "白色褶饰连衣裙"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:34
+#: ./data\character\0494_刺玫.csv:37
 msgid "黑菱纹过膝长袜"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:35
+#: ./data\character\0494_刺玫.csv:38
 msgid "黑色尖头高跟鞋"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:36
+#: ./data\character\0494_刺玫.csv:39
 msgid "荆棘玫瑰法杖"
 msgstr ""
 
-#: ./data\character\0494_刺玫.csv:37
+#: ./data\character\0494_刺玫.csv:40
 msgid "棕色皮革小腰包"
 msgstr ""
 
@@ -49424,27 +49424,27 @@ msgstr ""
 msgid "砖石"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:28
+#: ./data\character\0566_砖石.csv:31
 msgid "青色长外套"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:29
+#: ./data\character\0566_砖石.csv:32
 msgid "棕色皮质护腕"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:31
+#: ./data\character\0566_砖石.csv:34
 msgid "棕色长筒靴"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:32
+#: ./data\character\0566_砖石.csv:35
 msgid "杜林法杖"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:33
+#: ./data\character\0566_砖石.csv:36
 msgid "红色腰带"
 msgstr ""
 
-#: ./data\character\0566_砖石.csv:34
+#: ./data\character\0566_砖石.csv:37
 msgid "工具挂包"
 msgstr ""
 
@@ -49452,35 +49452,35 @@ msgstr ""
 msgid "银币"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:26
+#: ./data\character\0569_银币.csv:28
 msgid "黑色蝴蝶结"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:27
+#: ./data\character\0569_银币.csv:29
 msgid "蓝色无袖上衣"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:28
+#: ./data\character\0569_银币.csv:30
 msgid "白色短袖外套"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:29
+#: ./data\character\0569_银币.csv:31
 msgid "褐色护腕"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:31
+#: ./data\character\0569_银币.csv:33
 msgid "黑色腿带装饰"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:32
+#: ./data\character\0569_银币.csv:34
 msgid "黑色高帮鞋"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:33
+#: ./data\character\0569_银币.csv:35
 msgid "黑色腰包"
 msgstr ""
 
-#: ./data\character\0569_银币.csv:34
+#: ./data\character\0569_银币.csv:36
 msgid "褐色手提箱"
 msgstr ""
 
@@ -49524,35 +49524,35 @@ msgstr ""
 msgid "思想扭曲而又疯狂的赦罪师家族成员的一员，其体内的基因相当驳杂，经过了数次实验性的融合，如同奇美拉一般。\n而她所珍视的家人，无一将其视为家人。"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:34
+#: ./data\character\0653_萨卢斯.csv:37
 msgid "白色蕾丝褶领"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:35
+#: ./data\character\0653_萨卢斯.csv:38
 msgid "黑金链饰礼服外套"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:36
+#: ./data\character\0653_萨卢斯.csv:39
 msgid "白色褶皱高领衫"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:37
+#: ./data\character\0653_萨卢斯.csv:40
 msgid "黑色开衩礼裙摆"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:38
+#: ./data\character\0653_萨卢斯.csv:41
 msgid "黑色哑光腿环裤袜"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:39
+#: ./data\character\0653_萨卢斯.csv:42
 msgid "黑星饰尖头高跟鞋"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:40
+#: ./data\character\0653_萨卢斯.csv:43
 msgid "扭曲古木魔杖"
 msgstr ""
 
-#: ./data\character\0653_萨卢斯.csv:41
+#: ./data\character\0653_萨卢斯.csv:44
 msgid "镂空金纹腰饰"
 msgstr ""
 
@@ -49636,27 +49636,27 @@ msgstr ""
 msgid "自称深池士兵的游击队员，是维恩等人的老大。曾加入深池，但因接受不了狂热的氛围以及看不到未来而逃走。"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:31
+#: ./data\character\0724_塞尔蒙.csv:32
 msgid "灰色兜帽围巾"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:32
+#: ./data\character\0724_塞尔蒙.csv:33
 msgid "黑色破旧斗篷"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:33
+#: ./data\character\0724_塞尔蒙.csv:34
 msgid "黑色无袖上衣"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:34
+#: ./data\character\0724_塞尔蒙.csv:35
 msgid "黑色皮质臂甲"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:35
+#: ./data\character\0724_塞尔蒙.csv:36
 msgid "灰色破洞长裤"
 msgstr ""
 
-#: ./data\character\0724_塞尔蒙.csv:36
+#: ./data\character\0724_塞尔蒙.csv:37
 msgid "黑灰混搭靴"
 msgstr ""
 
@@ -49672,31 +49672,31 @@ msgstr ""
 msgid "格拉斯哥帮成员，和其他人一起运营着诺伯特区的“揍歪下巴”拳馆作为据点，并等待维娜和追随她离开维多利亚的格拉斯哥帮成员归来。随身携带着的是从旧货市场淘来的最爱的蝴蝶刀。诺伯特区被萨卡兹分离出去后与卡铎尔、戴菲恩一同坚守拳馆，援助寻求庇护的难民。"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:29
+#: ./data\character\0863_贝尔德.csv:30
 msgid "黑色小礼帽"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:30
+#: ./data\character\0863_贝尔德.csv:31
 msgid "紫色项链"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:32
+#: ./data\character\0863_贝尔德.csv:33
 msgid "紫色内搭上衣"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:33
+#: ./data\character\0863_贝尔德.csv:34
 msgid "黑色网纹手套"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:35
+#: ./data\character\0863_贝尔德.csv:36
 msgid "黑色马丁靴"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:36
+#: ./data\character\0863_贝尔德.csv:37
 msgid "蝴蝶刀"
 msgstr ""
 
-#: ./data\character\0863_贝尔德.csv:37
+#: ./data\character\0863_贝尔德.csv:38
 msgid "银色装饰链条"
 msgstr ""
 
@@ -49712,11 +49712,11 @@ msgstr ""
 msgid "日落街酒店门童，来自维多利亚本地的整合运动成员。在博士等人之前取走了日落街酒店的电报机，暗中向整合运动发送情报。"
 msgstr ""
 
-#: ./data\character\0864_珀茜瓦尔.csv:30
+#: ./data\character\0864_珀茜瓦尔.csv:32
 msgid "灰色战术背心"
 msgstr ""
 
-#: ./data\character\0864_珀茜瓦尔.csv:32
+#: ./data\character\0864_珀茜瓦尔.csv:34
 msgid "灰色战术短靴"
 msgstr ""
 
@@ -49732,35 +49732,35 @@ msgstr ""
 msgid "温德米尔以剑法和领军能力闻名，其剑刃能斩断高塔。她是镇守莱塔尼亚边境的大公爵，选帝侯的大敌。军纪严明，忠于维多利亚，对王剑没有兴趣，对危险非常敏锐，对部下比较仁义。"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:30
+#: ./data\character\0868_温德米尔.csv:33
 msgid "黑色皮革眼罩"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:31
+#: ./data\character\0868_温德米尔.csv:34
 msgid "黑色立领军装夹克"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:32
+#: ./data\character\0868_温德米尔.csv:35
 msgid "白色高领衬衫"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:33
+#: ./data\character\0868_温德米尔.csv:36
 msgid "黑色长皮手套"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:34
+#: ./data\character\0868_温德米尔.csv:37
 msgid "黑色修身军裤"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:35
+#: ./data\character\0868_温德米尔.csv:38
 msgid "黑色及膝军靴"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:36
+#: ./data\character\0868_温德米尔.csv:39
 msgid "银鞘骑士长剑"
 msgstr ""
 
-#: ./data\character\0868_温德米尔.csv:37
+#: ./data\character\0868_温德米尔.csv:40
 msgid "黄色绶带肩饰"
 msgstr ""
 
@@ -49776,23 +49776,23 @@ msgstr ""
 msgid "巫妖王庭信使，十分在意自己的小方块。在离开伦蒂尼姆时遇到了伊内斯等人，并且交通工具小方块被W炸掉，与其见识了巨兽移动造成的残影并进行了交流。在始源之角降临时与众巫妖一同被巫妖君王叫回协助处理相关事务。在魂灵熔炉爆炸后将巫妖君王下达的回收死魂灵碎片任务外包给妮芙解决，并擅自带领一群萨卡兹进入魂灵熔炉内继续没能完成的安抚仪式。"
 msgstr ""
 
-#: ./data\character\0869_埃芒加德.csv:28
+#: ./data\character\0869_埃芒加德.csv:31
 msgid "黑色尖角头饰"
 msgstr ""
 
-#: ./data\character\0869_埃芒加德.csv:29
+#: ./data\character\0869_埃芒加德.csv:32
 msgid "黑色哥特连衣裙"
 msgstr ""
 
-#: ./data\character\0869_埃芒加德.csv:32
+#: ./data\character\0869_埃芒加德.csv:35
 msgid "巫妖法杖"
 msgstr ""
 
-#: ./data\character\0869_埃芒加德.csv:33
+#: ./data\character\0869_埃芒加德.csv:36
 msgid "黑色蝴蝶结腰带"
 msgstr ""
 
-#: ./data\character\0869_埃芒加德.csv:34
+#: ./data\character\0869_埃芒加德.csv:37
 msgid "飘逸黑纱披风"
 msgstr ""
 
@@ -49808,27 +49808,27 @@ msgstr ""
 msgid "莱茵生命人力资源科主任，前蓝卡坞著名演员玛丽安娜·布莱克，前梅兰德基金会特工“晨星”，曾检视克丽斯腾的父母莱特夫妇，在他们去世后资助克丽斯腾的生活和学业，也支持她的理想，视克丽斯腾如女儿一般，为莱茵生命贡献全部人脉。向赫默提供身份掩护等帮助，但在能量井中因自身对克丽斯腾的情感挡在了赫默前面。事件结束后帮赫默打点关系后从莱茵生命退休，不再过问世事。"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:29
+#: ./data\character\0893_雅拉.csv:32
 msgid "白色单片眼镜"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:30
+#: ./data\character\0893_雅拉.csv:33
 msgid "棕色长风衣"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:32
+#: ./data\character\0893_雅拉.csv:35
 msgid "黑色长裤"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:33
+#: ./data\character\0893_雅拉.csv:36
 msgid "黑色高跟皮鞋"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:34
+#: ./data\character\0893_雅拉.csv:37
 msgid "机械臂装置"
 msgstr ""
 
-#: ./data\character\0893_雅拉.csv:35
+#: ./data\character\0893_雅拉.csv:38
 msgid "皮质公文包"
 msgstr ""
 
@@ -49880,35 +49880,35 @@ msgstr ""
 msgid "哥伦比亚的旅行歌手，自称“精神上的拓荒者”，与大帝是旧识。来到新汐斯塔故地重游并四处收集故事，在此期间以“一个故事”为报酬担任酒吧“纯白火山”的驻唱歌手。虽然不能像阿黛尔那样看到多利和祂所有的分身，但是在海岸边弹吉他时看到了那只带着矿灯、咀嚼路牌的分身。"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:29
+#: ./data\character\0993_伯德.csv:31
 msgid "花饰缁带发夹"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:30
+#: ./data\character\0993_伯德.csv:32
 msgid "黑色流浪披肩"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:31
+#: ./data\character\0993_伯德.csv:33
 msgid "白色无袖衬衣"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:32
+#: ./data\character\0993_伯德.csv:34
 msgid "黑色皮质束身马甲"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:33
+#: ./data\character\0993_伯德.csv:35
 msgid "棕色流苏短裙"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:35
+#: ./data\character\0993_伯德.csv:37
 msgid "棕色流苏短靴"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:36
+#: ./data\character\0993_伯德.csv:38
 msgid "木制吉他"
 msgstr ""
 
-#: ./data\character\0993_伯德.csv:37
+#: ./data\character\0993_伯德.csv:39
 msgid "红色笔记本"
 msgstr ""
 
@@ -49964,39 +49964,39 @@ msgstr ""
 msgid "生于维多利亚的伦蒂尼姆，干员芙蓉的孪生妹妹。自从因为感染矿石病来到罗德岛，已经经历了数年的时光。在罗德岛的这段时间，她从未有一日的懈怠，不断寻找着突破自己源石技艺极限的方法。"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:31
+#: ./data\character\1011_炎狱炎熔.csv:37
 msgid "战术兜帽"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:34
+#: ./data\character\1011_炎狱炎熔.csv:40
 msgid "破损战术外套"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:35
+#: ./data\character\1011_炎狱炎熔.csv:41
 msgid "黑色破损内搭"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:36
+#: ./data\character\1011_炎狱炎熔.csv:42
 msgid "左手战术手套"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:37
+#: ./data\character\1011_炎狱炎熔.csv:43
 msgid "右臂装甲护手"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:38
+#: ./data\character\1011_炎狱炎熔.csv:44
 msgid "破损黑色热裤"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:39
+#: ./data\character\1011_炎狱炎熔.csv:45
 msgid "灰色作战短靴"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:40
+#: ./data\character\1011_炎狱炎熔.csv:46
 msgid "源石能导法杖"
 msgstr ""
 
-#: ./data\character\1011_炎狱炎熔.csv:41
+#: ./data\character\1011_炎狱炎熔.csv:47
 msgid "腰部战术装备包"
 msgstr ""
 
@@ -50076,27 +50076,27 @@ msgstr ""
 msgid "陈，前龙门高级警司，前龙门近卫局特别督察组组长，毕业于维多利亚皇家近卫学校，成绩优异，表现突出。在龙门近卫局供职期间，力主取缔龙门境内非法活动，对抗暴力犯罪和有组织犯罪，追缉武装逃犯与国际重犯等行动，并取得多项重大成果。\n现辞去职务，正式成为罗德岛的一员。依本人意愿，任务多以外派为主，为各地外派干员提供有力支援以及现场指导。"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:29
+#: ./data\character\1013_假日威龙陈.csv:33
 msgid "蓝白护目镜鸭舌帽"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:30
+#: ./data\character\1013_假日威龙陈.csv:34
 msgid "黑白拉链机车夹克"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:31
+#: ./data\character\1013_假日威龙陈.csv:35
 msgid "V领黑白运动内搭"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:32
+#: ./data\character\1013_假日威龙陈.csv:36
 msgid "白蓝边运动热裤"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:33
+#: ./data\character\1013_假日威龙陈.csv:37
 msgid "黑色细带高跟凉鞋"
 msgstr ""
 
-#: ./data\character\1013_假日威龙陈.csv:34
+#: ./data\character\1013_假日威龙陈.csv:38
 msgid "高压充能水枪"
 msgstr ""
 
@@ -50112,39 +50112,39 @@ msgstr ""
 msgid "临光，卡西米尔耀骑士。在掩护己方队员、机动作战、歼灭战与开阔地带作战中体现出极高的战斗技巧和个人军事素养。\n在重返卡西米尔并夺得第二十四届骑士特别锦标赛决斗赛冠军之后，留在卡西米尔处理后续事务。作为合作干员为罗德岛驻卡瓦莱利亚基办事处提供战术支援，必要时也会去往其他地区协助本舰展开各项行动。\n（大荒星陨！）"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:29
+#: ./data\character\1014_耀骑士临光.csv:34
 msgid "黑色通讯耳机"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:30
+#: ./data\character\1014_耀骑士临光.csv:35
 msgid "黑色高领内衬"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:31
+#: ./data\character\1014_耀骑士临光.csv:36
 msgid "白色骑士长袍外套"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:32
+#: ./data\character\1014_耀骑士临光.csv:37
 msgid "黑色紧身作战内衬"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:34
+#: ./data\character\1014_耀骑士临光.csv:39
 msgid "银色臂甲护腕"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:37
+#: ./data\character\1014_耀骑士临光.csv:42
 msgid "银黑拼接骑士腿甲"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:38
+#: ./data\character\1014_耀骑士临光.csv:43
 msgid "银黑金属骑士战靴"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:39
+#: ./data\character\1014_耀骑士临光.csv:44
 msgid "骑士大剑"
 msgstr ""
 
-#: ./data\character\1014_耀骑士临光.csv:40
+#: ./data\character\1014_耀骑士临光.csv:45
 msgid "腰部蓝色药剂瓶"
 msgstr ""
 
@@ -50160,35 +50160,35 @@ msgstr ""
 msgid "艾雅法拉，火山学家，天灾信使。近年参与拍摄多部火山纪录片，并参与撰写出版火山相关书籍。现于罗德岛继续接受治疗，并视需求参与包括天灾研究在内的多项活动。"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:29
+#: ./data\character\1016_纯烬艾雅法拉.csv:36
 msgid "红色发绳头饰"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:30
+#: ./data\character\1016_纯烬艾雅法拉.csv:37
 msgid "红蓝饰边白色长风衣"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:31
+#: ./data\character\1016_纯烬艾雅法拉.csv:38
 msgid "紫色多带战术上衣"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:32
+#: ./data\character\1016_纯烬艾雅法拉.csv:39
 msgid "深色高领打底衫"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:34
+#: ./data\character\1016_纯烬艾雅法拉.csv:41
 msgid "黑色不对称长筒袜"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:35
+#: ./data\character\1016_纯烬艾雅法拉.csv:42
 msgid "白绑带粉色高跟鞋"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:36
+#: ./data\character\1016_纯烬艾雅法拉.csv:43
 msgid "多彩能量长法杖"
 msgstr ""
 
-#: ./data\character\1016_纯烬艾雅法拉.csv:37
+#: ./data\character\1016_纯烬艾雅法拉.csv:44
 msgid "腰挂式战术小包"
 msgstr ""
 
@@ -50204,27 +50204,27 @@ msgstr ""
 msgid "最初以格拉斯哥帮头领身份登记为罗德岛干员的推进之王，于伦蒂尼姆战争期间又以典范军领袖身份与罗德岛协同行动，现在则以伦蒂尼姆议会议长身份，和罗德岛保持合作关系。罗德岛为伦蒂尼姆的医疗建设提供了支持，维娜·维多利亚也承诺未来将在更多领域与罗德岛展开合作。"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:31
+#: ./data\character\1019_维娜·维多利亚.csv:35
 msgid "黑蓝披风"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:32
+#: ./data\character\1019_维娜·维多利亚.csv:36
 msgid "黑色骑士甲"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:33
+#: ./data\character\1019_维娜·维多利亚.csv:37
 msgid "黑色骑士臂甲"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:36
+#: ./data\character\1019_维娜·维多利亚.csv:40
 msgid "黑色骑士靴"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:37
+#: ./data\character\1019_维娜·维多利亚.csv:41
 msgid "诸王之息"
 msgstr ""
 
-#: ./data\character\1019_维娜·维多利亚.csv:38
+#: ./data\character\1019_维娜·维多利亚.csv:42
 msgid "秩序圣球"
 msgstr ""
 
@@ -50244,27 +50244,27 @@ msgstr ""
 msgid "#fff8dc"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:37
+#: ./data\character\1020_焰影苇草.csv:42
 msgid "百合花发饰"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:38
+#: ./data\character\1020_焰影苇草.csv:43
 msgid "半透明外套"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:39
+#: ./data\character\1020_焰影苇草.csv:44
 msgid "丝质白色纹饰连衣裙"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:40
+#: ./data\character\1020_焰影苇草.csv:45
 msgid "单手隔热手套"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:41
+#: ./data\character\1020_焰影苇草.csv:46
 msgid "黑色百合纹连身丝袜"
 msgstr ""
 
-#: ./data\character\1020_焰影苇草.csv:43
+#: ./data\character\1020_焰影苇草.csv:48
 msgid "白色厚跟鞋"
 msgstr ""
 
@@ -50280,7 +50280,7 @@ msgstr ""
 msgid "经过长久的训练与磨砺后，克洛丝顺利晋升为正式干员，主要负责外勤任务。在罗德岛教官的指导和外勤任务的磨炼下，她已经成长许多，在射击技巧与隐匿行动上有了自己的心得与看法。"
 msgstr ""
 
-#: ./data\character\1021_寒芒克洛丝.csv:31
+#: ./data\character\1021_寒芒克洛丝.csv:37
 msgid "黑色丝质夹克"
 msgstr ""
 
@@ -50296,39 +50296,39 @@ msgstr ""
 msgid "调香师莱娜，在与博士和罗德岛医疗部沟通后，将疗养庭院暂时交予干员波登可负责，并主动申请外派至米诺斯地区，担任新建立的雅赛努斯办事处的负责人，为当地建立感染者医疗体系。"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:28
+#: ./data\character\1022_撷英调香师.csv:35
 msgid "绿色花朵宽发带"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:29
+#: ./data\character\1022_撷英调香师.csv:36
 msgid "黑色紧身项圈"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:30
+#: ./data\character\1022_撷英调香师.csv:37
 msgid "白色宽袖长外衣"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:31
+#: ./data\character\1022_撷英调香师.csv:38
 msgid "绿色抹胸围裙"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:32
+#: ./data\character\1022_撷英调香师.csv:39
 msgid "棕色战术胸挂"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:34
+#: ./data\character\1022_撷英调香师.csv:41
 msgid "浅绿色百褶长裙"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:35
+#: ./data\character\1022_撷英调香师.csv:42
 msgid "黑色交叉高跟鞋"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:36
+#: ./data\character\1022_撷英调香师.csv:43
 msgid "花藤木质法杖"
 msgstr ""
 
-#: ./data\character\1022_撷英调香师.csv:37
+#: ./data\character\1022_撷英调香师.csv:44
 msgid "绿色方形腰包"
 msgstr ""
 
@@ -50352,19 +50352,19 @@ msgstr ""
 msgid "经过系统的医疗理论培训以及长时间的临床实践训练后，芙蓉已经由实习医生转为正式医疗干员，并且成为了医疗部的主治医师之一。芙蓉不仅在医疗外勤任务上有相当丰富的经验，在健康管理以及病后护理的理论研究方面也颇有建树。"
 msgstr ""
 
-#: ./data\character\1024_濯尘芙蓉.csv:30
+#: ./data\character\1024_濯尘芙蓉.csv:36
 msgid "制式罗德岛上衣"
 msgstr ""
 
-#: ./data\character\1024_濯尘芙蓉.csv:31
+#: ./data\character\1024_濯尘芙蓉.csv:37
 msgid "黑色勒肉安全裤"
 msgstr ""
 
-#: ./data\character\1024_濯尘芙蓉.csv:32
+#: ./data\character\1024_濯尘芙蓉.csv:38
 msgid "透肉黑色连裤袜"
 msgstr ""
 
-#: ./data\character\1024_濯尘芙蓉.csv:33
+#: ./data\character\1024_濯尘芙蓉.csv:39
 msgid "皮质黑色长筒靴"
 msgstr ""
 
@@ -50380,43 +50380,43 @@ msgstr ""
 msgid "嘉维尔现在仍是罗德岛医疗部的一员，但在罗德岛需要她发挥自己的战斗力而非医学素养的时候，她也会拿起战斧，冲锋陷阵。"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:31
+#: ./data\character\1026_百炼嘉维尔.csv:36
 msgid "军绿飞行员护目镜"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:32
+#: ./data\character\1026_百炼嘉维尔.csv:37
 msgid "黑色通讯耳麦"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:33
+#: ./data\character\1026_百炼嘉维尔.csv:38
 msgid "悬挂式防毒面具"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:34
+#: ./data\character\1026_百炼嘉维尔.csv:39
 msgid "墨绿战术运动上衣"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:35
+#: ./data\character\1026_百炼嘉维尔.csv:40
 msgid "灰白迷彩斗篷"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:36
+#: ./data\character\1026_百炼嘉维尔.csv:41
 msgid "黑色战术长手套"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:37
+#: ./data\character\1026_百炼嘉维尔.csv:42
 msgid "绿色携物特化改装热裤"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:38
+#: ./data\character\1026_百炼嘉维尔.csv:43
 msgid "深绿色连袜护膝"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:39
+#: ./data\character\1026_百炼嘉维尔.csv:44
 msgid "深灰战术凉鞋"
 msgstr ""
 
-#: ./data\character\1026_百炼嘉维尔.csv:40
+#: ./data\character\1026_百炼嘉维尔.csv:45
 msgid "大号链锯战斧"
 msgstr ""
 
@@ -50440,43 +50440,43 @@ msgstr ""
 msgid "《特里蒙科学伦理联合宣言》发起人，莱茵生命总辖构件科执行顾问，在医疗事务方面与罗德岛展开了深度合作。\n本人拥有丰富的医学临床经验，在罗德岛接受矿石病相关治疗的同时，为罗德岛提供医学支持。"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:30
+#: ./data\character\1031_淬羽赫默.csv:36
 msgid "蓝色羽毛耳坠"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:31
+#: ./data\character\1031_淬羽赫默.csv:37
 msgid "莱茵科技白翼长袍"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:32
+#: ./data\character\1031_淬羽赫默.csv:38
 msgid "黑金拼接战斗连衣裙"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:33
+#: ./data\character\1031_淬羽赫默.csv:39
 msgid "黑色高领打底衫"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:34
+#: ./data\character\1031_淬羽赫默.csv:40
 msgid "右臂战术半指手套"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:36
+#: ./data\character\1031_淬羽赫默.csv:42
 msgid "黑色运动安全裤"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:38
+#: ./data\character\1031_淬羽赫默.csv:44
 msgid "白色科技防护短靴"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:39
+#: ./data\character\1031_淬羽赫默.csv:45
 msgid "“白翼”浮游单元"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:40
+#: ./data\character\1031_淬羽赫默.csv:46
 msgid "手持式治疗注射器"
 msgstr ""
 
-#: ./data\character\1031_淬羽赫默.csv:41
+#: ./data\character\1031_淬羽赫默.csv:47
 msgid "莱茵生命身份胸牌"
 msgstr ""
 
@@ -50492,39 +50492,39 @@ msgstr ""
 msgid "诗怀雅，龙门近卫局局长。\n于汐斯塔度假归来，目前仅以私人身份视情况为罗德岛工作提供协助。"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:29
+#: ./data\character\1033_琳琅诗怀雅.csv:33
 msgid "黑白花饰宽檐遮阳帽"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:30
+#: ./data\character\1033_琳琅诗怀雅.csv:34
 msgid "金色方形锁骨链"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:31
+#: ./data\character\1033_琳琅诗怀雅.csv:35
 msgid "黑白拼色印花开衫"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:32
+#: ./data\character\1033_琳琅诗怀雅.csv:36
 msgid "黑色深V吊带内搭"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:34
+#: ./data\character\1033_琳琅诗怀雅.csv:38
 msgid "叠戴金色手镯组"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:35
+#: ./data\character\1033_琳琅诗怀雅.csv:39
 msgid "黑色高腰饰带热裤"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:36
+#: ./data\character\1033_琳琅诗怀雅.csv:40
 msgid "黑色皮革腿环带"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:37
+#: ./data\character\1033_琳琅诗怀雅.csv:41
 msgid "黑色绑带高跟凉鞋"
 msgstr ""
 
-#: ./data\character\1033_琳琅诗怀雅.csv:38
+#: ./data\character\1033_琳琅诗怀雅.csv:42
 msgid "“SW”定制手提包"
 msgstr ""
 
@@ -50540,43 +50540,43 @@ msgstr ""
 msgid "杰西卡·布林雷，因私人原因离开黑钢基地后，选择去往拓荒地，成为了一名治安官。现作为当地办事处的合作干员为罗德岛提供帮助与支持。"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:29
+#: ./data\character\1034_涤火杰西卡.csv:35
 msgid "战术猫耳通讯耳机"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:30
+#: ./data\character\1034_涤火杰西卡.csv:36
 msgid "黑色简约颈环"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:31
+#: ./data\character\1034_涤火杰西卡.csv:37
 msgid "黑钢战术执勤外套"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:32
+#: ./data\character\1034_涤火杰西卡.csv:38
 msgid "军绿高领打底衫"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:33
+#: ./data\character\1034_涤火杰西卡.csv:39
 msgid "黑色运动工装短裤"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:34
+#: ./data\character\1034_涤火杰西卡.csv:40
 msgid "黑色拼接护膝长袜"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:35
+#: ./data\character\1034_涤火杰西卡.csv:41
 msgid "灰白拼色运动靴"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:36
+#: ./data\character\1034_涤火杰西卡.csv:42
 msgid "重型防御盾牌"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:37
+#: ./data\character\1034_涤火杰西卡.csv:43
 msgid "大口径步枪"
 msgstr ""
 
-#: ./data\character\1034_涤火杰西卡.csv:38
+#: ./data\character\1034_涤火杰西卡.csv:44
 msgid "黑钢身份识别牌"
 msgstr ""
 
@@ -50592,31 +50592,31 @@ msgstr ""
 msgid "萨卡兹雇佣兵领袖W，现正式更名为维什戴尔。于伦蒂尼姆战争期间，与罗德岛伦蒂尼姆特别行动队紧密合作，数度阻遏军事委员会的行动。"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:36
+#: ./data\character\1035_维什戴尔.csv:37
 msgid "红色兜帽夹克"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:37
+#: ./data\character\1035_维什戴尔.csv:38
 msgid "黑色运动胸衣"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:39
+#: ./data\character\1035_维什戴尔.csv:40
 msgid "黑色皮革热裤"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:40
+#: ./data\character\1035_维什戴尔.csv:41
 msgid "黑色系带战术靴"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:41
+#: ./data\character\1035_维什戴尔.csv:42
 msgid "祖宗发射器"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:42
+#: ./data\character\1035_维什戴尔.csv:43
 msgid "战术匕首"
 msgstr ""
 
-#: ./data\character\1035_维什戴尔.csv:43
+#: ./data\character\1035_维什戴尔.csv:44
 msgid "腰部炸弹"
 msgstr ""
 
@@ -50632,31 +50632,31 @@ msgstr ""
 msgid "用于提升历阵锐枪芬的潜能。\n一件宽大的风衣。在野外活动的时候，可要注意防风保暖呀。"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:29
+#: ./data\character\1036_历阵锐枪芬.csv:33
 msgid "战术防风镜"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:30
+#: ./data\character\1036_历阵锐枪芬.csv:34
 msgid "卡其色露脐夹克"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:31
+#: ./data\character\1036_历阵锐枪芬.csv:35
 msgid "黑色运动内衬"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:32
+#: ./data\character\1036_历阵锐枪芬.csv:36
 msgid "黑色交叉裹胸"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:33
+#: ./data\character\1036_历阵锐枪芬.csv:37
 msgid "露指战术手套"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:34
+#: ./data\character\1036_历阵锐枪芬.csv:38
 msgid "卡其色工装长裤"
 msgstr ""
 
-#: ./data\character\1036_历阵锐枪芬.csv:36
+#: ./data\character\1036_历阵锐枪芬.csv:40
 msgid "制式先锋长枪"
 msgstr ""
 
@@ -50672,19 +50672,19 @@ msgstr ""
 msgid "拉普兰德，无业，叙拉古萨卢佐家族现任家主阿尔贝托的独女，目前已从家族脱离。拉普兰德擅长单兵作战，经常在战术攻坚与肃清作战中为罗德岛提供协助。"
 msgstr ""
 
-#: ./data\character\1038_荒芜拉普兰德.csv:37
+#: ./data\character\1038_荒芜拉普兰德.csv:40
 msgid "华丽叙拉古礼服上衣夹克"
 msgstr ""
 
-#: ./data\character\1038_荒芜拉普兰德.csv:39
+#: ./data\character\1038_荒芜拉普兰德.csv:42
 msgid "华丽叙拉古礼服连体裙"
 msgstr ""
 
-#: ./data\character\1038_荒芜拉普兰德.csv:40
+#: ./data\character\1038_荒芜拉普兰德.csv:43
 msgid "灰色长袜"
 msgstr ""
 
-#: ./data\character\1038_荒芜拉普兰德.csv:42
+#: ./data\character\1038_荒芜拉普兰德.csv:45
 msgid "不规则几何形双刃法杖"
 msgstr ""
 
@@ -50728,19 +50728,19 @@ msgstr ""
 msgid "能天使，拉特兰公民，适用拉特兰一至十三项公民权益。在合约期间，于秘密联络、武装押运等多项行动中为罗德岛提供帮助。现应本人要求，将其登记的合作身份更新为：企鹅物流资深员工，拉特兰新创物流公司“苹果派物流”老板。"
 msgstr ""
 
-#: ./data\character\1041_新约能天使.csv:28
+#: ./data\character\1041_新约能天使.csv:34
 msgid "黑色短款夹克"
 msgstr ""
 
-#: ./data\character\1041_新约能天使.csv:29
+#: ./data\character\1041_新约能天使.csv:35
 msgid "白色修身开叉连衣裙"
 msgstr ""
 
-#: ./data\character\1041_新约能天使.csv:31
+#: ./data\character\1041_新约能天使.csv:37
 msgid "十字架白色过膝长袜"
 msgstr ""
 
-#: ./data\character\1041_新约能天使.csv:33
+#: ./data\character\1041_新约能天使.csv:39
 msgid "黑色大型铳枪"
 msgstr ""
 
@@ -50756,23 +50756,23 @@ msgstr ""
 msgid "麟青砚，曾官居炎国大理寺少卿，现已辞去官职，回到天师府研修雷法。游历途中暂居罗德岛，参与部分外勤任务。"
 msgstr ""
 
-#: ./data\character\1043_司霆惊蛰.csv:31
+#: ./data\character\1043_司霆惊蛰.csv:35
 msgid "金色流云纹外披"
 msgstr ""
 
-#: ./data\character\1043_司霆惊蛰.csv:32
+#: ./data\character\1043_司霆惊蛰.csv:36
 msgid "黑色修身道袍"
 msgstr ""
 
-#: ./data\character\1043_司霆惊蛰.csv:33
+#: ./data\character\1043_司霆惊蛰.csv:37
 msgid "白色长款手套"
 msgstr ""
 
-#: ./data\character\1043_司霆惊蛰.csv:34
+#: ./data\character\1043_司霆惊蛰.csv:38
 msgid "黑色修身长袍"
 msgstr ""
 
-#: ./data\character\1043_司霆惊蛰.csv:37
+#: ./data\character\1043_司霆惊蛰.csv:41
 msgid "黑色角环"
 msgstr ""
 
@@ -50788,27 +50788,27 @@ msgstr ""
 msgid "星熊，现任龙门近卫局特别督察组组长。仍作为重装干员协助罗德岛行动，主要职能维持不变。"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:28
+#: ./data\character\1044_斩业星熊.csv:30
 msgid "金属发圈"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:29
+#: ./data\character\1044_斩业星熊.csv:31
 msgid "金属圆环颈圈"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:30
+#: ./data\character\1044_斩业星熊.csv:32
 msgid "开襟式黑色长风衣外套"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:31
+#: ./data\character\1044_斩业星熊.csv:33
 msgid "白色运动抹胸"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:32
+#: ./data\character\1044_斩业星熊.csv:34
 msgid "开衩白色武士袴"
 msgstr ""
 
-#: ./data\character\1044_斩业星熊.csv:33
+#: ./data\character\1044_斩业星熊.csv:35
 msgid "赤色饰带高筒靴"
 msgstr ""
 
@@ -50824,31 +50824,31 @@ msgstr ""
 msgid "初雪，谢拉格出身，喀兰圣女，全谢拉格的宗教领袖。在谢拉格的发展与变革历程中扮演着重要的角色，如今正着手建设谢拉格境内的基础教育系统。据部分信息报告，其在谢拉格境内曾成功驱散过一场即将降临的天灾。"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:32
+#: ./data\character\1046_圣聆初雪.csv:36
 msgid "蓝宝石额心坠饰"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:34
+#: ./data\character\1046_圣聆初雪.csv:38
 msgid "民族风珠串项链"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:35
+#: ./data\character\1046_圣聆初雪.csv:39
 msgid "蓝白毛领披肩长袍"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:36
+#: ./data\character\1046_圣聆初雪.csv:40
 msgid "深紫色圣女长裙"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:38
+#: ./data\character\1046_圣聆初雪.csv:42
 msgid "灰色棉质小腿袜"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:39
+#: ./data\character\1046_圣聆初雪.csv:43
 msgid "棕色尖头皮靴"
 msgstr ""
 
-#: ./data\character\1046_圣聆初雪.csv:40
+#: ./data\character\1046_圣聆初雪.csv:44
 msgid "喀兰圣铃"
 msgstr ""
 
@@ -50864,27 +50864,27 @@ msgstr ""
 msgid "莱茵生命能量科研究员，埃琳娜·乌比卡博士，如今作为谢拉格观测站的能量组组长活跃在研究一线。谢拉格天灾事件的主要调查者之一。"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:31
+#: ./data\character\1047_溯光星源.csv:34
 msgid "额戴式护目镜"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:32
+#: ./data\character\1047_溯光星源.csv:35
 msgid "黑色科研防风外套"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:33
+#: ./data\character\1047_溯光星源.csv:36
 msgid "米白色几何剪裁连衣裙"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:34
+#: ./data\character\1047_溯光星源.csv:37
 msgid "灰色防护手套"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:36
+#: ./data\character\1047_溯光星源.csv:39
 msgid "单侧金属护腿"
 msgstr ""
 
-#: ./data\character\1047_溯光星源.csv:37
+#: ./data\character\1047_溯光星源.csv:40
 msgid "深褐色装甲长筒靴"
 msgstr ""
 
@@ -50900,40 +50900,84 @@ msgstr ""
 msgid "陈，前龙门高级警司，前龙门近卫局特别督察组组长，毕业于维多利亚皇家近卫学校，成绩优异，表现突出。后辞去职务，正式成为罗德岛的一员。依本人意愿，任务多以外派为主，为各地外派干员提供有力支援以及现场指导。"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:27
+#: ./data\character\1050_赤刃明霄陈.csv:30
 msgid "红色交叉束带"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:28
+#: ./data\character\1050_赤刃明霄陈.csv:31
 msgid "深蓝开叉连衣"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:29
+#: ./data\character\1050_赤刃明霄陈.csv:32
 msgid "白色紧身衣"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:30
+#: ./data\character\1050_赤刃明霄陈.csv:33
 msgid "白色无指手套"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:31
+#: ./data\character\1050_赤刃明霄陈.csv:34
 msgid "黑色修身短裤"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:33
+#: ./data\character\1050_赤刃明霄陈.csv:36
 msgid "黑色皮质大腿环"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:34
+#: ./data\character\1050_赤刃明霄陈.csv:37
 msgid "黑色长款皮靴"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:35
+#: ./data\character\1050_赤刃明霄陈.csv:38
 msgid "赤霄"
 msgstr ""
 
-#: ./data\character\1050_赤刃明霄陈.csv:36
+#: ./data\character\1050_赤刃明霄陈.csv:39
 msgid "书刀"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:4
+msgid "怒潮凛冬"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:13
+msgid "一块碎石，似乎曾是某座雕像的一部分。凛冬说，她在这块石头上押注了许多，她相信这会是一个时代的开端。"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:14
+msgid "凛冬，乌萨斯学生自治团团长，加入罗德岛后长期担任作战小队队长，并在近期协助罗德岛于圣骏堡建立办事处，作出重要贡献。凛冬在长期训练和高频次战斗中精进自身实力，形成了独特且成熟的战斗风格，现作为近卫干员参与罗德岛在乌萨斯的行动。"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:31
+msgid "黑红呢料贝雷帽"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:32
+msgid "红色三角领巾"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:33
+msgid "深蓝色厚重大衣"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:34
+msgid "深棕色毛领短夹克"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:35
+msgid "米灰色百褶连衣短裙"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:37
+msgid "暗红色针织长筒袜"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:38
+msgid "米灰色毛边中筒靴"
+msgstr ""
+
+#: ./data\character\1051_怒潮凛冬.csv:39
+msgid "重型乌萨斯锤斧"
 msgstr ""
 
 #: ./data\character\1067_厄尔苏拉.csv:4
@@ -50948,27 +50992,27 @@ msgstr ""
 msgid "疤痕商场原下一任掌门，伊内丝的旧识，军事委员会最年轻的少校。负责驱使骸骨舰船“生命脊椎”运输物资。现已被罗德岛俘获。"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:32
+#: ./data\character\1067_厄尔苏拉.csv:33
 msgid "红色军帽"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:34
+#: ./data\character\1067_厄尔苏拉.csv:35
 msgid "红色内衬"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:37
+#: ./data\character\1067_厄尔苏拉.csv:38
 msgid "红黑色高跟皮靴"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:38
+#: ./data\character\1067_厄尔苏拉.csv:39
 msgid "萨卡兹法术装置"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:39
+#: ./data\character\1067_厄尔苏拉.csv:40
 msgid "红色绶带"
 msgstr ""
 
-#: ./data\character\1067_厄尔苏拉.csv:40
+#: ./data\character\1067_厄尔苏拉.csv:41
 msgid "军衔肩章"
 msgstr ""
 
@@ -50984,31 +51028,31 @@ msgstr ""
 msgid "女妖王庭之主菈玛莲·杜康珐丽丝，萨卡兹六英雄之一。"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:32
+#: ./data\character\1071_菈玛莲.csv:35
 msgid "黑色荆棘头冠"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:33
+#: ./data\character\1071_菈玛莲.csv:36
 msgid "黑色哥特长袍"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:34
+#: ./data\character\1071_菈玛莲.csv:37
 msgid "红色丝带装饰"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:36
+#: ./data\character\1071_菈玛莲.csv:39
 msgid "黑色长拖尾裙"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:37
+#: ./data\character\1071_菈玛莲.csv:40
 msgid "女妖权杖"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:38
+#: ./data\character\1071_菈玛莲.csv:41
 msgid "荆棘飘带装饰"
 msgstr ""
 
-#: ./data\character\1071_菈玛莲.csv:39
+#: ./data\character\1071_菈玛莲.csv:42
 msgid "黑色纱质披风"
 msgstr ""
 
@@ -51024,23 +51068,23 @@ msgstr ""
 msgid "统治莱塔尼亚的两位女皇之一，深黑的剑刃，“无情权威”，“黑色的山羊”，实际是与另一位女皇莉泽洛特·伊维格娜德一同制造的人造对巫王兵器。看似是严厉的“权威无情”，但实际上内心仍然有柔软的部分。认为晚霞应属于每一个人，收留教导来自鲁珀坎大区的米夏。"
 msgstr ""
 
-#: ./data\character\1115_希尔德加德.csv:29
+#: ./data\character\1115_希尔德加德.csv:33
 msgid "橙色丝带领饰"
 msgstr ""
 
-#: ./data\character\1115_希尔德加德.csv:33
+#: ./data\character\1115_希尔德加德.csv:37
 msgid "黑色军用长靴"
 msgstr ""
 
-#: ./data\character\1115_希尔德加德.csv:34
+#: ./data\character\1115_希尔德加德.csv:38
 msgid "莱塔尼亚权威之剑"
 msgstr ""
 
-#: ./data\character\1115_希尔德加德.csv:35
+#: ./data\character\1115_希尔德加德.csv:39
 msgid "金色肩章装饰"
 msgstr ""
 
-#: ./data\character\1115_希尔德加德.csv:36
+#: ./data\character\1115_希尔德加德.csv:40
 msgid "金色腰带扣"
 msgstr ""
 
@@ -51056,35 +51100,35 @@ msgstr ""
 msgid "塔季扬娜，烈夏生母.\n二十年前于一次探索中与外界失联，后单身带着女儿回归乌萨斯，并独自抚养女儿。于切尔诺伯格事变中受感染，拖着病躯找上罗德岛，找到当时被罗德岛二十年前于一次探索中与外界失联，后单身带着女儿回归乌萨斯，并独自抚养女儿。于切尔诺伯格事变中受感染，拖着病躯找上罗德岛，找到当时被罗德岛\n救助的女儿罗莎琳，即干员烈夏。此后，塔季扬娜女士选择留在罗德岛，接受相关治疗。\n目前身体状况较为稳定，如果能继续接受治疗，控制得当，避免前往过于危险的区域，塔季扬娜女士的病症短期内不会进—步恶化。\n"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:34
+#: ./data\character\1159_塔季扬娜.csv:37
 msgid "条带间色发箍"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:35
+#: ./data\character\1159_塔季扬娜.csv:38
 msgid "十字星状吊坠"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:36
+#: ./data\character\1159_塔季扬娜.csv:39
 msgid "黄蓝色蝴蝶领巾"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:37
+#: ./data\character\1159_塔季扬娜.csv:40
 msgid "深色毛领长外套"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:38
+#: ./data\character\1159_塔季扬娜.csv:41
 msgid "淡褐色打底衬衫"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:39
+#: ./data\character\1159_塔季扬娜.csv:42
 msgid "黑色不规则百褶短裙"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:40
+#: ./data\character\1159_塔季扬娜.csv:43
 msgid "过踝长筒高跟靴"
 msgstr ""
 
-#: ./data\character\1159_塔季扬娜.csv:41
+#: ./data\character\1159_塔季扬娜.csv:44
 msgid "黑色链条小方包"
 msgstr ""
 
@@ -51100,27 +51144,27 @@ msgstr ""
 msgid "大炎最资深的天师之一，本名未知，镇守天机阁三百七十余年，是北境邪魔战线的核心。外形是娇小的金发少女，实际上已有数百岁的长寿。惊蛰的师祖。\n\n平日里行事乖张顽皮，但据望的说法，老天师这样做是为了抵御邪魔污染心智。由于多年征战，身体有多处旧伤。诛杀过的怪物难以计数。天机阁的天师和士兵大多都是她的徒子徒孙（乃至徒曾孙以上）。\n\n实力深不可测，通过扭曲源石技艺使自己获得了超乎寻常的长寿，遇到连天阴雨时仅用扇子轻扇便能驱散云雨使天空放晴，需要年配合各大天师府铸造“十二楼五城，机关三千座，兵俑百万台”之数的庞大机关群才能代替她守卫天机阁。在剧情中展示了火系源石技艺，为炽白色的火焰，温度极高，可以扭曲空间，在原野上烧出天堑，轻松消灭了大量被邪魔污染的怪物，能够轻易焚毁绩的织物，望需要用自身分裂出的“黑子”才能抵挡。同时，作为惊蛰的师祖，雷法修为也不可小觑。\n\n与岁的十二碎片皆有过接触，为他们指点今后道路"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:32
+#: ./data\character\1238_老天师.csv:34
 msgid "红色飘带领饰"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:33
+#: ./data\character\1238_老天师.csv:35
 msgid "白色道袍外衣"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:34
+#: ./data\character\1238_老天师.csv:36
 msgid "黑色内搭衣"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:35
+#: ./data\character\1238_老天师.csv:37
 msgid "黑白条纹长裙"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:37
+#: ./data\character\1238_老天师.csv:39
 msgid "炎国法扇"
 msgstr ""
 
-#: ./data\character\1238_老天师.csv:39
+#: ./data\character\1238_老天师.csv:41
 msgid "符咒装饰挂件"
 msgstr ""
 
@@ -51208,19 +51252,19 @@ msgstr ""
 msgid "阿戈尔的总战争设计师，社会行政监察所的技术执政官，耐心的、友善的阿戈尔人。管理弥利亚留姆，提出并推动航道计划。一年前将弥利亚留姆移动到伊比利亚附近，事件开始前一周与伊比利亚联系，邀请伊比利亚的使节出访阿戈尔"
 msgstr ""
 
-#: ./data\character\1382_克莱门莎.csv:31
+#: ./data\character\1382_克莱门莎.csv:33
 msgid "白蓝色仪式长袍"
 msgstr ""
 
-#: ./data\character\1382_克莱门莎.csv:32
+#: ./data\character\1382_克莱门莎.csv:34
 msgid "黑色蕾丝边披肩"
 msgstr ""
 
-#: ./data\character\1382_克莱门莎.csv:33
+#: ./data\character\1382_克莱门莎.csv:35
 msgid "金色装饰紧身上衣"
 msgstr ""
 
-#: ./data\character\1382_克莱门莎.csv:34
+#: ./data\character\1382_克莱门莎.csv:36
 msgid "金色装饰手套"
 msgstr ""
 
@@ -51236,23 +51280,23 @@ msgstr ""
 msgid "科学发展规划所最优秀的执政官，留在阿戈尔本境。"
 msgstr ""
 
-#: ./data\character\1384_赫拉提娅.csv:30
+#: ./data\character\1384_赫拉提娅.csv:33
 msgid "蓝色蝴蝶结项圈"
 msgstr ""
 
-#: ./data\character\1384_赫拉提娅.csv:31
+#: ./data\character\1384_赫拉提娅.csv:34
 msgid "白色祭司长袍"
 msgstr ""
 
-#: ./data\character\1384_赫拉提娅.csv:32
+#: ./data\character\1384_赫拉提娅.csv:35
 msgid "白色缎带手饰"
 msgstr ""
 
-#: ./data\character\1384_赫拉提娅.csv:34
+#: ./data\character\1384_赫拉提娅.csv:37
 msgid "白色轻便拖鞋"
 msgstr ""
 
-#: ./data\character\1384_赫拉提娅.csv:35
+#: ./data\character\1384_赫拉提娅.csv:38
 msgid "阿戈尔权杖"
 msgstr ""
 
@@ -51268,19 +51312,19 @@ msgstr ""
 msgid "女性食腐者。898年联军进攻卡兹戴尔时，卡莱莎受一名想要看雪的逃兵影响北上前往萨米为食腐者寻找新出路，发现了一眼可以缓解食腐者因长期没有食腐而流失力量痛苦的冰泉，其后自称“北风女巫”隐居于萨米。萨卡兹进驻伦蒂尼姆前夕，卡莱莎拒绝了军事委员会的军衔。萨卡兹撤退回卡兹戴尔后，卡莱莎与她的房子返回了卡兹戴尔，用自己的记忆和一些源石技艺制作了一顶花冠用以抚慰受战争创伤的士兵。卡莱莎的房子具有巫妖与食腐者的源石技艺，可以在炮火中穿行并翻越卡兹戴尔城墙。"
 msgstr ""
 
-#: ./data\character\1452_卡莱莎.csv:31
+#: ./data\character\1452_卡莱莎.csv:33
 msgid "黑色哥特束身衣"
 msgstr ""
 
-#: ./data\character\1452_卡莱莎.csv:32
+#: ./data\character\1452_卡莱莎.csv:34
 msgid "蓝色飘带装饰"
 msgstr ""
 
-#: ./data\character\1452_卡莱莎.csv:35
+#: ./data\character\1452_卡莱莎.csv:37
 msgid "黑色蕾丝长袜"
 msgstr ""
 
-#: ./data\character\1452_卡莱莎.csv:37
+#: ./data\character\1452_卡莱莎.csv:39
 msgid "萨卡兹巫女法杖"
 msgstr ""
 
@@ -51296,35 +51340,35 @@ msgstr ""
 msgid "全名克伦妮·“雅仕”·曼提尔，居住于卡兹戴尔的无业裁缝，从事服装设计与制作、旅游纪念品制售行业，长期惨淡经营，在温饱线上挣扎。长期委托莫斯提马采购外国衣料。有成为服装设计师的愿望。有与卡兹戴尔大多数萨卡兹格格不入的审美观与生活观。"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:29
+#: ./data\character\1453_克伦妮.csv:30
 msgid "黑紫色巫师高帽"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:30
+#: ./data\character\1453_克伦妮.csv:31
 msgid "黑色哥特式斜披风"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:31
+#: ./data\character\1453_克伦妮.csv:32
 msgid "白色荷叶边衬衣"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:32
+#: ./data\character\1453_克伦妮.csv:33
 msgid "紫色蝴蝶结马甲"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:33
+#: ./data\character\1453_克伦妮.csv:34
 msgid "黑色蕾丝边手套"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:34
+#: ./data\character\1453_克伦妮.csv:35
 msgid "黑色修身长裤"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:35
+#: ./data\character\1453_克伦妮.csv:36
 msgid "紫黑色高跟短靴"
 msgstr ""
 
-#: ./data\character\1453_克伦妮.csv:36
+#: ./data\character\1453_克伦妮.csv:37
 msgid "黑色手杖"
 msgstr ""
 
@@ -51372,19 +51416,19 @@ msgstr ""
 msgid "弑君者"
 msgstr ""
 
-#: ./data\character\1502_弑君者.csv:30
+#: ./data\character\1502_弑君者.csv:34
 msgid "黑色战术口罩"
 msgstr ""
 
-#: ./data\character\1502_弑君者.csv:31
+#: ./data\character\1502_弑君者.csv:35
 msgid "黑色连帽风衣"
 msgstr ""
 
-#: ./data\character\1502_弑君者.csv:32
+#: ./data\character\1502_弑君者.csv:36
 msgid "白色内搭衬衫"
 msgstr ""
 
-#: ./data\character\1502_弑君者.csv:34
+#: ./data\character\1502_弑君者.csv:38
 msgid "破洞紧身牛仔裤"
 msgstr ""
 
@@ -51392,31 +51436,31 @@ msgstr ""
 msgid "霜星"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:27
+#: ./data\character\1505_霜星.csv:31
 msgid "黑色荆棘发带"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:28
+#: ./data\character\1505_霜星.csv:32
 msgid "霜白破损战术大衣"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:29
+#: ./data\character\1505_霜星.csv:33
 msgid "深灰紧身作战服"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:30
+#: ./data\character\1505_霜星.csv:34
 msgid "深灰战术半指手套"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:32
+#: ./data\character\1505_霜星.csv:36
 msgid "深灰紧身作战裤"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:33
+#: ./data\character\1505_霜星.csv:37
 msgid "深灰过膝高跟长靴"
 msgstr ""
 
-#: ./data\character\1505_霜星.csv:34
+#: ./data\character\1505_霜星.csv:38
 msgid "银霜细刃剑"
 msgstr ""
 
@@ -51476,27 +51520,27 @@ msgstr ""
 msgid "文月"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:27
+#: ./data\character\2006_文月.csv:30
 msgid "橙红花朵发饰"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:28
+#: ./data\character\2006_文月.csv:31
 msgid "雪白毛绒围脖"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:29
+#: ./data\character\2006_文月.csv:32
 msgid "黑底红鹤振袖"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:30
+#: ./data\character\2006_文月.csv:33
 msgid "黑色简约外套"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:33
+#: ./data\character\2006_文月.csv:36
 msgid "红绳高齿木屐"
 msgstr ""
 
-#: ./data\character\2006_文月.csv:34
+#: ./data\character\2006_文月.csv:37
 msgid "红色锦缎和服腰带"
 msgstr ""
 
@@ -51512,39 +51556,39 @@ msgstr ""
 msgid "提丰，活跃于萨米的萨卡兹，以猎人自居，对萨米的自然环境和潜在威胁有着充足的知识储备和应对技巧。现应干员麦哲伦邀请与罗德岛进行合作，协助罗德岛在萨米及无尽冰原地区的事务。"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:29
+#: ./data\character\2012_提丰.csv:32
 msgid "恶魔头冠"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:30
+#: ./data\character\2012_提丰.csv:33
 msgid "白色皮革项圈"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:31
+#: ./data\character\2012_提丰.csv:34
 msgid "黑色镂空战斗紧身衣"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:32
+#: ./data\character\2012_提丰.csv:35
 msgid "灰白宽松大外套"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:35
+#: ./data\character\2012_提丰.csv:38
 msgid "左腿黑色吊带过膝长袜"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:36
+#: ./data\character\2012_提丰.csv:39
 msgid "右腿黑色小腿袜"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:37
+#: ./data\character\2012_提丰.csv:40
 msgid "黑银厚底高跟战靴"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:38
+#: ./data\character\2012_提丰.csv:41
 msgid "复合动力弓"
 msgstr ""
 
-#: ./data\character\2012_提丰.csv:39
+#: ./data\character\2012_提丰.csv:42
 msgid "金属环形角饰"
 msgstr ""
 
@@ -51596,35 +51640,35 @@ msgstr ""
 msgid "年，无业游民，熟习各类金属工艺，拥有与身份不符的渊博冶金知识。现凭访客身份逗留于罗德岛，偶尔为罗德岛的金属加工项目提供建议。声称自己擅长音像娱乐工作，经常提供一些罗德岛干员普遍不太喜爱的音像产品。"
 msgstr ""
 
-#: ./data\character\2014_年.csv:30
+#: ./data\character\2014_年.csv:35
 msgid "赤金流苏耳坠"
 msgstr ""
 
-#: ./data\character\2014_年.csv:31
+#: ./data\character\2014_年.csv:36
 msgid "白色祥云纹长袍"
 msgstr ""
 
-#: ./data\character\2014_年.csv:32
+#: ./data\character\2014_年.csv:37
 msgid "赤色运动束胸"
 msgstr ""
 
-#: ./data\character\2014_年.csv:33
+#: ./data\character\2014_年.csv:38
 msgid "白色红饰带热裤"
 msgstr ""
 
-#: ./data\character\2014_年.csv:34
+#: ./data\character\2014_年.csv:39
 msgid "右腿青红腿带"
 msgstr ""
 
-#: ./data\character\2014_年.csv:35
+#: ./data\character\2014_年.csv:40
 msgid "灰白赤纹运动鞋"
 msgstr ""
 
-#: ./data\character\2014_年.csv:36
+#: ./data\character\2014_年.csv:41
 msgid "玄铁巨盾"
 msgstr ""
 
-#: ./data\character\2014_年.csv:37
+#: ./data\character\2014_年.csv:42
 msgid "腰间黑色工具包"
 msgstr ""
 
@@ -51676,31 +51720,31 @@ msgstr ""
 msgid "令，寓居尚蜀的诗人，与炎国司岁台等政府部门均有联系，在尚蜀事件中接触罗德岛，现通过审核，以访客身份驻留本舰。"
 msgstr ""
 
-#: ./data\character\2023_令.csv:30
+#: ./data\character\2023_令.csv:35
 msgid "青蓝发冠"
 msgstr ""
 
-#: ./data\character\2023_令.csv:32
+#: ./data\character\2023_令.csv:37
 msgid "水墨纹饰白袍"
 msgstr ""
 
-#: ./data\character\2023_令.csv:33
+#: ./data\character\2023_令.csv:38
 msgid "金边素白抹胸"
 msgstr ""
 
-#: ./data\character\2023_令.csv:34
+#: ./data\character\2023_令.csv:39
 msgid "系带黑色热裤"
 msgstr ""
 
-#: ./data\character\2023_令.csv:35
+#: ./data\character\2023_令.csv:40
 msgid "黑底白面运动鞋"
 msgstr ""
 
-#: ./data\character\2023_令.csv:36
+#: ./data\character\2023_令.csv:41
 msgid "盘龙灯影法杖"
 msgstr ""
 
-#: ./data\character\2023_令.csv:37
+#: ./data\character\2023_令.csv:42
 msgid "黑铁酒泉葫芦"
 msgstr ""
 
@@ -51716,39 +51760,39 @@ msgstr ""
 msgid "黍，炎国农业天师，天师府授业天师。曾于炎国北部农业基地大荒城从事农业研究多年且已有丰富的科研成果。现因访问亲属，以访客身份暂驻罗德岛。"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:30
+#: ./data\character\2025_黍.csv:35
 msgid "木制发簪"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:31
+#: ./data\character\2025_黍.csv:36
 msgid "方块颈环"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:32
+#: ./data\character\2025_黍.csv:37
 msgid "白底蓝边云纹长袍"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:33
+#: ./data\character\2025_黍.csv:38
 msgid "格纹方块抹胸"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:34
+#: ./data\character\2025_黍.csv:39
 msgid "黑色皮革护腕"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:35
+#: ./data\character\2025_黍.csv:40
 msgid "白色宽松喇叭裤"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:37
+#: ./data\character\2025_黍.csv:42
 msgid "深色防水长筒靴"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:38
+#: ./data\character\2025_黍.csv:43
 msgid "辉光青刃剑"
 msgstr ""
 
-#: ./data\character\2025_黍.csv:39
+#: ./data\character\2025_黍.csv:44
 msgid "天师仪"
 msgstr ""
 
@@ -51764,39 +51808,39 @@ msgstr ""
 msgid "布丁，哥伦比亚的电气工程师，在野外考察时意外感染矿石病，来到罗德岛应聘工作并寻求治疗。作为可露希尔小姐的帮手似乎很合适，入职后被立刻抓去成为了工程部助手。"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:29
+#: ./data\character\4004_布丁.csv:31
 msgid "黑色简约发带"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:30
+#: ./data\character\4004_布丁.csv:32
 msgid "罗德岛工装夹克"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:31
+#: ./data\character\4004_布丁.csv:33
 msgid "白色花纹高领衫"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:34
+#: ./data\character\4004_布丁.csv:36
 msgid "白色简约连衣裙"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:35
+#: ./data\character\4004_布丁.csv:37
 msgid "白色运动中筒袜"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:36
+#: ./data\character\4004_布丁.csv:38
 msgid "黑色战术腿环"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:37
+#: ./data\character\4004_布丁.csv:39
 msgid "黑白拼色运动鞋"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:38
+#: ./data\character\4004_布丁.csv:40
 msgid "电能充能法杖"
 msgstr ""
 
-#: ./data\character\4004_布丁.csv:39
+#: ./data\character\4004_布丁.csv:41
 msgid "海豹玩偶小抱枕"
 msgstr ""
 
@@ -51852,35 +51896,35 @@ msgstr ""
 msgid "艾丽妮，前伊比利亚审判官，大审判官达里奥的学生。对伊比利亚历史、律法、人文地理等知识十分了解。在“愚人号”事件后，辞去审判官职务，经凯尔希亲自推荐，现以审判庭信使的身份与罗德岛签订合作协议，为应对来自海洋的威胁而做准备。"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:27
+#: ./data\character\4009_艾丽妮.csv:29
 msgid "银色十字星耳钉"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:28
+#: ./data\character\4009_艾丽妮.csv:30
 msgid "改良修女战斗服"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:29
+#: ./data\character\4009_艾丽妮.csv:31
 msgid "黑色破损披风"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:31
+#: ./data\character\4009_艾丽妮.csv:33
 msgid "白色修女连衣裙"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:32
+#: ./data\character\4009_艾丽妮.csv:34
 msgid "纯白连裤袜"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:33
+#: ./data\character\4009_艾丽妮.csv:35
 msgid "荷叶边洛丽塔短靴"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:34
+#: ./data\character\4009_艾丽妮.csv:36
 msgid "伊比利亚审判官长剑"
 msgstr ""
 
-#: ./data\character\4009_艾丽妮.csv:35
+#: ./data\character\4009_艾丽妮.csv:37
 msgid "粉光审判官提灯"
 msgstr ""
 
@@ -51896,27 +51940,27 @@ msgstr ""
 msgid "隐德来希，作为卡兹戴尔情报组织玫瑰河畔的成员，曾为巴别塔提供过情报。伦蒂尼姆战争期间，隐德来希主动与罗德岛取得联系，现以访客身份留舰。\n需注意，隐德来希与罗德岛并非正式的合约关系，她与罗德岛的一切合作，均视作私人委托。"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:26
+#: ./data\character\4010_隐德来希.csv:30
 msgid "白色领巾"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:27
+#: ./data\character\4010_隐德来希.csv:31
 msgid "束腰暗黑哥特服"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:29
+#: ./data\character\4010_隐德来希.csv:33
 msgid "深红色蕾丝文胸"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:30
+#: ./data\character\4010_隐德来希.csv:34
 msgid "镂空蕾丝边丝袜"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:31
+#: ./data\character\4010_隐德来希.csv:35
 msgid "黑色高跟皮靴"
 msgstr ""
 
-#: ./data\character\4010_隐德来希.csv:32
+#: ./data\character\4010_隐德来希.csv:36
 msgid "月牙状大型镰刀"
 msgstr ""
 
@@ -51932,15 +51976,15 @@ msgstr ""
 msgid "谢拉格圣女，恩雅·希瓦艾什，也就是干员初雪的侍女长，作为圣女的代表加入罗德岛。\n负责初雪秘密访问罗德岛的诸多对接事宜，除此之外，本人也十分享受干员生活，现作为术师干员活跃于各种任务中。\n"
 msgstr ""
 
-#: ./data\character\4013_耶拉.csv:29
+#: ./data\character\4013_耶拉.csv:34
 msgid "渐变色羽饰外衬"
 msgstr ""
 
-#: ./data\character\4013_耶拉.csv:30
+#: ./data\character\4013_耶拉.csv:35
 msgid "白色黑网格壁袍"
 msgstr ""
 
-#: ./data\character\4013_耶拉.csv:32
+#: ./data\character\4013_耶拉.csv:37
 msgid "白色高跟鞋"
 msgstr ""
 
@@ -52004,15 +52048,15 @@ msgstr ""
 msgid "空构，本名斯普莉雅，拉特兰公民，就职于教皇厅第六厅，于安布罗修事件后跟随执行者里凯莱以拉特兰外派人员的身份加入罗德岛。\n精通铳械辅助技术，在通讯、机械工程等领域亦有造诣，现作为访学人员为工程部提供协助。"
 msgstr ""
 
-#: ./data\character\4015_空构.csv:29
+#: ./data\character\4015_空构.csv:33
 msgid "灰绿色夹克"
 msgstr ""
 
-#: ./data\character\4015_空构.csv:30
+#: ./data\character\4015_空构.csv:34
 msgid "白色西装裤"
 msgstr ""
 
-#: ./data\character\4015_空构.csv:32
+#: ./data\character\4015_空构.csv:36
 msgid "白色球靴"
 msgstr ""
 
@@ -52028,31 +52072,31 @@ msgstr ""
 msgid "前东国忍者。上任家主离世后，由于自身想法和新任家主的商业目标相矛盾，经家中关系及家主的协调，被推荐来罗德岛工作。目前为罗德岛驻维多利亚情报人员。"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:29
+#: ./data\character\4016_风丸.csv:32
 msgid "紫色蝴蝶结领饰"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:31
+#: ./data\character\4016_风丸.csv:34
 msgid "黄色和风外套"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:33
+#: ./data\character\4016_风丸.csv:36
 msgid "蓝色绑带腿饰"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:35
+#: ./data\character\4016_风丸.csv:38
 msgid "灰色忍者木屐"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:36
+#: ./data\character\4016_风丸.csv:39
 msgid "东国忍具套装"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:37
+#: ./data\character\4016_风丸.csv:40
 msgid "皮质工具包"
 msgstr ""
 
-#: ./data\character\4016_风丸.csv:38
+#: ./data\character\4016_风丸.csv:41
 msgid "彩色挂饰装饰"
 msgstr ""
 
@@ -52068,59 +52112,59 @@ msgstr ""
 msgid "九色鹿，自称来自大炎的某一片山林，具体位置并未告知。自身具有丰富的药草采集和制作的相关知识，并具备一定作战能力。经其他干员介绍，来到罗德岛交流学习，近期将与罗德岛同行。"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:30
+#: ./data\character\4019_九色鹿.csv:35
 msgid "坠玛瑙银环"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:31
+#: ./data\character\4019_九色鹿.csv:36
 msgid "环颈嵌玛瑙银项链"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:32
+#: ./data\character\4019_九色鹿.csv:37
 msgid "落花流水纹玉珍珠银环"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:33
+#: ./data\character\4019_九色鹿.csv:38
 msgid "新中式混纺仰月纹门襟云气纹袖口外套"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:34
+#: ./data\character\4019_九色鹿.csv:39
 msgid "彩花钿纹轻纱里衬"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:35
+#: ./data\character\4019_九色鹿.csv:40
 msgid "工字褶丝绸宝相花纹饰抹胸"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:36
+#: ./data\character\4019_九色鹿.csv:41
 msgid "掐丝嵌玉银流苏环"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:37
+#: ./data\character\4019_九色鹿.csv:42
 msgid "红青双色绸缎束腰"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:38
+#: ./data\character\4019_九色鹿.csv:43
 msgid "白色丝质薄纱长裙"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:39
+#: ./data\character\4019_九色鹿.csv:44
 msgid "银环挂珠"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:40
+#: ./data\character\4019_九色鹿.csv:45
 msgid "厚底布屐"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:41
+#: ./data\character\4019_九色鹿.csv:46
 msgid "七彩祥云和五色神光"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:42
+#: ./data\character\4019_九色鹿.csv:47
 msgid "佛光"
 msgstr ""
 
-#: ./data\character\4019_九色鹿.csv:43
+#: ./data\character\4019_九色鹿.csv:48
 msgid "神药"
 msgstr ""
 
@@ -52136,35 +52180,35 @@ msgstr ""
 msgid "红隼，萨尔贡人，舒巴特-阿尔萨兰地区前部落战士，曾与她的兄弟姐妹们一起被当地王酋军强制奴役。在一次逃离后与罗德岛相遇，重返矿场解救了与自己一同受难的工友，后主动申请加入罗德岛。现作为罗德岛萨尔贡办事处干员，接受治疗的同时参与各类外勤任务。"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:29
+#: ./data\character\4023_红隼.csv:32
 msgid "橙色羽毛耳环"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:30
+#: ./data\character\4023_红隼.csv:33
 msgid "萨尔贡项链"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:32
+#: ./data\character\4023_红隼.csv:35
 msgid "黄色蝴蝶结胸衣"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:33
+#: ./data\character\4023_红隼.csv:36
 msgid "黑色皮质护臂"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:35
+#: ./data\character\4023_红隼.csv:38
 msgid "白色网纹丝袜"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:37
+#: ./data\character\4023_红隼.csv:40
 msgid "黑色战斗短靴"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:38
+#: ./data\character\4023_红隼.csv:41
 msgid "萨尔贡弯刀"
 msgstr ""
 
-#: ./data\character\4023_红隼.csv:39
+#: ./data\character\4023_红隼.csv:42
 msgid "白色毛皮肩饰"
 msgstr ""
 
@@ -52180,31 +52224,31 @@ msgstr ""
 msgid "英格丽，铃兰干员的母亲，曾为叙拉古灰厅十二家族之一——威尼斯家族的核心成员，多执行暗杀任务，擅长歼灭战与突袭战，后因故从家族脱离。现以罗德岛驻舰干员身份活动，代号忍冬。"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:30
+#: ./data\character\4026_忍冬.csv:34
 msgid "红色花纹领巾"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:31
+#: ./data\character\4026_忍冬.csv:35
 msgid "黑色金纹大衣"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:32
+#: ./data\character\4026_忍冬.csv:36
 msgid "黑色修身马甲"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:34
+#: ./data\character\4026_忍冬.csv:38
 msgid "棕色皮制手套"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:35
+#: ./data\character\4026_忍冬.csv:39
 msgid "黑色渐变长裙"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:36
+#: ./data\character\4026_忍冬.csv:40
 msgid "深色花纹长袜"
 msgstr ""
 
-#: ./data\character\4026_忍冬.csv:39
+#: ./data\character\4026_忍冬.csv:43
 msgid "腰间御守"
 msgstr ""
 
@@ -52244,43 +52288,43 @@ msgstr ""
 msgid "复奏，新沃尔西尼知名乐团的经理人，在观察到新沃尔西尼的诸多权力人物都与罗德岛有千丝万缕的关系后，主动联系罗德岛寻求商业合作，以期扩大乐团的知名度。基于本人的意愿，也会参与一部分外勤任务。"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:27
+#: ./data\character\4031_复奏.csv:30
 msgid "黑色蝴蝶结发饰"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:28
+#: ./data\character\4031_复奏.csv:31
 msgid "亮蓝色领带"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:29
+#: ./data\character\4031_复奏.csv:32
 msgid "深绿色毛领大衣"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:30
+#: ./data\character\4031_复奏.csv:33
 msgid "白色花边衬衫"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:31
+#: ./data\character\4031_复奏.csv:34
 msgid "棕色百褶短裙"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:32
+#: ./data\character\4031_复奏.csv:35
 msgid "黑色长筒丝袜"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:33
+#: ./data\character\4031_复奏.csv:36
 msgid "皮质战术腿环"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:34
+#: ./data\character\4031_复奏.csv:37
 msgid "金属装饰高跟鞋"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:35
+#: ./data\character\4031_复奏.csv:38
 msgid "长柄法杖"
 msgstr ""
 
-#: ./data\character\4031_复奏.csv:36
+#: ./data\character\4031_复奏.csv:39
 msgid "幽灵玩偶挂饰"
 msgstr ""
 
@@ -52316,27 +52360,27 @@ msgstr ""
 msgid "号角，毕业于维多利亚皇家近卫学校，现为维多利亚风暴突击队第二分队指挥官。于伦蒂尼姆事件中与罗德岛协同作战，经精英干员Misery介绍，与罗德岛签订战略合作条款。"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:29
+#: ./data\character\4039_号角.csv:31
 msgid "灰色军装衬衫"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:30
+#: ./data\character\4039_号角.csv:32
 msgid "绿色战术背心"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:32
+#: ./data\character\4039_号角.csv:34
 msgid "白色热裤"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:35
+#: ./data\character\4039_号角.csv:37
 msgid "维多利亚重盾"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:36
+#: ./data\character\4039_号角.csv:38
 msgid "军用战术腰带"
 msgstr ""
 
-#: ./data\character\4039_号角.csv:37
+#: ./data\character\4039_号角.csv:39
 msgid "通讯设备"
 msgstr ""
 
@@ -52352,23 +52396,23 @@ msgstr ""
 msgid "洛洛，伦蒂尼姆市民自救军成员，伦蒂尼姆事件中与罗德岛协同作战，具有侦察及远程攻击相关作战经验。根据本人意向，与罗德岛驻伦蒂尼姆办事处达成合作关系。"
 msgstr ""
 
-#: ./data\character\4040_洛洛.csv:30
+#: ./data\character\4040_洛洛.csv:32
 msgid "红色领巾"
 msgstr ""
 
-#: ./data\character\4040_洛洛.csv:31
+#: ./data\character\4040_洛洛.csv:33
 msgid "黑色露腹背心"
 msgstr ""
 
-#: ./data\character\4040_洛洛.csv:32
+#: ./data\character\4040_洛洛.csv:34
 msgid "红色护腕手套"
 msgstr ""
 
-#: ./data\character\4040_洛洛.csv:36
+#: ./data\character\4040_洛洛.csv:38
 msgid "维多利亚短剑"
 msgstr ""
 
-#: ./data\character\4040_洛洛.csv:37
+#: ./data\character\4040_洛洛.csv:39
 msgid "黑色工具腰包"
 msgstr ""
 
@@ -52384,47 +52428,47 @@ msgstr ""
 msgid "埃拉托，来自米诺斯的吟游诗人，对抗萨尔贡殖民者的游击队成员。至于本人反复强调的“蝉联三届勇士大会射箭项目冠军”和“米诺斯第一竖琴演奏家”的身份无法考证，暂不录入档案。"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:27
+#: ./data\character\4043_埃拉托.csv:29
 msgid "白色简约发箍"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:28
+#: ./data\character\4043_埃拉托.csv:30
 msgid "翠绿宝石耳坠"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:29
+#: ./data\character\4043_埃拉托.csv:31
 msgid "黑色雅致颈环"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:30
+#: ./data\character\4043_埃拉托.csv:32
 msgid "月桂女神礼裙"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:31
+#: ./data\character\4043_埃拉托.csv:33
 msgid "翠羽流苏披肩"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:32
+#: ./data\character\4043_埃拉托.csv:34
 msgid "白色露指手套"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:33
+#: ./data\character\4043_埃拉托.csv:35
 msgid "橄榄枝金边臂环"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:35
+#: ./data\character\4043_埃拉托.csv:37
 msgid "棕色皮革腿环"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:36
+#: ./data\character\4043_埃拉托.csv:38
 msgid "赤色丝绸腿带"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:37
+#: ./data\character\4043_埃拉托.csv:39
 msgid "白绿拼色凉靴"
 msgstr ""
 
-#: ./data\character\4043_埃拉托.csv:38
+#: ./data\character\4043_埃拉托.csv:40
 msgid "米诺斯传承竖琴"
 msgstr ""
 
@@ -52440,43 +52484,43 @@ msgstr ""
 msgid "海蒂，以小说家的名义在维多利亚活动，同时已担任凯尔希的私人信使多年。因参与市民自救军的行动而遭萨卡兹军抓捕，在罗德岛进入伦蒂尼姆时被救出，随后正式以干员身份加入罗德岛。"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:29
+#: ./data\character\4045_海蒂.csv:32
 msgid "红色宽檐礼帽"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:30
+#: ./data\character\4045_海蒂.csv:33
 msgid "红色项圈饰品"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:31
+#: ./data\character\4045_海蒂.csv:34
 msgid "白色贵族外套"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:32
+#: ./data\character\4045_海蒂.csv:35
 msgid "黑色紧身胸衣"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:33
+#: ./data\character\4045_海蒂.csv:36
 msgid "红色皮质手套"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:34
+#: ./data\character\4045_海蒂.csv:37
 msgid "黑色开衩长裙"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:35
+#: ./data\character\4045_海蒂.csv:38
 msgid "白色蕾丝长袜"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:36
+#: ./data\character\4045_海蒂.csv:39
 msgid "红色高跟鞋"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:37
+#: ./data\character\4045_海蒂.csv:40
 msgid "维多利亚手杖"
 msgstr ""
 
-#: ./data\character\4045_海蒂.csv:38
+#: ./data\character\4045_海蒂.csv:41
 msgid "红色皮质手包"
 msgstr ""
 
@@ -52488,7 +52532,7 @@ msgstr ""
 msgid "莱茵生命源石技艺应用科主任，在罗德岛选择使用自己的本名作为代号。多萝西·弗兰克斯小姐以“莱茵生命与罗德岛的合作项目负责人”这一身份加入我们，将会在许多研究项目上为罗德岛提供帮助。身为源石技艺应用科的主任，她对源石技艺本身的理解毋庸置疑，而在源石技艺的应用上更是炉火纯青。"
 msgstr ""
 
-#: ./data\character\4048_多萝西.csv:37
+#: ./data\character\4048_多萝西.csv:40
 msgid "过膝高筒靴"
 msgstr ""
 
@@ -52504,23 +52548,23 @@ msgstr ""
 msgid "协律，本名托妮娅·克朗，来自莱塔尼亚偏远小镇的调谐师。于一场暴风雪导致的声场核心过载事故中不慎感染上矿石病，后来经介绍来到罗德岛，接受治疗的同时，致力于为罗德岛的音乐环境提供力所能及的支持与辅助，并作为术师干员协助战斗。"
 msgstr ""
 
-#: ./data\character\4051_协律.csv:29
+#: ./data\character\4051_协律.csv:31
 msgid "黑色不对称单袖夹克"
 msgstr ""
 
-#: ./data\character\4051_协律.csv:30
+#: ./data\character\4051_协律.csv:32
 msgid "白色无袖百褶连衣裙"
 msgstr ""
 
-#: ./data\character\4051_协律.csv:33
+#: ./data\character\4051_协律.csv:35
 msgid "宝蓝色厚裤袜"
 msgstr ""
 
-#: ./data\character\4051_协律.csv:34
+#: ./data\character\4051_协律.csv:36
 msgid "黑灰色拉链短靴"
 msgstr ""
 
-#: ./data\character\4051_协律.csv:36
+#: ./data\character\4051_协律.csv:38
 msgid "战术腿包"
 msgstr ""
 
@@ -52628,39 +52672,39 @@ msgstr ""
 msgid "法尔贾万达巴德博物馆现任馆长梅捷缇克缇，只有朋友才可以称她“缇缇”。现以外勤干员的身份与罗德岛展开合作。她也希望能尽自己的全力，修复萨尔贡与米诺斯的关系。"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:29
+#: ./data\character\4056_缇缇.csv:32
 msgid "黄金猫眼头饰"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:30
+#: ./data\character\4056_缇缇.csv:33
 msgid "科技风宽松夹克"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:31
+#: ./data\character\4056_缇缇.csv:34
 msgid "黑白拼色马甲"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:32
+#: ./data\character\4056_缇缇.csv:35
 msgid "灰色紧身衣"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:33
+#: ./data\character\4056_缇缇.csv:36
 msgid "黑色开叉短裙"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:34
+#: ./data\character\4056_缇缇.csv:37
 msgid "黑色过膝长筒袜"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:35
+#: ./data\character\4056_缇缇.csv:38
 msgid "黑色厚底机能靴"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:36
+#: ./data\character\4056_缇缇.csv:39
 msgid "圣甲虫权杖"
 msgstr ""
 
-#: ./data\character\4056_缇缇.csv:37
+#: ./data\character\4056_缇缇.csv:40
 msgid "白色飘逸长饰带"
 msgstr ""
 
@@ -52712,35 +52756,35 @@ msgstr ""
 msgid "来自哥伦比亚的一名普通雇佣兵。虽然个人战斗技能不算突出，但考虑到她应变能力优秀，且能够在复杂的战场环境下，及时灵活有效地调整行动方案，她依旧可以成为一名坚实可靠的小队干员。"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:29
+#: ./data\character\4063_石英.csv:30
 msgid "单眼战术眼罩"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:30
+#: ./data\character\4063_石英.csv:31
 msgid "破旧兜帽披风"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:31
+#: ./data\character\4063_石英.csv:32
 msgid "拼接紧身作战服"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:32
+#: ./data\character\4063_石英.csv:33
 msgid "灰色工装短裤"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:33
+#: ./data\character\4063_石英.csv:34
 msgid "战术腰带及腿包"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:35
+#: ./data\character\4063_石英.csv:36
 msgid "灰色厚底运动凉鞋"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:36
+#: ./data\character\4063_石英.csv:37
 msgid "长柄大剑"
 msgstr ""
 
-#: ./data\character\4063_石英.csv:37
+#: ./data\character\4063_石英.csv:38
 msgid "老式怀表"
 msgstr ""
 
@@ -52752,7 +52796,7 @@ msgstr ""
 msgid "原为叙拉古城邦法官，通过干员德克萨斯与罗德岛建立联系。于后勤部工作，担任罗德岛法律顾问一职。"
 msgstr ""
 
-#: ./data\character\4065_斥罪.csv:37
+#: ./data\character\4065_斥罪.csv:38
 msgid "叙拉古法典"
 msgstr ""
 
@@ -52768,19 +52812,19 @@ msgstr ""
 msgid "驻外干员海沫，她比看上去的要更好斗。\n\n海的女儿，选择了拒绝大海。"
 msgstr ""
 
-#: ./data\character\4066_海沫.csv:36
+#: ./data\character\4066_海沫.csv:37
 msgid "贝壳发饰"
 msgstr ""
 
-#: ./data\character\4066_海沫.csv:37
+#: ./data\character\4066_海沫.csv:38
 msgid "露肩休闲外套"
 msgstr ""
 
-#: ./data\character\4066_海沫.csv:38
+#: ./data\character\4066_海沫.csv:39
 msgid "白色长尾裙"
 msgstr ""
 
-#: ./data\character\4066_海沫.csv:40
+#: ./data\character\4066_海沫.csv:41
 msgid "绑带鞋"
 msgstr ""
 
@@ -52796,19 +52840,19 @@ msgstr ""
 msgid "萨卡兹雇佣兵中的一员，自哥伦比亚被曼弗雷德召集至伦蒂尼姆，后因理念不合而带小队脱离原本阵营，受袭途中被搭救。\n现接受罗德岛雇佣，为作战小队提供战场医疗支援。"
 msgstr ""
 
-#: ./data\character\4071_明椒.csv:29
+#: ./data\character\4071_明椒.csv:33
 msgid "深色战地上衣"
 msgstr ""
 
-#: ./data\character\4071_明椒.csv:30
+#: ./data\character\4071_明椒.csv:34
 msgid "战损版安全裤"
 msgstr ""
 
-#: ./data\character\4071_明椒.csv:31
+#: ./data\character\4071_明椒.csv:35
 msgid "黑色泡泡袜"
 msgstr ""
 
-#: ./data\character\4071_明椒.csv:32
+#: ./data\character\4071_明椒.csv:36
 msgid "黑色拖鞋"
 msgstr ""
 
@@ -52824,15 +52868,15 @@ msgstr ""
 msgid "截云，生活在炎国西北部沙漠中的阿纳萨少女，经槐琥介绍来到罗德岛在大炎的办事处接受治疗，同时担任外勤干员。"
 msgstr ""
 
-#: ./data\character\4078_截云.csv:30
+#: ./data\character\4078_截云.csv:32
 msgid "开口喇叭裤"
 msgstr ""
 
-#: ./data\character\4078_截云.csv:31
+#: ./data\character\4078_截云.csv:33
 msgid "踝高短袜"
 msgstr ""
 
-#: ./data\character\4078_截云.csv:32
+#: ./data\character\4078_截云.csv:34
 msgid "白色沙漠靴"
 msgstr ""
 
@@ -52848,19 +52892,19 @@ msgstr ""
 msgid "卢契拉，阿戈尔人，隶属技术院设施管理所，于穹顶系统担任穹顶管理员与洋流测绘员。阿戈尔与陆地建立联系后，卢契拉出于个人兴趣，以个人名义与罗德岛达成合作，不定期前来进行文化交流。 现以“海霓”为代号，登记为罗德岛合作干员。"
 msgstr ""
 
-#: ./data\character\4079_海霓.csv:33
+#: ./data\character\4079_海霓.csv:34
 msgid "白色蕾丝上衣"
 msgstr ""
 
-#: ./data\character\4079_海霓.csv:34
+#: ./data\character\4079_海霓.csv:35
 msgid "黑色束胸背心"
 msgstr ""
 
-#: ./data\character\4079_海霓.csv:35
+#: ./data\character\4079_海霓.csv:36
 msgid "黑色长袖外套"
 msgstr ""
 
-#: ./data\character\4079_海霓.csv:39
+#: ./data\character\4079_海霓.csv:40
 msgid "阿戈尔法杖"
 msgstr ""
 
@@ -52912,11 +52956,11 @@ msgstr ""
 msgid "温米，出生于雷姆必拓的一座矿业小镇，虽年纪尚小，却在烹饪、机械修理等技术领域展露出了出色的天分。经干员暴行推荐，在监护人阿兰娜的陪同下来到罗德岛接受治疗，同时在舰上学习源石技艺基础课程。"
 msgstr ""
 
-#: ./data\character\4081_温米.csv:30
+#: ./data\character\4081_温米.csv:34
 msgid "白色绿饰点缀连衣裙"
 msgstr ""
 
-#: ./data\character\4081_温米.csv:33
+#: ./data\character\4081_温米.csv:37
 msgid "红棕色小皮鞋"
 msgstr ""
 
@@ -52932,11 +52976,11 @@ msgstr ""
 msgid "仇白，剑客，出生于炎国姜齐城附近的水寨，后因家庭变故离开故乡，常年行走于炎国各地，并无固定居所与工作。\n经调查，仇白曾在不同事件中与多位干员有过接触，后接受罗德岛的合作邀请，为罗德岛在炎国境内的各项事务提供支持。"
 msgstr ""
 
-#: ./data\character\4082_仇白.csv:29
+#: ./data\character\4082_仇白.csv:30
 msgid "黑色红饰吊带裙"
 msgstr ""
 
-#: ./data\character\4082_仇白.csv:31
+#: ./data\character\4082_仇白.csv:32
 msgid "黑色过肘护手"
 msgstr ""
 
@@ -52952,15 +52996,15 @@ msgstr ""
 msgid "铎铃，奔波在炎国西北部的乡村信使，曾使数个闭塞的村庄获得了相对通畅的信息交流。因矿石病来罗德岛求医，现兼职为罗德岛提供信使服务。"
 msgstr ""
 
-#: ./data\character\4083_铎铃.csv:30
+#: ./data\character\4083_铎铃.csv:34
 msgid "白色露脐运动上衣"
 msgstr ""
 
-#: ./data\character\4083_铎铃.csv:31
+#: ./data\character\4083_铎铃.csv:35
 msgid "运动裤"
 msgstr ""
 
-#: ./data\character\4083_铎铃.csv:32
+#: ./data\character\4083_铎铃.csv:36
 msgid "耐磨短袜"
 msgstr ""
 
@@ -52976,15 +53020,15 @@ msgstr ""
 msgid "前萨卡兹佣兵头目，伊内丝。曾短暂参与卡兹戴尔的混乱内战，直到切尔诺伯格事件时，她借助假死彻底消失在所有人的视野中。此后，伊内丝隐藏了自己的踪迹，但通过最近的伦蒂尼姆事件，她正式与罗德岛恢复了联系。期间她经历了什么无从查验，最后在阿斯卡纶的担保下与罗德岛签订了战略合作条款。"
 msgstr ""
 
-#: ./data\character\4087_伊内丝.csv:30
+#: ./data\character\4087_伊内丝.csv:34
 msgid "黑色短袖战地风夹克"
 msgstr ""
 
-#: ./data\character\4087_伊内丝.csv:31
+#: ./data\character\4087_伊内丝.csv:35
 msgid "深色包臀裙"
 msgstr ""
 
-#: ./data\character\4087_伊内丝.csv:32
+#: ./data\character\4087_伊内丝.csv:36
 msgid "褐色护膝"
 msgstr ""
 
@@ -53044,15 +53088,15 @@ msgstr ""
 msgid "薇薇安娜·德罗斯特，莱塔尼亚施彤领选帝侯霍赫贝格家族后裔，前卡西米尔人气竞技骑士。经耀骑士临光举荐，在罗德岛登记为合作干员。\n擅长使用光影类源石技艺，配以华丽的剑术技巧，能在战场上灵活御敌。驻留本舰期间将为罗德岛提供战术与外勤任务支援。"
 msgstr ""
 
-#: ./data\character\4098_薇薇安娜.csv:29
+#: ./data\character\4098_薇薇安娜.csv:35
 msgid "带兜帽披袍"
 msgstr ""
 
-#: ./data\character\4098_薇薇安娜.csv:30
+#: ./data\character\4098_薇薇安娜.csv:36
 msgid "黑色底色白饰洛丽塔"
 msgstr ""
 
-#: ./data\character\4098_薇薇安娜.csv:32
+#: ./data\character\4098_薇薇安娜.csv:38
 msgid "白色长筒高跟靴"
 msgstr ""
 
@@ -53068,27 +53112,27 @@ msgstr ""
 msgid "狙击干员跃跃，走起路来一蹦一跳。\n\n她正邀请你加入她的游戏，答应她吧，不会让你失望的。"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:45
+#: ./data\character\4100_跃跃.csv:46
 msgid "露耳兜帽"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:46
+#: ./data\character\4100_跃跃.csv:47
 msgid "带绒球白色塑制外套"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:47
+#: ./data\character\4100_跃跃.csv:48
 msgid "黑色露脐羊绒衫"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:48
+#: ./data\character\4100_跃跃.csv:49
 msgid "红色皮手套"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:50
+#: ./data\character\4100_跃跃.csv:51
 msgid "不对称红厚棉袜"
 msgstr ""
 
-#: ./data\character\4100_跃跃.csv:51
+#: ./data\character\4100_跃跃.csv:52
 msgid "带绒球工作靴"
 msgstr ""
 
@@ -53104,39 +53148,39 @@ msgstr ""
 msgid "萨卡兹独眼巨人凛视，走出冰封的岩窟。\n\n她看见终局，她寻找起因。"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:39
+#: ./data\character\4102_凛视.csv:41
 msgid "白花发饰"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:40
+#: ./data\character\4102_凛视.csv:42
 msgid "铃铛耳饰"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:41
+#: ./data\character\4102_凛视.csv:43
 msgid "毛毡披肩"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:42
+#: ./data\character\4102_凛视.csv:44
 msgid "黑白无袖褶边长襟衣"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:43
+#: ./data\character\4102_凛视.csv:45
 msgid "印花束口衬衣"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:44
+#: ./data\character\4102_凛视.csv:46
 msgid "皮革束腰"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:45
+#: ./data\character\4102_凛视.csv:47
 msgid "皮裙"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:46
+#: ./data\character\4102_凛视.csv:48
 msgid "黑丝过膝袜"
 msgstr ""
 
-#: ./data\character\4102_凛视.csv:47
+#: ./data\character\4102_凛视.csv:49
 msgid "皮革厚增高靴"
 msgstr ""
 
@@ -53152,20 +53196,80 @@ msgstr ""
 msgid "海伦娜，经杰西卡介绍成为罗德岛的合作干员，为拓荒地办事处提供帮助。"
 msgstr ""
 
-#: ./data\character\4104_冰酿.csv:32
+#: ./data\character\4104_冰酿.csv:37
 msgid "露脐短版上衬"
 msgstr ""
 
-#: ./data\character\4104_冰酿.csv:33
+#: ./data\character\4104_冰酿.csv:38
 msgid "黑色包臀裙"
 msgstr ""
 
-#: ./data\character\4104_冰酿.csv:35
+#: ./data\character\4104_冰酿.csv:40
 msgid "深色长筒靴"
 msgstr ""
 
-#: ./data\character\4104_冰酿.csv:36
+#: ./data\character\4104_冰酿.csv:41
 msgid "围裙"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:4
+msgid "杏仁"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:13
+msgid "一枚金属制的哨子，用力吹动会发出响亮的哨音，相当提神。“哟嗬——开工啦！”"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:14
+msgid "罗拉·阿里亚斯，黑钢国际工程专家，年纪轻轻就具备了不俗的技术实力，在机械工程与自动化领域拥有丰富的实践经验，曾多次为黑钢的行动提供关键技术支持。在双方新一轮的交流项目中，罗拉主动申请作为派遣干员前往罗德岛。现以特别技术顾问的身份与工程部合作，参与项目研发，且相当卖力。"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:31
+msgid "深色带护镜鸭舌帽"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:32
+msgid "通讯耳机"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:33
+msgid "白色硬质护颈"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:34
+msgid "金属哨子项链"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:35
+msgid "深蓝黑钢制服夹克"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:36
+msgid "橙色多功能背心"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:37
+msgid "白色短袖T恤"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:38
+msgid "深灰色无指手套"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:39
+msgid "深灰百褶短裙"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:40
+msgid "白色堆堆袜"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:41
+msgid "深灰色厚底运动鞋"
+msgstr ""
+
+#: ./data\character\4105_杏仁.csv:42
+msgid "黑黄相间工程枪"
 msgstr ""
 
 #: ./data\character\4110_戴菲恩.csv:4
@@ -53180,11 +53284,11 @@ msgstr ""
 msgid "戴菲恩，曾作为情报人员在诺伯特区活动多年，后以典范军成员的身份参与了伦蒂尼姆周边的一系列战役。在维多利亚事件结束后，同罗德岛达成了一系列战略合作条款，为罗德岛驻维多利亚办事处提供协助。"
 msgstr ""
 
-#: ./data\character\4110_戴菲恩.csv:29
+#: ./data\character\4110_戴菲恩.csv:33
 msgid "维多利亚式军装"
 msgstr ""
 
-#: ./data\character\4110_戴菲恩.csv:31
+#: ./data\character\4110_戴菲恩.csv:35
 msgid "黑色踝袜"
 msgstr ""
 
@@ -53204,15 +53308,15 @@ msgstr ""
 msgid "#B22222"
 msgstr ""
 
-#: ./data\character\4116_锏.csv:30
+#: ./data\character\4116_锏.csv:33
 msgid "深色莱塔尼亚军装"
 msgstr ""
 
-#: ./data\character\4116_锏.csv:31
+#: ./data\character\4116_锏.csv:34
 msgid "深色西装裤"
 msgstr ""
 
-#: ./data\character\4116_锏.csv:33
+#: ./data\character\4116_锏.csv:36
 msgid "雪地军靴"
 msgstr ""
 
@@ -53228,39 +53332,39 @@ msgstr ""
 msgid "莱伊，雷姆必拓人，无稳定职业，较常从事在雷姆必拓被称为“探井人”的矿井安保工作。偶遇故地重游的阿米娅、博士与暴行后，主动申请加入罗德岛。现作为罗德岛驻舰干员参与各类安保、战斗及勘探任务。"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:29
+#: ./data\character\4117_莱伊.csv:33
 msgid "黑色探险头灯帽"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:30
+#: ./data\character\4117_莱伊.csv:34
 msgid "灰色流苏围巾"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:31
+#: ./data\character\4117_莱伊.csv:35
 msgid "红色求生哨"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:32
+#: ./data\character\4117_莱伊.csv:36
 msgid "卡其色工装夹克"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:33
+#: ./data\character\4117_莱伊.csv:37
 msgid "露脐黑色短衬衫"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:34
+#: ./data\character\4117_莱伊.csv:38
 msgid "卡其色战术手套"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:37
+#: ./data\character\4117_莱伊.csv:41
 msgid "黑色金属扣登山靴"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:38
+#: ./data\character\4117_莱伊.csv:42
 msgid "金色重型源石铳"
 msgstr ""
 
-#: ./data\character\4117_莱伊.csv:39
+#: ./data\character\4117_莱伊.csv:43
 msgid "沙地兽"
 msgstr ""
 
@@ -53272,19 +53376,19 @@ msgstr ""
 msgid "小满，来自炎国北部农业重镇大荒城的普通女孩，在管理牧兽方面颇有心得。跟随黍以访客身份暂居罗德岛。"
 msgstr ""
 
-#: ./data\character\4122_小满.csv:30
+#: ./data\character\4122_小满.csv:35
 msgid "绿色长褂"
 msgstr ""
 
-#: ./data\character\4122_小满.csv:31
+#: ./data\character\4122_小满.csv:36
 msgid "墨绿色短裙"
 msgstr ""
 
-#: ./data\character\4122_小满.csv:32
+#: ./data\character\4122_小满.csv:37
 msgid "短筒袜"
 msgstr ""
 
-#: ./data\character\4122_小满.csv:33
+#: ./data\character\4122_小满.csv:38
 msgid "深色运动鞋"
 msgstr ""
 
@@ -53300,43 +53404,43 @@ msgstr ""
 msgid "干员露托，曾在玻利瓦尔各交战地区活动，不从属于任何当地组织，以战场打扫工作为生。现今在本舰接受治疗，并与后勤部签订合作协议，偶尔以战场环境顾问的身份支援外勤任务。"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:42
+#: ./data\character\4130_露托.csv:43
 msgid "褪色的浅黄色丝巾"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:43
+#: ./data\character\4130_露托.csv:44
 msgid "玻利瓦尔士官外套"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:44
+#: ./data\character\4130_露托.csv:45
 msgid "白色上衣（宽大）"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:45
+#: ./data\character\4130_露托.csv:46
 msgid "黑色长护腕"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:47
+#: ./data\character\4130_露托.csv:48
 msgid "深绿色护膝"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:48
+#: ./data\character\4130_露托.csv:49
 msgid "玻利瓦尔制式盾牌（改装）"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:49
+#: ./data\character\4130_露托.csv:50
 msgid "黑色尖头锤"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:50
+#: ./data\character\4130_露托.csv:51
 msgid "黑色丝袜（破损）"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:51
+#: ./data\character\4130_露托.csv:52
 msgid "黑色劳保鞋"
 msgstr ""
 
-#: ./data\character\4130_露托.csv:52
+#: ./data\character\4130_露托.csv:53
 msgid "棕色背包"
 msgstr ""
 
@@ -53348,15 +53452,15 @@ msgstr ""
 msgid "阿斯卡纶，巴别塔时期担任情报官，后作为S.W.E.E.P.负责人，为罗德岛负责反渗透工作。"
 msgstr ""
 
-#: ./data\character\4132_阿斯卡纶.csv:33
+#: ./data\character\4132_阿斯卡纶.csv:35
 msgid "白色刺客风衣"
 msgstr ""
 
-#: ./data\character\4132_阿斯卡纶.csv:34
+#: ./data\character\4132_阿斯卡纶.csv:36
 msgid "紫色紧身衣"
 msgstr ""
 
-#: ./data\character\4132_阿斯卡纶.csv:35
+#: ./data\character\4132_阿斯卡纶.csv:37
 msgid "黑色紧身裤"
 msgstr ""
 
@@ -53372,19 +53476,19 @@ msgstr ""
 msgid "巴别塔的创立者，特蕾西娅。\n一段来自过去的回响，承载着通往未来的爱与希望。"
 msgstr ""
 
-#: ./data\character\4134_魔王.csv:30
+#: ./data\character\4134_魔王.csv:32
 msgid "黑色高跟靴子"
 msgstr ""
 
-#: ./data\character\4134_魔王.csv:31
+#: ./data\character\4134_魔王.csv:33
 msgid "黑色高领毛衣"
 msgstr ""
 
-#: ./data\character\4134_魔王.csv:32
+#: ./data\character\4134_魔王.csv:34
 msgid "白色纱裙"
 msgstr ""
 
-#: ./data\character\4134_魔王.csv:34
+#: ./data\character\4134_魔王.csv:36
 msgid "长黑丝"
 msgstr ""
 
@@ -53400,35 +53504,35 @@ msgstr ""
 msgid "西昆妲，前深海猎人计划研究员，现服役于阿戈尔军团系统，担任海巡队指挥官。在阿戈尔向陆上诸国发出合作邀请后，西昆妲以阿戈尔对陆接洽代表的身份与罗德岛达成合作协议，以罗德岛为媒介与陆上诸国建立交流关系。 现以“深巡”为代号，登记为罗德岛合作干员。"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:29
+#: ./data\character\4137_深巡.csv:34
 msgid "蓝色军用头盔"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:30
+#: ./data\character\4137_深巡.csv:35
 msgid "白色海军制服"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:31
+#: ./data\character\4137_深巡.csv:36
 msgid "蓝色装甲背心"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:32
+#: ./data\character\4137_深巡.csv:37
 msgid "白色作战手套"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:33
+#: ./data\character\4137_深巡.csv:38
 msgid "蓝色作战长裤"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:35
+#: ./data\character\4137_深巡.csv:40
 msgid "阿戈尔重盾"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:36
+#: ./data\character\4137_深巡.csv:41
 msgid "蓝色装备挂带"
 msgstr ""
 
-#: ./data\character\4137_深巡.csv:37
+#: ./data\character\4137_深巡.csv:42
 msgid "白色羽毛装饰"
 msgstr ""
 
@@ -53444,28 +53548,76 @@ msgstr ""
 msgid "娜仁图亚，曾是足迹遍布萨尔贡大半地区的沙盗，现作为外勤干员长期驻留罗德岛，凭借自己丰富的自然知识与生存技巧，活跃于各种野外行动。"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:28
+#: ./data\character\4138_娜仁图亚.csv:34
 msgid "银色装饰头带"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:29
+#: ./data\character\4138_娜仁图亚.csv:35
 msgid "黑色皮质胸甲"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:32
+#: ./data\character\4138_娜仁图亚.csv:38
 msgid "白色半透明短裙"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:33
+#: ./data\character\4138_娜仁图亚.csv:39
 msgid "黑色内衬短裤"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:36
+#: ./data\character\4138_娜仁图亚.csv:42
 msgid "蓝色宝石装饰"
 msgstr ""
 
-#: ./data\character\4138_娜仁图亚.csv:37
+#: ./data\character\4138_娜仁图亚.csv:43
 msgid "银色金属腰带"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:4
+msgid "莎草"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:13
+msgid "一本贴上了照片的《游历初步规划（第三版）》。她的旅程因和罗德岛的相逢而开始，祝她一路顺风。"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:14
+msgid "阿娜特，曾任萨尔贡法尔贾万达巴德博物馆的代理馆长，怀揣着游历大地这一理想的她，在经历了博物馆的变故后踏上巡游大地的旅程。现以“莎草”为代号，作为外勤干员与罗德岛驻萨尔贡办事处展开合作，为罗德岛在当地的历史研究活动提供理论支持和指导。"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:29
+msgid "白绿拼接软兜帽"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:30
+msgid "三角形金耳坠"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:31
+msgid "三角形金属项链"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:32
+msgid "白绿拼接长外套"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:33
+msgid "绿底几何纹长裙"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:34
+msgid "右手棕色短皮手套"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:36
+msgid "白色绑带厚底露趾凉鞋"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:37
+msgid "埃及风长柄法杖"
+msgstr ""
+
+#: ./data\character\4139_莎草.csv:38
+msgid "尾部金属圆环"
 msgstr ""
 
 #: ./data\character\4146_妮芙.csv:4
@@ -53480,24 +53632,308 @@ msgstr ""
 msgid "卡兹戴尔市民妮芙，通过罗德岛驻卡兹戴尔办事处加入罗德岛外勤部门。\n擅长使用心灵相关的源石技艺，配合其笞心魔的天赋，可在诸多领域发挥特长。"
 msgstr ""
 
-#: ./data\character\4146_妮芙.csv:34
+#: ./data\character\4146_妮芙.csv:37
 msgid "红色蝴蝶结领结"
 msgstr ""
 
-#: ./data\character\4146_妮芙.csv:35
+#: ./data\character\4146_妮芙.csv:38
 msgid "灰色军装外套"
 msgstr ""
 
-#: ./data\character\4146_妮芙.csv:41
+#: ./data\character\4146_妮芙.csv:44
 msgid "萨卡兹法杖"
 msgstr ""
 
-#: ./data\character\4146_妮芙.csv:42
+#: ./data\character\4146_妮芙.csv:45
 msgid "红色腰带装饰"
 msgstr ""
 
-#: ./data\character\4146_妮芙.csv:43
+#: ./data\character\4146_妮芙.csv:46
 msgid "罗德岛徽章"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:4
+msgid "菲莱"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:13
+msgid "一种静坐冥想时使用的熏香，据说它的原料在生长时会竭尽沙土中的水分。如今它竭尽自己，只为助你思若泉流。"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:14
+msgid "菲莱，来自萨尔贡的神庙守卫，信仰“生命之河”。如今以虔修者的身份在各地游历。在修习之旅中结识了驻萨尔贡办事处的干员，并与办事处建立长期合作关系，为罗德岛的安保、救灾工作提供援助，兼任外勤重装干员。"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:33
+msgid "黄金十字项链"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:34
+msgid "白色深V无袖上衣"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:35
+msgid "浅卡其色连帽披风"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:36
+msgid "卡其色牛仔短裤"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:37
+msgid "黑色拉链长腿套"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:39
+msgid "古老铭文棺材型塔盾"
+msgstr ""
+
+#: ./data\character\4148_菲莱.csv:40
+msgid "黄金十字柄弯刀"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:4
+msgid "瑰盐"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:13
+msgid "一个带有奇异芬芳的药草卷，据说点燃后其香气可以凝神静气。但在交给医疗部鉴别之前最好不要擅自使用！"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:14
+msgid "瑰盐，伊比利亚地区的流浪草药医生，人脉资源丰富，涵盖当地各阶层人士，现为罗德岛提供伊比利亚相关情报及工作开展前期的调研支持。"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:32
+msgid "白色荷叶边衬衫"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:33
+msgid "灰色不对称机能背心"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:34
+msgid "红黑几何图案发带"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:35
+msgid "红色珠串细项链"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:36
+msgid "棕色露指短款手套"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:37
+msgid "砖红色宽腿灯笼裤"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:38
+msgid "浅灰色罗纹运动短袜"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:39
+msgid "深棕色厚底工装靴"
+msgstr ""
+
+#: ./data\character\4163_瑰盐.csv:40
+msgid "复古铜制香炉提灯"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:4
+msgid "特克诺"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:13
+msgid "一个脸颊烧焦的小木偶，圆溜溜的眼睛让你想起特克诺撒娇时的样子。"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:14
+msgid "特克诺，多索雷斯街头艺术社区成员，曾卷入克里斯达尔艺术馆的恐怖袭击事件，因暴露于大量源石粉尘之中，感染加重。经干员介绍，特克诺来到罗德岛寻求医疗援助。病情稳定后，她主动提出加入罗德岛。现已通过相关培训和测试，作为外勤干员常驻于多索雷斯。"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:33
+msgid "黑色荷叶边发饰"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:34
+msgid "蓝色宝石耳钉"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:35
+msgid "黑色圆环项圈"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:36
+msgid "黑绿拼接拉链连衣裙"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:37
+msgid "黑色皮带绑缚袖套"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:39
+msgid "左腿吊带过膝黑丝"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:41
+msgid "黑色拉链开口腿套"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:42
+msgid "黑色厚底搭扣靴"
+msgstr ""
+
+#: ./data\character\4164_特克诺.csv:43
+msgid "机械电能法杖"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:4
+msgid "云迹"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:13
+msgid "一个小小的白色挂件，用来纪念你陪伴她一起完成的飞行实验。她有点在意你会不会随时带在身上。"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:14
+msgid "云迹，出生于哥伦比亚的飞行冒险家，为进行飞行实验而旅居各地，对于飞行动力装备的开发与改良颇有心得，如今为治疗矿石病来到罗德岛，并为罗德岛工程部的机动装置研发项目提供技术支持。"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:30
+msgid "白色带耳毛线帽"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:31
+msgid "细金属框圆眼镜"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:32
+msgid "蓝色飘逸长领带"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:33
+msgid "白色机能防风夹克"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:34
+msgid "灰白色长袖卫衣"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:35
+msgid "黑色机能运动短裤"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:36
+msgid "白色护膝医疗绷带"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:37
+msgid "黑色皮质高筒靴"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:38
+msgid "特种工程铆钉枪"
+msgstr ""
+
+#: ./data\character\4165_云迹.csv:39
+msgid "双擎喷气飞行背包"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:4
+msgid "钼铅"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:13
+msgid "一块美丽的矿石，根据钼铅的说法，它的颜色会发生变化。工作之余，不妨看一眼，或许会有惊喜。"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:14
+msgid "探险家，矿石收藏家，同时也是哥伦比亚城际网络中颇为知名的社交媒体视频创作者。在地质考察过程中，不慎感染矿石病，来到罗德岛接受治疗。其后，经过交涉，作为特种干员加入罗德岛，以丰富的地质学知识和荒野求生经验，为罗德岛诸多队伍的野外探索任务提供支持。"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:31
+msgid "深色迷彩鸭舌帽"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:32
+msgid "圆形细框复古眼镜"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:33
+msgid "白色领结小丝巾"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:34
+msgid "黑色长款战术夹克"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:35
+msgid "土黄图案短袖衬衫"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:37
+msgid "黑色百褶半身短裙"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:38
+msgid "白色过膝绑带长袜"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:39
+msgid "深棕色系带战术靴"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:40
+msgid "红色工程地质锤"
+msgstr ""
+
+#: ./data\character\4171_钼铅.csv:41
+msgid "多功能战术腰包组件"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:4
+msgid "行箸"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:13
+msgid "一枚玉雕止箸。行箸以寻百味，止箸以品其味。"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:14
+msgid "行箸，就任于炎国太史阁的历史研究者，畅销美食类散记《百灶食珍录》作者。经干员煌介绍，以访客身份来到罗德岛。"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:30
+msgid "深蓝色制服小帽"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:31
+msgid "深蓝色宽袖长外套"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:32
+msgid "白色无袖高领胸衣"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:33
+msgid "红蓝串珠编织手链"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:34
+msgid "深蓝色百褶短裙"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:35
+msgid "黑色单侧大腿环"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:36
+msgid "银灰拼黑高跟短靴"
+msgstr ""
+
+#: ./data\character\4172_行箸.csv:37
+msgid "奇法卷宗与笔"
 msgstr ""
 
 #: ./data\character\4177_水灯心.csv:4
@@ -53512,32 +53948,140 @@ msgstr ""
 msgid "水灯心，本名布莉吉，游牧民。据称来自塔拉某支古老的游牧部族，其成员长久以来在平原、丘陵地区从事游牧活动，兼领天灾预警、传信相关职责。现经干员苇草推荐与罗德岛合作，在接受矿石病治疗的同时，作为狙击干员协助战斗。"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:33
+#: ./data\character\4177_水灯心.csv:37
 msgid "部落风贴颈饰"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:34
+#: ./data\character\4177_水灯心.csv:38
 msgid "部落长摆夹露肩贴身夹克"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:35
+#: ./data\character\4177_水灯心.csv:39
 msgid "单边护臂"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:36
+#: ./data\character\4177_水灯心.csv:40
 msgid "部落皮革腰带镂空露腿长裤"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:38
+#: ./data\character\4177_水灯心.csv:42
 msgid "回旋刃"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:39
+#: ./data\character\4177_水灯心.csv:43
 msgid "旅行露指平板鞋"
 msgstr ""
 
-#: ./data\character\4177_水灯心.csv:40
+#: ./data\character\4177_水灯心.csv:44
 msgid "部落风旅行皮革包"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:4
+msgid "阿兰娜"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:13
+msgid "一把多功能扳手，这是阿兰娜独自操作数控机床制作出的第一件作品。她把这份独一无二的纪念品送给了你，并提醒你末端的小锤子可以用来敲开坚果。"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:14
+msgid "阿兰娜，原雷姆必拓比格皮勒自治州运载车驾驶员，熟练掌握多种机械操控与维修技巧，现就职于罗德岛工程部第三维修工坊，参与由可露希尔主持的各类新型设备的研发与调试工作。"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:32
+msgid "橙黑工业护目镜"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:33
+msgid "银色金属耳环"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:34
+msgid "黄黑工作围脖"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:35
+msgid "棕色战术短马甲"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:36
+msgid "白色运动露脐背心"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:37
+msgid "黑黄半指战术手套"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:38
+msgid "黑色宽松工装长裤"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:39
+msgid "黑色搭扣战术长靴"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:40
+msgid "重型工业大管钳"
+msgstr ""
+
+#: ./data\character\4178_阿兰娜.csv:41
+msgid "多功能战术工具包"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:4
+msgid "聆音"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:13
+msgid "一盆清新的百合花，从干员聆音的花圃中移栽而来。她总是很擅长照料新生的花朵。"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:14
+msgid "来自玻利瓦尔的修女，经拉特兰干员推荐加入罗德岛，目前已经返回家乡玻利瓦尔，于当地办事处担任近卫干员。"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:33
+msgid "黑色修女风头饰"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:34
+msgid "精致小巧耳坠"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:35
+msgid "银色十字项圈"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:36
+msgid "黑色短款皮夹克"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:38
+msgid "纯白及地披风"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:39
+msgid "银色简约素戒"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:40
+msgid "黑色高开叉长裙"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:41
+msgid "白色半透薄纱裙"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:43
+msgid "黑色金扣及踝靴"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:44
+msgid "黑金长柄战斧"
+msgstr ""
+
+#: ./data\character\4187_聆音.csv:45
+msgid "纯白天使挂饰"
 msgstr ""
 
 #: ./data\character\4191_蒂比.csv:4
@@ -53552,43 +54096,43 @@ msgstr ""
 msgid "蒂比，蓝卡坞场景喷绘师。由本人主动联系，希望推动罗德岛与蓝卡坞双方，就为蓝卡坞感染者员工和演员提供医疗服务的问题，建立相关合作关系，同时根据本人意愿，作为特种干员为罗德岛提供服务。"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:30
+#: ./data\character\4191_蒂比.csv:32
 msgid "粉饰涂鸦棒球帽"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:31
+#: ./data\character\4191_蒂比.csv:33
 msgid "涂鸦风宽松连帽夹克"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:32
+#: ./data\character\4191_蒂比.csv:34
 msgid "亮黄色工装背带胸兜"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:33
+#: ./data\character\4191_蒂比.csv:35
 msgid "白色纯棉内搭背心"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:34
+#: ./data\character\4191_蒂比.csv:36
 msgid "黄色防滑工作手套"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:35
+#: ./data\character\4191_蒂比.csv:37
 msgid "蓝色牛仔工装短裤"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:36
+#: ./data\character\4191_蒂比.csv:38
 msgid "破洞深色小腿袜"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:37
+#: ./data\character\4191_蒂比.csv:39
 msgid "多绑带厚底机能靴"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:38
+#: ./data\character\4191_蒂比.csv:40
 msgid "便携式喷漆枪"
 msgstr ""
 
-#: ./data\character\4191_蒂比.csv:39
+#: ./data\character\4191_蒂比.csv:41
 msgid "浮空装置"
 msgstr ""
 
@@ -53604,27 +54148,27 @@ msgstr ""
 msgid "蕾缪安，拉特兰公民，适用于拉特兰一至十三项公民权益，现任拉特兰教皇厅第七厅枢机。"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:30
+#: ./data\character\4193_蕾缪安.csv:36
 msgid "黑色拉链皮夹克"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:31
+#: ./data\character\4193_蕾缪安.csv:37
 msgid "白色荷叶边蕾丝衬衫"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:32
+#: ./data\character\4193_蕾缪安.csv:38
 msgid "黑色花边短裤"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:33
+#: ./data\character\4193_蕾缪安.csv:39
 msgid "黑色厚底花饰系带长筒靴"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:34
+#: ./data\character\4193_蕾缪安.csv:40
 msgid "大口径狙击步枪"
 msgstr ""
 
-#: ./data\character\4193_蕾缪安.csv:35
+#: ./data\character\4193_蕾缪安.csv:41
 msgid "“弹匣与花窗”"
 msgstr ""
 
@@ -53640,27 +54184,27 @@ msgstr ""
 msgid "电弧，罗德岛精英干员。曾为巴别塔提供通讯支援，主导罗德岛早期的通讯系统建设，为相关通讯工作提供了必要的框架支持。"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:32
+#: ./data\character\4195_电弧.csv:36
 msgid "白色山茶花发饰"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:34
+#: ./data\character\4195_电弧.csv:38
 msgid "灰色战术机能夹克"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:35
+#: ./data\character\4195_电弧.csv:39
 msgid "黑色多功能战术胸挂"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:36
+#: ./data\character\4195_电弧.csv:40
 msgid "黑粉撞色战术手套"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:38
+#: ./data\character\4195_电弧.csv:42
 msgid "深灰色工装短靴"
 msgstr ""
 
-#: ./data\character\4195_电弧.csv:39
+#: ./data\character\4195_电弧.csv:43
 msgid "“小树”与“小轴”"
 msgstr ""
 
@@ -53676,35 +54220,35 @@ msgstr ""
 msgid "遥，在东国南院有相当名气的艺人。本名紫野遥，艺名羽生萌萌香。受干员星熊推荐，与罗德岛签订合约，负责罗德岛与东国的交流工作。鉴于本人的要求，也会参与一部分外勤任务。"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:27
+#: ./data\character\4202_遥.csv:31
 msgid "红色缎带发饰"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:28
+#: ./data\character\4202_遥.csv:32
 msgid "金鱼流苏耳坠"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:29
+#: ./data\character\4202_遥.csv:33
 msgid "红色简约颈环"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:30
+#: ./data\character\4202_遥.csv:34
 msgid "白色泡泡袖外套"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:31
+#: ./data\character\4202_遥.csv:35
 msgid "蓝色抹胸连衣裙"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:32
+#: ./data\character\4202_遥.csv:36
 msgid "红色皮革手套"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:34
+#: ./data\character\4202_遥.csv:38
 msgid "红白拼色高筒靴"
 msgstr ""
 
-#: ./data\character\4202_遥.csv:35
+#: ./data\character\4202_遥.csv:39
 msgid "星盘泡泡法杖"
 msgstr ""
 
@@ -53720,39 +54264,39 @@ msgstr ""
 msgid "吉星，活跃在锻冶町的珠宝鉴定师，杂货铺“吉星”的所有者，在金石会事件后失去了店铺与家，经介绍来到罗德岛接受矿石病治疗，现作为狙击干员为罗德岛提供服务。"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:28
+#: ./data\character\4203_吉星.csv:32
 msgid "朋克风金属耳环"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:29
+#: ./data\character\4203_吉星.csv:33
 msgid "金属骨头项链"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:30
+#: ./data\character\4203_吉星.csv:34
 msgid "深蓝色领带"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:31
+#: ./data\character\4203_吉星.csv:35
 msgid "白色渐变和服夹克"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:32
+#: ./data\character\4203_吉星.csv:36
 msgid "爱心装饰抹胸"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:33
+#: ./data\character\4203_吉星.csv:37
 msgid "拉链开衩高腰长裙"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:34
+#: ./data\character\4203_吉星.csv:38
 msgid "黑红色小腿袜"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:35
+#: ./data\character\4203_吉星.csv:39
 msgid "黑色厚底松糕鞋"
 msgstr ""
 
-#: ./data\character\4203_吉星.csv:36
+#: ./data\character\4203_吉星.csv:40
 msgid "彩绘涂装铳"
 msgstr ""
 
@@ -53768,39 +54312,39 @@ msgstr ""
 msgid "折桠，常用名别乔克，曾为乌萨斯远北中心矿区工人，现于罗德岛接受治疗，同时根据本人意愿，接受标准强度的战斗训练，作为罗德岛的外勤干员参与感染者救助工作。"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:30
+#: ./data\character\4207_折桠.csv:33
 msgid "机械风护目镜发饰"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:32
+#: ./data\character\4207_折桠.csv:35
 msgid "拼接工装风外套"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:33
+#: ./data\character\4207_折桠.csv:36
 msgid "蓝色牛仔背带短裤"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:34
+#: ./data\character\4207_折桠.csv:37
 msgid "白色短袖缝补衬衫"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:35
+#: ./data\character\4207_折桠.csv:38
 msgid "棕色露指战术手套"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:37
+#: ./data\character\4207_折桠.csv:40
 msgid "白色运动及膝袜"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:38
+#: ./data\character\4207_折桠.csv:41
 msgid "工装风拼接高帮靴"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:39
+#: ./data\character\4207_折桠.csv:42
 msgid "防爆改装塔盾"
 msgstr ""
 
-#: ./data\character\4207_折桠.csv:40
+#: ./data\character\4207_折桠.csv:43
 msgid "煤油矿灯"
 msgstr ""
 
@@ -53816,31 +54360,31 @@ msgstr ""
 msgid "冬时，本名科谢尼娅·马尔科芙娜·涅留朵娃，原乌萨斯远北中心矿区研究所研究员，现入职罗德岛，继续其在乌萨斯从事的部分研究。"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:27
+#: ./data\character\4208_冬时.csv:28
 msgid "黑色半框眼镜"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:28
+#: ./data\character\4208_冬时.csv:29
 msgid "毛领探险派克大衣"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:29
+#: ./data\character\4208_冬时.csv:30
 msgid "破损不规则长衫"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:30
+#: ./data\character\4208_冬时.csv:31
 msgid "浅蓝色立领衬衫"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:33
+#: ./data\character\4208_冬时.csv:34
 msgid "黑色紧身打底裤"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:34
+#: ./data\character\4208_冬时.csv:35
 msgid "灰绿色工装短靴"
 msgstr ""
 
-#: ./data\character\4208_冬时.csv:35
+#: ./data\character\4208_冬时.csv:36
 msgid "军绿色挎包"
 msgstr ""
 
@@ -53856,27 +54400,27 @@ msgstr ""
 msgid "雪猎，出身于谢拉格佩尔罗契家迁入雪山生活的一支，祖辈以在山中捕猎为生，雕刻耶拉冈德像的手艺代代相传。雪猎擅长在雪山中狩猎，身体素质极佳，不幸在一次捕猎中感染了矿石病，现于罗德岛接受治疗，并根据个人意愿成为一名外勤干员。"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:29
+#: ./data\character\4211_雪猎.csv:32
 msgid "谢拉格狩猎头饰"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:30
+#: ./data\character\4211_雪猎.csv:33
 msgid "宝石项链"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:31
+#: ./data\character\4211_雪猎.csv:34
 msgid "雪境毛领兜帽外套"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:32
+#: ./data\character\4211_雪猎.csv:35
 msgid "黑色皮革运动胸衣"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:36
+#: ./data\character\4211_雪猎.csv:39
 msgid "毛皮镶边登山雪地靴"
 msgstr ""
 
-#: ./data\character\4211_雪猎.csv:37
+#: ./data\character\4211_雪猎.csv:40
 msgid "谢拉格特制捕兽弩"
 msgstr ""
 
@@ -53892,35 +54436,35 @@ msgstr ""
 msgid "娜斯提·鲁诺瑞伊，莱茵生命工程科主任，哥伦比亚工程科学领域的专家，在应用语言学方面也有一定造诣。经塞雷娅介绍，现与罗德岛签订长期合作条款，作为工程部特聘顾问，为罗德岛多个项目提供支持。"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:29
+#: ./data\character\4212_娜斯提.csv:34
 msgid "黑色羽状发饰"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:30
+#: ./data\character\4212_娜斯提.csv:35
 msgid "白色标签耳坠"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:31
+#: ./data\character\4212_娜斯提.csv:36
 msgid "棕色防风西装"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:32
+#: ./data\character\4212_娜斯提.csv:37
 msgid "白绿拼接中长款防风外套"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:33
+#: ./data\character\4212_娜斯提.csv:38
 msgid "白色贴身衬衫"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:36
+#: ./data\character\4212_娜斯提.csv:41
 msgid "棕色修身西装长裤"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:37
+#: ./data\character\4212_娜斯提.csv:42
 msgid "黑色系带皮靴"
 msgstr ""
 
-#: ./data\character\4212_娜斯提.csv:38
+#: ./data\character\4212_娜斯提.csv:43
 msgid "女妖骨笔"
 msgstr ""
 
@@ -53936,44 +54480,148 @@ msgstr ""
 msgid "费尔南·伯恩，哥伦比亚人，经营着一家以“哪儿都能去”闻名的独立旅行社。除了已故的荣誉社员马丁·伯恩，费尔南便是该社的唯一成员。\n接受治疗的同时，费尔南也与罗德岛达成了合作，以“响石”为代号，在各类外勤任务中行使向导职责。"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:29
+#: ./data\character\4214_响石.csv:33
 msgid "深蓝色飞行员风帽"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:30
+#: ./data\character\4214_响石.csv:34
 msgid "黄色涂鸦领带"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:31
+#: ./data\character\4214_响石.csv:35
 msgid "米白色露脐工装短袖"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:33
+#: ./data\character\4214_响石.csv:37
 msgid "黑红色不对称战术手套"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:34
+#: ./data\character\4214_响石.csv:38
 msgid "黄色苏格兰格纹百褶裙"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:35
+#: ./data\character\4214_响石.csv:39
 msgid "黑色紧身安全裤"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:36
+#: ./data\character\4214_响石.csv:40
 msgid "白棕色针织堆堆袜"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:37
+#: ./data\character\4214_响石.csv:41
 msgid "黑橙拼色运动靴"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:38
+#: ./data\character\4214_响石.csv:42
 msgid "改装喇叭大盾"
 msgstr ""
 
-#: ./data\character\4214_响石.csv:39
+#: ./data\character\4214_响石.csv:43
 msgid "导游扩音器"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:4
+msgid "伯塔尼"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:13
+msgid "一种可折叠的微型天线，又似乎是一个发夹？伯塔尼将它交给你时没做任何解释，只是偷偷笑了一下。"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:14
+msgid "伯塔尼，原名季申娜·维克托罗夫娜·别利亚耶娃，曾就读于圣骏堡的帝国理工大学，肄业，经凛冬干员介绍加入罗德岛，继续学习和研究源石通讯技术，并参与外勤任务。"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:31
+msgid "黑色蝴蝶结发夹"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:32
+msgid "黄色耳饰标签"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:33
+msgid "黑色蝴蝶结项圈"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:34
+msgid "黑色毛领厚重夹克"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:35
+msgid "蓝色拉链紧身内搭"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:36
+msgid "红色保暖手套"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:37
+msgid "棕色紧身短裤"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:38
+msgid "灰色针织长筒袜"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:39
+msgid "黑白机能高帮靴"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:40
+msgid "大型机械通讯杖"
+msgstr ""
+
+#: ./data\character\4223_伯塔尼.csv:41
+msgid "角部天线"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:4
+msgid "乌啾"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:13
+msgid "一颗乌黑发亮的玻璃球，不知道是怎么烧成的，沉甸甸，圆滚滚。乌啾说，这是她的珍藏，不准输给别人。"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:14
+msgid "乌啾，曾作为地下组织“无缚者同盟”成员在乌萨斯圣骏堡活动，后经干员凛冬介绍加入罗德岛驻圣骏堡办事处，参与情报搜集及急救工作。按照其监护人烈夏要求，乌啾定期前往罗德岛总部接受矿石病治疗及通识教育。"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:29
+msgid "深灰色厚实雷帽"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:30
+msgid "灰色十字耳饰"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:31
+msgid "红色细长丝带"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:32
+msgid "毛领黑色长外套"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:33
+msgid "淡紫色连衣百褶裙"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:36
+msgid "灰色腿部绑带"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:37
+msgid "多排扣黑色短靴"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:38
+msgid "机械大剪刀"
+msgstr ""
+
+#: ./data\character\4224_乌啾.csv:39
+msgid "北方乌色少见羽兽"
 msgstr ""
 
 #: ./data\character\6666_炉芯终曲阿米娅.csv:4

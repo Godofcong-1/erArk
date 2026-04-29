@@ -147,12 +147,13 @@ def judge_assistant_character(character_id: int) -> int:
         return 0
 
     character_data: game_type.Character = cache.character_data[character_id]
-    now_time_hour = character_data.behavior.start_time.hour
-    # 如果超过了12点，则清零早安问候
-    if now_time_hour >= 12:
+    start_time_hour = character_data.behavior.start_time.hour
+    now_time_hour = cache.game_time.hour
+    # 如果超过了12点，则将早安问候设为已问候
+    if start_time_hour >= 12 and now_time_hour >= 12:
         character_data.sp_flag.morning_salutation = 2
     # 如果早于18点且不是睡觉时间，则清零晚安问候
-    if now_time_hour < 18 and not handle_premise.handle_game_time_is_sleep_time(character_id):
+    if start_time_hour < 18 and not handle_premise.handle_game_time_is_sleep_time(character_id):
         character_data.sp_flag.night_salutation = 0
     return 1
 

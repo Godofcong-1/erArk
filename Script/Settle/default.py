@@ -4822,6 +4822,25 @@ def handle_maintenance_flag_to_0(
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.sp_flag.work_maintenance = False
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MORNING_SALUTATION_FLAG_TO_0)
+def handle_morning_salutation_flag_to_0(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    将自身早安问候设为未问候
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.sp_flag.morning_salutation = 0
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CANCEL_ALL_WORK_AND_ENTERTAINMENT_FLAG)
 def handle_cancel_all_work_and_entertainment_flag(

@@ -172,6 +172,7 @@ cid,effect_name,effect_type,effect
 366,SELF_INTELLIGENT_FOLLOW_ON_IF_ASSISTANT,特殊flag_基础,如果自己是助理且打开了跟随服务，则自己进入智能跟随状态
 367,SELF_STOP_MOVE,特殊flag_基础,自己停止移动
 371,MAINTENANCE_FLAG_TO_0,特殊flag_基础,自身清零要检修状态
+372,MORNING_SALUTATION_FLAG_TO_0,特殊flag_基础,将自身早安问候设为未问候
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零
@@ -318,6 +319,7 @@ cid,effect_name,effect_type,effect
 814,PENIS_IN_T_TAIL,H_阴茎位置,改变当前阴茎位置为交互对象_尾交中
 815,PENIS_IN_T_HORN,H_阴茎位置,改变当前阴茎位置为交互对象_阴茎蹭角中
 816,PENIS_IN_T_EARS,H_阴茎位置,改变当前阴茎位置为交互对象_阴茎蹭耳朵中
+817,PENIS_IN_T_DEEP_THROAT,H_阴茎位置,改变当前阴茎位置为交互对象_深喉中
 821,PENIS_IN_T_HAT,H_阴茎位置,改变当前阴茎位置为交互对象_帽子交中
 822,PENIS_IN_T_GLASSES,H_阴茎位置,改变当前阴茎位置为交互对象_眼镜交中
 823,PENIS_IN_T_EAR_ORNAMENT,H_阴茎位置,改变当前阴茎位置为交互对象_耳饰交中
