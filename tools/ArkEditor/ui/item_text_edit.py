@@ -144,6 +144,8 @@ class ItemTextEdit(QWidget):
             {"text": "玩家阴茎描述_短词", "slot": lambda: self.insert_text('{penis_s}')},
             {"text": "玩家交互对象口腔描述_长句", "slot": lambda: self.insert_text('{mouth}')},
             {"text": "玩家交互对象口腔描述_短词", "slot": lambda: self.insert_text('{mouth_s}')},
+            {"text": "玩家交互对象喉咙描述_长句", "slot": lambda: self.insert_text('{throat}')},
+            {"text": "玩家交互对象喉咙描述_短词", "slot": lambda: self.insert_text('{throat_s}')},
             {"text": "玩家交互对象头发描述_长句", "slot": lambda: self.insert_text('{hair}')},
             {"text": "玩家交互对象头发描述_短词", "slot": lambda: self.insert_text('{hair_s}')},
             {"text": "玩家交互对象脸部描述_长句", "slot": lambda: self.insert_text('{face}')},
