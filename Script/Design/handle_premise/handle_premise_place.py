@@ -1511,6 +1511,18 @@ def handle_in_target_dormitory(character_id: int) -> int:
     return handle_in_dormitory(character_data.target_character_id)
 
 
+@add_premise(constant_promise.Premise.IN_DORMITORY_MANAGER_ROOM)
+def handle_in_dormitory_manager_room(character_id: int) -> int:
+    """
+    校验角色是否在宿舍管理员室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return common_place_judge_by_SceneTag(character_id, "Dormitory_Manager_Room")
+
+
 @add_premise(constant_promise.Premise.IN_TOILET_MAN)
 def handle_in_toilet_man(character_id: int) -> int:
     """

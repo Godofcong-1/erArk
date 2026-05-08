@@ -1,4 +1,4 @@
-class Premise:
+﻿class Premise:
     """前提id"""
 
     DEBUG_MODE_SETTING_ON = "debug_mode_setting_on"
@@ -383,6 +383,8 @@ class Premise:
     """ 地点_定位 在自己宿舍中或在已经入住的旅馆中 """
     IN_TARGET_DORMITORY = "in_target_dor"
     """ 地点_定位 在交互对象宿舍中 """
+    IN_DORMITORY_MANAGER_ROOM = "in_dormitory_manager_room"
+    """ 地点_定位 在宿舍管理员室中 """
     IN_TOILET_MAN = "in_toilet_man"
     """ 地点_定位 在男士洗手间 """
     IN_TOILET_FEMALE = "in_toilet_female"
@@ -1321,6 +1323,9 @@ class Premise:
     """ 属性_身体部位 自身阴茎大小为粗大 """
     JJ_3 = "jj_3"
     """ 属性_身体部位 自身阴茎大小为巨根 """
+
+    CAN_MANUAL_CHANGE_DORMITORY = "can_manual_change_dormitory"
+    """ 属性_宿舍 该角色当前可被手动更换宿舍（未处于同居/监禁等特殊状态） """
 
     SELF_TIRED = "self_tired"
     """ 特殊flag_生活 自身疲劳 """
@@ -3588,6 +3593,10 @@ class Premise:
     """ 工作_角色 交互对象的工作为监狱长 """
     T_WORK_IS_NOT_WARDEN = "t_work_is_not_warden"
     """ 工作_角色 交互对象的工作不是监狱长 """
+    WORK_IS_DORMITORY_MANAGER = "work_is_dormitory_manager"
+    """ 工作_角色 自己的工作为宿舍管理员 """
+    TARGET_WORK_IS_DORMITORY_MANAGER = "t_work_is_dormitory_manager"
+    """ 工作_角色 交互对象的工作为宿舍管理员 """
     HAVE_WARDEN = "have_warden"
     """ 工作_角色 当前有监狱长 """
 
@@ -3733,3 +3742,4 @@ class Premise:
     """ 复合 在厨房或者在等级大于等于2级的博士房间 """
     PLAYER_NOT_H_OR_HIDDEN_SEX_MODE = "player_not_h_or_hidden_sex_mode"
     """ 复合 当前玩家不在H中或在隐奸模式中 """
+
