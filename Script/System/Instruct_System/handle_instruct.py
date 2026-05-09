@@ -626,6 +626,12 @@ def handle_manage_basement():
     cache.now_panel_id = constant.Panel.MANAGE_BASEMENT
 
 
+@add_instruct(constant.Instruct.MANAGE_DORMITORY)
+def handle_manage_dormitory():
+    """处理宿舍管理系统指令"""
+    cache.now_panel_id = constant.Panel.MANAGE_DORMITORY
+
+
 # 以下为源石技艺#
 
 @add_instruct(constant.Instruct.HYPNOSIS_ONE)

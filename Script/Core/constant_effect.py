@@ -336,6 +336,18 @@ class BehaviorEffect:
     """ 特殊flag_基础 自身清零要检修状态 """
     MORNING_SALUTATION_FLAG_TO_0 = 372
     """ 特殊flag_基础 将自身早安问候设为未问候 """
+    DORMITORY_ADMIN_PHASE_TO_0 = 373
+    """ 特殊flag_基础 自身宿舍管理员阶段设为0（到岗） """
+    DORMITORY_ADMIN_PHASE_TO_1 = 374
+    """ 特殊flag_基础 自身宿舍管理员阶段设为1（整理） """
+    DORMITORY_ADMIN_PHASE_TO_2 = 375
+    """ 特殊flag_基础 自身宿舍管理员阶段设为2（选宿舍） """
+    DORMITORY_ADMIN_PHASE_TO_3 = 376
+    """ 特殊flag_基础 自身宿舍管理员阶段设为3（移动） """
+    DORMITORY_ADMIN_PHASE_TO_4 = 377
+    """ 特殊flag_基础 自身宿舍管理员阶段设为4（处理） """
+    DORMITORY_ADMIN_PHASE_TO_5 = 378
+    """ 特殊flag_基础 自身宿舍管理员阶段设为5（返回） """
 
     DIRTY_RESET = 401
     """ 属性_结构体 污浊结构体归零 """

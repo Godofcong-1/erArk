@@ -164,6 +164,8 @@ class Panel:
     """ 绳艺面板 """
     EDIT_GROUP_SEX_TEMPLE = 64
     """ 编辑群交行动面板 """
+    MANAGE_DORMITORY = 65
+    """ 宿舍管理面板 """
 
 
 class InstructType:

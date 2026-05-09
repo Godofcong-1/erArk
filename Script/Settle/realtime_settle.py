@@ -353,6 +353,7 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
     返回:
         None
     """
+    from Script.System.Dormitory_System import dormitory_manager_system
     now_char = cache.character_data[character_id]
     # 减少疲劳
     tired_change = int(true_add_time / 6) * 2
@@ -382,6 +383,8 @@ def settle_sleep(character_id: int, true_add_time: int) -> None:
     # 宿舍的影响
     else:
         final_adjust *= basement.calc_facility_efficiency(4)
+        knowledge_level = dormitory_manager_system.get_dormitory_manager_knowledge(character_id)
+        final_adjust *= (1 + knowledge_level * 0.05)
     hp_base = now_char.hit_point_max * 0.0025 + 3
     mp_base = now_char.mana_point_max * 0.005 + 6
     now_char.hit_point = min(now_char.hit_point + int(hp_base * true_add_time * final_adjust), now_char.hit_point_max)

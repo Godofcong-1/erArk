@@ -161,6 +161,14 @@ def manage_basement_flow():
     now_panel.draw()
 
 
+@handle_panel.add_panel(constant.Panel.MANAGE_DORMITORY)
+def manage_dormitory_flow():
+    """宿舍管理面板"""
+    from Script.System.Dormitory_System import manage_dormitory_panel
+    now_panel = manage_dormitory_panel.Manage_Dormitory_Panel(width)
+    now_panel.draw()
+
+
 # @handle_panel.add_panel(constant.Panel.INSTRUCT_FILTER)
 # def instruct_filter_flow():
 #     """指令过滤面板"""

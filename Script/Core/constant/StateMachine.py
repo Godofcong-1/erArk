@@ -148,6 +148,18 @@ class StateMachine:
     """ 工作：进入要手术状态，并指定一个对象病人 """
     WORK_PERFORM_SURGERY = 325
     """ 工作：进行手术治疗 """
+    DORMITORY_ADMIN_TO_OFFICE = 326
+    """ 工作：前往所属层舍管房（含调度入口） """
+    DORMITORY_ADMIN_ORGANIZE = 327
+    """ 工作：整理宿舍意见 """
+    DORMITORY_ADMIN_SELECT_ROOM = 328
+    """ 工作：选择目标宿舍 """
+    DORMITORY_ADMIN_MOVE_TO_DORM = 329
+    """ 工作：移动至目标宿舍 """
+    DORMITORY_ADMIN_HANDLE_PROBLEM = 330
+    """ 工作：处理宿舍问题 """
+    DORMITORY_ADMIN_RETURN_OFFICE = 331
+    """ 工作：返回所属层舍管房 """
 
     ENTERTAIN_READ = 401
     """ 娱乐：读书 """
@@ -361,4 +373,5 @@ class StateMachine:
     """ 切换自己是否装备道具_V振动棒 """
     SELF_A_VIBRATOR_SWITCH_CHANEG = 754
     """ 切换自己是否装备道具_A振动棒 """
+
 

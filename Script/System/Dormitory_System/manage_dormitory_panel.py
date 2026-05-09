@@ -1,0 +1,473 @@
+from types import FunctionType
+from typing import Dict, List, Tuple
+
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, constant_promise
+from Script.Design import basement, handle_premise
+from Script.System.Dormitory_System import common
+from Script.UI.Moudle import draw
+from Script.Config import normal_config
+
+cache: game_type.Cache = cache_control.cache
+""" 游戏缓存数据 """
+_: FunctionType = get_text._
+""" 翻译api """
+line_feed = draw.NormalDraw()
+line_feed.text = "\n"
+line_feed.width = 1
+window_width: int = normal_config.config_normal.text_width
+""" 窗体宽度 """
+
+
+class Manage_Dormitory_Panel:
+    """
+    宿舍管理系统主面板
+    输入类型: width(int)
+    输出类型: 无
+    功能: 提供宿舍总览、干员宿舍调整、宿舍管理员调整三个子页
+    """
+
+    def __init__(self, width: int):
+        """初始化绘制对象"""
+        self.width: int = width
+        self.now_panel: str = _("宿舍总览")
+
+    def draw(self):
+        """
+        绘制主循环
+        输入类型: 无
+        输出类型: 无
+        功能: 绘制页签并分发到对应子页面
+        """
+        # 如果不是debug模式，则返回
+        if not cache.debug_mode:
+            return
+        title_text = _("宿舍管理系统")
+        panel_list = [_("宿舍总览"), _("管理干员所属宿舍"), _("调整宿舍管理员")]
+        title_draw = draw.TitleLineDraw(title_text, self.width)
+
+        while 1:
+            basement.get_base_updata()
+            basement.update_work_people()
+            return_list: List[str] = []
+
+            title_draw.draw()
+            for now_panel in panel_list:
+                panel_width = int(self.width / len(panel_list))
+                if now_panel == self.now_panel:
+                    now_draw = draw.CenterDraw()
+                    now_draw.text = f"[{now_panel}]"
+                    now_draw.style = "onbutton"
+                    now_draw.width = panel_width
+                    now_draw.draw()
+                else:
+                    now_draw = draw.CenterButton(
+                        f"[{now_panel}]",
+                        f"\n{now_panel}",
+                        panel_width,
+                        cmd_func=self.change_panel,
+                        args=(now_panel,),
+                    )
+                    now_draw.draw()
+                    return_list.append(now_draw.return_text)
+            line_feed.draw()
+            draw.LineDraw("+", self.width).draw()
+
+            if self.now_panel == _("宿舍总览"):
+                self._draw_overview_page()
+            elif self.now_panel == _("管理干员所属宿舍"):
+                self._draw_manage_character_dormitory_page(return_list)
+            elif self.now_panel == _("调整宿舍管理员"):
+                self._draw_manage_dormitory_manager_page(return_list)
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text:
+                cache.now_panel_id = constant.Panel.MANAGE_BASEMENT
+                break
+
+    def change_panel(self, now_panel: str):
+        """
+        切换当前页签
+        输入类型: now_panel(str)
+        输出类型: 无
+        功能: 更新当前显示页签
+        """
+        self.now_panel = now_panel
+
+    def _draw_overview_page(self):
+        """
+        绘制宿舍总览
+        输入类型: 无
+        输出类型: 无
+        功能: 显示宿舍等级、开放层数/房间数、管理员状态和基础恢复效率
+        """
+        dormitory_level = cache.rhodes_island.facility_level.get(4, 1)
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        open_layers = sorted(open_rooms_by_layer.keys())
+        efficiency = basement.calc_facility_efficiency(4)
+        max_open_layer = common.get_dormitory_max_open_layer()
+
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n 当前宿舍区块等级：{0}\n").format(dormitory_level)
+        info_draw.text += _(" 按等级应开放至：{0}层\n").format(max_open_layer)
+        info_draw.text += _(" 当前开放层数：{0} 层\n").format(len(open_layers))
+        info_draw.text += _(" 当前开放房间数：{0} 间\n").format(sum(len(open_rooms_by_layer[layer]) for layer in open_layers))
+        info_draw.text += _(" 当前基础恢复效率：{0:.0f}%\n").format(efficiency * 100)
+        info_draw.text += _("\n 各层管理员状态：\n")
+
+        for layer in open_layers:
+            manager_id = cache.rhodes_island.dormitory_managers.get(layer, 0)
+            if manager_id and manager_id in cache.character_data:
+                manager_name = cache.character_data[manager_id].name
+                info_draw.text += _("  {0}层：已任命（{1}）\n").format(layer, manager_name)
+            else:
+                info_draw.text += _("  {0}层：未任命\n").format(layer)
+        if not len(open_layers):
+            info_draw.text += _("  暂无开放层\n")
+        info_draw.draw()
+
+    def _draw_manage_character_dormitory_page(self, return_list: List[str]):
+        """
+        绘制干员宿舍调整页
+        输入类型: return_list(List[str])
+        输出类型: 无
+        功能: 列出干员并支持进入换宿舍流程
+        """
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n 选择一名干员以调整宿舍（仅显示已拥有干员）：\n")
+        info_draw.draw()
+
+        chara_ids = sorted([cid for cid in cache.npc_id_got if cid != 0], key=lambda x: cache.character_data[x].adv)
+        draw_count = 0
+        for chara_id in chara_ids:
+            character_data = cache.character_data[chara_id]
+            dormitory_text = self._get_dormitory_name(character_data.dormitory)
+            button_text = f"[{str(character_data.adv).rjust(4, '0')}] {character_data.name} ({dormitory_text})"
+            now_draw = draw.LeftButton(
+                button_text,
+                f"\n{character_data.name}",
+                int(self.width / 3),
+                cmd_func=self._choose_new_dormitory,
+                args=(chara_id,),
+            )
+            now_draw.draw()
+            return_list.append(now_draw.return_text)
+            draw_count += 1
+            if draw_count % 3 == 0:
+                line_feed.draw()
+
+        line_feed.draw()
+
+    def _draw_manage_dormitory_manager_page(self, return_list: List[str]):
+        """
+        绘制宿舍管理员调整页
+        输入类型: return_list(List[str])
+        输出类型: 无
+        功能: 按层展示当前管理员并支持进入层级任命/撤换
+        """
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        open_layers = sorted(open_rooms_by_layer.keys())
+
+        info_draw = draw.NormalDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n 选择层级后可进行任命或撤换：\n")
+        info_draw.draw()
+
+        for layer in open_layers:
+            manager_id = cache.rhodes_island.dormitory_managers.get(layer, 0)
+            if manager_id and manager_id in cache.character_data:
+                manager_name = cache.character_data[manager_id].name
+                layer_text = _("[{0}层] 当前管理员：{1}").format(layer, manager_name)
+            else:
+                layer_text = _("[{0}层] 当前管理员：未任命").format(layer)
+            now_draw = draw.LeftButton(
+                layer_text,
+                f"\n{layer}",
+                self.width,
+                cmd_func=self._manage_one_layer_manager,
+                args=(layer,),
+            )
+            now_draw.draw()
+            return_list.append(now_draw.return_text)
+            line_feed.draw()
+
+        if not len(open_layers):
+            wait_draw = draw.NormalDraw()
+            wait_draw.width = self.width
+            wait_draw.text = _("\n 暂无可管理的开放层。\n")
+            wait_draw.draw()
+
+    def _choose_new_dormitory(self, character_id: int):
+        """
+        进入单角色换宿舍流程
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 校验前提并从可入住房间中选择目标宿舍
+        """
+        if not handle_premise.handle_premise(constant_promise.Premise.CAN_MANUAL_CHANGE_DORMITORY, character_id):
+            now_draw = draw.WaitDraw()
+            now_draw.width = self.width
+            now_draw.style = "gold_enrod"
+            now_draw.text = _("\n○当前角色处于特殊状态，暂不可手动更换宿舍\n")
+            now_draw.draw()
+            return
+
+        character_data = cache.character_data[character_id]
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        occupancy = self._get_room_occupancy()
+
+        room_candidates: List[Tuple[int, str, str]] = []
+        for layer in sorted(open_rooms_by_layer.keys()):
+            for room_name, room_path in open_rooms_by_layer[layer]:
+                room_count = occupancy.get(room_path, 0)
+                if room_path == character_data.dormitory or room_count < 2:
+                    room_candidates.append((layer, room_name, room_path))
+
+        while 1:
+            return_list: List[str] = []
+            title_draw = draw.TitleLineDraw(_("调整宿舍：{0}").format(character_data.name), self.width)
+            title_draw.draw()
+
+            now_dormitory_text = self._get_dormitory_name(character_data.dormitory)
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n 当前宿舍：{0}\n").format(now_dormitory_text)
+            info_draw.text += _(" 请选择目标宿舍（仅显示已开放且未满员）：\n\n")
+            info_draw.draw()
+
+            for layer, room_name, room_path in room_candidates:
+                room_count = occupancy.get(room_path, 0)
+                room_text = _("[{0}层] {1} ({2}/2)").format(layer, room_name, room_count)
+                room_draw = draw.LeftButton(
+                    room_text,
+                    f"\n{room_name}",
+                    int(self.width / 2),
+                    cmd_func=self._set_character_dormitory,
+                    args=(character_id, room_path),
+                )
+                room_draw.draw()
+                return_list.append(room_draw.return_text)
+                line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
+
+    def _set_character_dormitory(self, character_id: int, dormitory_path: str):
+        """
+        应用角色宿舍变更
+        输入类型: character_id(int), dormitory_path(str)
+        输出类型: 无
+        功能: 更新角色 dormitory 字段，不修改 pre_dormitory
+        """
+        character_data = cache.character_data[character_id]
+        old_text = self._get_dormitory_name(character_data.dormitory)
+        new_text = self._get_dormitory_name(dormitory_path)
+        character_data.dormitory = dormitory_path
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n○{0} 的宿舍已从 {1} 调整为 {2}\n").format(character_data.name, old_text, new_text)
+        info_draw.draw()
+
+    def _manage_one_layer_manager(self, layer: int):
+        """
+        单层管理员管理入口
+        输入类型: layer(int)
+        输出类型: 无
+        功能: 提供任命与撤换操作
+        """
+        while 1:
+            return_list: List[str] = []
+            title_draw = draw.TitleLineDraw(_("调整{0}层宿舍管理员").format(layer), self.width)
+            title_draw.draw()
+
+            manager_id = cache.rhodes_island.dormitory_managers.get(layer, 0)
+            manager_text = _("未任命")
+            if manager_id and manager_id in cache.character_data:
+                manager_text = cache.character_data[manager_id].name
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n 当前管理员：{0}\n\n").format(manager_text)
+            info_draw.draw()
+
+            appoint_draw = draw.LeftButton(
+                _("[任命干员]"),
+                _("\n任命干员"),
+                int(self.width / 2),
+                cmd_func=self._appoint_manager_for_layer,
+                args=(layer,),
+            )
+            appoint_draw.draw()
+            return_list.append(appoint_draw.return_text)
+            line_feed.draw()
+
+            remove_draw = draw.LeftButton(
+                _("[撤换管理员]"),
+                _("\n撤换管理员"),
+                int(self.width / 2),
+                cmd_func=self._remove_manager_for_layer,
+                args=(layer,),
+            )
+            remove_draw.draw()
+            return_list.append(remove_draw.return_text)
+            line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
+
+    def _appoint_manager_for_layer(self, layer: int):
+        """
+        为指定层任命管理员
+        输入类型: layer(int)
+        输出类型: 无
+        功能: 选择干员并更新 dormitory_managers 与工作岗位
+        """
+        while 1:
+            return_list: List[str] = []
+            title_draw = draw.TitleLineDraw(_("选择{0}层宿舍管理员").format(layer), self.width)
+            title_draw.draw()
+
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n 请选择一名干员任命为宿舍管理员：\n")
+            info_draw.draw()
+
+            chara_ids = sorted([cid for cid in cache.npc_id_got if cid != 0], key=lambda x: cache.character_data[x].adv)
+            for chara_id in chara_ids:
+                character_data = cache.character_data[chara_id]
+                button_text = f"[{str(character_data.adv).rjust(4, '0')}] {character_data.name}"
+                now_draw = draw.LeftButton(
+                    button_text,
+                    f"\n{character_data.name}",
+                    int(self.width / 3),
+                    cmd_func=self._do_appoint_manager,
+                    args=(layer, chara_id),
+                )
+                now_draw.draw()
+                return_list.append(now_draw.return_text)
+            line_feed.draw()
+
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == back_draw.return_text or yrn in return_list:
+                break
+
+    def _do_appoint_manager(self, layer: int, character_id: int):
+        """
+        执行任命管理员
+        输入类型: layer(int), character_id(int)
+        输出类型: 无
+        功能: 同步更新层管理员、角色 work_type 与工作缓存
+        """
+        old_manager_id = cache.rhodes_island.dormitory_managers.get(layer, 0)
+
+        # 先把该角色在其他层的任命清掉，保证一人只管理一层
+        for other_layer, other_character_id in list(cache.rhodes_island.dormitory_managers.items()):
+            if other_layer != layer and other_character_id == character_id:
+                cache.rhodes_island.dormitory_managers[other_layer] = 0
+
+        # 替换当前层旧管理员
+        if old_manager_id and old_manager_id in cache.character_data and old_manager_id != character_id:
+            cache.character_data[old_manager_id].work.work_type = 0
+
+        cache.rhodes_island.dormitory_managers[layer] = character_id
+        cache.character_data[character_id].work.work_type = 31
+        basement.update_work_people()
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n○已任命 {0} 为 {1}层宿舍管理员\n").format(cache.character_data[character_id].name, layer)
+        info_draw.draw()
+
+    def _remove_manager_for_layer(self, layer: int):
+        """
+        撤换指定层管理员
+        输入类型: layer(int)
+        输出类型: 无
+        功能: 清空层管理员并将原管理员岗位重置为无
+        """
+        manager_id = cache.rhodes_island.dormitory_managers.get(layer, 0)
+        if not manager_id:
+            info_draw = draw.WaitDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n○该层当前没有已任命管理员\n")
+            info_draw.draw()
+            return
+
+        if manager_id in cache.character_data:
+            cache.character_data[manager_id].work.work_type = 0
+        cache.rhodes_island.dormitory_managers[layer] = 0
+        basement.update_work_people()
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n○已撤换 {0}层宿舍管理员\n").format(layer)
+        info_draw.draw()
+
+    def _get_open_rooms_by_layer(self) -> Dict[int, List[Tuple[str, str]]]:
+        """
+        统计已开放宿舍房间
+        输入类型: 无
+        输出类型: Dict[int, List[Tuple[str,str]]]
+        功能: 返回已开放房间，key=层号，value=[(房间名, 场景路径)]
+        """
+        return common.get_open_dormitory_rooms_by_layer()
+
+    def _get_room_occupancy(self) -> Dict[str, int]:
+        """
+        统计宿舍占用人数
+        输入类型: 无
+        输出类型: Dict[str,int]
+        功能: 统计每个宿舍路径当前住了几名干员
+        """
+        occupancy: Dict[str, int] = {}
+        for character_id in cache.npc_id_got:
+            if character_id == 0:
+                continue
+            dormitory_path = cache.character_data[character_id].dormitory
+            if dormitory_path:
+                occupancy[dormitory_path] = occupancy.get(dormitory_path, 0) + 1
+        return dict(occupancy)
+
+    def _get_dormitory_max_open_layer(self) -> int:
+        """
+        根据宿舍区等级获取理论开放层上限
+        输入类型: 无
+        输出类型: int
+        功能: 从 Facility_effect.csv 对应等级说明中解析“开放至X区”，失败时使用保底映射
+        """
+        return common.get_dormitory_max_open_layer()
+
+    def _get_dormitory_name(self, dormitory_path: str) -> str:
+        """
+        获取宿舍显示名
+        输入类型: dormitory_path(str)
+        输出类型: str
+        功能: 将宿舍路径转换为可读中文场景名
+        """
+        if dormitory_path == "":
+            return _("暂无")
+        if dormitory_path not in cache.scene_data:
+            return dormitory_path.split("\\")[-1]
+        return cache.scene_data[dormitory_path].scene_name

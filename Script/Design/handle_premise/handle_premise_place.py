@@ -1481,6 +1481,16 @@ def handle_not_in_dormitory(character_id: int) -> int:
         return 0
     return 1
 
+@add_premise(constant_promise.Premise.IN_ANY_DORMITORY)
+def handle_in_any_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在任一宿舍中（包括自己和他人宿舍）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    return common_place_judge_by_SceneTag(character_id, "Dormitory")
 
 @add_premise(constant_promise.Premise.IN_DORMITORY_OR_HOTEL)
 def handle_in_dormitory_or_hotel(character_id: int) -> int:

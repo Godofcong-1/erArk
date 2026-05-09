@@ -240,6 +240,8 @@ class Instruct:
     """ 管理资源交易 """
     NAVIGATION = "navigation"
     """ 导航 """
+    MANAGE_DORMITORY = "manage_dormitory"
+    """ 宿舍管理系统 """
     MANAGE_BASEMENT = "manage_basement"
     """ 管理罗德岛 """
 

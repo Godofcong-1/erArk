@@ -88,7 +88,10 @@ int,str,str,str,str,str,str,int,str,str,str,str
 2030,investigate_resource_market,研判资源市场,WORK,0,NOT_H|IN_RESOURCE_EXCHANGE|NO_TARGET_OR_TARGET_CAN_COOPERATE|TIRED_LE_74,INVESTIGATE_RESOURCE_MARKET,1,,hand,hand_work,
 2031,manage_resource_exchange,管理资源交易,WORK,0,NOT_H|TIRED_LE_84|HP_G_1|IN_RESOURCE_EXCHANGE,,2,MANAGE_RESOURCE_EXCHANGE,hand,hand_work,
 2032,navigation,导航,WORK,0,NOT_H|IN_COMMAND_ROOM_OR_OUT_EXIT,,2,NAVIGATION,hand,hand_work,
-2033,manage_basement,管理罗德岛,WORK,0,NOT_H|IN_DR_OFFICE,,2,MANAGE_BASEMENT,hand,hand_work,
+2033,organize_dormitory_opinion,整理宿舍意见,WORK,0,NOT_H|IN_DORMITORY_MANAGER_ROOM|TARGET_WORK_IS_DORMITORY_MANAGER|DEBUG_MODE_ON,,1,,hand,hand_work,
+2034,handle_dormitory_problem,处理宿舍问题,WORK,0,NOT_H|IN_DORMITORY_MANAGER_ROOM|IN_ANY_DORMITORY|DEBUG_MODE_ON,,1,,hand,hand_work,
+2035,manage_dormitory,宿舍管理系统,WORK,0,NOT_H|IN_DORMITORY_MANAGER_ROOM|DEBUG_MODE_ON,,2,MANAGE_DORMITORY,hand,hand_work,
+2051,manage_basement,管理罗德岛,WORK,0,NOT_H|IN_DR_OFFICE,,2,MANAGE_BASEMENT,hand,hand_work,
 3001,singing,唱歌,PLAY,0,NOT_H|NO_TARGET_OR_TARGET_CAN_COOPERATE|TIRED_LE_74,SINGING,1,,hand,hand_play,
 3002,play_instrument,演奏乐器,PLAY,0,NOT_H|HAVE_INSTRUMENT_OR_IN_MUSIC_ROOM|NO_TARGET_OR_TARGET_CAN_COOPERATE|TIRED_LE_74,PLAY_INSTRUMENT,1,,hand,hand_play,
 3003,listen_inflation,听肚子里的动静,PLAY,0,HAVE_TARGET|NOT_H|NOT_IN_TOILET|T_INFLATION_1|TIRED_LE_84|HP_G_1,LISTEN_INFLATION,1,,hand,hand_play,belly

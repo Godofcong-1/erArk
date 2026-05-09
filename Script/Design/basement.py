@@ -97,7 +97,23 @@ def get_base_zero() -> game_type.Rhodes_Island:
     # 初始化医疗系统运行期缓存
     medical_service.init_medical_department_data(base_data, reset_runtime=True)
 
+    # 初始化宿舍管理员（1~9层各对应一名，默认未任命）
+    for layer_id in range(1, 10):
+        base_data.dormitory_managers[layer_id] = 0
+
     return base_data
+
+
+def init_dormitory_managers(base_data: game_type.Rhodes_Island):
+    """
+    初始化宿舍管理员数据
+    输入类型: game_type.Rhodes_Island
+    输出类型: 无
+    功能: 将 dormitory_managers 中 1~9 层全部初始化为 0（未任命）
+    """
+    for layer_id in range(1, 10):
+        if layer_id not in base_data.dormitory_managers:
+            base_data.dormitory_managers[layer_id] = 0
 
 def get_base_updata():
     """

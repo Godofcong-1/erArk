@@ -187,6 +187,10 @@ class CharacterStatus:
     """ 进行手术治疗 """
     STATUS_WARD_ROUND = 226
     """ 病房查房 """
+    STATUS_ORGANIZE_DORMITORY_OPINION = 227
+    """ 整理宿舍意见 """
+    STATUS_HANDLE_DORMITORY_PROBLEM = 228
+    """ 处理宿舍问题 """
     STATUS_MORNING_SALUTATION_1 = 251
     """ 早安问候：叫起床 """
     STATUS_MORNING_SALUTATION_2 = 252

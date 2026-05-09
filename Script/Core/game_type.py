@@ -842,6 +842,10 @@ class CHARA_WORK:
         """ 当前正在处理的门诊病人ID，用于医疗经营系统 """
         self.surgery_patient_id: int = 0
         """ 当前正在手术的病人ID，用于医疗经营系统 """
+        self.dormitory_admin_phase: int = 0
+        """ 宿舍管理员行动阶段，int [0到岗,1整理,2选宿舍,3移动,4处理,5返回] """
+        self.dormitory_admin_target_room: str = ""
+        """ 宿舍管理员当前目标宿舍路径字符串 """
 
 
 class CHARA_ENTERTAINMENT:
@@ -1210,6 +1214,10 @@ class Rhodes_Island:
         """ 素材资源 """
         self.used_extra_warehouse_capacity_module: int = 0
         """ 已使用的仓储空间扩展模块数量 """
+
+        # 宿舍区
+        self.dormitory_managers: Dict[int, int] = {}
+        """ 各层宿舍管理员，输入类型:无，输出类型:Dict[int,int]，功能:key=层号(1-9), value=角色id(0表示未任命) """
 
         # 生活娱乐区
         self.life_zone_max: int = 0

@@ -379,6 +379,8 @@
     """ 地点_定位 在自己宿舍中 """
     NOT_IN_DORMITORY = "not_in_dor"
     """ 地点_定位 不在自己宿舍中 """
+    IN_ANY_DORMITORY = "in_any_dormitory"
+    """ 地点_定位 在任一宿舍中（包括自己和他人宿舍） """
     IN_DORMITORY_OR_HOTEL = "in_dor_or_hotel"
     """ 地点_定位 在自己宿舍中或在已经入住的旅馆中 """
     IN_TARGET_DORMITORY = "in_target_dor"
