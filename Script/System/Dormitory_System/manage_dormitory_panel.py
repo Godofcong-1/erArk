@@ -30,6 +30,8 @@ class Manage_Dormitory_Panel:
         """初始化绘制对象"""
         self.width: int = width
         self.now_panel: str = _("宿舍总览")
+        self.temp_blank_character_ids: List[int] = []
+        """ 临时空白位中的干员id列表 """
 
     def draw(self):
         """
@@ -78,12 +80,17 @@ class Manage_Dormitory_Panel:
 
             line_feed.draw()
             line_feed.draw()
-            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            lock_panel_leave = self._is_character_dormitory_page_locked()
+            back_style = "deep_gray" if lock_panel_leave else "standard"
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width, normal_style=back_style)
             back_draw.draw()
             return_list.append(back_draw.return_text)
 
             yrn = flow_handle.askfor_all(return_list)
             if yrn == back_draw.return_text:
+                if lock_panel_leave:
+                    self._draw_temp_blank_lock_hint()
+                    continue
                 reset_count = self._reset_unassigned_dormitory_manager_work_type()
                 if reset_count > 0:
                     info_draw = draw.WaitDraw()
@@ -100,6 +107,9 @@ class Manage_Dormitory_Panel:
         输出类型: 无
         功能: 更新当前显示页签
         """
+        if now_panel != self.now_panel and self._is_character_dormitory_page_locked():
+            self._draw_temp_blank_lock_hint()
+            return
         self.now_panel = now_panel
 
     def _draw_overview_page(self):
@@ -144,7 +154,31 @@ class Manage_Dormitory_Panel:
         """
         info_draw = draw.NormalDraw()
         info_draw.width = self.width
-        info_draw.text = _("\n 选择一名干员以调整宿舍（仅显示已拥有干员）：\n")
+        info_draw.text = ""
+        temp_blank_list = self._get_temp_blank_character_ids()
+        temp_blank_names = []
+        for character_id in temp_blank_list:
+            if character_id in cache.character_data:
+                temp_blank_names.append(cache.character_data[character_id].name)
+        if len(temp_blank_names):
+            info_draw.text += _("○临时空白位：{0}人（{1}）").format(len(temp_blank_names), "、".join(temp_blank_names))
+        else:
+            info_draw.text += _("○临时空白位：0人\n")
+        info_draw.draw()
+
+        if len(temp_blank_names):
+            auto_sort_text = _("[自动排序临时空白位]")
+            auto_sort_draw = draw.CenterButton(
+                auto_sort_text,
+                _("\n自动排序临时空白位"),
+                int(self.width / 3),
+                cmd_func=self._auto_sort_temp_blank_characters,
+            )
+            auto_sort_draw.draw()
+            return_list.append(auto_sort_draw.return_text)
+            line_feed.draw()
+
+        info_draw.text = _("○选择一名干员以调整宿舍（仅显示已拥有干员）：\n")
         info_draw.draw()
 
         chara_ids = sorted([cid for cid in cache.npc_id_got if cid != 0], key=lambda x: cache.character_data[x].adv)
@@ -270,12 +304,13 @@ class Manage_Dormitory_Panel:
         character_data = cache.character_data[character_id]
         open_rooms_by_layer = self._get_open_rooms_by_layer()
         occupancy = self._get_room_occupancy()
+        temp_blank_list = self._get_temp_blank_character_ids()
 
         room_candidates: List[Tuple[int, str, str]] = []
         for layer in sorted(open_rooms_by_layer.keys()):
             for room_name, room_path in open_rooms_by_layer[layer]:
                 room_count = occupancy.get(room_path, 0)
-                if room_path == character_data.dormitory or room_count < 2:
+                if room_path != character_data.dormitory and room_count < 2:
                     room_candidates.append((layer, room_name, room_path))
 
         while 1:
@@ -287,12 +322,32 @@ class Manage_Dormitory_Panel:
             info_draw = draw.NormalDraw()
             info_draw.width = self.width
             info_draw.text = _("\n 当前宿舍：{0}\n").format(now_dormitory_text)
+            if character_id in temp_blank_list:
+                info_draw.text += _(" 当前状态：临时空白位\n")
             info_draw.text += _(" 请选择目标宿舍（仅显示已开放且未满员）：\n\n")
             info_draw.draw()
+
+            if character_id not in temp_blank_list:
+                temp_blank_text = _("[移入临时空白位]")
+                temp_blank_draw = draw.CenterButton(
+                    temp_blank_text,
+                    _("\n移入临时空白位"),
+                    int(self.width / 3),
+                    cmd_func=self._move_character_to_temp_blank,
+                    args=(character_id,),
+                )
+                temp_blank_draw.draw()
+                return_list.append(temp_blank_draw.return_text)
+                line_feed.draw()
+            line_feed.draw()
 
             for layer, room_name, room_path in room_candidates:
                 room_count = occupancy.get(room_path, 0)
                 room_text = _("[{0}层] {1} ({2}/2)").format(layer, room_name, room_count)
+                # 如果该宿舍有角色，则显示这些角色的名字
+                if room_path in occupancy and occupancy[room_path] > 0:
+                    occupants = [cache.character_data[cid].name for cid in cache.character_data if cache.character_data[cid].dormitory == room_path]
+                    room_text += " - " + "、".join(occupants)
                 room_draw = draw.LeftButton(
                     room_text,
                     f"\n{room_name}",
@@ -323,10 +378,70 @@ class Manage_Dormitory_Panel:
         old_text = self._get_dormitory_name(character_data.dormitory)
         new_text = self._get_dormitory_name(dormitory_path)
         character_data.dormitory = dormitory_path
+        self._remove_from_temp_blank(character_id)
 
         info_draw = draw.WaitDraw()
         info_draw.width = self.width
         info_draw.text = _("\n○{0} 的宿舍已从 {1} 调整为 {2}\n").format(character_data.name, old_text, new_text)
+        info_draw.draw()
+
+    def _move_character_to_temp_blank(self, character_id: int):
+        """
+        将干员移入临时空白位
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 角色离开当前宿舍并加入临时空白位列表
+        """
+        character_data = cache.character_data[character_id]
+        temp_blank_list = self._get_temp_blank_character_ids()
+        if character_id not in temp_blank_list:
+            temp_blank_list.append(character_id)
+        old_text = self._get_dormitory_name(character_data.dormitory)
+        character_data.dormitory = ""
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n○{0} 已从 {1} 移入临时空白位\n").format(character_data.name, old_text)
+        info_draw.draw()
+
+    def _auto_sort_temp_blank_characters(self):
+        """
+        将临时空白位干员自动排序入住宿舍可用位
+        输入类型: 无
+        输出类型: 无
+        功能: 按列表顺序将临时空白位干员填入当前可用宿舍位置
+        """
+        temp_blank_list = self._get_temp_blank_character_ids()
+        if not len(temp_blank_list):
+            return
+
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        occupancy = self._get_room_occupancy()
+        free_slots: List[str] = []
+
+        for layer in sorted(open_rooms_by_layer.keys()):
+            for room_name, room_path in open_rooms_by_layer[layer]:
+                room_count = occupancy.get(room_path, 0)
+                for _slot_idx in range(max(0, 2 - room_count)):
+                    free_slots.append(room_path)
+
+        assigned_count = 0
+        while len(temp_blank_list) and len(free_slots):
+            character_id = temp_blank_list[0]
+            target_room = free_slots.pop(0)
+            if character_id in cache.character_data:
+                cache.character_data[character_id].dormitory = target_room
+                assigned_count += 1
+            temp_blank_list.pop(0)
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        if assigned_count:
+            info_draw.text = _("\n○已自动安置{0}名干员进入宿舍\n").format(assigned_count)
+            if len(temp_blank_list):
+                info_draw.text += _("○仍有{0}名干员留在临时空白位（宿舍可用位置不足）\n").format(len(temp_blank_list))
+        else:
+            info_draw.text = _("\n○当前没有可用宿舍位置，无法进行自动排序\n")
         info_draw.draw()
 
     def _appoint_manager_for_layer(self, layer: int):
@@ -453,6 +568,55 @@ class Manage_Dormitory_Panel:
         if reset_count > 0:
             basement.update_work_people()
         return reset_count
+
+    def _get_temp_blank_character_ids(self) -> List[int]:
+        """
+        获取并清洗临时空白位干员列表
+        输入类型: 无
+        输出类型: List[int]
+        功能: 确保列表存在，去重并移除无效角色id
+        """
+        temp_blank_list = self.temp_blank_character_ids
+
+        valid_ids = []
+        for character_id in temp_blank_list:
+            if character_id in cache.character_data and character_id not in valid_ids:
+                valid_ids.append(character_id)
+        self.temp_blank_character_ids = valid_ids
+        return self.temp_blank_character_ids
+
+    def _remove_from_temp_blank(self, character_id: int):
+        """
+        将角色从临时空白位列表移除
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 当角色被分配到宿舍后，从临时空白位列表删除
+        """
+        temp_blank_list = self._get_temp_blank_character_ids()
+        if character_id in temp_blank_list:
+            temp_blank_list.remove(character_id)
+
+    def _is_character_dormitory_page_locked(self) -> bool:
+        """
+        判断当前是否处于临时空白位锁定状态
+        输入类型: 无
+        输出类型: bool
+        功能: 当处于管理干员所属宿舍页且临时空白位不为空时，锁定离开行为
+        """
+        return self.now_panel == _("管理干员所属宿舍") and len(self._get_temp_blank_character_ids()) > 0
+
+    def _draw_temp_blank_lock_hint(self):
+        """
+        绘制临时空白位锁定提示
+        输入类型: 无
+        输出类型: 无
+        功能: 提示用户先清空临时空白位后再切换页面或返回
+        """
+        temp_count = len(self._get_temp_blank_character_ids())
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        info_draw.text = _("\n○当前有{0}名干员处于临时空白位，请先完成安置后再切换页面或返回\n").format(temp_count)
+        info_draw.draw()
 
     def _get_open_rooms_by_layer(self) -> Dict[int, List[Tuple[str, str]]]:
         """
