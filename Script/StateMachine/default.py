@@ -242,6 +242,10 @@ def character_move_to_toilet(character_id: int):
                     to_toilet = map_handle.get_map_system_path_for_str(place)
                     find_flag = True
                     break
+            # 如果是在宿舍区的话，则寻找自己的宿舍
+            if not find_flag and handle_premise.handle_in_dormitory_zone(character_id):
+                to_toilet = map_handle.get_map_system_path_for_str(character_data.dormitory)
+                find_flag = True
         # 如果还是没找到的话就随机选择一个女厕所
         if not find_flag:
             to_toilet = map_handle.get_map_system_path_for_str(
@@ -249,6 +253,9 @@ def character_move_to_toilet(character_id: int):
     )
     # print(f"debug constant.place_data[\"Toilet_Female\"] = ",constant.place_data["Toilet_Female"])
     move_success = general_movement_module(character_id, to_toilet)
+    # 如果成功移动到了厕所，则将该厕所记录在角色数据里，方便下次优先选择
+    if move_success and find_flag:
+        character_data.action_info.find_another_toilet = to_toilet
     # 如果就近的厕所因某些原因无法进入，则随机找一个另外的厕所
     if find_flag and not move_success:
         to_toilet = map_handle.get_map_system_path_for_str(random.choice(constant.place_data["Toilet_Female"]))
