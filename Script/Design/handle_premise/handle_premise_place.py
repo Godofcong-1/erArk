@@ -1492,6 +1492,21 @@ def handle_in_any_dormitory(character_id: int) -> int:
     """
     return common_place_judge_by_SceneTag(character_id, "Dormitory")
 
+@add_premise(constant_promise.Premise.IN_DORMITORY_ZONE)
+def handle_in_dormitory_zone(character_id: int) -> int:
+    """
+    校验角色是否在宿舍区
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data = cache.character_data[character_id]
+    now_position = character_data.position
+    if now_position[0] == "宿舍":
+        return 1
+    return 0
+
 @add_premise(constant_promise.Premise.IN_DORMITORY_OR_HOTEL)
 def handle_in_dormitory_or_hotel(character_id: int) -> int:
     """
@@ -1532,6 +1547,53 @@ def handle_in_dormitory_manager_room(character_id: int) -> int:
     """
     return common_place_judge_by_SceneTag(character_id, "Dormitory_Manager_Room")
 
+@add_premise(constant_promise.Premise.NOT_IN_DORMITORY_MANAGER_ROOM)
+def handle_not_in_dormitory_manager_room(character_id: int) -> int:
+    """
+    校验角色是否不在宿舍管理员室中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_dormitory_manager_room(character_id):
+        return 0
+    return 1
+
+@add_premise(constant_promise.Premise.IN_PROBLEM_TARGET_DORMITORY)
+def handle_in_problem_target_dormitory(character_id: int) -> int:
+    """
+    校验角色是否在要处理问题的目标宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    # 获取目标宿舍路径，若无有效目标则进入返回舍管房阶段
+    target_room = character_data.work.dormitory_admin_target_room
+    if target_room == "":
+        return 0
+
+    # 检查当前场景是否已在目标宿舍
+    target_scene = map_handle.get_map_system_path_for_str(target_room)
+    character_data = cache.character_data[character_id]
+    if character_data.position == target_scene:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_PROBLEM_TARGET_DORMITORY)
+def handle_not_in_problem_target_dormitory(character_id: int) -> int:
+    """
+    校验角色是否不在要处理问题的目标宿舍中
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_problem_target_dormitory(character_id):
+        return 0
+    return 1
 
 @add_premise(constant_promise.Premise.IN_TOILET_MAN)
 def handle_in_toilet_man(character_id: int) -> int:
@@ -1570,11 +1632,10 @@ def handle_not_in_toilet_female(character_id: int) -> int:
         return 0
     return 1
 
-
-@add_premise(constant_promise.Premise.NOT_IN_TOILET)
-def handle_not_in_toilet(character_id: int) -> int:
+@add_premise(constant_promise.Premise.IN_TOILET)
+def handle_in_toilet(character_id: int) -> int:
     """
-    校验角色是否不在洗手间（含宿舍）
+    校验角色是否在洗手间（含宿舍）
     Keyword arguments:
     character_id -- 角色id
     Return arguments:
@@ -1585,13 +1646,25 @@ def handle_not_in_toilet(character_id: int) -> int:
     now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
     now_scene_data = cache.scene_data[now_scene_str]
     if "Toilet_Male" in now_scene_data.scene_tag:
-        return 0
+        return 1
     if "Toilet_Female" in now_scene_data.scene_tag:
-        return 0
+        return 1
     if "Dormitory" in now_scene_data.scene_tag:
+        return 1
+    return 0
+
+@add_premise(constant_promise.Premise.NOT_IN_TOILET)
+def handle_not_in_toilet(character_id: int) -> int:
+    """
+    校验角色是否不在洗手间（含宿舍）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    if handle_in_toilet(character_id):
         return 0
     return 1
-
 
 @add_premise(constant_promise.Premise.IN_TOILET_OR_DORMITORY)
 def handle_in_toilet_or_dormitory(character_id: int) -> int:

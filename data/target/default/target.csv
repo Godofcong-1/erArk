@@ -53,10 +53,10 @@ ai的目标,,,,
 63,43,rest_flag_1|in_restroom,12,要休息状态，且在休息室，则休息
 
 66,80,normal_1267|urinate_ge_80,11,1267正常（可能AI跟随、服装异常或意识模糊），尿意值到80%，则进入要撒尿状态
-67,511,pee_flag_1|not_in_toilet_female|not_is_assistant_and_in_dr_room,12,要撒尿状态，不在洗手间里，且不符合助理优先在博士房间解手的条件，则去洗手间
-68,50,pee_flag_1|in_toilet_female,12,要撒尿状态，且正在女洗手间里，则解手
+67,511,pee_flag_1|not_in_toilet|not_is_assistant_and_in_dr_room,12,要撒尿状态，不在洗手间里，且不符合自己是助理并正在博士房间的条件，则去洗手间
+68,50,pee_flag_1|in_toilet,12,要撒尿状态，且正在洗手间里，则解手
 69,50,pee_flag_1|is_assistant|in_dr_room,12,要撒尿状态，自己是助理，在博士房间，则解手
-70,50,urinate_ge_125|not_in_toilet_female,0,尿意值到极限，不在洗手间里，当场直接排尿
+70,50,urinate_ge_125|not_in_toilet,0,尿意值到极限（现调整为150%），不在洗手间里，当场直接排尿
 
 71,2,unnormal_2,1,2异常，则原地待机30分钟
 72,43,unnormal_2|mp_0,13,2异常，气力0，则休息
@@ -103,6 +103,12 @@ ai的目标,,,,
 344,663,normal_all|work_is_hospital_doctor|to_work_time|not_in_inpatient_department|have_no_patient_need_surgery,21,正常状态下，工作为住院医生，在到岗时间，当前不在住院部，自己没有要进行手术的病人，则去住院部
 345,663,normal_all|work_is_hospital_doctor|work_time|not_in_inpatient_department|have_no_patient_need_surgery,21,正常状态下，工作为住院医生，在工作时间，当前不在住院部，自己没有要进行手术的病人，则去住院部
 346,323,normal_all|work_is_hospital_doctor|work_time|in_inpatient_department|have_no_patient_need_surgery,22,正常状态下，工作为住院医生，在工作时间，当前在住院部，自己没有要进行手术的病人，则巡查病房
+
+351,326,normal_all|work_is_dormitory_manager|to_work_time|not_in_dormitory_manager_room|dormitory_manager_action_0,21,正常状态下，工作为宿舍管理员，在到岗时间，如果不在宿舍管理员室，且当前状态是到岗整理，则去宿舍管理员室
+352,326,normal_all|work_is_dormitory_manager|work_time|not_in_dormitory_manager_room|dormitory_manager_action_0,21,正常状态下，工作为宿舍管理员，在工作时间，如果不在宿舍管理员室，且当前状态是到岗整理，则去宿舍管理员室
+353,327,normal_all_except_special_hypnosis|work_is_dormitory_manager|work_time|in_dormitory_manager_room|dormitory_manager_action_0,22,正常状态下或被空气或体控催眠中，工作为宿舍管理员，在工作时间，如果在宿舍管理员室，自身阶段为到岗整理，则整理宿舍意见
+354,328,normal_all|work_is_dormitory_manager|work_time|not_in_problem_target_dormitory|dormitory_manager_action_1,21,正常状态下，工作为宿舍管理员，在工作时间，不在要处理问题的目标宿舍，且当前状态是移动处理，则移动至目标宿舍
+355,329,normal_all_except_special_hypnosis|work_is_dormitory_manager|work_time|in_problem_target_dormitory|dormitory_manager_action_1,22,正常状态下或被空气或体控催眠中，工作为宿舍管理员，在工作时间，如果在要处理问题的目标宿舍中，自身阶段为移动处理，则处理宿舍问题
 
 461,82,normal_all|all_entertainment_time|entertainment_is_swimming|swim_flag_0,31,正常状态下，全娱乐时间，娱乐是游泳，今天当前不是游完泳状态，则进入要换泳衣状态
 462,612,swim_flag_1|all_entertainment_time|not_in_training_locker_room,31,要换泳衣状态下，当前不在训练场的更衣室，则去训练场的更衣室
@@ -177,10 +183,3 @@ ai的目标,,,,
 804,651,normal_all|work_is_sex_trainee|ask_one_exercises|to_work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在到岗时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
 805,651,normal_all|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|not_in_humiliation_room,21,正常状态下，工作是性爱练习生，自己被要求进行了至少一项练习，在工作时间，自己有隶属系陷落素质，如果不在调教室，则去调教室
 806,317,normal_all_except_special_hypnosis|work_is_sex_trainee|ask_one_exercises|work_time|self_fall_obey|in_humiliation_room,22,正常状态下或被空气或体控催眠中，自己被要求进行了至少一项练习，工作是性爱练习生，在工作时间，自己有隶属系陷落素质，如果在调教室，则开始性爱练习
-
-861,326,normal_all|work_is_dormitory_manager|to_work_time,21,宿舍管理员到岗：前往所属层舍管房
-862,327,normal_all_except_special_hypnosis|work_is_dormitory_manager|work_time,22,宿舍管理员整理宿舍意见（30分钟）
-863,328,normal_all_except_special_hypnosis|work_is_dormitory_manager|work_time,22,宿舍管理员选择目标宿舍
-864,329,normal_all|work_is_dormitory_manager|work_time,21,宿舍管理员移动至目标宿舍
-865,330,normal_all_except_special_hypnosis|work_is_dormitory_manager|work_time,22,宿舍管理员处理宿舍问题（10分钟）
-866,331,normal_all|work_is_dormitory_manager|work_time,21,宿舍管理员返回所属层舍管房

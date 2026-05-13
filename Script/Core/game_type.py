@@ -843,7 +843,7 @@ class CHARA_WORK:
         self.surgery_patient_id: int = 0
         """ 当前正在手术的病人ID，用于医疗经营系统 """
         self.dormitory_admin_phase: int = 0
-        """ 宿舍管理员行动阶段，int [0到岗,1整理,2选宿舍,3移动,4处理,5返回] """
+        """ 宿舍管理员行动阶段，int [0到岗整理,1移动处理] """
         self.dormitory_admin_target_room: str = ""
         """ 宿舍管理员当前目标宿舍路径字符串 """
 

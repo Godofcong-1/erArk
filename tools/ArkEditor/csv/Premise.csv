@@ -189,12 +189,18 @@ in_out_exit,IN_OUT_EXIT,地点_定位,在罗德岛出口
 in_command_room_or_out_exit,IN_COMMAND_ROOM_OR_OUT_EXIT,地点_定位,在指挥室或罗德岛出口
 in_dor,IN_DORMITORY,地点_定位,在自己宿舍中
 not_in_dor,NOT_IN_DORMITORY,地点_定位,不在自己宿舍中
+in_any_dormitory,IN_ANY_DORMITORY,地点_定位,在任一宿舍中（包括自己和他人宿舍）
+in_dormitory_zone,IN_DORMITORY_ZONE,地点_定位,在宿舍区中
 in_dor_or_hotel,IN_DORMITORY_OR_HOTEL,地点_定位,在自己宿舍中或在已经入住的旅馆中
 in_target_dor,IN_TARGET_DORMITORY,地点_定位,在交互对象宿舍中
 in_dormitory_manager_room,IN_DORMITORY_MANAGER_ROOM,地点_定位,在宿舍管理员室中
+not_in_dormitory_manager_room,NOT_IN_DORMITORY_MANAGER_ROOM,地点_定位,不在宿舍管理员室中
+in_problem_target_dormitory,IN_PROBLEM_TARGET_DORMITORY,地点_定位,在要处理问题的目标宿舍中
+not_in_problem_target_dormitory,NOT_IN_PROBLEM_TARGET_DORMITORY,地点_定位,不在要处理问题的目标宿舍中
 in_toilet_man,IN_TOILET_MAN,地点_定位,在男士洗手间
 in_toilet_female,IN_TOILET_FEMALE,地点_定位,在女士洗手间
 not_in_toilet_female,NOT_IN_TOILET_FEMALE,地点_定位,不在女士洗手间
+in_toilet,IN_TOILET,地点_定位,在洗手间（含宿舍）
 not_in_toilet,NOT_IN_TOILET,地点_定位,不在洗手间（含宿舍）
 in_toilet_or_dormitory,IN_TOILET_OR_DORMITORY,地点_定位,在洗手间或自己宿舍中
 in_restroom,IN_REST_ROOM,地点_定位,在休息室中
@@ -1824,6 +1830,8 @@ have_warden,HAVE_WARDEN,工作_角色,当前有监狱长
 
 have_no_patient_need_surgery,HAVE_NO_PATIENT_NEED_SURGERY,工作_记录,自身没有需要进行手术的患者
 have_patient_need_surgery,HAVE_PATIENT_NEED_SURGERY,工作_记录,自身有需要进行手术的患者
+dormitory_manager_action_0,DORMITORY_MANAGER_ACTION_0,工作_记录,自身宿舍管理员行动阶段_到岗整理
+dormitory_manager_action_1,DORMITORY_MANAGER_ACTION_1,工作_记录,自身宿舍管理员行动阶段_移动处理
 
 patient_wait,PATIENT_WAIT,工作_经营,有患者正等待就诊
 medical_ward_wait,MEDICAL_WARD_WAIT,工作_经营,有住院患者需要照护

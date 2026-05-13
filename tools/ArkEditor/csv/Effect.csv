@@ -173,6 +173,8 @@ cid,effect_name,effect_type,effect
 367,SELF_STOP_MOVE,特殊flag_基础,自己停止移动
 371,MAINTENANCE_FLAG_TO_0,特殊flag_基础,自身清零要检修状态
 372,MORNING_SALUTATION_FLAG_TO_0,特殊flag_基础,将自身早安问候设为未问候
+373,DORMITORY_ADMIN_PHASE_TO_0,特殊flag_基础,自身宿舍管理员阶段设为0（到岗整理）
+374,DORMITORY_ADMIN_PHASE_TO_1,特殊flag_基础,自身宿舍管理员阶段设为1（移动处理）
 
 401,DIRTY_RESET,属性_结构体,污浊结构体归零
 402,ASSISTANT_RESET,属性_结构体,助理结构体归零

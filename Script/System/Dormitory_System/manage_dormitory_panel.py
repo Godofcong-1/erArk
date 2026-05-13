@@ -174,52 +174,8 @@ class Manage_Dormitory_Panel:
             button_draw.draw()
             return_list.append(button_draw.return_text)
             line_feed.draw()
-            now_text = ""
-            live_npc_id_set = cache.npc_id_got.copy()
-            Dormitory_all = constant.place_data["Dormitory"] + constant.place_data["Special_Dormitory"] # 合并普通和特殊宿舍
-            # 遍历所有宿舍
-            dormitory_count = 0 # 用来计数宿舍总数量
-            pre_dormitory_name = "100" # 用来保存上一个宿舍名字
-            for dormitory_place in Dormitory_all:
-                count = 0
-                tem_remove_id_set = set() # 用来保存需要删除id的临时set
-                dormitory_name = dormitory_place.split("\\")[-1]
-                dormitory_son_text = f"    [{dormitory_name}]："
-                # 遍历角色id
-                dormitory_npc_name = ""
-                for npc_id in live_npc_id_set:
-                    live_dormitory = cache.character_data[npc_id].dormitory
-                    # 如果该角色住在该宿舍，则在text中加入名字信息
-                    if live_dormitory == dormitory_place:
-                        dormitory_npc_name += f"{cache.character_data[npc_id].name}  "
-                        # W的名字需要单独处理，减掉一个空格
-                        if cache.character_data[npc_id].name == "W":
-                            dormitory_npc_name = dormitory_npc_name[:-1]
-                        count += 1
-                        tem_remove_id_set.add(npc_id)
-                    # 宿舍满2人则中断循环
-                    if count >= 2:
-                        break
-                dormitory_son_text += f"{str(dormitory_npc_name).ljust(15,'　')}" # 对齐为15个全角字符
-                # 在id集合中删掉本次已经出现过的id
-                for npc_id in tem_remove_id_set:
-                    live_npc_id_set.discard(npc_id)
-                # 宿舍有人则显示该宿舍
-                if count:
-                    # 换区或者单独宿舍则换行
-                    if dormitory_name[0] != pre_dormitory_name[0]:
-                        now_text += "\n"
-                        dormitory_count = 0
-                        if dormitory_name[0] not in {"梅","莱"}:
-                            now_text += "\n"
-                    # 每5个宿舍换行
-                    elif dormitory_count % 5 == 0:
-                        now_text += "\n"
-                    pre_dormitory_name = dormitory_name # 更新上一个宿舍名字
-                    now_text += dormitory_son_text
-                    dormitory_count += 1
             now_draw = draw.NormalDraw()
-            now_draw.text = now_text
+            now_draw.text = common.get_dormitory_occupants_text()
             now_draw.width = self.width
             now_draw.draw()
             line_feed.draw()
@@ -297,13 +253,6 @@ class Manage_Dormitory_Panel:
         输出类型: 无
         功能: 按层展示当前管理员并支持进入层级任命/撤换
         """
-        # 如果不是debug模式，则显示还未实装
-        if not cache.debug_mode:
-            now_draw = draw.WaitDraw()
-            now_draw.width = self.width
-            now_draw.text = _("\n○宿舍管理员调整功能尚未实装\n")
-            now_draw.draw()
-            return
         from Script.UI.Panel import manage_basement_panel
         open_rooms_by_layer = self._get_open_rooms_by_layer()
         open_layers = sorted(open_rooms_by_layer.keys())

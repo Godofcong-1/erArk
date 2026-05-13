@@ -650,6 +650,30 @@ def handle_have_patient_need_surgery(character_id: int) -> int:
     """
     return not handle_have_no_patient_need_surgery(character_id)
 
+@add_premise(constant_promise.Premise.DORMITORY_MANAGER_ACTION_0)
+def handle_dormitory_manager_action_0(character_id: int) -> int:
+    """
+    自身宿舍管理员行动阶段_到岗整理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.dormitory_admin_phase == 0
+
+@add_premise(constant_promise.Premise.DORMITORY_MANAGER_ACTION_1)
+def handle_dormitory_manager_action_1(character_id: int) -> int:
+    """
+    自身宿舍管理员行动阶段_移动处理
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    return character_data.work.dormitory_admin_phase == 1
+
 @add_premise(constant_promise.Premise.PATIENT_WAIT)
 def handle_patient_wait(character_id: int) -> int:
     """
