@@ -496,6 +496,7 @@ cid,effect_name,effect_type,effect
 1701,WAIT_UNITL_TRAGET_ACTION_END,行动,玩家等待至交互对象行动结束
 1702,WAIT_UNITL_PLAYER_ACTION_END,行动,自己等待至玩家行动结束
 1711,SET_TARGET_FOOD_FROM_BAG_LAST,行动,将自己行为目标食物指定为背包里的最后一个食物
+1712,CLEAR_TARGET_TOILET_PATH,行动,清空自己记录的目标厕所位置路径
 1721,MOVE_TO_OWN_DORMITORY,行动,自己前往自己的宿舍
 1722,STOP_ENDURANCE_SHOOT,行动,射出忍耐的射精次数
 

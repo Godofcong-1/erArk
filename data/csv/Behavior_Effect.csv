@@ -33,7 +33,7 @@ int,str,str
 135,eat,516
 136,refuse_eat,152 - 991
 137,buy_food,9999
-140,pee,32 - 331 - 1751
+140,pee,32 - 331 - 1721 - 1751
 
 151,singing,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 504
 152,play_instrument,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 505

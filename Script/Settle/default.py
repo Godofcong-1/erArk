@@ -2636,6 +2636,26 @@ def handle_set_target_food_from_bag_last(
     character_data.behavior.food_quality = now_food.quality
     character_data.behavior.target_food = now_food
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAR_TARGET_TOILET_PATH)
+def handle_clear_target_toilet_path(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    清空自己记录的目标厕所位置路径
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    character_data.action_info.find_another_toilet = []
+
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MOVE_TO_OWN_DORMITORY)
 def handle_move_to_own_dormitory(

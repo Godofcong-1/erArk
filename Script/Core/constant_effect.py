@@ -967,6 +967,8 @@ class BehaviorEffect:
     """ 行动 自己等待至玩家行动结束 """
     SET_TARGET_FOOD_FROM_BAG_LAST = 1711
     """ 行动 将自己行为目标食物指定为背包里的最后一个食物 """
+    CLEAR_TARGET_TOILET_PATH = 1712
+    """ 行动 清空自己记录的目标厕所位置路径"""
     MOVE_TO_OWN_DORMITORY = 1721
     """ 行动 自己前往自己的宿舍 """
     STOP_ENDURANCE_SHOOT = 1722
