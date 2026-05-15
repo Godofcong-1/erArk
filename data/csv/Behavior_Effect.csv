@@ -36,32 +36,32 @@ int,str,str
 140,pee,32 - 331 - 1721 - 1751
 
 151,singing,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 504
-152,play_instrument,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 505
-153,watch_movie,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1
-154,photography,1513 - 1514 - 21 - 22 - 53 - 81
-155,play_water,1513 - 1514 - 21 - 22 - 53 - 81
-156,play_chess,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1
-157,play_mahjong,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1
-158,play_cards,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1
-159,rehearse_dance,1513 - 1514 - 21 - 22 - 53 - 81 - CVE_A1_E|80_G_1
-160,play_arcade_game,1513 - 1514 - 21 - 22 - 53 - 81
-161,swimming,1515 - 1516 - 21 - 22 - 53 - 81
+152,play_instrument,1513 - 1514 - 53 - 81 - CVE_A1_E|85_G_1 - 505 - 1751
+153,watch_movie,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1 - 1751
+154,photography,1513 - 1514 - 21 - 22 - 53 - 81 - 1751
+155,play_water,1513 - 1514 - 21 - 22 - 53 - 81 - 1751
+156,play_chess,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1 - 1751
+157,play_mahjong,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1 - 1751
+158,play_cards,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|82_G_1 - 1751
+159,rehearse_dance,1513 - 1514 - 21 - 22 - 53 - 81 - CVE_A1_E|80_G_1 - 1751
+160,play_arcade_game,1513 - 1514 - 21 - 22 - 53 - 81 - 1751
+161,swimming,1515 - 1516 - 21 - 22 - 53 - 81 - 1751
 162,taste_wine,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|83_G_1
 163,taste_tea,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|83_G_1
 164,taste_coffee,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|83_G_1
 165,taste_dessert,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|83_G_1
 166,taste_food,2 - 3 - 34 - 53 - 81 - CVE_A2_E|83_G_1 - CVE_A1_E|83_G_1
-167,play_house,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|80_G_1
-168,style_hair,1511 - 1512 - 21 - 22 - 53 - 81
-169,full_body_styling,1513 - 1514 - 21 - 22 - 53 - 81
+167,play_house,1511 - 1512 - 21 - 22 - 53 - 81 - CVE_A1_E|80_G_1 - 1751
+168,style_hair,1511 - 1512 - 21 - 22 - 53 - 81 - 1751
+169,full_body_styling,1513 - 1514 - 21 - 22 - 53 - 81 - 1751
 171,listen_inflation,1511 - 1512 - 21 - 22 - 55 - 58
 172,play_with_child,13 - 14 - 21 - 22 - 71 - 53
 173,pl_win_in_board_game,12 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 532
 174,pl_lose_in_board_game,12 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 533
-181,soak_feet,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
-182,steam_sauna,13 - 14 - 21 - 22 - 53 - 54 - 55 - 58 - 62
-183,hydrotherapy_treatment,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
-184,onsen_bath,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62
+181,soak_feet,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62 - 1751
+182,steam_sauna,13 - 14 - 21 - 22 - 53 - 54 - 55 - 58 - 62 - 1751
+183,hydrotherapy_treatment,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62 - 1751
+184,onsen_bath,11 - 12 - 21 - 22 - 53 - 54 - 55 - 58 - 62 - 1751
 
 191,aromatherapy_1,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 192,aromatherapy_2,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
@@ -72,28 +72,28 @@ int,str,str
 197,aromatherapy_7,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 198,aromatherapy_8,1511 - 1512 - 21 - 22 - 81 - 521 - CVE_A1_E|89_G_1
 
-201,official_work,21 - 11 - 12 - 22 - 71 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 506
-202,battle_command,9999
-205,training,21 - 15 - 16 - 22 - 71 - CVE_A2_E|81_G_1 - CVE_A1_E|81_G_1 - 701
-206,exercise,21 - 15 - 16 - 22 - 71 - 508
-207,cure_patient,21 - 13 - 14 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 507
-208,recruit,11 - 12 - 21 - 22 - 71 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 510
-209,invite_visitor,11 - 12 - 21 - 22 - 71 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 518
+201,official_work,21 - 11 - 12 - 22 - 71 - CVE_A2_E|82_G_1 - CVE_A1_E|82_G_1 - 506 - 1751
+202,battle_command,9999 - 1751
+205,training,21 - 15 - 16 - 22 - 71 - CVE_A2_E|81_G_1 - CVE_A1_E|81_G_1 - 701 - 1751
+206,exercise,21 - 15 - 16 - 22 - 71 - 508 - 1751
+207,cure_patient,21 - 13 - 14 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 507 - 1751
+208,recruit,11 - 12 - 21 - 22 - 71 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 510 - 1751
+209,invite_visitor,11 - 12 - 21 - 22 - 71 - CVE_A2_E|80_G_1 - CVE_A1_E|80_G_1 - 518 - 1751
 210,read_book,12 - 21 - 22 - 71 - 511
 213,teach,1513 - 1514 - 512
 214,attent_class,1511 - 1512
 215,maintenance_facilities,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1 - 534 - 371
-216,repair_equipment,15 - 16 - 21 - 22 - 71 - 539 - CVE_A1_E|90_G_1
-217,npc_work_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 993
-218,produce,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1
-219,plant_manage_crop,15 - 16 - 21 - 22 - 71 - CVE_A1_E|89_G_1
-221,deal_with_diplomacy,11 - 12 - 21 - 22 - 71 - CVE_A1_E|80_G_1 - CVE_A1_E|82_G_1
-222,train_prisoner,1511 - 1514 - 81 - 82 - 86 - 535
-223,manage_facility_power,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1
-224,investigate_resource_market,13 - 14 - 21 - 22 - 71 - CVE_A1_E|80_G_1
-225,perform_surgery,1515 - 1516 - 71 - CVE_A1_E|88_G_5 - 541
-226,ward_round,13 - 14 - 21 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 542
-227,organize_dormitory_opinion,11 - 12 - 21 - 22 - 374 - CVE_A2_E|82_G_1
+216,repair_equipment,15 - 16 - 21 - 22 - 71 - 539 - CVE_A1_E|90_G_1 - 1751
+217,npc_work_cook,13 - 14 - 81 - CVE_A1_E|83_G_1 - 993 - 1751
+218,produce,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1 - 1751
+219,plant_manage_crop,15 - 16 - 21 - 22 - 71 - CVE_A1_E|89_G_1 - 1751
+221,deal_with_diplomacy,11 - 12 - 21 - 22 - 71 - CVE_A1_E|80_G_1 - CVE_A1_E|82_G_1 - 1751
+222,train_prisoner,1511 - 1514 - 81 - 82 - 86 - 535 - 1751
+223,manage_facility_power,13 - 14 - 21 - 22 - 71 - CVE_A1_E|90_G_1 - 1751
+224,investigate_resource_market,13 - 14 - 21 - 22 - 71 - CVE_A1_E|80_G_1 - 1751
+225,perform_surgery,1515 - 1516 - 71 - CVE_A1_E|88_G_5 - 541 - 1751
+226,ward_round,13 - 14 - 21 - 22 - 71 - CVE_A2_E|88_G_1 - CVE_A1_E|88_G_1 - 542 - 1751
+227,organize_dormitory_opinion,11 - 12 - 21 - 22 - 374 - CVE_A2_E|82_G_1 - 1751
 228,handle_dormitory_problem,13 - 14 - 21 - 22 - 373 - CVE_A2_E|82_G_1
 
 251,morning_salutation_1,11 - 12 - 21 - 22
