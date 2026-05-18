@@ -1741,6 +1741,10 @@ class Cache:
         """ 禁止出现的干员id集合 """
         self.input_cache: List[str] = []
         """ 玩家指令输入记录（最大20）"""
+        self.input_cache_draft: str = ""
+        """ 玩家正在编辑但尚未发送的输入草稿 """
+        self.input_cache_browsing: bool = False
+        """ 玩家是否正在浏览输入历史 """
         self.daily_intsruce: List[str] = []
         """ 每日指令输入记录 """
         self.pl_pre_behavior_instruce: List[str] = []

@@ -380,6 +380,8 @@ def send_input(*args):
         if not (order) == "":
             cache.input_cache.append(order)
             cache.input_position = 0
+    cache.input_cache_draft = ""
+    cache.input_cache_browsing = False
     input_event_func(order)
     clear_order()
 
