@@ -632,6 +632,9 @@ function showInstructMenu(instructs, partName) {
         btn.textContent = instruct.name;
         btn.onclick = (e) => {
             e.stopPropagation();
+            if (typeof window.recordPersistentInputCommand === 'function') {
+                window.recordPersistentInputCommand(instruct.name || instruct.id);
+            }
             if (socket && socket.connected) {
                 socket.emit('execute_instruct', { instruct_id: instruct.id });
             }

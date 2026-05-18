@@ -962,6 +962,8 @@ function renderFloatingInstructButtons(instructs) {
     instructs.forEach(instruct => {
          const card = document.createElement('div');
          card.className = 'interaction-card minor-card floating-instruct';
+            card.dataset.instructId = instruct.id;
+            card.dataset.instructName = instruct.name;
          // Requirement 3: No English name for floating buttons
          card.innerHTML = `
             <span class="name-cn">${instruct.name}</span>
@@ -970,7 +972,7 @@ function renderFloatingInstructButtons(instructs) {
              e.stopPropagation();
              // Highlight this action card briefly?
              // Execute
-             executeInstruct(instruct.id);
+             executeInstruct(instruct.id, instruct.name);
          };
          container.appendChild(card);
     });
@@ -1154,8 +1156,14 @@ function handleMainSceneClick(e) {
  * 执行指令
  * @param {string} instructId - 指令ID
  */
-function executeInstruct(instructId) {
-    console.log('[DEBUG] executeInstruct called, instructId:', instructId);
+function executeInstruct(instructId, instructName = '') {
+    console.log('[DEBUG] executeInstruct called, instructId:', instructId, 'instructName:', instructName);
+
+    // 将真实触发名写入持久输入历史，确保上键可回溯刚执行的指令
+    if (typeof window.recordPersistentInputCommand === 'function') {
+        window.recordPersistentInputCommand(instructName || instructId);
+    }
+
     if (window.socket && window.socket.connected) {
         window.socket.emit('execute_instruct', { instruct_id: instructId });
     } else {

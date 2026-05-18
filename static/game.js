@@ -2426,6 +2426,21 @@ function getImagePath(imageName) {
  * @param {string} buttonId - 按钮ID
  */
 function handleButtonClick(buttonId) {
+    // 记录按钮触发到输入历史，确保“点击指令后可用上键回溯触发名”
+    if (typeof recordPersistentInputCommand === 'function') {
+        let triggerName = '';
+        const buttons = document.querySelectorAll('.game-button[data-id]');
+        for (const button of buttons) {
+            if ((button.dataset.id || '').trim() === (buttonId || '').trim()) {
+                triggerName = normalizePersistentInputCommand(button.textContent || '');
+                break;
+            }
+        }
+
+        // 优先记录按钮显示名（触发名），找不到时回退为按钮ID
+        recordPersistentInputCommand(triggerName || buttonId);
+    }
+
     // 发送按钮点击事件到服务器
     fetch('/api/button_click', {
         method: 'POST',
@@ -2762,12 +2777,53 @@ function handlePersistentInputSubmit() {
         return; // 如果输入为空，则不执行任何操作
     }
 
+    // 规范化输入，兼容用户输入中的多余空白
+    const normalizedInput = typeof normalizePersistentInputCommand === 'function' ? normalizePersistentInputCommand(inputValue) : inputValue;
+
     // 1. 尝试匹配按钮
     const buttons = document.querySelectorAll('.game-button[data-id]');
     for (const button of buttons) {
-        if (button.dataset.id === inputValue) {
-            console.log(`Input '${inputValue}' matches button with data-id. Simulating click.`);
-            handleButtonClick(inputValue);
+        const buttonId = (button.dataset.id || '').trim();
+        const buttonText = typeof normalizePersistentInputCommand === 'function' ? normalizePersistentInputCommand(button.textContent || '') : (button.textContent || '').trim();
+
+        // 兼容两种触发方式：输入按钮ID 或 输入按钮显示名（触发名）
+        const matchedById = typeof matchesPersistentInputCommand === 'function' ? matchesPersistentInputCommand(buttonId, normalizedInput) : buttonId === normalizedInput;
+        const matchedByText = typeof matchesPersistentInputCommand === 'function' ? matchesPersistentInputCommand(buttonText, normalizedInput) : buttonText === normalizedInput;
+
+        if (matchedById || matchedByText) {
+            console.log(`Input '${inputValue}' matches button '${buttonText}' (id: '${buttonId}'). Simulating click.`);
+            handleButtonClick(buttonId);
+            persistentInput.value = ''; // 清空输入框
+            return;
+        }
+    }
+
+    // 1.1 尝试匹配新UI浮动指令卡片
+    const floatingInstructCards = document.querySelectorAll('.floating-instruct[data-instruct-id]');
+    for (const card of floatingInstructCards) {
+        const instructId = (card.dataset.instructId || '').trim();
+        const instructName = typeof normalizePersistentInputCommand === 'function' ? normalizePersistentInputCommand(card.dataset.instructName || card.textContent || '') : (card.dataset.instructName || card.textContent || '').trim();
+
+        const matchedByInstructId = typeof matchesPersistentInputCommand === 'function' ? matchesPersistentInputCommand(instructId, normalizedInput) : instructId === normalizedInput;
+        const matchedByInstructName = typeof matchesPersistentInputCommand === 'function' ? matchesPersistentInputCommand(instructName, normalizedInput) : instructName === normalizedInput;
+
+        if (matchedByInstructId || matchedByInstructName) {
+            console.log(`Input '${inputValue}' matches floating instruct '${instructName}' (id: '${instructId}'). Executing instruct.`);
+            if (typeof window.executeInstruct === 'function') {
+                window.executeInstruct(instructId, instructName);
+                persistentInput.value = ''; // 清空输入框
+                return;
+            }
+        }
+    }
+
+    // 1.2 尝试匹配身体部位弹出菜单中的指令按钮
+    const instructMenuButtons = document.querySelectorAll('.instruct-menu-btn');
+    for (const button of instructMenuButtons) {
+        const instructName = typeof normalizePersistentInputCommand === 'function' ? normalizePersistentInputCommand(button.textContent || '') : (button.textContent || '').trim();
+        if (typeof matchesPersistentInputCommand === 'function' ? matchesPersistentInputCommand(instructName, normalizedInput) : instructName === normalizedInput) {
+            console.log(`Input '${inputValue}' matches instruct menu button '${instructName}'. Simulating click.`);
+            button.click();
             persistentInput.value = ''; // 清空输入框
             return;
         }
@@ -2776,6 +2832,9 @@ function handlePersistentInputSubmit() {
     // 2. 如果没有按钮匹配，并且存在活动的通用输入请求
     if (activeInputRequest) {
         console.log(`Input '${inputValue}' submitted for activeInputRequest type: ${activeInputRequest.type}`);
+        if (typeof recordPersistentInputCommand === 'function') {
+            recordPersistentInputCommand(inputValue);
+        }
         sendInputToServer(activeInputRequest.type, inputValue);
         persistentInput.value = ''; // 清空输入框
         return;
