@@ -4170,6 +4170,7 @@ def handle_self_h_state_reset(
     """
     if not add_time:
         return
+    from Script.System.Sex_System import group_sex_panel
     character_data: game_type.Character = cache.character_data[character_id]
     # H状态数据归零
     character_data.h_state = attr_calculation.get_h_state_reset(character_data.h_state)
@@ -4183,6 +4184,8 @@ def handle_self_h_state_reset(
     handle_premise.settle_chara_unnormal_flag(character_id, 1)
     # 清零前往群交
     character_data.sp_flag.go_to_join_group_sex = False
+    # 清零自己在群交模板中的数据
+    group_sex_panel.clear_character_data_in_group_sex_template(character_id)
     # 清零隐奸模式
     character_data.sp_flag.hidden_sex_mode = 0
     # 清零露出模式

@@ -269,6 +269,45 @@ def get_now_template_part_list():
 
     return now_template_empty_part_list, now_template_not_empty_part_list
 
+
+def clear_character_data_in_group_sex_template(character_id: int) -> bool:
+    """
+    清除角色在玩家当前群交模板中的数据（A与B）
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    bool -- 是否找到并重置过该角色数据
+    """
+
+    pl_character_data: game_type.Character = cache.character_data[0]
+    group_sex_body_template_dict = pl_character_data.h_state.group_sex_body_template_dict
+    found_flag = False
+
+    for template_key in ["A", "B"]:
+        if template_key not in group_sex_body_template_dict:
+            continue
+
+        now_template_data = group_sex_body_template_dict[template_key]
+
+        # 对单部位
+        for body_part in now_template_data[0]:
+            if now_template_data[0][body_part][0] == character_id:
+                now_template_data[0][body_part] = [-1, -1]
+                found_flag = True
+
+        # 对多部位（侍奉）
+        target_chara_id_list = now_template_data[1][0]
+        if character_id in target_chara_id_list:
+            # 将该角色id从列表中移除
+            target_chara_id_list.remove(character_id)
+            # 如果移除后列表为空，则重置状态id
+            if not target_chara_id_list:
+                now_template_data[1] = [[-1], -1]
+            found_flag = True
+
+    return found_flag
+
+
 class SeeGroupSexInfoPanel:
     """
     显示群交栏数据面板对象
