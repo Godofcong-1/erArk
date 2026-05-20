@@ -100,6 +100,8 @@ def init_character(character_id: int, character_tem: game_type.NpcTem, collect_r
         now_character.text_color = character_tem.TextColor
     # 赋予口上大小
     now_character.talk_size = character_tem.Talk_Size
+    # 口上版本
+    cache.all_system_setting.character_text_version[character_id] = 1
     # 最后集成
     cache.character_data[character_id] = now_character
     character.init_attr(character_id)

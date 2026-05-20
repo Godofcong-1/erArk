@@ -440,7 +440,6 @@ def update_map(loaded_dict):
         now_draw.text = draw_text
         now_draw.draw()
 
-
     return update_count
 
 def update_settings(loaded_dict):
@@ -486,6 +485,11 @@ def update_settings(loaded_dict):
         now_difficulty.draw()
     # 角色口上选择设置
     character_text_version = zero_system_setting.character_text_version
+    # 获取玩家的女儿角色列表
+    daughter_characters = loaded_dict["character_data"][0].relationship.child_id_list
+    for daughter_cid in daughter_characters:
+        if daughter_cid not in character_text_version:
+            character_text_version[daughter_cid] = 1
     if len(loaded_dict["all_system_setting"].character_text_version) != len(character_text_version):
         for key in character_text_version:
             if key not in loaded_dict["all_system_setting"].character_text_version:
