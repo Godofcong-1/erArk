@@ -112,6 +112,7 @@ class SeeCharacterItemBagPanel:
         item_list_H_Drug = []
         item_list_H_Machine = []
         item_list_SM = []
+        item_list_Key = []
         self.item_list = [i for i in game_config.config_item]
         for item_id in self.item_list:
             if self.character_data.item[item_id] >= 1:
@@ -127,12 +128,15 @@ class SeeCharacterItemBagPanel:
                     item_list_H_Machine.append(item_id)
                 elif game_config.config_item[item_id].type == "SM":
                     item_list_SM.append(item_id)
+                elif game_config.config_item[item_id].type == "Key":
+                    item_list_Key.append(item_id)
         self.item_list_all.append(item_list_Drug)
         self.item_list_all.append(item_list_Machine)
         self.item_list_all.append(item_list_Consumables)
         self.item_list_all.append(item_list_H_Drug)
         self.item_list_all.append(item_list_H_Machine)
         self.item_list_all.append(item_list_SM)
+        self.item_list_all.append(item_list_Key)
 
         item_panel = panel.PageHandlePanel([], ItemNameDraw, 50, 2, width, True, True, 0)
         self.handle_panel = item_panel
@@ -141,7 +145,7 @@ class SeeCharacterItemBagPanel:
     def draw(self):
         """绘制对象"""
         title_draw = draw.TitleLineDraw(_("人物道具"), self.width)
-        item_list_type = [_("药品"), _("机器"), _("消耗品"), _("H药品"), _("H用机器"), _("SM器具")]
+        item_list_type = [_("药品"), _("机器"), _("消耗品"), _("H药品"), _("H用机器"), _("SM器具"), _("钥匙")]
         while 1:
             title_draw.draw()
             # 绘制粉红凭证
