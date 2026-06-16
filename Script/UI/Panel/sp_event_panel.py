@@ -46,8 +46,8 @@ class Born_Panel:
         self.draw_list: List[draw.NormalDraw] = []
         """ 绘制的文本列表 """
 
-    def draw(self):
-        """绘制对象"""
+    def _draw_born_event_content(self) -> None:
+        """生育事件主逻辑绘制。"""
         from Script.Design import second_behavior
 
         pl_character_data: game_type.Character = cache.character_data[0]
@@ -69,7 +69,7 @@ class Born_Panel:
             doctor_id = dr_k_id
         # 如果还是没有的话，则随机选取任何一位干员来接生
         if doctor_id == 0:
-            doctor_id = random.choice(cache.npc_id_got)
+            doctor_id = random.choice(list(cache.npc_id_got))
         doctor_character_data: game_type.Character = cache.character_data[doctor_id]
 
         # 最外层的大循环
@@ -89,7 +89,7 @@ class Born_Panel:
                 info_draw.draw()
                 line_feed.draw()
                 button_text = _(" 焦急等待")
-                button_draw = draw.LeftButton( _(button_text), _("\n"), self.width)
+                button_draw = draw.LeftButton(_(button_text), _("\n"), self.width)
                 button_draw.draw()
                 return_list.append(button_draw.return_text)
                 yrn = flow_handle.askfor_all(return_list)
@@ -154,4 +154,19 @@ class Born_Panel:
                 achievement_panel.achievement_flow(_("生育"), 707)
 
             break
+
+    def draw(self):
+        """绘制对象"""
+        from Script.System.Web_Draw_System import (
+            BORN_EVENT_PANEL_TAB_ID,
+            cleanup_managed_sub_panel_mode,
+            enter_managed_sub_panel_mode_by_type,
+        )
+
+        sub_panel_context = enter_managed_sub_panel_mode_by_type(BORN_EVENT_PANEL_TAB_ID)
+        try:
+            self._draw_born_event_content()
+        finally:
+            # 无论正常退出还是抛出异常，都要清理当前方法进入的子面板
+            cleanup_managed_sub_panel_mode(sub_panel_context)
 

@@ -127,7 +127,8 @@ def append_current_draw_element(element: Dict[str, Any], record_history: bool = 
 
     返回值类型：无
     功能描述：统一处理绘制元素的追加和历史维护
-    在行为循环期间，文本类元素会被记录到其他文本列表中，同时不再推送到前端显示
+    在行为循环期间，文本类元素会被记录到其他文本列表中。
+    但在子面板模式下，文本仍需正常显示，避免子面板交互提示丢失。
     """
     _ensure_current_draw_list()
     # 如果文本为空，则直接返回
@@ -146,8 +147,10 @@ def append_current_draw_element(element: Dict[str, Any], record_history: bool = 
                 cache.web_other_texts.append(string)
                 # 实时推送文本到前端
                 emit_realtime_text(string, "other")
-            # 已记录的文本（包括空白和换行符）不再推送到前端显示
-            return
+            # 仅在非子面板模式下隐藏已记录文本；
+            # 子面板交互过程中的提示文本必须继续显示。
+            if not getattr(cache, 'web_sub_panel_mode', False):
+                return
     cache.current_draw_elements.append(element)
     elem_type = element.get("type")
     if elem_type in {"line_wait", "wait"}:

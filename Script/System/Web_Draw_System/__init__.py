@@ -31,8 +31,12 @@ from Script.System.Web_Draw_System.status_panel import StatusPanel
 from Script.System.Web_Draw_System.tab_menu import (
     TabMenu,
     MAIN_PANEL_TAB_ID,
+    SEX_POSITION_PANEL_TAB_ID,
+    BORN_EVENT_PANEL_TAB_ID,
     enter_sub_panel_mode,
+    enter_managed_sub_panel_mode_by_type,
     exit_sub_panel_mode,
+    cleanup_managed_sub_panel_mode,
     is_in_sub_panel_mode,
 )
 from Script.System.Web_Draw_System.body_part_button import BodyPartButton

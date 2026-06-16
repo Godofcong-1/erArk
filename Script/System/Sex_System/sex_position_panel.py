@@ -39,21 +39,8 @@ class Sex_Position_Panel:
         self.change_position = change_position
         """ 是否为切换体位 """
 
-    def draw(self) -> None:
-        """绘制面板"""
-
-        # Web模式下进入子面板模式，确保面板内容渲染在固定头部下方的内容区域，
-        # 而不是直接附加到主界面的下方
-        web_sub_panel_entered = False
-        if getattr(cache, 'web_mode', False):
-            from Script.System.Web_Draw_System import enter_sub_panel_mode, is_in_sub_panel_mode
-            from Script.Core import io_init
-            if not is_in_sub_panel_mode():
-                # 清空当前绘制元素和历史，避免主面板内容残留
-                io_init.clear_screen_and_history()
-                enter_sub_panel_mode("sex_position_panel", _("性交体位"))
-                web_sub_panel_entered = True
-
+    def _draw_panel_content(self) -> None:
+        """性交姿势面板主逻辑绘制。"""
         title_draw = draw.TitleLineDraw(_("性交体位"), self.width)
         # 获取当前角色数据
         character_data: game_type.Character = cache.character_data[0]
@@ -65,101 +52,110 @@ class Sex_Position_Panel:
         now_scene_str = map_handle.get_map_system_path_str_for_list(now_position)
         now_scene_furniture = cache.scene_data[now_scene_str].have_furniture
 
+        while 1:
+            return_list = []
+            title_draw.draw()
+
+            line_feed.draw()
+
+            # 遍历性交体位数据
+            for sex_position_id in game_config.config_sex_position_data:
+                # 跳过无
+                if sex_position_id <= 0:
+                    continue
+                sex_position_data = game_config.config_sex_position_data[sex_position_id]
+                sex_position_id_text = str(sex_position_id).rjust(2,'0')
+                sex_position_name = attr_calculation.pad_display_width(sex_position_data.name, 10)
+                sex_position_furniture_req = sex_position_data.furniture_req
+                sex_position_skill_req = sex_position_data.skill_req
+                sex_position_stamina_cost = sex_position_data.stamina_cost
+                # 绘制文本
+                sex_position_text = f"[{sex_position_id_text}]{sex_position_name}："
+                # 用于判断是否可以选择该体位
+                cant_flag = False
+
+                # 已选判定
+                if sex_position_id == now_sex_position_id:
+                    sex_position_text += _("(当前体位)")
+                    cant_flag = True
+
+                # 显示体力消耗程度
+                if sex_position_stamina_cost == 1:
+                    sex_position_text += _("(体力消耗小)")
+                elif sex_position_stamina_cost == 2:
+                    sex_position_text += _("(体力消耗中)")
+                elif sex_position_stamina_cost == 3:
+                    sex_position_text += _("(体力消耗大)")
+
+                # 地点判定
+                if sex_position_furniture_req > now_scene_furniture:
+                    if sex_position_furniture_req == 1:
+                        sex_position_text += _("(需要房间内有桌椅等级的家具)")
+                    elif sex_position_furniture_req == 3:
+                        sex_position_text += _("(需要房间内有床铺等级的家具)")
+                    cant_flag = True
+
+                # 技巧判定
+                if sex_position_skill_req > pl_tec_lv:
+                    sex_position_text += _("(需要博士腰技至少为{0}级)").format(sex_position_skill_req)
+                    cant_flag = True
+
+                # 体位说明
+                sex_position_text += sex_position_data.info
+
+                # 当前的体位不可选择
+                if sex_position_id == now_sex_position_id:
+                    text_draw = draw.NormalDraw()
+                    text_draw.text = sex_position_text
+                    text_draw.style = 'gold_enrod'
+                    text_draw.draw()
+                # 如果不能施展则不显示按钮，仅打印灰色文本
+                elif cant_flag:
+                    text_draw = draw.NormalDraw()
+                    text_draw.text = sex_position_text
+                    text_draw.style = 'deep_gray'
+                    text_draw.draw()
+                # 如果可以施展则显示按钮
+                else:
+                    button_draw = draw.LeftButton(
+                        _(sex_position_text),
+                        _(str(sex_position_id)),
+                        self.width,
+                        cmd_func=self.select_sex_position,
+                        args=(sex_position_id,),
+                        )
+                    return_list.append(button_draw.return_text)
+                    button_draw.draw()
+                line_feed.draw()
+
+            line_feed.draw()
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            line_feed.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                cache.now_panel_id = constant.Panel.IN_SCENE
+                break
+
+    def draw(self) -> None:
+        """绘制面板"""
+
+        # Web模式下进入子面板模式，确保面板内容渲染在固定头部下方的内容区域，
+        # 而不是直接附加到主界面的下方
+        from Script.System.Web_Draw_System import (
+            SEX_POSITION_PANEL_TAB_ID,
+            cleanup_managed_sub_panel_mode,
+            enter_managed_sub_panel_mode_by_type,
+        )
+
+        sub_panel_context = enter_managed_sub_panel_mode_by_type(SEX_POSITION_PANEL_TAB_ID)
         try:
-            while 1:
-                return_list = []
-                title_draw.draw()
-
-                line_feed.draw()
-
-                # 遍历性交体位数据
-                for sex_position_id in game_config.config_sex_position_data:
-                    # 跳过无
-                    if sex_position_id <= 0:
-                        continue
-                    sex_position_data = game_config.config_sex_position_data[sex_position_id]
-                    sex_position_id_text = str(sex_position_id).rjust(2,'0')
-                    sex_position_name = attr_calculation.pad_display_width(sex_position_data.name, 10)
-                    sex_position_furniture_req = sex_position_data.furniture_req
-                    sex_position_skill_req = sex_position_data.skill_req
-                    sex_position_stamina_cost = sex_position_data.stamina_cost
-                    # 绘制文本
-                    sex_position_text = f"[{sex_position_id_text}]{sex_position_name}："
-                    # 用于判断是否可以选择该体位
-                    cant_flag = False
-
-                    # 已选判定
-                    if sex_position_id == now_sex_position_id:
-                        sex_position_text += _("(当前体位)")
-                        cant_flag = True
-
-                    # 显示体力消耗程度
-                    if sex_position_stamina_cost == 1:
-                        sex_position_text += _("(体力消耗小)")
-                    elif sex_position_stamina_cost == 2:
-                        sex_position_text += _("(体力消耗中)")
-                    elif sex_position_stamina_cost == 3:
-                        sex_position_text += _("(体力消耗大)")
-
-                    # 地点判定
-                    if sex_position_furniture_req > now_scene_furniture:
-                        if sex_position_furniture_req == 1:
-                            sex_position_text += _("(需要房间内有桌椅等级的家具)")
-                        elif sex_position_furniture_req == 3:
-                            sex_position_text += _("(需要房间内有床铺等级的家具)")
-                        cant_flag = True
-
-                    # 技巧判定
-                    if sex_position_skill_req > pl_tec_lv:
-                        sex_position_text += _("(需要博士腰技至少为{0}级)").format(sex_position_skill_req)
-                        cant_flag = True
-
-                    # 体位说明
-                    sex_position_text += sex_position_data.info
-
-                    # 当前的体位不可选择
-                    if sex_position_id == now_sex_position_id:
-                        text_draw = draw.NormalDraw()
-                        text_draw.text = sex_position_text
-                        text_draw.style = 'gold_enrod'
-                        text_draw.draw()
-                    # 如果不能施展则不显示按钮，仅打印灰色文本
-                    elif cant_flag:
-                        text_draw = draw.NormalDraw()
-                        text_draw.text = sex_position_text
-                        text_draw.style = 'deep_gray'
-                        text_draw.draw()
-                    # 如果可以施展则显示按钮
-                    else:
-                        button_draw = draw.LeftButton(
-                            _(sex_position_text),
-                            _(str(sex_position_id)),
-                            self.width,
-                            cmd_func=self.select_sex_position,
-                            args=(sex_position_id,),
-                            )
-                        return_list.append(button_draw.return_text)
-                        button_draw.draw()
-                    line_feed.draw()
-
-                line_feed.draw()
-                line_feed.draw()
-                back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
-                back_draw.draw()
-                line_feed.draw()
-                return_list.append(back_draw.return_text)
-                yrn = flow_handle.askfor_all(return_list)
-                if yrn in return_list:
-                    cache.now_panel_id = constant.Panel.IN_SCENE
-                    break
+            self._draw_panel_content()
         finally:
-            # 退出子面板模式（仅当本次进入时退出，避免误关由调用方维护的子面板状态）
-            if web_sub_panel_entered:
-                from Script.System.Web_Draw_System import exit_sub_panel_mode
-                from Script.Core import io_init
-                exit_sub_panel_mode()
-                # 清空子面板内容，避免残留到主面板
-                io_init.clear_screen_and_history()
+            # 无论正常退出还是抛出异常，都要清理当前方法进入的子面板
+            cleanup_managed_sub_panel_mode(sub_panel_context)
 
     def select_sex_position(self, sex_position_id):
         """结算选择的性交体位"""

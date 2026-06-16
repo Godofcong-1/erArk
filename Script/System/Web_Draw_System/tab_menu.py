@@ -26,6 +26,17 @@ cache: game_type.Cache = cache_control.cache
 MAIN_PANEL_TAB_ID = "__main_panel__"
 MAIN_PANEL_TAB_NAME = "主面板"
 
+# 子面板统一标识
+SEX_POSITION_PANEL_TAB_ID = "sex_position_panel"
+SEX_POSITION_PANEL_TAB_NAME = "性交体位"
+BORN_EVENT_PANEL_TAB_ID = "born_event_panel"
+BORN_EVENT_PANEL_TAB_NAME = "生育事件"
+
+SUB_PANEL_TAB_NAME_MAP = {
+    SEX_POSITION_PANEL_TAB_ID: SEX_POSITION_PANEL_TAB_NAME,
+    BORN_EVENT_PANEL_TAB_ID: BORN_EVENT_PANEL_TAB_NAME,
+}
+
 
 def filter_instructs_by_premise(instruct_ids: Union[List, Set]) -> List[str]:
     """
@@ -275,7 +286,57 @@ def enter_sub_panel_mode(panel_id: str, panel_name: str = ""):
     """
     cache.web_sub_panel_mode = True
     cache.web_sub_panel_id = panel_id
-    cache.web_sub_panel_name = panel_name or panel_id
+    cache.web_sub_panel_name = panel_name or SUB_PANEL_TAB_NAME_MAP.get(panel_id, panel_id)
+
+
+def enter_managed_sub_panel_mode(panel_id: str, panel_name: str = "") -> Dict[str, Any]:
+    """
+    以受管方式进入子面板模式
+
+    功能：
+    - 仅在Web模式下生效
+    - 支持在已有子面板中切换到新的子面板
+    - 返回进入前的上下文，用于退出时恢复原子面板
+    - 进入前清空屏幕与历史，避免内容残留
+
+    Keyword arguments:
+    panel_id -- 子面板ID
+    panel_name -- 子面板名称
+
+    Returns:
+    Dict[str, Any] -- 进入上下文，供 cleanup_managed_sub_panel_mode 恢复状态
+    """
+    context = {
+        "entered": False,
+        "prev_mode": bool(getattr(cache, "web_sub_panel_mode", False)),
+        "prev_id": getattr(cache, "web_sub_panel_id", None),
+        "prev_name": getattr(cache, "web_sub_panel_name", ""),
+    }
+    if not getattr(cache, "web_mode", False):
+        return context
+    from Script.Core import io_init
+    io_init.clear_screen_and_history()
+    enter_sub_panel_mode(panel_id, panel_name)
+    context["entered"] = True
+    return context
+
+
+def enter_managed_sub_panel_mode_by_type(sub_panel_type: str) -> Dict[str, Any]:
+    """
+    按子面板类型进入受管子面板模式
+
+    功能：
+    - 调用方只需传入子面板类型（通常就是预定义的子面板ID常量）
+    - 自动从统一注册表解析 panel_name，避免各调用点重复传 panel_id/panel_name
+
+    Keyword arguments:
+    sub_panel_type -- 子面板类型标识
+
+    Returns:
+    Dict[str, Any] -- 进入上下文，供 cleanup_managed_sub_panel_mode 恢复状态
+    """
+    panel_name = SUB_PANEL_TAB_NAME_MAP.get(sub_panel_type, sub_panel_type)
+    return enter_managed_sub_panel_mode(sub_panel_type, panel_name)
 
 
 def exit_sub_panel_mode():
@@ -287,6 +348,46 @@ def exit_sub_panel_mode():
     cache.web_sub_panel_mode = False
     cache.web_sub_panel_id = None
     cache.web_sub_panel_name = ""
+
+
+def cleanup_managed_sub_panel_mode(sub_panel_context: Any) -> None:
+    """
+    清理受管子面板模式
+
+    功能：
+    - 支持恢复进入前的子面板上下文（用于嵌套子面板）
+    - 若无上层子面板则退出到非子面板模式
+    - 清空屏幕与历史，避免残留
+
+    Keyword arguments:
+    sub_panel_context -- enter_managed_sub_panel_mode 返回的上下文（兼容旧bool参数）
+    """
+    # 向后兼容旧调用：传入bool时保持原行为
+    if isinstance(sub_panel_context, bool):
+        if not sub_panel_context:
+            return
+        from Script.Core import io_init
+        exit_sub_panel_mode()
+        io_init.clear_screen_and_history()
+        return
+
+    if not isinstance(sub_panel_context, dict):
+        return
+    if not sub_panel_context.get("entered", False):
+        return
+
+    from Script.Core import io_init
+    prev_mode = bool(sub_panel_context.get("prev_mode", False))
+    prev_id = sub_panel_context.get("prev_id", None)
+    prev_name = sub_panel_context.get("prev_name", "")
+
+    if prev_mode:
+        cache.web_sub_panel_mode = True
+        cache.web_sub_panel_id = prev_id
+        cache.web_sub_panel_name = prev_name
+    else:
+        exit_sub_panel_mode()
+    io_init.clear_screen_and_history()
 
 
 def is_in_sub_panel_mode() -> bool:

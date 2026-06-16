@@ -668,7 +668,12 @@ function initWebSocket() {
     socket.on('settlement_status', (data) => {
         console.log('收到结算状态更新:', data);
         if (data.is_settling) {
-            showSettlementOverlay();
+            if (shouldSuppressSettlementOverlay()) {
+                hideSettlementOverlay();
+                console.log('[结算提示] 检测到输入请求，跳过显示结算遮罩');
+            } else {
+                showSettlementOverlay();
+            }
         } else {
             hideSettlementOverlay();
         }
@@ -709,6 +714,16 @@ function initWebSocket() {
             hideSettlementButtonsModal();
         }
     });
+}
+
+/**
+ * 当前是否应抑制结算遮罩
+ * 当存在通用输入请求（如取名）时，不显示结算遮罩，避免遮挡引导文本与输入操作。
+ *
+ * @returns {boolean} 是否应抑制结算遮罩
+ */
+function shouldSuppressSettlementOverlay() {
+    return !!(activeInputRequest && (activeInputRequest.type === 'string' || activeInputRequest.type === 'integer'));
 }
 
 /**
@@ -1334,6 +1349,10 @@ function renderGameState(state) {
     // 更新全局状态和活动输入请求
     currentGlobalState = state;
     activeInputRequest = state.input_request || null;
+    // 处于文本输入阶段时强制隐藏结算遮罩，确保引导信息与输入框可见。
+    if (shouldSuppressSettlementOverlay()) {
+        hideSettlementOverlay();
+    }
     
     // 调试日志：打印接收到的完整状态和 input_request
     console.log('Received state:', JSON.stringify(state, null, 2));
