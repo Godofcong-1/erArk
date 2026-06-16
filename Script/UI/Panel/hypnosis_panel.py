@@ -238,12 +238,15 @@ class Chose_Hypnosis_Type_Panel:
                 draw_text = f"  [{hypnosis_type_data.name}]"
                 draw_text += _("(需要[{0}]，且催眠深度达到{1}%)").format(game_config.config_talent[hypnosis_type_data.talent_id].name, hypnosis_type_data.hypnosis_degree)
                 draw_text += f"：{hypnosis_type_data.introduce}"
-                # 已解锁则绘制按钮，需要已有该能力，且当前没有对象，或有对象且该对象催眠深度达到要求
+                # 已解锁则绘制按钮，需要已有该能力，且当前交互对象是自己，或有交互对象且该对象催眠深度达到要求且交互对象不在临盆产后中
                 if (
                     pl_character_data.talent[hypnosis_type_data.talent_id] 
                     and (
                         pl_character_data.target_character_id == 0 or 
-                         (pl_character_data.target_character_id > 0 and target_character_data.hypnosis.hypnosis_degree >= hypnosis_type_data.hypnosis_degree)
+                         (pl_character_data.target_character_id > 0 and
+                          target_character_data.hypnosis.hypnosis_degree >= hypnosis_type_data.hypnosis_degree and 
+                            not handle_premise.handle_self_parturient_or_postpartum(pl_character_data.target_character_id)
+                          )
                          )
                     ):
                     button_draw = draw.LeftButton(
