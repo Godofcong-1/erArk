@@ -6094,6 +6094,33 @@ def handle_cure_patient_add_just(
     now_draw.draw()
 
 
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PERFORM_SURGERY)
+def handle_perform_surgery(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """执行手术治疗并根据结果输出提示"""
+    from Script.System.Medical_System import medical_service
+
+    if not add_time:
+        return
+
+    doctor_data: game_type.Character = cache.character_data[character_id]
+    if doctor_data.dead:
+        return
+
+    # 获取病人id
+    patient_id = int(getattr(doctor_data.work, "surgery_patient_id", 0) or 0)
+
+    # 执行手术
+    medical_service.attempt_surgery(patient_id, doctor_data, target_base=cache.rhodes_island)
+
+    # 获取大量习得
+    base_chara_state_common_settle(character_id, add_time, 9, ability_level = doctor_data.ability[46], extra_adjust = 3, change_data = change_data)
+
+
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.WARD_ROUND_PROCESS)
 def handle_ward_round_process(
         character_id: int,
@@ -6110,11 +6137,6 @@ def handle_ward_round_process(
     doctor_data: game_type.Character = cache.character_data[character_id]
     if doctor_data.dead:
         return
-
-    # medical_service.prepare_doctor_medical_behavior(
-    #     doctor_data,
-    #     getattr(doctor_data.behavior, "behavior_id", None),
-    # )
 
     outcome = medical_service.conduct_ward_round(doctor_data)
 
@@ -6182,32 +6204,33 @@ def handle_ward_round_process(
 
     draw_text.draw()
 
-
-@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.PERFORM_SURGERY)
-def handle_perform_surgery(
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.ASK_COPY_KEY)
+def handle_ask_copy_key(
         character_id: int,
         add_time: int,
         change_data: game_type.CharacterStatusChange,
         now_time: datetime.datetime,
 ):
-    """执行手术治疗并根据结果输出提示"""
-    from Script.System.Medical_System import medical_service
-
+    """
+    （要求复制钥匙用）获取交互对象的所在楼层的钥匙
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
     if not add_time:
         return
-
-    doctor_data: game_type.Character = cache.character_data[character_id]
-    if doctor_data.dead:
-        return
-
-    # 获取病人id
-    patient_id = int(getattr(doctor_data.work, "surgery_patient_id", 0) or 0)
-
-    # 执行手术
-    medical_service.attempt_surgery(patient_id, doctor_data, target_base=cache.rhodes_island)
-
-    # 获取大量习得
-    base_chara_state_common_settle(character_id, add_time, 9, ability_level = doctor_data.ability[46], extra_adjust = 3, change_data = change_data)
+    from Script.System.Dormitory_System import dormitory_manager_system
+    key_item_id = dormitory_manager_system.ask_copy_key(character_id)
+    now_draw = draw.NormalDraw()
+    now_draw.width = width
+    if key_item_id:
+        key_name = game_config.config_item[key_item_id].name
+        now_draw.text = _("\n获得了：【{0}】\n").format(key_name)
+    else:
+        now_draw.text = _("\n获得钥匙失败\n")
+    now_draw.draw()
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.RECRUIT_ADD_ADJUST)

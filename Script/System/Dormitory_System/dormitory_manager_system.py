@@ -3,7 +3,7 @@ import random
 from types import FunctionType
 
 from Script.Core import cache_control, game_type, get_text, constant
-from Script.Design import handle_state_machine, map_handle
+from Script.Design import handle_state_machine, map_handle, handle_premise
 from Script.System.Dormitory_System import common
 
 cache: game_type.Cache = cache_control.cache
@@ -227,3 +227,25 @@ def dormitory_admin_handle_problem(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_HANDLE_DORMITORY_PROBLEM
     # 清零目标宿舍，进入返回舍管房阶段
     _set_target_room(character_id, "")
+
+def ask_copy_key(character_id: int):
+    """
+    （要求复制钥匙用）获取交互对象的所在楼层的钥匙
+    输入类型: character_id(int)
+    输出类型: 无
+    功能: 判断交互对象是否为宿舍管理员，若是则获取其负责层号并给予玩家对应层号的钥匙
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    target_id = character_data.target_character_id
+    # 判断交互对象是否为宿舍管理员，如果不是则不执行
+    if not handle_premise.handle_work_is_dormitory_manager(target_id):
+        return 0
+    # 获取交互对象负责的层号
+    layer = _get_manager_layer_by_character(target_id)
+    if layer <= 0:
+        return 0
+    # 给予玩家对应层号的钥匙
+    key_item_id = 300 + layer
+    character_data.item[key_item_id] = 1
+    # 返回钥匙id
+    return key_item_id

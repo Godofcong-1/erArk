@@ -97,8 +97,16 @@ def character_move(character_id: int, target_scene: list) -> tuple[str, list, li
         # 玩家移动，且目标地点锁门时
         if character_id == 0 and access_type == "door_lock":
             now_scene_data = cache.scene_data[target_scene_str]
+            # 如果这里是宿舍，且玩家持有该楼层的钥匙，则解锁
+            # TODO 增加从地点到获取楼层的判断逻辑
+            if "Dormitory" in now_scene_data.scene_tag and False:
+                info_draw = draw.WaitDraw()
+                info_draw.text = _("\n  ●你拿出了该楼层的复制钥匙，悄悄打开了门\n\n")
+                info_draw.draw()
+                now_scene_data.close_flag = 0
+                access_type = "open"
             # 如果这是宿舍或客房，且玩家持有一次性钥匙则消耗钥匙并解锁
-            if ("Dormitory" in now_scene_data.scene_tag or "Guest_Room" in now_scene_data.scene_tag) and character_data.item[152] >= 1:
+            elif ("Dormitory" in now_scene_data.scene_tag or "Guest_Room" in now_scene_data.scene_tag) and character_data.item[152] >= 1:
                 info_draw = draw.WaitDraw()
                 info_draw.text = _("\n  ●你拿出了一次性万能钥匙，悄悄打开了门\n\n")
                 info_draw.draw()
