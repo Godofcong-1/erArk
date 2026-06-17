@@ -118,8 +118,13 @@ class FoodBagPanel:
 
             now_draw = draw.NormalDraw()
             now_draw.text = _("○正常调味食物\n")
-            if handle_premise.handle_hunger_le_79(0):
-                now_draw.text += _("  现在不饿，无法吃东西。\n\n")
+            if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
+                now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(character_data.name)
+            elif handle_premise.handle_have_target(0):
+                if handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                    now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
+                elif not handle_premise.handle_t_normal_6(0):
+                    now_draw.text += _("  {0}现在意识不清醒，无法吃东西。\n\n").format(target_character_data.name)
             # now_draw.width = 1
             now_draw.draw()
             self.handle_panel_normal.draw()
@@ -127,9 +132,9 @@ class FoodBagPanel:
 
             now_draw = draw.NormalDraw()
             now_draw.text = _("○特殊调味食物\n")
-            if character_data.target_character_id == 0:
+            if handle_premise.handle_have_no_target(0):
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
-            elif handle_premise.handle_hunger_le_79(character_data.target_character_id):
+            elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
             # now_draw.width = 1
             now_draw.draw()
@@ -239,17 +244,22 @@ class SeeFoodListByFoodNameDraw:
         # 正常调味的情况下
         if food_data.special_seasoning == 0:
             # 自己已经吃饱了则不显示按钮
-            if handle_premise.handle_hunger_le_79(0):
+            if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
                 draw_button_flag = False
-            # 有交互对象且对方意识完全不清醒，则不显示按钮
-            if handle_premise.handle_have_target(0) and not handle_premise.handle_t_normal_6(0):
-                draw_button_flag = False
+            # 有交互对象
+            elif handle_premise.handle_have_target(0):
+                # 对方已经吃饱了，则不显示按钮
+                if handle_premise.handle_hunger_le_79(character_data.target_character_id):
+                    draw_button_flag = False
+                # 对方意识完全不清醒，则不显示按钮
+                elif not handle_premise.handle_t_normal_6(0):
+                    draw_button_flag = False
         else:
             # 特殊调味的情况下，如果没有目标则不显示按钮
-            if character_data.target_character_id == 0:
+            if handle_premise.handle_have_no_target(0):
                 draw_button_flag = False
             # 如果目标已经吃饱了则不显示按钮
-            if handle_premise.handle_hunger_le_79(character_data.target_character_id):
+            elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 draw_button_flag = False
 
         if draw_button_flag:
