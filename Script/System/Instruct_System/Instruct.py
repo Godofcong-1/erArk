@@ -332,6 +332,8 @@ class Instruct:
     """ 索要袜子 """
     INVITE_TO_BATH = "invite_to_bath"
     """ 一起洗澡 """
+    ASK_COPY_KEY = "ask_copy_key"
+    """ 要求复制钥匙 """
     STEAL_PAN = "steal_pan"
     """ 偷走内裤 """
     STEAL_SOCKS = "steal_socks"

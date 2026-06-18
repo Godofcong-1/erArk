@@ -23,14 +23,8 @@ def get_dormitory_layer_by_character(character_id: int) -> int:
         return 0
     character_data = cache.character_data[character_id]
     dormitory_path = character_data.dormitory
-    if dormitory_path == "" or dormitory_path not in cache.scene_data:
-        return 0
-
-    room_name = cache.scene_data[dormitory_path].scene_name
-    match = re.search(r"宿舍(\d)\d{2}房", room_name)
-    if not match:
-        return 0
-    return int(match.group(1))
+    dormitory_layer = common.get_layer_by_dormitory_path(dormitory_path)
+    return dormitory_layer
 
 
 def get_dormitory_manager_knowledge(character_id: int) -> int:

@@ -4061,3 +4061,26 @@ def handle_not_have_target_manage_dormitory_key(character_id: int) -> int:
     if character_data.item[key_item_id] > 0:
         return 0
     return 1
+
+@add_premise(constant_promise.Premise.HAVE_TARGET_DORMITORY_LAYER_KEY)
+def handle_have_target_dormitory_layer_key(character_id: int) -> int:
+    """
+    自己已持有对方所在的宿舍楼层的钥匙
+    Keyword arguments:
+    character_id -- 角色id
+    Return arguments:
+    int -- 权重
+    """
+    from System.Dormitory_System import dormitory_manager_system
+    character_data = cache.character_data[character_id]
+    target_character_id = character_data.target_character_id
+    # 获取目标角色的宿舍层号
+    target_manager_layer = dormitory_manager_system.get_dormitory_layer_by_character(target_character_id)
+    # 如果目标角色没有符合的宿舍层，则返回0
+    if target_manager_layer == 0:
+        return 0
+    # 获取对应的钥匙道具编号
+    key_item_id = 300 + target_manager_layer
+    if character_data.item[key_item_id] > 0:
+        return 1
+    return 0

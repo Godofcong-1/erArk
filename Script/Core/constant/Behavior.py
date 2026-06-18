@@ -245,6 +245,8 @@ class Behavior:
     """ 挤奶 """
     INVITE_TO_BATH = "invite_to_bath"
     """ 一起洗澡 """
+    ASK_COPY_KEY = "ask_copy_key"
+    """ 要求复制钥匙 """
     RAISE_SKIRT = "raise_skirt"
     """ 掀起裙子 """
     SMELL_UNDERWEAR = "smell_underwear"

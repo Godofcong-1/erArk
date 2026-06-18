@@ -2007,6 +2007,10 @@ def handle_invite_to_bath():
     """处理一起洗澡指令"""
     chara_handle_instruct_common_settle(constant.Behavior.INVITE_TO_BATH, judge = _("严重骚扰"), force_taget_wait = True)
 
+@add_instruct(constant.Instruct.ASK_COPY_KEY)
+def handle_ask_copy_key():
+    """处理要求复制钥匙指令"""
+    chara_handle_instruct_common_settle(constant.Behavior.ASK_COPY_KEY, judge = _("严重骚扰"))
 
 @add_instruct(constant.Instruct.STEAL_PAN)
 def handle_steal_pan():

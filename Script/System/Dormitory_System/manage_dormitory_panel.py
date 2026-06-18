@@ -549,6 +549,15 @@ class Manage_Dormitory_Panel:
         for other_layer, other_character_id in list(cache.rhodes_island.dormitory_managers.items()):
             if other_layer != layer and other_character_id == character_id:
                 cache.rhodes_island.dormitory_managers[other_layer] = 0
+                # 重置玩家的该楼层钥匙
+                key_item_id = 300 + other_layer
+                pl_character_data = cache.character_data[0]
+                if pl_character_data.item[key_item_id] > 0:
+                    pl_character_data.item[key_item_id] = 0
+                    info_draw = draw.NormalDraw()
+                    info_draw.width = self.width
+                    info_draw.text = _("\n○{0}的{1}层管理员任命已被撤销，博士持有的该层钥匙已被收回\n").format(cache.character_data[character_id].name, other_layer)
+                    info_draw.draw()
 
         # 替换当前层旧管理员：仅撤掉该层归属，不立即撤掉岗位，离开面板时统一清理未分配楼层者
 
@@ -579,6 +588,15 @@ class Manage_Dormitory_Panel:
         # 仅撤掉该层归属，不立即撤掉岗位，便于后续快速改派到其他楼层。
         cache.rhodes_island.dormitory_managers[layer] = 0
         basement.update_work_people()
+        # 重置玩家的该楼层钥匙
+        key_item_id = 300 + layer
+        pl_character_data = cache.character_data[0]
+        if pl_character_data.item[key_item_id] > 0:
+            pl_character_data.item[key_item_id] = 0
+            info_draw = draw.NormalDraw()
+            info_draw.width = self.width
+            info_draw.text = _("\n○{0}的{1}层管理员任命已被撤销，博士持有的该层钥匙已被收回\n").format(cache.character_data[manager_id].name, layer)
+            info_draw.draw()
 
         info_draw = draw.WaitDraw()
         info_draw.width = self.width

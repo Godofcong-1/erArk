@@ -3274,6 +3274,8 @@
     """ 道具_持有 交互对象已持有阴茎倒模 """
     NOT_HAVE_TARGET_MANAGE_DORMITORY_KEY = "not_have_target_manage_dormitory_key"
     """ 道具_持有 自己未持有对方所管理的宿舍楼层的钥匙 """
+    HAVE_TARGET_DORMITORY_LAYER_KEY = "have_target_dormitory_layer_key"
+    """ 道具_持有 自己已持有对方所在的宿舍楼层的钥匙 """
 
     SELF_NOW_NIPPLE_CLAMP = "self_now_nipple_clamp"
     """ 道具_使用 自己正在乳头夹 """

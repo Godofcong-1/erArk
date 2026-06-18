@@ -73,6 +73,7 @@ def character_move(character_id: int, target_scene: list) -> tuple[str, list, li
     list -- 本次移动到的位置 \n
     int -- 本次移动花费的时间 \n
     """
+    from Script.Design import handle_premise
     character_data: game_type.Character = cache.character_data[character_id]
     now_position = character_data.position
     # if not character_id:
@@ -98,8 +99,7 @@ def character_move(character_id: int, target_scene: list) -> tuple[str, list, li
         if character_id == 0 and access_type == "door_lock":
             now_scene_data = cache.scene_data[target_scene_str]
             # 如果这里是宿舍，且玩家持有该楼层的钥匙，则解锁
-            # TODO 增加从地点到获取楼层的判断逻辑
-            if "Dormitory" in now_scene_data.scene_tag and False:
+            if "Dormitory" in now_scene_data.scene_tag and handle_premise.handle_have_target_dormitory_layer_key(0):
                 info_draw = draw.WaitDraw()
                 info_draw.text = _("\n  ●你拿出了该楼层的复制钥匙，悄悄打开了门\n\n")
                 info_draw.draw()

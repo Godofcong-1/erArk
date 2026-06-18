@@ -188,3 +188,18 @@ def get_dormitory_occupants_text() -> str:
             now_text += dormitory_son_text
             dormitory_count += 1
     return now_text
+
+def get_layer_by_dormitory_path(dormitory_path: str) -> int:
+    """
+    从宿舍场景路径中解析层号
+    输入类型: dormitory_path(str)
+    输出类型: int
+    功能: 从宿舍场景路径对应的场景名中解析层号，失败时返回0
+    """
+    if dormitory_path == "" or dormitory_path not in cache.scene_data:
+        return 0
+    room_name = cache.scene_data[dormitory_path].scene_name
+    match = re.search(r"宿舍(\d)\d{2}房", room_name)
+    if not match:
+        return 0
+    return int(match.group(1))

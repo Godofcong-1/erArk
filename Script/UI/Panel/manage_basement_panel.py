@@ -789,7 +789,7 @@ class Change_Npc_Work_Panel:
                 if i in range(30,40) and target_data.body_manage[i]:
                     target_data.body_manage[i] = 0
         # 如果当前工作是监狱长
-        if work_id == 191:
+        if handle_premise.handle_work_is_warden(character_id):
             from Script.Design import map_handle
             # 如果有旧的监狱长，则解除监狱长身份，并重置宿舍
             if handle_premise.handle_have_warden(0):
