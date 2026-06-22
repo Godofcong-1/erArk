@@ -203,3 +203,31 @@ def get_layer_by_dormitory_path(dormitory_path: str) -> int:
     if not match:
         return 0
     return int(match.group(1))
+
+def check_have_target_dormitory_layer_key(character_id: int, target_layer: int) -> bool:
+    """
+    检查角色是否持有目标宿舍层的钥匙
+    输入类型: character_id(int), target_layer(int)
+    输出类型: bool
+    功能: 根据目标层号获取对应钥匙的道具ID，检查角色持有数量是否大于0
+    """
+    if target_layer <= 0:
+        return False
+    # 构造目标层钥匙的道具ID，格式为 300 + 层号
+    target_key_item_id = 300 + target_layer
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.item.get(target_key_item_id, 0) > 0:
+        return True
+    return False
+
+def check_have_move_target_room_key(character_id: int, target_scene_str: str) -> bool:
+    """
+    检查角色是否持有移动目标地点的钥匙
+    输入类型: character_id(int), target_scene_str(str)
+    输出类型: bool
+    功能: 根据目标场景路径解析对应层号，获取该层号对应的钥匙道具ID，检查角色持有数量是否大于0
+    """
+    target_layer = get_layer_by_dormitory_path(target_scene_str)
+    if target_layer <= 0:
+        return False
+    return check_have_target_dormitory_layer_key(character_id, target_layer)

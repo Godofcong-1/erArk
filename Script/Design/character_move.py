@@ -98,8 +98,9 @@ def character_move(character_id: int, target_scene: list) -> tuple[str, list, li
         # 玩家移动，且目标地点锁门时
         if character_id == 0 and access_type == "door_lock":
             now_scene_data = cache.scene_data[target_scene_str]
+            from Script.System.Dormitory_System.common import check_have_move_target_room_key
             # 如果这里是宿舍，且玩家持有该楼层的钥匙，则解锁
-            if "Dormitory" in now_scene_data.scene_tag and handle_premise.handle_have_target_dormitory_layer_key(0):
+            if "Dormitory" in now_scene_data.scene_tag and check_have_move_target_room_key(0, target_scene_str):
                 info_draw = draw.WaitDraw()
                 info_draw.text = _("\n  ●你拿出了该楼层的复制钥匙，悄悄打开了门\n\n")
                 info_draw.draw()
