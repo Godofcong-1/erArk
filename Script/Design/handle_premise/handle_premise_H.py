@@ -4048,7 +4048,7 @@ def handle_not_have_target_manage_dormitory_key(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    from System.Dormitory_System import dormitory_manager_system
+    from Script.System.Dormitory_System import dormitory_manager_system
     character_data = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     # 获取目标角色管理的宿舍层号
@@ -4071,7 +4071,7 @@ def handle_have_target_dormitory_layer_key(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    from System.Dormitory_System import dormitory_manager_system
+    from Script.System.Dormitory_System import dormitory_manager_system
     character_data = cache.character_data[character_id]
     target_character_id = character_data.target_character_id
     # 获取目标角色的宿舍层号
