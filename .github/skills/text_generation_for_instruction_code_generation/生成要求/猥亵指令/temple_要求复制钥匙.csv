@@ -1,0 +1,6 @@
+cid,behavior_id,adv_id,premise,context
+口上id,触发口上的行为id,口上限定的剧情npcid,前提id,口上内容
+str,str,int,str,str
+0,0,0,0,1
+口上配置数据,,,,
+0,ask_copy_key,0,high_1,{Name}向{TargetName}索要对方所负责的楼层的钥匙，{TargetName}犹豫了一下，最终还是把钥匙交给{Name}复制了一份。
