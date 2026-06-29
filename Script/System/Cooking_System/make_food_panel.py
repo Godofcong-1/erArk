@@ -174,7 +174,12 @@ class Make_food_Panel:
             line_feed.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn == back_draw.return_text or (yrn in self.handle_panel.return_list and yrn != self.handle_panel.old_page_return and yrn != self.handle_panel.next_page_return and yrn != _("取消")):
+            # 进入本轮输入前重置二级确认结果，避免沿用上一次状态
+            SeeFoodListByFoodNameDraw.last_confirm_result = ""
+            if yrn in self.handle_panel.return_list and SeeFoodListByFoodNameDraw.last_confirm_result == _("取消"):
+                yrn = _("取消")
+            if (yrn == back_draw.return_text or 
+            (yrn in self.handle_panel.return_list and yrn not in {self.handle_panel.old_page_return, self.handle_panel.next_page_return, _("取消"), _("[取消]"), _("返回"), _("[返回]")})):
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -494,7 +499,6 @@ class SeeFoodListByFoodNameDraw:
     num_button -- 绘制数字按钮
     button_id -- 数字按钮id
     """
-
     def __init__(
         self, text: Tuple[str, str, int], width: int, is_button: bool, num_button: bool, button_id: int,
     ):
@@ -521,6 +525,8 @@ class SeeFoodListByFoodNameDraw:
         """ 食物名字 """
         self.add_coffee: bool = False
         """ 是否为加料咖啡 """
+        self.last_confirm_result: str = ""
+        """ 记录二级确认面板最后一次操作结果（如：取消） """
 
         # 延迟创建：此处仅根据菜谱id读取菜谱信息，不创建食物对象
         self.food_cid: str = self.cid
@@ -633,8 +639,10 @@ class SeeFoodListByFoodNameDraw:
                 make_count = max_count
             elif yrn == confirm_draw.return_text:
                 self.make_food(make_food_time, make_count)
+                SeeFoodListByFoodNameDraw.last_confirm_result = _("确认")
                 break
             else:
+                SeeFoodListByFoodNameDraw.last_confirm_result = _("取消")
                 break
 
     def make_food(self, new_make_food_time: int = 0, make_count: int = 1):
