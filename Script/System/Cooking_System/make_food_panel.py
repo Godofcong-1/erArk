@@ -1,8 +1,8 @@
 from typing import Tuple, Dict
 from types import FunctionType
-from uuid import UUID
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import cooking, update
+from Script.Design import update
+from Script.System.Cooking_System import cooking
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel, ejaculation_panel
@@ -496,13 +496,13 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: Tuple[str, UUID, int], width: int, is_button: bool, num_button: bool, button_id: int,
+        self, text: Tuple[str, str, int], width: int, is_button: bool, num_button: bool, button_id: int,
     ):
         """初始化绘制对象"""
         self.cid: str = text[0]
-        """ 食物商店索引id """
-        self.text: UUID = text[1]
-        """ 食物uid """
+        """ 菜谱id字符串 """
+        self.text: str = text[1]
+        """ 食物名字 """
         self.special_seasoning = text[2]
         """ 调味类型 """
         self.draw_text: str = ""
@@ -517,36 +517,19 @@ class SeeFoodListByFoodNameDraw:
         """ 按钮返回值 """
         self.make_food_time: int = 0
         """ 做饭所需时间 """
-        # self.draw_effect_draw = draw.NormalDraw()
-        # """ 做饭效果绘制 """
         self.food_name: str = ""
         """ 食物名字 """
         self.add_coffee: bool = False
         """ 是否为加料咖啡 """
-        # food_data: game_type.Food = cache.restaurant_data[str(self.cid)][self.text]
-        # draw_effect_text = ""
 
-        # print("debug self.text :",self.text)
-        # print("debug self.cid :",self.text)
-
-        # 转换为正确格式
-        now_food_list = [(self.cid, x) for x in cache.rhodes_island.makefood_data[self.cid]]
-        # print("debug now_food_list = ",now_food_list)
-        self.food_cid: str = now_food_list[0][0]
-        """ 食物商店索引id """
-        self.food_uid: UUID = now_food_list[0][1]
-        """ 食物uid """
-
-        if isinstance(self.food_cid, str):
-            food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
-            self.food_name = food_recipe.name
-            self.make_food_time = food_recipe.time
-            if food_recipe.type == 8:
-                self.add_coffee = True
-            # draw_effect_text += "制作用时" + self.make_food_time + "分钟\n"
-
-        # print("index_text :",index_text)
-        # print("debug self.make_food_time :",self.make_food_time)
+        # 延迟创建：此处仅根据菜谱id读取菜谱信息，不创建食物对象
+        self.food_cid: str = self.cid
+        """ 菜谱id字符串 """
+        food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
+        self.food_name = food_recipe.name
+        self.make_food_time = food_recipe.time
+        if food_recipe.type == 8:
+            self.add_coffee = True
 
         # 按钮绘制
         name_draw = draw.NormalDraw()
@@ -573,75 +556,127 @@ class SeeFoodListByFoodNameDraw:
         """ 绘制的对象 """
 
     def make_food_for_sure(self):
-        """确认是否制作食物"""
+        """确认是否制作食物，并选择制作数量"""
         from Script.Design import basement
 
-        line_feed.draw()
-
+        character_data: game_type.Character = cache.character_data[0]
         food_recipe = cache.recipe_data[int(self.food_cid)]
         food_name = self.food_name
         food_diffucty = food_recipe.difficulty
-        make_food_time = self.make_food_time
-        facility_adjust = basement.calc_facility_efficiency(5)
-        # 根据设施效率调整制作时间
-        facility_adjust_str = ""
-        if facility_adjust != 1.0:
-            make_food_time = int(make_food_time / facility_adjust)
-            rate = (make_food_time - self.make_food_time) / self.make_food_time
-            if rate > 0:
-                facility_adjust_str = _("（+{0:.1f}%）").format(rate * 100)
-            elif rate < 0:
-                facility_adjust_str = _("（{0:.1f}%）").format(rate * 100)
         seasoning_name = game_config.config_seasoning[self.special_seasoning].name
+        facility_adjust = basement.calc_facility_efficiency(5)
 
-        # 输出食物的名字、预计制作耗时、介绍、调味，询问是否确认
-        confirm_text = ""
-        confirm_text += _("食物名字: {0}\n").format(food_name)
-        confirm_text += _("菜谱难度: {0}\n").format(food_diffucty)
-        confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
-        confirm_text += _("当前调味: {0}\n").format(seasoning_name)
-        confirm_text += _("是否确认制作该食物？")
-
-        info_draw = draw.NormalDraw()
-        info_draw.text = confirm_text
-        info_draw.draw()
-        line_feed.draw()
-        line_feed.draw()
-
-        confirm_draw = draw.CenterButton(_("[确认]"), _("确认"), int(window_width / 2))
-        confirm_draw.draw()
-        cancel_draw = draw.CenterButton(_("[取消]"), _("取消"), int(window_width / 2))
-        cancel_draw.draw()
-        line_feed.draw()
-
-        # 确认则制作食物
-        yrn = flow_handle.askfor_all([confirm_draw.return_text, cancel_draw.return_text])
-        if yrn == confirm_draw.return_text:
-            self.make_food(make_food_time)
-
-    def make_food(self, new_make_food_time: int = 0):
-        """玩家制作食物"""
-        character_data: game_type.Character = cache.character_data[0]
-        # 赋予名字、作者和味道
-        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].name = self.food_name
-        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].maker = character_data.name
-        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].special_seasoning = self.special_seasoning
-        cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].quality = character_data.ability[43]
-        # 药物调味则扣除药物
+        # 计算最大可制作数量（上限10，药物调味时受药物库存限制）
+        max_count = 10
         if self.special_seasoning > 100:
-            character_data.item[self.special_seasoning] -= 1
-        # 放到玩家背包里
-        character_data.food_bag[self.food_uid] = cache.rhodes_island.makefood_data[self.food_cid][self.food_uid]
-        # 精液调味则将精液量加到食物数据里
-        if self.special_seasoning in {11,12} :
-            semen_text, semen_count = ejaculation_panel.common_ejaculation()
-            cache.rhodes_island.makefood_data[self.food_cid][self.food_uid].special_seasoning_amount = semen_count
-        # 成就
-        cache.achievement.make_food_count += 1
+            max_count = min(max_count, character_data.item[self.special_seasoning])
+        max_count = max(1, max_count)
+        make_count = 1
+
+        while 1:
+            py_cmd.clr_cmd()
+            line_feed.draw()
+
+            # 计算总耗时：基础时间 +（数量-1）* 菜谱难度，再根据设施效率调整
+            base_total_time = self.make_food_time + (make_count - 1) * max(0, food_diffucty)
+            make_food_time = base_total_time
+            facility_adjust_str = ""
+            if facility_adjust != 1.0 and base_total_time > 0:
+                make_food_time = int(base_total_time / facility_adjust)
+                rate = (make_food_time - base_total_time) / base_total_time
+                if rate > 0:
+                    facility_adjust_str = _("（+{0:.1f}%）").format(rate * 100)
+                elif rate < 0:
+                    facility_adjust_str = _("（{0:.1f}%）").format(rate * 100)
+
+            # 输出食物的名字、菜谱难度、制作数量、预计耗时、调味
+            confirm_text = ""
+            confirm_text += _("食物名字: {0}\n").format(food_name)
+            confirm_text += _("菜谱难度: {0}\n").format(food_diffucty)
+            confirm_text += _("制作数量: {0} （最多 {1}）\n").format(make_count, max_count)
+            confirm_text += _("预计耗时: {0} 分钟{1}\n").format(make_food_time, facility_adjust_str)
+            confirm_text += _("当前调味: {0}\n").format(seasoning_name)
+            info_draw = draw.NormalDraw()
+            info_draw.text = confirm_text
+            info_draw.draw()
+            line_feed.draw()
+
+            # 数量调整按钮
+            return_list = []
+            minus_draw = draw.CenterButton(_("[-1]"), _("减少"), int(window_width / 4))
+            minus_draw.draw()
+            return_list.append(minus_draw.return_text)
+            plus_draw = draw.CenterButton(_("[+1]"), _("增加"), int(window_width / 4))
+            plus_draw.draw()
+            return_list.append(plus_draw.return_text)
+            max_draw = draw.CenterButton(_("[最大]"), _("最大"), int(window_width / 4))
+            max_draw.draw()
+            return_list.append(max_draw.return_text)
+            line_feed.draw()
+            line_feed.draw()
+
+            # 确认/取消按钮
+            confirm_draw = draw.CenterButton(_("[确认制作]"), _("确认"), int(window_width / 2))
+            confirm_draw.draw()
+            return_list.append(confirm_draw.return_text)
+            cancel_draw = draw.CenterButton(_("[取消]"), _("取消"), int(window_width / 2))
+            cancel_draw.draw()
+            return_list.append(cancel_draw.return_text)
+            line_feed.draw()
+
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn == minus_draw.return_text:
+                make_count = max(1, make_count - 1)
+            elif yrn == plus_draw.return_text:
+                make_count = min(max_count, make_count + 1)
+            elif yrn == max_draw.return_text:
+                make_count = max_count
+            elif yrn == confirm_draw.return_text:
+                self.make_food(make_food_time, make_count)
+                break
+            else:
+                break
+
+    def make_food(self, new_make_food_time: int = 0, make_count: int = 1):
+        """
+        玩家制作食物
+        Keyword arguments:
+        new_make_food_time -- 本次制作的总耗时（分钟）
+        make_count -- 制作数量
+        """
+        character_data: game_type.Character = cache.character_data[0]
+        food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
+
+        # 按数量逐个创建食物对象（延迟创建：仅在制作时才创建对应菜谱的食物对象）
+        real_count = 0
+        for _i in range(make_count):
+            # 药物调味则每份扣除一个药物，库存不足时停止制作
+            if self.special_seasoning > 100:
+                if character_data.item[self.special_seasoning] <= 0:
+                    break
+                character_data.item[self.special_seasoning] -= 1
+            # 精液调味则每份扣除一次精液量，库存不足时停止制作
+            if self.special_seasoning in {11, 12}:
+                semen_text, semen_count = ejaculation_panel.common_ejaculation()
+                if semen_count <= 0:
+                    break
+            # 创建食物对象并赋予名字、作者、品质、味道
+            new_food = cooking.create_food("", int(self.food_cid), character_data.ability[43], character_data.name)
+            new_food.special_seasoning = self.special_seasoning
+            if self.special_seasoning in {11, 12}:
+                new_food.special_seasoning_amount = semen_count
+            # 放到玩家背包里
+            character_data.food_bag[new_food.uid] = new_food
+            # 成就计数
+            cache.achievement.make_food_count += 1
+            real_count += 1
+
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = new_make_food_time
         character_data.behavior.food_seasoning = self.special_seasoning
+        character_data.behavior.cook_difficulty = food_recipe.difficulty
+        character_data.behavior.make_food_count = real_count
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
         character_data.behavior.duration = new_make_food_time
         character_data.state = constant.CharacterStatus.STATUS_MAKE_FOOD

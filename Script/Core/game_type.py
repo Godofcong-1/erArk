@@ -129,10 +129,6 @@ class Food:
         """ 食物对象的唯一id """
         self.quality: int = 0
         """ 食物品质 """
-        # self.weight: int = 0
-        # """ 食物重量 """
-        # self.feel: dict = {}
-        # """ 食物效果 """
         self.maker: str = ""
         """ 食物制作者 """
         self.recipe: int = -1
@@ -141,16 +137,6 @@ class Food:
         """ 调味类型 """
         self.special_seasoning_amount: int = 0
         """ 特殊调味的量 """
-        # self.cook: bool = False
-        # """ 可烹饪 """
-        # self.eat: bool = False
-        # """ 可食用 """
-        self.drink: bool = False
-        """ 可作为饮料 """
-        # self.seasoning: bool = False
-        # """ 可作为调料 """
-        # self.fruit: bool = False
-        # """ 是否是水果 """
         self.milk_ml: int = 0
         """ 牛奶毫升数 """
         self.urine_ml: int = 0
@@ -173,12 +159,6 @@ class Recipes:
         """ 菜品价格 """
         self.introduce: str = ""
         """ 说明介绍 """
-        # self.base: list = []
-        # """ 烹饪所使用的主食材 """
-        # self.ingredients: list = []
-        # """ 烹饪所使用的辅食材 """
-        # self.seasoning: list = []
-        # """ 烹饪所使用的调料 """
 
 
 class NormalConfig:
@@ -1006,6 +986,10 @@ class Behavior:
         """ 前提结算用:做饭指令用时 """
         self.food_seasoning: int = 0
         """ 前提结算用:食物调味类型 0正常，其他见Seasoning.csv """
+        self.cook_difficulty: int = 0
+        """ 前提结算用:制作食物的菜谱难度等级 """
+        self.make_food_count: int = 1
+        """ 前提结算用:本次制作食物的数量 """
         self.pan_name: str = ""
         """ 前提结算用:内裤名字 """
         self.socks_name: str = ""
@@ -1229,10 +1213,10 @@ class Rhodes_Island:
         食堂内贩卖的食物数据
         食谱id(str):食物唯一id:食物对象
         """
-        self.makefood_data: Dict[str, Dict[UUID, Food]] = {}
+        self.makefood_data: Dict[str, int] = {}
         """
-        做饭区的食物数据
-        食谱id(str):食物唯一id:食物对象
+        做饭区可制作的菜谱数据（延迟创建：仅记录可制作的菜谱id，食物对象在制作时才创建）
+        食谱id(str):食谱id(int)
         """
         self.makefood_filter_type: List[int] = []
         """ 做饭筛选：菜谱类型列表，空列表表示不筛选 """

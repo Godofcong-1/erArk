@@ -2211,7 +2211,7 @@ def character_start_eat_food(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.Design import cooking
+    from Script.System.Cooking_System import cooking
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2259,7 +2259,7 @@ def character_buy_rand_food_at_foodshop(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.Design import cooking
+    from Script.System.Cooking_System import cooking
 
     character_data: game_type.Character = cache.character_data[character_id]
     character_data.target_character_id = character_id
@@ -2281,7 +2281,6 @@ def character_buy_rand_food_at_foodshop(character_id: int):
             # 遍历食物
             for food_uid in cache.rhodes_island.dining_hall_data[recipes_id]:
                 now_food: game_type.Food = cache.rhodes_island.dining_hall_data[recipes_id][food_uid]
-                # if now_food.eat:
                 all_food_list.append(recipes_id)
                 # 如果是自制食物则加入制作食物列表
                 if made_food_flag:
@@ -2311,7 +2310,6 @@ def character_buy_rand_food_at_foodshop(character_id: int):
                 continue
             for food_uid in cache.rhodes_island.restaurant_data[restaurant_id][recipes_id]:
                 now_food: game_type.Food = cache.rhodes_island.restaurant_data[restaurant_id][recipes_id][food_uid]
-                # if now_food.eat:
                 all_food_list.append(recipes_id)
                 break
         if not len(all_food_list):
@@ -2358,8 +2356,6 @@ def character_eat_rand_food(character_id: int):
     character_data.behavior.behavior_id = constant.Behavior.EAT
     now_food_list = []
     for food_id in character_data.food_bag:
-        # now_food: game_type.Food = character_data.food_bag[food_id]
-        # if 27 in now_food.feel and now_food.eat:
         now_food_list.append(food_id)
     # 如果没有食物则直接清空饥饿值和进食状态，然后切换至无行动状态并返回，以防止进食失败的死循环
     if not len(now_food_list):

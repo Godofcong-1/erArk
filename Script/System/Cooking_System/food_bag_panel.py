@@ -2,7 +2,8 @@ from types import FunctionType
 from uuid import UUID
 from Script.Core import get_text, game_type, cache_control, constant, flow_handle
 from Script.UI.Moudle import panel, draw
-from Script.Design import cooking, update, attr_calculation, handle_premise
+from Script.Design import update, attr_calculation, handle_premise
+from Script.System.Cooking_System import cooking
 from Script.Config import normal_config, game_config
 from Script.UI.Panel import achievement_panel
 
@@ -212,7 +213,6 @@ class SeeFoodListByFoodNameDraw:
         name_draw = draw.NormalDraw()
         # print(f"debug self.text = {self.text}")
         food_data: game_type.Food = cache.character_data[0].food_bag[self.text]
-        # quality_text_data = [_("垃圾"), _("饲料"), _("粮食"), _("美味"), _("春药")]
         food_name = ""
         if food_data.recipe != -1:
             food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]

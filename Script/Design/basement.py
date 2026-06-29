@@ -8,7 +8,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, attr_calculation, map_handle, cooking
+from Script.Design import handle_premise, map_handle
 from Script.UI.Moudle import draw
 
 cache: game_type.Cache = cache_control.cache
@@ -335,6 +335,7 @@ def update_base_resouce_newday():
     """
     from Script.UI.Panel import invite_visitor_panel, aromatherapy_panel, agriculture_production_panel, manage_assembly_line_panel, physical_check_and_manage, confinement_and_training, resource_exchange_panel
     from Script.System.Medical_System import medical_service
+    from Script.System.Cooking_System import cooking
 
     now_draw = draw.WaitDraw()
     now_draw.width = window_width

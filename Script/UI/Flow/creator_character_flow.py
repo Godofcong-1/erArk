@@ -68,7 +68,7 @@ def first_bonus_and_setting_updata():
 def game_start():
     """初始化游戏数据"""
     cache = cache_control.cache
-    from Script.Design import cooking
+    from Script.System.Cooking_System import cooking
     from Script.UI.Panel import achievement_panel
     from Script.System.Medical_System import medical_service
 

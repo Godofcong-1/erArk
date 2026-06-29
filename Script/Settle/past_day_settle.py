@@ -37,7 +37,7 @@ def update_new_day():
     Return arguments:
     无
     """
-    from Script.Design import cooking
+    from Script.System.Cooking_System import cooking
     from Script.UI.Panel import nation_diplomacy_panel, navigation_panel, assistant_panel
 
     now_draw = draw.NormalDraw()

@@ -1,10 +1,7 @@
-from typing import Tuple, Dict
 from types import FunctionType
-from uuid import UUID
-from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
-from Script.Design import map_handle, cooking, update
+from Script.Core import cache_control, game_type, get_text, flow_handle, constant, py_cmd
 from Script.UI.Moudle import draw, panel
-from Script.Config import game_config, normal_config
+from Script.Config import normal_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """

@@ -6,9 +6,7 @@ from Script.Design import (
     settle_behavior,
     map_handle,
     attr_calculation,
-    cooking,
     handle_premise,
-    second_behavior,
 )
 from Script.Core import cache_control, constant_effect, game_type, get_text
 from Script.Config import normal_config
@@ -1070,6 +1068,7 @@ def handle_npc_make_food_to_shop(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.System.Cooking_System import cooking
     if not add_time:
         return
     # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
@@ -1106,6 +1105,7 @@ def handle_npc_make_food_to_bag(
     change_data -- 状态变更信息记录对象
     now_time -- 结算的时间
     """
+    from Script.System.Cooking_System import cooking
     if not add_time:
         return
     # 获取角色数据

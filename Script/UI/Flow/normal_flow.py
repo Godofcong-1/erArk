@@ -12,8 +12,6 @@ from Script.UI.Panel import (
     building_panel,
     collection_panel,
     ejaculation_panel,
-    make_food_panel,
-    food_bag_panel,
     food_shop_panel,
     manage_basement_panel,
     see_item_info_panel,
@@ -108,6 +106,7 @@ def find_call():
 @handle_panel.add_panel(constant.Panel.FOOD_BAG)
 def food_bag_flow():
     """食物背包面板"""
+    from Script.System.Cooking_System import food_bag_panel
     now_panel = food_bag_panel.FoodBagPanel(width)
     now_panel.draw()
 
@@ -122,6 +121,7 @@ def food_shop_flow():
 @handle_panel.add_panel(constant.Panel.MAKE_FOOD)
 def make_food_flow():
     """制作食物面板"""
+    from Script.System.Cooking_System import make_food_panel
     now_panel = make_food_panel.Make_food_Panel(width)
     now_panel.draw()
 
@@ -430,6 +430,7 @@ def play_gomoku_flow():
 @handle_panel.add_panel(constant.Panel.MAKE_COFFEE_ADD)
 def make_coffee_add_flow():
     """泡咖啡（加料）面板"""
+    from Script.System.Cooking_System import make_food_panel
     now_panel = make_food_panel.Make_food_Panel(width, make_food_type = 1)
     now_panel.draw()
 

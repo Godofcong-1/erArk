@@ -9,7 +9,7 @@ from Script.Core import (
     constant,
 )
 from Script.Config import game_config, normal_config
-from Script.Design import handle_premise, update, map_handle, instuct_judege, game_time, cooking
+from Script.Design import update, map_handle, instuct_judege, game_time
 
 panel_info_data = {}
 
@@ -374,6 +374,7 @@ class Fridge_Panel:
 
     def take_milk(self, character_id: int):
         """拿走母乳并放进玩家背包"""
+        from Script.System.Cooking_System import cooking
         pl_character_data: game_type.Character = cache.character_data[0]
         character_data = cache.character_data[character_id]
 

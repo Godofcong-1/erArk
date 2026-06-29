@@ -9,7 +9,6 @@ from Script.Design import (
     map_handle,
     attr_calculation,
     game_time,
-    cooking,
     character_behavior,
     handle_npc_ai_in_h,
     handle_premise,
@@ -5932,6 +5931,43 @@ def handle_target_coffee_add_adjust(
         base_chara_favorability_and_trust_common_settle(character_id, add_time, False, 0, adjust, change_data)
         # 好意变化#
         base_chara_state_common_settle(character_data.target_character_id, add_time, 11, ability_level = target_data.ability[43], change_data_to_target_change = change_data)
+
+
+@settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.MAKE_FOOD_ADD_ADJUST)
+def handle_make_food_add_adjust(
+        character_id: int,
+        add_time: int,
+        change_data: game_type.CharacterStatusChange,
+        now_time: datetime.datetime,
+):
+    """
+    （制作食物用）根据当前行为中的菜谱难度等级，动态获得料理经验与习得。
+    收益仅按单份结算，不随制作数量变化。
+    Keyword arguments:
+    character_id -- 角色id
+    add_time -- 结算时间
+    change_data -- 状态变更信息记录对象
+    now_time -- 结算的时间
+    """
+    if not add_time:
+        return
+    character_data: game_type.Character = cache.character_data[character_id]
+    if character_data.dead:
+        return
+    # 读取当前行为中的菜谱难度等级（最低为1）
+    cook_difficulty = max(1, character_data.behavior.cook_difficulty)
+    # 料理经验：随菜谱难度等级提升而增加（难度即为基础获得值）
+    base_chara_experience_common_settle(character_id, 83, base_value = cook_difficulty, change_data = change_data)
+    # 习得：随菜谱难度等级提升而增加（独立于制作数量与总耗时，仅按单份结算）
+    character_data.ability.setdefault(30, 0)
+    base_chara_state_common_settle(
+        character_id,
+        cook_difficulty,
+        9,
+        base_value = cook_difficulty * 10,
+        ability_level = character_data.ability[30],
+        change_data = change_data,
+    )
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.OFFICIAL_WORK_ADD_ADJUST)

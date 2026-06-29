@@ -146,7 +146,7 @@ def new_game_minimal_init():
         basement,
         game_time,
     )
-    from Script.Design import cooking
+    from Script.System.Cooking_System import cooking
     from Script.Config import game_config
     from Script.Core import io_init
 

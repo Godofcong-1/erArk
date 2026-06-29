@@ -137,7 +137,8 @@ def input_load_save(save_id: str):
     Keyword arguments:
     save_id -- 存档id
     """
-    from Script.Design import basement, cooking
+    from Script.Design import basement
+    from Script.System.Cooking_System import cooking
     from Script.System.Medical_System import medical_service
     # 创建一个新的类实例，这个实例会包含所有的默认键值
     new_cache = game_type.Cache()
