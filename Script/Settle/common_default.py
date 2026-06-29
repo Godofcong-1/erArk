@@ -532,6 +532,8 @@ def base_chara_favorability_and_trust_common_settle(
     favorability_flag -- true为好感,false为信赖\n
     base_value -- 基础固定值\n
     extra_adjust -- 额外系数\n
+    change_data -- 结算信息记录对象\n
+    target_character_id -- 交互对象id，默认为0。在为0时会自动获取角色的交互对象id。若角色没有交互对象，则不会进行结算
     """
     character_data: game_type.Character = cache.character_data[character_id]
     pl_character_data: game_type.Character = cache.character_data[0]

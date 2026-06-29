@@ -7561,12 +7561,14 @@ def handle_eat_add_just(
     food_quality = character_data.behavior.food_quality
     # 品质最小为1
     food_quality = max(food_quality, 1)
-    quality_adjust = (food_quality / 5) ** 2
+    quality_adjust = (food_quality / 2) ** 2
     # 高品质食物额外加系数
     if food_quality == 8:
         quality_adjust *= 2
     elif food_quality >= 7:
         quality_adjust += 1
+    # 获取食物菜谱难度等级
+    cook_difficulty = max(character_data.behavior.cook_difficulty, 1)
 
     # 检测是否是手制的食物
     pl_make_flag = False
@@ -7590,7 +7592,7 @@ def handle_eat_add_just(
 
         # 加好感
         if chara_id:
-            now_add = int(add_time * quality_adjust)
+            now_add = int(add_time * quality_adjust * cook_difficulty * random.uniform(0.8, 1.2))
             base_chara_favorability_and_trust_common_settle(character_id, now_add, True, 0, 0, change_data, chara_id)
             # 玩家做的饭的情况下，额外加信赖
             if pl_make_flag:
@@ -7601,7 +7603,7 @@ def handle_eat_add_just(
 
         # 加体力气力，清零饥饿值和进食状态
         # 为了增加更多的体力气力，将时间设为25
-        now_add = int(25 * quality_adjust)
+        now_add = int(25 * cook_difficulty * random.uniform(0.8, 1.2))
         handle_add_small_hit_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
         handle_add_small_mana_point(chara_id,add_time=now_add,change_data=target_change,now_time=now_time)
         handle_hunger_point_zero(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
