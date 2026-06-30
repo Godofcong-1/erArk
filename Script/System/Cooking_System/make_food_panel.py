@@ -1,8 +1,8 @@
-from typing import Tuple, Dict
+from typing import Tuple
 from types import FunctionType
 from Script.Core import cache_control, game_type, get_text, flow_handle, text_handle, constant, py_cmd
 from Script.Design import update
-from Script.System.Cooking_System import cooking
+from Script.System.Cooking_System import cooking, cook_question_panel
 from Script.UI.Moudle import draw, panel
 from Script.Config import game_config, normal_config
 from Script.UI.Panel import achievement_panel, ejaculation_panel
@@ -32,12 +32,14 @@ class Make_food_Panel:
         """ 绘制的最大宽度 """
         self.now_panel = _("主食")
         """ 当前绘制的食物类型 """
-        self.handle_panel: panel.PageHandlePanel = None
+        self.handle_panel: panel.PageHandlePanel
         """ 当前名字列表控制面板make_food_type """
         self.make_food_type = make_food_type
         """ 0普通做饭，1泡咖啡 """
         self.special_seasoning = 0
         """ 调味类型 """
+        self.cook_mode = 0
+        """ 烹饪模式：0标准模式，1精细模式 """
 
     def draw(self):
         """绘制对象"""
@@ -106,18 +108,16 @@ class Make_food_Panel:
             line_feed.draw()
 
             # 加料说明
-            now_seasoning_name = game_config.config_seasoning[self.special_seasoning].name
             now_draw = draw.NormalDraw()
-            now_draw.text = _("○当前的调味： {0}").format(now_seasoning_name)
+            now_draw.text = _("○当前的调味：")
             # now_draw.width = 1
             now_draw.draw()
 
             # 加料面板
             for seasoning_cid in game_config.config_seasoning:
-                # 如果泡加料咖啡则跳过普通味道
-                if self.now_panel == _("咖啡") and seasoning_cid <= 10:
+                # 不再显示基础调味
+                if seasoning_cid <= 10:
                     continue
-                if seasoning_cid == 0:
                     button_width = int(self.width / 16)
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  基础:    ")
@@ -131,7 +131,7 @@ class Make_food_Panel:
                     # now_draw.width = 1
                     now_draw.draw()
                 elif seasoning_cid == 102:
-                    button_width = int(self.width / 8)
+                    button_width = int(self.width / 8 + 1)
                     now_draw = draw.NormalDraw()
                     now_draw.text = _("\n  药物:    ")
                     # now_draw.width = 1
@@ -140,17 +140,79 @@ class Make_food_Panel:
                 if seasoning_cid > 100:
                     if not character_data.item[seasoning_cid] and not cache.debug_mode:
                         continue
+                # 基础的按钮格式
+                button_style = 'standard'
+                # 如果当前调味为该调味则高亮显示
+                if self.special_seasoning == seasoning_cid:
+                    button_style = 'gold_enrod'
 
                 button_text = f"[{game_config.config_seasoning[seasoning_cid].name}]"
-                button_draw = draw.LeftButton(
+                button_draw = draw.CenterButton(
                     _(button_text),
                     _(button_text),
                     button_width,
+                    normal_style=button_style,
                     cmd_func=self.choice_seasoning,
                     args=(seasoning_cid,),
                     )
                 return_list.append(button_draw.return_text)
                 button_draw.draw()
+            line_feed.draw()
+
+            # 烹饪模式面板（标准/精细），仅在非特殊调味时精细模式可选
+            special_flag = cooking.is_special_seasoning(self.special_seasoning)
+            # 特殊调味时强制为标准模式
+            if special_flag:
+                self.cook_mode = 0
+            mode_button_width = int(self.width / 6 + 1)
+            mode_title = draw.NormalDraw()
+            mode_title.text = _("○烹饪模式：\n")
+            mode_title.draw()
+            # 标准模式行
+            if self.cook_mode == 0:
+                std_draw = draw.CenterDraw()
+                std_draw.text = _("[标准模式]")
+                std_draw.style = "gold_enrod"
+                std_draw.width = mode_button_width
+                std_draw.draw()
+            else:
+                std_draw = draw.CenterButton(
+                    _("[标准模式]"), _("标准模式"), mode_button_width,
+                    cmd_func=self.change_cook_mode, args=(0,),
+                )
+                std_draw.draw()
+                return_list.append(std_draw.return_text)
+            std_info = draw.NormalDraw()
+            std_info.text = _("：不考虑细节直接烹饪，烹饪出的食物品质与料理技能相关，品质上限为美味，无法达到绝珍的级别\n")
+            std_info.draw()
+            # 精细模式行
+            if special_flag:
+                # 特殊调味时精细模式灰显不可点击
+                fine_info = draw.CenterDraw()
+                fine_info.text = _("[精细模式]")
+                fine_info.style = "deep_gray"
+                fine_info.width = mode_button_width
+                fine_info.draw()
+                fine_info = draw.NormalDraw()
+                fine_info.text = _("：特殊调味时不可用\n")
+                fine_info.draw()
+            else:
+                if self.cook_mode == 1:
+                    fine_draw = draw.CenterDraw()
+                    fine_draw.text = _("[精细模式]")
+                    fine_draw.style = "gold_enrod"
+                    fine_draw.width = mode_button_width
+                    fine_draw.draw()
+                else:
+                    fine_draw = draw.CenterButton(
+                        _("[精细模式]"), _("精细模式"), mode_button_width,
+                        cmd_func=self.change_cook_mode, args=(1,),
+                    )
+                    fine_draw.draw()
+                    return_list.append(fine_draw.return_text)
+                fine_info = draw.NormalDraw()
+                fine_info.text = _("：仔细考虑烹饪细节，根据细节的处理方式，食物品质能在料理技能的基础上进一步提升，最高可达到绝珍的级别\n")
+                fine_info.draw()
             line_feed.draw()
             line_feed.draw()
 
@@ -160,15 +222,14 @@ class Make_food_Panel:
             # now_draw.width = 1
             now_draw.draw()
             food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
-            # 将调味增加进去
-            food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
-            
+            # 将调味、烹饪模式增加进去
+            food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
             self.handle_panel.text_list = food_name_list
             self.handle_panel.update()
             self.handle_panel.draw()
 
-
             return_list.extend(self.handle_panel.return_list)
+            line_feed.draw()
             back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
             back_draw.draw()
             line_feed.draw()
@@ -192,8 +253,8 @@ class Make_food_Panel:
         self.now_panel = food_type
 
         food_name_list = cooking.get_filtered_sorted_cook_data(self.now_panel)
-        # 将调味增加进去
-        food_name_list = [(x[0], x[1], self.special_seasoning) for x in food_name_list]
+        # 将调味、烹饪模式增加进去
+        food_name_list = [(x[0], x[1], self.special_seasoning, self.cook_mode) for x in food_name_list]
 
         self.handle_panel = panel.PageHandlePanel(
             food_name_list, SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0
@@ -201,7 +262,22 @@ class Make_food_Panel:
 
     def choice_seasoning(self, seasoning_cid):
         """选择味道"""
-        self.special_seasoning = seasoning_cid
+        # 如果当前调味为该调味则取消选择
+        if self.special_seasoning == seasoning_cid:
+            self.special_seasoning = 0
+        else:
+            self.special_seasoning = seasoning_cid
+        # 选择特殊调味时重置为标准模式（精细模式不适用于特殊调味）
+        if cooking.is_special_seasoning(seasoning_cid):
+            self.cook_mode = 0
+
+    def change_cook_mode(self, cook_mode: int):
+        """
+        切换烹饪模式
+        Keyword arguments:
+        cook_mode -- 烹饪模式：0标准，1精细
+        """
+        self.cook_mode = cook_mode
 
     def get_filter_sort_status_text(self) -> tuple:
         """
@@ -500,7 +576,7 @@ class SeeFoodListByFoodNameDraw:
     button_id -- 数字按钮id
     """
     def __init__(
-        self, text: Tuple[str, str, int], width: int, is_button: bool, num_button: bool, button_id: int,
+        self, text: Tuple[str, str, int, int], width: int, is_button: bool, num_button: bool, button_id: int,
     ):
         """初始化绘制对象"""
         self.cid: str = text[0]
@@ -509,6 +585,8 @@ class SeeFoodListByFoodNameDraw:
         """ 食物名字 """
         self.special_seasoning = text[2]
         """ 调味类型 """
+        self.cook_mode = text[3]
+        """ 烹饪模式：0标准模式，1精细模式 """
         self.draw_text: str = ""
         """ 食物名字绘制文本 """
         self.width: int = width
@@ -655,6 +733,17 @@ class SeeFoodListByFoodNameDraw:
         character_data: game_type.Character = cache.character_data[0]
         food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
 
+        # 计算食物品质：基础品质为玩家料理技能，封顶到美味
+        base_quality = cooking.get_base_food_quality(0)
+        food_quality = base_quality
+        # 精细模式且为非特殊调味且存在题库时，进入答题流程，答对可提升品质（封顶绝珍）
+        if (
+            self.cook_mode == 1
+            and not cooking.is_special_seasoning(self.special_seasoning)
+            and cooking.has_cook_question_library(int(self.food_cid))
+        ):
+            food_quality = cook_question_panel.run_cook_question_flow(int(self.food_cid), base_quality)
+
         # 按数量逐个创建食物对象（延迟创建：仅在制作时才创建对应菜谱的食物对象）
         real_count = 0
         for _i in range(make_count):
@@ -669,7 +758,7 @@ class SeeFoodListByFoodNameDraw:
                 if semen_count <= 0:
                     break
             # 创建食物对象并赋予名字、作者、品质、味道
-            new_food = cooking.create_food("", int(self.food_cid), character_data.ability[43], character_data.name)
+            new_food = cooking.create_food("", int(self.food_cid), food_quality, character_data.name)
             new_food.special_seasoning = self.special_seasoning
             if self.special_seasoning in {11, 12}:
                 new_food.special_seasoning_amount = semen_count

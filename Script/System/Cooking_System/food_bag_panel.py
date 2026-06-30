@@ -2,10 +2,8 @@ from types import FunctionType
 from uuid import UUID
 from Script.Core import get_text, game_type, cache_control, constant, flow_handle
 from Script.UI.Moudle import panel, draw
-from Script.Design import update, attr_calculation, handle_premise
-from Script.System.Cooking_System import cooking
+from Script.Design import attr_calculation, handle_premise
 from Script.Config import normal_config, game_config
-from Script.UI.Panel import achievement_panel
 
 _: FunctionType = get_text._
 """ 翻译api """
@@ -32,9 +30,9 @@ class FoodBagPanel:
         """ 绘制的最大宽度 """
         self.now_panel = _("当前持有食物")
         """ 当前绘制的食物类型 """
-        self.handle_panel_normal: panel.PageHandlePanel = None
+        self.handle_panel_normal: panel.PageHandlePanel
         """ 正常调味食物列表控制面板 """
-        self.handle_panel_special: panel.PageHandlePanel = None
+        self.handle_panel_special: panel.PageHandlePanel
         """ 特殊调味食物列表控制面板 """
 
     def draw(self):
@@ -43,10 +41,10 @@ class FoodBagPanel:
         food_type_list = [_("当前持有食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel_normal = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 0, 0
+            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, 1, 0, 0
+            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 0
         )
         while 1:
             character_data: game_type.Character = cache.character_data[0]
@@ -93,13 +91,13 @@ class FoodBagPanel:
                     now_draw = draw.CenterDraw()
                     now_draw.text = f"[{food_type}]"
                     now_draw.style = "onbutton"
-                    now_draw.width = self.width / len(food_type_list)
+                    now_draw.width = int(self.width / len(food_type_list))
                     now_draw.draw()
                 else:
                     now_draw = draw.CenterButton(
                         f"[{food_type}]",
                         food_type,
-                        self.width / len(food_type_list),
+                        int(self.width / len(food_type_list)),
                         cmd_func=self.change_panel,
                         args=(food_type,),
                     )
@@ -176,10 +174,10 @@ class FoodBagPanel:
         self.handle_panel_special.update()
 
         self.handle_panel_normal = panel.PageHandlePanel(
-            id_list_normal, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 0, 0
+            id_list_normal, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, 1, 0, 0
+            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 0
         )
 
 
@@ -284,6 +282,9 @@ class SeeFoodListByFoodNameDraw:
 
     def eat_food(self):
         """食用食物"""
+        from Script.System.Cooking_System import cooking
+        from Script.UI.Panel import achievement_panel
+        from Script.Design import update
         character_data: game_type.Character = cache.character_data[0]
         now_food = character_data.food_bag[self.text]
         character_data.behavior.food_name = now_food.name

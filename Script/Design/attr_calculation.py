@@ -813,6 +813,7 @@ def get_food_quality(value: int):
             return now_cid,now_data.name
         else:
             continue
+    return 4, game_config.config_food_quality[4].name
 
 
 def get_favorability_level(value: int):

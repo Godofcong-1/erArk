@@ -341,6 +341,8 @@ config_prts: Dict[int, config_def.Prts] = {}
 """ 教程数据 """
 config_food_quality: Dict[int, config_def.Food_Quality] = {}
 """ 食物质量数据 """
+config_cook_question: Dict[int, Dict[str, list]] = {}
+""" 烹饪问题库 食物id:烹饪阶段:[问题dict列表] """
 config_prts_data: Dict[int, Dict[int, Dict[int, config_def.Prts]]] = {}
 """ 教程数据的具体整理 父id:子id:0问1答:内容 """
 config_productformula: Dict[int, config_def.ProductFormula] = {}
@@ -1574,6 +1576,21 @@ def load_food_quality():
         config_food_quality[now_tem.cid] = now_tem
 
 
+def load_cook_question():
+    """载入烹饪问题库数据（按 食物id -> 烹饪阶段 -> 问题列表 建索引）"""
+    # 若尚未生成任何题库csv，则该表不存在，直接返回
+    if "Cook_Question" not in config_data:
+        return
+    now_data = config_data["Cook_Question"]
+    translate_data(now_data)
+    config_cook_question.clear()
+    for tem_data in now_data["data"]:
+        # food_id 为菜谱id，stage 为烹饪阶段（备料/烹饪/调味/装盘）
+        food_id = tem_data["food_id"]
+        stage = tem_data["stage"]
+        config_cook_question.setdefault(food_id, {}).setdefault(stage, []).append(tem_data)
+
+
 def load_favorability_level():
     """载入好感度等级数据"""
     now_data = config_data["Favorability_Level"]
@@ -2216,6 +2233,7 @@ def init():
     load_sleep_level()
     load_hidden_level()
     load_food_quality()
+    load_cook_question()
     load_favorability_level()
     load_trust_level()
     load_seasoning()

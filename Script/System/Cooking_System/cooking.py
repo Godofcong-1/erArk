@@ -78,6 +78,78 @@ def create_food(
     return food
 
 
+# 烹饪问题库的四个阶段（顺序固定：备料->烹饪->调味->装盘），值与 cook_question csv 中 stage 列一致
+COOK_QUESTION_STAGES = [_("备料"), _("烹饪"), _("调味"), _("装盘")]
+""" 烹饪问题库阶段顺序 """
+
+
+def get_good_quality_cap() -> int:
+    """
+    获取标准模式（及精细模式基础值）的品质上限——美味（食物质量cid=3）的料理技能上限值
+    Return arguments:
+    int -- 美味品质对应的上限值
+    """
+    return game_config.config_food_quality[3].ability_level
+
+
+def get_max_food_quality() -> int:
+    """
+    获取食物品质的绝对上限——所有质量等级中的最大料理技能上限值（绝珍）
+    Return arguments:
+    int -- 食物品质绝对上限值
+    """
+    return max(quality.ability_level for quality in game_config.config_food_quality.values())
+
+
+def get_base_food_quality(character_id: int = 0) -> int:
+    """
+    获取制作食物的基础品质：玩家料理技能(ability[43])，封顶到美味上限
+    Keyword arguments:
+    character_id -- 角色id，默认为0（玩家）
+    Return arguments:
+    int -- 基础品质值（不超过美味上限）
+    """
+    character_data = cache.character_data[character_id]
+    return min(character_data.ability[43], get_good_quality_cap())
+
+
+def is_special_seasoning(seasoning_cid: int) -> bool:
+    """
+    判断调味是否为特殊调味（精液/药物等，cid>=11），特殊调味时精细模式不可用
+    Keyword arguments:
+    seasoning_cid -- 调味cid
+    Return arguments:
+    bool -- 是否为特殊调味
+    """
+    return seasoning_cid >= 11
+
+
+def has_cook_question_library(food_id: int) -> bool:
+    """
+    判断指定食物是否拥有可用的烹饪问题库（至少一个阶段存在题目）
+    Keyword arguments:
+    food_id -- 食物（菜谱）id
+    Return arguments:
+    bool -- 是否存在可用题库
+    """
+    stage_data = game_config.config_cook_question.get(food_id, {})
+    for stage in COOK_QUESTION_STAGES:
+        if stage_data.get(stage):
+            return True
+    return False
+
+
+def get_food_cook_questions(food_id: int) -> Dict[str, list]:
+    """
+    获取指定食物的烹饪问题库（阶段 -> 问题列表）
+    Keyword arguments:
+    food_id -- 食物（菜谱）id
+    Return arguments:
+    Dict -- 阶段到问题列表的映射
+    """
+    return game_config.config_cook_question.get(food_id, {})
+
+
 def cook(food_data: Dict[str, Food], recipe_id: int, cook_level: int, maker: str) -> Food:
     """
     按食谱烹饪食物

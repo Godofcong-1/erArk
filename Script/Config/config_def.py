@@ -1699,6 +1699,28 @@ class World_Setting:
     """ 设定介绍 """
 
 
+class Cook_Question:
+    """ 烹饪问题库 """
+
+    cid: int
+    """ 问题cid """
+    food_id: int
+    """ 食物id """
+    stage: str
+    """ 烹饪阶段 """
+    question: str
+    """ 问题内容 """
+    correct_answer: str
+    """ 正确答案 """
+    wrong_answer_1: str
+    """ 错误答案1 """
+    wrong_answer_2: str
+    """ 错误答案2 """
+    wrong_answer_3: str
+    """ 错误答案3 """
+
+
+
 class Talk:
     """ 口上配置数据 """
 
