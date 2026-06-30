@@ -78,7 +78,7 @@ try:
 except:
     character_talk_data = {}
 
-def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False):
+def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, talk_common: bool = False, cook_question: bool = False):
     """
     输入：
         file_path (str): 文件路径
@@ -86,6 +86,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
         talk (bool): 是否为talk
         target (bool): 是否为target
         talk_common (bool): 是否为talk_common
+        cook_question (bool): 是否为烹饪问题库（多个食物题库csv合并为同一张 Cook_Question 表）
     返回：None
     功能：读取csv并更新全局配置数据
     """
@@ -115,6 +116,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 type_text = "TargetEffect"
         if talk_common:
             type_text = "Talk_Common"
+        if cook_question:
+            type_text = "Cook_Question"
         if talk:
             character_talk_data.setdefault(type_text, {})
             character_talk_data[type_text].setdefault("data", [])
@@ -218,8 +221,8 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
     """
     global config_def_str
     if class_name not in class_data:
-        # 给talk补上一个头部空行
-        if class_name == "Talk":
+        # 给talk/烹饪问题库补上一个头部空行
+        if class_name in {"Talk", "Cook_Question"}:
             config_def_str += "\n\n"
         config_def_str += "class " + class_name + ":"
         config_def_str += '\n    """ ' + class_text + ' """\n'
@@ -400,13 +403,31 @@ if BUILD_PO:
 file_list = os.listdir(config_dir)
 index = 0
 for i in file_list:
+    now_file = os.path.join(config_dir, i)
+    # 跳过子目录（如 cook_question 题库目录，稍后单独递归处理）
+    if os.path.isdir(now_file):
+        continue
+    # 跳过非csv文件
     if i.split(".")[1] != "csv":
         continue
     if index:
         config_def_str += "\n\n\n"
-    now_file = os.path.join(config_dir, i)
     build_csv_config(now_file, i, False, False)
     index += 1
+
+# 构建烹饪问题库（data/csv/cook_question 子目录下每个食物的题库csv合并为 Cook_Question 表）
+cook_question_dir = os.path.join(config_dir, "cook_question")
+if os.path.isdir(cook_question_dir):
+    count = 0
+    for cq_file in sorted(os.listdir(cook_question_dir)):
+        # 仅处理 csv 文件
+        if not cq_file.endswith(".csv"):
+            continue
+        config_def_str += "\n"
+        count += 1
+        build_csv_config(os.path.join(cook_question_dir, cq_file), cq_file, False, False, cook_question=True)
+    # if count:
+    #     print(f"[进度] 已处理烹饪库，共 {count} 个食物文件合并为烹饪细节表")
 
 # 在写入 talk 数据时根据 BUILD_TALK 判断是否覆盖
 if BUILD_TALK:
