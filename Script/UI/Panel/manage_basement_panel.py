@@ -52,6 +52,7 @@ class Manage_Basement_Panel:
             _("动力区"):[_("[能源系统]")],
             _("工程部"):[_("[基建系统]"), _("[装备维护系统]")],
             _("宿舍区"):[_("[宿舍管理系统]")],
+            _("生活娱乐区"):[_("[烹饪系统]")],
             _("制造加工区"):[_("[生产系统]")],
             _("图书馆"):[_("[图书馆管理系统]")],
             _("贸易区"):[_("[资源交易系统]")],
@@ -293,6 +294,7 @@ class Manage_Basement_Panel:
         from Script.System.Medical_System import medical_department_panel
         from Script.System.Field_Commission_System import field_commission_panel
         from Script.System.Dormitory_System import manage_dormitory_panel
+        from Script.System.Cooking_System import make_food_panel
 
         if _("基建系统") in son_panel:
             now_panel = building_panel.Building_Panel(self.width)
@@ -329,6 +331,14 @@ class Manage_Basement_Panel:
             now_panel = agriculture_production_panel.Agriculture_Production_Panel(self.width)
         elif _("宿舍管理系统") in son_panel:
             now_panel = manage_dormitory_panel.Manage_Dormitory_Panel(self.width)
+        elif _("烹饪系统") in son_panel:
+            # 输出提示
+            info_draw = draw.WaitDraw()
+            info_draw.text = _("\n○需要在生活娱乐区-厨房中进行烹饪\n")
+            info_draw.style = "gold_enrod"
+            info_draw.width = self.width
+            info_draw.draw()
+            return
         elif _("监禁调教系统") in son_panel:
             # 如果没有监狱长，则不显示监禁调教系统
             if not handle_premise.handle_have_warden(0):
