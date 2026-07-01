@@ -643,8 +643,8 @@ class SeeFoodListByFoodNameDraw:
             py_cmd.clr_cmd()
             line_feed.draw()
 
-            # 计算总耗时：基础时间 +（数量-1）* 菜谱难度，再根据设施效率调整
-            base_total_time = self.make_food_time + (make_count - 1) * max(0, food_diffucty)
+            # 计算总耗时：基础时间 + 每多一份增加食谱时间的10%，再根据设施效率调整
+            base_total_time = int(self.make_food_time * (1 + (make_count - 1) * 0.1))
             make_food_time = base_total_time
             facility_adjust_str = ""
             if facility_adjust != 1.0 and base_total_time > 0:
