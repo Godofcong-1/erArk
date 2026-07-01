@@ -1700,7 +1700,7 @@ class World_Setting:
 
 
 class Cook_Question:
-    """ 烹饪问题库 """
+    """ 两面包夹芝士烹饪问题库 """
 
     cid: int
     """ 问题cid """
@@ -1718,7 +1718,6 @@ class Cook_Question:
     """ 错误答案2 """
     wrong_answer_3: str
     """ 错误答案3 """
-
 
 
 class Talk:

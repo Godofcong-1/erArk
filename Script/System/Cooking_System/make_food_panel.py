@@ -159,11 +159,7 @@ class Make_food_Panel:
                 button_draw.draw()
             line_feed.draw()
 
-            # 烹饪模式面板（标准/精细），仅在非特殊调味时精细模式可选
-            special_flag = cooking.is_special_seasoning(self.special_seasoning)
-            # 特殊调味时强制为标准模式
-            if special_flag:
-                self.cook_mode = 0
+            # 烹饪模式面板（标准/精细），特殊调味也可选择精细模式（对应阶段会替换为特殊阶段的问题）
             mode_button_width = int(self.width / 6 + 1)
             mode_title = draw.NormalDraw()
             mode_title.text = _("○烹饪模式：\n")
@@ -186,33 +182,22 @@ class Make_food_Panel:
             std_info.text = _("：不考虑细节直接烹饪，烹饪出的食物品质与料理技能相关，品质上限为美味，无法达到绝珍的级别\n")
             std_info.draw()
             # 精细模式行
-            if special_flag:
-                # 特殊调味时精细模式灰显不可点击
-                fine_info = draw.CenterDraw()
-                fine_info.text = _("[精细模式]")
-                fine_info.style = "deep_gray"
-                fine_info.width = mode_button_width
-                fine_info.draw()
-                fine_info = draw.NormalDraw()
-                fine_info.text = _("：特殊调味时不可用\n")
-                fine_info.draw()
+            if self.cook_mode == 1:
+                fine_draw = draw.CenterDraw()
+                fine_draw.text = _("[精细模式]")
+                fine_draw.style = "gold_enrod"
+                fine_draw.width = mode_button_width
+                fine_draw.draw()
             else:
-                if self.cook_mode == 1:
-                    fine_draw = draw.CenterDraw()
-                    fine_draw.text = _("[精细模式]")
-                    fine_draw.style = "gold_enrod"
-                    fine_draw.width = mode_button_width
-                    fine_draw.draw()
-                else:
-                    fine_draw = draw.CenterButton(
-                        _("[精细模式]"), _("精细模式"), mode_button_width,
-                        cmd_func=self.change_cook_mode, args=(1,),
-                    )
-                    fine_draw.draw()
-                    return_list.append(fine_draw.return_text)
-                fine_info = draw.NormalDraw()
-                fine_info.text = _("：仔细考虑烹饪细节，根据细节的处理方式，食物品质能在料理技能的基础上进一步提升，最高可达到绝珍的级别\n")
-                fine_info.draw()
+                fine_draw = draw.CenterButton(
+                    _("[精细模式]"), _("精细模式"), mode_button_width,
+                    cmd_func=self.change_cook_mode, args=(1,),
+                )
+                fine_draw.draw()
+                return_list.append(fine_draw.return_text)
+            fine_info = draw.NormalDraw()
+            fine_info.text = _("：仔细考虑烹饪细节，根据细节的处理方式，食物品质能在料理技能的基础上进一步提升，最高可达到绝珍的级别\n")
+            fine_info.draw()
             line_feed.draw()
             line_feed.draw()
 
@@ -267,9 +252,6 @@ class Make_food_Panel:
             self.special_seasoning = 0
         else:
             self.special_seasoning = seasoning_cid
-        # 选择特殊调味时重置为标准模式（精细模式不适用于特殊调味）
-        if cooking.is_special_seasoning(seasoning_cid):
-            self.cook_mode = 0
 
     def change_cook_mode(self, cook_mode: int):
         """
@@ -736,13 +718,14 @@ class SeeFoodListByFoodNameDraw:
         # 计算食物品质：基础品质为玩家料理技能，封顶到美味
         base_quality = cooking.get_base_food_quality(0)
         food_quality = base_quality
-        # 精细模式且为非特殊调味且存在题库时，进入答题流程，答对可提升品质（封顶绝珍）
+        # 精细模式且存在题库时，进入答题流程（特殊调味会替换对应阶段的问题），答对可提升品质（封顶绝珍）
         if (
             self.cook_mode == 1
-            and not cooking.is_special_seasoning(self.special_seasoning)
             and cooking.has_cook_question_library(int(self.food_cid))
         ):
-            food_quality = cook_question_panel.run_cook_question_flow(int(self.food_cid), base_quality)
+            food_quality = cook_question_panel.run_cook_question_flow(
+                int(self.food_cid), base_quality, self.special_seasoning
+            )
 
         # 按数量逐个创建食物对象（延迟创建：仅在制作时才创建对应菜谱的食物对象）
         real_count = 0

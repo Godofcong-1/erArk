@@ -14,14 +14,16 @@ window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
 
-def run_cook_question_flow(food_id: int, base_quality: int) -> int:
+def run_cook_question_flow(food_id: int, base_quality: int, special_seasoning: int = 0) -> int:
     """
     精细模式烹饪答题流程
     依次回答 备料/烹饪/调味/装盘 四个阶段各一题，每阶段从该食物题库随机抽题，选项随机排列。
+    若选择了特殊调味，则对应阶段（调味或装盘）会改从对应的特殊阶段题库抽题。
     答对每题食物品质+1（封顶绝珍），答错品质不变。
     Keyword arguments:
     food_id -- 食物（菜谱）id
     base_quality -- 基础品质值
+    special_seasoning -- 当前调味cid，用于判定是否替换对应阶段的问题池
     Return arguments:
     int -- 答题后的最终品质值
     """
@@ -36,6 +38,8 @@ def run_cook_question_flow(food_id: int, base_quality: int) -> int:
     max_quality = cooking.get_max_food_quality()
     food_name = cache.recipe_data[food_id].name
     question_lib = cooking.get_food_cook_questions(food_id)
+    # 特殊调味对应的阶段替换规则（如精液替换调味/装盘阶段、药物替换调味阶段）
+    stage_override = cooking.get_special_seasoning_question_stage(special_seasoning)
 
     # 换行绘制对象
     line_feed = draw.NormalDraw()
@@ -51,7 +55,11 @@ def run_cook_question_flow(food_id: int, base_quality: int) -> int:
 
     # 依次处理每个阶段
     for stage in cooking.COOK_QUESTION_STAGES:
-        stage_questions = question_lib.get(stage, [])
+        # 确定实际使用的问题阶段：特殊调味会将对应阶段替换为特殊阶段的问题池
+        actual_stage = stage
+        if stage_override is not None and stage_override[0] == stage:
+            actual_stage = stage_override[1]
+        stage_questions = question_lib.get(actual_stage, [])
         # 该阶段无题则跳过
         if not stage_questions:
             continue

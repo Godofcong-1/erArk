@@ -115,13 +115,35 @@ def get_base_food_quality(character_id: int = 0) -> int:
 
 def is_special_seasoning(seasoning_cid: int) -> bool:
     """
-    判断调味是否为特殊调味（精液/药物等，cid>=11），特殊调味时精细模式不可用
+    判断调味是否为特殊调味（精液/药物等，cid>=11）
     Keyword arguments:
     seasoning_cid -- 调味cid
     Return arguments:
     bool -- 是否为特殊调味
     """
     return seasoning_cid >= 11
+
+
+def get_special_seasoning_question_stage(special_seasoning: int):
+    """
+    获取特殊调味对应的烹饪问题阶段替换规则
+    选择特殊调味进行精细烹饪时，其对应的常规阶段问题池会被替换为特殊阶段的问题池
+    Keyword arguments:
+    special_seasoning -- 调味cid
+    Return arguments:
+    tuple -- (被替换的常规阶段, 替换用的特殊阶段)，无替换规则则返回 None
+    """
+    # 射入精液（巧妙地混入食物中，cid11）：替换调味阶段为精液调味题
+    if special_seasoning == 11:
+        return (_("调味"), _("调味_精液"))
+    # 射入精液（不作掩饰直接射上去，cid12）：替换装盘阶段为精液装盘题
+    if special_seasoning == 12:
+        return (_("装盘"), _("装盘_精液"))
+    # 加入药物（所有药物cid均>100）：替换调味阶段为药物调味题
+    if special_seasoning > 100:
+        return (_("调味"), _("调味_药物"))
+    # 其他调味无替换规则（母乳暂未在游戏中实装）
+    return None
 
 
 def has_cook_question_library(food_id: int) -> bool:
