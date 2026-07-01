@@ -91,8 +91,15 @@ def character_aotu_change_value(character_id: int, now_time: datetime.datetime, 
         new_urinate = min(now_character_data.urinate_point + int(add_urinate), 300)
         now_character_data.urinate_point = new_urinate
 
+    # 获取当前体力气力与最大值的比例，当前比例越低，调整系数越高，最高为无体力时的2倍，最低为满比例时的1倍
+    hit_point_ratio = now_character_data.hit_point / now_character_data.hit_point_max
+    mana_point_ratio = now_character_data.mana_point / now_character_data.mana_point_max
+    hit_adjust_coefficient = 2 - hit_point_ratio
+    mana_adjust_coefficient = 2 - mana_point_ratio
+
     # 结算饥饿值
     add_hunger = random.randint(int(true_add_time * 0.8), int(true_add_time * 1.2))
+    add_hunger = int(add_hunger * hit_adjust_coefficient * mana_adjust_coefficient)
     new_hunger = min(now_character_data.hunger_point + add_hunger, 240)
     now_character_data.hunger_point = new_hunger
 
