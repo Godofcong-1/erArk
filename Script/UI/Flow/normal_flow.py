@@ -434,6 +434,13 @@ def make_coffee_add_flow():
     now_panel = make_food_panel.Make_food_Panel(width, make_food_type = 1)
     now_panel.draw()
 
+@handle_panel.add_panel(constant.Panel.MIXOLOGY)
+def mixology_flow():
+    """调酒面板"""
+    from Script.System.Cooking_System import make_food_panel
+    now_panel = make_food_panel.Make_food_Panel(width, make_food_type = 2)
+    now_panel.draw()
+
 @handle_panel.add_panel(constant.Panel.ASK_HIDDEN_SEX)
 def ask_hidden_sex_flow():
     """邀请隐奸面板"""

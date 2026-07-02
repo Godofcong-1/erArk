@@ -166,6 +166,8 @@ class Panel:
     """ 编辑群交行动面板 """
     MANAGE_DORMITORY = 65
     """ 宿舍管理面板 """
+    MIXOLOGY = 66
+    """ 调酒面板 """
 
 
 class InstructType:

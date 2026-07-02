@@ -874,6 +874,11 @@ def handle_make_food():
     cache.now_panel_id = constant.Panel.MAKE_FOOD
 
 
+@add_instruct(constant.Instruct.MIXOLOGY)
+def handle_mixology():
+    """处理调酒指令"""
+    cache.now_panel_id = constant.Panel.MIXOLOGY
+
 @add_instruct(constant.Instruct.ALL_NPC_POSITION)
 def handle_all_npc_position():
     """处理干员位置一览指令"""

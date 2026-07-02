@@ -35,7 +35,7 @@ class Make_food_Panel:
         self.handle_panel: panel.PageHandlePanel
         """ 当前名字列表控制面板make_food_type """
         self.make_food_type = make_food_type
-        """ 0普通做饭，1泡咖啡 """
+        """ 0普通做饭，1泡咖啡，2酒类 """
         self.special_seasoning = 0
         """ 调味类型 """
         self.cook_mode = 0
@@ -45,10 +45,13 @@ class Make_food_Panel:
         """绘制对象"""
         character_data: game_type.Character = cache.character_data[0]
         title_draw = draw.TitleLineDraw(_("制作食物"), self.width)
-        food_type_list = [_("主食"), _("零食")]
+        food_type_list = [_("主食"), _("零食"), _("饮品"), _("酒类")]
         if self.make_food_type == 1:
             food_type_list = [_("咖啡")]
             self.now_panel = _("咖啡")
+        elif self.make_food_type == 2:
+            food_type_list = [_("酒类")]
+            self.now_panel = _("酒类")
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel = panel.PageHandlePanel([], SeeFoodListByFoodNameDraw, 50, 5, self.width, True, True, 0)
         while 1:
@@ -712,11 +715,15 @@ class SeeFoodListByFoodNameDraw:
         new_make_food_time -- 本次制作的总耗时（分钟）
         make_count -- 制作数量
         """
+        from Script.Design import handle_premise
         character_data: game_type.Character = cache.character_data[0]
         food_recipe: game_type.Recipes = cache.recipe_data[int(self.food_cid)]
 
         # 计算食物品质：基础品质为玩家料理技能，封顶到美味
         base_quality = cooking.get_base_food_quality(0)
+        # 如果当前是酒类，且当前地点在酒吧，则品质额外+1
+        if food_recipe.type == 3 and handle_premise.handle_in_bar(0):
+            base_quality += 1
         food_quality = base_quality
         # 精细模式且存在题库时，进入答题流程（特殊调味会替换对应阶段的问题），答对可提升品质（封顶绝珍）
         if (

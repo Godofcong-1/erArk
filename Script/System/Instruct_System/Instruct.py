@@ -230,6 +230,8 @@ class Instruct:
     """ 管理农业生产 """
     MANAGE_VEHICLE = "manage_vehicle"
     """ 管理载具 """
+    MIXOLOGY = "mixology"
+    """ 调酒 """
     PHYSICAL_CHECK_AND_MANAGE = "physical_check_and_manage"
     """ 身体检查与管理 """
     MANAGE_CONFINEMENT_AND_TRAINING = "manage_confinement_and_training"
