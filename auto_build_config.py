@@ -12,11 +12,13 @@ target_dir = os.path.join("data", "target")
 character_dir = os.path.join("data","character")
 ui_text_dir = os.path.join("data", "ui_text")
 po_csv_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_csv.po")
+po_cook_question_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_cook_question.po")
 po_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_talk.po")
 po_common_talk_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_common_talk.po")
 po_event_path = os.path.join("data","po","zh_CN","LC_MESSAGES", "erArk_event.po")
 data_path = os.path.join("data","Character.json")
 config_data_path = os.path.join("data", "data.json")
+cook_question_data_path = os.path.join("data", "Cook_Question.json")
 ui_text_data_path = os.path.join("data", "ui_text.json")
 character_talk_data_path = os.path.join("data", "Character_Talk.json")
 character_event_data_path = os.path.join("data", "Character_Event.json")
@@ -25,6 +27,7 @@ config_path = os.path.join("Script", "Config", "config_def.py")
 
 # 全局变量
 config_data = {}
+cook_question_data = {}
 character_data = {}
 ui_text_data = {}
 character_talk_data = {}
@@ -36,6 +39,7 @@ class_data = set()
 config_def_str = ""
 # 使用列表累积 PO 行，减少大量字符串拼接导致的性能损耗
 config_po_lines = []
+cook_question_po_lines = []
 talk_po_lines = []
 common_talk_po_lines = []
 event_po_lines = []
@@ -122,6 +126,10 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
             character_talk_data.setdefault(type_text, {})
             character_talk_data[type_text].setdefault("data", [])
             character_talk_data[type_text].setdefault("gettext", {})
+        elif cook_question:
+            cook_question_data.setdefault(type_text, {})
+            cook_question_data[type_text].setdefault("data", [])
+            cook_question_data[type_text].setdefault("gettext", {})
         elif talk_common:
             talk_common_data.setdefault(type_text, {})
             talk_common_data[type_text].setdefault("data", [])
@@ -187,7 +195,7 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                 elif k == "target_id" and target:
                     row[k] = path_list[-2] + row[k]
                 if get_text_data[k]:
-                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common)
+                    build_config_po(row[k], file_path, now_index, talk = talk, common_talk = talk_common, cook_question = cook_question)
             if talk:
                 row["version"] = 1
                 # 如果口上的文件名中存在下划线标记的版本号，则将最后一个下划线之后的数字记录为版本号
@@ -195,6 +203,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
                     # print(f"debug file_id = {file_id}")
                     row["version"] = int(file_id.rsplit("_", 1)[-1])
                 character_talk_data[type_text]["data"].append(row)
+            elif cook_question:
+                cook_question_data[type_text]["data"].append(row)
             elif talk_common:
                 talk_common_data[type_text]["data"].append(row)
             else:
@@ -202,6 +212,8 @@ def build_csv_config(file_path: str, file_name: str, talk: bool, target: bool, t
         if talk:
             get_text_data["version"] = 0
             character_talk_data[type_text]["gettext"] = get_text_data
+        elif cook_question:
+            cook_question_data[type_text]["gettext"] = get_text_data
         elif talk_common:
             talk_common_data[type_text]["gettext"] = get_text_data
         else:
@@ -240,7 +252,7 @@ def build_config_def(class_name: str, value_type: dict, docstring: dict, class_t
             config_def_str = config_def_str[:-2]
 
 
-def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False, common_talk: bool = False, event: bool = False):
+def build_config_po(message: str, file_path: str, now_index: int, talk: bool = False, common_talk: bool = False, cook_question: bool = False, event: bool = False):
     """
     输入：
         message (str): 文本内容
@@ -248,15 +260,17 @@ def build_config_po(message: str, file_path: str, now_index: int, talk: bool = F
         now_index (int): 当前行数
         talk (bool): 是否为talk
         common_talk (bool): 是否为common talk
+        cook_question (bool): 是否为cook question
         event (bool): 是否为event
     返回：None
     功能：构建配置po文本
     """
-    global built, config_po_lines, talk_po_lines, common_talk_po_lines, event_po_lines
+    global built, config_po_lines, talk_po_lines, common_talk_po_lines, cook_question_po_lines, event_po_lines
     if message not in built:
         lines = (
             talk_po_lines if talk else
             common_talk_po_lines if common_talk else
+            cook_question_po_lines if cook_question else
             event_po_lines if event else
             config_po_lines
         )
@@ -396,6 +410,7 @@ print("开始加载游戏数据\n")
 if BUILD_PO:
     header_text = build_po_text()
     config_po_lines.append(header_text)
+    cook_question_po_lines.append(header_text)
     talk_po_lines.append(header_text)
     common_talk_po_lines.append(header_text)
     event_po_lines.append(header_text)
@@ -556,6 +571,8 @@ if BUILD_CONFIG:
     #     config_file.write(config_def_str)
     with open(config_data_path, "w", encoding="utf-8") as config_data_file:
         json.dump(config_data, config_data_file, ensure_ascii=False)
+    with open(cook_question_data_path, "w", encoding="utf-8") as cook_question_data_file:
+        json.dump(cook_question_data, cook_question_data_file, ensure_ascii=False)
 
 if BUILD_UI_TEXT:
     with open(ui_text_data_path, "w", encoding="utf-8") as ui_text_data_file:
@@ -566,6 +583,9 @@ if BUILD_CONFIG:  # 与po输出相关的配置
         po_file.write(''.join(config_po_lines))
 
 if BUILD_PO:
+    if BUILD_CONFIG:
+        with open(po_cook_question_path, "w", encoding="utf-8") as po_file:
+            po_file.write(''.join(cook_question_po_lines))
     if BUILD_TALK:
         with open(po_talk_path, "w", encoding="utf-8") as po_file:
             po_file.write(''.join(talk_po_lines))

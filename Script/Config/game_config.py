@@ -17,6 +17,8 @@ talk_common_path = os.path.join("data", "Talk_Common.json")
 """ 原始通用文本文件路径 """
 ui_text_path = os.path.join("data", "ui_text.json")
 """ 原始ui文本数据文件路径 """
+cook_question_path = os.path.join("data", "Cook_Question.json")
+""" 原始烹饪问题库数据文件路径 """
 config_data = {}
 """ 原始json数据 """
 character_data = {}
@@ -27,6 +29,8 @@ talk_common_data = {}
 """ 原始通用文本数据 """
 ui_text_data = {}
 """ 原始ui文本数据 """
+cook_question_data = {}
+""" 原始烹饪问题库数据 """
 config_bar: Dict[int, config_def.BarConfig] = {}
 """ 比例条配置数据 """
 config_bar_data: Dict[str, int] = {}
@@ -466,13 +470,18 @@ config_instruct_by_id: Dict[str, int] = {}
 
 def load_data_json():
     """载入data.json、character.json与ui_text.json内配置数据"""
-    global config_data, character_data, ui_text_data, character_talk_data, character_event_data, talk_common_data
+    global config_data, character_data, ui_text_data, character_talk_data, character_event_data, talk_common_data, cook_question_data
     config_data = json_handle.load_json(data_path)
     character_data = json_handle.load_json(character_path)
     ui_text_data = json_handle.load_json(ui_text_path)
     character_talk_data = json_handle.load_json(character_talk_path)
     character_event_data = json_handle.load_json(character_event_path)
     talk_common_data = json_handle.load_json(talk_common_path)
+    # 兼容旧构建产物：若独立题库文件缺失，则按空题库处理
+    if os.path.exists(cook_question_path):
+        cook_question_data = json_handle.load_json(cook_question_path)
+    else:
+        cook_question_data = {}
 
 def reload_talk_data():
     """重新载入口上配置数据"""
@@ -1579,9 +1588,9 @@ def load_food_quality():
 def load_cook_question():
     """载入烹饪问题库数据（按 食物id -> 烹饪阶段 -> 问题列表 建索引）"""
     # 若尚未生成任何题库csv，则该表不存在，直接返回
-    if "Cook_Question" not in config_data:
+    if "Cook_Question" not in cook_question_data:
         return
-    now_data = config_data["Cook_Question"]
+    now_data = cook_question_data["Cook_Question"]
     translate_data(now_data)
     config_cook_question.clear()
     for tem_data in now_data["data"]:
