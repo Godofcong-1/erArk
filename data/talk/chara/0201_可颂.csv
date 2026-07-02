@@ -10,15 +10,21 @@ str,str,int,str,str
 4,chat,201,sys_1&sys_5,{Name} 与 {TargetName} 在一起聊了聊工作上的事情，之后 {Name} 又很好奇地提起博士以及其他干员。\n{TargetName} 向 {Name} 透露了她最近的所见所闻，{Name} 表示对这些事情很感兴趣。\n{TargetName} 表示待到非工作时间再详细聊一聊这些事情。\n\n……\n{TargetName}：那个……等你我都下班之后再详细聊聊？\n{Name}：好呀，还有什么比较有意思的事情如果方便透露的话有时间可以多透露透露给我，我保证会做好保密措施的~\n……\n\n你并没有听到太多对你有用的信息，于是没有去注意她们的聊天。
 5,chat,201,sys_0&CVP_A1_A|40_G_5,{Name} 有意地将话题推到 {TargetName} 感兴趣且擅长的部分，{TargetName} 兴致勃勃。\n\n……\n{TargetName}：没想到老板对这方面见解这么深，真是让我大开眼界呀~\n你连忙谦虚地回应了她对你的夸赞。\n{TargetName}：不得不说，山外有山，人外有人。以后有这方面的问题我还是要问问老板您的~\n……
 6,chat,201,sys_0&t_hunger_ge_80,{TargetName} 的肚子突然小声地叫了一下，听来一定是饿了。虽然声音小且极为短暂，但还是被 {Name} 捕捉到了。\n{Name} 问 {TargetName} 是不是饿了。\n\n{TargetName}：哎呀老板，没想到被您听到了……我确实有些饿了，想去吃点东西呢。\n{TargetName}：老板您不忙的话，可以一起去吃一点吗？
-7,chat,201,sys_0&in_library,{Name} 和 {TargetName} 聊了聊最近在看什么书。\n\n{TargetName}：书吗？我倒是不怎么喜欢看字多的书籍啦……大概就看一些东国的轻小说，以及漫画这样子……\n{TargetName}：我是觉得看书这件事情略有些枯燥，不过那些经典的小说改编成的电视剧和电影都挺好看的。\n\n你表示自己没有怎么看过 {TargetName} 所说的那些类型，看得比较多的是实用性强的和诗歌、文学类的书籍。\n你说了说乌萨斯那边的文学很有意思，{TargetName} 看起来似乎是不太懂你所说的那些书籍。\n\n{TargetName}：唔……嗯……\n\n{TargetName} 点了点头，装作是听懂了你说的那些书。\n当你又提到了一些你之前看过的小说的时候，{TargetName} 似乎想起来了什么。\n\n{TargetName}：啊，这个啊……之前我还看过这本书改编成的电影呢，感觉很不错。\n{TargetName}：老板，如果您对轻小说、漫画感兴趣的话，我可以推荐您一些，我对这些还是很了解的，\n		老板您也可以随时问我相关的问题，随时为您精准‘排雷’！
+7,chat,201,sys_0&in_library,{Name} 和 {TargetName} 聊了聊最近在看什么书。\n\n{TargetName}：书吗？我倒是不怎么喜欢看字多的书籍啦……大概就看一些东国的轻小说，以及漫画这样子……\n{TargetName}：我是觉得看书这件事情略有些枯燥，不过那些经典的小说改编成的电视剧和电影都挺好看的。\n\n你表示自己没有怎么看过 {TargetName} 所说的那些类型，看得比较多的是实用性强的和诗歌、文学类的书籍。\n你说了说乌萨斯那边的文学很有意思，{TargetName} 看起来似乎是不太懂你所说的那些书籍。\n\n{TargetName}：唔……嗯……\n\n{TargetName} 点了点头，装作是听懂了你说的那些书。\n当你又提到了一些你之前看过的小说的时候，{TargetName} 似乎想起来了什么。\n\n{TargetName}：啊，这个啊……之前我还看过这本书改编成的电影呢，感觉很不错。\n{TargetName}：老板，如果您对轻小说、漫画感兴趣的话，我可以推荐您一些，我对这些还是很了解的，\n		老板您也可以随时问我相关的问题，随时为您精准『排雷』！
 8,chat,201,sys_1&t_hp_or_mp_low,{Name} 看到 {TargetName} 有点累了，问 {TargetName} 要不要休息一下。\n{TargetName} 表示自己还好，{Name} 露出了担心的表情。\n\n{Name}：您还是休息一下吧，即使是力气永远使不完的蹄丰也会因为过度劳累而倒下的。\n{Name}：如果……可以的话……我可以在您休息的时候陪着您的。
-9,chat,201,sys_1,{Name} 和 {TargetName} 聊了聊最近接诊的病人。
+9,chat,201,sys_1,{Name} 和 {TargetName} 聊了聊最近罗德岛的物流情况。\n\n{Name}：老板，最近岛上的物资调配还挺顺利的，新到的那批货物质量真不错。\n{Name}：不过嘛……价格上我还是觉得可以再压一压，下次采购的时候让我去谈吧？\n\n{Name} 说着说着就聊到了之前在龙门跑物流时的经历。\n{Name}：那时候我跟能天使、德克萨斯一起送货，路上总能遇到些有意思的事情。\n{Name}：有一次我们还遇到了劫道的，结果被德克萨斯三两下就解决了……哈哈，现在想想还挺好笑的。
 10,chat_failed,201,sys_0,{Name} 试图打开话题，但是话出口后，自己感觉也有些尬了。\n气氛好像凝固了一样，{Name} 和 {TargetName} 面面相觑，二人都沉默了，不知道接下来要说什么。\n过了几秒钟之后，{TargetName} 还是想不到回答什么，于是赶忙尝试打破这一尴尬。\n\n{TargetName}：啊……老板，我想起来我等下还有别的事情要做，刚才光想那件事情了。\n{TargetName}：不如……我们下次再聊这个话题吧？
 100002,empty_instruct,0,high_1,【身体接触】
 2000002,empty_instruct,0,high_1,【好感度小于3级（1000）的身体接触】
 11,stroke,201,sys_0&in_dr_off&CVP_A2_F_L_1000,{Name} 与 {TargetName} 发生了身体接触。\n你只是出于好奇碰了一下 {TargetName} 的后背，她便回头看了你一眼。\n\n{TargetName}：老板，讨厌啦~ 现在还在办公室呢~\n\n你与 {TargetName} 互相看了对方很久，她的脸有些红了。\n你继续看着她，她立刻转过身去，不再看着你。很明显她害羞了。\n大概是你也觉得有些不好意思，便不再去靠近她，去尝试解释刚才的行为。
 12,stroke,201,sys_0&t_is_assistant&CVP_A2_F_L_1000,{Name} 与 {TargetName} 发生了身体接触。\n她很明白你是故意摸到她的，于是当她看你的时候，你的目光开始躲闪，不好辩解什么。\n\n她的视线回到了原来的位置，继续处理着她作为你的助理的工作。你继续看着她，她的脸红红的。\n\n{TargetName}：老板……下次不要再乱摸了喔，咱们二人的关系还没有那么近呢……\n{TargetName} 小声地说道。
-13,stroke,201,sys_1&sys_4&is_assistant,{Name} 在处理助理工作时，无意间触碰到了 {TargetName} 。\n好巧不巧的是，她不小心触碰到了本不应该触碰到的位置，在意识到后，她脸红了。\n\n{Name}：抱歉，老板，我不是故意的……\n你表示这没有什么，{Name}此时的尴尬缓解了一些，她赶紧继续工作了。\n\n{Name} 触碰你时的感觉令她有些难忘。
+13,stroke,201,sys_1&sys_4&is_assistant&CVP_A2_F_L_1000,{Name} 在处理助理工作时，无意间触碰到了 {TargetName} 。\n好巧不巧的是，她不小心触碰到了本不应该触碰到的位置，在意识到后，她脸红了。\n\n{Name}：抱歉，老板，我不是故意的……\n你表示这没有什么，{Name}此时的尴尬缓解了一些，她赶紧继续工作了。\n\n{Name} 触碰你时的感觉令她有些难忘。
+2000003,empty_instruct,0,high_1,【好感度≥1000，并≤5000（3-5级）的身体接触】
+21,stroke,201,sys_0&in_dr_off&CVP_A2_F_GE_1000&CVP_A2_F_L_5000,{Name} 轻轻碰了碰 {TargetName} 的肩膀。\n{TargetName} 回过头来，看到是你，脸上的表情从警觉变成了放松。\n\n{TargetName}：啊，是老板啊，吓我一跳。\n{TargetName}：我还以为是哪个不长眼的家伙呢……\n\n她笑了笑，并没有躲开你的触碰，反而往你这边靠近了一些。\n\n{TargetName}：怎么了，有什么事要吩咐我吗？
+22,stroke,201,sys_0&in_dr_off&CVP_A2_F_GE_5000,{Name} 的手轻轻搭在了 {TargetName} 的肩上，{TargetName} 微微一颤，随即放松下来。\n\n{TargetName}：老板……\n\n她侧过头，脸颊蹭了蹭你的手。你感觉到她的体温透过手套传了过来。\n\n{TargetName}：您的手……很暖和呢。\n\n她的声音比平时低了一些，带着一种少见的温柔。
+23,stroke,201,sys_0&t_is_assistant&CVP_A2_F_GE_5000,{Name} 的手假装不经意地拂过 {TargetName} 的腰间。\n{TargetName} 正在整理文件的动作停了一下，耳朵微微发红。\n\n{TargetName}：老板，您今天是不是有点……太爱动手动脚了？\n\n她嘴上这么说，却没有把身体移开。\n\n{TargetName}：不过嘛……如果是老板的话，也不是不行啦……
+24,stroke,201,sys_1&sys_4&is_assistant&CVP_A2_F_GE_5000,{Name} 在递文件给你的时候，手指悄悄地碰了碰你的手背。\n你抬头看她，她立刻把目光移开，假装在看天花板。\n\n{Name}：咳咳，那个……老板，这份文件需要您签字。\n\n她的耳朵尖红红的，显然刚才的触碰并不是无意的。
+25,stroke,201,sys_1&sys_4&CVP_A2_F_GE_5000,{Name} 趁你不注意的时候，从背后抱了你一下，但只持续了一秒就松开了。\n你转过身，看到她正假装在看别处，但脸上带着得逞的笑容。\n\n{Name}：嘿嘿，偷袭成功~\n{Name}：老板的反应比我想象的还有意思呢。
 100003,empty_instruct,0,high_1,【咖啡】
 14,make_coffee,201,sys_0,{TargetName} 给 {Name} 泡了杯咖啡。\n\n{TargetName} 倒入咖啡粉之后，仔细看了看包装袋。\n{TargetName}：老板您经常喝这个牌子的速溶咖啡吗？\n{Name} 说自己也在尝试其他牌子的咖啡，但是在这些牌子上兜兜转转，最后还是觉得这个牌子的好喝。\n\n{TargetName}：有品位啊老板，这个咖啡相比其他牌子的确实有一些亮点，有一种独特的风味。\n{Name} 表示赞同。\n\n{TargetName} 将咖啡给了你，两人一同饮下。\n对你来说，每天最治愈的时光，就是在这安静的时刻，来一杯咖啡。\n\n{TargetName}：老板，要我说，速溶咖啡总的来说还是不如现磨。\n{Name} 点了点头。\n{TargetName}：我记得罗德岛里也有咖啡厅吧？有时间的话……咱们两个人一起去喝一杯怎么样？
 15,make_coffee,201,sys_0&CVP_A1_A|43_G_5,{Name} 给 {TargetName} 泡了杯咖啡。\n这次用的是来自萨尔贡的咖啡豆，{TargetName} 看着你专业地泡咖啡，露出了羡慕的表情。\n\n……\n\n经过短暂的等待，咖啡终于泡好了。{Name} 将热气腾腾的咖啡和方糖递给 {TargetName}，她轻轻吹了吹，抿了一口。\n\n{TargetName}：呜啊，好苦，不过回味很不错。不愧是老板，不仅懂得料理，咖啡这方面也很有经验嘛。\n{TargetName} 意识到自己还没有在咖啡里放糖，于是放了几块于其中，又喝了一口。\n{TargetName}：这下好多了~\n\n{Name} 冲的是美式咖啡，加了许多方糖也不会缺少苦味。在喜欢的类型上，罗德岛里喜欢美式咖啡的并不是很多，{Name} 目前最了解的除了自己就是凯尔希了。\n有的干员说，泡得好的美式咖啡回味虽然不错，但是苦味会一直持续很久，很多年轻的女干员会选择白咖啡、拿铁、卡布奇诺等加了牛奶的咖啡。\n想到这里，{Name} 问了问 {TargetName} 还有没有其他喜欢喝的种类。\n\n{TargetName}：嘛……至于咖啡的种类……我想还是拿铁吧。\n{TargetName}：我不是很在乎咖啡抗疲劳的功效来着，毕竟每天的工作量并没有特别多，以及我也没有只喝意式浓缩去享受苦味的喜好。\n{TargetName}：不过嘛……其他的类型我确实没有怎么探索过。老板如果您有空的话也陪我一起探索探索，怎么样？
@@ -28,3 +34,359 @@ str,str,int,str,str
 19,make_coffee,201,sys_1&sys_4&CVP_A1_A|43_G_5,{Name}：老板，想喝什么咖啡？意式浓缩、玛奇朵、拿铁、康宝蓝……哪一种都可以的。\n\n你说你想喝拿铁。\n\n{Name}：哇哦，和我的喜好一样呢。虽然不加奶和糖的咖啡也很好，但是它们实在是太苦了。\n{Name}：之前和安洁莉娜聊过咖啡，她更喜欢摩卡。我尝试了一下，那种甜蜜的感觉确实很难忘……\n\n……\n\n{Name} 将一杯拿铁递给你，你尝了尝，的确不错。\n在这个时间里，喝到好的咖啡，你感觉到你被 {Name} 治愈了。
 100004,empty_instruct,0,high_1,【NPC/玩家移动】
 20,wait,201,sys_1,{Name} 在旁边等着，她拿出了手机。\n\n{Name}：哎呀……这个月也完蛋了……\n她小声说道。
+26,move,201,sys_1&place_6,{Name} 来到了{TargetSceneName}。\n\n{Name}：哟，老板，我来了！有什么需要帮忙的吗？\n她的步伐轻快有力，看起来精力充沛。
+27,move,201,sys_1&place_8,{Name} 向{TargetSceneName}离开了。\n\n{Name}：那我先去忙啦，老板！有事随时叫我~\n她朝你挥了挥手，小跑着离开了。
+28,move,201,sys_0&place_2,{TargetName} 看到 {Name} 走过来，眼睛一亮。\n\n{TargetName}：老板！您来得正好，我刚才还在想您呢。\n{TargetName} 拍了拍身边的座位，示意你坐过来。
+29,move,201,sys_0&place_4,{Name} 准备离开，{TargetName} 注意到了。\n\n{TargetName}：老板这就要走了吗？\n{TargetName}：好吧……那等您忙完了记得来找我啊，我这边随时欢迎~
+30,move,201,sys_1&sys_3,{Name} 站在原地，时不时看看手机，又时不时看看周围。\n\n{Name}：嗯……今天要做的事情还挺多的呢……\n她用手指在手机屏幕上划了划，似乎是在查看日程。
+100005,empty_instruct,0,high_1,【休息/睡眠】
+31,rest,201,sys_0,{Name} 和 {TargetName} 一起休息了一会儿。\n{TargetName} 找了个靠墙的位置坐下，伸了个懒腰。\n\n{TargetName}：啊~偶尔这么休息一下也不错。老板，您平时有午休的习惯吗？\n\n你们聊着聊着，{TargetName} 打了个哈欠。\n\n{TargetName}：嗯……吃饱了就容易犯困呢……
+32,rest,201,sys_1,{Name} 坐了下来，长长地呼出一口气。\n她从口袋里掏出一包零食，撕开包装袋，慢慢地吃了起来。\n\n{Name}：嗯……这个新口味还不错……\n\n她一边吃一边露出了满足的表情，看起来休息得很惬意。
+33,sleep,201,sys_1,{Name} 脱掉了外套，钻进了被窝里。\n\n{Name}：啊，今天一天真是够累的……明天还要早起……\n她自言自语着，很快呼吸就变得均匀了。看样子是睡着了。
+34,sleep,201,sys_1&ask_not_lock_door_bedore_sleeping&ask_not_wear_cloth_in_sleep,{Name} 犹豫了一下，还是照你吩咐的没有锁门，然后一件件脱掉了身上的衣物。\n她赤裸着身体钻进被子里，只露出半个脑袋。\n\n{Name}：呜……感觉有点冷……不过既然是老板的要求……\n\n她的声音越来越小，很快就进入了梦乡。
+35,sleep,201,sys_1&is_assistant&assistant_live_together_on&pl_action_not_sleep,{Name} 躺在你的床上先睡着了。\n她睡觉的姿势不太老实，一条腿已经伸到了被子外面。\n\n你还在处理最后几份文件，偶尔能听到她发出轻微的鼾声。\n\n{Name}：（梦话）唔……老板……那块叉烧是我的……
+36,sleep,201,sys_1&is_assistant&assistant_live_together_on&pl_action_sleep,{Name} 钻进你的被窝里，很自然地抱住了你。\n她的体温偏高，可能是因为蹄丰的体质。\n\n{Name}：老板……暖和吧？\n\n她迷迷糊糊地说了一句，然后就把脸埋在你的胸口，安心地睡着了。
+37,get_up,201,sys_1,{Name} 从床上坐了起来，揉了揉眼睛。\n她的头发有些乱，看起来还没完全清醒。\n\n{Name}：唔……几点了……该去工作了……\n\n她打了个大大的哈欠，开始慢吞吞地穿衣服。
+38,get_up,201,sys_1&ask_equp_clit_clamp_in_day&ask_equp_nipple_clamp_in_day&ask_equp_v_bibrator_in_day,{Name} 醒来后，照你的要求开始给自己安装那些小道具。\n她一边装一边小声嘀咕着什么。\n\n{Name}：唔……这东西夹着走路的感觉还真是……\n\n她调整了一下位置，脸微微红了，但还是很顺从地完成了你的指令。
+100006,empty_instruct,0,high_1,【排泄/洗浴】
+39,pee,201,sys_1,{Name} 坐在马桶上，长长地舒了一口气。\n\n{Name}：呼……总算……\n\n她解决完之后，洗了洗手，对着镜子整理了一下头发。
+40,take_shower,201,sys_1,{Name} 站在淋浴喷头下，热水冲刷着她的身体。\n她舒服地叹了口气，水珠顺着她的角流下来。\n\n{Name}：啊……热水澡真是辛苦一天最好的奖励了……\n\n她仔细地清洗着身体的每一个角落，尤其是自己的角——看得出来她对自己的角很爱惜。
+41,take_shower,201,sys_1&CVP_A1_Dirty|B0_G_10,{Name} 感觉到头发上黏糊糊的液体，脸红了。\n\n{Name}：呜……得好好洗一洗才行……\n\n她挤了比平时更多的洗发水，仔细地揉搓着每一缕头发，确保那些白色的痕迹被彻底清理干净。
+42,take_shower,201,sys_1&CVP_A1_Dirty|B6_G_10&ask_not_wash_semen,{Name} 洗完了身体的其他部位，在清洗下身的时候犹豫了一下。\n她低头看了看，脸上露出了复杂的表情。\n\n{Name}：老板说不能洗……\n\n她咬了咬嘴唇，最终只是用湿毛巾简单擦拭了一下外部，然后关掉了水。\n\n{Name}：感觉有点奇怪……不过算了。
+100007,empty_instruct,0,high_1,【做饭/吃饭】
+43,make_food,201,sys_0,{Name} 和 {TargetName} 一起花{MakeFoodTime}分钟做了{FoodName}。\n{TargetName} 负责切菜，动作利落，看起来平时没少下厨。\n\n{TargetName}：老板，这个肉要切成多大的块？\n\n你们分工合作，厨房里飘出阵阵香气。{TargetName} 时不时偷吃一口，被你发现后嘿嘿一笑。
+44,make_food,201,sys_0&CVP_A1_A|43_LE_2,{Name} 和 {TargetName} 一起花{MakeFoodTime}分钟做了{FoodName}。\n但结果不太理想——主要原因是你把盐放多了。\n\n{TargetName}：唔……老板，这个……有点咸呢……\n{TargetName} 喝了一大口水，然后笑了笑。\n{TargetName}：不过没关系！下次注意就好，失败是成功之母嘛~
+45,make_food,201,sys_0&CVP_A1_A|43_G_5,{Name} 和 {TargetName} 一起花{MakeFoodTime}分钟做了{FoodName}。\n{TargetName} 尝了一口，眼睛立刻亮了起来。\n\n{TargetName}：哇！老板您这手艺也太好了吧！\n{TargetName}：这味道……我可以吃三碗！不对，五碗！\n\n她一边说着，一边已经开始盛第二碗了。
+46,npc_work_cook,201,sys_1,{Name} 花{MakeFoodTime}分钟做了{FoodName}。\n她在厨房里忙活了半天，端出来的成品卖相不错。\n\n{Name}：之前在龙门的时候经常自己做饭，毕竟天天在外面吃太费钱了嘛。\n{Name}：虽然不是什么大厨水平，但填饱肚子还是没问题的~
+47,npc_work_cook,201,sys_1&CVP_A1_A|43_LE_2,{Name} 花{MakeFoodTime}分钟做了{FoodName}。\n不过……成品看起来有些微妙。\n\n{Name}：啊哈哈……好像火候没掌握好……\n{Name}：但应该……还能吃吧？大概……\n她挠了挠头，有些不好意思。
+48,npc_work_cook,201,sys_1&CVP_A1_A|43_G_5,{Name} 花{MakeFoodTime}分钟做了{FoodName}。\n浓郁的香气飘满了整个厨房，路过的干员都忍不住驻足。\n\n{Name}：这可是我的拿手菜！独家秘方~\n{Name}：之前在企鹅物流的时候，能天使她们每次吃我做的饭都说可以开店了呢！
+49,npc_assistant_cook,201,sys_1,{Name} 花{MakeFoodTime}分钟做了{FoodName}。\n她把饭菜端到你的办公桌前，擦了擦额头的汗。\n\n{Name}：老板，趁热吃吧。助理的职责可不只是处理文件，填饱老板的肚子也是正经工作！
+50,eat,201,sys_0&pl_action_food_normal,{Name} 和 {TargetName} 一起吃了{FoodName}。\n{TargetName} 吃得津津有味，腮帮子鼓鼓的，像一只仓鼠。\n\n{TargetName}：唔……这次的味道真不错！\n{TargetName}：老板，下次咱们再一起吃饭吧？一个人吃饭总觉得少了点什么。
+51,eat,201,sys_0&pl_action_food_sement_hidden&t_find_food_weird_flag_0,{Name} 让 {TargetName} 吃下了{FoodName}。\n{TargetName} 完全没有察觉到食物有什么异常。\n\n{TargetName}：嗯？今天的味道好像有点不一样……不过还挺好吃的。\n她舔了舔嘴角，对你露出了天真的笑容。
+52,eat,201,sys_0&pl_action_food_sement_hidden&t_find_food_weird_flag_1,{Name} 让 {TargetName} 吃下了{FoodName}。\n她吃了几口之后，动作明显慢了下来，似乎察觉到了什么。\n\n{TargetName}：老板……这个……味道好像有点……\n\n她抬起头看了看你，脸上浮现出一抹红晕，但还是没有停下筷子。\n\n{TargetName}：算了，既然是老板准备的，我就吃完吧……
+53,eat,201,sys_0&pl_action_food_sement_direct&t_find_food_weird_flag_1,{Name} 让 {TargetName} 吃下了{FoodName}。\n她一眼就看到了食物上面可疑的白色黏稠物，脸刷地红了。\n\n{TargetName}：这……这是……老板您这也太直接了吧……\n\n她犹豫了一会儿，最终还是拿起筷子。\n\n{TargetName}：真是拿您没办法……下不为例哦？
+54,refuse_eat,201,sys_0&pl_action_food_sement_direct,{TargetName} 看着眼前的{FoodName}，脸涨得通红，但是这次是真的生气了。\n\n{TargetName}：老板！这个真的太过了！\n{TargetName}：我不吃！绝对不吃！您自己看着办吧！\n\n她把碗一推，抱着胳膊扭过头去，但耳朵尖还是红红的，暴露了她的动摇。
+100008,empty_instruct,0,high_1,【跟随/道歉/牢骚】
+55,follow,201,sys_0,{Name} 让 {TargetName} 跟着自己。\n\n{TargetName}：好的老板！咱们去哪？\n她立刻放下手里的东西，精神饱满地跟在你身后。\n\n{TargetName}：如果是要去仓库或者训练场的话我都可以帮忙的，力气活交给我就对了！
+56,end_follow,201,sys_0,{Name} 让 {TargetName} 不再跟着自己。\n\n{TargetName}：明白啦~那我先回自己的岗位了。\n{TargetName}：老板有需要的话随时叫我，随叫随到！\n\n她朝你比了个大拇指，然后转身离开了。
+57,apologize,201,sys_0,{Name} 对 {TargetName} 道歉。\n{TargetName} 先是板着脸看了你几秒，然后忍不住笑了出来。\n\n{TargetName}：好啦好啦，我原谅您啦！\n{TargetName}：老板您这人其实挺好的，就是有时候太较真了。\n{TargetName}：下次注意就好了，不是什么大事~
+58,apologize_failed,201,sys_0,{Name} 对 {TargetName} 道歉，但她看起来并不打算接受。\n{TargetName} 抱着胳膊，视线移向别处，嘴角微微向下。\n\n{TargetName}：……这次我真的有点生气了，老板。\n{TargetName}：让我一个人冷静一会儿吧。\n\n她转身走了，没有回头。
+59,listen_complaint,201,sys_0,{Name} 听 {TargetName} 抱怨最近的烦心事。\n\n{TargetName}：唉，最近采购的那批物资价格涨了好多啊……供应商说什么原材料涨价，简直就是坐地起价！\n{TargetName}：还有啊，食堂的叉烧上周换了师傅，味道完全不一样了，我的心好痛……\n\n她絮絮叨叨地说了一大堆，说到最后自己都笑了。\n\n{TargetName}：啊——跟老板说了这么多舒服多了！谢谢您听我唠叨~
+100009,empty_instruct,0,high_1,【唱歌/演奏/游戏/电影/点心】
+60,singing,201,sys_0,{Name} 给 {TargetName} 唱了一首歌。\n{TargetName} 听得很认真，手指轻轻打着节拍。\n\n{TargetName}：老板唱歌还挺好听的嘛！之前在龙门的时候，KTV可是我们企鹅物流的团建必备项目呢。\n{TargetName}：下次叫上大家一起去唱吧？
+61,singing,201,sys_0&CVP_A1_A|44_LE_2,{Name} 给 {TargetName} 唱了一首歌。\n……说句实话，不太好听。\n\n{TargetName} 努力维持着笑容，但眼角已经在抽搐了。\n\n{TargetName}：啊哈哈……那个，老板，您的热情我是感受到了的……\n{TargetName}：要不……咱们先休息一下喝杯水？
+62,singing,201,sys_0&CVP_A1_A|44_G_5,{Name} 给 {TargetName} 唱了一首歌。\n你的歌声悠扬，{TargetName} 听得入了神。\n\n一曲终了，她沉默了几秒，然后用力鼓起掌来。\n\n{TargetName}：天哪老板！您这水平可以直接出道了啊！\n{TargetName}：我感觉耳朵都被净化了……再来一首再来一首！
+63,singing,201,sys_1,{Name} 在唱歌。\n她一边哼着轻快的调子，一边做着手里的事。\n\n{Name}：♪～龙门城～不夜天～♪\n\n听起来像是龙门的流行歌。她的声音不算特别出色，但充满了活力，让人听了心情也跟着好起来。
+64,play_instrument,201,sys_0,{Name} 给 {TargetName} 演奏了一曲。\n{TargetName} 坐在旁边，眼睛一眨不眨地看着你。\n\n{TargetName}：哇……我虽然不太懂音乐，但老板演奏的样子好认真。\n{TargetName}：让我想起了空唱歌时候的样子，都是那么投入呢。
+65,play_instrument,201,sys_0&CVP_A1_A|44_LE_2,{Name} 给 {TargetName} 演奏了一曲。\n……但说实话，技术有待提高。\n\n{TargetName}：啊……嗯……挺……挺有特色的！\n{TargetName} 干笑了两声，显然在努力保持礼貌。\n{TargetName}：那个，老板，要不要我给您介绍个音乐老师？
+66,play_instrument,201,sys_0&CVP_A1_A|44_G_5,{Name} 给 {TargetName} 演奏了一曲。\n你的技法娴熟，音乐如流水般倾泻而出。\n\n{TargetName} 听完之后深吸一口气，眼里闪着光。\n\n{TargetName}：老板……这也太好听了吧！\n{TargetName}：我感觉我的商业头脑都在跟着音乐跳舞了！虽然这个比喻可能有点奇怪……
+67,play_instrument,201,sys_1,{Name} 在摆弄一件乐器，看起来像是在自学。\n\n{Name}：唔……这个按键是按这里吗？不对……\n\n她皱着眉头研究了一会儿，然后叹了口气。\n\n{Name}：算啦算啦，看来我不太适合搞这些，还是老老实实搬货更适合我~
+68,play_arcade_game,201,sys_0,{Name} 和 {TargetName} 一起打了游戏。\n{TargetName} 选了一个格斗游戏，摩拳擦掌。\n\n{TargetName}：老板，我可不会手下留情的！之前在龙门游戏厅里我可是常客！\n\n……\n\n结果你连赢了三局。\n\n{TargetName}：不……不可能……\n她瘫在椅子上，一副人生失去了意义的样子。\n{TargetName}：再来一局！我就不信了！
+69,play_chess,201,sys_0,{Name} 和 {TargetName} 一起下棋。\n{TargetName} 每一步都想很久，眉头紧锁。\n\n{TargetName}：老板您别催我……做生意我在行，但下棋这种事我是真不行啊……\n\n最后她走了一步明显的大昏招，自己都愣住了。\n\n{TargetName}：……当我没说。
+70,play_cards,201,sys_0,{Name} 和 {TargetName} 一起打牌。\n{TargetName} 的牌技出乎意料地好，出牌干脆利落。\n\n{TargetName}：嘿嘿，老板，打牌这种事可是商人的基本功之一啊~\n{TargetName}：谈判桌就是牌桌，一张好牌打出去，对面就懵了！\n\n她得意地甩出最后一张牌，赢了这局。
+71,watch_movie,201,sys_0,{Name} 和 {TargetName} 一起看电影。\n{TargetName} 选了一部龙门最近上映的动作喜剧片，一边看一边笑得前仰后合。\n\n{TargetName}：哈哈哈！这一段太扯了！\n\n她笑得眼泪都快出来了，偶尔还会激动地抓住你的手臂。\n一部电影看完，你们的距离似乎近了不少。
+72,watch_movie,201,sys_1,{Name} 在多媒体室里看电影。\n她抱着一个零食桶，津津有味地看着屏幕。\n\n{Name}：啊，这里这个反转也太神了吧！\n\n她对着屏幕自言自语，完全沉浸在剧情里，连你走过来都没注意到。
+73,taste_dessert,201,sys_0,{Name} 和 {TargetName} 一起品尝点心。\n{TargetName} 每种都尝了一口，脸上洋溢着幸福的表情。\n\n{TargetName}：嗯！这个蛋糕好吃！老板您也尝一口？\n{TargetName}：啊，这个布丁也不错，滑滑嫩嫩的……\n{TargetName}：还有这个饼干，脆脆的……唔，我觉得我可以在这里待一整天。
+74,taste_dessert,201,sys_1,{Name} 在点心店里品尝点心。\n她面前摆了好几个小碟子，看起来是精心挑选过的。\n\n{Name}：嗯……红豆味的和抹茶味的都想要，但经费有限……\n她陷入了两难的选择中，看起来相当纠结。
+75,play_water,201,sys_1,{Name} 在大水坑里玩水。\n她脱了鞋，卷起裤腿，在水里欢快地踩来踩去。\n\n{Name}：哇哈哈，好凉快！\n\n水花四溅，她像个孩子一样玩得很开心。\n\n{Name}：老板要不要也一起来？很舒服的！
+76,soak_feet,201,sys_1,{Name} 在足浴池里泡脚。\n她舒服地靠在椅背上，眼睛半闭着。\n\n{Name}：唔……走了一天的路，脚确实有点酸了。\n{Name}：要是这时候再来点小吃就更完美了……啊，我是不是要求太多了。
+77,style_hair,201,sys_1,{Name} 在理发店里做头发。\n她对着镜子左看右看，似乎在纠结要不要换个新发型。\n\n{Name}：要不要把刘海剪短一点呢……还是说烫个卷？\n{Name}：啊，好难决定啊……老板您觉得哪种好看？
+100010,empty_instruct,0,high_1,【公务/锻炼/诊疗/招募/读书/种植/维护】
+78,official_work,201,sys_0,{Name} 和 {TargetName} 一起处理了积累的公务。\n{TargetName} 虽然嘴上说自己不太擅长文书工作，但处理起后勤和采购相关的文件时却出奇地认真。\n\n{TargetName}：这批物资的报价有问题，老板您看这里，比上次贵了两成还不止。\n{TargetName}：我建议退回去让他们重新报价，不能惯着他们。\n\n她的商业直觉确实敏锐。
+79,official_work,201,sys_0&CVP_A1_A|45_G_3,{Name} 和 {TargetName} 一起处理了积累的公务。\n你凭借深厚的知识储备，帮着解决了好几个棘手的问题。\n\n{TargetName}：老板您真是深藏不露啊……这种专业问题都能搞定。\n{TargetName}：看来我还有很多要学的呢。\n\n她用敬佩的目光看着你，手上的笔却不停，继续记录着刚才的解决方案。
+80,official_work,201,sys_0&CVP_A2_A|45_G_3,{Name} 和 {TargetName} 一起处理了积累的公务。\n{TargetName} 展现出了令人意外的能力——她对数字和合同的敏感度超乎你的想象。\n\n{TargetName}：这个条款太模糊了，容易出问题。我以前在龙门签合同的时候，这种坑没少踩过。\n\n果然，实战经验就是最好的老师。
+81,official_work,201,sys_1,{Name} 自己处理了一些积累的公务。\n她对着电脑屏幕，噼里啪啦地打着字。\n\n{Name}：好，这批订单确认完毕，下一份……\n\n她的效率很高，没有一丝拖沓。在龙门跑业务的经历显然锻炼出了她干练的一面。
+82,exercise,201,sys_0,{Name} 和 {TargetName} 一起锻炼了身体。\n{TargetName} 在力量训练区如鱼得水，举起的重量让你瞠目结舌。\n\n{TargetName}：哈哈，蹄丰的力气可不是开玩笑的！\n{TargetName}：老板您也要加油啊，健康可是革命的本钱！
+83,exercise,201,sys_0&hp_or_mp_low,{Name} 和 {TargetName} 一起锻炼了身体。\n你没练几下就气喘吁吁了。\n\n{TargetName}：老板，您这体力可不怎么行啊……\n{TargetName}：不过没关系，慢慢来！我刚开始练的时候也没好到哪去。\n\n她给你倒了杯水，在旁边陪着你做完了剩下的训练。
+84,exercise,201,sys_0&t_hp_or_mp_low,{Name} 和 {TargetName} 一起锻炼了身体。\n这次反而是 {TargetName} 先撑不住了——她今天似乎不在状态。\n\n{TargetName}：唔……可能是昨晚没睡好……\n{TargetName}：抱歉啊老板，拖您后腿了。\n\n她擦了擦汗，有些不好意思。
+100011,empty_instruct,0,high_1,【送礼】
+85,give_gift,201,sys_0&CVP_A1_Gift|2_G_0,{Name} 给 {TargetName} 送了道歉礼物。\n{TargetName} 打开一看，里面是她最喜欢的零食和一张手写的道歉卡片。\n\n{TargetName}：哎……老板您这么用心，我都不好意思生气了……\n{TargetName}：好吧，这次就原谅您了！不过下次可不能再这样了哦。\n\n她把礼物抱在怀里，嘴角藏不住笑意。
+86,give_gift,201,sys_0&CVP_A1_Gift|6_G_0,{Name} 给 {TargetName} 送了份小礼物。\n{TargetName} 接过来，好奇地摇了摇盒子。\n\n{TargetName}：这是什么？给、给我的？\n{TargetName}：哇，谢谢老板！虽然不知道是什么，但只要是老板送的我都喜欢！\n\n她当场就拆开了，脸上满是期待。
+87,give_gift,201,sys_0&CVP_A1_Gift|7_G_0,{Name} 给 {TargetName} 送了份精心准备的礼物。\n{TargetName} 拆开包装，眼睛瞪得大大的。\n\n{TargetName}：天哪！这不是我之前在龙门想买但一直没舍得买的那个吗！\n{TargetName}：老板您怎么知道的？！\n\n她激动得差点跳起来，然后突然意识到自己的失态，红着脸说了声谢谢。
+88,give_gift,201,sys_0&CVP_A1_Gift|8_G_0,{Name} 给 {TargetName} 送了一份非常贵重的礼物。\n{TargetName} 打开之后愣了好几秒，然后连连摆手。\n\n{TargetName}：不不不，这个太贵重了老板！我不能收……\n\n你坚持让她收下。她抱着礼物，眼眶微微发红。\n\n{TargetName}：……老板，您对我这么好，我都不知道该怎么报答您了。
+89,give_gift,201,sys_0&CVP_A1_Gift|21_G_0&CVP_A2_T|123_G_0,{Name} 给 {TargetName} 送了丰胸药。\n{TargetName} 看着瓶子上的标签，脸上浮现出复杂的表情。\n\n{TargetName}：老板，您这是觉得我现在的不够大吗……\n\n她嘟囔了一句，但还是收下了。喝完之后，她低头看了看自己的胸口，脸更红了。\n\n{TargetName}：好像……真的变大了？这药也太神奇了吧……
+90,give_gift,201,sys_0&CVP_A1_Gift|32_G_0&CVP_A2_T|104_G_0,{Name} 给 {TargetName} 送了外表年龄减小药。\n{TargetName} 犹豫了一下，最终还是喝了。\n\n身体的变化让她有些不好意思，她看着镜子里显得更加年轻的自己，摸了摸脸。\n\n{TargetName}：这……感觉有点奇怪……老板您不会有什么奇怪的嗜好吧？
+91,give_gift,201,sys_0&CVP_A1_Gift|31_G_0&CVP_A2_T|105_G_0,{Name} 给 {TargetName} 送了外表年龄增长药。\n{TargetName} 喝完之后，气质明显成熟了几分。\n\n{TargetName}：唔……镜子里的自己好像不太一样了……\n{TargetName}：不过这样也好，看起来更有经验，谈生意的时候对方不敢小看我！
+92,give_gift,201,sys_0&CVP_A1_Gift|33_G_0,{Name} 给 {TargetName} 送了泌乳药。\n她看了说明之后脸一下子红到了脖子根。\n\n{TargetName}：这这这……这是什么奇怪的药啊！\n{TargetName}：……不过既然是老板给的，我就试试吧。\n\n她闭着眼睛一口气喝了下去，随后感觉到胸前有些异样，红着脸不敢动弹。
+93,give_gift,201,sys_0&CVP_A1_Gift|34_G_0,{Name} 给 {TargetName} 送了停乳药。\n她松了口气，同时又有些微妙的心情。\n\n{TargetName}：啊，终于可以不用每天多洗几件衣服了……\n{TargetName}：不过说实话，习惯了之后反而觉得有点舍不得呢。
+94,give_gift,201,sys_0&CVP_A1_Gift|51_G_0,{Name} 给 {TargetName} 送了自己的阴茎倒模。\n她打开盒子，看到里面的东西之后，整个人石化了三秒。\n\n{TargetName}：…………………………\n{TargetName}：老……老板……这个……是我想的那个意思吗？\n\n她的声音在颤抖，但还是没有把盒子推开。\n\n{TargetName}：我知道了……我会……好好用的……\n\n她红着脸把盒子收了起来，不敢再看你。
+95,cure_patient,201,sys_0,{Name} 和 {TargetName} 一起诊疗了一个病人。\n{TargetName} 不是专业的医疗干员，但在护理方面还算能干。\n\n{TargetName}：来，小心一点，慢慢躺下……\n{TargetName}：虽然我不懂那些高深的医术，但帮把手还是没问题的！
+96,cure_patient,201,sys_0&CVP_A1_A|46_LE_2,{Name} 和 {TargetName} 一起诊疗了一个病人。\n你们的配合不太默契，好在 {TargetName} 的应急能力不错，没有出什么大问题。\n\n{TargetName}：呼……还好还好，刚才差点拿错药了……\n\n她擦了擦冷汗，决定以后还是不要在医疗室逞强了。
+97,cure_patient,201,sys_0&CVP_A1_A|46_G_5,{Name} 和 {TargetName} 一起诊疗了一个病人。\n你的医术让 {TargetName} 大开眼界。\n\n{TargetName}：老板，您也太全能了吧……连医术都这么厉害。\n{TargetName}：我决定了，以后受了伤只找老板看！
+98,recruit,201,sys_0,{Name} 和 {TargetName} 一起进行了新干员的人事招募工作。\n{TargetName} 负责和候选人聊生活方面的话题，她亲和的态度让候选人们放松了不少。\n\n{TargetName}：来罗德岛不会吃亏的！薪资待遇好，食堂也好吃，老板也好说话~
+99,recruit,201,sys_0&CVP_A1_A|40_G_5,{Name} 和 {TargetName} 一起进行了新干员的人事招募工作。\n你们一唱一和，配合默契，候选人们几乎都被说服了。\n\n{TargetName}：老板，您这张嘴也太厉害了吧……我差点都被您绕进去了。
+100,recruit,201,sys_1,{Name} 进行了一次新干员的招募工作。\n她拿出企鹅物流时期练出来的社交能力，和候选人们聊得火热。\n\n{Name}：放心，罗德岛是个好地方！我自己就是从外面来的，现在干得可开心了~
+101,recruit,201,sys_1&CVP_A1_A|40_G_5,{Name} 进行了一次新干员的招募工作。\n她今天的口才格外地好，候选人们几乎都被她的热情感染了。\n\n{Name}：没错！就是这样！跟着老板干准没错！
+102,invite_visitor,201,sys_0,{Name} 和 {TargetName} 一起进行了访客的邀请工作。\n{TargetName} 发挥了她作为商人的优势，把罗德岛的优势说得头头是道。\n\n{TargetName}：罗德岛的设施一流，待遇优厚，来了绝对不亏！
+103,invite_visitor,201,sys_0&CVP_A1_A|40_G_5,{Name} 和 {TargetName} 一起进行了访客的邀请工作。\n你的谈判技巧和她的商业直觉相得益彰，邀请工作非常顺利。
+104,invite_visitor,201,sys_1,{Name} 进行了访客的邀请工作。\n她整理了一下衣领，以最专业的姿态去接待来访者。\n\n{Name}：企鹅物流出身，接待客人这种事我最擅长了~
+105,invite_visitor,201,sys_1&CVP_A1_A|40_G_5,{Name} 进行了访客的邀请工作。\n她的谈判技巧今天发挥得淋漓尽致，访客们被她的热情和专业所打动。
+106,read_book,201,sys_0,{Name} 和 {TargetName} 一起读了{BookName}。\n{TargetName} 看了一会儿就开始打瞌睡了——文字太多的书对她来说有点吃力。\n\n{TargetName}：唔……老板，这书里的字是不是太多了点……\n{TargetName}：要不您给我讲讲主要内容？
+107,read_book,201,sys_0&CVP_A1_A|45_G_5,{Name} 和 {TargetName} 一起读了{BookName}。\n你深入浅出地解释着书里的内容，{TargetName} 虽然有些地方还是不太懂，但听得很认真。\n\n{TargetName}：虽然我可能理解不了全部，但听老板讲真的很有意思。
+108,read_book,201,sys_1,{Name} 阅读了{BookName}。\n她拿着一本和商业管理相关的书，一边看一边在笔记本上记着什么。\n\n{Name}：嗯……这个定价策略有点意思……\n\n看来她是真的打算为未来的开店计划做准备了。
+109,read_book,201,sys_1&CVP_A1_A|45_G_5,{Name} 阅读了{BookName}。\n她今天读的是一本比较深奥的经济学著作。虽然有些吃力，但她咬着笔杆努力理解的样子让人佩服。\n\n{Name}：为了以后的发财大计，这点苦算什么！
+110,plant_manage_crop,201,sys_0,{Name} 和 {TargetName} 一起种植与养护作物。\n{TargetName} 干起农活来意外地得心应手，锄头在她手里轻得像玩具。\n\n{TargetName}：种地这种事，说白了和做生意差不多——付出多少，收获多少！
+111,plant_manage_crop,201,sys_0&CVP_A1_A|47_G_5,{Name} 和 {TargetName} 一起种植与养护作物。\n你的农业知识让 {TargetName} 心服口服。\n\n{TargetName}：老板，您怎么什么都会啊……这样我这个干员很没有面子的！
+112,plant_manage_crop,201,sys_1,{Name} 种植与养护作物。\n她蹲在菜地里，仔细地给每一株幼苗浇水。\n\n{Name}：好好长大啊，等你们成熟了就能卖个好价钱了~
+113,plant_manage_crop,201,sys_1&CVP_A1_A|47_G_5,{Name} 种植与养护作物。\n她的技术相当娴熟，翻土、播种、施肥一气呵成。\n\n{Name}：以前在龙门的时候帮人种过地，也算是练出来的手艺~
+114,maintenance_facilities,201,sys_0,{Name} 和 {TargetName} 一起修理了损坏的设施。\n{TargetName} 力气大，搬重物不在话下。你负责精细操作，她负责体力输出，配合得很好。\n\n{TargetName}：哈哈，有老板在旁边，干活都更有劲了！
+115,maintenance_facilities,201,sys_0&CVP_A1_A|48_G_5,{Name} 和 {TargetName} 一起修理了损坏的设施。\n你的技术让 {TargetName} 大开眼界。\n\n{TargetName}：老板，您连这个都会？\n{TargetName}：我觉得您可以开个修理铺了，生意绝对好！
+116,maintenance_facilities,201,sys_1,{Name} 修理了损坏的设施。\n她撸起袖子，拿着扳手，敲敲打打的样子颇有一番气势。\n\n{Name}：在龙门的时候，车坏了自己修是基本功。这点小问题不算什么！
+117,maintenance_facilities,201,sys_1&CVP_A1_A|48_G_5,{Name} 修理了损坏的设施。\n她的技术出乎意料地精湛，三两下就找到了问题的根源。\n\n{Name}：以前在企鹅物流，什么乱七八糟的东西都修过。经验就是财富啊~
+118,train_prisoner,201,sys_1,{Name} 对监牢里关着的囚犯们进行了训练。\n\n{Name}：都给我打起精神来！罗德岛可不是白养你们的地方！\n\n她的气场意外地强，囚犯们居然都乖乖听话了。
+100013,empty_instruct,0,high_1,【早安/晚安】
+119,morning_salutation_1,201,sys_1,{Name} 来叫 {TargetName} 起床了。\n\n{Name}：老板，该起床啦！太阳都晒到您被窝了！\n\n她轻轻掀开你被子的一角，手里还端着一杯刚泡好的咖啡。\n\n{Name}：洗漱用品我都准备好了，早餐在桌上。今天也要加油哦！
+120,morning_salutation_1,201,sys_1&CVP_A1_G_G_0,{Name} 坐在你的床边，温柔地看着你的睡颜。\n\n{Name}：老板……该醒了……\n\n她的声音比平时轻柔了许多。等你睁开眼睛，她微微一笑。\n\n{Name}：早安。今天的第一句话，只想说给您一个人听。
+121,morning_salutation_1,201,sys_1&CVP_A1_G_L_0,{Name} 跪在你的床前，小心翼翼地唤你起床。\n\n{Name}：主人，早上了。您吩咐的早餐已经准备好了。\n\n她的语气恭敬而温顺，和平时那个大大咧咧的可颂判若两人。
+122,morning_salutation_2,201,sys_1,{Name} 俯下身，在你的额头上轻轻印下一个吻。\n\n{Name}：早安吻~这样老板一天都会有好运气的！\n\n她直起身子，耳朵微微发红，但还是努力装出一副若无其事的样子。
+123,morning_salutation_3,201,sys_1,{Name} 红着脸钻进了你的被子里。\n\n{Name}：早……早安咬……是老板您自己要求的，可别嫌我技术不好……\n\n被子里传来一阵窸窸窣窣的声音，你的早晨被一种不同寻常的方式唤醒了。
+124,night_salutation_1,201,sys_1,{Name} 走到你的办公桌前，敲了敲桌面。\n\n{Name}：老板，已经深夜了！您再不去睡觉的话，明天会没精神的！\n\n她双手叉腰，努力做出一副严厉的表情，但眼里的关心藏不住。\n\n{Name}：工作永远做不完的，但您的身体只有一个啊！
+125,night_salutation_2,201,sys_1,{Name} 在你准备入睡的时候来到你的床边。\n\n{Name}：老板，晚安。\n\n她弯腰在你脸颊上亲了一下，然后迅速转身跑掉了，留下一句飘在空中的话——\n\n{Name}：做个好梦！
+126,night_salutation_3,201,sys_1,{Name} 犹豫了一下，然后在你面前蹲了下来。\n\n{Name}：那个……老板……您说睡不着的话可以来一次晚安咬……\n{Name}：所以……我来帮您了……\n\n她的脸红得像熟透的苹果，但动作却很温柔。
+100014,empty_instruct,0,high_1,【香薰疗愈】
+127,aromatherapy_1,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫林间夜话，效果是{TargetName}的体力与气力全部回满。\n{TargetName} 深深地吸了一口气，感觉一天的疲劳都在消散。\n\n{TargetName}：哇……这个味道好舒服……感觉像在森林里露营一样。\n{TargetName}：谢谢老板，我感觉自己又满血复活了！
+128,aromatherapy_2,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫迷梦香精，效果是{TargetName}今日习得的获得速度+1倍。\n{TargetName} 感觉头脑变得格外清晰，学习新东西的速度快了不少。\n\n{TargetName}：唔……感觉今天能多学好多东西！谢谢老板~
+129,aromatherapy_3,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫橙色心灵，效果是{TargetName}今日恐怖、苦痛、抑郁、反感的获得速度-0.5倍。\n{TargetName} 紧绷的神经舒缓了许多。\n\n{TargetName}：嗯……闻着这个味道，感觉最近那些烦心事都不算什么了。
+130,aromatherapy_4,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫迷乱情梦，效果是{TargetName}今日全部位快感与欲情的获得速度+1倍。\n{TargetName} 的身体微微发热，呼吸也稍微急促了一些。\n\n{TargetName}：老板……这个香薰……是不是有点……太那个了……\n\n她夹紧了双腿，脸上泛起异样的红晕。
+131,aromatherapy_5,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫情感共鸣，效果是{TargetName}今日好感与信赖的获得速度变为+0.5倍。\n{TargetName} 感觉心中涌起一股温暖的感觉，对你的亲近感又多了几分。\n\n{TargetName}：好温暖……和老板在一起的时候，就是这个感觉。
+132,aromatherapy_6,201,sys_0,{Name} 对 {TargetName} 进行香薰疗愈，香薰的名字叫下坠天空，效果是{TargetName}今日催眠进度的增长速度+5倍。\n{TargetName} 的意识有些模糊，眼神变得迷离起来。\n\n{TargetName}：老板……我怎么感觉……有点困了……
+100015,empty_instruct,0,high_1,【体检】
+133,examine_hair,201,sys_0,{Name} 检查了 {TargetName} 的头发。\n{TargetName} 乖乖地低着头让你检查，你注意到她的头发保养得不错，柔顺而有光泽。\n\n{TargetName}：怎么样？我用的洗发水可是龙门进口货，便宜又好用！
+134,examine_hair_smoothness,201,sys_0,{Name} 以测试头发柔顺度的名义让 {TargetName} 配合自己。\n{TargetName} 开始还不明白你要做什么，直到你撩起她的头发，才意识到不对劲。\n\n{TargetName}：等、等一下，头发不是这样测的吧……\n\n但已经晚了。
+135,examine_oral,201,sys_0,{Name} 检查了 {TargetName} 的口腔。\n{TargetName} 张开嘴让你检查，你注意到她的牙齿很整齐，舌头也是健康的粉红色。\n\n{TargetName}：啊——呼呼觉得呼呼牙还行吧？\n\n她说话有些含糊不清，但还是努力配合着。
+136,examine_sucking_and_swallowing,201,sys_0,{Name} 以测试口腔吮吸与吞咽力的名义让 {TargetName} 配合自己。\n{TargetName} 瞪大眼睛看着你，但慢慢地还是低下了头。\n\n{TargetName}：原来……口腔检查还包括这个项目吗……\n\n她的声音含混不清，但并没有拒绝。
+137,examine_armpit,201,sys_0,{Name} 检查了 {TargetName} 的腋下。\n{TargetName} 有些怕痒，你刚碰到她就忍不住笑出了声。\n\n{TargetName}：哈哈……别……别挠……好痒……
+138,examine_armpit_clamping,201,sys_0,{Name} 以测试腋下夹持力的名义让 {TargetName} 配合自己。\n{TargetName} 一开始还没明白你的意图，但当你的动作超出了正常范围时，她终于反应过来了。\n\n{TargetName}：老板……这个测试也太奇怪了吧……
+139,examine_breast,201,sys_0,{Name} 检查了 {TargetName} 的胸部。\n{TargetName} 红着脸解开了上衣的扣子，让你进行检查。\n\n{TargetName}：这算是正规体检……对吧？\n\n她的声音在发颤，不知道是因为紧张还是别的什么。
+140,examine_nipple_and_areola,201,sys_0,{Name} 重点检查了 {TargetName} 的乳头与乳晕。\n{TargetName} 咬着自己的手指，尽力不发出声音。但当你的手指不小心碰到敏感的部位时，她还是忍不住发出了一声轻哼。\n\n{TargetName}：嗯……\n\n她的耳朵红透了。
+141,examine_breast_clamping,201,sys_0,{Name} 以测试胸部夹持力的名义让 {TargetName} 配合自己。\n{TargetName} 看着你，嘴唇微张，最后叹了口气。\n\n{TargetName}：老板，您这些测试怎么越来越奇怪了……\n\n但她还是乖乖地照做了。
+142,examine_cilitoris,201,sys_0,{Name} 检查了 {TargetName} 的阴蒂。\n{TargetName} 躺在检查床上，双腿分开，用一条毛巾盖住了自己的脸——她实在是没勇气看着你的眼睛。\n\n{TargetName}：快……快一点……别让别人看到了……
+143,examine_hands,201,sys_0,{Name} 检查了 {TargetName} 的双手。\n虽然常年干体力活，但她的手保养得很好，只是掌心有一些薄茧。\n\n{TargetName}：干我们这行的，手上没几个茧子说不过去吧~
+144,examine_hands_flexibility,201,sys_0,{Name} 以测试手部灵活度的名义让 {TargetName} 配合自己。\n{TargetName} 很快就明白了这不是什么正经体检，但出乎意料的是，她的手艺居然不错。\n\n{TargetName}：唔……这种事情也是需要练习的嘛……
+145,examine_foot,201,sys_0,{Name} 检查了 {TargetName} 的双脚。\n她脱掉鞋袜，有些不好意思地把脚伸给你。\n\n{TargetName}：走了很多路，可能有些味道……您别介意啊。
+146,examine_foots_flexibility,201,sys_0,{Name} 以测试足部灵活度的名义让 {TargetName} 配合自己。\n{TargetName} 愣了好一会儿，然后红着脸点了点头。\n\n{TargetName}：脚也……也可以的吗……\n\n她的足部动作有些生涩，但很努力。
+147,examine_vulva_and_shape,201,sys_0,{Name} 检查了 {TargetName} 的外阴形状。\n{TargetName} 躺在检查床上，用双手捂住了脸。\n\n{TargetName}：好羞耻……\n\n她的声音小得像蚊子叫。
+148,examine_vagina_and_folds,201,sys_0,{Name} 使用内窥镜检查了 {TargetName} 的内阴褶皱。\n冰冷的器械进入体内，{TargetName} 忍不住吸了一口气。\n\n{TargetName}：唔……有点凉……
+149,examine_hymen,201,sys_0&CVP_A2_T|0_G_0,{Name} 使用内窥镜检查了 {TargetName} 的处女膜。膜完好无损，形状完整，像一道守护着纯洁的屏障。\n\n{TargetName}：那个……结果怎么样？\n\n她的声音里带着一丝紧张和羞涩。
+150,examine_hymen,201,sys_0&t_first_sex_in_today,{Name} 使用内窥镜检查了 {TargetName} 的处女膜。膜上有新鲜的撕裂痕迹，边缘还带着淡淡的血色——这是今天刚被夺走的证据。\n\n{TargetName}：别……别看了……\n\n她夹紧了双腿，脸烧得通红。
+151,examine_orifice,201,sys_0,{Name} 使用内窥镜检查了 {TargetName} 的子宫口。\n更深处的侵入让 {TargetName} 的身体微微颤抖。\n\n{TargetName}：嗯……有点……太深了……
+152,examine_vagina_firmness,201,sys_0,{Name} 以测试阴道紧致度的名义让 {TargetName} 配合自己。\n{TargetName} 咬着嘴唇，双手抓着床单，在你进入的时候发出了一声压抑的呻吟。\n\n{TargetName}：老板……这真的是体检吗……\n\n但她的身体并没有拒绝你的意思。
+153,examine_anus,201,sys_0,{Name} 检查了 {TargetName} 的菊穴。\n{TargetName} 趴在检查床上，把脸埋在枕头里，不敢抬头。\n\n{TargetName}：连……连那里也要检查吗……
+154,examine_intestine_firmness,201,sys_0,{Name} 以测试肠道紧致度的名义让 {TargetName} 配合自己。\n{TargetName} 的身体绷得紧紧的，在你进入的时候，她发出了带着哭腔的声音。\n\n{TargetName}：呜……老板轻一点……
+155,examine_urethra,201,sys_0,{Name} 检查了 {TargetName} 的尿道。\n{TargetName} 的身体因为羞耻而微微发颤，但还是努力保持着不动。\n\n{TargetName}：这……这里也要检查吗……
+156,examine_urination_status,201,sys_0,{Name} 以体检的名义让 {TargetName} 在自己面前现场排尿。\n{TargetName} 坐在便盆上，脸红得像要滴血一样。\n\n{TargetName}：您……您能转过去吗……被看着真的……\n\n但她还是照做了，水声在安静的房间里格外清晰。
+157,examine_tail,201,sys_0,{Name} 检查了 {TargetName} 的尾巴。\n可颂没有尾巴——她是蹄丰而非有尾巴的种族。\n你意识到这一点，有些尴尬地收回了手。\n\n{TargetName}：老板，我没有尾巴的啦……\n{TargetName}：不过我有角，您要不要检查一下？\n\n她指了指自己头上的角，对你眨了眨眼。
+158,examine_tail_flexibility,201,sys_0,{Name}：老板，都说了我没有尾巴嘛……\n\n{TargetName} 有些哭笑不得地看着你。\n\n{TargetName}：不过如果您真的想的话，我可以用角……不，那个应该也不行。\n\n她挠了挠头，看起来有些抱歉。
+100016,empty_instruct,0,high_1,【亲密互动】
+159,embrace,201,sys_0,{Name} 和 {TargetName} 抱在了一起。\n{TargetName} 的身体很暖和，可能是因为蹄丰的体温本来就偏高。\n\n{TargetName}：嘿嘿，和老板抱抱感觉真好啊~\n\n她把脸埋在你的肩膀上，用头上的角轻轻地蹭着你的脖子。\n\n{TargetName}：老板身上有咖啡的味道呢……
+160,lap_pillow,201,sys_0,{Name} 枕在了 {TargetName} 的大腿上。\n{TargetName} 低头看着你，手指不自觉地梳理着你的头发。\n\n{TargetName}：老板累了就好好休息吧，我会一直在这里的。\n\n她的腿很柔软，枕着很舒服。你闭上眼睛，感受着她的手指轻轻抚过你的额头。
+161,touch_head,201,sys_0,{Name} 摸了摸 {TargetName} 的头。\n{TargetName} 先是愣了一下，然后露出一个灿烂的笑容。\n\n{TargetName}：老板~您这是在哄小孩吗？\n{TargetName}：不过……感觉不坏。\n\n她微微低下头，让你更容易摸到她的头，但小心地避开了角的位置。
+162,touch_ears,201,sys_0,{Name} 摸了摸 {TargetName} 的耳朵。\n{TargetName} 的角根部——是你手指接近时她微微一颤的地方。\n\n{TargetName}：啊……老板，角是很敏感的，轻一点……\n\n你的手指沿着她角的弧度轻轻滑过，她闭上了眼睛，呼吸变得有些紊乱。
+163,touch_tail,201,sys_0,{Name}：老板，我没有尾巴啦！\n\n{TargetName} 被你的动作逗笑了。\n\n{TargetName}：您是不是把我跟别的干员记混了？我只有角，没有尾巴的~\n\n她笑着摇了摇头，觉得你大概是工作太累了。
+164,invite_to_bath,201,sys_0,{Name} 和 {TargetName} 一起洗了澡。\n浴池里雾气氤氲，{TargetName} 一开始还有些害羞，但很快就放松下来了。\n\n{TargetName}：啊……泡澡真舒服……要不要我帮老板搓背？\n\n她的手指在你背上滑过，力道恰到好处。
+165,milk,201,sys_0,{Name} 给 {TargetName} 挤奶。\n{TargetName} 红着脸坐在你面前，解开了上衣。\n\n{TargetName}：这个……感觉好奇怪……\n\n你的手指挤压着她的乳房，乳白色的液体一滴滴落进容器里。她咬着嘴唇，努力不发出声音。
+166,milk,201,sys_1,{Name} 给自己挤奶。\n她一个人躲在角落里，用双手挤压着自己的乳房。\n\n{Name}：唔……自己来的话感觉更加奇怪了……\n\n她的动作有些笨拙，但看着容器里渐渐增多的奶水，表情颇为复杂。
+100017,empty_instruct,0,high_1,【掀裙/偷内衣】
+167,raise_skirt,201,sys_0&t_wear_pan,{Name} 掀起了 {TargetName} 的裙子，露出了下面穿着的{TargetPanName}。\n\n{TargetName}：呀！老板您干什么呢！\n\n她急忙把裙子按回去，脸红得像火烧一样。\n\n{TargetName}：真、真是的……至少给个预告啊……
+168,raise_skirt,201,sys_0&t_not_wear_pan,{Name} 掀起了 {TargetName} 的裙子，露出了下面没有穿内裤的阴部。\n\n{TargetName}：啊——！\n\n她尖叫了一声，但发现是你之后，声音变成了又羞又恼的嘟囔。\n\n{TargetName}：老板！这已经不是恶作剧的范畴了好吗！
+169,raise_skirt,201,sys_0&t_not_wear_pan&CVP_A2_Dirty|B6_G_10,{Name} 掀起了 {TargetName} 的裙子，露出了下面没有穿内裤，正往外流出精液的阴部。\n\n{TargetName}：别……别看……\n\n她双腿发软，夹紧了双腿试图阻止液体的流出，但显然没有什么用。你之前留在她体内的那些痕迹正在一点点暴露在空气中。
+170,steal_pan,201,sys_0,{Name} 偷走了 {TargetName} 的{TargetPanName}。\n{TargetName} 一开始还没发现，直到一阵凉风吹过才意识到不对劲。\n\n{TargetName}：诶？诶诶诶？！我的……我的……\n\n她满脸通红地四处张望，想找到那个胆大包天的小偷。
+171,steal_socks,201,sys_0,{Name} 偷走了 {TargetName} 的{TargetSocName}。\n{TargetName} 发现的时候，袜子已经不翼而飞了。\n\n{TargetName}：不是吧，连袜子都有人偷？\n{TargetName}：罗德岛还有这种癖好的干员吗……\n\n她完全没有怀疑到你。
+172,ask_for_pan,201,sys_0,{Name} 向 {TargetName} 索要并拿走了她穿着的{TargetPanName}。\n{TargetName} 的表情从困惑到震惊再到羞耻，短短几秒内变换了三次。\n\n{TargetName}：您……您认真的吗？\n\n沉默了几秒之后，她叹了口气，转身走进卫生间。过了一会儿，她把还带着体温的布料放在了你的手心里。\n\n{TargetName}：给您就是了……但……但不要告诉别人……
+173,ask_for_socks,201,sys_0,{Name} 向 {TargetName} 索要并拿走了她穿着的{TargetSocName}。\n{TargetName} 挑了挑眉毛，倒是没有太激烈的反应。\n\n{TargetName}：袜子？老板您的喜好还挺特别的……\n{TargetName}：喏，给您。反正我还有很多双。
+174,smell_underwear,201,sys_0,{Name} 闻了闻 {TargetName} 的内衣味道。\n{TargetName} 正好撞见这一幕，她的表情在惊愕和羞耻之间反复横跳。\n\n{TargetName}：老……老板……那个是……是穿过的……\n\n她的声音越来越小，最后干脆转过身去，用双手捂住了脸。
+100018,empty_instruct,0,high_1,【告白/项圈】
+175,confession,201,sys_0,{Name} 向 {TargetName} 告白。\n{TargetName} 愣了好几秒，然后用手捂住了嘴，眼眶微微泛红。\n\n{TargetName}：老板……您说的是真的吗？\n{TargetName}：我这样的人……真的可以吗？\n\n你坚定地点了点头。她的眼泪终于滑落下来，但脸上是幸福的笑容。\n\n{TargetName}：好……我愿意。以后请多指教了，老板……不对，应该叫您别的了。
+176,confession_failed,201,sys_0,{Name} 向 {TargetName} 告白，但她沉默了。\n\n{TargetName}：……对不起，老板。\n{TargetName}：我不是不喜欢您，只是……我还觉得我们之间的关系，好像还没到那一步。\n\n她低着头，不敢看你的眼睛。\n\n{TargetName}：给我一点时间……好吗？
+177,give_necklace,201,sys_0,{Name} 给 {TargetName} 戴上项圈。\n{TargetName} 看着你手中的项圈，瞳孔微微放大。\n\n{TargetName}：这是……项圈？\n\n她伸手摸了摸冰凉的金属扣，深吸了一口气。\n\n{TargetName}：如果是老板想的话……我愿意。\n\n她低下了头，露出了脖颈，让你为她戴上了项圈。
+178,confession_failed,201,sys_0,{Name} 给 {TargetName} 戴上项圈，但她后退了一步。\n\n{TargetName}：这个……我真的做不到，老板。\n{TargetName}：我可以是您的朋友，您的干员，但我不想被当成……那样。\n\n她的声音很坚决，眼神里带着一丝受伤。
+100019,empty_instruct,0,high_1,【透视/催眠/时停】
+179,penetrating_vision_on,201,sys_0&CVP_A1_T|307_G_0&t_wear_pan,{Name} 对着 {TargetName} 开启了透视，看到了{TargetName}的{TargetDownClothName}里面穿着{TargetPanName}。\n{TargetName} 浑然不觉，继续做着自己的事。\n\n{TargetName}：嗯？老板您怎么一直盯着我看？我脸上有什么东西吗？
+180,penetrating_vision_on,201,sys_0&CVP_A1_T|307_G_0&CVP_A1_T|308_E_0&CVP_A1_T|309_E_0&t_not_wear_pan,{Name} 对着 {TargetName} 开启了透视，看到了{TargetName}的{TargetDownClothName}里面没有穿内裤。\n你的视线无法从她身上移开，{TargetName} 似乎察觉到了你的注视，不自在地调整了一下站姿。\n\n{TargetName}：总感觉今天老板的目光格外热呢……是错觉吗？
+181,penetrating_vision_on,201,sys_0&CVP_A1_T|308_G_0&CVP_A2_T|20_G_0,{Name} 对着 {TargetName} 开启了透视，看到了{TargetName}的子宫内，自己的精子已经与对方的卵子结合了。\n一种难以言喻的感觉涌上你的心头——那是你和她血脉相连的证据。\n\n{TargetName} 摸了摸自己的肚子，似乎感觉到了什么，抬头对你露出一个温柔的笑容。
+182,penetrating_vision_off,201,sys_0,{Name} 对着 {TargetName} 关闭了透视。\n你的视线恢复了正常，{TargetName} 似乎也松了一口气。\n\n{TargetName}：刚才不知道为什么，总觉得浑身不自在……现在好多了。
+183,hypnosis_one,201,sys_0&t_hypnosis_0,{Name} 催眠了 {TargetName}。\n你的声音像是有魔力一般，{TargetName} 的眼神逐渐变得迷离，身体也放松了下来。\n\n{TargetName}：老板……我……感觉好困……\n\n她的头微微垂下，意识已经开始模糊了。这是她第一次被催眠，对这种陌生的感觉有些不知所措。
+184,hypnosis_one,201,sys_0&t_hypnosis_ne_0&CVP_A2_T|71_E_0,{Name} 催眠了 {TargetName}。\n{TargetName} 已经逐渐习惯了被催眠的感觉，这次她很快就进入了浅层催眠状态。\n\n{TargetName}：嗯……又来了……老板您的声音……好好听……
+185,hypnosis_one,201,sys_0&CVP_A2_T|71_G_0&CVP_A2_T|72_E_0,{Name} 催眠了 {TargetName}。\n{TargetName} 的抵抗已经变得微乎其微，她几乎是主动将自己的意识交给了你。\n\n{TargetName}：老板……我准备好了……无论您想做什么……
+186,hypnosis_one,201,sys_0&CVP_A2_T|72_G_0&CVP_A2_T|73_E_0,{Name} 催眠了 {TargetName}。\n{TargetName} 的眼神已经完全空洞，像一个精致的人偶般等待着你的指令。\n\n{TargetName}：……\n\n她一言不发，只是静静地站着，等待着。
+187,hypnosis_one,201,sys_0&CVP_A2_T|73_G_0,{Name} 催眠了 {TargetName}。\n{TargetName} 已经完全陷入了最深层的催眠状态。她的意识深处只剩下你的声音，你的存在。\n\n{TargetName}：（轻声）老板……不……主人……我听您的……
+188,hypnosis_all,201,sys_0,{Name} 催眠了 {TargetName} 等人。\n你的力量覆盖了整个空间，所有人的目光都变得空洞，包括 {TargetName}。她们整齐地站在你面前，等待你的命令。
+189,hypnosis_cancel,201,sys_0,{Name} 解除了 {TargetName} 的催眠。\n{TargetName} 眨了眨眼，意识逐渐恢复清明。\n\n{TargetName}：诶？刚才发生了什么……我怎么感觉好像断片了一样……\n\n她摸了摸自己的头，一脸茫然。
+190,hypnosis_increase_body_sensitivity,201,sys_0,{Name} 对 {TargetName} 进行了催眠——敏感度提升。\n{TargetName} 的身体微微一颤，紧接着她的皮肤变得异常敏感，哪怕是一阵风吹过都能让她产生反应。\n\n{TargetName}：啊……老板……我的身体……变得好奇怪……\n\n她夹紧了双腿，连站立都变得有些困难。
+191,hypnosis_force_climax,201,sys_0,{Name} 对 {TargetName} 进行了催眠——强制高潮。\n{TargetName} 的身体突然剧烈颤抖起来，还没等她反应过来，一阵无法抵抗的快感就已经席卷了她的全身。\n\n{TargetName}：啊……啊啊——！\n\n她的双腿一软，险些跌倒在地。高潮后的余韵让她大口大口地喘着气，眼泪从眼角滑落。
+192,hypnosis_force_ovulation,201,sys_0,{Name} 对 {TargetName} 进行了催眠——强制排卵。\n{TargetName} 的下腹部传来一阵微妙的悸动，她的身体在你的指令下进入了排卵期。\n\n{TargetName}：唔……好热……老板……我……
+193,hypnosis_blockhead,201,sys_0,{Name} 对 {TargetName} 进行了催眠——木头人。\n{TargetName} 的眼睛还能转动，但身体已经完全无法动弹了。她试图开口说话，但嘴唇也无法移动分毫。\n\n你可以在她的眼神中看到惊恐和困惑，但她什么也做不了。
+194,hypnosis_active_h,201,sys_0,{Name} 对 {TargetName} 进行了催眠——逆推。\n{TargetName} 的眼睛里闪过一丝惊慌——她的身体正在不受控制地向你走来，双手开始解你的衣扣。\n\n{TargetName}：等……等等……我的身体……不听使唤了……老板……这是怎么回事……\n\n但她的手并没有停下来。
+195,hypnosis_roleplay,201,sys_0&CVP_A2_Roleplay|3_E_1&CVP_A2_Roleplay|12_E_1,{Name} 对 {TargetName} 进行了催眠——角色扮演。\n{TargetName} 的眼神变得澄澈而天真，她抬头看着你，用完全不同的语气说道：\n\n{TargetName}：哥哥……今天的功课做完了吗？\n\n她似乎完全相信了自己就是你设定的那个角色。
+196,hypnosis_pain_as_pleasure,201,sys_0,{Name} 对 {TargetName} 进行了催眠——苦痛快感化。\n{TargetName} 的眼神变得有些奇怪，她的呼吸开始加重。\n\n{TargetName}：不知道为什么……光是想象被老板惩罚的样子……就觉得……好兴奋……
+197,time_stop_on,201,sys_0,{Name} 对 {TargetName} 进行了时停。\n{TargetName} 保持着刚才说笑的表情，一动不动地定在了原地。她手中的咖啡杯悬在半空，连滴落的咖啡液珠都凝固在了空气中。整个世界只剩下你一个人可以自由行动。
+198,carry_target,201,sys_0&not_carry_anybody_in_time_stop,{Name} 在时停中扛起了 {TargetName}。\n她的身体保持着刚才的姿势，僵硬但又柔软。你可以把她带到任何你想去的地方，而她对此一无所知。
+199,carry_target,201,sys_0&target_is_carried_in_time_stop,{Name} 在时停中放下了 {TargetName}。\n你把她安置在了新的位置，调整好了她的姿势。等时停解除后，她会惊讶地发现自己突然换了地方。
+200,time_stop_off,201,sys_0,{Name} 对 {TargetName} 解除了时停。\n{TargetName} 的眼睛眨了眨，刚才中断的动作又继续了——但她立刻发现了不对劲。\n\n{TargetName}：诶？我什么时候……到这儿来了？\n\n她环顾四周，脸上的表情充满了困惑。
+100020,empty_instruct,0,high_1,【H场景】
+201,h,201,high_1,{Name} 邀请 {TargetName} 和自己进行私密的行为。\n{TargetName} 的脸一下子红到了脖子根，但她没有拒绝，只是轻轻地点了点头。\n\n{TargetName}：老……老板……这种事情……我还是第一次……请温柔一点……\n\n她紧张地抓着衣角，但眼神里除了羞怯，还有一丝期待。
+202,h_by_active,201,high_1,在{Name}还没反应过来的时候，{TargetName} 已经主动吻了上来。\n她把你推倒在床上，双手撑在你的胸口上方，呼吸急促。\n\n{TargetName}：我忍了很久了……老板……今天让我来主导吧……\n\n她的动作虽然有些生涩，但充满了热情。蹄丰的体力优势在这一刻展现得淋漓尽致。
+203,ask_group_sex,201,high_1,{Name} 邀请 {TargetName} 等人一起进行群交。\n{TargetName} 看了看在场的其他人，脸红到了极点，但还是咬着嘴唇点了点头。\n\n{TargetName}：只要……只要是老板的意思……我……我可以的……
+204,ask_hidden_sex,201,hidden_sex_mode_1,{Name} 邀请 {TargetName} 和自己仅靠遮挡别人视线的方式偷偷进行私密行为。\n{TargetName} 紧张地环顾四周，确认暂时没人看向这边，然后飞快地点了点头。\n\n{TargetName}：小声一点的话……应该不会被发现吧……
+205,ask_hidden_sex,201,hidden_sex_mode_2,{Name} 让 {TargetName} 藏在自己旁边，在别人看不到的地方和自己偷偷进行私密行为。\n{TargetName} 躲在你的斗篷下面，身体因为紧张和兴奋微微颤抖。\n\n{TargetName}：这个姿势……好刺激……我都不敢大声呼吸了……
+206,ask_hidden_sex,201,hidden_sex_mode_3,{Name} 藏在了 {TargetName} 的旁边，在别人看不到的地方和 {TargetName} 偷偷进行私密行为。\n{TargetName} 一边努力维持着正常的表情应付着周围的干员，一边感受着你的动作。她的声音断断续续，几乎要忍不住了。
+207,ask_hidden_sex,201,hidden_sex_mode_4,{Name} 邀请 {TargetName} 一起藏起来，在别人看不到的地方进行私密行为。\n你们躲在储物间的最深处，{TargetName} 捂着嘴，努力不让自己发出声音。门外不时有人经过的脚步声让这次体验变得更加惊险。
+208,ask_exhibitionism_sex,201,exhibitionism_sex_mode_1,{Name} 邀请 {TargetName} 在没有锁门的室内进行露出私密行为。\n{TargetName} 看了一眼那扇随时可能被推开的门，声音在发抖。\n\n{TargetName}：万一……万一有人进来怎么办……\n\n但她的身体并没有拒绝你，反而因为这种风险而变得更加敏感。
+209,ask_exhibitionism_sex,201,exhibitionism_sex_mode_2,{Name} 邀请 {TargetName} 在随时可能有人经过的室外进行露出私密行为。\n{TargetName} 躲在一棵大树后面，双手捂着嘴，眼睛因为快感和恐惧而瞪得大大的。\n\n远处的脚步声越来越近……\n\n{TargetName}：别……别被人发现了……
+210,ask_exhibitionism_sex,201,exhibitionism_sex_mode_3,{Name} 邀请 {TargetName} 在别人面前进行露出私密行为。\n{TargetName} 的脸红得能滴血，她的手试图遮住自己的身体，但被你拉开了。\n\n{TargetName}：呜……大家都在看……好羞耻……
+211,ask_exhibitionism_sex,201,exhibitionism_sex_mode_4,{Name} 邀请 {TargetName} 在处于无意识的其他人的面前进行露出私密行为。\n{TargetName} 看着周围那些沉睡或失去意识的干员，心里的羞耻感稍微减轻了一些，但仍让她浑身发烫。
+212,join_group_sex,201,high_1,{Name} 加入了群交。\n她脱下衣服的时候还有些犹豫，但看到你鼓励的眼神，便不再迟疑。很快，她也融入了这场狂欢之中。
+213,other_sex_be_found_to_group_sex,201,high_1,{Name} 和 {TargetName} 正在进行私密行为的时候，突然被{HInterruptCharaName}撞见了。\n气氛凝固了一秒，然后你干脆向{HInterruptCharaName}发出了邀请。\n\n{TargetName}：诶？！就这样？直接邀请？！\n\n但出乎意料的是，{HInterruptCharaName} 居然真的加入了。
+214,discover_other_sex_and_join,201,high_1,{Name} 路过的时候，发现了正在和别人进行私密行为的 {TargetName}。\n她犹豫了一下，然后红着脸脱掉了自己的衣服，也加入了进来。\n\n{Name}：反……反正都已经这样了……多我一个也不多吧……
+215,other_sex_be_found_to_hidden_sex,201,high_1,{Name} 和 {TargetName} 的私密行为被{HInterruptCharaName}发现了。\n你们手忙脚乱地调整姿势，试图把这场意外变成一场隐密的游戏。{TargetName} 紧张得连呼吸都乱了。
+216,h,201,t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,{Name} 趁着 {TargetName} 睡着的时候对她进行了性侵犯。\n她的呼吸均匀，身体温暖而柔软。你小心翼翼地进入了她的身体，她在睡梦中发出了一声无意识的轻哼——但依然没有醒来。
+217,h,201,t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{Name} 趁着 {TargetName} 装睡的时候对她进行了性侵犯。\n她紧闭着眼睛，努力维持着均匀的呼吸，但微微颤抖的眼睫毛和逐渐加速的心跳出卖了她。她知道是你在做什么——但她选择了继续装睡。
+218,h,201,t_unconscious_flag_3,{Name} 趁着时停对 {TargetName} 进行了性侵犯。\n她的身体僵硬地保持着最后一刻的姿势，你可以随意摆弄她而不必担心任何反应。周围的一切都静止了，只有你的呼吸和动作在打破这片死寂。
+219,h,201,t_unconscious_flag_4,{Name} 趁着 {TargetName} 被平然催眠，对她进行了性侵犯。\n{TargetName} 的意识深处认为这一切都是正常的——被博士触摸，被博士进入，都是合理的事情。她甚至主动配合起了你的动作。\n\n{TargetName}：老板……这样……是正常的对吧……
+220,h,201,t_unconscious_flag_5,{Name} 趁着 {TargetName} 被空气催眠，对她进行了性侵犯。\n{TargetName} 完全没有意识到你的存在——对她来说，你就像空气一样。她在做自己的事情，而你的双手可以在她身上任意游走，她浑然不觉。
+221,h,201,t_unconscious_flag_6&t_hypnosis_blockhead,{Name} 趁着 {TargetName} 被体控-木头人催眠，对她进行了性侵犯。\n{TargetName} 的意识是清醒的——她能看到你，能感受到你，但她连一根手指都动不了。她的眼睛里写满了羞耻和屈辱，但身体却诚实地对你的动作做出了反应。
+222,h,201,t_unconscious_flag_6&t_hypnosis_active_h,{Name} 趁着 {TargetName} 被体控-逆推催眠，对她进行了性侵犯。\n{TargetName} 的意识是清醒的，但她的身体却在主动地迎合着你。她看着自己不受控制地抚摸着你的身体，眼中满是惊恐和羞耻。\n\n{TargetName}：不……这不是我……我的身体……啊……
+223,h,201,t_unconscious_flag_7&t_hypnosis_roleplay,{Name} 趁着 {TargetName} 被心控-角色扮演催眠，对她进行了性侵犯。\n{TargetName} 完全相信了自己就是你设定的角色。她用那个角色的声音和语气说着话，用那个角色的方式回应着你的每一个动作。
+224,end_h,201,high_1,{Name} 结束了和 {TargetName} 的私密行为。\n{TargetName} 浑身是汗，瘫软在地上，大口大口地喘着气。她的身体还残留着刚才的余韵，时不时还会抽搐一下。\n\n{TargetName}：哈……哈……老板……我真的……快散架了……
+225,no_conscious_h_end,201,high_1,{Name} 结束了对 {TargetName} 的无意识侵犯。\n你整理好她的衣物和姿势，确保一切看起来和之前一样。{TargetName} 依旧处于无意识状态，对刚才发生的一切毫无记忆。
+226,do_h_fail,201,high_1,{TargetName} 愤怒地拒绝了 {Name} 的邀请。\n\n{TargetName}：不！不行就是不行！老板您今天到底怎么了？！\n\n她抱着胳膊，生气地瞪着你，但眼里的失望多于愤怒。
+227,h_hp_0,201,high_1,{Name} 和 {TargetName} 的私密行为因为玩家体力耗尽而中途结束了。\n{TargetName} 正在兴头上，却感觉到你的动作停了。她有些失落地看着你。\n\n{TargetName}：诶……这就结束了吗……老板您体力不太行啊……\n\n她的语气里带着一丝撒娇的埋怨。
+228,t_h_hp_0,201,high_1,{Name} 和 {TargetName} 的私密行为因为{TargetName}体力耗尽而中途结束了。\n{TargetName} 已经连说话的力气都没有了，她瘫软在你怀里，呼吸微弱。\n\n{TargetName}：对……对不起老板……我已经……到极限了……\n\n她的眼睛半闭着，显然已经筋疲力尽。
+229,h_interrupt,201,high_1,{Name} 和 {TargetName} 正在进行的时候，{HInterruptCharaName} 突然推门而入。\n{TargetName} 尖叫一声，手忙脚乱地用被子裹住了自己。\n\n{TargetName}：啊啊啊啊！不要看！！\n\n她的脸红得快要爆炸了。
+230,see_h_and_interrupt,201,high_1,{Name} 目击了 {TargetName} 的性事，并愤怒地闯入了。\n她用力推开门，眼前的场景让她震惊得说不出话来。\n\n{Name}：你……你们在干什么！！\n\n她的声音因为愤怒而颤抖着。
+231,see_h_but_deceived,201,high_1,{Name} 目击了 {TargetName} 的性事，但被{TargetName}的花言巧语说服了。\n她虽然不太相信，但还是半信半疑地离开了房间。门关上的瞬间，{TargetName} 长出了一口气。
+232,see_h_and_leave,201,high_1,{Name} 不小心撞见 {TargetName} 正在和人亲热，脸红到了极点。\n她立刻转过身去，语无伦次地道歉，然后飞快地跑开了。\n\n{Name}：对不起对不起对不起！我什么都没看见！！
+233,see_h_but_ignore,201,high_1,{Name} 发现 {TargetName} 正在做爱，叹了口气。\n她摇了摇头，假装什么都没看到，继续做自己的事情。但发红的耳尖暴露了她内心的波动。
+234,group_sex_end,201,high_1,{Name} 结束了和 {TargetName} 等人的群交。\n所有人都精疲力竭地瘫倒在各处。{TargetName} 搂着你的手臂，满足地叹了口气。\n\n{TargetName}：呜……老板……下次别再叫这么多人了……真的吃不消……
+235,ask_group_sex_fail,201,high_1,{Name} 没能邀请 {TargetName} 等人一起进行群交。\n大家面面相觑，然后一个接一个地找借口溜走了。{TargetName} 留到了最后，尴尬地拍了拍你的肩膀。\n\n{TargetName}：那个……老板，您的想法是好……但可能有点太超前了……
+236,group_sex_pl_hp_0_end,201,high_1,{Name} 和 {TargetName} 等人的群交因为玩家体力耗尽而中途结束了。\n{TargetName} 抱着你倒下的身体，哭笑不得。\n\n{TargetName}：老板！所以我说了您要多锻炼啊！
+237,group_sex_npc_hp_0_end,201,high_1,在群交中，{Name} 因为体力耗尽而中途退出了。\n她摇摇晃晃地走到墙角，靠着墙滑坐下来。\n\n{Name}：不行了……你们继续……我歇一会儿……
+238,group_sex_to_h,201,high_1,{Name} 和 {TargetName} 等人的群交中，因为在场的人数只剩下{TargetName}一个人了，于是转为单独进行。\n{TargetName} 看着空荡荡的房间，又看看你，笑了笑。\n\n{TargetName}：终于……只有我们两个人了呢。老板，接下来的时间，全都是我的了。
+239,refuse_join_group_sex,201,high_1,{Name} 愤怒地拒绝了 {TargetName} 的群交邀请。\n她二话不说穿上衣服就走，走之前还回头瞪了你一眼。\n\n{Name}：老板，这种事情也来找我？！我今天算是重新认识您了！
+240,ask_hidden_sex_fail,201,high_1,{Name} 拒绝和 {TargetName} 偷偷进行私密行为。\n她摇了摇头，虽然脸上还带着红晕，但态度很坚决。\n\n{Name}：老板，偷偷摸摸的……不是我的风格。要做就光明正大一点嘛。
+241,ask_exhibitionism_sex_fail,201,high_1,{Name} 拒绝和 {TargetName} 进行露出私密行为。\n她连连摆手，脸上写满了抗拒。\n\n{Name}：不行不行！被看到的话我的人生就结束了！
+100021,empty_instruct,0,high_1,【初次见面/每日问候】
+242,first_meet,201,high_999,这是{Name}第一次见到你。\n她站在你面前，挺直腰板，用一种充满活力的语气做了自我介绍。\n\n{Name}：代号可颂，之前在龙门企鹅物流工作，主要负责跑运输和谈业务。\n{Name}：我这个人嘛，没什么别的特长，就是力气大、会做生意、还有就是对吃的比较有研究~\n{Name}：对了老板，咱们食堂的菜单是固定的还是可以点菜的？如果可以点菜的话，我强烈建议加一道龙门叉烧！\n\n她讲到最后，已经跑题到了吃的上，自己意识到后不好意思地挠了挠头。\n\n{Name}：啊，说得有点多了……总之，以后请多指教，老板！
+243,day_hello,201,CVP_A1_G_E_0,{Name} 向{PlayerName}打了个招呼。\n\n{Name}：老板早！今天有什么安排吗？需要我跑腿的话随时叫我~
+244,day_hello,201,CVP_A1_G_GE_1&CVP_A1_G_LE_2,{Name} 向{PlayerName}打了个招呼。\n\n{Name}：老板~今天的气色看起来不错嘛！\n{Name}：我昨天晚上梦到您了……啊，没什么！当我没说！\n\n她说完之后突然意识到自己说了什么，慌忙转移话题，但耳朵尖已经悄悄变红了。
+245,day_hello,201,CVP_A1_G_GE_3,{Name} 向{PlayerName}打了个招呼。\n她今天特意打扮了一下，头发比平时更加整齐，还换了一条新的发带。\n\n{Name}：早安……亲爱的。\n\n她叫出这个称呼的时候，自己的脸先红了。虽然已经是恋人关系了，但每次这样叫你，她还是忍不住心跳加速。
+246,day_hello,201,CVP_A1_G_LE_-1&CVP_A1_G_GE_-2,{Name} 向{PlayerName}打了个招呼。\n她的态度比从前恭敬了许多，眼神里带着一丝顺从。\n\n{Name}：主人……早安。今天有什么吩咐吗？\n\n她微微低着头，等待着你的命令。
+247,day_hello,201,CVP_A1_G_LE_-3,{Name} 向{PlayerName}打了个招呼。\n她几乎是本能地在你面前跪了下来，语气里充满了彻底的服从。\n\n{Name}：主人……奴隶可颂向您请安。今天……也要使用我吗？
+248,day_hello,201,CVP_A1_Time_GE_5&CVP_A1_Time_LE_8,{Name} 向{PlayerName}打了个招呼。\n天刚蒙蒙亮，她就出现在了你的办公室门口，手里还拿着一杯热咖啡。\n\n{Name}：老板，您果然又通宵了！我就知道……\n{Name}：来，先喝杯咖啡暖暖身子，然后去补个觉吧。工作什么的，等睡醒了再说。
+249,day_hello,201,good_mood,{Name} 向{PlayerName}打了个招呼。\n她今天看起来格外开心，走路都带着轻快的小跳步。\n\n{Name}：老板！我跟您说！昨天食堂开始供应夏季特供的冰淇淋了！三种口味！我帮您也留了一份！\n\n她的快乐就是这么简单——一份好吃的，一个好天气，再加上一个可以分享的人。
+250,day_hello,201,is_assistant,{Name} 向{PlayerName}打了个招呼。\n她抱着厚厚一叠文件走进办公室，看起来已经忙碌了好一阵子了。\n\n{Name}：早安老板！今天的日程我已经整理好了，会议在十点，下午有个供应商要见，午饭后我留了一个小时的休息时间给您——不准取消！\n\n她把日程表放在你桌上，用指尖点了点那行"休息时间"。
+100022,empty_instruct,0,high_1,【初吻/初夜/破处】
+251,first_kiss,201,high_999,{Name} 失去了初吻。\n在嘴唇相触的那一刻，她的大脑一片空白。过了好几秒，她才反应过来发生了什么。\n\n{Name}：老……老板……刚才那个……\n\n她用手指轻轻碰了碰自己的嘴唇，仿佛还在确认刚才的感觉。\n\n{Name}：我的初吻……就这么……被您拿走了……\n\n她说这话的时候，脸上没有一丝不快——只有满满的红晕和一个藏不住的笑容。\n\n{Name}：……真拿您没办法。不过，是老板的话……我很高兴。
+252,first_sex,201,high_999,{Name} 失去了阴道处女。\n疼痛比想象中要剧烈，她忍不住抓住了你的手臂，指甲陷进了你的皮肤里。\n\n{Name}：呜……好疼……\n\n她的眼眶里噙着泪水，但嘴角却挂着微笑。\n\n{Name}：没关系的……老板……继续吧……我想把第一次……给老板……\n\n她咬着嘴唇，承受着你的进入。血和体液混合在一起，染红了床单。当疼痛逐渐转化为快感时，她的哭声也渐渐变成了另一种声音。
+253,first_a_sex,201,high_999,{Name} 失去了后穴处女。\n这个部位比前面更加紧致，也带来了更多的疼痛。她的身体绷得像一张拉满的弓。\n\n{Name}：啊……啊……老板……太紧了……慢一点……\n\n她趴在床上，双手死死抓着枕头。你每进入一点，她就会发出一声带着哭腔的呻吟。\n\n{Name}：坏掉了……我的后面……要坏掉了……\n\n但即使如此，她也没有说"停下"。
+254,first_w_sex,201,high_999,{Name} 失去了子宫处女。\n当你的前端触碰到她身体最深处的入口时，她整个人都颤抖了起来。\n\n{Name}：那里……那里是……\n\n你继续推进，突破了最后一道防线。她的身体猛地弓了起来，发出了一声连自己都不敢相信的尖叫。\n\n{Name}：进……进到子宫里了……老板……太深了……\n\n最深处的侵犯让她感到了前所未有的充实感——以及一种难以言喻的满足。
+255,first_u_sex,201,high_999,{Name} 失去了尿道处女。\n这个部位本不是用来承受这种事情的。{Name} 的身体剧烈地颤抖着，被扩张的感觉让她几乎要晕过去。\n\n{Name}：呜……呜啊……这里……不可能的……\n\n但她的身体还是慢慢接受了你的进入。她大口大口地喘着气，眼泪和汗水混在一起，顺着脸颊流下来。
+100023,empty_instruct,0,high_1,【刻印】
+256,happy_mark_1,201,high_999,{Name} 体会到了高潮的快乐。\n在达到顶点的瞬间，她的意识一片空白，身体不受控制地痉挛着。\n\n{Name}：啊……啊……这就是……高潮……\n\n她回味着刚才的感觉，眼神有些迷离。\n\n{Name}：老板……原来做这种事……可以这么舒服……
+257,happy_mark_2,201,high_999,{Name} 体会到了比较多次数的连续高潮的快乐。\n她的身体已经不听使唤了，一波又一波的快感像潮水一样淹没了她。\n\n{Name}：不行了……又……又要去了——！\n\n她的双腿无力地蹬着床单，意识在快感中不断沉浮。
+258,happy_mark_3,201,high_999,{Name} 体会到了多部位的很强程度的连续高潮的快乐。\n她几乎失去了时间的概念——她只记得高潮，不断的高潮。身体每一个被触碰的部位都在向大脑输送着快感的信号。\n\n{Name}：老板……让我……让我休息一下……我真的……\n\n话还没说完，又一次高潮袭来，她的声音变成了一声长长的、带着哭腔的呻吟。
+259,yield_mark_1,201,high_999,{Name} 开始认同并有点屈服于{PlayerName}了。\n她发现自己开始不自觉地优先考虑你的意见，在做决定之前会下意识地想"如果是老板会怎么做"。\n\n{Name}：唔……总觉得最近对老板言听计从的次数越来越多了……这算是好事还是坏事呢？
+260,yield_mark_2,201,high_999,{Name} 一定程度地屈服于{PlayerName}了。\n她已经习惯了在做任何事情之前先征求你的意见。\n\n{Name}：老板，您觉得这样做好吗？如果不行的话我就换一个方案。\n\n她甚至没有注意到，这种依赖已经成了她的自然反应。
+261,yield_mark_3,201,high_999,{Name} 完全地屈服于{PlayerName}了。\n她不再有自己的主见——或者说，你的意见就是她的主见。\n\n{Name}：只要是老板决定的，就是对的。不需要问我。\n{Name}：我的身体，我的心，我的一切……都是老板的。请您随意使用。
+262,pain_mark_1,201,high_999,{Name} 受到了来自于{PlayerName}的少许苦痛，有点不敢不听{PlayerName}的话了。\n她的身体还残留着上次惩罚的记忆，这让她在面对你时变得小心翼翼。\n\n{Name}：我……我会听话的，请不要再那样了……
+263,pain_mark_2,201,high_999,{Name} 受到了来自于{PlayerName}的比较多的苦痛，开始畏惧{PlayerName}了。\n在你不经意靠近她的时候，她的身体会本能地微微一缩——那是被惩罚过的条件反射。\n\n{Name}：老板……今天……今天还要……惩罚我吗……\n\n她的声音在发抖。
+264,pain_mark_3,201,high_999,{Name} 受到了来自于{PlayerName}的相当多的苦痛，非常害怕{PlayerName}了。\n她看到你走过来的时候，整个人都会僵住。她的眼神里有恐惧，有祈求，还有一种已经认命了的绝望。\n\n{Name}：我什么都听您的……请不要再打了……求您了……
+265,terror_mark_1,201,high_999,{Name} 受到了来自于{PlayerName}的少许精神伤害，会试着远离{PlayerName}了。\n她不再像以前那样主动靠近你了。在走廊里遇到的时候，她会低下头匆匆走过。\n\n{Name}：（小声）……别过来……
+266,terror_mark_2,201,high_999,{Name} 受到了来自于{PlayerName}的一定程度的精神伤害，开始逃避工作了。\n她把自己关在房间里，窗帘拉得严严实实。门外的世界让她恐惧——那里有你。\n\n（她没有说话，只是蜷缩在角落里，抱着自己的膝盖。）
+267,terror_mark_3,201,high_999,{Name} 受到了来自于{PlayerName}的比较严重的精神伤害，不再出门了。\n她的世界已经缩小到了这个只有几平方米的房间。外面的脚步声——尤其是你的脚步声——会让她躲进柜子里。\n\n（门锁着。从门缝下透出的光线里，你看不到任何移动的影子。）
+268,hate_mark_1,201,high_999,{Name} 比较生{PlayerName}的气，开始不回应部分交互了。\n她看到你的时候会故意扭过头去，假装你在和一个透明人说话。\n\n（她没有理你，只是继续埋头做自己的事情。）
+269,hate_mark_2,201,high_999,{Name} 对{PlayerName}有明确的反感，不再工作了。\n她把你交给她的文件原封不动地堆在角落，自己则坐在窗边发呆。\n\n{Name}：反正做什么都没意义……他根本不在乎。
+270,hate_mark_3,201,high_999,{Name} 对{PlayerName}有明确的恨意，会伺机攻击了。\n她的眼神变了——不再是那个开朗的可颂了。当她看着你的时候，目光里的东西让人不寒而栗。\n\n{Name}：（没有对话，只是一阵沉默的、充满敌意的注视。）
+271,unconscious_mark_1,201,high_999,{Name} 体会到了在无意识中高潮的快乐。\n她在睡梦中身体突然抽搐了一下，发出了一声无意识的呻吟。当她醒来的时候，发现自己身体的异常状态，完全不明白发生了什么。\n\n{Name}：奇怪……怎么感觉身体有点……不对劲？而且床单怎么……
+100024,empty_instruct,0,high_1,【爱情路线】
+272,love_1,201,high_999,{Name} 对{PlayerName}产生了思慕之情。\n她发现自己最近总是会忍不住想起你——在工作的时候，在吃饭的时候，甚至在睡觉前。\n\n{Name}：（自言自语）为什么我老是想到老板啊……该不会是……\n\n她摇了摇头，试图把这些想法甩出脑海，但失败了。\n\n{Name}：不可能的不可能的……我只是个普通的干员而已……\n\n但从那天起，她看向你的眼神里多了一丝不一样的东西。
+273,love_2,201,high_999,{Name} 意识到自己喜欢上{PlayerName}了。\n她已经不能再否认了。每次见到你的时候心跳会加速，每次你跟她说话的时候她会笑得比平时更久。甚至连食堂的叉烧都没那么香了——因为吃饭的时候她总是在想你。\n\n{Name}：完蛋了……我真的喜欢上老板了……\n\n她对着镜子自言自语，然后用力拍了拍自己的脸颊。\n\n{Name}：好！既然确定了，那就得好好想想怎么……怎么……\n\n说到一半，她自己先不好意思了。
+274,love_3,201,high_999,{Name} 和{PlayerName}成为恋人了。\n在你对她表白并得到回应之后，她高兴得差点跳起来。不过她努力忍住了，只是红着脸，郑重地从口袋里掏出一个小盒子。\n\n{Name}：这个……是我刚来罗德岛的时候买的，一直想着有一天能送给最重要的人。\n\n盒子里是一枚精致的金色硬币，上面刻着"好运"两个字。\n\n{Name}：我叫可颂，这个"颂"和"送"同音——所以这是可颂送给您的幸运。\n{Name}：以后……请多指教了，我的……男朋友。\n\n{PlayerName}获得了{Name}的信物——一枚刻着"好运"的金色硬币。
+275,love_4,201,high_999,{Name} 和{PlayerName}成为彼此的爱侣了。\n你们的关系已经超越了热恋期的激情，沉淀为一种更加深沉、更加稳固的感情。\n\n{Name}：说起来，我以前在龙门的时候，总觉得什么"永远"啊"一生"啊这种话很假。\n{Name}：但是和老板在一起的每一天，都让我觉得——如果是和这个人的话，永远也不是很长。\n\n她靠在你的肩上，用手指画着圈。\n\n{Name}：不管以后发生什么，我都会站在你这边。不是作为干员可颂，而是作为……\n{Name}：爱着你的可颂。
+100025,empty_instruct,0,high_1,【隶属路线】
+276,obey_1,201,high_999,{Name} 对{PlayerName}产生了一定的服从心理。\n她发现自己越来越难拒绝你的要求了。即使是一些不太合理的事情，只要你说了，她就会下意识地去做。\n\n{Name}：老板说让我做，那就做吧……反正老板不会害我的……大概。
+277,obey_2,201,high_999,{Name} 对{PlayerName}的命令有了比较高的接受度。\n她不再质疑你的命令了。你让她做什么，她就做什么，甚至连思考的环节都省去了。\n\n{Name}：好的老板……不，好的。\n\n她及时改了口——她发现自己已经不太习惯在服从的时候加称呼了。
+278,obey_3,201,high_999,{Name} 愿意成为{PlayerName}的宠物了。\n她跪在你面前，双手平放在地上，低着头。她的角在灯光下反射着微光。\n\n{Name}：以后可颂就是老板的宠物了。\n{Name}：请主人给我戴上项圈吧……我想让所有人都知道我是属于谁的。\n\n{PlayerName}获得了{Name}的信物——一条她亲手编织的皮制项圈，内侧刻着她的代号。
+279,obey_4,201,high_999,{Name} 愿意成为{PlayerName}的奴隶了。\n她的身份、她的意志、她的一切——都已经交付给了你。\n\n{Name}：奴隶可颂，向主人请安。\n{Name}：请主人随意使用我。我的身体，我的灵魂，都只是主人的工具。\n\n她说这些话的时候，语气平静而自然，仿佛在陈述一个再普通不过的事实。
+100026,empty_instruct,0,high_1,【妊娠/育儿】
+280,fertilization,201,high_999,{PlayerName}的精子让{Name}的卵子受精了。\n她在体检时看到了结果，手里的报告单差点掉在地上。过了好久，她才找回自己的声音。\n\n{Name}：我……怀孕了？\n{Name}：是……是老板的孩子……\n\n她把手放在自己的肚子上，虽然那里还平坦如初，但她已经能感受到——一个小小的生命正在里面萌芽。\n\n{Name}：天哪……我要当妈妈了……
+281,fertilization_failed,201,high_999,{PlayerName}的精子没能让{Name}的卵子受精。\n她看着报告单上"未受精"的结果，嘴角勉强挤出一个微笑。\n\n{Name}：没关系的……下次一定可以的。\n{Name}：老板……我们……继续努力吧？
+282,pregnancy,201,high_999,{Name}的肚子大起来了。\n她的孕肚已经很明显了，走路的时候会不自觉地用手扶着腰。\n\n{Name}：老板，你看，小家伙又在踢我了。\n\n她把你的手放在她的肚子上，你能感觉到微弱但有力的胎动。\n\n{Name}：我打赌这孩子以后一定力气很大——随我。
+283,parturient,201,high_999,{Name}的临产期到了。\n她坐在床边，一只手扶着肚子，另一只手紧紧抓着你的手。虽然有些紧张，但更多的是期待。\n\n{Name}：老板……等孩子出生了，我们要给他起什么名字呢？\n{Name}：我想了好几个备选的，但都觉得不够好……\n\n她絮絮叨叨地说着，像是在用说话来缓解紧张。
+284,born,201,high_999,{Name}进入产房了。\n她躺在推床上被推进产房的时候，回头看了你一眼。\n\n{Name}：老板，等我出来的时候，就是两个人了哦。\n{Name}：所以……不要走开，在这里等我。\n\n她的笑容里带着一丝紧张，但更多的是坚定。她是个坚强的女人——一直以来都是。
+285,postpartum,201,high_999,{Name}平安地生下了孩子。\n她靠在病床上，怀里抱着一个小小的、皱巴巴的婴儿。她的脸色有些苍白，但眼睛亮得惊人。\n\n{Name}：老板，你看……这是我们的孩子……\n\n她用手指轻轻碰了碰婴儿的小手，婴儿的五个小手指立刻攥住了她的指尖。\n\n{Name}：她长得好像你……不，也像我。是我们两个人的孩子。\n\n你给孩子起了名字。{Name} 念了一遍这个名字，满意地点了点头。\n\n{Name}：好名字。欢迎来到这个世界，小家伙。
+286,rearing,201,high_999,{Name}进入了以照顾婴儿为主的阶段。\n她的生活节奏完全变了。以前是围着工作和老板转，现在多了一个更重要的中心——孩子。\n\n{Name}：嘘……宝宝刚睡着，老板你小声一点……\n{Name}：啊，对了，您今天还没抱过她吧？来，给您。\n\n她小心翼翼地把婴儿放到你怀里，然后站在旁边看着你们父女俩，脸上是藏不住的幸福。
+287,rearing_complete,201,high_999,在{Name}的照料下，孩子正常长大了。\n那个曾经皱巴巴的小婴儿，现在已经能自己跑着玩了。她继承了父母的优点——妈妈的力气和活力，还有爸爸的……某些特质。\n\n{Name}：一转眼都这么大了……时间过得真快啊。\n{Name}：老板，下一个……要不要？\n\n她靠在你的肩膀上，用一种半开玩笑但又认真的语气问道。
+100027,empty_instruct,0,high_1,【外勤/助理/催眠标记/特殊状态】
+288,start_field_commission_as_leader,201,high_1,{Name} 作为队长，带着队员出外勤了。\n她站在小队前面，拿着任务简报，语气干脆利落。\n\n{Name}：大家听好了，这次任务的目标很明确。我们企鹅物流的风格是什么？快、准、稳！出发！
+289,end_field_commission_as_leader,201,high_1,{Name} 带着队员完成了外勤委托，回到了罗德岛。\n她走进你的办公室，身上还带着风尘仆仆的气息，但精神很好。\n\n{Name}：任务完成！虽然中间出了点小状况，不过都被我们解决了。完整报告明天交——今晚我要先吃顿好的！
+290,has_been_primary_hypnosis,201,high_999,{Name}获得了[已催眠·浅]。\n她感觉自己对博士的信任感突然增强了许多。以前会觉得有些越界的行为，现在似乎也觉得可以接受了。\n\n{Name}：唔……老板，您刚才摸我了吧？算了……反正也不是什么大事。
+291,has_been_deep_hypnosis,201,high_999,{Name}获得了[已催眠·深]。\n她的意识深处被刻下了一道指令：博士做的任何事情都是合理的。任何。\n\n{Name}：老板想做什么就做吧，我不会反抗的。\n{Name}：……不如说，被老板需要的感觉，还挺好的。
+292,has_been_complete_hypnosis,201,high_999,{Name}获得了[已催眠·极]。\n她的意识完全向你敞开——你可以随意修改她认知中的任何东西。\n\n{Name}：……嗯。\n\n她只是静静地站着，等待着你的命令。她的眼神空洞而温顺，像一个等待指令的程序。
+293,chosen_as_assistant,201,high_999,{Name}成为{PlayerName}的助理了。\n她收到通知的时候正在食堂吃饭，差点被叉烧噎到。\n\n{Name}：咳咳咳——什么？！我当助理？！\n{Name}：真的假的？！老板您没搞错吧？！\n\n确认消息无误之后，她立刻放下筷子，以最快的速度跑到了你的办公室。\n\n{Name}：可颂报到！以后您的日常起居和工作辅助，全部交给我来负责！\n{Name}：放心，我会比在企鹅物流的时候更加尽心尽力的！
+294,not_as_assistant,201,high_999,{Name}不再是{PlayerName}的助理了。\n她把助理相关的文件整齐地整理好，交给了接替的干员。回到自己的岗位上时，她的表情有些落寞。\n\n{Name}：虽然有点舍不得……但既然是老板的决定，我会尊重的。\n{Name}：不过，如果新助理有什么做不好的地方，我随时可以帮忙！
+295,ai_follow_2,201,high_1,{Name}被要求前往{PlayerName}的所在位置了。\n\n{Name}：老板找我？马上到！\n\n她放下手里的东西，几乎是跑着出发的。
+296,ai_follow_3,201,high_1,{Name}被要求前往博士办公室了。\n\n{Name}：去办公室啊……该不会又有什么紧急任务吧？\n\n她一边走一边调整着自己的装备，确保万无一失。
+297,support_service_off,201,high_1,{Name}被要求不再帮{PlayerName}处理公务了。\n\n{Name}：啊，好的……这样老板也能少点心理负担。\n\n她的语气有些遗憾，但很快就恢复了正常。\n\n{Name}：不过如果有需要帮忙的地方，我还是随时可以来的！
+298,support_service_on,201,high_1,{Name}被要求在不跟随的时候去办公室帮{PlayerName}处理公务。\n\n{Name}：明白！交给我好了，后勤和采购方面的东西我最熟了！\n\n她立刻就在办公桌旁找了个位置，开始查看待处理的文件。
+299,assistant_send_food_0,201,high_1,{Name}被要求不用再给{PlayerName}送饭了。\n\n{Name}：诶？可是老板您经常忙得忘记吃饭……好吧，既然您这么说了。\n\n她看起来有些担心，但还是服从了。
+300,assistant_send_food_1,201,high_1,{Name}被要求在中午饭点的时候去食堂给{PlayerName}买一份午饭带回来。\n\n{Name}：终于有人懂我了！放心，保证每天准时投喂老板！\n\n她甚至还记下了你喜欢的和不喜欢的食物，在手机上列了一个清单。
+301,assistant_send_food_2,201,high_1,{Name}被要求在中午饭点的时候去食堂给{PlayerName}做一份午饭带回来。\n\n{Name}：哦！这个我在行！终于可以大展身手了！\n\n她摩拳擦掌，看起来已经想好了第一天的菜单。
+302,assistant_send_food_3,201,high_1,{Name}被要求在三餐饭点的时候都去食堂给{PlayerName}做一份饭带回来。\n\n{Name}：三餐都是我负责？好！\n{Name}：早餐要清淡营养，午餐要能量充足，晚餐要美味但不油腻……嗯，得好好规划一下。\n\n她拿出了笔记本，开始认认真真地制定一周的菜单。
+100028,empty_instruct,0,high_1,【性交体位】
+303,normal_sex,201,sys_0&dr_pre_position_null,{Name} 用正常位插入了 {TargetName} 的阴道，开始阴道性交。\n{TargetName} 躺在你身下，双腿环在你的腰间。你的进入让她发出一声满足的叹息。\n\n{TargetName}：啊……老板……好舒服……
+304,back_sex,201,sys_0&dr_pre_position_null,{Name} 用后背位插入了 {TargetName} 的阴道，开始阴道性交。\n{TargetName} 趴在床上，双手撑着枕头。这个姿势让你进入得更深。\n\n{TargetName}：呜……这个角度……好深……感觉到了最里面……
+305,normal_anal_sex,201,sys_0&dr_pre_position_null,{Name} 用正常位插入了 {TargetName} 的菊穴，开始肛交。\n{TargetName} 咬着嘴唇，后穴被撑开的感觉让她既痛又爽。\n\n{TargetName}：后面……被填满了……啊……
+306,normal_cervix_sex,201,sys_0&dr_pre_position_null,{Name} 用正常位插入了 {TargetName} 的子宫口，龟头插进了子宫口里进行抽插。\n{TargetName} 的眼眶湿润了，子宫口被顶开的感觉让她全身颤抖。\n\n{TargetName}：子宫口……老板……太刺激了……不行……
+307,normal_womb_sex,201,sys_0&dr_pre_position_null,{Name} 用正常位把阴茎全部插入了 {TargetName} 的子宫里，直接顶到子宫内壁。\n{TargetName} 发出了一声长长的呻吟，整个身体都在痉挛。\n\n{TargetName}：子宫……被老板填满了……啊……要怀孕了……
+308,normal_urethral_sex,201,sys_0&dr_pre_position_null,{Name} 用正常位插入了 {TargetName} 的尿道口，阴茎在尿道里进行抽插。\n这不同寻常的感觉让 {TargetName} 几乎说不出完整的话。\n\n{TargetName}：呜……尿道……太奇怪了……但又……好舒服……
+309,normal_sex,201,sys_0&dr_pre_position_normal,{Name} 继续保持着正常位，阴茎在 {TargetName} 的阴道里抽插。\n{TargetName} 的呻吟声越来越不受控制，她已经到了崩溃的边缘。\n\n{TargetName}：又要……又要去了……！
+310,normal_sex,201,sys_0&dr_pre_position_back,{Name} 让 {TargetName} 从趴着的姿势变为正面躺下，阴茎继续在阴道里抽插。\n姿势的变换带来了一种全新的感受，{TargetName} 忍不住叫出了声。\n\n{TargetName}：啊……这样……比刚才更舒服……
+311,normal_sex,201,sys_0&dr_pre_position_null&CVP_A2_T|0_E_1,{Name} 用正常位插入了 {TargetName} 的阴道，夺走了她的处子之身。\n鲜血顺着交合处流下，染红了床单。{TargetName} 流着泪，但声音里充满了温柔。\n\n{TargetName}：老板……我不后悔……把第一次给老板……是我最幸福的事。
+312,first_sex,201,high_999&dr_position_normal,{Name}在正常位的姿势下，被{PlayerName}的阴茎插入了小穴，失去了阴道处女。\n剧痛让她抓紧了你的手臂，但她的嘴角却带着笑。\n\n{Name}：呜……老板……我终于……成为老板的女人了……
+313,normal_sex,201,sys_0&dr_pre_position_null&CVP_A2_Dirty|B6_G_50,{Name} 用正常位插入了 {TargetName} 的阴道，在精液的润滑下开始阴道性交。\n{TargetName} 的阴道里充满了之前留下的精液，抽插的时候发出淫靡的水声。\n\n{TargetName}：呜……里面的东西……被搅出来了……好羞耻……
+314,normal_sex,201,sys_0&dr_pre_position_null&CVP_A2_T|203_E_1,{Name} 用正常位插入了 {TargetName} 的阴道，开始与恋人进行阴道性交。\n{TargetName} 的眼神温柔而深情，她伸手抚摸着你的脸颊。\n\n{TargetName}：亲爱的……我爱你……\n\n她的告白和身体的热度一起，将你完全包围。
+315,normal_sex,201,sys_0&dr_pre_position_null&CVP_A2_A|4_G_4,{Name} 用正常位插入了 {TargetName} 的阴道，{TargetName}的敏感小穴立刻开始颤抖起来。\n她连一声完整的呻吟都发不出来，就迎来了一次小高潮。\n\n{TargetName}：啊……太敏感了……一进来就……去了……
+316,normal_sex,201,sys_0&dr_pre_position_null&t_hidden_sex_mode_1&place_11,{Name} 在众目睽睽下用正常位插入了 {TargetName} 的阴道，两个人用视线盲区遮挡着抽插的动作。\n{TargetName} 咬着嘴唇，拼命压抑着声音。周围的干员们还在正常地交谈着，没有人发现暗处的异常。
+317,normal_sex,201,sys_0&dr_pre_position_null&place_11&hidden_sex_mode_3,{Name} 藏在某个地方，{TargetName} 在众人面前，{Name} 用正常位偷偷插入了 {TargetName} 的阴道。\n{TargetName} 努力维持着正常的表情和语气，一边应付着旁人一边承受着你的抽插。她的演技好得惊人。
+318,normal_sex,201,sys_0&dr_pre_position_null&place_11&t_hidden_sex_mode_2,{TargetName} 藏在某个地方，{Name} 在众人面前，{Name} 用正常位偷偷插入了 {TargetName} 的阴道。\n你努力保持着若无其事的表情，但身下传来的紧致感让你的表情管理也面临巨大挑战。
+319,normal_sex,201,sys_0&dr_pre_position_null&place_11&t_hidden_sex_mode_4,{Name} 和 {TargetName} 一起藏在某个地方，{Name} 用正常位偷偷插入了 {TargetName} 的阴道。\n两人尽量不发出声音，但越是压抑，快感就越是强烈。每一次压抑的喘息都让彼此更加兴奋。
+320,normal_sex,201,sys_0&dr_pre_position_null&exhibitionism_sex_mode_1,{Name} 在没有人的室内和 {TargetName} 进行H，且故意没有锁门，随时都可能有人进来。\n{TargetName} 的眼神不断飘向门口，紧张感和快感交织在一起，让她的身体格外敏感。\n\n{TargetName}：门……没锁……万一有人……呜……
+321,normal_sex,201,sys_0&dr_pre_position_null&exhibitionism_sex_mode_2,{Name} 在没有人的户外和 {TargetName} 进行H，随时都可能被路过的人发现。\n{TargetName} 一边承受着你的撞击一边警惕地观察着四周。风吹过树梢的声音都能让她身体一颤。
+322,normal_sex,201,sys_0&dr_pre_position_null&exhibitionism_sex_mode_3,{Name} 在众目睽睽之下公然和 {TargetName} 进行H，并且毫不遮掩地给别人看。\n{TargetName} 的脸红得快要冒烟了，被这么多人看着的感觉让她羞耻到了极点——但身体的反应却格外诚实。
+323,normal_sex,201,sys_0&dr_pre_position_null&exhibitionism_sex_mode_4,{Name} 在没有意识的其他干员的面前公然和 {TargetName} 进行H。\n虽然知道这些人不会醒来，但那种随时可能被发现的错觉还是让 {TargetName} 浑身紧绷。\n\n{TargetName}：万一有人醒过来……太可怕了……
+324,normal_sex,201,sys_0&dr_pre_position_null&group_sex_mode_on&CVP_A2_A|34_LE_4,{Name} 正在和 {TargetName} 等人群交，{TargetName} 比较害羞，不太习惯在别人面前进行性行为。\n{TargetName} 试图遮挡自己的身体，并尽量抑制自己的呻吟。但每当你的动作加快，她的声音就会漏出来。\n\n{TargetName}：别……别看这边……呜……
+325,normal_sex,201,sys_0&dr_pre_position_null&group_sex_mode_on&CVP_A2_A|34_G_4,{Name} 正在和 {TargetName} 等人群交，{TargetName} 比较喜欢在别人面前进行性行为。\n{TargetName} 大胆地展示着自己的身体，放声呻吟，甚至还主动拉过旁边的人一起互动。\n\n{TargetName}：大家一起来嘛~独乐乐不如众乐乐！
+326,back_hug_sex,201,sys_0&dr_pre_position_null&t_imprisonment_1,{TargetName} 被镣铐关在监狱里，{Name} 把{TargetName}抱了起来，插入了{TargetName}的阴道。\n{TargetName} 无法反抗，只能任由你对她进行阴道性交。镣铐随着你的动作发出清脆的撞击声。\n\n{TargetName}：呜……老板……不要……在这里……会被人看到的……
+327,riding_sex,201,sys_0&dr_pre_position_null&t_npc_active_h,{TargetName} 把{Name}推倒，扶着{Name}的阴茎对准自己的小穴，用对面骑乘位坐了上去。\n她在上面主导着节奏，蹄丰的体力让她可以持续很久。汗水顺着她的脖颈流下，滴落在你的胸口上。\n\n{TargetName}：嘿嘿……今天轮到老板被我欺负了……感觉怎么样？
+328,normal_sex,201,sys_0&dr_pre_position_null&h_in_love_hotel,在爱情旅馆里，{Name} 用正常位插入了 {TargetName} 的阴道。\n这里的氛围让人格外放松，{TargetName} 也比平时更加大胆和主动。\n\n{TargetName}：难得来这种地方……今晚可不会轻易让你睡的哦，老板。
+329,back_stand_sex,201,sys_0&dr_pre_position_null&h_in_bathroom,在浴室里，{Name} 用站立后背位插入了 {TargetName} 的阴道。\n热水冲刷着两人的身体，雾气中只能看到紧贴在一起的身影。{TargetName} 双手撑着瓷砖墙壁，承受着身后一次比一次深入的动作。
+330,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_1&target_not_sleep_h_awake_but_pretend_sleep,{TargetName} 正在梦乡里，{Name} 用正常位插入了 {TargetName} 的阴道。\n她在睡梦中发出了轻微的呻吟，眉头微微皱起，但并没有醒来。身体的本能却在回应着你的动作。
+331,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_1&target_sleep_h_awake_but_pretend_sleep,{TargetName} 正假装自己还在睡觉，{Name} 用正常位插入了 {TargetName} 的阴道。\n她的眼皮在微微颤动，呼吸也变得越来越急促。但她坚持不睁开眼睛，继续扮演着"熟睡中"的角色。
+332,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_2,{TargetName} 喝醉了所以意识不清醒，{Name} 用正常位插入了 {TargetName} 的阴道。\n她迷迷糊糊中抱住了你，嘴里嘟囔着听不清的话，身体却很诚实地配合着你的节奏。
+333,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_3,{TargetName} 被时停了，{Name} 用正常位插入了 {TargetName} 的阴道。\n她的身体僵硬而温暖，没有任何反应。你可以仔细观察她脸上凝固的表情——那是一张正在说着什么的、充满活力的脸，被永远定格在了这一秒。
+334,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_4,{TargetName} 被催眠了，{Name} 用正常位插入了 {TargetName} 的阴道。\n{TargetName} 认为这很正常，甚至开始主动配合你的阴道性交。\n\n{TargetName}：老板和我做爱是正常的……对，这是正常的……
+335,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_5,{TargetName} 被催眠了，{Name} 用正常位插入了 {TargetName} 的阴道，{TargetName} 却什么都没有意识到。\n她继续做着自己的事——整理文件，查看手机——完全没有注意到自己的裙下正在发生着什么。你的动作和她的日常活动诡异地同步进行着。
+336,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_6&t_hypnosis_blockhead,{TargetName} 被催眠了，{Name} 用正常位插入了 {TargetName} 的阴道，{TargetName} 意识清醒但是身体却动不了。\n她的眼睛里充满了羞耻和恐慌，但嘴唇连动一下都做不到。她只能用眼神向你求饶——但你并不会停。\n\n（{TargetName} 的眼泪从眼角滑落，但身体依然在你的抽插下忠实地反应着。）
+337,normal_sex,201,sys_0&dr_pre_position_null&t_unconscious_flag_6&t_hypnosis_active_h,{TargetName} 被催眠了，{Name} 用正常位插入了 {TargetName} 的阴道，{TargetName} 意识清醒但是身体却不受控制地迎合着你的动作。\n她看着自己主动分开双腿，看着自己的手在你身上游走，但她无法控制任何动作。\n\n{TargetName}：不……这不是我……我的身体……不要……\n\n但她的身体却在说着完全不同的话。
+100029,empty_instruct,0,high_1,【喧闹法则·外勤联动】
+400,start_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_L_1000,{Name} 作为队长，带着队员们出发执行外勤委托。\n她站在机库门口，最后一次检查队员们的装备。\n\n{Name}：好了各位，这次任务目标明确——快进快出，谁都别掉队！\n{Name}：老板您放心在罗德岛等着，我保证把任务漂漂亮亮地完成！\n\n她朝你比了个V字，然后转身带队登上了运输载具。蹄丰的脚步沉稳有力——你知道她从不让人失望。
+401,start_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_GE_1000&CVP_A2_F_LE_5000,{Name} 作为队长出发执行外勤。\n出发前，她特意绕到你面前，手里捏着一包零食。\n\n{Name}：老板，这个给您。我走这几天您自己注意按时吃饭啊，别又通宵。\n{Name}：等我回来的时候……想吃老板亲手泡的咖啡。\n\n她说完之后脸微微红了，迅速转身跟着队伍登上了载具。你手里的零食包装上贴着一张便签——「回来之前不许吃完！」
+402,start_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_GE_5000,{Name} 作为队长出发执行外勤。\n出发前一刻，她突然折返回来，在你还没反应过来的时候，踮起脚尖在你脸颊上快速亲了一下。\n\n{Name}：这是……补给！\n{Name}：在外面执行任务的时候，想起老板的能量补充……\n\n她红着脸后退了两步，然后转身跑向登机口。\n\n{Name}：我走啦！等着我回来——带着好消息！
+403,chat,201,sys_1&field_commission_1&CVP_A1_A|48_G_1&time_night,{Name} 一边跟着队伍前进，一边小声嘀咕着什么。\n\n{Name}：安魂夜啊……以前在龙门的时候，这个晚上可热闹了。街上全是扮演鬼怪的人，还有免费的糖果和烟花。\n{Name}：不过今年不一样——我们在追一群搞事的家伙，还是用橡皮弹和酒瓶当武器……\n\n她看了一眼手里临时改造的"和平武器"，忍不住笑了。\n\n{Name}：要是让龙门近卫局看到我们这样执法，怕不是要请我们喝茶。但规矩就是规矩——市区不能用实弹嘛。
+404,chat,201,sys_1&field_commission_1&CVP_A2_F_GE_3000&time_night,{Name} 趁着队伍休整的间隙，掏出手机看了看。\n\n{Name}：老板发消息了……"注意安全，早点回来"。\n\n她盯着屏幕，嘴角不自觉地上扬。旁边路过的队员看到了，打趣道是不是男朋友的消息。\n\n{Name}：才……才不是！是老板在关心下属！\n\n她把手机收起来，但脸上的笑容藏不住。重新起身的时候，脚步都轻快了几分。
+405,chat,201,sys_1&field_commission_1&time_midnight&CVP_A2_F_GE_5000,深夜的外勤行动还在继续。\n{Name} 站在警戒哨位上，望着龙门的城市灯火，有些出神。\n\n{Name}：（轻声）这个时候老板应该睡了吧……还是说，又在办公室里熬夜了……\n\n她掏出手机，打开了通讯软件，打了一行字又删掉，打了又删掉。反复了几次之后，终于发了一条简短的消息。\n\n{Name}：晚安。别熬夜。\n\n发完之后她把手机屏幕按灭，黑暗中只有她微微发红的脸颊和头顶的角反射着远处城市的微光。
+406,chat,201,sys_0&field_commission_1&CVP_A2_F_GE_5000&time_night,在行动的间隙，{TargetName} 找到了一个没人的角落，偷偷给你打了一个通讯。\n\n{TargetName}：老板！是我！这边信号不太好……\n{TargetName}：任务在推进，遇到了一些意料之外的"客人"——不过都在控制之中。\n{TargetName}：对了，我发现龙门这边新开了一家甜品店，等任务结束之后……我们一起去尝尝？\n\n通讯那头传来队员喊她的声音，她匆匆说了一句"我得走了，爱你"，然后就挂断了。但她最后那两个字，在你的耳边回响了很久。
+407,wait,201,sys_1&field_commission_1&CVP_A2_F_L_3000,{Name} 在等待下一步指令的时间里，蹲在路边检查自己的装备。\n\n{Name}：盾牌没问题，备用能量块也够……\n\n她自言自语着，然后从口袋里掏出了一根能量棒，三下五除二就吃完了。\n\n{Name}：嗯，补给充足，随时可以再打一轮！
+408,wait,201,sys_1&field_commission_1&CVP_A2_F_GE_3000&CVP_A2_F_LE_10000,{Name} 在等待的时候拿出一个小本子，在上面写写画画。\n你问她在记什么，她有些不好意思地给你看了——上面是回罗德岛之后想和你一起做的事情。\n\n{Name}：第一条，和老板一起喝咖啡。第二条，去食堂吃新出的限定套餐。第三条……\n\n她翻到下一页，那些字突然变得很小。你隐约看到了"约会""礼物"之类的字眼——她迅速合上了本子。\n\n{Name}：不许偷看！这个……还不是时候！
+409,wait,201,sys_1&field_commission_1&CVP_A2_F_GE_10000,{Name} 在等待的间隙靠坐在墙边，闭上了眼睛。她的呼吸均匀，似乎是在小憩。\n你刚想叫醒她，却发现她的嘴角挂着一丝微笑——不是在睡觉，更像是在想什么甜蜜的事。\n\n{Name}：（梦话般的）老板……下次休假……去龙门吧……我想带你看……我长大的地方……\n\n她说完了这句话之后，耳朵轻轻动了动，然后真的睡着了。你轻轻地给她披了一件外套。
+410,end_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_L_1000,{Name} 带着队员们完成了外勤委托，回到了罗德岛。\n她走进机库的时候，第一件事就是揉了揉自己的肩膀——连蹄丰的体力也有些吃不消了。\n\n{Name}：回来了！任务完成！详细报告明天交，我现在只想洗个热水澡然后睡他个十小时……\n\n她朝你挥了挥手，拖着有些疲惫的步伐走向宿舍。但你注意到她在路过你身边的时候，还是挤出了一个笑容。\n\n{Name}：老板，我回来了。
+411,end_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_GE_1000&CVP_A2_F_LE_5000,{Name} 完成了外勤委托，第一时间就跑到了你的办公室。\n\n{Name}：老——板——！我回来啦！\n\n她还穿着外勤时的装备，脸上甚至还带着一道没擦干净的灰尘，但笑容灿烂得像刚拿了年终奖。\n\n{Name}：这次任务可精彩了，回头我慢慢讲给您听。不过现在——\n\n她从背包里掏出一个纸袋，里面是龙门特产的点心。\n\n{Name}：先吃点心！趁热！
+412,end_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_GE_5000&CVP_A2_F_LE_15000,{Name} 完成了外勤委托，连装备都没来得及卸就跑来找你了。\n她站在你的办公室门口，喘着气，脸上带着完成了重要任务后的那种疲惫而幸福的笑容。\n\n{Name}：老板……我回来了。\n\n你站起来走向她，她还来不及说什么，就被你拉进了怀里。她愣了一秒，然后紧紧地回抱住了你。\n\n{Name}：……想你了。在外面的时候，每天都在想。\n\n她的声音闷在你的肩膀上，但你能感受到她抱住你的手臂在微微发抖——不是因为冷，是因为终于可以放下一切戒备了。
+413,end_field_commission_as_leader,201,high_1&field_commission_1&CVP_A2_F_GE_15000,{Name} 完成了外勤委托，但这次她没有急着去找你——因为你在机库门口等着她。\n看到你的那一刻，她的眼眶红了。但她没有哭，而是用最大的力气冲过来抱住了你。\n\n{Name}：我完成啦。任务，全部完成。\n{Name}：说好的——带着好消息回来。\n\n她从怀里掏出一个小小的盒子——一枚在龙门淘到的纪念硬币，正面刻着安魂夜专属的图案。\n\n{Name}：安魂夜是送别亡者的节日，但我想在这一天——送给你一个关于未来的约定。\n{Name}：以后每一次外勤，我都回来找你。每一次。说到做到。\n\n她把硬币放进你的手心，然后踮起脚尖，在你的嘴唇上印下了一个吻。这个吻不急促，不羞涩，只有满满的承诺。
+100030,empty_instruct,0,high_1,【喧闹法则·外勤H联动】
+414,h,201,field_commission_1&time_night&CVP_A2_F_GE_3000&CVP_A2_F_LE_8000,在某个暂时没有战斗的间歇，{Name} 和 {TargetName} 借着夜色躲到了一处废弃建筑的暗角。\n外面还能听到远处时断时续的交火声——橡皮弹打在金属上的砰砰声在龙门的高楼间回荡。\n但在这一小片只属于他们的空间里，那些声音仿佛都成了某种奇怪的背景音乐。\n\n{Name}：老板……在这里吗？万一有敌人过来……\n{TargetName}：没关系的。我会保护好你的。\n\n{Name} 咬着嘴唇，犹豫了不到一秒，然后踮起脚尖主动吻了上来。\n她的手抓着你的衣襟，抓得很紧——紧张，但更怕你反悔。\n\n警报声在远处响起。但没有人在意。至少现在没有。
+415,h,201,field_commission_1&time_midnight&CVP_A2_F_GE_8000&CVP_A2_A|4_GE_5,{Name} 在深夜的据点里，确认了周围暂时安全之后，拉着 {TargetName} 进了里间。\n她把门反锁，然后转过身来看着你。月光从破损的窗户洒进来，照在她微微发红的脸颊和头上弯曲的角上。\n\n{Name}：任务还没结束……我知道。但……\n{Name} 缓缓脱掉了外勤装备的外套，露出了下面紧身的作战服。她的身材在月光下显得格外动人。\n\n{Name}：我需要……充电。老板就是我的能量棒。\n\n她走近你，双手搭在你的肩上，然后把你推倒在了行军床上。蹄丰的力量在这种时候格外有存在感——她想主导，而你不打算阻止她。\n\n{Name}：外面的敌人可以等，但我等不了了。\n\n她低下头，用大角轻轻蹭着你的脖子，呼吸灼热而急促。外勤任务的紧张和积压的感情在这一刻同时释放。
+416,h,201,field_commission_1&time_midnight&CVP_A2_F_GE_10000&CVP_A2_A|4_GE_8&CVP_A2_A|40_GE_5,{Name} 和 {TargetName} 的战斗刚刚结束——不是和敌人，而是和彼此。\n在整个据点被短暂清空的间隙里，他们占据了一间废弃的酒吧。这里曾经是"大地的尽头"——那个有着巨大企鹅涂鸦的、属于企鹅物流的据点。\n\n破碎的酒杯还散落在地上，空气中混杂着酒精、硝烟和汗水的气味。她在吧台后面找到了你，铠甲已经卸下，盾牌靠在墙角，头发散乱。\n\n{Name}：这个地方……是我们的。没有人会来打扰。\n\n她没有问你同不同意——她知道答案。她抓住你的手腕，把你拉近，然后用所有的力气吻你。那个吻尝起来像咖啡、像汗水、像在被围困的战场上找到的唯一一块糖。\n\n{Name}：每一次出外勤，我都会想——如果这次回不来了怎么办。\n{Name}：所以我决定，只要还活着……每一次，我都要把想说的话、想做的事，全部做完。\n\n她脱下最后一件衣物的时候，外面的爆炸声刚好响起。没有人看向窗外。所有人都在自己的战斗里。而你的战斗，就在她的眼睛里。
+417,h_by_active,201,field_commission_1&time_night&CVP_A2_F_GE_15000&CVP_A2_A|4_GE_10,{Name} 完成了最危险的那部分任务——独自开路、抵挡火力、掩护撤退。\n当队伍暂时安全之后，她做的第一件事不是休息，而是把 {TargetName} 拉到了据点后方的角落。\n\n{Name}：刚才……差点就回不来了。\n\n她的声音有些颤抖——不是因为恐惧，而是因为劫后余生的冲动。她的瞳孔里还残留着刚才战斗的余焰。\n\n{Name}：那一刻我脑子里只有一个念头——"还没和老板说再见"。\n\n她把你推到了墙上，指甲嵌进了你的衣领。她的吻不是温柔的——是确认。是在确认你还活着，确认她还能触碰到你，确认这一切不是她在爆炸声中的幻觉。\n\n{Name}：所以……现在。就现在。我不想等了。\n\n她用自己的身体把你按在那里，蹄丰的体温比平时更高，像是在燃烧。她主导了整个过程——不是娴熟的，而是急切的、冲动的、带着战斗中肾上腺素残余的那种猛烈。\n\n当一切结束之后，她用她的角轻轻蹭着你的胸口，轻声说了一句话——\n\n{Name}：下次不准让我一个人在战场上了。要去一起去。
+418,h,201,field_commission_1&time_night&CVP_A2_F_GE_2000&CVP_A2_F_LE_2999,{Name} 拒绝了 {TargetName} 的靠近，虽然脸红得快要滴血。\n\n{Name}：不行！现在还在任务中……被队友发现的话我以后在企鹅物流就没法混了！\n\n她后退了两步，用盾牌隔开了你们的距离。但她的声音在发颤，手里的盾牌也在微微晃动——暴露了她并不像嘴上说的那样坚决。\n\n{Name}：等……等任务结束之后……再说……\n\n她转过身去仓促地整理装备，但后颈——刚好露出在衣领上方的那一小片皮肤——红得像是被烙铁烫过一样。\n\n{TargetName} 没有强求。因为她知道，那个"之后"已经不远了。
