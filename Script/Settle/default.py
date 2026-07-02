@@ -7601,16 +7601,24 @@ def handle_eat_add_just(
         change_data.target_change.setdefault(target_data.cid, game_type.TargetChange())
         target_change = change_data.target_change[target_data.cid]
 
-        # 加好感
+        # NPC吃的时候
         if chara_id:
             now_add = int(add_time * quality_adjust * cook_difficulty * add_time_adjust * random.uniform(0.8, 1.2))
+            # 加好感
             base_chara_favorability_and_trust_common_settle(character_id, now_add, True, 0, 0, change_data, chara_id)
+            # 加好意
+            base_chara_state_common_settle(chara_id, now_add * 4, 11, 0, change_data_to_target_change = change_data)
             # 玩家做的饭的情况下，额外加信赖
             if pl_make_flag:
                 base_chara_favorability_and_trust_common_settle(character_id, now_add, False, 0, 0, change_data, chara_id)
-            # 高品质食物则变为好心情
+            # 高品质食物
             if food_quality >= 7:
+                # 变为好心情
                 handle_mood_to_good(chara_id, add_time, change_data, now_time)
+                # 增加口喉快感
+                base_chara_state_common_settle(chara_id, now_add * 3, 21, 0, change_data_to_target_change = change_data)
+                # 增加心理快感
+                base_chara_state_common_settle(chara_id, now_add * 2, 23, 0, change_data_to_target_change = change_data)
 
         # 加体力气力，清零饥饿值和进食状态
         # 为了增加更多的体力气力，将时间设为25
