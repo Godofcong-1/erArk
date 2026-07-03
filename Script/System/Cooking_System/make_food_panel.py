@@ -758,6 +758,24 @@ class SeeFoodListByFoodNameDraw:
             cache.achievement.make_food_count += 1
             real_count += 1
 
+        # 如果实际制作数量为0，则不进行后续处理并输出提示信息
+        if real_count <= 0:
+            py_cmd.clr_cmd()
+            line_feed.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("制作失败：没有足够的调味材料或精液量！\n")
+            info_draw.draw()
+            line_feed.draw()
+            return
+        # 如果实际制作数量小于请求数量，则输出提示信息
+        elif real_count < make_count:
+            py_cmd.clr_cmd()
+            line_feed.draw()
+            info_draw = draw.NormalDraw()
+            info_draw.text = _("因为调味材料或精液量不足，实际制作数量为 {0} 个\n").format(real_count)
+            info_draw.draw()
+            line_feed.draw()
+
         # 烹饪行为
         character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = new_make_food_time
