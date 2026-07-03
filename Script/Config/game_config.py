@@ -502,7 +502,7 @@ def translate_data(data: dict):
         for key in now_data:
             if key == "null":
                 print(f"debug 遇到无效key: {key}，now_data :", now_data)
-            if data["gettext"][key]:
+            if data["gettext"].get(key) or key == "name":
                 # print("now_data :",now_data)
                 now_data[key] = get_text._(now_data[key])
 
