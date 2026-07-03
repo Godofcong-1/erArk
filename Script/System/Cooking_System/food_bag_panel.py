@@ -1,5 +1,6 @@
 from types import FunctionType
 from uuid import UUID
+from typing import Tuple, List
 from Script.Core import get_text, game_type, cache_control, constant, flow_handle
 from Script.UI.Moudle import panel, draw
 from Script.Design import attr_calculation, handle_premise
@@ -41,18 +42,19 @@ class FoodBagPanel:
         food_type_list = [_("当前持有食物")]
         # food_type_list = [_("主食"), _("零食"), _("饮品"), _("水果"), _("食材"), _("调料")]
         self.handle_panel_normal = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 0
+            [], FoodGroupDraw, 10, 1, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 2
+            [], FoodGroupDraw, 10, 1, window_width, True, False, 2
         )
         while 1:
             character_data: game_type.Character = cache.character_data[0]
             if cache.now_panel_id != constant.Panel.FOOD_BAG:
                 break
 
-            # 读取背包食物，并只提取uid列表
-            id_list_normal,id_list_special = [],[]
+            # 读取背包食物，按(recipe, special_seasoning)分组
+            group_normal: dict = {}
+            group_special: dict = {}
             del_food_flag = False
             for i in character_data.food_bag.copy():
                 food_data: game_type.Food = cache.character_data[0].food_bag[i]
@@ -63,14 +65,20 @@ class FoodBagPanel:
                     del_food_flag = True
                     continue
                 # 如果food_data是精液调味(调味类型11和12)没有special_seasoning_amount属性，则删除该食物
-                elif food_data.special_seasoning in [11,12] and not hasattr(food_data, "special_seasoning_amount"):
+                elif food_data.special_seasoning in [11, 12] and not hasattr(food_data, "special_seasoning_amount"):
                     del cache.character_data[0].food_bag[i]
                     del_food_flag = True
                     continue
+                group_key = (food_data.recipe, food_data.special_seasoning)
                 if food_data.special_seasoning == 0:
-                    id_list_normal.append(i)
+                    group_normal.setdefault(group_key, [])
+                    group_normal[group_key].append(i)
                 else:
-                    id_list_special.append(i)
+                    group_special.setdefault(group_key, [])
+                    group_special[group_key].append(i)
+
+            id_list_normal = list(group_normal.items())
+            id_list_special = list(group_special.items())
 
             self.handle_panel_normal.text_list = id_list_normal
             self.handle_panel_normal.update()
@@ -108,7 +116,6 @@ class FoodBagPanel:
             line.draw()
             now_draw = draw.NormalDraw()
             now_draw.text = _("◆普通食物在场景无人时为独自食用，有人时则与目标一起分享，特殊调味食物仅可让目标食用。\n")
-            # now_draw.width = 1
             now_draw.draw()
             line_feed.draw()
 
@@ -116,7 +123,9 @@ class FoodBagPanel:
             target_character_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
             now_draw = draw.NormalDraw()
-            now_draw.text = _("○正常调味食物（共 {0} 个）\n").format(len(id_list_normal))
+            now_draw.text = _("○正常调味食物（共 {0} 种，{1} 个）\n").format(
+                len(id_list_normal), sum(len(v) for v in group_normal.values())
+            )
             if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(character_data.name)
             elif handle_premise.handle_have_target(0):
@@ -124,18 +133,18 @@ class FoodBagPanel:
                     now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
                 elif not handle_premise.handle_t_normal_6(0):
                     now_draw.text += _("  {0}现在意识不清醒，无法吃东西。\n\n").format(target_character_data.name)
-            # now_draw.width = 1
             now_draw.draw()
             self.handle_panel_normal.draw()
             line_feed.draw()
 
             now_draw = draw.NormalDraw()
-            now_draw.text = _("○特殊调味食物（共 {0} 个）\n").format(len(id_list_special))
+            now_draw.text = _("○特殊调味食物（共 {0} 种，{1} 个）\n").format(
+                len(id_list_special), sum(len(v) for v in group_special.values())
+            )
             if handle_premise.handle_have_no_target(0):
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
             elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(target_character_data.name)
-            # now_draw.width = 1
             now_draw.draw()
             self.handle_panel_special.draw()
 
@@ -146,7 +155,7 @@ class FoodBagPanel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list and yrn not in ["0","1","2","3"]:
+            if yrn == back_draw.return_text:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -159,33 +168,35 @@ class FoodBagPanel:
         self.now_panel = food_type
         character_data: game_type.Character = cache.character_data[0]
 
-        # 读取背包食物，并只提取uid列表
-        id_list_normal,id_list_special = [],[]
+        # 按(recipe, special_seasoning)分组
+        group_normal: dict = {}
+        group_special: dict = {}
         for i in character_data.food_bag:
             food_data: game_type.Food = cache.character_data[0].food_bag[i]
+            group_key = (food_data.recipe, food_data.special_seasoning)
             if food_data.special_seasoning == 0:
-                id_list_normal.append(i)
+                group_normal.setdefault(group_key, [])
+                group_normal[group_key].append(i)
             else:
-                id_list_special.append(i)
+                group_special.setdefault(group_key, [])
+                group_special[group_key].append(i)
 
-        self.handle_panel_normal.text_list = id_list_normal
-        self.handle_panel_normal.update()
-        self.handle_panel_special.text_list = id_list_special
-        self.handle_panel_special.update()
+        id_list_normal = list(group_normal.items())
+        id_list_special = list(group_special.items())
 
         self.handle_panel_normal = panel.PageHandlePanel(
-            id_list_normal, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 0
+            id_list_normal, FoodGroupDraw, 10, 5, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 2
+            id_list_special, FoodGroupDraw, 10, 5, window_width, True, False, 2
         )
 
 
-class SeeFoodListByFoodNameDraw:
+class FoodGroupDraw:
     """
-    点击后可查看食物列表的食物名字按钮对象
+    食物分组按钮对象，外部显示食物名称、数量和最高品质，点击后展开该组的所有食物供选择
     Keyword arguments:
-    text -- 食物名字
+    text -- ((recipe_id, special_seasoning), [uid_list]) 分组键和uid列表
     width -- 最大宽度
     is_button -- 绘制按钮
     num_button -- 绘制数字按钮
@@ -193,86 +204,90 @@ class SeeFoodListByFoodNameDraw:
     """
 
     def __init__(
-        self, text: UUID, width: int, is_button: bool, num_button: bool, button_id: int
+        self, text: Tuple, width: int, is_button: bool, num_button: bool, button_id: int
     ):
         """初始化绘制对象"""
-        self.text: UUID = text
-        """ 食物id """
+        group_key, uid_list = text
+        recipe_id, special_seasoning = group_key
+
+        self.uid_list: List[UUID] = uid_list
+        """ 该分组下的食物uid列表 """
         self.draw_text: str = ""
-        """ 食物名字绘制文本 """
+        """ 绘制文本，供面板对齐处理使用 """
         self.width: int = width
         """ 最大宽度 """
-        self.num_button: bool = num_button
-        """ 绘制数字按钮 """
         self.button_id: int = button_id
         """ 数字按钮的id """
         self.button_return: str = str(button_id)
         """ 按钮返回值 """
-        name_draw = draw.NormalDraw()
-        # print(f"debug self.text = {self.text}")
-        food_data: game_type.Food = cache.character_data[0].food_bag[self.text]
-        food_name = ""
-        if food_data.recipe != -1:
-            food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
-            food_name = food_recipe.name
-            food_introduce = food_recipe.introduce
-        food_quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
-        food_quality_str = f"({food_quality_str})"
-        # 如果是母乳，则不显示质量，而是显示母乳的ml
-        if food_data.milk_ml > 0:
-            food_quality_str = ""
-            milk_ml = f"({food_data.milk_ml}ml)"
-        else:
-            milk_ml = ""
-        # 如果不是正常调味，则标注味道
-        food_seasoning = ""
-        if food_data.special_seasoning != 0:
-            food_seasoning += f"({game_config.config_seasoning[food_data.special_seasoning].name})"
-        
-        button_text = f"  {food_name}{food_seasoning}"
-        button_text += f"{food_quality_str}"
-        button_text += f"{milk_ml}"
-        if food_data.maker != "":
-            button_text += f"(by {food_data.maker})"
-        button_text += f"：{food_introduce}"
+        self.food_name: str = ""
+        """ 食物名称 """
+        self.food_introduce: str = ""
+        """ 食物介绍 """
+        self.special_seasoning: int = special_seasoning
+        """ 特殊调味类型 """
 
-        # 判断是否需要绘制按钮
+        # 获取食物名称和介绍
+        if recipe_id != -1 and recipe_id in cache.recipe_data:
+            food_recipe: game_type.Recipes = cache.recipe_data[recipe_id]
+            self.food_name = food_recipe.name
+            self.food_introduce = food_recipe.introduce
+
+        # 特殊调味名称
+        seasoning_str = ""
+        if special_seasoning != 0 and special_seasoning in game_config.config_seasoning:
+            seasoning_str = f"({game_config.config_seasoning[special_seasoning].name})"
+
+        # 遍历计算最高品质和是否有制作者
+        max_quality = 0
+        has_maker = False
+        for uid in uid_list:
+            if uid in cache.character_data[0].food_bag:
+                food_data: game_type.Food = cache.character_data[0].food_bag[uid]
+                if food_data.quality > max_quality:
+                    max_quality = food_data.quality
+                if food_data.maker != "":
+                    has_maker = True
+
+        _quality_level, quality_str = attr_calculation.get_food_quality(max_quality)
+        count = len(uid_list)
+        quality_text = f"(最高品质：{quality_str})" if max_quality > 0 else ""
+        # 食谱等级
+        recipe_difficulty = 0
+        recipe_difficulty_str = ""
+        if recipe_id != -1 and recipe_id in cache.recipe_data:
+            recipe_difficulty = cache.recipe_data[recipe_id].difficulty
+            recipe_difficulty_str = f"(食谱等级：{recipe_difficulty})"
+
+        button_text = f"  {self.food_name}{seasoning_str} {recipe_difficulty_str} {quality_text} x{count}"
+
+        # 判断是否可以点击（与原食用条件保持一致）
         draw_button_flag = True
         character_data: game_type.Character = cache.character_data[0]
-        # 正常调味的情况下
-        if food_data.special_seasoning == 0:
-            # 自己已经吃饱了则不显示按钮
+        if special_seasoning == 0:
             if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
                 draw_button_flag = False
-            # 有交互对象
             elif handle_premise.handle_have_target(0):
-                # 对方已经吃饱了，则不显示按钮
                 if handle_premise.handle_hunger_le_79(character_data.target_character_id):
                     draw_button_flag = False
-                # 对方意识完全不清醒，则不显示按钮
                 elif not handle_premise.handle_t_normal_6(0):
                     draw_button_flag = False
         else:
-            # 特殊调味的情况下，如果没有目标则不显示按钮
             if handle_premise.handle_have_no_target(0):
                 draw_button_flag = False
-            # 如果目标已经吃饱了则不显示按钮
             elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
                 draw_button_flag = False
 
         if draw_button_flag:
-            # 将uuid的前三位作为按钮的返回值
-            return_text = f"\n{food_name}_{str(self.text)[:3]}"
-            name_draw = draw.LeftButton(
-                button_text, return_text, self.width, cmd_func=self.eat_food
-            )
-            self.draw_text = button_text
+            return_text = f"\ngroup_{self.food_name}_{str(uid_list[0])[:3]}"
+            name_draw = draw.LeftButton(button_text, return_text, self.width, cmd_func=self.see_food_group_list)
             self.button_return = name_draw.return_text
         else:
             name_draw = draw.LeftDraw()
             name_draw.text = button_text
             name_draw.width = self.width
-            self.draw_text = name_draw.text
+
+        self.draw_text = button_text
         self.now_draw = name_draw
         """ 绘制的对象 """
 
@@ -280,13 +295,61 @@ class SeeFoodListByFoodNameDraw:
         """绘制对象"""
         self.now_draw.draw()
 
-    def eat_food(self):
-        """食用食物"""
+    def see_food_group_list(self):
+        """展开显示该分组下的所有食物，供玩家选择食用"""
+        title_draw = draw.TitleLineDraw(self.food_name, window_width)
+
+        intro_draw = draw.NormalDraw()
+        if self.food_introduce:
+            intro_draw.text = f"{self.food_name}：{self.food_introduce}\n\n"
+            intro_draw.width = window_width
+
+        while 1:
+            title_draw.draw()
+            if self.food_introduce:
+                intro_draw.draw()
+
+            return_list = []
+            character_data: game_type.Character = cache.character_data[0]
+            valid_uids = [uid for uid in self.uid_list if uid in character_data.food_bag]
+
+            for uid in valid_uids:
+                food_data: game_type.Food = character_data.food_bag[uid]
+                _quality_level, food_quality_str = attr_calculation.get_food_quality(food_data.quality)
+
+                # 构建单个食物的显示文本
+                item_text = f"  {self.food_name}"
+                if food_data.milk_ml > 0:
+                    item_text += f"({food_data.milk_ml}ml)"
+                else:
+                    item_text += f"({food_quality_str})"
+                if food_data.maker != "":
+                    item_text += f" (by {food_data.maker})"
+                if self.special_seasoning != 0 and self.special_seasoning in game_config.config_seasoning:
+                    item_text += f"({game_config.config_seasoning[self.special_seasoning].name})"
+                item_text += f"：{self.food_introduce}"
+
+                button_return = f"\neat_{self.food_name}_{str(uid)[:3]}"
+                food_btn = draw.LeftButton(item_text, button_return, window_width, cmd_func=self.eat_food, args=(uid,))
+                food_btn.draw()
+                return_list.append(food_btn.return_text)
+                line_feed.draw()
+
+            line_feed.draw()
+            back_draw = draw.CenterButton(_("[返回]"), _("返回"), window_width)
+            back_draw.draw()
+            return_list.append(back_draw.return_text)
+            yrn = flow_handle.askfor_all(return_list)
+            if yrn in return_list:
+                break
+
+    def eat_food(self, uid: UUID):
+        """食用指定uid的食物"""
         from Script.System.Cooking_System import cooking
         from Script.UI.Panel import achievement_panel
         from Script.Design import update
         character_data: game_type.Character = cache.character_data[0]
-        now_food = character_data.food_bag[self.text]
+        now_food: game_type.Food = character_data.food_bag[uid]
         character_data.behavior.food_name = now_food.name
         character_data.behavior.food_seasoning = now_food.special_seasoning
         character_data.behavior.food_quality = now_food.quality
