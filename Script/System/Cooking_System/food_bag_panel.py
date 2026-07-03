@@ -44,7 +44,7 @@ class FoodBagPanel:
             [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 0
+            [], SeeFoodListByFoodNameDraw, 10, 1, window_width, True, False, 2
         )
         while 1:
             character_data: game_type.Character = cache.character_data[0]
@@ -146,7 +146,7 @@ class FoodBagPanel:
             back_draw.draw()
             return_list.append(back_draw.return_text)
             yrn = flow_handle.askfor_all(return_list)
-            if yrn in return_list and yrn not in ["0","1"]:
+            if yrn in return_list and yrn not in ["0","1","2","3"]:
                 cache.now_panel_id = constant.Panel.IN_SCENE
                 break
 
@@ -177,7 +177,7 @@ class FoodBagPanel:
             id_list_normal, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 0
         )
         self.handle_panel_special = panel.PageHandlePanel(
-            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 0
+            id_list_special, SeeFoodListByFoodNameDraw, 10, 5, window_width, True, False, 2
         )
 
 
