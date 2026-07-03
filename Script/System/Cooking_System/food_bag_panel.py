@@ -117,6 +117,7 @@ class FoodBagPanel:
 
             now_draw = draw.NormalDraw()
             now_draw.text = _("○正常调味食物\n")
+            now_draw.text += _("食物数量为：{0}个\n").format(len(id_list_normal))
             if handle_premise.handle_have_no_target(0) and handle_premise.handle_hunger_le_79(0):
                 now_draw.text += _("  {0}现在不饿，无法吃东西。\n\n").format(character_data.name)
             elif handle_premise.handle_have_target(0):
@@ -131,6 +132,7 @@ class FoodBagPanel:
 
             now_draw = draw.NormalDraw()
             now_draw.text = _("○特殊调味食物\n")
+            now_draw.text += _("食物数量为：{0}个\n").format(len(id_list_special))
             if handle_premise.handle_have_no_target(0):
                 now_draw.text += _("  当前没有目标，无法食用特殊调味食物。\n\n")
             elif handle_premise.handle_have_target(0) and handle_premise.handle_hunger_le_79(character_data.target_character_id):
