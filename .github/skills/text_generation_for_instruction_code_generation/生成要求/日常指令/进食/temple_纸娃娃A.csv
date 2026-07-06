@@ -1,0 +1,14 @@
+cid,type_id,adv_id,premise,context
+组件id,组件类型名,组件限定的剧情npcid,前提id,组件内容
+str,str,int,str,str
+0,0,0,0,1
+组件配置数据,,,,
+
+1000,action_eat_food_A,0,food_type_0&food_quality_low&food_recipe_difficulty_low,一份潦草凑合的{FoodName}被随意地摆了上来，看得出只是简单对付的手艺，色泽黯淡而毫无光泽，形态松散地瘫在器皿里。\n它散发出的气味寡淡而杂乱，几乎闻不到什么诱人的香气，稀薄的热气有气无力地飘散，反倒隐隐透出一股令人皱眉的生涩味。\n这份粗制的{FoodName}实在难以勾起半分食欲，暗沉的色泽与含混的气息交织在一起，只让人本能地想别过脸去。
+1001,action_eat_food_A,0,food_type_0&food_quality_medium&food_recipe_difficulty_medium,一份用了些心思的{FoodName}被端了上来，看得出是花了些时间烹制的，饱满地盛在器皿中央，泛着还算温润的光泽。\n表层袅袅升腾着氤氲的热气，将一股家常而扎实的香味缓缓推散开来，那股温热的气息不算浓烈，却也规规矩矩地勾起人几分食欲。\n{FoodName}的色泽还算鲜活，油润的光泽在表面缓缓流转，分量也颇为实在地铺陈开来，看着这份中规中矩却不失可口的{FoodName}，令人喉头微微一动。
+1002,action_eat_food_A,0,food_type_0&food_quality_high&food_recipe_difficulty_high,一份精心烹制的{FoodName}被郑重地呈了上来，看得出是耗费了大量工夫的复杂手艺，饱满而讲究地盛在器皿中央，泛着诱人的油亮光泽。\n浓郁而醇厚的香气层层叠叠地升腾弥散，随着腾腾的热气直往鼻腔里钻，那股扎实精致的气息勾得人食指大动、喉头滚动。\n{FoodName}的色泽饱满而鲜活，考究的摆盘透着匠心，油润的光泽在表面缓缓流淌，光是凝视这一份用心的{FoodName}，便叫人唇齿生津。
+1003,action_eat_food_A,0,food_type_0&food_quality_highest&food_recipe_difficulty_highest,一份堪称绝品的{FoodName}被慎重地呈了上来，看得出是倾注了无数心血、耗时极久的极致大餐，色香俱全，饱满得几乎要溢出光来。\n馥郁勾魂的香气层层叠叠地绽放开来，随着氤氲的热气弥散在鼻尖，那股摄人心魄的芬芳直往人心底最深处钻，勾得人五脏六腑都躁动起来。\n{FoodName}的每一处细节都完美得挑不出瑕疵，璀璨的色泽与浓郁的气味交融在一起，光是看着这一份登峰造极的{FoodName}，便叫人喉头滚动、恨不得立刻将它含进口中。
+1004,action_eat_food_A,0,food_type_3&food_quality_low&food_recipe_difficulty_low,一份随手调出的{FoodName}被草草斟在杯里，看得出只是最简单的调配，液体浑浊而缺乏光泽，无精打采地荡在杯底。\n它散发出的气味冲鼻而杂乱，那股生硬粗糙的酒气几乎不见半分醇香，反倒带着一股刺鼻的辛辣，直往鼻腔里冲，撩得人下意识地皱起眉头。\n这份粗劣的{FoodName}实在勾不起半分兴致，浑浊的色泽与冲鼻的气息交织在一起，只让人本能地想推开它。
+1005,action_eat_food_A,0,food_type_3&food_quality_medium&food_recipe_difficulty_medium,一份用心调配过的{FoodName}被斟在杯中，看得出是花了些工夫的，液面微微晃动着，泛起还算温润的光泽。\n袅袅飘散的酒气带着一缕规规矩矩的醇香，辛辣中裹着淡淡的甘甜气息，丝丝缕缕地钻进鼻腔，撩拨得人面颊微微一热。\n{FoodName}的色泽还算清透诱人，随着轻轻的晃动缓缓旋出柔和的弧线，光是嗅到这股尚可的酒香，便叫人忍不住想含一口在唇齿之间。
+1006,action_eat_food_A,0,food_type_3&food_quality_high&food_recipe_difficulty_high,一份精心调制的{FoodName}被讲究地斟在杯中，看得出是耗费了不少心思的复杂手艺，澄澈的液体里荡漾着迷离的光泽，随着轻晃缓缓旋出诱人的弧线。\n那股醇厚而微醺的酒香扑面而来，浓郁的芬芳中裹着一缕缠绵的甘甜，丝丝缕缕地钻进鼻腔，撩拨得人面颊发热、心头微荡。\n{FoodName}散发出的芬芳带着令人沉醉的暧昧，光是嗅到这股勾人的酒气，便叫人心头泛起一阵微妙的躁动，忍不住想含一口细细品味。
+1007,action_eat_food_A,0,food_type_3&food_quality_highest&food_recipe_difficulty_highest,一份堪称绝品的{FoodName}被慎重地斟在杯中，看得出是倾注了极致匠心、耗时极久调制而成的珍酿，澄澈璀璨的液体里荡漾着摄人心魄的迷离光泽。\n那股醇厚馥郁的酒香层层绽放、扑面而来，甘美与醺然交织缠绕，勾魂摄魄地钻进鼻腔，撩拨得人面颊滚烫、心神俱醉。\n{FoodName}散发出的芬芳暧昧得令人沉沦，随着轻轻的旋晃流转出诱人的光晕，光是嗅到这股醉人的绝世酒气，便叫人心头躁动难耐，恨不得立刻含一口在唇齿之间。
