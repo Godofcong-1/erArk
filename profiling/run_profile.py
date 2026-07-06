@@ -149,6 +149,7 @@ def new_game_minimal_init():
     from Script.System.Cooking_System import cooking
     from Script.Config import game_config
     from Script.Core import io_init
+    from Script.System.Dormitory_System import common as dormitory_common
 
     cache = cache_control.cache
 
@@ -204,7 +205,7 @@ def new_game_minimal_init():
     except Exception as e:
         log(f"first_NPC_work 过程中忽略异常: {e}")
 
-    character_handle.init_character_dormitory()
+    dormitory_common.init_character_dormitory()
     character_handle.init_character_position()
     character_handle.init_character_facility_open()
     character_handle.handle_character_setting()

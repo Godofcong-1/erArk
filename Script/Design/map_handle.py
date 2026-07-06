@@ -578,7 +578,7 @@ def judge_scene_accessible(target_scene_str : str, character_id : int, draw_flag
     """
     判断目标地点是否可以进入
     Keyword arguments:
-    target_scene_str -- 目标场景位置（例：A\B\C）
+    target_scene_str -- 目标场景位置（例：A\\B\\C）
     character_id -- 角色id
     draw_flag -- 是否输出提示信息 (default True)
     Return arguments:

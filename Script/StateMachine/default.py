@@ -115,11 +115,11 @@ def character_move_to_dormitory(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
-    from Script.Design import character_handle
+    from Script.System.Dormitory_System import common as dormitory_common
     character_data: game_type.Character = cache.character_data[character_id]
     # 增加一个对宿舍是否为无的判定
     if character_data.dormitory == _("无"):
-        character_handle.new_character_get_dormitory(character_id)
+        dormitory_common.new_character_get_dormitory(character_id)
     target_scene = map_handle.get_map_system_path_for_str(character_data.dormitory)
     general_movement_module(character_id, target_scene)
 

@@ -17,7 +17,7 @@ from Script.Design import (
     basement,
     game_time,
 )
-from Script.Config import game_config, config_def, character_config
+from Script.Config import game_config, character_config
 
 
 cache: game_type.Cache = cache_control.cache
@@ -256,140 +256,6 @@ def get_rand_npc_sex() -> int:
     return sex_weight_regin_data[weight_regin]
 
 
-def init_character_dormitory():
-    """
-    分配角色宿舍
-    角色分配到csv里所写的宿舍名所对应的房间坐标
-    """
-    cache = cache_control.cache
-    dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
-    }
-    dormitory = {
-        x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
-    }
-    special_dormitory = {
-        key: constant.place_data[key] for key in constant.place_data if "Special_Dormitory" in key
-    }
-    special_dormitory = {
-        x: 0 for j in [k[1] for k in sorted(special_dormitory.items(), key=lambda x: x[0])] for x in j
-    }
-    # print("dormitory :",dormitory)
-    # print("cache.scene_data[list(Dr_room.keys())[0]].scene_name :",cache.scene_data[list(Dr_room.keys())[0]].scene_name)
-    npc_count = 0
-    cache.npc_id_got.discard(0)
-    for character_id in cache.npc_id_got:
-        character_data = cache.character_data[character_id]
-        # print(f"{character_data.name}：{character_data.dormitory}")
-        # 普通干员每两个人住一个房间
-        if character_data.dormitory == "无":
-            n = npc_count // 2
-            # print(f"debug n :{n}, len(dormitory) :{len(dormitory)}")
-            now_room = list(dormitory.keys())[n]
-            # print(f"debug now_room = {now_room}")
-            character_data.dormitory = now_room
-            npc_count += 1
-        # 有单独宿舍的干员住在对应宿舍
-        else:
-            for n in list(dormitory.keys()):
-                if cache.scene_data[n].scene_name == character_data.dormitory:
-                    # 如果要住宿舍的话，那先检测宿舍是否已经有人住了
-                    if "宿舍" in character_data.dormitory:
-                        already_live = False
-                        for now_character_id in cache.npc_id_got:
-                            if now_character_id == character_id:
-                                continue
-                            now_character_data = cache.character_data[now_character_id]
-                            # 如果已经有人住了，则置flag为true，跳出循环
-                            if now_character_data.dormitory == character_data.dormitory:
-                                already_live = True
-                                break
-                        # 如果已经有人住了，则换成普通宿舍，重新分配
-                        if already_live:
-                            character_data.dormitory = "无"
-                            init_character_dormitory()
-                            break
-                        else:
-                            character_data.dormitory = n
-                            # print(f"debug n :{n}")
-                            break
-                    # 非宿舍的话直接住
-                    else:
-                        character_data.dormitory = n
-                        # print(f"debug n :{n}")
-                        break
-
-
-def new_character_get_dormitory(character_id: int):
-    """
-    给新角色分配宿舍
-    Keyword arguments:
-    character_id -- 角色id
-    """
-    character_data = cache.character_data[character_id]
-    # 分为访客和普通干员
-    if character_id in cache.rhodes_island.visitor_info:
-        from Script.UI.Panel import invite_visitor_panel
-        guest_room = {
-            key: constant.place_data[key] for key in constant.place_data if "Guest_Room" in key
-        }
-        
-        # 按照客房编号进行数字排序
-        guest_room_sorted = sorted(guest_room["Guest_Room"], key=invite_visitor_panel.sort_guest_room_key)
-        
-        final_room_list = []
-        for room_id in game_config.config_facility_open:
-            # 跳过非客房和未开放的客房
-            room_name = game_config.config_facility_open[room_id].name
-            if _("客房") not in room_name:
-                continue
-            # 跳过未开放的客房
-            cache.rhodes_island.facility_open.setdefault(room_id,False)
-            if not cache.rhodes_island.facility_open[room_id]:
-                continue
-            # 遍历检查是否有同名客房，使用排序后的列表
-            for room_full_path in guest_room_sorted:
-                if game_config.config_facility_open[room_id].name == room_full_path.split("\\")[-1]:
-                    final_room_list.append(room_full_path)
-        
-        # 查找第一个空闲的客房
-        for room_path in final_room_list:
-            room_occupied = False
-            # 检查是否有其他访客已经住在这个房间
-            for now_character_id in cache.rhodes_island.visitor_info:
-                if now_character_id == character_id:
-                    continue
-                now_character_data = cache.character_data[now_character_id]
-                if now_character_data.dormitory == room_path:
-                    room_occupied = True
-                    break
-            # 如果房间未被占用，则分配给当前角色
-            if not room_occupied:
-                character_data.dormitory = room_path
-                return
-        
-        # 如果所有客房都满了，则分配到列表之外（这种情况理论上不应该发生）
-        if len(final_room_list) > 0:
-            character_data.dormitory = final_room_list[0]
-            print(f"警告：所有客房都已满，{character_data.name}被分配到{final_room_list[0]}。请检查访客区设施。")
-    else:
-        dormitory = {
-            key: constant.place_data[key] for key in constant.place_data if "Dormitory" in key
-        }
-        dormitory = {
-            x: 0 for j in [k[1] for k in sorted(dormitory.items(), key=lambda x: x[0])] for x in j
-        }
-        npc_count = 0
-        for now_character_id in cache.npc_id_got:
-            now_character_data = cache.character_data[now_character_id]
-            # 普通干员每两个人住一个房间
-            if "宿舍" in now_character_data.dormitory:
-                npc_count += 1
-        n = npc_count // 2
-        now_room = list(dormitory.keys())[n]
-        character_data.dormitory = now_room
-
-
 def init_character_position():
     """初始化角色位置"""
     cache = cache_control.cache
@@ -437,6 +303,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
     visitor_flag -- 是否为访客
     """
     from Script.Settle import default
+    from Script.System.Dormitory_System import common as dormitory_common
 
     # 角色上线
     default.handle_chara_on_line(character_id, 1, change_data = game_type.CharacterStatusChange(), now_time = cache.game_time)
@@ -462,7 +329,7 @@ def get_new_character(character_id: int, visitor_flag: bool = False):
                 cache.rhodes_island.facility_open[open_cid] = True
 
     # 分配角色宿舍
-    new_character_get_dormitory(character_id)
+    dormitory_common.new_character_get_dormitory(character_id)
 
     # 初始化新角色位置
     character_position = character_data.position

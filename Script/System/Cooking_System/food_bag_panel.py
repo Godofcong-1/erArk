@@ -251,13 +251,13 @@ class FoodGroupDraw:
 
         _quality_level, quality_str = attr_calculation.get_food_quality(max_quality)
         count = len(uid_list)
-        quality_text = f"(最高品质：{quality_str})" if max_quality > 0 else ""
+        quality_text = _("(最高品质：{quality_str})").format(quality_str=quality_str) if max_quality > 0 else ""
         # 食谱等级
         recipe_difficulty = 0
         recipe_difficulty_str = ""
         if recipe_id != -1 and recipe_id in cache.recipe_data:
             recipe_difficulty = cache.recipe_data[recipe_id].difficulty
-            recipe_difficulty_str = f"(食谱等级：{recipe_difficulty})"
+            recipe_difficulty_str = _("(食谱等级：{recipe_difficulty})").format(recipe_difficulty=recipe_difficulty)
 
         button_text = f"  {self.food_name}{seasoning_str} {recipe_difficulty_str} {quality_text} x{count}"
 

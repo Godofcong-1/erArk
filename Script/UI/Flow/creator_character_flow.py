@@ -71,8 +71,9 @@ def game_start():
     from Script.System.Cooking_System import cooking
     from Script.UI.Panel import achievement_panel
     from Script.System.Medical_System import medical_service
+    from Script.System.Dormitory_System import common as dormitory_common
 
-    character_handle.init_character_dormitory()
+    dormitory_common.init_character_dormitory()
     character_handle.init_character_position()
     character_handle.init_character_facility_open()
     character_handle.handle_character_setting()

@@ -84,6 +84,7 @@ def visitor_to_operator(character_id: int):
     Keyword arguments:
     character_id -- 角色id
     """
+    from Script.System.Dormitory_System import common as dormitory_common
 
     character_data = cache.character_data[character_id]
 
@@ -99,7 +100,7 @@ def visitor_to_operator(character_id: int):
             cache.rhodes_island.facility_open[open_cid] = True
 
     # 重新分配角色宿舍
-    character_handle.new_character_get_dormitory(character_id)
+    dormitory_common.new_character_get_dormitory(character_id)
 
 def settle_visitor_arrivals(visitor_id = 0):
     """

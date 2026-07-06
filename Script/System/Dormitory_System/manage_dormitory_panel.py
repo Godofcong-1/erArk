@@ -1,8 +1,9 @@
+import re
 from types import FunctionType
-from typing import Any, Dict, List, Tuple
+from typing import Any, Dict, List, Optional, Tuple
 
 from Script.Core import cache_control, game_type, get_text, flow_handle, constant, constant_promise
-from Script.Design import basement, handle_premise
+from Script.Design import basement, handle_premise, map_handle
 from Script.System.Dormitory_System import common
 from Script.UI.Moudle import draw
 from Script.Config import normal_config
@@ -192,6 +193,17 @@ class Manage_Dormitory_Panel:
         select_draw.draw()
         return_list.append(select_draw.return_text)
 
+        if self._have_overcrowded_open_dormitory():
+            redistribute_text = _("[将大于两人的宿舍重新分配]")
+            redistribute_draw = draw.CenterButton(
+                redistribute_text,
+                _("\n将大于两人的宿舍重新分配"),
+                int(self.width / 3),
+                cmd_func=self._redistribute_overcrowded_dormitories,
+            )
+            redistribute_draw.draw()
+            return_list.append(redistribute_draw.return_text)
+
         # 如果存在临时空白位，则提供自动排序入口
         if len(temp_blank_names):
             auto_sort_text = _("[自动排序临时空白位]")
@@ -347,7 +359,8 @@ class Manage_Dormitory_Panel:
         for layer in sorted(open_rooms_by_layer.keys()):
             for room_name, room_path in open_rooms_by_layer[layer]:
                 room_count = occupancy.get(room_path, 0)
-                if room_path != character_data.dormitory and room_count < 2:
+                room_capacity = self._get_room_capacity(room_path, occupancy)
+                if room_path != character_data.dormitory and room_count < room_capacity:
                     room_candidates.append((layer, room_name, room_path))
 
         while 1:
@@ -381,7 +394,8 @@ class Manage_Dormitory_Panel:
             line_count = 0
             for layer, room_name, room_path in room_candidates:
                 room_count = occupancy.get(room_path, 0)
-                room_text = _("[{0}层] {1} ({2}/2)").format(layer, room_name, room_count)
+                room_capacity = self._get_room_capacity(room_path, occupancy)
+                room_text = _("[{0}层] {1} ({2}/{3})").format(layer, room_name, room_count, room_capacity)
                 # 如果该宿舍有角色，则显示这些角色的名字
                 if room_path in occupancy and occupancy[room_path] > 0:
                     occupants = [cache.character_data[cid].name for cid in cache.character_data if cache.character_data[cid].dormitory == room_path]
@@ -466,7 +480,8 @@ class Manage_Dormitory_Panel:
         for layer in sorted(open_rooms_by_layer.keys()):
             for room_name, room_path in open_rooms_by_layer[layer]:
                 room_count = occupancy.get(room_path, 0)
-                for _slot_idx in range(max(0, 2 - room_count)):
+                room_capacity = self._get_room_capacity(room_path, occupancy)
+                for _slot_idx in range(max(0, room_capacity - room_count)):
                     free_slots.append(room_path)
 
         assigned_count = 0
@@ -486,6 +501,74 @@ class Manage_Dormitory_Panel:
                 info_draw.text += _("○仍有{0}名干员留在临时空白位（宿舍可用位置不足）\n").format(len(temp_blank_list))
         else:
             info_draw.text = _("\n○当前没有可用宿舍位置，无法进行自动排序\n")
+        info_draw.draw()
+
+    def _have_overcrowded_open_dormitory(self) -> bool:
+        """
+        判断是否存在超过2人的已开放宿舍
+        输入类型: 无
+        输出类型: bool
+        功能: 遍历已开放宿舍，存在任意房间入住人数大于2则返回True
+        """
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        occupancy = self._get_room_occupancy()
+        for layer in sorted(open_rooms_by_layer.keys()):
+            for room_name, room_path in open_rooms_by_layer[layer]:
+                if occupancy.get(room_path, 0) > 2:
+                    return True
+        return False
+
+    def _redistribute_overcrowded_dormitories(self):
+        """
+        将大于两人的宿舍重新分配
+        输入类型: 无
+        输出类型: 无
+        功能: 每个超员宿舍保留前两人，其余角色汇总后按开放宿舍空位重新分配；若空位不足则不执行分配
+        """
+        open_rooms_by_layer = self._get_open_rooms_by_layer()
+        open_room_paths: List[str] = []
+        for layer in sorted(open_rooms_by_layer.keys()):
+            for room_name, room_path in open_rooms_by_layer[layer]:
+                open_room_paths.append(room_path)
+
+        room_character_ids: Dict[str, List[int]] = {room_path: [] for room_path in open_room_paths}
+        sorted_character_ids = sorted([cid for cid in cache.npc_id_got if cid != 0 and cid in cache.character_data], key=lambda x: cache.character_data[x].adv)
+        for character_id in sorted_character_ids:
+            dormitory_path = cache.character_data[character_id].dormitory
+            if dormitory_path in room_character_ids:
+                room_character_ids[dormitory_path].append(character_id)
+
+        need_redistribute_character_ids: List[int] = []
+        room_kept_count: Dict[str, int] = {}
+        for room_path in open_room_paths:
+            room_ids = room_character_ids.get(room_path, [])
+            if len(room_ids) > 2:
+                need_redistribute_character_ids.extend(room_ids[2:])
+                room_kept_count[room_path] = 2
+            else:
+                room_kept_count[room_path] = len(room_ids)
+
+        if not len(need_redistribute_character_ids):
+            return
+
+        free_slots: List[str] = []
+        for room_path in open_room_paths:
+            remain_capacity = max(0, 2 - room_kept_count.get(room_path, 0))
+            for _slot_idx in range(remain_capacity):
+                free_slots.append(room_path)
+
+        info_draw = draw.WaitDraw()
+        info_draw.width = self.width
+        if len(free_slots) < len(need_redistribute_character_ids):
+            info_draw.text = _("\n○当前剩余宿舍空位不足以重新分配，请升级宿舍后重试。\n")
+            info_draw.draw()
+            return
+
+        for index, character_id in enumerate(need_redistribute_character_ids):
+            target_room = free_slots[index]
+            cache.character_data[character_id].dormitory = target_room
+
+        info_draw.text = _("\n○已完成重新分配，共分配了{0}名角色。\n").format(len(need_redistribute_character_ids))
         info_draw.draw()
 
     def _appoint_manager_for_layer(self, layer: int):
@@ -563,6 +646,12 @@ class Manage_Dormitory_Panel:
 
         cache.rhodes_island.dormitory_managers[layer] = character_id
         cache.character_data[character_id].work.work_type = 31
+        self._move_manager_to_layer_room(layer, character_id)
+
+        if old_manager_id and old_manager_id != character_id:
+            if old_manager_id not in cache.rhodes_island.dormitory_managers.values():
+                self._restore_manager_dormitory(old_manager_id)
+
         basement.update_work_people()
 
         info_draw = draw.WaitDraw()
@@ -587,6 +676,7 @@ class Manage_Dormitory_Panel:
 
         # 仅撤掉该层归属，不立即撤掉岗位，便于后续快速改派到其他楼层。
         cache.rhodes_island.dormitory_managers[layer] = 0
+        self._restore_manager_dormitory(manager_id)
         basement.update_work_people()
         # 重置玩家的该楼层钥匙
         key_item_id = 300 + layer
@@ -704,6 +794,92 @@ class Manage_Dormitory_Panel:
             if dormitory_path:
                 occupancy[dormitory_path] = occupancy.get(dormitory_path, 0) + 1
         return dict(occupancy)
+
+    def _get_room_capacity(self, room_path: str, occupancy: Optional[Dict[str, int]] = None) -> int:
+        """
+        获取宿舍房间容量
+        输入类型: room_path(str), occupancy(Dict[str,int])
+        输出类型: int
+        功能: 默认容量为2人；若当前实际入住人数超过2，则以实际人数作为该房间容量
+        """
+        if occupancy is None:
+            occupancy = self._get_room_occupancy()
+        return max(2, int(occupancy.get(room_path, 0)))
+
+    def _get_manager_room_path_by_layer(self, layer: int) -> str:
+        """
+        获取指定层的舍管房路径
+        输入类型: layer(int)
+        输出类型: str
+        功能: 从 Dormitory_Manager_Room 列表中匹配对应层级的舍管房路径，未匹配则返回空字符串
+        """
+        office_candidates = constant.place_data.get("Dormitory_Manager_Room", [])
+        for office_path in office_candidates:
+            match = re.search(r"[\\/](\d)区[\\/]", office_path)
+            if match and int(match.group(1)) == layer:
+                return office_path
+        return ""
+
+    def _is_manager_room_path(self, dormitory_path: str) -> bool:
+        """
+        判断路径是否为舍管房
+        输入类型: dormitory_path(str)
+        输出类型: bool
+        功能: 通过场景标签与地点表双重判断是否属于 Dormitory_Manager_Room
+        """
+        if dormitory_path == "":
+            return False
+        if dormitory_path in constant.place_data.get("Dormitory_Manager_Room", []):
+            return True
+        if dormitory_path in cache.scene_data:
+            return "Dormitory_Manager_Room" in cache.scene_data[dormitory_path].scene_tag
+        return False
+
+    def _move_manager_to_layer_room(self, layer: int, character_id: int):
+        """
+        将宿舍管理员迁入对应层舍管房
+        输入类型: layer(int), character_id(int)
+        输出类型: 无
+        功能: 任命后记录原宿舍并将当前宿舍切换到目标层舍管房
+        """
+        manager_room_path = self._get_manager_room_path_by_layer(layer)
+        if manager_room_path == "":
+            return
+
+        character_data = cache.character_data[character_id]
+        if not self._is_manager_room_path(character_data.dormitory) and character_data.pre_dormitory == "":
+            character_data.pre_dormitory = character_data.dormitory
+        character_data.dormitory = manager_room_path
+
+        character_position = character_data.position
+        target_scene = map_handle.get_map_system_path_for_str(manager_room_path)
+        if target_scene:
+            map_handle.character_move_scene(character_position, target_scene, character_id)
+
+    def _restore_manager_dormitory(self, character_id: int):
+        """
+        将被撤销任命的宿舍管理员恢复原宿舍
+        输入类型: character_id(int)
+        输出类型: 无
+        功能: 若角色当前在舍管房且存在 pre_dormitory，则恢复到原宿舍并清空 pre_dormitory
+        """
+        if character_id not in cache.character_data:
+            return
+
+        character_data = cache.character_data[character_id]
+        if not self._is_manager_room_path(character_data.dormitory):
+            return
+        if character_data.pre_dormitory == "":
+            return
+
+        restore_path = character_data.pre_dormitory
+        character_data.dormitory = restore_path
+        character_data.pre_dormitory = ""
+
+        character_position = character_data.position
+        target_scene = map_handle.get_map_system_path_for_str(restore_path)
+        if target_scene:
+            map_handle.character_move_scene(character_position, target_scene, character_id)
 
     def _get_dormitory_max_open_layer(self) -> int:
         """
