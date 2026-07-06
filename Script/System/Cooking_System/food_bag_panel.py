@@ -350,9 +350,6 @@ class FoodGroupDraw:
         from Script.Design import update
         character_data: game_type.Character = cache.character_data[0]
         now_food: game_type.Food = character_data.food_bag[uid]
-        character_data.behavior.food_name = now_food.name
-        character_data.behavior.food_seasoning = now_food.special_seasoning
-        character_data.behavior.food_quality = now_food.quality
         character_data.behavior.target_food = now_food
         character_data.behavior.duration = 5
         character_data.behavior.behavior_id = constant.Behavior.EAT

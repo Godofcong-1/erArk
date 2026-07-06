@@ -489,18 +489,13 @@ def judge_accept_special_seasoning_food(character_id: int):
     # 567异常则直接通过
     if handle_premise.handle_unnormal_567(character_id):
         return 1
-    # 普通调味直接进行判定
-    if pl_character_data.behavior.food_seasoning <= 10:
-        if return_d100 <= accept_rate:
-            target_data.sp_flag.find_food_weird = False
-            return 1
-        else:
-            target_data.sp_flag.find_food_weird = True
-            return 0
+    # 普通调味直接通过
+    elif handle_premise.handle_pl_action_food_normal(0):
+        return 1
     # 其他特殊调味
     else:
         # 精液判定
-        if pl_character_data.behavior.food_seasoning in {11,12}:
+        if handle_premise.handle_pl_action_food_sement_hidden(0) or handle_premise.handle_pl_action_food_sement_direct(0):
             # 精爱味觉或淫乱可以通过
             if target_data.talent[31] or target_data.talent[40]:
                 target_data.sp_flag.find_food_weird = True
@@ -515,7 +510,7 @@ def judge_accept_special_seasoning_food(character_id: int):
                 return 1
 
             # 精液_巧妙混合
-            if pl_character_data.behavior.food_seasoning == 11:
+            if handle_premise.handle_pl_action_food_sement_hidden(0):
                 # 3级爱情系或至少2级隶属系的话才接受
                 for talent_id in {203,204,212,213,214}:
                     if target_data.talent[talent_id]:
@@ -529,7 +524,7 @@ def judge_accept_special_seasoning_food(character_id: int):
                     target_data.sp_flag.find_food_weird = True
                     return 0
             # 精液_直接盖上
-            elif pl_character_data.behavior.food_seasoning == 12:
+            elif handle_premise.handle_pl_action_food_sement_direct(0):
                 # 4级爱情系或至少3级隶属系的话才接受
                 for talent_id in {204,213,214}:
                     if target_data.talent[talent_id]:
@@ -543,7 +538,7 @@ def judge_accept_special_seasoning_food(character_id: int):
                     target_data.sp_flag.find_food_weird = True
                     return 0
         # 药物判定
-        elif pl_character_data.behavior.food_seasoning >= 101:
+        elif handle_premise.handle_pl_action_food_medicine(0):
             # 进行概率判定，难度*2，但不会高于40
             if min(return_d100 * 2, 40) <= accept_rate:
                 target_data.sp_flag.find_food_weird = False

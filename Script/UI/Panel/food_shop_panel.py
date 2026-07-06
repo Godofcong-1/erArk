@@ -359,7 +359,7 @@ class SeeFoodListByFoodNameDraw:
         character_data: game_type.Character = cache.character_data[0]
         character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
         character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
-        character_data.behavior.food_name = self.food_name
+        character_data.behavior.target_food = character_data.food_bag[uid]
         character_data.behavior.duration = 1
         # 时间流逝
         update.game_update_flow(1)

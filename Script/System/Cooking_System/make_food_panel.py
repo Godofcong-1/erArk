@@ -754,6 +754,7 @@ class SeeFoodListByFoodNameDraw:
                 new_food.special_seasoning_amount = semen_count
             # 放到玩家背包里
             character_data.food_bag[new_food.uid] = new_food
+            character_data.behavior.target_food = new_food
             # 成就计数
             cache.achievement.make_food_count += 1
             real_count += 1
@@ -777,10 +778,7 @@ class SeeFoodListByFoodNameDraw:
             line_feed.draw()
 
         # 烹饪行为
-        character_data.behavior.food_name = self.food_name
         character_data.behavior.make_food_time = new_make_food_time
-        character_data.behavior.food_seasoning = self.special_seasoning
-        character_data.behavior.cook_difficulty = food_recipe.difficulty
         character_data.behavior.make_food_count = real_count
         character_data.behavior.behavior_id = constant.Behavior.MAKE_FOOD
         character_data.behavior.duration = new_make_food_time

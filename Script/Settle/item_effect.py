@@ -1074,10 +1074,9 @@ def handle_npc_make_food_to_shop(
     # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
     cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
     recipes_id = random.choice(cookable_recipes_list)
-    # 获取角色数据与食谱数据
+    # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     cook_ability_lv = character_data.ability[43]
-    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
     # 制作食物
     food_list = {}
     # 每级料理技能等级增加一次制作次数
@@ -1086,8 +1085,8 @@ def handle_npc_make_food_to_shop(
         # 将食物添加到当前所在食物商店中
         cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
         cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
-    # 将食物名记录到角色数据中
-    character_data.behavior.food_name = food_recipe.name
+    # 记录最近制作的食物对象
+    character_data.behavior.target_food = new_food
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.NPC_MAKE_FOOD_TO_BAG)
@@ -1113,11 +1112,10 @@ def handle_npc_make_food_to_bag(
     # 随机选择一个食谱，根据食谱难度，高难度的有高出现权重
     cookable_recipes_list = cooking.get_character_cookable_recipes(character_id, weight_flag=True)
     recipes_id = random.choice(cookable_recipes_list)
-    food_recipe: game_type.Recipes = cache.recipe_data[recipes_id]
     food_list = {}
     new_food = cooking.cook(food_list, recipes_id, character_data.ability[43], character_data.name)
     character_data.food_bag[new_food.uid] = new_food
-    character_data.behavior.food_name = food_recipe.name
+    character_data.behavior.target_food = new_food
 
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.DELETE_ALL_FOOD)

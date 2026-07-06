@@ -944,7 +944,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         TargetNickName=target_nick_name,
         TargetNickNameToPl=target_nick_name_to_pl,
 
-        FoodName=character_data.behavior.food_name,
+        FoodName=character_data.behavior.target_food.name,
         MakeFoodTime=character_data.behavior.make_food_time,
         AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,

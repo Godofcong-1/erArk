@@ -2323,13 +2323,10 @@ def character_buy_rand_food_at_foodshop(character_id: int):
         del cache.rhodes_island.restaurant_data[restaurant_id][now_food_id][now_food.uid]
 
 
-    # 记录食物名字
-    food_recipe: game_type.Recipes = cache.recipe_data[now_food.recipe]
-    food_name = food_recipe.name
     character_data.behavior.behavior_id = constant.Behavior.BUY_FOOD
     character_data.state = constant.CharacterStatus.STATUS_BUY_FOOD
     character_data.behavior.duration = 5
-    character_data.behavior.food_name = food_name
+    character_data.behavior.target_food = now_food
 
     # 特殊flag进行对应更改
     # 帮忙买饭
@@ -2372,11 +2369,6 @@ def character_eat_rand_food(character_id: int):
     character_data.state = constant.CharacterStatus.STATUS_EAT
     character_data.action_info.eat_food_restaurant = -1
 
-    # 记录食物名字
-    food_data: game_type.Food = character_data.food_bag[choice_food_id]
-    food_recipe: game_type.Recipes = cache.recipe_data[food_data.recipe]
-    food_name = food_recipe.name
-    character_data.behavior.food_name = food_name
     character_data.behavior.duration = 30
 
 

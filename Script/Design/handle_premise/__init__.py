@@ -24,6 +24,7 @@ from Script.Design.handle_premise.handle_premise_last_cmd import *
 from Script.Design.handle_premise.handle_premise_assistant import *
 from Script.Design.handle_premise.handle_premise_body_manage import *
 from Script.Design.handle_premise.handle_premise_work import *
+from Script.Design.handle_premise.handle_premise_food import *
 
 
 cache: game_type.Cache = cache_control.cache

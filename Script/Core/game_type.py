@@ -978,16 +978,8 @@ class Behavior:
         """ 移动行为的最终目标坐标 """
         self.target_food: Food = Food()
         """ 行为的食物对象 """
-        self.food_name: str = ""
-        """ 前提结算用:进食行为消耗的食物名字 """
-        self.food_quality: int = 0
-        """ 前提结算用:进食行为消耗的食物品质 """
         self.make_food_time: int = 0
         """ 前提结算用:做饭指令用时 """
-        self.food_seasoning: int = 0
-        """ 前提结算用:食物调味类型 0正常，其他见Seasoning.csv """
-        self.cook_difficulty: int = 0
-        """ 前提结算用:制作食物的菜谱难度等级 """
         self.make_food_count: int = 1
         """ 前提结算用:本次制作食物的数量 """
         self.pan_name: str = ""

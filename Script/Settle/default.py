@@ -2630,9 +2630,6 @@ def handle_set_target_food_from_bag_last(
     # 获取背包最后一个食物
     last_key = list(character_data.food_bag.keys())[-1]
     now_food = character_data.food_bag[last_key]
-    character_data.behavior.food_name = now_food.name
-    character_data.behavior.food_seasoning = now_food.special_seasoning
-    character_data.behavior.food_quality = now_food.quality
     character_data.behavior.target_food = now_food
 
 @settle_behavior.add_settle_behavior_effect(constant_effect.BehaviorEffect.CLEAR_TARGET_TOILET_PATH)
@@ -5955,7 +5952,10 @@ def handle_make_food_add_adjust(
     if character_data.dead:
         return
     # 读取当前行为中的菜谱难度等级（最低为1）
-    cook_difficulty = max(1, character_data.behavior.cook_difficulty)
+    cook_difficulty = 1
+    now_food = character_data.behavior.target_food
+    if now_food is not None and now_food.recipe in game_config.config_recipes:
+        cook_difficulty = max(1, game_config.config_recipes[now_food.recipe].difficulty)
     # 料理经验：随菜谱难度等级提升而增加（难度即为基础获得值）
     base_chara_experience_common_settle(character_id, 83, base_value = cook_difficulty, change_data = change_data)
     # 习得：随菜谱难度等级提升而增加（独立于制作数量与总耗时，仅按单份结算）
@@ -7548,9 +7548,11 @@ def handle_eat_add_just(
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
 
+    now_food = character_data.behavior.target_food
+    food_seasoning = now_food.special_seasoning if now_food is not None else 0
     # 判断是谁要吃食物
     eat_food_chara_id_list = []
-    if character_data.behavior.food_seasoning == 0:
+    if food_seasoning == 0:
         eat_food_chara_id_list.append(character_id)
         if character_data.target_character_id != character_id:
             eat_food_chara_id_list.append(character_data.target_character_id)
@@ -7558,7 +7560,7 @@ def handle_eat_add_just(
         eat_food_chara_id_list.append(character_data.target_character_id)
 
     # 根据食物品质获得调整系数
-    food_quality = character_data.behavior.food_quality
+    food_quality = now_food.quality if now_food is not None else 1
     # 品质最小为1
     food_quality = max(food_quality, 1)
     quality_adjust = (food_quality / 2) ** 2
@@ -7568,14 +7570,16 @@ def handle_eat_add_just(
     elif food_quality >= 7:
         quality_adjust += 1
     # 获取食物菜谱难度等级
-    cook_difficulty = max(character_data.behavior.cook_difficulty, 1)
+    cook_difficulty = 1
+    if now_food is not None and now_food.recipe in game_config.config_recipes:
+        cook_difficulty = max(game_config.config_recipes[now_food.recipe].difficulty, 1)
     # 时间加成
     add_time_adjust = 1
 
     # 检测是否是手制的食物
     pl_make_flag = False
-    if character_data.behavior.target_food:
-        food_maker = character_data.behavior.target_food.maker
+    if now_food is not None:
+        food_maker = now_food.maker
         if len(food_maker):
             # 手动制作的食物则额外加成
             quality_adjust *= 2
@@ -7584,7 +7588,7 @@ def handle_eat_add_just(
             if food_maker == pl_character_name:
                 pl_make_flag = True
         # 获取食谱id
-        food_recipe_id = character_data.behavior.target_food.recipe
+        food_recipe_id = now_food.recipe
         # 获取食谱数据
         if food_recipe_id in game_config.config_recipes:
             food_recipe_data = game_config.config_recipes[food_recipe_id]
@@ -7629,28 +7633,27 @@ def handle_eat_add_just(
         handle_eat_food_flag_to_0(chara_id,add_time=add_time,change_data=target_change,now_time=now_time)
 
         # 精液食物则将精液加到口腔污浊，并加精液经验
-        if character_data.behavior.food_seasoning in {11,12}:
+        if food_seasoning in {11,12}:
             # 加精液经验和饮精经验
             base_chara_experience_common_settle(chara_id, 24, change_data=target_change)
             base_chara_experience_common_settle(chara_id, 25, change_data=target_change)
             # 获取精液量
-            now_food = character_data.behavior.target_food
-            semen_ml = now_food.special_seasoning_amount
+            semen_ml = now_food.special_seasoning_amount if now_food is not None else 0
             # 加精液到口腔
             cache.shoot_position = 2    # 口腔
             ejaculation_panel.update_semen_dirty(chara_id, 2, 0, semen_ml, update_shoot_position_flag=False)
         # 药物食物则获得对应药物效果
-        elif character_data.behavior.food_seasoning == 102: # 事后避孕药
+        elif food_seasoning == 102: # 事后避孕药
             handle_target_no_pregnancy_from_last_h(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif character_data.behavior.food_seasoning == 103: # 媚药
+        elif food_seasoning == 103: # 媚药
             handle_target_add_huge_desire_and_submit(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif character_data.behavior.food_seasoning == 105: # 一次性利尿剂
+        elif food_seasoning == 105: # 一次性利尿剂
             handle_target_add_urinate(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif character_data.behavior.food_seasoning == 106: # 持续性利尿剂
+        elif food_seasoning == 106: # 持续性利尿剂
             handle_target_diuretics_on(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif character_data.behavior.food_seasoning == 107: # 安眠药
+        elif food_seasoning == 107: # 安眠药
             handle_target_add_tired_tosleep(0,add_time=add_time,change_data=change_data,now_time=now_time)
-        elif character_data.behavior.food_seasoning == 108: # 排卵促进药
+        elif food_seasoning == 108: # 排卵促进药
             handle_target_add_pregnancy_chance(0,add_time=add_time,change_data=change_data,now_time=now_time)
 
 
