@@ -1077,11 +1077,13 @@ def handle_npc_make_food_to_shop(
     # 获取角色数据
     character_data: game_type.Character = cache.character_data[character_id]
     cook_ability_lv = character_data.ability[43]
+    # NPC制作食物的品质上限为6
+    food_quality_limit = min(6, cook_ability_lv)
     # 制作食物
     food_list = {}
     # 每级料理技能等级增加一次制作次数
     for i in range(cook_ability_lv + 1):
-        new_food = cooking.cook(food_list, recipes_id, cook_ability_lv, character_data.name)
+        new_food = cooking.cook(food_list, recipes_id, food_quality_limit, character_data.name)
         # 将食物添加到当前所在食物商店中
         cache.rhodes_island.dining_hall_data.setdefault(str(recipes_id), {})
         cache.rhodes_island.dining_hall_data[str(recipes_id)][new_food.uid] = new_food
