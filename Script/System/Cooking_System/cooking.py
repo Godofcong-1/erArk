@@ -479,8 +479,14 @@ def judge_accept_special_seasoning_food(character_id: int):
     pl_character_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_id]
     return_d100 = random.randint(1,100)
-    # 口才+厨艺的双重加成判定
-    accept_rate = pl_character_data.ability[40] *10 + pl_character_data.ability[43] * 10
+    # 食物的菜谱难度
+    food_recipe_id = pl_character_data.behavior.target_food.recipe
+    food_recipe_data: game_type.Recipes = cache.recipe_data[food_recipe_id]
+    food_difficulty = food_recipe_data.difficulty
+    # 食物的品质
+    food_quality = pl_character_data.behavior.target_food.quality
+    # 口才+菜谱难度+食物品质的双重加成判定
+    accept_rate = pl_character_data.ability[40] * 10 + food_difficulty * 5 + food_quality * 5
     accept_rate = max(accept_rate,5) # 保底5%几率
 
     # debug模式直接过
