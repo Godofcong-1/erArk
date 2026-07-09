@@ -795,6 +795,11 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         pl_target_data: game_type.Character = cache.character_data[pl_target_id]
         pl_target_name = pl_target_data.name
 
+    # 当前行为食物
+    behavior_food_name = ""
+    if character_data.behavior.target_food:
+        behavior_food_name = character_data.behavior.target_food.name
+
     # 包中食物
     all_food_name = ""
     all_food_count = 0
@@ -944,7 +949,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
         TargetNickName=target_nick_name,
         TargetNickNameToPl=target_nick_name_to_pl,
 
-        FoodName=character_data.behavior.target_food.name,
+        FoodName=behavior_food_name,
         MakeFoodTime=character_data.behavior.make_food_time,
         AllFoodName=all_food_name,
         BookName = character_data.behavior.book_name,
