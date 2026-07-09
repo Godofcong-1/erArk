@@ -147,6 +147,26 @@ def append_current_draw_element(element: Dict[str, Any], record_history: bool = 
                 cache.web_other_texts.append(string)
                 # 实时推送文本到前端
                 emit_realtime_text(string, "other")
+                # 主界面（非子面板）下，同步将文本写入对话框队列
+                # 角色名留空，样式沿用原文本样式，逐条点击推进
+                if not getattr(cache, 'web_sub_panel_mode', False):
+                    text_style = element.get("style") or element.get("font") or "standard"
+                    try:
+                        from Script.System.Web_Draw_System.dialog_box import add_dialog_text
+
+                        # 去掉开头和结尾的换行符，避免对话框中出现多余空行
+                        new_string = string.strip("\n")
+
+                        add_dialog_text(
+                            speaker_name="PRTS",
+                            text=new_string,
+                            text_color=text_style,
+                            wait_input=True,
+                            is_minor=False,
+                        )
+                    except Exception:
+                        # 对话框模块异常时不影响原有文本记录流程
+                        pass
             # 仅在非子面板模式下隐藏已记录文本；
             # 子面板交互过程中的提示文本必须继续显示。
             if not getattr(cache, 'web_sub_panel_mode', False):
