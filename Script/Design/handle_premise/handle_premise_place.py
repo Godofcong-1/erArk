@@ -495,8 +495,7 @@ def handle_scene_all_unconscious(character_id: int) -> int:
             continue
         if handle_unconscious_flag_0(chara_id):
             return 0
-        return 1
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_ALL_UNCONSCIOUS_OR_SLEEP)
@@ -688,8 +687,7 @@ def handle_scene_all_fall_ge_2(character_id: int) -> int:
             continue
         if handle_self_not_fall(chara_id) or handle_self_fall_1(chara_id):
             return 0
-        return 1
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_ALL_NOT_TIRED)
@@ -715,8 +713,7 @@ def handle_scene_all_not_tired(character_id: int) -> int:
             continue
         if handle_self_tired(chara_id):
             return 0
-        return 1
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_ALL_NOT_H)
@@ -742,8 +739,7 @@ def handle_scene_all_not_h(character_id: int) -> int:
             continue
         if handle_self_is_h(chara_id):
             return 0
-        return 1
-    return 0
+    return 1
 
 
 @add_premise(constant_promise.Premise.SCENE_HAVE_MULTI_MASTUREBATE_TO_PL_CHARA)
