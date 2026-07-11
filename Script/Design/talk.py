@@ -14,6 +14,21 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
+def _parse_standalone_common_talk_token(talk_text: str) -> str | None:
+    """
+    参数：talk_text(str)为待分类的口上文本
+    返回：str或None，已注册的独立通用口上行为ID，非独立标记时返回None
+    功能：统一识别由口上选择器生成的独立通用口上标记
+    """
+    common_talk_match = re.fullmatch(r"\{([^{}]+)\}", talk_text)
+    if common_talk_match is None:
+        return None
+    behavior_id = common_talk_match.group(1)
+    if behavior_id not in game_config.config_talk_common_cid_list_by_type:
+        return None
+    return behavior_id
+
+
 def handle_talk(character_id: int):
     """
     处理行为结算对话\n
@@ -277,9 +292,11 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         if now_talk_id and now_talk_id in game_config.config_talk:
             now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
             unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
-        # 如果口上文本是大括号的纸娃娃地文文本，则获取行为id
-        elif talk_text.startswith("{") and talk_text.endswith("}"):
-            now_behavior_id = talk_text[1:-1]
+        # 如果口上文本是独立的纸娃娃地文标记，则获取行为id
+        else:
+            common_behavior_id = _parse_standalone_common_talk_token(talk_text)
+            if common_behavior_id is not None:
+                now_behavior_id = common_behavior_id
         # 玩家读书时额外绘制当前书籍的内容节选
         if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
             from Script.UI.Panel import read_book_panel
@@ -740,10 +757,8 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
     player_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
 
-    # 如果口上文本是大括号的地文文本，则获取行为id
-    common_talk_flag = False
-    if talk_text.startswith("{") and talk_text.endswith("}"):
-        common_talk_flag = True
+    # 仅将选择器可生成的独立通用口上标记识别为纸娃娃地文
+    common_behavior_id = _parse_standalone_common_talk_token(talk_text)
 
     # 输入的原文本
     now_talk_text, special_code = special_code_judge(talk_text)
@@ -752,7 +767,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
     now_talk_text = talk_common_judge(now_talk_text, character_id)
 
     # 如果是纸娃娃地文文本，则将当前id改为玩家id
-    if common_talk_flag:
+    if common_behavior_id is not None:
         character_id = 0
         character_data = cache.character_data[character_id]
         target_data = cache.character_data[character_data.target_character_id]
