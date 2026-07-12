@@ -1,5 +1,5 @@
 from types import FunctionType
-from typing import Optional, Union
+from typing import Optional, Tuple, Union
 from Script.Design import (
     character_handle,
     map_handle,
@@ -23,6 +23,30 @@ cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
 width = normal_config.config_normal.text_width
 """ 屏幕宽度 """
+
+
+def route_pain_delta(
+        character_id: int,
+        pain_value: float,
+        continuous_adjust: float = 1,
+        ) -> Tuple[int, float]:
+    """
+    路由已计算完成的有符号苦痛增量
+    Keyword arguments:
+    character_id -- 角色id
+    pain_value -- 已计算完成的有符号苦痛增量
+    continuous_adjust -- 心理快感阶段的连续指令修正
+    Return arguments:
+    Tuple[int, float] -- 结算状态id与结算值
+    """
+    character_data: game_type.Character = cache.character_data[character_id]
+    if pain_value <= 0 or not character_data.hypnosis.pain_as_pleasure:
+        return 17, pain_value
+
+    final_adjust = chara_feel_state_adjust(character_id, 23, character_data.ability[36])
+    final_adjust *= continuous_adjust
+    final_value = int(pain_value * final_adjust)
+    return 23, final_value
 
 def base_chara_hp_mp_common_settle(
         character_id: int,
@@ -208,6 +232,7 @@ def base_chara_state_common_settle(
         final_adjust = chara_base_state_adjust(character_id, state_id, ability_level) + extra_adjust
 
     # 连续重复指令减值，非负面数值，仅玩家的交互对象
+    continuous_adjust = 1
     if state_id not in bad_state_set and character_id == pl_character_data.target_character_id:
         # 判断是否为连续指令
         if len(cache.pl_pre_behavior_instruce) >= 2 and cache.pl_pre_behavior_instruce[-1] == cache.pl_pre_behavior_instruce[-2]:
@@ -239,10 +264,13 @@ def base_chara_state_common_settle(
         final_value += tenths_value
     final_value = int(final_value)
 
-    # 心控-苦痛快感化，将苦痛状态转化为快感状态
-    if state_id == 17 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
-        base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
-        return
+    # 心控-苦痛快感化，仅路由最终值为正的苦痛增量
+    if state_id == 17:
+        state_id, final_value = route_pain_delta(
+            character_id,
+            final_value,
+            continuous_adjust,
+        )
 
     # 结算最终值
     character_data.status_data[state_id] += final_value

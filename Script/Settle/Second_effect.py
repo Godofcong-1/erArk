@@ -8,7 +8,7 @@ from Script.Design import (
 from Script.Core import cache_control, constant_effect, game_type, get_text
 from Script.Config import normal_config
 from Script.UI.Moudle import draw
-from Script.Settle.common_default import base_chara_experience_common_settle, base_chara_hp_mp_common_settle, base_chara_state_common_settle
+from Script.Settle.common_default import base_chara_experience_common_settle, base_chara_hp_mp_common_settle, base_chara_state_common_settle, route_pain_delta
 
 
 _: FunctionType = get_text._
@@ -1244,10 +1244,11 @@ def handle_add_small_pain(
     now_add_lust += now_lust / 20
     now_add_lust = int(now_add_lust)
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    pain_state_id, now_add_lust = route_pain_delta(character_id, now_add_lust)
+    character_data.status_data[pain_state_id] += now_add_lust
+    character_data.status_data[pain_state_id] = min(99999, character_data.status_data[pain_state_id])
+    change_data.status_data.setdefault(pain_state_id, 0)
+    change_data.status_data[pain_state_id] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_SMALL_TERROR)
@@ -1836,10 +1837,11 @@ def handle_add_middle_pain(
     now_add_lust += now_lust / 10
     now_add_lust = int(now_add_lust)
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    pain_state_id, now_add_lust = route_pain_delta(character_id, now_add_lust)
+    character_data.status_data[pain_state_id] += now_add_lust
+    character_data.status_data[pain_state_id] = min(99999, character_data.status_data[pain_state_id])
+    change_data.status_data.setdefault(pain_state_id, 0)
+    change_data.status_data[pain_state_id] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_MIDDLE_TERROR)
@@ -2621,10 +2623,11 @@ def handle_add_large_pain(
     adjust = attr_calculation.get_mark_debuff_adjust(character_data.ability[15])
     now_add_lust *= adjust
 
-    character_data.status_data[17] += now_add_lust
-    character_data.status_data[17] = min(99999, character_data.status_data[17])
-    change_data.status_data.setdefault(17, 0)
-    change_data.status_data[17] += now_add_lust
+    pain_state_id, now_add_lust = route_pain_delta(character_id, now_add_lust)
+    character_data.status_data[pain_state_id] += now_add_lust
+    character_data.status_data[pain_state_id] = min(99999, character_data.status_data[pain_state_id])
+    change_data.status_data.setdefault(pain_state_id, 0)
+    change_data.status_data[pain_state_id] += now_add_lust
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.ADD_LARGE_TERROR)
@@ -3195,17 +3198,21 @@ def handle_extra_orgasm(
         extra_terror *= adjust
         extra_terror = int(extra_terror)
         # 结算苦痛和恐怖
-        character_data.status_data[17] += extra_pain
-        character_data.status_data[17] = min(99999, character_data.status_data[17])
-        change_data.status_data.setdefault(17, 0)
-        change_data.status_data[17] += extra_pain
+        pain_state_id, extra_pain = route_pain_delta(character_id, extra_pain)
+        character_data.status_data[pain_state_id] += extra_pain
+        character_data.status_data[pain_state_id] = min(99999, character_data.status_data[pain_state_id])
+        change_data.status_data.setdefault(pain_state_id, 0)
+        change_data.status_data[pain_state_id] += extra_pain
         character_data.status_data[18] += extra_terror
         character_data.status_data[18] = min(99999, character_data.status_data[18])
         change_data.status_data.setdefault(18, 0)
         change_data.status_data[18] += extra_terror
         # 绘制信息
         now_draw = draw.NormalDraw()
-        now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
+        if pain_state_id == 23:
+            now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的心理快感和恐怖\n").format(character_data.name, all_extra_count)
+        else:
+            now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
         now_draw.text = now_text
         now_draw.width = window_width
         now_draw.draw()
