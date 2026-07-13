@@ -241,6 +241,8 @@ def settle_discovered(character_id: int) -> None:
         return
     # 寻找是否有会发现的人
     interrupt_chara_list = get_nearby_conscious_unfallen_characters(character_id)
+    # 排除本次行动中已经处理过的发现者
+    interrupt_chara_list = [chara_id for chara_id in interrupt_chara_list if not cache.character_data[chara_id].sp_flag.see_pl_h]
     # 存在则进入被发现面板
     if len(interrupt_chara_list):
         from Script.System.Sex_System import sex_be_discovered_panel
