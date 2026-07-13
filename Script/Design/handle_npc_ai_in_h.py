@@ -602,8 +602,12 @@ def npc_ai_in_group_sex(character_id: int):
             # print(f"debug {character_data.name}加入侍奉{game_config.config_status[ A_template_data[1][1]].name}")
         else:
             # 获取该部位的状态id列表
+            old_target_character_id = pl_character_data.target_character_id
             pl_character_data.target_character_id = character_id
-            new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            try:
+                new_status_id_list = group_sex_panel.get_status_id_list_from_group_sex_body_part(body_part)
+            finally:
+                pl_character_data.target_character_id = old_target_character_id
             # 如果没有可用的状态，则返回
             if len(new_status_id_list) == 0:
                 return
