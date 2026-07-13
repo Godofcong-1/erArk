@@ -313,10 +313,12 @@ class System_Setting_Panel:
         normal_config.config_normal.font_size = new_size
         normal_config.config_normal.order_font_size = new_size - 2
         # 修改根目录下的config.ini文件中的字体大小
-        config_ini_path = "config.ini"
+        config_ini_path = normal_config.get_config_ini_path()
         if os.path.exists(config_ini_path):
             ini_config = configparser.ConfigParser()
             ini_config.read(config_ini_path, encoding="utf8")
+            if "game" not in ini_config:
+                ini_config["game"] = {}
             ini_config["game"]["font_size"] = str(new_size)
             ini_config["game"]["text_width"] = str(int(normal_config.config_normal.window_width / new_size * 2))
             with open(config_ini_path, "w", encoding="utf8") as config_file:
@@ -345,10 +347,12 @@ class System_Setting_Panel:
             new_dpi = 300
         normal_config.config_normal.tk_dpi = new_dpi
         # 修改根目录下的config.ini文件中的DPI设置
-        config_ini_path = "config.ini"
+        config_ini_path = normal_config.get_config_ini_path()
         if os.path.exists(config_ini_path):
             ini_config = configparser.ConfigParser()
             ini_config.read(config_ini_path, encoding="utf8")
+            if "game" not in ini_config:
+                ini_config["game"] = {}
             ini_config["game"]["tk_dpi"] = str(new_dpi)
             with open(config_ini_path, "w", encoding="utf8") as config_file:
                 ini_config.write(config_file)
@@ -534,10 +538,12 @@ class Game_Basic_Settings_Panel:
     def change_draw_mode_cmd(self, new_mode: int):
         """修改绘制模式设置"""
         # 修改config.ini文件中的web_draw设置
-        config_ini_path = "config.ini"
+        config_ini_path = normal_config.get_config_ini_path()
         if os.path.exists(config_ini_path):
             ini_config = configparser.ConfigParser()
             ini_config.read(config_ini_path, encoding="utf8")
+            if "game" not in ini_config:
+                ini_config["game"] = {}
             ini_config["game"]["web_draw"] = str(new_mode)
             with open(config_ini_path, "w", encoding="utf8") as config_file:
                 ini_config.write(config_file)
@@ -557,10 +563,12 @@ class Game_Basic_Settings_Panel:
         # 修改配置中的语言
         normal_config.config_normal.language = lang_code
         # 修改config.ini文件中的语言设置
-        config_ini_path = "config.ini"
+        config_ini_path = normal_config.get_config_ini_path()
         if os.path.exists(config_ini_path):
             ini_config = configparser.ConfigParser()
             ini_config.read(config_ini_path, encoding="utf8")
+            if "game" not in ini_config:
+                ini_config["game"] = {}
             ini_config["game"]["language"] = lang_code
             with open(config_ini_path, "w", encoding="utf8") as config_file:
                 ini_config.write(config_file)
