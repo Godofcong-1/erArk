@@ -118,7 +118,83 @@ def write_save_data(save_id: str, data_id: str, write_data: dict):
         pickle.dump(write_data, f)
 
 
-def load_save(save_id: str) -> dict:
+def _normalize_save_path(path_text):
+    """
+    将存档中的路径文本转换为当前系统的路径格式
+    Keyword arguments:
+    path_text -- 可能包含其他系统路径分隔符的值
+    Return arguments:
+    str/object -- 字符串路径会被归一化，其他类型原样返回
+    """
+    foreign_sep = "\\" if os.sep == "/" else "/"
+    if isinstance(path_text, str) and foreign_sep in path_text:
+        return path_text.replace(foreign_sep, os.sep)
+    return path_text
+
+
+def _normalize_save_path_keys(path_dict):
+    """
+    归一化以场景或地图路径为键的存档字典
+    Keyword arguments:
+    path_dict -- 以路径文本为键的字典
+    Return arguments:
+    dict/object -- 有外来分隔符时返回归一化后的字典，否则原样返回
+    """
+    if not isinstance(path_dict, dict):
+        return path_dict
+    if not any(_normalize_save_path(key) != key for key in path_dict):
+        return path_dict
+    return {_normalize_save_path(key): value for key, value in path_dict.items()}
+
+
+def _normalize_loaded_save_paths(loaded_cache: game_type.Cache) -> None:
+    """
+    归一化反序列化存档中已知的结构性路径字段
+    Keyword arguments:
+    loaded_cache -- 从存档反序列化得到的游戏缓存
+    Return arguments:
+    None
+    """
+    scene_data = getattr(loaded_cache, "scene_data", None)
+    if isinstance(scene_data, dict):
+        loaded_cache.scene_data = _normalize_save_path_keys(scene_data)
+        for scene in loaded_cache.scene_data.values():
+            if hasattr(scene, "scene_path"):
+                scene.scene_path = _normalize_save_path(scene.scene_path)
+
+    map_data = getattr(loaded_cache, "map_data", None)
+    if isinstance(map_data, dict):
+        loaded_cache.map_data = _normalize_save_path_keys(map_data)
+        for map_data_value in loaded_cache.map_data.values():
+            if hasattr(map_data_value, "map_path"):
+                map_data_value.map_path = _normalize_save_path(map_data_value.map_path)
+
+    character_data = getattr(loaded_cache, "character_data", None)
+    if isinstance(character_data, dict):
+        for character in character_data.values():
+            if hasattr(character, "dormitory"):
+                character.dormitory = _normalize_save_path(character.dormitory)
+            if hasattr(character, "pre_dormitory"):
+                character.pre_dormitory = _normalize_save_path(character.pre_dormitory)
+            work_data = getattr(character, "work", None)
+            if work_data is not None and hasattr(work_data, "dormitory_admin_target_room"):
+                work_data.dormitory_admin_target_room = _normalize_save_path(work_data.dormitory_admin_target_room)
+            ability_data = getattr(character, "pl_ability", None)
+            if ability_data is not None and hasattr(ability_data, "air_hypnosis_position"):
+                ability_data.air_hypnosis_position = _normalize_save_path(ability_data.air_hypnosis_position)
+
+    rhodes_island = getattr(loaded_cache, "rhodes_island", None)
+    if rhodes_island is not None:
+        facility_damage_data = getattr(rhodes_island, "facility_damage_data", None)
+        if isinstance(facility_damage_data, dict):
+            rhodes_island.facility_damage_data = _normalize_save_path_keys(facility_damage_data)
+        maintenance_place = getattr(rhodes_island, "maintenance_place", None)
+        if isinstance(maintenance_place, dict):
+            for character_id, place in maintenance_place.items():
+                maintenance_place[character_id] = _normalize_save_path(place)
+
+
+def load_save(save_id: str) -> game_type.Cache:
     """
     按存档id读取存档数据
     Keyword arguments:
@@ -129,7 +205,9 @@ def load_save(save_id: str) -> dict:
     save_path = get_save_dir_path(save_id)
     file_path = os.path.join(save_path, "1")
     with open(file_path, "rb") as f:
-        return pickle.load(f)
+        loaded_cache = pickle.load(f)
+    _normalize_loaded_save_paths(loaded_cache)
+    return loaded_cache
 
 def input_load_save(save_id: str):
     """
