@@ -14,21 +14,6 @@ _: FunctionType = get_text._
 """ 翻译api """
 
 
-def _parse_standalone_common_talk_token(talk_text: str) -> str | None:
-    """
-    参数：talk_text(str)为待分类的口上文本
-    返回：str或None，已注册的独立通用口上行为ID，非独立标记时返回None
-    功能：统一识别由口上选择器生成的独立通用口上标记
-    """
-    common_talk_match = re.fullmatch(r"\{([^{}]+)\}", talk_text)
-    if common_talk_match is None:
-        return None
-    behavior_id = common_talk_match.group(1)
-    if behavior_id not in game_config.config_talk_common_cid_list_by_type:
-        return None
-    return behavior_id
-
-
 def handle_talk(character_id: int):
     """
     处理行为结算对话\n
@@ -60,8 +45,8 @@ def handle_talk(character_id: int):
         return
     # 第一段行为结算的口上
     now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict)
-    talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
-    handle_talk_draw(character_id, talk_text, now_talk_id)
+    talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+    handle_talk_draw(character_id, talk_text, now_talk_id, common_behavior_id=common_behavior_id)
 
     # 玩家移动到NPC位置时，NPC的打招呼文本
     if character_id == 0 and behavior_id == constant.Behavior.MOVE:
@@ -70,8 +55,8 @@ def handle_talk(character_id: int):
             # 要求对象是NPC，且没有跟随玩家
             if chara_id > 0 and handle_premise.handle_not_follow(chara_id):
                 now_talk_data, calculated_premise_dict = handle_talk_sub(chara_id, behavior_id, calculated_premise_dict)
-                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
-                handle_talk_draw(chara_id, talk_text, now_talk_id)
+                talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+                handle_talk_draw(chara_id, talk_text, now_talk_id, common_behavior_id=common_behavior_id)
 
 
 def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
@@ -95,12 +80,12 @@ def handle_second_talk(character_id: int, behavior_id: str = "share_blankly"):
         for second_behavior_id, behavior_data in character_data.second_behavior.items():
             if behavior_data != 0:
                 now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, second_behavior_id, calculated_premise_dict)
-                talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
-                handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id)
+                talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, second_behavior_id)
+                handle_talk_draw(character_id, talk_text, now_talk_id, second_behavior_id, common_behavior_id)
     else:
         now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict)
-        talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
-        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
+        talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id, common_behavior_id)
 
     # 交互对象
     # if character_id == 0 and character_data.target_character_id:
@@ -245,9 +230,12 @@ def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly
     behavior_id -- 行为id，默认为"share_blankly"
     Return arguments:
     talk_text -- 口上文本
+    now_talk_id -- 口上ID
+    common_behavior_id -- 选择器生成纸娃娃地文时的行为ID，否则为None
     """
     talk_text = ""
     now_talk_id = ""
+    common_behavior_id = None
     if len(now_talk_data):
         talk_weight = value_handle.get_rand_value_for_value_region(list(now_talk_data.keys()))
         now_talk_id = random.choice(list(now_talk_data[talk_weight]))
@@ -263,13 +251,15 @@ def choice_talk_from_talk_data(now_talk_data: dict, behavior_id = "share_blankly
             if random.randint(1, 100) <= use_common_talk_rate * 10:
                 talk_text = '{' + behavior_id + '}'
                 now_talk_id = ""
+                common_behavior_id = behavior_id
     else:
         # 在没有口上的情况下，如果行为id在通用口上列表中，则调用纸娃娃地文
         if behavior_id in game_config.config_talk_common_cid_list_by_type and cache.all_system_setting.draw_setting[2] == 1:
             talk_text = '{' + behavior_id + '}'
-    return talk_text, now_talk_id
+            common_behavior_id = behavior_id
+    return talk_text, now_talk_id, common_behavior_id
 
-def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second_behavior_id = ""):
+def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second_behavior_id = "", common_behavior_id: str | None = None):
     """
     处理行为结算对话的输出
     Keyword arguments:
@@ -277,6 +267,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
     talk_text -- 口上文本
     now_talk_id -- 当前口上id
     second_behavior_id -- 二段行为id，默认为""
+    common_behavior_id -- 选择器生成纸娃娃地文时的行为ID，默认为None
     """
     from Script.Design import handle_chat_ai
 
@@ -292,11 +283,9 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         if now_talk_id and now_talk_id in game_config.config_talk:
             now_behavior_id = game_config.config_talk[now_talk_id].behavior_id
             unusual_talk_flag = game_config.config_talk[now_talk_id].adv_id
-        # 如果口上文本是独立的纸娃娃地文标记，则获取行为id
-        else:
-            common_behavior_id = _parse_standalone_common_talk_token(talk_text)
-            if common_behavior_id is not None:
-                now_behavior_id = common_behavior_id
+        # 如果选择器返回纸娃娃地文，则使用其明确的行为ID
+        elif common_behavior_id is not None:
+            now_behavior_id = common_behavior_id
         # 玩家读书时额外绘制当前书籍的内容节选
         if character_id == 0 and now_behavior_id == constant.Behavior.READ_BOOK:
             from Script.UI.Panel import read_book_panel
@@ -314,7 +303,7 @@ def handle_talk_draw(character_id: int, talk_text: str, now_talk_id: str, second
         if special_code[0]:
             now_draw = draw.NormalDraw()
         # 获取最终输出文本
-        now_talk_text = code_text_to_draw_text(talk_text, character_id)
+        now_talk_text = code_text_to_draw_text(talk_text, character_id, common_behavior_id is not None)
         now_draw.text = now_talk_text
         now_draw.width = normal_config.config_normal.text_width
         # 角色口上
@@ -417,8 +406,8 @@ def must_show_talk_check(character_id: int):
             continue
         # 进行绘制
         now_talk_data, calculated_premise_dict = handle_talk_sub(character_id, behavior_id, calculated_premise_dict, True)
-        talk_text, now_talk_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
-        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id)
+        talk_text, now_talk_id, common_behavior_id = choice_talk_from_talk_data(now_talk_data, behavior_id)
+        handle_talk_draw(character_id, talk_text, now_talk_id, behavior_id, common_behavior_id)
         # 遍历该二段行为的所有结算效果，挨个触发，但因为不在结算阶段，所以不会显示具体的结算数据
         change_data = game_type.CharacterStatusChange()
         for effect_id in game_config.config_behavior_effect_data[behavior_id]:
@@ -744,21 +733,19 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                     now_talk = pattern.sub(_replacer, now_talk)
     return now_talk
 
-def code_text_to_draw_text(talk_text: str, character_id: int):
+def code_text_to_draw_text(talk_text: str, character_id: int, common_talk_flag: bool = False):
     """
     将文本中的代码转化为对应的文本 \n
     Keyword arguments: \n
-    now_talk -- 输入的原文本 \n
+    talk_text -- 输入的原文本 \n
     character_id -- 角色id \n
+    common_talk_flag -- 是否为选择器生成的纸娃娃地文，默认为False \n
     Return arguments:
     now_talk_text -- 转化后的文本
     """
     character_data: game_type.Character = cache.character_data[character_id]
     player_data: game_type.Character = cache.character_data[0]
     target_data: game_type.Character = cache.character_data[character_data.target_character_id]
-
-    # 仅将选择器可生成的独立通用口上标记识别为纸娃娃地文
-    common_behavior_id = _parse_standalone_common_talk_token(talk_text)
 
     # 输入的原文本
     now_talk_text, special_code = special_code_judge(talk_text)
@@ -767,7 +754,7 @@ def code_text_to_draw_text(talk_text: str, character_id: int):
     now_talk_text = talk_common_judge(now_talk_text, character_id)
 
     # 如果是纸娃娃地文文本，则将当前id改为玩家id
-    if common_behavior_id is not None:
+    if common_talk_flag:
         character_id = 0
         character_data = cache.character_data[character_id]
         target_data = cache.character_data[character_data.target_character_id]
