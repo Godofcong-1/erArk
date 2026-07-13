@@ -2805,7 +2805,8 @@ def handle_pl_action_move(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_action_move(0):
+    pl_character_data = cache.character_data[0]
+    if pl_character_data.behavior.move_final_target != []:
         return 1
     return 0
 
@@ -2819,9 +2820,7 @@ def handle_pl_action_not_move(character_id: int) -> int:
     Return arguments:
     int -- 权重
     """
-    if handle_action_move(0):
-        return 0
-    return 1
+    return not handle_pl_action_move(character_id)
 
 
 @add_premise(constant_promise.Premise.T_ACTION_MOVE)
