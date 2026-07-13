@@ -17,6 +17,22 @@ line_feed.width = 1
 window_width: int = normal_config.config_normal.text_width
 """ 窗体宽度 """
 
+
+def format_commission_reputation_for_display(value: float) -> str:
+    """
+    将声望数值格式化为最多两位小数的显示文本
+
+    Keyword arguments:
+    value -- 声望数值
+    Return arguments:
+    str -- 去除浮点尾数与无意义末尾零后的显示文本
+    """
+    display_text = f"{value:.2f}".rstrip("0").rstrip(".")
+    if display_text in ["", "-0"]:
+        return "0"
+    return display_text
+
+
 def update_field_commission():
     """
     刷新外勤委托的相关数据
@@ -337,10 +353,15 @@ def process_commission_text(now_text, demand_or_reward, deduction_or_increase, s
         type_text += f"{item_type}　"
 
     # 添加全文
+    display_now_have_item_num = now_have_item_num
+    display_item_num = item_num
+    if text_list[0] == "声望":
+        display_now_have_item_num = format_commission_reputation_for_display(now_have_item_num)
+        display_item_num = format_commission_reputation_for_display(item_num)
     if not demand_or_reward:
-        full_text += f"{item_name}:{now_have_item_num}/{item_num} "
+        full_text += f"{item_name}:{display_now_have_item_num}/{display_item_num} "
     else:
-        full_text += f"{item_name}:{item_num} "
+        full_text += f"{item_name}:{display_item_num} "
 
     return type_text, full_text, satify_flag
 
