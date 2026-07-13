@@ -26,20 +26,20 @@ def character_get_second_behavior(character_id: int, second_behavior_id: str, re
         character_data.second_behavior[second_behavior_id] = 0
     if reset:
         character_data.second_behavior[second_behavior_id] = 0
-        # 如果该二段行为在必须计算结算列表中，则不再进行显示结算
+        # 如果该二段行为在必须结算列表中，则不再进行结算
         if second_behavior_id in game_config.config_behavior_must_settle_cid_list:
             if second_behavior_id in character_data.must_settle_second_behavior_id_list:
                 character_data.must_settle_second_behavior_id_list.remove(second_behavior_id)
-        # 如果该二段行为在必须显示结算列表中，则不再进行显示结算
+        # 如果该二段行为在必须显示列表中，则不再进行显示
         if second_behavior_id in game_config.config_behavior_must_show_cid_list:
             if second_behavior_id in character_data.must_show_second_behavior_id_list:
                 character_data.must_show_second_behavior_id_list.remove(second_behavior_id)
     else:
         character_data.second_behavior[second_behavior_id] = 1
-        # 如果该二段行为在必须计算结算列表中，则进行显示结算
+        # 如果该二段行为在必须结算列表中，则进行结算
         if second_behavior_id in game_config.config_behavior_must_settle_cid_list:
             character_data.must_settle_second_behavior_id_list.append(second_behavior_id)
-        # 如果该二段行为在必须显示结算列表中，则进行显示结算
+        # 如果该二段行为在必须显示列表中，则进行显示
         if second_behavior_id in game_config.config_behavior_must_show_cid_list:
             character_data.must_show_second_behavior_id_list.append(second_behavior_id)
 
@@ -120,6 +120,10 @@ def second_behavior_effect(
     """
     character_data: game_type.Character = cache.character_data[character_id]
 
+    # 如果没有任何二段行为，则直接返回
+    if not any(character_data.second_behavior.values()):
+        return
+
     # 检测是否与玩家处于同一位置#
     if (
             character_data.position != cache.character_data[0].position
@@ -127,10 +131,6 @@ def second_behavior_effect(
     ):
         talk.must_show_talk_check(character_id)
         must_settle_check(character_id)
-        return
-
-    # 如果没有任何二段行为，则直接返回
-    if not any(character_data.second_behavior.values()):
         return
 
     # 遍历二段行为id，进行结算
