@@ -504,16 +504,16 @@ int,str,str
 1042,h_orgasm_strong,220 - 229 - 231 - 234 - 278 - 279 - 303 - 304 - 413 - 417 - 997
 1043,h_orgasm_super,220 - 230 - 233 - 236 - 291 - 292 - 305 - 306 - 414 - 418 - 997
 
-1050,plural_orgasm_2,409 - 301
-1051,plural_orgasm_3,409 - 301 - 302
-1052,plural_orgasm_4,409 - 303 - 302
-1053,plural_orgasm_5,409 - 303 - 302
-1054,plural_orgasm_6,409 - 303 - 304
-1055,plural_orgasm_7,409 - 303 - 304
-1056,plural_orgasm_8,409 - 303 - 304
-1057,plural_orgasm_9,409 - 305 - 306
-1058,plural_orgasm_10,409 - 305 - 306
-1059,plural_orgasm_11,409 - 305 - 306
+1050,plural_orgasm_2,409 - 301 - 997
+1051,plural_orgasm_3,409 - 301 - 302 - 997
+1052,plural_orgasm_4,409 - 303 - 302 - 997
+1053,plural_orgasm_5,409 - 303 - 302 - 997
+1054,plural_orgasm_6,409 - 303 - 304 - 997
+1055,plural_orgasm_7,409 - 303 - 304 - 997
+1056,plural_orgasm_8,409 - 303 - 304 - 997
+1057,plural_orgasm_9,409 - 305 - 306 - 997
+1058,plural_orgasm_10,409 - 305 - 306 - 997
+1059,plural_orgasm_11,409 - 305 - 306 - 997
 
 1060,s_orgasm_edge,999
 1061,b_orgasm_edge,999
