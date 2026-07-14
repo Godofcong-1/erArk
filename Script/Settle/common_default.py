@@ -28,14 +28,12 @@ width = normal_config.config_normal.text_width
 def route_pain_delta(
         character_id: int,
         pain_value: float,
-        continuous_adjust: float = 1,
         ) -> Tuple[int, float]:
     """
     路由已计算完成的有符号苦痛增量
     Keyword arguments:
     character_id -- 角色id
     pain_value -- 已计算完成的有符号苦痛增量
-    continuous_adjust -- 心理快感阶段的连续指令修正
     Return arguments:
     Tuple[int, float] -- 结算状态id与结算值
     """
@@ -44,7 +42,6 @@ def route_pain_delta(
         return 17, pain_value
 
     final_adjust = chara_feel_state_adjust(character_id, 23, character_data.ability[36])
-    final_adjust *= continuous_adjust
     final_value = int(pain_value * final_adjust)
     return 23, final_value
 
@@ -269,7 +266,6 @@ def base_chara_state_common_settle(
         state_id, final_value = route_pain_delta(
             character_id,
             final_value,
-            continuous_adjust,
         )
 
     # 结算最终值
