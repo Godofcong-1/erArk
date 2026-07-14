@@ -9,7 +9,7 @@ def game_update_flow(add_time: int):
     Keyword arguments:
     add_time -- 游戏步进的时间
     """
-    # 检查是否已经在游戏更新流程中，防止递归调用导致死循环
+    # 深度达到上限时拒绝继续嵌套，防止递归调用导致死循环
     if cache_control.cache.game_update_flow_running >= 2:
         return
     

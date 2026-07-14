@@ -285,7 +285,7 @@ def input_load_save(save_id: str):
 
     # 更新绘制模式
     loaded_dict["web_mode"] = cache.web_mode
-    # 重置防止递归调用的标志
+    # 重置游戏更新流程的嵌套深度
     loaded_dict["game_update_flow_running"] = 0
 
     # 遍历更新全角色属性

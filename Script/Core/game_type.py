@@ -1786,7 +1786,7 @@ class Cache:
         self.over_behavior_character: Set = set()
         """ 本次update中已结束结算的npc """
         self.game_update_flow_running: int = 0
-        """ 游戏更新流程运行状态标志，用于防止递归调用导致的死循环 """
+        """ 游戏更新流程当前嵌套深度，用于限制递归调用层数 """
         self.pl_sleep_save_flag: bool = False
         """ 玩家睡觉，要进行存档 """
         self.recipe_data: Dict[int, Recipes] = {}
