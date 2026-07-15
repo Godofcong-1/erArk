@@ -124,13 +124,18 @@ def second_behavior_effect(
     if not any(character_data.second_behavior.values()):
         return
 
-    # 检测是否与玩家处于同一位置#
+    # 检测是否与玩家处于同一位置，进行必须显示和必须结算的二段行为处理
     if (
+            second_behavior_list == [] and
             character_data.position != cache.character_data[0].position
             and character_data.behavior.move_src != cache.character_data[0].position
     ):
         talk.must_show_talk_check(character_id)
         must_settle_check(character_id)
+        return
+
+    # 在处理后，如果没有任何二段行为，则再次直接返回
+    if not any(character_data.second_behavior.values()):
         return
 
     # 遍历二段行为id，进行结算
