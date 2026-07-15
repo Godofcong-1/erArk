@@ -1,9 +1,6 @@
-import datetime
 from functools import wraps
 from types import FunctionType
 from Script.Core import cache_control, constant, constant_promise, game_type, get_text
-from Script.Design import map_handle, game_time, attr_calculation
-from Script.Config import normal_config, game_config
 
 cache: game_type.Cache = cache_control.cache
 """ 游戏缓存数据 """
@@ -305,6 +302,8 @@ def handle_food_recipe_difficulty_low(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.difficulty <= 3:
         return 1
@@ -321,6 +320,8 @@ def handle_food_recipe_difficulty_medium(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if 4 <= recipe_data.difficulty <= 5:
         return 1
@@ -337,6 +338,8 @@ def handle_food_recipe_difficulty_high(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if 6 <= recipe_data.difficulty <= 7:
         return 1
@@ -353,6 +356,8 @@ def handle_food_recipe_difficulty_highest(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.difficulty >= 8:
         return 1
@@ -369,6 +374,8 @@ def handle_food_type_0(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 0:
         return 1
@@ -385,6 +392,8 @@ def handle_food_type_1(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 1:
         return 1
@@ -401,6 +410,8 @@ def handle_food_type_2(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 2:
         return 1
@@ -417,6 +428,8 @@ def handle_food_type_3(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 3:
         return 1
@@ -433,6 +446,8 @@ def handle_food_type_4(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 4:
         return 1
@@ -449,6 +464,8 @@ def handle_food_type_5(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 5:
         return 1
@@ -465,6 +482,8 @@ def handle_food_type_8(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 8:
         return 1
@@ -481,6 +500,8 @@ def handle_food_type_9(character_id: int) -> int:
     """
     character_data = cache.character_data[character_id]
     recipe_id = character_data.behavior.target_food.recipe
+    if recipe_id == -1:
+        return 0
     recipe_data = cache.recipe_data[recipe_id]
     if recipe_data.type == 9:
         return 1
