@@ -343,15 +343,6 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                             judge = 1
                 if judge and (now_text != name) and cache.all_system_setting.draw_setting[7] == 1:
                     now_text_list.append(now_text)
-        if add_time > 0:
-            if not exchange_flag:
-                now_text_time = _("\n\n {0}分钟过去了\n").format(str(add_time))
-            else:
-                now_text_time = _("\n\n 该行动将持续{0}分钟\n").format(str(add_time))
-        else:
-            now_text_time = "\n"
-        if now_text_list:
-            now_text_list.append(now_text_time)
         # now_panel = panel.LeftDrawTextListPanel()
         now_text = "".join(now_text_list)
         now_panel = rich_text.get_rich_text_draw_panel(now_text)
