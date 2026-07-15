@@ -662,6 +662,7 @@ def talk_common_judge(now_talk: str, character_id: int) -> str:
                 if "_s" in key and "penis" not in key and "hair" not in key:
                     common_s_A_list = game_config.config_talk_common_cid_list_by_part["common_s"]["A"]
                     if "A" in part_dict:
+                        part_dict = {**part_dict, "A": part_dict["A"].copy()}
                         part_dict["A"] += common_s_A_list
                 # 定义替换函数：每次匹配都随机挑选每个部位一条文本进行拼接
                 def _part_replacer(match):
