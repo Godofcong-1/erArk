@@ -131,21 +131,17 @@ def get_value_text(value: float) -> str:
     Return arguments:
     str -- 文本显示
     """
-    value = round(value, 2)
-    company = ["K", "M", "G", "T", "P", "E", "Z", "Y", "B", "N", "D"]
     int_value = int(value)
-    value_str = str(int_value)
-    if len(value_str) < 4:
-        value_str = str(value)
-    else:
-        company_index = int((len(value_str) - 1) / 3)
-        if company_index >= len(company):
-            company_index = len(company) - 1
-        value_str = value_str[: -company_index * 3]
-        value_str += company[company_index]
-    if int(value) >= 0:
-        value_str = "+" + value_str
-    return value_str
+    company = ["K", "M", "G", "T", "P", "E", "Z", "Y", "B", "N", "D"]
+    sign = "+" if int_value >= 0 else "-"
+    absolute_value = abs(int_value)
+    digit_count = len(str(absolute_value))
+    if digit_count < 4:
+        return sign + str(absolute_value)
+
+    company_group = min((digit_count - 1) // 3, len(company))
+    compact_value = absolute_value // (1000 ** company_group)
+    return sign + str(compact_value) + company[company_group - 1]
 
 
 def get_semen_now_text(level: int,position: int) -> str:
