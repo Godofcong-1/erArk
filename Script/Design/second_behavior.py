@@ -407,13 +407,15 @@ def orgasm_settle(
     orgasm_edge_success_flag = False
     if orgasm_edge_flag:
         candidate_orgasm_edge_count = character_data.h_state.orgasm_edge_count.copy()
+        crossed_part_count = 0
         for orgasm in supported_orgasm_list:
             normal_orgasm_data = normal_orgasm_dict.get(orgasm, 0)
             extra_orgasm_data = extra_orgasm_dict.get(orgasm, 0)
             un_count_orgasm_data = un_count_orgasm_dict.get(orgasm, 0)
             if normal_orgasm_data > 0 or extra_orgasm_data > 0 or un_count_orgasm_data > 0:
                 candidate_orgasm_edge_count[orgasm] = candidate_orgasm_edge_count.get(orgasm, 0) + normal_orgasm_data + un_count_orgasm_data
-        orgasm_edge_success_flag = judge_orgasm_edge_success(character_id, candidate_orgasm_edge_count)
+                crossed_part_count += 1
+        orgasm_edge_success_flag = judge_orgasm_edge_success(character_id, candidate_orgasm_edge_count, crossed_part_count)
         # 共同寸止失败时，将已累积的寸止计数并入本次不计数高潮一起解放，清空寸止计数并进入解放状态
         if not orgasm_edge_success_flag:
             release_orgasm_dict = un_count_orgasm_dict.copy()
@@ -596,12 +598,13 @@ def judge_orgasm_degree(level_count: int) -> int:
         return 2
 
 
-def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None) -> bool:
+def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None, crossed_part_count: int = 1) -> bool:
     """
     判断高潮寸止是否成功
     Keyword arguments:
     character_id -- 角色id
     orgasm_edge_count -- 用于本次判定的寸止计数字典，None时使用角色实时寸止计数
+    crossed_part_count -- 本次同时跨过绝顶阈值的部位数，成功率按该数取幂，多部位同时寸止更难
     Return arguments:
     bool -- 是否成功
     """
@@ -628,6 +631,10 @@ def judge_orgasm_edge_success(character_id: int, orgasm_edge_count: dict = None)
     # 否则，每超出一次，则有20%的概率失败
     else:
         fail_rate = 0.2 * over_count * -1
+        # 多部位同时寸止时，单部位成功率按跨阈部位数取幂（p^k），据此换算总失败率
+        # 先把单部位成功率夹到[0,1]，避免fail_rate>1时负底数取偶次幂反而降低失败率
+        success_rate = max(0.0, 1 - fail_rate) ** crossed_part_count
+        fail_rate = 1 - success_rate
         random_num = random.uniform(0, 1)
         if random_num < fail_rate:
             orgasm_edge_success_flag = False
