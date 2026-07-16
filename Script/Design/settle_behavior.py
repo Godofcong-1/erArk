@@ -345,9 +345,11 @@ def handle_settle_behavior(character_id: int, now_time: datetime.datetime, event
                     now_text_list.append(now_text)
         if add_time > 0:
             if not exchange_flag:
-                now_text_time = _("\n\n {0}分钟过去了\n").format(str(add_time))
+                chara_name = now_character_data.name
+                now_text_time = _("\n\n {0}的时间过去了{1}分钟\n").format(chara_name, str(add_time))
             else:
-                now_text_time = _("\n\n 该行动将持续{0}分钟\n").format(str(add_time))
+                chara_name = target_data.name
+                now_text_time = _("\n\n {0}的行动将持续{1}分钟\n").format(chara_name, str(add_time))
         else:
             now_text_time = "\n"
         if now_text_list:
