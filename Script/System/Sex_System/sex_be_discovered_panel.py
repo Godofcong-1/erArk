@@ -48,6 +48,8 @@ class Sex_Be_Discovered_Panel:
         """ 玩家角色数据 """
         self.target_chara_data = cache.character_data[self.pl_chara_data.target_character_id]
         """ 玩家交互对象数据 """
+        self.discoverer_reaction_settled = False
+        """ 发现者反应是否已结算 """
 
     def draw(self) -> None:
         """绘制面板"""
@@ -164,6 +166,7 @@ class Sex_Be_Discovered_Panel:
 
     def _let_find_chara_away(self) -> None:
         """选择用花言巧语支开对方"""
+        from Script.Design import character_behavior
         pass_flag = False
         now_draw_text = ""
         if self.find_chara_data.talent[222]:
@@ -179,6 +182,8 @@ class Sex_Be_Discovered_Panel:
             now_draw = draw.NormalDraw()
             now_draw.text = now_draw_text
             now_draw.draw()
+            character_behavior.judge_character_status(self.character_id)
+            self.discoverer_reaction_settled = True
         # 未通过
         else:
             self._end_current_h()
@@ -198,6 +203,7 @@ class Sex_Be_Discovered_Panel:
 
     def _continue_exhibitionism_sex(self) -> None:
         """选择转为露出"""
+        from Script.Design import character_behavior
         # 如果当前已经是露出模式
         if handle_premise.handle_exhibitionism_sex_mode_ge_1(0):
             # 判断对方的实行值
@@ -205,10 +211,14 @@ class Sex_Be_Discovered_Panel:
             if instuct_judege.calculation_instuct_judege(0, self.character_id, _("露出"))[0]:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_BUT_IGNORE
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+                character_behavior.judge_character_status(self.character_id)
+                self.discoverer_reaction_settled = True
             # 如果是能接受H的等级，则自己离开
             elif instuct_judege.calculation_instuct_judege(0, self.character_id, _("H模式"))[0]:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.SEE_H_AND_LEAVE
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+                character_behavior.judge_character_status(self.character_id)
+                self.discoverer_reaction_settled = True
             # 否则打断当前H
             else:
                 self._end_current_h()
@@ -233,10 +243,13 @@ class Sex_Be_Discovered_Panel:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.JOIN_GROUP_SEX
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
                 character_behavior.judge_character_status(self.character_id)
+                self.discoverer_reaction_settled = True
             # 不在群交中则转为群交
             else:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.DISCOVER_OTHER_SEX_AND_JOIN
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
+                character_behavior.judge_character_status(self.character_id)
+                self.discoverer_reaction_settled = True
                 handle_instruct.chara_handle_instruct_common_settle(constant.Behavior.OTHER_SEX_BE_FOUND_TO_GROUP_SEX)
                 # 结算成就
                 achievement_panel.get_achievement_judge_by_value(905, 1)
@@ -246,6 +259,7 @@ class Sex_Be_Discovered_Panel:
                 self.find_chara_data.behavior.behavior_id = constant.Behavior.REFUSE_JOIN_GROUP_SEX
                 self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
                 character_behavior.judge_character_status(self.character_id)
+                self.discoverer_reaction_settled = True
             # 不在群交中则结束当前H
             else:
                 self._end_current_h()
@@ -260,6 +274,7 @@ class Sex_Be_Discovered_Panel:
         self.find_chara_data.behavior.duration = game_config.config_behavior[self.find_chara_data.behavior.behavior_id].duration
         # 手动结算该状态
         character_behavior.judge_character_status(self.character_id)
+        self.discoverer_reaction_settled = True
         # 如果是在群交中，则结束群交
         if handle_premise.handle_group_sex_mode_on(0):
             self.pl_chara_data.behavior.behavior_id = constant.Behavior.GROUP_SEX_END

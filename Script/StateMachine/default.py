@@ -1321,6 +1321,7 @@ def character_see_h_and_move_to_dormitory(character_id: int):
     # 绘制被发现面板
     now_panel = sex_be_discovered_panel.Sex_Be_Discovered_Panel(normal_config.config_normal.text_width, character_id)
     now_panel.draw()
+    cache.character_data[character_id].sp_flag.see_h_reaction_settled = now_panel.discoverer_reaction_settled
 
 @handle_state_machine.add_state_machine(constant.StateMachine.SINGING)
 def character_singing(character_id: int):

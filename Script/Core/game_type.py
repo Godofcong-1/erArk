@@ -807,6 +807,8 @@ class SPECIAL_FLAG:
         """ 正在前往参与群交 """
         self.see_pl_h: bool = False
         """ 目击玩家H，在H被发现面板中使用，以免重复触发，玩家移动后重置 """
+        self.see_h_reaction_settled: bool = False
+        """ 目击H后的发现者反应已结算，NPC外层结算后重置 """
         self.sex_toy_level: int = 0
         """ 自己身上情趣玩具的档位，int，0关1弱2中3强 """
 
