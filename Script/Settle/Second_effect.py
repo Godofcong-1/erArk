@@ -2170,8 +2170,8 @@ def handle_milking_machine(
         character_data.pregnancy.milk -= now_milk
         character_data.behavior.milk_ml += now_milk
 
-        # 绘制信息
-        if now_milk:
+        # 绘制信息（异地NPC不向玩家绘制）
+        if now_milk and handle_premise.handle_in_player_scene(character_id):
             now_draw = draw.NormalDraw()
             now_text = _("\n{0}被搾乳机榨出了{1}ml的乳汁\n").format(character_data.name, now_milk)
             now_draw.text = now_text
@@ -2221,8 +2221,8 @@ def handle_urine_collector(
         character_data.urinate_point -= now_urine
         character_data.behavior.urine_ml += now_urine
 
-        # 绘制信息
-        if now_urine:
+        # 绘制信息（异地NPC不向玩家绘制）
+        if now_urine and handle_premise.handle_in_player_scene(character_id):
             now_draw = draw.NormalDraw()
             now_text = _("\n{0}被采尿器吸出了{1}ml的圣水\n").format(character_data.name, now_urine)
             now_draw.text = now_text
@@ -2266,11 +2266,12 @@ def handle_b_orgasm_to_milk(
         else:
             now_text = _("\n{0}在绝顶的同时喷出了{1}ml的乳汁，喷出的乳汁散落的到处都是\n").format(character_data.name, eject_milk)
 
-        # 绘制信息
+        # 绘制信息（异地NPC不向玩家绘制）
         now_draw = draw.NormalDraw()
         now_draw.text = now_text
         now_draw.width = window_width
-        now_draw.draw()
+        if handle_premise.handle_in_player_scene(character_id):
+            now_draw.draw()
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.U_ORGASM_TO_PEE)
@@ -2308,11 +2309,12 @@ def handle_u_orgasm_to_pee(
         else:
             now_text = _("\n{0}在绝顶的同时漏出了{1}ml的尿液，漏出的尿液在地上汇成一滩\n").format(character_data.name, eject_urine)
 
-        # 绘制信息
+        # 绘制信息（异地NPC不向玩家绘制）
         now_draw = draw.NormalDraw()
         now_draw.text = now_text
         now_draw.width = window_width
-        now_draw.draw()
+        if handle_premise.handle_in_player_scene(character_id):
+            now_draw.draw()
 
 
 @settle_behavior.add_settle_second_behavior_effect(constant_effect.SecondEffect.EXTRA_ORGASM)
@@ -2339,12 +2341,13 @@ def handle_extra_orgasm(
         extra_terror = int(100 * (1.2 ** all_extra_count))
         base_chara_state_common_settle(character_id, 0, 17, extra_pain, ability_level = character_data.ability[15], tenths_add = False, change_data = change_data)
         base_chara_state_common_settle(character_id, 0, 18, extra_terror, ability_level = character_data.ability[17], tenths_add = False, change_data = change_data)
-        # 绘制信息
+        # 绘制信息（异地NPC不向玩家绘制）
         now_draw = draw.NormalDraw()
         now_text = _("\n{0}因为第{1}次的连续额外绝顶而被迫感受到了更多的苦痛和恐怖\n").format(character_data.name, all_extra_count)
         now_draw.text = now_text
         now_draw.width = window_width
-        now_draw.draw()
+        if handle_premise.handle_in_player_scene(character_id):
+            now_draw.draw()
         # 额外高潮次数清零
         character_data.h_state.extra_orgasm_count = 0
 

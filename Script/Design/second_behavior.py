@@ -143,8 +143,14 @@ def second_behavior_effect(
         if behavior_data != 0:
             if second_behavior_list and second_behavior_id not in second_behavior_list:
                 continue
-            # 触发二段行为的口上
-            talk.handle_second_talk(character_id, second_behavior_id)
+            # 触发二段行为的口上（异地NPC不显示结算口上，与上方必须结算门一致；
+            # 但必须显示(998)的行为——如经能力面板手动升级的刻印——不受在场限制）
+            if (
+                character_data.position == cache.character_data[0].position
+                or character_data.behavior.move_src == cache.character_data[0].position
+                or second_behavior_id in game_config.config_behavior_must_show_cid_list
+            ):
+                talk.handle_second_talk(character_id, second_behavior_id)
             # 如果没找到对应的结算效果，则直接跳过
             if second_behavior_id not in game_config.config_behavior_effect_data:
                 print(f"debug second_behavior_id = {second_behavior_id}没有找到对应的结算效果")
