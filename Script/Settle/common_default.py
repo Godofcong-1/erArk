@@ -240,7 +240,7 @@ def base_chara_state_common_settle(
     final_value = int(final_value)
 
     # 心控-苦痛快感化，将苦痛状态转化为快感状态
-    if state_id == 17 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
+    if state_id == 17 and final_value > 0 and handle_premise.handle_hypnosis_pain_as_pleasure(character_id):
         base_chara_state_common_settle(character_id, final_value, 23, 0, ability_level = character_data.ability[36], tenths_add = False, change_data = change_data, change_data_to_target_change = change_data_to_target_change)
         return
 
