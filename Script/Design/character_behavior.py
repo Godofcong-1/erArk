@@ -170,7 +170,9 @@ def character_behavior(character_id: int, now_time: datetime.datetime, pl_start_
             # 寻找可用行动
             handle_npc_ai.find_character_target(character_id, now_time)
             # 结算状态与事件
-            judge_character_status(character_id)
+            if not character_data.sp_flag.see_h_reaction_settled or character_data.behavior.behavior_id == constant.Behavior.MOVE:
+                judge_character_status(character_id)
+            character_data.sp_flag.see_h_reaction_settled = False
         # 移动情况下也直接结算
         elif character_data.behavior.behavior_id == constant.Behavior.MOVE:
             # 结算状态与事件
